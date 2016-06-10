@@ -226,13 +226,13 @@ public:
      * @param event Event information.
      * @js NA
      */
-    virtual void onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event);
+    virtual void onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event) override;
     /** Callback function for key released.
     * @param keyCode KeyCode information.
     * @param event Event information.
     * @js NA
     */
-    virtual void onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event);
+    virtual void onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event) override;
 
     CC_DEPRECATED_ATTRIBUTE virtual bool isKeypadEnabled() const final { return _keyboardEnabled; }
     CC_DEPRECATED_ATTRIBUTE virtual void setKeypadEnabled(bool value);

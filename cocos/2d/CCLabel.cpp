@@ -1551,19 +1551,7 @@ void Label::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
     }
     // Don't do calculate the culling if the transform was not updated
     bool transformUpdated = flags & FLAGS_TRANSFORM_DIRTY;
-#if CC_USE_CULLING
-    auto visitingCamera = Camera::getVisitingCamera();
-    auto defaultCamera = Camera::getDefaultCamera();
-    if (visitingCamera == defaultCamera) {
-        _insideBounds = (transformUpdated || visitingCamera->isViewProjectionUpdated()) ? renderer->checkVisibility(transform, _contentSize) : _insideBounds;
-    }
-    else
-    {
-        _insideBounds = renderer->checkVisibility(transform, _contentSize);
-    }
 
-    if (_insideBounds)
-#endif
     {
         if (!_shadowEnabled && (_currentLabelType == LabelType::BMFONT || _currentLabelType == LabelType::CHARMAP))
         {

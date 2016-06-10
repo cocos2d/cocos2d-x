@@ -82,7 +82,6 @@ JNIEXPORT void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeInit(JNIEnv*  env, j
         director->getEventDispatcher()->dispatchEvent(&recreatedEvent);
         director->setGLDefaultValues();
     }
-    cocos2d::network::_preloadJavaDownloaderClass();
 }
 
 JNIEXPORT jintArray Java_org_cocos2dx_lib_Cocos2dxActivity_getGLContextAttrs(JNIEnv*  env, jobject thiz)

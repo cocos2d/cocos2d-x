@@ -1,16 +1,9 @@
 #include "AppDelegate.h"
-#include "CCLuaEngine.h"
+
 #include "SimpleAudioEngine.h"
 #include "cocos2d.h"
-#include "ide-support/CodeIDESupport.h"
 
 #include "runtime/Runtime.h"
-
-// Lua
-#include "ide-support/RuntimeLuaImpl.h"
-
-// Js
-#include "ide-support/RuntimeJsImpl.h"
 
 
 using namespace CocosDenshion;
@@ -25,9 +18,6 @@ AppDelegate::AppDelegate()
 AppDelegate::~AppDelegate()
 {
     SimpleAudioEngine::end();
-
-    // NOTE:Please don't remove this call if you want to debug with Cocos Code IDE
-    RuntimeEngine::getInstance()->end();
 }
 
 //if you want a different context,just modify the value of glContextAttrs
@@ -46,22 +36,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     // set default FPS
     Director::getInstance()->setAnimationInterval(1.0 / 60.0f);
     
-    auto runtimeEngine = RuntimeEngine::getInstance();
-    runtimeEngine->setEventTrackingEnable(true);
-    runtimeEngine->addRuntime(RuntimeLuaImpl::create(), kRuntimeEngineLua);
-    auto jsRuntime = RuntimeJsImpl::create();
-    runtimeEngine->addRuntime(jsRuntime, kRuntimeEngineJs);
-    runtimeEngine->start();
-    
-    // js need special debug port
-    if (runtimeEngine->getProjectConfig().getDebuggerType() != kCCRuntimeDebuggerNone)
-    {
-        jsRuntime->startWithDebugger();
-    }
 
-
-    // Runtime end
-    cocos2d::log("iShow!");
     return true;
 }
 

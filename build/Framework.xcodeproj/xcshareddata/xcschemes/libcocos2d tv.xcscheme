@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A07A4C241783777C0073F6A7"
-               BuildableName = "libcocos2d iOS.a"
-               BlueprintName = "libcocos2d iOS"
+               BlueprintIdentifier = "78C3536A1CEE7F6500F10068"
+               BuildableName = "libcocos2d tv.a"
+               BlueprintName = "libcocos2d tv"
                ReferencedContainer = "container:Framework.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -45,9 +45,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "A07A4C241783777C0073F6A7"
-            BuildableName = "libcocos2d iOS.a"
-            BlueprintName = "libcocos2d iOS"
+            BlueprintIdentifier = "78C3536A1CEE7F6500F10068"
+            BuildableName = "libcocos2d tv.a"
+            BlueprintName = "libcocos2d tv"
             ReferencedContainer = "container:Framework.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -63,9 +63,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "A07A4C241783777C0073F6A7"
-            BuildableName = "libcocos2d iOS.a"
-            BlueprintName = "libcocos2d iOS"
+            BlueprintIdentifier = "78C3536A1CEE7F6500F10068"
+            BuildableName = "libcocos2d tv.a"
+            BlueprintName = "libcocos2d tv"
             ReferencedContainer = "container:Framework.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

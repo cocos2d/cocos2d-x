@@ -231,12 +231,9 @@ navmesh/CCNavMeshUtils.cpp \
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/. \
                     $(LOCAL_PATH)/.. \
-<<<<<<< HEAD
                     $(LOCAL_PATH)/platform \
                     $(LOCAL_PATH)/base \
                     $(LOCAL_PATH)/editor-support \
-=======
->>>>>>> cocos2d/v3
                     $(LOCAL_PATH)/../external \
                     $(LOCAL_PATH)/../external/tinyxml2 \
                     $(LOCAL_PATH)/../external/unzip \
@@ -270,11 +267,8 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/platform/include/vote \
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH) \
-<<<<<<< HEAD
                     $(LOCAL_PATH)/platform \
                     $(LOCAL_PATH)/editor-support \
-=======
->>>>>>> cocos2d/v3
                     $(LOCAL_PATH)/../external \
                     $(LOCAL_PATH)/../external/tinyxml2 \
                     $(LOCAL_PATH)/../external/unzip \

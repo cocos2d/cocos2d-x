@@ -185,7 +185,6 @@ Image* captureNode(Node* startNode, float scale)
     RenderTexture* finalRtx = nullptr;
 
     auto rtx = RenderTexture::create(size.width, size.height, Texture2D::PixelFormat::RGBA8888, GL_DEPTH24_STENCIL8);
-    rtx->getSprite()->setBlendFunc({GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA});
     // rtx->setKeepMatrix(true);
     Point savedPos = startNode->getPosition();
     Point anchor;
@@ -193,7 +192,7 @@ Image* captureNode(Node* startNode, float scale)
         anchor = startNode->getAnchorPoint();
     }
     startNode->setPosition(Point(size.width * anchor.x, size.height * anchor.y));
-    rtx->beginWithClear(1.0f, 1.0f, 1.0f, 0.5f);
+    rtx->begin(); 
     startNode->visit();
     rtx->end();
     startNode->setPosition(savedPos);
@@ -208,10 +207,9 @@ Image* captureNode(Node* startNode, float scale)
         sprite->setFlippedY(true);
 
         finalRtx = RenderTexture::create(size.width * scale, size.height * scale, Texture2D::PixelFormat::RGBA8888, GL_DEPTH24_STENCIL8);
-    finalRtx->getSprite()->setBlendFunc({GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA});
 
         sprite->setScale(scale); // or use finalRtx->setKeepMatrix(true);
-        finalRtx->beginWithClear(1.0f, 1.0f, 1.0f, 0.5f);
+        finalRtx->begin(); 
         sprite->visit();
         finalRtx->end();
     }

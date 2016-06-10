@@ -650,20 +650,7 @@ void Sprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
         return;
     }
     
-#if CC_USE_CULLING
-    // Don't do calculate the culling if the transform was not updated
-    auto visitingCamera = Camera::getVisitingCamera();
-    auto defaultCamera = Camera::getDefaultCamera();
-    if (visitingCamera == defaultCamera) {
-        _insideBounds = ((flags & FLAGS_TRANSFORM_DIRTY)|| visitingCamera->isViewProjectionUpdated()) ? renderer->checkVisibility(transform, _contentSize) : _insideBounds;
-    }
-    else
-    {
-        _insideBounds = renderer->checkVisibility(transform, _contentSize);
-    }
 
-    if(_insideBounds)
-#endif
     {
         _trianglesCommand.init(_globalZOrder, _texture->getName(), getGLProgramState(), _blendFunc, _polyInfo.triangles, transform, flags);
         renderer->addCommand(&_trianglesCommand);

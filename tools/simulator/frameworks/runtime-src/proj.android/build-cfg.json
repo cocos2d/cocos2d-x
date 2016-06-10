@@ -1,16 +1,15 @@
 {
     "ndk_module_path" :[
-        "../../../../../",
-        "../../../../../cocos/",
-        "../../../../../external",
-        "../../../../../cocos/scripting"
+        "../../../../../cocos2d", 
+        "../../../../../cocos2d/cocos", 
+        "../../../../../cocos2d/external"
     ],
     "copy_resources": [
     ],
     "must_copy_resources": [
-        {
-            "from": "../../../config.json",
-            "to": ""
-        }
+    {
+        "from": "../../config.json",
+        "to": ""
+    }
     ]
 }

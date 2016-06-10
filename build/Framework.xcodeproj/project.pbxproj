@@ -5109,7 +5109,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1551A33F158F2AB200E66CFE /* libcocos2d Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2d Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1551A33F158F2AB200E66CFE /* libcocos2d mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2d mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		15AE17E419AAD2F700C27E9E /* CCAABB.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCAABB.cpp; sourceTree = "<group>"; };
 		15AE17E519AAD2F700C27E9E /* CCAABB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAABB.h; sourceTree = "<group>"; };
 		15AE17E619AAD2F700C27E9E /* CCAnimate3D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCAnimate3D.cpp; sourceTree = "<group>"; };
@@ -5992,7 +5992,7 @@
 		78AEAC291BD22EE300FA8783 /* Shake.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Shake.cpp; sourceTree = "<group>"; };
 		78BF8F7E1CF140E900DBBF62 /* libfreetype.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfreetype.a; path = ../external/freetype2/prebuilt/tv/libfreetype.a; sourceTree = "<group>"; };
 		78BF8F801CF140F800DBBF62 /* libpng.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpng.a; path = ../external/png/prebuilt/tv/libpng.a; sourceTree = "<group>"; };
-		78C35A1B1CEE7F6500F10068 /* libcocos2d TV.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2d TV.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		78C35A1B1CEE7F6500F10068 /* libcocos2d tv.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2d tv.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		78D822201C41681A000D99EA /* Internal.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Internal.cpp; sourceTree = "<group>"; };
 		78E5CBFA1BCA446B00CB036E /* Storage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Storage.h; path = ../support/Storage.h; sourceTree = "<group>"; };
 		78E5CC0A1BCA6F5E00CB036E /* Text.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Text.h; path = ../entities/Text.h; sourceTree = "<group>"; };
@@ -6016,7 +6016,7 @@
 		A0534A691B87306E006B03E5 /* CCIDownloaderImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCIDownloaderImpl.h; sourceTree = "<group>"; };
 		A05DCF9B1B90584E00EE040B /* CCDownloader-curl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "CCDownloader-curl.cpp"; sourceTree = "<group>"; };
 		A05DCF9C1B90584E00EE040B /* CCDownloader-curl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CCDownloader-curl.h"; sourceTree = "<group>"; };
-		A07A4D641783777C0073F6A7 /* libcocos2d iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2d iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A07A4D641783777C0073F6A7 /* libcocos2d iphone.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2d iphone.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0E749F51BA8FD7F001A8332 /* UIEditBoxImpl-common.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "UIEditBoxImpl-common.cpp"; sourceTree = "<group>"; };
 		A0E749F61BA8FD7F001A8332 /* UIEditBoxImpl-common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIEditBoxImpl-common.h"; sourceTree = "<group>"; };
 		B20564AA1A6E5744001C1B6E /* ccShader_PositionColorTextureAsPointsize.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_PositionColorTextureAsPointsize.vert; sourceTree = "<group>"; };
@@ -6980,9 +6980,9 @@
 		1551A340158F2AB200E66CFE /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				1551A33F158F2AB200E66CFE /* libcocos2d Mac.a */,
-				A07A4D641783777C0073F6A7 /* libcocos2d iOS.a */,
-				78C35A1B1CEE7F6500F10068 /* libcocos2d TV.a */,
+				1551A33F158F2AB200E66CFE /* libcocos2d mac.a */,
+				A07A4D641783777C0073F6A7 /* libcocos2d iphone.a */,
+				78C35A1B1CEE7F6500F10068 /* libcocos2d tv.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -12936,9 +12936,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		1551A33E158F2AB200E66CFE /* libcocos2d Mac */ = {
+		1551A33E158F2AB200E66CFE /* libcocos2d mac */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1551A34C158F2AB200E66CFE /* Build configuration list for PBXNativeTarget "libcocos2d Mac" */;
+			buildConfigurationList = 1551A34C158F2AB200E66CFE /* Build configuration list for PBXNativeTarget "libcocos2d mac" */;
 			buildPhases = (
 				1551A33B158F2AB200E66CFE /* Sources */,
 				1551A33C158F2AB200E66CFE /* Frameworks */,
@@ -12948,14 +12948,14 @@
 			);
 			dependencies = (
 			);
-			name = "libcocos2d Mac";
+			name = "libcocos2d mac";
 			productName = cocos2dx;
-			productReference = 1551A33F158F2AB200E66CFE /* libcocos2d Mac.a */;
+			productReference = 1551A33F158F2AB200E66CFE /* libcocos2d mac.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		78C3536A1CEE7F6500F10068 /* libcocos2d TV */ = {
+		78C3536A1CEE7F6500F10068 /* libcocos2d tv */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 78C35A181CEE7F6500F10068 /* Build configuration list for PBXNativeTarget "libcocos2d TV" */;
+			buildConfigurationList = 78C35A181CEE7F6500F10068 /* Build configuration list for PBXNativeTarget "libcocos2d tv" */;
 			buildPhases = (
 				78C3536B1CEE7F6500F10068 /* Sources */,
 				78C356711CEE7F6500F10068 /* Frameworks */,
@@ -12965,14 +12965,14 @@
 			);
 			dependencies = (
 			);
-			name = "libcocos2d TV";
+			name = "libcocos2d tv";
 			productName = cocos2dx;
-			productReference = 78C35A1B1CEE7F6500F10068 /* libcocos2d TV.a */;
+			productReference = 78C35A1B1CEE7F6500F10068 /* libcocos2d tv.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		A07A4C241783777C0073F6A7 /* libcocos2d iOS */ = {
+		A07A4C241783777C0073F6A7 /* libcocos2d iphone */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A07A4D611783777C0073F6A7 /* Build configuration list for PBXNativeTarget "libcocos2d iOS" */;
+			buildConfigurationList = A07A4D611783777C0073F6A7 /* Build configuration list for PBXNativeTarget "libcocos2d iphone" */;
 			buildPhases = (
 				A07A4C251783777C0073F6A7 /* Sources */,
 				A07A4CAD1783777C0073F6A7 /* Frameworks */,
@@ -12982,9 +12982,9 @@
 			);
 			dependencies = (
 			);
-			name = "libcocos2d iOS";
+			name = "libcocos2d iphone";
 			productName = cocos2dx;
-			productReference = A07A4D641783777C0073F6A7 /* libcocos2d iOS.a */;
+			productReference = A07A4D641783777C0073F6A7 /* libcocos2d iphone.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -13008,9 +13008,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				A07A4C241783777C0073F6A7 /* libcocos2d iOS */,
-				1551A33E158F2AB200E66CFE /* libcocos2d Mac */,
-				78C3536A1CEE7F6500F10068 /* libcocos2d TV */,
+				A07A4C241783777C0073F6A7 /* libcocos2d iphone */,
+				1551A33E158F2AB200E66CFE /* libcocos2d mac */,
+				78C3536A1CEE7F6500F10068 /* libcocos2d tv */,
 			);
 		};
 /* End PBXProject section */
@@ -15516,7 +15516,10 @@
 					"$(SRCROOT)/../external/freetype2/prebuilt/tv",
 				);
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = (
+					"-fembed-bitcode",
+					"-ObjC",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				SEPARATE_STRIP = NO;
@@ -15555,7 +15558,10 @@
 					"$(SRCROOT)/../external/freetype2/prebuilt/tv",
 				);
 				ONLY_ACTIVE_ARCH = NO;
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = (
+					"-fembed-bitcode",
+					"-ObjC",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				SEPARATE_STRIP = NO;
@@ -15597,7 +15603,6 @@
 					"$(SRCROOT)/../external/websockets/prebuilt/ios",
 					"$(SRCROOT)/../external/chipmunk/prebuilt/ios",
 				);
-				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-llibsql3",
@@ -15668,7 +15673,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		1551A34C158F2AB200E66CFE /* Build configuration list for PBXNativeTarget "libcocos2d Mac" */ = {
+		1551A34C158F2AB200E66CFE /* Build configuration list for PBXNativeTarget "libcocos2d mac" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1551A34D158F2AB200E66CFE /* Debug */,
@@ -15677,7 +15682,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		78C35A181CEE7F6500F10068 /* Build configuration list for PBXNativeTarget "libcocos2d TV" */ = {
+		78C35A181CEE7F6500F10068 /* Build configuration list for PBXNativeTarget "libcocos2d tv" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				78C35A191CEE7F6500F10068 /* Debug */,
@@ -15686,7 +15691,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A07A4D611783777C0073F6A7 /* Build configuration list for PBXNativeTarget "libcocos2d iOS" */ = {
+		A07A4D611783777C0073F6A7 /* Build configuration list for PBXNativeTarget "libcocos2d iphone" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A07A4D621783777C0073F6A7 /* Debug */,

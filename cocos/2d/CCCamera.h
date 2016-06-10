@@ -326,7 +326,7 @@ public:
     static const experimental::Viewport& getDefaultViewport() { return _defaultViewport; }
     static void setDefaultViewport(const experimental::Viewport& vp) { _defaultViewport = vp; }
 
-    virtual Camera* deepCopy();
+    virtual Camera* deepCopy() override;
 };
 
 NS_CC_END

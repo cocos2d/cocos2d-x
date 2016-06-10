@@ -37,7 +37,7 @@ enum class LightType
     AMBIENT = 3,
 };
 
-enum class LightFlag
+enum LightFlag
 {
     LIGHT0 = 1,
     LIGHT1 = 1 << 1,
@@ -102,7 +102,7 @@ protected:
     bool        _enabled;
 
 public:
-    virtual BaseLight* deepCopy();
+    virtual BaseLight* deepCopy() override;
 };
 
 /**
@@ -145,7 +145,7 @@ CC_CONSTRUCTOR_ACCESS:
     virtual ~DirectionLight();
 
 public:
-    virtual DirectionLight* deepCopy();
+    virtual DirectionLight* deepCopy() override;
     
 };
 
@@ -180,7 +180,7 @@ protected:
     float _range;
 
 public:
-    virtual PointLight* deepCopy();
+    virtual PointLight* deepCopy() override;
 };
 
 /**
@@ -277,7 +277,7 @@ protected:
     float _cosOuterAngle;
 
 public:
-    virtual SpotLight* deepCopy();
+    virtual SpotLight* deepCopy() override;
 };
 
 /**
@@ -302,7 +302,7 @@ CC_CONSTRUCTOR_ACCESS:
     virtual ~AmbientLight();
 
 public:
-    virtual AmbientLight* deepCopy();
+    virtual AmbientLight* deepCopy() override;
 };
 
 NS_CC_END

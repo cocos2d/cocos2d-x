@@ -1,21 +1,3 @@
-<<<<<<< HEAD
-#include "CCNodeLoaderLibrary.h"
-
-#include "CCLayerLoader.h"
-#include "CCLayerColorLoader.h"
-#include "CCLayerGradientLoader.h"
-#include "CCLabelBMFontLoader.h"
-#include "CCLabelTTFLoader.h"
-#include "CCSpriteLoader.h"
-#include "CCScale9SpriteLoader.h"
-#include "CCBFileLoader.h"
-//#include "CCMenuLoader.h"
-//#include "CCMenuItemLoader.h"
-//#include "CCMenuItemImageLoader.h"
-#include "CCControlButtonLoader.h"
-#include "CCParticleSystemQuadLoader.h"
-#include "CCScrollViewLoader.h"
-=======
 #include "editor-support/cocosbuilder/CCNodeLoaderLibrary.h"
 
 #include "editor-support/cocosbuilder/CCLayerLoader.h"
@@ -32,7 +14,6 @@
 #include "editor-support/cocosbuilder/CCControlButtonLoader.h"
 #include "editor-support/cocosbuilder/CCParticleSystemQuadLoader.h"
 #include "editor-support/cocosbuilder/CCScrollViewLoader.h"
->>>>>>> cocos2d/v3
 
 using namespace cocos2d;
 

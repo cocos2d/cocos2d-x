@@ -16,20 +16,5 @@ void cocos_android_app_init (JNIEnv* env, jobject thiz) {
     AppDelegate *pAppDelegate = new AppDelegate();
 }
 
-extern "C"
-{
-	bool Java_org_cocos2dx_lua_AppActivity_nativeIsLandScape(JNIEnv *env, jobject thisz)
-	{
-		return ConfigParser::getInstance()->isLanscape();
-	}
 
-	bool Java_org_cocos2dx_lua_AppActivity_nativeIsDebug(JNIEnv *env, jobject thisz)
-	{
-#if (COCOS2D_DEBUG > 0) && (CC_CODE_IDE_DEBUG_SUPPORT > 0)
-        return true;
-#else
-        return false;    
-#endif
-	}
-}
 
