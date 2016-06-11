@@ -160,6 +160,7 @@ set(TESTS_SRC
   Classes/VibrateTest/VibrateTest.cpp
   Classes/ZwoptexTest/ZwoptexTest.cpp
   Classes/SpriteFrameCacheTest/SpriteFrameCacheTest.cpp
+  classes/JsonValueConverterTest/JsonValueConverterTest.cpp
   Classes/controller.cpp
   Classes/testBasic.cpp
   ${PLATFORM_SRC}

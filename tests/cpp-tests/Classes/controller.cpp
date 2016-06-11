@@ -102,6 +102,7 @@ public:
         addTest("Vibrate", []() { return new VibrateTests(); });
         addTest("Zwoptex", []() { return new ZwoptexTests(); });
         addTest("SpriteFrameCache", []() { return new SpriteFrameCacheTests(); });
+        addTest("Value Converting Test", []() { return new ValueConverterTests(); });
     }
 };
 

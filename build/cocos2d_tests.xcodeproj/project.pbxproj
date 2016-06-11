@@ -651,6 +651,9 @@
 		1AC35DF818CEE65B00F37B72 /* pew-pew-lei.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CC418CED84500F37B72 /* pew-pew-lei.wav */; };
 		1F33634F18E37E840074764D /* RefPtrTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1F33634D18E37E840074764D /* RefPtrTest.cpp */; };
 		1F33635018E37E840074764D /* RefPtrTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1F33634D18E37E840074764D /* RefPtrTest.cpp */; };
+		2715490E1D0C68F900C61439 /* JsonValueConverterTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2715490C1D0C68F900C61439 /* JsonValueConverterTest.cpp */; };
+		2715490F1D0C68F900C61439 /* JsonValueConverterTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2715490C1D0C68F900C61439 /* JsonValueConverterTest.cpp */; };
+		271549101D0C68F900C61439 /* JsonValueConverterTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2715490C1D0C68F900C61439 /* JsonValueConverterTest.cpp */; };
 		27C5CE011C6E0469000CA4B3 /* SpriteFrameCacheTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27C5CDFF1C6E0469000CA4B3 /* SpriteFrameCacheTest.cpp */; };
 		27C5CE021C6E0470000CA4B3 /* SpriteFrameCacheTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27C5CDFF1C6E0469000CA4B3 /* SpriteFrameCacheTest.cpp */; };
 		27C5CE031C6E0477000CA4B3 /* SpriteFrameCacheTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27C5CDFF1C6E0469000CA4B3 /* SpriteFrameCacheTest.cpp */; };
@@ -2307,6 +2310,8 @@
 		1D6058910D05DD3D006BFB54 /* cpp-tests Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "cpp-tests Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F33634D18E37E840074764D /* RefPtrTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RefPtrTest.cpp; sourceTree = "<group>"; };
 		1F33634E18E37E840074764D /* RefPtrTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RefPtrTest.h; sourceTree = "<group>"; };
+		2715490C1D0C68F900C61439 /* JsonValueConverterTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = JsonValueConverterTest.cpp; path = JsonValueConverterTest/JsonValueConverterTest.cpp; sourceTree = "<group>"; };
+		2715490D1D0C68F900C61439 /* JsonValueConverterTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JsonValueConverterTest.h; path = JsonValueConverterTest/JsonValueConverterTest.h; sourceTree = "<group>"; };
 		27C5CDFF1C6E0469000CA4B3 /* SpriteFrameCacheTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpriteFrameCacheTest.cpp; sourceTree = "<group>"; };
 		27C5CE001C6E0469000CA4B3 /* SpriteFrameCacheTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpriteFrameCacheTest.h; sourceTree = "<group>"; };
 		29080D1A191B574B0066F8DF /* UITest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UITest.cpp; path = UITest/UITest.cpp; sourceTree = "<group>"; };
@@ -3337,6 +3342,7 @@
 		1AC3592418CECF0A00F37B72 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				2715490B1D0C68B200C61439 /* ValueConverterTest */,
 				50921EAC1B746D5F00C085CC /* DownloaderTest */,
 				B6DD2FF91B04972B00E47F5F /* NavMeshTest */,
 				B6CAB54B1AF9AA4B00B9B856 /* Physics3DTest */,
@@ -4520,6 +4526,15 @@
 				FA94B0B81B8EF73D0074B261 /* performance-tests */,
 			);
 			name = tests;
+			sourceTree = "<group>";
+		};
+		2715490B1D0C68B200C61439 /* ValueConverterTest */ = {
+			isa = PBXGroup;
+			children = (
+				2715490C1D0C68F900C61439 /* JsonValueConverterTest.cpp */,
+				2715490D1D0C68F900C61439 /* JsonValueConverterTest.h */,
+			);
+			name = ValueConverterTest;
 			sourceTree = "<group>";
 		};
 		27C5CDFE1C6E043D000CA4B3 /* SpriteFrameCacheTest */ = {
@@ -6779,6 +6794,7 @@
 				27C5CE011C6E0469000CA4B3 /* SpriteFrameCacheTest.cpp in Sources */,
 				1AC35C5118CECF0C00F37B72 /* testBasic.cpp in Sources */,
 				1AC35B6B18CECF0C00F37B72 /* CocosBuilderTest.cpp in Sources */,
+				2715490E1D0C68F900C61439 /* JsonValueConverterTest.cpp in Sources */,
 				1AC35B4118CECF0C00F37B72 /* QuestionContainerSprite.cpp in Sources */,
 				1AC35B6118CECF0C00F37B72 /* DrawPrimitivesTest.cpp in Sources */,
 				1AC35C1718CECF0C00F37B72 /* MotionStreakTest.cpp in Sources */,
@@ -7024,6 +7040,7 @@
 				507B41DC1C31BEA60067B53E /* UITextTest.cpp in Sources */,
 				507B41DE1C31BEA60067B53E /* TableViewTestScene.cpp in Sources */,
 				507B41DF1C31BEA60067B53E /* ShaderTest2.cpp in Sources */,
+				271549101D0C68F900C61439 /* JsonValueConverterTest.cpp in Sources */,
 				507B41E01C31BEA60067B53E /* UnitTest.cpp in Sources */,
 				507B41E21C31BEA60067B53E /* Bug-458.cpp in Sources */,
 				507B41E31C31BEA60067B53E /* UIScene.cpp in Sources */,
@@ -7145,6 +7162,7 @@
 				29080DE4191B595E0066F8DF /* UIWidgetAddNodeTest.cpp in Sources */,
 				1AC35C4218CECF0C00F37B72 /* RenderTextureTest.cpp in Sources */,
 				1AC35C1618CECF0C00F37B72 /* MenuTest.cpp in Sources */,
+				2715490F1D0C68F900C61439 /* JsonValueConverterTest.cpp in Sources */,
 				1AC35C6818CECF0C00F37B72 /* UserDefaultTest.cpp in Sources */,
 				29080D1D191B574B0066F8DF /* UITest.cpp in Sources */,
 				3E9E75D1199324CB005B7047 /* Camera3DTest.cpp in Sources */,

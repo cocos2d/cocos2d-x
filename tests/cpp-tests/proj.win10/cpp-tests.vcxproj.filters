@@ -790,6 +790,7 @@
       <Filter>Classes\UITest\CocoStudioGUITest\UITabContorlTest</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\SpriteFrameCacheTest\SpriteFrameCacheTest.cpp" />
+    <ClCompile Include="..\Classes\JsonValueConverterTest/JsonValueConverterTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.xaml.h" />
@@ -1428,6 +1429,7 @@
       <Filter>Classes\UITest\CocoStudioGUITest\UITabContorlTest</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\SpriteFrameCacheTest\SpriteFrameCacheTest.h" />
+    <ClInclude Include="..\Classes\JsonValueConverterTest/JsonValueConverterTest.h" />
     <ClInclude Include="..\Classes\CocosStudio3DTest\CocosStudio3DTest.h" />
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\CocoStudioGUITest.h" />
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UITextTest\UITextTest_Editor.h" />
