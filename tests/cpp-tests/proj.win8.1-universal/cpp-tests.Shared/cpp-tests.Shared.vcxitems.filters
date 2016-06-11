@@ -636,7 +636,7 @@
       <Filter>Classes\UITest\CocostudioGUISceneTest\UITabControlTest</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\SpriteFrameCacheTest\SpriteFrameCacheTest.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\JsonValueConverterTest/JsonValueConverterTest.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\JsonValueConverterTest\JsonValueConverterTest.cpp" />
 
   </ItemGroup>
   <ItemGroup>
@@ -1430,7 +1430,7 @@
       <Filter>Classes\UITest\CocostudioGUISceneTest\UITabControlTest</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\SpriteFrameCacheTest\SpriteFrameCacheTest.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\JsonValueConverterTest/JsonValueConverterTest.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\JsonValueConverterTest\JsonValueConverterTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\GUIEditorTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UIScene_Editor.h" />
   </ItemGroup>

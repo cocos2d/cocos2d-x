@@ -170,7 +170,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\VibrateTest\VibrateTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ZwoptexTest\ZwoptexTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\SpriteFrameCacheTest\SpriteFrameCacheTest.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\JsonValueConverterTest/JsonValueConverterTest.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\JsonValueConverterTest\JsonValueConverterTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)App.xaml.cpp">
       <DependentUpon>$(MSBuildThisFileDirectory)App.xaml</DependentUpon>
     </ClCompile>
@@ -393,7 +393,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\VibrateTest\VibrateTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ZwoptexTest\ZwoptexTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\SpriteFrameCacheTest\SpriteFrameCacheTest.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\JsonValueConverterTest/JsonValueConverterTest.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\JsonValueConverterTest\JsonValueConverterTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)App.xaml.h">
       <DependentUpon>$(MSBuildThisFileDirectory)App.xaml</DependentUpon>
     </ClInclude>

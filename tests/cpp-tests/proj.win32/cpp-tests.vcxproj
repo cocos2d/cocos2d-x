@@ -295,7 +295,7 @@ xcopy "$(OutDir)..\*.dll" "$(OutDir)" /D /Y</Command>
     <ClCompile Include="..\Classes\Box2DTestBed\TestEntries.cpp" />
     <ClCompile Include="..\Classes\MutiTouchTest\MutiTouchTest.cpp" />
     <ClCompile Include="..\Classes\SpriteFrameCacheTest\SpriteFrameCacheTest.cpp" />
-    <ClCompile Include="..\Classes\JsonValueConverterTest/JsonValueConverterTest.cpp" />
+    <ClCompile Include="..\Classes\JsonValueConverterTest\JsonValueConverterTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Classes\AllocatorTest\AllocatorTest.h" />
@@ -509,7 +509,7 @@ xcopy "$(OutDir)..\*.dll" "$(OutDir)" /D /Y</Command>
     <ClInclude Include="..\Classes\Box2DTestBed\Tests\Web.h" />
     <ClInclude Include="..\Classes\MutiTouchTest\MutiTouchTest.h" />
     <ClInclude Include="..\Classes\SpriteFrameCacheTest\SpriteFrameCacheTest.h" />
-    <ClInclude Include="..\Classes\JsonValueConverterTest/JsonValueConverterTest.h" />
+    <ClInclude Include="..\Classes\JsonValueConverterTest\JsonValueConverterTest.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\cocos\2d\libcocos2d.vcxproj">
