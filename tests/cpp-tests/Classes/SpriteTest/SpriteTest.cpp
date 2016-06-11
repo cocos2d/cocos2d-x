@@ -3685,6 +3685,14 @@ AnimationCacheTest::AnimationCacheTest()
     grossini->runAction(seq);
 }
 
+AnimationCacheTest::~AnimationCacheTest()
+{
+    auto frameCache = SpriteFrameCache::getInstance();
+    frameCache->removeSpriteFramesFromFile("animations/grossini.plist");
+    frameCache->removeSpriteFramesFromFile("animations/grossini_gray.plist");
+    frameCache->removeSpriteFramesFromFile("animations/grossini_blue.plist");
+}
+
 std::string AnimationCacheTest::title() const
 {
     return "AnimationCache";
@@ -3743,6 +3751,14 @@ AnimationCacheFile::AnimationCacheFile()
 
     // run the animation
     grossini->runAction(seq);
+}
+
+AnimationCacheFile::~AnimationCacheFile()
+{
+    auto frameCache = SpriteFrameCache::getInstance();
+    frameCache->removeSpriteFramesFromFile("animations/grossini.plist");
+    frameCache->removeSpriteFramesFromFile("animations/grossini_gray.plist");
+    frameCache->removeSpriteFramesFromFile("animations/grossini_blue.plist");
 }
 
 std::string AnimationCacheFile::title() const
