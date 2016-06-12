@@ -309,7 +309,14 @@ void Renderer::setupVBOAndVAO()
 void Renderer::setupVBO()
 {
     glGenBuffers(2, &_buffersVBO[0]);
-    mapBuffers();
+    // Issue #15652
+    // Should not initialzie VBO with a large size (VBO_SIZE=65536),
+    // it may cause low FPS on some Android devices like LG G4 & Nexus 5X.
+    // It's probably because some implementations of OpenGLES driver will
+    // copy the whole memory of VBO which initialzied at the first time
+    // once glBufferData/glBufferSubData is invoked.
+    // For more discussion, please refer to https://github.com/cocos2d/cocos2d-x/issues/15652
+//    mapBuffers();
 }
 
 void Renderer::mapBuffers()
