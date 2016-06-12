@@ -72,7 +72,7 @@ void localStorageInit( const std::string& fullpath)
 void localStorageFree()
 {
     if (_initialized) {
-        JniHelper::callStaticVoidMethod(className, "destory");
+        JniHelper::callStaticVoidMethod(className, "destroy");
         _initialized = 0;
     }
 }
