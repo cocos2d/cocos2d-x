@@ -588,6 +588,8 @@ ParticleSystem::~ParticleSystem()
 
 void ParticleSystem::addParticles(int count)
 {
+    if (paused)
+        return;
     uint32_t RANDSEED = rand();
 
     int start = _particleCount;
@@ -1348,4 +1350,22 @@ void ParticleSystem::stop()
 {
     stopSystem();
 }
+
+bool ParticleSystem::isPaused()
+{
+    return paused;
+}
+
+void ParticleSystem::pauseEmissions()
+{
+    paused = true;
+}
+
+void ParticleSystem::unPauseEmissions()
+{
+    paused = false;
+}
+
+
+
 NS_CC_END
