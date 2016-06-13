@@ -33,6 +33,7 @@ THE SOFTWARE.
 #include "base/base64.h"
 #include "renderer/CCCustomCommand.h"
 #include "renderer/CCRenderer.h"
+#include "renderer/CCTextureCache.h"
 
 #include "platform/CCImage.h"
 #include "platform/CCFileUtils.h"
@@ -311,10 +312,33 @@ Rect getCascadeBoundingBox(Node *node)
     return cbb;
 }
 
+Sprite* createSpriteFromBase64Cached(const char* base64String, const char* key)
+{
+    Texture2D* texture = Director::getInstance()->getTextureCache()->getTextureForKey(key);
+
+    if (texture == nullptr)
+    {
+        unsigned char* decoded;
+        int length = base64Decode((const unsigned char*)base64String, (unsigned int)strlen(base64String), &decoded);
+
+        Image *image = new (std::nothrow) Image();
+        bool imageResult = image->initWithImageData(decoded, length);
+        CCASSERT(imageResult, "Failed to create image from base64!");
+        free(decoded);
+
+        texture = Director::getInstance()->getTextureCache()->addImage(image, key);
+        image->release();
+    }
+
+    Sprite* sprite = Sprite::createWithTexture(texture);
+    
+    return sprite;
+}
+
 Sprite* createSpriteFromBase64(const char* base64String)
 {
     unsigned char* decoded;
-    int length = base64Decode((const unsigned char*) base64String, (unsigned int) strlen(base64String), &decoded);
+    int length = base64Decode((const unsigned char*)base64String, (unsigned int)strlen(base64String), &decoded);
 
     Image *image = new (std::nothrow) Image();
     bool imageResult = image->initWithImageData(decoded, length);
@@ -328,7 +352,7 @@ Sprite* createSpriteFromBase64(const char* base64String)
 
     Sprite* sprite = Sprite::createWithTexture(texture);
     texture->release();
-    
+
     return sprite;
 }
 

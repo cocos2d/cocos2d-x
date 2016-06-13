@@ -27,6 +27,7 @@ THE SOFTWARE.
 #include "base/ccUtils.h"
 
 static const char* CIRCLE_IMAGE = "iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAQAAADZc7J/AAAA8ElEQVRIx62VyRGCQBBF+6gWRCEmYDIQkhiBCgHhSclC8YqWzOV5oVzKAYZp3r1/9fpbxAIBMTsKrjx5cqVgR0wgLhCRUWOjJiPqD56xoaGPhpRZV/iSEy6crHmw5oIrF9b/lVeMofrJgjlnxlIy/wik+JB+mme8BExbBhm+5CJC2LE2LtSEQoyGWDioBA5CoRIohJtK4CYDxzNEM4GAugR1E9VjVC+SZpXvhCJCrjomESLvc17pDGX7bWmlh6UtpjPVCWy9zaJ0TD7qfm3pwERMz2trRVZk3K3BD/L34AY+dEDCniMVBkPFkT2J/b2/AIV+dRpFLOYoAAAAAElFTkSuQmCC";
+static const char* CIRCLE_IMAGE_KEY = "/__circleImage";
 
 NS_CC_BEGIN
 
@@ -64,7 +65,7 @@ PageViewIndicator::~PageViewIndicator()
 
 bool PageViewIndicator::init()
 {
-    _currentIndexNode = utils::createSpriteFromBase64(CIRCLE_IMAGE);
+    _currentIndexNode = utils::createSpriteFromBase64Cached(CIRCLE_IMAGE, CIRCLE_IMAGE_KEY);
     _currentIndexNode->setVisible(false);
     addProtectedChild(_currentIndexNode, 1);
     return true;
