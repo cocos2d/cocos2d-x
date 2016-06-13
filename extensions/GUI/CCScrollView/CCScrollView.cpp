@@ -855,6 +855,10 @@ void ScrollView::onTouchCancelled(Touch* touch, Event* /*event*/)
     }
     
     auto touchIter = std::find(_touches.begin(), _touches.end(), touch);
+
+    if ( touchIter == _touches.end() )
+        return;
+    
     _touches.erase(touchIter);
     
     if (_touches.size() == 0)
