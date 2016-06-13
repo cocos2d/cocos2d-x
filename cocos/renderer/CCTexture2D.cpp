@@ -39,6 +39,7 @@ THE SOFTWARE.
 #include "platform/CCDevice.h"
 #include "base/ccConfig.h"
 #include "base/ccMacros.h"
+#include "base/ccUTF8.h"
 #include "base/CCConfiguration.h"
 #include "platform/CCPlatformMacros.h"
 #include "base/CCDirector.h"
@@ -46,8 +47,6 @@ THE SOFTWARE.
 #include "renderer/ccGLStateCache.h"
 #include "renderer/CCGLProgramCache.h"
 #include "base/CCNinePatchImageParser.h"
-#include "deprecated/CCString.h"
-
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     #include "renderer/CCTextureCache.h"

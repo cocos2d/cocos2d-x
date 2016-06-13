@@ -30,9 +30,9 @@ THE SOFTWARE.
 #include "2d/CCCamera.h"
 #include "base/CCEventDispatcher.h"
 #include "base/CCEventListenerCustom.h"
+#include "base/ccUTF8.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCFrameBuffer.h"
-#include "deprecated/CCString.h"
 
 #if CC_USE_PHYSICS
 #include "physics/CCPhysicsWorld.h"

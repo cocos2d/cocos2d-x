@@ -30,12 +30,10 @@ THE SOFTWARE.
 #include "2d/CCSprite.h"
 #include "base/CCDirector.h"
 #include "base/CCProfiling.h"
+#include "base/ccUTF8.h"
 #include "renderer/CCTextureCache.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCQuadCommand.h"
-
-#include "deprecated/CCString.h" // For StringUtils::format
-
 
 NS_CC_BEGIN
 

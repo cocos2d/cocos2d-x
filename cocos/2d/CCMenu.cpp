@@ -29,8 +29,8 @@ THE SOFTWARE.
 #include "base/CCTouch.h"
 #include "base/CCEventListenerTouch.h"
 #include "base/CCEventDispatcher.h"
+#include "base/ccUTF8.h"
 #include "platform/CCStdC.h"
-#include "deprecated/CCString.h"
 
 #include <vector>
 

@@ -28,9 +28,8 @@ THE SOFTWARE.
 #include "renderer/CCTextureAtlas.h"
 #include "platform/CCFileUtils.h"
 #include "base/CCDirector.h"
+#include "base/ccUTF8.h"
 #include "renderer/CCTextureCache.h"
-
-#include "deprecated/CCString.h"
 
 #if CC_LABELATLAS_DEBUG_DRAW
 #include "renderer/CCRenderer.h"

@@ -36,7 +36,7 @@
 #include "renderer/CCRenderer.h"
 #include "renderer/CCTextureAtlas.h"
 #include "base/CCProfiling.h"
-#include "deprecated/CCString.h"
+#include "base/ccUTF8.h"
 
 NS_CC_BEGIN
 

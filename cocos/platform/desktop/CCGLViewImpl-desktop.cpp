@@ -37,7 +37,6 @@ THE SOFTWARE.
 #include "base/ccUtils.h"
 #include "base/ccUTF8.h"
 #include "2d/CCCamera.h"
-#include "deprecated/CCString.h"
 
 NS_CC_BEGIN
 
