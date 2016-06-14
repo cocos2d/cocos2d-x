@@ -113,12 +113,9 @@ public:
      */
     virtual void beginWithClear(float r, float g, float b, float a, float depthValue, int stencilValue);
 
-    /** End is key word of lua, use other name to export to lua.
-     * @js NA
+    /** Ends grabbing.
+     * @lua endToLua
      */
-    inline void endToLua(){ end();};
-
-    /** Ends grabbing. */
     virtual void end();
 
     /** Clears the texture with a color. 

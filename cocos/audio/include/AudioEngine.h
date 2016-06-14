@@ -110,6 +110,7 @@ public:
      * Release objects relating to AudioEngine.
      *
      * @warning It must be called before the application exit.
+     * @lua endToLua
      */
     static void end();
     
