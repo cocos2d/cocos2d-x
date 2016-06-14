@@ -570,7 +570,10 @@ public:
     FontStroke            _stroke;
     /// enable text wrap
     bool                  _enableWrap;
-    /// enable shrink font size
+    /** There are 4 overflows: none, clamp, shrink and resize_height.
+     *  The conresponding integer values are 0, 1, 2, 3 respectively
+     * For more information, please refer to Label::Overflow enum class.
+     */
     int                  _overflow;
 };
 
