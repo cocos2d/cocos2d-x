@@ -696,10 +696,19 @@
 		29080DE4191B595E0066F8DF /* UIWidgetAddNodeTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29080D89191B595E0066F8DF /* UIWidgetAddNodeTest.cpp */; };
 		292CF01419A1965E00E8E6A0 /* UIEditBoxTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 292CF01219A1965E00E8E6A0 /* UIEditBoxTest.cpp */; };
 		292CF01519A1965E00E8E6A0 /* UIEditBoxTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 292CF01219A1965E00E8E6A0 /* UIEditBoxTest.cpp */; };
+		294D7D8A1D0E5093002CE7B7 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29DC5A1E1CFFE5E700CF2930 /* CoreText.framework */; };
+		294D7D8B1D0E509A002CE7B7 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29DC5A1E1CFFE5E700CF2930 /* CoreText.framework */; };
+		294D7D8C1D0E50A0002CE7B7 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29DC5A1E1CFFE5E700CF2930 /* CoreText.framework */; };
+		294D7D8D1D0E50A6002CE7B7 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29DC5A1E1CFFE5E700CF2930 /* CoreText.framework */; };
+		294D7D8E1D0E50AC002CE7B7 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29DC5A1E1CFFE5E700CF2930 /* CoreText.framework */; };
+		294D7D8F1D0E50B2002CE7B7 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29DC5A1E1CFFE5E700CF2930 /* CoreText.framework */; };
+		294D7D901D0E50B8002CE7B7 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29DC5A1E1CFFE5E700CF2930 /* CoreText.framework */; };
+		294D7D911D0E50BF002CE7B7 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29DC5A1E1CFFE5E700CF2930 /* CoreText.framework */; };
 		295824591987415900F9746D /* UIScale9SpriteTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 295824571987415900F9746D /* UIScale9SpriteTest.cpp */; };
 		2958245A1987415900F9746D /* UIScale9SpriteTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 295824571987415900F9746D /* UIScale9SpriteTest.cpp */; };
 		298D7F6F19AC31F300FF096D /* UIWebViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 298D7F6D19AC31F300FF096D /* UIWebViewTest.cpp */; };
 		29AFEF6719ACCAA000F6B10A /* Test.html in Resources */ = {isa = PBXBuildFile; fileRef = 29AFEF6619ACCAA000F6B10A /* Test.html */; };
+		29DC5A201CFFE6E100CF2930 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29DC5A1E1CFFE5E700CF2930 /* CoreText.framework */; };
 		38FA2E76194AECF800FF2BE4 /* ActionTimeline in Resources */ = {isa = PBXBuildFile; fileRef = 38FA2E75194AECF800FF2BE4 /* ActionTimeline */; };
 		38FA2E77194AECF800FF2BE4 /* ActionTimeline in Resources */ = {isa = PBXBuildFile; fileRef = 38FA2E75194AECF800FF2BE4 /* ActionTimeline */; };
 		3E2BDAD019BEA3410055CDCD /* NewAudioEngineTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E2BDACE19BEA3410055CDCD /* NewAudioEngineTest.cpp */; };
@@ -2356,6 +2365,7 @@
 		298D7F6D19AC31F300FF096D /* UIWebViewTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UIWebViewTest.cpp; path = UIWebViewTest/UIWebViewTest.cpp; sourceTree = "<group>"; };
 		298D7F6E19AC31F300FF096D /* UIWebViewTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIWebViewTest.h; path = UIWebViewTest/UIWebViewTest.h; sourceTree = "<group>"; };
 		29AFEF6619ACCAA000F6B10A /* Test.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = Test.html; path = "../tests/cpp-tests/Resources/Test.html"; sourceTree = "<group>"; };
+		29DC5A1E1CFFE5E700CF2930 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/CoreText.framework; sourceTree = DEVELOPER_DIR; };
 		38FA2E75194AECF800FF2BE4 /* ActionTimeline */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ActionTimeline; path = "../tests/cpp-tests/Resources/ActionTimeline"; sourceTree = "<group>"; };
 		3E2BDACE19BEA3410055CDCD /* NewAudioEngineTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NewAudioEngineTest.cpp; sourceTree = "<group>"; };
 		3E2BDACF19BEA3410055CDCD /* NewAudioEngineTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewAudioEngineTest.h; sourceTree = "<group>"; };
@@ -2600,6 +2610,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				294D7D8E1D0E50AC002CE7B7 /* CoreText.framework in Frameworks */,
 				4B5C5BB01CA114C100D55A14 /* Security.framework in Frameworks */,
 				15427B7A198B87AA00DC375D /* libcocos2d iOS.a in Frameworks */,
 				15427B79198B879900DC375D /* libluacocos2d iOS.a in Frameworks */,
@@ -2646,6 +2657,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				294D7D8F1D0E50B2002CE7B7 /* CoreText.framework in Frameworks */,
 				4B5C5BB11CA114C700D55A14 /* Security.framework in Frameworks */,
 				18FC4D5F1B4257CD00B76F95 /* libsqlite3.dylib in Frameworks */,
 				185663F01B41569E009EF2AE /* libjscocos2d iOS.a in Frameworks */,
@@ -2709,6 +2721,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				294D7D8A1D0E5093002CE7B7 /* CoreText.framework in Frameworks */,
 				4B5C5BAC1CA114A300D55A14 /* Security.framework in Frameworks */,
 				1A0EE40318CDF775004CD58F /* libcocos2d iOS.a in Frameworks */,
 				1A0EE40618CDF775004CD58F /* CoreMotion.framework in Frameworks */,
@@ -2729,6 +2742,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				294D7D8C1D0E50A0002CE7B7 /* CoreText.framework in Frameworks */,
 				4B5C5BAE1CA114B500D55A14 /* Security.framework in Frameworks */,
 				ED545A761B68A1B600C3958E /* libiconv.dylib in Frameworks */,
 				15EFA68B198B3AD8000C57D3 /* libcocos2d iOS.a in Frameworks */,
@@ -2771,6 +2785,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				294D7D8B1D0E509A002CE7B7 /* CoreText.framework in Frameworks */,
 				4B5C5BAD1CA114AC00D55A14 /* Security.framework in Frameworks */,
 				52B47A351A53A43A004E4C60 /* Security.framework in Frameworks */,
 				15EFA66F198B356E000C57D3 /* libluacocos2d iOS.a in Frameworks */,
@@ -2813,6 +2828,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				294D7D8D1D0E50A6002CE7B7 /* CoreText.framework in Frameworks */,
 				4B5C5BAF1CA114BB00D55A14 /* Security.framework in Frameworks */,
 				3E61773D1960FBD200DE83F5 /* GameController.framework in Frameworks */,
 				3E6177221960FAED00DE83F5 /* libcocos2d iOS.a in Frameworks */,
@@ -2947,6 +2963,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				294D7D901D0E50B8002CE7B7 /* CoreText.framework in Frameworks */,
 				4B5C5BB21CA114CC00D55A14 /* Security.framework in Frameworks */,
 				50FC18C31C33725200DD15A3 /* libsqlite3.dylib in Frameworks */,
 				50FC18C41C33725200DD15A3 /* libjscocos2d iOS.a in Frameworks */,
@@ -2971,6 +2988,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				29DC5A201CFFE6E100CF2930 /* CoreText.framework in Frameworks */,
 				4B5C5BAB1CA1149900D55A14 /* Security.framework in Frameworks */,
 				ED545A731B68A1AC00C3958E /* libiconv.dylib in Frameworks */,
 				52B47A341A534B2B004E4C60 /* Security.framework in Frameworks */,
@@ -2993,6 +3011,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				294D7D911D0E50BF002CE7B7 /* CoreText.framework in Frameworks */,
 				4B5C5BB31CA114D400D55A14 /* Security.framework in Frameworks */,
 				FA94B0A31B8EF69A0074B261 /* libiconv.dylib in Frameworks */,
 				FA94B0A41B8EF69A0074B261 /* Security.framework in Frameworks */,
@@ -4729,6 +4748,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				29DC5A1E1CFFE5E700CF2930 /* CoreText.framework */,
 				4B5C5BB41CA114DB00D55A14 /* Security.framework */,
 				4B5C5BAA1CA1149900D55A14 /* Security.framework */,
 				ED545A721B68A1AC00C3958E /* libiconv.dylib */,

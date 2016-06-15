@@ -746,7 +746,7 @@ public:
     virtual std::string subtitle() const override;
 };
 
-class LabelCharMapFontTest : public LabelSystemFontTest
+class LabelCharMapFontTest : public LabelLayoutBaseTest
 {
 public:
     CREATE_FUNC(LabelCharMapFontTest);

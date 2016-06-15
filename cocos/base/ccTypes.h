@@ -311,9 +311,9 @@ struct CC_DLL V3F_T2F
  */
 struct CC_DLL V2F_C4B_T2F_Triangle
 {
-	V2F_C4B_T2F a;
-	V2F_C4B_T2F b;
-	V2F_C4B_T2F c;
+    V2F_C4B_T2F a;
+    V2F_C4B_T2F b;
+    V2F_C4B_T2F c;
 };
 
 /** @struct V2F_C4B_T2F_Quad
@@ -496,11 +496,11 @@ public:
     /// true if shadow enabled
     bool   _shadowEnabled;
     /// shadow x and y offset
-	Size   _shadowOffset;
+    Size   _shadowOffset;
     /// shadow blurrines
-	float  _shadowBlur;
+    float  _shadowBlur;
     /// shadow opacity
-	float  _shadowOpacity;
+    float  _shadowOpacity;
 };
 
 /** @struct FontStroke
@@ -512,7 +512,7 @@ public:
 
     // stroke is disabled by default
     FontStroke()
-	    : _strokeEnabled(false)
+        : _strokeEnabled(false)
         , _strokeColor(Color3B::BLACK)
         , _strokeAlpha(255)
         , _strokeSize(0)
@@ -521,7 +521,7 @@ public:
     /// true if stroke enabled
     bool      _strokeEnabled;
     /// stroke color
-	Color3B   _strokeColor;
+    Color3B   _strokeColor;
     /// stroke alpha
     GLubyte   _strokeAlpha;
     /// stroke size
@@ -543,9 +543,11 @@ public:
         : _fontSize(0)
         , _alignment(TextHAlignment::CENTER)
         , _vertAlignment(TextVAlignment::TOP)
-    	, _dimensions(Size::ZERO)
+        , _dimensions(Size::ZERO)
         , _fontFillColor(Color3B::WHITE)
         , _fontAlpha(255)
+        , _enableWrap(true)
+        , _overflow(0)
     {}
 
     /// font name
@@ -566,7 +568,13 @@ public:
     FontShadow            _shadow;
     /// font stroke
     FontStroke            _stroke;
-
+    /// enable text wrap
+    bool                  _enableWrap;
+    /** There are 4 overflows: none, clamp, shrink and resize_height.
+     *  The conresponding integer values are 0, 1, 2, 3 respectively
+     * For more information, please refer to Label::Overflow enum class.
+     */
+    int                  _overflow;
 };
 
 /**

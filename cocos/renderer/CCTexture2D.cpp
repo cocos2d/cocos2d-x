@@ -754,7 +754,7 @@ bool Texture2D::initWithImage(Image *image, PixelFormat format)
     Size             imageSize = Size((float)imageWidth, (float)imageHeight);
     PixelFormat      pixelFormat = ((PixelFormat::NONE == format) || (PixelFormat::AUTO == format)) ? image->getRenderFormat() : format;
     PixelFormat      renderFormat = image->getRenderFormat();
-    size_t	         tempDataLen = image->getDataLen();
+    size_t           tempDataLen = image->getDataLen();
 
 
     if (image->getNumberOfMipmaps() > 1)
@@ -1066,7 +1066,7 @@ Texture2D::PixelFormat Texture2D::convertDataToFormat(const unsigned char* data,
 }
 
 // implementation Texture2D (Text)
-bool Texture2D::initWithString(const char *text, const std::string& fontName, float fontSize, const Size& dimensions/* = Size(0, 0)*/, TextHAlignment hAlignment/* =  TextHAlignment::CENTER */, TextVAlignment vAlignment/* =  TextVAlignment::TOP */)
+bool Texture2D::initWithString(const char *text, const std::string& fontName, float fontSize, const Size& dimensions/* = Size(0, 0)*/, TextHAlignment hAlignment/* =  TextHAlignment::CENTER */, TextVAlignment vAlignment/* =  TextVAlignment::TOP */, bool enableWrap /* = false */, int overflow /* = 0 */)
 {
     FontDefinition tempDef;
     
@@ -1080,6 +1080,8 @@ bool Texture2D::initWithString(const char *text, const std::string& fontName, fl
     tempDef._alignment     = hAlignment;
     tempDef._vertAlignment = vAlignment;
     tempDef._fontFillColor = Color3B::WHITE;
+    tempDef._enableWrap    = enableWrap;
+    tempDef._overflow      = overflow;
 
     return initWithString(text, tempDef);
 }
@@ -1326,37 +1328,37 @@ void Texture2D::setAntiAliasTexParameters()
 
 const char* Texture2D::getStringForFormat() const
 {
-	switch (_pixelFormat) 
-	{
-		case Texture2D::PixelFormat::RGBA8888:
-			return  "RGBA8888";
+    switch (_pixelFormat) 
+    {
+        case Texture2D::PixelFormat::RGBA8888:
+            return  "RGBA8888";
 
-		case Texture2D::PixelFormat::RGB888:
-			return  "RGB888";
+        case Texture2D::PixelFormat::RGB888:
+            return  "RGB888";
 
-		case Texture2D::PixelFormat::RGB565:
-			return  "RGB565";
+        case Texture2D::PixelFormat::RGB565:
+            return  "RGB565";
 
-		case Texture2D::PixelFormat::RGBA4444:
-			return  "RGBA4444";
+        case Texture2D::PixelFormat::RGBA4444:
+            return  "RGBA4444";
 
-		case Texture2D::PixelFormat::RGB5A1:
-			return  "RGB5A1";
+        case Texture2D::PixelFormat::RGB5A1:
+            return  "RGB5A1";
 
-		case Texture2D::PixelFormat::AI88:
-			return  "AI88";
+        case Texture2D::PixelFormat::AI88:
+            return  "AI88";
 
-		case Texture2D::PixelFormat::A8:
-			return  "A8";
+        case Texture2D::PixelFormat::A8:
+            return  "A8";
 
-		case Texture2D::PixelFormat::I8:
-			return  "I8";
+        case Texture2D::PixelFormat::I8:
+            return  "I8";
 
-		case Texture2D::PixelFormat::PVRTC4:
-			return  "PVRTC4";
+        case Texture2D::PixelFormat::PVRTC4:
+            return  "PVRTC4";
 
-		case Texture2D::PixelFormat::PVRTC2:
-			return  "PVRTC2";
+        case Texture2D::PixelFormat::PVRTC2:
+            return  "PVRTC2";
 
         case Texture2D::PixelFormat::PVRTC2A:
             return "PVRTC2A";
@@ -1385,13 +1387,13 @@ const char* Texture2D::getStringForFormat() const
         case Texture2D::PixelFormat::ATC_INTERPOLATED_ALPHA:
             return "ATC_INTERPOLATED_ALPHA";
             
-		default:
-			CCASSERT(false , "unrecognized pixel format");
-			CCLOG("stringForFormat: %ld, cannot give useful result", (long)_pixelFormat);
-			break;
-	}
+        default:
+            CCASSERT(false , "unrecognized pixel format");
+            CCLOG("stringForFormat: %ld, cannot give useful result", (long)_pixelFormat);
+            break;
+    }
 
-	return  nullptr;
+    return  nullptr;
 }
 
 //
@@ -1416,12 +1418,12 @@ unsigned int Texture2D::getBitsPerPixelForFormat(Texture2D::PixelFormat format) 
         return 0;
     }
     
-	return _pixelFormatInfoTables.at(format).bpp;
+    return _pixelFormatInfoTables.at(format).bpp;
 }
 
 unsigned int Texture2D::getBitsPerPixelForFormat() const
 {
-	return this->getBitsPerPixelForFormat(_pixelFormat);
+    return this->getBitsPerPixelForFormat(_pixelFormat);
 }
 
 const Texture2D::PixelFormatInfoMap& Texture2D::getPixelFormatInfoMap()
