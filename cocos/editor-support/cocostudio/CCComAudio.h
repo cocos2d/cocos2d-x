@@ -75,6 +75,9 @@ public:
 
     virtual bool serialize(void* r) override;
 public:
+    /**
+    * @lua endToLua
+    */
     void end();
     void preloadBackgroundMusic(const char* pszFilePath);
     void playBackgroundMusic(const char* pszFilePath, bool bLoop);
