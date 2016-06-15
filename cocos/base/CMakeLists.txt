@@ -7,7 +7,6 @@ if(MACOSX OR APPLE)
 elseif(ANDROID)
   set(COCOS_BASE_SPECIFIC_SRC
     base/CCUserDefault-android.cpp
-    base/CCController-android.cpp
   )
 endif()
 

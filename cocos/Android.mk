@@ -112,7 +112,6 @@ base/CCAsyncTaskPool.cpp \
 base/CCAutoreleasePool.cpp \
 base/CCConfiguration.cpp \
 base/CCConsole.cpp \
-base/CCController-android.cpp \
 base/CCController.cpp \
 base/CCData.cpp \
 base/CCDataVisitor.cpp \

@@ -9,6 +9,7 @@ LOCAL_MODULE_FILENAME := libcocos2dandroid
 LOCAL_SRC_FILES := \
 CCApplication-android.cpp \
 CCCommon-android.cpp \
+CCController-android.cpp \
 CCDevice-android.cpp \
 CCGLViewImpl-android.cpp \
 CCFileUtils-android.cpp \

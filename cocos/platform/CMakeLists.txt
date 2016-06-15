@@ -75,6 +75,7 @@ set(COCOS_PLATFORM_SPECIFIC_SRC
 )
 
 set(COCOS2DX_ANDROID_STATIC
+  platform/android/CCController-android.cpp
   platform/android/CCDevice-android.cpp
   platform/android/javaactivity-android.cpp
   platform/android/jni/TouchesJni.cpp
