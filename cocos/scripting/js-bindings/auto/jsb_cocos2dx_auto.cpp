@@ -47374,22 +47374,6 @@ bool js_cocos2dx_RenderTexture_setClearColor(JSContext *cx, uint32_t argc, jsval
     JS_ReportError(cx, "js_cocos2dx_RenderTexture_setClearColor : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_cocos2dx_RenderTexture_endToLua(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::RenderTexture* cobj = (cocos2d::RenderTexture *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_RenderTexture_endToLua : Invalid Native Object");
-    if (argc == 0) {
-        cobj->endToLua();
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_RenderTexture_endToLua : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
 bool js_cocos2dx_RenderTexture_beginWithClear(JSContext *cx, uint32_t argc, jsval *vp)
 {
     bool ok = true;
@@ -47807,7 +47791,6 @@ void js_register_cocos2dx_RenderTexture(JSContext *cx, JS::HandleObject global) 
         JS_FN("begin", js_cocos2dx_RenderTexture_begin, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setAutoDraw", js_cocos2dx_RenderTexture_setAutoDraw, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setClearColor", js_cocos2dx_RenderTexture_setClearColor, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("endToLua", js_cocos2dx_RenderTexture_endToLua, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("beginWithClear", js_cocos2dx_RenderTexture_beginWithClear, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("clearDepth", js_cocos2dx_RenderTexture_clearDepth, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getClearColor", js_cocos2dx_RenderTexture_getClearColor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
