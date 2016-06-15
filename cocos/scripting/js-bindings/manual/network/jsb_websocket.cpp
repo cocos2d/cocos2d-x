@@ -23,7 +23,7 @@
 
 #include "scripting/js-bindings/manual/network/jsb_websocket.h"
 
-#include "deprecated/CCString.h"
+#include "base/ccUTF8.h"
 #include "network/WebSocket.h"
 #include "platform/CCPlatformMacros.h"
 #include "scripting/js-bindings/manual/ScriptingCore.h"

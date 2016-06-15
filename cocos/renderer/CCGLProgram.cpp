@@ -33,11 +33,10 @@ THE SOFTWARE.
 #endif
 
 #include "base/CCDirector.h"
+#include "base/ccUTF8.h"
 #include "base/uthash.h"
 #include "renderer/ccGLStateCache.h"
 #include "platform/CCFileUtils.h"
-
-#include "deprecated/CCString.h"
 
 // helper functions
 

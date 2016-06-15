@@ -23,7 +23,7 @@
  ****************************************************************************/
 #include "AssetsManagerEx.h"
 #include "CCEventListenerAssetsManagerEx.h"
-#include "deprecated/CCString.h"
+#include "base/ccUTF8.h"
 #include "base/CCDirector.h"
 
 #include <stdio.h>
