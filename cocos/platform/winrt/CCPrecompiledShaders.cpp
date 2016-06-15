@@ -83,16 +83,16 @@ static std::string computeHash(const GLchar* vShaderByteArray, const GLchar* fSh
 
     if(!err)
     {
-        err = SHA1Input(&sha,(const unsigned char *) vShaderByteArray,strlen(vShaderByteArray));
+        err = SHA1Input(&sha,(const unsigned char *) vShaderByteArray,static_cast<unsigned int>(strlen(vShaderByteArray)));
     }
     if(!err)
     {
-        err = SHA1Input(&sha,(const unsigned char *) fShaderByteArray,strlen(fShaderByteArray));
+        err = SHA1Input(&sha,(const unsigned char *) fShaderByteArray, static_cast<unsigned int>(strlen(fShaderByteArray)));
     }
     if(!err)
     {
         char* shader_version = (char*) glGetString(GL_SHADING_LANGUAGE_VERSION);
-        err = SHA1Input(&sha,(const unsigned char *) shader_version,strlen(shader_version));
+        err = SHA1Input(&sha,(const unsigned char *) shader_version, static_cast<unsigned int>(strlen(shader_version)));
     }
     if(!err)
     {
