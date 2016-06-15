@@ -150,6 +150,8 @@ getName : function (
 * @param {size_object} size
 * @param {cc.TextHAlignment} texthalignment
 * @param {cc.TextVAlignment} textvalignment
+* @param {bool} bool
+* @param {int} int
 * @return {bool|bool}
 */
 initWithString : function(
@@ -158,7 +160,9 @@ str,
 float,
 size,
 texthalignment,
-textvalignment 
+textvalignment,
+bool,
+int 
 )
 {
     return false;
