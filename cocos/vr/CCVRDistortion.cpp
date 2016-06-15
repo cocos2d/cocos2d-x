@@ -23,7 +23,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCVRDistortion.h"
+#include "vr/CCVRDistortion.h"
 #include <math.h>
 
 NS_CC_BEGIN
