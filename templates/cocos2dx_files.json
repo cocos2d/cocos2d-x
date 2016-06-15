@@ -1002,6 +1002,8 @@
         "cocos/platform/android/libcocos2dx/AndroidManifest.xml", 
         "cocos/platform/android/libcocos2dx/build.gradle", 
         "cocos/platform/android/libcocos2dx/proguard-rules.pro", 
+        "cocos/platform/apple/CCDevice-apple.h", 
+        "cocos/platform/apple/CCDevice-apple.mm", 
         "cocos/platform/apple/CCFileUtils-apple.h", 
         "cocos/platform/apple/CCFileUtils-apple.mm", 
         "cocos/platform/apple/CCLock-apple.cpp", 
