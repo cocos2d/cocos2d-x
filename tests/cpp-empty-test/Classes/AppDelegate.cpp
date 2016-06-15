@@ -92,7 +92,9 @@ bool AppDelegate::applicationDidFinishLaunching()
     cocostudio::LocalizationHelper::setCurrentManager(lm, true);
     */
 
-    glview->setVREnabled(true);
+    // to enable VR, uncomment the following lines
+//    auto vrImpl = new VRGenericRenderer;
+//    glview->setVR(vrImpl);
 
     // turn on display FPS
     director->setDisplayStats(true);
