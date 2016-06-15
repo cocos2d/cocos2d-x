@@ -33,6 +33,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "js-tests", "..\tests\js-tes
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "performance-tests", "..\tests\performance-tests\proj.win32\performance-tests.vcxproj", "{2778C02D-DDD0-4A92-A6AA-C3E2B7EDE3FF}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "liboculus", "..\external\oculus\proj.win32\liboculus.vcxproj", "{A380A595-CFBA-4BEA-8FC3-A31BFD55BA41}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM = Debug|ARM
@@ -119,6 +121,12 @@ Global
 		{2778C02D-DDD0-4A92-A6AA-C3E2B7EDE3FF}.Release|ARM.ActiveCfg = Release|Win32
 		{2778C02D-DDD0-4A92-A6AA-C3E2B7EDE3FF}.Release|Win32.ActiveCfg = Release|Win32
 		{2778C02D-DDD0-4A92-A6AA-C3E2B7EDE3FF}.Release|Win32.Build.0 = Release|Win32
+		{A380A595-CFBA-4BEA-8FC3-A31BFD55BA41}.Debug|ARM.ActiveCfg = Debug|Win32
+		{A380A595-CFBA-4BEA-8FC3-A31BFD55BA41}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A380A595-CFBA-4BEA-8FC3-A31BFD55BA41}.Debug|Win32.Build.0 = Debug|Win32
+		{A380A595-CFBA-4BEA-8FC3-A31BFD55BA41}.Release|ARM.ActiveCfg = Release|Win32
+		{A380A595-CFBA-4BEA-8FC3-A31BFD55BA41}.Release|Win32.ActiveCfg = Release|Win32
+		{A380A595-CFBA-4BEA-8FC3-A31BFD55BA41}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -128,6 +136,7 @@ Global
 		{929480E7-23C0-4DF6-8456-096D71547116} = {92D54E36-7916-48EF-A951-224DD3B25442}
 		{012DFF48-A13F-4F52-B07B-F8B9D21CE95B} = {92D54E36-7916-48EF-A951-224DD3B25442}
 		{41E34993-647E-4282-8384-4AB1AE31A452} = {92D54E36-7916-48EF-A951-224DD3B25442}
+		{A380A595-CFBA-4BEA-8FC3-A31BFD55BA41} = {92D54E36-7916-48EF-A951-224DD3B25442}
 	EndGlobalSection
 	GlobalSection(DPCodeReviewSolutionGUID) = preSolution
 		DPCodeReviewSolutionGUID = {00000000-0000-0000-0000-000000000000}

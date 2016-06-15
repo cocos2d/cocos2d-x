@@ -45,6 +45,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
+import android.hardware.SensorManager;
 
 import com.android.vending.expansion.zipfile.APKExpansionSupport;
 import com.android.vending.expansion.zipfile.ZipResourceFile;
@@ -60,6 +61,7 @@ import java.util.LinkedHashSet;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+
 
 public class Cocos2dxHelper {
     // ===========================================================
@@ -78,6 +80,7 @@ public class Cocos2dxHelper {
     private static AssetManager sAssetManager;
     private static Cocos2dxAccelerometer sCocos2dxAccelerometer;
     private static boolean sAccelerometerEnabled;
+    private static boolean sCompassEnabled;
     private static boolean sActivityVisible;
     private static String sPackageName;
     private static String sFileDirectory;
@@ -243,9 +246,13 @@ public class Cocos2dxHelper {
 
     public static void enableAccelerometer() {
         Cocos2dxHelper.sAccelerometerEnabled = true;
-        Cocos2dxHelper.sCocos2dxAccelerometer.enable();
+        Cocos2dxHelper.sCocos2dxAccelerometer.enableAccel();
     }
 
+    public static void enableCompass() {
+        Cocos2dxHelper.sCompassEnabled = true;
+        Cocos2dxHelper.sCocos2dxAccelerometer.enableCompass();
+    }
 
     public static void setAccelerometerInterval(float interval) {
         Cocos2dxHelper.sCocos2dxAccelerometer.setInterval(interval);
@@ -396,7 +403,10 @@ public class Cocos2dxHelper {
     public static void onResume() {
         sActivityVisible = true;
         if (Cocos2dxHelper.sAccelerometerEnabled) {
-            Cocos2dxHelper.sCocos2dxAccelerometer.enable();
+            Cocos2dxHelper.sCocos2dxAccelerometer.enableAccel();
+        }
+        if (Cocos2dxHelper.sCompassEnabled) {
+            Cocos2dxHelper.sCocos2dxAccelerometer.enableCompass();
         }
     }
 
@@ -691,5 +701,13 @@ public class Cocos2dxHelper {
             return -1;
         }
     }
+
     //Enhance API modification end     
+    public static float[] getAccelValue() {
+        return Cocos2dxHelper.sCocos2dxAccelerometer.accelerometerValues;
+    }
+
+    public static float[] getCompassValue() {
+        return Cocos2dxHelper.sCocos2dxAccelerometer.compassFieldValues;
+    }
 }

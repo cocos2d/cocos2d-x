@@ -573,6 +573,10 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UITextField.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UIVBox.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UIWidget.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\vr\CCVRDistortion.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\vr\CCVRDistortionMesh.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\vr\CCVRGenericHeadTracker.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\vr\CCVRGenericRenderer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\CCAction.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\CCActionCamera.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\CCActionCatmullRom.h" />
@@ -1176,6 +1180,10 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UITextField.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UIVBox.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UIWidget.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\vr\CCVRDistortion.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\vr\CCVRDistortionMesh.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\vr\CCVRGenericHeadTracker.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\vr\CCVRGenericRenderer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\CCAction.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\CCActionCamera.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\CCActionCatmullRom.cpp" />

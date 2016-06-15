@@ -184,7 +184,7 @@ const std::vector<Camera*>& Scene::getCameras()
     return _cameras;
 }
 
-void Scene::render(Renderer* renderer)
+void Scene::render(Renderer* renderer, const Mat4& eyeTransform, const Mat4* eyeProjection)
 {
     auto director = Director::getInstance();
     Camera* defaultCamera = nullptr;
@@ -194,13 +194,25 @@ void Scene::render(Renderer* renderer)
     {
         if (!camera->isVisible())
             continue;
-        
+
         Camera::_visitingCamera = camera;
         if (Camera::_visitingCamera->getCameraFlag() == CameraFlag::DEFAULT)
         {
             defaultCamera = Camera::_visitingCamera;
         }
-        
+
+        // There are two ways to modify the "default camera" with the eye Transform:
+        // a) modify the "nodeToParentTransform" matrix
+        // b) modify the "additional transform" matrix
+        // both alternatives are correct, if the user manually modifies the camera with a camera->setPosition()
+        // then the "nodeToParent transform" will be lost.
+        // And it is important that the change is "permament", because the matrix might be used for calculate
+        // culling and other stuff.
+        if (eyeProjection)
+            camera->setAdditionalProjection(*eyeProjection * camera->getProjectionMatrix().getInversed());
+        else
+            camera->setAdditionalTransform(eyeTransform.getInversed());
+
         director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
         director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, Camera::_visitingCamera->getViewProjectionMatrix());
         camera->apply();
@@ -214,12 +226,17 @@ void Scene::render(Renderer* renderer)
             _navMesh->debugDraw(renderer);
         }
 #endif
-        
+
         renderer->render();
-        
+        camera->restore();
+
         director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+
+        // we shouldn't restore the transform matrix since it could be used
+        // from "update" or other parts of the game to calculate culling or something else.
+//        camera->setNodeToParentTransform(eyeCopy);
     }
-    
+
 #if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
     if (_physics3DWorld && _physics3DWorld->isDebugDrawEnabled())
     {
@@ -232,16 +249,16 @@ void Scene::render(Renderer* renderer)
 #endif
 
     Camera::_visitingCamera = nullptr;
-    experimental::FrameBuffer::applyDefaultFBO();
+//    experimental::FrameBuffer::applyDefaultFBO();
 }
 
 void Scene::removeAllChildren()
 {
     if (_defaultCamera)
         _defaultCamera->retain();
-    
+
     Node::removeAllChildren();
-    
+
     if (_defaultCamera)
     {
         addChild(_defaultCamera);
@@ -290,21 +307,21 @@ bool Scene::initWithPhysics()
 #if CC_USE_PHYSICS
     _physicsWorld = PhysicsWorld::construct(this);
 #endif
-    
+
     bool ret = false;
     do
     {
         Director * director;
         CC_BREAK_IF( ! (director = Director::getInstance()) );
-        
+
         this->setContentSize(director->getWinSize());
-        
+
 #if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
         Physics3DWorldDes info;
         CC_BREAK_IF(! (_physics3DWorld = Physics3DWorld::create(&info)));
         _physics3DWorld->retain();
 #endif
-        
+
         // success
         ret = true;
     } while (0);
@@ -320,7 +337,7 @@ void Scene::stepPhysicsAndNavigation(float deltaTime)
     if (_physicsWorld && _physicsWorld->isAutoStep())
         _physicsWorld->update(deltaTime);
 #endif
-    
+
 #if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
     if (_physics3DWorld)
     {

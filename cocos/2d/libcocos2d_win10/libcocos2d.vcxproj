@@ -671,6 +671,10 @@
     <ClCompile Include="..\..\ui\UITextField.cpp" />
     <ClCompile Include="..\..\ui\UIVBox.cpp" />
     <ClCompile Include="..\..\ui\UIWidget.cpp" />
+    <ClCompile Include="..\..\vr\CCVRDistortion.cpp" />
+    <ClCompile Include="..\..\vr\CCVRDistortionMesh.cpp" />
+    <ClCompile Include="..\..\vr\CCVRGenericHeadTracker.cpp" />
+    <ClCompile Include="..\..\vr\CCVRGenericRenderer.cpp" />
     <ClCompile Include="..\CCAction.cpp" />
     <ClCompile Include="..\CCActionCamera.cpp" />
     <ClCompile Include="..\CCActionCatmullRom.cpp" />
@@ -1251,6 +1255,10 @@
     <ClInclude Include="..\..\renderer\CCTextureCube.h" />
     <ClInclude Include="..\..\ui\UIEditBox\UIEditBoxImpl-common.h" />
     <ClInclude Include="..\..\ui\UITabControl.h" />
+    <ClInclude Include="..\..\vr\CCVRDistortion.h" />
+    <ClInclude Include="..\..\vr\CCVRDistortionMesh.h" />
+    <ClInclude Include="..\..\vr\CCVRGenericHeadTracker.h" />
+    <ClInclude Include="..\..\vr\CCVRGenericRenderer.h" />
     <ClInclude Include="..\CCAutoPolygon.h" />
     <ClInclude Include="..\CCCameraBackgroundBrush.h" />
     <ClInclude Include="..\renderer\CCFrameBuffer.h" />

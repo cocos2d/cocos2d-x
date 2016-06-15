@@ -190,6 +190,10 @@ renderer/CCVertexIndexData.cpp \
 renderer/ccGLStateCache.cpp \
 renderer/CCFrameBuffer.cpp \
 renderer/ccShaders.cpp \
+vr/CCVRDistortion.cpp \
+vr/CCVRDistortionMesh.cpp \
+vr/CCVRGenericRenderer.cpp \
+vr/CCVRGenericHeadTracker.cpp \
 deprecated/CCArray.cpp \
 deprecated/CCDeprecated.cpp \
 deprecated/CCDictionary.cpp \

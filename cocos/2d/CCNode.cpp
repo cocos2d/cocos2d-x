@@ -1788,6 +1788,7 @@ void Node::setAdditionalTransform(Mat4* additionalTransform)
     if (additionalTransform == nullptr)
     {
         _useAdditionalTransform = false;
+        _additionalTransform = Mat4::IDENTITY;
     }
     else
     {
@@ -1797,6 +1798,12 @@ void Node::setAdditionalTransform(Mat4* additionalTransform)
     _transformUpdated = _transformDirty = _inverseDirty = true;
 }
 
+void Node::setAdditionalTransform(const Mat4& additionalTransform)
+{
+    _useAdditionalTransform = true;
+    _additionalTransform = additionalTransform;
+    _transformUpdated = _transformDirty = _inverseDirty = true;
+}
 
 AffineTransform Node::getParentToNodeAffineTransform() const
 {
