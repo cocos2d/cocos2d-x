@@ -805,13 +805,13 @@ CC_CONSTRUCTOR_ACCESS:
     /** Are the emissions paused
      @return True if the emissions are paused, else false
      */
-    virtual bool isPaused();
+    virtual bool isPaused() const;
     
     /* Pause the emissions*/
     virtual void pauseEmissions();
     
     /* UnPause the emissions*/
-    virtual void unPauseEmissions();
+    virtual void resumeEmissions();
 
 protected:
     virtual void updateBlendFunc();
@@ -969,7 +969,7 @@ protected:
     PositionType _positionType;
     
     /** is the emitter paused */
-    bool paused;
+    bool _paused;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(ParticleSystem);

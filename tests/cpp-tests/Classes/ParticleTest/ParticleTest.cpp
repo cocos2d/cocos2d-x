@@ -104,7 +104,7 @@ void DemoPause::pauseEmitter(float time)
 {
     if (_emitter->isPaused())
     {
-        _emitter->unPauseEmissions();
+        _emitter->resumeEmissions();
     }
     else
     {

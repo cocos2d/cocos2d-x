@@ -588,7 +588,7 @@ ParticleSystem::~ParticleSystem()
 
 void ParticleSystem::addParticles(int count)
 {
-    if (paused)
+    if (_paused)
         return;
     uint32_t RANDSEED = rand();
 
@@ -1351,19 +1351,19 @@ void ParticleSystem::stop()
     stopSystem();
 }
 
-bool ParticleSystem::isPaused()
+bool ParticleSystem::isPaused() const
 {
-    return paused;
+    return _paused;
 }
 
 void ParticleSystem::pauseEmissions()
 {
-    paused = true;
+    _paused = true;
 }
 
-void ParticleSystem::unPauseEmissions()
+void ParticleSystem::resumeEmissions()
 {
-    paused = false;
+    _paused = false;
 }
 
 
