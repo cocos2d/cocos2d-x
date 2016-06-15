@@ -434,17 +434,6 @@ JS_SetDebugErrorHook(JSRuntime *rt, JSDebugErrorHook hook, void *closure);
 
 /************************************************************************/
 
-extern JS_PUBLIC_API(size_t)
-JS_GetObjectTotalSize(JSContext *cx, JSObject *obj);
-
-extern JS_PUBLIC_API(size_t)
-JS_GetFunctionTotalSize(JSContext *cx, JSFunction *fun);
-
-extern JS_PUBLIC_API(size_t)
-JS_GetScriptTotalSize(JSContext *cx, JSScript *script);
-
-/************************************************************************/
-
 extern JS_FRIEND_API(void)
 js_RevertVersion(JSContext *cx);
 

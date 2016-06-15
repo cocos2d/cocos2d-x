@@ -8,6 +8,7 @@
 #ifndef js_HashTable_h__
 #define js_HashTable_h__
 
+#include "mozilla/Assertions.h"
 #include "mozilla/Attributes.h"
 #include "mozilla/DebugOnly.h"
 #include "mozilla/TypeTraits.h"
@@ -67,7 +68,15 @@ class HashMap
 
     // HashMap construction is fallible (due to OOM); thus the user must call
     // init after constructing a HashMap and check the return value.
-    HashMap(AllocPolicy a = AllocPolicy()) : impl(a)  {}
+    HashMap(AllocPolicy a = AllocPolicy())
+      : impl(a)
+    {
+        MOZ_STATIC_ASSERT(tl::IsRelocatableHeapType<Key>::result,
+                          "Key type must be relocatable");
+        MOZ_STATIC_ASSERT(tl::IsRelocatableHeapType<Value>::result,
+                          "Value type must be relocatable");
+    }
+
     bool init(uint32_t len = 16)                      { return impl.init(len); }
     bool initialized() const                          { return impl.initialized(); }
 
@@ -84,6 +93,10 @@ class HashMap
     // Also see the definition of Ptr in HashTable above (with T = Entry).
     typedef typename Impl::Ptr Ptr;
     Ptr lookup(const Lookup &l) const                 { return impl.lookup(l); }
+
+    // Like lookup, but does not assert if two threads call lookup at the same
+    // time. Only use this method when none of the threads will modify the map.
+    Ptr readonlyThreadsafeLookup(const Lookup &l) const { return impl.readonlyThreadsafeLookup(l); }
 
     // Assuming |p.found()|, remove |*p|.
     void remove(Ptr p)                                { impl.remove(p); }
@@ -250,9 +263,6 @@ class HashMap
     HashMap &operator=(const HashMap &hm) MOZ_DELETE;
 
     friend class Impl::Enum;
-
-    typedef typename tl::StaticAssert<tl::IsRelocatableHeapType<Key>::result>::result keyAssert;
-    typedef typename tl::StaticAssert<tl::IsRelocatableHeapType<Value>::result>::result valAssert;
 };
 
 /*****************************************************************************/
@@ -293,7 +303,11 @@ class HashSet
 
     // HashSet construction is fallible (due to OOM); thus the user must call
     // init after constructing a HashSet and check the return value.
-    HashSet(AllocPolicy a = AllocPolicy()) : impl(a)  {}
+    HashSet(AllocPolicy a = AllocPolicy()) : impl(a)
+    {
+        MOZ_STATIC_ASSERT(tl::IsRelocatableHeapType<T>::result,
+                          "Set element type must be relocatable");
+    }
     bool init(uint32_t len = 16)                      { return impl.init(len); }
     bool initialized() const                          { return impl.initialized(); }
 
@@ -444,8 +458,6 @@ class HashSet
     HashSet &operator=(const HashSet &hs) MOZ_DELETE;
 
     friend class Impl::Enum;
-
-    typedef typename tl::StaticAssert<tl::IsRelocatableHeapType<T>::result>::result _;
 };
 
 /*****************************************************************************/
@@ -482,7 +494,7 @@ struct PointerHasher
 {
     typedef Key Lookup;
     static HashNumber hash(const Lookup &l) {
-        JS_ASSERT(!js::IsPoisonedPtr(l));
+        JS_ASSERT(!JS::IsPoisonedPtr(l));
         size_t word = reinterpret_cast<size_t>(l) >> zeroBits;
         JS_STATIC_ASSERT(sizeof(HashNumber) == 4);
 #if JS_BYTES_PER_WORD == 4
@@ -493,8 +505,8 @@ struct PointerHasher
 #endif
     }
     static bool match(const Key &k, const Lookup &l) {
-        JS_ASSERT(!js::IsPoisonedPtr(k));
-        JS_ASSERT(!js::IsPoisonedPtr(l));
+        JS_ASSERT(!JS::IsPoisonedPtr(k));
+        JS_ASSERT(!JS::IsPoisonedPtr(l));
         return k == l;
     }
 };
@@ -522,6 +534,28 @@ struct DefaultHasher
 template <class T>
 struct DefaultHasher<T *> : PointerHasher<T *, tl::FloorLog2<sizeof(void *)>::result>
 {};
+
+// For doubles, we can xor the two uint32s.
+template <>
+struct DefaultHasher<double>
+{
+    typedef double Lookup;
+    static HashNumber hash(double d) {
+        JS_STATIC_ASSERT(sizeof(HashNumber) == 4);
+        union {
+            struct {
+                uint32_t lo;
+                uint32_t hi;
+            } s;
+            double d;
+        } u;
+        u.d = d;
+        return u.s.lo ^ u.s.hi;
+    }
+    static bool match(double lhs, double rhs) {
+        return lhs == rhs;
+    }
+};
 
 /*****************************************************************************/
 
@@ -554,17 +588,13 @@ class HashMapEntry
 
 namespace mozilla {
 
-template <class T>
-struct IsPod<js::detail::HashTableEntry<T> >
-{
-    static const bool value = IsPod<T>::value;
-};
+template <typename T>
+struct IsPod<js::detail::HashTableEntry<T> > : IsPod<T> {};
 
-template <class K, class V>
+template <typename K, typename V>
 struct IsPod<js::HashMapEntry<K, V> >
-{
-    static const bool value = IsPod<K>::value && IsPod<V>::value;
-};
+  : IntegralConstant<bool, IsPod<K>::value && IsPod<V>::value>
+{};
 
 } // namespace mozilla
 
@@ -789,8 +819,10 @@ class HashTable : private AllocPolicy
 
         // Potentially rehashes the table.
         ~Enum() {
-            if (rekeyed)
+            if (rekeyed) {
+                table.gen++;
                 table.checkOverRemoved();
+            }
 
             if (removed)
                 table.compactIfUnderloaded();
@@ -1163,9 +1195,8 @@ class HashTable : private AllocPolicy
     void checkOverRemoved()
     {
         if (overloaded()) {
-            METER(stats.rehashes++);
-            rehashTable();
-            JS_ASSERT(!overloaded());
+            if (checkOverloaded() == RehashFailed)
+                rehashTableInPlace();
         }
     }
 
@@ -1215,8 +1246,9 @@ class HashTable : private AllocPolicy
     // the element is already inserted or still waiting to be inserted.  Since
     // already-inserted elements win any conflicts, we get the same table as we
     // would have gotten through random insertion order.
-    void rehashTable()
+    void rehashTableInPlace()
     {
+        METER(stats.rehashes++);
         removedCount = 0;
         for (size_t i = 0; i < capacity(); ++i)
             table[i].unsetCollision();
@@ -1339,6 +1371,12 @@ class HashTable : private AllocPolicy
     Ptr lookup(const Lookup &l) const
     {
         ReentrancyGuard g(*this);
+        HashNumber keyHash = prepareHash(l);
+        return Ptr(lookup(l, keyHash, 0));
+    }
+
+    Ptr readonlyThreadsafeLookup(const Lookup &l) const
+    {
         HashNumber keyHash = prepareHash(l);
         return Ptr(lookup(l, keyHash, 0));
     }

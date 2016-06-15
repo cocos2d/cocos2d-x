@@ -11,24 +11,8 @@
 namespace js {
 namespace gc {
 
-/*
- * Page size must be static to support our arena pointer optimizations, so we
- * are forced to support each platform with non-4096 pages as a special case.
- * Note: The freelist supports a maximum arena shift of 15.
- * Note: Do not use JS_CPU_SPARC here, this header is used outside JS.
- */
-#if (defined(SOLARIS) || defined(__FreeBSD__)) && \
-    (defined(__sparc) || defined(__sparcv9) || defined(__ia64))
-const size_t PageShift = 13;
-const size_t ArenaShift = PageShift;
-#elif defined(__powerpc64__)
-const size_t PageShift = 16;
 const size_t ArenaShift = 12;
-#else
-const size_t PageShift = 12;
-const size_t ArenaShift = PageShift;
-#endif
-const size_t PageSize = size_t(1) << PageShift;
+
 const size_t ArenaSize = size_t(1) << ArenaShift;
 const size_t ArenaMask = ArenaSize - 1;
 
@@ -56,7 +40,7 @@ static const uint32_t GRAY = 1;
 } /* namespace js */
 
 namespace JS {
-typedef JSCompartment Zone;
+struct Zone;
 } /* namespace JS */
 
 namespace JS {
@@ -110,28 +94,16 @@ GetGCThingArena(void *thing)
 }
 
 } /* namespace gc */
+
 } /* namespace js */
 
 namespace JS {
-
-static JS_ALWAYS_INLINE JSCompartment *
-GetGCThingCompartment(void *thing)
-{
-    JS_ASSERT(thing);
-    return js::gc::GetGCThingArena(thing)->zone;
-}
 
 static JS_ALWAYS_INLINE Zone *
 GetGCThingZone(void *thing)
 {
     JS_ASSERT(thing);
     return js::gc::GetGCThingArena(thing)->zone;
-}
-
-static JS_ALWAYS_INLINE JSCompartment *
-GetObjectCompartment(JSObject *obj)
-{
-    return GetGCThingCompartment(obj);
 }
 
 static JS_ALWAYS_INLINE Zone *

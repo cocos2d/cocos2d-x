@@ -7,11 +7,11 @@
  *                            | (__| |_| |  _ <| |___
  *                             \___|\___/|_| \_\_____|
  *
- * Copyright (C) 1998 - 2006, Daniel Stenberg, <daniel@haxx.se>, et al.
+ * Copyright (C) 1998 - 2015, Daniel Stenberg, <daniel@haxx.se>, et al.
  *
  * This software is licensed as described in the file COPYING, which
  * you should have received as part of this distribution. The terms
- * are also available at http://curl.haxx.se/docs/copyright.html.
+ * are also available at https://curl.haxx.se/docs/copyright.html.
  *
  * You may opt to use, copy, modify, merge, publish, distribute and/or sell
  * copies of the Software, and permit persons to whom the Software is
@@ -57,15 +57,8 @@ CURL_EXTERN char *curl_mvaprintf(const char *format, va_list args);
 # undef vaprintf
 # define printf curl_mprintf
 # define fprintf curl_mfprintf
-#ifdef CURLDEBUG
-/* When built with CURLDEBUG we define away the sprintf() functions since we
-   don't want internal code to be using them */
-# define sprintf sprintf_was_used
-# define vsprintf vsprintf_was_used
-#else
 # define sprintf curl_msprintf
 # define vsprintf curl_mvsprintf
-#endif
 # define snprintf curl_msnprintf
 # define vprintf curl_mvprintf
 # define vfprintf curl_mvfprintf
