@@ -17491,14 +17491,6 @@ color4f
 },
 
 /**
- * @method endToLua
- */
-endToLua : function (
-)
-{
-},
-
-/**
  * @method beginWithClear
 * @param {float|float|float} float
 * @param {float|float|float} float

@@ -78,10 +78,12 @@
 -- @return GLView#GLView self (return value: cc.GLView)
         
 --------------------------------
---  Force destroying EGL view, subclass must implement this method. 
--- @function [parent=#GLView] end 
+-- Get the frame size of EGL view.<br>
+-- In general, it returns the screen size since the EGL view is a fullscreen view.<br>
+-- return The frame size of EGL view.
+-- @function [parent=#GLView] getFrameSize 
 -- @param self
--- @return GLView#GLView self (return value: cc.GLView)
+-- @return size_table#size_table ret (return value: size_table)
         
 --------------------------------
 -- Get scale factor of the vertical direction.<br>
@@ -103,14 +105,6 @@
 -- @function [parent=#GLView] getVisibleOrigin 
 -- @param self
 -- @return vec2_table#vec2_table ret (return value: vec2_table)
-        
---------------------------------
--- Get the frame size of EGL view.<br>
--- In general, it returns the screen size since the EGL view is a fullscreen view.<br>
--- return The frame size of EGL view.
--- @function [parent=#GLView] getFrameSize 
--- @param self
--- @return size_table#size_table ret (return value: size_table)
         
 --------------------------------
 --  Set zoom factor for frame. This methods are for<br>
@@ -172,6 +166,13 @@
 -- @function [parent=#GLView] getResolutionPolicy 
 -- @param self
 -- @return int#int ret (return value: int)
+        
+--------------------------------
+--  Force destroying EGL view, subclass must implement this method. <br>
+-- lua endToLua
+-- @function [parent=#GLView] end 
+-- @param self
+-- @return GLView#GLView self (return value: cc.GLView)
         
 --------------------------------
 --  Returns whether or not the view is in Retina Display mode.<br>
