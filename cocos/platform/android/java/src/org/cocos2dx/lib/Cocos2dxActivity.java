@@ -312,7 +312,6 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
     public void onWindowFocusChanged(boolean hasFocus) {
     	Log.d(TAG, "onWindowFocusChanged() hasFocus=" + hasFocus);
         super.onWindowFocusChanged(hasFocus);
-        this.hideVirtualButton();
         
         this.hasFocus = hasFocus;
         resumeIfHasFocus();
@@ -320,6 +319,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
     
     private void resumeIfHasFocus() {
         if(hasFocus) {
+            this.hideVirtualButton();
         	Cocos2dxHelper.onResume();
         	mGLSurfaceView.onResume();
         }
