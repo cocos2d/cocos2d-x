@@ -380,4 +380,13 @@ public:
     virtual std::string subtitle() const override;
 };
 
+class DemoPause : public ParticleDemo
+{
+public:
+    CREATE_FUNC(DemoPause);
+    virtual void onEnter() override;
+    virtual std::string subtitle() const override;
+    void pauseEmitter(float time);
+};
+
 #endif
