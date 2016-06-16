@@ -106,6 +106,7 @@ NewLabelTests::NewLabelTests()
     ADD_TEST_CASE(LabelBold);
 
     ADD_TEST_CASE(LabelLocalizationTest);
+    ADD_TEST_CASE(LabelBMFontScaleFactorTest);
 };
 
 LabelFNTColorAndOpacity::LabelFNTColorAndOpacity()
@@ -3148,4 +3149,66 @@ void LabelLocalizationTest::onChangedRadioButtonSelect(RadioButton* radioButton,
     default:
         break;
     }
+}
+
+std::string LabelBMFontScaleFactorTest::title() const
+{
+    return "different scaleFactor LabelBMFont";
+}
+
+std::string LabelBMFontScaleFactorTest::subtitle() const
+{
+    return "Should be valid size";
+}
+
+void LabelBMFontScaleFactorTest::onEnter()
+{
+    auto director = Director::getInstance();
+    director->getOpenGLView()->setDesignResolutionSize(_originalDesignSize.width, _originalDesignSize.height, ResolutionPolicy::NO_BORDER);
+    AtlasDemoNew::onEnter();
+}
+
+void LabelBMFontScaleFactorTest::onExit()
+{
+    auto director = Director::getInstance();
+    auto glview = director->getOpenGLView();
+    glview->setDesignResolutionSize(_originalDesignSize.width, _originalDesignSize.height, ResolutionPolicy::SHOW_ALL);
+    director->setContentScaleFactor(_originalScaleFactor);
+    AtlasDemoNew::onExit();
+}
+
+LabelBMFontScaleFactorTest::LabelBMFontScaleFactorTest()
+{
+    auto designSize = Director::getInstance()->getOpenGLView()->getDesignResolutionSize();
+    _originalDesignSize = designSize;
+    _originalScaleFactor = Director::getInstance()->getContentScaleFactor();
+
+    auto menuItem = MenuItemFont::create("restore scaleFactor", [&](cocos2d::Ref* sender) {
+        Director::getInstance()->setContentScaleFactor(_originalScaleFactor);
+        auto center = VisibleRect::center();
+        auto sprite = Sprite::create("Images/grossini.png");
+        sprite->setPosition(center.x * 0.5, center.y);
+        addChild(sprite);
+
+        auto label = Label::createWithBMFont("fonts/bitmapFontTest2.fnt", "Test");
+        label->setPosition(sprite->getPosition());
+        addChild(label);
+    });
+
+    auto center = VisibleRect::center();
+    menuItem->setFontSizeObj(12);
+    auto menu = Menu::createWithItem(menuItem);
+    addChild(menu);
+    auto scale = 0.8f;
+    Director::getInstance()->setContentScaleFactor(_originalScaleFactor / scale);
+    auto winSize = Director::getInstance()->getWinSize();
+    menu->setPosition(winSize.width * 0.9, winSize.height * 0.25f);
+
+    auto sprite = Sprite::create("Images/grossini.png");
+    sprite->setPosition(center.x, center.y);
+    addChild(sprite);
+
+    auto label = Label::createWithBMFont("fonts/bitmapFontTest2.fnt", "Test");
+    label->setPosition(sprite->getPosition());
+    addChild(label);
 }

@@ -850,4 +850,21 @@ public:
     cocostudio::ILocalizationManager* _localizationBin;
 };
 
+class LabelBMFontScaleFactorTest : public AtlasDemoNew
+{
+public:
+    CREATE_FUNC(LabelBMFontScaleFactorTest);
+
+    LabelBMFontScaleFactorTest();
+    void onChangedRadioButtonSelect(cocos2d::ui::RadioButton* radioButton, cocos2d::ui::RadioButton::EventType type);
+
+    void onEnter() override;
+    void onExit() override;
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    cocos2d::Size _originalDesignSize;
+    float _originalScaleFactor;
+};
+
 #endif
