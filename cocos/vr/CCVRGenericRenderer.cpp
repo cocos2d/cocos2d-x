@@ -89,8 +89,8 @@ void VRGenericRenderer::setup(GLView* glview)
 
 
     _distortion = new Distortion;
-    _leftDistortionMesh = createDistortionMesh(VREye::LEFT);
-    _rightDistortionMesh = createDistortionMesh(VREye::RIGHT);
+    _leftDistortionMesh = createDistortionMesh(VREye::EyeType::LEFT);
+    _rightDistortionMesh = createDistortionMesh(VREye::EyeType::RIGHT);
 
     setupGLProgram();
 }
@@ -168,15 +168,15 @@ DistortionMesh* VRGenericRenderer::createDistortionMesh(VREye::EyeType eyeType)
 
     const float screenWidth = _texSize.width;
     const float screenHeight = _texSize.height;
-    const float xEyeOffsetScreen = (eyeType == VREye::LEFT) ? screenWidth/4 + vp._left : screenWidth*3/4 + vp._left;
+    const float xEyeOffsetScreen = (eyeType == VREye::EyeType::LEFT) ? screenWidth/4 + vp._left : screenWidth*3/4 + vp._left;
     const float yEyeOffsetScreen = screenHeight/2 + vp._bottom;
 
     const float textureWidth = _texSize.width;
     const float textureHeight = _texSize.height;
-    const float xEyeOffsetTexture = (eyeType == VREye::LEFT) ? _texSize.width/4 : _texSize.width*3/4;
+    const float xEyeOffsetTexture = (eyeType == VREye::EyeType::LEFT) ? _texSize.width/4 : _texSize.width*3/4;
     const float yEyeOffsetTexture = _texSize.height/2;
 
-    const float viewportX = (eyeType == VREye::LEFT) ? 0 : textureWidth/2;
+    const float viewportX = (eyeType == VREye::EyeType::LEFT) ? 0 : textureWidth/2;
     const float viewportY = 0;
     const float viewportW = textureWidth/2;
     const float viewportH = textureHeight;

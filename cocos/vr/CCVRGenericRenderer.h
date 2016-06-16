@@ -40,11 +40,11 @@ class VRGenericHeadTracker;
 
 struct CC_DLL VREye
 {
-    typedef enum  {
+    enum class EyeType {
         MONO,
         LEFT,
         RIGHT,
-    } EyeType;
+    };
 
     EyeType type;
     experimental::Viewport viewport;
