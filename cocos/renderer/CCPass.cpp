@@ -52,6 +52,7 @@ Pass* Pass::create(Technique* technique)
         pass->autorelease();
         return pass;
     }
+    CC_SAFE_DELETE(pass);
     return nullptr;
 }
 
@@ -63,6 +64,7 @@ Pass* Pass::createWithGLProgramState(Technique* technique, GLProgramState* progr
         pass->autorelease();
         return pass;
     }
+    CC_SAFE_DELETE(pass);
     return nullptr;
 }
 
