@@ -676,6 +676,8 @@ protected:
     bool isHorizontalClamped(float letterPositionX, int lineInex);
     void restoreFontSize();
     void updateLetterSpriteScale(Sprite* sprite);
+    int getFirstCharLen(const std::u16string& utf16Text, int startIndex, int textLen);
+    int getFirstWordLen(const std::u16string& utf16Text, int startIndex, int textLen);
 
     void reset();
 
