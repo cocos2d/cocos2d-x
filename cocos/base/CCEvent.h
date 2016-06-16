@@ -74,6 +74,10 @@ public:
      */
     inline void stopPropagation() { _isStopped = true; };
     
+    /** Resets propagation for current event.
+     */
+    inline void resetPropagation() { _isStopped = false; };
+
     /** Checks whether the event has been stopped.
      *
      * @return True if the event has been stopped.

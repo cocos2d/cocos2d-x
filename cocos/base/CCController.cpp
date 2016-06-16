@@ -77,12 +77,14 @@ const Controller::KeyStatus& Controller::getKeyStatus(int keyCode)
 
 void Controller::onConnected()
 {
+    _connectEvent->resetPropagation();
     _connectEvent->setConnectStatus(true);
     _eventDispatcher->dispatchEvent(_connectEvent);
 }
 
 void Controller::onDisconnected()
 {
+    _connectEvent->resetPropagation();
     _connectEvent->setConnectStatus(false);
     _eventDispatcher->dispatchEvent(_connectEvent);
 
@@ -96,6 +98,7 @@ void Controller::onButtonEvent(int keyCode, bool isPressed, float value, bool is
     _allKeyStatus[keyCode].value = value;
     _allKeyStatus[keyCode].isAnalog = isAnalog;
 
+    _keyEvent->resetPropagation();
     _keyEvent->setKeyCode(keyCode);
     _eventDispatcher->dispatchEvent(_keyEvent);
 }
@@ -106,6 +109,7 @@ void Controller::onAxisEvent(int axisCode, float value, bool isAnalog)
     _allKeyStatus[axisCode].value = value;
     _allKeyStatus[axisCode].isAnalog = isAnalog;
 
+    _axisEvent->resetPropagation();
     _axisEvent->setKeyCode(axisCode);
     _eventDispatcher->dispatchEvent(_axisEvent);
 }
