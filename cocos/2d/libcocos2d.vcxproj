@@ -1393,9 +1393,6 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ProjectReference Include="..\..\external\bullet\proj.win32\libbullet.vcxproj">
       <Project>{012dff48-a13f-4f52-b07b-f8b9d21ce95b}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\external\oculus\proj.win32\liboculus.vcxproj">
-      <Project>{a380a595-cfba-4bea-8fc3-a31bfd55ba41}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\..\external\recast\proj.win32\librecast.vcxproj">
       <Project>{41e34993-647e-4282-8384-4ab1ae31a452}</Project>
     </ProjectReference>
