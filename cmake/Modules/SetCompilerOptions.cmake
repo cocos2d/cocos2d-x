@@ -97,7 +97,7 @@ macro (SetCompilerOptions)
 	  endif()
 	endif()
 
-	if (MINGW OR NOT USE_PREBUILT_LIBS)
+	if (MINGW AND NOT USE_PREBUILT_LIBS)
 		add_definitions(-DMINIZIP_FROM_SYSTEM)
 	endif()
 

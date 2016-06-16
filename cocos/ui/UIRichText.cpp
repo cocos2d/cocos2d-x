@@ -28,7 +28,7 @@
 #include <vector>
 #include <locale>
 
-#include "tinyxml2/tinyxml2.h"
+#include "tinyxml2.h"
 #include "platform/CCFileUtils.h"
 #include "platform/CCApplication.h"
 #include "base/CCEventListenerTouch.h"

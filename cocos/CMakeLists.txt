@@ -88,12 +88,22 @@ set(COCOS_SRC cocos2d.cpp
 
 add_library(cocos2dInternal ${COCOS_SRC})
 
+set_target_properties(cocos2dInternal
+    PROPERTIES
+    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+    VERSION "${COCOS2D_X_VERSION}"
+)
+
 set(PLATFORM_SPECIFIC_LIBS)
 if(WINDOWS)
   foreach(_pkg OPENGL GLEW GLFW3 VORBIS MPG123 OPENAL)
     cocos_use_pkg(cocos2dInternal ${_pkg})
   endforeach()
   list(APPEND PLATFORM_SPECIFIC_LIBS ws2_32 winmm)
+  if(MINGW)
+    list(APPEND PLATFORM_SPECIFIC_LIBS shlwapi version)
+  endif()
 elseif(LINUX)
   foreach(_pkg OPENGL GLEW GLFW3 FMOD FONTCONFIG THREADS GTK3)
     cocos_use_pkg(cocos2dInternal ${_pkg})
