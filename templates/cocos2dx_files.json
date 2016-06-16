@@ -1096,7 +1096,6 @@
         "cocos/platform/winrt/CCGLViewImpl-winrt.h", 
         "cocos/platform/winrt/CCGLViewImpl.cpp", 
         "cocos/platform/winrt/CCGLViewImpl.h", 
-        "cocos/platform/winrt/CCGL_Angle.h", 
         "cocos/platform/winrt/CCPThreadWinRT.cpp", 
         "cocos/platform/winrt/CCPThreadWinRT.h", 
         "cocos/platform/winrt/CCPlatformDefine-winrt.h", 
