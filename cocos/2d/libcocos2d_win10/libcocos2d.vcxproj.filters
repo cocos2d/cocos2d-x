@@ -3425,9 +3425,6 @@
     <ClInclude Include="..\..\platform\winrt\CCGL.h">
       <Filter>platform\winrt</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\platform\winrt\CCGL_Angle.h">
-      <Filter>platform\winrt</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\platform\winrt\CCGLViewImpl-winrt.h">
       <Filter>platform\winrt</Filter>
     </ClInclude>

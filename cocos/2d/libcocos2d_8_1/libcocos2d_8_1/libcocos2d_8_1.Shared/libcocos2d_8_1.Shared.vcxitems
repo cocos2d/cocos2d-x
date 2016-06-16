@@ -499,7 +499,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\platform\winrt\CCFreeTypeFont.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\platform\winrt\CCGL.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\platform\winrt\CCGLViewImpl-winrt.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\platform\winrt\CCGL_Angle.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\platform\winrt\CCPlatformDefine-winrt.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\platform\winrt\CCPrecompiledShaders.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\platform\winrt\CCPThreadWinRT.h" />

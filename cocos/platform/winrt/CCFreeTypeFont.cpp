@@ -179,7 +179,7 @@ unsigned char* CCFreeTypeFont::initWithString(const char * text, const FontDefin
 unsigned char* CCFreeTypeFont::getBitmap(Device::TextAlign eAlignMask, int &width, int &height, ssize_t& dataLength)
 {
     int lineNumber = 0;
-    int totalLines = m_lines.size();
+    int totalLines = static_cast<int>(m_lines.size());
 
     m_width = m_inWidth ? m_inWidth : m_textWidth;
     m_height = m_inHeight ? m_inHeight : m_textHeight;
@@ -463,7 +463,7 @@ FT_Error CCFreeTypeFont::initWordGlyphs(std::vector<TGlyph>& glyphs, const std::
     unsigned int    numGlyphs = 0;
     wchar_t *       pwszBuffer = nullptr;
 
-	int num_chars = text.size();
+	int num_chars = static_cast<int>(text.size());
 	int nBufLen  = num_chars + 1;
 	pwszBuffer = new wchar_t[nBufLen];
     if(!pwszBuffer)

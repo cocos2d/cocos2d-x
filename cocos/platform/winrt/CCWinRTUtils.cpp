@@ -153,7 +153,7 @@ std::string PlatformStringToString(Platform::String^ s) {
 Platform::String^ PlatformStringFromString(const std::string& s)
 {
     std::wstring ws = StringUtf8ToWideChar(s);
-    return ref new Platform::String(ws.data(), ws.length());
+    return ref new Platform::String(ws.data(), static_cast<unsigned int>(ws.length()));
 }
 
 #if 0
