@@ -164,7 +164,7 @@ public:
             } \
             break;
             
-        void* address;
+        void* address = nullptr;
         
         switch (adjusted_size)
         {
