@@ -15109,6 +15109,14 @@ getGravity : function (
 },
 
 /**
+ * @method resumeEmissions
+ */
+resumeEmissions : function (
+)
+{
+},
+
+/**
  * @method getTangentialAccel
  * @return {float}
  */
@@ -15136,6 +15144,14 @@ getSpeed : function (
 )
 {
     return 0;
+},
+
+/**
+ * @method pauseEmissions
+ */
+pauseEmissions : function (
+)
+{
 },
 
 /**
@@ -15678,6 +15694,16 @@ getLife : function (
 )
 {
     return 0;
+},
+
+/**
+ * @method isPaused
+ * @return {bool}
+ */
+isPaused : function (
+)
+{
+    return false;
 },
 
 /**
@@ -17486,14 +17512,6 @@ bool
  */
 setClearColor : function (
 color4f 
-)
-{
-},
-
-/**
- * @method endToLua
- */
-endToLua : function (
 )
 {
 },
