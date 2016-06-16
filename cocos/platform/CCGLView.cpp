@@ -464,4 +464,9 @@ float GLView::getScaleY() const
     return _scaleY;
 }
 
+void GLView::makeContextCurrent()
+{
+    
+}
+
 NS_CC_END

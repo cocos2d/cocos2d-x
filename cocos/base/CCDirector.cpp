@@ -276,6 +276,11 @@ void Director::drawScene()
         _scheduler->update(_deltaTime);
         _eventDispatcher->dispatchEvent(_eventAfterUpdate);
     }
+   
+    if (_openGLView)
+    {
+	    _openGLView->makeContextCurrent();
+    }
 
     _renderer->clear();
     experimental::FrameBuffer::clearAllFBOs();
