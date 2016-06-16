@@ -64,7 +64,6 @@ NewLabelTests::NewLabelTests()
     ADD_TEST_CASE(LabelLineHeightTest);
     ADD_TEST_CASE(LabelAdditionalKerningTest);
     ADD_TEST_CASE(LabelAddChildTest);
-    ADD_TEST_CASE(LabelFullTypeFontTest);
     ADD_TEST_CASE(LabelSmallDimensionsTest);
 
     ADD_TEST_CASE(LabelCharMapTest);
@@ -1945,20 +1944,6 @@ std::string LabelIssue11585Test::title() const
 std::string LabelIssue11585Test::subtitle() const
 {
     return "The color of letter should not be overridden by fade action.";
-}
-
-LabelFullTypeFontTest::LabelFullTypeFontTest()
-{
-    auto center = VisibleRect::center();
-
-    auto label = Label::createWithTTF("Hello 中国", "XueJ2312F.ttf", 30);
-    label->setPosition(center.x, center.y);
-    addChild(label);
-}
-
-std::string LabelFullTypeFontTest::title() const
-{
-    return "Test font supported by FullType";
 }
 
 LabelIssue10688Test::LabelIssue10688Test()
