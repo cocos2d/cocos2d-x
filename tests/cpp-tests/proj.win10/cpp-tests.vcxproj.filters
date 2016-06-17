@@ -774,6 +774,9 @@
     <ClCompile Include="..\Classes\BugsTest\Bug-15594.cpp">
       <Filter>Classes\BugsTest</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\BugsTest\Bug-15776.cpp">
+      <Filter>Classes\BugsTest</Filter>
+    </ClCompile>
     <ClCompile Include="..\Classes\CurlTest\CurlTest.cpp">
       <Filter>Classes\CurlTest</Filter>
     </ClCompile>
@@ -1410,6 +1413,9 @@
       <Filter>Classes\BugsTest</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\BugsTest\Bug-15594.h">
+      <Filter>Classes\BugsTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\BugsTest\Bug-15776.h">
       <Filter>Classes\BugsTest</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\CurlTest\CurlTest.h">

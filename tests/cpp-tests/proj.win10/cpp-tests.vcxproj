@@ -306,6 +306,7 @@
     <ClInclude Include="..\Classes\Box2DTest\Box2dTest.h" />
     <ClInclude Include="..\Classes\BugsTest\Bug-12847.h" />
     <ClInclude Include="..\Classes\BugsTest\Bug-15594.h" />
+    <ClInclude Include="..\Classes\BugsTest\Bug-15776.h" />
     <ClInclude Include="..\Classes\BugsTest\Bug-CCDrawNode.h" />
     <ClInclude Include="..\Classes\BugsTest\Bug-1159.h" />
     <ClInclude Include="..\Classes\BugsTest\Bug-1174.h" />
@@ -500,6 +501,7 @@
     <ClCompile Include="..\Classes\Box2DTest\Box2dTest.cpp" />
     <ClCompile Include="..\Classes\BugsTest\Bug-12847.cpp" />
     <ClCompile Include="..\Classes\BugsTest\Bug-15594.cpp" />
+    <ClCompile Include="..\Classes\BugsTest\Bug-15776.cpp" />
     <ClCompile Include="..\Classes\BugsTest\Bug-CCDrawNode.cpp" />
     <ClCompile Include="..\Classes\BugsTest\Bug-1159.cpp" />
     <ClCompile Include="..\Classes\BugsTest\Bug-1174.cpp" />

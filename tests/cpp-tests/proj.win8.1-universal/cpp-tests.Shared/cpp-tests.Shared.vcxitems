@@ -42,6 +42,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\BugsTest\Bug-1174.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\BugsTest\Bug-12847.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\BugsTest\Bug-15594.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\BugsTest\Bug-15776.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\BugsTest\Bug-350.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\BugsTest\Bug-422.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\BugsTest\Bug-458\Bug-458.cpp" />
@@ -245,6 +246,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\BugsTest\Bug-1174.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\BugsTest\Bug-12847.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\BugsTest\Bug-15594.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\BugsTest\Bug-15776.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\BugsTest\Bug-350.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\BugsTest\Bug-422.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\BugsTest\Bug-458\Bug-458.h" />
