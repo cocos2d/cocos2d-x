@@ -26,7 +26,7 @@
 #define __cocos2d_libs__CCGameController__
 /// @cond DO_NOT_SHOW
 
-#include "base/CCController.h"
+#include "platform/CCController.h"
 #include "base/CCEventController.h"
 #include "base/CCEventListenerController.h"
 

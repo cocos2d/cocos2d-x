@@ -365,8 +365,6 @@
     <ClCompile Include="..\..\base\ccCArray.cpp" />
     <ClCompile Include="..\..\base\CCConfiguration.cpp" />
     <ClCompile Include="..\..\base\CCConsole.cpp" />
-    <ClCompile Include="..\..\base\CCController-android.cpp" />
-    <ClCompile Include="..\..\base\CCController.cpp" />
     <ClCompile Include="..\..\base\CCData.cpp" />
     <ClCompile Include="..\..\base\CCDataVisitor.cpp" />
     <ClCompile Include="..\..\base\CCDirector.cpp" />
@@ -582,6 +580,7 @@
     <ClCompile Include="..\..\physics\CCPhysicsJoint.cpp" />
     <ClCompile Include="..\..\physics\CCPhysicsShape.cpp" />
     <ClCompile Include="..\..\physics\CCPhysicsWorld.cpp" />
+    <ClCompile Include="..\..\platform\CCController.cpp" />
     <ClCompile Include="..\..\platform\CCFileUtils.cpp" />
     <ClCompile Include="..\..\platform\CCGLView.cpp" />
     <ClCompile Include="..\..\platform\CCImage.cpp" />
@@ -989,7 +988,6 @@
     <ClInclude Include="..\..\base\ccConfig.h" />
     <ClInclude Include="..\..\base\CCConfiguration.h" />
     <ClInclude Include="..\..\base\CCConsole.h" />
-    <ClInclude Include="..\..\base\CCController.h" />
     <ClInclude Include="..\..\base\CCData.h" />
     <ClInclude Include="..\..\base\CCDataVisitor.h" />
     <ClInclude Include="..\..\base\CCDirector.h" />
@@ -1217,6 +1215,7 @@
     <ClInclude Include="..\..\platform\CCApplication.h" />
     <ClInclude Include="..\..\platform\CCApplicationProtocol.h" />
     <ClInclude Include="..\..\platform\CCCommon.h" />
+    <ClInclude Include="..\..\platform\CCController.h" />
     <ClInclude Include="..\..\platform\CCDevice.h" />
     <ClInclude Include="..\..\platform\CCFileUtils.h" />
     <ClInclude Include="..\..\platform\CCGL.h" />
@@ -1381,7 +1380,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\3d\CCAnimationCurve.inl" />
-    <None Include="..\..\base\CCController-iOS.mm" />
     <None Include="..\..\base\CCUserDefault-apple.mm" />
     <None Include="..\..\math\Mat4.inl" />
     <None Include="..\..\math\MathUtil.inl" />

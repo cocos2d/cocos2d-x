@@ -15,7 +15,6 @@ set(COCOS_BASE_SRC
   base/CCAutoreleasePool.cpp
   base/CCConfiguration.cpp
   base/CCConsole.cpp
-  base/CCController.cpp
   base/CCData.cpp
   base/CCDataVisitor.cpp
   base/CCNinePatchImageParser.cpp
