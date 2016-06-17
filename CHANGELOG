@@ -1,3 +1,91 @@
+cocos2d-x-3.12 Jun 30 2016
+
+[HIGHLIGHT]     add VR support
+[HIGHLIGHT]     support Windows 10 UWP x64
+[HIGHLIGHT]     support obb extension on Android
+
+[NEW]           Core: add `utils::findChild()`
+[NEW]           Core: add CSV format support to tile maps
+[NEW]           Core: add `FileUtils::getContents()`
+[NEW]           Core: cocos2d::Value supports unsigned
+[NEW]           Particle: add feature to pause/resume particle emitter
+[NEW]           UI: add clamp and shrunk feature for system fonts, currently only support iOS, Android and Mac
+[NEW]           UI: make ListView select item programmatically
+[NEW]           UI: add `EditBox::InputFlag::LOWERCASE_ALL_CHARACTERS` to lowercase characters
+[NEW]           UI: add `setBounce()` to WebView
+[NEW]           Web: can set orientation
+
+[REFINE]        Android: hide virtual button by default
+[REFINE]        Android: set music volume control as default
+[REFINE]        Android: usage clang insteand of gcc to compile codes
+[REFINE]        Audio: catch `IllegalStateException` exception to avoid crash when playing background music with SimpleAudioEngine on Android
+[REFINE]        Core: fix many warnings
+[REFINE]        Core: move StringUtils functions from deprecated header file to ccUTF8.h
+[REFINE]        Core: FontFNT will ignore chars that exceeds 65535 and print a warning information
+[REFINE]        Core: `Node::ignoreAnchorPointForPosition()` is deprecated and add `Node::setIgnoreAnchorPointForPosition()`
+[REFINE]        Core: allow inherit from platform FileUitils
+[REFINE]        Core: add optional alpha parameter to Color4B and Color4F
+[REFINE]        Core: Follow action can accept horizontal and vertical offset
+[REFINE]        Core: TMXXMLParse parse `id` element
+[REFINE]        Lua: rename all member functions named `end()` to `endLua()`
+[REFINE]        JSB: make selectedSprite opitional in MenuItemSprite
+[REFINE]        JSB: return null if read failed in `js_cocos2dx_CCFileUtils_getDataFromFile()`
+[REFINE]        Template: iOS tempalte is refined to make cocos2d-x game scene work better with other UIView
+[REFINE]        Template: remove `build_native.sh`
+[REFINE]        Template: ARC support on iOS and Mac OS
+[REFINE]        UI: TTF and BMFont label wrap mode will automanytically changed to char wrap mode when label's width is less than word's boundary
+[REFINE]        UI: UIWidget adds missing properties for clone
+[REFINE]        UI: UIScrollBar caches the texture created with base64 encoded images
+[REFINE]        UI: EditBox now prints lowercase letters by default
+[REFINE]        UI: enable WebView's local storage on Android
+[REFINE]        UI: improve EditBox implementation on WinRT
+[REFINE]        UI: make PageView indicator more tunable
+[REFINE]        UI: make PageView page turning event time tweak configurable
+[REFINE]        UI: RichText is improved: add effect of outline, shadow and glow; catch the event of open url; ability to extend tags; add anchor of image tag
+[REFINE]        3D: skeleton animation is more efficient when two animations switch frequently
+[REFINE]        3rd party: update webp to 0.5.0
+
+[FIX]           Android: fix compiling error if using NDK r11+
+[FIX]           Android: package name is `libcocos2dx` instead of application name if building with Android Studio
+[FIX]           Audio: AudioEngine can not work if the file path contains not ascii code on iOS
+[FIX]           Audio: SimpleAudioEngine::playEffect() doesn't work correctly on Linux
+[FIX]           AssetManagerEx: use manifestUrl from remote version
+[FIX]           Core: `FileUtils::writeValueMap()` will crash on iOS if it contains `Value::Type::None` type element
+[FIX]           Core: `ClippgNode::setStencil()` may cause assert error if it is invoked before
+[FIX]           Core: `TextureCache::addImageAsync()` doesn't set pixel format corretly
+[FIX]           Core: `GL::SetBlending()` doesn't set dst correctly
+[FIX]           Core: vertex z can not work correctly if window size changed on desktop platforms
+[FIX]           Core: use `std::isnan()` instead of `isnan()` to fix compiling errors on some Linux platforms
+[FIX]           Core: crash on windows when using PolygonInfo
+[FIX]           Core: fix `libpng error: CgBI: unhandled critical chunk` error with Xcode 7.3
+[FIX]           Core: EXC_BAD_ACCESS random crash caused by reallocation of shared indices memory
+[FIX]           Core: memory leak of `utils::captureScreen()` on iOS and Mac OS
+[FIX]           Core: assert error if remove an event listener twice at the same time
+[FIX]           Core: FileUtils::getValueMapFromFile() returns wrong value if it is a number with scientific notation on Android
+[FIX]           Core: UIGrayScale shader is not reloaded when reloading shaders
+[FIX]           Core: `SpriteFrame::clone()` doesn't clone polygonInfo
+[FIX]           Core: `FileUtils::createDirectory()` fails on Mac OS with sandbox
+[FIX]           Core: `cocos2d::Value` operator overloading of comparison `==` returns wrong value in case Type::VECTOR 
+[FIX]           Core: wrong content size if minisize
+[FIX]           Core: can not have a class named `Game` on Windows
+[FIX]           Core: crash if load bad image on Windows
+[FIX]           Core: custom shader uniforms and attributes do not have effect in DrawNode
+[FIX]           Core: blend mode doesn't work with animated sprite
+[FIX]           JSB: fix some bugs related with JSB debegger
+[FIX]           JSB: scheduler callback target lost
+[FIX]           JSB: missing scroll widgets constants
+[FIX]           JSB: if obj is undefined or null then attempt to access obj.__nativeObj leads to incorrect behavior
+[FIX]           Network: HttpClient Content-type limitation on iOS
+[FIX]           Network: downloader crash when storage path contains spaces
+[FIX]           Network: SocketIO crash on reconnect
+[FIX]           Physics: PhysicsBody damping doesn't wrok
+[FIX]           UI: EditBox may cause `java.lang.IndexOutOfBoundsException` exception on Android
+[FIX]           UI: TextFieldTTF doesn't show password correctly
+[FIX]           UI: RichText crash on Windows
+[FIX]           RenderTexture: `setOpacity()` has not effect
+[FIX]           3D: `Sprite3D::createNode()` may not work correctly with particular model data
+
+
 cocos2d-x-3.11.1 May 27 2016
 
 [HIGHLIGHT]     Supports IPv6-only network
