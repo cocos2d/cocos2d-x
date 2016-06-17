@@ -385,6 +385,7 @@ void TextureCache::parseNinePatchImage(cocos2d::Image *image, cocos2d::Texture2D
 Texture2D* TextureCache::addImage(Image *image, const std::string &key)
 {
     CCASSERT(image != nullptr, "TextureCache: image MUST not be nil");
+    CCASSERT(image->getData() != nullptr, "TextureCache: image MUST not be nil");
 
     Texture2D * texture = nullptr;
 
