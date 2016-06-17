@@ -43,6 +43,12 @@
 -- @return GLView#GLView self (return value: cc.GLView)
         
 --------------------------------
+-- 
+-- @function [parent=#GLView] getVR 
+-- @param self
+-- @return VRIRenderer#VRIRenderer ret (return value: cc.VRIRenderer)
+        
+--------------------------------
 -- Set Scissor rectangle with points.<br>
 -- param x Set the points of x.<br>
 -- param y Set the points of y.<br>
@@ -180,6 +186,23 @@
 -- @function [parent=#GLView] isRetinaDisplay 
 -- @param self
 -- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- Renders a Scene with a Renderer<br>
+-- This method is called dirctly by the Director
+-- @function [parent=#GLView] renderScene 
+-- @param self
+-- @param #cc.Scene scene
+-- @param #cc.Renderer renderer
+-- @return GLView#GLView self (return value: cc.GLView)
+        
+--------------------------------
+-- Sets a VR renderer. <br>
+-- if `vrrenderer` is `nullptr` VR will be disabled
+-- @function [parent=#GLView] setVR 
+-- @param self
+-- @param #cc.VRIRenderer vrrenderer
+-- @return GLView#GLView self (return value: cc.GLView)
         
 --------------------------------
 -- Set opengl view port rectangle with points.<br>
