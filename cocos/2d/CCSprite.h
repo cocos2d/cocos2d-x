@@ -585,7 +585,7 @@ CC_CONSTRUCTOR_ACCESS :
 protected:
 
     void updateColor() override;
-    virtual void setTextureCoords(Rect rect);
+    virtual void setTextureCoords(const Rect& rect);
     virtual void updateBlendFunc();
     virtual void setReorderChildDirtyRecursively();
     virtual void setDirtyRecursively(bool value);

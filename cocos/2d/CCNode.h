@@ -1644,6 +1644,7 @@ public:
      * @param additionalTransform An additional transform matrix.
      */
     void setAdditionalTransform(Mat4* additionalTransform);
+    void setAdditionalTransform(const Mat4& additionalTransform);
     void setAdditionalTransform(const AffineTransform& additionalTransform);
 
     /// @} end of Coordinate Converters

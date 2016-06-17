@@ -286,6 +286,9 @@
     <Filter Include="cocostudio\reader\WidgetReader\TabControlReader">
       <UniqueIdentifier>{8686c220-18af-4bea-abce-f4797afd01f1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="vr">
+      <UniqueIdentifier>{5cbd879f-02ae-4f28-af33-2c4f980dd6f0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\physics\CCPhysicsBody.cpp">
@@ -1952,6 +1955,18 @@
     </ClCompile>
     <ClCompile Include="..\editor-support\cocostudio\LocalizationManager.cpp">
       <Filter>cocostudio\json</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vr\CCVRDistortion.cpp">
+      <Filter>vr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vr\CCVRDistortionMesh.cpp">
+      <Filter>vr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vr\CCVRGenericHeadTracker.cpp">
+      <Filter>vr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vr\CCVRGenericRenderer.cpp">
+      <Filter>vr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -3814,6 +3829,21 @@
     </ClInclude>
     <ClInclude Include="..\editor-support\cocostudio\LocalizationManager.h">
       <Filter>cocostudio\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vr\CCVRProtocol.h">
+      <Filter>vr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vr\CCVRDistortion.h">
+      <Filter>vr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vr\CCVRDistortionMesh.h">
+      <Filter>vr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vr\CCVRGenericHeadTracker.h">
+      <Filter>vr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vr\CCVRGenericRenderer.h">
+      <Filter>vr</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

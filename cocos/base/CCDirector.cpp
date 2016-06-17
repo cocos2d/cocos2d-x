@@ -298,7 +298,7 @@ void Director::drawScene()
         _renderer->clearDrawStats();
         
         //render the scene
-        _runningScene->render(_renderer);
+        _openGLView->renderScene(_runningScene, _renderer);
         
         _eventDispatcher->dispatchEvent(_eventAfterVisit);
     }
@@ -604,11 +604,9 @@ void Director::setProjection(Projection projection)
     {
         case Projection::_2D:
         {
-            loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-
             Mat4 orthoMatrix;
             Mat4::createOrthographicOffCenter(0, size.width, 0, size.height, -1024, 1024, &orthoMatrix);
-            multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, orthoMatrix);
+            loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, orthoMatrix);
             loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
             break;
         }
@@ -619,17 +617,14 @@ void Director::setProjection(Projection projection)
 
             Mat4 matrixPerspective, matrixLookup;
 
-            loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-
             // issue #1334
             Mat4::createPerspective(60, (GLfloat)size.width/size.height, 10, zeye+size.height/2, &matrixPerspective);
 
-            multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, matrixPerspective);
-
             Vec3 eye(size.width/2, size.height/2, zeye), center(size.width/2, size.height/2, 0.0f), up(0.0f, 1.0f, 0.0f);
             Mat4::createLookAt(eye, center, up, &matrixLookup);
-            multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, matrixLookup);
-            
+            Mat4 proj3d = matrixPerspective * matrixLookup;
+
+            loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, proj3d);
             loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
             break;
         }

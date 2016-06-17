@@ -104,7 +104,11 @@ bool AppDelegate::applicationDidFinishLaunching()
     console->listenOnTCP(5678);
 
     _testController = TestController::getInstance();
-    
+
+    // To enable built-in VR, use this line.
+//    auto vrImpl = new VRGenericRenderer;
+//    glview->setVR(vrImpl);
+
     return true;
 }
 

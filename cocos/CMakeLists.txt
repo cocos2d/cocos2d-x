@@ -40,6 +40,7 @@ include(physics3d/CMakeLists.txt)
 include(math/CMakeLists.txt)
 include(navmesh/CMakeLists.txt)
 include(renderer/CMakeLists.txt)
+include(vr/CMakeLists.txt)
 include(base/CMakeLists.txt)
 include(deprecated/CMakeLists.txt)
 include(ui/CMakeLists.txt)
@@ -73,6 +74,7 @@ set(COCOS_SRC cocos2d.cpp
     ${COCOS_MATH_SRC}
     ${COCOS_NAVMESH_SRC}
     ${COCOS_RENDERER_SRC}
+    ${COCOS_VR_SRC}
     ${COCOS_BASE_SRC}
     ${COCOS_AUDIO_SRC}
     ${COCOS_UI_SRC}

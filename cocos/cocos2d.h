@@ -301,6 +301,9 @@ THE SOFTWARE.
 #include "3d/CCSprite3DMaterial.h"
 #include "3d/CCTerrain.h"
 
+// vr
+#include "vr/CCVRGenericRenderer.h"
+
 
 // Deprecated
 // All deprecated features are include inside deprecated/CCDeprecated.h.
