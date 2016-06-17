@@ -2193,9 +2193,13 @@ setCameraOrderDirty : function (
 /**
  * @method render
  * @param {cc.Renderer} arg0
+ * @param {mat4_object} arg1
+ * @param {mat4_object} arg2
  */
 render : function (
-renderer 
+renderer, 
+mat4, 
+mat4 
 )
 {
 },
@@ -2332,6 +2336,16 @@ setIMEKeyboardState : function (
 bool 
 )
 {
+},
+
+/**
+ * @method getVR
+ * @return {cc.VRIRenderer}
+ */
+getVR : function (
+)
+{
+    return cc.VRIRenderer;
 },
 
 /**
@@ -2492,6 +2506,28 @@ isRetinaDisplay : function (
 )
 {
     return false;
+},
+
+/**
+ * @method renderScene
+ * @param {cc.Scene} arg0
+ * @param {cc.Renderer} arg1
+ */
+renderScene : function (
+scene, 
+renderer 
+)
+{
+},
+
+/**
+ * @method setVR
+ * @param {cc.VRIRenderer} arg0
+ */
+setVR : function (
+vrirenderer 
+)
+{
 },
 
 /**
@@ -18996,6 +19032,14 @@ TransitionProgressOutIn : function (
 cc.Camera = {
 
 /**
+ * @method restore
+ */
+restore : function (
+)
+{
+},
+
+/**
  * @method getDepth
  * @return {char}
  */
@@ -19093,6 +19137,14 @@ mat4
 )
 {
     return 0;
+},
+
+/**
+ * @method restoreViewport
+ */
+restoreViewport : function (
+)
+{
 },
 
 /**
@@ -19211,6 +19263,14 @@ vec3
 )
 {
     return cc.Vec2;
+},
+
+/**
+ * @method restoreFrameBufferObject
+ */
+restoreFrameBufferObject : function (
+)
+{
 },
 
 /**
