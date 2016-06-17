@@ -501,12 +501,6 @@
     <ClCompile Include="..\..\base\CCConsole.cpp">
       <Filter>base</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\base\CCController.cpp">
-      <Filter>base</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\base\CCController-android.cpp">
-      <Filter>base</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\base\CCData.cpp">
       <Filter>base</Filter>
     </ClCompile>
@@ -1524,6 +1518,9 @@
     <ClCompile Include="..\..\network\WebSocket.cpp">
       <Filter>network</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\platform\CCController.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\platform\CCFileUtils.cpp">
       <Filter>platform</Filter>
     </ClCompile>
@@ -2226,9 +2223,6 @@
       <Filter>base</Filter>
     </ClInclude>
     <ClInclude Include="..\..\base\CCConsole.h">
-      <Filter>base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\base\CCController.h">
       <Filter>base</Filter>
     </ClInclude>
     <ClInclude Include="..\..\base\CCData.h">
@@ -3380,6 +3374,9 @@
     <ClInclude Include="..\..\platform\CCCommon.h">
       <Filter>platform</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\platform\CCController.h">
+      <Filter>base</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\platform\CCDevice.h">
       <Filter>platform</Filter>
     </ClInclude>
@@ -3895,9 +3892,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\base\CCController-iOS.mm">
-      <Filter>base</Filter>
-    </None>
     <None Include="..\..\base\CCUserDefault-apple.mm">
       <Filter>base</Filter>
     </None>
