@@ -1,6 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -22,19 +21,58 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#ifndef __Java_org_cocos2dx_lib_Cocos2dxHelper_H__
-#define __Java_org_cocos2dx_lib_Cocos2dxHelper_H__
+#include <math.h>
+#include "audio/android/Track.h"
 
-#include <string>
+namespace cocos2d {
 
-typedef void (*EditTextCallback)(const char* text, void* ctx);
+Track::Track(const PcmData &pcmData)
+        : onStateChanged(nullptr)
+        , _pcmData(pcmData)
+        , _state(State::IDLE)
+        , _name(-1)
+        , _volume(1.0f)
+        , _isVolumeDirty(false)
+        , _isLoop(false)
+{
+    init(_pcmData.pcmBuffer->data(), _pcmData.numFrames, _pcmData.bitsPerSample / 8 * _pcmData.numChannels);
+}
 
-extern const char * getApkPath();
-extern std::string getPackageNameJNI();
-extern int getObbAssetFileDescriptorJNI(const char* path, long* startOffset, long* size);
-extern void conversionEncodingJNI(const char* src, int byteSize, const char* fromCharset, char* dst, const char* newCharset);
+Track::~Track()
+{
 
-extern int getDeviceSampleRate();
-extern int getDeviceAudioBufferSizeInFrames();
+}
 
-#endif /* __Java_org_cocos2dx_lib_Cocos2dxHelper_H__ */
+gain_minifloat_packed_t Track::getVolumeLR()
+{
+    gain_minifloat_t v = gain_from_float(_volume);
+    return gain_minifloat_pack(v, v);
+}
+
+bool Track::setPosition(float pos)
+{
+    mNextFrame = (size_t) (pos * mNumFrames / _pcmData.duration);
+    mUnrel = 0;
+    return true;
+}
+
+float Track::getPosition() const
+{
+    return mNextFrame * _pcmData.duration / mNumFrames;
+}
+
+void Track::setVolume(float volume)
+{
+    if (fabs(_volume - volume) > 0.00001)
+    {
+        _volume = volume;
+        setVolumeDirty(true);
+    }
+}
+
+float Track::getVolume() const
+{
+    return _volume;
+}
+
+} // namespace cocos2d {

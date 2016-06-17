@@ -39,6 +39,7 @@ AudioEngineTests::AudioEngineTests()
     ADD_TEST_CASE(AudioProfileTest);
     ADD_TEST_CASE(InvalidAudioFileTest);
     ADD_TEST_CASE(LargeAudioFileTest);
+    ADD_TEST_CASE(AudioPerformanceTest);
 }
 
 namespace {
@@ -609,10 +610,12 @@ bool AudioIssue11143Test::init()
 
         auto playItem = TextButton::create("play", [](TextButton* button){
             auto audioId = AudioEngine::play2d("audio/SoundEffectsFX009/FX082.mp3", true);
+            char key[100] = {0};
+            sprintf(key, "play another sound %d", audioId);
             button->scheduleOnce([audioId](float dt){
                 AudioEngine::stop(audioId);
                 AudioEngine::play2d("audio/SoundEffectsFX009/FX083.mp3");
-            }, 2.f, "play another sound");
+            }, 0.3f, key);
         });
         playItem->setPosition(layerSize.width * 0.5f, layerSize.height * 0.5f);
         addChild(playItem);
@@ -631,5 +634,99 @@ std::string AudioIssue11143Test::title() const
 std::string AudioIssue11143Test::subtitle() const
 {
     return "2 seconds after first sound play,you should hear another sound.";
+}
+
+// Enable profiles for this file
+#undef CC_PROFILER_DISPLAY_TIMERS
+#define CC_PROFILER_DISPLAY_TIMERS() Profiler::getInstance()->displayTimers()
+#undef CC_PROFILER_PURGE_ALL
+#define CC_PROFILER_PURGE_ALL() Profiler::getInstance()->releaseAllTimers()
+
+#undef CC_PROFILER_START
+#define CC_PROFILER_START(__name__) ProfilingBeginTimingBlock(__name__)
+#undef CC_PROFILER_STOP
+#define CC_PROFILER_STOP(__name__) ProfilingEndTimingBlock(__name__)
+#undef CC_PROFILER_RESET
+#define CC_PROFILER_RESET(__name__) ProfilingResetTimingBlock(__name__)
+
+#undef CC_PROFILER_START_CATEGORY
+#define CC_PROFILER_START_CATEGORY(__cat__, __name__) do{ if(__cat__) ProfilingBeginTimingBlock(__name__); } while(0)
+#undef CC_PROFILER_STOP_CATEGORY
+#define CC_PROFILER_STOP_CATEGORY(__cat__, __name__) do{ if(__cat__) ProfilingEndTimingBlock(__name__); } while(0)
+#undef CC_PROFILER_RESET_CATEGORY
+#define CC_PROFILER_RESET_CATEGORY(__cat__, __name__) do{ if(__cat__) ProfilingResetTimingBlock(__name__); } while(0)
+
+#undef CC_PROFILER_START_INSTANCE
+#define CC_PROFILER_START_INSTANCE(__id__, __name__) do{ ProfilingBeginTimingBlock( String::createWithFormat("%08X - %s", __id__, __name__)->getCString() ); } while(0)
+#undef CC_PROFILER_STOP_INSTANCE
+#define CC_PROFILER_STOP_INSTANCE(__id__, __name__) do{ ProfilingEndTimingBlock(    String::createWithFormat("%08X - %s", __id__, __name__)->getCString() ); } while(0)
+#undef CC_PROFILER_RESET_INSTANCE
+#define CC_PROFILER_RESET_INSTANCE(__id__, __name__) do{ ProfilingResetTimingBlock( String::createWithFormat("%08X - %s", __id__, __name__)->getCString() ); } while(0)
+
+bool AudioPerformanceTest::init()
+{
+    if (AudioEngineTestDemo::init())
+    {
+        std::vector<std::string> audioFiles = {
+            "audio/SoundEffectsFX009/FX081.mp3",
+            "audio/SoundEffectsFX009/FX082.mp3",
+            "audio/SoundEffectsFX009/FX083.mp3",
+            "audio/SoundEffectsFX009/FX084.mp3",
+            "audio/SoundEffectsFX009/FX085.mp3",
+            "audio/SoundEffectsFX009/FX086.mp3",
+            "audio/SoundEffectsFX009/FX087.mp3",
+            "audio/SoundEffectsFX009/FX088.mp3",
+            "audio/SoundEffectsFX009/FX089.mp3",
+            "audio/SoundEffectsFX009/FX090.mp3"
+        };
+        
+        for (const auto& audioFile : audioFiles)
+        {
+            AudioEngine::preload(audioFile);
+        }
+        
+        auto& layerSize = this->getContentSize();
+        
+        auto playItem = TextButton::create("Start Test", [this, audioFiles](TextButton* button){
+            button->setEnabled(false);
+            static_cast<TextButton*>(getChildByName("DisplayButton"))->setEnabled(true);
+            
+            unschedule("test");
+            schedule([audioFiles](float dt){
+                int index = cocos2d::random(0, (int)(audioFiles.size()-1));
+                CC_PROFILER_START("play2d");
+                AudioEngine::play2d(audioFiles[index]);
+                CC_PROFILER_STOP("play2d");
+            }, 0.25f, "test");
+        });
+        playItem->setPosition(layerSize.width * 0.5f, layerSize.height * 2 / 3);
+        playItem->setName("PlayButton");
+        addChild(playItem);
+        
+        auto displayItem = TextButton::create("Display Result", [this, playItem](TextButton* button){
+            unschedule("test");
+            CC_PROFILER_DISPLAY_TIMERS();
+            playItem->setEnabled(true);
+            button->setEnabled(false);
+        });
+        displayItem->setEnabled(false);
+        displayItem->setPosition(layerSize.width * 0.5f, layerSize.height / 3);
+        displayItem->setName("DisplayButton");
+        addChild(displayItem);
+        
+        return true;
+    }
+    
+    return false;
+}
+
+std::string AudioPerformanceTest::title() const
+{
+    return "Test Performance of AudioEngine::play2d, audio is played 1 time per second";
+}
+
+std::string AudioPerformanceTest::subtitle() const
+{
+    return "Please see console for the result";
 }
 

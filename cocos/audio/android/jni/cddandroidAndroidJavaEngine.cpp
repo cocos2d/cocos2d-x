@@ -23,16 +23,17 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
+#define  LOG_TAG    "cocosdenshion::android::AndroidJavaEngine"
+
 #include "audio/android/jni/cddandroidAndroidJavaEngine.h"
 #include <stdlib.h>
-#include <android/log.h>
+
 #include <sys/system_properties.h>
 #include "audio/android/ccdandroidUtils.h"
 #include "audio/include/AudioEngine.h"
 #include "platform/android/jni/JniHelper.h"
 
 // logging
-#define  LOG_TAG    "cocosdenshion::android::AndroidJavaEngine"
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
 
 // Java class

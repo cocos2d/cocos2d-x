@@ -1,6 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -22,19 +21,28 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#ifndef __Java_org_cocos2dx_lib_Cocos2dxHelper_H__
-#define __Java_org_cocos2dx_lib_Cocos2dxHelper_H__
 
-#include <string>
+#ifndef COCOS_IVOLUMEPROVIDER_H
+#define COCOS_IVOLUMEPROVIDER_H
 
-typedef void (*EditTextCallback)(const char* text, void* ctx);
+#include "audio/android/audio_utils/include/audio_utils/minifloat.h"
 
-extern const char * getApkPath();
-extern std::string getPackageNameJNI();
-extern int getObbAssetFileDescriptorJNI(const char* path, long* startOffset, long* size);
-extern void conversionEncodingJNI(const char* src, int byteSize, const char* fromCharset, char* dst, const char* newCharset);
+namespace cocos2d {
 
-extern int getDeviceSampleRate();
-extern int getDeviceAudioBufferSizeInFrames();
+class IVolumeProvider
+{
+public:
+    // The provider implementation is responsible for validating that the return value is in range.
+    virtual gain_minifloat_packed_t getVolumeLR() = 0;
 
-#endif /* __Java_org_cocos2dx_lib_Cocos2dxHelper_H__ */
+protected:
+    IVolumeProvider()
+    { }
+
+    virtual ~IVolumeProvider()
+    { }
+};
+
+} // namespace cocos2d {
+
+#endif // COCOS_IVOLUMEPROVIDER_H
