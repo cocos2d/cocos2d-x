@@ -850,4 +850,14 @@ public:
     cocostudio::ILocalizationManager* _localizationBin;
 };
 
+class LabelIssue15214 : public AtlasDemoNew
+{
+public:
+    CREATE_FUNC(LabelIssue15214);
+
+    LabelIssue15214();
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
 #endif
