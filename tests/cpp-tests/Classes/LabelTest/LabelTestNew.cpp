@@ -106,6 +106,8 @@ NewLabelTests::NewLabelTests()
     ADD_TEST_CASE(LabelBold);
 
     ADD_TEST_CASE(LabelLocalizationTest);
+
+    ADD_TEST_CASE(LabelIssue15214);
 };
 
 LabelFNTColorAndOpacity::LabelFNTColorAndOpacity()
@@ -3148,4 +3150,30 @@ void LabelLocalizationTest::onChangedRadioButtonSelect(RadioButton* radioButton,
     default:
         break;
     }
+}
+
+// LabelBMFontBinaryFormat
+LabelIssue15214::LabelIssue15214()
+{
+    auto size = Director::getInstance()->getVisibleSize();
+    Label* label = Label::createWithTTF("CHECK!", "fonts/arial.ttf", 48.0f);
+    label->enableUnderline();
+    label->setColor(cocos2d::Color3B::BLUE);
+    label->setPosition(size.width/2, size.height/3*2);
+    this->addChild(label);
+    label = Label::createWithSystemFont("CHECK!", "Verdana", 48.0f);
+    label->enableUnderline();
+    label->setColor(cocos2d::Color3B::BLUE);
+    label->setPosition(size.width/2, size.height/3*1);
+    this->addChild(label);
+}
+
+std::string LabelIssue15214::title() const
+{
+    return "Githug Issue 15214";
+}
+
+std::string LabelIssue15214::subtitle() const
+{
+    return "Font and underline should be of the same color";
 }

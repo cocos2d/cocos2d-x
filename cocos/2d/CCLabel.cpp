@@ -1876,16 +1876,22 @@ void Label::updateDisplayedColor(const Color3B& parentColor)
 {
     Node::updateDisplayedColor(parentColor);
 
+    if (_currentLabelType == LabelType::TTF || _currentLabelType == LabelType::STRING_TEXTURE)
+        setTextColor(Color4B(_displayedColor));
+
     if (_textSprite)
     {
         _textSprite->updateDisplayedColor(_displayedColor);
-        if (_shadowNode)
-        {
-            _shadowNode->updateDisplayedColor(_displayedColor);
-        }
+    }
 
-        if (_underlineNode)
-            _contentDirty = true;
+    if (_shadowNode)
+    {
+        _shadowNode->updateDisplayedColor(_displayedColor);
+    }
+
+    if (_underlineNode)
+    {
+        _contentDirty = true;
     }
 
     for (auto&& it : _letters)
