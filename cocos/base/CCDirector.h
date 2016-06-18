@@ -163,11 +163,11 @@ public:
     inline Scene* getRunningScene() { return _runningScene; }
 
     /** Gets previous running Scene. Director can only run one Scene at a time. */
-    inline Scene* getPreviousScene() { unsigned int c = _scenesStack.size(); return (Scene*) _scenesStack.at(c - 2); }
+    inline Scene* getPreviousScene() { long c = _scenesStack.size(); return (Scene*) _scenesStack.at(c - 2); }
     inline Scene* getRootScene() { return (Scene*) _scenesStack.at(0); }
 
     /** */
-    inline int getScenesStackCount() { return _scenesStack.size(); }
+    inline long getScenesStackCount() { return _scenesStack.size(); }
 
     /** Gets the FPS value. */
     inline float getAnimationInterval() { return _animationInterval; }
