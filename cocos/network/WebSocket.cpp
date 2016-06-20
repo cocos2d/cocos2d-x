@@ -623,7 +623,7 @@ void WebSocket::onSubThreadStarted()
 
         char portStr[10];
         sprintf(portStr, "%d", _port);
-        std::string ads_port = _host + ":" + portStr;
+        std::string ads_port = _host; // + ":" + portStr;
 
         _wsInstance = lws_client_connect(_wsContext, _host.c_str(), _port, _SSLConnection,
                                              _path.c_str(), ads_port.c_str(), ads_port.c_str(),
