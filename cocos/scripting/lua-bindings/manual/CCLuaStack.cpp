@@ -862,6 +862,14 @@ int LuaStack::luaLoadBuffer(lua_State *L, const char *chunk, int chunkSize, cons
     }
     else
     {
+        // UTF-8 BOM? skip
+        if (static_cast<unsigned char>(chunk[0]) == 0xEF &&
+            static_cast<unsigned char>(chunk[1]) == 0xBB &&
+            static_cast<unsigned char>(chunk[2]) == 0xBF)
+        {
+            chunk += 3;
+            chunkSize -= 3;
+        }
         r = luaL_loadbuffer(L, chunk, chunkSize, chunkName);
     }
 
