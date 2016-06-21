@@ -618,14 +618,14 @@ std::string FileUtils::getStringFromFile(const std::string& filename)
     // truncated
     s.resize(strlen(s.data()));
 
-    return s;
+    return std::move(s);
 }
 
 Data FileUtils::getDataFromFile(const std::string& filename)
 {
     Data d;
     getContents(filename, &d);
-    return d;
+    return std::move(d);
 }
 
 
