@@ -354,8 +354,6 @@ std::set<unsigned int>* BMFontConfiguration::parseConfigFile(const std::string& 
         }
     }
     
-    CC_SAFE_FREE(contents);
-    
     return validCharsString;
 }
 
