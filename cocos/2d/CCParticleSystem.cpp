@@ -219,6 +219,7 @@ ParticleSystem::ParticleSystem()
 , _opacityModifyRGB(false)
 , _yCoordFlipped(1)
 , _positionType(PositionType::FREE)
+, _paused(false)
 {
     modeA.gravity.setZero();
     modeA.speed = 0;
