@@ -5,7 +5,7 @@
 -- @parent_module cc
 
 --------------------------------
--- Restor the FBO, RenderTargets and viewport.
+-- Restore the FBO, RenderTargets and viewport.
 -- @function [parent=#Camera] restore 
 -- @param self
 -- @return Camera#Camera self (return value: cc.Camera)
