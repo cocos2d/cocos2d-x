@@ -505,6 +505,10 @@ var TestFrameEvent = ArmatureTestLayer.extend({
     },
     onFrameEvent: function (bone, evt, originFrameIndex, currentFrameIndex) {
         cc.log("(" + bone.getName() + ") emit a frame event (" + evt + ") at frame index (" + currentFrameIndex + ").");
+        if (cc._renderType === cc.game.RENDER_TYPE_CANVAS) {
+            return;
+        }
+
         if (!this.getActionByTag(FRAME_EVENT_ACTION_TAG) || this.getActionByTag(FRAME_EVENT_ACTION_TAG).isDone()) {
             if ("opengl" in cc.sys.capabilities) {
                 this.stopAllActions();
