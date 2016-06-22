@@ -66,6 +66,11 @@ var cc = cc || {};
         cc.Node.prototype.setLocalZOrder.apply(this, arguments);
     };
 
+    cc.Node.prototype.ignoreAnchorPointForPosition = function() {
+        logW("cc.Node.ignoreAnchorPointForPosition", "cc.Node.setIgnoreAnchorPointForPosition");
+        cc.Node.prototype.setIgnoreAnchorPointForPosition.apply(this, arguments);
+    };
+
     cc.Node.prototype.nodeToParentTransform = function() {
         logW("cc.Node.nodeToParentTransform", "cc.Node.getNodeToParentTransform");
         return cc.Node.prototype.getNodeToParentTransform.apply(this, arguments);
