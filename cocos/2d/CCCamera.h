@@ -249,7 +249,7 @@ public:
      */
     void apply();
     /**
-     Restor the FBO, RenderTargets and viewport.
+     Restore the FBO, RenderTargets and viewport.
      */
     void restore();
 

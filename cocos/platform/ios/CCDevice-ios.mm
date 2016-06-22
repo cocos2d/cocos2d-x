@@ -402,7 +402,7 @@ static bool _initWithString(const char * text, cocos2d::Device::TextAlign align,
                                                    blue:info->tintColorB
                                                   alpha:info->tintColorA];
 
-        //adjust text rect acoording to overflow
+        // adjust text rect according to overflow
         NSMutableDictionary* tokenAttributesDict = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                              foregroundColor,NSForegroundColorAttributeName,
                                              font, NSFontAttributeName,

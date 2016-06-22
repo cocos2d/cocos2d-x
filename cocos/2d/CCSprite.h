@@ -550,7 +550,7 @@ CC_CONSTRUCTOR_ACCESS :
      * A SpriteFrame will be fetched from the SpriteFrameCache by name.
      * If the SpriteFrame doesn't exist it will raise an exception.
      *
-     * @param   spriteFrameName  A key string that can fected a valid SpriteFrame from SpriteFrameCache.
+     * @param   spriteFrameName  A key string that can fetched a valid SpriteFrame from SpriteFrameCache.
      * @return  True if the sprite is initialized properly, false otherwise.
      */
     virtual bool initWithSpriteFrameName(const std::string& spriteFrameName);

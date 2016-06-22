@@ -394,7 +394,7 @@ public:
 
     /**
      * Renders a Scene with a Renderer
-     * This method is called dirctly by the Director
+     * This method is called directly by the Director
      */
     void renderScene(Scene* scene, Renderer* renderer);
 
