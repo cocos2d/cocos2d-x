@@ -114,7 +114,7 @@ public:
            int count = strlen(text);
            jbyteArray strArray = methodInfo.env->NewByteArray(count);
            methodInfo.env->SetByteArrayRegion(strArray, 0, count, reinterpret_cast<const jbyte*>(text));
-           jstring jstrFont = methodInfo.env->NewStringUTF(fullPathOrFontName.c_str());
+           jstring jstrFont = methodInfo.env->NewStringUTF(fullPathOrFontName.empty() ? textDefinition._fontName.c_str() : fullPathOrFontName.c_str());
 
            if(!methodInfo.env->CallStaticBooleanMethod(methodInfo.classID, methodInfo.methodID, strArray,
                jstrFont, textDefinition._fontSize, textDefinition._fontFillColor.r, textDefinition._fontFillColor.g, 
