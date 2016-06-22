@@ -227,6 +227,10 @@
 		1A0EE43318CDF799004CD58F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ABCA39E18CD9EE50087CE3A /* UIKit.framework */; };
 		1A0EE43418CDF799004CD58F /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ABCA39C18CD9ED80087CE3A /* AVFoundation.framework */; };
 		1A0EE43518CDF799004CD58F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64832165F3AFD007D4F18 /* Foundation.framework */; };
+		1A78A5521D1A3C9B00B61B27 /* ccs-res in Resources */ = {isa = PBXBuildFile; fileRef = 460629771CDB4DBA00B44058 /* ccs-res */; };
+		1A78A5531D1A3CE800B61B27 /* ccs-res in Resources */ = {isa = PBXBuildFile; fileRef = 460629771CDB4DBA00B44058 /* ccs-res */; };
+		1A78A5541D1A3D0F00B61B27 /* ccs-res in Resources */ = {isa = PBXBuildFile; fileRef = 460629771CDB4DBA00B44058 /* ccs-res */; };
+		1A78A5551D1A3D1500B61B27 /* ccs-res in Resources */ = {isa = PBXBuildFile; fileRef = 460629771CDB4DBA00B44058 /* ccs-res */; };
 		1AAF534D180E2F4E000584C8 /* libcocos2d Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FB01807A4F9005B8026 /* libcocos2d Mac.a */; };
 		1AAF5400180E39D4000584C8 /* libcocos2d iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FBE1807A4F9005B8026 /* libcocos2d iOS.a */; };
 		1ABCA28718CD91510087CE3A /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64822165F391E007D4F18 /* Cocoa.framework */; };
@@ -5949,6 +5953,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1A78A5521D1A3C9B00B61B27 /* ccs-res in Resources */,
 				150983E11B1C514B007F3818 /* NavMesh in Resources */,
 				15B914491B15721400C6B95B /* Shaders3D in Resources */,
 				15B914481B156A3700C6B95B /* Materials in Resources */,
@@ -5998,6 +6003,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1A78A5541D1A3D0F00B61B27 /* ccs-res in Resources */,
 				15BF83C71B1D9E8900D518FA /* NavMesh in Resources */,
 				15B9144A1B15A18C00C6B95B /* Materials in Resources */,
 				15B9144B1B15A18C00C6B95B /* Shaders3D in Resources */,
@@ -6131,6 +6137,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1A78A5531D1A3CE800B61B27 /* ccs-res in Resources */,
 				507B41021C31BEA60067B53E /* components in Resources */,
 				507B41031C31BEA60067B53E /* Icon-144.png in Resources */,
 				507B41041C31BEA60067B53E /* Icon-50.png in Resources */,
@@ -6216,6 +6223,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1A78A5551D1A3D1500B61B27 /* ccs-res in Resources */,
 				507B43811C31FB670067B53E /* NavMesh in Resources */,
 				507B43821C31FB670067B53E /* Materials in Resources */,
 				507B43831C31FB670067B53E /* Shaders3D in Resources */,
