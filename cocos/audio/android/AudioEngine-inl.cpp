@@ -439,7 +439,7 @@ void AudioEngineImpl::preload(const std::string& filePath, std::function<void(bo
     CCLOG("Preload not support on Anroid");
     if (callback)
     {
-        callback(false);
+        callback(true);
     }
 }
 
