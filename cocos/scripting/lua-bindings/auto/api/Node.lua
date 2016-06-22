@@ -937,7 +937,7 @@
         
 --------------------------------
 -- LocalZOrder is the 'key' used to sort the node relative to its siblings.<br>
--- The Node's parent will sort all its children based ont the LocalZOrder value.<br>
+-- The Node's parent will sort all its children based on the LocalZOrder value.<br>
 -- If two nodes have the same LocalZOrder, then the node that was added first to the children's array will be in front of the other node in the array.<br>
 -- Also, the Scene Graph is traversed using the "In-Order" tree traversal algorithm ( http:en.wikipedia.org/wiki/Tree_traversal#In-order )<br>
 -- And Nodes that have LocalZOder values < 0 are the "left" subtree<br>
