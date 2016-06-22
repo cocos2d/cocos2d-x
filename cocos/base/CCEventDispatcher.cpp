@@ -845,8 +845,10 @@ void EventDispatcher::dispatchTouchEventToListeners(EventListenerVector* listene
             // second, for all camera call all listeners
             // get a copy of cameras, prevent it's been modified in listener callback
             // if camera's depth is greater, process it earlier
-            for (auto& camera: scene->getCameras())
+            auto cameras = scene->getCameras();
+            for (auto rit = cameras.rbegin(); rit != cameras.rend(); ++rit)
             {
+                Camera* camera = *rit;
                 if (camera->isVisible() == false)
                 {
                     continue;
