@@ -299,9 +299,9 @@ static int unlink_cb(const char *fpath, const struct stat *sb, int typeflag, str
 
 bool FileUtilsApple::removeDirectory(const std::string& path)
 {
-    if (path.size() > 0 && path[path.size() - 1] != '/')
+    if (path.empty())
     {
-        CCLOGERROR("Fail to remove directory, path must terminate with '/': %s", path.c_str());
+        CCLOGERROR("Fail to remove directory, path is empty!");
         return false;
     }
 
