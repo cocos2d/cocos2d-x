@@ -101,7 +101,7 @@ static char *_js_log_buf = NULL;
 static std::vector<sc_register_sth> registrationList;
 
 // name ~> JSScript map
-static std::unordered_map<std::string, JSScript*> filename_script;
+static std::unordered_map<std::string, JS::PersistentRootedScript*> filename_script;
 // port ~> socket map
 static std::unordered_map<int,int> ports_sockets;
 
@@ -651,7 +651,7 @@ static std::string RemoveFileExt(const std::string& filePath) {
     }
 }
 
-JSScript* ScriptingCore::getScript(const char *path)
+JS::PersistentRootedScript* ScriptingCore::getScript(const char *path)
 {
     // a) check jsc file first
     std::string byteCodePath = RemoveFileExt(std::string(path)) + BYTE_CODE_FILE_EXT;
@@ -666,27 +666,32 @@ JSScript* ScriptingCore::getScript(const char *path)
     return NULL;
 }
 
-void ScriptingCore::compileScript(const char *path, JS::HandleObject global, JSContext* cx)
+JS::PersistentRootedScript* ScriptingCore::compileScript(const char *path, JS::HandleObject global, JSContext* cx)
 {
     if (!path) {
-        return;
+        return nullptr;
     }
 
-    if (getScript(path)) {
-        return;
+    JS::PersistentRootedScript* script = getScript(path);
+    if (script != nullptr) {
+        return script;
     }
-
-    cocos2d::FileUtils *futil = cocos2d::FileUtils::getInstance();
-
-    if (cx == NULL) {
+    
+    if (cx == nullptr) {
         cx = _cx;
     }
+    
+    cocos2d::FileUtils *futil = cocos2d::FileUtils::getInstance();
 
     JSAutoCompartment ac(cx, global);
-
-    JS::RootedScript script(cx);
+    script = new (std::nothrow) JS::PersistentRootedScript(cx);
+    if (script == nullptr) {
+        return nullptr;
+    }
+    
     JS::RootedObject obj(cx, global);
-
+    bool compileSucceed = false;
+    
     // a) check jsc file first
     std::string byteCodePath = RemoveFileExt(std::string(path)) + BYTE_CODE_FILE_EXT;
 
@@ -696,12 +701,17 @@ void ScriptingCore::compileScript(const char *path, JS::HandleObject global, JSC
         Data data = futil->getDataFromFile(byteCodePath);
         if (!data.isNull())
         {
-            script = JS_DecodeScript(cx, data.getBytes(), static_cast<uint32_t>(data.getSize()), nullptr);
+            *script = JS_DecodeScript(cx, data.getBytes(), static_cast<uint32_t>(data.getSize()), nullptr);
+        }
+        
+        if (*script) {
+            compileSucceed = true;
+            filename_script[byteCodePath] = script;
         }
     }
 
     // b) no jsc file, check js file
-    if (!script)
+    if (!(*script))
     {
         /* Clear any pending exception from previous failed decoding.  */
         ReportException(cx);
@@ -717,17 +727,26 @@ void ScriptingCore::compileScript(const char *path, JS::HandleObject global, JSC
         std::string jsFileContent = futil->getStringFromFile(fullPath);
         if (!jsFileContent.empty())
         {
-            ok = JS::Compile(cx, obj, op, jsFileContent.c_str(), jsFileContent.size(), &script);
+            ok = JS::Compile(cx, obj, op, jsFileContent.c_str(), jsFileContent.size(), &(*script));
         }
 #else
-        ok = JS::Compile(cx, obj, op, fullPath.c_str(), &script);
+        ok = JS::Compile(cx, obj, op, fullPath.c_str(), &(*script));
 #endif
         if (ok) {
+            compileSucceed = true;
             filename_script[fullPath] = script;
         }
     }
     else {
         filename_script[byteCodePath] = script;
+    }
+    
+    if (compileSucceed) {
+        return script;
+    } else {
+        LOGD("ScriptingCore:: compileScript fail:%s", path);
+        CC_SAFE_DELETE(script);
+        return nullptr;
     }
 }
 
@@ -737,6 +756,7 @@ void ScriptingCore::cleanScript(const char *path)
     auto it = filename_script.find(byteCodePath);
     if (it != filename_script.end())
     {
+        delete it->second;
         filename_script.erase(it);
     }
 
@@ -744,11 +764,12 @@ void ScriptingCore::cleanScript(const char *path)
     it = filename_script.find(fullPath);
     if (it != filename_script.end())
     {
+        delete it->second;
         filename_script.erase(it);
     }
 }
 
-std::unordered_map<std::string, JSScript*>  &ScriptingCore::getFileScript()
+std::unordered_map<std::string, JS::PersistentRootedScript*>& ScriptingCore::getFileScript()
 {
     return filename_script;
 }
@@ -769,13 +790,16 @@ bool ScriptingCore::runScript(const char *path, JS::HandleObject global, JSConte
         cx = _cx;
     }
 
-    compileScript(path,global,cx);
-    JS::RootedScript script(cx, getScript(path));
+    auto script = compileScript(path, global, cx);
+    if (script == nullptr) {
+        return false;
+    }
+    
     bool evaluatedOK = false;
     if (script) {
         JS::RootedValue rval(cx);
         JSAutoCompartment ac(cx, global);
-        evaluatedOK = JS_ExecuteScript(cx, global, script, &rval);
+        evaluatedOK = JS_ExecuteScript(cx, global, *script, &rval);
         if (false == evaluatedOK) {
             cocos2d::log("Evaluating %s failed (evaluatedOK == JS_FALSE)", path);
             JS_ReportPendingException(cx);
@@ -797,13 +821,13 @@ bool ScriptingCore::requireScript(const char *path, JS::HandleObject global, JSC
         cx = _cx;
     }
 
-    compileScript(path,global,cx);
-    JS::RootedScript script(cx, getScript(path));
+    auto script = compileScript(path, global, cx);
+
     bool evaluatedOK = false;
     if (script)
     {
         JSAutoCompartment ac(cx, global);
-        evaluatedOK = JS_ExecuteScript(cx, global, script, jsvalRet);
+        evaluatedOK = JS_ExecuteScript(cx, global, (*script), jsvalRet);
         if (false == evaluatedOK)
         {
             cocos2d::log("(evaluatedOK == JS_FALSE)");
