@@ -459,7 +459,7 @@ MyXMLVisitor::MyXMLVisitor(RichText* richText)
     
     MyXMLVisitor::setTagDescription("outline", true, [](const ValueMap& tagAttrValueMap) {
         // supported attributes:
-        // color, cize
+        // color, size
         ValueMap attrValueMap;
         
         attrValueMap[RichText::KEY_TEXT_STYLE] = RichText::VALUE_TEXT_STYLE_OUTLINE;

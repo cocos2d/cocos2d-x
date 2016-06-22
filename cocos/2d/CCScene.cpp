@@ -206,7 +206,7 @@ void Scene::render(Renderer* renderer, const Mat4& eyeTransform, const Mat4* eye
         // b) modify the "additional transform" matrix
         // both alternatives are correct, if the user manually modifies the camera with a camera->setPosition()
         // then the "nodeToParent transform" will be lost.
-        // And it is important that the change is "permament", because the matrix might be used for calculate
+        // And it is important that the change is "permanent", because the matrix might be used for calculate
         // culling and other stuff.
         if (eyeProjection)
             camera->setAdditionalProjection(*eyeProjection * camera->getProjectionMatrix().getInversed());
