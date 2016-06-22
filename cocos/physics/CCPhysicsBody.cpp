@@ -953,7 +953,11 @@ void PhysicsBody::onAdd()
 
 void PhysicsBody::onRemove()
 {
+    CCASSERT(_owner != nullptr, "_owner can't be nullptr");
+
     removeFromPhysicsWorld();
+
+    _owner->_physicsBody = nullptr;
 }
 
 void PhysicsBody::addToPhysicsWorld()
@@ -968,10 +972,11 @@ void PhysicsBody::addToPhysicsWorld()
 
 void PhysicsBody::removeFromPhysicsWorld()
 {
-    if (_world)
+    if (_owner)
     {
-        _world->removeBody(this);
-        _world = nullptr;
+        auto scene = _owner->getScene();
+        if (scene)
+            scene->getPhysicsWorld()->removeBody(this);
     }
 }
 
