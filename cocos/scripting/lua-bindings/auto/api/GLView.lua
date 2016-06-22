@@ -189,7 +189,7 @@
         
 --------------------------------
 -- Renders a Scene with a Renderer<br>
--- This method is called dirctly by the Director
+-- This method is called directly by the Director
 -- @function [parent=#GLView] renderScene 
 -- @param self
 -- @param #cc.Scene scene
