@@ -243,7 +243,19 @@ public class Cocos2dxEditBoxHelper {
                 if (editBox != null) {
                     Typeface tf;
                     if (!fontName.isEmpty()) {
-                        tf  =  Typeface.create(fontName, Typeface.NORMAL);
+                        if (fontName.endsWith(".ttf")) {
+                            try {
+                                tf = Cocos2dxTypefaces.get(mCocos2dxActivity.getContext(), fontName);
+                            } catch (final Exception e) {
+                                Log.e("Cocos2dxEditBoxHelper", "error to create ttf type face: "
+                                        + fontName);
+                                // The file may not find, use system font.
+                                tf  =  Typeface.create(fontName, Typeface.NORMAL);
+                            }
+                        } else {
+                            tf  =  Typeface.create(fontName, Typeface.NORMAL);
+                        }
+
                     }else{
                         tf = Typeface.DEFAULT;
                     }
