@@ -661,74 +661,6 @@ var SpriteBatchNodeZOrder = SpriteTestDemo.extend({
 
 //------------------------------------------------------------------
 //
-// SpriteBatchNodeReorder
-//
-//------------------------------------------------------------------
-var SpriteBatchNodeReorder = SpriteTestDemo.extend({
-
-    _title:"SpriteBatchNode: reorder #1",
-    _subtitle:"Should not crash",
-
-    ctor:function () {
-        //----start15----ctor
-        this._super();
-        var a = [];
-        var asmtest = new cc.SpriteBatchNode(s_ghosts);
-
-        for (var i = 0; i < 10; i++) {
-            var s1 = new cc.Sprite(asmtest.texture, cc.rect(0, 0, 50, 50));
-            a.push(s1);
-            asmtest.addChild(s1, 10);
-        }
-
-        for (i = 0; i < 10; i++) {
-            if (i != 5)
-                asmtest.reorderChild(a[i], 9);
-        }
-
-        var prev = -1, currentIndex;
-        var children = asmtest.children;
-        var child;
-        for (i = 0; i < children.length; i++) {
-            child = children[i];
-            if (!child)
-                break;
-
-            //TODO need fixed
-            currentIndex = child.atlasIndex;
-            //cc.Assert(prev == currentIndex - 1, "Child order failed");
-            ////----UXLog("children %x - atlasIndex:%d", child, currentIndex);
-            prev = currentIndex;
-        }
-
-        prev = -1;
-        var sChildren = asmtest.descendants;
-        for (i = 0; i < sChildren.length; i++) {
-            child = sChildren[i];
-            if (!child)
-                break;
-
-            currentIndex = child.atlasIndex;
-            //cc.Assert(prev == currentIndex - 1, "Child order failed");
-            ////----UXLog("descendant %x - atlasIndex:%d", child, currentIndex);
-            prev = currentIndex;
-        }
-        //----end15----
-    },
-    //
-    // Automation
-    //
-    testDuration:1.2,
-    getExpectedResult:function () {
-        return JSON.stringify(true);
-    },
-    getCurrentResult:function () {
-        return JSON.stringify(true);
-    }
-});
-
-//------------------------------------------------------------------
-//
 // SpriteBatchNodeReorderIssue744
 //
 //------------------------------------------------------------------
@@ -957,262 +889,6 @@ var SpriteBatchNodeReorderIssue767 = SpriteTestDemo.extend({
         this.curPixel2 = this.readPixels(winSize.width / 2 + 11, winSize.height / 2 - 11, 2, 2);
         var ret = {"pixel1":this.containsPixel(this.curPixel1, this.pixel1) ? "yes" : "no",
             "pixel2":this.containsPixel(this.curPixel2, this.pixel2) ? "yes" : "no"};
-        return JSON.stringify(ret);
-    }
-});
-
-//------------------------------------------------------------------
-//
-// SpriteZVertex
-//
-//------------------------------------------------------------------
-var SpriteZVertex = SpriteTestDemo.extend({
-    _dir:0,
-    _time:0,
-    _title:"Sprite: openGL Z vertex",
-    _subtitle:"Scene should rotate",
-
-    ctor:function () {
-        //----start19----ctor
-        this._super(cc.color(255, 0, 0, 80), cc.color(255, 98, 117, 20));
-
-
-        if ("opengl" in cc.sys.capabilities && cc._renderType === cc.game.RENDER_TYPE_WEBGL) {
-
-            gl.enable(gl.DEPTH_TEST);
-            //
-            // This test tests z-order
-            // If you are going to use it is better to use a 3D projection
-            //
-            // WARNING:
-            // The developer is resposible for ordering it's sprites according to it's Z if the sprite has
-            // transparent parts.
-            //
-
-            //
-            // Configure shader to mimic glAlphaTest
-            //
-            var alphaTestShader = cc.shaderCache.getProgram(cc.SHADER_SPRITE_POSITION_TEXTURECOLORALPHATEST);
-            var glprogram = alphaTestShader.getProgram();
-            var alphaValueLocation = gl.getUniformLocation(glprogram, cc.UNIFORM_ALPHA_TEST_VALUE_S);
-
-            // set alpha test value
-            // NOTE: alpha test shader is hard-coded to use the equivalent of a glAlphaFunc(GL_GREATER) comparison
-            gl.useProgram(glprogram);
-            alphaTestShader.setUniformLocationF32(alphaValueLocation, 0.5);
-
-            this._dir = 1;
-            this._time = 0;
-
-            var step = winSize.width / 12;
-
-            var node = new cc.Node();
-            // camera uses the center of the image as the pivoting point
-            node.width = winSize.width;
-	        node.height = winSize.height;
-            node.anchorX = 0.5;
-            node.anchorY = 0.5;
-            node.x = winSize.width / 2;
-            node.y = winSize.height / 2;
-
-            this.addChild(node, 0);
-            var sprite;
-            for (var i = 0; i < 5; i++) {
-                sprite = new cc.Sprite(s_grossini_dance_atlas, cc.rect(0, 121, 85, 121));
-                sprite.x = (i + 1) * step;
-                sprite.y = winSize.height / 2;
-                sprite.vertexZ = 10 + i * 40;
-                sprite.shaderProgram = alphaTestShader;
-                node.addChild(sprite, 0);
-            }
-
-            for (i = 5; i < 11; i++) {
-                sprite = new cc.Sprite(s_grossini_dance_atlas, cc.rect(85, 0, 85, 121));
-                sprite.x = (i + 1) * step;
-                sprite.y = winSize.height / 2;
-                sprite.vertexZ = 10 + (10 - i) * 40;
-                sprite.shaderProgram = alphaTestShader;
-                node.addChild(sprite, 0);
-            }
-
-            this.runAction(cc.orbitCamera(10, 1, 0, 0, 360, 0, 0));
-        } else {
-            var label = new cc.LabelTTF("Not supported on HTML5-canvas", "Times New Roman", 30);
-            this.addChild(label);
-            label.x = winSize.width / 2;
-            label.y = winSize.height / 2;
-        }
-        //----end19----
-    },
-    onEnter:function () {
-        //----start19----onEnter
-        this._super();
-        if ("opengl" in cc.sys.capabilities && cc._renderType === cc.game.RENDER_TYPE_WEBGL) {
-            director.setProjection(cc.Director.PROJECTION_3D);
-            gl.enable(gl.DEPTH_TEST);
-
-            // Avoid Z-fighting with menu and title
-            var menu = this.getChildByTag(BASE_TEST_MENU_TAG);
-            menu.vertexZ = 1;
-            var title = this.getChildByTag(BASE_TEST_TITLE_TAG);
-            title.vertexZ = 1;
-            var subtitle = this.getChildByTag(BASE_TEST_SUBTITLE_TAG);
-            subtitle.vertexZ = 1;
-        }
-        //----end19----
-    },
-    onExit:function () {
-        //----start19----onExit
-        if ("opengl" in cc.sys.capabilities && cc._renderType === cc.game.RENDER_TYPE_WEBGL) {
-            director.setProjection(cc.Director.PROJECTION_2D);
-            gl.disable(gl.DEPTH_TEST);
-        }
-        this._super();
-        //----end19----
-    },
-    // Automation
-    testDuration:2.2,
-    pixel1:{"0":51, "1":0, "2":51, "3":255},
-    pixel2:{"0":0, "1":0, "2":0, "3":255},
-    getExpectedResult:function () {
-        var ret = {"pixel1":"yes", "pixel2":"yes", "pixel3":"yes"};
-        return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
-        var ret1 = this.readPixels(winSize.width / 2 - 171, winSize.height / 2, 5, 5);
-        var ret2 = this.readPixels(winSize.width / 2 - 189, winSize.height / 2, 5, 5);
-        var ret3 = this.readPixels(winSize.width / 2 - 146, winSize.height / 2, 5, 5);
-        var ret = {"pixel1":this.containsPixel(ret1, this.pixel1, false) ? "yes" : "no",
-            "pixel2":this.containsPixel(ret2, this.pixel2, false) ? "yes" : "no",
-            "pixel3":this.containsPixel(ret3, this.pixel2, false) ? "yes" : "no"};
-        return JSON.stringify(ret);
-    }
-});
-
-//------------------------------------------------------------------
-//
-// SpriteBatchNodeZVertex
-//
-//------------------------------------------------------------------
-var SpriteBatchNodeZVertex = SpriteTestDemo.extend({
-    _dir:0,
-    _time:0,
-    _title:"SpriteBatchNode: openGL Z vertex",
-    _subtitle:"Scene should rotate",
-
-    ctor:function () {
-        //----start20----ctor
-        this._super(cc.color(255, 0, 0, 80), cc.color(255, 98, 117, 20));
-
-        if ("opengl" in cc.sys.capabilities && cc._renderType === cc.game.RENDER_TYPE_WEBGL) {
-
-            //
-            // This test tests z-order
-            // If you are going to use it is better to use a 3D projection
-            //
-            // WARNING:
-            // The developer is resposible for ordering it's sprites according to it's Z if the sprite has
-            // transparent parts.
-            //
-
-            //
-            // Configure shader to mimic glAlphaTest
-            //
-            var alphaTestShader = cc.shaderCache.getProgram("ShaderPositionTextureColorAlphaTest");
-            var glprogram = alphaTestShader.getProgram();
-            var alphaValueLocation = gl.getUniformLocation(glprogram, cc.UNIFORM_ALPHA_TEST_VALUE_S);
-
-            // set alpha test value
-            // NOTE: alpha test shader is hard-coded to use the equivalent of a glAlphaFunc(GL_GREATER) comparison
-            gl.useProgram(glprogram);
-            alphaTestShader.setUniformLocationF32(alphaValueLocation, 0.5);
-
-            var step = winSize.width / 12;
-
-            // small capacity. Testing resizing.
-            // Don't use capacity=1 in your real game. It is expensive to resize the capacity
-            var batch = new cc.SpriteBatchNode(s_grossini_dance_atlas, 1);
-            // camera uses the center of the image as the pivoting point
-            batch.width = winSize.width;
-	        batch.height = winSize.height;
-            batch.anchorX = 0.5;
-            batch.anchorY = 0.5;
-            batch.x = winSize.width / 2;
-            batch.y = winSize.height / 2;
-            batch.shaderProgram = alphaTestShader;
-
-            this.addChild(batch, 0, TAG_SPRITE_BATCH_NODE);
-            var sprite;
-
-            for (var i = 0; i < 5; i++) {
-                sprite = new cc.Sprite(batch.texture, cc.rect(0, 121, 85, 121));
-                sprite.x = (i + 1) * step;
-                sprite.y = winSize.height / 2;
-                sprite.vertexZ = 10 + i * 40;
-                batch.addChild(sprite, 0);
-
-            }
-
-            for (i = 5; i < 11; i++) {
-                sprite = new cc.Sprite(batch.texture, cc.rect(85, 0, 85, 121));
-                sprite.x = (i + 1) * step;
-                sprite.y = winSize.height / 2;
-                sprite.vertexZ = 10 + (10 - i) * 40;
-                batch.addChild(sprite, 0);
-            }
-
-            this.runAction(cc.orbitCamera(10, 1, 0, 0, 360, 0, 0));
-        } else {
-            var label = new cc.LabelTTF("Not supported on HTML5-canvas", "Times New Roman", 30);
-            this.addChild(label);
-            label.x = winSize.width / 2;
-            label.y = winSize.height / 2;
-        }
-        //----end20----
-    },
-    onEnter:function () {
-        //----start20----onEnter
-        this._super();
-
-        if ("opengl" in cc.sys.capabilities && cc._renderType === cc.game.RENDER_TYPE_WEBGL) {
-            director.setProjection(cc.Director.PROJECTION_3D);
-            gl.enable(gl.DEPTH_TEST);
-
-            // Avoid Z-fighting with menu and title
-            var menu = this.getChildByTag(BASE_TEST_MENU_TAG);
-            menu.vertexZ = 1;
-            var title = this.getChildByTag(BASE_TEST_TITLE_TAG);
-            title.vertexZ = 1;
-            var subtitle = this.getChildByTag(BASE_TEST_SUBTITLE_TAG);
-            subtitle.vertexZ = 1;
-
-        }
-        //----end20----
-    },
-    onExit:function () {
-        //----start20----onExit
-        if ("opengl" in cc.sys.capabilities && cc._renderType === cc.game.RENDER_TYPE_WEBGL) {
-            director.setProjection(cc.Director.PROJECTION_2D);
-            gl.disable(gl.DEPTH_TEST);
-        }
-        this._super();
-        //----end20----
-    },
-    // Automation
-    testDuration:2.2,
-    pixel1:{"0":51, "1":0, "2":51, "3":255},
-    pixel2:{"0":0, "1":0, "2":0, "3":255},
-    getExpectedResult:function () {
-        var ret = {"pixel1":"yes", "pixel2":"yes", "pixel3":"yes"};
-        return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
-        var ret1 = this.readPixels(winSize.width / 2 - 171, winSize.height / 2, 5, 5);
-        var ret2 = this.readPixels(winSize.width / 2 - 189, winSize.height / 2, 5, 5);
-        var ret3 = this.readPixels(winSize.width / 2 - 146, winSize.height / 2, 5, 5);
-        var ret = {"pixel1":this.containsPixel(ret1, this.pixel1, false) ? "yes" : "no",
-            "pixel2":this.containsPixel(ret2, this.pixel2, false) ? "yes" : "no",
-            "pixel3":this.containsPixel(ret3, this.pixel2, false) ? "yes" : "no"};
         return JSON.stringify(ret);
     }
 });
@@ -4288,58 +3964,6 @@ var SpriteBatchNodeChildrenChildren = SpriteTestDemo.extend({
 
 //------------------------------------------------------------------
 //
-// SpriteNilTexture
-//
-//------------------------------------------------------------------
-var SpriteNilTexture = SpriteTestDemo.extend({
-
-    _title:"Sprite without texture",
-    _subtitle:"opacity and color should work",
-
-    ctor:function () {
-        //----start38----ctor
-        this._super();
-
-        // TEST: If no texture is given, then Opacity + Color should work.
-        var sprite = new cc.Sprite();
-        sprite.setTextureRect(cc.rect(0, 0, 300, 300));
-        // sprite.color = cc.color.RED;
-        sprite.color = cc.color(255, 0, 0);
-        sprite.opacity = 128;
-        sprite.x = 3 * winSize.width / 4;
-        sprite.y = winSize.height / 2;
-        this.addChild(sprite, 100);
-
-        sprite = new cc.Sprite();
-        sprite.setTextureRect(cc.rect(0, 0, 300, 300));
-        //sprite.color = cc.color.BLUE;
-        sprite.color = cc.color(0, 0, 255);
-        sprite.opacity = 128;
-        sprite.x = winSize.width / 4;
-        sprite.y = winSize.height / 2;
-        this.addChild(sprite, 100);
-        //----end38----
-    },
-    //
-    // Automation
-    //
-    testDuration:1,
-    pixel1:{"0":0, "1":0, "2":128, "3":255},
-    pixel2:{"0":128, "1":0, "2":0, "3":255},
-    getExpectedResult:function () {
-        var ret = {"pixel1":"yes", "pixel2":"yes"};
-        return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
-        var ret1 = this.readPixels(winSize.width / 4, winSize.height / 2, 5, 5);
-        var ret2 = this.readPixels(3 * winSize.width / 4, winSize.height / 2, 5, 5);
-        var ret = {"pixel1":this.containsPixel(ret1, this.pixel1) ? "yes" : "no", "pixel2":this.containsPixel(ret2, this.pixel2) ? "yes" : "no"};
-        return JSON.stringify(ret);
-    }
-});
-
-//------------------------------------------------------------------
-//
 // SpriteSubclass
 //
 //------------------------------------------------------------------
@@ -4614,82 +4238,6 @@ var NodeSort = SpriteTestDemo.extend({
     },
     getCurrentResult:function () {
         return JSON.stringify(this.testOrders);
-    }
-});
-
-var SpriteBatchNodeReorderSameIndex = SpriteTestDemo.extend({
-    _batchNode:null,
-    _sprite1:null,
-    _sprite2:null,
-    _sprite3:null,
-    _sprite4:null,
-    _sprite5:null,
-
-    _title:"SpriteBatchNodeReorder same index",
-    _subtitle:"tag order in console should be 2,3,4,5,1",
-
-    ctor:function () {
-        //----start47----ctor
-        this._super();
-        this._batchNode = new cc.SpriteBatchNode(s_piece, 15);
-        this.addChild(this._batchNode, 1, 0);
-
-        this._sprite1 = new cc.Sprite(this._batchNode.texture, cc.rect(128, 0, 64, 64));
-        this._sprite1.x = 100;
-        this._sprite1.y = 160;
-        this._batchNode.addChild(this._sprite1, 3, 1);
-
-        this._sprite2 = new cc.Sprite(this._batchNode.texture, cc.rect(128, 0, 64, 64));
-        this._sprite2.x = 164;
-        this._sprite2.y = 160;
-        this._batchNode.addChild(this._sprite2, 4, 2);
-
-        this._sprite3 = new cc.Sprite(this._batchNode.texture, cc.rect(128, 0, 64, 64));
-        this._sprite3.x = 228;
-        this._sprite3.y = 160;
-        this._batchNode.addChild(this._sprite3, 4, 3);
-
-        this._sprite4 = new cc.Sprite(this._batchNode.texture, cc.rect(128, 0, 64, 64));
-        this._sprite4.x = 292;
-        this._sprite4.y = 160;
-        this._batchNode.addChild(this._sprite4, 5, 4);
-
-        this._sprite5 = new cc.Sprite(this._batchNode.texture, cc.rect(128, 0, 64, 64));
-        this._sprite5.x = 356;
-        this._sprite5.y = 160;
-        this._batchNode.addChild(this._sprite5, 6, 5);
-
-        this.scheduleOnce(this.reorderSprite, 2);
-        //----end47----
-    },
-
-    reorderSprite:function (dt) {
-        //----start47----reorderSprite
-        this._batchNode.reorderChild(this._sprite4, 4);
-        this._batchNode.reorderChild(this._sprite5, 4);
-        this._batchNode.reorderChild(this._sprite1, 4);
-
-        this._batchNode.sortAllChildren();
-
-        var descendants = this._batchNode.descendants;
-
-        for (var i = 0; i < descendants.length; i++) {
-            var child = descendants[i];
-            cc.log("tag:" + child.tag);
-            this.testDescendants.push(child.tag);
-        }
-        //----end47----
-    },
-    //
-    // Automation
-    //
-    testDuration:2.2,
-    testDescendants:[],
-    getExpectedResult:function () {
-        return JSON.stringify([2, 3, 4, 5, 1]);
-    },
-    getCurrentResult:function () {
-        return JSON.stringify(this.testDescendants);
     }
 });
 
@@ -5433,12 +4981,9 @@ var arrayOfSpriteTest = [
     SpriteBatchNodeColorOpacity,
     SpriteZOrder,
     SpriteBatchNodeZOrder,
-    SpriteBatchNodeReorder,
     SpriteBatchNodeReorderIssue744,
     SpriteBatchNodeReorderIssue766,
     SpriteBatchNodeReorderIssue767,
-    SpriteZVertex,
-    SpriteBatchNodeZVertex,
     Sprite6,
     SpriteFlip,
     SpriteBatchNodeFlip,
@@ -5456,7 +5001,6 @@ var arrayOfSpriteTest = [
     SpriteBatchNodeChildrenScale,
     SpriteChildrenChildren,
     SpriteBatchNodeChildrenChildren,
-    SpriteNilTexture,
 	SpriteSubclass,
     AnimationCacheTest,
     SpriteOffsetAnchorSkew,
@@ -5465,7 +5009,6 @@ var arrayOfSpriteTest = [
     SpriteBatchNodeOffsetAnchorSkewScale,
     SpriteOffsetAnchorFlip,
     SpriteBatchNodeOffsetAnchorFlip,
-    SpriteBatchNodeReorderSameIndex,
     SpriteBatchNodeReorderOneChild,
     NodeSort,
     SpriteSkewNegativeScaleChildren,
