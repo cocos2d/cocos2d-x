@@ -318,7 +318,7 @@ var BMFontOpacityColorAlignmentTest = AtlasDemo.extend({
         // testing anchors
         label2.anchorX = 0.5;
         label2.anchorY = 0.5;
-        label2.color = cc.color.RED ;
+        label2.color = cc.color.RED;
         this.addChild(label2, 0, TAG_BITMAP_ATLAS2);
         label2.runAction(repeat.clone());
 

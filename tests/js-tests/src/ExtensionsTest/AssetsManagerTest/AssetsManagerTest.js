@@ -199,7 +199,7 @@ var AssetsManagerLoaderScene = TestScene.extend({
         layer.addChild(this._fileLoadingBar);
 
         this._am = new jsb.AssetsManager(manifestPath, storagePath);
-        // this._am.retain();
+        this._am.retain();
 
         if (!this._am.getLocalManifest().isLoaded())
         {
