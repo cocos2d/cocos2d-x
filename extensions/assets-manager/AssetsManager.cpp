@@ -63,6 +63,7 @@ AssetsManager::AssetsManager(const char* packageUrl/* =nullptr */, const char* v
 , _isDownloading(false)
 , _shouldDeleteDelegateWhenExit(false)
 {
+    checkStoragePath();
     // convert downloader error code to AssetsManager::ErrorCode
     _downloader->onTaskError = [this](const DownloadTask& task,
                                       int errorCode,
@@ -145,7 +146,7 @@ AssetsManager::AssetsManager(const char* packageUrl/* =nullptr */, const char* v
         
         // start download;
         const string outFileName = _storagePath + TEMP_PACKAGE_FILE_NAME;
-        _downloader->createDownloadFileTask(_packageUrl, _storagePath);
+        _downloader->createDownloadFileTask(_packageUrl, outFileName);
     };
     
     // after download package, do uncompress operation
