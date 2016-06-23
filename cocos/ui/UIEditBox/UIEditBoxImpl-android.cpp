@@ -36,6 +36,7 @@
 #include "math/Vec2.h"
 #include "ui/UIHelper.h"
 #include "base/CCDirector.h"
+#include "platform/CCFileUtils.h"
 
 NS_CC_BEGIN
 
@@ -112,8 +113,17 @@ void EditBoxImplAndroid::setNativeFont(const char* pFontName, int fontSize)
 {
     auto director = cocos2d::Director::getInstance();
     auto glView = director->getOpenGLView();
-    JniHelper::callStaticVoidMethod(editBoxClassName, "setFont", 
-                                    _editBoxIndex, pFontName, 
+    auto isFontFileExists = cocos2d::FileUtils::getInstance()->isFileExist(pFontName);
+    std::string realFontPath = pFontName;
+    if(isFontFileExists) {
+        realFontPath = cocos2d::FileUtils::getInstance()->fullPathForFilename(pFontName);
+        if (realFontPath.find("assets/") == 0)
+        {
+            realFontPath = realFontPath.substr(strlen("assets/"));   // Chop out the 'assets/' portion of the path.
+        }
+    }
+    JniHelper::callStaticVoidMethod(editBoxClassName, "setFont",
+                                    _editBoxIndex, realFontPath,
                                     (float)fontSize * glView->getScaleX());
 }
 
