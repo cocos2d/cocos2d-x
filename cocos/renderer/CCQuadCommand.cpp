@@ -72,9 +72,20 @@ void QuadCommand::init(float globalOrder, GLuint textureID, GLProgramState* glPr
 
 void QuadCommand::reIndex(int indicesCount)
 {
+    // first time init: create a decent buffer size for indices to prevent too much resizing
+    if (__indexCapacity == -1)
+    {
+        indicesCount = std::max(indicesCount, 2048);
+    }
+
     if (indicesCount > __indexCapacity)
     {
+        // if resizing is needed, get needed size plus 25%, but not bigger that max size
+        indicesCount *= 1.25;
+        indicesCount = std::min(indicesCount, 65536);
+
         CCLOG("cocos2d: QuadCommand: resizing index size from [%d] to [%d]", __indexCapacity, indicesCount);
+
         _ownedIndices.push_back(__indices);
         __indices = new (std::nothrow) GLushort[indicesCount];
         __indexCapacity = indicesCount;
