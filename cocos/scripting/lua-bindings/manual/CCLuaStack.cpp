@@ -857,7 +857,7 @@ int LuaStack::luaLoadBuffer(lua_State *L, const char *chunk, int chunkSize, cons
             chunk += 3;
             chunkSize -= 3;
         }
-    }
+    };
 
     if (_xxteaEnabled && strncmp(chunk, _xxteaSign, _xxteaSignLen) == 0)
     {
