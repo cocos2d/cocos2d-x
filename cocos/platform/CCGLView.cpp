@@ -493,8 +493,10 @@ void GLView::setVR(VRIRenderer* vrRenderer)
 {
     if (_vrImpl != vrRenderer)
     {
-        if (_vrImpl)
+        if (_vrImpl) {
+            _vrImpl->cleanup();
             delete _vrImpl;
+        }
 
         if (vrRenderer)
             vrRenderer->setup(this);

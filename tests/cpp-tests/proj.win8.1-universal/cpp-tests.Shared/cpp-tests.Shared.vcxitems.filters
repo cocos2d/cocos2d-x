@@ -636,6 +636,9 @@
       <Filter>Classes\UITest\CocostudioGUISceneTest\UITabControlTest</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\SpriteFrameCacheTest\SpriteFrameCacheTest.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\VRTest\VRTest.cpp">
+      <Filter>Classes\VRTests</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ActionManagerTest\ActionManagerTest.cpp">
@@ -1379,6 +1382,9 @@
     <Filter Include="Classes\UITest\CocostudioGUISceneTest\UITabControlTest">
       <UniqueIdentifier>{aa41698e-072b-4b8b-89e0-0065e2fbb7fd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\VRTests">
+      <UniqueIdentifier>{9f993b49-f2da-4359-a39d-c1015673f22a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Page Include="$(MSBuildThisFileDirectory)..\..\..\..\cocos\platform\win8.1-universal\OpenGLESPage.xaml" />
@@ -1430,5 +1436,8 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\SpriteFrameCacheTest\SpriteFrameCacheTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\GUIEditorTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UIScene_Editor.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\VRTest\VRTest.h">
+      <Filter>Classes\VRTests</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

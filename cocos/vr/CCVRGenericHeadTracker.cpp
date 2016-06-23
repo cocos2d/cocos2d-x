@@ -228,13 +228,17 @@ Mat4 VRGenericHeadTracker::getLocalRotation()
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     CMMotionManager* motionMgr = (CMMotionManager*)_motionMgr;
-    CMDeviceMotion *motion = motionMgr.deviceMotion;
+    CMDeviceMotion* motion = motionMgr.deviceMotion;
 
-    CMRotationMatrix rotationMatrix = motion.attitude.rotationMatrix;
-    Mat4 inertialReferenceFrameToDevice0 = matrixFromRotationMatrix(rotationMatrix); // note the matrix inversion
-    Mat4 inertialReferenceFrameToDevice = inertialReferenceFrameToDevice0.getTransposed();
-    Mat4 worldToDevice =  inertialReferenceFrameToDevice * _worldToInertialReferenceFrame;
-    return  _deviceToDisplay * worldToDevice;
+    if (motion) {
+        CMRotationMatrix rotationMatrix = motion.attitude.rotationMatrix;
+        Mat4 inertialReferenceFrameToDevice0 = matrixFromRotationMatrix(rotationMatrix); // note the matrix inversion
+        Mat4 inertialReferenceFrameToDevice = inertialReferenceFrameToDevice0.getTransposed();
+        Mat4 worldToDevice =  inertialReferenceFrameToDevice * _worldToInertialReferenceFrame;
+        return  _deviceToDisplay * worldToDevice;
+    }
+    // bug!
+    return Mat4::IDENTITY;
 
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     static Vec3 prevAccel = Vec3(0,0,0);
