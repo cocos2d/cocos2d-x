@@ -63,6 +63,7 @@ public:
     virtual bool createDirectory(const std::string& path) override;
 private:
     virtual bool isFileExistInternal(const std::string& filePath) const override;
+    virtual bool isDirectoryExistInternal(const std::string& dirPath) const override;
     virtual bool removeDirectory(const std::string& dirPath) override;
     virtual void valueMapCompact(ValueMap& valueMap) override;
     virtual void valueVectorCompact(ValueVector& valueVector) override;
