@@ -60,7 +60,7 @@ using namespace Microsoft::WRL;
 
 NS_CC_BEGIN
 
-static GLViewImpl* s_pEglView = NULL;
+static GLViewImpl* s_pEglView = nullptr;
 
 GLViewImpl* GLViewImpl::create(const std::string& viewName)
 {
@@ -103,7 +103,7 @@ GLViewImpl::GLViewImpl()
 GLViewImpl::~GLViewImpl()
 {
 	CC_ASSERT(this == s_pEglView);
-    s_pEglView = NULL;
+    s_pEglView = nullptr;
 
 	// TODO: cleanup 
 }

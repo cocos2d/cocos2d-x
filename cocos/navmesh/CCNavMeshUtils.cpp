@@ -52,9 +52,9 @@ void LinearAllocator::free(void* /*ptr*/)
 void* LinearAllocator::alloc(const int size)
 {
     if (!buffer)
-        return 0;
+        return nullptr;
     if (top + size > capacity)
-        return 0;
+        return nullptr;
     unsigned char* mem = &buffer[top];
     top += size;
     return mem;

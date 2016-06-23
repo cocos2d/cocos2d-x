@@ -404,7 +404,7 @@ HRESULT MP3Reader::readAudioData(IMFSourceReader* pReader)
 
             _audioSize += cbSize;
             hr = pBuffer->Unlock();
-            pAudioData = NULL;
+            pAudioData = nullptr;
         }
 
         if (FAILED(hr)) {

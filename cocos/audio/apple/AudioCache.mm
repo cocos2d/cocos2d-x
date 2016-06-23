@@ -39,10 +39,10 @@
 typedef ALvoid	AL_APIENTRY	(*alBufferDataStaticProcPtr) (const ALint bid, ALenum format, ALvoid* data, ALsizei size, ALsizei freq);
 static ALvoid  alBufferDataStaticProc(const ALint bid, ALenum format, ALvoid* data, ALsizei size, ALsizei freq)
 {
-	static	alBufferDataStaticProcPtr	proc = NULL;
+    static alBufferDataStaticProcPtr proc = nullptr;
     
-    if (proc == NULL){
-        proc = (alBufferDataStaticProcPtr) alcGetProcAddress(NULL, (const ALCchar*) "alBufferDataStatic");
+    if (proc == nullptr) {
+        proc = (alBufferDataStaticProcPtr) alcGetProcAddress(nullptr, (const ALCchar*) "alBufferDataStatic");
     }
     
     if (proc){

@@ -685,11 +685,11 @@ int * FontFNT::getHorizontalKerningForTextUTF16(const std::u16string& text, int 
     outNumLetters = static_cast<int>(text.length());
     
     if (!outNumLetters)
-        return 0;
+        return nullptr;
     
     int *sizes = new (std::nothrow) int[outNumLetters];
     if (!sizes)
-        return 0;
+        return nullptr;
     
     for (int c = 0; c < outNumLetters; ++c)
     {
