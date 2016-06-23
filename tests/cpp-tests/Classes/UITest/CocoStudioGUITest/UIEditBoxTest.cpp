@@ -57,13 +57,13 @@ bool UIEditBoxTest::init()
         
         // top
         std::string pNormalSprite = "extensions/green_edit.png";
-        _editName = ui::EditBox::create(editBoxSize + Size(0,40), ui::Scale9Sprite::create(pNormalSprite));
-        _editName->setPosition(Vec2(visibleOrigin.x+visibleSize.width/2-50, visibleOrigin.y+visibleSize.height*3/4));
+        _editName = ui::EditBox::create(editBoxSize + Size(0,20), ui::Scale9Sprite::create(pNormalSprite));
+        _editName->setPosition(Vec2(visibleOrigin.x+visibleSize.width/2-60, visibleOrigin.y+visibleSize.height*3/4 - 20));
         _editName->setFontColor(Color3B::RED);
         _editName->setPlaceHolder("Name:");
         _editName->setPlaceholderFontColor(Color3B::WHITE);
         _editName->setMaxLength(8);
-        _editName->setFontSize(editBoxSize.height/2);
+        _editName->setFontSize(editBoxSize.height/3);
         _editName->setText("v👐👊💝");
         _editName->setReturnType(ui::EditBox::KeyboardReturnType::DONE);
         _editName->setDelegate(this);
