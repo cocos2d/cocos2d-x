@@ -243,7 +243,7 @@ public:
     int drawText(const char * pszText, SIZE& tSize, Device::TextAlign eAlign)
     {
         int nRet = 0;
-        wchar_t * pwszBuffer = 0;
+        wchar_t * pwszBuffer = nullptr;
         wchar_t* fixedText = nullptr;
         do
         {

@@ -46,7 +46,7 @@ static long getCurrentMillSecond()
     return lLastTime;
 }
 
-Application* Application::sm_pSharedApplication = 0;
+Application* Application::sm_pSharedApplication = nullptr;
 
 Application::Application()
 : _animationInterval(1.0f/60.0f*1000.0f)

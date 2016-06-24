@@ -663,7 +663,7 @@ JSScript* ScriptingCore::getScript(const char *path)
     if (filename_script.find(fullPath) != filename_script.end())
         return filename_script[fullPath];
 
-    return NULL;
+    return nullptr;
 }
 
 void ScriptingCore::compileScript(const char *path, JS::HandleObject global, JSContext* cx)

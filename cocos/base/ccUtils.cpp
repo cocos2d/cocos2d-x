@@ -136,7 +136,7 @@ void onCaptureScreen(const std::function<void(bool, const std::string&)>& afterC
                 startedCapture = false;
             };
 
-            AsyncTaskPool::getInstance()->enqueue(AsyncTaskPool::TaskType::TASK_IO, mainThread, (void*)NULL, [image, outputFile]()
+            AsyncTaskPool::getInstance()->enqueue(AsyncTaskPool::TaskType::TASK_IO, mainThread, nullptr, [image, outputFile]()
             {
                 succeedSaveToFile = image->saveToFile(outputFile);
                 delete image;

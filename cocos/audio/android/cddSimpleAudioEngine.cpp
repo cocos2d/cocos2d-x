@@ -29,7 +29,7 @@ THE SOFTWARE.
 
 namespace CocosDenshion {
 
-    static SimpleAudioEngine *s_pEngine = 0;
+    static SimpleAudioEngine *s_pEngine = nullptr;
 
     SimpleAudioEngine* SimpleAudioEngine::getInstance() {
         if (! s_pEngine) {
@@ -42,7 +42,7 @@ namespace CocosDenshion {
     void SimpleAudioEngine::end() {
         if (s_pEngine) {
             delete s_pEngine;
-            s_pEngine = NULL;
+            s_pEngine = nullptr;
         }
     }
 

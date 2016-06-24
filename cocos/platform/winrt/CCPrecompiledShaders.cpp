@@ -38,7 +38,7 @@ using namespace concurrency;
 NS_CC_BEGIN
 
 // singleton stuff
-static CCPrecompiledShaders *s_pPrecompiledShaders = NULL;
+static CCPrecompiledShaders *s_pPrecompiledShaders = nullptr;
 
 #define SHADER_NAME_PREFIX "s_"
 

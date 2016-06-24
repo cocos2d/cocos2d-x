@@ -34,7 +34,7 @@
 
 NS_CC_BEGIN
 
-Application* Application::sm_pSharedApplication = 0;
+Application* Application::sm_pSharedApplication = nullptr;
 
 Application::Application()
 {

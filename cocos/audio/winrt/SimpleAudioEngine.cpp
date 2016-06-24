@@ -28,7 +28,7 @@ USING_NS_CC;
 
 namespace CocosDenshion {
 
-Audio* s_audioController = NULL;
+Audio* s_audioController = nullptr;
 bool s_initialized = false;
 
 SimpleAudioEngine* SimpleAudioEngine::getInstance()
@@ -42,7 +42,7 @@ static Audio* sharedAudioController()
 {
     if (! s_audioController || !s_initialized)
     {
-        if(s_audioController == NULL)
+        if (s_audioController == nullptr)
         {
             s_audioController = new Audio;
         }

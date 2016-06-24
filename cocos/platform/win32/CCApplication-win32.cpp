@@ -41,7 +41,7 @@ static void PVRFrameEnableControlWindow(bool bEnable);
 NS_CC_BEGIN
 
 // sharedApplication pointer
-Application * Application::sm_pSharedApplication = 0;
+Application * Application::sm_pSharedApplication = nullptr;
 
 Application::Application()
 : _instance(nullptr)

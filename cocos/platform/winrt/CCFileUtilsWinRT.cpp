@@ -84,13 +84,13 @@ static void _checkPath()
 
 FileUtils* FileUtils::getInstance()
 {
-    if (s_sharedFileUtils == NULL)
+    if (s_sharedFileUtils == nullptr)
     {
         s_sharedFileUtils = new CCFileUtilsWinRT();
         if(!s_sharedFileUtils->init())
         {
           delete s_sharedFileUtils;
-          s_sharedFileUtils = NULL;
+          s_sharedFileUtils = nullptr;
           CCLOG("ERROR: Could not init CCFileUtilsWinRT");
         }
     }
@@ -184,7 +184,7 @@ FileUtils::Status CCFileUtilsWinRT::getContents(const std::string& filename, Res
 bool CCFileUtilsWinRT::isFileExistInternal(const std::string& strFilePath) const
 {
     bool ret = false;
-    FILE * pf = 0;
+    FILE * pf = nullptr;
 
     std::string strPath = strFilePath;
     if (!isAbsolutePath(strPath))

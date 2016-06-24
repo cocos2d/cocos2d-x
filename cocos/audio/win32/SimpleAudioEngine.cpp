@@ -82,7 +82,7 @@ void SimpleAudioEngine::end()
     while (p != sharedList().end())
     {
         delete p->second;
-        p->second = NULL;
+        p->second = nullptr;
         p++;
     }   
     sharedList().clear();
@@ -251,7 +251,7 @@ void SimpleAudioEngine::unloadEffect(const char* pszFilePath)
     if (p != sharedList().end())
     {
         delete p->second;
-        p->second = NULL;
+        p->second = nullptr;
         sharedList().erase(nID);
     }    
 }
