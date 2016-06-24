@@ -2379,7 +2379,11 @@ void jsb_ref_rebind(JSContext* cx, JS::HandleObject jsobj, js_proxy_t *proxy, co
     jsb_remove_proxy(proxy);
 
     // Rebind js obj with new action
-    jsb_new_proxy(newRef, jsobj);
+    js_proxy_t* newProxy = jsb_new_proxy(newRef, jsobj);
+    
+#if !CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+    JS::AddNamedObjectRoot(cx, &newProxy->obj, debug);
+#endif
 }
 
 // Register finalize hook
