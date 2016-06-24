@@ -1764,6 +1764,12 @@ const Mat4& Node::getNodeToParentTransform() const
 
     if (_additionalTransform)
     {
+        // This is needed to support both Node::setNodeToParentTransform() and Node::setAdditionalTransform()
+        // at the same time. The scenario is this:
+        // at some point setNodeToParentTransform() is called.
+        // and later setAdditionalTransform() is called every time. And since _transform
+        // is being overwritten everyframe, _additionalTransform[1] is used to have a copy
+        // of the last "_trasform without _additionalTransform"
         if (_transformDirty)
             _additionalTransform[1] = _transform;
 
