@@ -793,6 +793,8 @@
 		5046AB4B1AF2A8D80060550B /* MaterialSystemTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5046AB481AF2A8D80060550B /* MaterialSystemTest.cpp */; };
 		5046AB5B1AF2C4180060550B /* Materials in Resources */ = {isa = PBXBuildFile; fileRef = 5046AB5A1AF2C4180060550B /* Materials */; };
 		5046AB5C1AF2C4180060550B /* Materials in Resources */ = {isa = PBXBuildFile; fileRef = 5046AB5A1AF2C4180060550B /* Materials */; };
+		504C949C1D1C51BE00E4E9B3 /* VRTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C949A1D1C51BE00E4E9B3 /* VRTest.cpp */; };
+		504C949E1D1C51BE00E4E9B3 /* VRTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C949A1D1C51BE00E4E9B3 /* VRTest.cpp */; };
 		507B41021C31BEA60067B53E /* components in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CB318CED84500F37B72 /* components */; };
 		507B41031C31BEA60067B53E /* Icon-144.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35C7918CECF1400F37B72 /* Icon-144.png */; };
 		507B41041C31BEA60067B53E /* Icon-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35C7D18CECF1400F37B72 /* Icon-50.png */; };
@@ -1178,6 +1180,7 @@
 		507B44481C3370050067B53E /* project.json in Resources */ = {isa = PBXBuildFile; fileRef = 507B44461C3370050067B53E /* project.json */; };
 		50921EAF1B746D5F00C085CC /* DownloaderTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50921EAD1B746D5F00C085CC /* DownloaderTest.cpp */; };
 		50921EB01B746D5F00C085CC /* DownloaderTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50921EAD1B746D5F00C085CC /* DownloaderTest.cpp */; };
+		50D6E2511D1D1782000974D4 /* VRTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C949A1D1C51BE00E4E9B3 /* VRTest.cpp */; };
 		50FC18521C3371C000DD15A3 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50FC17C51C3371C000DD15A3 /* AppDelegate.cpp */; };
 		50FC188C1C3371C000DD15A3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 50FC18211C3371C000DD15A3 /* InfoPlist.strings */; };
 		50FC188D1C3371C000DD15A3 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50FC18231C3371C000DD15A3 /* MainMenu.xib */; };
@@ -2426,6 +2429,8 @@
 		5046AB481AF2A8D80060550B /* MaterialSystemTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MaterialSystemTest.cpp; sourceTree = "<group>"; };
 		5046AB491AF2A8D80060550B /* MaterialSystemTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaterialSystemTest.h; sourceTree = "<group>"; };
 		5046AB5A1AF2C4180060550B /* Materials */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Materials; path = "../tests/cpp-tests/Resources/Materials"; sourceTree = "<group>"; };
+		504C949A1D1C51BE00E4E9B3 /* VRTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VRTest.cpp; sourceTree = "<group>"; };
+		504C949B1D1C51BE00E4E9B3 /* VRTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VRTest.h; sourceTree = "<group>"; };
 		507B420D1C31BEA60067B53E /* cpp-tests tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "cpp-tests tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		507B42B01C31E6070067B53E /* js-tests tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "js-tests tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		507B43B91C31FB670067B53E /* lua-tests tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "lua-tests tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -3360,6 +3365,7 @@
 		1AC3592418CECF0A00F37B72 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				504C94991D1C51BE00E4E9B3 /* VRTest */,
 				50921EAC1B746D5F00C085CC /* DownloaderTest */,
 				B6DD2FF91B04972B00E47F5F /* NavMeshTest */,
 				B6CAB54B1AF9AA4B00B9B856 /* Physics3DTest */,
@@ -4967,6 +4973,15 @@
 				5046AB491AF2A8D80060550B /* MaterialSystemTest.h */,
 			);
 			path = MaterialSystemTest;
+			sourceTree = "<group>";
+		};
+		504C94991D1C51BE00E4E9B3 /* VRTest */ = {
+			isa = PBXGroup;
+			children = (
+				504C949A1D1C51BE00E4E9B3 /* VRTest.cpp */,
+				504C949B1D1C51BE00E4E9B3 /* VRTest.h */,
+			);
+			path = VRTest;
 			sourceTree = "<group>";
 		};
 		507B44491C3370140067B53E /* js-memory-gc-tests */ = {
@@ -6839,6 +6854,7 @@
 				29080DA3191B595E0066F8DF /* UIButtonTest.cpp in Sources */,
 				1AC35C5518CECF0C00F37B72 /* Texture2dTest.cpp in Sources */,
 				1AC35C0718CECF0C00F37B72 /* MouseTest.cpp in Sources */,
+				504C949C1D1C51BE00E4E9B3 /* VRTest.cpp in Sources */,
 				1AC35C5D18CECF0C00F37B72 /* Ball.cpp in Sources */,
 				1AC35BF318CECF0C00F37B72 /* ExtensionsTest.cpp in Sources */,
 				1AC35B3518CECF0C00F37B72 /* TestEntries.cpp in Sources */,
@@ -6973,6 +6989,7 @@
 				507B41761C31BEA60067B53E /* testBasic.cpp in Sources */,
 				507B41791C31BEA60067B53E /* CocosBuilderTest.cpp in Sources */,
 				507B417B1C31BEA60067B53E /* QuestionContainerSprite.cpp in Sources */,
+				504C949E1D1C51BE00E4E9B3 /* VRTest.cpp in Sources */,
 				507B417C1C31BEA60067B53E /* DrawPrimitivesTest.cpp in Sources */,
 				507B417D1C31BEA60067B53E /* UITextFieldTest.cpp in Sources */,
 				507B417E1C31BEA60067B53E /* MotionStreakTest.cpp in Sources */,
@@ -7249,6 +7266,7 @@
 				1AC35B2618CECF0C00F37B72 /* ActionsProgressTest.cpp in Sources */,
 				1AC35B6618CECF0C00F37B72 /* EffectsTest.cpp in Sources */,
 				1AC35B7218CECF0C00F37B72 /* TestHeaderLayer.cpp in Sources */,
+				50D6E2511D1D1782000974D4 /* VRTest.cpp in Sources */,
 				1AC35B2218CECF0C00F37B72 /* ActionManagerTest.cpp in Sources */,
 				1AC35C3E18CECF0C00F37B72 /* PhysicsTest.cpp in Sources */,
 				29080DB2191B595E0066F8DF /* UILayoutTest.cpp in Sources */,

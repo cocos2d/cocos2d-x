@@ -1162,7 +1162,6 @@ void CameraArcBallDemo::updateCameraTransform()
     Mat4::createTranslation(_center, &center);
     Mat4 result = center * rot * trans;
     _camera->setNodeToParentTransform(result);
-
 }
 
 void CameraArcBallDemo::switchOperateCallback(Ref* sender)
