@@ -98,6 +98,9 @@ NSFont* EditBoxImplMac::constructFont(const char *fontName, int fontSize)
     else
     {
         textFont = [NSFont fontWithName:fntName size:fontSize];
+        if (textFont == nil) {
+            textFont = [NSFont systemFontOfSize:fontSize];
+        }
     }
     
     return textFont;
