@@ -197,8 +197,7 @@ void EditBoxImplAndroid::updateNativeFrame(const Rect& rect)
 
 void EditBoxImplAndroid::nativeOpenKeyboard()
 {
-    //it will also open up the soft keyboard
-    JniHelper::callStaticVoidMethod(editBoxClassName, "setVisible", _editBoxIndex, true);
+    JniHelper::callStaticVoidMethod(editBoxClassName, "openKeyboard", _editBoxIndex);
 }
 
 
@@ -235,7 +234,7 @@ void editBoxEditingDidEnd(int index, const std::string& text)
 
 const char* EditBoxImplAndroid::getNativeDefaultFontName()
 {
-    return "";
+    return "sans-serif";
 }
 
 } //end of ui namespace
