@@ -1870,13 +1870,13 @@ protected:
     float _rotationZ_X;             ///< rotation angle on Z-axis, component X
     float _rotationZ_Y;             ///< rotation angle on Z-axis, component Y
     
-    Quaternion _rotationQuat;      ///rotation using quaternion, if _rotationZ_X == _rotationZ_Y, _rotationQuat = RotationZ_X * RotationY * RotationX, else _rotationQuat = RotationY * RotationX
+    Quaternion _rotationQuat;       ///rotation using quaternion, if _rotationZ_X == _rotationZ_Y, _rotationQuat = RotationZ_X * RotationY * RotationX, else _rotationQuat = RotationY * RotationX
 
     float _scaleX;                  ///< scaling factor on x-axis
     float _scaleY;                  ///< scaling factor on y-axis
     float _scaleZ;                  ///< scaling factor on z-axis
 
-    Vec2 _position;                ///< position of the node
+    Vec2 _position;                 ///< position of the node
     float _positionZ;               ///< OpenGL real Z position
     Vec2 _normalizedPosition;
     bool _usingNormalizedPosition;
@@ -1885,21 +1885,21 @@ protected:
     float _skewX;                   ///< skew angle on x-axis
     float _skewY;                   ///< skew angle on y-axis
 
-    Vec2 _anchorPointInPoints;     ///< anchor point in points
-    Vec2 _anchorPoint;             ///< anchor point normalized (NOT in points)
+    Vec2 _anchorPointInPoints;      ///< anchor point in points
+    Vec2 _anchorPoint;              ///< anchor point normalized (NOT in points)
 
     Size _contentSize;              ///< untransformed size of the node
     bool _contentSizeDirty;         ///< whether or not the contentSize is dirty
 
-    Mat4 _modelViewTransform;    ///< ModelView transform of the Node.
+    Mat4 _modelViewTransform;       ///< ModelView transform of the Node.
 
     // "cache" variables are allowed to be mutable
-    mutable Mat4 _transform;      ///< transform
+    mutable Mat4 _transform;        ///< transform
     mutable bool _transformDirty;   ///< transform dirty flag
-    mutable Mat4 _inverse;        ///< inverse transform
+    mutable Mat4 _inverse;          ///< inverse transform
     mutable bool _inverseDirty;     ///< inverse transform dirty flag
-    mutable Mat4 _additionalTransform; ///< transform
-    bool _useAdditionalTransform;   ///< The flag to check whether the additional transform is dirty
+    mutable Mat4* _additionalTransform; ///< two transforms needed by additional transforms
+    mutable bool _additionalTransformDirty; ///< transform dirty ?
     bool _transformUpdated;         ///< Whether or not the Transform object was updated since the last frame
 
     int _localZOrder;               ///< Local order (relative to its siblings) used to sort the node
@@ -1908,10 +1908,10 @@ protected:
     Vector<Node*> _children;        ///< array of children nodes
     Node *_parent;                  ///< weak reference to parent node
     Director* _director;            //cached director pointer to improve rendering performance
-    int _tag;                         ///< a tag. Can be any number you assigned just to identify this node
+    int _tag;                       ///< a tag. Can be any number you assigned just to identify this node
     
-    std::string _name;               ///<a string label, an user defined string to identify this node
-    size_t _hashOfName;            ///<hash value of _name, used for speed in getChildByName
+    std::string _name;              ///<a string label, an user defined string to identify this node
+    size_t _hashOfName;             ///<hash value of _name, used for speed in getChildByName
 
     void *_userData;                ///< A user assigned void pointer, Can be point to any cpp object
     Ref *_userObject;               ///< A user assigned Object

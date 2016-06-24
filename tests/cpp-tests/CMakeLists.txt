@@ -163,6 +163,8 @@ set(TESTS_SRC
   Classes/SpriteFrameCacheTest/SpriteFrameCacheTest.cpp
   Classes/controller.cpp
   Classes/testBasic.cpp
+  Classes/VRTest/VRTest.cpp
+  Classes/VRTest/VRTest.h
   ${PLATFORM_SRC}
 )
 
