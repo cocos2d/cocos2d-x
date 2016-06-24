@@ -794,7 +794,6 @@
 		5046AB5B1AF2C4180060550B /* Materials in Resources */ = {isa = PBXBuildFile; fileRef = 5046AB5A1AF2C4180060550B /* Materials */; };
 		5046AB5C1AF2C4180060550B /* Materials in Resources */ = {isa = PBXBuildFile; fileRef = 5046AB5A1AF2C4180060550B /* Materials */; };
 		504C949C1D1C51BE00E4E9B3 /* VRTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C949A1D1C51BE00E4E9B3 /* VRTest.cpp */; };
-		504C949D1D1C51BE00E4E9B3 /* VRTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C949A1D1C51BE00E4E9B3 /* VRTest.cpp */; };
 		504C949E1D1C51BE00E4E9B3 /* VRTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C949A1D1C51BE00E4E9B3 /* VRTest.cpp */; };
 		507B41021C31BEA60067B53E /* components in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CB318CED84500F37B72 /* components */; };
 		507B41031C31BEA60067B53E /* Icon-144.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35C7918CECF1400F37B72 /* Icon-144.png */; };
@@ -1181,6 +1180,7 @@
 		507B44481C3370050067B53E /* project.json in Resources */ = {isa = PBXBuildFile; fileRef = 507B44461C3370050067B53E /* project.json */; };
 		50921EAF1B746D5F00C085CC /* DownloaderTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50921EAD1B746D5F00C085CC /* DownloaderTest.cpp */; };
 		50921EB01B746D5F00C085CC /* DownloaderTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50921EAD1B746D5F00C085CC /* DownloaderTest.cpp */; };
+		50D6E2511D1D1782000974D4 /* VRTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C949A1D1C51BE00E4E9B3 /* VRTest.cpp */; };
 		50FC18521C3371C000DD15A3 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50FC17C51C3371C000DD15A3 /* AppDelegate.cpp */; };
 		50FC188C1C3371C000DD15A3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 50FC18211C3371C000DD15A3 /* InfoPlist.strings */; };
 		50FC188D1C3371C000DD15A3 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50FC18231C3371C000DD15A3 /* MainMenu.xib */; };
@@ -7266,6 +7266,7 @@
 				1AC35B2618CECF0C00F37B72 /* ActionsProgressTest.cpp in Sources */,
 				1AC35B6618CECF0C00F37B72 /* EffectsTest.cpp in Sources */,
 				1AC35B7218CECF0C00F37B72 /* TestHeaderLayer.cpp in Sources */,
+				50D6E2511D1D1782000974D4 /* VRTest.cpp in Sources */,
 				1AC35B2218CECF0C00F37B72 /* ActionManagerTest.cpp in Sources */,
 				1AC35C3E18CECF0C00F37B72 /* PhysicsTest.cpp in Sources */,
 				29080DB2191B595E0066F8DF /* UILayoutTest.cpp in Sources */,
