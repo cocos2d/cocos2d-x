@@ -1360,8 +1360,12 @@ var ActionRepeatForever = ActionsDemo.extend({
 
     },
     repeatForever:function (sender) {
-        var repeat = cc.rotateBy(1, 360).repeatForever();
-        sender.runAction(repeat);
+        sender.runAction(cc.sequence(
+                cc.rotateBy(2, 90).easing(cc.easeElasticInOut(0.5)),
+                cc.rotateBy(0.5, 90)
+            ).repeatForever()
+        );
+        cc.sys.garbageCollect();
     },
     title:function () {
         return "cc.CallFunc + cc.RepeatForever";
