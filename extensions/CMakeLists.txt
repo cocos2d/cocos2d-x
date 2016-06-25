@@ -13,6 +13,13 @@ set(COCOS_EXTENSIONS_SRC
   ../extensions/assets-manager/CCEventAssetsManagerEx.cpp
   ../extensions/assets-manager/CCEventListenerAssetsManagerEx.cpp
   ../extensions/assets-manager/Manifest.cpp
+  ../extensions/Gestures/GestureRecognizer.cpp
+  ../extensions/Gestures/GestureRecognizerUtils.cpp
+  ../extensions/Gestures/LongPressGestureRecognizer.cpp
+  ../extensions/Gestures/PanGestureRecognizer.cpp
+  ../extensions/Gestures/PinchGestureRecognizer.cpp
+  ../extensions/Gestures/SwipeGestureRecognizer.cpp
+  ../extensions/Gestures/TapGestureRecognizer.cpp
   ../extensions/GUI/CCControlExtension/CCControl.cpp
   ../extensions/GUI/CCControlExtension/CCControlButton.cpp
   ../extensions/GUI/CCControlExtension/CCControlColourPicker.cpp
