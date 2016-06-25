@@ -166,7 +166,7 @@ public:
         OK = 0,
         NotExists = 1, // File not exists
         OpenFailed = 2, // Open file failed.
-        ReadFaild = 3, // Read failed
+        ReadFailed = 3, // Read failed
         NotInitialized = 4, // FileUtils is not initializes
         TooLarge = 5, // The file is too large (great than 2^32-1)
         ObtainSizeFailed = 6 // Failed to obtain the file size.
@@ -226,7 +226,7 @@ public:
      *      - Status::OK when there is no error, the buffer is filled with the contents of file.
      *      - Status::NotExists when file not exists, the buffer will not changed.
      *      - Status::OpenFailed when cannot open file, the buffer will not changed.
-     *      - Status::ReadFaild when read end up before read whole, the buffer will fill with already read bytes.
+     *      - Status::ReadFailed when read end up before read whole, the buffer will fill with already read bytes.
      *      - Status::NotInitialized when FileUtils is not initializes, the buffer will not changed.
      *      - Status::TooLarge when there file to be read is too large (> 2^32-1), the buffer will not changed.
      *      - Status::ObtainSizeFailed when failed to obtain the file size, the buffer will not changed.

@@ -650,7 +650,7 @@ FileUtils::Status FileUtils::getContents(const std::string& filename, ResizableB
 
     if (readsize < size) {
         buffer->resize(readsize);
-        return Status::ReadFaild;
+        return Status::ReadFailed;
     }
 
     return Status::OK;
