@@ -244,6 +244,18 @@ public:
      */
     float getItemsMargin()const;
     
+    /**
+     * Set time to scroll between items (see scrollToItem)
+     * @param time
+     */
+    void  setScrollDuration(const float time);
+    
+     /**
+     * Get time to scroll between items
+     * @param time
+     */
+    float getScrollDuration() const;
+    
     //override methods
     virtual void doLayout() override;
     virtual void requestDoLayout() override;
@@ -426,6 +438,8 @@ protected:
     bool _magneticAllowedOutOfBoundary;
     
     float _itemsMargin;
+    
+    float _scrollTime;
     
     ssize_t _curSelectedIndex;
 
