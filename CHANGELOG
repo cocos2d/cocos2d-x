@@ -1,7 +1,9 @@
 cocos2d-x-3.12 Jun 30 2016
 
 [HIGHLIGHT]     add VR support
-[HIGHLIGHT]     support Windows 10 UWP x64
+[HIGHLIGHT]     add Tizen support
+[HIGHLIGHT]     fix Android performance issue
+[HIGHLIGHT]     Web engine performance improved in WebGL mode
 [HIGHLIGHT]     support obb extension on Android
 
 [NEW]           Core: add `utils::findChild()`
@@ -9,12 +11,14 @@ cocos2d-x-3.12 Jun 30 2016
 [NEW]           Core: add `FileUtils::getContents()`
 [NEW]           Core: cocos2d::Value supports unsigned
 [NEW]           Particle: add feature to pause/resume particle emitter
+[NEW]           Platform: support Windows 10 UWP x64
 [NEW]           UI: add clamp and shrunk feature for system fonts, currently only support iOS, Android and Mac
 [NEW]           UI: make ListView select item programmatically
 [NEW]           UI: add `EditBox::InputFlag::LOWERCASE_ALL_CHARACTERS` to lowercase characters
 [NEW]           UI: add `setBounce()` to WebView
 [NEW]           Web: can set orientation
 
+[REFINE]        Android: use clang instead of gcc to compile codes
 [REFINE]        Android: hide virtual button by default
 [REFINE]        Android: set music volume control as default
 [REFINE]        Android: usage clang insteand of gcc to compile codes
@@ -49,7 +53,8 @@ cocos2d-x-3.12 Jun 30 2016
 [FIX]           Android: package name is `libcocos2dx` instead of application name if building with Android Studio
 [FIX]           Audio: AudioEngine can not work if the file path contains not ascii code on iOS
 [FIX]           Audio: SimpleAudioEngine::playEffect() doesn't work correctly on Linux
-[FIX]           AssetManagerEx: use manifestUrl from remote version
+[FIX]           AssetsManager: can not work
+[FIX]           AssetsManagerEx: use manifestUrl from remote version
 [FIX]           Core: `FileUtils::writeValueMap()` will crash on iOS if it contains `Value::Type::None` type element
 [FIX]           Core: `ClippgNode::setStencil()` may cause assert error if it is invoked before
 [FIX]           Core: `TextureCache::addImageAsync()` doesn't set pixel format corretly
@@ -71,10 +76,13 @@ cocos2d-x-3.12 Jun 30 2016
 [FIX]           Core: crash if load bad image on Windows
 [FIX]           Core: custom shader uniforms and attributes do not have effect in DrawNode
 [FIX]           Core: blend mode doesn't work with animated sprite
+[FIX]           Core: `FileUtils::removeDirectory()` can not work correctly when the path is not end of `/` on iOS and Mac
 [FIX]           JSB: fix some bugs related with JSB debegger
 [FIX]           JSB: scheduler callback target lost
 [FIX]           JSB: missing scroll widgets constants
 [FIX]           JSB: if obj is undefined or null then attempt to access obj.__nativeObj leads to incorrect behavior
+[FIX]           JSB: use `require()` to require the same script twice may crash
+[FIX]           Lua: lua function is not invoked when error happens in websocket
 [FIX]           Network: HttpClient Content-type limitation on iOS
 [FIX]           Network: downloader crash when storage path contains spaces
 [FIX]           Network: SocketIO crash on reconnect
@@ -82,6 +90,8 @@ cocos2d-x-3.12 Jun 30 2016
 [FIX]           UI: EditBox may cause `java.lang.IndexOutOfBoundsException` exception on Android
 [FIX]           UI: TextFieldTTF doesn't show password correctly
 [FIX]           UI: RichText crash on Windows
+[FIX]           UI: EditBox can not use custom font on Android
+[FIX]           UI: can not use TTF font on Android
 [FIX]           RenderTexture: `setOpacity()` has not effect
 [FIX]           3D: `Sprite3D::createNode()` may not work correctly with particular model data
 
