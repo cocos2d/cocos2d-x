@@ -176,7 +176,7 @@ FileUtils::Status CCFileUtilsWinRT::getContents(const std::string& filename, Res
     {
         buffer->resize(sizeRead);
         CCLOG("Get data from file(%s) failed, error code is %s", filename.data(), std::to_string(::GetLastError()).data());
-        return FileUtils::Status::ReadFaild;
+        return FileUtils::Status::ReadFailed;
     }
     return FileUtils::Status::OK;
 }

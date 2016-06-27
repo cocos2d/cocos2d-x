@@ -295,7 +295,7 @@ FileUtils::Status FileUtilsAndroid::getContents(const std::string& filename, Res
     if (readsize < size) {
         if (readsize >= 0)
             buffer->resize(readsize);
-        return FileUtils::Status::ReadFaild;
+        return FileUtils::Status::ReadFailed;
     }
 
     return FileUtils::Status::OK;

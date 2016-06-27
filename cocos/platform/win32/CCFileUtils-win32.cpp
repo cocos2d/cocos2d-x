@@ -264,7 +264,7 @@ FileUtils::Status FileUtilsWin32::getContents(const std::string& filename, Resiz
     if (!successed) {
 		CCLOG("Get data from file(%s) failed, error code is %s", filename.data(), std::to_string(::GetLastError()).data());
 		buffer->resize(sizeRead);
-		return FileUtils::Status::ReadFaild;
+		return FileUtils::Status::ReadFailed;
     }
     return FileUtils::Status::OK;
 }
