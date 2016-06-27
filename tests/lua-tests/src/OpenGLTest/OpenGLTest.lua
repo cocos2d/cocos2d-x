@@ -909,10 +909,6 @@ local function OpenGLTestMainLayer()
         end
     end
 
-    local function createLayerByCurCase(curCase)
-        return createGLNodeCCAPITest()
-    end
-
     function ShowCurrentTest()    
         local curScene = cc.Scene:create()
         if nil ~= curScene then
