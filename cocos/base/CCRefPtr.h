@@ -87,8 +87,7 @@ template <typename T> class RefPtr
 public:
     
     inline RefPtr()
-    :
-        _ptr(nullptr)
+        : _ptr(nullptr)
     {
         
     }
@@ -100,22 +99,19 @@ public:
     }
 
     inline RefPtr(T * ptr)
-    :
-        _ptr(const_cast<typename std::remove_const<T>::type*>(ptr))     // Const cast allows RefPtr<T> to reference objects marked const too.
+        : _ptr(ptr)
     {
         CC_REF_PTR_SAFE_RETAIN(_ptr);
     }
     
     inline RefPtr(std::nullptr_t ptr)
-    :
-        _ptr(nullptr)
+        : _ptr(nullptr)
     {
         
     }
     
     inline RefPtr(const RefPtr<T> & other)
-    :
-        _ptr(other._ptr)
+        : _ptr(other._ptr)
     {
         CC_REF_PTR_SAFE_RETAIN(_ptr);
     }
@@ -155,7 +151,7 @@ public:
         {
             CC_REF_PTR_SAFE_RETAIN(other);
             CC_REF_PTR_SAFE_RELEASE(_ptr);
-            _ptr = const_cast<typename std::remove_const<T>::type*>(other);     // Const cast allows RefPtr<T> to reference objects marked const too.
+            _ptr = other;
         }
         
         return *this;
@@ -167,26 +163,21 @@ public:
         return *this;
     }
     
-    // Note: using reinterpret_cast<> instead of static_cast<> here because it doesn't require type info.
-    // Since we verify the correct type cast at compile time on construction/assign we don't need to know the type info
-    // here. Not needing the type info here enables us to use these operations in inline functions in header files when
-    // the type pointed to by this class is only forward referenced.
-    
-    inline operator T * () const { return reinterpret_cast<T*>(_ptr); }
+    inline operator T * () const { return _ptr; }
     
     inline T & operator * () const
     {
         CCASSERT(_ptr, "Attempt to dereference a null pointer!");
-        return reinterpret_cast<T&>(*_ptr);
+        return *_ptr;
     }
     
     inline T * operator->() const
     {
         CCASSERT(_ptr, "Attempt to dereference a null pointer!");
-        return reinterpret_cast<T*>(_ptr);
+        return _ptr;
     }
     
-    inline T * get() const { return reinterpret_cast<T*>(_ptr); }
+    inline T * get() const { return _ptr; }
     
     
     inline bool operator == (const RefPtr<T> & other) const { return _ptr == other._ptr; }
@@ -246,7 +237,7 @@ public:
     {
         if (&other != this)
         {
-            Ref * tmp = _ptr;
+            T * tmp = _ptr;
             _ptr = other._ptr;
             other._ptr = tmp;
         }
@@ -273,7 +264,10 @@ public:
     }
     
 private:
-    Ref * _ptr;
+    T * _ptr;
+
+    // NOTE: We can ensure T is derived from cocos2d::Ref at compile time here.
+    static_assert(std::is_base_of<Ref, typename std::remove_const<T>::type>::value, "T must be derived from Ref");
 };
     
 template<class T> inline
