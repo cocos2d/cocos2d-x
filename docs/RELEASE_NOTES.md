@@ -164,16 +164,15 @@ cocos new -l cpp|js|lua MyNewGame
 ## The main features in detail of Cocos2d-x v3.12
 
 ### VR support
+VR Support is now available! Currently there is support for __Google Cardboard__, __Oculus Rift__, __Samsung Gear__ and __Deepoon E2__. Also provided is a *generic* __VR__ renderer to help with testing. It should not be used to trust deploying a production __VR__ game. In usual Cocos2d-x fashion it is very easy to get started with an easy to understand API. Read our chapter in the [Programmers Guide](http://cocos2d-x.org/docs/static-pages/programmers-guide.html) for more information.
 
-TBD
 
 ### Tizen support
-
-TBD
+You can now develop for the __Tizen__ mobile platform. The latest __2.4__ SDK is supported. Tizen development uses it's own uniqie IDE as well as a simulator for testing applications. For setup instructions please read our [documentation](http://cocos2d-x.org/docs/installation/Tizen/).
 
 ### improve Android performance
 
-We found cocos2d-x has performance on some Android devices. It is because cocos2d-x creates a big map buffer by default and fill the map buffer with actual data, which is less then map buffer size. On some Android devices, it will transfer as many data as the map buffer size which causes performance issue.
+Thank you to our users for helping diagnose performance issues on some Android devices. It is because cocos2d-x creates a big map buffer by default and fills the map buffer with actual data, which is less than the map buffer size. On some Android devices, it will transfer as much data as the map buffer size which causes performance issue.
 
 More detail information and discussion can refer to [the issue](https://github.com/cocos2d/cocos2d-x/issues/15652).
 
@@ -187,9 +186,8 @@ Web engine performance in WebGL mode is obviously improved in this version. The 
 
 ![memory-usage](https://raw.githubusercontent.com/minggo/Pictures/master/web-performance-improve/memory-usage.png)
 
-### use clang on Android
-
-As [google deprecated gcc since NDK r11](https://developer.android.com/ndk/downloads/revision_history.html), so cocos2d-x changes to use clang  too. And we suggest using latest NDK version if possible. 
+### Use clang on Android
+[Google deprecated gcc starting in NDK r11](https://developer.android.com/ndk/downloads/revision_history.html), cocos2d-x now uses clang. We suggest using the latest NDK version, if possible. 
  
 ## Other changes
-You can also take a look at the [full changelog](https://github.com/cocos2d/cocos2d-x/blob/v3/CHANGELOG).
+View our [full changelog](https://github.com/cocos2d/cocos2d-x/blob/v3/CHANGELOG).
