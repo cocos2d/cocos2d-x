@@ -420,7 +420,7 @@ public:
      *  @js NA
      *  @lua NA
      */
-    virtual __Dictionary* clone() const;
+    virtual __Dictionary* clone() const override;
     
 private:
     /** 

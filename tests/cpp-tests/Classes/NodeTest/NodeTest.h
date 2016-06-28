@@ -325,6 +325,7 @@ public:
     virtual std::string subtitle() const override;
     
     virtual void onEnter() override;
+    virtual void onExit() override;
 
     void test(float dt);
 };

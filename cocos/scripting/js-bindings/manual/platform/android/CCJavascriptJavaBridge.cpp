@@ -22,7 +22,7 @@
  
 #include <android/log.h>
 #include "scripting/js-bindings/manual/platform/android/CCJavascriptJavaBridge.h"
-#include "cocos2d.h"
+
 #include "platform/android/jni/JniHelper.h"
 #include "scripting/js-bindings/manual/spidermonkey_specifics.h"
 #include "scripting/js-bindings/manual/ScriptingCore.h"
@@ -83,11 +83,18 @@ bool JavascriptJavaBridge::CallInfo::execute(void)
             break;
 
         case TypeString:
+        {
             m_retjstring = (jstring)m_env->CallStaticObjectMethod(m_classID, m_methodID);
             std::string strValue = cocos2d::StringUtils::getStringUTFCharsJNI(m_env, m_retjstring);
             
             m_ret.stringValue = new string(strValue);
             break;
+        }
+
+        default:
+            m_error = JSJ_ERR_TYPE_NOT_SUPPORT;
+            LOGD("Return type '%d' is not supported", static_cast<int>(m_returnType));
+            return false;
     }
 
     if (m_env->ExceptionCheck() == JNI_TRUE)
@@ -123,10 +130,17 @@ bool JavascriptJavaBridge::CallInfo::executeWithArgs(jvalue *args)
              break;
 
          case TypeString:
+        {
              m_retjstring = (jstring)m_env->CallStaticObjectMethodA(m_classID, m_methodID, args);
              std::string strValue = cocos2d::StringUtils::getStringUTFCharsJNI(m_env, m_retjstring);
              m_ret.stringValue = new string(strValue);
              break;
+        }
+
+        default:
+            m_error = JSJ_ERR_TYPE_NOT_SUPPORT;
+            LOGD("Return type '%d' is not supported", static_cast<int>(m_returnType));
+            return false;
      }
 
     if (m_env->ExceptionCheck() == JNI_TRUE)
@@ -279,6 +293,8 @@ JS::Value JavascriptJavaBridge::convertReturnValue(JSContext *cx, ReturnValue re
 			return BOOLEAN_TO_JSVAL(retValue.boolValue);
 		case TypeString:
 			return c_string_to_jsval(cx, retValue.stringValue->c_str(),retValue.stringValue->size());
+        default:
+            break;
 	}
 
 	return ret;

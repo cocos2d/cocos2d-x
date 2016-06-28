@@ -1,18 +1,18 @@
 /****************************************************************************
  Copyright (c) 2014 Chukong Technologies Inc.
- 
+
  http://www.cocos2d-x.org
- 
+
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
- 
+
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
- 
+
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -23,6 +23,17 @@
  ****************************************************************************/
 
 #include "js_Effect3D_bindings.h"
+#include "3d/CCMesh.h"
+#include "3d/CCMeshSkin.h"
+#include "3d/CCSprite3D.h"
+#include "base/CCDirector.h"
+#include "base/CCEventType.h"
+#include "base/CCEventDispatcher.h"
+#include "base/CCEventCustom.h"
+#include "base/CCEventListenerCustom.h"
+#include "renderer/CCGLProgramCache.h"
+#include "renderer/CCRenderer.h"
+#include "renderer/CCVertexAttribBinding.h"
 #include "scripting/js-bindings/manual/cocos2d_specifics.hpp"
 
 using namespace cocos2d;
@@ -48,20 +59,20 @@ class Effect3DOutline: public Effect3D
 {
 public:
     static Effect3DOutline* create();
-    
+
     void setOutlineColor(const Vec3& color);
-    
+
     void setOutlineWidth(float width);
-    
+
     virtual void draw(const Mat4 &transform) override;
     virtual void setTarget(EffectSprite3D *sprite) override;
 
-    
+
     Effect3DOutline();
     virtual ~Effect3DOutline();
-    
+
     bool init();
-protected: 
+protected:
     Vec3 _outlineColor;
     float _outlineWidth;
     //weak reference
@@ -69,16 +80,16 @@ protected:
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     EventListenerCustom* _backToForegroundListener;
 #endif
-    
+
 protected:
     static const std::string _vertShaderFile;
     static const std::string _fragShaderFile;
     static const std::string _keyInGLProgramCache;
-    
+
     static const std::string _vertSkinnedShaderFile;
     static const std::string _fragSkinnedShaderFile;
     static const std::string _keySkinnedInGLProgramCache;
-    
+
     static GLProgram* getOrCreateProgram(bool isSkinned = false);
 };
 
@@ -87,7 +98,7 @@ class EffectSprite3D : public Sprite3D
 public:
     static EffectSprite3D* createFromObjFileAndTexture(const std::string& objFilePath, const std::string& textureFilePath);
     static EffectSprite3D* create(const std::string& path);
-    
+
     void setEffect3D(Effect3D* effect);
     void addEffect(Effect3DOutline* effect, ssize_t order);
     virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
@@ -119,7 +130,7 @@ EffectSprite3D* EffectSprite3D::create(const std::string &path)
 {
     if (path.length() < 4)
         CCASSERT(false, "improper name specified when creating Sprite3D");
-    
+
     auto sprite = new (std::nothrow) EffectSprite3D();
     if (sprite && sprite->initWithFile(path))
     {
@@ -133,7 +144,7 @@ EffectSprite3D* EffectSprite3D::create(const std::string &path)
 EffectSprite3D::EffectSprite3D()
 : _defaultEffect(nullptr)
 {
-    
+
 }
 
 EffectSprite3D::~EffectSprite3D()
@@ -163,9 +174,9 @@ void EffectSprite3D::addEffect(Effect3DOutline* effect, ssize_t order)
     if(nullptr == effect) return;
     effect->retain();
     effect->setTarget(this);
-    
+
     _effects.push_back(std::make_tuple(order,effect,CustomCommand()));
-    
+
     std::sort(std::begin(_effects), std::end(_effects), tuple_sort);
 }
 
@@ -198,7 +209,7 @@ GLProgram* Effect3DOutline::getOrCreateProgram(bool isSkinned /* = false */ )
         }
         return program;
     }
-    
+
 }
 
 Effect3DOutline* Effect3DOutline::create()
@@ -218,7 +229,7 @@ Effect3DOutline* Effect3DOutline::create()
 
 bool Effect3DOutline::init()
 {
-    
+
     return true;
 }
 
@@ -272,7 +283,7 @@ void Effect3DOutline::setOutlineWidth(float width)
 void Effect3DOutline::setTarget(EffectSprite3D *sprite)
 {
     CCASSERT(nullptr != sprite && nullptr != sprite->getMesh(),"Error: Setting a null pointer or a null mesh EffectSprite3D to Effect3D");
-    
+
     if(sprite != _sprite)
     {
         GLProgram* glprogram;
@@ -280,22 +291,22 @@ void Effect3DOutline::setTarget(EffectSprite3D *sprite)
             glprogram = GLProgram::createWithFilenames(_vertShaderFile, _fragShaderFile);
         else
             glprogram = GLProgram::createWithFilenames(_vertSkinnedShaderFile, _fragSkinnedShaderFile);
-        
+
         _glProgramState = GLProgramState::create(glprogram);
-        
+
         _glProgramState->retain();
         _glProgramState->setUniformVec3("OutLineColor", _outlineColor);
         _glProgramState->setUniformFloat("OutlineWidth", _outlineWidth);
-        
-        
+
+
         _sprite = sprite;
-        
+
         auto mesh = sprite->getMesh();
         long offset = 0;
         for (auto i = 0; i < mesh->getMeshVertexAttribCount(); i++)
         {
             auto meshvertexattrib = mesh->getMeshVertexAttribute(i);
-            
+
             _glProgramState->setVertexAttribPointer(s_attributeNames[meshvertexattrib.vertexAttrib],
                                                     meshvertexattrib.size,
                                                     meshvertexattrib.type,
@@ -304,12 +315,12 @@ void Effect3DOutline::setTarget(EffectSprite3D *sprite)
                                                     (void*)offset);
             offset += meshvertexattrib.attribSizeBytes;
         }
-        
+
         Color4F color(_sprite->getDisplayedColor());
         color.a = _sprite->getDisplayedOpacity() / 255.0f;
         _glProgramState->setUniformVec4("u_color", Vec4(color.r, color.g, color.b, color.a));
     }
-    
+
 }
 
 static void MatrixPalleteCallBack( GLProgram* glProgram, Uniform* uniform, int paletteSize, const float* palette)
@@ -328,10 +339,10 @@ void Effect3DOutline::draw(const Mat4 &transform)
         glEnable(GL_CULL_FACE);
         glCullFace(GL_FRONT);
         glEnable(GL_DEPTH_TEST);
-        
+
         auto mesh = _sprite->getMesh();
         glBindBuffer(GL_ARRAY_BUFFER, mesh->getVertexBuffer());
-        
+
         auto skin = _sprite->getMesh()->getSkin();
         if(_sprite && skin)
         {
@@ -339,14 +350,14 @@ void Effect3DOutline::draw(const Mat4 &transform)
                                       skin->getMatrixPaletteSize(), (float*)skin->getMatrixPalette());
             _glProgramState->setUniformCallback("u_matrixPalette", function);
         }
-        
+
         if(_sprite)
             _glProgramState->apply(transform);
-        
+
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->getIndexBuffer());
         glDrawElements(mesh->getPrimitiveType(), (GLsizei)mesh->getIndexCount(), mesh->getIndexFormat(), 0);
         CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, mesh->getIndexCount());
-        
+
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         glDisable(GL_DEPTH_TEST);
@@ -364,9 +375,9 @@ void EffectSprite3D::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &tran
         CustomCommand &cc = std::get<2>(effect);
         cc.func = CC_CALLBACK_0(Effect3D::draw,std::get<1>(effect),transform);
         renderer->addCommand(&cc);
-        
+
     }
-    
+
     if(!_defaultEffect)
     {
         Sprite3D::draw(renderer, transform, flags);
@@ -377,7 +388,7 @@ void EffectSprite3D::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &tran
         _command.func = CC_CALLBACK_0(Effect3D::draw, _defaultEffect, transform);
         renderer->addCommand(&_command);
     }
-    
+
     for(auto &effect : _effects)
     {
         if(std::get<0>(effect) <=0)
@@ -385,7 +396,7 @@ void EffectSprite3D::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &tran
         CustomCommand &cc = std::get<2>(effect);
         cc.func = CC_CALLBACK_0(Effect3D::draw,std::get<1>(effect),transform);
         renderer->addCommand(&cc);
-        
+
     }
 }
 
@@ -411,13 +422,13 @@ bool js_cocos2dx_Effect3DOutline_setOutlineWidth(JSContext *cx, uint32_t argc, j
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Effect3DOutline_setOutlineWidth : Invalid Native Object");
     if (argc == 1) {
         double arg0;
-        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !std::isnan(arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Effect3DOutline_setOutlineWidth : Error processing arguments");
         cobj->setOutlineWidth(arg0);
         args.rval().setUndefined();
         return true;
     }
-    
+
     JS_ReportError(cx, "js_cocos2dx_Effect3DOutline_setOutlineWidth : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
@@ -437,7 +448,7 @@ bool js_cocos2dx_Effect3DOutline_setOutlineColor(JSContext *cx, uint32_t argc, j
         args.rval().setUndefined();
         return true;
     }
-    
+
     JS_ReportError(cx, "js_cocos2dx_Effect3DOutline_setOutlineColor : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
@@ -471,11 +482,11 @@ bool jsb_Effect3DOutline_constructor(JSContext *cx, uint32_t argc, jsval *vp)
     bool ok = true;
     Effect3DOutline* cobj = new (std::nothrow) Effect3DOutline();
     cobj->init();
-    
+
     js_type_class_t *typeClass = js_get_type_from_native<Effect3DOutline>(cobj);
     JS::RootedObject jsobj(cx, jsb_ref_create_jsobject(cx, cobj, typeClass, "Effect3DOutline"));
     args.rval().set(OBJECT_TO_JSVAL(jsobj));
-    
+
     if (JS_HasProperty(cx, jsobj, "_ctor", &ok) && ok)
         ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(jsobj), "_ctor", args);
     return true;
@@ -492,34 +503,34 @@ void js_register_cocos2dx_Effect3DOutline(JSContext *cx, JS::HandleObject global
     jsb_Effect3DOutline_class->resolve = JS_ResolveStub;
     jsb_Effect3DOutline_class->convert = JS_ConvertStub;
     jsb_Effect3DOutline_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
-    
+
     static JSPropertySpec properties[] = {
         JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_PS_END
     };
-    
+
     static JSFunctionSpec funcs[] = {
         JS_FN("setOutlineWidth", js_cocos2dx_Effect3DOutline_setOutlineWidth, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setOutlineColor", js_cocos2dx_Effect3DOutline_setOutlineColor, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
-    
+
     static JSFunctionSpec st_funcs[] = {
         JS_FN("create", js_cocos2dx_Effect3DOutline_create, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
-    
+
     JS::RootedObject parentProto(cx, jsb_Effect3D_prototype);
     jsb_Effect3DOutline_prototype = JS_InitClass(
                                                  cx, global,
                                                  parentProto,
                                                  jsb_Effect3DOutline_class,
-                                                 jsb_Effect3DOutline_constructor, 0, 
+                                                 jsb_Effect3DOutline_constructor, 0,
                                                  properties,
                                                  funcs,
                                                  NULL, // no static properties
                                                  st_funcs);
-    
+
     // add the proto and JSClass to the type->js info hash table
     JS::RootedObject proto(cx, jsb_Effect3DOutline_prototype);
     jsb_register_class<Effect3DOutline>(cx, jsb_Effect3DOutline_class, proto, parentProto);
@@ -552,7 +563,7 @@ bool js_cocos2dx_EffectSprite3D_setEffect3D(JSContext *cx, uint32_t argc, jsval 
         args.rval().setUndefined();
         return true;
     }
-    
+
     JS_ReportError(cx, "js_cocos2dx_EffectSprite3D_setEffect3D : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
@@ -581,7 +592,7 @@ bool js_cocos2dx_EffectSprite3D_addEffect(JSContext *cx, uint32_t argc, jsval *v
         args.rval().setUndefined();
         return true;
     }
-    
+
     JS_ReportError(cx, "js_cocos2dx_EffectSprite3D_addEffect : wrong number of arguments: %d, was expecting %d", argc, 2);
     return false;
 }
@@ -657,11 +668,11 @@ bool jsb_EffectSprite3D_constructor(JSContext *cx, uint32_t argc, jsval *vp)
             cobj->setTexture(texture);
         }
     }
-    
+
     js_type_class_t *typeClass = js_get_type_from_native<EffectSprite3D>(cobj);
     JS::RootedObject jsobj(cx, jsb_ref_create_jsobject(cx, cobj, typeClass, "EffectSprite3D"));
     args.rval().set(OBJECT_TO_JSVAL(jsobj));
-    
+
     if (JS_HasProperty(cx, jsobj, "_ctor", &ok) && ok)
         ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(jsobj), "_ctor", args);
     return true;
@@ -678,24 +689,24 @@ void js_register_cocos2dx_EffectSprite3D(JSContext *cx, JS::HandleObject global)
     jsb_EffectSprite3D_class->resolve = JS_ResolveStub;
     jsb_EffectSprite3D_class->convert = JS_ConvertStub;
     jsb_EffectSprite3D_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
-    
+
     static JSPropertySpec properties[] = {
         JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_PS_END
     };
-    
+
     static JSFunctionSpec funcs[] = {
         JS_FN("setEffect3D", js_cocos2dx_EffectSprite3D_setEffect3D, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("addEffect", js_cocos2dx_EffectSprite3D_addEffect, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
-    
+
     static JSFunctionSpec st_funcs[] = {
         JS_FN("createFromObjFileAndTexture", js_cocos2dx_EffectSprite3D_createFromObjFileAndTexture, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("create", js_cocos2dx_EffectSprite3D_create, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
-    
+
     JS::RootedObject parentProto(cx, jsb_cocos2d_Sprite3D_prototype);
     jsb_EffectSprite3D_prototype = JS_InitClass(
                                                 cx, global,
@@ -706,7 +717,7 @@ void js_register_cocos2dx_EffectSprite3D(JSContext *cx, JS::HandleObject global)
                                                 funcs,
                                                 NULL, // no static properties
                                                 st_funcs);
-    
+
     // add the proto and JSClass to the type->js info hash table
     JS::RootedObject proto(cx, jsb_EffectSprite3D_prototype);
     jsb_register_class<EffectSprite3D>(cx, jsb_EffectSprite3D_class, proto, parentProto);

@@ -39,6 +39,7 @@ THE SOFTWARE.
 #include "platform/CCDevice.h"
 #include "base/ccConfig.h"
 #include "base/ccMacros.h"
+#include "base/ccUTF8.h"
 #include "base/CCConfiguration.h"
 #include "platform/CCPlatformMacros.h"
 #include "base/CCDirector.h"
@@ -46,8 +47,6 @@ THE SOFTWARE.
 #include "renderer/ccGLStateCache.h"
 #include "renderer/CCGLProgramCache.h"
 #include "base/CCNinePatchImageParser.h"
-#include "deprecated/CCString.h"
-
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     #include "renderer/CCTextureCache.h"
@@ -754,7 +753,7 @@ bool Texture2D::initWithImage(Image *image, PixelFormat format)
     Size             imageSize = Size((float)imageWidth, (float)imageHeight);
     PixelFormat      pixelFormat = ((PixelFormat::NONE == format) || (PixelFormat::AUTO == format)) ? image->getRenderFormat() : format;
     PixelFormat      renderFormat = image->getRenderFormat();
-    size_t	         tempDataLen = image->getDataLen();
+    size_t           tempDataLen = image->getDataLen();
 
 
     if (image->getNumberOfMipmaps() > 1)
@@ -846,7 +845,7 @@ Texture2D::PixelFormat Texture2D::convertI8ToFormat(const unsigned char* data, s
         // unsupported conversion or don't need to convert
         if (format != PixelFormat::AUTO && format != PixelFormat::I8)
         {
-            CCLOG("Can not convert image format PixelFormat::I8 to format ID:%d, we will use it's origin format PixelFormat::I8", format);
+            CCLOG("Can not convert image format PixelFormat::I8 to format ID:%d, we will use it's origin format PixelFormat::I8", static_cast<int>(format));
         }
 
         *outData = (unsigned char*)data;
@@ -900,7 +899,7 @@ Texture2D::PixelFormat Texture2D::convertAI88ToFormat(const unsigned char* data,
         // unsupported conversion or don't need to convert
         if (format != PixelFormat::AUTO && format != PixelFormat::AI88)
         {
-            CCLOG("Can not convert image format PixelFormat::AI88 to format ID:%d, we will use it's origin format PixelFormat::AI88", format);
+            CCLOG("Can not convert image format PixelFormat::AI88 to format ID:%d, we will use it's origin format PixelFormat::AI88", static_cast<int>(format));
         }
 
         *outData = (unsigned char*)data;
@@ -955,7 +954,7 @@ Texture2D::PixelFormat Texture2D::convertRGB888ToFormat(const unsigned char* dat
         // unsupported conversion or don't need to convert
         if (format != PixelFormat::AUTO && format != PixelFormat::RGB888)
         {
-            CCLOG("Can not convert image format PixelFormat::RGB888 to format ID:%d, we will use it's origin format PixelFormat::RGB888", format);
+            CCLOG("Can not convert image format PixelFormat::RGB888 to format ID:%d, we will use it's origin format PixelFormat::RGB888", static_cast<int>(format));
         }
 
         *outData = (unsigned char*)data;
@@ -1009,7 +1008,7 @@ Texture2D::PixelFormat Texture2D::convertRGBA8888ToFormat(const unsigned char* d
         // unsupported conversion or don't need to convert
         if (format != PixelFormat::AUTO && format != PixelFormat::RGBA8888)
         {
-            CCLOG("Can not convert image format PixelFormat::RGBA8888 to format ID:%d, we will use it's origin format PixelFormat::RGBA8888", format);
+            CCLOG("Can not convert image format PixelFormat::RGBA8888 to format ID:%d, we will use it's origin format PixelFormat::RGBA8888", static_cast<int>(format));
         }
 
         *outData = (unsigned char*)data;
@@ -1058,7 +1057,7 @@ Texture2D::PixelFormat Texture2D::convertDataToFormat(const unsigned char* data,
     case PixelFormat::RGBA8888:
         return convertRGBA8888ToFormat(data, dataLen, format, outData, outDataLen);
     default:
-        CCLOG("unsupported conversion from format %d to format %d", originFormat, format);
+        CCLOG("unsupported conversion from format %d to format %d", static_cast<int>(originFormat), static_cast<int>(format));
         *outData = (unsigned char*)data;
         *outDataLen = dataLen;
         return originFormat;
@@ -1066,7 +1065,7 @@ Texture2D::PixelFormat Texture2D::convertDataToFormat(const unsigned char* data,
 }
 
 // implementation Texture2D (Text)
-bool Texture2D::initWithString(const char *text, const std::string& fontName, float fontSize, const Size& dimensions/* = Size(0, 0)*/, TextHAlignment hAlignment/* =  TextHAlignment::CENTER */, TextVAlignment vAlignment/* =  TextVAlignment::TOP */)
+bool Texture2D::initWithString(const char *text, const std::string& fontName, float fontSize, const Size& dimensions/* = Size(0, 0)*/, TextHAlignment hAlignment/* =  TextHAlignment::CENTER */, TextVAlignment vAlignment/* =  TextVAlignment::TOP */, bool enableWrap /* = false */, int overflow /* = 0 */)
 {
     FontDefinition tempDef;
     
@@ -1080,6 +1079,8 @@ bool Texture2D::initWithString(const char *text, const std::string& fontName, fl
     tempDef._alignment     = hAlignment;
     tempDef._vertAlignment = vAlignment;
     tempDef._fontFillColor = Color3B::WHITE;
+    tempDef._enableWrap    = enableWrap;
+    tempDef._overflow      = overflow;
 
     return initWithString(text, tempDef);
 }
@@ -1326,37 +1327,37 @@ void Texture2D::setAntiAliasTexParameters()
 
 const char* Texture2D::getStringForFormat() const
 {
-	switch (_pixelFormat) 
-	{
-		case Texture2D::PixelFormat::RGBA8888:
-			return  "RGBA8888";
+    switch (_pixelFormat) 
+    {
+        case Texture2D::PixelFormat::RGBA8888:
+            return  "RGBA8888";
 
-		case Texture2D::PixelFormat::RGB888:
-			return  "RGB888";
+        case Texture2D::PixelFormat::RGB888:
+            return  "RGB888";
 
-		case Texture2D::PixelFormat::RGB565:
-			return  "RGB565";
+        case Texture2D::PixelFormat::RGB565:
+            return  "RGB565";
 
-		case Texture2D::PixelFormat::RGBA4444:
-			return  "RGBA4444";
+        case Texture2D::PixelFormat::RGBA4444:
+            return  "RGBA4444";
 
-		case Texture2D::PixelFormat::RGB5A1:
-			return  "RGB5A1";
+        case Texture2D::PixelFormat::RGB5A1:
+            return  "RGB5A1";
 
-		case Texture2D::PixelFormat::AI88:
-			return  "AI88";
+        case Texture2D::PixelFormat::AI88:
+            return  "AI88";
 
-		case Texture2D::PixelFormat::A8:
-			return  "A8";
+        case Texture2D::PixelFormat::A8:
+            return  "A8";
 
-		case Texture2D::PixelFormat::I8:
-			return  "I8";
+        case Texture2D::PixelFormat::I8:
+            return  "I8";
 
-		case Texture2D::PixelFormat::PVRTC4:
-			return  "PVRTC4";
+        case Texture2D::PixelFormat::PVRTC4:
+            return  "PVRTC4";
 
-		case Texture2D::PixelFormat::PVRTC2:
-			return  "PVRTC2";
+        case Texture2D::PixelFormat::PVRTC2:
+            return  "PVRTC2";
 
         case Texture2D::PixelFormat::PVRTC2A:
             return "PVRTC2A";
@@ -1385,13 +1386,13 @@ const char* Texture2D::getStringForFormat() const
         case Texture2D::PixelFormat::ATC_INTERPOLATED_ALPHA:
             return "ATC_INTERPOLATED_ALPHA";
             
-		default:
-			CCASSERT(false , "unrecognized pixel format");
-			CCLOG("stringForFormat: %ld, cannot give useful result", (long)_pixelFormat);
-			break;
-	}
+        default:
+            CCASSERT(false , "unrecognized pixel format");
+            CCLOG("stringForFormat: %ld, cannot give useful result", (long)_pixelFormat);
+            break;
+    }
 
-	return  nullptr;
+    return  nullptr;
 }
 
 //
@@ -1416,12 +1417,12 @@ unsigned int Texture2D::getBitsPerPixelForFormat(Texture2D::PixelFormat format) 
         return 0;
     }
     
-	return _pixelFormatInfoTables.at(format).bpp;
+    return _pixelFormatInfoTables.at(format).bpp;
 }
 
 unsigned int Texture2D::getBitsPerPixelForFormat() const
 {
-	return this->getBitsPerPixelForFormat(_pixelFormat);
+    return this->getBitsPerPixelForFormat(_pixelFormat);
 }
 
 const Texture2D::PixelFormatInfoMap& Texture2D::getPixelFormatInfoMap()

@@ -1,20 +1,20 @@
 ﻿/****************************************************************************
  Copyright (c) 2012      greathqy
  Copyright (c) 2012      cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
- 
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+
  http://www.cocos2d-x.org
- 
+
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
- 
+
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
- 
+
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -43,7 +43,7 @@
 NS_CC_BEGIN
 
 namespace network {
-    
+
 
 
 /** @~english Singleton that handles asynchronous http requests.
@@ -78,7 +78,7 @@ public:
     static HttpClient *getInstance();
     
     /** @~english
-     * Destroy the instance of HttpClient. 
+     * Release the instance of HttpClient. 
      * @~chinese 
      * 销毁HttpClient实例。
      */
@@ -151,7 +151,7 @@ public:
     void sendImmediate(HttpRequest* request);
     
     /**@~english
-     * Set the timeout value for connecting in seconds.
+     * Set the timeout value for connecting.
      *
      * @~chinese 
      * 以秒为单位设置连接超时时间。
@@ -162,7 +162,7 @@ public:
     void setTimeoutForConnect(int value);
     
     /**@~english
-     * Get the timeout value for connecting in seconds.
+     * Get the timeout value for connecting.
      *
      * @~chinese 
      * 获取以秒为单痊的连接超时时间。
@@ -173,7 +173,7 @@ public:
     int getTimeoutForConnect();
     
     /**@~english
-     * Set the timeout value for reading in seconds.
+     * Set the timeout value for reading.
      *
      * @~chinese 
      * 设置以秒为单位的read超时时间。
@@ -229,6 +229,7 @@ public:
 private:
     HttpClient();
     virtual ~HttpClient();
+
     bool init(void);
     
     /**@~english
@@ -243,44 +244,44 @@ private:
     void networkThreadAlone(HttpRequest* request, HttpResponse* response);
 
     void dispatchResponseCallbacks();
-    
+
     void processResponse(HttpResponse* response, char* responseMessage);
     void increaseThreadCount();
     void decreaseThreadCountAndMayDeleteThis();
-    
+
 private:
     bool _isInited;
-    
+
     int _timeoutForConnect;
     std::mutex _timeoutForConnectMutex;
-    
+
     int _timeoutForRead;
     std::mutex _timeoutForReadMutex;
-    
+
     int  _threadCount;
     std::mutex _threadCountMutex;
-    
+
     Scheduler* _scheduler;
     std::mutex _schedulerMutex;
-    
+
     Vector<HttpRequest*>  _requestQueue;
     std::mutex _requestQueueMutex;
-    
+
     Vector<HttpResponse*> _responseQueue;
     std::mutex _responseQueueMutex;
-    
+
     std::string _cookieFilename;
     std::mutex _cookieFileMutex;
-    
+
     std::string _sslCaFilename;
     std::mutex _sslCaFileMutex;
-    
+
     HttpCookie* _cookie;
-    
+
     std::condition_variable_any _sleepCondition;
-    
-	char _responseMessage[RESPONSE_BUFFER_SIZE];
-    
+
+    char _responseMessage[RESPONSE_BUFFER_SIZE];
+
     HttpRequest* _requestSentinel;
 };
 
@@ -292,3 +293,4 @@ NS_CC_END
 /// @}
 
 #endif //__CCHTTPCLIENT_H__
+

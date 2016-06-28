@@ -126,8 +126,23 @@ public:
     /** @~english create default camera, the camera type depends on Director::getProjection, the depth of the default camera is 0
      * @~chinese 创建默认的相机,相机的类型取决于Director::getProjection,默认的相机深度是0*/
     static Camera* create();
-    
-    /**@~english
+
+    /**
+     * @~english Get the visiting camera , the visiting camera shall be set on Scene::render
+     * @~chinese 获取正在遍历的相机，该相机必须在`Scene::render`设置
+     */
+    static const Camera* getVisitingCamera();
+
+    static const experimental::Viewport& getDefaultViewport();
+    static void setDefaultViewport(const experimental::Viewport& vp);
+
+    /**
+     * @~english Get the default camera of the current running scene.
+     * @~chinese 从当前运行场景中获取默认相机。
+     */
+    static Camera* getDefaultCamera();
+
+    /**
     * Gets the type of camera.
     *
      * @~chinese 
@@ -309,19 +324,6 @@ public:
     virtual void onEnter() override;
     virtual void onExit() override;
 
-    /**@~english
-     * Get the visiting camera , the visiting camera shall be set on Scene::render
-     * @~chinese 
-     * 获取绘制的相机,绘制的相机会在Scene::render中设置。
-     */
-    static const Camera* getVisitingCamera() { return _visitingCamera; }
-
-    /**@~english
-     * Get the default camera of the current running scene.
-     * @~chinese 
-     * 获取到当前运行场景的默认相机。
-     */
-    static Camera* getDefaultCamera();
     /**
      @~english Before rendering scene with this camera, the background need to be cleared. It clears the depth buffer with max depth by default. Use setBackgroundBrush to modify the default behavior
      * @~chinese 场景渲染前该函数被调用，用来清除背景，默认情况下用最大深度值来清除背景深度，使用setBackgroundBrush来修改默认行为。
@@ -333,11 +335,16 @@ public:
      */
     void apply();
     /**
+     Restor the FBO, RenderTargets and viewport.
+     */
+    void restore();
+
+    /**
      @~english Set FBO, which will attach several render target for the rendered result.
      * @~chinese 设置FBO，FBO上可以绑定Render target用来绘制渲染结果。
      * @param fbo @~english FBO.
      * @~chinese 用来绑定到相机的FBO
-    */
+     */
     void setFrameBufferObject(experimental::FrameBuffer* fbo);
     /**
      @~english Set Viewport for camera.
@@ -345,8 +352,8 @@ public:
      * @param vp @~english Viewport
      * @~chinese 视口
      */
-    void setViewport(const experimental::Viewport& vp) { _viewport = vp; }
-    
+    void setViewport(const experimental::Viewport& vp);
+
     /**
      * @~english Whether or not the viewprojection matrix was updated since the last frame.
      * @~chinese viewprojection矩阵是否需要更新
@@ -354,7 +361,7 @@ public:
      * @~chinese 如果viewprojection矩阵需要更新返回true，否则false
      */
     bool isViewProjectionUpdated() const {return _viewProjectionUpdated;}
-    
+
     /**
      * @~english set the background brush. See CameraBackgroundBrush for more information.
      * @~chinese 设置背景刷。
@@ -362,16 +369,13 @@ public:
      * @~chinese 用来清除背景的背景刷
      */
     void setBackgroundBrush(CameraBackgroundBrush* clearBrush);
-    
+
     /**
      * @~english Get clear brush
      * @~chinese 获取背景刷
      */
     CameraBackgroundBrush* getBackgroundBrush() const { return _clearBrush; }
-    
-    /** @~english override visit routine which inherites from Node
-     * @~chinese 从Node继承来的visit方法，这里进行了重写
-     */
+
     virtual void visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;
 
     /**@~english Check if the background clear brush valid
@@ -384,15 +388,15 @@ public:
 CC_CONSTRUCTOR_ACCESS:
     Camera();
     ~Camera();
-    
+
     /**@~english
-     * Set the scene,this method should not be invoke manually
+     * Set the scene,this method shall not be invoke manually
      * @~chinese 
      * 设置场景,这个方法不应该手动调用
      */
     void setScene(Scene* scene);
     
-    /**@~english set additional matrix for the projection matrix, it multiplys mat to projection matrix when called, used by WP8
+    /**@~english set additional matrix for the projection matrix, it multiplies mat to projection matrix when called, used by WP8
      * @~chinese 对投影矩阵设置额外的矩阵,在WP8平台使用时，调用的时候它会乘以投影矩阵*/
     void setAdditionalProjection(const Mat4& mat);
     
@@ -402,13 +406,19 @@ CC_CONSTRUCTOR_ACCESS:
     bool initOrthographic(float zoomX, float zoomY, float nearPlane, float farPlane);
     void applyFrameBufferObject();
     void applyViewport();
+    void restoreFrameBufferObject();
+    void restoreViewport();
+
 protected:
+    static Camera* _visitingCamera;
+    static experimental::Viewport _defaultViewport;
 
     Scene* _scene; //Scene camera belongs to
     Mat4 _projection;
     mutable Mat4 _view;
     mutable Mat4 _viewInv;
     mutable Mat4 _viewProjection;
+
     Vec3 _up;
     Camera::Type _type;
     float _fieldOfView;
@@ -422,18 +432,12 @@ protected:
     mutable Frustum _frustum;   // camera frustum
     mutable bool _frustumDirty;
     int8_t  _depth;                 //camera depth, the depth of camera with CameraFlag::DEFAULT flag is 0 by default, a camera with larger depth is drawn on top of camera with smaller depth
-    static Camera* _visitingCamera;
-    
+
     CameraBackgroundBrush* _clearBrush; //brush used to clear the back ground
-    
+
     experimental::Viewport _viewport;
-    
     experimental::FrameBuffer* _fbo;
-protected:
-    static experimental::Viewport _defaultViewport;
-public:
-    static const experimental::Viewport& getDefaultViewport() { return _defaultViewport; }
-    static void setDefaultViewport(const experimental::Viewport& vp) { _defaultViewport = vp; }
+    GLint _oldViewport[4];
 };
 
 NS_CC_END

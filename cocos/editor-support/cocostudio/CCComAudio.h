@@ -143,11 +143,8 @@ public:
    
 public:
     /**
-     * @brief @~english Release the shared Engine object.
-     * @~chinese 释放音效引擎实例。
-     * @warning @~english It must be called before the application exit, or it will lead to memory leaks.
-     * @~chinese 在游戏退出时需要调用这个方法，不然的话会导致内存泄漏。
-     */
+    * @lua endToLua
+    */
     void end();
 
     /**

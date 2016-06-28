@@ -23,7 +23,7 @@
  ****************************************************************************/
 #include "AssetsManagerEx.h"
 #include "CCEventListenerAssetsManagerEx.h"
-#include "deprecated/CCString.h"
+#include "base/ccUTF8.h"
 #include "base/CCDirector.h"
 
 #include <stdio.h>
@@ -494,7 +494,13 @@ void AssetsManagerEx::downloadManifest()
     if (_updateState != State::PREDOWNLOAD_MANIFEST)
         return;
 
-    std::string manifestUrl = _localManifest->getManifestFileUrl();
+    std::string manifestUrl;
+    if (_remoteManifest->isVersionLoaded()) {
+        manifestUrl = _remoteManifest->getManifestFileUrl();
+    } else {
+        manifestUrl = _localManifest->getManifestFileUrl();
+    }
+
     if (manifestUrl.size() > 0)
     {
         _updateState = State::DOWNLOADING_MANIFEST;
@@ -658,8 +664,8 @@ void AssetsManagerEx::updateSucceed()
     _compressedFiles.clear();
 
     std::function<void(void*)> mainThread = [this](void* param) {
-        AsyncData* asyncData = (AsyncData*)param;
-        if (asyncData->errorCompressedFile.empty())
+        auto asyncDataInner = reinterpret_cast<AsyncData*>(param);
+        if (asyncDataInner->errorCompressedFile.empty())
         {
             // 5. Set update state
             _updateState = State::UP_TO_DATE;
@@ -669,10 +675,10 @@ void AssetsManagerEx::updateSucceed()
         else
         {
             _updateState = State::FAIL_TO_UPDATE;
-            dispatchUpdateEvent(EventAssetsManagerEx::EventCode::ERROR_DECOMPRESS, "", "Unable to decompress file " + asyncData->errorCompressedFile);
+            dispatchUpdateEvent(EventAssetsManagerEx::EventCode::ERROR_DECOMPRESS, "", "Unable to decompress file " + asyncDataInner->errorCompressedFile);
         }
 
-        delete asyncData;
+        delete asyncDataInner;
     };
     AsyncTaskPool::getInstance()->enqueue(AsyncTaskPool::TaskType::TASK_OTHER, mainThread, (void*)asyncData, [this, asyncData]() {
         // Decompress all compressed files
@@ -824,7 +830,7 @@ const DownloadUnits& AssetsManagerEx::getFailedAssets() const
 
 void AssetsManagerEx::downloadFailedAssets()
 {
-    CCLOG("AssetsManagerEx : Start update %lu failed assets.\n", _failedUnits.size());
+    CCLOG("AssetsManagerEx : Start update %lu failed assets.\n", static_cast<unsigned long>(_failedUnits.size()));
     updateAssets(_failedUnits);
 }
 

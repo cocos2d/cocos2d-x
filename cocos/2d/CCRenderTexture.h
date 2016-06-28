@@ -157,13 +157,11 @@ public:
      */
     virtual void beginWithClear(float r, float g, float b, float a, float depthValue, int stencilValue);
 
-    /** @~english End is key word of lua, use other name to export to lua.
-     * @~chinese 因为 end 是 lua 中的关键字，此接口是为 lua binding 增加的。
-     * @js NA
-     */
-    inline void endToLua(){ end();};
 
-    /** @~english Ends grabbing.  @~chinese 结束渲染。*/
+
+    /** @~english Ends grabbing.  @~chinese 结束渲染。
+     * @lua endToLua
+     */
     virtual void end();
 
     /** @~english Clears the texture with a color. 

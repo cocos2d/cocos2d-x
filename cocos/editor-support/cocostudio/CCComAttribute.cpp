@@ -196,7 +196,7 @@ bool ComAttribute::serialize(void* r)
 		{
 			filePath.assign(cocos2d::FileUtils::getInstance()->fullPathForFilename(file));
 		}
-		if (parse(filePath.c_str()))
+		if (parse(filePath))
 		{
             ret = true;
 		}

@@ -64,7 +64,6 @@ NewLabelTests::NewLabelTests()
     ADD_TEST_CASE(LabelLineHeightTest);
     ADD_TEST_CASE(LabelAdditionalKerningTest);
     ADD_TEST_CASE(LabelAddChildTest);
-    ADD_TEST_CASE(LabelFullTypeFontTest);
     ADD_TEST_CASE(LabelSmallDimensionsTest);
 
     ADD_TEST_CASE(LabelCharMapTest);
@@ -1034,7 +1033,7 @@ LabelTTFFontsTestNew::LabelTTFFontsTestNew()
     auto size = Director::getInstance()->getWinSize();
     TTFConfig ttfConfig(ttfpaths[0],20, GlyphCollection::NEHE);
 
-    for (size_t i = 0; i < fontCount; ++i) {
+    for (int i = 0; i < fontCount; ++i) {
         ttfConfig.fontFilePath = ttfpaths[i];
         auto label = Label::createWithTTF(ttfConfig, ttfpaths[i], TextHAlignment::CENTER,0);
         if( label ) {            
@@ -1947,20 +1946,6 @@ std::string LabelIssue11585Test::subtitle() const
     return "The color of letter should not be overridden by fade action.";
 }
 
-LabelFullTypeFontTest::LabelFullTypeFontTest()
-{
-    auto center = VisibleRect::center();
-
-    auto label = Label::createWithTTF("Hello 中国", "XueJ2312F.ttf", 30);
-    label->setPosition(center.x, center.y);
-    addChild(label);
-}
-
-std::string LabelFullTypeFontTest::title() const
-{
-    return "Test font supported by FullType";
-}
-
 LabelIssue10688Test::LabelIssue10688Test()
 {
     auto center = VisibleRect::center();
@@ -2094,7 +2079,6 @@ void LabelLayoutBaseTest::initWrapOption(const cocos2d::Size& size)
     checkBox->setScale(0.5);
     checkBox->setSelected(true);
     checkBox->setName("toggleWrap");
-    checkBox->setEnabled(false);
 
     checkBox->addEventListener([=](Ref* ref, CheckBox::EventType event){
         if (event == CheckBox::EventType::SELECTED) {
@@ -2281,6 +2265,8 @@ void LabelLayoutBaseTest::valueChanged(cocos2d::Ref *sender, cocos2d::extension:
         _label->setTTFConfig(ttfConfig);
     }else if(_labelType == 1){
         _label->setBMFontSize(fontSize);
+    }else if (_labelType == 2) {
+        _label->setSystemFontSize(fontSize);
     }
     this->updateDrawNodeSize(_label->getContentSize());
     
@@ -2603,11 +2589,15 @@ LabelSystemFontTest::LabelSystemFontTest()
 {
     _label->setLineSpacing(5);
     _label->setVerticalAlignment(TextVAlignment::CENTER);
-   _label->setOverflow(Label::Overflow::NONE);
-   _label->setSystemFontName("Hiragino Sans GB");
+    _label->setOverflow(Label::Overflow::NONE);
+    _label->setSystemFontName("Hiragino Sans GB");
+    _label->setSystemFontSize(20);
+    _label->enableOutline(Color4B::RED, 1.0);
+    _label->setString("This is a very\n 我爱你中国\n long sentence");
+    _labelType = 2;
     
     auto stepper = (ControlStepper*)this->getChildByName("stepper");
-    stepper->setEnabled(false);
+    stepper->setEnabled(true);
     
     auto checkbox = (CheckBox*)(this->getChildByName("toggleType"));
     checkbox->setEnabled(false);
@@ -2615,9 +2605,6 @@ LabelSystemFontTest::LabelSystemFontTest()
     this->updateDrawNodeSize(_label->getContentSize());
 
     auto slider1 = (ui::Slider*)this->getChildByTag(1);
-
-     auto slider2 = (ui::Slider*)this->getChildByTag(2);
-     slider2->setVisible(false);
 
     auto winSize = Director::getInstance()->getVisibleSize();
     slider1->addEventListener([=](Ref* ref, Slider::EventType event){
@@ -2657,6 +2644,9 @@ LabelSystemFontTest::LabelSystemFontTest()
     this->addChild(checkBox);
 
     this->initToggleCheckboxes();
+
+    auto checkboxToggleWrap = (CheckBox*)(this->getChildByName("toggleWrap"));
+    checkboxToggleWrap->setEnabled(true);
 }
 
 void LabelSystemFontTest::initToggleCheckboxes()
@@ -2735,8 +2725,6 @@ void LabelSystemFontTest::onChangedRadioButtonSelect(RadioButton* radioButton, R
     default:
         break;
     }
-    auto checkbox = (CheckBox*)(this->getChildByName("toggleWrap"));
-    checkbox->setSelected(_label->isWrapEnabled());
     this->updateDrawNodeSize(_label->getContentSize());
 }
 
@@ -2750,7 +2738,7 @@ LabelCharMapFontTest::LabelCharMapFontTest()
     _label->setScale(0.5f);
 
     auto stepper = (ControlStepper*)this->getChildByName("stepper");
-    stepper->setEnabled(false);
+    stepper->setEnabled(true);
 
     auto checkbox = (CheckBox*)(this->getChildByName("toggleType"));
     checkbox->setEnabled(false);

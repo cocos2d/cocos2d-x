@@ -32,9 +32,7 @@ THE SOFTWARE.
 #include "platform/winrt/CCApplication.h"
 #include "platform/winrt/CCWinRTUtils.h"
 #include "deprecated/CCNotificationCenter.h"
-#include "base/CCDirector.h"
 #include "base/CCEventDispatcher.h"
-#include "base/CCIMEDispatcher.h"
 #include "base/CCEventMouse.h"
 
 #include <map>
@@ -261,7 +259,7 @@ void GLViewImpl::OnPointerPressed(CoreWindow^ sender, PointerEventArgs^ args)
 
 void GLViewImpl::OnPointerPressed(PointerEventArgs^ args)
 {
-    int id = args->CurrentPoint->PointerId;
+    intptr_t id = args->CurrentPoint->PointerId;
     Vec2 pt = GetPoint(args);
     handleTouchesBegin(1, &id, &pt.x, &pt.y);
 }
@@ -269,7 +267,7 @@ void GLViewImpl::OnPointerPressed(PointerEventArgs^ args)
 void GLViewImpl::OnPointerWheelChanged(CoreWindow^ sender, PointerEventArgs^ args)
 {
     float direction = (float)args->CurrentPoint->Properties->MouseWheelDelta;
-    int id = 0;
+    intptr_t id = 0;
     Vec2 p(0.0f,0.0f);
     handleTouchesBegin(1, &id, &p.x, &p.y);
     p.y += direction;
@@ -299,7 +297,7 @@ void GLViewImpl::OnPointerMoved( PointerEventArgs^ args)
 	{
 		if (m_lastPointValid)
 		{
-			int id = args->CurrentPoint->PointerId;
+            intptr_t id = args->CurrentPoint->PointerId;
 			Vec2 p = GetPoint(args);
 			handleTouchesMove(1, &id, &p.x, &p.y);
 		}
@@ -319,7 +317,7 @@ void GLViewImpl::OnPointerReleased(CoreWindow^ sender, PointerEventArgs^ args)
 
 void GLViewImpl::OnPointerReleased(PointerEventArgs^ args)
 {
-    int id = args->CurrentPoint->PointerId;
+    intptr_t id = args->CurrentPoint->PointerId;
     Vec2 pt = GetPoint(args);
     handleTouchesEnd(1, &id, &pt.x, &pt.y);
 }

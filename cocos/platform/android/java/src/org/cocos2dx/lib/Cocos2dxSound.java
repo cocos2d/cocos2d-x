@@ -28,6 +28,7 @@ import android.content.Context;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.util.Log;
+import android.content.res.AssetFileDescriptor;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -273,7 +274,12 @@ public class Cocos2dxSound {
             if (path.startsWith("/")) {
                 soundID = this.mSoundPool.load(path, 0);
             } else {
-                soundID = this.mSoundPool.load(this.mContext.getAssets().openFd(path), 0);
+                if (Cocos2dxHelper.getObbFile() != null) {
+                    final AssetFileDescriptor assetFileDescriptor = Cocos2dxHelper.getObbFile().getAssetFileDescriptor(path);
+                    soundID = mSoundPool.load(assetFileDescriptor, 0);
+                } else {
+                    soundID = this.mSoundPool.load(this.mContext.getAssets().openFd(path), 0);
+                }
             }
         } catch (final Exception e) {
             soundID = Cocos2dxSound.INVALID_SOUND_ID;

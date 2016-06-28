@@ -44,7 +44,7 @@ THE SOFTWARE.
 #include "renderer/CCRenderer.h"
 #include "renderer/CCVertexIndexBuffer.h"
 #include "base/CCDirector.h"
-#include "deprecated/CCString.h"
+#include "base/ccUTF8.h"
 
 NS_CC_BEGIN
 namespace experimental {
@@ -828,7 +828,7 @@ void TMXLayer::setTileGID(int gid, const Vec2& tileCoordinate, TMXTileFlags flag
     }
 }
 
-void TMXLayer::setupTileSprite(Sprite* sprite, Vec2 pos, int gid)
+void TMXLayer::setupTileSprite(Sprite* sprite, const Vec2& pos, int gid)
 {
     sprite->setPosition(getPositionAt(pos));
     sprite->setPositionZ((float)getVertexZForPos(pos));

@@ -1,6 +1,6 @@
 ﻿/****************************************************************************
  Copyright (c) 2015 Chris Hannon http://www.channon.us
- Copyright (c) 2013-2015 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -116,7 +116,7 @@ public:
 
         /**@~english
          * This is kept for backwards compatibility, connect is now fired as a socket.io event "connect"
-         * 
+         *
          * This function would be called when the related SIOClient object receive messages that mean it have connected to endpoint successfully.
          *
          * @~chinese 
@@ -226,7 +226,7 @@ public:
 private:
 
     SocketIO();
-    virtual ~SocketIO(void);
+    virtual ~SocketIO();
 
     static SocketIO *_inst;
 
@@ -341,7 +341,7 @@ public:
      * @param e @~english the callback function. @~chinese 回调函数。
      */
     void on(const std::string& eventName, SIOEvent e);
-    
+
     /**
      * @~english Set tag of SIOClient.
      * The tag is used to distinguish the various SIOClient objects.
@@ -351,7 +351,6 @@ public:
      * @~chinese 标签（字符串）。
      */
     void setTag(const char* tag);
-    
 
     /**
      * @~english Get tag of SIOClient.
@@ -375,3 +374,4 @@ NS_CC_END
 /// @}
 
 #endif /* defined(__CC_JSB_SOCKETIO_H__) */
+

@@ -29,8 +29,8 @@ THE SOFTWARE.
 #include "base/CCTouch.h"
 #include "base/CCEventListenerTouch.h"
 #include "base/CCEventDispatcher.h"
+#include "base/ccUTF8.h"
 #include "platform/CCStdC.h"
-#include "deprecated/CCString.h"
 
 #include <vector>
 
@@ -137,7 +137,7 @@ bool Menu::initWithArray(const Vector<MenuItem*>& arrayOfItems)
         // menu in the center of the screen
         Size s = Director::getInstance()->getWinSize();
 
-        this->ignoreAnchorPointForPosition(true);
+        this->setIgnoreAnchorPointForPosition(true);
         setAnchorPoint(Vec2(0.5f, 0.5f));
         this->setContentSize(s);
 

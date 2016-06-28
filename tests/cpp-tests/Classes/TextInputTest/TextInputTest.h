@@ -53,7 +53,7 @@ class TextFieldTTFActionTest : public KeyboardNotificationLayer, public cocos2d:
     cocos2d::TextFieldTTF*    _textField;
     cocos2d::Action*          _textFieldAction;
     bool                _action;
-    int                 _charLimit;       // the textfield max char limit
+    size_t              _charLimit;       // the textfield max char limit
 
 public:
     CREATE_FUNC(TextFieldTTFActionTest);
@@ -75,4 +75,17 @@ public:
     virtual bool onDraw(cocos2d::TextFieldTTF*  sender);
 };
 
+//////////////////////////////////////////////////////////////////////////
+// TextFieldTTFSecureTextEntryTest for test TextFieldTTF SecureTextEntry.
+//////////////////////////////////////////////////////////////////////////
+
+class TextFieldTTFSecureTextEntryTest : public TextFieldTTFDefaultTest
+{
+public:
+    CREATE_FUNC(TextFieldTTFSecureTextEntryTest);
+    
+    virtual std::string subtitle() const override;
+    // Layer
+    virtual void onEnter() override;
+};
 #endif    // __TEXT_INPUT_TEST_H__

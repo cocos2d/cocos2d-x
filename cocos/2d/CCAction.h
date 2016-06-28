@@ -2,7 +2,7 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
  
 http://www.cocos2d-x.org
 
@@ -439,8 +439,33 @@ public:
      * @~chinese 追踪的边界。如果矩形等于`Rect::ZERO`，等同于没有边界。
      */
     static Follow* create(Node *followedNode, const Rect& rect = Rect::ZERO);
+      
+    /**@~english
+     * Creates the action with a set boundary or with no boundary with offsets.
+     * @~chinese 
+     * 创建追踪动作，并可以选择设置一组边界和偏移。
+     *
+     * @param followedNode  @~english The node to be followed.
+     * @~chinese 被跟随的节点
+     * @param rect  @~english The boundary. If \p rect is equal to Rect::ZERO, it'll work
+     *              with no boundary.
+     * @~chinese 追踪的边界。如果矩形等于`Rect::ZERO`，等同于没有边界。
+     *
+     * @param xOffset @~english The horizontal offset from the center of the screen from which the
+     *               node  is to be followed.It can be positive,negative or zero.If
+     *               set to zero the node will be horizontally centered followed.
+     * @~chinese 被跟随的node的中心点的水平偏移。可以是正数、负数和0。如果设置为0，那么就跟随node的水平中心点。
+     *  @param yOffset @~english The vertical offset from the center of the screen from which the
+     *                 node is to be followed.It can be positive,negative or zero.
+     *                 If set to zero the node will be vertically centered followed.
+     * @~chinese 被跟随的node的中心点的垂直偏移。可以是正数、负数和0。如果设置为0，那么就跟随node的垂直中心点。
+     * @~english If both xOffset and yOffset are set to zero,then the node will be horizontally and vertically centered followed.
+     * @~chinese 如果xOffset和yOffset都设置为0，那么将跟随node的中心点。
+     */
+
+    static Follow* createWithOffset(Node* followedNode,float xOffset,float yOffset,const Rect& rect = Rect::ZERO);
     
-    /** @~english Return whether the boundarySet is opened.
+    /** Return boundarySet.
      *
      * @~chinese 返回是否开启追踪边界.
      * 
@@ -490,6 +515,8 @@ CC_CONSTRUCTOR_ACCESS:
     , _rightBoundary(0.0)
     , _topBoundary(0.0)
     , _bottomBoundary(0.0)
+    , _offsetX(0.0)
+    , _offsetY(0.0)
     , _worldRect(Rect::ZERO)
     {}
 
@@ -502,7 +529,7 @@ CC_CONSTRUCTOR_ACCESS:
     /**@~english
      * Initializes the action with a set boundary or with no boundary.
      *
-     * @~chinese 
+     * @~chinese
      * 初始化追踪动作，可以选择设置一组追踪边界。
      * 
      * @param followedNode  @~english The node to be followed.
@@ -512,6 +539,32 @@ CC_CONSTRUCTOR_ACCESS:
      * @~chinese 追踪的边界。如果矩形等于`Rect::ZERO`，等同于没有边界。
      */
     bool initWithTarget(Node *followedNode, const Rect& rect = Rect::ZERO);
+    
+    
+    /**@~english
+     * Initializes the action with a set boundary or with no boundary with offsets.
+     *
+     * @~chinese
+     * 初始化追踪动作，可以选择设置一组追踪边界和偏移
+     *
+     * @param followedNode  @~english The node to be followed. 
+     * @~chinese 被跟随的节点。
+     * @param rect  @~english The boundary. If \p rect is equal to Rect::ZERO, it'll work
+     *              with no boundary.
+     * @~chinese 追踪的边界。如果矩形等于`Rect::ZERO`，等同于没有边界。
+     * @param xOffset @~english The horizontal offset from the center of the screen from which the
+     *                node  is to be followed.It can be positive,negative or zero.If
+     *                set to zero the node will be horizontally centered followed.
+     * @~chinese 被跟随的node的中心点的水平偏移。可以是正数、负数和0。如果设置为0，那么就跟随node的水平中心点。
+     * @param yOffset @~english The vertical offset from the center of the screen from which the
+     *                node is to be followed.It can be positive,negative or zero.
+     *                If set to zero the node will be vertically centered followed.
+     * @~chinese 被跟随的node的中心点的垂直偏移。可以是正数、负数和0。如果设置为0，那么就跟随node的垂直中心点。
+     * @~english If both xOffset and yOffset are set to zero,then the node will be horizontally and vertically centered followed.
+     * @~chinese 如果xOffset和yOffset都设置为0，那么将跟随node的中心点。
+
+     */
+    bool initWithTargetAndOffset(Node *followedNode,float xOffset,float yOffset,const Rect& rect = Rect::ZERO);
 
 protected:
 
@@ -533,6 +586,11 @@ protected:
     float _rightBoundary;
     float _topBoundary;
     float _bottomBoundary;
+    
+    /** @~english Horizontal (x) and vertical (y) offset values. @~chinese 垂直和水平偏移 */
+    float _offsetX;
+    float _offsetY;
+    
     Rect _worldRect;
 
 private:

@@ -307,7 +307,7 @@ public:
     /**
      * @brief Set color of page indicator's selected index.
      *
-     * @param spaceBetweenIndexNodes Space between nodes in pixel.
+     * @param color Space between nodes in pixel.
      */
     void setIndicatorSelectedIndexColor(const Color3B& color);
 
@@ -318,7 +318,43 @@ public:
      */
     const Color3B& getIndicatorSelectedIndexColor() const;
 
-    /**   
+    /**
+     * @brief Set color of page indicator's index nodes.
+     *
+     * @param color Space between nodes in pixel.
+     */
+    void setIndicatorIndexNodesColor(const Color3B& color);
+    
+    /**
+     * @brief Get the color of page indicator's index nodes.
+     *
+     * @return color
+     */
+    const Color3B& getIndicatorIndexNodesColor() const;
+    
+    /**
+     * @brief Set scale of page indicator's index nodes.
+     *
+     * @param indexNodesScale Scale of index nodes.
+     */
+    void setIndicatorIndexNodesScale(float indexNodesScale);
+    
+    /**
+     * sets texture for index nodes.
+     *
+     * @param fileName   File name of texture.
+     * @param resType    @see TextureResType .
+     */
+    void setIndicatorIndexNodesTexture(const std::string& texName,Widget::TextureResType texType = Widget::TextureResType::LOCAL);
+    
+    /**
+     * @brief Get scale of page indicator's index nodes.
+     *
+     * @return indexNodesScale
+     */
+    float getIndicatorIndexNodesScale() const;
+    
+    /**
      * @~english If you don't specify the value, the pageView will turn page when scrolling at the half width of a page.
      * @~chinese 如果没有指定该值，pageView会在滚到页面一半时切换到下一页。
      * @param threshold  @~english A threshold in float. @~chinese 切换页面门限值。
@@ -347,6 +383,8 @@ public:
      * @return @~english True if using custom scroll threshold, false otherwise. @~chinese True表明使用用户设置的页面切换门限值。反之不使用。
      */
     CC_DEPRECATED_ATTRIBUTE bool isUsingCustomScrollThreshold()const;
+
+    void setAutoScrollStopEpsilon(float epsilon);
 
 CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
@@ -391,6 +429,7 @@ protected:
 #pragma warning (pop)
 #endif
     ccPageViewCallback _eventCallback;
+    float _autoScrollStopEpsilon;
 };
 
 }

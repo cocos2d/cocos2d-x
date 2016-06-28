@@ -43,6 +43,12 @@
 -- @return GLView#GLView self (return value: cc.GLView)
         
 --------------------------------
+-- 
+-- @function [parent=#GLView] getVR 
+-- @param self
+-- @return VRIRenderer#VRIRenderer ret (return value: cc.VRIRenderer)
+        
+--------------------------------
 -- Set Scissor rectangle with points.<br>
 -- param x Set the points of x.<br>
 -- param y Set the points of y.<br>
@@ -78,10 +84,12 @@
 -- @return GLView#GLView self (return value: cc.GLView)
         
 --------------------------------
---  Force destroying EGL view, subclass must implement this method. 
--- @function [parent=#GLView] end 
+-- Get the frame size of EGL view.<br>
+-- In general, it returns the screen size since the EGL view is a fullscreen view.<br>
+-- return The frame size of EGL view.
+-- @function [parent=#GLView] getFrameSize 
 -- @param self
--- @return GLView#GLView self (return value: cc.GLView)
+-- @return size_table#size_table ret (return value: size_table)
         
 --------------------------------
 -- Get scale factor of the vertical direction.<br>
@@ -103,14 +111,6 @@
 -- @function [parent=#GLView] getVisibleOrigin 
 -- @param self
 -- @return vec2_table#vec2_table ret (return value: vec2_table)
-        
---------------------------------
--- Get the frame size of EGL view.<br>
--- In general, it returns the screen size since the EGL view is a fullscreen view.<br>
--- return The frame size of EGL view.
--- @function [parent=#GLView] getFrameSize 
--- @param self
--- @return size_table#size_table ret (return value: size_table)
         
 --------------------------------
 --  Set zoom factor for frame. This methods are for<br>
@@ -174,11 +174,35 @@
 -- @return int#int ret (return value: int)
         
 --------------------------------
+--  Force destroying EGL view, subclass must implement this method. <br>
+-- lua endToLua
+-- @function [parent=#GLView] end 
+-- @param self
+-- @return GLView#GLView self (return value: cc.GLView)
+        
+--------------------------------
 --  Returns whether or not the view is in Retina Display mode.<br>
 -- return Returns whether or not the view is in Retina Display mode.
 -- @function [parent=#GLView] isRetinaDisplay 
 -- @param self
 -- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- Renders a Scene with a Renderer<br>
+-- This method is called dirctly by the Director
+-- @function [parent=#GLView] renderScene 
+-- @param self
+-- @param #cc.Scene scene
+-- @param #cc.Renderer renderer
+-- @return GLView#GLView self (return value: cc.GLView)
+        
+--------------------------------
+-- Sets a VR renderer. <br>
+-- if `vrrenderer` is `nullptr` VR will be disabled
+-- @function [parent=#GLView] setVR 
+-- @param self
+-- @param #cc.VRIRenderer vrrenderer
+-- @return GLView#GLView self (return value: cc.GLView)
         
 --------------------------------
 -- Set opengl view port rectangle with points.<br>

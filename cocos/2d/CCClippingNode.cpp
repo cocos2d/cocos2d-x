@@ -290,6 +290,7 @@ Node* ClippingNode::getStencil() const
 
 void ClippingNode::setStencil(Node *stencil)
 {
+    //early out if the stencil is already set
     if (_stencil == stencil)
         return;
     
@@ -303,9 +304,26 @@ void ClippingNode::setStencil(Node *stencil)
             sEngine->retainScriptObject(this, stencil);
     }
 #endif // CC_ENABLE_GC_FOR_NATIVE_OBJECTS
-    CC_SAFE_RETAIN(stencil);
-    CC_SAFE_RELEASE(_stencil);
+    
+    //cleanup current stencil
+    if(_stencil != nullptr && _stencil->isRunning())
+    {
+        _stencil->onExitTransitionDidStart();
+        _stencil->onExit();
+    }
+    CC_SAFE_RELEASE_NULL(_stencil);
+    
+    //initialise new stencil
     _stencil = stencil;
+    CC_SAFE_RETAIN(_stencil);
+    if(_stencil != nullptr && this->isRunning())
+    {
+        _stencil->onEnter();
+        if(this->_isTransitionFinished)
+        {
+            _stencil->onEnterTransitionDidFinish();
+        }
+    }
 }
 
 bool ClippingNode::hasContent() const

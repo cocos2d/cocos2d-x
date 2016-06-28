@@ -630,6 +630,7 @@ class AnimationCacheTest : public SpriteTestDemo
 public:
     CREATE_FUNC(AnimationCacheTest);
     AnimationCacheTest();
+    virtual ~AnimationCacheTest();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 };
@@ -739,6 +740,7 @@ public:
     CREATE_FUNC(AnimationCacheFile);
 
     AnimationCacheFile();
+    virtual ~AnimationCacheFile();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 };

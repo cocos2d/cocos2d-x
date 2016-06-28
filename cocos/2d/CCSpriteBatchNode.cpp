@@ -29,12 +29,11 @@ THE SOFTWARE.
 #include "2d/CCSpriteBatchNode.h"
 #include "2d/CCSprite.h"
 #include "base/CCDirector.h"
+#include "base/CCProfiling.h"
+#include "base/ccUTF8.h"
 #include "renderer/CCTextureCache.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCQuadCommand.h"
-
-#include "deprecated/CCString.h" // For StringUtils::format
-
 
 NS_CC_BEGIN
 
@@ -252,7 +251,7 @@ void SpriteBatchNode::removeAllChildrenWithCleanup(bool doCleanup)
     Node::removeAllChildrenWithCleanup(doCleanup);
 
     _descendants.clear();
-    _textureAtlas->removeAllQuads();
+    if (_textureAtlas) {_textureAtlas->removeAllQuads();}
 }
 
 //override sortAllChildren

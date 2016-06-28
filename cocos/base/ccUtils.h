@@ -62,6 +62,7 @@ NS_CC_BEGIN
 int ccNextPOT(int value);
 
 class Sprite;
+class Image;
 
 namespace utils
 {
@@ -82,7 +83,16 @@ namespace utils
      * 一个简单的基本文件名("hello.png" etc.),不要使用相对路径的目录名("mydir/hello.png" etc.).
      * @since v3.2
      */
-    void CC_DLL captureScreen(const std::function<void(bool, const std::string&)>& afterCaptured, const std::string& filename);
+    CC_DLL void  captureScreen(const std::function<void(bool, const std::string&)>& afterCaptured, const std::string& filename);
+
+    /** Capture a specific Node.
+    * @param startNode: specify the snapshot Node. It chould be cocos2d::Scene
+    * @param scale
+    * @returns: return a Image, then can call saveToFile to save the image as "xxx.png or xxx.jpg".
+    * @since v3.11
+    * !!! remark: Caller is responsible for releasing it by calling delete.
+    */
+    CC_DLL Image* captureNode(Node* startNode, float scale = 1.0f);
     
     /**
      * @~english Find children by name, it will return all child that has the same name.
@@ -102,7 +112,7 @@ namespace utils
      * @~chinese 名称相匹配的子节点数组
      * @since v3.2
      */
-    std::vector<Node*> CC_DLL findChildren(const Node &node, const std::string &name);
+    CC_DLL std::vector<Node*>  findChildren(const Node &node, const std::string &name);
     
     /**
      * @~english Same to ::atof, but strip the string, remain 7 numbers after '.' before call atof.
@@ -116,7 +126,7 @@ namespace utils
      * @return @~english Returns converted value of a string.
      * @~chinese 返回转换后的字符串。
      */
-    double CC_DLL atof(const char* str);
+    CC_DLL double  atof(const char* str);
 
     /**
      * @~english Get current exact time, accurate to nanoseconds.
@@ -125,7 +135,7 @@ namespace utils
      * @return @~english Returns the time in seconds since the Epoch.
      * @~chinese 返回Epoch以来的时间间隔,以秒为单位。
      */
-    double CC_DLL gettime();
+    CC_DLL double  gettime();
 
     /**@~english
      * Get current time in milliseconds, accurate to nanoseconds
@@ -134,7 +144,7 @@ namespace utils
      * @return @~english Returns the time in milliseconds since the Epoch.
      * @~chinese 返回从公元纪年开始的毫秒时间
      */
-    long long CC_DLL getTimeInMilliseconds();
+    CC_DLL long long  getTimeInMilliseconds();
 
     /**
      * @~english
@@ -144,15 +154,58 @@ namespace utils
      * @return @~english Returns union of bounding box of a node and its children.
      * @~chinese 返回一个节点以及其子节点的边界框
      */
-    Rect CC_DLL getCascadeBoundingBox(Node *node);
+    CC_DLL Rect getCascadeBoundingBox(Node *node);
 
     /**
-     * Create a sprite instance from base64 encoded image.
+     * Create a sprite instance from base64 encoded image and adds the texture to the Texture Cache.
 
      * @return Returns an instance of sprite
      */
-    Sprite* createSpriteFromBase64(const char* base64String);
+    CC_DLL Sprite* createSpriteFromBase64Cached(const char* base64String, const char* key);
 
+    /**
+    * Create a sprite instance from base64 encoded image.
+
+    * @return Returns an instance of sprite
+    */
+    CC_DLL Sprite* createSpriteFromBase64(const char* base64String);
+
+
+    /**
+     * Find a child by name recursively
+
+     * @return  Returns found node or nullptr
+     */
+    CC_DLL Node*  findChild(Node* levelRoot, const char* name);
+
+    /**
+     * Find a child by tag recursively
+
+     * @return Returns found node or nullptr
+     */
+   CC_DLL Node*  findChild(Node* levelRoot, int tag);
+
+    /**
+     * Find a child by name recursively
+
+     * @return  Returns found node or nullptr with specified type 'T'
+     */
+    template<typename T> inline
+    T findChild(Node* levelRoot, const char* name)
+    {
+        return dynamic_cast<T>(findChild(levelRoot, name));
+    }
+
+    /**
+     * Find a child by tag recursively
+
+     * @return  Returns found node or nullptr with specified type 'T'
+     */
+    template<typename T> inline
+    T findChild(Node* levelRoot, int tag)
+    {
+        return dynamic_cast<T>(findChild(levelRoot, tag));
+    }
 }
 
 NS_CC_END

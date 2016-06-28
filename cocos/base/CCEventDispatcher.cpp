@@ -604,6 +604,10 @@ void EventDispatcher::removeEventListener(EventListener* listener)
 {
     if (listener == nullptr)
         return;
+    
+    // just return if listener is in _toRemovedListeners to avoid remove listeners more than once
+    if (std::find(_toRemovedListeners.begin(), _toRemovedListeners.end(), listener) != _toRemovedListeners.end())
+        return;
 
     bool isFound = false;
     
@@ -842,10 +846,9 @@ void EventDispatcher::dispatchTouchEventToListeners(EventListenerVector* listene
             // get a copy of cameras, prevent it's been modified in listener callback
             // if camera's depth is greater, process it earlier
             auto cameras = scene->getCameras();
-            Camera* camera;
-            for (int j = int(cameras.size()) - 1; j >= 0; --j)
+            for (auto rit = cameras.rbegin(); rit != cameras.rend(); ++rit)
             {
-                camera = cameras[j];
+                Camera* camera = *rit;
                 if (camera->isVisible() == false)
                 {
                     continue;

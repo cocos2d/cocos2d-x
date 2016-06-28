@@ -38,7 +38,7 @@
 static std::string getFixedBaseUrl(const std::string& baseUrl)
 {
     std::string fixedBaseUrl;
-    if (baseUrl.empty() || baseUrl.c_str()[0] != '/') {
+    if (baseUrl.empty() || baseUrl.at(0) != '/') {
         fixedBaseUrl = [[[NSBundle mainBundle] resourcePath] UTF8String];
         fixedBaseUrl += "/";
         fixedBaseUrl += baseUrl;
@@ -52,7 +52,7 @@ static std::string getFixedBaseUrl(const std::string& baseUrl)
         fixedBaseUrl.replace(pos, 1, "%20");
     }
     
-    if (fixedBaseUrl.c_str()[fixedBaseUrl.length() - 1] != '/') {
+    if (fixedBaseUrl.at(fixedBaseUrl.length() - 1) != '/') {
         fixedBaseUrl += "/";
     }
     
@@ -71,6 +71,8 @@ static std::string getFixedBaseUrl(const std::string& baseUrl)
 + (instancetype)webViewWrapper;
 
 - (void)setVisible:(bool)visible;
+
+- (void)setBounces:(bool)bounces;
 
 - (void)setFrameWithX:(float)x y:(float)y width:(float)width height:(float)height;
 
@@ -144,6 +146,10 @@ static std::string getFixedBaseUrl(const std::string& baseUrl)
 
 - (void)setVisible:(bool)visible {
     self.uiWebView.hidden = !visible;
+}
+
+- (void)setBounces:(bool)bounces {
+  self.uiWebView.scrollView.bounces = bounces;
 }
 
 - (void)setFrameWithX:(float)x y:(float)y width:(float)width height:(float)height {
@@ -340,6 +346,10 @@ void WebViewImpl::goForward() {
 
 void WebViewImpl::evaluateJS(const std::string &js) {
     [_uiWebViewWrapper evaluateJS:js];
+}
+
+void WebViewImpl::setBounces(bool bounces) {
+    [_uiWebViewWrapper setBounces:bounces];
 }
 
 void WebViewImpl::setScalesPageToFit(const bool scalesPageToFit) {

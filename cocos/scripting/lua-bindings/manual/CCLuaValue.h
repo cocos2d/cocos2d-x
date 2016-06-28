@@ -265,7 +265,7 @@ public:
      * @return @~english the type of LuaValue object.
      * @~chinese LuaValue对象的类型。
      */
-    const LuaValueType getType(void) const {
+    LuaValueType getType() const {
         return _type;
     }
     

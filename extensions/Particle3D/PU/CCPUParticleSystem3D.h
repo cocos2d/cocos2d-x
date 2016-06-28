@@ -441,45 +441,21 @@ public:
     inline float getTimeElapsedSinceStart(void) const {return _timeElapsedSinceStart;};
 
     /**
-    * @~english Get the default width of particle.
-    * @~chinese 获取粒子默认的宽度。
-    * @return @~english The width of particle. @~chinese 粒子的宽度。
-    */
-    const float getDefaultWidth(void) const;
-
-    /**
-    * @~english Set the default width of particle.
-    * @~chinese 设置粒子默认的宽度。
-    * @param width @~english The width of particle. @~chinese 粒子的宽度。
-    */
+     * default particle width
+     */
+    float getDefaultWidth() const;
     void setDefaultWidth(const float width);
 
-    /**
-    * @~english Get the default height of particle.
-    * @~chinese 获取粒子默认的高度。
-    * @return @~english The height of particle. @~chinese 粒子的高度。
-    */
-    const float getDefaultHeight(void) const;
-
-    /**
-    * @~english Set the default height of particle.
-    * @~chinese 设置粒子默认的高度。
-    * @param height @~english The height of particle. @~chinese 粒子的高度。
-    */
+    /** 
+     * default particle height
+     */
+    float getDefaultHeight() const;
     void setDefaultHeight(const float height);
 
-    /**
-    * @~english Get the default depth of particle.
-    * @~chinese 获取粒子默认的深度。
-    * @return @~english The depth of particle. @~chinese 粒子的深度。
-    */
-    const float getDefaultDepth(void) const;
-
-    /**
-    * @~english Set the default depth of particle.
-    * @~chinese 设置粒子默认的深度。
-    * @param depth @~english The depth of particle. @~chinese 粒子的深度。
-    */
+    /** 
+     * default particle depth
+     */
+    float getDefaultDepth() const;
     void setDefaultDepth(const float depth);
 
     /**

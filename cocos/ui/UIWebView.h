@@ -30,6 +30,7 @@
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN) && !defined(CC_PLATFORM_OS_TVOS)
 
 
+
 #include "ui/UIWidget.h"
 #include "ui/GUIExport.h"
 #include "base/CCData.h"
@@ -271,6 +272,11 @@ public:
      */
     ccWebViewCallback getOnJSCallback()const;
 
+    /**
+     * Set whether the webview bounces at end of scroll of WebView.
+     */
+    void setBounces(bool bounce);
+
     virtual void draw(cocos2d::Renderer *renderer, cocos2d::Mat4 const &transform, uint32_t flags) override;
 
     /**@~english
@@ -279,7 +285,6 @@ public:
      * 设置WebView的可见性。
      */
     virtual void setVisible(bool visible) override;
-    
     virtual void onEnter() override;
     virtual void onExit() override;
     

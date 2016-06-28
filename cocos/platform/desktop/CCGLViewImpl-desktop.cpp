@@ -37,7 +37,6 @@ THE SOFTWARE.
 #include "base/ccUtils.h"
 #include "base/ccUTF8.h"
 #include "2d/CCCamera.h"
-#include "deprecated/CCString.h"
 
 NS_CC_BEGIN
 
@@ -300,8 +299,13 @@ GLViewImpl::~GLViewImpl()
 
 GLViewImpl* GLViewImpl::create(const std::string& viewName)
 {
+    return GLViewImpl::create(viewName, false);
+}
+
+GLViewImpl* GLViewImpl::create(const std::string& viewName, bool resizable)
+{
     auto ret = new (std::nothrow) GLViewImpl;
-    if(ret && ret->initWithRect(viewName, Rect(0, 0, 960, 640), 1.0f, false)) {
+    if(ret && ret->initWithRect(viewName, Rect(0, 0, 960, 640), 1.0f, resizable)) {
         ret->autorelease();
         return ret;
     }
@@ -616,7 +620,14 @@ Rect GLViewImpl::getScissorRect() const
 
 void GLViewImpl::onGLFWError(int errorID, const char* errorDesc)
 {
-    _glfwError = StringUtils::format("GLFWError #%d Happen, %s", errorID, errorDesc);
+    if (_mainWindow)
+    {
+        _glfwError = StringUtils::format("GLFWError #%d Happen, %s", errorID, errorDesc);
+    }
+    else
+    {
+        _glfwError.append(StringUtils::format("GLFWError #%d Happen, %s\n", errorID, errorDesc));
+    }
     CCLOGERROR("%s", _glfwError.c_str());
 }
 
@@ -813,12 +824,17 @@ void GLViewImpl::onGLFWframebuffersize(GLFWwindow* window, int w, int h)
 
 void GLViewImpl::onGLFWWindowSizeFunCallback(GLFWwindow *window, int width, int height)
 {
-    int frameWidth = width / _frameZoomFactor;
-    int frameHeight = height / _frameZoomFactor;
-    setFrameSize(frameWidth, frameHeight);
-    
-    updateDesignResolutionSize();
-    Director::getInstance()->setViewport();
+    if (width && height && _resolutionPolicy != ResolutionPolicy::UNKNOWN)
+    {
+        Size baseDesignSize = _designResolutionSize;
+        ResolutionPolicy baseResolutionPolicy = _resolutionPolicy;
+
+        int frameWidth = width / _frameZoomFactor;
+        int frameHeight = height / _frameZoomFactor;
+        setFrameSize(frameWidth, frameHeight);
+        setDesignResolutionSize(baseDesignSize.width, baseDesignSize.height, baseResolutionPolicy);
+        Director::getInstance()->setViewport();
+    }
 }
 
 void GLViewImpl::onGLFWWindowIconifyCallback(GLFWwindow* window, int iconified)

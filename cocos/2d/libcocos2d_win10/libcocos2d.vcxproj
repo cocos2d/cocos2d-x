@@ -642,6 +642,7 @@
     <ClCompile Include="..\..\ui\UIButton.cpp" />
     <ClCompile Include="..\..\ui\UIAbstractCheckButton.cpp" />
     <ClCompile Include="..\..\ui\UICheckBox.cpp" />
+    <ClCompile Include="..\..\ui\UIEditBox\UIEditBoxImpl-common.cpp" />
     <ClCompile Include="..\..\ui\UIRadioButton.cpp" />
     <ClCompile Include="..\..\ui\UIDeprecated.cpp" />
     <ClCompile Include="..\..\ui\UIEditBox\UIEditBox.cpp" />
@@ -670,6 +671,10 @@
     <ClCompile Include="..\..\ui\UITextField.cpp" />
     <ClCompile Include="..\..\ui\UIVBox.cpp" />
     <ClCompile Include="..\..\ui\UIWidget.cpp" />
+    <ClCompile Include="..\..\vr\CCVRDistortion.cpp" />
+    <ClCompile Include="..\..\vr\CCVRDistortionMesh.cpp" />
+    <ClCompile Include="..\..\vr\CCVRGenericHeadTracker.cpp" />
+    <ClCompile Include="..\..\vr\CCVRGenericRenderer.cpp" />
     <ClCompile Include="..\CCAction.cpp" />
     <ClCompile Include="..\CCActionCamera.cpp" />
     <ClCompile Include="..\CCActionCatmullRom.cpp" />
@@ -1232,7 +1237,6 @@
     <ClInclude Include="..\..\platform\winrt\CCFreeTypeFont.h" />
     <ClInclude Include="..\..\platform\winrt\CCGL.h" />
     <ClInclude Include="..\..\platform\winrt\CCGLViewImpl-winrt.h" />
-    <ClInclude Include="..\..\platform\winrt\CCGL_Angle.h" />
     <ClInclude Include="..\..\platform\winrt\CCPlatformDefine-winrt.h" />
     <ClInclude Include="..\..\platform\winrt\CCPrecompiledShaders.h" />
     <ClInclude Include="..\..\platform\winrt\CCPThreadWinRT.h" />
@@ -1248,7 +1252,12 @@
     <ClInclude Include="..\..\renderer\CCBatchCommand.h" />
     <ClInclude Include="..\..\renderer\CCCustomCommand.h" />
     <ClInclude Include="..\..\renderer\CCTextureCube.h" />
+    <ClInclude Include="..\..\ui\UIEditBox\UIEditBoxImpl-common.h" />
     <ClInclude Include="..\..\ui\UITabControl.h" />
+    <ClInclude Include="..\..\vr\CCVRDistortion.h" />
+    <ClInclude Include="..\..\vr\CCVRDistortionMesh.h" />
+    <ClInclude Include="..\..\vr\CCVRGenericHeadTracker.h" />
+    <ClInclude Include="..\..\vr\CCVRGenericRenderer.h" />
     <ClInclude Include="..\CCAutoPolygon.h" />
     <ClInclude Include="..\CCCameraBackgroundBrush.h" />
     <ClInclude Include="..\renderer\CCFrameBuffer.h" />
@@ -1533,34 +1542,34 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <GenerateManifest>false</GenerateManifest>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
-    <TargetName>libcocos2d_v3.11_Windows_10.0</TargetName>
+    <TargetName>libcocos2d_v3.12_Windows_10.0</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <GenerateManifest>false</GenerateManifest>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
-    <TargetName>libcocos2d_v3.11_Windows_10.0</TargetName>
+    <TargetName>libcocos2d_v3.12_Windows_10.0</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <GenerateManifest>false</GenerateManifest>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
     <LinkIncremental>false</LinkIncremental>
-    <TargetName>libcocos2d_v3.11_Windows_10.0</TargetName>
+    <TargetName>libcocos2d_v3.12_Windows_10.0</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <GenerateManifest>false</GenerateManifest>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
     <LinkIncremental>false</LinkIncremental>
-    <TargetName>libcocos2d_v3.11_Windows_10.0</TargetName>
+    <TargetName>libcocos2d_v3.12_Windows_10.0</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <GenerateManifest>false</GenerateManifest>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
-    <TargetName>libcocos2d_v3.11_Windows_10.0</TargetName>
+    <TargetName>libcocos2d_v3.12_Windows_10.0</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <GenerateManifest>false</GenerateManifest>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
-    <TargetName>libcocos2d_v3.11_Windows_10.0</TargetName>
+    <TargetName>libcocos2d_v3.12_Windows_10.0</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

@@ -29,9 +29,9 @@ THE SOFTWARE.
 #include "2d/CCTMXTiledMap.h"
 #include "2d/CCSprite.h"
 #include "base/CCDirector.h"
+#include "base/ccUTF8.h"
 #include "renderer/CCTextureCache.h"
 #include "renderer/CCGLProgram.h"
-#include "deprecated/CCString.h" // For StringUtils::format
 
 NS_CC_BEGIN
 
@@ -224,7 +224,7 @@ void TMXLayer::parseInternalProperties()
     }
 }
 
-void TMXLayer::setupTileSprite(Sprite* sprite, Vec2 pos, int gid)
+void TMXLayer::setupTileSprite(Sprite* sprite, const Vec2& pos, int gid)
 {
     sprite->setPosition(getPositionAt(pos));
     sprite->setPositionZ((float)getVertexZForPos(pos));
@@ -281,7 +281,7 @@ void TMXLayer::setupTileSprite(Sprite* sprite, Vec2 pos, int gid)
     }
 }
 
-Sprite* TMXLayer::reusedTileWithRect(Rect rect)
+Sprite* TMXLayer::reusedTileWithRect(const Rect& rect)
 {
     if (! _reusedTile) 
     {

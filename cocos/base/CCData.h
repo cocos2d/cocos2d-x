@@ -1,7 +1,7 @@
 ﻿/****************************************************************************
  Copyright (c) 2010-2012 cocos2d-x.org
  Copyright (c) 2013-2014 Chukong Technologies Inc.
- 
+
  http://www.cocos2d-x.org
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -42,7 +42,7 @@ NS_CC_BEGIN
 class CC_DLL Data
 {
     friend class Properties;
-    
+
 public:
 
     /**@~english
@@ -60,7 +60,6 @@ public:
      */
     Data();
     
-
     /**@~english
      * Copy constructor of Data.
      * @~chinese 
@@ -68,14 +67,12 @@ public:
      */
     Data(const Data& other);
     
-
     /**@~english
      * Copy constructor of Data.
      * @~chinese 
      * Data的拷贝构造函数。
      */
     Data(Data&& other);
-    
 
     /**@~english
      * Destructor of Data.
@@ -83,7 +80,6 @@ public:
      * Data的析构函数。
      */
     ~Data();
-    
 
     /**@~english
      * Overloads of operator=.
@@ -92,14 +88,12 @@ public:
      */
     Data& operator= (const Data& other);
     
-
     /**@~english
      * Overloads of operator=.
      * @~chinese 
      * 重载赋值操作符。
      */
     Data& operator= (Data&& other);
-    
 
     /**@~english
      * Gets internal bytes of Data. It will return the pointer directly used in Data, so don't delete it.
@@ -111,7 +105,6 @@ public:
      * @~chinese Data中内部使用的指针。
      */
     unsigned char* getBytes() const;
-    
 
     /**@~english
      * Gets the size of the bytes.
@@ -123,7 +116,6 @@ public:
      * @~chinese 字节的数据的大小。
      */
     ssize_t getSize() const;
-    
 
     /** @~english Copies the buffer pointer and its size.
      * @~chinese 拷贝缓冲指针和它的大小。
@@ -133,8 +125,7 @@ public:
      * 开发人员应该在调用这个方法后释放指针。
      *  @see Data::fastSet
      */
-    void copy(const unsigned char* bytes, const ssize_t size);
-    
+    void copy(const unsigned char* bytes, const ssize_t size);   
 
     /** @~english Fast set the buffer pointer and its size. Please use it carefully.
      * @~chinese 快速设置缓冲区指针和它的大小。请小心使用它。
@@ -149,7 +140,6 @@ public:
      *  @see Data::copy
      */
     void fastSet(unsigned char* bytes, const ssize_t size);
-    
 
     /** @~english
      * Clears data, free buffer and reset data size.
@@ -158,7 +148,6 @@ public:
      */
     void clear();
     
-
     /** @~english
      * Check whether the data is null.
      *
@@ -169,10 +158,33 @@ public:
      * @~chinese 如果数据为空返回真,如果不是返回假。
      */
     bool isNull() const;
-    
+
+    /**
+     * Get the internal buffer of data and set data to empty state.
+     *
+     * The ownership of the buffer removed from the data object.
+     * That is the user have to free the returned buffer.
+     * The data object is set to empty state, that is internal buffer is set to nullptr
+     * and size is set to zero.
+     * Usage:
+     *  <pre>
+     *  {@code
+     *  Data d;
+     *  // ...
+     *  ssize_t size;
+     *  unsigned char* buffer = d.takeBuffer(&size);
+     *  // use buffer and size
+     *  free(buffer);
+     *  }
+     * </pre
+     *
+     * @param size Will fill with the data buffer size in bytes, if you do not care buffer size, pass nullptr.
+     * @return the internal data buffer, free it after use.
+     */
+    unsigned char* takeBuffer(ssize_t* size);
 private:
     void move(Data& other);
-    
+
 private:
     unsigned char* _bytes;
     ssize_t _size;

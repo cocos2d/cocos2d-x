@@ -95,7 +95,7 @@ struct CC_DLL Color4B
 {
     Color4B();
     Color4B(GLubyte _r, GLubyte _g, GLubyte _b, GLubyte _a);
-    explicit Color4B(const Color3B& color);
+    explicit Color4B(const Color3B& color, GLubyte _a = 255);
     explicit Color4B(const Color4F& color);
     
     inline void set(GLubyte _r, GLubyte _g, GLubyte _b, GLubyte _a)
@@ -140,7 +140,7 @@ struct CC_DLL Color4F
 {
     Color4F();
     Color4F(float _r, float _g, float _b, float _a);
-    explicit Color4F(const Color3B& color);
+    explicit Color4F(const Color3B& color, float _a = 1.0f);
     explicit Color4F(const Color4B& color);
 
     bool operator==(const Color4F& right) const;
@@ -365,9 +365,9 @@ struct CC_DLL V3F_T2F
  */
 struct CC_DLL V2F_C4B_T2F_Triangle
 {
-	V2F_C4B_T2F a;
-	V2F_C4B_T2F b;
-	V2F_C4B_T2F c;
+    V2F_C4B_T2F a;
+    V2F_C4B_T2F b;
+    V2F_C4B_T2F c;
 };
 
 /** @struct V2F_C4B_T2F_Quad
@@ -632,11 +632,12 @@ public:
      * @~chinese 如果阴影效果开启，则为 true；否则为 false。
      */
     bool   _shadowEnabled;
+
     /**@~english shadow x and y offset
      * @~chinese 阴影的 x 与 y 轴偏移量。
      */
 	Size   _shadowOffset;
-    /**@~english shadow blurriness
+    /**@~english shadow blurrines
      * @~chinese 阴影的模糊度。
      */
 	float  _shadowBlur;
@@ -656,7 +657,7 @@ public:
 
     // stroke is disabled by default
     FontStroke()
-	    : _strokeEnabled(false)
+        : _strokeEnabled(false)
         , _strokeColor(Color3B::BLACK)
         , _strokeAlpha(255)
         , _strokeSize(0)
@@ -666,6 +667,7 @@ public:
      * @~chinese 如果启用了描边效果，则为 true；否则为 false。
      */
     bool      _strokeEnabled;
+
     /**@~english stroke color
      * @~chinese 描边的颜色。
      */
@@ -673,6 +675,7 @@ public:
     /**@~english stroke alpha
      * @~chinese 描边的透明度。
      */
+
     GLubyte   _strokeAlpha;
     /**@~english stroke size
      * @~chinese 描边的大小。
@@ -696,9 +699,11 @@ public:
         : _fontSize(0)
         , _alignment(TextHAlignment::CENTER)
         , _vertAlignment(TextVAlignment::TOP)
-    	, _dimensions(Size::ZERO)
+        , _dimensions(Size::ZERO)
         , _fontFillColor(Color3B::WHITE)
         , _fontAlpha(255)
+        , _enableWrap(true)
+        , _overflow(0)
     {}
 
     /**@~english font name
@@ -737,7 +742,13 @@ public:
      * @~chinese 字体描边效果。
      */
     FontStroke            _stroke;
-
+    /// enable text wrap
+    bool                  _enableWrap;
+    /** There are 4 overflows: none, clamp, shrink and resize_height.
+     *  The conresponding integer values are 0, 1, 2, 3 respectively
+     * For more information, please refer to Label::Overflow enum class.
+     */
+    int                  _overflow;
 };
 
 /**

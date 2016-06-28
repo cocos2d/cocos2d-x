@@ -25,7 +25,7 @@ _spawnCount(5), //swpanCount should > listview.width / tempalteWidth + 2
 _totalCount(50),
 _bufferZone(45), //bufferZone should be larger than List item width
 _updateTimer(0),
-_updateInterval(1.0 / 24), // you could tweak this value to adjust ListView data update rate
+_updateInterval(1.0f / 24), // you could tweak this value to adjust ListView data update rate
 _lastContentPosY(0), //use this value to detect if we are scrolling left or right
 _itemTemplateHeight(0)
 {
@@ -281,7 +281,7 @@ _spawnCount(4), //swpanCount should > listview.width / tempalteWidth + 2
 _totalCount(50),
 _bufferZone(140), //bufferZone should be larger than List item width
 _updateTimer(0),
-_updateInterval(1.0 / 24), // you could tweak this value to adjust ListView data update rate
+_updateInterval(1.0f / 24), // you could tweak this value to adjust ListView data update rate
 _lastContentPosX(0), //use this value to detect if we are scrolling left or right
 _itemTemplateWidth(0)
 {

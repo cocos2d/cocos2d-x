@@ -126,7 +126,7 @@ public:
      * @~chinese 渲染场景使用的渲染器。
      * @js NA
      */
-    virtual void render(Renderer* renderer);
+    virtual void render(Renderer* renderer, const Mat4& eyeTransform, const Mat4* eyeProjection = nullptr);
     
     virtual void removeAllChildren() override;
     

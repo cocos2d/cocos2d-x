@@ -237,6 +237,11 @@ namespace ui {
              * 自动把输入的所有字符大写。
              */
             INITIAL_CAPS_ALL_CHARACTERS,
+            
+            /**
+             * Lowercase all characters automatically.
+             */
+            LOWERCASE_ALL_CHARACTERS
         };
             
         /**@~english

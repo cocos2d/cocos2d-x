@@ -155,4 +155,18 @@ protected:
     cocos2d::ui::Text* _displayValueLabel;
 };
 
+class UIPageViewIndicatorTest : public UIScene
+{
+public:
+    CREATE_FUNC(UIPageViewIndicatorTest);
+    
+    UIPageViewIndicatorTest();
+    ~UIPageViewIndicatorTest();
+    virtual bool init() override;
+    
+protected:
+    
+    cocos2d::ui::Text* _displayValueLabel;
+};
+
 #endif /* defined(__TestCpp__UIPageViewTest__) */

@@ -34,6 +34,23 @@
 #include "renderer/CCGLProgram.h"
 #include "platform/CCGL.h"
 
+#if !defined(NDEBUG) && CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+
+/// Basic wrapper for glInsertEventMarkerEXT() depending on the current build settings and platform.
+#define CCGL_DEBUG_INSERT_EVENT_MARKER(__message__) glInsertEventMarkerEXT(0, __message__)
+/// Basic wrapper for glPushGroupMarkerEXT() depending on the current build settings and platform.
+#define CCGL_DEBUG_PUSH_GROUP_MARKER(__message__) glPushGroupMarkerEXT(0, __message__)
+/// Basic wrapper for CCGL_DEBUG_POP_GROUP_MARKER() depending on the current build settings and platform.
+#define CCGL_DEBUG_POP_GROUP_MARKER() glPopGroupMarkerEXT()
+
+#else
+
+#define CCGL_DEBUG_INSERT_EVENT_MARKER(__message__)
+#define CCGL_DEBUG_PUSH_GROUP_MARKER(__message__)
+#define CCGL_DEBUG_POP_GROUP_MARKER()
+
+#endif
+
 /**
  * @addtogroup renderer
  * @{

@@ -36,8 +36,8 @@ static std::string s_pszResourcePath;
 static inline std::string convertPathFormatToUnixStyle(const std::string& path)
 {
     std::string ret = path;
-    int len = ret.length();
-    for (int i = 0; i < len; ++i)
+    size_t len = ret.length();
+    for (size_t i = 0; i < len; ++i)
     {
         if (ret[i] == '\\')
         {
@@ -142,6 +142,45 @@ long CCFileUtilsWinRT::getFileSize(const std::string &filepath)
     return (long)size.QuadPart;
 }
 
+FileUtils::Status CCFileUtilsWinRT::getContents(const std::string& filename, ResizableBuffer* buffer)
+{
+    if (filename.empty())
+        return FileUtils::Status::NotExists;
+
+    // read the file from hardware
+    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(filename);
+
+    HANDLE fileHandle = ::CreateFile2(StringUtf8ToWideChar(fullPath).c_str(), GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE, OPEN_EXISTING, nullptr);
+    if (fileHandle == INVALID_HANDLE_VALUE)
+        return FileUtils::Status::OpenFailed;
+
+    FILE_STANDARD_INFO info = {0};
+    if (::GetFileInformationByHandleEx(fileHandle, FileStandardInfo, &info, sizeof(info)) == 0)
+    {
+        ::CloseHandle(fileHandle);
+        return FileUtils::Status::OpenFailed;
+    }
+
+    if (info.EndOfFile.HighPart > 0)
+    {
+        ::CloseHandle(fileHandle);
+        return FileUtils::Status::TooLarge;
+    }
+
+    buffer->resize(info.EndOfFile.LowPart);
+    DWORD sizeRead = 0;
+    BOOL successed = ::ReadFile(fileHandle, buffer->buffer(), info.EndOfFile.LowPart, &sizeRead, nullptr);
+    ::CloseHandle(fileHandle);
+
+    if (!successed)
+    {
+        buffer->resize(sizeRead);
+        CCLOG("Get data from file(%s) failed, error code is %s", filename.data(), std::to_string(::GetLastError()).data());
+        return FileUtils::Status::ReadFaild;
+    }
+    return FileUtils::Status::OK;
+}
+
 bool CCFileUtilsWinRT::isFileExistInternal(const std::string& strFilePath) const
 {
     bool ret = false;
@@ -208,7 +247,7 @@ bool CCFileUtilsWinRT::createDirectory(const std::string& path)
     }
 
     WIN32_FILE_ATTRIBUTE_DATA wfad;
-    
+
     if (!(GetFileAttributesEx(StringUtf8ToWideChar(path).c_str(), GetFileExInfoStandard, &wfad)))
     {
         subpath = "";
@@ -331,16 +370,6 @@ bool CCFileUtilsWinRT::renameFile(const std::string &path, const std::string &ol
     return renameFile(oldPath, newPath);
 }
 
-std::string CCFileUtilsWinRT::getStringFromFile(const std::string& filename)
-{
-    Data data = getDataFromFile(filename);
-    if (data.isNull())
-    {
-        return "";
-    }
-    std::string ret((const char*)data.getBytes(), data.getSize());
-    return ret;
-}
 
 string CCFileUtilsWinRT::getWritablePath() const
 {

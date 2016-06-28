@@ -68,7 +68,7 @@
         
 --------------------------------
 -- @overload self, char, cc.FontDefinition         
--- @overload self, char, string, float, size_table, int, int         
+-- @overload self, char, string, float, size_table, int, int, bool, int         
 -- @function [parent=#Texture2D] initWithString
 -- @param self
 -- @param #char text
@@ -77,6 +77,8 @@
 -- @param #size_table dimensions
 -- @param #int hAlignment
 -- @param #int vAlignment
+-- @param #bool enableWrap
+-- @param #int overflow
 -- @return bool#bool ret (return value: bool)
 
 --------------------------------

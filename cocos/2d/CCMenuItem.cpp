@@ -30,7 +30,7 @@ THE SOFTWARE.
 #include "2d/CCSprite.h"
 #include "2d/CCLabelAtlas.h"
 #include "2d/CCLabel.h"
-#include "deprecated/CCString.h"
+#include "base/ccUTF8.h"
 #include <stdarg.h>
 
 NS_CC_BEGIN

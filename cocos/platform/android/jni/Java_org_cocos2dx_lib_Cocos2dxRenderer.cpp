@@ -3,7 +3,7 @@
 #include "base/CCEventType.h"
 #include "base/CCEventCustom.h"
 #include "base/CCEventDispatcher.h"
-#include "../CCApplication.h"
+#include "platform/CCApplication.h"
 #include "platform/CCFileUtils.h"
 #include "platform/android/jni/JniHelper.h"
 #include <jni.h>

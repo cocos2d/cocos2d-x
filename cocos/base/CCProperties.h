@@ -266,8 +266,6 @@ class Data;
  */
 class CC_DLL Properties
 {
-    friend class Game;
-
 public:
 
     /**@~english

@@ -67,7 +67,10 @@ public:
     
     /** @~english Create a Value by an integer value.  @~chinese 由一个整数创建一个Value。*/
     explicit Value(int v);
-    
+
+    /** @~english Create a Value by an unsigned value. @~chinese 由一个无符号整数创建一个Value。 */
+    explicit Value(unsigned int v);
+
     /** @~english Create a Value by a float value.  @~chinese 由一个浮点数创建一个Value。*/
     explicit Value(float v);
     
@@ -122,6 +125,9 @@ public:
     /** @~english Assignment operator, assign from integer to Value.  @~chinese 赋值运算符,从整数赋值。*/
     Value& operator= (int v);
 
+    /** @~english Assignment operator, assign from integer to Value. @~chinese 赋值运算符,从无符号整数赋值。 */
+    Value& operator= (unsigned int v);
+
     /** @~english Assignment operator, assign from float to Value.  @~chinese 赋值运算符,从浮点数赋值。*/
     Value& operator= (float v);
 
@@ -173,6 +179,9 @@ public:
     /** @~english Gets as an integer value. Will convert to integer if possible, or will trigger assert error.  @~chinese 获取一个整数值。如果可能将转换为整数,否则引发断言错误。*/
     int asInt() const;
 
+    /** @~english Gets as an unsigned value. Will convert to unsigned if possible, or will trigger assert error. @~chinese 获取一个无符号整数。如果可能将转换为无符号整数,否则引发断言错误。*/
+    unsigned int asUnsignedInt() const;
+
     /** @~english Gets as a float value. Will convert to float if possible, or will trigger assert error.  @~chinese 获取一个浮点数。如果可能将转换为浮动,否则引发断言错误。*/
     float asFloat() const;
 
@@ -220,6 +229,8 @@ public:
         BYTE,
         /// wrap integer
         INTEGER,
+        /// wrap unsigned
+        UNSIGNED,
         /// wrap float
         FLOAT,
         /// wrap double
@@ -250,6 +261,7 @@ private:
     {
         unsigned char byteVal;
         int intVal;
+        unsigned int unsignedVal;
         float floatVal;
         double doubleVal;
         bool boolVal;

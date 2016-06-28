@@ -437,8 +437,8 @@ protected:
 
     /* @~english The layer recognizes some special properties, like cc_vertez  @~chinese 层识别一些特殊的属性，比如cc_vertez*/
     void parseInternalProperties();
-    void setupTileSprite(Sprite* sprite, Vec2 pos, int gid);
-    Sprite* reusedTileWithRect(Rect rect);
+    void setupTileSprite(Sprite* sprite, const Vec2& pos, int gid);
+    Sprite* reusedTileWithRect(const Rect& rect);
     int getVertexZForPos(const Vec2& pos);
 
     // index

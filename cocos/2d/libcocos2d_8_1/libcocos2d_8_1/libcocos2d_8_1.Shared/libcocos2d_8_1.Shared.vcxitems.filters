@@ -676,9 +676,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\platform\winrt\CCGL.h">
       <Filter>platform\winrt</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\platform\winrt\CCGL_Angle.h">
-      <Filter>platform\winrt</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\platform\winrt\CCPThreadWinRT.h">
       <Filter>platform\winrt</Filter>
     </ClInclude>
@@ -1888,6 +1885,18 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\LocalizationManager.h">
       <Filter>cocostudio\components</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\vr\CCVRDistortion.h">
+      <Filter>vr</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\vr\CCVRDistortionMesh.h">
+      <Filter>vr</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\vr\CCVRGenericHeadTracker.h">
+      <Filter>vr</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\vr\CCVRGenericRenderer.h">
+      <Filter>vr</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -3610,6 +3619,19 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\LocalizationManager.cpp">
       <Filter>cocostudio\components</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\UIEditBox\UIEditBoxImpl-common.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\vr\CCVRDistortion.cpp">
+      <Filter>vr</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\vr\CCVRDistortionMesh.cpp">
+      <Filter>vr</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\vr\CCVRGenericHeadTracker.cpp">
+      <Filter>vr</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\vr\CCVRGenericRenderer.cpp">
+      <Filter>vr</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="2d">
@@ -3890,6 +3912,9 @@
     </Filter>
     <Filter Include="cocostudio\reader\WidgetReader\TabControlReader">
       <UniqueIdentifier>{fe153deb-3cee-416d-bdcb-fa409ae48240}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vr">
+      <UniqueIdentifier>{485c9ff1-3f65-46dc-a4ee-4eeb3f6d31f1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

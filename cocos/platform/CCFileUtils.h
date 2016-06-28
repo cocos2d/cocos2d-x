@@ -28,6 +28,7 @@ THE SOFTWARE.
 #include <string>
 #include <vector>
 #include <unordered_map>
+#include <type_traits>
 
 #include "platform/CCPlatformMacros.h"
 #include "base/ccTypes.h"
@@ -40,6 +41,66 @@ NS_CC_BEGIN
  * @addtogroup platform
  * @{
  */
+
+
+class ResizableBuffer {
+public:
+    virtual ~ResizableBuffer() {}
+    virtual void resize(size_t size) = 0;
+    virtual void* buffer() const = 0;
+};
+
+template<typename T>
+class ResizableBufferAdapter { };
+
+
+template<typename CharT, typename Traits, typename Allocator>
+class ResizableBufferAdapter< std::basic_string<CharT, Traits, Allocator> > : public ResizableBuffer {
+    typedef std::basic_string<CharT, Traits, Allocator> BufferType;
+    BufferType* _buffer;
+public:
+    explicit ResizableBufferAdapter(BufferType* buffer) : _buffer(buffer) {}
+    virtual void resize(size_t size) override {
+        _buffer->resize((size + sizeof(CharT) - 1) / sizeof(CharT));
+    }
+    virtual void* buffer() const override {
+        return &_buffer->front();
+    }
+};
+
+template<typename T, typename Allocator>
+class ResizableBufferAdapter< std::vector<T, Allocator> > : public ResizableBuffer {
+    typedef std::vector<T, Allocator> BufferType;
+    BufferType* _buffer;
+public:
+    explicit ResizableBufferAdapter(BufferType* buffer) : _buffer(buffer) {}
+    virtual void resize(size_t size) override {
+        _buffer->resize((size + sizeof(T) - 1) / sizeof(T));
+    }
+    virtual void* buffer() const override {
+        return &_buffer->front();
+    }
+};
+
+
+template<>
+class ResizableBufferAdapter<Data> : public ResizableBuffer {
+    typedef Data BufferType;
+    BufferType* _buffer;
+public:
+    explicit ResizableBufferAdapter(BufferType* buffer) : _buffer(buffer) {}
+    virtual void resize(size_t size) override {
+        if (static_cast<size_t>(_buffer->getSize()) < size) {
+            auto old = _buffer->getBytes();
+            void* buffer = realloc(old, size);
+            if (buffer)
+                _buffer->fastSet((unsigned char*)buffer, size);
+        }
+    }
+    virtual void* buffer() const override {
+        return _buffer->getBytes();
+    }
+};
 
 /** @~english Helper class to handle file operations.  @~chinese 处理文件操作的通用工具类。*/
 class CC_DLL FileUtils
@@ -122,7 +183,107 @@ public:
      * @~chinese 一个数据对象。
      */
     virtual Data getDataFromFile(const std::string& filename);
-    
+
+    enum class Status
+    {
+        OK = 0,
+        NotExists = 1, // File not exists
+        OpenFailed = 2, // Open file failed.
+        ReadFaild = 3, // Read failed
+        NotInitialized = 4, // FileUtils is not initializes
+        TooLarge = 5, // The file is too large (great than 2^32-1)
+        ObtainSizeFailed = 6 // Failed to obtain the file size.
+    };
+
+    /**
+     *  @~english Gets whole file contents as string from a file.
+     *
+     *  Unlike getStringFromFile, these getContents methods:
+     *      - read file in binary mode (does not convert CRLF to LF).
+     *      - does not truncate the string when '\0' is found (returned string of getContents may have '\0' in the middle.).
+     *
+     *  The template version of can accept cocos2d::Data, std::basic_string and std::vector.
+     * @~chinese 获取文件内容。
+     * 和`getStringFromFile`不同，该函数可以：
+     *     - 读取二进制文件（不会把CRLF转换为LF）
+     *     - 当文件内容含有'\0'时，读取内容不会被截断（读取的文件内容可以包含'\0'）
+     * 可以把文件内容读取到`cocos2d::Data`，`std::basic_string`和`std::vector`
+     *
+     *  <pre>
+     *  {@code
+     *  std::string sbuf;
+     *  FileUtils::getInstance()->getContents("path/to/file", &sbuf);
+     *
+     *  std::vector<int> vbuf;
+     *  FileUtils::getInstance()->getContents("path/to/file", &vbuf);
+     *
+     *  Data dbuf;
+     *  FileUtils::getInstance()->getContents("path/to/file", &dbuf);
+     *  }
+     * </pre
+     *
+     *  @~english Note: if you read to std::vector<T> and std::basic_string<T> where T is not 8 bit type,
+     *  you may get 0 ~ sizeof(T)-1 bytes padding.
+     *  @~chinese 注意：如果你想读取文件内容到`std::vector<T>`和`std::basic_string<T>`且T不只8位时，
+     *  会自动填充0 ~ size(T)-1字节内容
+     *
+     *  - @~english To write a new buffer class works with getContents, just extend ResizableBuffer.
+     *  - @~chinese 想读取文件内容到新的buffer类时，只需要继承扩展ResizableBuffer。
+     *  - @~english To write a adapter for existing class, write a specialized ResizableBufferAdapter for that class, see follow code.
+     *  - @~chinese 想读取文件内容到已有类，只需要为该类实现ResizableBufferAdapter接口，可以参考下面的代码
+     *
+     *  <pre>
+     *  {@code
+     *  NS_CC_BEGIN // ResizableBufferAdapter needed in cocos2d namespace.
+     *  template<>
+     *  class ResizableBufferAdapter<AlreadyExistsBuffer> : public ResizableBuffer {
+     *  public:
+     *      ResizableBufferAdapter(AlreadyExistsBuffer* buffer)  {
+     *          // your code here
+     *      }
+     *      virtual void resize(size_t size) override  {
+     *          // your code here
+     *      }
+     *      virtual void* buffer() const override {
+     *          // your code here
+     *      }
+     *  };
+     *  NS_CC_END
+     *  }
+     * </pre
+     *
+     *  @param[in] filename @~english  The resource file name which contains the path.
+     *                      @~chinese 文件路径 
+     *  @param[out] buffer @~english The buffer where the file contents are store to.
+     *                     @~chinese 文件内容读取后存放的缓冲区。
+     *  @return Returns:
+     *      - Status::OK @~english when there is no error, the buffer is filled with the contents of file.
+     *                   @~chinese 没有发生读取错误，文件内容已经读取到缓冲区。
+     *      - Status::NotExists @~english when file not exists, the buffer will not changed.
+     *                          @~chinese 文件不存在，缓冲区内容不会改变。
+     *      - Status::OpenFailed  @~english when cannot open file, the buffer will not changed.
+     *                            @~chinese 无法打开文件，缓冲区内容不会改变。
+     *      - Status::ReadFaild @~english when read end up before read whole, the buffer will fill with already read bytes.
+     *                          @~chinese 文件读取过程中出错，已读取内容在缓冲区里。
+     *      - Status::NotInitialized @~english when FileUtils is not initializes, the buffer will not changed.
+     *                               @~chinese FileUtils还没初始化，缓冲区内容不会改变。
+     *      - Status::TooLarge @~english when there file to be read is too large (> 2^32-1), the buffer will not changed.
+     *                         @~chinese 文件太大（> 2^32-1），缓冲区内容不会改变。
+     *      - Status::ObtainSizeFailed @~english  when failed to obtain the file size, the buffer will not changed.
+     *                                 @~chinese 无法获取文件大小，缓冲区内容不会改变。
+     */
+    template <
+        typename T,
+        typename Enable = typename std::enable_if<
+            std::is_base_of< ResizableBuffer, ResizableBufferAdapter<T> >::value
+        >::type
+    >
+    Status getContents(const std::string& filename, T* buffer) {
+        ResizableBufferAdapter<T> buf(buffer);
+        return getContents(filename, &buf);
+    }
+    virtual Status getContents(const std::string& filename, ResizableBuffer* buffer);
+
     /**@~english
      *  Gets resource file data
      *  @~chinese 
@@ -858,6 +1019,11 @@ protected:
      */
     static FileUtils* s_sharedFileUtils;
 
+    /**
+     *  Remove null value key (for iOS)
+     */
+    virtual void valueMapCompact(ValueMap& valueMap);
+    virtual void valueVectorCompact(ValueVector& valueVector);
 };
 
 // end of support group

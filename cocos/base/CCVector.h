@@ -58,16 +58,16 @@ public:
     // ------------------------------------------
     
     /** @~english Iterator, can be used to loop the Vector.  @~chinese 迭代器,可用于循环遍历Vector。*/
-    typedef typename std::vector<T>::iterator iterator;
+    using iterator = typename std::vector<T>::iterator;
 
     /** @~english Const iterator, can be used to loop the Vector.  @~chinese 常量迭代器,可用于循环遍历Vector。*/
-    typedef typename std::vector<T>::const_iterator const_iterator;
+    using const_iterator = typename std::vector<T>::const_iterator;
     
     /** @~english Reversed iterator, can be used to loop the Vector in reverse sequence.  @~chinese 反向迭代器,可用于反向循环遍历Vector队列。*/
-    typedef typename std::vector<T>::reverse_iterator reverse_iterator;
+    using reverse_iterator = typename std::vector<T>::reverse_iterator;
 
     /** @~english Reversed iterator, can be used to loop the Vector in reverse sequence.  @~chinese 反向迭代器,可用于反向循环遍历Vector队列。*/
-    typedef typename std::vector<T>::const_reverse_iterator const_reverse_iterator;
+    using const_reverse_iterator = typename std::vector<T>::const_reverse_iterator;
     
     /** @~english Returns an iterator pointing the first element of the Vector.  @~chinese 返回一个迭代器指向Vector的第一个元素。*/
     iterator begin() { return _data.begin(); }
@@ -156,6 +156,15 @@ public:
         static_assert(std::is_convertible<T, Ref*>::value, "Invalid Type for cocos2d::Vector<T>!");
         CCLOGINFO("In the default constructor with capacity of Vector.");
         reserve(capacity);
+    }
+
+    /** @~english Constructor with initializer list. @~chinese 通过初始化列表构造函数。 */
+    Vector<T>(std::initializer_list<T> list)
+    {
+        for (auto& element : list)
+        {
+	    pushBack(element);
+        }
     }
 
     /** @~english Destructor.  @~chinese 析构函数。 */
@@ -336,7 +345,7 @@ public:
     {
         if (!_data.empty())
         {
-            ssize_t randIdx = rand() % _data.size();
+            ssize_t randIdx = RandomHelper::random_int<int>(0, static_cast<int>(_data.size()) - 1);
             return *(_data.begin() + randIdx);
         }
         return nullptr;

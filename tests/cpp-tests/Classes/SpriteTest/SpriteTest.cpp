@@ -1189,7 +1189,7 @@ Sprite6::Sprite6()
     // Don't use capacity=1 in your real game. It is expensive to resize the capacity
     auto batch = SpriteBatchNode::create("Images/grossini_dance_atlas.png", 1);
     addChild(batch, 0, kTagSpriteBatchNode);
-    batch->ignoreAnchorPointForPosition( true );
+    batch->setIgnoreAnchorPointForPosition( true );
 
     auto s = Director::getInstance()->getWinSize();
 
@@ -3685,6 +3685,14 @@ AnimationCacheTest::AnimationCacheTest()
     grossini->runAction(seq);
 }
 
+AnimationCacheTest::~AnimationCacheTest()
+{
+    auto frameCache = SpriteFrameCache::getInstance();
+    frameCache->removeSpriteFramesFromFile("animations/grossini.plist");
+    frameCache->removeSpriteFramesFromFile("animations/grossini_gray.plist");
+    frameCache->removeSpriteFramesFromFile("animations/grossini_blue.plist");
+}
+
 std::string AnimationCacheTest::title() const
 {
     return "AnimationCache";
@@ -3743,6 +3751,14 @@ AnimationCacheFile::AnimationCacheFile()
 
     // run the animation
     grossini->runAction(seq);
+}
+
+AnimationCacheFile::~AnimationCacheFile()
+{
+    auto frameCache = SpriteFrameCache::getInstance();
+    frameCache->removeSpriteFramesFromFile("animations/grossini.plist");
+    frameCache->removeSpriteFramesFromFile("animations/grossini_gray.plist");
+    frameCache->removeSpriteFramesFromFile("animations/grossini_blue.plist");
 }
 
 std::string AnimationCacheFile::title() const

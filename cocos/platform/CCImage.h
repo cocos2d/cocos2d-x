@@ -30,7 +30,7 @@ THE SOFTWARE.
 #include "base/CCRef.h"
 #include "renderer/CCTexture2D.h"
 
-#if defined(CC_USE_WIC)
+#if CC_USE_WIC
 #include "platform/winrt/WICImageLoader-winrt.h"
 #endif
 
@@ -104,13 +104,32 @@ public:
     };
 
     /**
-    @brief @~english Load the image from the specified path.
+     * @~english Enables or disables premultiplied alpha for PNG files.
+     * @~chinese 开启或关闭PNG文件的alpha预乘
+     *
+     *  @param enabled @~english (default: true) @~chinese 默认值为true
+     */
+    static void setPNGPremultipliedAlphaEnabled(bool enabled) { PNG_PREMULTIPLIED_ALPHA_ENABLED = enabled; }
+    
+    /** @~english treats (or not) PVR files as if they have alpha premultiplied.
+     Since it is impossible to know at runtime if the PVR images have the alpha channel premultiplied, it is
+     possible load them as if they have (or not) the alpha channel premultiplied.
+     
+     By default it is disabled.
+
+     @~chinese 是否把PRV文件当成包含alpha预乘来对待。运行时无法判断一个PVR文件是否预乘，但是可以手动设置是否把它当成alpha预乘。
+     默认是不当成alpha预乘。
+     */
+    static void setPVRImagesHavePremultipliedAlpha(bool haveAlphaPremultiplied);
+
+    /**
+     *@brief @~english Load the image from the specified path.
      * @~chinese 从指定的路径加载图片
-    @param path   @~english the absolute file path.
+     * @param path   @~english the absolute file path.
      * @~chinese 文件的绝对路径
-    @return @~english true if loaded correctly.
+     * @return @~english true if loaded correctly.
      * @~chinese 如果正确加载则返回true
-    */
+     */
     bool initWithImageFile(const std::string& path);
 
     /**
@@ -159,23 +178,9 @@ public:
      * @~chinese 图片是否以RGB格式保存。
      */
     bool saveToFile(const std::string &filename, bool isToRGB = true);
-    
-    
-    /** @~english treats (or not) PVR files as if they have alpha premultiplied.
-     Since it is impossible to know at runtime if the PVR images have the alpha channel premultiplied, it is
-     possible load them as if they have (or not) the alpha channel premultiplied.
-     
-     By default it is disabled.
-     * @~chinese 设置PVR文件是否进行透明像素混合。
-     * 因为不可能知道在运行时PVR图像是否已有alpha通道的混合,
-     * 可能加载它们时有(或没有)透明通道混合。
-     * 
-     * 在默认情况下是禁用的。
-     */
-    static void setPVRImagesHavePremultipliedAlpha(bool haveAlphaPremultiplied);
 
 protected:
-#if defined(CC_USE_WIC)
+#if CC_USE_WIC
     bool encodeWithWIC(const std::string& filePath, bool isToRGB, GUID containerFormat);
     bool decodeWithWIC(const unsigned char *data, ssize_t dataLen);
 #endif
@@ -205,6 +210,10 @@ protected:
      * 这个和使用define是一样的，只不过它遵守命名空间的规则
      */
     static const int MIPMAP_MAX = 16;
+    /**
+     @brief Determine whether we premultiply alpha for png files.
+     */
+    static bool PNG_PREMULTIPLIED_ALPHA_ENABLED;
     unsigned char *_data;
     ssize_t _dataLen;
     int _width;
@@ -221,8 +230,8 @@ protected:
 
 protected:
     // noncopyable
-    Image(const Image&    rImg);
-    Image & operator=(const Image&);
+    Image(const Image& rImg);
+    Image& operator=(const Image&);
     
     /*
      @brief @~english The same result as with initWithImageFile, but thread safe. It is caused by

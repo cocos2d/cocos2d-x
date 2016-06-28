@@ -30,12 +30,11 @@ THE SOFTWARE.
 #include "platform/linux/CCApplication-linux.h"
 #include "platform/CCCommon.h"
 #include "base/ccMacros.h"
-#include "deprecated/CCString.h"
+#include "base/ccUTF8.h"
 #include <unistd.h>
 #include <sys/stat.h>
 #include <stdio.h>
 #include <errno.h>
-#include <sys/stat.h>
 
 #ifndef CC_RESOURCE_FOLDER_LINUX
 #define CC_RESOURCE_FOLDER_LINUX ("/Resources/")

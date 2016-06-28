@@ -34,7 +34,6 @@ THE SOFTWARE.
 #include "platform/CCCommon.h"
 #include "platform/winrt/InputEvent.h"
 #include "platform/CCGLView.h"
-#include <agile.h>
 
 #include <wrl/client.h>
 

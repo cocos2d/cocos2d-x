@@ -1,19 +1,19 @@
 ﻿/****************************************************************************
  Copyright (c) 2010-2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
- 
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+
  http://www.cocos2d-x.org
- 
+
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
- 
+
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
- 
+
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -92,6 +92,11 @@ public:
      * @see httprequest.cpp。
      */
     HttpRequest()
+        : _requestType(Type::UNKNOWN)
+        , _pTarget(nullptr)
+        , _pSelector(nullptr)
+        , _pCallback(nullptr)
+        , _pUserData(nullptr)
     {
         _requestType = Type::UNKNOWN;
         _url.clear();
@@ -123,13 +128,13 @@ public:
      * @return Ref* @~english always return nullptr.
      * @~chinese 始终返回nullptr。
      */
-    Ref* autorelease(void)
+    Ref* autorelease()
     {
         CCASSERT(false, "HttpResponse is used between network thread and ui thread \
                  therefore, autorelease is forbidden here");
-        return NULL;
+        return nullptr;
     }
-            
+
     // setter/getters for properties
      
     /** @~english
@@ -145,6 +150,7 @@ public:
     {
         _requestType = type;
     };
+
     /** @~english
      * Get the request type of HttpRequest object.
      *
@@ -154,7 +160,7 @@ public:
      * @return @~english HttpRequest::Type.
      * @~chinese HttpRequest::Type。
      */
-    inline Type getRequestType()
+    inline Type getRequestType() const
     {
         return _requestType;
     };
@@ -183,7 +189,7 @@ public:
      * @return @~english const char* the pointer of _url.
      * @~chinese 指向url的字符串指针。
      */
-    inline const char* getUrl()
+    inline const char* getUrl() const
     {
         return _url.c_str();
     };
@@ -214,11 +220,12 @@ public:
      */
     inline char* getRequestData()
     {
-        if(_requestData.size() != 0)
-            return &(_requestData.front());
+        if(!_requestData.empty())
+            return _requestData.data();
 
         return nullptr;
     }
+
     /** @~english
      * Get the size of request data
      *
@@ -228,7 +235,7 @@ public:
      * @return @~english ssize_t the size of request data
      * @~chinese 请求数据的大小
      */
-    inline ssize_t getRequestDataSize()
+    inline ssize_t getRequestDataSize() const
     {
         return _requestData.size();
     }
@@ -259,7 +266,7 @@ public:
      * @return @~english const char* the pointer of _tag
      * @~chinese 指向_tag的字符串指针
      */
-    inline const char* getTag()
+    inline const char* getTag() const
     {
         return _tag.c_str();
     };
@@ -292,7 +299,7 @@ public:
      * @return @~english void* the pointer of user-customed data.
      * @~chinese 指向用户自定义数据的指针。
      */
-    inline void* getUserData()
+    inline void* getUserData() const
     {
         return _pUserData;
     };
@@ -357,7 +364,7 @@ public:
      * @return @~english Ref* the target of callback selector funtion
      * @~chinese 回调函数的target对象
      */
-    inline Ref* getTarget()
+    inline Ref* getTarget() const
     {
         return _pTarget;
     }
@@ -393,7 +400,7 @@ public:
      * @return @~english the _prxy object
      * @~chinese _prxy对象
      */
-    inline _prxy getSelector()
+    inline _prxy getSelector() const
     {
         return _prxy(_pSelector);
     }
@@ -407,7 +414,7 @@ public:
      * @return @~english ccHttpRequestCallback callback function.
      * @~chinese ccHttpRequestCallback回调函数。
      */
-    inline const ccHttpRequestCallback& getCallback()
+    inline const ccHttpRequestCallback& getCallback() const
     {
         return _pCallback;
     }
@@ -421,7 +428,7 @@ public:
      * @param pHeaders @~english the string vector of custom-defined headers.
      * @~chinese 包含自定义请求头的std::vector<std::string>。
      */
-    inline void setHeaders(std::vector<std::string> pHeaders)
+    inline void setHeaders(std::vector<std::string> headers)
    	{
    		_headers=pHeaders;
    	}
@@ -435,11 +442,11 @@ public:
      * @return @~english the string vector of custom-defined headers.
      * @~chinese 包含自定义请求头的std::vector<std::string>。
      */
-   	inline std::vector<std::string> getHeaders()
-   	{
-   		return _headers;
-   	}
-    
+    inline std::vector<std::string> getHeaders() const
+    {
+        return _headers;
+    }
+
 private:
     inline void doSetResponseCallback(Ref* pTarget, SEL_HttpResponse pSelector)
     {
@@ -465,8 +472,8 @@ protected:
     Ref*                        _pTarget;        /// callback target of pSelector function
     SEL_HttpResponse            _pSelector;      /// callback function, e.g. MyLayer::onHttpResponse(HttpClient *sender, HttpResponse * response)
     ccHttpRequestCallback       _pCallback;      /// C++11 style callbacks
-    void*                       _pUserData;      /// You can add your customed data here 
-    std::vector<std::string>    _headers;		      /// custom http headers
+    void*                       _pUserData;      /// You can add your customed data here
+    std::vector<std::string>    _headers;              /// custom http headers
 };
 
 }
@@ -477,3 +484,4 @@ NS_CC_END
 /// @}
 
 #endif //__HTTP_REQUEST_H__
+

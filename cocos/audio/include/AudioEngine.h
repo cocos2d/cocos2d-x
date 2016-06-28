@@ -117,6 +117,7 @@ public:
      * 
      * @warning @~english It must be called before the application exit.
      * @~chinese 在应用程序退出之前必须要调用它。
+     * @lua endToLua
      */
     static void end();
     

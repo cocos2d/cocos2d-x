@@ -13,6 +13,7 @@ FileUtilsTests::FileUtilsTests()
     ADD_TEST_CASE(TestDirectoryFuncs);
     ADD_TEST_CASE(TextWritePlist);
     ADD_TEST_CASE(TestWriteString);
+    ADD_TEST_CASE(TestGetContents);
     ADD_TEST_CASE(TestWriteData);
     ADD_TEST_CASE(TestWriteValueMap);
     ADD_TEST_CASE(TestWriteValueVector);
@@ -242,7 +243,7 @@ void TestIsDirectoryExist::onEnter()
     auto s = Director::getInstance()->getWinSize();
     auto util = FileUtils::getInstance();
     int x = s.width/2, y = s.height/3;
-    
+
     Label* label = nullptr;
     std::string dir;
     auto getMsg = [&dir](bool b)-> std::string
@@ -251,12 +252,12 @@ void TestIsDirectoryExist::onEnter()
         snprintf((char *)msg, 512, "%s for dir: \"%s\"", b ? "success" : "failed", dir.c_str());
         return std::string(msg);
     };
-    
+
     dir = "Images";
     label = Label::createWithSystemFont(getMsg(util->isDirectoryExist(dir)), "", 20);
     label->setPosition(x, y * 2);
     this->addChild(label);
-    
+
     dir = util->getWritablePath();
     label = Label::createWithSystemFont(getMsg(util->isDirectoryExist(dir)), "", 20);
     label->setPosition(x, y * 1);
@@ -270,12 +271,12 @@ void TestIsDirectoryExist::onEnter()
 
 void TestIsDirectoryExist::onExit()
 {
-    
+
     FileUtils *sharedFileUtils = FileUtils::getInstance();
-    
+
     // reset filename lookup
     sharedFileUtils->purgeCachedEntries();
-    
+
     FileUtilsDemo::onExit();
 }
 
@@ -592,6 +593,129 @@ std::string TestWriteString::subtitle() const
     return "";
 }
 
+class CustomBuffer : public ResizableBuffer {};
+
+struct AlreadyExistsBuffer {};
+
+NS_CC_BEGIN
+template<>
+class ResizableBufferAdapter<AlreadyExistsBuffer> : public ResizableBuffer {
+public:
+    explicit ResizableBufferAdapter(AlreadyExistsBuffer* buffer) {
+    }
+    virtual void resize(size_t size) override {
+
+    }
+    virtual void* buffer() const override {
+        return nullptr;
+    }
+};
+NS_CC_END
+
+static void saveAsBinaryText(const std::string& filename, const std::vector<char>& binary){
+    auto fs = FileUtils::getInstance();
+    std::string text(binary.begin(), binary.end());
+    fs->writeStringToFile(text, filename);
+}
+
+static const std::string FileErrors[] = {
+    "OK",
+    "NotExists",
+    "OpenFailed",
+    "ReadFaild",
+    "NotInitialized",
+    "TooLarge",
+    "ObtainSizeFailed",
+};
+
+
+void TestGetContents::onEnter()
+{
+    FileUtilsDemo::onEnter();
+    auto fs = FileUtils::getInstance();
+
+    auto testIfCompiles = [fs]() {
+        fs->getContents("", (CustomBuffer*)(nullptr));
+        AlreadyExistsBuffer buf;
+        fs->getContents("", &buf);
+    };
+
+    (void)(testIfCompiles);
+
+    auto winSize = Director::getInstance()->getWinSize();
+
+    auto readResult = Label::createWithTTF("show readResult", "fonts/Thonburi.ttf", 16);
+    this->addChild(readResult);
+    readResult->setPosition(winSize.width / 2, winSize.height / 2);
+
+    std::vector<char> binary = {'\r','\n','\r','\n','\0','\0','\r','\n'};
+    _generatedFile = fs->getWritablePath() + "file-with-zeros-and-crlf";
+    saveAsBinaryText(_generatedFile, binary);
+
+
+    auto runTests = [&]() {
+        // Test read string in binary mode
+        std::string bs;
+        fs->getContents(_generatedFile, &bs);
+        if ( bs.size() != binary.size() || !std::equal( bs.begin(), bs.end(), binary.begin() ) )
+            return std::string("failed: read as binary string");
+
+        // Text read string in text mode
+        std::string ts = fs->getStringFromFile(_generatedFile);
+        if (ts != "\r\n\r\n")
+            return std::string("failed: read as zero terminated string");
+
+
+        std::string files[] = {_generatedFile, "background.wav", "fileLookup.plist"};
+        for (auto& file : files) {
+            std::string sbuf;
+
+            auto serr = fs->getContents(file, &sbuf);
+            if (serr != FileUtils::Status::OK)
+                return std::string("failed: error: " + FileErrors[(int)serr]);
+
+            std::vector<int> vbuf;
+            auto verr = fs->getContents(file, &vbuf);
+            if (verr != FileUtils::Status::OK)
+                return std::string("failed: error: " + FileErrors[(int)verr]);
+
+            Data dbuf;
+            auto derr = fs->getContents(file, &dbuf);
+            if (derr != FileUtils::Status::OK)
+                return std::string("failed: error: " + FileErrors[(int)derr]);
+
+            if (memcmp(&sbuf.front(), &vbuf.front(), sbuf.size()) != 0)
+                return std::string("failed: error: sbuf != vbuf");
+
+            if (dbuf.getSize() != sbuf.size())
+                return std::string("failed: error: sbuf.size() != dbuf.getSize()");
+
+            if (memcmp(&sbuf.front(), dbuf.getBytes(), sbuf.size()) != 0)
+                return std::string("failed: error: sbuf != dbuf");
+        }
+        return std::string("read success");
+    };
+    readResult->setString("FileUtils::getContents() " + runTests());
+}
+
+void TestGetContents::onExit()
+{
+    if (!_generatedFile.empty())
+        FileUtils::getInstance()->removeFile(_generatedFile);
+
+    FileUtilsDemo::onExit();
+}
+
+std::string TestGetContents::title() const
+{
+    return "FileUtils: TestGetContents";
+}
+
+std::string TestGetContents::subtitle() const
+{
+    return "";
+}
+
 void TestWriteData::onEnter()
 {
     FileUtilsDemo::onEnter();
@@ -671,6 +795,8 @@ void TestWriteValueMap::onEnter()
     ValueMap mapInValueMap;
     mapInValueMap["string1"] = "string in dictInMap key 0";
     mapInValueMap["string2"] = "string in dictInMap key 1";
+    mapInValueMap["none"].getType();
+    
     valueMap["data0"] = Value(mapInValueMap);
 
     valueMap["data1"] = Value("string in array");
@@ -866,11 +992,11 @@ void TestUnicodePath::onEnter()
     FileUtilsDemo::onEnter();
     auto s = Director::getInstance()->getWinSize();
     auto util = FileUtils::getInstance();
-    
+
     int x = s.width/2,
     y = s.height/5;
     Label* label = nullptr;
-    
+
     std::string dir = "中文路径/";
     std::string filename = "测试文件.test";
 
@@ -881,20 +1007,20 @@ void TestUnicodePath::onEnter()
         snprintf((char *)msg, 512, "%s for %s path: \"%s\"", b ? "success" : "failed", act.c_str(), path.c_str());
         return std::string(msg);
     };
-    
+
     // Check whether unicode dir should be create or not
     std::string dirPath = util->getWritablePath() + dir;
     if (!util->isDirectoryExist(dirPath))
     {
         util->createDirectory(dirPath);
     }
-    
+
     act = "create";
     bool isExist = util->isDirectoryExist(dirPath);
     label = Label::createWithSystemFont(getMsg(isExist, dirPath), "", 12, Size(s.width, 0));
     label->setPosition(x, y * 4);
     this->addChild(label);
-    
+
     if (isExist)
     {
         // Check whether unicode file should be create or not
@@ -906,12 +1032,12 @@ void TestUnicodePath::onEnter()
             writeData.copy((unsigned char *)writeDataStr.c_str(), writeDataStr.size());
             util->writeDataToFile(writeData, filePath);
         }
-        
+
         isExist = util->isFileExist(filePath);
         label = Label::createWithSystemFont(getMsg(isExist, filePath), "", 12, Size(s.width, 0));
         label->setPosition(x, y * 3);
         this->addChild(label);
-        
+
         act = "remove";
         if (isExist)
         {
@@ -924,13 +1050,13 @@ void TestUnicodePath::onEnter()
             // vc can't treat unicode string correctly, don't use unicode string in code
             log("The content of file from writable path: %s", buffer);
             free(buffer);
-            
+
             // remove test file
             label = Label::createWithSystemFont(getMsg(util->removeFile(filePath), filePath), "", 12, Size(s.width, 0));
             label->setPosition(x, y * 2);
             this->addChild(label);
         }
-        
+
         // remove test dir
         label = Label::createWithSystemFont(getMsg(util->removeDirectory(dirPath), dirPath), "", 12, Size(s.width, 0));
         label->setPosition(x, y * 1);
@@ -940,7 +1066,7 @@ void TestUnicodePath::onEnter()
 
 void TestUnicodePath::onExit()
 {
-    
+
     FileUtils *sharedFileUtils = FileUtils::getInstance();
     sharedFileUtils->purgeCachedEntries();
     sharedFileUtils->setFilenameLookupDictionary(ValueMap());

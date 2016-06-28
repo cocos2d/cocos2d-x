@@ -30,7 +30,8 @@ extern "C" {
 #include "lua.h"
 }
 
-#include "cocos2d.h"
+#include "deprecated/CCArray.h"
+
 #include "scripting/lua-bindings/manual/CCLuaValue.h"
 
 /**

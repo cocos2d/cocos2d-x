@@ -372,7 +372,7 @@ public:
      * @param gid @~english The tile gid.
      * @~chinese 瓦片gid。
      */
-    void setupTileSprite(Sprite* sprite, Vec2 pos, int gid);
+    void setupTileSprite(Sprite* sprite, const Vec2& pos, int gid);
 
     //
     // Override

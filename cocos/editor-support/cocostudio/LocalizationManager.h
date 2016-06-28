@@ -10,9 +10,10 @@ namespace cocostudio {
     /**
     *@brief Localization string manager interface template.
     */
-    class ILocalizationManager
+    class CC_STUDIO_DLL ILocalizationManager
     {
     public:
+        virtual ~ILocalizationManager() = default;
         virtual bool initLanguageData(std::string file) = 0;
         virtual std::string getLocalizationString(std::string key) = 0;
     };

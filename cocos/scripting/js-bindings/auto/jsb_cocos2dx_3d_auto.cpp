@@ -250,7 +250,7 @@ bool js_cocos2dx_3d_Animate3D_setWeight(JSContext *cx, uint32_t argc, jsval *vp)
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_Animate3D_setWeight : Invalid Native Object");
     if (argc == 1) {
         double arg0 = 0;
-        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !std::isnan(arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_3d_Animate3D_setWeight : Error processing arguments");
         cobj->setWeight(arg0);
         args.rval().setUndefined();
@@ -300,7 +300,7 @@ bool js_cocos2dx_3d_Animate3D_initWithFrames(JSContext *cx, uint32_t argc, jsval
         } while (0);
         ok &= jsval_to_int32(cx, args.get(1), (int32_t *)&arg1);
         ok &= jsval_to_int32(cx, args.get(2), (int32_t *)&arg2);
-        ok &= JS::ToNumber( cx, args.get(3), &arg3) && !isnan(arg3);
+        ok &= JS::ToNumber( cx, args.get(3), &arg3) && !std::isnan(arg3);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_3d_Animate3D_initWithFrames : Error processing arguments");
         bool ret = cobj->initWithFrames(arg0, arg1, arg2, arg3);
         jsval jsret = JSVAL_NULL;
@@ -340,7 +340,7 @@ bool js_cocos2dx_3d_Animate3D_setSpeed(JSContext *cx, uint32_t argc, jsval *vp)
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_Animate3D_setSpeed : Invalid Native Object");
     if (argc == 1) {
         double arg0 = 0;
-        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !std::isnan(arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_3d_Animate3D_setSpeed : Error processing arguments");
         cobj->setSpeed(arg0);
         args.rval().setUndefined();
@@ -375,10 +375,10 @@ bool js_cocos2dx_3d_Animate3D_init(JSContext *cx, uint32_t argc, jsval *vp)
             } while (0);
             if (!ok) { ok = true; break; }
             double arg1 = 0;
-            ok &= JS::ToNumber( cx, args.get(1), &arg1) && !isnan(arg1);
+            ok &= JS::ToNumber( cx, args.get(1), &arg1) && !std::isnan(arg1);
             if (!ok) { ok = true; break; }
             double arg2 = 0;
-            ok &= JS::ToNumber( cx, args.get(2), &arg2) && !isnan(arg2);
+            ok &= JS::ToNumber( cx, args.get(2), &arg2) && !std::isnan(arg2);
             if (!ok) { ok = true; break; }
             bool ret = cobj->init(arg0, arg1, arg2);
             jsval jsret = JSVAL_NULL;
@@ -422,7 +422,7 @@ bool js_cocos2dx_3d_Animate3D_setOriginInterval(JSContext *cx, uint32_t argc, js
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_Animate3D_setOriginInterval : Invalid Native Object");
     if (argc == 1) {
         double arg0 = 0;
-        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !std::isnan(arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_3d_Animate3D_setOriginInterval : Error processing arguments");
         cobj->setOriginInterval(arg0);
         args.rval().setUndefined();
@@ -487,10 +487,10 @@ bool js_cocos2dx_3d_Animate3D_create(JSContext *cx, uint32_t argc, jsval *vp)
             } while (0);
             if (!ok) { ok = true; break; }
             double arg1 = 0;
-            ok &= JS::ToNumber( cx, args.get(1), &arg1) && !isnan(arg1);
+            ok &= JS::ToNumber( cx, args.get(1), &arg1) && !std::isnan(arg1);
             if (!ok) { ok = true; break; }
             double arg2 = 0;
-            ok &= JS::ToNumber( cx, args.get(2), &arg2) && !isnan(arg2);
+            ok &= JS::ToNumber( cx, args.get(2), &arg2) && !std::isnan(arg2);
             if (!ok) { ok = true; break; }
             cocos2d::Animate3D* ret = cocos2d::Animate3D::create(arg0, arg1, arg2);
             jsval jsret = JSVAL_NULL;
@@ -589,7 +589,7 @@ bool js_cocos2dx_3d_Animate3D_createWithFrames(JSContext *cx, uint32_t argc, jsv
         } while (0);
         ok &= jsval_to_int32(cx, args.get(1), (int32_t *)&arg1);
         ok &= jsval_to_int32(cx, args.get(2), (int32_t *)&arg2);
-        ok &= JS::ToNumber( cx, args.get(3), &arg3) && !isnan(arg3);
+        ok &= JS::ToNumber( cx, args.get(3), &arg3) && !std::isnan(arg3);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_3d_Animate3D_createWithFrames : Error processing arguments");
 
         auto ret = cocos2d::Animate3D::createWithFrames(arg0, arg1, arg2, arg3);
@@ -608,7 +608,7 @@ bool js_cocos2dx_3d_Animate3D_setTransitionTime(JSContext *cx, uint32_t argc, js
     bool ok = true;
     if (argc == 1) {
         double arg0 = 0;
-        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !std::isnan(arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_3d_Animate3D_setTransitionTime : Error processing arguments");
         cocos2d::Animate3D::setTransitionTime(arg0);
         args.rval().setUndefined();
@@ -3497,7 +3497,7 @@ bool js_cocos2dx_3d_Terrain_setSkirtHeightRatio(JSContext *cx, uint32_t argc, js
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_Terrain_setSkirtHeightRatio : Invalid Native Object");
     if (argc == 1) {
         double arg0 = 0;
-        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !std::isnan(arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_3d_Terrain_setSkirtHeightRatio : Error processing arguments");
         cobj->setSkirtHeightRatio(arg0);
         args.rval().setUndefined();
@@ -3616,10 +3616,10 @@ bool js_cocos2dx_3d_Terrain_getHeight(JSContext *cx, uint32_t argc, jsval *vp)
     do {
         if (argc == 2) {
             double arg0 = 0;
-            ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+            ok &= JS::ToNumber( cx, args.get(0), &arg0) && !std::isnan(arg0);
             if (!ok) { ok = true; break; }
             double arg1 = 0;
-            ok &= JS::ToNumber( cx, args.get(1), &arg1) && !isnan(arg1);
+            ok &= JS::ToNumber( cx, args.get(1), &arg1) && !std::isnan(arg1);
             if (!ok) { ok = true; break; }
             double ret = cobj->getHeight(arg0, arg1);
             jsval jsret = JSVAL_NULL;
@@ -3632,10 +3632,10 @@ bool js_cocos2dx_3d_Terrain_getHeight(JSContext *cx, uint32_t argc, jsval *vp)
     do {
         if (argc == 3) {
             double arg0 = 0;
-            ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+            ok &= JS::ToNumber( cx, args.get(0), &arg0) && !std::isnan(arg0);
             if (!ok) { ok = true; break; }
             double arg1 = 0;
-            ok &= JS::ToNumber( cx, args.get(1), &arg1) && !isnan(arg1);
+            ok &= JS::ToNumber( cx, args.get(1), &arg1) && !std::isnan(arg1);
             if (!ok) { ok = true; break; }
             cocos2d::Vec3* arg2 = nullptr;
             do {
@@ -3695,9 +3695,9 @@ bool js_cocos2dx_3d_Terrain_setLODDistance(JSContext *cx, uint32_t argc, jsval *
         double arg0 = 0;
         double arg1 = 0;
         double arg2 = 0;
-        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
-        ok &= JS::ToNumber( cx, args.get(1), &arg1) && !isnan(arg1);
-        ok &= JS::ToNumber( cx, args.get(2), &arg2) && !isnan(arg2);
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !std::isnan(arg0);
+        ok &= JS::ToNumber( cx, args.get(1), &arg1) && !std::isnan(arg1);
+        ok &= JS::ToNumber( cx, args.get(2), &arg2) && !std::isnan(arg2);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_3d_Terrain_setLODDistance : Error processing arguments");
         cobj->setLODDistance(arg0, arg1, arg2);
         args.rval().setUndefined();

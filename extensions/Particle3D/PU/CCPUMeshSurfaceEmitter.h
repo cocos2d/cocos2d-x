@@ -38,7 +38,7 @@ NS_CC_BEGIN
 
 /** @class PUTriangle
 *@brief @~english Definition of a Triangle.
-@~chinese ¶¨ÒåÒ»¸öÈı½ÇĞÎÀà¡£
+@~chinese Â¶Â¨Ã’Ã¥Ã’Â»Â¸Ã¶ÃˆÃ½Â½Ã‡ÃÃÃ€Ã Â¡Â£
 */
 class PUTriangle
 {
@@ -66,53 +66,53 @@ public:
 
     /**
     * @~english Constructor.
-    * @~chinese ¹¹ÔìÆ÷¡£
+    * @~chinese Â¹Â¹Ã”Ã¬Ã†Ã·Â¡Â£
     */
     PUTriangle(void){};
 
     /**
     * @~english Calculate the (square) surface of the triangle.
-    * @~chinese ¼ÆËãÈı½ÇĞÎµÄ±íÃæ¡£
+    * @~chinese è®¡ç®—ï¼ˆæ­£æ–¹å½¢ï¼‰è¡¨é¢çš„ä¸‰è§’å½¢
     */
     void calculateSquareSurface (void);
 
     /**
     * @~english Calculate the surface normal of the triangle.
-    * @~chinese ¼ÆËãÈı½ÇĞÎµÄ±íÃæ·¨Ïß¡£
+    * @~chinese è®¡ç®—æ­£æ–¹å½¢è¡¨é¢ä¸‰è§’å½¢çš„æ³•çº¿
     */
     void calculateSurfaceNormal (void);
 
     /**
     * @~english Calculate the edge normals of the 3 edges.
-    * @~chinese ¼ÆËãÈı½ÇĞÎµÄ±ß·¨Ïß¡£
+    * @~chinese è®¡ç®—3æ¡è¾¹çš„æ³•çº¿
     */
     void calculateEdgeNormals (void);
 
     /**
     * @~english Determine a random position on this triangle.
-    * @~chinese »ñÈ¡Èı½ÇĞÎÄÚµÄÒ»¸öËæ»úµã¡£
-    * @return   @~english A random position on this triangle. @~chinese Èı½ÇĞÎµÄËæ»úµã¡£
+    * @~chinese éšæœºè·å–ä¸‰è§’å½¢çš„ä¸€ç‚¹ä½ç½®
+    * @return   @~english A random position on this triangle. @~chinese è¿”å›ä¸‰è§’å½¢å†…çš„éšæœºç‚¹çš„ä½ç½®
     */
     const Vec3 getRandomTrianglePosition (void);
 
     /**
     * @~english Determine a random position including its normal on a one of the edges.
-    * @~chinese »ñÈ¡Èı½ÇĞÎÄÚµÄÒ»¸öËæ»úµã°üº¬Ò»Ìõ±ßµÄ·¨Ïß¡£
-    * @return   @~english Position and normal. @~chinese Î»ÖÃºÍ·¨Ïß¡£
+    * @~chinese éšæœºè·å–æŸä¸€æ¡è¾¹çš„ä½ç½®å’Œæ³•çº¿
+    * @return   @~english Position and normal. @~chinese ä½ç½®å’Œæ³•çº¿
     */
     const PositionAndNormal getRandomEdgePositionAndNormal (void);
 
     /**
     * @~english Determine a random vertex including its normal of this triangle.
-    * @~chinese »ñÈ¡Èı½ÇĞÎÄÚµÄÒ»¸öËæ»ú¶¥µãºÍ·¨Ïß¡£
-    * @return   @~english Position and normal. @~chinese Î»ÖÃºÍ·¨Ïß¡£
+    * @~chinese éšæœºè·å–ä¸‰è§’å½¢å†…çš„æŸä¸€ç‚¹çš„å‘é‡å’Œæ³•çº¿
+    * @return   @~english Position and normal. @~chinese å‘é‡å’Œæ³•çº¿
     */
     const PositionAndNormal getRandomVertexAndNormal (void);
 };
 
 /** @class PUSortAscending
 *@brief @~english Comparer used for sorting vector in ascending order.
-@~chinese ÉıĞò±È½ÏÈİÆ÷ÓÃÒÔÅÅĞòÈı½ÇĞÎ¡£
+@~chinese ç”¨äºå®¹å™¨é™åºæ’åºæ—¶çš„æ¯”è¾ƒ
 */
 struct PUSortAscending
 {
@@ -124,7 +124,7 @@ struct PUSortAscending
 
 /** @class PUSortDescending
 *@brief @~english Comparer used for sorting vector in descending order.
-@~chinese ½µĞò±È½ÏÈİÆ÷ÓÃÒÔÅÅĞòÈı½ÇĞÎ¡£
+@~chinese ç”¨äºå®¹å™¨å‡åºæ’åºæ—¶çš„æ¯”è¾ƒ
 */
 struct PUSortDescending
 {
@@ -139,7 +139,7 @@ typedef std::vector<PUTriangle> Triangles;
 
 /** @class MeshInfo
 *@brief @~english Definition of a Mesh.
-@~chinese ¶¨ÒåÒ»¸öÍø¸ñÀà¡£
+@~chinese ç½‘æ ¼å®šä¹‰
 */
 class MeshInfo
 {
@@ -170,10 +170,10 @@ public:
 
     /**
     * @~english Generate a random number.
-    * @~chinese Éú³É¸ßË¹Ëæ»úÊı¡£
-    * @param high   @~english The high argument determines that numbers are returned between [0..high]. @~chinese ×î´óµÄ·¶Î§¡£
-    * @param cutoff   @~english The cutoff. @~chinese ½Ø¶ÏÖµ¡£
-    * @return   @~english The value. @~chinese Ëæ»úÖµ¡£
+    * @~chinese ç”Ÿæˆä¸€ä¸ªéšæœºæ•°
+    * @param high   @~english The high argument determines that numbers are returned between [0..high]. @~chinese éšæœºæ•°çš„ä¸Šç•Œ
+    * @param cutoff   @~english The cutoff.
+    * @return   @~english The value. @~chinese éšæœºæ•°
     */
     float getGaussianRandom (float high, float cutoff = 4);
 
@@ -185,32 +185,32 @@ public:
 
     /**
     * @~english Get one triangle.
-    * @~chinese »ñÈ¡Ò»¸öÈı½ÇĞÎ¡£
-    * @param triangleIndex   @~english The index of triangle. @~chinese Èı½ÇĞÎË÷Òı¡£
-    * @return   @~english The triangle. @~chinese Èı½ÇĞÎ¡£
+    * @~chinese è·å–ä¸€ä¸ªä¸‰è§’å½¢
+    * @param triangleIndex   @~english The index of triangle. @~chinese ä¸‰è§’å½¢çš„ç´¢å¼•
+    * @return   @~english The triangle. @~chinese ä¸‰è§’å½¢
     */
     const PUTriangle& getTriangle (size_t triangleIndex);
 
     /**
     * @~english Get a random triangle (index) from the mesh.
-    * @~chinese »ñÈ¡Ò»¸öÍø¸ñÖĞµÄËæ»úÈı½ÇĞÎË÷Òı¡£
-    * @return   @~english The index of triangle. @~chinese Èı½ÇĞÎË÷Òı¡£
+    * @~chinese ä»ç½‘æ ¼ä¸­éšæœºè·å–ä¸€ä¸ªä¸‰è§’å½¢
+    * @return   @~english The index of triangle. @~chinese ä¸‰è§’å½¢ç´¢å¼•
     */
-    const size_t getRandomTriangleIndex (void);
+    const size_t getRandomTriangleIndex ();
     
     /**
     * @~english Get triangle number.
-    * @~chinese »ñÈ¡Íø¸ñÖĞÈı½ÇĞÎÊıÄ¿¡£
-    * @return   @~english The number of triangle. @~chinese Èı½ÇĞÎÊıÄ¿¡£
+    * @~chinese è·å–ä¸‰è§’å½¢æ•°é‡
+    * @return   @~english The number of triangle. @~chinese ä¸‰è§’å½¢æ•°é‡
     */
     size_t getTriangleCount() const { return _triangles.size(); }
 
     /**
     * @~english Returns both a random point on a given triangle and its normal vector.
     *           How the random point and the normal are determined depends on the distribution type.
-    * @~chinese ·µ»ØÖ¸¶¨Èı½ÇĞÎµÄËùÓĞËæ»úµãºÍ·¨Ïß¡£
-    * @param triangleIndex   @~english The index of triangle. @~chinese Èı½ÇĞÎË÷Òı¡£
-    * @return   @~english Position and normal. @~chinese Î»ÖÃºÍ·¨Ïß¡£
+    * @~chinese è¿”å›ä¸‰è§’å½¢ä¸Šçš„éšæœºç‚¹ä½ç½®åŠå…¶æ³•çº¿å‘é‡ã€‚éšæœºä½ç½®å’Œæ³•çº¿çš„é€‰å–å–å†³äºåˆ†åˆ«ç±»å‹ã€‚
+    * @param triangleIndex   @~english The index of triangle. @~chinese ä¸‰è§’å½¢çš„ç´¢å¼•
+    * @return   @~english Position and normal. @~chinese ä½ç½®å’Œæ³•çº¿
     */
     const PUTriangle::PositionAndNormal getRandomPositionAndNormal (const size_t triangleIndex);
 
@@ -236,67 +236,67 @@ public:
 
     /**
     * @~english Returns the mesh name.
-    * @~chinese ·µ»ØÍø¸ñÃû³Æ¡£
-    * @return   @~english The mesh nam. @~chinese Íø¸ñÃû³Æ¡£
+    * @~chinese è¿”å›ç½‘æ ¼åå­—
+    * @return   @~english The mesh nam. @~chinese ç½‘æ ¼åå­—
     */
     const std::string& getMeshName(void) const;
 
     /**
     * @~english Sets the mesh name.
-    * @~chinese ÉèÖÃÍø¸ñÃû³Æ¡£
-    * @param meshName   @~english The index of triangle. @~chinese Íø¸ñÃû³Æ¡£
-    * @param doBuild   @~english If need build mesh. @~chinese ÊÇ·ñ¹¹½¨Íø¸ñ¡£
+    * @~chinese è®¾ç½®ç½‘æ ¼åå­—
+    * @param meshName   @~english The index of triangle. @~chinese ä¸‰è§’å½¢ç´¢å¼•
+    * @param doBuild   @~english If need build mesh. @~chinese æ˜¯å¦éœ€è¦æ„å»ºç½‘æ ¼
     */
     void setMeshName(const std::string& meshName, bool doBuild = true);
 
     /**
     * @~english Returns whether use normal.
-    * @~chinese ·µ»ØÊÇ·ñÊ¹ÓÃ·¨Ïß¡£
-    * @return   @~english Whether use normal. @~chinese ÊÇ·ñÊ¹ÓÃ·¨Ïß¡£
+    * @~chinese æ˜¯å¦ä½¿ç”¨æ³•çº¿
+    * @return   @~english Whether use normal. @~chinese æ˜¯å¦ä½¿ç”¨æ³•çº¿
     */
     bool useNormals (void) const;
 
     /**
     * @~english Set indication whether normals are used for the particle direction.
-    * @~chinese ÉèÖÃ·¨ÏßÊÇ·ñÓÃÓÚÁ£×Ó·½Ïò¡£
-    * @param useNormals   @~english Whether use normal. @~chinese ÊÇ·ñÊ¹ÓÃ·¨Ïß¡£
+    * @~chinese è®¾ç½®æ ‡å¿—ç”¨äºåˆ¤æ–­æ³•çº¿æ˜¯å¦ä½œç”¨äºä¾‹å­æ–¹å‘
+    * @param useNormals   @~english Whether use normal. @~chinese æ˜¯å¦ä½¿ç”¨æ³•çº¿
     */
     void setUseNormals (bool useNormals);
 
     /**
     * @~english Returns the type of particle distribution.
-    * @~chinese ·µ»Ø·Ö²¼ÀàĞÍ¡£
-    * @return   @~english  the type of particle distribution. @~chinese Á£×Ó·Ö²¼ÀàĞÍ¡£
+    * @~chinese è¿”å›ä¾‹å­åˆ†å¸ƒç±»å‹
+    * @return   @~english  the type of particle distribution. @~chinese ç²’å­åˆ†å¸ƒç±»å‹
     * @remarks
     * There are several ways to emit particles on the surface of a mesh. This attribute indicates
     * the type of distribution on the surface.
     */
-    const MeshInfo::MeshSurfaceDistribution getDistribution (void) const;
+    MeshInfo::MeshSurfaceDistribution getDistribution() const;
 
     /**
     * @~english Set the type of particle distribution on the surface of a mesh.
-    * @~chinese ÉèÖÃÍø¸ñµÄÁ£×Ó·Ö²¼ÀàĞÍ¡£
-    * @param distribution   @~english the type of particle distribution. @~chinese Á£×Ó·Ö²¼ÀàĞÍ¡£
+    * @~chinese è®¾ç½®ç½‘æ ¼è¡¨é¢ç²’å­åˆ†å¸ƒç±»å‹
+    * @param distribution   @~english the type of particle distribution. @~chinese ç²’å­åˆ†å¸ƒç±»å‹
     */
     void setDistribution(MeshInfo::MeshSurfaceDistribution distribution);
 
     /**
     * @~english Returns the scale of the mesh.
-    * @~chinese »ñÈ¡Íø¸ñËõ·Å¡£
-    * @return   @~english  the scale. @~chinese Ëõ·Å¡£
+    * @~chinese è¿”å›ç½‘æ ¼çš„ç¼©æ”¾ç³»æ•°
+    * @return   @~english  the scale. @~chinese ç¼©æ”¾ç³»æ•°
     */
     const Vec3& getScale (void) const;
 
     /**
     * @~english Set the scale of the mesh.
-    * @~chinese ÉèÖÃÍø¸ñËõ·Å¡£
-    * @return   @~english  the scale. @~chinese Ëõ·Å¡£
+    * @~chinese è®¾ç½®ç½‘æ ¼çš„ç¼©æ”¾ç³»æ•°
+    * @return   @~english  the scale. @~chinese ç¼©æ”¾ç³»æ•°
     */
     void setScale (const Vec3& scale);
 
     /**
     * @~english Build all the data needed to generate the particles.
-    * @~chinese ¹¹½¨Á£×ÓËùĞèµÄÊı¾İ¡£
+    * @~chinese æ„å»ºç”Ÿæˆç²’å­éœ€è¦çš„æ•°æ®
     */
     void build(void);
 

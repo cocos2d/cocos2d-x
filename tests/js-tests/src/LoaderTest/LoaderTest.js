@@ -113,7 +113,8 @@ var LoaderCycleLayer = BaseTestLayer.extend({
                     resultTTF.setColor(cc.color.GREEN);
                 else
                     resultTTF.setColor(cc.color.RED);
-                t.addChild(resultTTF);
+                if (!resultTTF.parent)
+                    t.addChild(resultTTF);
                 if(index < 4)
                     t.test(cb);
             };

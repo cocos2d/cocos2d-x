@@ -153,7 +153,7 @@ std::string PlatformStringToString(Platform::String^ s) {
 Platform::String^ PlatformStringFromString(const std::string& s)
 {
     std::wstring ws = StringUtf8ToWideChar(s);
-    return ref new Platform::String(ws.data(), ws.length());
+    return ref new Platform::String(ws.data(), static_cast<unsigned int>(ws.length()));
 }
 
 #if 0
@@ -321,8 +321,7 @@ Concurrency::task<Platform::Array<byte>^> ReadDataAsync(Platform::String^ path)
 std::string computeHashForFile(const std::string& filePath)
 {
     std::string ret = filePath;
-    int pos = std::string::npos;
-    pos = ret.find_last_of('/');
+    size_t pos = ret.find_last_of('/');
 
     if (pos != std::string::npos) {
         ret = ret.substr(pos);

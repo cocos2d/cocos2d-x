@@ -128,26 +128,9 @@ public:
      */
     struct Triangle
     {
-        /** 
-         * @~english Constructors @~chinese 构造函数
-         * @param p1 @~english First point @~chinese 三角形第一个顶点
-         * @param p2 @~english Seconde point @~chinese 三角形第二个顶点
-         * @param p3 @~english Third point @~chinese 三角形第三个顶点
-         */
-        Triangle(Vec3 p1, Vec3 p2, Vec3 p3);
-        /**
-         * @~english Get intersection point @~chinese 获取射线和三角形的交点
-         * @param ray @~english Ray using to intersect with triangle @~chinese 用来和三角形求交的射线
-         * @param interScetPoint @~english intersect point when exist @~chinese 当交点存在时，这个变量返回射线和三角形的交点
-         * @return @~english True if intersection point exist, false otherwise @~chinese 交点存在时返回true，否则返回false
-         */
+        Triangle(const Vec3& p1, const Vec3& p2, const Vec3& p3);
         bool getInsterctPoint(const Ray &ray, Vec3& interScetPoint) const;
-        /**
-         * @~english Transform the triangle. @~chinese 对三角形进行变换
-         * @param matrix @~english Matrix used to transform the triangle. @~chinese 用来做变换的矩阵
-         */
-        void transform(Mat4 matrix);
-        /** @~english three points of triangle @~chinese 三角形的三个顶点 */
+        void transform(const Mat4& matrix);
         Vec3 _p1, _p2, _p3;
     };
 
@@ -234,8 +217,8 @@ private:
     struct CC_DLL TerrainVertexData
     {
         /*constructor*/
-        TerrainVertexData() {};
-        TerrainVertexData(Vec3 v1, Tex2F v2)
+        TerrainVertexData(){};
+        TerrainVertexData(const Vec3& v1, const Tex2F& v2)
         {
             _position = v1;
             _texcoord = v2;
@@ -489,7 +472,7 @@ public:
         @param normal @~english  the specified position's normal vector in terrain . if this argument is NULL or nullptr,Normal calculation shall be skip. @~chinese 在指定位置的法线矢量地形。如果这个参数为空或nullptr，正常计算应跳过。
         @return @~english the height value of the specified position of the terrain, if the (X,Z) position is out of the terrain bounds,it shall return 0; @~chinese 地形的指定位置的高度值，如果（x，z）位置的地形边界，它将返回0；
      **/
-    float getHeight(Vec2 pos, Vec3*Normal = nullptr) const;
+    float getHeight(const Vec2& pos, Vec3* normal = nullptr) const;
 
     /** @~english get the normal of the specified pistion in terrain
         @~chinese 得到指定位置的法线
@@ -572,7 +555,7 @@ public:
         @param worldSpace @~english  a world space position will be converted @~chinese 一个世界空间位置将被转换
         @return @~english a terrain space position @~chinese 地形的空间位置
     */
-    Vec2 convertToTerrainSpace(Vec2 worldSpace)const;
+    Vec2 convertToTerrainSpace(const Vec2& worldSpace) const;
 
     /** @~english reset the heightmap data.
         @~chinese 复位高度图数据。
@@ -638,7 +621,7 @@ protected:
         @~chinese 递归的设置每个地形块的LOD
         @param cameraPos @~english  the camera postion in world space @~chinese 在世界空间中的摄像机位置
      **/
-    void setChunksLOD(Vec3 cameraPos);
+    void setChunksLOD(const Vec3& cameraPos);
 
     /** @~english load Vertices from height filed for the whole terrain.
         @~chinese 从高度图加载地形顶点。

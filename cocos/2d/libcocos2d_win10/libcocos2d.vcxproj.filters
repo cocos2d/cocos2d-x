@@ -269,6 +269,9 @@
     <Filter Include="cocostudio\reader\WidgetReader\Particle3DReader\ParticleReader">
       <UniqueIdentifier>{2e9af99e-c268-459a-9615-9f3c5b58efdc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="vr">
+      <UniqueIdentifier>{757d4df8-a9d6-430f-9a7a-80170d9ca6fb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\cocos2d.cpp" />
@@ -1990,6 +1993,21 @@
     <ClCompile Include="..\..\ui\UITabControl.cpp">
       <Filter>ui\UIWidgets</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\ui\UIEditBox\UIEditBoxImpl-common.cpp">
+      <Filter>ui\UIWidgets\EditBox</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\vr\CCVRDistortion.cpp">
+      <Filter>vr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\vr\CCVRDistortionMesh.cpp">
+      <Filter>vr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\vr\CCVRGenericHeadTracker.cpp">
+      <Filter>vr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\vr\CCVRGenericRenderer.cpp">
+      <Filter>vr</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\cocos2d.h" />
@@ -3422,9 +3440,6 @@
     <ClInclude Include="..\..\platform\winrt\CCGL.h">
       <Filter>platform\winrt</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\platform\winrt\CCGL_Angle.h">
-      <Filter>platform\winrt</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\platform\winrt\CCGLViewImpl-winrt.h">
       <Filter>platform\winrt</Filter>
     </ClInclude>
@@ -3886,6 +3901,21 @@
     </ClInclude>
     <ClInclude Include="..\..\ui\UITabControl.h">
       <Filter>ui\UIWidgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ui\UIEditBox\UIEditBoxImpl-common.h">
+      <Filter>ui\UIWidgets\EditBox</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\vr\CCVRDistortion.h">
+      <Filter>vr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\vr\CCVRDistortionMesh.h">
+      <Filter>vr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\vr\CCVRGenericHeadTracker.h">
+      <Filter>vr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\vr\CCVRGenericRenderer.h">
+      <Filter>vr</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

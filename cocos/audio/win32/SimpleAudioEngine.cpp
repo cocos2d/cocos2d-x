@@ -28,7 +28,8 @@ THE SOFTWARE.
 #include <cstdlib>
 
 #include "audio/win32/MciPlayer.h"
-#include "cocos2d.h"
+#include "platform/CCFileUtils.h"
+
 USING_NS_CC;
 
 using namespace std;

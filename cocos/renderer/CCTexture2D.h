@@ -297,7 +297,7 @@ public:
      * @js NA
      * @lua NA
      */
-	void releaseGLTexture();
+    void releaseGLTexture();
 
     /** @~english Initializes a Texture2D object with data.
      * @~chinese 使用指定的数据初始化 Texture2D 对象。
@@ -374,6 +374,7 @@ public:
      * @~chinese 
      * 简化从图像文件创建 Texture2D 对象的扩展方法。
     */
+
     /** @~english
 	 * Initializes a texture from a `Image` object.
      *
@@ -425,10 +426,14 @@ public:
      * @~chinese 文本水平对齐方式。
      * @param vAlignment @~english The font vertical text alignment type.
      * @~chinese 文本垂直对齐方式。
+     * @param enableWrap @~english Whether enable text wrap or not.
+     * @~chinese 文本是否自动换行
+     * @param shrinkFontSize @~english Whether shrink font size when content larger than the dimensions.
+     * @~chinese 当文本内容大小超过限定范围时是否自动调整文本内容大小
      * @return @~english If the initialization is success, return true; else return false.
      * @~chinese 如果初始化成功，返回 true；否则返回 false。
      */
-    bool initWithString(const char *text,  const std::string &fontName, float fontSize, const Size& dimensions = Size(0, 0), TextHAlignment hAlignment = TextHAlignment::CENTER, TextVAlignment vAlignment = TextVAlignment::TOP);
+    bool initWithString(const char *text,  const std::string &fontName, float fontSize, const Size& dimensions = Size(0, 0), TextHAlignment hAlignment = TextHAlignment::CENTER, TextVAlignment vAlignment = TextVAlignment::TOP, bool enableWrap = true, int overflow = 0);
 
     /** @~english Initializes a texture from a string using a text definition.
      * @~chinese 使用指定的文本与指定的字体属性初始化一个纹理。

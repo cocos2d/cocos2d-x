@@ -431,7 +431,13 @@ public:
     ssize_t getCurSelectedIndex() const;
     
     /**
-     * @~english
+     * @brief @~english Set current selected widget's index and call TouchEventType::ENDED event.
+     * @~chinese 设置控件选中的索引并发出`TouchEventType::ENDED`事件
+     * @param A index of a selected item.
+     */
+     void setCurSelectedIndex(int itemIndex);
+    
+    /**@~english
      * Add an event click callback to ListView, then one item of Listview is clicked, the callback will be called.
      * @~chinese 
      * 添加ListView点击事件的回调，ListView中的一个项目被点击将会调用回调函数。

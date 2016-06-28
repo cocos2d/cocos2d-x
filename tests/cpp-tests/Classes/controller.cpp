@@ -41,7 +41,6 @@ public:
         addTest("Curl", []() { return new CurlTests(); });
 #endif
         addTest("Current Language", []() { return new CurrentLanguageTests(); });
-        addTest("CocosStudio3D Test", []() { return new CocosStudio3DTests(); });
         addTest("Downloader Test", []() { return new DownloaderTests(); });
         addTest("EventDispatcher", []() { return new EventDispatcherTests(); });
         addTest("Effects - Advanced", []() { return new EffectAdvanceTests(); });
@@ -101,6 +100,7 @@ public:
         addTest("URL Open Test", []() { return new OpenURLTests(); });
         addTest("UserDefault", []() { return new UserDefaultTests(); });
         addTest("Vibrate", []() { return new VibrateTests(); });
+        addTest("VR Test", []() { return new VRTests(); });
         addTest("Zwoptex", []() { return new ZwoptexTests(); });
         addTest("SpriteFrameCache", []() { return new SpriteFrameCacheTests(); });
     }

@@ -37,10 +37,8 @@ THE SOFTWARE.
 #include "renderer/CCTexture2D.h"
 #include "renderer/CCRenderer.h"
 #include "base/CCDirector.h"
+#include "base/ccUTF8.h"
 #include "2d/CCCamera.h"
-
-#include "deprecated/CCString.h"
-
 
 NS_CC_BEGIN
 
@@ -465,7 +463,7 @@ void Sprite::setVertexRect(const Rect& rect)
     _rect = rect;
 }
 
-void Sprite::setTextureCoords(Rect rect)
+void Sprite::setTextureCoords(const Rect& rectInPoint)
 {
     Texture2D *tex = _batchNode ? _textureAtlas->getTexture() : _texture;
     if (tex == nullptr)
@@ -473,7 +471,7 @@ void Sprite::setTextureCoords(Rect rect)
         return;
     }
     
-    rect = CC_RECT_POINTS_TO_PIXELS(rect);
+    auto rectInPixels = CC_RECT_POINTS_TO_PIXELS(rectInPoint);
 
     float atlasWidth = (float)tex->getPixelsWide();
     float atlasHeight = (float)tex->getPixelsHigh();
@@ -483,15 +481,15 @@ void Sprite::setTextureCoords(Rect rect)
     if (_rectRotated)
     {
 #if CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
-        left    = (2*rect.origin.x+1)/(2*atlasWidth);
-        right   = left+(rect.size.height*2-2)/(2*atlasWidth);
-        top     = (2*rect.origin.y+1)/(2*atlasHeight);
-        bottom  = top+(rect.size.width*2-2)/(2*atlasHeight);
+        left    = (2*rectInPixels.origin.x+1)/(2*atlasWidth);
+        right   = left+(rectInPixels.size.height*2-2)/(2*atlasWidth);
+        top     = (2*rectInPixels.origin.y+1)/(2*atlasHeight);
+        bottom  = top+(rectInPixels.size.width*2-2)/(2*atlasHeight);
 #else
-        left    = rect.origin.x/atlasWidth;
-        right   = (rect.origin.x+rect.size.height) / atlasWidth;
-        top     = rect.origin.y/atlasHeight;
-        bottom  = (rect.origin.y+rect.size.width) / atlasHeight;
+        left    = rectInPixels.origin.x/atlasWidth;
+        right   = (rectInPixels.origin.x+rectInPixels.size.height) / atlasWidth;
+        top     = rectInPixels.origin.y/atlasHeight;
+        bottom  = (rectInPixels.origin.y+rectInPixels.size.width) / atlasHeight;
 #endif // CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
 
         if (_flippedX)
@@ -516,15 +514,15 @@ void Sprite::setTextureCoords(Rect rect)
     else
     {
 #if CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
-        left    = (2*rect.origin.x+1)/(2*atlasWidth);
-        right    = left + (rect.size.width*2-2)/(2*atlasWidth);
-        top        = (2*rect.origin.y+1)/(2*atlasHeight);
-        bottom    = top + (rect.size.height*2-2)/(2*atlasHeight);
+        left    = (2*rectInPixels.origin.x+1)/(2*atlasWidth);
+        right    = left + (rectInPixels.size.width*2-2)/(2*atlasWidth);
+        top        = (2*rectInPixels.origin.y+1)/(2*atlasHeight);
+        bottom    = top + (rectInPixels.size.height*2-2)/(2*atlasHeight);
 #else
-        left    = rect.origin.x/atlasWidth;
-        right    = (rect.origin.x + rect.size.width) / atlasWidth;
-        top        = rect.origin.y/atlasHeight;
-        bottom    = (rect.origin.y + rect.size.height) / atlasHeight;
+        left    = rectInPixels.origin.x/atlasWidth;
+        right    = (rectInPixels.origin.x + rectInPixels.size.width) / atlasWidth;
+        top        = rectInPixels.origin.y/atlasHeight;
+        bottom    = (rectInPixels.origin.y + rectInPixels.size.height) / atlasHeight;
 #endif // ! CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
 
         if(_flippedX)
@@ -924,10 +922,10 @@ void Sprite::setAnchorPoint(const Vec2& anchor)
     SET_DIRTY_RECURSIVELY();
 }
 
-void Sprite::ignoreAnchorPointForPosition(bool value)
+void Sprite::setIgnoreAnchorPointForPosition(bool value)
 {
-    CCASSERT(! _batchNode, "ignoreAnchorPointForPosition is invalid in Sprite");
-    Node::ignoreAnchorPointForPosition(value);
+    CCASSERT(! _batchNode, "setIgnoreAnchorPointForPosition is invalid in Sprite");
+    Node::setIgnoreAnchorPointForPosition(value);
 }
 
 void Sprite::setVisible(bool bVisible)
@@ -1183,7 +1181,7 @@ std::string Sprite::getDescription() const
     return StringUtils::format("<Sprite | Tag = %d, TextureID = %d>", _tag, texture_id );
 }
 
-PolygonInfo& Sprite::getPolygonInfo()
+const PolygonInfo& Sprite::getPolygonInfo() const
 {
     return _polyInfo;
 }

@@ -1,19 +1,19 @@
 ﻿/****************************************************************************
  Copyright (c) 2010-2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
- 
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+
  http://www.cocos2d-x.org
- 
+
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
- 
+
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
- 
+
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -38,7 +38,8 @@ NS_CC_BEGIN
 namespace network {
 
 /** 
- * @brief @~english A HttpResponse class is wrapped to the related responsed data came back from the HttpClient.
+ * @brief @~english defines the object which users will receive at onHttpCompleted(sender, HttpResponse) callback.
+ * Please refer to samples/TestCpp/Classes/ExtensionTest/NetworkTest/HttpClientTest.cpp as a sample.
  * @~chinese HttpResponse是对HttpClient返回的响应数据的封装。
  * @see samples/TestCpp/Classes/ExtensionTest/NetworkTest/HttpClientTest.cpp.
  * @since v2.0.2.
@@ -55,17 +56,14 @@ public:
      * @~chinese 对应的HttpRequest对象
      */
     HttpResponse(HttpRequest* request)
+        : _pHttpRequest(request)
+        , _succeed(false)
+        , _responseDataString("")
     {
-        _pHttpRequest = request;
         if (_pHttpRequest)
         {
             _pHttpRequest->retain();
         }
-        
-        _succeed = false;
-        _responseData.clear();
-        _errorBuffer.clear();
-        _responseDataString = "";
     }
     
     /** @~english
@@ -92,13 +90,13 @@ public:
      * @return @~english always return nullptr.
      * @~chinese 始终返回nullptr。
      */
-    cocos2d::Ref* autorelease(void)
+    cocos2d::Ref* autorelease()
     {
         CCASSERT(false, "HttpResponse is used between network thread and ui thread \
                         therefore, autorelease is forbidden here");
-        return NULL;
+        return nullptr;
     }
-    
+
     // getters, will be called by users
     
     /** @~english
@@ -110,7 +108,7 @@ public:
      * @return @~english the corresponding HttpRequest object which leads to this response.
      * @~chinese 对应这个响应的HttpRequest对象。
      */
-    inline HttpRequest* getHttpRequest()
+    inline HttpRequest* getHttpRequest() const
     {
         return _pHttpRequest;
     }
@@ -126,7 +124,7 @@ public:
      * @return @~english bool the flag that represent whether the http request return sucesssfully or not.
      * @~chinese 判断HttpReqeust是否返回成功的标记。
      */
-    inline bool isSucceed()
+    inline bool isSucceed() const
     {
         return _succeed;
     };
@@ -164,7 +162,7 @@ public:
      * @return @~english the value of _responseCode
      * @~chinese _responseCode的价值
      */
-    inline long getResponseCode()
+    inline long getResponseCode() const
     {
         return _responseCode;
     }
@@ -176,11 +174,11 @@ public:
      * @return @~english the pointer that point to _errorBuffer.
      * @~chinese 指向_errorBuffer的指针。
      */
-    inline const char* getErrorBuffer()
+    inline const char* getErrorBuffer() const
     {
         return _errorBuffer.c_str();
     }
-    
+
     // setters, will be called by HttpClient
     // users should avoid invoking these methods
     
@@ -273,23 +271,23 @@ public:
      * @return @~english the string pointer that point to the response data.
      * @~chinese 指向响应数据的字符串指针。
      */
-    inline const char* getResponseDataString()
+    inline const char* getResponseDataString() const
     {
         return _responseDataString.c_str();
     }
-    
+
 protected:
     bool initWithRequest(HttpRequest* request);
-    
+
     // properties
-    HttpRequest*        _pHttpRequest;  /// the corresponding HttpRequest pointer who leads to this response 
+    HttpRequest*        _pHttpRequest;  /// the corresponding HttpRequest pointer who leads to this response
     bool                _succeed;       /// to indicate if the http request is successful simply
     std::vector<char>   _responseData;  /// the returned raw data. You can also dump it as a string
     std::vector<char>   _responseHeader;  /// the returned raw header data. You can also dump it as a string
     long                _responseCode;    /// the status code returned from libcurl, e.g. 200, 404
     std::string         _errorBuffer;   /// if _responseCode != 200, please read _errorBuffer to find the reason
     std::string         _responseDataString; // the returned raw data. You can also dump it as a string
-    
+
 };
 
 }
@@ -300,3 +298,4 @@ NS_CC_END
 /// @}
 
 #endif //__HTTP_RESPONSE_H__
+

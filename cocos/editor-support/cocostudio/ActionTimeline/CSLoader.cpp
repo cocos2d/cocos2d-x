@@ -25,8 +25,14 @@
 #include "editor-support/cocostudio/ActionTimeline/CSLoader.h"
 
 #include "base/ObjectFactory.h"
-
+#include "base/CCDirector.h"
+#include "base/ccUTF8.h"
 #include "ui/CocosGUI.h"
+#include "2d/CCSpriteFrameCache.h"
+#include "2d/CCParticleSystemQuad.h"
+#include "2d/CCTMXTiledMap.h"
+#include "platform/CCFileUtils.h"
+
 #include "editor-support/cocostudio/ActionTimeline/CCActionTimelineCache.h"
 #include "editor-support/cocostudio/ActionTimeline/CCActionTimeline.h"
 #include "editor-support/cocostudio/ActionTimeline/CCActionTimelineNode.h"

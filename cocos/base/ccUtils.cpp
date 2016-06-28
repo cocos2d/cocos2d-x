@@ -33,9 +33,12 @@ THE SOFTWARE.
 #include "base/base64.h"
 #include "renderer/CCCustomCommand.h"
 #include "renderer/CCRenderer.h"
+#include "renderer/CCTextureCache.h"
+
 #include "platform/CCImage.h"
 #include "platform/CCFileUtils.h"
 #include "2d/CCSprite.h"
+#include "2d/CCRenderTexture.h"
 
 NS_CC_BEGIN
 
@@ -174,6 +177,49 @@ void captureScreen(const std::function<void(bool, const std::string&)>& afterCap
     });
 }
 
+Image* captureNode(Node* startNode, float scale)
+{ // The best snapshot API, support Scene and any Node
+    auto& size = startNode->getContentSize();
+
+    Director::getInstance()->setNextDeltaTimeZero(true);
+
+    RenderTexture* finalRtx = nullptr;
+
+    auto rtx = RenderTexture::create(size.width, size.height, Texture2D::PixelFormat::RGBA8888, GL_DEPTH24_STENCIL8);
+    // rtx->setKeepMatrix(true);
+    Point savedPos = startNode->getPosition();
+    Point anchor;
+    if (!startNode->isIgnoreAnchorPointForPosition()) {
+        anchor = startNode->getAnchorPoint();
+    }
+    startNode->setPosition(Point(size.width * anchor.x, size.height * anchor.y));
+    rtx->begin(); 
+    startNode->visit();
+    rtx->end();
+    startNode->setPosition(savedPos);
+
+    if (std::abs(scale - 1.0f) < 1e-6/* no scale */)
+        finalRtx = rtx;
+    else {
+        /* scale */
+        auto finalRect = Rect(0, 0, size.width, size.height);
+        Sprite *sprite = Sprite::createWithTexture(rtx->getSprite()->getTexture(), finalRect);
+        sprite->setAnchorPoint(Point(0, 0));
+        sprite->setFlippedY(true);
+
+        finalRtx = RenderTexture::create(size.width * scale, size.height * scale, Texture2D::PixelFormat::RGBA8888, GL_DEPTH24_STENCIL8);
+
+        sprite->setScale(scale); // or use finalRtx->setKeepMatrix(true);
+        finalRtx->begin(); 
+        sprite->visit();
+        finalRtx->end();
+    }
+
+    Director::getInstance()->getRenderer()->render();
+
+    return finalRtx->newImage();
+}
+
 std::vector<Node*> findChildren(const Node &node, const std::string &name)
 {
     std::vector<Node*> vec;
@@ -266,10 +312,33 @@ Rect getCascadeBoundingBox(Node *node)
     return cbb;
 }
 
+Sprite* createSpriteFromBase64Cached(const char* base64String, const char* key)
+{
+    Texture2D* texture = Director::getInstance()->getTextureCache()->getTextureForKey(key);
+
+    if (texture == nullptr)
+    {
+        unsigned char* decoded;
+        int length = base64Decode((const unsigned char*)base64String, (unsigned int)strlen(base64String), &decoded);
+
+        Image *image = new (std::nothrow) Image();
+        bool imageResult = image->initWithImageData(decoded, length);
+        CCASSERT(imageResult, "Failed to create image from base64!");
+        free(decoded);
+
+        texture = Director::getInstance()->getTextureCache()->addImage(image, key);
+        image->release();
+    }
+
+    Sprite* sprite = Sprite::createWithTexture(texture);
+    
+    return sprite;
+}
+
 Sprite* createSpriteFromBase64(const char* base64String)
 {
     unsigned char* decoded;
-    int length = base64Decode((const unsigned char*) base64String, (unsigned int) strlen(base64String), &decoded);
+    int length = base64Decode((const unsigned char*)base64String, (unsigned int)strlen(base64String), &decoded);
 
     Image *image = new (std::nothrow) Image();
     bool imageResult = image->initWithImageData(decoded, length);
@@ -283,8 +352,53 @@ Sprite* createSpriteFromBase64(const char* base64String)
 
     Sprite* sprite = Sprite::createWithTexture(texture);
     texture->release();
-    
+
     return sprite;
+}
+
+Node* findChild(Node* levelRoot, const char* name)
+{
+    if (levelRoot == nullptr)
+        return nullptr;
+
+    // Find this node
+    {
+        auto target = levelRoot->getChildByName(name);
+        if (target != nullptr)
+            return target;
+    }
+
+    // Find recursively
+    for (auto& child : levelRoot->getChildren())
+    {
+        auto target = findChild(child, name);
+        if (target != nullptr)
+            return target;
+    }
+    return nullptr;
+}
+
+Node* findChild(Node* levelRoot, int tag)
+{
+    if (levelRoot == nullptr)
+        return nullptr;
+
+    // Find this node
+    {
+        auto target = levelRoot->getChildByTag(tag);
+        if (target != nullptr)
+            return target;
+    }
+
+    // Find recursively
+    for (auto& child : levelRoot->getChildren())
+    {
+        auto target = findChild(child, tag);
+        if (target != nullptr)
+            return target;
+    }
+
+    return nullptr;
 }
 
 }

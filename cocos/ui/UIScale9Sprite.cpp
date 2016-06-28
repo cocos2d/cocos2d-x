@@ -87,11 +87,11 @@ namespace ui {
         bool ret = false;
         do {
             Texture2D* texture = spriteFrame->getTexture();
-            CCASSERT(texture != NULL, "CCTexture must be not nil");
+            CCASSERT(texture != nullptr, "Texture2D must be not null");
             if(texture == nullptr) break;
             
             Sprite *sprite = Sprite::createWithSpriteFrame(spriteFrame);
-            CCASSERT(sprite != NULL, "sprite must be not nil");
+            CCASSERT(sprite != nullptr, "Sprite must be not null");
             if(sprite == nullptr) break;
             
             ret = this->init(sprite,
@@ -106,7 +106,7 @@ namespace ui {
     }
     bool Scale9Sprite::initWithSpriteFrame(SpriteFrame* spriteFrame)
     {
-        CCASSERT(spriteFrame != NULL, "Invalid spriteFrame for sprite");
+        CCASSERT(spriteFrame != nullptr, "Invalid spriteFrame for sprite");
         bool pReturn = this->initWithSpriteFrame(spriteFrame, Rect::ZERO);
         return pReturn;
     }
@@ -137,7 +137,7 @@ namespace ui {
 
     bool Scale9Sprite::init()
     {
-        return this->init(NULL, Rect::ZERO, Rect::ZERO);
+        return this->init(nullptr, Rect::ZERO, Rect::ZERO);
     }
 
     bool Scale9Sprite::init(Sprite* sprite, const Rect& rect, const Rect& capInsets)
@@ -236,7 +236,7 @@ namespace ui {
             return pReturn;
         }
         CC_SAFE_DELETE(pReturn);
-        return NULL;
+        return nullptr;
     }
 
     Scale9Sprite* Scale9Sprite::create(const std::string& file,
@@ -250,7 +250,7 @@ namespace ui {
             return pReturn;
         }
         CC_SAFE_DELETE(pReturn);
-        return NULL;
+        return nullptr;
     }
 
 
@@ -263,7 +263,7 @@ namespace ui {
             return pReturn;
         }
         CC_SAFE_DELETE(pReturn);
-        return NULL;
+        return nullptr;
     }
 
 
@@ -278,7 +278,7 @@ namespace ui {
             return pReturn;
         }
         CC_SAFE_DELETE(pReturn);
-        return NULL;
+        return nullptr;
     }
 
 
@@ -291,7 +291,7 @@ namespace ui {
             return pReturn;
         }
         CC_SAFE_DELETE(pReturn);
-        return NULL;
+        return nullptr;
     }
 
 
@@ -305,7 +305,7 @@ namespace ui {
             return pReturn;
         }
         CC_SAFE_DELETE(pReturn);
-        return NULL;
+        return nullptr;
     }
 
     Scale9Sprite* Scale9Sprite::createWithSpriteFrame(SpriteFrame* spriteFrame)
@@ -317,7 +317,7 @@ namespace ui {
             return pReturn;
         }
         CC_SAFE_DELETE(pReturn);
-        return NULL;
+        return nullptr;
     }
 
 
@@ -331,7 +331,7 @@ namespace ui {
             return pReturn;
         }
         CC_SAFE_DELETE(pReturn);
-        return NULL;
+        return nullptr;
     }
 
     Scale9Sprite* Scale9Sprite::createWithSpriteFrameName(const std::string& spriteFrameName)
@@ -345,8 +345,7 @@ namespace ui {
         CC_SAFE_DELETE(pReturn);
 
         log("Could not allocate Scale9Sprite()");
-        return NULL;
-
+        return nullptr;
     }
 
     void Scale9Sprite::cleanupSlicedSprites()
@@ -552,7 +551,9 @@ namespace ui {
             auto vertices = this->calculateVertices(capInsets, originalSize, offsets);
             auto triangles = this->calculateTriangles(uv, vertices);
 
-            _scale9Image->getPolygonInfo().setTriangles(triangles);
+            auto polyInfo = _scale9Image->getPolygonInfo();
+            polyInfo.setTriangles(triangles);
+            _scale9Image->setPolygonInfo(polyInfo);
         }
     }
 
@@ -582,7 +583,7 @@ namespace ui {
             return pReturn;
         }
         CC_SAFE_DELETE(pReturn);
-        return NULL;
+        return nullptr;
     }
     
     Scale9Sprite::State Scale9Sprite::getState()const

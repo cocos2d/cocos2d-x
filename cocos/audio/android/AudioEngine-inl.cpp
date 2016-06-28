@@ -38,6 +38,7 @@
 #include "base/CCDirector.h"
 #include "base/CCScheduler.h"
 #include "platform/android/CCFileUtils-android.h"
+#include "platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
 
 using namespace cocos2d;
 using namespace cocos2d::experimental;
@@ -104,27 +105,31 @@ bool AudioPlayer::init(SLEngineItf engineEngine, SLObjectItf outputMixObject,con
         SLDataFormat_MIME format_mime = {SL_DATAFORMAT_MIME, NULL, SL_CONTAINERTYPE_UNSPECIFIED};
         audioSrc.pFormat = &format_mime;
 
-        if (fileFullPath[0] != '/'){
-            std::string relativePath = "";
-
+        if (fileFullPath[0] != '/') {
+            off_t start, length;
+            std::string relativePath;
             size_t position = fileFullPath.find("assets/");
+
             if (0 == position) {
                 // "assets/" is at the beginning of the path and we don't want it
-                relativePath += fileFullPath.substr(strlen("assets/"));
+                relativePath = fileFullPath.substr(strlen("assets/"));
             } else {
-                relativePath += fileFullPath;
+                relativePath = fileFullPath;
             }
 
-            auto asset = AAssetManager_open(cocos2d::FileUtilsAndroid::getAssetManager(), relativePath.c_str(), AASSET_MODE_UNKNOWN);
-
-            // open asset as file descriptor
-            off_t start, length;
-            _assetFd = AAsset_openFileDescriptor(asset, &start, &length);
-            if (_assetFd <= 0){
+            if (cocos2d::FileUtilsAndroid::getObbFile() != nullptr) {
+              _assetFd = getObbAssetFileDescriptorJNI(relativePath.c_str(), &start, &length);
+            } else {
+                auto asset = AAssetManager_open(cocos2d::FileUtilsAndroid::getAssetManager(), relativePath.c_str(), AASSET_MODE_UNKNOWN);
+                // open asset as file descriptor
+                _assetFd = AAsset_openFileDescriptor(asset, &start, &length);
                 AAsset_close(asset);
+            }
+
+            if (_assetFd <= 0) {
+                CCLOGERROR("Failed to open file descriptor for '%s'", fileFullPath.c_str());
                 break;
             }
-            AAsset_close(asset);
 
             // configure audio source
             loc_fd = {SL_DATALOCATOR_ANDROIDFD, _assetFd, start, length};
@@ -434,7 +439,7 @@ void AudioEngineImpl::preload(const std::string& filePath, std::function<void(bo
     CCLOG("Preload not support on Anroid");
     if (callback)
     {
-        callback(false);
+        callback(true);
     }
 }
 

@@ -46,7 +46,6 @@
 
 NS_CC_BEGIN
 
-static const int UNDERLINE_NODE_TAG = 0xaabbccdd;
 /**
  * LabelLetter used to update the quad in texture atlas without SpriteBatchNode.
  */
@@ -561,6 +560,11 @@ void Label::updateShaderProgram()
 
 void Label::setFontAtlas(FontAtlas* atlas,bool distanceFieldEnabled /* = false */, bool useA8Shader /* = false */)
 {
+    if(atlas)
+    {
+        _systemFontDirty = false;
+    }
+
     if (atlas == _fontAtlas)
     {
         FontAtlasCache::releaseFontAtlas(atlas);
@@ -780,9 +784,9 @@ bool Label::alignText()
     do {
         _fontAtlas->prepareLetterDefinitions(_utf16Text);
         auto& textures = _fontAtlas->getTextures();
-        if (textures.size() > _batchNodes.size())
+        if (textures.size() > static_cast<size_t>(_batchNodes.size()))
         {
-            for (auto index = _batchNodes.size(); index < textures.size(); ++index)
+            for (auto index = static_cast<size_t>(_batchNodes.size()); index < textures.size(); ++index)
             {
                 auto batchNode = SpriteBatchNode::createWithTexture(textures.at(index));
                 if (batchNode)
@@ -1129,7 +1133,7 @@ void Label::enableBold()
     if (!_boldEnabled)
     {
         // bold is implemented with outline
-        enableShadow(Color4B::WHITE, Size(0.9,0), 0);
+        enableShadow(Color4B::WHITE, Size(0.9f, 0), 0);
         // add one to kerning
         setAdditionalKerning(_additionalKerning+1);
         _boldEnabled = true;
@@ -1322,7 +1326,7 @@ void Label::setFontDefinition(const FontDefinition& textDefinition)
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID) && (CC_TARGET_PLATFORM != CC_PLATFORM_IOS)
     if (textDefinition._stroke._strokeEnabled)
     {
-        CCLOGERROR("Currently only supported on iOS and Android!");
+        CCLOGERROR("Stroke Currently only supported on iOS and Android!");
     }
     _outlineSize = 0.f;
 #else
@@ -1681,6 +1685,7 @@ void Label::setSystemFontName(const std::string& systemFont)
     if (systemFont != _systemFont)
     {
         _systemFont = systemFont;
+        _currentLabelType = LabelType::STRING_TEXTURE;
         _systemFontDirty = true;
     }
 }
@@ -1691,6 +1696,7 @@ void Label::setSystemFontSize(float fontSize)
     {
         _systemFontSize = fontSize;
         _originalFontSize = fontSize;
+        _currentLabelType = LabelType::STRING_TEXTURE;
         _systemFontDirty = true;
     }
 }
@@ -1807,6 +1813,8 @@ void Label::setAdditionalKerning(float space)
 
 float Label::getAdditionalKerning() const
 {
+    CCASSERT(_currentLabelType != LabelType::STRING_TEXTURE, "Not supported system font!");
+
     return _additionalKerning;
 }
 
@@ -2030,6 +2038,8 @@ FontDefinition Label::_getFontDefinition() const
     systemFontDef._fontFillColor.b = _textColor.b;
     systemFontDef._fontAlpha = _textColor.a;
     systemFontDef._shadow._shadowEnabled = false;
+    systemFontDef._enableWrap = _enableWrap;
+    systemFontDef._overflow = (int)_overflow;
 
     if (_currLabelEffect == LabelEffect::OUTLINE && _outlineSize > 0.f)
     {
@@ -2048,7 +2058,7 @@ FontDefinition Label::_getFontDefinition() const
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID) && (CC_TARGET_PLATFORM != CC_PLATFORM_IOS)
     if (systemFontDef._stroke._strokeEnabled)
     {
-        CCLOGERROR("Currently only supported on iOS and Android!");
+        CCLOGERROR("Stroke Currently only supported on iOS and Android!");
     }
     systemFontDef._stroke._strokeEnabled = false;
 #endif
@@ -2086,8 +2096,7 @@ float Label::getRenderingFontSize()const
 
 void Label::enableWrap(bool enable)
 {
-    if(enable == _enableWrap || _overflow == Overflow::RESIZE_HEIGHT
-       || _currentLabelType == LabelType::STRING_TEXTURE){
+    if(enable == _enableWrap || _overflow == Overflow::RESIZE_HEIGHT){
         return;
     }
 
@@ -2111,12 +2120,6 @@ void Label::setOverflow(Overflow overflow)
     
     if (_currentLabelType == LabelType::CHARMAP) {
         if (overflow == Overflow::SHRINK) {
-            return;
-        }
-    }
-    
-    if (_currentLabelType == LabelType::STRING_TEXTURE) {
-        if (overflow == Overflow::CLAMP || overflow == Overflow::SHRINK) {
             return;
         }
     }

@@ -27,11 +27,12 @@
 #include <map>
 #include <string>
 #include "scripting/lua-bindings/manual/tolua_fix.h"
-#include "cocos2d.h"
+
 #include "scripting/lua-bindings/manual/CCLuaStack.h"
 #include "scripting/lua-bindings/manual/CCLuaValue.h"
 #include "scripting/lua-bindings/manual/CCLuaEngine.h"
 #include "scripting/lua-bindings/manual/cocos2d/LuaScriptHandlerMgr.h"
+#include "deprecated/CCString.h"
 
 using namespace cocos2d;
 
@@ -132,7 +133,7 @@ void LuaWebSocket::onError(WebSocket* ws, const WebSocket::ErrorCode& error)
 {
     LuaWebSocket* luaWs = dynamic_cast<LuaWebSocket*>(ws);
     if (NULL != luaWs) {
-        int nHandler = 0;//luaWs->getScriptHandler(LuaWebSocket::kWebSocketScriptHandlerError);
+        int nHandler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)this,ScriptHandlerMgr::HandlerType::WEBSOCKET_ERROR);
         if (0 != nHandler)
         {
             CommonScriptData data(nHandler,"");

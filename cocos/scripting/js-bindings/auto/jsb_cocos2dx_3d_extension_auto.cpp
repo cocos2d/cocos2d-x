@@ -443,7 +443,7 @@ bool js_cocos2dx_3d_extension_PUParticleSystem3D_getDefaultDepth(JSContext *cx, 
     cocos2d::PUParticleSystem3D* cobj = (cocos2d::PUParticleSystem3D *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_extension_PUParticleSystem3D_getDefaultDepth : Invalid Native Object");
     if (argc == 0) {
-        const float ret = cobj->getDefaultDepth();
+        double ret = cobj->getDefaultDepth();
         jsval jsret = JSVAL_NULL;
         jsret = DOUBLE_TO_JSVAL(ret);
         args.rval().set(jsret);
@@ -573,7 +573,7 @@ bool js_cocos2dx_3d_extension_PUParticleSystem3D_forceUpdate(JSContext *cx, uint
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_extension_PUParticleSystem3D_forceUpdate : Invalid Native Object");
     if (argc == 1) {
         double arg0 = 0;
-        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !std::isnan(arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_3d_extension_PUParticleSystem3D_forceUpdate : Error processing arguments");
         cobj->forceUpdate(arg0);
         args.rval().setUndefined();
@@ -645,7 +645,7 @@ bool js_cocos2dx_3d_extension_PUParticleSystem3D_getDefaultWidth(JSContext *cx, 
     cocos2d::PUParticleSystem3D* cobj = (cocos2d::PUParticleSystem3D *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_extension_PUParticleSystem3D_getDefaultWidth : Invalid Native Object");
     if (argc == 0) {
-        const float ret = cobj->getDefaultWidth();
+        double ret = cobj->getDefaultWidth();
         jsval jsret = JSVAL_NULL;
         jsret = DOUBLE_TO_JSVAL(ret);
         args.rval().set(jsret);
@@ -727,7 +727,7 @@ bool js_cocos2dx_3d_extension_PUParticleSystem3D_setDefaultWidth(JSContext *cx, 
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_extension_PUParticleSystem3D_setDefaultWidth : Invalid Native Object");
     if (argc == 1) {
         double arg0 = 0;
-        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !std::isnan(arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_3d_extension_PUParticleSystem3D_setDefaultWidth : Error processing arguments");
         cobj->setDefaultWidth(arg0);
         args.rval().setUndefined();
@@ -817,7 +817,7 @@ bool js_cocos2dx_3d_extension_PUParticleSystem3D_setMaxVelocity(JSContext *cx, u
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_extension_PUParticleSystem3D_setMaxVelocity : Invalid Native Object");
     if (argc == 1) {
         double arg0 = 0;
-        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !std::isnan(arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_3d_extension_PUParticleSystem3D_setMaxVelocity : Error processing arguments");
         cobj->setMaxVelocity(arg0);
         args.rval().setUndefined();
@@ -835,7 +835,7 @@ bool js_cocos2dx_3d_extension_PUParticleSystem3D_getDefaultHeight(JSContext *cx,
     cocos2d::PUParticleSystem3D* cobj = (cocos2d::PUParticleSystem3D *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_extension_PUParticleSystem3D_getDefaultHeight : Invalid Native Object");
     if (argc == 0) {
-        const float ret = cobj->getDefaultHeight();
+        double ret = cobj->getDefaultHeight();
         jsval jsret = JSVAL_NULL;
         jsret = DOUBLE_TO_JSVAL(ret);
         args.rval().set(jsret);
@@ -927,7 +927,7 @@ bool js_cocos2dx_3d_extension_PUParticleSystem3D_setParticleSystemScaleVelocity(
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_extension_PUParticleSystem3D_setParticleSystemScaleVelocity : Invalid Native Object");
     if (argc == 1) {
         double arg0 = 0;
-        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !std::isnan(arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_3d_extension_PUParticleSystem3D_setParticleSystemScaleVelocity : Error processing arguments");
         cobj->setParticleSystemScaleVelocity(arg0);
         args.rval().setUndefined();
@@ -965,7 +965,7 @@ bool js_cocos2dx_3d_extension_PUParticleSystem3D_setDefaultHeight(JSContext *cx,
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_extension_PUParticleSystem3D_setDefaultHeight : Invalid Native Object");
     if (argc == 1) {
         double arg0 = 0;
-        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !std::isnan(arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_3d_extension_PUParticleSystem3D_setDefaultHeight : Error processing arguments");
         cobj->setDefaultHeight(arg0);
         args.rval().setUndefined();
@@ -1023,7 +1023,7 @@ bool js_cocos2dx_3d_extension_PUParticleSystem3D_setDefaultDepth(JSContext *cx, 
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_extension_PUParticleSystem3D_setDefaultDepth : Invalid Native Object");
     if (argc == 1) {
         double arg0 = 0;
-        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !std::isnan(arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_3d_extension_PUParticleSystem3D_setDefaultDepth : Error processing arguments");
         cobj->setDefaultDepth(arg0);
         args.rval().setUndefined();

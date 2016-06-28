@@ -28,7 +28,7 @@
 
 #include "jsapi.h"
 #include "jsfriendapi.h"
-#include "cocos2d.h"
+
 #include "ui/CocosGUI.h"
 #include "scripting/js-bindings/manual/js_bindings_config.h"
 #include "scripting/js-bindings/manual/js_bindings_core.h"
@@ -373,7 +373,7 @@ public:
      @return @~english Script object
      * @~chinese 脚本对象
      */
-    JSScript* getScript(const char *path);
+    JS::PersistentRootedScript* getScript(const char *path);
 
     /**@~english
      * Compile the specified js file
@@ -386,7 +386,7 @@ public:
      * @param cx        @~english The js context
      * @~chinese js上下文
      */
-    void compileScript(const char *path, JS::HandleObject global, JSContext* cx = NULL);
+    JS::PersistentRootedScript* compileScript(const char *path, JS::HandleObject global, JSContext* cx = NULL);
     
     /**@~english
      * Run the specified js file
@@ -450,7 +450,7 @@ public:
      * @return @~english The cached script object map
      * @~chinese 缓存脚本对象表
      */
-    std::unordered_map<std::string, JSScript*> &getFileScript();
+    std::unordered_map<std::string, JS::PersistentRootedScript*>& getFileScript();
     /**@~english
      * Clean all script objects
      * @~chinese 
@@ -754,7 +754,7 @@ public:
     bool handleMouseEvent(void* nativeObj, cocos2d::EventMouse::MouseEventType eventType, cocos2d::Event* event);
     bool handleMouseEvent(void* nativeObj, cocos2d::EventMouse::MouseEventType eventType, cocos2d::Event* event, JS::MutableHandleValue jsvalRet);
 
-    bool handleKeybardEvent(void* nativeObj, cocos2d::EventKeyboard::KeyCode keyCode, bool isPressed, cocos2d::Event* event);
+    bool handleKeyboardEvent(void* nativeObj, cocos2d::EventKeyboard::KeyCode keyCode, bool isPressed, cocos2d::Event* event);
     bool handleFocusEvent(void* nativeObj, cocos2d::ui::Widget* widgetLoseFocus, cocos2d::ui::Widget* widgetGetFocus);
 
     void restartVM();

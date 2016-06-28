@@ -27,7 +27,8 @@ void AppDelegate::initGLContextAttrs()
     GLView::setGLContextAttrs(glContextAttrs);
 }
 
-bool AppDelegate::applicationDidFinishLaunching() {
+bool AppDelegate::applicationDidFinishLaunching()
+{
     // initialize director
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
@@ -91,11 +92,15 @@ bool AppDelegate::applicationDidFinishLaunching() {
     cocostudio::LocalizationHelper::setCurrentManager(lm, true);
     */
 
+    // to enable VR, uncomment the following lines
+//    auto vrImpl = new VRGenericRenderer;
+//    glview->setVR(vrImpl);
+
     // turn on display FPS
     director->setDisplayStats(true);
 
     // set FPS. the default value is 1.0/60 if you don't call this
-    director->setAnimationInterval(1.0 / 60);
+    director->setAnimationInterval(1.0f / 60);
 
     // create a scene. it's an autorelease object
     auto scene = HelloWorld::scene();
@@ -106,11 +111,12 @@ bool AppDelegate::applicationDidFinishLaunching() {
     return true;
 }
 
-// This function will be called when the app is inactive. When comes a phone call,it's be invoked too
-void AppDelegate::applicationDidEnterBackground() {
+// This function will be called when the app is inactive. Note, when receiving a phone call it is invoked.
+void AppDelegate::applicationDidEnterBackground()
+{
     Director::getInstance()->stopAnimation();
 
-    // if you use SimpleAudioEngine, it must be pause
+    // if you use SimpleAudioEngine, it must be paused
     // SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
 }
 

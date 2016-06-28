@@ -256,6 +256,14 @@ void Director::setGLDefaultValues()
     setAlphaBlending(true);
     setDepthTest(false);
     setProjection(_projection);
+
+    // Everything should be drawn within `Scene::render()`.
+    // Otherwise it might not render correctly since the GL state might not be the correct one
+    // so the FPS should be part of Scene. But until we move them there, this little hack is to
+    // set the default glViewPort(), so that when `Scene::render()` exits, the viewport is the correct
+    // one for the FPS
+    auto vp = Camera::getDefaultViewport();
+    glViewport(vp._left, vp._bottom, vp._width, vp._height);
 }
 
 // Draw the Scene
@@ -298,7 +306,7 @@ void Director::drawScene()
         _renderer->clearDrawStats();
         
         //render the scene
-        _runningScene->render(_renderer);
+        _openGLView->renderScene(_runningScene, _renderer);
         
         _eventDispatcher->dispatchEvent(_eventAfterVisit);
     }
@@ -604,11 +612,9 @@ void Director::setProjection(Projection projection)
     {
         case Projection::_2D:
         {
-            loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-
             Mat4 orthoMatrix;
             Mat4::createOrthographicOffCenter(0, size.width, 0, size.height, -1024, 1024, &orthoMatrix);
-            multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, orthoMatrix);
+            loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, orthoMatrix);
             loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
             break;
         }
@@ -619,17 +625,14 @@ void Director::setProjection(Projection projection)
 
             Mat4 matrixPerspective, matrixLookup;
 
-            loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-
             // issue #1334
             Mat4::createPerspective(60, (GLfloat)size.width/size.height, 10, zeye+size.height/2, &matrixPerspective);
 
-            multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, matrixPerspective);
-
             Vec3 eye(size.width/2, size.height/2, zeye), center(size.width/2, size.height/2, 0.0f), up(0.0f, 1.0f, 0.0f);
             Mat4::createLookAt(eye, center, up, &matrixLookup);
-            multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, matrixLookup);
-            
+            Mat4 proj3d = matrixPerspective * matrixLookup;
+
+            loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, proj3d);
             loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
             break;
         }
@@ -1088,7 +1091,7 @@ void Director::restartDirector()
     
     // Real restart in script level
 #if CC_ENABLE_SCRIPT_BINDING
-    ScriptEvent scriptEvent(kRestartGame, NULL);
+    ScriptEvent scriptEvent(kRestartGame, nullptr);
     ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
 #endif
 }

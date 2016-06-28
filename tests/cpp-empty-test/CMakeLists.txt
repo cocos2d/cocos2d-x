@@ -22,7 +22,7 @@
 # THE SOFTWARE.
 # ****************************************************************************/
 
-set(APP_NAME cpp_empty_test)
+set(APP_NAME cpp-empty-test)
 
 if(ANDROID)
   set(PLATFORM_SRC proj.android/jni/main.cpp)

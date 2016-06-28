@@ -573,9 +573,9 @@ public:
     /**
      * returns a reference of the polygon information associated with this sprite
      *
-     * @return a copy of PolygonInfo
+     * @return a reference of PolygonInfo
      */
-    PolygonInfo& getPolygonInfo();
+    const PolygonInfo& getPolygonInfo() const;
 
     /**
      * set the sprite to use this new PolygonInfo
@@ -641,7 +641,9 @@ public:
     virtual void setScale(float scale) override;
     virtual void setPositionZ(float positionZ) override;
     virtual void setAnchorPoint(const Vec2& anchor) override;
-    virtual void ignoreAnchorPointForPosition(bool value) override;
+    
+    virtual void setIgnoreAnchorPointForPosition(bool value) override;
+    
     virtual void setVisible(bool bVisible) override;
     virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
     virtual void setOpacityModifyRGB(bool modify) override;
@@ -827,7 +829,7 @@ CC_CONSTRUCTOR_ACCESS :
 protected:
 
     void updateColor() override;
-    virtual void setTextureCoords(Rect rect);
+    virtual void setTextureCoords(const Rect& rect);
     virtual void updateBlendFunc();
     virtual void setReorderChildDirtyRecursively();
     virtual void setDirtyRecursively(bool value);

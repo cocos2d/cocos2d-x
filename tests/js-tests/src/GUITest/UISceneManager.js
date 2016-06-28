@@ -533,6 +533,12 @@
                 func: function () {
                     return new UIPageViewChildSizeTest();
                 }
+            },
+            {
+                title: "UIPageViewIndicatorTest",
+                func: function () {
+                    return new UIPageViewIndicatorTest();
+                }
             }
         ],
         "UIListView": [
