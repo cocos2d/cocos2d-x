@@ -66,10 +66,8 @@ var cc = cc || {};
         cc.Node.prototype.setLocalZOrder.apply(this, arguments);
     };
 
-    cc.Node.prototype.ignoreAnchorPointForPosition = function() {
-        logW("cc.Node.ignoreAnchorPointForPosition", "cc.Node.setIgnoreAnchorPointForPosition");
-        cc.Node.prototype.setIgnoreAnchorPointForPosition.apply(this, arguments);
-    };
+    // Not deprecated in the web engine yet, so no need to log
+    cc.Node.prototype.ignoreAnchorPointForPosition = cc.Node.prototype.setIgnoreAnchorPointForPosition;
 
     cc.Node.prototype.nodeToParentTransform = function() {
         logW("cc.Node.nodeToParentTransform", "cc.Node.getNodeToParentTransform");
