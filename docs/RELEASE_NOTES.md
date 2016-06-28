@@ -2,7 +2,7 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [Cocos2d-x 3.11 Release Notes](#cocos2d-x-311-release-notes)
+- [Cocos2d-x 3.12 Release Notes](#cocos2d-x-312-release-notes)
 - [Misc Information](#misc-information)
 - [Requirements](#requirements)
   - [Runtime Requirements](#runtime-requirements)
@@ -14,18 +14,19 @@
     - [Windows](#windows)
     - [Linux](#linux)
   - [How to start a new game](#how-to-start-a-new-game)
-- [v3.11](#v311)
-  - [Highlights features](#highlights-features)
-  - [The main features in detail of Cocos2d-x v3.11](#the-main-features-in-detail-of-cocos2d-x-v311)
-    - [New memory model in JSB](#new-memory-model-in-jsb)
-    - [OpenSSL](#openssl)
-    - [Cocos2d-x JSB program debugging](#cocos2d-x-jsb-program-debugging)
-    - [New WebGL renderer](#new-webgl-renderer)
+- [v3.12](#v312)
+  - [Highlights](#highlights)
+  - [The main features in detail of Cocos2d-x v3.12](#the-main-features-in-detail-of-cocos2d-x-v312)
+    - [VR support](#vr-support)
+    - [Tizen support](#tizen-support)
+    - [improve Android performance](#improve-android-performance)
+    - [improve web engine performance in WebGL mode](#improve-web-engine-performance-in-webgl-mode)
+    - [use clang on Android](#use-clang-on-android)
   - [Other changes](#other-changes)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-# Cocos2d-x 3.11 Release Notes #
+# Cocos2d-x 3.12 Release Notes #
 
 # Misc Information
 
@@ -35,7 +36,7 @@
 
 ## Runtime Requirements
 
-* Android 2.3 or newer
+* Android 2.3.3 or newer
 * iOS 5.0 or newer
 * OS X 10.7 or newer
 * Windows 7 or newer
@@ -149,76 +150,46 @@ Use the __cocos__ console app to create a new game:
 cocos new -l cpp|js|lua MyNewGame
 ```
 
-# v3.11
+# v3.12
 
-## Highlights features
+## Highlights
 
-* upgrade Chipmunk to v7.0.1
-* use new memory model in JSB, don't have to invoke `retain/release` in JS, it is disabled by default
-* upgrade Curl to v7.48
-* upgrade OpenSSL to 1.0.2g
-* can use VSCode and new Firefox to debug cocos2d-x JSB programs
-* refactor WebGL renderer
+* add VR support
+* add Tizen support
+* improve Android performance issue
+* improve web engine performance in WebGL mode
+* support Android obb extension
+* use clang instead of gcc on Android
 
-## The main features in detail of Cocos2d-x v3.11
+## The main features in detail of Cocos2d-x v3.12
 
-### New memory model in JSB
+### VR support
 
-With new memory model, you don't have to care about object lifecycle. Which means you don't have to invoke `retain/release` in JS any more.
+TBD
 
-Though we have finished many tests about this new memory model, we can't make sure it is too perfect to enable it by default. But you are appreciated if you can enable it to have a try. If you want to enable it, you should change the value of `CC_ENABLE_GC_FOR_NATIVE_OBJECTS` to 1 in `base/ccConfig.h` like this:
+### Tizen support
 
-```c++
-#ifdef CC_ENABLE_SCRIPT_BINDING
-  #ifndef CC_ENABLE_GC_FOR_NATIVE_OBJECTS
-  #define CC_ENABLE_GC_FOR_NATIVE_OBJECTS 1 // change to 1
-  #endif
-#endif
-```
+TBD
 
-### OpenSSL
-Cocos2d-x has upgraded __OpenSSL__ to version __1.0.2g__.
+### improve Android performance
 
-Beginning __July 11, 2016__, Google Play will block publishing of any new apps or updates that use older versions of __OpenSSL__. It is important that you update the use of __OpenSSL__ in your projects. More detail information can refer to [this ticket](http://discuss.cocos2d-x.org/t/openssl-problem-again/28270).
+We found cocos2d-x has performance on some Android devices. It is because cocos2d-x creates a big map buffer by default and fill the map buffer with actual data, which is less then map buffer size. On some Android devices, it will transfer as many data as the map buffer size which causes performance issue.
 
-If you use v2.x or use older versions of v3.x, you can just update __CURL__ and __OpenSSL__.
-To do this:
+More detail information and discussion can refer to [the issue](https://github.com/cocos2d/cocos2d-x/issues/15652).
 
-* modify __Cocos2d-x root/external/config.json__ to update the dependency version. For v3.x the dependency version is `v3-deps-92`, and for v2.x it is `v2-deps-5`
-* execute the __download-deps.py__ script in your __Cocos2d-x root__.
+### improve web engine performance in WebGL mode
 
-```sh
-(jtsm @ 15 ~) $ cd cocos2d-x
+Web engine performance in WebGL mode is obviously improved in this version. The rendering performance, cpu usage and memory usage are optimized.
 
-(jtsm @ 15 ~/cocos2d-x) $ ./download-deps.py
+![rendering peformance](https://raw.githubusercontent.com/minggo/Pictures/master/web-performance-improve/adverage-time-per-frame.png)
 
-=======================================================
-==> Prepare to download external libraries!
-==> Ready to download 'v3-deps-92.zip' from 'https://github.com/cocos2d/cocos2d-x-3rd-party-libs-bin/archive/v3-deps-92.zip'
-==> WARNING: Couldnt grab the file size from remote, use 'zip_file_size' section in '/Users/jtsm/Chukong-Inc/cocos2d-x/external/config.json'
-==> Start to download, please wait ...
-==> Downloading finished!
-==> Extracting files, please wait ...
-==> Extraction done! ==> Copying files...
-==> Cleaning...
-```
-Feel free to post on our <a href="http://discuss.cocos2d-x.org">forums</a> if you run into difficulty.
+![cpu-usage](https://raw.githubusercontent.com/minggo/Pictures/master/web-performance-improve/cpu-usage.png)
 
-### Cocos2d-x JSB program debugging
+![memory-usage](https://raw.githubusercontent.com/minggo/Pictures/master/web-performance-improve/memory-usage.png)
 
-In previous version, can not use Firefox 30+ to debug cocos2d-x JSB programs. This limit is fixed since v3.11. And web console feature is added too. [This documentation](http://www.cocos2d-x.org/wiki/Javascript_Remote_Debugging) shows how to use Firefox to debug cocos2d-x JSB programs(this is a little difference from current usage).
+### use clang on Android
 
-Of course you can use [VSCode](https://code.visualstudio.com/) to debug cocos2d-x JSB programs too. You can read about how to use VSCode to debug cocos2d-x JSB programs [here](http://discuss.cocos2d-x.org/t/use-vscode-to-debug-cocos2d-x-jsb-programs/27588).
-
-### New WebGL renderer
-
-In v3.11, we have refactored the WebGL renderer in web engine, here is the detailed changes:
-
-1. Activate WebGL on Android by default.
-2. Add sprite auto batching in WebGL.
-3. Shared rendering buffer for Sprites.
-
-Compare with old version, the draw calls in your game should be significantly reduced if the textures is well managed. This improves also the CPU usage and memory usage. The above is just a first step of WebGL renderer upgrade, we will continue to investigate in this direction in the future versions.
-
+As [google deprecated gcc since NDK r11](https://developer.android.com/ndk/downloads/revision_history.html), so cocos2d-x changes to use clang  too. And we suggest using latest NDK version if possible. 
+ 
 ## Other changes
 You can also take a look at the [full changelog](https://github.com/cocos2d/cocos2d-x/blob/v3/CHANGELOG).

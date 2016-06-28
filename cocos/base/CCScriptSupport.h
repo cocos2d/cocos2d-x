@@ -557,11 +557,18 @@ struct CommonScriptData
     : handler(inHandler),
       eventSource(inSource)
     {
-        strncpy(eventName, inName, 64);
+        if (nullptr == inName)
+        {
+            memset(eventName, 0, sizeof(eventName));
+        }
+        else
+        {
+            strncpy(eventName, inName, sizeof(eventName));
+        }
         
         if (nullptr == inClassName)
         {
-            memset(eventSourceClassName, 0, 64*sizeof(char));
+            memset(eventSourceClassName, 0, sizeof(eventSourceClassName));
         }
         else
         {

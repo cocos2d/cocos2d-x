@@ -990,6 +990,13 @@ function NodeDeprecated.getVertexZ(self)
     return self:getPositionZ()
 end
 cc.Node.getVertexZ = NodeDeprecated.getVertexZ
+
+function NodeDeprecated.ignoreAnchorPointForPosition(self,ignore)
+    deprecatedTip("cc.Node:ignoreAnchorPointForPosition", "cc.Node:setIgnoreAnchorPointForPosition")
+    return self:setIgnoreAnchorPointForPosition(ignore)
+end
+
+cc.Node.ignoreAnchorPointForPosition = NodeDeprecated.ignoreAnchorPointForPosition
 --functions of cc.Node will be deprecated end
 
 --functions of cc.GLProgram will be deprecated begin

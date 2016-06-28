@@ -195,7 +195,6 @@ public class Cocos2dxEditBoxHelper {
                             //if editbox doesn't support multiline, just hide the keyboard
                             if ((editBox.getInputType() & InputType.TYPE_TEXT_FLAG_MULTI_LINE) != InputType.TYPE_TEXT_FLAG_MULTI_LINE) {
                                 Cocos2dxEditBoxHelper.closeKeyboardOnUiThread(index);
-                                mCocos2dxActivity.getGLSurfaceView().requestFocus();
                                 return true;
                             }
                         }
@@ -209,7 +208,6 @@ public class Cocos2dxEditBoxHelper {
                     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                         if (actionId == EditorInfo.IME_ACTION_DONE) {
                             Cocos2dxEditBoxHelper.closeKeyboardOnUiThread(index);
-                            mCocos2dxActivity.getGLSurfaceView().requestFocus();
                         }
                         return false;
                     }
@@ -243,7 +241,19 @@ public class Cocos2dxEditBoxHelper {
                 if (editBox != null) {
                     Typeface tf;
                     if (!fontName.isEmpty()) {
-                        tf  =  Typeface.create(fontName, Typeface.NORMAL);
+                        if (fontName.endsWith(".ttf")) {
+                            try {
+                                tf = Cocos2dxTypefaces.get(mCocos2dxActivity.getContext(), fontName);
+                            } catch (final Exception e) {
+                                Log.e("Cocos2dxEditBoxHelper", "error to create ttf type face: "
+                                        + fontName);
+                                // The file may not find, use system font.
+                                tf  =  Typeface.create(fontName, Typeface.NORMAL);
+                            }
+                        } else {
+                            tf  =  Typeface.create(fontName, Typeface.NORMAL);
+                        }
+
                     }else{
                         tf = Typeface.DEFAULT;
                     }
@@ -315,13 +325,6 @@ public class Cocos2dxEditBoxHelper {
                 Cocos2dxEditBox editBox = mEditBoxArray.get(index);
                 if (editBox != null) {
                     editBox.setVisibility(visible ? View.VISIBLE : View.GONE);
-                    if (visible) {
-                        editBox.requestFocus();
-                        Cocos2dxEditBoxHelper.openKeyboard(index);
-                    }else{
-                        mCocos2dxActivity.getGLSurfaceView().requestFocus();
-                        Cocos2dxEditBoxHelper.closeKeyboardOnUiThread(index);
-                    }
                 }
             }
         });
@@ -391,10 +394,26 @@ public class Cocos2dxEditBoxHelper {
 
 
 
-    public static void openKeyboard(int index) {
+    public static void openKeyboard(final int index) {
+
+        mCocos2dxActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+               openKeyboardOnUiThread(index);
+            }
+        });
+    }
+
+    private static void openKeyboardOnUiThread(int index) {
+        if (Looper.myLooper() != Looper.getMainLooper()) {
+            Log.e(TAG, "openKeyboardOnUiThread doesn't run on UI thread!");
+            return;
+        }
+
         final InputMethodManager imm = (InputMethodManager) mCocos2dxActivity.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         Cocos2dxEditBox editBox = mEditBoxArray.get(index);
         if (null != editBox) {
+            editBox.requestFocus();
             imm.showSoftInput(editBox, 0);
             mCocos2dxActivity.getGLSurfaceView().setSoftKeyboardShown(true);
         }
@@ -411,6 +430,7 @@ public class Cocos2dxEditBoxHelper {
         if (null != editBox) {
             imm.hideSoftInputFromWindow(editBox.getWindowToken(), 0);
             mCocos2dxActivity.getGLSurfaceView().setSoftKeyboardShown(false);
+            mCocos2dxActivity.getGLSurfaceView().requestFocus();
         }
     }
 

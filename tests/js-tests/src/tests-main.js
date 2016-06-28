@@ -313,15 +313,6 @@ var testNames = [
         }
     },
     {
-        title:"CocoStudio Test",
-        resource:g_cocoStudio,
-        platforms: PLATFORM_ALL,
-        linksrc:"",
-        testScene:function () {
-            return new CocoStudioTestScene();
-        }
-    },
-    {
         title:"Component Test",
         platforms: PLATFORM_JSB,
         linksrc:"src/ComponentTest/ComponentTest.js",

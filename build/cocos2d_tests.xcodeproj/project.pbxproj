@@ -227,6 +227,10 @@
 		1A0EE43318CDF799004CD58F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ABCA39E18CD9EE50087CE3A /* UIKit.framework */; };
 		1A0EE43418CDF799004CD58F /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ABCA39C18CD9ED80087CE3A /* AVFoundation.framework */; };
 		1A0EE43518CDF799004CD58F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64832165F3AFD007D4F18 /* Foundation.framework */; };
+		1A78A5521D1A3C9B00B61B27 /* ccs-res in Resources */ = {isa = PBXBuildFile; fileRef = 460629771CDB4DBA00B44058 /* ccs-res */; };
+		1A78A5531D1A3CE800B61B27 /* ccs-res in Resources */ = {isa = PBXBuildFile; fileRef = 460629771CDB4DBA00B44058 /* ccs-res */; };
+		1A78A5541D1A3D0F00B61B27 /* ccs-res in Resources */ = {isa = PBXBuildFile; fileRef = 460629771CDB4DBA00B44058 /* ccs-res */; };
+		1A78A5551D1A3D1500B61B27 /* ccs-res in Resources */ = {isa = PBXBuildFile; fileRef = 460629771CDB4DBA00B44058 /* ccs-res */; };
 		1AAF534D180E2F4E000584C8 /* libcocos2d Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FB01807A4F9005B8026 /* libcocos2d Mac.a */; };
 		1AAF5400180E39D4000584C8 /* libcocos2d iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FBE1807A4F9005B8026 /* libcocos2d iOS.a */; };
 		1ABCA28718CD91510087CE3A /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64822165F391E007D4F18 /* Cocoa.framework */; };
@@ -767,6 +771,10 @@
 		3EA0FB72191C844400B170C8 /* UIVideoPlayerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EA0FB70191C844400B170C8 /* UIVideoPlayerTest.cpp */; };
 		460629781CDB4DBA00B44058 /* ccs-res in Resources */ = {isa = PBXBuildFile; fileRef = 460629771CDB4DBA00B44058 /* ccs-res */; };
 		460629791CDB4DBA00B44058 /* ccs-res in Resources */ = {isa = PBXBuildFile; fileRef = 460629771CDB4DBA00B44058 /* ccs-res */; };
+		463D7E7C1D227C5F00EA6BD1 /* Bug-14327.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 463D7E781D227C3800EA6BD1 /* Bug-14327.cpp */; };
+		463D7E7D1D227C6A00EA6BD1 /* Bug-14327.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 463D7E781D227C3800EA6BD1 /* Bug-14327.cpp */; };
+		463D7E7E1D227CA400EA6BD1 /* Bug-15776.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 463D7E7A1D227C3800EA6BD1 /* Bug-15776.cpp */; };
+		463D7E7F1D227CAB00EA6BD1 /* Bug-15776.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 463D7E7A1D227C3800EA6BD1 /* Bug-15776.cpp */; };
 		4B5C5BA81CA1147300D55A14 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 826294421AAF071500CB7CF7 /* Security.framework */; };
 		4B5C5BA91CA1147F00D55A14 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 826294421AAF071500CB7CF7 /* Security.framework */; };
 		4B5C5BAB1CA1149900D55A14 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B5C5BAA1CA1149900D55A14 /* Security.framework */; };
@@ -790,7 +798,6 @@
 		5046AB5B1AF2C4180060550B /* Materials in Resources */ = {isa = PBXBuildFile; fileRef = 5046AB5A1AF2C4180060550B /* Materials */; };
 		5046AB5C1AF2C4180060550B /* Materials in Resources */ = {isa = PBXBuildFile; fileRef = 5046AB5A1AF2C4180060550B /* Materials */; };
 		504C949C1D1C51BE00E4E9B3 /* VRTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C949A1D1C51BE00E4E9B3 /* VRTest.cpp */; };
-		504C949D1D1C51BE00E4E9B3 /* VRTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C949A1D1C51BE00E4E9B3 /* VRTest.cpp */; };
 		504C949E1D1C51BE00E4E9B3 /* VRTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C949A1D1C51BE00E4E9B3 /* VRTest.cpp */; };
 		507B41021C31BEA60067B53E /* components in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CB318CED84500F37B72 /* components */; };
 		507B41031C31BEA60067B53E /* Icon-144.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35C7918CECF1400F37B72 /* Icon-144.png */; };
@@ -1175,11 +1182,9 @@
 		507B44361C336EFA0067B53E /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ABCA35418CD9A820087CE3A /* OpenGL.framework */; };
 		507B44471C3370050067B53E /* main.js in Resources */ = {isa = PBXBuildFile; fileRef = 507B44451C3370050067B53E /* main.js */; };
 		507B44481C3370050067B53E /* project.json in Resources */ = {isa = PBXBuildFile; fileRef = 507B44461C3370050067B53E /* project.json */; };
-		508AAE891D14B53600268791 /* Bug-15776.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 508AAE871D14B53600268791 /* Bug-15776.cpp */; };
-		508AAE8A1D14B53600268791 /* Bug-15776.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 508AAE871D14B53600268791 /* Bug-15776.cpp */; };
-		508AAE8B1D14B53600268791 /* Bug-15776.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 508AAE871D14B53600268791 /* Bug-15776.cpp */; };
 		50921EAF1B746D5F00C085CC /* DownloaderTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50921EAD1B746D5F00C085CC /* DownloaderTest.cpp */; };
 		50921EB01B746D5F00C085CC /* DownloaderTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50921EAD1B746D5F00C085CC /* DownloaderTest.cpp */; };
+		50D6E2511D1D1782000974D4 /* VRTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C949A1D1C51BE00E4E9B3 /* VRTest.cpp */; };
 		50FC18521C3371C000DD15A3 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50FC17C51C3371C000DD15A3 /* AppDelegate.cpp */; };
 		50FC188C1C3371C000DD15A3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 50FC18211C3371C000DD15A3 /* InfoPlist.strings */; };
 		50FC188D1C3371C000DD15A3 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50FC18231C3371C000DD15A3 /* MainMenu.xib */; };
@@ -2420,6 +2425,10 @@
 		3EA0FB70191C844400B170C8 /* UIVideoPlayerTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIVideoPlayerTest.cpp; sourceTree = "<group>"; };
 		3EA0FB71191C844400B170C8 /* UIVideoPlayerTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIVideoPlayerTest.h; sourceTree = "<group>"; };
 		460629771CDB4DBA00B44058 /* ccs-res */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "ccs-res"; path = "../tests/cpp-tests/Resources/ccs-res"; sourceTree = "<group>"; };
+		463D7E781D227C3800EA6BD1 /* Bug-14327.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "Bug-14327.cpp"; sourceTree = "<group>"; };
+		463D7E791D227C3800EA6BD1 /* Bug-14327.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bug-14327.h"; sourceTree = "<group>"; };
+		463D7E7A1D227C3800EA6BD1 /* Bug-15776.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "Bug-15776.cpp"; sourceTree = "<group>"; };
+		463D7E7B1D227C3800EA6BD1 /* Bug-15776.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bug-15776.h"; sourceTree = "<group>"; };
 		46A15F9C1807A4F8005B8026 /* cocos2d_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = cocos2d_libs.xcodeproj; sourceTree = "<group>"; };
 		4B5C5BAA1CA1149900D55A14 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.2.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
 		4B5C5BB41CA114DB00D55A14 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS9.1.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
@@ -2437,8 +2446,6 @@
 		507B44431C336EFA0067B53E /* js-memory-gc-tests Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "js-memory-gc-tests Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		507B44451C3370050067B53E /* main.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = main.js; path = "../tests/js-memory-gc-tests/main.js"; sourceTree = "<group>"; };
 		507B44461C3370050067B53E /* project.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = project.json; path = "../tests/js-memory-gc-tests/project.json"; sourceTree = "<group>"; };
-		508AAE871D14B53600268791 /* Bug-15776.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "Bug-15776.cpp"; sourceTree = "<group>"; };
-		508AAE881D14B53600268791 /* Bug-15776.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bug-15776.h"; sourceTree = "<group>"; };
 		50921EAD1B746D5F00C085CC /* DownloaderTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DownloaderTest.cpp; sourceTree = "<group>"; };
 		50921EAE1B746D5F00C085CC /* DownloaderTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownloaderTest.h; sourceTree = "<group>"; };
 		50FC17C51C3371C000DD15A3 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
@@ -3575,6 +3582,10 @@
 		1AC3597618CECF0B00F37B72 /* BugsTest */ = {
 			isa = PBXGroup;
 			children = (
+				463D7E781D227C3800EA6BD1 /* Bug-14327.cpp */,
+				463D7E791D227C3800EA6BD1 /* Bug-14327.h */,
+				463D7E7A1D227C3800EA6BD1 /* Bug-15776.cpp */,
+				463D7E7B1D227C3800EA6BD1 /* Bug-15776.h */,
 				94D793D51B4B7A3600F60F10 /* Bug-CCDrawNode.cpp */,
 				94D793D61B4B7A3600F60F10 /* Bug-CCDrawNode.h */,
 				1AC3597718CECF0B00F37B72 /* Bug-1159.cpp */,
@@ -3602,8 +3613,6 @@
 				850F8A231B5F3A4F00780603 /* Bug-12847.h */,
 				500D1CD11CF4A48B00535D35 /* Bug-15594.cpp */,
 				500D1CD21CF4A48B00535D35 /* Bug-15594.h */,
-				508AAE871D14B53600268791 /* Bug-15776.cpp */,
-				508AAE881D14B53600268791 /* Bug-15776.h */,
 			);
 			path = BugsTest;
 			sourceTree = "<group>";
@@ -5971,6 +5980,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1A78A5521D1A3C9B00B61B27 /* ccs-res in Resources */,
 				150983E11B1C514B007F3818 /* NavMesh in Resources */,
 				15B914491B15721400C6B95B /* Shaders3D in Resources */,
 				15B914481B156A3700C6B95B /* Materials in Resources */,
@@ -6020,6 +6030,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1A78A5541D1A3D0F00B61B27 /* ccs-res in Resources */,
 				15BF83C71B1D9E8900D518FA /* NavMesh in Resources */,
 				15B9144A1B15A18C00C6B95B /* Materials in Resources */,
 				15B9144B1B15A18C00C6B95B /* Shaders3D in Resources */,
@@ -6153,6 +6164,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1A78A5531D1A3CE800B61B27 /* ccs-res in Resources */,
 				507B41021C31BEA60067B53E /* components in Resources */,
 				507B41031C31BEA60067B53E /* Icon-144.png in Resources */,
 				507B41041C31BEA60067B53E /* Icon-50.png in Resources */,
@@ -6238,6 +6250,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1A78A5551D1A3D1500B61B27 /* ccs-res in Resources */,
 				507B43811C31FB670067B53E /* NavMesh in Resources */,
 				507B43821C31FB670067B53E /* Materials in Resources */,
 				507B43831C31FB670067B53E /* Shaders3D in Resources */,
@@ -6836,7 +6849,6 @@
 				B6C039D919C95D83007207DC /* LightTest.cpp in Sources */,
 				1AC35B5B18CECF0C00F37B72 /* CurlTest.cpp in Sources */,
 				1AC35BFF18CECF0C00F37B72 /* CustomTableViewCell.cpp in Sources */,
-				508AAE891D14B53600268791 /* Bug-15776.cpp in Sources */,
 				29080DDF191B595E0066F8DF /* UITextTest.cpp in Sources */,
 				1AC35BEF18CECF0C00F37B72 /* CCControlSwitchTest.cpp in Sources */,
 				3E9E75D0199324CB005B7047 /* Camera3DTest.cpp in Sources */,
@@ -6893,6 +6905,7 @@
 				29080DAD191B595E0066F8DF /* UIImageViewTest.cpp in Sources */,
 				1AC35B6918CECF0C00F37B72 /* ButtonTestLayer.cpp in Sources */,
 				1AC35B2F18CECF0C00F37B72 /* Box2dView.cpp in Sources */,
+				463D7E7E1D227CA400EA6BD1 /* Bug-15776.cpp in Sources */,
 				1AC35C0F18CECF0C00F37B72 /* LabelTest.cpp in Sources */,
 				1AC35C6918CECF0C00F37B72 /* VisibleRect.cpp in Sources */,
 				1F33634F18E37E840074764D /* RefPtrTest.cpp in Sources */,
@@ -6918,6 +6931,7 @@
 				1AC35BF518CECF0C00F37B72 /* HttpClientTest.cpp in Sources */,
 				1AC35B4F18CECF0C00F37B72 /* ClickAndMoveTest.cpp in Sources */,
 				29080DCF191B595E0066F8DF /* UISliderTest.cpp in Sources */,
+				463D7E7C1D227C5F00EA6BD1 /* Bug-14327.cpp in Sources */,
 				500D1CD31CF4A48B00535D35 /* Bug-15594.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -7010,7 +7024,6 @@
 				507B418E1C31BEA60067B53E /* CurlTest.cpp in Sources */,
 				507B418F1C31BEA60067B53E /* CustomTableViewCell.cpp in Sources */,
 				507B41911C31BEA60067B53E /* CCControlSwitchTest.cpp in Sources */,
-				508AAE8B1D14B53600268791 /* Bug-15776.cpp in Sources */,
 				507B41921C31BEA60067B53E /* BaseTest.cpp in Sources */,
 				507B41941C31BEA60067B53E /* main.m in Sources */,
 				507B41951C31BEA60067B53E /* UIScrollViewTest.cpp in Sources */,
@@ -7166,6 +7179,8 @@
 				1AC35C4E18CECF0C00F37B72 /* SpineTest.cpp in Sources */,
 				B6CAB54F1AF9AA6C00B9B856 /* Physics3DTest.cpp in Sources */,
 				1AC35C1E18CECF0C00F37B72 /* NewRendererTest.cpp in Sources */,
+				463D7E7D1D227C6A00EA6BD1 /* Bug-14327.cpp in Sources */,
+				463D7E7F1D227CAB00EA6BD1 /* Bug-15776.cpp in Sources */,
 				5EBEECB11995247000429821 /* DrawNode3D.cpp in Sources */,
 				B5CE6DD21B3C08F8002B0419 /* UIRadioButtonTest.cpp in Sources */,
 				1AC35B6818CECF0C00F37B72 /* AnimationsTestLayer.cpp in Sources */,
@@ -7267,11 +7282,10 @@
 				1AC35B2618CECF0C00F37B72 /* ActionsProgressTest.cpp in Sources */,
 				1AC35B6618CECF0C00F37B72 /* EffectsTest.cpp in Sources */,
 				1AC35B7218CECF0C00F37B72 /* TestHeaderLayer.cpp in Sources */,
+				50D6E2511D1D1782000974D4 /* VRTest.cpp in Sources */,
 				1AC35B2218CECF0C00F37B72 /* ActionManagerTest.cpp in Sources */,
 				1AC35C3E18CECF0C00F37B72 /* PhysicsTest.cpp in Sources */,
 				29080DB2191B595E0066F8DF /* UILayoutTest.cpp in Sources */,
-				508AAE8A1D14B53600268791 /* Bug-15776.cpp in Sources */,
-				504C949D1D1C51BE00E4E9B3 /* VRTest.cpp in Sources */,
 				1AC35B6A18CECF0C00F37B72 /* ButtonTestLayer.cpp in Sources */,
 				29080DB6191B595E0066F8DF /* UIListViewTest.cpp in Sources */,
 				5046AB4B1AF2A8D80060550B /* MaterialSystemTest.cpp in Sources */,
