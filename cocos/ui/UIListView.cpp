@@ -441,7 +441,7 @@ float ListView::getItemsMargin()const
     return _itemsMargin;
 }
 
-void ListView::setScrollDuration(const float time) 
+void ListView::setScrollDuration(float time)
 {
     if (time >= 0)
         _scrollTime = time;

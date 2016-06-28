@@ -245,14 +245,17 @@ public:
     float getItemsMargin()const;
     
     /**
-     * Set time to scroll between items (see scrollToItem)
-     * @param time
+     * Set the time in seconds to scroll between items.
+     * Subsequent calls of function 'scrollToItem', will take 'time' seconds for scrolling.
+     * @param time The seconds needed to scroll between two items. 'time' must be >= 0
+     * @see scrollToItem(ssize_t, const Vec2&, const Vec2&)
      */
-    void  setScrollDuration(const float time);
+    void  setScrollDuration(float time);
     
      /**
-     * Get time to scroll between items
-     * @param time
+     * Get the time in seconds to scroll between items.
+     * @return The time in seconds to scroll between items
+     * @see setScrollDuration(float)
      */
     float getScrollDuration() const;
     
