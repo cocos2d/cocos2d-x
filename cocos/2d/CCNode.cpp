@@ -1800,7 +1800,7 @@ void Node::setAdditionalTransform(const AffineTransform& additionalTransform)
     setAdditionalTransform(&tmp);
 }
 
-void Node::setAdditionalTransform(Mat4* additionalTransform)
+void Node::setAdditionalTransform(const Mat4* additionalTransform)
 {
     if (additionalTransform == nullptr)
     {
@@ -1823,8 +1823,7 @@ void Node::setAdditionalTransform(Mat4* additionalTransform)
 
 void Node::setAdditionalTransform(const Mat4& additionalTransform)
 {
-    Mat4* mat4= const_cast<Mat4*>(&additionalTransform);
-    setAdditionalTransform(mat4);
+    setAdditionalTransform(&additionalTransform);
 }
 
 AffineTransform Node::getParentToNodeAffineTransform() const
