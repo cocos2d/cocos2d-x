@@ -101,7 +101,7 @@ var arrayOfTransitionsTest = [
     }}
 ];
 
-if ('opengl' in cc.sys.capabilities) {
+if (cc._renderType !== cc.game.RENDER_TYPE_CANVAS) {
     arrayOfTransitionsTest = arrayOfTransitionsTest.concat(
         [
             {title: "PageTransitionForward", transitionFunc: function (t, s) {
