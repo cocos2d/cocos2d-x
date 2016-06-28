@@ -112,8 +112,10 @@ bool MotionStreak::initWithFade(float fade, float minSeg, float stroke, const Co
 
     _stroke = stroke;
     _fadeDelta = 1.0f/fade;
-
-    _maxPoints = (int)(fade*60.0f)+2;
+    
+    double fps = 1/Director::getInstance()->getAnimationInterval();
+    _maxPoints = (int)(fade*fps)+2;
+    
     _nuPoints = 0;
     _pointState = (float *)malloc(sizeof(float) * _maxPoints);
     _pointVertexes = (Vec2*)malloc(sizeof(Vec2) * _maxPoints);
