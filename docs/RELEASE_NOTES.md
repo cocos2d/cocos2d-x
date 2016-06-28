@@ -179,7 +179,13 @@ More detail information and discussion can refer to [the issue](https://github.c
 
 ### improve web engine performance in WebGL mode
 
-TBD
+Web engine performance in WebGL mode is obviously improved in this version. The rendering performance, cpu usage and memory usage are optimized.
+
+![rendering peformance](https://raw.githubusercontent.com/minggo/Pictures/master/web-performance-improve/adverage-time-per-frame.png)
+
+![cpu-usage](https://raw.githubusercontent.com/minggo/Pictures/master/web-performance-improve/cpu-usage.png)
+
+![memory-usage](https://raw.githubusercontent.com/minggo/Pictures/master/web-performance-improve/memory-usage.png)
 
 ### use clang on Android
 
