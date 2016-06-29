@@ -41,6 +41,7 @@
         "cmake/Modules/FindPackageMessage.cmake", 
         "cmake/Modules/FindPkgConfig.cmake", 
         "cmake/Modules/FindRecast.cmake", 
+        "cmake/Modules/FindSQLite3.cmake", 
         "cmake/Modules/FindTIFF.cmake", 
         "cmake/Modules/FindTinyXML2.cmake", 
         "cmake/Modules/FindVorbis.cmake", 
