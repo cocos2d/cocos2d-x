@@ -902,6 +902,7 @@
         "cocos/platform/CCGL.h", 
         "cocos/platform/CCGLView.cpp", 
         "cocos/platform/CCGLView.h", 
+        "cocos/platform/CCGLViewImpl.h", 
         "cocos/platform/CCImage.cpp", 
         "cocos/platform/CCImage.h", 
         "cocos/platform/CCPlatformConfig.h", 
