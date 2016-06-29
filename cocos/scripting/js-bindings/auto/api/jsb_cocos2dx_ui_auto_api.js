@@ -3544,6 +3544,16 @@ getCurSelectedIndex : function (
 },
 
 /**
+ * @method getScrollDuration
+ * @return {float}
+ */
+getScrollDuration : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method getItemsMargin
  * @return {float}
  */
@@ -3793,6 +3803,16 @@ getRightmostItemInCurrentView : function (
 )
 {
     return ccui.Widget;
+},
+
+/**
+ * @method setScrollDuration
+ * @param {float} arg0
+ */
+setScrollDuration : function (
+float 
+)
+{
 },
 
 /**
