@@ -1004,7 +1004,7 @@ bool FileUtils::isDirectoryExist(const std::string& dirPath) const
         for (const auto& resolutionIt : _searchResolutionsOrderArray)
         {
             // searchPath + file_path + resourceDirectory
-            fullpath = searchIt + dirPath + resolutionIt;
+            fullpath = fullPathForFilename(searchIt + dirPath + resolutionIt);
             if (isDirectoryExistInternal(fullpath))
             {
                 _fullPathCache.insert(std::make_pair(dirPath, fullpath));
