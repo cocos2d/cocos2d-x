@@ -8003,9 +8003,9 @@
 		29CB8F531929D67D00C841D6 /* widgets */ = {
 			isa = PBXGroup;
 			children = (
+				292DB12E19B4574100A80320 /* UIEditBox */,
 				78F458AB1CE71E6000A70B02 /* UIPageViewIndicator.cpp */,
 				78F458AC1CE71E6000A70B02 /* UIPageViewIndicator.h */,
-				292DB12E19B4574100A80320 /* UIEditBox */,
 				2905F9FE18CF08D000240AA3 /* UIListView.cpp */,
 				2905F9FF18CF08D000240AA3 /* UIListView.h */,
 				2905FA0018CF08D000240AA3 /* UILoadingBar.cpp */,

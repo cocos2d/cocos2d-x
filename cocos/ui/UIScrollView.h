@@ -658,6 +658,7 @@ protected:
     bool _inertiaScrollEnabled;
 
     bool _bounceEnabled;
+    float _sens;
     
     Vec2 _outOfBoundaryAmount;
     bool _outOfBoundaryAmountDirty;

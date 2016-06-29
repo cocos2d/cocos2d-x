@@ -161,7 +161,7 @@ THE SOFTWARE.
  */
 #ifndef CC_TEXTURE_ATLAS_USE_VAO
     #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-        #define CC_TEXTURE_ATLAS_USE_VAO 1
+        #define CC_TEXTURE_ATLAS_USE_VAO 0
     #else
         /* Some Windows display adapter driver cannot support VAO.
          * Some android devices cannot support VAO very well, so we disable it by default for android platform.

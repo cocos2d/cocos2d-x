@@ -82,8 +82,8 @@ void onCaptureScreen(const std::function<void(bool, const std::string&)>& afterC
     frameSize = frameSize * glView->getFrameZoomFactor() * glView->getRetinaFactor();
 #endif
 
-    int width = static_cast<int>(frameSize.width);
-    int height = static_cast<int>(frameSize.width);
+    int width = static_cast<int>(fmin(frameSize.width, frameSize.height));
+    int height = static_cast<int>(fmin(frameSize.width, frameSize.height));
 
     bool succeed = false;
     std::string outputFile = "";
@@ -97,7 +97,7 @@ void onCaptureScreen(const std::function<void(bool, const std::string&)>& afterC
         }
 
         glPixelStorei(GL_PACK_ALIGNMENT, 1);
-        glReadPixels(0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, buffer.get());
+        glReadPixels(frameSize.width / 2 - width / 2, frameSize.height / 2 - height / 2, width, height, GL_RGBA, GL_UNSIGNED_BYTE, buffer.get());
 
         std::shared_ptr<GLubyte> flippedBuffer(new GLubyte[width * height * 4], [](GLubyte* p) { CC_SAFE_DELETE_ARRAY(p); });
         if (!flippedBuffer)

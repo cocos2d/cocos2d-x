@@ -75,7 +75,8 @@ _verticalScrollBar(nullptr),
 _horizontalScrollBar(nullptr),
 _scrollViewEventListener(nullptr),
 _scrollViewEventSelector(nullptr),
-_eventCallback(nullptr)
+_eventCallback(nullptr),
+_sens(3.0)
 {
     setTouchEnabled(true);
     _propagateTouchEvents = false;
@@ -894,6 +895,9 @@ void ScrollView::handleMoveLogic(Touch *touch)
         return;
     }
     Vec3 delta3 = currPt - prevPt;
+    delta3.x /= _sens;
+    delta3.y /= _sens;
+
     Vec2 delta(delta3.x, delta3.y);
     scrollChildren(delta);
     
@@ -1024,6 +1028,7 @@ void ScrollView::interceptTouchEvent(Widget::TouchEventType event, Widget *sende
                 default:
                     break;
             }
+            offsetInInch/=2;
             if (offsetInInch > _childFocusCancelOffsetInInch)
             {
                 sender->setHighlighted(false);

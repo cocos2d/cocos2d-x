@@ -41,6 +41,7 @@ _pageViewEventSelector(nullptr),
 _eventCallback(nullptr),
 _autoScrollStopEpsilon(0.001f)
 {
+  this->_sens = 1.0;
 }
 
 PageView::~PageView()
