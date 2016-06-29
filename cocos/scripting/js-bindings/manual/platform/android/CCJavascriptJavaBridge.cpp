@@ -383,9 +383,9 @@ JS_BINDED_FUNC_IMPL(JavascriptJavaBridge, callStaticMethod)
                 switch (call.argumentTypeAtIndex(i))
                 {
                     case TypeInteger:
-                        double interger;
-                        JS::ToNumber(cx, argv.get(index), &interger);
-                        args[i].i = (int)interger;
+                        double integer;
+                        JS::ToNumber(cx, argv.get(index), &integer);
+                        args[i].i = (int)integer;
                         break;
 
                     case TypeFloat:

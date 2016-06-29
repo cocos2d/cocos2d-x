@@ -415,8 +415,8 @@ bool EffectNormalMapped::init()
 }
 bool EffectNormalMapped::initNormalMap(const std::string& normalMapFileName)
 {
-    auto normalMapTextrue = Director::getInstance()->getTextureCache()->addImage(normalMapFileName);
-    getGLProgramState()->setUniformTexture("u_normalMap", normalMapTextrue);
+    auto normalMapTexture = Director::getInstance()->getTextureCache()->addImage(normalMapFileName);
+    getGLProgramState()->setUniformTexture("u_normalMap", normalMapTexture);
     return true;
 }
 void EffectNormalMapped::setTarget(EffectSprite* sprite)
