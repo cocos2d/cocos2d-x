@@ -908,8 +908,8 @@ void Director::popToSceneStackLevel(int level)
     if (level >= c)
         return;
 
-    auto fisrtOnStackScene = _scenesStack.back();
-    if (fisrtOnStackScene == _runningScene)
+    auto firstOnStackScene = _scenesStack.back();
+    if (firstOnStackScene == _runningScene)
     {
 #if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
         auto sEngine = ScriptEngineManager::getInstance()->getScriptEngine();

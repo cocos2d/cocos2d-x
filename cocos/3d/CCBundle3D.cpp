@@ -924,9 +924,9 @@ bool Bundle3D::loadMaterialsBinary(MaterialDatas& materialdatas)
         float  data[14];
         _binaryReader.read(&data,sizeof(float), 14);
         
-        unsigned int textruenum = 1;
-        _binaryReader.read(&textruenum, 4, 1);
-        for(unsigned int j = 0; j < textruenum ; j++ )
+        unsigned int textureNum = 1;
+        _binaryReader.read(&textureNum, 4, 1);
+        for (unsigned int j = 0; j < textureNum; j++)
         {
             NTextureData  textureData;
             textureData.id = _binaryReader.readString();
