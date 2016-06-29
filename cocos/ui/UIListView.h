@@ -244,6 +244,21 @@ public:
      */
     float getItemsMargin()const;
     
+    /**
+     * Set the time in seconds to scroll between items.
+     * Subsequent calls of function 'scrollToItem', will take 'time' seconds for scrolling.
+     * @param time The seconds needed to scroll between two items. 'time' must be >= 0
+     * @see scrollToItem(ssize_t, const Vec2&, const Vec2&)
+     */
+    void  setScrollDuration(float time);
+    
+     /**
+     * Get the time in seconds to scroll between items.
+     * @return The time in seconds to scroll between items
+     * @see setScrollDuration(float)
+     */
+    float getScrollDuration() const;
+    
     //override methods
     virtual void doLayout() override;
     virtual void requestDoLayout() override;
@@ -426,6 +441,8 @@ protected:
     bool _magneticAllowedOutOfBoundary;
     
     float _itemsMargin;
+    
+    float _scrollTime;
     
     ssize_t _curSelectedIndex;
 

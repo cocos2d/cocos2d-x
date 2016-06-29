@@ -39,6 +39,7 @@ _gravity(Gravity::CENTER_VERTICAL),
 _magneticType(MagneticType::NONE),
 _magneticAllowedOutOfBoundary(true),
 _itemsMargin(0.0f),
+_scrollTime(DEFAULT_TIME_IN_SEC_FOR_SCROLL_TO_ITEM),
 _curSelectedIndex(-1),
 _innerContainerDoLayoutDirty(true),
 _listViewEventListener(nullptr),
@@ -440,6 +441,17 @@ float ListView::getItemsMargin()const
     return _itemsMargin;
 }
 
+void ListView::setScrollDuration(float time)
+{
+    if (time >= 0)
+        _scrollTime = time;
+}
+
+float ListView::getScrollDuration() const 
+{
+    return _scrollTime;
+}
+
 void ListView::setDirection(Direction dir)
 {
     switch (dir)
@@ -775,7 +787,7 @@ void ListView::jumpToItem(ssize_t itemIndex, const Vec2& positionRatioInView, co
 
 void ListView::scrollToItem(ssize_t itemIndex, const Vec2& positionRatioInView, const Vec2& itemAnchorPoint)
 {
-    scrollToItem(itemIndex, positionRatioInView, itemAnchorPoint, DEFAULT_TIME_IN_SEC_FOR_SCROLL_TO_ITEM);
+    scrollToItem(itemIndex, positionRatioInView, itemAnchorPoint, _scrollTime);
 }
 
 void ListView::scrollToItem(ssize_t itemIndex, const Vec2& positionRatioInView, const Vec2& itemAnchorPoint, float timeInSec)
