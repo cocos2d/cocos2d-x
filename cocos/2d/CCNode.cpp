@@ -57,13 +57,8 @@ NS_CC_BEGIN
 
 bool nodeComparisonLess(Node* n1, Node* n2)
 {
-    return( n1->getLocalZOrder() < n2->getLocalZOrder() ||
-           ( n1->getLocalZOrder() == n2->getLocalZOrder() && n1->getOrderOfArrival() < n2->getOrderOfArrival() )
-           );
+    return( n1->getLocalZOrder() < n2->getLocalZOrder() );
 }
-
-// FIXME:: Yes, nodes might have a sort problem once every 15 days if the game runs at 60 FPS and each frame sprites are reordered.
-int Node::s_globalOrderOfArrival = 1;
 
 // MARK: Constructor, Destructor, Init
 
@@ -100,7 +95,6 @@ Node::Node()
 , _userData(nullptr)
 , _userObject(nullptr)
 , _glProgramState(nullptr)
-, _orderOfArrival(0)
 , _running(false)
 , _visible(true)
 , _ignoreAnchorPointForPosition(false)
@@ -695,17 +689,6 @@ void Node::setUserData(void *userData)
     _userData = userData;
 }
 
-int Node::getOrderOfArrival() const
-{
-    return _orderOfArrival;
-}
-
-void Node::setOrderOfArrival(int orderOfArrival)
-{
-    CCASSERT(orderOfArrival >=0, "Invalid orderOfArrival");
-    _orderOfArrival = orderOfArrival;
-}
-
 void Node::setUserObject(Ref* userObject)
 {
 #if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
@@ -965,8 +948,7 @@ void Node::addChildHelper(Node* child, int localZOrder, int tag, const std::stri
         child->setName(name);
     
     child->setParent(this);
-    child->setOrderOfArrival(s_globalOrderOfArrival++);
-    
+
     if( _running )
     {
         child->onEnter();
@@ -1151,7 +1133,6 @@ void Node::reorderChild(Node *child, int zOrder)
 {
     CCASSERT( child != nullptr, "Child must be non-nil");
     _reorderChildDirty = true;
-    child->setOrderOfArrival(s_globalOrderOfArrival++);
     child->_localZOrder = zOrder;
 }
 
