@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2015 	IsCool Entertainment
 
 http://www.cocos2d-x.org
 
@@ -33,6 +34,7 @@ THE SOFTWARE.
 #include "base/ccTypes.h"
 #include "platform/android/jni/JniHelper.h"
 #include "platform/CCFileUtils.h"
+#include "platform/CCStroke.h"
 
 static const std::string helperClassName = "org/cocos2dx/lib/Cocos2dxHelper";
 
@@ -157,13 +159,17 @@ Data Device::getTextureDataForText(const char * text, const FontDefinition& text
     {
         BitmapDC &dc = sharedBitmapDC();
 
+        FontDefinition systemFontDefinition( textDefinition );
+        systemFontDefinition._stroke._strokeEnabled = false;
+    
         if(! dc.getBitmapFromJavaShadowStroke(text, 
             (int)textDefinition._dimensions.width, 
             (int)textDefinition._dimensions.height, 
-            align, textDefinition )) { break;};
+            align, systemFontDefinition )) { break;};
 
         width = dc._width;
         height = dc._height;
+        drawStroke( dc._data, width, height, textDefinition._stroke );
         ret.fastSet(dc._data,width * height * 4);
         hasPremultipliedAlpha = true;
     } while (0);

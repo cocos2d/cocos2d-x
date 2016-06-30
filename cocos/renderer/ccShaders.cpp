@@ -2,6 +2,7 @@
 Copyright (c) 2011      Zynga Inc.
 Copyright (c) 2012 		cocos2d-x.org
 Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2015 	IsCool Entertainment
 
 http://www.cocos2d-x.org
 
@@ -75,6 +76,7 @@ NS_CC_BEGIN
 #include "renderer/ccShader_Label_df_glow.frag"
 #include "renderer/ccShader_Label_normal.frag"
 #include "renderer/ccShader_Label_outline.frag"
+#include "renderer/ccShader_Label_shadow.frag"
 
 //
 #include "renderer/ccShader_3D_PositionTex.vert"

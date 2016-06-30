@@ -2,6 +2,7 @@
 Copyright (c) 2011      Zynga Inc.
 Copyright (c) 2012 		cocos2d-x.org
 Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2015 	IsCool Entertainment
 
 http://www.cocos2d-x.org
 
@@ -74,6 +75,7 @@ extern CC_DLL const GLchar * ccLabelNormal_frag;
 extern CC_DLL const GLchar * ccLabelOutline_frag;
 
 extern CC_DLL const GLchar * ccLabel_vert;
+extern CC_DLL const GLchar * ccLabelShadow_frag;
 
 extern CC_DLL const GLchar * cc3D_PositionTex_vert;
 extern CC_DLL const GLchar * cc3D_SkinPositionTex_vert;

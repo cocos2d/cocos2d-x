@@ -111,6 +111,8 @@ include_directories(
 set(COCOS_PLATFORM_SRC
 
   platform/CCSAXParser.cpp
+  platform/CCStroke.cpp
+  platform/CCStrokeScan.cpp
   platform/CCThread.cpp
   platform/CCGLView.cpp
   platform/CCFileUtils.cpp

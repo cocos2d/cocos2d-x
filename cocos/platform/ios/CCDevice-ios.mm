@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (c) 2010-2012 cocos2d-x.org
  Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2015 	 IsCool Entertainment
 
  http://www.cocos2d-x.org
 
@@ -33,6 +34,7 @@
 #include "base/CCEventDispatcher.h"
 #include "base/CCEventAcceleration.h"
 #include "base/CCDirector.h"
+#include "platform/CCStroke.h"
 #import <UIKit/UIKit.h>
 
 // Accelerometer
@@ -555,17 +557,8 @@ Data Device::getTextureDataForText(const char * text, const FontDefinition& text
         tImageInfo info = {0};
         info.width                  = textDefinition._dimensions.width;
         info.height                 = textDefinition._dimensions.height;
-        info.hasShadow              = textDefinition._shadow._shadowEnabled;
-        info.shadowOffset.width     = textDefinition._shadow._shadowOffset.width;
-        info.shadowOffset.height    = textDefinition._shadow._shadowOffset.height;
-        info.shadowBlur             = textDefinition._shadow._shadowBlur;
-        info.shadowOpacity          = textDefinition._shadow._shadowOpacity;
-        info.hasStroke              = textDefinition._stroke._strokeEnabled;
-        info.strokeColorR           = textDefinition._stroke._strokeColor.r / 255.0f;
-        info.strokeColorG           = textDefinition._stroke._strokeColor.g / 255.0f;
-        info.strokeColorB           = textDefinition._stroke._strokeColor.b / 255.0f;
-        info.strokeColorA           = textDefinition._stroke._strokeAlpha / 255.0f;
-        info.strokeSize             = textDefinition._stroke._strokeSize;
+        info.hasShadow              = false;
+        info.hasStroke              = false;
         info.tintColorR             = textDefinition._fontFillColor.r / 255.0f;
         info.tintColorG             = textDefinition._fontFillColor.g / 255.0f;
         info.tintColorB             = textDefinition._fontFillColor.b / 255.0f;
@@ -575,10 +568,13 @@ Data Device::getTextureDataForText(const char * text, const FontDefinition& text
         {
             break;
         }
+
         height = info.height;
         width = info.width;
+        drawStroke( info.data, width, height, textDefinition._stroke );
+
         ret.fastSet(info.data,width * height * 4);
-        hasPremultipliedAlpha = true;
+        hasPremultipliedAlpha = info.isPremultipliedAlpha;
     } while (0);
 
     return ret;

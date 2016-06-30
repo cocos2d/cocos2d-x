@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2015 	IsCool Entertainment
 
 http://www.cocos2d-x.org
 
@@ -31,6 +32,7 @@ THE SOFTWARE.
 #include <Cocoa/Cocoa.h>
 #include <string>
 #include "base/ccTypes.h"
+#include "platform/CCStroke.h"
 #include "platform/apple/CCDevice-apple.h"
 
 NS_CC_BEGIN
@@ -352,6 +354,7 @@ Data Device::getTextureDataForText(const char * text, const FontDefinition& text
         }
         height = (short)info.height;
         width = (short)info.width;
+        drawStroke( info.data, width, height, textDefinition._stroke );
         ret.fastSet(info.data,width * height * 4);
         hasPremultipliedAlpha = true;
     } while (0);

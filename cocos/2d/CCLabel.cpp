@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (c) 2013      Zynga Inc.
  Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2015 	 IsCool Entertainment
 
  http://www.cocos2d-x.org
 
@@ -38,11 +39,15 @@
 #include "platform/CCFileUtils.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/ccGLStateCache.h"
+#include "renderer/ccShaders.h"
+#include "renderer/CCTextureCache.h"
 #include "base/CCDirector.h"
 #include "base/CCEventListenerCustom.h"
 #include "base/CCEventDispatcher.h"
 #include "base/CCEventCustom.h"
 #include "2d/CCFontFNT.h"
+
+#include <sstream>
 
 NS_CC_BEGIN
 
@@ -376,7 +381,8 @@ bool Label::setCharMap(const std::string& charMapFile, int itemWidth, int itemHe
 
 Label::Label(TextHAlignment hAlignment /* = TextHAlignment::LEFT */, 
              TextVAlignment vAlignment /* = TextVAlignment::TOP */)
-: _textSprite(nullptr)
+: _outlineSize(0)
+, _textSprite(nullptr)
 , _shadowNode(nullptr)
 , _fontAtlas(nullptr)
 , _reusedLetter(nullptr)
@@ -1128,6 +1134,8 @@ void Label::enableShadow(const Color4B& shadowColor /* = Color4B::BLACK */,
         }
     }
 
+    adjustSize();
+    
     _shadowColor4F.r = shadowColor.r / 255.0f;
     _shadowColor4F.g = shadowColor.g / 255.0f;
     _shadowColor4F.b = shadowColor.b / 255.0f;
@@ -1255,16 +1263,14 @@ void Label::createSpriteForSystemFont(const FontDefinition& fontDef)
 {
     _currentLabelType = LabelType::STRING_TEXTURE;
 
-    auto texture = new (std::nothrow) Texture2D;
-    texture->initWithString(_utf8Text.c_str(), fontDef);
-
+    auto texture = getOrCreateTextTexture( fontDef );
+ 
     _textSprite = Sprite::createWithTexture(texture);
     //set camera mask using label's camera mask, because _textSprite may be null when setting camera mask to label
     _textSprite->setCameraMask(getCameraMask());
     _textSprite->setGlobalZOrder(getGlobalZOrder());
     _textSprite->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
-    this->setContentSize(_textSprite->getContentSize());
-    texture->release();
+
     if (_blendFuncDirty)
     {
         _textSprite->setBlendFunc(_blendFunc);
@@ -1290,13 +1296,18 @@ void Label::createShadowSpriteForSystemFont(const FontDefinition& fontDef)
         shadowFontDefinition._fontFillColor.b = _shadowColor3B.b;
         shadowFontDefinition._fontAlpha = _shadowOpacity;
 
-        shadowFontDefinition._stroke._strokeColor = shadowFontDefinition._fontFillColor;
-        shadowFontDefinition._stroke._strokeAlpha = shadowFontDefinition._fontAlpha;
+        shadowFontDefinition._stroke._strokeAlpha = 0;
 
-        auto texture = new (std::nothrow) Texture2D;
-        texture->initWithString(_utf8Text.c_str(), shadowFontDefinition);
+        auto texture = getOrCreateTextTexture( shadowFontDefinition );
         _shadowNode = Sprite::createWithTexture(texture);
-        texture->release();
+        _shadowNode->setColor( _shadowColor3B );
+        
+        GLProgram* const shader
+          ( GLProgram::createWithByteArrays
+            ( ccPositionTextureColor_noMVP_vert, ccLabelShadow_frag ) );
+
+        _shadowNode->setGLProgramState
+          ( GLProgramState::getOrCreateWithGLProgram( shader ) );
     }
 
     if (_shadowNode)
@@ -1314,6 +1325,74 @@ void Label::createShadowSpriteForSystemFont(const FontDefinition& fontDef)
         _shadowNode->updateDisplayedColor(_displayedColor);
         _shadowNode->updateDisplayedOpacity(_displayedOpacity);
     }
+}
+
+Texture2D* Label::getOrCreateTextTexture( const FontDefinition& font ) const
+{
+    std::ostringstream textureKey;
+    textureKey << _utf8Text
+               << '/' << font._fontName
+               << ':' << font._fontSize
+               << ':' << static_cast<int>(font._alignment)
+               << ':' << static_cast<int>(font._vertAlignment)
+               << ':' << font._dimensions.width
+               << ':' << font._dimensions.height
+               << ':' << static_cast<unsigned int>(font._fontFillColor.r)
+               << ':' << static_cast<unsigned int>(font._fontFillColor.g)
+               << ':' << static_cast<unsigned int>(font._fontFillColor.b)
+               << ':' << static_cast<unsigned int>(font._fontAlpha)
+               << ':' << font._shadow._shadowEnabled
+               << ':' << font._shadow._shadowOffset.width
+               << ':' << font._shadow._shadowOffset.height
+               << ':' << font._shadow._shadowBlur
+               << ':' << font._shadow._shadowOpacity
+               << ':' << font._stroke._strokeEnabled
+               << ':' << static_cast<unsigned int>(font._stroke._strokeColor.r)
+               << ':' << static_cast<unsigned int>(font._stroke._strokeColor.g)
+               << ':' << static_cast<unsigned int>(font._stroke._strokeColor.b)
+               << ':' << static_cast<unsigned int>(font._stroke._strokeAlpha)
+               << ':' << font._stroke._strokeSize;
+
+    TextureCache* const cache( Director::getInstance()->getTextureCache() );
+    Texture2D* result( cache->getTextureForKey( textureKey.str() ) );
+
+    if ( result != nullptr )
+        return result;
+    
+    result = new (std::nothrow) Texture2D;
+    result->initWithString( _utf8Text.c_str(), font );
+    cache->addTexture( result, textureKey.str() );
+    
+    return result;
+}
+
+void Label::adjustSize()
+{
+    if ( _shadowNode )
+    {
+        const Vec2 textPosition( _textSprite->getPosition() );
+        const Vec2 shadowPosition( _shadowNode->getPosition() );
+        const Size textSize( _textSprite->getContentSize() );
+        const Size shadowSize( _shadowNode->getContentSize() );
+        
+        const float left( std::min( textPosition.x, shadowPosition.x ) );
+        const float right
+            ( std::max
+              ( textPosition.x + textSize.width,
+                shadowPosition.x + shadowSize.width ) );
+        const float bottom( std::min( textPosition.y, shadowPosition.y ) );
+        const float top
+            ( std::max
+              ( textPosition.y + textSize.height,
+                shadowPosition.y + shadowSize.height ) );
+
+        setContentSize( Size( right - left, top - bottom ) );
+
+        _textSprite->setPosition( textPosition - Vec2( left, bottom ) );
+        _shadowNode->setPosition( shadowPosition - Vec2( left, bottom ) );
+    }
+    else if ( _textSprite )
+        setContentSize( _textSprite->getContentSize() );
 }
 
 void Label::setCameraMask(unsigned short mask, bool applyChildren)
@@ -1341,7 +1420,7 @@ void Label::setFontDefinition(const FontDefinition& textDefinition)
     textColor.a = textDefinition._fontAlpha;
     setTextColor(textColor);
     
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID) && (CC_TARGET_PLATFORM != CC_PLATFORM_IOS)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID) && (CC_TARGET_PLATFORM != CC_PLATFORM_IOS) && (CC_TARGET_PLATFORM != CC_PLATFORM_LINUX) && (CC_TARGET_PLATFORM != CC_PLATFORM_MAC)
     if (textDefinition._stroke._strokeEnabled)
     {
         CCLOGERROR("Stroke Currently only supported on iOS and Android!");
@@ -1401,6 +1480,8 @@ void Label::updateContent()
         {
             createShadowSpriteForSystemFont(fontDef);
         }
+
+        adjustSize();
     }
 
     if (_underlineNode)
@@ -2095,7 +2176,7 @@ FontDefinition Label::_getFontDefinition() const
         systemFontDef._stroke._strokeEnabled = false;
     }
 
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID) && (CC_TARGET_PLATFORM != CC_PLATFORM_IOS)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID) && (CC_TARGET_PLATFORM != CC_PLATFORM_IOS) && (CC_TARGET_PLATFORM != CC_PLATFORM_LINUX) && (CC_TARGET_PLATFORM != CC_PLATFORM_MAC)
     if (systemFontDef._stroke._strokeEnabled)
     {
         CCLOGERROR("Stroke Currently only supported on iOS and Android!");

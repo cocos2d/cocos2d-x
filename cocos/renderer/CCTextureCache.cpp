@@ -3,6 +3,7 @@ Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
 Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2015 	IsCool Entertainment
 
 http://www.cocos2d-x.org
 
@@ -373,12 +374,7 @@ Texture2D * TextureCache::addImage(const std::string &path)
 
             if (texture && texture->initWithImage(image))
             {
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-                // cache the texture file name
-                VolatileTextureMgr::addImageTexture(texture, fullpath);
-#endif
-                // texture already retained, no need to re-retain it
-                _textures.emplace(fullpath, texture);
+                addTexture(texture, fullpath);
 
                 //-- ANDROID ETC1 ALPHA SUPPORTS.
                 std::string alphaFullPath = path + s_etc1AlphaFileSuffix;
@@ -394,7 +390,7 @@ Texture2D * TextureCache::addImage(const std::string &path)
                         CC_SAFE_RELEASE(pAlphaTexture);
                     }
                 }
-
+                
                 //parse 9-patch info
                 this->parseNinePatchImage(image, texture, path);
             }
@@ -412,7 +408,21 @@ Texture2D * TextureCache::addImage(const std::string &path)
     return texture;
 }
 
-void TextureCache::parseNinePatchImage(cocos2d::Image *image, cocos2d::Texture2D *texture, const std::string& path)
+void TextureCache::addTexture(Texture2D* texture, const std::string& key)
+{
+    CCASSERT(getTextureForKey( key ) == nullptr,
+             "TextureCache: key must not exist" );
+    CCASSERT(texture != nullptr, "TextureCache: texture MUST not be nil");
+
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    // cache the texture file name
+    VolatileTextureMgr::addImageTexture(texture, key);
+#endif
+    // texture already retained, no need to re-retain it
+    _textures.emplace(key, texture);
+}
+
+void TextureCache::parseNinePatchImage(cocos2d::Image *image, cocos2d::Texture2D *texture,const std::string& path)
 {
     if (NinePatchImageParser::isNinePatchImage(path))
     {
