@@ -3822,6 +3822,8 @@
 		50CB247E19D9C5A100687767 /* AudioPlayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 50CB247319D9C5A100687767 /* AudioPlayer.h */; };
 		50CB247F19D9C5A100687767 /* AudioPlayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50CB247419D9C5A100687767 /* AudioPlayer.mm */; };
 		50CB248019D9C5A100687767 /* AudioPlayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50CB247419D9C5A100687767 /* AudioPlayer.mm */; };
+		50CE4D1F1D243DD8003D2FB9 /* glfw3.h in Headers */ = {isa = PBXBuildFile; fileRef = 50CE4D1D1D243DD8003D2FB9 /* glfw3.h */; };
+		50CE4D201D243DD8003D2FB9 /* glfw3native.h in Headers */ = {isa = PBXBuildFile; fileRef = 50CE4D1E1D243DD8003D2FB9 /* glfw3native.h */; };
 		50ED2BD919BE5D5D00A0AB90 /* CCEventListenerController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E6176631960F89B00DE83F5 /* CCEventListenerController.cpp */; };
 		50ED2BDA19BE76D300A0AB90 /* UIVideoPlayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EA0FB69191C841D00B170C8 /* UIVideoPlayer.h */; };
 		50ED2BDB19BE76D500A0AB90 /* UIVideoPlayer-ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3EA0FB6A191C841D00B170C8 /* UIVideoPlayer-ios.mm */; };
@@ -6714,6 +6716,8 @@
 		50CB247219D9C5A100687767 /* AudioEngine-inl.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "AudioEngine-inl.mm"; sourceTree = "<group>"; };
 		50CB247319D9C5A100687767 /* AudioPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioPlayer.h; sourceTree = "<group>"; };
 		50CB247419D9C5A100687767 /* AudioPlayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AudioPlayer.mm; sourceTree = "<group>"; };
+		50CE4D1D1D243DD8003D2FB9 /* glfw3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = glfw3.h; sourceTree = "<group>"; };
+		50CE4D1E1D243DD8003D2FB9 /* glfw3native.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = glfw3native.h; sourceTree = "<group>"; };
 		50DC5180187B817900A9C23F /* RELEASE_NOTES.md */ = {isa = PBXFileReference; lastKnownFileType = text; name = RELEASE_NOTES.md; path = ../docs/RELEASE_NOTES.md; sourceTree = "<group>"; };
 		50E6D32E18E174130051CA34 /* UIHBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIHBox.cpp; sourceTree = "<group>"; };
 		50E6D32F18E174130051CA34 /* UIHBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIHBox.h; sourceTree = "<group>"; };
@@ -8348,6 +8352,7 @@
 		1A57033F180BD0540088DEC7 /* glfw3 */ = {
 			isa = PBXGroup;
 			children = (
+				50CE4D1C1D243DD8003D2FB9 /* mac */,
 				1A570345180BD07B0088DEC7 /* lib */,
 			);
 			name = glfw3;
@@ -9937,6 +9942,16 @@
 			path = apple;
 			sourceTree = "<group>";
 		};
+		50CE4D1C1D243DD8003D2FB9 /* mac */ = {
+			isa = PBXGroup;
+			children = (
+				50CE4D1D1D243DD8003D2FB9 /* glfw3.h */,
+				50CE4D1E1D243DD8003D2FB9 /* glfw3native.h */,
+			);
+			name = mac;
+			path = ../external/glfw3/include/mac;
+			sourceTree = "<group>";
+		};
 		50F9654D1CD0360000ADE813 /* vr */ = {
 			isa = PBXGroup;
 			children = (
@@ -11303,6 +11318,7 @@
 				5091A7A319BFABA800AC8789 /* CCPlatformDefine.h in Headers */,
 				B6CAB4F71AF9AA1A00B9B856 /* btAlignedAllocator.h in Headers */,
 				5034CA3F191D591100CE6051 /* ccShader_Position_uColor.vert in Headers */,
+				50CE4D201D243DD8003D2FB9 /* glfw3native.h in Headers */,
 				B665E4381AA80A6600DDB1C5 /* CCPUVortexAffector.h in Headers */,
 				B29A7DD319EE1B7700872B35 /* Skin.h in Headers */,
 				50ABBD461925AB0000A911A9 /* CCVertex.h in Headers */,
@@ -11651,6 +11667,7 @@
 				B6CAB35D1AF9AA1A00B9B856 /* gim_radixsort.h in Headers */,
 				B6CAB4AB1AF9AA1A00B9B856 /* SpuCollisionObjectWrapper.h in Headers */,
 				15AE1B5E19AADA9900C27E9E /* UITextBMFont.h in Headers */,
+				50CE4D1F1D243DD8003D2FB9 /* glfw3.h in Headers */,
 				B665E3601AA80A6500DDB1C5 /* CCPUOnRandomObserverTranslator.h in Headers */,
 				15AE18E719AAD35000C27E9E /* CCActionFrameEasing.h in Headers */,
 				B6CAB3511AF9AA1A00B9B856 /* gim_geometry.h in Headers */,
