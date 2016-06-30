@@ -312,6 +312,11 @@ namespace cocostudio
                 {
                     fileExist = true;
                 }
+                else if(SpriteFrameCache::getInstance()->getSpriteFrameByName(imageFileName))
+                {
+                    fileExist = true;
+                    imageFileNameType = 1;
+                }
                 else
                 {
                     errorFilePath = imageFileName;
