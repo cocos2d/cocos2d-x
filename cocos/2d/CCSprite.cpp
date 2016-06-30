@@ -1071,6 +1071,8 @@ void Sprite::setSpriteFrame(SpriteFrame *spriteFrame)
     // update texture before updating texture rect
     if (texture != _texture)
     {
+        //fix possible memory corruption
+        _polyInfo.setTriangles(TrianglesCommand::Triangles{nullptr, nullptr, 0, 0});
         setTexture(texture);
     }
 
