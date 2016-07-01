@@ -48,6 +48,14 @@ public:
     virtual std::string subtitle() const override;
 };
 
+class UIHelperSubStringTest : public UnitTestDemo
+{
+public:
+    CREATE_FUNC(UIHelperSubStringTest);
+    virtual void onEnter() override;
+    virtual std::string subtitle() const override;
+};
+
 class MathUtilTest : public UnitTestDemo
 {
 public:
