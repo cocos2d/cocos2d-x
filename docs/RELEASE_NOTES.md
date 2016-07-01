@@ -21,7 +21,7 @@
     - [Tizen support](#tizen-support)
     - [improve Android performance](#improve-android-performance)
     - [improve web engine performance in WebGL mode](#improve-web-engine-performance-in-webgl-mode)
-    - [use clang on Android](#use-clang-on-android)
+    - [Use clang on Android](#use-clang-on-android)
   - [Other changes](#other-changes)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -154,7 +154,7 @@ cocos new -l cpp|js|lua MyNewGame
 
 ## Highlights
 
-* add VR support
+* add VR support in experimental
 * add Tizen support
 * improve Android performance issue
 * improve web engine performance in WebGL mode
