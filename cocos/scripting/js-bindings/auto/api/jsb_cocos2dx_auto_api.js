@@ -1624,16 +1624,6 @@ getScheduler : function(
 },
 
 /**
- * @method getOrderOfArrival
- * @return {int}
- */
-getOrderOfArrival : function (
-)
-{
-    return 0;
-},
-
-/**
  * @method setActionManager
  * @param {cc.ActionManager} arg0
  */
@@ -1810,16 +1800,6 @@ int
 )
 {
     return cc.Node;
-},
-
-/**
- * @method setOrderOfArrival
- * @param {int} arg0
- */
-setOrderOfArrival : function (
-int 
-)
-{
 },
 
 /**
