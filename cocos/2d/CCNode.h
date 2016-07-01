@@ -668,27 +668,6 @@ public:
     virtual float getRotationSkewY() const;
     CC_DEPRECATED_ATTRIBUTE virtual float getRotationY() const { return getRotationSkewY(); }
 
-    /**
-     * Sets the arrival order when this node has a same ZOrder with other children.
-     *
-     * A node which called addChild subsequently will take a larger arrival order,
-     * If two children have the same Z order, the child with larger arrival order will be drawn later.
-     *
-     * @warning This method is used internally for localZOrder sorting, don't change this manually
-     *
-     * @param orderOfArrival   The arrival order.
-     */
-    void setOrderOfArrival(int orderOfArrival);
-    /**
-     * Returns the arrival order, indicates which children is added previously.
-     *
-     * @see `setOrderOfArrival(unsigned int)`
-     *
-     * @return The arrival order.
-     */
-    int getOrderOfArrival() const;
-
-
     /** @deprecated No longer needed
     * @lua NA
     */
@@ -1918,8 +1897,6 @@ protected:
 
     GLProgramState *_glProgramState; ///< OpenGL Program State
 
-    int _orderOfArrival;            ///< used to preserve sequence while sorting children with the same localZOrder
-
     Scheduler *_scheduler;          ///< scheduler used to schedule timers and updates
 
     ActionManager *_actionManager;  ///< a pointer to ActionManager singleton, which is used to handle all the actions
@@ -1952,8 +1929,6 @@ protected:
     bool        _cascadeColorEnabled;
     bool        _cascadeOpacityEnabled;
 
-    static int s_globalOrderOfArrival;
-    
     // camera mask, it is visible only when _cameraMask & current camera' camera flag is true
     unsigned short _cameraMask;
     
