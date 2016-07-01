@@ -247,6 +247,26 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
         else {
             CCLOG("cocos2d: TMXFomat: Unsupported orientation: %d", tmxMapInfo->getOrientation());
         }
+        
+        std::string staggerAxisStr = attributeDict["staggeraxis"].asString();
+        if (staggerAxisStr == "x") {
+            tmxMapInfo->setStaggerAxis(TMXStaggerAxis_X);
+        }
+        else if (staggerAxisStr  == "y") {
+            tmxMapInfo->setStaggerAxis(TMXStaggerAxis_Y);
+        }
+
+        std::string staggerIndex = attributeDict["staggerindex"].asString();
+        if (staggerIndex == "odd") {
+            tmxMapInfo->setStaggerIndex(TMXStaggerIndex_Odd);
+        }
+        else if (staggerIndex == "even") {
+            tmxMapInfo->setStaggerIndex(TMXStaggerIndex_Even);
+        }
+
+
+        float hexSideLength = attributeDict["hexsidelength"].asFloat();
+        tmxMapInfo->setHexSideLength(hexSideLength);
 
         Size s;
         s.width = attributeDict["width"].asFloat();
@@ -256,6 +276,8 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
         s.width = attributeDict["tilewidth"].asFloat();
         s.height = attributeDict["tileheight"].asFloat();
         tmxMapInfo->setTileSize(s);
+
+        
 
         // The parent element is now "map"
         tmxMapInfo->setParentElement(TMXPropertyMap);
@@ -383,6 +405,17 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
 
         // The parent element is now "objectgroup"
         tmxMapInfo->setParentElement(TMXPropertyObjectGroup);
+    }
+    else if (elementName == "tileoffset")
+    {
+        TMXTilesetInfo* tileset = tmxMapInfo->getTilesets().back();
+        
+        double tileOffsetX = attributeDict["x"].asDouble();
+        
+        double tileOffsetY = attributeDict["y"].asDouble();
+        
+        tileset->_tileOffset = Vec2(tileOffsetX, tileOffsetY);
+        
     }
     else if (elementName == "image")
     {

@@ -342,6 +342,12 @@ protected:
     TMXTilesetInfo* _tileSet;
     /** Layer orientation, which is the same as the map orientation */
     int _layerOrientation;
+    /** Stagger Axis */
+    int _staggerAxis;
+    /** Stagger Index */
+    int _staggerIndex;
+    /** Hex side length*/
+    int _hexSideLength;
     /** properties from the layer. They can be added using Tiled */
     ValueMap _properties;
 };
