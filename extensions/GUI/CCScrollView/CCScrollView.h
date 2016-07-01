@@ -312,6 +312,13 @@ protected:
      * Touch point
      */
     CCPoint m_tTouchPoint;
+    
+    // *********************************************
+    // Rubber/Elastic effect to mimic UIScrollView
+    CCPoint m_startTouchPoint;
+    bool pullToRefresh;
+    // *********************************************
+    
     /**
      * length between two fingers
      */
