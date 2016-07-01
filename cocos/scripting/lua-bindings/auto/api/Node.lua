@@ -740,14 +740,6 @@
 -- @return AffineTransform#AffineTransform ret (return value: cc.AffineTransform)
         
 --------------------------------
--- Returns the arrival order, indicates which children is added previously.<br>
--- see `setOrderOfArrival(unsigned int)`<br>
--- return The arrival order.
--- @function [parent=#Node] getOrderOfArrival 
--- @param self
--- @return int#int ret (return value: int)
-        
---------------------------------
 -- Sets the ActionManager object that is used by all actions.<br>
 -- warning If you set a new ActionManager, then previously created actions will be removed.<br>
 -- param actionManager     A ActionManager object that is used by all actions.
@@ -899,17 +891,6 @@
 -- @param self
 -- @param #int tag
 -- @return Node#Node ret (return value: cc.Node)
-        
---------------------------------
--- Sets the arrival order when this node has a same ZOrder with other children.<br>
--- A node which called addChild subsequently will take a larger arrival order,<br>
--- If two children have the same Z order, the child with larger arrival order will be drawn later.<br>
--- warning This method is used internally for localZOrder sorting, don't change this manually<br>
--- param orderOfArrival   The arrival order.
--- @function [parent=#Node] setOrderOfArrival 
--- @param self
--- @param #int orderOfArrival
--- @return Node#Node self (return value: cc.Node)
         
 --------------------------------
 -- Returns the scale factor on Z axis of this node<br>

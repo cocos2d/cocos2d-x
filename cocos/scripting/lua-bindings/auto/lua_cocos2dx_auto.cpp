@@ -8198,53 +8198,6 @@ int lua_cocos2dx_Node_getParentToNodeAffineTransform(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_Node_getOrderOfArrival(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::Node* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.Node",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::Node*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getOrderOfArrival'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Node_getOrderOfArrival'", nullptr);
-            return 0;
-        }
-        int ret = cobj->getOrderOfArrival();
-        tolua_pushnumber(tolua_S,(lua_Number)ret);
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Node:getOrderOfArrival",argc, 0);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Node_getOrderOfArrival'.",&tolua_err);
-#endif
-
-    return 0;
-}
 int lua_cocos2dx_Node_setActionManager(lua_State* tolua_S)
 {
     int argc = 0;
@@ -9096,56 +9049,6 @@ int lua_cocos2dx_Node_getChildByTag(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Node_getChildByTag'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_Node_setOrderOfArrival(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::Node* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.Node",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::Node*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setOrderOfArrival'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 1) 
-    {
-        int arg0;
-
-        ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "cc.Node:setOrderOfArrival");
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Node_setOrderOfArrival'", nullptr);
-            return 0;
-        }
-        cobj->setOrderOfArrival(arg0);
-        lua_settop(tolua_S, 1);
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Node:setOrderOfArrival",argc, 1);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Node_setOrderOfArrival'.",&tolua_err);
 #endif
 
     return 0;
@@ -10877,7 +10780,6 @@ int lua_register_cocos2dx_Node(lua_State* tolua_S)
         tolua_function(tolua_S,"getLocalZOrder",lua_cocos2dx_Node_getLocalZOrder);
         tolua_function(tolua_S,"getScheduler",lua_cocos2dx_Node_getScheduler);
         tolua_function(tolua_S,"getParentToNodeAffineTransform",lua_cocos2dx_Node_getParentToNodeAffineTransform);
-        tolua_function(tolua_S,"getOrderOfArrival",lua_cocos2dx_Node_getOrderOfArrival);
         tolua_function(tolua_S,"setActionManager",lua_cocos2dx_Node_setActionManager);
         tolua_function(tolua_S,"setColor",lua_cocos2dx_Node_setColor);
         tolua_function(tolua_S,"isRunning",lua_cocos2dx_Node_isRunning);
@@ -10895,7 +10797,6 @@ int lua_register_cocos2dx_Node(lua_State* tolua_S)
         tolua_function(tolua_S,"setGlobalZOrder",lua_cocos2dx_Node_setGlobalZOrder);
         tolua_function(tolua_S,"setScale",lua_cocos2dx_Node_setScale);
         tolua_function(tolua_S,"getChildByTag",lua_cocos2dx_Node_getChildByTag);
-        tolua_function(tolua_S,"setOrderOfArrival",lua_cocos2dx_Node_setOrderOfArrival);
         tolua_function(tolua_S,"getScaleZ",lua_cocos2dx_Node_getScaleZ);
         tolua_function(tolua_S,"getScaleY",lua_cocos2dx_Node_getScaleY);
         tolua_function(tolua_S,"getScaleX",lua_cocos2dx_Node_getScaleX);
