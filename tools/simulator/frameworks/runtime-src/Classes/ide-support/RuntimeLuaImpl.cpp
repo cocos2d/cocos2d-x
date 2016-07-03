@@ -20,6 +20,18 @@
 #include "runtime/ConfigParser.h"
 #include "runtime/FileServer.h"
 
+#include "cocosdenshion/lua_cocos2dx_cocosdenshion_manual.h"
+#include "network/lua_cocos2dx_network_manual.h"
+#include "cocosbuilder/lua_cocos2dx_cocosbuilder_manual.h"
+#include "cocostudio/lua_cocos2dx_coco_studio_manual.hpp"
+#include "extension/lua_cocos2dx_extension_manual.h"
+#include "ui/lua_cocos2dx_ui_manual.hpp"
+#include "spine/lua_cocos2dx_spine_manual.hpp"
+#include "3d/lua_cocos2dx_3d_manual.h"
+#include "audioengine/lua_cocos2dx_audioengine_manual.h"
+#include "physics3d/lua_cocos2dx_physics3d_manual.h"
+#include "navmesh/lua_cocos2dx_navmesh_manual.h"
+
 USING_NS_CC;
 using namespace std;
 
@@ -334,7 +346,26 @@ void RuntimeLuaImpl::init()
 {
     auto engine = LuaEngine::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(engine);
-    lua_module_register(engine->getLuaStack()->getLuaState());
+
+    lua_State* L = engine->getLuaStack()->getLuaState();
+
+    //Dont' change the module register order unless you know what your are doing
+    register_cocosdenshion_module(L);
+    register_network_module(L);
+    register_cocosbuilder_module(L);
+    register_cocostudio_module(L);
+    register_ui_moudle(L);
+    register_extension_module(L);
+    register_spine_module(L);
+    register_cocos3d_module(L);
+    register_audioengine_module(L);
+#if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
+    register_physics3d_module(L);
+#endif
+#if CC_USE_NAVMESH
+    register_navmesh_module(L);
+#endif
+
     register_runtime_override_function(engine->getLuaStack()->getLuaState());
     engine->getLuaStack()->setXXTEAKeyAndSign("2dxLua", strlen("2dxLua"), "XXTEA", strlen("XXTEA"));
 }
