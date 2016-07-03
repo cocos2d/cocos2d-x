@@ -49,6 +49,10 @@ TileMapTests::TileMapTests()
     ADD_TEST_CASE(TMXBug987);
     ADD_TEST_CASE(TMXBug787);
     ADD_TEST_CASE(TMXGIDObjectsTest);
+    ADD_TEST_CASE(TMXHexOddXTest);
+    ADD_TEST_CASE(TMXHexEvenXTest);
+    ADD_TEST_CASE(TMXHexOddYTest);
+    ADD_TEST_CASE(TMXHexEvenYTest);
 }
 
 TileDemo::TileDemo()
@@ -1491,3 +1495,92 @@ std::string TMXGIDObjectsTest::subtitle() const
 {
     return "Tiles are created from an object group";
 }
+
+//------------------------------------------------------------------
+//
+// TMXHexOddXTest
+//
+//------------------------------------------------------------------
+TMXHexOddXTest::TMXHexOddXTest()
+{
+    auto color = LayerColor::create( Color4B(64,64,64,255) );
+    addChild(color, -1);
+
+    auto map = TMXTiledMap::create("TileMaps/hexagonal-mini-odd-x.tmx");
+    addChild(map, 0, kTagTileMap);
+
+    Size CC_UNUSED s = map->getContentSize();
+    CCLOG("ContentSize: %f, %f", s.width,s.height);
+}
+
+std::string TMXHexOddXTest::title() const
+{
+    return "TMX Hex Odd X";
+}
+
+//------------------------------------------------------------------
+//
+// TMXHexOddYTest
+//
+//------------------------------------------------------------------
+TMXHexOddYTest::TMXHexOddYTest()
+{
+    auto color = LayerColor::create( Color4B(64,64,64,255) );
+    addChild(color, -1);
+
+    auto map = TMXTiledMap::create("TileMaps/hexagonal-mini-odd-y.tmx");
+    addChild(map, 0, kTagTileMap);
+
+    Size CC_UNUSED s = map->getContentSize();
+    CCLOG("ContentSize: %f, %f", s.width,s.height);
+}
+
+std::string TMXHexOddYTest::title() const
+{
+    return "TMX Hex Odd Y";
+}
+
+//------------------------------------------------------------------
+//
+// TMXHexEvenXTest
+//
+//------------------------------------------------------------------
+TMXHexEvenXTest::TMXHexEvenXTest()
+{
+    auto color = LayerColor::create( Color4B(64,64,64,255) );
+    addChild(color, -1);
+
+    auto map = TMXTiledMap::create("TileMaps/hexagonal-mini-even-x.tmx");
+    addChild(map, 0, kTagTileMap);
+
+    Size CC_UNUSED s = map->getContentSize();
+    CCLOG("ContentSize: %f, %f", s.width,s.height);
+}
+
+std::string TMXHexEvenXTest::title() const
+{
+    return "TMX Hex Even X";
+}
+
+//------------------------------------------------------------------
+//
+// TMXHexEvenYTest
+//
+//------------------------------------------------------------------
+TMXHexEvenYTest::TMXHexEvenYTest()
+{
+    auto color = LayerColor::create( Color4B(64,64,64,255) );
+    addChild(color, -1);
+
+    auto map = TMXTiledMap::create("TileMaps/hexagonal-mini-even-y.tmx");
+    addChild(map, 0, kTagTileMap);
+
+    Size CC_UNUSED s = map->getContentSize();
+    CCLOG("ContentSize: %f, %f", s.width,s.height);
+}
+
+std::string TMXHexEvenYTest::title() const
+{
+    return "TMX Hex Even Y";
+}
+
