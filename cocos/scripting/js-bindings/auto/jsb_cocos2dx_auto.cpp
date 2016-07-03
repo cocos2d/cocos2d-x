@@ -61940,24 +61940,42 @@ void js_register_cocos2dx_TMXTilesetInfo(JSContext *cx, JS::HandleObject global)
 JSClass  *jsb_cocos2d_TMXMapInfo_class;
 JSObject *jsb_cocos2d_TMXMapInfo_prototype;
 
-bool js_cocos2dx_TMXMapInfo_setObjectGroups(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_cocos2dx_TMXMapInfo_setCurrentString(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     cocos2d::TMXMapInfo* cobj = (cocos2d::TMXMapInfo *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_TMXMapInfo_setObjectGroups : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_TMXMapInfo_setCurrentString : Invalid Native Object");
     if (argc == 1) {
-        cocos2d::Vector<cocos2d::TMXObjectGroup *> arg0;
-        ok &= jsval_to_ccvector(cx, args.get(0), &arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_TMXMapInfo_setObjectGroups : Error processing arguments");
-        cobj->setObjectGroups(arg0);
+        std::string arg0;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_TMXMapInfo_setCurrentString : Error processing arguments");
+        cobj->setCurrentString(arg0);
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_cocos2dx_TMXMapInfo_setObjectGroups : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_cocos2dx_TMXMapInfo_setCurrentString : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_TMXMapInfo_getHexSideLength(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::TMXMapInfo* cobj = (cocos2d::TMXMapInfo *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_TMXMapInfo_getHexSideLength : Invalid Native Object");
+    if (argc == 0) {
+        int ret = cobj->getHexSideLength();
+        jsval jsret = JSVAL_NULL;
+        jsret = int32_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_TMXMapInfo_getHexSideLength : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_cocos2dx_TMXMapInfo_setTileSize(JSContext *cx, uint32_t argc, jsval *vp)
@@ -62020,22 +62038,24 @@ bool js_cocos2dx_TMXMapInfo_getOrientation(JSContext *cx, uint32_t argc, jsval *
     JS_ReportError(cx, "js_cocos2dx_TMXMapInfo_getOrientation : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_cocos2dx_TMXMapInfo_isStoringCharacters(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_cocos2dx_TMXMapInfo_setObjectGroups(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     cocos2d::TMXMapInfo* cobj = (cocos2d::TMXMapInfo *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_TMXMapInfo_isStoringCharacters : Invalid Native Object");
-    if (argc == 0) {
-        bool ret = cobj->isStoringCharacters();
-        jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
-        args.rval().set(jsret);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_TMXMapInfo_setObjectGroups : Invalid Native Object");
+    if (argc == 1) {
+        cocos2d::Vector<cocos2d::TMXObjectGroup *> arg0;
+        ok &= jsval_to_ccvector(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_TMXMapInfo_setObjectGroups : Error processing arguments");
+        cobj->setObjectGroups(arg0);
+        args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_cocos2dx_TMXMapInfo_isStoringCharacters : wrong number of arguments: %d, was expecting %d", argc, 0);
+    JS_ReportError(cx, "js_cocos2dx_TMXMapInfo_setObjectGroups : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_cocos2dx_TMXMapInfo_setLayers(JSContext *cx, uint32_t argc, jsval *vp)
@@ -62172,6 +62192,44 @@ bool js_cocos2dx_TMXMapInfo_getLayers(JSContext *cx, uint32_t argc, jsval *vp)
     } while(0);
 
     JS_ReportError(cx, "js_cocos2dx_TMXMapInfo_getLayers : wrong number of arguments");
+    return false;
+}
+bool js_cocos2dx_TMXMapInfo_getStaggerAxis(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::TMXMapInfo* cobj = (cocos2d::TMXMapInfo *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_TMXMapInfo_getStaggerAxis : Invalid Native Object");
+    if (argc == 0) {
+        int ret = cobj->getStaggerAxis();
+        jsval jsret = JSVAL_NULL;
+        jsret = int32_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_TMXMapInfo_getStaggerAxis : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_TMXMapInfo_setHexSideLength(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::TMXMapInfo* cobj = (cocos2d::TMXMapInfo *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_TMXMapInfo_setHexSideLength : Invalid Native Object");
+    if (argc == 1) {
+        int arg0 = 0;
+        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_TMXMapInfo_setHexSideLength : Error processing arguments");
+        cobj->setHexSideLength(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_TMXMapInfo_setHexSideLength : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_cocos2dx_TMXMapInfo_getTilesets(JSContext *cx, uint32_t argc, jsval *vp)
@@ -62344,6 +62402,24 @@ bool js_cocos2dx_TMXMapInfo_getTileProperties(JSContext *cx, uint32_t argc, jsva
     JS_ReportError(cx, "js_cocos2dx_TMXMapInfo_getTileProperties : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
+bool js_cocos2dx_TMXMapInfo_isStoringCharacters(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::TMXMapInfo* cobj = (cocos2d::TMXMapInfo *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_TMXMapInfo_isStoringCharacters : Invalid Native Object");
+    if (argc == 0) {
+        bool ret = cobj->isStoringCharacters();
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_TMXMapInfo_isStoringCharacters : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
 bool js_cocos2dx_TMXMapInfo_getExternalTilesetFileName(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -62414,24 +62490,24 @@ bool js_cocos2dx_TMXMapInfo_getTMXFileName(JSContext *cx, uint32_t argc, jsval *
     JS_ReportError(cx, "js_cocos2dx_TMXMapInfo_getTMXFileName : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_cocos2dx_TMXMapInfo_setCurrentString(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_cocos2dx_TMXMapInfo_setStaggerIndex(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     cocos2d::TMXMapInfo* cobj = (cocos2d::TMXMapInfo *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_TMXMapInfo_setCurrentString : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_TMXMapInfo_setStaggerIndex : Invalid Native Object");
     if (argc == 1) {
-        std::string arg0;
-        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_TMXMapInfo_setCurrentString : Error processing arguments");
-        cobj->setCurrentString(arg0);
+        int arg0 = 0;
+        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_TMXMapInfo_setStaggerIndex : Error processing arguments");
+        cobj->setStaggerIndex(arg0);
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_cocos2dx_TMXMapInfo_setCurrentString : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_cocos2dx_TMXMapInfo_setStaggerIndex : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_cocos2dx_TMXMapInfo_setProperties(JSContext *cx, uint32_t argc, jsval *vp)
@@ -62514,6 +62590,24 @@ bool js_cocos2dx_TMXMapInfo_setMapSize(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "js_cocos2dx_TMXMapInfo_setMapSize : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
+bool js_cocos2dx_TMXMapInfo_getCurrentString(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::TMXMapInfo* cobj = (cocos2d::TMXMapInfo *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_TMXMapInfo_getCurrentString : Invalid Native Object");
+    if (argc == 0) {
+        const std::string& ret = cobj->getCurrentString();
+        jsval jsret = JSVAL_NULL;
+        jsret = std_string_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_TMXMapInfo_getCurrentString : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
 bool js_cocos2dx_TMXMapInfo_setStoringCharacters(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -62532,6 +62626,26 @@ bool js_cocos2dx_TMXMapInfo_setStoringCharacters(JSContext *cx, uint32_t argc, j
     }
 
     JS_ReportError(cx, "js_cocos2dx_TMXMapInfo_setStoringCharacters : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_TMXMapInfo_setStaggerAxis(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::TMXMapInfo* cobj = (cocos2d::TMXMapInfo *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_TMXMapInfo_setStaggerAxis : Invalid Native Object");
+    if (argc == 1) {
+        int arg0 = 0;
+        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_TMXMapInfo_setStaggerAxis : Error processing arguments");
+        cobj->setStaggerAxis(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_TMXMapInfo_setStaggerAxis : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_cocos2dx_TMXMapInfo_getMapSize(JSContext *cx, uint32_t argc, jsval *vp)
@@ -62606,22 +62720,22 @@ bool js_cocos2dx_TMXMapInfo_getProperties(JSContext *cx, uint32_t argc, jsval *v
     JS_ReportError(cx, "js_cocos2dx_TMXMapInfo_getProperties : wrong number of arguments");
     return false;
 }
-bool js_cocos2dx_TMXMapInfo_getCurrentString(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_cocos2dx_TMXMapInfo_getStaggerIndex(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     cocos2d::TMXMapInfo* cobj = (cocos2d::TMXMapInfo *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_TMXMapInfo_getCurrentString : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_TMXMapInfo_getStaggerIndex : Invalid Native Object");
     if (argc == 0) {
-        const std::string& ret = cobj->getCurrentString();
+        int ret = cobj->getStaggerIndex();
         jsval jsret = JSVAL_NULL;
-        jsret = std_string_to_jsval(cx, ret);
+        jsret = int32_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
     }
 
-    JS_ReportError(cx, "js_cocos2dx_TMXMapInfo_getCurrentString : wrong number of arguments: %d, was expecting %d", argc, 0);
+    JS_ReportError(cx, "js_cocos2dx_TMXMapInfo_getStaggerIndex : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_cocos2dx_TMXMapInfo_setLayerAttribs(JSContext *cx, uint32_t argc, jsval *vp)
@@ -62732,17 +62846,20 @@ void js_register_cocos2dx_TMXMapInfo(JSContext *cx, JS::HandleObject global) {
     };
 
     static JSFunctionSpec funcs[] = {
-        JS_FN("setObjectGroups", js_cocos2dx_TMXMapInfo_setObjectGroups, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setCurrentString", js_cocos2dx_TMXMapInfo_setCurrentString, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getHexSideLength", js_cocos2dx_TMXMapInfo_getHexSideLength, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setTileSize", js_cocos2dx_TMXMapInfo_setTileSize, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("initWithTMXFile", js_cocos2dx_TMXMapInfo_initWithTMXFile, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getOrientation", js_cocos2dx_TMXMapInfo_getOrientation, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("isStoringCharacters", js_cocos2dx_TMXMapInfo_isStoringCharacters, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setObjectGroups", js_cocos2dx_TMXMapInfo_setObjectGroups, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setLayers", js_cocos2dx_TMXMapInfo_setLayers, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("parseXMLFile", js_cocos2dx_TMXMapInfo_parseXMLFile, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getParentElement", js_cocos2dx_TMXMapInfo_getParentElement, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setTMXFileName", js_cocos2dx_TMXMapInfo_setTMXFileName, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("parseXMLString", js_cocos2dx_TMXMapInfo_parseXMLString, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getLayers", js_cocos2dx_TMXMapInfo_getLayers, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getStaggerAxis", js_cocos2dx_TMXMapInfo_getStaggerAxis, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setHexSideLength", js_cocos2dx_TMXMapInfo_setHexSideLength, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getTilesets", js_cocos2dx_TMXMapInfo_getTilesets, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getParentGID", js_cocos2dx_TMXMapInfo_getParentGID, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setParentElement", js_cocos2dx_TMXMapInfo_setParentElement, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -62751,19 +62868,22 @@ void js_register_cocos2dx_TMXMapInfo(JSContext *cx, JS::HandleObject global) {
         JS_FN("getLayerAttribs", js_cocos2dx_TMXMapInfo_getLayerAttribs, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getTileSize", js_cocos2dx_TMXMapInfo_getTileSize, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getTileProperties", js_cocos2dx_TMXMapInfo_getTileProperties, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("isStoringCharacters", js_cocos2dx_TMXMapInfo_isStoringCharacters, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getExternalTilesetFileName", js_cocos2dx_TMXMapInfo_getExternalTilesetFileName, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getObjectGroups", js_cocos2dx_TMXMapInfo_getObjectGroups, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getTMXFileName", js_cocos2dx_TMXMapInfo_getTMXFileName, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setCurrentString", js_cocos2dx_TMXMapInfo_setCurrentString, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setStaggerIndex", js_cocos2dx_TMXMapInfo_setStaggerIndex, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setProperties", js_cocos2dx_TMXMapInfo_setProperties, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setOrientation", js_cocos2dx_TMXMapInfo_setOrientation, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setTileProperties", js_cocos2dx_TMXMapInfo_setTileProperties, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setMapSize", js_cocos2dx_TMXMapInfo_setMapSize, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getCurrentString", js_cocos2dx_TMXMapInfo_getCurrentString, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setStoringCharacters", js_cocos2dx_TMXMapInfo_setStoringCharacters, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setStaggerAxis", js_cocos2dx_TMXMapInfo_setStaggerAxis, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getMapSize", js_cocos2dx_TMXMapInfo_getMapSize, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setTilesets", js_cocos2dx_TMXMapInfo_setTilesets, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getProperties", js_cocos2dx_TMXMapInfo_getProperties, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getCurrentString", js_cocos2dx_TMXMapInfo_getCurrentString, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getStaggerIndex", js_cocos2dx_TMXMapInfo_getStaggerIndex, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setLayerAttribs", js_cocos2dx_TMXMapInfo_setLayerAttribs, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("ctor", js_cocos2dx_TMXMapInfo_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
