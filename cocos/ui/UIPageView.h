@@ -170,7 +170,7 @@ public:
     /**
      * Scroll to a page with a given index.
      *
-     * @param idx   A given index in the PageView. Index start from 0 to pageCount -1.
+     * @param itemIndex   A given index in the PageView. Index start from 0 to pageCount -1.
      */
     void scrollToItem(ssize_t itemIndex);
 

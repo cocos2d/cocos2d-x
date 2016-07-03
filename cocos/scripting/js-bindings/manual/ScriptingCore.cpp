@@ -701,7 +701,7 @@ JS::PersistentRootedScript* ScriptingCore::compileScript(const char *path, JS::H
     // a) check jsc file first
     std::string byteCodePath = RemoveFileExt(std::string(path)) + BYTE_CODE_FILE_EXT;
 
-    // Check whether '.jsc' files exist to avoid outputing log which says 'couldn't find .jsc file'.
+    // Check whether '.jsc' files exist to avoid outputting log which says 'couldn't find .jsc file'.
     if (futil->isFileExist(byteCodePath))
     {
         Data data = futil->getDataFromFile(byteCodePath);

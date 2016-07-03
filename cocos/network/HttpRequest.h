@@ -322,7 +322,7 @@ public:
     /**
      * Set custom-defined headers.
      *
-     * @param pHeaders the string vector of custom-defined headers.
+     * @param headers The string vector of custom-defined headers.
      */
     inline void setHeaders(const std::vector<std::string>& headers)
        {

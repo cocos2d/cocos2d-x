@@ -323,7 +323,7 @@ public:
     static Terrain * create(TerrainData &parameter, CrackFixedType fixedType = CrackFixedType::INCREASE_LOWER);
     /**get specified position's height mapping to the terrain,use bi-linear interpolation method
      * @param x the X position
-     * @param y the Z position
+     * @param z the Z position
      * @param normal the specified position's normal vector in terrain . if this argument is NULL or nullptr,Normal calculation shall be skip.
      * @return the height value of the specified position of the terrain, if the (X,Z) position is out of the terrain bounds,it shall return 0;
      **/
