@@ -89,6 +89,7 @@ extern "C"
     
 #if CC_USE_JPEG
 #include "jpeglib.h"
+#include <setjmp.h>
 #endif // CC_USE_JPEG
 }
 #include "base/s3tc.h"

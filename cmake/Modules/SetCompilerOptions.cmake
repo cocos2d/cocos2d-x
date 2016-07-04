@@ -88,17 +88,15 @@ macro (SetCompilerOptions)
 	endif()
 
 	if(MINGW)
-	  #add_definitions(-DGLEW_STATIC)
+	  add_definitions(-DGLEW_STATIC)
+	  add_definitions(-DCURL_STATICLIB)
+	  add_definitions(-DAL_LIBTYPE_STATIC)
 	  add_definitions(-D__SSIZE_T)
 
 	  if(CLANG)
 	    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ")
 	    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ")
 	  endif()
-	endif()
-
-	if (MINGW AND NOT USE_PREBUILT_LIBS)
-		add_definitions(-DMINIZIP_FROM_SYSTEM)
 	endif()
 
 endmacro (SetCompilerOptions)
