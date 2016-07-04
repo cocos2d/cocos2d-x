@@ -194,7 +194,7 @@ const Size& GLView::getFrameSize() const
 
 void GLView::setFrameSize(float width, float height)
 {
-    _designResolutionSize = _screenSize = Size(width, height);
+    _screenSize = Size(width, height);
 }
 
 Rect GLView::getVisibleRect() const
