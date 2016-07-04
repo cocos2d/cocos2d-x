@@ -130,7 +130,7 @@
         
 --------------------------------
 -- Scroll to a page with a given index.<br>
--- param idx   A given index in the PageView. Index start from 0 to pageCount -1.
+-- param itemIndex   A given index in the PageView. Index start from 0 to pageCount -1.
 -- @function [parent=#PageView] scrollToItem 
 -- @param self
 -- @param #long itemIndex
