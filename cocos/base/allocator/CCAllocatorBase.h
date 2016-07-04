@@ -30,6 +30,7 @@
 #include <string>
 
 #include "platform/CCPlatformMacros.h"
+#include "platform/CCStdC.h"
 #include "base/allocator/CCAllocatorMacros.h"
 
 

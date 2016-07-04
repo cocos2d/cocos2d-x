@@ -42,9 +42,10 @@ macro (BuildModules)
 
 	# Chipmunk
 	if(USE_CHIPMUNK)
-	  if(USE_PREBUILT_LIBS)
-	    cocos_find_package(Chipmunk CHIPMUNK REQUIRED)
-	  endif()
+	  cocos_find_package(Chipmunk CHIPMUNK REQUIRED)
+	  add_definitions(-DCC_ENABLE_CHIPMUNK_INTEGRATION=1)
+	else(USE_CHIPMUNK)
+	  add_definitions(-DCC_USE_PHYSICS=0)
 	endif(USE_CHIPMUNK)
 
 	# Box2d (not prebuilded, exists as source)
@@ -59,8 +60,12 @@ macro (BuildModules)
 	    set(Box2D_LIBRARIES Box2D)
 	  endif()
 	  message(STATUS "Box2D include dirs: ${Box2D_INCLUDE_DIRS}")
+	  add_definitions(-DCC_ENABLE_BOX2D_INTEGRATION=1)
 	elseif(BUILD_BOX2D)
 	  add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/external/Box2D)
+	  add_definitions(-DCC_ENABLE_BOX2D_INTEGRATION=1)
+	else()
+	  add_definitions(-DCC_ENABLE_BOX2D_INTEGRATION=0)
 	endif(USE_BOX2D)
 
 	# Bullet (not prebuilded, exists as source)
@@ -73,7 +78,12 @@ macro (BuildModules)
 	    cocos_find_package(bullet BULLET REQUIRED)
 	    set(BULLET_LIBRARIES bullet)
 	  endif()
+	  add_definitions(-DCC_ENABLE_BULLET_INTEGRATION=1)
+	  add_definitions(-DCC_USE_PHYSICS=1)
 	  message(STATUS "Bullet include dirs: ${BULLET_INCLUDE_DIRS}")
+	else(USE_BULLET)
+	  add_definitions(-DCC_ENABLE_BULLET_INTEGRATION=0)
+	  add_definitions(-DCC_USE_3D_PHYSICS=0)
 	endif(USE_BULLET)
 
 	# Recast (not prebuilded, exists as source)
@@ -87,6 +97,9 @@ macro (BuildModules)
 	    set(RECAST_LIBRARIES recast)
 	  endif()
 	  message(STATUS "Recast include dirs: ${RECAST_INCLUDE_DIRS}")
+	  add_definitions(-DCC_USE_NAVMESH=1)
+	else(USE_RECAST)
+	  add_definitions(-DCC_USE_NAVMESH=0)
 	endif(USE_RECAST)
 
 	# Tinyxml2 (not prebuilded, exists as source)
@@ -99,16 +112,13 @@ macro (BuildModules)
 	endif()
 	message(STATUS "TinyXML2 include dirs: ${TinyXML2_INCLUDE_DIRS}")
 
-	# libjpeg
-	cocos_find_package(JPEG JPEG REQUIRED)
 	cocos_find_package(ZLIB ZLIB REQUIRED)
-
 	# minizip (we try to migrate to minizip from https://github.com/nmoinvaz/minizip)
 	# only msys2 currently provides package for this variant, all other
 	# dists have packages from zlib, thats very old for us.
 	# moreover our embedded version modified to quick provide
 	# functionality needed by cocos.
-	if(USE_PREBUILT_LIBS OR NOT MINGW)
+	if(USE_PREBUILT_LIBS OR NOT MINGW OR USE_SOURCES_EXTERNAL)
 	  #TODO: hack! should be in external/unzip/CMakeLists.txt
 	  include_directories(${ZLIB_INCLUDE_DIRS})
 	  add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/external/unzip)
@@ -119,17 +129,38 @@ macro (BuildModules)
 	  cocos_find_package(MINIZIP MINIZIP REQUIRED)
 	  # double check that we have needed functions
 	  include(CheckLibraryExists)
-	  check_library_exists(${MINIZIP_LIBRARIES} "unzGoToFirstFile2" "" MINIZIP_HAS_GOTOFIRSTFILE2)
-	  if(NOT MINIZIP_HAS_GOTOFIRSTFILE2)
-	    message(FATAL_ERROR "Minizip library on you system very old. Please use recent version from https://github.com/nmoinvaz/minizip or enable USE_PREBUILT_LIBS")
-	    return()
-	  endif()
+	  add_definitions(-DMINIZIP_FROM_SYSTEM)
 	endif()
+	
+	# Jpeg
+	if(USE_JPEG)
+	  cocos_find_package(JPEG JPEG REQUIRED)
+	  add_definitions(-DCC_USE_JPEG=1)
+	else(USE_JPEG)
+	  add_definitions(-DCC_USE_JPEG=0)
+	endif(USE_JPEG)
 
-	cocos_find_package(PNG PNG REQUIRED)
-	cocos_find_package(TIFF TIFF REQUIRED)
+	# Tiff
+	if(USE_TIFF)
+	  cocos_find_package(TIFF TIFF REQUIRED)
+	  add_definitions(-DCC_USE_TIFF=1)
+	else(USE_TIFF)
+	  add_definitions(-DCC_USE_TIFF=0)
+	endif(USE_TIFF)
+
+	# Png
+	if(USE_PNG)
+		cocos_find_package(PNG PNG REQUIRED)
+	  add_definitions(-DCC_USE_PNG=1)
+	else(USE_PNG)
+      add_definitions(-DCC_USE_PNG=0)
+	endif(USE_PNG)
+	
 	cocos_find_package(WEBSOCKETS WEBSOCKETS REQUIRED)
 	cocos_find_package(CURL CURL REQUIRED)
+	if(NOT USE_PREBUILT_LIBS)
+	  cocos_find_package(OpenSSL OPENSSL REQUIRED)
+	endif()
 
 	# flatbuffers
 	if(USE_PREBUILT_LIBS OR USE_SOURCES_EXTERNAL)
