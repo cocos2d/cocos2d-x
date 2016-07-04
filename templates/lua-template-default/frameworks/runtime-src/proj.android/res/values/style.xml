@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <style name="Theme.Black.NoTitleBar.ActionModeOverlay" parent="android:Theme.Black.NoTitleBar">
+    <item name="android:windowActionModeOverlay">true</item>
+  </style>
+</resources>
