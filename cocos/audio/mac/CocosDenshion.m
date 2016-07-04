@@ -1411,7 +1411,7 @@ static BOOL _mixerRateSet = NO;
                 
             case kIT_SCurve:
                 //Cubic s curve t^2 * (3 - 2t)
-                return ((float)(t * t * (3.0 - (2.0 * t))) * (end - start)) + start;
+                return ((t * t * (3.0f - (2.0f * t))) * (end - start)) + start;
                 
             case kIT_Exponential:    
                 //Formulas taken from EaseAction
@@ -1486,7 +1486,7 @@ static BOOL _mixerRateSet = NO;
 }    
 
 -(void) modify:(float) t {
-    if (t < 1.0) {
+    if (t < 1.0f) {
         [self _setTargetProperty:[interpolator interpolate:t]];
     } else {
         //At the end

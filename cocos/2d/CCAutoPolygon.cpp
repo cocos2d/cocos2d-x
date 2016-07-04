@@ -494,7 +494,7 @@ std::vector<Vec2> AutoPolygon::reduce(const std::vector<Vec2>& points, const Rec
     std::vector<Vec2> result = rdp(points, ep);
     
     auto last = result.back();
-    if(last.y > result.front().y && last.getDistance(result.front()) < ep*0.5)
+    if (last.y > result.front().y && last.getDistance(result.front()) < ep * 0.5f)
     {
         result.front().y = last.y;
         result.pop_back();

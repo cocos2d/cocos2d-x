@@ -730,7 +730,7 @@ Vec2 Director::convertToGL(const Vec2& uiPoint)
     Vec4 glCoord;
     //transformInv.transformPoint(clipCoord, &glCoord);
     transformInv.transformVector(clipCoord, &glCoord);
-    float factor = 1.0/glCoord.w;
+    float factor = 1.0f / glCoord.w;
     return Vec2(glCoord.x * factor, glCoord.y * factor);
 }
 
@@ -757,8 +757,8 @@ Vec2 Director::convertToUI(const Vec2& glPoint)
 	clipCoord.z = clipCoord.z / clipCoord.w;
 
     Size glSize = _openGLView->getDesignResolutionSize();
-    float factor = 1.0/glCoord.w;
-    return Vec2(glSize.width*(clipCoord.x*0.5 + 0.5) * factor, glSize.height*(-clipCoord.y*0.5 + 0.5) * factor);
+    float factor = 1.0f / glCoord.w;
+    return Vec2(glSize.width * (clipCoord.x * 0.5f + 0.5f) * factor, glSize.height * (-clipCoord.y * 0.5f + 0.5f) * factor);
 }
 
 const Size& Director::getWinSize(void) const

@@ -941,8 +941,8 @@ void PhysicsBody::onAdd()
 {
     _owner->_physicsBody = this;
     auto contentSize = _owner->getContentSize();
-    _ownerCenterOffset.x = 0.5 * contentSize.width;
-    _ownerCenterOffset.y = 0.5 * contentSize.height;
+    _ownerCenterOffset.x = 0.5f * contentSize.width;
+    _ownerCenterOffset.y = 0.5f * contentSize.height;
 
     setRotationOffset(_owner->getRotation());
 
