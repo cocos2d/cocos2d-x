@@ -81,7 +81,7 @@ bool PULineEmitterTranslator::translateChildProperty( PUScriptCompiler* compiler
     }
     else if (prop->name == token[TOKEN_LINE_EMIT_MAX_INCREMENT])
     {
-        // Property: line_em_max_increment (de[recated and replaced by 'max_increment')
+        // Property: line_em_max_increment (deprecated and replaced by 'max_increment')
         if (passValidateProperty(compiler, prop, token[TOKEN_LINE_EMIT_MAX_INCREMENT], VAL_REAL))
         {
             float val = 0.0f;

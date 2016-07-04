@@ -227,7 +227,7 @@ public:
     * If you don't want to system default implementation after setting delegate, you can just pass nullptr
     * to this function.
     *
-    * @warm It will delete previous delegate
+    * @warning It will delete previous delegate
     */
     static void setDelegate(UserDefault *delegate);
 

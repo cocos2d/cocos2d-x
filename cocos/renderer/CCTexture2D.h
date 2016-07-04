@@ -289,7 +289,7 @@ public:
      @param hAlignment The font horizontal text alignment type.
      @param vAlignment The font vertical text alignment type.
      @param enableWrap Whether enable text wrap or not.
-     @param shrinkFontSize Whether shrink font size when content larger than the dimensions.
+     @param overflow Whether shrink font size when content larger than the dimensions.
      */
     bool initWithString(const char *text,  const std::string &fontName, float fontSize, const Size& dimensions = Size(0, 0), TextHAlignment hAlignment = TextHAlignment::CENTER, TextVAlignment vAlignment = TextVAlignment::TOP, bool enableWrap = true, int overflow = 0);
 

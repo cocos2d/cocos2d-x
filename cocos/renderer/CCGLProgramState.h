@@ -367,7 +367,7 @@ public:
      * to an enumeration value. If it matches to one of the predefined strings, it will create a
      * callback to get the correct value at runtime.
      *
-     * @param name The name of the material parameter to store an auto-binding for.
+     * @param uniformName The name of the material parameter to store an auto-binding for.
      * @param autoBinding A string matching one of the built-in AutoBinding enum constants.
      */
     void setParameterAutoBinding(const std::string& uniformName, const std::string& autoBinding);

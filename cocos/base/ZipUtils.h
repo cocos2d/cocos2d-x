@@ -85,7 +85,7 @@ typedef struct unz_file_info_s unz_file_info;
         /** 
         * Inflates either zlib or gzip deflated memory. The inflated memory is expected to be freed by the caller.
         *
-        * @param outLenghtHint It is assumed to be the needed room to allocate the inflated buffer.
+        * @param outLengthHint It is assumed to be the needed room to allocate the inflated buffer.
         *
         * @return The length of the deflated buffer.
         * @since v1.0.0
@@ -269,7 +269,7 @@ typedef struct unz_file_info_s unz_file_info;
         /**
         * Get resource file data from a zip file.
         * @param fileName File name
-        * @param[out] pSize If the file read operation succeeds, it will be the data size, otherwise 0.
+        * @param[out] size If the file read operation succeeds, it will be the data size, otherwise 0.
         * @return Upon success, a pointer to the data is returned, otherwise nullptr.
         * @warning Recall: you are responsible for calling free() on any Non-nullptr pointer returned.
         *

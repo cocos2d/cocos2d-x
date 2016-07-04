@@ -360,9 +360,9 @@ public:
     ssize_t getCurSelectedIndex() const;
     
     /**
-     +     * @brief Set current selected widget's index and call TouchEventType::ENDED event.
-     +     * @param A index of a selected item.
-     +     */
+     * @brief Set current selected widget's index and call TouchEventType::ENDED event.
+     * @param itemIndex A index of a selected item.
+     */
      void setCurSelectedIndex(int itemIndex);
     
     /**

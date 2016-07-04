@@ -809,7 +809,7 @@ static BOOL _mixerRateSet = NO;
 /**
  * Play a sound.
  * @param soundId the id of the sound to play (buffer id).
- * @param SourceGroupId the source group that will be used to play the sound.
+ * @param sourceGroupId the source group that will be used to play the sound.
  * @param pitch pitch multiplier. e.g 1.0 is unaltered, 0.5 is 1 octave lower. 
  * @param pan stereo position. -1 is fully left, 0 is centre and 1 is fully right.
  * @param gain gain multiplier. e.g. 1.0 is unaltered, 0.5 is half the gain

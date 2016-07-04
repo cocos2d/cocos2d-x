@@ -306,7 +306,7 @@ public:
     const std::string& getMaterialName() const { return _matName; };
 
     /** Forces emission of particles.
-     * @remarks The number of requested particles are the exact number that are emitted. No down-scalling is applied.
+     * @remarks The number of requested particles are the exact number that are emitted. No down-scaling is applied.
      */
     void forceEmission(PUEmitter* emitter, unsigned requested);
 

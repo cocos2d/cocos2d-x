@@ -1750,7 +1750,7 @@ const Mat4& Node::getNodeToParentTransform() const
         // at some point setNodeToParentTransform() is called.
         // and later setAdditionalTransform() is called every time. And since _transform
         // is being overwritten everyframe, _additionalTransform[1] is used to have a copy
-        // of the last "_trasform without _additionalTransform"
+        // of the last "_transform without _additionalTransform"
         if (_transformDirty)
             _additionalTransform[1] = _transform;
 

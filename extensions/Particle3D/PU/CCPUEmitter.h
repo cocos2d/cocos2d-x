@@ -238,7 +238,7 @@ public:
     /** Sets the direction of the particle that the emitter is emitting.
     @remarks
         Don't confuse this with the emitters own direction.
-    @param dir The base direction of emitted particles.
+    @param direction The base direction of emitted particles.
     */
     void setParticleDirection(const Vec3& direction);
 
