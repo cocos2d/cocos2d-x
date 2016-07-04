@@ -265,7 +265,7 @@ long long getTimeInMilliseconds()
 {
     struct timeval tv;
     gettimeofday (&tv, nullptr);
-    return tv.tv_sec * 1000 + tv.tv_usec / 1000;
+    return (long long)tv.tv_sec * 1000 + tv.tv_usec / 1000;
 }
 
 Rect getCascadeBoundingBox(Node *node)
