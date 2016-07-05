@@ -66,7 +66,7 @@ public:
     virtual void* buffer() const override {
         // can not invoke string::front() if it is empty
 
-        if (_buffer.empty())
+        if (_buffer->empty())
             return nullptr;
         else
             return &_buffer->front();
@@ -85,7 +85,7 @@ public:
     virtual void* buffer() const override {
         // can not invoke vector::front() if it is empty
 
-        if (_buffer.empty())
+        if (_buffer->empty())
             return nullptr;
         else
             return &_buffer->front();
