@@ -64,7 +64,12 @@ public:
         _buffer->resize((size + sizeof(CharT) - 1) / sizeof(CharT));
     }
     virtual void* buffer() const override {
-        return &_buffer->front();
+        // can not invoke string::front() if it is empty
+
+        if (_buffer.empty())
+            return nullptr;
+        else
+            return &_buffer->front();
     }
 };
 
@@ -78,7 +83,12 @@ public:
         _buffer->resize((size + sizeof(T) - 1) / sizeof(T));
     }
     virtual void* buffer() const override {
-        return &_buffer->front();
+        // can not invoke vector::front() if it is empty
+
+        if (_buffer.empty())
+            return nullptr;
+        else
+            return &_buffer->front();
     }
 };
 
