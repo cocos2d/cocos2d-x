@@ -877,8 +877,9 @@ void SIOClientImpl::onMessage(WebSocket* ws, const WebSocket::Data& data)
                 break;
             case 4:
             {
-                const char second = payload.at(0);
-                int control2 = atoi(&second);
+                
+                //payload.at(0)返回出来的可能是局部变量？
+                int control2 = atoi(payload.c_str());
                 CCLOGINFO("Message code: [%i]", control);
 
                 SocketIOPacket *packetOut = SocketIOPacket::createPacketWithType("event", _version);
