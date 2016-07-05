@@ -256,6 +256,13 @@ FileUtils::Status FileUtilsWin32::getContents(const std::string& filename, Resiz
 		::CloseHandle(fileHandle);
 		return FileUtils::Status::TooLarge;
 	}
+    // don't read file content if it is empty
+    if (size == 0)
+    {
+        ::CloseHandle(fileHandle);
+        return FileUtils::Status::OK;
+    }
+
     buffer->resize(size);
     DWORD sizeRead = 0;
     BOOL successed = ::ReadFile(fileHandle, buffer->buffer(), size, &sizeRead, nullptr);
