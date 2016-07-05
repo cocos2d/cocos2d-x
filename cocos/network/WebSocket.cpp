@@ -337,6 +337,18 @@ WebSocket::WebSocket()
 
 WebSocket::~WebSocket()
 {
+    _readStateMutex.lock();
+    if (_readyState != State::CLOSED)
+    {
+        // Sets the state to 'closed' to make sure 'onConnectionClosed' which is
+        // invoked by websocket thread don't post 'close' message to Cocos thread since
+        // WebSocket instance is destroyed at next frame.
+        // 'closed' state has to be set before quit websocket thread.
+        _readyState = State::CLOSED;
+        _wsHelper->quitWebSocketThread();
+    }
+    _readStateMutex.unlock();
+    
     LOGD("In the destructor of WebSocket (%p)\n", this);
     CC_SAFE_DELETE(_wsHelper);
 
