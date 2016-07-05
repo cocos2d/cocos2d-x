@@ -50,7 +50,7 @@ LOCAL_SRC_FILES := ../auto/jsb_cocos2dx_3d_auto.cpp \
                    ../auto/jsb_cocos2dx_physics3d_auto.cpp \
                    ../auto/js_bindings_chipmunk_auto_classes.cpp \
                    ../auto/js_bindings_chipmunk_functions.cpp \
-                   ../manual/ScriptingCore.cpp \ \
+                   ../manual/ScriptingCore.cpp \
                    ../manual/cocos2d_specifics.cpp \
                    ../manual/js_manual_conversions.cpp \
                    ../manual/js_bindings_core.cpp \
