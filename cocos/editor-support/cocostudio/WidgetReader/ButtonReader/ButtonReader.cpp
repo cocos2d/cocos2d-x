@@ -673,6 +673,11 @@ namespace cocostudio
                 {
                     normalFileExist = true;
                 }
+                else if (SpriteFrameCache::getInstance()->getSpriteFrameByName(normalTexturePath))
+                {
+                    normalFileExist = true;
+                    normalType = 1;
+                }
                 else
                 {
                     normalErrorFilePath = normalTexturePath;
