@@ -150,18 +150,18 @@ namespace ui
         return _tabItems.size();
     }
 
-    void TabControl::setHeaderWidth(float headerWith)
+    void TabControl::setHeaderWidth(float headerWidth)
     {
-        _headerWidth = headerWith;
+        _headerWidth = headerWidth;
         if (_headerDockPlace == Dock::TOP || _headerDockPlace == Dock::BOTTOM)
             initTabHeadersPos(0);
         if (_headerDockPlace == Dock::LEFT || _headerDockPlace == Dock::RIGHT)
             initContainers();
     }
 
-    void TabControl::setHeaderHeight(float headerHeigt)
+    void TabControl::setHeaderHeight(float headerHeight)
     {
-        _headerHeight = headerHeigt;
+        _headerHeight = headerHeight;
         if (_headerDockPlace == Dock::LEFT || _headerDockPlace == Dock::RIGHT)
             initTabHeadersPos(0);
         if (_headerDockPlace == Dock::TOP || _headerDockPlace == Dock::BOTTOM)
@@ -339,9 +339,9 @@ namespace ui
         }
     }
 
-    void TabControl::setTabChangedEventListener(const ccTabControlCallback& callBack)
+    void TabControl::setTabChangedEventListener(const ccTabControlCallback& callback)
     {
-        _tabChangedCallback = callBack;
+        _tabChangedCallback = callback;
     }
 
     int TabControl::indexOfTabHeader(const TabHeader* tabCell) const
