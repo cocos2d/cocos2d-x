@@ -618,16 +618,20 @@ void TextureAtlas::drawNumberOfQuads(ssize_t numberOfQuads, ssize_t start)
         {
             glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
             // option 1: subdata
-//            glBufferSubData(GL_ARRAY_BUFFER, sizeof(_quads[0])*start, sizeof(_quads[0]) * n , &_quads[start] );
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_EMSCRIPTEN)
+            glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(_quads[0]) * _capacity, _quads);
+#endif
 
             // option 2: data
 //            glBufferData(GL_ARRAY_BUFFER, sizeof(quads_[0]) * (n-start), &quads_[start], GL_DYNAMIC_DRAW);
 
             // option 3: orphaning + glMapBuffer
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_EMSCRIPTEN)
             glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0]) * _capacity, nullptr, GL_DYNAMIC_DRAW);
             void *buf = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
             memcpy(buf, _quads, sizeof(_quads[0])* _totalQuads);
             glUnmapBuffer(GL_ARRAY_BUFFER);
+#endif
             
             glBindBuffer(GL_ARRAY_BUFFER, 0);
 

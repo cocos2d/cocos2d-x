@@ -141,6 +141,12 @@ public:
     CC_DEPRECATED_ATTRIBUTE static Director* sharedDirector() { return Director::getInstance(); }
     
     /**
+     * Returns true if director instance already created.
+     * @js NA
+     */
+    static bool hasInstance();
+    
+    /**
      * @js ctor
      */
     Director();

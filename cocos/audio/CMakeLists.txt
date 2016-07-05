@@ -27,6 +27,13 @@ elseif(LINUX)
         audio/linux/AudioEngine-linux.h
         audio/linux/AudioEngine-linux.cpp
     )
+    
+elseif(EMSCRIPTEN)
+    set(COCOS_AUDIO_PLATFORM_SRC
+        audio/emcc/SimpleAudioEngine.cpp
+        audio/emcc/AudioEngine-emcc.h
+        audio/emcc/AudioEngine-emcc.cpp
+    )
 
 elseif(MACOSX)
     # split it in _C and non C

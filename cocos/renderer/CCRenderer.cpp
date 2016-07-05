@@ -793,6 +793,9 @@ void Renderer::drawBatchedTriangles()
         glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
 
         // option 1: subdata
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_EMSCRIPTEN)
+        glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(_verts[0])*_filledVertex, _verts);
+#endif
 //        glBufferSubData(GL_ARRAY_BUFFER, sizeof(_quads[0])*start, sizeof(_quads[0]) * n , &_quads[start] );
 
         // option 2: data
@@ -802,10 +805,12 @@ void Renderer::drawBatchedTriangles()
         // FIXME: in order to work as fast as possible, it must "and the exact same size and usage hints it had before."
         //  source: https://www.opengl.org/wiki/Buffer_Object_Streaming#Explicit_multiple_buffering
         // so most probably we won't have any benefit of using it
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_EMSCRIPTEN)
         glBufferData(GL_ARRAY_BUFFER, sizeof(_verts[0]) * _filledVertex, nullptr, GL_STATIC_DRAW);
         void *buf = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
         memcpy(buf, _verts, sizeof(_verts[0]) * _filledVertex);
         glUnmapBuffer(GL_ARRAY_BUFFER);
+#endif
 
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         

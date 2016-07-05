@@ -36,7 +36,7 @@ public:
         addTest("Click and Move", [](){return new ClickAndMoveTest(); });
         addTest("Configuration", []() { return new ConfigurationTests(); });
         addTest("Console", []() { return new ConsoleTests(); });
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_IOS) && (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_IOS) && (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID) && (CC_TARGET_PLATFORM != CC_PLATFORM_EMSCRIPTEN)
         // android and ios don't use CURL
         addTest("Curl", []() { return new CurlTests(); });
 #endif

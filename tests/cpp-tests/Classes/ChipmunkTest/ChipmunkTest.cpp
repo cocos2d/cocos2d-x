@@ -95,7 +95,7 @@ ChipmunkTest::~ChipmunkTest()
         cpShapeFree( _walls[i] );
     }
 
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_EMSCRIPTEN
 	cpSpaceFree(_space);
 #else
 	cpHastySpaceFree(_space);
@@ -111,7 +111,7 @@ void ChipmunkTest::initPhysics()
     // init chipmunk
     //cpInitChipmunk();
 
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_EMSCRIPTEN
 	_space = cpSpaceNew();
 #else
 	_space = cpHastySpaceNew();
@@ -165,7 +165,7 @@ void ChipmunkTest::update(float delta)
 
     for(int i=0; i<steps; i++){
 
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_EMSCRIPTEN
 		cpSpaceStep(_space, dt);
 #else
 		cpHastySpaceStep(_space, dt);

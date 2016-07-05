@@ -143,7 +143,7 @@ elseif(MACOSX OR APPLE)
     ${FOUNDATION_LIBRARY}
     ${ICONV_LIBRARY}
   )
-
+elseif(EMSCRIPTEN)
 elseif(ANDROID)
   set(PLATFORM_SPECIFIC_LIBS GLESv1_CM GLESv2 EGL log android OpenSLES)
   get_filename_component(__module_path "${CMAKE_TOOLCHAIN_FILE}" DIRECTORY)

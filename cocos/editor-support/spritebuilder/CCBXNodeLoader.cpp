@@ -200,7 +200,7 @@ Node *NodeLoader::createNode(const Size &parentSize, float mainScale, float addi
     if(createNodeFunction)
         ret = createNodeFunction(parentSize, mainScale, additionalScale);
     else
-        ret = createNodeInstance(parentSize, mainScale, additionalScale, owner, rootNode);
+        ret = createNodeInstance(parentSize, mainScale, additionalScale, owner, rootNode, parentOwner);
     if(!ret)
         return nullptr;
     

@@ -26,6 +26,12 @@ macro (SelectModule)
   endif()
   
   set(USE_SOURCES_EXTERNAL_DEFAULT OFF)
+  
+  if(EMSCRIPTEN)
+    set(BUILD_JS_LIBS_DEFAULT OFF)
+    set(BUILD_LUA_LIBS_DEFAULT OFF)
+    set(USE_SOURCES_EXTERNAL_DEFAULT ON)
+  endif()
 
   option(USE_CHIPMUNK "Use chipmunk for physics library" ON)
   option(USE_BOX2D "Use box2d for physics library" OFF)

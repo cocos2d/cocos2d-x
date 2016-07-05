@@ -1,7 +1,9 @@
 set(APP_NAME cpp-tests)
 
 # Use same method as in cocos library
+if(NOT EMSCRIPTEN)
 cocos_find_package(CURL CURL REQUIRED)
+endif()
 
 if(WIN32)
   set(PLATFORM_SRC proj.win32/main.cpp)
@@ -20,6 +22,9 @@ elseif(ANDROID)
   set(PLATFORM_SRC
           Classes/JNITest/JNITest.cpp
           proj.android/jni/main.cpp)
+          set(RES_PREFIX "/Resources")
+elseif(EMSCRIPTEN)
+  set(PLATFORM_SRC proj.emscripten/main.cpp)
   set(RES_PREFIX "/Resources")
 else()
   message( FATAL_ERROR "Unsupported platform, CMake will exit" )
@@ -231,9 +236,30 @@ ELSEIF(ANDROID)
 else()
     set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${APP_NAME}")
     set_target_properties(${APP_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${APP_BIN_DIR}")
+
+    if(EMSCRIPTEN)
+        set(CMAKE_EXECUTABLE_SUFFIX ".html")    
+        set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -s NO_EXIT_RUNTIME=1 -s TOTAL_MEMORY=268435456 --preload-file ${CMAKE_CURRENT_SOURCE_DIR}/Resources@/")
+        set(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -s DEMANGLE_SUPPORT=1 -s ASSERTIONS=2 -s SAFE_HEAP=1")
+        set(CMAKE_EXE_LINKER_FLAGS_RELWITHDEBINFO "${CMAKE_EXE_LINKER_FLAGS_RELWITHDEBINFO} -s DEMANGLE_SUPPORT=1 -s ASSERTIONS=2 -s SAFE_HEAP=1")
+        set(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -s DEMANGLE_SUPPORT=0 -s ELIMINATE_DUPLICATE_FUNCTIONS=1 --llvm-lto 1")
+        set(CMAKE_EXE_LINKER_FLAGS_MINSIZEREL "${CMAKE_EXE_LINKER_FLAGS_MINSIZEREL} -s DEMANGLE_SUPPORT=0 -s ELIMINATE_DUPLICATE_FUNCTIONS=1 --llvm-lto 1")
+        
+        file(GLOB preJsFiles ${CMAKE_CURRENT_SOURCE_DIR}/../../cocos/audio/emcc/buzz.js)
+        file(GLOB libraryJsFiles 
+          ${CMAKE_CURRENT_SOURCE_DIR}/../../cocos/audio/emcc/SimpleAudioEngine.js
+          ${CMAKE_CURRENT_SOURCE_DIR}/../../cocos/base/emcc/StorageEngine.js
+          ${CMAKE_CURRENT_SOURCE_DIR}/../../cocos/network/WebSocket.js
+          ${CMAKE_CURRENT_SOURCE_DIR}/../../cocos/network/HttpClient.js
+          ${CMAKE_CURRENT_SOURCE_DIR}/../../cocos/ui/UIEditBox/UIEditBox.js
+          )
     
-    pre_build(${APP_NAME}
-      COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/Resources ${APP_BIN_DIR}${RES_PREFIX}
-      )
+        em_link_js_library(${APP_NAME} ${libraryJsFiles})
+        em_link_pre_js(${APP_NAME} ${preJsFiles})
+    else()
+        pre_build(${APP_NAME}
+          COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/Resources ${APP_BIN_DIR}${RES_PREFIX}
+          )
+    endif()
 endif()
 

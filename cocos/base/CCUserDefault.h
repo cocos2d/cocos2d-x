@@ -249,7 +249,14 @@ public:
      * @js NA
      */
     static bool isXMLFileExist();
-
+    
+    /** Set prefix for emscripten
+     */
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_EMSCRIPTEN)
+    void setPrefixForEmcc(const std::string &prefix);
+#endif
+    
 protected:
     UserDefault();
     virtual ~UserDefault();
@@ -262,6 +269,10 @@ private:
     static UserDefault* _userDefault;
     static std::string _filePath;
     static bool _isFilePathInitialized;
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_EMSCRIPTEN)
+    static std::string _emccPrefix;
+#endif
 };
 
 

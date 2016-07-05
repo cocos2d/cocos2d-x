@@ -94,6 +94,9 @@ if(ANDROID)
   list(APPEND all_prebuilt_libs zlib)
 endif()
 
+if(EMSCRIPTEN)
+  list(APPEND jpeg png tiff webp chipmunk)
+endif()
 
 # END CONFIG
 

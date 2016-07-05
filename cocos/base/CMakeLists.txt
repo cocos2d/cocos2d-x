@@ -4,6 +4,11 @@ if(MACOSX OR APPLE)
     base/CCUserDefault-apple.mm
   )
 
+elseif (EMSCRIPTEN)
+  set(COCOS_BASE_SPECIFIC_SRC
+    base/emcc/CCUserDefault-emcc.cpp
+  )
+
 elseif(ANDROID)
   set(COCOS_BASE_SPECIFIC_SRC
     base/CCUserDefault-android.cpp

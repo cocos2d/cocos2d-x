@@ -57,6 +57,11 @@
 #endif
 #define MUTEX_UNLOCK(m) \
     ReleaseMutex(m)
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_EMSCRIPTEN
+#define MUTEX int
+#define MUTEX_INIT(...)
+#define MUTEX_LOCK(...)
+#define MUTEX_UNLOCK(...)
 #else
 #message "Unsupported platform for AllocatorMutex, Locking semantics will not be supported"
 #define MUTEX

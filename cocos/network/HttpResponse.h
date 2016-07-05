@@ -170,6 +170,16 @@ public:
     }
 
     /**
+     * Set the http response data buffer, it is used by HttpClient.
+     * @param data the pointer point to the response data buffer.
+     * @param size size of data buffer.
+     */
+    inline void setResponseData(const char* data, size_t size)
+    {
+        _responseData.assign(data, data + size);
+    }
+    
+    /** 
      * Set the http response headers buffer, it is used by HttpClient.
      * @param data the pointer point to the response headers buffer.
      */

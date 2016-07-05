@@ -24,7 +24,13 @@
 #include "UIWebViewTest/UIWebViewTest.h"
 #endif
 #include "UIScale9SpriteTest.h"
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)     || \
+    (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || \
+    (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)     || \
+    (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)   || \
+    (CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN)   || \
+    (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)   || \
+    (CC_TARGET_PLATFORM == CC_PLATFORM_EMSCRIPTEN)
 #include "UIEditBoxTest.h"
 #endif
 
@@ -34,7 +40,13 @@ GUIDynamicCreateTests::GUIDynamicCreateTests()
     addTest("VideoPlayer Test", [](){ return new (std::nothrow) VideoPlayerTests; });
     addTest("WebView Test", [](){ return new (std::nothrow) WebViewTests; });
 #endif
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)     || \
+    (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || \
+    (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)     || \
+    (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)   || \
+    (CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN)   || \
+    (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)   || \
+    (CC_TARGET_PLATFORM == CC_PLATFORM_EMSCRIPTEN)
     addTest("EditBox Test", [](){ return new (std::nothrow) UIEditBoxTests; });
 #endif
     addTest("Focus Test", [](){ return new (std::nothrow) UIFocusTests; });

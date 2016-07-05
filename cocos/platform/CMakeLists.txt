@@ -64,6 +64,15 @@ set(COCOS_PLATFORM_SPECIFIC_SRC
   platform/desktop/CCGLViewImpl-desktop.cpp
 )
 
+elseif(EMSCRIPTEN)
+set(COCOS_PLATFORM_SPECIFIC_SRC
+  platform/emcc/CCFileUtils-emcc.cpp
+  platform/emcc/CCCommon-emcc.cpp
+  platform/emcc/CCApplication-emcc.cpp
+  platform/emcc/CCDevice-emcc.cpp
+  platform/emcc/CCGLViewImpl-emcc.cpp
+)
+
 elseif(ANDROID)
 
 set(COCOS_PLATFORM_SPECIFIC_SRC

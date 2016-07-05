@@ -30,7 +30,7 @@
 #include "storage/local-storage/LocalStorage.h"
 #include "platform/CCPlatformMacros.h"
 
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID && CC_TARGET_PLATFORM != CC_PLATFORM_EMSCRIPTEN)
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -177,4 +177,4 @@ void localStorageClear()
         printf("Error in localStorage.clear()\n");
 }
 
-#endif // #if (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID)
+#endif // #if (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID && CC_TARGET_PLATFORM != CC_PLATFORM_EMSCRIPTEN))

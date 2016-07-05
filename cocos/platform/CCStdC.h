@@ -42,6 +42,8 @@ THE SOFTWARE.
 #include "platform/linux/CCStdC-linux.h"
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN
 #include "platform/tizen/CCStdC-tizen.h"
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_EMSCRIPTEN
+#include "platform/emcc/CCStdC-emcc.h"
 #endif
 
 #endif /* __PLATFORM_CCSTDC_H__*/

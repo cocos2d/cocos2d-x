@@ -43,7 +43,7 @@ bool UITextFieldTest::init()
         _uiLayer->addChild(alert);
         
         // Create the textfield
-        TextField* textField = TextField::create("input words here","Arial",30);
+        TextField* textField = TextField::create("input words here 1", "fonts/Marker Felt.ttf", 30);
 
         textField->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         textField->addEventListener(CC_CALLBACK_2(UITextFieldTest::textFieldEvent, this));

@@ -4186,6 +4186,8 @@
 		A5B57D4B1A3B919900CCBDB4 /* SpriteBuilder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5B57CE01A3B919900CCBDB4 /* SpriteBuilder.cpp */; };
 		A5B57D4C1A3B919900CCBDB4 /* SpriteBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = A5B57CE11A3B919900CCBDB4 /* SpriteBuilder.h */; };
 		A5B57D4D1A3B919900CCBDB4 /* SpriteBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = A5B57CE11A3B919900CCBDB4 /* SpriteBuilder.h */; };
+		A5FD79BE1D2A63DC00E11101 /* HttpClient-emcc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5FD79BD1D2A63DC00E11101 /* HttpClient-emcc.cpp */; };
+		A5FD79C01D2A63EA00E11101 /* WebSocket-emcc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5FD79BF1D2A63EA00E11101 /* WebSocket-emcc.cpp */; };
 		B2165EEA19921124000BE3E6 /* CCPrimitiveCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B257B45E198A353E00D9A687 /* CCPrimitiveCommand.cpp */; };
 		B217703C1977ECB4009EE11B /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B217703B1977ECB4009EE11B /* IOKit.framework */; };
 		B21770401977ECE6009EE11B /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B217703F1977ECE6009EE11B /* OpenGL.framework */; };
@@ -7083,6 +7085,10 @@
 		A5B57CDF1A3B919900CCBDB4 /* CCBXWidgetloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCBXWidgetloader.h; path = spritebuilder/CCBXWidgetloader.h; sourceTree = "<group>"; };
 		A5B57CE01A3B919900CCBDB4 /* SpriteBuilder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SpriteBuilder.cpp; path = spritebuilder/SpriteBuilder.cpp; sourceTree = "<group>"; };
 		A5B57CE11A3B919900CCBDB4 /* SpriteBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SpriteBuilder.h; path = spritebuilder/SpriteBuilder.h; sourceTree = "<group>"; };
+		A5C27CB81DD1E4490069F627 /* UIEditBoxImpl-emcc.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = "UIEditBoxImpl-emcc.cpp"; sourceTree = "<group>"; };
+		A5C27CB91DD1E4490069F627 /* UIEditBoxImpl-emcc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIEditBoxImpl-emcc.h"; sourceTree = "<group>"; };
+		A5FD79BD1D2A63DC00E11101 /* HttpClient-emcc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "HttpClient-emcc.cpp"; sourceTree = "<group>"; };
+		A5FD79BF1D2A63EA00E11101 /* WebSocket-emcc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "WebSocket-emcc.cpp"; sourceTree = "<group>"; };
 		B20564AA1A6E5744001C1B6E /* ccShader_PositionColorTextureAsPointsize.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_PositionColorTextureAsPointsize.vert; sourceTree = "<group>"; };
 		B217703B1977ECB4009EE11B /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		B217703D1977ECC1009EE11B /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -7937,6 +7943,17 @@
 		D0FD03441A3B51AA00825BB5 /* CCAllocatorStrategyFixedBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAllocatorStrategyFixedBlock.h; sourceTree = "<group>"; };
 		D0FD03451A3B51AA00825BB5 /* CCAllocatorStrategyGlobalSmallBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAllocatorStrategyGlobalSmallBlock.h; sourceTree = "<group>"; };
 		D0FD03461A3B51AA00825BB5 /* CCAllocatorStrategyPool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAllocatorStrategyPool.h; sourceTree = "<group>"; };
+		D85F54661D2BAAE200F49F75 /* CCApplication-emcc.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = "CCApplication-emcc.cpp"; sourceTree = "<group>"; };
+		D85F54671D2BAAE200F49F75 /* CCApplication-emcc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CCApplication-emcc.h"; sourceTree = "<group>"; };
+		D85F54681D2BAAE200F49F75 /* CCCommon-emcc.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = "CCCommon-emcc.cpp"; sourceTree = "<group>"; };
+		D85F54691D2BAAE200F49F75 /* CCDevice-emcc.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = "CCDevice-emcc.cpp"; sourceTree = "<group>"; };
+		D85F546A1D2BAAE200F49F75 /* CCFileUtils-emcc.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = "CCFileUtils-emcc.cpp"; sourceTree = "<group>"; };
+		D85F546B1D2BAAE200F49F75 /* CCFileUtils-emcc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CCFileUtils-emcc.h"; sourceTree = "<group>"; };
+		D85F546C1D2BAAE200F49F75 /* CCGL-emcc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CCGL-emcc.h"; sourceTree = "<group>"; };
+		D85F546D1D2BAAE200F49F75 /* CCGLViewImpl-emcc.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = "CCGLViewImpl-emcc.cpp"; sourceTree = "<group>"; };
+		D85F546E1D2BAAE200F49F75 /* CCGLViewImpl-emcc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CCGLViewImpl-emcc.h"; sourceTree = "<group>"; };
+		D85F546F1D2BAAE200F49F75 /* CCPlatformDefine-emcc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CCPlatformDefine-emcc.h"; sourceTree = "<group>"; };
+		D85F54701D2BAAE200F49F75 /* CCStdC-emcc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CCStdC-emcc.h"; sourceTree = "<group>"; };
 		DA8C62A019E52C6400000516 /* ioapi_mem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ioapi_mem.cpp; sourceTree = "<group>"; };
 		DA8C62A119E52C6400000516 /* ioapi_mem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ioapi_mem.h; sourceTree = "<group>"; };
 		DABC9FA719E7DFA900FA252C /* CCClippingRectangleNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCClippingRectangleNode.cpp; sourceTree = "<group>"; };
@@ -9246,6 +9263,8 @@
 			children = (
 				291A091F1C5F06530068C1D2 /* Mac */,
 				2980F0161BA9A5550059E678 /* iOS */,
+				A5C27CB81DD1E4490069F627 /* UIEditBoxImpl-emcc.cpp */,
+				A5C27CB91DD1E4490069F627 /* UIEditBoxImpl-emcc.h */,
 				A0E749F51BA8FD7F001A8332 /* UIEditBoxImpl-common.cpp */,
 				A0E749F61BA8FD7F001A8332 /* UIEditBoxImpl-common.h */,
 				50ED2BDC19BEAF7900A0AB90 /* UIEditBoxImpl-win32.h */,
@@ -10039,6 +10058,7 @@
 		507003251B69820100E83DDD /* HttpClient */ = {
 			isa = PBXGroup;
 			children = (
+				A5FD79BD1D2A63DC00E11101 /* HttpClient-emcc.cpp */,
 				52B47A2B1A5349A3004E4C60 /* HttpClient-apple.mm */,
 				507003161B69735200E83DDD /* HttpClient-android.cpp */,
 				507003171B69735200E83DDD /* HttpClient-winrt.cpp */,
@@ -10068,6 +10088,7 @@
 		507003271B69821300E83DDD /* WebSocket */ = {
 			isa = PBXGroup;
 			children = (
+				A5FD79BF1D2A63EA00E11101 /* WebSocket-emcc.cpp */,
 				1AAF5368180E3374000584C8 /* WebSocket.cpp */,
 				1AAF5369180E3374000584C8 /* WebSocket.h */,
 			);
@@ -10115,6 +10136,7 @@
 		50ABBEDB1926664700A911A9 /* platform */ = {
 			isa = PBXGroup;
 			children = (
+				D85F54651D2BAAE200F49F75 /* emcc */,
 				503DD8CD1926736A00CD74DD /* ios */,
 				50ABBF2D1926664700A911A9 /* desktop */,
 				50ABBF4E1926664700A911A9 /* mac */,
@@ -11584,6 +11606,24 @@
 			);
 			name = allocator;
 			path = ../base/allocator;
+			sourceTree = "<group>";
+		};
+		D85F54651D2BAAE200F49F75 /* emcc */ = {
+			isa = PBXGroup;
+			children = (
+				D85F54661D2BAAE200F49F75 /* CCApplication-emcc.cpp */,
+				D85F54671D2BAAE200F49F75 /* CCApplication-emcc.h */,
+				D85F54681D2BAAE200F49F75 /* CCCommon-emcc.cpp */,
+				D85F54691D2BAAE200F49F75 /* CCDevice-emcc.cpp */,
+				D85F546A1D2BAAE200F49F75 /* CCFileUtils-emcc.cpp */,
+				D85F546B1D2BAAE200F49F75 /* CCFileUtils-emcc.h */,
+				D85F546C1D2BAAE200F49F75 /* CCGL-emcc.h */,
+				D85F546D1D2BAAE200F49F75 /* CCGLViewImpl-emcc.cpp */,
+				D85F546E1D2BAAE200F49F75 /* CCGLViewImpl-emcc.h */,
+				D85F546F1D2BAAE200F49F75 /* CCPlatformDefine-emcc.h */,
+				D85F54701D2BAAE200F49F75 /* CCStdC-emcc.h */,
+			);
+			path = emcc;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -14904,6 +14944,7 @@
 				292DB14F19B4574100A80320 /* UIEditBoxImpl-stub.cpp in Sources */,
 				15AE199419AAD39600C27E9E /* LayoutReader.cpp in Sources */,
 				1A01C68A18F57BE800EFE3A6 /* CCDeprecated.cpp in Sources */,
+				A5FD79C01D2A63EA00E11101 /* WebSocket-emcc.cpp in Sources */,
 				B6CAB2F51AF9AA1A00B9B856 /* btTriangleBuffer.cpp in Sources */,
 				1A1645B0191B726C008C7C7F /* ConvertUTF.c in Sources */,
 				15AE1BE219AAE01E00C27E9E /* CCScrollView.cpp in Sources */,
@@ -15750,6 +15791,7 @@
 				5020A20A1D49912500E80C72 /* Slot.c in Sources */,
 				B665E20A1AA80A6500DDB1C5 /* CCPUBaseColliderTranslator.cpp in Sources */,
 				B665E3E61AA80A6600DDB1C5 /* CCPUSineForceAffectorTranslator.cpp in Sources */,
+				A5FD79BE1D2A63DC00E11101 /* HttpClient-emcc.cpp in Sources */,
 				B6CAB32F1AF9AA1A00B9B856 /* btGImpactQuantizedBvh.cpp in Sources */,
 				15AE1B5119AADA9900C27E9E /* UIPageView.cpp in Sources */,
 				B6CAB35F1AF9AA1A00B9B856 /* gim_tri_collision.cpp in Sources */,

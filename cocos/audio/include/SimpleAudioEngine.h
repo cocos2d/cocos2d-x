@@ -37,6 +37,11 @@ THE SOFTWARE.
 #define CC_DEPRECATED_ATTRIBUTE
 #endif
 
+#ifdef EMSCRIPTEN
+#include <vector>
+#endif
+
+
 /**
 * @addtogroup audio
 * @{
@@ -248,6 +253,15 @@ public:
      * @param filePath The path of the effect file.
      */
     virtual void unloadEffect(const char* filePath);
+    
+    /**
+    * set emscripten availaible audio files extension
+    *
+    * @extFiles extensions vector
+    */
+#ifdef EMSCRIPTEN
+    void setUseFileExt(const std::vector<std::string> &extFiles);
+#endif
 
 protected:
     /**

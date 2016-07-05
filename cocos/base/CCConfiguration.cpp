@@ -129,27 +129,32 @@ void Configuration::gatherGPUInfo()
 	_valueDict["gl.max_samples_allowed"] = Value((int)_maxSamplesAllowed);
 #endif
     
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_EMSCRIPTEN)
+    _supportsETC1 = checkForGLExtension("WEBGL_compressed_texture_etc1");
+    _supportsS3TC = checkForGLExtension("WEBGL_compressed_texture_s3tc");
+    _supportsATITC = checkForGLExtension("WEBGL_compressed_texture_atc");
+    _supportsPVRTC = checkForGLExtension("WEBGL_compressed_texture_pvrtc");
+#else
     _supportsETC1 = checkForGLExtension("GL_OES_compressed_ETC1_RGB8_texture");
-    _valueDict["gl.supports_ETC1"] = Value(_supportsETC1);
-    
     _supportsS3TC = checkForGLExtension("GL_EXT_texture_compression_s3tc");
-    _valueDict["gl.supports_S3TC"] = Value(_supportsS3TC);
-    
     _supportsATITC = checkForGLExtension("GL_AMD_compressed_ATC_texture");
-    _valueDict["gl.supports_ATITC"] = Value(_supportsATITC);
-    
     _supportsPVRTC = checkForGLExtension("GL_IMG_texture_compression_pvrtc");
-	_valueDict["gl.supports_PVRTC"] = Value(_supportsPVRTC);
+#endif
+    
+    _valueDict["gl.supports_ETC1"] = Value(_supportsETC1);
+    _valueDict["gl.supports_S3TC"] = Value(_supportsS3TC);
+    _valueDict["gl.supports_ATITC"] = Value(_supportsATITC);
+    _valueDict["gl.supports_PVRTC"] = Value(_supportsPVRTC);
 
     _supportsNPOT = true;
 	_valueDict["gl.supports_NPOT"] = Value(_supportsNPOT);
 	
     _supportsBGRA8888 = checkForGLExtension("GL_IMG_texture_format_BGRA888");
 	_valueDict["gl.supports_BGRA8888"] = Value(_supportsBGRA8888);
-
+    
     _supportsDiscardFramebuffer = checkForGLExtension("GL_EXT_discard_framebuffer");
-	_valueDict["gl.supports_discard_framebuffer"] = Value(_supportsDiscardFramebuffer);
-
+    _valueDict["gl.supports_discard_framebuffer"] = Value(_supportsDiscardFramebuffer);
+    
     _supportsShareableVAO = checkForGLExtension("vertex_array_object");
     _valueDict["gl.supports_vertex_array_object"] = Value(_supportsShareableVAO);
 
@@ -417,7 +422,8 @@ void Configuration::loadConfigFile(const std::string& filename)
     else
         _valueDict[name] = Value((int)_animate3DQuality);
     
-    Director::getInstance()->getEventDispatcher()->dispatchEvent(_loadedEvent);
+    if(Director::hasInstance())
+        Director::getInstance()->getEventDispatcher()->dispatchEvent(_loadedEvent);
 }
 
 NS_CC_END

@@ -149,6 +149,13 @@ public:
     std::mutex& getCookieFileMutex() {return _cookieFileMutex;}
 
     std::mutex& getSSLCaFileMutex() {return _sslCaFileMutex;}
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_EMSCRIPTEN)
+    virtual void update(float time);
+    
+    static std::string getRequestType(HttpRequest::Type type);
+#endif
+    
 private:
     HttpClient();
     virtual ~HttpClient();

@@ -111,7 +111,11 @@ void PhysicsDemo::toggleDebugCallback(Ref* sender)
 
 namespace
 {
+#if CC_TARGET_PLATFORM == CC_PLATFORM_EMSCRIPTEN
+    const int LOGO_WIDTH = 100;
+#else
     const int LOGO_WIDTH = 188;
+#endif
     const int LOGO_HEIGHT = 35;
     const int LOGO_RAW_LENGTH = 24;
     const char LOGO_IMAGE[] =

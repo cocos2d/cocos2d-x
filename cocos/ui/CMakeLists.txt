@@ -26,6 +26,10 @@ ELSEIF(ANDROID)
         ui/UIVideoPlayer-android.cpp
         ui/UIWebViewImpl-android.cpp
     )
+elseif(EMSCRIPTEN)
+    set(COCOS_UI_SPECIFIC_SRC
+        ui/UIEditBox/UIEditBoxImpl-emcc.cpp
+    )
 endif()
 
 #todo: android UIWebViewImpl and UIVideoPlayer

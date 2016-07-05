@@ -32,8 +32,10 @@ macro (BuildModules)
 	  endif()
 	endif(LINUX OR MACOSX OR WINDOWS)
 
-	# Freetype required on all platforms
-	cocos_find_package(Freetype FREETYPE REQUIRED)
+	# Freetype required on all platforms except emscripten
+	if(NOT EMSCRIPTEN)
+	  cocos_find_package(Freetype FREETYPE REQUIRED)
+	endif()
 
 	# WebP required if used
 	if(USE_WEBP)
@@ -70,14 +72,16 @@ macro (BuildModules)
 
 	# Bullet (not prebuilded, exists as source)
 	if(USE_BULLET)
-	  if(USE_PREBUILT_LIBS OR USE_SOURCES_EXTERNAL)
-	    add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/external/bullet)
-	    set(BULLET_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/external/bullet)
-	    set(BULLET_LIBRARIES bullet)
-	  else()
-	    cocos_find_package(bullet BULLET REQUIRED)
-	    set(BULLET_LIBRARIES bullet)
-	  endif()
+	  if(NOT EMSCRIPTEN)
+	    if(USE_PREBUILT_LIBS OR USE_SOURCES_EXTERNAL)
+	      add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/external/bullet)
+	      set(BULLET_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/external/bullet)
+	      set(BULLET_LIBRARIES bullet)
+	    else()
+	      cocos_find_package(bullet BULLET REQUIRED)
+	      set(BULLET_LIBRARIES bullet)
+	    endif()
+	  endif(NOT EMSCRIPTEN)
 	  add_definitions(-DCC_ENABLE_BULLET_INTEGRATION=1)
 	  add_definitions(-DCC_USE_PHYSICS=1)
 	  message(STATUS "Bullet include dirs: ${BULLET_INCLUDE_DIRS}")
@@ -112,7 +116,10 @@ macro (BuildModules)
 	endif()
 	message(STATUS "TinyXML2 include dirs: ${TinyXML2_INCLUDE_DIRS}")
 
-	cocos_find_package(ZLIB ZLIB REQUIRED)
+	if(NOT EMSCRIPTEN)
+	  cocos_find_package(ZLIB ZLIB REQUIRED)
+	endif()
+
 	# minizip (we try to migrate to minizip from https://github.com/nmoinvaz/minizip)
 	# only msys2 currently provides package for this variant, all other
 	# dists have packages from zlib, thats very old for us.
@@ -150,17 +157,21 @@ macro (BuildModules)
 
 	# Png
 	if(USE_PNG)
-		cocos_find_package(PNG PNG REQUIRED)
+	  if(NOT EMSCRIPTEN)
+	    cocos_find_package(PNG PNG REQUIRED)
+	  endif(NOT EMSCRIPTEN)
 	  add_definitions(-DCC_USE_PNG=1)
 	else(USE_PNG)
-      add_definitions(-DCC_USE_PNG=0)
+	  add_definitions(-DCC_USE_PNG=0)
 	endif(USE_PNG)
 	
-	cocos_find_package(WEBSOCKETS WEBSOCKETS REQUIRED)
-	cocos_find_package(CURL CURL REQUIRED)
-	if(NOT USE_PREBUILT_LIBS)
-	  cocos_find_package(OpenSSL OPENSSL REQUIRED)
-	endif()
+	if(NOT EMSCRIPTEN)
+	  cocos_find_package(WEBSOCKETS WEBSOCKETS REQUIRED)
+	  cocos_find_package(CURL CURL REQUIRED)
+	  if(NOT USE_PREBUILT_LIBS)
+	    cocos_find_package(OpenSSL OPENSSL REQUIRED)
+	  endif()
+	endif(NOT EMSCRIPTEN)
 
 	# flatbuffers
 	if(USE_PREBUILT_LIBS OR USE_SOURCES_EXTERNAL)

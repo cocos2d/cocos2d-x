@@ -42,6 +42,8 @@
 #include "audio/linux/AudioEngine-linux.h"
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN
 #include "audio/tizen/AudioEngine-tizen.h"
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_EMSCRIPTEN
+#include "audio/emcc/AudioEngine-emcc.h"
 #endif
 
 #define TIME_DELAY_PRECISION 0.0001
