@@ -337,7 +337,7 @@ void TextFieldTTF::setCursorPosition(std::size_t cursorPosition)
     if (_cursorEnabled && cursorPosition <= (std::size_t)_charCount)
     {
         _cursorPosition = cursorPosition;
-        _cursorShowingTime = CURSOR_TIME_SHOW_HIDE*2.0;
+        _cursorShowingTime = CURSOR_TIME_SHOW_HIDE * 2.0f;
     }
 }
 

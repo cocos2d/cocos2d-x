@@ -905,9 +905,9 @@ void GLProgram::setUniformsForBuiltins(const Mat4 &matrixMV)
         // Getting Mach time per frame per shader using time could be extremely expensive.
         float time = _director->getTotalFrames() * _director->getAnimationInterval();
 
-        setUniformLocationWith4f(_builtInUniforms[GLProgram::UNIFORM_TIME], time/10.0, time, time*2, time*4);
-        setUniformLocationWith4f(_builtInUniforms[GLProgram::UNIFORM_SIN_TIME], time/8.0, time/4.0, time/2.0, sinf(time));
-        setUniformLocationWith4f(_builtInUniforms[GLProgram::UNIFORM_COS_TIME], time/8.0, time/4.0, time/2.0, cosf(time));
+        setUniformLocationWith4f(_builtInUniforms[GLProgram::UNIFORM_TIME], time/10.0f, time, time*2, time*4);
+        setUniformLocationWith4f(_builtInUniforms[GLProgram::UNIFORM_SIN_TIME], time/8.0f, time/4.0f, time/2.0f, sinf(time));
+        setUniformLocationWith4f(_builtInUniforms[GLProgram::UNIFORM_COS_TIME], time/8.0f, time/4.0f, time/2.0f, cosf(time));
     }
 
     if (_flags.usesRandom)

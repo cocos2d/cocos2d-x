@@ -638,10 +638,10 @@ bool MyXMLVisitor::VisitEnter( const tinyxml2::XMLElement& element, const tinyxm
                     attributes.fontSize = attrValueMap.at(RichText::KEY_FONT_SIZE).asFloat();
                 }
                 if (attrValueMap.find(RichText::KEY_FONT_SMALL) != attrValueMap.end()) {
-                    attributes.fontSize = getFontSize() * 0.8;
+                    attributes.fontSize = getFontSize() * 0.8f;
                 }
                 if (attrValueMap.find(RichText::KEY_FONT_BIG) != attrValueMap.end()) {
-                    attributes.fontSize = getFontSize() * 1.25;
+                    attributes.fontSize = getFontSize() * 1.25f;
                 }
                 if (attrValueMap.find(RichText::KEY_FONT_COLOR_STRING) != attrValueMap.end()) {
                     attributes.setColor(_richText->color3BWithString(attrValueMap.at(RichText::KEY_FONT_COLOR_STRING).asString()));

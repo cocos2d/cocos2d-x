@@ -1357,7 +1357,7 @@ void Terrain::Chunk::updateVerticesForLOD()
     int gridY = _size.height;
     int gridX = _size.width;
 
-    if(_currentLod>=2 && std::abs(_slope)>1.2)
+    if (_currentLod >= 2 && std::abs(_slope) > 1.2f)
     {
         int step = 1<<_currentLod;
         for(int i =step;i<gridY-step;i+=step)

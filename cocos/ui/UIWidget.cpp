@@ -1312,7 +1312,7 @@ void Widget::copyProperties(Widget *widget)
         float originalScale = Node::getScaleX();
         if (_flippedX)
         {
-            originalScale = originalScale * -1.0;
+            originalScale = originalScale * -1.0f;
         }
         return originalScale;
     }
@@ -1322,7 +1322,7 @@ void Widget::copyProperties(Widget *widget)
         float originalScale = Node::getScaleY();
         if (_flippedY)
         {
-            originalScale = originalScale * -1.0;
+            originalScale = originalScale * -1.0f;
         }
         return originalScale;
     }
