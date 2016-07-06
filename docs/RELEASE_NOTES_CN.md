@@ -70,7 +70,9 @@ glBufferData(GL_ARRAY_BUFFER, 100, xxx , GL_DYNAMIC_DRAW);
 
 ### Android使用clang编译器
 
-[从NDK r11开始Google弃用了gcc](https://developer.android.com/ndk/downloads/revision_history.html)，所以cocos2d-x也切换到clang编译器。如果可能的话，一般都建议使用最新版本的NDK。
+[从NDK r11开始Google弃用了gcc](https://developer.android.com/ndk/downloads/revision_history.html)，所以cocos2d-x也切换到clang编译器。
+
+建议使用NDK r11c。在测试过程中发现，如果使用NDK r10c + clang的话，`Node::enumerateChildren()`会崩溃。
 
 ## 其他改动
 更完整的改动列表可以阅读[full changelog](https://github.com/cocos2d/cocos2d-x/blob/v3/CHANGELOG)。
