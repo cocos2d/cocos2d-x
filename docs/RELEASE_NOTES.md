@@ -178,7 +178,7 @@ More detail information and discussion can refer to [the issue](https://github.c
 
 ### improve web engine performance in WebGL mode
 
-Web engine performance in WebGL mode is obviously improved in this version. The rendering performance, cpu usage and memory usage are optimized.
+The web engine is receiving a big performance upgrade. The WebGL renderer have been completely refactored from the ground up. This means improved rendering and a reduced memory footprint.
 
 ![rendering peformance](https://raw.githubusercontent.com/minggo/Pictures/master/web-performance-improve/adverage-time-per-frame.png)
 
