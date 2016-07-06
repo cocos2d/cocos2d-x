@@ -101,7 +101,7 @@ bool ActionInterval::initWithDuration(float d)
 
     _elapsed = 0;
     _firstTick = true;
-	_pause = false;
+    _pause = false;
 
     return true;
 }
@@ -125,8 +125,8 @@ bool ActionInterval::isDone() const
 
 void ActionInterval::step(float dt)
 {
-	if (_pause)
-		return;
+    if (_pause)
+        return;
     if (_firstTick)
     {
         _firstTick = false;
