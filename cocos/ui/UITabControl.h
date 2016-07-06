@@ -273,7 +273,7 @@ namespace ui {
         * Add a callback function which would be called when selected tab changed
         *@param callback A std::function with type @see `ccTabControlCallback`
         */
-        void setTabChangedEventListener(const ccTabControlCallback& callBack);
+        void setTabChangedEventListener(const ccTabControlCallback& callback);
         /// @}
 
         /// @{
@@ -281,9 +281,9 @@ namespace ui {
 
         /**
         * set header width, affect all tab
-        * @param headerWith: each tab header's width
+        * @param headerWidth each tab header's width
         */
-        void  setHeaderWidth(float headerWith);
+        void  setHeaderWidth(float headerWidth);
 
         /**
         * get tab header's width
@@ -293,9 +293,9 @@ namespace ui {
 
         /**
         * set header height, affect all tab
-        * @param headerHeigt: each tab header's height
+        * @param headerHeight each tab header's height
         */
-        void  setHeaderHeight(float headerHeigt);
+        void  setHeaderHeight(float headerHeight);
 
         /**
         * get tab header's height

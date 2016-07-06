@@ -510,7 +510,7 @@ bool jsval_to_array_of_cpvect( JSContext *cx, jsval vp, cpVect**verts, int *numV
     uint32_t len = 0;
     JS_GetArrayLength(cx, jsobj, &len);
 
-    JSB_PRECONDITION( len%2==0, "Array lenght should be even");
+    JSB_PRECONDITION( len%2==0, "Array length should be even");
 
     cpVect *array = (cpVect*)malloc( sizeof(cpVect) * len/2);
 

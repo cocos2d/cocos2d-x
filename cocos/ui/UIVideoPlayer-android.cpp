@@ -82,7 +82,7 @@ VideoPlayer::VideoPlayer()
 
 #if CC_VIDEOPLAYER_DEBUG_DRAW
     _debugDrawNode = DrawNode::create();
-    addchild(_debugDrawNode);
+    addChild(_debugDrawNode);
 #endif
 }
 
