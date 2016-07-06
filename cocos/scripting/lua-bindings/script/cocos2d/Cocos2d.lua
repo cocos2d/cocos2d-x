@@ -309,7 +309,7 @@ function cc.convertColor(input, typ)
             ret = {r = input.r, g = input.g, b = input.b}
         end
         if input.a then
-            if math.ceil(input.a) ~= input.a or input.a >= 1 then
+            if math.ceil(input.a) ~= input.a or input.a <= 1 then
                 ret.a = input.a * 255
             else
                 ret.a = input.a
@@ -324,7 +324,7 @@ function cc.convertColor(input, typ)
             ret = {r = input.r / 255, g = input.g / 255, b = input.b / 255}
         end
         if input.a then
-            if math.ceil(input.a) ~= input.a or input.a >= 1 then
+            if math.ceil(input.a) ~= input.a or input.a <= 1 then
                 ret.a = input.a
             else
                 ret.a = input.a / 255
