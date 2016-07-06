@@ -36,7 +36,7 @@
 
 ## Runtime Requirements
 
-* Android 2.3.3 or newer
+* Android 2.3.3+
 * iOS 5.0 or newer
 * OS X 10.7 or newer
 * Windows 7 or newer
@@ -49,7 +49,7 @@
 
 * Xcode 5.1 or newer for iOS or Mac
 * gcc 4.9 or newer for Linux
-* ndk-r10c for Android
+* ndk-r11+ for Android
 * Visual Studio 2013 or newer for Windows (win32)
 * Visual Studio 2013 update4 or newer for Windows 8.1 universal Apps
 * Visual Studio 2015 or newer and Windows 10.0 (build 10074 or higher) for Windows 10.0 UWP Apps
