@@ -6,10 +6,10 @@
 
 --------------------------------
 -- set header width, affect all tab<br>
--- param headerWith: each tab header's width
+-- param headerWidth each tab header's width
 -- @function [parent=#TabControl] setHeaderWidth 
 -- @param self
--- @param #float headerWith
+-- @param #float headerWidth
 -- @return TabControl#TabControl self (return value: ccui.TabControl)
         
 --------------------------------
@@ -104,7 +104,7 @@
 -- param callback A std::function with type @see `ccTabControlCallback`
 -- @function [parent=#TabControl] setTabChangedEventListener 
 -- @param self
--- @param #function callBack
+-- @param #function callback
 -- @return TabControl#TabControl self (return value: ccui.TabControl)
         
 --------------------------------
@@ -117,10 +117,10 @@
         
 --------------------------------
 -- set header height, affect all tab<br>
--- param headerHeigt: each tab header's height
+-- param headerHeight each tab header's height
 -- @function [parent=#TabControl] setHeaderHeight 
 -- @param self
--- @param #float headerHeigt
+-- @param #float headerHeight
 -- @return TabControl#TabControl self (return value: ccui.TabControl)
         
 --------------------------------
