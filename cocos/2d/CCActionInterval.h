@@ -74,6 +74,12 @@ public:
      * @return The seconds had elapsed since the actions started to run.
      */
     inline float getElapsed(void) { return _elapsed; }
+    inline void setElapsed(float elapsed) { this->_elapsed = elapsed; }
+
+
+    inline void pause(){ this->_pause = true; }
+    inline void resume(){ this->_pause = false; }
+    inline bool isPause(){ return this->_pause; }
 
     /** Sets the amplitude rate, extension in GridAction
      *
@@ -114,6 +120,7 @@ CC_CONSTRUCTOR_ACCESS:
 
 protected:
     float _elapsed;
+    bool _pause;
     bool   _firstTick;
 
 protected:
