@@ -388,7 +388,7 @@ bool JSB_closeWindow(JSContext *cx, uint32_t argc, jsval *vp)
 {
     EventListenerCustom* _event = Director::getInstance()->getEventDispatcher()->addCustomEventListener(Director::EVENT_AFTER_DRAW, [&](EventCustom *event) {
         Director::getInstance()->getEventDispatcher()->removeEventListener(_event);
-        _event->release();
+        CC_SAFE_RELEASE(_event);
         
         ScriptingCore::getInstance()->cleanup();
     });

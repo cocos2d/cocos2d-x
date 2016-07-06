@@ -3,6 +3,7 @@ html {
 }
 
 body, canvas, div {
+  outline: none;
   -moz-user-select: none;
   -webkit-user-select: none;
   -ms-user-select: none;
@@ -42,4 +43,8 @@ body {
   -webkit-box-orient: horizontal;
   -webkit-box-align: center;
   -webkit-box-pack: center;
+}
+
+canvas {
+  background-color: rgba(0, 0, 0, 0);
 }
