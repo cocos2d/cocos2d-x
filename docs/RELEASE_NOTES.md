@@ -159,7 +159,7 @@ cocos new -l cpp|js|lua MyNewGame
 * improve Android performance issue
 * improve web engine performance in WebGL mode
 * support Android obb extension
-* use clang instead of gcc on Android
+* use clang instead of gcc on Android, use NDK r11+
 
 ## The main features in detail of Cocos2d-x v3.12
 
