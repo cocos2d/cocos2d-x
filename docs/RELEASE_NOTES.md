@@ -187,7 +187,9 @@ Web engine performance in WebGL mode is obviously improved in this version. The 
 ![memory-usage](https://raw.githubusercontent.com/minggo/Pictures/master/web-performance-improve/memory-usage.png)
 
 ### Use clang on Android
-[Google deprecated gcc starting in NDK r11](https://developer.android.com/ndk/downloads/revision_history.html), cocos2d-x now uses clang. We suggest using the latest NDK version, if possible. 
+[Google deprecated gcc starting in NDK r11](https://developer.android.com/ndk/downloads/revision_history.html), cocos2d-x now uses clang. We suggest using the NDK r11c.
+
+We found an issue that, if using NDKr 10c + clang, then `Node::enumerateChildren()` will crash on Android.
  
 ## Other changes
 View our [full changelog](https://github.com/cocos2d/cocos2d-x/blob/v3/CHANGELOG).
