@@ -23,7 +23,7 @@
 * 提升引擎在Android平台的渲染效率
 * 提升Cocos2d-html5 WebGL模式的性能
 * 支持Android的OBB扩展格式
-* Android平台使用clang编译器
+* Android平台使用clang编译器，使用NDK r11+
 
 ## 主要特性的详细介绍
 
