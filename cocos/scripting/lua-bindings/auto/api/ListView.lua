@@ -85,9 +85,8 @@
 -- @return ListView#ListView self (return value: ccui.ListView)
         
 --------------------------------
--- +     * @brief Set current selected widget's index and call TouchEventType::ENDED event.<br>
--- +     * @param A index of a selected item.<br>
--- +     
+-- brief Set current selected widget's index and call TouchEventType::ENDED event.<br>
+-- param itemIndex A index of a selected item.
 -- @function [parent=#ListView] setCurSelectedIndex 
 -- @param self
 -- @param #int itemIndex
