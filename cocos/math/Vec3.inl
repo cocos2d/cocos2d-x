@@ -50,7 +50,7 @@ inline void Vec3::add(float xx, float yy, float zz)
 
 inline float Vec3::length() const
 {
-    return sqrt(x * x + y * y + z * z);
+    return std::sqrt(x * x + y * y + z * z);
 }
 
 inline float Vec3::lengthSquared() const

@@ -24,7 +24,7 @@
 
 #include <algorithm>
 #include <functional>
-#include <math.h>
+#include <cmath>
 #include "math/CCMathBase.h"
 
 /**
