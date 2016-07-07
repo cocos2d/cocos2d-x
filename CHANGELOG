@@ -1,4 +1,4 @@
-cocos2d-x-3.12 Jun 30 2016
+cocos2d-x-3.12 Jul 06 2016
 
 [HIGHLIGHT]     add VR support
 [HIGHLIGHT]     add Tizen support
@@ -16,7 +16,9 @@ cocos2d-x-3.12 Jun 30 2016
 [NEW]           UI: make ListView select item programmatically
 [NEW]           UI: add `EditBox::InputFlag::LOWERCASE_ALL_CHARACTERS` to lowercase characters
 [NEW]           UI: add `setBounce()` to WebView
-[NEW]           Web: can set orientation
+[NEW]           Web: refactor TMXLayer renderers
+[NEW]           Web: can force orientation in mobile browser
+[NEW]           Web: support high resolution TTF Label on retina display
 
 [REFINE]        Android: use clang instead of gcc to compile codes
 [REFINE]        Android: hide virtual button by default
@@ -48,6 +50,11 @@ cocos2d-x-3.12 Jun 30 2016
 [REFINE]        UI: RichText is improved: add effect of outline, shadow and glow; catch the event of open url; ability to extend tags; add anchor of image tag
 [REFINE]        3D: skeleton animation is more efficient when two animations switch frequently
 [REFINE]        3rd party: update webp to 0.5.0
+[REFINE]        Web: improve basic types to reduce memory usage
+[REFINE]        Web: Show line number in console statements
+[REFINE]        Web: Cache base64 image of PageViewIndicator and ScrollViewBar
+[REFINE]        Web: Pass error in cc.AsyncPool in onEnd callback
+[REFINE]        Web: Separate ccui.ListView event callback from ccui.ScrollView for its own events
 
 [FIX]           Android: fix compiling error if using NDK r11+
 [FIX]           Android: package name is `libcocos2dx` instead of application name if building with Android Studio
@@ -94,6 +101,10 @@ cocos2d-x-3.12 Jun 30 2016
 [FIX]           UI: can not use TTF font on Android
 [FIX]           RenderTexture: `setOpacity()` has not effect
 [FIX]           3D: `Sprite3D::createNode()` may not work correctly with particular model data
+[FIX]           Web: `getParentToNodeTransform` doesn't return result
+[FIX]           Web: remote image without extension in url can't be loaded as image
+[FIX]           Web: nested clipping nodes rendering issue in WebGL render mode
+[FIX]           Web: IMEDispatcher can't work in mobile Chrome
 
 
 cocos2d-x-3.11.1 May 27 2016
