@@ -29,7 +29,7 @@
 
 ### VR支持
 
-该版本添加了VR支持，不过还处于测试阶段。目前支持的设备有__Google Cardboard__，__Oculus Rift__，__Samsung Gear__和__Deepoon E2__。关于如何使用、测试VR功能，请参考[Programming Guide](http://cocos2d-x.org/docs/static-pages/programmers-guide.html)。
+该版本添加了VR支持，不过还处于测试阶段。目前支持的设备有__Google Cardboard__，__Oculus Rift__，__Samsung Gear__和__Deepoon E2__。关于如何使用、测试VR功能，请参考[Programming Guide](http://cocos2d-x.org/docs/programmers-guide/vr/index.html)。
 
 ### Tizen支持
 
