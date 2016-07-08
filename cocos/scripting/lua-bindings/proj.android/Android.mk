@@ -6,6 +6,8 @@ LOCAL_MODULE := cocos2d_lua_android_static
 
 LOCAL_MODULE_FILENAME := libluacocos2dandroid
 
+LOCAL_ARM_MODE := arm
+
 LOCAL_SRC_FILES := ../manual/platform/android/CCLuaJavaBridge.cpp \
                    ../manual/platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxLuaJavaBridge.cpp
 
@@ -31,9 +33,7 @@ LOCAL_MODULE    := cocos2d_lua_static
 
 LOCAL_MODULE_FILENAME := libluacocos2d
 
-ifeq ($(COCOS_SIMULATOR_BUILD),1)
 LOCAL_ARM_MODE := arm
-endif
 
 LOCAL_SRC_FILES := ../manual/CCLuaBridge.cpp \
           ../manual/CCLuaEngine.cpp \

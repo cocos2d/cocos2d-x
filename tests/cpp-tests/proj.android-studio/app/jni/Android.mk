@@ -6,6 +6,8 @@ LOCAL_MODULE := cpp_tests_shared
 
 LOCAL_MODULE_FILENAME := libcpp_tests
 
+LOCAL_ARM_MODE := arm
+
 LOCAL_SRC_FILES := main.cpp \
 ../../../Classes/ActionManagerTest/ActionManagerTest.cpp \
 ../../../Classes/ActionsEaseTest/ActionsEaseTest.cpp \

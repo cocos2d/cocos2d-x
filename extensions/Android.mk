@@ -5,9 +5,7 @@ LOCAL_MODULE    := cocos_extension_static
 
 LOCAL_MODULE_FILENAME := libextension
 
-ifeq ($(USE_ARM_MODE),1)
 LOCAL_ARM_MODE := arm
-endif
 
 LOCAL_SRC_FILES := \
 assets-manager/AssetsManager.cpp \
