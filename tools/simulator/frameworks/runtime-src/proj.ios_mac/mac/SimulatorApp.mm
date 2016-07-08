@@ -340,13 +340,6 @@ static void glfwDropFunc(GLFWwindow *window, int count, const char **files)
     GLView::setGLContextAttrs(glContextAttrs);
     
     // create console window **MUST** before create opengl view
-#if (CC_CODE_IDE_DEBUG_SUPPORT == 1)
-    if (_project.isShowConsole())
-    {
-        [self openConsoleWindow];
-        CCLOG("%s\n",Configuration::getInstance()->getInfo().c_str());
-    }
-#endif
     float frameScale = _project.getFrameScale();
     
     // get frame size
