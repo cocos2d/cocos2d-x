@@ -22,6 +22,7 @@
 #ifndef MATH_VEC3_H
 #define MATH_VEC3_H
 
+#include <cmath>
 #include "math/CCMathBase.h"
 
 /**

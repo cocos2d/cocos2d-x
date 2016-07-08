@@ -6,6 +6,8 @@ LOCAL_MODULE := lua_game_controller_test_shared
 
 LOCAL_MODULE_FILENAME := liblua_game_controller
 
+LOCAL_ARM_MODE := arm
+
 LOCAL_SRC_FILES := main.cpp \
                    ../../Classes/AppDelegate.cpp \
                    ../../../../../cocos/scripting/lua-bindings/auto/lua_cocos2dx_controller_auto.cpp \

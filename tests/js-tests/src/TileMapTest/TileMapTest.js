@@ -524,6 +524,7 @@ var TMXIsoTest = TileDemo.extend({
         // move map to the center of the screen
         var ms = map.getMapSize();
         var ts = map.getTileSize();
+        // map.setPosition(-ms.width * ts.width / 2, -ms.height * ts.height / 2);
         map.runAction(cc.moveTo(1.0, cc.p(-ms.width * ts.width / 2, -ms.height * ts.height / 2)));
     },
     title:function () {

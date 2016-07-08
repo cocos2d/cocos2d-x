@@ -838,7 +838,7 @@ static bool js_callFunc(JSContext *cx, uint32_t argc, jsval *vp)
         JS::RootedObject jsobj(cx, jsb_ref_create_jsobject(cx, ret, typeClass, "cocos2d::CallFuncN"));
 
         JS::RootedValue retVal(cx, OBJECT_TO_JSVAL(jsobj));
-        std::shared_ptr<JSCallbackWrapper> tmpCobj(new JSCallbackWrapper(retVal));
+        std::shared_ptr<JSCallbackWrapper> tmpCobj(new JSCallbackWrapper());
 
         JS::RootedValue callback(cx, args.get(0));
         tmpCobj->setJSCallbackFunc(callback);
