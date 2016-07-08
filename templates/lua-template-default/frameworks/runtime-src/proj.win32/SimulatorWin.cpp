@@ -32,12 +32,7 @@
 #include "platform/win32/PlayerMenuServiceWin.h"
 
 // define 1 to open console ui and setup windows system menu, 0 to disable
-#include "ide-support/CodeIDESupport.h"
-#if (CC_CODE_IDE_DEBUG_SUPPORT > 0)
-#define SIMULATOR_WITH_CONSOLE_AND_MENU 1
-#else
 #define SIMULATOR_WITH_CONSOLE_AND_MENU 0
-#endif
 
 USING_NS_CC;
 
