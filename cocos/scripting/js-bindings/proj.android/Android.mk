@@ -6,9 +6,7 @@ LOCAL_MODULE := cocos2d_js_android_static
 
 LOCAL_MODULE_FILENAME := libjscocos2dandroid
 
-ifeq ($(COCOS_SIMULATOR_BUILD),1)
 LOCAL_ARM_MODE := arm
-endif
 
 LOCAL_SRC_FILES := ../manual/platform/android/CCJavascriptJavaBridge.cpp
 
@@ -34,6 +32,8 @@ include $(CLEAR_VARS)
 LOCAL_MODULE := cocos2d_js_static
 
 LOCAL_MODULE_FILENAME := libjscocos2d
+
+LOCAL_ARM_MODE := arm
 
 LOCAL_SRC_FILES := ../auto/jsb_cocos2dx_3d_auto.cpp \
                    ../auto/jsb_cocos2dx_extension_auto.cpp \
