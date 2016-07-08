@@ -142,7 +142,7 @@ Main features
    * Sprites and Sprite Sheets
    * Effects: Lens, Ripple, Waves, Liquid, etc.
    * Actions (behaviours):
-     * Trasformation Actions: Move, Rotate, Scale, Fade, Tint, etc.
+     * Transformation Actions: Move, Rotate, Scale, Fade, Tint, etc.
      * Composable actions: Sequence, Spawn, Repeat, Reverse
      * Ease Actions: Exp, Sin, Cubic, Elastic, etc.
      * Misc actions: CallFunc, OrbitCamera, Follow, Tween

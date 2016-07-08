@@ -43,7 +43,7 @@
 * Windows Phone 8.1
 * Windows 10 UWP
 * Linux Ubuntu 14.04 or newer
-* Mordern browsers and IE 9+ (On mobile platforms, only iOS and Android 5 activated WebGL support)
+* Modern browsers and IE 9+ (On mobile platforms, only iOS and Android 5 activated WebGL support)
 
 ## Compiler Requirements
 
@@ -179,7 +179,7 @@ More detail information and discussion can refer to [the issue](https://github.c
 
 The web engine is receiving a big performance upgrade. The WebGL renderer have been completely refactored from the ground up. This means improved rendering and a reduced memory footprint.
 
-![rendering peformance](https://raw.githubusercontent.com/minggo/Pictures/master/web-performance-improve/adverage-time-per-frame.png)
+![rendering performance](https://raw.githubusercontent.com/minggo/Pictures/master/web-performance-improve/adverage-time-per-frame.png)
 
 ![cpu-usage](https://raw.githubusercontent.com/minggo/Pictures/master/web-performance-improve/cpu-usage.png)
 
