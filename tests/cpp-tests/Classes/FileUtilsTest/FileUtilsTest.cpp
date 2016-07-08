@@ -385,8 +385,9 @@ void TestDirectoryFuncs::onEnter()
     y = s.height/4;
     Label* label = nullptr;
 
-    std::string dir = sharedFileUtils->getWritablePath() + "__test/";
+    std::string dir = sharedFileUtils->getWritablePath() + "__test";
     std::string subDir = "dir1/dir2";
+    std::string fullSubDir = dir + "/" + subDir;
     std::string msg;
     bool ok;
 
@@ -400,8 +401,8 @@ void TestDirectoryFuncs::onEnter()
         this->addChild(label);
 
         // Create sub directories recursively
-        ok = sharedFileUtils->createDirectory(dir + subDir);
-        if (ok && sharedFileUtils->isDirectoryExist(dir + subDir))
+        ok = sharedFileUtils->createDirectory(fullSubDir);
+        if (ok && sharedFileUtils->isDirectoryExist(fullSubDir))
         {
             msg = StringUtils::format("createDirectory: Sub directories '%s' created", subDir.c_str());
             label = Label::createWithSystemFont(msg, "", 20);
