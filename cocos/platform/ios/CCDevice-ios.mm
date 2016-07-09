@@ -387,6 +387,8 @@ static bool _initWithString(const char * text, cocos2d::Device::TextAlign align,
         CC_BREAK_IF(! font);
         
         NSString * str          = [NSString stringWithUTF8String:text];
+        CC_BREAK_IF(!str);
+
         CGSize dimensions;
         dimensions.width     = info->width;
         dimensions.height    = info->height;

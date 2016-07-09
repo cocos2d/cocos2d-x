@@ -232,6 +232,7 @@ static bool _initWithString(const char * text, Device::TextAlign align, const ch
     
     do {
         NSString * string  = [NSString stringWithUTF8String:text];
+        CC_BREAK_IF(!string);
         
         id font = _createSystemFont(fontName, size);
         CC_BREAK_IF(!font);
