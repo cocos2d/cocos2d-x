@@ -232,7 +232,7 @@ public:
     /**
      * Set the margin between each item in ListView.
      *
-     * @param margin
+     * @param margin A margin in float.
      */
     void setItemsMargin(float margin);
     

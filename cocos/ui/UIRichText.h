@@ -134,7 +134,7 @@ public:
      * @param text Content string.
      * @param fontName Content font name.
      * @param fontSize Content font size.
-     * @param flags: italics, bold, underline, strikethrough, url, outline, shadow or glow
+     * @param flags italics, bold, underline, strikethrough, url, outline, shadow or glow
      * @param url uniform resource locator
      * @param outlineColor the color of the outline
      * @param outlineSize the outline effect size value
@@ -159,7 +159,7 @@ public:
      * @param text Content string.
      * @param fontName Content font name.
      * @param fontSize Content font size.
-     * @param flags: italics, bold, underline, strikethrough, url, outline, shadow or glow
+     * @param flags italics, bold, underline, strikethrough, url, outline, shadow or glow
      * @param url uniform resource locator
      * @param outlineColor the color of the outline
      * @param outlineSize the outline effect size value

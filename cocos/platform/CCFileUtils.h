@@ -191,8 +191,7 @@ public:
      *
      *  The template version of can accept cocos2d::Data, std::basic_string and std::vector.
      *
-     *  <pre>
-     *  {@code
+     *  @code
      *  std::string sbuf;
      *  FileUtils::getInstance()->getContents("path/to/file", &sbuf);
      *
@@ -201,8 +200,7 @@ public:
      *
      *  Data dbuf;
      *  FileUtils::getInstance()->getContents("path/to/file", &dbuf);
-     *  }
-     * </pre
+     *  @endcode
      *
      *  Note: if you read to std::vector<T> and std::basic_string<T> where T is not 8 bit type,
      *  you may get 0 ~ sizeof(T)-1 bytes padding.
@@ -210,8 +208,7 @@ public:
      *  - To write a new buffer class works with getContents, just extend ResizableBuffer.
      *  - To write a adapter for existing class, write a specialized ResizableBufferAdapter for that class, see follow code.
      *
-     *  <pre>
-     *  {@code
+     *  @code
      *  NS_CC_BEGIN // ResizableBufferAdapter needed in cocos2d namespace.
      *  template<>
      *  class ResizableBufferAdapter<AlreadyExistsBuffer> : public ResizableBuffer {
@@ -227,8 +224,7 @@ public:
      *      }
      *  };
      *  NS_CC_END
-     *  }
-     * </pre
+     *  @endcode
      *
      *  @param[in]  filename The resource file name which contains the path.
      *  @param[out] buffer The buffer where the file contents are store to.
