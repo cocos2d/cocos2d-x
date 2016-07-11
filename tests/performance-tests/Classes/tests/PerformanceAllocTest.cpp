@@ -83,7 +83,7 @@ bool PerformceAllocScene::init()
 
 void PerformceAllocScene::initWithQuantityOfNodes(unsigned int nNodes)
 {
-    //srand(time());
+    //std::srand(time());
     auto s = Director::getInstance()->getWinSize();
 
     lastRenderedCount = 0;
@@ -100,7 +100,7 @@ void PerformceAllocScene::initWithQuantityOfNodes(unsigned int nNodes)
 		updateQuantityOfNodes();
         updateProfilerName();
         CC_PROFILER_PURGE_ALL();
-        srand(0);
+        std::srand(0);
 	});
     decrease->setColor(Color3B(0,200,20));
     auto increase = MenuItemFont::create(" + ", [&](Ref *sender) {
@@ -112,7 +112,7 @@ void PerformceAllocScene::initWithQuantityOfNodes(unsigned int nNodes)
 		updateQuantityOfNodes();
         updateProfilerName();
         CC_PROFILER_PURGE_ALL();
-        srand(0);
+        std::srand(0);
 	});
     increase->setColor(Color3B(0,200,20));
 
@@ -129,7 +129,7 @@ void PerformceAllocScene::initWithQuantityOfNodes(unsigned int nNodes)
     updateQuantityLabel();
     updateQuantityOfNodes();
     updateProfilerName();
-    srand(0);
+    std::srand(0);
 }
 
 std::string PerformceAllocScene::title() const

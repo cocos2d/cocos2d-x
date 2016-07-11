@@ -1221,7 +1221,7 @@ void Console::commandTouchSubCommandTap(int fd, const std::string& args)
         float x = utils::atof(argv[1].c_str());
         float y = utils::atof(argv[2].c_str());
         
-        srand ((unsigned)time(nullptr));
+        std::srand ((unsigned)time(nullptr));
         _touchId = rand();
         Scheduler *sched = Director::getInstance()->getScheduler();
         sched->performFunctionInCocosThread( [&](){
@@ -1250,7 +1250,7 @@ void Console::commandTouchSubCommandSwipe(int fd, const std::string& args)
         float x2 = utils::atof(argv[3].c_str());
         float y2 = utils::atof(argv[4].c_str());
         
-        srand ((unsigned)time(nullptr));
+        std::srand ((unsigned)time(nullptr));
         _touchId = rand();
         
         Scheduler *sched = Director::getInstance()->getScheduler();
