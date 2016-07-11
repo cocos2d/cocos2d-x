@@ -200,8 +200,8 @@ void SpriteFrameCache::addSpriteFramesWithDictionary(ValueMap& dictionary, Textu
                 CCLOGWARN("cocos2d: WARNING: originalWidth/Height not found on the SpriteFrame. AnchorPoint won't work as expected. Regenerate the .plist");
             }
             // abs ow/oh
-            ow = abs(ow);
-            oh = abs(oh);
+            ow = std::abs(ow);
+            oh = std::abs(oh);
             // create frame
             spriteFrame = SpriteFrame::createWithTexture(texture,
                                                          Rect(x, y, w, h),
@@ -635,8 +635,8 @@ void SpriteFrameCache::reloadSpriteFramesWithDictionary(ValueMap& dictionary, Te
                 CCLOGWARN("cocos2d: WARNING: originalWidth/Height not found on the SpriteFrame. AnchorPoint won't work as expected. Regenrate the .plist");
             }
             // abs ow/oh
-            ow = abs(ow);
-            oh = abs(oh);
+            ow = std::abs(ow);
+            oh = std::abs(oh);
             // create frame
             spriteFrame = SpriteFrame::createWithTexture(texture,
                 Rect(x, y, w, h),
