@@ -285,7 +285,7 @@ Vec2 ScrollViewBar::calculatePosition(float innerContainerMeasure, float scrollV
     float denominatorValue = innerContainerMeasure - scrollViewMeasure;
     if(outOfBoundaryValue != 0)
     {
-        denominatorValue += fabs(outOfBoundaryValue);
+        denominatorValue += std::abs(outOfBoundaryValue);
     }
     
     float positionRatio = 0;

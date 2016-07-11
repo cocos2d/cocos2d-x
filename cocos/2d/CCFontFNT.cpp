@@ -24,6 +24,7 @@
  ****************************************************************************/
 
 #include "2d/CCFontFNT.h"
+#include <cmath>
 #include <set>
 #include "base/uthash.h"
 #include "2d/CCFontAtlas.h"
@@ -750,7 +751,7 @@ FontAtlas * FontFNT::createFontAtlas()
     int originalFontSize = _configuration->_fontSize;
     float originalLineHeight = _configuration->_commonHeight;
     float factor = 0.0f;
-    if (fabs(_fontSize - originalFontSize) < FLT_EPSILON) {
+    if (std::abs(_fontSize - originalFontSize) < FLT_EPSILON) {
         factor = 1.0f;
     }else {
         factor = _fontSize / originalFontSize;

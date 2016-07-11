@@ -23,6 +23,7 @@
 ****************************************************************************/
 
 #include "base/CCValue.h"
+#include <cmath>
 #include <sstream>
 #include <iomanip>
 #include "base/ccUtils.h"
@@ -385,8 +386,8 @@ bool Value::operator== (const Value& v) const
         case Type::UNSIGNED:return v._field.unsignedVal == this->_field.unsignedVal;
         case Type::BOOLEAN: return v._field.boolVal     == this->_field.boolVal;
         case Type::STRING:  return *v._field.strVal     == *this->_field.strVal;
-        case Type::FLOAT:   return fabs(v._field.floatVal  - this->_field.floatVal)  <= FLT_EPSILON;
-        case Type::DOUBLE:  return fabs(v._field.doubleVal - this->_field.doubleVal) <= FLT_EPSILON;
+        case Type::FLOAT:   return std::abs(v._field.floatVal  - this->_field.floatVal)  <= FLT_EPSILON;
+        case Type::DOUBLE:  return std::abs(v._field.doubleVal - this->_field.doubleVal) <= DBL_EPSILON;
         case Type::VECTOR:
         {
             const auto &v1 = *(this->_field.vectorVal);

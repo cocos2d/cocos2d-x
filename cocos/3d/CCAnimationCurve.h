@@ -24,6 +24,7 @@
 #ifndef __CCANIMATIONCURVE_H__
 #define __CCANIMATIONCURVE_H__
 
+#include <cmath>
 #include <functional>
 
 #include "platform/CCPlatformMacros.h"
