@@ -277,7 +277,7 @@ void ShuffleTiles::startWithTarget(Node *target)
 
     if (_seed != (unsigned int)-1)
     {
-        srand(_seed);
+        std::srand(_seed);
     }
 
     _tilesCount = _gridSize.width * _gridSize.height;
@@ -602,7 +602,7 @@ void TurnOffTiles::startWithTarget(Node *target)
 
     if (_seed != (unsigned int)-1)
     {
-        srand(_seed);
+        std::srand(_seed);
     }
 
     _tilesCount = _gridSize.width * _gridSize.height;
