@@ -157,7 +157,7 @@
         
 --------------------------------
 -- Set the margin between each item in ListView.<br>
--- param margin
+-- param margin A margin in float.
 -- @function [parent=#ListView] setItemsMargin 
 -- @param self
 -- @param #float margin
