@@ -128,16 +128,14 @@ public:
      * The data object is set to empty state, that is internal buffer is set to nullptr
      * and size is set to zero.
      * Usage:
-     *  <pre>
-     *  {@code
+     * @code
      *  Data d;
      *  // ...
      *  ssize_t size;
      *  unsigned char* buffer = d.takeBuffer(&size);
      *  // use buffer and size
      *  free(buffer);
-     *  }
-     * </pre
+     * @endcode
      *
      * @param size Will fill with the data buffer size in bytes, if you do not care buffer size, pass nullptr.
      * @return the internal data buffer, free it after use.

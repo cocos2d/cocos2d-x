@@ -215,39 +215,39 @@ namespace ui {
         
         /**
          * remove the tab from this TabControl
-         * @param index: the index of tab
+         * @param index The index of tab
          */
         void      removeTab(int index);
         
         /**
          * set tab selected, switch the current selected tab and visible container
-         * @param index: the index of tab
+         * @param index The index of tab
          */
         void      setSelectTab(int index);
         
         /**
          * set tab selected, switch the current selected tab and visible container
-         * @param tabHeader, the tab instance
+         * @param tabHeader The tab instance
          */
         void      setSelectTab(TabHeader* tabHeader);
         
         /**
          * get TabHeader
-         * @param index, the index of tab
+         * @param index The index of tab
          */
         TabHeader* getTabHeader(int index) const;
         
         /**
          * get Container
-         * @param index, the index of tab
+         * @param index The index of tab
          */
         Layout*   getTabContainer(int index) const;
         
         /**
          * insert tab, and init the position of header and container
-         * @param index, the index tab should be
-         * @param header, the header Button, will be a protected child in TabControl
-         * @param the container, will be a protected child in TabControl
+         * @param index The index tab should be
+         * @param header The header Button, will be a protected child in TabControl
+         * @param container The container, will be a protected child in TabControl
          */
         void      insertTab(int index, TabHeader* header, Layout* container);
         
@@ -265,7 +265,7 @@ namespace ui {
 
         /**
         * get the index of tabCell in TabView, return -1 if not exists in.
-        / @return the index of tabCell in TabView,  `-1` means not exists in.
+        * @return the index of tabCell in TabView, `-1` means not exists in.
         */
         int indexOfTabHeader(const TabHeader* tabCell) const;
 
@@ -318,7 +318,7 @@ namespace ui {
 
         /**
         * set the delta zoom of selected tab
-        * @param zoom, the delta zoom
+        * @param zoom The delta zoom
         */
         void  setHeaderSelectedZoom(float zoom);
 
@@ -330,7 +330,7 @@ namespace ui {
 
         /**
         * the header dock place of header in TabControl
-        * @param: dockPlace, the strip place
+        * @param dockPlace The strip place
         */
         void         setHeaderDockPlace(TabControl::Dock dockPlace);
         TabControl::Dock getHeaderDockPlace() const { return _headerDockPlace; }

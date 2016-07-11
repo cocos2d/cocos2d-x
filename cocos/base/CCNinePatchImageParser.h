@@ -76,8 +76,6 @@ public:
      * @param image A Image object pointer.
      * @param frameRect The sprite frame rect in the image atlas.
      * @param rotated Whether is sprite frame is rotated in the image atlas.
-     *
-     * @return
      */
     NinePatchImageParser(Image* image, const Rect& frameRect, bool rotated);
 
