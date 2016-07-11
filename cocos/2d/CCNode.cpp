@@ -1741,24 +1741,24 @@ const Mat4& Node::getNodeToParentTransform() const
                 _transform.m[13] += _transform.m[1] * -_anchorPointInPoints.x + _transform.m[5] * -_anchorPointInPoints.y;
             }
         }
+        
+        if (_additionalTransformDirty)
+        {
+            // This is needed to support both Node::setNodeToParentTransform() and Node::setAdditionalTransform()
+            // at the same time. The scenario is this:
+            // at some point setNodeToParentTransform() is called.
+            // and later setAdditionalTransform() is called every time. And since _transform
+            // is being overwritten everyframe, _additionalTransform[1] is used to have a copy
+            // of the last "_transform without _additionalTransform"
+            if (_transformDirty)
+                _additionalTransform[1] = _transform;
+            
+            if (_transformUpdated)
+                _transform = _additionalTransform[1] * _additionalTransform[0];
+        }
+        
+        _transformDirty = false;
     }
-
-    if (_additionalTransform)
-    {
-        // This is needed to support both Node::setNodeToParentTransform() and Node::setAdditionalTransform()
-        // at the same time. The scenario is this:
-        // at some point setNodeToParentTransform() is called.
-        // and later setAdditionalTransform() is called every time. And since _transform
-        // is being overwritten everyframe, _additionalTransform[1] is used to have a copy
-        // of the last "_transform without _additionalTransform"
-        if (_transformDirty)
-            _additionalTransform[1] = _transform;
-
-        if (_transformUpdated)
-            _transform = _additionalTransform[1] * _additionalTransform[0];
-    }
-
-    _transformDirty = _additionalTransformDirty = false;
 
     return _transform;
 }
@@ -1787,6 +1787,7 @@ void Node::setAdditionalTransform(const Mat4* additionalTransform)
     {
         delete[] _additionalTransform;
         _additionalTransform = nullptr;
+        _additionalTransformDirty = false;
     }
     else
     {
@@ -1798,8 +1799,9 @@ void Node::setAdditionalTransform(const Mat4* additionalTransform)
         }
 
         _additionalTransform[0] = *additionalTransform;
+        _additionalTransformDirty = true;
     }
-    _transformUpdated = _additionalTransformDirty = _inverseDirty = true;
+    _transformUpdated = _transformDirty = _inverseDirty = true;
 }
 
 void Node::setAdditionalTransform(const Mat4& additionalTransform)
