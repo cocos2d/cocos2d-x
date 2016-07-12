@@ -102,6 +102,7 @@ void ProtectedNode::addProtectedChild(Node *child, int zOrder, int tag)
     child->setTag(tag);
     
     child->setParent(this);
+    child->setOrderOfArrival(s_globalOrderOfArrival++);
     
     if( _running )
     {
@@ -261,6 +262,7 @@ void ProtectedNode::reorderProtectedChild(cocos2d::Node *child, int localZOrder)
 {
     CCASSERT( child != nullptr, "Child must be non-nil");
     _reorderProtectedChildDirty = true;
+    child->setOrderOfArrival(s_globalOrderOfArrival++);
     child->setLocalZOrder(localZOrder);
 }
 
