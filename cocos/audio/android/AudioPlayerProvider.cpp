@@ -145,8 +145,6 @@ IAudioPlayer *AudioPlayerProvider::getAudioPlayer(const std::string &audioFilePa
             {
                 // Put an empty lambda to preloadEffect since we only want the future object to get PcmData
                 auto promise = preloadEffect(info, [](bool, PcmData){});
-                auto promise2 = promise;
-//                ALOGV("after preload effect, %d, promise2: %d", promise.use_count(), promise2.use_count());
                 auto fut = promise->get_future();
                 std::future_status statue = fut.wait_for(std::chrono::seconds(5));
                 if (statue == std::future_status::ready)
