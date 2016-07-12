@@ -108,6 +108,7 @@ class EventListener;
 
 class CC_DLL Node : public Ref
 {
+    friend bool cocos2d::nodeComparisonLess(Node* n1, Node* n2);
 public:
     /** Default tag used for all the nodes */
     static const int INVALID_TAG = -1;
@@ -175,8 +176,9 @@ public:
      *
      * @return The local (relative to its siblings) Z order.
      */
-    virtual int getLocalZOrder() const { return _localZOrder; }
+    virtual int getLocalZOrder() const { return _localZOrder.detail.z; }
     CC_DEPRECATED_ATTRIBUTE virtual int getZOrder() const { return getLocalZOrder(); }
+
 
     /**
      Defines the oder in which the nodes are renderer.
@@ -667,6 +669,27 @@ public:
      */
     virtual float getRotationSkewY() const;
     CC_DEPRECATED_ATTRIBUTE virtual float getRotationY() const { return getRotationSkewY(); }
+
+    /** !!! ONLY FOR INTERNAL USE
+     * Sets the arrival order when this node has a same ZOrder with other children.
+     *
+     * A node which called addChild subsequently will take a larger arrival order,
+     * If two children have the same Z order, the child with larger arrival order will be drawn later.
+     *
+     * @warning This method is used internally for localZOrder sorting, don't change this manually
+     *
+     * @param orderOfArrival   The arrival order.
+     */
+    void setOrderOfArrival(unsigned int orderOfArrival);
+
+    /** !!! ONLY FOR INTERNAL USE
+     * Gets the local order of arrival this node.
+     *
+     * @see `setLocalZOrder(int)`
+     *
+     * @return The local (relative to its siblings) Z order.
+     */
+    long long getLocalZOrderValue() const { return _localZOrder.value; }
 
     /** @deprecated No longer needed
     * @lua NA
@@ -1881,7 +1904,13 @@ protected:
     mutable bool _additionalTransformDirty; ///< transform dirty ?
     bool _transformUpdated;         ///< Whether or not the Transform object was updated since the last frame
 
-    int _localZOrder;               ///< Local order (relative to its siblings) used to sort the node
+    union {
+        struct {
+            int z; // The actual Z order
+            int a; // The oder of arrival
+        } detail;
+        long long value;
+    } _localZOrder;  ///< Local order storage (relative to its siblings) used to sort the node
     float _globalZOrder;            ///< Global order used to sort the node
 
     Vector<Node*> _children;        ///< array of children nodes
@@ -1928,6 +1957,8 @@ protected:
     Color3B     _realColor;
     bool        _cascadeColorEnabled;
     bool        _cascadeOpacityEnabled;
+
+    static unsigned int s_globalOrderOfArrival;
 
     // camera mask, it is visible only when _cameraMask & current camera' camera flag is true
     unsigned short _cameraMask;
