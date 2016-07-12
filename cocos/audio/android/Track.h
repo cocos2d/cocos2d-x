@@ -52,10 +52,13 @@ public:
     {
         if (_state != state)
         {
+            _prevState = _state;
             _state = state;
             onStateChanged(_state);
         }
     };
+
+    inline State getPrevState() const { return _prevState; };
 
     inline bool isPlayOver() const { return _state == State::PLAYING && mNextFrame >= mNumFrames;};
     inline void setName(int name) { _name = name; };
@@ -82,6 +85,7 @@ public:
 
 private:
     const PcmData& _pcmData;
+    State _prevState;
     State _state;
     int _name;
     float _volume;

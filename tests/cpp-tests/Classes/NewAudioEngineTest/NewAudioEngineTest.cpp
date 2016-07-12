@@ -609,6 +609,9 @@ bool AudioIssue11143Test::init()
         auto& layerSize = this->getContentSize();
 
         auto playItem = TextButton::create("play", [](TextButton* button){
+            AudioEngine::play2d("audio/SoundEffectsFX009/FX082.mp3", true);
+            AudioEngine::stopAll();
+            
             auto audioId = AudioEngine::play2d("audio/SoundEffectsFX009/FX082.mp3", true);
             char key[100] = {0};
             sprintf(key, "play another sound %d", audioId);
@@ -616,6 +619,7 @@ bool AudioIssue11143Test::init()
                 AudioEngine::stop(audioId);
                 AudioEngine::play2d("audio/SoundEffectsFX009/FX083.mp3");
             }, 0.3f, key);
+
         });
         playItem->setPosition(layerSize.width * 0.5f, layerSize.height * 0.5f);
         addChild(playItem);

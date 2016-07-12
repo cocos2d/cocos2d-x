@@ -29,6 +29,7 @@ namespace cocos2d {
 Track::Track(const PcmData &pcmData)
         : onStateChanged(nullptr)
         , _pcmData(pcmData)
+        , _prevState(State::IDLE)
         , _state(State::IDLE)
         , _name(-1)
         , _volume(1.0f)

@@ -226,10 +226,9 @@ void AudioMixerController::mixOneFrame()
         }
         else
         {
-            ALOG_ASSERT(track->getName() >= 0);
-
             if (state == Track::State::PLAYING)
             {
+                ALOG_ASSERT(track->getName() >= 0);
                 int name = track->getName();
                 // If we don't use multiple buffers, no need to reset the MAIN_BUFFER for mixer.
 //                _mixer->setParameter(name, AudioMixer::TRACK, AudioMixer::MAIN_BUFFER, _mixing->buf);
@@ -249,16 +248,33 @@ void AudioMixerController::mixOneFrame()
             }
             else if (state == Track::State::RESUMED)
             {
-                _mixer->enable(track->getName());
-                track->setState(Track::State::PLAYING);
+                if (track->getPrevState() == Track::State::PAUSED)
+                {
+                    _mixer->enable(track->getName());
+                    track->setState(Track::State::PLAYING);
+                }
+                else
+                {
+                    ALOGW("Previous state (%d) isn't PAUSED, couldn't resume!", track->getPrevState());
+                }
             }
             else if (state == Track::State::PAUSED)
             {
-                _mixer->disable(track->getName());
+                if (track->getPrevState() == Track::State::PLAYING || track->getPrevState() == Track::State::RESUMED)
+                {
+                    _mixer->disable(track->getName());
+                }
+                else
+                {
+                    ALOGW("Previous state (%d) isn't PLAYING, couldn't pause!", track->getPrevState());
+                }
             }
             else if (state == Track::State::STOPPED)
             {
-                _mixer->deleteTrackName(track->getName());
+                if (track->getPrevState() != Track::State::IDLE)
+                {
+                    _mixer->deleteTrackName(track->getName());
+                }
                 tracksToRemove.push_back(track);
             }
 
