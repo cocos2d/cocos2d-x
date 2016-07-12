@@ -1839,7 +1839,9 @@ namespace
 bool Image::initWithS3TCData(const unsigned char * data, ssize_t dataLen)
 {
     const uint32_t FOURCC_DXT1 = makeFourCC('D', 'X', 'T', '1');
+    const uint32_t FOURCC_DXT2 = makeFourCC('D', 'X', 'T', '2');
     const uint32_t FOURCC_DXT3 = makeFourCC('D', 'X', 'T', '3');
+    const uint32_t FOURCC_DXT4 = makeFourCC('D', 'X', 'T', '4');
     const uint32_t FOURCC_DXT5 = makeFourCC('D', 'X', 'T', '5');
     
     /* load the .dds file */
@@ -1888,9 +1890,19 @@ bool Image::initWithS3TCData(const unsigned char * data, ssize_t dataLen)
         {
             _renderFormat = Texture2D::PixelFormat::S3TC_DXT1;
         }
+        else if (FOURCC_DXT2 == header->ddsd.DUMMYUNIONNAMEN4.ddpfPixelFormat.fourCC)
+        {
+            _hasPremultipliedAlpha = true;
+            _renderFormat = Texture2D::PixelFormat::S3TC_DXT3;
+        }
         else if (FOURCC_DXT3 == header->ddsd.DUMMYUNIONNAMEN4.ddpfPixelFormat.fourCC)
         {
             _renderFormat = Texture2D::PixelFormat::S3TC_DXT3;
+        }
+        else if (FOURCC_DXT4 == header->ddsd.DUMMYUNIONNAMEN4.ddpfPixelFormat.fourCC)
+        {
+            _hasPremultipliedAlpha = true;
+            _renderFormat = Texture2D::PixelFormat::S3TC_DXT5;
         }
         else if (FOURCC_DXT5 == header->ddsd.DUMMYUNIONNAMEN4.ddpfPixelFormat.fourCC)
         {
