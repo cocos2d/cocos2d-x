@@ -28,6 +28,8 @@ THE SOFTWARE.
 #include "audio/android/IVolumeProvider.h"
 #include "audio/android/PcmBufferProvider.h"
 
+#include <functional>
+
 namespace cocos2d {
 
 class Track : public PcmBufferProvider, public IVolumeProvider
