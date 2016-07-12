@@ -366,18 +366,22 @@ void AudioEngineImpl::setFinishCallback(int audioID, const std::function<void (i
 
 void AudioEngineImpl::preload(const std::string& filePath, const std::function<void(bool)>& callback)
 {
-    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(filePath);
-
-    PcmData result;
-
     if (_audioPlayerProvider != nullptr)
     {
-        result = _audioPlayerProvider->preloadEffect(fullPath);
+        std::string fullPath = FileUtils::getInstance()->fullPathForFilename(filePath);
+        _audioPlayerProvider->preloadEffect(fullPath, [callback](bool succeed, PcmData data){
+            if (callback != nullptr)
+            {
+                callback(succeed);
+            }
+        });
     }
-
-    if (callback)
+    else
     {
-        callback(result.isValid());
+        if (callback != nullptr)
+        {
+            callback(false);
+        }
     }
 }
 
@@ -385,7 +389,8 @@ void AudioEngineImpl::uncache(const std::string& filePath)
 {
     if (_audioPlayerProvider != nullptr)
     {
-        _audioPlayerProvider->clearPcmCache(filePath);
+        std::string fullPath = FileUtils::getInstance()->fullPathForFilename(filePath);
+        _audioPlayerProvider->clearPcmCache(fullPath);
     }
 }
 

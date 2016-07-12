@@ -9,6 +9,7 @@ LOCAL_MODULE_FILENAME := libaudioengine
 
 LOCAL_SRC_FILES := AudioEngine-inl.cpp \
                    ../AudioEngine.cpp \
+                   CCThreadPool.cpp \
                    AssetFd.cpp \
                    AudioDecoder.cpp \
                    AudioPlayerProvider.cpp \

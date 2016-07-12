@@ -27,9 +27,16 @@ THE SOFTWARE.
 #include "audio/android/AudioDecoder.h"
 #include "audio/android/AudioResampler.h"
 #include "audio/android/PcmBufferProvider.h"
-#include "audio/android/cutils/log.h"
 
 namespace cocos2d {
+
+/* Explicitly requesting SL_IID_ANDROIDSIMPLEBUFFERQUEUE and SL_IID_PREFETCHSTATUS
+* on the UrlAudioPlayer object for decoding, SL_IID_METADATAEXTRACTION for retrieving the
+* format of the decoded audio */
+#define NUM_EXPLICIT_INTERFACES_FOR_PLAYER 3
+
+/* Size of the decode buffer queue */
+#define NB_BUFFERS_IN_QUEUE 4
 
 /* size of the struct to retrieve the PCM format metadata values: the values we're interested in
  * are SLuint32, but it is saved in the data field of a SLMetadataInfo, hence the larger size.
@@ -43,6 +50,13 @@ namespace cocos2d {
 #define PREFETCHEVENT_ERROR_CANDIDATE (SL_PREFETCHEVENT_STATUSCHANGE | SL_PREFETCHEVENT_FILLLEVELCHANGE)
 
 //-----------------------------------------------------------------
+
+static int toBufferSizeInBytes(int bufferSizeInFrames, int sampleSize, int channelCount)
+{
+    return bufferSizeInFrames * sampleSize * channelCount;
+}
+
+static int BUFFER_SIZE_IN_BYTES = 0;
 
 static void checkMetaData(int index, const char *key)
 {
@@ -80,13 +94,16 @@ public:
     }
 };
 
-AudioDecoder::AudioDecoder(SLEngineItf engineItf, const std::string &url, int sampleRate)
+AudioDecoder::AudioDecoder(SLEngineItf engineItf, const std::string &url, int bufferSizeInFrames, int sampleRate)
         : _engineItf(engineItf), _url(url), _playObj(nullptr), _formatQueried(false),
           _prefetchError(false), _counter(0), _numChannelsKeyIndex(-1), _sampleRateKeyIndex(-1),
           _bitsPerSampleKeyIndex(-1), _containerSizeKeyIndex(-1), _channelMaskKeyIndex(-1),
-          _endiannessKeyIndex(-1), _eos(false), _sampleRate(sampleRate), _assetFd(0)
+          _endiannessKeyIndex(-1), _eos(false), _bufferSizeInFrames(bufferSizeInFrames),
+          _sampleRate(sampleRate), _assetFd(0)
 {
-    memset(_pcmData, 0, sizeof(_pcmData));
+    BUFFER_SIZE_IN_BYTES = toBufferSizeInBytes(bufferSizeInFrames, 2, 2);
+    _pcmData = (char*) malloc(NB_BUFFERS_IN_QUEUE * BUFFER_SIZE_IN_BYTES);
+    memset(_pcmData, 0x00, NB_BUFFERS_IN_QUEUE * BUFFER_SIZE_IN_BYTES);
     auto pcmBuffer = std::make_shared<std::vector<char>>();
     pcmBuffer->reserve(4096);
     _result.pcmBuffer = pcmBuffer;
@@ -95,8 +112,6 @@ AudioDecoder::AudioDecoder(SLEngineItf engineItf, const std::string &url, int sa
 AudioDecoder::~AudioDecoder()
 {
     ALOGV("~AudioDecoder() %p", this);
-
-    ALOGV("Before destroying SL play object");
     SL_DESTROY_OBJ(_playObj);
     ALOGV("After destroying SL play object");
     if (_assetFd > 0)
@@ -105,10 +120,12 @@ AudioDecoder::~AudioDecoder()
         ::close(_assetFd);
         _assetFd = 0;
     }
+    free(_pcmData);
 }
 
 bool AudioDecoder::start(const FdGetterCallback &fdGetterCallback)
 {
+    auto oldTime = clockNow();
     SLresult result;
 
     /* Objects this application uses: one audio player */
@@ -239,7 +256,7 @@ bool AudioDecoder::start(const FdGetterCallback &fdGetterCallback)
     result = (*playItf)->RegisterCallback(playItf, SLAudioDecoderCallbackProxy::decProgressCallback,
                                           this);
     SL_RETURN_VAL_IF_FAILED(result, false, "RegisterCallback failed");
-    ALOGV("Play callback registered\n");
+    ALOGV("Play callback registered");
 
 
     /* Get the buffer queue interface which was explicitly requested */
@@ -259,9 +276,9 @@ bool AudioDecoder::start(const FdGetterCallback &fdGetterCallback)
     /* Initialize the callback and its context for the decoding buffer queue */
     _decContext.playItf = playItf;
     _decContext.metaItf = mdExtrItf;
-    _decContext.pDataBase = (int8_t *) &_pcmData;
+    _decContext.pDataBase = (int8_t *) _pcmData;
     _decContext.pData = _decContext.pDataBase;
-    _decContext.size = sizeof(_pcmData);
+    _decContext.size = NB_BUFFERS_IN_QUEUE * BUFFER_SIZE_IN_BYTES;
 
     result = (*decBuffQueueItf)->RegisterCallback(decBuffQueueItf,
                                                   SLAudioDecoderCallbackProxy::decPlayCallback,
@@ -308,7 +325,7 @@ bool AudioDecoder::start(const FdGetterCallback &fdGetterCallback)
     }
     if (timeOutIndex == 0 || _prefetchError)
     {
-        ALOGE("Failure to prefetch data in time, exiting\n");
+        ALOGE("Failure to prefetch data in time, exiting");
         SL_RETURN_VAL_IF_FAILED(SL_RESULT_CONTENT_NOT_FOUND, false,
                                 "Failure to prefetch data in time");
     }
@@ -321,10 +338,10 @@ bool AudioDecoder::start(const FdGetterCallback &fdGetterCallback)
 
     if (durationInMsec == SL_TIME_UNKNOWN)
     {
-        ALOGV("Content duration is unknown\n");
+        ALOGV("Content duration is unknown");
     } else
     {
-        ALOGV("Content duration is %dms\n", (int)durationInMsec);
+        ALOGV("Content duration is %dms", (int)durationInMsec);
     }
 
     /* ------------------------------------------------------ */
@@ -393,7 +410,7 @@ bool AudioDecoder::start(const FdGetterCallback &fdGetterCallback)
     result = (*playItf)->SetPlayState(playItf, SL_PLAYSTATE_PLAYING);
     SL_RETURN_VAL_IF_FAILED(result, false, "SetPlayState SL_PLAYSTATE_PLAYING failed");
 
-    ALOGV("Starting to decode\n");
+    ALOGV("Starting to decode");
 
     /* Decode until the end of the stream is reached */
     {
@@ -403,7 +420,7 @@ bool AudioDecoder::start(const FdGetterCallback &fdGetterCallback)
             _eosCondition.wait(autoLock);
         }
     }
-    ALOGV("EOS signaled\n");
+    ALOGV("EOS signaled");
 
     /* ------------------------------------------------------ */
     /* End of decoding */
@@ -412,7 +429,7 @@ bool AudioDecoder::start(const FdGetterCallback &fdGetterCallback)
     result = (*playItf)->SetPlayState(playItf, SL_PLAYSTATE_STOPPED);
     SL_RETURN_VAL_IF_FAILED(result, false, "SetPlayState SL_PLAYSTATE_STOPPED failed");
 
-    ALOGV("Stopped decoding\n");
+    ALOGV("Stopped decoding");
 
     /* Destroy the UrlAudioPlayer object */
     SL_DESTROY_OBJ(_playObj);
@@ -428,6 +445,9 @@ bool AudioDecoder::start(const FdGetterCallback &fdGetterCallback)
     resample();
 
     interleave();
+
+    auto nowTime = clockNow();
+    ALOGV("Decoding (%s) to pcm data wasted %fms", _url.c_str(), intervalInMS(oldTime, nowTime));
 
     return true;
 }
@@ -562,7 +582,7 @@ void AudioDecoder::prefetchCallback(SLPrefetchStatusItf caller, SLuint32 event)
     SL_RETURN_IF_FAILED(result, "GetFillLevel failed");
 
     SLuint32 status;
-    //ALOGV("PrefetchEventCallback: received event %u\n", event);
+    //ALOGV("PrefetchEventCallback: received event %u", event);
     result = (*caller)->GetPrefetchStatus(caller, &status);
 
     SL_RETURN_IF_FAILED(result, "GetPrefetchStatus failed");
@@ -570,7 +590,7 @@ void AudioDecoder::prefetchCallback(SLPrefetchStatusItf caller, SLuint32 event)
     if ((PREFETCHEVENT_ERROR_CANDIDATE == (event & PREFETCHEVENT_ERROR_CANDIDATE))
         && (level == 0) && (status == SL_PREFETCHSTATUS_UNDERFLOW))
     {
-        ALOGV("PrefetchEventCallback: Error while prefetching data, exiting\n");
+        ALOGV("PrefetchEventCallback: Error while prefetching data, exiting");
         _prefetchError = true;
         signalEos();
     }
@@ -598,7 +618,7 @@ void AudioDecoder::decodeToPcmCallback(SLAndroidSimpleBufferQueueItf queueItf)
         SLmillisecond msec;
         result = (*_decContext.playItf)->GetPosition(_decContext.playItf, &msec);
         SL_RETURN_IF_FAILED(result, "decodeToPcmCallback,GetPosition failed");
-        ALOGV("DecPlayCallback called (iteration %d): current position=%u ms\n", _counter, msec);
+        ALOGV("DecPlayCallback called (iteration %d): current position=%u ms", _counter, msec);
     }
 
     _result.pcmBuffer->insert(_result.pcmBuffer->end(), _decContext.pData,
@@ -626,7 +646,7 @@ void AudioDecoder::decodeToPcmCallback(SLAndroidSimpleBufferQueueItf queueItf)
     SL_RETURN_IF_FAILED(result, "decQueueState.GetState failed");
 
     ALOGV("DecBufferQueueCallback now has _decContext.pData=%p, _decContext.pDataBase=%p, queue: "
-                 "count=%u playIndex=%u, count: %d\n",
+                 "count=%u playIndex=%u, count: %d",
          _decContext.pData, _decContext.pDataBase, decQueueState.count, decQueueState.index, _counter);
 #endif
 
@@ -637,9 +657,9 @@ void AudioDecoder::decodeToPcmCallback(SLAndroidSimpleBufferQueueItf queueItf)
     SL_RETURN_IF_FAILED(result, "decodeToPcmCallback,GetPosition2 failed");
 
     if (posMsec == SL_TIME_UNKNOWN) {
-        ALOGV("Content position is unknown (in dec callback)\n");
+        ALOGV("Content position is unknown (in dec callback)");
     } else {
-        ALOGV("Content position is %ums (in dec callback)\n",
+        ALOGV("Content position is %ums (in dec callback)",
                 posMsec);
     }
 #endif

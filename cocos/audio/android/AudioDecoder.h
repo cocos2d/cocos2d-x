@@ -33,22 +33,10 @@ THE SOFTWARE.
 
 namespace cocos2d {
 
-/* Explicitly requesting SL_IID_ANDROIDSIMPLEBUFFERQUEUE and SL_IID_PREFETCHSTATUS
-* on the UrlAudioPlayer object for decoding, SL_IID_METADATAEXTRACTION for retrieving the
-* format of the decoded audio */
-#define NUM_EXPLICIT_INTERFACES_FOR_PLAYER 3
-
-/* Size of the decode buffer queue */
-#define NB_BUFFERS_IN_QUEUE 4
-/* Size of each buffer in the queue */
-#define BUFFER_SIZE_IN_SAMPLES 1024 // number of samples per MP3 frame
-#define BUFFER_SIZE_IN_BYTES   (BUFFER_SIZE_IN_SAMPLES)
-
-
 class AudioDecoder
 {
 public:
-    AudioDecoder(SLEngineItf engineItf, const std::string &url, int sampleRate);
+    AudioDecoder(SLEngineItf engineItf, const std::string &url, int bufferSizeInFrames, int sampleRate);
 
     virtual ~AudioDecoder();
 
@@ -75,7 +63,7 @@ private:
 
     SLObjectItf _playObj;
     /* Local storage for decoded audio data */
-    char _pcmData[NB_BUFFERS_IN_QUEUE * BUFFER_SIZE_IN_BYTES];
+    char* _pcmData;
 
     /* used to query metadata values */
     SLMetadataInfo _pcmMetaData;
@@ -111,6 +99,7 @@ private:
     } CallbackCntxt;
 
     CallbackCntxt _decContext;
+    int _bufferSizeInFrames;
     int _sampleRate;
     int _assetFd;
 
