@@ -12,7 +12,7 @@
 -- param text Content string.<br>
 -- param fontName Content font name.<br>
 -- param fontSize Content font size.<br>
--- param flags: italics, bold, underline, strikethrough, url, outline, shadow or glow<br>
+-- param flags italics, bold, underline, strikethrough, url, outline, shadow or glow<br>
 -- param url uniform resource locator<br>
 -- param outlineColor the color of the outline<br>
 -- param outlineSize the outline effect size value<br>
@@ -47,7 +47,7 @@
 -- param text Content string.<br>
 -- param fontName Content font name.<br>
 -- param fontSize Content font size.<br>
--- param flags: italics, bold, underline, strikethrough, url, outline, shadow or glow<br>
+-- param flags italics, bold, underline, strikethrough, url, outline, shadow or glow<br>
 -- param url uniform resource locator<br>
 -- param outlineColor the color of the outline<br>
 -- param outlineSize the outline effect size value<br>
