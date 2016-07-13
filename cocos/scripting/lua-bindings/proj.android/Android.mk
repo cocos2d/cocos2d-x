@@ -21,7 +21,17 @@ LOCAL_EXPORT_LDLIBS := -lGLESv2 \
                        -llog \
                        -landroid
 
-LOCAL_STATIC_LIBRARIES := luajit_static
+ifeq ($(TARGET_ARCH_ABI),arm64-v8a)
+LUA_STATIC_LIB := lua_static
+LUA_IMPORT_PATH := lua/lua
+LUA_INCLUDE_PATH := $(LOCAL_PATH)/../../../../external/lua/lua
+else
+LUA_STATIC_LIB := luajit_static
+LUA_IMPORT_PATH := lua/luajit/prebuilt/android
+LUA_INCLUDE_PATH := $(LOCAL_PATH)/../../../../external/lua/luajit/include
+endif
+
+LOCAL_STATIC_LIBRARIES := $(LUA_STATIC_LIB)
 
 include $(BUILD_STATIC_LIBRARY)
 
@@ -134,7 +144,7 @@ LOCAL_SRC_FILES += ../manual/navmesh/lua_cocos2dx_navmesh_conversions.cpp \
                    ../auto/lua_cocos2dx_navmesh_auto.cpp \
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../../external/lua/tolua \
-                    $(LOCAL_PATH)/../../../../external/lua/luajit/include \
+                    $(LUA_INCLUDE_PATH) \
                     $(LOCAL_PATH)/../../../2d \
                     $(LOCAL_PATH)/../../../3d \
                     $(LOCAL_PATH)/../../../network \
@@ -164,7 +174,7 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../../external/lua/tolua \
                     $(LOCAL_PATH)/../../../../external/lua
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../../../../external/lua/tolua \
-                           $(LOCAL_PATH)/../../../../external/lua/luajit/include \
+						   $(LUA_INCLUDE_PATH) \
                            $(LOCAL_PATH)/../auto \
                            $(LOCAL_PATH)/../manual \
                            $(LOCAL_PATH)/../manual/cocos2d \
@@ -186,5 +196,5 @@ LOCAL_STATIC_LIBRARIES := cocos2dx_static
 
 include $(BUILD_STATIC_LIBRARY)
 
-$(call import-module,lua/luajit/prebuilt/android)
+$(call import-module,$(LUA_IMPORT_PATH))
 $(call import-module,.)
