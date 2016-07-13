@@ -31,7 +31,7 @@ THE SOFTWARE.
 
 #include <unordered_map>
 #include <memory>
-#include <future>
+#include <condition_variable>
 
 namespace cocos2d {
 // Manage PcmAudioPlayer& UrlAudioPlayer
@@ -89,7 +89,7 @@ private:
 
     UrlAudioPlayer *createUrlAudioPlayer(const AudioFileInfo &info);
 
-    std::shared_ptr<std::promise<PcmData>> preloadEffect(const AudioFileInfo &info, const PreloadCallback& cb);
+    void preloadEffect(const AudioFileInfo &info, const PreloadCallback& cb);
 
     AudioFileInfo getFileInfo(const std::string &audioFilePath);
 
@@ -109,10 +109,13 @@ private:
     struct PreloadCallbackParam
     {
         PreloadCallback callback;
-        std::shared_ptr<std::promise<PcmData>> promise;
     };
+
     std::unordered_map<std::string, std::vector<PreloadCallbackParam>> _preloadCallbackMap;
     std::mutex _preloadCallbackMutex;
+
+    std::mutex _preloadWaitMutex;
+    std::condition_variable _preloadWaitCond;
 
     PcmAudioService* _pcmAudioService;
     AudioMixerController *_mixController;
