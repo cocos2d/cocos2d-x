@@ -158,15 +158,15 @@ public:
      *
      * @param localZOrder The local Z order value.
      */
-    virtual void setLocalZOrder(unsigned int localZOrder);
+    virtual void setLocalZOrder(int localZOrder);
 
-    CC_DEPRECATED_ATTRIBUTE virtual void setZOrder(unsigned int localZOrder) { setLocalZOrder(localZOrder); }
+    CC_DEPRECATED_ATTRIBUTE virtual void setZOrder(int localZOrder) { setLocalZOrder(localZOrder); }
     
     /* 
      Helper function used by `setLocalZOrder`. Don't use it unless you know what you are doing.
      @js NA
      */
-    CC_DEPRECATED_ATTRIBUTE virtual void _setLocalZOrder(unsigned int z);
+    CC_DEPRECATED_ATTRIBUTE virtual void _setLocalZOrder(int z);
 
     /**
      * Gets the local Z order of this node.
@@ -175,8 +175,8 @@ public:
      *
      * @return The local (relative to its siblings) Z order.
      */
-    virtual unsigned int getLocalZOrder() const { return _localZOrder.detail.z; }
-    CC_DEPRECATED_ATTRIBUTE virtual unsigned int getZOrder() const { return getLocalZOrder(); }
+    virtual int getLocalZOrder() const { return static_cast<int>(_localZOrder.detail.z - 0x7fffffffU); }
+    CC_DEPRECATED_ATTRIBUTE virtual int getZOrder() const { return getLocalZOrder(); }
 
 
     /**
@@ -682,9 +682,7 @@ public:
     void _setOrderOfArrival(unsigned int orderOfArrival);
 
     /** !!! ONLY FOR INTERNAL USE
-     * Gets the local order of arrival this node.
-     *
-     * @see `setLocalZOrder(int)`
+     * Gets the local order value of arrival this node.
      *
      * @return The local (relative to its siblings) Z order.
      */
@@ -1905,8 +1903,8 @@ protected:
 
     union {
         struct {
-            unsigned int z; // The actual Z order
-            unsigned int a; // The oder of arrival
+            unsigned int z; // The actual Z order, store as unsigned, but signed for user
+            unsigned int a; // The order of arrival
         } detail;
         unsigned long long value;
     } _localZOrder;  ///< Local order storage (relative to its siblings) used to sort the node
