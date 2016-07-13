@@ -640,9 +640,16 @@ FileUtils::Status FileUtils::getContents(const std::string& filename, ResizableB
     if (!fp)
         return Status::OpenFailed;
 
-    fseek(fp, 0, SEEK_END);
-    size_t size = ftell(fp);
-    fseek(fp, 0, SEEK_SET);
+#if defined(_MSC_VER)
+    auto descriptor = _fileno(fp);
+#else
+    auto descriptor = fileno(fp);
+#endif
+    struct stat statBuf;
+    if (fstat(descriptor, &statBuf) == -1) {
+        return Status::ReadFailed;
+    }
+    size_t size = statBuf.st_size;
 
     buffer->resize(size);
     size_t readsize = fread(buffer->buffer(), 1, size, fp);
