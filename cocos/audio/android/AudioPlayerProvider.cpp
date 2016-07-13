@@ -226,56 +226,56 @@ void AudioPlayerProvider::preloadEffect(const AudioFileInfo &info, const Preload
         return;
     }
 
-    std::string audioFilePath = info.url;
-
+    if (isSmallFile(info))
     {
-        // 1. First time check, if it wasn't in the cache, goto 2 step
-        std::lock_guard<std::mutex> lk(_pcmCacheMutex);
-        auto&& iter = _pcmCache.find(audioFilePath);
-        if (iter != _pcmCache.end())
+        std::string audioFilePath = info.url;
+
         {
-            ALOGV("1. Return pcm data from cache, url: %s", info.url.c_str());
-            cb(true, iter->second);
-            return;
-        }
-    }
-
-    {
-        // 2. Check whether the audio file is being preloaded, if it has been removed from map just now,
-        // goto step 3
-        std::lock_guard<std::mutex> lk(_preloadCallbackMutex);
-
-        auto&& preloadIter = _preloadCallbackMap.find(audioFilePath);
-        if (preloadIter != _preloadCallbackMap.end())
-        {
-            ALOGV("audio (%s) is being preloaded, add to callback vector!", audioFilePath.c_str());
-            PreloadCallbackParam param;
-            param.callback = cb;
-            preloadIter->second.push_back(std::move(param));
-            return;
-        }
-
-        {   // 3. Check it in cache again. If it has been removed from map just now, the file is in
-            // the cache absolutely.
-            std::lock_guard<std::mutex> lk2(_pcmCacheMutex);
+            // 1. First time check, if it wasn't in the cache, goto 2 step
+            std::lock_guard<std::mutex> lk(_pcmCacheMutex);
             auto&& iter = _pcmCache.find(audioFilePath);
             if (iter != _pcmCache.end())
             {
-                ALOGV("2. Return pcm data from cache, url: %s", info.url.c_str());
+                ALOGV("1. Return pcm data from cache, url: %s", info.url.c_str());
                 cb(true, iter->second);
                 return;
             }
         }
 
-        PreloadCallbackParam param;
-        param.callback = cb;
-        std::vector<PreloadCallbackParam> callbacks;
-        callbacks.push_back(std::move(param));
-        _preloadCallbackMap.insert(std::make_pair(audioFilePath, std::move(callbacks)));
-    }
+        {
+            // 2. Check whether the audio file is being preloaded, if it has been removed from map just now,
+            // goto step 3
+            std::lock_guard<std::mutex> lk(_preloadCallbackMutex);
 
-    if (isSmallFile(info))
-    {
+            auto&& preloadIter = _preloadCallbackMap.find(audioFilePath);
+            if (preloadIter != _preloadCallbackMap.end())
+            {
+                ALOGV("audio (%s) is being preloaded, add to callback vector!", audioFilePath.c_str());
+                PreloadCallbackParam param;
+                param.callback = cb;
+                preloadIter->second.push_back(std::move(param));
+                return;
+            }
+
+            {   // 3. Check it in cache again. If it has been removed from map just now, the file is in
+                // the cache absolutely.
+                std::lock_guard<std::mutex> lk2(_pcmCacheMutex);
+                auto&& iter = _pcmCache.find(audioFilePath);
+                if (iter != _pcmCache.end())
+                {
+                    ALOGV("2. Return pcm data from cache, url: %s", info.url.c_str());
+                    cb(true, iter->second);
+                    return;
+                }
+            }
+
+            PreloadCallbackParam param;
+            param.callback = cb;
+            std::vector<PreloadCallbackParam> callbacks;
+            callbacks.push_back(std::move(param));
+            _preloadCallbackMap.insert(std::make_pair(audioFilePath, std::move(callbacks)));
+        }
+
         _threadPool->pushTask([this, audioFilePath](int tid) {
             ALOGV("AudioPlayerProvider::preloadEffect: (%s)", audioFilePath.c_str());
             PcmData d;
@@ -312,7 +312,7 @@ void AudioPlayerProvider::preloadEffect(const AudioFileInfo &info, const Preload
     }
     else
     {
-        ALOGV("File (%s) is too large, ignore preload!", audioFilePath.c_str());
+        ALOGV("File (%s) is too large, ignore preload!", info.url.c_str());
         cb(true, pcmData);
     }
 }
