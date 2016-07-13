@@ -38,20 +38,23 @@ def caculate_built_samples(args):
     targets = set(targets)
     return list(targets)
 
-def do_build(app_android_root, build_mode):
+def do_build(app_android_root, build_mode, app_abi):
 
-    command = 'cocos compile -p android -s %s --ndk-mode %s' % (app_android_root, build_mode)
+    command = 'cocos compile -p android -s %s --ndk-mode %s --app-abi %s' % (app_android_root, build_mode, app_abi)
     print command
 
     if os.system(command) != 0:
         raise Exception("Build dynamic library for project [ " + app_android_root + " ] fails!")
 
-def build_samples(target, build_mode):
+def build_samples(target, build_mode, app_abi):
 
     if build_mode is None:
         build_mode = 'debug'
     elif build_mode != 'release':
         build_mode = 'debug'
+
+    if app_abi is None:
+        app_abi = 'armeabi-v7a'
 
     build_targets = caculate_built_samples(target)
 
@@ -76,7 +79,7 @@ def build_samples(target, build_mode):
             print 'unknown target: %s' % target
             continue
 
-        do_build(app_android_root, build_mode)
+        do_build(app_android_root, build_mode, app_abi)
 
 # -------------- main --------------
 if __name__ == '__main__':
@@ -96,7 +99,7 @@ if __name__ == '__main__':
     """
 
     parser = OptionParser(usage=usage)
-    parser.add_option("-n", "--ndk", dest="ndk_build_param",
+    parser.add_option("-n", "--ndk", dest="app_abi",
                       help='It is not used anymore, because cocos console does not support it.')
     parser.add_option("-p", "--platform", dest="android_platform",
                       help='This parameter is not used any more, just keep compatible.')
@@ -111,7 +114,7 @@ if __name__ == '__main__':
         sys.exit(1)
     else:
         try:
-            build_samples(args, opts.build_mode)
+            build_samples(args, opts.build_mode, opts.app_abi)
         except Exception as e:
             print e
             sys.exit(1)
