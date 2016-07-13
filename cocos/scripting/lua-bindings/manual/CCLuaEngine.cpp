@@ -395,7 +395,7 @@ int LuaEngine::handleKeypadEvent(void* data)
 
     switch(action)
     {
-        case EventKeyboard::KeyCode::KEY_BACKSPACE:
+        case EventKeyboard::KeyCode::KEY_ESCAPE:
 			_stack->pushString("backClicked");
 			break;
 		case EventKeyboard::KeyCode::KEY_MENU:
