@@ -102,7 +102,7 @@ void ProtectedNode::addProtectedChild(Node *child, int zOrder, int tag)
     child->setTag(tag);
     
     child->setParent(this);
-    child->setOrderOfArrival(s_globalOrderOfArrival++);
+    child->_setOrderOfArrival(s_globalOrderOfArrival++);
     
     if( _running )
     {
@@ -262,7 +262,7 @@ void ProtectedNode::reorderProtectedChild(cocos2d::Node *child, int localZOrder)
 {
     CCASSERT( child != nullptr, "Child must be non-nil");
     _reorderProtectedChildDirty = true;
-    child->setOrderOfArrival(s_globalOrderOfArrival++);
+    child->_setOrderOfArrival(s_globalOrderOfArrival++);
     child->setLocalZOrder(localZOrder);
 }
 
@@ -330,7 +330,7 @@ void ProtectedNode::visit(Renderer* renderer, const Mat4 &parentTransform, uint3
     
     // FIX ME: Why need to set _orderOfArrival to 0??
     // Please refer to https://github.com/cocos2d/cocos2d-x/pull/6920
-    // setOrderOfArrival(0);
+    // _setOrderOfArrival(0);
     
     director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 }

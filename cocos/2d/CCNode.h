@@ -108,7 +108,6 @@ class EventListener;
 
 class CC_DLL Node : public Ref
 {
-    friend bool cocos2d::nodeComparisonLess(Node* n1, Node* n2);
 public:
     /** Default tag used for all the nodes */
     static const int INVALID_TAG = -1;
@@ -176,7 +175,7 @@ public:
      *
      * @return The local (relative to its siblings) Z order.
      */
-    virtual int getLocalZOrder() const { return _localZOrder.detail.z; }
+    virtual int getLocalZOrder() const { return static_cast<int>(_localZOrder.detail.z - 0x7fffffffU); }
     CC_DEPRECATED_ATTRIBUTE virtual int getZOrder() const { return getLocalZOrder(); }
 
 
@@ -680,16 +679,14 @@ public:
      *
      * @param orderOfArrival   The arrival order.
      */
-    void setOrderOfArrival(unsigned int orderOfArrival);
+    void _setOrderOfArrival(unsigned int orderOfArrival);
 
     /** !!! ONLY FOR INTERNAL USE
-     * Gets the local order of arrival this node.
-     *
-     * @see `setLocalZOrder(int)`
+     * Gets the local order value of arrival this node.
      *
      * @return The local (relative to its siblings) Z order.
      */
-    long long getLocalZOrderValue() const { return _localZOrder.value; }
+    unsigned long long _getLocalZOrderValue() const { return _localZOrder.value; }
 
     /** @deprecated No longer needed
     * @lua NA
@@ -1906,10 +1903,10 @@ protected:
 
     union {
         struct {
-            int z; // The actual Z order
-            int a; // The oder of arrival
+            unsigned int z; // The actual Z order, store as unsigned, but signed for user
+            unsigned int a; // The order of arrival
         } detail;
-        long long value;
+        unsigned long long value;
     } _localZOrder;  ///< Local order storage (relative to its siblings) used to sort the node
     float _globalZOrder;            ///< Global order used to sort the node
 

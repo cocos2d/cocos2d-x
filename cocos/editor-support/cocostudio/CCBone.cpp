@@ -143,7 +143,7 @@ void Bone::setBoneData(BoneData *boneData)
     }
 
     _name = _boneData->name;
-    _localZOrder.detail.z = _boneData->zOrder;
+    _setLocalZOrder(_boneData->zOrder);
 
     _displayManager->initDisplayList(boneData);
 }
