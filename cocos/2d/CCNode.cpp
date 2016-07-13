@@ -118,6 +118,8 @@ Node::Node()
 #endif
 {
     _localZOrder.value = 0;
+    _localZOrder.detail.z = 0x7fffffffU;
+    
     // set default scheduler and actionManager
     _director = Director::getInstance();
     _actionManager = _director->getActionManager();
