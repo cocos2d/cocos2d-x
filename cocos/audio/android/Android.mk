@@ -25,7 +25,7 @@ LOCAL_SRC_FILES := AudioEngine-inl.cpp \
                    PcmAudioService.cpp \
                    Track.cpp \
                    audio_utils/format.c \
-                   audio_utils/minifloat.c \
+                   audio_utils/minifloat.cpp \
                    audio_utils/primitives.c \
 
 

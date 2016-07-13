@@ -47,7 +47,10 @@ AudioMixerController::AudioMixerController(int bufferSizeInFrames, int sampleRat
     for (int i = 0; i < ARRAY_SIZE(_buffers); ++i)
     {
         _buffers[i].size = (size_t) bufferSizeInFrames * 2 * channelCount;
-        posix_memalign(&_buffers[i].buf, 32, _buffers[i].size);
+        // Don't use posix_memalign since it was added from API 16, it will crash on Android 2.3
+        // Therefore, for a workaround, we uses memalign here.
+        _buffers[i].buf = memalign(32, _buffers[i].size);
+//        posix_memalign(&_buffers[i].buf, 32, _buffers[i].size);
         memset(_buffers[i].buf, 0, _buffers[i].size);
 //        _buffers[i].state = BufferState::EMPTY;
     }
