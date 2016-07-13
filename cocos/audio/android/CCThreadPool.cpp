@@ -119,6 +119,7 @@ ThreadPool::~ThreadPool()
 // number of idle threads
 int ThreadPool::getIdleThreadNum()
 {
+    std::lock_guard<std::mutex> lk(_idleThreadNumMutex);
     return _idleThreadNum;
 }
 
@@ -248,7 +249,11 @@ void ThreadPool::pushTask(const std::function<void(int)>& runnable,
 {
     if (!_isFixedSize)
     {
-        if (_idleThreadNum > _minThreadNum)
+        _idleThreadNumMutex.lock();
+        int idleNum = _idleThreadNum;
+        _idleThreadNumMutex.unlock();
+
+        if (idleNum > _minThreadNum)
         {
             if (_taskQueue.empty())
             {
@@ -264,7 +269,7 @@ void ThreadPool::pushTask(const std::function<void(int)>& runnable,
                 }
             }
         }
-        else if (_idleThreadNum == 0)
+        else if (idleNum == 0)
         {
             stretchPool(_stretchStep);
         }
@@ -411,14 +416,20 @@ void ThreadPool::setThread(int tid)
             }
             // the queue is empty here, wait for the next command
             std::unique_lock<std::mutex> lock(_mutex);
+            _idleThreadNumMutex.lock();
             ++_idleThreadNum;
+            _idleThreadNumMutex.unlock();
+
             *_idleFlags[tid] = true;
             _cv.wait(lock, [this, &task, &isPop, &abort]() {
                 isPop = _taskQueue.pop(task);
                 return isPop || _isDone || abort;
             });
             *_idleFlags[tid] = false;
+            _idleThreadNumMutex.lock();
             --_idleThreadNum;
+            _idleThreadNumMutex.unlock();
+            
             if (!isPop)
                 return;  // if the queue is empty and isDone == true or *flag then return
         }

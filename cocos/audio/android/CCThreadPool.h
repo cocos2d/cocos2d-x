@@ -30,13 +30,14 @@
 //#include "platform/CCPlatformMacros.h"
 
 #include <functional>
+#include <memory>
 #include <thread>
 #include <queue>
 #include <mutex>
 #include <condition_variable>
-#include <atomic>
 #include <vector>
-#include <memory>
+#include <atomic>
+#include <mutex>
 
 namespace cocos2d {
 
@@ -209,7 +210,11 @@ private:
     ThreadSafeQueue<Task> _taskQueue;
     std::atomic<bool> _isDone;
     std::atomic<bool> _isStop;
-    std::atomic<int> _idleThreadNum;  // how many threads are waiting
+
+    //FIXME: std::atomic<int> isn't supported by ndk-r10e while compiling with `armeabi` arch.
+    // So using a mutex here instead.
+    int _idleThreadNum;  // how many threads are waiting
+    std::mutex _idleThreadNumMutex;
 
     std::mutex _mutex;
     std::condition_variable _cv;
