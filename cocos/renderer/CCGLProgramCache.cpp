@@ -68,6 +68,16 @@ enum {
     kShaderType_3DSkyBox,
     kShaderType_3DTerrain,
     kShaderType_CameraClear,
+    // x-studio365 spec, ETC1 ALPHA supports.
+    kShaderType_ETC1AAPositionTextureColor,
+    kShaderType_ETC1AAPositionTextureColor_noMVP,
+    kShaderType_ETC1ASPositionTextureColor,
+    kShaderType_ETC1ASPositionTextureColor_noMVP,
+
+    kShaderType_ETC1AAPositionTextureGray,
+    kShaderType_ETC1AAPositionTextureGray_noMVP,
+    kShaderType_ETC1ASPositionTextureGray,
+    kShaderType_ETC1ASPositionTextureGray_noMVP,
     kShaderType_MAX,
 };
 
@@ -276,6 +286,40 @@ void GLProgramCache::loadDefaultGLPrograms()
     p = new (std::nothrow) GLProgram();
     loadDefaultGLProgram(p, kShaderType_CameraClear);
     _programs.insert(std::make_pair(GLProgram::SHADER_CAMERA_CLEAR, p));
+
+    /// x-studio365 spec,ETC1 ALPHA supports.
+    p = new(std::nothrow) GLProgram();
+    loadDefaultGLProgram(p, kShaderType_ETC1AAPositionTextureColor);
+    _programs.insert(std::make_pair(GLProgram::SHADER_NAME_ETC1AA_POSITION_TEXTURE_COLOR, p));
+
+    p = new(std::nothrow) GLProgram();
+    loadDefaultGLProgram(p, kShaderType_ETC1AAPositionTextureColor_noMVP);
+    _programs.insert(std::make_pair(GLProgram::SHADER_NAME_ETC1AA_POSITION_TEXTURE_COLOR_NO_MVP, p));
+
+    p = new(std::nothrow) GLProgram();
+    loadDefaultGLProgram(p, kShaderType_ETC1ASPositionTextureColor);
+    _programs.insert(std::make_pair(GLProgram::SHADER_NAME_ETC1AS_POSITION_TEXTURE_COLOR, p));
+
+    p = new(std::nothrow) GLProgram();
+    loadDefaultGLProgram(p, kShaderType_ETC1ASPositionTextureColor_noMVP);
+    _programs.insert(std::make_pair(GLProgram::SHADER_NAME_ETC1AS_POSITION_TEXTURE_COLOR_NO_MVP, p));
+
+    /// x-studio365 spec,ETC1 Gray supports.
+    p = new(std::nothrow) GLProgram();
+    loadDefaultGLProgram(p, kShaderType_ETC1AAPositionTextureGray);
+    _programs.insert(std::make_pair(GLProgram::SHADER_NAME_ETC1AA_POSITION_TEXTURE_GRAY, p));
+
+    p = new(std::nothrow) GLProgram();
+    loadDefaultGLProgram(p, kShaderType_ETC1AAPositionTextureGray_noMVP);
+    _programs.insert(std::make_pair(GLProgram::SHADER_NAME_ETC1AA_POSITION_TEXTURE_GRAY_NO_MVP, p));
+
+    p = new(std::nothrow) GLProgram();
+    loadDefaultGLProgram(p, kShaderType_ETC1ASPositionTextureGray);
+    _programs.insert(std::make_pair(GLProgram::SHADER_NAME_ETC1AS_POSITION_TEXTURE_GRAY, p));
+
+    p = new(std::nothrow) GLProgram();
+    loadDefaultGLProgram(p, kShaderType_ETC1ASPositionTextureGray_noMVP);
+    _programs.insert(std::make_pair(GLProgram::SHADER_NAME_ETC1AS_POSITION_TEXTURE_GRAY_NO_MVP, p));
 }
 
 void GLProgramCache::reloadDefaultGLPrograms()
@@ -563,6 +607,32 @@ void GLProgramCache::loadDefaultGLProgram(GLProgram *p, int type)
             break;
         case kShaderType_CameraClear:
             p->initWithByteArrays(ccCameraClearVert, ccCameraClearFrag);
+            break;
+            /// x-studio365 spec, ETC1 ALPHA supports.
+        case kShaderType_ETC1AAPositionTextureColor:
+            p->initWithByteArrays(ccETC1AAPositionTextureColor_vert, ccETC1AAPositionTextureColor_frag);
+            break;
+        case kShaderType_ETC1AAPositionTextureColor_noMVP:
+            p->initWithByteArrays(ccETC1AAPositionTextureColor_noMVP_vert, ccETC1AAPositionTextureColor_frag);
+            break;
+        case kShaderType_ETC1ASPositionTextureColor:
+            p->initWithByteArrays(ccPositionTextureColor_vert, ccETC1ASPositionTextureColor_frag);
+            break;
+        case kShaderType_ETC1ASPositionTextureColor_noMVP:
+            p->initWithByteArrays(ccPositionTextureColor_noMVP_vert, ccETC1ASPositionTextureColor_frag);
+            break;
+            /// x-studio365 spec, ETC1 GRAY supports.
+        case kShaderType_ETC1AAPositionTextureGray:
+            p->initWithByteArrays(ccETC1AAPositionTextureColor_vert, ccETC1AAPositionTextureGray_frag);
+            break;
+        case kShaderType_ETC1AAPositionTextureGray_noMVP:
+            p->initWithByteArrays(ccETC1AAPositionTextureColor_noMVP_vert, ccETC1AAPositionTextureGray_frag);
+            break;
+        case kShaderType_ETC1ASPositionTextureGray:
+            p->initWithByteArrays(ccPositionTextureColor_vert, ccETC1ASPositionTextureGray_frag);
+            break;
+        case kShaderType_ETC1ASPositionTextureGray_noMVP:
+            p->initWithByteArrays(ccPositionTextureColor_noMVP_vert, ccETC1ASPositionTextureGray_frag);
             break;
         default:
             CCLOG("cocos2d: %s:%d, error shader type", __FUNCTION__, __LINE__);
