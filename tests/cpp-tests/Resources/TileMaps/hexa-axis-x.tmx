@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="hexagonal" renderorder="right-down" width="3" height="3" tilewidth="80" tileheight="80" hexsidelength="40" staggeraxis="x" staggerindex="even" nextobjectid="1">
+ <tileset firstgid="1" name="hexa-axis-x" tilewidth="80" tileheight="80" tilecount="2" columns="2">
+  <image source="hexa-axis-x.png" width="160" height="80"/>
+  <tile id="0">
+   <properties>
+    <property name="collidable" type="bool" value="true"/>
+    <property name="name" value="Plain"/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="collidable" type="bool" value="false"/>
+    <property name="name" value="Rock"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="ground" width="3" height="3" opacity="0.2">
+  <data encoding="csv">
+1,2,1,
+2,2,1,
+1,1,2
+</data>
+ </layer>
+</map>
