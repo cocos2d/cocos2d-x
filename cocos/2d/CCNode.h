@@ -108,7 +108,6 @@ class EventListener;
 
 class CC_DLL Node : public Ref
 {
-    friend bool cocos2d::nodeComparisonLess(Node* n1, Node* n2);
 public:
     /** Default tag used for all the nodes */
     static const int INVALID_TAG = -1;
@@ -159,15 +158,15 @@ public:
      *
      * @param localZOrder The local Z order value.
      */
-    virtual void setLocalZOrder(int localZOrder);
+    virtual void setLocalZOrder(unsigned int localZOrder);
 
-    CC_DEPRECATED_ATTRIBUTE virtual void setZOrder(int localZOrder) { setLocalZOrder(localZOrder); }
+    CC_DEPRECATED_ATTRIBUTE virtual void setZOrder(unsigned int localZOrder) { setLocalZOrder(localZOrder); }
     
     /* 
      Helper function used by `setLocalZOrder`. Don't use it unless you know what you are doing.
      @js NA
      */
-    CC_DEPRECATED_ATTRIBUTE virtual void _setLocalZOrder(int z);
+    CC_DEPRECATED_ATTRIBUTE virtual void _setLocalZOrder(unsigned int z);
 
     /**
      * Gets the local Z order of this node.
@@ -176,8 +175,8 @@ public:
      *
      * @return The local (relative to its siblings) Z order.
      */
-    virtual int getLocalZOrder() const { return _localZOrder.detail.z; }
-    CC_DEPRECATED_ATTRIBUTE virtual int getZOrder() const { return getLocalZOrder(); }
+    virtual unsigned int getLocalZOrder() const { return _localZOrder.detail.z; }
+    CC_DEPRECATED_ATTRIBUTE virtual unsigned int getZOrder() const { return getLocalZOrder(); }
 
 
     /**
@@ -680,7 +679,7 @@ public:
      *
      * @param orderOfArrival   The arrival order.
      */
-    void setOrderOfArrival(unsigned int orderOfArrival);
+    void _setOrderOfArrival(unsigned int orderOfArrival);
 
     /** !!! ONLY FOR INTERNAL USE
      * Gets the local order of arrival this node.
@@ -689,7 +688,7 @@ public:
      *
      * @return The local (relative to its siblings) Z order.
      */
-    long long getLocalZOrderValue() const { return _localZOrder.value; }
+    unsigned long long _getLocalZOrderValue() const { return _localZOrder.value; }
 
     /** @deprecated No longer needed
     * @lua NA
@@ -1906,10 +1905,10 @@ protected:
 
     union {
         struct {
-            int z; // The actual Z order
-            int a; // The oder of arrival
+            unsigned int z; // The actual Z order
+            unsigned int a; // The oder of arrival
         } detail;
-        long long value;
+        unsigned long long value;
     } _localZOrder;  ///< Local order storage (relative to its siblings) used to sort the node
     float _globalZOrder;            ///< Global order used to sort the node
 
