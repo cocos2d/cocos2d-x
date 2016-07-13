@@ -60,7 +60,7 @@ bool nodeComparisonLess(Node* n1, Node* n2)
     return( n1->_getLocalZOrderValue() < n2->_getLocalZOrderValue() );
 }
 
-// FIXME:: Yes, nodes might have a sort problem once every 15 days if the game runs at 60 FPS and each frame sprites are reordered.
+// FIXME:: Yes, nodes might have a sort problem once every 30 days if the game runs at 60 FPS and each frame sprites are reordered.
 unsigned int Node::s_globalOrderOfArrival = 1;
 
 // MARK: Constructor, Destructor, Init
