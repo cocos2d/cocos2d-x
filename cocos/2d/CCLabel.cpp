@@ -620,7 +620,7 @@ bool Label::setBMFontFilePath(const std::string& bmfontFilePath, const Vec2& ima
     }
 
     //assign the default fontSize
-    if (fabs(fontSize) < FLT_EPSILON) {
+    if (std::abs(fontSize) < FLT_EPSILON) {
         FontFNT *bmFont = (FontFNT*)newAtlas->getFont();
         if (bmFont) {
             float originalFontSize = bmFont->getOriginalFontSize();
@@ -1002,7 +1002,7 @@ void Label::scaleFontSizeDown(float fontSize)
         ttfConfig.fontSize = fontSize;
         this->setTTFConfigInternal(ttfConfig);
     }else if(_currentLabelType == LabelType::BMFONT){
-        if (fabs(fontSize) < FLT_EPSILON) {
+        if (std::abs(fontSize) < FLT_EPSILON) {
             fontSize = 0.1f;
             shouldUpdateContent = false;
         }
@@ -2162,7 +2162,7 @@ void Label::updateLetterSpriteScale(Sprite* sprite)
     }
     else
     {
-        if(fabs(_bmFontSize)<FLT_EPSILON)
+        if (std::abs(_bmFontSize) < FLT_EPSILON)
         {
             sprite->setScale(0);
         }

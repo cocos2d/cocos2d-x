@@ -26,6 +26,7 @@
 #if CC_USE_PHYSICS
 
 #include <climits>
+#include <cmath>
 #include <unordered_map>
 
 #include "chipmunk/chipmunk.h"
@@ -111,7 +112,7 @@ void PhysicsShape::setMaterial(const PhysicsMaterial& material)
 
 void PhysicsShape::setScale(float scaleX, float scaleY)
 {
-    if (fabs(_scaleX - scaleX) > FLT_EPSILON || fabs(_scaleY - scaleY) > FLT_EPSILON)
+    if (std::abs(_scaleX - scaleX) > FLT_EPSILON || std::abs(_scaleY - scaleY) > FLT_EPSILON)
     {
         if (_type == Type::CIRCLE && scaleX != scaleY)
         {

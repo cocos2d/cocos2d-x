@@ -508,7 +508,7 @@ void Repeat::update(float dt)
         }
 
         // fix for issue #1288, incorrect end value of repeat
-        if(fabs(dt - 1.0f) < FLT_EPSILON && _total < _times)
+        if (std::abs(dt - 1.0f) < FLT_EPSILON && _total < _times)
         {
             if (!(sendUpdateEventToScript(1.0f, _innerAction)))
                 _innerAction->update(1.0f);
