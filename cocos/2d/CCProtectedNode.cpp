@@ -102,6 +102,7 @@ void ProtectedNode::addProtectedChild(Node *child, int zOrder, int tag)
     child->setTag(tag);
     
     child->setParent(this);
+    child->_setOrderOfArrival(s_globalOrderOfArrival++);
     
     if( _running )
     {
@@ -252,7 +253,7 @@ void ProtectedNode::insertProtectedChild(cocos2d::Node *child, int z)
 void ProtectedNode::sortAllProtectedChildren()
 {
     if( _reorderProtectedChildDirty ) {
-        std::stable_sort( std::begin(_protectedChildren), std::end(_protectedChildren), nodeComparisonLess );
+        std::sort( std::begin(_protectedChildren), std::end(_protectedChildren), nodeComparisonLess );
         _reorderProtectedChildDirty = false;
     }
 }
@@ -261,6 +262,7 @@ void ProtectedNode::reorderProtectedChild(cocos2d::Node *child, int localZOrder)
 {
     CCASSERT( child != nullptr, "Child must be non-nil");
     _reorderProtectedChildDirty = true;
+    child->_setOrderOfArrival(s_globalOrderOfArrival++);
     child->setLocalZOrder(localZOrder);
 }
 
