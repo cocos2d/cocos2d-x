@@ -86,7 +86,7 @@ public:
     std::function<void(State)> onStateChanged;
 
 private:
-    const PcmData& _pcmData;
+    PcmData _pcmData;
     State _prevState;
     State _state;
     int _name;
