@@ -30,7 +30,6 @@ THE SOFTWARE.
 #include "audio/android/OpenSLHelper.h"
 
 #include <algorithm>
-#include <stdlib.h> // for posix_memalign
 
 namespace cocos2d { namespace experimental {
 
@@ -38,39 +37,22 @@ AudioMixerController::AudioMixerController(int bufferSizeInFrames, int sampleRat
         : _bufferSizeInFrames(bufferSizeInFrames)
         , _sampleRate(sampleRate)
         , _channelCount(channelCount)
-//        , _mixingThread(nullptr)
         , _mixer(nullptr)
-        , _isDestroy(false)
         , _isPaused(false)
+        , _isMixingFrame(false)
 {
     ALOGV("In the constructor of AudioMixerController!");
-    for (int i = 0; i < ARRAY_SIZE(_buffers); ++i)
-    {
-        _buffers[i].size = (size_t) bufferSizeInFrames * 2 * channelCount;
-        // Don't use posix_memalign since it was added from API 16, it will crash on Android 2.3
-        // Therefore, for a workaround, we uses memalign here.
-        _buffers[i].buf = memalign(32, _buffers[i].size);
-//        posix_memalign(&_buffers[i].buf, 32, _buffers[i].size);
-        memset(_buffers[i].buf, 0, _buffers[i].size);
-//        _buffers[i].state = BufferState::EMPTY;
-    }
 
-//    _busy = &_buffers[0];
-    _current = &_buffers[0];
-//    _next = &_buffers[2];
-//    _afterNext = &_buffers[3];
-    _mixing = nullptr;
+    _mixingBuffer.size = (size_t) bufferSizeInFrames * 2 * channelCount;
+    // Don't use posix_memalign since it was added from API 16, it will crash on Android 2.3
+    // Therefore, for a workaround, we uses memalign here.
+    _mixingBuffer.buf = memalign(32, _mixingBuffer.size);
+    memset(_mixingBuffer.buf, 0, _mixingBuffer.size);
 }
 
 AudioMixerController::~AudioMixerController()
 {
     destroy();
-//    if (_mixingThread != nullptr)
-//    {
-//        _mixingThread->join();
-//        delete _mixingThread;
-//        _mixingThread = nullptr;
-//    }
 
     if (_mixer != nullptr)
     {
@@ -78,17 +60,13 @@ AudioMixerController::~AudioMixerController()
         _mixer = nullptr;
     }
 
-    for (int i = 0; i < sizeof(_buffers) / sizeof(_buffers[0]); ++i)
-    {
-        free(_buffers[i].buf);
-    }
+    free(_mixingBuffer.buf);
 }
 
 bool AudioMixerController::init()
 {
     _mixer = new (std::nothrow) AudioMixer(_bufferSizeInFrames, _sampleRate);
-//    _mixingThread = new (std::nothrow) std::thread(&AudioMixerController::mixingThreadLoop, this);
-    return true;
+    return _mixer != nullptr;
 }
 
 bool AudioMixerController::addTrack(Track* track)
@@ -102,7 +80,6 @@ bool AudioMixerController::addTrack(Track* track)
     if (iter == _activeTracks.end())
     {
         _activeTracks.push_back(track);
-//        _mixingCondition.notify_one();
         ret = true;
     }
 
@@ -122,25 +99,9 @@ static void removeItemFromVector(std::vector<T>& v, T item)
 void AudioMixerController::mixOneFrame()
 {
     _isMixingFrame = true;
-//    _switchMutex.lock();
     _activeTracksMutex.lock();
 
     auto mixStart = clockNow();
-
-//    if (_current->state == BufferState ::EMPTY)
-    {
-        _mixing = _current;
-    }
-//    else if (_next->state == BufferState::EMPTY)
-//    {
-//        _mixing = _next;
-//    }
-//    else if (_afterNext->state == BufferState::EMPTY)
-//    {
-//        _mixing = _afterNext;
-//    }
-
-//    _switchMutex.unlock();
 
     std::vector<Track*> tracksToRemove;
     tracksToRemove.reserve(_activeTracks.size());
@@ -192,7 +153,7 @@ void AudioMixerController::mixOneFrame()
             {
                 _mixer->setBufferProvider(name, track);
                 _mixer->setParameter(name, AudioMixer::TRACK, AudioMixer::MAIN_BUFFER,
-                                     _mixing->buf);
+                                     _mixingBuffer.buf);
                 _mixer->setParameter(
                         name,
                         AudioMixer::TRACK,
@@ -231,8 +192,6 @@ void AudioMixerController::mixOneFrame()
         {
             ALOG_ASSERT(track->getName() >= 0);
             int name = track->getName();
-            // If we don't use multiple buffers, no need to reset the MAIN_BUFFER for mixer.
-//                _mixer->setParameter(name, AudioMixer::TRACK, AudioMixer::MAIN_BUFFER, _mixing->buf);
             if (track->isVolumeDirty())
             {
                 gain_minifloat_packed_t volume = track->getVolumeLR();
@@ -300,20 +259,16 @@ void AudioMixerController::mixOneFrame()
     }
 
     bool hasAvailableTracks = _activeTracks.size() - tracksToRemove.size() > 0;
-//    _activeTracksMutex.unlock();
 
     if (hasAvailableTracks)
     {
         ALOGV_IF(_activeTracks.size() > 8,  "More than 8 active tracks: %d", (int) _activeTracks.size());
         _mixer->process(AudioBufferProvider::kInvalidPTS);
-//        _mixing->state = BufferState::FULL;
     }
     else
     {
         ALOGV("Doesn't have enough tracks: %d, %d", (int) _activeTracks.size(), (int) tracksToRemove.size());
     }
-
-//    _activeTracksMutex.lock();
 
     // Remove stopped or playover tracks for active tracks container
     for (auto&& track : tracksToRemove)
@@ -339,75 +294,8 @@ void AudioMixerController::mixOneFrame()
     _isMixingFrame = false;
 }
 
-//void AudioMixerController::mixingThreadLoop()
-//{
-//    auto doWait = [this](){
-//        std::unique_lock<std::mutex> lk(_mixingMutex);
-//        _switchMutex.unlock();
-//        _activeTracksMutex.unlock();
-//
-//        _mixingCondition.wait(lk);
-//
-//        _switchMutex.lock();
-//        _activeTracksMutex.lock();
-//    };
-//
-//    for (;;)
-//    {
-//        _switchMutex.lock();
-//        _activeTracksMutex.lock();
-//
-//        if (_isPaused)
-//        {
-//            doWait();
-//        }
-//
-//        if (_activeTracks.empty())
-//        {
-//            doWait();
-//        }
-//
-//        if  (_current->state == BufferState::FULL && _next->state == BufferState::FULL && _afterNext->state == BufferState::FULL)
-//        {
-//            ALOGD("Yeah, all buffers are full, waiting ...");
-//            doWait();
-//        }
-//
-//        if (_isDestroy)
-//        {
-//            _switchMutex.unlock();
-//            _activeTracksMutex.unlock();
-//            _isDestroy = false;
-//            return;
-//        }
-//
-////       mixOneFrame();
-//    }
-//}
-//
-//void AudioMixerController::switchBuffers()
-//{
-//    ALOGD("AudioMixerController::switchBuffers ...");
-//    _switchMutex.lock();
-//    OutputBuffer* tmp = _busy;
-//    _busy = _current; _busy->state = BufferState::BUSY;
-//    _current = _next; // Don't change current state
-//    _next = _afterNext; // Don't change next state
-//    _afterNext = tmp; _afterNext->state = BufferState::EMPTY;
-//    _switchMutex.unlock();
-//
-//    _mixingCondition.notify_one();
-//    _current->state = BufferState::EMPTY;
-//}
-
 void AudioMixerController::destroy()
 {
-//    _isDestroy = true;
-//    while(_isDestroy)
-//    {
-//        _mixingCondition.notify_one();
-//        usleep(100);
-//    }
     while (_isMixingFrame)
     {
         usleep(10);
@@ -423,7 +311,6 @@ void AudioMixerController::pause()
 void AudioMixerController::resume()
 {
     _isPaused = false;
-//    _mixingCondition.notify_one();
 }
 
 bool AudioMixerController::hasPlayingTacks()
