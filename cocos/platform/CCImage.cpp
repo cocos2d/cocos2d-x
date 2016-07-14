@@ -231,8 +231,14 @@ namespace
         _pixel3_formathash::value_type(PVR3TexturePixelFormat::PVRTC2BPP_RGBA,      Texture2D::PixelFormat::PVRTC2A),
         _pixel3_formathash::value_type(PVR3TexturePixelFormat::PVRTC4BPP_RGB,       Texture2D::PixelFormat::PVRTC4),
         _pixel3_formathash::value_type(PVR3TexturePixelFormat::PVRTC4BPP_RGBA,      Texture2D::PixelFormat::PVRTC4A),
+        
+        _pixel3_formathash::value_type(PVR3TexturePixelFormat::PVRTC2_2BPP_RGBA,    Texture2D::PixelFormat::PVRTCII2),
+        _pixel3_formathash::value_type(PVR3TexturePixelFormat::PVRTC2_4BPP_RGBA,    Texture2D::PixelFormat::PVRTCII4),
 
-        _pixel3_formathash::value_type(PVR3TexturePixelFormat::ETC1,        Texture2D::PixelFormat::ETC),
+        _pixel3_formathash::value_type(PVR3TexturePixelFormat::ETC1,                Texture2D::PixelFormat::ETC),
+        _pixel3_formathash::value_type(PVR3TexturePixelFormat::ETC2_RGB,            Texture2D::PixelFormat::ETC2_RGB),
+        _pixel3_formathash::value_type(PVR3TexturePixelFormat::ETC2_RGBA,           Texture2D::PixelFormat::ETC2_RGBA),
+        _pixel3_formathash::value_type(PVR3TexturePixelFormat::ETC2_RGBA1,          Texture2D::PixelFormat::ETC2_RGBA1),
     };
         
     static const int PVR3_MAX_TABLE_ELEMENTS = sizeof(v3_pixel_formathash_value) / sizeof(v3_pixel_formathash_value[0]);
@@ -443,11 +449,31 @@ Texture2D::PixelFormat getDevicePixelFormat(Texture2D::PixelFormat format)
                 return format;
             else
                 return Texture2D::PixelFormat::RGBA8888;
+            
+        case Texture2D::PixelFormat::PVRTCII4:
+        case Texture2D::PixelFormat::PVRTCII2:
+            if(Configuration::getInstance()->supportsPVRTC2())
+                return format;
+            else
+                return Texture2D::PixelFormat::RGBA8888;
+            
         case Texture2D::PixelFormat::ETC:
             if(Configuration::getInstance()->supportsETC())
                 return format;
             else
                 return Texture2D::PixelFormat::RGB888;
+            
+        case Texture2D::PixelFormat::ETC2_RGB:
+            if(Configuration::getInstance()->supportsETC2())
+                return format;
+            else
+                return Texture2D::PixelFormat::RGB888;
+        case Texture2D::PixelFormat::ETC2_RGBA:
+        case Texture2D::PixelFormat::ETC2_RGBA1:
+            if(Configuration::getInstance()->supportsETC2())
+                return format;
+            else
+                return Texture2D::PixelFormat::RGBA8888;
         default:
             return format;
     }
@@ -1346,6 +1372,15 @@ namespace
             case PVR3TexturePixelFormat::BGRA8888:
                 return Configuration::getInstance()->supportsBGRA8888();
                 
+            case PVR3TexturePixelFormat::PVRTC2_2BPP_RGBA:
+            case PVR3TexturePixelFormat::PVRTC2_4BPP_RGBA:
+                return Configuration::getInstance()->supportsPVRTC2();
+                
+            case PVR3TexturePixelFormat::ETC2_RGB:
+            case PVR3TexturePixelFormat::ETC2_RGBA:
+            case PVR3TexturePixelFormat::ETC2_RGBA1:
+                return Configuration::getInstance()->supportsETC2();
+                
             case PVR3TexturePixelFormat::PVRTC2BPP_RGB:
             case PVR3TexturePixelFormat::PVRTC2BPP_RGBA:
             case PVR3TexturePixelFormat::PVRTC4BPP_RGB:
@@ -1628,6 +1663,28 @@ bool Image::initWithPVRv3Data(const unsigned char * data, ssize_t dataLen)
                 widthBlocks = width / 4;
                 heightBlocks = height / 4;
                 break;
+                
+            case PVR3TexturePixelFormat::PVRTC2_2BPP_RGBA :
+                if (!Configuration::getInstance()->supportsPVRTC2())
+                {
+                    CCLOG("cocos2d: Hardware PVR2 decoder not present.");
+                    return false;
+                }
+                blockSize = 8 * 4; // Pixel by pixel block size for 2bpp
+                widthBlocks = width / 8;
+                heightBlocks = height / 4;
+                break;
+            case PVR3TexturePixelFormat::PVRTC2_4BPP_RGBA :
+                if (!Configuration::getInstance()->supportsPVRTC2())
+                {
+                    CCLOG("cocos2d: Hardware PVR2 decoder not present.");
+                    return false;
+                }
+                blockSize = 4 * 4; // Pixel by pixel block size for 4bpp
+                widthBlocks = width / 4;
+                heightBlocks = height / 4;
+                break;
+                
             case PVR3TexturePixelFormat::ETC1:
                 if (!Configuration::getInstance()->supportsETC())
                 {
@@ -1646,6 +1703,38 @@ bool Image::initWithPVRv3Data(const unsigned char * data, ssize_t dataLen)
                 widthBlocks = width / 4;
                 heightBlocks = height / 4;
                 break;
+                
+            case PVR3TexturePixelFormat::ETC2_RGB:
+                if (!Configuration::getInstance()->supportsETC2())
+                {
+                    CCLOG("cocos2d: Hardware ETC2 decoder not present.");
+                    return false;
+                }
+                blockSize = 4 * 4; // Pixel by pixel block size for 4bpp
+                widthBlocks = width / 4;
+                heightBlocks = height / 4;
+                break;
+            case PVR3TexturePixelFormat::ETC2_RGBA:
+                if (!Configuration::getInstance()->supportsETC2())
+                {
+                    CCLOG("cocos2d: Hardware ETC2 decoder not present.");
+                    return false;
+                }
+                blockSize = 2 * 4; // Pixel by pixel block size for 8bpp
+                widthBlocks = width / 2;
+                heightBlocks = height / 4;
+                break;
+            case PVR3TexturePixelFormat::ETC2_RGBA1:
+                if (!Configuration::getInstance()->supportsETC2())
+                {
+                    CCLOG("cocos2d: Hardware ETC2 decoder not present.");
+                    return false;
+                }
+                blockSize = 4 * 4; // Pixel by pixel block size for 4bpp
+                widthBlocks = width / 4;
+                heightBlocks = height / 4;
+                break;
+                
             case PVR3TexturePixelFormat::BGRA8888:
                 if (! Configuration::getInstance()->supportsBGRA8888())
                 {

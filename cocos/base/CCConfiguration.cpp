@@ -42,7 +42,9 @@ Configuration::Configuration()
 : _maxTextureSize(0) 
 , _maxModelviewStackDepth(0)
 , _supportsPVRTC(false)
+, _supportsPVRTC2(false)
 , _supportsETC1(false)
+, _supportsETC2(false)
 , _supportsS3TC(false)
 , _supportsATITC(false)
 , _supportsNPOT(false)
@@ -134,11 +136,15 @@ void Configuration::gatherGPUInfo()
     _supportsS3TC = checkForGLExtension("WEBGL_compressed_texture_s3tc");
     _supportsATITC = checkForGLExtension("WEBGL_compressed_texture_atc");
     _supportsPVRTC = checkForGLExtension("WEBGL_compressed_texture_pvrtc");
+    _supportsETC2 = checkForGLExtension("WEBGL_compressed_texture_es3");
 #else
     _supportsETC1 = checkForGLExtension("GL_OES_compressed_ETC1_RGB8_texture");
     _supportsS3TC = checkForGLExtension("GL_EXT_texture_compression_s3tc");
     _supportsATITC = checkForGLExtension("GL_AMD_compressed_ATC_texture");
     _supportsPVRTC = checkForGLExtension("GL_IMG_texture_compression_pvrtc");
+    _supportsPVRTC2 = checkForGLExtension("GL_IMG_texture_compression_pvrtc2");
+    //GL_ARB_ES3_compatibility
+    _supportsETC2 = checkForGLExtension("GL_OES_compressed_ETC2_RGB8_texture") && checkForGLExtension("GL_COMPRESSED_RGBA8_ETC2_EAC") && checkForGLExtension("GL_COMPRESSED_RGB8_PUNCHTHROUGH_ALPHA1_ETC2");
 #endif
     
     _valueDict["gl.supports_ETC1"] = Value(_supportsETC1);
@@ -235,6 +241,11 @@ bool Configuration::supportsPVRTC() const
 	return _supportsPVRTC;
 }
 
+bool Configuration::supportsPVRTC2() const
+{
+    return _supportsPVRTC2;
+}
+
 bool Configuration::supportsETC() const
 {
     //GL_ETC1_RGB8_OES is not defined in old opengl version
@@ -243,6 +254,11 @@ bool Configuration::supportsETC() const
 #else
     return false;
 #endif
+}
+
+bool Configuration::supportsETC2() const
+{
+    return _supportsETC2;
 }
 
 bool Configuration::supportsS3TC() const

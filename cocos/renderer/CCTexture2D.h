@@ -100,8 +100,18 @@ public:
         PVRTC2,
         //! 2-bit PVRTC-compressed texture: PVRTC2 (has alpha channel)
         PVRTC2A,
+        //! 4-bit PVRTCII-compressed texture: PVRTCII4 (has alpha channel)
+        PVRTCII4,
+        //! 2-bit PVRTCII-compressed texture: PVRTCII2 (has alpha channel)
+        PVRTCII2,
         //! ETC-compressed texture: ETC
         ETC,
+        //! ETC2-compressed texture: ETC_RGB
+        ETC2_RGB,
+        //! ETC2-compressed texture: ETC_RGBA
+        ETC2_RGBA,
+        //! ETC2-compressed texture: ETC_RGBA1
+        ETC2_RGBA1,
         //! S3TC-compressed texture: S3TC_Dxt1
         S3TC_DXT1,
         //! S3TC-compressed texture: S3TC_Dxt3

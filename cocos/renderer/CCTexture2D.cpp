@@ -70,15 +70,32 @@ namespace {
         PixelFormatInfoMapValue(Texture2D::PixelFormat::I8, Texture2D::PixelFormatInfo(GL_LUMINANCE, GL_LUMINANCE, GL_UNSIGNED_BYTE, 8, false, false)),
         PixelFormatInfoMapValue(Texture2D::PixelFormat::AI88, Texture2D::PixelFormatInfo(GL_LUMINANCE_ALPHA, GL_LUMINANCE_ALPHA, GL_UNSIGNED_BYTE, 16, false, true)),
         
-#ifdef GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG
+#ifdef GL_IMG_texture_compression_pvrtc
         PixelFormatInfoMapValue(Texture2D::PixelFormat::PVRTC2, Texture2D::PixelFormatInfo(GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG, 0xFFFFFFFF, 0xFFFFFFFF, 2, true, false)),
         PixelFormatInfoMapValue(Texture2D::PixelFormat::PVRTC2A, Texture2D::PixelFormatInfo(GL_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG, 0xFFFFFFFF, 0xFFFFFFFF, 2, true, true)),
         PixelFormatInfoMapValue(Texture2D::PixelFormat::PVRTC4, Texture2D::PixelFormatInfo(GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG, 0xFFFFFFFF, 0xFFFFFFFF, 4, true, false)),
         PixelFormatInfoMapValue(Texture2D::PixelFormat::PVRTC4A, Texture2D::PixelFormatInfo(GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG, 0xFFFFFFFF, 0xFFFFFFFF, 4, true, true)),
 #endif
         
+#ifdef GL_IMG_texture_compression_pvrtc2
+        PixelFormatInfoMapValue(Texture2D::PixelFormat::PVRTC2A, Texture2D::PixelFormatInfo(GL_COMPRESSED_RGBA_PVRTC_2BPPV2_IMG, 0xFFFFFFFF, 0xFFFFFFFF, 2, true, true)),
+        PixelFormatInfoMapValue(Texture2D::PixelFormat::PVRTC4A, Texture2D::PixelFormatInfo(GL_COMPRESSED_RGBA_PVRTC_4BPPV2_IMG, 0xFFFFFFFF, 0xFFFFFFFF, 4, true, true)),
+#endif
+        
 #ifdef GL_ETC1_RGB8_OES
         PixelFormatInfoMapValue(Texture2D::PixelFormat::ETC, Texture2D::PixelFormatInfo(GL_ETC1_RGB8_OES, 0xFFFFFFFF, 0xFFFFFFFF, 4, true, false)),
+#endif
+        
+#ifdef GL_COMPRESSED_RGB8_ETC2
+        PixelFormatInfoMapValue(Texture2D::PixelFormat::ETC2_RGB, Texture2D::PixelFormatInfo(GL_COMPRESSED_RGB8_ETC2, 0xFFFFFFFF, 0xFFFFFFFF, 4, true, false)),
+#endif
+        
+#ifdef GL_COMPRESSED_RGBA8_ETC2_EAC
+        PixelFormatInfoMapValue(Texture2D::PixelFormat::ETC2_RGBA, Texture2D::PixelFormatInfo(GL_COMPRESSED_RGBA8_ETC2_EAC, 0xFFFFFFFF, 0xFFFFFFFF, 8, true, true)),
+#endif
+        
+#ifdef GL_COMPRESSED_RGB8_PUNCHTHROUGH_ALPHA1_ETC2
+        PixelFormatInfoMapValue(Texture2D::PixelFormat::ETC2_RGBA1, Texture2D::PixelFormatInfo(GL_COMPRESSED_RGB8_PUNCHTHROUGH_ALPHA1_ETC2, 0xFFFFFFFF, 0xFFFFFFFF, 4, true, true)),
 #endif
         
 #ifdef GL_COMPRESSED_RGBA_S3TC_DXT1_EXT
@@ -94,18 +111,15 @@ namespace {
 #endif
         
 #ifdef GL_ATC_RGB_AMD
-        PixelFormatInfoMapValue(Texture2D::PixelFormat::ATC_RGB, Texture2D::PixelFormatInfo(GL_ATC_RGB_AMD,
-            0xFFFFFFFF, 0xFFFFFFFF, 4, true, false)),
+        PixelFormatInfoMapValue(Texture2D::PixelFormat::ATC_RGB, Texture2D::PixelFormatInfo(GL_ATC_RGB_AMD, 0xFFFFFFFF, 0xFFFFFFFF, 4, true, false)),
 #endif
         
 #ifdef GL_ATC_RGBA_EXPLICIT_ALPHA_AMD
-        PixelFormatInfoMapValue(Texture2D::PixelFormat::ATC_EXPLICIT_ALPHA, Texture2D::PixelFormatInfo(GL_ATC_RGBA_EXPLICIT_ALPHA_AMD,
-            0xFFFFFFFF, 0xFFFFFFFF, 8, true, false)),
+        PixelFormatInfoMapValue(Texture2D::PixelFormat::ATC_EXPLICIT_ALPHA, Texture2D::PixelFormatInfo(GL_ATC_RGBA_EXPLICIT_ALPHA_AMD, 0xFFFFFFFF, 0xFFFFFFFF, 8, true, false)),
 #endif
         
 #ifdef GL_ATC_RGBA_INTERPOLATED_ALPHA_AMD
-        PixelFormatInfoMapValue(Texture2D::PixelFormat::ATC_INTERPOLATED_ALPHA, Texture2D::PixelFormatInfo(GL_ATC_RGBA_INTERPOLATED_ALPHA_AMD,
-            0xFFFFFFFF, 0xFFFFFFFF, 8, true, false)),
+        PixelFormatInfoMapValue(Texture2D::PixelFormat::ATC_INTERPOLATED_ALPHA, Texture2D::PixelFormatInfo(GL_ATC_RGBA_INTERPOLATED_ALPHA_AMD, 0xFFFFFFFF, 0xFFFFFFFF, 8, true, false)),
 #endif
     };
 }
@@ -588,7 +602,9 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat
     const PixelFormatInfo& info = _pixelFormatInfoTables.at(pixelFormat);
 
     if (info.compressed && !Configuration::getInstance()->supportsPVRTC()
+                        && !Configuration::getInstance()->supportsPVRTC2()
                         && !Configuration::getInstance()->supportsETC()
+                        && !Configuration::getInstance()->supportsETC2()
                         && !Configuration::getInstance()->supportsS3TC()
                         && !Configuration::getInstance()->supportsATITC())
     {
@@ -1372,8 +1388,23 @@ const char* Texture2D::getStringForFormat() const
         case Texture2D::PixelFormat::PVRTC4A:
             return "PVRTC4A";
             
+        case Texture2D::PixelFormat::PVRTCII2:
+            return "PVRTCII2";
+            
+        case Texture2D::PixelFormat::PVRTCII4:
+            return "PVRTCII4";
+            
         case Texture2D::PixelFormat::ETC:
             return "ETC";
+            
+        case Texture2D::PixelFormat::ETC2_RGB:
+            return "ETC2_RGB";
+            
+        case Texture2D::PixelFormat::ETC2_RGBA:
+            return "ETC2_RGBA";
+            
+        case Texture2D::PixelFormat::ETC2_RGBA1:
+            return "ETC2_RGBA1";
 
         case Texture2D::PixelFormat::S3TC_DXT1:
             return "S3TC_DXT1";
