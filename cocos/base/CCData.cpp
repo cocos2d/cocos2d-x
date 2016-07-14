@@ -75,6 +75,8 @@ Data& Data::operator= (Data&& other)
 
 void Data::move(Data& other)
 {
+    clear();
+    
     _bytes = other._bytes;
     _size = other._size;
 
