@@ -74,10 +74,7 @@ private:
 
     AudioMixerController* _controller;
 
-    std::chrono::high_resolution_clock::time_point _lastEnqueueTime;
-
     friend class SLPcmAudioPlayerCallbackProxy;
-
     friend class AudioPlayerProvider;
 };
 

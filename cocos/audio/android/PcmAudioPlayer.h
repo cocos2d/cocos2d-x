@@ -48,7 +48,7 @@ public:
 
     virtual std::string getUrl() const override { return _url; };
 
-    virtual State getState() const override { return _state; };
+    virtual State getState() const override;
 
     virtual void play() override;
 
@@ -82,21 +82,12 @@ private:
     PcmAudioPlayer(AudioMixerController * controller, ICallerThreadUtils* callerThreadUtils);
     virtual ~PcmAudioPlayer();
 
-    void setState(State state);
-
 private:
     int _id;
     std::string _url;
     PcmData _decResult;
-
-    State _state;
-
-    std::mutex _stateMutex;
-
     Track* _track;
-
     PlayEventCallback _playEventCallback;
-
     AudioMixerController * _controller;
     ICallerThreadUtils* _callerThreadUtils;
 

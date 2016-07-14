@@ -21,8 +21,13 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#include <math.h>
+
+#define LOG_TAG "Track"
+
+#include "audio/android/cutils/log.h"
 #include "audio/android/Track.h"
+
+#include <math.h>
 
 namespace cocos2d { namespace experimental {
 
@@ -41,7 +46,7 @@ Track::Track(const PcmData &pcmData)
 
 Track::~Track()
 {
-
+    ALOGV("~Track(): %p", this);
 }
 
 gain_minifloat_packed_t Track::getVolumeLR()

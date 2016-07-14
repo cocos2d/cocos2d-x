@@ -48,7 +48,6 @@ PcmAudioService::PcmAudioService(SLEngineItf engineItf, SLObjectItf outputMixObj
           _playItf(nullptr), _volumeItf(nullptr), _bufferQueueItf(nullptr), _numChannels(-1),
           _sampleRate(-1), _bufferSizeInBytes(0), _controller(nullptr)
 {
-    _lastEnqueueTime = clockNow();
 }
 
 PcmAudioService::~PcmAudioService()
@@ -60,30 +59,8 @@ PcmAudioService::~PcmAudioService()
 
 bool PcmAudioService::enqueue()
 {
-//    auto nowTime = clockNow();
-//    ALOGV("enqueue cycle wastes: %fms", intervalInMS(_lastEnqueueTime, nowTime));
     if (_controller->hasPlayingTacks())
     {
-        // Don't need to check all buffers
-//        if (_flinger->isAllBuffersFull())
-//        {
-//            ALOGV("Yeah, all buffers are full ...");
-//        }
-        bool needWait = false;
-        auto oldTime = clockNow();
-//        while (!_flinger->isCurrentBufferFull() && !_flinger->isPaused())
-//        {
-//            needWait = true;
-//            usleep(100);
-//        }
-//
-//        if (needWait)
-//        {
-//            auto newTime = clockNow();
-//            float waitingMS = intervalInMS(oldTime, newTime);
-//            ALOGW_IF(waitingMS > 1.0f, "PcmAudioService waits mixing %fms", waitingMS);
-//        }
-
         if (_controller->isPaused())
         {
             SLresult r = (*_bufferQueueItf)->Enqueue(_bufferQueueItf, __silenceData.data(), __silenceData.size());
@@ -91,15 +68,12 @@ bool PcmAudioService::enqueue()
         }
         else
         {
-//            ALOGV("mix one frame ...");
             _controller->mixOneFrame();
 
             auto current = _controller->current();
             ALOG_ASSERT(current != nullptr, "current buffer is nullptr ...");
             SLresult r = (*_bufferQueueItf)->Enqueue(_bufferQueueItf, current->buf, current->size);
             SL_RETURN_VAL_IF_FAILED(r, false, "enqueue failed!");
-
-//            _flinger->switchBuffers();
         }
     }
     else
@@ -107,7 +81,7 @@ bool PcmAudioService::enqueue()
         SLresult r = (*_bufferQueueItf)->Enqueue(_bufferQueueItf, __silenceData.data(), __silenceData.size());
         SL_RETURN_VAL_IF_FAILED(r, false, "enqueue silent data failed!");
     }
-//    _lastEnqueueTime = clockNow();
+
     return true;
 }
 

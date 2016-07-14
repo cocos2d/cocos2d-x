@@ -65,8 +65,6 @@ private:
     /* Local storage for decoded audio data */
     char* _pcmData;
 
-    /* used to query metadata values */
-    SLMetadataInfo _pcmMetaData;
     /* we only want to query / display the PCM format once */
     bool _formatQueried;
     /* Used to signal prefetching failures */

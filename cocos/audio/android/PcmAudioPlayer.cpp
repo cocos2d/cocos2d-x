@@ -33,7 +33,6 @@ namespace cocos2d { namespace experimental {
 
 PcmAudioPlayer::PcmAudioPlayer(AudioMixerController * controller, ICallerThreadUtils* callerThreadUtils)
         : _id(-1)
-        , _state(State::INVALID)
         , _track(nullptr)
         , _playEventCallback(nullptr)
         , _controller(controller)
@@ -45,56 +44,49 @@ PcmAudioPlayer::PcmAudioPlayer(AudioMixerController * controller, ICallerThreadU
 PcmAudioPlayer::~PcmAudioPlayer()
 {
     ALOGV("In the destructor of PcmAudioPlayer (%p)", this);
+    delete _track;
 }
 
 bool PcmAudioPlayer::prepare(const std::string &url, const PcmData &decResult)
 {
-    std::lock_guard<std::mutex> lk(_stateMutex);
-    if (_state == State::PLAYING)
-    {
-        ALOGE("PcmAudioService (%s) is playing, ignore play ...", _url.c_str());
-        return false;
-    }
-    else
-    {
-        _url = url;
-        _decResult = decResult;
+    _url = url;
+    _decResult = decResult;
 
-        _track = new (std::nothrow) Track(_decResult);
-        _track->onStateChanged = [this](Track::State state) {
+    _track = new (std::nothrow) Track(_decResult);
+    _track->onStateChanged = [this](Track::State state) {
 
-            if (state == Track::State::OVER)
+        if (state == Track::State::OVER)
+        {
+            if (_playEventCallback != nullptr)
             {
-                if (_playEventCallback != nullptr)
-                {
-                    _playEventCallback(State::OVER);
-                }
+                _playEventCallback(State::OVER);
             }
-            else if (state == Track::State::STOPPED)
+        }
+        else if (state == Track::State::STOPPED)
+        {
+            if (_playEventCallback != nullptr)
             {
-                if (_playEventCallback != nullptr)
-                {
-                    _playEventCallback(State::STOPPED);
-                }
+                _playEventCallback(State::STOPPED);
             }
-            else if (state == Track::State::DESTROYED)
-            {
-                ALOGV("Before deleting PcmAudioPlayer (%p)", this);
-                _callerThreadUtils->performFunctionInCallerThread([this](){
-                    // should delete self in caller'thread rather than OpenSLES enqueue thread.
-                    delete this;
-                });
-            }
-        };
+        }
+        else if (state == Track::State::DESTROYED)
+        {
+            ALOGV("Before deleting PcmAudioPlayer (%p)", this);
+            _callerThreadUtils->performFunctionInCallerThread([this](){
+                // should delete self in caller'thread rather than OpenSLES enqueue thread.
+                delete this;
+            });
+        }
+    };
 
-        setVolume(1.0f);
-    }
+    setVolume(1.0f);
 
     return true;
 }
 
 void PcmAudioPlayer::rewind()
 {
+    ALOGW("PcmAudioPlayer::rewind isn't supported!");
 }
 
 void PcmAudioPlayer::setVolume(float volume)
@@ -137,11 +129,6 @@ void PcmAudioPlayer::setPlayEventCallback(const PlayEventCallback &playEventCall
     _playEventCallback = playEventCallback;
 }
 
-void PcmAudioPlayer::setState(State state)
-{
-    _state = state;
-}
-
 void PcmAudioPlayer::play()
 {
     // put track to AudioMixerController
@@ -167,5 +154,44 @@ void PcmAudioPlayer::stop()
     _track->setState(Track::State::STOPPED);
 }
 
+IAudioPlayer::State PcmAudioPlayer::getState() const
+{
+    IAudioPlayer::State state = State::INVALID;
+
+    if (_track != nullptr)
+    {
+        switch (_track->getState())
+        {
+            case Track::State::IDLE:
+                state = State::INITIALIZED;
+                break;
+
+            case Track::State::PLAYING:
+                state = State::PLAYING;
+                break;
+
+            case Track::State::RESUMED:
+                state = State::PLAYING;
+                break;
+
+            case Track::State::PAUSED:
+                state = State::PAUSED;
+                break;
+
+            case Track::State::STOPPED:
+                state = State::STOPPED;
+                break;
+
+            case Track::State::OVER:
+                state = State::OVER;
+                break;
+
+            default:
+                state = State::INVALID;
+                break;
+        }
+    }
+    return state;
+}
 
 }} // namespace cocos2d { namespace experimental {

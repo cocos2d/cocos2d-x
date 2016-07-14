@@ -42,7 +42,7 @@ UrlAudioPlayer::UrlAudioPlayer(SLEngineItf engineItf, SLObjectItf outputMixObjec
         : _engineItf(engineItf), _outputMixObj(outputMixObject),
           _callerThreadUtils(callerThreadUtils), _id(-1), _assetFd(nullptr),
           _playObj(nullptr), _playItf(nullptr), _seekItf(nullptr), _volumeItf(nullptr),
-          _volume(0.0f), _isLoop(false), _duration(0.0f), _state(State::INVALID),
+          _volume(0.0f), _duration(0.0f), _isLoop(false), _state(State::INVALID),
           _isDestroyed(false), _playEventCallback(nullptr)
 {
     std::call_once(__onceFlag, []() {
