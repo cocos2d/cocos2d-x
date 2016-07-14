@@ -1149,11 +1149,32 @@ bool Image::initWithPngData(const unsigned char * data, ssize_t dataLen)
         png_read_image(png_ptr, row_pointers);
 
         png_read_end(png_ptr, nullptr);
-
-        // premultiplied alpha for RGBA8888
-        if (PNG_PREMULTIPLIED_ALPHA_ENABLED && color_type == PNG_COLOR_TYPE_RGB_ALPHA)
+        
+        png_textp text_ptr;
+        int num_text;
+        png_get_text(png_ptr, info_ptr, &text_ptr, &num_text);
+        bool alreadyPremultipliedAlpha = false;
+        for (int i = 0; i < num_text; ++i)
         {
-            premultipliedAlpha();
+            if(strcmp(text_ptr[i].key, "premultiplied_alpha") == 0 && strcmp(text_ptr[i].text, "true") == 0)
+                alreadyPremultipliedAlpha = true;
+        }
+        
+        if(alreadyPremultipliedAlpha)
+        {
+            _hasPremultipliedAlpha = true;
+        }
+        else
+        {
+            // premultiplied alpha for RGBA8888
+            if (PNG_PREMULTIPLIED_ALPHA_ENABLED && color_type == PNG_COLOR_TYPE_RGB_ALPHA)
+            {
+                premultipliedAlpha();
+            }
+            else
+            {
+                _hasPremultipliedAlpha = false;
+            }
         }
 
         if (row_pointers != nullptr)
