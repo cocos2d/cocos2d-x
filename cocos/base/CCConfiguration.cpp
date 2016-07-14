@@ -51,6 +51,7 @@ Configuration::Configuration()
 , _supportsShareableVAO(false)
 , _supportsOESDepth24(false)
 , _supportsOESPackedDepthStencil(false)
+, _supportsOESMapBuffer(false)
 , _maxSamplesAllowed(0)
 , _maxTextureUnits(0)
 , _glExtensions(nullptr)
@@ -150,8 +151,11 @@ void Configuration::gatherGPUInfo()
 	_valueDict["gl.supports_discard_framebuffer"] = Value(_supportsDiscardFramebuffer);
 
     _supportsShareableVAO = checkForGLExtension("vertex_array_object");
-	_valueDict["gl.supports_vertex_array_object"] = Value(_supportsShareableVAO);
-    
+    _valueDict["gl.supports_vertex_array_object"] = Value(_supportsShareableVAO);
+
+    _supportsOESMapBuffer = checkForGLExtension("GL_OES_mapbuffer");
+    _valueDict["gl.supports_OES_map_buffer"] = Value(_supportsOESMapBuffer);
+
     _supportsOESDepth24 = checkForGLExtension("GL_OES_depth24");
     _valueDict["gl.supports_OES_depth24"] = Value(_supportsOESDepth24);
 
@@ -269,6 +273,22 @@ bool Configuration::supportsShareableVAO() const
 #endif
 }
 
+bool Configuration::supportsMapBuffer() const
+{
+    // Fixes Github issue #16123
+    //
+    // XXX: Fixme. Should check GL ES and not iOS or Android
+    // For example, linux could be compiled with GL ES. Or perhaps in the future Android will
+    // support OpenGL. This is because glMapBufferOES() is an extension of OpenGL ES. And glMapBuffer()
+    // is always implemented in OpenGL.
+
+    // XXX: Warning. On iOS this is always `true`. Avoiding the comparison.
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    return _supportsOESMapBuffer;
+#else
+    return true;
+#endif
+}
 
 bool Configuration::supportsOESDepth24() const
 {
