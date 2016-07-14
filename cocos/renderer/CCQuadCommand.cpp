@@ -54,7 +54,7 @@ QuadCommand::~QuadCommand()
 }
 
 void QuadCommand::init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, const BlendFunc& blendType, V3F_C4B_T2F_Quad* quads, ssize_t quadCount,
-                       const Mat4& mv, uint32_t flags)
+                       const Mat4& mv, uint32_t flags, GLuint textureID1)
 {
     CCASSERT(glProgramState, "Invalid GLProgramState");
     CCASSERT(glProgramState->getVertexAttribsFlags() == 0, "No custom attributes are supported in QuadCommand");
@@ -67,7 +67,7 @@ void QuadCommand::init(float globalOrder, GLuint textureID, GLProgramState* glPr
     triangles.vertCount = (int)quadCount * 4;
     triangles.indices = __indices;
     triangles.indexCount = (int)quadCount * 6;
-    TrianglesCommand::init(globalOrder, textureID, glProgramState, blendType, triangles, mv, flags);
+    TrianglesCommand::init(globalOrder, textureID, glProgramState, blendType, triangles, mv, flags, textureID1);
 }
 
 void QuadCommand::reIndex(int indicesCount)

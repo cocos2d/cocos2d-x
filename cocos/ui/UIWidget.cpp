@@ -35,6 +35,8 @@ THE SOFTWARE.
 #include "renderer/CCGLProgramState.h"
 #include "renderer/ccShaders.h"
 #include "2d/CCCamera.h"
+#include "2d/CCSprite.h"
+#include "ui/UIScale9Sprite.h"
 
 NS_CC_BEGIN
 
@@ -1198,14 +1200,40 @@ void Widget::copyClonedWidgetChildren(Widget* model)
 GLProgramState* Widget::getNormalGLProgramState()const
 {
     GLProgramState *glState = nullptr;
-    glState = GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP);
+
+    // x-studio365 spec, ETC1 Gray supports.
+    // currently, Only AbstractCheckButton, ui::Slider called this function, them's VirtualRender is Sprite
+    auto virtualRender = const_cast<Widget*>(this)->getVirtualRenderer();
+    Texture2D* virtualTexture = nullptr;
+    if (auto sp = dynamic_cast<Sprite*>(virtualRender))
+    {
+        virtualTexture = sp->getTexture();
+    }
+    else if (auto scale9sp = dynamic_cast<Scale9Sprite*>(virtualRender))
+    {
+        virtualTexture = scale9sp->getSprite() != nullptr ? scale9sp->getSprite()->getTexture() : nullptr;
+    }
+    glState = GLProgramState::getPositionTextureColorGLProgramState(virtualTexture, true); // GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_GRAYSCALE);
     return glState;
 }
 
 GLProgramState* Widget::getGrayGLProgramState()const
 {
     GLProgramState *glState = nullptr;
-    glState = GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_GRAYSCALE);
+
+    // x-studio365 spec, ETC1 Gray supports.
+    // currently, Only AbstractCheckButton, ui::Slider called this function, them's VirtualRender is Sprite
+    auto virtualRender = const_cast<Widget*>(this)->getVirtualRenderer();
+    Texture2D* virtualTexture = nullptr;
+    if (auto sp = dynamic_cast<cocos2d::Sprite*>(virtualRender))
+    {
+        virtualTexture = sp->getTexture();
+    }
+    else if (auto scale9sp = dynamic_cast<Scale9Sprite*>(virtualRender))
+    {
+        virtualTexture = scale9sp->getSprite() != nullptr ? scale9sp->getSprite()->getTexture() : nullptr;
+    }
+    glState = GLProgramState::getPositionTextureGrayGLProgramState(virtualTexture); // GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_GRAYSCALE);
     return glState;
 }
 
