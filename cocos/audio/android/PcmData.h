@@ -65,4 +65,4 @@ struct PcmData
 
 }} // namespace cocos2d { namespace experimental {
 
-#endif //COCOS_PCMDATA_H
+#endif // COCOS_PCMDATA_H

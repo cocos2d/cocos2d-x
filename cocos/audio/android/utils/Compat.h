@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#ifndef __LIB_UTILS_COMPAT_H
-#define __LIB_UTILS_COMPAT_H
+#ifndef COCOS_LIB_UTILS_COMPAT_H
+#define COCOS_LIB_UTILS_COMPAT_H
 
 #include <unistd.h>
 
@@ -85,4 +85,4 @@ static inline ssize_t pwrite64(int fd, const void* buf, size_t nbytes, off64_t o
 #define OS_PATH_SEPARATOR '/'
 #endif
 
-#endif /* __LIB_UTILS_COMPAT_H */
+#endif /* COCOS_LIB_UTILS_COMPAT_H */

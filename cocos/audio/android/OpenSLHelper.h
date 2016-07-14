@@ -99,4 +99,4 @@ typedef std::function<int(const std::string&, off_t* start, off_t* length)> FdGe
 
 #define ARRAY_SIZE(arr) (sizeof(arr) / sizeof(arr[0]))
 
-#endif //COCOS_OPENSLHELPER_H
+#endif // COCOS_OPENSLHELPER_H

@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#ifndef ANDROID_AUDIO_RESAMPLER_H
-#define ANDROID_AUDIO_RESAMPLER_H
+#ifndef COCOS_AUDIO_RESAMPLER_H
+#define COCOS_AUDIO_RESAMPLER_H
 
 #include <stdint.h>
 #include <sys/types.h>
@@ -181,4 +181,4 @@ private:
 // ----------------------------------------------------------------------------
 }} // namespace cocos2d { namespace experimental {
 
-#endif // ANDROID_AUDIO_RESAMPLER_H
+#endif // COCOS_AUDIO_RESAMPLER_H

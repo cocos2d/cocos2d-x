@@ -97,4 +97,4 @@ private:
 
 }} // namespace cocos2d { namespace experimental {
 
-#endif //COCOS_TRACK_H
+#endif // COCOS_TRACK_H

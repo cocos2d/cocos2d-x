@@ -22,8 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef COCOS_BUFFERPROVIDER_H
-#define COCOS_BUFFERPROVIDER_H
+#ifndef COCOS_PCMBUFFERPROVIDER_H
+#define COCOS_PCMBUFFERPROVIDER_H
 
 #include "audio/android/AudioBufferProvider.h"
 
@@ -51,4 +51,4 @@ protected:
 
 }} // namespace cocos2d { namespace experimental {
 
-#endif //COCOS_BUFFERPROVIDER_H
+#endif // COCOS_PCMBUFFERPROVIDER_H

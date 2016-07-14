@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#ifndef ANDROID_AUDIO_RESAMPLER_PUBLIC_H
-#define ANDROID_AUDIO_RESAMPLER_PUBLIC_H
+#ifndef COCOS_AUDIO_RESAMPLER_PUBLIC_H
+#define COCOS_AUDIO_RESAMPLER_PUBLIC_H
 
 #include <stdint.h>
 #include <math.h>
@@ -174,4 +174,4 @@ static inline bool isMusicRate(uint32_t sampleRate) {
 
 // ---------------------------------------------------------------------------
 
-#endif // ANDROID_AUDIO_RESAMPLER_PUBLIC_H
+#endif // COCOS_AUDIO_RESAMPLER_PUBLIC_H

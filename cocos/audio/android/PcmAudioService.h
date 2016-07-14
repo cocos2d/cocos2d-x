@@ -80,4 +80,4 @@ private:
 
 }} // namespace cocos2d { namespace experimental {
 
-#endif //COCOS_PCMAUDIOSERVICE_H
+#endif // COCOS_PCMAUDIOSERVICE_H

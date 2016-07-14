@@ -41,4 +41,4 @@ private:
 
 }} // namespace cocos2d { namespace experimental {
 
-#endif //COCOS_ASSETFD_H
+#endif // COCOS_ASSETFD_H

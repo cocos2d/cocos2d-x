@@ -502,4 +502,4 @@ static inline audio_channel_mask_t audio_channel_out_mask_from_count(uint32_t ch
             AUDIO_CHANNEL_REPRESENTATION_POSITION, bits);
 }
 
-#endif //COCOS_AUDIO_H
+#endif // COCOS_AUDIO_H

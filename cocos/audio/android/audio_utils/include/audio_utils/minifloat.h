@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#ifndef ANDROID_AUDIO_MINIFLOAT_H
-#define ANDROID_AUDIO_MINIFLOAT_H
+#ifndef COCOS_AUDIO_MINIFLOAT_H
+#define COCOS_AUDIO_MINIFLOAT_H
 
 #include <stdint.h>
 #include <sys/cdefs.h>
@@ -78,4 +78,4 @@ float float_from_gain(gain_minifloat_t gain);
 
 __END_DECLS
 
-#endif  // ANDROID_AUDIO_MINIFLOAT_H
+#endif  // COCOS_AUDIO_MINIFLOAT_H

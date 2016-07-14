@@ -87,4 +87,4 @@ private:
 
 }} // namespace cocos2d { namespace experimental {
 
-#endif //COCOS_AUDIOMIXER_CONTROLLER_H
+#endif // COCOS_AUDIOMIXER_CONTROLLER_H

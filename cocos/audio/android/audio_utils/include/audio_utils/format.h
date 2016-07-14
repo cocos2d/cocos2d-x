@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#ifndef ANDROID_AUDIO_FORMAT_H
-#define ANDROID_AUDIO_FORMAT_H
+#ifndef COCOS_AUDIO_FORMAT_H
+#define COCOS_AUDIO_FORMAT_H
 
 #include <stdint.h>
 #include <sys/cdefs.h>
@@ -76,4 +76,4 @@ size_t memcpy_by_index_array_initialization_from_channel_mask(int8_t *idxary, si
 
 __END_DECLS
 
-#endif  // ANDROID_AUDIO_FORMAT_H
+#endif  // COCOS_AUDIO_FORMAT_H

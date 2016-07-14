@@ -14,12 +14,11 @@
  * limitations under the License.
  */
 
-#ifndef ANDROID_AUDIO_RESAMPLER_CUBIC_H
-#define ANDROID_AUDIO_RESAMPLER_CUBIC_H
+#ifndef COCOS_AUDIO_RESAMPLER_CUBIC_H
+#define COCOS_AUDIO_RESAMPLER_CUBIC_H
 
 #include <stdint.h>
 #include <sys/types.h>
-//#include <cutils/log.h>
 
 #include "audio/android/AudioResampler.h"
 #include "audio/android/AudioBufferProvider.h"
@@ -66,4 +65,4 @@ private:
 // ----------------------------------------------------------------------------
 }} // namespace cocos2d { namespace experimental {
 
-#endif /*ANDROID_AUDIO_RESAMPLER_CUBIC_H*/
+#endif /*COCOS_AUDIO_RESAMPLER_CUBIC_H*/

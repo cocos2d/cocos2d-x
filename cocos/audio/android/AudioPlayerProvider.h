@@ -125,4 +125,4 @@ private:
 
 }} // namespace cocos2d { namespace experimental {
 
-#endif //COCOS_AUDIOPLAYERPROVIDER_H
+#endif // COCOS_AUDIOPLAYERPROVIDER_H

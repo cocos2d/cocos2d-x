@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#ifndef ANDROID_AUDIO_PRIMITIVES_H
-#define ANDROID_AUDIO_PRIMITIVES_H
+#ifndef COCOS_AUDIO_PRIMITIVES_H
+#define COCOS_AUDIO_PRIMITIVES_H
 
 #include <stdint.h>
 #include <stdlib.h>
@@ -956,4 +956,4 @@ int32_t mulRL(int left, uint32_t inRL, uint32_t vRL)
 
 __END_DECLS
 
-#endif  // ANDROID_AUDIO_PRIMITIVES_H
+#endif  // COCOS_AUDIO_PRIMITIVES_H

@@ -108,4 +108,4 @@ private:
 
 }} // namespace cocos2d { namespace experimental {
 
-#endif //COCOS_AUDIODECODER_H
+#endif // COCOS_AUDIODECODER_H
