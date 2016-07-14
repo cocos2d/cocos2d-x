@@ -83,7 +83,7 @@ public:
     CC_DEPRECATED_ATTRIBUTE static void reloadAllTextures();
 
     // ETC1 ALPHA supports.
-    static void setETC1AlphaFileEndix(const std::string& endix);
+    static void setETC1AlphaFileSuffix(const std::string& suffix);
 
 public:
     /**
