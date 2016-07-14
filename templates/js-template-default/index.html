@@ -99,7 +99,7 @@ canvas {
             var browserCheck = ua.match(/(qzone|micromessenger|qq)(mobile)?(browser)?\/?([\d.]+)/i);
             if (browserCheck) {
                 var browserVersion = parseFloat(browserCheck[4] || 0);
-                if (browserVer < 6.2) {
+                if (browserVersion < 6.2) {
                     var gameCanvas = document.getElementById("gameCanvas");
                     var ctx = gameCanvas.getContext('2d');
                     ctx.fillStyle = '#000000';
