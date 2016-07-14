@@ -132,7 +132,7 @@ void PcmAudioPlayer::setPlayEventCallback(const PlayEventCallback &playEventCall
 void PcmAudioPlayer::play()
 {
     // put track to AudioMixerController
-    ALOGD("PcmAudioPlayer (%p) play (%s) ...", this, _url.c_str());
+    ALOGV("PcmAudioPlayer (%p) play (%s) ...", this, _url.c_str());
     _controller->addTrack(_track);
 }
 

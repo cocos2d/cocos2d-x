@@ -41,19 +41,16 @@ extern "C" {
 #endif
 
 // ---------------------------------------------------------------------
-#ifndef LOG_NDEBUG
-#define LOG_NDEBUG 0
-#endif
 /*
  * Normally we strip ALOGV (VERBOSE messages) from release builds.
  * You can modify this (for example with "#define LOG_NDEBUG 0"
  * at the top of your source file) to change that behavior.
  */
 #ifndef LOG_NDEBUG
-#ifdef NDEBUG
-#define LOG_NDEBUG 1
-#else
+#if defined(COCOS2D_DEBUG) && COCOS2D_DEBUG > 0
 #define LOG_NDEBUG 0
+#else
+#define LOG_NDEBUG 1
 #endif
 #endif
 
