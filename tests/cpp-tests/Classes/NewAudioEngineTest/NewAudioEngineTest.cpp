@@ -178,8 +178,14 @@ namespace {
     };
 }
 
+AudioEngineTestDemo::AudioEngineTestDemo()
+: _isDestroyed(std::make_shared<bool>(false))
+{
+}
+
 void AudioEngineTestDemo::onExit()
 {
+    *_isDestroyed = true;
     AudioEngine::stopAll();
     TestCase::onExit();
 }
@@ -357,7 +363,14 @@ bool AudioLoadTest::init()
 
         auto preloadItem = TextButton::create("preload", [&, stateLabel](TextButton* button){
             stateLabel->setString("status:loading...");
-            AudioEngine::preload("audio/SoundEffectsFX009/FX082.mp3", [stateLabel](bool isSuccess){
+            auto isDestroyed = _isDestroyed;
+            AudioEngine::preload("audio/SoundEffectsFX009/FX082.mp3", [isDestroyed, stateLabel](bool isSuccess){
+                if (*isDestroyed)
+                {
+                    CCLOG("AudioLoadTest scene was destroyed, no need to set the label text.");
+                    return;
+                }
+                
                 if (isSuccess)
                 {
                     stateLabel->setString("status:load success");

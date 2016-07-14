@@ -37,9 +37,12 @@ DEFINE_TEST_SUITE(AudioEngineTests);
 class AudioEngineTestDemo : public TestCase
 {
 public:
+    AudioEngineTestDemo();
+    
     virtual std::string title() const override;
     virtual void onExit() override;
-    
+protected:
+    std::shared_ptr<bool> _isDestroyed;
 };
 
 class AudioControlTest : public AudioEngineTestDemo
