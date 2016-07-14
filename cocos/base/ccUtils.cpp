@@ -388,7 +388,7 @@ Node* findChild(Node* levelRoot, const std::string& name)
 
 Node* findChild(Node* levelRoot, int tag)
 {
-    if (levelRoot == nullptr)
+    if (levelRoot == nullptr || tag == Node::INVALID_TAG)
         return nullptr;
 
     // Find this node
