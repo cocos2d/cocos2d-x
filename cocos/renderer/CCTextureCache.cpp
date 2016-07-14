@@ -241,12 +241,11 @@ void TextureCache::loadImage()
         asyncStruct->loadSuccess = asyncStruct->image.initWithImageFileThreadSafe(asyncStruct->filename);
 
         // x-studio365 spec, ETC1 ALPHA supports.
-        if (asyncStruct->loadSuccess) { // check whether alpha texture exists & load it
-            if (asyncStruct->image.getFileType() == Image::Format::ETC) {
-                auto alphaFile = asyncStruct->filename + s_etc1AlphaFileSuffix;
-                if (FileUtils::getInstance()->isFileExist(alphaFile))
-                    asyncStruct->imageAlpha.initWithImageFileThreadSafe(alphaFile);
-            }
+        if (asyncStruct->loadSuccess && asyncStruct->image.getFileType() == Image::Format::ETC && !s_etc1AlphaFileSuffix.empty()) 
+        { // check whether alpha texture exists & load it
+            auto alphaFile = asyncStruct->filename + s_etc1AlphaFileSuffix;
+            if (FileUtils::getInstance()->isFileExist(alphaFile))
+                asyncStruct->imageAlpha.initWithImageFileThreadSafe(alphaFile);
         }
         // push the asyncStruct to response queue
         _responseMutex.lock();
@@ -376,12 +375,13 @@ Texture2D * TextureCache::addImage(const std::string &path)
 #endif
                 // texture already retained, no need to re-retain it
                 _textures.insert( std::make_pair(fullpath, texture) );
+
 			    //-- x-studio365 spec, ANDROID ETC1 ALPHA SUPPORTS.
                 std::string alphaFullPath = path + s_etc1AlphaFileSuffix;
-                if (image->getFileType() == Image::Format::ETC && FileUtils::getInstance()->isFileExist(alphaFullPath)) {
+                if (image->getFileType() == Image::Format::ETC && !s_etc1AlphaFileSuffix.empty() && FileUtils::getInstance()->isFileExist(alphaFullPath))
+                {
                     Image alphaImage;
-					bRet = alphaImage.initWithImageFile(alphaFullPath);
-					if (bRet != false)
+					if (alphaImage.initWithImageFile(alphaFullPath))
 					{
 						Texture2D *pAlphaTexture = new Texture2D;
 						pAlphaTexture->autorelease();
@@ -390,7 +390,6 @@ Texture2D * TextureCache::addImage(const std::string &path)
 					}
 				}
 
-				
                 //parse 9-patch info
                 this->parseNinePatchImage(image, texture, path);
             }
