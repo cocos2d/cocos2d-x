@@ -104,6 +104,7 @@ namespace
     static const int PVR_TEXTURE_FLAG_TYPE_MASK = 0xff;
     
     static bool _PVRHaveAlphaPremultiplied = false;
+    static bool _ATITCHaveAlphaPremultiplied = false;
     
     // Values taken from PVRTexture.h from http://www.imgtec.com
     enum class PVR2TextureFlag
@@ -2071,6 +2072,7 @@ bool Image::initWithATITCData(const unsigned char *data, ssize_t dataLen)
     _height = header->pixelHeight;
     _numberOfMipmaps = header->numberOfMipmapLevels;
     
+    _hasPremultipliedAlpha = _ATITCHaveAlphaPremultiplied;
     int blockSize = 0;
     switch (header->glInternalFormat)
     {
@@ -2563,6 +2565,11 @@ void Image::premultipliedAlpha()
 void Image::setPVRImagesHavePremultipliedAlpha(bool haveAlphaPremultiplied)
 {
     _PVRHaveAlphaPremultiplied = haveAlphaPremultiplied;
+}
+
+void Image::setATITCImagesHavePremultipliedAlpha(bool haveAlphaPremultiplied)
+{
+    _ATITCHaveAlphaPremultiplied = haveAlphaPremultiplied;
 }
 
 NS_CC_END

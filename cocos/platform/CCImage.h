@@ -114,6 +114,14 @@ public:
      By default it is disabled.
      */
     static void setPVRImagesHavePremultipliedAlpha(bool haveAlphaPremultiplied);
+    
+    /** treats (or not) ATITC files as if they have alpha premultiplied.
+     Since it is impossible to know at runtime if the ATITC images have the alpha channel premultiplied, it is
+     possible load them as if they have (or not) the alpha channel premultiplied.
+     
+     By default it is disabled.
+     */
+    static void setATITCImagesHavePremultipliedAlpha(bool haveAlphaPremultiplied);
 
     /**
     @brief Load the image from the specified path.
