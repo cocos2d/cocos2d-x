@@ -361,5 +361,14 @@ public:
     virtual std::string title() const override;
 };
 
+class TMXHexAxisXTest : public TileDemo
+{
+public:
+    CREATE_FUNC(TMXHexAxisXTest);
+    TMXHexAxisXTest();
+    virtual std::string title() const override;
+
+};
+
 
 #endif
