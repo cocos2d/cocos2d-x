@@ -39,13 +39,13 @@
 
 NS_CC_BEGIN
 
-class IAudioPlayer;
-class AudioPlayerProvider;
-
 class EventCustom;
 class EventListener;
 
 namespace experimental {
+
+class IAudioPlayer;
+class AudioPlayerProvider;
 
 class AudioEngineImpl;
 
