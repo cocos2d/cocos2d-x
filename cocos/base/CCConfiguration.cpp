@@ -119,7 +119,7 @@ void Configuration::gatherGPUInfo()
 	_valueDict["gl.version"] = Value((const char*)glGetString(GL_VERSION));
 
     _glExtensions = (char *)glGetString(GL_EXTENSIONS);
-
+    
     glGetIntegerv(GL_MAX_TEXTURE_SIZE, &_maxTextureSize);
 	_valueDict["gl.max_texture_size"] = Value((int)_maxTextureSize);
 
@@ -143,14 +143,20 @@ void Configuration::gatherGPUInfo()
     _supportsATITC = checkForGLExtension("GL_AMD_compressed_ATC_texture");
     _supportsPVRTC = checkForGLExtension("GL_IMG_texture_compression_pvrtc");
     _supportsPVRTC2 = checkForGLExtension("GL_IMG_texture_compression_pvrtc2");
-    //GL_ARB_ES3_compatibility
-    _supportsETC2 = checkForGLExtension("GL_OES_compressed_ETC2_RGB8_texture") && checkForGLExtension("GL_COMPRESSED_RGBA8_ETC2_EAC") && checkForGLExtension("GL_COMPRESSED_RGB8_PUNCHTHROUGH_ALPHA1_ETC2");
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    //all 64bit iphnes support etc2 textures
+    _supportsETC2 = sizeof(void*) == 8;
+#else
+    _supportsETC2 = checkForGLExtension("GL_ARB_ES3_compatibility") || (checkForGLExtension("GL_OES_compressed_ETC2_RGB8_texture") && checkForGLExtension("GL_COMPRESSED_RGBA8_ETC2_EAC") && checkForGLExtension("GL_COMPRESSED_RGB8_PUNCHTHROUGH_ALPHA1_ETC2"));
+#endif
 #endif
     
     _valueDict["gl.supports_ETC1"] = Value(_supportsETC1);
+    _valueDict["gl.supports_ETC2"] = Value(_supportsETC2);
     _valueDict["gl.supports_S3TC"] = Value(_supportsS3TC);
     _valueDict["gl.supports_ATITC"] = Value(_supportsATITC);
     _valueDict["gl.supports_PVRTC"] = Value(_supportsPVRTC);
+    _valueDict["gl.supports_PVRTC2"] = Value(_supportsPVRTC2);
 
     _supportsNPOT = true;
 	_valueDict["gl.supports_NPOT"] = Value(_supportsNPOT);

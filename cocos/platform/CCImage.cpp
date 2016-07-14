@@ -94,6 +94,11 @@ extern "C"
 #define CC_GL_ATC_RGBA_EXPLICIT_ALPHA_AMD                          0x8C93
 #define CC_GL_ATC_RGBA_INTERPOLATED_ALPHA_AMD                      0x87EE
 
+#define CC_GL_ETC1_RGB8_OES                                        0x8D64
+#define CC_GL_COMPRESSED_RGB8_ETC2                                 0x9274
+#define CC_GL_COMPRESSED_RGB8_PUNCHTHROUGH_ALPHA1_ETC2             0x9276
+#define CC_GL_COMPRESSED_RGBA8_ETC2_EAC                            0x9278
+
 NS_CC_BEGIN
 
 //////////////////////////////////////////////////////////////////////////
@@ -104,7 +109,8 @@ namespace
     static const int PVR_TEXTURE_FLAG_TYPE_MASK = 0xff;
     
     static bool _PVRHaveAlphaPremultiplied = false;
-    static bool _ATITCHaveAlphaPremultiplied = false;
+    static bool _KTXHaveAlphaPremultiplied = false;
+    static bool _PKMHaveAlphaPremultiplied = false;
     
     // Values taken from PVRTexture.h from http://www.imgtec.com
     enum class PVR2TextureFlag
@@ -406,6 +412,68 @@ namespace
         uint32_t numberOfFaces;
         uint32_t numberOfMipmapLevels;
         uint32_t bytesOfKeyValueData;
+        int getBlockSize() const
+        {
+            switch (glInternalFormat)
+            {
+                case CC_GL_ATC_RGB_AMD:
+                    return 8;
+                case CC_GL_ATC_RGBA_EXPLICIT_ALPHA_AMD:
+                    return 16;
+                case CC_GL_ATC_RGBA_INTERPOLATED_ALPHA_AMD:
+                    return 16;
+                case CC_GL_ETC1_RGB8_OES:
+                    return 8;
+                case CC_GL_COMPRESSED_RGB8_ETC2:
+                    return 8;
+                case CC_GL_COMPRESSED_RGB8_PUNCHTHROUGH_ALPHA1_ETC2:
+                    return 8;
+                case CC_GL_COMPRESSED_RGBA8_ETC2_EAC:
+                    return 16;
+                default:
+                    return 0;
+            }
+        }
+        bool isFormatSupported() const
+        {
+            switch (glInternalFormat)
+            {
+                case CC_GL_ATC_RGB_AMD:
+                case CC_GL_ATC_RGBA_EXPLICIT_ALPHA_AMD:
+                case CC_GL_ATC_RGBA_INTERPOLATED_ALPHA_AMD:
+                    return Configuration::getInstance()->supportsATITC();
+                case CC_GL_ETC1_RGB8_OES:
+                    return Configuration::getInstance()->supportsETC();
+                case CC_GL_COMPRESSED_RGB8_ETC2:
+                case CC_GL_COMPRESSED_RGB8_PUNCHTHROUGH_ALPHA1_ETC2:
+                case CC_GL_COMPRESSED_RGBA8_ETC2_EAC:
+                    return Configuration::getInstance()->supportsETC2();
+                default:
+                    return false;
+            }
+        }
+        Texture2D::PixelFormat getPixelFormat()
+        {
+            switch (glInternalFormat)
+            {
+                case CC_GL_ATC_RGB_AMD:
+                    return Texture2D::PixelFormat::ATC_RGB;
+                case CC_GL_ATC_RGBA_EXPLICIT_ALPHA_AMD:
+                    return Texture2D::PixelFormat::ATC_EXPLICIT_ALPHA;
+                case CC_GL_ATC_RGBA_INTERPOLATED_ALPHA_AMD:
+                    return Texture2D::PixelFormat::ATC_INTERPOLATED_ALPHA;
+                case CC_GL_ETC1_RGB8_OES:
+                    return Texture2D::PixelFormat::ETC;
+                case CC_GL_COMPRESSED_RGB8_ETC2:
+                    return Texture2D::PixelFormat::ETC2_RGB;
+                case CC_GL_COMPRESSED_RGB8_PUNCHTHROUGH_ALPHA1_ETC2:
+                    return Texture2D::PixelFormat::ETC2_RGBA1;
+                case CC_GL_COMPRESSED_RGBA8_ETC2_EAC:
+                    return Texture2D::PixelFormat::ETC2_RGBA;
+                default:
+                    return Texture2D::PixelFormat::NONE;
+            }
+        }
     };
 }
 //atitc struct end
@@ -1816,6 +1884,9 @@ bool Image::initWithETCData(const unsigned char * data, ssize_t dataLen)
     {
         return  false;
     }
+    
+    if(_PKMHaveAlphaPremultiplied)
+        _hasPremultipliedAlpha = true;
 
     _width = etc1_pkm_get_width(header);
     _height = etc1_pkm_get_height(header);
@@ -1830,9 +1901,9 @@ bool Image::initWithETCData(const unsigned char * data, ssize_t dataLen)
         //old opengl version has no define for GL_ETC1_RGB8_OES, add macro to make compiler happy. 
 #ifdef GL_ETC1_RGB8_OES
         _renderFormat = Texture2D::PixelFormat::ETC;
-        _dataLen = dataLen - ETC_PKM_HEADER_SIZE;
+        _dataLen = dataLen - PKM_HEADER_SIZE;
         _data = static_cast<unsigned char*>(malloc(_dataLen * sizeof(unsigned char)));
-        memcpy(_data, static_cast<const unsigned char*>(data) + ETC_PKM_HEADER_SIZE, _dataLen);
+        memcpy(_data, static_cast<const unsigned char*>(data) + PKM_HEADER_SIZE, _dataLen);
         return true;
 #endif
     }
@@ -2054,9 +2125,19 @@ bool Image::initWithS3TCData(const unsigned char * data, ssize_t dataLen)
             {
                 s3tc_decode(pixelData + encodeOffset, &decodeImageData[0], width, height, S3TCDecodeFlag::DXT1);
             }
+            else if (FOURCC_DXT2 == header->ddsd.DUMMYUNIONNAMEN4.ddpfPixelFormat.fourCC)
+            {
+                _hasPremultipliedAlpha = true;
+                s3tc_decode(pixelData + encodeOffset, &decodeImageData[0], width, height, S3TCDecodeFlag::DXT1);
+            }
             else if (FOURCC_DXT3 == header->ddsd.DUMMYUNIONNAMEN4.ddpfPixelFormat.fourCC)
             {
                 s3tc_decode(pixelData + encodeOffset, &decodeImageData[0], width, height, S3TCDecodeFlag::DXT3);
+            }
+            else if (FOURCC_DXT4 == header->ddsd.DUMMYUNIONNAMEN4.ddpfPixelFormat.fourCC)
+            {
+                _hasPremultipliedAlpha = true;
+                s3tc_decode(pixelData + encodeOffset, &decodeImageData[0], width, height, S3TCDecodeFlag::DXT5);
             }
             else if (FOURCC_DXT5 == header->ddsd.DUMMYUNIONNAMEN4.ddpfPixelFormat.fourCC)
             {
@@ -2093,22 +2174,8 @@ bool Image::initWithATITCData(const unsigned char *data, ssize_t dataLen)
     _height = header->pixelHeight;
     _numberOfMipmaps = header->numberOfMipmapLevels;
     
-    _hasPremultipliedAlpha = _ATITCHaveAlphaPremultiplied;
-    int blockSize = 0;
-    switch (header->glInternalFormat)
-    {
-        case CC_GL_ATC_RGB_AMD:
-            blockSize = 8;
-            break;
-        case CC_GL_ATC_RGBA_EXPLICIT_ALPHA_AMD:
-            blockSize = 16;
-            break;
-        case CC_GL_ATC_RGBA_INTERPOLATED_ALPHA_AMD:
-            blockSize = 16;
-            break;
-        default:
-            break;
-    }
+    _hasPremultipliedAlpha = _KTXHaveAlphaPremultiplied;
+    int blockSize = header->getBlockSize();
     
     /* pixelData point to the compressed data address */
     unsigned char *pixelData = (unsigned char *)data + sizeof(ATITCTexHeader) + header->bytesOfKeyValueData + 4;
@@ -2117,13 +2184,67 @@ bool Image::initWithATITCData(const unsigned char *data, ssize_t dataLen)
     int width = _width;
     int height = _height;
     
-    if (Configuration::getInstance()->supportsATITC())  //compressed data length
+    bool alphaDown = false;
+    
+    if(header->bytesOfKeyValueData)
+    {
+        uint32_t bytesOfKeyValueData = header->bytesOfKeyValueData;
+        const char *keyValueData = (char *)data + sizeof(ATITCTexHeader);
+        uint32_t currentKeyValueDataOffset = 0;
+        while(currentKeyValueDataOffset<bytesOfKeyValueData)
+        {
+            uint32_t keyAndValueByteSize = *((int*)(keyValueData + currentKeyValueDataOffset));
+            
+            currentKeyValueDataOffset+=4;
+            
+            const char *strStart = keyValueData + currentKeyValueDataOffset;
+            const char *strEnd = strStart + 1;
+            bool error = false;
+            while(*(strEnd) != '\0')
+            {
+                ++strEnd;
+                if(strEnd>(keyValueData + currentKeyValueDataOffset + keyAndValueByteSize))
+                {
+                    error = true;
+                    break;
+                }
+            }
+            if(error)
+                break;
+            
+            std::string key(strStart, strEnd);
+            
+            strStart = strEnd + 1;
+            strEnd = strStart + 1;
+            
+            while(*(strEnd) != '\0')
+            {
+                ++strEnd;
+                if(strEnd>(keyValueData + currentKeyValueDataOffset + keyAndValueByteSize))
+                    break;
+            }
+            if(error)
+                break;
+            
+            std::string value(strStart, strEnd);
+
+            if(key == "alpha" && value == "down")
+            {
+                alphaDown = true;
+                break;
+            }
+            
+            currentKeyValueDataOffset += ((keyAndValueByteSize + 3)/4)*4;
+        }
+    }
+    
+    if(header->isFormatSupported())
     {
         _dataLen = dataLen - sizeof(ATITCTexHeader) - header->bytesOfKeyValueData - 4;
         _data = static_cast<unsigned char*>(malloc(_dataLen * sizeof(unsigned char)));
         memcpy((void *)_data,(void *)pixelData , _dataLen);
     }
-    else                                               //decompressed data length
+    else
     {
         for (int i = 0; i < _numberOfMipmaps && (width || height); ++i)
         {
@@ -2150,36 +2271,14 @@ bool Image::initWithATITCData(const unsigned char *data, ssize_t dataLen)
         
         int size = ((width+3)/4)*((height+3)/4)*blockSize;
         
-        if (Configuration::getInstance()->supportsATITC())
+        if(header->isFormatSupported())
         {
-            /* decode texture through hardware */
-            
-            CCLOG("this is atitc H decode");
-            
-            switch (header->glInternalFormat)
-            {
-                case CC_GL_ATC_RGB_AMD:
-                    _renderFormat = Texture2D::PixelFormat::ATC_RGB;
-                    break;
-                case CC_GL_ATC_RGBA_EXPLICIT_ALPHA_AMD:
-                    _renderFormat = Texture2D::PixelFormat::ATC_EXPLICIT_ALPHA;
-                    break;
-                case CC_GL_ATC_RGBA_INTERPOLATED_ALPHA_AMD:
-                    _renderFormat = Texture2D::PixelFormat::ATC_INTERPOLATED_ALPHA;
-                    break;
-                default:
-                    break;
-            }
-            
+            _renderFormat = header->getPixelFormat();
             _mipmaps[i].address = (unsigned char *)_data + encodeOffset;
             _mipmaps[i].len = size;
         }
         else
         {
-            /* if it is not gles or device do not support ATITC, decode texture by software */
-            
-            CCLOG("cocos2d: Hardware ATITC decoder not present. Using software decoder");
-            
             int bytePerPixel = 4;
             unsigned int stride = width * bytePerPixel;
             _renderFormat = Texture2D::PixelFormat::RGBA8888;
@@ -2188,18 +2287,43 @@ bool Image::initWithATITCData(const unsigned char *data, ssize_t dataLen)
             switch (header->glInternalFormat)
             {
                 case CC_GL_ATC_RGB_AMD:
+                    CCLOG("cocos2d: Hardware ATITC decoder not present. Using software decoder");
                     atitc_decode(pixelData + encodeOffset, &decodeImageData[0], width, height, ATITCDecodeFlag::ATC_RGB);
                     break;
                 case CC_GL_ATC_RGBA_EXPLICIT_ALPHA_AMD:
+                    CCLOG("cocos2d: Hardware ATITC decoder not present. Using software decoder");
                     atitc_decode(pixelData + encodeOffset, &decodeImageData[0], width, height, ATITCDecodeFlag::ATC_EXPLICIT_ALPHA);
                     break;
                 case CC_GL_ATC_RGBA_INTERPOLATED_ALPHA_AMD:
+                    CCLOG("cocos2d: Hardware ATITC decoder not present. Using software decoder");
                     atitc_decode(pixelData + encodeOffset, &decodeImageData[0], width, height, ATITCDecodeFlag::ATC_INTERPOLATED_ALPHA);
+                    break;
+                case CC_GL_ETC1_RGB8_OES:
+                    CCLOG("cocos2d: Hardware ETC1 decoder not present. Using software decoder");
+                    bytePerPixel = 3;
+                    stride = width * bytePerPixel;
+                    _renderFormat = Texture2D::PixelFormat::RGB888;
+                    etc1_decode_image(static_cast<const unsigned char*>(pixelData + encodeOffset), static_cast<etc1_byte*>(&decodeImageData[0]), width, height, bytePerPixel, stride);
+                    break;
+                case CC_GL_COMPRESSED_RGB8_ETC2:
+                    CCLOG("cocos2d: Hardware ETC2 decoder not present. Using software decoder");
+                    bytePerPixel = 3;
+                    stride = width * bytePerPixel;
+                    _renderFormat = Texture2D::PixelFormat::RGB888;
+                    break;
+                case CC_GL_COMPRESSED_RGB8_PUNCHTHROUGH_ALPHA1_ETC2:
+                    CCLOG("cocos2d: Hardware ETC2 decoder not present. Using software decoder");
+                    bytePerPixel = 3;
+                    stride = width * bytePerPixel;
+                    _renderFormat = Texture2D::PixelFormat::RGB888;
+                    break;
+                case CC_GL_COMPRESSED_RGBA8_ETC2_EAC:
+                    CCLOG("cocos2d: Hardware ETC2 decoder not present. Using software decoder");
                     break;
                 default:
                     break;
             }
-
+            
             _mipmaps[i].address = (unsigned char *)_data + decodeOffset;
             _mipmaps[i].len = (stride * height);
             memcpy((void *)_mipmaps[i].address, (void *)&decodeImageData[0], _mipmaps[i].len);
@@ -2588,9 +2712,14 @@ void Image::setPVRImagesHavePremultipliedAlpha(bool haveAlphaPremultiplied)
     _PVRHaveAlphaPremultiplied = haveAlphaPremultiplied;
 }
 
-void Image::setATITCImagesHavePremultipliedAlpha(bool haveAlphaPremultiplied)
+void Image::setKTXImagesHavePremultipliedAlpha(bool haveAlphaPremultiplied)
 {
-    _ATITCHaveAlphaPremultiplied = haveAlphaPremultiplied;
+    _KTXHaveAlphaPremultiplied = haveAlphaPremultiplied;
+}
+
+void Image::setPKMImagesHavePremultipliedAlpha(bool haveAlphaPremultiplied)
+{
+    _PKMHaveAlphaPremultiplied = haveAlphaPremultiplied;
 }
 
 NS_CC_END
