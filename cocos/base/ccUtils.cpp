@@ -366,22 +366,20 @@ Sprite* createSpriteFromBase64(const char* base64String)
     return sprite;
 }
 
-Node* findChild(Node* levelRoot, const char* name)
+Node* findChild(Node* levelRoot, const std::string& name)
 {
-    if (levelRoot == nullptr)
+    if (levelRoot == nullptr || name.empty())
         return nullptr;
 
     // Find this node
-    {
-        auto target = levelRoot->getChildByName(name);
-        if (target != nullptr)
-            return target;
-    }
+    auto target = levelRoot->getChildByName(name);
+    if (target != nullptr)
+        return target;
 
     // Find recursively
     for (auto& child : levelRoot->getChildren())
     {
-        auto target = findChild(child, name);
+        target = findChild(child, name);
         if (target != nullptr)
             return target;
     }
@@ -394,16 +392,14 @@ Node* findChild(Node* levelRoot, int tag)
         return nullptr;
 
     // Find this node
-    {
-        auto target = levelRoot->getChildByTag(tag);
-        if (target != nullptr)
-            return target;
-    }
+    auto target = levelRoot->getChildByTag(tag);
+    if (target != nullptr)
+        return target;
 
     // Find recursively
     for (auto& child : levelRoot->getChildren())
     {
-        auto target = findChild(child, tag);
+        target = findChild(child, tag);
         if (target != nullptr)
             return target;
     }
