@@ -32,7 +32,7 @@ THE SOFTWARE.
 #include <algorithm>
 #include <stdlib.h> // for posix_memalign
 
-namespace cocos2d {
+namespace cocos2d { namespace experimental {
 
 AudioMixerController::AudioMixerController(int bufferSizeInFrames, int sampleRate, int channelCount)
         : _bufferSizeInFrames(bufferSizeInFrames)
@@ -443,4 +443,5 @@ bool AudioMixerController::hasPlayingTacks()
 
     return false;
 }
-} // namespace cocos2d
+
+}} // namespace cocos2d { namespace experimental {

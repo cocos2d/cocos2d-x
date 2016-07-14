@@ -19,7 +19,7 @@
 
 #include "audio/android/cutils/log.h"
 
-namespace cocos2d {
+namespace cocos2d { namespace experimental {
 
 /* Behavior of is_same<>::value is true if the types are identical,
  * false otherwise. Identical to the STL std::is_same.
@@ -447,6 +447,6 @@ inline void volumeMulti(TO* out, size_t frameCount,
     }
 }
 
-};
+}} // namespace cocos2d { namespace experimental {
 
 #endif /* COCOS_AUDIO_MIXER_OPS_H */

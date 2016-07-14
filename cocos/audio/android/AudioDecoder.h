@@ -31,7 +31,7 @@ THE SOFTWARE.
 #include <mutex>
 #include <condition_variable>
 
-namespace cocos2d {
+namespace cocos2d { namespace experimental {
 
 class AudioDecoder
 {
@@ -108,6 +108,6 @@ private:
     void interleave();
 };
 
-} // namespace cocos2d {
+}} // namespace cocos2d { namespace experimental {
 
 #endif //COCOS_AUDIODECODER_H

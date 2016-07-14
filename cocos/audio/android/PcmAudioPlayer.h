@@ -30,7 +30,7 @@ THE SOFTWARE.
 #include "audio/android/PcmData.h"
 #include "audio/android/Track.h"
 
-namespace cocos2d {
+namespace cocos2d { namespace experimental {
 
 class ICallerThreadUtils;
 class AudioMixerController;
@@ -103,6 +103,6 @@ private:
     friend class AudioPlayerProvider;
 };
 
-} //namespace cocos2d {
+}} // namespace cocos2d { namespace experimental {
 
 #endif // COCOS_PCMAUDIOPLAYER_H

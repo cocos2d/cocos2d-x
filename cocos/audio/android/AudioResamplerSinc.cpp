@@ -52,7 +52,7 @@
 
 #define UNUSED(x) ((void)(x))
 
-namespace cocos2d {
+namespace cocos2d { namespace experimental {
 // ----------------------------------------------------------------------------
 
 
@@ -604,4 +604,4 @@ void AudioResamplerSinc::interpolate(
     }
 }
 // ----------------------------------------------------------------------------
-} // namespace cocos2d
+}} // namespace cocos2d { namespace experimental {

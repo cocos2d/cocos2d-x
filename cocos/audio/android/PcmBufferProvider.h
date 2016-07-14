@@ -30,7 +30,7 @@ THE SOFTWARE.
 #include <stddef.h>
 #include <stdio.h>
 
-namespace cocos2d {
+namespace cocos2d { namespace experimental {
 
 class PcmBufferProvider : public AudioBufferProvider
 {
@@ -49,6 +49,6 @@ protected:
     size_t mUnrel;     // number of frames not yet released
 };
 
-}
+}} // namespace cocos2d { namespace experimental {
 
 #endif //COCOS_BUFFERPROVIDER_H

@@ -31,7 +31,7 @@ THE SOFTWARE.
 #include <math.h>
 #include <algorithm> // for std::find
 
-namespace cocos2d {
+namespace cocos2d { namespace experimental {
 
 static std::vector<UrlAudioPlayer *> __allPlayers;
 
@@ -336,4 +336,4 @@ void UrlAudioPlayer::destroy()
     }
 }
 
-} // namespace cocos2d {
+}} // namespace cocos2d { namespace experimental {

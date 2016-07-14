@@ -24,7 +24,7 @@ THE SOFTWARE.
 #include <math.h>
 #include "audio/android/Track.h"
 
-namespace cocos2d {
+namespace cocos2d { namespace experimental {
 
 Track::Track(const PcmData &pcmData)
         : onStateChanged(nullptr)
@@ -76,4 +76,4 @@ float Track::getVolume() const
     return _volume;
 }
 
-} // namespace cocos2d {
+}} // namespace cocos2d { namespace experimental {

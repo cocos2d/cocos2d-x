@@ -20,7 +20,7 @@
 #include <sys/types.h>
 #include <errno.h>
 
-namespace cocos2d {
+namespace cocos2d { namespace experimental {
 
 // use this type to return error codes
 #ifdef _WIN32
@@ -81,7 +81,7 @@ enum {
 # define NO_ERROR 0L
 #endif
 
-}; // namespace cocos2d
+}} // namespace cocos2d { namespace experimental {
     
 // ---------------------------------------------------------------------------
     

@@ -20,7 +20,7 @@
 #include <stdint.h>
 #include <math.h>
 
-namespace cocos2d {
+namespace cocos2d { namespace experimental {
 
 // AUDIO_RESAMPLER_DOWN_RATIO_MAX is the maximum ratio between the original
 // audio sample rate and the target rate when downsampling,
@@ -170,7 +170,7 @@ static inline bool isMusicRate(uint32_t sampleRate) {
     return sampleRate >= AUDIO_PROCESSING_MUSIC_RATE;
 }
 
-} // namespace cocos2d
+}} // namespace cocos2d { namespace experimental {
 
 // ---------------------------------------------------------------------------
 

@@ -24,7 +24,7 @@
 #include "audio/android/AudioResampler.h"
 #include "audio/android/AudioBufferProvider.h"
 
-namespace cocos2d {
+namespace cocos2d { namespace experimental {
 
 
 typedef const int32_t * (*readCoefficientsFn)(bool upDownSample);
@@ -96,6 +96,6 @@ private:
 };
 
 // ----------------------------------------------------------------------------
-} // namespace cocos2d
+}} // namespace cocos2d { namespace experimental {
 
 #endif /*ANDROID_AUDIO_RESAMPLER_SINC_H*/

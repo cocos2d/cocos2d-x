@@ -27,7 +27,7 @@ THE SOFTWARE.
 #include "audio/android/OpenSLHelper.h"
 #include "audio/android/PcmData.h"
 
-namespace cocos2d {
+namespace cocos2d { namespace experimental {
 
 PcmData::PcmData()
 {
@@ -135,4 +135,4 @@ std::string PcmData::toString() const
     return ret;
 }
 
-} // namespace cocos2d {
+}} // namespace cocos2d { namespace experimental {

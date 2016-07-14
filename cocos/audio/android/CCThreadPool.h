@@ -39,7 +39,7 @@
 #include <atomic>
 #include <mutex>
 
-namespace cocos2d {
+namespace cocos2d { namespace experimental {
 
 /**
  * @addtogroup base
@@ -233,7 +233,7 @@ private:
 // end of base group
 /// @}
 
-} // namespace cocos2d {
+}} // namespace cocos2d { namespace experimental {
 
 
 #endif /* __CCTHREAD_POOL_H__ */

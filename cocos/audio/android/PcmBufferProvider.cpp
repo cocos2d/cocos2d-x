@@ -27,7 +27,7 @@ THE SOFTWARE.
 #include "audio/android/cutils/log.h"
 #include "audio/android/PcmBufferProvider.h"
 
-namespace cocos2d {
+namespace cocos2d { namespace experimental {
 
 static int gVerbose = 0;
 
@@ -96,4 +96,4 @@ void PcmBufferProvider::reset() {
     mNextFrame = 0;
 }
 
-}
+}} // namespace cocos2d { namespace experimental {

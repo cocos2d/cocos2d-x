@@ -27,7 +27,7 @@ THE SOFTWARE.
 #include "audio/android/PcmAudioService.h"
 #include "audio/android/AudioMixerController.h"
 
-namespace cocos2d {
+namespace cocos2d { namespace experimental {
 
 static std::vector<char> __silenceData;
 
@@ -215,4 +215,4 @@ void PcmAudioService::resume()
     SL_RETURN_IF_FAILED(r, "PcmAudioService::resume failed");
 }
 
-} // namespace cocos2d {
+}} // namespace cocos2d { namespace experimental {

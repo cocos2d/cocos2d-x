@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include "audio/android/AudioResampler.h"
 #include "audio/android/PcmBufferProvider.h"
 
-namespace cocos2d {
+namespace cocos2d { namespace experimental {
 
 /* Explicitly requesting SL_IID_ANDROIDSIMPLEBUFFERQUEUE and SL_IID_PREFETCHSTATUS
 * on the UrlAudioPlayer object for decoding, SL_IID_METADATAEXTRACTION for retrieving the
@@ -754,4 +754,4 @@ void AudioDecoder::interleave()
     _result.pcmBuffer = newBuffer;
 }
 
-} // namespace cocos2d {
+}} // namespace cocos2d { namespace experimental {

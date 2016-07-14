@@ -37,7 +37,7 @@ THE SOFTWARE.
 #include <stdlib.h>
 #include <algorithm> // for std::find_if
 
-namespace cocos2d {
+namespace cocos2d { namespace experimental {
 
 static int getSystemAPILevel()
 {
@@ -486,4 +486,4 @@ void AudioPlayerProvider::resume()
     }
 }
 
-} // namespace cocos2d {
+}} // namespace cocos2d { namespace experimental {

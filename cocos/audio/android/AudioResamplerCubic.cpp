@@ -24,7 +24,7 @@
 #include "audio/android/AudioResampler.h"
 #include "audio/android/AudioResamplerCubic.h"
 
-namespace cocos2d {
+namespace cocos2d { namespace experimental {
 // ----------------------------------------------------------------------------
 
 void AudioResamplerCubic::init() {
@@ -188,4 +188,4 @@ save_state:
 }
 
 // ----------------------------------------------------------------------------
-} // namespace cocos2d
+}} // namespace cocos2d { namespace experimental {
