@@ -49,9 +49,7 @@
 #include "audio/android/IAudioPlayer.h"
 #include "audio/android/ICallerThreadUtils.h"
 #include "audio/android/AudioPlayerProvider.h"
-
-#define LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG, LOG_TAG,__VA_ARGS__)
-#define LOGE(...)  __android_log_print(ANDROID_LOG_ERROR, LOG_TAG,__VA_ARGS__)
+#include "audio/android/cutils/log.h" 
 
 using namespace cocos2d;
 using namespace cocos2d::experimental;
@@ -85,7 +83,7 @@ static int fdGetter(const std::string& url, off_t* start, off_t* length)
 
     if (fd <= 0)
     {
-        LOGE("Failed to open file descriptor for '%s'", url.c_str());
+        ALOGE("Failed to open file descriptor for '%s'", url.c_str());
     }
 
     return fd;
@@ -184,7 +182,7 @@ bool AudioEngineImpl::init()
 
 int AudioEngineImpl::play2d(const std::string &filePath ,bool loop ,float volume)
 {
-    LOGD("play2d, _audioPlayers.size=%d", (int)_audioPlayers.size());
+    ALOGV("play2d, _audioPlayers.size=%d", (int)_audioPlayers.size());
     auto audioId = AudioEngine::INVALID_AUDIO_ID;
 
     do 
@@ -206,14 +204,14 @@ int AudioEngineImpl::play2d(const std::string &filePath ,bool loop ,float volume
 
                 if (state != IAudioPlayer::State::OVER && state != IAudioPlayer::State::STOPPED)
                 {
-                    LOGD("ignore state: %d", state);
+                    ALOGV("ignore state: %d", state);
                     return;
                 }
 
                 int id = player->getId();
 
                 auto cb = [this, id](){
-                    LOGD("Removing player id=%d", id);
+                    ALOGV("Removing player id=%d", id);
                     auto iter = _callbackMap.find(id);
                     if (iter != _callbackMap.end())
                     {
@@ -241,7 +239,7 @@ int AudioEngineImpl::play2d(const std::string &filePath ,bool loop ,float volume
         } 
         else
         {
-            LOGE("Oops, player is null ...");
+            ALOGE("Oops, player is null ...");
             return AudioEngine::INVALID_AUDIO_ID;
         }
 
