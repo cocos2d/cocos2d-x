@@ -150,8 +150,8 @@ public:
      If two nodes have the same LocalZOrder, then the node that was added first to the children's array will be in front of the other node in the array.
      
      Also, the Scene Graph is traversed using the "In-Order" tree traversal algorithm ( http://en.wikipedia.org/wiki/Tree_traversal#In-order )
-     And Nodes that have LocalZOder values < 0 are the "left" subtree
-     While Nodes with LocalZOder >=0 are the "right" subtree.
+     And Nodes that have LocalZOrder values < 0 are the "left" subtree
+     While Nodes with LocalZOrder >=0 are the "right" subtree.
      
      @see `setGlobalZOrder`
      @see `setVertexZ`
@@ -179,10 +179,10 @@ public:
     CC_DEPRECATED_ATTRIBUTE virtual int getZOrder() const { return getLocalZOrder(); }
 
     /**
-     Defines the oder in which the nodes are renderer.
+     Defines the order in which the nodes are renderer.
      Nodes that have a Global Z Order lower, are renderer first.
      
-     In case two or more nodes have the same Global Z Order, the oder is not guaranteed.
+     In case two or more nodes have the same Global Z Order, the order is not guaranteed.
      The only exception if the Nodes have a Global Z Order == 0. In that case, the Scene Graph order is used.
      
      By default, all nodes have a Global Z Order = 0. That means that by default, the Scene Graph order is used to render the nodes.

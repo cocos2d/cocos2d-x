@@ -206,7 +206,7 @@ public:
     
     /** Check the listener is available.
 
-     *@return Ture if there's one available callback function at least, false if there's no one.
+     * @return True if there's one available callback function at least, false if there's no one.
      */
     virtual bool checkAvailable() override;
     
