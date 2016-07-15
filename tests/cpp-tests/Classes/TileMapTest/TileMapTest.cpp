@@ -53,6 +53,7 @@ TileMapTests::TileMapTests()
     ADD_TEST_CASE(TMXHexEvenXTest);
     ADD_TEST_CASE(TMXHexOddYTest);
     ADD_TEST_CASE(TMXHexEvenYTest);
+    ADD_TEST_CASE(TMXHexAxisXTest);
 }
 
 TileDemo::TileDemo()
@@ -1584,3 +1585,24 @@ std::string TMXHexEvenYTest::title() const
     return "TMX Hex Even Y";
 }
 
+//------------------------------------------------------------------
+//
+// TMXHexAxisXTest
+//
+//------------------------------------------------------------------
+TMXHexAxisXTest::TMXHexAxisXTest()
+{
+    auto color = LayerColor::create( Color4B(64,64,64,255) );
+    addChild(color, -1);
+    
+    auto map = TMXTiledMap::create("TileMaps/hexa-axis-x.tmx");
+    addChild(map, 0, kTagTileMap);
+    
+    Size CC_UNUSED s = map->getContentSize();
+    CCLOG("ContentSize: %f, %f", s.width,s.height);
+}
+
+std::string TMXHexAxisXTest::title() const
+{
+    return "The map should be same with in Tiled Editor";
+}

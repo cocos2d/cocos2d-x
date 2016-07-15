@@ -172,13 +172,13 @@ void TMXLayer::setupTiles()
         for (int x=0; x < _layerSize.width; x++)
         {
             int newX = x;
-            // fix correr render ordering in Hexagonal maps when stagger axis == x
+            // fix correct render ordering in Hexagonal maps when stagger axis == x
             if (_staggerAxis == TMXStaggerAxis_X && _layerOrientation == TMXOrientationHex)
             {
                 int one_or_zero = (_staggerIndex == TMXStaggerIndex_Odd) ? 1 : 0;
                 int zero_or_one = one_or_zero ^ 1;
-                if(x >= _layerSize.width/2)
-                    newX = (x - _layerSize.width/2) * 2 + one_or_zero;
+                if (x >= (int)_layerSize.width/2)
+                    newX = (x - (int)_layerSize.width/2) * 2 + one_or_zero;
                 else
                     newX = x * 2 + zero_or_one;
             }
