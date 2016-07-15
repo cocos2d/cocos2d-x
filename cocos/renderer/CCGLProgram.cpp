@@ -651,17 +651,17 @@ bool GLProgram::updateUniformLocation(GLint location, const GLvoid* data, unsign
     }
     else
     {
-        if (memcmp(element->second.first, data, bytes) == 0)
+        if (element->second.second < bytes)
         {
-            updated = false;
+            GLvoid* value = realloc(element->second.first, bytes);
+            memcpy(value, data, bytes);
+            _hashForUniforms[location] = std::make_pair(value, bytes);
         }
         else
         {
-            if (element->second.second < bytes)
+            if (memcmp(element->second.first, data, bytes) == 0)
             {
-                GLvoid* value = realloc(element->second.first, bytes);
-                memcpy(value, data, bytes );
-                _hashForUniforms[location] = std::make_pair(value, bytes);
+                updated = false;
             }
             else
                 memcpy(element->second.first, data, bytes);
