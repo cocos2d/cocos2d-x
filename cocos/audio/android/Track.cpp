@@ -57,14 +57,14 @@ gain_minifloat_packed_t Track::getVolumeLR()
 
 bool Track::setPosition(float pos)
 {
-    mNextFrame = (size_t) (pos * mNumFrames / _pcmData.duration);
-    mUnrel = 0;
+    _nextFrame = (size_t) (pos * _numFrames / _pcmData.duration);
+    _unrel = 0;
     return true;
 }
 
 float Track::getPosition() const
 {
-    return mNextFrame * _pcmData.duration / mNumFrames;
+    return _nextFrame * _pcmData.duration / _numFrames;
 }
 
 void Track::setVolume(float volume)

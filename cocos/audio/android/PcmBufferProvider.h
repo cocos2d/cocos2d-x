@@ -42,11 +42,11 @@ public:
     void reset();
 
 protected:
-    const void *mAddr;      // base address
-    size_t mNumFrames; // total frames
-    size_t mFrameSize; // size of each frame in bytes
-    size_t mNextFrame; // index of next frame to provide
-    size_t mUnrel;     // number of frames not yet released
+    const void *_addr;      // base address
+    size_t _numFrames; // total frames
+    size_t _frameSize; // size of each frame in bytes
+    size_t _nextFrame; // index of next frame to provide
+    size_t _unrel;     // number of frames not yet released
 };
 
 }} // namespace cocos2d { namespace experimental {

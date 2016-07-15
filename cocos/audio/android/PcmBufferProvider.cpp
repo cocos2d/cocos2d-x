@@ -29,25 +29,23 @@ THE SOFTWARE.
 
 namespace cocos2d { namespace experimental {
 
-static int gVerbose = 0;
-
 PcmBufferProvider::PcmBufferProvider()
-        : mAddr(nullptr)
-        , mNumFrames(0)
-        , mFrameSize(0)
-        , mNextFrame(0)
-        , mUnrel(0)
+        : _addr(nullptr)
+        , _numFrames(0)
+        , _frameSize(0)
+        , _nextFrame(0)
+        , _unrel(0)
 {
     
 }
 
 bool PcmBufferProvider::init(const void *addr, size_t frames, size_t frameSize)
 {
-    mAddr = addr;
-    mNumFrames = frames;
-    mFrameSize = frameSize;
-    mNextFrame = 0;
-    mUnrel = 0;
+    _addr = addr;
+    _numFrames = frames;
+    _frameSize = frameSize;
+    _nextFrame = 0;
+    _unrel = 0;
     return true;
 }
 
@@ -55,18 +53,17 @@ status_t PcmBufferProvider::getNextBuffer(Buffer *buffer,
                                           int64_t pts/* = kInvalidPTS*/) {
     (void) pts; // suppress warning
     size_t requestedFrames = buffer->frameCount;
-    if (requestedFrames > mNumFrames - mNextFrame) {
-        buffer->frameCount = mNumFrames - mNextFrame;
+    if (requestedFrames > _numFrames - _nextFrame) {
+        buffer->frameCount = _numFrames - _nextFrame;
     }
 
-    if (gVerbose) {
-        ALOGV("getNextBuffer() requested %zu frames out of %zu frames available,"
-                       " and returned %zu frames\n",
-               requestedFrames, (size_t) (mNumFrames - mNextFrame), buffer->frameCount);
-    }
-    mUnrel = buffer->frameCount;
+    ALOGV("getNextBuffer() requested %zu frames out of %zu frames available,"
+                  " and returned %zu frames\n",
+              requestedFrames, (size_t) (_numFrames - _nextFrame), buffer->frameCount);
+
+    _unrel = buffer->frameCount;
     if (buffer->frameCount > 0) {
-        buffer->raw = (char *) mAddr + mFrameSize * mNextFrame;
+        buffer->raw = (char *) _addr + _frameSize * _nextFrame;
         return NO_ERROR;
     } else {
         buffer->raw = NULL;
@@ -75,25 +72,23 @@ status_t PcmBufferProvider::getNextBuffer(Buffer *buffer,
 }
 
 void PcmBufferProvider::releaseBuffer(Buffer *buffer) {
-    if (buffer->frameCount > mUnrel) {
+    if (buffer->frameCount > _unrel) {
         ALOGV("ERROR releaseBuffer() released %zu frames but only %zu available "
-                "to release\n", buffer->frameCount, mUnrel);
-        mNextFrame += mUnrel;
-        mUnrel = 0;
+                "to release\n", buffer->frameCount, _unrel);
+        _nextFrame += _unrel;
+        _unrel = 0;
     } else {
-        if (gVerbose) {
-            ALOGV("releaseBuffer() released %zu frames out of %zu frames available "
-                           "to release\n", buffer->frameCount, mUnrel);
-        }
-        mNextFrame += buffer->frameCount;
-        mUnrel -= buffer->frameCount;
+        ALOGV("releaseBuffer() released %zu frames out of %zu frames available "
+                           "to release\n", buffer->frameCount, _unrel);
+        _nextFrame += buffer->frameCount;
+        _unrel -= buffer->frameCount;
     }
     buffer->frameCount = 0;
     buffer->raw = NULL;
 }
 
 void PcmBufferProvider::reset() {
-    mNextFrame = 0;
+    _nextFrame = 0;
 }
 
 }} // namespace cocos2d { namespace experimental {

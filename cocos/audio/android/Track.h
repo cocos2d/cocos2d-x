@@ -62,7 +62,7 @@ public:
 
     inline State getPrevState() const { return _prevState; };
 
-    inline bool isPlayOver() const { return _state == State::PLAYING && mNextFrame >= mNumFrames;};
+    inline bool isPlayOver() const { return _state == State::PLAYING && _nextFrame >= _numFrames;};
     inline void setName(int name) { _name = name; };
     inline int getName() const { return _name; };
 
