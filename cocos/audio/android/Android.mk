@@ -15,7 +15,6 @@ LOCAL_SRC_FILES := AudioEngine-inl.cpp \
                    AudioPlayerProvider.cpp \
                    AudioResampler.cpp \
                    AudioResamplerCubic.cpp \
-                   AudioResamplerSinc.cpp \
                    PcmBufferProvider.cpp \
                    PcmAudioPlayer.cpp \
                    UrlAudioPlayer.cpp \
