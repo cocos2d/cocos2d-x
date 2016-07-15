@@ -93,11 +93,6 @@ NS_CC_BEGIN
 #include "renderer/ccShader_CameraClear.frag"
 
 // x-studio365 spec
-#include "renderer/ccShader_ETC1AA_PositionTextureColor.vert.ipp"
-#include "renderer/ccShader_ETC1AA_PositionTextureColor_noMVP.vert.ipp"
-#include "renderer/ccShader_ETC1AA_PositionTextureColor.frag.ipp"
-#include "renderer/ccShader_ETC1AA_PositionTextureGray.frag.ipp"
-
 #include "renderer/ccShader_ETC1AS_PositionTextureColor.frag.ipp"
 #include "renderer/ccShader_ETC1AS_PositionTextureGray.frag.ipp"
 NS_CC_END
