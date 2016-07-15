@@ -647,6 +647,7 @@ FileUtils::Status FileUtils::getContents(const std::string& filename, ResizableB
 #endif
     struct stat statBuf;
     if (fstat(descriptor, &statBuf) == -1) {
+        fclose(fp);
         return Status::ReadFailed;
     }
     size_t size = statBuf.st_size;
