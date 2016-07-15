@@ -181,6 +181,7 @@ public class Cocos2dxEditBoxHelper {
                                     Cocos2dxEditBoxHelper.__editBoxEditingDidEnd(index, text);
                                 }
                             });
+                            mCocos2dxActivity.hideVirtualButton();
                             mFrameLayout.setEnableForceDoLayout(false);
                             Log.d(TAG, "edit box lose focus");
                         }
@@ -431,6 +432,8 @@ public class Cocos2dxEditBoxHelper {
             imm.hideSoftInputFromWindow(editBox.getWindowToken(), 0);
             mCocos2dxActivity.getGLSurfaceView().setSoftKeyboardShown(false);
             mCocos2dxActivity.getGLSurfaceView().requestFocus();
+            // can take effect after GLSurfaceView has focus
+            mCocos2dxActivity.hideVirtualButton();
         }
     }
 

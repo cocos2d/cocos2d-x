@@ -116,6 +116,8 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
                             final InputMethodManager imm = (InputMethodManager) Cocos2dxGLSurfaceView.mCocos2dxGLSurfaceView.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                             imm.hideSoftInputFromWindow(Cocos2dxGLSurfaceView.this.mCocos2dxEditText.getWindowToken(), 0);
                             Cocos2dxGLSurfaceView.this.requestFocus();
+                            // can take effect after GLSurfaceView has focus
+                            ((Cocos2dxActivity)Cocos2dxGLSurfaceView.mCocos2dxGLSurfaceView.getContext()).hideVirtualButton();
                             Log.d("GLSurfaceView", "HideSoftInput");
                         }
                         break;
