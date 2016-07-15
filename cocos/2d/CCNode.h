@@ -106,8 +106,11 @@ class EventListener;
 
  */
 
+#define CC_LOCALZORDER_ZERO 0x7fffffffULL
+
 class CC_DLL Node : public Ref
 {
+    friend bool nodeComparisonLess(Node* n1, Node* n2);
 public:
     /** Default tag used for all the nodes */
     static const int INVALID_TAG = -1;
@@ -168,6 +171,18 @@ public:
      */
     CC_DEPRECATED_ATTRIBUTE virtual void _setLocalZOrder(int z);
 
+    /** !!! ONLY FOR INTERNAL USE
+    * Sets the arrival order when this node has a same ZOrder with other children.
+    *
+    * A node which called addChild subsequently will take a larger arrival order,
+    * If two children have the same Z order, the child with larger arrival order will be drawn later.
+    *
+    * @warning This method is used internally for localZOrder sorting, don't change this manually
+    *
+    * @param orderOfArrival   The arrival order.
+    */
+    CC_DEPRECATED_ATTRIBUTE void _setOrderOfArrival(unsigned int orderOfArrival);
+
     /**
      * Gets the local Z order of this node.
      *
@@ -175,7 +190,7 @@ public:
      *
      * @return The local (relative to its siblings) Z order.
      */
-    virtual int getLocalZOrder() const { return _localZOrder; }
+    virtual int getLocalZOrder() const { return static_cast<int>(((_localZOrder >> 32) & 0xffffffff) - CC_LOCALZORDER_ZERO); }
     CC_DEPRECATED_ATTRIBUTE virtual int getZOrder() const { return getLocalZOrder(); }
 
     /**
@@ -1881,8 +1896,10 @@ protected:
     mutable bool _additionalTransformDirty; ///< transform dirty ?
     bool _transformUpdated;         ///< Whether or not the Transform object was updated since the last frame
 
-    int _localZOrder;               ///< Local order (relative to its siblings) used to sort the node
+    unsigned long long _localZOrder;               ///< Local order (relative to its siblings) used to sort the node
     float _globalZOrder;            ///< Global order used to sort the node
+
+    static unsigned int s_globalOrderOfArrival;
 
     Vector<Node*> _children;        ///< array of children nodes
     Node *_parent;                  ///< weak reference to parent node
