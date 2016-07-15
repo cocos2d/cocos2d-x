@@ -347,7 +347,6 @@ bool UrlAudioPlayer::prepare(const std::string &url, SLuint32 locatorType, std::
     setState(State::INITIALIZED);
 
     setVolume(1.0f);
-    pause();
 
     return true;
 }
