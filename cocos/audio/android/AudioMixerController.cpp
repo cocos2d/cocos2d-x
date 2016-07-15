@@ -175,16 +175,18 @@ void AudioMixerController::mixOneFrame()
                         AudioMixer::CHANNEL_MASK,
                         (void *) (uintptr_t) channelMask);
 
+                track->setState(Track::State::PLAYING);
+                track->setName(name);
+                _mixer->enable(name);
+
+                std::lock_guard<std::mutex> lk(track->_volumeDirtyMutex);
                 gain_minifloat_packed_t volume = track->getVolumeLR();
                 float lVolume = float_from_gain(gain_minifloat_unpack_left(volume));
                 float rVolume = float_from_gain(gain_minifloat_unpack_right(volume));
 
                 _mixer->setParameter(name, AudioMixer::VOLUME, AudioMixer::VOLUME0, &lVolume);
                 _mixer->setParameter(name, AudioMixer::VOLUME, AudioMixer::VOLUME1, &rVolume);
-                _mixer->enable(name);
 
-                track->setState(Track::State::PLAYING);
-                track->setName(name);
                 track->setVolumeDirty(false);
             }
         }
@@ -192,6 +194,9 @@ void AudioMixerController::mixOneFrame()
         {
             ALOG_ASSERT(track->getName() >= 0);
             int name = track->getName();
+
+            std::lock_guard<std::mutex> lk(track->_volumeDirtyMutex);
+
             if (track->isVolumeDirty())
             {
                 gain_minifloat_packed_t volume = track->getVolumeLR();

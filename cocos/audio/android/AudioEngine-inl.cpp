@@ -60,10 +60,25 @@ using namespace cocos2d::experimental;
 class CallerThreadUtils : public ICallerThreadUtils
 {
 public:
-    virtual void performFunctionInCallerThread(const std::function<void()>& func) {
+    virtual void performFunctionInCallerThread(const std::function<void()>& func)
+    {
         Director::getInstance()->getScheduler()->performFunctionInCocosThread(func);
     };
+
+    virtual std::thread::id getCallerThreadId()
+    {
+        return _tid;
+    };
+
+    void setCallerThreadId(std::thread::id tid)
+    {
+        _tid = tid;
+    };
+
+private:
+    std::thread::id _tid;
 };
+
 static CallerThreadUtils __callerThreadUtils;
 
 static int fdGetter(const std::string& url, off_t* start, off_t* length)
@@ -100,7 +115,7 @@ AudioEngineImpl::AudioEngineImpl()
     , _onPauseListener(nullptr)
     , _onResumeListener(nullptr)
 {
-
+    __callerThreadUtils.setCallerThreadId(std::this_thread::get_id());
 }
 
 AudioEngineImpl::~AudioEngineImpl()
@@ -204,33 +219,21 @@ int AudioEngineImpl::play2d(const std::string &filePath ,bool loop ,float volume
 
                 if (state != IAudioPlayer::State::OVER && state != IAudioPlayer::State::STOPPED)
                 {
-                    ALOGV("ignore state: %d", state);
+                    ALOGV("Ignore state: %d", state);
                     return;
                 }
 
                 int id = player->getId();
 
-                auto cb = [this, id](){
-                    ALOGV("Removing player id=%d", id);
-                    auto iter = _callbackMap.find(id);
-                    if (iter != _callbackMap.end())
-                    {
-                        iter->second(id, *AudioEngine::_audioIDInfoMap[id].filePath);
-                        _callbackMap.erase(iter);
-                    }
-                    AudioEngine::remove(id);
-                    _audioPlayers.erase(id);
-                };
-
-                auto director = Director::getInstance();
-                if (director->getCocos2dThreadId() == std::this_thread::get_id())
+                ALOGV("Removing player id=%d", id);
+                auto iter = _callbackMap.find(id);
+                if (iter != _callbackMap.end())
                 {
-                    cb();
+                    iter->second(id, *AudioEngine::_audioIDInfoMap[id].filePath);
+                    _callbackMap.erase(iter);
                 }
-                else
-                {
-                    director->getScheduler()->performFunctionInCocosThread(cb);
-                }
+                AudioEngine::remove(id);
+                _audioPlayers.erase(id);
             });
 
             player->setLoop(loop);

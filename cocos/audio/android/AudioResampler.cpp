@@ -26,7 +26,7 @@
 //#include <cutils/properties.h>
 #include "audio/android/audio_utils/include/audio_utils/primitives.h"
 #include "audio/android/AudioResampler.h"
-#include "audio/android/AudioResamplerSinc.h"
+//#include "audio/android/AudioResamplerSinc.h"
 #include "audio/android/AudioResamplerCubic.h"
 
 
@@ -228,12 +228,16 @@ AudioResampler* AudioResampler::create(audio_format_t format, int inChannelCount
     case HIGH_QUALITY:
         ALOGV("Create HIGH_QUALITY sinc Resampler");
         LOG_ALWAYS_FATAL_IF(format != AUDIO_FORMAT_PCM_16_BIT, "invalid pcm format");
-        resampler = new (std::nothrow) AudioResamplerSinc(inChannelCount, sampleRate);
+        ALOG_ASSERT(false, "HIGH_QUALITY isn't supported");
+        // Cocos2d-x only uses MED_QUALITY, so we could remove Sinc relative files
+//        resampler = new (std::nothrow) AudioResamplerSinc(inChannelCount, sampleRate);
         break;
     case VERY_HIGH_QUALITY:
         ALOGV("Create VERY_HIGH_QUALITY sinc Resampler = %d", quality);
         LOG_ALWAYS_FATAL_IF(format != AUDIO_FORMAT_PCM_16_BIT, "invalid pcm format");
-        resampler = new (std::nothrow) AudioResamplerSinc(inChannelCount, sampleRate, quality);
+        // Cocos2d-x only uses MED_QUALITY, so we could remove Sinc relative files
+//        resampler = new (std::nothrow) AudioResamplerSinc(inChannelCount, sampleRate, quality);
+        ALOG_ASSERT(false, "VERY_HIGH_QUALITY isn't supported");
         break;
     }
 

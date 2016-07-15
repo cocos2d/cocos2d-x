@@ -22,8 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef COCOS_URLAUDIOPLAYER_H
-#define COCOS_URLAUDIOPLAYER_H
+#pragma once
 
 #include "audio/android/IAudioPlayer.h"
 #include "audio/android/OpenSLHelper.h"
@@ -31,6 +30,7 @@ THE SOFTWARE.
 #include <mutex>
 #include <vector>
 #include <memory>
+#include <thread>
 
 namespace cocos2d { namespace experimental {
 
@@ -116,17 +116,14 @@ private:
     float _duration;
     bool _isLoop;
     State _state;
-    bool _isDestroyed;
 
     PlayEventCallback _playEventCallback;
 
-    std::mutex _stateMutex;
+    std::thread::id _callerThreadId;
+    std::shared_ptr<bool> _isDestroyed;
 
     friend class SLUrlAudioPlayerCallbackProxy;
-
     friend class AudioPlayerProvider;
 };
 
 }} // namespace cocos2d { namespace experimental {
-
-#endif // COCOS_URLAUDIOPLAYER_H

@@ -22,8 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef COCOS_IAUDIOPLAYER_H
-#define COCOS_IAUDIOPLAYER_H
+#pragma once
 
 #include <functional>
 
@@ -32,15 +31,6 @@ namespace cocos2d { namespace experimental {
 class IAudioPlayer
 {
 public:
-    virtual ~IAudioPlayer()
-    { };
-
-    virtual int getId() const = 0;
-
-    virtual void setId(int id) = 0;
-
-    virtual std::string getUrl() const = 0;
-
     enum class State
     {
         INVALID = 0,
@@ -50,6 +40,17 @@ public:
         STOPPED,
         OVER
     };
+
+    using PlayEventCallback = std::function<void(State)>;
+
+    virtual ~IAudioPlayer()
+    { };
+
+    virtual int getId() const = 0;
+
+    virtual void setId(int id) = 0;
+
+    virtual std::string getUrl() const = 0;
 
     virtual State getState() const = 0;
 
@@ -77,13 +78,9 @@ public:
 
     virtual bool setPosition(float pos) = 0;
 
-    typedef std::function<void(State)> PlayEventCallback;
-
     // @note: STOPPED event is invoked in main thread
     //        OVER event is invoked in sub thread
     virtual void setPlayEventCallback(const PlayEventCallback &playEventCallback) = 0;
 };
 
 }} // namespace cocos2d { namespace experimental {
-
-#endif //COCOS_IAUDIOPLAYER_H

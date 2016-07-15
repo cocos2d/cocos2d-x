@@ -14,8 +14,7 @@
  * limitations under the License.
  */
 
-#ifndef COCOS_AUDIO_MIXER_OPS_H
-#define COCOS_AUDIO_MIXER_OPS_H
+#pragma once
 
 #include "audio/android/cutils/log.h"
 
@@ -449,4 +448,3 @@ inline void volumeMulti(TO* out, size_t frameCount,
 
 }} // namespace cocos2d { namespace experimental {
 
-#endif /* COCOS_AUDIO_MIXER_OPS_H */

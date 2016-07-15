@@ -21,8 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#ifndef COCOS_ASSETFD_H
-#define COCOS_ASSETFD_H
+#pragma once
 
 #include <unistd.h>
 
@@ -41,4 +40,3 @@ private:
 
 }} // namespace cocos2d { namespace experimental {
 
-#endif // COCOS_ASSETFD_H

@@ -95,7 +95,7 @@ PcmData &PcmData::operator=(PcmData &&o)
     endianness = o.endianness;
     numFrames = o.numFrames;
     duration = o.duration;
-    pcmBuffer = o.pcmBuffer;
+    pcmBuffer = std::move(o.pcmBuffer);
     o.reset();
     return *this;
 }

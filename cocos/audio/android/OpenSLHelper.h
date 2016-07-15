@@ -22,8 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef COCOS_OPENSLHELPER_H
-#define COCOS_OPENSLHELPER_H
+#pragma once
 
 #include "audio/android/cutils/log.h"
 
@@ -98,5 +97,3 @@ typedef std::function<int(const std::string&, off_t* start, off_t* length)> FdGe
 #define intervalInMS(oldTime, newTime) (static_cast<long>(std::chrono::duration_cast<std::chrono::microseconds>((newTime) - (oldTime)).count()) / 1000.f)
 
 #define ARRAY_SIZE(arr) (sizeof(arr) / sizeof(arr[0]))
-
-#endif // COCOS_OPENSLHELPER_H

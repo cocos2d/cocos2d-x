@@ -53,29 +53,40 @@ bool PcmAudioPlayer::prepare(const std::string &url, const PcmData &decResult)
     _decResult = decResult;
 
     _track = new (std::nothrow) Track(_decResult);
-    _track->onStateChanged = [this](Track::State state) {
 
-        if (state == Track::State::OVER)
-        {
-            if (_playEventCallback != nullptr)
+    std::thread::id callerThreadId = _callerThreadUtils->getCallerThreadId();
+
+    _track->onStateChanged = [this, callerThreadId](Track::State state) {
+        // It maybe in sub thread
+        auto func = [this, state](){
+            // It's in caller's thread
+            if (state == Track::State::OVER)
             {
-                _playEventCallback(State::OVER);
+                if (_playEventCallback != nullptr)
+                {
+                    _playEventCallback(State::OVER);
+                }
             }
-        }
-        else if (state == Track::State::STOPPED)
-        {
-            if (_playEventCallback != nullptr)
+            else if (state == Track::State::STOPPED)
             {
-                _playEventCallback(State::STOPPED);
+                if (_playEventCallback != nullptr)
+                {
+                    _playEventCallback(State::STOPPED);
+                }
             }
-        }
-        else if (state == Track::State::DESTROYED)
-        {
-            ALOGV("Before deleting PcmAudioPlayer (%p)", this);
-            _callerThreadUtils->performFunctionInCallerThread([this](){
-                // should delete self in caller'thread rather than OpenSLES enqueue thread.
+            else if (state == Track::State::DESTROYED)
+            {
                 delete this;
-            });
+            }
+        };
+
+        if (callerThreadId == std::this_thread::get_id())
+        {
+            func();
+        }
+        else
+        {
+            _callerThreadUtils->performFunctionInCallerThread(func);
         }
     };
 

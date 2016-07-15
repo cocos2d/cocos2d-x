@@ -14,8 +14,7 @@
  * limitations under the License.
  */
 
-#ifndef COCOS_AUDIO_BUFFER_PROVIDER_H
-#define COCOS_AUDIO_BUFFER_PROVIDER_H
+#pragma once
 
 #include <stddef.h>
 #include <stdint.h>
@@ -79,5 +78,3 @@ public:
 
 // ----------------------------------------------------------------------------
 }} // namespace cocos2d { namespace experimental {
-
-#endif // COCOS_AUDIO_BUFFER_PROVIDER_H

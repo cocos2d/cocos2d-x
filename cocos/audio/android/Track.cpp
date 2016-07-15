@@ -38,7 +38,7 @@ Track::Track(const PcmData &pcmData)
         , _state(State::IDLE)
         , _name(-1)
         , _volume(1.0f)
-        , _isVolumeDirty(false)
+        , _isVolumeDirty(true)
         , _isLoop(false)
 {
     init(_pcmData.pcmBuffer->data(), _pcmData.numFrames, _pcmData.bitsPerSample / 8 * _pcmData.numChannels);
@@ -69,6 +69,7 @@ float Track::getPosition() const
 
 void Track::setVolume(float volume)
 {
+    std::lock_guard<std::mutex> lk(_volumeDirtyMutex);
     if (fabs(_volume - volume) > 0.00001)
     {
         _volume = volume;
@@ -80,5 +81,16 @@ float Track::getVolume() const
 {
     return _volume;
 }
+
+void Track::setState(State state)
+{
+    std::lock_guard<std::mutex> lk(_stateMutex);
+    if (_state != state)
+    {
+        _prevState = _state;
+        _state = state;
+        onStateChanged(_state);
+    }
+};
 
 }} // namespace cocos2d { namespace experimental {

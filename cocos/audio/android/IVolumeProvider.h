@@ -21,9 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-
-#ifndef COCOS_IVOLUMEPROVIDER_H
-#define COCOS_IVOLUMEPROVIDER_H
+#pragma once
 
 #include "audio/android/audio_utils/include/audio_utils/minifloat.h"
 
@@ -44,5 +42,3 @@ protected:
 };
 
 }} // namespace cocos2d { namespace experimental {
-
-#endif // COCOS_IVOLUMEPROVIDER_H

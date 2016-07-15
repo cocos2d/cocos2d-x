@@ -21,10 +21,10 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#ifndef COCOS_ICALLERTHREADUTILS_H
-#define COCOS_ICALLERTHREADUTILS_H
+#pragma once
 
 #include <functional>
+#include <thread>
 
 namespace cocos2d { namespace experimental {
 
@@ -35,8 +35,7 @@ public:
     { };
 
     virtual void performFunctionInCallerThread(const std::function<void()>& func) = 0;
+    virtual std::thread::id getCallerThreadId() = 0;
 };
 
 }} // namespace cocos2d { namespace experimental {
-
-#endif //COCOS_ICALLERTHREADUTILS_H

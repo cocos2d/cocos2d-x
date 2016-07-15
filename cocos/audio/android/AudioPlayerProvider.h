@@ -22,8 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef COCOS_AUDIOPLAYERPROVIDER_H
-#define COCOS_AUDIOPLAYERPROVIDER_H
+#pragma once
 
 #include "audio/android/IAudioPlayer.h"
 #include "audio/android/OpenSLHelper.h"
@@ -125,4 +124,3 @@ private:
 
 }} // namespace cocos2d { namespace experimental {
 
-#endif // COCOS_AUDIOPLAYERPROVIDER_H

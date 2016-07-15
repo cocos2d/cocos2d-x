@@ -21,14 +21,15 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#ifndef COCOS_TRACK_H
-#define COCOS_TRACK_H
+
+#pragma once
 
 #include "audio/android/PcmData.h"
 #include "audio/android/IVolumeProvider.h"
 #include "audio/android/PcmBufferProvider.h"
 
 #include <functional>
+#include <mutex>
 
 namespace cocos2d { namespace experimental {
 
@@ -50,15 +51,7 @@ public:
     virtual ~Track();
 
     inline State getState() const { return _state; };
-    inline void setState(State state)
-    {
-        if (_state != state)
-        {
-            _prevState = _state;
-            _state = state;
-            onStateChanged(_state);
-        }
-    };
+    void setState(State state);
 
     inline State getPrevState() const { return _prevState; };
 
@@ -68,12 +61,6 @@ public:
 
     void setVolume(float volume);
     float getVolume() const;
-
-    inline void setVolumeDirty(bool isDirty)
-    { _isVolumeDirty = isDirty; };
-
-    inline bool isVolumeDirty() const
-    { return _isVolumeDirty; };
 
     bool setPosition(float pos);
     float getPosition() const;
@@ -86,15 +73,24 @@ public:
     std::function<void(State)> onStateChanged;
 
 private:
+    inline bool isVolumeDirty() const
+    { return _isVolumeDirty; };
+
+    inline void setVolumeDirty(bool isDirty)
+    { _isVolumeDirty = isDirty; };
+
+private:
     PcmData _pcmData;
     State _prevState;
     State _state;
+    std::mutex _stateMutex;
     int _name;
     float _volume;
     bool _isVolumeDirty;
+    std::mutex _volumeDirtyMutex;
     bool _isLoop;
+
+    friend class AudioMixerController;
 };
 
 }} // namespace cocos2d { namespace experimental {
-
-#endif // COCOS_TRACK_H

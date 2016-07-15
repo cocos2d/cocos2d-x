@@ -22,8 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef COCOS_PCMBUFFERPROVIDER_H
-#define COCOS_PCMBUFFERPROVIDER_H
+#pragma once
 
 #include "audio/android/AudioBufferProvider.h"
 
@@ -37,8 +36,8 @@ class PcmBufferProvider : public AudioBufferProvider
 public:
     PcmBufferProvider();
     bool init(const void *addr, size_t frames, size_t frameSize);
-    virtual status_t getNextBuffer(Buffer *buffer, int64_t pts = kInvalidPTS);
-    virtual void releaseBuffer(Buffer *buffer);
+    virtual status_t getNextBuffer(Buffer *buffer, int64_t pts = kInvalidPTS) override ;
+    virtual void releaseBuffer(Buffer *buffer) override ;
     void reset();
 
 protected:
@@ -50,5 +49,3 @@ protected:
 };
 
 }} // namespace cocos2d { namespace experimental {
-
-#endif // COCOS_PCMBUFFERPROVIDER_H

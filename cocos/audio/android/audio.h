@@ -22,8 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef COCOS_AUDIO_H
-#define COCOS_AUDIO_H
+#pragma once
 
 // ----------------------------------------------------------------------------
 
@@ -502,4 +501,3 @@ static inline audio_channel_mask_t audio_channel_out_mask_from_count(uint32_t ch
             AUDIO_CHANNEL_REPRESENTATION_POSITION, bits);
 }
 
-#endif // COCOS_AUDIO_H

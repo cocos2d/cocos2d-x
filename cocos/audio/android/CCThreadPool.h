@@ -24,8 +24,7 @@
  Inspired by https://github.com/vit-vit/CTPL
  
  ****************************************************************************/
-#ifndef __CCTHREAD_POOL_H__
-#define __CCTHREAD_POOL_H__
+#pragma once
 
 //#include "platform/CCPlatformMacros.h"
 
@@ -96,7 +95,7 @@ public:
      *  @param type The task type, it's TASK_TYPE_DEFAULT if this argument isn't assigned
      *  @note This function has to be invoked in cocos thread
      */
-    void pushTask(const std::function<void(int)>& runnable, int type = TASK_TYPE_DEFAULT);
+    void pushTask(const std::function<void(int /*threadId*/)>& runnable, int type = TASK_TYPE_DEFAULT);
 
     // Stops all tasks, it will remove all tasks in queue
     void stopAllTasks();
@@ -234,6 +233,3 @@ private:
 /// @}
 
 }} // namespace cocos2d { namespace experimental {
-
-
-#endif /* __CCTHREAD_POOL_H__ */

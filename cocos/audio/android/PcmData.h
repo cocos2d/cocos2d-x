@@ -22,8 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef COCOS_PCMDATA_H
-#define COCOS_PCMDATA_H
+#pragma once
 
 #include <stdio.h>
 #include <string>
@@ -64,5 +63,3 @@ struct PcmData
 };
 
 }} // namespace cocos2d { namespace experimental {
-
-#endif // COCOS_PCMDATA_H

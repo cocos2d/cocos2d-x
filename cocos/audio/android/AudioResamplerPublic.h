@@ -14,8 +14,7 @@
  * limitations under the License.
  */
 
-#ifndef COCOS_AUDIO_RESAMPLER_PUBLIC_H
-#define COCOS_AUDIO_RESAMPLER_PUBLIC_H
+#pragma once
 
 #include <stdint.h>
 #include <math.h>
@@ -173,5 +172,3 @@ static inline bool isMusicRate(uint32_t sampleRate) {
 }} // namespace cocos2d { namespace experimental {
 
 // ---------------------------------------------------------------------------
-
-#endif // COCOS_AUDIO_RESAMPLER_PUBLIC_H

@@ -722,6 +722,7 @@ bool AudioPerformanceTest::init()
         
         auto displayItem = TextButton::create("Display Result", [this, playItem](TextButton* button){
             unschedule("test");
+            AudioEngine::stopAll();
             CC_PROFILER_DISPLAY_TIMERS();
             playItem->setEnabled(true);
             button->setEnabled(false);

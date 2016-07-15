@@ -27,6 +27,13 @@ THE SOFTWARE.
 #include "audio/android/cutils/log.h"
 #include "audio/android/PcmBufferProvider.h"
 
+//#define VERY_VERY_VERBOSE_LOGGING
+#ifdef VERY_VERY_VERBOSE_LOGGING
+#define ALOGVV ALOGV
+#else
+#define ALOGVV(a...) do { } while (0)
+#endif
+
 namespace cocos2d { namespace experimental {
 
 PcmBufferProvider::PcmBufferProvider()
@@ -57,8 +64,8 @@ status_t PcmBufferProvider::getNextBuffer(Buffer *buffer,
         buffer->frameCount = _numFrames - _nextFrame;
     }
 
-    ALOGV("getNextBuffer() requested %zu frames out of %zu frames available,"
-                  " and returned %zu frames\n",
+    ALOGVV("getNextBuffer() requested %zu frames out of %zu frames available,"
+                  " and returned %zu frames",
               requestedFrames, (size_t) (_numFrames - _nextFrame), buffer->frameCount);
 
     _unrel = buffer->frameCount;
@@ -73,13 +80,13 @@ status_t PcmBufferProvider::getNextBuffer(Buffer *buffer,
 
 void PcmBufferProvider::releaseBuffer(Buffer *buffer) {
     if (buffer->frameCount > _unrel) {
-        ALOGV("ERROR releaseBuffer() released %zu frames but only %zu available "
-                "to release\n", buffer->frameCount, _unrel);
+        ALOGVV("ERROR releaseBuffer() released %zu frames but only %zu available "
+                "to release", buffer->frameCount, _unrel);
         _nextFrame += _unrel;
         _unrel = 0;
     } else {
-        ALOGV("releaseBuffer() released %zu frames out of %zu frames available "
-                           "to release\n", buffer->frameCount, _unrel);
+        ALOGVV("releaseBuffer() released %zu frames out of %zu frames available "
+                           "to release", buffer->frameCount, _unrel);
         _nextFrame += buffer->frameCount;
         _unrel -= buffer->frameCount;
     }
