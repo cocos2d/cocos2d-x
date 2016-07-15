@@ -480,6 +480,55 @@ namespace
 
 //////////////////////////////////////////////////////////////////////////
 
+//struct and data for pkm
+namespace
+{
+    static const char kMagic[] = { 'P', 'K', 'M', ' ', '1', '0' };
+
+    static const uint32_t PKM_FORMAT_OFFSET = 6;
+    static const uint32_t PKM_ENCODED_WIDTH_OFFSET = 8;
+    static const uint32_t PKM_ENCODED_HEIGHT_OFFSET = 10;
+    static const uint32_t PKM_WIDTH_OFFSET = 12;
+    static const uint32_t PKM_HEIGHT_OFFSET = 14;
+    
+    static const uint32_t PKM_HEADER_SIZE = 16;
+    
+    static const uint32_t PKM_NO_MIPMAPS = 0;
+    
+    static uint32_t readBEUint16(const unsigned char* pIn) {
+        return (pIn[0] << 8) | pIn[1];
+    }
+    
+    bool etc1_pkm_is_valid(const unsigned char* pHeader) {
+        if (memcmp(pHeader, kMagic, sizeof(kMagic))) {
+            return false;
+        }
+        uint32_t format = readBEUint16(pHeader + PKM_FORMAT_OFFSET);
+        uint32_t encodedWidth = readBEUint16(pHeader + PKM_ENCODED_WIDTH_OFFSET);
+        uint32_t encodedHeight = readBEUint16(pHeader + PKM_ENCODED_HEIGHT_OFFSET);
+        uint32_t width = readBEUint16(pHeader + PKM_WIDTH_OFFSET);
+        uint32_t height = readBEUint16(pHeader + PKM_HEIGHT_OFFSET);
+        return format == PKM_NO_MIPMAPS &&
+        encodedWidth >= width && encodedWidth - width < 4 &&
+        encodedHeight >= height && encodedHeight - height < 4;
+    }
+    
+    // Read the image width from a PKM header
+    
+    uint32_t etc1_pkm_get_width(const unsigned char* pHeader) {
+        return readBEUint16(pHeader + PKM_WIDTH_OFFSET);
+    }
+    
+    // Read the image height from a PKM header
+    
+    uint32_t etc1_pkm_get_height(const unsigned char* pHeader){
+        return readBEUint16(pHeader + PKM_HEIGHT_OFFSET);
+    }
+    
+}
+
+//////////////////////////////////////////////////////////////////////////
+
 namespace
 {
     typedef struct 
@@ -705,7 +754,7 @@ bool Image::isPng(const unsigned char * data, ssize_t dataLen)
 
 bool Image::isEtc(const unsigned char * data, ssize_t dataLen)
 {
-    return etc1_pkm_is_valid((etc1_byte*)data) ? true : false;
+    return etc1_pkm_is_valid(data) ? true : false;
 }
 
 
@@ -1469,8 +1518,6 @@ namespace
             case PVR3TexturePixelFormat::ETC2_RGB:
             case PVR3TexturePixelFormat::ETC2_RGBA:
             case PVR3TexturePixelFormat::ETC2_RGBA1:
-                return Configuration::getInstance()->supportsETC2();
-                
             case PVR3TexturePixelFormat::PVRTC2BPP_RGB:
             case PVR3TexturePixelFormat::PVRTC2BPP_RGBA:
             case PVR3TexturePixelFormat::PVRTC4BPP_RGB:
@@ -1780,14 +1827,11 @@ bool Image::initWithPVRv3Data(const unsigned char * data, ssize_t dataLen)
                 {
                     CCLOG("cocos2d: Hardware ETC1 decoder not present. Using software decoder");
                     int bytePerPixel = 3;
-                    unsigned int stride = width * bytePerPixel;
                     _unpack = true;
                     _mipmaps[i].len = width*height*bytePerPixel;
                     _mipmaps[i].address = new (std::nothrow) unsigned char[width*height*bytePerPixel];
-                    if (etc1_decode_image(static_cast<const unsigned char*>(_data+dataOffset), static_cast<etc1_byte*>(_mipmaps[i].address), width, height, bytePerPixel, stride) != 0)
-                    {
+                    if (UnpackETC(static_cast<const unsigned char*>(_data+dataOffset), CC_GL_ETC1_RGB8_OES, width, height, _mipmaps[i].address))
                         return false;
-                    }
                 }
                 blockSize = 4 * 4; // Pixel by pixel block size for 4bpp
                 widthBlocks = width / 4;
@@ -1798,7 +1842,13 @@ bool Image::initWithPVRv3Data(const unsigned char * data, ssize_t dataLen)
                 if (!Configuration::getInstance()->supportsETC2())
                 {
                     CCLOG("cocos2d: Hardware ETC2 decoder not present.");
-                    return false;
+                    int bytePerPixel = 3;
+                    _unpack = true;
+                    _mipmaps[i].len = width*height*bytePerPixel;
+                    _mipmaps[i].address = new (std::nothrow) unsigned char[width*height*bytePerPixel];
+                    if (UnpackETC(static_cast<const unsigned char*>(_data+dataOffset), CC_GL_COMPRESSED_RGB8_ETC2, width, height, _mipmaps[i].address))
+                        return false;
+
                 }
                 blockSize = 4 * 4; // Pixel by pixel block size for 4bpp
                 widthBlocks = width / 4;
@@ -1808,7 +1858,12 @@ bool Image::initWithPVRv3Data(const unsigned char * data, ssize_t dataLen)
                 if (!Configuration::getInstance()->supportsETC2())
                 {
                     CCLOG("cocos2d: Hardware ETC2 decoder not present.");
-                    return false;
+                    int bytePerPixel = 4;
+                    _unpack = true;
+                    _mipmaps[i].len = width*height*bytePerPixel;
+                    _mipmaps[i].address = new (std::nothrow) unsigned char[width*height*bytePerPixel];
+                    if (UnpackETC(static_cast<const unsigned char*>(_data+dataOffset), CC_GL_COMPRESSED_RGBA8_ETC2_EAC, width, height, _mipmaps[i].address))
+                        return false;
                 }
                 blockSize = 2 * 4; // Pixel by pixel block size for 8bpp
                 widthBlocks = width / 2;
@@ -1818,7 +1873,12 @@ bool Image::initWithPVRv3Data(const unsigned char * data, ssize_t dataLen)
                 if (!Configuration::getInstance()->supportsETC2())
                 {
                     CCLOG("cocos2d: Hardware ETC2 decoder not present.");
-                    return false;
+                    int bytePerPixel = 4;
+                    _unpack = true;
+                    _mipmaps[i].len = width*height*bytePerPixel;
+                    _mipmaps[i].address = new (std::nothrow) unsigned char[width*height*bytePerPixel];
+                    if (UnpackETC(static_cast<const unsigned char*>(_data+dataOffset), CC_GL_COMPRESSED_RGB8_PUNCHTHROUGH_ALPHA1_ETC2, width, height, _mipmaps[i].address))
+                        return false;
                 }
                 blockSize = 4 * 4; // Pixel by pixel block size for 4bpp
                 widthBlocks = width / 4;
@@ -1877,7 +1937,7 @@ bool Image::initWithPVRv3Data(const unsigned char * data, ssize_t dataLen)
 
 bool Image::initWithETCData(const unsigned char * data, ssize_t dataLen)
 {
-    const etc1_byte* header = static_cast<const etc1_byte*>(data);
+    const unsigned char* header = static_cast<const unsigned char*>(data);
     
     //check the data
     if (! etc1_pkm_is_valid(header))
@@ -1913,13 +1973,12 @@ bool Image::initWithETCData(const unsigned char * data, ssize_t dataLen)
 
          //if it is not gles or device do not support ETC, decode texture by software
         int bytePerPixel = 3;
-        unsigned int stride = _width * bytePerPixel;
         _renderFormat = Texture2D::PixelFormat::RGB888;
         
         _dataLen =  _width * _height * bytePerPixel;
         _data = static_cast<unsigned char*>(malloc(_dataLen * sizeof(unsigned char)));
         
-        if (etc1_decode_image(static_cast<const unsigned char*>(data) + ETC_PKM_HEADER_SIZE, static_cast<etc1_byte*>(_data), _width, _height, bytePerPixel, stride) != 0)
+        if (UnpackETC(static_cast<const unsigned char*>(data) + PKM_HEADER_SIZE, CC_GL_ETC1_RGB8_OES, _width, _height, static_cast<unsigned char*>(_data)) != 0)
         {
             _dataLen = 0;
             if (_data != nullptr)
@@ -2298,27 +2357,38 @@ bool Image::initWithATITCData(const unsigned char *data, ssize_t dataLen)
                     CCLOG("cocos2d: Hardware ATITC decoder not present. Using software decoder");
                     atitc_decode(pixelData + encodeOffset, &decodeImageData[0], width, height, ATITCDecodeFlag::ATC_INTERPOLATED_ALPHA);
                     break;
+                    
                 case CC_GL_ETC1_RGB8_OES:
                     CCLOG("cocos2d: Hardware ETC1 decoder not present. Using software decoder");
                     bytePerPixel = 3;
                     stride = width * bytePerPixel;
                     _renderFormat = Texture2D::PixelFormat::RGB888;
-                    etc1_decode_image(static_cast<const unsigned char*>(pixelData + encodeOffset), static_cast<etc1_byte*>(&decodeImageData[0]), width, height, bytePerPixel, stride);
+                    if (UnpackETC(static_cast<const unsigned char*>(pixelData + encodeOffset), CC_GL_ETC1_RGB8_OES, width, height, &decodeImageData[0]))
+                        return false;
                     break;
                 case CC_GL_COMPRESSED_RGB8_ETC2:
                     CCLOG("cocos2d: Hardware ETC2 decoder not present. Using software decoder");
                     bytePerPixel = 3;
                     stride = width * bytePerPixel;
                     _renderFormat = Texture2D::PixelFormat::RGB888;
+                    if (UnpackETC(static_cast<const unsigned char*>(pixelData + encodeOffset), CC_GL_COMPRESSED_RGB8_ETC2, width, height, &decodeImageData[0]))
+                        return false;
                     break;
                 case CC_GL_COMPRESSED_RGB8_PUNCHTHROUGH_ALPHA1_ETC2:
                     CCLOG("cocos2d: Hardware ETC2 decoder not present. Using software decoder");
-                    bytePerPixel = 3;
+                    bytePerPixel = 4;
                     stride = width * bytePerPixel;
-                    _renderFormat = Texture2D::PixelFormat::RGB888;
+                    _renderFormat = Texture2D::PixelFormat::RGBA8888;
+                    if (UnpackETC(static_cast<const unsigned char*>(pixelData + encodeOffset), CC_GL_COMPRESSED_RGB8_PUNCHTHROUGH_ALPHA1_ETC2, width, height, &decodeImageData[0]))
+                        return false;
                     break;
                 case CC_GL_COMPRESSED_RGBA8_ETC2_EAC:
                     CCLOG("cocos2d: Hardware ETC2 decoder not present. Using software decoder");
+                    bytePerPixel = 4;
+                    stride = width * bytePerPixel;
+                    _renderFormat = Texture2D::PixelFormat::RGBA8888;
+                    if (UnpackETC(static_cast<const unsigned char*>(pixelData + encodeOffset), CC_GL_COMPRESSED_RGBA8_ETC2_EAC, width, height, &decodeImageData[0]))
+                        return false;
                     break;
                 default:
                     break;
