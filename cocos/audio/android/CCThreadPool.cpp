@@ -117,9 +117,10 @@ ThreadPool::~ThreadPool()
 }
 
 // number of idle threads
-int ThreadPool::getIdleThreadNum()
+int ThreadPool::getIdleThreadNum() const
 {
-    std::lock_guard<std::mutex> lk(_idleThreadNumMutex);
+    ThreadPool* thiz = const_cast<ThreadPool*>(this);
+    std::lock_guard<std::mutex> lk(thiz->_idleThreadNumMutex);
     return _idleThreadNum;
 }
 
@@ -245,7 +246,7 @@ void ThreadPool::stretchPool(int count)
 }
 
 void ThreadPool::pushTask(const std::function<void(int)>& runnable,
-                          int type/* = TASK_TYPE_DEFAULT*/)
+                          TaskType type/* = DEFAULT*/)
 {
     if (!_isFixedSize)
     {
@@ -299,7 +300,7 @@ void ThreadPool::stopAllTasks()
     }
 }
 
-void ThreadPool::stopTasksByType(int type)
+void ThreadPool::stopTasksByType(TaskType type)
 {
     Task task;
 
@@ -344,9 +345,9 @@ void ThreadPool::joinThread(int tid)
     }
 }
 
-size_t ThreadPool::getTaskNum()
+int ThreadPool::getTaskNum() const
 {
-    return _taskQueue.size();
+    return (int) _taskQueue.size();
 }
 
 void ThreadPool::setFixedSize(bool isFixedSize)

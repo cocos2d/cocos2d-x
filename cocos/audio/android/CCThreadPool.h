@@ -49,13 +49,13 @@ class ThreadPool
 {
 public:
 
-    enum TaskType
+    enum class TaskType
     {
-        TASK_TYPE_DEFAULT = 0,
-        TASK_TYPE_NETWORK,
-        TASK_TYPE_IO,
-        TASK_TYPE_AUDIO,
-        TASK_TYPE_USER = 1000
+        DEFAULT = 0,
+        NETWORK,
+        IO,
+        AUDIO,
+        USER = 1000
     };
 
     /*
@@ -95,31 +95,31 @@ public:
      *  @param type The task type, it's TASK_TYPE_DEFAULT if this argument isn't assigned
      *  @note This function has to be invoked in cocos thread
      */
-    void pushTask(const std::function<void(int /*threadId*/)>& runnable, int type = TASK_TYPE_DEFAULT);
+    void pushTask(const std::function<void(int /*threadId*/)>& runnable, TaskType type = TaskType::DEFAULT);
 
     // Stops all tasks, it will remove all tasks in queue
     void stopAllTasks();
 
     // Stops some tasks by type
-    void stopTasksByType(int type);
+    void stopTasksByType(TaskType type);
 
     // Gets the minimum thread numbers
-    inline int getMinThreadNum()
+    inline int getMinThreadNum() const
     { return _minThreadNum; };
 
     // Gets the maximum thread numbers
-    inline int getMaxThreadNum()
+    inline int getMaxThreadNum() const
     { return _maxThreadNum; };
 
     // Gets the number of idle threads
-    int getIdleThreadNum();
+    int getIdleThreadNum() const;
 
     // Gets the number of initialized threads
-    inline int getInitedThreadNum()
+    inline int getInitedThreadNum() const
     { return _initedThreadNum; };
 
     // Gets the task number
-    size_t getTaskNum();
+    int getTaskNum() const;
 
     /* 
      * Trys to shrink pool
@@ -183,15 +183,17 @@ private:
             return true;
         }
 
-        bool empty()
+        bool empty() const
         {
-            std::unique_lock<std::mutex> lock(this->mutex);
+            auto thiz = const_cast<ThreadSafeQueue*>(this);
+            std::unique_lock<std::mutex> lock(thiz->mutex);
             return this->q.empty();
         }
 
-        size_t size()
+        size_t size() const
         {
-            std::unique_lock<std::mutex> lock(this->mutex);
+            auto thiz = const_cast<ThreadSafeQueue*>(this);
+            std::unique_lock<std::mutex> lock(thiz->mutex);
             return this->q.size();
         }
 
@@ -202,7 +204,7 @@ private:
 
     struct Task
     {
-        int type;
+        TaskType type;
         std::function<void(int)> *callback;
     };
 
