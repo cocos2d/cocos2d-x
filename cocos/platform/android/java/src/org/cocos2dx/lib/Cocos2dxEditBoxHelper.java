@@ -433,7 +433,6 @@ public class Cocos2dxEditBoxHelper {
             mCocos2dxActivity.getGLSurfaceView().setSoftKeyboardShown(false);
             mCocos2dxActivity.getGLSurfaceView().requestFocus();
             // can take effect after GLSurfaceView has focus
-            Log.e(TAG, "closeKeyboardOnUiThread");
             mCocos2dxActivity.hideVirtualButton();
         }
     }
