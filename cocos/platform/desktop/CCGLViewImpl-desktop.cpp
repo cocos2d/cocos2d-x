@@ -835,6 +835,11 @@ void GLViewImpl::onGLFWWindowSizeFunCallback(GLFWwindow *window, int width, int 
 
         int frameWidth = width / _frameZoomFactor;
         int frameHeight = height / _frameZoomFactor;
+        if(_isInRetinaMonitor && _isRetinaEnabled)
+        {
+            frameWidth *= 2;
+            frameHeight *= 2;
+        }
         setFrameSize(frameWidth, frameHeight);
         setDesignResolutionSize(baseDesignSize.width, baseDesignSize.height, baseResolutionPolicy);
         Director::getInstance()->setViewport();
