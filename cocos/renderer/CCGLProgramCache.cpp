@@ -40,6 +40,8 @@ NS_CC_BEGIN
 enum {
     kShaderType_PositionTextureColor,
     kShaderType_PositionTextureColor_noMVP,
+    kShaderType_PositionTextureColorAtlas,
+    kShaderType_PositionTextureColorAtlas_noMVP,
     kShaderType_PositionTextureColorAlphaTest,
     kShaderType_PositionTextureColorAlphaTestNoMV,
     kShaderType_PositionColor,
@@ -53,6 +55,7 @@ enum {
     kShaderType_LabelDistanceFieldNormal,
     kShaderType_LabelDistanceFieldGlow,
     kShaderType_UIGrayScale,
+    kShaderType_UIGrayScaleAtlas,
     kShaderType_LabelNormal,
     kShaderType_LabelOutline,
     kShaderType_3DPosition,
@@ -147,6 +150,16 @@ void GLProgramCache::loadDefaultGLPrograms()
     p = new (std::nothrow) GLProgram();
     loadDefaultGLProgram(p, kShaderType_PositionTextureColor_noMVP);
     _programs.insert( std::make_pair( GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP, p ) );
+    
+    // Position Texture Color shader separate alpha
+    p = new (std::nothrow) GLProgram();
+    loadDefaultGLProgram(p, kShaderType_PositionTextureColorAtlas);
+    _programs.insert( std::make_pair( GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_ATLAS, p ) );
+    
+    // Position Texture Color shader separate alpha
+    p = new (std::nothrow) GLProgram();
+    loadDefaultGLProgram(p, kShaderType_PositionTextureColorAtlas_noMVP);
+    _programs.insert( std::make_pair( GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_ATLAS_NO_MVP, p ) );
 
     // Position Texture Color alpha test
     p = new (std::nothrow) GLProgram();
@@ -222,6 +235,10 @@ void GLProgramCache::loadDefaultGLPrograms()
     p = new (std::nothrow) GLProgram();
     loadDefaultGLProgram(p, kShaderType_UIGrayScale);
     _programs.insert(std::make_pair(GLProgram::SHADER_NAME_POSITION_GRAYSCALE, p));
+    
+    p = new (std::nothrow) GLProgram();
+    loadDefaultGLProgram(p, kShaderType_UIGrayScaleAtlas);
+    _programs.insert(std::make_pair(GLProgram::SHADER_NAME_POSITION_GRAYSCALE_ATLAS, p));
 
     p = new (std::nothrow) GLProgram();
     loadDefaultGLProgram(p, kShaderType_LabelNormal);
@@ -311,10 +328,25 @@ void GLProgramCache::reloadDefaultGLPrograms()
     p->reset();
     loadDefaultGLProgram(p, kShaderType_PositionTextureColor);
 
+    // Position Texture Color shader
+    p = getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR);
+    p->reset();
+    loadDefaultGLProgram(p, kShaderType_PositionTextureColor);
+    
     // Position Texture Color without MVP shader
     p = getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP);
     p->reset();
     loadDefaultGLProgram(p, kShaderType_PositionTextureColor_noMVP);
+    
+    // Position Texture Color shader
+    p = getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_ATLAS);
+    p->reset();
+    loadDefaultGLProgram(p, kShaderType_PositionTextureColorAtlas);
+    
+    // Position Texture Color shader separate alpha
+    p = getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_ATLAS_NO_MVP);
+    p->reset();
+    loadDefaultGLProgram(p, kShaderType_PositionTextureColorAtlas_noMVP);
 
     // Position Texture Color alpha test
     p = getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST);
@@ -389,6 +421,10 @@ void GLProgramCache::reloadDefaultGLPrograms()
     p = getGLProgram(GLProgram::SHADER_NAME_POSITION_GRAYSCALE);
     p->reset();
     loadDefaultGLProgram(p, kShaderType_UIGrayScale);
+    
+    p = getGLProgram(GLProgram::SHADER_NAME_POSITION_GRAYSCALE_ATLAS);
+    p->reset();
+    loadDefaultGLProgram(p, kShaderType_UIGrayScaleAtlas);
 
     p = getGLProgram(GLProgram::SHADER_NAME_LABEL_NORMAL);
     p->reset();
@@ -483,6 +519,12 @@ void GLProgramCache::loadDefaultGLProgram(GLProgram *p, int type)
         case kShaderType_PositionTextureColor_noMVP:
             p->initWithByteArrays(ccPositionTextureColor_noMVP_vert, ccPositionTextureColor_noMVP_frag);
             break;
+        case kShaderType_PositionTextureColorAtlas:
+            p->initWithByteArrays(ccPositionTextureColorAtlas_vert, ccPositionTextureColorAtlas_frag);
+            break;
+        case kShaderType_PositionTextureColorAtlas_noMVP:
+            p->initWithByteArrays(ccPositionTextureColorAtlas_noMVP_vert, ccPositionTextureColorAtlas_noMVP_frag);
+            break;
         case kShaderType_PositionTextureColorAlphaTest:
             p->initWithByteArrays(ccPositionTextureColor_vert, ccPositionTextureColorAlphaTest_frag);
             break;
@@ -523,6 +565,10 @@ void GLProgramCache::loadDefaultGLProgram(GLProgram *p, int type)
         case kShaderType_UIGrayScale:
             p->initWithByteArrays(ccPositionTextureColor_noMVP_vert,
                                   ccPositionTexture_GrayScale_frag);
+            break;
+        case kShaderType_UIGrayScaleAtlas:
+            p->initWithByteArrays(ccPositionTextureColorAtlas_noMVP_vert,
+                                  ccPositionTexture_GrayScaleAtlas_frag);
             break;
         case kShaderType_LabelNormal:
             p->initWithByteArrays(ccLabel_vert, ccLabelNormal_frag);

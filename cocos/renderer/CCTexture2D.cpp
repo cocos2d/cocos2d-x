@@ -455,6 +455,7 @@ Texture2D::Texture2D()
 , _maxT(0.0)
 , _hasPremultipliedAlpha(false)
 , _hasMipmaps(false)
+, _hasSeparateAlpha(false)
 , _shaderProgram(nullptr)
 , _antialiasEnabled(true)
 , _ninePatchInfo(nullptr)
@@ -520,6 +521,7 @@ Size Texture2D::getContentSize() const
 {
     Size ret;
     ret.width = _contentSize.width / CC_CONTENT_SCALE_FACTOR();
+    //ret.height = _hasSeparateAlpha?_contentSize.height/2:_contentSize.height / CC_CONTENT_SCALE_FACTOR();
     ret.height = _contentSize.height / CC_CONTENT_SCALE_FACTOR();
     
     return ret;
@@ -565,6 +567,16 @@ void Texture2D::setGLProgram(GLProgram* shaderProgram)
 bool Texture2D::hasPremultipliedAlpha() const
 {
     return _hasPremultipliedAlpha;
+}
+
+void Texture2D::setHasSeparateAlpha(bool value)
+{
+    _hasSeparateAlpha = value;
+}
+
+bool Texture2D::hasSeparateAlpha() const
+{
+    return _hasSeparateAlpha;
 }
 
 bool Texture2D::initWithData(const void *data, ssize_t dataLen, Texture2D::PixelFormat pixelFormat, int pixelsWide, int pixelsHigh, const Size& contentSize)
@@ -681,7 +693,7 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat
     
     // Specify OpenGL texture image
     int width = pixelsWide;
-    int height = pixelsHigh;
+    int height = _hasSeparateAlpha?pixelsHigh*2:pixelsHigh;
     
     for (int i = 0; i < mipmapsNum; ++i)
     {
@@ -786,6 +798,7 @@ bool Texture2D::initWithImage(Image *image, PixelFormat format)
             CCLOG("cocos2d: WARNING: This image has more than 1 mipmaps and we will not convert the data format");
         }
 
+        _hasSeparateAlpha = image->hasSeparateAlpha();
         initWithMipmaps(image->getMipmaps(), image->getNumberOfMipmaps(), image->getRenderFormat(), imageWidth, imageHeight);
         
         // set the premultiplied tag
@@ -800,6 +813,7 @@ bool Texture2D::initWithImage(Image *image, PixelFormat format)
             CCLOG("cocos2d: WARNING: This image is compressed and we can't convert it for now");
         }
 
+        _hasSeparateAlpha = image->hasSeparateAlpha();
         initWithData(tempData, tempDataLen, image->getRenderFormat(), imageWidth, imageHeight, imageSize);
         
         // set the premultiplied tag
@@ -814,6 +828,7 @@ bool Texture2D::initWithImage(Image *image, PixelFormat format)
 
         pixelFormat = convertDataToFormat(tempData, tempDataLen, renderFormat, pixelFormat, &outTempData, &outTempDataLen);
 
+        _hasSeparateAlpha = image->hasSeparateAlpha();
         initWithData(outTempData, outTempDataLen, pixelFormat, imageWidth, imageHeight, imageSize);
 
 
@@ -1179,6 +1194,7 @@ bool Texture2D::initWithString(const char *text, const FontDefinition& textDefin
         free(outTempData);
     }
     _hasPremultipliedAlpha = hasPremultipliedAlpha;
+    _hasSeparateAlpha = false;
 
     return ret;
 }

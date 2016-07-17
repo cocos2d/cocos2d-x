@@ -179,6 +179,10 @@ public:
     static const char* SHADER_NAME_POSITION_TEXTURE_COLOR;
     /**Built in shader for 2d. Support Position, Texture and Color vertex attribute, but without multiply vertex by MVP matrix.*/
     static const char* SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP;
+    /**Built in shader for 2d. Support Position, Texture and Color vertex attribute. Alpha from lower part of texture*/
+    static const char* SHADER_NAME_POSITION_TEXTURE_COLOR_ATLAS;
+    /**Built in shader for 2d. Support Position, Texture and Color vertex attribute. Alpha from lower part of texture, but without multiply vertex by MVP matrix.*/
+    static const char* SHADER_NAME_POSITION_TEXTURE_COLOR_ATLAS_NO_MVP;
     /**Built in shader for 2d. Support Position, Texture vertex attribute, but include alpha test.*/
     static const char* SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST;
     /**Built in shader for 2d. Support Position, Texture and Color vertex attribute, include alpha test and without multiply vertex by MVP matrix.*/
@@ -202,6 +206,7 @@ public:
 
     /**Built in shader for ui effects */
     static const char* SHADER_NAME_POSITION_GRAYSCALE;
+    static const char* SHADER_NAME_POSITION_GRAYSCALE_ATLAS;
     /** @{
         Built in shader for label and label with effects.
     */

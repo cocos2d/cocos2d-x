@@ -58,6 +58,12 @@ extern CC_DLL const GLchar * ccPositionTextureColor_vert;
 extern CC_DLL const GLchar * ccPositionTextureColor_noMVP_frag;
 extern CC_DLL const GLchar * ccPositionTextureColor_noMVP_vert;
 
+extern CC_DLL const GLchar * ccPositionTextureColorAtlas_frag;
+extern CC_DLL const GLchar * ccPositionTextureColorAtlas_vert;
+
+extern CC_DLL const GLchar * ccPositionTextureColorAtlas_noMVP_frag;
+extern CC_DLL const GLchar * ccPositionTextureColorAtlas_noMVP_vert;
+
 extern CC_DLL const GLchar * ccPositionTextureColorAlphaTest_frag;
 
 extern CC_DLL const GLchar * ccPositionTexture_uColor_frag;
@@ -67,6 +73,7 @@ extern CC_DLL const GLchar * ccPositionColorLengthTexture_frag;
 extern CC_DLL const GLchar * ccPositionColorLengthTexture_vert;
 
 extern CC_DLL const GLchar * ccPositionTexture_GrayScale_frag;
+extern CC_DLL const GLchar * ccPositionTexture_GrayScaleAtlas_frag;
 
 extern CC_DLL const GLchar * ccLabelDistanceFieldNormal_frag;
 extern CC_DLL const GLchar * ccLabelDistanceFieldGlow_frag;

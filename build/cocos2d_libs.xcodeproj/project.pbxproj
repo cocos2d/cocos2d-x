@@ -7027,6 +7027,10 @@
 		A0E749F61BA8FD7F001A8332 /* UIEditBoxImpl-common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIEditBoxImpl-common.h"; sourceTree = "<group>"; };
 		A521EF251C1AE31800918650 /* CCBXEditBoxLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCBXEditBoxLoader.cpp; path = spritebuilder/CCBXEditBoxLoader.cpp; sourceTree = "<group>"; };
 		A521EF261C1AE31800918650 /* CCBXEditBoxLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCBXEditBoxLoader.h; path = spritebuilder/CCBXEditBoxLoader.h; sourceTree = "<group>"; };
+		A52F9A671D38F42600749478 /* ccShader_PositionTextureColorAtlas_noMVP.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = ccShader_PositionTextureColorAtlas_noMVP.frag; sourceTree = "<group>"; };
+		A52F9A681D38F42600749478 /* ccShader_PositionTextureColorAtlas_noMVP.vert */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = ccShader_PositionTextureColorAtlas_noMVP.vert; sourceTree = "<group>"; };
+		A52F9A691D38F42600749478 /* ccShader_PositionTextureColorAtlas.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = ccShader_PositionTextureColorAtlas.frag; sourceTree = "<group>"; };
+		A52F9A6A1D38F42600749478 /* ccShader_PositionTextureColorAtlas.vert */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = ccShader_PositionTextureColorAtlas.vert; sourceTree = "<group>"; };
 		A59003511A4433D500AF12A4 /* CCBXScissorsNodeLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCBXScissorsNodeLoader.cpp; path = spritebuilder/CCBXScissorsNodeLoader.cpp; sourceTree = "<group>"; };
 		A59003521A4433D500AF12A4 /* CCBXScissorsNodeLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCBXScissorsNodeLoader.h; path = spritebuilder/CCBXScissorsNodeLoader.h; sourceTree = "<group>"; };
 		A59470341A7F9DC2002DB024 /* CCBXScrollListViewLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCBXScrollListViewLoader.cpp; path = spritebuilder/CCBXScrollListViewLoader.cpp; sourceTree = "<group>"; };
@@ -9994,6 +9998,10 @@
 				5034CA61191D91CF00CE6051 /* ccShader_PositionTextureColor.frag */,
 				5034CA62191D91CF00CE6051 /* ccShader_PositionTextureColor_noMVP.vert */,
 				5034CA63191D91CF00CE6051 /* ccShader_PositionTextureColor_noMVP.frag */,
+				A52F9A691D38F42600749478 /* ccShader_PositionTextureColorAtlas.frag */,
+				A52F9A6A1D38F42600749478 /* ccShader_PositionTextureColorAtlas.vert */,
+				A52F9A671D38F42600749478 /* ccShader_PositionTextureColorAtlas_noMVP.frag */,
+				A52F9A681D38F42600749478 /* ccShader_PositionTextureColorAtlas_noMVP.vert */,
 				5034C9FB191D591000CE6051 /* ccShader_PositionTextureColorAlphaTest.frag */,
 				5034CA00191D591000CE6051 /* ccShader_PositionTextureA8Color.vert */,
 				5034CA01191D591000CE6051 /* ccShader_PositionTextureA8Color.frag */,

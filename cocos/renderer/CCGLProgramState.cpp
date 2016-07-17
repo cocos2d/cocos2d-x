@@ -323,6 +323,18 @@ GLProgramState* GLProgramState::getOrCreateWithGLProgramName(const std::string& 
             return GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_ETC1AS_POSITION_TEXTURE_GRAY_NO_MVP);
         }
     }
+    else if (texture != nullptr && texture->hasSeparateAlpha()) {
+        if (glProgramName == GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR) {
+            return GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_ATLAS);
+        }
+        else if (glProgramName == GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP) {
+            return GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_ATLAS_NO_MVP);
+        }
+        else if (glProgramName == GLProgram::SHADER_NAME_POSITION_GRAYSCALE) {
+            return GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_GRAYSCALE_ATLAS);
+        }
+    }
+
 
     return GLProgramState::getOrCreateWithGLProgramName(glProgramName);
 }

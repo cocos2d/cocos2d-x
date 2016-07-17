@@ -381,6 +381,11 @@ public:
     /** Whether or not the texture has their Alpha premultiplied. */
     bool hasPremultipliedAlpha() const;
     
+    /** Set whether or not the texture has separate alpha. */
+    void setHasSeparateAlpha(bool value);
+    /** Whether or not the texture has separate alpha. */
+    bool hasSeparateAlpha() const;
+    
     /** Whether or not the texture has mip maps.*/
     bool hasMipmaps() const;
 
@@ -546,6 +551,9 @@ protected:
     
     /** whether or not the texture has mip maps*/
     bool _hasMipmaps;
+    
+    /** whether or not the texture has separate Alpha chanel */
+    bool _hasSeparateAlpha;
 
     /** shader program used by drawAtPoint and drawInRect */
     GLProgram* _shaderProgram;

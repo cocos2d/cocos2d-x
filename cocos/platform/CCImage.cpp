@@ -612,6 +612,7 @@ Image::Image()
 , _renderFormat(Texture2D::PixelFormat::NONE)
 , _numberOfMipmaps(0)
 , _hasPremultipliedAlpha(false)
+, _hasSeparateAlpha(false)
 {
 
 }
@@ -958,6 +959,8 @@ bool Image::decodeWithWIC(const unsigned char *data, ssize_t dataLen)
     {
         _width = img.getWidth();
         _height = img.getHeight();
+        _hasPremultipliedAlpha = false;
+        _hasSeparateAlpha = false;
 
         WICPixelFormatGUID format = img.getPixelFormat();
 
@@ -1107,6 +1110,8 @@ bool Image::initWithJpgData(const unsigned char * data, ssize_t dataLen)
         /* init image info */
         _width  = cinfo.output_width;
         _height = cinfo.output_height;
+        _hasPremultipliedAlpha = false;
+        _hasSeparateAlpha = false;
 
         _dataLen = cinfo.output_width*cinfo.output_height*cinfo.output_components;
         _data = static_cast<unsigned char*>(malloc(_dataLen * sizeof(unsigned char)));
@@ -1276,6 +1281,8 @@ bool Image::initWithPngData(const unsigned char * data, ssize_t dataLen)
             if(strcmp(text_ptr[i].key, "premultiplied_alpha") == 0 && strcmp(text_ptr[i].text, "true") == 0)
                 alreadyPremultipliedAlpha = true;
         }
+        
+        _hasSeparateAlpha = false;
         
         if(alreadyPremultipliedAlpha)
         {
@@ -1465,6 +1472,8 @@ bool Image::initWithTiffData(const unsigned char * data, ssize_t dataLen)
 
         _dataLen = npixels * sizeof (uint32);
         _data = static_cast<unsigned char*>(malloc(_dataLen * sizeof(unsigned char)));
+        
+        _hasSeparateAlpha = false;
 
         uint32* raster = (uint32*) _TIFFmalloc(npixels * sizeof (uint32));
         if (raster != nullptr) 
@@ -1558,6 +1567,7 @@ bool Image::initWithPVRv2Data(const unsigned char * data, ssize_t dataLen)
     
     //can not detect the premultiplied alpha from pvr file, use _PVRHaveAlphaPremultiplied instead.
     _hasPremultipliedAlpha = _PVRHaveAlphaPremultiplied;
+    _hasSeparateAlpha = false;
     
     unsigned int flags = CC_SWAP_INT32_LITTLE_TO_HOST(header->flags);
     PVR2TexturePixelFormat formatFlags = static_cast<PVR2TexturePixelFormat>(flags & PVR_TEXTURE_FLAG_TYPE_MASK);
@@ -1745,6 +1755,7 @@ bool Image::initWithPVRv3Data(const unsigned char * data, ssize_t dataLen)
     // flags
     int flags = CC_SWAP_INT32_LITTLE_TO_HOST(header->flags);
 
+    _hasSeparateAlpha = false;
     // PVRv3 specifies premultiply alpha in a flag -- should always respect this in PVRv3 files
     if (flags & (unsigned int)PVR3TextureFlag::PremultipliedAlpha)
     {
@@ -1945,6 +1956,8 @@ bool Image::initWithETCData(const unsigned char * data, ssize_t dataLen)
         return  false;
     }
     
+    _hasSeparateAlpha = false;
+    
     if(_PKMHaveAlphaPremultiplied)
         _hasPremultipliedAlpha = true;
 
@@ -2045,6 +2058,9 @@ bool Image::initWithTGAData(tImageTGA* tgaData)
         _dataLen = _width * _height * tgaData->pixelDepth / 8;
         _fileType = Format::TGA;
 
+        _hasPremultipliedAlpha = false;
+        _hasSeparateAlpha = false;
+        
         ret = true;
         
     }while(false);
@@ -2079,6 +2095,9 @@ namespace
 
 bool Image::initWithS3TCData(const unsigned char * data, ssize_t dataLen)
 {
+    _hasPremultipliedAlpha = false;
+    _hasSeparateAlpha = false;
+    
     const uint32_t FOURCC_DXT1 = makeFourCC('D', 'X', 'T', '1');
     const uint32_t FOURCC_DXT2 = makeFourCC('D', 'X', 'T', '2');
     const uint32_t FOURCC_DXT3 = makeFourCC('D', 'X', 'T', '3');
@@ -2234,6 +2253,7 @@ bool Image::initWithATITCData(const unsigned char *data, ssize_t dataLen)
     _numberOfMipmaps = header->numberOfMipmapLevels;
     
     _hasPremultipliedAlpha = _KTXHaveAlphaPremultiplied;
+    _hasSeparateAlpha = false;
     int blockSize = header->getBlockSize();
     
     /* pixelData point to the compressed data address */
@@ -2242,8 +2262,6 @@ bool Image::initWithATITCData(const unsigned char *data, ssize_t dataLen)
     /* calculate the dataLen */
     int width = _width;
     int height = _height;
-    
-    bool alphaDown = false;
     
     if(header->bytesOfKeyValueData)
     {
@@ -2289,7 +2307,7 @@ bool Image::initWithATITCData(const unsigned char *data, ssize_t dataLen)
 
             if(key == "alpha" && value == "down")
             {
-                alphaDown = true;
+                _hasSeparateAlpha = true;
                 break;
             }
             

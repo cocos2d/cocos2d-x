@@ -421,6 +421,8 @@ namespace ui {
         this->cleanupSlicedSprites();
 
         updateBlendFunc(sprite?sprite->getTexture():nullptr);
+        
+        Texture2D* oldTexture = _scale9Image?_scale9Image->getTexture():nullptr;
 
         if(nullptr != sprite)
         {
@@ -483,8 +485,13 @@ namespace ui {
         }
 
         applyBlendFunc();
+        
         if (getGLProgramState()) {
-            _scale9Image->setGLProgramState(getGLProgramState());
+            Texture2D* texture = sprite?sprite->getTexture():nullptr;
+            if((!oldTexture && texture && texture->hasSeparateAlpha()) || (oldTexture && oldTexture->hasSeparateAlpha() && !texture) || (oldTexture && texture && texture->hasSeparateAlpha()!=oldTexture->hasSeparateAlpha()))
+                setState(_brightState);
+            else
+                _scale9Image->setGLProgramState(getGLProgramState());
         } else {
             this->setState(_brightState);
         }
