@@ -1,6 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -22,19 +21,67 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#ifndef __Java_org_cocos2dx_lib_Cocos2dxHelper_H__
-#define __Java_org_cocos2dx_lib_Cocos2dxHelper_H__
 
-#include <string>
+#pragma once
 
-typedef void (*EditTextCallback)(const char* text, void* ctx);
+#include "audio/android/utils/Errors.h"
 
-extern const char * getApkPath();
-extern std::string getPackageNameJNI();
-extern int getObbAssetFileDescriptorJNI(const char* path, long* startOffset, long* size);
-extern void conversionEncodingJNI(const char* src, int byteSize, const char* fromCharset, char* dst, const char* newCharset);
+#include <thread>
+#include <mutex>
+#include <condition_variable>
+#include <atomic>
+#include <vector>
 
-extern int getDeviceSampleRate();
-extern int getDeviceAudioBufferSizeInFrames();
+namespace cocos2d { namespace experimental {
 
-#endif /* __Java_org_cocos2dx_lib_Cocos2dxHelper_H__ */
+class Track;
+class AudioMixer;
+
+class AudioMixerController
+{
+public:
+
+    struct OutputBuffer
+    {
+        void* buf;
+        size_t size;
+    };
+
+    AudioMixerController(int bufferSizeInFrames, int sampleRate, int channelCount);
+
+    ~AudioMixerController();
+
+    bool init();
+
+    bool addTrack(Track* track);
+
+    bool hasPlayingTacks();
+
+    void pause();
+    void resume();
+    inline bool isPaused() const { return _isPaused; };
+
+    void mixOneFrame();
+
+    inline OutputBuffer* current() { return &_mixingBuffer; }
+
+private:
+    void destroy();
+
+private:
+    int _bufferSizeInFrames;
+    int _sampleRate;
+    int _channelCount;
+
+    AudioMixer* _mixer;
+
+    std::mutex _activeTracksMutex;
+    std::vector<Track*> _activeTracks;
+
+    OutputBuffer _mixingBuffer;
+
+    std::atomic_bool _isPaused;
+    std::atomic_bool _isMixingFrame;
+};
+
+}} // namespace cocos2d { namespace experimental {

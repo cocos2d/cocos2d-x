@@ -38,34 +38,16 @@
 #define ERRORLOG(msg) log("fun:%s,line:%d,msg:%s",__func__,__LINE__,#msg)
 
 NS_CC_BEGIN
-    namespace experimental{
+
+class EventCustom;
+class EventListener;
+
+namespace experimental {
+
+class IAudioPlayer;
+class AudioPlayerProvider;
+
 class AudioEngineImpl;
-
-class AudioPlayer
-{
-public:
-    AudioPlayer();
-    ~AudioPlayer();
-
-    bool init(SLEngineItf engineEngine, SLObjectItf outputMixObject,const std::string& fileFullPath, float volume, bool loop);
-
-    bool _playOver;
-    bool _loop;
-    SLPlayItf _fdPlayerPlay;
-private:
-    SLObjectItf _fdPlayerObject;
-    SLSeekItf _fdPlayerSeek;
-    SLVolumeItf _fdPlayerVolume;
-
-    float _duration;
-    int _audioID;
-    int _assetFd;
-    float _delayTimeToRemove;
-
-    std::function<void (int, const std::string &)> _finishCallback;
-
-    friend class AudioEngineImpl;
-};
 
 class AudioEngineImpl : public cocos2d::Ref
 {
@@ -86,11 +68,10 @@ public:
     bool setCurrentTime(int audioID, float time);
     void setFinishCallback(int audioID, const std::function<void (int, const std::string &)> &callback);
 
-    void uncache(const std::string& filePath){}
-    void uncacheAll(){}
-    void preload(const std::string& filePath, std::function<void(bool)> callback);
-    
-    void update(float dt);
+    void uncache(const std::string& filePath);
+    void uncacheAll();
+    void preload(const std::string& filePath, const std::function<void(bool)>& callback);
+
 private:
 
     // engine interfaces
@@ -101,9 +82,14 @@ private:
     SLObjectItf _outputMixObject;
 
     //audioID,AudioInfo
-    std::unordered_map<int, AudioPlayer>  _audioPlayers;
+    std::unordered_map<int, IAudioPlayer*>  _audioPlayers;
+    std::unordered_map<int, std::function<void (int, const std::string &)>> _callbackMap;
 
-    int currentAudioID;
+    AudioPlayerProvider* _audioPlayerProvider;
+    EventListener* _onPauseListener;
+    EventListener* _onResumeListener;
+
+    int _audioIDIndex;
     
     bool _lazyInitLoop;
 };

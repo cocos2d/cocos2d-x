@@ -8,7 +8,25 @@ LOCAL_MODULE := audioengine_static
 LOCAL_MODULE_FILENAME := libaudioengine
 
 LOCAL_SRC_FILES := AudioEngine-inl.cpp \
-                   ../AudioEngine.cpp
+                   ../AudioEngine.cpp \
+                   CCThreadPool.cpp \
+                   AssetFd.cpp \
+                   AudioDecoder.cpp \
+                   AudioPlayerProvider.cpp \
+                   AudioResampler.cpp \
+                   AudioResamplerCubic.cpp \
+                   PcmBufferProvider.cpp \
+                   PcmAudioPlayer.cpp \
+                   UrlAudioPlayer.cpp \
+                   PcmData.cpp \
+                   AudioMixerController.cpp \
+                   AudioMixer.cpp \
+                   PcmAudioService.cpp \
+                   Track.cpp \
+                   audio_utils/format.c \
+                   audio_utils/minifloat.cpp \
+                   audio_utils/primitives.c \
+
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../include
 

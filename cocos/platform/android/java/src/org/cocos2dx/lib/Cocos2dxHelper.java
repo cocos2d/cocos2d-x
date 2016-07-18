@@ -24,6 +24,8 @@ THE SOFTWARE.
  ****************************************************************************/
 package org.cocos2dx.lib;
 
+import android.content.pm.PackageManager;
+import android.media.AudioManager;
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
@@ -112,6 +114,30 @@ public class Cocos2dxHelper {
         sActivity = activity;
         Cocos2dxHelper.sCocos2dxHelperListener = (Cocos2dxHelperListener)activity;
         if (!sInited) {
+
+            PackageManager pm = activity.getPackageManager();
+            boolean isSupportLowLatency = pm.hasSystemFeature(PackageManager.FEATURE_AUDIO_LOW_LATENCY);
+
+            Log.d(TAG, "isSupportLowLatency:" + isSupportLowLatency);
+
+            int sampleRate = 44100;
+            int bufferSizeInFrames = 192;
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                AudioManager am = (AudioManager) activity.getSystemService(Context.AUDIO_SERVICE);
+                String strSampleRate = am.getProperty(AudioManager.PROPERTY_OUTPUT_SAMPLE_RATE);
+                String strBufferSizeInFrames = am.getProperty(AudioManager.PROPERTY_OUTPUT_FRAMES_PER_BUFFER);
+
+                sampleRate = Integer.parseInt(strSampleRate);
+                bufferSizeInFrames = Integer.parseInt(strBufferSizeInFrames);
+
+                Log.d(TAG, "sampleRate: " + sampleRate + ", framesPerBuffer: " + bufferSizeInFrames);
+            } else {
+                Log.d(TAG, "android version is lower than " + Build.VERSION_CODES.JELLY_BEAN_MR1);
+            }
+
+            nativeSetAudioDeviceInfo(isSupportLowLatency, sampleRate, bufferSizeInFrames);
+
             final ApplicationInfo applicationInfo = activity.getApplicationInfo();
             
             Cocos2dxHelper.sPackageName = applicationInfo.packageName;
@@ -224,6 +250,8 @@ public class Cocos2dxHelper {
     private static native void nativeSetEditTextDialogResult(final byte[] pBytes);
 
     private static native void nativeSetContext(final Context pContext, final AssetManager pAssetManager);
+
+    private static native void nativeSetAudioDeviceInfo(boolean isSupportLowLatency, int deviceSampleRate, int audioBufferSizeInFames);
 
     public static String getCocos2dxPackageName() {
         return Cocos2dxHelper.sPackageName;

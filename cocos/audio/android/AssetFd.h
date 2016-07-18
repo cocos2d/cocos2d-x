@@ -1,6 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -22,19 +21,22 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#ifndef __Java_org_cocos2dx_lib_Cocos2dxHelper_H__
-#define __Java_org_cocos2dx_lib_Cocos2dxHelper_H__
+#pragma once
 
-#include <string>
+#include <unistd.h>
 
-typedef void (*EditTextCallback)(const char* text, void* ctx);
+namespace cocos2d { namespace experimental {
 
-extern const char * getApkPath();
-extern std::string getPackageNameJNI();
-extern int getObbAssetFileDescriptorJNI(const char* path, long* startOffset, long* size);
-extern void conversionEncodingJNI(const char* src, int byteSize, const char* fromCharset, char* dst, const char* newCharset);
+class AssetFd
+{
+public:
+    AssetFd(int assetFd);
+    ~AssetFd();
 
-extern int getDeviceSampleRate();
-extern int getDeviceAudioBufferSizeInFrames();
+    inline int getFd() const { return _assetFd; };
+private:
+    int _assetFd;
+};
 
-#endif /* __Java_org_cocos2dx_lib_Cocos2dxHelper_H__ */
+}} // namespace cocos2d { namespace experimental {
+
