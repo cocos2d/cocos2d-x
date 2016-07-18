@@ -112,7 +112,7 @@
 -- @param #float minSeg
 -- @param #float strokeWidth
 -- @param #color3b_table strokeColor
--- @param #string iamgePath
+-- @param #string imagePath
 -- @return MotionStreak#MotionStreak ret (return value: cc.MotionStreak)
 
 --------------------------------
