@@ -551,7 +551,7 @@ bool PhysicsShapePolygon::init(const Vec2* points, int count, const PhysicsMater
 {
     do
     {
-        _type = Type::POLYGEN;
+        _type = Type::POLYGON;
         
         auto vecs = new (std::nothrow) cpVect[count];
         PhysicsHelper::points2cpvs(points, vecs, count);        //count = cpConvexHull((int)count, vecs, nullptr, nullptr, 0);
@@ -763,7 +763,7 @@ bool PhysicsShapeEdgePolygon::init(const Vec2* points, int count, const PhysicsM
     cpVect* vec = nullptr;
     do
     {
-        _type = Type::EDGEPOLYGEN;
+        _type = Type::EDGEPOLYGON;
         
         vec = new (std::nothrow) cpVect[count];
         PhysicsHelper::points2cpvs(points, vec, count);
