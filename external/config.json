@@ -1,8 +1,8 @@
 {
-    "version":"v3-deps-109",
-    "zip_file_size":"135566431",
+    "version":"v3-deps-109e",
+    "zip_file_size":"137436463",
     "repo_name":"cocos2d-x-3rd-party-libs-bin",
-    "repo_parent":"https://github.com/cocos2d/",
+    "repo_parent":"https://github.com/newnon/",
     "move_dirs":{
         "fbx-conv":"tools"
     }
