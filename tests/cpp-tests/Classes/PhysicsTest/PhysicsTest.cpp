@@ -962,7 +962,7 @@ void PhysicsDemoPump::onEnter()
     
     // pump
     auto pump = Node::create();
-    auto center = PhysicsShape::getPolyonCenter(vec, 4);
+    auto center = PhysicsShape::getPolygonCenter(vec, 4);
     pump->setPosition(center);
     auto pumpBody = PhysicsBody::createPolygon(vec, 4, PHYSICSBODY_MATERIAL_DEFAULT, -center);
     pump->addComponent(pumpBody);
@@ -1199,7 +1199,7 @@ void PhysicsDemoSlice::clipPoly(PhysicsShapePolygon* shape, Vec2 normal, float d
         }
     }
     
-    Vec2 center = PhysicsShape::getPolyonCenter(points, pointsCount);
+    Vec2 center = PhysicsShape::getPolygonCenter(points, pointsCount);
     Node* node = Node::create();
     PhysicsBody* polyon = PhysicsBody::createPolygon(points, pointsCount, PHYSICSBODY_MATERIAL_DEFAULT, -center);
     node->setPosition(center);
