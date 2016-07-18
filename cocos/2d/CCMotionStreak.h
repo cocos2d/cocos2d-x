@@ -51,10 +51,10 @@ public:
      * @param minSeg The minimum segments.
      * @param strokeWidth The width of stroke.
      * @param strokeColor The color of stroke.
-     * @param iamgePath The texture file name of stoke.
+     * @param imagePath The texture file name of stoke.
      * @return An autoreleased MotionStreak object.
      */
-    static MotionStreak* create(float timeToFade, float minSeg, float strokeWidth, const Color3B& strokeColor, const std::string& iamgePath);
+    static MotionStreak* create(float timeToFade, float minSeg, float strokeWidth, const Color3B& strokeColor, const std::string& imagePath);
     /** Creates and initializes a motion streak with fade in seconds, minimum segments, stroke's width, color, texture.
      * 
      * @param timeToFade The fade time, in seconds.

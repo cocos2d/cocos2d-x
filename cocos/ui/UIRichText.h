@@ -494,12 +494,12 @@ public:
     bool isAnchorTextDelEnabled();                      /*!< valid strikethrough of a-tag? */
     void setAnchorTextUnderline(bool enable);           /*!< enable the underline of a-tag */
     bool isAnchorTextUnderlineEnabled();                /*!< valid underline of a-tag? */
-    /** @breif enable the outline of a-tag */
+    /** @brief enable the outline of a-tag */
     void setAnchorTextOutline(bool enable, const Color3B& outlineColor = Color3B::WHITE, int outlineSize = -1);
     bool isAnchorTextOutlineEnabled();                  /*!< valid outline of a-tag? */
     Color3B getAnchorTextOutlineColor3B();              /*!< return the current text outline color of a-tag */
     int getAnchorTextOutlineSize();                     /*!< return the current text outline size of a-tag */
-    /** @breif enable the shadow of a-tag */
+    /** @brief enable the shadow of a-tag */
     void setAnchorTextShadow(bool enable, const Color3B& shadowColor = Color3B::BLACK, const Size& offset = Size(2.0, -2.0), int blurRadius = 0);
     bool isAnchorTextShadowEnabled();                   /*!< valid shadow of a-tag? */
     Color3B getAnchorTextShadowColor3B();               /*!< return the current text shadow color of a-tag */
