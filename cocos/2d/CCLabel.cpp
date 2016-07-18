@@ -1594,7 +1594,7 @@ void Label::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
             auto textureAtlas = _batchNodes.at(0)->getTextureAtlas();
             auto texture = textureAtlas->getTexture();
             _quadCommand.init(_globalZOrder, texture->getName(), getGLProgramState(), 
-                _blendFunc, textureAtlas->getQuads(), textureAtlas->getTotalQuads(), transform, flags, texture->getAlphaName());
+                _blendFunc, textureAtlas->getQuads(), textureAtlas->getTotalQuads(), transform, flags, texture->getAlphaTextureName());
             renderer->addCommand(&_quadCommand);
         }
         else

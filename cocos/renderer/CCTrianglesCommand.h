@@ -68,7 +68,7 @@ public:
      @param mv ModelView matrix for the command.
      @param flags to indicate that the command is using 3D rendering or not.
      */
-    void init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, const Triangles& triangles,const Mat4& mv, uint32_t flags, GLuint textureID1 = 0);
+    void init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, const Triangles& triangles,const Mat4& mv, uint32_t flags, GLuint alphaTextureID = 0);
     /**Deprecated function, the params is similar as the upper init function, with flags equals 0.*/
     CC_DEPRECATED_ATTRIBUTE void init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, const Triangles& triangles,const Mat4& mv);
     /**Apply the texture, shaders, programs, blend functions to GPU pipeline.*/
@@ -113,7 +113,7 @@ protected:
     /**Model view matrix when rendering the triangles.*/
     Mat4 _mv;
 
-    GLuint _textureID1; // x-studio365 spec, ANDROID ETC1 ALPHA supports.
+    GLuint _alphaTextureID; // x-studio365 spec, ANDROID ETC1 ALPHA supports.
 };
 
 NS_CC_END

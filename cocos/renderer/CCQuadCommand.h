@@ -61,7 +61,7 @@ public:
      @param flags to indicate that the command is using 3D rendering or not.
      */
     void init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, const BlendFunc& blendType, V3F_C4B_T2F_Quad* quads, ssize_t quadCount,
-              const Mat4& mv, uint32_t flags, GLuint textureID1 = 0);
+              const Mat4& mv, uint32_t flags, GLuint alphaTextureID = 0);
 
     /**Deprecated function, the params is similar as the upper init function, with flags equals 0.*/
     CC_DEPRECATED_ATTRIBUTE void init(float globalOrder, GLuint textureID, GLProgramState* shader, const BlendFunc& blendType, V3F_C4B_T2F_Quad* quads, ssize_t quadCount,

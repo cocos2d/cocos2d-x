@@ -47,7 +47,7 @@ using namespace std;
 
 NS_CC_BEGIN
 
-static std::string s_etc1AlphaFileSuffix = "Alpha";
+std::string TextureCache::s_etc1AlphaFileSuffix = "@alpha";
 
 // implementation TextureCache
 
@@ -62,9 +62,9 @@ TextureCache * TextureCache::getInstance()
 }
 
 TextureCache::TextureCache()
-    : _loadingThread(nullptr)
-    , _needQuit(false)
-    , _asyncRefCount(0)
+: _loadingThread(nullptr)
+, _needQuit(false)
+, _asyncRefCount(0)
 {
 }
 
@@ -311,10 +311,11 @@ void TextureCache::addImageAsyncCallBack(float dt)
                 texture->autorelease();
                 // x-studio365 spec, ETC1 ALPHA supports.
                 if (asyncStruct->imageAlpha.getFileType() == Image::Format::ETC) {
-                    auto alphaTexture = new Texture2D();
-                    alphaTexture->initWithImage(&asyncStruct->imageAlpha, asyncStruct->pixelFormat);
-                    texture->setAlphaTexture(alphaTexture);
-                    alphaTexture->release();
+                    auto alphaTexture = new(std::nothrow) Texture2D();
+                    if(alphaTexture != nullptr && alphaTexture->initWithImage(&asyncStruct->imageAlpha, asyncStruct->pixelFormat)) {
+                        texture->setAlphaTexture(alphaTexture);
+                    }
+                    CC_SAFE_RELEASE(alphaTexture);
                 }
             }
             else {
@@ -386,10 +387,11 @@ Texture2D * TextureCache::addImage(const std::string &path)
                     Image alphaImage;
                     if (alphaImage.initWithImageFile(alphaFullPath))
                     {
-                        Texture2D *pAlphaTexture = new Texture2D;
-                        pAlphaTexture->autorelease();
-                        pAlphaTexture->initWithImage(&alphaImage);
-                        texture->setAlphaTexture(pAlphaTexture);
+                        Texture2D *pAlphaTexture = new(std::nothrow) Texture2D;
+                        if(pAlphaTexture != nullptr && pAlphaTexture->initWithImage(&alphaImage)) {
+                            texture->setAlphaTexture(pAlphaTexture);
+                        }
+                        CC_SAFE_RELEASE(pAlphaTexture);
                     }
                 }
 
@@ -677,14 +679,14 @@ std::list<VolatileTexture*> VolatileTextureMgr::_textures;
 bool VolatileTextureMgr::_isReloading = false;
 
 VolatileTexture::VolatileTexture(Texture2D *t)
-    : _texture(t)
-    , _cashedImageType(kInvalid)
-    , _textureData(nullptr)
-    , _pixelFormat(Texture2D::PixelFormat::RGBA8888)
-    , _fileName("")
-    , _text("")
-    , _uiImage(nullptr)
-    , _hasMipmaps(false)
+: _texture(t)
+, _cashedImageType(kInvalid)
+, _textureData(nullptr)
+, _pixelFormat(Texture2D::PixelFormat::RGBA8888)
+, _fileName("")
+, _text("")
+, _uiImage(nullptr)
+, _hasMipmaps(false)
 {
     _texParams.minFilter = GL_LINEAR;
     _texParams.magFilter = GL_LINEAR;

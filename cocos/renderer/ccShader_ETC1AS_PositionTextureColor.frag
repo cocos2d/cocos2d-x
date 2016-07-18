@@ -22,27 +22,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
- /* References:
-#ifdef GL_ES
-precision mediump float;
-#endif
 
-varying vec4 v_fragmentColor;
-varying vec2 v_texCoord;
-
-uniform vec4  u_add_color;
-uniform float u_percent;
-
-void main() {
-    vec4 color1 = texture2D(CC_Texture0, v_texCoord);
-    vec4 color2 = texture2D(CC_Texture1, v_texCoord);
-    
-    gl_FragColor.rgb = v_fragmentColor.a * color1.rgb * color2.r ;
-    gl_FragColor.a   = v_fragmentColor.a * color2.r;
-}
- */
- 
-extern CC_DLL const char* ccETC1ASPositionTextureColor_frag = STRINGIFY(
+extern const char* ccETC1ASPositionTextureColor_frag = STRINGIFY(
 \n#ifdef GL_ES\n
     precision mediump float;
 \n#endif\n

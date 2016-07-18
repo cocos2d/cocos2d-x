@@ -22,13 +22,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
- /* Normal ETC1 AS frag shader
-    vec4 texColor = texture2D(CC_Texture0, v_texCoord);
 
-    gl_FragColor.a = v_fragmentColor.a * texture2D(CC_Texture1, v_texCoord).r;
-    gl_FragColor.rgb = texColor.rgb * gl_FragColor.a;
- */
-extern CC_DLL const char* ccETC1ASPositionTextureGray_frag = STRINGIFY(
+extern const char* ccETC1ASPositionTextureGray_frag = STRINGIFY(
 \n#ifdef GL_ES\n
     precision mediump float;
 \n#endif\n

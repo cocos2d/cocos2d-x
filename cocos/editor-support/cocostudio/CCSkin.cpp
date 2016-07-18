@@ -243,7 +243,7 @@ void Skin::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
         mv, 
         flags,
         // x-studio365 spec, ETC1 ALPHA supports.
-        _texture->getAlphaName());
+        _texture->getAlphaTextureName());
 
     renderer->addCommand(&_quadCommand);
 }
