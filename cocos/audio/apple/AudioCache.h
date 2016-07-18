@@ -22,11 +22,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+#pragma once
+
 #include "platform/CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC
-
-#ifndef __AUDIO_CACHE_H_
-#define __AUDIO_CACHE_H_
 
 #import <OpenAL/al.h>
 #import <AudioToolbox/AudioToolbox.h>
@@ -39,6 +38,19 @@
 
 #define QUEUEBUFFER_NUM 3
 #define QUEUEBUFFER_TIME_STEP 0.1
+
+#define QUOTEME_(x) #x
+#define QUOTEME(x) QUOTEME_(x)
+
+#if defined(COCOS2D_DEBUG) && COCOS2D_DEBUG > 0
+#define ALOGV(fmt, ...) printf("V/" LOG_TAG " (" QUOTEME(__LINE__) "): " fmt "\n", ##__VA_ARGS__)
+#else
+#define ALOGV(fmt, ...) do {} while(false)
+#endif
+#define ALOGD(fmt, ...) printf("D/" LOG_TAG " (" QUOTEME(__LINE__) "): " fmt "\n", ##__VA_ARGS__)
+#define ALOGI(fmt, ...) printf("I/" LOG_TAG " (" QUOTEME(__LINE__) "): " fmt "\n", ##__VA_ARGS__)
+#define ALOGW(fmt, ...) printf("W/" LOG_TAG " (" QUOTEME(__LINE__) "): " fmt "\n", ##__VA_ARGS__)
+#define ALOGE(fmt, ...) printf("E/" LOG_TAG " (" QUOTEME(__LINE__) "): " fmt "\n", ##__VA_ARGS__)
 
 NS_CC_BEGIN
 namespace experimental{
@@ -56,7 +68,7 @@ public:
     void addLoadCallback(const std::function<void(bool)>& callback);
     
 protected:
-    void readDataTask();
+    void readDataTask(unsigned int selfId);
 
     void invokingPlayCallbacks();
 
@@ -93,8 +105,10 @@ protected:
     std::vector< std::function<void(bool)> > _loadCallbacks;
     std::mutex _readDataTaskMutex;
     
-    bool _exitReadDataTask;
+    std::shared_ptr<bool> _isDestroyed;
     std::string _fileFullPath;
+    unsigned int _id;
+    bool _isReadDataThreadStarted;
     
     friend class AudioEngineImpl;
     friend class AudioPlayer;
@@ -103,6 +117,5 @@ protected:
 }
 NS_CC_END
 
-#endif // __AUDIO_CACHE_H_
 #endif
 

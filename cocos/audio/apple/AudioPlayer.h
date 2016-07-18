@@ -64,7 +64,7 @@ protected:
     bool _loop;
     std::function<void (int, const std::string &)> _finishCallbak;
     
-    bool _beDestroy;
+    bool _isDestroyed;
     bool _removeByAudioEngine;
     bool _ready;
     ALuint _alSource;
@@ -73,10 +73,16 @@ protected:
     float _currTime;
     bool _streamingSource;
     ALuint _bufferIds[3];
-    std::thread _rotateBufferThread;
+    std::thread* _rotateBufferThread;
     std::condition_variable _sleepCondition;
     std::mutex _sleepMutex;
     bool _timeDirty;
+    bool _isRotateThreadExited;
+    
+    std::mutex _play2dMutex;
+    bool _isPlay2dStarted;
+    
+    unsigned int _id;
     
     friend class AudioEngineImpl;
 };
