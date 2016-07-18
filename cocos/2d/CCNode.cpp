@@ -57,7 +57,7 @@ NS_CC_BEGIN
 
 bool nodeComparisonLess(Node* n1, Node* n2)
 {
-    return(n1->_localZOrder < n2->_localZOrder);
+    return(n1->_localZOrder.value < n2->_localZOrder.value);
 }
 
 // FIXME:: Yes, nodes might have a sort problem once every 30 days if the game runs at 60 FPS and each frame sprites are reordered.
@@ -87,7 +87,6 @@ Node::Node()
 , _transformUpdated(true)
 // children (lazy allocs)
 // lazy alloc
-, _localZOrder(CC_LOCALZORDER_ZERO << 32)
 , _globalZOrder(0)
 , _parent(nullptr)
 // "whole screen" objects. like Scenes and Layers, should set _ignoreAnchorPointForPosition to true
@@ -118,6 +117,8 @@ Node::Node()
 , _physicsBody(nullptr)
 #endif
 {
+    _localZOrder.value = 0;
+
     // set default scheduler and actionManager
     _director = Director::getInstance();
     _actionManager = _director->getActionManager();
@@ -273,12 +274,12 @@ void Node::setLocalZOrder(int z)
 /// used internally to alter the zOrder variable. DON'T call this method manually
 void Node::_setLocalZOrder(int z)
 {
-    _localZOrder = ((CC_LOCALZORDER_ZERO + z) << 32) | (_localZOrder & 0xffffffff);
+    _localZOrder.detail.z = z;
 }
 
-void Node::_setOrderOfArrival(unsigned int orderOfArrival)
+void Node::_updateOrderOfArrival()
 {
-    _localZOrder = (_localZOrder & 0xffffffff00000000) | orderOfArrival;
+    _localZOrder.detail.a = s_globalOrderOfArrival++;
 }
 
 void Node::setGlobalZOrder(float globalZOrder)
@@ -958,7 +959,7 @@ void Node::addChildHelper(Node* child, int localZOrder, int tag, const std::stri
     child->setParent(this);
     child->setCameraMask(getCameraMask());
 
-    child->_setOrderOfArrival(s_globalOrderOfArrival++);
+    child->_updateOrderOfArrival();
 
     if( _running )
     {
@@ -990,7 +991,7 @@ void Node::addChild(Node *child, int zOrder)
 void Node::addChild(Node *child)
 {
     CCASSERT( child != nullptr, "Argument must be non-nil");
-    this->addChild(child, child->_localZOrder, child->_name);
+    this->addChild(child, child->_localZOrder.detail.z, child->_name);
 }
 
 void Node::removeFromParent()
@@ -1144,7 +1145,7 @@ void Node::reorderChild(Node *child, int zOrder)
 {
     CCASSERT( child != nullptr, "Child must be non-nil");
     _reorderChildDirty = true;
-    child->_setOrderOfArrival(s_globalOrderOfArrival++);
+    child->_updateOrderOfArrival();
     child->_setLocalZOrder(zOrder);
 }
 

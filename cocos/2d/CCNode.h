@@ -106,8 +106,6 @@ class EventListener;
 
  */
 
-#define CC_LOCALZORDER_ZERO 0x7fffffffULL
-
 class CC_DLL Node : public Ref
 {
     friend bool nodeComparisonLess(Node* n1, Node* n2);
@@ -181,7 +179,7 @@ public:
     *
     * @param orderOfArrival   The arrival order.
     */
-    CC_DEPRECATED_ATTRIBUTE void _setOrderOfArrival(unsigned int orderOfArrival);
+    CC_DEPRECATED_ATTRIBUTE void _updateOrderOfArrival(void);
 
     /**
      * Gets the local Z order of this node.
@@ -190,7 +188,7 @@ public:
      *
      * @return The local (relative to its siblings) Z order.
      */
-    virtual int getLocalZOrder() const { return static_cast<int>(((_localZOrder >> 32) & 0xffffffff) - CC_LOCALZORDER_ZERO); }
+    virtual int getLocalZOrder() const { return _localZOrder.detail.z; }
     CC_DEPRECATED_ATTRIBUTE virtual int getZOrder() const { return getLocalZOrder(); }
 
     /**
@@ -1896,7 +1894,13 @@ protected:
     mutable bool _additionalTransformDirty; ///< transform dirty ?
     bool _transformUpdated;         ///< Whether or not the Transform object was updated since the last frame
 
-    unsigned long long _localZOrder;               ///< Local order (relative to its siblings) used to sort the node
+    union {
+        struct {
+            int z;
+            unsigned int a;
+        } detail;
+        long long value;
+    } _localZOrder;               ///< Local order (relative to its siblings) used to sort the node
     float _globalZOrder;            ///< Global order used to sort the node
 
     static unsigned int s_globalOrderOfArrival;
