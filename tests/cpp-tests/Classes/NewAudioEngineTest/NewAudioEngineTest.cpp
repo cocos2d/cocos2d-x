@@ -40,6 +40,7 @@ AudioEngineTests::AudioEngineTests()
     ADD_TEST_CASE(InvalidAudioFileTest);
     ADD_TEST_CASE(LargeAudioFileTest);
     ADD_TEST_CASE(AudioPerformanceTest);
+    ADD_TEST_CASE(AudioSwitchStateTest);
 }
 
 namespace {
@@ -748,3 +749,33 @@ std::string AudioPerformanceTest::subtitle() const
     return "Please see console for the result";
 }
 
+/////////////////////////////////////////////////////////////////////////
+
+bool AudioSwitchStateTest::init()
+{
+    if (AudioEngineTestDemo::init())
+    {
+        schedule([](float dt){
+            
+            AudioEngine::uncacheAll();
+            AudioEngine::preload("audio/SoundEffectsFX009/FX081.mp3");
+            AudioEngine::play2d("audio/SoundEffectsFX009/FX082.mp3");
+            AudioEngine::play2d("audio/LuckyDay.mp3");
+            
+        }, 0.1f, "AudioSwitchStateTest");
+        
+        return true;
+    }
+    
+    return false;
+}
+
+std::string AudioSwitchStateTest::title() const
+{
+    return "play, preload, stop switch test";
+}
+
+std::string AudioSwitchStateTest::subtitle() const
+{
+    return "Should not crash";
+}

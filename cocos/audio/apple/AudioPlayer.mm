@@ -113,11 +113,14 @@ void AudioPlayer::destroy()
             
             delete _rotateBufferThread;
             _rotateBufferThread = nullptr;
+            ALOGVV("rotateBufferThread exited!");
         }
     }
     
-    alSourceStop(_alSource);
-    alSourcei(_alSource, AL_BUFFER, NULL);
+    ALOGVV("Before alSourceStop");
+    alSourceStop(_alSource); CHECK_AL_ERROR_DEBUG();
+    ALOGVV("Before alSourcei");
+    alSourcei(_alSource, AL_BUFFER, NULL); CHECK_AL_ERROR_DEBUG();
     
     _removeByAudioEngine = true;
     
