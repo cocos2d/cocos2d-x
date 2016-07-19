@@ -103,7 +103,7 @@ protected:
     ALsizei _sampleRate;
     float _duration;
     int _bytesPerFrame;
-    AudioStreamBasicDescription outputFormat;
+    AudioStreamBasicDescription _outputFormat;
     
     /*Cache related stuff;
      * Cache pcm data when sizeInBytes less than PCMDATA_CACHEMAXSIZE

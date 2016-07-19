@@ -252,12 +252,12 @@ void AudioPlayer::rotateBufferThread(int offsetFrame)
         goto ExitBufferThread;
     }
     
-    error = ExtAudioFileSetProperty(extRef, kExtAudioFileProperty_ClientDataFormat, sizeof(_audioCache->outputFormat), &_audioCache->outputFormat);
+    error = ExtAudioFileSetProperty(extRef, kExtAudioFileProperty_ClientDataFormat, sizeof(_audioCache->_outputFormat), &_audioCache->_outputFormat);
     AudioBufferList		theDataBuffer;
     theDataBuffer.mNumberBuffers = 1;
     theDataBuffer.mBuffers[0].mData = tmpBuffer;
     theDataBuffer.mBuffers[0].mDataByteSize = _audioCache->_queBufferBytes;
-    theDataBuffer.mBuffers[0].mNumberChannels = _audioCache->outputFormat.mChannelsPerFrame;
+    theDataBuffer.mBuffers[0].mNumberChannels = _audioCache->_outputFormat.mChannelsPerFrame;
     
     if (offsetFrame != 0) {
         ExtAudioFileSeek(extRef, offsetFrame);
@@ -271,7 +271,7 @@ void AudioPlayer::rotateBufferThread(int offsetFrame)
                 bufferProcessed--;
                 if (_timeDirty) {
                     _timeDirty = false;
-                    offsetFrame = _currTime * _audioCache->outputFormat.mSampleRate;
+                    offsetFrame = _currTime * _audioCache->_outputFormat.mSampleRate;
                     ExtAudioFileSeek(extRef, offsetFrame);
                 }
                 else {
@@ -301,7 +301,7 @@ void AudioPlayer::rotateBufferThread(int offsetFrame)
                 
                 ALuint bid;
                 alSourceUnqueueBuffers(_alSource, 1, &bid);
-                alBufferData(bid, _audioCache->_format, tmpBuffer, frames * _audioCache->outputFormat.mBytesPerFrame, _audioCache->_sampleRate);
+                alBufferData(bid, _audioCache->_format, tmpBuffer, frames * _audioCache->_outputFormat.mBytesPerFrame, _audioCache->_sampleRate);
                 alSourceQueueBuffers(_alSource, 1, &bid);
             }
         }

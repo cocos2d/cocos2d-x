@@ -303,7 +303,7 @@ void AudioEngineImpl::_play2d(AudioCache *cache, int audioID)
     }
     else
     {
-        ALOGE("AudioEngineImpl::_play2d, cache was destroyed or not ready!");
+        ALOGD("AudioEngineImpl::_play2d, cache was destroyed or not ready!");
         auto iter = _audioPlayers.find(audioID);
         if (iter != _audioPlayers.end())
         {

@@ -47,6 +47,7 @@ namespace {
 unsigned int __idIndex = 0;
 }
 
+#define INVALID_AL_BUFFER_ID 0xFFFFFFFF
 #define PCMDATA_CACHEMAXSIZE 1048576
 
 typedef ALvoid	AL_APIENTRY	(*alBufferDataStaticProcPtr) (const ALint bid, ALenum format, ALvoid* data, ALsizei size, ALsizei freq);
@@ -69,6 +70,10 @@ using namespace cocos2d::experimental;
 
 AudioCache::AudioCache()
 : _dataSize(0)
+, _format(-1)
+, _duration(0.0f)
+, _bytesPerFrame(0)
+, _alBufferId(INVALID_AL_BUFFER_ID)
 , _pcmData(nullptr)
 , _bytesOfRead(0)
 , _queBufferFrames(0)
@@ -80,6 +85,13 @@ AudioCache::AudioCache()
 , _isSkipReadDataTask(false)
 {
     ALOGVV("AudioCache() %p, id=%u", this, _id);
+    for (int i = 0; i < QUEUEBUFFER_NUM; ++i)
+    {
+        _queBuffers[i] = nullptr;
+        _queBufferSize[i] = 0;
+    }
+    
+    memset(&_outputFormat, 0, sizeof(_outputFormat));
 }
 
 AudioCache::~AudioCache()
@@ -101,14 +113,19 @@ AudioCache::~AudioCache()
     _readDataTaskMutex.unlock();
     
     if (_pcmData)
-    { //FIXME: _pcmData is read in sub thread, alDeleteBuffers should be really careful.
+    {
         if (_state == State::READY)
         {
-            alDeleteBuffers(1, &_alBufferId);
+            if (_alBufferId != INVALID_AL_BUFFER_ID && alIsBuffer(_alBufferId))
+            {
+                ALOGV("~AudioCache(id=%u), delete buffer: %u", _id, _alBufferId);
+                alDeleteBuffers(1, &_alBufferId);
+                _alBufferId = INVALID_AL_BUFFER_ID;
+            }
         }
         else
         {
-            ALOGW("AudioCache (%p), id=%u, buffer isn't ready ...", this, _id);
+            ALOGW("AudioCache (%p), id=%u, buffer isn't ready, state=%d", this, _id, _state);
         }
         
         free(_pcmData);
@@ -180,18 +197,18 @@ void AudioCache::readDataTask(unsigned int selfId)
         
         // Set the client format to 16 bit signed integer (native-endian) data
         // Maintain the channel count and sample rate of the original source format
-        outputFormat.mSampleRate = theFileFormat.mSampleRate;
-        outputFormat.mChannelsPerFrame = theFileFormat.mChannelsPerFrame;
+        _outputFormat.mSampleRate = theFileFormat.mSampleRate;
+        _outputFormat.mChannelsPerFrame = theFileFormat.mChannelsPerFrame;
         
-        _bytesPerFrame = 2 * outputFormat.mChannelsPerFrame;
-        outputFormat.mFormatID = kAudioFormatLinearPCM;
-        outputFormat.mBytesPerPacket = _bytesPerFrame;
-        outputFormat.mFramesPerPacket = 1;
-        outputFormat.mBytesPerFrame = _bytesPerFrame;
-        outputFormat.mBitsPerChannel = 16;
-        outputFormat.mFormatFlags = kAudioFormatFlagsNativeEndian | kAudioFormatFlagIsPacked | kAudioFormatFlagIsSignedInteger;
+        _bytesPerFrame = 2 * _outputFormat.mChannelsPerFrame;
+        _outputFormat.mFormatID = kAudioFormatLinearPCM;
+        _outputFormat.mBytesPerPacket = _bytesPerFrame;
+        _outputFormat.mFramesPerPacket = 1;
+        _outputFormat.mBytesPerFrame = _bytesPerFrame;
+        _outputFormat.mBitsPerChannel = 16;
+        _outputFormat.mFormatFlags = kAudioFormatFlagsNativeEndian | kAudioFormatFlagIsPacked | kAudioFormatFlagIsSignedInteger;
         
-        error = ExtAudioFileSetProperty(extRef, kExtAudioFileProperty_ClientDataFormat, sizeof(outputFormat), &outputFormat);
+        error = ExtAudioFileSetProperty(extRef, kExtAudioFileProperty_ClientDataFormat, sizeof(_outputFormat), &_outputFormat);
         if(error)
         {
             ALOGE("%s: ExtAudioFileSetProperty FAILED, Error = %ld", __PRETTY_FUNCTION__, (long)error);
@@ -211,10 +228,10 @@ void AudioCache::readDataTask(unsigned int selfId)
         
         if (*_isDestroyed) break;
         
-        _dataSize = (ALsizei)(theFileLengthInFrames * outputFormat.mBytesPerFrame);
-        _format = (outputFormat.mChannelsPerFrame > 1) ? AL_FORMAT_STEREO16 : AL_FORMAT_MONO16;
-        _sampleRate = (ALsizei)outputFormat.mSampleRate;
-        _duration = 1.0f * theFileLengthInFrames / outputFormat.mSampleRate;
+        _dataSize = (ALsizei)(theFileLengthInFrames * _outputFormat.mBytesPerFrame);
+        _format = (_outputFormat.mChannelsPerFrame > 1) ? AL_FORMAT_STEREO16 : AL_FORMAT_MONO16;
+        _sampleRate = (ALsizei)_outputFormat.mSampleRate;
+        _duration = 1.0f * theFileLengthInFrames / _outputFormat.mSampleRate;
         
         if (_dataSize <= PCMDATA_CACHEMAXSIZE)
         {
@@ -231,14 +248,14 @@ void AudioCache::readDataTask(unsigned int selfId)
             alBufferDataStaticProc(_alBufferId, _format, _pcmData, _dataSize, _sampleRate);
             
             readInFrames = theFileFormat.mSampleRate * QUEUEBUFFER_TIME_STEP * QUEUEBUFFER_NUM;
-            dataSize = outputFormat.mBytesPerFrame * readInFrames;
+            dataSize = _outputFormat.mBytesPerFrame * readInFrames;
             if (dataSize > _dataSize) {
                 dataSize = _dataSize;
                 readInFrames = theFileLengthInFrames;
             }
             theDataBuffer.mNumberBuffers = 1;
             theDataBuffer.mBuffers[0].mDataByteSize = (UInt32)dataSize;
-            theDataBuffer.mBuffers[0].mNumberChannels = outputFormat.mChannelsPerFrame;
+            theDataBuffer.mBuffers[0].mNumberChannels = _outputFormat.mChannelsPerFrame;
             
             theDataBuffer.mBuffers[0].mData = _pcmData;
             frames = readInFrames;
@@ -268,15 +285,16 @@ void AudioCache::readDataTask(unsigned int selfId)
             
             _bytesOfRead = _dataSize;
         }
-        else{
+        else
+        {
             _queBufferFrames = theFileFormat.mSampleRate * QUEUEBUFFER_TIME_STEP;
             if (_queBufferFrames == 0)
                 break;
             
-            _queBufferBytes = _queBufferFrames * outputFormat.mBytesPerFrame;
+            _queBufferBytes = _queBufferFrames * _outputFormat.mBytesPerFrame;
             
             theDataBuffer.mNumberBuffers = 1;
-            theDataBuffer.mBuffers[0].mNumberChannels = outputFormat.mChannelsPerFrame;
+            theDataBuffer.mBuffers[0].mNumberChannels = _outputFormat.mChannelsPerFrame;
             for (int index = 0; index < QUEUEBUFFER_NUM; ++index) {
                 _queBuffers[index] = (char*)malloc(_queBufferBytes);
                 
@@ -307,6 +325,12 @@ void AudioCache::readDataTask(unsigned int selfId)
     if (_state != State::READY)
     {
         _state = State::FAILED;
+        if (_alBufferId != INVALID_AL_BUFFER_ID && alIsBuffer(_alBufferId))
+        {
+            ALOGV("readDataTask failed, delete buffer: %u", _alBufferId);
+            alDeleteBuffers(1, &_alBufferId);
+            _alBufferId = INVALID_AL_BUFFER_ID;
+        }
     }
     
     _readDataTaskMutex.unlock();
