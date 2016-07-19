@@ -85,7 +85,7 @@ AudioCache::~AudioCache()
 {
     ALOGVV("~AudioCache() %p, %u", this, _id);
     *_isDestroyed = true;
-    while (_state == State::LOADING)
+    while (_state == State::INITIAL || _state == State::LOADING)
     {
         ALOGVV("waiting readData thread to start ...");
         std::this_thread::sleep_for(std::chrono::milliseconds(5));
