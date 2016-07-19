@@ -258,6 +258,7 @@ int AudioEngineImpl::play2d(const std::string &filePath ,bool loop ,float volume
         return AudioEngine::INVALID_AUDIO_ID;
     }
     
+    player->setCache(audioCache);
     _threadMutex.lock();
     _audioPlayers[_currentAudioID] = player;
     _threadMutex.unlock();
@@ -277,11 +278,11 @@ int AudioEngineImpl::play2d(const std::string &filePath ,bool loop ,float volume
 void AudioEngineImpl::_play2d(AudioCache *cache, int audioID)
 {
     //Note: It may bn in sub thread or main thread :(
-    if (!*cache->_isDestroyed && cache->_alBufferReady)
+    if (!*cache->_isDestroyed && cache->_state == AudioCache::State::READY)
     {
         _threadMutex.lock();
         auto playerIt = _audioPlayers.find(audioID);
-        if (playerIt != _audioPlayers.end() && playerIt->second->play2d(cache)) {
+        if (playerIt != _audioPlayers.end() && playerIt->second->play2d()) {
             _scheduler->performFunctionInCocosThread([audioID](){
                 
                 if (AudioEngine::_audioIDInfoMap.find(audioID) != AudioEngine::_audioIDInfoMap.end()) {
@@ -294,6 +295,11 @@ void AudioEngineImpl::_play2d(AudioCache *cache, int audioID)
     else
     {
         ALOGE("AudioEngineImpl::_play2d, cache was destroyed or not ready!");
+        auto iter = _audioPlayers.find(audioID);
+        if (iter != _audioPlayers.end())
+        {
+            iter->second->_removeByAudioEngine = true;
+        }
     }
 }
 

@@ -36,7 +36,7 @@
 #include "base/CCDirector.h"
 #include "base/CCScheduler.h"
 
-//#define VERY_VERY_VERBOSE_LOGGING
+#define VERY_VERY_VERBOSE_LOGGING
 #ifdef VERY_VERY_VERBOSE_LOGGING
 #define ALOGVV ALOGV
 #else
@@ -44,7 +44,7 @@
 #endif
 
 namespace {
-    unsigned int __idIndex = 0;
+unsigned int __idIndex = 0;
 }
 
 #define PCMDATA_CACHEMAXSIZE 1048576
@@ -73,11 +73,10 @@ AudioCache::AudioCache()
 , _bytesOfRead(0)
 , _queBufferFrames(0)
 , _queBufferBytes(0)
-, _alBufferReady(false)
-, _loadFail(false)
+, _state(State::INITIAL)
 , _isDestroyed(std::make_shared<bool>(false))
+, _isLoaded(std::make_shared<bool>(false))
 , _id(++__idIndex)
-, _isReadDataThreadStarted(false)
 {
     ALOGVV("AudioCache() %p", this);
 }
@@ -86,7 +85,7 @@ AudioCache::~AudioCache()
 {
     ALOGVV("~AudioCache() %p, %u", this, _id);
     *_isDestroyed = true;
-    while (!_isReadDataThreadStarted)
+    while (_state == State::LOADING)
     {
         ALOGVV("waiting readData thread to start ...");
         std::this_thread::sleep_for(std::chrono::milliseconds(5));
@@ -95,18 +94,16 @@ AudioCache::~AudioCache()
     _readDataTaskMutex.lock();
     _readDataTaskMutex.unlock();
     
-    if(_pcmData)
+    if (_pcmData)
     { //FIXME: _pcmData is read in sub thread, alDeleteBuffers should be really careful.
-        if (_alBufferReady)
+        if (_state == State::READY)
         {
-            ALOGVV("buffer ready, delete it.");
             alDeleteBuffers(1, &_alBufferId);
         }
         else
         {
-            ALOGW("buffer isn't ready ...");
+            ALOGW("AudioCache (%p), id=%u, buffer isn't ready ...", this, _id);
         }
-
         
         free(_pcmData);
     }
@@ -123,10 +120,10 @@ AudioCache::~AudioCache()
 void AudioCache::readDataTask(unsigned int selfId)
 {
     //Note: It's in sub thread
-    ALOGVV("cache id: %u", selfId);
+    ALOGVV("readDataTask, cache id: %u", selfId);
     
     _readDataTaskMutex.lock();
-    _isReadDataThreadStarted = true;
+    _state = State::LOADING;
     
     AudioStreamBasicDescription		theFileFormat;
     UInt32 thePropertySize = sizeof(theFileFormat);
@@ -214,7 +211,9 @@ void AudioCache::readDataTask(unsigned int selfId)
         theDataBuffer.mBuffers[0].mData = _pcmData;
         frames = readInFrames;
         ExtAudioFileRead(extRef, (UInt32*)&frames, &theDataBuffer);
-        _alBufferReady = true;
+        
+        _state = State::READY;
+        
         _bytesOfRead += dataSize;
         invokingPlayCallbacks();
         
@@ -237,6 +236,9 @@ void AudioCache::readDataTask(unsigned int selfId)
     }
     else{
         _queBufferFrames = theFileFormat.mSampleRate * QUEUEBUFFER_TIME_STEP;
+        if (_queBufferFrames == 0)
+            goto ExitThread;
+        
         _queBufferBytes = _queBufferFrames * outputFormat.mBytesPerFrame;
         
 		theDataBuffer.mNumberBuffers = 1;
@@ -251,6 +253,8 @@ void AudioCache::readDataTask(unsigned int selfId)
             
             _queBufferSize[index] = theDataBuffer.mBuffers[0].mDataByteSize;
         }
+        
+        _state = State::READY;
     }
     
 ExitThread:
@@ -258,49 +262,76 @@ ExitThread:
     if (extRef)
         ExtAudioFileDispose(extRef);
     
+    if (_state != State::READY)
+    {
+        _state = State::FAILED;
+    }
     
-    if (_queBufferFrames > 0)
-        _alBufferReady = true;
-    else
-        _loadFail = true;
-    
+    //FIXME: Why to invoke play callback first? Should it be after 'load' callback?
     invokingPlayCallbacks();
-
     invokingLoadCallbacks();
+    
     _readDataTaskMutex.unlock();
 }
 
 void AudioCache::addPlayCallback(const std::function<void()>& callback)
 {
-    _callbackMutex.lock();
-    if (_alBufferReady) {
-        callback();
-    } else if(!_loadFail){
-        _callbacks.push_back(callback);
+    std::lock_guard<std::mutex> lk(_playCallbackMutex);
+    switch (_state)
+    {
+        case State::INITIAL:
+        case State::LOADING:
+            _playCallbacks.push_back(callback);
+            break;
+            
+        case State::READY:
+        // If state is failure, we still need to invoke the callback
+        // since the callback will set the 'AudioPlayer::_removeByAudioEngine' flag to true.
+        case State::FAILED:
+            *_isLoaded = true;
+            callback();
+            break;
+            
+        default:
+            ALOGE("Invalid state: %d", _state);
+            break;
     }
-    _callbackMutex.unlock();
 }
 
 void AudioCache::invokingPlayCallbacks()
 {
-    _callbackMutex.lock();
-    auto count = _callbacks.size();
-    for (size_t index = 0; index < count; ++index) {
-        _callbacks[index]();
+    std::lock_guard<std::mutex> lk(_playCallbackMutex);
+    
+    for (auto&& cb : _playCallbacks)
+    {
+        cb();
     }
-    _callbacks.clear();
-    _callbackMutex.unlock();
+    
+    _playCallbacks.clear();
+    *_isLoaded = true;
 }
 
 void AudioCache::addLoadCallback(const std::function<void(bool)>& callback)
 {
-    if (_alBufferReady) {
-        callback(true);
-    } else if(_loadFail){
-        callback(false);
-    }
-    else {
-        _loadCallbacks.push_back(callback);
+    switch (_state)
+    {
+        case State::INITIAL:
+        case State::LOADING:
+            _loadCallbacks.push_back(callback);
+            break;
+            
+        case State::READY:
+            *_isLoaded = true;
+            callback(true);
+            break;
+        case State::FAILED:
+            *_isLoaded = true;
+            callback(false);
+            break;
+            
+        default:
+            ALOGE("Invalid state: %d", _state);
+            break;
     }
 }
 
@@ -308,7 +339,7 @@ void AudioCache::invokingLoadCallbacks()
 {
     if (*_isDestroyed)
     {
-        ALOGV("_isDestroyed=true, don't invoke preload callback ...");
+        ALOGV("AudioCache (%p) was destroyed, don't invoke preload callback ...", this);
         return;
     }
     
@@ -317,15 +348,18 @@ void AudioCache::invokingLoadCallbacks()
     scheduler->performFunctionInCocosThread([&, isDestroyed](){
         if (*isDestroyed)
         {
-            ALOGV("invokingLoadCallbacks, (%p) was destroyed!", this);
+            ALOGV("invokingLoadCallbacks perform in cocos thread, AudioCache (%p) was destroyed!", this);
             return;
         }
-        auto count = _loadCallbacks.size();
-        for (size_t index = 0; index < count; ++index) {
-            _loadCallbacks[index](_alBufferReady);
+        
+        for (auto&& cb : _loadCallbacks)
+        {
+            cb(_state == State::READY);
         }
+
         _loadCallbacks.clear();
     });
+    *_isLoaded = true;
 }
 
 #endif

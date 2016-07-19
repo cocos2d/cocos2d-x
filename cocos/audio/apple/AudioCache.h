@@ -52,14 +52,36 @@
 #define ALOGW(fmt, ...) printf("W/" LOG_TAG " (" QUOTEME(__LINE__) "): " fmt "\n", ##__VA_ARGS__)
 #define ALOGE(fmt, ...) printf("E/" LOG_TAG " (" QUOTEME(__LINE__) "): " fmt "\n", ##__VA_ARGS__)
 
+#if defined(COCOS2D_DEBUG) && COCOS2D_DEBUG > 0
+#define CHECK_AL_ERROR_DEBUG() \
+do { \
+    GLenum __error = alGetError(); \
+    if (__error) { \
+        ALOGE("OpenAL error 0x%04X in %s %s %d\n", __error, __FILE__, __FUNCTION__, __LINE__); \
+    } \
+} while (false)
+#else
+#define CHECK_AL_ERROR_DEBUG() 
+#endif
+
 NS_CC_BEGIN
 namespace experimental{
 
 class AudioEngineImpl;
 class AudioPlayer;
 
-class AudioCache{
+class AudioCache
+{
 public:
+    
+    enum class State
+    {
+        INITIAL,
+        LOADING,
+        READY,
+        FAILED
+    };
+    
     AudioCache();
     ~AudioCache();
 
@@ -97,18 +119,20 @@ protected:
     UInt32 _queBufferFrames;
     UInt32 _queBufferBytes;
 
-    bool _alBufferReady;
-    bool _loadFail;
-    std::mutex _callbackMutex;
+    std::mutex _playCallbackMutex;
+    std::vector< std::function<void()> > _playCallbacks;
     
-    std::vector< std::function<void()> > _callbacks;
+    // loadCallbacks doesn't need mutex since it's invoked only in Cocos thread.
     std::vector< std::function<void(bool)> > _loadCallbacks;
+    
     std::mutex _readDataTaskMutex;
     
+    State _state;
+    
     std::shared_ptr<bool> _isDestroyed;
+    std::shared_ptr<bool> _isLoaded;
     std::string _fileFullPath;
     unsigned int _id;
-    bool _isReadDataThreadStarted;
     
     friend class AudioEngineImpl;
     friend class AudioPlayer;
