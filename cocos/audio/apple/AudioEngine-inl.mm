@@ -209,14 +209,23 @@ AudioCache* AudioEngineImpl::preload(const std::string& filePath, std::function<
     if (it == _audioCaches.end()) {
         audioCache = &_audioCaches[filePath];
         audioCache->_fileFullPath = FileUtils::getInstance()->fullPathForFilename(filePath);
-        
-        AudioEngine::addTask(std::bind(&AudioCache::readDataTask, audioCache, audioCache->_id));
+        unsigned int cacheId = audioCache->_id;
+        auto isCacheDestroyed = audioCache->_isDestroyed;
+        AudioEngine::addTask([audioCache, cacheId, isCacheDestroyed](){
+            if (*isCacheDestroyed)
+            {
+                ALOGV("AudioCache (id=%u) was destroyed, no need to launch readDataTask.", cacheId);
+                audioCache->setSkipReadDataTask(true);
+                return;
+            }
+            audioCache->readDataTask(cacheId);
+        });
     }
     else {
         audioCache = &it->second;
     }
     
-    if(audioCache && callback)
+    if (audioCache && callback)
     {
         audioCache->addLoadCallback(callback);
     }

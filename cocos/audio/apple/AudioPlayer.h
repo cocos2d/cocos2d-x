@@ -80,7 +80,6 @@ protected:
     bool _isRotateThreadExited;
     
     std::mutex _play2dMutex;
-    std::shared_ptr<bool> _isAudioLoaded;
     
     unsigned int _id;
     

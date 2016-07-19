@@ -90,6 +90,7 @@ public:
     void addLoadCallback(const std::function<void(bool)>& callback);
     
 protected:
+    void setSkipReadDataTask(bool isSkip) { _isSkipReadDataTask = isSkip; };
     void readDataTask(unsigned int selfId);
 
     void invokingPlayCallbacks();
@@ -130,9 +131,10 @@ protected:
     State _state;
     
     std::shared_ptr<bool> _isDestroyed;
-    std::shared_ptr<bool> _isLoaded;
     std::string _fileFullPath;
     unsigned int _id;
+    bool _isLoadingFinished;
+    bool _isSkipReadDataTask;
     
     friend class AudioEngineImpl;
     friend class AudioPlayer;

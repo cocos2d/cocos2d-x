@@ -60,7 +60,6 @@ AudioPlayer::AudioPlayer()
 , _timeDirty(false)
 , _isRotateThreadExited(false)
 , _id(++__idIndex)
-, _isAudioLoaded(std::make_shared<bool>(false))
 {
     memset(_bufferIds, 0, sizeof(_bufferIds));
 }
@@ -85,37 +84,46 @@ void AudioPlayer::destroy()
 
     _isDestroyed = true;
     
-    if (_audioCache != nullptr)
+    do
     {
-        while (!*_isAudioLoaded)
+        if (_audioCache != nullptr)
         {
-            std::this_thread::sleep_for(std::chrono::milliseconds(5));
-        }
-    }
-    
-    // Wait for play2d to be finished.
-    _play2dMutex.lock();
-    _play2dMutex.unlock();
-    
-    if (_streamingSource)
-    {
-        if (_rotateBufferThread != nullptr)
-        {
-            while (!_isRotateThreadExited)
+            if (_audioCache->_state == AudioCache::State::INITIAL)
             {
-                _sleepCondition.notify_one();
+                ALOGV("AudioPlayer::destroy, id=%u, cache isn't ready!", _id);
+                break;
+            }
+            
+            while (!_audioCache->_isLoadingFinished)
+            {
                 std::this_thread::sleep_for(std::chrono::milliseconds(5));
             }
-            
-            if (_rotateBufferThread->joinable()) {
-                _rotateBufferThread->join();
-            }
-            
-            delete _rotateBufferThread;
-            _rotateBufferThread = nullptr;
-            ALOGVV("rotateBufferThread exited!");
         }
-    }
+        
+        // Wait for play2d to be finished.
+        _play2dMutex.lock();
+        _play2dMutex.unlock();
+        
+        if (_streamingSource)
+        {
+            if (_rotateBufferThread != nullptr)
+            {
+                while (!_isRotateThreadExited)
+                {
+                    _sleepCondition.notify_one();
+                    std::this_thread::sleep_for(std::chrono::milliseconds(5));
+                }
+                
+                if (_rotateBufferThread->joinable()) {
+                    _rotateBufferThread->join();
+                }
+                
+                delete _rotateBufferThread;
+                _rotateBufferThread = nullptr;
+                ALOGVV("rotateBufferThread exited!");
+            }
+        }
+    } while(false);
     
     ALOGVV("Before alSourceStop");
     alSourceStop(_alSource); CHECK_AL_ERROR_DEBUG();
@@ -131,7 +139,6 @@ void AudioPlayer::destroy()
 void AudioPlayer::setCache(AudioCache* cache)
 {
     _audioCache = cache;
-    _isAudioLoaded = cache->_isLoaded;
 }
 
 bool AudioPlayer::play2d()
