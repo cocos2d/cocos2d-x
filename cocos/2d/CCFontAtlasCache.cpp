@@ -56,10 +56,10 @@ FontAtlas* FontAtlasCache::getFontAtlasTTF(const _ttfConfig* config)
 
     char tmp[ATLAS_MAP_KEY_BUFFER];
     if (useDistanceField) {
-        snprintf(tmp, ATLAS_MAP_KEY_BUFFER, "df %.2f %d %s", config->fontSize, config->outlineSize,
+        snprintf(tmp, ATLAS_MAP_KEY_BUFFER, "df %.2f %.2f %s", config->fontSize, config->outlineSize,
                  config->fontFilePath.c_str());
     } else {
-        snprintf(tmp, ATLAS_MAP_KEY_BUFFER, "%.2f %d %s", config->fontSize, config->outlineSize,
+        snprintf(tmp, ATLAS_MAP_KEY_BUFFER, "%.2f %.2f %s", config->fontSize, config->outlineSize,
                  config->fontFilePath.c_str());
     }
     std::string atlasName = tmp;

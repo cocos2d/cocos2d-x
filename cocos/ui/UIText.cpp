@@ -350,7 +350,7 @@ void Text::enableShadow(const Color4B& shadowColor,const Size &offset, int blurR
     _labelRenderer->enableShadow(shadowColor, offset, blurRadius);
 }
 
-void Text::enableOutline(const Color4B& outlineColor,int outlineSize)
+void Text::enableOutline(const Color4B& outlineColor, float outlineSize)
 {
     _labelRenderer->enableOutline(outlineColor, outlineSize);
     updateContentSizeWithTextureSize(_labelRenderer->getContentSize());
@@ -399,7 +399,7 @@ Color4B Text::getShadowColor() const
     return Color4B(effect.r * 255, effect.g * 255, effect.b * 255, effect.a * 255);
 }
 
-int Text::getOutlineSize() const
+float Text::getOutlineSize() const
 {
     return _labelRenderer->getOutlineSize();
 }

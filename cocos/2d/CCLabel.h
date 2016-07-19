@@ -53,7 +53,7 @@ typedef struct _ttfConfig
     const char *customGlyphs;
 
     bool distanceFieldEnabled;
-    int outlineSize;
+    float outlineSize;
 
     bool italics;
     bool bold;
@@ -61,7 +61,7 @@ typedef struct _ttfConfig
     bool strikethrough;
 
     _ttfConfig(const std::string& filePath = "",float size = 12, const GlyphCollection& glyphCollection = GlyphCollection::DYNAMIC,
-        const char *customGlyphCollection = nullptr, bool useDistanceField = false, int outline = 0,
+        const char *customGlyphCollection = nullptr, bool useDistanceField = false, float outline = 0.0f,
                bool useItalics = false, bool useBold = false, bool useUnderline = false, bool useStrikethrough = false)
         : fontFilePath(filePath)
         , fontSize(size)
@@ -74,7 +74,7 @@ typedef struct _ttfConfig
         , underline(useUnderline)
         , strikethrough(useStrikethrough)
     {
-        if(outline > 0)
+        if(outline > 0.0f)
         {
             distanceFieldEnabled = false;
         }
@@ -345,7 +345,7 @@ public:
      * Enable outline effect to Label.
      * @warning Limiting use to only when the Label created with true type font or system font.
      */
-    virtual void enableOutline(const Color4B& outlineColor,int outlineSize = -1);
+    virtual void enableOutline(const Color4B& outlineColor,float outlineSize = -1.0f);
 
     /**
     * Enable glow effect to Label.
@@ -410,7 +410,7 @@ public:
     /**
     * Return the outline effect size value.
     */
-    int getOutlineSize() const { return _outlineSize; }
+    float getOutlineSize() const { return _outlineSize; }
 
     /**
     * Return current effect type.
