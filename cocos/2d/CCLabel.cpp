@@ -1056,11 +1056,11 @@ void Label::enableGlow(const Color4B& glowColor)
     }
 }
 
-void Label::enableOutline(const Color4B& outlineColor,int outlineSize /* = -1 */)
+void Label::enableOutline(const Color4B& outlineColor,float outlineSize /* = -1 */)
 {
     CCASSERT(_currentLabelType == LabelType::STRING_TEXTURE || _currentLabelType == LabelType::TTF, "Only supported system font and TTF!");
 
-    if (outlineSize > 0 || _currLabelEffect == LabelEffect::OUTLINE)
+    if (outlineSize > 0.0f || _currLabelEffect == LabelEffect::OUTLINE)
     {
         if (_currentLabelType == LabelType::TTF)
         {
@@ -1069,7 +1069,7 @@ void Label::enableOutline(const Color4B& outlineColor,int outlineSize /* = -1 */
             _effectColorF.b = outlineColor.b / 255.0f;
             _effectColorF.a = outlineColor.a / 255.0f;
 
-            if (outlineSize > 0 && _fontConfig.outlineSize != outlineSize)
+            if (outlineSize > 0.0f && _fontConfig.outlineSize != outlineSize)
             {
                 _fontConfig.outlineSize = outlineSize;
                 setTTFConfig(_fontConfig);
