@@ -127,7 +127,7 @@ bool Director::init(void)
     _frameRate = 0.0f;
     _FPSLabel = _drawnBatchesLabel = _drawnVerticesLabel = nullptr;
     _totalFrames = 0;
-    _lastUpdate = new (std::nothrow) struct timeval;
+    _lastUpdate = std::chrono::steady_clock::now();
     _secondsPerFrame = 1.0f;
 
     // paused ?
@@ -204,9 +204,6 @@ Director::~Director(void)
 
     CC_SAFE_RELEASE(_eventDispatcher);
     
-    // delete _lastUpdate
-    CC_SAFE_DELETE(_lastUpdate);
-
     Configuration::destroyInstance();
 
     s_SharedDirector = nullptr;
@@ -343,14 +340,7 @@ void Director::drawScene()
 
 void Director::calculateDeltaTime()
 {
-    struct timeval now;
-
-    if (gettimeofday(&now, nullptr) != 0)
-    {
-        CCLOG("error in gettimeofday");
-        _deltaTime = 0;
-        return;
-    }
+    auto now = std::chrono::steady_clock::now();
 
     // new delta time. Re-fixed issue #1277
     if (_nextDeltaTimeZero)
@@ -360,7 +350,7 @@ void Director::calculateDeltaTime()
     }
     else
     {
-        _deltaTime = (now.tv_sec - _lastUpdate->tv_sec) + (now.tv_usec - _lastUpdate->tv_usec) / 1000000.0f;
+        _deltaTime = std::chrono::duration_cast<std::chrono::microseconds>(now - _lastUpdate).count() / 1000000.0f;
         _deltaTime = MAX(0, _deltaTime);
     }
 
@@ -372,7 +362,7 @@ void Director::calculateDeltaTime()
     }
 #endif
 
-    *_lastUpdate = now;
+    _lastUpdate = now;
 }
 float Director::getDeltaTime() const
 {
@@ -1224,10 +1214,9 @@ void Director::calculateMPF()
     static float prevSecondsPerFrame = 0;
     static const float MPF_FILTER = 0.10f;
 
-    struct timeval now;
-    gettimeofday(&now, nullptr);
+    auto now = std::chrono::steady_clock::now();
     
-    _secondsPerFrame = (now.tv_sec - _lastUpdate->tv_sec) + (now.tv_usec - _lastUpdate->tv_usec) / 1000000.0f;
+    _secondsPerFrame = std::chrono::duration_cast<std::chrono::microseconds>(now - _lastUpdate).count() / 1000000.0f;
 
     _secondsPerFrame = _secondsPerFrame * MPF_FILTER + (1-MPF_FILTER) * prevSecondsPerFrame;
     prevSecondsPerFrame = _secondsPerFrame;
@@ -1378,10 +1367,7 @@ void Director::setEventDispatcher(EventDispatcher* dispatcher)
 // so we now only support DisplayLinkDirector
 void DisplayLinkDirector::startAnimation()
 {
-    if (gettimeofday(_lastUpdate, nullptr) != 0)
-    {
-        CCLOG("cocos2d: DisplayLinkDirector: Error on gettimeofday");
-    }
+    _lastUpdate = std::chrono::steady_clock::now();
 
     _invalid = false;
 
