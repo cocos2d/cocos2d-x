@@ -606,6 +606,12 @@ void Director::setProjection(Projection projection)
 {
     Size size = _winSizeInPoints;
 
+    if (size.width == 0 || size.height == 0)
+    {
+        CCLOGERROR("cocos2d: warning, Director::setProjection() failed because size is 0");
+        return;
+    }
+
     setViewport();
 
     switch (projection)

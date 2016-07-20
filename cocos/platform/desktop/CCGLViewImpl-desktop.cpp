@@ -361,10 +361,10 @@ bool GLViewImpl::initWithRect(const std::string& viewName, Rect rect, float fram
     glfwWindowHint(GLFW_DEPTH_BITS,_glContextAttrs.depthBits);
     glfwWindowHint(GLFW_STENCIL_BITS,_glContextAttrs.stencilBits);
 
-    int needWidth = rect.size.width * _frameZoomFactor;
-    int neeHeight = rect.size.height * _frameZoomFactor;
+    int neededWidth = rect.size.width * _frameZoomFactor;
+    int neededHeight = rect.size.height * _frameZoomFactor;
 
-    _mainWindow = glfwCreateWindow(needWidth, neeHeight, _viewName.c_str(), _monitor, nullptr);
+    _mainWindow = glfwCreateWindow(neededWidth, neededHeight, _viewName.c_str(), _monitor, nullptr);
 
     if (_mainWindow == nullptr)
     {
@@ -391,11 +391,11 @@ bool GLViewImpl::initWithRect(const std::string& viewName, Rect rect, float fram
     */
     int realW = 0, realH = 0;
     glfwGetWindowSize(_mainWindow, &realW, &realH);
-    if (realW != needWidth)
+    if (realW != neededWidth)
     {
         rect.size.width = realW / _frameZoomFactor;
     }
-    if (realH != neeHeight)
+    if (realH != neededHeight)
     {
         rect.size.height = realH / _frameZoomFactor;
     }
@@ -431,6 +431,9 @@ bool GLViewImpl::initWithRect(const std::string& viewName, Rect rect, float fram
 
     // Enable point size by default.
     glEnable(GL_VERTEX_PROGRAM_POINT_SIZE);
+
+    // GLFW v3.2 no longer emits "onGLFWWindowSizeFunCallback" at creation time. Force default viewport:
+    setViewPortInPoints(0, 0, neededWidth, neededHeight);
 
     return true;
 }
