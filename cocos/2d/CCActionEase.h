@@ -28,7 +28,7 @@ THE SOFTWARE.
 #define __ACTION_CCEASE_ACTION_H__
 
 #include "2d/CCActionInterval.h"
-#include "CCTweenFunction.h"
+#include "2d/CCTweenFunction.h"
 
 #define EASE_MACRO_COMMA ,
 
