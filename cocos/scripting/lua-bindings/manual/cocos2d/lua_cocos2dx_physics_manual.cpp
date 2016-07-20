@@ -738,7 +738,7 @@ tolua_lerror:
     return 0;
 }
 
-int lua_cocos2dx_physics_PhysicsShape_getPolyonCenter(lua_State* tolua_S)
+int lua_cocos2dx_physics_PhysicsShape_getPolygonCenter(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -758,7 +758,7 @@ int lua_cocos2dx_physics_PhysicsShape_getPolyonCenter(lua_State* tolua_S)
         cocos2d::Vec2* arg0;
         int arg1 = 0;
         do {
-            ok = luaval_to_array_of_vec2(tolua_S, 2, &arg0, &arg1, "cc.PhysicsShape:getPolyonCenter");
+            ok = luaval_to_array_of_vec2(tolua_S, 2, &arg0, &arg1, "cc.PhysicsShape:getPolygonCenter");
             if (nullptr == arg0){
                 LUA_PRECONDITION( arg0, "Invalid Native Object");
             }} while (0);
@@ -767,16 +767,16 @@ int lua_cocos2dx_physics_PhysicsShape_getPolyonCenter(lua_State* tolua_S)
             CC_SAFE_DELETE_ARRAY(arg0);
             return 0;
         }
-        cocos2d::Vec2 ret = cocos2d::PhysicsShape::getPolyonCenter(arg0, arg1);
+        cocos2d::Vec2 ret = cocos2d::PhysicsShape::getPolygonCenter(arg0, arg1);
         CC_SAFE_DELETE_ARRAY(arg0);
         vec2_to_luaval(tolua_S, ret);
         return 1;
     }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "getPolyonCenter",argc, 2);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "getPolygonCenter",argc, 2);
     return 0;
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_physics_PhysicsShape_getPolyonCenter'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_physics_PhysicsShape_getPolygonCenter'.",&tolua_err);
 #endif
     return 0;
 }
@@ -1502,8 +1502,11 @@ int register_all_cocos2dx_physics_manual(lua_State* tolua_S)
         lua_pushstring(tolua_S,"recenterPoints");
         lua_pushcfunction(tolua_S,lua_cocos2dx_physics_PhysicsShape_recenterPoints );
         lua_rawset(tolua_S,-3);
+        lua_pushstring(tolua_S,"getPolygonCenter");
+        lua_pushcfunction(tolua_S,lua_cocos2dx_physics_PhysicsShape_getPolygonCenter );
+        lua_rawset(tolua_S,-3);
         lua_pushstring(tolua_S,"getPolyonCenter");
-        lua_pushcfunction(tolua_S,lua_cocos2dx_physics_PhysicsShape_getPolyonCenter );
+        lua_pushcfunction(tolua_S,lua_cocos2dx_physics_PhysicsShape_getPolygonCenter );
         lua_rawset(tolua_S,-3);
     }
     lua_pop(tolua_S, 1);
