@@ -784,7 +784,8 @@ void Renderer::drawBatchedTriangles()
     batchesTotal++;
 
     /************** 2: Copy vertices/indices to GL objects *************/
-    if (Configuration::getInstance()->supportsShareableVAO())
+    auto conf = Configuration::getInstance();
+    if (conf->supportsShareableVAO() && conf->supportsMapBuffer())
     {
         //Bind VAO
         GL::bindVAO(_buffersVAO);
