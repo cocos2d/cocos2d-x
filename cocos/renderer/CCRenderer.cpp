@@ -215,7 +215,7 @@ Renderer::Renderer()
     
     RenderQueue defaultRenderQueue;
     _renderGroups.push_back(defaultRenderQueue);
-    _queuedTriangleCommands.reserve(BATCH_TRIAGCOMMAND_RESEVER_SIZE);
+    _queuedTriangleCommands.reserve(BATCH_TRIAGCOMMAND_RESERVED_SIZE);
 
     // default clear color
     _clearColor = Color4F::BLACK;
