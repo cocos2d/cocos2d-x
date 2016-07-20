@@ -188,10 +188,10 @@ bool UIRichTextXMLBasic::init()
         _richText = RichText::createWithXML("This is just a simple text. no xml tags here. testing the basics. testing word-wrapping. testing, testing, testing");
         _richText->ignoreContentAdaptWithSize(false);
         _richText->setContentSize(Size(100, 100));
+        _richText->formatText();
 
         _richText->setPosition(Vec2(widgetSize.width / 2, widgetSize.height / 2));
         _richText->setLocalZOrder(10);
-
 
         _widget->addChild(_richText);
 
@@ -273,6 +273,7 @@ bool UIRichTextXMLSmallBig::init()
         _richText = RichText::createWithXML("Regular size.<small>smaller size.</small><big>bigger.<small>normal.</small>bigger</big>.normal.");
         _richText->ignoreContentAdaptWithSize(false);
         _richText->setContentSize(Size(100, 100));
+        _richText->formatText();
 
         _richText->setPosition(Vec2(widgetSize.width / 2, widgetSize.height / 2));
         _richText->setLocalZOrder(10);
@@ -358,6 +359,7 @@ bool UIRichTextXMLColor::init()
         _richText = RichText::createWithXML("Defaul color.<font color='#ff0000'>red.<font color='#00ff00'>green</font>red again.</font>default again");
         _richText->ignoreContentAdaptWithSize(false);
         _richText->setContentSize(Size(100, 100));
+        _richText->formatText();
 
         _richText->setPosition(Vec2(widgetSize.width / 2, widgetSize.height / 2));
         _richText->setLocalZOrder(10);
@@ -443,6 +445,7 @@ bool UIRichTextXMLSUIB::init()
         _richText = RichText::createWithXML("system font: <u>underline</u><i>italics</i><b>bold</b><del>strike-through</del>");
         _richText->ignoreContentAdaptWithSize(false);
         _richText->setContentSize(Size(100, 100));
+        _richText->formatText();
 
         _richText->setPosition(Vec2(widgetSize.width / 2, widgetSize.height / 2));
         _richText->setLocalZOrder(10);
@@ -528,6 +531,7 @@ bool UIRichTextXMLSUIB2::init()
         _richText = RichText::createWithXML("<font face='fonts/Marker Felt.ttf' size='24'>ttf font: <u>underline</u><i>italics</i><b>bold</b><del>strike-through</del></font>");
         _richText->ignoreContentAdaptWithSize(false);
         _richText->setContentSize(Size(100, 100));
+        _richText->formatText();
 
         _richText->setPosition(Vec2(widgetSize.width / 2, widgetSize.height / 2));
         _richText->setLocalZOrder(10);
@@ -613,6 +617,7 @@ bool UIRichTextXMLSUIB3::init()
         _richText = RichText::createWithXML("<font face='fonts/Marker Felt.ttf' size='20'>ttf font: <i><u>italics and underline</u></i><del><b>bold and strike-through</b></del></font>");
         _richText->ignoreContentAdaptWithSize(false);
         _richText->setContentSize(Size(100, 100));
+        _richText->formatText();
 
         _richText->setPosition(Vec2(widgetSize.width / 2, widgetSize.height / 2));
         _richText->setLocalZOrder(10);
@@ -698,6 +703,7 @@ bool UIRichTextXMLImg::init()
         _richText = RichText::createWithXML("you should see an image here: <img src='cocosui/sliderballnormal.png'/> and this is text again. and this is the same image, but bigger: <img src='cocosui/sliderballnormal.png' width='30' height='30' /> and here goes text again");
         _richText->ignoreContentAdaptWithSize(false);
         _richText->setContentSize(Size(100, 100));
+        _richText->formatText();
 
         _richText->setPosition(Vec2(widgetSize.width / 2, widgetSize.height / 2));
         _richText->setLocalZOrder(10);
@@ -783,6 +789,7 @@ bool UIRichTextXMLUrl::init()
         _richText = RichText::createWithXML("And this link will redirect you to google: <a href='http://www.google.com'>click me</a>");
         _richText->ignoreContentAdaptWithSize(false);
         _richText->setContentSize(Size(100, 100));
+        _richText->formatText();
 
         _richText->setPosition(Vec2(widgetSize.width / 2, widgetSize.height / 2));
         _richText->setLocalZOrder(10);
@@ -868,6 +875,7 @@ bool UIRichTextXMLUrlImg::init()
         _richText = RichText::createWithXML("And this link will redirect you to google: <a href='http://www.google.com'><img src=\"cocosui/ccicon.png\" height=\"48\" width=\"48\" /></a>");
         _richText->ignoreContentAdaptWithSize(false);
         _richText->setContentSize(Size(100, 100));
+        _richText->formatText();
         
         _richText->setPosition(Vec2(widgetSize.width / 2, widgetSize.height / 2));
         _richText->setLocalZOrder(10);
@@ -953,6 +961,7 @@ bool UIRichTextXMLFace::init()
         _richText = RichText::createWithXML("<font size='20' face='fonts/Marker Felt.ttf'>Marker Felt 20.<font face='fonts/arial.ttf'>Arial 20.</font></font><font face='font/Thonburi.ttf' size='24' color='#0000ff'>Thonburi 24 blue</font>");
         _richText->ignoreContentAdaptWithSize(false);
         _richText->setContentSize(Size(100, 100));
+        _richText->formatText();
 
         _richText->setPosition(Vec2(widgetSize.width / 2, widgetSize.height / 2));
         _richText->setLocalZOrder(10);
@@ -1038,6 +1047,7 @@ bool UIRichTextXMLBR::init()
         _richText = RichText::createWithXML("this is one line.<br/>this should be in another line.<br/>and this is another line");
         _richText->ignoreContentAdaptWithSize(false);
         _richText->setContentSize(Size(100, 100));
+        _richText->formatText();
 
         _richText->setPosition(Vec2(widgetSize.width / 2, widgetSize.height / 2));
         _richText->setLocalZOrder(10);
@@ -1108,6 +1118,7 @@ bool UIRichTextXMLInvalid::init()
         {
             _richText->ignoreContentAdaptWithSize(false);
             _richText->setContentSize(Size(100, 100));
+            _richText->formatText();
 
             _richText->setPosition(Vec2(widgetSize.width / 2, widgetSize.height / 2));
             _richText->setLocalZOrder(10);
@@ -1160,6 +1171,7 @@ bool UIRichTextXMLOutline::init()
         _richText = RichText::createWithXML("<font face='fonts/Marker Felt.ttf' size=\"24\"><outline color=\"#D2B48C\" size=\"2\">OUTLINE</outline></font>");
         _richText->ignoreContentAdaptWithSize(false);
         _richText->setContentSize(Size(100, 100));
+        _richText->formatText();
         
         _richText->setPosition(Vec2(widgetSize.width / 2, widgetSize.height / 2));
         _richText->setLocalZOrder(10);
@@ -1245,6 +1257,7 @@ bool UIRichTextXMLShadow::init()
         _richText = RichText::createWithXML("<font size=\"24\"><shadow color=\"#4169E1\" offsetWidth=\"8\" offsetHeight=\"-8\" blurRadius=\"2\">SHADOW</shadow></font>");
         _richText->ignoreContentAdaptWithSize(false);
         _richText->setContentSize(Size(100, 100));
+        _richText->formatText();
         
         _richText->setPosition(Vec2(widgetSize.width / 2, widgetSize.height / 2));
         _richText->setLocalZOrder(10);
@@ -1330,6 +1343,7 @@ bool UIRichTextXMLGlow::init()
         _richText = RichText::createWithXML("<font face=\"fonts/Marker Felt.ttf\" size=\"24\"><glow color=\"#AFEEEE\">GLOW</glow></font>");
         _richText->ignoreContentAdaptWithSize(false);
         _richText->setContentSize(Size(100, 100));
+        _richText->formatText();
         
         _richText->setPosition(Vec2(widgetSize.width / 2, widgetSize.height / 2));
         _richText->setLocalZOrder(10);
@@ -1451,6 +1465,7 @@ bool UIRichTextXMLExtend::init()
         });
         _richText->ignoreContentAdaptWithSize(false);
         _richText->setContentSize(Size(100, 100));
+        _richText->formatText();
         
         _richText->setPosition(Vec2(widgetSize.width / 2, widgetSize.height / 2));
         _richText->setLocalZOrder(10);
