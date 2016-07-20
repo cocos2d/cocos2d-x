@@ -175,12 +175,19 @@ void TMXLayer::setupTiles()
             // fix correct render ordering in Hexagonal maps when stagger axis == x
             if (_staggerAxis == TMXStaggerAxis_X && _layerOrientation == TMXOrientationHex)
             {
-                int one_or_zero = (_staggerIndex == TMXStaggerIndex_Odd) ? 1 : 0;
-                int zero_or_one = one_or_zero ^ 1;
-                if (x >= (int)_layerSize.width/2)
-                    newX = (x - (int)_layerSize.width/2) * 2 + one_or_zero;
-                else
-                    newX = x * 2 + zero_or_one;
+                if (_staggerIndex == TMXStaggerIndex_Odd)
+                {
+                    if (x >= _layerSize.width/2)
+                        newX = (x - std::ceil(_layerSize.width/2)) * 2 + 1;
+                    else
+                        newX = x * 2;
+                } else {
+                    // TMXStaggerIndex_Even
+                    if (x >= static_cast<int>(_layerSize.width/2))
+                        newX = (x - static_cast<int>(_layerSize.width/2)) * 2;
+                    else
+                        newX = x * 2 + 1;
+                }
             }
 
             int pos = static_cast<int>(newX + _layerSize.width * y);
