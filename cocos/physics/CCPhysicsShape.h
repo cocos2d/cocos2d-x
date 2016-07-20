@@ -77,11 +77,17 @@ public:
         UNKNOWN,
         CIRCLE,
         BOX,
-        POLYGEN,
+        POLYGON,
         EDGESEGMENT,
         EDGEBOX,
-        EDGEPOLYGEN,
+        EDGEPOLYGON,
         EDGECHAIN,
+
+        /** @deprecated Use Type::POLYGON instead. */
+        POLYGEN = POLYGON,
+
+        /** @deprecated Use Type::EDGEPOLYGON instead. */
+        EDGEPOLYGEN = EDGEPOLYGON,
     };
     
 public:
