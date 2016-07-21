@@ -22,6 +22,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+#define LOG_TAG "AudioPlayer"
+
 #include "platform/CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC
 
@@ -32,111 +34,204 @@
 #include "platform/CCFileUtils.h"
 #import <AudioToolbox/ExtendedAudioFile.h>
 
+#define VERY_VERY_VERBOSE_LOGGING
+#ifdef VERY_VERY_VERBOSE_LOGGING
+#define ALOGVV ALOGV
+#else
+#define ALOGVV(...) do{} while(false)
+#endif
+
 using namespace cocos2d;
 using namespace cocos2d::experimental;
+
+namespace {
+unsigned int __idIndex = 0;
+}
 
 AudioPlayer::AudioPlayer()
 : _audioCache(nullptr)
 , _finishCallbak(nullptr)
-, _beDestroy(false)
+, _isDestroyed(false)
 , _removeByAudioEngine(false)
 , _ready(false)
 , _currTime(0.0f)
 , _streamingSource(false)
+, _rotateBufferThread(nullptr)
 , _timeDirty(false)
-{    
+, _isRotateThreadExited(false)
+, _id(++__idIndex)
+{
+    memset(_bufferIds, 0, sizeof(_bufferIds));
 }
 
 AudioPlayer::~AudioPlayer()
 {
-    if (_streamingSource) {
-        _beDestroy = true;
-        _sleepCondition.notify_one();
-        if (_rotateBufferThread.joinable()) {
-            _rotateBufferThread.join();
-        }
+    ALOGVV("~AudioPlayer() (%p), id=%u", this, _id);
+    destroy();
+    
+    if (_streamingSource)
+    {
         alDeleteBuffers(3, _bufferIds);
     }
 }
 
 void AudioPlayer::destroy()
 {
-    alSourceStop(_alSource);
-    alSourcei(_alSource, AL_BUFFER, NULL);
+    if (_isDestroyed)
+        return;
     
-    std::unique_lock<std::mutex> lk(_sleepMutex);
-    _beDestroy = true;
-    if (_streamingSource) {
-        _sleepCondition.notify_one();
-    }
-    else if (_ready) {
-        _removeByAudioEngine = true;
-    }
-    _ready = false;
-}
+    ALOGVV("AudioPlayer::destroy begin, id=%u", _id);
 
-bool AudioPlayer::play2d(AudioCache* cache)
-{
-    if (!cache->_alBufferReady) {
-        _removeByAudioEngine = true;
-        return false;
-    }
-    _audioCache = cache;
+    _isDestroyed = true;
     
-    alSourcei(_alSource, AL_BUFFER, 0);
-    alSourcef(_alSource, AL_PITCH, 1.0f);
-    alSourcef(_alSource, AL_GAIN, _volume);
-    alSourcei(_alSource, AL_LOOPING, AL_FALSE);
-    
-    if (_audioCache->_queBufferFrames == 0) {
-        if (_loop) {
-            alSourcei(_alSource, AL_LOOPING, AL_TRUE);
-        }
-    }
-    else {
-        alGetError();
-        alGenBuffers(3, _bufferIds);
-        auto alError = alGetError();
-        if (alError == AL_NO_ERROR) {
-            for (int index = 0; index < QUEUEBUFFER_NUM; ++index) {
-                alBufferData(_bufferIds[index], _audioCache->_format, _audioCache->_queBuffers[index], _audioCache->_queBufferSize[index], _audioCache->_sampleRate);
+    do
+    {
+        if (_audioCache != nullptr)
+        {
+            if (_audioCache->_state == AudioCache::State::INITIAL)
+            {
+                ALOGV("AudioPlayer::destroy, id=%u, cache isn't ready!", _id);
+                break;
+            }
+            
+            while (!_audioCache->_isLoadingFinished)
+            {
+                std::this_thread::sleep_for(std::chrono::milliseconds(5));
             }
         }
-        else {
-            printf("%s:alGenBuffers error code:%x", __PRETTY_FUNCTION__,alError);
-            _removeByAudioEngine = true;
-            return false;
+        
+        // Wait for play2d to be finished.
+        _play2dMutex.lock();
+        _play2dMutex.unlock();
+        
+        if (_streamingSource)
+        {
+            if (_rotateBufferThread != nullptr)
+            {
+                while (!_isRotateThreadExited)
+                {
+                    _sleepCondition.notify_one();
+                    std::this_thread::sleep_for(std::chrono::milliseconds(5));
+                }
+                
+                if (_rotateBufferThread->joinable()) {
+                    _rotateBufferThread->join();
+                }
+                
+                delete _rotateBufferThread;
+                _rotateBufferThread = nullptr;
+                ALOGVV("rotateBufferThread exited!");
+            }
         }
-        _streamingSource = true;
-    }
+    } while(false);
     
+    ALOGVV("Before alSourceStop");
+    alSourceStop(_alSource); CHECK_AL_ERROR_DEBUG();
+    ALOGVV("Before alSourcei");
+    alSourcei(_alSource, AL_BUFFER, NULL); CHECK_AL_ERROR_DEBUG();
+    
+    _removeByAudioEngine = true;
+    
+    _ready = false;
+    ALOGVV("AudioPlayer::destroy end, id=%u", _id);
+}
+
+void AudioPlayer::setCache(AudioCache* cache)
+{
+    _audioCache = cache;
+}
+
+bool AudioPlayer::play2d()
+{
+    _play2dMutex.lock();
+    ALOGV("AudioPlayer::play2d, _alSource: %u", _alSource);
+
+    /*********************************************************************/
+    /*       Note that it may be in sub thread or in main thread.       **/
+    /*********************************************************************/
+    bool ret = false;
+    do
     {
-        std::unique_lock<std::mutex> lk(_sleepMutex);
-        if (_beDestroy) {
-            _removeByAudioEngine = true;
-            return false;
-        }
-        if (_streamingSource) {
-            alSourceQueueBuffers(_alSource, QUEUEBUFFER_NUM, _bufferIds);
-            _rotateBufferThread = std::thread(&AudioPlayer::rotateBufferThread,this, _audioCache->_queBufferFrames * QUEUEBUFFER_NUM + 1);
-        }
-        else {
-            alSourcei(_alSource, AL_BUFFER, _audioCache->_alBufferId);
+        if (_audioCache->_state != AudioCache::State::READY)
+        {
+            ALOGE("alBuffer isn't ready for play!");
+            break;
         }
         
-        alGetError();
-        alSourcePlay(_alSource);
-    }
+        alSourcei(_alSource, AL_BUFFER, 0);CHECK_AL_ERROR_DEBUG();
+        alSourcef(_alSource, AL_PITCH, 1.0f);CHECK_AL_ERROR_DEBUG();
+        alSourcef(_alSource, AL_GAIN, _volume);CHECK_AL_ERROR_DEBUG();
+        alSourcei(_alSource, AL_LOOPING, AL_FALSE);CHECK_AL_ERROR_DEBUG();
+        
+        if (_audioCache->_queBufferFrames == 0)
+        {
+            if (_loop) {
+                alSourcei(_alSource, AL_LOOPING, AL_TRUE);
+                CHECK_AL_ERROR_DEBUG();
+            }
+        }
+        else
+        {
+            alGenBuffers(3, _bufferIds);
+            
+            auto alError = alGetError();
+            if (alError == AL_NO_ERROR)
+            {
+                for (int index = 0; index < QUEUEBUFFER_NUM; ++index)
+                {
+                    alBufferData(_bufferIds[index], _audioCache->_format, _audioCache->_queBuffers[index], _audioCache->_queBufferSize[index], _audioCache->_sampleRate);
+                }
+                CHECK_AL_ERROR_DEBUG();
+            }
+            else
+            {
+                ALOGE("%s:alGenBuffers error code:%x", __PRETTY_FUNCTION__,alError);
+                break;
+            }
+            _streamingSource = true;
+        }
+        
+        {
+            std::unique_lock<std::mutex> lk(_sleepMutex);
+            if (_isDestroyed)
+                break;
+            
+            if (_streamingSource)
+            {
+                alSourceQueueBuffers(_alSource, QUEUEBUFFER_NUM, _bufferIds);
+                CHECK_AL_ERROR_DEBUG();
+                _rotateBufferThread = new std::thread(&AudioPlayer::rotateBufferThread, this, _audioCache->_queBufferFrames * QUEUEBUFFER_NUM + 1);
+            }
+            else
+            {
+                alSourcei(_alSource, AL_BUFFER, _audioCache->_alBufferId);
+                CHECK_AL_ERROR_DEBUG();
+            }
+
+            alSourcePlay(_alSource);
+        }
+        
+        auto alError = alGetError();
+        if (alError != AL_NO_ERROR)
+        {
+            ALOGE("%s:alSourcePlay error code:%x", __PRETTY_FUNCTION__,alError);
+            break;
+        }
+
+        ALint state;
+        alGetSourcei(_alSource, AL_SOURCE_STATE, &state);
+        assert(state == AL_PLAYING);
+        _ready = true;
+        ret = true;
+    } while (false);
     
-    auto alError = alGetError();
-    if (alError != AL_NO_ERROR) {
-        printf("%s:alSourcePlay error code:%x\n", __PRETTY_FUNCTION__,alError);
+    if (!ret)
+    {
         _removeByAudioEngine = true;
-        return false;
     }
-    _ready = true;
     
-    return true;
+    _play2dMutex.unlock();
+    return ret;
 }
 
 void AudioPlayer::rotateBufferThread(int offsetFrame)
@@ -153,22 +248,22 @@ void AudioPlayer::rotateBufferThread(int offsetFrame)
     
     auto error = ExtAudioFileOpenURL(fileURL, &extRef);
     if(error) {
-        printf("%s: ExtAudioFileOpenURL FAILED, Error = %ld\n", __PRETTY_FUNCTION__,(long) error);
+        ALOGE("%s: ExtAudioFileOpenURL FAILED, Error = %ld", __PRETTY_FUNCTION__,(long) error);
         goto ExitBufferThread;
     }
     
-    error = ExtAudioFileSetProperty(extRef, kExtAudioFileProperty_ClientDataFormat, sizeof(_audioCache->outputFormat), &_audioCache->outputFormat);
+    error = ExtAudioFileSetProperty(extRef, kExtAudioFileProperty_ClientDataFormat, sizeof(_audioCache->_outputFormat), &_audioCache->_outputFormat);
     AudioBufferList		theDataBuffer;
     theDataBuffer.mNumberBuffers = 1;
     theDataBuffer.mBuffers[0].mData = tmpBuffer;
     theDataBuffer.mBuffers[0].mDataByteSize = _audioCache->_queBufferBytes;
-    theDataBuffer.mBuffers[0].mNumberChannels = _audioCache->outputFormat.mChannelsPerFrame;
+    theDataBuffer.mBuffers[0].mNumberChannels = _audioCache->_outputFormat.mChannelsPerFrame;
     
     if (offsetFrame != 0) {
         ExtAudioFileSeek(extRef, offsetFrame);
     }
     
-    while (!_beDestroy) {
+    while (!_isDestroyed) {
         alGetSourcei(_alSource, AL_SOURCE_STATE, &sourceState);
         if (sourceState == AL_PLAYING) {
             alGetSourcei(_alSource, AL_BUFFERS_PROCESSED, &bufferProcessed);
@@ -176,7 +271,7 @@ void AudioPlayer::rotateBufferThread(int offsetFrame)
                 bufferProcessed--;
                 if (_timeDirty) {
                     _timeDirty = false;
-                    offsetFrame = _currTime * _audioCache->outputFormat.mSampleRate;
+                    offsetFrame = _currTime * _audioCache->_outputFormat.mSampleRate;
                     ExtAudioFileSeek(extRef, offsetFrame);
                 }
                 else {
@@ -199,20 +294,20 @@ void AudioPlayer::rotateBufferThread(int offsetFrame)
                         theDataBuffer.mBuffers[0].mDataByteSize = _audioCache->_queBufferBytes;
                         ExtAudioFileRead(extRef, (UInt32*)&frames, &theDataBuffer);
                     } else {
-                        _beDestroy = true;
+                        _isDestroyed = true;
                         break;
                     }
                 }
                 
                 ALuint bid;
                 alSourceUnqueueBuffers(_alSource, 1, &bid);
-                alBufferData(bid, _audioCache->_format, tmpBuffer, frames * _audioCache->outputFormat.mBytesPerFrame, _audioCache->_sampleRate);
+                alBufferData(bid, _audioCache->_format, tmpBuffer, frames * _audioCache->_outputFormat.mBytesPerFrame, _audioCache->_sampleRate);
                 alSourceQueueBuffers(_alSource, 1, &bid);
             }
         }
         
         std::unique_lock<std::mutex> lk(_sleepMutex);
-        if (_beDestroy) {
+        if (_isDestroyed) {
             break;
         }
         
@@ -220,17 +315,19 @@ void AudioPlayer::rotateBufferThread(int offsetFrame)
     }
     
 ExitBufferThread:
+    ALOGV("Exit rotate buffer thread ...");
     CFRelease(fileURL);
 	// Dispose the ExtAudioFileRef, it is no longer needed
 	if (extRef){
         ExtAudioFileDispose(extRef);
     }
     free(tmpBuffer);
+    _isRotateThreadExited = true;
 }
 
 bool AudioPlayer::setLoop(bool loop)
 {
-    if (!_beDestroy ) {
+    if (!_isDestroyed ) {
         _loop = loop;
         return true;
     }
@@ -240,7 +337,7 @@ bool AudioPlayer::setLoop(bool loop)
 
 bool AudioPlayer::setTime(float time)
 {
-    if (!_beDestroy && time >= 0.0f && time < _audioCache->_duration) {
+    if (!_isDestroyed && time >= 0.0f && time < _audioCache->_duration) {
         
         _currTime = time;
         _timeDirty = true;
