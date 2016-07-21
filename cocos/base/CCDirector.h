@@ -30,6 +30,7 @@ THE SOFTWARE.
 
 #include <stack>
 #include <thread>
+#include <chrono>
 
 #include "platform/CCPlatformMacros.h"
 #include "base/CCRef.h"
@@ -589,7 +590,7 @@ protected:
     Vector<Scene*> _scenesStack;
     
     /* last time the main loop was updated */
-    struct timeval *_lastUpdate;
+    std::chrono::steady_clock::time_point _lastUpdate;
 
     /* whether or not the next delta time will be zero */
     bool _nextDeltaTimeZero;
