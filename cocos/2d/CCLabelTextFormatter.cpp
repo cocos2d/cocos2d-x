@@ -218,7 +218,7 @@ bool Label::multilineTextWrap(std::function<int(const std::u16string&, int, int)
                     nextLetterX += _horizontalKernings[letterIndex + 1];
                 nextLetterX += letterDef.xAdvance * _bmfontScale + _additionalKerning;
 
-                tokenRight = letterPosition.x + letterDef.width * _bmfontScale;
+                tokenRight = nextLetterX / contentScaleFactor;
             }
             nextChangeSize = true;
 
