@@ -647,7 +647,7 @@ static BOOL configured = FALSE;
                 if (audioSource.isPlaying) {
                     audioSource->systemPaused = YES;
                     audioSource->systemPauseLocation = audioSource.audioSourcePlayer.currentTime;
-                    [audioSource stop];
+                    [audioSource pause];
                 } else {
                     //Music is either paused or stopped, if it is paused it will be restarted
                     //by OS so we will stop it.
