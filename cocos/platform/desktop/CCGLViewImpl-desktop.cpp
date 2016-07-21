@@ -432,9 +432,9 @@ bool GLViewImpl::initWithRect(const std::string& viewName, Rect rect, float fram
     // Enable point size by default.
     glEnable(GL_VERTEX_PROGRAM_POINT_SIZE);
 
-    // GLFW v3.2 no longer emits "onGLFWWindowSizeFunCallback" at creation time. Force default viewport:
-    setViewPortInPoints(0, 0, neededWidth, neededHeight);
-
+//    // GLFW v3.2 no longer emits "onGLFWWindowSizeFunCallback" at creation time. Force default viewport:
+//    setViewPortInPoints(0, 0, neededWidth, neededHeight);
+//
     return true;
 }
 

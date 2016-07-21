@@ -158,12 +158,19 @@ void GLView::updateDesignResolutionSize()
         float viewPortH = _designResolutionSize.height * _scaleY;
         
         _viewPortRect.setRect((_screenSize.width - viewPortW) / 2, (_screenSize.height - viewPortH) / 2, viewPortW, viewPortH);
-        
+
+
         // reset director's member variables to fit visible rect
         auto director = Director::getInstance();
         director->_winSizeInPoints = getDesignResolutionSize();
         director->_isStatusLabelUpdated = true;
         director->setProjection(director->getProjection());
+
+        // Github issue #16139
+        // A default viewport is needed in order to display the FPS,
+        // since the FPS are rendered in the Director, and there is no viewport there.
+        // Everything, including the FPS should renderer in the Scene.
+        glViewport(0, 0, _screenSize.width, _screenSize.height);
     }
 }
 
