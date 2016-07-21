@@ -713,13 +713,13 @@ namespace ui {
             if(_insideBounds)
 #endif
             {
-                auto textureName = _scale9Image->getTexture()->getName();
+                auto texture = _scale9Image->getTexture();
                 auto programState = _scale9Image->getGLProgramState();
                 auto blendFunc = _scale9Image->getBlendFunc();
                 auto& polyInfo = _scale9Image->getPolygonInfo();
                 auto globalZOrder = _scale9Image->getGlobalZOrder();
-                // TODO: x-studio365 spec, ETC1 ALPHA supports?
-                _trianglesCommand.init(globalZOrder,textureName, programState, blendFunc, polyInfo.triangles, transform, flags, _scale9Image->getTexture()->getAlphaTextureName());
+                // x-studio365 spec, ETC1 ALPHA support
+                _trianglesCommand.init(globalZOrder,texture, programState, blendFunc, polyInfo.triangles, transform, flags);
                 renderer->addCommand(&_trianglesCommand);
                 
 #if CC_SPRITE_DEBUG_DRAW

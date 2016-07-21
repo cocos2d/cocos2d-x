@@ -235,15 +235,13 @@ void Skin::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 
     // TODO: implement z order
     _quadCommand.init(_globalZOrder, 
-        _texture->getName(), 
+        _texture, 
         getGLProgramState(), 
         _blendFunc, 
         &_quad, 
         1,
         mv, 
-        flags,
-        // x-studio365 spec, ETC1 ALPHA supports.
-        _texture->getAlphaTextureName());
+        flags);
 
     renderer->addCommand(&_quadCommand);
 }

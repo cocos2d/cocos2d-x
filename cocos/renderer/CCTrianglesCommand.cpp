@@ -28,6 +28,7 @@
 #include "renderer/CCGLProgramState.h"
 #include "xxhash.h"
 #include "renderer/CCRenderer.h"
+#include "renderer/CCTexture2D.h"
 
 NS_CC_BEGIN
 
@@ -42,7 +43,7 @@ TrianglesCommand::TrianglesCommand()
     _type = RenderCommand::Type::TRIANGLES_COMMAND;
 }
 
-void TrianglesCommand::init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, const Triangles& triangles,const Mat4& mv, uint32_t flags, GLuint alphaTextureID)
+void TrianglesCommand::init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, const Triangles& triangles,const Mat4& mv, uint32_t flags)
 {
     CCASSERT(glProgramState, "Invalid GLProgramState");
     CCASSERT(glProgramState->getVertexAttribsFlags() == 0, "No custom attributes are supported in QuadCommand");
@@ -63,7 +64,6 @@ void TrianglesCommand::init(float globalOrder, GLuint textureID, GLProgramState*
        _glProgram != glProgramState->getGLProgram())
     {
         _textureID = textureID;
-        _alphaTextureID = alphaTextureID;
         _blendType = blendType;
         _glProgramState = glProgramState;
         _glProgram = glProgramState->getGLProgram();
@@ -75,6 +75,12 @@ void TrianglesCommand::init(float globalOrder, GLuint textureID, GLProgramState*
 void TrianglesCommand::init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, const Triangles& triangles,const Mat4& mv)
 {
     init(globalOrder, textureID, glProgramState, blendType, triangles, mv, 0);
+}
+
+void TrianglesCommand::init(float globalOrder, Texture2D* texture, GLProgramState* glProgramState, BlendFunc blendType, const Triangles& triangles, const Mat4& mv, uint32_t flags)
+{
+    init(globalOrder, texture->getName(), glProgramState, blendType, triangles, mv, flags);
+    _alphaTextureID = texture->getAlphaTextureName();
 }
 
 TrianglesCommand::~TrianglesCommand()

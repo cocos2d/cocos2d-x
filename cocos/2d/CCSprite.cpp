@@ -667,14 +667,12 @@ void Sprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 #endif
     {
         _trianglesCommand.init(_globalZOrder, 
-            _texture->getName(), 
+            _texture, 
             getGLProgramState(), 
             _blendFunc, 
             _polyInfo.triangles, 
             transform, 
-            flags, 
-            // x-studio365 spec, ETC1 ALPHA supports.
-            _texture->getAlphaTextureName());
+            flags);
 
         renderer->addCommand(&_trianglesCommand);
         
