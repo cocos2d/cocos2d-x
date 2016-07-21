@@ -6467,6 +6467,16 @@ gatherGPUInfo : function (
 },
 
 /**
+ * @method supportsMapBuffer
+ * @return {bool}
+ */
+supportsMapBuffer : function (
+)
+{
+    return false;
+},
+
+/**
  * @method destroyInstance
  */
 destroyInstance : function (
