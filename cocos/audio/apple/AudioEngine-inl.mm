@@ -194,7 +194,7 @@ bool AudioEngineImpl::init()
             // fixed #16170: Random crash in alGenBuffers(AudioCache::readDataTask) at startup
             // Please note that, as we know the OpenAL operation is atomic (threadsafe),
             // 'alGenBuffers' may be invoked by different threads. But in current implementation of 'alGenBuffers',
-            // When the first time it was invoked, application may crash!!!
+            // When the first time it's invoked, application may crash!!!
             // Why? OpenAL is opensource by Apple and could be found at
             // http://opensource.apple.com/source/OpenAL/OpenAL-48.7/Source/OpenAL/oalImp.cpp .
             /*
@@ -233,8 +233,8 @@ bool AudioEngineImpl::init()
             }
              
              */
-            // gBufferMapLock will be initialized in the 'InitializeBufferMap' function,
-            // that's the problem. It means that 'InitializeBufferMap' will be invoked in different threads.
+            // 'gBufferMapLock' will be initialized in the 'InitializeBufferMap' function,
+            // that's the problem. It means that 'InitializeBufferMap' may be invoked in different threads.
             // It will be very dangerous in multi-threads environment.
             // Imagine there're two threads (Thread A, Thread B), they call 'alGenBuffers' simultaneously.
             // While A goto 'Position Gap', 'gOALBufferMap' was assigned, then B goto 'Position 1' and find
