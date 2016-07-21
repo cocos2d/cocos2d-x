@@ -179,7 +179,7 @@ public:
     *
     * @param orderOfArrival   The arrival order.
     */
-    CC_DEPRECATED_ATTRIBUTE void _updateOrderOfArrival(void);
+    void updateOrderOfArrival();
 
     /**
      * Gets the local Z order of this node.
@@ -1899,7 +1899,7 @@ protected:
             int z; // The original localZOrder
             unsigned int a; // Order Of Arrival, for avoid sort problem with unstable_sort algorithm.
         } detail;
-        long long value; // The actual value of sort by
+        long long value; // The value to be used in sort
     } _localZOrder;               ///< Local order (relative to its siblings) used to sort the node
     float _globalZOrder;            ///< Global order used to sort the node
 

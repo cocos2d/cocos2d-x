@@ -277,7 +277,7 @@ void Node::_setLocalZOrder(int z)
     _localZOrder.detail.z = z;
 }
 
-void Node::_updateOrderOfArrival()
+void Node::updateOrderOfArrival()
 {
     _localZOrder.detail.a = s_globalOrderOfArrival++;
 }
@@ -959,7 +959,7 @@ void Node::addChildHelper(Node* child, int localZOrder, int tag, const std::stri
     child->setParent(this);
     child->setCameraMask(getCameraMask());
 
-    child->_updateOrderOfArrival();
+    child->updateOrderOfArrival();
 
     if( _running )
     {
@@ -1145,7 +1145,7 @@ void Node::reorderChild(Node *child, int zOrder)
 {
     CCASSERT( child != nullptr, "Child must be non-nil");
     _reorderChildDirty = true;
-    child->_updateOrderOfArrival();
+    child->updateOrderOfArrival();
     child->_setLocalZOrder(zOrder);
 }
 
@@ -1247,7 +1247,7 @@ void Node::visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t paren
         {
             auto node = _children.at(i);
 
-            if (node && node->getLocalZOrder() < 0)
+            if (node && node->_localZOrder.detail.z < 0)
                 node->visit(renderer, _modelViewTransform, flags);
             else
                 break;
