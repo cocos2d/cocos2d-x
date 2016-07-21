@@ -192,6 +192,69 @@ bool AudioEngineImpl::init()
             for (int i = 0; i < MAX_AUDIOINSTANCES; ++i) {
                 _alSourceUsed[_alSources[i]] = false;
             }
+            
+            // fixed #16170: Random crash in alGenBuffers(AudioCache::readDataTask) at startup
+            // Please note that, as we know the OpenAL operation is atomic (threadsafe),
+            // 'alGenBuffers' may be invoked by different threads. But in current implementation of 'alGenBuffers',
+            // When the first time it's invoked, application may crash!!!
+            // Why? OpenAL is opensource by Apple and could be found at
+            // http://opensource.apple.com/source/OpenAL/OpenAL-48.7/Source/OpenAL/oalImp.cpp .
+            /*
+             
+            void InitializeBufferMap()
+            {
+                if (gOALBufferMap == NULL) // Position 1
+                {
+                    gOALBufferMap = new OALBufferMap ();  // Position 2
+             
+                    // Position Gap
+             
+                    gBufferMapLock = new CAGuard("OAL:BufferMapLock"); // Position 3
+                    gDeadOALBufferMap = new OALBufferMap ();
+
+                    OALBuffer   *newBuffer = new OALBuffer (AL_NONE);
+                    gOALBufferMap->Add(AL_NONE, &newBuffer);
+                }
+            }
+
+            AL_API ALvoid AL_APIENTRY alGenBuffers(ALsizei n, ALuint *bids)
+            {
+                ...
+
+                try {
+                    if (n < 0)
+                    throw ((OSStatus) AL_INVALID_VALUE);
+
+                    InitializeBufferMap();
+                    if (gOALBufferMap == NULL)
+                    throw ((OSStatus) AL_INVALID_OPERATION);
+
+                    CAGuard::Locker locked(*gBufferMapLock);  // Position 4
+                ...
+                ...
+            }
+             
+             */
+            // 'gBufferMapLock' will be initialized in the 'InitializeBufferMap' function,
+            // that's the problem. It means that 'InitializeBufferMap' may be invoked in different threads.
+            // It will be very dangerous in multi-threads environment.
+            // Imagine there're two threads (Thread A, Thread B), they call 'alGenBuffers' simultaneously.
+            // While A goto 'Position Gap', 'gOALBufferMap' was assigned, then B goto 'Position 1' and find
+            // that 'gOALBufferMap' isn't NULL, B just jump over 'InitialBufferMap' and goto 'Position 4'.
+            // Meanwhile, A is still at 'Position Gap', B will crash at '*gBufferMapLock' since 'gBufferMapLock'
+            // is still a null pointer. Oops, how could Apple implemented this method in this fucking way?
+            
+            // Workaround is do an unused invocation in the mainthread right after OpenAL is initialized successfully
+            // as bellow.
+            // ================ Workaround begin ================ //
+            
+            ALuint unusedAlBufferId = 0;
+            alGenBuffers(1, &unusedAlBufferId);
+            alDeleteBuffers(1, &unusedAlBufferId);
+            
+            // ================ Workaround end ================ //
+            
+            
             _scheduler = Director::getInstance()->getScheduler();
             ret = true;
             ALOGI("OpenAL was initialized successfully!");
