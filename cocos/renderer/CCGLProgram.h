@@ -507,7 +507,7 @@ protected:
     Update the uniform data in location.
     @param location The location of the uniform.
     @param data Updated data.
-    @oaram bytes Data length in bytes to update.
+    @param bytes Data length in bytes to update.
     */
     bool updateUniformLocation(GLint location, const GLvoid* data, unsigned int bytes);
     /**Get a general description of the shader.*/

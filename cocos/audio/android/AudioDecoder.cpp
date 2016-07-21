@@ -44,7 +44,7 @@ namespace cocos2d { namespace experimental {
  *  */
 #define PCM_METADATA_VALUE_SIZE 32
 
-/* used to detect errors likely to have occured when the OpenSL ES framework fails to open
+/* used to detect errors likely to have occurred when the OpenSL ES framework fails to open
  * a resource, for instance because a file URI is invalid, or an HTTP server doesn't respond.
  */
 #define PREFETCHEVENT_ERROR_CANDIDATE (SL_PREFETCHEVENT_STATUSCHANGE | SL_PREFETCHEVENT_FILLLEVELCHANGE)
