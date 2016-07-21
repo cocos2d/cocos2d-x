@@ -193,7 +193,7 @@ bool AudioEngineImpl::init()
             
             // fixed #16170: Random crash in alGenBuffers(AudioCache::readDataTask) at startup
             // Please note that, as we know the OpenAL operation is atomic (threadsafe),
-            // 'alGenBuffers' may be invoked by different threads. But in the current implementation of 'alGenBuffers',
+            // 'alGenBuffers' may be invoked by different threads. But in current implementation of 'alGenBuffers',
             // When the first time it was invoked, application may crash!!!
             // Why? OpenAL is opensource by Apple and could be found at
             // http://opensource.apple.com/source/OpenAL/OpenAL-48.7/Source/OpenAL/oalImp.cpp .
