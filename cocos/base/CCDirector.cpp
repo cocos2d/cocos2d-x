@@ -253,14 +253,6 @@ void Director::setGLDefaultValues()
     setAlphaBlending(true);
     setDepthTest(false);
     setProjection(_projection);
-
-    // Everything should be drawn within `Scene::render()`.
-    // Otherwise it might not render correctly since the GL state might not be the correct one
-    // so the FPS should be part of Scene. But until we move them there, this little hack is to
-    // set the default glViewPort(), so that when `Scene::render()` exits, the viewport is the correct
-    // one for the FPS
-    auto vp = Camera::getDefaultViewport();
-    glViewport(vp._left, vp._bottom, vp._width, vp._height);
 }
 
 // Draw the Scene
