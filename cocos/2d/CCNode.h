@@ -1896,10 +1896,10 @@ protected:
 
     union {
         struct {
-            int z; // The original localZOrder
-            unsigned int a; // Order Of Arrival, for avoid sort problem with unstable_sort algorithm.
+            std::int32_t z; // The original localZOrder
+            std::uint32_t a; // Order Of Arrival, for avoid sort problem with unstable_sort algorithm.
         } detail;
-        long long value; // The value to be used in sort
+        std::int64_t value; // The value to be used in sort
     } _localZOrder;               ///< Local order (relative to its siblings) used to sort the node
     float _globalZOrder;            ///< Global order used to sort the node
 
