@@ -877,9 +877,8 @@ void SIOClientImpl::onMessage(WebSocket* ws, const WebSocket::Data& data)
                 break;
             case 4:
             {
-                const char second = payload.at(0);
-                int control2 = atoi(&second);
-                CCLOGINFO("Message code: [%i]", control);
+                int control2 = payload.at(0) - '0';
+                CCLOGINFO("Message code: [%i]", control2);
 
                 SocketIOPacket *packetOut = SocketIOPacket::createPacketWithType("event", _version);
                 std::string endpoint = "";
