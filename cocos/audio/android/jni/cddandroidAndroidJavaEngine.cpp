@@ -102,7 +102,7 @@ void AndroidJavaEngine::rewindBackgroundMusic() {
 }
 
 bool AndroidJavaEngine::willPlayBackgroundMusic() {
-    return true;
+    return JniHelper::callStaticBooleanMethod(helperClassName, "willPlayBackgroundMusic");
 }
 
 bool AndroidJavaEngine::isBackgroundMusicPlaying() {

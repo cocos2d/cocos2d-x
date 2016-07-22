@@ -367,6 +367,10 @@ public class Cocos2dxHelper {
         Cocos2dxHelper.sCocos2dMusic.rewindBackgroundMusic();
     }
 
+    public static boolean willPlayBackgroundMusic() {
+        return Cocos2dxHelper.sCocos2dMusic.willPlayBackgroundMusic();
+    }
+
     public static boolean isBackgroundMusicPlaying() {
         return Cocos2dxHelper.sCocos2dMusic.isBackgroundMusicPlaying();
     }

@@ -27,6 +27,7 @@ package org.cocos2dx.lib;
 
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.util.Log;
 
@@ -173,6 +174,15 @@ public class Cocos2dxMusic {
         if (this.mBackgroundMediaPlayer != null) {
             playBackgroundMusic(mCurrentPath, mIsLoop);
         }
+    }
+
+    public boolean willPlayBackgroundMusic() {
+        // We will play our own background music, if there isn't already some
+        // music active from some other app (eg the user playing their own
+        // music).
+        AudioManager manager =
+            (AudioManager)mContext.getSystemService(Context.AUDIO_SERVICE);
+        return !manager.isMusicActive();
     }
 
     public boolean isBackgroundMusicPlaying() {
