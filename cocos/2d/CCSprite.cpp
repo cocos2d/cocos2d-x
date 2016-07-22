@@ -1149,6 +1149,8 @@ void Sprite::setBatchNode(SpriteBatchNode *spriteBatchNode)
         // using batch
         _transformToBatch = Mat4::IDENTITY;
         setTextureAtlas(_batchNode->getTextureAtlas()); // weak ref
+        
+        _reorderChildDirty = true; // force reorder
     }
 }
 
