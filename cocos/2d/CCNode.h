@@ -29,6 +29,7 @@
 #ifndef __CCNODE_H__
 #define __CCNODE_H__
 
+#include <cstdint>
 #include "base/ccMacros.h"
 #include "base/CCVector.h"
 #include "base/CCProtocols.h"
