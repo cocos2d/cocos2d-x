@@ -121,7 +121,7 @@ typedef enum {
  * indicates options and parameters for each format. The sub format is mainly
  * used for record to indicate for instance the requested bitrate or profile.
  * It can also be used for certain formats to give informations not present in
- * the encoded audio stream (e.g. octet alignement for AMR).
+ * the encoded audio stream (e.g. octet alignment for AMR).
  */
 typedef enum {
     AUDIO_FORMAT_INVALID             = 0xFFFFFFFFUL,

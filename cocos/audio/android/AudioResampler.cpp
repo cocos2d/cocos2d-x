@@ -548,7 +548,7 @@ resampleMono16_exit:
 *       vl, vr : left and right gain
 *       phaseFraction : pointer on current phase fraction
 *       phaseIncrement
-*   Ouput:
+*   Output:
 *       outputIndex :
 *       out : updated buffer
 *       inputIndex : index of next to use
@@ -669,7 +669,7 @@ void AudioResamplerOrder1::AsmMono16Loop(int16_t *in, int32_t* maxOutPt, int32_t
 *       vl, vr : left and right gain
 *       phaseFraction : pointer on current phase fraction
 *       phaseIncrement
-*   Ouput:
+*   Output:
 *       outputIndex :
 *       out : updated buffer
 *       inputIndex : index of next to use

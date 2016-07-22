@@ -287,7 +287,7 @@ bool UrlAudioPlayer::prepare(const std::string &url, SLuint32 locatorType, std::
     // Although locFd & locUri are only used inside if/else block, its lifecycle
     // will be destroyed right after '}' block. And since we pass a pointer to
     // 'audioSrc.pLocator=&locFd/&locUri', pLocator will point to an invalid address
-    // while invoking Engine::createAudioPlayer interface. So be care of change the postion
+    // while invoking Engine::createAudioPlayer interface. So be care of change the position
     // of these two variables.
     SLDataLocator_AndroidFD locFd;
     SLDataLocator_URI locUri;

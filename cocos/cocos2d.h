@@ -307,7 +307,7 @@ THE SOFTWARE.
 
 // Deprecated
 // All deprecated features are include inside deprecated/CCDeprecated.h.
-// It is recommanded that you just inlcude what is needed.
+// It is recommended that you just include what is needed.
 // eg. #include "deprecated/CCString.h" if you only need cocos2d::__String.
 #include "deprecated/CCDeprecated.h"
 
