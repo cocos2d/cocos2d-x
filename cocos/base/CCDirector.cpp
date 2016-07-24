@@ -481,7 +481,7 @@ void Director::popMatrix(MATRIX_STACK_TYPE type)
     }
     else
     {
-        CCASSERT(false, "unknow matrix stack type");
+        CCASSERT(false, "unknown matrix stack type");
     }
 }
 
@@ -501,7 +501,7 @@ void Director::loadIdentityMatrix(MATRIX_STACK_TYPE type)
     }
     else
     {
-        CCASSERT(false, "unknow matrix stack type");
+        CCASSERT(false, "unknown matrix stack type");
     }
 }
 
@@ -521,7 +521,7 @@ void Director::loadMatrix(MATRIX_STACK_TYPE type, const Mat4& mat)
     }
     else
     {
-        CCASSERT(false, "unknow matrix stack type");
+        CCASSERT(false, "unknown matrix stack type");
     }
 }
 
@@ -541,7 +541,7 @@ void Director::multiplyMatrix(MATRIX_STACK_TYPE type, const Mat4& mat)
     }
     else
     {
-        CCASSERT(false, "unknow matrix stack type");
+        CCASSERT(false, "unknown matrix stack type");
     }
 }
 
@@ -561,7 +561,7 @@ void Director::pushMatrix(MATRIX_STACK_TYPE type)
     }
     else
     {
-        CCASSERT(false, "unknow matrix stack type");
+        CCASSERT(false, "unknown matrix stack type");
     }
 }
 
@@ -580,7 +580,7 @@ const Mat4& Director::getMatrix(MATRIX_STACK_TYPE type) const
         return _textureMatrixStack.top();
     }
 
-    CCASSERT(false, "unknow matrix stack type, will return modelview matrix instead");
+    CCASSERT(false, "unknown matrix stack type, will return modelview matrix instead");
     return  _modelViewMatrixStack.top();
 }
 

@@ -95,7 +95,7 @@ bool array_to_valuevector_deprecated(__Array& array,ValueVector& valueVec)
         }
         else
         {
-            CCASSERT(false, "the type isn't suppored.");
+            CCASSERT(false, "the type isn't supported.");
         }
     }
 

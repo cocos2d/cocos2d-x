@@ -409,7 +409,7 @@ namespace cocos2d { namespace network {
                 {
                     char buf[256] = {0};
                     sprintf(buf
-                            , "When crequest url(%s) header info, return unexcept http response code(%ld)"
+                            , "When request url(%s) header info, return unexcept http response code(%ld)"
                             , wrapper.first->requestURL.c_str()
                             , httpResponseCode);
                     coTask.setErrorProc(DownloadTask::ERROR_IMPL_INTERNAL, CURLE_OK, buf);
