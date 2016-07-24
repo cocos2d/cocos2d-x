@@ -173,6 +173,9 @@ protected:
     float _fadeDelta;
     float _minSeg;
 
+	//opacity
+	GLubyte _opacity;
+
     unsigned int _maxPoints;
     unsigned int _nuPoints;
     unsigned int _previousNuPoints;
