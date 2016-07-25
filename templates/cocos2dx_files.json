@@ -3559,6 +3559,7 @@
         "external/zlib/prebuilt/android/armeabi/libz.a", 
         "external/zlib/prebuilt/android/x86/libz.a", 
         "external/zlib/prebuilt/mac/libz.a", 
+        "issue_template.md", 
         "licenses/LICENSE_AA-EDT.txt", 
         "licenses/LICENSE_CCBReader.txt", 
         "licenses/LICENSE_CCControlExtension.txt", 
