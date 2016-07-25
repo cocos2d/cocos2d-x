@@ -249,7 +249,7 @@ static CCAccelerometerDispatcher* s_pAccelerometerDispatcher;
         case UIInterfaceOrientationPortrait:
             break;
         default:
-            NSAssert(false, @"unknow orientation");
+            NSAssert(false, @"unknown orientation");
     }
 
     cocos2d::EventAcceleration event(*_acceleration);
