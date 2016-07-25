@@ -27,10 +27,17 @@ extern "C" {
     }
 
     JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeOnResume() {
+        static bool first = true;
         if (Director::getInstance()->getOpenGLView()) {
-            Application::getInstance()->applicationWillEnterForeground();
+            // don't invoke at first to keep the same logic as iOS
+            // can refer to https://github.com/cocos2d/cocos2d-x/issues/14206
+            if (!first)
+                Application::getInstance()->applicationWillEnterForeground();
+
             cocos2d::EventCustom foregroundEvent(EVENT_COME_TO_FOREGROUND);
             cocos2d::Director::getInstance()->getEventDispatcher()->dispatchEvent(&foregroundEvent);
+
+            first = false;
         }
     }
 
