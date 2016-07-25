@@ -127,7 +127,7 @@ bool MotionStreak3D::initWithFade(float fade, float minSeg, float stroke, const 
     _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
 
     // shader state
-    setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
+    setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR, texture));
 
     setTexture(texture);
     setColor(color);

@@ -445,6 +445,7 @@ Texture2D::Texture2D()
 , _antialiasEnabled(true)
 , _ninePatchInfo(nullptr)
 , _valid(true)
+, _alphaTexture(nullptr)
 {
 }
 
@@ -453,6 +454,7 @@ Texture2D::~Texture2D()
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     VolatileTextureMgr::removeTexture(this);
 #endif
+    CC_SAFE_RELEASE_NULL(_alphaTexture); // ETC1 ALPHA support.
 
     CCLOGINFO("deallocing Texture2D: %p - id=%u", this, _name);
     CC_SAFE_RELEASE(_shaderProgram);
@@ -493,6 +495,11 @@ int Texture2D::getPixelsHigh() const
 GLuint Texture2D::getName() const
 {
     return _name;
+}
+
+GLuint Texture2D::getAlphaTextureName() const
+{
+    return _alphaTexture == nullptr ? 0 : _alphaTexture->getName();
 }
 
 Size Texture2D::getContentSize() const
@@ -1486,4 +1493,13 @@ void Texture2D::removeSpriteFrameCapInset(SpriteFrame* spriteFrame)
     }
 }
 
+/// halx99 spec, ANDROID ETC1 ALPHA supports.
+void Texture2D::setAlphaTexture(Texture2D* alphaTexture)
+{
+    if (alphaTexture != nullptr) {
+        this->_alphaTexture = alphaTexture;
+        this->_alphaTexture->retain();
+        this->_hasPremultipliedAlpha = true; // PremultipliedAlpha shoud be true.
+    }
+}
 NS_CC_END

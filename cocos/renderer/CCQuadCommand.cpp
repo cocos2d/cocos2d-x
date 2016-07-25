@@ -31,7 +31,7 @@
 #include "renderer/CCTechnique.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCPass.h"
-
+#include "renderer/CCTexture2D.h"
 #include "xxhash.h"
 
 NS_CC_BEGIN
@@ -109,5 +109,11 @@ void QuadCommand::init(float globalOrder, GLuint textureID, GLProgramState* shad
     init(globalOrder, textureID, shader, blendType, quads, quadCount, mv, 0);
 }
 
+void QuadCommand::init(float globalOrder, Texture2D* texture, GLProgramState* glProgramState, const BlendFunc& blendType, V3F_C4B_T2F_Quad* quads, ssize_t quadCount,
+    const Mat4& mv, uint32_t flags)
+{
+    init(globalOrder, texture->getName(), glProgramState, blendType, quads, quadCount, mv, flags);
+    _alphaTextureID = texture->getAlphaTextureName();
+}
 
 NS_CC_END
