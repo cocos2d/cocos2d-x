@@ -224,12 +224,14 @@
 -- @return GLProgramState#GLProgramState ret (return value: cc.GLProgramState)
         
 --------------------------------
---  gets-or-creates an instance of GLProgramState for a given GLProgramName 
--- @function [parent=#GLProgramState] getOrCreateWithGLProgramName 
+-- @overload self, string, cc.Texture2D         
+-- @overload self, string         
+-- @function [parent=#GLProgramState] getOrCreateWithGLProgramName
 -- @param self
 -- @param #string glProgramName
+-- @param #cc.Texture2D texture
 -- @return GLProgramState#GLProgramState ret (return value: cc.GLProgramState)
-        
+
 --------------------------------
 --  gets-or-creates an instance of GLProgramState for a given GLProgram 
 -- @function [parent=#GLProgramState] getOrCreateWithGLProgram 
