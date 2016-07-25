@@ -57,6 +57,9 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 
     private final static String TAG = Cocos2dxActivity.class.getSimpleName();
 
+    // SDKBOX usage
+    private final SdkBoxInitializer sdkboxInitializer = new SdkBoxInitializer();
+
     // ===========================================================
     // Fields
     // ===========================================================
@@ -263,6 +266,8 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 
         onLoadNativeLibraries();
 
+        sdkboxInitializer.init(this);
+
         sContext = this;
         this.mHandler = new Cocos2dxHandler(this);
         
@@ -301,13 +306,33 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
     // ===========================================================
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        sdkboxInitializer.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        sdkboxInitializer.onStop();
+    }
+
+    @Override
     protected void onResume() {
     	Log.d(TAG, "onResume()");
         super.onResume();
         this.hideVirtualButton();
+        sdkboxInitializer.onResume();
        	resumeIfHasFocus();
     }
-    
+
+    @Override
+    public void onBackPressed() {
+        if(!sdkboxInitializer.onBackPressed()) {
+           super.onBackPressed();
+        }
+    }
+
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
     	Log.d(TAG, "onWindowFocusChanged() hasFocus=" + hasFocus);
@@ -330,6 +355,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
     	Log.d(TAG, "onPause()");
         super.onPause();
         Cocos2dxHelper.onPause();
+        sdkboxInitializer.onPause();
         mGLSurfaceView.onPause();
     }
     
@@ -358,7 +384,9 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
             listener.onActivityResult(requestCode, resultCode, data);
         }
 
-        super.onActivityResult(requestCode, resultCode, data);
+        if(!sdkboxInitializer.onActivityResult(requestCode, resultCode, data)) {
+           super.onActivityResult(requestCode, resultCode, data);
+        }
     }
 
 
