@@ -295,7 +295,7 @@ void ListView::addChild(Node* child, int zOrder, const std::string &name)
     }
 }
     
-void ListView::removeChild(cocos2d::Node *child, bool cleaup)
+void ListView::removeChild(cocos2d::Node *child, bool cleanup)
 {
     Widget* widget = dynamic_cast<Widget*>(child);
     if (nullptr != widget)
@@ -316,7 +316,7 @@ void ListView::removeChild(cocos2d::Node *child, bool cleaup)
         onItemListChanged();
     }
    
-    ScrollView::removeChild(child, cleaup);
+    ScrollView::removeChild(child, cleanup);
 }
     
 void ListView::removeAllChildren()
