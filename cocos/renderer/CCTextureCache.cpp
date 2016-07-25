@@ -241,7 +241,7 @@ void TextureCache::loadImage()
         // load image
         asyncStruct->loadSuccess = asyncStruct->image.initWithImageFileThreadSafe(asyncStruct->filename);
 
-        // x-studio365 spec, ETC1 ALPHA supports.
+        // ETC1 ALPHA supports.
         if (asyncStruct->loadSuccess && asyncStruct->image.getFileType() == Image::Format::ETC && !s_etc1AlphaFileSuffix.empty())
         { // check whether alpha texture exists & load it
             auto alphaFile = asyncStruct->filename + s_etc1AlphaFileSuffix;
@@ -309,7 +309,7 @@ void TextureCache::addImageAsyncCallBack(float dt)
                 texture->retain();
 
                 texture->autorelease();
-                // x-studio365 spec, ETC1 ALPHA supports.
+                // ETC1 ALPHA supports.
                 if (asyncStruct->imageAlpha.getFileType() == Image::Format::ETC) {
                     auto alphaTexture = new(std::nothrow) Texture2D();
                     if(alphaTexture != nullptr && alphaTexture->initWithImage(&asyncStruct->imageAlpha, asyncStruct->pixelFormat)) {
@@ -380,7 +380,7 @@ Texture2D * TextureCache::addImage(const std::string &path)
                 // texture already retained, no need to re-retain it
                 _textures.insert(std::make_pair(fullpath, texture));
 
-                //-- x-studio365 spec, ANDROID ETC1 ALPHA SUPPORTS.
+                //-- ANDROID ETC1 ALPHA SUPPORTS.
                 std::string alphaFullPath = path + s_etc1AlphaFileSuffix;
                 if (image->getFileType() == Image::Format::ETC && !s_etc1AlphaFileSuffix.empty() && FileUtils::getInstance()->isFileExist(alphaFullPath))
                 {

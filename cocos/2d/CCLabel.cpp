@@ -525,7 +525,7 @@ void Label::reset()
     setRotationSkewX(0);        // reverse italics
 }
 
-//  x-studio365 spec, ETC1 ALPHA supports, for LabelType::BMFONT & LabelType::CHARMAP
+//  ETC1 ALPHA supports, for LabelType::BMFONT & LabelType::CHARMAP
 static Texture2D* _getTexture(Label* label)
  {
     struct _FontAtlasPub : public FontAtlas
@@ -554,9 +554,9 @@ void Label::updateShaderProgram()
         else if (_useA8Shader)
             setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_LABEL_NORMAL));
         else if (_shadowEnabled)
-            setGLProgramState(GLProgramState::getPositionTextureColorGLProgramState(_getTexture(this), false)); // setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
+            setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR, _getTexture(this)));
         else
-            setGLProgramState(GLProgramState::getPositionTextureColorGLProgramState(_getTexture(this), true)); // setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP));
+            setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP, _getTexture(this)));
 
         break;
     case cocos2d::LabelEffect::OUTLINE: 
@@ -1131,9 +1131,7 @@ void Label::enableShadow(const Color4B& shadowColor /* = Color4B::BLACK */,const
 
     if (_currentLabelType == LabelType::BMFONT || _currentLabelType == LabelType::CHARMAP)
     {
-        // x-studio365 spec, ETC1 ALPHA supports.
-        setGLProgramState(GLProgramState::getPositionTextureColorGLProgramState(_getTexture(this), !_shadowEnabled));
-
+        setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(_shadowEnabled ? GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR : GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP, _getTexture(this)));
     }
 }
 
@@ -1590,7 +1588,7 @@ void Label::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
             {
                 it.second->updateTransform();
             }
-            // x-studio365 spec, ETC1 ALPHA supports for BMFONT & CHARMAP
+            // ETC1 ALPHA supports for BMFONT & CHARMAP
             auto textureAtlas = _batchNodes.at(0)->getTextureAtlas();
             auto texture = textureAtlas->getTexture();
             _quadCommand.init(_globalZOrder, texture, getGLProgramState(), 

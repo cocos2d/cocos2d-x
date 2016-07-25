@@ -310,40 +310,21 @@ void VertexAttribValue::setPointer(GLint size, GLenum type, GLboolean normalized
 // GLProgramState
 //
 //
-GLProgramState* GLProgramState::getPositionTextureColorGLProgramState(Texture2D* texture, bool noMVP)
+GLProgramState* GLProgramState::getOrCreateWithGLProgramName(const std::string& glProgramName, Texture2D* texture)
 {
-    GLProgramState* state = nullptr;
-    if (texture != nullptr) {
-        if (0 == texture->getAlphaTextureName()) {
-            state = GLProgramState::getOrCreateWithGLProgramName(noMVP ? GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP : GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR);
+    if (texture != nullptr && texture->getAlphaTextureName() != 0) {
+        if (glProgramName == GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR) {
+            return GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_ETC1AS_POSITION_TEXTURE_COLOR);
         }
-        else { // x-studio365 spec, ETC1 ALPHA supports.
-            state = GLProgramState::getOrCreateWithGLProgramName(noMVP ? GLProgram::SHADER_NAME_ETC1AS_POSITION_TEXTURE_COLOR_NO_MVP : GLProgram::SHADER_NAME_ETC1AS_POSITION_TEXTURE_COLOR);
+        else if (glProgramName == GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP) {
+            return GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_ETC1AS_POSITION_TEXTURE_COLOR_NO_MVP);
         }
-    }
-    else {
-        state = GLProgramState::getOrCreateWithGLProgramName(noMVP ? GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP : GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR);
+        else if (glProgramName == GLProgram::SHADER_NAME_POSITION_GRAYSCALE) {
+            return GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_ETC1AS_POSITION_TEXTURE_GRAY_NO_MVP);
+        }
     }
 
-    return state;
-}
-
-GLProgramState* GLProgramState::getPositionTextureGrayGLProgramState(Texture2D* texture)
-{
-    GLProgramState* state = nullptr;
-    if (texture != nullptr) {
-        if (0 == texture->getAlphaTextureName()) {
-            state = GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_GRAYSCALE);
-        }
-        else { // x-studio365 spec, ETC1 ALPHA supports.
-            state = GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_ETC1AS_POSITION_TEXTURE_GRAY_NO_MVP);
-        }
-    }
-    else {
-        state = GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_GRAYSCALE);
-    }
-    
-    return state;
+    return GLProgramState::getOrCreateWithGLProgramName(glProgramName);
 }
 
 GLProgramState* GLProgramState::create(GLProgram *glprogram)

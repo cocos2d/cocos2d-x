@@ -598,12 +598,12 @@ namespace ui {
         {
         case State::NORMAL:
         {
-            glState = GLProgramState::getPositionTextureColorGLProgramState(_scale9Image != nullptr ? _scale9Image->getTexture() : nullptr); // GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP);
+            glState = GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP, _scale9Image != nullptr ? _scale9Image->getTexture() : nullptr);
         }
         break;
         case State::GRAY:
         {
-            glState = GLProgramState::getPositionTextureGrayGLProgramState(_scale9Image != nullptr ? _scale9Image->getTexture() : nullptr); // GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_GRAYSCALE);
+            glState = GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_GRAYSCALE, _scale9Image != nullptr ? _scale9Image->getTexture() : nullptr);
         }
         default:
             break;
@@ -718,7 +718,7 @@ namespace ui {
                 auto blendFunc = _scale9Image->getBlendFunc();
                 auto& polyInfo = _scale9Image->getPolygonInfo();
                 auto globalZOrder = _scale9Image->getGlobalZOrder();
-                // x-studio365 spec, ETC1 ALPHA support
+                // ETC1 ALPHA support
                 _trianglesCommand.init(globalZOrder,texture, programState, blendFunc, polyInfo.triangles, transform, flags);
                 renderer->addCommand(&_trianglesCommand);
                 

@@ -114,7 +114,7 @@ protected:
     /**Model view matrix when rendering the triangles.*/
     Mat4 _mv;
 
-    GLuint _alphaTextureID; // x-studio365 spec, ANDROID ETC1 ALPHA supports.
+    GLuint _alphaTextureID; // ANDROID ETC1 ALPHA supports.
 };
 
 NS_CC_END

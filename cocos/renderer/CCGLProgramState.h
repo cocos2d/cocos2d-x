@@ -241,10 +241,6 @@ class CC_DLL GLProgramState : public Ref
 {
     friend class GLProgramStateCache;
 public:
-    /** x-studio365 spec, update node program state */
-    static GLProgramState* getPositionTextureColorGLProgramState(Texture2D* texture, bool noMVP = true);
-    static GLProgramState* getPositionTextureGrayGLProgramState(Texture2D* texture);
-
     /** returns a new instance of GLProgramState for a given GLProgram */
     static GLProgramState* create(GLProgram* glprogram);
 
@@ -253,6 +249,9 @@ public:
 
     /** gets-or-creates an instance of GLProgramState for a given GLProgramName */
     static GLProgramState* getOrCreateWithGLProgramName(const std::string& glProgramName );
+
+    /** gets-or-creates an instance of GLProgramState for the given GLProgramName & texture */
+    static GLProgramState* getOrCreateWithGLProgramName(const std::string& glProgramName, Texture2D* texture);
 
     /** gets-or-creates an instance of GLProgramState for given shaders */
     static GLProgramState* getOrCreateWithShaders(const std::string& vertexShader, const std::string& fragShader, const std::string& compileTimeDefines);

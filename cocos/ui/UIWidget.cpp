@@ -1201,7 +1201,7 @@ GLProgramState* Widget::getNormalGLProgramState()const
 {
     GLProgramState *glState = nullptr;
 
-    // x-studio365 spec, ETC1 Gray supports.
+    // ETC1 Gray supports.
     // currently, Only AbstractCheckButton, ui::Slider called this function, them's VirtualRender is Sprite
     auto virtualRender = const_cast<Widget*>(this)->getVirtualRenderer();
     Texture2D* virtualTexture = nullptr;
@@ -1213,7 +1213,7 @@ GLProgramState* Widget::getNormalGLProgramState()const
     {
         virtualTexture = scale9sp->getSprite() != nullptr ? scale9sp->getSprite()->getTexture() : nullptr;
     }
-    glState = GLProgramState::getPositionTextureColorGLProgramState(virtualTexture, true); // GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_GRAYSCALE);
+    glState = GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP, virtualTexture);
     return glState;
 }
 
@@ -1221,7 +1221,7 @@ GLProgramState* Widget::getGrayGLProgramState()const
 {
     GLProgramState *glState = nullptr;
 
-    // x-studio365 spec, ETC1 Gray supports.
+    // ETC1 Gray supports.
     // currently, Only AbstractCheckButton, ui::Slider called this function, them's VirtualRender is Sprite
     auto virtualRender = const_cast<Widget*>(this)->getVirtualRenderer();
     Texture2D* virtualTexture = nullptr;
@@ -1233,7 +1233,7 @@ GLProgramState* Widget::getGrayGLProgramState()const
     {
         virtualTexture = scale9sp->getSprite() != nullptr ? scale9sp->getSprite()->getTexture() : nullptr;
     }
-    glState = GLProgramState::getPositionTextureGrayGLProgramState(virtualTexture); // GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_GRAYSCALE);
+    glState = GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_GRAYSCALE, virtualTexture);
     return glState;
 }
 

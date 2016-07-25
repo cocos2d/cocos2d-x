@@ -109,7 +109,7 @@ void TrianglesCommand::useMaterial() const
     GL::bindTexture2D(_textureID);
     
     if (_alphaTextureID > 0)
-    { // x-studio365 spec, ANDROID ETC1 ALPHA supports.
+    { // ANDROID ETC1 ALPHA supports.
         GL::bindTexture2DN(1, _alphaTextureID);
     }
     //set blend mode

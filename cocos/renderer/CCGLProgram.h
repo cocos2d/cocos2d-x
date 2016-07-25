@@ -168,7 +168,7 @@ public:
     @name Built Shader types
     @{
     */
-    /** x-studio365 spec: ETC1 ALPHA supports for 2d */
+    /** ETC1 ALPHA supports for 2d */
     static const char* SHADER_NAME_ETC1AS_POSITION_TEXTURE_COLOR;
     static const char* SHADER_NAME_ETC1AS_POSITION_TEXTURE_COLOR_NO_MVP;
 
