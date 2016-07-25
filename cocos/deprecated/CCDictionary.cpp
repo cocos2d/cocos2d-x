@@ -502,7 +502,7 @@ static ValueVector ccarray_to_valuevector(__Array* arr)
         }  else if ((boolVal = dynamic_cast<__Bool*>(obj))) {
             arrElement = boolVal->getValue() ? Value(true) : Value(false);
         } else {
-            CCASSERT(false, "the type isn't suppored.");
+            CCASSERT(false, "the type isn't supported.");
         }
 
         ret.push_back(arrElement);
@@ -543,7 +543,7 @@ static ValueMap ccdictionary_to_valuemap(__Dictionary* dict)
         } else if ((boolVal = dynamic_cast<__Bool*>(obj))) {
             dictElement = boolVal->getValue() ? Value(true) : Value(false);
         } else {
-            CCASSERT(false, "the type isn't suppored.");
+            CCASSERT(false, "the type isn't supported.");
         }
 
         const char* key = pElement->getStrKey();

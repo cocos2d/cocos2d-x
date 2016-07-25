@@ -2727,7 +2727,7 @@ void array_to_luaval(lua_State* L,__Array* inValue)
         }
         else
         {
-            CCASSERT(false, "the type isn't suppored.");
+            CCASSERT(false, "the type isn't supported.");
         }
     }
 }
@@ -2811,7 +2811,7 @@ void dictionary_to_luaval(lua_State* L, __Dictionary* dict)
         }
         else
         {
-            CCASSERT(false, "the type isn't suppored.");
+            CCASSERT(false, "the type isn't supported.");
         }
     }
 }

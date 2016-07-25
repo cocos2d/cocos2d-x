@@ -74,7 +74,7 @@ void MeshCommand::init(float globalZOrder,
                        const cocos2d::Mat4 &mv,
                        uint32_t flags)
 {
-    CCASSERT(material, "material cannot be nill");
+    CCASSERT(material, "material cannot be null");
 
     RenderCommand::init(globalZOrder, mv, flags);
 
@@ -103,8 +103,8 @@ void MeshCommand::init(float globalZOrder,
                        const cocos2d::Mat4& mv,
                        uint32_t flags)
 {
-    CCASSERT(glProgramState, "GLProgramState cannot be nill");
-    CCASSERT(stateBlock, "StateBlock cannot be nill");
+    CCASSERT(glProgramState, "GLProgramState cannot be null");
+    CCASSERT(stateBlock, "StateBlock cannot be null");
     CCASSERT(!_material, "cannot init with GLProgramState if previously inited without GLProgramState");
 
     RenderCommand::init(globalZOrder, mv, flags);

@@ -794,7 +794,7 @@ void WebSocket::onClientReceivedData(void* in, ssize_t len)
     }
     else
     {
-        LOGD("Emtpy message received, index=%d!\n", packageIndex);
+        LOGD("Empty message received, index=%d!\n", packageIndex);
     }
 
     // If no more data pending, send it to the client thread

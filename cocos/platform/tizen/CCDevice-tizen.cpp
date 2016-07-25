@@ -106,7 +106,7 @@ static void accelerometer_sensor_cb(sensor_h _sensor, sensor_event_s *sensor_dat
         _acceleration->y = -tmp;
         break;
     default:
-        CCLOG("unknow orientation");
+        CCLOG("unknown orientation");
     }
 
     cocos2d::EventAcceleration event(*_acceleration);

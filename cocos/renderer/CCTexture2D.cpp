@@ -774,7 +774,7 @@ bool Texture2D::initWithImage(Image *image, PixelFormat format)
     {
         if (pixelFormat != image->getRenderFormat())
         {
-            CCLOG("cocos2d: WARNING: This image is compressed and we cann't convert it for now");
+            CCLOG("cocos2d: WARNING: This image is compressed and we can't convert it for now");
         }
 
         initWithData(tempData, tempDataLen, image->getRenderFormat(), imageWidth, imageHeight, imageSize);
