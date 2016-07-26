@@ -23,7 +23,7 @@
  * THE SOFTWARE.
  */
 
-extern const char* ccETC1ASPositionTextureGray_frag = STRINGIFY(
+const char* ccETC1ASPositionTextureGray_frag = STRINGIFY(
 \n#ifdef GL_ES\n
     precision mediump float;
 \n#endif\n
