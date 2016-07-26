@@ -130,7 +130,7 @@ void Label::updateBMFontScale()
     }
 }
 
-bool Label::multilineTextWrap(std::function<int(const std::u16string&, int, int)> nextTokenLen)
+bool Label::multilineTextWrap(const std::function<int(const std::u16string&, int, int)>& nextTokenLen)
 {
     int textLen = getStringLength();
     int lineIndex = 0;
@@ -270,12 +270,12 @@ bool Label::multilineTextWrap(std::function<int(const std::u16string&, int, int)
 
 bool Label::multilineTextWrapByWord()
 {
-    return multilineTextWrap(std::bind(CC_CALLBACK_3(Label::getFirstWordLen, this), std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
+    return multilineTextWrap(CC_CALLBACK_3(Label::getFirstWordLen, this));
 }
 
 bool Label::multilineTextWrapByChar()
 {
-      return multilineTextWrap(std::bind(CC_CALLBACK_3(Label::getFirstCharLen, this) , std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
+    return multilineTextWrap(CC_CALLBACK_3(Label::getFirstCharLen, this));
 }
 
 bool Label::isVerticalClamp()
@@ -325,7 +325,7 @@ bool Label::isHorizontalClamp()
     return letterClamp;
 }
 
-void Label::shrinkLabelToContentSize(std::function<bool(void)> lambda)
+void Label::shrinkLabelToContentSize(const std::function<bool(void)>& lambda)
 {
     float fontSize = this->getRenderingFontSize();
 

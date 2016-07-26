@@ -599,12 +599,12 @@ namespace ui {
         {
         case State::NORMAL:
         {
-            glState = GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP);
+            glState = GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP, _scale9Image != nullptr ? _scale9Image->getTexture() : nullptr);
         }
         break;
         case State::GRAY:
         {
-            glState = GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_GRAYSCALE);
+            glState = GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_GRAYSCALE, _scale9Image != nullptr ? _scale9Image->getTexture() : nullptr);
         }
         default:
             break;
@@ -714,12 +714,13 @@ namespace ui {
             if(_insideBounds)
 #endif
             {
-                auto textureName = _scale9Image->getTexture()->getName();
+                auto texture = _scale9Image->getTexture();
                 auto programState = _scale9Image->getGLProgramState();
                 auto blendFunc = _scale9Image->getBlendFunc();
                 auto& polyInfo = _scale9Image->getPolygonInfo();
                 auto globalZOrder = _scale9Image->getGlobalZOrder();
-                _trianglesCommand.init(globalZOrder,textureName, programState, blendFunc, polyInfo.triangles, transform, flags);
+                // ETC1 ALPHA support
+                _trianglesCommand.init(globalZOrder,texture, programState, blendFunc, polyInfo.triangles, transform, flags);
                 renderer->addCommand(&_trianglesCommand);
                 
 #if CC_SPRITE_DEBUG_DRAW
