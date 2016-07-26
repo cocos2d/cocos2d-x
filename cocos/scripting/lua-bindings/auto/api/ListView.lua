@@ -356,7 +356,7 @@
 -- @function [parent=#ListView] removeChild 
 -- @param self
 -- @param #cc.Node child
--- @param #bool cleaup
+-- @param #bool cleanup
 -- @return ListView#ListView self (return value: ccui.ListView)
         
 --------------------------------
