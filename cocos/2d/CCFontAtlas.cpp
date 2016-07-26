@@ -265,7 +265,7 @@ void FontAtlas::findNewCharacters(const std::u16string& u16Text, std::unordered_
     //find new characters
     if (_letterDefinitions.empty())
     {
-        newChars = u16Text;
+        newChars.append(u16Text);
     }
     else
     {
