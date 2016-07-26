@@ -525,7 +525,7 @@
 -- @function [parent=#ScrollView] removeChild 
 -- @param self
 -- @param #cc.Node child
--- @param #bool cleaup
+-- @param #bool cleanup
 -- @return ScrollView#ScrollView self (return value: ccui.ScrollView)
         
 --------------------------------
