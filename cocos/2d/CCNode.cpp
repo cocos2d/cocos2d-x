@@ -57,7 +57,12 @@ NS_CC_BEGIN
 
 bool nodeComparisonLess(Node* n1, Node* n2)
 {
-    return(n1->_localZOrder.value < n2->_localZOrder.value);
+#if defined(_M_X64) || defined(_LP64) || defined(__x86_64) || defined(_WIN64)
+    return (n1->_localZOrder.value < n2->_localZOrder.value);
+#else
+    return n1->_localZOrder.detail.z < n2->_localZOrder.detail.z || 
+        (n1->_localZOrder.detail.z == n2->_localZOrder.detail.z && n1->_localZOrder.detail.a < n2->_localZOrder.detail.a);
+#endif
 }
 
 // FIXME:: Yes, nodes might have a sort problem once every 30 days if the game runs at 60 FPS and each frame sprites are reordered.
