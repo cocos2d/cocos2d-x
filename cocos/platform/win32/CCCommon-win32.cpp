@@ -35,7 +35,9 @@ NS_CC_BEGIN
 
 void MessageBox(const char * pszMsg, const char * pszTitle)
 {
-    MessageBoxA(nullptr, pszMsg, pszTitle, MB_OK);
+    std::wstring wsMsg = cocos2d::StringUtf8ToWideChar(pszMsg);
+    std::wstring wsTitle = cocos2d::StringUtf8ToWideChar(pszTitle);
+    MessageBoxW(nullptr, wsMsg.c_str(), wsTitle.c_str(), MB_OK);
 }
 
 void LuaLog(const char *pszMsg)
