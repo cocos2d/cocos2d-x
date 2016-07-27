@@ -71,6 +71,7 @@ CocosNodeTests::CocosNodeTests()
     ADD_TEST_CASE(NodeNormalizedPositionTest2);
     ADD_TEST_CASE(NodeNormalizedPositionBugTest);
     ADD_TEST_CASE(NodeNameTest);
+    ADD_TEST_CASE(Issue16100Test);
 }
 
 TestCocosNodeDemo::TestCocosNodeDemo(void)
@@ -1445,3 +1446,69 @@ void NodeNameTest::test(float dt)
     auto findChildren = utils::findChildren(*parent, "node");
     CCAssert(findChildren.size() == 50, "");
 }
+
+//------------------------------------------------------------------
+//
+// Issue16100Test
+//
+//------------------------------------------------------------------
+void Issue16100Test::onEnter()
+{
+    TestCocosNodeDemo::onEnter();
+
+    // create user camera
+    auto s = Director::getInstance()->getWinSize();
+
+    auto delay = DelayTime::create(0.1f);
+    auto f = CallFunc::create([this, s]()
+    {
+        auto camera = Camera::createOrthographic(s.width * 2, s.height * 2, -1024, 1024);
+        camera->setCameraFlag(CameraFlag::USER1);
+        addChild(camera);
+    });
+    this->runAction(Sequence::createWithTwoActions(delay, f));
+
+    // grossini using default camera
+    auto sprite = Sprite::create("Images/grossini.png");
+    this->addChild(sprite);
+
+    sprite->setPosition(-200,s.height/3);
+    auto moveby = MoveBy::create(2, Vec2(400,0));
+    auto movebyback = moveby->reverse();
+    auto seq = Sequence::create(moveby, movebyback, nullptr);
+    auto forever = RepeatForever::create(seq);
+
+    sprite->runAction(forever);
+
+    sprite->setCameraMask((int)CameraFlag::DEFAULT);
+
+
+    // grossini's sister using user camera
+    auto sister = Sprite::create("Images/grossinis_sister1.png");
+    this->addChild(sister);
+
+    sister->setPosition(-200,s.height*2/3);
+    auto moveby1 = MoveBy::create(2, Vec2(400,0));
+    auto movebyback1 = moveby1->reverse();
+    auto seq1 = Sequence::create(moveby1, movebyback1, nullptr);
+    auto forever1 = RepeatForever::create(seq1);
+
+    sister->runAction(forever1);
+    sister->setCameraMask((int)CameraFlag::USER1);
+}
+
+void Issue16100Test::onExit()
+{
+    TestCocosNodeDemo::onExit();
+}
+
+std::string Issue16100Test::title() const
+{
+    return "Issue 16100";
+}
+
+std::string Issue16100Test::subtitle() const
+{
+    return "Sprite should appear on the screen";
+}
+
