@@ -113,10 +113,6 @@ struct timezone
 
 int CC_DLL gettimeofday(struct timeval *, struct timezone *);
 
-std::wstring CC_DLL StringUtf8ToWideChar(const std::string& strUtf8);
-std::string CC_DLL StringWideCharToUtf8(const std::wstring& strWideChar);
-std::string CC_DLL UTF8StringToMultiByte(const std::string& strUtf8);
-
 NS_CC_END
 
 #else

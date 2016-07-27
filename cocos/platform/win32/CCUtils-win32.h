@@ -1,6 +1,4 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -23,31 +21,19 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
+#ifndef __CC_UTILS_WIN32_H__
+#define __CC_UTILS_WIN32_H__
 
-#include "platform/CCPlatformConfig.h"
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+#include "platform/CCPlatformMacros.h"
 
-#include "platform/CCStdC.h"
-
-#ifndef __MINGW32__
+#include <string>
 
 NS_CC_BEGIN
 
-int gettimeofday(struct timeval * val, struct timezone *)
-{
-    if (val)
-    {
-        LARGE_INTEGER liTime, liFreq;
-        QueryPerformanceFrequency( &liFreq );
-        QueryPerformanceCounter( &liTime );
-        val->tv_sec     = (long)( liTime.QuadPart / liFreq.QuadPart );
-        val->tv_usec    = (long)( liTime.QuadPart * 1000000.0 / liFreq.QuadPart - val->tv_sec * 1000000.0 );
-    }
-    return 0;
-}
+std::wstring CC_DLL StringUtf8ToWideChar(const std::string& strUtf8);
+std::string CC_DLL StringWideCharToUtf8(const std::wstring& strWideChar);
+std::string CC_DLL UTF8StringToMultiByte(const std::string& strUtf8);
 
 NS_CC_END
 
-#endif // __MINGW32__
-
-#endif // CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+#endif // __CC_UTILS_WIN32_H__
