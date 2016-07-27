@@ -28,6 +28,8 @@
 // To change this behvior, use the File Inspector from Xcode
 
 #include "vr/CCVRGenericHeadTracker.h"
+
+#include <cmath>
 #include "platform/CCPlatformMacros.h"
 #include "platform/CCDevice.h"
 
@@ -127,15 +129,15 @@ Vec3 lowPass(const Vec3& input, const Vec3& prev)
 
 static Mat4 getRotateEulerMatrix(float x, float y, float z)
 {
-    x *= (float)(M_PI / 180.0f);
-    y *= (float)(M_PI / 180.0f);
-    z *= (float)(M_PI / 180.0f);
-    float cx = (float) cos(x);
-    float sx = (float) sin(x);
-    float cy = (float) cos(y);
-    float sy = (float) sin(y);
-    float cz = (float) cos(z);
-    float sz = (float) sin(z);
+    x *= static_cast<float>(M_PI) / 180.0f;
+    y *= static_cast<float>(M_PI) / 180.0f;
+    z *= static_cast<float>(M_PI) / 180.0f;
+    float cx = std::cos(x);
+    float sx = std::sin(x);
+    float cy = std::cos(y);
+    float sy = std::sin(y);
+    float cz = std::cos(z);
+    float sz = std::sin(z);
     float cxsy = cx * sy;
     float sxsy = sx * sy;
     Mat4 matrix;
