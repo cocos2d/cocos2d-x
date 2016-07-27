@@ -560,6 +560,19 @@
 -- @return Node#Node self (return value: cc.Node)
         
 --------------------------------
+-- Sets the shader program for this node<br>
+-- Since v2.0, each rendering node must set its shader program.<br>
+-- It should be set in initialize phase.<br>
+-- code<br>
+-- node->setGLrProgram(GLProgramCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));<br>
+-- endcode<br>
+-- param glprogram The shader program.
+-- @function [parent=#Node] setGLProgram 
+-- @param self
+-- @param #cc.GLProgram glprogram
+-- @return Node#Node self (return value: cc.Node)
+        
+--------------------------------
 -- Determines if the node is visible.<br>
 -- see `setVisible(bool)`<br>
 -- return true if the node is visible, false if the node is hidden.
@@ -1089,19 +1102,6 @@
 -- @return mat4_table#mat4_table ret (return value: mat4_table)
         
 --------------------------------
--- Sets the shader program for this node<br>
--- Since v2.0, each rendering node must set its shader program.<br>
--- It should be set in initialize phase.<br>
--- code<br>
--- node->setGLrProgram(GLProgramCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));<br>
--- endcode<br>
--- param glprogram The shader program.
--- @function [parent=#Node] setGLProgram 
--- @param self
--- @param #cc.GLProgram glprogram
--- @return Node#Node self (return value: cc.Node)
-        
---------------------------------
 -- Gets the scale factor of the node,  when X and Y have the same scale factor.<br>
 -- warning Assert when `_scaleX != _scaleY`<br>
 -- see setScale(float)<br>
@@ -1109,6 +1109,17 @@
 -- @function [parent=#Node] getScale 
 -- @param self
 -- @return float#float ret (return value: float)
+        
+--------------------------------
+--  !!! ONLY FOR INTERNAL USE<br>
+-- Sets the arrival order when this node has a same ZOrder with other children.<br>
+-- A node which called addChild subsequently will take a larger arrival order,<br>
+-- If two children have the same Z order, the child with larger arrival order will be drawn later.<br>
+-- warning This method is used internally for localZOrder sorting, don't change this manually<br>
+-- param orderOfArrival   The arrival order.
+-- @function [parent=#Node] updateOrderOfArrival 
+-- @param self
+-- @return Node#Node self (return value: cc.Node)
         
 --------------------------------
 --  Returns the normalized position.<br>
