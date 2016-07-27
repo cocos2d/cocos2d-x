@@ -170,8 +170,8 @@ bool Menu::initWithArray(const Vector<MenuItem*>& arrayOfItems)
         
         _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
 
-
-
+        // For Desktop platform listen mouse
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
         auto mouseListener = EventListenerMouse::create();
 
         mouseListener->onMouseMove = [this](EventMouse* event) {
@@ -197,6 +197,7 @@ bool Menu::initWithArray(const Vector<MenuItem*>& arrayOfItems)
         };
 
         _eventDispatcher->addEventListenerWithSceneGraphPriority(mouseListener, this);
+#endif
         
         return true;
     }
