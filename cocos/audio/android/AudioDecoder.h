@@ -35,24 +35,24 @@ namespace cocos2d { namespace experimental {
 class AudioDecoder
 {
 public:
-    AudioDecoder(SLEngineItf engineItf, const std::string &url, int bufferSizeInFrames, int sampleRate);
+    AudioDecoder(SLEngineItf engineItf, const std::string &url, int bufferSizeInFrames, int sampleRate, const FdGetterCallback &fdGetterCallback);
 
     virtual ~AudioDecoder();
 
-    bool start(const FdGetterCallback &fdGetterCallback);
+    bool start();
 
     inline PcmData getResult()
     { return _result; };
 
 private:
-    void resample();
+    bool decodeToPcm();
+    bool resample();
+    bool interleave();
+    void queryAudioInfo();
 
     void signalEos();
-
     void decodeToPcmCallback(SLAndroidSimpleBufferQueueItf queueItf);
-
     void prefetchCallback(SLPrefetchStatusItf caller, SLuint32 event);
-
     void decodeProgressCallback(SLPlayItf caller, SLuint32 event);
 
 private:
@@ -99,10 +99,10 @@ private:
     int _bufferSizeInFrames;
     int _sampleRate;
     int _assetFd;
+    FdGetterCallback _fdGetterCallback;
+    bool _isDecodingCallbackInvoked;
 
     friend class SLAudioDecoderCallbackProxy;
-
-    void interleave();
 };
 
 }} // namespace cocos2d { namespace experimental {
