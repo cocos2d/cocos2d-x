@@ -565,12 +565,6 @@ bool GLProgram::link()
 
     glLinkProgram(_program);
 
-    parseVertexAttribs();
-    parseUniforms();
-
-    clearShader();
-
-#if DEBUG || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     glGetProgramiv(_program, GL_LINK_STATUS, &status);
 
     if (status == GL_FALSE)
@@ -579,7 +573,13 @@ bool GLProgram::link()
         GL::deleteProgram(_program);
         _program = 0;
     }
-#endif
+    else
+    {
+        parseVertexAttribs();
+        parseUniforms();
+
+        clearShader();
+    }
 
     return (status == GL_TRUE);
 }
