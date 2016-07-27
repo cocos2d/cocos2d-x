@@ -41,6 +41,7 @@ AudioEngineTests::AudioEngineTests()
     ADD_TEST_CASE(LargeAudioFileTest);
     ADD_TEST_CASE(AudioPerformanceTest);
     ADD_TEST_CASE(AudioSwitchStateTest);
+    ADD_TEST_CASE(AudioSmallFileTest);
 }
 
 namespace {
@@ -776,6 +777,29 @@ std::string AudioSwitchStateTest::title() const
 }
 
 std::string AudioSwitchStateTest::subtitle() const
+{
+    return "Should not crash";
+}
+
+/////////////////////////////////////////////////////////////////////////
+
+bool AudioSmallFileTest::init()
+{
+    if (AudioEngineTestDemo::init())
+    {
+        AudioEngine::play2d("audio/SmallFile.mp3");
+        return true;
+    }
+    
+    return false;
+}
+
+std::string AudioSmallFileTest::title() const
+{
+    return "Playing small mp3 file";
+}
+
+std::string AudioSmallFileTest::subtitle() const
 {
     return "Should not crash";
 }
