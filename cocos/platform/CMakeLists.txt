@@ -26,6 +26,7 @@ if(WINDOWS)
 
 set(COCOS_PLATFORM_SPECIFIC_SRC
   platform/win32/CCStdC-win32.cpp
+  platform/win32/CCUtils-win32.cpp
   platform/win32/CCFileUtils-win32.cpp
   platform/win32/CCCommon-win32.cpp
   platform/win32/CCApplication-win32.cpp
