@@ -48,6 +48,7 @@ void _spAttachment_init (spAttachment* self, const char* name, spAttachmentType 
 }
 
 void _spAttachment_deinit (spAttachment* self) {
+	if (self->attachmentLoader) spAttachmentLoader_disposeAttachment(self->attachmentLoader, self);
 	FREE(self->vtable);
 	FREE(self->name);
 }
