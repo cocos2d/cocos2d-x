@@ -29,17 +29,21 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-#include <spine/Event.h>
-#include <spine/extension.h>
+#ifndef SPINE_COCOS2DATTACHMENTLOADER_H_
+#define SPINE_COCOS2DATTACHMENTLOADER_H_
 
-spEvent* spEvent_create (float time, spEventData* data) {
-	spEvent* self = NEW(spEvent);
-	CONST_CAST(spEventData*, self->data) = data;
-	CONST_CAST(float, self->time) = time;
-	return self;
+#include <spine/AtlasAttachmentLoader.h>
+
+extern "C" {
+
+typedef struct Cocos2dAttachmentLoader {
+	spAttachmentLoader super;
+	spAtlasAttachmentLoader* atlasAttachmentLoader;
+} Cocos2dAttachmentLoader;
+
+/* The Cocos2dAttachmentLoader must not be disposed until after the skeleton data has been disposed. */
+Cocos2dAttachmentLoader* Cocos2dAttachmentLoader_create (spAtlas* atlas);
+
 }
 
-void spEvent_dispose (spEvent* self) {
-	FREE(self->stringValue);
-	FREE(self);
-}
+#endif /* SPINE_COCOS2DATTACHMENTLOADER_H_ */

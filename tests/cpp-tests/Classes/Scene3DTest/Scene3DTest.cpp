@@ -17,10 +17,10 @@ public:
     : SkeletonAnimation(skeletonDataFile, atlasFile, scale)
     {}
     
-    virtual void drawSkeleton (const cocos2d::Mat4& transform, uint32_t transformFlags) override
+    virtual void draw(cocos2d::Renderer* renderer, const cocos2d::Mat4& transform, uint32_t transformFlags) override
     {
         glDisable(GL_CULL_FACE);
-        SkeletonAnimation::drawSkeleton(transform, transformFlags);
+        SkeletonAnimation::draw(renderer, transform, transformFlags);
         RenderState::StateBlock::invalidate(cocos2d::RenderState::StateBlock::RS_ALL_ONES);
     }
     

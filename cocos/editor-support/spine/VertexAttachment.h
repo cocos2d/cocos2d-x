@@ -29,8 +29,8 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-#ifndef SPINE_SKINNEDMESHATTACHMENT_H_
-#define SPINE_SKINNEDMESHATTACHMENT_H_
+#ifndef SPINE_VERTEXATTACHMENT_H_
+#define SPINE_VERTEXATTACHMENT_H_
 
 #include <spine/Attachment.h>
 #include <spine/Slot.h>
@@ -39,52 +39,30 @@
 extern "C" {
 #endif
 
-typedef struct spSkinnedMeshAttachment {
+typedef struct spVertexAttachment spVertexAttachment;
+struct spVertexAttachment {
 	spAttachment super;
-	const char* path;
 
 	int bonesCount;
 	int* bones;
 
-	int weightsCount;
-	float* weights;
+	int verticesCount;
+	float* vertices;
 
-	int trianglesCount;
-	int* triangles;
+	int worldVerticesLength;
+};
 
-	int uvsCount;
-	float* regionUVs;
-	float* uvs;
-	int hullLength;
-
-	float r, g, b, a;
-
-	void* rendererObject;
-	int regionOffsetX, regionOffsetY; /* Pixels stripped from the bottom left, unrotated. */
-	int regionWidth, regionHeight; /* Unrotated, stripped pixel size. */
-	int regionOriginalWidth, regionOriginalHeight; /* Unrotated, unstripped pixel size. */
-	float regionU, regionV, regionU2, regionV2;
-	int/*bool*/regionRotate;
-
-	/* Nonessential. */
-	int edgesCount;
-	int* edges;
-	float width, height;
-} spSkinnedMeshAttachment;
-
-spSkinnedMeshAttachment* spSkinnedMeshAttachment_create (const char* name);
-void spSkinnedMeshAttachment_updateUVs (spSkinnedMeshAttachment* self);
-void spSkinnedMeshAttachment_computeWorldVertices (spSkinnedMeshAttachment* self, spSlot* slot, float* worldVertices);
+void spVertexAttachment_computeWorldVertices (spVertexAttachment* self, spSlot* slot, float* worldVertices);
+void spVertexAttachment_computeWorldVertices1 (spVertexAttachment* self, int start, int count, spSlot* slot, float* worldVertices, int offset);
 
 #ifdef SPINE_SHORT_NAMES
-typedef spSkinnedMeshAttachment SkinnedMeshAttachment;
-#define SkinnedMeshAttachment_create(...) spSkinnedMeshAttachment_create(__VA_ARGS__)
-#define SkinnedMeshAttachment_updateUVs(...) spSkinnedMeshAttachment_updateUVs(__VA_ARGS__)
-#define SkinnedMeshAttachment_computeWorldVertices(...) spSkinnedMeshAttachment_computeWorldVertices(__VA_ARGS__)
+typedef spVertexAttachment VertexAttachment;
+#define VertexAttachment_computeWorldVertices(...) spVertexAttachment_computeWorldVertices(__VA_ARGS__)
+#define VertexAttachment_computeWorldVertices1(...) spVertexAttachment_computeWorldVertices1(__VA_ARGS__)
 #endif
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* SPINE_SKINNEDMESHATTACHMENT_H_ */
+#endif /* SPINE_VERTEXATTACHMENT_H_ */

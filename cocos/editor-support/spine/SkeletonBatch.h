@@ -29,17 +29,50 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-#include <spine/Event.h>
-#include <spine/extension.h>
+#ifndef SPINE_SKELETONBATCH_H_
+#define SPINE_SKELETONBATCH_H_
 
-spEvent* spEvent_create (float time, spEventData* data) {
-	spEvent* self = NEW(spEvent);
-	CONST_CAST(spEventData*, self->data) = data;
-	CONST_CAST(float, self->time) = time;
-	return self;
+#include <spine/spine.h>
+#include "cocos2d.h"
+
+namespace spine {
+
+class SkeletonBatch {
+public:
+	/* Sets the max number of vertices that can be drawn in a single frame. The buffer will grow automatically as needed, but
+	 * setting it to the appropriate is more efficient. Best to call before getInstance is called for the first time. Default is
+	 * 8192. */
+	static void setBufferSize (int vertexCount);
+
+	static SkeletonBatch* getInstance ();
+
+	void update (float delta);
+
+	void addCommand (cocos2d::Renderer* renderer, float globalOrder, GLuint textureID, cocos2d::GLProgramState* glProgramState,
+		cocos2d::BlendFunc blendType, const cocos2d::TrianglesCommand:: Triangles& triangles, const cocos2d::Mat4& mv, uint32_t flags);
+
+protected:
+	SkeletonBatch (int capacity);
+	virtual ~SkeletonBatch ();
+
+	cocos2d::V3F_C4B_T2F* _buffer;
+	int _capacity;
+	int _position;
+
+	class Command {
+	public:
+		Command ();
+		virtual ~Command ();
+
+		cocos2d::TrianglesCommand* trianglesCommand;
+		cocos2d::TrianglesCommand::Triangles* triangles;
+		Command* next;
+	};
+
+	Command* _firstCommand;
+	Command* _command;
+};
+
 }
 
-void spEvent_dispose (spEvent* self) {
-	FREE(self->stringValue);
-	FREE(self);
-}
+#endif // SPINE_SKELETONBATCH_H_

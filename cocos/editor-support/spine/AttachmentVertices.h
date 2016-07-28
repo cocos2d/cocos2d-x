@@ -29,17 +29,22 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-#include <spine/Event.h>
-#include <spine/extension.h>
+#ifndef SPINE_ATTACHMENTVERTICES_H_
+#define SPINE_ATTACHMENTVERTICES_H_
 
-spEvent* spEvent_create (float time, spEventData* data) {
-	spEvent* self = NEW(spEvent);
-	CONST_CAST(spEventData*, self->data) = data;
-	CONST_CAST(float, self->time) = time;
-	return self;
+#include "cocos2d.h"
+
+namespace spine {
+
+class AttachmentVertices {
+public:
+	AttachmentVertices (cocos2d::Texture2D* texture, int verticesCount, unsigned short* triangles, int trianglesCount);
+	virtual ~AttachmentVertices ();
+
+	cocos2d::Texture2D* _texture;
+	cocos2d::TrianglesCommand::Triangles* _triangles;
+};
+
 }
 
-void spEvent_dispose (spEvent* self) {
-	FREE(self->stringValue);
-	FREE(self);
-}
+#endif /* SPINE_ATTACHMENTVERTICES_H_ */

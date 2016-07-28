@@ -1,10 +1,10 @@
 /******************************************************************************
  * Spine Runtimes Software License
  * Version 2.3
- * 
+ *
  * Copyright (c) 2013-2015, Esoteric Software
  * All rights reserved.
- * 
+ *
  * You are granted a perpetual, non-exclusive, non-sublicensable and
  * non-transferable license to use, install, execute and perform the Spine
  * Runtimes Software (the "Software") and derivative works solely for personal
@@ -16,7 +16,7 @@
  * or other intellectual property or proprietary rights notices on or in the
  * Software, including any copy thereof. Redistributions in binary or source
  * form must include this license and terms.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY ESOTERIC SOFTWARE "AS IS" AND ANY EXPRESS OR
  * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
@@ -29,17 +29,28 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-#include <spine/Event.h>
+#include <spine/PathAttachment.h>
 #include <spine/extension.h>
 
-spEvent* spEvent_create (float time, spEventData* data) {
-	spEvent* self = NEW(spEvent);
-	CONST_CAST(spEventData*, self->data) = data;
-	CONST_CAST(float, self->time) = time;
+void _spPathAttachment_dispose (spAttachment* attachment) {
+	spPathAttachment* self = SUB_CAST(spPathAttachment, attachment);
+
+	_spVertexAttachment_deinit(SUPER(self));
+
+	FREE(self->lengths);
+	FREE(self);
+}
+
+spPathAttachment* spPathAttachment_create (const char* name) {
+	spPathAttachment* self = NEW(spPathAttachment);
+	_spAttachment_init(SUPER(SUPER(self)), name, SP_ATTACHMENT_PATH, _spPathAttachment_dispose);
 	return self;
 }
 
-void spEvent_dispose (spEvent* self) {
-	FREE(self->stringValue);
-	FREE(self);
+void spPathAttachment_computeWorldVertices (spPathAttachment* self, spSlot* slot, float* worldVertices) {
+	spVertexAttachment_computeWorldVertices(SUPER(self), slot, worldVertices);
+}
+
+void spPathAttachment_computeWorldVertices1 (spPathAttachment* self, spSlot* slot, int start, int count, float* worldVertices, int offset) {
+	spVertexAttachment_computeWorldVertices1(SUPER(self), start, count, slot, worldVertices, offset);
 }

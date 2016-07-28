@@ -1,10 +1,10 @@
 /******************************************************************************
  * Spine Runtimes Software License
  * Version 2.3
- * 
+ *
  * Copyright (c) 2013-2015, Esoteric Software
  * All rights reserved.
- * 
+ *
  * You are granted a perpetual, non-exclusive, non-sublicensable and
  * non-transferable license to use, install, execute and perform the Spine
  * Runtimes Software (the "Software") and derivative works solely for personal
@@ -16,7 +16,7 @@
  * or other intellectual property or proprietary rights notices on or in the
  * Software, including any copy thereof. Redistributions in binary or source
  * form must include this license and terms.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY ESOTERIC SOFTWARE "AS IS" AND ANY EXPRESS OR
  * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
@@ -29,17 +29,37 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-#include <spine/Event.h>
-#include <spine/extension.h>
+#ifndef SPINE_PATHATTACHMENT_H_
+#define SPINE_PATHATTACHMENT_H_
 
-spEvent* spEvent_create (float time, spEventData* data) {
-	spEvent* self = NEW(spEvent);
-	CONST_CAST(spEventData*, self->data) = data;
-	CONST_CAST(float, self->time) = time;
-	return self;
-}
+#include <spine/Attachment.h>
+#include <spine/VertexAttachment.h>
+#include <spine/Atlas.h>
+#include <spine/Slot.h>
 
-void spEvent_dispose (spEvent* self) {
-	FREE(self->stringValue);
-	FREE(self);
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+typedef struct spPathAttachment {
+	spVertexAttachment super;
+	int lengthsLength;
+	float* lengths;
+	int/*bool*/ closed, constantSpeed;
+} spPathAttachment;
+
+spPathAttachment* spPathAttachment_create (const char* name);
+void spPathAttachment_computeWorldVertices (spPathAttachment* self, spSlot* slot, float* worldVertices);
+void spPathAttachment_computeWorldVertices1 (spPathAttachment* self, spSlot* slot, int start, int count, float* worldVertices, int offset);
+
+#ifdef SPINE_SHORT_NAMES
+typedef spPathAttachment PathAttachment;
+#define PathAttachment_create(...) spPathAttachment_create(__VA_ARGS__)
+#define PathAttachment_computeWorldVertices(...) spPathAttachment_computeWorldVertices(__VA_ARGS__)
+#endif
+
+#ifdef __cplusplus
 }
+#endif
+
+#endif /* SPINE_PATHATTACHMENT_H_ */

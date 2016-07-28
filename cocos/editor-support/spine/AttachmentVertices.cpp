@@ -29,17 +29,25 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-#include <spine/Event.h>
-#include <spine/extension.h>
+#include <spine/AttachmentVertices.h>
 
-spEvent* spEvent_create (float time, spEventData* data) {
-	spEvent* self = NEW(spEvent);
-	CONST_CAST(spEventData*, self->data) = data;
-	CONST_CAST(float, self->time) = time;
-	return self;
+USING_NS_CC;
+
+namespace spine {
+
+AttachmentVertices::AttachmentVertices (Texture2D* texture, int verticesCount, unsigned short* triangles, int trianglesCount) {
+	_texture = texture;
+
+	_triangles = new TrianglesCommand::Triangles();
+	_triangles->verts = new V3F_C4B_T2F[verticesCount];
+	_triangles->vertCount = verticesCount;
+	_triangles->indices = triangles;
+	_triangles->indexCount = trianglesCount;
 }
 
-void spEvent_dispose (spEvent* self) {
-	FREE(self->stringValue);
-	FREE(self);
+AttachmentVertices::~AttachmentVertices () {
+	delete [] _triangles->verts;
+	delete _triangles;
+}
+
 }

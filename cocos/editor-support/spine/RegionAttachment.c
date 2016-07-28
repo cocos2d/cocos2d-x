@@ -103,12 +103,12 @@ void spRegionAttachment_updateOffset (spRegionAttachment* self) {
 void spRegionAttachment_computeWorldVertices (spRegionAttachment* self, spBone* bone, float* vertices) {
 	const float* offset = self->offset;
 	float x = bone->skeleton->x + bone->worldX, y = bone->skeleton->y + bone->worldY;
-	vertices[SP_VERTEX_X1] = offset[SP_VERTEX_X1] * bone->m00 + offset[SP_VERTEX_Y1] * bone->m01 + x;
-	vertices[SP_VERTEX_Y1] = offset[SP_VERTEX_X1] * bone->m10 + offset[SP_VERTEX_Y1] * bone->m11 + y;
-	vertices[SP_VERTEX_X2] = offset[SP_VERTEX_X2] * bone->m00 + offset[SP_VERTEX_Y2] * bone->m01 + x;
-	vertices[SP_VERTEX_Y2] = offset[SP_VERTEX_X2] * bone->m10 + offset[SP_VERTEX_Y2] * bone->m11 + y;
-	vertices[SP_VERTEX_X3] = offset[SP_VERTEX_X3] * bone->m00 + offset[SP_VERTEX_Y3] * bone->m01 + x;
-	vertices[SP_VERTEX_Y3] = offset[SP_VERTEX_X3] * bone->m10 + offset[SP_VERTEX_Y3] * bone->m11 + y;
-	vertices[SP_VERTEX_X4] = offset[SP_VERTEX_X4] * bone->m00 + offset[SP_VERTEX_Y4] * bone->m01 + x;
-	vertices[SP_VERTEX_Y4] = offset[SP_VERTEX_X4] * bone->m10 + offset[SP_VERTEX_Y4] * bone->m11 + y;
+	vertices[SP_VERTEX_X1] = offset[SP_VERTEX_X1] * bone->a + offset[SP_VERTEX_Y1] * bone->b + x;
+	vertices[SP_VERTEX_Y1] = offset[SP_VERTEX_X1] * bone->c + offset[SP_VERTEX_Y1] * bone->d + y;
+	vertices[SP_VERTEX_X2] = offset[SP_VERTEX_X2] * bone->a + offset[SP_VERTEX_Y2] * bone->b + x;
+	vertices[SP_VERTEX_Y2] = offset[SP_VERTEX_X2] * bone->c + offset[SP_VERTEX_Y2] * bone->d + y;
+	vertices[SP_VERTEX_X3] = offset[SP_VERTEX_X3] * bone->a + offset[SP_VERTEX_Y3] * bone->b + x;
+	vertices[SP_VERTEX_Y3] = offset[SP_VERTEX_X3] * bone->c + offset[SP_VERTEX_Y3] * bone->d + y;
+	vertices[SP_VERTEX_X4] = offset[SP_VERTEX_X4] * bone->a + offset[SP_VERTEX_Y4] * bone->b + x;
+	vertices[SP_VERTEX_Y4] = offset[SP_VERTEX_X4] * bone->c + offset[SP_VERTEX_Y4] * bone->d + y;
 }

@@ -29,17 +29,17 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-#include <spine/Event.h>
+#include <spine/TransformConstraintData.h>
 #include <spine/extension.h>
 
-spEvent* spEvent_create (float time, spEventData* data) {
-	spEvent* self = NEW(spEvent);
-	CONST_CAST(spEventData*, self->data) = data;
-	CONST_CAST(float, self->time) = time;
+spTransformConstraintData* spTransformConstraintData_create (const char* name) {
+	spTransformConstraintData* self = NEW(spTransformConstraintData);
+	MALLOC_STR(self->name, name);
 	return self;
 }
 
-void spEvent_dispose (spEvent* self) {
-	FREE(self->stringValue);
+void spTransformConstraintData_dispose (spTransformConstraintData* self) {
+	FREE(self->name);
+	FREE(self->bones);
 	FREE(self);
 }

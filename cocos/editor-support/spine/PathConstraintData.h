@@ -1,10 +1,10 @@
 /******************************************************************************
  * Spine Runtimes Software License
  * Version 2.3
- * 
+ *
  * Copyright (c) 2013-2015, Esoteric Software
  * All rights reserved.
- * 
+ *
  * You are granted a perpetual, non-exclusive, non-sublicensable and
  * non-transferable license to use, install, execute and perform the Spine
  * Runtimes Software (the "Software") and derivative works solely for personal
@@ -16,7 +16,7 @@
  * or other intellectual property or proprietary rights notices on or in the
  * Software, including any copy thereof. Redistributions in binary or source
  * form must include this license and terms.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY ESOTERIC SOFTWARE "AS IS" AND ANY EXPRESS OR
  * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
@@ -29,17 +29,68 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-#include <spine/Event.h>
-#include <spine/extension.h>
+#ifndef SPINE_PATHCONSTRAINTDATA_H_
+#define SPINE_PATHCONSTRAINTDATA_H_
 
-spEvent* spEvent_create (float time, spEventData* data) {
-	spEvent* self = NEW(spEvent);
-	CONST_CAST(spEventData*, self->data) = data;
-	CONST_CAST(float, self->time) = time;
-	return self;
-}
+#include <spine/BoneData.h>
+#include <spine/SlotData.h>
 
-void spEvent_dispose (spEvent* self) {
-	FREE(self->stringValue);
-	FREE(self);
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+typedef enum {
+	SP_POSITION_MODE_FIXED, SP_POSITION_MODE_PERCENT
+} spPositionMode;
+
+typedef enum {
+	SP_SPACING_MODE_LENGTH, SP_SPACING_MODE_FIXED, SP_SPACING_MODE_PERCENT
+} spSpacingMode;
+
+typedef enum {
+	SP_ROTATE_MODE_TANGENT, SP_ROTATE_MODE_CHAIN, SP_ROTATE_MODE_CHAIN_SCALE
+} spRotateMode;
+
+typedef struct spPathConstraintData {
+	const char* const name;
+	int bonesCount;
+	spBoneData** const bones;
+	spSlotData* target;
+	spPositionMode positionMode;
+	spSpacingMode spacingMode;
+	spRotateMode rotateMode;
+	float offsetRotation;
+	float position, spacing, rotateMix, translateMix;
+
+#ifdef __cplusplus
+	spPathConstraintData() :
+		name(0),
+		bonesCount(0),
+		bones(0),
+		target(0),
+		positionMode(SP_POSITION_MODE_FIXED),
+		spacingMode(SP_SPACING_MODE_LENGTH),
+		rotateMode(SP_ROTATE_MODE_TANGENT),
+		offsetRotation(0),
+		position(0),
+		spacing(0),
+		rotateMix(0),
+		translateMix(0) {
+	}
+#endif
+} spPathConstraintData;
+
+spPathConstraintData* spPathConstraintData_create (const char* name);
+void spPathConstraintData_dispose (spPathConstraintData* self);
+
+#ifdef SPINE_SHORT_NAMES
+typedef spPathConstraintData PathConstraintData;
+#define PathConstraintData_create(...) spPathConstraintData_create(__VA_ARGS__)
+#define PathConstraintData_dispose(...) spPathConstraintData_dispose(__VA_ARGS__)
+#endif
+
+#ifdef __cplusplus
 }
+#endif
+
+#endif /* SPINE_PATHCONSTRAINTDATA_H_ */
