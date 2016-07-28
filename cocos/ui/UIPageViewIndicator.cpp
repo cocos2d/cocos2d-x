@@ -220,7 +220,7 @@ void PageViewIndicator::increaseNumberOfPages()
     
     indexNode->setColor(_indexNodesColor);
     indexNode->setScale(_indexNodesScale);
-//    indexNode->setOpacity(255 * 0.3f);
+    indexNode->setOpacity(255 * 0.3f);
     addProtectedChild(indexNode);
     _indexNodes.pushBack(indexNode);
 }
