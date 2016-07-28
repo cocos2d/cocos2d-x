@@ -393,7 +393,7 @@ void Scene3DTestScene::createWorld3D()
     _terrain = Terrain::create(data,Terrain::CrackFixedType::SKIRT);
     _terrain->setMaxDetailMapAmount(4);
     _terrain->setDrawWire(false);
-    
+
     _terrain->setSkirtHeightRatio(3);
     _terrain->setLODDistance(64,128,192);
     
