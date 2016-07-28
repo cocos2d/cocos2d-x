@@ -704,9 +704,9 @@ var g_spine = [
     "spine/spineboy.json",
     "spine/spineboy.png",
     "spine/sprite.png",
-    "spine/goblins-ffd.png",
-    "spine/goblins-ffd.atlas",
-    "spine/goblins-ffd.json"
+    "spine/goblins.png",
+    "spine/goblins.atlas",
+    "spine/goblins.json"
 ];
 
 if (!cc.sys.isNative) {

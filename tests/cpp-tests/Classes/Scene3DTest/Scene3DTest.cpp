@@ -703,9 +703,7 @@ void Scene3DTestScene::createDetailDlg()
     
     // add a spine ffd animation on it
     auto skeletonNode =
-        SkeletonAnimationCullingFix::createWithFile("spine/goblins-ffd.json",
-                                          "spine/goblins-ffd.atlas",
-                                          1.5f);
+        SkeletonAnimationCullingFix::createWithFile("spine/goblins.json", "spine/goblins.atlas", 1.5f);
     skeletonNode->setAnimation(0, "walk", true);
     skeletonNode->setSkin("goblin");
     
