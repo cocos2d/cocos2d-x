@@ -27,7 +27,7 @@ THE SOFTWARE.
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 
 #include "platform/CCCommon.h"
-#include "platform/CCStdC.h"
+#include "platform/win32/CCUtils-win32.h"
 
 NS_CC_BEGIN
 
@@ -35,7 +35,9 @@ NS_CC_BEGIN
 
 void MessageBox(const char * pszMsg, const char * pszTitle)
 {
-    MessageBoxA(nullptr, pszMsg, pszTitle, MB_OK);
+    std::wstring wsMsg = cocos2d::StringUtf8ToWideChar(pszMsg);
+    std::wstring wsTitle = cocos2d::StringUtf8ToWideChar(pszTitle);
+    MessageBoxW(nullptr, wsMsg.c_str(), wsTitle.c_str(), MB_OK);
 }
 
 void LuaLog(const char *pszMsg)
