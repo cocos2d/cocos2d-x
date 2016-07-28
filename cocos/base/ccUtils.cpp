@@ -25,6 +25,7 @@ THE SOFTWARE.
 
 #include "base/ccUtils.h"
 
+#include <cmath>
 #include <stdlib.h>
 
 #include "base/CCDirector.h"
@@ -198,7 +199,7 @@ Image* captureNode(Node* startNode, float scale)
     rtx->end();
     startNode->setPosition(savedPos);
 
-    if (std::abs(scale - 1.0f) < 1e-6/* no scale */)
+    if (std::abs(scale - 1.0f) < 1e-6f/* no scale */)
         finalRtx = rtx;
     else {
         /* scale */
