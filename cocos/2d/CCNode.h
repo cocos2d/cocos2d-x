@@ -43,12 +43,6 @@
 #include "physics/CCPhysicsBody.h"
 #endif
 
-#if defined(_M_X64) || defined(_WIN64) || defined(__LP64__) || defined(_LP64) || defined(__x86_64)
-#define CC_64BITS 1
-#else
-#define CC_64BITS 0
-#endif
-
 NS_CC_BEGIN
 
 class GridBase;
@@ -195,11 +189,8 @@ public:
      *
      * @return The local (relative to its siblings) Z order.
      */
-#if CC_64BITS
-    virtual int getLocalZOrder() const { return static_cast<int>(_localZOrder >> 32); }
-#else
+
     virtual int getLocalZOrder() const { return _localZOrder; }
-#endif
 
     CC_DEPRECATED_ATTRIBUTE virtual int getZOrder() const { return getLocalZOrder(); }
 
@@ -1906,12 +1897,10 @@ protected:
     mutable bool _additionalTransformDirty; ///< transform dirty ?
     bool _transformUpdated;         ///< Whether or not the Transform object was updated since the last frame
 
-#if CC_64BITS
-    std::int64_t _localZOrder;               ///< Local order (relative to its siblings) used to sort the node
-#else
+    std::int64_t _localZOrderAndArrival; /// cache, for 64bits compress optimize.
     int _localZOrder; /// < Local order (relative to its siblings) used to sort the node
     unsigned int _orderOfArrival; /// < used to preserve sequence while sorting children with the same localZOrder
-#endif
+
     float _globalZOrder;            ///< Global order used to sort the node
 
     static unsigned int s_globalOrderOfArrival;
