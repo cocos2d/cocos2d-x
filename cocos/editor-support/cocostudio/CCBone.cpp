@@ -143,7 +143,7 @@ void Bone::setBoneData(BoneData *boneData)
     }
 
     _name = _boneData->name;
-    _setLocalZOrder(_boneData->zOrder);
+    _localZOrder = _boneData->zOrder;
 
     _displayManager->initDisplayList(boneData);
 }
@@ -377,7 +377,7 @@ Tween *Bone::getTween()
 
 void Bone::setLocalZOrder(int zOrder)
 {
-    if (getLocalZOrder() != zOrder)
+    if (_localZOrder != zOrder)
         Node::setLocalZOrder(zOrder);
 }
 
