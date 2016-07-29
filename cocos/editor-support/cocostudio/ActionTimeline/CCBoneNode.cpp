@@ -550,8 +550,8 @@ void BoneNode::sortAllChildren()
 {
     if (_reorderChildDirty)
     {
-        std::sort(_childBones.begin(), _childBones.end(), cocos2d::nodeComparisonLess);
-        std::sort(_boneSkins.begin(), _boneSkins.end(), cocos2d::nodeComparisonLess);
+        cocos2d::Node::sortNodes(_childBones);
+        cocos2d::Node::sortNodes(_boneSkins);
         Node::sortAllChildren();
     }
 }

@@ -76,8 +76,6 @@ enum {
     kNodeOnCleanup
 };
 
-bool CC_DLL nodeComparisonLess(Node* n1, Node* n2);
-
 class EventListener;
 
 /** @class Node
@@ -109,7 +107,6 @@ class EventListener;
 
 class CC_DLL Node : public Ref
 {
-    friend bool nodeComparisonLess(Node* n1, Node* n2);
 public:
     /** Default tag used for all the nodes */
     static const int INVALID_TAG = -1;
@@ -929,6 +926,25 @@ public:
      * @note Don't call this manually unless a child added needs to be removed in the same frame.
      */
     virtual void sortAllChildren();
+
+    /**
+     * Sorts helper function
+     *
+     */
+    template<typename _T>
+    static void sortNodes(cocos2d::Vector<_T*>& nodes)
+    {
+        static_assert(std::is_base_of<Node, _T>::value, "Node::sortNodes: Only accept derived of Node!");
+#if CC_64BITS
+        std::sort(std::begin(nodes), std::end(nodes), [](_T* n1, _T* n2) {
+            return (n1->_localZOrderAndArrival < n2->_localZOrderAndArrival);
+        }
+#else
+        std::stable_sort(std::begin(nodes), std::end(nodes), [](_T* n1, _T* n2) {
+            return n1->_localZOrder < n2->_localZOrder;
+        });
+#endif
+    }
 
     /// @} end of Children and Parent
     

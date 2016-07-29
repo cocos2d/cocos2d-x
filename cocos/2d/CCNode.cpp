@@ -55,15 +55,6 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-bool nodeComparisonLess(Node* n1, Node* n2)
-{
-#if CC_64BITS
-    return (n1->_localZOrderAndArrival < n2->_localZOrderAndArrival);
-#else
-    return n1->_localZOrder < n2->_localZOrder;
-#endif
-}
-
 // FIXME:: Yes, nodes might have a sort problem once every 30 days if the game runs at 60 FPS and each frame sprites are reordered.
 unsigned int Node::s_globalOrderOfArrival = 0;
 
@@ -284,8 +275,7 @@ void Node::_setLocalZOrder(int z)
 
 void Node::updateOrderOfArrival()
 {
-    auto newArrival = ++s_globalOrderOfArrival;
-    _localZOrderAndArrival = (_localZOrder & 0xffffffff00000000) | (newArrival);
+    _localZOrderAndArrival = (_localZOrderAndArrival & 0xffffffff00000000) | (++s_globalOrderOfArrival);
 }
 
 void Node::setGlobalZOrder(float globalZOrder)
@@ -1159,11 +1149,7 @@ void Node::sortAllChildren()
 {
     if (_reorderChildDirty)
     {
-#if CC_64BITS
-        std::sort(std::begin(_children), std::end(_children), nodeComparisonLess);
-#else
-        std::stable_sort(std::begin(_children), std::end(_children), nodeComparisonLess);
-#endif
+        sortNodes(_children);
         _reorderChildDirty = false;
     }
 }
