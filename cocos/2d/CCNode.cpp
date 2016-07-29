@@ -60,7 +60,7 @@ bool nodeComparisonLess(Node* n1, Node* n2)
 #if CC_64BITS
     return (n1->_localZOrderAndArrival < n2->_localZOrderAndArrival);
 #else
-    return n1->_localZOrder < n2->_localZOrder || (n1->_localZOrder == n2->_localZOrder && n1->_orderOfArrival < n2->_orderOfArrival);
+    return n1->_localZOrder < n2->_localZOrder;
 #endif
 }
 
@@ -93,7 +93,6 @@ Node::Node()
 // lazy alloc
 , _localZOrderAndArrival(0)
 , _localZOrder(0)
-, _orderOfArrival(0)
 , _globalZOrder(0)
 , _parent(nullptr)
 // "whole screen" objects. like Scenes and Layers, should set _ignoreAnchorPointForPosition to true
@@ -287,7 +286,6 @@ void Node::updateOrderOfArrival()
 {
     auto newArrival = ++s_globalOrderOfArrival;
     _localZOrderAndArrival = (_localZOrder & 0xffffffff00000000) | (newArrival);
-    _orderOfArrival = newArrival;
 }
 
 void Node::setGlobalZOrder(float globalZOrder)
@@ -1161,7 +1159,11 @@ void Node::sortAllChildren()
 {
     if (_reorderChildDirty)
     {
+#if CC_64BITS
         std::sort(std::begin(_children), std::end(_children), nodeComparisonLess);
+#else
+        std::stable_sort(std::begin(_children), std::end(_children), nodeComparisonLess);
+#endif
         _reorderChildDirty = false;
     }
 }

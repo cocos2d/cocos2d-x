@@ -254,7 +254,11 @@ void ProtectedNode::insertProtectedChild(cocos2d::Node *child, int z)
 void ProtectedNode::sortAllProtectedChildren()
 {
     if( _reorderProtectedChildDirty ) {
+#if CC_64BITS
         std::sort( std::begin(_protectedChildren), std::end(_protectedChildren), nodeComparisonLess );
+#else
+        std::stable_sort(std::begin(_protectedChildren), std::end(_protectedChildren), nodeComparisonLess);
+#endif
         _reorderProtectedChildDirty = false;
     }
 }

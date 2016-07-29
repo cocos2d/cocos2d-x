@@ -1899,7 +1899,6 @@ protected:
 
     std::int64_t _localZOrderAndArrival; /// cache, for 64bits compress optimize.
     int _localZOrder; /// < Local order (relative to its siblings) used to sort the node
-    unsigned int _orderOfArrival; /// < used to preserve sequence while sorting children with the same localZOrder
 
     float _globalZOrder;            ///< Global order used to sort the node
 
