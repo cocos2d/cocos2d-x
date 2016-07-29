@@ -22,11 +22,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+#pragma once
+
 #include "platform/CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC
-
-#ifndef __AUDIO_PLAYER_H_
-#define __AUDIO_PLAYER_H_
 
 #include <condition_variable>
 #include <mutex>
@@ -55,8 +54,9 @@ public:
     bool setLoop(bool loop);
     
 protected:
+    void setCache(AudioCache* cache);
     void rotateBufferThread(int offsetFrame);
-    bool play2d(AudioCache* cache);
+    bool play2d();
     
     AudioCache* _audioCache;
     
@@ -64,7 +64,7 @@ protected:
     bool _loop;
     std::function<void (int, const std::string &)> _finishCallbak;
     
-    bool _beDestroy;
+    bool _isDestroyed;
     bool _removeByAudioEngine;
     bool _ready;
     ALuint _alSource;
@@ -73,16 +73,21 @@ protected:
     float _currTime;
     bool _streamingSource;
     ALuint _bufferIds[3];
-    std::thread _rotateBufferThread;
+    std::thread* _rotateBufferThread;
     std::condition_variable _sleepCondition;
     std::mutex _sleepMutex;
     bool _timeDirty;
+    bool _isRotateThreadExited;
+    
+    std::mutex _play2dMutex;
+    
+    unsigned int _id;
     
     friend class AudioEngineImpl;
 };
 
 }
 NS_CC_END
-#endif // __AUDIO_PLAYER_H_
+
 #endif
 

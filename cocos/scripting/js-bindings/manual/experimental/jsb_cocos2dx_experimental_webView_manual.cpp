@@ -35,6 +35,9 @@ static bool jsb_cocos2dx_experimental_webView_setOnShouldStartLoading(JSContext 
         });
         return true;
     }
+
+    JS_ReportError(cx, "jsb_cocos2dx_experimental_webView_setOnShouldStartLoading : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
 }
 
 static bool jsb_cocos2dx_experimental_webView_setOnDidFinishLoading(JSContext *cx, uint32_t argc, jsval *vp)
@@ -62,6 +65,9 @@ static bool jsb_cocos2dx_experimental_webView_setOnDidFinishLoading(JSContext *c
         });
         return true;
     }
+
+    JS_ReportError(cx, "jsb_cocos2dx_experimental_webView_setOnDidFinishLoading : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
 }
 
 static bool jsb_cocos2dx_experimental_webView_setOnDidFailLoading(JSContext *cx, uint32_t argc, jsval *vp)
@@ -89,6 +95,9 @@ static bool jsb_cocos2dx_experimental_webView_setOnDidFailLoading(JSContext *cx,
         });
         return true;
     }
+
+    JS_ReportError(cx, "jsb_cocos2dx_experimental_webView_setOnDidFailLoading : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
 }
 
 static bool jsb_cocos2dx_experimental_webView_setOnJSCallback(JSContext *cx, uint32_t argc, jsval *vp)
@@ -116,6 +125,9 @@ static bool jsb_cocos2dx_experimental_webView_setOnJSCallback(JSContext *cx, uin
         });
         return true;
     }
+
+    JS_ReportError(cx, "jsb_cocos2dx_experimental_webView_setOnJSCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
 }
 extern JSObject* jsb_cocos2d_experimental_ui_WebView_prototype;
 

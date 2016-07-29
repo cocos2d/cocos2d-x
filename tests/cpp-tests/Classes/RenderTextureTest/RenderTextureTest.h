@@ -142,4 +142,17 @@ public:
     SimpleSprite* addNewSpriteWithCoords(const cocos2d::Vec2& p);
 };
 
+class Issue16113Test : public RenderTextureTest
+{
+public:
+    CREATE_FUNC(Issue16113Test);
+    Issue16113Test();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+
+private:
+    cocos2d::RenderTexture* _rend;
+    cocos2d::Sprite* _spriteDraw;
+};
+
 #endif

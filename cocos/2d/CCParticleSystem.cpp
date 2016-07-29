@@ -51,8 +51,9 @@ THE SOFTWARE.
 #include "base/base64.h"
 #include "base/ZipUtils.h"
 #include "base/CCDirector.h"
+#include "base/CCProfiling.h"
+#include "base/ccUTF8.h"
 #include "renderer/CCTextureCache.h"
-#include "deprecated/CCString.h"
 #include "platform/CCFileUtils.h"
 
 using namespace std;
@@ -218,6 +219,7 @@ ParticleSystem::ParticleSystem()
 , _opacityModifyRGB(false)
 , _yCoordFlipped(1)
 , _positionType(PositionType::FREE)
+, _paused(false)
 {
     modeA.gravity.setZero();
     modeA.speed = 0;
@@ -587,6 +589,8 @@ ParticleSystem::~ParticleSystem()
 
 void ParticleSystem::addParticles(int count)
 {
+    if (_paused)
+        return;
     uint32_t RANDSEED = rand();
 
     int start = _particleCount;
@@ -1347,4 +1351,22 @@ void ParticleSystem::stop()
 {
     stopSystem();
 }
+
+bool ParticleSystem::isPaused() const
+{
+    return _paused;
+}
+
+void ParticleSystem::pauseEmissions()
+{
+    _paused = true;
+}
+
+void ParticleSystem::resumeEmissions()
+{
+    _paused = false;
+}
+
+
+
 NS_CC_END

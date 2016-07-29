@@ -35,7 +35,8 @@
 #include "renderer/CCQuadCommand.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCTextureAtlas.h"
-#include "deprecated/CCString.h"
+#include "base/CCProfiling.h"
+#include "base/ccUTF8.h"
 
 NS_CC_BEGIN
 
@@ -93,7 +94,7 @@ bool ParticleBatchNode::initWithTexture(Texture2D *tex, int capacity)
     
     _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
 
-    setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
+    setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR, tex));
 
     return true;
 }

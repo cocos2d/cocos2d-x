@@ -168,6 +168,12 @@ public:
     @name Built Shader types
     @{
     */
+    /** ETC1 ALPHA supports for 2d */
+    static const char* SHADER_NAME_ETC1AS_POSITION_TEXTURE_COLOR;
+    static const char* SHADER_NAME_ETC1AS_POSITION_TEXTURE_COLOR_NO_MVP;
+
+    static const char* SHADER_NAME_ETC1AS_POSITION_TEXTURE_GRAY;
+    static const char* SHADER_NAME_ETC1AS_POSITION_TEXTURE_GRAY_NO_MVP;
 
     /**Built in shader for 2d. Support Position, Texture and Color vertex attribute.*/
     static const char* SHADER_NAME_POSITION_TEXTURE_COLOR;
@@ -507,7 +513,7 @@ protected:
     Update the uniform data in location.
     @param location The location of the uniform.
     @param data Updated data.
-    @oaram bytes Data length in bytes to update.
+    @param bytes Data length in bytes to update.
     */
     bool updateUniformLocation(GLint location, const GLvoid* data, unsigned int bytes);
     /**Get a general description of the shader.*/

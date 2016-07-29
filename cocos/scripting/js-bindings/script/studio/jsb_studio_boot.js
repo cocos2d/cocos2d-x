@@ -40,8 +40,8 @@ ccs.actionManager = ccs.ActionManager.getInstance();
 ccs.ActionManager.prototype.clear = function() {
     this.releaseActions();
 };
-ccs.ActionManager.prototype.initWithDictionary = function(file, dic, node) {
-    ccs.actionManager.initWithDictionaryEx(file, JSON.stringify(dic), node);
+ccs.ActionManager.prototype.initWithDictionary = function(file, dic, node, version) {
+    ccs.actionManager.initWithDictionaryEx(file, JSON.stringify(dic), node, version);
 }
 
 /**

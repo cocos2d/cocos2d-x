@@ -156,7 +156,7 @@ public:
     inline unsigned int getFlags() const { return _flags; }
     /** Changes the flag field that is used to group the actions easily.
      *
-     * @param tag Used to identify the action easily.
+     * @param flags Used to group the actions easily.
      */
     inline void setFlags(unsigned int flags) { _flags = flags; }
 

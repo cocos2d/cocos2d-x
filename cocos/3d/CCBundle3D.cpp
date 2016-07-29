@@ -98,10 +98,10 @@ void getChildMap(std::map<int, std::vector<int> >& map, SkinData* skinData, cons
 
     // get transform matrix
     Mat4 transform;
-    const rapidjson::Value& parent_tranform = val[OLDTRANSFORM];
-    for (rapidjson::SizeType j = 0; j < parent_tranform.Size(); j++)
+    const rapidjson::Value& parent_transform = val[OLDTRANSFORM];
+    for (rapidjson::SizeType j = 0; j < parent_transform.Size(); j++)
     {
-        transform.m[j] = parent_tranform[j].GetDouble();
+        transform.m[j] = parent_transform[j].GetDouble();
     }
 
     // set origin matrices
@@ -924,9 +924,9 @@ bool Bundle3D::loadMaterialsBinary(MaterialDatas& materialdatas)
         float  data[14];
         _binaryReader.read(&data,sizeof(float), 14);
         
-        unsigned int textruenum = 1;
-        _binaryReader.read(&textruenum, 4, 1);
-        for(unsigned int j = 0; j < textruenum ; j++ )
+        unsigned int textureNum = 1;
+        _binaryReader.read(&textureNum, 4, 1);
+        for (unsigned int j = 0; j < textureNum; j++)
         {
             NTextureData  textureData;
             textureData.id = _binaryReader.readString();

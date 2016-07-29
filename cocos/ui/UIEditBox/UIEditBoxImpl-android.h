@@ -70,7 +70,7 @@ public:
     virtual const char* getNativeDefaultFontName() override;
     virtual void nativeOpenKeyboard() override;
     virtual void nativeCloseKeyboard() override;
-    virtual void setNativeMaxLength(int maxLength);
+    virtual void setNativeMaxLength(int maxLength) override;
     
 private:
     int _editBoxIndex;

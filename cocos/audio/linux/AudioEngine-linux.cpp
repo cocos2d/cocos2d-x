@@ -261,6 +261,8 @@ void AudioEngineImpl::uncache(const std::string& path)
         }
         mapSound.erase(it);
     }
+    if (mapId.find(path) != mapId.end())
+        mapId.erase(path);
 }
 
 void AudioEngineImpl::uncacheAll()
@@ -272,6 +274,7 @@ void AudioEngineImpl::uncacheAll()
         }
     }
     mapSound.clear();
+    mapId.clear();
 }
 
 int AudioEngineImpl::preload(const std::string& filePath, std::function<void(bool isSuccess)> callback)
@@ -291,6 +294,11 @@ int AudioEngineImpl::preload(const std::string& filePath, std::function<void(boo
     }
 
     int id = static_cast<int>(mapChannelInfo.size()) + 1;
+    if (mapId.find(filePath) == mapId.end())
+        mapId.insert({filePath, id});
+    else
+        id = mapId.at(filePath);
+
     auto& chanelInfo = mapChannelInfo[id];
     chanelInfo.sound = sound;
     chanelInfo.id = id;

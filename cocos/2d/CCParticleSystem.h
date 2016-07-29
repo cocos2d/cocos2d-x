@@ -801,6 +801,17 @@ CC_CONSTRUCTOR_ACCESS:
     
     //! Initializes a system with a fixed number of particles
     virtual bool initWithTotalParticles(int numberOfParticles);
+    
+    /** Are the emissions paused
+     @return True if the emissions are paused, else false
+     */
+    virtual bool isPaused() const;
+    
+    /* Pause the emissions*/
+    virtual void pauseEmissions();
+    
+    /* UnPause the emissions*/
+    virtual void resumeEmissions();
 
 protected:
     virtual void updateBlendFunc();
@@ -956,6 +967,9 @@ protected:
      @since v0.8
      */
     PositionType _positionType;
+    
+    /** is the emitter paused */
+    bool _paused;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(ParticleSystem);

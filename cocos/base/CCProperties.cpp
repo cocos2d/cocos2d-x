@@ -32,8 +32,6 @@
 #include "math/Mat4.h"
 #include "base/ccUTF8.h"
 #include "base/CCData.h"
-#include "deprecated/CCString.h"
-
 
 USING_NS_CC;
 
@@ -90,7 +88,7 @@ Properties* Properties::createNonRefCounted(const std::string& url)
     if (url.size() == 0)
     {
         CCLOGERROR("Attempting to create a Properties object from an empty URL!");
-        return NULL;
+        return nullptr;
     }
 
     // Calculate the file and full namespace path from the specified url.
@@ -113,7 +111,7 @@ Properties* Properties::createNonRefCounted(const std::string& url)
     {
         CCLOGWARN("Failed to load properties from url '%s'.", url.c_str());
         CC_SAFE_DELETE(properties);
-        return NULL;
+        return nullptr;
     }
 
     // If the loaded properties object is not the root namespace,
@@ -652,7 +650,7 @@ Properties* Properties::getNextNamespace()
         return ns;
     }
 
-    return NULL;
+    return nullptr;
 }
 
 void Properties::rewind()
@@ -680,7 +678,7 @@ Properties* Properties::getNamespace(const char* id, bool searchNames, bool recu
         }
     }
 
-    return NULL;
+    return nullptr;
 }
 
 const char* Properties::getNamespace() const
@@ -1152,7 +1150,7 @@ Properties* getPropertiesFromNamespacePath(Properties* properties, const std::ve
                 if (iter == NULL)
                 {
                     CCLOGWARN("Failed to load properties object from url.");
-                    return NULL;
+                    return nullptr;
                 }
 
                 if (strcmp(iter->getId(), namespacePath[i].c_str()) == 0)

@@ -1,0 +1,12 @@
+html {
+  -ms-touch-action: none;
+}
+
+body, canvas, div {
+  outline: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  -khtml-user-select: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}

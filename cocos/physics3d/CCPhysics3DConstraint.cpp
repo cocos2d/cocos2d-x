@@ -74,9 +74,9 @@ int	Physics3DConstraint::getOverrideNumSolverIterations() const
 
 ///override the number of constraint solver iterations used to solve this constraint
 ///-1 will use the default number of iterations, as specified in SolverInfo.m_numIterations
-void Physics3DConstraint::setOverrideNumSolverIterations(int overideNumIterations)
+void Physics3DConstraint::setOverrideNumSolverIterations(int overrideNumIterations)
 {
-    _constraint->setOverrideNumSolverIterations(overideNumIterations);
+    _constraint->setOverrideNumSolverIterations(overrideNumIterations);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

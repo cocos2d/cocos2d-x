@@ -20,6 +20,7 @@ ActionManagerTests::ActionManagerTests()
     ADD_TEST_CASE(StopAllActionsTest);
     ADD_TEST_CASE(StopActionsByFlagsTest);
     ADD_TEST_CASE(ResumeTest);
+    ADD_TEST_CASE(Issue14050Test);
 }
 
 //------------------------------------------------------------------
@@ -341,4 +342,39 @@ void StopActionsByFlagsTest::stopAction(float time)
 std::string StopActionsByFlagsTest::subtitle() const
 {
     return "Stop All Actions By Flags Test";
+}
+
+//------------------------------------------------------------------
+//
+// Issue14050Test
+//
+//------------------------------------------------------------------
+class SpriteIssue14050: public Sprite
+{
+public:
+    SpriteIssue14050()
+    {
+        log("SpriteIssue14050::constructor");
+    }
+    virtual ~SpriteIssue14050()
+    {
+        log("SpriteIssue14050::destructor");
+    }
+};
+
+void Issue14050Test::onEnter()
+{
+    ActionManagerTest::onEnter();
+
+    auto sprite = new (std::nothrow) SpriteIssue14050;
+    sprite->initWithFile("Images/grossini.png");
+    sprite->autorelease();
+
+    auto move = MoveBy::create(2, Vec2(100, 100));
+    sprite->runAction(move);
+}
+
+std::string Issue14050Test::subtitle() const
+{
+    return "Issue14050. Sprite should not leak.";
 }

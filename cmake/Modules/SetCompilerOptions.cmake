@@ -23,7 +23,7 @@ macro (SetCompilerOptions)
     # definitions for bullet
 	if (USE_BULLET)
 		add_definitions(-DCC_ENABLE_BULLET_INTEGRATION=1)
-        add_definitions(-DCC_USE_PHYSICS=1)
+        add_definitions(-DCC_USE_3D_PHYSICS=1)
 	else()
 		add_definitions(-DCC_ENABLE_BULLET_INTEGRATION=0)
         add_definitions(-DCC_USE_3D_PHYSICS=0)
@@ -97,7 +97,7 @@ macro (SetCompilerOptions)
 	  endif()
 	endif()
 
-	if (MINGW OR NOT USE_PREBUILT_LIBS)
+	if (MINGW AND NOT USE_PREBUILT_LIBS)
 		add_definitions(-DMINIZIP_FROM_SYSTEM)
 	endif()
 

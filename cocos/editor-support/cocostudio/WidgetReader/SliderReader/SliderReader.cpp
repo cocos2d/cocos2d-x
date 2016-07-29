@@ -12,8 +12,6 @@
 
 #include "tinyxml2.h"
 #include "flatbuffers/flatbuffers.h"
-#include "platform/CCFileUtils.h"
-#include "2d/CCSpriteFrameCache.h"
 
 USING_NS_CC;
 using namespace ui;
@@ -486,6 +484,11 @@ namespace cocostudio
                 {
                     imageFileExist = true;
                 }
+                else if(SpriteFrameCache::getInstance()->getSpriteFrameByName(imageFileName))
+                {
+                    imageFileExist = true;
+                    imageFileNameType = 1;
+                }
                 else
                 {
                     imageErrorFilePath = imageFileName;
@@ -550,6 +553,11 @@ namespace cocostudio
                 if (FileUtils::getInstance()->isFileExist(normalFileName))
                 {
                     normalFileExist = true;
+                }
+                else if(SpriteFrameCache::getInstance()->getSpriteFrameByName(normalFileName))
+                {
+                    normalFileExist = true;
+                    normalType = 1;
                 }
                 else
                 {
@@ -616,6 +624,11 @@ namespace cocostudio
                 {
                     pressedFileExist = true;
                 }
+                else if(SpriteFrameCache::getInstance()->getSpriteFrameByName(pressedFileName))
+                {
+                    pressedFileExist = true;
+                    pressedType = 1;
+                }
                 else
                 {
                     pressedErrorFilePath = pressedFileName;
@@ -681,6 +694,11 @@ namespace cocostudio
                 {
                     disabledFileExist = true;
                 }
+                else if(SpriteFrameCache::getInstance()->getSpriteFrameByName(disabledFileName))
+                {
+                    disabledFileExist = true;
+                    disabledType = 1;
+                }
                 else
                 {
                     disabledErrorFilePath = disabledFileName;
@@ -745,6 +763,11 @@ namespace cocostudio
                 if (FileUtils::getInstance()->isFileExist(progressBarFileName))
                 {
                     progressFileExist = true;
+                }
+                else if(SpriteFrameCache::getInstance()->getSpriteFrameByName(progressBarFileName))
+                {
+                    progressFileExist = true;
+                    progressBarType = 1;
                 }
                 else
                 {

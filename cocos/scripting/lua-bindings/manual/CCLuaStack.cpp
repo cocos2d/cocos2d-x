@@ -847,6 +847,17 @@ int LuaStack::luaLoadChunksFromZIP(lua_State *L)
 int LuaStack::luaLoadBuffer(lua_State *L, const char *chunk, int chunkSize, const char *chunkName)
 {
     int r = 0;
+    
+    auto skipBOM = [](const char*& chunk, int& chunkSize){
+        // UTF-8 BOM? skip
+        if (static_cast<unsigned char>(chunk[0]) == 0xEF &&
+            static_cast<unsigned char>(chunk[1]) == 0xBB &&
+            static_cast<unsigned char>(chunk[2]) == 0xBF)
+        {
+            chunk += 3;
+            chunkSize -= 3;
+        }
+    };
 
     if (_xxteaEnabled && strncmp(chunk, _xxteaSign, _xxteaSignLen) == 0)
     {
@@ -857,11 +868,13 @@ int LuaStack::luaLoadBuffer(lua_State *L, const char *chunk, int chunkSize, cons
                                               (unsigned char*)_xxteaKey,
                                               (xxtea_long)_xxteaKeyLen,
                                               &len);
+        skipBOM((const char*&)result, (int&)len);
         r = luaL_loadbuffer(L, (char*)result, len, chunkName);
         free(result);
     }
     else
     {
+        skipBOM(chunk, chunkSize);
         r = luaL_loadbuffer(L, chunk, chunkSize, chunkName);
     }
 

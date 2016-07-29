@@ -31,7 +31,7 @@
 #include "renderer/CCTechnique.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCPass.h"
-
+#include "renderer/CCTexture2D.h"
 #include "xxhash.h"
 
 NS_CC_BEGIN
@@ -39,13 +39,18 @@ NS_CC_BEGIN
 int QuadCommand::__indexCapacity = -1;
 GLushort* QuadCommand::__indices = nullptr;
 
-QuadCommand::QuadCommand()
-: _indexSize(-1)
+QuadCommand::QuadCommand():
+_indexSize(-1),
+_ownedIndices()
 {
 }
 
 QuadCommand::~QuadCommand()
 {
+    for (auto& indices : _ownedIndices)
+    {
+        CC_SAFE_DELETE_ARRAY(indices);
+    }
 }
 
 void QuadCommand::init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, const BlendFunc& blendType, V3F_C4B_T2F_Quad* quads, ssize_t quadCount,
@@ -67,10 +72,22 @@ void QuadCommand::init(float globalOrder, GLuint textureID, GLProgramState* glPr
 
 void QuadCommand::reIndex(int indicesCount)
 {
+    // first time init: create a decent buffer size for indices to prevent too much resizing
+    if (__indexCapacity == -1)
+    {
+        indicesCount = std::max(indicesCount, 2048);
+    }
+
     if (indicesCount > __indexCapacity)
     {
+        // if resizing is needed, get needed size plus 25%, but not bigger that max size
+        indicesCount *= 1.25;
+        indicesCount = std::min(indicesCount, 65536);
+
         CCLOG("cocos2d: QuadCommand: resizing index size from [%d] to [%d]", __indexCapacity, indicesCount);
-        __indices = (GLushort*) realloc(__indices, indicesCount * sizeof(__indices[0]));
+
+        _ownedIndices.push_back(__indices);
+        __indices = new (std::nothrow) GLushort[indicesCount];
         __indexCapacity = indicesCount;
     }
 
@@ -92,5 +109,11 @@ void QuadCommand::init(float globalOrder, GLuint textureID, GLProgramState* shad
     init(globalOrder, textureID, shader, blendType, quads, quadCount, mv, 0);
 }
 
+void QuadCommand::init(float globalOrder, Texture2D* texture, GLProgramState* glProgramState, const BlendFunc& blendType, V3F_C4B_T2F_Quad* quads, ssize_t quadCount,
+    const Mat4& mv, uint32_t flags)
+{
+    init(globalOrder, texture->getName(), glProgramState, blendType, quads, quadCount, mv, flags);
+    _alphaTextureID = texture->getAlphaTextureName();
+}
 
 NS_CC_END

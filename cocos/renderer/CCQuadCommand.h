@@ -25,6 +25,8 @@
 #ifndef _CC_QUADCOMMAND_H_
 #define _CC_QUADCOMMAND_H_
 
+#include <vector>
+
 #include "renderer/CCTrianglesCommand.h"
 #include "renderer/CCGLProgramState.h"
 
@@ -65,10 +67,14 @@ public:
     CC_DEPRECATED_ATTRIBUTE void init(float globalOrder, GLuint textureID, GLProgramState* shader, const BlendFunc& blendType, V3F_C4B_T2F_Quad* quads, ssize_t quadCount,
               const Mat4& mv);
 
+    void init(float globalOrder, Texture2D* textureID, GLProgramState* glProgramState, const BlendFunc& blendType, V3F_C4B_T2F_Quad* quads, ssize_t quadCount,
+        const Mat4& mv, uint32_t flags);
+
 protected:
     void reIndex(int indices);
 
     int _indexSize;
+    std::vector<GLushort*> _ownedIndices;
 
     // shared across all instances
     static int __indexCapacity;

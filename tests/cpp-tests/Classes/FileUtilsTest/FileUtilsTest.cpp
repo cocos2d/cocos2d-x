@@ -385,8 +385,9 @@ void TestDirectoryFuncs::onEnter()
     y = s.height/4;
     Label* label = nullptr;
 
-    std::string dir = sharedFileUtils->getWritablePath() + "__test/";
+    std::string dir = sharedFileUtils->getWritablePath() + "__test";
     std::string subDir = "dir1/dir2";
+    std::string fullSubDir = dir + "/" + subDir;
     std::string msg;
     bool ok;
 
@@ -400,8 +401,8 @@ void TestDirectoryFuncs::onEnter()
         this->addChild(label);
 
         // Create sub directories recursively
-        ok = sharedFileUtils->createDirectory(dir + subDir);
-        if (ok && sharedFileUtils->isDirectoryExist(dir + subDir))
+        ok = sharedFileUtils->createDirectory(fullSubDir);
+        if (ok && sharedFileUtils->isDirectoryExist(fullSubDir))
         {
             msg = StringUtils::format("createDirectory: Sub directories '%s' created", subDir.c_str());
             label = Label::createWithSystemFont(msg, "", 20);
@@ -622,7 +623,7 @@ static const std::string FileErrors[] = {
     "OK",
     "NotExists",
     "OpenFailed",
-    "ReadFaild",
+    "ReadFailed",
     "NotInitialized",
     "TooLarge",
     "ObtainSizeFailed",
@@ -795,6 +796,8 @@ void TestWriteValueMap::onEnter()
     ValueMap mapInValueMap;
     mapInValueMap["string1"] = "string in dictInMap key 0";
     mapInValueMap["string2"] = "string in dictInMap key 1";
+    mapInValueMap["none"].getType();
+    
     valueMap["data0"] = Value(mapInValueMap);
 
     valueMap["data1"] = Value("string in array");

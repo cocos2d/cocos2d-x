@@ -28,7 +28,7 @@
 #include <vector>
 #include <locale>
 
-#include "tinyxml2/tinyxml2.h"
+#include "tinyxml2.h"
 #include "platform/CCFileUtils.h"
 #include "platform/CCApplication.h"
 #include "base/CCEventListenerTouch.h"
@@ -459,7 +459,7 @@ MyXMLVisitor::MyXMLVisitor(RichText* richText)
     
     MyXMLVisitor::setTagDescription("outline", true, [](const ValueMap& tagAttrValueMap) {
         // supported attributes:
-        // color, cize
+        // color, size
         ValueMap attrValueMap;
         
         attrValueMap[RichText::KEY_TEXT_STYLE] = RichText::VALUE_TEXT_STYLE_OUTLINE;
@@ -638,10 +638,10 @@ bool MyXMLVisitor::VisitEnter( const tinyxml2::XMLElement& element, const tinyxm
                     attributes.fontSize = attrValueMap.at(RichText::KEY_FONT_SIZE).asFloat();
                 }
                 if (attrValueMap.find(RichText::KEY_FONT_SMALL) != attrValueMap.end()) {
-                    attributes.fontSize = getFontSize() * 0.8;
+                    attributes.fontSize = getFontSize() * 0.8f;
                 }
                 if (attrValueMap.find(RichText::KEY_FONT_BIG) != attrValueMap.end()) {
-                    attributes.fontSize = getFontSize() * 1.25;
+                    attributes.fontSize = getFontSize() * 1.25f;
                 }
                 if (attrValueMap.find(RichText::KEY_FONT_COLOR_STRING) != attrValueMap.end()) {
                     attributes.setColor(_richText->color3BWithString(attrValueMap.at(RichText::KEY_FONT_COLOR_STRING).asString()));

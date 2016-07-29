@@ -33,6 +33,14 @@
 -- @return long#long ret (return value: long)
         
 --------------------------------
+-- Get the time in seconds to scroll between items.<br>
+-- return The time in seconds to scroll between items<br>
+-- see setScrollDuration(float)
+-- @function [parent=#ListView] getScrollDuration 
+-- @param self
+-- @return float#float ret (return value: float)
+        
+--------------------------------
 -- brief Query margin between each item in ListView.<br>
 -- return A margin in float.
 -- @function [parent=#ListView] getItemsMargin 
@@ -74,6 +82,14 @@
 -- @function [parent=#ListView] pushBackCustomItem 
 -- @param self
 -- @param #ccui.Widget item
+-- @return ListView#ListView self (return value: ccui.ListView)
+        
+--------------------------------
+-- brief Set current selected widget's index and call TouchEventType::ENDED event.<br>
+-- param itemIndex A index of a selected item.
+-- @function [parent=#ListView] setCurSelectedIndex 
+-- @param self
+-- @param #int itemIndex
 -- @return ListView#ListView self (return value: ccui.ListView)
         
 --------------------------------
@@ -141,7 +157,7 @@
         
 --------------------------------
 -- Set the margin between each item in ListView.<br>
--- param margin
+-- param margin A margin in float.
 -- @function [parent=#ListView] setItemsMargin 
 -- @param self
 -- @param #float margin
@@ -210,6 +226,16 @@
 -- @function [parent=#ListView] getRightmostItemInCurrentView 
 -- @param self
 -- @return Widget#Widget ret (return value: ccui.Widget)
+        
+--------------------------------
+-- Set the time in seconds to scroll between items.<br>
+-- Subsequent calls of function 'scrollToItem', will take 'time' seconds for scrolling.<br>
+-- param time The seconds needed to scroll between two items. 'time' must be >= 0<br>
+-- see scrollToItem(ssize_t, const Vec2&, const Vec2&)
+-- @function [parent=#ListView] setScrollDuration 
+-- @param self
+-- @param #float time
+-- @return ListView#ListView self (return value: ccui.ListView)
         
 --------------------------------
 -- brief Query the closest item to a specific position in current view.<br>
@@ -330,7 +356,7 @@
 -- @function [parent=#ListView] removeChild 
 -- @param self
 -- @param #cc.Node child
--- @param #bool cleaup
+-- @param #bool cleanup
 -- @return ListView#ListView self (return value: ccui.ListView)
         
 --------------------------------

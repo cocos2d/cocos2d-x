@@ -51,6 +51,21 @@ public:
     void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
 };
 
+class Sprite1ETC1Alpha : public SpriteTestDemo
+{
+public:
+    CREATE_FUNC(Sprite1ETC1Alpha);
+    Sprite1ETC1Alpha();
+    bool init() override;
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+
+    void addNewSpriteWithCoords(cocos2d::Vec2 p);
+    void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
+
+    cocos2d::Sprite* _background;
+};
+
 class SpriteBatchNode1: public SpriteTestDemo
 {
 public:
@@ -630,6 +645,7 @@ class AnimationCacheTest : public SpriteTestDemo
 public:
     CREATE_FUNC(AnimationCacheTest);
     AnimationCacheTest();
+    virtual ~AnimationCacheTest();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 };
@@ -739,6 +755,7 @@ public:
     CREATE_FUNC(AnimationCacheFile);
 
     AnimationCacheFile();
+    virtual ~AnimationCacheFile();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 };

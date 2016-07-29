@@ -34,6 +34,23 @@
 #include "renderer/CCGLProgram.h"
 #include "platform/CCGL.h"
 
+#if !defined(NDEBUG) && CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+
+/// Basic wrapper for glInsertEventMarkerEXT() depending on the current build settings and platform.
+#define CCGL_DEBUG_INSERT_EVENT_MARKER(__message__) glInsertEventMarkerEXT(0, __message__)
+/// Basic wrapper for glPushGroupMarkerEXT() depending on the current build settings and platform.
+#define CCGL_DEBUG_PUSH_GROUP_MARKER(__message__) glPushGroupMarkerEXT(0, __message__)
+/// Basic wrapper for CCGL_DEBUG_POP_GROUP_MARKER() depending on the current build settings and platform.
+#define CCGL_DEBUG_POP_GROUP_MARKER() glPopGroupMarkerEXT()
+
+#else
+
+#define CCGL_DEBUG_INSERT_EVENT_MARKER(__message__)
+#define CCGL_DEBUG_PUSH_GROUP_MARKER(__message__)
+#define CCGL_DEBUG_POP_GROUP_MARKER()
+
+#endif
+
 /**
  * @addtogroup renderer
  * @{
@@ -127,8 +144,8 @@ public:
     static const int VBO_SIZE = 65536;
     /**The max number of indices in a index buffer.*/
     static const int INDEX_VBO_SIZE = VBO_SIZE * 6 / 4;
-    /**The rendercommands which can be batched will be saved into a list, this is the reversed size of this list.*/
-    static const int BATCH_TRIAGCOMMAND_RESEVER_SIZE = 64;
+    /**The rendercommands which can be batched will be saved into a list, this is the reserved size of this list.*/
+    static const int BATCH_TRIAGCOMMAND_RESERVED_SIZE = 64;
     /**Reserved for material id, which means that the command could not be batched.*/
     static const int MATERIAL_ID_DO_NOT_BATCH = 0;
     /**Constructor.*/

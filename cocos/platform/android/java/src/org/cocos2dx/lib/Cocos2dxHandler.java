@@ -73,7 +73,7 @@ public class Cocos2dxHandler extends Handler {
         Cocos2dxActivity theActivity = this.mActivity.get();
         DialogMessage dialogMessage = (DialogMessage)msg.obj;
         new AlertDialog.Builder(theActivity)
-        .setTitle(dialogMessage.titile)
+        .setTitle(dialogMessage.title)
         .setMessage(dialogMessage.message)
         .setPositiveButton("Ok", 
                 new DialogInterface.OnClickListener() {
@@ -92,11 +92,11 @@ public class Cocos2dxHandler extends Handler {
     // ===========================================================
     
     public static class DialogMessage {
-        public String titile;
+        public String title;
         public String message;
         
         public DialogMessage(String title, String message) {
-            this.titile = title;
+            this.title = title;
             this.message = message;
         }
     }

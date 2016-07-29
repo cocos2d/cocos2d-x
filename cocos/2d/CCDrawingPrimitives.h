@@ -101,7 +101,7 @@ namespace DrawPrimitives
 
     /** Draws an array of points.
      *
-     * @param point A point coordinates.
+     * @param points A point coordinates.
      * @param numberOfPoints The number of points.
      * @since v0.7.2
      */

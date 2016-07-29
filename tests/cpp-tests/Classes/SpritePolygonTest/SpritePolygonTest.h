@@ -185,4 +185,12 @@ public:
     virtual void initSprites() override;
 };
 
+class Issue14017Test : public SpritePolygonTestDemo
+{
+public:
+    CREATE_FUNC(Issue14017Test);
+    Issue14017Test();
+    virtual void initSprites() override;
+};
+
 #endif /* defined(__cocos2d_tests__SpritePolygonTest__) */

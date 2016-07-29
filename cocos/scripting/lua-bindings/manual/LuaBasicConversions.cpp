@@ -72,7 +72,7 @@ extern int lua_isusertype (lua_State* L, int lo, const char* type);
 
 bool luaval_is_usertype(lua_State* L,int lo,const char* type, int def)
 {
-    if (def && lua_gettop(L)<abs(lo))
+    if (def && lua_gettop(L)<std::abs(lo))
         return true;
 
     if (lua_isnil(L,lo) || lua_isusertype(L,lo,type))
@@ -2727,7 +2727,7 @@ void array_to_luaval(lua_State* L,__Array* inValue)
         }
         else
         {
-            CCASSERT(false, "the type isn't suppored.");
+            CCASSERT(false, "the type isn't supported.");
         }
     }
 }
@@ -2811,7 +2811,7 @@ void dictionary_to_luaval(lua_State* L, __Dictionary* dict)
         }
         else
         {
-            CCASSERT(false, "the type isn't suppored.");
+            CCASSERT(false, "the type isn't supported.");
         }
     }
 }

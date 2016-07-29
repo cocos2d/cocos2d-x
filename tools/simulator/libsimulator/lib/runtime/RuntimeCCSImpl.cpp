@@ -3,7 +3,7 @@
 #include "ConfigParser.h"
 #include "cocostudio/CocoStudio.h"
 #include "ui/UIHelper.h"
-#include "tinyxml2/tinyxml2.h"
+#include "tinyxml2.h"
 
 ////////////////////////////////////////
 

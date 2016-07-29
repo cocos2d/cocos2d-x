@@ -18,7 +18,7 @@
         
 --------------------------------
 --  Check the listener is available.<br>
--- return Ture if there's one available callback function at least, false if there's no one.
+-- return True if there's one available callback function at least, false if there's no one.
 -- @function [parent=#EventListenerPhysicsContact] checkAvailable 
 -- @param self
 -- @return bool#bool ret (return value: bool)

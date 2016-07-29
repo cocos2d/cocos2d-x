@@ -26,7 +26,7 @@ THE SOFTWARE.
 #include "platform/android/jni/JniHelper.h"
 #include <string.h>
 #include "base/CCDirector.h"
-#include "../CCApplication.h"
+#include "platform/CCApplication.h"
 #include "platform/CCFileUtils.h"
 #include "base/ccUTF8.h"
 

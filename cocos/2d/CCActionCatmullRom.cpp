@@ -57,6 +57,9 @@ PointArray* PointArray::create(ssize_t capacity)
 bool PointArray::initWithCapacity(ssize_t capacity)
 {
     _controlPoints = new (std::nothrow) vector<Vec2*>();
+    if (capacity > 0) {
+        _controlPoints->reserve(capacity);
+    }
     
     return true;
 }

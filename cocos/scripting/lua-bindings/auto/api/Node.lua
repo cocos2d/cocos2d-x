@@ -740,14 +740,6 @@
 -- @return AffineTransform#AffineTransform ret (return value: cc.AffineTransform)
         
 --------------------------------
--- Returns the arrival order, indicates which children is added previously.<br>
--- see `setOrderOfArrival(unsigned int)`<br>
--- return The arrival order.
--- @function [parent=#Node] getOrderOfArrival 
--- @param self
--- @return int#int ret (return value: int)
-        
---------------------------------
 -- Sets the ActionManager object that is used by all actions.<br>
 -- warning If you set a new ActionManager, then previously created actions will be removed.<br>
 -- param actionManager     A ActionManager object that is used by all actions.
@@ -864,9 +856,9 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- Defines the oder in which the nodes are renderer.<br>
+-- Defines the order in which the nodes are renderer.<br>
 -- Nodes that have a Global Z Order lower, are renderer first.<br>
--- In case two or more nodes have the same Global Z Order, the oder is not guaranteed.<br>
+-- In case two or more nodes have the same Global Z Order, the order is not guaranteed.<br>
 -- The only exception if the Nodes have a Global Z Order == 0. In that case, the Scene Graph order is used.<br>
 -- By default, all nodes have a Global Z Order = 0. That means that by default, the Scene Graph order is used to render the nodes.<br>
 -- Global Z Order is useful when you need to render nodes in an order different than the Scene Graph order.<br>
@@ -901,17 +893,6 @@
 -- @return Node#Node ret (return value: cc.Node)
         
 --------------------------------
--- Sets the arrival order when this node has a same ZOrder with other children.<br>
--- A node which called addChild subsequently will take a larger arrival order,<br>
--- If two children have the same Z order, the child with larger arrival order will be drawn later.<br>
--- warning This method is used internally for localZOrder sorting, don't change this manually<br>
--- param orderOfArrival   The arrival order.
--- @function [parent=#Node] setOrderOfArrival 
--- @param self
--- @param #int orderOfArrival
--- @return Node#Node self (return value: cc.Node)
-        
---------------------------------
 -- Returns the scale factor on Z axis of this node<br>
 -- see `setScaleZ(float)`<br>
 -- return The scale factor on Z axis.
@@ -937,11 +918,11 @@
         
 --------------------------------
 -- LocalZOrder is the 'key' used to sort the node relative to its siblings.<br>
--- The Node's parent will sort all its children based ont the LocalZOrder value.<br>
+-- The Node's parent will sort all its children based on the LocalZOrder value.<br>
 -- If two nodes have the same LocalZOrder, then the node that was added first to the children's array will be in front of the other node in the array.<br>
 -- Also, the Scene Graph is traversed using the "In-Order" tree traversal algorithm ( http:en.wikipedia.org/wiki/Tree_traversal#In-order )<br>
--- And Nodes that have LocalZOder values < 0 are the "left" subtree<br>
--- While Nodes with LocalZOder >=0 are the "right" subtree.<br>
+-- And Nodes that have LocalZOrder values < 0 are the "left" subtree<br>
+-- While Nodes with LocalZOrder >=0 are the "right" subtree.<br>
 -- see `setGlobalZOrder`<br>
 -- see `setVertexZ`<br>
 -- param localZOrder The local Z order value.

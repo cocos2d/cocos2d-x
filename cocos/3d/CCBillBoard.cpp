@@ -44,54 +44,54 @@ BillBoard::~BillBoard()
 
 BillBoard* BillBoard::createWithTexture(Texture2D *texture, Mode mode)
 {
-    BillBoard *billborad = new (std::nothrow) BillBoard();
-    if (billborad && billborad->initWithTexture(texture))
+    BillBoard *billboard = new (std::nothrow) BillBoard();
+    if (billboard && billboard->initWithTexture(texture))
     {
-        billborad->_mode = mode;
-        billborad->autorelease();
-        return billborad;
+        billboard->_mode = mode;
+        billboard->autorelease();
+        return billboard;
     }
-    CC_SAFE_DELETE(billborad);
+    CC_SAFE_DELETE(billboard);
     return nullptr;
 }
 
 
 BillBoard* BillBoard::create(const std::string& filename, Mode mode)
 {
-    BillBoard *billborad = new (std::nothrow) BillBoard();
-    if (billborad && billborad->initWithFile(filename))
+    BillBoard *billboard = new (std::nothrow) BillBoard();
+    if (billboard && billboard->initWithFile(filename))
     {
-        billborad->_mode = mode;
-        billborad->autorelease();
-        return billborad;
+        billboard->_mode = mode;
+        billboard->autorelease();
+        return billboard;
     }
-    CC_SAFE_DELETE(billborad);
+    CC_SAFE_DELETE(billboard);
     return nullptr;
 }
 
 BillBoard* BillBoard::create(const std::string& filename, const Rect& rect, Mode mode)
 {
-    BillBoard *billborad = new (std::nothrow) BillBoard();
-    if (billborad && billborad->initWithFile(filename, rect))
+    BillBoard *billboard = new (std::nothrow) BillBoard();
+    if (billboard && billboard->initWithFile(filename, rect))
     {
-        billborad->_mode = mode;
-        billborad->autorelease();
-        return billborad;
+        billboard->_mode = mode;
+        billboard->autorelease();
+        return billboard;
     }
-    CC_SAFE_DELETE(billborad);
+    CC_SAFE_DELETE(billboard);
     return nullptr;
 }
 
 BillBoard* BillBoard::create(Mode mode)
 {
-    BillBoard *billborad = new (std::nothrow) BillBoard();
-    if (billborad && billborad->init())
+    BillBoard *billboard = new (std::nothrow) BillBoard();
+    if (billboard && billboard->init())
     {
-        billborad->_mode = mode;
-        billborad->autorelease();
-        return billborad;
+        billboard->_mode = mode;
+        billboard->autorelease();
+        return billboard;
     }
-    CC_SAFE_DELETE(billborad);
+    CC_SAFE_DELETE(billboard);
     return nullptr;
 }
 

@@ -115,7 +115,7 @@ protected:
 
     bool _enable;
     bool _collisionEnable;
-    bool _destoryMark;
+    bool _destroyMark;
     int _tag;
     float _maxForce;
 

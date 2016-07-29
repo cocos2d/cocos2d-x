@@ -49,18 +49,18 @@ var LoaderTestLayer = BaseTestLayer.extend({
             bg.y = winSize.height/2;
         });
 
-        cc.loader.load([s_Cowboy_plist, s_Cowboy_png], function(err, results){
+        cc.loader.load([s_ghostsPlist, s_ghosts], function(err, results){
             if(err){
-                cc.log("Failed to load %s, %s .", s_Cowboy_plist, s_Cowboy_png);
+                cc.log("Failed to load %s, %s .", s_ghostsPlist, s_ghosts);
                 return;
             }
 
-            cc.log(s_Cowboy_plist + "--->");
+            cc.log(s_ghostsPlist + "--->");
             cc.log(results[0]);
-            cc.log(s_Cowboy_png + "--->");
+            cc.log(s_ghosts + "--->");
             cc.log(results[1]);
-            cc.spriteFrameCache.addSpriteFrames(s_Cowboy_plist);
-            var frame = new cc.Sprite("#testAnimationResource/1.png");
+            cc.spriteFrameCache.addSpriteFrames(s_ghostsPlist);
+            var frame = new cc.Sprite("#sister1.gif");
             self.addChild(frame);
             frame.x = winSize.width/4;
             frame.y = winSize.height/4;
@@ -113,7 +113,8 @@ var LoaderCycleLayer = BaseTestLayer.extend({
                     resultTTF.setColor(cc.color.GREEN);
                 else
                     resultTTF.setColor(cc.color.RED);
-                t.addChild(resultTTF);
+                if (!resultTTF.parent)
+                    t.addChild(resultTTF);
                 if(index < 4)
                     t.test(cb);
             };

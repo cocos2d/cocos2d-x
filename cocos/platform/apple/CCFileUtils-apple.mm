@@ -33,7 +33,6 @@ THE SOFTWARE.
 #include <stack>
 
 #include "base/CCDirector.h"
-#include "deprecated/CCString.h"
 #include "deprecated/CCDictionary.h"
 #include "platform/CCFileUtils.h"
 #include "platform/CCSAXParser.h"
@@ -300,9 +299,9 @@ static int unlink_cb(const char *fpath, const struct stat *sb, int typeflag, str
 
 bool FileUtilsApple::removeDirectory(const std::string& path)
 {
-    if (path.size() > 0 && path[path.size() - 1] != '/')
+    if (path.empty())
     {
-        CCLOGERROR("Fail to remove directory, path must terminate with '/': %s", path.c_str());
+        CCLOGERROR("Fail to remove directory, path is empty!");
         return false;
     }
 
@@ -367,7 +366,7 @@ bool FileUtilsApple::writeToFile(const ValueMap& dict, const std::string &fullPa
 
 bool FileUtils::writeValueMapToFile(const ValueMap& dict, const std::string& fullPath)
 {
-
+    valueMapCompact(const_cast<ValueMap&>(dict));
     //CCLOG("iOS||Mac Dictionary %d write to file %s", dict->_ID, fullPath.c_str());
     NSMutableDictionary *nsDict = [NSMutableDictionary dictionary];
 
@@ -378,9 +377,59 @@ bool FileUtils::writeValueMapToFile(const ValueMap& dict, const std::string& ful
 
     NSString *file = [NSString stringWithUTF8String:fullPath.c_str()];
     // do it atomically
-    [nsDict writeToFile:file atomically:YES];
+    return [nsDict writeToFile:file atomically:YES];
+}
 
-    return true;
+void FileUtilsApple::valueMapCompact(ValueMap& valueMap)
+{
+    auto itr = valueMap.begin();
+    while(itr != valueMap.end()){
+        auto vtype = itr->second.getType();
+        switch(vtype){
+            case Value::Type::NONE:{
+                itr = valueMap.erase(itr);
+                continue;
+            }
+                break;
+            case Value::Type::MAP:{
+                valueMapCompact(itr->second.asValueMap());
+            }
+                break;
+            case Value::Type::VECTOR:{
+                valueVectorCompact(itr->second.asValueVector());
+            }
+                break;
+            default:
+                break;
+        }
+        itr++;
+    }
+}
+
+void FileUtilsApple::valueVectorCompact(ValueVector& valueVector)
+{
+    auto itr = valueVector.begin();
+    while(itr != valueVector.end()){
+        auto vtype = (*itr).getType();
+        switch(vtype){
+            case Value::Type::NONE:{
+                itr = valueVector.erase(itr);
+                continue;
+            }
+                break;
+            case Value::Type::MAP:{
+                valueMapCompact((*itr).asValueMap());
+            }
+                break;
+            case Value::Type::VECTOR:{
+                valueVectorCompact((*itr).asValueVector());
+            }
+                break;
+            default:
+                break;
+        }
+        itr++;
+    }
 }
 
 bool FileUtils::writeValueVectorToFile(const ValueVector& vecData, const std::string& fullPath)

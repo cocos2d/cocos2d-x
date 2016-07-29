@@ -6,15 +6,15 @@
 
 --------------------------------
 -- set header width, affect all tab<br>
--- param headerWith: each tab header's width
+-- param headerWidth each tab header's width
 -- @function [parent=#TabControl] setHeaderWidth 
 -- @param self
--- @param #float headerWith
+-- @param #float headerWidth
 -- @return TabControl#TabControl self (return value: ccui.TabControl)
         
 --------------------------------
 -- remove the tab from this TabControl<br>
--- param index: the index of tab
+-- param index The index of tab
 -- @function [parent=#TabControl] removeTab 
 -- @param self
 -- @param #int index
@@ -42,9 +42,9 @@
         
 --------------------------------
 -- insert tab, and init the position of header and container<br>
--- param index, the index tab should be<br>
--- param header, the header Button, will be a protected child in TabControl<br>
--- param the container, will be a protected child in TabControl
+-- param index The index tab should be<br>
+-- param header The header Button, will be a protected child in TabControl<br>
+-- param container The container, will be a protected child in TabControl
 -- @function [parent=#TabControl] insertTab 
 -- @param self
 -- @param #int index
@@ -70,7 +70,7 @@
         
 --------------------------------
 -- the header dock place of header in TabControl<br>
--- param: dockPlace, the strip place
+-- param dockPlace The strip place
 -- @function [parent=#TabControl] setHeaderDockPlace 
 -- @param self
 -- @param #int dockPlace
@@ -86,7 +86,7 @@
 
 --------------------------------
 -- get TabHeader<br>
--- param index, the index of tab
+-- param index The index of tab
 -- @function [parent=#TabControl] getTabHeader 
 -- @param self
 -- @param #int index
@@ -104,12 +104,12 @@
 -- param callback A std::function with type @see `ccTabControlCallback`
 -- @function [parent=#TabControl] setTabChangedEventListener 
 -- @param self
--- @param #function callBack
+-- @param #function callback
 -- @return TabControl#TabControl self (return value: ccui.TabControl)
         
 --------------------------------
 -- set the delta zoom of selected tab<br>
--- param zoom, the delta zoom
+-- param zoom The delta zoom
 -- @function [parent=#TabControl] setHeaderSelectedZoom 
 -- @param self
 -- @param #float zoom
@@ -117,15 +117,15 @@
         
 --------------------------------
 -- set header height, affect all tab<br>
--- param headerHeigt: each tab header's height
+-- param headerHeight each tab header's height
 -- @function [parent=#TabControl] setHeaderHeight 
 -- @param self
--- @param #float headerHeigt
+-- @param #float headerHeight
 -- @return TabControl#TabControl self (return value: ccui.TabControl)
         
 --------------------------------
 -- get the index of tabCell in TabView, return -1 if not exists in.<br>
--- / @return the index of tabCell in TabView,  `-1` means not exists in.
+-- return the index of tabCell in TabView, `-1` means not exists in.
 -- @function [parent=#TabControl] indexOfTabHeader 
 -- @param self
 -- @param #ccui.TabHeader tabCell
@@ -133,7 +133,7 @@
         
 --------------------------------
 -- get Container<br>
--- param index, the index of tab
+-- param index The index of tab
 -- @function [parent=#TabControl] getTabContainer 
 -- @param self
 -- @param #int index

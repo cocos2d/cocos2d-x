@@ -13,9 +13,6 @@
 
 #include "tinyxml2.h"
 #include "flatbuffers/flatbuffers.h"
-#include "platform/CCFileUtils.h"
-#include "2d/CCSpriteFrameCache.h"
-#include "2d/CCLabel.h"
 
 USING_NS_CC;
 using namespace ui;
@@ -675,6 +672,11 @@ namespace cocostudio
                 if (FileUtils::getInstance()->isFileExist(normalTexturePath))
                 {
                     normalFileExist = true;
+                }
+                else if (SpriteFrameCache::getInstance()->getSpriteFrameByName(normalTexturePath))
+                {
+                    normalFileExist = true;
+                    normalType = 1;
                 }
                 else
                 {

@@ -39,6 +39,9 @@ THE SOFTWARE.
 #define  LOG_TAG    "CCFileUtils-android.cpp"
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
 
+#define  ASSETS_FOLDER_NAME          "assets/"
+#define  ASSETS_FOLDER_NAME_LENGTH   7
+
 using namespace std;
 
 NS_CC_BEGIN
@@ -85,7 +88,7 @@ FileUtilsAndroid::~FileUtilsAndroid()
 
 bool FileUtilsAndroid::init()
 {
-    _defaultResRootPath = "assets/";
+    _defaultResRootPath = ASSETS_FOLDER_NAME;
     
     std::string assetsPath(getApkPath());
     if (assetsPath.find("/obb/") != std::string::npos)
@@ -201,11 +204,7 @@ bool FileUtilsAndroid::isDirectoryExistInternal(const std::string& dirPath) cons
     }
 
     const char* s = dirPath.c_str();
-    bool startWithAssets = (dirPath.find("assets/") == 0);
-    int lenOfAssets = 7;
-
-    std::string tmpStr;
-
+    
     // find absolute path in flash memory
     if (s[0] == '/')
     {
@@ -216,23 +215,26 @@ bool FileUtilsAndroid::isDirectoryExistInternal(const std::string& dirPath) cons
             return S_ISDIR(st.st_mode);
         }
     }
-
-    // find it in apk's assets dir
-    // Found "assets/" at the beginning of the path and we don't want it
-    CCLOG("find in apk dirPath(%s)", s);
-    if (startWithAssets)
+    else
     {
-        s += lenOfAssets;
-    }
-    if (FileUtilsAndroid::assetmanager)
-    {
-        AAssetDir* aa = AAssetManager_openDir(FileUtilsAndroid::assetmanager, s);
-        if (aa && AAssetDir_getNextFileName(aa))
+        // find it in apk's assets dir
+        // Found "assets/" at the beginning of the path and we don't want it
+        CCLOG("find in apk dirPath(%s)", s);
+        if (dirPath.find(ASSETS_FOLDER_NAME) == 0)
         {
-            AAssetDir_close(aa);
-            return true;
+            s += ASSETS_FOLDER_NAME_LENGTH;
+        }
+        if (FileUtilsAndroid::assetmanager)
+        {
+            AAssetDir* aa = AAssetManager_openDir(FileUtilsAndroid::assetmanager, s);
+            if (aa && AAssetDir_getNextFileName(aa))
+            {
+                AAssetDir_close(aa);
+                return true;
+            }
         }
     }
+    
     return false;
 }
 
@@ -295,7 +297,7 @@ FileUtils::Status FileUtilsAndroid::getContents(const std::string& filename, Res
     if (readsize < size) {
         if (readsize >= 0)
             buffer->resize(readsize);
-        return FileUtils::Status::ReadFaild;
+        return FileUtils::Status::ReadFailed;
     }
 
     return FileUtils::Status::OK;

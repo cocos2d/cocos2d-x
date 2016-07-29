@@ -293,7 +293,7 @@ EaseExponentialOut* EaseExponentialOut::clone() const
 {
     // no copy constructor
     if (_inner)
-        EaseExponentialOut::create(_inner->clone());
+        return EaseExponentialOut::create(_inner->clone());
     
     return nullptr;
 }

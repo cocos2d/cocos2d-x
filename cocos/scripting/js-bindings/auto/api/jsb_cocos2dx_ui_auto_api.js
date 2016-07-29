@@ -3544,6 +3544,16 @@ getCurSelectedIndex : function (
 },
 
 /**
+ * @method getScrollDuration
+ * @return {float}
+ */
+getScrollDuration : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method getItemsMargin
  * @return {float}
  */
@@ -3595,6 +3605,16 @@ widget
  */
 pushBackCustomItem : function (
 widget 
+)
+{
+},
+
+/**
+ * @method setCurSelectedIndex
+ * @param {int} arg0
+ */
+setCurSelectedIndex : function (
+int 
 )
 {
 },
@@ -3783,6 +3803,16 @@ getRightmostItemInCurrentView : function (
 )
 {
     return ccui.Widget;
+},
+
+/**
+ * @method setScrollDuration
+ * @param {float} arg0
+ */
+setScrollDuration : function (
+float 
+)
+{
 },
 
 /**
@@ -5030,10 +5060,28 @@ int
 },
 
 /**
+ * @method removeAllPages
+ */
+removeAllPages : function (
+)
+{
+},
+
+/**
  * @method setAutoScrollStopEpsilon
  * @param {float} arg0
  */
 setAutoScrollStopEpsilon : function (
+float 
+)
+{
+},
+
+/**
+ * @method setIndicatorIndexNodesScale
+ * @param {float} arg0
+ */
+setIndicatorIndexNodesScale : function (
 float 
 )
 {
@@ -5090,6 +5138,16 @@ long
 },
 
 /**
+ * @method getIndicatorIndexNodesColor
+ * @return {color3b_object}
+ */
+getIndicatorIndexNodesColor : function (
+)
+{
+    return cc.Color3B;
+},
+
+/**
  * @method getIndicatorSelectedIndexColor
  * @return {color3b_object}
  */
@@ -5097,6 +5155,16 @@ getIndicatorSelectedIndexColor : function (
 )
 {
     return cc.Color3B;
+},
+
+/**
+ * @method getIndicatorIndexNodesScale
+ * @return {float}
+ */
+getIndicatorIndexNodesScale : function (
+)
+{
+    return 0;
 },
 
 /**
@@ -5140,9 +5208,11 @@ long
 },
 
 /**
- * @method removeAllPages
+ * @method setIndicatorIndexNodesColor
+ * @param {color3b_object} arg0
  */
-removeAllPages : function (
+setIndicatorIndexNodesColor : function (
+color3b 
 )
 {
 },
@@ -5173,6 +5243,18 @@ getCurrentPageIndex : function (
  */
 removePage : function (
 widget 
+)
+{
+},
+
+/**
+ * @method setIndicatorIndexNodesTexture
+ * @param {String} arg0
+ * @param {ccui.Widget::TextureResType} arg1
+ */
+setIndicatorIndexNodesTexture : function (
+str, 
+texturerestype 
 )
 {
 },

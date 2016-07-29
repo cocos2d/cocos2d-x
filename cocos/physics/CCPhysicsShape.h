@@ -77,11 +77,17 @@ public:
         UNKNOWN,
         CIRCLE,
         BOX,
-        POLYGEN,
+        POLYGON,
         EDGESEGMENT,
         EDGEBOX,
-        EDGEPOLYGEN,
+        EDGEPOLYGON,
         EDGECHAIN,
+
+        /** @deprecated Use Type::POLYGON instead. */
+        POLYGEN = POLYGON,
+
+        /** @deprecated Use Type::EDGEPOLYGON instead. */
+        EDGEPOLYGEN = EDGEPOLYGON,
     };
     
 public:
@@ -260,13 +266,16 @@ public:
     static void recenterPoints(Vec2* points, int count, const Vec2& center = Vec2::ZERO);
 
     /**
-     * Get center of the polyon points.
+     * Get center of the polygon points.
      *
      * @param points A Vec2 object pointer.
      * @param count An integer number.
      * @return A Vec2 object.
      */
-    static Vec2 getPolyonCenter(const Vec2* points, int count);
+    static Vec2 getPolygonCenter(const Vec2* points, int count);
+
+    /** @deprecated use getPolygonCenter() instead */
+    CC_DEPRECATED_ATTRIBUTE static Vec2 getPolyonCenter(const Vec2* points, int count);
     
     /**
      * Set a mask that defines which categories this physics body belongs to.

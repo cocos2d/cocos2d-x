@@ -1,39 +1,31 @@
 {
+"skeleton": { "hash": "rPoYyBLFG6F0CGZ5wsUEBKDJU9U", "spine": "3.4.00", "width": 470.9, "height": 731.49, "images": "./images/" },
 "bones": [
 	{ "name": "hip", "y": 247.47 },
-	{ "name": "front_thigh", "parent": "hip", "length": 74.8, "x": -17.45, "y": -11.64, "rotation": -95.51, "color": "00ff04ff" },
-	{ "name": "rear_thigh", "parent": "hip", "length": 85.71, "x": 8.91, "y": -5.62, "rotation": -72.54, "color": "ff000dff" },
-	{ "name": "torso", "parent": "hip", "length": 127.55, "x": -1.61, "y": 4.9, "rotation": 103.82, "color": "e0da19ff" },
-	{
-		"name": "front_shin",
-		"parent": "front_thigh",
-		"length": 128.76,
-		"x": 78.69,
-		"y": 1.6,
-		"rotation": -2.21,
-		"inheritScale": false,
-		"color": "00ff04ff"
-	},
-	{ "name": "front_upper_arm", "parent": "torso", "length": 69.45, "x": 103.75, "y": 19.32, "rotation": 168.37, "color": "00ff04ff" },
-	{ "name": "neck", "parent": "torso", "length": 25.45, "x": 127.49, "y": -0.3, "rotation": -31.53, "color": "e0da19ff" },
-	{ "name": "rear_shin", "parent": "rear_thigh", "length": 121.87, "x": 86.1, "y": -1.32, "rotation": -19.83, "color": "ff000dff" },
-	{ "name": "rear_upper_arm", "parent": "torso", "length": 51.93, "x": 92.35, "y": -19.22, "rotation": -169.55, "color": "ff000dff" },
+	{ "name": "torso", "parent": "hip", "length": 127.55, "rotation": 103.82, "x": -1.61, "y": 4.9, "color": "e0da19ff" },
+	{ "name": "front_upper_arm", "parent": "torso", "length": 69.45, "rotation": 168.37, "x": 103.75, "y": 19.32, "color": "00ff04ff" },
 	{
 		"name": "front_bracer",
 		"parent": "front_upper_arm",
 		"length": 40.57,
+		"rotation": 18.29,
 		"x": 68.8,
 		"y": -0.68,
-		"rotation": 18.29,
 		"color": "00ff04ff"
 	},
-	{ "name": "front_foot", "parent": "front_shin", "length": 91.34, "x": 128.75, "y": -0.33, "rotation": 77.9, "color": "00ff04ff" },
-	{ "name": "head", "parent": "neck", "length": 263.57, "x": 27.66, "y": -0.25, "rotation": 23.18, "color": "e0da19ff" },
-	{ "name": "rear_bracer", "parent": "rear_upper_arm", "length": 34.55, "x": 51.35, "rotation": 23.15, "color": "ff000dff" },
-	{ "name": "rear_foot", "parent": "rear_shin", "length": 82.57, "x": 121.45, "y": -0.75, "rotation": 69.3, "color": "ff000dff" },
-	{ "name": "front_fist", "parent": "front_bracer", "length": 65.38, "x": 40.56, "y": 0.19, "rotation": 12.43, "color": "00ff04ff" },
-	{ "name": "gun", "parent": "rear_bracer", "length": 43.1, "x": 34.42, "y": -0.45, "rotation": 5.34, "color": "ff000dff" },
-	{ "name": "gunTip", "parent": "gun", "x": 201.04, "y": 52.13, "rotation": 6.83, "color": "ff000dff" }
+	{ "name": "front_fist", "parent": "front_bracer", "length": 65.38, "rotation": 12.43, "x": 40.56, "y": 0.19, "color": "00ff04ff" },
+	{ "name": "front_thigh", "parent": "hip", "length": 74.8, "rotation": -95.51, "x": -17.45, "y": -11.64, "color": "00ff04ff" },
+	{ "name": "front_shin", "parent": "front_thigh", "length": 128.76, "rotation": -2.21, "x": 78.69, "y": 1.6, "color": "00ff04ff" },
+	{ "name": "front_foot", "parent": "front_shin", "length": 91.34, "rotation": 77.9, "x": 128.75, "y": -0.33, "color": "00ff04ff" },
+	{ "name": "rear_upper_arm", "parent": "torso", "length": 51.93, "rotation": -169.55, "x": 92.35, "y": -19.22, "color": "ff000dff" },
+	{ "name": "rear_bracer", "parent": "rear_upper_arm", "length": 34.55, "rotation": 23.15, "x": 51.35, "color": "ff000dff" },
+	{ "name": "gun", "parent": "rear_bracer", "length": 43.1, "rotation": 5.34, "x": 34.42, "y": -0.45, "color": "ff000dff" },
+	{ "name": "gunTip", "parent": "gun", "rotation": 6.83, "x": 201.04, "y": 52.13, "color": "ff000dff" },
+	{ "name": "neck", "parent": "torso", "length": 25.45, "rotation": -31.53, "x": 127.49, "y": -0.3, "color": "e0da19ff" },
+	{ "name": "head", "parent": "neck", "length": 263.57, "rotation": 23.18, "x": 27.66, "y": -0.25, "color": "e0da19ff" },
+	{ "name": "rear_thigh", "parent": "hip", "length": 85.71, "rotation": -72.54, "x": 8.91, "y": -5.62, "color": "ff000dff" },
+	{ "name": "rear_shin", "parent": "rear_thigh", "length": 121.87, "rotation": -19.83, "x": 86.1, "y": -1.32, "color": "ff000dff" },
+	{ "name": "rear_foot", "parent": "rear_shin", "length": 82.57, "rotation": 69.3, "x": 121.45, "y": -0.75, "color": "ff000dff" }
 ],
 "slots": [
 	{ "name": "rear_upper_arm", "bone": "rear_upper_arm", "attachment": "rear_upper_arm" },
@@ -54,7 +46,8 @@
 	{ "name": "goggles", "bone": "head", "attachment": "goggles" },
 	{ "name": "front_bracer", "bone": "front_bracer", "attachment": "front_bracer" },
 	{ "name": "front_fist", "bone": "front_fist", "attachment": "front_fist_closed" },
-	{ "name": "muzzle", "bone": "gunTip", "additive": true }
+	{ "name": "muzzle", "bone": "gunTip", "blend": "additive" },
+	{ "name": "head-bb", "bone": "head" }
 ],
 "skins": {
 	"default": {
@@ -91,6 +84,13 @@
 		},
 		"head": {
 			"head": { "x": 128.95, "y": 0.29, "rotation": -70.63, "width": 271, "height": 298 }
+		},
+		"head-bb": {
+			"head": {
+				"type": "boundingbox",
+				"vertexCount": 6,
+				"vertices": [ -19.14, -70.3, 40.8, -118.07, 257.77, -115.61, 285.16, 57.18, 120.77, 164.95, -5.06, 76.94 ]
+			}
 		},
 		"mouth": {
 			"mouth_grind": { "x": 23.68, "y": -32.23, "rotation": -70.63, "width": 93, "height": 59 },
@@ -1825,10 +1825,6 @@
 				]
 			},
 			"muzzle": {
-				"attachment": [
-					{ "time": 0.1333, "name": "muzzle" },
-					{ "time": 0.2666, "name": null }
-				],
 				"color": [
 					{
 						"time": 0.1333,
@@ -1841,6 +1837,10 @@
 						"curve": [ 0.821, 0, 0.909, 0.89 ]
 					},
 					{ "time": 0.2666, "color": "ffffff00" }
+				],
+				"attachment": [
+					{ "time": 0.1333, "name": "muzzle" },
+					{ "time": 0.2666, "name": null }
 				]
 			}
 		},
@@ -2008,7 +2008,7 @@
 				]
 			}
 		},
-		"draworder": [
+		"drawOrder": [
 			{
 				"time": 0.6666,
 				"offsets": [

@@ -28,8 +28,8 @@
 
 #include "ui/UIEditBox/UIEditBoxImpl-mac.h"
 #include "base/CCDirector.h"
+#include "base/ccUTF8.h"
 #include "ui/UIEditBox/UIEditBox.h"
-#include "deprecated/CCString.h"
 #include "ui/UIEditBox/Mac/CCUIEditBoxMac.h"
 
 NS_CC_BEGIN
@@ -98,6 +98,9 @@ NSFont* EditBoxImplMac::constructFont(const char *fontName, int fontSize)
     else
     {
         textFont = [NSFont fontWithName:fntName size:fontSize];
+        if (textFont == nil) {
+            textFont = [NSFont systemFontOfSize:fontSize];
+        }
     }
     
     return textFont;

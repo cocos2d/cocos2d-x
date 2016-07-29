@@ -391,7 +391,6 @@ var ActionRotateXY = ActionsDemo.extend({
 
         this._tamara.runAction(cc.sequence(actionTo, delay, actionToBack));
         this._grossini.runAction(cc.sequence(actionBy, delay.clone(), actionBy.reverse()));
-
         this._kathia.runAction(cc.sequence(actionBy2, delay.clone(), actionBy2.reverse()));
 
         if (!cc.sys.isNative && !("opengl" in cc.sys.capabilities)) {
@@ -452,7 +451,6 @@ var ActionSkew = ActionsDemo.extend({
 
         this._tamara.runAction(cc.sequence(actionTo, delay, actionToBack));
         this._grossini.runAction(cc.sequence(actionBy, delay.clone(), actionBy.reverse()));
-
         this._kathia.runAction(cc.sequence(actionBy2, delay.clone(), actionBy2.reverse()));
         //----end5----
     },
@@ -1362,8 +1360,12 @@ var ActionRepeatForever = ActionsDemo.extend({
 
     },
     repeatForever:function (sender) {
-        var repeat = cc.rotateBy(1, 360).repeatForever();
-        sender.runAction(repeat);
+        sender.runAction(cc.sequence(
+                cc.rotateBy(2, 90).easing(cc.easeElasticInOut(0.5)),
+                cc.rotateBy(0.5, 90)
+            ).repeatForever()
+        );
+        cc.sys.garbageCollect();
     },
     title:function () {
         return "cc.CallFunc + cc.RepeatForever";
@@ -1644,50 +1646,6 @@ var ActionRepeat = ActionsDemo.extend({
         return JSON.stringify(ret);
     }
 
-});
-//------------------------------------------------------------------
-//
-// ActionOrbit
-//
-//------------------------------------------------------------------
-var ActionOrbit = ActionsDemo.extend({
-    onEnter:function () {
-        this._super();
-        this.centerSprites(3);
-
-        var orbit1 = cc.orbitCamera(2, 1, 0, 0, 180, 0, 0);
-        var action1 = cc.sequence(
-            orbit1,
-            orbit1.reverse());
-
-        var orbit2 = cc.orbitCamera(2, 1, 0, 0, 180, -45, 0);
-        var action2 = cc.sequence(
-            orbit2,
-            orbit2.reverse());
-
-        var orbit3 = cc.orbitCamera(2, 1, 0, 0, 180, 90, 0);
-        var action3 = cc.sequence(
-            orbit3,
-            orbit3.reverse());
-
-        this._kathia.runAction(action1.repeatForever());
-        this._tamara.runAction(action2.repeatForever());
-        this._grossini.runAction(action3.repeatForever());
-
-        var move = cc.moveBy(3, cc.p(100, -100));
-        var move_back = move.reverse();
-        var seq = cc.sequence(move, move_back);
-
-        var rfe = seq.repeatForever();
-
-        this._kathia.runAction(rfe);
-        this._tamara.runAction((rfe.clone()));
-        this._grossini.runAction((rfe.clone()));
-
-    },
-    subtitle:function () {
-        return "OrbitCamera action";
-    }
 });
 //------------------------------------------------------------------
 //
@@ -3011,10 +2969,6 @@ var arrayOfActionsTest = [
     ActionCustomTest,
     ActionIssue13605
 ];
-
-if("opengl" in cc.sys.capabilities){
-    arrayOfActionsTest.push(ActionOrbit);
-}
 
 var nextActionsTest = function () {
     actionsTestIdx++;

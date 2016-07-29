@@ -129,8 +129,7 @@ cc.isUndefined = function(obj) {
  * @returns {boolean}
  */
 cc.isObject = function(obj) {
-    return obj.__nativeObj !== undefined ||
-        ( typeof obj === "object" && Object.prototype.toString.call(obj) === '[object Object]' );
+    return ( obj !== null && typeof obj === "object" );
 };
 
 /**
@@ -299,7 +298,7 @@ jsb.registerNativeRef = function (owner, target) {
     if (owner && target && owner !== target) {
         var refs = owner.__nativeRefs;
         if (!refs) {
-            refs = owner.__nativeRefs = [1];
+            refs = owner.__nativeRefs = [];
         }
         var index = refs.indexOf(target);
         if (index === -1) {

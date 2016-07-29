@@ -329,4 +329,54 @@ public:
     virtual std::string subtitle() const override;    
 };
 
+class TMXHexOddXTest : public TileDemo
+{
+public:
+    CREATE_FUNC(TMXHexOddXTest);
+    TMXHexOddXTest();
+    virtual std::string title() const override;
+};
+
+class TMXHexOddYTest : public TileDemo
+{
+public:
+    CREATE_FUNC(TMXHexOddYTest);
+    TMXHexOddYTest();
+    virtual std::string title() const override;
+};
+
+class TMXHexEvenXTest : public TileDemo
+{
+public:
+    CREATE_FUNC(TMXHexEvenXTest);
+    TMXHexEvenXTest();
+    virtual std::string title() const override;
+};
+
+class TMXHexEvenYTest : public TileDemo
+{
+public:
+    CREATE_FUNC(TMXHexEvenYTest);
+    TMXHexEvenYTest();
+    virtual std::string title() const override;
+};
+
+class TMXHexAxisXTest : public TileDemo
+{
+public:
+    CREATE_FUNC(TMXHexAxisXTest);
+    TMXHexAxisXTest();
+    virtual std::string title() const override;
+
+};
+
+class Issue16105Test : public TileDemo
+{
+public:
+    CREATE_FUNC(Issue16105Test);
+    Issue16105Test();
+    virtual std::string title() const override;
+
+};
+
 #endif

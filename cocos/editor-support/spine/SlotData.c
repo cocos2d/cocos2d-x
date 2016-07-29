@@ -32,8 +32,9 @@
 #include <spine/SlotData.h>
 #include <spine/extension.h>
 
-spSlotData* spSlotData_create (const char* name, spBoneData* boneData) {
+spSlotData* spSlotData_create (const int index, const char* name, spBoneData* boneData) {
 	spSlotData* self = NEW(spSlotData);
+	CONST_CAST(int, self->index) = index;
 	MALLOC_STR(self->name, name);
 	CONST_CAST(spBoneData*, self->boneData) = boneData;
 	self->r = 1;

@@ -79,4 +79,12 @@ public:
     virtual bool init() override;
 };
 
+class Issue16073Test : public UIScene
+{
+public:
+    CREATE_FUNC(Issue16073Test);
+
+    virtual bool init() override;
+};
+
 #endif /* defined(__TestCpp__UITextTest__) */

@@ -12,6 +12,7 @@ UITextTests::UITextTests()
     ADD_TEST_CASE(UITextTest_TTF);
     ADD_TEST_CASE(UITextTest_IgnoreConentSize);
     ADD_TEST_CASE(UITextTest_Clone);
+    ADD_TEST_CASE(Issue16073Test);
 }
 
 // UITextTest
@@ -288,6 +289,25 @@ bool UITextTest_Clone::init()
         cloneText->setPosition(Vec2(widgetSize.width / 2.0f + 80,
             widgetSize.height / 2.0f));
         _uiLayer->addChild(cloneText);
+
+        return true;
+    }
+    return false;
+}
+
+// Issue16073Test
+
+bool Issue16073Test::init()
+{
+    if (UIScene::init())
+    {
+        Size widgetSize = _widget->getContentSize();
+
+        Text* singleText = Text::create("mwhahaha\360", "Verdana", 40);
+
+        singleText->setPosition(Vec2(widgetSize.width / 2.0f - 80,
+                                     widgetSize.height / 2.0f));
+        _uiLayer->addChild(singleText);
 
         return true;
     }

@@ -28,6 +28,7 @@
 #include "renderer/CCGLProgramState.h"
 #include "xxhash.h"
 #include "renderer/CCRenderer.h"
+#include "renderer/CCTexture2D.h"
 
 NS_CC_BEGIN
 
@@ -37,6 +38,7 @@ TrianglesCommand::TrianglesCommand()
 ,_glProgramState(nullptr)
 ,_glProgram(nullptr)
 ,_blendType(BlendFunc::DISABLE)
+,_alphaTextureID(0)
 {
     _type = RenderCommand::Type::TRIANGLES_COMMAND;
 }
@@ -75,6 +77,12 @@ void TrianglesCommand::init(float globalOrder, GLuint textureID, GLProgramState*
     init(globalOrder, textureID, glProgramState, blendType, triangles, mv, 0);
 }
 
+void TrianglesCommand::init(float globalOrder, Texture2D* texture, GLProgramState* glProgramState, BlendFunc blendType, const Triangles& triangles, const Mat4& mv, uint32_t flags)
+{
+    init(globalOrder, texture->getName(), glProgramState, blendType, triangles, mv, flags);
+    _alphaTextureID = texture->getAlphaTextureName();
+}
+
 TrianglesCommand::~TrianglesCommand()
 {
 }
@@ -100,6 +108,10 @@ void TrianglesCommand::useMaterial() const
     //Set texture
     GL::bindTexture2D(_textureID);
     
+    if (_alphaTextureID > 0)
+    { // ANDROID ETC1 ALPHA supports.
+        GL::bindTexture2DN(1, _alphaTextureID);
+    }
     //set blend mode
     GL::blendFunc(_blendType.src, _blendType.dst);
     

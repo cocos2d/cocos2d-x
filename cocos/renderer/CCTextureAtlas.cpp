@@ -30,6 +30,7 @@ THE SOFTWARE.
 #include <stdlib.h>
 
 #include "base/ccMacros.h"
+#include "base/ccUTF8.h"
 #include "base/CCEventType.h"
 #include "base/CCDirector.h"
 #include "base/CCConfiguration.h"
@@ -41,9 +42,6 @@ THE SOFTWARE.
 #include "renderer/CCRenderer.h"
 #include "renderer/CCTexture2D.h"
 #include "platform/CCGL.h"
-
-
-#include "deprecated/CCString.h"
 
 //According to some tests GL_TRIANGLE_STRIP is slower, MUCH slower. Probably I'm doing something very wrong
 
@@ -392,7 +390,7 @@ void TextureAtlas::insertQuadFromIndex(ssize_t oldIndex, ssize_t newIndex)
         return;
     }
     // because it is ambiguous in iphone, so we implement abs ourselves
-    // unsigned int howMany = abs( oldIndex - newIndex);
+    // unsigned int howMany = std::abs( oldIndex - newIndex);
     auto howMany = (oldIndex - newIndex) > 0 ? (oldIndex - newIndex) :  (newIndex - oldIndex);
     auto dst = oldIndex;
     auto src = oldIndex + 1;
@@ -608,7 +606,8 @@ void TextureAtlas::drawNumberOfQuads(ssize_t numberOfQuads, ssize_t start)
     
     GL::bindTexture2D(_texture->getName());
 
-    if (Configuration::getInstance()->supportsShareableVAO())
+    auto conf = Configuration::getInstance();
+    if (conf->supportsShareableVAO() && conf->supportsMapBuffer())
     {
         //
         // Using VBO and VAO
