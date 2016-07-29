@@ -281,10 +281,9 @@ LOCAL_WHOLE_STATIC_LIBRARIES += cpufeatures
 LOCAL_CFLAGS   :=  -DUSE_FILE32API
 LOCAL_CFLAGS   +=  -fexceptions
 
-# Issues #9968
-#ifeq ($(TARGET_ARCH_ABI),armeabi-v7a)
-#    LOCAL_CFLAGS += -DHAVE_NEON=1
-#endif
+ifeq ($(TARGET_ARCH_ABI),armeabi-v7a)
+    LOCAL_CFLAGS += -DHAVE_NEON=1
+endif
 
 LOCAL_CPPFLAGS := -Wno-deprecated-declarations
 LOCAL_EXPORT_CFLAGS   := -DUSE_FILE32API
