@@ -124,6 +124,12 @@
 
 --------------------------------
 -- 
+-- @function [parent=#SkeletonRenderer] create 
+-- @param self
+-- @return SkeletonRenderer#SkeletonRenderer ret (return value: sp.SkeletonRenderer)
+        
+--------------------------------
+-- 
 -- @function [parent=#SkeletonRenderer] onEnter 
 -- @param self
 -- @return SkeletonRenderer#SkeletonRenderer self (return value: sp.SkeletonRenderer)
