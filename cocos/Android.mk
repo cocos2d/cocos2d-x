@@ -280,9 +280,11 @@ LOCAL_WHOLE_STATIC_LIBRARIES += cpufeatures
 # define the macro to compile through support/zip_support/ioapi.c
 LOCAL_CFLAGS   :=  -DUSE_FILE32API
 LOCAL_CFLAGS   +=  -fexceptions
-ifeq ($(TARGET_ARCH_ABI),armeabi-v7a)
-    LOCAL_CFLAGS += -DHAVE_NEON=1
-endif
+
+#ifeq ($(TARGET_ARCH_ABI),armeabi-v7a)
+#    LOCAL_CFLAGS += -DHAVE_NEON=1
+#endif
+
 LOCAL_CPPFLAGS := -Wno-deprecated-declarations
 LOCAL_EXPORT_CFLAGS   := -DUSE_FILE32API
 LOCAL_EXPORT_CPPFLAGS := -Wno-deprecated-declarations
