@@ -253,7 +253,6 @@ bool js_cocos2dx_Node_update(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_sortAllChildren(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getWorldToNodeAffineTransform(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getScale(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Node_updateOrderOfArrival(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getNormalizedPosition(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getParentToNodeTransform(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_convertToNodeSpace(JSContext *cx, uint32_t argc, jsval *vp);

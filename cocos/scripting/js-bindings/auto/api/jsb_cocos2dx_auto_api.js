@@ -2059,14 +2059,6 @@ getScale : function (
 },
 
 /**
- * @method updateOrderOfArrival
- */
-updateOrderOfArrival : function (
-)
-{
-},
-
-/**
  * @method getNormalizedPosition
  * @return {vec2_object}
  */
