@@ -58,15 +58,18 @@ NS_CC_BEGIN
 bool nodeComparisonLess(Node* n1, Node* n2)
 {
 #if defined(_M_X64) || defined(_LP64) || defined(__x86_64) || defined(_WIN64)
-    return (n1->_localZOrder.value < n2->_localZOrder.value);
+    return (n1->_localZOrder < n2->_localZOrder);
 #else
-    return n1->_localZOrder.detail.z < n2->_localZOrder.detail.z || 
-        (n1->_localZOrder.detail.z == n2->_localZOrder.detail.z && n1->_localZOrder.detail.a < n2->_localZOrder.detail.a);
+    auto z1 = n1->getLocalZOrder();
+    auto a1 = static_cast<std::uint32_t>(n1->_localZOrder & 0xffffffff);
+    auto z2 = n2->getLocalZOrder();
+    auto a2 = static_cast<std::uint32_t>(n2->_localZOrder & 0xffffffff);
+    return z1 < z2 || (z1 == z2 && a1 < a2);
 #endif
 }
 
 // FIXME:: Yes, nodes might have a sort problem once every 30 days if the game runs at 60 FPS and each frame sprites are reordered.
-unsigned int Node::s_globalOrderOfArrival = 0;
+std::uint32_t Node::s_globalOrderOfArrival = 0;
 
 // MARK: Constructor, Destructor, Init
 
@@ -92,6 +95,7 @@ Node::Node()
 , _transformUpdated(true)
 // children (lazy allocs)
 // lazy alloc
+, _localZOrder(0)
 , _globalZOrder(0)
 , _parent(nullptr)
 // "whole screen" objects. like Scenes and Layers, should set _ignoreAnchorPointForPosition to true
@@ -122,8 +126,6 @@ Node::Node()
 , _physicsBody(nullptr)
 #endif
 {
-    _localZOrder.value = 0;
-
     // set default scheduler and actionManager
     _director = Director::getInstance();
     _actionManager = _director->getActionManager();
@@ -279,12 +281,12 @@ void Node::setLocalZOrder(int z)
 /// used internally to alter the zOrder variable. DON'T call this method manually
 void Node::_setLocalZOrder(int z)
 {
-    _localZOrder.detail.z = z;
+    _localZOrder = (static_cast<std::int64_t>(z) << 32) | (_localZOrder & 0xffffffff);
 }
 
 void Node::updateOrderOfArrival()
 {
-    _localZOrder.detail.a = s_globalOrderOfArrival++;
+    _localZOrder = (_localZOrder & 0xffffffff00000000) | (s_globalOrderOfArrival++);
 }
 
 void Node::setGlobalZOrder(float globalZOrder)
@@ -996,7 +998,7 @@ void Node::addChild(Node *child, int zOrder)
 void Node::addChild(Node *child)
 {
     CCASSERT( child != nullptr, "Argument must be non-nil");
-    this->addChild(child, child->_localZOrder.detail.z, child->_name);
+    this->addChild(child, child->getLocalZOrder(), child->_name);
 }
 
 void Node::removeFromParent()
@@ -1252,7 +1254,7 @@ void Node::visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t paren
         {
             auto node = _children.at(i);
 
-            if (node && node->_localZOrder.detail.z < 0)
+            if (node && node->_localZOrder < 0)
                 node->visit(renderer, _modelViewTransform, flags);
             else
                 break;
