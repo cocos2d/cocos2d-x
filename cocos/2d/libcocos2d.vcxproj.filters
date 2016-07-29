@@ -1243,6 +1243,9 @@
     <ClCompile Include="..\platform\win32\CCStdC-win32.cpp">
       <Filter>platform\win32</Filter>
     </ClCompile>
+    <ClCompile Include="..\platform\win32\CCUtils-win32.cpp">
+      <Filter>platform\win32</Filter>
+    </ClCompile>
     <ClCompile Include="..\platform\desktop\CCGLViewImpl-desktop.cpp">
       <Filter>platform\desktop</Filter>
     </ClCompile>
@@ -3070,6 +3073,9 @@
       <Filter>platform\win32</Filter>
     </ClInclude>
     <ClInclude Include="..\platform\win32\CCStdC-win32.h">
+      <Filter>platform\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\win32\CCUtils-win32.h">
       <Filter>platform\win32</Filter>
     </ClInclude>
     <ClInclude Include="..\platform\desktop\CCGLViewImpl-desktop.h">

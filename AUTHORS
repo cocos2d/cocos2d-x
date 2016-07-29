@@ -42,6 +42,14 @@ Community Evangelism / Programmers Guide Author:
     Jason Slack-Moehrle (slackmoehrle)
     
 Developers:
+    halx99(Guo Xiaodong)
+        Add ETC1 builtin alpha support.
+        Add findChild for cocos2d::utils.
+        Add script with utf-8 bom support for luabindings.
+        Add captureNode for cocos2d::utils.
+        fix AudioEngine bug for iOS, UTF8 filePath.
+        
+        
     Rolando Abarca
         Javascript Binding and testjs
         

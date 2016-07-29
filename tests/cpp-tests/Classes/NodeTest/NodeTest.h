@@ -330,4 +330,15 @@ public:
     void test(float dt);
 };
 
+class Issue16100Test : public TestCocosNodeDemo
+{
+public:
+    CREATE_FUNC(Issue16100Test);
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+
+    virtual void onEnter() override;
+    virtual void onExit() override;
+};
+
 #endif

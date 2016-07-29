@@ -279,8 +279,8 @@ void AudioPlayerProvider::preloadEffect(const AudioFileInfo &info, const Preload
         _threadPool->pushTask([this, audioFilePath](int tid) {
             ALOGV("AudioPlayerProvider::preloadEffect: (%s)", audioFilePath.c_str());
             PcmData d;
-            AudioDecoder decoder(_engineItf, audioFilePath, _bufferSizeInFrames, _deviceSampleRate);
-            bool ret = decoder.start(_fdGetterCallback);
+            AudioDecoder decoder(_engineItf, audioFilePath, _bufferSizeInFrames, _deviceSampleRate, _fdGetterCallback);
+            bool ret = decoder.start();
             if (ret)
             {
                 d = decoder.getResult();
