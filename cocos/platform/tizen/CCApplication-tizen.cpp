@@ -172,7 +172,8 @@ static void init_gl(Evas_Object *obj) {
 static void create_indicator(Application *ad) {
     elm_win_conformant_set(ad->_win, EINA_TRUE);
 
-    elm_win_indicator_mode_set(ad->_win, ELM_WIN_INDICATOR_HIDE);
+    elm_win_indicator_mode_set(ad->_win, ELM_WIN_INDICATOR_SHOW);
+    elm_win_indicator_opacity_set(ad->_win, ELM_WIN_INDICATOR_TRANSPARENT);
 
     ad->_conform = elm_conformant_add(ad->_win);
     evas_object_size_hint_weight_set(ad->_conform, EVAS_HINT_EXPAND,
