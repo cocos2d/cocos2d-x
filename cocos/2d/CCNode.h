@@ -104,13 +104,9 @@ class EventListener;
  - A Node is a "void" object. If you want to draw something on the screen, you should use a Sprite instead. Or subclass Node and override `draw`.
 
  */
-template<typename _T> inline
-void sortNodes(cocos2d::Vector<_T*>& nodes);
 
 class CC_DLL Node : public Ref
 {
-    template<typename _T> inline
-    friend  void sortNodes(cocos2d::Vector<_T*>& nodes);
 public:
     /** Default tag used for all the nodes */
     static const int INVALID_TAG = -1;
@@ -930,6 +926,25 @@ public:
      * @note Don't call this manually unless a child added needs to be removed in the same frame.
      */
     virtual void sortAllChildren();
+
+    /**
+    * Sorts helper function
+    *
+    */
+    template<typename _T> inline
+    static void sortNodes(cocos2d::Vector<_T*>& nodes)
+    {
+        static_assert(std::is_base_of<Node, _T>::value, "Node::sortNodes: Only accept derived of Node!");
+#if CC_64BITS
+        std::sort(std::begin(nodes), std::end(nodes), [](_T* n1, _T* n2) {
+            return (n1->_localZOrderAndArrival < n2->_localZOrderAndArrival);
+        });
+#else
+        std::stable_sort(std::begin(nodes), std::end(nodes), [](_T* n1, _T* n2) {
+            return n1->_localZOrder < n2->_localZOrder;
+        });
+#endif
+    }
 
     /// @} end of Children and Parent
     
@@ -1979,25 +1994,6 @@ public:
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Node);
 };
-
-/**
-* Sorts helper function
-*
-*/
-template<typename _T> inline
-void sortNodes(cocos2d::Vector<_T*>& nodes)
-{
-    static_assert(std::is_base_of<Node, _T>::value, "Node::sortNodes: Only accept derived of Node!");
-#if CC_64BITS
-    std::sort(std::begin(nodes), std::end(nodes), [](_T* n1, _T* n2) {
-        return (n1->_localZOrderAndArrival < n2->_localZOrderAndArrival);
-    }
-#else
-    std::stable_sort(std::begin(nodes), std::end(nodes), [](_T* n1, _T* n2) {
-        return n1->_localZOrder < n2->_localZOrder;
-    });
-#endif
-}
 
 /**
  * This is a helper function, checks a GL screen point is in content rectangle space.
