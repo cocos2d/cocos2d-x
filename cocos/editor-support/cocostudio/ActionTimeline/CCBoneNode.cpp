@@ -550,8 +550,8 @@ void BoneNode::sortAllChildren()
 {
     if (_reorderChildDirty)
     {
-        cocos2d::Node::sortNodes(_childBones);
-        cocos2d::Node::sortNodes(_boneSkins);
+        sortNodes(_childBones);
+        sortNodes(_boneSkins);
         Node::sortAllChildren();
     }
 }

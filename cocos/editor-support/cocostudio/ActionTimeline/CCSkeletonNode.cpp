@@ -363,7 +363,7 @@ void SkeletonNode::updateOrderedAllbones()
 
 void SkeletonNode::sortOrderedAllBones()
 {
-    cocos2d::Node::sortNodes(this->_subOrderedAllBones);
+    sortNodes(this->_subOrderedAllBones);
 }
 
 NS_TIMELINE_END
