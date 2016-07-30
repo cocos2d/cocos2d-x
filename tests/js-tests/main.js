@@ -27,7 +27,7 @@
 
 /**
  * A brief explanation for "project.json":
- * Here is the content of project.json file, this is the global configuration for your game, you can modify it to customize some behavior.
+ * Here is the content ofproject.json file, this is the global configuration for your game, you can modify it to customize some behavior.
  * The detail of each field is under it.
  {
     "debugMode"     : 1,
@@ -122,6 +122,7 @@ cc.game.onStart = function(){
     }
     else
     {
+        cc.view.enableRetina(true);
         cc.view.setDesignResolutionSize(800, 450, cc.ResolutionPolicy.SHOW_ALL);
         cc.view.resizeWithBrowserSize(true);
         // js-test use cpptest resource in debug mode , and in the release mode, console will copy the resource into the res dir

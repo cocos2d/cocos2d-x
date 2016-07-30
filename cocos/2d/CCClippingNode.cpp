@@ -107,9 +107,7 @@ bool ClippingNode::init()
 
 bool ClippingNode::init(Node *stencil)
 {
-    CC_SAFE_RELEASE(_stencil);
-    _stencil = stencil;
-    CC_SAFE_RETAIN(_stencil);
+    setStencil(stencil);
     return true;
 }
 
@@ -292,9 +290,40 @@ Node* ClippingNode::getStencil() const
 
 void ClippingNode::setStencil(Node *stencil)
 {
-    CC_SAFE_RETAIN(stencil);
-    CC_SAFE_RELEASE(_stencil);
+    //early out if the stencil is already set
+    if (_stencil == stencil)
+        return;
+    
+#if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+    auto sEngine = ScriptEngineManager::getInstance()->getScriptEngine();
+    if (sEngine)
+    {
+        if (_stencil)
+            sEngine->releaseScriptObject(this, _stencil);
+        if (stencil)
+            sEngine->retainScriptObject(this, stencil);
+    }
+#endif // CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+    
+    //cleanup current stencil
+    if(_stencil != nullptr && _stencil->isRunning())
+    {
+        _stencil->onExitTransitionDidStart();
+        _stencil->onExit();
+    }
+    CC_SAFE_RELEASE_NULL(_stencil);
+    
+    //initialise new stencil
     _stencil = stencil;
+    CC_SAFE_RETAIN(_stencil);
+    if(_stencil != nullptr && this->isRunning())
+    {
+        _stencil->onEnter();
+        if(this->_isTransitionFinished)
+        {
+            _stencil->onEnterTransitionDidFinish();
+        }
+    }
 }
 
 bool ClippingNode::hasContent() const

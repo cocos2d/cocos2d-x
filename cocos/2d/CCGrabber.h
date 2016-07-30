@@ -38,7 +38,7 @@ class Texture2D;
  * @{
  */
 
-/** FBO class that grabs the the contents of the screen */
+/** FBO class that grabs the contents of the screen */
 class Grabber : public Ref
 {
 public:

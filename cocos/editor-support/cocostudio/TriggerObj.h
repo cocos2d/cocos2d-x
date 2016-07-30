@@ -25,12 +25,10 @@ THE SOFTWARE.
 #ifndef __TRIGGEROBJ_H__
 #define __TRIGGEROBJ_H__
 
-#include "CocoStudio.h"
+#include "editor-support/cocostudio/CocoStudio.h"
 #include "base/CCVector.h"
+#include "base/CCEventListenerCustom.h"
 
-namespace cocos2d {
-class EventListenerCustom;
-}
 
 namespace cocostudio {
 

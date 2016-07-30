@@ -323,7 +323,7 @@ void Sprite3DMaterialCache::removeUnusedSprite3DMaterial()
             CCLOG("cocos2d: GLProgramStateCache: removing unused GLProgramState");
             
             value->release();
-            _materials.erase(it++);
+            it = _materials.erase(it);
         } else {
             ++it;
         }

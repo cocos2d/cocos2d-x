@@ -34,7 +34,7 @@ using namespace Windows::Foundation;
 #include "base/CCDirector.h"
 #include <algorithm>
 #include "platform/CCFileUtils.h"
-#include "CCWinRTUtils.h"
+#include "platform/winrt/CCWinRTUtils.h"
 #include "platform/CCApplication.h"
 #include "tinyxml2/tinyxml2.h"
 
@@ -46,7 +46,7 @@ using namespace Windows::Foundation;
 NS_CC_BEGIN
 
 // sharedApplication pointer
-Application * Application::sm_pSharedApplication = 0;
+Application * Application::sm_pSharedApplication = nullptr;
 
 
 
@@ -57,7 +57,7 @@ Application * Application::sm_pSharedApplication = 0;
 ////////////////////////////////////////////////////////////////////////////////
 
 // sharedApplication pointer
-Application * s_pSharedApplication = 0;
+Application * s_pSharedApplication = nullptr;
 
 Application::Application() :
 m_openURLDelegate(nullptr)
@@ -70,7 +70,7 @@ m_openURLDelegate(nullptr)
 Application::~Application()
 {
     CC_ASSERT(this == sm_pSharedApplication);
-    sm_pSharedApplication = NULL;
+    sm_pSharedApplication = nullptr;
 }
 
 int Application::run()

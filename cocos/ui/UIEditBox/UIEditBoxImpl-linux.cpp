@@ -23,11 +23,11 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "UIEditBoxImpl-linux.h"
+#include "ui/UIEditBox/UIEditBoxImpl-linux.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
 
-#include "UIEditBox.h"
+#include "ui/UIEditBox/UIEditBox.h"
 #include "2d/CCLabel.h"
 #include "base/ccUTF8.h"
 #include <gtk/gtk.h>

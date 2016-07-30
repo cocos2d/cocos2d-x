@@ -34,6 +34,23 @@
 #include "renderer/CCGLProgram.h"
 #include "platform/CCGL.h"
 
+#if !defined(NDEBUG) && CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+
+/// Basic wrapper for glInsertEventMarkerEXT() depending on the current build settings and platform.
+#define CCGL_DEBUG_INSERT_EVENT_MARKER(__message__) glInsertEventMarkerEXT(0, __message__)
+/// Basic wrapper for glPushGroupMarkerEXT() depending on the current build settings and platform.
+#define CCGL_DEBUG_PUSH_GROUP_MARKER(__message__) glPushGroupMarkerEXT(0, __message__)
+/// Basic wrapper for CCGL_DEBUG_POP_GROUP_MARKER() depending on the current build settings and platform.
+#define CCGL_DEBUG_POP_GROUP_MARKER() glPopGroupMarkerEXT()
+
+#else
+
+#define CCGL_DEBUG_INSERT_EVENT_MARKER(__message__)
+#define CCGL_DEBUG_PUSH_GROUP_MARKER(__message__)
+#define CCGL_DEBUG_POP_GROUP_MARKER()
+
+#endif
+
 /**
  * @addtogroup renderer
  * @{
@@ -42,7 +59,6 @@
 NS_CC_BEGIN
 
 class EventListenerCustom;
-class QuadCommand;
 class TrianglesCommand;
 class MeshCommand;
 
@@ -119,7 +135,7 @@ class GroupCommandManager;
 
 /* Class responsible for the rendering in.
 
-Whenever possible prefer to use `QuadCommand` objects since the renderer will automatically batch them.
+Whenever possible prefer to use `TrianglesCommand` objects since the renderer will automatically batch them.
  */
 class CC_DLL Renderer
 {
@@ -128,8 +144,8 @@ public:
     static const int VBO_SIZE = 65536;
     /**The max number of indices in a index buffer.*/
     static const int INDEX_VBO_SIZE = VBO_SIZE * 6 / 4;
-    /**The rendercommands which can be batched will be saved into a list, this is the reversed size of this list.*/
-    static const int BATCH_QUADCOMMAND_RESEVER_SIZE = 64;
+    /**The rendercommands which can be batched will be saved into a list, this is the reserved size of this list.*/
+    static const int BATCH_TRIAGCOMMAND_RESERVED_SIZE = 64;
     /**Reserved for material id, which means that the command could not be batched.*/
     static const int MATERIAL_ID_DO_NOT_BATCH = 0;
     /**Constructor.*/
@@ -168,11 +184,11 @@ public:
     void setClearColor(const Color4F& clearColor);
     /* returns the number of drawn batches in the last frame */
     ssize_t getDrawnBatches() const { return _drawnBatches; }
-    /* RenderCommands (except) QuadCommand should update this value */
+    /* RenderCommands (except) TrianglesCommand should update this value */
     void addDrawnBatches(ssize_t number) { _drawnBatches += number; };
     /* returns the number of drawn triangles in the last frame */
     ssize_t getDrawnVertices() const { return _drawnVertices; }
-    /* RenderCommands (except) QuadCommand should update this value */
+    /* RenderCommands (except) TrianglesCommand should update this value */
     void addDrawnVertices(ssize_t number) { _drawnVertices += number; };
     /* clear draw stats */
     void clearDrawStats() { _drawnBatches = _drawnVertices = 0; }
@@ -198,23 +214,21 @@ protected:
     void setupVBO();
     void mapBuffers();
     void drawBatchedTriangles();
-    void drawBatchedQuads();
 
-    //Draw the previews queued quads and flush previous context
+    //Draw the previews queued triangles and flush previous context
     void flush();
     
     void flush2D();
     
     void flush3D();
 
-    void flushQuads();
     void flushTriangles();
 
     void processRenderCommand(RenderCommand* command);
     void visitRenderQueue(RenderQueue& queue);
 
     void fillVerticesAndIndices(const TrianglesCommand* cmd);
-    void fillQuads(const QuadCommand* cmd);
+
 
     /* clear color set outside be used in setGLDefaultValues() */
     Color4F _clearColor;
@@ -223,11 +237,8 @@ protected:
     
     std::vector<RenderQueue> _renderGroups;
 
-    uint32_t _lastMaterialID;
-
-    MeshCommand*              _lastBatchedMeshCommand;
-    std::vector<TrianglesCommand*> _batchedCommands;
-    std::vector<QuadCommand*> _batchQuadCommands;
+    MeshCommand* _lastBatchedMeshCommand;
+    std::vector<TrianglesCommand*> _queuedTriangleCommands;
 
     //for TrianglesCommand
     V3F_C4B_T2F _verts[VBO_SIZE];
@@ -235,16 +246,20 @@ protected:
     GLuint _buffersVAO;
     GLuint _buffersVBO[2]; //0: vertex  1: indices
 
+    // Internal structure that has the information for the batches
+    struct TriBatchToDraw {
+        TrianglesCommand* cmd;  // needed for the Material
+        GLushort indicesToDraw;
+        GLushort offset;
+    };
+    // capacity of the array of TriBatches
+    int _triBatchesToDrawCapacity;
+    // the TriBatches
+    TriBatchToDraw* _triBatchesToDraw;
+
     int _filledVertex;
     int _filledIndex;
-    
-    //for QuadCommand
-    V3F_C4B_T2F _quadVerts[VBO_SIZE];
-    GLushort _quadIndices[INDEX_VBO_SIZE];
-    GLuint _quadVAO;
-    GLuint _quadbuffersVBO[2]; //0: vertex  1: indices
-    int _numberQuads;
-    
+
     bool _glViewAssigned;
 
     // stats

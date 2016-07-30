@@ -23,11 +23,11 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "LuaSkeletonAnimation.h"
-#include "cocos2d.h"
-#include "LuaScriptHandlerMgr.h"
-#include "CCLuaStack.h"
-#include "CCLuaEngine.h"
+#include "scripting/lua-bindings/manual/spine/LuaSkeletonAnimation.h"
+
+#include "scripting/lua-bindings/manual/cocos2d/LuaScriptHandlerMgr.h"
+#include "scripting/lua-bindings/manual/CCLuaStack.h"
+#include "scripting/lua-bindings/manual/CCLuaEngine.h"
 
 using namespace spine;
 USING_NS_CC;

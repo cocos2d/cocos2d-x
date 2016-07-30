@@ -33,7 +33,7 @@
 #include <map>
 #include "fmod.hpp"
 #include "fmod_errors.h"
-#include "AudioEngine.h"
+#include "audio/include/AudioEngine.h"
 
 #include "base/CCRef.h"
 
@@ -83,7 +83,7 @@ private:
     FMOD::Channel * getChannel(FMOD::Sound *);
   
     struct ChannelInfo{
-        size_t id; 
+        int id;
         std::string path; 
         FMOD::Sound * sound;
         FMOD::Channel * channel; 
@@ -93,6 +93,8 @@ private:
     };
     
     std::map<int, ChannelInfo> mapChannelInfo;
+
+    std::map<std::string, int> mapId;
     
     std::map<std::string, FMOD::Sound *> mapSound;  
     

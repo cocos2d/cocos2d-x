@@ -24,7 +24,7 @@
 
 #include <algorithm>
 #include <functional>
-#include <math.h>
+#include <cmath>
 #include "math/CCMathBase.h"
 
 /**
@@ -766,6 +766,6 @@ NS_CC_MATH_END
  @}
  */
 
-#include "Vec2.inl"
+#include "math/Vec2.inl"
 
 #endif // MATH_VEC2_H

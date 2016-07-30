@@ -26,7 +26,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCProtectedNode.h"
+#include "2d/CCProtectedNode.h"
 
 #include "base/CCDirector.h"
 #include "2d/CCScene.h"
@@ -39,8 +39,8 @@ ProtectedNode::ProtectedNode() : _reorderProtectedChildDirty(false)
 
 ProtectedNode::~ProtectedNode()
 {
-    
     CCLOGINFO( "deallocing ProtectedNode: %p - tag: %i", this, _tag );
+    removeAllProtectedChildren();
 }
 
 ProtectedNode * ProtectedNode::create(void)
@@ -102,7 +102,6 @@ void ProtectedNode::addProtectedChild(Node *child, int zOrder, int tag)
     child->setTag(tag);
     
     child->setParent(this);
-    child->setOrderOfArrival(s_globalOrderOfArrival++);
     
     if( _running )
     {
@@ -171,6 +170,13 @@ void ProtectedNode::removeProtectedChild(cocos2d::Node *child, bool cleanup)
         // set parent nil at the end
         child->setParent(nullptr);
         
+#if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+        auto sEngine = ScriptEngineManager::getInstance()->getScriptEngine();
+        if (sEngine)
+        {
+            sEngine->releaseScriptObject(this, child);
+        }
+#endif // CC_ENABLE_GC_FOR_NATIVE_OBJECTS
         _protectedChildren.erase(index);
     }
 }
@@ -198,6 +204,13 @@ void ProtectedNode::removeAllProtectedChildrenWithCleanup(bool cleanup)
         {
             child->cleanup();
         }
+#if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+        auto sEngine = ScriptEngineManager::getInstance()->getScriptEngine();
+        if (sEngine)
+        {
+            sEngine->releaseScriptObject(this, child);
+        }
+#endif // CC_ENABLE_GC_FOR_NATIVE_OBJECTS
         // set parent nil at the end
         child->setParent(nullptr);
     }
@@ -224,6 +237,13 @@ void ProtectedNode::removeProtectedChildByTag(int tag, bool cleanup)
 // helper used by reorderChild & add
 void ProtectedNode::insertProtectedChild(cocos2d::Node *child, int z)
 {
+#if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+    auto sEngine = ScriptEngineManager::getInstance()->getScriptEngine();
+    if (sEngine)
+    {
+        sEngine->retainScriptObject(this, child);
+    }
+#endif // CC_ENABLE_GC_FOR_NATIVE_OBJECTS
     _reorderProtectedChildDirty = true;
     _protectedChildren.pushBack(child);
     child->setLocalZOrder(z);
@@ -232,7 +252,7 @@ void ProtectedNode::insertProtectedChild(cocos2d::Node *child, int z)
 void ProtectedNode::sortAllProtectedChildren()
 {
     if( _reorderProtectedChildDirty ) {
-        std::sort( std::begin(_protectedChildren), std::end(_protectedChildren), nodeComparisonLess );
+        std::stable_sort( std::begin(_protectedChildren), std::end(_protectedChildren), nodeComparisonLess );
         _reorderProtectedChildDirty = false;
     }
 }
@@ -241,7 +261,6 @@ void ProtectedNode::reorderProtectedChild(cocos2d::Node *child, int localZOrder)
 {
     CCASSERT( child != nullptr, "Child must be non-nil");
     _reorderProtectedChildDirty = true;
-    child->setOrderOfArrival(s_globalOrderOfArrival++);
     child->setLocalZOrder(localZOrder);
 }
 

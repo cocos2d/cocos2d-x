@@ -22,12 +22,16 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "GameMapReader.h"
+#include "editor-support/cocostudio/WidgetReader/GameMapReader/GameMapReader.h"
 
+#include "2d/CCLabel.h"
 #include "2d/CCTMXXMLParser.h"
+#include "2d/CCTMXTiledMap.h"
+#include "platform/CCFileUtils.h"
+#include "deprecated/CCString.h"
 
-#include "cocostudio/CSParseBinary_generated.h"
-#include "cocostudio/WidgetReader/NodeReader/NodeReader.h"
+#include "editor-support/cocostudio/CSParseBinary_generated.h"
+#include "editor-support/cocostudio/WidgetReader/NodeReader/NodeReader.h"
 
 #include "tinyxml2.h"
 #include "flatbuffers/flatbuffers.h"

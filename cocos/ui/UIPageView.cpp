@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -38,7 +38,8 @@ _currentPageIndex(-1),
 _childFocusCancelOffset(5.0f),
 _pageViewEventListener(nullptr),
 _pageViewEventSelector(nullptr),
-_eventCallback(nullptr)
+_eventCallback(nullptr),
+_autoScrollStopEpsilon(0.001f)
 {
 }
 
@@ -177,6 +178,11 @@ bool PageView::isUsingCustomScrollThreshold()const
     return false;
 }
 
+void PageView::setAutoScrollStopEpsilon(float epsilon)
+{
+    _autoScrollStopEpsilon = epsilon;
+}
+
 void PageView::moveInnerContainer(const Vec2& deltaMove, bool canStartBounceBack)
 {
     ListView::moveInnerContainer(deltaMove, canStartBounceBack);
@@ -254,11 +260,16 @@ void PageView::handleReleaseLogic(Touch *touch)
             {
                 --_currentPageIndex;
             }
-            _currentPageIndex = MIN(_currentPageIndex, _items.size());
+            _currentPageIndex = MIN(_currentPageIndex, _items.size() - 1);
             _currentPageIndex = MAX(_currentPageIndex, 0);
             scrollToItem(_currentPageIndex);
         }
     }
+}
+    
+float PageView::getAutoScrollStopEpsilon() const
+{
+    return _autoScrollStopEpsilon;
 }
 
 void PageView::pageTurningEvent()
@@ -288,6 +299,12 @@ void PageView::addEventListenerPageView(Ref *target, SEL_PageViewEvent selector)
 void PageView::addEventListener(const ccPageViewCallback& callback)
 {
     _eventCallback = callback;
+    ccScrollViewCallback scrollViewCallback = [=](Ref* ref, ScrollView::EventType type) -> void{
+        if (type == ScrollView::EventType::AUTOSCROLL_ENDED) {
+            callback(ref, PageView::EventType::TURNING);
+        }
+    };
+    this->addEventListener(scrollViewCallback);
 }
 
 ssize_t PageView::getCurPageIndex() const
@@ -312,7 +329,7 @@ Vector<Layout*>& PageView::getPages()
 
 Layout* PageView::getPage(ssize_t index)
 {
-    if (index < 0 || index >= this->getPages().size())
+    if (index < 0 || index >= this->getItems().size())
     {
         return nullptr;
     }
@@ -427,6 +444,44 @@ const Color3B& PageView::getIndicatorSelectedIndexColor() const
     return _indicator->getSelectedIndexColor();
 }
 
+void PageView::setIndicatorIndexNodesColor(const Color3B& color)
+{
+    if(_indicator != nullptr)
+    {
+        _indicator->setIndexNodesColor(color);
+    }
+}
+    
+const Color3B& PageView::getIndicatorIndexNodesColor() const
+{
+    CCASSERT(_indicator != nullptr, "");
+    return _indicator->getIndexNodesColor();
+}
+    
+void PageView::setIndicatorIndexNodesScale(float indexNodesScale)
+{
+    if(_indicator != nullptr)
+    {
+        _indicator->setIndexNodesScale(indexNodesScale);
+        _indicator->indicate(_currentPageIndex);
+    }
+}
+    
+float PageView::getIndicatorIndexNodesScale() const
+{
+    CCASSERT(_indicator != nullptr, "");
+    return _indicator->getIndexNodesScale();
+}
+  
+void PageView::setIndicatorIndexNodesTexture(const std::string& texName,Widget::TextureResType texType)
+{
+    if(_indicator != nullptr)
+    {
+        _indicator->setIndexNodesTexture(texName, texType);
+        _indicator->indicate(_currentPageIndex);
+    }
+}
+    
 void PageView::remedyLayoutParameter(Widget *item)
 {
     item->setContentSize(this->getContentSize());

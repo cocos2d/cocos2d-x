@@ -20,17 +20,25 @@
         
 --------------------------------
 -- brief Query the center item<br>
--- return A item instance.
+-- return An item instance.
 -- @function [parent=#ListView] getCenterItemInCurrentView 
 -- @param self
 -- @return Widget#Widget ret (return value: ccui.Widget)
         
 --------------------------------
--- brief Query current selected widget's idnex.<br>
--- return A index of a selected item.
+-- brief Query current selected widget's index.<br>
+-- return An index of a selected item.
 -- @function [parent=#ListView] getCurSelectedIndex 
 -- @param self
 -- @return long#long ret (return value: long)
+        
+--------------------------------
+-- Get the time in seconds to scroll between items.<br>
+-- return The time in seconds to scroll between items<br>
+-- see setScrollDuration(float)
+-- @function [parent=#ListView] getScrollDuration 
+-- @param self
+-- @return float#float ret (return value: float)
         
 --------------------------------
 -- brief Query margin between each item in ListView.<br>
@@ -70,15 +78,23 @@
         
 --------------------------------
 -- Insert a  custom item into the end of ListView.<br>
--- param item A item in `Widget*`.
+-- param item An item in `Widget*`.
 -- @function [parent=#ListView] pushBackCustomItem 
 -- @param self
 -- @param #ccui.Widget item
 -- @return ListView#ListView self (return value: ccui.ListView)
         
 --------------------------------
+-- brief Set current selected widget's index and call TouchEventType::ENDED event.<br>
+-- param itemIndex A index of a selected item.
+-- @function [parent=#ListView] setCurSelectedIndex 
+-- @param self
+-- @param #int itemIndex
+-- @return ListView#ListView self (return value: ccui.ListView)
+        
+--------------------------------
 -- Insert a default item(create by cloning model) into listview at a give index.<br>
--- param index  A index in ssize_t.
+-- param index  An index in ssize_t.
 -- @function [parent=#ListView] insertDefaultItem 
 -- @param self
 -- @param #long index
@@ -92,7 +108,7 @@
 -- @return ListView#ListView self (return value: ccui.ListView)
         
 --------------------------------
--- Add a event click callback to ListView, then one item of Listview is clicked, the callback will be called.<br>
+-- Add an event click callback to ListView, then one item of Listview is clicked, the callback will be called.<br>
 -- param callback A callback function with type of `ccListViewCallback`.
 -- @function [parent=#ListView] addEventListener 
 -- @param self
@@ -107,7 +123,7 @@
         
 --------------------------------
 -- brief Query the topmost item in horizontal list<br>
--- return A item instance.
+-- return An item instance.
 -- @function [parent=#ListView] getTopmostItemInCurrentView 
 -- @param self
 -- @return Widget#Widget ret (return value: ccui.Widget)
@@ -120,7 +136,7 @@
         
 --------------------------------
 -- brief Query the bottommost item in horizontal list<br>
--- return A item instance.
+-- return An item instance.
 -- @function [parent=#ListView] getBottommostItemInCurrentView 
 -- @param self
 -- @return Widget#Widget ret (return value: ccui.Widget)
@@ -134,14 +150,14 @@
         
 --------------------------------
 -- brief Query the leftmost item in horizontal list<br>
--- return A item instance.
+-- return An item instance.
 -- @function [parent=#ListView] getLeftmostItemInCurrentView 
 -- @param self
 -- @return Widget#Widget ret (return value: ccui.Widget)
         
 --------------------------------
 -- Set the margin between each item in ListView.<br>
--- param margin
+-- param margin A margin in float.
 -- @function [parent=#ListView] setItemsMargin 
 -- @param self
 -- @param #float margin
@@ -154,7 +170,7 @@
 -- @return int#int ret (return value: int)
         
 --------------------------------
--- Return a item at a given index.<br>
+-- Return an item at a given index.<br>
 -- param index A given index in ssize_t.<br>
 -- return A widget instance.
 -- @function [parent=#ListView] getItem 
@@ -163,7 +179,7 @@
 -- @return Widget#Widget ret (return value: ccui.Widget)
         
 --------------------------------
--- Remove a item at given index.<br>
+-- Remove an item at given index.<br>
 -- param index A given index in ssize_t.
 -- @function [parent=#ListView] removeItem 
 -- @param self
@@ -197,7 +213,7 @@
 -- brief Query the closest item to a specific position in inner container.<br>
 -- param targetPosition Specifies the target position in inner container's coordinates.<br>
 -- param itemAnchorPoint Specifies an anchor point of each item for position to calculate distance.<br>
--- return A item instance if list view is not empty. Otherwise, returns null.
+-- return An item instance if list view is not empty. Otherwise, returns null.
 -- @function [parent=#ListView] getClosestItemToPosition 
 -- @param self
 -- @param #vec2_table targetPosition
@@ -206,17 +222,27 @@
         
 --------------------------------
 -- brief Query the rightmost item in horizontal list<br>
--- return A item instance.
+-- return An item instance.
 -- @function [parent=#ListView] getRightmostItemInCurrentView 
 -- @param self
 -- @return Widget#Widget ret (return value: ccui.Widget)
+        
+--------------------------------
+-- Set the time in seconds to scroll between items.<br>
+-- Subsequent calls of function 'scrollToItem', will take 'time' seconds for scrolling.<br>
+-- param time The seconds needed to scroll between two items. 'time' must be >= 0<br>
+-- see scrollToItem(ssize_t, const Vec2&, const Vec2&)
+-- @function [parent=#ListView] setScrollDuration 
+-- @param self
+-- @param #float time
+-- @return ListView#ListView self (return value: ccui.ListView)
         
 --------------------------------
 -- brief Query the closest item to a specific position in current view.<br>
 -- For instance, to find the item in the center of view, call 'getClosestItemToPositionInCurrentView(Vec2::ANCHOR_MIDDLE, Vec2::ANCHOR_MIDDLE)'.<br>
 -- param positionRatioInView Specifies the target position with ratio in list view's content size.<br>
 -- param itemAnchorPoint Specifies an anchor point of each item for position to calculate distance.<br>
--- return A item instance if list view is not empty. Otherwise, returns null.
+-- return An item instance if list view is not empty. Otherwise, returns null.
 -- @function [parent=#ListView] getClosestItemToPositionInCurrentView 
 -- @param self
 -- @param #vec2_table positionRatioInView
@@ -224,7 +250,7 @@
 -- @return Widget#Widget ret (return value: ccui.Widget)
         
 --------------------------------
--- Set a item model for listview.<br>
+-- Set an item model for listview.<br>
 -- When calling `pushBackDefaultItem`, the model will be used as a blueprint and new model copy will be inserted into ListView.<br>
 -- param model  Model in `Widget*`.
 -- @function [parent=#ListView] setItemModel 
@@ -330,7 +356,7 @@
 -- @function [parent=#ListView] removeChild 
 -- @param self
 -- @param #cc.Node child
--- @param #bool cleaup
+-- @param #bool cleanup
 -- @return ListView#ListView self (return value: ccui.ListView)
         
 --------------------------------

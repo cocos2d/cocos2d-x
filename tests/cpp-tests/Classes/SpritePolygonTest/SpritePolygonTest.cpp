@@ -13,6 +13,14 @@ SpritePolygonTest::SpritePolygonTest()
     ADD_TEST_CASE(SpritePolygonTest5);
     ADD_TEST_CASE(SpritePolygonPerformanceTestDynamic);
     ADD_TEST_CASE(SpritePerformanceTestDynamic);
+    // FIXME: Tizen will crash with this example
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_TIZEN)
+    ADD_TEST_CASE(SpritePolygonTestNoCrash);
+#endif
+    ADD_TEST_CASE(SpritePolygonTestTPIsland);
+    ADD_TEST_CASE(SpritePolygonTestAutoPolyIsland);
+    ADD_TEST_CASE(SpritePolygonTestFrameAnim);
+    ADD_TEST_CASE(Issue14017Test);
 }
 
 SpritePolygonTestCase::SpritePolygonTestCase()
@@ -84,23 +92,23 @@ void SpritePolygonTestCase::updateDrawNode()
                 auto drawnode = _drawNodes.at(i);
                 auto sp = (Sprite*)drawnode->getParent();
                 if(!sp) return;
-                auto polygoninfo = sp->getPolygonInfo();
+                const auto& polygoninfo = sp->getPolygonInfo();
                 drawnode->clear();
-                auto count = polygoninfo.triangles.indexCount/3;
-                auto indices = polygoninfo.triangles.indices;
-                auto verts = polygoninfo.triangles.verts;
+                const auto count = polygoninfo.triangles.indexCount/3;
+                const auto indices = polygoninfo.triangles.indices;
+                const auto verts = polygoninfo.triangles.verts;
                 for(ssize_t i = 0; i < count; i++)
                 {
                     //draw 3 lines
-                    Vec3 from =verts[indices[i*3]].vertices;
+                    Vec3 from = verts[indices[i*3]].vertices;
                     Vec3 to = verts[indices[i*3+1]].vertices;
                     drawnode->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::GREEN);
                     
-                    from =verts[indices[i*3+1]].vertices;
+                    from = verts[indices[i*3+1]].vertices;
                     to = verts[indices[i*3+2]].vertices;
                     drawnode->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::GREEN);
                     
-                    from =verts[indices[i*3+2]].vertices;
+                    from = verts[indices[i*3+2]].vertices;
                     to = verts[indices[i*3]].vertices;
                     drawnode->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::GREEN);
                 }
@@ -111,6 +119,7 @@ void SpritePolygonTestCase::updateDrawNode()
 bool SpritePolygonTestDemo::init()
 {
     if (SpritePolygonTestCase::init()) {
+        _polygonSprite = nullptr;
         initSprites();
         initTouches();
         return true;
@@ -120,18 +129,20 @@ bool SpritePolygonTestDemo::init()
 
 void SpritePolygonTestDemo::initTouches()
 {
-    auto touchListener = EventListenerTouchOneByOne::create();
-    touchListener->onTouchBegan = [&](Touch* touch, Event* event){
-        return true;
-    };
-    touchListener->onTouchMoved = [&](Touch* touch, Event* event){
-        auto pos = touch->getDelta();
-        float newScale = clampf(_polygonSprite->getScale() + pos.x * 0.01f, 0.1f, 2.f);
-        _polygonSprite->setScale(newScale);
-        _normalSprite->setScale(newScale);
-        updateDrawNode();
-    };
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
+    if(_polygonSprite) {
+        auto touchListener = EventListenerTouchOneByOne::create();
+        touchListener->onTouchBegan = [&](Touch* touch, Event* event){
+            return true;
+        };
+        touchListener->onTouchMoved = [&](Touch* touch, Event* event){
+            auto pos = touch->getDelta();
+            float newScale = clampf(_polygonSprite->getScale() + pos.x * 0.01f, 0.1f, 2.f);
+            _polygonSprite->setScale(newScale);
+            _normalSprite->setScale(newScale);
+            updateDrawNode();
+        };
+        _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
+    }
 }
 
 SpritePolygonTest1::SpritePolygonTest1()
@@ -275,11 +286,11 @@ void SpritePolygonTestSlider::initSliders()
 
 void SpritePolygonTestSlider::makeSprites(const std::string* list, const int count, const float y)
 {
-    auto vsize =Director::getInstance()->getVisibleSize();
-    float offset = (vsize.width-100)/(count-1);
+    auto vsize = Director::getInstance()->getVisibleSize();
     for(int i = 0; i < count; i++)
     {
-        auto sp = makeSprite(list[i], Vec2(50+offset*i, y));
+        float offset = (vsize.width/(count+1)) * (i+1);
+        auto sp = makeSprite(list[i], Vec2(offset, y));
         addChild(sp);
     }
 }
@@ -362,7 +373,7 @@ void SpritePolygonTest3::initSprites()
         s_pathB2,
         "Images/elephant1_Diffuse.png"
     };
-    int count = 4;
+    int count = sizeof(list)/sizeof(list[0]);
     makeSprites(list, count, vsize.height/2);
 }
 
@@ -593,7 +604,7 @@ void SpritePolygonPerformanceTestDynamic::initIncrementStats()
 {
     _pinfo = AutoPolygon::generatePolygon(s_pathGrossini);
     _incVert = _pinfo.getVertCount();
-    _incTri = _pinfo.getTriaglesCount();
+    _incTri = _pinfo.getTrianglesCount();
     _incPix = _pinfo.getArea();
 }
 
@@ -629,4 +640,202 @@ Sprite* SpritePerformanceTestDynamic::makeSprite()
     auto ret =  Sprite::create(s_pathGrossini);
     ret->runAction(RepeatForever::create(RotateBy::create(1.0,360.0)));
     return ret;
+}
+
+//
+// SpritePolygonTestNoCrash
+//
+SpritePolygonTestNoCrash::SpritePolygonTestNoCrash()
+{
+    _title = "SpritePolygon ";
+    _subtitle = "AutoPolygon: should not crash";
+}
+
+void SpritePolygonTestNoCrash::initSprites()
+{
+    auto s = Director::getInstance()->getWinSize();
+    auto pinfo = AutoPolygon::generatePolygon("Images/sprite_polygon_crash.png", Rect::ZERO, 1);
+    auto sprite = Sprite::create(pinfo);
+    addChild(sprite);
+    sprite->setPosition(s.width/2, s.height/2);
+
+    //DrawNode
+    auto spDrawNode = DrawNode::create();
+    spDrawNode->setTag(sprite->getTag());
+    spDrawNode->clear();
+    sprite->addChild(spDrawNode);
+    _drawNodes.pushBack(spDrawNode);
+
+    updateDrawNode();
+}
+
+//
+// SpritePolygonTestTPIsland
+//
+SpritePolygonTestTPIsland::SpritePolygonTestTPIsland()
+{
+    _title = "SpritePolygon ";
+    _subtitle = "TexturePacker: Sprite with island";
+}
+
+void SpritePolygonTestTPIsland::initSprites()
+{
+    auto s = Director::getInstance()->getWinSize();
+    auto cache = SpriteFrameCache::getInstance();
+    cache->addSpriteFramesWithFile("Images/test_polygon.plist");
+
+    auto sprite = Sprite::createWithSpriteFrame(cache->getSpriteFrameByName("island_polygon.png"));
+    addChild(sprite);
+    sprite->setPosition(s.width/2, s.height/2);
+
+    //DrawNode
+    auto spDrawNode = DrawNode::create();
+    spDrawNode->setTag(sprite->getTag());
+    spDrawNode->clear();
+    sprite->addChild(spDrawNode);
+    _drawNodes.pushBack(spDrawNode);
+
+    updateDrawNode();
+}
+
+//
+// SpritePolygonTestAutoPolyIsland
+//
+SpritePolygonTestAutoPolyIsland::SpritePolygonTestAutoPolyIsland()
+{
+    _title = "SpritePolygon";
+    _subtitle = "AutoPolygon: Sprite with island";
+}
+
+void SpritePolygonTestAutoPolyIsland::initSprites()
+{
+    auto s = Director::getInstance()->getWinSize();
+
+    auto pinfo = AutoPolygon::generatePolygon("Images/island_polygon.png", Rect::ZERO, 1);
+    auto sprite = Sprite::create(pinfo);
+    addChild(sprite);
+    sprite->setPosition(s.width/2, s.height/2);
+
+    //DrawNode
+    auto spDrawNode = DrawNode::create();
+    spDrawNode->setTag(sprite->getTag());
+    spDrawNode->clear();
+    sprite->addChild(spDrawNode);
+    _drawNodes.pushBack(spDrawNode);
+
+    updateDrawNode();
+}
+
+//
+// SpritePolygonTestFrameAnim
+//
+SpritePolygonTestFrameAnim::SpritePolygonTestFrameAnim()
+{
+    _title = "SpritePolygon";
+    _subtitle = "SpriteFrame animation";
+}
+
+void SpritePolygonTestFrameAnim::initSprites()
+{
+    auto screen = Director::getInstance()->getWinSize();
+
+    auto rotate = RotateBy::create(10, 360);
+    auto action = RepeatForever::create(rotate);
+    char str[100] = {0};
+
+    auto cache = SpriteFrameCache::getInstance();
+    cache->addSpriteFramesWithFile("animations/grossini_dance_poly.plist");
+
+    Sprite *sprite;
+    for(int i=0;i<10;i++)
+    {
+        sprintf(str, "grossini_dance_%02d.png", i+1);
+        sprite = Sprite::createWithSpriteFrameName(str);
+
+        sprite->setPosition(Vec2(screen.width/6*(i%5+1), screen.height*2/3 - screen.height*(i/5)/3));
+
+        auto point = Sprite::create("Images/r1.png");
+        point->setScale( 0.1f );
+        point->setPosition( sprite->getPosition() );
+        addChild(point, 10);
+
+        sprite->runAction( action->clone() );
+        addChild(sprite, i);
+
+        //DrawNode
+        auto spDrawNode = DrawNode::create();
+        spDrawNode->clear();
+        sprite->addChild(spDrawNode);
+        _drawNodes.pushBack(spDrawNode);
+    }
+
+    updateDrawNode();
+
+
+    Vector<SpriteFrame*> animFrames(5);
+    for(int i = 9; i < 14; i++)
+    {
+        sprintf(str, "grossini_dance_%02d.png", i+1);
+        animFrames.pushBack(cache->getSpriteFrameByName(str));
+    }
+    auto animation = Animation::createWithSpriteFrames(animFrames, 0.3f);
+    sprite->runAction(RepeatForever::create(Animate::create(animation)));
+    
+}
+
+//
+// Issue14017Test
+//
+Issue14017Test::Issue14017Test()
+{
+    _title = "Issue 14017";
+    _subtitle = "Autopolygon around the banana";
+}
+
+void Issue14017Test::initSprites()
+{
+    auto s = Director::getInstance()->getWinSize();
+    auto offset = Vec2(0.15*s.width,0);
+    auto filename = "Images/bug14017.png";
+
+    //Sprite
+    auto pinfo = AutoPolygon::generatePolygon(filename);
+    _polygonSprite = Sprite::create(pinfo);
+    _polygonSprite->setTag(101);
+    addChild(_polygonSprite);
+    _polygonSprite->setPosition(Vec2(s)/2 + offset);
+
+    _normalSprite = Sprite::create(filename);
+    _normalSprite->setTag(100);
+    addChild(_normalSprite);
+    _normalSprite->setPosition(Vec2(s)/2 - offset);
+
+    //DrawNode
+    auto spDrawNode = DrawNode::create();
+    spDrawNode->setTag(_normalSprite->getTag());
+    spDrawNode->clear();
+    _normalSprite->addChild(spDrawNode);
+    _drawNodes.pushBack(spDrawNode);
+
+    auto sppDrawNode = DrawNode::create();
+    sppDrawNode->setTag(_polygonSprite->getTag());
+    sppDrawNode->clear();
+    _polygonSprite->addChild(sppDrawNode);
+    _drawNodes.pushBack(sppDrawNode);
+
+    //Label
+    TTFConfig ttfConfig("fonts/arial.ttf", 8);
+    std::string temp = "Sprite:\nPixels drawn: ";
+    auto spSize = _normalSprite->getContentSize();
+    auto spArea = Label::createWithTTF(ttfConfig, temp+Value((int)spSize.width*(int)spSize.height).asString());
+    _normalSprite->addChild(spArea);
+    spArea->setAnchorPoint(Vec2(0,1));
+
+    temp = "SpritePolygon:\nPixels drawn: ";
+    auto vertCount = "\nverts:"+Value((int)pinfo.getVertCount()).asString();
+    auto sppArea = Label::createWithTTF(ttfConfig, temp+Value((int)pinfo.getArea()).asString()+vertCount);
+    _polygonSprite->addChild(sppArea);
+    sppArea->setAnchorPoint(Vec2(0,1));
+
+    updateDrawNode();
 }

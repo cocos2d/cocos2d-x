@@ -1,9 +1,8 @@
-#include "lua_cocos2dx_experimental_auto.hpp"
-#include "CCFastTMXLayer.h"
-#include "CCFastTMXTiledMap.h"
-#include "tolua_fix.h"
-#include "LuaBasicConversions.h"
-
+#include "scripting/lua-bindings/auto/lua_cocos2dx_experimental_auto.hpp"
+#include "2d/CCFastTMXLayer.h"
+#include "2d/CCFastTMXTiledMap.h"
+#include "scripting/lua-bindings/manual/tolua_fix.h"
+#include "scripting/lua-bindings/manual/LuaBasicConversions.h"
 
 int lua_cocos2dx_experimental_TMXLayer_getPositionAt(lua_State* tolua_S)
 {

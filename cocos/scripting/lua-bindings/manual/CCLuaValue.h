@@ -201,7 +201,7 @@ public:
      * 
      * @return the type of LuaValue object.
      */
-    const LuaValueType getType(void) const {
+    LuaValueType getType() const {
         return _type;
     }
     

@@ -44,7 +44,7 @@ PUSphereCollider::~PUSphereCollider( void )
 }
 
 //-----------------------------------------------------------------------
-const float PUSphereCollider::getRadius(void) const
+float PUSphereCollider::getRadius() const
 {
     return _radius;
 }

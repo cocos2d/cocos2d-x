@@ -43,6 +43,7 @@ NS_CC_BEGIN
 class CC_DLL CCFileUtilsWinRT : public FileUtils
 {
     friend class FileUtils;
+protected:
     CCFileUtilsWinRT();
 public:
     /* override functions */
@@ -51,8 +52,9 @@ public:
     virtual bool isAbsolutePath(const std::string& strPath) const;
     virtual std::string getPathForFilename(const std::string& filename, const std::string& resolutionDirectory, const std::string& searchPath) const override;
     virtual std::string getFullPathForDirectoryAndFilename(const std::string& strDirectory, const std::string& strFilename) const override;
-	virtual std::string getStringFromFile(const std::string& filename) override;
     virtual std::string getSuitableFOpen(const std::string& filenameUtf8) const override;
+    virtual long getFileSize(const std::string &filepath) override;
+	virtual FileUtils::Status getContents(const std::string& filename, ResizableBuffer* buffer) override;
 	static std::string getAppPath();
 
 private:

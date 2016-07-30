@@ -37,10 +37,8 @@ THE SOFTWARE.
 #include "renderer/CCTexture2D.h"
 #include "renderer/CCRenderer.h"
 #include "base/CCDirector.h"
+#include "base/ccUTF8.h"
 #include "2d/CCCamera.h"
-
-#include "deprecated/CCString.h"
-
 
 NS_CC_BEGIN
 
@@ -291,7 +289,7 @@ bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect, bool rotated)
         _quad.tr.colors = Color4B::WHITE;
         
         // shader state
-        setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP));
+        // setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP)); 
 
         // update texture (calls updateBlendFunc)
         setTexture(texture);
@@ -323,7 +321,7 @@ Sprite::Sprite(void)
 #endif //CC_SPRITE_DEBUG_DRAW
 }
 
-Sprite::~Sprite(void)
+Sprite::~Sprite()
 {
     CC_SAFE_RELEASE(_spriteFrame);
     CC_SAFE_RELEASE(_texture);
@@ -367,6 +365,8 @@ void Sprite::setTexture(const std::string &filename)
 
 void Sprite::setTexture(Texture2D *texture)
 {
+    setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP));
+
     // If batchnode, then texture id should be the same
     CCASSERT(! _batchNode || (texture &&  texture->getName() == _batchNode->getTexture()->getName()), "CCSprite: Batched sprites should use the same texture as the batchnode");
     // accept texture==nil as argument
@@ -465,7 +465,7 @@ void Sprite::setVertexRect(const Rect& rect)
     _rect = rect;
 }
 
-void Sprite::setTextureCoords(Rect rect)
+void Sprite::setTextureCoords(const Rect& rectInPoint)
 {
     Texture2D *tex = _batchNode ? _textureAtlas->getTexture() : _texture;
     if (tex == nullptr)
@@ -473,7 +473,7 @@ void Sprite::setTextureCoords(Rect rect)
         return;
     }
     
-    rect = CC_RECT_POINTS_TO_PIXELS(rect);
+    auto rectInPixels = CC_RECT_POINTS_TO_PIXELS(rectInPoint);
 
     float atlasWidth = (float)tex->getPixelsWide();
     float atlasHeight = (float)tex->getPixelsHigh();
@@ -483,15 +483,15 @@ void Sprite::setTextureCoords(Rect rect)
     if (_rectRotated)
     {
 #if CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
-        left    = (2*rect.origin.x+1)/(2*atlasWidth);
-        right   = left+(rect.size.height*2-2)/(2*atlasWidth);
-        top     = (2*rect.origin.y+1)/(2*atlasHeight);
-        bottom  = top+(rect.size.width*2-2)/(2*atlasHeight);
+        left    = (2*rectInPixels.origin.x+1)/(2*atlasWidth);
+        right   = left+(rectInPixels.size.height*2-2)/(2*atlasWidth);
+        top     = (2*rectInPixels.origin.y+1)/(2*atlasHeight);
+        bottom  = top+(rectInPixels.size.width*2-2)/(2*atlasHeight);
 #else
-        left    = rect.origin.x/atlasWidth;
-        right   = (rect.origin.x+rect.size.height) / atlasWidth;
-        top     = rect.origin.y/atlasHeight;
-        bottom  = (rect.origin.y+rect.size.width) / atlasHeight;
+        left    = rectInPixels.origin.x/atlasWidth;
+        right   = (rectInPixels.origin.x+rectInPixels.size.height) / atlasWidth;
+        top     = rectInPixels.origin.y/atlasHeight;
+        bottom  = (rectInPixels.origin.y+rectInPixels.size.width) / atlasHeight;
 #endif // CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
 
         if (_flippedX)
@@ -516,15 +516,15 @@ void Sprite::setTextureCoords(Rect rect)
     else
     {
 #if CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
-        left    = (2*rect.origin.x+1)/(2*atlasWidth);
-        right    = left + (rect.size.width*2-2)/(2*atlasWidth);
-        top        = (2*rect.origin.y+1)/(2*atlasHeight);
-        bottom    = top + (rect.size.height*2-2)/(2*atlasHeight);
+        left    = (2*rectInPixels.origin.x+1)/(2*atlasWidth);
+        right    = left + (rectInPixels.size.width*2-2)/(2*atlasWidth);
+        top        = (2*rectInPixels.origin.y+1)/(2*atlasHeight);
+        bottom    = top + (rectInPixels.size.height*2-2)/(2*atlasHeight);
 #else
-        left    = rect.origin.x/atlasWidth;
-        right    = (rect.origin.x + rect.size.width) / atlasWidth;
-        top        = rect.origin.y/atlasHeight;
-        bottom    = (rect.origin.y + rect.size.height) / atlasHeight;
+        left    = rectInPixels.origin.x/atlasWidth;
+        right    = (rectInPixels.origin.x + rectInPixels.size.width) / atlasWidth;
+        top        = rectInPixels.origin.y/atlasHeight;
+        bottom    = (rectInPixels.origin.y + rectInPixels.size.height) / atlasHeight;
 #endif // ! CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
 
         if(_flippedX)
@@ -594,15 +594,6 @@ void Sprite::updateTransform(void)
             float x2 = x1 + size.width;
             float y2 = y1 + size.height;
             
-            if (_flippedX)
-            {
-                std::swap(x1, x2);
-            }
-            if (_flippedY)
-            {
-                std::swap(y1, y2);
-            }
-            
             float x = _transformToBatch.m[12];
             float y = _transformToBatch.m[13];
 
@@ -626,6 +617,7 @@ void Sprite::updateTransform(void)
             _quad.br.vertices.set(SPRITE_RENDER_IN_SUBPIXEL(bx), SPRITE_RENDER_IN_SUBPIXEL(by), _positionZ);
             _quad.tl.vertices.set(SPRITE_RENDER_IN_SUBPIXEL(dx), SPRITE_RENDER_IN_SUBPIXEL(dy), _positionZ);
             _quad.tr.vertices.set(SPRITE_RENDER_IN_SUBPIXEL(cx), SPRITE_RENDER_IN_SUBPIXEL(cy), _positionZ);
+            setTextureCoords(_rect);
         }
 
         // MARMALADE CHANGE: ADDED CHECK FOR nullptr, TO PERMIT SPRITES WITH NO BATCH NODE / TEXTURE ATLAS
@@ -659,21 +651,29 @@ void Sprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
     }
     
 #if CC_USE_CULLING
-    // Don't do calculate the culling if the transform was not updated
+    // Don't calculate the culling if the transform was not updated
     auto visitingCamera = Camera::getVisitingCamera();
     auto defaultCamera = Camera::getDefaultCamera();
     if (visitingCamera == defaultCamera) {
-        _insideBounds = ((flags & FLAGS_TRANSFORM_DIRTY)|| visitingCamera->isViewProjectionUpdated()) ? renderer->checkVisibility(transform, _contentSize) : _insideBounds;
+        _insideBounds = ((flags & FLAGS_TRANSFORM_DIRTY) || visitingCamera->isViewProjectionUpdated()) ? renderer->checkVisibility(transform, _contentSize) : _insideBounds;
     }
     else
     {
+        // XXX: this always return true since
         _insideBounds = renderer->checkVisibility(transform, _contentSize);
     }
 
     if(_insideBounds)
 #endif
     {
-        _trianglesCommand.init(_globalZOrder, _texture->getName(), getGLProgramState(), _blendFunc, _polyInfo.triangles, transform, flags);
+        _trianglesCommand.init(_globalZOrder, 
+            _texture, 
+            getGLProgramState(), 
+            _blendFunc, 
+            _polyInfo.triangles, 
+            transform, 
+            flags);
+
         renderer->addCommand(&_trianglesCommand);
         
 #if CC_SPRITE_DEBUG_DRAW
@@ -932,10 +932,10 @@ void Sprite::setAnchorPoint(const Vec2& anchor)
     SET_DIRTY_RECURSIVELY();
 }
 
-void Sprite::ignoreAnchorPointForPosition(bool value)
+void Sprite::setIgnoreAnchorPointForPosition(bool value)
 {
-    CCASSERT(! _batchNode, "ignoreAnchorPointForPosition is invalid in Sprite");
-    Node::ignoreAnchorPointForPosition(value);
+    CCASSERT(! _batchNode, "setIgnoreAnchorPointForPosition is invalid in Sprite");
+    Node::setIgnoreAnchorPointForPosition(value);
 }
 
 void Sprite::setVisible(bool bVisible)
@@ -1082,6 +1082,10 @@ void Sprite::setSpriteFrame(SpriteFrame *spriteFrame)
     {
         _polyInfo = spriteFrame->getPolygonInfo();
     }
+    if (spriteFrame->hasAnchorPoint())
+    {
+        setAnchorPoint(spriteFrame->getAnchorPoint());
+    }
 }
 
 void Sprite::setDisplayFrameWithAnimationName(const std::string& animationName, ssize_t frameIndex)
@@ -1187,7 +1191,7 @@ std::string Sprite::getDescription() const
     return StringUtils::format("<Sprite | Tag = %d, TextureID = %d>", _tag, texture_id );
 }
 
-PolygonInfo& Sprite::getPolygonInfo()
+const PolygonInfo& Sprite::getPolygonInfo() const
 {
     return _polyInfo;
 }

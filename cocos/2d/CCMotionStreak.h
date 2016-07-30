@@ -47,24 +47,24 @@ class CC_DLL MotionStreak : public Node, public TextureProtocol
 public:
     /** Creates and initializes a motion streak with fade in seconds, minimum segments, stroke's width, color, texture filename.
      *
-     * @param fade The fade time, in seconds.
+     * @param timeToFade The fade time, in seconds.
      * @param minSeg The minimum segments.
-     * @param stroke The width of stroke.
-     * @param color The color of stroke.
-     * @param path The texture file name of stoke.
+     * @param strokeWidth The width of stroke.
+     * @param strokeColor The color of stroke.
+     * @param imagePath The texture file name of stoke.
      * @return An autoreleased MotionStreak object.
      */
-    static MotionStreak* create(float fade, float minSeg, float stroke, const Color3B& color, const std::string& path);
+    static MotionStreak* create(float timeToFade, float minSeg, float strokeWidth, const Color3B& strokeColor, const std::string& imagePath);
     /** Creates and initializes a motion streak with fade in seconds, minimum segments, stroke's width, color, texture.
      * 
-     * @param fade The fade time, in seconds.
+     * @param timeToFade The fade time, in seconds.
      * @param minSeg The minimum segments.
-     * @param stroke The width of stroke.
-     * @param color The color of stroke.
+     * @param strokeWidth The width of stroke.
+     * @param strokeColor The color of stroke.
      * @param texture The texture name of stoke.
      * @return An autoreleased MotionStreak object.
      */
-    static MotionStreak* create(float fade, float minSeg, float stroke, const Color3B& color, Texture2D* texture);
+    static MotionStreak* create(float timeToFade, float minSeg, float strokeWidth, const Color3B& strokeColor, Texture2D* texture);
 
     /** Color used for the tint.
      *

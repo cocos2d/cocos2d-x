@@ -25,9 +25,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#import "CCUIEditBoxIOS.h"
-#import "CCUISingleLineTextField.h"
-#import "CCUIMultilineTextField.h"
+#import "ui/UIEditBox/iOS/CCUIEditBoxIOS.h"
+#import "ui/UIEditBox/iOS/CCUISingleLineTextField.h"
+#import "ui/UIEditBox/iOS/CCUIMultilineTextField.h"
 
 #import "platform/ios/CCEAGLView-ios.h"
 #include "base/CCDirector.h"
@@ -57,7 +57,7 @@
         _editState = NO;
         self.frameRect = frameRect;
         self.editBox = editBox;
-        self.dataInputMode = cocos2d::ui::EditBox::InputFlag::INITIAL_CAPS_ALL_CHARACTERS;
+        self.dataInputMode = cocos2d::ui::EditBox::InputFlag::LOWERCASE_ALL_CHARACTERS;
         self.keyboardReturnType = cocos2d::ui::EditBox::KeyboardReturnType::DEFAULT;
         
         [self createMultiLineTextField];
@@ -206,6 +206,10 @@
             self.textInput.autocorrectionType = UITextAutocorrectionTypeNo;
             break;
             
+        case cocos2d::ui::EditBox::InputFlag::LOWERCASE_ALL_CHARACTERS:
+            self.textInput.autocapitalizationType = UITextAutocapitalizationTypeNone;
+            break;
+            
         default:
             break;
     }
@@ -274,18 +278,12 @@
     [eaglview doAnimationWhenKeyboardMoveWithDuration:duration distance:distance];
 }
 
-- (void)setPosition:(CGPoint)pos
-{
-    // TODO: Handle anchor point?
-    CGRect frame = self.textInput.frame;
-    frame.origin = pos;
-    self.textInput.frame = frame;
-}
-
-- (void)setContentSize:(CGSize)size
+- (void)updateFrame:(CGRect)rect
 {
     CGRect frame = self.textInput.frame;
-    frame.size = size;
+    frame.origin = rect.origin;
+    frame.size = rect.size;
+    
     self.textInput.frame = frame;
 }
 
@@ -375,12 +373,14 @@
 - (void)textViewDidChange:(UITextView *)textView
 {
     int maxLength = getEditBoxImplIOS()->getMaxLength();
-    if (textView.text.length > maxLength) {
-        textView.text = [textView.text substringToIndex:maxLength];
+    if (textView.markedTextRange == nil) {
+        if (textView.text.length > maxLength) {
+            textView.text = [textView.text substringToIndex:maxLength];
+        }
+        
+        const char* inputText = [textView.text UTF8String];
+        getEditBoxImplIOS()->editBoxEditingChanged(inputText);
     }
-    
-    const char* inputText = [textView.text UTF8String];
-    getEditBoxImplIOS()->editBoxEditingChanged(inputText);
 }
 
 
@@ -391,12 +391,14 @@
 - (void)textChanged:(UITextField *)textField
 {
     int maxLength = getEditBoxImplIOS()->getMaxLength();
-    if (textField.text.length > maxLength) {
-        textField.text = [textField.text substringToIndex:maxLength];
+    if (textField.markedTextRange == nil) {
+        if (textField.text.length > maxLength) {
+            textField.text = [textField.text substringToIndex:maxLength];
+        }
+        
+        const char* inputText = [textField.text UTF8String];
+        getEditBoxImplIOS()->editBoxEditingChanged(inputText);
     }
-    
-    const char* inputText = [textField.text UTF8String];
-    getEditBoxImplIOS()->editBoxEditingChanged(inputText);
 }
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)sender        // return NO to disallow editing.

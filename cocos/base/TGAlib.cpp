@@ -26,7 +26,7 @@ THE SOFTWARE.
 #include <string.h>
 #include <stdlib.h>
 
-#include "TGAlib.h"
+#include "base/TGAlib.h"
 #include "base/CCData.h"
 #include "platform/CCFileUtils.h"
 

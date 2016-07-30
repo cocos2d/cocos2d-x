@@ -22,8 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "UIScrollViewBar.h"
-#include "CCImage.h"
+#include "ui/UIScrollViewBar.h"
+#include "platform/CCImage.h"
 #include "2d/CCSprite.h"
 #include "base/ccUtils.h"
 
@@ -33,6 +33,9 @@ namespace ui {
     
 static const char* HALF_CIRCLE_IMAGE = "iVBORw0KGgoAAAANSUhEUgAAAAwAAAAGCAMAAADAMI+zAAAAJ1BMVEX///////////////////////////////////////////////////9Ruv0SAAAADHRSTlMABgcbbW7Hz9Dz+PmlcJP5AAAAMElEQVR4AUXHwQ2AQAhFwYcLH1H6r1djzDK3ASxUpTBeK/uTCyz7dx54b44m4p5cD1MwAooEJyk3AAAAAElFTkSuQmCC";
 static const char* BODY_IMAGE_1_PIXEL_HEIGHT = "iVBORw0KGgoAAAANSUhEUgAAAAwAAAABCAMAAADdNb8LAAAAA1BMVEX///+nxBvIAAAACklEQVR4AWNABgAADQABYc2cpAAAAABJRU5ErkJggg==";
+
+static const char* HALF_CIRCLE_IMAGE_KEY = "/__halfCircleImage";
+static const char* BODY_IMAGE_1_PIXEL_HEIGHT_KEY = "/__bodyImage";
 
 static const Color3B DEFAULT_COLOR(52, 65, 87);
 static const float DEFAULT_MARGIN = 20;
@@ -82,7 +85,7 @@ bool ScrollViewBar::init()
         return false;
     }
     
-    _upperHalfCircle = utils::createSpriteFromBase64(HALF_CIRCLE_IMAGE);
+    _upperHalfCircle = utils::createSpriteFromBase64Cached(HALF_CIRCLE_IMAGE, HALF_CIRCLE_IMAGE_KEY);
     _upperHalfCircle->setAnchorPoint(Vec2::ANCHOR_MIDDLE_BOTTOM);
     addProtectedChild(_upperHalfCircle);
     
@@ -91,20 +94,18 @@ bool ScrollViewBar::init()
     _lowerHalfCircle->setAnchorPoint(Vec2::ANCHOR_MIDDLE_BOTTOM);
     addProtectedChild(_lowerHalfCircle);
     
-    _body = utils::createSpriteFromBase64(BODY_IMAGE_1_PIXEL_HEIGHT);
+    _body = utils::createSpriteFromBase64Cached(BODY_IMAGE_1_PIXEL_HEIGHT, BODY_IMAGE_1_PIXEL_HEIGHT_KEY);
     _body->setAnchorPoint(Vec2::ANCHOR_MIDDLE_BOTTOM);
     addProtectedChild(_body);
     
     setColor(DEFAULT_COLOR);
-    
+    onScrolled(Vec2::ZERO);
+    ProtectedNode::setOpacity(0);
+    _autoHideRemainingTime = 0.0f;
+
     if(_direction == ScrollView::Direction::HORIZONTAL)
     {
         setRotation(90);
-    }
-    
-    if(_autoHideEnabled)
-    {
-        ProtectedNode::setOpacity(0);
     }
     return true;
 }
@@ -146,7 +147,12 @@ void ScrollViewBar::setWidth(float width)
 void ScrollViewBar::setAutoHideEnabled(bool autoHideEnabled)
 {
     _autoHideEnabled = autoHideEnabled;
-    ProtectedNode::setOpacity(_opacity);
+    if (!_autoHideEnabled && !_touching && _autoHideRemainingTime <= 0)
+    {
+        ProtectedNode::setOpacity(_opacity);
+    }
+    else
+        ProtectedNode::setOpacity(0);
 }
 
 float ScrollViewBar::getWidth() const
@@ -279,7 +285,7 @@ Vec2 ScrollViewBar::calculatePosition(float innerContainerMeasure, float scrollV
     float denominatorValue = innerContainerMeasure - scrollViewMeasure;
     if(outOfBoundaryValue != 0)
     {
-        denominatorValue += fabs(outOfBoundaryValue);
+        denominatorValue += std::abs(outOfBoundaryValue);
     }
     
     float positionRatio = 0;

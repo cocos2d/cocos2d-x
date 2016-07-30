@@ -17,10 +17,10 @@ public:
     : SkeletonAnimation(skeletonDataFile, atlasFile, scale)
     {}
     
-    virtual void drawSkeleton (const cocos2d::Mat4& transform, uint32_t transformFlags) override
+    virtual void draw(cocos2d::Renderer* renderer, const cocos2d::Mat4& transform, uint32_t transformFlags) override
     {
         glDisable(GL_CULL_FACE);
-        SkeletonAnimation::drawSkeleton(transform, transformFlags);
+        SkeletonAnimation::draw(renderer, transform, transformFlags);
         RenderState::StateBlock::invalidate(cocos2d::RenderState::StateBlock::RS_ALL_ONES);
     }
     
@@ -249,7 +249,7 @@ bool Scene3DTestScene::init()
         ca = _gameCameras[CAMERA_WORLD_3D_SCENE] =
             Camera::createPerspective(60,
                                       visibleSize.width/visibleSize.height,
-                                      0.1,
+                                      0.1f,
                                       200);
         ca->setDepth(CAMERA_WORLD_3D_SCENE);
         ca->setName(s_CameraNames[CAMERA_WORLD_3D_SCENE]);
@@ -393,7 +393,7 @@ void Scene3DTestScene::createWorld3D()
     _terrain = Terrain::create(data,Terrain::CrackFixedType::SKIRT);
     _terrain->setMaxDetailMapAmount(4);
     _terrain->setDrawWire(false);
-    
+
     _terrain->setSkirtHeightRatio(3);
     _terrain->setLODDistance(64,128,192);
     
@@ -401,7 +401,7 @@ void Scene3DTestScene::createWorld3D()
     _player = Player::create("Sprite3DTest/girl.c3b",
                              _gameCameras[CAMERA_WORLD_3D_SCENE],
                              _terrain);
-    _player->setScale(0.08);
+    _player->setScale(0.08f);
     _player->setPositionY(_terrain->getHeight(_player->getPositionX(),
                                               _player->getPositionZ()));
     
@@ -494,7 +494,7 @@ void Scene3DTestScene::createUI()
         cb->setSelected(true);
         if (text) cb->setName(text);
         cb->setAnchorPoint(Vec2(0, 0.5));
-        cb->setScale(0.8);
+        cb->setScale(0.8f);
         cb->addClickEventListener([this](Ref* sender)
             {
                 auto index = static_cast<Node *>(sender)->getTag();
@@ -703,9 +703,7 @@ void Scene3DTestScene::createDetailDlg()
     
     // add a spine ffd animation on it
     auto skeletonNode =
-        SkeletonAnimationCullingFix::createWithFile("spine/goblins-ffd.json",
-                                          "spine/goblins-ffd.atlas",
-                                          1.5f);
+        SkeletonAnimationCullingFix::createWithFile("spine/goblins.json", "spine/goblins.atlas", 1.5f);
     skeletonNode->setAnimation(0, "walk", true);
     skeletonNode->setSkin("goblin");
     

@@ -26,7 +26,7 @@ THE SOFTWARE.
 #include "platform/CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
 
-#include "CCApplication-linux.h"
+#include "platform/linux/CCApplication-linux.h"
 #include <unistd.h>
 #include <sys/time.h>
 #include <string>
@@ -37,7 +37,7 @@ NS_CC_BEGIN
 
 
 // sharedApplication pointer
-Application * Application::sm_pSharedApplication = 0;
+Application * Application::sm_pSharedApplication = nullptr;
 
 static long getCurrentMillSecond() {
     long lLastTime;
@@ -58,7 +58,7 @@ Application::Application()
 Application::~Application()
 {
     CC_ASSERT(this == sm_pSharedApplication);
-    sm_pSharedApplication = NULL;
+    sm_pSharedApplication = nullptr;
 }
 
 int Application::run()

@@ -2,7 +2,7 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2011      Zynga Inc.
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -61,7 +61,10 @@ then running it again in Reverse mode.
 
 Example:
 
-Action *pingPongAction = Sequence::actions(action, action->reverse(), nullptr);
+@code
+auto action = MoveBy::create(1.0f, Vec2::ONE);
+auto pingPongAction = Sequence::create(action, action->reverse(), nullptr);
+@endcode
 */
 class CC_DLL ActionInterval : public FiniteTimeAction
 {
@@ -187,8 +190,8 @@ public:
     virtual void update(float t) override;
     
 CC_CONSTRUCTOR_ACCESS:
-    Sequence() {}
-    virtual ~Sequence(void);
+    Sequence();
+    virtual ~Sequence();
 
     /** initializes the action */
     bool initWithTwoActions(FiniteTimeAction *pActionOne, FiniteTimeAction *pActionTwo);
@@ -413,7 +416,7 @@ public:
     virtual void update(float time) override;
     
 CC_CONSTRUCTOR_ACCESS:
-    Spawn() {}
+    Spawn();
     virtual ~Spawn();
 
     /** initializes the Spawn action with the 2 actions to spawn */
@@ -1520,10 +1523,6 @@ public:
      * @param time In seconds.
      */
     virtual void update(float time) override;
-    //
-    // Overrides
-    //
-    virtual bool isDone(void) const override;
     
 CC_CONSTRUCTOR_ACCESS:
     TargetedAction();

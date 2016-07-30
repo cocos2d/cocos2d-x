@@ -25,16 +25,53 @@ App::App()
     Resuming += ref new EventHandler<Object^>(this, &App::OnResuming);
 }
 
+/// <summary>
+/// Invoked when the application is launched normally by the end user.	Other entry points
+/// will be used such as when the application is launched to open a specific file.
+/// </summary>
+/// <param name="e">Details about the launch request and process.</param>
 void App::OnLaunched(Windows::ApplicationModel::Activation::LaunchActivatedEventArgs^ e)
 {
-    if (mPage == nullptr)
+    // if our app is prelaunched do nothing
+    // see https://msdn.microsoft.com/en-us/windows/uwp/launch-resume/handle-app-prelaunch
+    if (e->PrelaunchActivated)
     {
-        mPage = ref new OpenGLESPage(&mOpenGLES);
+        return;
     }
 
-    // Place the page in the current window and ensure that it is active.
-    Windows::UI::Xaml::Window::Current->Content = mPage;
-    Windows::UI::Xaml::Window::Current->Activate();
+    auto rootFrame = dynamic_cast<Frame^>(Window::Current->Content);
+
+    // Do not repeat app initialization when the Window already has content,
+    // just ensure that the window is active
+    if (rootFrame == nullptr)
+    {
+        // Create a Frame to act as the navigation context and associate it with
+        // a SuspensionManager key
+        rootFrame = ref new Frame();
+
+        rootFrame->NavigationFailed += ref new Windows::UI::Xaml::Navigation::NavigationFailedEventHandler(this, &App::OnNavigationFailed);
+
+        if (e->PreviousExecutionState == ApplicationExecutionState::Terminated)
+        {
+            // TODO: Restore the saved session state only when appropriate, scheduling the
+            // final launch steps after the restore is complete
+
+        }
+
+        // Place the frame in the current Window
+        Window::Current->Content = rootFrame;
+        // Ensure the current window is active
+    }
+
+    if (rootFrame->Content == nullptr)
+    {
+        // When the navigation stack isn't restored navigate to the first page,
+        // configuring the new page by passing required information as a navigation
+        // parameter
+        rootFrame->Content = mPage = ref new OpenGLESPage(&mOpenGLES);
+    }
+    // Ensure the current window is active
+    Window::Current->Activate();
 }
 
 /// <summary>
@@ -47,7 +84,10 @@ void App::OnSuspending(Object^ sender, SuspendingEventArgs^ e)
     (void)sender;	// Unused parameter
     (void)e;		// Unused parameter
 
-    mPage->SetVisibility(false);
+    if (mPage)
+    {
+        mPage->SetVisibility(false);
+    }
 }
 
 /// <summary>
@@ -60,6 +100,22 @@ void App::OnResuming(Object ^sender, Object ^args)
     (void)sender; // Unused parameter
     (void)args; // Unused parameter
 
-    mPage->SetVisibility(true);
+    if (mPage)
+    {
+        mPage->SetVisibility(true);
+    }
 }
+
+/// <summary>
+/// Invoked when Navigation to a certain page fails
+/// </summary>
+/// <param name="sender">The Frame which failed navigation</param>
+/// <param name="e">Details about the navigation failure</param>
+void App::OnNavigationFailed(Platform::Object ^sender, Windows::UI::Xaml::Navigation::NavigationFailedEventArgs ^e)
+{
+    throw ref new FailureException("Failed to load Page " + e->SourcePageType.Name);
+}
+
+
+
 

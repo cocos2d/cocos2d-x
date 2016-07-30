@@ -18,6 +18,9 @@
 #endif
 #endif
 #endif
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#include "JNITest/JNITest.h"
+#endif
 
 // sort them alphabetically. thanks
 #include "ActionManagerTest/ActionManagerTest.h"
@@ -30,7 +33,6 @@
 #include "Camera3DTest/Camera3DTest.h"
 #include "ClickAndMoveTest/ClickAndMoveTest.h"
 #include "CocosDenshionTest/CocosDenshionTest.h"
-#include "CocosStudio3DTest/CocosStudio3DTest.h"
 #include "ConfigurationTest/ConfigurationTest.h"
 #include "ConsoleTest/ConsoleTest.h"
 #include "CurrentLanguageTest/CurrentLanguageTest.h"
@@ -87,6 +89,8 @@
 #include "UnitTest/UnitTest.h"
 #include "UserDefaultTest/UserDefaultTest.h"
 #include "VibrateTest/VibrateTest.h"
+#include "VRTest/VRTest.h"
 #include "ZwoptexTest/ZwoptexTest.h"
+#include "SpriteFrameCacheTest/SpriteFrameCacheTest.h"
 
 #endif

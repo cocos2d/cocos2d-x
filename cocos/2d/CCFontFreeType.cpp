@@ -26,7 +26,7 @@ THE SOFTWARE.
 #include "2d/CCFontFreeType.h"
 #include FT_BBOX_H
 #include "edtaa3func.h"
-#include "CCFontAtlas.h"
+#include "2d/CCFontAtlas.h"
 #include "base/CCDirector.h"
 #include "base/ccUTF8.h"
 #include "platform/CCFileUtils.h"
@@ -85,6 +85,7 @@ void FontFreeType::shutdownFreeType()
     if (_FTInitialized == true)
     {
         FT_Done_FreeType(_FTlibrary);
+        s_cacheFontData.clear();
         _FTInitialized = false;
     }
 }
@@ -141,7 +142,7 @@ bool FontFreeType::createFontObject(const std::string &fontName, float fontSize)
 
     if (FT_New_Memory_Face(getFTLibrary(), s_cacheFontData[fontName].data.getBytes(), s_cacheFontData[fontName].data.getSize(), 0, &face ))
         return false;
-    
+
     if (FT_Select_Charmap(face, FT_ENCODING_UNICODE))
     {
         int foundIndex = -1;
@@ -272,6 +273,14 @@ int  FontFreeType::getHorizontalKerningForChars(unsigned short firstChar, unsign
 int FontFreeType::getFontAscender() const
 {
     return (static_cast<int>(_fontRef->size->metrics.ascender >> 6));
+}
+
+const char* FontFreeType::getFontFamily() const
+{
+    if (!_fontRef)
+        return nullptr;
+
+    return _fontRef->family_name;
 }
 
 unsigned char* FontFreeType::getGlyphBitmap(unsigned short theChar, long &outWidth, long &outHeight, Rect &outRect,int &xAdvance)
@@ -639,7 +648,7 @@ void FontFreeType::releaseFont(const std::string &fontName)
     auto item = s_cacheFontData.begin();
     while (s_cacheFontData.end() != item)
     {
-        if (item->first.find(fontName) >= 0)
+        if (item->first.find(fontName) != std::string::npos)
             item = s_cacheFontData.erase(item);
         else
             item++;

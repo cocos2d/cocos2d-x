@@ -1,18 +1,18 @@
 /****************************************************************************
  Copyright (c) 2013-2014 Chukong Technologies Inc.
- 
+
  http://www.cocos2d-x.org
- 
+
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
- 
+
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
- 
+
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -32,8 +32,10 @@ extern "C" {
 }
 #endif
 
-#include "cocos2d.h"
-#include "LuaScriptHandlerMgr.h"
+
+#include "scripting/lua-bindings/manual/cocos2d/LuaScriptHandlerMgr.h"
+#include "base/CCEventListenerAcceleration.h"
+#include "base/CCEventListenerCustom.h"
 
 NS_CC_BEGIN
 class LuaEventListenerCustom
@@ -63,7 +65,7 @@ struct LuaEventAccelerationData
 {
     void* acc;
     Event* event;
-    
+
     LuaEventAccelerationData(void* inAcc,Event* inEvent)
     :acc(inAcc),event(inEvent)
     {
@@ -74,7 +76,7 @@ struct LuaEventKeyboarData
 {
     int keyCode;
     Event* event;
-    
+
     LuaEventKeyboarData(int inKeyCode,Event* inEvent)
     :keyCode(inKeyCode),event(inEvent)
     {
@@ -85,7 +87,7 @@ struct LuaEventTouchData
 {
     Touch* touch;
     Event* event;
-    
+
     LuaEventTouchData(Touch* inTouch, Event* inEvent)
     :touch(inTouch),
     event(inEvent)
@@ -97,7 +99,7 @@ struct LuaEventTouchesData
 {
     std::vector<Touch*> touches;
     Event* event;
-    
+
     LuaEventTouchesData(std::vector<Touch*> inTouches, Event* inEvent)
     :touches(inTouches),
     event(inEvent)
@@ -108,7 +110,7 @@ struct LuaEventTouchesData
 struct LuaEventMouseData
 {
     Event* event;
-    
+
     LuaEventMouseData(Event* inEvent)
     :event(inEvent)
     {

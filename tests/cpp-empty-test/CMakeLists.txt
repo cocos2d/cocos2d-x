@@ -1,7 +1,31 @@
+#/****************************************************************************
+# Copyright (c) 2015 Chukong Technologies Inc.
+
+# http://www.cocos2d-x.org
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+# THE SOFTWARE.
+# ****************************************************************************/
+
 set(APP_NAME cpp-empty-test)
 
 if(ANDROID)
-  set(PLATFORM_SRC proj.android/jni/hellocpp/main.cpp)
+  set(PLATFORM_SRC proj.android/jni/main.cpp)
   set(RES_PREFIX "/Resources")
 elseif(WINDOWS)
   set(PLATFORM_SRC proj.win32/main.cpp)
@@ -28,18 +52,26 @@ else()
 
 endif()
 
+include_directories(Classes)
+
 set(SAMPLE_SRC
   ${PLATFORM_SRC}
   Classes/AppDelegate.cpp
   Classes/HelloWorldScene.cpp
 )
 
-# add the executable
-add_executable(${APP_NAME}
-  ${SAMPLE_SRC}
-)
+if(ANDROID)
+    add_library(${APP_NAME} SHARED ${SAMPLE_SRC})
+    IF(CMAKE_BUILD_TYPE MATCHES RELEASE)
+        ADD_CUSTOM_COMMAND(TARGET ${APP_NAME} POST_BUILD COMMAND ${CMAKE_STRIP} lib${APP_NAME}.so)
+    ENDIF()
+else()
+    # add the executable
+    add_executable(${APP_NAME} ${SAMPLE_SRC})
+endif()
 
 target_link_libraries(${APP_NAME} cocos2d)
+
 
 if(MSVC)
 

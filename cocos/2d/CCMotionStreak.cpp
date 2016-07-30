@@ -102,7 +102,7 @@ bool MotionStreak::initWithFade(float fade, float minSeg, float stroke, const Co
 {
     Node::setPosition(Vec2::ZERO);
     setAnchorPoint(Vec2::ZERO);
-    ignoreAnchorPointForPosition(true);
+    setIgnoreAnchorPointForPosition(true);
     _startingPositionInitialized = false;
 
     _positionR.setZero();
@@ -112,8 +112,10 @@ bool MotionStreak::initWithFade(float fade, float minSeg, float stroke, const Co
 
     _stroke = stroke;
     _fadeDelta = 1.0f/fade;
-
-    _maxPoints = (int)(fade*60.0f)+2;
+    
+    double fps = 1/Director::getInstance()->getAnimationInterval();
+    _maxPoints = (int)(fade*fps)+2;
+    
     _nuPoints = 0;
     _pointState = (float *)malloc(sizeof(float) * _maxPoints);
     _pointVertexes = (Vec2*)malloc(sizeof(Vec2) * _maxPoints);
@@ -126,7 +128,7 @@ bool MotionStreak::initWithFade(float fade, float minSeg, float stroke, const Co
     _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
 
     // shader state
-    setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
+    setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR, texture));
 
     setTexture(texture);
     setColor(color);

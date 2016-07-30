@@ -28,7 +28,7 @@ THE SOFTWARE.
 #pragma once
 
 #include <agile.h>
-#include "InputEvent.h"
+#include "platform/winrt/InputEvent.h"
 
 NS_CC_BEGIN
 

@@ -194,7 +194,7 @@ emitter.startSpin = 0;
 #endif
 #endif
 
-class CC_DLL ParticleSystem : public Node, public TextureProtocol
+class CC_DLL ParticleSystem : public Node, public TextureProtocol, public PlayableProtocol
 {
 public:
     /** Mode
@@ -761,8 +761,14 @@ public:
     */
     virtual const BlendFunc &getBlendFunc() const override;
 
-    const std::string getResourceFile() const { return _plistFile; }
+    const std::string& getResourceFile() const { return _plistFile; }
 
+    /// @{
+    /// @name implement Playable Protocol
+    virtual void start() override;
+    virtual void stop() override;
+    /// @} end of PlaybleProtocol
+    
 CC_CONSTRUCTOR_ACCESS:
     /**
      * @js ctor
@@ -795,6 +801,17 @@ CC_CONSTRUCTOR_ACCESS:
     
     //! Initializes a system with a fixed number of particles
     virtual bool initWithTotalParticles(int numberOfParticles);
+    
+    /** Are the emissions paused
+     @return True if the emissions are paused, else false
+     */
+    virtual bool isPaused() const;
+    
+    /* Pause the emissions*/
+    virtual void pauseEmissions();
+    
+    /* UnPause the emissions*/
+    virtual void resumeEmissions();
 
 protected:
     virtual void updateBlendFunc();
@@ -950,6 +967,9 @@ protected:
      @since v0.8
      */
     PositionType _positionType;
+    
+    /** is the emitter paused */
+    bool _paused;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(ParticleSystem);

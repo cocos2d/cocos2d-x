@@ -111,7 +111,7 @@ std::string ConsoleCustomCommand::subtitle() const
 
 ConsoleUploadFile::ConsoleUploadFile()
 {
-    srand ((unsigned)time(nullptr));
+    std::srand ((unsigned)time(nullptr));
     int _id = rand()%100000;
     char buf[32];
     sprintf(buf, "%d", _id);

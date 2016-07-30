@@ -2,12 +2,13 @@
 
 # START CONFIG
 
-set(_chipmunk_inc chipmunk.h)
-set(_chipmunk_inc_paths chipmunk)
+set(_chipmunk_inc chipmunk/chipmunk.h)
+set(_chipmunk_inc_paths include)
 set(_chipmunk_libs chipmunk libchipmunk)
 
 set(_curl_inc curl/curl.h)
-set(_curl_libs crypto ssl libeay32 ssleay32 curl libcurl_imp libcurl)
+# order: curl, ssl, crypto
+set(_curl_libs curl libcurl_imp libcurl ssl libeay32 ssleay32 crypto)
 
 set(_freetype2_prefix FREETYPE)
 set(_freetype2_inc ft2build.h freetype/freetype.h)
@@ -89,6 +90,11 @@ if(LINUX)
   list(APPEND all_prebuilt_libs fmod)
 endif()
 
+if(ANDROID)
+  list(APPEND all_prebuilt_libs zlib)
+endif()
+
+
 # END CONFIG
 
 foreach(_lib ${all_prebuilt_libs})
@@ -135,6 +141,7 @@ foreach(_lib ${all_prebuilt_libs})
       #message(STATUS "${_lib} ${_prefix}_INCLUDE_DIRS: ${${_prefix}_INCLUDE_DIRS}")
 
       set(lib_dir_candidates
+        ${_root}/prebuilt/${PLATFORM_FOLDER}/${ANDROID_ABI}
         ${_root}/prebuilt/${PLATFORM_FOLDER}/${ARCH_DIR}
         ${_root}/prebuilt/${PLATFORM_FOLDER}
         ${_root}/prebuilt/${PLATFORM_FOLDER}/release-lib

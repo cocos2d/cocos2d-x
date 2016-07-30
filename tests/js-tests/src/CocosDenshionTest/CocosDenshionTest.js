@@ -231,7 +231,8 @@ var soundId = null;
 
 var playMusic = function () {
     cc.log("play background music");
-    audioEngine.playMusic(MUSIC_FILE, false);
+    var musicFile = MUSIC_FILE;
+    audioEngine.playMusic(musicFile, false);
 };
 
 var stopMusic = function () {

@@ -23,10 +23,14 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#include "jsb_cocos2dx_3d_manual.h"
-#include "cocos2d_specifics.hpp"
-#include "jsb_cocos2dx_3d_auto.hpp"
+#include "scripting/js-bindings/manual/3d/jsb_cocos2dx_3d_manual.h"
+#include "scripting/js-bindings/manual/cocos2d_specifics.hpp"
+#include "scripting/js-bindings/auto/jsb_cocos2dx_3d_auto.hpp"
+#include "3d/CCAnimate3D.h"
 #include "3d/CCBundle3D.h"
+#include "3d/CCMesh.h"
+#include "3d/CCSprite3D.h"
+#include "renderer/CCTextureCube.h"
 
 using namespace cocos2d;
 
@@ -35,19 +39,21 @@ public:
     JSB_HeapValueWrapper(JSContext* cx, JS::HandleValue value)
     :_cx(cx)
     {
-        _data.construct(cx, value);
+        _data = value;
+        js_add_object_root(value);
     }
 
     ~JSB_HeapValueWrapper(){
-        _data.destroyIfConstructed();
+        JS::RootedValue value(_cx, _data);
+        js_remove_object_root(value);
     }
 
-    JS::HandleValue get(){
-        return _data.ref();
+    jsval get(){
+        return _data;
     }
 private:
     JSContext* _cx;
-    mozilla::Maybe<JS::PersistentRootedValue> _data;
+    JS::Heap<JS::Value> _data;
 };
 
 static bool js_cocos2dx_Sprite3D_createAsync(JSContext *cx, uint32_t argc, jsval *vp)
@@ -59,15 +65,17 @@ static bool js_cocos2dx_Sprite3D_createAsync(JSContext *cx, uint32_t argc, jsval
         jsval_to_std_string(cx, args.get(0), &modelPath);
 
         std::function<void(Sprite3D*, void*)> callback;
-        JS::RootedObject cb(cx, args.get(argc == 4 ? 2 : 3).toObjectOrNull());
-        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, cb, args.get(argc == 4 ? 1 : 2)));
+        JS::RootedValue targetVal(cx, args.get(argc == 4 ? 2 : 3));
+        JS::RootedObject target(cx, targetVal.toObjectOrNull());
+        JS::RootedValue fval(cx, args.get(argc == 4 ? 1 : 2));
+        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, target, fval));
         auto lambda = [=](Sprite3D* larg0, void* larg1) -> void{
-
-            jsval largv[2];
             JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+            jsval largv[2];
             largv[0] = OBJECT_TO_JSVAL(js_get_or_create_jsobject<Sprite3D>(cx, larg0));
             JSB_HeapValueWrapper* v = (JSB_HeapValueWrapper*)larg1;
-            largv[1] = v->get();
+            JS::RootedValue dataVal(cx, v->get());
+            largv[1] = dataVal;
 
             JS::RootedValue rval(cx);
 		    bool ok = func->invoke(2, largv, &rval);
@@ -402,7 +410,7 @@ void register_all_cocos2dx_3d_manual(JSContext *cx, JS::HandleObject global)
 
     tmpObj.set(jsb_cocos2d_Sprite3D_prototype);
     JS_DefineFunction(cx, tmpObj, "getAABB", js_cocos2dx_Sprite3D_getAABB, 0, JSPROP_READONLY | JSPROP_PERMANENT);
-    
+
     tmpObj.set(jsb_cocos2d_Mesh_prototype);
     JS_DefineFunction(cx, tmpObj, "getMeshVertexAttribute", js_cocos2dx_Mesh_getMeshVertexAttribute, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 

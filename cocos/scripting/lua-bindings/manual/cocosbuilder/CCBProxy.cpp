@@ -22,8 +22,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCBProxy.h"
-#include "LuaScriptHandlerMgr.h"
+#include "scripting/lua-bindings/manual/cocosbuilder/CCBProxy.h"
+#include "scripting/lua-bindings/manual/cocos2d/LuaScriptHandlerMgr.h"
+#include "deprecated/CCString.h"
 
 CCBReader* CCBProxy::createCCBReader()
 {

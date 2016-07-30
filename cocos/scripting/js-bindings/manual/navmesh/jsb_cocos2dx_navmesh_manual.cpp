@@ -24,13 +24,13 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#include "jsb_cocos2dx_navmesh_auto.hpp"
+#include "scripting/js-bindings/auto/jsb_cocos2dx_navmesh_auto.hpp"
 #if CC_USE_NAVMESH
-#include "ScriptingCore.h"
-#include "cocos2d_specifics.hpp"
-#include "cocos2d.h"
+#include "scripting/js-bindings/manual/ScriptingCore.h"
+#include "scripting/js-bindings/manual/cocos2d_specifics.hpp"
+
 #include "navmesh/CCNavMesh.h"
-#include "js_manual_conversions.h"
+#include "scripting/js-bindings/manual/js_manual_conversions.h"
 
 static bool jsb_cocos2dx_navmesh_NavMeshAgent_move(JSContext *cx, uint32_t argc, jsval *vp)
 {
@@ -58,12 +58,9 @@ static bool jsb_cocos2dx_navmesh_NavMeshAgent_move(JSContext *cx, uint32_t argc,
 		std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, obj, args.get(1)));
 
 		cobj->move(arg0, [=](cocos2d::NavMeshAgent *agent, float totalTimeAfterMove)->void{
-			jsval arg[2];
-			js_proxy_t *agentProxy = js_get_or_create_proxy(cx, agent);
-			if (proxy)
-				arg[0] = OBJECT_TO_JSVAL(agentProxy->obj);
-			else
-				arg[0] = JSVAL_NULL;
+            jsval arg[2];
+            JS::RootedObject jsobj(cx, js_get_or_create_jsobject<cocos2d::NavMeshAgent>(cx, agent));
+            arg[0] = OBJECT_TO_JSVAL(jsobj);
 			arg[1] = DOUBLE_TO_JSVAL((double)totalTimeAfterMove);
 			JS::RootedValue rval(cx);
 

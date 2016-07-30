@@ -1,7 +1,7 @@
 
 --------------------------------
 -- @module ParticleSystem
--- @extend Node,TextureProtocol
+-- @extend Node,TextureProtocol,PlayableProtocol
 -- @parent_module cc
 
 --------------------------------
@@ -137,6 +137,12 @@
 -- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
+-- 
+-- @function [parent=#ParticleSystem] resumeEmissions 
+-- @param self
+-- @return ParticleSystem#ParticleSystem self (return value: cc.ParticleSystem)
+        
+--------------------------------
 --  Gets the tangential acceleration.<br>
 -- return The tangential acceleration.
 -- @function [parent=#ParticleSystem] getTangentialAccel 
@@ -157,6 +163,12 @@
 -- @function [parent=#ParticleSystem] getSpeed 
 -- @param self
 -- @return float#float ret (return value: float)
+        
+--------------------------------
+-- 
+-- @function [parent=#ParticleSystem] pauseEmissions 
+-- @param self
+-- @return ParticleSystem#ParticleSystem self (return value: cc.ParticleSystem)
         
 --------------------------------
 --  Gets the angle of each particle. <br>
@@ -417,6 +429,12 @@
 -- @return ParticleSystem#ParticleSystem self (return value: cc.ParticleSystem)
         
 --------------------------------
+-- 
+-- @function [parent=#ParticleSystem] stop 
+-- @param self
+-- @return ParticleSystem#ParticleSystem self (return value: cc.ParticleSystem)
+        
+--------------------------------
 --  Update the verts position data of particle,<br>
 -- should be overridden by subclasses. 
 -- @function [parent=#ParticleSystem] updateParticleQuads 
@@ -460,6 +478,12 @@
 -- @function [parent=#ParticleSystem] setRotationIsDir 
 -- @param self
 -- @param #bool t
+-- @return ParticleSystem#ParticleSystem self (return value: cc.ParticleSystem)
+        
+--------------------------------
+-- / @{/ @name implement Playable Protocol
+-- @function [parent=#ParticleSystem] start 
+-- @param self
 -- @return ParticleSystem#ParticleSystem self (return value: cc.ParticleSystem)
         
 --------------------------------
@@ -555,6 +579,13 @@
 -- @function [parent=#ParticleSystem] getLife 
 -- @param self
 -- @return float#float ret (return value: float)
+        
+--------------------------------
+--  Are the emissions paused<br>
+-- return True if the emissions are paused, else false
+-- @function [parent=#ParticleSystem] isPaused 
+-- @param self
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 --  Sets the speed variance.<br>

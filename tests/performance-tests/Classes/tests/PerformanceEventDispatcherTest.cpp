@@ -78,7 +78,7 @@ bool PerformanceEventDispatcherScene::init()
 void PerformanceEventDispatcherScene::initWithQuantityOfNodes(unsigned int nNodes)
 {
     _type = 0;
-    srand((unsigned)time(nullptr));
+    std::srand((unsigned)time(nullptr));
     auto s = Director::getInstance()->getWinSize();
     
     _lastRenderedCount = 0;
@@ -95,7 +95,7 @@ void PerformanceEventDispatcherScene::initWithQuantityOfNodes(unsigned int nNode
 		updateQuantityOfNodes();
         updateProfilerName();
         CC_PROFILER_PURGE_ALL();
-        srand(0);
+        std::srand(0);
 	});
     decrease->setColor(Color3B(0,200,20));
     _decrease = decrease;
@@ -109,7 +109,7 @@ void PerformanceEventDispatcherScene::initWithQuantityOfNodes(unsigned int nNode
 		updateQuantityOfNodes();
         updateProfilerName();
         CC_PROFILER_PURGE_ALL();
-        srand(0);
+        std::srand(0);
 	});
     increase->setColor(Color3B(0,200,20));
     _increase = increase;

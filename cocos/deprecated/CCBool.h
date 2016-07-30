@@ -57,7 +57,7 @@ public:
     /* override functions */
     virtual void acceptVisitor(DataVisitor &visitor) { visitor.visit(this); }
 
-    __Bool* clone() const
+    virtual __Bool* clone() const override
     {
         return __Bool::create(_value);
     }

@@ -25,7 +25,8 @@ THE SOFTWARE.
 #ifndef __UIPAGEVIEWINDICATOR_H__
 #define __UIPAGEVIEWINDICATOR_H__
 
-#include "UIPageView.h"
+#include "ui/UIPageView.h"
+#include "2d/CCSprite.h"
 
 NS_CC_BEGIN
 /**
@@ -56,7 +57,19 @@ public:
     float getSpaceBetweenIndexNodes() const { return _spaceBetweenIndexNodes; }
     void setSelectedIndexColor(const Color3B& color) { _currentIndexNode->setColor(color); }
     const Color3B& getSelectedIndexColor() const { return _currentIndexNode->getColor(); }
-
+    void setIndexNodesColor(const Color3B& indexNodesColor);
+    const Color3B& getIndexNodesColor() const { return _indexNodesColor; }
+    void setIndexNodesScale(float indexNodesScale);
+    float getIndexNodesScale() const { return _indexNodesScale; }
+    
+    /**
+     * Sets texture for index nodes.
+     *
+     * @param fileName   File name of texture.
+     * @param resType    @see TextureResType .
+     */
+    void setIndexNodesTexture(const std::string& texName,Widget::TextureResType texType = Widget::TextureResType::LOCAL);
+    
 protected:
     bool init() override;
     void increaseNumberOfPages();
@@ -64,10 +77,15 @@ protected:
     void rearrange();
 
     PageView::Direction _direction;
-    Vector<Node*> _indexNodes;
-    Node* _currentIndexNode;
+    Vector<Sprite*> _indexNodes;
+    Sprite* _currentIndexNode;
     float _spaceBetweenIndexNodes;
-
+    float _indexNodesScale;
+    Color3B _indexNodesColor;
+    
+    bool _useDefaultTexture;
+    std::string _indexNodesTextureFile;
+    Widget::TextureResType _indexNodesTexType;
 };
 
 }

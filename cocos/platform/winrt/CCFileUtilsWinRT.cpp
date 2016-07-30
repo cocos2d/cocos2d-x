@@ -22,9 +22,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#include "CCFileUtilsWinRT.h"
+#include "platform/winrt/CCFileUtilsWinRT.h"
 #include <regex>
-#include "CCWinRTUtils.h"
+#include "platform/winrt/CCWinRTUtils.h"
 #include "platform/CCCommon.h"
 using namespace std;
 
@@ -36,8 +36,8 @@ static std::string s_pszResourcePath;
 static inline std::string convertPathFormatToUnixStyle(const std::string& path)
 {
     std::string ret = path;
-    int len = ret.length();
-    for (int i = 0; i < len; ++i)
+    size_t len = ret.length();
+    for (size_t i = 0; i < len; ++i)
     {
         if (ret[i] == '\\')
         {
@@ -84,13 +84,13 @@ static void _checkPath()
 
 FileUtils* FileUtils::getInstance()
 {
-    if (s_sharedFileUtils == NULL)
+    if (s_sharedFileUtils == nullptr)
     {
         s_sharedFileUtils = new CCFileUtilsWinRT();
         if(!s_sharedFileUtils->init())
         {
           delete s_sharedFileUtils;
-          s_sharedFileUtils = NULL;
+          s_sharedFileUtils = nullptr;
           CCLOG("ERROR: Could not init CCFileUtilsWinRT");
         }
     }
@@ -129,10 +129,62 @@ std::string CCFileUtilsWinRT::getSuitableFOpen(const std::string& filenameUtf8) 
     return UTF8StringToMultiByte(filenameUtf8);
 }
 
+long CCFileUtilsWinRT::getFileSize(const std::string &filepath)
+{
+    WIN32_FILE_ATTRIBUTE_DATA fad;
+    if (!GetFileAttributesEx(StringUtf8ToWideChar(filepath).c_str(), GetFileExInfoStandard, &fad))
+    {
+        return 0; // error condition, could call GetLastError to find out more
+    }
+    LARGE_INTEGER size;
+    size.HighPart = fad.nFileSizeHigh;
+    size.LowPart = fad.nFileSizeLow;
+    return (long)size.QuadPart;
+}
+
+FileUtils::Status CCFileUtilsWinRT::getContents(const std::string& filename, ResizableBuffer* buffer)
+{
+    if (filename.empty())
+        return FileUtils::Status::NotExists;
+
+    // read the file from hardware
+    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(filename);
+
+    HANDLE fileHandle = ::CreateFile2(StringUtf8ToWideChar(fullPath).c_str(), GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE, OPEN_EXISTING, nullptr);
+    if (fileHandle == INVALID_HANDLE_VALUE)
+        return FileUtils::Status::OpenFailed;
+
+    FILE_STANDARD_INFO info = {0};
+    if (::GetFileInformationByHandleEx(fileHandle, FileStandardInfo, &info, sizeof(info)) == 0)
+    {
+        ::CloseHandle(fileHandle);
+        return FileUtils::Status::OpenFailed;
+    }
+
+    if (info.EndOfFile.HighPart > 0)
+    {
+        ::CloseHandle(fileHandle);
+        return FileUtils::Status::TooLarge;
+    }
+
+    buffer->resize(info.EndOfFile.LowPart);
+    DWORD sizeRead = 0;
+    BOOL successed = ::ReadFile(fileHandle, buffer->buffer(), info.EndOfFile.LowPart, &sizeRead, nullptr);
+    ::CloseHandle(fileHandle);
+
+    if (!successed)
+    {
+        buffer->resize(sizeRead);
+        CCLOG("Get data from file(%s) failed, error code is %s", filename.data(), std::to_string(::GetLastError()).data());
+        return FileUtils::Status::ReadFailed;
+    }
+    return FileUtils::Status::OK;
+}
+
 bool CCFileUtilsWinRT::isFileExistInternal(const std::string& strFilePath) const
 {
     bool ret = false;
-    FILE * pf = 0;
+    FILE * pf = nullptr;
 
     std::string strPath = strFilePath;
     if (!isAbsolutePath(strPath))
@@ -195,7 +247,7 @@ bool CCFileUtilsWinRT::createDirectory(const std::string& path)
     }
 
     WIN32_FILE_ATTRIBUTE_DATA wfad;
-    
+
     if (!(GetFileAttributesEx(StringUtf8ToWideChar(path).c_str(), GetFileExInfoStandard, &wfad)))
     {
         subpath = "";
@@ -318,16 +370,6 @@ bool CCFileUtilsWinRT::renameFile(const std::string &path, const std::string &ol
     return renameFile(oldPath, newPath);
 }
 
-std::string CCFileUtilsWinRT::getStringFromFile(const std::string& filename)
-{
-    Data data = getDataFromFile(filename);
-    if (data.isNull())
-    {
-        return "";
-    }
-    std::string ret((const char*)data.getBytes(), data.getSize());
-    return ret;
-}
 
 string CCFileUtilsWinRT::getWritablePath() const
 {

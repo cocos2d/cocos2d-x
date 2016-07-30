@@ -22,9 +22,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "cocostudio/CCDatas.h"
-#include "cocostudio/CCUtilMath.h"
-#include "cocostudio/CCTransformHelp.h"
+#include "editor-support/cocostudio/CCDatas.h"
+#include "editor-support/cocostudio/CCUtilMath.h"
+#include "editor-support/cocostudio/CCTransformHelp.h"
 
 using namespace cocos2d;
 
@@ -142,7 +142,7 @@ Color4B BaseData::getColor()
     return Color4B(r, g, b, a);
 }
 
-const std::string DisplayData::changeDisplayToTexture(const std::string& displayName)
+std::string DisplayData::changeDisplayToTexture(const std::string& displayName)
 {
     // remove .xxx
     std::string textureName = displayName;

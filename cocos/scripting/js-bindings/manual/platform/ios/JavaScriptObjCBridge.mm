@@ -22,11 +22,11 @@
 
 #import <Foundation/Foundation.h>
 
-#import "JavaScriptObjCBridge.h"
-#include "spidermonkey_specifics.h"
-#include "ScriptingCore.h"
-#include "js_manual_conversions.h"
-#include "cocos2d.h"
+#import "scripting/js-bindings/manual/platform/ios/JavaScriptObjCBridge.h"
+#include "scripting/js-bindings/manual/spidermonkey_specifics.h"
+#include "scripting/js-bindings/manual/ScriptingCore.h"
+#include "scripting/js-bindings/manual/js_manual_conversions.h"
+
 JavaScriptObjCBridge::CallInfo::~CallInfo(void)
 {
     if (m_returnType == TypeString)
@@ -261,6 +261,16 @@ JS_BINDED_CONSTRUCTOR_IMPL(JavaScriptObjCBridge)
 static void basic_object_finalize(JSFreeOp *freeOp, JSObject *obj)
 {
     CCLOG("basic_object_finalize %p ...", obj);
+    
+    js_proxy_t* nproxy;
+    js_proxy_t* jsproxy;
+    JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
+    JS::RootedObject jsobj(cx, obj);
+    jsproxy = jsb_get_js_proxy(jsobj);
+    if (jsproxy) {
+        nproxy = jsb_get_native_proxy(jsproxy->ptr);
+        jsb_remove_proxy(nproxy, jsproxy);
+    }
 }
 
 JS_BINDED_FUNC_IMPL(JavaScriptObjCBridge, callStaticMethod){

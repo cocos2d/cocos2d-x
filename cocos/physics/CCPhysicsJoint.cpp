@@ -24,11 +24,11 @@
 
 #include "physics/CCPhysicsJoint.h"
 #if CC_USE_PHYSICS
-#include "chipmunk.h"
+#include "chipmunk/chipmunk.h"
 
-#include "CCPhysicsBody.h"
-#include "CCPhysicsWorld.h"
-#include "CCPhysicsHelper.h"
+#include "physics/CCPhysicsBody.h"
+#include "physics/CCPhysicsWorld.h"
+#include "physics/CCPhysicsHelper.h"
 #include "2d/CCNode.h"
 
 NS_CC_BEGIN
@@ -39,7 +39,7 @@ PhysicsJoint::PhysicsJoint()
 , _world(nullptr)
 , _enable(false)
 , _collisionEnable(true)
-, _destoryMark(false)
+, _destroyMark(false)
 , _tag(0)
 , _maxForce(PHYSICS_INFINITY)
 , _initDirty(true)
@@ -87,8 +87,8 @@ bool PhysicsJoint::initJoint()
 
         for (auto subjoint : _cpConstraints)
         {
-            subjoint->maxForce = _maxForce;
-            subjoint->errorBias = cpfpow(1.0f - 0.15f, 60.0f);
+            cpConstraintSetMaxForce(subjoint, _maxForce);
+            cpConstraintSetErrorBias(subjoint, cpfpow(1.0f - 0.15f, 60.0f));
             cpSpaceAddConstraint(_world->_cpSpace, subjoint);
         }
         _initDirty = false;
@@ -139,7 +139,7 @@ void PhysicsJoint::setMaxForce(float force)
     _maxForce = force;
     for (auto joint : _cpConstraints)
     {
-        joint->maxForce = force;
+        cpConstraintSetMaxForce(joint, force);
     }
 }
 
@@ -304,22 +304,22 @@ void PhysicsJointLimit::setMax(float max)
 
 Vec2 PhysicsJointLimit::getAnchr1() const
 {
-    return PhysicsHelper::cpv2point(cpSlideJointGetAnchr1(_cpConstraints.front()));
+    return PhysicsHelper::cpv2point(cpSlideJointGetAnchorA(_cpConstraints.front()));
 }
 
 void PhysicsJointLimit::setAnchr1(const Vec2& anchr)
 {
-    cpSlideJointSetAnchr1(_cpConstraints.front(), PhysicsHelper::point2cpv(anchr));
+    cpSlideJointSetAnchorA(_cpConstraints.front(), PhysicsHelper::point2cpv(anchr));
 }
 
 Vec2 PhysicsJointLimit::getAnchr2() const
 {
-    return PhysicsHelper::cpv2point(cpSlideJointGetAnchr2(_cpConstraints.front()));
+    return PhysicsHelper::cpv2point(cpSlideJointGetAnchorB(_cpConstraints.front()));
 }
 
 void PhysicsJointLimit::setAnchr2(const Vec2& anchr)
 {
-    cpSlideJointSetAnchr1(_cpConstraints.front(), PhysicsHelper::point2cpv(anchr));
+    cpSlideJointSetAnchorB(_cpConstraints.front(), PhysicsHelper::point2cpv(anchr));
 }
 
 PhysicsJointDistance* PhysicsJointDistance::construct(PhysicsBody* a, PhysicsBody* b, const Vec2& anchr1, const Vec2& anchr2)
@@ -405,22 +405,22 @@ bool PhysicsJointSpring::createConstraints()
 
 Vec2 PhysicsJointSpring::getAnchr1() const
 {
-    return PhysicsHelper::cpv2point(cpDampedSpringGetAnchr1(_cpConstraints.front()));
+    return PhysicsHelper::cpv2point(cpDampedSpringGetAnchorA(_cpConstraints.front()));
 }
 
 void PhysicsJointSpring::setAnchr1(const Vec2& anchr)
 {
-    cpDampedSpringSetAnchr1(_cpConstraints.front(), PhysicsHelper::point2cpv(anchr));
+    cpDampedSpringSetAnchorA(_cpConstraints.front(), PhysicsHelper::point2cpv(anchr));
 }
 
 Vec2 PhysicsJointSpring::getAnchr2() const
 {
-    return PhysicsHelper::cpv2point(cpDampedSpringGetAnchr2(_cpConstraints.front()));
+    return PhysicsHelper::cpv2point(cpDampedSpringGetAnchorB(_cpConstraints.front()));
 }
 
 void PhysicsJointSpring::setAnchr2(const Vec2& anchr)
 {
-    cpDampedSpringSetAnchr1(_cpConstraints.front(), PhysicsHelper::point2cpv(anchr));
+    cpDampedSpringSetAnchorB(_cpConstraints.front(), PhysicsHelper::point2cpv(anchr));
 }
 
 float PhysicsJointSpring::getRestLength() const
@@ -510,12 +510,12 @@ void PhysicsJointGroove::setGrooveB(const Vec2& grooveB)
 
 Vec2 PhysicsJointGroove::getAnchr2() const
 {
-    return PhysicsHelper::cpv2point(cpGrooveJointGetAnchr2(_cpConstraints.front()));
+    return PhysicsHelper::cpv2point(cpGrooveJointGetAnchorB(_cpConstraints.front()));
 }
 
 void PhysicsJointGroove::setAnchr2(const Vec2& anchr2)
 {
-    cpGrooveJointSetAnchr2(_cpConstraints.front(), PhysicsHelper::point2cpv(anchr2));
+    cpGrooveJointSetAnchorB(_cpConstraints.front(), PhysicsHelper::point2cpv(anchr2));
 }
 
 PhysicsJointRotarySpring* PhysicsJointRotarySpring::construct(PhysicsBody* a, PhysicsBody* b, float stiffness, float damping)

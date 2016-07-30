@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include "platform/CCFileUtils.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-#include "CCWinRTUtils.h"
+#include "platform/winrt/CCWinRTUtils.h"
 
 using namespace Windows::Storage;
 using namespace Windows::Foundation;
@@ -246,7 +246,7 @@ void UserDefault::setDataForKey(const char* pKey, const Data& value) {
         return;
     }
 
-    char *encodedData = 0;
+    char *encodedData = nullptr;
     base64Encode(value.getBytes(), static_cast<unsigned int>(value.getSize()), &encodedData);
 
     setPlatformKeyValue(pKey, dynamic_cast<PropertyValue^>(PropertyValue::CreateString(PlatformStringFromString(encodedData))));

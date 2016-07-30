@@ -20,7 +20,10 @@
  * THE SOFTWARE.
  */
 
-#include "js_bindings_opengl.h"
+#include "scripting/js-bindings/manual/js_bindings_opengl.h"
+
+#include "base/CCDirector.h"
+#include "renderer/CCRenderer.h"
 
 NS_CC_BEGIN
 
@@ -128,7 +131,6 @@ void js_register_cocos2dx_GLNode(JSContext *cx, JS::HandleObject global) {
     js_cocos2dx_GLNode_class->enumerate = JS_EnumerateStub;
     js_cocos2dx_GLNode_class->resolve = JS_ResolveStub;
     js_cocos2dx_GLNode_class->convert = JS_ConvertStub;
-    js_cocos2dx_GLNode_class->finalize = jsb_ref_finalize;
     js_cocos2dx_GLNode_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
 
     static JSPropertySpec properties[] = {
@@ -144,7 +146,7 @@ void js_register_cocos2dx_GLNode(JSContext *cx, JS::HandleObject global) {
         JS_FN("create", js_cocos2dx_GLNode_create, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
-    
+
     JS::RootedObject parentProto(cx, jsb_cocos2d_Node_prototype);
     js_cocos2dx_GLNode_prototype = JS_InitClass(
         cx, global,
@@ -155,7 +157,7 @@ void js_register_cocos2dx_GLNode(JSContext *cx, JS::HandleObject global) {
         funcs,
         NULL, // no static properties
         st_funcs);
-    
+
     // add the proto and JSClass to the type->js info hash table
     JS::RootedObject proto(cx, js_cocos2dx_GLNode_prototype);
     jsb_register_class<cocos2d::GLNode>(cx, js_cocos2dx_GLNode_class, proto, parentProto);

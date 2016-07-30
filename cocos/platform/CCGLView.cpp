@@ -29,6 +29,10 @@ THE SOFTWARE.
 #include "base/CCDirector.h"
 #include "base/CCEventDispatcher.h"
 #include "2d/CCCamera.h"
+#include "2d/CCScene.h"
+#include "renderer/CCRenderer.h"
+#include "vr/CCVRProtocol.h"
+#include "vr/CCVRGenericRenderer.h"
 
 NS_CC_BEGIN
 
@@ -103,6 +107,7 @@ GLView::GLView()
 : _scaleX(1.0f)
 , _scaleY(1.0f)
 , _resolutionPolicy(ResolutionPolicy::UNKNOWN)
+, _vrImpl(nullptr)
 {
 }
 
@@ -153,12 +158,19 @@ void GLView::updateDesignResolutionSize()
         float viewPortH = _designResolutionSize.height * _scaleY;
         
         _viewPortRect.setRect((_screenSize.width - viewPortW) / 2, (_screenSize.height - viewPortH) / 2, viewPortW, viewPortH);
-        
+
+
         // reset director's member variables to fit visible rect
         auto director = Director::getInstance();
         director->_winSizeInPoints = getDesignResolutionSize();
         director->_isStatusLabelUpdated = true;
-        director->setGLDefaultValues();
+        director->setProjection(director->getProjection());
+
+        // Github issue #16139
+        // A default viewport is needed in order to display the FPS,
+        // since the FPS are rendered in the Director, and there is no viewport there.
+        // Everything, including the FPS should renderer in the Scene.
+        glViewport(0, 0, _screenSize.width, _screenSize.height);
     }
 }
 
@@ -189,7 +201,7 @@ const Size& GLView::getFrameSize() const
 
 void GLView::setFrameSize(float width, float height)
 {
-    _designResolutionSize = _screenSize = Size(width, height);
+    _screenSize = Size(width, height);
 }
 
 Rect GLView::getVisibleRect() const
@@ -462,6 +474,42 @@ float GLView::getScaleX() const
 float GLView::getScaleY() const
 {
     return _scaleY;
+}
+
+void GLView::renderScene(Scene* scene, Renderer* renderer)
+{
+    CCASSERT(scene, "Invalid Scene");
+    CCASSERT(renderer, "Invalid Renderer");
+
+    if (_vrImpl)
+    {
+        _vrImpl->render(scene, renderer);
+    }
+    else
+    {
+        scene->render(renderer, Mat4::IDENTITY, nullptr);
+    }
+}
+
+VRIRenderer* GLView::getVR() const
+{
+    return _vrImpl;
+}
+
+void GLView::setVR(VRIRenderer* vrRenderer)
+{
+    if (_vrImpl != vrRenderer)
+    {
+        if (_vrImpl) {
+            _vrImpl->cleanup();
+            delete _vrImpl;
+        }
+
+        if (vrRenderer)
+            vrRenderer->setup(this);
+
+        _vrImpl = vrRenderer;
+    }
 }
 
 NS_CC_END

@@ -55,14 +55,21 @@ typedef struct spAttachmentLoader {
 
 void spAttachmentLoader_dispose (spAttachmentLoader* self);
 
-/* Returns 0 to not load an attachment. If 0 is returned and spAttachmentLoader.error1 is set, an error occurred. */
-spAttachment* spAttachmentLoader_newAttachment (spAttachmentLoader* self, spSkin* skin, spAttachmentType type, const char* name,
+/* Called to create each attachment. Returns 0 to not load an attachment. If 0 is returned and _spAttachmentLoader_setError was
+ * called, an error occurred. */
+spAttachment* spAttachmentLoader_createAttachment (spAttachmentLoader* self, spSkin* skin, spAttachmentType type, const char* name,
 		const char* path);
+/* Called after the attachment has been fully configured. */
+void spAttachmentLoader_configureAttachment (spAttachmentLoader* self, spAttachment* attachment);
+/* Called just before the attachment is disposed. This can release allocations made in spAttachmentLoader_configureAttachment. */
+void spAttachmentLoader_disposeAttachment (spAttachmentLoader* self, spAttachment* attachment);
 
 #ifdef SPINE_SHORT_NAMES
 typedef spAttachmentLoader AttachmentLoader;
 #define AttachmentLoader_dispose(...) spAttachmentLoader_dispose(__VA_ARGS__)
-#define AttachmentLoader_newAttachment(...) spAttachmentLoader_newAttachment(__VA_ARGS__)
+#define AttachmentLoader_createAttachment(...) spAttachmentLoader_createAttachment(__VA_ARGS__)
+#define AttachmentLoader_configureAttachment(...) spAttachmentLoader_configureAttachment(__VA_ARGS__)
+#define AttachmentLoader_disposeAttachment(...) spAttachmentLoader_disposeAttachment(__VA_ARGS__)
 #endif
 
 #ifdef __cplusplus

@@ -68,8 +68,8 @@ public:
      * @param trans translate vec3
      * @param rot   rotation quaternion
      * @param scale scale vec3
-     * @param tag, unique tag, only blend animation between different tags
-     * @param weight, blend weight
+     * @param tag unique tag, only blend animation between different tags
+     * @param weight blend weight
      */
     void setAnimationValue(float* trans, float* rot, float* scale, void* tag = nullptr, float weight = 1.0f);
     

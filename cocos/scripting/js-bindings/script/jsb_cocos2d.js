@@ -26,7 +26,7 @@
 
 // CCConfig.js
 //
-cc.ENGINE_VERSION = "Cocos2d-JS v3.10";
+cc.ENGINE_VERSION = "Cocos2d-JS v3.12";
 
 cc.FIX_ARTIFACTS_BY_STRECHING_TEXEL = 0;
 cc.DIRECTOR_STATS_POSITION = {x: 0, y: 0};
@@ -1595,14 +1595,7 @@ cc.Director.EVENT_BEFORE_UPDATE = "director_before_update";
 cc.Director.EVENT_AFTER_UPDATE = "director_after_update";
 cc.Director.EVENT_BEFORE_SCENE_LAUNCH = "director_before_scene_launch";
 
-cc.Director.prototype.runScene = function(scene){
-    if (!this.getRunningScene()) {
-        this.runWithScene(scene);
-    }
-    else {
-        this.replaceScene(scene);
-    }
-};
+cc.Director.prototype.runScene = cc.Director.prototype.replaceScene;
 
 cc.visibleRect = {
     topLeft:cc.p(0,0),
@@ -2633,6 +2626,26 @@ _p.setDisabledSpriteFrame = function(frame) {
 cc.MenuItemToggle.prototype.selectedItem = cc.MenuItemToggle.prototype.getSelectedItem;
 
 
+// playMusic searchPaths
+if (cc.sys.os === cc.sys.OS_ANDROID && cc.audioEngine) {
+    cc.audioEngine._playMusic = cc.audioEngine.playMusic;
+    cc.audioEngine.playMusic = function () {
+        var args = arguments;
+        var searchPaths = jsb.fileUtils.getSearchPaths();
+        var path = args[0];
+        searchPaths.some(function (item) {
+            var temp = item + '/' + path;
+            var exists = jsb.fileUtils.isFileExist(temp);
+            if (exists) {
+                path = temp;
+                return true;
+            }
+        });
+        args[0] = path;
+        cc.audioEngine._playMusic.apply(cc.audioEngine, args);
+    };
+}
+
 //
 // LabelTTF API wrappers
 //
@@ -2651,6 +2664,17 @@ cc.LabelTTF.prototype.enableShadow = function (shadowColor, offset, blurRadius) 
 }
 
 cc.LabelTTF.prototype.setDrawMode = function () {};
+
+
+//
+// Label overflow
+//
+cc.Label.Overflow = {
+    NONE: 0,
+    CLAMP: 1,
+    SHRINK: 2,
+    RESIZE_HEIGHT: 3
+};
 
 
 //
@@ -2782,6 +2806,16 @@ cc.GLProgram.prototype.setUniformLocationWithMatrix4fv = function(){
     var tempArray = Array.prototype.slice.call(arguments);
     tempArray = Array.prototype.concat.call(tempArray, 4);
     this.setUniformLocationWithMatrixfvUnion.apply(this, tempArray);
+};
+
+var jsbSetUniformCallback = cc.GLProgramState.prototype.setUniformCallback;
+cc.GLProgramState.prototype.setUniformCallback = function (uniform, callback) {
+    if (!jsb._root) {
+        jsb._root = {};
+    }
+    var owner = jsb._root;
+    jsb.addRoot(owner, callback);
+    jsbSetUniformCallback.call(this, uniform, callback);
 };
 
 

@@ -1490,7 +1490,7 @@ void Sprite3DWithOBBPerformanceTest::onTouchesMoved(const std::vector<Touch*>& t
 void Sprite3DWithOBBPerformanceTest::update(float dt)
 {
     char szText[16];
-    sprintf(szText,"%lu cubes",_obb.size());
+    sprintf(szText,"%lu cubes", static_cast<unsigned long>(_obb.size()));
     _labelCubeCount->setString(szText);
     
     if (_drawDebug)
@@ -1966,7 +1966,7 @@ NodeAnimationTest::NodeAnimationTest()
                                               _sprites[_vectorIndex]->setVisible(false);
                                               
                                               int tIndex = _vectorIndex + 1;
-                                              if(tIndex >= _sprites.size())
+                                              if(tIndex >= static_cast<int>(_sprites.size()))
                                                   _vectorIndex = 0;
                                               else
                                                   _vectorIndex++;
@@ -2553,12 +2553,12 @@ Sprite3DNormalMappingTest::Sprite3DNormalMappingTest()
         static bool reverseDir = false;
         node->setPosition3D(Vec3(radius * cos(angle), 0.0f, radius * sin(angle)));
         if (reverseDir){
-            angle -= 0.01;
+            angle -= 0.01f;
             if (angle < 0.0)
                 reverseDir = false;
         }
         else{
-            angle += 0.01;
+            angle += 0.01f;
             if (3.14159 < angle)
                 reverseDir = true;
         }
@@ -2649,7 +2649,7 @@ void Sprite3DPropertyTest::printMeshName(cocos2d::Ref* sender)
     Vector<Mesh*> meshes =_sprite->getMeshes();
     for(Mesh* mesh : meshes)
     {
-        CCLOG("MeshName: %s ", mesh->getName().c_str());
+        log("MeshName: %s ", mesh->getName().c_str());
     }
     CCLOG("MeshName End");
 }
@@ -2657,7 +2657,7 @@ void Sprite3DPropertyTest::removeUsedTexture(cocos2d::Ref* sender)
 {
     if (_meshTex != nullptr)
     {
-        TextureCache::getInstance()->removeTexture(_meshTex);
+        Director::getInstance()->getTextureCache()->removeTexture(_meshTex);
         this->refreshSpriteRender();
     }
 }
@@ -2666,7 +2666,7 @@ void Sprite3DPropertyTest::resetTexture(cocos2d::Ref* sender)
 {
     if (_meshTex != nullptr)
     {
-        _meshTex = TextureCache::getInstance()->addImage(_texFile);
+        _meshTex = Director::getInstance()->getTextureCache()->addImage(_texFile);
         this->refreshSpriteRender();
     }
 }

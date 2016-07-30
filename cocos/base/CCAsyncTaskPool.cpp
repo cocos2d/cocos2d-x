@@ -38,7 +38,7 @@ AsyncTaskPool* AsyncTaskPool::getInstance()
     return s_asyncTaskPool;
 }
 
-void AsyncTaskPool::destoryInstance()
+void AsyncTaskPool::destroyInstance()
 {
     delete s_asyncTaskPool;
     s_asyncTaskPool = nullptr;

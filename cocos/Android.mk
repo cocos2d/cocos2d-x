@@ -6,9 +6,7 @@ LOCAL_MODULE := cocos2dx_internal_static
 
 LOCAL_MODULE_FILENAME := libcocos2dxinternal
 
-ifeq ($(USE_ARM_MODE),1)
 LOCAL_ARM_MODE := arm
-endif
 
 ifeq ($(TARGET_ARCH_ABI),armeabi-v7a)
 MATHNEONFILE := math/MathUtil.cpp.neon
@@ -190,6 +188,10 @@ renderer/CCVertexIndexData.cpp \
 renderer/ccGLStateCache.cpp \
 renderer/CCFrameBuffer.cpp \
 renderer/ccShaders.cpp \
+vr/CCVRDistortion.cpp \
+vr/CCVRDistortionMesh.cpp \
+vr/CCVRGenericRenderer.cpp \
+vr/CCVRGenericHeadTracker.cpp \
 deprecated/CCArray.cpp \
 deprecated/CCDeprecated.cpp \
 deprecated/CCDictionary.cpp \
@@ -233,8 +235,6 @@ navmesh/CCNavMeshUtils.cpp \
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/. \
                     $(LOCAL_PATH)/.. \
-                    $(LOCAL_PATH)/platform \
-                    $(LOCAL_PATH)/base \
                     $(LOCAL_PATH)/../external \
                     $(LOCAL_PATH)/../external/tinyxml2 \
                     $(LOCAL_PATH)/../external/unzip \
@@ -247,7 +247,6 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/../external/clipper
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH) \
-                    $(LOCAL_PATH)/platform \
                     $(LOCAL_PATH)/../external \
                     $(LOCAL_PATH)/../external/tinyxml2 \
                     $(LOCAL_PATH)/../external/unzip \
@@ -280,9 +279,9 @@ LOCAL_WHOLE_STATIC_LIBRARIES := cocos2dxandroid_static
 # define the macro to compile through support/zip_support/ioapi.c
 LOCAL_CFLAGS   :=  -DUSE_FILE32API
 LOCAL_CFLAGS   +=  -fexceptions
-LOCAL_CPPFLAGS := -Wno-deprecated-declarations -Wno-extern-c-compat
+LOCAL_CPPFLAGS := -Wno-deprecated-declarations
 LOCAL_EXPORT_CFLAGS   := -DUSE_FILE32API
-LOCAL_EXPORT_CPPFLAGS := -Wno-deprecated-declarations -Wno-extern-c-compat
+LOCAL_EXPORT_CPPFLAGS := -Wno-deprecated-declarations
 
 include $(BUILD_STATIC_LIBRARY)
 

@@ -160,16 +160,13 @@ bool Manifest::versionEquals(const Manifest *b) const
 std::unordered_map<std::string, Manifest::AssetDiff> Manifest::genDiff(const Manifest *b) const
 {
     std::unordered_map<std::string, AssetDiff> diff_map;
-    std::unordered_map<std::string, Asset> bAssets = b->getAssets();
+    const std::unordered_map<std::string, Asset> &bAssets = b->getAssets();
     
-    std::string key;
-    Asset valueA;
-    Asset valueB;
     std::unordered_map<std::string, Asset>::const_iterator valueIt, it;
     for (it = _assets.begin(); it != _assets.end(); ++it)
     {
-        key = it->first;
-        valueA = it->second;
+        const auto &key = it->first;
+        const auto &valueA = it->second;
         
         // Deleted
         valueIt = bAssets.find(key);
@@ -182,7 +179,7 @@ std::unordered_map<std::string, Manifest::AssetDiff> Manifest::genDiff(const Man
         }
         
         // Modified
-        valueB = valueIt->second;
+        auto &valueB = valueIt->second;
         if (valueA.md5 != valueB.md5) {
             AssetDiff diff;
             diff.asset = valueB;
@@ -193,8 +190,8 @@ std::unordered_map<std::string, Manifest::AssetDiff> Manifest::genDiff(const Man
     
     for (it = bAssets.begin(); it != bAssets.end(); ++it)
     {
-        key = it->first;
-        valueB = it->second;
+        const auto &key = it->first;
+        const auto &valueB = it->second;
         
         // Added
         valueIt = _assets.find(key);
@@ -246,7 +243,12 @@ void Manifest::prependSearchPaths()
 {
     std::vector<std::string> searchPaths = FileUtils::getInstance()->getSearchPaths();
     std::vector<std::string>::iterator iter = searchPaths.begin();
-    searchPaths.insert(iter, _manifestRoot);
+    bool needChangeSearchPaths = false;
+    if (std::find(searchPaths.begin(), searchPaths.end(), _manifestRoot) == searchPaths.end())
+    {
+        searchPaths.insert(iter, _manifestRoot);
+        needChangeSearchPaths = true;
+    }
     
     for (int i = (int)_searchPaths.size()-1; i >= 0; i--)
     {
@@ -256,8 +258,12 @@ void Manifest::prependSearchPaths()
         path = _manifestRoot + path;
         iter = searchPaths.begin();
         searchPaths.insert(iter, path);
+        needChangeSearchPaths = true;
     }
-    FileUtils::getInstance()->setSearchPaths(searchPaths);
+    if (needChangeSearchPaths)
+    {
+        FileUtils::getInstance()->setSearchPaths(searchPaths);
+    }
 }
 
 
@@ -318,8 +324,7 @@ void Manifest::setAssetDownloadState(const std::string &key, const Manifest::Dow
                 {
                     for (rapidjson::Value::MemberIterator itr = assets.MemberBegin(); itr != assets.MemberEnd(); ++itr)
                     {
-                        std::string jkey = itr->name.GetString();
-                        if (jkey == key) {
+                        if (key.compare(itr->name.GetString()) == 0) {
                             rapidjson::Value &entry = itr->value;
                             if (entry.HasMember(KEY_DOWNLOAD_STATE) && entry[KEY_DOWNLOAD_STATE].IsInt())
                             {

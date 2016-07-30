@@ -23,7 +23,7 @@
  */
 
 
-#import "CDAudioManager.h"
+#import "audio/ios/CDAudioManager.h"
 
 NSString * const kCDN_AudioManagerInitialised = @"kCDN_AudioManagerInitialised";
 
@@ -329,11 +329,17 @@ static BOOL configured = FALSE;
     configured = TRUE;
 }    
 
--(BOOL) isOtherAudioPlaying {
+-(BOOL) isOtherAudioPlaying
+{
+    // AudioSessionGetProperty removed from tvOS 9.1
+#if defined(CC_TARGET_OS_TVOS)
+    return false;
+#else
     UInt32 isPlaying = 0;
     UInt32 varSize = sizeof(isPlaying);
     AudioSessionGetProperty (kAudioSessionProperty_OtherAudioIsPlaying, &varSize, &isPlaying);
     return (isPlaying != 0);
+#endif
 }
 
 -(void) setMode:(tAudioManagerMode) mode {
@@ -409,10 +415,13 @@ static BOOL configured = FALSE;
 
 - (id) init: (tAudioManagerMode) mode {
     if ((self = [super init])) {
-        
-        //Initialise the audio session 
+
+        // 'delegate' not supported on tvOS
+#if !defined(CC_TARGET_OS_TVOS)
+        //Initialise the audio session
         AVAudioSession* session = [AVAudioSession sharedInstance];
         session.delegate = self;
+#endif
     
         _mode = mode;
         backgroundMusicCompletionSelector = nil;
@@ -482,7 +491,7 @@ static BOOL configured = FALSE;
 //determine ringer switch state
 -(BOOL) isDeviceMuted {
 
-#if TARGET_IPHONE_SIMULATOR
+#if TARGET_IPHONE_SIMULATOR || defined(CC_TARGET_OS_TVOS)
     //Calling audio route stuff on the simulator causes problems
     return NO;
 #else    
@@ -635,15 +644,17 @@ static BOOL configured = FALSE;
         case kAMRBStopPlay:
             
             for( CDLongAudioSource *audioSource in audioSourceChannels) {
-                if (audioSource.isPlaying) {
-                    audioSource->systemPaused = YES;
-                    audioSource->systemPauseLocation = audioSource.audioSourcePlayer.currentTime;
-                    [audioSource stop];
-                } else {
-                    //Music is either paused or stopped, if it is paused it will be restarted
-                    //by OS so we will stop it.
-                    audioSource->systemPaused = NO;
-                    [audioSource stop];
+                if (!audioSource->systemPaused) {
+                    if (audioSource.isPlaying) {
+                        audioSource->systemPaused = YES;
+                        audioSource->systemPauseLocation = audioSource.audioSourcePlayer.currentTime;
+                        [audioSource pause];
+                    } else {
+                        //Music is either paused or stopped, if it is paused it will be restarted
+                        //by OS so we will stop it.
+                        audioSource->systemPaused = NO;
+                        [audioSource stop];
+                    }
                 }
             }
             break;

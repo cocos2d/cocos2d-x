@@ -54,6 +54,7 @@ public class Cocos2dxWebView extends WebView {
 
         this.getSettings().setSupportZoom(false);
 
+        this.getSettings().setDomStorageEnabled(true);
         this.getSettings().setJavaScriptEnabled(true);
 
         // `searchBoxJavaBridge_` has big security risk. http://jvn.jp/en/jp/JVN53768697

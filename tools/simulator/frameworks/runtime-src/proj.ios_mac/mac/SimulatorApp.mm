@@ -36,7 +36,6 @@
 #include "runtime/ConfigParser.h"
 
 #include "cocos2d.h"
-#include "CodeIDESupport.h"
 
 #include "platform/mac/PlayerMac.h"
 #include "AppEvent.h"
@@ -340,13 +339,6 @@ static void glfwDropFunc(GLFWwindow *window, int count, const char **files)
     GLView::setGLContextAttrs(glContextAttrs);
     
     // create console window **MUST** before create opengl view
-#if (CC_CODE_IDE_DEBUG_SUPPORT == 1)
-    if (_project.isShowConsole())
-    {
-        [self openConsoleWindow];
-        CCLOG("%s\n",Configuration::getInstance()->getInfo().c_str());
-    }
-#endif
     float frameScale = _project.getFrameScale();
     
     // get frame size
@@ -452,6 +444,7 @@ static void glfwDropFunc(GLFWwindow *window, int count, const char **files)
     
     RuntimeEngine::getInstance()->setProjectConfig(_project);
     Application::getInstance()->run();
+    CC_SAFE_DELETE(_app);
     // After run, application needs to be terminated immediately.
     [NSApp terminate: self];
 }
@@ -705,6 +698,7 @@ static void glfwDropFunc(GLFWwindow *window, int count, const char **files)
 
 -(IBAction)onFileClose:(id)sender
 {
+    CC_SAFE_DELETE(_app);
     [[NSApplication sharedApplication] terminate:self];
 }
 
@@ -722,6 +716,12 @@ static void glfwDropFunc(GLFWwindow *window, int count, const char **files)
         [_window setLevel:NSNormalWindowLevel];
         [sender setState:NSOffState];
     }
+}
+
+- (void)applicationWillTerminate:(NSNotification *)notification
+{
+    CC_SAFE_DELETE(_app);
+    [[NSApplication sharedApplication] terminate:self];
 }
 
 @end

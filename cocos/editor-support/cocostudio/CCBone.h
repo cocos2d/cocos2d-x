@@ -25,12 +25,12 @@ THE SOFTWARE.
 #ifndef __CCBONE_H__
 #define __CCBONE_H__
 
-#include "cocostudio/CCArmatureDefine.h"
-#include "cocostudio/CCDatas.h"
-#include "cocostudio/CCTween.h"
-#include "cocostudio/CCDecorativeDisplay.h"
-#include "cocostudio/CCDisplayManager.h"
-#include "cocostudio/CocosStudioExport.h"
+#include "editor-support/cocostudio/CCArmatureDefine.h"
+#include "editor-support/cocostudio/CCDatas.h"
+#include "editor-support/cocostudio/CCTween.h"
+#include "editor-support/cocostudio/CCDecorativeDisplay.h"
+#include "editor-support/cocostudio/CCDisplayManager.h"
+#include "editor-support/cocostudio/CocosStudioExport.h"
 #include "2d/CCNode.h"
 #include "math/CCMath.h"
 
@@ -107,7 +107,7 @@ public:
 
     /**
      * Set parent bone.
-     * If parent is NUll, then also remove this bone from armature.
+     * If parent is null, then also remove this bone from armature.
      * It will not set the Armature, if you want to add the bone to a Armature, you should use Armature::addBone(Bone *bone, const char* parentName).
      *
      * @param parent  the parent bone.

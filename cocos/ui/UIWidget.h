@@ -29,6 +29,7 @@ THE SOFTWARE.
 #include "ui/UILayoutParameter.h"
 #include "ui/GUIDefine.h"
 #include "ui/GUIExport.h"
+#include "ui/UIWidget.h"
 #include "base/CCMap.h"
 
 /**
@@ -728,7 +729,6 @@ public:
     /**
      * Toggle widget focus status.
      *@param focus  pass true to let the widget get focus or pass false to let the widget lose focus
-     *@return void
      */
     void setFocused(bool focus);
     
@@ -741,7 +741,6 @@ public:
     /**
      * Allow widget to accept focus.
      *@param enable pass true/false to enable/disable the focus ability of a widget
-     *@return void
      */
     void setFocusEnabled(bool enable);
     
@@ -797,7 +796,6 @@ public:
     /**
      *Toggle use unify size.
      *@param enable True to use unify size, false otherwise.
-     *@return void
      */
     void setUnifySizeEnabled(bool enable);
 
@@ -835,7 +833,6 @@ public:
     /**
      * Toggle layout component enable.
      *@param enable Layout Component of a widget
-     *@return void
      */
     void setLayoutComponentEnabled(bool enable);
 
@@ -869,7 +866,6 @@ CC_CONSTRUCTOR_ACCESS:
      * This method is called when a focus change event happens
      *@param widgetLostFocus  The widget which lose its focus
      *@param widgetGetFocus  The widget which get its focus
-     *@return void
      */
     void onFocusChange(Widget* widgetLostFocus, Widget* widgetGetFocus);
     
@@ -877,7 +873,6 @@ CC_CONSTRUCTOR_ACCESS:
      * Dispatch a EventFocus through a EventDispatcher
      *@param widgetLoseFocus  The widget which lose its focus
      *@param widgetGetFocus he widget which get its focus
-     *@return void
      */
     void  dispatchFocusEvent(Widget* widgetLoseFocus, Widget* widgetGetFocus);
     

@@ -232,7 +232,7 @@ public:
     /**
      * Set the margin between each item in ListView.
      *
-     * @param margin
+     * @param margin A margin in float.
      */
     void setItemsMargin(float margin);
     
@@ -244,6 +244,21 @@ public:
      */
     float getItemsMargin()const;
     
+    /**
+     * Set the time in seconds to scroll between items.
+     * Subsequent calls of function 'scrollToItem', will take 'time' seconds for scrolling.
+     * @param time The seconds needed to scroll between two items. 'time' must be >= 0
+     * @see scrollToItem(ssize_t, const Vec2&, const Vec2&)
+     */
+    void  setScrollDuration(float time);
+    
+     /**
+     * Get the time in seconds to scroll between items.
+     * @return The time in seconds to scroll between items
+     * @see setScrollDuration(float)
+     */
+    float getScrollDuration() const;
+    
     //override methods
     virtual void doLayout() override;
     virtual void requestDoLayout() override;
@@ -253,7 +268,7 @@ public:
     virtual void addChild(Node* child, int zOrder, const std::string &name) override;
     virtual void removeAllChildren() override;
     virtual void removeAllChildrenWithCleanup(bool cleanup) override;
-    virtual void removeChild(Node* child, bool cleaup = true) override;
+    virtual void removeChild(Node* child, bool cleanup = true) override;
 
     /**
      * @brief Query the closest item to a specific position in inner container.
@@ -345,6 +360,12 @@ public:
     ssize_t getCurSelectedIndex() const;
     
     /**
+     * @brief Set current selected widget's index and call TouchEventType::ENDED event.
+     * @param itemIndex A index of a selected item.
+     */
+     void setCurSelectedIndex(int itemIndex);
+    
+    /**
      * Add an event click callback to ListView, then one item of Listview is clicked, the callback will be called.
      *@deprecated Use  `addEventListener` instead.
      *@param target A pointer of `Ref*` type.
@@ -420,6 +441,8 @@ protected:
     bool _magneticAllowedOutOfBoundary;
     
     float _itemsMargin;
+    
+    float _scrollTime;
     
     ssize_t _curSelectedIndex;
 

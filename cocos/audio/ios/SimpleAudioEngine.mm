@@ -23,8 +23,9 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "audio/include/SimpleAudioEngine.h"
-#include "SimpleAudioEngine_objc.h"
-#include "cocos2d.h"
+#include "audio/ios/SimpleAudioEngine_objc.h"
+#include "platform/CCFileUtils.h"
+
 USING_NS_CC;
 
 static void static_end()
@@ -168,7 +169,7 @@ void SimpleAudioEngine::end()
     if (s_pEngine)
     {
         delete s_pEngine;
-        s_pEngine = NULL;
+        s_pEngine = nullptr;
     }
     
     static_end();

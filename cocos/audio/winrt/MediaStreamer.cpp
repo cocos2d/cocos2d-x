@@ -16,7 +16,7 @@
 * See the License for the specific language governing permissions and limitations under the License.
 */
 
-#include "MediaStreamer.h"
+#include "audio/winrt/MediaStreamer.h"
 
 #include <Mfidl.h>
 #include <Mfreadwrite.h>
@@ -99,7 +99,7 @@ Platform::Array<byte>^ MediaStreamer::ReadData(_In_ Platform::String^ filename, 
         throw ref new Platform::OutOfMemoryException();
     }
 
-    from += m_offset;
+    from += static_cast<unsigned int>(m_offset);
     length = (length == 0 || from + length > fileInfo.EndOfFile.LowPart) ? fileInfo.EndOfFile.LowPart - from : length;
     Platform::Array<byte>^ fileData = ref new Platform::Array<byte>(length);
 
@@ -215,11 +215,11 @@ void MediaStreamer::ReadAll(uint8* buffer, uint32 maxBufferSize, uint32* bufferL
 {
     if (!m_data.size())
     {
-        ReadChunk(buffer, 0, m_dataLen, bufferLength);
+        ReadChunk(buffer, 0, static_cast<unsigned int>(m_dataLen), bufferLength);
     }
     else
     {
-        UINT32 toCopy = m_data.size() - m_offset;
+        UINT32 toCopy = static_cast<UINT32>(m_data.size() - m_offset);
         if (toCopy > maxBufferSize) toCopy = maxBufferSize;
 
         CopyMemory(buffer, m_data.data(), toCopy);

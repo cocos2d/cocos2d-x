@@ -21,10 +21,10 @@
  * THE SOFTWARE.
  */
 
-#include "jsb_cocos2dx_spine_manual.h"
-#include "ScriptingCore.h"
-#include "cocos2d_specifics.hpp"
-#include "spine/spine-cocos2dx.h"
+#include "scripting/js-bindings/manual/spine/jsb_cocos2dx_spine_manual.h"
+#include "scripting/js-bindings/manual/ScriptingCore.h"
+#include "scripting/js-bindings/manual/cocos2d_specifics.hpp"
+#include "editor-support/spine/spine-cocos2dx.h"
 
 using namespace spine;
 
@@ -114,16 +114,22 @@ jsval spbone_to_jsval(JSContext* cx, spBone& v)
         JS_DefineProperty(cx, tmp, "rotation", v.rotation, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
         JS_DefineProperty(cx, tmp, "scaleX", v.scaleX, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
         JS_DefineProperty(cx, tmp, "scaleY", v.scaleY, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
-        JS_DefineProperty(cx, tmp, "m00", v.m00, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
-        JS_DefineProperty(cx, tmp, "m01", v.m01, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+        JS_DefineProperty(cx, tmp, "shearX", v.shearX, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+        JS_DefineProperty(cx, tmp, "shearY", v.shearY, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+        JS_DefineProperty(cx, tmp, "m00", v.a, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+        JS_DefineProperty(cx, tmp, "m01", v.b, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
         JS_DefineProperty(cx, tmp, "worldX", v.worldX, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
-        JS_DefineProperty(cx, tmp, "m10", v.m10, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
-        JS_DefineProperty(cx, tmp, "m11", v.m11, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
-        JS_DefineProperty(cx, tmp, "worldY", v.worldY, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+        JS_DefineProperty(cx, tmp, "m10", v.c, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+        JS_DefineProperty(cx, tmp, "m11", v.d, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+        JS_DefineProperty(cx, tmp, "worldY", v.worldY, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+        JS_DefineProperty(cx, tmp, "worldSignX", v.worldSignX, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+        JS_DefineProperty(cx, tmp, "worldSignY", v.worldSignY, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    /*
         JS_DefineProperty(cx, tmp, "worldRotation", v.worldRotation, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
         JS_DefineProperty(cx, tmp, "worldScaleX", v.worldScaleX, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
         JS_DefineProperty(cx, tmp, "worldScaleY", v.worldScaleY, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    
+     */
+
     if (ok)
     {
         return OBJECT_TO_JSVAL(tmp);
@@ -570,43 +576,6 @@ bool jsb_cocos2dx_spine_addAnimation(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-
-
-class JSSkeletonAnimationWrapper: public JSCallbackWrapper
-{
-public:
-    JSSkeletonAnimationWrapper() {}
-    virtual ~JSSkeletonAnimationWrapper() {}
-    
-    void animationCallbackFunc(spine::SkeletonAnimation* node, int trackIndex, spEventType type, spEvent* event, int loopCount) const {
-        JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
-        JS::RootedObject thisObj(cx, getJSCallbackThis().toObjectOrNull());
-        JS::RootedValue callback(cx, getJSCallbackFunc());
-        js_proxy_t *proxy = js_get_or_create_proxy(cx, node);
-        JS::RootedValue retval(cx);
-        if (!callback.isNullOrUndefined())
-        {
-            jsval nodeVal = OBJECT_TO_JSVAL(proxy->obj);
-            jsval trackIndexVal = INT_TO_JSVAL(trackIndex);
-            int tmpType = (int)type;
-            jsval typeVal = INT_TO_JSVAL(tmpType);
-            jsval eventVal = JSVAL_NULL;
-            if (event)
-                eventVal = spevent_to_jsval(cx, *event);
-            jsval loopCountVal = INT_TO_JSVAL(loopCount);
-            
-            jsval valArr[5];
-            valArr[0] = nodeVal;
-            valArr[1] = trackIndexVal;
-            valArr[2] = typeVal;
-            valArr[3] = eventVal;
-            valArr[4] = loopCountVal;
-            
-            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-            JS_CallFunctionValue(cx, thisObj, callback, JS::HandleValueArray::fromMarkedLocation(5, valArr), &retval);
-        }
-    }
-};
 
 
 extern JSObject* jsb_spine_SkeletonRenderer_prototype;

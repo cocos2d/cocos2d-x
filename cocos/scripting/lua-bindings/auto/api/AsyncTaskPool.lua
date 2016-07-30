@@ -13,7 +13,7 @@
         
 --------------------------------
 -- Destroys the async task pool.
--- @function [parent=#AsyncTaskPool] destoryInstance 
+-- @function [parent=#AsyncTaskPool] destroyInstance 
 -- @param self
 -- @return AsyncTaskPool#AsyncTaskPool self (return value: cc.AsyncTaskPool)
         

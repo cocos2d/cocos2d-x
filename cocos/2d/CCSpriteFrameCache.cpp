@@ -37,13 +37,11 @@ THE SOFTWARE.
 #include "platform/CCFileUtils.h"
 #include "base/CCNS.h"
 #include "base/ccMacros.h"
+#include "base/ccUTF8.h"
 #include "base/CCDirector.h"
 #include "renderer/CCTexture2D.h"
 #include "renderer/CCTextureCache.h"
 #include "base/CCNinePatchImageParser.h"
-
-#include "deprecated/CCString.h"
-
 
 using namespace std;
 
@@ -130,9 +128,9 @@ void SpriteFrameCache::initializePolygonInfo(const Size &textureSize,
         indexData[i] = static_cast<unsigned short>(triangleIndices[i]);
     }
 
-    info.triangles.vertCount = vertexCount;
+    info.triangles.vertCount = static_cast<int>(vertexCount);
     info.triangles.verts = vertexData;
-    info.triangles.indexCount = indexCount;
+    info.triangles.indexCount = static_cast<int>(indexCount);
     info.triangles.indices = indexData;
     info.rect = Rect(0, 0, spriteSize.width, spriteSize.height);
 }
@@ -202,8 +200,8 @@ void SpriteFrameCache::addSpriteFramesWithDictionary(ValueMap& dictionary, Textu
                 CCLOGWARN("cocos2d: WARNING: originalWidth/Height not found on the SpriteFrame. AnchorPoint won't work as expected. Regenerate the .plist");
             }
             // abs ow/oh
-            ow = abs(ow);
-            oh = abs(oh);
+            ow = std::abs(ow);
+            oh = std::abs(oh);
             // create frame
             spriteFrame = SpriteFrame::createWithTexture(texture,
                                                          Rect(x, y, w, h),
@@ -276,6 +274,10 @@ void SpriteFrameCache::addSpriteFramesWithDictionary(ValueMap& dictionary, Textu
                 initializePolygonInfo(textureSize, spriteSourceSize, vertices, verticesUV, indices, info);
                 spriteFrame->setPolygonInfo(info);
             }
+            if (frameDict.find("anchor") != frameDict.end())
+            {
+                spriteFrame->setAnchorPoint(PointFromString(frameDict["anchor"].asString()));
+            }
         }
 
         bool flag = NinePatchImageParser::isNinePatchImage(spriteFrameName);
@@ -292,6 +294,58 @@ void SpriteFrameCache::addSpriteFramesWithDictionary(ValueMap& dictionary, Textu
         _spriteFrames.insert(spriteFrameName, spriteFrame);
     }
     CC_SAFE_DELETE(image);
+}
+
+void SpriteFrameCache::addSpriteFramesWithDictionary(ValueMap& dict, const std::string &texturePath)
+{
+    std::string pixelFormatName;
+    if (dict.find("metadata") != dict.end())
+    {
+        ValueMap& metadataDict = dict.at("metadata").asValueMap();
+        if (metadataDict.find("pixelFormat") != metadataDict.end())
+        {
+            pixelFormatName = metadataDict.at("pixelFormat").asString();
+        }
+    }
+    
+    Texture2D *texture = nullptr;
+    static std::unordered_map<std::string, Texture2D::PixelFormat> pixelFormats = {
+        {"RGBA8888", Texture2D::PixelFormat::RGBA8888},
+        {"RGBA4444", Texture2D::PixelFormat::RGBA4444},
+        {"RGB5A1", Texture2D::PixelFormat::RGB5A1},
+        {"RGBA5551", Texture2D::PixelFormat::RGB5A1},
+        {"RGB565", Texture2D::PixelFormat::RGB565},
+        {"A8", Texture2D::PixelFormat::A8},
+        {"ALPHA", Texture2D::PixelFormat::A8},
+        {"I8", Texture2D::PixelFormat::I8},
+        {"AI88", Texture2D::PixelFormat::AI88},
+        {"ALPHA_INTENSITY", Texture2D::PixelFormat::AI88},
+        //{"BGRA8888", Texture2D::PixelFormat::BGRA8888}, no Image conversion RGBA -> BGRA
+        {"RGB888", Texture2D::PixelFormat::RGB888}
+    };
+
+    auto pixelFormatIt = pixelFormats.find(pixelFormatName);
+    if (pixelFormatIt != pixelFormats.end())
+    {
+        const Texture2D::PixelFormat pixelFormat = (*pixelFormatIt).second;
+        const Texture2D::PixelFormat currentPixelFormat = Texture2D::getDefaultAlphaPixelFormat();
+        Texture2D::setDefaultAlphaPixelFormat(pixelFormat);
+        texture = Director::getInstance()->getTextureCache()->addImage(texturePath);
+        Texture2D::setDefaultAlphaPixelFormat(currentPixelFormat);
+    }
+    else
+    {
+        texture = Director::getInstance()->getTextureCache()->addImage(texturePath);
+    }
+    
+    if (texture)
+    {
+        addSpriteFramesWithDictionary(dict, texture);
+    }
+    else
+    {
+        CCLOG("cocos2d: SpriteFrameCache: Couldn't load texture");
+    }
 }
 
 void SpriteFrameCache::addSpriteFramesWithFile(const std::string& plist, Texture2D *texture)
@@ -317,16 +371,15 @@ void SpriteFrameCache::addSpriteFramesWithFileContent(const std::string& plist_c
 void SpriteFrameCache::addSpriteFramesWithFile(const std::string& plist, const std::string& textureFileName)
 {
     CCASSERT(textureFileName.size()>0, "texture name should not be null");
-    Texture2D *texture = Director::getInstance()->getTextureCache()->addImage(textureFileName);
-
-    if (texture)
+    if (_loadedFileNames->find(plist) != _loadedFileNames->end())
     {
-        addSpriteFramesWithFile(plist, texture);
+        return; // We already added it
     }
-    else
-    {
-        CCLOG("cocos2d: SpriteFrameCache: couldn't load texture file. File not found %s", textureFileName.c_str());
-    }
+    
+    const std::string fullPath = FileUtils::getInstance()->fullPathForFilename(plist);
+    ValueMap dict = FileUtils::getInstance()->getValueMapFromFile(fullPath);
+    addSpriteFramesWithDictionary(dict, textureFileName);
+    _loadedFileNames->insert(plist);
 }
 
 void SpriteFrameCache::addSpriteFramesWithFile(const std::string& plist)
@@ -358,7 +411,7 @@ void SpriteFrameCache::addSpriteFramesWithFile(const std::string& plist)
         if (!texturePath.empty())
         {
             // build texture path relative to plist file
-            texturePath = FileUtils::getInstance()->fullPathFromRelativeFile(texturePath.c_str(), plist);
+            texturePath = FileUtils::getInstance()->fullPathFromRelativeFile(texturePath, plist);
         }
         else
         {
@@ -374,18 +427,8 @@ void SpriteFrameCache::addSpriteFramesWithFile(const std::string& plist)
 
             CCLOG("cocos2d: SpriteFrameCache: Trying to use file %s as texture", texturePath.c_str());
         }
-
-        Texture2D *texture = Director::getInstance()->getTextureCache()->addImage(texturePath.c_str());
-
-        if (texture)
-        {
-            addSpriteFramesWithDictionary(dict, texture);
-            _loadedFileNames->insert(plist);
-        }
-        else
-        {
-            CCLOG("cocos2d: SpriteFrameCache: Couldn't load texture");
-        }
+        addSpriteFramesWithDictionary(dict, texturePath);
+        _loadedFileNames->insert(plist);
     }
 }
 
@@ -589,11 +632,11 @@ void SpriteFrameCache::reloadSpriteFramesWithDictionary(ValueMap& dictionary, Te
             // check ow/oh
             if (!ow || !oh)
             {
-                CCLOGWARN("cocos2d: WARNING: originalWidth/Height not found on the SpriteFrame. AnchorPoint won't work as expected. Regenrate the .plist");
+                CCLOGWARN("cocos2d: WARNING: originalWidth/Height not found on the SpriteFrame. AnchorPoint won't work as expected. Regenerate the .plist");
             }
             // abs ow/oh
-            ow = abs(ow);
-            oh = abs(oh);
+            ow = std::abs(ow);
+            oh = std::abs(oh);
             // create frame
             spriteFrame = SpriteFrame::createWithTexture(texture,
                 Rect(x, y, w, h),
@@ -688,7 +731,7 @@ bool SpriteFrameCache::reloadTexture(const std::string& plist)
     if (!texturePath.empty())
     {
         // build texture path relative to plist file
-        texturePath = FileUtils::getInstance()->fullPathFromRelativeFile(texturePath.c_str(), plist);
+        texturePath = FileUtils::getInstance()->fullPathFromRelativeFile(texturePath, plist);
     }
     else
     {
@@ -704,7 +747,7 @@ bool SpriteFrameCache::reloadTexture(const std::string& plist)
     }
 
     Texture2D *texture = nullptr;
-    if (Director::getInstance()->getTextureCache()->reloadTexture(texturePath.c_str()))
+    if (Director::getInstance()->getTextureCache()->reloadTexture(texturePath))
         texture = Director::getInstance()->getTextureCache()->getTextureForKey(texturePath);
 
     if (texture)

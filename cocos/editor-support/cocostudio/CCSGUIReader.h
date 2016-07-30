@@ -26,10 +26,11 @@ THE SOFTWARE.
 #define __CCSGUIREADER_H__
 
 #include "ui/UILayout.h"
-#include "cocostudio/DictionaryHelper.h"
-#include "WidgetReader/WidgetReaderProtocol.h"
+#include "editor-support/cocostudio/DictionaryHelper.h"
+#include "editor-support/cocostudio/WidgetReader/WidgetReaderProtocol.h"
 #include "base/ObjectFactory.h"
-#include "cocostudio/CocosStudioExport.h"
+#include "base/CCValue.h"
+#include "editor-support/cocostudio/CocosStudioExport.h"
 
 namespace protocolbuffers
 {
@@ -73,7 +74,7 @@ public:
     /**
      *  @js NA
      */
-    const cocos2d::Size getFileDesignSize(const char* fileName) const;
+    cocos2d::Size getFileDesignSize(const char* fileName) const;
     
     void setFilePath(const std::string& strFilePath) { m_strFilePath = strFilePath; }
     const std::string& getFilePath() const { return m_strFilePath; }

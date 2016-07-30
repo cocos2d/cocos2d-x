@@ -71,7 +71,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import <OpenGLES/ES2/glext.h>
 #import <CoreFoundation/CoreFoundation.h>
 
-#import "CCESRenderer-ios.h"
+#import "platform/ios/CCESRenderer-ios.h"
 
 //CLASS INTERFACE:
 
@@ -119,7 +119,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 + (id) viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format;
 /** creates an initializes an CCEAGLView with a frame, a color buffer format, and a depth buffer format */
 + (id) viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth;
-/** creates an initializes an CCEAGLView with a frame, a color buffer format, a depth buffer format, a sharegroup, and multisamping */
+/** creates an initializes an CCEAGLView with a frame, a color buffer format, a depth buffer format, a sharegroup, and multisampling */
 + (id) viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained sharegroup:(EAGLSharegroup*)sharegroup multiSampling:(BOOL)multisampling numberOfSamples:(unsigned int)samples;
 
 /** Initializes an CCEAGLView with a frame and 0-bit depth buffer, and a RGB565 color buffer */

@@ -29,6 +29,7 @@
 #ifdef __ANDROID__
 
 #include <iosfwd>
+#include <stdint.h>
 
 namespace cocos2d {
     class Data;
@@ -81,6 +82,8 @@ namespace cocos2d {
                 virtual void draw(cocos2d::Renderer *renderer, cocos2d::Mat4 const &transform, uint32_t flags);
 
                 virtual void setVisible(bool visible);
+
+                void setBounces(bool bounces);
 
                 static bool shouldStartLoading(const int viewTag, const std::string &url);
                 static void didFinishLoading(const int viewTag, const std::string &url);

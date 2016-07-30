@@ -27,7 +27,7 @@
 #if CC_TARGET_PLATFORM != CC_PLATFORM_WIN32 && CC_TARGET_PLATFORM != CC_PLATFORM_WINRT && CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID
 #include <iconv.h>
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-#include "android/jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
+#include "platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
 #endif
 #include "2d/CCFontFreeType.h"
 #include "base/ccUTF8.h"
@@ -123,6 +123,17 @@ FontAtlas::~FontAtlas()
 #endif
 }
 
+void FontAtlas::reset()
+{
+    releaseTextures();
+    
+    _currLineHeight = 0;
+    _currentPage = 0;
+    _currentPageOrigX = 0;
+    _currentPageOrigY = 0;
+    _letterDefinitions.clear();
+}
+
 void FontAtlas::releaseTextures()
 {
     for( auto &item: _atlasTextures)
@@ -132,15 +143,11 @@ void FontAtlas::releaseTextures()
     _atlasTextures.clear();
 }
 
-void FontAtlas::relaseTextures()
-{
-    releaseTextures();
-}
-
 void FontAtlas::purgeTexturesAtlas()
 {
-    if (_fontFreeType && _atlasTextures.size() > 1)
+    if (_fontFreeType)
     {
+        reset();
         auto eventDispatcher = Director::getInstance()->getEventDispatcher();
         eventDispatcher->dispatchCustomEvent(CMD_PURGE_FONTATLAS,this);
         eventDispatcher->dispatchCustomEvent(CMD_RESET_FONTATLAS,this);
@@ -149,12 +156,7 @@ void FontAtlas::purgeTexturesAtlas()
 
 void FontAtlas::listenRendererRecreated(EventCustom *event)
 {
-    if (_fontFreeType)
-    {
-        auto eventDispatcher = Director::getInstance()->getEventDispatcher();
-        eventDispatcher->dispatchCustomEvent(CMD_PURGE_FONTATLAS,this);
-        eventDispatcher->dispatchCustomEvent(CMD_RESET_FONTATLAS,this);
-    }
+    purgeTexturesAtlas();
 }
 
 void FontAtlas::addLetterDefinition(char16_t utf16Char, const FontLetterDefinition &letterDefinition)
@@ -263,7 +265,20 @@ void FontAtlas::findNewCharacters(const std::u16string& u16Text, std::unordered_
     //find new characters
     if (_letterDefinitions.empty())
     {
-        newChars = u16Text;
+        // fixed #16169: new android project crash in android 5.0.2 device (Nexus 7) when use 3.12.
+        // While using clang compiler with gnustl_static on android, the copy assignment operator of `std::u16string`
+        // will affect the memory validity, it means after `newChars` is destroyed, the memory of `u16Text` holds
+        // will be a dead region. `u16text` represents the variable in `Label::_utf16Text`, when somewhere
+        // allocates memory by `malloc, realloc, new, new[]`, the generated memory address may be the same
+        // as `Label::_utf16Text` holds. If doing a `memset` or other memory operations, the orignal `Label::_utf16Text`
+        // will be in an unknown state. Meanwhile, a bunch lots of logic which depends on `Label::_utf16Text`
+        // will be broken.
+        
+        // newChars = u16Text;
+        
+        // Using `append` method is a workaround for this issue. So please be carefuly while using the assignment operator
+        // of `std::u16string`.
+        newChars.append(u16Text);
     }
     else
     {
@@ -321,6 +336,7 @@ bool FontAtlas::prepareLetterDefinitions(const std::u16string& utf16Text)
     int adjustForExtend = _letterEdgeExtend / 2;
     long bitmapWidth;
     long bitmapHeight;
+    int glyphHeight;
     Rect tempRect;
     FontLetterDefinition tempDef;
 
@@ -340,16 +356,12 @@ bool FontAtlas::prepareLetterDefinitions(const std::u16string& utf16Text)
             tempDef.offsetX = tempRect.origin.x + adjustForDistanceMap + adjustForExtend;
             tempDef.offsetY = _fontAscender + tempRect.origin.y - adjustForDistanceMap - adjustForExtend;
 
-            if (bitmapHeight > _currLineHeight)
-            {
-                _currLineHeight = static_cast<int>(bitmapHeight) + _letterPadding + _letterEdgeExtend + 1;
-            }
             if (_currentPageOrigX + tempDef.width > CacheTextureWidth)
             {
                 _currentPageOrigY += _currLineHeight;
                 _currLineHeight = 0;
                 _currentPageOrigX = 0;
-                if (_currentPageOrigY + _lineHeight >= CacheTextureHeight)
+                if (_currentPageOrigY + _lineHeight + _letterPadding + _letterEdgeExtend >= CacheTextureHeight)
                 {
                     unsigned char *data = nullptr;
                     if (pixelFormat == Texture2D::PixelFormat::AI88)
@@ -382,6 +394,11 @@ bool FontAtlas::prepareLetterDefinitions(const std::u16string& utf16Text)
                     addTexture(tex, _currentPage);
                     tex->release();
                 }
+            }
+            glyphHeight = static_cast<int>(bitmapHeight) + _letterPadding + _letterEdgeExtend;
+            if (glyphHeight > _currLineHeight)
+            {
+                _currLineHeight = glyphHeight;
             }
             _fontFreeType->renderCharAt(_currentPageData, _currentPageOrigX + adjustForExtend, _currentPageOrigY + adjustForExtend, bitmap, bitmapWidth, bitmapHeight);
 
@@ -423,7 +440,7 @@ bool FontAtlas::prepareLetterDefinitions(const std::u16string& utf16Text)
     {
         data = _currentPageData + CacheTextureWidth * (int)startY;
     }
-    _atlasTextures[_currentPage]->updateWithData(data, 0, startY, CacheTextureWidth, _currentPageOrigY - startY + _lineHeight);
+    _atlasTextures[_currentPage]->updateWithData(data, 0, startY, CacheTextureWidth, _currentPageOrigY - startY + _currLineHeight);
 
     return true;
 }

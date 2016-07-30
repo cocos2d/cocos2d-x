@@ -28,7 +28,7 @@ Copyright (c) 2013-2014 Chukong Technologies
 #include "base/ccMacros.h"
 #include <stdlib.h>
 #include <stdio.h>
-#include "CCArray.h"
+#include "deprecated/CCArray.h"
 #include "base/ccUtils.h"
 
 NS_CC_BEGIN
@@ -272,30 +272,5 @@ __String* __String::clone() const
 {
     return __String::create(_string);
 }
-
-namespace StringUtils {
-
-std::string format(const char* format, ...)
-{
-#define CC_MAX_STRING_LENGTH (1024*100)
-    
-    std::string ret;
-    
-    va_list ap;
-    va_start(ap, format);
-    
-    char* buf = (char*)malloc(CC_MAX_STRING_LENGTH);
-    if (buf != nullptr)
-    {
-        vsnprintf(buf, CC_MAX_STRING_LENGTH, format, ap);
-        ret = buf;
-        free(buf);
-    }
-    va_end(ap);
-    
-    return ret;
-}
-
-} // namespace StringUtils {
     
 NS_CC_END

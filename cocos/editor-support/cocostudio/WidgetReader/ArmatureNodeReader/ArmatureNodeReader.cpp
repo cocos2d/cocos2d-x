@@ -1,10 +1,12 @@
-#include "tinyxml2/tinyxml2.h"
+#include "editor-support/cocostudio/WidgetReader/ArmatureNodeReader/ArmatureNodeReader.h"
+
+#include "platform/CCFileUtils.h"
+#include "tinyxml2.h"
 #include "flatbuffers/flatbuffers.h"
-#include "cocostudio/WidgetReader/NodeReader/NodeReader.h"
-#include "cocostudio/CSParseBinary_generated.h"
-#include "CSArmatureNode_generated.h"
-#include "cocostudio/WidgetReader/ArmatureNodeReader/ArmatureNodeReader.h"
-#include "cocostudio/CCArmature.h"
+#include "editor-support/cocostudio/WidgetReader/NodeReader/NodeReader.h"
+#include "editor-support/cocostudio/CSParseBinary_generated.h"
+#include "editor-support/cocostudio/WidgetReader/ArmatureNodeReader/CSArmatureNode_generated.h"
+#include "editor-support/cocostudio/CCArmature.h"
 
 
 USING_NS_CC;
@@ -153,14 +155,6 @@ void ArmatureNodeReader::setPropsWithFlatBuffers(cocos2d::Node *node,
         errorFilePath = filepath;
         fileExist = false;
     }
-    
-    //if (!fileExist)
-    //{
-    //    auto label = Label::create();
-    //    label->setString(__String::createWithFormat("%s missed", filepath.c_str())->getCString());
-    //    custom->addChild(label);
-    //}
-    
 }
 
 cocos2d::Node*  ArmatureNodeReader::createNodeWithFlatBuffers(const flatbuffers::Table *nodeOptions)

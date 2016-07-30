@@ -303,7 +303,7 @@ inline flatbuffers::Offset<NodeTree> CreateNodeTree(flatbuffers::FlatBufferBuild
 }
 
 struct Options : private flatbuffers::Table {
-    const Table *data() const { return GetPointer<const Table *>(4); }
+  const Table *data() const { return GetPointer<const Table *>(4); }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<flatbuffers::uoffset_t>(verifier, 4 /* data */) &&
@@ -325,7 +325,7 @@ struct OptionsBuilder {
 };
 
 inline flatbuffers::Offset<Options> CreateOptions(flatbuffers::FlatBufferBuilder &_fbb,
-   flatbuffers::Offset<Table> data = 0) {
+  flatbuffers::Offset<Table> data = 0) {
   OptionsBuilder builder_(_fbb);
   builder_.add_data(data);
   return builder_.Finish();
@@ -736,6 +736,7 @@ struct ButtonOptions : private flatbuffers::Table {
   float shadowOffsetX() const { return GetField<float>(40, 2); }
   float shadowOffsetY() const { return GetField<float>(42, -2); }
   int32_t shadowBlurRadius() const { return GetField<int32_t>(44, 0); }
+  uint8_t isLocalized() const { return GetField<uint8_t>(46, 0); }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<flatbuffers::uoffset_t>(verifier, 4 /* widgetOptions */) &&
@@ -766,6 +767,7 @@ struct ButtonOptions : private flatbuffers::Table {
            VerifyField<float>(verifier, 40 /* shadowOffsetX */) &&
            VerifyField<float>(verifier, 42 /* shadowOffsetY */) &&
            VerifyField<int32_t>(verifier, 44 /* shadowBlurRadius */) &&
+           VerifyField<uint8_t>(verifier, 46 /* isLocalized */) &&
            verifier.EndTable();
   }
 };
@@ -794,10 +796,11 @@ struct ButtonOptionsBuilder {
   void add_shadowOffsetX(float shadowOffsetX) { fbb_.AddElement<float>(40, shadowOffsetX, 2); }
   void add_shadowOffsetY(float shadowOffsetY) { fbb_.AddElement<float>(42, shadowOffsetY, -2); }
   void add_shadowBlurRadius(int32_t shadowBlurRadius) { fbb_.AddElement<int32_t>(44, shadowBlurRadius, 0); }
+  void add_isLocalized(uint8_t isLocalized) { fbb_.AddElement<uint8_t>(46, isLocalized, 0); }
   ButtonOptionsBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
   ButtonOptionsBuilder &operator=(const ButtonOptionsBuilder &);
   flatbuffers::Offset<ButtonOptions> Finish() {
-    auto o = flatbuffers::Offset<ButtonOptions>(fbb_.EndTable(start_, 21));
+    auto o = flatbuffers::Offset<ButtonOptions>(fbb_.EndTable(start_, 22));
     return o;
   }
 };
@@ -823,7 +826,8 @@ inline flatbuffers::Offset<ButtonOptions> CreateButtonOptions(flatbuffers::FlatB
    const Color *shadowColor = 0,
    float shadowOffsetX = 2,
    float shadowOffsetY = -2,
-   int32_t shadowBlurRadius = 0) {
+   int32_t shadowBlurRadius = 0,
+   uint8_t isLocalized = 0) {
   ButtonOptionsBuilder builder_(_fbb);
   builder_.add_shadowBlurRadius(shadowBlurRadius);
   builder_.add_shadowOffsetY(shadowOffsetY);
@@ -842,6 +846,7 @@ inline flatbuffers::Offset<ButtonOptions> CreateButtonOptions(flatbuffers::FlatB
   builder_.add_pressedData(pressedData);
   builder_.add_normalData(normalData);
   builder_.add_widgetOptions(widgetOptions);
+  builder_.add_isLocalized(isLocalized);
   builder_.add_shadowEnabled(shadowEnabled);
   builder_.add_outlineEnabled(outlineEnabled);
   builder_.add_displaystate(displaystate);
@@ -1029,6 +1034,7 @@ struct TextBMFontOptions : private flatbuffers::Table {
   const WidgetOptions *widgetOptions() const { return GetPointer<const WidgetOptions *>(4); }
   const ResourceData *fileNameData() const { return GetPointer<const ResourceData *>(6); }
   const flatbuffers::String *text() const { return GetPointer<const flatbuffers::String *>(8); }
+  uint8_t isLocalized() const { return GetField<uint8_t>(10, 0); }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<flatbuffers::uoffset_t>(verifier, 4 /* widgetOptions */) &&
@@ -1037,6 +1043,7 @@ struct TextBMFontOptions : private flatbuffers::Table {
            verifier.VerifyTable(fileNameData()) &&
            VerifyField<flatbuffers::uoffset_t>(verifier, 8 /* text */) &&
            verifier.Verify(text()) &&
+           VerifyField<uint8_t>(verifier, 10 /* isLocalized */) &&
            verifier.EndTable();
   }
 };
@@ -1047,10 +1054,11 @@ struct TextBMFontOptionsBuilder {
   void add_widgetOptions(flatbuffers::Offset<WidgetOptions> widgetOptions) { fbb_.AddOffset(4, widgetOptions); }
   void add_fileNameData(flatbuffers::Offset<ResourceData> fileNameData) { fbb_.AddOffset(6, fileNameData); }
   void add_text(flatbuffers::Offset<flatbuffers::String> text) { fbb_.AddOffset(8, text); }
+  void add_isLocalized(uint8_t isLocalized) { fbb_.AddElement<uint8_t>(10, isLocalized, 0); }
   TextBMFontOptionsBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
   TextBMFontOptionsBuilder &operator=(const TextBMFontOptionsBuilder &);
   flatbuffers::Offset<TextBMFontOptions> Finish() {
-    auto o = flatbuffers::Offset<TextBMFontOptions>(fbb_.EndTable(start_, 3));
+    auto o = flatbuffers::Offset<TextBMFontOptions>(fbb_.EndTable(start_, 4));
     return o;
   }
 };
@@ -1058,11 +1066,13 @@ struct TextBMFontOptionsBuilder {
 inline flatbuffers::Offset<TextBMFontOptions> CreateTextBMFontOptions(flatbuffers::FlatBufferBuilder &_fbb,
    flatbuffers::Offset<WidgetOptions> widgetOptions = 0,
    flatbuffers::Offset<ResourceData> fileNameData = 0,
-   flatbuffers::Offset<flatbuffers::String> text = 0) {
+   flatbuffers::Offset<flatbuffers::String> text = 0,
+   uint8_t isLocalized = 0) {
   TextBMFontOptionsBuilder builder_(_fbb);
   builder_.add_text(text);
   builder_.add_fileNameData(fileNameData);
   builder_.add_widgetOptions(widgetOptions);
+  builder_.add_isLocalized(isLocalized);
   return builder_.Finish();
 }
 
@@ -1086,6 +1096,7 @@ struct TextOptions : private flatbuffers::Table {
   float shadowOffsetX() const { return GetField<float>(36, 2); }
   float shadowOffsetY() const { return GetField<float>(38, -2); }
   int32_t shadowBlurRadius() const { return GetField<int32_t>(40, 0); }
+  uint8_t isLocalized() const { return GetField<uint8_t>(42, 0); }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<flatbuffers::uoffset_t>(verifier, 4 /* widgetOptions */) &&
@@ -1111,6 +1122,7 @@ struct TextOptions : private flatbuffers::Table {
            VerifyField<float>(verifier, 36 /* shadowOffsetX */) &&
            VerifyField<float>(verifier, 38 /* shadowOffsetY */) &&
            VerifyField<int32_t>(verifier, 40 /* shadowBlurRadius */) &&
+           VerifyField<uint8_t>(verifier, 42 /* isLocalized */) &&
            verifier.EndTable();
   }
 };
@@ -1137,10 +1149,11 @@ struct TextOptionsBuilder {
   void add_shadowOffsetX(float shadowOffsetX) { fbb_.AddElement<float>(36, shadowOffsetX, 2); }
   void add_shadowOffsetY(float shadowOffsetY) { fbb_.AddElement<float>(38, shadowOffsetY, -2); }
   void add_shadowBlurRadius(int32_t shadowBlurRadius) { fbb_.AddElement<int32_t>(40, shadowBlurRadius, 0); }
+  void add_isLocalized(uint8_t isLocalized) { fbb_.AddElement<uint8_t>(42, isLocalized, 0); }
   TextOptionsBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
   TextOptionsBuilder &operator=(const TextOptionsBuilder &);
   flatbuffers::Offset<TextOptions> Finish() {
-    auto o = flatbuffers::Offset<TextOptions>(fbb_.EndTable(start_, 19));
+    auto o = flatbuffers::Offset<TextOptions>(fbb_.EndTable(start_, 20));
     return o;
   }
 };
@@ -1164,7 +1177,8 @@ inline flatbuffers::Offset<TextOptions> CreateTextOptions(flatbuffers::FlatBuffe
    const Color *shadowColor = 0,
    float shadowOffsetX = 2,
    float shadowOffsetY = -2,
-   int32_t shadowBlurRadius = 0) {
+   int32_t shadowBlurRadius = 0,
+   uint8_t isLocalized = 0) {
   TextOptionsBuilder builder_(_fbb);
   builder_.add_shadowBlurRadius(shadowBlurRadius);
   builder_.add_shadowOffsetY(shadowOffsetY);
@@ -1181,6 +1195,7 @@ inline flatbuffers::Offset<TextOptions> CreateTextOptions(flatbuffers::FlatBuffe
   builder_.add_fontName(fontName);
   builder_.add_fontResource(fontResource);
   builder_.add_widgetOptions(widgetOptions);
+  builder_.add_isLocalized(isLocalized);
   builder_.add_shadowEnabled(shadowEnabled);
   builder_.add_outlineEnabled(outlineEnabled);
   builder_.add_isCustomSize(isCustomSize);
@@ -1202,6 +1217,7 @@ struct TextFieldOptions : private flatbuffers::Table {
   int32_t areaWidth() const { return GetField<int32_t>(24, 0); }
   int32_t areaHeight() const { return GetField<int32_t>(26, 0); }
   uint8_t isCustomSize() const { return GetField<uint8_t>(28, 0); }
+  uint8_t isLocalized() const { return GetField<uint8_t>(30, 0); }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<flatbuffers::uoffset_t>(verifier, 4 /* widgetOptions */) &&
@@ -1223,6 +1239,7 @@ struct TextFieldOptions : private flatbuffers::Table {
            VerifyField<int32_t>(verifier, 24 /* areaWidth */) &&
            VerifyField<int32_t>(verifier, 26 /* areaHeight */) &&
            VerifyField<uint8_t>(verifier, 28 /* isCustomSize */) &&
+           VerifyField<uint8_t>(verifier, 30 /* isLocalized */) &&
            verifier.EndTable();
   }
 };
@@ -1243,10 +1260,11 @@ struct TextFieldOptionsBuilder {
   void add_areaWidth(int32_t areaWidth) { fbb_.AddElement<int32_t>(24, areaWidth, 0); }
   void add_areaHeight(int32_t areaHeight) { fbb_.AddElement<int32_t>(26, areaHeight, 0); }
   void add_isCustomSize(uint8_t isCustomSize) { fbb_.AddElement<uint8_t>(28, isCustomSize, 0); }
+  void add_isLocalized(uint8_t isLocalized) { fbb_.AddElement<uint8_t>(30, isLocalized, 0); }
   TextFieldOptionsBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
   TextFieldOptionsBuilder &operator=(const TextFieldOptionsBuilder &);
   flatbuffers::Offset<TextFieldOptions> Finish() {
-    auto o = flatbuffers::Offset<TextFieldOptions>(fbb_.EndTable(start_, 13));
+    auto o = flatbuffers::Offset<TextFieldOptions>(fbb_.EndTable(start_, 14));
     return o;
   }
 };
@@ -1264,7 +1282,8 @@ inline flatbuffers::Offset<TextFieldOptions> CreateTextFieldOptions(flatbuffers:
    int32_t maxLength = 0,
    int32_t areaWidth = 0,
    int32_t areaHeight = 0,
-   uint8_t isCustomSize = 0) {
+   uint8_t isCustomSize = 0,
+   uint8_t isLocalized = 0) {
   TextFieldOptionsBuilder builder_(_fbb);
   builder_.add_areaHeight(areaHeight);
   builder_.add_areaWidth(areaWidth);
@@ -1276,6 +1295,7 @@ inline flatbuffers::Offset<TextFieldOptions> CreateTextFieldOptions(flatbuffers:
   builder_.add_fontName(fontName);
   builder_.add_fontResource(fontResource);
   builder_.add_widgetOptions(widgetOptions);
+  builder_.add_isLocalized(isLocalized);
   builder_.add_isCustomSize(isCustomSize);
   builder_.add_maxLengthEnabled(maxLengthEnabled);
   builder_.add_passwordEnabled(passwordEnabled);
@@ -1497,6 +1517,9 @@ struct ScrollViewOptions : private flatbuffers::Table {
   const FlatSize *innerSize() const { return GetStruct<const FlatSize *>(28); }
   int32_t direction() const { return GetField<int32_t>(30, 0); }
   uint8_t bounceEnabled() const { return GetField<uint8_t>(32, 0); }
+  uint8_t scrollbarEnabeld() const { return GetField<uint8_t>(34, 1); }
+  uint8_t scrollbarAutoHide() const { return GetField<uint8_t>(36, 1); }
+  float scrollbarAutoHideTime() const { return GetField<float>(38, 0.2); }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<flatbuffers::uoffset_t>(verifier, 4 /* widgetOptions */) &&
@@ -1516,6 +1539,9 @@ struct ScrollViewOptions : private flatbuffers::Table {
            VerifyField<FlatSize>(verifier, 28 /* innerSize */) &&
            VerifyField<int32_t>(verifier, 30 /* direction */) &&
            VerifyField<uint8_t>(verifier, 32 /* bounceEnabled */) &&
+           VerifyField<uint8_t>(verifier, 34 /* scrollbarEnabeld */) &&
+           VerifyField<uint8_t>(verifier, 36 /* scrollbarAutoHide */) &&
+           VerifyField<float>(verifier, 38 /* scrollbarAutoHideTime */) &&
            verifier.EndTable();
   }
 };
@@ -1538,10 +1564,13 @@ struct ScrollViewOptionsBuilder {
   void add_innerSize(const FlatSize *innerSize) { fbb_.AddStruct(28, innerSize); }
   void add_direction(int32_t direction) { fbb_.AddElement<int32_t>(30, direction, 0); }
   void add_bounceEnabled(uint8_t bounceEnabled) { fbb_.AddElement<uint8_t>(32, bounceEnabled, 0); }
+  void add_scrollbarEnabeld(uint8_t scrollbarEnabeld) { fbb_.AddElement<uint8_t>(34, scrollbarEnabeld, 1); }
+  void add_scrollbarAutoHide(uint8_t scrollbarAutoHide) { fbb_.AddElement<uint8_t>(36, scrollbarAutoHide, 1); }
+  void add_scrollbarAutoHideTime(float scrollbarAutoHideTime) { fbb_.AddElement<float>(38, scrollbarAutoHideTime, 0.2); }
   ScrollViewOptionsBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
   ScrollViewOptionsBuilder &operator=(const ScrollViewOptionsBuilder &);
   flatbuffers::Offset<ScrollViewOptions> Finish() {
-    auto o = flatbuffers::Offset<ScrollViewOptions>(fbb_.EndTable(start_, 15));
+    auto o = flatbuffers::Offset<ScrollViewOptions>(fbb_.EndTable(start_, 18));
     return o;
   }
 };
@@ -1561,8 +1590,12 @@ inline flatbuffers::Offset<ScrollViewOptions> CreateScrollViewOptions(flatbuffer
    uint8_t backGroundScale9Enabled = 0,
    const FlatSize *innerSize = 0,
    int32_t direction = 0,
-   uint8_t bounceEnabled = 0) {
+   uint8_t bounceEnabled = 0,
+   uint8_t scrollbarEnabeld = 1,
+   uint8_t scrollbarAutoHide = 1,
+   float scrollbarAutoHideTime = 0.2) {
   ScrollViewOptionsBuilder builder_(_fbb);
+  builder_.add_scrollbarAutoHideTime(scrollbarAutoHideTime);
   builder_.add_direction(direction);
   builder_.add_innerSize(innerSize);
   builder_.add_scale9Size(scale9Size);
@@ -1574,6 +1607,8 @@ inline flatbuffers::Offset<ScrollViewOptions> CreateScrollViewOptions(flatbuffer
   builder_.add_bgColor(bgColor);
   builder_.add_backGroundImageData(backGroundImageData);
   builder_.add_widgetOptions(widgetOptions);
+  builder_.add_scrollbarAutoHide(scrollbarAutoHide);
+  builder_.add_scrollbarEnabeld(scrollbarEnabeld);
   builder_.add_bounceEnabled(bounceEnabled);
   builder_.add_backGroundScale9Enabled(backGroundScale9Enabled);
   builder_.add_bgColorOpacity(bgColorOpacity);

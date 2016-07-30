@@ -241,7 +241,6 @@ class CC_DLL GLProgramState : public Ref
 {
     friend class GLProgramStateCache;
 public:
-
     /** returns a new instance of GLProgramState for a given GLProgram */
     static GLProgramState* create(GLProgram* glprogram);
 
@@ -250,6 +249,9 @@ public:
 
     /** gets-or-creates an instance of GLProgramState for a given GLProgramName */
     static GLProgramState* getOrCreateWithGLProgramName(const std::string& glProgramName );
+
+    /** gets-or-creates an instance of GLProgramState for the given GLProgramName & texture */
+    static GLProgramState* getOrCreateWithGLProgramName(const std::string& glProgramName, Texture2D* texture);
 
     /** gets-or-creates an instance of GLProgramState for given shaders */
     static GLProgramState* getOrCreateWithShaders(const std::string& vertexShader, const std::string& fragShader, const std::string& compileTimeDefines);
@@ -262,6 +264,7 @@ public:
      @param modelView The applied modelView matrix to shader.
      */
     void apply(const Mat4& modelView);
+
     /**
      Apply GLProgram, and built in uniforms.
      @param modelView The applied modelView matrix to shader.
@@ -366,7 +369,7 @@ public:
      * to an enumeration value. If it matches to one of the predefined strings, it will create a
      * callback to get the correct value at runtime.
      *
-     * @param name The name of the material parameter to store an auto-binding for.
+     * @param uniformName The name of the material parameter to store an auto-binding for.
      * @param autoBinding A string matching one of the built-in AutoBinding enum constants.
      */
     void setParameterAutoBinding(const std::string& uniformName, const std::string& autoBinding);

@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "cocostudio/CCActionFrame.h"
+#include "editor-support/cocostudio/CCActionFrame.h"
 #include "2d/CCActionEase.h"
 
 using namespace cocos2d;

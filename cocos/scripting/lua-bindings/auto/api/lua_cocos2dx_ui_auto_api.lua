@@ -166,4 +166,14 @@
 -- @field [parent=#ccui] LayoutComponent#LayoutComponent LayoutComponent preloaded module
 
 
+--------------------------------------------------------
+-- the ccui TabHeader
+-- @field [parent=#ccui] TabHeader#TabHeader TabHeader preloaded module
+
+
+--------------------------------------------------------
+-- the ccui TabControl
+-- @field [parent=#ccui] TabControl#TabControl TabControl preloaded module
+
+
 return nil

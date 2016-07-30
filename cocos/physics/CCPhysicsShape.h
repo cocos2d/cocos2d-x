@@ -77,11 +77,17 @@ public:
         UNKNOWN,
         CIRCLE,
         BOX,
-        POLYGEN,
+        POLYGON,
         EDGESEGMENT,
         EDGEBOX,
-        EDGEPOLYGEN,
+        EDGEPOLYGON,
         EDGECHAIN,
+
+        /** @deprecated Use Type::POLYGON instead. */
+        POLYGEN = POLYGON,
+
+        /** @deprecated Use Type::EDGEPOLYGON instead. */
+        EDGEPOLYGEN = EDGEPOLYGON,
     };
     
 public:
@@ -260,13 +266,16 @@ public:
     static void recenterPoints(Vec2* points, int count, const Vec2& center = Vec2::ZERO);
 
     /**
-     * Get center of the polyon points.
+     * Get center of the polygon points.
      *
      * @param points A Vec2 object pointer.
      * @param count An integer number.
      * @return A Vec2 object.
      */
-    static Vec2 getPolyonCenter(const Vec2* points, int count);
+    static Vec2 getPolygonCenter(const Vec2* points, int count);
+
+    /** @deprecated use getPolygonCenter() instead */
+    CC_DEPRECATED_ATTRIBUTE static Vec2 getPolyonCenter(const Vec2* points, int count);
     
     /**
      * Set a mask that defines which categories this physics body belongs to.
@@ -445,7 +454,7 @@ public:
      * @param   offset A Vec2 object, it is the offset from the body's center of gravity in body local coordinates.
      * @return  An autoreleased PhysicsShapePolygon object pointer.
      */
-    static PhysicsShapePolygon* create(const Vec2* points, int count, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, const Vec2& offset = Vec2::ZERO);
+    static PhysicsShapePolygon* create(const Vec2* points, int count, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, const Vec2& offset = Vec2::ZERO, float radius = 0.0f);
     
     /**
      * Calculate the area of a polygon with specified value.
@@ -465,7 +474,7 @@ public:
      * @param offset A Vec2 object, it is the offset from the body's center of gravity in body local coordinates.
      * @return A float number
      */
-    static float calculateMoment(float mass, const Vec2* points, int count, const Vec2& offset = Vec2::ZERO);
+    static float calculateMoment(float mass, const Vec2* points, int count, const Vec2& offset = Vec2::ZERO, float radius = 0.0f);
     
     /**
      * Calculate the moment for a polygon.
@@ -503,7 +512,7 @@ public:
      */
     virtual Vec2 getCenter() override;
 protected:
-    bool init(const Vec2* points, int count, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, const Vec2& offset = Vec2::ZERO);
+    bool init(const Vec2* points, int count, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, const Vec2& offset = Vec2::ZERO, float radius = 0.0f);
     float calculateArea() override;
     virtual void updateScale() override;
     
@@ -524,7 +533,7 @@ public:
      * @param   offset A Vec2 object, it is the offset from the body's center of gravity in body local coordinates.
      * @return  An autoreleased PhysicsShapeBox object pointer.
      */
-    static PhysicsShapeBox* create(const Size& size, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, const Vec2& offset = Vec2::ZERO);
+    static PhysicsShapeBox* create(const Size& size, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, const Vec2& offset = Vec2::ZERO, float radius = 0.0f);
     
     /**
      * Get this box's width and height.
@@ -541,7 +550,7 @@ public:
     virtual Vec2 getOffset() override { return getCenter(); }
     
 protected:
-    bool init(const Size& size, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, const Vec2& offset = Vec2::ZERO);
+    bool init(const Size& size, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, const Vec2& offset = Vec2::ZERO, float radius = 0.0f);
     
 protected:
     PhysicsShapeBox();

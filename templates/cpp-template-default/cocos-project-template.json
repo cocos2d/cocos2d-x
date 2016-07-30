@@ -23,7 +23,8 @@
                "proj.win10/PROJECT_NAME.sln",
                "proj.win10/App/PROJECT_NAME.vcxproj",
                "proj.win10/App/PROJECT_NAME.vcxproj.filters",
-               "proj.win10/App/PROJECT_NAME_TemporaryKey.pfx"
+               "proj.win10/App/PROJECT_NAME_TemporaryKey.pfx",
+	       "proj.tizen/shared/res/PROJECT_NAME.png"
             ]
          },
          "project_replace_project_name":{
@@ -57,7 +58,9 @@
                "proj.win10/App/PROJECT_NAME.vcxproj",
                "proj.win10/App/PROJECT_NAME.vcxproj.filters",
                "proj.win10/App/Package.appxmanifest",
-               "CMakeLists.txt"
+               "CMakeLists.txt",
+               "proj.tizen/.project",
+               "proj.tizen/tizen-manifest.xml"
             ]
          },
          "project_replace_package_name":{
@@ -65,7 +68,8 @@
             "files":[
                "proj.android/AndroidManifest.xml",
                "proj.android-studio/app/build.gradle",
-               "proj.android-studio/app/AndroidManifest.xml"
+               "proj.android-studio/app/AndroidManifest.xml",
+	       "proj.tizen/tizen-manifest.xml"
             ]
          },
          "project_replace_mac_bundleid": {
