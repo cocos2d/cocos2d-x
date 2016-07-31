@@ -32,7 +32,6 @@
 #include "renderer/CCRenderer.h"
 #include "renderer/CCPass.h"
 #include "renderer/CCTexture2D.h"
-#include "xxhash.h"
 
 NS_CC_BEGIN
 
