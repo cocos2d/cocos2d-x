@@ -56,25 +56,47 @@ void stopAccelerometerSensor();
 void pauseAccelerometerSensor();
 void resumeAccelerometerSensor();
 
-static void win_back_cb(void *data, Evas_Object *obj, void *event_info) {
-    //Application *ad = (Application *)data;
-    /* Let window go to hidden state. */
-    //elm_win_lower(ad->_win);
- //   cocos2d::EventKeyboard event(cocos2d::EventKeyboard::KeyCode::KEY_ESCAPE, false);
- //   cocos2d::Director::getInstance()->getEventDispatcher()->dispatchEvent(&event);
-    stopAccelerometerSensor();
-    Director::getInstance()->end();
-}
-
-static void win_more_cb(void *data, Evas_Object *obj, void *event_info) {
-    cocos2d::EventKeyboard event(cocos2d::EventKeyboard::KeyCode::KEY_MENU, false);
-    cocos2d::Director::getInstance()->getEventDispatcher()->dispatchEvent(&event);
-}
-
 static void makeCurrent(void)
 {
-    Application* app = Application::getInstance();
-    evas_gl_make_current(app->_evasGL, app->_sfc, app->_ctx);
+	Application* app = Application::getInstance();
+	evas_gl_make_current(app->_evasGL, app->_sfc, app->_ctx);
+}
+
+
+static Eina_Bool _key_down_cb(void *data, int type, void *ev)
+{
+   makeCurrent();
+   Ecore_Event_Key *event = (Ecore_Event_Key *)ev;
+   if (!strcmp("XF86Stop", event->key) || !strcmp("XF86Back", event->key))
+   {
+	    cocos2d::EventKeyboard event(cocos2d::EventKeyboard::KeyCode::KEY_ESCAPE, true);
+	    cocos2d::Director::getInstance()->getEventDispatcher()->dispatchEvent(&event);
+   }
+   else if (!strcmp("XF86Menu", event->key))
+   {
+	    cocos2d::EventKeyboard event(cocos2d::EventKeyboard::KeyCode::KEY_MENU, true);
+	    cocos2d::Director::getInstance()->getEventDispatcher()->dispatchEvent(&event);
+   }
+
+   return ECORE_CALLBACK_PASS_ON;
+}
+
+static Eina_Bool _key_up_cb(void *data, int type, void *ev)
+{
+   makeCurrent();
+   Ecore_Event_Key *event = (Ecore_Event_Key *)ev;
+   if (!strcmp("XF86Stop", event->key) || !strcmp("XF86Back", event->key))
+   {
+	    cocos2d::EventKeyboard event(cocos2d::EventKeyboard::KeyCode::KEY_ESCAPE, false);
+	    cocos2d::Director::getInstance()->getEventDispatcher()->dispatchEvent(&event);
+   }
+   else if (!strcmp("XF86Menu", event->key))
+   {
+	    cocos2d::EventKeyboard event(cocos2d::EventKeyboard::KeyCode::KEY_MENU, false);
+	    cocos2d::Director::getInstance()->getEventDispatcher()->dispatchEvent(&event);
+   }
+
+   return ECORE_CALLBACK_PASS_ON;
 }
 
 static void draw_gl(Evas_Object *obj)
@@ -150,7 +172,8 @@ static void init_gl(Evas_Object *obj) {
 static void create_indicator(Application *ad) {
     elm_win_conformant_set(ad->_win, EINA_TRUE);
 
-    elm_win_indicator_mode_set(ad->_win, ELM_WIN_INDICATOR_HIDE);
+    elm_win_indicator_mode_set(ad->_win, ELM_WIN_INDICATOR_SHOW);
+    elm_win_indicator_opacity_set(ad->_win, ELM_WIN_INDICATOR_TRANSPARENT);
 
     ad->_conform = elm_conformant_add(ad->_win);
     evas_object_size_hint_weight_set(ad->_conform, EVAS_HINT_EXPAND,
@@ -240,62 +263,59 @@ static void touch_up_cb(void *data, Evas *e , Evas_Object *obj , void *event_inf
     cocos2d::Director::getInstance()->getOpenGLView()->handleTouchesEnd(1, &id, &x, &y);
 }
 
-static void get_glview_mode(GLContextAttrs &attrs, char* gl_mode)
+static Elm_GLView_Mode get_glview_mode(const GLContextAttrs &attrs)
 {
-    strcat(gl_mode, "opengl");
+	/* for performance */
+	Elm_GLView_Mode mode = ELM_GLVIEW_DIRECT;
 
-    if (attrs.alphaBits > 0)
-    {
-        strcat(gl_mode, ":alpha");
-    }
+	/* alpha */
+	if (attrs.alphaBits > 0)
+	{
+		//fixme if enable this, cpp-test show white screen only.
+		//mode = (Elm_GLView_Mode)(mode | ELM_GLVIEW_ALPHA);
+	}
 
-    if (attrs.depthBits > 0)
-    {
-        strcat(gl_mode, ":depth");
-        if (attrs.depthBits <= 8)
-        {
-            strcat(gl_mode, "8");
-        }
-        else if (attrs.depthBits <= 16)
-        {
-            strcat(gl_mode, "16");
-        }
-        else if (attrs.depthBits <= 24)
-        {
-            strcat(gl_mode, "24");
-        }
-        else
-        {
-            strcat(gl_mode, "32");
-        }
-    }
+	/* depth */
+	if (attrs.depthBits > 24)
+	{
+		mode = (Elm_GLView_Mode)(mode | ELM_GLVIEW_DEPTH_32);
+	}
+	else if (attrs.depthBits > 16)
+	{
+		mode = (Elm_GLView_Mode)(mode | ELM_GLVIEW_DEPTH_24);
+	}
+	else if (attrs.depthBits > 8)
+	{
+		mode = (Elm_GLView_Mode)(mode | ELM_GLVIEW_DEPTH_16);
+	}
+	else if (attrs.depthBits > 0)
+	{
+		mode = (Elm_GLView_Mode)(mode | ELM_GLVIEW_DEPTH_8);
+	}
 
-    if (attrs.stencilBits > 0)
-    {
-        strcat(gl_mode, ":stencil");
-        if (attrs.stencilBits == 1)
-        {
-            strcat(gl_mode, "1");
-        }
-        else if (attrs.stencilBits == 2)
-        {
-            strcat(gl_mode, "2");
-        }
-        else if (attrs.stencilBits <= 4)
-        {
-            strcat(gl_mode, "4");
-        }
-        else if (attrs.stencilBits <= 8)
-        {
-            strcat(gl_mode, "8");
-        }
-        else
-        {
-            strcat(gl_mode, "16");
-        }
-    }
+	/* stencil */
+	if (attrs.stencilBits > 8)
+	{
+		mode = (Elm_GLView_Mode)(mode | ELM_GLVIEW_STENCIL_16);
+	}
+	else if (attrs.stencilBits > 4)
+	{
+		mode = (Elm_GLView_Mode)(mode | ELM_GLVIEW_STENCIL_8);
+	}
+	else if (attrs.stencilBits > 2)
+	{
+		mode = (Elm_GLView_Mode)(mode | ELM_GLVIEW_STENCIL_4);
+	}
+	else if (attrs.stencilBits > 1)
+	{
+		mode = (Elm_GLView_Mode)(mode | ELM_GLVIEW_STENCIL_2);
+	}
+	else if (attrs.stencilBits > 0)
+	{
+		mode = (Elm_GLView_Mode)(mode | ELM_GLVIEW_STENCIL_1);
+	}
 
-    strcat(gl_mode, "\0");
+	return mode;
 }
 
 static bool app_create(void *data) {
@@ -304,19 +324,14 @@ static bool app_create(void *data) {
      * If this function returns true, the main loop of application starts
      * If this function returns false, the application is terminated. */
 
-    Evas_Object *bx, *gl;
-    Ecore_Animator *ani;
+    Evas_Object *gl;
     Application *ad = (Application *)data;
 
     if (!data)
         return false;
 
     /* Create and initialize GLView */
-    ad->initGLContextAttrs();
-    GLContextAttrs attrs = GLView::getGLContextAttrs();
-    char gl_mode[100] = "";
-    get_glview_mode(attrs, gl_mode);
-    elm_config_accel_preference_set("opengl");//(gl_mode);
+    elm_config_accel_preference_set("opengl");
     /* Create the window */
     ad->_win = add_win("cocos2d-x");
 
@@ -328,22 +343,19 @@ static bool app_create(void *data) {
     rots[1] = rots[0] + 180 % 360;
     elm_win_wm_rotation_available_rotations_set(ad->_win, rots, 2);
 
-    eext_object_event_callback_add(ad->_win, EEXT_CALLBACK_BACK, win_back_cb, ad);
-    eext_object_event_callback_add(ad->_win, EEXT_CALLBACK_MORE, win_more_cb, ad);
-
-    /* Add a box to contain our GLView */
-    bx = elm_box_add(ad->_win);
-    evas_object_size_hint_weight_set(bx, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-    elm_win_resize_object_add(ad->_win, bx);
-    evas_object_show(bx);
+    ecore_event_handler_add(ECORE_EVENT_KEY_DOWN, _key_down_cb, ad);
+    ecore_event_handler_add(ECORE_EVENT_KEY_UP, _key_up_cb, ad);
 
     gl = elm_glview_add(ad->_win);
+    elm_win_resize_object_add(ad->_win, gl);
     ELEMENTARY_GLVIEW_GLOBAL_USE(gl);
     evas_object_size_hint_align_set(gl, EVAS_HINT_FILL, EVAS_HINT_FILL);
     evas_object_size_hint_weight_set(gl, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 
-    /* Request a surface with alpha and a depth buffer */
-    Elm_GLView_Mode mode = (Elm_GLView_Mode)(ELM_GLVIEW_DIRECT | ELM_GLVIEW_DEPTH | ELM_GLVIEW_STENCIL);
+    /* Create and initialize GLView */
+    ad->initGLContextAttrs();
+    auto attrs = GLView::getGLContextAttrs();
+    auto mode = get_glview_mode(attrs);
     elm_glview_mode_set(gl, mode);
 
     /* The resize policy tells GLView what to do with the surface when it
@@ -375,7 +387,6 @@ static bool app_create(void *data) {
     elm_glview_render_func_set(gl, draw_gl);
 
     /* Add the GLView to the box and show it */
-    elm_box_pack_end(bx, gl);
     evas_object_show(gl);
 
     elm_object_focus_set(gl, EINA_TRUE);
@@ -387,9 +398,8 @@ static bool app_create(void *data) {
      * GL so this animator needs to be deleted with ecore_animator_del().
      */
     ecore_animator_source_set(ECORE_ANIMATOR_SOURCE_TIMER);
-    ani = ecore_animator_add(anim, gl);
-    evas_object_data_set(gl, "ani", ani);
-    //evas_object_data_set(gl, "ad", ad);
+    ad->_ani = ecore_animator_add(anim, gl);
+    evas_object_data_set(gl, "ani", ad->_ani);
     evas_object_event_callback_add(gl, EVAS_CALLBACK_DEL, del_anim, gl);
 
     /* Add Mouse Event Callbacks */
@@ -401,7 +411,7 @@ static bool app_create(void *data) {
     evas_object_event_callback_add(gl, EVAS_CALLBACK_MULTI_MOVE, touches_move_cb, ad);
     evas_object_event_callback_add(gl, EVAS_CALLBACK_MULTI_UP, touches_up_cb, ad);
 
-    evas_object_show(ad->_win);
+
 
     create_indicator(ad);
 
@@ -419,6 +429,8 @@ static void app_pause(void *data)
 
     Application* app = ((Application *)data);
     app->applicationDidEnterBackground();
+
+    ecore_animator_freeze(app->_ani);
 }
 
 static void app_resume(void *data)
@@ -432,6 +444,8 @@ static void app_resume(void *data)
     Application* app = ((Application *)data);
     app->applicationWillEnterForeground();
     resumeAccelerometerSensor();
+
+    ecore_animator_thaw(app->_ani);
 }
 
 static void app_terminate(void *data)
@@ -454,8 +468,7 @@ static void app_control(app_control_h app_control, void *data)
 
 int Application::run()
 {
-    ui_app_lifecycle_callback_s event_callback = {0,};
-    //app_event_handler_h handlers[5] = {NULL, };
+	ui_app_lifecycle_callback_s event_callback = { nullptr, };
 
     event_callback.create = app_create;
     event_callback.terminate = app_terminate;
