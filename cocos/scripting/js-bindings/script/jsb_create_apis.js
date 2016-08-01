@@ -855,7 +855,7 @@ cc.GLProgram.prototype._ctor = function(vShaderFileName, fShaderFileName) {
  * var spriteFrame = cc.spriteFrameCache.getSpriteFrame('grossini_dance_01.png');
  * var sprite = cc.Sprite.create(spriteFrame);
  *
- * 4.Create a sprite with an exsiting texture contained in a CCTexture2D object
+ * 4.Create a sprite with an existing texture contained in a CCTexture2D object
  *      After creation, the rect will be the size of the texture, and the offset will be (0,0).
  * var texture = cc.textureCache.addImage('HelloHTML5World.png');
  * var sprite1 = cc.Sprite.create(texture);
