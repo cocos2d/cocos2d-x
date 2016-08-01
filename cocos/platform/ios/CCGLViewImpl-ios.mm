@@ -31,7 +31,6 @@
 #include "platform/ios/CCEAGLView-ios.h"
 #include "platform/ios/CCDirectorCaller-ios.h"
 #include "platform/ios/CCGLViewImpl-ios.h"
-#include "deprecated/CCSet.h"
 #include "base/CCTouch.h"
 
 NS_CC_BEGIN

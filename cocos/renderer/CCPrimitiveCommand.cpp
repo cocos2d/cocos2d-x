@@ -31,8 +31,6 @@
 
 #include "base/CCDirector.h"
 
-#include "xxhash.h"
-
 NS_CC_BEGIN
 
 PrimitiveCommand::PrimitiveCommand()
