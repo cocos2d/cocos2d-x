@@ -39,7 +39,7 @@ endif()
 project (Cocos2d-X)
 
 # The version number
-set(COCOS2D_X_VERSION 3.12)
+set(COCOS2D_X_VERSION 3.13)
 
 # define some variables
 
