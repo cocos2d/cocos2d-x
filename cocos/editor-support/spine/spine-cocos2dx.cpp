@@ -40,6 +40,8 @@ GLuint wrap (spAtlasWrap wrap) {
 
 GLuint filter (spAtlasFilter filter) {
 	switch (filter) {
+	case SP_ATLAS_UNKNOWN_FILTER:
+		break;
 	case SP_ATLAS_NEAREST:
 		return GL_NEAREST;
 	case SP_ATLAS_LINEAR:
