@@ -89,6 +89,7 @@ cocos2d.cpp \
 2d/CCAutoPolygon.cpp \
 3d/CCFrustum.cpp \
 3d/CCPlane.cpp \
+platform/CCController.cpp \
 platform/CCFileUtils.cpp \
 platform/CCGLView.cpp \
 platform/CCImage.cpp \
@@ -110,8 +111,6 @@ base/CCAsyncTaskPool.cpp \
 base/CCAutoreleasePool.cpp \
 base/CCConfiguration.cpp \
 base/CCConsole.cpp \
-base/CCController-android.cpp \
-base/CCController.cpp \
 base/CCData.cpp \
 base/CCDataVisitor.cpp \
 base/CCDirector.cpp \

@@ -257,7 +257,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\ccConfig.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCConfiguration.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCConsole.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCController.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCData.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCDataVisitor.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCDirector.h" />
@@ -483,6 +482,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\platform\CCApplication.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\platform\CCApplicationProtocol.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\platform\CCCommon.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\platform\CCController.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\platform\CCDevice.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\platform\CCFileUtils.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\platform\CCGL.h" />
@@ -896,7 +896,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\ccCArray.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCConfiguration.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCConsole.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCController.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCData.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCDataVisitor.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCDirector.cpp" />
@@ -1091,6 +1090,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\physics\CCPhysicsJoint.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\physics\CCPhysicsShape.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\physics\CCPhysicsWorld.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\platform\CCController.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\platform\CCFileUtils.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\platform\CCGLView.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\platform\CCImage.cpp" />

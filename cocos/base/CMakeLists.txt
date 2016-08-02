@@ -7,7 +7,6 @@ if(MACOSX OR APPLE)
 elseif(ANDROID)
   set(COCOS_BASE_SPECIFIC_SRC
     base/CCUserDefault-android.cpp
-    base/CCController-android.cpp
   )
 endif()
 
@@ -16,7 +15,6 @@ set(COCOS_BASE_SRC
   base/CCAutoreleasePool.cpp
   base/CCConfiguration.cpp
   base/CCConsole.cpp
-  base/CCController.cpp
   base/CCData.cpp
   base/CCDataVisitor.cpp
   base/CCNinePatchImageParser.cpp
