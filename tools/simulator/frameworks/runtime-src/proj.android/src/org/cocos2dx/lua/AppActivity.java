@@ -75,7 +75,7 @@ public class AppActivity extends Cocos2dxActivity{
 			{
 				AlertDialog.Builder builder=new AlertDialog.Builder(this);
 				builder.setTitle("Warning");
-				builder.setMessage("Please open WIFI for debuging...");
+				builder.setMessage("Please open WIFI for debugging...");
 				builder.setPositiveButton("OK",new DialogInterface.OnClickListener() {
 					
 					@Override

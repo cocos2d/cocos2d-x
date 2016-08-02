@@ -882,7 +882,7 @@ ThreadActor.prototype = {
         generatedLocation));
 
       // Cases when we should pause because we have executed enough to consider
-      // a "step" to have occured:
+      // a "step" to have occurred:
       //
       // 1.1. We change frames.
       // 1.2. We change URLs (can happen without changing frames thanks to

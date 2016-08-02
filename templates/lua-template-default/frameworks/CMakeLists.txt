@@ -52,7 +52,7 @@ endif(USE_BULLET)
 set(BUILD_CPP_EMPTY_TEST OFF CACHE BOOL "turn off build cpp-empty-test")
 set(BUILD_CPP_TESTS OFF CACHE BOOL "turn off build cpp-tests")
 set(BUILD_LUA_TESTS OFF CACHE BOOL "turn off build lua-tests")
-set(BUILD_JS_LIBS OFF CACHE BOOL "turn off build js releated targets")
+set(BUILD_JS_LIBS OFF CACHE BOOL "turn off build js related targets")
 add_subdirectory(${COCOS2D_ROOT})
 
 
