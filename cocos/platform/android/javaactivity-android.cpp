@@ -38,6 +38,7 @@ THE SOFTWARE.
 #include "platform/android/jni/JniHelper.h"
 #include "network/CCDownloader-android.h"
 #include <android/log.h>
+#include <android/api-level.h>
 #include <jni.h>
 
 #define  LOG_TAG    "main"
@@ -49,6 +50,28 @@ using namespace cocos2d;
 
 extern "C"
 {
+
+// ndk break compatibility, refer to https://github.com/cocos2d/cocos2d-x/issues/16267 for detail information
+// should remove it when using NDK r13 since NDK r13 will add back bsd_signal()
+#if __ANDROID_API__ > 19
+#include <signal.h>
+#include <dlfcn.h>
+  typedef __sighandler_t (*bsd_signal_func_t)(int, __sighandler_t);
+  bsd_signal_func_t bsd_signal_func = NULL;
+
+  __sighandler_t bsd_signal(int s, __sighandler_t f) {
+    if (bsd_signal_func == NULL) {
+      // For now (up to Android 7.0) this is always available 
+      bsd_signal_func = (bsd_signal_func_t) dlsym(RTLD_DEFAULT, "bsd_signal");
+
+      if (bsd_signal_func == NULL) {
+        __android_log_assert("", "bsd_signal_wrapper", "bsd_signal symbol not found!");
+      }
+    }
+
+    return bsd_signal_func(s, f);
+  }
+#endif // __ANDROID_API__ > 19
 
 JNIEXPORT jint JNI_OnLoad(JavaVM *vm, void *reserved)
 {
