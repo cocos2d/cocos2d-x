@@ -138,7 +138,7 @@ bool AudioPlayer::play2d(AudioCache* cache)
     return true;
 }
 
-int AudioPlayer::readPcmData(char* buffer, int bufferSize, const std::function<int/*readBytes*/(char*/*buf*/, int/*toReadBytes*/)>& fileReader)
+int AudioPlayer::readPcmData(char* buffer, int bufferSize, const std::function<int/*readBytes*/(char* /*buf*/, int /*bytesToRead*/)>& fileReader)
 {
     assert(buffer != nullptr && bufferSize > 0);
 
@@ -148,8 +148,11 @@ int AudioPlayer::readPcmData(char* buffer, int bufferSize, const std::function<i
     do
     {
         readBytesOnce = fileReader(buffer + readBytes, remainBytes);
-        readBytes += readBytesOnce;
-        remainBytes -= readBytesOnce;
+        if (readBytesOnce > 0)
+        {
+            readBytes += readBytesOnce;
+            remainBytes -= readBytesOnce;
+        }
     } while (readBytesOnce > 0 && readBytes < bufferSize);
 
     return readBytes;
