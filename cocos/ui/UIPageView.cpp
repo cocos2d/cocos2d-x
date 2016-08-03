@@ -39,7 +39,8 @@ _childFocusCancelOffset(5.0f),
 _pageViewEventListener(nullptr),
 _pageViewEventSelector(nullptr),
 _eventCallback(nullptr),
-_autoScrollStopEpsilon(0.001f)
+_autoScrollStopEpsilon(0.001f),
+_previousPageIndex(-1)
 {
 }
 
@@ -218,6 +219,12 @@ void PageView::refreshIndicatorPosition()
         _indicator->setPosition(Vec2(posX, posY));
     }
 }
+    
+void PageView::handlePressLogic(Touch *touch)
+{
+    ListView::handlePressLogic(touch);
+    _previousPageIndex = _currentPageIndex;
+}
 
 void PageView::handleReleaseLogic(Touch *touch)
 {
@@ -228,7 +235,6 @@ void PageView::handleReleaseLogic(Touch *touch)
     {
         return;
     }
-
     Vec2 touchMoveVelocity = flattenVectorByDirection(calculateTouchMoveVelocity());
 
     static const float INERTIA_THRESHOLD = 500;
@@ -272,6 +278,19 @@ float PageView::getAutoScrollStopEpsilon() const
     return _autoScrollStopEpsilon;
 }
 
+void PageView::addEventListenerPageView(Ref *target, SEL_PageViewEvent selector)
+{
+    _pageViewEventListener = target;
+    _pageViewEventSelector = selector;
+    
+    ccScrollViewCallback scrollViewCallback = [=](Ref* ref, ScrollView::EventType type) -> void{
+        if (type == ScrollView::EventType::AUTOSCROLL_ENDED && _previousPageIndex != _currentPageIndex) {
+            pageTurningEvent();
+        }
+    };
+    this->addEventListener(scrollViewCallback);
+}
+    
 void PageView::pageTurningEvent()
 {
     this->retain();
@@ -289,19 +308,13 @@ void PageView::pageTurningEvent()
     }
     this->release();
 }
-
-void PageView::addEventListenerPageView(Ref *target, SEL_PageViewEvent selector)
-{
-    _pageViewEventListener = target;
-    _pageViewEventSelector = selector;
-}
     
 void PageView::addEventListener(const ccPageViewCallback& callback)
 {
     _eventCallback = callback;
     ccScrollViewCallback scrollViewCallback = [=](Ref* ref, ScrollView::EventType type) -> void{
-        if (type == ScrollView::EventType::AUTOSCROLL_ENDED) {
-            callback(ref, PageView::EventType::TURNING);
+        if (type == ScrollView::EventType::AUTOSCROLL_ENDED && _previousPageIndex != _currentPageIndex) {
+            pageTurningEvent();
         }
     };
     this->addEventListener(scrollViewCallback);
@@ -364,6 +377,11 @@ void PageView::copySpecialProperties(Widget *widget)
         _ccEventCallback = pageView->_ccEventCallback;
         _pageViewEventListener = pageView->_pageViewEventListener;
         _pageViewEventSelector = pageView->_pageViewEventSelector;
+        _currentPageIndex = pageView->_currentPageIndex;
+        _previousPageIndex = pageView->_previousPageIndex;
+        _childFocusCancelOffset = pageView->_childFocusCancelOffset;
+        _autoScrollStopEpsilon = pageView->_autoScrollStopEpsilon;
+        _indicatorPositionAsAnchorPoint = pageView->_indicatorPositionAsAnchorPoint;
     }
 }
 
