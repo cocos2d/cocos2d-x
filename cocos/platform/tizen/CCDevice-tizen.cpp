@@ -332,7 +332,7 @@ static void getTextBitmapData(const char * text, const FontDefinition& textDefin
     //evas_shutdown();//not necessary, removed when use Tizen 2.4.
 }
 
-Data Device::getTextureDataForText(const char * text, const FontDefinition& textDefinition, TextAlign align, int &width, int &height, bool& hasPremultipliedAlpha)
+Data Device::getTextureDataForText(const char * text, const FontDefinition& textDefinition, TextAlign align, int &width, int &height, bool& hasPremultipliedAlpha, float& /*fontAscent*/)
 {
     Data ret;
     do 

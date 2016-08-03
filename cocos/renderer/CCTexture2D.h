@@ -297,8 +297,9 @@ public:
      
      @param text A null terminated string.
      @param textDefinition A FontDefinition object contains font attributes.
+     @param fontAscent [out] The font ascent for this textDefinition.
      */
-    bool initWithString(const char *text, const FontDefinition& textDefinition);
+    bool initWithString(const char *text, const FontDefinition& textDefinition, float& fontAscent);
 
     /** Sets the min filter, mag filter, wrap s and wrap t texture parameters.
     If the texture size is NPOT (non power of 2), then in can only use GL_CLAMP_TO_EDGE in GL_TEXTURE_WRAP_{S,T}.

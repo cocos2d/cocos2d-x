@@ -240,7 +240,7 @@ public:
         return true;
     }
 
-    int drawText(const char * pszText, SIZE& tSize, Device::TextAlign eAlign)
+    int drawText(const char * pszText, SIZE& tSize, Device::TextAlign eAlign, float& fontAscent)
     {
         int nRet = 0;
         wchar_t * pwszBuffer = nullptr;
@@ -381,6 +381,10 @@ public:
                 nRet = DrawTextW(_DC, pwszBuffer, nLen, &rcText, dwFmt);
             }
 
+            TEXTMETRIC lptm;
+            GetTextMetrics(_DC, &lptm);
+            fontAscent = lptm.tmAscent;
+
             //DrawTextA(_DC, pszText, nLen, &rcText, dwFmt);
 
             SelectObject(_DC, hOldBmp);
@@ -431,7 +435,7 @@ static BitmapDC& sharedBitmapDC()
     return s_BmpDC;
 }
 
-Data Device::getTextureDataForText(const char * text, const FontDefinition& textDefinition, TextAlign align, int &width, int &height, bool& hasPremultipliedAlpha)
+Data Device::getTextureDataForText(const char * text, const FontDefinition& textDefinition, TextAlign align, int &width, int &height, bool& hasPremultipliedAlpha, float& fontAscent)
 {
     Data ret;
     do
@@ -446,7 +450,7 @@ Data Device::getTextureDataForText(const char * text, const FontDefinition& text
         // draw text
         // does changing to SIZE here affects the font size by rounding from float?
         SIZE size = {(LONG) textDefinition._dimensions.width,(LONG) textDefinition._dimensions.height};
-        CC_BREAK_IF(! dc.drawText(text, size, align));
+        CC_BREAK_IF(! dc.drawText(text, size, align, fontAscent));
 
         int dataLen = size.cx * size.cy * 4;
         unsigned char* dataBuf = (unsigned char*)malloc(sizeof(unsigned char) * dataLen);

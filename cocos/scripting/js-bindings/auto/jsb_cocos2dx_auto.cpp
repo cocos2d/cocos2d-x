@@ -392,7 +392,8 @@ bool js_cocos2dx_Texture2D_initWithString(JSContext *cx, uint32_t argc, jsval *v
             cocos2d::FontDefinition arg1;
             ok &= jsval_to_FontDefinition(cx, args.get(1), &arg1);
             if (!ok) { ok = true; break; }
-            bool ret = cobj->initWithString(arg0, arg1);
+            float fontAscent = 0;
+            bool ret = cobj->initWithString(arg0, arg1, fontAscent);
             jsval jsret = JSVAL_NULL;
             jsret = BOOLEAN_TO_JSVAL(ret);
             args.rval().set(jsret);
