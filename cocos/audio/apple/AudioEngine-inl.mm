@@ -67,7 +67,7 @@ void AudioEngineInterruptionListenerCallback(void* user_data, UInt32 interruptio
     else if (kAudioSessionEndInterruption == interruption_state)
     {
       OSStatus result = AudioSessionSetActive(true);
-      if (result) NSLog(@"Error setting audio session active! %d\n", result);
+      if (result) NSLog(@"Error setting audio session active! %d\n", static_cast<int>(result));
 
       alcMakeContextCurrent(s_ALContext);
     }
