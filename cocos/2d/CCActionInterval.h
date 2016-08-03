@@ -776,7 +776,7 @@ class  CC_DLL ResizeTo : public ActionInterval
 public:
     /**
     * Creates the action.
-    * @brief Resize a Node object to the final size by modifying it's Size attribute.
+    * @brief Resize a Node object to the final size by modifying it's Size attribute. Works on all nodes where setContentSize is effective. But it's mostly useful for nodes where 9-slice is enabled
     * @param duration Duration time, in seconds.
     * @param final_size The target size to reach
     * @return An autoreleased RotateTo object.
@@ -812,7 +812,7 @@ private:
 
 
 /** @class ResizeBy
-* @brief Resize a Node object by a Size.
+* @brief Resize a Node object by a Size. Works on all nodes where setContentSize is effective. But it's mostly useful for nodes where 9-slice is enabled
 */
 class CC_DLL ResizeBy : public ActionInterval 
 {

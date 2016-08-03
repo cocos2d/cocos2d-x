@@ -1505,7 +1505,7 @@ void ResizeTo::startWithTarget(cocos2d::Node* target)
 {
     ActionInterval::startWithTarget(target);
     _initialSize = target->getContentSize();
-    _sizeDelta = (_finalSize - _initialSize) / _duration;
+    _sizeDelta = _finalSize - _initialSize;
 
 }
 
@@ -1513,13 +1513,7 @@ void ResizeTo::update(float time)
 {
     if (_target)
     {
-        auto new_size = _initialSize + (_sizeDelta * time);
-        
-        if (new_size.width > _finalSize.width) // Avoid rounding errors, just set the final size!
-        {
-            new_size = _finalSize;
-        }
-        
+        auto new_size = _initialSize + (_sizeDelta * time); 
         _target->setContentSize(new_size);
     }
 }

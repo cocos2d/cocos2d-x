@@ -578,6 +578,15 @@ private:
     cocos2d::Vector<Node*> _pausedTargets;
 };
 
+class ActionResize : public ActionsDemo 
+{
+public:
+    CREATE_FUNC(ActionResize);
+
+    virtual void onEnter() override;
+    virtual std::string subtitle() const override;
+};
+
 class ActionFloatTest : public ActionsDemo
 {
 public:
