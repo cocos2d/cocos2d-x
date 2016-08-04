@@ -26,7 +26,7 @@
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-# Cocos2d-x 3.12 Release Notes #
+# Cocos2d-x 3.13 Release Notes #
 
 # Misc Information
 
@@ -47,9 +47,9 @@
 
 ## Compiler Requirements
 
-* Xcode 5.1 or newer for iOS or Mac
-* gcc 4.9 or newer for Linux
-* ndk-r11+ for Android
+* Xcode 7+ for iOS or Mac
+* gcc 4.9+ for Linux
+* ndk-r11+ and API level 19 for Android
 * Visual Studio 2013 or newer for Windows (win32)
 * Visual Studio 2013 update4 or newer for Windows 8.1 universal Apps
 * Visual Studio 2015 or newer and Windows 10.0 (build 10074 or higher) for Windows 10.0 UWP Apps
@@ -150,45 +150,54 @@ Use the __cocos__ console app to create a new game:
 cocos new -l cpp|js|lua MyNewGame
 ```
 
-# v3.12
+# v3.13
 
 ## Highlights
 
-* add VR support in experimental
-* add Tizen support
-* improve Android performance issue
-* improve web engine performance in WebGL mode
-* support Android obb extension
-* use clang instead of gcc on Android, use NDK r11+
+* add VR plugin
+* support ETC1 alpha channel
+* fix AudioEngine performance for Android 4.2+
+* add Andorid arm-64 support
+* switch to use gcc 4.9
+* upgrade CURL to 7.50.0
+* upgrade Spine to 3.4
+* update glfw to 3.2
 
-## The main features in detail of Cocos2d-x v3.12
+## The main features in detail of Cocos2d-x v3.13
 
-### VR support
-VR Support is now available! Currently there is support for __Google Cardboard__, __Oculus Rift__, __Samsung Gear__ and __Deepoon E2__. Also provided is a *generic* __VR__ renderer to help with testing. It should not be used to trust deploying a production __VR__ game. In usual Cocos2d-x fashion it is very easy to get started with an easy to understand API. Read our chapter in the [Programmers Guide](http://cocos2d-x.org/docs/programmers-guide/vr/index.html) for more information.
+### Add VR plugin
 
-### Tizen support
-You can now develop for the __Tizen__ mobile platform. The latest __2.4__ SDK is supported. Tizen development uses it's own uniqie IDE as well as a simulator for testing applications. For setup instructions please read our [documentation](http://cocos2d-x.org/docs/installation/Tizen/).
+TBD: add link of PG
 
-### Improve Android performance
+### Support ETC1 alpha channel
 
-Thank you to our users for helping diagnose performance issues on some Android devices. It is because Cocos2d-x creates a big map buffer by default and fills the map buffer with actual data, which is less than the map buffer size. On some Android devices, it will transfer as much data as the map buffer size which causes performance issue.
+Thanks [halx99](https://github.com/halx99)'s contribution, now cocos2d-x supports ETC1 alpha channel by default.
 
-More detail information and discussion can refer to [the issue](https://github.com/cocos2d/cocos2d-x/issues/15652).
+If want to use ETC1 alpha chaneel, you should put `xxx.pkm` and `xxx.pkm@alpha` in the same folder, and use it like this:
 
-### Improve web engine performance in WebGL mode
+```c++
+auto sprite = Sprite::create("xxx.pkm");
+```
 
-The web engine is receiving a big performance upgrade. The WebGL renderer have been completely refactored from the ground up. This means improved rendering and a reduced memory footprint.
+`xxx.pkm@alpha` is the resource for alpha channel. `@alpha` subfix is required by engine to load alpha texture automatically.
 
-![rendering performance](https://raw.githubusercontent.com/minggo/Pictures/master/web-performance-improve/adverage-time-per-frame.png)
+More detail usage can refer to the implementation of `Sprite1ETC1Alpha` in `tests/cpp-tests/Classes/SpriteTest/SpriteTest.cpp`.
 
-![cpu-usage](https://raw.githubusercontent.com/minggo/Pictures/master/web-performance-improve/cpu-usage.png)
+### AudioEngine performance for Android 4.2+
 
-![memory-usage](https://raw.githubusercontent.com/minggo/Pictures/master/web-performance-improve/memory-usage.png)
+AudioEngine uses [OpenSL ES](https://developer.android.com/ndk/guides/audio/opensl-for-android.html) on Android, and it supports decoding audio source file to PCM data in codes since Android 4.2. Now AudioEngine uses this feature to fix the performance issue. The performane is the same as before if running on Android 4.1 or lower version.
 
-### Use clang on Android
-[Google deprecated gcc starting in NDK r11](https://developer.android.com/ndk/downloads/revision_history.html), Cocos2d-x now uses clang. We suggest using the NDK r11c.
+### Android arm-64 support
 
-We found an issue that, if using NDKr 10c + clang, then `Node::enumerateChildren()` will crash on Android.
+Now we provide arm-64 bit 3rd party libraries, which means can build 64-bit apps on Android. You can use the command to build 64-bit apps:
+```
+cocos run -p android --app-abi arm64-v8a
+```
 
-## Other changes
-View our [full changelog](https://github.com/cocos2d/cocos2d-x/blob/v3/CHANGELOG).
+### Switch to use gcc 4.9
+
+cocos2d-x switch to use clang in `v3.12`, but developers reported [some crash issue](https://github.com/cocos2d/cocos2d-x/issues/16244) that caused by using `clang+gnustl_static`, so we switch to use gcc 4.9. We will change to use `clang+c++_static` when `c++_static` is stable.
+
+### Upgrade CURL to 7.50.0
+
+Because CURL has [a bug about connect to IPV4 numerical IP address in NAT64 environment](https://github.com/curl/curl/issues/863), and it is fixed in v7.50.0, so we upgrade to this version when v7.50.0 is released.
