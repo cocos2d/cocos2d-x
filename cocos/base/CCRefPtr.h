@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2014      PlayFirst Inc.
- Copyright (c) 2014-2015 Chukong Technologies Inc.
+ Copyright (c) 2014-2016 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
