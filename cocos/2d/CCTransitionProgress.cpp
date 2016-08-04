@@ -2,7 +2,7 @@
 Copyright (c) 2009      Lam Pham
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2012      Ricardo Quesada
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
