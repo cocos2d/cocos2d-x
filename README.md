@@ -13,7 +13,7 @@ cocos2d-x
 
 [cocos2d-x][1] is a multi-platform framework for building 2d games, interactive books, demos and other graphical applications.
 It is based on [cocos2d-iphone][2], but instead of using Objective-C, it uses C++.
-It works on iOS, Android, Windows Phone and Store Apps, OS X, Tizen, Windows, Linux and Web platforms.
+It works on iOS, Android, Tizen, Windows Phone and Store Apps, OS X, Windows, Linux and Web platforms.
 
 **Cocos2d-x Framework Architecture**:
 
@@ -76,6 +76,13 @@ You can also create a JS project or Lua project with `-l js` or `-l lua`.
 ### Build and run a new project for OSX ###
 
     $ cocos run -p mac
+
+### Build and run a new project for Tizen ###
+
+The cocos command line tools doesn't support Tizen yet, you have to use Tizen IDE to do the build.
+
+Please refer to this [guide](http://cocos2d-x.org/docs/installation/Tizen/index.html ).
+
 
 ### Build and run a new project for Linux ###
 
@@ -175,6 +182,7 @@ Build Requirements
 * or Windows 7+, VS 2013+
 * Python 2.7.5
 * NDK r11+ is required to build Android games
+* Tizen SDK 2.3+ is required to build Tizen games
 * Windows Phone/Store 8.1 VS 2013 Update 4+ or VS 2015
 * Windows Phone/Store 10.0 VS 2015
 * JRE or JDK 1.6+ is required for web publishing
@@ -183,6 +191,7 @@ Runtime Requirements
 --------------------
   * iOS 7.0+ for iPhone / iPad games
   * Android 2.3.3+ for Android games
+  * Tizen 2.3+ or 2.4+ for Tizen games
   * Windows 8.1 or Windows 10.0 for Windows Phone/Store 8.1 games
   * Windows 10.0 for Windows Phone/Store 10.0  games
   * OS X v10.9+ for Mac games
@@ -257,6 +266,10 @@ $ adb install ../tests/cpp-empty-test/proj.android/bin/CppEmptyTest-debug.apk
 ```
 
 Then click item on Android device to run tests. Available value of `-p` is the API level, cocos2d-x supports from level 10.
+
+* For Tizen
+
+Please refer to this [guide](http://cocos2d-x.org/docs/installation/Tizen/index.html ).
 
 Learning Resources
 --------------------------------
