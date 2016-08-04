@@ -425,6 +425,7 @@ protected:
     ccPageViewCallback _eventCallback;
     float _autoScrollStopEpsilon;
     ssize_t _previousPageIndex;
+    bool _isTouchBegin;
 };
 
 }

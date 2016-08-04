@@ -40,7 +40,8 @@ _pageViewEventListener(nullptr),
 _pageViewEventSelector(nullptr),
 _eventCallback(nullptr),
 _autoScrollStopEpsilon(0.001f),
-_previousPageIndex(-1)
+_previousPageIndex(-1),
+_isTouchBegin(false)
 {
 }
 
@@ -223,7 +224,10 @@ void PageView::refreshIndicatorPosition()
 void PageView::handlePressLogic(Touch *touch)
 {
     ListView::handlePressLogic(touch);
-    _previousPageIndex = _currentPageIndex;
+    if (!_isTouchBegin) {
+        _previousPageIndex = _currentPageIndex;
+        _isTouchBegin = true;
+    }
 }
 
 void PageView::handleReleaseLogic(Touch *touch)
@@ -306,6 +310,7 @@ void PageView::pageTurningEvent()
     {
         _ccEventCallback(this, static_cast<int>(EventType::TURNING));
     }
+    _isTouchBegin = false;
     this->release();
 }
     
@@ -382,6 +387,7 @@ void PageView::copySpecialProperties(Widget *widget)
         _childFocusCancelOffset = pageView->_childFocusCancelOffset;
         _autoScrollStopEpsilon = pageView->_autoScrollStopEpsilon;
         _indicatorPositionAsAnchorPoint = pageView->_indicatorPositionAsAnchorPoint;
+        _isTouchBegin = pageView->_isTouchBegin;
     }
 }
 
