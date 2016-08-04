@@ -88,13 +88,13 @@ void MciPlayer::Open(const char* pFileName, UINT uId)
         MCI_OPEN_PARMS mciOpen = {0};
         MCIERROR mciError;
         mciOpen.lpstrDeviceType = (LPCTSTR)MCI_ALL_DEVICE_ID;
-		WCHAR* fileNameWideChar = new WCHAR[nLen + 1];
-		BREAK_IF(! fileNameWideChar);
-		MultiByteToWideChar(CP_ACP, 0, pFileName, nLen + 1, fileNameWideChar, nLen + 1);
+        WCHAR* fileNameWideChar = new WCHAR[nLen + 1];
+        BREAK_IF(! fileNameWideChar);
+        MultiByteToWideChar(CP_ACP, 0, pFileName, nLen + 1, fileNameWideChar, nLen + 1);
         mciOpen.lpstrElementName = fileNameWideChar;
 
         mciError = mciSendCommand(0,MCI_OPEN, MCI_OPEN_ELEMENT, reinterpret_cast<DWORD_PTR>(&mciOpen));
-		CC_SAFE_DELETE_ARRAY(mciOpen.lpstrElementName);
+        CC_SAFE_DELETE_ARRAY(mciOpen.lpstrElementName);
         BREAK_IF(mciError);
 
         _dev = mciOpen.wDeviceID;
