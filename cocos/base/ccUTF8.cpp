@@ -14,7 +14,7 @@
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS ORgetStringUTFCharsJNI
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
@@ -230,22 +230,31 @@ bool UTF32ToUTF16(const std::u32string& utf32, std::u16string& outUtf16)
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) 
 std::string getStringUTFCharsJNI(JNIEnv* env, jstring srcjStr, bool* ret)
 {
-    std::string utf8Str;
-    const unsigned short * unicodeChar = ( const unsigned short *)env->GetStringChars(srcjStr, nullptr);
-    size_t unicodeCharLength = env->GetStringLength(srcjStr);
-    const std::u16string unicodeStr((const char16_t *)unicodeChar, unicodeCharLength);
-    bool flag = UTF16ToUTF8(unicodeStr, utf8Str);
-
-    if (ret)
+std::string utf8Str;
+    if(srcjStr != nullptr)
     {
-        *ret = flag;
+        const unsigned short * unicodeChar = ( const unsigned short *)env->GetStringChars(srcjStr, nullptr);
+        size_t unicodeCharLength = env->GetStringLength(srcjStr);
+        const std::u16string unicodeStr((const char16_t *)unicodeChar, unicodeCharLength);
+        bool flag = UTF16ToUTF8(unicodeStr, utf8Str);
+        if (ret)
+        {
+            *ret = flag;
+        }
+        if (!flag)
+        {
+            utf8Str = "";
+        }
+        env->ReleaseStringChars(srcjStr, unicodeChar);
     }
-
-    if (!flag)
+    else
     {
+        if (ret)
+        {
+            *ret = false;
+        }
         utf8Str = "";
     }
-    env->ReleaseStringChars(srcjStr, unicodeChar);
     return utf8Str;
 }
 
