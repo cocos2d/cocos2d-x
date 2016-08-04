@@ -245,10 +245,10 @@ std::string Application::getVersion()
                         // Doesn't matter if you are on 32 bit or 64 bit,
                         // DWORD is always 32 bits, so first two revision numbers
                         // come from dwFileVersionMS, last two come from dwFileVersionLS
-                        sprintf(verString, "%d.%d.%d.%d", (verInfo->dwFileVersionMS >> 16) & 0xffff,
-                                (verInfo->dwFileVersionMS >> 0) & 0xffff,
-                                (verInfo->dwFileVersionLS >> 16) & 0xffff,
-                                (verInfo->dwFileVersionLS >> 0) & 0xffff
+                        sprintf(verString, "%d.%d.%d", (verInfo->dwProductVersionMS >> 16) & 0xffff,
+                                (verInfo->dwProductVersionMS >> 0) & 0xffff,
+                                (verInfo->dwProductVersionLS >> 16) & 0xffff,
+                                (verInfo->dwProductVersionLS >> 0) & 0xffff
                                 );
                     }
                 }
@@ -257,6 +257,11 @@ std::string Application::getVersion()
         delete[] verData;
     }
     return verString;
+}
+
+std::string Application::getBuildVersion()
+{
+    return "";
 }
 
 bool Application::openURL(const std::string &url)

@@ -73,7 +73,15 @@ public:
     /* override functions */
     virtual LanguageType getCurrentLanguage() override;
 
-    std::string getVersion() override;
+    /**
+    @brief Get application version
+    */
+    virtual std::string getVersion() override;
+    
+    /**
+    @brief Get application build version.
+    */
+    virtual std::string getBuildVersion() override;
 
     /**
     @brief Get current language iso 639-1 code

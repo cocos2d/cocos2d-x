@@ -327,6 +327,15 @@ public class Cocos2dxHelper {
  			return "";
  		}
  	}
+ 	
+ 	 public static String getBuildVersion() {
+ 		try {
+ 			String version = Integer.toString(Cocos2dxActivity.getContext().getPackageManager().getPackageInfo(Cocos2dxActivity.getContext().getPackageName(), 0).versionCode);
+ 			return version;
+ 		} catch(Exception e) {
+ 			return "";
+ 		}
+ 	}
 
     public static boolean openURL(String url) { 
         boolean ret = false;

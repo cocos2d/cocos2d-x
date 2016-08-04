@@ -592,6 +592,12 @@ std::string Application::getVersion()
     return "";
 }
 
+std::string Application::getBuildVersion()
+{
+    //TODO
+    return "";
+}
+
 LanguageType Application::getCurrentLanguage()
 {
     char *pLanguageName = getenv("LANG");

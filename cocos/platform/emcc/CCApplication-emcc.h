@@ -83,6 +83,11 @@ public:
      */
     virtual std::string getVersion() override;
     
+    /**
+     @brief Get application build version.
+     */
+    virtual std::string getBuildVersion() override;
+    
     
     /**
      *  Sets the Resource root path.
@@ -128,6 +133,7 @@ protected:
     
     static Application * sm_pSharedApplication;
     static std::string _appVersion;
+    static std::string _appBuildVersion;
 };
 
 NS_CC_END

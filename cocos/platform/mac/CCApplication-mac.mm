@@ -126,6 +126,14 @@ std::string Application::getVersion() {
     return "";
 }
 
+std::string Application::getBuildVersion() {
+    NSString* version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
+    if (version) {
+        return [version UTF8String];
+    }
+    return "";
+}
+
 /////////////////////////////////////////////////////////////////////////////////////////////////
 // static member function
 //////////////////////////////////////////////////////////////////////////////////////////////////

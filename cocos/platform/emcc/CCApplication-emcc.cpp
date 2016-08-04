@@ -49,6 +49,7 @@ NS_CC_BEGIN
 // sharedApplication pointer
 Application * Application::sm_pSharedApplication = 0;
 std::string Application::_appVersion;
+std::string Application::_appBuildVersion;
 
 static bool useBackgroundLoop = false;
 static bool useMainLoopTiming = true;
@@ -237,9 +238,19 @@ std::string Application::getVersion()
     return _appVersion;
 }
 
+std::string Application::getBuildVersion()
+{
+    return _appBuildVersion;
+}
+
 void Application::setAppVersion(const std::string &version)
 {
     _appVersion = version;
+}
+
+void Application::setAppBuildVersion(const std::string &version)
+{
+    _appBuildVersion = version;
 }
 
 void Application::setResourceRootPath(const std::string& rootResDir)

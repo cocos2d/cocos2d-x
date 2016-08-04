@@ -245,6 +245,11 @@ std::string  Application::getVersion()
     return r;
 }
 
+std::string Application::getBuildVersion()
+{
+    return "";
+}
+
 bool Application::openURL(const std::string &url)
 {
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
