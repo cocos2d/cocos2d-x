@@ -133,9 +133,24 @@ bool AudioDecoder::start()
     bool ret;
     do
     {
-        ret = decodeToPcm(); if (!ret) break;
-        ret = resample(); if (!ret) break;
-        ret = interleave(); if (!ret) break;
+        ret = decodeToPcm();
+        if (!ret) 
+        {
+            ALOGE("decodeToPcm (%s) failed!", _url.c_str());
+            break;
+        }
+        ret = resample();
+        if (!ret) 
+        {
+            ALOGE("resample (%s) failed!", _url.c_str());
+            break;
+        }
+        ret = interleave();
+        if (!ret) 
+        {
+            ALOGE("interleave (%s) failed!", _url.c_str());
+            break;
+        }
 
         auto nowTime = clockNow();
 
@@ -143,6 +158,8 @@ bool AudioDecoder::start()
               intervalInMS(oldTime, nowTime));
 
     } while(false);
+
+    ALOGV_IF(!ret, "%s returns false, decode (%s)", __FUNCTION__, _url.c_str());
     return ret;
 }
 
