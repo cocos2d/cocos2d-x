@@ -1,7 +1,7 @@
 /****************************************************************************
 Copyright (c) 2007      Scott Lembcke
 Copyright (c) 2010-2012 cocos2d-x.org
-CopyRight (c) 2013-2014 Chukong Technologies Inc.
+CopyRight (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
