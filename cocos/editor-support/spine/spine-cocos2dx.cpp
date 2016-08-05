@@ -62,7 +62,6 @@ GLuint filter (spAtlasFilter filter) {
 
 void _spAtlasPage_createTexture (spAtlasPage* self, const char* path) {
 	Texture2D* texture = Director::getInstance()->getTextureCache()->addImage(path);
-	CCASSERT(texture != nullptr, "Invalid image");
 	texture->retain();
 
 	Texture2D::TexParams textureParams = {filter(self->minFilter), filter(self->magFilter), wrap(self->uWrap), wrap(self->vWrap)};
@@ -78,12 +77,11 @@ void _spAtlasPage_disposeTexture (spAtlasPage* self) {
 }
 
 char* _spUtil_readFile (const char* path, int* length) {
-	Data data = FileUtils::getInstance()->getDataFromFile(FileUtils::getInstance()->fullPathForFilename(path));
-	if (data.isNull()) return 0;
-
-	// avoid buffer overflow (int is shorter than ssize_t in certain platforms)
-	ssize_t tmpLen;
-	char *ret = (char*)data.takeBuffer(&tmpLen);
-	*length = static_cast<int>(tmpLen);
-	return ret;
+	Data data = FileUtils::getInstance()->getDataFromFile(
+			FileUtils::getInstance()->fullPathForFilename(path).c_str());
+    if (data.isNull()) return 0;
+	*length = static_cast<int>(data.getSize());
+	char* bytes = MALLOC(char, *length);
+	memcpy(bytes, data.getBytes(), *length);
+	return bytes;
 }
