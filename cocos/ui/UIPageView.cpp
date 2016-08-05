@@ -225,6 +225,7 @@ void PageView::handlePressLogic(Touch *touch)
 {
     ListView::handlePressLogic(touch);
     if (!_isTouchBegin) {
+        _currentPageIndex = getIndex(getCenterItemInCurrentView());
         _previousPageIndex = _currentPageIndex;
         _isTouchBegin = true;
     }
