@@ -82,8 +82,15 @@ char* _spUtil_readFile (const char* path, int* length) {
 	if (data.isNull()) return 0;
 
 	// avoid buffer overflow (int is shorter than ssize_t in certain platforms)
+#if COCOS2D_VERSION >= 0x00031200
 	ssize_t tmpLen;
 	char *ret = (char*)data.takeBuffer(&tmpLen);
 	*length = static_cast<int>(tmpLen);
 	return ret;
+#else
+    *length = static_cast<int>(data.getSize());
+    char* bytes = MALLOC(char, *length);
+    memcpy(bytes, data.getBytes(), *length);
+    return bytes;
+#endif
 }
