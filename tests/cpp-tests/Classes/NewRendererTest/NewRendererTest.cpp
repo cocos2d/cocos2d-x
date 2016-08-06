@@ -626,20 +626,23 @@ RendererUniformBatch::RendererUniformBatch()
     auto glBlurState = createBlurGLProgramState();
     auto glSepiaState = createSepiaGLProgramState();
 
-    for (int i=0; i<100; i++)
+    auto x_inc = s.width / 20;
+    auto y_inc = s.height / 6;
+
+    for (int y=0; y<6; ++y)
     {
-        int x = CCRANDOM_0_1() * s.width;
-        int y = CCRANDOM_0_1() * s.height;
+        for (int x=0; x<20; ++x)
+        {
+            auto sprite = Sprite::create("Images/grossini.png");
+            sprite->setPosition(Vec2(x * x_inc, y * y_inc));
+            sprite->setScale(0.4);
+            addChild(sprite);
 
-        auto sprite = Sprite::create("Images/grossini.png");
-        sprite->setPosition(Vec2(x,y));
-        sprite->setScale(0.4);
-        addChild(sprite);
-
-        if (i>66) {
-            sprite->setGLProgramState(glSepiaState);
-        } else if(i>33) {
-            sprite->setGLProgramState(glBlurState);
+            if (y>=4) {
+                sprite->setGLProgramState(glSepiaState);
+            } else if(y>=2) {
+                sprite->setGLProgramState(glBlurState);
+            }
         }
     }
 }
@@ -703,21 +706,24 @@ RendererUniformBatch2::RendererUniformBatch2()
     auto glBlurState = createBlurGLProgramState();
     auto glSepiaState = createSepiaGLProgramState();
 
-    for (int i=0; i<100; i++)
+    auto x_inc = s.width / 20;
+    auto y_inc = s.height / 6;
+
+    for (int y=0; y<6; ++y)
     {
-        int x = CCRANDOM_0_1() * s.width;
-        int y = CCRANDOM_0_1() * s.height;
+        for (int x=0; x<20; ++x)
+        {
+            auto sprite = Sprite::create("Images/grossini.png");
+            sprite->setPosition(Vec2(x * x_inc, y * y_inc));
+            sprite->setScale(0.4);
+            addChild(sprite);
 
-        auto sprite = Sprite::create("Images/grossini.png");
-        sprite->setPosition(Vec2(x,y));
-        sprite->setScale(0.4);
-        addChild(sprite);
-
-        auto r = CCRANDOM_0_1();
-        if (r < 0.33)
-            sprite->setGLProgramState(glSepiaState);
-        else if (r < 0.66)
-            sprite->setGLProgramState(glBlurState);
+            auto r = CCRANDOM_0_1();
+            if (r < 0.33)
+                sprite->setGLProgramState(glSepiaState);
+            else if (r < 0.66)
+                sprite->setGLProgramState(glBlurState);
+        }
     }
 }
 
