@@ -105,8 +105,6 @@ protected:
     GLuint _textureID;
     /**GLprogramstate for the command. encapsulate shaders and uniforms.*/
     GLProgramState* _glProgramState;
-    /**The GLProgram used by GLProgramState*/
-    GLProgram* _glProgram;
     /**Blend function when rendering the triangles.*/
     BlendFunc _blendType;
     /**Rendered triangles.*/
