@@ -981,6 +981,15 @@ void Director::reset()
         _eventDispatcher->removeAllEventListeners();
     }
     
+    if(_notificationNode)
+    {
+        _notificationNode->onExit();
+        _notificationNode->cleanup();
+        _notificationNode->release();
+    }
+    
+    _notificationNode = nullptr;
+    
     // remove all objects, but don't release it.
     // runWithScene might be executed after 'end'.
 #if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
