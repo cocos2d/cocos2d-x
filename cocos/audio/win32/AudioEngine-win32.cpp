@@ -25,7 +25,7 @@
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 
-#include "AudioEngine-win32.h"
+#include "audio/win32/AudioEngine-win32.h"
 
 #ifdef OPENAL_PLAIN_INCLUDES
 #include "alc.h"
@@ -120,28 +120,34 @@ AudioCache* AudioEngineImpl::preload(const std::string& filePath, std::function<
             break;
         }
 
-        auto ext = strchr(filePath.c_str(), '.');
         AudioCache::FileFormat fileFormat = AudioCache::FileFormat::UNKNOWN;
 
-        if (_stricmp(ext, ".ogg") == 0){
+        std::string fileExtension = FileUtils::getInstance()->getFileExtension(filePath);
+        if (fileExtension == ".ogg")
+        {
             fileFormat = AudioCache::FileFormat::OGG;
         }
-        else if (_stricmp(ext, ".mp3") == 0){
+        else if (fileExtension == ".mp3")
+        {
             fileFormat = AudioCache::FileFormat::MP3;
 
-            if (MPG123_LAZYINIT){
+            if (MPG123_LAZYINIT)
+            {
                 auto error = mpg123_init();
-                if (error == MPG123_OK){
+                if (error == MPG123_OK)
+                {
                     MPG123_LAZYINIT = false;
                 }
-                else{
+                else
+                {
                     log("Basic setup goes wrong: %s", mpg123_plain_strerror(error));
                     break;
                 }
             }
         }
-        else{
-            log("unsupported media type:%s\n", ext);
+        else
+        {
+            log("Unsupported media type file: %s\n", filePath.c_str());
             break;
         }
 
@@ -316,6 +322,7 @@ bool AudioEngineImpl::stop(int audioID)
     _alSourceUsed[player._alSource] = false;
     if (player._streamingSource)
     {
+        player._ready = false;
         player.notifyExitThread();
     } 
     else
@@ -340,6 +347,7 @@ void AudioEngineImpl::stopAll()
         auto& player = it->second;
         if (player._streamingSource)
         {
+            player._ready = false;
             player.notifyExitThread();
             ++it;
         }
@@ -451,7 +459,7 @@ void AudioEngineImpl::update(float dt)
         auto& player = it->second;
         alGetSourcei(player._alSource, AL_SOURCE_STATE, &sourceState);
         
-        if (player._readForRemove)
+        if (player._readForRemove && !player._ready)
         {
             it = _audioPlayers.erase(it);
         }
@@ -466,6 +474,7 @@ void AudioEngineImpl::update(float dt)
             
             if (player._streamingSource)
             {
+                player._ready = false;
                 player.notifyExitThread();
                 ++it;
             } 

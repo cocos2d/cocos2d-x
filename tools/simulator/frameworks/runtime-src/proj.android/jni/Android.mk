@@ -6,14 +6,10 @@ LOCAL_MODULE := cocos2dlua_shared
 
 LOCAL_MODULE_FILENAME := libcocos2dlua
 
-ifeq ($(COCOS_SIMULATOR_BUILD),1)
 LOCAL_ARM_MODE := arm
-endif
 
 FILE_LIST := hellolua/main.cpp
 FILE_LIST += $(wildcard $(LOCAL_PATH)/../../Classes/*.cpp)
-FILE_LIST += $(wildcard $(LOCAL_PATH)/../../Classes/ide-support/*.cpp)
-FILE_LIST += $(wildcard $(LOCAL_PATH)/../../Classes/ide-support/*.c)
 
 LOCAL_SRC_FILES := $(FILE_LIST:$(LOCAL_PATH)/%=%)
 

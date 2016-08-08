@@ -22,13 +22,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "tinyxml2/tinyxml2.h"
+#include "tinyxml2.h"
 #include "flatbuffers/flatbuffers.h"
-#include "cocostudio/WidgetReader/SkeletonReader/CSBoneBinary_generated.h"
-#include "cocostudio/WidgetReader/NodeReader/NodeReader.h"
-#include "cocostudio/CSParseBinary_generated.h"
-#include "cocostudio/WidgetReader/SkeletonReader/SkeletonNodeReader.h"
-#include "cocostudio/ActionTimeline/CCSkeletonNode.h"
+#include "editor-support/cocostudio/WidgetReader/SkeletonReader/CSBoneBinary_generated.h"
+#include "editor-support/cocostudio/WidgetReader/NodeReader/NodeReader.h"
+#include "editor-support/cocostudio/CSParseBinary_generated.h"
+#include "editor-support/cocostudio/WidgetReader/SkeletonReader/SkeletonNodeReader.h"
+#include "editor-support/cocostudio/ActionTimeline/CCSkeletonNode.h"
 
 USING_NS_CC;
 USING_NS_TIMELINE;

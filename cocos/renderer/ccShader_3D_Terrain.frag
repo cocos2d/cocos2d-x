@@ -1,13 +1,18 @@
 
 const char* cc3D_Terrain_frag = STRINGIFY(
 \n#ifdef GL_ES\n
-precision lowp float;
+precision mediump float;
 \n#endif\n
 uniform vec3 u_color;\n
 varying vec2 v_texCoord;\n
 varying vec3 v_normal;\n
+\n#ifdef GL_ES\n
+uniform lowp int u_has_alpha;\n
+uniform lowp int u_has_light_map;\n
+\n#else\n
 uniform int u_has_alpha;\n
 uniform int u_has_light_map;\n
+\n#endif\n
 uniform sampler2D u_alphaMap;\n
 uniform sampler2D u_texture0;\n
 uniform sampler2D u_texture1;\n

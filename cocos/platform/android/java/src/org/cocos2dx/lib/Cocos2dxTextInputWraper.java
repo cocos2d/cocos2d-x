@@ -26,6 +26,7 @@ package org.cocos2dx.lib;
 import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
@@ -78,39 +79,31 @@ public class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListe
         if (this.isFullScreenEdit()) {
             return;
         }
-
-        //if (BuildConfig.DEBUG) {
-            //Log.d(TAG, "afterTextChanged: " + s);
-        //}
-        int nModified = s.length() - this.mText.length();
-        if (nModified > 0) {
-            final String insertText = s.subSequence(this.mText.length(), s.length()).toString();
-            this.mCocos2dxGLSurfaceView.insertText(insertText);
-            /*
-            if (BuildConfig.DEBUG) {
-                Log.d(TAG, "insertText(" + insertText + ")");
+        int old_i = 0;
+        int new_i = 0;
+        while (old_i < this.mText.length() && new_i < s.length()) {
+            if (this.mText.charAt(old_i) != s.charAt(new_i)) {
+                break;
             }
-            */
-        } else {
-            for (; nModified < 0; ++nModified) {
-                this.mCocos2dxGLSurfaceView.deleteBackward();
-                /*
-                if (BuildConfig.DEBUG) {
-                    Log.d(TAG, "deleteBackward");
-                }
-                */
-            }
+            old_i += 1;
+            new_i += 1;
         }
+
+        for (; old_i < this.mText.length(); ++old_i) {
+            this.mCocos2dxGLSurfaceView.deleteBackward();
+        }
+
+        int nModified = s.length() - new_i;
+        if (nModified > 0) {
+            final String insertText = s.subSequence(new_i, s.length()).toString();
+            this.mCocos2dxGLSurfaceView.insertText(insertText);
+        }
+
         this.mText = s.toString();
     }
 
     @Override
     public void beforeTextChanged(final CharSequence pCharSequence, final int start, final int count, final int after) {
-        /*
-        if (BuildConfig.DEBUG) {
-            Log.d(TAG, "beforeTextChanged(" + pCharSequence + ")start: " + start + ",count: " + count + ",after: " + after);
-        }
-        */
         this.mText = pCharSequence.toString();
     }
 
@@ -126,11 +119,6 @@ public class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListe
             if (null != mOriginText) {
                 for (int i = this.mOriginText.length(); i > 0; i--) {
                     this.mCocos2dxGLSurfaceView.deleteBackward();
-                    /*
-                    if (BuildConfig.DEBUG) {
-                        Log.d(TAG, "deleteBackward");
-                    }
-                    */
                 }
             }
             
@@ -149,11 +137,7 @@ public class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListe
             
             final String insertText = text;
             this.mCocos2dxGLSurfaceView.insertText(insertText);
-            /*
-            if (BuildConfig.DEBUG) {
-                Log.d(TAG, "insertText(" + insertText + ")");
-            }
-            */
+
         }
         
         if (pActionID == EditorInfo.IME_ACTION_DONE) {
@@ -162,11 +146,4 @@ public class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListe
         return false;
     }
 
-    // ===========================================================
-    // Methods
-    // ===========================================================
-
-    // ===========================================================
-    // Inner and Anonymous Classes
-    // ===========================================================
 }

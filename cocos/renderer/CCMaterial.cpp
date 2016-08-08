@@ -105,10 +105,6 @@ bool Material::initWithGLProgramState(cocos2d::GLProgramState *state)
 
 bool Material::initWithFile(const std::string& validfilename)
 {
-    Data data = FileUtils::getInstance()->getDataFromFile(validfilename);
-    char* bytes = (char*)data.getBytes();
-    bytes[data.getSize()-1]='\0';
-
     // Warning: properties is not a "Ref" object, must be manually deleted
     Properties* properties = Properties::createNonRefCounted(validfilename);
 
@@ -442,6 +438,7 @@ Material* Material::clone() const
         for (const auto& technique: _techniques)
         {
             auto t = technique->clone();
+            t->_parent = material;
             material->_techniques.pushBack(t);
         }
 

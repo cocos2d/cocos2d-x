@@ -108,6 +108,9 @@ public:
 
     virtual void onEnter() override;
     virtual std::string subtitle() const override;
+    void parsingTesting(unsigned int count);
+protected:
+    unsigned int _maxParsingCoumt;
 };
 
 class Material_invalidate : public MaterialSystemBaseTest

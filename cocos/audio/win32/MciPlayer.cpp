@@ -1,5 +1,6 @@
-#include "MciPlayer.h"
+#include "audio/win32/MciPlayer.h"
 #include <tchar.h>
+#include "platform/CCFileUtils.h"
 
 #define WIN_CLASS_NAME        "CocosDenshionCallbackWnd"
 #define BREAK_IF(cond)      if (cond) break;
@@ -79,10 +80,8 @@ void MciPlayer::Open(const char* pFileName, UINT uId)
 //         pBuf = new WCHAR[nLen + 1];
 //         BREAK_IF(! pBuf);
 //         MultiByteToWideChar(CP_ACP, 0, pFileName, nLen + 1, pBuf, nLen + 1);
-        
-        std::string strFile(pFileName);
-        int nPos = strFile.rfind(".") + 1;
-        strExt = strFile.substr(nPos, strFile.length() - nPos);
+
+        strExt = cocos2d::FileUtils::getInstance()->getFileExtension(pFileName);
 
         Close();
 
@@ -137,13 +136,14 @@ void MciPlayer::Close()
 void MciPlayer::Pause()
 {
     _SendGenericCommand(MCI_PAUSE);
+    _playing = false;
 }
 
 void MciPlayer::Resume()
 {
-    if (strExt == "mid" || strExt == "MID")
+    if (strExt == ".mid")
     {
-        // midi not supprt MCI_RESUME, should get the position and use MCI_FROM
+        // midi not support MCI_RESUME, should get the position and use MCI_FROM
         MCI_STATUS_PARMS mciStatusParms;
         MCI_PLAY_PARMS   mciPlayParms;  
         mciStatusParms.dwItem = MCI_STATUS_POSITION;   
@@ -154,6 +154,7 @@ void MciPlayer::Resume()
     else
     {
         _SendGenericCommand(MCI_RESUME);
+        _playing = true;
     }   
 }
 

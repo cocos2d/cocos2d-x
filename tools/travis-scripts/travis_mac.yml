@@ -16,4 +16,4 @@ notifications:
 # whitelist
 branches:
   only:
-    - v3
+    - v3.8

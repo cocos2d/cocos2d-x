@@ -72,6 +72,71 @@ var fileUtilsBase = BaseTestLayer.extend({
 
 });
 
+var TestWriteData = fileUtilsBase.extend({
+    _title:"fileUtils: TestWriteData(Binary) to files",
+    ctor:function() {
+        this._super();
+
+        var winSize = cc.winSize;
+
+        var writeResult = new cc.LabelTTF("", "Arial", 18);
+        this.addChild(writeResult);
+        writeResult.setPosition(winSize.width / 2, winSize.height * 3 / 4);
+
+        var readResult = new cc.LabelTTF("", "Arial", 18);
+        this.addChild(readResult);
+        readResult.setPosition(winSize.width / 2, winSize.height  / 3);
+
+        var writablePath = jsb.fileUtils.getWritablePath();
+        writablePath += "cocos/fileUtilTest/";
+        var fileName = "writeDataTest.bin";
+        var fullPath = writablePath + fileName;
+
+        // writeTest
+        var writeData = new Uint8Array(8);
+        for(var i = 0; i < writeData.length; i ++) {
+            writeData[i] = i;
+        }
+        jsb.fileUtils.createDirectory(writablePath);
+        if (jsb.fileUtils.writeDataToFile(writeData, fullPath))
+        {
+            log("see the file at %s", fullPath);
+            writeResult.setString("write success:\n" + fullPath);
+        }
+        else
+        {
+            log("write file failed");
+            writeResult.setString("write fail");
+        }
+
+        // readTest
+        var readData = jsb.fileUtils.getDataFromFile(fullPath);
+        if(!readData || typeof readData != typeof writeData) {
+            log("read file failed");
+            readResult.setString("read failed");
+        } else {
+            var match = true;
+            if(readData.length != writeData.length){
+                log("data size not match");
+                match = false;
+            } else {
+                for(var i = 0; i < readData.length; i ++) {
+                    if(readData[i] != writeData[i]) {
+                        log("data not match");
+                        match = false;
+                        break;
+                    }
+                }
+            }
+            if(!match) {
+                readResult.setString("read success, but data not correct");
+            } else {
+                readResult.setString("read test success");
+            }
+        }
+    },
+});
+
 var TestWriteString = fileUtilsBase.extend({
     _title:"fileUtils: TestWriteString to files",
     ctor:function() {
@@ -301,6 +366,7 @@ var TestWriteValueVector = fileUtilsBase.extend({
     },
 });
 var arrayOffileUtils = [
+    TestWriteData,
     TestWriteString,
     TestWriteValueMap,
     TestWriteValueVector

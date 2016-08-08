@@ -11,6 +11,8 @@ UITextTests::UITextTests()
     ADD_TEST_CASE(UILabelTest_Effect);
     ADD_TEST_CASE(UITextTest_TTF);
     ADD_TEST_CASE(UITextTest_IgnoreConentSize);
+    ADD_TEST_CASE(UITextTest_Clone);
+    ADD_TEST_CASE(Issue16073Test);
 }
 
 // UITextTest
@@ -263,3 +265,52 @@ bool UITextTest_IgnoreConentSize::init()
     }
     return false;
 }
+
+// UITextTest_IgnoreConentSize
+
+bool UITextTest_Clone::init()
+{
+    if (UIScene::init())
+    {
+        Size widgetSize = _widget->getContentSize();
+
+        Text* singleText = Text::create("ignore conent",
+            "fonts/Marker Felt.ttf", 30);
+        singleText->setPosition(Vec2(widgetSize.width / 2.0f - 80,
+            widgetSize.height / 2.0f));
+        singleText->setString("CHUKONG");
+        singleText->setTouchScaleChangeEnabled(true);
+        singleText->setTouchEnabled(true);
+        singleText->enableOutline(Color4B(255,0,0,100), 10);
+        singleText->enableShadow(Color4B::YELLOW, Size(2,-2), 0);
+        _uiLayer->addChild(singleText);
+
+        auto cloneText = singleText->clone();
+        cloneText->setPosition(Vec2(widgetSize.width / 2.0f + 80,
+            widgetSize.height / 2.0f));
+        _uiLayer->addChild(cloneText);
+
+        return true;
+    }
+    return false;
+}
+
+// Issue16073Test
+
+bool Issue16073Test::init()
+{
+    if (UIScene::init())
+    {
+        Size widgetSize = _widget->getContentSize();
+
+        Text* singleText = Text::create("mwhahaha\360", "Verdana", 40);
+
+        singleText->setPosition(Vec2(widgetSize.width / 2.0f - 80,
+                                     widgetSize.height / 2.0f));
+        _uiLayer->addChild(singleText);
+
+        return true;
+    }
+    return false;
+}
+

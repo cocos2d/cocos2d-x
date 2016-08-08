@@ -24,7 +24,7 @@
 
  ****************************************************************************/
 
-#include "CCRenderState.h"
+#include "renderer/CCRenderState.h"
 
 #include <string>
 
@@ -55,7 +55,7 @@ RenderState::~RenderState()
 
 void RenderState::initialize()
 {
-    if (StateBlock::_defaultState == NULL)
+    if (StateBlock::_defaultState == nullptr)
     {
         StateBlock::_defaultState = StateBlock::create();
         CC_SAFE_RETAIN(StateBlock::_defaultState);
@@ -121,7 +121,7 @@ void RenderState::bind(Pass* pass)
     StateBlock::restore(stateOverrideBits);
 
     // Apply renderer state for the entire hierarchy, top-down.
-    rs = NULL;
+    rs = nullptr;
     while ((rs = getTopmost(rs)))
     {
         if (rs->_state)
@@ -137,12 +137,12 @@ RenderState* RenderState::getTopmost(RenderState* below)
     if (rs == below)
     {
         // Nothing below ourself.
-        return NULL;
+        return nullptr;
     }
 
     while (rs)
     {
-        if (rs->_parent == below || rs->_parent == NULL)
+        if (rs->_parent == below || rs->_parent == nullptr)
         {
             // Stop traversing up here.
             return rs;
@@ -150,7 +150,7 @@ RenderState* RenderState::getTopmost(RenderState* below)
         rs = rs->_parent;
     }
 
-    return NULL;
+    return nullptr;
 }
 
 RenderState::StateBlock* RenderState::getStateBlock() const
@@ -158,9 +158,16 @@ RenderState::StateBlock* RenderState::getStateBlock() const
     return _state;
 }
 
+void RenderState::setStateBlock(RenderState::StateBlock* state)
+{
+    CC_SAFE_RETAIN(state);
+    CC_SAFE_RELEASE(_state);
+    _state = state;
+}
+
 void RenderState::cloneInto(RenderState* renderState) const
 {
-    CCASSERT(renderState, "must be non nill");
+    CCASSERT(renderState, "must be non null");
 
     // Clone our state block
     if (_state)
@@ -190,7 +197,7 @@ RenderState::StateBlock* RenderState::StateBlock::create()
 }
 
 //
-// The defaults are based on GamePlay3D defaults, with the following chagnes
+// The defaults are based on GamePlay3D defaults, with the following changes
 // _depthWriteEnabled is FALSE
 // _depthTestEnabled is TRUE
 // _blendEnabled is TRUE

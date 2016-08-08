@@ -27,6 +27,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\extensions\assets-manager\AssetsManager.cpp" />
+    <ClCompile Include="..\..\..\extensions\assets-manager\AssetsManagerEx.cpp" />
+    <ClCompile Include="..\..\..\extensions\assets-manager\CCEventAssetsManagerEx.cpp" />
+    <ClCompile Include="..\..\..\extensions\assets-manager\CCEventListenerAssetsManagerEx.cpp" />
+    <ClCompile Include="..\..\..\extensions\assets-manager\Manifest.cpp" />
     <ClCompile Include="..\..\..\extensions\ExtensionDeprecated.cpp" />
     <ClCompile Include="..\..\..\extensions\GUI\CCControlExtension\CCControl.cpp" />
     <ClCompile Include="..\..\..\extensions\GUI\CCControlExtension\CCControlButton.cpp" />
@@ -276,6 +281,7 @@
     <ClCompile Include="..\..\3d\CCMesh.cpp" />
     <ClCompile Include="..\..\3d\CCMeshSkin.cpp" />
     <ClCompile Include="..\..\3d\CCMeshVertexIndexData.cpp" />
+    <ClCompile Include="..\..\3d\CCMotionStreak3D.cpp" />
     <ClCompile Include="..\..\3d\CCOBB.cpp" />
     <ClCompile Include="..\..\3d\CCObjLoader.cpp" />
     <ClCompile Include="..\..\3d\CCPlane.cpp" />
@@ -285,7 +291,6 @@
     <ClCompile Include="..\..\3d\CCSprite3D.cpp" />
     <ClCompile Include="..\..\3d\CCSprite3DMaterial.cpp" />
     <ClCompile Include="..\..\3d\CCTerrain.cpp" />
-    <ClCompile Include="..\..\3d\CCTextureCube.cpp" />
     <ClCompile Include="..\..\audio\AudioEngine.cpp" />
     <ClCompile Include="..\..\audio\winrt\Audio.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
@@ -410,6 +415,7 @@
     </ClCompile>
     <ClCompile Include="..\..\base\CCIMEDispatcher.cpp" />
     <ClCompile Include="..\..\base\CCNinePatchImageParser.cpp" />
+    <ClCompile Include="..\..\base\CCStencilStateManager.cpp" />
     <ClCompile Include="..\..\base\CCNS.cpp" />
     <ClCompile Include="..\..\base\CCProfiling.cpp" />
     <ClCompile Include="..\..\base\CCProperties.cpp" />
@@ -503,6 +509,7 @@
     <ClCompile Include="..\..\editor-support\cocostudio\CocoStudio.cpp" />
     <ClCompile Include="..\..\editor-support\cocostudio\DictionaryHelper.cpp" />
     <ClCompile Include="..\..\editor-support\cocostudio\FlatBuffersSerialize.cpp" />
+    <ClCompile Include="..\..\editor-support\cocostudio\LocalizationManager.cpp" />
     <ClCompile Include="..\..\editor-support\cocostudio\TriggerBase.cpp" />
     <ClCompile Include="..\..\editor-support\cocostudio\TriggerMng.cpp" />
     <ClCompile Include="..\..\editor-support\cocostudio\TriggerObj.cpp" />
@@ -512,8 +519,10 @@
     <ClCompile Include="..\..\editor-support\cocostudio\WidgetReader\CheckBoxReader\CheckBoxReader.cpp" />
     <ClCompile Include="..\..\editor-support\cocostudio\WidgetReader\ComAudioReader\ComAudioReader.cpp" />
     <ClCompile Include="..\..\editor-support\cocostudio\WidgetReader\GameMapReader\GameMapReader.cpp" />
+    <ClCompile Include="..\..\editor-support\cocostudio\WidgetReader\GameNode3DReader\GameNode3DReader.cpp" />
     <ClCompile Include="..\..\editor-support\cocostudio\WidgetReader\ImageViewReader\ImageViewReader.cpp" />
     <ClCompile Include="..\..\editor-support\cocostudio\WidgetReader\LayoutReader\LayoutReader.cpp" />
+    <ClCompile Include="..\..\editor-support\cocostudio\WidgetReader\Light3DReader\Light3DReader.cpp" />
     <ClCompile Include="..\..\editor-support\cocostudio\WidgetReader\ListViewReader\ListViewReader.cpp" />
     <ClCompile Include="..\..\editor-support\cocostudio\WidgetReader\LoadingBarReader\LoadingBarReader.cpp" />
     <ClCompile Include="..\..\editor-support\cocostudio\WidgetReader\Node3DReader\Node3DReader.cpp" />
@@ -531,6 +540,7 @@
     <ClCompile Include="..\..\editor-support\cocostudio\WidgetReader\SliderReader\SliderReader.cpp" />
     <ClCompile Include="..\..\editor-support\cocostudio\WidgetReader\Sprite3DReader\Sprite3DReader.cpp" />
     <ClCompile Include="..\..\editor-support\cocostudio\WidgetReader\SpriteReader\SpriteReader.cpp" />
+    <ClCompile Include="..\..\editor-support\cocostudio\WidgetReader\TabControlReader\TabControlReader.cpp" />
     <ClCompile Include="..\..\editor-support\cocostudio\WidgetReader\TextAtlasReader\TextAtlasReader.cpp" />
     <ClCompile Include="..\..\editor-support\cocostudio\WidgetReader\TextBMFontReader\TextBMFontReader.cpp" />
     <ClCompile Include="..\..\editor-support\cocostudio\WidgetReader\TextFieldReader\TextFieldReader.cpp" />
@@ -552,6 +562,8 @@
     <ClCompile Include="..\..\navmesh\CCNavMeshDebugDraw.cpp" />
     <ClCompile Include="..\..\navmesh\CCNavMeshObstacle.cpp" />
     <ClCompile Include="..\..\navmesh\CCNavMeshUtils.cpp" />
+    <ClCompile Include="..\..\network\CCDownloader-curl.cpp" />
+    <ClCompile Include="..\..\network\CCDownloader.cpp" />
     <ClCompile Include="..\..\network\HttpClient-winrt.cpp" />
     <ClCompile Include="..\..\network\HttpConnection-winrt.cpp" />
     <ClCompile Include="..\..\network\HttpCookie.cpp" />
@@ -620,6 +632,7 @@
     <ClCompile Include="..\..\renderer\CCTexture2D.cpp" />
     <ClCompile Include="..\..\renderer\CCTextureAtlas.cpp" />
     <ClCompile Include="..\..\renderer\CCTextureCache.cpp" />
+    <ClCompile Include="..\..\renderer\CCTextureCube.cpp" />
     <ClCompile Include="..\..\renderer\CCTrianglesCommand.cpp" />
     <ClCompile Include="..\..\renderer\CCVertexAttribBinding.cpp" />
     <ClCompile Include="..\..\renderer\CCVertexIndexBuffer.cpp" />
@@ -629,6 +642,7 @@
     <ClCompile Include="..\..\ui\UIButton.cpp" />
     <ClCompile Include="..\..\ui\UIAbstractCheckButton.cpp" />
     <ClCompile Include="..\..\ui\UICheckBox.cpp" />
+    <ClCompile Include="..\..\ui\UIEditBox\UIEditBoxImpl-common.cpp" />
     <ClCompile Include="..\..\ui\UIRadioButton.cpp" />
     <ClCompile Include="..\..\ui\UIDeprecated.cpp" />
     <ClCompile Include="..\..\ui\UIEditBox\UIEditBox.cpp" />
@@ -643,18 +657,24 @@
     <ClCompile Include="..\..\ui\UIListView.cpp" />
     <ClCompile Include="..\..\ui\UILoadingBar.cpp" />
     <ClCompile Include="..\..\ui\UIPageView.cpp" />
+    <ClCompile Include="..\..\ui\UIPageViewIndicator.cpp" />
     <ClCompile Include="..\..\ui\UIRelativeBox.cpp" />
     <ClCompile Include="..\..\ui\UIRichText.cpp" />
     <ClCompile Include="..\..\ui\UIScale9Sprite.cpp" />
     <ClCompile Include="..\..\ui\UIScrollView.cpp" />
     <ClCompile Include="..\..\ui\UIScrollViewBar.cpp" />
     <ClCompile Include="..\..\ui\UISlider.cpp" />
+    <ClCompile Include="..\..\ui\UITabControl.cpp" />
     <ClCompile Include="..\..\ui\UIText.cpp" />
     <ClCompile Include="..\..\ui\UITextAtlas.cpp" />
     <ClCompile Include="..\..\ui\UITextBMFont.cpp" />
     <ClCompile Include="..\..\ui\UITextField.cpp" />
     <ClCompile Include="..\..\ui\UIVBox.cpp" />
     <ClCompile Include="..\..\ui\UIWidget.cpp" />
+    <ClCompile Include="..\..\vr\CCVRDistortion.cpp" />
+    <ClCompile Include="..\..\vr\CCVRDistortionMesh.cpp" />
+    <ClCompile Include="..\..\vr\CCVRGenericHeadTracker.cpp" />
+    <ClCompile Include="..\..\vr\CCVRGenericRenderer.cpp" />
     <ClCompile Include="..\CCAction.cpp" />
     <ClCompile Include="..\CCActionCamera.cpp" />
     <ClCompile Include="..\CCActionCatmullRom.cpp" />
@@ -673,6 +693,7 @@
     <ClCompile Include="..\CCAtlasNode.cpp" />
     <ClCompile Include="..\CCAutoPolygon.cpp" />
     <ClCompile Include="..\CCCamera.cpp" />
+    <ClCompile Include="..\CCCameraBackgroundBrush.cpp" />
     <ClCompile Include="..\CCClippingNode.cpp" />
     <ClCompile Include="..\CCClippingRectangleNode.cpp" />
     <ClCompile Include="..\CCComponent.cpp" />
@@ -727,6 +748,11 @@
     <ClCompile Include="..\CCTweenFunction.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\extensions\assets-manager\AssetsManager.h" />
+    <ClInclude Include="..\..\..\extensions\assets-manager\AssetsManagerEx.h" />
+    <ClInclude Include="..\..\..\extensions\assets-manager\CCEventAssetsManagerEx.h" />
+    <ClInclude Include="..\..\..\extensions\assets-manager\CCEventListenerAssetsManagerEx.h" />
+    <ClInclude Include="..\..\..\extensions\assets-manager\Manifest.h" />
     <ClInclude Include="..\..\..\extensions\cocos-ext.h" />
     <ClInclude Include="..\..\..\extensions\ExtensionDeprecated.h" />
     <ClInclude Include="..\..\..\extensions\ExtensionExport.h" />
@@ -931,6 +957,7 @@
     <ClInclude Include="..\..\3d\CCMesh.h" />
     <ClInclude Include="..\..\3d\CCMeshSkin.h" />
     <ClInclude Include="..\..\3d\CCMeshVertexIndexData.h" />
+    <ClInclude Include="..\..\3d\CCMotionStreak3D.h" />
     <ClInclude Include="..\..\3d\CCOBB.h" />
     <ClInclude Include="..\..\3d\CCObjLoader.h" />
     <ClInclude Include="..\..\3d\CCPlane.h" />
@@ -940,7 +967,6 @@
     <ClInclude Include="..\..\3d\CCSprite3D.h" />
     <ClInclude Include="..\..\3d\CCSprite3DMaterial.h" />
     <ClInclude Include="..\..\3d\CCTerrain.h" />
-    <ClInclude Include="..\..\3d\CCTextureCube.h" />
     <ClInclude Include="..\..\3d\cocos3d.h" />
     <ClInclude Include="..\..\audio\include\AudioEngine.h" />
     <ClInclude Include="..\..\audio\include\Export.h" />
@@ -996,6 +1022,7 @@
     <ClInclude Include="..\..\base\ccMacros.h" />
     <ClInclude Include="..\..\base\CCMap.h" />
     <ClInclude Include="..\..\base\CCNinePatchImageParser.h" />
+    <ClInclude Include="..\..\base\CCStencilStateManager.h" />
     <ClInclude Include="..\..\base\CCNS.h" />
     <ClInclude Include="..\..\base\CCProfiling.h" />
     <ClInclude Include="..\..\base\CCProperties.h" />
@@ -1108,6 +1135,7 @@
     <ClInclude Include="..\..\editor-support\cocostudio\CSParseBinary_generated.h" />
     <ClInclude Include="..\..\editor-support\cocostudio\DictionaryHelper.h" />
     <ClInclude Include="..\..\editor-support\cocostudio\FlatBuffersSerialize.h" />
+    <ClInclude Include="..\..\editor-support\cocostudio\LocalizationManager.h" />
     <ClInclude Include="..\..\editor-support\cocostudio\TriggerBase.h" />
     <ClInclude Include="..\..\editor-support\cocostudio\TriggerMng.h" />
     <ClInclude Include="..\..\editor-support\cocostudio\TriggerObj.h" />
@@ -1118,8 +1146,10 @@
     <ClInclude Include="..\..\editor-support\cocostudio\WidgetReader\CheckBoxReader\CheckBoxReader.h" />
     <ClInclude Include="..\..\editor-support\cocostudio\WidgetReader\ComAudioReader\ComAudioReader.h" />
     <ClInclude Include="..\..\editor-support\cocostudio\WidgetReader\GameMapReader\GameMapReader.h" />
+    <ClInclude Include="..\..\editor-support\cocostudio\WidgetReader\GameNode3DReader\GameNode3DReader.h" />
     <ClInclude Include="..\..\editor-support\cocostudio\WidgetReader\ImageViewReader\ImageViewReader.h" />
     <ClInclude Include="..\..\editor-support\cocostudio\WidgetReader\LayoutReader\LayoutReader.h" />
+    <ClInclude Include="..\..\editor-support\cocostudio\WidgetReader\Light3DReader\Light3DReader.h" />
     <ClInclude Include="..\..\editor-support\cocostudio\WidgetReader\ListViewReader\ListViewReader.h" />
     <ClInclude Include="..\..\editor-support\cocostudio\WidgetReader\LoadingBarReader\LoadingBarReader.h" />
     <ClInclude Include="..\..\editor-support\cocostudio\WidgetReader\Node3DReader\Node3DReader.h" />
@@ -1138,6 +1168,8 @@
     <ClInclude Include="..\..\editor-support\cocostudio\WidgetReader\SliderReader\SliderReader.h" />
     <ClInclude Include="..\..\editor-support\cocostudio\WidgetReader\Sprite3DReader\Sprite3DReader.h" />
     <ClInclude Include="..\..\editor-support\cocostudio\WidgetReader\SpriteReader\SpriteReader.h" />
+    <ClInclude Include="..\..\editor-support\cocostudio\WidgetReader\TabControlReader\CSTabControl_generated.h" />
+    <ClInclude Include="..\..\editor-support\cocostudio\WidgetReader\TabControlReader\TabControlReader.h" />
     <ClInclude Include="..\..\editor-support\cocostudio\WidgetReader\TextAtlasReader\TextAtlasReader.h" />
     <ClInclude Include="..\..\editor-support\cocostudio\WidgetReader\TextBMFontReader\TextBMFontReader.h" />
     <ClInclude Include="..\..\editor-support\cocostudio\WidgetReader\TextFieldReader\TextFieldReader.h" />
@@ -1162,6 +1194,9 @@
     <ClInclude Include="..\..\navmesh\CCNavMeshDebugDraw.h" />
     <ClInclude Include="..\..\navmesh\CCNavMeshObstacle.h" />
     <ClInclude Include="..\..\navmesh\CCNavMeshUtils.h" />
+    <ClInclude Include="..\..\network\CCDownloader-curl.h" />
+    <ClInclude Include="..\..\network\CCDownloader.h" />
+    <ClInclude Include="..\..\network\CCIDownloaderImpl.h" />
     <ClInclude Include="..\..\network\HttpClient.h" />
     <ClInclude Include="..\..\network\HttpConnection-winrt.h" />
     <ClInclude Include="..\..\network\HttpCookie.h" />
@@ -1202,7 +1237,6 @@
     <ClInclude Include="..\..\platform\winrt\CCFreeTypeFont.h" />
     <ClInclude Include="..\..\platform\winrt\CCGL.h" />
     <ClInclude Include="..\..\platform\winrt\CCGLViewImpl-winrt.h" />
-    <ClInclude Include="..\..\platform\winrt\CCGL_Angle.h" />
     <ClInclude Include="..\..\platform\winrt\CCPlatformDefine-winrt.h" />
     <ClInclude Include="..\..\platform\winrt\CCPrecompiledShaders.h" />
     <ClInclude Include="..\..\platform\winrt\CCPThreadWinRT.h" />
@@ -1217,7 +1251,15 @@
     <ClInclude Include="..\..\platform\winrt\WICImageLoader-winrt.h" />
     <ClInclude Include="..\..\renderer\CCBatchCommand.h" />
     <ClInclude Include="..\..\renderer\CCCustomCommand.h" />
+    <ClInclude Include="..\..\renderer\CCTextureCube.h" />
+    <ClInclude Include="..\..\ui\UIEditBox\UIEditBoxImpl-common.h" />
+    <ClInclude Include="..\..\ui\UITabControl.h" />
+    <ClInclude Include="..\..\vr\CCVRDistortion.h" />
+    <ClInclude Include="..\..\vr\CCVRDistortionMesh.h" />
+    <ClInclude Include="..\..\vr\CCVRGenericHeadTracker.h" />
+    <ClInclude Include="..\..\vr\CCVRGenericRenderer.h" />
     <ClInclude Include="..\CCAutoPolygon.h" />
+    <ClInclude Include="..\CCCameraBackgroundBrush.h" />
     <ClInclude Include="..\renderer\CCFrameBuffer.h" />
     <ClInclude Include="..\..\renderer\CCGLProgram.h" />
     <ClInclude Include="..\..\renderer\CCGLProgramCache.h" />
@@ -1345,6 +1387,7 @@
     <ClInclude Include="..\CCTweenFunction.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\3d\CCAnimationCurve.inl" />
     <None Include="..\..\base\CCController-iOS.mm" />
     <None Include="..\..\base\CCUserDefault-apple.mm" />
     <None Include="..\..\math\Mat4.inl" />
@@ -1399,9 +1442,6 @@
     <None Include="..\cocos2d.def" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="..\..\renderer\CMakeLists.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\..\external\Box2D\proj-win10\libbox2d.vcxproj">
       <Project>{0c32d479-46d5-46c3-9aa9-0a8ff8320516}</Project>
     </ProjectReference>
@@ -1425,8 +1465,8 @@
     <AppContainerApplication>true</AppContainerApplication>
     <ApplicationType>Windows Store</ApplicationType>
     <ApplicationTypeRevision>8.2</ApplicationTypeRevision>
-    <TargetPlatformVersion>10.0.10069.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.10069.0</TargetPlatformMinVersion>
+    <WindowsTargetPlatformVersion>10.0.10240.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformMinVersion>10.0.10240.0</WindowsTargetPlatformMinVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -1502,34 +1542,34 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <GenerateManifest>false</GenerateManifest>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
-    <TargetName>libcocos2d_v3.8_Windows_10.0</TargetName>
+    <TargetName>libcocos2d_v3.13_Windows_10.0</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <GenerateManifest>false</GenerateManifest>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
-    <TargetName>libcocos2d_v3.8_Windows_10.0</TargetName>
+    <TargetName>libcocos2d_v3.13_Windows_10.0</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <GenerateManifest>false</GenerateManifest>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
     <LinkIncremental>false</LinkIncremental>
-    <TargetName>libcocos2d_v3.8_Windows_10.0</TargetName>
+    <TargetName>libcocos2d_v3.13_Windows_10.0</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <GenerateManifest>false</GenerateManifest>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
     <LinkIncremental>false</LinkIncremental>
-    <TargetName>libcocos2d_v3.8_Windows_10.0</TargetName>
+    <TargetName>libcocos2d_v3.13_Windows_10.0</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <GenerateManifest>false</GenerateManifest>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
-    <TargetName>libcocos2d_v3.8_Windows_10.0</TargetName>
+    <TargetName>libcocos2d_v3.13_Windows_10.0</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <GenerateManifest>false</GenerateManifest>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
-    <TargetName>libcocos2d_v3.8_Windows_10.0</TargetName>
+    <TargetName>libcocos2d_v3.13_Windows_10.0</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -1539,7 +1579,7 @@
       <PreprocessorDefinitions>_USRDLL;_LIB;COCOS2DXWIN32_EXPORTS;_USE3DDLL;_EXPORT_DLL_;_USRSTUDIODLL;_USREXDLL;_USEGUIDLL;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_DEBUG;COCOS2D_DEBUG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>false</SDLCheck>
       <DisableSpecificWarnings>4458;4459;%(DisableSpecificWarnings)</DisableSpecificWarnings>
-      <AdditionalIncludeDirectories>$(EngineRoot)external\win10-specific\zlib\include;$(EngineRoot)external\freetype2\include\win10\freetype2;$(EngineRoot)external\protobuf-lite\src;$(EngineRoot)external\protobuf-lite\win32;$(EngineRoot)external\win10-specific\OggDecoder\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot)cocos\editor-support;$(EngineRoot)cocos\platform\winrt;$(EngineRoot)external\win10-specific\zlib\include;$(EngineRoot)external\freetype2\include\win10\freetype2;$(EngineRoot)external\protobuf-lite\src;$(EngineRoot)external\protobuf-lite\win32;$(EngineRoot)external\win10-specific\OggDecoder\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/Zm384 /bigobj %(AdditionalOptions)</AdditionalOptions>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
@@ -1558,9 +1598,10 @@
       <PreprocessorDefinitions>_USRDLL;_LIB;COCOS2DXWIN32_EXPORTS;_USE3DDLL;_EXPORT_DLL_;_USRSTUDIODLL;_USREXDLL;_USEGUIDLL;CC_ENABLE_CHIPMUNK_INTEGRATION=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>false</SDLCheck>
       <DisableSpecificWarnings>4458;4459;%(DisableSpecificWarnings)</DisableSpecificWarnings>
-      <AdditionalIncludeDirectories>$(EngineRoot)external\win10-specific\zlib\include;$(EngineRoot)external\freetype2\include\win10\freetype2;$(EngineRoot)external\protobuf-lite\src;$(EngineRoot)external\protobuf-lite\win32;$(EngineRoot)external\win10-specific\OggDecoder\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot)cocos\editor-support;$(EngineRoot)cocos\platform\winrt;$(EngineRoot)external\win10-specific\zlib\include;$(EngineRoot)external\freetype2\include\win10\freetype2;$(EngineRoot)external\protobuf-lite\src;$(EngineRoot)external\protobuf-lite\win32;$(EngineRoot)external\win10-specific\OggDecoder\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/Zm384 /bigobj %(AdditionalOptions)</AdditionalOptions>
       <WholeProgramOptimization>false</WholeProgramOptimization>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -1577,7 +1618,7 @@
       <PreprocessorDefinitions>_USRDLL;_LIB;COCOS2DXWIN32_EXPORTS;_USE3DDLL;_EXPORT_DLL_;_USRSTUDIODLL;_USREXDLL;_USEGUIDLL;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_DEBUG;COCOS2D_DEBUG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>false</SDLCheck>
       <DisableSpecificWarnings>4458;4459;%(DisableSpecificWarnings)</DisableSpecificWarnings>
-      <AdditionalIncludeDirectories>$(EngineRoot)external\win10-specific\zlib\include;$(EngineRoot)external\freetype2\include\win10\freetype2;$(EngineRoot)external\protobuf-lite\src;$(EngineRoot)external\protobuf-lite\win32;$(EngineRoot)external\win10-specific\OggDecoder\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot)cocos\editor-support;$(EngineRoot)cocos\platform\winrt;$(EngineRoot)external\win10-specific\zlib\include;$(EngineRoot)external\freetype2\include\win10\freetype2;$(EngineRoot)external\protobuf-lite\src;$(EngineRoot)external\protobuf-lite\win32;$(EngineRoot)external\win10-specific\OggDecoder\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/Zm384 /bigobj %(AdditionalOptions)</AdditionalOptions>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
@@ -1596,7 +1637,7 @@
       <PreprocessorDefinitions>_USRDLL;_LIB;COCOS2DXWIN32_EXPORTS;_USE3DDLL;_EXPORT_DLL_;_USRSTUDIODLL;_USREXDLL;_USEGUIDLL;CC_ENABLE_CHIPMUNK_INTEGRATION=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>false</SDLCheck>
       <DisableSpecificWarnings>4458;4459;%(DisableSpecificWarnings)</DisableSpecificWarnings>
-      <AdditionalIncludeDirectories>$(EngineRoot)external\win10-specific\zlib\include;$(EngineRoot)external\freetype2\include\win10\freetype2;$(EngineRoot)external\protobuf-lite\src;$(EngineRoot)external\protobuf-lite\win32;$(EngineRoot)external\win10-specific\OggDecoder\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot)cocos\editor-support;$(EngineRoot)cocos\platform\winrt;$(EngineRoot)external\win10-specific\zlib\include;$(EngineRoot)external\freetype2\include\win10\freetype2;$(EngineRoot)external\protobuf-lite\src;$(EngineRoot)external\protobuf-lite\win32;$(EngineRoot)external\win10-specific\OggDecoder\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/Zm384 /bigobj %(AdditionalOptions)</AdditionalOptions>
       <WholeProgramOptimization>false</WholeProgramOptimization>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -1616,7 +1657,7 @@
       <PreprocessorDefinitions>_USRDLL;_LIB;COCOS2DXWIN32_EXPORTS;_USE3DDLL;_EXPORT_DLL_;_USRSTUDIODLL;_USREXDLL;_USEGUIDLL;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_DEBUG;COCOS2D_DEBUG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>false</SDLCheck>
       <DisableSpecificWarnings>4458;4459;%(DisableSpecificWarnings)</DisableSpecificWarnings>
-      <AdditionalIncludeDirectories>$(EngineRoot)external\win10-specific\zlib\include;$(EngineRoot)external\freetype2\include\win10\freetype2;$(EngineRoot)external\protobuf-lite\src;$(EngineRoot)external\protobuf-lite\win32;$(EngineRoot)external\win10-specific\OggDecoder\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot)cocos\editor-support;$(EngineRoot)cocos\platform\winrt;$(EngineRoot)external\win10-specific\zlib\include;$(EngineRoot)external\freetype2\include\win10\freetype2;$(EngineRoot)external\protobuf-lite\src;$(EngineRoot)external\protobuf-lite\win32;$(EngineRoot)external\win10-specific\OggDecoder\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/Zm384 /bigobj %(AdditionalOptions)</AdditionalOptions>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
@@ -1635,9 +1676,10 @@
       <PreprocessorDefinitions>_USRDLL;_LIB;COCOS2DXWIN32_EXPORTS;_USE3DDLL;_EXPORT_DLL_;_USRSTUDIODLL;_USREXDLL;_USEGUIDLL;CC_ENABLE_CHIPMUNK_INTEGRATION=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>false</SDLCheck>
       <DisableSpecificWarnings>4458;4459;%(DisableSpecificWarnings)</DisableSpecificWarnings>
-      <AdditionalIncludeDirectories>$(EngineRoot)external\win10-specific\zlib\include;$(EngineRoot)external\freetype2\include\win10\freetype2;$(EngineRoot)external\protobuf-lite\src;$(EngineRoot)external\protobuf-lite\win32;$(EngineRoot)external\win10-specific\OggDecoder\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot)cocos\editor-support;$(EngineRoot)cocos\platform\winrt;$(EngineRoot)external\win10-specific\zlib\include;$(EngineRoot)external\freetype2\include\win10\freetype2;$(EngineRoot)external\protobuf-lite\src;$(EngineRoot)external\protobuf-lite\win32;$(EngineRoot)external\win10-specific\OggDecoder\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/Zm384 /bigobj %(AdditionalOptions)</AdditionalOptions>
       <WholeProgramOptimization>false</WholeProgramOptimization>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

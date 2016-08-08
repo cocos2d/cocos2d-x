@@ -1,5 +1,6 @@
 #include "ParticleTest.h"
 #include "../testResource.h"
+#include "editor-support/cocostudio/CocosStudioExtension.h"
 
 USING_NS_CC;
 
@@ -77,6 +78,43 @@ void DemoSun::onEnter()
 std::string DemoSun::subtitle() const
 {
     return "ParticleSun";
+}
+
+//------------------------------------------------------------------
+//
+// DemoPause
+//
+//------------------------------------------------------------------
+void DemoPause::onEnter()
+{
+    ParticleDemo::onEnter();
+    
+    _emitter = ParticleSmoke::create();
+    _emitter->retain();
+    _background->addChild(_emitter, 10);
+    
+    _emitter->setTexture( Director::getInstance()->getTextureCache()->addImage(s_fire) );
+    
+    setEmitterPosition();
+    schedule(CC_SCHEDULE_SELECTOR(DemoPause::pauseEmitter), 2.0f);
+
+
+}
+void DemoPause::pauseEmitter(float time)
+{
+    if (_emitter->isPaused())
+    {
+        _emitter->resumeEmissions();
+    }
+    else
+    {
+        _emitter->pauseEmissions();
+    }
+}
+
+std::string DemoPause::subtitle() const
+{
+    return "Pause Particle";
 }
 
 //------------------------------------------------------------------
@@ -975,6 +1013,7 @@ ParticleTests::ParticleTests()
     ADD_TEST_CASE(DemoModernArt);
     ADD_TEST_CASE(DemoRing);
     ADD_TEST_CASE(ParallaxParticle);
+    ADD_TEST_CASE(DemoPause);
     addTestCase("BoilingFoam", [](){return DemoParticleFromFile::create("BoilingFoam");});
     addTestCase("BurstPipe", [](){return DemoParticleFromFile::create("BurstPipe"); });
     addTestCase("Comet", [](){return DemoParticleFromFile::create("Comet"); });

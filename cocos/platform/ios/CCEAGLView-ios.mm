@@ -64,17 +64,16 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #include "platform/CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 
-#import "CCEAGLView-ios.h"
+#import "platform/ios/CCEAGLView-ios.h"
 
 #import <QuartzCore/QuartzCore.h>
 
 #import "base/CCDirector.h"
-#import "deprecated/CCSet.h"
 #import "base/CCTouch.h"
 #import "base/CCIMEDispatcher.h"
-#import "CCGLViewImpl-ios.h"
-#import "CCES2Renderer-ios.h"
-#import "OpenGL_Internal-ios.h"
+#import "platform/ios/CCGLViewImpl-ios.h"
+#import "platform/ios/CCES2Renderer-ios.h"
+#import "platform/ios/OpenGL_Internal-ios.h"
 
 //CLASS IMPLEMENTATIONS:
 
@@ -147,13 +146,13 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
         originalRect_ = self.frame;
         self.keyboardShowNotification = nil;
-		
-		if ([self respondsToSelector:@selector(setContentScaleFactor:)])
-		{
-			self.contentScaleFactor = [[UIScreen mainScreen] scale];
-		}
-    }
         
+        if ([self respondsToSelector:@selector(setContentScaleFactor:)])
+        {
+            self.contentScaleFactor = [[UIScreen mainScreen] scale];
+        }
+    }
+    
     return self;
 }
 
@@ -266,7 +265,10 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
     // Avoid flicker. Issue #350
     //[director performSelectorOnMainThread:@selector(drawScene) withObject:nil waitUntilDone:YES];
-    cocos2d::Director::getInstance()->drawScene();
+    if ([NSThread isMainThread])
+    {
+        cocos2d::Director::getInstance()->drawScene();
+    }
 }
 
 - (void) swapBuffers
@@ -274,7 +276,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
     // IMPORTANT:
     // - preconditions
     //    -> context_ MUST be the OpenGL context
-    //    -> renderbuffer_ must be the the RENDER BUFFER
+    //    -> renderbuffer_ must be the RENDER BUFFER
 
 #ifdef __IPHONE_4_0
     
@@ -349,25 +351,25 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 - (CGPoint) convertPointFromViewToSurface:(CGPoint)point
 {
     CGRect bounds = [self bounds];
-        
-        CGPoint ret;
-        ret.x = (point.x - bounds.origin.x) / bounds.size.width * size_.width;
-        ret.y =  (point.y - bounds.origin.y) / bounds.size.height * size_.height;
     
-        return ret;
+    CGPoint ret;
+    ret.x = (point.x - bounds.origin.x) / bounds.size.width * size_.width;
+    ret.y =  (point.y - bounds.origin.y) / bounds.size.height * size_.height;
+    
+    return ret;
 }
 
 - (CGRect) convertRectFromViewToSurface:(CGRect)rect
 {
     CGRect bounds = [self bounds];
     
-        CGRect ret;
-        ret.origin.x = (rect.origin.x - bounds.origin.x) / bounds.size.width * size_.width;
-        ret.origin.y = (rect.origin.y - bounds.origin.y) / bounds.size.height * size_.height;
-        ret.size.width = rect.size.width / bounds.size.width * size_.width;
-        ret.size.height = rect.size.height / bounds.size.height * size_.height;
+    CGRect ret;
+    ret.origin.x = (rect.origin.x - bounds.origin.x) / bounds.size.width * size_.width;
+    ret.origin.y = (rect.origin.y - bounds.origin.y) / bounds.size.height * size_.height;
+    ret.size.width = rect.size.width / bounds.size.width * size_.width;
+    ret.size.height = rect.size.height / bounds.size.height * size_.height;
     
-        return ret;
+    return ret;
 }
 
 
@@ -377,8 +379,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
     
     for(UIView* view in subviews)
     {
-        if([view isKindOfClass:NSClassFromString(@"CCCustomUITextField")] ||
-           [view isKindOfClass:NSClassFromString(@"UICustomUITextField")])
+        if([view isKindOfClass:NSClassFromString(@"UITextView")] ||
+           [view isKindOfClass:NSClassFromString(@"UITextField")])
         {
             if ([view isFirstResponder])
             {
@@ -419,17 +421,26 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
     UITouch* ids[IOS_MAX_TOUCHES_COUNT] = {0};
     float xs[IOS_MAX_TOUCHES_COUNT] = {0.0f};
     float ys[IOS_MAX_TOUCHES_COUNT] = {0.0f};
+    float fs[IOS_MAX_TOUCHES_COUNT] = {0.0f};
+    float ms[IOS_MAX_TOUCHES_COUNT] = {0.0f};
     
     int i = 0;
     for (UITouch *touch in touches) {
         ids[i] = touch;
         xs[i] = [touch locationInView: [touch view]].x * self.contentScaleFactor;;
         ys[i] = [touch locationInView: [touch view]].y * self.contentScaleFactor;;
+#if defined(__IPHONE_9_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_9_0)
+        // running on iOS 9.0 or higher version
+        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 9.0f) {
+            fs[i] = touch.force;
+            ms[i] = touch.maximumPossibleForce;
+        }
+#endif
         ++i;
     }
 
     auto glview = cocos2d::Director::getInstance()->getOpenGLView();
-    glview->handleTouchesMove(i, (intptr_t*)ids, xs, ys);
+    glview->handleTouchesMove(i, (intptr_t*)ids, xs, ys, fs, ms);
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
@@ -729,8 +740,14 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
     double aniDuration = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
     
     CGSize viewSize = self.frame.size;
+
+#if defined(CC_TARGET_OS_TVOS)
+    // statusBarOrientation not defined on tvOS, and also, orientation makes
+    // no sense on tvOS
+    begin.origin.y = viewSize.height - begin.origin.y - begin.size.height;
+    end.origin.y = viewSize.height - end.origin.y - end.size.height;
+#else
     CGFloat tmp;
-    
     switch (getFixedOrientation([[UIApplication sharedApplication] statusBarOrientation]))
     {
         case UIInterfaceOrientationPortrait:
@@ -772,10 +789,11 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
         default:
             break;
     }
+#endif
 
     auto glview = cocos2d::Director::getInstance()->getOpenGLView();
     float scaleX = glview->getScaleX();
-	float scaleY = glview->getScaleY();
+    float scaleY = glview->getScaleY();
     
     
     
@@ -792,7 +810,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
         end.size.height -= offestY;
     }
     
-    // Convert to desigin coordinate
+    // Convert to design coordinate
     begin = CGRectApplyAffineTransform(begin, CGAffineTransformScale(CGAffineTransformIdentity, 1.0f/scaleX, 1.0f/scaleY));
     end = CGRectApplyAffineTransform(end, CGAffineTransformScale(CGAffineTransformIdentity, 1.0f/scaleX, 1.0f/scaleY));
 
@@ -819,7 +837,14 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
         //CGSize screenSize = self.window.screen.bounds.size;
         dispatcher->dispatchKeyboardDidShow(notiInfo);
         caretRect_ = end;
-        caretRect_.origin.y = viewSize.height - (caretRect_.origin.y + caretRect_.size.height + [UIFont smallSystemFontSize]);
+
+#if defined(CC_TARGET_OS_TVOS)
+        // smallSystemFontSize not available on TVOS
+        int fontSize = 12;
+#else
+        int fontSize = [UIFont smallSystemFontSize];
+#endif
+        caretRect_.origin.y = viewSize.height - (caretRect_.origin.y + caretRect_.size.height + fontSize);
         caretRect_.size.height = 0;
         isKeyboardShown_ = YES;
     }
@@ -835,6 +860,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
     }
 }
 
+#if !defined(CC_TARGET_OS_TVOS)
 UIInterfaceOrientation getFixedOrientation(UIInterfaceOrientation statusBarOrientation)
 {
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
@@ -843,23 +869,27 @@ UIInterfaceOrientation getFixedOrientation(UIInterfaceOrientation statusBarOrien
     }
     return statusBarOrientation;
 }
+#endif
 
 -(void) doAnimationWhenKeyboardMoveWithDuration:(float)duration distance:(float)dis
 {
     [UIView beginAnimations:nil context:nullptr];
-	[UIView setAnimationDelegate:self];
-	[UIView setAnimationDuration:duration];
-	[UIView setAnimationBeginsFromCurrentState:YES];
+    [UIView setAnimationDelegate:self];
+    [UIView setAnimationDuration:duration];
+    [UIView setAnimationBeginsFromCurrentState:YES];
     
     //NSLog(@"[animation] dis = %f, scale = %f \n", dis, cocos2d::GLView::getInstance()->getScaleY());
     
     if (dis < 0.0f) dis = 0.0f;
 
     auto glview = cocos2d::Director::getInstance()->getOpenGLView();
-	dis *= glview->getScaleY();
+    dis *= glview->getScaleY();
     
     dis /= self.contentScaleFactor;
-    
+
+#if defined(CC_TARGET_OS_TVOS)
+    self.frame = CGRectMake(originalRect_.origin.x, originalRect_.origin.y - dis, originalRect_.size.width, originalRect_.size.height);
+#else
     switch (getFixedOrientation([[UIApplication sharedApplication] statusBarOrientation]))
     {
         case UIInterfaceOrientationPortrait:
@@ -881,8 +911,9 @@ UIInterfaceOrientation getFixedOrientation(UIInterfaceOrientation statusBarOrien
         default:
             break;
     }
+#endif
     
-	[UIView commitAnimations];
+    [UIView commitAnimations];
 }
 
 

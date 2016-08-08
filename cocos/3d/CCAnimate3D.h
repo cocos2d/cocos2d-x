@@ -41,7 +41,7 @@ class EventCustom;
 
 enum class Animate3DQuality
 {
-    QUALITY_NONE = 0,          // it'll be ignore the curve-evaluating(the animation looks like stop), just acculate transition time.
+    QUALITY_NONE = 0,          // it'll be ignore the curve-evaluating(the animation looks like stop), just accumulate transition time.
     QUALITY_LOW,               // low animation quality, it'll be more efficient.
     QUALITY_HIGH,              // high animation quality.
 };
@@ -64,7 +64,7 @@ public:
     /**
      * create Animate3D
      * @param animation used to generate animate3D
-     * @param formTime 
+     * @param fromTime
      * @param duration Time the Animate3D lasts
      * @return Animate3D created using animate
      */
@@ -161,7 +161,7 @@ protected:
     float      _last; //last time 0 - 1, used to generate sub Animate3D
     bool       _playReverse; // is playing reverse
     static float      _transTime; //transition time from one animate3d to another
-    float      _accTransTime; // acculate transition time
+    float      _accTransTime; // accumulate transition time
     float      _lastTime;     // last t (0 - 1)
     float      _originInterval;// save origin interval time
     float      _frameRate;

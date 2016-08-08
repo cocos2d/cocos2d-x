@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2013      Zynga Inc.
- Copyright (c) 2013-2015 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -53,9 +53,20 @@ public:
      It will purge the textures atlas and if multiple texture exist in one FontAtlas.
      */
     static void purgeCachedData();
-    
+
+    /** Release current FNT texture and reload it.
+     CAUTION : All component use this font texture should be reset font name, though the file name is same!
+               otherwise, it will cause program crash!
+    */
+    static void reloadFontAtlasFNT(const std::string& fontFileName, const Vec2& imageOffset = Vec2::ZERO);
+
+    /** Unload all texture atlas texture create by special file name.
+     CAUTION : All component use this font texture should be reset font name, though the file name is same!
+               otherwise, it will cause program crash!
+    */
+    static void unloadFontAtlasTTF(const std::string& fontFileName);
+
 private:
-    static std::string generateFontName(const std::string& fontFileName, int size, bool useDistanceField);
     static std::unordered_map<std::string, FontAtlas *> _atlasMap;
 };
 

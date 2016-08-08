@@ -2,7 +2,7 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -37,10 +37,8 @@ THE SOFTWARE.
 #include "renderer/CCTexture2D.h"
 #include "renderer/CCRenderer.h"
 #include "base/CCDirector.h"
+#include "base/ccUTF8.h"
 #include "2d/CCCamera.h"
-
-#include "deprecated/CCString.h"
-
 
 NS_CC_BEGIN
 
@@ -142,9 +140,11 @@ Sprite* Sprite::create()
     return nullptr;
 }
 
-bool Sprite::init(void)
+bool Sprite::init()
 {
-    return initWithTexture(nullptr, Rect::ZERO );
+    initWithTexture(nullptr, Rect::ZERO);
+    
+    return true;
 }
 
 bool Sprite::initWithTexture(Texture2D *texture)
@@ -152,9 +152,11 @@ bool Sprite::initWithTexture(Texture2D *texture)
     CCASSERT(texture != nullptr, "Invalid texture for sprite");
 
     Rect rect = Rect::ZERO;
-    rect.size = texture->getContentSize();
+    if (texture) {
+        rect.size = texture->getContentSize();
+    }
 
-    return initWithTexture(texture, rect);
+    return initWithTexture(texture, rect, false);
 }
 
 bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect)
@@ -164,9 +166,16 @@ bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect)
 
 bool Sprite::initWithFile(const std::string& filename)
 {
-    CCASSERT(filename.size()>0, "Invalid filename for sprite");
+    if (filename.empty())
+    {
+        CCLOG("Call Sprite::initWithFile with blank resource filename.");
+        return false;
+    }
 
-    Texture2D *texture = Director::getInstance()->getTextureCache()->addImage(filename);
+    _fileName = filename;
+    _fileType = 0;
+
+    Texture2D *texture = _director->getTextureCache()->addImage(filename);
     if (texture)
     {
         Rect rect = Rect::ZERO;
@@ -182,9 +191,16 @@ bool Sprite::initWithFile(const std::string& filename)
 
 bool Sprite::initWithFile(const std::string &filename, const Rect& rect)
 {
-    CCASSERT(filename.size()>0, "Invalid filename");
+    CCASSERT(!filename.empty(), "Invalid filename");
+    if (filename.empty())
+    {
+        return false;
+    }
+    
+    _fileName = filename;
+    _fileType = 0;
 
-    Texture2D *texture = Director::getInstance()->getTextureCache()->addImage(filename);
+    Texture2D *texture = _director->getTextureCache()->addImage(filename);
     if (texture)
     {
         return initWithTexture(texture, rect);
@@ -198,7 +214,14 @@ bool Sprite::initWithFile(const std::string &filename, const Rect& rect)
 
 bool Sprite::initWithSpriteFrameName(const std::string& spriteFrameName)
 {
-    CCASSERT(spriteFrameName.size() > 0, "Invalid spriteFrameName");
+    CCASSERT(!spriteFrameName.empty(), "Invalid spriteFrameName");
+    if (spriteFrameName.empty())
+    {
+        return false;
+    }
+    
+    _fileName = spriteFrameName;
+    _fileType = 1;
 
     SpriteFrame *frame = SpriteFrameCache::getInstance()->getSpriteFrameByName(spriteFrameName);
     return initWithSpriteFrame(frame);
@@ -207,7 +230,11 @@ bool Sprite::initWithSpriteFrameName(const std::string& spriteFrameName)
 bool Sprite::initWithSpriteFrame(SpriteFrame *spriteFrame)
 {
     CCASSERT(spriteFrame != nullptr, "spriteFrame can't be nullptr!");
-
+    if (spriteFrame == nullptr)
+    {
+        return false;
+    }
+    
     bool bRet = initWithTexture(spriteFrame->getTexture(), spriteFrame->getRect());
     setSpriteFrame(spriteFrame);
 
@@ -216,21 +243,23 @@ bool Sprite::initWithSpriteFrame(SpriteFrame *spriteFrame)
 
 bool Sprite::initWithPolygon(const cocos2d::PolygonInfo &info)
 {
-    Texture2D *texture = Director::getInstance()->getTextureCache()->addImage(info.filename);
-    bool res = false;
-    if(initWithTexture(texture))
+    bool ret = false;
+    
+    Texture2D *texture = _director->getTextureCache()->addImage(info.filename);
+    if(texture && initWithTexture(texture))
     {
         _polyInfo = info;
-        setContentSize(_polyInfo.rect.size/Director::getInstance()->getContentScaleFactor());
-        res = true;
+        setContentSize(_polyInfo.rect.size / _director->getContentScaleFactor());
+        ret = true;
     }
-    return res;
+    
+    return ret;
 }
 
 // designated initializer
 bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect, bool rotated)
 {
-    bool result;
+    bool result = false;
     if (Node::init())
     {
         _batchNode = nullptr;
@@ -260,7 +289,7 @@ bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect, bool rotated)
         _quad.tr.colors = Color4B::WHITE;
         
         // shader state
-        setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP));
+        // setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP)); 
 
         // update texture (calls updateBlendFunc)
         setTexture(texture);
@@ -271,28 +300,28 @@ bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect, bool rotated)
         setBatchNode(nullptr);
         result = true;
     }
-    else
-    {
-        result = false;
-    }
+    
     _recursiveDirty = true;
     setDirty(true);
+    
     return result;
 }
 
 Sprite::Sprite(void)
 : _batchNode(nullptr)
+, _textureAtlas(nullptr)
 , _shouldBeHidden(false)
 , _texture(nullptr)
 , _spriteFrame(nullptr)
 , _insideBounds(true)
 {
 #if CC_SPRITE_DEBUG_DRAW
-    debugDraw(true);
+    _debugDrawNode = DrawNode::create();
+    addChild(_debugDrawNode);
 #endif //CC_SPRITE_DEBUG_DRAW
 }
 
-Sprite::~Sprite(void)
+Sprite::~Sprite()
 {
     CC_SAFE_RELEASE(_spriteFrame);
     CC_SAFE_RELEASE(_texture);
@@ -327,7 +356,7 @@ void Sprite::setTexture(const std::string &filename)
 {
     Texture2D *texture = Director::getInstance()->getTextureCache()->addImage(filename);
     setTexture(texture);
-
+    _unflippedOffsetPositionFromCenter = Vec2::ZERO;
     Rect rect = Rect::ZERO;
     if (texture)
         rect.size = texture->getContentSize();
@@ -336,6 +365,8 @@ void Sprite::setTexture(const std::string &filename)
 
 void Sprite::setTexture(Texture2D *texture)
 {
+    setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP, texture));
+
     // If batchnode, then texture id should be the same
     CCASSERT(! _batchNode || (texture &&  texture->getName() == _batchNode->getTexture()->getName()), "CCSprite: Batched sprites should use the same texture as the batchnode");
     // accept texture==nil as argument
@@ -344,7 +375,7 @@ void Sprite::setTexture(Texture2D *texture)
     if (texture == nullptr)
     {
         // Gets the texture by key firstly.
-        texture = Director::getInstance()->getTextureCache()->getTextureForKey(CC_2x2_WHITE_IMAGE_KEY);
+        texture = _director->getTextureCache()->getTextureForKey(CC_2x2_WHITE_IMAGE_KEY);
 
         // If texture wasn't in cache, create it from RAW data.
         if (texture == nullptr)
@@ -354,7 +385,7 @@ void Sprite::setTexture(Texture2D *texture)
             CC_UNUSED_PARAM(isOK);
             CCASSERT(isOK, "The 2x2 empty texture was created unsuccessfully.");
 
-            texture = Director::getInstance()->getTextureCache()->addImage(image, CC_2x2_WHITE_IMAGE_KEY);
+            texture = _director->getTextureCache()->addImage(image, CC_2x2_WHITE_IMAGE_KEY);
             CC_SAFE_RELEASE(image);
         }
     }
@@ -428,66 +459,21 @@ void Sprite::setTextureRect(const Rect& rect, bool rotated, const Size& untrimme
     _polyInfo.setQuad(&_quad);
 }
 
-void Sprite::debugDraw(bool on)
-{
-    if (_batchNode) {
-        log("Sprite doesn't support debug draw when using SpriteBatchNode");
-        return ;
-    }
-    DrawNode* draw = getChildByName<DrawNode*>("debugDraw");
-    if(on)
-    {
-        if(!draw)
-        {
-            draw = DrawNode::create();
-            draw->setName("debugDraw");
-            addChild(draw);
-        }
-        draw->setVisible(true);
-        draw->clear();
-        //draw lines
-        auto last = _polyInfo.triangles.indexCount/3;
-        auto _indices = _polyInfo.triangles.indices;
-        auto _verts = _polyInfo.triangles.verts;
-        for(ssize_t i = 0; i < last; i++)
-        {
-            //draw 3 lines
-            Vec3 from =_verts[_indices[i*3]].vertices;
-            Vec3 to = _verts[_indices[i*3+1]].vertices;
-            draw->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::GREEN);
-            
-            from =_verts[_indices[i*3+1]].vertices;
-            to = _verts[_indices[i*3+2]].vertices;
-            draw->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::GREEN);
-            
-            from =_verts[_indices[i*3+2]].vertices;
-            to = _verts[_indices[i*3]].vertices;
-            draw->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::GREEN);
-        }
-    }
-    else
-    {
-        if(draw)
-            draw->setVisible(false);
-    }
-}
-
-
 // override this method to generate "double scale" sprites
 void Sprite::setVertexRect(const Rect& rect)
 {
     _rect = rect;
 }
 
-void Sprite::setTextureCoords(Rect rect)
+void Sprite::setTextureCoords(const Rect& rectInPoint)
 {
-    rect = CC_RECT_POINTS_TO_PIXELS(rect);
-
     Texture2D *tex = _batchNode ? _textureAtlas->getTexture() : _texture;
-    if (! tex)
+    if (tex == nullptr)
     {
         return;
     }
+    
+    auto rectInPixels = CC_RECT_POINTS_TO_PIXELS(rectInPoint);
 
     float atlasWidth = (float)tex->getPixelsWide();
     float atlasHeight = (float)tex->getPixelsHigh();
@@ -497,15 +483,15 @@ void Sprite::setTextureCoords(Rect rect)
     if (_rectRotated)
     {
 #if CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
-        left    = (2*rect.origin.x+1)/(2*atlasWidth);
-        right   = left+(rect.size.height*2-2)/(2*atlasWidth);
-        top     = (2*rect.origin.y+1)/(2*atlasHeight);
-        bottom  = top+(rect.size.width*2-2)/(2*atlasHeight);
+        left    = (2*rectInPixels.origin.x+1)/(2*atlasWidth);
+        right   = left+(rectInPixels.size.height*2-2)/(2*atlasWidth);
+        top     = (2*rectInPixels.origin.y+1)/(2*atlasHeight);
+        bottom  = top+(rectInPixels.size.width*2-2)/(2*atlasHeight);
 #else
-        left    = rect.origin.x/atlasWidth;
-        right   = (rect.origin.x+rect.size.height) / atlasWidth;
-        top     = rect.origin.y/atlasHeight;
-        bottom  = (rect.origin.y+rect.size.width) / atlasHeight;
+        left    = rectInPixels.origin.x/atlasWidth;
+        right   = (rectInPixels.origin.x+rectInPixels.size.height) / atlasWidth;
+        top     = rectInPixels.origin.y/atlasHeight;
+        bottom  = (rectInPixels.origin.y+rectInPixels.size.width) / atlasHeight;
 #endif // CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
 
         if (_flippedX)
@@ -530,15 +516,15 @@ void Sprite::setTextureCoords(Rect rect)
     else
     {
 #if CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
-        left    = (2*rect.origin.x+1)/(2*atlasWidth);
-        right    = left + (rect.size.width*2-2)/(2*atlasWidth);
-        top        = (2*rect.origin.y+1)/(2*atlasHeight);
-        bottom    = top + (rect.size.height*2-2)/(2*atlasHeight);
+        left    = (2*rectInPixels.origin.x+1)/(2*atlasWidth);
+        right    = left + (rectInPixels.size.width*2-2)/(2*atlasWidth);
+        top        = (2*rectInPixels.origin.y+1)/(2*atlasHeight);
+        bottom    = top + (rectInPixels.size.height*2-2)/(2*atlasHeight);
 #else
-        left    = rect.origin.x/atlasWidth;
-        right    = (rect.origin.x + rect.size.width) / atlasWidth;
-        top        = rect.origin.y/atlasHeight;
-        bottom    = (rect.origin.y + rect.size.height) / atlasHeight;
+        left    = rectInPixels.origin.x/atlasWidth;
+        right    = (rectInPixels.origin.x + rectInPixels.size.width) / atlasWidth;
+        top        = rectInPixels.origin.y/atlasHeight;
+        bottom    = (rectInPixels.origin.y + rectInPixels.size.height) / atlasHeight;
 #endif // ! CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
 
         if(_flippedX)
@@ -607,6 +593,7 @@ void Sprite::updateTransform(void)
 
             float x2 = x1 + size.width;
             float y2 = y1 + size.height;
+            
             float x = _transformToBatch.m[12];
             float y = _transformToBatch.m[13];
 
@@ -630,6 +617,7 @@ void Sprite::updateTransform(void)
             _quad.br.vertices.set(SPRITE_RENDER_IN_SUBPIXEL(bx), SPRITE_RENDER_IN_SUBPIXEL(by), _positionZ);
             _quad.tl.vertices.set(SPRITE_RENDER_IN_SUBPIXEL(dx), SPRITE_RENDER_IN_SUBPIXEL(dy), _positionZ);
             _quad.tr.vertices.set(SPRITE_RENDER_IN_SUBPIXEL(cx), SPRITE_RENDER_IN_SUBPIXEL(cy), _positionZ);
+            setTextureCoords(_rect);
         }
 
         // MARMALADE CHANGE: ADDED CHECK FOR nullptr, TO PERMIT SPRITES WITH NO BATCH NODE / TEXTURE ATLAS
@@ -657,23 +645,58 @@ void Sprite::updateTransform(void)
 
 void Sprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
+    if (_texture == nullptr)
+    {
+        return;
+    }
+    
 #if CC_USE_CULLING
-    // Don't do calculate the culling if the transform was not updated
+    // Don't calculate the culling if the transform was not updated
     auto visitingCamera = Camera::getVisitingCamera();
     auto defaultCamera = Camera::getDefaultCamera();
     if (visitingCamera == defaultCamera) {
-        _insideBounds = ((flags & FLAGS_TRANSFORM_DIRTY)|| visitingCamera->isViewProjectionUpdated()) ? renderer->checkVisibility(transform, _contentSize) : _insideBounds;
+        _insideBounds = ((flags & FLAGS_TRANSFORM_DIRTY) || visitingCamera->isViewProjectionUpdated()) ? renderer->checkVisibility(transform, _contentSize) : _insideBounds;
     }
     else
     {
+        // XXX: this always return true since
         _insideBounds = renderer->checkVisibility(transform, _contentSize);
     }
 
     if(_insideBounds)
 #endif
     {
-        _trianglesCommand.init(_globalZOrder, _texture->getName(), getGLProgramState(), _blendFunc, _polyInfo.triangles, transform, flags);
+        _trianglesCommand.init(_globalZOrder, 
+            _texture, 
+            getGLProgramState(), 
+            _blendFunc, 
+            _polyInfo.triangles, 
+            transform, 
+            flags);
+
         renderer->addCommand(&_trianglesCommand);
+        
+#if CC_SPRITE_DEBUG_DRAW
+        _debugDrawNode->clear();
+        auto count = _polyInfo.triangles.indexCount/3;
+        auto indices = _polyInfo.triangles.indices;
+        auto verts = _polyInfo.triangles.verts;
+        for(ssize_t i = 0; i < count; i++)
+        {
+            //draw 3 lines
+            Vec3 from =verts[indices[i*3]].vertices;
+            Vec3 to = verts[indices[i*3+1]].vertices;
+            _debugDrawNode->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::WHITE);
+            
+            from =verts[indices[i*3+1]].vertices;
+            to = verts[indices[i*3+2]].vertices;
+            _debugDrawNode->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::WHITE);
+            
+            from =verts[indices[i*3+2]].vertices;
+            to = verts[indices[i*3]].vertices;
+            _debugDrawNode->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::WHITE);
+        }
+#endif //CC_SPRITE_DEBUG_DRAW
     }
 }
 
@@ -682,7 +705,11 @@ void Sprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 void Sprite::addChild(Node *child, int zOrder, int tag)
 {
     CCASSERT(child != nullptr, "Argument must be non-nullptr");
-
+    if (child == nullptr)
+    {
+        return;
+    }
+    
     if (_batchNode)
     {
         Sprite* childSprite = dynamic_cast<Sprite*>(child);
@@ -703,6 +730,10 @@ void Sprite::addChild(Node *child, int zOrder, int tag)
 void Sprite::addChild(Node *child, int zOrder, const std::string &name)
 {
     CCASSERT(child != nullptr, "Argument must be non-nullptr");
+    if (child == nullptr)
+    {
+        return;
+    }
     
     if (_batchNode)
     {
@@ -766,7 +797,7 @@ void Sprite::sortAllChildren()
 {
     if (_reorderChildDirty)
     {
-        std::sort(std::begin(_children), std::end(_children), nodeComparisonLess);
+        sortNodes(_children);
 
         if ( _batchNode)
         {
@@ -901,10 +932,10 @@ void Sprite::setAnchorPoint(const Vec2& anchor)
     SET_DIRTY_RECURSIVELY();
 }
 
-void Sprite::ignoreAnchorPointForPosition(bool value)
+void Sprite::setIgnoreAnchorPointForPosition(bool value)
 {
-    CCASSERT(! _batchNode, "ignoreAnchorPointForPosition is invalid in Sprite");
-    Node::ignoreAnchorPointForPosition(value);
+    CCASSERT(! _batchNode, "setIgnoreAnchorPointForPosition is invalid in Sprite");
+    Node::setIgnoreAnchorPointForPosition(value);
 }
 
 void Sprite::setVisible(bool bVisible)
@@ -922,6 +953,9 @@ void Sprite::setFlippedX(bool flippedX)
             auto& v = _polyInfo.triangles.verts[i].vertices;
             v.x = _contentSize.width -v.x;
         }
+        if (_textureAtlas) {
+            setDirty(true);
+        }
     }
 }
 
@@ -938,6 +972,9 @@ void Sprite::setFlippedY(bool flippedY)
         for (ssize_t i = 0; i < _polyInfo.triangles.vertCount; i++) {
             auto& v = _polyInfo.triangles.verts[i].vertices;
             v.y = _contentSize.height -v.y;
+        }
+        if (_textureAtlas) {
+            setDirty(true);
         }
     }
 }
@@ -1004,6 +1041,12 @@ bool Sprite::isOpacityModifyRGB(void) const
 
 void Sprite::setSpriteFrame(const std::string &spriteFrameName)
 {
+    CCASSERT(!spriteFrameName.empty(), "spriteFrameName must not be empty");
+    if (spriteFrameName.empty())
+    {
+        return;
+    }
+    
     SpriteFrameCache *cache = SpriteFrameCache::getInstance();
     SpriteFrame *spriteFrame = cache->getSpriteFrameByName(spriteFrameName);
 
@@ -1034,12 +1077,25 @@ void Sprite::setSpriteFrame(SpriteFrame *spriteFrame)
     // update rect
     _rectRotated = spriteFrame->isRotated();
     setTextureRect(spriteFrame->getRect(), _rectRotated, spriteFrame->getOriginalSize());
+    
+    if(spriteFrame->hasPolygonInfo())
+    {
+        _polyInfo = spriteFrame->getPolygonInfo();
+    }
+    if (spriteFrame->hasAnchorPoint())
+    {
+        setAnchorPoint(spriteFrame->getAnchorPoint());
+    }
 }
 
 void Sprite::setDisplayFrameWithAnimationName(const std::string& animationName, ssize_t frameIndex)
 {
-    CCASSERT(animationName.size()>0, "CCSprite#setDisplayFrameWithAnimationName. animationName must not be nullptr");
-
+    CCASSERT(!animationName.empty(), "CCSprite#setDisplayFrameWithAnimationName. animationName must not be nullptr");
+    if (animationName.empty())
+    {
+        return;
+    }
+    
     Animation *a = AnimationCache::getInstance()->getAnimation(animationName);
 
     CCASSERT(a, "CCSprite#setDisplayFrameWithAnimationName: Frame not found");
@@ -1112,7 +1168,7 @@ void Sprite::updateBlendFunc(void)
 {
     CCASSERT(! _batchNode, "CCSprite: updateBlendFunc doesn't work when the sprite is rendered using a SpriteBatchNode");
 
-    // it is possible to have an untextured spritec
+    // it is possible to have an untextured sprite
     if (! _texture || ! _texture->hasPremultipliedAlpha())
     {
         _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
@@ -1135,7 +1191,7 @@ std::string Sprite::getDescription() const
     return StringUtils::format("<Sprite | Tag = %d, TextureID = %d>", _tag, texture_id );
 }
 
-PolygonInfo Sprite::getPolygonInfo() const
+const PolygonInfo& Sprite::getPolygonInfo() const
 {
     return _polyInfo;
 }

@@ -26,18 +26,17 @@ THE SOFTWARE.
 #ifndef __CC_EGLVIEWIMPL_WINRT_H__
 #define __CC_EGLVIEWIMPL_WINRT_H__
 
-#include "CCStdC.h"
+#include "platform/winrt/CCStdC.h"
 #include "platform/CCCommon.h"
+#include "platform/winrt/Keyboard-winrt.h"
 #include "platform/CCGLView.h"
-#include "InputEvent.h"
-
+#include "base/CCEventKeyboard.h"
 
 #include <agile.h>
 #include <concurrent_queue.h>
 #include <string>
 #include <memory>
 #include <wrl/client.h>
-#include <Keyboard-winrt.h>
 
 NS_CC_BEGIN
 
@@ -56,10 +55,19 @@ public:
     Windows::Graphics::Display::DisplayOrientations getDeviceOrientation() {return m_orientation;};
     Size getRenerTargetSize() const { return Size(m_width, m_height); }
 
-    virtual void setIMEKeyboardState(bool bOpen);
+    virtual void setIMEKeyboardState(bool bOpen) override;
     virtual void setIMEKeyboardState(bool bOpen, const std::string& str);
 
     virtual bool Create(float width, float height, float dpi, Windows::Graphics::Display::DisplayOrientations orientation);
+
+    /**
+    * Hide or Show the mouse cursor if there is one.
+    *
+    * @param isVisible Hide or Show the mouse cursor if there is one.
+    */
+    virtual void setCursorVisible(bool isVisible) override;
+
+    bool isCursorVisible() { return _isCursorVisible; }
 
     void setDispatcher(Windows::UI::Core::CoreDispatcher^ dispatcher);
     Windows::UI::Core::CoreDispatcher^ getDispatcher() {return m_dispatcher.Get();}
@@ -70,6 +78,12 @@ public:
 	void OnPointerPressed(Windows::UI::Core::PointerEventArgs^ args);
 	void OnPointerMoved(Windows::UI::Core::PointerEventArgs^ args);
 	void OnPointerReleased(Windows::UI::Core::PointerEventArgs^ args);
+
+    void OnMousePressed(Windows::UI::Core::PointerEventArgs^ args);
+    void OnMouseMoved(Windows::UI::Core::PointerEventArgs^ args);
+    void OnMouseReleased(Windows::UI::Core::PointerEventArgs^ args);
+    void OnMouseWheelChanged(Windows::UI::Core::PointerEventArgs^ args);
+
 	void OnWinRTKeyboardEvent(WinRTKeyboardEventType type, Windows::UI::Core::KeyEventArgs^ args);
 
 
@@ -131,6 +145,7 @@ protected:
     float _frameZoomFactor;
     bool _supportTouch;
     bool _isRetina;
+    bool _isCursorVisible;
 
 
 private:
@@ -141,6 +156,7 @@ private:
  
     cocos2d::Vec2 TransformToOrientation(Windows::Foundation::Point point);
  	cocos2d::Vec2  GetPoint(Windows::UI::Core::PointerEventArgs^ args);
+    cocos2d::Vec2  GetPointMouse(Windows::UI::Core::PointerEventArgs^ args);
        
     Windows::Foundation::Rect m_windowBounds;
 	Windows::Foundation::EventRegistrationToken m_eventToken;
@@ -156,19 +172,18 @@ private:
 	bool m_lastPointValid;
 	bool m_windowClosed;
 	bool m_windowVisible;
+    // PointerReleased for mouse not send button id, need save in PointerPressed last button
+    MouseButton _lastMouseButtonPressed;
 
     bool m_running;
 	bool m_initialized;
     bool m_appShouldExit;
 
-    Cocos2dEventDelegate^ m_delegate;
-    Cocos2dMessageBoxDelegate^ m_messageBoxDelegate;
-    Cocos2dEditBoxDelegate^ m_editBoxDelegate;
-
     Concurrency::concurrent_queue<std::shared_ptr<InputEvent>> mInputEvents;
 
     Platform::Agile<Windows::UI::Core::CoreDispatcher> m_dispatcher;
     Platform::Agile<Windows::UI::Xaml::Controls::Panel> m_panel;
+
     KeyBoardWinRT^ m_keyboard;
 
     cocos2d::EventListenerKeyboard* m_backButtonListener;

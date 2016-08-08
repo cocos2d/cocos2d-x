@@ -41,12 +41,17 @@ static void untrackRef(Ref* ref);
 
 Ref::Ref()
 : _referenceCount(1) // when the Ref is created, the reference count of it is 1
+#if CC_ENABLE_SCRIPT_BINDING
+, _luaID (0)
+, _scriptObject(nullptr)
+, _rooted(false)
+, _scriptOwned(false)
+,_referenceCountAtRootTime(0)
+#endif
 {
 #if CC_ENABLE_SCRIPT_BINDING
     static unsigned int uObjectCount = 0;
-    _luaID = 0;
     _ID = ++uObjectCount;
-    _scriptObject = nullptr;
 #endif
     
 #if CC_REF_LEAK_DETECTION
@@ -62,6 +67,7 @@ Ref::~Ref()
     {
         ScriptEngineManager::getInstance()->getScriptEngine()->removeScriptObjectByObject(this);
     }
+#if !CC_ENABLE_GC_FOR_NATIVE_OBJECTS
     else
     {
         ScriptEngineProtocol* pEngine = ScriptEngineManager::getInstance()->getScriptEngine();
@@ -70,7 +76,8 @@ Ref::~Ref()
             pEngine->removeScriptObjectByObject(this);
         }
     }
-#endif
+#endif // !CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+#endif // CC_ENABLE_SCRIPT_BINDING
 
 
 #if CC_REF_LEAK_DETECTION

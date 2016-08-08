@@ -30,6 +30,10 @@
 
 var chipmunkTestSceneIdx = -1;
 
+function k_scalar_body(body, point, n) {
+    var rcn = cp.v.cross(cp.v.sub(point, body.p), n);
+    return 1.0/body.m + rcn*rcn/body.i;
+}
 
 //------------------------------------------------------------------
 //
@@ -530,7 +534,7 @@ var ChipmunkCollisionTestB = ChipmunkBaseLayer.extend( {
             var wall = walls[i];
             cp.shapeSetElasticity(wall, 1);
             cp.shapeSetFriction(wall, 1);
-            cp.spaceAddStaticShape( this.space, wall );
+            cp.spaceAddShape(this.space, wall);
         }
 
         // Gravity
@@ -540,9 +544,10 @@ var ChipmunkCollisionTestB = ChipmunkBaseLayer.extend( {
     createPhysicsSprite : function( pos, file, collision_type ) {
         // using "C" API. DO NO USE THIS API
         var body = cp.bodyNew(1, cp.momentForBox(1, 48, 108) );
-        cp.bodySetPos( body, pos );
+        cp.bodySetPosition( body, pos );
         cp.spaceAddBody( this.space, body );
-        var shape = cp.boxShapeNew( body, 48, 108);
+        // chipmunk v7.0 uses an extra argument
+        var shape = cp.boxShapeNew( body, 48, 108, 0);
         cp.shapeSetElasticity( shape, 0.5 );
         cp.shapeSetFriction( shape, 0.5 );
         cp.shapeSetCollisionType( shape, collision_type );
@@ -1495,12 +1500,12 @@ var Buoyancy = ChipmunkDemo.extend( {
 
         var j=count-1;
         for(var i=0; i<count; i++) {
-            var a = body.local2World( poly.getVert(j));
-            var b = body.local2World( poly.getVert(i));
+            var a = body.local2World(poly.getVert(j));
+            var b = body.local2World(poly.getVert(i));
 
             if(a.y < level){
-                clipped.push( a.x );
-                clipped.push( a.y );
+                clipped.push(a.x);
+                clipped.push(a.y);
             }
 
             var a_level = a.y - level;
@@ -1521,24 +1526,24 @@ var Buoyancy = ChipmunkDemo.extend( {
 
         var displacedMass = clippedArea*FLUID_DENSITY;
         var centroid = cp.centroidForPoly(clipped);
-        var r = cp.v.sub(centroid, body.getPos());
 
         var dt = space.getCurrentTimeStep();
         var g = space.gravity;
 
         // Apply the buoyancy force as an impulse.
-        body.applyImpulse( cp.v.mult(g, -displacedMass*dt), r);
+        body.applyImpulse(cp.v.mult(g, -displacedMass*dt), centroid);
 
         // Apply linear damping for the fluid drag.
-        var v_centroid = cp.v.add(body.getVel(), cp.v.mult(cp.v.perp(r), body.w));
-        var k = 1; //k_scalar_body(body, r, cp.v.normalize_safe(v_centroid));
+        var v_centroid = body.getVelAtWorldPoint(centroid)
+        var k = k_scalar_body(body, centroid, cp.v.normalize(v_centroid));
         var damping = clippedArea*FLUID_DRAG*FLUID_DENSITY;
         var v_coef = Math.exp(-damping*dt*k); // linear drag
 //  var v_coef = 1.0/(1.0 + damping*dt*cp.v.len(v_centroid)*k); // quadratic drag
-        body.applyImpulse( cp.v.mult(cp.v.sub(cp.v.mult(v_centroid, v_coef), v_centroid), 1.0/k), r);
+        body.applyImpulse(cp.v.mult(cp.v.sub(cp.v.mult(v_centroid, v_coef), v_centroid), 1.0/k), centroid);
 
         // Apply angular damping for the fluid drag.
-        var w_damping = cp.momentForPoly(FLUID_DRAG*FLUID_DENSITY*clippedArea, clipped, cp.v.neg(body.p));
+        var cog = body.local2World(body.getCenterOfGravity());
+        var w_damping = cp.momentForPoly(FLUID_DRAG*FLUID_DENSITY*clippedArea, clipped, cp.v.neg(cog), 0);
         body.w *= Math.exp(-w_damping*dt* (1/body.i));
 
         return true;
@@ -1744,50 +1749,41 @@ var Query = ChipmunkDemo.extend({
 
         var start = cc.p(320, 240);
         var end = touch.getLocation();
+        var radius = 10;
         drawNode.drawSegment(start, end, 1, cc.color(0, 255, 0, 255));
 
-        //segmntQueryFirst
-        var info = target.space.segmentQueryFirst(start, end, cp.ALL_LAYERS, cp.NO_GROUP);
+        // WARNING: API changed in Chipmunk v7.0
+        var info = target.space.segmentQueryFirst(start, end, radius, cp.SHAPE_FILTER_ALL);
         if(info) {
-            var point = info.hitPoint(start, end);
 
-            // Draw red over the occluded part of the query
-            drawNode.drawSegment(point, end, 1, cc.color(255, 0, 0, 255));
+            // Draw blue over the occluded part of the query
+            drawNode.drawSegment(cp.v.lerp(start, end, info.alpha), end, 1, cc.color(0,0,255,255));
             
-            // Draw a little blue surface normal
-            drawNode.drawSegment(point, cp.v.add(point, cp.v.mult(info.n, 16)), 1, cc.color(0, 255, 255, 255));
-        }
-
-        //segmentQuery
-        target.space.segmentQuery(start, end, cp.ALL_LAYERS, cp.NO_GROUP, function(shape, t, n){
-            cc.log("segmentQuery" + shape);
-        });
-
-        //nearestPointQueryNearest
-        var nearestInfo = target.space.nearestPointQueryNearest(end, 100, cp.ALL_LAYERS, cp.NO_GROUP);
-        if (nearestInfo) {
-            drawNode.drawSegment(end, nearestInfo.p, 1, cc.color(255, 255, 0, 255));
-
-            // Draw a red bounding box around the shape under the mouse.
-            if(nearestInfo.d < 0) target.drawBB(nearestInfo.shape.getBB(), null, cc.color(255, 0, 0, 255));
-        }
-
-        //pointQuery
-        target.space.pointQuery(end, cp.ALL_LAYERS, cp.NO_GROUP, function(shape){
-            cc.log("pointQuery" + shape);
-        });
+            // Draw a little red surface normal
+            drawNode.drawSegment(info.point, cp.v.add(info.point, cp.v.mult(info.normal, 16)), 1, cc.color(255,0,0,255));
         
-        //nearestPointQuery
-        target.space.nearestPointQuery(end, 100, cp.ALL_LAYERS, cp.NO_GROUP, function(shape, distance, point){
-            cc.log("nearestPointQuery" + shape);
-            cc.log("distance:" + distance);
-            cc.log("nearest point:" + point.x + "," + point.y);
-        });
+            // Draw a little red dot on the hit point.
+            drawNode.drawDot(info.point, 3, cc.color(255,0,0,255));
 
-        //bbQuery
-        target.space.bbQuery(cp.bb(end.x-50, end.y-50, end.x+50, end.y+50), cp.ALL_LAYERS, cp.NO_GROUP, function(shape){
-            cc.log("bbQuery" + shape);
-        });
+            cc.log("Segment Query: Dist(" + info.alpha * cp.v.dist(start,end) + ") Normal:(" + info.normal.x + "," + info.normal.y + ")");
+
+            // Draw a fat green line over the unoccluded part of the query
+            // drawNode.drawSegment(start, cp.v.lerp(start, end, info.alpha), radius, cc.color(0,255,0,255));
+        } else {
+            cc.log("Segment Query (None)");
+        }
+
+        var nearestInfo = target.space.pointQueryNearest(touch.getLocation(), 100.0, cp.SHAPE_FILTER_ALL);
+        if(nearestInfo){
+            // Draw a grey line to the closest shape.
+            drawNode.drawDot(touch.getLocation(), 3, cc.color(128, 128, 128, 255));
+            drawNode.drawSegment(touch.getLocation(), nearestInfo.p, 1, cc.color(128, 128, 128, 255));
+            
+            // Draw a red bounding box around the shape under the mouse.
+//            if(nearestInfo.d < 0)
+//                drawNode.drawBB(cpShapeGetBB(nearestInfo.shape), RGBAColor(1,0,0,1));
+        }
+        
     }
 });
 
@@ -2053,18 +2049,19 @@ var Issue1083 = ChipmunkDemo.extend({
         cc.assert(segment.a.y == 0, "SegmentShape assertion failed : a.y");
         cc.assert(segment.b.x == length/2, "SegmentShape assertion failed : b.x");
         cc.assert(segment.b.y == 0, "SegmentShape assertion failed : b.y");
-        var nomal = cp.v.perp(cp.v.normalize(cp.v.sub(b, a)));
-        cc.assert(segment.n.x == nomal.x, "SegmentShape assertion failed : n.x");
-        cc.assert(segment.n.y == nomal.y, "SegmentShape assertion failed : n.y");
+        var normal = cp.v.perp(cp.v.normalize(cp.v.sub(b, a)));
+        cc.assert(segment.n.x == normal.x, "SegmentShape assertion failed : n.x");
+        cc.assert(segment.n.y == normal.y, "SegmentShape assertion failed : n.y");
         cc.assert(segment.r == 20, "SegmentShape assertion failed : r");
 
         for(var i = 0; i < verts.length; ++i){
             cc.assert(verts[i] == poly.verts[i],"PolyShape assertion failed : verts");
         }
 
-        var plane = poly.planes[0];
-        cc.assert(plane.d.toFixed(4) == 24.2705, "PolyShape assertion failed : planes d");
-        cc.assert(plane.n.x.toFixed(4) == 0.8090, "PolyShape assertion failed : planes n");
+        // FIXME: Chipmunk v7.0 does export planes
+        // var plane = poly.planes[0];
+        // cc.assert(plane.d.toFixed(4) == 24.2705, "PolyShape assertion failed : planes d");
+        // cc.assert(plane.n.x.toFixed(4) == 0.8090, "PolyShape assertion failed : planes n");
     }
 });
 

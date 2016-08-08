@@ -22,9 +22,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "CCActionTimeline.h"
+#include "editor-support/cocostudio/ActionTimeline/CCActionTimeline.h"
 
-#include "cocostudio/CCComExtensionData.h"
+#include "editor-support/cocostudio/CCComExtensionData.h"
 
 USING_NS_CC;
 
@@ -197,14 +197,17 @@ void ActionTimeline::step(float delta)
     {
         return;
     }
-
     _time += delta * _timeSpeed;
-    const float endtoffset = _time - _endFrame * _frameInternal;
+    float deltaCurrFrameTime = std::abs(_time - _currentFrame * _frameInternal);
+    if (deltaCurrFrameTime < _frameInternal)
+        return;
 
+    const float endtoffset = _time - _endFrame * _frameInternal;
     if (endtoffset < _frameInternal)
     {
         _currentFrame = (int)(_time / _frameInternal);
         stepToFrame(_currentFrame);
+        emitFrameEndCallFuncs(_currentFrame);
         if (endtoffset >= 0 && _lastFrameListener != nullptr) // last frame 
             _lastFrameListener();
     }
@@ -218,6 +221,7 @@ void ActionTimeline::step(float delta)
             {
                 _currentFrame = _endFrame;
                 stepToFrame(_currentFrame);
+                emitFrameEndCallFuncs(_currentFrame);
                 if (_lastFrameListener != nullptr)  // last frame 
                     _lastFrameListener();
             }
@@ -304,16 +308,19 @@ void ActionTimeline::addAnimationInfo(const AnimationInfo& animationInfo)
     }
 
     _animationInfos[animationInfo.name] = animationInfo;
+    addFrameEndCallFunc(animationInfo.endIndex, animationInfo.name, animationInfo.clipEndCallBack);
 }
 
 void ActionTimeline::removeAnimationInfo(std::string animationName)
 {
-    if (_animationInfos.find(animationName) == _animationInfos.end())
+    auto clipIter = _animationInfos.find(animationName);
+    if (clipIter == _animationInfos.end())
     {
         CCLOG("AnimationInfo (%s) not exists.", animationName.c_str());
         return;
     }
 
+    removeFrameEndCallFunc((*clipIter).second.endIndex, animationName);
     _animationInfos.erase(animationName);
 }
 
@@ -322,9 +329,21 @@ bool ActionTimeline::IsAnimationInfoExists(const std::string& animationName)
     return _animationInfos.find(animationName) != _animationInfos.end();
 }
 
-AnimationInfo ActionTimeline::getAnimationInfo(const std::string &animationName)
+const AnimationInfo& ActionTimeline::getAnimationInfo(const std::string &animationName)
 {
     return _animationInfos.find(animationName)->second;
+}
+
+void ActionTimeline::setAnimationEndCallFunc(const std::string animationName, std::function<void()> func)
+{
+    auto clipIter = _animationInfos.find(animationName);
+    if (clipIter == _animationInfos.end())
+    {
+        CCLOG("AnimationInfo (%s) not exists.", animationName.c_str());
+        return;
+    }
+    clipIter->second.clipEndCallBack = func;
+    addFrameEndCallFunc(clipIter->second.endIndex, animationName, func);
 }
 
 void ActionTimeline::setFrameEventCallFunc(std::function<void(Frame *)> listener)
@@ -355,6 +374,52 @@ void ActionTimeline::emitFrameEvent(Frame* frame)
     }
 }
 
+void ActionTimeline::addFrameEndCallFunc(int frameIndex, const std::string& funcKey, std::function<void()> func)
+{
+    if (func != nullptr)
+    {
+        _frameEndCallFuncs[frameIndex][funcKey] = func;
+    }
+}
+
+void ActionTimeline::removeFrameEndCallFunc(int frameIndex, const std::string& funcKey)
+{
+    auto endClipCallsIter = _frameEndCallFuncs.find(frameIndex);
+    if (endClipCallsIter != _frameEndCallFuncs.end())
+    {
+        auto funcIter = (*endClipCallsIter).second.find(funcKey);
+        if (funcIter != (*endClipCallsIter).second.end())
+            (*endClipCallsIter).second.erase(funcKey);
+        if ((*endClipCallsIter).second.empty())
+            _frameEndCallFuncs.erase(endClipCallsIter);
+    }
+}
+
+void ActionTimeline::removeFrameEndCallFuncs(int frameIndex)
+{
+    auto endClipCallsIter = _frameEndCallFuncs.find(frameIndex);
+    if (endClipCallsIter != _frameEndCallFuncs.end())
+    {
+        _frameEndCallFuncs.erase(endClipCallsIter);
+    }
+}
+
+void ActionTimeline::clearFrameEndCallFuncs()
+{
+    _frameEndCallFuncs.clear();
+}
+
+void ActionTimeline::emitFrameEndCallFuncs(int frameIndex)
+{
+    auto clipEndCallsIter = _frameEndCallFuncs.find(frameIndex);
+    if (clipEndCallsIter != _frameEndCallFuncs.end())
+    {
+        auto clipEndCalls = (*clipEndCallsIter).second;
+        for (auto call : clipEndCalls)
+            (call).second();
+    }
+}
+
 void ActionTimeline::gotoFrame(int frameIndex)
 {
     if(_target == nullptr)
@@ -374,5 +439,15 @@ void ActionTimeline::stepToFrame(int frameIndex)
     {      
         _timelineList.at(i)->stepToFrame(frameIndex);
     }
+}
+
+void ActionTimeline::start()
+{
+    gotoFrameAndPlay(0);
+}
+
+void ActionTimeline::stop()
+{
+    pause();
 }
 NS_TIMELINE_END

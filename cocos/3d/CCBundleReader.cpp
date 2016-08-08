@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCBundleReader.h"
+#include "3d/CCBundleReader.h"
 #include "platform/CCFileUtils.h"
 
 NS_CC_BEGIN
@@ -87,7 +87,7 @@ ssize_t BundleReader::read(void* ptr, ssize_t size, ssize_t count)
 char* BundleReader::readLine(int num,char* line)
 {
     if (!_buffer)
-        return 0;
+        return nullptr;
 
     char* buffer = (char*)_buffer+_position;
     char* p = line;

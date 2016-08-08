@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCPhysics3D.h"
+#include "physics3d/CCPhysics3D.h"
 #include "renderer/CCRenderer.h"
 
 #if CC_USE_3D_PHYSICS
@@ -86,7 +86,7 @@ bool Physics3DWorld::init(Physics3DWorldDes* info)
     _collisionConfiguration = new (std::nothrow) btDefaultCollisionConfiguration();
     //_collisionConfiguration->setConvexConvexMultipointIterations();
     
-    ///use the default collision dispatcher. For parallel processing you can use a diffent dispatcher (see Extras/BulletMultiThreaded)
+    ///use the default collision dispatcher. For parallel processing you can use a different dispatcher (see Extras/BulletMultiThreaded)
     _dispatcher = new (std::nothrow) btCollisionDispatcher(_collisionConfiguration);
     
     _broadphase = new (std::nothrow) btDbvtBroadphase();

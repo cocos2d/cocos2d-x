@@ -43,16 +43,18 @@ NS_CC_BEGIN
 class CC_DLL CCFileUtilsWinRT : public FileUtils
 {
     friend class FileUtils;
+protected:
     CCFileUtilsWinRT();
 public:
-    /* override funtions */
+    /* override functions */
     bool init();
     virtual std::string getWritablePath() const;
     virtual bool isAbsolutePath(const std::string& strPath) const;
     virtual std::string getPathForFilename(const std::string& filename, const std::string& resolutionDirectory, const std::string& searchPath) const override;
     virtual std::string getFullPathForDirectoryAndFilename(const std::string& strDirectory, const std::string& strFilename) const override;
-	virtual std::string getStringFromFile(const std::string& filename) override;
     virtual std::string getSuitableFOpen(const std::string& filenameUtf8) const override;
+    virtual long getFileSize(const std::string &filepath) override;
+	virtual FileUtils::Status getContents(const std::string& filename, ResizableBuffer* buffer) override;
 	static std::string getAppPath();
 
 private:
@@ -67,6 +69,16 @@ private:
     *  @return True if the file have been renamed successfully, false if not.
     */
     virtual bool renameFile(const std::string &path, const std::string &oldname, const std::string &name) override;
+
+
+    /**
+    *  Renames a file.
+    *
+    *  @param oldfullpath  The current name of the file, including path and name.
+    *  @param newfullpath  The new name of the file, including path and name
+    *  @return True if the file have been renamed successfully, false if not.
+    */
+    virtual bool renameFile(const std::string &oldfullpath, const std::string& newfullpath) override;
 
     /**
     *  Checks whether a directory exists without considering search paths and resolution orders.

@@ -2,7 +2,7 @@
 Copyright (c) 2011      Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (C) 2013-2014 Chukong Technologies Inc.
+Copyright (C) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -119,7 +119,7 @@ static void SetBlending(GLenum sfactor, GLenum dfactor)
 
         RenderState::StateBlock::_defaultState->setBlend(true);
         RenderState::StateBlock::_defaultState->setBlendSrc((RenderState::Blend)sfactor);
-        RenderState::StateBlock::_defaultState->setBlendSrc((RenderState::Blend)dfactor);
+        RenderState::StateBlock::_defaultState->setBlendDst((RenderState::Blend)dfactor);
     }
 }
 

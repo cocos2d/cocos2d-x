@@ -110,7 +110,7 @@ void SpineTestLayerNormal::update (float deltaTime) {
 bool SpineTestLayerFFD::init () {
     if (!SpineTestLayer::init()) return false;
     
-	skeletonNode = SkeletonAnimation::createWithFile("spine/goblins-ffd.json", "spine/goblins-ffd.atlas", 1.5f);
+	skeletonNode = SkeletonAnimation::createWithFile("spine/goblins.json", "spine/goblins.atlas", 1.5f);
 	skeletonNode->setAnimation(0, "walk", true);
 	skeletonNode->setSkin("goblin");
     
@@ -153,7 +153,7 @@ bool SpineTestPerformanceLayer::init () {
     {
         
         Vec2 pos = convertToNodeSpace(touch->getLocation());
-        auto skeletonNode = SkeletonAnimation::createWithFile("spine/goblins-ffd.json", "spine/goblins-ffd.atlas", 1.5f);
+        auto skeletonNode = SkeletonAnimation::createWithFile("spine/goblins.json", "spine/goblins.atlas", 1.5f);
         skeletonNode->setAnimation(0, "walk", true);
         skeletonNode->setSkin("goblin");
         

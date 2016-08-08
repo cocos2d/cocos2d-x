@@ -24,7 +24,7 @@
  ****************************************************************************/
 
 
-var UILabelAtlasTest = UIScene.extend({
+var UILabelAtlasTest = UIMainLayer.extend({
     init: function () {
         if (this._super()) {
             //init text

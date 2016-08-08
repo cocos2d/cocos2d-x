@@ -109,10 +109,10 @@ var Slider = ccui.Slider.extend({
 var AudioControlTest = AudioEngineBase.extend({
     _title:"Audio control test",
     
-    _audioID: jsb.AudioEngine.INVALID_AUDIO_ID,
+    _audioID: -1,
     _loopEnabled: false,
     _volume: 1,
-    _duration: jsb.AudioEngine.TIME_UNKNOWN,
+    _duration: -1,
     _timeRatio: 0,
     _updateTimeSlider: true,
 
@@ -121,7 +121,10 @@ var AudioControlTest = AudioEngineBase.extend({
 
     ctor: function () {
         this._super();
-        
+
+        this._audioID = jsb.AudioEngine.INVALID_AUDIO_ID;
+        this._duration = jsb.AudioEngine.TIME_UNKNOWN;
+
         var fontFilePath = "fonts/arial.ttf";
         
         var layerSize = this.getContentSize();

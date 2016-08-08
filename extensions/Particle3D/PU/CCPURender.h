@@ -65,7 +65,7 @@ class CC_DLL PUParticle3DEntityRender : public PURender
 {
 public:
     void copyAttributesTo(PUParticle3DEntityRender *render);
-
+    virtual void reset()override;
 CC_CONSTRUCTOR_ACCESS:
     PUParticle3DEntityRender();
     virtual ~PUParticle3DEntityRender();
@@ -73,7 +73,6 @@ CC_CONSTRUCTOR_ACCESS:
 protected:
 
     bool initRender(const std::string &texFile);
-
 protected:
 
     struct VertexInfo
@@ -188,6 +187,7 @@ public:
     virtual PUParticle3DModelRender* clone() override;
     void copyAttributesTo(PUParticle3DModelRender *render);
 
+    virtual void reset()override;
 CC_CONSTRUCTOR_ACCESS:
     PUParticle3DModelRender();
     virtual ~PUParticle3DModelRender();

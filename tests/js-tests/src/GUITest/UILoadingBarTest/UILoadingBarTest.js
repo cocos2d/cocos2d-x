@@ -23,7 +23,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var UILoadingBarTest = UIScene.extend({
+var UILoadingBarTest = UIMainLayer.extend({
     _count: 0,
     _loadingBar:null,
     ctor: function () {

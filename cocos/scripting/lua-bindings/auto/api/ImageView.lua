@@ -48,6 +48,12 @@
 -- @return ImageView#ImageView self (return value: ccui.ImageView)
         
 --------------------------------
+-- 
+-- @function [parent=#ImageView] getRenderFile 
+-- @param self
+-- @return ResourceData#ResourceData ret (return value: cc.ResourceData)
+        
+--------------------------------
 -- Get ImageView's capInsets size.<br>
 -- return Query capInsets size in Rect<br>
 -- see `setCapInsets(const Rect&)`
@@ -85,9 +91,10 @@
         
 --------------------------------
 -- 
--- @function [parent=#ImageView] init 
+-- @function [parent=#ImageView] ignoreContentAdaptWithSize 
 -- @param self
--- @return bool#bool ret (return value: bool)
+-- @param #bool ignore
+-- @return ImageView#ImageView self (return value: ccui.ImageView)
         
 --------------------------------
 -- 
@@ -97,16 +104,29 @@
         
 --------------------------------
 -- 
--- @function [parent=#ImageView] getVirtualRendererSize 
+-- @function [parent=#ImageView] init 
 -- @param self
--- @return size_table#size_table ret (return value: size_table)
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- 
--- @function [parent=#ImageView] ignoreContentAdaptWithSize 
+-- @function [parent=#ImageView] setGLProgram 
 -- @param self
--- @param #bool ignore
+-- @param #cc.GLProgram glProgram
 -- @return ImageView#ImageView self (return value: ccui.ImageView)
+        
+--------------------------------
+-- 
+-- @function [parent=#ImageView] setGLProgramState 
+-- @param self
+-- @param #cc.GLProgramState glProgramState
+-- @return ImageView#ImageView self (return value: ccui.ImageView)
+        
+--------------------------------
+-- 
+-- @function [parent=#ImageView] getVirtualRendererSize 
+-- @param self
+-- @return size_table#size_table ret (return value: size_table)
         
 --------------------------------
 -- Default constructor<br>

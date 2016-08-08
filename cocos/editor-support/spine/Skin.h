@@ -50,6 +50,20 @@ typedef struct spSkin {
 #endif
 } spSkin;
 
+/* Private structs, needed by Skeleton */
+typedef struct _Entry _Entry;
+struct _Entry {
+	int slotIndex;
+	const char* name;
+	spAttachment* attachment;
+	_Entry* next;
+};
+
+typedef struct {
+	spSkin super;
+	_Entry* entries;
+} _spSkin;
+
 spSkin* spSkin_create (const char* name);
 void spSkin_dispose (spSkin* self);
 

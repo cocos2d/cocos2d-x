@@ -1,6 +1,6 @@
 ﻿/****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 * Portions Copyright (c) Microsoft Open Technologies, Inc.
 * All Rights Reserved
@@ -25,11 +25,15 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "Keyboard-winrt.h"
+#include "platform/winrt/Keyboard-winrt.h"
+#include "base/CCEventKeyboard.h"
+#include "platform/winrt/CCGLViewImpl-winrt.h"
+#include "base/CCIMEDispatcher.h"
+#include "base/CCDirector.h"
+#include "base/CCEventDispatcher.h"
 
 using namespace cocos2d;
 using namespace Platform;
-using namespace Concurrency;
 using namespace Windows::System;
 using namespace Windows::System::Threading;
 using namespace Windows::UI::Core;
@@ -117,9 +121,9 @@ static keyCodeItem g_keyCodeStructArray [] = {
     { (int) VirtualKey::Left, EventKeyboard::KeyCode::KEY_LEFT_ARROW },
     { (int) VirtualKey::Down, EventKeyboard::KeyCode::KEY_DOWN_ARROW },
     { (int) VirtualKey::Up, EventKeyboard::KeyCode::KEY_UP_ARROW },
-    { VK_PRIOR, EventKeyboard::KeyCode::KEY_KP_PG_UP },
-    { VK_NEXT, EventKeyboard::KeyCode::KEY_KP_PG_DOWN },
-    { VK_HOME, EventKeyboard::KeyCode::KEY_KP_HOME },
+    { VK_PRIOR, EventKeyboard::KeyCode::KEY_PG_UP },
+    { VK_NEXT, EventKeyboard::KeyCode::KEY_PG_DOWN },
+    { VK_HOME, EventKeyboard::KeyCode::KEY_HOME },
     { VK_END, EventKeyboard::KeyCode::KEY_END },
     { VK_CAPITAL, EventKeyboard::KeyCode::KEY_CAPS_LOCK },
     { VK_SCROLL, EventKeyboard::KeyCode::KEY_SCROLL_LOCK },
@@ -266,33 +270,47 @@ void KeyBoardWinRT::OnWinRTKeyboardEvent(WinRTKeyboardEventType type, KeyEventAr
 {
     bool pressed = (type == WinRTKeyboardEventType::KeyPressed);
 
-    // don't allow key repeats
-    if (pressed && args->KeyStatus.WasKeyDown)
-    {
-        return;
-    }
+    // Is key repeats
+    bool repeat = pressed && args->KeyStatus.WasKeyDown;
 
     int key = static_cast<int>(args->VirtualKey);
     auto it = g_keyCodeMap.find(key);
     if (it != g_keyCodeMap.end())
     {
-        switch (it->second)
+
+        EventKeyboard::KeyCode keyCode = it->second;
+
+        EventKeyboard event(keyCode, pressed);
+        if (!repeat)
         {
-        case EventKeyboard::KeyCode::KEY_BACKSPACE:
-            if (pressed)
-            {
-                IMEDispatcher::sharedDispatcher()->dispatchDeleteBackward();
-            }
-            break;
-        default:
-            EventKeyboard event(it->second, pressed);
             auto dispatcher = Director::getInstance()->getEventDispatcher();
             dispatcher->dispatchEvent(&event);
-            if (it->second == EventKeyboard::KeyCode::KEY_ENTER)
+            if (keyCode == EventKeyboard::KeyCode::KEY_ENTER)
             {
                 IMEDispatcher::sharedDispatcher()->dispatchInsertText("\n", 1);
-                }
-            break;
+            }
+        }
+
+        if (pressed && !event.isStopped())
+        {
+            switch (keyCode)
+            {
+            case EventKeyboard::KeyCode::KEY_BACKSPACE:
+                IMEDispatcher::sharedDispatcher()->dispatchDeleteBackward();
+                break;
+            case EventKeyboard::KeyCode::KEY_HOME:
+            case EventKeyboard::KeyCode::KEY_KP_HOME:
+            case EventKeyboard::KeyCode::KEY_DELETE:
+            case EventKeyboard::KeyCode::KEY_KP_DELETE:
+            case EventKeyboard::KeyCode::KEY_END:
+            case EventKeyboard::KeyCode::KEY_LEFT_ARROW:
+            case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
+            case EventKeyboard::KeyCode::KEY_ESCAPE:
+                IMEDispatcher::sharedDispatcher()->dispatchControlKey(keyCode);
+                break;
+            default:
+                break;
+            }
         }
     }
     else

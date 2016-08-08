@@ -5,6 +5,12 @@
 -- @parent_module cc
 
 --------------------------------
+-- Restore the FBO, RenderTargets and viewport.
+-- @function [parent=#Camera] restore 
+-- @param self
+-- @return Camera#Camera self (return value: cc.Camera)
+        
+--------------------------------
 -- get depth, camera with larger depth is drawn on top of camera with smaller depth, the depth of camera with CameraFlag::DEFAULT is 0, user defined camera is -1 by default
 -- @function [parent=#Camera] getDepth 
 -- @param self
@@ -20,6 +26,14 @@
 -- 
 -- @function [parent=#Camera] applyViewport 
 -- @param self
+-- @return Camera#Camera self (return value: cc.Camera)
+        
+--------------------------------
+-- set the background brush. See CameraBackgroundBrush for more information.<br>
+-- param clearBrush Brush used to clear the background
+-- @function [parent=#Camera] setBackgroundBrush 
+-- @param self
+-- @param #cc.CameraBackgroundBrush clearBrush
 -- @return Camera#Camera self (return value: cc.Camera)
         
 --------------------------------
@@ -39,11 +53,23 @@
 -- @return Camera#Camera self (return value: cc.Camera)
         
 --------------------------------
+-- Get clear brush
+-- @function [parent=#Camera] getBackgroundBrush 
+-- @param self
+-- @return CameraBackgroundBrush#CameraBackgroundBrush ret (return value: cc.CameraBackgroundBrush)
+        
+--------------------------------
 -- Gets the camera's projection matrix.<br>
 -- return The camera projection matrix.
 -- @function [parent=#Camera] getProjectionMatrix 
 -- @param self
 -- @return mat4_table#mat4_table ret (return value: mat4_table)
+        
+--------------------------------
+-- 
+-- @function [parent=#Camera] isBrushValid 
+-- @param self
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- Get object depth towards camera
@@ -53,14 +79,19 @@
 -- @return float#float ret (return value: float)
         
 --------------------------------
--- Before rendering scene with this camera, the background need to be cleared.
--- @function [parent=#Camera] clearBackground 
+-- 
+-- @function [parent=#Camera] restoreViewport 
 -- @param self
--- @param #float depth
 -- @return Camera#Camera self (return value: cc.Camera)
         
 --------------------------------
--- set additional matrix for the projection matrix, it multiplys mat to projection matrix when called, used by WP8
+-- Before rendering scene with this camera, the background need to be cleared. It clears the depth buffer with max depth by default. Use setBackgroundBrush to modify the default behavior
+-- @function [parent=#Camera] clearBackground 
+-- @param self
+-- @return Camera#Camera self (return value: cc.Camera)
+        
+--------------------------------
+-- set additional matrix for the projection matrix, it multiplies mat to projection matrix when called, used by WP8
 -- @function [parent=#Camera] setAdditionalProjection 
 -- @param self
 -- @param #mat4_table mat
@@ -137,6 +168,12 @@
 -- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
+-- 
+-- @function [parent=#Camera] restoreFrameBufferObject 
+-- @param self
+-- @return Camera#Camera self (return value: cc.Camera)
+        
+--------------------------------
 -- Gets the camera's view matrix.<br>
 -- return The camera view matrix.
 -- @function [parent=#Camera] getViewMatrix 
@@ -176,7 +213,7 @@
 -- @return Camera#Camera self (return value: cc.Camera)
         
 --------------------------------
--- Set FBO, which will attacha several render target for the rendered result.
+-- Set FBO, which will attach several render target for the rendered result.
 -- @function [parent=#Camera] setFrameBufferObject 
 -- @param self
 -- @param #cc.experimental::FrameBuffer fbo

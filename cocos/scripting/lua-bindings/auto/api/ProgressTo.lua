@@ -8,7 +8,7 @@
 -- brief Initializes with a duration and destination percentage. <br>
 -- param duration Specify the duration of the ProgressTo action. It's a value in seconds.<br>
 -- param percent Specify the destination percentage.<br>
--- return If the creation sucess, return true; otherwise, return false.
+-- return If the creation success, return true; otherwise, return false.
 -- @function [parent=#ProgressTo] initWithDuration 
 -- @param self
 -- @param #float duration
@@ -19,7 +19,7 @@
 -- brief Create and initializes with a duration and a destination percentage.<br>
 -- param duration Specify the duration of the ProgressTo action. It's a value in seconds.<br>
 -- param percent Specify the destination percentage.<br>
--- return If the creation sucess, return a pointer of ProgressTo action; otherwise, return nil.
+-- return If the creation success, return a pointer of ProgressTo action; otherwise, return nil.
 -- @function [parent=#ProgressTo] create 
 -- @param self
 -- @param #float duration

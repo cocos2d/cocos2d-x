@@ -2,7 +2,7 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -109,7 +109,7 @@ public:
      * @param renderer The renderer use to render the scene.
      * @js NA
      */
-    void render(Renderer* renderer);
+    virtual void render(Renderer* renderer, const Mat4& eyeTransform, const Mat4* eyeProjection = nullptr);
     
     /** override function */
     virtual void removeAllChildren() override;
@@ -145,15 +145,13 @@ private:
     
 #if (CC_USE_PHYSICS || (CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION))
 public:
-    virtual void addChild(Node* child, int zOrder, int tag) override;
-    virtual void addChild(Node* child, int zOrder, const std::string &name) override;
     
 #if CC_USE_PHYSICS
     /** Get the physics world of the scene.
      * @return The physics world of the scene.
      * @js NA
      */
-    inline PhysicsWorld* getPhysicsWorld() { return _physicsWorld; }
+    inline PhysicsWorld* getPhysicsWorld() const { return _physicsWorld; }
 #endif
     
 #if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
@@ -203,8 +201,8 @@ public:
     void setNavMeshDebugCamera(Camera *camera);
 
 protected:
-    NavMesh*       _navMesh;
-    Camera *       _navMeshDebugCamera;
+    NavMesh*        _navMesh;
+    Camera *        _navMeshDebugCamera;
 #endif
     
 #if (CC_USE_PHYSICS || (CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION) || CC_USE_NAVMESH)

@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -21,27 +21,33 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#include "cocostudio/CCSGUIReader.h"
-#include "ui/CocosGUI.h"
-#include "cocostudio/CCActionManagerEx.h"
+#include "editor-support/cocostudio/CCSGUIReader.h"
+
 #include <fstream>
 #include <iostream>
-#include "WidgetReader/ButtonReader/ButtonReader.h"
-#include "WidgetReader/CheckBoxReader/CheckBoxReader.h"
-#include "WidgetReader/SliderReader/SliderReader.h"
-#include "WidgetReader/ImageViewReader/ImageViewReader.h"
-#include "WidgetReader/LoadingBarReader/LoadingBarReader.h"
-#include "WidgetReader/TextAtlasReader/TextAtlasReader.h"
-#include "WidgetReader/TextReader/TextReader.h"
-#include "WidgetReader/TextBMFontReader/TextBMFontReader.h"
-#include "WidgetReader/TextFieldReader/TextFieldReader.h"
-#include "WidgetReader/LayoutReader/LayoutReader.h"
-#include "WidgetReader/PageViewReader/PageViewReader.h"
-#include "WidgetReader/ScrollViewReader/ScrollViewReader.h"
-#include "WidgetReader/ListViewReader/ListViewReader.h"
-#include "cocostudio/CocoLoader.h"
 #include "ui/CocosGUI.h"
+#include "platform/CCFileUtils.h"
+#include "2d/CCSpriteFrameCache.h"
+#include "base/CCDirector.h"
+#include "base/ccUtils.h"
+
+#include "editor-support/cocostudio/CCActionManagerEx.h"
+#include "editor-support/cocostudio/WidgetReader/ButtonReader/ButtonReader.h"
+#include "editor-support/cocostudio/WidgetReader/CheckBoxReader/CheckBoxReader.h"
+#include "editor-support/cocostudio/WidgetReader/SliderReader/SliderReader.h"
+#include "editor-support/cocostudio/WidgetReader/ImageViewReader/ImageViewReader.h"
+#include "editor-support/cocostudio/WidgetReader/LoadingBarReader/LoadingBarReader.h"
+#include "editor-support/cocostudio/WidgetReader/TextAtlasReader/TextAtlasReader.h"
+#include "editor-support/cocostudio/WidgetReader/TextReader/TextReader.h"
+#include "editor-support/cocostudio/WidgetReader/TextBMFontReader/TextBMFontReader.h"
+#include "editor-support/cocostudio/WidgetReader/TextFieldReader/TextFieldReader.h"
+#include "editor-support/cocostudio/WidgetReader/LayoutReader/LayoutReader.h"
+#include "editor-support/cocostudio/WidgetReader/PageViewReader/PageViewReader.h"
+#include "editor-support/cocostudio/WidgetReader/ScrollViewReader/ScrollViewReader.h"
+#include "editor-support/cocostudio/WidgetReader/ListViewReader/ListViewReader.h"
+#include "editor-support/cocostudio/CocoLoader.h"
 #include "tinyxml2.h"
+
 
 using namespace cocos2d;
 using namespace cocos2d::ui;
@@ -146,7 +152,7 @@ void GUIReader::storeFileDesignSize(const char *fileName, const cocos2d::Size &s
     _fileDesignSizes[keyHeight] = cocos2d::Value(size.height);
 }
 
-const cocos2d::Size GUIReader::getFileDesignSize(const char* fileName) const
+cocos2d::Size GUIReader::getFileDesignSize(const char* fileName) const
 {
     std::string keyWidth = fileName;
     keyWidth.append("width");
@@ -493,7 +499,7 @@ Widget* WidgetPropertiesReader0250::createWidget(const rapidjson::Value& data, c
         const char* file = DICTOOL->getStringValueFromArray_json(data, "textures", i);
         std::string tp = fullPath;
         tp.append(file);
-        SpriteFrameCache::getInstance()->addSpriteFramesWithFile(tp.c_str());
+        SpriteFrameCache::getInstance()->addSpriteFramesWithFile(tp);
     }
     float fileDesignWidth = DICTOOL->getFloatValue_json(data, "designWidth");
     float fileDesignHeight = DICTOOL->getFloatValue_json(data, "designHeight");
@@ -764,7 +770,11 @@ void WidgetPropertiesReader0250::setPropsForButtonFromJsonDictionary(Widget*widg
     bool fn = DICTOOL->checkObjectExist_json(options, "fontName");
     if (fn)
     {
-        button->setTitleFontName(DICTOOL->getStringValue_json(options, "fontName"));
+        const char * szTemp = DICTOOL->getStringValue_json(options, "fontName");
+        if (szTemp && *szTemp)
+            button->setTitleFontName(szTemp);
+        else
+            button->setTitleFontName(std::string(""));
     }
     setColorPropsForWidgetFromJsonDictionary(widget,options);
 }
@@ -882,7 +892,11 @@ void WidgetPropertiesReader0250::setPropsForLabelFromJsonDictionary(Widget*widge
     bool fn = DICTOOL->checkObjectExist_json(options, "fontName");
     if (fn)
     {
-        label->setFontName(DICTOOL->getStringValue_json(options, "fontName"));
+        const char * szTemp = DICTOOL->getStringValue_json(options, "fontName");
+        if (szTemp && *szTemp)
+            label->setFontName(szTemp);
+        else
+            label->setFontName(std::string(""));
     }
     bool aw = DICTOOL->checkObjectExist_json(options, "areaWidth");
     bool ah = DICTOOL->checkObjectExist_json(options, "areaHeight");
@@ -1105,7 +1119,11 @@ void WidgetPropertiesReader0250::setPropsForTextFieldFromJsonDictionary(Widget*w
     bool fn = DICTOOL->checkObjectExist_json(options, "fontName");
     if (fn)
     {
-        textField->setFontName(DICTOOL->getStringValue_json(options, "fontName"));
+        const char * szTemp = DICTOOL->getStringValue_json(options, "fontName");
+        if (szTemp && *szTemp)
+            textField->setFontName(szTemp);
+        else
+            textField->setFontName(std::string(""));
     }
     bool tsw = DICTOOL->checkObjectExist_json(options, "touchSizeWidth");
     bool tsh = DICTOOL->checkObjectExist_json(options, "touchSizeHeight");
@@ -1203,7 +1221,7 @@ Widget* WidgetPropertiesReader0300::createWidget(const rapidjson::Value& data, c
         const char* file = DICTOOL->getStringValueFromArray_json(data, "textures", i);
         std::string tp = fullPath;
         tp.append(file);
-        SpriteFrameCache::getInstance()->addSpriteFramesWithFile(tp.c_str());
+        SpriteFrameCache::getInstance()->addSpriteFramesWithFile(tp);
     }
     float fileDesignWidth = DICTOOL->getFloatValue_json(data, "designWidth");
     float fileDesignHeight = DICTOOL->getFloatValue_json(data, "designHeight");

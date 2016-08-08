@@ -58,7 +58,7 @@
 -- override the number of constraint solver iterations used to solve this constraint, -1 will use the default number of iterations, as specified in SolverInfo.m_numIterations
 -- @function [parent=#Physics3DConstraint] setOverrideNumSolverIterations 
 -- @param self
--- @param #int overideNumIterations
+-- @param #int overrideNumIterations
 -- @return Physics3DConstraint#Physics3DConstraint self (return value: cc.Physics3DConstraint)
         
 --------------------------------

@@ -1,583 +1,445 @@
-/****************************************************************************
-Copyright (c) 2014 cocos2d-x.org
-
-http://www.cocos2d-x.org
-
-* Portions Copyright (c) Microsoft Open Technologies, Inc.
-* All Rights Reserved
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-****************************************************************************/
+///****************************************************************************
+//Copyright (c) 2014 cocos2d-x.org
+//
+//http://www.cocos2d-x.org
+//
+//* Portions Copyright (c) Microsoft Open Technologies, Inc.
+//* All Rights Reserved
+//
+//Permission is hereby granted, free of charge, to any person obtaining a copy
+//of this software and associated documentation files (the "Software"), to deal
+//in the Software without restriction, including without limitation the rights
+//to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//copies of the Software, and to permit persons to whom the Software is
+//furnished to do so, subject to the following conditions:
+//
+//The above copyright notice and this permission notice shall be included in
+//all copies or substantial portions of the Software.
+//
+//THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+//THE SOFTWARE.
+//****************************************************************************/
 
 #include "platform/CCPlatformConfig.h"
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#include "ui/UIEditBox/UIEditBoxImpl-winrt.h"
+#include "platform/winrt/CCWinRTUtils.h"
+#include "platform/winrt/CCGLViewImpl-winrt.h"
+#include "2d/CCFontFreeType.h"
 
-#include "UIEditBoxImpl-winrt.h"
-#include "UIEditBox.h"
-#include "CCGLViewImpl-winrt.h"
-#include "base/CCScriptSupport.h"
-#include "base/ccUTF8.h"
-#include "2d/CCLabel.h"
-#include "CCWinRTUtils.h"
+#if defined(WINAPI_FAMILY) && WINAPI_FAMILY == WINAPI_FAMILY_PHONE_APP
+#define XAML_TOP_PADDING 10.0f
+#else
+#define XAML_TOP_PADDING 0.0f
+#endif
 
-using namespace Platform;
-using namespace Concurrency;
-using namespace Windows::System;
-using namespace Windows::System::Threading;
-using namespace Windows::UI::Core;
-using namespace Windows::UI::Input;
-using namespace Windows::UI::Xaml;
-using namespace Windows::UI::Xaml::Controls;
-using namespace Windows::UI::Xaml::Input;
-using namespace Windows::Foundation;
-using namespace Windows::UI::ViewManagement;
+namespace cocos2d {
 
-NS_CC_BEGIN
+  namespace ui {
 
-namespace ui {
+    Platform::String^ EDIT_BOX_XAML_NAME = L"cocos2d_editbox";
+    Platform::String^ CANVAS_XAML_NAME = L"cocos2d_canvas";
 
-EditBoxWinRT::EditBoxWinRT()
-{
-
-}
-
-EditBoxWinRT::~EditBoxWinRT()
-{
-
-}
-
-EditBoxWinRT::EditBoxWinRT(Platform::String^ strPlaceHolder, Platform::String^ strText, int maxLength, EditBox::InputMode inputMode, EditBox::InputFlag inputFlag, Windows::Foundation::EventHandler<Platform::String^>^ receiveHandler)
-{
-    m_dispatcher = cocos2d::GLViewImpl::sharedOpenGLView()->getDispatcher();
-    m_panel = cocos2d::GLViewImpl::sharedOpenGLView()->getPanel();
-    m_strText = strText;
-    m_strPlaceholder = strPlaceHolder;
-    m_inputMode = inputMode;
-    m_inputFlag = inputFlag;
-    m_receiveHandler = receiveHandler;
-    m_maxLength = maxLength;
-}
-
-
-void EditBoxWinRT::OpenXamlEditBox(Platform::String^ strText)
-{
-    if (m_dispatcher.Get() == nullptr || m_panel.Get() == nullptr)
+    EditBoxImpl* __createSystemEditBox(EditBox* pEditBox)
     {
-        return;
+      return new UIEditBoxImplWinrt(pEditBox);
     }
 
-    // must create XAML element on main UI thread
-    m_dispatcher.Get()->RunAsync(Windows::UI::Core::CoreDispatcherPriority::Normal, ref new DispatchedHandler([this, strText]()
+    EditBoxWinRT::EditBoxWinRT(Windows::Foundation::EventHandler<Platform::String^>^ beginHandler,
+      Windows::Foundation::EventHandler<Platform::String^>^ changeHandler,
+      Windows::Foundation::EventHandler<Platform::String^>^ endHandler) :
+      _beginHandler(beginHandler),
+      _changeHandler(changeHandler),
+      _endHandler(endHandler),
+      _color(Windows::UI::Colors::White),
+      _initialText(L""),
+      _fontFamily(L"Segoe UI"),
+      _fontSize(12),
+      _password(false),
+      _isEditing(false),
+      _multiline(false),
+      _maxLength(0 /* unlimited */)
     {
-        critical_section::scoped_lock lock(m_criticalSection);
-        m_strText = strText;
-        auto item = findXamlElement(m_panel.Get(), "cocos2d_editbox");
-        if (item != nullptr)
-        {
-            Controls::Button^ button = dynamic_cast<Controls::Button^>(item);
-            if (button)
-            {
-                m_flyout = dynamic_cast<Flyout^>(button->Flyout);
-                if (m_flyout)
-                {
-                    if (m_inputFlag == EditBox::InputFlag::PASSWORD)
-                    {
-                        SetupPasswordBox();
-                    }
-                    else
-                    {
-                        SetupTextBox();
-                    }
+      m_dispatcher = cocos2d::GLViewImpl::sharedOpenGLView()->getDispatcher();
+      m_panel = cocos2d::GLViewImpl::sharedOpenGLView()->getPanel();
+    }
 
-                    auto doneButton = findXamlElement(m_flyout->Content, "cocos2d_editbox_done");
-                    if (doneButton != nullptr)
-                    {
-                        m_doneButton = dynamic_cast<Controls::Button^>(doneButton);
-                        m_doneToken = m_doneButton->Click += ref new RoutedEventHandler(this, &EditBoxWinRT::Done);
-                    }
+    void EditBoxWinRT::closeKeyboard()
+    {
+      m_dispatcher.Get()->RunAsync(Windows::UI::Core::CoreDispatcherPriority::Normal, ref new Windows::UI::Core::DispatchedHandler([this]() {
+        removeTextBox();
+        _textBox = nullptr;
+        auto canvas = static_cast<Canvas^>(findXamlElement(m_panel.Get(), CANVAS_XAML_NAME));
+        canvas->Visibility = Visibility::Collapsed;
+      }));
+    }
 
-                    auto cancelButton = findXamlElement(m_flyout->Content, "cocos2d_editbox_cancel");
-                    if (cancelButton != nullptr)
-                    {
-                        m_cancelButton = dynamic_cast<Controls::Button^>(cancelButton);
-                        m_cancelToken = m_cancelButton->Click += ref new RoutedEventHandler(this, &EditBoxWinRT::Cancel);
-                    }
-                }
-            }
+    Windows::UI::Xaml::Controls::Control^ EditBoxWinRT::createPasswordBox()
+    {
+      auto passwordBox = ref new PasswordBox;
+      passwordBox->BorderThickness = 0;
+      passwordBox->Name = EDIT_BOX_XAML_NAME;
+      passwordBox->Width = _size.Width;
+      passwordBox->Height = _size.Height;
+      passwordBox->Foreground = ref new Media::SolidColorBrush(_color);
+      passwordBox->Password = _initialText;
+      passwordBox->FontSize = _fontSize;
+      passwordBox->FontFamily = ref new Media::FontFamily(_fontFamily);
+      passwordBox->MaxLength = _maxLength;
+      _changeToken = passwordBox->PasswordChanged += ref new Windows::UI::Xaml::RoutedEventHandler(this, &cocos2d::ui::EditBoxWinRT::onPasswordChanged);
+      return passwordBox;
+    }
 
-            if (m_flyout)
-            {
-                auto inputPane = InputPane::GetForCurrentView();
-                m_hideKeyboardToken = inputPane->Hiding += ref new TypedEventHandler<InputPane^, InputPaneVisibilityEventArgs^>(this, &EditBoxWinRT::HideKeyboard);
+    Windows::UI::Xaml::Controls::Control^ EditBoxWinRT::createTextBox()
+    {
+      auto textBox = ref new TextBox;
+      textBox->BorderThickness = 0;
+      textBox->Name = EDIT_BOX_XAML_NAME;
+      textBox->Width = _size.Width;
+      textBox->Height = _size.Height;
+      textBox->Foreground = ref new Media::SolidColorBrush(_color);
+      textBox->Text = _initialText;
+      textBox->FontSize = _fontSize;
+      textBox->FontFamily = ref new Media::FontFamily(_fontFamily);
+      textBox->MaxLength = _maxLength;
+      textBox->AcceptsReturn = _multiline;
+      textBox->TextWrapping = _multiline ? TextWrapping::Wrap : TextWrapping::NoWrap;
+      setInputScope(textBox);
+      _changeToken = textBox->TextChanged += ref new Windows::UI::Xaml::Controls::TextChangedEventHandler(this, &cocos2d::ui::EditBoxWinRT::onTextChanged);
+      return textBox;
+    }
 
-                m_closedToken = m_flyout->Closed += ref new EventHandler<Platform::Object^>(this, &EditBoxWinRT::Closed);
-                m_flyout->ShowAt(m_panel.Get());
-            }
+    void EditBoxWinRT::onPasswordChanged(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ args)
+    {
+      onTextChanged(sender, nullptr);
+    }
+
+    void EditBoxWinRT::onTextChanged(Platform::Object ^sender, Windows::UI::Xaml::Controls::TextChangedEventArgs ^e)
+    {
+      Platform::String^ text = L"";
+      if (_password) {
+        text = static_cast<PasswordBox^>(_textBox)->Password;
+      }
+      else {
+        text = static_cast<TextBox^>(_textBox)->Text;
+      }
+      std::shared_ptr<cocos2d::InputEvent> inputEvent(new UIEditBoxEvent(this, text, _changeHandler));
+      cocos2d::GLViewImpl::sharedOpenGLView()->QueueEvent(inputEvent);
+    }
+
+    void EditBoxWinRT::onKeyDown(Platform::Object^ sender, Windows::UI::Xaml::Input::KeyRoutedEventArgs^ args)
+    {
+      if (args->Key == Windows::System::VirtualKey::Enter && !_multiline) {
+        onLostFocus(nullptr, nullptr);
+      }
+    }
+
+    void EditBoxWinRT::onGotFocus(Platform::Object ^sender, Windows::UI::Xaml::RoutedEventArgs ^args)
+    {
+      Concurrency::critical_section::scoped_lock lock(_critical_section);
+      std::shared_ptr<cocos2d::InputEvent> inputEvent(new UIEditBoxEvent(this, nullptr, _beginHandler));
+      cocos2d::GLViewImpl::sharedOpenGLView()->QueueEvent(inputEvent);
+      _isEditing = true;
+    }
+
+    void EditBoxWinRT::onLostFocus(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs ^args)
+    {
+      _isEditing = false;
+      Concurrency::critical_section::scoped_lock lock(_critical_section);
+      Platform::String^ text = L"";
+      if (_password) {
+        text = static_cast<PasswordBox^>(_textBox)->Password;
+        static_cast<PasswordBox^>(_textBox)->PasswordChanged -= _changeToken;
+      }
+      else {
+        text = static_cast<TextBox^>(_textBox)->Text;
+        static_cast<TextBox^>(_textBox)->TextChanged -= _changeToken;
+      }
+      std::shared_ptr<cocos2d::InputEvent> inputEvent(new UIEditBoxEvent(this, text, _endHandler));
+      cocos2d::GLViewImpl::sharedOpenGLView()->QueueEvent(inputEvent);
+
+      _textBox->LostFocus -= _unfocusToken;
+      _textBox->GotFocus -= _focusToken;
+      _textBox->KeyDown -= _keydownToken;
+      closeKeyboard();
+    }
+
+    bool EditBoxWinRT::isEditing() {
+      return _isEditing;
+    }
+
+    void EditBoxWinRT::openKeyboard()
+    {
+      m_dispatcher.Get()->RunAsync(Windows::UI::Core::CoreDispatcherPriority::Normal, ref new Windows::UI::Core::DispatchedHandler([this]() {
+        removeTextBox();
+        Canvas^ canvas = static_cast<Canvas^>(findXamlElement(m_panel.Get(), CANVAS_XAML_NAME));
+
+        if (_password) {
+          _textBox = createPasswordBox();
         }
-    }));
-}
+        else {
+          _textBox = createTextBox();
+        }
 
-void EditBoxWinRT::Closed(Platform::Object^ sender, Platform::Object^ e)
-{
-    critical_section::scoped_lock lock(m_criticalSection);
-    RemoveControls();
-}
+        // Position the text box
+        canvas->SetLeft(_textBox, _rect.X);
+        canvas->SetTop(_textBox, _rect.Y - XAML_TOP_PADDING);
 
-void EditBoxWinRT::Done(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
-{
-    QueueText();
-    HideFlyout();
-}
+        // Finally, insert it into the XAML scene hierarchy and make the containing canvas visible
+        canvas->Children->InsertAt(0, _textBox);
+        canvas->Background = ref new Media::SolidColorBrush();
+        canvas->Visibility = Visibility::Visible;
 
-void EditBoxWinRT::Cancel(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
-{
-    HideFlyout();
-}
+        _keydownToken = _textBox->KeyDown += ref new Windows::UI::Xaml::Input::KeyEventHandler(this, &cocos2d::ui::EditBoxWinRT::onKeyDown);
+        _focusToken = _textBox->GotFocus += ref new Windows::UI::Xaml::RoutedEventHandler(this, &cocos2d::ui::EditBoxWinRT::onGotFocus);
+        _unfocusToken = _textBox->LostFocus += ref new Windows::UI::Xaml::RoutedEventHandler(this, &cocos2d::ui::EditBoxWinRT::onLostFocus);
 
-void EditBoxWinRT::HideKeyboard(Windows::UI::ViewManagement::InputPane^ inputPane, Windows::UI::ViewManagement::InputPaneVisibilityEventArgs^ args)
-{
-    // we don't want to hide the flyout when the user hide the keyboard
-    //HideFlyout();
-}
+        _textBox->Focus(FocusState::Programmatic);
+        if (_password) {
+          static_cast<PasswordBox^>(_textBox)->SelectAll();
+        }
+        else {
+          static_cast<TextBox^>(_textBox)->Select(_initialText->Length(), 0);
+        }
 
-void EditBoxWinRT::HideFlyout()
-{
-    critical_section::scoped_lock lock(m_criticalSection);
-    if (m_flyout)
-    {
-        m_flyout->Hide();
+        auto inputPane = Windows::UI::ViewManagement::InputPane::GetForCurrentView();
+      }));
     }
-}
 
-void EditBoxWinRT::RemoveControls()
-{
-    if (m_dispatcher.Get() && m_panel.Get())
+    void EditBoxWinRT::setFontColor(Windows::UI::Color color)
     {
-        // run on main UI thread
-        m_dispatcher.Get()->RunAsync(Windows::UI::Core::CoreDispatcherPriority::Normal, ref new DispatchedHandler([this]()
-        {
-            critical_section::scoped_lock lock(m_criticalSection);
-
-            if (m_doneButton != nullptr)
-            {
-                m_doneButton->Click -= m_doneToken;
-                m_doneButton = nullptr;
-            }
- 
-            if (m_cancelButton != nullptr)
-            {
-                m_cancelButton->Click -= m_cancelToken;
-                m_cancelButton = nullptr;
-            }
-
-            m_textBox = nullptr;
-            m_passwordBox = nullptr;
-
-            if (m_flyout != nullptr)
-            {
-                m_flyout->Closed -= m_closedToken;
-                m_flyout = nullptr;
-            }
-
-            auto inputPane = InputPane::GetForCurrentView();
-            inputPane->Hiding -= m_hideKeyboardToken;
-        }));
+      _color = color;
     }
-}
 
-void EditBoxWinRT::RemoveTextBox()
-{
-    auto g = findXamlElement(m_flyout->Content, "cocos2d_editbox_grid");
-    auto grid = dynamic_cast<Grid^>(g);
-    auto box = findXamlElement(m_flyout->Content, "cocos2d_editbox_textbox");
-
-    if (box)
+    void EditBoxWinRT::setFontFamily(Platform::String^ fontFamily)
     {
-        removeXamlElement(grid, box);
+      _fontFamily = fontFamily;
     }
-}
 
-void EditBoxWinRT::SetupTextBox()
-{
-    RemoveTextBox();
-    m_textBox = ref new TextBox;
-    m_textBox->Text = m_strText;
-    m_textBox->Name = "cocos2d_editbox_textbox";
-    m_textBox->MinWidth = 200;
-    m_textBox->PlaceholderText = m_strPlaceholder;
-    m_textBox->Select(m_textBox->Text->Length(), 0);
-    m_textBox->MaxLength = m_maxLength < 0 ? 0 : m_maxLength;
-    SetInputScope(m_textBox, m_inputMode);
-    auto g = findXamlElement(m_flyout->Content, "cocos2d_editbox_grid");
-    auto grid = dynamic_cast<Grid^>(g);
-    grid->Children->InsertAt(0, m_textBox);
-}
-
-void EditBoxWinRT::SetupPasswordBox()
-{
-    RemoveTextBox();
-    m_passwordBox = ref new PasswordBox();
-    m_passwordBox->Password = m_strText;
-    m_passwordBox->MinWidth = 200;
-    m_passwordBox->Name = "cocos2d_editbox_textbox";
-    m_passwordBox->SelectAll();
-    m_passwordBox->PlaceholderText = m_strPlaceholder;
-    m_passwordBox->MaxLength = m_maxLength < 0 ? 0 : m_maxLength;
-    auto g = findXamlElement(m_flyout->Content, "cocos2d_editbox_grid");
-    auto grid = dynamic_cast<Grid^>(g);
-    grid->Children->InsertAt(0, m_passwordBox);
-}
-
-
-
-void EditBoxWinRT::SetInputScope(TextBox^ box, EditBox::InputMode inputMode)
-{
-    // TextBox.SetInputScope
-    InputScope^ inputScope = ref new InputScope();
-    InputScopeName^ name = ref new InputScopeName();
-
-    switch (inputMode)
+    void EditBoxWinRT::setFontSize(int fontSize)
     {
-    case EditBox::InputMode::ANY:
+      _fontSize = fontSize;
+    }
+
+    void EditBoxWinRT::removeTextBox()
+    {
+      auto canvas = findXamlElement(m_panel.Get(), CANVAS_XAML_NAME);
+      auto box = findXamlElement(canvas, EDIT_BOX_XAML_NAME);
+      removeXamlElement(canvas, box);
+      _isEditing = false;
+    }
+
+    void EditBoxWinRT::setInputFlag(int inputFlags) {
+      _password = false;
+      switch ((EditBox::InputFlag)inputFlags) {
+      case EditBox::InputFlag::PASSWORD:
+      case EditBox::InputFlag::SENSITIVE:
+        _password = true;
+        break;
+      default:
+        CCLOG("Warning: cannot set INITIAL_CAPS_* input flags for WinRT edit boxes");
+      }
+    }
+
+    void EditBoxWinRT::setInputMode(int inputMode) {
+      _inputMode = inputMode;
+    }
+
+    void EditBoxWinRT::setMaxLength(int maxLength) {
+      _maxLength = maxLength;
+    }
+
+    void EditBoxWinRT::setInputScope(TextBox^ textBox)
+    {
+      InputScope^ inputScope = ref new InputScope;
+      InputScopeName^ name = ref new InputScopeName;
+
+      switch ((EditBox::InputMode)_inputMode) {
+      case EditBox::InputMode::SINGLE_LINE:
+      case EditBox::InputMode::ANY:
         name->NameValue = InputScopeNameValue::Default;
         break;
-    case EditBox::InputMode::EMAIL_ADDRESS:
+      case EditBox::InputMode::EMAIL_ADDRESS:
         name->NameValue = InputScopeNameValue::EmailSmtpAddress;
         break;
-    case EditBox::InputMode::NUMERIC:
+      case EditBox::InputMode::DECIMAL:
+      case EditBox::InputMode::NUMERIC:
         name->NameValue = InputScopeNameValue::Number;
         break;
-    case EditBox::InputMode::PHONE_NUMBER:
+      case EditBox::InputMode::PHONE_NUMBER:
         name->NameValue = InputScopeNameValue::TelephoneNumber;
         break;
-    case EditBox::InputMode::URL:
+      case EditBox::InputMode::URL:
         name->NameValue = InputScopeNameValue::Url;
         break;
-    case EditBox::InputMode::DECIMAL:
-        name->NameValue = InputScopeNameValue::Number;
-        break;
-    case EditBox::InputMode::SINGLE_LINE:
-        name->NameValue = InputScopeNameValue::Default;
-        break;
-    default:
-        name->NameValue = InputScopeNameValue::Default;
-        break;
+      }
+
+      textBox->InputScope = nullptr;
+      inputScope->Names->Append(name);
+      textBox->InputScope = inputScope;
     }
 
-    box->InputScope = nullptr;
-    inputScope->Names->Append(name);
-    box->InputScope = inputScope;
-}
-
-void EditBoxWinRT::QueueText()
-{
-    critical_section::scoped_lock lock(m_criticalSection);
-    if ((m_passwordBox == nullptr) && (m_textBox == nullptr))
+    void EditBoxWinRT::setPosition(Windows::Foundation::Rect rect)
     {
-        return;
+      _rect = rect;
     }
 
-    m_strText = m_inputFlag == EditBox::InputFlag::PASSWORD ? m_passwordBox->Password : m_textBox->Text;
-    std::shared_ptr<cocos2d::InputEvent> e(new UIEditBoxEvent(this, m_strText, m_receiveHandler));
-    cocos2d::GLViewImpl::sharedOpenGLView()->QueueEvent(e);
-}
-
-
-
-EditBoxImpl* __createSystemEditBox(EditBox* pEditBox)
-{
-    return new UIEditBoxImplWinrt(pEditBox);
-}
-
-UIEditBoxImplWinrt::UIEditBoxImplWinrt( EditBox* pEditText )
-    : EditBoxImpl(pEditText)
-    , m_pLabel(NULL)
-    , m_pLabelPlaceHolder(NULL)
-    , m_eEditBoxInputMode(EditBox::InputMode::SINGLE_LINE)
-    , m_eEditBoxInputFlag(EditBox::InputFlag::INTIAL_CAPS_ALL_CHARACTERS)
-    , m_eKeyboardReturnType(EditBox::KeyboardReturnType::DEFAULT)
-    , m_colText(Color3B::WHITE)
-    , m_colPlaceHolder(Color3B::GRAY)
-    , m_nMaxLength(-1)
-{
-
-}
-
-UIEditBoxImplWinrt::~UIEditBoxImplWinrt()
-{
-
-}
-
-void UIEditBoxImplWinrt::openKeyboard()
-{
-    if (_delegate != NULL)
+    void EditBoxWinRT::setSize(Windows::Foundation::Size size)
     {
-        _delegate->editBoxEditingDidBegin(_editBox);
+      _size = size;
     }
-#if CC_ENABLE_SCRIPT_BINDING
-    EditBox* pEditBox = this->getEditBox();
-    if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
+
+    void EditBoxWinRT::setText(Platform::String^ text)
     {
-        CommonScriptData data(pEditBox->getScriptEditBoxHandler(), "began",pEditBox);
-        ScriptEvent event(kCommonEvent,(void*)&data);
-        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
+      _initialText = text;
+      // If already editing
+      if (_isEditing) {
+        m_dispatcher.Get()->RunAsync(Windows::UI::Core::CoreDispatcherPriority::Normal, ref new Windows::UI::Core::DispatchedHandler([this]() {
+          auto textBox = static_cast<TextBox^>(_textBox);
+          unsigned int currentStart = textBox->SelectionStart;
+          bool cursorAtEnd = currentStart == textBox->Text->Length();
+          textBox->Text = _initialText;
+          if (cursorAtEnd || currentStart > textBox->Text->Length()) {
+            currentStart = textBox->Text->Length();
+          }
+          textBox->Select(currentStart, 0);
+        }));
+      }
     }
-#endif
-    std::string placeHolder = m_pLabelPlaceHolder->getString();
-    if (placeHolder.length() == 0)
-        placeHolder = "Enter value";
 
-    char pText[100]= {0};
-    std::string text = getText();
-    if (text.length())
-        strncpy(pText, text.c_str(), 100);
-
-
-    if (!m_editBoxWinrt)
+    void EditBoxWinRT::setVisible(bool visible)
     {
-        Windows::Foundation::EventHandler<Platform::String^>^ receiveHandler = ref new Windows::Foundation::EventHandler<Platform::String^>(
-            [this](Platform::Object^ sender, Platform::String^ arg)
-        {
-            setText(PlatformStringTostring(arg).c_str());
-            if (_delegate != NULL) {
-                _delegate->editBoxTextChanged(_editBox, getText());
-                _delegate->editBoxEditingDidEnd(_editBox);
-                _delegate->editBoxReturn(_editBox);
-            }
-        });
-
-        m_editBoxWinrt = ref new EditBoxWinRT(stringToPlatformString(placeHolder), stringToPlatformString(getText()), m_nMaxLength, m_eEditBoxInputMode, m_eEditBoxInputFlag, receiveHandler);
+      _visible = visible;
+      // If already editing
+      m_dispatcher.Get()->RunAsync(Windows::UI::Core::CoreDispatcherPriority::Normal, ref new Windows::UI::Core::DispatchedHandler([this]() {
+        Canvas^ canvas = static_cast<Canvas^>(findXamlElement(m_panel.Get(), CANVAS_XAML_NAME));
+        canvas->Visibility = _visible ? Visibility::Visible : Visibility::Collapsed;
+      }));
     }
 
-    m_editBoxWinrt->OpenXamlEditBox(stringToPlatformString(getText()));
-}
 
-bool UIEditBoxImplWinrt::initWithSize( const Size& size )
-{
-    //! int fontSize = getFontSizeAccordingHeightJni(size.height-12);
-    m_pLabel = Label::createWithSystemFont("", "", size.height-12);
-    // align the text vertically center
-    m_pLabel->setAnchorPoint(Vec2(0.0f, 0.5f));
-    m_pLabel->setPosition(Vec2(5.0, size.height / 2.0f));
-    m_pLabel->setTextColor(m_colText);
-    _editBox->addChild(m_pLabel);
 
-    m_pLabelPlaceHolder = Label::createWithSystemFont("", "", size.height-12);
-    // align the text vertically center
-    m_pLabelPlaceHolder->setAnchorPoint(Vec2(0.0f, 0.5f));
-    m_pLabelPlaceHolder->setPosition(Vec2(5.0f, size.height / 2.0f));
-    m_pLabelPlaceHolder->setVisible(false);
-    m_pLabelPlaceHolder->setTextColor(m_colPlaceHolder);
-    _editBox->addChild(m_pLabelPlaceHolder);
 
-    m_EditSize = size;
-    return true;
-}
-
-void UIEditBoxImplWinrt::setFont( const char* pFontName, int fontSize )
-{
-    if(m_pLabel != NULL) {
-        m_pLabel->setSystemFontName(pFontName);
-        m_pLabel->setSystemFontSize(fontSize);
-    }
-
-    if(m_pLabelPlaceHolder != NULL) {
-        m_pLabelPlaceHolder->setSystemFontName(pFontName);
-        m_pLabelPlaceHolder->setSystemFontSize(fontSize);
-    }
-}
-
-void UIEditBoxImplWinrt::setFontColor( const Color4B& color )
-{
-    m_colText = color;
-    m_pLabel->setTextColor(color);
-}
-
-void UIEditBoxImplWinrt::setPlaceholderFont( const char* pFontName, int fontSize )
-{
-    if(m_pLabelPlaceHolder != NULL) {
-        m_pLabelPlaceHolder->setSystemFontName(pFontName);
-        m_pLabelPlaceHolder->setSystemFontSize(fontSize);
-    }
-}
-
-void UIEditBoxImplWinrt::setPlaceholderFontColor( const Color4B& color )
-{
-    m_colPlaceHolder = color;
-    m_pLabelPlaceHolder->setTextColor(color);
-}
-
-void UIEditBoxImplWinrt::setInputMode( EditBox::InputMode inputMode )
-{
-    m_eEditBoxInputMode = inputMode;
-}
-
-void UIEditBoxImplWinrt::setInputFlag(EditBox::InputFlag inputFlag )
-{
-    m_eEditBoxInputFlag = inputFlag;
-}
-
-void UIEditBoxImplWinrt::setMaxLength( int maxLength )
-{
-    m_nMaxLength = maxLength;
-}
-
-int UIEditBoxImplWinrt::getMaxLength()
-{
-    return m_nMaxLength;
-}
-
-void UIEditBoxImplWinrt::setReturnType( EditBox::KeyboardReturnType returnType )
-{
-    m_eKeyboardReturnType = returnType;
-}
-
-bool UIEditBoxImplWinrt::isEditing()
-{
-    return false;
-}
-
-void UIEditBoxImplWinrt::setText( const char* pText )
-{
-    if (pText != NULL)
+    UIEditBoxImplWinrt::UIEditBoxImplWinrt(EditBox* pEditText) : EditBoxImplCommon(pEditText)
     {
-        m_strText = pText;
-
-        if (m_strText.length() > 0)
-        {
-            m_pLabelPlaceHolder->setVisible(false);
-
-            std::string strToShow;
-
-            if (EditBox::InputFlag::PASSWORD == m_eEditBoxInputFlag)
-            {
-                long length = StringUtils::getCharacterCountInUTF8String(m_strText);
-                for (long i = 0; i < length; i++)
-                {
-                    strToShow.append("*");
-                }
-            }
-            else
-            {
-                strToShow = m_strText;
-            }
-
-            //! std::string strWithEllipsis = getStringWithEllipsisJni(strToShow.c_str(), m_EditSize.width, m_EditSize.height-12);
-            //! m_pLabel->setString(strWithEllipsis.c_str());
-            m_pLabel->setString(strToShow.c_str());
-        }
-        else
-        {
-            m_pLabelPlaceHolder->setVisible(true);
-            m_pLabel->setString("");
-        }
-
+      auto beginHandler = ref new Windows::Foundation::EventHandler<Platform::String^>([this](Platform::Object^ sender, Platform::String^ arg) {
+        this->editBoxEditingDidBegin();
+      });
+      auto changeHandler = ref new Windows::Foundation::EventHandler<Platform::String^>([this](Platform::Object^ sender, Platform::String^ arg) {
+        auto text = PlatformStringToString(arg);
+        this->editBoxEditingChanged(text);
+      });
+      auto endHandler = ref new Windows::Foundation::EventHandler<Platform::String^>([this](Platform::Object^ sender, Platform::String^ arg) {
+        auto text = PlatformStringToString(arg);
+        this->editBoxEditingDidEnd(text);
+        this->onEndEditing(text);
+      });
+      _system_control = ref new EditBoxWinRT(beginHandler, changeHandler, endHandler);
     }
-}
 
-const char* UIEditBoxImplWinrt::getText( void )
-{
-    return m_strText.c_str();
-}
-
-void UIEditBoxImplWinrt::setPlaceHolder( const char* pText )
-{
-    if (pText != NULL)
+    void UIEditBoxImplWinrt::setNativeFont(const char* pFontName, int fontSize)
     {
-        m_strPlaceHolder = pText;
-        if (m_strPlaceHolder.length() > 0 && m_strText.length() == 0)
-        {
-            m_pLabelPlaceHolder->setVisible(true);
-        }
+      // fontSize
+      _fontSize = fontSize;
+      auto transform = _editBox->getNodeToWorldTransform();
+      cocos2d::Vec3 scale;
+      transform.getScale(&scale);
+      _system_control->setFontSize(_fontSize * cocos2d::Director::getInstance()->getOpenGLView()->getScaleY() /** scale.y*/);
 
-        m_pLabelPlaceHolder->setString(m_strPlaceHolder.c_str());
+      // fontFamily
+      auto font = cocos2d::FontFreeType::create(pFontName, fontSize /* TODO: Not sure if supposed to be scaled or unscaled */, cocos2d::GlyphCollection::DYNAMIC, nullptr);
+      if (font != nullptr) {
+        std::string fontName = "ms-appx:///Assets/Resources/" + std::string(pFontName) +'#' + font->getFontFamily();
+        _system_control->setFontFamily(PlatformStringFromString(pFontName));
+      }
     }
-}
 
-void UIEditBoxImplWinrt::setPosition( const Vec2& pos )
-{
+    void UIEditBoxImplWinrt::setNativeFontColor(const Color4B& color)
+    {
+      Windows::UI::Color win_color = { 0xFF, color.r, color.g, color.b };
+      _system_control->setFontColor(win_color);
+    }
 
-}
+    void UIEditBoxImplWinrt::setNativeInputMode(EditBox::InputMode inputMode)
+    {
+      _system_control->setInputMode((int)inputMode);
+    }
 
-void UIEditBoxImplWinrt::setVisible( bool visible )
-{
+    void UIEditBoxImplWinrt::setNativeInputFlag(EditBox::InputFlag inputFlag)
+    {
+      _system_control->setInputFlag((int)inputFlag);
+    }
 
-}
+    void UIEditBoxImplWinrt::setNativeText(const char* pText)
+    {
+      _system_control->setText(PlatformStringFromString(pText));
+    }
 
-void UIEditBoxImplWinrt::setContentSize( const Size& size )
-{
+    void UIEditBoxImplWinrt::setNativeVisible(bool visible)
+    {
+      _system_control->setVisible(visible);
+    }
 
-}
+    void UIEditBoxImplWinrt::updateNativeFrame(const Rect& rect)
+    {
 
-void UIEditBoxImplWinrt::setAnchorPoint( const Vec2& anchorPoint )
-{
+    }
 
-}
+    void UIEditBoxImplWinrt::nativeOpenKeyboard()
+    {
+      // Update the text
+      _system_control->setText(PlatformStringFromString(getText()));
+      // Size
+      auto glView = cocos2d::Director::getInstance()->getOpenGLView();
+      auto transform = _editBox->getNodeToWorldTransform();
+      cocos2d::Vec3 scale;
+      transform.getScale(&scale);
+      Windows::Foundation::Size xamlSize = { _editBox->getContentSize().width * glView->getScaleX() * scale.x, _editBox->getContentSize().height * glView->getScaleY() * scale.y };
+      _system_control->setSize(xamlSize);
+      _system_control->setFontSize(_fontSize * cocos2d::Director::getInstance()->getOpenGLView()->getScaleY() /** scale.y*/);
+      // Position
+      auto directorInstance = cocos2d::Director::getInstance();
+      auto frameSize = glView->getFrameSize();
+      auto winSize = directorInstance->getWinSize();
+      auto leftBottom = _editBox->convertToWorldSpace(cocos2d::Point::ZERO);
+      auto rightTop = _editBox->convertToWorldSpace(cocos2d::Point(_editBox->getContentSize().width, _editBox->getContentSize().height));
+      Windows::Foundation::Rect rect;
+      rect.X = frameSize.width / 2 + (leftBottom.x - winSize.width / 2) * glView->getScaleX();
+      rect.Y = frameSize.height / 2 - (rightTop.y - winSize.height / 2) * glView->getScaleY();
+      rect.Width = (rightTop.x - leftBottom.x) * glView->getScaleX();
+      rect.Height = (rightTop.y - leftBottom.y) * glView->getScaleY();
+      _system_control->setPosition(rect);
+      // .. and open
+      _system_control->openKeyboard();
+    }
 
-void UIEditBoxImplWinrt::visit( void )
-{
+    void UIEditBoxImplWinrt::nativeCloseKeyboard()
+    {
+      _system_control->closeKeyboard();
+    }
 
-}
+    void UIEditBoxImplWinrt::setNativeMaxLength(int maxLength)
+    {
+      _system_control->setMaxLength(maxLength);
+    }
 
-void UIEditBoxImplWinrt::doAnimationWhenKeyboardMove( float duration, float distance )
-{
+    cocos2d::Vec2 UIEditBoxImplWinrt::convertDesignCoordToXamlCoord(const cocos2d::Vec2& designCoord)
+    {
+      auto glView = cocos2d::Director::getInstance()->getOpenGLView();
+      float viewH = glView->getFrameSize().height;
+      Vec2 visiblePos = Vec2(designCoord.x * glView->getScaleX(), designCoord.y * glView->getScaleY());
+      Vec2 screenGLPos = visiblePos + glView->getViewPortRect().origin;
+      Vec2 xamlPos(screenGLPos.x, viewH - screenGLPos.y);
+      return xamlPos;
+    }
 
-}
+  } // namespace ui
 
-void UIEditBoxImplWinrt::closeKeyboard()
-{
+} // namespace cocos2d
 
-}
-
-void UIEditBoxImplWinrt::onEnter( void )
-{
-
-}
-
-Platform::String^ UIEditBoxImplWinrt::stringToPlatformString( std::string strSrc )
-{
-    // to wide char
-    int nStrLen = MultiByteToWideChar(CP_UTF8, 0, strSrc.c_str(), -1, NULL, 0);  
-    wchar_t* pWStr = new wchar_t[nStrLen + 1];  
-    memset(pWStr, 0, nStrLen + 1);  
-    MultiByteToWideChar(CP_UTF8, 0, strSrc.c_str(), -1, pWStr, nStrLen);  
-    Platform::String^ strDst = ref new Platform::String(pWStr);
-    delete[] pWStr;
-    return strDst;
-}
-
-std::string UIEditBoxImplWinrt::PlatformStringTostring( Platform::String^ strSrc )
-{
-    const wchar_t* pWStr = strSrc->Data();
-    int nStrLen = WideCharToMultiByte(CP_UTF8, 0, pWStr, -1, NULL, 0, NULL, NULL);  
-    char* pStr = new char[nStrLen + 1];  
-    memset(pStr, 0, nStrLen + 1);  
-    WideCharToMultiByte(CP_UTF8, 0, pWStr, -1, pStr, nStrLen, NULL, NULL);  ;  
-
-    std::string strDst = std::string(pStr);
-
-    delete[] pStr;
-    return strDst;
-}
-
-}
-
-NS_CC_END
-
-#endif // WP8
+#endif // (CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)

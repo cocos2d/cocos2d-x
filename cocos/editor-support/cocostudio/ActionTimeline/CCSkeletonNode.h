@@ -25,12 +25,12 @@ THE SOFTWARE.
 #ifndef __CCSKELETONNODE_H__
 #define  __CCSKELETONNODE_H__
 
-#include "CCTimelineMacro.h"
+#include "editor-support/cocostudio/ActionTimeline/CCTimelineMacro.h"
 #include "renderer/CCRenderer.h"
-#include "cocostudio/CocosStudioExport.h"
+#include "editor-support/cocostudio/CocosStudioExport.h"
 #include "base/CCMap.h"
 
-#include "CCBoneNode.h"
+#include "editor-support/cocostudio/ActionTimeline/CCBoneNode.h"
 
 NS_TIMELINE_BEGIN
 
@@ -97,19 +97,20 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(SkeletonNode);
 
 
+    void checkSubBonesDirty();
+    // for draw skins as ordered bones' local z
+    cocos2d::Vector<BoneNode*>         _subOrderedAllBones;
+    void updateOrderedAllbones();
+    void sortOrderedAllBones();
     // for batch draw sub bones
-    bool                           _subDrawBonesDirty;
-    bool                           _subDrawBonesOrderDirty;
-    cocos2d::Vector<BoneNode*>     _subDrawBones;      // for draw faster, cache a list from _subBonesMap, sorted by render order
+    bool                           _subBonesDirty;
+    bool                           _subBonesOrderDirty;
     std::vector<cocos2d::Vec3>     _batchedBoneVetices;
     std::vector<cocos2d::Color4F>  _batchedBoneColors;
     int                            _batchedVeticesCount;
     cocos2d::CustomCommand         _batchBoneCommand;
 
-    void updateAllDrawBones();
-    void sortAllDrawBones();
     void batchDrawAllSubBones(const cocos2d::Mat4 &transform);
-    void batchSubBone(BoneNode* bone);
 };
 
 NS_TIMELINE_END

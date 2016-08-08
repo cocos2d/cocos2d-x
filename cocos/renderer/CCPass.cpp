@@ -27,7 +27,7 @@
  - Qt3D: http://qt-project.org/
  ****************************************************************************/
 
-#include "CCPass.h"
+#include "renderer/CCPass.h"
 #include "renderer/CCGLProgramState.h"
 #include "renderer/CCGLProgram.h"
 #include "renderer/CCTexture2D.h"
@@ -52,6 +52,7 @@ Pass* Pass::create(Technique* technique)
         pass->autorelease();
         return pass;
     }
+    CC_SAFE_DELETE(pass);
     return nullptr;
 }
 
@@ -63,6 +64,7 @@ Pass* Pass::createWithGLProgramState(Technique* technique, GLProgramState* progr
         pass->autorelease();
         return pass;
     }
+    CC_SAFE_DELETE(pass);
     return nullptr;
 }
 

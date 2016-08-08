@@ -116,8 +116,7 @@ static bool stringEndWith(const std::string str, const std::string needle)
 
 static void initGLContextAttrs()
 {
-    //set OpenGL context attributions,now can only set six attributions:
-    //red,green,blue,alpha,depth,stencil
+    // set OpenGL context attributes: red,green,blue,alpha,depth,stencil
     GLContextAttrs glContextAttrs = {8, 8, 8, 8, 24, 8};
 
     GLView::setGLContextAttrs(glContextAttrs);
@@ -190,7 +189,7 @@ void SimulatorWin::openNewPlayerWithProjectConfig(const ProjectConfig &config)
     STARTUPINFO si = {0};
     si.cb = sizeof(STARTUPINFO);
 
-#define MAX_COMMAND 1024 // lenth of commandLine is always beyond MAX_PATH
+#define MAX_COMMAND 1024 // length of commandLine is always beyond MAX_PATH
 
     WCHAR command[MAX_COMMAND];
     memset(command, 0, sizeof(command));
@@ -406,6 +405,10 @@ int SimulatorWin::run()
     {
         RECT rect;
         GetWindowRect(_hwnd, &rect);
+        if (pos.x < 0)
+            pos.x = 0;
+        if (pos.y < 0)
+            pos.y = 0;
         MoveWindow(_hwnd, pos.x, pos.y, rect.right - rect.left, rect.bottom - rect.top, FALSE);
     }
 
@@ -424,7 +427,9 @@ int SimulatorWin::run()
     updateWindowTitle();
 
     // startup message loop
-    return app->run();
+    int ret = app->run();
+    CC_SAFE_DELETE(_app);
+    return ret;
 }
 
 // services
@@ -719,11 +724,35 @@ void SimulatorWin::parseCocosProjectConfig(ProjectConfig &config)
     }
 
     // set project directory as search root path
-    FileUtils::getInstance()->setDefaultResourceRootPath(tmpConfig.getProjectDir().c_str());
+    string solutionDir = tmpConfig.getProjectDir();
+    if (!solutionDir.empty())
+    {
+        for (int i = 0; i < solutionDir.size(); ++i)
+        {
+            if (solutionDir[i] == '\\')
+            {
+                solutionDir[i] = '/';
+            }
+        }
+        int nPos = -1;
+        if (solutionDir[solutionDir.length() - 1] == '/')
+            nPos = solutionDir.rfind('/', solutionDir.length() - 2);
+        else
+            nPos = solutionDir.rfind('/');
+        if (nPos > 0)
+            solutionDir = solutionDir.substr(0, nPos + 1);
+        FileUtils::getInstance()->setDefaultResourceRootPath(solutionDir);
+        FileUtils::getInstance()->addSearchPath(solutionDir);
+        FileUtils::getInstance()->addSearchPath(tmpConfig.getProjectDir().c_str());
+    }
+    else
+    {
+        FileUtils::getInstance()->setDefaultResourceRootPath(tmpConfig.getProjectDir().c_str());
+    }
 
     // parse config.json
     auto parser = ConfigParser::getInstance();
-    auto configPath = tmpConfig.getProjectDir().append(CONFIG_FILE);
+    auto configPath = solutionDir.append(CONFIG_FILE);
     parser->readConfig(configPath);
 
     // set information
@@ -769,7 +798,7 @@ std::string SimulatorWin::getUserDocumentPath()
     char* tempstring = new char[length + 1];
     wcstombs(tempstring, filePath, length + 1);
     string userDocumentPath(tempstring);
-    free(tempstring);
+    delete [] tempstring;
 
     userDocumentPath = convertPathFormatToUnixStyle(userDocumentPath);
     userDocumentPath.append("/");

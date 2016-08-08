@@ -1,7 +1,7 @@
 /****************************************************************************
 Copyright (c) 2012      greathqy
 Copyright (c) 2012      cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -23,6 +23,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
+
+#include "platform/CCPlatformConfig.h"
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 
 #include "network/HttpRequest.h"
 #include "network/HttpClient.h"
@@ -129,10 +132,10 @@ namespace network {
         ~HttpConnection();
 
         bool init(HttpRequest *pRequest, DWORD timeOutInMs = 0);
-        bool open(std::string verb);
-        bool open(std::string verb, bool userAuthentication);
-        bool open(std::string verb, std::string cookieFile);
-        bool open(std::string verb, bool userAuthentication, std::string cookieFile);
+        bool open(const std::string& verb);
+        bool open(const std::string& verb, bool userAuthentication);
+        bool open(const std::string& verb, const std::string& cookieFile);
+        bool open(const std::string& verb, bool userAuthentication, const std::string& cookieFile);
         bool send();
         DWORD getStatusCode();
         std::string getErrorMessage();
@@ -141,8 +144,8 @@ namespace network {
 
     protected:
         void cancelRequest(HRESULT hrError);
-        HRESULT authenticateUser(std::string& verb, std::string& url, std::string& headers);
-        HRESULT processCookieFile(std::string& url, std::string& cookieFile);
+        HRESULT authenticateUser(const std::string& verb, const std::string& url, const std::string& headers);
+        HRESULT processCookieFile(const std::string& url, const std::string& cookieFile);
 
     private:
         bool _isInitialized;
@@ -155,3 +158,5 @@ namespace network {
 }
 
 NS_CC_END
+
+#endif // #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)

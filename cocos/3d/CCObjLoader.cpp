@@ -1,7 +1,7 @@
 //
 // Copyright 2012-2015, Syoyo Fujita.
 //
-// Licensed under 2-clause BSD liecense.
+// Licensed under 2-clause BSD license.
 //
 
 //
@@ -17,7 +17,7 @@
 //                 Parse transmittance material parameter correctly.
 // version 0.9.5 : Parse multiple group name.
 //                 Add support of specifying the base path to load material file.
-// version 0.9.4 : Initial suupport of group tag(g)
+// version 0.9.4 : Initial support of group tag(g)
 // version 0.9.3 : Fix parsing triple 'x/y/z'
 // version 0.9.2 : Add more .mtl load support
 // version 0.9.1 : Add initial .mtl load support
@@ -38,7 +38,7 @@
 #include "platform/CCFileUtils.h"
 #include "base/ccUtils.h"
 
-#include "CCObjLoader.h"
+#include "3d/CCObjLoader.h"
 
 namespace tinyobj {
     
@@ -572,7 +572,7 @@ namespace tinyobj {
             if (token[0] == 'T' && token[1] == 'r' && isSpace(token[2])) {
                 token += 2;
                 // Invert value of Tr(assume Tr is in range [0, 1])
-                material.dissolve = 1.0 - parseFloat(token);
+                material.dissolve = 1.0f - parseFloat(token);
                 continue;
             }
             

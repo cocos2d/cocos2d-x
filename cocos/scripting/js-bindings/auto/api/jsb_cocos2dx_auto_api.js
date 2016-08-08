@@ -29,6 +29,16 @@ getMaxT : function (
 },
 
 /**
+ * @method setAlphaTexture
+ * @param {cc.Texture2D} arg0
+ */
+setAlphaTexture : function (
+texture2d 
+)
+{
+},
+
+/**
  * @method getStringForFormat
  * @return {char}
  */
@@ -121,6 +131,16 @@ getPixelsHigh : function (
 },
 
 /**
+ * @method getAlphaTextureName
+ * @return {unsigned int}
+ */
+getAlphaTextureName : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method getBitsPerPixelForFormat
 * @param {cc.Texture2D::PixelFormat} pixelformat
 * @return {unsigned int|unsigned int}
@@ -150,6 +170,8 @@ getName : function (
 * @param {size_object} size
 * @param {cc.TextHAlignment} texthalignment
 * @param {cc.TextVAlignment} textvalignment
+* @param {bool} bool
+* @param {int} int
 * @return {bool|bool}
 */
 initWithString : function(
@@ -158,7 +180,9 @@ str,
 float,
 size,
 texthalignment,
-textvalignment 
+textvalignment,
+bool,
+int 
 )
 {
     return false;
@@ -172,6 +196,16 @@ setMaxT : function (
 float 
 )
 {
+},
+
+/**
+ * @method getPath
+ * @return {String}
+ */
+getPath : function (
+)
+{
+    return ;
 },
 
 /**
@@ -365,6 +399,16 @@ getStartLocationInView : function (
 },
 
 /**
+ * @method getCurrentForce
+ * @return {float}
+ */
+getCurrentForce : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method getStartLocation
  * @return {vec2_object}
  */
@@ -386,16 +430,30 @@ getID : function (
 
 /**
  * @method setTouchInfo
- * @param {int} arg0
- * @param {float} arg1
- * @param {float} arg2
- */
-setTouchInfo : function (
-int, 
-float, 
+* @param {int|int} int
+* @param {float|float} float
+* @param {float|float} float
+* @param {float} float
+* @param {float} float
+*/
+setTouchInfo : function(
+int,
+float,
+float,
+float,
 float 
 )
 {
+},
+
+/**
+ * @method getMaxForce
+ * @return {float}
+ */
+getMaxForce : function (
+)
+{
+    return 0;
 },
 
 /**
@@ -522,6 +580,173 @@ EventTouch : function (
 };
 
 /**
+ * @class ComponentContainer
+ */
+cc.ComponentContainer = {
+
+/**
+ * @method visit
+ * @param {float} arg0
+ */
+visit : function (
+float 
+)
+{
+},
+
+/**
+ * @method remove
+* @param {cc.Component|String} component
+* @return {bool|bool}
+*/
+remove : function(
+str 
+)
+{
+    return false;
+},
+
+/**
+ * @method removeAll
+ */
+removeAll : function (
+)
+{
+},
+
+/**
+ * @method add
+ * @param {cc.Component} arg0
+ * @return {bool}
+ */
+add : function (
+component 
+)
+{
+    return false;
+},
+
+/**
+ * @method isEmpty
+ * @return {bool}
+ */
+isEmpty : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method get
+ * @param {String} arg0
+ * @return {cc.Component}
+ */
+get : function (
+str 
+)
+{
+    return cc.Component;
+},
+
+};
+
+/**
+ * @class Component
+ */
+cc.Component = {
+
+/**
+ * @method setEnabled
+ * @param {bool} arg0
+ */
+setEnabled : function (
+bool 
+)
+{
+},
+
+/**
+ * @method setName
+ * @param {String} arg0
+ */
+setName : function (
+str 
+)
+{
+},
+
+/**
+ * @method isEnabled
+ * @return {bool}
+ */
+isEnabled : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method getOwner
+ * @return {cc.Node}
+ */
+getOwner : function (
+)
+{
+    return cc.Node;
+},
+
+/**
+ * @method init
+ * @return {bool}
+ */
+init : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method setOwner
+ * @param {cc.Node} arg0
+ */
+setOwner : function (
+node 
+)
+{
+},
+
+/**
+ * @method getName
+ * @return {String}
+ */
+getName : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method create
+ * @return {cc.Component}
+ */
+create : function (
+)
+{
+    return cc.Component;
+},
+
+/**
+ * @method Component
+ * @constructor
+ */
+Component : function (
+)
+{
+},
+
+};
+
+/**
  * @class Node
  */
 cc.Node = {
@@ -570,18 +795,6 @@ getGLProgram : function (
 )
 {
     return cc.GLProgram;
-},
-
-/**
- * @method updateTransformFromPhysics
- * @param {mat4_object} arg0
- * @param {unsigned int} arg1
- */
-updateTransformFromPhysics : function (
-mat4, 
-int 
-)
-{
 },
 
 /**
@@ -747,14 +960,6 @@ func
 },
 
 /**
- * @method removeFromPhysicsWorld
- */
-removeFromPhysicsWorld : function (
-)
-{
-},
-
-/**
  * @method removeAllComponents
  */
 removeAllComponents : function (
@@ -802,16 +1007,6 @@ getonEnterTransitionDidFinishCallback : function (
 )
 {
     return std::function<void ()>;
-},
-
-/**
- * @method isOpacityModifyRGB
- * @return {bool}
- */
-isOpacityModifyRGB : function (
-)
-{
-    return false;
 },
 
 /**
@@ -1053,13 +1248,13 @@ getOnEnterCallback : function (
 },
 
 /**
- * @method getPhysicsBody
- * @return {cc.PhysicsBody}
+ * @method isOpacityModifyRGB
+ * @return {bool}
  */
-getPhysicsBody : function (
+isOpacityModifyRGB : function (
 )
 {
-    return cc.PhysicsBody;
+    return false;
 },
 
 /**
@@ -1080,16 +1275,6 @@ int
 reorderChild : function (
 node, 
 int 
-)
-{
-},
-
-/**
- * @method ignoreAnchorPointForPosition
- * @param {bool} arg0
- */
-ignoreAnchorPointForPosition : function (
-bool 
 )
 {
 },
@@ -1265,6 +1450,16 @@ getRotation : function (
 },
 
 /**
+ * @method getPhysicsBody
+ * @return {cc.PhysicsBody}
+ */
+getPhysicsBody : function (
+)
+{
+    return cc.PhysicsBody;
+},
+
+/**
  * @method getAnchorPointInPoints
  * @return {vec2_object}
  */
@@ -1419,22 +1614,6 @@ str
 },
 
 /**
- * @method updatePhysicsBodyTransform
- * @param {mat4_object} arg0
- * @param {unsigned int} arg1
- * @param {float} arg2
- * @param {float} arg3
- */
-updatePhysicsBodyTransform : function (
-mat4, 
-int, 
-float, 
-float 
-)
-{
-},
-
-/**
  * @method getDisplayedOpacity
  * @return {unsigned char}
  */
@@ -1462,16 +1641,6 @@ getScheduler : function(
 )
 {
     return cc.Scheduler;
-},
-
-/**
- * @method getOrderOfArrival
- * @return {int}
- */
-getOrderOfArrival : function (
-)
-{
-    return 0;
 },
 
 /**
@@ -1654,16 +1823,6 @@ int
 },
 
 /**
- * @method setOrderOfArrival
- * @param {int} arg0
- */
-setOrderOfArrival : function (
-int 
-)
-{
-},
-
-/**
  * @method getScaleZ
  * @return {float}
  */
@@ -1763,6 +1922,16 @@ getBoundingBox : function (
 )
 {
     return cc.Rect;
+},
+
+/**
+ * @method setIgnoreAnchorPointForPosition
+ * @param {bool} arg0
+ */
+setIgnoreAnchorPointForPosition : function (
+bool 
+)
+{
 },
 
 /**
@@ -1887,6 +2056,14 @@ getScale : function (
 )
 {
     return 0;
+},
+
+/**
+ * @method updateOrderOfArrival
+ */
+updateOrderOfArrival : function (
+)
+{
 },
 
 /**
@@ -2024,9 +2201,13 @@ setCameraOrderDirty : function (
 /**
  * @method render
  * @param {cc.Renderer} arg0
+ * @param {mat4_object} arg1
+ * @param {mat4_object} arg2
  */
 render : function (
-renderer 
+renderer, 
+mat4, 
+mat4 
 )
 {
 },
@@ -2163,6 +2344,16 @@ setIMEKeyboardState : function (
 bool 
 )
 {
+},
+
+/**
+ * @method getVR
+ * @return {cc.VRIRenderer}
+ */
+getVR : function (
+)
+{
+    return cc.VRIRenderer;
 },
 
 /**
@@ -2323,6 +2514,28 @@ isRetinaDisplay : function (
 )
 {
     return false;
+},
+
+/**
+ * @method renderScene
+ * @param {cc.Scene} arg0
+ * @param {cc.Renderer} arg1
+ */
+renderScene : function (
+scene, 
+renderer 
+)
+{
+},
+
+/**
+ * @method setVR
+ * @param {cc.VRIRenderer} arg0
+ */
+setVR : function (
+vrirenderer 
+)
+{
 },
 
 /**
@@ -3158,9 +3371,9 @@ tasktype
 },
 
 /**
- * @method destoryInstance
+ * @method destroyInstance
  */
-destoryInstance : function (
+destroyInstance : function (
 )
 {
 },
@@ -3330,6 +3543,15 @@ reverse : function (
     return cc.Action;
 },
 
+/**
+ * @method Action
+ * @constructor
+ */
+Action : function (
+)
+{
+},
+
 };
 
 /**
@@ -3473,6 +3695,24 @@ rect
 },
 
 /**
+ * @method initWithTargetAndOffset
+ * @param {cc.Node} arg0
+ * @param {float} arg1
+ * @param {float} arg2
+ * @param {rect_object} arg3
+ * @return {bool}
+ */
+initWithTargetAndOffset : function (
+node, 
+float, 
+float, 
+rect 
+)
+{
+    return false;
+},
+
+/**
  * @method isBoundarySet
  * @return {bool}
  */
@@ -3497,6 +3737,24 @@ rect
 },
 
 /**
+ * @method createWithOffset
+ * @param {cc.Node} arg0
+ * @param {float} arg1
+ * @param {float} arg2
+ * @param {rect_object} arg3
+ * @return {cc.Follow}
+ */
+createWithOffset : function (
+node, 
+float, 
+float, 
+rect 
+)
+{
+    return cc.Follow;
+},
+
+/**
  * @method Follow
  * @constructor
  */
@@ -3508,26 +3766,569 @@ Follow : function (
 };
 
 /**
+ * @class Image
+ */
+cc.Image = {
+
+/**
+ * @method hasPremultipliedAlpha
+ * @return {bool}
+ */
+hasPremultipliedAlpha : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method getDataLen
+ * @return {long}
+ */
+getDataLen : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method saveToFile
+ * @param {String} arg0
+ * @param {bool} arg1
+ * @return {bool}
+ */
+saveToFile : function (
+str, 
+bool 
+)
+{
+    return false;
+},
+
+/**
+ * @method hasAlpha
+ * @return {bool}
+ */
+hasAlpha : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method isCompressed
+ * @return {bool}
+ */
+isCompressed : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method getHeight
+ * @return {int}
+ */
+getHeight : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method initWithImageFile
+ * @param {String} arg0
+ * @return {bool}
+ */
+initWithImageFile : function (
+str 
+)
+{
+    return false;
+},
+
+/**
+ * @method getWidth
+ * @return {int}
+ */
+getWidth : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getBitPerPixel
+ * @return {int}
+ */
+getBitPerPixel : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getFileType
+ * @return {cc.Image::Format}
+ */
+getFileType : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getFilePath
+ * @return {String}
+ */
+getFilePath : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method getNumberOfMipmaps
+ * @return {int}
+ */
+getNumberOfMipmaps : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getRenderFormat
+ * @return {cc.Texture2D::PixelFormat}
+ */
+getRenderFormat : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getData
+ * @return {unsigned char}
+ */
+getData : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getMipmaps
+ * @return {cc._MipmapInfo}
+ */
+getMipmaps : function (
+)
+{
+    return cc._MipmapInfo;
+},
+
+/**
+ * @method initWithRawData
+ * @param {unsigned char} arg0
+ * @param {long} arg1
+ * @param {int} arg2
+ * @param {int} arg3
+ * @param {int} arg4
+ * @param {bool} arg5
+ * @return {bool}
+ */
+initWithRawData : function (
+char, 
+long, 
+int, 
+int, 
+int, 
+bool 
+)
+{
+    return false;
+},
+
+/**
+ * @method setPVRImagesHavePremultipliedAlpha
+ * @param {bool} arg0
+ */
+setPVRImagesHavePremultipliedAlpha : function (
+bool 
+)
+{
+},
+
+/**
+ * @method setPNGPremultipliedAlphaEnabled
+ * @param {bool} arg0
+ */
+setPNGPremultipliedAlphaEnabled : function (
+bool 
+)
+{
+},
+
+/**
+ * @method Image
+ * @constructor
+ */
+Image : function (
+)
+{
+},
+
+};
+
+/**
+ * @class GLProgramState
+ */
+cc.GLProgramState = {
+
+/**
+ * @method setUniformCallback
+* @param {int|String} int
+* @param {function|function} func
+*/
+setUniformCallback : function(
+str,
+func 
+)
+{
+},
+
+/**
+ * @method getVertexAttribsFlags
+ * @return {unsigned int}
+ */
+getVertexAttribsFlags : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method applyAutoBinding
+ * @param {String} arg0
+ * @param {String} arg1
+ */
+applyAutoBinding : function (
+str, 
+str 
+)
+{
+},
+
+/**
+ * @method setUniformVec2
+* @param {int|String} int
+* @param {vec2_object|vec2_object} vec2
+*/
+setUniformVec2 : function(
+str,
+vec2 
+)
+{
+},
+
+/**
+ * @method setUniformVec3
+* @param {int|String} int
+* @param {vec3_object|vec3_object} vec3
+*/
+setUniformVec3 : function(
+str,
+vec3 
+)
+{
+},
+
+/**
+ * @method setVertexAttribCallback
+ * @param {String} arg0
+ * @param {function} arg1
+ */
+setVertexAttribCallback : function (
+str, 
+func 
+)
+{
+},
+
+/**
+ * @method apply
+ * @param {mat4_object} arg0
+ */
+apply : function (
+mat4 
+)
+{
+},
+
+/**
+ * @method getNodeBinding
+ * @return {cc.Node}
+ */
+getNodeBinding : function (
+)
+{
+    return cc.Node;
+},
+
+/**
+ * @method applyGLProgram
+ * @param {mat4_object} arg0
+ */
+applyGLProgram : function (
+mat4 
+)
+{
+},
+
+/**
+ * @method setNodeBinding
+ * @param {cc.Node} arg0
+ */
+setNodeBinding : function (
+node 
+)
+{
+},
+
+/**
+ * @method setUniformInt
+* @param {int|String} int
+* @param {int|int} int
+*/
+setUniformInt : function(
+str,
+int 
+)
+{
+},
+
+/**
+ * @method setParameterAutoBinding
+ * @param {String} arg0
+ * @param {String} arg1
+ */
+setParameterAutoBinding : function (
+str, 
+str 
+)
+{
+},
+
+/**
+ * @method setUniformVec2v
+* @param {int|String} int
+* @param {long|long} long
+* @param {vec2_object|vec2_object} vec2
+*/
+setUniformVec2v : function(
+str,
+long,
+vec2 
+)
+{
+},
+
+/**
+ * @method getUniformCount
+ * @return {long}
+ */
+getUniformCount : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method applyAttributes
+ */
+applyAttributes : function (
+)
+{
+},
+
+/**
+ * @method clone
+ * @return {cc.GLProgramState}
+ */
+clone : function (
+)
+{
+    return cc.GLProgramState;
+},
+
+/**
+ * @method setGLProgram
+ * @param {cc.GLProgram} arg0
+ */
+setGLProgram : function (
+glprogram 
+)
+{
+},
+
+/**
+ * @method setUniformFloatv
+* @param {int|String} int
+* @param {long|long} long
+* @param {float|float} float
+*/
+setUniformFloatv : function(
+str,
+long,
+float 
+)
+{
+},
+
+/**
+ * @method getGLProgram
+ * @return {cc.GLProgram}
+ */
+getGLProgram : function (
+)
+{
+    return cc.GLProgram;
+},
+
+/**
+ * @method setUniformTexture
+* @param {String|String|int|int} str
+* @param {unsigned int|cc.Texture2D|cc.Texture2D|unsigned int} int
+*/
+setUniformTexture : function(
+int,
+int 
+)
+{
+},
+
+/**
+ * @method applyUniforms
+ */
+applyUniforms : function (
+)
+{
+},
+
+/**
+ * @method setUniformFloat
+* @param {int|String} int
+* @param {float|float} float
+*/
+setUniformFloat : function(
+str,
+float 
+)
+{
+},
+
+/**
+ * @method setUniformMat4
+* @param {int|String} int
+* @param {mat4_object|mat4_object} mat4
+*/
+setUniformMat4 : function(
+str,
+mat4 
+)
+{
+},
+
+/**
+ * @method setUniformVec3v
+* @param {int|String} int
+* @param {long|long} long
+* @param {vec3_object|vec3_object} vec3
+*/
+setUniformVec3v : function(
+str,
+long,
+vec3 
+)
+{
+},
+
+/**
+ * @method getVertexAttribCount
+ * @return {long}
+ */
+getVertexAttribCount : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method create
+ * @param {cc.GLProgram} arg0
+ * @return {cc.GLProgramState}
+ */
+create : function (
+glprogram 
+)
+{
+    return cc.GLProgramState;
+},
+
+/**
+ * @method getOrCreateWithGLProgramName
+* @param {String|String} str
+* @param {cc.Texture2D} texture2d
+* @return {cc.GLProgramState|cc.GLProgramState}
+*/
+getOrCreateWithGLProgramName : function(
+str,
+texture2d 
+)
+{
+    return cc.GLProgramState;
+},
+
+/**
+ * @method getOrCreateWithGLProgram
+ * @param {cc.GLProgram} arg0
+ * @return {cc.GLProgramState}
+ */
+getOrCreateWithGLProgram : function (
+glprogram 
+)
+{
+    return cc.GLProgramState;
+},
+
+/**
+ * @method getOrCreateWithShaders
+ * @param {String} arg0
+ * @param {String} arg1
+ * @param {String} arg2
+ * @return {cc.GLProgramState}
+ */
+getOrCreateWithShaders : function (
+str, 
+str, 
+str 
+)
+{
+    return cc.GLProgramState;
+},
+
+};
+
+/**
  * @class SpriteFrame
  */
 cc.SpriteFrame = {
 
 /**
- * @method clone
- * @return {cc.SpriteFrame}
+ * @method setAnchorPoint
+ * @param {vec2_object} arg0
  */
-clone : function (
-)
-{
-    return cc.SpriteFrame;
-},
-
-/**
- * @method setRotated
- * @param {bool} arg0
- */
-setRotated : function (
-bool 
+setAnchorPoint : function (
+vec2 
 )
 {
 },
@@ -3543,26 +4344,6 @@ texture2d
 },
 
 /**
- * @method getOffset
- * @return {vec2_object}
- */
-getOffset : function (
-)
-{
-    return cc.Vec2;
-},
-
-/**
- * @method setRectInPixels
- * @param {rect_object} arg0
- */
-setRectInPixels : function (
-rect 
-)
-{
-},
-
-/**
  * @method getTexture
  * @return {cc.Texture2D}
  */
@@ -3573,41 +4354,11 @@ getTexture : function (
 },
 
 /**
- * @method getRect
- * @return {rect_object}
- */
-getRect : function (
-)
-{
-    return cc.Rect;
-},
-
-/**
  * @method setOffsetInPixels
  * @param {vec2_object} arg0
  */
 setOffsetInPixels : function (
 vec2 
-)
-{
-},
-
-/**
- * @method getRectInPixels
- * @return {rect_object}
- */
-getRectInPixels : function (
-)
-{
-    return cc.Rect;
-},
-
-/**
- * @method setOriginalSize
- * @param {size_object} arg0
- */
-setOriginalSize : function (
-size 
 )
 {
 },
@@ -3623,13 +4374,33 @@ getOriginalSizeInPixels : function (
 },
 
 /**
- * @method setOriginalSizeInPixels
+ * @method setOriginalSize
  * @param {size_object} arg0
  */
-setOriginalSizeInPixels : function (
+setOriginalSize : function (
 size 
 )
 {
+},
+
+/**
+ * @method setRectInPixels
+ * @param {rect_object} arg0
+ */
+setRectInPixels : function (
+rect 
+)
+{
+},
+
+/**
+ * @method getRect
+ * @return {rect_object}
+ */
+getRect : function (
+)
+{
+    return cc.Rect;
 },
 
 /**
@@ -3640,36 +4411,6 @@ setOffset : function (
 vec2 
 )
 {
-},
-
-/**
- * @method initWithTexture
-* @param {cc.Texture2D|cc.Texture2D} texture2d
-* @param {rect_object|rect_object} rect
-* @param {bool} bool
-* @param {vec2_object} vec2
-* @param {size_object} size
-* @return {bool|bool}
-*/
-initWithTexture : function(
-texture2d,
-rect,
-bool,
-vec2,
-size 
-)
-{
-    return false;
-},
-
-/**
- * @method isRotated
- * @return {bool}
- */
-isRotated : function (
-)
-{
-    return false;
 },
 
 /**
@@ -3703,13 +4444,23 @@ rect
 },
 
 /**
- * @method getOffsetInPixels
- * @return {vec2_object}
- */
-getOffsetInPixels : function (
+ * @method initWithTexture
+* @param {cc.Texture2D|cc.Texture2D} texture2d
+* @param {rect_object|rect_object} rect
+* @param {bool} bool
+* @param {vec2_object} vec2
+* @param {size_object} size
+* @return {bool|bool}
+*/
+initWithTexture : function(
+texture2d,
+rect,
+bool,
+vec2,
+size 
 )
 {
-    return cc.Vec2;
+    return false;
 },
 
 /**
@@ -3720,6 +4471,96 @@ getOriginalSize : function (
 )
 {
     return cc.Size;
+},
+
+/**
+ * @method clone
+ * @return {cc.SpriteFrame}
+ */
+clone : function (
+)
+{
+    return cc.SpriteFrame;
+},
+
+/**
+ * @method getRectInPixels
+ * @return {rect_object}
+ */
+getRectInPixels : function (
+)
+{
+    return cc.Rect;
+},
+
+/**
+ * @method isRotated
+ * @return {bool}
+ */
+isRotated : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method setRotated
+ * @param {bool} arg0
+ */
+setRotated : function (
+bool 
+)
+{
+},
+
+/**
+ * @method getOffset
+ * @return {vec2_object}
+ */
+getOffset : function (
+)
+{
+    return cc.Vec2;
+},
+
+/**
+ * @method setOriginalSizeInPixels
+ * @param {size_object} arg0
+ */
+setOriginalSizeInPixels : function (
+size 
+)
+{
+},
+
+/**
+ * @method getAnchorPoint
+ * @return {vec2_object}
+ */
+getAnchorPoint : function (
+)
+{
+    return cc.Vec2;
+},
+
+/**
+ * @method hasAnchorPoint
+ * @return {bool}
+ */
+hasAnchorPoint : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method getOffsetInPixels
+ * @return {vec2_object}
+ */
+getOffsetInPixels : function (
+)
+{
+    return cc.Vec2;
 },
 
 /**
@@ -4178,6 +5019,18 @@ getElapsed : function (
 cc.Sequence = {
 
 /**
+ * @method init
+ * @param {Array} arg0
+ * @return {bool}
+ */
+init : function (
+array 
+)
+{
+    return false;
+},
+
+/**
  * @method initWithTwoActions
  * @param {cc.FiniteTimeAction} arg0
  * @param {cc.FiniteTimeAction} arg1
@@ -4330,6 +5183,18 @@ RepeatForever : function (
  * @class Spawn
  */
 cc.Spawn = {
+
+/**
+ * @method init
+ * @param {Array} arg0
+ * @return {bool}
+ */
+init : function (
+array 
+)
+{
+    return false;
+},
 
 /**
  * @method initWithTwoActions
@@ -5396,6 +6261,16 @@ supportsPVRTC : function (
 },
 
 /**
+ * @method supportsOESDepth24
+ * @return {bool}
+ */
+supportsOESDepth24 : function (
+)
+{
+    return false;
+},
+
+/**
  * @method getMaxModelviewStackDepth
  * @return {int}
  */
@@ -5560,6 +6435,16 @@ supportsDiscardFramebuffer : function (
 },
 
 /**
+ * @method supportsOESPackedDepthStencil
+ * @return {bool}
+ */
+supportsOESPackedDepthStencil : function (
+)
+{
+    return false;
+},
+
+/**
  * @method supportsS3TC
  * @return {bool}
  */
@@ -5609,6 +6494,16 @@ value
 gatherGPUInfo : function (
 )
 {
+},
+
+/**
+ * @method supportsMapBuffer
+ * @return {bool}
+ */
+supportsMapBuffer : function (
+)
+{
+    return false;
 },
 
 /**
@@ -6039,14 +6934,14 @@ str
 
 /**
  * @method renameFile
- * @param {String} arg0
- * @param {String} arg1
- * @param {String} arg2
- * @return {bool}
- */
-renameFile : function (
-str, 
-str, 
+* @param {String|String} str
+* @param {String|String} str
+* @param {String} str
+* @return {bool|bool}
+*/
+renameFile : function(
+str,
+str,
 str 
 )
 {
@@ -6289,6 +7184,18 @@ str
 )
 {
     return false;
+},
+
+/**
+ * @method getFileExtension
+ * @param {String} arg0
+ * @return {String}
+ */
+getFileExtension : function (
+str 
+)
+{
+    return ;
 },
 
 /**
@@ -10581,343 +11488,6 @@ float
 };
 
 /**
- * @class GLProgramState
- */
-cc.GLProgramState = {
-
-/**
- * @method setUniformCallback
-* @param {int|String} int
-* @param {function|function} func
-*/
-setUniformCallback : function(
-str,
-func 
-)
-{
-},
-
-/**
- * @method getVertexAttribsFlags
- * @return {unsigned int}
- */
-getVertexAttribsFlags : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method applyAutoBinding
- * @param {String} arg0
- * @param {String} arg1
- */
-applyAutoBinding : function (
-str, 
-str 
-)
-{
-},
-
-/**
- * @method setUniformVec2
-* @param {int|String} int
-* @param {vec2_object|vec2_object} vec2
-*/
-setUniformVec2 : function(
-str,
-vec2 
-)
-{
-},
-
-/**
- * @method setUniformVec3
-* @param {int|String} int
-* @param {vec3_object|vec3_object} vec3
-*/
-setUniformVec3 : function(
-str,
-vec3 
-)
-{
-},
-
-/**
- * @method setVertexAttribCallback
- * @param {String} arg0
- * @param {function} arg1
- */
-setVertexAttribCallback : function (
-str, 
-func 
-)
-{
-},
-
-/**
- * @method apply
- * @param {mat4_object} arg0
- */
-apply : function (
-mat4 
-)
-{
-},
-
-/**
- * @method getNodeBinding
- * @return {cc.Node}
- */
-getNodeBinding : function (
-)
-{
-    return cc.Node;
-},
-
-/**
- * @method applyGLProgram
- * @param {mat4_object} arg0
- */
-applyGLProgram : function (
-mat4 
-)
-{
-},
-
-/**
- * @method setNodeBinding
- * @param {cc.Node} arg0
- */
-setNodeBinding : function (
-node 
-)
-{
-},
-
-/**
- * @method setUniformInt
-* @param {int|String} int
-* @param {int|int} int
-*/
-setUniformInt : function(
-str,
-int 
-)
-{
-},
-
-/**
- * @method setParameterAutoBinding
- * @param {String} arg0
- * @param {String} arg1
- */
-setParameterAutoBinding : function (
-str, 
-str 
-)
-{
-},
-
-/**
- * @method setUniformVec2v
-* @param {int|String} int
-* @param {long|long} long
-* @param {vec2_object|vec2_object} vec2
-*/
-setUniformVec2v : function(
-str,
-long,
-vec2 
-)
-{
-},
-
-/**
- * @method getUniformCount
- * @return {long}
- */
-getUniformCount : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method applyAttributes
- */
-applyAttributes : function (
-)
-{
-},
-
-/**
- * @method clone
- * @return {cc.GLProgramState}
- */
-clone : function (
-)
-{
-    return cc.GLProgramState;
-},
-
-/**
- * @method setGLProgram
- * @param {cc.GLProgram} arg0
- */
-setGLProgram : function (
-glprogram 
-)
-{
-},
-
-/**
- * @method setUniformFloatv
-* @param {int|String} int
-* @param {long|long} long
-* @param {float|float} float
-*/
-setUniformFloatv : function(
-str,
-long,
-float 
-)
-{
-},
-
-/**
- * @method getGLProgram
- * @return {cc.GLProgram}
- */
-getGLProgram : function (
-)
-{
-    return cc.GLProgram;
-},
-
-/**
- * @method setUniformTexture
-* @param {String|String|int|int} str
-* @param {unsigned int|cc.Texture2D|cc.Texture2D|unsigned int} int
-*/
-setUniformTexture : function(
-int,
-int 
-)
-{
-},
-
-/**
- * @method applyUniforms
- */
-applyUniforms : function (
-)
-{
-},
-
-/**
- * @method setUniformFloat
-* @param {int|String} int
-* @param {float|float} float
-*/
-setUniformFloat : function(
-str,
-float 
-)
-{
-},
-
-/**
- * @method setUniformMat4
-* @param {int|String} int
-* @param {mat4_object|mat4_object} mat4
-*/
-setUniformMat4 : function(
-str,
-mat4 
-)
-{
-},
-
-/**
- * @method setUniformVec3v
-* @param {int|String} int
-* @param {long|long} long
-* @param {vec3_object|vec3_object} vec3
-*/
-setUniformVec3v : function(
-str,
-long,
-vec3 
-)
-{
-},
-
-/**
- * @method getVertexAttribCount
- * @return {long}
- */
-getVertexAttribCount : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method create
- * @param {cc.GLProgram} arg0
- * @return {cc.GLProgramState}
- */
-create : function (
-glprogram 
-)
-{
-    return cc.GLProgramState;
-},
-
-/**
- * @method getOrCreateWithGLProgramName
- * @param {String} arg0
- * @return {cc.GLProgramState}
- */
-getOrCreateWithGLProgramName : function (
-str 
-)
-{
-    return cc.GLProgramState;
-},
-
-/**
- * @method getOrCreateWithGLProgram
- * @param {cc.GLProgram} arg0
- * @return {cc.GLProgramState}
- */
-getOrCreateWithGLProgram : function (
-glprogram 
-)
-{
-    return cc.GLProgramState;
-},
-
-/**
- * @method getOrCreateWithShaders
- * @param {String} arg0
- * @param {String} arg1
- * @param {String} arg2
- * @return {cc.GLProgramState}
- */
-getOrCreateWithShaders : function (
-str, 
-str, 
-str 
-)
-{
-    return cc.GLProgramState;
-},
-
-};
-
-/**
  * @class AtlasNode
  */
 cc.AtlasNode = {
@@ -11271,6 +11841,24 @@ int
 },
 
 /**
+ * @method drawPolygon
+ * @param {vec2_object} arg0
+ * @param {int} arg1
+ * @param {color4f_object} arg2
+ * @param {float} arg3
+ * @param {color4f_object} arg4
+ */
+drawPolygon : function (
+vec2, 
+int, 
+color4f, 
+float, 
+color4f 
+)
+{
+},
+
+/**
  * @method drawDot
  * @param {vec2_object} arg0
  * @param {float} arg1
@@ -11469,19 +12057,13 @@ color4f
 },
 
 /**
- * @method drawPoly
- * @param {vec2_object} arg0
- * @param {unsigned int} arg1
- * @param {bool} arg2
- * @param {color4f_object} arg3
+ * @method getLineWidth
+ * @return {float}
  */
-drawPoly : function (
-vec2, 
-int, 
-bool, 
-color4f 
+getLineWidth : function (
 )
 {
+    return 0;
 },
 
 /**
@@ -11575,6 +12157,16 @@ float
 },
 
 /**
+ * @method getWidth
+ * @return {float}
+ */
+getWidth : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method getString
  * @return {String}
  */
@@ -11625,6 +12217,16 @@ getBlendFunc : function (
 },
 
 /**
+ * @method enableWrap
+ * @param {bool} arg0
+ */
+enableWrap : function (
+bool 
+)
+{
+},
+
+/**
  * @method setWidth
  * @param {float} arg0
  */
@@ -11632,6 +12234,26 @@ setWidth : function (
 float 
 )
 {
+},
+
+/**
+ * @method getAdditionalKerning
+ * @return {float}
+ */
+getAdditionalKerning : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getBMFontSize
+ * @return {float}
+ */
+getBMFontSize : function (
+)
+{
+    return 0;
 },
 
 /**
@@ -11649,6 +12271,26 @@ getMaxLineWidth : function (
  * @return {cc.TextHAlignment}
  */
 getHorizontalAlignment : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getShadowOffset
+ * @return {size_object}
+ */
+getShadowOffset : function (
+)
+{
+    return cc.Size;
+},
+
+/**
+ * @method getLineSpacing
+ * @return {float}
+ */
+getLineSpacing : function (
 )
 {
     return 0;
@@ -11685,14 +12327,58 @@ str
 },
 
 /**
+ * @method isWrapEnabled
+ * @return {bool}
+ */
+isWrapEnabled : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method getOutlineSize
+ * @return {int}
+ */
+getOutlineSize : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method setBMFontFilePath
  * @param {String} arg0
  * @param {vec2_object} arg1
+ * @param {float} arg2
  * @return {bool}
  */
 setBMFontFilePath : function (
 str, 
-vec2 
+vec2, 
+float 
+)
+{
+    return false;
+},
+
+/**
+ * @method initWithTTF
+* @param {cc._ttfConfig|String} _ttfconfig
+* @param {String|String} str
+* @param {cc.TextHAlignment|float} texthalignment
+* @param {int|size_object} int
+* @param {cc.TextHAlignment} texthalignment
+* @param {cc.TextVAlignment} textvalignment
+* @return {bool|bool}
+*/
+initWithTTF : function(
+str,
+str,
+float,
+size,
+texthalignment,
+textvalignment 
 )
 {
     return false;
@@ -11714,6 +12400,24 @@ float
  */
 setSystemFontSize : function (
 float 
+)
+{
+},
+
+/**
+ * @method setOverflow
+ * @param {cc.Label::Overflow} arg0
+ */
+setOverflow : function (
+overflow 
+)
+{
+},
+
+/**
+ * @method enableStrikethrough
+ */
+enableStrikethrough : function (
 )
 {
 },
@@ -11769,13 +12473,23 @@ int
 },
 
 /**
- * @method getAdditionalKerning
+ * @method getShadowBlurRadius
  * @return {float}
  */
-getAdditionalKerning : function (
+getShadowBlurRadius : function (
 )
 {
     return 0;
+},
+
+/**
+ * @method getEffectColor
+ * @return {color4f_object}
+ */
+getEffectColor : function (
+)
+{
+    return cc.Color4F;
 },
 
 /**
@@ -11847,6 +12561,16 @@ textvalignment
 },
 
 /**
+ * @method setLineSpacing
+ * @param {float} arg0
+ */
+setLineSpacing : function (
+float 
+)
+{
+},
+
+/**
  * @method getLineHeight
  * @return {float}
  */
@@ -11854,6 +12578,16 @@ getLineHeight : function (
 )
 {
     return 0;
+},
+
+/**
+ * @method getShadowColor
+ * @return {color4f_object}
+ */
+getShadowColor : function (
+)
+{
+    return cc.Color4F;
 },
 
 /**
@@ -11867,13 +12601,11 @@ getTTFConfig : function (
 },
 
 /**
- * @method getVerticalAlignment
- * @return {cc.TextVAlignment}
+ * @method enableItalics
  */
-getVerticalAlignment : function (
+enableItalics : function (
 )
 {
-    return 0;
 },
 
 /**
@@ -11881,36 +12613,6 @@ getVerticalAlignment : function (
  * @param {color4b_object} arg0
  */
 setTextColor : function (
-color4b 
-)
-{
-},
-
-/**
- * @method setHeight
- * @param {float} arg0
- */
-setHeight : function (
-float 
-)
-{
-},
-
-/**
- * @method getWidth
- * @return {float}
- */
-getWidth : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method enableGlow
- * @param {color4b_object} arg0
- */
-enableGlow : function (
 color4b 
 )
 {
@@ -11926,6 +12628,56 @@ int
 )
 {
     return cc.Sprite;
+},
+
+/**
+ * @method setHeight
+ * @param {float} arg0
+ */
+setHeight : function (
+float 
+)
+{
+},
+
+/**
+ * @method isShadowEnabled
+ * @return {bool}
+ */
+isShadowEnabled : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method enableGlow
+ * @param {color4b_object} arg0
+ */
+enableGlow : function (
+color4b 
+)
+{
+},
+
+/**
+ * @method getOverflow
+ * @return {cc.Label::Overflow}
+ */
+getOverflow : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getVerticalAlignment
+ * @return {cc.TextVAlignment}
+ */
+getVerticalAlignment : function (
+)
+{
+    return 0;
 },
 
 /**
@@ -11989,6 +12741,32 @@ texthalignment
 },
 
 /**
+ * @method enableBold
+ */
+enableBold : function (
+)
+{
+},
+
+/**
+ * @method enableUnderline
+ */
+enableUnderline : function (
+)
+{
+},
+
+/**
+ * @method getLabelEffectType
+ * @return {cc.LabelEffect}
+ */
+getLabelEffectType : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method setAlignment
 * @param {cc.TextHAlignment|cc.TextHAlignment} texthalignment
 * @param {cc.TextVAlignment} textvalignment
@@ -12004,6 +12782,16 @@ textvalignment
  * @method requestSystemFontRefresh
  */
 requestSystemFontRefresh : function (
+)
+{
+},
+
+/**
+ * @method setBMFontSize
+ * @param {float} arg0
+ */
+setBMFontSize : function (
+float 
 )
 {
 },
@@ -13093,6 +13881,16 @@ isSelected : function (
 },
 
 /**
+ * @method setCallback
+ * @param {function} arg0
+ */
+setCallback : function (
+func 
+)
+{
+},
+
+/**
  * @method unselected
  */
 unselected : function (
@@ -13134,6 +13932,16 @@ setLabel : function (
 node 
 )
 {
+},
+
+/**
+ * @method getString
+ * @return {String}
+ */
+getString : function (
+)
+{
+    return ;
 },
 
 /**
@@ -14114,6 +14922,64 @@ ParticleBatchNode : function (
 };
 
 /**
+ * @class ParticleData
+ */
+cc.ParticleData = {
+
+/**
+ * @method release
+ */
+release : function (
+)
+{
+},
+
+/**
+ * @method getMaxCount
+ * @return {unsigned int}
+ */
+getMaxCount : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method init
+ * @param {int} arg0
+ * @return {bool}
+ */
+init : function (
+int 
+)
+{
+    return false;
+},
+
+/**
+ * @method copyParticle
+ * @param {int} arg0
+ * @param {int} arg1
+ */
+copyParticle : function (
+int, 
+int 
+)
+{
+},
+
+/**
+ * @method ParticleData
+ * @constructor
+ */
+ParticleData : function (
+)
+{
+},
+
+};
+
+/**
  * @class ParticleSystem
  */
 cc.ParticleSystem = {
@@ -14299,6 +15165,14 @@ getGravity : function (
 },
 
 /**
+ * @method resumeEmissions
+ */
+resumeEmissions : function (
+)
+{
+},
+
+/**
  * @method getTangentialAccel
  * @return {float}
  */
@@ -14326,6 +15200,14 @@ getSpeed : function (
 )
 {
     return 0;
+},
+
+/**
+ * @method pauseEmissions
+ */
+pauseEmissions : function (
+)
+{
 },
 
 /**
@@ -14378,6 +15260,16 @@ int
 )
 {
     return false;
+},
+
+/**
+ * @method addParticles
+ * @param {int} arg0
+ */
+addParticles : function (
+int 
+)
+{
 },
 
 /**
@@ -14482,18 +15374,6 @@ int
  */
 setEndColorVar : function (
 color4f 
-)
-{
-},
-
-/**
- * @method updateQuadWithParticle
- * @param {cc.sParticle} arg0
- * @param {vec2_object} arg1
- */
-updateQuadWithParticle : function (
-sparticle, 
-vec2 
 )
 {
 },
@@ -14627,6 +15507,16 @@ getStartSpin : function (
 },
 
 /**
+ * @method getResourceFile
+ * @return {String}
+ */
+getResourceFile : function (
+)
+{
+    return ;
+},
+
+/**
  * @method getRotatePerSecond
  * @return {float}
  */
@@ -14634,16 +15524,6 @@ getRotatePerSecond : function (
 )
 {
     return 0;
-},
-
-/**
- * @method initParticle
- * @param {cc.sParticle} arg0
- */
-initParticle : function (
-sparticle 
-)
-{
 },
 
 /**
@@ -14672,6 +15552,22 @@ getDuration : function (
  */
 setSourcePosition : function (
 vec2 
+)
+{
+},
+
+/**
+ * @method stop
+ */
+stop : function (
+)
+{
+},
+
+/**
+ * @method updateParticleQuads
+ */
+updateParticleQuads : function (
 )
 {
 },
@@ -14722,6 +15618,14 @@ float
  */
 setRotationIsDir : function (
 bool 
+)
+{
+},
+
+/**
+ * @method start
+ */
+start : function (
 )
 {
 },
@@ -14849,6 +15753,16 @@ getLife : function (
 },
 
 /**
+ * @method isPaused
+ * @return {bool}
+ */
+isPaused : function (
+)
+{
+    return false;
+},
+
+/**
  * @method setSpeedVar
  * @param {float} arg0
  */
@@ -14954,16 +15868,6 @@ setStartSizeVar : function (
 float 
 )
 {
-},
-
-/**
- * @method addParticle
- * @return {bool}
- */
-addParticle : function (
-)
-{
-    return false;
 },
 
 /**
@@ -16146,200 +17050,6 @@ ProtectedNode : function (
 };
 
 /**
- * @class Image
- */
-cc.Image = {
-
-/**
- * @method hasPremultipliedAlpha
- * @return {bool}
- */
-hasPremultipliedAlpha : function (
-)
-{
-    return false;
-},
-
-/**
- * @method getDataLen
- * @return {long}
- */
-getDataLen : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method saveToFile
- * @param {String} arg0
- * @param {bool} arg1
- * @return {bool}
- */
-saveToFile : function (
-str, 
-bool 
-)
-{
-    return false;
-},
-
-/**
- * @method hasAlpha
- * @return {bool}
- */
-hasAlpha : function (
-)
-{
-    return false;
-},
-
-/**
- * @method isCompressed
- * @return {bool}
- */
-isCompressed : function (
-)
-{
-    return false;
-},
-
-/**
- * @method getHeight
- * @return {int}
- */
-getHeight : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method initWithImageFile
- * @param {String} arg0
- * @return {bool}
- */
-initWithImageFile : function (
-str 
-)
-{
-    return false;
-},
-
-/**
- * @method getWidth
- * @return {int}
- */
-getWidth : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getBitPerPixel
- * @return {int}
- */
-getBitPerPixel : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getFileType
- * @return {cc.Image::Format}
- */
-getFileType : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getNumberOfMipmaps
- * @return {int}
- */
-getNumberOfMipmaps : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getRenderFormat
- * @return {cc.Texture2D::PixelFormat}
- */
-getRenderFormat : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getData
- * @return {unsigned char}
- */
-getData : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getMipmaps
- * @return {cc._MipmapInfo}
- */
-getMipmaps : function (
-)
-{
-    return cc._MipmapInfo;
-},
-
-/**
- * @method initWithRawData
- * @param {unsigned char} arg0
- * @param {long} arg1
- * @param {int} arg2
- * @param {int} arg3
- * @param {int} arg4
- * @param {bool} arg5
- * @return {bool}
- */
-initWithRawData : function (
-char, 
-long, 
-int, 
-int, 
-int, 
-bool 
-)
-{
-    return false;
-},
-
-/**
- * @method setPVRImagesHavePremultipliedAlpha
- * @param {bool} arg0
- */
-setPVRImagesHavePremultipliedAlpha : function (
-bool 
-)
-{
-},
-
-/**
- * @method Image
- * @constructor
- */
-Image : function (
-)
-{
-},
-
-};
-
-/**
  * @class Sprite
  */
 cc.Sprite = {
@@ -16412,6 +17122,16 @@ setRotationSkewY : function (
 float 
 )
 {
+},
+
+/**
+ * @method getResourceType
+ * @return {int}
+ */
+getResourceType : function (
+)
+{
+    return 0;
 },
 
 /**
@@ -16561,6 +17281,16 @@ getSpriteFrame : function (
 },
 
 /**
+ * @method getResourceName
+ * @return {String}
+ */
+getResourceName : function (
+)
+{
+    return ;
+},
+
+/**
  * @method isDirty
  * @return {bool}
  */
@@ -16608,16 +17338,6 @@ getTextureRect : function (
 )
 {
     return cc.Rect;
-},
-
-/**
- * @method debugDraw
- * @param {bool} arg0
- */
-debugDraw : function (
-bool 
-)
-{
 },
 
 /**
@@ -16848,14 +17568,6 @@ bool
  */
 setClearColor : function (
 color4f 
-)
-{
-},
-
-/**
- * @method endToLua
- */
-endToLua : function (
 )
 {
 },
@@ -18340,6 +19052,14 @@ TransitionProgressOutIn : function (
 cc.Camera = {
 
 /**
+ * @method restore
+ */
+restore : function (
+)
+{
+},
+
+/**
  * @method getDepth
  * @return {char}
  */
@@ -18368,6 +19088,16 @@ applyViewport : function (
 },
 
 /**
+ * @method setBackgroundBrush
+ * @param {cc.CameraBackgroundBrush} arg0
+ */
+setBackgroundBrush : function (
+camerabackgroundbrush 
+)
+{
+},
+
+/**
  * @method lookAt
  * @param {vec3_object} arg0
  * @param {vec3_object} arg1
@@ -18388,6 +19118,16 @@ apply : function (
 },
 
 /**
+ * @method getBackgroundBrush
+ * @return {cc.CameraBackgroundBrush}
+ */
+getBackgroundBrush : function (
+)
+{
+    return cc.CameraBackgroundBrush;
+},
+
+/**
  * @method getProjectionMatrix
  * @return {mat4_object}
  */
@@ -18395,6 +19135,16 @@ getProjectionMatrix : function (
 )
 {
     return cc.Mat4;
+},
+
+/**
+ * @method isBrushValid
+ * @return {bool}
+ */
+isBrushValid : function (
+)
+{
+    return false;
 },
 
 /**
@@ -18410,11 +19160,17 @@ mat4
 },
 
 /**
+ * @method restoreViewport
+ */
+restoreViewport : function (
+)
+{
+},
+
+/**
  * @method clearBackground
- * @param {float} arg0
  */
 clearBackground : function (
-float 
 )
 {
 },
@@ -18527,6 +19283,14 @@ vec3
 )
 {
     return cc.Vec2;
+},
+
+/**
+ * @method restoreFrameBufferObject
+ */
+restoreFrameBufferObject : function (
+)
+{
 },
 
 /**
@@ -18718,6 +19482,274 @@ getDefaultCamera : function (
  * @constructor
  */
 Camera : function (
+)
+{
+},
+
+};
+
+/**
+ * @class CameraBackgroundBrush
+ */
+cc.CameraBackgroundBrush = {
+
+/**
+ * @method getBrushType
+ * @return {cc.CameraBackgroundBrush::BrushType}
+ */
+getBrushType : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method drawBackground
+ * @param {cc.Camera} arg0
+ */
+drawBackground : function (
+camera 
+)
+{
+},
+
+/**
+ * @method init
+ * @return {bool}
+ */
+init : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method isValid
+ * @return {bool}
+ */
+isValid : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method createSkyboxBrush
+ * @param {String} arg0
+ * @param {String} arg1
+ * @param {String} arg2
+ * @param {String} arg3
+ * @param {String} arg4
+ * @param {String} arg5
+ * @return {cc.CameraBackgroundSkyBoxBrush}
+ */
+createSkyboxBrush : function (
+str, 
+str, 
+str, 
+str, 
+str, 
+str 
+)
+{
+    return cc.CameraBackgroundSkyBoxBrush;
+},
+
+/**
+ * @method createColorBrush
+ * @param {color4f_object} arg0
+ * @param {float} arg1
+ * @return {cc.CameraBackgroundColorBrush}
+ */
+createColorBrush : function (
+color4f, 
+float 
+)
+{
+    return cc.CameraBackgroundColorBrush;
+},
+
+/**
+ * @method createNoneBrush
+ * @return {cc.CameraBackgroundBrush}
+ */
+createNoneBrush : function (
+)
+{
+    return cc.CameraBackgroundBrush;
+},
+
+/**
+ * @method createDepthBrush
+ * @return {cc.CameraBackgroundDepthBrush}
+ */
+createDepthBrush : function (
+)
+{
+    return cc.CameraBackgroundDepthBrush;
+},
+
+/**
+ * @method CameraBackgroundBrush
+ * @constructor
+ */
+CameraBackgroundBrush : function (
+)
+{
+},
+
+};
+
+/**
+ * @class CameraBackgroundDepthBrush
+ */
+cc.CameraBackgroundDepthBrush = {
+
+/**
+ * @method setDepth
+ * @param {float} arg0
+ */
+setDepth : function (
+float 
+)
+{
+},
+
+/**
+ * @method create
+ * @param {float} arg0
+ * @return {cc.CameraBackgroundDepthBrush}
+ */
+create : function (
+float 
+)
+{
+    return cc.CameraBackgroundDepthBrush;
+},
+
+/**
+ * @method CameraBackgroundDepthBrush
+ * @constructor
+ */
+CameraBackgroundDepthBrush : function (
+)
+{
+},
+
+};
+
+/**
+ * @class CameraBackgroundColorBrush
+ */
+cc.CameraBackgroundColorBrush = {
+
+/**
+ * @method setColor
+ * @param {color4f_object} arg0
+ */
+setColor : function (
+color4f 
+)
+{
+},
+
+/**
+ * @method create
+ * @param {color4f_object} arg0
+ * @param {float} arg1
+ * @return {cc.CameraBackgroundColorBrush}
+ */
+create : function (
+color4f, 
+float 
+)
+{
+    return cc.CameraBackgroundColorBrush;
+},
+
+/**
+ * @method CameraBackgroundColorBrush
+ * @constructor
+ */
+CameraBackgroundColorBrush : function (
+)
+{
+},
+
+};
+
+/**
+ * @class CameraBackgroundSkyBoxBrush
+ */
+cc.CameraBackgroundSkyBoxBrush = {
+
+/**
+ * @method setTextureValid
+ * @param {bool} arg0
+ */
+setTextureValid : function (
+bool 
+)
+{
+},
+
+/**
+ * @method setTexture
+ * @param {cc.TextureCube} arg0
+ */
+setTexture : function (
+texturecube 
+)
+{
+},
+
+/**
+ * @method setActived
+ * @param {bool} arg0
+ */
+setActived : function (
+bool 
+)
+{
+},
+
+/**
+ * @method isActived
+ * @return {bool}
+ */
+isActived : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method create
+* @param {String} str
+* @param {String} str
+* @param {String} str
+* @param {String} str
+* @param {String} str
+* @param {String} str
+* @return {cc.CameraBackgroundSkyBoxBrush|cc.CameraBackgroundSkyBoxBrush}
+*/
+create : function(
+str,
+str,
+str,
+str,
+str,
+str 
+)
+{
+    return cc.CameraBackgroundSkyBoxBrush;
+},
+
+/**
+ * @method CameraBackgroundSkyBoxBrush
+ * @constructor
+ */
+CameraBackgroundSkyBoxBrush : function (
 )
 {
 },
@@ -19432,6 +20464,16 @@ int
 },
 
 /**
+ * @method getUniformFlags
+ * @return {cc.GLProgram::UniformFlags}
+ */
+getUniformFlags : function (
+)
+{
+    return cc.GLProgram::UniformFlags;
+},
+
+/**
  * @method getUniformLocationForName
  * @param {char} arg0
  * @return {int}
@@ -19887,6 +20929,16 @@ getStateBlock : function (
 )
 {
     return cc.RenderState::StateBlock;
+},
+
+/**
+ * @method setParent
+ * @param {cc.RenderState} arg0
+ */
+setParent : function (
+renderstate 
+)
+{
 },
 
 /**
@@ -20376,6 +21428,18 @@ texture2d
 },
 
 /**
+ * @method renameTextureWithKey
+ * @param {String} arg0
+ * @param {String} arg1
+ */
+renameTextureWithKey : function (
+str, 
+str 
+)
+{
+},
+
+/**
  * @method removeUnusedTextures
  */
 removeUnusedTextures : function (
@@ -20397,6 +21461,16 @@ texture2d
  * @method waitForQuit
  */
 waitForQuit : function (
+)
+{
+},
+
+/**
+ * @method setETC1AlphaFileSuffix
+ * @param {String} arg0
+ */
+setETC1AlphaFileSuffix : function (
+str 
 )
 {
 },
@@ -20494,18 +21568,6 @@ char
 cc.Application = {
 
 /**
- * @method openURL
- * @param {String} arg0
- * @return {bool}
- */
-openURL : function (
-str 
-)
-{
-    return false;
-},
-
-/**
  * @method getTargetPlatform
  * @return {cc.ApplicationProtocol::Platform}
  */
@@ -20523,6 +21585,28 @@ getCurrentLanguage : function (
 )
 {
     return 0;
+},
+
+/**
+ * @method openURL
+ * @param {String} arg0
+ * @return {bool}
+ */
+openURL : function (
+str 
+)
+{
+    return false;
+},
+
+/**
+ * @method getVersion
+ * @return {String}
+ */
+getVersion : function (
+)
+{
+    return ;
 },
 
 /**
@@ -20905,6 +21989,18 @@ SpriteBatchNode : function (
 cc.SpriteFrameCache = {
 
 /**
+ * @method reloadTexture
+ * @param {String} arg0
+ * @return {bool}
+ */
+reloadTexture : function (
+str 
+)
+{
+    return false;
+},
+
+/**
  * @method addSpriteFramesWithFileContent
  * @param {String} arg0
  * @param {cc.Texture2D} arg1
@@ -21057,7 +22153,7 @@ cc.TextFieldTTF = {
 
 /**
  * @method getCharCount
- * @return {int}
+ * @return {unsigned long}
  */
 getCharCount : function (
 )
@@ -21066,10 +22162,30 @@ getCharCount : function (
 },
 
 /**
+ * @method setCursorChar
+ * @param {char} arg0
+ */
+setCursorChar : function (
+char 
+)
+{
+},
+
+/**
  * @method setSecureTextEntry
  * @param {bool} arg0
  */
 setSecureTextEntry : function (
+bool 
+)
+{
+},
+
+/**
+ * @method setCursorEnabled
+ * @param {bool} arg0
+ */
+setCursorEnabled : function (
 bool 
 )
 {
@@ -21106,6 +22222,36 @@ float
 },
 
 /**
+ * @method appendString
+ * @param {String} arg0
+ */
+appendString : function (
+str 
+)
+{
+},
+
+/**
+ * @method getPasswordTextStyle
+ * @return {String}
+ */
+getPasswordTextStyle : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method setPasswordTextStyle
+ * @param {String} arg0
+ */
+setPasswordTextStyle : function (
+str 
+)
+{
+},
+
+/**
  * @method setColorSpaceHolder
 * @param {color4b_object|color3b_object} color4b
 */
@@ -21136,6 +22282,18 @@ str
 },
 
 /**
+ * @method setCursorFromPoint
+ * @param {vec2_object} arg0
+ * @param {cc.Camera} arg1
+ */
+setCursorFromPoint : function (
+vec2, 
+camera 
+)
+{
+},
+
+/**
  * @method isSecureTextEntry
  * @return {bool}
  */
@@ -21153,6 +22311,16 @@ getPlaceHolder : function (
 )
 {
     return ;
+},
+
+/**
+ * @method setCursorPosition
+ * @param {unsigned long} arg0
+ */
+setCursorPosition : function (
+long 
+)
+{
 },
 
 /**
@@ -21458,13 +22626,23 @@ TMXTilesetInfo : function (
 cc.TMXMapInfo = {
 
 /**
- * @method setObjectGroups
- * @param {Array} arg0
+ * @method setCurrentString
+ * @param {String} arg0
  */
-setObjectGroups : function (
-array 
+setCurrentString : function (
+str 
 )
 {
+},
+
+/**
+ * @method getHexSideLength
+ * @return {int}
+ */
+getHexSideLength : function (
+)
+{
+    return 0;
 },
 
 /**
@@ -21500,13 +22678,13 @@ getOrientation : function (
 },
 
 /**
- * @method isStoringCharacters
- * @return {bool}
+ * @method setObjectGroups
+ * @param {Array} arg0
  */
-isStoringCharacters : function (
+setObjectGroups : function (
+array 
 )
 {
-    return false;
 },
 
 /**
@@ -21571,6 +22749,26 @@ getLayers : function(
 )
 {
     return new Array();
+},
+
+/**
+ * @method getStaggerAxis
+ * @return {int}
+ */
+getStaggerAxis : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setHexSideLength
+ * @param {int} arg0
+ */
+setHexSideLength : function (
+int 
+)
+{
 },
 
 /**
@@ -21658,6 +22856,26 @@ getTileProperties : function (
 },
 
 /**
+ * @method isStoringCharacters
+ * @return {bool}
+ */
+isStoringCharacters : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method getExternalTilesetFileName
+ * @return {String}
+ */
+getExternalTilesetFileName : function (
+)
+{
+    return ;
+},
+
+/**
  * @method getObjectGroups
 * @return {Array|Array}
 */
@@ -21678,11 +22896,11 @@ getTMXFileName : function (
 },
 
 /**
- * @method setCurrentString
- * @param {String} arg0
+ * @method setStaggerIndex
+ * @param {int} arg0
  */
-setCurrentString : function (
-str 
+setStaggerIndex : function (
+int 
 )
 {
 },
@@ -21728,11 +22946,31 @@ size
 },
 
 /**
+ * @method getCurrentString
+ * @return {String}
+ */
+getCurrentString : function (
+)
+{
+    return ;
+},
+
+/**
  * @method setStoringCharacters
  * @param {bool} arg0
  */
 setStoringCharacters : function (
 bool 
+)
+{
+},
+
+/**
+ * @method setStaggerAxis
+ * @param {int} arg0
+ */
+setStaggerAxis : function (
+int 
 )
 {
 },
@@ -21768,13 +23006,13 @@ getProperties : function(
 },
 
 /**
- * @method getCurrentString
- * @return {String}
+ * @method getStaggerIndex
+ * @return {int}
  */
-getCurrentString : function (
+getStaggerIndex : function (
 )
 {
-    return ;
+    return 0;
 },
 
 /**
@@ -22120,6 +23358,16 @@ str
 },
 
 /**
+ * @method getLayerNum
+ * @return {int}
+ */
+getLayerNum : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method setMapSize
  * @param {size_object} arg0
  */
@@ -22152,17 +23400,13 @@ getObjectGroups : function(
 },
 
 /**
- * @method initWithXML
- * @param {String} arg0
- * @param {String} arg1
- * @return {bool}
+ * @method getResourceFile
+ * @return {String}
  */
-initWithXML : function (
-str, 
-str 
+getResourceFile : function (
 )
 {
-    return false;
+    return ;
 },
 
 /**
@@ -22195,6 +23439,20 @@ getMapSize : function (
 )
 {
     return cc.Size;
+},
+
+/**
+ * @method initWithXML
+ * @param {String} arg0
+ * @param {String} arg1
+ * @return {bool}
+ */
+initWithXML : function (
+str, 
+str 
+)
+{
+    return false;
 },
 
 /**
@@ -22410,173 +23668,6 @@ int
 TileMapAtlas : function (
 )
 {
-},
-
-};
-
-/**
- * @class Component
- */
-cc.Component = {
-
-/**
- * @method setEnabled
- * @param {bool} arg0
- */
-setEnabled : function (
-bool 
-)
-{
-},
-
-/**
- * @method setName
- * @param {String} arg0
- */
-setName : function (
-str 
-)
-{
-},
-
-/**
- * @method isEnabled
- * @return {bool}
- */
-isEnabled : function (
-)
-{
-    return false;
-},
-
-/**
- * @method getOwner
- * @return {cc.Node}
- */
-getOwner : function (
-)
-{
-    return cc.Node;
-},
-
-/**
- * @method init
- * @return {bool}
- */
-init : function (
-)
-{
-    return false;
-},
-
-/**
- * @method getName
- * @return {String}
- */
-getName : function (
-)
-{
-    return ;
-},
-
-/**
- * @method setOwner
- * @param {cc.Node} arg0
- */
-setOwner : function (
-node 
-)
-{
-},
-
-/**
- * @method create
- * @return {cc.Component}
- */
-create : function (
-)
-{
-    return cc.Component;
-},
-
-/**
- * @method Component
- * @constructor
- */
-Component : function (
-)
-{
-},
-
-};
-
-/**
- * @class ComponentContainer
- */
-cc.ComponentContainer = {
-
-/**
- * @method visit
- * @param {float} arg0
- */
-visit : function (
-float 
-)
-{
-},
-
-/**
- * @method remove
-* @param {cc.Component|String} component
-* @return {bool|bool}
-*/
-remove : function(
-str 
-)
-{
-    return false;
-},
-
-/**
- * @method removeAll
- */
-removeAll : function (
-)
-{
-},
-
-/**
- * @method add
- * @param {cc.Component} arg0
- * @return {bool}
- */
-add : function (
-component 
-)
-{
-    return false;
-},
-
-/**
- * @method isEmpty
- * @return {bool}
- */
-isEmpty : function (
-)
-{
-    return false;
-},
-
-/**
- * @method get
- * @param {String} arg0
- * @return {cc.Component}
- */
-get : function (
-str 
-)
-{
-    return cc.Component;
 },
 
 };
@@ -22811,5 +23902,12 @@ getInstance : function (
 {
     return cc.SimpleAudioEngine;
 },
+
+};
+
+/**
+ * @class ComponentJS
+ */
+cc.ComponentJS = {
 
 };

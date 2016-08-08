@@ -23,25 +23,33 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __INPUT_EVENT__
-#define __INPUT_EVENT__
+#ifndef __WINRT_INPUT_EVENT__
+#define __WINRT_INPUT_EVENT__
 
-#include "cocos2d.h"
-#include "InputEventTypes.h"
+#include "platform/CCPlatformMacros.h"
+#include "platform/winrt/InputEventTypes.h"
+#include "base/ccTypes.h"
 #include <agile.h>
 
 NS_CC_BEGIN
 
-public delegate void Cocos2dEventDelegate(Cocos2dEvent event, Platform::String^ text);
-public delegate void Cocos2dMessageBoxDelegate(Platform::String^  title, Platform::String^ text);
-public delegate void Cocos2dEditBoxDelegate(Platform::String^ strPlaceHolder, Platform::String^ strText, int maxLength, int inputMode, int inputFlag, Windows::Foundation::EventHandler<Platform::String^>^ receiveHandler);
-public delegate void Cocos2dOpenURLDelegate(Platform::String^ url);
 
 enum PointerEventType
 {
     PointerPressed,
     PointerMoved,
     PointerReleased,
+    MousePressed,
+    MouseMoved,
+    MouseReleased,
+    MouseWheelChanged,
+};
+enum MouseButton
+{
+    Left = 0,
+    Right = 1,
+    Middle = 2,
+    None
 };
 
 class CC_DLL InputEvent
@@ -137,5 +145,5 @@ private:
 
 NS_CC_END
 
-#endif // #ifndef __INPUT_EVENT__
+#endif // #ifndef __WINRT_INPUT_EVENT__
 

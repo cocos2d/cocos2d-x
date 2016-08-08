@@ -1,7 +1,7 @@
 /****************************************************************************
  Copyright (c) 2012      greathqy
  Copyright (c) 2012      cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -24,7 +24,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "HttpClient.h"
+#include "platform/CCPlatformConfig.h"
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+
+#include "network/HttpClient.h"
 
 #include <queue>
 #include <sstream>
@@ -35,6 +38,8 @@
 #include "platform/CCFileUtils.h"
 #include "platform/android/jni/JniHelper.h"
 
+#include "base/ccUTF8.h"
+ 
 NS_CC_BEGIN
 
 namespace network {
@@ -378,7 +383,7 @@ public:
         return header;
     }
     
-    const std::string getCookieFileName()
+    const std::string& getCookieFileName() const
     {
         return _cookieFileName;
     }
@@ -394,7 +399,7 @@ public:
     }
     
 private:
-    void createHttpURLConnection(std::string url)
+    void createHttpURLConnection(const std::string& url)
     {
         JniMethodInfo methodInfo;
         if (JniHelper::getStaticMethodInfo(methodInfo,
@@ -579,17 +584,9 @@ private:
         {
             return nullptr;
         }
-
-        const char* str = nullptr;
-        char* ret = nullptr;
-        str = env->GetStringUTFChars(jstr, nullptr);
-        if (nullptr != str)
-        {
-            ret = strdup(str);
-        }
-
-        env->ReleaseStringUTFChars(jstr, str);
-
+        char *ret = nullptr;
+        std::string strValue = cocos2d::StringUtils::getStringUTFCharsJNI(env, jstr);
+        ret = strdup(strValue.c_str());
         return ret;
     }
 
@@ -611,7 +608,7 @@ private:
         return len;
     }
 
-    const std::string getCookieString()
+    const std::string& getCookieString() const
     {
         return _responseCookies;
     }
@@ -715,7 +712,10 @@ void HttpClient::processResponse(HttpResponse* response, char* responseMessage)
     }
     free(contentInfo);
     
-    strcpy(responseMessage, urlConnection.getResponseMessage());
+    char *messageInfo = urlConnection.getResponseMessage();
+    strcpy(responseMessage, messageInfo);
+    free(messageInfo);
+
     urlConnection.disconnect();
 
     // write data to HttpResponse
@@ -892,7 +892,7 @@ HttpClient::HttpClient()
 HttpClient::~HttpClient()
 {
     CCLOG("In the destructor of HttpClient!");
-    CC_SAFE_DELETE(_requestSentinel);
+    CC_SAFE_RELEASE(_requestSentinel);
 }
 
 //Lazy create semaphore & mutex & thread
@@ -1053,4 +1053,4 @@ const std::string& HttpClient::getSSLVerification()
 
 NS_CC_END
 
-
+#endif // #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)

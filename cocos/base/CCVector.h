@@ -53,14 +53,14 @@ public:
     // ------------------------------------------
     
     /** Iterator, can be used to loop the Vector. */
-    typedef typename std::vector<T>::iterator iterator;
+    using iterator = typename std::vector<T>::iterator;
     /** Const iterator, can be used to loop the Vector. */
-    typedef typename std::vector<T>::const_iterator const_iterator;
-    
+    using const_iterator = typename std::vector<T>::const_iterator;
+
     /** Reversed iterator, can be used to loop the Vector in reverse sequence. */
-    typedef typename std::vector<T>::reverse_iterator reverse_iterator;
-    /** Reversed iterator, can be used to loop the Vector in reverse sequence. */
-    typedef typename std::vector<T>::const_reverse_iterator const_reverse_iterator;
+    using reverse_iterator = typename std::vector<T>::reverse_iterator;
+    /** Reversed iterator, can be used to loop the Vector in reverse sequence. */ 
+    using const_reverse_iterator = typename std::vector<T>::const_reverse_iterator;
     
     /** Returns an iterator pointing the first element of the Vector. */
     iterator begin() { return _data.begin(); }
@@ -123,6 +123,15 @@ public:
         static_assert(std::is_convertible<T, Ref*>::value, "Invalid Type for cocos2d::Vector<T>!");
         CCLOGINFO("In the default constructor with capacity of Vector.");
         reserve(capacity);
+    }
+
+    /** Constructor with initializer list. */
+    Vector<T>(std::initializer_list<T> list)
+    {
+        for (auto& element : list)
+        {
+	    pushBack(element);
+        }
     }
 
     /** Destructor. */
@@ -279,7 +288,7 @@ public:
     {
         if (!_data.empty())
         {
-            ssize_t randIdx = rand() % _data.size();
+            ssize_t randIdx = RandomHelper::random_int<int>(0, static_cast<int>(_data.size()) - 1);
             return *(_data.begin() + randIdx);
         }
         return nullptr;
@@ -300,7 +309,7 @@ public:
      * @param other The vector to be compared.
      * @return True if two vectors are equal, false if not.
      */
-    bool equals(const Vector<T> &other)
+    bool equals(const Vector<T> &other) const
     {
         ssize_t s = this->size();
         if (s != other.size())
@@ -435,7 +444,7 @@ public:
     }
 
     /** @brief Removes all elements from the Vector (which are destroyed), leaving the container with a size of 0.
-     *  @note All the elements in the Vector will be released (referece count will be decreased).
+     *  @note All the elements in the Vector will be released (reference count will be decreased).
      */
     void clear()
     {

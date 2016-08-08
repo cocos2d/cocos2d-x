@@ -34,10 +34,13 @@ _ReSharper*/
 [Tt]est[Rr]esult*
 ipch/
 *.opensdf
+*.opendb
 SubmissionInfo
 Generated Files
 AppPackages
+BundleArtifacts
 .vs/
+*.VC.db
 
 # Ignore files build by ndk and eclipse
 libs/
@@ -147,3 +150,7 @@ tests/cpp-tests/Resources/audio
 /*/*/*/prebuilt-mk/Android.mk
 /*/*/*/*/prebuilt-mk/Android.mk
 *.xcscmblueprint
+tests/cpp-empty-test/proj.tizen/res/
+tests/cpp-tests/proj.tizen/res/
+tests/lua-empty-test/project/proj.tizen/res/
+tests/lua-tests/project/proj.tizen/res/

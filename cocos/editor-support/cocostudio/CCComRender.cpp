@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -22,20 +22,27 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "cocostudio/CCComRender.h"
-#include "cocostudio/CocoStudio.h"
+#include "editor-support/cocostudio/CCComRender.h"
+#include "editor-support/cocostudio/CocoStudio.h"
+
+#include "platform/CCFileUtils.h"
+#include "2d/CCTMXTiledMap.h"
+#include "2d/CCParticleSystemQuad.h"
+#include "2d/CCSpriteFrameCache.h"
 
 using namespace cocos2d;
 
 namespace cocostudio {
 
 IMPLEMENT_CLASS_COMPONENT_INFO(ComRender)
-ComRender::ComRender(void)
+
+const std::string ComRender::COMPONENT_NAME = "CCComRender";
+
+ComRender::ComRender()
 : _render(nullptr)
 {
-    _name = "CCComRender";
+    _name = COMPONENT_NAME;
 }
-
 
 ComRender::ComRender(cocos2d::Node *node, const char *comName)
 {
@@ -47,7 +54,7 @@ ComRender::ComRender(cocos2d::Node *node, const char *comName)
     _name.assign(comName);
 }
 
-ComRender::~ComRender(void)
+ComRender::~ComRender()
 {
     CC_SAFE_RELEASE_NULL(_render);
 }
@@ -167,21 +174,21 @@ bool ComRender::serialize(void* r)
         {
             if (strcmp(className, "CCSprite") == 0 && (filePath.find(".png") != filePath.npos || filePath.find(".pvr.ccz") != filePath.npos))
             {
-                _render = Sprite::create(filePath.c_str());
+                _render = Sprite::create(filePath);
                 _render->retain();
                 
                 ret = true;
             }
             else if(strcmp(className, "CCTMXTiledMap") == 0 && filePath.find(".tmx") != filePath.npos)
             {
-                _render = TMXTiledMap::create(filePath.c_str());
+                _render = TMXTiledMap::create(filePath);
                 _render->retain();
                 
                 ret = true;
             }
             else if(strcmp(className, "CCParticleSystemQuad") == 0 && filePath.find(".plist") != filePath.npos)
             {
-                _render = ParticleSystemQuad::create(filePath.c_str());
+                _render = ParticleSystemQuad::create(filePath);
                 _render->setPosition(0.0f, 0.0f);
                 _render->retain();
                 
@@ -189,24 +196,18 @@ bool ComRender::serialize(void* r)
             }
             else if(strcmp(className, "CCArmature") == 0)
             {
-                std::string file_extension = filePath;
-                size_t pos = filePath.find_last_of('.');
-                if (pos != std::string::npos)
-                {
-                    file_extension = filePath.substr(pos, filePath.length());
-                    std::transform(file_extension.begin(),file_extension.end(), file_extension.begin(), (int(*)(int))toupper);
-                }
-                if (file_extension == ".JSON" || file_extension == ".EXPORTJSON")
+                std::string fileExtension = FileUtils::getInstance()->getFileExtension(filePath);
+                if (fileExtension == ".json" || fileExtension == ".exportjson")
                 {
                     rapidjson::Document doc;
-                    if(!readJson(filePath.c_str(), doc))
+                    if(!readJson(filePath, doc))
                     {
                         log("read json file[%s] error!\n", filePath.c_str());
                         continue;
                     }
                     const rapidjson::Value &subData = DICTOOL->getDictionaryFromArray_json(doc, "armature_data", 0);
                     const char *name = DICTOOL->getStringValue_json(subData, "name");
-                    ArmatureDataManager::getInstance()->addArmatureFileInfo(filePath.c_str());
+                    ArmatureDataManager::getInstance()->addArmatureFileInfo(filePath);
                     Armature *pAr = Armature::create(name);
                     _render = pAr;
                     _render->retain();
@@ -225,9 +226,9 @@ bool ComRender::serialize(void* r)
                     }
                     ret = true;
                 }
-                else if (file_extension == ".CSB")
+                else if (fileExtension == ".csb")
                 {
-                    std::string binaryFilePath = FileUtils::getInstance()->fullPathForFilename(filePath.c_str());
+                    std::string binaryFilePath = FileUtils::getInstance()->fullPathForFilename(filePath);
                     auto fileData = FileUtils::getInstance()->getDataFromFile(binaryFilePath);
                     auto fileDataBytes = fileData.getBytes();
                     CC_BREAK_IF(fileData.isNull());
@@ -262,7 +263,7 @@ bool ComRender::serialize(void* r)
                                         {
                                             if (str1 != nullptr)
                                             {
-                                                ArmatureDataManager::getInstance()->addArmatureFileInfo(filePath.c_str());
+                                                ArmatureDataManager::getInstance()->addArmatureFileInfo(filePath);
                                                 Armature *pAr = Armature::create(str1);
                                                 _render = pAr;
                                                 _render->retain();
@@ -299,14 +300,8 @@ bool ComRender::serialize(void* r)
             }
             else if(strcmp(className, "GUIComponent") == 0)
             {
-                std::string file_extension = filePath;
-                size_t pos = filePath.find_last_of('.');
-                if (pos != std::string::npos)
-                {
-                    file_extension = filePath.substr(pos, filePath.length());
-                    std::transform(file_extension.begin(),file_extension.end(), file_extension.begin(), (int(*)(int))toupper);
-                }
-                if (file_extension == ".JSON" || file_extension == ".EXPORTJSON")
+                std::string fileExtension = FileUtils::getInstance()->getFileExtension(filePath);
+                if (fileExtension == ".json" || fileExtension == ".exportjson")
                 {
                     cocos2d::ui::Widget* widget = GUIReader::getInstance()->widgetFromJsonFile(filePath.c_str());
                     _render = widget;
@@ -314,7 +309,7 @@ bool ComRender::serialize(void* r)
                     
                     ret = true;
                 }
-                else if (file_extension == ".CSB")
+                else if (fileExtension == ".csb")
                 {
                     cocos2d::ui::Widget* widget = GUIReader::getInstance()->widgetFromBinaryFile(filePath.c_str());
                     _render = widget;
@@ -339,8 +334,8 @@ bool ComRender::serialize(void* r)
                     continue;
                 }
                 strPngFile.replace(pos, strPngFile.length(), ".png");
-                SpriteFrameCache::getInstance()->addSpriteFramesWithFile(plistPath.c_str(), strPngFile.c_str());
-                _render = Sprite::createWithSpriteFrameName(filePath.c_str());
+                SpriteFrameCache::getInstance()->addSpriteFramesWithFile(plistPath, strPngFile);
+                _render = Sprite::createWithSpriteFrameName(filePath);
                 _render->retain();
                 
                 ret = true;
@@ -359,7 +354,7 @@ bool ComRender::serialize(void* r)
     return ret;
 }
 
-ComRender* ComRender::create(void)
+ComRender* ComRender::create()
 {
     ComRender * ret = new (std::nothrow) ComRender();
     if (ret != nullptr && ret->init())

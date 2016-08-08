@@ -76,7 +76,8 @@ PUBillboardChain::PUBillboardChain(const std::string& name, const std::string &t
                                _texture(nullptr),
                                _glProgramState(nullptr),
                                _indexBuffer(nullptr),
-                               _vertexBuffer(nullptr)
+                               _vertexBuffer(nullptr),
+                               _texFile(texFile)
 {
 
     _stateBlock = RenderState::StateBlock::create();
@@ -695,7 +696,7 @@ void PUBillboardChain::render( Renderer* renderer, const Mat4 &transform, Partic
         updateIndexBuffer();
         if (!_vertices.empty() && !_indices.empty())
         {
-            GLuint texId = (_texture ? _texture->getName() : 0);
+            GLuint texId = this->getTextureName();
             _stateBlock->setBlendFunc(particleSystem->getBlendFunc());
             _meshCommand->init(0,
                                texId,
@@ -729,6 +730,24 @@ void PUBillboardChain::setDepthWrite( bool isDepthWrite )
 void PUBillboardChain::setBlendFunc(const BlendFunc& blendFunc)
 {
     _stateBlock->setBlendFunc(blendFunc);
+}
+
+GLuint PUBillboardChain::getTextureName()
+{
+    if (Director::getInstance()->getTextureCache()->getTextureForKey(_texFile) == nullptr)
+    {
+        _texture = nullptr;
+        this->init("");
+    }
+    else if (_texture == nullptr)
+    {
+        this->init(_texFile);
+    }
+
+    if (_texture == nullptr)
+        return 0;
+
+    return _texture->getName();
 }
 
 //-----------------------------------------------------------------------

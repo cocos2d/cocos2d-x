@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -22,17 +22,18 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "TriggerBase.h"
+#include "editor-support/cocostudio/TriggerBase.h"
+#include "base/CCEventCustom.h"
 
 using namespace cocos2d;
 using namespace cocostudio;
 
 void sendEvent(unsigned int event)
 {
-    char* buf = new char[10];
+    char buf[10];
     sprintf(buf, "%d", event);
     std::string custom_event_name(buf);
-    CC_SAFE_DELETE_ARRAY(buf);
+
     EventCustom eventCustom(custom_event_name);
     TriggerMng::getInstance()->dispatchEvent(&eventCustom);
 }

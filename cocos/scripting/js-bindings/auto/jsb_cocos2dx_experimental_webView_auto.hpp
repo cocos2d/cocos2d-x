@@ -1,5 +1,5 @@
 #include "base/ccConfig.h"
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS) && !defined(CC_TARGET_OS_TVOS)
 #ifndef __cocos2dx_experimental_webView_h__
 #define __cocos2dx_experimental_webView_h__
 
@@ -21,6 +21,7 @@ bool js_cocos2dx_experimental_webView_WebView_setScalesPageToFit(JSContext *cx, 
 bool js_cocos2dx_experimental_webView_WebView_getOnDidFailLoading(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_experimental_webView_WebView_loadFile(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_experimental_webView_WebView_loadURL(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_experimental_webView_WebView_setBounces(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_experimental_webView_WebView_evaluateJS(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_experimental_webView_WebView_getOnJSCallback(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_experimental_webView_WebView_canGoForward(JSContext *cx, uint32_t argc, jsval *vp);
@@ -33,4 +34,4 @@ bool js_cocos2dx_experimental_webView_WebView_create(JSContext *cx, uint32_t arg
 bool js_cocos2dx_experimental_webView_WebView_WebView(JSContext *cx, uint32_t argc, jsval *vp);
 
 #endif // __cocos2dx_experimental_webView_h__
-#endif //#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#endif //#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS) && !defined(CC_TARGET_OS_TVOS)

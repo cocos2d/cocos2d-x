@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -69,11 +69,11 @@ public:
     inline GLuint getTextureID() const { return _textureID; }
     /**Get the glprogramstate used for drawing.*/
     inline GLProgramState* getGLProgramState() const { return _glProgramState; }
-    /**Get the blend funcion for drawing.*/
+    /**Get the blend function for drawing.*/
     inline BlendFunc getBlendType() const { return _blendType; }
-    /**Get the modelview matrix when draw the primtive.*/
+    /**Get the modelview matrix when draw the primitive.*/
     inline const Mat4& getModelView() const { return _mv; }
-    /**Execute and draw the commmand, called by renderer.*/
+    /**Execute and draw the command, called by renderer.*/
     void execute() const;
 protected:
     

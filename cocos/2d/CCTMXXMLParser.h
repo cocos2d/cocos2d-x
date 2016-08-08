@@ -2,7 +2,7 @@
 Copyright (c) 2009-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2015 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -62,6 +62,7 @@ enum {
     TMXLayerAttribBase64 = 1 << 1,
     TMXLayerAttribGzip = 1 << 2,
     TMXLayerAttribZlib = 1 << 3,
+    TMXLayerAttribCSV = 1 << 4,
 };
 
 enum {
@@ -135,10 +136,13 @@ public:
     Size            _tileSize;
     int             _spacing;
     int             _margin;
+    Vec2            _tileOffset;
     //! filename containing the tiles (should be spritesheet / texture atlas)
     std::string     _sourceImage;
     //! size in pixels of the image
     Size            _imageSize;
+    std::string     _originSourceImage;
+
 public:
     /**
      * @js ctor
@@ -204,6 +208,18 @@ public:
     /// map orientation
     inline int getOrientation() const { return _orientation; };
     inline void setOrientation(int orientation) { _orientation = orientation; };
+    
+    /// map staggeraxis
+    inline int getStaggerAxis() const { return _staggerAxis; };
+    inline void setStaggerAxis(int staggerAxis) { _staggerAxis = staggerAxis; };
+
+    /// map stagger index
+    inline int getStaggerIndex() const { return _staggerIndex; };
+    inline void setStaggerIndex(int staggerIndex) { _staggerIndex = staggerIndex; };
+
+    /// map hexsidelength
+    inline int getHexSideLength() const { return _hexSideLength; };
+    inline void setHexSideLength(int hexSideLength) { _hexSideLength = hexSideLength; };
 
     /// map width & height
     inline const Size& getMapSize() const { return _mapSize; };
@@ -279,12 +295,19 @@ public:
     inline void setCurrentString(const std::string& currentString){ _currentString = currentString; }
     inline const std::string& getTMXFileName() const { return _TMXFileName; }
     inline void setTMXFileName(const std::string& fileName){ _TMXFileName = fileName; }
+    inline const std::string& getExternalTilesetFileName() const { return _externalTilesetFilename; }
 
 protected:
     void internalInit(const std::string& tmxFileName, const std::string& resourcePath);
 
     /// map orientation
     int    _orientation;
+    ///map staggerAxis
+    int    _staggerAxis;
+    ///map staggerIndex
+    int    _staggerIndex;
+    ///map hexsidelength
+    int    _hexSideLength;
     /// map width & height
     Size _mapSize;
     /// tiles width & height
@@ -318,6 +341,7 @@ protected:
     ValueMapIntKey _tileProperties;
     int _currentFirstGID;
     bool _recordFirstGID;
+    std::string _externalTilesetFilename;
 };
 
 // end of tilemap_parallax_nodes group

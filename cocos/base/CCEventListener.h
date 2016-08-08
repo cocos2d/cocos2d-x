@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -106,7 +106,7 @@ public:
 
     /** Checks whether the listener is enabled.
      *
-     * @return True if the listenrt is enabled.
+     * @return True if the listener is enabled.
      */
     inline bool isEnabled() const { return _isEnabled; };
 

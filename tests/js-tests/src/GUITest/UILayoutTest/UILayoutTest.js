@@ -23,7 +23,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var UILayoutTestBase = UIScene.extend({
+var UILayoutTestBase = UIMainLayer.extend({
     layout: null,
     button: null,
     textButton: null,
@@ -239,7 +239,7 @@ var UILayoutTest_Layout_Relative = UILayoutTestBase.extend({
     }
 });
 
-var UILayoutTest_Layout_Relative_Align_Parent = UIScene.extend({
+var UILayoutTest_Layout_Relative_Align_Parent = UIMainLayer.extend({
      init: function(){
          if (this._super()) {
              var widgetSize = this._widget.getContentSize();
@@ -337,7 +337,7 @@ var UILayoutTest_Layout_Relative_Align_Parent = UIScene.extend({
      }
 });
 
-var UILayoutTest_Layout_Relative_Location = UIScene.extend({
+var UILayoutTest_Layout_Relative_Location = UIMainLayer.extend({
      init: function(){
          if (this._super()) {
              var widgetSize = this._widget.getContentSize();
@@ -406,7 +406,7 @@ var UILayoutTest_Layout_Relative_Location = UIScene.extend({
      }
 });
 
-var UILayoutComponentTest = UIScene.extend({
+var UILayoutComponentTest = UIMainLayer.extend({
     _baseLayer: null,
     init: function(){
         if (this._super()) {

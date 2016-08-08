@@ -80,6 +80,7 @@ var Physics3DTestDemo = cc.Layer.extend({
 
     onTouchesBegan:function(touches, event){
         this._needShootBox = true;
+        event.stopPropagation();
     },
 
     onTouchesMoved:function(touches, event){
@@ -93,6 +94,7 @@ var Physics3DTestDemo = cc.Layer.extend({
 
             if(delta.x * delta.x + delta.y + delta.y > 16)
                 this._needShootBox = false;
+            event.stopPropagation();
         }
     },
 
@@ -109,6 +111,7 @@ var Physics3DTestDemo = cc.Layer.extend({
 
             var dir = cc.math.vec3Sub(farP, nearP);
             this.shootBox(cc.math.vec3Add(this._camera.getPosition3D(), cc.math.vec3(dir.x*10, dir.y*10, dir.z*10)));
+            event.stopPropagation();
         }
     },
 
@@ -440,6 +443,7 @@ var Physics3DConstraintDemo = Physics3DTestDemo.extend({
                 this._constraint = new jsb.Physics3DPointToPointConstraint(result.hitObj, position);
                 this._world.addPhysics3DConstraint(this._constraint, true);
                 this._pickingDistance = cc.math.vec3Length(cc.math.vec3Sub(result.hitPosition, nearP));
+                event.stopPropagation();
                 return;
             }
         }
@@ -461,6 +465,7 @@ var Physics3DConstraintDemo = Physics3DTestDemo.extend({
 
             var dir  = cc.math.vec3Normalize(cc.math.vec3Sub(farP, nearP));
             this._constraint.setPivotPointInB(cc.math.vec3Add(nearP, cc.math.vec3(dir.x * this._pickingDistance, dir.y * this._pickingDistance, dir.z * this._pickingDistance)));
+            event.stopPropagation();
             return;
         }
         Physics3DTestDemo.prototype.onTouchesMoved.call(this, touches, event);
@@ -470,6 +475,7 @@ var Physics3DConstraintDemo = Physics3DTestDemo.extend({
         if(this._constraint){
             this._world.removePhysics3DConstraint(this._constraint);
             this._constraint = null;
+            event.stopPropagation();
             return;
         }
         Physics3DTestDemo.prototype.onTouchesEnded.call(this, touches, event);

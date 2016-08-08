@@ -2,7 +2,7 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2013 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -101,7 +101,7 @@ namespace DrawPrimitives
 
     /** Draws an array of points.
      *
-     * @param point A point coordinates.
+     * @param points A point coordinates.
      * @param numberOfPoints The number of points.
      * @since v0.7.2
      */
@@ -196,7 +196,7 @@ namespace DrawPrimitives
      * @param origin The origin of the bezier path.
      * @param control The control of the bezier path.
      * @param destination The destination of the bezier path.
-     * @param segments The The number of segments.
+     * @param segments The number of segments.
      * @warning This function could be pretty slow. Use it only for debugging purposes.
      * @since v0.8
      */
@@ -208,7 +208,7 @@ namespace DrawPrimitives
      * @param control1 The first control of the bezier path.
      * @param control2 The second control of the bezier path.
      * @param destination The destination of the bezier path.
-     * @param segments The The number of segments.
+     * @param segments The number of segments.
      * @warning This function could be pretty slow. Use it only for debugging purposes.
      * @since v0.8
      */
@@ -217,7 +217,7 @@ namespace DrawPrimitives
     /** Draws a Catmull Rom path.
      *
      * @param arrayOfControlPoints A point array  of control point.
-     * @param segments The The number of segments.
+     * @param segments The number of segments.
      * @warning This function could be pretty slow. Use it only for debugging purposes.
      * @since v2.0
      */
@@ -227,7 +227,7 @@ namespace DrawPrimitives
      *
      * @param config A array point.
      * @param tension The tension of the spline.
-     * @param segments The The number of segments.
+     * @param segments The number of segments.
      * @warning This function could be pretty slow. Use it only for debugging purposes.
      * @since v2.0
      */

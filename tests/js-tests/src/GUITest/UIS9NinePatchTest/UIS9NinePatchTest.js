@@ -23,7 +23,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var UIS9NinePatchTest = UIScene.extend({
+var UIS9NinePatchTest = UIMainLayer.extend({
     init: function () {
         if (this._super()) {
             //init text

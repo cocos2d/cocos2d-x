@@ -1,9 +1,9 @@
-#include "CCBAnimationManager.h"
+#include "editor-support/cocosbuilder/CCBAnimationManager.h"
 
-#include "CCBReader.h"
-#include "CCNode+CCBRelativePositioning.h"
+#include "editor-support/cocosbuilder/CCBReader.h"
+#include "editor-support/cocosbuilder/CCNode+CCBRelativePositioning.h"
 #include "audio/include/SimpleAudioEngine.h"
-#include "CCBSelectorResolver.h"
+#include "editor-support/cocosbuilder/CCBSelectorResolver.h"
 
 #include <string>
 #include <sstream>
@@ -663,7 +663,7 @@ Sequence*  CCBAnimationManager::actionForCallbackChannel(CCBSequenceProperty* ch
             
             if(target != nullptr)
             {
-                if(selectorName.length() > 0)
+                if(!selectorName.empty())
                 {
                     SEL_CallFuncN selCallFunc = 0;
                     

@@ -1,11 +1,11 @@
 #ifndef __CCBPROXY_H_
 #define __CCBPROXY_H_
 
-#include "cocos2d.h"
-#include "CCLuaEngine.h"
+
+#include "scripting/lua-bindings/manual/CCLuaEngine.h"
 #include "audio/include/SimpleAudioEngine.h"
 #include "extensions/cocos-ext.h"
-#include "cocosbuilder/CocosBuilder.h"
+#include "editor-support/cocosbuilder/CocosBuilder.h"
 
 USING_NS_CC;
 USING_NS_CC_EXT;
@@ -49,7 +49,7 @@ public:
     CCB_STATIC_NEW_AUTORELEASE_OBJECT_WITH_INIT_METHOD(CCBProxy, create);
     
     /**
-     * Createa a CCBReader object.
+     * Create a CCBReader object.
      * 
      * @return a CCBReader object.
      *
@@ -71,7 +71,7 @@ public:
     
     /**
      * Get the true type name of pNode.
-     * By using the dynamic_cast function, we coulde get the true type name of pNode.
+     * By using the dynamic_cast function, we could get the true type name of pNode.
      *
      * @param pNode the Node object used to query.
      * @return a string pointer point to the true type name otherwise return "No Support".
@@ -80,12 +80,12 @@ public:
     const char* getNodeTypeName(Node* pNode);
     
     /**
-     * Set relationship between the Lua callback function refrence index handle and the node.
+     * Set relationship between the Lua callback function reference index handle and the node.
      * According to the different controlEvents values,we would choose different ScriptHandlerMgr::HandlerTyp.
-     * When node receive the events information should be passed on to Lua, it would find the Lua callback funtion by the Lua callback function refrence index.
+     * When node receive the events information should be passed on to Lua, it would find the Lua callback function by the Lua callback function reference index.
      * 
      * @param node the node object should pass on the events information to Lua,when the events are triggered.
-     * @param handle the Lua callback function refrence index.
+     * @param handle the Lua callback function reference index.
      * @param controlEvents the combination value of Control::EventType, default 0.
      * @js NA
      */

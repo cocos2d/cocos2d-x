@@ -32,6 +32,7 @@
 
 #include "base/CCDirector.h"
 #include "base/CCAsyncTaskPool.h"
+#include "base/ccUTF8.h"
 #include "2d/CCLight.h"
 #include "2d/CCCamera.h"
 #include "base/ccMacros.h"
@@ -45,11 +46,9 @@
 #include "renderer/CCTechnique.h"
 #include "renderer/CCPass.h"
 
-#include "deprecated/CCString.h" // For StringUtils::format
-
 NS_CC_BEGIN
 
-static GLProgramState* getGLProgramStateForAttribs(MeshVertexData* meshVertexData, bool usesLight);
+static Sprite3DMaterial* getSprite3DMaterialForAttribs(MeshVertexData* meshVertexData, bool usesLight);
 
 Sprite3D* Sprite3D::create()
 {
@@ -231,8 +230,7 @@ bool Sprite3D::loadFromFile(const std::string& path, NodeDatas* nodedatas, MeshD
 {
     std::string fullPath = FileUtils::getInstance()->fullPathForFilename(path);
     
-    std::string ext = path.substr(path.length() - 4, 4);
-    std::transform(ext.begin(), ext.end(), ext.begin(), tolower);
+    std::string ext = FileUtils::getInstance()->getFileExtension(path);
     if (ext == ".obj")
     {
         return Bundle3D::loadObj(*meshdatas, *materialdatas, *nodedatas, fullPath);
@@ -286,6 +284,7 @@ bool Sprite3D::init()
 
 bool Sprite3D::initWithFile(const std::string& path)
 {
+    _aabbDirty = true;
     _meshes.clear();
     _meshVertexDatas.clear();
     CC_SAFE_RELEASE_NULL(_skeleton);
@@ -352,7 +351,7 @@ bool Sprite3D::initFrom(const NodeDatas& nodeDatas, const MeshDatas& meshdatas, 
              createAttachSprite3DNode(it,materialdatas);
         }
     }
-    genGLProgramState();
+    genMaterial();
     
     return true;
 }
@@ -363,6 +362,13 @@ Sprite3D* Sprite3D::createSprite3DNode(NodeData* nodedata,ModelData* modeldata,c
     {
         sprite->setName(nodedata->id);
         auto mesh = Mesh::create(nodedata->id, getMeshIndexData(modeldata->subMeshId));
+        
+        if (_skeleton && modeldata->bones.size())
+        {
+            auto skin = MeshSkin::create(_skeleton, modeldata->bones, modeldata->invBindPose);
+            mesh->setSkin(skin);
+        }
+        
         if (modeldata->matrialId == "" && materialdatas.materials.size())
         {
             const NTextureData* textureData = materialdatas.materials[0].getTextureData(NTextureData::Usage::Diffuse);
@@ -389,6 +395,21 @@ Sprite3D* Sprite3D::createSprite3DNode(NodeData* nodedata,ModelData* modeldata,c
                         mesh->_isTransparent = (materialData->getTextureData(NTextureData::Usage::Transparency) != nullptr);
                     }
                 }
+                textureData = materialData->getTextureData(NTextureData::Usage::Normal);
+                if (textureData)
+                {
+                    auto tex = Director::getInstance()->getTextureCache()->addImage(textureData->filename);
+                    if(tex)
+                    {
+                        Texture2D::TexParams texParams;
+                        texParams.minFilter = GL_LINEAR;
+                        texParams.magFilter = GL_LINEAR;
+                        texParams.wrapS = textureData->wrapS;
+                        texParams.wrapT = textureData->wrapT;
+                        tex->setTexParameters(texParams);
+                    }
+                    mesh->setTexture(tex, NTextureData::Usage::Normal);
+                }
             }
         }
 
@@ -405,7 +426,7 @@ Sprite3D* Sprite3D::createSprite3DNode(NodeData* nodedata,ModelData* modeldata,c
         
         sprite->addMesh(mesh);
         sprite->autorelease();
-        sprite->genGLProgramState(); 
+        sprite->genMaterial();
     }
     return   sprite;
 }
@@ -441,9 +462,9 @@ void Sprite3D::setMaterial(Material *material, int meshIndex)
 
     if (meshIndex == -1)
     {
-        for (auto mesh: _meshes)
+        for (ssize_t i = 0; i < _meshes.size(); i++)
         {
-            mesh->setMaterial(material);
+            _meshes.at(i)->setMaterial(i == 0 ? material : material->clone());
         }
     }
     else
@@ -462,26 +483,31 @@ Material* Sprite3D::getMaterial(int meshIndex) const
 }
 
 
-void Sprite3D::genGLProgramState(bool useLight)
+void Sprite3D::genMaterial(bool useLight)
 {
     _shaderUsingLight = useLight;
 
-    std::unordered_map<const MeshVertexData*, GLProgramState*> glProgramestates;
+    std::unordered_map<const MeshVertexData*, Sprite3DMaterial*> materials;
     for(auto meshVertexData : _meshVertexDatas)
     {
-        auto glprogramstate = getGLProgramStateForAttribs(meshVertexData, useLight);
-        glProgramestates[meshVertexData] = glprogramstate;
+        auto material = getSprite3DMaterialForAttribs(meshVertexData, useLight);
+        materials[meshVertexData] = material;
     }
     
     for (auto& mesh: _meshes)
     {
-        auto glProgramState = glProgramestates[mesh->getMeshIndexData()->getMeshVertexData()];
+        auto material = materials[mesh->getMeshIndexData()->getMeshVertexData()];
+        //keep original state block if exist
+        auto oldmaterial = mesh->getMaterial();
+        if (oldmaterial)
+        {
+            material->setStateBlock(oldmaterial->getStateBlock());
+        }
 
-        // hack to prevent cloning the very first time
-        if (glProgramState->getReferenceCount() == 1)
-            mesh->setGLProgramState(glProgramState);
+        if (material->getReferenceCount() == 1)
+            mesh->setMaterial(material);
         else
-            mesh->setGLProgramState(glProgramState->clone());
+            mesh->setMaterial(material->clone());
     }
 }
 
@@ -533,6 +559,21 @@ void Sprite3D::createNode(NodeData* nodedata, Node* root, const MaterialDatas& m
                                     mesh->_isTransparent = (materialData->getTextureData(NTextureData::Usage::Transparency) != nullptr);
                                 }
                             }
+                            textureData = materialData->getTextureData(NTextureData::Usage::Normal);
+                            if (textureData)
+                            {
+                                auto tex = Director::getInstance()->getTextureCache()->addImage(textureData->filename);
+                                if (tex)
+                                {
+                                    Texture2D::TexParams texParams;
+                                    texParams.minFilter = GL_LINEAR;
+                                    texParams.magFilter = GL_LINEAR;
+                                    texParams.wrapS = textureData->wrapS;
+                                    texParams.wrapT = textureData->wrapT;
+                                    tex->setTexParameters(texParams);
+                                }
+                                mesh->setTexture(tex, NTextureData::Usage::Normal);
+                            }
                         }
                     }
                     
@@ -546,6 +587,7 @@ void Sprite3D::createNode(NodeData* nodedata, Node* root, const MaterialDatas& m
                     setScaleY(scale.y);
                     setScaleZ(scale.z);
                     
+                    node = this;
                 }
             }
             else
@@ -712,7 +754,7 @@ void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
 #if CC_USE_CULLING
     // camera clipping
-    if(Camera::getVisitingCamera() && !Camera::getVisitingCamera()->isVisibleInFrustum(&this->getAABB()))
+    if(_children.size() == 0 && Camera::getVisitingCamera() && !Camera::getVisitingCamera()->isVisibleInFrustum(&getAABB()))
         return;
 #endif
     
@@ -731,13 +773,13 @@ void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
         const auto lights = scene->getLights();
         bool usingLight = false;
         for (const auto light : lights) {
-            usingLight = ((unsigned int)light->getLightFlag() & _lightMask) > 0;
+            usingLight = light->isEnabled() && ((static_cast<unsigned int>(light->getLightFlag()) & _lightMask) > 0);
             if (usingLight)
                 break;
         }
         if (usingLight != _shaderUsingLight)
         {
-            genGLProgramState(usingLight);
+            genMaterial(usingLight);
         }
     }
     
@@ -849,7 +891,7 @@ void Sprite3D::setCullFaceEnabled(bool enable)
 
 Mesh* Sprite3D::getMeshByIndex(int index) const
 {
-    CCASSERT(index < _meshes.size(), "invald index");
+    CCASSERT(index < _meshes.size(), "invalid index");
     return _meshes.at(index);
 }
 
@@ -931,8 +973,8 @@ void Sprite3DCache::removeSprite3DData(const std::string& key)
     if (it != _spriteDatas.end())
     {
         delete it->second;
+        _spriteDatas.erase(it);
     }
-    _spriteDatas.erase(it);
 }
 
 void Sprite3DCache::removeAllSprite3DData()
@@ -955,45 +997,30 @@ Sprite3DCache::~Sprite3DCache()
 //
 // MARK: Helpers
 //
-static GLProgramState* getGLProgramStateForAttribs(MeshVertexData* meshVertexData, bool usesLight)
+static Sprite3DMaterial* getSprite3DMaterialForAttribs(MeshVertexData* meshVertexData, bool usesLight)
 {
     bool textured = meshVertexData->hasVertexAttrib(GLProgram::VERTEX_ATTRIB_TEX_COORD);
     bool hasSkin = meshVertexData->hasVertexAttrib(GLProgram::VERTEX_ATTRIB_BLEND_INDEX)
     && meshVertexData->hasVertexAttrib(GLProgram::VERTEX_ATTRIB_BLEND_WEIGHT);
     bool hasNormal = meshVertexData->hasVertexAttrib(GLProgram::VERTEX_ATTRIB_NORMAL);
-
-    const char* shader = nullptr;
+    bool hasTangentSpace = meshVertexData->hasVertexAttrib(GLProgram::VERTEX_ATTRIB_TANGENT) 
+    && meshVertexData->hasVertexAttrib(GLProgram::VERTEX_ATTRIB_BINORMAL);
+    Sprite3DMaterial::MaterialType type;
     if(textured)
     {
-        if (hasSkin)
-        {
-            if (hasNormal && usesLight)
-                shader = GLProgram::SHADER_3D_SKINPOSITION_NORMAL_TEXTURE;
-            else
-                shader = GLProgram::SHADER_3D_SKINPOSITION_TEXTURE;
+        if (hasTangentSpace){
+            type = hasNormal && usesLight ? Sprite3DMaterial::MaterialType::BUMPED_DIFFUSE : Sprite3DMaterial::MaterialType::UNLIT;
         }
-        else
-        {
-            if (hasNormal && usesLight)
-                shader = GLProgram::SHADER_3D_POSITION_NORMAL_TEXTURE;
-            else
-                shader = GLProgram::SHADER_3D_POSITION_TEXTURE;
+        else{
+            type = hasNormal && usesLight ? Sprite3DMaterial::MaterialType::DIFFUSE : Sprite3DMaterial::MaterialType::UNLIT;
         }
     }
     else
     {
-        if (hasNormal && usesLight)
-            shader = GLProgram::SHADER_3D_POSITION_NORMAL;
-        else
-            shader = GLProgram::SHADER_3D_POSITION;
+        type = hasNormal && usesLight ? Sprite3DMaterial::MaterialType::DIFFUSE_NOTEX : Sprite3DMaterial::MaterialType::UNLIT_NOTEX;
     }
-
-    CCASSERT(shader, "Couldn't find shader for sprite");
-
-    auto glProgram = GLProgramCache::getInstance()->getGLProgram(shader);
-    auto glprogramstate = GLProgramState::create(glProgram);
-
-    return glprogramstate;
+    
+    return Sprite3DMaterial::createBuiltInMaterial(type, hasSkin);
 }
 
 NS_CC_END

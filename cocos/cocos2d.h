@@ -2,7 +2,7 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -29,8 +29,8 @@ THE SOFTWARE.
 #define __COCOS2D_H__
 
 // 0x00 HI ME LO
-// 00   03 07 00
-#define COCOS2D_VERSION 0x00030700
+// 00   03 08 00
+#define COCOS2D_VERSION 0x00031300
 
 //
 // all cocos2d include files
@@ -138,6 +138,7 @@ THE SOFTWARE.
 
 // 2d utils
 #include "2d/CCCamera.h"
+#include "2d/CCCameraBackgroundBrush.h"
 #include "2d/CCGrabber.h"
 #include "2d/CCGrid.h"
 #include "2d/CCLight.h"
@@ -162,18 +163,12 @@ THE SOFTWARE.
 #include "renderer/CCRenderer.h"
 #include "renderer/CCTechnique.h"
 #include "renderer/CCTexture2D.h"
+#include "renderer/CCTextureCube.h"
 #include "renderer/CCTextureCache.h"
 #include "renderer/CCTrianglesCommand.h"
 #include "renderer/CCVertexAttribBinding.h"
 #include "renderer/CCVertexIndexBuffer.h"
 #include "renderer/CCVertexIndexData.h"
-#include "renderer/CCPrimitive.h"
-#include "renderer/CCPrimitiveCommand.h"
-#include "renderer/CCTrianglesCommand.h"
-#include "renderer/CCMaterial.h"
-#include "renderer/CCTechnique.h"
-#include "renderer/CCPass.h"
-#include "renderer/CCRenderState.h"
 #include "renderer/CCFrameBuffer.h"
 #include "renderer/ccGLStateCache.h"
 #include "renderer/ccShaders.h"
@@ -247,6 +242,13 @@ THE SOFTWARE.
 	#include "platform/winrt/CCStdC.h"
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN)
+	#include "platform/tizen/CCApplication-tizen.h"
+	#include "platform/tizen/CCGLViewImpl-tizen.h"
+	#include "platform/tizen/CCGL-tizen.h"
+	#include "platform/tizen/CCStdC-tizen.h"
+#endif
+
 // script_support
 #include "base/CCScriptSupport.h"
 
@@ -288,6 +290,7 @@ THE SOFTWARE.
 #include "3d/CCFrustum.h"
 #include "3d/CCMesh.h"
 #include "3d/CCMeshSkin.h"
+#include "3d/CCMotionStreak3D.h"
 #include "3d/CCMeshVertexIndexData.h"
 #include "3d/CCOBB.h"
 #include "3d/CCPlane.h"
@@ -297,19 +300,15 @@ THE SOFTWARE.
 #include "3d/CCSprite3D.h"
 #include "3d/CCSprite3DMaterial.h"
 #include "3d/CCTerrain.h"
-#include "3d/CCTextureCube.h"
 
-// Deprecated include
-#include "deprecated/CCArray.h"
-#include "deprecated/CCBool.h"
-#include "deprecated/CCDictionary.h"
-#include "deprecated/CCDouble.h"
-#include "deprecated/CCFloat.h"
-#include "deprecated/CCInteger.h"
-#include "deprecated/CCNotificationCenter.h"
-#include "deprecated/CCSet.h"
-#include "deprecated/CCString.h"
-// CCDeprecated.h must be included at the end
+// vr
+#include "vr/CCVRGenericRenderer.h"
+
+
+// Deprecated
+// All deprecated features are include inside deprecated/CCDeprecated.h.
+// It is recommended that you just include what is needed.
+// eg. #include "deprecated/CCString.h" if you only need cocos2d::__String.
 #include "deprecated/CCDeprecated.h"
 
 

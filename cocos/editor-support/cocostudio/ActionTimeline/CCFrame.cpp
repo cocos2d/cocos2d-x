@@ -22,9 +22,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "CCFrame.h"
-#include "CCTimeLine.h"
-#include "CCActionTimeline.h"
+#include "editor-support/cocostudio/ActionTimeline/CCFrame.h"
+#include "editor-support/cocostudio/ActionTimeline/CCTimeLine.h"
+#include "editor-support/cocostudio/ActionTimeline/CCActionTimeline.h"
 #include "2d/CCSpriteFrameCache.h"
 #include "2d/CCSpriteFrame.h"
 #include <exception>
@@ -506,7 +506,10 @@ void AnchorPointFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
     {
 	    return;
     }
-
+    if (_tween)
+    {
+        _betweenAnchorPoint = static_cast<AnchorPointFrame*>(nextFrame)->_anchorPoint - _anchorPoint;
+    }
     _node->setAnchorPoint(_anchorPoint);
 }
 
@@ -519,6 +522,15 @@ Frame* AnchorPointFrame::clone()
     frame->cloneProperty(this);
 
     return frame;
+}
+
+void AnchorPointFrame::onApply(float percent)
+{
+    if ((nullptr != _node) && (_betweenAnchorPoint.x != 0 || _betweenAnchorPoint.y != 0))
+    {
+        auto applyAnchorP = _betweenAnchorPoint * percent + _anchorPoint;
+        _node->setAnchorPoint(applyAnchorP);
+    }
 }
 
 
@@ -606,20 +618,35 @@ void InnerActionFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 
 void InnerActionFrame::setStartFrameIndex(int frameIndex)
 {
-    CCASSERT(!_enterWithName, " cannot setStartFrameIndex when enterWithName is set");
+    if (_enterWithName)
+    {
+        CCLOG(" cannot set start when enter frame with name. setEnterWithName false firstly!");
+        return;
+    }
+
     _startFrameIndex = frameIndex;
 }
 
 
 void InnerActionFrame::setEndFrameIndex(int frameIndex)
 {
-    CCASSERT(!_enterWithName, " cannot setEndFrameIndex when enterWithName is set");
+    if (_enterWithName)
+    {
+        CCLOG(" cannot set end when enter frame with name. setEnterWithName false firstly!");
+        return;
+    }
+
     _endFrameIndex = frameIndex;
 }
 
 void InnerActionFrame::setAnimationName(const std::string& animationName)
 {
-    CCASSERT(_enterWithName, " cannot set aniamtioname when enter frame with index. setEnterWithName true firstly!");
+    if (!_enterWithName)
+    {
+        CCLOG(" cannot set aniamtioname when enter frame with index. setEnterWithName true firstly!");
+        return;
+    }
+
     _animationName = animationName;
    
 }
@@ -880,5 +907,47 @@ Frame* BlendFuncFrame::clone()
     return frame;
 }
 
+//PlayableFrame
+const std::string PlayableFrame::START_ACT = "start";
+const std::string PlayableFrame::STOP_ACT = "stop";
+const std::string PlayableFrame::PLAYABLE_EXTENTION = "playable_extension";
+PlayableFrame* PlayableFrame::create()
+{
+    auto frame = new (std::nothrow) PlayableFrame();
+    if(frame)
+    {
+        frame->autorelease();
+        return frame;
+    }
+    CC_SAFE_DELETE(frame);
+    return nullptr;
+}
 
+PlayableFrame::PlayableFrame()
+    : _playableAct("")
+{
+    
+}
+
+void PlayableFrame::onEnter(Frame *nextFrame, int currentFrameINdex)
+{
+    auto playableNode = dynamic_cast<PlayableProtocol*>(_node);
+    if (nullptr == playableNode) // may be a playable component
+        playableNode = dynamic_cast<PlayableProtocol*>(_node->getComponent(PLAYABLE_EXTENTION));
+    if (nullptr == playableNode)
+        return;
+
+    if(_playableAct == START_ACT)
+        playableNode->start();
+    else if(_playableAct == STOP_ACT)
+        playableNode->stop();
+}
+
+Frame* PlayableFrame::clone()
+{
+    PlayableFrame* frame = PlayableFrame::create();
+    frame->cloneProperty(this);
+    frame->setPlayableAct(_playableAct);
+    return frame;
+}
 NS_TIMELINE_END

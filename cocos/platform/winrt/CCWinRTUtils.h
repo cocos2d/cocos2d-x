@@ -27,19 +27,20 @@ THE SOFTWARE.
 #define __CCWINRT_UTILS_H__
 
 #include "platform/CCPlatformMacros.h"
-
-#include <wrl/client.h>
-#include <ppl.h>
 #include <ppltasks.h>
 
 #include <string>
 
 NS_CC_BEGIN
 
+bool isWindowsPhone();
 
+CC_DEPRECATED_ATTRIBUTE std::wstring CC_DLL CCUtf8ToUnicode(const char * pszUtf8Str, unsigned len = -1);
+CC_DEPRECATED_ATTRIBUTE std::string CC_DLL CCUnicodeToUtf8(const wchar_t* pwszStr);
 
-std::wstring CC_DLL CCUtf8ToUnicode(const char * pszUtf8Str, unsigned len = -1);
-std::string CC_DLL CCUnicodeToUtf8(const wchar_t* pwszStr);
+std::wstring CC_DLL StringUtf8ToWideChar(const std::string& strUtf8);
+std::string CC_DLL StringWideCharToUtf8(const std::wstring& strWideChar);
+
 Platform::Object^ findXamlElement(Platform::Object^ parent, Platform::String^ name);
 bool removeXamlElement(Platform::Object^ parent, Platform::Object^ element);
 bool replaceXamlElement(Platform::Object^ parent, Platform::Object^ add, Platform::Object^ remove);

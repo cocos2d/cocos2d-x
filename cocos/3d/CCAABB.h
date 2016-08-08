@@ -36,7 +36,7 @@ NS_CC_BEGIN
  */
 
 /**
- * Axis Aligned Bounding Box (AABB), usually caculate some rough but fast collision detection.
+ * Axis Aligned Bounding Box (AABB), usually calculate some rough but fast collision detection.
  */
 class CC_DLL AABB
 {

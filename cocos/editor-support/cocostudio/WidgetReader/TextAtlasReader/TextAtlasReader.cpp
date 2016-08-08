@@ -1,11 +1,13 @@
 
 
-#include "TextAtlasReader.h"
+#include "editor-support/cocostudio/WidgetReader/TextAtlasReader/TextAtlasReader.h"
 
 #include "ui/UITextAtlas.h"
-#include "cocostudio/CocoLoader.h"
-#include "cocostudio/CSParseBinary_generated.h"
-#include "cocostudio/FlatBuffersSerialize.h"
+#include "platform/CCFileUtils.h"
+
+#include "editor-support/cocostudio/CocoLoader.h"
+#include "editor-support/cocostudio/CSParseBinary_generated.h"
+#include "editor-support/cocostudio/FlatBuffersSerialize.h"
 
 #include "tinyxml2.h"
 #include "flatbuffers/flatbuffers.h"
@@ -22,7 +24,7 @@ namespace cocostudio
     static const char* P_ItemHeight = "itemHeight";
     static const char* P_StartCharMap = "startCharMap";
     
-    static TextAtlasReader* instanceTextAtalsReader = nullptr;
+    static TextAtlasReader* instanceTextAtlasReader = nullptr;
     
     IMPLEMENT_CLASS_NODE_READER_INFO(TextAtlasReader)
     
@@ -38,16 +40,16 @@ namespace cocostudio
     
     TextAtlasReader* TextAtlasReader::getInstance()
     {
-        if (!instanceTextAtalsReader)
+        if (!instanceTextAtlasReader)
         {
-            instanceTextAtalsReader = new (std::nothrow) TextAtlasReader();
+            instanceTextAtlasReader = new (std::nothrow) TextAtlasReader();
         }
-        return instanceTextAtalsReader;
+        return instanceTextAtlasReader;
     }
     
     void TextAtlasReader::destroyInstance()
     {
-        CC_SAFE_DELETE(instanceTextAtalsReader);
+        CC_SAFE_DELETE(instanceTextAtlasReader);
     }
     
     void TextAtlasReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *cocoLoader, stExpCocoNode *cocoNode)
@@ -274,13 +276,6 @@ namespace cocostudio
                     errorFilePath = cmfPath;
                     fileExist = false;
                 }
-                
-                //if (!fileExist)
-                //{
-                //    auto label = Label::create();
-                //    label->setString(__String::createWithFormat("%s missed", errorFilePath.c_str())->getCString());
-                //    labelAtlas->addChild(label);
-                //}
                 break;
             }
                 

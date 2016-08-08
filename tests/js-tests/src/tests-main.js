@@ -62,6 +62,9 @@ var TestScene = cc.Scene.extend({
         }
     },
     onMainMenuCallback:function () {
+        if (director.isPaused()) {
+            director.resume();
+        } 
         var scene = new cc.Scene();
         var layer = new TestController();
         scene.addChild(layer);
@@ -94,7 +97,7 @@ var TestController = cc.LayerGradient.extend({
         // add close menu
         var closeItem = new cc.MenuItemImage(s_pathClose, s_pathClose, this.onCloseCallback, this);
         closeItem.x = winSize.width - 30;
-	    closeItem.y = winSize.height - 30;
+        closeItem.y = winSize.height - 30;
 
         var subItem1 = new cc.MenuItemFont("Automated Test: Off");
         subItem1.fontSize = 18;
@@ -112,7 +115,16 @@ var TestController = cc.LayerGradient.extend({
 
         var menu = new cc.Menu(closeItem, toggleAutoTestItem);//pmenu is just a holder for the close button
         menu.x = 0;
-	    menu.y = 0;
+        menu.y = 0;
+
+        // sort the test title
+        testNames.sort(function(first, second){
+            if (first.title > second.title)
+            {
+                return 1;
+            }
+            return -1;
+        });
 
         // add menu items for tests
         this._itemMenu = new cc.Menu();//item menu is where all the label goes, and the one gets scrolled
@@ -122,11 +134,11 @@ var TestController = cc.LayerGradient.extend({
             var menuItem = new cc.MenuItemLabel(label, this.onMenuCallback, this);
             this._itemMenu.addChild(menuItem, i + 10000);
             menuItem.x = winSize.width / 2;
-	        menuItem.y = (winSize.height - (i + 1) * LINE_SPACE);
+            menuItem.y = (winSize.height - (i + 1) * LINE_SPACE);
 
             // enable disable
             if ( !cc.sys.isNative) {
-                if( 'opengl' in cc.sys.capabilities ){
+                if( cc._renderType !== cc.game.RENDER_TYPE_CANVAS ){
                     menuItem.enabled = (testNames[i].platforms & PLATFORM_HTML5) | (testNames[i].platforms & PLATFORM_HTML5_WEBGL);
                 }else{
                     menuItem.setEnabled( testNames[i].platforms & PLATFORM_HTML5 );
@@ -145,15 +157,15 @@ var TestController = cc.LayerGradient.extend({
         }
 
         this._itemMenu.width = winSize.width;
-	    this._itemMenu.height = (testNames.length + 1) * LINE_SPACE;
+        this._itemMenu.height = (testNames.length + 1) * LINE_SPACE;
         this._itemMenu.x = curPos.x;
-	    this._itemMenu.y = curPos.y;
+        this._itemMenu.y = curPos.y;
         this.addChild(this._itemMenu);
         this.addChild(menu, 1);
 
         // 'browser' can use touches or mouse.
         // The benefit of using 'touches' in a browser, is that it works both with mouse events or touches events
-        if ('touches' in cc.sys.capabilities)
+        if ('touches' in cc.sys.capabilities) {
             cc.eventManager.addListener({
                 event: cc.EventListener.TOUCH_ALL_AT_ONCE,
                 onTouchesMoved: function (touches, event) {
@@ -163,6 +175,7 @@ var TestController = cc.LayerGradient.extend({
                     return true;
                 }
             }, this);
+        }
         else if ('mouse' in cc.sys.capabilities) {
             cc.eventManager.addListener({
                 event: cc.EventListener.MOUSE,
@@ -200,7 +213,13 @@ var TestController = cc.LayerGradient.extend({
         }, this);
     },
     onCloseCallback:function () {
-        window.history && window.history.go(-1);
+        if (cc.sys.isNative)
+        {
+            cc.game.end();
+        }
+        else {
+            window.history && window.history.go(-1);
+        }
     },
     onToggleAutoTest:function() {
         autoTestEnabled = !autoTestEnabled;
@@ -214,7 +233,7 @@ var TestController = cc.LayerGradient.extend({
         if( newY > ((testNames.length + 1) * LINE_SPACE - winSize.height))
             newY = ((testNames.length + 1) * LINE_SPACE - winSize.height);
 
-	    this._itemMenu.y = newY;
+        this._itemMenu.y = newY;
     }
 });
 TestController.YOffset = 0;
@@ -276,15 +295,6 @@ var testNames = [
             return new ChipmunkTestScene();
         }
     },
-    //"BugsTest",
-    {
-        title:"Click and Move Test",
-        platforms: PLATFORM_ALL,
-        linksrc:"src/ClickAndMoveTest/ClickAndMoveTest.js",
-        testScene:function () {
-            return new ClickAndMoveTestScene();
-        }
-    },
     {
         title:"ClippingNode Test",
         platforms: PLATFORM_ALL,
@@ -303,12 +313,11 @@ var testNames = [
         }
     },
     {
-        title:"CocoStudio Test",
-        resource:g_cocoStudio,
-        platforms: PLATFORM_ALL,
-        linksrc:"",
+        title:"Component Test",
+        platforms: PLATFORM_JSB,
+        linksrc:"src/ComponentTest/ComponentTest.js",
         testScene:function () {
-            return new CocoStudioTestScene();
+            return new ComponentTestScene();
         }
     },
     {
@@ -463,6 +472,15 @@ var testNames = [
         }
     },
     {
+        title:"Memory Model Test",
+        resource:g_menu,
+        platforms: PLATFORM_JSB,
+        linksrc:"src/MemoryModelTest/MemoryModelTest.js",
+        testScene:function () {
+            return new MemoryModelTestScene();
+        }
+    },
+    {
         title:"Menu Test",
         resource:g_menu,
         platforms: PLATFORM_ALL,
@@ -527,15 +545,6 @@ var testNames = [
         linksrc:"src/PathTest/PathTest.js",
         testScene:function () {
             return new PathTestScene();
-        }
-    },
-    {
-        title:"Performance Test",
-        platforms: PLATFORM_ALL,
-        linksrc:"",
-        resource:g_performace,
-        testScene:function () {
-            return new PerformanceTestScene();
         }
     },
     {
@@ -715,7 +724,7 @@ var testNames = [
     },
     {
         title:"Vibrate Test",
-        platforms: PLATFORM_ALL,
+        platforms: PLATFORM_JSB,
         linksrc:"src/VibrateTest/VibrateTest.js",
         testScene:function () {
             return new VibrateTestScene();

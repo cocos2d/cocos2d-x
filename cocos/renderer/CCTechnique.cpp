@@ -86,6 +86,7 @@ Technique* Technique::clone() const
         for (const auto pass: _passes)
         {
             auto p = pass->clone();
+            p->_parent = technique;
             technique->_passes.pushBack(p);
         }
 

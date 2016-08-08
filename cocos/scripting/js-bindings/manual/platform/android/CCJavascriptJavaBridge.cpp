@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2014 Chukong Technologies Inc.
+ * Copyright (c) 2013-2016 Chukong Technologies Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,12 +21,13 @@
  */
  
 #include <android/log.h>
-#include "CCJavascriptJavaBridge.h"
-#include "cocos2d.h"
+#include "scripting/js-bindings/manual/platform/android/CCJavascriptJavaBridge.h"
+
 #include "platform/android/jni/JniHelper.h"
-#include "spidermonkey_specifics.h"
-#include "ScriptingCore.h"
-#include "js_manual_conversions.h"
+#include "scripting/js-bindings/manual/spidermonkey_specifics.h"
+#include "scripting/js-bindings/manual/ScriptingCore.h"
+#include "scripting/js-bindings/manual/js_manual_conversions.h"
+#include "base/ccUTF8.h"
 
 #define  LOG_TAG    "CCJavascriptJavaBridge"
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
@@ -38,10 +39,14 @@ extern "C" {
 JNIEXPORT jint JNICALL Java_org_cocos2dx_lib_Cocos2dxJavascriptJavaBridge_evalString
   (JNIEnv *env, jclass cls, jstring value)
 {
-    const char *_value = env->GetStringUTFChars(value, NULL);
-    ScriptingCore::getInstance()->evalString(_value,NULL);
-    env->ReleaseStringUTFChars(value, _value);
-    
+    bool strFlag = false;
+    std::string strValue = cocos2d::StringUtils::getStringUTFCharsJNI(env, value, &strFlag);
+    if (!strFlag)
+    {
+        CCLOG("Cocos2dxJavascriptJavaBridge_evalString error, invalid string code");
+        return 0;
+    }
+    ScriptingCore::getInstance()->evalString(strValue.c_str());
     return 1;
 }
 
@@ -78,11 +83,18 @@ bool JavascriptJavaBridge::CallInfo::execute(void)
             break;
 
         case TypeString:
+        {
             m_retjstring = (jstring)m_env->CallStaticObjectMethod(m_classID, m_methodID);
-            const char *stringBuff = m_env->GetStringUTFChars(m_retjstring, 0);
-            m_ret.stringValue = new string(stringBuff);
-            m_env->ReleaseStringUTFChars(m_retjstring, stringBuff);
-           break;
+            std::string strValue = cocos2d::StringUtils::getStringUTFCharsJNI(m_env, m_retjstring);
+            
+            m_ret.stringValue = new string(strValue);
+            break;
+        }
+
+        default:
+            m_error = JSJ_ERR_TYPE_NOT_SUPPORT;
+            LOGD("Return type '%d' is not supported", static_cast<int>(m_returnType));
+            return false;
     }
 
     if (m_env->ExceptionCheck() == JNI_TRUE)
@@ -118,11 +130,17 @@ bool JavascriptJavaBridge::CallInfo::executeWithArgs(jvalue *args)
              break;
 
          case TypeString:
+        {
              m_retjstring = (jstring)m_env->CallStaticObjectMethodA(m_classID, m_methodID, args);
-             const char *stringBuff = m_env->GetStringUTFChars(m_retjstring, 0);
-             m_ret.stringValue = new string(stringBuff);
-             m_env->ReleaseStringUTFChars(m_retjstring, stringBuff);
-            break;
+             std::string strValue = cocos2d::StringUtils::getStringUTFCharsJNI(m_env, m_retjstring);
+             m_ret.stringValue = new string(strValue);
+             break;
+        }
+
+        default:
+            m_error = JSJ_ERR_TYPE_NOT_SUPPORT;
+            LOGD("Return type '%d' is not supported", static_cast<int>(m_returnType));
+            return false;
      }
 
     if (m_env->ExceptionCheck() == JNI_TRUE)
@@ -275,6 +293,8 @@ JS::Value JavascriptJavaBridge::convertReturnValue(JSContext *cx, ReturnValue re
 			return BOOLEAN_TO_JSVAL(retValue.boolValue);
 		case TypeString:
 			return c_string_to_jsval(cx, retValue.stringValue->c_str(),retValue.stringValue->size());
+        default:
+            break;
 	}
 
 	return ret;
@@ -298,7 +318,9 @@ JS_BINDED_CONSTRUCTOR_IMPL(JavascriptJavaBridge)
     js_proxy_t *p;
     jsval out;
     
-    JSObject *obj = JS_NewObject(cx, &JavascriptJavaBridge::js_class, JS::RootedObject(cx, JavascriptJavaBridge::js_proto), JS::RootedObject(cx, JavascriptJavaBridge::js_parent));
+    JS::RootedObject proto(cx, JavascriptJavaBridge::js_proto);
+    JS::RootedObject parentProto(cx, JavascriptJavaBridge::js_parent);
+    JS::RootedObject obj(cx, JS_NewObject(cx, &JavascriptJavaBridge::js_class, proto, parentProto));
     
     if (obj) {
         JS_SetPrivate(obj, jsj);
@@ -306,7 +328,7 @@ JS_BINDED_CONSTRUCTOR_IMPL(JavascriptJavaBridge)
     }
 
     args.rval().set(out);
-    p =jsb_new_proxy(jsj, obj);
+    p = jsb_new_proxy(jsj, obj);
     
     JS::AddNamedObjectRoot(cx, &p->obj, "JavascriptJavaBridge");
     return true;
@@ -361,9 +383,9 @@ JS_BINDED_FUNC_IMPL(JavascriptJavaBridge, callStaticMethod)
                 switch (call.argumentTypeAtIndex(i))
                 {
                     case TypeInteger:
-                        double interger;
-                        JS::ToNumber(cx, argv.get(index), &interger);
-                        args[i].i = (int)interger;
+                        double integer;
+                        JS::ToNumber(cx, argv.get(index), &integer);
+                        args[i].i = (int)integer;
                         break;
 
                     case TypeFloat:

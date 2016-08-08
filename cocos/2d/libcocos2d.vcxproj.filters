@@ -283,6 +283,12 @@
     <Filter Include="cocostudio\TimelineAction\Skeleton">
       <UniqueIdentifier>{ca5e1475-3bfd-4aae-ad54-2e19d5021b92}</UniqueIdentifier>
     </Filter>
+    <Filter Include="cocostudio\reader\WidgetReader\TabControlReader">
+      <UniqueIdentifier>{8686c220-18af-4bea-abce-f4797afd01f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vr">
+      <UniqueIdentifier>{5cbd879f-02ae-4f28-af33-2c4f980dd6f0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\physics\CCPhysicsBody.cpp">
@@ -392,9 +398,6 @@
       <Filter>2d</Filter>
     </ClCompile>
     <ClCompile Include="CCDrawNode.cpp">
-      <Filter>2d</Filter>
-    </ClCompile>
-    <ClCompile Include="CCFont.cpp">
       <Filter>2d</Filter>
     </ClCompile>
     <ClCompile Include="CCFontAtlas.cpp">
@@ -826,6 +829,9 @@
     <ClCompile Include="..\3d\CCSprite3DMaterial.cpp">
       <Filter>3d</Filter>
     </ClCompile>
+    <ClCompile Include="..\3d\CCMotionStreak3D.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\extensions\assets-manager\AssetsManager.cpp">
       <Filter>extension\AssetsManager</Filter>
     </ClCompile>
@@ -932,6 +938,9 @@
       <Filter>ui\UIWidgets\ScrollWidget</Filter>
     </ClCompile>
     <ClCompile Include="..\ui\UIPageView.cpp">
+      <Filter>ui\UIWidgets\ScrollWidget</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ui\UIPageViewIndicator.cpp">
       <Filter>ui\UIWidgets\ScrollWidget</Filter>
     </ClCompile>
     <ClCompile Include="..\ui\UIScrollView.cpp">
@@ -1234,6 +1243,9 @@
     <ClCompile Include="..\platform\win32\CCStdC-win32.cpp">
       <Filter>platform\win32</Filter>
     </ClCompile>
+    <ClCompile Include="..\platform\win32\CCUtils-win32.cpp">
+      <Filter>platform\win32</Filter>
+    </ClCompile>
     <ClCompile Include="..\platform\desktop\CCGLViewImpl-desktop.cpp">
       <Filter>platform\desktop</Filter>
     </ClCompile>
@@ -1247,9 +1259,6 @@
       <Filter>extension\AssetsManager</Filter>
     </ClCompile>
     <ClCompile Include="..\..\extensions\assets-manager\CCEventListenerAssetsManagerEx.cpp">
-      <Filter>extension\AssetsManager</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\extensions\assets-manager\Downloader.cpp">
       <Filter>extension\AssetsManager</Filter>
     </ClCompile>
     <ClCompile Include="..\..\extensions\assets-manager\Manifest.cpp">
@@ -1363,9 +1372,6 @@
       <Filter>3d</Filter>
     </ClCompile>
     <ClCompile Include="..\3d\CCSkybox.cpp">
-      <Filter>3d</Filter>
-    </ClCompile>
-    <ClCompile Include="..\3d\CCTextureCube.cpp">
       <Filter>3d</Filter>
     </ClCompile>
     <ClCompile Include="..\..\extensions\Particle3D\PU\CCPUAffector.cpp">
@@ -1899,6 +1905,9 @@
     <ClCompile Include="..\base\CCNinePatchImageParser.cpp">
       <Filter>base</Filter>
     </ClCompile>
+    <ClCompile Include="..\base\CCStencilStateManager.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
     <ClCompile Include="..\base\CCNinePatchImageParser.cpp" />
     <ClCompile Include="..\renderer\CCFrameBuffer.cpp">
       <Filter>renderer</Filter>
@@ -1927,6 +1936,40 @@
     </ClCompile>
     <ClCompile Include="..\editor-support\cocostudio\CCComExtensionData.cpp">
       <Filter>cocostudio\components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\network\CCDownloader.cpp">
+      <Filter>network\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CCCameraBackgroundBrush.cpp">
+      <Filter>2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\renderer\CCTextureCube.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\network\CCDownloader-curl.cpp">
+      <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\editor-support\cocostudio\WidgetReader\Light3DReader\Light3DReader.cpp" />
+    <ClCompile Include="..\editor-support\cocostudio\WidgetReader\TabControlReader\TabControlReader.cpp">
+      <Filter>cocostudio\reader\WidgetReader\TabControlReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ui\UITabControl.cpp">
+      <Filter>ui\UIWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\editor-support\cocostudio\LocalizationManager.cpp">
+      <Filter>cocostudio\json</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vr\CCVRDistortion.cpp">
+      <Filter>vr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vr\CCVRDistortionMesh.cpp">
+      <Filter>vr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vr\CCVRGenericHeadTracker.cpp">
+      <Filter>vr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vr\CCVRGenericRenderer.cpp">
+      <Filter>vr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2082,9 +2125,6 @@
       <Filter>2d</Filter>
     </ClInclude>
     <ClInclude Include="CCLabelBMFont.h">
-      <Filter>2d</Filter>
-    </ClInclude>
-    <ClInclude Include="CCLabelTextFormatter.h">
       <Filter>2d</Filter>
     </ClInclude>
     <ClInclude Include="CCLabelTTF.h">
@@ -2541,6 +2581,9 @@
       <Filter>3d</Filter>
     </ClInclude>
     <ClInclude Include="..\3d\CCSprite3DMaterial.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3d\CCMotionStreak3D.h">
       <Filter>3d</Filter>
     </ClInclude>
     <ClInclude Include="..\3d\cocos3d.h">
@@ -3032,6 +3075,9 @@
     <ClInclude Include="..\platform\win32\CCStdC-win32.h">
       <Filter>platform\win32</Filter>
     </ClInclude>
+    <ClInclude Include="..\platform\win32\CCUtils-win32.h">
+      <Filter>platform\win32</Filter>
+    </ClInclude>
     <ClInclude Include="..\platform\desktop\CCGLViewImpl-desktop.h">
       <Filter>platform\desktop</Filter>
     </ClInclude>
@@ -3045,9 +3091,6 @@
       <Filter>extension\AssetsManager</Filter>
     </ClInclude>
     <ClInclude Include="..\..\extensions\assets-manager\CCEventListenerAssetsManagerEx.h">
-      <Filter>extension\AssetsManager</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\extensions\assets-manager\Downloader.h">
       <Filter>extension\AssetsManager</Filter>
     </ClInclude>
     <ClInclude Include="..\..\extensions\assets-manager\Manifest.h">
@@ -3179,9 +3222,6 @@
       <Filter>3d</Filter>
     </ClInclude>
     <ClInclude Include="..\3d\CCSkybox.h">
-      <Filter>3d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\3d\CCTextureCube.h">
       <Filter>3d</Filter>
     </ClInclude>
     <ClInclude Include="..\platform\CCPlatformConfig.h">
@@ -3724,6 +3764,9 @@
     <ClInclude Include="..\base\CCNinePatchImageParser.h">
       <Filter>base</Filter>
     </ClInclude>
+    <ClInclude Include="..\base\CCStencilStateManager.h">
+      <Filter>base</Filter>
+    </ClInclude>
     <ClInclude Include="..\base\CCNinePatchImageParser.h" />
     <ClInclude Include="..\renderer\CCFrameBuffer.h">
       <Filter>renderer</Filter>
@@ -3755,6 +3798,58 @@
     </ClInclude>
     <ClInclude Include="..\editor-support\cocostudio\CCComExtensionData.h">
       <Filter>cocostudio\components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\network\CCDownloader.h">
+      <Filter>network\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\network\CCDownloaderImpl.h">
+      <Filter>network\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\network\CCIDownloaderImpl.h">
+      <Filter>network\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CCCameraBackgroundBrush.h">
+      <Filter>2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\renderer\CCTextureCube.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\network\CCDownloader-curl.h">
+      <Filter>network\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\editor-support\cocostudio\WidgetReader\Light3DReader\Light3DReader.h" />
+    <ClInclude Include="..\ui\UIAbstractCheckButton.h">
+      <Filter>ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\editor-support\cocostudio\CSLanguageDataBinary_generated.h">
+      <Filter>cocostudio\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\editor-support\cocostudio\WidgetReader\TabControlReader\CSTabControl_generated.h">
+      <Filter>cocostudio\reader\WidgetReader\TabControlReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\editor-support\cocostudio\WidgetReader\TabControlReader\TabControlReader.h">
+      <Filter>cocostudio\reader\WidgetReader\TabControlReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ui\UITabControl.h">
+      <Filter>ui\UIWidgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\editor-support\cocostudio\LocalizationManager.h">
+      <Filter>cocostudio\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vr\CCVRProtocol.h">
+      <Filter>vr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vr\CCVRDistortion.h">
+      <Filter>vr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vr\CCVRDistortionMesh.h">
+      <Filter>vr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vr\CCVRGenericHeadTracker.h">
+      <Filter>vr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vr\CCVRGenericRenderer.h">
+      <Filter>vr</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

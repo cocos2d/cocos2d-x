@@ -2,7 +2,7 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -48,7 +48,7 @@ THE SOFTWARE.
 
 /** @def CC_ENABLE_GL_STATE_CACHE
  * If enabled, cocos2d will maintain an OpenGL state cache internally to avoid unnecessary switches.
- * In order to use them, you have to use the following functions, instead of the the GL ones:
+ * In order to use them, you have to use the following functions, instead of the GL ones:
  *  - ccGLUseProgram() instead of glUseProgram().
  *  - GL::deleteProgram() instead of glDeleteProgram().
  *  - GL::blendFunc() instead of glBlendFunc().
@@ -329,13 +329,30 @@ THE SOFTWARE.
 #define CC_ENABLE_SCRIPT_BINDING 1
 #endif
 
+/** When CC_ENABLE_SCRIPT_BINDING and CC_ENABLE_GC_FOR_NATIVE_OBJECTS are both 1
+ then the Garbage collector will release the native objects, only when the JS/Lua objets
+ are collected.
+ The benefit is that users don't need to retain/release the JS/Lua objects manually.
+
+ By default this behavior is disabled by default
+ */
+#ifdef CC_ENABLE_SCRIPT_BINDING
+  #ifndef CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+  #define CC_ENABLE_GC_FOR_NATIVE_OBJECTS 0
+  #endif
+#endif
+
 /** @def CC_CONSTRUCTOR_ACCESS
  * Indicate the init functions access modifier. If value equals to protected, then these functions are protected.
  * If value equals to public, these functions are public,
  * protected by default.
  */
 #ifndef CC_CONSTRUCTOR_ACCESS
-#define CC_CONSTRUCTOR_ACCESS public
+  #ifdef CC_ENABLE_SCRIPT_BINDING
+    #define CC_CONSTRUCTOR_ACCESS public
+  #else
+    #define CC_CONSTRUCTOR_ACCESS protected
+  #endif
 #endif
 
 /** @def CC_ENABLE_ALLOCATOR
@@ -374,6 +391,18 @@ THE SOFTWARE.
  */
 #ifndef CC_ALLOCATOR_GLOBAL_NEW_DELETE
 # define CC_ALLOCATOR_GLOBAL_NEW_DELETE cocos2d::allocator::AllocatorStrategyGlobalSmallBlock
+#endif
+
+#ifndef CC_FILEUTILS_APPLE_ENABLE_OBJC
+#define CC_FILEUTILS_APPLE_ENABLE_OBJC  1
+#endif
+
+/** @def CC_ENABLE_PREMULTIPLIED_ALPHA
+ * If enabled, all textures will be preprocessed to multiply its rgb components
+ * by its alpha component.
+ */
+#ifndef CC_ENABLE_PREMULTIPLIED_ALPHA
+# define CC_ENABLE_PREMULTIPLIED_ALPHA 1
 #endif
 
 #endif // __CCCONFIG_H__

@@ -7,7 +7,7 @@
 --------------------------------
 -- Stop an Action with a name.<br>
 -- param jsonName  UI file name<br>
--- param actionName  action name in teh UIfile.<br>
+-- param actionName  action name in the UIfile.<br>
 -- return  ActionObject which named as the param name
 -- @function [parent=#ActionManagerEx] stopActionByName 
 -- @param self
@@ -25,6 +25,12 @@
 -- @param #char jsonName
 -- @param #char actionName
 -- @return ActionObject#ActionObject ret (return value: ccs.ActionObject)
+        
+--------------------------------
+-- 
+-- @function [parent=#ActionManagerEx] getStudioVersionNumber 
+-- @param self
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- @overload self, char, char, cc.CallFunc         

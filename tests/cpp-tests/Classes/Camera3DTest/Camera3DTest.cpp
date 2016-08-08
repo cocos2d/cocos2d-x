@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -444,8 +444,6 @@ void Camera3DTestDemo::move3D(float elapsedTime)
         Vec3 offset = newFaceDir * 25.0f * elapsedTime;
         curPos+=offset;
         _sprite3D->setPosition3D(curPos);
-        offset.x=offset.x;
-        offset.z=offset.z;
         if(_cameraType==CameraType::ThirdPerson)
         {
             Vec3 cameraPos= _camera->getPosition3D();
@@ -894,7 +892,7 @@ void CameraCullingDemo::addSpriteCallback(Ref* sender)
     
     // update sprite number
     char szText[16];
-    sprintf(szText,"%ld sprits",_layer3D->getChildrenCount());
+    sprintf(szText,"%ld sprits", static_cast<long>(_layer3D->getChildrenCount()));
     _labelSprite3DCount->setString(szText);
 }
 
@@ -922,7 +920,7 @@ void CameraCullingDemo::delSpriteCallback(Ref* sender)
     
     // update sprite number
     char szText[16];
-    sprintf(szText,"%ld sprits",_layer3D->getChildrenCount());
+    sprintf(szText,"%ld sprits", static_cast<long>(_layer3D->getChildrenCount()));
     _labelSprite3DCount->setString(szText);
 }
 
@@ -1164,7 +1162,6 @@ void CameraArcBallDemo::updateCameraTransform()
     Mat4::createTranslation(_center, &center);
     Mat4 result = center * rot * trans;
     _camera->setNodeToParentTransform(result);
-
 }
 
 void CameraArcBallDemo::switchOperateCallback(Ref* sender)
@@ -1454,7 +1451,7 @@ void CameraFrameBufferTest::onEnter()
     fbo->attachRenderTarget(rt);
     fbo->attachDepthStencilTarget(rtDS);
     auto sprite = Sprite::createWithTexture(fbo->getRenderTarget()->getTexture());
-    sprite->setScale(0.3);
+    sprite->setScale(0.3f);
     sprite->runAction(RepeatForever::create(RotateBy::create(1, 90)));
     sprite->setPosition(size.width/2, size.height/2);
     addChild(sprite);

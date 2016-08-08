@@ -65,18 +65,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\3d\jsb_cocos2dx_3d_manual.h">
       <Filter>manual</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\chipmunk\js_bindings_chipmunk_auto_classes.h">
-      <Filter>manual\chipmunk</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\chipmunk\js_bindings_chipmunk_auto_classes_registration.h">
-      <Filter>manual\chipmunk</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\chipmunk\js_bindings_chipmunk_functions.h">
-      <Filter>manual\chipmunk</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\chipmunk\js_bindings_chipmunk_functions_registration.h">
-      <Filter>manual\chipmunk</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\chipmunk\js_bindings_chipmunk_manual.h">
       <Filter>manual\chipmunk</Filter>
     </ClInclude>
@@ -140,6 +128,17 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_navmesh_auto.hpp">
       <Filter>auto</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\component\CCComponentJS.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\js_module_register.h">
+      <Filter>manual</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\js-BindingsExport.h">
+      <Filter>manual</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\auto\js_bindings_chipmunk_auto_classes.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\auto\js_bindings_chipmunk_auto_classes_registration.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\auto\js_bindings_chipmunk_functions.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\auto\js_bindings_chipmunk_functions_registration.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_3d_auto.cpp">
@@ -195,12 +194,6 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\3d\jsb_cocos2dx_3d_manual.cpp">
       <Filter>manual</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\chipmunk\js_bindings_chipmunk_auto_classes.cpp">
-      <Filter>manual\chipmunk</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\chipmunk\js_bindings_chipmunk_functions.cpp">
-      <Filter>manual\chipmunk</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\chipmunk\js_bindings_chipmunk_manual.cpp">
       <Filter>manual\chipmunk</Filter>
@@ -259,6 +252,12 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_navmesh_auto.cpp">
       <Filter>auto</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\component\CCComponentJS.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\js_module_register.cpp">
+      <Filter>manual</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\auto\js_bindings_chipmunk_auto_classes.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\auto\js_bindings_chipmunk_functions.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="auto">

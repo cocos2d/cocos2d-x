@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2011      Laschweinski
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -45,10 +45,12 @@ NS_CC_BEGIN
 class CC_DLL FileUtilsLinux : public FileUtils
 {
     friend class FileUtils;
+protected:
     FileUtilsLinux();
+private:
     std::string _writablePath;
 public:
-    /* override funtions */
+    /* override functions */
     bool init();
     virtual std::string getWritablePath() const;
 private:

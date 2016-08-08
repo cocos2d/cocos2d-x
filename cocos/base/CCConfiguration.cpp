@@ -1,7 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010      Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -49,6 +49,9 @@ Configuration::Configuration()
 , _supportsBGRA8888(false)
 , _supportsDiscardFramebuffer(false)
 , _supportsShareableVAO(false)
+, _supportsOESDepth24(false)
+, _supportsOESPackedDepthStencil(false)
+, _supportsOESMapBuffer(false)
 , _maxSamplesAllowed(0)
 , _maxTextureUnits(0)
 , _glExtensions(nullptr)
@@ -57,7 +60,7 @@ Configuration::Configuration()
 , _maxSpotLightInShader(1)
 , _animate3DQuality(Animate3DQuality::QUALITY_LOW)
 {
-    _loadedEvent = new EventCustom(CONFIG_FILE_LOADED);
+    _loadedEvent = new (std::nothrow) EventCustom(CONFIG_FILE_LOADED);
 }
 
 bool Configuration::init()
@@ -148,7 +151,18 @@ void Configuration::gatherGPUInfo()
 	_valueDict["gl.supports_discard_framebuffer"] = Value(_supportsDiscardFramebuffer);
 
     _supportsShareableVAO = checkForGLExtension("vertex_array_object");
-	_valueDict["gl.supports_vertex_array_object"] = Value(_supportsShareableVAO);
+    _valueDict["gl.supports_vertex_array_object"] = Value(_supportsShareableVAO);
+
+    _supportsOESMapBuffer = checkForGLExtension("GL_OES_mapbuffer");
+    _valueDict["gl.supports_OES_map_buffer"] = Value(_supportsOESMapBuffer);
+
+    _supportsOESDepth24 = checkForGLExtension("GL_OES_depth24");
+    _valueDict["gl.supports_OES_depth24"] = Value(_supportsOESDepth24);
+
+    
+    _supportsOESPackedDepthStencil = checkForGLExtension("GL_OES_packed_depth_stencil");
+    _valueDict["gl.supports_OES_packed_depth_stencil"] = Value(_supportsOESPackedDepthStencil);
+
 
     CHECK_GL_ERROR_DEBUG();
 }
@@ -189,7 +203,7 @@ bool Configuration::checkForGLExtension(const std::string &searchName) const
 
 //
 // getters for specific variables.
-// Mantained for backward compatiblity reasons only.
+// Maintained for backward compatibility reasons only.
 //
 int Configuration::getMaxTextureSize() const
 {
@@ -258,6 +272,35 @@ bool Configuration::supportsShareableVAO() const
     return false;
 #endif
 }
+
+bool Configuration::supportsMapBuffer() const
+{
+    // Fixes Github issue #16123
+    //
+    // XXX: Fixme. Should check GL ES and not iOS or Android
+    // For example, linux could be compiled with GL ES. Or perhaps in the future Android will
+    // support OpenGL. This is because glMapBufferOES() is an extension of OpenGL ES. And glMapBuffer()
+    // is always implemented in OpenGL.
+
+    // XXX: Warning. On iOS this is always `true`. Avoiding the comparison.
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    return _supportsOESMapBuffer;
+#else
+    return true;
+#endif
+}
+
+bool Configuration::supportsOESDepth24() const
+{
+    return _supportsOESDepth24;
+    
+}
+bool Configuration::supportsOESPackedDepthStencil() const
+{
+    return _supportsOESPackedDepthStencil;
+}
+
+
 
 int Configuration::getMaxSupportDirLightInShader() const
 {

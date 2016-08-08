@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014-2015 Chukong Technologies Inc.
+ Copyright (c) 2014-2016 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -79,6 +79,8 @@ public:
     virtual void draw(cocos2d::Renderer *renderer, cocos2d::Mat4 const &transform, uint32_t flags);
 
     virtual void setVisible(bool visible);
+
+    void setBounces(bool bounces);
 
 private:
     UIWebViewWrapper *_uiWebViewWrapper;

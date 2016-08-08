@@ -137,12 +137,12 @@ void spSkeletonBounds_update (spSkeletonBounds* self, spSkeleton* skeleton, int/
 		self->boundingBoxes[self->count] = boundingBox;
 
 		polygon = self->polygons[self->count];
-		if (!polygon || polygon->capacity < boundingBox->verticesCount) {
+		if (!polygon || polygon->capacity < boundingBox->super.worldVerticesLength) {
 			if (polygon) spPolygon_dispose(polygon);
-			self->polygons[self->count] = polygon = spPolygon_create(boundingBox->verticesCount);
+			self->polygons[self->count] = polygon = spPolygon_create(boundingBox->super.worldVerticesLength);
 		}
-		polygon->count = boundingBox->verticesCount;
-		spBoundingBoxAttachment_computeWorldVertices(boundingBox, slot->bone, polygon->vertices);
+		polygon->count = boundingBox->super.worldVerticesLength;
+		spBoundingBoxAttachment_computeWorldVertices(boundingBox, slot, polygon->vertices);
 
 		if (updateAabb) {
 			int ii = 0;

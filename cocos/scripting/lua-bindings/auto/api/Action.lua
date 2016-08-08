@@ -88,7 +88,7 @@
         
 --------------------------------
 --  Changes the flag field that is used to group the actions easily.<br>
--- param tag Used to identify the action easily.
+-- param flags Used to group the actions easily.
 -- @function [parent=#Action] setFlags 
 -- @param self
 -- @param #unsigned int flags
@@ -117,8 +117,8 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
---  Returns a new action that performs the exactly the reverse action. <br>
--- return A new action that performs the exactly the reverse action.<br>
+--  Returns a new action that performs the exact reverse of the action. <br>
+-- return A new action that performs the exact reverse of the action.<br>
 -- js NA
 -- @function [parent=#Action] reverse 
 -- @param self

@@ -21,10 +21,10 @@
  * THE SOFTWARE.
  */
 
-#include "jsb_cocos2dx_navmesh_conversions.h"
+#include "scripting/js-bindings/manual/navmesh/jsb_cocos2dx_navmesh_conversions.h"
 #if CC_USE_NAVMESH
-#include "cocos2d_specifics.hpp"
-#include "js_manual_conversions.h"
+#include "scripting/js-bindings/manual/cocos2d_specifics.hpp"
+#include "scripting/js-bindings/manual/js_manual_conversions.h"
 
 bool jsval_to_NavMeshAgentParam(JSContext *cx, JS::HandleValue v, cocos2d::NavMeshAgentParam* ret)
 {
@@ -84,8 +84,10 @@ jsval offMeshLinkData_to_jsval(JSContext* cx, const cocos2d::OffMeshLinkData& v)
     JS::RootedObject parent(cx);
     JS::RootedObject tmp(cx, JS_NewObject(cx, NULL, proto, parent));
     if (!tmp) return JSVAL_NULL;
-    bool ok = JS_DefineProperty(cx, tmp, "startPosition", JS::RootedValue(cx, vector3_to_jsval(cx, v.startPosition)), JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
-    JS_DefineProperty(cx, tmp, "endPosition", JS::RootedValue(cx, vector3_to_jsval(cx, v.endPosition)), JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS::RootedValue jsstartPos(cx, vector3_to_jsval(cx, v.startPosition));
+    JS::RootedValue jsendPos(cx, vector3_to_jsval(cx, v.endPosition));
+    bool ok = JS_DefineProperty(cx, tmp, "startPosition", jsstartPos, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+    JS_DefineProperty(cx, tmp, "endPosition", jsendPos, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     if (ok) {
         return OBJECT_TO_JSVAL(tmp);
     }

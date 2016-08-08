@@ -24,9 +24,10 @@
 
 #include "platform/CCPlatformConfig.h"
 
-#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+// Webview not available on tvOS
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) && !defined(CC_TARGET_OS_TVOS)
 
-#include "UIWebViewImpl-ios.h"
+#include "ui/UIWebViewImpl-ios.h"
 #include "renderer/CCRenderer.h"
 #include "base/CCDirector.h"
 #include "platform/CCGLView.h"
@@ -37,7 +38,7 @@
 static std::string getFixedBaseUrl(const std::string& baseUrl)
 {
     std::string fixedBaseUrl;
-    if (baseUrl.empty() || baseUrl.c_str()[0] != '/') {
+    if (baseUrl.empty() || baseUrl.at(0) != '/') {
         fixedBaseUrl = [[[NSBundle mainBundle] resourcePath] UTF8String];
         fixedBaseUrl += "/";
         fixedBaseUrl += baseUrl;
@@ -51,7 +52,7 @@ static std::string getFixedBaseUrl(const std::string& baseUrl)
         fixedBaseUrl.replace(pos, 1, "%20");
     }
     
-    if (fixedBaseUrl.c_str()[fixedBaseUrl.length() - 1] != '/') {
+    if (fixedBaseUrl.at(fixedBaseUrl.length() - 1) != '/') {
         fixedBaseUrl += "/";
     }
     
@@ -70,6 +71,8 @@ static std::string getFixedBaseUrl(const std::string& baseUrl)
 + (instancetype)webViewWrapper;
 
 - (void)setVisible:(bool)visible;
+
+- (void)setBounces:(bool)bounces;
 
 - (void)setFrameWithX:(float)x y:(float)y width:(float)width height:(float)height;
 
@@ -143,6 +146,10 @@ static std::string getFixedBaseUrl(const std::string& baseUrl)
 
 - (void)setVisible:(bool)visible {
     self.uiWebView.hidden = !visible;
+}
+
+- (void)setBounces:(bool)bounces {
+  self.uiWebView.scrollView.bounces = bounces;
 }
 
 - (void)setFrameWithX:(float)x y:(float)y width:(float)width height:(float)height {
@@ -341,6 +348,10 @@ void WebViewImpl::evaluateJS(const std::string &js) {
     [_uiWebViewWrapper evaluateJS:js];
 }
 
+void WebViewImpl::setBounces(bool bounces) {
+    [_uiWebViewWrapper setBounces:bounces];
+}
+
 void WebViewImpl::setScalesPageToFit(const bool scalesPageToFit) {
     [_uiWebViewWrapper setScalesPageToFit:scalesPageToFit];
 }
@@ -348,13 +359,13 @@ void WebViewImpl::setScalesPageToFit(const bool scalesPageToFit) {
 void WebViewImpl::draw(cocos2d::Renderer *renderer, cocos2d::Mat4 const &transform, uint32_t flags) {
     if (flags & cocos2d::Node::FLAGS_TRANSFORM_DIRTY) {
         
-        auto direcrot = cocos2d::Director::getInstance();
-        auto glView = direcrot->getOpenGLView();
+        auto director = cocos2d::Director::getInstance();
+        auto glView = director->getOpenGLView();
         auto frameSize = glView->getFrameSize();
         
         auto scaleFactor = [static_cast<CCEAGLView *>(glView->getEAGLView()) contentScaleFactor];
 
-        auto winSize = direcrot->getWinSize();
+        auto winSize = director->getWinSize();
 
         auto leftBottom = this->_webView->convertToWorldSpace(cocos2d::Vec2::ZERO);
         auto rightTop = this->_webView->convertToWorldSpace(cocos2d::Vec2(this->_webView->getContentSize().width, this->_webView->getContentSize().height));

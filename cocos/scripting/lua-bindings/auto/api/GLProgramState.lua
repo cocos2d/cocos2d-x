@@ -104,7 +104,7 @@
 -- This method parses the passed in autoBinding string and attempts to convert it<br>
 -- to an enumeration value. If it matches to one of the predefined strings, it will create a<br>
 -- callback to get the correct value at runtime.<br>
--- param name The name of the material parameter to store an auto-binding for.<br>
+-- param uniformName The name of the material parameter to store an auto-binding for.<br>
 -- param autoBinding A string matching one of the built-in AutoBinding enum constants.
 -- @function [parent=#GLProgramState] setParameterAutoBinding 
 -- @param self
@@ -224,12 +224,14 @@
 -- @return GLProgramState#GLProgramState ret (return value: cc.GLProgramState)
         
 --------------------------------
---  gets-or-creates an instance of GLProgramState for a given GLProgramName 
--- @function [parent=#GLProgramState] getOrCreateWithGLProgramName 
+-- @overload self, string, cc.Texture2D         
+-- @overload self, string         
+-- @function [parent=#GLProgramState] getOrCreateWithGLProgramName
 -- @param self
 -- @param #string glProgramName
+-- @param #cc.Texture2D texture
 -- @return GLProgramState#GLProgramState ret (return value: cc.GLProgramState)
-        
+
 --------------------------------
 --  gets-or-creates an instance of GLProgramState for a given GLProgram 
 -- @function [parent=#GLProgramState] getOrCreateWithGLProgram 

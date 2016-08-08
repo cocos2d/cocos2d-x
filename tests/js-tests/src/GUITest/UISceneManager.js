@@ -465,6 +465,24 @@
                 func: function () {
                     return new UIScrollViewRotated();
                 }
+            },
+            {
+                title: "UIScrollViewDisableTest",
+                func: function () {
+                    return new UIScrollViewDisableTest();
+                }
+            },
+            {
+                title:"UIScrollView Multiple Items Test",
+                func: function () {
+                    return new UIScrollViewTest_Vertical_Multiple();
+                }
+            },
+            {
+                title:"UIScrollView Scroll Bar Test",
+                func: function () {
+                    return new UIScrollViewTest_ScrollBar();
+                }
             }
         ],
         "UIPageView": [
@@ -497,6 +515,30 @@
                 func: function () {
                     return new UIPageViewDynamicAddAndRemoveTest();
                 }
+            },
+            {
+                title: "UIPageViewDisableTouchTest",
+                func: function () {
+                    return new UIPageViewDisableTouchTest();
+                }
+            },
+            {
+                title: "UIPageViewJumpToPageTest",
+                func: function () {
+                    return new UIPageViewJumpToPageTest();
+                }
+            },
+            {
+                title: "UIPageViewChildSizeTest",
+                func: function () {
+                    return new UIPageViewChildSizeTest();
+                }
+            },
+            {
+                title: "UIPageViewIndicatorTest",
+                func: function () {
+                    return new UIPageViewIndicatorTest();
+                }
             }
         ],
         "UIListView": [
@@ -510,6 +552,36 @@
                 title: "UIListViewTest_Horizontal",
                 func: function () {
                     return new UIListViewTest_Horizontal();
+                }
+            },
+            {
+                title:"UIListViewTest_TouchIntercept ",
+                func: function() {
+                    return new UIListViewTest_TouchIntercept();
+                }
+            },
+            {
+                title:"UIListViewTest Scroll to item  vertical",
+                func: function() {
+                    return new UIListViewTest_ScrollToItemVertical();
+                }
+            },
+            {
+                title:"UIListViewTest Scroll to item horizontal",
+                func: function() {
+                    return new UIListViewTest_ScrollToItemHorizontal();
+                }
+            },
+            {
+                title:"UIListViewTest magnetic vertical",
+                func: function() {
+                    return new UIListViewTest_MagneticVertical();
+                }
+            },
+            {
+                title:"UIListViewTest magnetic horizontal",
+                func: function() {
+                    return new UIListViewTest_MagneticHorizontal();
                 }
             }
         ],
@@ -527,6 +599,72 @@
                 func: function () {
                     return new UIRichTextTest();
                 }
+            },
+            {
+                title: "UIRichTextXMLBasic",
+                func: function () {
+                    return new UIRichTextXMLBasic();
+                }
+            },
+            {
+                title: "UIRichTextXMLSmallBig",
+                func: function () {
+                    return new UIRichTextXMLSmallBig();
+                }
+            },
+            {
+                title: "UIRichTextXMLColor",
+                func: function () {
+                    return new UIRichTextXMLColor();
+                }
+            },
+            {
+                title: "UIRichTextXMLSUIB",
+                func: function () {
+                    return new UIRichTextXMLSUIB();
+                }
+            },
+            {
+                title: "UIRichTextXMLSUIB2",
+                func: function () {
+                    return new UIRichTextXMLSUIB2();
+                }
+            },
+            {
+                title: "UIRichTextXMLSUIB3",
+                func: function () {
+                    return new UIRichTextXMLSUIB3();
+                }
+            },
+            {
+                title: "UIRichTextXMLImg",
+                func: function () {
+                    return new UIRichTextXMLImg();
+                }
+            },
+            {
+                title: "UIRichTextXMLUrl",
+                func: function () {
+                    return new UIRichTextXMLUrl();
+                }
+            },
+            {
+                title: "UIRichTextXMLFace",
+                func: function () {
+                    return new UIRichTextXMLFace();
+                }
+            },
+            {
+                title: "UIRichTextXMLBR",
+                func: function () {
+                    return new UIRichTextXMLBR();
+                }
+            },
+            {
+                title: "UIRichTextXMLInvalid",
+                func: function () {
+                    return new UIRichTextXMLInvalid();
+                }
             }
         ]
     };
@@ -537,6 +675,16 @@
                 title: "UIS9NinePatchTest",
                 func: function () {
                     return new UIS9NinePatchTest();
+                }
+            }
+        ];
+    }
+    else {
+        testingItems["UIRichText"] = [
+            {
+                title: "UIRichTextTest",
+                func: function () {
+                    return new UIRichTextTest();
                 }
             }
         ];
@@ -567,8 +715,7 @@
     global.GUITestScene = cc.Class.extend({
 
         runThisTest: function(){
-            if(guiTestScene === null || !cc.sys.isObjectValid(guiTestScene))
-                guiTestScene = new listScene;
+            var guiTestScene = new listScene();
             cc.director.runScene(guiTestScene);
         }
 
@@ -674,10 +821,12 @@
 
         currentUIScene: function () {
             var test = currentTestingArray[this._currentUISceneId];
-            var sence = test.func();
-            sence.init();
-            sence.setSceneTitle(test.title);
-            return sence;
+            var layer = test.func();
+            layer.init();
+            layer.setSceneTitle(test.title);
+            var scene = new UIScene();
+            scene.addChild(layer);
+            return scene;
         }
     };
 

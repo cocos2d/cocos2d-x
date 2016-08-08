@@ -2,7 +2,7 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -84,7 +84,7 @@ public:
      * @param tilesetInfo An tileset info.
      * @param layerInfo A layer info.
      * @param mapInfo A map info.
-     * @return Reruen an autorelease object.
+     * @return Return an autorelease object.
      */
     static TMXLayer * create(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo);
     /**
@@ -261,7 +261,7 @@ public:
      * @param pos The tile coordinate.
      * @param gid The tile gid.
      */
-    void setupTileSprite(Sprite* sprite, Vec2 pos, int gid);
+    void setupTileSprite(Sprite* sprite, const Vec2& pos, int gid);
 
     //
     // Override
@@ -276,7 +276,7 @@ protected:
     void updateTiles(const Rect& culledRect);
     Vec2 calculateLayerOffset(const Vec2& offset);
 
-    /* The layer recognizes some special properties, like cc_vertez */
+    /* The layer recognizes some special properties, like cc_vertexz */
     void parseInternalProperties();
     
     Mat4 tileToNodeTransform();

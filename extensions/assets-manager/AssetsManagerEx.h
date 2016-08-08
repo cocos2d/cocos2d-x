@@ -25,18 +25,21 @@
 #ifndef __AssetsManagerEx__
 #define __AssetsManagerEx__
 
+#include <string>
+#include <unordered_map>
+#include <vector>
+
 #include "base/CCEventDispatcher.h"
 #include "platform/CCFileUtils.h"
+#include "network/CCDownloader.h"
+
 #include "CCEventAssetsManagerEx.h"
-#include "Downloader.h"
+
 #include "Manifest.h"
 #include "extensions/ExtensionMacros.h"
 #include "extensions/ExtensionExport.h"
 #include "json/document.h"
 
-#include <string>
-#include <unordered_map>
-#include <vector>
 
 NS_CC_EXT_BEGIN
 
@@ -46,9 +49,6 @@ NS_CC_EXT_BEGIN
 class CC_EX_DLL AssetsManagerEx : public Ref
 {
 public:
-    
-    friend class Downloader;
-    friend int downloadProgressFunc(Downloader::ProgressData *ptr, double totalToDownload, double nowDownloaded, double totalToUpLoad, double nowUpLoaded);
     
     //! Update states
     enum class State
@@ -62,17 +62,17 @@ public:
         MANIFEST_LOADED,
         NEED_UPDATE,
         UPDATING,
+        UNZIPPING,
         UP_TO_DATE,
         FAIL_TO_UPDATE
     };
     
     const static std::string VERSION_ID;
     const static std::string MANIFEST_ID;
-    const static std::string BATCH_UPDATE_ID;
     
     /** @brief Create function for creating a new AssetsManagerEx
      @param manifestUrl   The url for the local manifest file
-     @param storagePath   The storage path for downloaded assetes
+     @param storagePath   The storage path for downloaded assets
      @warning   The cached manifest in your storage path have higher priority and will be searched first,
                 only if it doesn't exist, AssetsManagerEx will use the given manifestUrl.
      */
@@ -143,13 +143,13 @@ protected:
     
     /** @brief Update a list of assets under the current AssetsManagerEx context
      */
-    void updateAssets(const Downloader::DownloadUnits& assets);
+    void updateAssets(const DownloadUnits& assets);
     
     /** @brief Retrieve all failed assets during the last update
      */
-    const Downloader::DownloadUnits& getFailedAssets() const;
+    const DownloadUnits& getFailedAssets() const;
     
-    /** @brief Function for destorying the downloaded version file and manifest file
+    /** @brief Function for destroying the downloaded version file and manifest file
      */
     void destroyDownloadedVersion();
     
@@ -160,7 +160,10 @@ protected:
      * @js NA
      * @lua NA
      */
-    virtual void onError(const Downloader::Error &error);
+    virtual void onError(const network::DownloadTask& task,
+                         int errorCode,
+                         int errorCodeInternal,
+                         const std::string& errorStr);
     
     /** @brief  Call back function for recording downloading percent of the current asset,
      the progression will then be reported to user's listener registed in addUpdateProgressEventListener
@@ -185,6 +188,10 @@ protected:
     virtual void onSuccess(const std::string &srcUrl, const std::string &storagePath, const std::string &customId);
     
 private:
+    void batchDownload();
+
+    // Called when one DownloadUnits finished
+    void onDownloadUnitsFinished();
     
     //! The event of the current AssetsManagerEx in event dispatcher
     std::string _eventName;
@@ -198,7 +205,7 @@ private:
     State _updateState;
     
     //! Downloader
-    std::shared_ptr<Downloader> _downloader;
+    std::shared_ptr<network::Downloader> _downloader;
     
     //! The reference to the local assets
     const std::unordered_map<std::string, Manifest::Asset> *_assets;
@@ -231,10 +238,10 @@ private:
     bool _waitToUpdate;
     
     //! All assets unit to download
-    Downloader::DownloadUnits _downloadUnits;
+    DownloadUnits _downloadUnits;
     
     //! All failed units
-    Downloader::DownloadUnits _failedUnits;
+    DownloadUnits _failedUnits;
     
     //! All files to be decompressed
     std::vector<std::string> _compressedFiles;

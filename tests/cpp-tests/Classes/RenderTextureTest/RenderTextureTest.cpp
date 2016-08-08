@@ -12,6 +12,7 @@ RenderTextureTests::RenderTextureTests()
     ADD_TEST_CASE(RenderTextureTargetNode);
     ADD_TEST_CASE(SpriteRenderTextureBug);
     ADD_TEST_CASE(RenderTexturePartTest);
+    ADD_TEST_CASE(Issue16113Test);
 };
 
 /**
@@ -697,4 +698,40 @@ std::string SpriteRenderTextureBug::title() const
 std::string SpriteRenderTextureBug::subtitle() const
 {
     return "Touch the screen. Sprite should appear on under the touch";
+}
+
+
+//
+// Issue16113Test
+//
+Issue16113Test::Issue16113Test()
+{
+    auto s = Director::getInstance()->getWinSize();
+
+    // Save Image menu
+    MenuItemFont::setFontSize(16);
+    auto item1 = MenuItemFont::create("Save Image", [&](Ref* ref){
+        auto winSize = Director::getInstance()->getVisibleSize();
+        auto text = Label::createWithTTF("hello world", "fonts/Marker Felt.ttf", 40);
+        text->setTextColor(Color4B::RED);
+        auto target = RenderTexture::create(winSize.width, winSize.height, Texture2D::PixelFormat::RGBA8888);
+        target->beginWithClear(0,0,0,0);
+        text->setPosition(winSize.width / 2,winSize.height/2);
+        text->Node::visit();
+        target->end();
+        target->saveToFile("issue16113.png", Image::Format::PNG);
+    });
+    auto menu = Menu::create(item1, nullptr);
+    this->addChild(menu);
+    menu->setPosition(s.width/2, s.height/2);
+}
+
+std::string Issue16113Test::title() const
+{
+    return "Github Issue 16113";
+}
+
+std::string Issue16113Test::subtitle() const
+{
+    return "aaa.png file without white border on iOS";
 }

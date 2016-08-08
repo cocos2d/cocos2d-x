@@ -356,7 +356,11 @@ class SetEnvVar(object):
         if not ndk_root:
             return False
 
-        ndk_build_path = os.path.join(ndk_root, 'ndk-build')
+        if self._isWindows():
+            ndk_build_path = os.path.join(ndk_root, 'ndk-build.cmd')
+        else:
+            ndk_build_path = os.path.join(ndk_root, 'ndk-build')
+
         if os.path.isfile(ndk_build_path):
             return True
         else:
@@ -482,7 +486,27 @@ class SetEnvVar(object):
                 self.set_windows_path(cocos_consle_root)
 
             self._force_update_env(COCOS_CONSOLE_ROOT, cocos_consle_root)
+    def set_cocos_x_root(self):
+        print("->Check environment variable %s" % COCOS_X_ROOT)
+        cocos_x_root = os.path.dirname(self.current_absolute_path)
+        old_dir = self._find_environment_variable(COCOS_X_ROOT)
+        if old_dir is None:
+            # add environment variable
+            if self._isWindows():
+                self.set_windows_path(cocos_x_root)
 
+            self._set_environment_variable(COCOS_X_ROOT, cocos_x_root)
+        else:
+            if old_dir == cocos_x_root:
+                # is same with before, nothing to do
+                return
+
+            # update the environment variable
+            if self._isWindows():
+                self.remove_dir_from_win_path(old_dir)
+                self.set_windows_path(cocos_x_root)
+
+            self._force_update_env(COCOS_X_ROOT, cocos_x_root)
     def set_templates_root(self):
         print("->Check environment variable %s" % COCOS_TEMPLATES_ROOT)
         cocos_templates_root = os.path.join(self.current_absolute_path, 'templates')
@@ -656,13 +680,14 @@ class SetEnvVar(object):
         else:
             return SetEnvVar.RESULT_DO_NOTHING
 
-    def set_environment_variables(self, ndk_root, android_sdk_root, ant_root):
+    def set_environment_variables(self, ndk_root, android_sdk_root, ant_root, quiet):
 
         print('\nSetting up cocos2d-x...')
 
         self.file_used_for_setup = self._get_filepath_for_setup()
 
         self.set_console_root()
+        self.set_cocos_x_root()
         self.set_templates_root()
 
         if self._isWindows():
@@ -671,10 +696,10 @@ class SetEnvVar(object):
         else:
             print('->Configuration for Android platform only, you can also skip and manually edit "%s"\n' %
                   self.file_used_for_setup)
-
-        ndk_ret = self.set_variable(NDK_ROOT, ndk_root)
-        sdk_ret = self.set_variable(ANDROID_SDK_ROOT, android_sdk_root)
-        ant_ret = self.set_variable(ANT_ROOT, ant_root)
+        if(quiet) :
+            ndk_ret = self.set_variable(NDK_ROOT, ndk_root)
+            sdk_ret = self.set_variable(ANDROID_SDK_ROOT, android_sdk_root)
+            ant_ret = self.set_variable(ANT_ROOT, ant_root)
 
         # tip the backup file
         if (self.backup_file is not None) and (os.path.exists(self.backup_file)):
@@ -699,12 +724,15 @@ if __name__ == '__main__':
                       dest='android_sdk_root', help='directory of android sdk root')
     parser.add_option(
         '-t', '--antroot', dest='ant_root', help='directory that contains ant/ant.bat')
+
+    parser.add_option(
+        '-q', '--quiet', dest='quiet',action="store_false", default = True, help='setup without setting NDK,SDK,ANT')
     opts, args = parser.parse_args()
 
     # set environment variables
     env = SetEnvVar()
     env.set_environment_variables(
-        opts.ndk_root, opts.android_sdk_root, opts.ant_root)
+        opts.ndk_root, opts.android_sdk_root, opts.ant_root, opts.quiet)
 
     if env._isWindows():
         import ctypes

@@ -24,8 +24,8 @@
 #include "platform/CCPlatformConfig.h"
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
-#include "AudioPlayer.h"
-#include "AudioCache.h"
+#include "audio/win32/AudioPlayer.h"
+#include "audio/win32/AudioCache.h"
 #include "base/CCConsole.h"
 #include "platform/CCFileUtils.h"
 #include "mpg123.h"
@@ -56,6 +56,7 @@ AudioPlayer::AudioPlayer(const AudioPlayer& player)
     _finishCallbak = player._finishCallbak;
     _ready = player._ready;
     _audioCache = player._audioCache;
+    _readForRemove = player._readForRemove;
 }
 
 AudioPlayer::~AudioPlayer()

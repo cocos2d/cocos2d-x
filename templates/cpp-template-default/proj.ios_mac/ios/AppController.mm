@@ -23,12 +23,13 @@
  ****************************************************************************/
 
 #import "AppController.h"
-#import "platform/ios/CCEAGLView-ios.h"
 #import "cocos2d.h"
 #import "AppDelegate.h"
 #import "RootViewController.h"
 
 @implementation AppController
+
+@synthesize window;
 
 #pragma mark -
 #pragma mark Application lifecycle
@@ -37,32 +38,15 @@
 static AppDelegate s_sharedApplication;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
-
-    cocos2d::Application *app = cocos2d::Application::getInstance();
-    app->initGLContextAttrs();
-    cocos2d::GLViewImpl::convertAttrs();
-
     // Override point for customization after application launch.
 
     // Add the view controller's view to the window and display.
     window = [[UIWindow alloc] initWithFrame: [[UIScreen mainScreen] bounds]];
 
-    // Init the CCEAGLView
-    CCEAGLView *eaglView = [CCEAGLView viewWithFrame: [window bounds]
-                                         pixelFormat: (NSString*)cocos2d::GLViewImpl::_pixelFormat
-                                         depthFormat: cocos2d::GLViewImpl::_depthFormat
-                                  preserveBackbuffer: NO
-                                          sharegroup: nil
-                                       multiSampling: NO
-                                     numberOfSamples: 0 ];
-    
-    // Enable or disable multiple touches
-    [eaglView setMultipleTouchEnabled:NO];
-
-    // Use RootViewController manage CCEAGLView 
-    _viewController = [[RootViewController alloc] initWithNibName:nil bundle:nil];
+    // Use RootViewController to manage CCEAGLView
+    _viewController = [[RootViewController alloc]init];
     _viewController.wantsFullScreenLayout = YES;
-    _viewController.view = eaglView;
+    
 
     // Set RootViewController to window
     if ( [[UIDevice currentDevice].systemVersion floatValue] < 6.0)
@@ -80,11 +64,6 @@ static AppDelegate s_sharedApplication;
 
     [[UIApplication sharedApplication] setStatusBarHidden:true];
 
-    // IMPORTANT: Setting the GLView should be done after creating the RootViewController
-    cocos2d::GLView *glview = cocos2d::GLViewImpl::createWithEAGLView(eaglView);
-    cocos2d::Director::getInstance()->setOpenGLView(glview);
-
-    app->run();
 
     return YES;
 }
@@ -95,7 +74,7 @@ static AppDelegate s_sharedApplication;
      Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
      Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
      */
-     //We don't need to call this method any more. It will interupt user defined game pause&resume logic
+    // We don't need to call this method any more. It will interrupt user defined game pause&resume logic
     /* cocos2d::Director::getInstance()->pause(); */
 }
 
@@ -103,7 +82,7 @@ static AppDelegate s_sharedApplication;
     /*
      Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
      */
-     //We don't need to call this method any more. It will interupt user defined game pause&resume logic
+    // We don't need to call this method any more. It will interrupt user defined game pause&resume logic
     /* cocos2d::Director::getInstance()->resume(); */
 }
 
@@ -140,10 +119,14 @@ static AppDelegate s_sharedApplication;
 }
 
 
+#if __has_feature(objc_arc)
+#else
 - (void)dealloc {
     [window release];
+    [_viewController release];
     [super dealloc];
 }
+#endif
 
 
 @end

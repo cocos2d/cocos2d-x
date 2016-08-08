@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2014 Chukong Technologies Inc.
+ * Copyright (c) 2013-2016 Chukong Technologies Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,8 +28,8 @@
 #include <vector>
 #include "jsapi.h"
 #include "jsfriendapi.h"
-#include "js_bindings_config.h"
-#include "jsb_helper.h"
+#include "scripting/js-bindings/manual/js_bindings_config.h"
+#include "scripting/js-bindings/manual/jsb_helper.h"
 
 using namespace std;
 

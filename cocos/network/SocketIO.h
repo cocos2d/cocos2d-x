@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2015 Chris Hannon http://www.channon.us
- Copyright (c) 2013-2015 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -104,8 +104,8 @@ public:
         virtual ~SIODelegate() {}
         /**
          * This is kept for backwards compatibility, connect is now fired as a socket.io event "connect"
-         * 
-         * This function would be called when the related SIOClient object recevie messages that mean it have connected to endpoint sucessfully.
+         *
+         * This function would be called when the related SIOClient object receive messages that mean it have connected to endpoint successfully.
          *
          * @param client the connected SIOClient object.
          */
@@ -113,7 +113,7 @@ public:
         /**
          * This is kept for backwards compatibility, message is now fired as a socket.io event "message"
          *
-         * This function would be called wwhen the related SIOClient object recevie message or json message.
+         * This function would be called when the related SIOClient object receive message or json message.
          *
          * @param client the connected SIOClient object.
          * @param data the message,it could be json message
@@ -122,7 +122,7 @@ public:
         /**
          * Pure virtual callback function, this function should be overrided by the subclass.
          *
-         * This function would be called when the related SIOClient object disconnect or recevie disconnect signal.
+         * This function would be called when the related SIOClient object disconnect or receive disconnect signal.
          *
          * @param client the connected SIOClient object.
          */
@@ -130,7 +130,7 @@ public:
         /**
          * Pure virtual callback function, this function should be overrided by the subclass.
          *
-         * This function would be called wwhen the related SIOClient object recevie error signal or didn't connect the endpoint but do some network operation,eg.,send and emit,etc.
+         * This function would be called when the related SIOClient object receive error signal or didn't connect the endpoint but do some network operation, eg.,send and emit,etc.
          *
          * @param client the connected SIOClient object.
          * @param data the error message
@@ -165,7 +165,7 @@ public:
 private:
 
     SocketIO();
-    virtual ~SocketIO(void);
+    virtual ~SocketIO();
 
     static SocketIO *_inst;
 
@@ -213,7 +213,7 @@ private:
 
 public:
     /**
-     * Construtor of SIOClient class.
+     * Constructor of SIOClient class.
      *
      * @param host the string that represent the host address.
      * @param port the int value represent the port number.
@@ -223,9 +223,9 @@ public:
      */
     SIOClient(const std::string& host, int port, const std::string& path, SIOClientImpl* impl, SocketIO::SIODelegate& delegate);
     /**
-     * Destructior of SIOClient class.
+     * Destructor of SIOClient class.
      */
-    virtual ~SIOClient(void);
+    virtual ~SIOClient();
 
     /**
      * Get the delegate for the client
@@ -256,16 +256,14 @@ public:
      * @param e the callback function.
      */
     void on(const std::string& eventName, SIOEvent e);
-    
+
     /**
      * Set tag of SIOClient.
      * The tag is used to distinguish the various SIOClient objects.
      * @param tag string object.
      */
-    inline void setTag(const char* tag)
-    {
-        _tag = tag;
-    };
+    void setTag(const char* tag);
+
     /**
      * Get tag of SIOClient.
      * @return const char* the pointer point to the _tag.
@@ -285,3 +283,4 @@ NS_CC_END
 /// @}
 
 #endif /* defined(__CC_JSB_SOCKETIO_H__) */
+

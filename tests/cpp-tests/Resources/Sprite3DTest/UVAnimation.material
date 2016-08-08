@@ -1,0 +1,31 @@
+// A "Material" file can contain one or more materials
+material UVAnimation
+{
+    technique normal
+    {
+        pass 0
+        {
+            shader
+            {
+                vertexShader = Sprite3DTest/cylinder.vert
+                fragmentShader = Sprite3DTest/cylinder.frag
+                // sampler:
+                //   responsible for setting the texture and its parameters
+                //   the Id of the sampler is the uniform name
+                sampler u_sampler0
+                {
+                    path = Sprite3DTest/dragon.png
+                    wrapS = REPEAT
+                    wrapT = REPEAT
+                }
+
+                sampler u_sampler1
+                {
+                    path = Sprite3DTest/caustics.png
+                    wrapS = REPEAT
+                    wrapT = REPEAT
+                }
+            }
+        }
+    }
+}

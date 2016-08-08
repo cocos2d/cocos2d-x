@@ -2,7 +2,7 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -403,6 +403,19 @@ public:
      */
     CC_DEPRECATED_ATTRIBUTE void setFlipY(bool flippedY) { setFlippedY(flippedY); };
 
+    /**
+     * returns a reference of the polygon information associated with this sprite
+     *
+     * @return a reference of PolygonInfo
+     */
+    const PolygonInfo& getPolygonInfo() const;
+
+    /**
+     * set the sprite to use this new PolygonInfo
+     *
+     * @param PolygonInfo the polygon information object
+     */
+    void setPolygonInfo(const PolygonInfo& info);
     //
     // Overrides
     //
@@ -454,21 +467,26 @@ public:
     virtual void setScale(float scale) override;
     virtual void setPositionZ(float positionZ) override;
     virtual void setAnchorPoint(const Vec2& anchor) override;
-    virtual void ignoreAnchorPointForPosition(bool value) override;
+    
+    virtual void setIgnoreAnchorPointForPosition(bool value) override;
+    
     virtual void setVisible(bool bVisible) override;
     virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
     virtual void setOpacityModifyRGB(bool modify) override;
     virtual bool isOpacityModifyRGB() const override;
     /// @}
 
-CC_CONSTRUCTOR_ACCESS:
+    int getResourceType() const { return _fileType; }
+    const std::string& getResourceName() const { return _fileName; }
+
+CC_CONSTRUCTOR_ACCESS :
 	/**
      * @js ctor
      */
     Sprite();
     virtual ~Sprite();
 
-    /* Initializes an empty sprite with nothing init. */
+    /* Initializes an empty sprite with no parameters. */
     virtual bool init() override;
 
     /**
@@ -498,7 +516,7 @@ CC_CONSTRUCTOR_ACCESS:
      *
      * After initialization, the offset will be (0,0).
      *
-     * @param   texture    A pointer to an exisiting Texture2D object.
+     * @param   texture    A pointer to an existing Texture2D object.
      *                      You can use a Texture2D object for many sprites.
      * @param   rect        Only the contents inside rect of this texture will be applied for this sprite.
      * @return  True if the sprite is initialized properly, false otherwise.
@@ -532,7 +550,7 @@ CC_CONSTRUCTOR_ACCESS:
      * A SpriteFrame will be fetched from the SpriteFrameCache by name.
      * If the SpriteFrame doesn't exist it will raise an exception.
      *
-     * @param   spriteFrameName  A key string that can fected a volid SpriteFrame from SpriteFrameCache.
+     * @param   spriteFrameName  A key string that can fetched a valid SpriteFrame from SpriteFrameCache.
      * @return  True if the sprite is initialized properly, false otherwise.
      */
     virtual bool initWithSpriteFrameName(const std::string& spriteFrameName);
@@ -563,27 +581,11 @@ CC_CONSTRUCTOR_ACCESS:
      * @lua     init
      */
     virtual bool initWithFile(const std::string& filename, const Rect& rect);
-
-    void debugDraw(bool on);
     
-    /**
-     * returns a copy of the polygon information associated with this sprite
-     * because this is a copy process it is slower than getting the reference, so use wisely
-     *
-     * @return a copy of PolygonInfo
-     */
-    PolygonInfo getPolygonInfo() const;
-    
-    /**
-     * set the sprite to use this new PolygonInfo
-     *
-     * @param PolygonInfo the polygon information object
-     */
-    void setPolygonInfo(const PolygonInfo& info);
 protected:
 
     void updateColor() override;
-    virtual void setTextureCoords(Rect rect);
+    virtual void setTextureCoords(const Rect& rect);
     virtual void updateBlendFunc();
     virtual void setReorderChildDirtyRecursively();
     virtual void setDirtyRecursively(bool value);
@@ -609,14 +611,15 @@ protected:
     Texture2D*       _texture;              /// Texture2D object that is used to render the sprite
     SpriteFrame*     _spriteFrame;
     TrianglesCommand _trianglesCommand;     ///
-
-
+#if CC_SPRITE_DEBUG_DRAW
+    DrawNode *_debugDrawNode;
+#endif //CC_SPRITE_DEBUG_DRAW
     //
     // Shared data
     //
 
     // texture
-    Rect _rect;                             /// Retangle of Texture2D
+    Rect _rect;                             /// Rectangle of Texture2D
     bool   _rectRotated;                    /// Whether the texture is rotated
 
     // Offset Position (used by Zwoptex)
@@ -635,6 +638,10 @@ protected:
     bool _flippedY;                         /// Whether the sprite is flipped vertically or not
 
     bool _insideBounds;                     /// whether or not the sprite was inside bounds the previous frame
+
+    std::string _fileName;
+    int _fileType;
+
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Sprite);
 };

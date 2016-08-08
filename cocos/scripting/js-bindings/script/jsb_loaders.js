@@ -75,7 +75,7 @@ cc._imgLoader = {
         });
     }
 };
-cc.loader.register(["png", "jpg", "bmp","jpeg","gif"], cc._imgLoader);
+cc.loader.register(["png", "jpg", "bmp","jpeg","gif", "webp"], cc._imgLoader);
 
 cc._plistLoader = {
     load : function(realUrl, url, res, cb){

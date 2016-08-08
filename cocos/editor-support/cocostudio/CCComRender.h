@@ -1,5 +1,5 @@
 ﻿/****************************************************************************
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -25,28 +25,22 @@ THE SOFTWARE.
 #ifndef __CC_EXTENTIONS_CCCOMRENDER_H__
 #define __CC_EXTENTIONS_CCCOMRENDER_H__
 
-#include "CCComBase.h"
+#include "editor-support/cocostudio/CCComBase.h"
 #include "2d/CCComponent.h"
-#include "cocostudio/CocosStudioExport.h"
+#include "editor-support/cocostudio/CocosStudioExport.h"
 
 namespace cocostudio {
 
 class CC_STUDIO_DLL ComRender : public cocos2d::Component
 {
     DECLARE_CLASS_COMPONENT_INFO
-CC_CONSTRUCTOR_ACCESS:
-    /**
-     *  @js ctor
-     */
-    ComRender(void);
-    ComRender(cocos2d::Node *node, const char *comName);
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual ~ComRender(void);
-    
+ 
 public:
+    const static std::string COMPONENT_NAME;
+
+    static ComRender* create();
+    static ComRender* create(cocos2d::Node *node, const char *comName);
+
     /**
      * @js NA
      * @lua NA
@@ -71,14 +65,23 @@ public:
     virtual cocos2d::Node* getNode();
     virtual void setNode(cocos2d::Node *node);
 
-    static ComRender* create(void);
-    static ComRender* create(cocos2d::Node *node, const char *comName);
+CC_CONSTRUCTOR_ACCESS:
+    /**
+    *  @js ctor
+    */
+    ComRender();
+    ComRender(cocos2d::Node *node, const char *comName);
+    /**
+    * @js NA
+    * @lua NA
+    */
+    virtual ~ComRender();
+
 private:
     bool readJson(const std::string &fileName, rapidjson::Document &doc);
 
-private:
     cocos2d::Node *_render;
 };
 
 }
-#endif  // __FUNDATION__CCCOMPONENT_H__
+#endif  // __CC_EXTENTIONS_CCCOMRENDER_H__

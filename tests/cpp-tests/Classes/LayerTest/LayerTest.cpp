@@ -372,7 +372,7 @@ void LayerTest1::onEnter()
     auto s = Director::getInstance()->getWinSize();
     auto layer = LayerColor::create( Color4B(0xFF, 0x00, 0x00, 0x80), 200, 200); 
     
-    layer->ignoreAnchorPointForPosition(false);
+    layer->setIgnoreAnchorPointForPosition(false);
     layer->setPosition( Vec2(s.width/2, s.height/2) );
     addChild(layer, 1, kTagLayer);
 }
@@ -422,12 +422,12 @@ void LayerTest2::onEnter()
     auto s = Director::getInstance()->getWinSize();
     auto layer1 = LayerColor::create( Color4B(255, 255, 0, 80), 100, 300);
     layer1->setPosition(Vec2(s.width/3, s.height/2));
-    layer1->ignoreAnchorPointForPosition(false);
+    layer1->setIgnoreAnchorPointForPosition(false);
     addChild(layer1, 1);
     
     auto layer2 = LayerColor::create( Color4B(0, 0, 255, 255), 100, 300);
     layer2->setPosition(Vec2((s.width/3)*2, s.height/2));
-    layer2->ignoreAnchorPointForPosition(false);
+    layer2->setIgnoreAnchorPointForPosition(false);
     addChild(layer2, 1);
     
     auto actionTint = TintBy::create(2, -255, -127, 0);
@@ -613,7 +613,7 @@ void LayerIgnoreAnchorPointPos::onToggle(Ref* pObject)
 {
     auto layer = this->getChildByTag(kLayerIgnoreAnchorPoint);
     bool ignore = layer->isIgnoreAnchorPointForPosition();
-    layer->ignoreAnchorPointForPosition(! ignore);
+    layer->setIgnoreAnchorPointForPosition(! ignore);
 }
 
 std::string LayerIgnoreAnchorPointPos::title() const
@@ -661,7 +661,7 @@ void LayerIgnoreAnchorPointRot::onToggle(Ref* pObject)
 {
     auto layer = this->getChildByTag(kLayerIgnoreAnchorPoint);
     bool ignore = layer->isIgnoreAnchorPointForPosition();
-    layer->ignoreAnchorPointForPosition(! ignore);
+    layer->setIgnoreAnchorPointForPosition(! ignore);
 }
 
 std::string LayerIgnoreAnchorPointRot::title() const
@@ -712,7 +712,7 @@ void LayerIgnoreAnchorPointScale::onToggle(Ref* pObject)
 {
     auto layer = this->getChildByTag(kLayerIgnoreAnchorPoint);
     bool ignore = layer->isIgnoreAnchorPointForPosition();
-    layer->ignoreAnchorPointForPosition(! ignore);
+    layer->setIgnoreAnchorPointForPosition(! ignore);
 }
 
 std::string LayerIgnoreAnchorPointScale::title() const

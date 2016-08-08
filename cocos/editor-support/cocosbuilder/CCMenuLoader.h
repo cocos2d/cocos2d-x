@@ -1,7 +1,7 @@
 #ifndef _CCB_CCMENULOADER_H_
 #define _CCB_CCMENULOADER_H_
 
-#include "CCLayerLoader.h"
+#include "editor-support/cocosbuilder/CCLayerLoader.h"
 #include "base/CCRef.h"
 #include "2d/CCMenu.h"
 

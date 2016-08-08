@@ -399,7 +399,7 @@ function Scene3DTest:createUI()
     local backItem = cc.MenuItemLabel:create(cc.Label:createWithTTF(ttfConfig, "Back"))
     backItem:setPosition(cc.p(VisibleRect:right().x - 50, VisibleRect:bottom().y + 25))
 
-    local menu = cc.Menu:create(showLeftDlgItem, descItem, backItem)
+    local menu = cc.Menu:create(showLeftDlgItem, descItem)
     menu:setPosition(cc.p(0.0, 0.0))
     menu:setCameraMask(s_CM[GAME_LAYER.LAYER_UI], true)
     self:addChild(menu)
@@ -512,7 +512,7 @@ function Scene3DTest:createDetailDlg()
     self._detailDlg:addChild(title)
     
     -- add a spine ffd animation on it
-    local skeletonNode = sp.SkeletonAnimation:create("spine/goblins-ffd.json", "spine/goblins-ffd.atlas", 1.5)
+    local skeletonNode = sp.SkeletonAnimation:create("spine/goblins.json", "spine/goblins.atlas", 1.5)
     skeletonNode:setAnimation(0, "walk", true)
     skeletonNode:setSkin("goblin")
 
@@ -674,7 +674,9 @@ function Scene3DTestMain()
     }
 
     scene:addChild(Scene3DTest.create())
-    scene:addChild(CreateBackMenuItem())
+    local menu = CreateBackMenuItem()
+    menu:setCameraMask(s_CM[GAME_LAYER.LAYER_UI])
+    scene:addChild(menu)
 
     return scene
 end

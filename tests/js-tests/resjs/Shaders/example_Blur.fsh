@@ -1,5 +1,3 @@
-// Shader taken from: http://webglsamples.googlecode.com/hg/electricflower/electricflower.html
-
 #ifdef GL_ES
 precision mediump float;
 #endif
@@ -7,21 +5,42 @@ precision mediump float;
 varying vec4 v_fragmentColor;
 varying vec2 v_texCoord;
 
-uniform vec2 blurSize;
-uniform vec4 substract;
+uniform vec2 resolution;
+uniform float blurRadius;
+uniform float sampleNum;
 
-void main() {
-	vec4 sum = vec4(0.0);
-	sum += texture2D(CC_Texture0, v_texCoord - 4.0 * blurSize) * 0.05;
-	sum += texture2D(CC_Texture0, v_texCoord - 3.0 * blurSize) * 0.09;
-	sum += texture2D(CC_Texture0, v_texCoord - 2.0 * blurSize) * 0.12;
-	sum += texture2D(CC_Texture0, v_texCoord - 1.0 * blurSize) * 0.15;
-	sum += texture2D(CC_Texture0, v_texCoord                 ) * 0.16;
-	sum += texture2D(CC_Texture0, v_texCoord + 1.0 * blurSize) * 0.15;
-	sum += texture2D(CC_Texture0, v_texCoord + 2.0 * blurSize) * 0.12;
-	sum += texture2D(CC_Texture0, v_texCoord + 3.0 * blurSize) * 0.09;
-	sum += texture2D(CC_Texture0, v_texCoord + 4.0 * blurSize) * 0.05;
+vec4 blur(vec2);
 
-	gl_FragColor = (sum - substract) * v_fragmentColor;
+void main(void)
+{
+    vec4 col = blur(v_texCoord); //* v_fragmentColor.rgb;
+    gl_FragColor = vec4(col) * v_fragmentColor;
 }
 
+vec4 blur(vec2 p)
+{
+    if (blurRadius > 0.0 && sampleNum > 1.0)
+    {
+        vec4 col = vec4(0);
+        vec2 unit = 1.0 / resolution.xy;
+        
+        float r = blurRadius;
+        float sampleStep = r / sampleNum;
+        
+        float count = 0.0;
+        
+        for(float x = -r; x < r; x += sampleStep)
+        {
+            for(float y = -r; y < r; y += sampleStep)
+            {
+                float weight = (r - abs(x)) * (r - abs(y));
+                col += texture2D(CC_Texture0, p + vec2(x * unit.x, y * unit.y)) * weight;
+                count += weight;
+            }
+        }
+        
+        return col / count;
+    }
+    
+    return texture2D(CC_Texture0, p);
+}

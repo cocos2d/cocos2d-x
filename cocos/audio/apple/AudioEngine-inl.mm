@@ -22,10 +22,12 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+#define LOG_TAG "AudioEngine-inl.mm"
+
 #include "platform/CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC
 
-#include "AudioEngine-inl.h"
+#include "audio/apple/AudioEngine-inl.h"
 
 #import <OpenAL/alc.h>
 #import <AVFoundation/AVFoundation.h>
@@ -54,6 +56,8 @@ static ALCcontext *s_ALContext = nullptr;
 
 @implementation AudioEngineSessionHandler
 
+// only enable it on iOS. Disable it on tvOS
+#if !defined(CC_TARGET_OS_TVOS)
 void AudioEngineInterruptionListenerCallback(void* user_data, UInt32 interruption_state)
 {
     if (kAudioSessionBeginInterruption == interruption_state)
@@ -63,11 +67,12 @@ void AudioEngineInterruptionListenerCallback(void* user_data, UInt32 interruptio
     else if (kAudioSessionEndInterruption == interruption_state)
     {
       OSStatus result = AudioSessionSetActive(true);
-      if (result) NSLog(@"Error setting audio session active! %d\n", result);
+      if (result) NSLog(@"Error setting audio session active! %d\n", static_cast<int>(result));
 
       alcMakeContextCurrent(s_ALContext);
     }
 }
+#endif
 
 -(id) init
 {
@@ -75,11 +80,15 @@ void AudioEngineInterruptionListenerCallback(void* user_data, UInt32 interruptio
     {
       if ([[[UIDevice currentDevice] systemVersion] intValue] > 5) {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleInterruption:) name:AVAudioSessionInterruptionNotification object:[AVAudioSession sharedInstance]];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleInterruption:) name:UIApplicationDidBecomeActiveNotification object:[AVAudioSession sharedInstance]];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleInterruption:) name:UIApplicationDidBecomeActiveNotification object:nil];
       }
+    // only enable it on iOS. Disable it on tvOS
+    // AudioSessionInitialize removed from tvOS
+#if !defined(CC_TARGET_OS_TVOS)
       else {
         AudioSessionInitialize(NULL, NULL, AudioEngineInterruptionListenerCallback, self);
       }
+#endif
     }
     return self;
 }
@@ -112,7 +121,7 @@ void AudioEngineInterruptionListenerCallback(void* user_data, UInt32 interruptio
                         setCategory: AVAudioSessionCategoryAmbient
                         error: &error];
         if (!success) {
-            printf("Fail to set audio session.\n");
+            ALOGE("Fail to set audio session.");
             return;
         }
         [[AVAudioSession sharedInstance] setActive:YES error:&error];
@@ -176,7 +185,7 @@ bool AudioEngineImpl::init()
             auto alError = alGetError();
             if(alError != AL_NO_ERROR)
             {
-                printf("%s:generating sources fail! error = %x\n", __PRETTY_FUNCTION__, alError);
+                ALOGE("%s:generating sources failed! error = %x", __PRETTY_FUNCTION__, alError);
                 break;
             }
             
@@ -184,7 +193,71 @@ bool AudioEngineImpl::init()
                 _alSourceUsed[_alSources[i]] = false;
             }
             
+            // fixed #16170: Random crash in alGenBuffers(AudioCache::readDataTask) at startup
+            // Please note that, as we know the OpenAL operation is atomic (threadsafe),
+            // 'alGenBuffers' may be invoked by different threads. But in current implementation of 'alGenBuffers',
+            // When the first time it's invoked, application may crash!!!
+            // Why? OpenAL is opensource by Apple and could be found at
+            // http://opensource.apple.com/source/OpenAL/OpenAL-48.7/Source/OpenAL/oalImp.cpp .
+            /*
+             
+            void InitializeBufferMap()
+            {
+                if (gOALBufferMap == NULL) // Position 1
+                {
+                    gOALBufferMap = new OALBufferMap ();  // Position 2
+             
+                    // Position Gap
+             
+                    gBufferMapLock = new CAGuard("OAL:BufferMapLock"); // Position 3
+                    gDeadOALBufferMap = new OALBufferMap ();
+
+                    OALBuffer   *newBuffer = new OALBuffer (AL_NONE);
+                    gOALBufferMap->Add(AL_NONE, &newBuffer);
+                }
+            }
+
+            AL_API ALvoid AL_APIENTRY alGenBuffers(ALsizei n, ALuint *bids)
+            {
+                ...
+
+                try {
+                    if (n < 0)
+                    throw ((OSStatus) AL_INVALID_VALUE);
+
+                    InitializeBufferMap();
+                    if (gOALBufferMap == NULL)
+                    throw ((OSStatus) AL_INVALID_OPERATION);
+
+                    CAGuard::Locker locked(*gBufferMapLock);  // Position 4
+                ...
+                ...
+            }
+             
+             */
+            // 'gBufferMapLock' will be initialized in the 'InitializeBufferMap' function,
+            // that's the problem. It means that 'InitializeBufferMap' may be invoked in different threads.
+            // It will be very dangerous in multi-threads environment.
+            // Imagine there're two threads (Thread A, Thread B), they call 'alGenBuffers' simultaneously.
+            // While A goto 'Position Gap', 'gOALBufferMap' was assigned, then B goto 'Position 1' and find
+            // that 'gOALBufferMap' isn't NULL, B just jump over 'InitialBufferMap' and goto 'Position 4'.
+            // Meanwhile, A is still at 'Position Gap', B will crash at '*gBufferMapLock' since 'gBufferMapLock'
+            // is still a null pointer. Oops, how could Apple implemented this method in this fucking way?
+            
+            // Workaround is do an unused invocation in the mainthread right after OpenAL is initialized successfully
+            // as bellow.
+            // ================ Workaround begin ================ //
+            
+            ALuint unusedAlBufferId = 0;
+            alGenBuffers(1, &unusedAlBufferId);
+            alDeleteBuffers(1, &unusedAlBufferId);
+            
+            // ================ Workaround end ================ //
+            
+            
+            _scheduler = Director::getInstance()->getScheduler();
             ret = true;
+            ALOGI("OpenAL was initialized successfully!");
         }
     }while (false);
     
@@ -199,14 +272,23 @@ AudioCache* AudioEngineImpl::preload(const std::string& filePath, std::function<
     if (it == _audioCaches.end()) {
         audioCache = &_audioCaches[filePath];
         audioCache->_fileFullPath = FileUtils::getInstance()->fullPathForFilename(filePath);
-        
-        AudioEngine::addTask(std::bind(&AudioCache::readDataTask, audioCache));
+        unsigned int cacheId = audioCache->_id;
+        auto isCacheDestroyed = audioCache->_isDestroyed;
+        AudioEngine::addTask([audioCache, cacheId, isCacheDestroyed](){
+            if (*isCacheDestroyed)
+            {
+                ALOGV("AudioCache (id=%u) was destroyed, no need to launch readDataTask.", cacheId);
+                audioCache->setSkipReadDataTask(true);
+                return;
+            }
+            audioCache->readDataTask(cacheId);
+        });
     }
     else {
         audioCache = &it->second;
     }
     
-    if(audioCache && callback)
+    if (audioCache && callback)
     {
         audioCache->addLoadCallback(callback);
     }
@@ -233,24 +315,33 @@ int AudioEngineImpl::play2d(const std::string &filePath ,bool loop ,float volume
         return AudioEngine::INVALID_AUDIO_ID;
     }
     
-    AudioCache* audioCache = preload(filePath, nullptr);
-    if (audioCache == nullptr) {
+    auto player = new (std::nothrow) AudioPlayer;
+    if (player == nullptr) {
         return AudioEngine::INVALID_AUDIO_ID;
     }
     
-    auto player = &_audioPlayers[_currentAudioID];
     player->_alSource = alSource;
     player->_loop = loop;
     player->_volume = volume;
-    audioCache->addPlayCallback(std::bind(&AudioEngineImpl::_play2d,this,audioCache,_currentAudioID));
+    
+    auto audioCache = preload(filePath, nullptr);
+    if (audioCache == nullptr) {
+        delete player;
+        return AudioEngine::INVALID_AUDIO_ID;
+    }
+    
+    player->setCache(audioCache);
+    _threadMutex.lock();
+    _audioPlayers[_currentAudioID] = player;
+    _threadMutex.unlock();
     
     _alSourceUsed[alSource] = true;
     
+    audioCache->addPlayCallback(std::bind(&AudioEngineImpl::_play2d,this,audioCache,_currentAudioID));
+    
     if (_lazyInitLoop) {
         _lazyInitLoop = false;
-        
-        auto scheduler = cocos2d::Director::getInstance()->getScheduler();
-        scheduler->schedule(CC_SCHEDULE_SELECTOR(AudioEngineImpl::update), this, 0.05f, false);
+        _scheduler->schedule(CC_SCHEDULE_SELECTOR(AudioEngineImpl::update), this, 0.05f, false);
     }
     
     return _currentAudioID++;
@@ -258,76 +349,81 @@ int AudioEngineImpl::play2d(const std::string &filePath ,bool loop ,float volume
 
 void AudioEngineImpl::_play2d(AudioCache *cache, int audioID)
 {
-    if(cache->_alBufferReady){
-        auto playerIt = _audioPlayers.find(audioID);
-        if (playerIt != _audioPlayers.end()) {
-            if (playerIt->second.play2d(cache)) {
-                AudioEngine::_audioIDInfoMap[audioID].state = AudioEngine::AudioState::PLAYING;
-            }
-            else{
-                _threadMutex.lock();
-                _toRemoveAudioIDs.push_back(audioID);
-                _threadMutex.unlock();
-            }
-        }
-    }
-    else {
+    //Note: It may bn in sub thread or main thread :(
+    if (!*cache->_isDestroyed && cache->_state == AudioCache::State::READY)
+    {
         _threadMutex.lock();
-        _toRemoveCaches.push_back(cache);
-        _toRemoveAudioIDs.push_back(audioID);
+        auto playerIt = _audioPlayers.find(audioID);
+        if (playerIt != _audioPlayers.end() && playerIt->second->play2d()) {
+            _scheduler->performFunctionInCocosThread([audioID](){
+                
+                if (AudioEngine::_audioIDInfoMap.find(audioID) != AudioEngine::_audioIDInfoMap.end()) {
+                    AudioEngine::_audioIDInfoMap[audioID].state = AudioEngine::AudioState::PLAYING;
+                }
+            });
+        }
         _threadMutex.unlock();
+    }
+    else
+    {
+        ALOGD("AudioEngineImpl::_play2d, cache was destroyed or not ready!");
+        auto iter = _audioPlayers.find(audioID);
+        if (iter != _audioPlayers.end())
+        {
+            iter->second->_removeByAudioEngine = true;
+        }
     }
 }
 
 void AudioEngineImpl::setVolume(int audioID,float volume)
 {
-    auto& player = _audioPlayers[audioID];
-    player._volume = volume;
+    auto player = _audioPlayers[audioID];
+    player->_volume = volume;
     
-    if (player._ready) {
-        alSourcef(_audioPlayers[audioID]._alSource, AL_GAIN, volume);
+    if (player->_ready) {
+        alSourcef(_audioPlayers[audioID]->_alSource, AL_GAIN, volume);
         
         auto error = alGetError();
         if (error != AL_NO_ERROR) {
-            printf("%s: audio id = %d, error = %x\n", __PRETTY_FUNCTION__,audioID,error);
+            ALOGE("%s: audio id = %d, error = %x", __PRETTY_FUNCTION__,audioID,error);
         }
     }
 }
 
 void AudioEngineImpl::setLoop(int audioID, bool loop)
 {
-    auto& player = _audioPlayers[audioID];
+    auto player = _audioPlayers[audioID];
     
-    if (player._ready) {
-        if (player._streamingSource) {
-            player.setLoop(loop);
+    if (player->_ready) {
+        if (player->_streamingSource) {
+            player->setLoop(loop);
         } else {
             if (loop) {
-                alSourcei(player._alSource, AL_LOOPING, AL_TRUE);
+                alSourcei(player->_alSource, AL_LOOPING, AL_TRUE);
             } else {
-                alSourcei(player._alSource, AL_LOOPING, AL_FALSE);
+                alSourcei(player->_alSource, AL_LOOPING, AL_FALSE);
             }
             
             auto error = alGetError();
             if (error != AL_NO_ERROR) {
-                printf("%s: audio id = %d, error = %x\n", __PRETTY_FUNCTION__,audioID,error);
+                ALOGE("%s: audio id = %d, error = %x", __PRETTY_FUNCTION__,audioID,error);
             }
         }
     }
     else {
-        player._loop = loop;
+        player->_loop = loop;
     }
 }
 
 bool AudioEngineImpl::pause(int audioID)
 {
     bool ret = true;
-    alSourcePause(_audioPlayers[audioID]._alSource);
+    alSourcePause(_audioPlayers[audioID]->_alSource);
     
     auto error = alGetError();
     if (error != AL_NO_ERROR) {
         ret = false;
-        printf("%s: audio id = %d, error = %x\n", __PRETTY_FUNCTION__,audioID,error);
+        ALOGE("%s: audio id = %d, error = %x", __PRETTY_FUNCTION__,audioID,error);
     }
     
     return ret;
@@ -336,56 +432,45 @@ bool AudioEngineImpl::pause(int audioID)
 bool AudioEngineImpl::resume(int audioID)
 {
     bool ret = true;
-    alSourcePlay(_audioPlayers[audioID]._alSource);
+    alSourcePlay(_audioPlayers[audioID]->_alSource);
     
     auto error = alGetError();
     if (error != AL_NO_ERROR) {
         ret = false;
-        printf("%s: audio id = %d, error = %x\n", __PRETTY_FUNCTION__,audioID,error);
+        ALOGE("%s: audio id = %d, error = %x", __PRETTY_FUNCTION__,audioID,error);
     }
     
     return ret;
 }
 
-bool AudioEngineImpl::stop(int audioID)
+void AudioEngineImpl::stop(int audioID)
 {
-    bool ret = true;
-    auto& player = _audioPlayers[audioID];
-    if (player._ready) {
-        alSourceStop(player._alSource);
-        
-        auto error = alGetError();
-        if (error != AL_NO_ERROR) {
-            ret = false;
-            printf("%s: audio id = %d, error = %x\n", __PRETTY_FUNCTION__,audioID,error);
-        }
-    }
-    
-    alSourcei(player._alSource, AL_BUFFER, 0);
-    
-    _alSourceUsed[player._alSource] = false;
-    _audioPlayers.erase(audioID);
-    
-    return ret;
+    auto player = _audioPlayers[audioID];
+    player->destroy();
+    //Note: Don't set the flag to false here, it should be set in 'update' function.
+    // Otherwise, the state got from alSourceState may be wrong
+//    _alSourceUsed[player->_alSource] = false;
 }
 
 void AudioEngineImpl::stopAll()
 {
-    for(int index = 0; index < MAX_AUDIOINSTANCES; ++index)
+    for(auto&& player : _audioPlayers)
     {
-        alSourceStop(_alSources[index]);
-        alSourcei(_alSources[index], AL_BUFFER, 0);
-        _alSourceUsed[_alSources[index]] = false;
+        player.second->destroy();
     }
-    
-    _audioPlayers.clear();
+    //Note: Don't set the flag to false here, it should be set in 'update' function.
+    // Otherwise, the state got from alSourceState may be wrong
+//    for(int index = 0; index < MAX_AUDIOINSTANCES; ++index)
+//    {
+//        _alSourceUsed[_alSources[index]] = false;
+//    }
 }
 
 float AudioEngineImpl::getDuration(int audioID)
 {
-    auto& player = _audioPlayers[audioID];
-    if(player._ready){
-        return player._audioCache->_duration;
+    auto player = _audioPlayers[audioID];
+    if(player->_ready){
+        return player->_audioCache->_duration;
     } else {
         return AudioEngine::TIME_UNKNOWN;
     }
@@ -394,16 +479,16 @@ float AudioEngineImpl::getDuration(int audioID)
 float AudioEngineImpl::getCurrentTime(int audioID)
 {
     float ret = 0.0f;
-    auto& player = _audioPlayers[audioID];
-    if(player._ready){
-        if (player._streamingSource) {
-            ret = player.getTime();
+    auto player = _audioPlayers[audioID];
+    if(player->_ready){
+        if (player->_streamingSource) {
+            ret = player->getTime();
         } else {
-            alGetSourcef(player._alSource, AL_SEC_OFFSET, &ret);
+            alGetSourcef(player->_alSource, AL_SEC_OFFSET, &ret);
             
             auto error = alGetError();
             if (error != AL_NO_ERROR) {
-                printf("%s, audio id:%d,error code:%x", __PRETTY_FUNCTION__,audioID,error);
+                ALOGE("%s, audio id:%d,error code:%x", __PRETTY_FUNCTION__,audioID,error);
             }
         }
     }
@@ -414,29 +499,29 @@ float AudioEngineImpl::getCurrentTime(int audioID)
 bool AudioEngineImpl::setCurrentTime(int audioID, float time)
 {
     bool ret = false;
-    auto& player = _audioPlayers[audioID];
+    auto player = _audioPlayers[audioID];
     
     do {
-        if (!player._ready) {
+        if (!player->_ready) {
             break;
         }
         
-        if (player._streamingSource) {
-            ret = player.setTime(time);
+        if (player->_streamingSource) {
+            ret = player->setTime(time);
             break;
         }
         else {
-            if (player._audioCache->_bytesOfRead != player._audioCache->_dataSize &&
-                (time * player._audioCache->_sampleRate * player._audioCache->_bytesPerFrame) > player._audioCache->_bytesOfRead) {
-                printf("%s: audio id = %d\n", __PRETTY_FUNCTION__,audioID);
+            if (player->_audioCache->_bytesOfRead != player->_audioCache->_dataSize &&
+                (time * player->_audioCache->_sampleRate * player->_audioCache->_bytesPerFrame) > player->_audioCache->_bytesOfRead) {
+                ALOGE("%s: audio id = %d", __PRETTY_FUNCTION__,audioID);
                 break;
             }
             
-            alSourcef(player._alSource, AL_SEC_OFFSET, time);
+            alSourcef(player->_alSource, AL_SEC_OFFSET, time);
             
             auto error = alGetError();
             if (error != AL_NO_ERROR) {
-                printf("%s: audio id = %d, error = %x\n", __PRETTY_FUNCTION__,audioID,error);
+                ALOGE("%s: audio id = %d, error = %x", __PRETTY_FUNCTION__,audioID,error);
             }
             ret = true;
         }
@@ -447,57 +532,45 @@ bool AudioEngineImpl::setCurrentTime(int audioID, float time)
 
 void AudioEngineImpl::setFinishCallback(int audioID, const std::function<void (int, const std::string &)> &callback)
 {
-    _audioPlayers[audioID]._finishCallbak = callback;
+    _audioPlayers[audioID]->_finishCallbak = callback;
 }
 
 void AudioEngineImpl::update(float dt)
 {
     ALint sourceState;
     int audioID;
+    AudioPlayer* player;
     
-    if (_threadMutex.try_lock()) {
-        size_t removeAudioCount = _toRemoveAudioIDs.size();
-        for (size_t index = 0; index < removeAudioCount; ++index) {
-            audioID = _toRemoveAudioIDs[index];
-            auto playerIt = _audioPlayers.find(audioID);
-            if (playerIt != _audioPlayers.end()) {
-                _alSourceUsed[playerIt->second._alSource] = false;
-                if(playerIt->second._finishCallbak) {
-                    auto& audioInfo = AudioEngine::_audioIDInfoMap[audioID];
-                    playerIt->second._finishCallbak(audioID, *audioInfo.filePath);
-                }
-                _audioPlayers.erase(audioID);
-                AudioEngine::remove(audioID);
-            }
-        }
-        size_t removeCacheCount = _toRemoveCaches.size();
-        for (size_t index = 0; index < removeCacheCount; ++index) {
-            auto itEnd = _audioCaches.end();
-            for (auto it = _audioCaches.begin(); it != itEnd; ++it) {
-                if (&it->second == _toRemoveCaches[index]) {
-                    _audioCaches.erase(it);
-                    break;
-                }
-            }
-        }
-        _threadMutex.unlock();
-    }
+//    ALOGV("AudioPlayer count: %d", (int)_audioPlayers.size());
     
     for (auto it = _audioPlayers.begin(); it != _audioPlayers.end(); ) {
         audioID = it->first;
-        auto& player = it->second;
-        alGetSourcei(player._alSource, AL_SOURCE_STATE, &sourceState);
+        player = it->second;
+        alGetSourcei(player->_alSource, AL_SOURCE_STATE, &sourceState);
         
-        if (player._ready && sourceState == AL_STOPPED) {
-            _alSourceUsed[player._alSource] = false;
-            if (player._finishCallbak) {
+        if (player->_removeByAudioEngine)
+        {
+            _alSourceUsed[player->_alSource] = false;
+            
+            AudioEngine::remove(audioID);
+            _threadMutex.lock();
+            it = _audioPlayers.erase(it);
+            _threadMutex.unlock();
+            delete player;
+        }
+        else if (player->_ready && sourceState == AL_STOPPED) {
+            
+            _alSourceUsed[player->_alSource] = false;
+            if (player->_finishCallbak) {
                 auto& audioInfo = AudioEngine::_audioIDInfoMap[audioID];
-                player._finishCallbak(audioID, *audioInfo.filePath);
+                player->_finishCallbak(audioID, *audioInfo.filePath); //FIXME: callback will delay 50ms
             }
             
             AudioEngine::remove(audioID);
-            
+            delete player;
+            _threadMutex.lock();
             it = _audioPlayers.erase(it);
+            _threadMutex.unlock();
         }
         else{
             ++it;
@@ -506,9 +579,7 @@ void AudioEngineImpl::update(float dt)
     
     if(_audioPlayers.empty()){
         _lazyInitLoop = true;
-        
-        auto scheduler = cocos2d::Director::getInstance()->getScheduler();
-        scheduler->unschedule(CC_SCHEDULE_SELECTOR(AudioEngineImpl::update), this);
+        _scheduler->unschedule(CC_SCHEDULE_SELECTOR(AudioEngineImpl::update), this);
     }
 }
 

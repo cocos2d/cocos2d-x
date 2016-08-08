@@ -1,7 +1,7 @@
 /****************************************************************************
  Copyright (c) 2012      greathqy
  Copyright (c) 2012      cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -24,7 +24,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "HttpClient.h"
+#include "network/HttpClient.h"
 #include <queue>
 #include <errno.h>
 #include <curl/curl.h>
@@ -411,7 +411,7 @@ HttpClient::HttpClient()
 
 HttpClient::~HttpClient()
 {
-	CC_SAFE_DELETE(_requestSentinel);
+	CC_SAFE_RELEASE(_requestSentinel);
 	CCLOG("HttpClient destructor");
 }
 

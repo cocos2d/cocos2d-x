@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -94,21 +94,22 @@ CheckBox* CheckBox::create(const std::string& backGround,
     return nullptr;
 }
     
-void CheckBox::releaseUpEvent()
+void CheckBox::onTouchEnded(Touch *touch, Event *unusedEvent)
 {
-    Widget::releaseUpEvent();
-    
     if (_isSelected)
     {
         setSelected(false);
+        AbstractCheckButton::onTouchEnded(touch, unusedEvent);
         dispatchSelectChangedEvent(false);
     }
     else
     {
         setSelected(true);
+        AbstractCheckButton::onTouchEnded(touch, unusedEvent);
         dispatchSelectChangedEvent(true);
     }
 }
+    
 
 void CheckBox::dispatchSelectChangedEvent(bool selected)
 {

@@ -99,7 +99,7 @@ void UIRadioButtonTest::addRadioButton(Ref* sender)
     }
     
     RadioButton* radioButton = RadioButton::create("cocosui/radio_button_off.png", "cocosui/radio_button_on.png");
-    pos.x += + BUTTON_WIDTH;
+    pos.x += BUTTON_WIDTH;
     radioButton->setPosition(pos);
     _radioButtonGroup->addRadioButton(radioButton);
     _uiLayer->addChild(radioButton);
@@ -302,7 +302,7 @@ bool UIRadioButtonTabTest::init()
         
         // Background for buttons
         LayerColor* colorLayer = LayerColor::create(Color4B::WHITE);
-        colorLayer->ignoreAnchorPointForPosition(false);
+        colorLayer->setIgnoreAnchorPointForPosition(false);
         colorLayer->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
         colorLayer->setContentSize(Size(buttonWidth * 3, 170 / Director::getInstance()->getContentScaleFactor()));
         colorLayer->setPosition(widgetSize / 2.0f);

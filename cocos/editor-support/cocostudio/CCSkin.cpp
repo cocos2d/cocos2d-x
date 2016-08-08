@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -27,9 +27,9 @@ THE SOFTWARE.
 #include "base/CCDirector.h"
 #include "renderer/CCRenderer.h"
 
-#include "cocostudio/CCSkin.h"
-#include "cocostudio/CCTransformHelp.h"
-#include "cocostudio/CCArmature.h"
+#include "editor-support/cocostudio/CCSkin.h"
+#include "editor-support/cocostudio/CCTransformHelp.h"
+#include "editor-support/cocostudio/CCArmature.h"
 
 
 using namespace cocos2d;
@@ -170,6 +170,15 @@ void Skin::updateTransform()
         float x2 = x1 + size.width;
         float y2 = y1 + size.height;
 
+        if (_flippedX)
+        {
+            std::swap(x1, x2);
+        }
+        if (_flippedY)
+        {
+            std::swap(y1, y2);
+        }
+        
         float x = transform.m[12];
         float y = transform.m[13];
 
@@ -224,8 +233,16 @@ void Skin::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     auto mv = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 
-    //TODO: implement z order
-    _quadCommand.init(_globalZOrder, _texture->getName(), getGLProgramState(), _blendFunc, &_quad, 1, mv, flags);
+    // TODO: implement z order
+    _quadCommand.init(_globalZOrder, 
+        _texture, 
+        getGLProgramState(), 
+        _blendFunc, 
+        &_quad, 
+        1,
+        mv, 
+        flags);
+
     renderer->addCommand(&_quadCommand);
 }
 

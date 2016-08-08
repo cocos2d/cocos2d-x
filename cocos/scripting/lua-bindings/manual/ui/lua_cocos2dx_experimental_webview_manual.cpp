@@ -1,12 +1,12 @@
-#include "lua_cocos2dx_experimental_video_manual.hpp"
+#include "scripting/lua-bindings/manual/ui/lua_cocos2dx_experimental_video_manual.hpp"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 
-#include "UIWebView.h"
-#include "tolua_fix.h"
-#include "LuaBasicConversions.h"
-#include "CCLuaValue.h"
-#include "CCLuaEngine.h"
+#include "ui/UIWebView.h"
+#include "scripting/lua-bindings/manual/tolua_fix.h"
+#include "scripting/lua-bindings/manual/LuaBasicConversions.h"
+#include "scripting/lua-bindings/manual/CCLuaValue.h"
+#include "scripting/lua-bindings/manual/CCLuaEngine.h"
 
 
 
@@ -152,7 +152,7 @@ static int lua_cocos2dx_experimental_WebView_setOnDidFailLoading(lua_State* L)
         };
         
         ScriptHandlerMgr::getInstance()->addCustomHandler((void*)self, handler);
-        self->setOnDidFinishLoading(callback);
+        self->setOnDidFailLoading(callback);
         return 0;
     }
     luaL_error(L, "%s has wrong number of arguments: %d, was expecting %d\n ", "ccexp.WebView:setOnDidFailLoading",argc, 1);

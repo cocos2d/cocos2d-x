@@ -1,7 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010      Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -145,6 +145,31 @@ public:
      * @since v2.0.0
      */
 	bool supportsShareableVAO() const;
+
+    /** Whether or not OES_depth24 is supported.
+     *
+     * @return Is true if supports OES_depth24.
+     * @since v2.0.0
+     */
+    bool supportsOESDepth24() const;
+    
+    /** Whether or not OES_Packed_depth_stencil is supported.
+     *
+     * @return Is true if supports OES_Packed_depth_stencil.
+     * @since v2.0.0
+     */
+    bool supportsOESPackedDepthStencil() const;
+
+    /** Whether or not glMapBuffer() is supported.
+     *
+     * On Desktop it returns `true`.
+     * On Mobile it checks for the extension `GL_OES_mapbuffer`
+     *
+     * @return Whether or not `glMapBuffer()` is supported.
+     * @since v3.13
+     */
+    bool supportsMapBuffer() const;
+
     
     /** Max support directional light in shader, for Sprite3D.
      *
@@ -232,6 +257,10 @@ protected:
     bool            _supportsBGRA8888;
     bool            _supportsDiscardFramebuffer;
     bool            _supportsShareableVAO;
+    bool            _supportsOESMapBuffer;
+    bool            _supportsOESDepth24;
+    bool            _supportsOESPackedDepthStencil;
+    
     GLint           _maxSamplesAllowed;
     GLint           _maxTextureUnits;
     char *          _glExtensions;

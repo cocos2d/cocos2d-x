@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2010-2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -30,11 +30,11 @@
 
 #include <string>
 
-#import "CCUserDefault.h"
+#import "base/CCUserDefault.h"
 #import "tinyxml2.h"
 #import "platform/CCPlatformConfig.h"
 #import "platform/CCPlatformMacros.h"
-#import "base64.h"
+#import "base/base64.h"
 #import "platform/CCFileUtils.h"
 
 #define XML_FILE_NAME "UserDefault.xml"
@@ -75,7 +75,7 @@ static tinyxml2::XMLElement* getXMLNodeForKey(const char* pKey, tinyxml2::XMLDoc
 
     do
     {
- 		tinyxml2::XMLDocument* xmlDoc = new tinyxml2::XMLDocument();
+ 		tinyxml2::XMLDocument* xmlDoc = new (std::nothrow) tinyxml2::XMLDocument();
 		*doc = xmlDoc;
 
         std::string xmlBuffer = FileUtils::getInstance()->getStringFromFile(UserDefault::getInstance()->getXMLFilePath());

@@ -127,12 +127,103 @@ var BakeLayerTest1 = BakeLayerBaseTest.extend({
     }
 });
 
+var BakeLayerTest2 = BakeLayerBaseTest.extend({
+    _bakeLayer: null,
+
+    title:function () {
+        return "Test 2. Bake Layer with other layer (Canvas only)";
+    },
+
+    subtitle: function () {
+        return "Changing top layer shouldn't increase draw call number";
+    },
+
+    ctor: function(){
+        this._super();
+
+        var winSize = cc.winSize;
+        var bakeItem = new cc.MenuItemFont("bake", this.onBake, this);
+        var unbakeItem = new cc.MenuItemFont("unbake", this.onUnbake, this);
+        var chTopItem = new cc.MenuItemFont("change top layer", this.onChangeZOrder, this);
+        var chBakeItem = new cc.MenuItemFont("change bake layer", this.onChangeBakeZOrder, this);
+        var menu = new cc.Menu(bakeItem, unbakeItem, chTopItem, chBakeItem);
+
+        menu.alignItemsVertically();
+        menu.x = winSize.width - 70;
+        menu.y = winSize.height - 120;
+        this.addChild(menu, 10);
+
+        var rootLayer = new cc.Layer();
+        rootLayer.setPosition(20,20);
+        this.addChild(rootLayer);
+
+        var bakeLayer = new cc.Layer();
+        bakeLayer.bake();
+        bakeLayer.setRotation(30);
+        rootLayer.addChild(bakeLayer);
+
+        for(var i = 0; i < 9; i++){
+            var sprite1 = new cc.Sprite(s_pathGrossini);
+            if (i % 2 === 0) {
+                sprite1.setPosition(50 + i * 30, winSize.height / 2 - 150);
+            } else {
+                sprite1.setPosition(50 + i * 30, winSize.height / 2 - 100);
+            }
+            if(i === 4)
+                this._actionSprite = sprite1;
+            sprite1.rotation = 360 * Math.random();
+            bakeLayer.addChild(sprite1);
+        }
+        this._bakeLayer = bakeLayer;
+
+        var normalLayer = new cc.Layer();
+        rootLayer.addChild(normalLayer);
+
+        for(var i = 0; i < 9; i++){
+            var sprite1 = new cc.Sprite(s_pathSister1);
+            if (i % 2 === 0) {
+                sprite1.setPosition(400 + i * 40, winSize.height / 2 - 50);
+            } else {
+                sprite1.setPosition(400 + i * 40, winSize.height / 2 + 50);
+            }
+            if(i === 4)
+                this._actionSprite = sprite1;
+            sprite1.rotation = 360 * Math.random();
+            normalLayer.addChild(sprite1);
+        }
+        this._normalLayer = normalLayer;
+
+        this.zOrder = 0;
+    },
+
+    onBake: function(){
+        this._bakeLayer.bake();
+    },
+
+    onUnbake: function(){
+        this._bakeLayer.unbake();
+    },
+
+    onChangeZOrder: function(){
+        this.zOrder++;
+        var childId = Math.floor(Math.random() * 9);
+        this._normalLayer.children[childId].setLocalZOrder(this.zOrder);
+        this._normalLayer.children[childId].rotation = 360 * Math.random();
+    },
+
+    onChangeBakeZOrder: function(){
+        this.zOrder++;
+        var childId = Math.floor(Math.random() * 9);
+        this._bakeLayer.children[childId].setLocalZOrder(this.zOrder);
+    }
+});
+
 var BakeLayerColorTest = BakeLayerBaseTest.extend({
     _bakeLayer: null,
     _actionSprite: null,
 
     title:function () {
-        return "Test 2. Bake Layer Gradient (Canvas only)";
+        return "Test 3. Bake Layer Gradient (Canvas only)";
     },
 
     ctor: function(){
@@ -210,6 +301,7 @@ var BakeLayerTestScene = TestScene.extend({
 //
 var arrayOfBakeLayerTest = [
     BakeLayerTest1,
+    BakeLayerTest2,
     BakeLayerColorTest
 ];
 

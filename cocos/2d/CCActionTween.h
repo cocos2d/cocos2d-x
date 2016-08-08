@@ -1,7 +1,7 @@
 /****************************************************************************
 Copyright (c) 2009      lhunath (Maarten Billemont)
 Copyright (c) 2010-2012 cocos2d-x.org
-CopyRight (c) 2013-2014 Chukong Technologies Inc.
+CopyRight (c) 2013-2016 Chukong Technologies Inc.
  
 http://www.cocos2d-x.org
 
@@ -42,7 +42,7 @@ NS_CC_BEGIN
         1. The node should be inherit from ActionTweenDelegate.
         2. Override the virtual method updateTweenAction in the node.
 
-        Then once you running ActionTween on the node, the method updateTweenAction will be incoked.
+        Then once you running ActionTween on the node, the method updateTweenAction will be invoked.
 */
 class CC_DLL ActionTweenDelegate
 {
@@ -98,7 +98,7 @@ public:
     void startWithTarget(Node *target) override;
     void update(float dt) override;
     ActionTween* reverse() const override;
-	ActionTween *clone() const override;
+    ActionTween *clone() const override;
     
 CC_CONSTRUCTOR_ACCESS:
     /** 

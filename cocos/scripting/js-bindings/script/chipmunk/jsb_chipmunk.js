@@ -145,6 +145,169 @@ cp.bb = function(l, b, r, t) {
 };
 
 //
+// BEGIN OF CHIPMUNK V6.2 COMPATIBILIY
+// Define them before the properties
+//
+
+// Body
+cp.Body.prototype.getVelAtWorldPoint = function(point) {
+        return this.getVelocityAtWorldPoint(point);
+}
+cp.Body.prototype.getVelAtLocalPoint = function(point) {
+        return this.getVelocityAtLocalPoint(point);
+}
+cp.Body.prototype.getVel = function() {
+        return this.getVelocity();
+}
+cp.Body.prototype.setVel = function(velocity) {
+        this.setVelocity(velocity);
+}
+cp.Body.prototype.getPos = function() {
+        return this.getPosition();
+}
+cp.Body.prototype.setPos = function(pos) {
+        this.setPosition(pos);
+}
+cp.Body.prototype.getRot = function() {
+        return this.getRotation();
+}
+cp.Body.prototype.getAngVel = function() {
+        return this.getAngularVelocity();
+}
+cp.Body.prototype.setAngVel = function(angularVelocity) {
+        this.setAngularVelocity(angularVelocity);
+}
+cp.Body.prototype.local2World = function(point) {
+        return this.localToWorld(point);
+}
+cp.Body.prototype.world2Local = function(point) {
+        return this.worldToLocal(point);
+}
+cp.Body.prototype.applyImpulse = function(j,r) {
+        this.applyImpulseAtWorldPoint(j,r);
+}
+cp.Body.prototype.applyForce = function(force, point) {
+        this.applyForceAtWorldPoint(force, point);
+}
+
+
+// Shapes
+cp.Shape.prototype.setLayers = function(layer) {
+        var filter = this.getFilter();
+        filter.mask = layer;
+        this.setFilter(filter);
+}
+cp.Shape.prototype.getLayers = function() {
+        var filter = this.getFilter();
+        return filter.mask;
+}
+cp.Shape.prototype.setGroup = function(group) {
+        var filter = this.getFilter();
+        filter.group = group;
+        this.setFilter(filter);
+}
+
+cp.Shape.prototype.getGroup = function() {
+        var filter = this.getFilter();
+        return filter.group;
+}
+
+cp.Shape.prototype.nearestPointQuery = function(p) {
+        return this.pointQuery(p);
+}
+cp.PolyShape.prototype.getNumVerts = function() {
+        return this.getCount();
+}
+
+// Space
+cp.Space.prototype.addStaticShape = function(shape) {
+        this.addShape(shape);
+}
+
+// Joints
+cp.PinJoint.prototype.getAnchr1 = function() {
+    return this.getAnchorA();
+};
+
+cp.PinJoint.prototype.getAnchr2 = function() {
+    return this.getAnchorB();
+};
+
+cp.SlideJoint.prototype.getAnchr1 = function() {
+    return this.getAnchorA();
+};
+
+cp.SlideJoint.prototype.getAnchr2 = function() {
+    return this.getAnchorB();
+};
+
+cp.PivotJoint.prototype.getAnchr1 = function() {
+    return this.getAnchorA();
+};
+
+cp.PivotJoint.prototype.getAnchr2 = function() {
+    return this.getAnchorB();
+};
+
+cp.GrooveJoint.prototype.getAnchr2 = function() {
+    return this.getAnchorB();
+};
+
+cp.DampedSpring.prototype.getAnchr1 = function() {
+    return this.getAnchorA();
+};
+
+cp.DampedSpring.prototype.getAnchr2 = function() {
+    return this.getAnchorB();
+};
+
+cp.Space.prototype.addStaticShape = function(shape) {
+    this.addShape(shape);
+};
+
+
+// END OF CHIPMUNK V6.2 COMPATIBILIY
+
+
+// Chipmunk v7.0 constants
+cp.SHAPE_FILTER_ALL = {
+        group:cp.NO_GROUP,
+        categories:cp.ALL_CATEGORIES,
+        mask:cp.ALL_CATEGORIES
+};
+
+cp.privateAPI = function() {
+        cc.log("Private API not exposed in Chipmunk v7.0");
+}
+
+// helpers for the properties. see below, in the properties section
+cp.Arbiter.prototype.getBodyA = function() {
+        return this.getBodies()[0];
+}
+cp.Arbiter.prototype.getBodyB = function() {
+        return this.getBodies()[1];
+}
+cp.Body.prototype.getVelocityX = function() {
+        return this.getVelocity().x;
+}
+cp.Body.prototype.getVelocityY = function() {
+        return this.getVelocity().y;
+}
+cp.Shape.prototype.getBBL = function() {
+        return this.getBB().l;
+}
+cp.Shape.prototype.getBBB = function() {
+        return this.getBB().b;
+}
+cp.Shape.prototype.getBBR = function() {
+        return this.getBB().r;
+}
+cp.Shape.prototype.getBBT = function() {
+        return this.getBB().t;
+}
+
+
+//
 // Some properties
 //
 var _proto = cp.Base.prototype;
@@ -268,6 +431,11 @@ cc.defineGetterSetter(_proto, "space", _proto.getSpace);
 cc.defineGetterSetter(_proto, "rot", _proto.getRot);
 cc.defineGetterSetter(_proto, "m", _proto.getMass, _proto.setMass);
 cc.defineGetterSetter(_proto, "i", _proto.getMoment, _proto.setMoment);
+cc.defineGetterSetter(_proto, "vx", _proto.getVelocityX);
+cc.defineGetterSetter(_proto, "vy", _proto.getVelocityY);
+cc.defineGetterSetter(_proto, "m_inv", cp.privateAPI);
+cc.defineGetterSetter(_proto, "i_inv", cp.privateAPI);
+
 
 // Shape properties
 _proto = cp.Shape.prototype;
@@ -280,6 +448,11 @@ cc.defineGetterSetter(_proto, "space", _proto.getSpace);
 cc.defineGetterSetter(_proto, "surface_v", _proto.getSurfaceVelocity, _proto.setSurfaceVelocity);
 cc.defineGetterSetter(_proto, "e", _proto.getElasticity, _proto.setElasticity);
 cc.defineGetterSetter(_proto, "u", _proto.getFriction, _proto.setFriction);
+cc.defineGetterSetter(_proto, "bb_l", _proto.getBBL, cp.privateAPI);
+cc.defineGetterSetter(_proto, "bb_b", _proto.getBBB, cp.privateAPI);
+cc.defineGetterSetter(_proto, "bb_r", _proto.getBBR, cp.privateAPI);
+cc.defineGetterSetter(_proto, "bb_t", _proto.getBBT, cp.privateAPI);
+
 _proto.cacheData = _proto.update;
 
 //CircleShape properties
@@ -295,10 +468,13 @@ cc.defineGetterSetter(_proto, "a", _proto.getA);
 cc.defineGetterSetter(_proto, "b", _proto.getB);
 cc.defineGetterSetter(_proto, "n", _proto.getNormal);
 cc.defineGetterSetter(_proto, "r", _proto.getRadius);
+cc.defineGetterSetter(_proto, "a_tangent", cp.privateAPI);
+cc.defineGetterSetter(_proto, "b_tangent", cp.privateAPI);
 
 //PolyShape properties
 _proto = cp.PolyShape.prototype;
 _proto.type = "poly";
+cc.defineGetterSetter(_proto, "verts", _proto.getVerts);
 
 // Constraint properties
 _proto = cp.Constraint.prototype;
@@ -372,5 +548,11 @@ _proto = cp.Arbiter.prototype;
 cc.defineGetterSetter(_proto, "e", _proto.getElasticity, _proto.setElasticity);
 cc.defineGetterSetter(_proto, "u", _proto.getFriction, _proto.setFriction);
 cc.defineGetterSetter(_proto, "surface_vr", _proto.getSurfaceVelocity, _proto.setSurfaceVelocity);
+// not auto-generated
+cc.defineGetterSetter(_proto, "a", _proto.getPointA);
+cc.defineGetterSetter(_proto, "b", _proto.getPointA);
+cc.defineGetterSetter(_proto, "body_a", _proto.getBodyA);
+cc.defineGetterSetter(_proto, "body_b", _proto.getBodyB);
 
 _proto = null;
+

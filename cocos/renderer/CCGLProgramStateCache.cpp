@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright 2013-2014 Chukong Technologies Inc.
+Copyright 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
  
@@ -81,7 +81,7 @@ void GLProgramStateCache::removeUnusedGLProgramState()
             CCLOG("cocos2d: GLProgramStateCache: removing unused GLProgramState");
 
             //value->release();
-            _glProgramStates.erase(it++);
+            it = _glProgramStates.erase(it);
         } else {
             ++it;
         }

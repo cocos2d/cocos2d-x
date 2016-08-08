@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -31,10 +31,10 @@ THE SOFTWARE.
 #include <android/log.h>
 #include <jni.h>
 #include "base/ccTypes.h"
-#include "jni/DPIJni.h"
-#include "jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
-#include "jni/JniHelper.h"
+#include "platform/android/jni/JniHelper.h"
 #include "platform/CCFileUtils.h"
+
+static const std::string helperClassName = "org/cocos2dx/lib/Cocos2dxHelper";
 
 NS_CC_BEGIN
 
@@ -43,7 +43,7 @@ int Device::getDPI()
     static int dpi = -1;
     if (dpi == -1)
     {
-        dpi = (int)getDPIJNI();
+        dpi = JniHelper::callStaticIntMethod(helperClassName, "getDPI");
     }
     return dpi;
 }
@@ -52,17 +52,17 @@ void Device::setAccelerometerEnabled(bool isEnabled)
 {
     if (isEnabled)
     {
-        enableAccelerometerJni();
+        JniHelper::callStaticVoidMethod(helperClassName, "enableAccelerometer");
     }
     else
     {
-        disableAccelerometerJni();
+        JniHelper::callStaticVoidMethod(helperClassName, "disableAccelerometer");
     }
 }
 
 void Device::setAccelerometerInterval(float interval)
 {
-    setAccelerometerIntervalJni(interval);
+    JniHelper::callStaticVoidMethod(helperClassName, "setAccelerometerInterval", interval);
 }
 
 class BitmapDC
@@ -88,7 +88,7 @@ public:
     {
            JniMethodInfo methodInfo;
            if (! JniHelper::getStaticMethodInfo(methodInfo, "org/cocos2dx/lib/Cocos2dxBitmap", "createTextBitmapShadowStroke",
-               "([BLjava/lang/String;IIIIIIIIZFFFFZIIIIF)Z"))
+               "([BLjava/lang/String;IIIIIIIIZFFFFZIIIIFZI)Z"))
            {
                CCLOG("%s %d: error to get methodInfo", __FILE__, __LINE__);
                return false;
@@ -96,13 +96,15 @@ public:
 
            // Do a full lookup for the font path using FileUtils in case the given font name is a relative path to a font file asset,
            // or the path has been mapped to a different location in the app package:
-           std::string fullPathOrFontName = FileUtils::getInstance()->fullPathForFilename(textDefinition._fontName);
-            
-           // If the path name returned includes the 'assets' dir then that needs to be removed, because the android.content.Context
-           // requires this portion of the path to be omitted for assets inside the app package.
-           if (fullPathOrFontName.find("assets/") == 0)
-           {
-               fullPathOrFontName = fullPathOrFontName.substr(strlen("assets/"));   // Chop out the 'assets/' portion of the path.
+           std::string fullPathOrFontName = textDefinition._fontName;
+           if(FileUtils::getInstance()->isFileExist(fullPathOrFontName)) {
+               fullPathOrFontName = FileUtils::getInstance()->fullPathForFilename(textDefinition._fontName);
+               // If the path name returned includes the 'assets' dir then that needs to be removed, because the android.content.Context
+               // requires this portion of the path to be omitted for assets inside the app package.
+               if (fullPathOrFontName.find("assets/") == 0)
+               {
+                   fullPathOrFontName = fullPathOrFontName.substr(strlen("assets/"));   // Chop out the 'assets/' portion of the path.
+               }
            }
 
            /**create bitmap
@@ -123,7 +125,8 @@ public:
                textDefinition._shadow._shadowEnabled, textDefinition._shadow._shadowOffset.width, -textDefinition._shadow._shadowOffset.height, 
                textDefinition._shadow._shadowBlur, textDefinition._shadow._shadowOpacity, 
                textDefinition._stroke._strokeEnabled, textDefinition._stroke._strokeColor.r, textDefinition._stroke._strokeColor.g, 
-               textDefinition._stroke._strokeColor.b, textDefinition._stroke._strokeAlpha, textDefinition._stroke._strokeSize))
+                                                       textDefinition._stroke._strokeColor.b, textDefinition._stroke._strokeAlpha, textDefinition._stroke._strokeSize,
+                                                       textDefinition._enableWrap, textDefinition._overflow))
            {
                 return false;
            }
@@ -170,12 +173,12 @@ Data Device::getTextureDataForText(const char * text, const FontDefinition& text
 
 void Device::setKeepScreenOn(bool value)
 {
-    setKeepScreenOnJni(value);
+    JniHelper::callStaticVoidMethod(helperClassName, "setKeepScreenOn", value);
 }
 
 void Device::vibrate(float duration)
 {
-    vibrateJni(duration);
+    JniHelper::callStaticVoidMethod(helperClassName, "vibrate", duration);
 }
 
 NS_CC_END

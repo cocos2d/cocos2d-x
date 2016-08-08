@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014-2015 Chukong Technologies Inc.
+ Copyright (c) 2014-2016 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -56,6 +56,8 @@ public:
      */
     enum Key
     {
+        KEY_NONE = 0,
+        
         JOYSTICK_LEFT_X = 1000,
         JOYSTICK_LEFT_Y,
         JOYSTICK_RIGHT_X,

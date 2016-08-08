@@ -24,16 +24,16 @@ THE SOFTWARE.
 
 package org.cocos2dx.lib;
 
-import java.lang.ref.WeakReference;
-
-import org.cocos2dx.lib.Cocos2dxVideoView.OnVideoEventListener;
-
 import android.graphics.Rect;
 import android.os.Handler;
 import android.os.Message;
 import android.util.SparseArray;
 import android.view.View;
 import android.widget.FrameLayout;
+
+import org.cocos2dx.lib.Cocos2dxVideoView.OnVideoEventListener;
+
+import java.lang.ref.WeakReference;
 
 public class Cocos2dxVideoHelper {
 

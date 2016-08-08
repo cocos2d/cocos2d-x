@@ -41,7 +41,11 @@
         },
 
         getNodeJson: function(json){
-            return json["Content"]["Content"]["ObjectData"];
+            var content = json["Content"];
+            if(content["ObjectData"])
+                return content["ObjectData"];
+
+            return content["Content"]["ObjectData"];
         },
 
         getClass: function(json){
@@ -156,6 +160,7 @@
         }
     };
 
+    var skyBoxBrushInstance = null;
     var getSkyboxRes = function(json, key) {
         if(json.hasOwnProperty(key) && json[key].hasOwnProperty("Path")) {
             return json[key]["Path"];
@@ -168,7 +173,7 @@
      * @param json
      * @returns {cc.Node}
      */
-    parser.initSingleNode = function(json){
+    parser.initSingleNode = function(json, resourcePath){
         var node = new cc.Node();
 
         this.generalAttributes(node, json);
@@ -176,23 +181,25 @@
         if(color != null)
             node.setColor(getColor(color));
 
-        if(json.hasOwnProperty("SkyBoxEnabled") && true == json["SkyBoxEnabled"])
+        if(json.hasOwnProperty("SkyBoxEnabled") && true == json["SkyBoxEnabled"]&&
+	json.hasOwnProperty("SkyBoxValid") && true == json["SkyBoxValid"])
         {
-            var leftFileData = getSkyboxRes(json, "LeftImage");
-            var rightFileData = getSkyboxRes(json, "RightImage");
-            var upFileData = getSkyboxRes(json, "UpImage");
-            var downFileData = getSkyboxRes(json, "DownImage");
-            var forwardFileData = getSkyboxRes(json, "ForwardImage");
-            var backFileData = getSkyboxRes(json, "BackImage");
-            var cameraFlag = json["SkyBoxMask"];
-            if(undefined === cameraFlag || isNaN(cameraFlag)) {
-                cameraFlag = 1024;
+            var leftFileData = resourcePath + getSkyboxRes(json, "LeftImage");
+            var rightFileData = resourcePath + getSkyboxRes(json, "RightImage");
+            var upFileData = resourcePath + getSkyboxRes(json, "UpImage");
+            var downFileData = resourcePath + getSkyboxRes(json, "DownImage");
+            var forwardFileData = resourcePath + getSkyboxRes(json, "ForwardImage");
+            var backFileData = resourcePath + getSkyboxRes(json, "BackImage");
+            var fileUtil = jsb.fileUtils;
+	    if(fileUtil.isFileExist(leftFileData)&&
+                fileUtil.isFileExist(rightFileData)&&
+                fileUtil.isFileExist(upFileData)&&
+                fileUtil.isFileExist(downFileData)&&
+                fileUtil.isFileExist(forwardFileData)&&
+                fileUtil.isFileExist(backFileData))
+            {
+                skyBoxBrushInstance = cc.CameraBackgroundSkyBoxBrush.create(leftFileData,rightFileData,upFileData,downFileData,forwardFileData,backFileData);
             }
-
-            var skyBox = new jsb.Skybox();
-            skyBox.init(leftFileData,rightFileData,upFileData,downFileData,forwardFileData,backFileData);
-            skyBox.setCameraMask(cameraFlag, false);
-            node.addChild(skyBox);
         }
 
         return node;
@@ -489,7 +496,7 @@
 
         this.widgetAttributes(widget, json);
 
-        var clipEnabled = json["ClipAble"];
+        var clipEnabled = json["ClipAble"] || false;
         if(clipEnabled != null)
             widget.setClippingEnabled(clipEnabled);
 
@@ -558,7 +565,7 @@
             widget.setFontSize(fontSize);
 
         var fontName = json["FontName"];
-        if(fontName != null)
+        if(fontName && "" !== fontName)
             widget.setFontName(fontName);
 
         var areaWidth = json["AreaWidth"];
@@ -594,7 +601,7 @@
         if(fontResource != null){
             var path = fontResource["Path"];
             //resoutceType = fontResource["Type"];
-            if(path != null){
+            if(path){
                 if (cc.sys.isNative) {
                     fontName = cc.path.join(cc.loader.resPath, resourcePath, path);
                 } else {
@@ -663,7 +670,7 @@
             widget.setTitleFontSize(fontSize);
 
         var fontName = json["FontName"];
-        if(fontName != null)
+        if(fontName && "" !== fontName)
             widget.setTitleFontName(fontName);
 
         var textColor = json["TextColor"];
@@ -678,7 +685,7 @@
         if(fontResource != null){
             var path = fontResource["Path"];
             //resoutceType = fontResource["Type"];
-            if(path != null){
+            if(path){
                 if (cc.sys.isNative) {
                     fontName = cc.path.join(cc.loader.resPath, resourcePath, path);
                 } else {
@@ -770,7 +777,7 @@
             widget.setBackGroundImage(path, type);
         });
 
-        var clipEnabled = json["ClipAble"];
+        var clipEnabled = json["ClipAble"] || false;
         widget.setClippingEnabled(clipEnabled);
 
         var colorType = getParam(json["ComboBoxIndex"], 0);
@@ -1126,7 +1133,7 @@
             widget.setFontSize(fontSize);
 
         var fontName = json["FontName"];
-        if(fontName != null)
+        if(fontName && "" !== fontName)
             widget.setFontName(fontName);
 
         var maxLengthEnabled = json["MaxLengthEnable"];
@@ -1147,7 +1154,7 @@
         if(fontResource != null){
             var path = fontResource["Path"];
             //resoutceType = fontResource["Type"];
-            if(path != null){
+            if(path){
                 if (cc.sys.isNative) {
                     fontName = cc.path.join(cc.loader.resPath, resourcePath, path);
                 } else {
@@ -1304,16 +1311,22 @@
             node.setDebugDrawLength(length);
 
         var blendFunc = json["BlendFunc"];
-        if(blendFunc)
+        if(blendFunc && blendFunc["Src"] !== undefined && blendFunc["Dst"] !== undefined)
             node.setBlendFunc(new cc.BlendFunc(blendFunc["Src"] || 0, blendFunc["Dst"] || 0));
 
         parser.generalAttributes(node, json);
+        var color = json["CColor"];
+        if(color && (color["R"] !== undefined || color["G"] !== undefined || color["B"] !== undefined))
+            node.setColor(getColor(color));
         return node;
     };
 
     parser.initSkeletonNode = function(json){
         var node = new ccs.SkeletonNode();
         parser.generalAttributes(node, json);
+        var color = json["CColor"];
+        if(color && (color["R"] !== undefined || color["G"] !== undefined || color["B"] !== undefined))
+            node.setColor(getColor(color));
         return node;
     };
 
@@ -1341,8 +1354,12 @@
                     cb(path, type);
                 else
                     cc.log("failed to get spriteFrame: %s", path);
-            }else
-                cb(resourcePath + path, type);
+            }else{
+                if(path && "" !== path && jsb.fileUtils.isFileExist(resourcePath + path))
+                    cb(resourcePath + path, type);
+                else
+                    cb("", type);
+            }
         }
     };
 
@@ -1429,7 +1446,7 @@
      * @param json
      * @returns {*}
      */
-    parser.initCamera = function(json){
+    parser.initCamera = function(json,resourcePath){
         var s = cc.winSize;
         var fov = json["Fov"] ? json["Fov"] : 60;
 
@@ -1490,21 +1507,34 @@
             node.setCameraFlag(cameraFlag);
         }
 
-        if(json.hasOwnProperty("SkyBoxEnabled") && true == json["SkyBoxEnabled"])
+	if(json.hasOwnProperty("SkyBoxEnabled") && true == json["SkyBoxEnabled"] &&
+            json.hasOwnProperty("SkyBoxValid") && true == json["SkyBoxValid"])
         {
-            var leftFileData = getSkyboxRes(json, "LeftImage");
-            var rightFileData = getSkyboxRes(json, "RightImage");
-            var upFileData = getSkyboxRes(json, "UpImage");
-            var downFileData = getSkyboxRes(json, "DownImage");
-            var forwardFileData = getSkyboxRes(json, "ForwardImage");
-            var backFileData = getSkyboxRes(json, "BackImage");
+            var leftFileData = resourcePath + getSkyboxRes(json, "LeftImage");
+            var rightFileData = resourcePath + getSkyboxRes(json, "RightImage");
+            var upFileData = resourcePath + getSkyboxRes(json, "UpImage");
+            var downFileData = resourcePath + getSkyboxRes(json, "DownImage");
+            var forwardFileData = resourcePath + getSkyboxRes(json, "ForwardImage");
+            var backFileData = resourcePath + getSkyboxRes(json, "BackImage");
 
-            var skyBox = new jsb.Skybox();
-            skyBox.init(leftFileData,rightFileData,upFileData,downFileData,forwardFileData,backFileData);
-            skyBox.setCameraMask(cameraFlag);
-            node.addChild(skyBox);
+            var fileUtil = jsb.fileUtils;
+            if(fileUtil.isFileExist(leftFileData)&&
+                fileUtil.isFileExist(rightFileData)&&
+                fileUtil.isFileExist(upFileData)&&
+                fileUtil.isFileExist(downFileData)&&
+                fileUtil.isFileExist(forwardFileData)&&
+                fileUtil.isFileExist(backFileData))
+            {
+                var innerBrush = cc.CameraBackgroundSkyBoxBrush.create(leftFileData,rightFileData,upFileData,downFileData,forwardFileData,backFileData);
+                node.setBackgroundBrush(innerBrush);
+            }
+            else
+                node.setBackgroundBrush(skyBoxBrushInstance);
         }
-
+	else if(skyBoxBrushInstance != null)
+	{
+		node.setBackgroundBrush(skyBoxBrushInstance);
+	}
         return node;
     };
 
@@ -1519,10 +1549,12 @@
         if(json["FileData"] && json["FileData"]["Path"])
             resFile = resourcePath + json["FileData"]["Path"];
 
-        var node;
-        if(resFile)
-            node = jsb.Sprite3D.create(resFile);
-        else
+        var node = null;
+        if(resFile) {
+            if(jsb.fileUtils.isFileExist(resFile))
+                node = jsb.Sprite3D.create(resFile);
+        }
+        if(null === node)
             node = jsb.Sprite3D.create();
 
         if(node) {
@@ -1534,6 +1566,44 @@
                     node.setColor(col);
             }
 
+            if(json.hasOwnProperty("IsFlipped") && true == json["IsFlipped"]) {
+                node.setCullFaceEnabled(true);
+                node.setCullFace(gl.FRONT);
+            }
+
+            if(json.hasOwnProperty("LightFlag")){
+                var lightFlagStr = json["LightFlag"];
+                var lightFlag = 0;
+                switch(lightFlagStr){
+                    case "LIGHT0":
+                        lightFlag = cc.LightFlag.LIGHT0; break;
+                    case "LIGHT1":
+                        lightFlag = cc.LightFlag.LIGHT1; break;
+                    case "LIGHT2":
+                        lightFlag = cc.LightFlag.LIGHT2; break;
+                    case "LIGHT3":
+                        lightFlag = cc.LightFlag.LIGHT3; break;
+                    case "LIGHT4":
+                        lightFlag = cc.LightFlag.LIGHT4; break;
+                    case "LIGHT5":
+                        lightFlag = cc.LightFlag.LIGHT5; break;
+                    case "LIGHT6":
+                        lightFlag = cc.LightFlag.LIGHT6; break;
+                    case "LIGHT7":
+                        lightFlag = cc.LightFlag.LIGHT7; break;
+                    case "LIGHT8":
+                        lightFlag = cc.LightFlag.LIGHT8; break;
+                    case "LIGHT9":
+                        lightFlag = cc.LightFlag.LIGHT9; break;
+                    case "LIGHT10":
+                        lightFlag = cc.LightFlag.LIGHT10; break;
+                    case "LIGHT11":
+                        lightFlag = cc.LightFlag.LIGHT11; break;
+                    case "LIGHT12":
+                        lightFlag = cc.LightFlag.LIGHT12; break;
+                }
+                node.setLightMask(lightFlag);
+            }
             var autoAction = getParam(json["RunAction3D"], false);
             if(autoAction && resFile){
                 var  animation = jsb.Animation3D.create(resFile, "");
@@ -1561,9 +1631,12 @@
         if(json["FileData"] && json["FileData"]["Path"])
             resFile = resourcePath+json["FileData"]["Path"];
 
-        if(resFile)
-            node = jsb.PUParticleSystem3D.create(resFile);
-        else
+        if(resFile){
+            if(jsb.fileUtils.isFileExist(resFile))
+                node = jsb.PUParticleSystem3D.create(resFile);
+        }
+
+        if(null === node)
             node = jsb.PUParticleSystem3D.create();
 
         if(node){
@@ -1571,6 +1644,95 @@
             node.startParticleSystem();
         }
 
+        return node;
+    };
+	
+	    /**
+     * Light3D
+     * @param json
+     * @param resourcePath
+     * @returns {*}
+     */
+    parser.initLight3D = function(json, resourcePath){
+        var node = new cc.Node();
+
+        var light = jsb.DirectionLight.create(cc.math.vec3(0, 0, 1), cc.color(255,255,255,255));
+        var flag = 0;
+        var intensity = 1;
+        var range = 5.0;
+        var outerAngle = 30.0;
+        var enabled = true;
+
+        if(json.hasOwnProperty("Intensity")){
+            intensity = json["Intensity"];
+        }
+        if(json.hasOwnProperty("Enable")){
+            enabled = json["Enable"];
+        }
+        if(json.hasOwnProperty("Range")){
+            range = json["Range"];
+        }
+        if(json.hasOwnProperty("OuterAngle")){
+            outerAngle = json["OuterAngle"] * 0.5;
+        }
+        if(json.hasOwnProperty("Flag")){
+            var lightFlagStr = json["Flag"];
+            switch(lightFlagStr){
+                case "LIGHT0":
+                    flag = cc.LightFlag.LIGHT0; break;
+                case "LIGHT1":
+                    flag = cc.LightFlag.LIGHT1; break;
+                case "LIGHT2":
+                    flag = cc.LightFlag.LIGHT2; break;
+                case "LIGHT3":
+                    flag = cc.LightFlag.LIGHT3; break;
+                case "LIGHT4":
+                    flag = cc.LightFlag.LIGHT4; break;
+                case "LIGHT5":
+                    flag = cc.LightFlag.LIGHT5; break;
+                case "LIGHT6":
+                    flag = cc.LightFlag.LIGHT6; break;
+                case "LIGHT7":
+                    flag = cc.LightFlag.LIGHT7; break;
+                case "LIGHT8":
+                    flag = cc.LightFlag.LIGHT8; break;
+                case "LIGHT9":
+                    flag = cc.LightFlag.LIGHT9; break;
+                case "LIGHT10":
+                    flag = cc.LightFlag.LIGHT10; break;
+                case "LIGHT11":
+                    flag = cc.LightFlag.LIGHT11; break;
+                case "LIGHT12":
+                    flag = cc.LightFlag.LIGHT12; break;
+            }
+        }
+        if(json.hasOwnProperty("Type")){
+            var type = json["Type"];
+            switch(type){
+                case "DIRECTIONAL":
+                    light = jsb.DirectionLight.create(cc.math.vec3(0, 0, 1), cc.color(255, 255, 255, 255)); break;
+                case "POINT":
+                    light = jsb.PointLight.create(cc.math.vec3(0, 0, 0), cc.color(255, 255, 255, 255), range); break;
+                case "SPOT":
+                    light = jsb.SpotLight.create(cc.math.vec3(0, 0, 1), cc.math.vec3(0, 0, 0), cc.color(255, 255, 255, 255), 0, cc.degreesToRadians(outerAngle), range); break;
+                case "AMBIENT":
+                    light = jsb.AmbientLight.create(cc.color(255,255,255,255)); break;
+            }
+        }
+
+        light.setIntensity(intensity);
+        light.setEnabled(enabled);
+        light.setLightFlag(flag);
+
+        node.addChild(light);
+        if(node)
+            this.general3DAttributes(node, json);
+
+        if(json["CColor"]) {
+            var col = getColor(json["CColor"]);
+            if(col && col.r !== 255 || col.g !== 255 || col.b !== 255)
+                node.setColor(col);
+        }
         return node;
     };
 
@@ -1605,7 +1767,8 @@
         {name: "Sprite3DObjectData", handle: parser.initSprite3D},
         {name: "Particle3DObjectData", handle: parser.initParticle3D},
         {name: "UserCameraObjectData", handle: parser.initCamera},
-        {name: "Node3DObjectData", handle: parser.initNode3D}
+        {name: "Node3DObjectData", handle: parser.initNode3D},
+        {name: "Light3DObjectData", handle: parser.initLight3D}
     ];
 
     register.forEach(function(item){
@@ -1618,7 +1781,7 @@
     });
 
 
-    load.registerParser("timeline", "2.*", parser);
+    load.registerParser("timeline", "*", parser);
 
 
 })(ccs._load, ccs._parser);

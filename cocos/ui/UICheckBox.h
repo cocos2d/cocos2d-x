@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -162,8 +162,8 @@ public:
     //override functions
     virtual std::string getDescription() const override;
     
+    virtual void onTouchEnded(Touch *touch, Event *unusedEvent) override;
 protected:
-    virtual void releaseUpEvent() override;
     
     virtual void dispatchSelectChangedEvent(bool selected) override;
     

@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -86,6 +86,10 @@ struct GLContextAttrs
 
 NS_CC_BEGIN
 
+class Scene;
+class Renderer;
+class VRIRenderer;
+
 /**
  * @addtogroup platform
  * @{
@@ -106,7 +110,10 @@ public:
      */
     virtual ~GLView();
 
-    /** Force destroying EGL view, subclass must implement this method. */
+    /** Force destroying EGL view, subclass must implement this method. 
+     *
+     * @lua endToLua
+     */
     virtual void end() = 0;
 
     /** Get whether opengl render system is ready, subclass must implement this method. */
@@ -313,6 +320,17 @@ public:
      * @param ys The points of y.
      */
     virtual void handleTouchesMove(int num, intptr_t ids[], float xs[], float ys[]);
+
+    /** Touch events are handled by default; if you want to customize your handlers, please override this function.
+     *
+     * @param num The number of touch.
+     * @param ids The identity of the touch.
+     * @param xs The points of x.
+     * @param ys The points of y.
+     * @param fs The force of 3d touches.
+     # @param ms The maximum force of 3d touches
+     */
+    virtual void handleTouchesMove(int num, intptr_t ids[], float xs[], float ys[], float fs[], float ms[]);
     
     /** Touch events are handled by default; if you want to customize your handlers, please override this function.
      *
@@ -373,7 +391,20 @@ public:
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     virtual id getCocoaWindow() = 0;
 #endif /* (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) */
-    
+
+    /**
+     * Renders a Scene with a Renderer
+     * This method is called directly by the Director
+     */
+    void renderScene(Scene* scene, Renderer* renderer);
+
+    /**
+     * Sets a VR renderer. 
+     * if `vrrenderer` is `nullptr` VR will be disabled
+     */
+    void setVR(VRIRenderer* vrrenderer);
+    VRIRenderer* getVR() const;
+
 protected:
     void updateDesignResolutionSize();
     
@@ -391,6 +422,9 @@ protected:
     float _scaleX;
     float _scaleY;
     ResolutionPolicy _resolutionPolicy;
+
+    // VR stuff
+    VRIRenderer* _vrImpl;
 };
 
 // end of platform group

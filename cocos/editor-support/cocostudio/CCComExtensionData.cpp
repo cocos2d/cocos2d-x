@@ -22,19 +22,20 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCComExtensionData.h"
-
-#include "cocostudio/ActionTimeline/CCActionTimeline.h"
-
+#include "editor-support/cocostudio/CCComExtensionData.h"
+#include "editor-support/cocostudio/ActionTimeline/CCActionTimeline.h"
 
 namespace cocostudio
 {
     IMPLEMENT_CLASS_COMPONENT_INFO(ComExtensionData)
+
+    const std::string ComExtensionData::COMPONENT_NAME = "ComExtensionData";
+
     ComExtensionData::ComExtensionData()
     : _customProperty("")
     , _timelineData(nullptr)
     {
-        _name = "ComExtensionData";
+        _name = COMPONENT_NAME;
     }
 
     ComExtensionData::~ComExtensionData()
@@ -80,7 +81,6 @@ namespace cocostudio
 
     void ComExtensionData::onRemove()
     {
-        CC_SAFE_RELEASE_NULL(_timelineData);
     }
 
     void ComExtensionData::setActionTag(int actionTag)
@@ -88,7 +88,7 @@ namespace cocostudio
         _timelineData->setActionTag(actionTag);
     }
     
-    const int ComExtensionData::getActionTag() const
+    int ComExtensionData::getActionTag() const
     {
         return _timelineData->getActionTag();
     }

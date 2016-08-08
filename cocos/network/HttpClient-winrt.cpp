@@ -1,7 +1,7 @@
 /****************************************************************************
 Copyright (c) 2012      greathqy
 Copyright (c) 2012      cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -24,7 +24,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "HttpClient.h"
+#include "platform/CCPlatformConfig.h"
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+
+#include "network/HttpClient.h"
 
 #include <thread>
 #include <queue>
@@ -37,7 +40,7 @@ THE SOFTWARE.
 #include "base/CCScheduler.h"
 
 #include "platform/CCFileUtils.h"
-#include "HttpConnection-winrt.h"
+#include "network/HttpConnection-winrt.h"
 
 NS_CC_BEGIN
 
@@ -75,7 +78,7 @@ namespace network {
 
     static void processHttpResponse(HttpResponse* response, std::string& errorStr);
 
-    static HttpRequest *s_requestSentinel = new HttpRequest;
+    static HttpRequest *s_requestSentinel = new (std::nothrow) HttpRequest;
 
     // Worker thread
     void HttpClient::networkThread()
@@ -364,3 +367,6 @@ namespace network {
     }
 
 NS_CC_END
+
+#endif // #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+

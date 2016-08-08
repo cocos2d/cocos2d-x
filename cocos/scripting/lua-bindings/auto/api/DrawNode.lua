@@ -119,7 +119,7 @@
 -- param origin The origin of the bezier path.<br>
 -- param control The control of the bezier path.<br>
 -- param destination The destination of the bezier path.<br>
--- param segments The The number of segments.<br>
+-- param segments The number of segments.<br>
 -- param color Set the quad bezier color.
 -- @function [parent=#DrawNode] drawQuadBezier 
 -- @param self
@@ -186,6 +186,12 @@
 -- @return DrawNode#DrawNode self (return value: cc.DrawNode)
         
 --------------------------------
+-- 
+-- @function [parent=#DrawNode] getLineWidth 
+-- @param self
+-- @return float#float ret (return value: float)
+        
+--------------------------------
 --  Draw a point.<br>
 -- param point A Vec2 used to point.<br>
 -- param pointSize The point size.<br>
@@ -204,7 +210,7 @@
 -- param control1 The first control of the bezier path.<br>
 -- param control2 The second control of the bezier path.<br>
 -- param destination The destination of the bezier path.<br>
--- param segments The The number of segments.<br>
+-- param segments The number of segments.<br>
 -- param color Set the cubic bezier color.
 -- @function [parent=#DrawNode] drawCubicBezier 
 -- @param self

@@ -23,7 +23,7 @@
         
 --------------------------------
 -- Removes a child from the container by tag value. It will also cleanup all running actions depending on the cleanup parameter.<br>
--- param tag       An interger number that identifies a child node.<br>
+-- param tag       An integer number that identifies a child node.<br>
 -- param cleanup   true if all running actions and callbacks on the child node will be cleanup, false otherwise.
 -- @function [parent=#ProtectedNode] removeProtectedChildByTag 
 -- @param self
@@ -43,7 +43,7 @@
         
 --------------------------------
 -- Removes all children from the container, and do a cleanup to all running actions depending on the cleanup parameter.<br>
--- param cleanup   true if all running actions on all children nodes should be cleanup, false oterwise.<br>
+-- param cleanup   true if all running actions on all children nodes should be cleanup, false otherwise.<br>
 -- js removeAllChildren<br>
 -- lua removeAllChildren
 -- @function [parent=#ProtectedNode] removeAllProtectedChildrenWithCleanup 
@@ -59,7 +59,7 @@
         
 --------------------------------
 -- Sorts the children array once before drawing, instead of every time when a child is added or reordered.<br>
--- This appraoch can improves the performance massively.<br>
+-- This approach can improves the performance massively.<br>
 -- note Don't call this manually unless a child added needs to be removed in the same frame
 -- @function [parent=#ProtectedNode] sortAllProtectedChildren 
 -- @param self

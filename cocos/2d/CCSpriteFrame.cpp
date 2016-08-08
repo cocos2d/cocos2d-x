@@ -2,7 +2,7 @@
 Copyright (c) 2008-2011 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -104,6 +104,7 @@ bool SpriteFrame::initWithTexture(Texture2D* texture, const Rect& rect, bool rot
     _originalSizeInPixels = originalSize;
     _originalSize = CC_SIZE_PIXELS_TO_POINTS( _originalSizeInPixels );
     _rotated = rotated;
+    _anchorPoint = Vec2(NAN, NAN);
 
     return true;
 }
@@ -119,6 +120,7 @@ bool SpriteFrame::initWithTextureFilename(const std::string& filename, const Rec
     _originalSizeInPixels = originalSize;
     _originalSize = CC_SIZE_PIXELS_TO_POINTS( _originalSizeInPixels );
     _rotated = rotated;
+    _anchorPoint = Vec2(NAN, NAN);
 
     return true;
 }
@@ -133,8 +135,9 @@ SpriteFrame* SpriteFrame::clone() const
 {
 	// no copy constructor	
     SpriteFrame *copy = new (std::nothrow) SpriteFrame();
-    copy->initWithTextureFilename(_textureFilename.c_str(), _rectInPixels, _rotated, _offsetInPixels, _originalSizeInPixels);
+    copy->initWithTextureFilename(_textureFilename, _rectInPixels, _rotated, _offsetInPixels, _originalSizeInPixels);
     copy->setTexture(_texture);
+    copy->setPolygonInfo(_polygonInfo);
     copy->autorelease();
     return copy;
 }
@@ -173,6 +176,21 @@ void SpriteFrame::setOffsetInPixels(const Vec2& offsetInPixels)
     _offset = CC_POINT_PIXELS_TO_POINTS( _offsetInPixels );
 }
 
+const Vec2& SpriteFrame::getAnchorPoint() const
+{
+    return _anchorPoint;
+}
+
+void SpriteFrame::setAnchorPoint(const Vec2& anchorPoint)
+{
+    _anchorPoint = anchorPoint;
+}
+
+bool SpriteFrame::hasAnchorPoint() const
+{
+    return !std::isnan(_anchorPoint.x);
+}
+
 void SpriteFrame::setTexture(Texture2D * texture)
 {
     if( _texture != texture ) {
@@ -188,11 +206,26 @@ Texture2D* SpriteFrame::getTexture()
         return _texture;
     }
 
-    if( _textureFilename.length() > 0 ) {
-        return Director::getInstance()->getTextureCache()->addImage(_textureFilename.c_str());
+    if( !_textureFilename.empty()) {
+        return Director::getInstance()->getTextureCache()->addImage(_textureFilename);
     }
     // no texture or texture filename
     return nullptr;
+}
+
+void SpriteFrame::setPolygonInfo(const PolygonInfo &polygonInfo)
+{
+    _polygonInfo = polygonInfo;
+}
+
+const PolygonInfo& SpriteFrame::getPolygonInfo() const
+{
+    return _polygonInfo;
+}
+
+bool SpriteFrame::hasPolygonInfo() const
+{
+    return _polygonInfo.triangles.vertCount != 0;
 }
 
 NS_CC_END

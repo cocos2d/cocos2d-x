@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -22,9 +22,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "cocostudio/CCBatchNode.h"
-#include "cocostudio/CCArmature.h"
-#include "cocostudio/CCSkin.h"
+#include "editor-support/cocostudio/CCBatchNode.h"
+#include "editor-support/cocostudio/CCArmature.h"
+#include "editor-support/cocostudio/CCSkin.h"
 
 #include "renderer/CCRenderer.h"
 #include "renderer/CCGroupCommand.h"

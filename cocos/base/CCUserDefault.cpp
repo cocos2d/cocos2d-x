@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -57,7 +57,7 @@ static tinyxml2::XMLElement* getXMLNodeForKey(const char* pKey, tinyxml2::XMLEle
 
     do 
     {
-         tinyxml2::XMLDocument* xmlDoc = new tinyxml2::XMLDocument();
+         tinyxml2::XMLDocument* xmlDoc = new (std::nothrow) tinyxml2::XMLDocument();
         *doc = xmlDoc;
 
         std::string xmlBuffer = FileUtils::getInstance()->getStringFromFile(UserDefault::getInstance()->getXMLFilePath());
@@ -394,7 +394,7 @@ void UserDefault::setDataForKey(const char* pKey, const Data& value) {
         return;
     }
 
-    char *encodedData = 0;
+    char *encodedData = nullptr;
     
     base64Encode(value.getBytes(), static_cast<unsigned int>(value.getSize()), &encodedData);
         
@@ -467,7 +467,7 @@ void UserDefault::initXMLFilePath()
 bool UserDefault::createXMLFile()
 {
     bool bRet = false;  
-    tinyxml2::XMLDocument *pDoc = new tinyxml2::XMLDocument(); 
+    tinyxml2::XMLDocument *pDoc = new (std::nothrow) tinyxml2::XMLDocument(); 
     if (nullptr==pDoc)  
     {  
         return false;  

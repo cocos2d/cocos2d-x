@@ -2,7 +2,7 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -54,17 +54,8 @@ public:
      * @memberof PolygonInfo
      * @return PolygonInfo object
      */
-    PolygonInfo():
-    isVertsOwner(true),
-    rect(cocos2d::Rect::ZERO),
-    filename("")
-    {
-        triangles.verts = nullptr;
-        triangles.indices = nullptr;
-        triangles.vertCount = 0;
-        triangles.indexCount = 0;
-    };
-    
+    PolygonInfo();
+
     /**
      * Create an polygoninfo from the data of another Polygoninfo
      * @param other     another PolygonInfo to be copied
@@ -85,32 +76,42 @@ public:
      * set the data to be a pointer to a quad
      * the member verts will not be released when this PolygonInfo destructs
      * as the verts memory are managed by other objects
-     * @param quad  a pointer to the V3F_C4B_T2F_Quad obje
+     * @param quad  a pointer to the V3F_C4B_T2F_Quad object
      */
     void setQuad(V3F_C4B_T2F_Quad *quad);
+
+    /**
+     * set the data to be a pointer to a triangles
+     * the member verts will not be released when this PolygonInfo destructs
+     * as the verts memory are managed by other objects
+     * @param triangles  a pointer to the TrianglesCommand::Triangles object
+     */
+    void setTriangles(const TrianglesCommand::Triangles& triangles);
 
     /**
      * get vertex count
      * @return number of vertices
      */
-    const unsigned int getVertCount() const;
+    unsigned int getVertCount() const;
     
     /**
      * get triangles count
      * @return number of triangles
      */
-    const unsigned int getTriaglesCount() const;
+    unsigned int getTrianglesCount() const;
+
+    /** @deprecated Use method getTrianglesCount() instead */
+    CC_DEPRECATED_ATTRIBUTE unsigned int getTriaglesCount() const;
     
     /**
      * get sum of all triangle area size
      * @return sum of all triangle area size
      */
-    const float getArea() const;
+    float getArea() const;
     
     Rect rect;
     std::string filename;
     TrianglesCommand::Triangles triangles;
-    
 protected:
     bool isVertsOwner;
     
@@ -144,18 +145,19 @@ public:
     /**
      * trace all the points along the outline of the image, 
      * @warning must create AutoPolygon with filename to use this function
-     * @param   rect    a texture rect for specify an area of the image, use Rect::Zero for the size of the image, default to Rect::Zero
+     * @param   rect    a texture rect for specify an area of the image
      * @param   threshold   the value when alpha is greater than this value will be counted as opaque, default to 0.0
      * @return  a vector of vec2 of all the points found in clockwise order
      * @code
      * auto ap = AutoPolygon("grossini.png");
-     * std::vector<Vec2> points = ap.trace();//default to size of the image and threshold 0.0
+     * auto rect = Rect(100, 100, 200, 200);
+     * std::vector<Vec2> points = ap.trace(rect);//default threshold is 0.0
      * @endcode
      */
      std::vector<Vec2> trace(const cocos2d::Rect& rect, const float& threshold = 0.0);
     
     /**
-     * reduce the ammount of points so its faster for GPU to process and draw
+     * reduce the amount of points so its faster for GPU to process and draw
      * based on Ramer-Douglas-Puecker algorithm
      * @param   points  a vector of Vec2 points as input
      * @param   rect    a texture rect for specify an area of the image to avoid over reduction
@@ -200,7 +202,7 @@ public:
      * @warning This method requires the AutoPolygon object to know the texture file dimension
      * @param   rect    a texture rect to specify where to map the UV
      * @param   verts   a pointer to the verts array, served both as input and output verts
-     * @param   count   the count for the verts arrac
+     * @param   count   the count for the verts array
      * @code
      * auto ap = AutoPolygon("grossini.png");
      * TrianglesCommand::Triangles myPolygons = ap.triangulate(myPoints);
@@ -249,7 +251,7 @@ protected:
     int getIndexFromPos(const unsigned int& x, const unsigned int& y){return y*_width+x;};
     cocos2d::Vec2 getPosFromIndex(const unsigned int& i){return cocos2d::Vec2(i%_width, i/_width);};
 
-    std::vector<cocos2d::Vec2> rdp(std::vector<cocos2d::Vec2> v, const float& optimization);
+    std::vector<cocos2d::Vec2> rdp(const std::vector<cocos2d::Vec2>& v, float optimization);
     float perpendicularDistance(const cocos2d::Vec2& i, const cocos2d::Vec2& start, const cocos2d::Vec2& end);
 
     //real rect is the size that is in scale with the texture file

@@ -129,7 +129,7 @@ protected:
     /** Returns the value for the given location. */
     float valueForLocation(Vec2 location);
 
-    //maunally put in the setters
+    //manually put in the setters
     /** Contains the receiver's current value. */
     CC_SYNTHESIZE_READONLY(float, _value, Value);
 

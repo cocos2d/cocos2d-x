@@ -23,14 +23,15 @@
     <ClCompile Include="..\auto\jsb_cocos2dx_studio_auto.cpp" />
     <ClCompile Include="..\auto\jsb_cocos2dx_ui_auto.cpp" />
     <ClCompile Include="..\manual\3d\jsb_cocos2dx_3d_manual.cpp" />
-    <ClCompile Include="..\manual\chipmunk\js_bindings_chipmunk_auto_classes.cpp" />
-    <ClCompile Include="..\manual\chipmunk\js_bindings_chipmunk_functions.cpp" />
+    <ClCompile Include="..\auto\js_bindings_chipmunk_auto_classes.cpp" />
+    <ClCompile Include="..\auto\js_bindings_chipmunk_functions.cpp" />
     <ClCompile Include="..\manual\chipmunk\js_bindings_chipmunk_manual.cpp" />
     <ClCompile Include="..\manual\chipmunk\js_bindings_chipmunk_registration.cpp" />
     <ClCompile Include="..\manual\cocos2d_specifics.cpp" />
     <ClCompile Include="..\manual\cocosbuilder\js_bindings_ccbreader.cpp" />
     <ClCompile Include="..\manual\cocostudio\jsb_cocos2dx_studio_conversions.cpp" />
     <ClCompile Include="..\manual\cocostudio\jsb_cocos2dx_studio_manual.cpp" />
+    <ClCompile Include="..\manual\component\CCComponentJS.cpp" />
     <ClCompile Include="..\manual\extension\jsb_cocos2dx_extension_manual.cpp" />
     <ClCompile Include="..\manual\jsb_event_dispatcher_manual.cpp" />
     <ClCompile Include="..\manual\jsb_opengl_functions.cpp" />
@@ -39,6 +40,7 @@
     <ClCompile Include="..\manual\js_bindings_core.cpp" />
     <ClCompile Include="..\manual\js_bindings_opengl.cpp" />
     <ClCompile Include="..\manual\js_manual_conversions.cpp" />
+    <ClCompile Include="..\manual\js_module_register.cpp" />
     <ClCompile Include="..\manual\localstorage\js_bindings_system_functions.cpp" />
     <ClCompile Include="..\manual\localstorage\js_bindings_system_registration.cpp" />
     <ClCompile Include="..\manual\navmesh\jsb_cocos2dx_navmesh_conversions.cpp" />
@@ -63,11 +65,11 @@
     <ClInclude Include="..\auto\jsb_cocos2dx_spine_auto.hpp" />
     <ClInclude Include="..\auto\jsb_cocos2dx_studio_auto.hpp" />
     <ClInclude Include="..\auto\jsb_cocos2dx_ui_auto.hpp" />
+    <ClInclude Include="..\auto\js_bindings_chipmunk_auto_classes.h" />
+    <ClInclude Include="..\auto\js_bindings_chipmunk_auto_classes_registration.h" />
+    <ClInclude Include="..\auto\js_bindings_chipmunk_functions.h" />
+    <ClInclude Include="..\auto\js_bindings_chipmunk_functions_registration.h" />
     <ClInclude Include="..\manual\3d\jsb_cocos2dx_3d_manual.h" />
-    <ClInclude Include="..\manual\chipmunk\js_bindings_chipmunk_auto_classes.h" />
-    <ClInclude Include="..\manual\chipmunk\js_bindings_chipmunk_auto_classes_registration.h" />
-    <ClInclude Include="..\manual\chipmunk\js_bindings_chipmunk_functions.h" />
-    <ClInclude Include="..\manual\chipmunk\js_bindings_chipmunk_functions_registration.h" />
     <ClInclude Include="..\manual\chipmunk\js_bindings_chipmunk_manual.h" />
     <ClInclude Include="..\manual\chipmunk\js_bindings_chipmunk_registration.h" />
     <ClInclude Include="..\manual\cocos2d_specifics.hpp" />
@@ -75,7 +77,9 @@
     <ClInclude Include="..\manual\cocosbuilder\js_bindings_ccbreader.h" />
     <ClInclude Include="..\manual\cocostudio\jsb_cocos2dx_studio_conversions.h" />
     <ClInclude Include="..\manual\cocostudio\jsb_cocos2dx_studio_manual.h" />
+    <ClInclude Include="..\manual\component\CCComponentJS.h" />
     <ClInclude Include="..\manual\extension\jsb_cocos2dx_extension_manual.h" />
+    <ClInclude Include="..\manual\js-BindingsExport.h" />
     <ClInclude Include="..\manual\jsb_event_dispatcher_manual.h" />
     <ClInclude Include="..\manual\jsb_helper.h" />
     <ClInclude Include="..\manual\jsb_opengl_functions.h" />
@@ -85,6 +89,7 @@
     <ClInclude Include="..\manual\js_bindings_core.h" />
     <ClInclude Include="..\manual\js_bindings_opengl.h" />
     <ClInclude Include="..\manual\js_manual_conversions.h" />
+    <ClInclude Include="..\manual\js_module_register.h" />
     <ClInclude Include="..\manual\localstorage\js_bindings_system_functions.h" />
     <ClInclude Include="..\manual\localstorage\js_bindings_system_functions_registration.h" />
     <ClInclude Include="..\manual\localstorage\js_bindings_system_registration.h" />
@@ -158,8 +163,8 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;_LIB;COCOS2D_DEBUG=1;XP_WIN;JS_HAVE___INTN;JS_INTPTR_TYPE=int;COCOS2D_JAVASCRIPT=1;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)..;$(EngineRoot);$(EngineRoot)cocos;$(EngineRoot)cocos\base;$(EngineRoot)cocos\3d;$(EngineRoot)cocos\2d;$(EngineRoot)cocos\navmesh;$(EngineRoot)cocos\physics3d;$(EngineRoot)cocos\ui;$(EngineRoot)cocos\storage;$(EngineRoot)cocos\editor-support\spine;$(EngineRoot)cocos\editor-support\cocosbuilder;$(EngineRoot)cocos\editor-support\cocostudio;$(EngineRoot)cocos\audio\include;$(EngineRoot)extensions;$(EngineRoot)external;$(ProjectDir)..\auto;$(ProjectDir)..\manual;$(ProjectDir)..\manual\cocostudio;$(ProjectDir)..\manual\navmesh;$(ProjectDir)..\manual\spine;$(ProjectDir)..\..\..\..\external\spidermonkey\include\win32;$(EngineRoot)external\chipmunk\include\chipmunk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;_LIB;COCOS2D_DEBUG=1;XP_WIN;JS_HAVE___INTN;JS_INTPTR_TYPE=int;COCOS2D_JAVASCRIPT=1;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_USRJSSTATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)..;$(EngineRoot);$(EngineRoot)cocos;$(EngineRoot)extensions;$(EngineRoot)external;$(ProjectDir)..\auto;$(ProjectDir)..\manual;$(ProjectDir)..\manual\cocostudio;$(ProjectDir)..\manual\navmesh;$(ProjectDir)..\manual\spine;$(ProjectDir)..\..\..\..\external\spidermonkey\include\win32;$(EngineRoot)external\chipmunk\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4068;4101;4800;4251;4244;4099;4083;4700;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <MinimalRebuild>false</MinimalRebuild>
@@ -184,8 +189,8 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\spidermonkey\prebuilt\win32\*.*" 
       <Optimization>MinSpace</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_LIB;XP_WIN;JS_HAVE___INTN;JS_INTPTR_TYPE=int;COCOS2D_JAVASCRIPT=1;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)..;$(EngineRoot);$(EngineRoot)cocos;$(EngineRoot)cocos\base;$(EngineRoot)cocos\3d;$(EngineRoot)cocos\2d;$(EngineRoot)cocos\physics3d;$(EngineRoot)cocos\ui;$(EngineRoot)cocos\navmesh;$(EngineRoot)cocos\storage;$(EngineRoot)cocos\editor-support\spine;$(EngineRoot)cocos\editor-support\cocosbuilder;$(EngineRoot)cocos\editor-support\cocostudio;$(EngineRoot)cocos\audio\include;$(EngineRoot)extensions;$(EngineRoot)external;$(ProjectDir)..\auto;$(ProjectDir)..\manual;$(ProjectDir)..\manual\cocostudio;$(ProjectDir)..\manual\navmesh;$(ProjectDir)..\manual\spine;$(ProjectDir)..\..\..\..\external\spidermonkey\include\win32;$(EngineRoot)external\chipmunk\include\chipmunk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_LIB;XP_WIN;JS_HAVE___INTN;JS_INTPTR_TYPE=int;COCOS2D_JAVASCRIPT=1;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_USRJSSTATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)..;$(EngineRoot);$(EngineRoot)cocos;$(EngineRoot)extensions;$(EngineRoot)external;$(ProjectDir)..\auto;$(ProjectDir)..\manual;$(ProjectDir)..\manual\cocostudio;$(ProjectDir)..\manual\navmesh;$(ProjectDir)..\manual\spine;$(ProjectDir)..\..\..\..\external\spidermonkey\include\win32;$(EngineRoot)external\chipmunk\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4068;4101;4800;4251;4244;4099;4083;4700;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <DebugInformationFormat>None</DebugInformationFormat>

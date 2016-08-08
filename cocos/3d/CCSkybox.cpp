@@ -31,9 +31,8 @@
 #include "renderer/CCGLProgramState.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCRenderState.h"
+#include "renderer/CCTextureCube.h"
 #include "3d/CCSkybox.h"
-#include "3d/CCTextureCube.h"
-
 #include "2d/CCCamera.h"
 
 NS_CC_BEGIN
@@ -148,6 +147,8 @@ void Skybox::draw(Renderer* renderer, const Mat4& transform, uint32_t flags)
 {
     _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(Skybox::onDraw, this, transform, flags);
+    _customCommand.setTransparent(false);
+    _customCommand.set3D(true);
     renderer->addCommand(&_customCommand);
 }
 
@@ -176,6 +177,9 @@ void Skybox::onDraw(const Mat4& transform, uint32_t flags)
 
     glCullFace(GL_BACK);
     RenderState::StateBlock::_defaultState->setCullFaceSide(RenderState::CULL_FACE_SIDE_BACK);
+    
+    glDisable(GL_BLEND);
+    RenderState::StateBlock::_defaultState->setBlend(false);
 
     if (Configuration::getInstance()->supportsShareableVAO())
     {

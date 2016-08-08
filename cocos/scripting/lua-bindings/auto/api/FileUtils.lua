@@ -52,7 +52,7 @@
         
 --------------------------------
 -- Sets the filenameLookup dictionary.<br>
--- param pFilenameLookupDict The dictionary for replacing filename.<br>
+-- param filenameLookupDict The dictionary for replacing filename.<br>
 -- since v2.1
 -- @function [parent=#FileUtils] setFilenameLookupDictionary 
 -- @param self
@@ -80,18 +80,15 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- Renames a file under the given directory.<br>
--- param path     The parent directory path of the file, it must be an absolute path.<br>
--- param oldname  The current name of the file.<br>
--- param name     The new name of the file.<br>
--- return True if the file have been renamed successfully, false if not.
--- @function [parent=#FileUtils] renameFile 
+-- @overload self, string, string         
+-- @overload self, string, string, string         
+-- @function [parent=#FileUtils] renameFile
 -- @param self
 -- @param #string path
 -- @param #string oldname
 -- @param #string name
 -- @return bool#bool ret (return value: bool)
-        
+
 --------------------------------
 -- Loads the filenameLookup dictionary from the contents of a filename.<br>
 -- note The plist file name should follow the format below:<br>
@@ -290,7 +287,7 @@
 --------------------------------
 -- Gets full path from a file name and the path of the relative file.<br>
 -- param filename The file name.<br>
--- param pszRelativeFile The path of the relative file.<br>
+-- param relativeFile The path of the relative file.<br>
 -- return The full path.<br>
 -- e.g. filename: hello.png, pszRelativeFile: /User/path1/path2/hello.plist<br>
 -- Return: /User/path1/path2/hello.pvr (If there a a key(hello.png)-value(hello.pvr) in FilenameLookup dictionary. )
@@ -303,7 +300,7 @@
 --------------------------------
 -- Windows fopen can't support UTF-8 filename<br>
 -- Need convert all parameters fopen and other 3rd-party libs<br>
--- param filename std::string name file for convertation from utf-8<br>
+-- param filenameUtf8 std::string name file for conversion from utf-8<br>
 -- return std::string ansi filename in current locale
 -- @function [parent=#FileUtils] getSuitableFOpen 
 -- @param self
@@ -320,6 +317,16 @@
 -- @param #map_table dict
 -- @param #string fullPath
 -- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- Gets filename extension is a suffix (separated from the base filename by a dot) in lower case.<br>
+-- Examples of filename extensions are .png, .jpeg, .exe, .dmg and .txt.<br>
+-- param filePath The path of the file, it could be a relative or absolute path.<br>
+-- return suffix for filename in lower case or empty if a dot not found.
+-- @function [parent=#FileUtils] getFileExtension 
+-- @param self
+-- @param #string filePath
+-- @return string#string ret (return value: string)
         
 --------------------------------
 -- Sets writable path.

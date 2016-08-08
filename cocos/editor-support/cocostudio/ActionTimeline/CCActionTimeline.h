@@ -25,25 +25,36 @@ THE SOFTWARE.
 #ifndef __CCTIMELINE_ACTION_H__
 #define __CCTIMELINE_ACTION_H__
 
-#include "CCTimeLine.h"
-#include "cocostudio/CocosStudioExport.h"
+#include "editor-support/cocostudio/ActionTimeline/CCTimeLine.h"
+#include "base/CCProtocols.h"
+#include "editor-support/cocostudio/CocosStudioExport.h"
 #include "2d/CCAction.h"
 
 NS_TIMELINE_BEGIN
 
-struct AnimationInfo
+typedef struct AnimationInfo
 {
-    AnimationInfo():startIndex(0),endIndex(0){}
-    AnimationInfo(const std::string& otherName, int otherStartIndex, int otherEndIndex)
-    :name(otherName),
-    startIndex(otherStartIndex),
-    endIndex(otherEndIndex)
+    AnimationInfo()
+        :startIndex(0)
+        ,endIndex(0)
     {
     }
+
+    AnimationInfo(const std::string& otherName, int otherStartIndex, int otherEndIndex)
+    :name(otherName)
+    ,startIndex(otherStartIndex)
+    ,endIndex(otherEndIndex)
+    {
+    }
+
     std::string name;
     int startIndex;
     int endIndex;
-};
+
+    //need set call back before clip added to ActionTimeline
+    // or see @ActionTimeline::setAnimationEndCallBack
+    std::function<void()> clipEndCallBack;
+} AnimationClip;
 
 class CC_STUDIO_DLL ActionTimelineData : public cocos2d::Ref
 {
@@ -60,7 +71,7 @@ protected:
 };
 
 
-class CC_STUDIO_DLL ActionTimeline : public cocos2d::Action
+class CC_STUDIO_DLL ActionTimeline : public cocos2d::Action, public cocos2d::PlayableProtocol
 {
 public:
     friend class Frame;
@@ -145,7 +156,12 @@ public:
     virtual void addAnimationInfo(const AnimationInfo& animationInfo);
     virtual void removeAnimationInfo(std::string animationName);
     virtual bool IsAnimationInfoExists(const std::string& animationName);
-    virtual AnimationInfo getAnimationInfo(const std::string& animationName);
+    virtual const AnimationInfo& getAnimationInfo(const std::string& animationName);
+    /**add a frame end call back to animation's end frame
+     * @param animationName  @addFrameEndCallFunc, make the animationName as funcKey
+     * @param func the callback function
+     */
+    virtual void setAnimationEndCallFunc(const std::string animationName, std::function<void()> func);
 
     /** Set ActionTimeline's frame event callback function */
     void setFrameEventCallFunc(std::function<void(Frame *)> listener);
@@ -154,6 +170,19 @@ public:
     /** Last frame callback will call when arriving last frame */
     void setLastFrameCallFunc(std::function<void()> listener);
     void clearLastFrameCallFunc();
+
+    /** add a callback function after played frameIndex
+     * @param frameIndex the frame index call back after
+     * @param funcKey for identity the callback function
+     * @param func the callback function
+     */
+    virtual void addFrameEndCallFunc(int frameIndex, const std::string& funcKey, std::function<void()> func);
+    // remove callback function after frameIndex which identified with funcKey
+    virtual void removeFrameEndCallFunc(int frameIndex, const std::string& funcKey);
+    // clear callback functions after frameIndex
+    virtual void removeFrameEndCallFuncs(int frameIndex);
+    // clear all the callback functions after frameIndexs in this actiontimeline
+    virtual void clearFrameEndCallFuncs();
 
     /** Inherit from Action. */
 
@@ -168,9 +197,19 @@ public:
     virtual void step(float delta) override; 
     virtual void startWithTarget(cocos2d::Node *target) override;  
     virtual bool isDone() const override { return false; }
+    
+    /// @{
+    /// @name implement Playable Protocol
+    virtual void start() override;
+    virtual void stop() override;
+    /// @} end of PlaybleProtocol
+
 protected:
     virtual void gotoFrame(int frameIndex);
     virtual void stepToFrame(int frameIndex);
+
+    // emit call back after frameIndex played
+    virtual void emitFrameEndCallFuncs(int frameIndex);
 
     /** emit frame event, call it when enter a frame*/
     virtual void emitFrameEvent(Frame* frame);
@@ -190,6 +229,7 @@ protected:
 
     std::function<void(Frame*)> _frameEventListener;
     std::function<void()> _lastFrameListener;
+    std::map<int, std::map<std::string, std::function<void()> > > _frameEndCallFuncs;
     std::map<std::string, AnimationInfo> _animationInfos;
 };
 

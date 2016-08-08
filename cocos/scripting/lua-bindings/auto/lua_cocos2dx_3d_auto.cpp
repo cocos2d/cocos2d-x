@@ -1,9 +1,8 @@
-#include "lua_cocos2dx_3d_auto.hpp"
+#include "scripting/lua-bindings/auto/lua_cocos2dx_3d_auto.hpp"
 #include "cocos2d.h"
-#include "CCBundle3D.h"
-#include "tolua_fix.h"
-#include "LuaBasicConversions.h"
-
+#include "3d/CCBundle3D.h"
+#include "scripting/lua-bindings/manual/tolua_fix.h"
+#include "scripting/lua-bindings/manual/LuaBasicConversions.h"
 
 int lua_cocos2dx_3d_Animation3D_initWithFile(lua_State* tolua_S)
 {
@@ -1134,6 +1133,209 @@ int lua_register_cocos2dx_3d_Animate3D(lua_State* tolua_S)
     return 1;
 }
 
+int lua_cocos2dx_3d_TextureCube_reloadTexture(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::TextureCube* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.TextureCube",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::TextureCube*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_3d_TextureCube_reloadTexture'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_3d_TextureCube_reloadTexture'", nullptr);
+            return 0;
+        }
+        bool ret = cobj->reloadTexture();
+        tolua_pushboolean(tolua_S,(bool)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.TextureCube:reloadTexture",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_3d_TextureCube_reloadTexture'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_3d_TextureCube_setTexParameters(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::TextureCube* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.TextureCube",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::TextureCube*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_3d_TextureCube_setTexParameters'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        cocos2d::Texture2D::TexParams arg0;
+
+        ok &= luaval_to_texparams(tolua_S, 2, &arg0, "cc.TextureCube:setTexParameters");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_3d_TextureCube_setTexParameters'", nullptr);
+            return 0;
+        }
+        cobj->setTexParameters(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.TextureCube:setTexParameters",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_3d_TextureCube_setTexParameters'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_3d_TextureCube_create(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"cc.TextureCube",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (argc == 6)
+    {
+        std::string arg0;
+        std::string arg1;
+        std::string arg2;
+        std::string arg3;
+        std::string arg4;
+        std::string arg5;
+        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "cc.TextureCube:create");
+        ok &= luaval_to_std_string(tolua_S, 3,&arg1, "cc.TextureCube:create");
+        ok &= luaval_to_std_string(tolua_S, 4,&arg2, "cc.TextureCube:create");
+        ok &= luaval_to_std_string(tolua_S, 5,&arg3, "cc.TextureCube:create");
+        ok &= luaval_to_std_string(tolua_S, 6,&arg4, "cc.TextureCube:create");
+        ok &= luaval_to_std_string(tolua_S, 7,&arg5, "cc.TextureCube:create");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_3d_TextureCube_create'", nullptr);
+            return 0;
+        }
+        cocos2d::TextureCube* ret = cocos2d::TextureCube::create(arg0, arg1, arg2, arg3, arg4, arg5);
+        object_to_luaval<cocos2d::TextureCube>(tolua_S, "cc.TextureCube",(cocos2d::TextureCube*)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "cc.TextureCube:create",argc, 6);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_3d_TextureCube_create'.",&tolua_err);
+#endif
+    return 0;
+}
+int lua_cocos2dx_3d_TextureCube_constructor(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::TextureCube* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_3d_TextureCube_constructor'", nullptr);
+            return 0;
+        }
+        cobj = new cocos2d::TextureCube();
+        cobj->autorelease();
+        int ID =  (int)cobj->_ID ;
+        int* luaID =  &cobj->_luaID ;
+        toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)cobj,"cc.TextureCube");
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.TextureCube:TextureCube",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_3d_TextureCube_constructor'.",&tolua_err);
+#endif
+
+    return 0;
+}
+
+static int lua_cocos2dx_3d_TextureCube_finalize(lua_State* tolua_S)
+{
+    printf("luabindings: finalizing LUA object (TextureCube)");
+    return 0;
+}
+
+int lua_register_cocos2dx_3d_TextureCube(lua_State* tolua_S)
+{
+    tolua_usertype(tolua_S,"cc.TextureCube");
+    tolua_cclass(tolua_S,"TextureCube","cc.TextureCube","cc.Texture2D",nullptr);
+
+    tolua_beginmodule(tolua_S,"TextureCube");
+        tolua_function(tolua_S,"new",lua_cocos2dx_3d_TextureCube_constructor);
+        tolua_function(tolua_S,"reloadTexture",lua_cocos2dx_3d_TextureCube_reloadTexture);
+        tolua_function(tolua_S,"setTexParameters",lua_cocos2dx_3d_TextureCube_setTexParameters);
+        tolua_function(tolua_S,"create", lua_cocos2dx_3d_TextureCube_create);
+    tolua_endmodule(tolua_S);
+    std::string typeName = typeid(cocos2d::TextureCube).name();
+    g_luaType[typeName] = "cc.TextureCube";
+    g_typeCast["TextureCube"] = "cc.TextureCube";
+    return 1;
+}
+
 int lua_cocos2dx_3d_AttachNode_create(lua_State* tolua_S)
 {
     int argc = 0;
@@ -1546,108 +1748,6 @@ int lua_register_cocos2dx_3d_BillBoard(lua_State* tolua_S)
     return 1;
 }
 
-int lua_cocos2dx_3d_Mesh_setTexture(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::Mesh* cobj = nullptr;
-    bool ok  = true;
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.Mesh",0,&tolua_err)) goto tolua_lerror;
-#endif
-    cobj = (cocos2d::Mesh*)tolua_tousertype(tolua_S,1,0);
-#if COCOS2D_DEBUG >= 1
-    if (!cobj)
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_3d_Mesh_setTexture'", nullptr);
-        return 0;
-    }
-#endif
-    argc = lua_gettop(tolua_S)-1;
-    do{
-        if (argc == 1) {
-            cocos2d::Texture2D* arg0;
-            ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0, "cc.Mesh:setTexture");
-
-            if (!ok) { break; }
-            cobj->setTexture(arg0);
-            lua_settop(tolua_S, 1);
-            return 1;
-        }
-    }while(0);
-    ok  = true;
-    do{
-        if (argc == 1) {
-            std::string arg0;
-            ok &= luaval_to_std_string(tolua_S, 2,&arg0, "cc.Mesh:setTexture");
-
-            if (!ok) { break; }
-            cobj->setTexture(arg0);
-            lua_settop(tolua_S, 1);
-            return 1;
-        }
-    }while(0);
-    ok  = true;
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n",  "cc.Mesh:setTexture",argc, 1);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_3d_Mesh_setTexture'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_3d_Mesh_getTexture(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::Mesh* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.Mesh",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::Mesh*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_3d_Mesh_getTexture'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_3d_Mesh_getTexture'", nullptr);
-            return 0;
-        }
-        cocos2d::Texture2D* ret = cobj->getTexture();
-        object_to_luaval<cocos2d::Texture2D>(tolua_S, "cc.Texture2D",(cocos2d::Texture2D*)ret);
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Mesh:getTexture",argc, 0);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_3d_Mesh_getTexture'.",&tolua_err);
-#endif
-
-    return 0;
-}
 int lua_cocos2dx_3d_Mesh_getMaterial(lua_State* tolua_S)
 {
     int argc = 0;
@@ -2545,8 +2645,6 @@ int lua_register_cocos2dx_3d_Mesh(lua_State* tolua_S)
 
     tolua_beginmodule(tolua_S,"Mesh");
         tolua_function(tolua_S,"new",lua_cocos2dx_3d_Mesh_constructor);
-        tolua_function(tolua_S,"setTexture",lua_cocos2dx_3d_Mesh_setTexture);
-        tolua_function(tolua_S,"getTexture",lua_cocos2dx_3d_Mesh_getTexture);
         tolua_function(tolua_S,"getMaterial",lua_cocos2dx_3d_Mesh_getMaterial);
         tolua_function(tolua_S,"getVertexSizeInBytes",lua_cocos2dx_3d_Mesh_getVertexSizeInBytes);
         tolua_function(tolua_S,"setMaterial",lua_cocos2dx_3d_Mesh_setMaterial);
@@ -3610,6 +3708,53 @@ int lua_cocos2dx_3d_Sprite3D_setCullFace(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_3d_Sprite3D_getMeshes(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Sprite3D* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Sprite3D",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Sprite3D*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_3d_Sprite3D_getMeshes'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_3d_Sprite3D_getMeshes'", nullptr);
+            return 0;
+        }
+        const cocos2d::Vector<cocos2d::Mesh *>& ret = cobj->getMeshes();
+        ccvector_to_luaval(tolua_S, ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Sprite3D:getMeshes",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_3d_Sprite3D_getMeshes'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_3d_Sprite3D_removeAllAttachNode(lua_State* tolua_S)
 {
     int argc = 0;
@@ -4154,6 +4299,67 @@ int lua_cocos2dx_3d_Sprite3D_setForce2DQueue(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_3d_Sprite3D_genMaterial(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Sprite3D* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Sprite3D",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Sprite3D*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_3d_Sprite3D_genMaterial'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_3d_Sprite3D_genMaterial'", nullptr);
+            return 0;
+        }
+        cobj->genMaterial();
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    if (argc == 1) 
+    {
+        bool arg0;
+
+        ok &= luaval_to_boolean(tolua_S, 2,&arg0, "cc.Sprite3D:genMaterial");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_3d_Sprite3D_genMaterial'", nullptr);
+            return 0;
+        }
+        cobj->genMaterial(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Sprite3D:genMaterial",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_3d_Sprite3D_genMaterial'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_3d_Sprite3D_removeAttachNode(lua_State* tolua_S)
 {
     int argc = 0;
@@ -4429,6 +4635,7 @@ int lua_register_cocos2dx_3d_Sprite3D(lua_State* tolua_S)
         tolua_function(tolua_S,"getLightMask",lua_cocos2dx_3d_Sprite3D_getLightMask);
         tolua_function(tolua_S,"getMaterial",lua_cocos2dx_3d_Sprite3D_getMaterial);
         tolua_function(tolua_S,"setCullFace",lua_cocos2dx_3d_Sprite3D_setCullFace);
+        tolua_function(tolua_S,"getMeshes",lua_cocos2dx_3d_Sprite3D_getMeshes);
         tolua_function(tolua_S,"removeAllAttachNode",lua_cocos2dx_3d_Sprite3D_removeAllAttachNode);
         tolua_function(tolua_S,"setMaterial",lua_cocos2dx_3d_Sprite3D_setMaterial);
         tolua_function(tolua_S,"getMesh",lua_cocos2dx_3d_Sprite3D_getMesh);
@@ -4440,6 +4647,7 @@ int lua_register_cocos2dx_3d_Sprite3D(lua_State* tolua_S)
         tolua_function(tolua_S,"getAttachNode",lua_cocos2dx_3d_Sprite3D_getAttachNode);
         tolua_function(tolua_S,"setBlendFunc",lua_cocos2dx_3d_Sprite3D_setBlendFunc);
         tolua_function(tolua_S,"setForce2DQueue",lua_cocos2dx_3d_Sprite3D_setForce2DQueue);
+        tolua_function(tolua_S,"genMaterial",lua_cocos2dx_3d_Sprite3D_genMaterial);
         tolua_function(tolua_S,"removeAttachNode",lua_cocos2dx_3d_Sprite3D_removeAttachNode);
         tolua_function(tolua_S,"getSkeleton",lua_cocos2dx_3d_Sprite3D_getSkeleton);
         tolua_function(tolua_S,"setForceDepthWrite",lua_cocos2dx_3d_Sprite3D_setForceDepthWrite);
@@ -4704,9 +4912,9 @@ int lua_cocos2dx_3d_Terrain_initHeightMap(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        const char* arg0;
+        std::string arg0;
 
-        std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp, "cc.Terrain:initHeightMap"); arg0 = arg0_tmp.c_str();
+        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "cc.Terrain:initHeightMap");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_3d_Terrain_initHeightMap'", nullptr);
@@ -4955,9 +5163,9 @@ int lua_cocos2dx_3d_Terrain_resetHeightMap(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        const char* arg0;
+        std::string arg0;
 
-        std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp, "cc.Terrain:resetHeightMap"); arg0 = arg0_tmp.c_str();
+        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "cc.Terrain:resetHeightMap");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_3d_Terrain_resetHeightMap'", nullptr);
@@ -5851,209 +6059,6 @@ int lua_register_cocos2dx_3d_Terrain(lua_State* tolua_S)
     std::string typeName = typeid(cocos2d::Terrain).name();
     g_luaType[typeName] = "cc.Terrain";
     g_typeCast["Terrain"] = "cc.Terrain";
-    return 1;
-}
-
-int lua_cocos2dx_3d_TextureCube_reloadTexture(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::TextureCube* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.TextureCube",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::TextureCube*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_3d_TextureCube_reloadTexture'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_3d_TextureCube_reloadTexture'", nullptr);
-            return 0;
-        }
-        bool ret = cobj->reloadTexture();
-        tolua_pushboolean(tolua_S,(bool)ret);
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.TextureCube:reloadTexture",argc, 0);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_3d_TextureCube_reloadTexture'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_3d_TextureCube_setTexParameters(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::TextureCube* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.TextureCube",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::TextureCube*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_3d_TextureCube_setTexParameters'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 1) 
-    {
-        cocos2d::Texture2D::TexParams arg0;
-
-        ok &= luaval_to_texparams(tolua_S, 2, &arg0, "cc.TextureCube:setTexParameters");
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_3d_TextureCube_setTexParameters'", nullptr);
-            return 0;
-        }
-        cobj->setTexParameters(arg0);
-        lua_settop(tolua_S, 1);
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.TextureCube:setTexParameters",argc, 1);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_3d_TextureCube_setTexParameters'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_3d_TextureCube_create(lua_State* tolua_S)
-{
-    int argc = 0;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertable(tolua_S,1,"cc.TextureCube",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    argc = lua_gettop(tolua_S) - 1;
-
-    if (argc == 6)
-    {
-        std::string arg0;
-        std::string arg1;
-        std::string arg2;
-        std::string arg3;
-        std::string arg4;
-        std::string arg5;
-        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "cc.TextureCube:create");
-        ok &= luaval_to_std_string(tolua_S, 3,&arg1, "cc.TextureCube:create");
-        ok &= luaval_to_std_string(tolua_S, 4,&arg2, "cc.TextureCube:create");
-        ok &= luaval_to_std_string(tolua_S, 5,&arg3, "cc.TextureCube:create");
-        ok &= luaval_to_std_string(tolua_S, 6,&arg4, "cc.TextureCube:create");
-        ok &= luaval_to_std_string(tolua_S, 7,&arg5, "cc.TextureCube:create");
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_3d_TextureCube_create'", nullptr);
-            return 0;
-        }
-        cocos2d::TextureCube* ret = cocos2d::TextureCube::create(arg0, arg1, arg2, arg3, arg4, arg5);
-        object_to_luaval<cocos2d::TextureCube>(tolua_S, "cc.TextureCube",(cocos2d::TextureCube*)ret);
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "cc.TextureCube:create",argc, 6);
-    return 0;
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_3d_TextureCube_create'.",&tolua_err);
-#endif
-    return 0;
-}
-int lua_cocos2dx_3d_TextureCube_constructor(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::TextureCube* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_3d_TextureCube_constructor'", nullptr);
-            return 0;
-        }
-        cobj = new cocos2d::TextureCube();
-        cobj->autorelease();
-        int ID =  (int)cobj->_ID ;
-        int* luaID =  &cobj->_luaID ;
-        toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)cobj,"cc.TextureCube");
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.TextureCube:TextureCube",argc, 0);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_3d_TextureCube_constructor'.",&tolua_err);
-#endif
-
-    return 0;
-}
-
-static int lua_cocos2dx_3d_TextureCube_finalize(lua_State* tolua_S)
-{
-    printf("luabindings: finalizing LUA object (TextureCube)");
-    return 0;
-}
-
-int lua_register_cocos2dx_3d_TextureCube(lua_State* tolua_S)
-{
-    tolua_usertype(tolua_S,"cc.TextureCube");
-    tolua_cclass(tolua_S,"TextureCube","cc.TextureCube","cc.Texture2D",nullptr);
-
-    tolua_beginmodule(tolua_S,"TextureCube");
-        tolua_function(tolua_S,"new",lua_cocos2dx_3d_TextureCube_constructor);
-        tolua_function(tolua_S,"reloadTexture",lua_cocos2dx_3d_TextureCube_reloadTexture);
-        tolua_function(tolua_S,"setTexParameters",lua_cocos2dx_3d_TextureCube_setTexParameters);
-        tolua_function(tolua_S,"create", lua_cocos2dx_3d_TextureCube_create);
-    tolua_endmodule(tolua_S);
-    std::string typeName = typeid(cocos2d::TextureCube).name();
-    g_luaType[typeName] = "cc.TextureCube";
-    g_typeCast["TextureCube"] = "cc.TextureCube";
     return 1;
 }
 

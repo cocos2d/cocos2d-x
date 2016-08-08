@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2013      Zynga Inc.
- Copyright (c) 2013-2015 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
 
@@ -36,7 +36,7 @@ FontCharMap * FontCharMap::create(const std::string& plistFile)
     std::string pathStr = FileUtils::getInstance()->fullPathForFilename(plistFile);
     std::string relPathStr = pathStr.substr(0, pathStr.find_last_of("/"))+"/";
 
-    ValueMap dict = FileUtils::getInstance()->getValueMapFromFile(pathStr.c_str());
+    ValueMap dict = FileUtils::getInstance()->getValueMapFromFile(pathStr);
 
     CCASSERT(dict["version"].asInt() == 1, "Unsupported version. Upgrade cocos2d version");
 

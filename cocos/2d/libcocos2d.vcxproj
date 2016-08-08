@@ -75,7 +75,7 @@
     </PreBuildEvent>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\include;$(EngineRoot)external\box2d;$(EngineRoot)external\sqlite3\include;$(EngineRoot)external\unzip;$(EngineRoot)external\edtaa3func;$(EngineRoot)external\tinyxml2;$(EngineRoot)external\png\include\win32;$(EngineRoot)external\jpeg\include\win32;$(EngineRoot)external\tiff\include\win32;$(EngineRoot)external\webp\include\win32;$(EngineRoot)external\freetype2\include\win32;$(EngineRoot)external\win32-specific\OpenalSoft\include;$(EngineRoot)external\win32-specific\MP3Decoder\include;$(EngineRoot)external\win32-specific\OggDecoder\include;$(EngineRoot)external\win32-specific\icon\include;$(EngineRoot)external\win32-specific\zlib\include;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)external\xxhash;$(EngineRoot)external\ConvertUTF;$(EngineRoot)external\curl\include\win32;$(EngineRoot)external\websockets\include\win32;$(EngineRoot)external\poly2tri\common;$(EngineRoot)external\poly2tri\sweep;$(EngineRoot)external\poly2tri;$(EngineRoot)external;$(EngineRoot)cocos;$(EngineRoot)cocos\editor-support;$(EngineRoot)cocos\audio\include;$(EngineRoot)extensions;$(EngineRoot);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\include;$(EngineRoot)external\box2d;$(EngineRoot)external\sqlite3\include;$(EngineRoot)external\unzip;$(EngineRoot)external\edtaa3func;$(EngineRoot)external\tinyxml2;$(EngineRoot)external\png\include\win32;$(EngineRoot)external\jpeg\include\win32;$(EngineRoot)external\tiff\include\win32;$(EngineRoot)external\webp\include\win32;$(EngineRoot)external\freetype2\include\win32;$(EngineRoot)external\win32-specific\OpenalSoft\include;$(EngineRoot)external\win32-specific\MP3Decoder\include;$(EngineRoot)external\win32-specific\OggDecoder\include;$(EngineRoot)external\win32-specific\icon\include;$(EngineRoot)external\win32-specific\zlib\include;$(EngineRoot)external\chipmunk\include;$(EngineRoot)external\xxhash;$(EngineRoot)external\ConvertUTF;$(EngineRoot)external\curl\include\win32;$(EngineRoot)external\websockets\include\win32;$(EngineRoot)external\poly2tri\common;$(EngineRoot)external\poly2tri\sweep;$(EngineRoot)external\poly2tri;$(EngineRoot)external;$(EngineRoot)cocos;$(EngineRoot)cocos\editor-support;$(EngineRoot)cocos\platform\win8.1-universal;$(EngineRoot)extensions;$(EngineRoot);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_USRDLL;_DEBUG;_WINDOWS;_LIB;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_USE3DDLL;_EXPORT_DLL_;_USRSTUDIODLL;_USREXDLL;_USEGUIDLL;CC_ENABLE_CHIPMUNK_INTEGRATION=1;PROTOBUF_USE_DLLS;LIBPROTOBUF_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -117,7 +117,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\debug-lib\*.*" 
       <ImportLibrary>$(TargetDir)$(TargetName).lib</ImportLibrary>
       <TargetMachine>MachineX86</TargetMachine>
       <ModuleDefinitionFile>cocos2d.def</ModuleDefinitionFile>
-      <AdditionalDependencies>sqlite3.lib;libcurl_imp.lib;websockets.lib;libmpg123.lib;libogg.lib;libvorbis.lib;libvorbisfile.lib;OpenAL32.lib;libbullet.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sqlite3.lib;libcurl_imp.lib;websockets.lib;libmpg123.lib;libogg.lib;libvorbis.lib;libvorbisfile.lib;OpenAL32.lib;libbullet.lib;version.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>
@@ -130,7 +130,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\debug-lib\*.*" 
       </Command>
     </PreBuildEvent>
     <ClCompile>
-      <AdditionalIncludeDirectories>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\include;$(EngineRoot)external\sqlite3\include;$(EngineRoot)external\unzip;$(EngineRoot)external\edtaa3func;$(EngineRoot)external\tinyxml2;$(EngineRoot)external\png\include\win32;$(EngineRoot)external\jpeg\include\win32;$(EngineRoot)external\tiff\include\win32;$(EngineRoot)external\webp\include\win32;$(EngineRoot)external\freetype2\include\win32;$(EngineRoot)external\win32-specific\MP3Decoder\include;$(EngineRoot)external\win32-specific\OggDecoder\include;$(EngineRoot)external\win32-specific\OpenalSoft\include;$(EngineRoot)external\win32-specific\icon\include;$(EngineRoot)external\win32-specific\zlib\include;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)external\xxhash;$(EngineRoot)external\ConvertUTF;$(EngineRoot)external\Box2d;$(EngineRoot)external\curl\include\win32;$(EngineRoot)external\websockets\include\win32\;$(EngineRoot)external\poly2tri\common;$(EngineRoot)external\poly2tri\sweep;$(EngineRoot)external\poly2tri;$(EngineRoot)external;$(EngineRoot)cocos;$(EngineRoot)cocos\editor-support;$(EngineRoot)cocos\audio\include;$(EngineRoot)extensions;$(EngineRoot);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\include;$(EngineRoot)external\sqlite3\include;$(EngineRoot)external\unzip;$(EngineRoot)external\edtaa3func;$(EngineRoot)external\tinyxml2;$(EngineRoot)external\png\include\win32;$(EngineRoot)external\jpeg\include\win32;$(EngineRoot)external\tiff\include\win32;$(EngineRoot)external\webp\include\win32;$(EngineRoot)external\freetype2\include\win32;$(EngineRoot)external\win32-specific\MP3Decoder\include;$(EngineRoot)external\win32-specific\OggDecoder\include;$(EngineRoot)external\win32-specific\OpenalSoft\include;$(EngineRoot)external\win32-specific\icon\include;$(EngineRoot)external\win32-specific\zlib\include;$(EngineRoot)external\chipmunk\include;$(EngineRoot)external\xxhash;$(EngineRoot)external\ConvertUTF;$(EngineRoot)external\Box2d;$(EngineRoot)external\curl\include\win32;$(EngineRoot)external\websockets\include\win32\;$(EngineRoot)external\poly2tri\common;$(EngineRoot)external\poly2tri\sweep;$(EngineRoot)external\poly2tri;$(EngineRoot)external;$(EngineRoot)cocos;$(EngineRoot)cocos\editor-support;$(EngineRoot)cocos\platform\win8.1-universal;$(EngineRoot)extensions;$(EngineRoot);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_USRDLL;NDEBUG;_WINDOWS;_LIB;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_USE3DDLL;_EXPORT_DLL_;_USRSTUDIODLL;_USREXDLL;_USEGUIDLL;CC_ENABLE_CHIPMUNK_INTEGRATION=1;PROTOBUF_USE_DLLS;LIBPROTOBUF_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <PrecompiledHeader>
@@ -164,7 +164,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
 </Command>
     </PreLinkEvent>
     <Link>
-      <AdditionalDependencies>sqlite3.lib;libcurl_imp.lib;websockets.lib;libmpg123.lib;libogg.lib;libvorbis.lib;libvorbisfile.lib;OpenAL32.lib;libbullet.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sqlite3.lib;libcurl_imp.lib;websockets.lib;libmpg123.lib;libogg.lib;libvorbis.lib;libvorbisfile.lib;OpenAL32.lib;libbullet.lib;version.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName).dll</OutputFile>
       <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>LIBCMTD.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
@@ -186,7 +186,6 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClCompile Include="..\..\extensions\assets-manager\AssetsManagerEx.cpp" />
     <ClCompile Include="..\..\extensions\assets-manager\CCEventAssetsManagerEx.cpp" />
     <ClCompile Include="..\..\extensions\assets-manager\CCEventListenerAssetsManagerEx.cpp" />
-    <ClCompile Include="..\..\extensions\assets-manager\Downloader.cpp" />
     <ClCompile Include="..\..\extensions\assets-manager\Manifest.cpp" />
     <ClCompile Include="..\..\extensions\GUI\CCControlExtension\CCControl.cpp" />
     <ClCompile Include="..\..\extensions\GUI\CCControlExtension\CCControlButton.cpp" />
@@ -387,6 +386,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClCompile Include="..\3d\CCMesh.cpp" />
     <ClCompile Include="..\3d\CCMeshSkin.cpp" />
     <ClCompile Include="..\3d\CCMeshVertexIndexData.cpp" />
+    <ClCompile Include="..\3d\CCMotionStreak3D.cpp" />
     <ClCompile Include="..\3d\CCOBB.cpp" />
     <ClCompile Include="..\3d\CCObjLoader.cpp" />
     <ClCompile Include="..\3d\CCPlane.cpp" />
@@ -396,7 +396,6 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClCompile Include="..\3d\CCSprite3D.cpp" />
     <ClCompile Include="..\3d\CCSprite3DMaterial.cpp" />
     <ClCompile Include="..\3d\CCTerrain.cpp" />
-    <ClCompile Include="..\3d\CCTextureCube.cpp" />
     <ClCompile Include="..\audio\AudioEngine.cpp" />
     <ClCompile Include="..\audio\win32\AudioCache.cpp" />
     <ClCompile Include="..\audio\win32\AudioEngine-win32.cpp" />
@@ -434,6 +433,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClCompile Include="..\base\ccFPSImages.c" />
     <ClCompile Include="..\base\CCIMEDispatcher.cpp" />
     <ClCompile Include="..\base\CCNinePatchImageParser.cpp" />
+    <ClCompile Include="..\base\CCStencilStateManager.cpp" />
     <ClCompile Include="..\base\CCNS.cpp" />
     <ClCompile Include="..\base\CCProfiling.cpp" />
     <ClCompile Include="..\base\CCProperties.cpp" />
@@ -526,6 +526,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClCompile Include="..\editor-support\cocostudio\CocoStudio.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\DictionaryHelper.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\FlatBuffersSerialize.cpp" />
+    <ClCompile Include="..\editor-support\cocostudio\LocalizationManager.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\TriggerBase.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\TriggerMng.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\TriggerObj.cpp" />
@@ -538,6 +539,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClCompile Include="..\editor-support\cocostudio\WidgetReader\GameNode3DReader\GameNode3DReader.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\WidgetReader\ImageViewReader\ImageViewReader.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\WidgetReader\LayoutReader\LayoutReader.cpp" />
+    <ClCompile Include="..\editor-support\cocostudio\WidgetReader\Light3DReader\Light3DReader.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\WidgetReader\ListViewReader\ListViewReader.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\WidgetReader\LoadingBarReader\LoadingBarReader.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\WidgetReader\NodeReaderDefine.cpp" />
@@ -552,6 +554,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClCompile Include="..\editor-support\cocostudio\WidgetReader\SkeletonReader\SkeletonNodeReader.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\WidgetReader\SliderReader\SliderReader.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\WidgetReader\SpriteReader\SpriteReader.cpp" />
+    <ClCompile Include="..\editor-support\cocostudio\WidgetReader\TabControlReader\TabControlReader.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\WidgetReader\TextAtlasReader\TextAtlasReader.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\WidgetReader\TextBMFontReader\TextBMFontReader.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\WidgetReader\TextFieldReader\TextFieldReader.cpp" />
@@ -576,6 +579,8 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClCompile Include="..\navmesh\CCNavMeshDebugDraw.cpp" />
     <ClCompile Include="..\navmesh\CCNavMeshObstacle.cpp" />
     <ClCompile Include="..\navmesh\CCNavMeshUtils.cpp" />
+    <ClCompile Include="..\network\CCDownloader-curl.cpp" />
+    <ClCompile Include="..\network\CCDownloader.cpp" />
     <ClCompile Include="..\network\HttpClient.cpp" />
     <ClCompile Include="..\network\SocketIO.cpp" />
     <ClCompile Include="..\network\WebSocket.cpp" />
@@ -603,6 +608,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClCompile Include="..\platform\win32\CCDevice-win32.cpp" />
     <ClCompile Include="..\platform\win32\CCFileUtils-win32.cpp" />
     <ClCompile Include="..\platform\win32\CCStdC-win32.cpp" />
+    <ClCompile Include="..\platform\win32\CCUtils-win32.cpp" />
     <ClCompile Include="..\renderer\CCBatchCommand.cpp" />
     <ClCompile Include="..\renderer\CCCustomCommand.cpp" />
     <ClCompile Include="..\renderer\CCFrameBuffer.cpp" />
@@ -626,6 +632,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClCompile Include="..\renderer\CCTexture2D.cpp" />
     <ClCompile Include="..\renderer\CCTextureAtlas.cpp" />
     <ClCompile Include="..\renderer\CCTextureCache.cpp" />
+    <ClCompile Include="..\renderer\CCTextureCube.cpp" />
     <ClCompile Include="..\renderer\CCTrianglesCommand.cpp" />
     <ClCompile Include="..\renderer\CCVertexAttribBinding.cpp" />
     <ClCompile Include="..\renderer\CCVertexIndexBuffer.cpp" />
@@ -649,12 +656,14 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClCompile Include="..\ui\UIListView.cpp" />
     <ClCompile Include="..\ui\UILoadingBar.cpp" />
     <ClCompile Include="..\ui\UIPageView.cpp" />
+    <ClCompile Include="..\ui\UIPageViewIndicator.cpp" />
     <ClCompile Include="..\ui\UIRelativeBox.cpp" />
     <ClCompile Include="..\ui\UIRichText.cpp" />
     <ClCompile Include="..\ui\UIScale9Sprite.cpp" />
     <ClCompile Include="..\ui\UIScrollView.cpp" />
     <ClCompile Include="..\ui\UIScrollViewBar.cpp" />
     <ClCompile Include="..\ui\UISlider.cpp" />
+    <ClCompile Include="..\ui\UITabControl.cpp" />
     <ClCompile Include="..\ui\UIText.cpp" />
     <ClCompile Include="..\ui\UITextAtlas.cpp" />
     <ClCompile Include="..\ui\UITextBMFont.cpp" />
@@ -662,6 +671,10 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClCompile Include="..\ui\UIVBox.cpp" />
     <ClCompile Include="..\ui\UIWebView.cpp" />
     <ClCompile Include="..\ui\UIWidget.cpp" />
+    <ClCompile Include="..\vr\CCVRDistortion.cpp" />
+    <ClCompile Include="..\vr\CCVRDistortionMesh.cpp" />
+    <ClCompile Include="..\vr\CCVRGenericHeadTracker.cpp" />
+    <ClCompile Include="..\vr\CCVRGenericRenderer.cpp" />
     <ClCompile Include="CCAction.cpp" />
     <ClCompile Include="CCActionCamera.cpp" />
     <ClCompile Include="CCActionCatmullRom.cpp" />
@@ -680,6 +693,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClCompile Include="CCAtlasNode.cpp" />
     <ClCompile Include="CCAutoPolygon.cpp" />
     <ClCompile Include="CCCamera.cpp" />
+    <ClCompile Include="CCCameraBackgroundBrush.cpp" />
     <ClCompile Include="CCClippingNode.cpp" />
     <ClCompile Include="CCClippingRectangleNode.cpp" />
     <ClCompile Include="CCComponent.cpp" />
@@ -688,7 +702,6 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClCompile Include="CCDrawNode.cpp" />
     <ClCompile Include="CCFastTMXLayer.cpp" />
     <ClCompile Include="CCFastTMXTiledMap.cpp" />
-    <ClCompile Include="CCFont.cpp" />
     <ClCompile Include="CCFontAtlas.cpp" />
     <ClCompile Include="CCFontAtlasCache.cpp" />
     <ClCompile Include="CCFontCharMap.cpp" />
@@ -738,7 +751,6 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="..\..\extensions\assets-manager\AssetsManagerEx.h" />
     <ClInclude Include="..\..\extensions\assets-manager\CCEventAssetsManagerEx.h" />
     <ClInclude Include="..\..\extensions\assets-manager\CCEventListenerAssetsManagerEx.h" />
-    <ClInclude Include="..\..\extensions\assets-manager\Downloader.h" />
     <ClInclude Include="..\..\extensions\assets-manager\Manifest.h" />
     <ClInclude Include="..\..\extensions\cocos-ext.h" />
     <ClInclude Include="..\..\extensions\ExtensionExport.h" />
@@ -952,6 +964,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="..\3d\CCMesh.h" />
     <ClInclude Include="..\3d\CCMeshSkin.h" />
     <ClInclude Include="..\3d\CCMeshVertexIndexData.h" />
+    <ClInclude Include="..\3d\CCMotionStreak3D.h" />
     <ClInclude Include="..\3d\CCOBB.h" />
     <ClInclude Include="..\3d\CCObjLoader.h" />
     <ClInclude Include="..\3d\CCPlane.h" />
@@ -961,7 +974,6 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="..\3d\CCSprite3D.h" />
     <ClInclude Include="..\3d\CCSprite3DMaterial.h" />
     <ClInclude Include="..\3d\CCTerrain.h" />
-    <ClInclude Include="..\3d\CCTextureCube.h" />
     <ClInclude Include="..\3d\cocos3d.h" />
     <ClInclude Include="..\audio\include\AudioEngine.h" />
     <ClInclude Include="..\audio\include\Export.h" />
@@ -1012,6 +1024,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="..\base\ccMacros.h" />
     <ClInclude Include="..\base\CCMap.h" />
     <ClInclude Include="..\base\CCNinePatchImageParser.h" />
+    <ClInclude Include="..\base\CCStencilStateManager.h" />
     <ClInclude Include="..\base\CCNS.h" />
     <ClInclude Include="..\base\CCProfiling.h" />
     <ClInclude Include="..\base\CCProperties.h" />
@@ -1120,10 +1133,12 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="..\editor-support\cocostudio\CocoLoader.h" />
     <ClInclude Include="..\editor-support\cocostudio\CocosStudioExport.h" />
     <ClInclude Include="..\editor-support\cocostudio\CocoStudio.h" />
+    <ClInclude Include="..\editor-support\cocostudio\CSLanguageDataBinary_generated.h" />
     <ClInclude Include="..\editor-support\cocostudio\CSParseBinary_generated.h" />
     <ClInclude Include="..\editor-support\cocostudio\CSParse3DBinary_generated.h" />
     <ClInclude Include="..\editor-support\cocostudio\DictionaryHelper.h" />
     <ClInclude Include="..\editor-support\cocostudio\FlatBuffersSerialize.h" />
+    <ClInclude Include="..\editor-support\cocostudio\LocalizationManager.h" />
     <ClInclude Include="..\editor-support\cocostudio\TriggerBase.h" />
     <ClInclude Include="..\editor-support\cocostudio\TriggerMng.h" />
     <ClInclude Include="..\editor-support\cocostudio\TriggerObj.h" />
@@ -1137,6 +1152,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="..\editor-support\cocostudio\WidgetReader\GameNode3DReader\GameNode3DReader.h" />
     <ClInclude Include="..\editor-support\cocostudio\WidgetReader\ImageViewReader\ImageViewReader.h" />
     <ClInclude Include="..\editor-support\cocostudio\WidgetReader\LayoutReader\LayoutReader.h" />
+    <ClInclude Include="..\editor-support\cocostudio\WidgetReader\Light3DReader\Light3DReader.h" />
     <ClInclude Include="..\editor-support\cocostudio\WidgetReader\ListViewReader\ListViewReader.h" />
     <ClInclude Include="..\editor-support\cocostudio\WidgetReader\LoadingBarReader\LoadingBarReader.h" />
     <ClInclude Include="..\editor-support\cocostudio\WidgetReader\NodeReaderDefine.h" />
@@ -1152,6 +1168,8 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="..\editor-support\cocostudio\WidgetReader\SkeletonReader\SkeletonNodeReader.h" />
     <ClInclude Include="..\editor-support\cocostudio\WidgetReader\SliderReader\SliderReader.h" />
     <ClInclude Include="..\editor-support\cocostudio\WidgetReader\SpriteReader\SpriteReader.h" />
+    <ClInclude Include="..\editor-support\cocostudio\WidgetReader\TabControlReader\CSTabControl_generated.h" />
+    <ClInclude Include="..\editor-support\cocostudio\WidgetReader\TabControlReader\TabControlReader.h" />
     <ClInclude Include="..\editor-support\cocostudio\WidgetReader\TextAtlasReader\TextAtlasReader.h" />
     <ClInclude Include="..\editor-support\cocostudio\WidgetReader\TextBMFontReader\TextBMFontReader.h" />
     <ClInclude Include="..\editor-support\cocostudio\WidgetReader\TextFieldReader\TextFieldReader.h" />
@@ -1179,6 +1197,10 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="..\navmesh\CCNavMeshDebugDraw.h" />
     <ClInclude Include="..\navmesh\CCNavMeshObstacle.h" />
     <ClInclude Include="..\navmesh\CCNavMeshUtils.h" />
+    <ClInclude Include="..\network\CCDownloader-curl.h" />
+    <ClInclude Include="..\network\CCDownloader.h" />
+    <ClInclude Include="..\network\CCDownloaderImpl.h" />
+    <ClInclude Include="..\network\CCIDownloaderImpl.h" />
     <ClInclude Include="..\network\HttpClient.h" />
     <ClInclude Include="..\network\HttpRequest.h" />
     <ClInclude Include="..\network\HttpResponse.h" />
@@ -1214,6 +1236,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="..\platform\win32\CCGL-win32.h" />
     <ClInclude Include="..\platform\win32\CCPlatformDefine-win32.h" />
     <ClInclude Include="..\platform\win32\CCStdC-win32.h" />
+    <ClInclude Include="..\platform\win32\CCUtils-win32.h" />
     <ClInclude Include="..\platform\win32\compat\stdint.h" />
     <ClInclude Include="..\renderer\CCBatchCommand.h" />
     <ClInclude Include="..\renderer\CCCustomCommand.h" />
@@ -1239,6 +1262,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="..\renderer\CCTexture2D.h" />
     <ClInclude Include="..\renderer\CCTextureAtlas.h" />
     <ClInclude Include="..\renderer\CCTextureCache.h" />
+    <ClInclude Include="..\renderer\CCTextureCube.h" />
     <ClInclude Include="..\renderer\CCTrianglesCommand.h" />
     <ClInclude Include="..\renderer\CCVertexAttribBinding.h" />
     <ClInclude Include="..\renderer\CCVertexIndexBuffer.h" />
@@ -1246,6 +1270,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="..\storage\local-storage\LocalStorage.h" />
     <ClInclude Include="..\ui\CocosGUI.h" />
     <ClInclude Include="..\ui\GUIExport.h" />
+    <ClInclude Include="..\ui\UIAbstractCheckButton.h" />
     <ClInclude Include="..\ui\UIButton.h" />
     <ClInclude Include="..\ui\UICheckBox.h" />
     <ClInclude Include="..\ui\UIDeprecated.h" />
@@ -1267,6 +1292,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="..\ui\UIScale9Sprite.h" />
     <ClInclude Include="..\ui\UIScrollView.h" />
     <ClInclude Include="..\ui\UISlider.h" />
+    <ClInclude Include="..\ui\UITabControl.h" />
     <ClInclude Include="..\ui\UIText.h" />
     <ClInclude Include="..\ui\UITextAtlas.h" />
     <ClInclude Include="..\ui\UITextBMFont.h" />
@@ -1275,6 +1301,11 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="..\ui\UIWebView-inl.h" />
     <ClInclude Include="..\ui\UIWebView.h" />
     <ClInclude Include="..\ui\UIWidget.h" />
+    <ClInclude Include="..\vr\CCVRDistortion.h" />
+    <ClInclude Include="..\vr\CCVRDistortionMesh.h" />
+    <ClInclude Include="..\vr\CCVRGenericHeadTracker.h" />
+    <ClInclude Include="..\vr\CCVRGenericRenderer.h" />
+    <ClInclude Include="..\vr\CCVRProtocol.h" />
     <ClInclude Include="CCAction.h" />
     <ClInclude Include="CCActionCamera.h" />
     <ClInclude Include="CCActionCatmullRom.h" />
@@ -1293,6 +1324,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="CCAtlasNode.h" />
     <ClInclude Include="CCAutoPolygon.h" />
     <ClInclude Include="CCCamera.h" />
+    <ClInclude Include="CCCameraBackgroundBrush.h" />
     <ClInclude Include="CCClippingNode.h" />
     <ClInclude Include="CCClippingRectangleNode.h" />
     <ClInclude Include="CCComponent.h" />
@@ -1313,7 +1345,6 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="CCLabel.h" />
     <ClInclude Include="CCLabelAtlas.h" />
     <ClInclude Include="CCLabelBMFont.h" />
-    <ClInclude Include="CCLabelTextFormatter.h" />
     <ClInclude Include="CCLabelTTF.h" />
     <ClInclude Include="CCLayer.h" />
     <ClInclude Include="CCLight.h" />

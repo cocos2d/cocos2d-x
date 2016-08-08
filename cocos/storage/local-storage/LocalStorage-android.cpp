@@ -28,7 +28,7 @@
  Works on cocos2d-iphone and cocos2d-x.
  */
 
-#include "LocalStorage.h"
+#include "storage/local-storage/LocalStorage.h"
 #include "platform/CCPlatformMacros.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
@@ -37,94 +37,78 @@
 #include <stdlib.h>
 #include <assert.h>
 #include "jni.h"
-#include "jni/JniHelper.h"
+#include "platform/android/jni/JniHelper.h"
 
 USING_NS_CC;
 static int _initialized = 0;
 
+static std::string className = "org/cocos2dx/lib/Cocos2dxLocalStorage";
+
 static void splitFilename (std::string& str)
 {
-	size_t found = 0;
-	found=str.find_last_of("/\\");
-	if (found != std::string::npos)
-	{
-		str = str.substr(found+1);
-	}
+    size_t found = 0;
+    found = str.find_last_of("/\\");
+    if (found != std::string::npos)
+    {
+        str = str.substr(found + 1);
+    }
 }
 
 void localStorageInit( const std::string& fullpath)
 {
-	if (fullpath.empty())
+    if (fullpath.empty())
         return;
 
-	if( ! _initialized )
+    if (!_initialized)
     {
-        JniMethodInfo t;
-
-        if (JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/Cocos2dxLocalStorage", "init", "(Ljava/lang/String;Ljava/lang/String;)Z")) {
-            std::string strDBFilename = fullpath;
-            splitFilename(strDBFilename);
-            jstring jdbName = t.env->NewStringUTF(strDBFilename.c_str());
-            jstring jtableName = t.env->NewStringUTF("data");
-            jboolean ret = t.env->CallStaticBooleanMethod(t.classID, t.methodID, jdbName, jtableName);
-            t.env->DeleteLocalRef(jdbName);
-            t.env->DeleteLocalRef(jtableName);
-            t.env->DeleteLocalRef(t.classID);
-            if (ret) {
-                _initialized = 1;
-            }
+        std::string strDBFilename = fullpath;
+        splitFilename(strDBFilename);
+        if (JniHelper::callStaticBooleanMethod(className, "init", strDBFilename, "data")) {
+            _initialized = 1;
         }
-	}
+    }
 }
 
 void localStorageFree()
 {
-	if( _initialized ) {
-		
-		JniMethodInfo t;
-        
-        if (JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/Cocos2dxLocalStorage", "destory", "()V"))
-        {
-            t.env->CallStaticVoidMethod(t.classID, t.methodID);
-        	t.env->DeleteLocalRef(t.classID); 
-        }
-        
-		_initialized = 0;
-	}
+    if (_initialized) {
+        JniHelper::callStaticVoidMethod(className, "destroy");
+        _initialized = 0;
+    }
 }
 
 /** sets an item in the LS */
 void localStorageSetItem( const std::string& key, const std::string& value)
 {
-	assert( _initialized );
-	
-    JniMethodInfo t;
-
-    if (JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/Cocos2dxLocalStorage", "setItem", "(Ljava/lang/String;Ljava/lang/String;)V")) {
-        jstring jkey = t.env->NewStringUTF(key.c_str());
-        jstring jvalue = t.env->NewStringUTF(value.c_str());
-        t.env->CallStaticVoidMethod(t.classID, t.methodID, jkey, jvalue);
-        t.env->DeleteLocalRef(jkey);
-        t.env->DeleteLocalRef(jvalue);
-        t.env->DeleteLocalRef(t.classID);
-    }
+    assert( _initialized );
+    JniHelper::callStaticVoidMethod(className, "setItem", key, value);
 }
 
 /** gets an item from the LS */
 bool localStorageGetItem( const std::string& key, std::string *outItem )
 {
-	assert( _initialized );
+    assert( _initialized );
     JniMethodInfo t;
 
     if (JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/Cocos2dxLocalStorage", "getItem", "(Ljava/lang/String;)Ljava/lang/String;"))
     {
         jstring jkey = t.env->NewStringUTF(key.c_str());
         jstring jret = (jstring)t.env->CallStaticObjectMethod(t.classID, t.methodID, jkey);
-        outItem->assign(JniHelper::jstring2string(jret));
-        t.env->DeleteLocalRef(jret);
-        t.env->DeleteLocalRef(jkey);
-        t.env->DeleteLocalRef(t.classID);
-        return true;
+        if (jret == nullptr)
+        {
+            t.env->DeleteLocalRef(jret);
+            t.env->DeleteLocalRef(jkey);
+            t.env->DeleteLocalRef(t.classID);
+            return false;
+        }
+        else 
+        {
+            outItem->assign(JniHelper::jstring2string(jret));
+            t.env->DeleteLocalRef(jret);
+            t.env->DeleteLocalRef(jkey);
+            t.env->DeleteLocalRef(t.classID);
+            return true;
+        }
     }
     else
     {
@@ -135,28 +119,15 @@ bool localStorageGetItem( const std::string& key, std::string *outItem )
 /** removes an item from the LS */
 void localStorageRemoveItem( const std::string& key )
 {
-	assert( _initialized );
-    JniMethodInfo t;
-
-    if (JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/Cocos2dxLocalStorage", "removeItem", "(Ljava/lang/String;)V")) {
-        jstring jkey = t.env->NewStringUTF(key.c_str());
-        t.env->CallStaticVoidMethod(t.classID, t.methodID, jkey);
-        t.env->DeleteLocalRef(jkey);
-        t.env->DeleteLocalRef(t.classID);
-    }
-
+    assert( _initialized );
+    JniHelper::callStaticVoidMethod(className, "removeItem", key);
 }
 
 /** removes all items from the LS */
 void localStorageClear()
 {
     assert( _initialized );
-    JniMethodInfo t;
-
-    if (JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/Cocos2dxLocalStorage", "clear", "()V")) {
-        t.env->CallStaticVoidMethod(t.classID, t.methodID);
-        t.env->DeleteLocalRef(t.classID);
-    }
+    JniHelper::callStaticVoidMethod(className, "clear");
 }
 
 #endif // #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)

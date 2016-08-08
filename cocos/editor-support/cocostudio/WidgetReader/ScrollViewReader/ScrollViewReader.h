@@ -25,8 +25,8 @@
 #ifndef __TestCpp__ScrollViewReader__
 #define __TestCpp__ScrollViewReader__
 
-#include "cocostudio/WidgetReader/LayoutReader/LayoutReader.h"
-#include "cocostudio/CocosStudioExport.h"
+#include "editor-support/cocostudio/WidgetReader/LayoutReader/LayoutReader.h"
+#include "editor-support/cocostudio/CocosStudioExport.h"
 
 namespace cocostudio
 {

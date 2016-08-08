@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -99,7 +99,7 @@ public:
 
     }
 
-    bool setFont(const char * pFontName = nullptr, int nSize = 0)
+    bool setFont(const char * pFontName = "", int nSize = 0)
     {
         bool bRet = false;
         do
@@ -110,12 +110,10 @@ public:
             LOGFONTA    tNewFont = {0};
             LOGFONTA    tOldFont = {0};
             GetObjectA(hDefFont, sizeof(tNewFont), &tNewFont);
-            if (fontName.c_str())
+            if (!fontName.empty())
             {
                 // create font from ttf file
-                int nFindttf = fontName.find(".ttf");
-                int nFindTTF = fontName.find(".TTF");
-                if (nFindttf >= 0 || nFindTTF >= 0)
+                if (FileUtils::getInstance()->getFileExtension(fontName) == ".ttf")
                 {
                     fontPath = FileUtils::getInstance()->fullPathForFilename(fontName.c_str());
                     int nFindPos = fontName.rfind("/");
@@ -245,7 +243,7 @@ public:
     int drawText(const char * pszText, SIZE& tSize, Device::TextAlign eAlign)
     {
         int nRet = 0;
-        wchar_t * pwszBuffer = 0;
+        wchar_t * pwszBuffer = nullptr;
         wchar_t* fixedText = nullptr;
         do
         {
@@ -466,7 +464,7 @@ Data Device::getTextureDataForText(const char * text, const FontDefinition& text
         width    = (short)size.cx;
         height   = (short)size.cy;
 
-        // copy pixed data
+        // copy pixel data
         bi.bmiHeader.biHeight = (bi.bmiHeader.biHeight > 0)
             ? - bi.bmiHeader.biHeight : bi.bmiHeader.biHeight;
         GetDIBits(dc.getDC(), dc.getBitmap(), 0, height, dataBuf,

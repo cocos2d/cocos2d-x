@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -23,8 +23,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "CCGLViewImpl-desktop.h"
+#include "platform/desktop/CCGLViewImpl-desktop.h"
 
+#include <cmath>
 #include <unordered_map>
 
 #include "platform/CCApplication.h"
@@ -186,7 +187,7 @@ static keyCodeItem g_keyCodeStructArray[] = {
 
     /* Function keys */
     { GLFW_KEY_ESCAPE          , EventKeyboard::KeyCode::KEY_ESCAPE        },
-    { GLFW_KEY_ENTER           , EventKeyboard::KeyCode::KEY_KP_ENTER      },
+    { GLFW_KEY_ENTER           , EventKeyboard::KeyCode::KEY_ENTER      },
     { GLFW_KEY_TAB             , EventKeyboard::KeyCode::KEY_TAB           },
     { GLFW_KEY_BACKSPACE       , EventKeyboard::KeyCode::KEY_BACKSPACE     },
     { GLFW_KEY_INSERT          , EventKeyboard::KeyCode::KEY_INSERT        },
@@ -195,9 +196,9 @@ static keyCodeItem g_keyCodeStructArray[] = {
     { GLFW_KEY_LEFT            , EventKeyboard::KeyCode::KEY_LEFT_ARROW    },
     { GLFW_KEY_DOWN            , EventKeyboard::KeyCode::KEY_DOWN_ARROW    },
     { GLFW_KEY_UP              , EventKeyboard::KeyCode::KEY_UP_ARROW      },
-    { GLFW_KEY_PAGE_UP         , EventKeyboard::KeyCode::KEY_KP_PG_UP      },
-    { GLFW_KEY_PAGE_DOWN       , EventKeyboard::KeyCode::KEY_KP_PG_DOWN    },
-    { GLFW_KEY_HOME            , EventKeyboard::KeyCode::KEY_KP_HOME       },
+    { GLFW_KEY_PAGE_UP         , EventKeyboard::KeyCode::KEY_PG_UP      },
+    { GLFW_KEY_PAGE_DOWN       , EventKeyboard::KeyCode::KEY_PG_DOWN    },
+    { GLFW_KEY_HOME            , EventKeyboard::KeyCode::KEY_HOME       },
     { GLFW_KEY_END             , EventKeyboard::KeyCode::KEY_END           },
     { GLFW_KEY_CAPS_LOCK       , EventKeyboard::KeyCode::KEY_CAPS_LOCK     },
     { GLFW_KEY_SCROLL_LOCK     , EventKeyboard::KeyCode::KEY_SCROLL_LOCK   },
@@ -263,7 +264,7 @@ static keyCodeItem g_keyCodeStructArray[] = {
 //////////////////////////////////////////////////////////////////////////
 
 
-GLViewImpl::GLViewImpl()
+GLViewImpl::GLViewImpl(bool initglfw)
 : _captured(false)
 , _supportTouch(false)
 , _isInRetinaMonitor(false)
@@ -283,9 +284,11 @@ GLViewImpl::GLViewImpl()
     }
 
     GLFWEventHandler::setGLViewImpl(this);
-
-    glfwSetErrorCallback(GLFWEventHandler::onGLFWError);
-    glfwInit();
+    if (initglfw)
+    {
+        glfwSetErrorCallback(GLFWEventHandler::onGLFWError);
+        glfwInit();
+    }
 }
 
 GLViewImpl::~GLViewImpl()
@@ -297,23 +300,28 @@ GLViewImpl::~GLViewImpl()
 
 GLViewImpl* GLViewImpl::create(const std::string& viewName)
 {
+    return GLViewImpl::create(viewName, false);
+}
+
+GLViewImpl* GLViewImpl::create(const std::string& viewName, bool resizable)
+{
     auto ret = new (std::nothrow) GLViewImpl;
-    if(ret && ret->initWithRect(viewName, Rect(0, 0, 960, 640), 1)) {
+    if(ret && ret->initWithRect(viewName, Rect(0, 0, 960, 640), 1.0f, resizable)) {
         ret->autorelease();
         return ret;
     }
-
+    CC_SAFE_DELETE(ret);
     return nullptr;
 }
 
-GLViewImpl* GLViewImpl::createWithRect(const std::string& viewName, Rect rect, float frameZoomFactor)
+GLViewImpl* GLViewImpl::createWithRect(const std::string& viewName, Rect rect, float frameZoomFactor, bool resizable)
 {
     auto ret = new (std::nothrow) GLViewImpl;
-    if(ret && ret->initWithRect(viewName, rect, frameZoomFactor)) {
+    if(ret && ret->initWithRect(viewName, rect, frameZoomFactor, resizable)) {
         ret->autorelease();
         return ret;
     }
-
+    CC_SAFE_DELETE(ret);
     return nullptr;
 }
 
@@ -324,7 +332,7 @@ GLViewImpl* GLViewImpl::createWithFullScreen(const std::string& viewName)
         ret->autorelease();
         return ret;
     }
-
+    CC_SAFE_DELETE(ret);
     return nullptr;
 }
 
@@ -335,17 +343,17 @@ GLViewImpl* GLViewImpl::createWithFullScreen(const std::string& viewName, const 
         ret->autorelease();
         return ret;
     }
-    
+    CC_SAFE_DELETE(ret);
     return nullptr;
 }
 
-bool GLViewImpl::initWithRect(const std::string& viewName, Rect rect, float frameZoomFactor)
+bool GLViewImpl::initWithRect(const std::string& viewName, Rect rect, float frameZoomFactor, bool resizable)
 {
     setViewName(viewName);
 
     _frameZoomFactor = frameZoomFactor;
 
-    glfwWindowHint(GLFW_RESIZABLE,GL_FALSE);
+    glfwWindowHint(GLFW_RESIZABLE,resizable?GL_TRUE:GL_FALSE);
     glfwWindowHint(GLFW_RED_BITS,_glContextAttrs.redBits);
     glfwWindowHint(GLFW_GREEN_BITS,_glContextAttrs.greenBits);
     glfwWindowHint(GLFW_BLUE_BITS,_glContextAttrs.blueBits);
@@ -353,10 +361,23 @@ bool GLViewImpl::initWithRect(const std::string& viewName, Rect rect, float fram
     glfwWindowHint(GLFW_DEPTH_BITS,_glContextAttrs.depthBits);
     glfwWindowHint(GLFW_STENCIL_BITS,_glContextAttrs.stencilBits);
 
-    int needWidth = rect.size.width * _frameZoomFactor;
-    int neeHeight = rect.size.height * _frameZoomFactor;
+    int neededWidth = rect.size.width * _frameZoomFactor;
+    int neededHeight = rect.size.height * _frameZoomFactor;
 
-    _mainWindow = glfwCreateWindow(needWidth, neeHeight, _viewName.c_str(), _monitor, nullptr);
+    _mainWindow = glfwCreateWindow(neededWidth, neededHeight, _viewName.c_str(), _monitor, nullptr);
+
+    if (_mainWindow == nullptr)
+    {
+        std::string message = "Can't create window";
+        if (!_glfwError.empty())
+        {
+            message.append("\nMore info: \n");
+            message.append(_glfwError);
+        }
+
+        MessageBox(message.c_str(), "Error launch application");
+        return false;
+    }
 
     /*
     *  Note that the created window and context may differ from what you requested,
@@ -370,11 +391,11 @@ bool GLViewImpl::initWithRect(const std::string& viewName, Rect rect, float fram
     */
     int realW = 0, realH = 0;
     glfwGetWindowSize(_mainWindow, &realW, &realH);
-    if (realW != needWidth)
+    if (realW != neededWidth)
     {
         rect.size.width = realW / _frameZoomFactor;
     }
-    if (realH != neeHeight)
+    if (realH != neededHeight)
     {
         rect.size.height = realH / _frameZoomFactor;
     }
@@ -411,6 +432,9 @@ bool GLViewImpl::initWithRect(const std::string& viewName, Rect rect, float fram
     // Enable point size by default.
     glEnable(GL_VERTEX_PROGRAM_POINT_SIZE);
 
+//    // GLFW v3.2 no longer emits "onGLFWWindowSizeFunCallback" at creation time. Force default viewport:
+//    setViewPortInPoints(0, 0, neededWidth, neededHeight);
+//
     return true;
 }
 
@@ -422,7 +446,7 @@ bool GLViewImpl::initWithFullScreen(const std::string& viewName)
         return false;
 
     const GLFWvidmode* videoMode = glfwGetVideoMode(_monitor);
-    return initWithRect(viewName, Rect(0, 0, videoMode->width, videoMode->height), 1.0f);
+    return initWithRect(viewName, Rect(0, 0, videoMode->width, videoMode->height), 1.0f, false);
 }
 
 bool GLViewImpl::initWithFullscreen(const std::string &viewname, const GLFWvidmode &videoMode, GLFWmonitor *monitor)
@@ -432,13 +456,13 @@ bool GLViewImpl::initWithFullscreen(const std::string &viewname, const GLFWvidmo
     if (nullptr == _monitor)
         return false;
     
-    //These are soft contraints. If the video mode is retrieved at runtime, the resulting window and context should match these exactly. If invalid attribs are passed (eg. from an outdated cache), window creation will NOT fail but the actual window/context may differ.
+    //These are soft constraints. If the video mode is retrieved at runtime, the resulting window and context should match these exactly. If invalid attribs are passed (eg. from an outdated cache), window creation will NOT fail but the actual window/context may differ.
     glfwWindowHint(GLFW_REFRESH_RATE, videoMode.refreshRate);
     glfwWindowHint(GLFW_RED_BITS, videoMode.redBits);
     glfwWindowHint(GLFW_BLUE_BITS, videoMode.blueBits);
     glfwWindowHint(GLFW_GREEN_BITS, videoMode.greenBits);
     
-    return initWithRect(viewname, Rect(0, 0, videoMode.width, videoMode.height), 1.0f);
+    return initWithRect(viewname, Rect(0, 0, videoMode.width, videoMode.height), 1.0f, false);
 }
 
 bool GLViewImpl::isOpenGLReady()
@@ -513,7 +537,7 @@ void GLViewImpl::setFrameZoomFactor(float zoomFactor)
 {
     CCASSERT(zoomFactor > 0.0f, "zoomFactor must be larger than 0");
 
-    if (fabs(_frameZoomFactor - zoomFactor) < FLT_EPSILON)
+    if (std::abs(_frameZoomFactor - zoomFactor) < FLT_EPSILON)
     {
         return;
     }
@@ -572,10 +596,10 @@ void GLViewImpl::setFrameSize(float width, float height)
 
 void GLViewImpl::setViewPortInPoints(float x , float y , float w , float h)
 {
-    experimental::Viewport vp = {(float)(x * _scaleX * _retinaFactor * _frameZoomFactor + _viewPortRect.origin.x * _retinaFactor * _frameZoomFactor),
+    experimental::Viewport vp((float)(x * _scaleX * _retinaFactor * _frameZoomFactor + _viewPortRect.origin.x * _retinaFactor * _frameZoomFactor),
         (float)(y * _scaleY * _retinaFactor  * _frameZoomFactor + _viewPortRect.origin.y * _retinaFactor * _frameZoomFactor),
         (float)(w * _scaleX * _retinaFactor * _frameZoomFactor),
-        (float)(h * _scaleY * _retinaFactor * _frameZoomFactor)};
+        (float)(h * _scaleY * _retinaFactor * _frameZoomFactor));
     Camera::setDefaultViewport(vp);
 }
 
@@ -600,7 +624,15 @@ Rect GLViewImpl::getScissorRect() const
 
 void GLViewImpl::onGLFWError(int errorID, const char* errorDesc)
 {
-    CCLOGERROR("GLFWError #%d Happen, %s\n", errorID, errorDesc);
+    if (_mainWindow)
+    {
+        _glfwError = StringUtils::format("GLFWError #%d Happen, %s", errorID, errorDesc);
+    }
+    else
+    {
+        _glfwError.append(StringUtils::format("GLFWError #%d Happen, %s\n", errorID, errorDesc));
+    }
+    CCLOGERROR("%s", _glfwError.c_str());
 }
 
 void GLViewImpl::onGLFWMouseCallBack(GLFWwindow* window, int button, int action, int modify)
@@ -711,10 +743,27 @@ void GLViewImpl::onGLFWKeyCallback(GLFWwindow *window, int key, int scancode, in
         auto dispatcher = Director::getInstance()->getEventDispatcher();
         dispatcher->dispatchEvent(&event);
     }
-    
-    if (GLFW_RELEASE != action && g_keyCodeMap[key] == EventKeyboard::KeyCode::KEY_BACKSPACE)
+
+    if (GLFW_RELEASE != action)
     {
-        IMEDispatcher::sharedDispatcher()->dispatchDeleteBackward();
+        switch (g_keyCodeMap[key])
+        {
+        case EventKeyboard::KeyCode::KEY_BACKSPACE:
+            IMEDispatcher::sharedDispatcher()->dispatchDeleteBackward();
+            break;
+        case EventKeyboard::KeyCode::KEY_HOME:
+        case EventKeyboard::KeyCode::KEY_KP_HOME:
+        case EventKeyboard::KeyCode::KEY_DELETE:
+        case EventKeyboard::KeyCode::KEY_KP_DELETE:
+        case EventKeyboard::KeyCode::KEY_END:
+        case EventKeyboard::KeyCode::KEY_LEFT_ARROW:
+        case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
+        case EventKeyboard::KeyCode::KEY_ESCAPE:
+            IMEDispatcher::sharedDispatcher()->dispatchControlKey(g_keyCodeMap[key]);
+            break;
+        default:
+            break;
+        }
     }
 }
 
@@ -724,7 +773,23 @@ void GLViewImpl::onGLFWCharCallback(GLFWwindow *window, unsigned int character)
     std::string utf8String;
 
     StringUtils::UTF16ToUTF8( wcharString, utf8String );
-    IMEDispatcher::sharedDispatcher()->dispatchInsertText( utf8String.c_str(), utf8String.size() );
+    static std::set<std::string> controlUnicode = {
+        "\xEF\x9C\x80", // up
+        "\xEF\x9C\x81", // down
+        "\xEF\x9C\x82", // left
+        "\xEF\x9C\x83", // right
+        "\xEF\x9C\xA8", // delete
+        "\xEF\x9C\xA9", // home
+        "\xEF\x9C\xAB", // end
+        "\xEF\x9C\xAC", // pageup
+        "\xEF\x9C\xAD", // pagedown
+        "\xEF\x9C\xB9"  // clear
+    };
+    // Check for send control key
+    if (controlUnicode.find(utf8String) == controlUnicode.end())
+    {
+        IMEDispatcher::sharedDispatcher()->dispatchInsertText( utf8String.c_str(), utf8String.size() );
+    }
 }
 
 void GLViewImpl::onGLFWWindowPosCallback(GLFWwindow *windows, int x, int y)
@@ -739,7 +804,7 @@ void GLViewImpl::onGLFWframebuffersize(GLFWwindow* window, int w, int h)
     float factorX = frameSizeW / w * _retinaFactor * _frameZoomFactor;
     float factorY = frameSizeH / h * _retinaFactor * _frameZoomFactor;
 
-    if (fabs(factorX - 0.5f) < FLT_EPSILON && fabs(factorY - 0.5f) < FLT_EPSILON )
+    if (std::abs(factorX - 0.5f) < FLT_EPSILON && std::abs(factorY - 0.5f) < FLT_EPSILON)
     {
         _isInRetinaMonitor = true;
         if (_isRetinaEnabled)
@@ -753,7 +818,7 @@ void GLViewImpl::onGLFWframebuffersize(GLFWwindow* window, int w, int h)
 
         glfwSetWindowSize(window, static_cast<int>(frameSizeW * 0.5f * _retinaFactor * _frameZoomFactor) , static_cast<int>(frameSizeH * 0.5f * _retinaFactor * _frameZoomFactor));
     }
-    else if(fabs(factorX - 2.0f) < FLT_EPSILON && fabs(factorY - 2.0f) < FLT_EPSILON)
+    else if (std::abs(factorX - 2.0f) < FLT_EPSILON && std::abs(factorY - 2.0f) < FLT_EPSILON)
     {
         _isInRetinaMonitor = false;
         _retinaFactor = 1;
@@ -763,9 +828,15 @@ void GLViewImpl::onGLFWframebuffersize(GLFWwindow* window, int w, int h)
 
 void GLViewImpl::onGLFWWindowSizeFunCallback(GLFWwindow *window, int width, int height)
 {
-    if (_resolutionPolicy != ResolutionPolicy::UNKNOWN)
+    if (width && height && _resolutionPolicy != ResolutionPolicy::UNKNOWN)
     {
-        updateDesignResolutionSize();
+        Size baseDesignSize = _designResolutionSize;
+        ResolutionPolicy baseResolutionPolicy = _resolutionPolicy;
+
+        int frameWidth = width / _frameZoomFactor;
+        int frameHeight = height / _frameZoomFactor;
+        setFrameSize(frameWidth, frameHeight);
+        setDesignResolutionSize(baseDesignSize.width, baseDesignSize.height, baseResolutionPolicy);
         Director::getInstance()->setViewport();
     }
 }

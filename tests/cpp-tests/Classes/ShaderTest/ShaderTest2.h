@@ -40,6 +40,7 @@ class EffectSpriteTest : public ShaderTestDemo2
 public:
     CREATE_FUNC(EffectSpriteTest);
     EffectSpriteTest();
+    virtual bool init();
     virtual std::string subtitle() const {return "Different effects on Sprite";}
 
 protected:
@@ -53,6 +54,7 @@ class EffectSpriteLamp : public ShaderTestDemo2
 public:
     CREATE_FUNC(EffectSpriteLamp);
     EffectSpriteLamp();
+    virtual bool init();
     virtual std::string subtitle() const {return "Sprite Lamp effects";}
     //callback
 public:

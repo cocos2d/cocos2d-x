@@ -182,25 +182,22 @@ var ScriptTestLayer = SysTestBase.extend({
         {
             return;
         }
+        var that = this;
         var manifestPath = "Manifests/ScriptTest/project.manifest";
         var storagePath = ((jsb.fileUtils ? jsb.fileUtils.getWritablePath() : "/") + "JSBTests/AssetsManagerTest/ScriptTest/");
         cc.log("Storage path for this test : " + storagePath);
 
-        if (this._am)
-        {
+        if (this._am){
             this._am.release();
             this._am = null;
         }
 
         this._am = new jsb.AssetsManager(manifestPath, storagePath);
         this._am.retain();
-        if (!this._am.getLocalManifest().isLoaded())
-        {
+        if (!this._am.getLocalManifest().isLoaded()){
             cc.log("Fail to update assets, step skipped.");
             that.clickMeShowTempLayer();
-        }
-        else {
-            var that = this;
+        }else {
             var listener = new jsb.EventListenerAssetsManager(this._am, function (event) {
                 var scene;
                 switch (event.getEventCode()) {
@@ -246,12 +243,9 @@ var ScriptTestLayer = SysTestBase.extend({
     },
     clickMeReloadTempLayer:function(){
         cc.sys.cleanScript(tempJSFileName);
-        if (!cc.sys.isNative)
-        {
+        if (!cc.sys.isNative){
             this.clickMeShowTempLayer();
-        }
-        else
-        {
+        }else{
             this.startDownload();
         }
 

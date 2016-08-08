@@ -69,7 +69,7 @@ public:
 };
 
 /**
- * Ref is used for reference count manangement. If a class inherits from Ref,
+ * Ref is used for reference count management. If a class inherits from Ref,
  * then it is easy to be shared in different places.
  * @js NA
  */
@@ -91,7 +91,7 @@ public:
      *
      * This decrements the Ref's reference count.
      *
-     * If the reference count reaches 0 after the descrement, this Ref is
+     * If the reference count reaches 0 after the decrement, this Ref is
      * destructed.
      *
      * @see retain, autorelease
@@ -102,10 +102,10 @@ public:
     /**
      * Releases the ownership sometime soon automatically.
      *
-     * This descrements the Ref's reference count at the end of current
+     * This decrements the Ref's reference count at the end of current
      * autorelease pool block.
      *
-     * If the reference count reaches 0 after the descrement, this Ref is
+     * If the reference count reaches 0 after the decrement, this Ref is
      * destructed.
      *
      * @returns The Ref itself.
@@ -156,6 +156,21 @@ public:
     int                 _luaID;
     /// scriptObject, support for swift
     void* _scriptObject;
+
+    /**
+     When true, it means that the object was already rooted.
+     */
+    bool _rooted;
+    unsigned int _referenceCountAtRootTime;
+
+    /**
+     * The life of the object is scrolled by the scripting engine.
+     *
+     * When the object is controlled by the scripting engine
+     * some additional logic is performed, like Rooting/Unrooting
+     * the object when retain/release is called.
+     */
+    bool _scriptOwned;
 #endif
 
     // Memory leak diagnostic data (only included when CC_REF_LEAK_DETECTION is defined and its value isn't zero)

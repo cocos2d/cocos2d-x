@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -75,6 +75,14 @@ class TextureWEBP : public TextureDemo
 {
 public:
     CREATE_FUNC(TextureWEBP);
+    virtual std::string title() const override;
+    virtual void onEnter() override;
+};
+
+class TextureWEBPNoAlpha : public TextureDemo
+{
+public:
+    CREATE_FUNC(TextureWEBPNoAlpha);
     virtual std::string title() const override;
     virtual void onEnter() override;
 };

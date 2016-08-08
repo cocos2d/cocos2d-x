@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2010-2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -31,6 +31,7 @@
 @interface CCDirectorCaller : NSObject {
         id displayLink;
         int interval;
+        BOOL isAppActive;
 }
 @property (readwrite) int interval;
 -(void) startMainLoop;

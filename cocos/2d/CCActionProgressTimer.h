@@ -1,7 +1,7 @@
 /****************************************************************************
 Copyright (C) 2010      Lam Pham
 Copyright (c) 2010-2012 cocos2d-x.org
-CopyRight (c) 2013-2014 Chukong Technologies Inc.
+CopyRight (c) 2013-2016 Chukong Technologies Inc.
  
 http://www.cocos2d-x.org
 
@@ -48,15 +48,15 @@ public:
      * @brief Create and initializes with a duration and a destination percentage.
      * @param duration Specify the duration of the ProgressTo action. It's a value in seconds.
      * @param percent Specify the destination percentage.
-     * @return If the creation sucess, return a pointer of ProgressTo action; otherwise, return nil.
+     * @return If the creation success, return a pointer of ProgressTo action; otherwise, return nil.
      */
     static ProgressTo* create(float duration, float percent);
 
     //
     // Overrides
     //
-	virtual ProgressTo* clone() const override;
-	virtual ProgressTo* reverse() const override;
+    virtual ProgressTo* clone() const override;
+    virtual ProgressTo* reverse() const override;
     virtual void startWithTarget(Node *target) override;
     virtual void update(float time) override;
     
@@ -68,7 +68,7 @@ CC_CONSTRUCTOR_ACCESS:
      * @brief Initializes with a duration and destination percentage. 
      * @param duration Specify the duration of the ProgressTo action. It's a value in seconds.
      * @param percent Specify the destination percentage.
-     * @return If the creation sucess, return true; otherwise, return false.
+     * @return If the creation success, return true; otherwise, return false.
      */
     bool initWithDuration(float duration, float percent);
 
@@ -92,15 +92,15 @@ public:
      * @param duration Specify the duration of the ProgressFromTo action. It's a value in seconds.
      * @param fromPercentage Specify the source percentage.
      * @param toPercentage Specify the destination percentage.
-     * @return If the creation sucess, return a pointer of ProgressFromTo action; otherwise, return nil.
+     * @return If the creation success, return a pointer of ProgressFromTo action; otherwise, return nil.
      */
     static ProgressFromTo* create(float duration, float fromPercentage, float toPercentage);
 
     //
     // Overrides
     //
-	virtual ProgressFromTo* clone() const override;
-	virtual ProgressFromTo* reverse() const override;
+    virtual ProgressFromTo* clone() const override;
+    virtual ProgressFromTo* reverse() const override;
     virtual void startWithTarget(Node *target) override;
     virtual void update(float time) override;
     
@@ -113,7 +113,7 @@ CC_CONSTRUCTOR_ACCESS:
      * @param duration Specify the duration of the ProgressFromTo action. It's a value in seconds.
      * @param fromPercentage Specify the source percentage.
      * @param toPercentage Specify the destination percentage.
-     * @return If the creation sucess, return true; otherwise, return false.
+     * @return If the creation success, return true; otherwise, return false.
      */
     bool initWithDuration(float duration, float fromPercentage, float toPercentage);
 
