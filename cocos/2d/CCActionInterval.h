@@ -783,16 +783,16 @@ public:
     */
     static ResizeTo* create(float duration, const cocos2d::Size& final_size);
 
-CC_CONSTRUCTOR_ACCESS:
-    ResizeTo() {}
-    virtual ~ResizeTo() {}
-    
     //
     // Overrides
     //
     virtual ResizeTo* clone() const override;
     void startWithTarget(cocos2d::Node* target) override;
     void update(float time) override;
+
+CC_CONSTRUCTOR_ACCESS:
+    ResizeTo() {}
+    virtual ~ResizeTo() {}
     
     /**
     * initializes the action
