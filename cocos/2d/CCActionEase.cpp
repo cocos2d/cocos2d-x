@@ -140,9 +140,9 @@ EaseRateAction* EaseRateAction::reverse() const {
 }
 
 //
-// EaseTemplate
+// NOTE: Converting these macros into Templates is desirable, but please see
+// issue #16159 [https://github.com/cocos2d/cocos2d-x/pull/16159] for further info
 //
-
 #define EASE_TEMPLATE_IMPL(CLASSNAME, TWEEN_FUNC, REVERSE_CLASSNAME) \
 CLASSNAME* CLASSNAME::create(cocos2d::ActionInterval *action) \
 { \
@@ -199,9 +199,9 @@ EASE_TEMPLATE_IMPL(EaseCubicActionOut, tweenfunc::cubicEaseOut, EaseCubicActionO
 EASE_TEMPLATE_IMPL(EaseCubicActionInOut, tweenfunc::cubicEaseInOut, EaseCubicActionInOut);
 
 //
-// EaseRateTemplate<F,I>
+// NOTE: Converting these macros into Templates is desirable, but please see
+// issue #16159 [https://github.com/cocos2d/cocos2d-x/pull/16159] for further info
 //
-
 #define EASERATE_TEMPLATE_IMPL(CLASSNAME, TWEEN_FUNC, REVERSE_CLASSNAME) \
 CLASSNAME* CLASSNAME::create(cocos2d::ActionInterval *action, float rate) \
 { \
@@ -249,9 +249,9 @@ bool EaseElastic::initWithAction(ActionInterval *action, float period /* = 0.3f*
 }
 
 //
-// EaseElastic Template
+// NOTE: Converting these macros into Templates is desirable, but please see
+// issue #16159 [https://github.com/cocos2d/cocos2d-x/pull/16159] for further info
 //
-
 #define EASEELASTIC_TEMPLATE_IMPL(CLASSNAME, TWEEN_FUNC, REVERSE_CLASSNAME) \
 CLASSNAME* CLASSNAME::create(cocos2d::ActionInterval *action, float period /* = 0.3f*/) \
 { \

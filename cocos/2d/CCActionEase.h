@@ -126,6 +126,10 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(EaseRateAction);
 };
 
+//
+// NOTE: Converting these macros into Templates is desirable, but please see
+// issue #16159 [https://github.com/cocos2d/cocos2d-x/pull/16159] for further info
+//
 #define EASE_TEMPLATE_DECL_CLASS(CLASSNAME) \
 class CC_DLL CLASSNAME : public ActionEase \
 { \
@@ -147,7 +151,6 @@ private: \
  @since v0.8.2
  @ingroup Actions
  */
-// STEVE: check this adds class correctly
 typedef ActionEase EaseBounce;
 
 /**
@@ -371,9 +374,9 @@ EASE_TEMPLATE_DECL_CLASS(EaseCubicActionOut);
  */
 EASE_TEMPLATE_DECL_CLASS(EaseCubicActionInOut);
 
-
 //
-//
+// NOTE: Converting these macros into Templates is desirable, but please see
+// issue #16159 [https://github.com/cocos2d/cocos2d-x/pull/16159] for further info
 //
 
 #define EASERATE_TEMPLATE_DECL_CLASS(CLASSNAME) \
@@ -465,6 +468,10 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(EaseElastic);
 };
 
+//
+// NOTE: Converting these macros into Templates is desirable, but please see
+// issue #16159 [https://github.com/cocos2d/cocos2d-x/pull/16159] for further info
+//
 #define EASEELASTIC_TEMPLATE_DECL_CLASS(CLASSNAME) \
 class CC_DLL CLASSNAME : public EaseElastic \
 { \
