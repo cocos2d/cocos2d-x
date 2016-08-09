@@ -158,10 +158,8 @@ CLASSNAME* CLASSNAME::create(cocos2d::ActionInterval *action) \
 } \
 CLASSNAME* CLASSNAME::clone() const \
 { \
-    auto a = new (std::nothrow) CLASSNAME(); \
-    a->initWithAction(_inner->clone()); \
-    a->autorelease(); \
-    return a; \
+    if(_inner) return CLASSNAME::create(_inner); \
+    return nullptr; \
 } \
 void CLASSNAME::update(float time) { \
     _inner->update(TWEEN_FUNC(time)); \
@@ -217,10 +215,8 @@ CLASSNAME* CLASSNAME::create(cocos2d::ActionInterval *action, float rate) \
 } \
 CLASSNAME* CLASSNAME::clone() const \
 { \
-    auto a = new (std::nothrow) CLASSNAME(); \
-    a->initWithAction(_inner->clone(), _rate); \
-    a->autorelease(); \
-    return a; \
+    if(_inner) return CLASSNAME::create(_inner, _rate); \
+    return nullptr; \
 } \
 void CLASSNAME::update(float time) { \
     _inner->update(TWEEN_FUNC(time, _rate)); \
@@ -267,10 +263,8 @@ CLASSNAME* CLASSNAME::create(cocos2d::ActionInterval *action, float period /* = 
 } \
 CLASSNAME* CLASSNAME::clone() const \
 { \
-    auto a = new (std::nothrow) CLASSNAME(); \
-    a->initWithAction(_inner->clone(), _period); \
-    a->autorelease(); \
-    return a; \
+    if(_inner) return CLASSNAME::create(_inner, _period); \
+    return nullptr; \
 } \
 void CLASSNAME::update(float time) { \
     _inner->update(TWEEN_FUNC(time, _period)); \
@@ -289,20 +283,15 @@ EASEELASTIC_TEMPLATE_IMPL(EaseElasticInOut, tweenfunc::elasticEaseInOut, EaseEla
 
 EaseBezierAction* EaseBezierAction::create(cocos2d::ActionInterval* action)
 {
-    EaseBezierAction *ret = new EaseBezierAction();
-    if (ret)
+    EaseBezierAction *ret = new (std::nothrow) EaseBezierAction();
+    if (ret && ret->initWithAction(action))
     {
-        if (ret->initWithAction(action))
-        {
-            ret->autorelease();
-        }
-        else
-        {
-            CC_SAFE_RELEASE_NULL(ret);
-        }
+        ret->autorelease();
+        return ret;
     }
 
-    return ret;
+    delete ret;
+    return nullptr;
 }
 
 void EaseBezierAction::setBezierParamer( float p0, float p1, float p2, float p3)
@@ -316,11 +305,17 @@ void EaseBezierAction::setBezierParamer( float p0, float p1, float p2, float p3)
 EaseBezierAction* EaseBezierAction::clone() const
 {
     // no copy constructor
-    auto a = new EaseBezierAction();
-    a->initWithAction(_inner->clone());
-    a->setBezierParamer(_p0,_p1,_p2,_p3);
-    a->autorelease();
-    return a;
+    if (_inner)
+    {
+        auto ret = EaseBezierAction::create(_inner->clone());
+        if (ret)
+        {
+            ret->setBezierParamer(_p0,_p1,_p2,_p3);
+        }
+        return ret;
+    }
+
+    return nullptr;
 }
 
 void EaseBezierAction::update(float time)
