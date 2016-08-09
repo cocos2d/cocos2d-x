@@ -142,7 +142,7 @@ void ProgressTimer::setType(Type type)
     }
 }
 
-void ProgressTimer::setReverseProgress(bool reverse)
+void ProgressTimer::setReverseDirection(bool reverse)
 {
     if( _reverseDirection != reverse ) {
         _reverseDirection = reverse;
