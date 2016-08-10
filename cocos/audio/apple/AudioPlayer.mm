@@ -71,7 +71,14 @@ AudioPlayer::~AudioPlayer()
     
     if (_streamingSource)
     {
-        alDeleteBuffers(3, _bufferIds);
+        CHECK_AL_ERROR_DEBUG();
+        for (int i = 0; i < QUEUEBUFFER_NUM; ++i)
+        {
+            ALOGV("buffer[%d]=%u", i, _bufferIds[i]);
+            assert(alIsBuffer(_bufferIds[i]));
+        }
+        alDeleteBuffers(QUEUEBUFFER_NUM, _bufferIds);
+        CHECK_AL_ERROR_DEBUG();
     }
 }
 
@@ -125,10 +132,19 @@ void AudioPlayer::destroy()
         }
     } while(false);
     
-    ALOGVV("Before alSourceStop");
-    alSourceStop(_alSource); CHECK_AL_ERROR_DEBUG();
-    ALOGVV("Before alSourcei");
-    alSourcei(_alSource, AL_BUFFER, NULL); CHECK_AL_ERROR_DEBUG();
+    ALOGVV("Before alSourceStop, id=%u", _id);
+    CHECK_AL_ERROR_DEBUG();
+    alSourceStop(_alSource);
+    CHECK_AL_ERROR_DEBUG();
+    ALOGVV("Before alSourcei, id=%u", _id);
+
+    // Note: buffers have to be detached before calling 'alDeleteBuffers',
+    // otherwise 'alDeleteBuffers' will cause AL_INVALID_OPERATION.
+    // Even if it's a streaming source, there's no need to screw around with alSourceUnqueueBuffers.
+    alSourcei(_alSource, AL_BUFFER, 0);
+    CHECK_AL_ERROR_DEBUG();
+    
+    ALOGVV("after alSourcei, id=%u", _id);
     
     _removeByAudioEngine = true;
     
@@ -144,7 +160,7 @@ void AudioPlayer::setCache(AudioCache* cache)
 bool AudioPlayer::play2d()
 {
     _play2dMutex.lock();
-    ALOGV("AudioPlayer::play2d, _alSource: %u", _alSource);
+    ALOGV("AudioPlayer::play2d, _alSource: %u, id=%u", _alSource, _id);
 
     /*********************************************************************/
     /*       Note that it may be in sub thread or in main thread.       **/
@@ -157,7 +173,7 @@ bool AudioPlayer::play2d()
             ALOGE("alBuffer isn't ready for play!");
             break;
         }
-        
+        CHECK_AL_ERROR_DEBUG();
         alSourcei(_alSource, AL_BUFFER, 0);CHECK_AL_ERROR_DEBUG();
         alSourcef(_alSource, AL_PITCH, 1.0f);CHECK_AL_ERROR_DEBUG();
         alSourcef(_alSource, AL_GAIN, _volume);CHECK_AL_ERROR_DEBUG();
@@ -172,7 +188,7 @@ bool AudioPlayer::play2d()
         }
         else
         {
-            alGenBuffers(3, _bufferIds);
+            alGenBuffers(QUEUEBUFFER_NUM, _bufferIds);
             
             auto alError = alGetError();
             if (alError == AL_NO_ERROR)
@@ -180,8 +196,8 @@ bool AudioPlayer::play2d()
                 for (int index = 0; index < QUEUEBUFFER_NUM; ++index)
                 {
                     alBufferData(_bufferIds[index], _audioCache->_format, _audioCache->_queBuffers[index], _audioCache->_queBufferSize[index], _audioCache->_sampleRate);
+                    CHECK_AL_ERROR_DEBUG();
                 }
-                CHECK_AL_ERROR_DEBUG();
             }
             else
             {
@@ -209,6 +225,7 @@ bool AudioPlayer::play2d()
             }
 
             alSourcePlay(_alSource);
+            CHECK_AL_ERROR_DEBUG();
         }
         
         auto alError = alGetError();
@@ -247,7 +264,8 @@ void AudioPlayer::rotateBufferThread(int offsetFrame)
     auto frames = _audioCache->_queBufferFrames;
     
     auto error = ExtAudioFileOpenURL(fileURL, &extRef);
-    if(error) {
+    if (error)
+    {
         ALOGE("%s: ExtAudioFileOpenURL FAILED, Error = %ld", __PRETTY_FUNCTION__,(long) error);
         goto ExitBufferThread;
     }
@@ -259,27 +277,40 @@ void AudioPlayer::rotateBufferThread(int offsetFrame)
     theDataBuffer.mBuffers[0].mDataByteSize = _audioCache->_queBufferBytes;
     theDataBuffer.mBuffers[0].mNumberChannels = _audioCache->_outputFormat.mChannelsPerFrame;
     
-    if (offsetFrame != 0) {
+    if (offsetFrame != 0)
+    {
         ExtAudioFileSeek(extRef, offsetFrame);
     }
     
-    while (!_isDestroyed) {
+    while (!_isDestroyed)
+    {
         alGetSourcei(_alSource, AL_SOURCE_STATE, &sourceState);
-        if (sourceState == AL_PLAYING) {
+        CHECK_AL_ERROR_DEBUG();
+        
+        if (sourceState == AL_PLAYING)
+        {
             alGetSourcei(_alSource, AL_BUFFERS_PROCESSED, &bufferProcessed);
-            while (bufferProcessed > 0) {
+            CHECK_AL_ERROR_DEBUG();
+            while (bufferProcessed > 0)
+            {
                 bufferProcessed--;
-                if (_timeDirty) {
+                if (_timeDirty)
+                {
                     _timeDirty = false;
                     offsetFrame = _currTime * _audioCache->_outputFormat.mSampleRate;
                     ExtAudioFileSeek(extRef, offsetFrame);
                 }
-                else {
+                else
+                {
                     _currTime += QUEUEBUFFER_TIME_STEP;
-                    if (_currTime > _audioCache->_duration) {
-                        if (_loop) {
+                    if (_currTime > _audioCache->_duration)
+                    {
+                        if (_loop)
+                        {
                             _currTime = 0.0f;
-                        } else {
+                        }
+                        else
+                        {
                             _currTime = _audioCache->_duration;
                         }
                     }
@@ -287,13 +318,17 @@ void AudioPlayer::rotateBufferThread(int offsetFrame)
                 
                 frames = _audioCache->_queBufferFrames;
                 ExtAudioFileRead(extRef, (UInt32*)&frames, &theDataBuffer);
-                if (frames <= 0) {
-                    if (_loop) {
+                if (frames <= 0)
+                {
+                    if (_loop)
+                    {
                         ExtAudioFileSeek(extRef, 0);
                         frames = _audioCache->_queBufferFrames;
                         theDataBuffer.mBuffers[0].mDataByteSize = _audioCache->_queBufferBytes;
                         ExtAudioFileRead(extRef, (UInt32*)&frames, &theDataBuffer);
-                    } else {
+                    }
+                    else
+                    {
                         _isDestroyed = true;
                         break;
                     }
@@ -301,13 +336,17 @@ void AudioPlayer::rotateBufferThread(int offsetFrame)
                 
                 ALuint bid;
                 alSourceUnqueueBuffers(_alSource, 1, &bid);
+                CHECK_AL_ERROR_DEBUG();
                 alBufferData(bid, _audioCache->_format, tmpBuffer, frames * _audioCache->_outputFormat.mBytesPerFrame, _audioCache->_sampleRate);
+                CHECK_AL_ERROR_DEBUG();
                 alSourceQueueBuffers(_alSource, 1, &bid);
+                CHECK_AL_ERROR_DEBUG();
             }
         }
         
         std::unique_lock<std::mutex> lk(_sleepMutex);
-        if (_isDestroyed) {
+        if (_isDestroyed)
+        {
             break;
         }
         
@@ -315,10 +354,11 @@ void AudioPlayer::rotateBufferThread(int offsetFrame)
     }
     
 ExitBufferThread:
-    ALOGV("Exit rotate buffer thread ...");
+    ALOGV("Exit rotate buffer thread, id=%u, coz destroyed: %d ...", _id, _isDestroyed);
     CFRelease(fileURL);
 	// Dispose the ExtAudioFileRef, it is no longer needed
-	if (extRef){
+	if (extRef)
+    {
         ExtAudioFileDispose(extRef);
     }
     free(tmpBuffer);
