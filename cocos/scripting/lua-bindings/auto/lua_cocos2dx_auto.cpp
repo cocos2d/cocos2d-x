@@ -1306,8 +1306,7 @@ int lua_cocos2dx_Texture2D_initWithString(lua_State* tolua_S)
             ok &= luaval_to_fontdefinition(tolua_S, 3, &arg1, "cc.Texture2D:initWithString");
 
             if (!ok) { break; }
-            float fontAscent = 0;
-            bool ret = cobj->initWithString(arg0, arg1, fontAscent);
+            bool ret = cobj->initWithString(arg0, arg1);
             tolua_pushboolean(tolua_S,(bool)ret);
             return 1;
         }

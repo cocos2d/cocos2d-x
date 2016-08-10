@@ -1088,12 +1088,16 @@ bool Texture2D::initWithString(const char *text, const std::string& fontName, fl
     tempDef._fontFillColor = Color3B::WHITE;
     tempDef._enableWrap    = enableWrap;
     tempDef._overflow      = overflow;
-    float tempFontAscent = 0;
 
-    return initWithString(text, tempDef, tempFontAscent);
+    return initWithString(text, tempDef);
 }
 
-bool Texture2D::initWithString(const char *text, const FontDefinition& textDefinition, float& fontAscent)
+bool Texture2D::initWithString(const char *text, const FontDefinition& textDefinition)
+{
+    return initWithString(text, textDefinition, NULL);
+}
+
+bool Texture2D::initWithString(const char *text, const FontDefinition& textDefinition, float* fontAscent)
 {
     if(!text || 0 == strlen(text))
     {
@@ -1146,9 +1150,13 @@ bool Texture2D::initWithString(const char *text, const FontDefinition& textDefin
     textDef._dimensions.height *= contentScaleFactor;
     textDef._stroke._strokeSize *= contentScaleFactor;
     textDef._shadow._shadowEnabled = false;
+
+    float tmpFontAscent = 0.0f;
+    if (!fontAscent)
+        fontAscent = &tmpFontAscent;
     
     bool hasPremultipliedAlpha;
-    Data outData = Device::getTextureDataForText(text, textDef, align, imageWidth, imageHeight, hasPremultipliedAlpha, fontAscent);
+    Data outData = Device::getTextureDataForText(text, textDef, align, imageWidth, imageHeight, hasPremultipliedAlpha, *fontAscent);
     if(outData.isNull())
     {
         return false;

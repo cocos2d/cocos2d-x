@@ -1254,7 +1254,7 @@ void Label::createSpriteForSystemFont(const FontDefinition& fontDef)
     _currentLabelType = LabelType::STRING_TEXTURE;
 
     auto texture = new (std::nothrow) Texture2D;
-    texture->initWithString(_utf8Text.c_str(), fontDef, _fontAscent);
+    texture->initWithString(_utf8Text.c_str(), fontDef, &_fontAscent);
 
     _textSprite = Sprite::createWithTexture(texture);
     //set camera mask using label's camera mask, because _textSprite may be null when setting camera mask to label
@@ -1290,10 +1290,9 @@ void Label::createShadowSpriteForSystemFont(const FontDefinition& fontDef)
 
         shadowFontDefinition._stroke._strokeColor = shadowFontDefinition._fontFillColor;
         shadowFontDefinition._stroke._strokeAlpha = shadowFontDefinition._fontAlpha;
-        float shadowFontAscent = 0;
 
         auto texture = new (std::nothrow) Texture2D;
-        texture->initWithString(_utf8Text.c_str(), shadowFontDefinition, shadowFontAscent);
+        texture->initWithString(_utf8Text.c_str(), shadowFontDefinition);
         _shadowNode = Sprite::createWithTexture(texture);
         texture->release();
     }
