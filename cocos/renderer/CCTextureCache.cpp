@@ -857,8 +857,7 @@ void VolatileTextureMgr::reloadAllTextures()
         break;
         case VolatileTexture::kString:
         {
-            float fontAscent = 0;
-            vt->_texture->initWithString(vt->_text.c_str(), vt->_fontDefinition, fontAscent);
+            vt->_texture->initWithString(vt->_text.c_str(), vt->_fontDefinition);
         }
         break;
         case VolatileTexture::kImage:
