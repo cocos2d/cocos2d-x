@@ -844,6 +844,7 @@ void WebSocket::onClientReceivedData(void* in, ssize_t len)
 
 void WebSocket::onConnectionOpened()
 {
+    lws_set_extension_option(_wsInstance, "permessage-deflate", "rx_buf_size", "16");
     /*
      * start the ball rolling,
      * LWS_CALLBACK_CLIENT_WRITEABLE will come next service
