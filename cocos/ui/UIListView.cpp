@@ -317,6 +317,7 @@ void ListView::removeChild(cocos2d::Node *child, bool cleanup)
     }
    
     ScrollView::removeChild(child, cleanup);
+    requestDoLayout();
 }
     
 void ListView::removeAllChildren()
@@ -358,7 +359,6 @@ void ListView::removeItem(ssize_t index)
         return;
     }
     removeChild(item, true);
-    requestDoLayout();
 }
 
 void ListView::removeLastItem()
