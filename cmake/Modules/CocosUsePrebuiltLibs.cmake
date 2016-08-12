@@ -7,7 +7,7 @@ set(_chipmunk_inc_paths include)
 if (${MSVC_VERSION} STREQUAL "1900")
     set(_chipmunk_libs chipmunk libchipmunk-2015)
 else()
-    set(_chipmunk_libs chipmunk libchipmunk-2015)
+    set(_chipmunk_libs chipmunk libchipmunk)
 endif(${MSVC_VERSION})
 
 set(_curl_inc curl/curl.h)
