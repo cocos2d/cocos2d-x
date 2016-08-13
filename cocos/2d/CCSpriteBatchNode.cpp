@@ -404,6 +404,19 @@ void SpriteBatchNode::increaseAtlasCapacity()
     }
 }
 
+void SpriteBatchNode::reserveCapacity(ssize_t newCapacity)
+{
+    if (newCapacity <= _textureAtlas->getCapacity())
+        return;
+
+    if (! _textureAtlas->resizeCapacity(newCapacity))
+    {
+        // serious problems
+        CCLOGWARN("cocos2d: WARNING: Not enough memory to resize the atlas");
+        CCASSERT(false, "Not enough memory to resize the atlas");
+    }
+}
+
 ssize_t SpriteBatchNode::rebuildIndexInOrder(Sprite *parent, ssize_t index)
 {
     CCASSERT(index>=0 && index < _children.size(), "Invalid index");

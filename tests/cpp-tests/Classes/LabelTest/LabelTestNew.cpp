@@ -108,6 +108,7 @@ NewLabelTests::NewLabelTests()
     ADD_TEST_CASE(LabelLocalizationTest);
 
     ADD_TEST_CASE(LabelIssue15214);
+    ADD_TEST_CASE(LabelIssue16293);
 };
 
 LabelFNTColorAndOpacity::LabelFNTColorAndOpacity()
@@ -3176,4 +3177,23 @@ std::string LabelIssue15214::title() const
 std::string LabelIssue15214::subtitle() const
 {
     return "Font and underline should be of the same color";
+}
+
+// LabelBMFontBinaryFormat
+LabelIssue16293::LabelIssue16293()
+{
+    auto size = Director::getInstance()->getVisibleSize();
+    Label* label = Label::createWithTTF("012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789", "fonts/arial.ttf", 12);
+    label->setPosition(size.width/2, size.height/2);
+    this->addChild(label);
+}
+
+std::string LabelIssue16293::title() const
+{
+    return "Githug Issue 16293";
+}
+
+std::string LabelIssue16293::subtitle() const
+{
+    return "No TextureAtlas resizes";
 }
