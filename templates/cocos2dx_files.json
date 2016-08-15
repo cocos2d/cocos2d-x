@@ -7315,6 +7315,7 @@
         "external/lua/luajit/include/luaconf.h", 
         "external/lua/luajit/include/lualib.h", 
         "external/lua/luajit/prebuilt/android/Android.mk", 
+        "external/lua/luajit/prebuilt/android/arm64-v8a/libluajit.a", 
         "external/lua/luajit/prebuilt/android/armeabi-v7a/libluajit.a", 
         "external/lua/luajit/prebuilt/android/armeabi/libluajit.a", 
         "external/lua/luajit/prebuilt/android/x86/libluajit.a", 
