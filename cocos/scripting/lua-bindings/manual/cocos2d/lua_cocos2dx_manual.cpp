@@ -7308,9 +7308,9 @@ int lua_cocos2dx_Application_is64BitIOSDevice(lua_State* tolua_S)
     {
         bool is64BitIOSDevice = false;
         Application::Platform platform = cocos2d::Application::getInstance()->getTargetPlatform();
-        if (Application::Platform::OS_IPHONE == platform || Application::Platform::OS_IPAD == platform)
+        if (Application::Platform::OS_IPHONE == platform || Application::Platform::OS_IPAD == platform || Application::Platform::OS_ANDROID == platform)
         {
-#if defined(__arm64__)
+#if defined(__arm64__) || defined(__aarch64__)
             is64BitIOSDevice = true;
 #endif
         }
