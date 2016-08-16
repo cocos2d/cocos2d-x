@@ -1460,6 +1460,129 @@ SkewBy* SkewBy::reverse() const
     return SkewBy::create(_duration, -_skewX, -_skewY);
 }
 
+ResizeTo* ResizeTo::create(float duration, const cocos2d::Size& final_size)
+{
+    ResizeTo *ret = new (std::nothrow) ResizeTo();
+    
+    if (ret)
+    {
+        if (ret->initWithDuration(duration, final_size))
+        {
+            ret->autorelease();
+        } 
+        else
+        {
+            delete ret;
+            ret = nullptr;
+        }
+    }
+    
+    return ret;
+}
+
+ResizeTo* ResizeTo::clone(void) const
+{
+    // no copy constructor
+    ResizeTo* a = new (std::nothrow) ResizeTo();
+    a->initWithDuration(_duration, _finalSize);
+    a->autorelease();
+
+    return a;
+}
+
+void ResizeTo::startWithTarget(cocos2d::Node* target)
+{
+    ActionInterval::startWithTarget(target);
+    _initialSize = target->getContentSize();
+    _sizeDelta = _finalSize - _initialSize;
+}
+
+void ResizeTo::update(float time)
+{
+    if (_target)
+    {
+        auto new_size = _initialSize + (_sizeDelta * time);
+        _target->setContentSize(new_size);
+    }
+}
+
+bool ResizeTo::initWithDuration(float duration, const cocos2d::Size& final_size)
+{
+    if (cocos2d::ActionInterval::initWithDuration(duration))
+    {
+        _finalSize = final_size;
+        return true;
+    }
+
+    return false;
+}
+
+//
+// ResizeBy
+//
+
+ResizeBy* ResizeBy::create(float duration, const cocos2d::Size& deltaSize)
+{
+    ResizeBy *ret = new (std::nothrow) ResizeBy();
+    
+    if (ret)
+    {
+        if (ret->initWithDuration(duration, deltaSize))
+        {
+            ret->autorelease();
+        } 
+        else
+        {
+              delete ret;
+              ret = nullptr;
+        }
+    }
+    
+    return ret;
+}
+
+ResizeBy* ResizeBy::clone() const
+{
+    // no copy constructor
+    auto a = new (std::nothrow) ResizeBy();
+    a->initWithDuration(_duration, _sizeDelta);
+    a->autorelease();
+    return a;
+}
+
+void ResizeBy::startWithTarget(Node *target)
+{
+    ActionInterval::startWithTarget(target);
+    _previousSize = _startSize = target->getContentSize();
+}
+
+ResizeBy* ResizeBy::reverse() const
+{
+    cocos2d::Size newSize(-_sizeDelta.width, -_sizeDelta.height);
+    return ResizeBy::create(_duration, newSize);
+}
+
+void ResizeBy::update(float t)
+{
+    if (_target)
+    {
+        _target->setContentSize(_startSize + (_sizeDelta * t));
+    }
+}
+
+bool ResizeBy::initWithDuration(float duration, const cocos2d::Size& deltaSize)
+{
+    bool ret = false;
+    
+    if (ActionInterval::initWithDuration(duration))
+    {
+        _sizeDelta = deltaSize;
+        ret = true;
+    }
+    
+    return ret;
+}
+
 //
 // JumpBy
 //
