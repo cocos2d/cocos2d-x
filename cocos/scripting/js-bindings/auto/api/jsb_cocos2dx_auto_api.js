@@ -16858,9 +16858,9 @@ getBarChangeRate : function (
 
 /**
  * @method setReverseDirection
-* @param {bool|bool} bool
-*/
-setReverseDirection : function(
+ * @param {bool} arg0
+ */
+setReverseDirection : function (
 bool 
 )
 {

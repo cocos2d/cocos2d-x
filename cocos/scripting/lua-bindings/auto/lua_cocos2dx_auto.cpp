@@ -71407,47 +71407,42 @@ int lua_cocos2dx_ProgressTimer_setReverseDirection(lua_State* tolua_S)
     int argc = 0;
     cocos2d::ProgressTimer* cobj = nullptr;
     bool ok  = true;
+
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
 #endif
 
+
 #if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"cc.ProgressTimer",0,&tolua_err)) goto tolua_lerror;
 #endif
+
     cobj = (cocos2d::ProgressTimer*)tolua_tousertype(tolua_S,1,0);
+
 #if COCOS2D_DEBUG >= 1
-    if (!cobj)
+    if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ProgressTimer_setReverseDirection'", nullptr);
         return 0;
     }
 #endif
+
     argc = lua_gettop(tolua_S)-1;
-    do{
-        if (argc == 1) {
-            bool arg0;
-            ok &= luaval_to_boolean(tolua_S, 2,&arg0, "cc.ProgressTimer:setReverseDirection");
+    if (argc == 1) 
+    {
+        bool arg0;
 
-            if (!ok) { break; }
-            cobj->setReverseDirection(arg0);
-            lua_settop(tolua_S, 1);
-            return 1;
+        ok &= luaval_to_boolean(tolua_S, 2,&arg0, "cc.ProgressTimer:setReverseDirection");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ProgressTimer_setReverseDirection'", nullptr);
+            return 0;
         }
-    }while(0);
-    ok  = true;
-    do{
-        if (argc == 1) {
-            bool arg0;
-            ok &= luaval_to_boolean(tolua_S, 2,&arg0, "cc.ProgressTimer:setReverseDirection");
-
-            if (!ok) { break; }
-            cobj->setReverseProgress(arg0);
-            lua_settop(tolua_S, 1);
-            return 1;
-        }
-    }while(0);
-    ok  = true;
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n",  "cc.ProgressTimer:setReverseProgress",argc, 1);
+        cobj->setReverseDirection(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ProgressTimer:setReverseDirection",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1

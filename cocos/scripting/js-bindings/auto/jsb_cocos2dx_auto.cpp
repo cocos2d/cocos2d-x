@@ -45761,36 +45761,22 @@ bool js_cocos2dx_ProgressTimer_getBarChangeRate(JSContext *cx, uint32_t argc, js
 }
 bool js_cocos2dx_ProgressTimer_setReverseDirection(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    bool ok = true;
-    cocos2d::ProgressTimer* cobj = nullptr;
-
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx);
-    obj.set(args.thisv().toObjectOrNull());
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cobj = (cocos2d::ProgressTimer *)(proxy ? proxy->ptr : nullptr);
+    cocos2d::ProgressTimer* cobj = (cocos2d::ProgressTimer *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ProgressTimer_setReverseDirection : Invalid Native Object");
-    do {
-        if (argc == 1) {
-            bool arg0;
-            arg0 = JS::ToBoolean(args.get(0));
-            cobj->setReverseDirection(arg0);
-            args.rval().setUndefined();
-            return true;
-        }
-    } while(0);
+    if (argc == 1) {
+        bool arg0;
+        arg0 = JS::ToBoolean(args.get(0));
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ProgressTimer_setReverseDirection : Error processing arguments");
+        cobj->setReverseDirection(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
 
-    do {
-        if (argc == 1) {
-            bool arg0;
-            arg0 = JS::ToBoolean(args.get(0));
-            cobj->setReverseProgress(arg0);
-            args.rval().setUndefined();
-            return true;
-        }
-    } while(0);
-
-    JS_ReportError(cx, "js_cocos2dx_ProgressTimer_setReverseDirection : wrong number of arguments");
+    JS_ReportError(cx, "js_cocos2dx_ProgressTimer_setReverseDirection : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_cocos2dx_ProgressTimer_getMidpoint(JSContext *cx, uint32_t argc, jsval *vp)
