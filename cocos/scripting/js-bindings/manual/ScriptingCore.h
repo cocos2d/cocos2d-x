@@ -81,8 +81,8 @@ class CC_JS_DLL ScriptingCore : public cocos2d::ScriptEngineProtocol
 private:
     JSRuntime *_rt;
     JSContext *_cx;
-    mozilla::Maybe<JS::PersistentRootedObject> _global;
-    mozilla::Maybe<JS::PersistentRootedObject> _debugGlobal;
+    JS::PersistentRootedObject *_global;
+    JS::PersistentRootedObject *_debugGlobal;
     SimpleRunLoop* _runLoop;
     bool _jsInited;
     bool _needCleanup;
@@ -494,12 +494,12 @@ public:
      * Gets the debug environment's global object
      * @return @~english The debug environment's global object
      */
-    JSObject* getDebugGlobal() { return _debugGlobal.ref().get(); }
+    JSObject* getDebugGlobal() { return _debugGlobal->get(); }
     /**@~english
      * Gets the global object
      * @return @~english The global object
      */
-    JSObject* getGlobalObject() { return _global.ref().get(); }
+    JSObject* getGlobalObject() { return _global->get(); }
     
     /**@~english
      * Checks whether a C++ function is overrided in js prototype chain
