@@ -1094,7 +1094,7 @@ bool Texture2D::initWithString(const char *text, const std::string& fontName, fl
 
 bool Texture2D::initWithString(const char *text, const FontDefinition& textDefinition)
 {
-    return initWithString(text, textDefinition, NULL);
+    return initWithString(text, textDefinition, nullptr);
 }
 
 bool Texture2D::initWithString(const char *text, const FontDefinition& textDefinition, float* fontAscent)

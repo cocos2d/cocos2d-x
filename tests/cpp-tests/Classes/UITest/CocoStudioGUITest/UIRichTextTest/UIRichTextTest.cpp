@@ -14,6 +14,7 @@ UIRichTextTests::UIRichTextTests()
     ADD_TEST_CASE(UIRichTextXMLSUIB);
     ADD_TEST_CASE(UIRichTextXMLSUIB2);
     ADD_TEST_CASE(UIRichTextXMLSUIB3);
+    ADD_TEST_CASE(UIRichTextXMLSUIB4);
     ADD_TEST_CASE(UIRichTextXMLImg);
     ADD_TEST_CASE(UIRichTextXMLUrl);
     ADD_TEST_CASE(UIRichTextXMLUrlImg);
@@ -38,7 +39,8 @@ bool UIRichTextTest::init()
         
         auto config = Configuration::getInstance();
         config->loadConfigFile("configs/config-test-ok.plist");
-        
+
+        SpriteFrameCache::getInstance()->addSpriteFramesWithFile("Images/ui.plist");
         
         std::string str1 = config->getValue("Chinese").asString();
         std::string str2 = config->getValue("Japanese").asString();
@@ -79,22 +81,24 @@ bool UIRichTextTest::init()
         // RichText
         _richText = RichText::create();
         _richText->ignoreContentAdaptWithSize(false);
-        _richText->setContentSize(Size(150, 100));
+        _richText->setContentSize(Size(180, 130));
         
         RichElementText* re1 = RichElementText::create(1, Color3B::WHITE, 255, str1, "SimSun", 10);
         RichElementText* re2 = RichElementText::create(2, Color3B::YELLOW, 255, "And this is yellow. ", "Helvetica", 10);
         RichElementText* re3 = RichElementText::create(3, Color3B::GRAY, 255, str2, "Yu Mincho", 10);
         RichElementText* re4 = RichElementText::create(4, Color3B::GREEN, 255, "And green with TTF support. ", "fonts/Marker Felt.ttf", 10);
-        RichElementText* re5 = RichElementText::create(5, Color3B::RED, 255, "Last one is red ", "Helvetica", 20);
+        RichElementText* re5 = RichElementText::create(4, Color3B::BLUE, 255, "BMFont support. ", "fonts/markerFelt.fnt", 10);
+        RichElementText* re6 = RichElementText::create(5, Color3B::RED, 255, "Last one is red ", "Helvetica", 20);
         
         RichElementImage* reimg = RichElementImage::create(6, Color3B::WHITE, 255, "cocosui/sliderballnormal.png");
+        RichElementImage* reimg2 = RichElementImage::create(6, Color3B::WHITE, 255, "coin.png"); // will use coin.png from ui.plist
         
         cocostudio::ArmatureDataManager::getInstance()->addArmatureFileInfo("cocosui/100/100.ExportJson");
         cocostudio::Armature *pAr = cocostudio::Armature::create("100");
         pAr->getAnimation()->play("Animation1");
         
         RichElementCustomNode* recustom = RichElementCustomNode::create(1, Color3B::WHITE, 255, pAr);
-        RichElementText* re6 = RichElementText::create(7, Color3B::ORANGE, 255, "Have fun!! ", "Helvetica", 15);
+        RichElementText* re7 = RichElementText::create(7, Color3B::ORANGE, 255, "Have fun!! ", "Helvetica", 15);
         _richText->pushBackElement(re1);
         _richText->insertElement(re2, 1);
         _richText->pushBackElement(re3);
@@ -103,6 +107,8 @@ bool UIRichTextTest::init()
         _richText->insertElement(reimg, 2);
         _richText->pushBackElement(recustom);
         _richText->pushBackElement(re6);
+        _richText->pushBackElement(reimg2);
+        _richText->pushBackElement(re7);
         
         _richText->setPosition(Vec2(widgetSize.width / 2, widgetSize.height / 2));
         _richText->setLocalZOrder(10);
@@ -127,7 +133,7 @@ void UIRichTextTest::touchEvent(Ref *pSender, Widget::TouchEventType type)
             if (_richText->isIgnoreContentAdaptWithSize())
             {
                 _richText->ignoreContentAdaptWithSize(false);
-                _richText->setContentSize(Size(100, 100));
+                _richText->setContentSize(Size(180, 130));
             }
             else
             {
@@ -662,6 +668,82 @@ void UIRichTextXMLSUIB3::switchWrapMode(Ref *pSender, Widget::TouchEventType typ
 }
 
 //
+// UIRichTextXMLSUIB4
+//
+bool UIRichTextXMLSUIB4::init() {
+  if (UIScene::init()) {
+    Size widgetSize = _widget->getContentSize();
+
+    // Add the alert
+    Text *alert = Text::create("RichText", "fonts/markerFelt.fnt", 30);
+    alert->setColor(Color3B(159, 168, 176));
+    alert->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getContentSize().height * 3.125));
+    _widget->addChild(alert);
+
+
+    Button* button = Button::create("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png");
+    button->setTouchEnabled(true);
+    button->setTitleText("switch");
+    button->setPosition(Vec2(widgetSize.width * 1 / 3, widgetSize.height / 2.0f + button->getContentSize().height * 2.5));
+    button->addTouchEventListener(CC_CALLBACK_2(UIRichTextXMLSUIB4::touchEvent, this));
+    button->setLocalZOrder(10);
+    _widget->addChild(button);
+
+    Button* button2 = Button::create("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png");
+    button2->setTouchEnabled(true);
+    button2->setTitleText("wrap mode");
+    button2->setPosition(Vec2(widgetSize.width * 2 / 3, widgetSize.height / 2.0f + button2->getContentSize().height * 2.5));
+    button2->addTouchEventListener(CC_CALLBACK_2(UIRichTextXMLSUIB4::switchWrapMode, this));
+    button2->setLocalZOrder(10);
+    _widget->addChild(button2);
+
+
+    // RichText
+    _richText = RichText::createWithXML("<font face='fonts/markerFelt.fnt' size='20'>bm font: <i><u>italics and underline</u></i><del><b>bold and strike-through</b></del></font>");
+    _richText->ignoreContentAdaptWithSize(false);
+    _richText->setContentSize(Size(150, 130));
+
+    _richText->setPosition(Vec2(widgetSize.width / 2, widgetSize.height / 2));
+    _richText->setLocalZOrder(10);
+
+
+    _widget->addChild(_richText);
+
+    // test remove all children, this call won't effect the test
+    _richText->removeAllChildren();
+
+    return true;
+  }
+  return false;
+}
+
+void UIRichTextXMLSUIB4::touchEvent(Ref *pSender, Widget::TouchEventType type) {
+  switch (type) {
+  case Widget::TouchEventType::ENDED:
+  {
+    if (_richText->isIgnoreContentAdaptWithSize()) {
+      _richText->ignoreContentAdaptWithSize(false);
+      _richText->setContentSize(Size(150, 130));
+    } else {
+      _richText->ignoreContentAdaptWithSize(true);
+    }
+  }
+  break;
+
+  default:
+    break;
+  }
+}
+
+void UIRichTextXMLSUIB4::switchWrapMode(Ref *pSender, Widget::TouchEventType type) {
+  if (type == Widget::TouchEventType::ENDED) {
+    auto wrapMode = _richText->getWrapMode();
+    wrapMode = (wrapMode == RichText::WRAP_PER_WORD) ? RichText::WRAP_PER_CHAR : RichText::WRAP_PER_WORD;
+    _richText->setWrapMode(wrapMode);
+  }
+}
+
+//
 // UIRichTextXMLImg
 //
 bool UIRichTextXMLImg::init()
@@ -693,11 +775,12 @@ bool UIRichTextXMLImg::init()
         button2->setLocalZOrder(10);
         _widget->addChild(button2);
 
+        SpriteFrameCache::getInstance()->addSpriteFramesWithFile("Images/ui.plist");
 
         // RichText
-        _richText = RichText::createWithXML("you should see an image here: <img src='cocosui/sliderballnormal.png'/> and this is text again. and this is the same image, but bigger: <img src='cocosui/sliderballnormal.png' width='30' height='30' /> and here goes text again");
+        _richText = RichText::createWithXML("you should see an image here: <img src='cocosui/sliderballnormal.png'/> and this is text again. and this is the same image, but bigger: <img src='cocosui/sliderballnormal.png' width='30' height='30' /> and here goes text again. This image comes from a sprite sheet: <img src='coin.png' width='15' height='15' />, that's all folks!");
         _richText->ignoreContentAdaptWithSize(false);
-        _richText->setContentSize(Size(100, 100));
+        _richText->setContentSize(Size(150, 130));
 
         _richText->setPosition(Vec2(widgetSize.width / 2, widgetSize.height / 2));
         _richText->setLocalZOrder(10);
@@ -722,7 +805,7 @@ void UIRichTextXMLImg::touchEvent(Ref *pSender, Widget::TouchEventType type)
             if (_richText->isIgnoreContentAdaptWithSize())
             {
                 _richText->ignoreContentAdaptWithSize(false);
-                _richText->setContentSize(Size(100, 100));
+                _richText->setContentSize(Size(150, 130));
             }
             else
             {
