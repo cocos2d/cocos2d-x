@@ -42,7 +42,7 @@ using namespace std;
  *  @brief Implementation for header retrieving.
  *  @param header
  */
-void MinXmlHttpRequest::_gotHeader(string header)
+void MinXmlHttpRequest::_gotHeader(string& header)
 {
     // Get Header and Set StatusText
     // Split String into Tokens
@@ -524,6 +524,20 @@ JS_BINDED_PROP_SET_IMPL(MinXmlHttpRequest, timeout)
 JS_BINDED_PROP_GET_IMPL(MinXmlHttpRequest, responseType)
 {
     JSString* str = JS_NewStringCopyN(cx, "", 0);
+    switch(_responseType)
+    {
+    case ResponseType::STRING:
+        str = JS_NewStringCopyN(cx, "text", 4);
+        break;
+    case ResponseType::ARRAY_BUFFER:
+        str = JS_NewStringCopyN(cx, "arraybuffer", 11);
+        break;
+    case ResponseType::JSON:
+        str = JS_NewStringCopyN(cx, "json", 4);
+        break;
+    default:
+        break;
+    }
     args.rval().set(STRING_TO_JSVAL(str));
     return true;
 }
@@ -700,7 +714,6 @@ JS_BINDED_PROP_GET_IMPL(MinXmlHttpRequest, response)
             //bool ok = JS_ParseJSON(cx, utf16Buf, static_cast<uint32_t>(utf16Count), &outVal);
             JS::RootedString jsstr(cx, strVal.toString());
             bool ok = JS_ParseJSON(cx, jsstr, &outVal);
-
             if (ok)
             {
                 args.rval().set(outVal);
@@ -796,7 +809,6 @@ JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, send)
 
     // Clean up header map. New request, new headers!
     _httpHeader.clear();
-
     _errorFlag = false;
 
     if (argc == 1)

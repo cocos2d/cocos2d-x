@@ -90,7 +90,6 @@ private:
     bool _callFromScript;
     ScriptingCore();
 public:
-    
     ~ScriptingCore();
 
     /**@~english
@@ -289,22 +288,22 @@ public:
      @param path @~english The script file path
      @return @~english Script object
      */
-    JS::PersistentRootedScript* getScript(const char *path);
-    
+    JS::PersistentRootedScript* getScript(const std::string& path);
+
     /**@~english
      * Compile the specified js file
      * @param path    @~english The path of the script to be compiled
      * @param global    @~english The js global object
      * @param cx        @~english The js context
      */
-    JS::PersistentRootedScript* compileScript(const char *path, JS::HandleObject global, JSContext* cx = NULL);
-    
+    JS::PersistentRootedScript* compileScript(const std::string& path, JS::HandleObject global, JSContext* cx = nullptr);
+
     /**@~english
      * Run the specified js file
      * @param path @~english The path of the script to be executed
      * @return @~english Return true if succeed, otherwise return false.
      */
-    bool runScript(const char *path);
+    bool runScript(const std::string& path);
     /**@~english
      * Run the specified js file
      * @param path @~english The path of the script to be executed
@@ -312,8 +311,8 @@ public:
      * @param global @~english The context to execute the script
      * @return @~english Return true if succeed, otherwise return false.
      */
-    bool runScript(const char *path, JS::HandleObject global, JSContext* cx = NULL);
-    
+    bool runScript(const std::string& path, JS::HandleObject global, JSContext* cx = NULL);
+
     /**@~english
      * Require the specified js file
      * The difference between run and require is that require returns the export object of the script
@@ -590,7 +589,7 @@ js_proxy_t* jsb_new_proxy(void* nativeObj, JS::HandleObject jsObj);
 /** returns the proxy associated with the Native* */
 js_proxy_t* jsb_get_native_proxy(void* nativeObj);
 /** returns the proxy associated with the JSObject* */
-js_proxy_t* jsb_get_js_proxy(JSObject* jsObj);
+js_proxy_t* jsb_get_js_proxy(JS::HandleObject jsObj);
 /** deprecated: use jsb_remove_proxy(js_proxy_t* proxy) instead */
 void jsb_remove_proxy(js_proxy_t* nativeProxy, js_proxy_t* jsProxy);
 /** removes both the native and js proxies */

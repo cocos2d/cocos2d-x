@@ -49,18 +49,18 @@ NS_CC_EXT_BEGIN
 
 static Color4F ColorForBody(cpBody *body)
 {
-	if (CP_BODY_TYPE_STATIC == cpBodyGetType(body) || cpBodyIsSleeping(body))
+    if (CP_BODY_TYPE_STATIC == cpBodyGetType(body) || cpBodyIsSleeping(body))
     {
-		return Color4F(0.5f, 0.5f, 0.5f ,0.5f);
-	}
+        return Color4F(0.5f, 0.5f, 0.5f ,0.5f);
+    }
     else if (body->sleeping.idleTime > cpBodyGetSpace(body)->sleepTimeThreshold)
     {
-		return Color4F(0.33f, 0.33f, 0.33f, 0.5f);
-	}
+        return Color4F(0.33f, 0.33f, 0.33f, 0.5f);
+    }
     else
     {
-		return Color4F(1.0f, 0.0f, 0.0f, 0.5f);
-	}
+        return Color4F(1.0f, 0.0f, 0.0f, 0.5f);
+    }
 }
 
 static Vec2 cpVert2Point(const cpVect &vert)
@@ -83,12 +83,12 @@ static Vec2* cpVertArray2ccpArrayN(const cpVect* cpVertArray, unsigned int count
 
 static void DrawShape(cpShape *shape, DrawNode *renderer)
 {
-	cpBody *body = cpShapeGetBody(shape);
-	Color4F color = ColorForBody(body);
+    cpBody *body = cpShapeGetBody(shape);
+    Color4F color = ColorForBody(body);
     
-	switch (shape->CP_PRIVATE(klass)->type)
+    switch (shape->CP_PRIVATE(klass)->type)
     {
-		case CP_CIRCLE_SHAPE:
+        case CP_CIRCLE_SHAPE:
         {
             cpCircleShape *circle = (cpCircleShape *)shape;
             cpVect center = circle->tc;
@@ -97,13 +97,13 @@ static void DrawShape(cpShape *shape, DrawNode *renderer)
             renderer->drawSegment(cpVert2Point(center), cpVert2Point(cpvadd(center, cpvmult(cpBodyGetRotation(body), radius))), 1.0, color);
         }
              break;
-		case CP_SEGMENT_SHAPE:
+        case CP_SEGMENT_SHAPE:
         {
             cpSegmentShape *seg = (cpSegmentShape *)shape;
             renderer->drawSegment(cpVert2Point(seg->ta), cpVert2Point(seg->tb), cpfmax(seg->r, 2.0), color);
         }
             break;
-		case CP_POLY_SHAPE:
+        case CP_POLY_SHAPE:
         {
             cpPolyShape* poly = (cpPolyShape*)shape;
             Color4F line = color;
@@ -116,17 +116,17 @@ static void DrawShape(cpShape *shape, DrawNode *renderer)
             CC_SAFE_DELETE_ARRAY(pPoints);
         }
             break;
-		default:
-			cpAssertHard(false, "Bad assertion in DrawShape()");
-	}
+        default:
+            cpAssertHard(false, "Bad assertion in DrawShape()");
+    }
 }
 
 static Color4F CONSTRAINT_COLOR(0, 1, 0, 0.5);
 
 static void DrawConstraint(cpConstraint *constraint, DrawNode *renderer)
 {
-	cpBody *body_a = cpConstraintGetBodyA(constraint);
-	cpBody *body_b = cpConstraintGetBodyB(constraint);
+    cpBody *body_a = cpConstraintGetBodyA(constraint);
+    cpBody *body_b = cpConstraintGetBodyB(constraint);
     
     if(cpConstraintIsPinJoint(constraint))
     {
@@ -169,7 +169,7 @@ static void DrawConstraint(cpConstraint *constraint, DrawNode *renderer)
     }
     else
     {
-        //		printf("Cannot draw constraint\n");
+        //        printf("Cannot draw constraint\n");
     }
 }
 #endif // #if CC_ENABLE_CHIPMUNK_INTEGRATION
@@ -187,7 +187,7 @@ void PhysicsDebugNode::draw(Renderer *renderer, const Mat4 &transform, uint32_t 
     DrawNode::clear();
 
     cpSpaceEachShape(_spacePtr, (cpSpaceShapeIteratorFunc)DrawShape, this);
-	cpSpaceEachConstraint(_spacePtr, (cpSpaceConstraintIteratorFunc)DrawConstraint, this);
+    cpSpaceEachConstraint(_spacePtr, (cpSpaceConstraintIteratorFunc)DrawConstraint, this);
     
     DrawNode::draw(renderer, transform, flags);
 #endif

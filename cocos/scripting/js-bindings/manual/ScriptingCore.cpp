@@ -657,7 +657,7 @@ static std::string RemoveFileExt(const std::string& filePath) {
     }
 }
 
-JS::PersistentRootedScript* ScriptingCore::getScript(const char *path)
+JS::PersistentRootedScript* ScriptingCore::getScript(const std::string& path)
 {
     // a) check jsc file first
     std::string byteCodePath = RemoveFileExt(std::string(path)) + BYTE_CODE_FILE_EXT;
@@ -672,9 +672,9 @@ JS::PersistentRootedScript* ScriptingCore::getScript(const char *path)
     return nullptr;
 }
 
-JS::PersistentRootedScript* ScriptingCore::compileScript(const char *path, JS::HandleObject global, JSContext* cx)
+JS::PersistentRootedScript* ScriptingCore::compileScript(const std::string& path, JS::HandleObject global, JSContext* cx)
 {
-    if (!path) {
+    if (path.empty()) {
         return nullptr;
     }
 
@@ -682,11 +682,11 @@ JS::PersistentRootedScript* ScriptingCore::compileScript(const char *path, JS::H
     if (script != nullptr) {
         return script;
     }
-    
+
     if (cx == nullptr) {
         cx = _cx;
     }
-    
+
     cocos2d::FileUtils *futil = cocos2d::FileUtils::getInstance();
 
     JSAutoCompartment ac(cx, global);
@@ -750,7 +750,7 @@ JS::PersistentRootedScript* ScriptingCore::compileScript(const char *path, JS::H
     if (compileSucceed) {
         return script;
     } else {
-        LOGD("ScriptingCore:: compileScript fail:%s", path);
+        LOGD("ScriptingCore:: compileScript fail:%s", path.c_str());
         CC_SAFE_DELETE(script);
         return nullptr;
     }
@@ -785,14 +785,14 @@ void ScriptingCore::cleanAllScript()
     filename_script.clear();
 }
 
-bool ScriptingCore::runScript(const char *path)
+bool ScriptingCore::runScript(const std::string& path)
 {
     return runScript(path, _global.ref(), _cx);
 }
 
-bool ScriptingCore::runScript(const char *path, JS::HandleObject global, JSContext* cx)
+bool ScriptingCore::runScript(const std::string& path, JS::HandleObject global, JSContext* cx)
 {
-    if (cx == NULL) {
+    if (cx == nullptr) {
         cx = _cx;
     }
 
@@ -800,14 +800,14 @@ bool ScriptingCore::runScript(const char *path, JS::HandleObject global, JSConte
     if (script == nullptr) {
         return false;
     }
-    
+
     bool evaluatedOK = false;
     if (script) {
         JS::RootedValue rval(cx);
         JSAutoCompartment ac(cx, global);
         evaluatedOK = JS_ExecuteScript(cx, global, *script, &rval);
         if (false == evaluatedOK) {
-            cocos2d::log("Evaluating %s failed (evaluatedOK == JS_FALSE)", path);
+            cocos2d::log("Evaluating %s failed (evaluatedOK == JS_FALSE)", path.c_str());
             JS_ReportPendingException(cx);
         }
     }
@@ -822,7 +822,7 @@ bool ScriptingCore::requireScript(const char *path, JS::MutableHandleValue jsval
 
 bool ScriptingCore::requireScript(const char *path, JS::HandleObject global, JSContext* cx, JS::MutableHandleValue jsvalRet)
 {
-    if (cx == NULL)
+    if (cx == nullptr)
     {
         cx = _cx;
     }
@@ -1106,7 +1106,6 @@ void ScriptingCore::removeScriptObjectByObject(Ref* pObj)
 //    else CCLOG("removeScriptObjectByObject. BUG: nproxy not found = %p", nproxy);
 }
 
-
 bool ScriptingCore::setReservedSpot(uint32_t i, JSObject *obj, jsval value) {
     JS_SetReservedSlot(obj, i, value);
     return true;
@@ -1173,13 +1172,13 @@ bool ScriptingCore::dumpRoot(JSContext *cx, uint32_t argc, jsval *vp)
 void ScriptingCore::pauseSchedulesAndActions(js_proxy_t* p)
 {
     JS::RootedObject obj(_cx, p->obj.get());
-    __Array * arr = JSScheduleWrapper::getTargetForJSObject(obj);
+    auto arr = JSScheduleWrapper::getTargetForJSObject(obj);
     if (! arr) return;
 
     Node* node = (Node*)p->ptr;
-    for(ssize_t i = 0; i < arr->count(); ++i) {
-        if (arr->getObjectAtIndex(i)) {
-            node->getScheduler()->pauseTarget(arr->getObjectAtIndex(i));
+    for(ssize_t i = 0; i < arr->size(); ++i) {
+        if (arr->at(i)) {
+            node->getScheduler()->pauseTarget(arr->at(i));
         }
     }
 }
@@ -1188,27 +1187,27 @@ void ScriptingCore::pauseSchedulesAndActions(js_proxy_t* p)
 void ScriptingCore::resumeSchedulesAndActions(js_proxy_t* p)
 {
     JS::RootedObject obj(_cx, p->obj.get());
-    __Array * arr = JSScheduleWrapper::getTargetForJSObject(obj);
+    auto arr = JSScheduleWrapper::getTargetForJSObject(obj);
     if (!arr) return;
 
     Node* node = (Node*)p->ptr;
-    for(ssize_t i = 0; i < arr->count(); ++i) {
-        if (!arr->getObjectAtIndex(i)) continue;
-        node->getScheduler()->resumeTarget(arr->getObjectAtIndex(i));
+    for(ssize_t i = 0; i < arr->size(); ++i) {
+        if (!arr->at(i)) continue;
+        node->getScheduler()->resumeTarget(arr->at(i));
     }
 }
 
 void ScriptingCore::cleanupSchedulesAndActions(js_proxy_t* p)
 {
     JS::RootedObject obj(_cx, p->obj.get());
-    __Array* arr = JSScheduleWrapper::getTargetForJSObject(obj);
-    if (arr) {
+    auto targetArray = JSScheduleWrapper::getTargetForJSObject(obj);
+    if (targetArray)
+    {
         Node* node = (Node*)p->ptr;
-        Scheduler* pScheduler = node->getScheduler();
-        Ref* pObj = nullptr;
-        CCARRAY_FOREACH(arr, pObj)
+        auto scheduler = node->getScheduler();
+        for (auto&& target : *targetArray)
         {
-            pScheduler->unscheduleAllForTarget(pObj);
+            scheduler->unscheduleAllForTarget(target);
         }
 
         JSScheduleWrapper::removeAllTargetsForJSObject(obj);
@@ -1360,10 +1359,12 @@ int ScriptingCore::handleComponentEvent(void* data)
     else if (action == kComponentOnEnter)
     {
         ret = executeFunctionWithOwner(nodeValue, "onEnter", 1, &dataVal, &retval);
+        resumeSchedulesAndActions(p);
     }
     else if (action == kComponentOnExit)
     {
         ret = executeFunctionWithOwner(nodeValue, "onExit", 1, &dataVal, &retval);
+        pauseSchedulesAndActions(p);
     }
     else if (action == kComponentOnUpdate)
     {
@@ -1649,11 +1650,12 @@ int ScriptingCore::executeCustomTouchEvent(EventTouch::EventCode eventType, Touc
 
 }
 
-
 int ScriptingCore::executeCustomTouchEvent(EventTouch::EventCode eventType,
                                            Touch *touch, JSObject *obj,
                                            JS::MutableHandleValue retval)
 {
+    JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+
     std::string funcName = getTouchFuncName(eventType);
 
     js_type_class_t *typeClass = js_get_type_from_native<cocos2d::Touch>(touch);
@@ -1909,11 +1911,11 @@ static void processInput(const std::string& data) {
 static void clearBuffers() {
     std::lock_guard<std::mutex> lk(g_rwMutex);
     // only process input if there's something and we're not locked
-    if (inData.length() > 0) {
+    if (!inData.empty()) {
         processInput(inData);
         inData.clear();
     }
-    if (outData.length() > 0) {
+    if (!outData.empty()) {
         _clientSocketWriteAndClearString(outData);
     }
 }
@@ -1975,7 +1977,6 @@ static void serverEntryPoint(unsigned int port)
     freeaddrinfo(result);
 
     listen(s, 1);
-
 
 #define MAX_RECEIVED_SIZE 1024
 #define BUF_SIZE MAX_RECEIVED_SIZE + 1
@@ -2178,7 +2179,7 @@ js_proxy_t* jsb_get_native_proxy(void* nativeObj)
     return nullptr;
 }
 
-js_proxy_t* jsb_get_js_proxy(JSObject* jsObj)
+js_proxy_t* jsb_get_js_proxy(JS::HandleObject jsObj)
 {
     auto search = _js_native_global_map.find(jsObj);
     if(search != _js_native_global_map.end())
