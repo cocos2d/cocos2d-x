@@ -69,6 +69,7 @@ Sprite3DTests::Sprite3DTests()
     ADD_TEST_CASE(MotionStreak3DTest);
     ADD_TEST_CASE(Sprite3DPropertyTest);
     ADD_TEST_CASE(Sprite3DNormalMappingTest);
+    ADD_TEST_CASE(Sprite3DProgramGeneratedGeometryTest);
 };
 
 //------------------------------------------------------------------
@@ -2689,3 +2690,199 @@ void Sprite3DPropertyTest::refreshSpriteRender()
         mesh->setTexture(cacheTex, cocos2d::NTextureData::Usage::Diffuse, false);
     }
 }
+
+//------------------------------------------------------------------
+//
+// Sprite3DProgramGeneratedGeometryTest
+//
+//------------------------------------------------------------------
+
+Sprite3DProgramGeneratedGeometryTest::Sprite3DProgramGeneratedGeometryTest()
+:   numberOfIterationSteps(0)
+{
+    tetrahedron = generateSprite3d();
+
+    auto rotate_action = RotateBy::create(0.4,Vec3(5,30,15));
+    rotation = RepeatForever::create(rotate_action);
+    tetrahedron->runAction(rotation);
+
+    rotation->retain();
+
+    addChild(tetrahedron);
+
+    //add directional lights
+    addChild(DirectionLight::create(Vec3(0.7,-3.7,-0.7),Color3B(255,255,255)));
+    addChild(DirectionLight::create(Vec3(3.7,.5,-0.7),Color3B(30,90,60)));
+    //set the ambient light
+    addChild(AmbientLight::create(Color3B(90,45,45)));
+    
+    auto listener = EventListenerTouchOneByOne::create();
+    listener->onTouchBegan = CC_CALLBACK_2(Sprite3DProgramGeneratedGeometryTest::onTouchBegan, this);
+    listener->onTouchEnded = CC_CALLBACK_2(Sprite3DProgramGeneratedGeometryTest::onTouchEnded, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+}
+
+Sprite3DProgramGeneratedGeometryTest::~Sprite3DProgramGeneratedGeometryTest()
+{
+    rotation->release();
+}
+
+std::string Sprite3DProgramGeneratedGeometryTest::title() const
+{
+    return "Program Generated Geometry";
+}
+
+std::string Sprite3DProgramGeneratedGeometryTest::subtitle() const
+{
+    return "Tap to increase model complexity";
+}
+
+bool Sprite3DProgramGeneratedGeometryTest::onTouchBegan(Touch* touch, Event  *event)
+{
+    return true;
+}
+
+void Sprite3DProgramGeneratedGeometryTest::onTouchEnded(Touch*, Event*)
+{
+    if (numberOfIterationSteps >= 6)
+        return; // beyond this, unsigned short is no longer sufficient to specify indices
+    
+    numberOfIterationSteps += 1;
+
+    // Sprite3d has an addMesh method, but not a replaceMesh or removeMesh
+    // so we create a new sprite3d with identical rotation to the previous one, then swap it into the scene
+
+    tetrahedron->stopAllActions();
+    auto newTetrahedron = generateSprite3d();
+
+    auto r = tetrahedron->getRotation();
+    newTetrahedron->setRotation(r);
+
+    newTetrahedron->runAction(rotation);
+    
+    removeChild(tetrahedron);
+    addChild(newTetrahedron);
+    
+    tetrahedron = newTetrahedron;
+}
+
+cocos2d::Sprite3D* Sprite3DProgramGeneratedGeometryTest::generateSprite3d()
+{
+    auto sprite3d = Sprite3D::create();
+
+    std::vector< MeshVertexAttrib > attributes = {
+            { 3, GL_FLOAT, GLProgram::VERTEX_ATTRIB_POSITION,       3*sizeof(float) },
+            { 3, GL_FLOAT, GLProgram::VERTEX_ATTRIB_NORMAL,         3*sizeof(float) },
+        };
+    perVertexSizeInFloat = 6;
+    
+    std::vector< float > vertices;
+    MeshData::IndexArray indices;
+    AddTetrahedron(vertices, indices, 0,0,0,  45, numberOfIterationSteps);
+    AddCube(vertices, indices, 0,-10,0,  15);
+    
+    sprite3d->addMesh(Mesh::create(vertices, perVertexSizeInFloat, indices, attributes));
+    sprite3d->setMaterial(Sprite3DMaterial::createBuiltInMaterial(Sprite3DMaterial::MaterialType::DIFFUSE_NOTEX, false));
+    sprite3d->setNormalizedPosition(Vec2(.5,.5));
+
+    return sprite3d;
+}
+
+void Sprite3DProgramGeneratedGeometryTest::AddCube(std::vector< float > &vertices, MeshData::IndexArray& indices,
+                                                          float x, float y, float z, float s)
+{
+    size_t startindex = vertices.size() / perVertexSizeInFloat;
+    vertices.insert ( vertices.end(), {
+        // position  normal
+        // +x
+        x+s,y-s,z-s, 1,0,0, 
+        x+s,y+s,z-s, 1,0,0, 
+        x+s,y-s,z+s, 1,0,0, 
+        x+s,y+s,z+s, 1,0,0, 
+        // +y
+        x-s,y+s,z-s, 0,1,0, 
+        x+s,y+s,z-s, 0,1,0, 
+        x-s,y+s,z+s, 0,1,0, 
+        x+s,y+s,z+s, 0,1,0, 
+        // +z
+        x-s,y-s,z+s, 0,0,1, 
+        x+s,y-s,z+s, 0,0,1, 
+        x-s,y+s,z+s, 0,0,1, 
+        x+s,y+s,z+s, 0,0,1, 
+        // -x
+        x-s,y-s,z-s, -1,0,0,
+        x-s,y+s,z-s, -1,0,0,
+        x-s,y-s,z+s, -1,0,0,
+        x-s,y+s,z+s, -1,0,0,
+        // -y
+        x-s,y-s,z-s, 0,-1,0,
+        x+s,y-s,z-s, 0,-1,0,
+        x-s,y-s,z+s, 0,-1,0,
+        x+s,y-s,z+s, 0,-1,0,
+        // -z
+        x-s,y-s,z-s, 0,0,-1,
+        x+s,y-s,z-s, 0,0,-1,
+        x-s,y+s,z-s, 0,0,-1,
+        x+s,y+s,z-s, 0,0,-1,
+    } );
+
+    MeshData::IndexArray meshindices = { 0, 3, 2, 1, 3, 0,
+                                         4, 6, 7, 4, 7, 5,
+                                         8, 11, 10, 9, 11, 8,
+                                         12,  14,  15,  13,  12,  15,
+                                         16,  19,  18,  17,  19,  16,
+                                         20,  22,  23,  21,  20,  23
+    };
+    
+    for (auto i : meshindices)
+    {
+        indices.push_back((unsigned short)(startindex+i));
+    }
+}
+
+void Sprite3DProgramGeneratedGeometryTest::AddTetrahedron(std::vector< float > &vertices, MeshData::IndexArray& indices,
+                                                          float x, float y, float z, float s, int steps)
+{
+    const float RT3 = 1.7320508076;
+    const float T1 = 0.316227766016838;
+    const float T2 = 0.948683298050514;
+    const float T3 = 0.806898221355073;
+    const float T4 = 0.295345247284436;
+    const float T5 = 0.511552974070637;
+
+    if (steps > 0)
+    {
+        AddTetrahedron(vertices, indices,  x, y+s, z,         s/2.0, steps-1);
+    
+        AddTetrahedron(vertices, indices,  x-RT3*s/2.0, y-s/2.0, z-s/2.0,         s/2.0, steps-1);
+        AddTetrahedron(vertices, indices,  x+RT3*s/2.0, y-s/2.0, z-s/2.0,         s/2.0, steps-1);
+        AddTetrahedron(vertices, indices,  x, y-s/2.0, z+RT3*s/2.0,         s/2.0, steps-1);
+        return;
+    }
+
+    size_t startindex = vertices.size() / perVertexSizeInFloat;
+    vertices.insert ( vertices.end(), {
+        // position                     normal
+        x,        y+2.0f*s,  z,       0, T1, -T2,
+        x+s*RT3,  y-s,    z-s,        0, T1, -T2,
+        x-s*RT3,  y-s,    z-s,        0, T1, -T2,
+
+        x,        y+2.0f*s,  z,       T3, T4, T5,
+        x,        y-s,    z+s*RT3,    T3, T4, T5,
+        x+s*RT3,  y-s,    z-s,        T3, T4, T5,
+
+        x,        y+2.0f*s,  z,       -T3, T4, T5,
+        x-s*RT3,  y-s,    z-s,        -T3, T4, T5,
+        x,        y-s,    z+s*RT3,    -T3, T4, T5,
+
+        x-s*RT3,  y-s,    z-s,        0,  -1,  0,
+        x+s*RT3,  y-s,    z-s,        0,  -1,  0,
+        x,        y-s,    z+s*RT3,    0,  -1,  0,
+    } );
+
+    for (size_t i=0; i<12; i++)
+    {
+        indices.push_back((unsigned short)(startindex+i));
+    }
+}
+
