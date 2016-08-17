@@ -4,10 +4,12 @@ cocos2d-x-3.13 Aug 22 2016
 [HIGHLIGHT]     support ETC1 alpha channel
 [HIGHLIGHT]     fix AudioEngine performance for Android 4.2+
 [HIGHLIGHT]     add Andorid arm-64 support
+[HIGHLIGHT]     use luajit for Android arm-64
 [HIGHLIGHT]     switch to use gcc 4.9
 [HIGHLIGHT]     upgrade CURL to 7.50.0
 [HIGHLIGHT]     upgrade Spine to 3.4
-[HIGHLIGHT]     update glfw to 3.2
+[HIGHLIGHT]     upgrade glfw to 3.2
+[HIGHLIGHT]     upgrade luajit to 2.1.0-beta2
 
 [NEW]           add `Configuration::supportsMapBuffer()`
 [NEW]           support hexagonal tile maps
@@ -16,6 +18,7 @@ cocos2d-x-3.13 Aug 22 2016
 [NEW]           implement `AudioEngine::preload()` on Android
 [NEW]           add `cc.Node['.classname']` to get class name for tolua C++ class in lua
 
+[REFINE]        move back to use gcc 4.9 on Android to fix some crash bugs
 [REFINE]        optimize Node sorting speed for 64-bit
 [REFINE]        using `chrono::steady_clock()` instread of gettimeofday for FPS calculation
 [REFINE]        use `fstat` instead of `fseek` and `ftell` for performance to read file content
@@ -24,11 +27,14 @@ cocos2d-x-3.13 Aug 22 2016
 [REFINE]        support utf-8 bom lua script
 [REFINE]        can show utf-8 characters in MessageBox and lua log on win32
 
+[FIX]           `GLProgram::link()` only check result in debug mode or WinRT
+[FIX]           PageView::clone() misses cloing some member variables
+[FIX]           potential crash of `AudioEngine::uncache()`
+[FIX]           websocket receives package size > 1023 error
 [FIX]           the color of underline is different from the text color
 [FIX]           memory leak in `MenuItemToggle::create()`
 [FIX]           crash after removing a physics body right after adding it
 [FIX]           SpriteBatchNode crash if CC_SPRITE_DEBUG_DRAW is enabled
-[FIX]           `FileUtils::removeDirectory()` can not work on all platforms except iOS and Mac
 [FIX]           memory leak in `Data::move()`
 [FIX]           crash in `EaseExpoentialOut::clone()`
 [FIX]           buffer over-read in `GLProgram::updateUniformLocation()`
@@ -40,12 +46,16 @@ cocos2d-x-3.13 Aug 22 2016
 [FIX]           fix `relocation overflow in R_ARM_THM_CALL` on Android
 [FIX]           navigation bar doesn't hide if show and dismiss keyboard on Android
 [FIX]           `utils::getTimeInMilliseconds()` may return wrong value on Android
+[FiX]           link error that `bsd_sinal` is not defined if building with API level 21+ and uses libwebsockets on Android
 [FIX]           compiling error with Android 6.0(API 23)
 [FIX]           music is not resumed when app is reactived on iOS
 [FIX]           random crash in `alGenBuffers` at startup on iOS
 [FIX]           can not play audio if uncache and play audio many times on iOS
 [FIX]           `Text::create()` crash if it contains invalid string on iOS
+[FIX]           `FileUtils::removeDirectory()` can not work on all platforms except iOS and Mac
+[FIX]           can not compile cocos2d-x on Mac OS X 10.10 and lower
 [FIX]           new js project link error on linux
+[FIX]           AudioEngine can not play large ogg file on Windows
 [FIX]           design resolution broken after minimize on desk platforms
 [FIX]           can not get the `backClicked` in lua
 [FIX]           `cc.convertColor` issue in lua
