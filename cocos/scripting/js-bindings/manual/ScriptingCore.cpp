@@ -899,8 +899,28 @@ void ScriptingCore::cleanup()
     localStorageFree();
     removeAllRoots(_cx);
     garbageCollect();
+
+    if (_js_log_buf) {
+        free(_js_log_buf);
+        _js_log_buf = NULL;
+    }
+    
+    for (auto& s : filename_script)
+    {
+        CC_SAFE_DELETE(s.second); 
+    }
+    filename_script.clear();
+    registrationList.clear();
+    
+    for (auto iter = _js_global_type_map.begin(); iter != _js_global_type_map.end(); ++iter)
+    {
+        delete iter->second->parentProto.ptr();
+        delete iter->second->proto.ptr();
+    }
+    
     CC_SAFE_DELETE(_global);
     CC_SAFE_DELETE(_debugGlobal);
+
     if (_cx)
     {
         JS_DestroyContext(_cx);
@@ -911,20 +931,13 @@ void ScriptingCore::cleanup()
         JS_DestroyRuntime(_rt);
         _rt = NULL;
     }
-    if (_js_log_buf) {
-        free(_js_log_buf);
-        _js_log_buf = NULL;
-    }
-
+    
     for (auto iter = _js_global_type_map.begin(); iter != _js_global_type_map.end(); ++iter)
     {
         free(iter->second->jsclass);
         free(iter->second);
     }
-
     _js_global_type_map.clear();
-    filename_script.clear();
-    registrationList.clear();
     
     _needCleanup = false;
 }

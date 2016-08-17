@@ -566,18 +566,16 @@ js_type_class_t *jsb_register_class(JSContext *cx, JSClass *jsClass, JS::HandleO
     std::string typeName = t.s_name();
     if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
     {
+        JS::RootedObject protoRoot(cx, proto);
+        JS::RootedObject protoParentRoot(cx, parentProto);
         p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        memset(p, 0, sizeof(js_type_class_t));
         p->jsclass = jsClass;
-        if (p->proto.empty())
-        {
-            p->proto.construct(cx);
-        }
-        p->proto.ref() = proto;
-        if (p->parentProto.empty())
-        {
-            p->parentProto.construct(cx);
-        }
-        p->parentProto.ref() = parentProto ;
+        auto persistentProtoRoot = new (std::nothrow) JS::PersistentRootedObject(cx, protoRoot);
+        p->proto.set(persistentProtoRoot);
+        
+        auto persistentProtoParentRoot = new (std::nothrow) JS::PersistentRootedObject(cx, protoParentRoot);
+        p->parentProto.set(persistentProtoParentRoot);
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
     return p;
