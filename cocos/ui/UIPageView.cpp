@@ -189,6 +189,10 @@ void PageView::moveInnerContainer(const Vec2& deltaMove, bool canStartBounceBack
 {
     ListView::moveInnerContainer(deltaMove, canStartBounceBack);
     _currentPageIndex = getIndex(getCenterItemInCurrentView());
+    if(_previousPageIndex != _currentPageIndex) {
+        pageTurningEvent();
+        _previousPageIndex = _currentPageIndex;
+    }
     if(_indicator != nullptr)
     {
         _indicator->indicate(_currentPageIndex);
@@ -289,7 +293,8 @@ void PageView::addEventListenerPageView(Ref *target, SEL_PageViewEvent selector)
     _pageViewEventSelector = selector;
 
     ccScrollViewCallback scrollViewCallback = [=](Ref* ref, ScrollView::EventType type) -> void{
-        if (type == ScrollView::EventType::AUTOSCROLL_ENDED && _previousPageIndex != _currentPageIndex) {
+        if (type == ScrollView::EventType::AUTOSCROLL_ENDED
+            && _previousPageIndex != _currentPageIndex) {
             pageTurningEvent();
         }
     };
@@ -319,7 +324,8 @@ void PageView::addEventListener(const ccPageViewCallback& callback)
 {
     _eventCallback = callback;
     ccScrollViewCallback scrollViewCallback = [=](Ref* ref, ScrollView::EventType type) -> void{
-        if (type == ScrollView::EventType::AUTOSCROLL_ENDED && _previousPageIndex != _currentPageIndex) {
+        if (type == ScrollView::EventType::AUTOSCROLL_ENDED
+            && _previousPageIndex != _currentPageIndex) {
             pageTurningEvent();
         }
     };

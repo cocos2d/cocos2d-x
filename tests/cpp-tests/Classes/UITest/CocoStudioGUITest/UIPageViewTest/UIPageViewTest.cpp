@@ -82,8 +82,8 @@ bool UIPageViewTest::init()
             pageView->insertCustomItem(layout, i);
         }
         
-        pageView->removeItem(0);
-        pageView->scrollToItem(pageCount - 2);
+//        pageView->removeItem(0);
+//        pageView->scrollToItem(pageCount - 2);
         //This method is deprecated, we used here only testing purpose
         pageView->addEventListenerPageView(this, pagevieweventselector(UIPageViewTest::pageViewEvent));
         
@@ -103,6 +103,7 @@ void UIPageViewTest::pageViewEvent(Ref *pSender, PageViewEventType type)
             PageView* pageView = dynamic_cast<PageView*>(pSender);
             
             _displayValueLabel->setString(StringUtils::format("page = %ld", static_cast<long>(pageView->getCurrentPageIndex() + 1)));
+            CCLOG("PageView turning event fired!");
         }
             break;
             
