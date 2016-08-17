@@ -1034,6 +1034,7 @@
         "cocos/platform/android/java/src/org/cocos2dx/lib/Cocos2dxLocalStorage.java", 
         "cocos/platform/android/java/src/org/cocos2dx/lib/Cocos2dxLuaJavaBridge.java", 
         "cocos/platform/android/java/src/org/cocos2dx/lib/Cocos2dxMusic.java", 
+        "cocos/platform/android/java/src/org/cocos2dx/lib/Cocos2dxReflectionHelper.java", 
         "cocos/platform/android/java/src/org/cocos2dx/lib/Cocos2dxRenderer.java", 
         "cocos/platform/android/java/src/org/cocos2dx/lib/Cocos2dxSound.java", 
         "cocos/platform/android/java/src/org/cocos2dx/lib/Cocos2dxTextInputWraper.java", 
