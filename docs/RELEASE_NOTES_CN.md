@@ -23,6 +23,7 @@
 * 增加了VR插件，包括**GearVR**、**GVR(Cardboard和Daydream)**、**DeepoonVR**和**OculusVR**
 * 支持ETC1 alpha通道
 * 解决了AudioEngin的性能问题，在Android 4.2+有效
+* 通过脏矩形算法提升Canvas渲染器性能
 * 支持Android 64位应用
 * Android切换回gcc 4.9
 * CURL升级到7.50.0
@@ -50,6 +51,21 @@ auto sprite = Sprite::create("xxx.pkm");
 ### AudioEngin性能提升
 
 Android平台下，AudioEngine使用[OpenSL ES](https://developer.android.com/ndk/guides/audio/opensl-for-android.html)播放声音。从Android 4.2开始，OpenSL ES支持解码声音文件为PCM数据，引擎正是利用这个以特性来缓存解码后数据以提升性能。因此，该性能提升只在Android 4.2及以上版本有效。
+
+### 脏矩形算法
+
+在v3.12中我们通过重构WebGL渲染器大幅度提升了Web引擎的性能，在这个版本中，我们又实现了脏矩形算法来提升Canvas渲染器的性能。脏矩形算法允许引擎只渲染当前帧中和前一帧不同的区域，而不是渲染整个画布，大大降低填充率，可以同时带来渲染效率的提升以及CPU使用率和耗电量的降低。对于相对静态的游戏画面来说，非常有效。这个功能默认是关闭的，开启它可以通过下面的代码：
+
+```
+// 开启脏矩形算法
+if (cc._renderType === cc.game.RENDER_TYPE_CANVAS) {
+    cc.renderer.enableDirtyRegion(true);
+    // 设置允许用脏矩形算法进行局部渲染的最高脏矩形数量
+    cc.renderer.setDirtyRegionCountThreshold(6);
+}
+// 检查脏矩形算法是否开启
+var enabled = isDirtyRegionEnabled();
+```
 
 ### 支持Android 64位应用
 

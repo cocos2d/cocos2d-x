@@ -29,6 +29,7 @@
 * add VR plugin
 * support ETC1 alpha channel
 * fix AudioEngine performance for Android 4.2+
+* improve canvas renderer performance with dirty region 
 * add Andorid arm-64 support
 * switch to use gcc 4.9
 * upgrade CURL to 7.50.0
@@ -58,6 +59,21 @@ More detail usage can refer to the implementation of `Sprite1ETC1Alpha` in `test
 ### AudioEngine performance for Android 4.2+
 
 AudioEngine uses [OpenSL ES](https://developer.android.com/ndk/guides/audio/opensl-for-android.html) on Android, and it supports decoding audio source file to PCM data in codes since Android 4.2. Now AudioEngine uses this feature to fix the performance issue. The performane is the same as before if running on Android 4.1 or lower version.
+
+### Dirty region in canvas renderer
+
+In v3.12, we improved WebGL renderer in the web engine, this version have brought the dirty region algorithm to improve canvas renderer performance. Basically, it detect every region that have been changed between frames, then only render these parts instead of refresh the whole canvas. This technique is beneficial for many games in which the dynamic region is often limited, it can improve frame rate and reduce CPU usage, power consumation. It's desactivated by default, to activate it, you can do the following:
+
+```
+// Enable dirty region algorithm
+if (cc._renderType === cc.game.RENDER_TYPE_CANVAS) {
+    cc.renderer.enableDirtyRegion(true);
+    // Maximum dirty region count to activate the partial rendering process
+    cc.renderer.setDirtyRegionCountThreshold(6);
+}
+// Detect if dirty is enabled
+var enabled = isDirtyRegionEnabled();
+```
 
 ### Android arm-64 support
 
