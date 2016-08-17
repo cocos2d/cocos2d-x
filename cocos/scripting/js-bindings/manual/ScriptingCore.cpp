@@ -520,7 +520,35 @@ void ScriptingCore::string_report(JS::HandleValue val) {
 bool ScriptingCore::evalString(const char *string, JS::MutableHandleValue outVal, const char *filename, JSContext* cx, JS::HandleObject global)
 {
     JSAutoCompartment ac(cx, global);
-    return JS_EvaluateScript(cx, global, string, (unsigned)strlen(string), "ScriptingCore::evalString", 1, outVal);
+    JS::PersistentRootedScript* script = new (std::nothrow) JS::PersistentRootedScript(cx);
+    if (script == nullptr) {
+        return false;
+    }
+    
+    JS::CompileOptions op(cx);
+    op.setUTF8(true);
+    
+    std::string content = string;
+    
+    bool ok = false;
+    bool evaluatedOK = false;
+    if (!content.empty())
+    {
+        ok = JS::Compile(cx, global, op, content.c_str(), content.size(), &(*script) );
+    }
+    if (ok) {
+        evaluatedOK = JS_ExecuteScript(cx, global, *script, outVal);
+        if (false == evaluatedOK) {
+            cocos2d::log("Evaluating %s failed (evaluatedOK == JS_FALSE)", content.c_str());
+            JS_ReportPendingException(cx);
+        }
+    }
+    else {
+        cocos2d::log("ScriptingCore:: evaluateScript fail: %s", content.c_str());
+    }
+    
+    CC_SAFE_DELETE(script);
+    return evaluatedOK;
 }
 
 bool ScriptingCore::evalString(const char *string, JS::MutableHandleValue outVal)
