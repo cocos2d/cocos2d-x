@@ -29,6 +29,9 @@ DEPENDS+=' libsqlite3-dev'
 DEPENDS+=' libglew-dev'
 DEPENDS+=' libssl-dev'
 DEPENDS+=' libgtk-3-dev'
+DEPENDS+=' libvorbis-dev'
+DEPENDS+=' libmpg123-dev'
+DEPENDS+=' libopenal-dev'
 
 MISSING=
 echo "Checking for missing packages ..."
