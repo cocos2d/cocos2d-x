@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -576,6 +576,15 @@ public:
     virtual std::string title() const override;    
 private:
     cocos2d::Vector<Node*> _pausedTargets;
+};
+
+class ActionResize : public ActionsDemo 
+{
+public:
+    CREATE_FUNC(ActionResize);
+
+    virtual void onEnter() override;
+    virtual std::string subtitle() const override;
 };
 
 class ActionFloatTest : public ActionsDemo

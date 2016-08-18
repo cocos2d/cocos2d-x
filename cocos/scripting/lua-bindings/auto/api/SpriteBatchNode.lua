@@ -110,6 +110,15 @@
 -- @return SpriteBatchNode#SpriteBatchNode self (return value: cc.SpriteBatchNode)
         
 --------------------------------
+--  reserves capacity for the batch node.<br>
+-- If the current capacity is bigger, nothing happens.<br>
+-- otherwise, a new capacity is allocated 
+-- @function [parent=#SpriteBatchNode] reserveCapacity 
+-- @param self
+-- @param #long newCapacity
+-- @return SpriteBatchNode#SpriteBatchNode self (return value: cc.SpriteBatchNode)
+        
+--------------------------------
 -- js NA
 -- @function [parent=#SpriteBatchNode] removeAllChildrenWithCleanup 
 -- @param self

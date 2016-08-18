@@ -1,7 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010      Lam Pham
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc
+Copyright (c) 2013-2016 Chukong Technologies Inc
 
 http://www.cocos2d-x.org
 
@@ -142,7 +142,7 @@ void ProgressTimer::setType(Type type)
     }
 }
 
-void ProgressTimer::setReverseProgress(bool reverse)
+void ProgressTimer::setReverseDirection(bool reverse)
 {
     if( _reverseDirection != reverse ) {
         _reverseDirection = reverse;

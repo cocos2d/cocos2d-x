@@ -220,7 +220,7 @@ void AudioMixerController::mixOneFrame()
             }
             else
             {
-                ALOGW("Previous state (%d) isn't PAUSED, couldn't resume!", track->getPrevState());
+                ALOGW("Previous state (%d) isn't PAUSED, couldn't resume!", static_cast<int>(track->getPrevState()));
             }
         }
         else if (state == Track::State::PAUSED)
@@ -231,7 +231,7 @@ void AudioMixerController::mixOneFrame()
             }
             else
             {
-                ALOGW("Previous state (%d) isn't PLAYING, couldn't pause!", track->getPrevState());
+                ALOGW("Previous state (%d) isn't PLAYING, couldn't pause!", static_cast<int>(track->getPrevState()));
             }
         }
         else if (state == Track::State::STOPPED)

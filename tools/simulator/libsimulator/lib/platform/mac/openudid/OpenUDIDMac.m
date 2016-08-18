@@ -322,7 +322,7 @@ static int const kOpenUDIDRedundancySlots = 100;
     // If the UIPasteboard external representation marks this app as opted-out, then to respect privacy, we return the ZERO OpenUDID, a sequence of 40 zeros...
     // This is a *new* case that developers have to deal with. Unlikely, statistically low, but still.
     // To circumvent this and maintain good tracking (conversion ratios, etc.), developers are invited to calculate how many of their users have opted-out from the full set of users.
-    // This ratio will let them extrapolate convertion ratios more accurately.
+    // This ratio will let them extrapolate conversion ratios more accurately.
     //
     if (optedOut) {
         if (error!=nil) *error = [NSError errorWithDomain:kOpenUDIDDomain

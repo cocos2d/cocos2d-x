@@ -2,7 +2,7 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2013 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2015 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -980,6 +980,15 @@ void Director::reset()
     {
         _eventDispatcher->removeAllEventListeners();
     }
+    
+    if(_notificationNode)
+    {
+        _notificationNode->onExit();
+        _notificationNode->cleanup();
+        _notificationNode->release();
+    }
+    
+    _notificationNode = nullptr;
     
     // remove all objects, but don't release it.
     // runWithScene might be executed after 'end'.

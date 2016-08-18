@@ -220,7 +220,7 @@ void ConsoleCommand::onSendCommand(int fd, const std::string &args)
 #endif
             } else if(strcmp(strcmd.c_str(), "getplatform") == 0)
             {
-                string platform="UNKNOW";
+                string platform="UNKNOWN";
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
                 platform = "WIN32";
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)

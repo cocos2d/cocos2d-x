@@ -1,7 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010      Lam Pham
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -99,14 +99,7 @@ public:
      */
     void setType(Type type);
     
-    /** Set the Reverse direction.
-     * @js setReverseDirection
-     * @lua setReverseDirection
-     * @param reverse If reverse is false it will clockwise,if is true it will Anti-clockwise.
-     */
-    void setReverseProgress(bool reverse);
-    
-    /** Return the Reverse direction. 
+    /** Return the Reverse direction.
      *
      * @return If the direction is Anti-clockwise,it will return true.
      */
@@ -116,7 +109,15 @@ public:
      *
      * @param value If value is false it will clockwise,if is true it will Anti-clockwise.
      */
-    inline void setReverseDirection(bool value) { _reverseDirection = value; };
+    void setReverseDirection(bool value);
+
+    /** Set the Reverse direction.
+     * @js setReverseDirection
+     * @lua setReverseDirection
+     * @param reverse If reverse is false it will clockwise,if is true it will Anti-clockwise.
+     */
+    CC_DEPRECATED_ATTRIBUTE void setReverseProgress(bool reverse) { setReverseDirection(reverse); }
+
 
     /**
      *    Midpoint is used to modify the progress start position.

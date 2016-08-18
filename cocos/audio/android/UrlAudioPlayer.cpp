@@ -169,7 +169,7 @@ void UrlAudioPlayer::stop()
     }
     else
     {
-        ALOGW("UrlAudioPlayer (%p, state:%d) isn't playing or paused, could not invoke stop!", this, _state);
+        ALOGW("UrlAudioPlayer (%p, state:%d) isn't playing or paused, could not invoke stop!", this, static_cast<int>(_state));
     }
 }
 
@@ -183,7 +183,7 @@ void UrlAudioPlayer::pause()
     }
     else
     {
-        ALOGW("UrlAudioPlayer (%p, state:%d) isn't playing, could not invoke pause!", this, _state);
+        ALOGW("UrlAudioPlayer (%p, state:%d) isn't playing, could not invoke pause!", this, static_cast<int>(_state));
     }
 }
 
@@ -197,7 +197,7 @@ void UrlAudioPlayer::resume()
     }
     else
     {
-        ALOGW("UrlAudioPlayer (%p, state:%d) isn't paused, could not invoke resume!", this, _state);
+        ALOGW("UrlAudioPlayer (%p, state:%d) isn't paused, could not invoke resume!", this, static_cast<int>(_state));
     }
 }
 
@@ -211,7 +211,7 @@ void UrlAudioPlayer::play()
     }
     else
     {
-        ALOGW("UrlAudioPlayer (%p, state:%d) isn't paused or initialized, could not invoke play!", this, _state);
+        ALOGW("UrlAudioPlayer (%p, state:%d) isn't paused or initialized, could not invoke play!", this, static_cast<int>(_state));
     }
 }
 

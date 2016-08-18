@@ -42,8 +42,9 @@ bool LuaJavaBridge::CallInfo::execute(void)
         case TypeString:
         {
             m_retjs = (jstring)m_env->CallStaticObjectMethod(m_classID, m_methodID);
-            std::string strValue = cocos2d::StringUtils::getStringUTFCharsJNI(m_env, m_retjs);
-            m_ret.stringValue = new string(strValue);
+            bool bValidStr = true;
+            std::string strValue = cocos2d::StringUtils::getStringUTFCharsJNI(m_env, m_retjs, &bValidStr);
+            m_ret.stringValue = (false == bValidStr) ? nullptr : new string(strValue);
            break;
         }
 
@@ -87,9 +88,10 @@ bool LuaJavaBridge::CallInfo::executeWithArgs(jvalue *args)
 
          case TypeString:
         {
-        	 m_retjs = (jstring)m_env->CallStaticObjectMethodA(m_classID, m_methodID, args);
-            std::string strValue = cocos2d::StringUtils::getStringUTFCharsJNI(m_env, m_retjs);
-            m_ret.stringValue = new string(strValue);
+       		m_retjs = (jstring)m_env->CallStaticObjectMethodA(m_classID, m_methodID, args);
+        	bool bValidStr = true;
+            	std::string strValue = cocos2d::StringUtils::getStringUTFCharsJNI(m_env, m_retjs, &bValidStr);
+            	m_ret.stringValue = (false == bValidStr) ? nullptr : new string(strValue);
             break;
         }
 
@@ -130,7 +132,11 @@ int LuaJavaBridge::CallInfo::pushReturnValue(lua_State *L)
 			lua_pushboolean(L, m_ret.boolValue);
 			return 1;
 		case TypeString:
-			lua_pushstring(L, m_ret.stringValue->c_str());
+			if(m_ret.stringValue == nullptr){
+				lua_pushnil(L);
+			}else{
+				lua_pushstring(L, m_ret.stringValue->c_str());
+			}
 			return 1;
         default:
             break;

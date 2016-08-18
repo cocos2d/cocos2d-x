@@ -2,7 +2,7 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -270,6 +270,15 @@ gl_code; \
 __gl_error_code = glGetError(); \
 CC_ASSERT(__gl_error_code == GL_NO_ERROR, "Error"); \
 } while(0)
+#endif
+
+ /*********************************/
+ /** 64bits Program Sense Macros **/
+ /*********************************/
+#if defined(_M_X64) || defined(_WIN64) || defined(__LP64__) || defined(_LP64) || defined(__x86_64)
+#define CC_64BITS 1
+#else
+#define CC_64BITS 0
 #endif
 
 

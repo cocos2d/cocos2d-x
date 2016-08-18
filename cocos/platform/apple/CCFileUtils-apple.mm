@@ -1,7 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -33,7 +33,6 @@ THE SOFTWARE.
 #include <stack>
 
 #include "base/CCDirector.h"
-#include "deprecated/CCDictionary.h"
 #include "platform/CCFileUtils.h"
 #include "platform/CCSAXParser.h"
 
