@@ -660,7 +660,7 @@ void Director::purgeCachedData(void)
 
 float Director::getZEye(void) const
 {
-    return (_winSizeInPoints.height / (2 * tanf(M_PI/6)));
+    return (_winSizeInPoints.height / 1.1566f);
 }
 
 void Director::setAlphaBlending(bool on)
