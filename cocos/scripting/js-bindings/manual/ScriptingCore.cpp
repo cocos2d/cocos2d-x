@@ -520,7 +520,7 @@ void ScriptingCore::string_report(JS::HandleValue val) {
 bool ScriptingCore::evalString(const char *string, JS::MutableHandleValue outVal, const char *filename, JSContext* cx, JS::HandleObject global)
 {
     JSAutoCompartment ac(cx, global);
-    JS::PersistentRootedScript* script = new (std::nothrow) JS::PersistentRootedScript(cx);
+    JS::PersistentRootedScript script(cx);
     if (script == nullptr) {
         return false;
     }
@@ -534,10 +534,10 @@ bool ScriptingCore::evalString(const char *string, JS::MutableHandleValue outVal
     bool evaluatedOK = false;
     if (!content.empty())
     {
-        ok = JS::Compile(cx, global, op, content.c_str(), content.size(), &(*script) );
+        ok = JS::Compile(cx, global, op, content.c_str(), content.size(), &(script) );
     }
     if (ok) {
-        evaluatedOK = JS_ExecuteScript(cx, global, *script, outVal);
+        evaluatedOK = JS_ExecuteScript(cx, global, script, outVal);
         if (false == evaluatedOK) {
             cocos2d::log("Evaluating %s failed (evaluatedOK == JS_FALSE)", content.c_str());
             JS_ReportPendingException(cx);
@@ -546,8 +546,6 @@ bool ScriptingCore::evalString(const char *string, JS::MutableHandleValue outVal
     else {
         cocos2d::log("ScriptingCore:: evaluateScript fail: %s", content.c_str());
     }
-    
-    CC_SAFE_DELETE(script);
     return evaluatedOK;
 }
 
@@ -658,11 +656,11 @@ void ScriptingCore::createGlobalContext() {
     JS_SetGCZeal(this->_cx, 2, JS_DEFAULT_ZEAL_FREQ);
 #endif
 
-    _global = new JS::PersistentRootedObject(_cx, NewGlobalObject(_cx));
+    _global = new (std::nothrow) JS::PersistentRootedObject(_rt, NewGlobalObject(_cx));
     JS::RootedObject global(_cx, _global->get());
 
     // Removed in Firefox v34
-    js::SetDefaultObjectForContext(_cx, _global->get());
+    js::SetDefaultObjectForContext(_cx, global);
 
     JSAutoCompartment ac(_cx, _global->get());
 
@@ -1759,7 +1757,8 @@ bool ScriptingCore::parseConfig(ConfigType type, const std::string &str)
     jsval args[2];
     args[0] = int32_to_jsval(_cx, static_cast<int>(type));
     args[1] = std_string_to_jsval(_cx, str);
-    return (true == executeFunctionWithOwner(OBJECT_TO_JSVAL(_global->get()), "__onParseConfig", 2, args));
+    JS::RootedValue globalVal(_cx, OBJECT_TO_JSVAL(_global->get()));
+    return (true == executeFunctionWithOwner(globalVal, "__onParseConfig", 2, args));
 }
 
 bool ScriptingCore::isObjectValid(JSContext *cx, uint32_t argc, jsval *vp)
@@ -2074,7 +2073,7 @@ void ScriptingCore::enableDebugger(unsigned int port)
 
         JS_SetDebugMode(_cx, true);
 
-        _debugGlobal = new JS::PersistentRootedObject(_cx, NewGlobalObject(_cx, true));
+        _debugGlobal = new (std::nothrow) JS::PersistentRootedObject(_cx, NewGlobalObject(_cx, true));
         // Adds the debugger object to root, otherwise it may be collected by GC.
         //AddObjectRoot(_cx, &_debugGlobal.ref()); no need, it's persistent rooted now
         //JS_WrapObject(_cx, &_debugGlobal.ref()); Not really needed, JS_WrapObject makes a cross-compartment wrapper for the given JS object
