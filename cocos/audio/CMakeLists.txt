@@ -24,8 +24,9 @@ ELSEIF(ANDROID)
 elseif(LINUX)
     set(COCOS_AUDIO_PLATFORM_SRC
         audio/linux/SimpleAudioEngine.cpp
-        audio/linux/AudioEngine-linux.h
         audio/linux/AudioEngine-linux.cpp
+        audio/linux/AudioCache.cpp
+        audio/linux/AudioPlayer.cpp
     )
 
 elseif(MACOSX)

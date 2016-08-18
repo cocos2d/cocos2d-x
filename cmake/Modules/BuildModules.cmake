@@ -7,6 +7,12 @@ macro (BuildModules)
 	    cocos_find_package(GLEW GLEW REQUIRED)
 	    #TODO: implement correct schema for pass cocos2d specific requirements to projects
 	    include_directories(${GLEW_INCLUDE_DIRS})
+	    
+	    cocos_find_package(Vorbis VORBIS REQUIRED)
+	    cocos_find_package(MPG123 MPG123 REQUIRED)
+	    cocos_find_package(OpenAL OPENAL REQUIRED)
+	    # because FindOpenAL.cmake set include dir for '#include <al.h>' for portability (not for '#include <AL/al.h>'
+        set(OPENAL_DEFINITIONS "-DOPENAL_PLAIN_INCLUDES")
 	  endif()
 
 	  cocos_find_package(GLFW3 GLFW3 REQUIRED)
@@ -18,17 +24,8 @@ macro (BuildModules)
 	    set(THREADS_LIBRARIES ${CMAKE_THREAD_LIBS_INIT})
 
 	    cocos_find_package(SQLite3 SQLITE3 REQUIRED)
-	    cocos_find_package(FMOD FMOD REQUIRED)
 	    cocos_find_package(Fontconfig FONTCONFIG REQUIRED)
 	    cocos_find_package(GTK3 GTK3 REQUIRED)
-	  endif()
-
-	  if(WINDOWS)
-	    cocos_find_package(Vorbis VORBIS REQUIRED)
-	    cocos_find_package(MPG123 MPG123 REQUIRED)
-	    cocos_find_package(OpenAL OPENAL REQUIRED)
-	    # because FindOpenAL.cmake set include dir for '#include <al.h>' for portability (not for '#include <AL/al.h>'
-        set(OPENAL_DEFINITIONS "-DOPENAL_PLAIN_INCLUDES")
 	  endif()
 	endif(LINUX OR MACOSX OR WINDOWS)
 

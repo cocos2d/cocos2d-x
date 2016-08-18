@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -25,17 +25,14 @@
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
 
-#ifndef __AUDIO_ENGINE_LINUX_H_
-#define __AUDIO_ENGINE_LINUX_H_
+#ifndef __AUDIO_ENGINE_INL_H_
+#define __AUDIO_ENGINE_INL_H_
 
-#include <functional>
-#include <iostream>
-#include <map>
-#include "fmod.hpp"
-#include "fmod_errors.h"
-#include "audio/include/AudioEngine.h"
+#include <unordered_map>
 
 #include "base/CCRef.h"
+#include "audio/linux/AudioCache.h"
+#include "audio/linux/AudioPlayer.h"
 
 NS_CC_BEGIN
     namespace experimental{
@@ -62,47 +59,36 @@ public:
     
     void uncache(const std::string& filePath);
     void uncacheAll();
-    
-
-    int preload(const std::string& filePath, std::function<void(bool isSuccess)> callback);
+    AudioCache* preload(const std::string& filePath, std::function<void(bool)> callback);
     
     void update(float dt);
     
-    /**
-     * used internally by ffmod callback 
-     */ 
-    void onSoundFinished(FMOD::Channel * channel); 
-    
 private:
-  
-    /**
-    * returns null if a sound with the given path is not found
-    */
-    FMOD::Sound * findSound(const std::string &path);
-  
-    FMOD::Channel * getChannel(FMOD::Sound *);
-  
-    struct ChannelInfo{
-        int id;
-        std::string path; 
-        FMOD::Sound * sound;
-        FMOD::Channel * channel; 
-        bool loop; 
-        float volume; 
-        std::function<void (int, const std::string &)> callback;
-    };
+    void _play2d(AudioCache *cache, int audioID);
     
-    std::map<int, ChannelInfo> mapChannelInfo;
-
-    std::map<std::string, int> mapId;
+    ALuint _alSources[MAX_AUDIOINSTANCES];
     
-    std::map<std::string, FMOD::Sound *> mapSound;  
+    //source,used
+    std::unordered_map<ALuint, bool> _alSourceUsed;
     
-    FMOD::System* pSystem;
+    //filePath,bufferInfo
+    std::unordered_map<std::string, AudioCache> _audioCaches;
+    
+    //audioID,AudioInfo
+    std::unordered_map<int, AudioPlayer>  _audioPlayers;
+    
+    std::mutex _threadMutex;
+    
+    std::vector<AudioCache*> _toRemoveCaches;
+    std::vector<int> _toRemoveAudioIDs;
+    
+    bool _lazyInitLoop;
+    
+    int _currentAudioID;
     
 };
 }
 NS_CC_END
-#endif // __AUDIO_ENGINE_LINUX_H_
+#endif // __AUDIO_ENGINE_INL_H_
 #endif
 
