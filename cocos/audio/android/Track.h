@@ -79,6 +79,12 @@ private:
     inline void setVolumeDirty(bool isDirty)
     { _isVolumeDirty = isDirty; };
 
+    inline bool isInitialized() const
+    { return _isInitialized; };
+
+    inline void setInitialized(bool isInitialized)
+    { _isInitialized = isInitialized; };
+
 private:
     PcmData _pcmData;
     State _prevState;
@@ -89,6 +95,7 @@ private:
     bool _isVolumeDirty;
     std::mutex _volumeDirtyMutex;
     bool _isLoop;
+    bool _isInitialized;
 
     friend class AudioMixerController;
 };
