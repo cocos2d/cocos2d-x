@@ -520,7 +520,10 @@ bool jsval_to_array_of_cpvect( JSContext *cx, jsval vp, cpVect**verts, int *numV
 
         double value = 0;
         ok = JS::ToNumber(cx, valarg, &value);
-        JSB_PRECONDITION( ok, "Error converting value to nsobject");
+        if (!ok) {
+            free(array);
+        }
+        JSB_PRECONDITION(ok, "Error converting value to nsobject");
 
         if(i%2==0)
             array[i/2].x = value;
@@ -1013,6 +1016,8 @@ void JSB_cpSpace_finalize(JSFreeOp *fop, JSObject *jsthis)
 {
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     if ( proxy ) {
+        CCLOGINFO("jsbindings: finalizing JS object %p (cpSpace), handle: %p", jsthis, proxy->handle);
+
         // space
         cpSpace *space = (cpSpace*) proxy->handle;
 

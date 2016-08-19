@@ -37,8 +37,20 @@
 #include "scripting/js-bindings/manual/cocos2d_specifics.hpp"
 #include "scripting/js-bindings/manual/js_bindings_config.h"
 
-
 USING_NS_CC;
+
+namespace
+{
+    class StringRef : public cocos2d::Ref
+    {
+    public:
+        CREATE_FUNC(StringRef);
+
+        virtual bool init() { return true; }
+
+        std::string data;
+    };
+};
 
 // JSStringWrapper
 JSStringWrapper::JSStringWrapper()
@@ -364,18 +376,12 @@ bool jsval_to_charptr( JSContext *cx, JS::HandleValue vp, const char **ret )
     JSString *jsstr = JS::ToString( cx, vp );
     JSB_PRECONDITION2( jsstr, cx, false, "invalid string" );
 
-    //XXX: what's this?
-    // root it
-//    vp = STRING_TO_JSVAL(jsstr);
-
     JSStringWrapper strWrapper(jsstr);
 
-    // XXX: It is converted to String and then back to char* to autorelease the created object.
-    __String *tmp = __String::create(strWrapper.get());
+    auto tmp = StringRef::create();
+    tmp->data = strWrapper.get();
 
-    JSB_PRECONDITION2( tmp, cx, false, "Error creating string from UTF8");
-
-    *ret = tmp->getCString();
+    *ret = tmp->data.c_str();
 
     return true;
 }
@@ -596,13 +602,17 @@ bool jsval_to_long_long(JSContext *cx, JS::HandleValue vp, long long* r)
 }
 
 bool jsval_to_std_string(JSContext *cx, JS::HandleValue v, std::string* ret) {
-    if(v.isString() || v.isNumber())
+    if(v.isString() || v.isBoolean())
     {
         JSString *tmp = JS::ToString(cx, v);
         JSB_PRECONDITION3(tmp, cx, false, "Error processing arguments");
 
         JSStringWrapper str(tmp);
         *ret = str.get();
+        return true;
+    }
+    if (v.isNullOrUndefined()) {
+        *ret = "";
         return true;
     }
 
@@ -1007,6 +1017,8 @@ bool jsval_to_ccarray_of_CCPoint(JSContext* cx, JS::HandleValue v, Point **point
         JS_GetElement(cx, jsobj, i, &valarg);
 
         ok = jsval_to_ccpoint(cx, valarg, &array[i]);
+        if(!ok)
+            delete [] array;
         JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
     }
 
@@ -2891,7 +2903,7 @@ jsval vector_vec2_to_jsval(JSContext *cx, const std::vector<cocos2d::Vec2>& v)
     JS::RootedObject jsretArr(cx, JS_NewArrayObject(cx, v.size()));
 
     int i = 0;
-    for (const cocos2d::Vec2 obj : v)
+    for (const cocos2d::Vec2& obj : v)
     {
         JS::RootedValue arrElement(cx);
         arrElement = vector2_to_jsval(cx, obj);

@@ -45,8 +45,6 @@ Ref::Ref()
 , _luaID (0)
 , _scriptObject(nullptr)
 , _rooted(false)
-, _scriptOwned(false)
-,_referenceCountAtRootTime(0)
 #endif
 {
 #if CC_ENABLE_SCRIPT_BINDING
