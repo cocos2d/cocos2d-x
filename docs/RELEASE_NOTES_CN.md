@@ -67,9 +67,5 @@ cocos2d-x 3.12时使用了clang编译器，结果发现了[崩溃问题](https:/
 
 CURL 7.50.0解决了[在NAT64环境连接IPV4地址格式的IP地址错误](https://github.com/curl/curl/issues/863)问题，因此引擎及时升级了CURL版本。
 
-### luajit 2.1.0-beta2
-
-TBD:
-
 ## 其他改动
 更完整的改动列表可以阅读[full changelog](https://github.com/cocos2d/cocos2d-x/blob/v3/CHANGELOG)。
