@@ -149,8 +149,8 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual ~Director();
-    virtual bool init();
+    ~Director();
+    bool init();
 
     // attribute
 
@@ -160,7 +160,7 @@ public:
     /** Gets the FPS value. */
     inline float getAnimationInterval() { return _animationInterval; }
     /** Sets the FPS value. FPS = 1/interval. */
-    virtual void setAnimationInterval(float interval) = 0;
+    void setAnimationInterval(float interval);
 
     /** Whether or not displaying the FPS on the bottom-left corner of the screen. */
     inline bool isDisplayStats() { return _displayStats; }
@@ -344,13 +344,13 @@ public:
     /** Stops the animation. Nothing will be drawn. The main loop won't be triggered anymore.
      * If you don't want to pause your animation call [pause] instead.
      */
-    virtual void stopAnimation() = 0;
+    void stopAnimation();
 
     /** The main loop is triggered again.
      * Call this function only if [stopAnimation] was called earlier.
      * @warning Don't call this function to start the main loop. To run the main loop call runWithScene.
      */
-    virtual void startAnimation() = 0;
+    void startAnimation();
 
     /** Draw the scene.
      * This method is called every frame. Don't call it manually.
@@ -388,7 +388,7 @@ public:
     /** Enables/disables OpenGL depth test. */
     void setDepthTest(bool on);
 
-    virtual void mainLoop() = 0;
+    void mainLoop();
 
     /** The size in pixels of the surface. It could be different than the screen size.
      * High-res devices might have a higher surface size than the screen size.
@@ -499,6 +499,11 @@ public:
      Useful to know if certain code is already running on the cocos2d thread
      */
     const std::thread::id& getCocos2dThreadId() const { return _cocos2d_thread_id; }
+
+    /**
+     * returns whether or not the Director is in a valid state
+     */
+    inline bool isValid() const { return !_invalid; }
 
 protected:
     void reset();
@@ -621,41 +626,21 @@ protected:
     /* cocos2d thread id */
     std::thread::id _cocos2d_thread_id;
 
+    /* whether or not the director is in a valid state */
+    bool _invalid;
+
     // GLView will recreate stats labels to fit visible rect
     friend class GLView;
 };
 
+// FIXME: Added for backward compatibility in case
+// someone is subclassing it.
+// Should be removed in v4.0
+class DisplayLinkDirector : public Director
+{};
+
 // end of base group
 /** @} */
-
-/** 
- @brief DisplayLinkDirector is a Director that synchronizes timers with the refresh rate of the display.
- 
- Features and Limitations:
-  - Scheduled timers & drawing are synchronizes with the refresh rate of the display
-  - Only supports animation intervals of 1/60 1/30 & 1/15
- 
- @since v0.8.2
- */
-class DisplayLinkDirector : public Director
-{
-public:
-    DisplayLinkDirector() 
-        : _invalid(false)
-    {}
-    virtual ~DisplayLinkDirector(){}
-
-    //
-    // Overrides
-    //
-    virtual void mainLoop() override;
-    virtual void setAnimationInterval(float value) override;
-    virtual void startAnimation() override;
-    virtual void stopAnimation() override;
-
-protected:
-    bool _invalid;
-};
 
 NS_CC_END
 
