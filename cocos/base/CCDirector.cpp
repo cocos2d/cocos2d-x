@@ -81,7 +81,7 @@ NS_CC_BEGIN
 // FIXME: it should be a Director ivar. Move it there once support for multiple directors is added
 
 // singleton stuff
-static DisplayLinkDirector *s_SharedDirector = nullptr;
+static Director *s_SharedDirector = nullptr;
 
 #define kDefaultFPS        60  // 60 frames per second
 extern const char* cocos2dVersion(void);
@@ -97,7 +97,7 @@ Director* Director::getInstance()
 {
     if (!s_SharedDirector)
     {
-        s_SharedDirector = new (std::nothrow) DisplayLinkDirector();
+        s_SharedDirector = new (std::nothrow) Director;
         CCASSERT(s_SharedDirector, "FATAL: Not enough memory");
         s_SharedDirector->init();
     }
@@ -107,6 +107,7 @@ Director* Director::getInstance()
 
 Director::Director()
 : _isStatusLabelUpdated(true)
+, _invalid(true)
 {
 }
 
@@ -1365,14 +1366,7 @@ void Director::setEventDispatcher(EventDispatcher* dispatcher)
     }
 }
 
-/***************************************************
-* implementation of DisplayLinkDirector
-**************************************************/
-
-// should we implement 4 types of director ??
-// I think DisplayLinkDirector is enough
-// so we now only support DisplayLinkDirector
-void DisplayLinkDirector::startAnimation()
+void Director::startAnimation()
 {
     _lastUpdate = std::chrono::steady_clock::now();
 
@@ -1386,7 +1380,7 @@ void DisplayLinkDirector::startAnimation()
     setNextDeltaTimeZero(true);
 }
 
-void DisplayLinkDirector::mainLoop()
+void Director::mainLoop()
 {
     if (_purgeDirectorInNextLoop)
     {
@@ -1407,12 +1401,12 @@ void DisplayLinkDirector::mainLoop()
     }
 }
 
-void DisplayLinkDirector::stopAnimation()
+void Director::stopAnimation()
 {
     _invalid = true;
 }
 
-void DisplayLinkDirector::setAnimationInterval(float interval)
+void Director::setAnimationInterval(float interval)
 {
     _animationInterval = interval;
     if (! _invalid)
