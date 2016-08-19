@@ -2922,6 +2922,16 @@ matrix_stack_type
 },
 
 /**
+ * @method isValid
+ * @return {bool}
+ */
+isValid : function (
+)
+{
+    return false;
+},
+
+/**
  * @method startAnimation
  */
 startAnimation : function (
