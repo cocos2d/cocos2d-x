@@ -111,6 +111,7 @@ const char* GLProgram::SHADER_CAMERA_CLEAR = "ShaderCameraClear";
 
 // uniform names
 const char* GLProgram::UNIFORM_NAME_AMBIENT_COLOR = "CC_AmbientColor";
+const char* GLProgram::UNIFORM_NAME_M_MATRIX = "CC_MMatrix";
 const char* GLProgram::UNIFORM_NAME_P_MATRIX = "CC_PMatrix";
 const char* GLProgram::UNIFORM_NAME_MV_MATRIX = "CC_MVMatrix";
 const char* GLProgram::UNIFORM_NAME_MVP_MATRIX  = "CC_MVPMatrix";
@@ -141,6 +142,7 @@ const char* GLProgram::ATTRIBUTE_NAME_BINORMAL = "a_binormal";
 
 
 static const char * COCOS2D_SHADER_UNIFORMS =
+        "uniform mat4 CC_MMatrix;\n"
         "uniform mat4 CC_PMatrix;\n"
         "uniform mat4 CC_MVMatrix;\n"
         "uniform mat4 CC_MVPMatrix;\n"
@@ -511,6 +513,7 @@ void GLProgram::bindAttribLocation(const std::string &attributeName, GLuint inde
 void GLProgram::updateUniforms()
 {
     _builtInUniforms[UNIFORM_AMBIENT_COLOR] = glGetUniformLocation(_program, UNIFORM_NAME_AMBIENT_COLOR);
+    _builtInUniforms[UNIFORM_M_MATRIX] = glGetUniformLocation(_program, UNIFORM_NAME_M_MATRIX);
     _builtInUniforms[UNIFORM_P_MATRIX] = glGetUniformLocation(_program, UNIFORM_NAME_P_MATRIX);
     _builtInUniforms[UNIFORM_MV_MATRIX] = glGetUniformLocation(_program, UNIFORM_NAME_MV_MATRIX);
     _builtInUniforms[UNIFORM_MVP_MATRIX] = glGetUniformLocation(_program, UNIFORM_NAME_MVP_MATRIX);
@@ -528,6 +531,7 @@ void GLProgram::updateUniforms()
     _builtInUniforms[UNIFORM_SAMPLER3] = glGetUniformLocation(_program, UNIFORM_NAME_SAMPLER3);
 
     _flags.usesP = _builtInUniforms[UNIFORM_P_MATRIX] != -1;
+    _flags.usesM = _builtInUniforms[UNIFORM_M_MATRIX] != -1;
     _flags.usesMV = _builtInUniforms[UNIFORM_MV_MATRIX] != -1;
     _flags.usesMVP = _builtInUniforms[UNIFORM_MVP_MATRIX] != -1;
     _flags.usesNormal = _builtInUniforms[UNIFORM_NORMAL_MATRIX] != -1;

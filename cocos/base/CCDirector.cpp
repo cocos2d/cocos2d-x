@@ -42,6 +42,7 @@ THE SOFTWARE.
 #include "2d/CCTransition.h"
 #include "2d/CCFontFreeType.h"
 #include "2d/CCLabelAtlas.h"
+#include "2d/CCRenderTexture.h"
 #include "renderer/CCGLProgramCache.h"
 #include "renderer/CCGLProgramStateCache.h"
 #include "renderer/CCTextureCache.h"
@@ -65,6 +66,14 @@ THE SOFTWARE.
 #if CC_ENABLE_SCRIPT_BINDING
 #include "base/CCScriptSupport.h"
 #endif
+
+#include "3d/CCSprite3D.h"
+#include "3d/CCSprite3DMaterial.h"
+
+#include "Entity.h"
+
+using namespace cocos2d;
+using namespace experimental;
 
 /**
  Position of the FPS
@@ -173,6 +182,18 @@ bool Director::init(void)
     _renderer = new (std::nothrow) Renderer;
     RenderState::initialize();
 
+    /**
+     *
+     * @Director
+     *  @Ambient;
+     *
+     */
+    this->ambient.source1 = DirectionLight::create(Vec3(0, 0, 0), Color3B(0, 0, 0));
+    this->ambient.source2 = AmbientLight::create(Color3B(0, 0, 0));
+
+    this->ambient.source1->retain();
+    this->ambient.source2->retain();
+
     return true;
 }
 
@@ -278,7 +299,7 @@ void Director::drawScene()
     }
 
     _renderer->clear();
-    experimental::FrameBuffer::clearAllFBOs();
+    //experimental::FrameBuffer::clearAllFBOs();
     /* to avoid flickr, nextScene MUST be here: after tick and before draw.
      * FIXME: Which bug is this one. It seems that it can't be reproduced with v0.9
      */
@@ -1480,5 +1501,371 @@ void DisplayLinkDirector::setAnimationInterval(float interval)
     }    
 }
 
-NS_CC_END
+/**
+ * Tooflya Inc. Development
+ *
+ * @author Igor Mats from Tooflya Inc.
+ * @copyright (c) by Igor Mats
+ * http://www.tooflya.com/development/
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
 
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ *
+ */
+
+/**
+ *
+ * @Director
+ * | @Ambient;
+ *
+ */
+void Director::setAmbientColor1(float r, float g, float b)
+{
+  this->ambient.source1->setColor(Color3B(r, g, b));
+}
+
+void Director::setAmbientColor2(float r, float g, float b)
+{
+  this->ambient.source2->setColor(Color3B(r, g, b));
+}
+
+void Director::setAmbientDirection(float x, float y, float z)
+{
+  this->ambient.source1->setDirection(Vec3(x, y, z));
+}
+
+void Director::setAmbient(bool state, Node* root)
+{
+  if(state)
+  {
+    if(!this->ambient.state)
+    {
+      root->addChild(this->ambient.source1);
+      root->addChild(this->ambient.source2);
+    }
+  }
+  else
+  {
+    if(this->ambient.state)
+    {
+    }
+  }
+
+  this->ambient.state = state;
+}
+
+/**
+ *
+ * @Director
+ * | @Shadows;
+ *
+ */
+void Director::setShadowCamera(Camera* camera)
+{
+  this->shadows.camera = camera;
+}
+
+void Director::setShadowElement(Node* element)
+{
+  this->shadows.element = element;
+}
+
+void Director::setShadowFactor(float factor)
+{
+  this->shadows.factor = factor;
+}
+
+void Director::setShadow(bool state, Node* root)
+{
+  if(state)
+  {
+    if(!this->shadows.state)
+    {
+      auto width = this->getWinSizeInPixels().width / this->shadows.factor;
+      auto height = this->getWinSizeInPixels().height / this->shadows.factor;
+
+      /**
+       *
+       * @Director
+       * | @Shadows;
+       * | @Generate frame buffer object;
+       *
+       */
+      this->shadows.frame = FrameBuffer::create(1, width, height);
+      this->shadows.frame->attachRenderTarget(RenderTarget::create(width, height));
+      this->shadows.frame->attachDepthStencilTarget(RenderTargetDepthStencil::create(width, height));
+
+      this->shadows.camera->setFrameBufferObject(this->shadows.frame);
+
+      /**
+       *
+       * @Director
+       * | @Shadows;
+       * | @Generate shader programs for shadows and add them to the cache;
+       *
+       */
+      GLProgramCache::getInstance()->addGLProgram(
+        GLProgram::createWithFilenames("director.shadows.normal.vert", "director.shadows.normal.frag"),
+        "@director.shadows.normal"
+      );
+      GLProgramCache::getInstance()->addGLProgram(
+        GLProgram::createWithFilenames("director.shadows.active.vert", "director.shadows.active.frag"),
+        "@director.shadows.active"
+      );
+
+      /**
+       *
+       * @Director
+       * | @Shadows;
+       * | @Should add shadows frame buffer texture to the default 2D camera;
+       *
+       */
+      if(true)
+      {
+        this->shadows.texture = new Entity(this->shadows.frame->getRenderTarget()->getTexture(), root);
+        this->shadows.texture->setScaleX(1 * this->shadows.factor);
+        this->shadows.texture->setScaleY(-1 * this->shadows.factor);
+        this->shadows.texture->setPosition(width / 2, height / 2);
+        this->shadows.texture->setCameraMask(2);
+        this->shadows.texture->setGlobalZOrder(100);
+      }
+    }
+  }
+  else
+  {
+    if(this->shadows.state)
+    {
+    }
+  }
+
+  this->shadows.state = state;
+}
+
+Node* Director::getShadowTexture()
+{
+  return this->shadows.texture;
+}
+
+/**
+ *
+ * @Director
+ * | @Capture;
+ *
+ */
+void Director::setCaptureCamera(Camera* camera)
+{
+  this->capture.camera = camera;
+}
+
+void Director::setCaptureElement(Sprite* element)
+{
+  this->capture.element = element;
+}
+
+void Director::setCaptureCount(int count)
+{
+  this->capture.count = count;
+}
+
+void Director::setCaptureTime(int time)
+{
+  this->capture.time = time;
+}
+
+void Director::setCaptureFactor(float factor)
+{
+  this->capture.factor = factor;
+}
+
+void Director::setCaptureScale(float scale)
+{
+  this->capture.scale = scale;
+}
+
+void Director::setCapturePosition(float x, float y)
+{
+  this->capture.x = x;
+  this->capture.y = y;
+}
+
+void Director::setCaptureSize(float width, float height)
+{
+  this->capture.width = width;
+  this->capture.height = height;
+}
+
+void Director::setCapture(bool state, Node* root)
+{
+  if(state)
+  {
+    if(!this->capture.state)
+    {
+      auto size = this->getWinSizeInPixels();
+
+      auto width = size.width / this->capture.factor;
+      auto height = size.height / this->capture.factor;
+
+      /**
+       *
+       * @Director
+       * | @Capture;
+       * | @Generate frame buffer object;
+       *
+       */
+      this->capture.frame = FrameBuffer::create(2, width, height);
+      this->capture.frame->attachRenderTarget(RenderTarget::create(width, height));
+      this->capture.frame->attachDepthStencilTarget(RenderTargetDepthStencil::create(width, height));
+
+      this->capture.camera->setFrameBufferObject(this->capture.frame);
+
+      /**
+       *
+       * @Director
+       * | @Capture;
+       * | @Should create render textures based on user's configurations;
+       *
+       */
+      auto count = this->capture.count;
+      auto time = this->capture.time;
+
+      for(int i = 0; i < count * time; i++)
+      {
+        auto render = RenderTexture::create(this->capture.width, this->capture.height, Texture2D::PixelFormat::RGBA8888);//, Texture2D::PixelFormat::RGB565);
+        render->retain();
+
+        this->capture.textures.push_back(render);
+      }
+
+      /**
+       *
+       * @Director
+       * | @Capture;
+       * | @Should add capture frame buffer texture to the default 2D camera;
+       *
+       */
+      this->capture.texture = new Entity(this->capture.frame->getRenderTarget()->getTexture(), root, true);
+      this->capture.texture->setScaleX(1 * this->capture.factor);
+      this->capture.texture->setScaleY(-1 * this->capture.factor);
+      this->capture.texture->setPosition(size.width / 2, size.height / 2);
+      this->capture.texture->setCameraMask(2);
+      this->capture.texture->setGlobalZOrder(1);
+
+      /**
+       *
+       * @Director
+       * | @Capture;
+       *
+       */
+      this->capture.element->initWithTexture(this->capture.texture->getTexture());
+      this->capture.element->setScaleX(1 * 1.0 / this->capture.scale);
+      this->capture.element->setScaleY(-1 * 1.0 / this->capture.scale);
+      this->capture.element->setPosition(this->capture.x + this->capture.width / 2, this->capture.y + this->capture.height / 2);
+      this->capture.element->retain();
+    }
+  }
+  else
+  {
+    if(this->capture.state)
+    {
+    }
+  }
+
+  this->capture.state = state;
+}
+
+Node* Director::getCaptureTexture()
+{
+  return this->capture.texture;
+}
+
+void Director::updateCapture()
+{
+  auto render = this->capture.textures.at(this->capture.textures.size() - 1);
+  this->capture.textures.erase(this->capture.textures.begin() + this->capture.textures.size() - 1);
+  this->capture.textures.insert(this->capture.textures.begin(), render);
+
+  render = this->capture.textures.at(0);
+
+  render->beginWithClear(1, 1, 1, 1);
+  this->capture.element->setTexture(this->capture.texture->getTexture());
+  this->capture.element->Sprite::visit();
+  render->end();
+
+  this->capture.count = min<int>(this->capture.textures.size(), this->capture.count + 1);
+}
+
+/**
+ *
+ * @Director
+ * | @Render;
+ *
+ */
+void Director::onRenderStart()
+{
+}
+
+void Director::onRenderFinish()
+{
+}
+
+void Director::onRenderStart(int index)
+{
+  if(this->shadows.state)
+  {
+    if(index == this->shadows.camera->getIndex())
+    {
+      for(auto element : this->shadows.element->getChildren())
+      {
+        element->setGLProgram(
+          GLProgramCache::getInstance()->getGLProgram("@director.shadows.normal")
+        );
+      }
+    }
+    else if(index == 1)
+    {
+      for(auto element : this->shadows.element->getChildren())
+      {
+        element->setGLProgram(
+          GLProgramCache::getInstance()->getGLProgram("@director.shadows.active")
+        );
+
+        float matrix[16] = {
+          0.5f, 0.0f, 0.0f, 0.0f,
+          0.0f, 0.5f, 0.0f, 0.0f,
+          0.0f, 0.0f, 0.5f, 0.0f,
+          0.5f, 0.5f, 0.5f, 1.0f
+        };
+
+        Mat4  cameraViewportMatrix(matrix);
+        Mat4 cameraViewMatrix = this->shadows.camera->getViewMatrix();
+        Mat4 cameraProjectionMatrix = this->shadows.camera->getProjectionMatrix();
+        Mat4 cameraTransformMatrix =  cameraViewportMatrix * cameraProjectionMatrix * cameraViewMatrix;
+
+        element->getGLProgramState()->setUniformMat4("modelTransformMatrix", element->getModelViewMatrix());
+        element->getGLProgramState()->setUniformMat4("cameraTransformMatrix", cameraTransformMatrix);
+        element->getGLProgramState()->setUniformTexture("transformTexture", this->shadows.frame->getRenderTarget()->getTexture());
+      }
+    }
+  }
+}
+
+void Director::onRenderFinish(int index)
+{
+}
+
+NS_CC_END

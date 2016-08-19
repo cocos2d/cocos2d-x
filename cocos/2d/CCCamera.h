@@ -111,6 +111,11 @@ public:
     void setCameraFlag(CameraFlag flag) { _cameraFlag = (unsigned short)flag; }
     void setCameraFlag(int flag) { _cameraFlag = (unsigned short)flag; }
 
+    /**get & set Camera index*/
+    int index;
+    int getIndex() const { return this->index; }
+    void setIndex(int index) { this->index = index; }
+
     /**
     * Make Camera looks at target
     *

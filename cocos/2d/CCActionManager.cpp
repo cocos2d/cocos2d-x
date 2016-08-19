@@ -409,8 +409,6 @@ void ActionManager::update(float dt)
     {
         _currentTarget = elt;
         _currentTargetSalvaged = false;
-      
-        dt = odt * _currentTarget->target->getActionsTimeFactor();
 
         if (! _currentTarget->paused)
         {

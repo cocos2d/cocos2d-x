@@ -55,8 +55,8 @@ Configuration::Configuration()
 , _maxTextureUnits(0)
 , _glExtensions(nullptr)
 , _maxDirLightInShader(1)
-, _maxPointLightInShader(1)
-, _maxSpotLightInShader(1)
+, _maxPointLightInShader(0)
+, _maxSpotLightInShader(0)
 , _animate3DQuality(Animate3DQuality::QUALITY_LOW)
 {
     _loadedEvent = new (std::nothrow) EventCustom(CONFIG_FILE_LOADED);

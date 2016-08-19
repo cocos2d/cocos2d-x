@@ -414,6 +414,7 @@ public:
      * @js NA
      */
     virtual void setPosition3D(const Vec3& position);
+    virtual void setPosition(float x, float y, float z);
     /**
      * Returns the position (X,Y,Z) in its parent's coordinate system.
      *
@@ -596,6 +597,7 @@ public:
      * @js NA
      */
     virtual void setRotation3D(const Vec3& rotation);
+    virtual void setRotation(float x, float y, float z);
     /**
      * Returns the rotation (X,Y,Z) in degrees.
      * 
@@ -2021,92 +2023,86 @@ private:
  *
  */
 
-protected:
-    bool _scheduleUpdate = false;
+  protected:
+  bool _scheduleUpdate = false;
 
-    float _actionsTimeFactor = 1.0;
+  float _actionsTimeFactor = 1.0;
 
-    void setScheduleUpdate(bool scheduleUpdate)
-    {
-        _scheduleUpdate = scheduleUpdate;
+  void setScheduleUpdate(bool scheduleUpdate)
+  {
+      _scheduleUpdate = scheduleUpdate;
 
-        if(this->state->create)
-        {
-            this->scheduleUpdate();
-        }
-    }
+      if(this->state->create)
+      {
+          this->scheduleUpdate();
+      }
+  }
 
-public:
-    int id;
+  public:
+  int id;
 
-    framework::Touch* touch;
-    framework::State* state;
-    framework::Cull* cull;
+  bool shadow = true;
+  bool light = true;
 
-    framework::Pool* pool = nullptr;
+  framework::Touch* touch;
+  framework::State* state;
+  framework::Cull* cull;
 
-    Node* _create();
-    Node* _destroy(bool action = false);
+  framework::Pool* pool = nullptr;
 
-    Node* _clone();
+  Node* _create();
+  Node* _destroy(bool action = false);
 
-    virtual void onCreate();
-    virtual void onDestroy(bool action = false);
+  Node* _clone();
 
-    bool onTouchBegan(Touch* touch, Event* e);
-    void onTouchEnded(Touch* touch, Event* e);
-    void onTouchMoved(Touch* touch, Event* e);
-    void onTouchCancelled(Touch* touch, Event* e);
+  virtual void onCreate();
+  virtual void onDestroy(bool action = false);
 
-    virtual void onTouchStart(Touch* touch, Event* e);
-    virtual void onTouchFinish(Touch* touch, Event* e);
-    virtual void onTouch(Touch* touch, Event* e);
+  virtual bool onTouchBegan(Touch* touch, Event* e);
+  virtual void onTouchEnded(Touch* touch, Event* e);
+  virtual void onTouchMoved(Touch* touch, Event* e);
+  virtual void onTouchCancelled(Touch* touch, Event* e);
 
-    virtual void onHover();
-    virtual void onUnHover();
+  virtual void onTouchStart(Touch* touch, Event* e);
+  virtual void onTouchFinish(Touch* touch, Event* e);
+  virtual void onTouch(Touch* touch, Event* e);
 
-    virtual bool onSwipe();
+  virtual void onHover(bool state);
 
-    virtual void onSwipeUp();
-    virtual void onSwipeDown();
-    virtual void onSwipeLeft();
-    virtual void onSwipeRight();
+  virtual int onSwipe(Touch* touch, Event* e);
+  virtual int onSwipe();
 
-    virtual void onKeyPressed(cocos2d::EventKeyboard::KeyCode key, Event *event);
-    virtual void onKeyReleased(cocos2d::EventKeyboard::KeyCode key, Event *event);
+  virtual void onSwipeUp();
+  virtual void onSwipeDown();
+  virtual void onSwipeLeft();
+  virtual void onSwipeRight();
 
-    virtual void onEnterShow();
-    virtual void onExitHide();
+  virtual void onKeyPressed(cocos2d::EventKeyboard::KeyCode key, Event *event);
+  virtual void onKeyReleased(cocos2d::EventKeyboard::KeyCode key, Event *event);
 
-    void setActionsTimeFactor(float factor);
-    float getActionsTimeFactor();
+  virtual void onEnterShow();
+  virtual void onExitHide();
 
-    void bind(bool bind, bool swallowed = true);
+  virtual void enableShadow(bool state);
+  virtual void enableLight(bool state);
 
-    int detectSwipe(Touch* touch, Event* e);
+  virtual bool enableShadow();
+  virtual bool enableLight();
 
-    virtual bool containsTouchLocation(Touch* touch);
+  virtual float getRecursiveWidth(bool recursive = false);
+  virtual float getRecursiveHeight(bool recursive = false);
 
-    void setPool(framework::Pool* pool)
-    {
-        this->pool = pool;
-    };
-    void setPoolIdentifier(int id)
-    {
-        this->id = id;
-    }
+  virtual void setPool(framework::Pool* pool);
+  virtual void setPool(int id);
 
-    framework::Pool* getPool() {
-        return this->pool;
-    };
-    int getPoolIdentifier() {
-        return this->id;
-    };
+  virtual bool bind(bool bind, bool swallowed = true);
+  virtual bool containsTouchLocation(Touch* touch);
 
-    float getRecursiveWidth(bool recursive = false);
-    float getRecursiveHeight(bool recursive = false);
+  framework::Pool* getPool();
 
-    virtual Node* deepCopy();
+  virtual Mat4 getModelViewMatrix();
+
+  virtual Node* deepCopy();
 };
 
 

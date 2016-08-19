@@ -125,6 +125,8 @@ public:
     {
         /**Ambient color.*/
         UNIFORM_AMBIENT_COLOR,
+        /**Model matrix.*/
+        UNIFORM_M_MATRIX,
         /**Projection matrix.*/
         UNIFORM_P_MATRIX,
         /**Model view matrix.*/
@@ -159,6 +161,7 @@ public:
         unsigned int usesMVP:1;
         unsigned int usesMV:1;
         unsigned int usesP:1;
+        unsigned int usesM:1;
         unsigned int usesRandom:1;
         // handy way to initialize the bitfield
         UniformFlags() { memset(this, 0, sizeof(*this)); }
@@ -269,6 +272,8 @@ public:
     */
     /**Ambient Color uniform.*/
     static const char* UNIFORM_NAME_AMBIENT_COLOR;
+    /**Model Matrix uniform.*/
+    static const char* UNIFORM_NAME_M_MATRIX;
     /**Projection Matrix uniform.*/
     static const char* UNIFORM_NAME_P_MATRIX;
     /**Model view matrix uniform.*/

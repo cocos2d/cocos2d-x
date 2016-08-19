@@ -191,6 +191,8 @@ void Scene::render(Renderer* renderer)
     Camera* defaultCamera = nullptr;
     const auto& transform = getNodeToParentTransform();
 
+    director->onRenderStart();
+
     for (int i = 0; i < getCameras().size(); i++)
     {
         auto camera = getCameras().at(i);
@@ -203,24 +205,20 @@ void Scene::render(Renderer* renderer)
         {
             defaultCamera = Camera::_visitingCamera;
         }
-        
+
+        director->onRenderStart(camera->getIndex());
         director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
         director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, Camera::_visitingCamera->getViewProjectionMatrix());
+
         camera->apply();
-        //clear background with max depth
         camera->clearBackground();
-        //visit the scene
+
         visit(renderer, transform, 0);
-#if CC_USE_NAVMESH
-        if (_navMesh && _navMeshDebugCamera == camera)
-        {
-            _navMesh->debugDraw(renderer);
-        }
-#endif
-        
+
         renderer->render();
-        
+
         director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+        director->onRenderFinish(camera->getIndex());
     }
     
 #if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
@@ -236,6 +234,8 @@ void Scene::render(Renderer* renderer)
 
     Camera::_visitingCamera = nullptr;
     experimental::FrameBuffer::applyDefaultFBO();
+
+    director->onRenderFinish();
 }
 
 void Scene::removeAllChildren()

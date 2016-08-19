@@ -333,6 +333,11 @@ void Node::setRotation3D(const Vec3& rotation)
   updateRotationQuat();
 }
 
+void Node::setRotation(float x, float y, float z)
+{
+  this->setRotation3D(Vec3(x, y, z));
+}
+
 Vec3 Node::getRotation3D() const
 {
   // rotation Z is decomposed in 2 to simulate Skew for Flash animations
@@ -519,6 +524,12 @@ void Node::setPosition3D(const Vec3& position)
 {
   setPositionZ(position.z);
   setPosition(position.x, position.y);
+}
+
+void Node::setPosition(float x, float y, float z)
+{
+  setPositionZ(z);
+  setPosition(x, y);
 }
 
 Vec3 Node::getPosition3D() const
@@ -2310,7 +2321,7 @@ void Node::onTouchEnded(Touch* touch, Event* e)
       {
         if(Times::now() - this->touch->time < framework::Touch::SWIPE_TIME)
         {
-          switch(this->detectSwipe(touch, e)) {
+          switch(this->onSwipe(touch, e)) {
           case framework::Touch::SWIPE_EVENT_UP:
           return this->onSwipeUp();
           break;
@@ -2355,7 +2366,7 @@ void Node::onTouchMoved(Touch* touch, Event* e)
     {
       this->touch->hovered = true;
 
-      this->onHover();
+      this->onHover(true);
     }
   }
   else
@@ -2364,7 +2375,7 @@ void Node::onTouchMoved(Touch* touch, Event* e)
     {
       this->touch->hovered = false;
 
-      this->onUnHover();
+      this->onHover(false);
     }
   }
 
@@ -2373,7 +2384,7 @@ void Node::onTouchMoved(Touch* touch, Event* e)
     {
       if(Times::now() - this->touch->time < framework::Touch::SWIPE_TIME)
       {
-        auto recognize = this->detectSwipe(touch, e);
+        auto recognize = this->onSwipe(touch, e);
 
         switch(recognize) {
           case framework::Touch::SWIPE_EVENT_UP:
@@ -2437,17 +2448,13 @@ void Node::onTouch(Touch* touch, Event* e)
 {
 }
 
-void Node::onHover()
+void Node::onHover(bool state)
 {
 }
 
-void Node::onUnHover()
+int Node::onSwipe()
 {
-}
-
-bool Node::onSwipe()
-{
-  return false;
+  return 0;
 }
 
 void Node::onSwipeUp()
@@ -2527,7 +2534,7 @@ void Node::onExitHide()
   }
 }
 
-void Node::bind(bool bind, bool swallowed)
+bool Node::bind(bool bind, bool swallowed)
 {
   if(bind)
   {
@@ -2547,9 +2554,11 @@ void Node::bind(bool bind, bool swallowed)
     
     this->_eventDispatcher->removeEventListenersForTarget(this);
   }
+
+  return this->touch->binded && !this->touch->unbinded;
 }
 
-int Node::detectSwipe(Touch* touch, Event* e)
+int Node::onSwipe(Touch* touch, Event* e)
 {
   auto coordinates = touch->getLocation();
 
@@ -2567,6 +2576,26 @@ int Node::detectSwipe(Touch* touch, Event* e)
   }
 
   return -1;
+}
+
+bool Node::enableShadow()
+{
+  return this->shadow;
+}
+
+bool Node::enableLight()
+{
+  return this->light;
+}
+
+void Node::enableShadow(bool state)
+{
+  this->shadow = state;
+}
+
+void Node::enableLight(bool state)
+{
+  this->light = state;
 }
 
 bool Node::containsTouchLocation(Touch* touch)
@@ -2603,14 +2632,24 @@ float Node::getRecursiveHeight(bool recursive)
   return -1;
 }
 
-void Node::setActionsTimeFactor(float factor)
+void Node::setPool(framework::Pool* pool)
 {
-  this->_actionsTimeFactor = factor;
+  this->pool = pool;
 }
 
-float Node::getActionsTimeFactor()
+void Node::setPool(int id)
 {
-  return this->_actionsTimeFactor == 0 ? Config::ACTIONS_MANAGER_TIME_FACTOR : this->_actionsTimeFactor;
+  this->id = id;
+}
+
+framework::Pool* Node::getPool()
+{
+  return this->pool;
+}
+
+Mat4 Node::getModelViewMatrix()
+{
+  return this->_modelViewTransform;
 }
 
 Node* Node::deepCopy()

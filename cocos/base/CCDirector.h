@@ -35,6 +35,8 @@ THE SOFTWARE.
 #include "base/CCRef.h"
 #include "base/CCVector.h"
 #include "2d/CCScene.h"
+#include "2d/CCLight.h"
+#include "2d/CCSprite.h"
 #include "math/CCMath.h"
 #include "platform/CCGL.h"
 #include "platform/CCGLView.h"
@@ -45,7 +47,6 @@ NS_CC_BEGIN
  * @addtogroup base
  * @{
  */
-
 /* Forward declarations. */
 class LabelAtlas;
 //class GLView;
@@ -61,6 +62,8 @@ class Renderer;
 class Camera;
 
 class Console;
+class RenderTexture;
+
 namespace experimental
 {
     class FrameBuffer;
@@ -93,6 +96,7 @@ enum class MATRIX_STACK_TYPE
  Since the Director is a singleton, the standard way to use it is by calling:
  _ Director::getInstance()->methodName();
  */
+ 
 class CC_DLL Director : public Ref
 {
 public:
@@ -637,6 +641,153 @@ protected:
 
     // GLView will recreate stats labels to fit visible rect
     friend class GLView;
+
+  /**
+   * Tooflya Inc. Development
+   *
+   * @author Igor Mats from Tooflya Inc.
+   * @copyright (c) by Igor Mats
+   * http://www.tooflya.com/development/
+   *
+   * Permission is hereby granted, free of charge, to any person obtaining a copy
+   * of this software and associated documentation files (the "Software"), to deal
+   * in the Software without restriction, including without limitation the rights
+   * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+   * copies of the Software, and to permit persons to whom the Software is
+   * furnished to do so, subject to the following conditions:
+
+   * The above copyright notice and this permission notice shall be included in
+   * all copies or substantial portions of the Software.
+
+   * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+   * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+   * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+   * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+   * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+   * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+   * THE SOFTWARE.
+   *
+   */
+  protected:
+
+    /**
+     *
+     * @Director
+     * | @Ambient;
+     *
+     */
+    struct Ambient {
+      bool state = false;
+
+      DirectionLight* source1;
+      AmbientLight* source2;
+    };
+
+    Ambient ambient;
+
+    /**
+     *
+     * @Director
+     * | @Shadows;
+     *
+     */
+    struct Shadows {
+      bool state = false;
+
+      float factor;
+
+      experimental::FrameBuffer* frame;
+      Camera* camera;
+      Node* element;
+      Node* texture;
+    };
+
+    Shadows shadows;
+
+    /**
+     *
+     * @Director
+     * | @Capture;
+     *
+     */
+    struct Capture {
+      bool state = false;
+
+      int count;
+      int time;
+      float scale;
+      float factor;
+      float x;
+      float y;
+      float width;
+      float height;
+
+      experimental::FrameBuffer* frame;
+      Camera* camera;
+      Sprite* texture;
+      Sprite* element;
+
+      std::vector<RenderTexture*> textures;
+    };
+
+    Capture capture;
+
+  public:
+
+    /**
+     *
+     * @Director
+     * | @Ambient;
+     *
+     */
+    virtual void setAmbientColor1(float r, float g, float b);
+    virtual void setAmbientColor2(float r, float g, float b);
+    virtual void setAmbientDirection(float x, float y, float z);
+    virtual void setAmbient(bool state, Node* root);
+
+    /**
+     *
+     * @Director
+     * | @Shadows;
+     *
+     */
+    virtual void setShadowCamera(Camera* camera);
+    virtual void setShadowElement(Node* element);
+    virtual void setShadowFactor(float factor);
+    virtual void setShadow(bool state, Node* root);
+
+    virtual Node* getShadowTexture();
+
+    /**
+     *
+     * @Director
+     * | @Capture;
+     *
+     */
+    virtual void setCaptureCamera(Camera* camera);
+    virtual void setCaptureElement(Sprite* element);
+    virtual void setCaptureCount(int count);
+    virtual void setCaptureTime(int time);
+    virtual void setCaptureFactor(float factor);
+    virtual void setCaptureScale(float scale);
+    virtual void setCapturePosition(float x, float y);
+    virtual void setCaptureSize(float width, float height);
+    virtual void setCapture(bool state, Node* root);
+
+    virtual void updateCapture();
+
+    virtual Node* getCaptureTexture();
+
+    /**
+     *
+     * @Director
+     * | @Render;
+     *
+     */
+    virtual void onRenderStart();
+    virtual void onRenderFinish();
+    virtual void onRenderStart(int index);
+    virtual void onRenderFinish(int index);
 };
 
 // end of base group
