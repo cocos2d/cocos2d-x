@@ -69,6 +69,7 @@ Sprite3DTests::Sprite3DTests()
     ADD_TEST_CASE(MotionStreak3DTest);
     ADD_TEST_CASE(Sprite3DPropertyTest);
     ADD_TEST_CASE(Sprite3DNormalMappingTest);
+    ADD_TEST_CASE(Issue16155Test);
 };
 
 //------------------------------------------------------------------
@@ -2588,6 +2589,9 @@ std::string Sprite3DNormalMappingTest::subtitle() const
     return "";
 }
 
+//
+//
+//
 Sprite3DPropertyTest::Sprite3DPropertyTest()
 {
     auto s = Director::getInstance()->getWinSize();
@@ -2688,4 +2692,25 @@ void Sprite3DPropertyTest::refreshSpriteRender()
         }
         mesh->setTexture(cacheTex, cocos2d::NTextureData::Usage::Diffuse, false);
     }
+}
+
+//
+// Issue16155Test
+//
+Issue16155Test::Issue16155Test()
+{
+    auto s = Director::getInstance()->getWinSize();
+
+    auto sprite = Sprite3D::create("Sprite3DTest/orc.c3b");
+    addChild(sprite);
+    removeChild(sprite);
+}
+
+std::string Issue16155Test::title() const
+{
+    return "Issue16155 Test";
+}
+std::string Issue16155Test::subtitle() const
+{
+    return "Should not leak texture";
 }

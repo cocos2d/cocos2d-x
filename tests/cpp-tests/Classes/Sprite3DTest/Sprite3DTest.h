@@ -615,4 +615,13 @@ protected:
     std::string _texFile;
 };
 
+class Issue16155Test : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(Issue16155Test);
+    Issue16155Test();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
 #endif
