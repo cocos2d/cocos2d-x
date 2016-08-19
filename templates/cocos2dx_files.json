@@ -1037,7 +1037,7 @@
         "cocos/platform/android/java/src/org/cocos2dx/lib/Cocos2dxReflectionHelper.java", 
         "cocos/platform/android/java/src/org/cocos2dx/lib/Cocos2dxRenderer.java", 
         "cocos/platform/android/java/src/org/cocos2dx/lib/Cocos2dxSound.java", 
-        "cocos/platform/android/java/src/org/cocos2dx/lib/Cocos2dxTextInputWraper.java", 
+        "cocos/platform/android/java/src/org/cocos2dx/lib/Cocos2dxTextInputWrapper.java", 
         "cocos/platform/android/java/src/org/cocos2dx/lib/Cocos2dxTypefaces.java", 
         "cocos/platform/android/java/src/org/cocos2dx/lib/Cocos2dxVideoHelper.java", 
         "cocos/platform/android/java/src/org/cocos2dx/lib/Cocos2dxVideoView.java", 
