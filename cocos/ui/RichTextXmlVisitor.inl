@@ -1,6 +1,6 @@
 #ifndef _RICHTEXTXMLVISITOR_IPP_
 #define _RICHTEXTXMLVISITOR_IPP_
-#include "rapidxml/rapidxml_sax3.hpp"
+#include "ui/rapidxml/rapidxml_sax3.hpp"
 
 USING_NS_CC;
 
