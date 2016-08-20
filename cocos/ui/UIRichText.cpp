@@ -235,7 +235,7 @@ RichElementNewLine* RichElementNewLine::create(int tag, const Color3B& color, GL
     return nullptr;
 }
 
-#include "RichTextXmlVisitor.ipp"
+#include "RichTextXmlVisitor.inl"
 
 const std::string RichText::KEY_VERTICAL_SPACE("KEY_VERTICAL_SPACE");
 const std::string RichText::KEY_WRAP_MODE("KEY_WRAP_MODE");
@@ -345,8 +345,9 @@ bool RichText::initWithXML(const std::string& origxml, const ValueMap& defaults,
         setDefaults(defaults);
         setOpenUrlHandler(handleOpenUrl);
         
-        SAXParser parser;
+        
         RichTextXmlVisitor visitor(this);
+        rapidxml::xml_sax3_parser<> parser(&visitor);
 
         // solves to issues:
         //  - creates defaults values
@@ -355,14 +356,13 @@ bool RichText::initWithXML(const std::string& origxml, const ValueMap& defaults,
         xml += origxml;
         xml += "</font>";
 
-        auto succeed = parser.parse(xml.c_str(), xml.length());
-        if (succeed)
-        {
-            /*MyXMLVisitor visitor(this);
-            document.Accept(&visitor);*/
+        try {
+            parser.parse<>(&xml.front(), xml.length());
             return true;
         }
-        CCLOG("cocos2d: UI::RichText: Error parsing xml!"/*, document.GetErrorStr1(), document.GetErrorStr2()*/);
+        catch(std::exception& e) {
+            CCLOG("cocos2d: UI::RichText: Error parsing xml: %s", e.what()/*, document.GetErrorStr1(), document.GetErrorStr2()*/);
+        }
     }
     return false;
 }
