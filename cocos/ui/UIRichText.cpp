@@ -360,8 +360,8 @@ bool RichText::initWithXML(const std::string& origxml, const ValueMap& defaults,
             parser.parse<>(&xml.front(), xml.length());
             return true;
         }
-        catch(std::exception& e) {
-            CCLOG("cocos2d: UI::RichText: Error parsing xml: %s", e.what()/*, document.GetErrorStr1(), document.GetErrorStr2()*/);
+        catch(rapidxml::parse_error& e) {
+            CCLOG("cocos2d: UI::RichText: Error parsing xml: %s at %s", e.what(), e.where<char>());
         }
     }
     return false;
