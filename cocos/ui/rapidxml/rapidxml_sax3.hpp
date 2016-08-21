@@ -61,6 +61,8 @@ namespace rapidxml
     class xml_sax3_handler
     {
     public:
+        virtual ~xml_sax3_handler(){}
+        
         virtual void xmlSAX3StartElement(const char *elementName, size_t) = 0;
 
         virtual void xmlSAX3Attr(const char* elementName, size_t,
@@ -78,6 +80,8 @@ namespace rapidxml
     class xml_sax2_handler : public xml_sax3_handler
     {
     public:
+        xml_sax2_handler(){ elementAttrs.reserve(64); }
+       
         /**
         * @remark: The parameter 'name' without null terminator charactor
         */
