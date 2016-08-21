@@ -235,7 +235,7 @@ RichElementNewLine* RichElementNewLine::create(int tag, const Color3B& color, GL
     return nullptr;
 }
 
-#include "RichTextXmlVisitor.inl"
+#include "ui/UIRichTextXmlVisitor.inl"
 
 const std::string RichText::KEY_VERTICAL_SPACE("KEY_VERTICAL_SPACE");
 const std::string RichText::KEY_WRAP_MODE("KEY_WRAP_MODE");
