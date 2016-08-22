@@ -54,7 +54,6 @@ public:
     bool init();
 
     bool addTrack(Track* track);
-
     bool hasPlayingTacks();
 
     void pause();
@@ -67,6 +66,7 @@ public:
 
 private:
     void destroy();
+    void initTrack(Track* track, std::vector<Track*>& tracksToRemove);
 
 private:
     int _bufferSizeInFrames;
