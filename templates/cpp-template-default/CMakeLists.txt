@@ -68,6 +68,11 @@ endif()
 
 # Compiler options
 if(MSVC)
+  if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+      set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /NODEFAULTLIB:msvcrt /NODEFAULTLIB:libcmt")
+  else()
+      set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /NODEFAULTLIB:libcmt")
+  endif()
   ADD_DEFINITIONS(-D_CRT_SECURE_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS
                   -wd4251 -wd4244 -wd4334 -wd4005 -wd4820 -wd4710
                   -wd4514 -wd4056 -wd4996 -wd4099)
