@@ -227,7 +227,7 @@ public:
      */
     virtual void setSecureTextEntry(bool value);
     virtual void setPasswordTextStyle(const std::string& text);
-    std::string getPasswordTextStyle() const;
+    const std::string& getPasswordTextStyle() const;
 
     /**
      * Query whether the currently display mode is secure text entry or not.
