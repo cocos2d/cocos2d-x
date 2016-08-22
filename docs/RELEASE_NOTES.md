@@ -10,8 +10,9 @@
     - [Add VR plugin](#add-vr-plugin)
     - [Support ETC1 alpha channel](#support-etc1-alpha-channel)
     - [AudioEngine performance for Android 4.2+](#audioengine-performance-for-android-42)
+    - [Dirty region in canvas renderer](#dirty-region-in-canvas-renderer)
     - [Android arm-64 support](#android-arm-64-support)
-    - [Switch to use gcc 4.9](#switch-to-use-gcc-49)
+    - [Switch to use gcc 4.9 on Android](#switch-to-use-gcc-49-on-android)
     - [Upgrade CURL to 7.50.0](#upgrade-curl-to-7500)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->

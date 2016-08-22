@@ -8,10 +8,10 @@
     - [增加VR插件](#%E5%A2%9E%E5%8A%A0vr%E6%8F%92%E4%BB%B6)
     - [支持ETC1 alpha通道](#%E6%94%AF%E6%8C%81etc1-alpha%E9%80%9A%E9%81%93)
     - [AudioEngin性能提升](#audioengin%E6%80%A7%E8%83%BD%E6%8F%90%E5%8D%87)
+    - [脏矩形算法](#%E8%84%8F%E7%9F%A9%E5%BD%A2%E7%AE%97%E6%B3%95)
     - [支持Android 64位应用](#%E6%94%AF%E6%8C%81android-64%E4%BD%8D%E5%BA%94%E7%94%A8)
     - [Android切换回gcc 4.9](#android%E5%88%87%E6%8D%A2%E5%9B%9Egcc-49)
     - [CURL升级到7.50.0](#curl%E5%8D%87%E7%BA%A7%E5%88%B07500)
-    - [luajit 2.1.0-beta2](#luajit-210-beta2)
   - [其他改动](#%E5%85%B6%E4%BB%96%E6%94%B9%E5%8A%A8)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
