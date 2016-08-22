@@ -27,7 +27,7 @@
 
 ## Highlights
 
-* add VR plugin
+* added VR plugins for Gear, Deepoon, Google Cardboard and Oculus.
 * support ETC1 alpha channel
 * fix AudioEngine performance for Android 4.2+
 * improve canvas renderer performance with dirty region 
@@ -39,9 +39,9 @@
 
 ## The main features in detail of Cocos2d-x v3.13
 
-### Add VR plugin
+### Added VR plugins
 
-TBD: add link of PG
+Support for Gear, Deepoon, Google Cardboard and Oculus has been added. Read about VR in our [Programmers Guide](http://www.cocos2d-x.org/docs/programmers-guide/vr/index.html)
 
 ### Support ETC1 alpha channel
 
