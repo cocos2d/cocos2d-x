@@ -2702,8 +2702,12 @@ Issue16155Test::Issue16155Test()
     auto s = Director::getInstance()->getWinSize();
 
     auto sprite = Sprite3D::create("Sprite3DTest/orc.c3b");
+
+    int rcBefore = sprite->getMeshByIndex(0)->getTexture()->getReferenceCount();
     addChild(sprite);
     removeChild(sprite);
+
+    cocos2d::log("Issue 16155: Ref count:%d. Run this test again. RC should be the same", rcBefore);
 }
 
 std::string Issue16155Test::title() const
@@ -2712,5 +2716,5 @@ std::string Issue16155Test::title() const
 }
 std::string Issue16155Test::subtitle() const
 {
-    return "Should not leak texture";
+    return "Should not leak texture. See console";
 }
