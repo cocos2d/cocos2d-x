@@ -79,7 +79,7 @@ const char* CCBProxy::getNodeTypeName(Node* pNode)
     }
     
     if (NULL != dynamic_cast<ui::Scale9Sprite*>(pNode)) {
-        return "cc.LayerGradient";
+        return "ccui.Scale9Sprite";
     }
     
     if (NULL != dynamic_cast<Menu*>(pNode)) {
