@@ -35,7 +35,7 @@
 
 ### 增加VR插件
 
-支持了Gear、Deepon、Google Cardboard和Oculus插件。可以参考[
+支持了Gear、Deepon、Google Cardboard和Oculus插件。具体的使用方法可以参考[Programmers Guide](http://www.cocos2d-x.org/docs/programmers-guide/vr/index.html)。
 
 ### 支持ETC1 alpha通道
 
