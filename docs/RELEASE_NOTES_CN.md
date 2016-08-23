@@ -25,6 +25,7 @@
 * 解决了AudioEngin的性能问题，在Android 4.2+有效
 * 通过脏矩形算法提升Canvas渲染器性能
 * 支持Android 64位应用
+* 集成[AnySDK][1]
 * Android切换回gcc 4.9
 * CURL升级到7.50.0
 * Spine升级到3.4
@@ -51,6 +52,20 @@ auto sprite = Sprite::create("xxx.pkm");
 ### AudioEngin性能提升
 
 Android平台下，AudioEngine使用[OpenSL ES](https://developer.android.com/ndk/guides/audio/opensl-for-android.html)播放声音。从Android 4.2开始，OpenSL ES支持解码声音文件为PCM数据，引擎正是利用这个以特性来缓存解码后数据以提升性能。因此，该性能提升只在Android 4.2及以上版本有效。
+
+### 集成[AnySDK][1]
+
+[AnySDK][1]为CP商提供一套第三方SDK接入解决方案，整个接入过程，不改变任何SDK的功能、特性、参数等，对于最终玩家而言是完全透明无感知的。支持的第三方SDK包括**渠道SDK**、**用户系统**、**支付系统**、**广告系统**、**统计系统**、**分享系统**等。
+
+可以通过如下方法集成[AnySDK][1]
+
+```
+cocos package import anysdk -p PROJECT_PATH --anysdk
+```
+
+`PROJECT_PATH`是游戏工程的根目录，比如`COCOS2DX_ROOT/tests/cpp-empty-test`。
+
+通过上面命令后，[AnySDK][1]框架就集成到了游戏项目中，可以在代码里调用AnySDK接口接入各种第三方SDK了。[AnySDK][1]的详细介绍和使用方法请参考[AnySDK][1]官网。
 
 ### 脏矩形算法
 
@@ -85,3 +100,5 @@ CURL 7.50.0解决了[在NAT64环境连接IPV4地址格式的IP地址错误](http
 
 ## 其他改动
 更完整的改动列表可以阅读[full changelog](https://github.com/cocos2d/cocos2d-x/blob/v3/CHANGELOG)。
+
+[1]: http://www.anysdk.com/
