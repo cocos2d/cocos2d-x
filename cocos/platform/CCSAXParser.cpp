@@ -28,7 +28,7 @@
 
 #include "platform/CCFileUtils.h"
 #include "tinyxml2.h"
-
+#include "platform/rapidxml_sax3.hpp"
 
 NS_CC_BEGIN
 
