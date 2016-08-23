@@ -57,6 +57,10 @@ auto sprite = Sprite::create("xxx.pkm");
 
 More detail usage can refer to the implementation of `Sprite1ETC1Alpha` in `tests/cpp-tests/Classes/SpriteTest/SpriteTest.cpp`.
 
+![](https://raw.githubusercontent.com/minggo/Pictures/master/etc1-alpha.png)
+
+As you can see, the blue block in the middle of the picture is an ETC1 picture with alpha channel.
+
 ### AudioEngine performance for Android 4.2+
 
 AudioEngine uses [OpenSL ES](https://developer.android.com/ndk/guides/audio/opensl-for-android.html) on Android, and it supports decoding audio source file to PCM data in codes since Android 4.2. Now AudioEngine uses this feature to fix the performance issue. The performane is the same as before if running on Android 4.1 or lower version.

@@ -35,7 +35,7 @@
 
 ### 增加VR插件
 
-TBD:
+支持了Gear、Deepon、Google Cardboard和Oculus插件。具体的使用方法可以参考[Programmers Guide](http://www.cocos2d-x.org/docs/programmers-guide/vr/index.html)。
 
 ### 支持ETC1 alpha通道
 
@@ -48,6 +48,10 @@ auto sprite = Sprite::create("xxx.pkm");
 ```
 
 引擎会自动去加载`xxx.pkm@alpha`作为alpha通道数据。更详细的使用方式请参考`tests/cpp-tests/Classes/SpriteTest/SpriteTest.cpp`里的`Sprite1ETC1Alpha `测试例子。
+
+![](https://raw.githubusercontent.com/minggo/Pictures/master/etc1-alpha.png)
+
+图中蓝色部分就是带alpha通道的ETC1图片。
 
 ### AudioEngin性能提升
 
