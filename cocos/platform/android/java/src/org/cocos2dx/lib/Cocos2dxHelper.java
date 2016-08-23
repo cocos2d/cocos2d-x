@@ -569,7 +569,7 @@ public class Cocos2dxHelper {
             return settings.getFloat(key, defaultValue);
         }
         catch (Exception ex) {
-            ex.printStackTrace();;
+            ex.printStackTrace();
 
             Map allValues = settings.getAll();
             Object value = allValues.get(key);
