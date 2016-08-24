@@ -28,7 +28,7 @@
 
 #include "platform/CCFileUtils.h"
 #include "tinyxml2.h"
-#include "platform/rapidxml_sax3.hpp"
+#include "rapidxml/rapidxml_sax3.hpp"
 
 NS_CC_BEGIN
 
@@ -99,12 +99,12 @@ public:
         _ccsaxParserImp = parser;
     }
 
-    void xmlSAX2StartElement(const char *name, size_t len, const char **atts, size_t attslen) override
+    void xmlSAX2StartElement(const char *name, size_t /*len*/, const char **atts, size_t /*attslen*/) override
     {
-        SAXParser::startElement(_ccsaxParserImp, (const CC_XML_CHAR *)elementName.first, (const CC_XML_CHAR **)(&elementAttrs[0]));
+        SAXParser::startElement(_ccsaxParserImp, (const CC_XML_CHAR *)name, (const CC_XML_CHAR **)atts);
     }
 
-    void xmlSAX2EndElement(const char *name, size_t len) override
+    void xmlSAX2EndElement(const char *name, size_t /*len*/) override
     {
         SAXParser::endElement(_ccsaxParserImp, (const CC_XML_CHAR *)name);
     }
