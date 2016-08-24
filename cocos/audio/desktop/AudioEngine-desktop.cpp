@@ -25,7 +25,7 @@
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
 
-#include "audio/linux/AudioEngine-linux.h"
+#include "audio/desktop/AudioEngine-desktop.h"
 
 #ifdef OPENAL_PLAIN_INCLUDES
 #include "alc.h"

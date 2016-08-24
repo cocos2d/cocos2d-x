@@ -1377,6 +1377,9 @@ Retired Core Developers:
 
     thuydx55
         Fixed a bug of loading pluginx lib when compile Android with --compile-script flag.
+        
+    Janonard
+        Merged the audio engine implementation for Windows and Linux.
 
     
 

@@ -37,7 +37,7 @@
 #include <AL/al.h>
 #endif
 #include "platform/CCPlatformMacros.h"
-#include "audio/linux/AudioCache.h"
+#include "audio/desktop/AudioCache.h"
 
 NS_CC_BEGIN
 namespace experimental{

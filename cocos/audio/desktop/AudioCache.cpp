@@ -25,7 +25,7 @@
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
 
-#include "audio/linux/AudioCache.h"
+#include "audio/desktop/AudioCache.h"
 #include <thread>
 #include <algorithm>
 #include "vorbis/codec.h"

@@ -50,6 +50,10 @@ gen/
 assets/
 local.properties
 
+# Ignore files build by KDevelop
+.kdev4/
+*.kdev4
+
 # Ignore python compiled files
 *.pyc
 

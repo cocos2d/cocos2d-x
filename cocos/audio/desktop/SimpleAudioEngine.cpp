@@ -7,37 +7,37 @@ using namespace CocosDenshion;
 using namespace cocos2d;
 using namespace cocos2d::experimental;
 
-struct SimpleAudioEngineLinux {
+struct SimpleAudioEngineDesktop {
     SimpleAudioEngine * engine = nullptr;
     int musicid;
     float effectsvolume;
     std::string musicpath;
 };
 
-SimpleAudioEngineLinux * g_SimpleAudioEngineLinux = nullptr;
+SimpleAudioEngineDesktop * g_SimpleAudioEngineDesktop = nullptr;
 
 SimpleAudioEngine* SimpleAudioEngine::getInstance()
 {
-    if (!g_SimpleAudioEngineLinux) {
-        g_SimpleAudioEngineLinux = new SimpleAudioEngineLinux();
-        g_SimpleAudioEngineLinux->engine = new SimpleAudioEngine();
+    if (!g_SimpleAudioEngineDesktop) {
+        g_SimpleAudioEngineDesktop = new SimpleAudioEngineDesktop();
+        g_SimpleAudioEngineDesktop->engine = new SimpleAudioEngine();
     }
-    return g_SimpleAudioEngineLinux->engine;
+    return g_SimpleAudioEngineDesktop->engine;
 }
 
 void SimpleAudioEngine::end()
 {
-    if (g_SimpleAudioEngineLinux) {
-        delete g_SimpleAudioEngineLinux->engine;
-        delete g_SimpleAudioEngineLinux;
+    if (g_SimpleAudioEngineDesktop) {
+        delete g_SimpleAudioEngineDesktop->engine;
+        delete g_SimpleAudioEngineDesktop;
     }
-    g_SimpleAudioEngineLinux = nullptr;
+    g_SimpleAudioEngineDesktop = nullptr;
 }
 
 SimpleAudioEngine::SimpleAudioEngine()
 {
-    g_SimpleAudioEngineLinux->musicid = -1;
-    g_SimpleAudioEngineLinux->effectsvolume = 1.0f;
+    g_SimpleAudioEngineDesktop->musicid = -1;
+    g_SimpleAudioEngineDesktop->effectsvolume = 1.0f;
 }
 
 SimpleAudioEngine::~SimpleAudioEngine()
@@ -46,47 +46,47 @@ SimpleAudioEngine::~SimpleAudioEngine()
 
 void SimpleAudioEngine::preloadBackgroundMusic(const char* filePath)
 {
-    g_SimpleAudioEngineLinux->musicpath = filePath;
+    g_SimpleAudioEngineDesktop->musicpath = filePath;
     AudioEngine::preload(filePath);
 }
 
 void SimpleAudioEngine::playBackgroundMusic(const char* filePath, bool loop)
 {
-    g_SimpleAudioEngineLinux->musicpath = filePath;
-    g_SimpleAudioEngineLinux->musicid = AudioEngine::play2d(filePath, loop);
+    g_SimpleAudioEngineDesktop->musicpath = filePath;
+    g_SimpleAudioEngineDesktop->musicid = AudioEngine::play2d(filePath, loop);
 }
 
 void SimpleAudioEngine::stopBackgroundMusic(bool releaseData)
 {
-    AudioEngine::stop(g_SimpleAudioEngineLinux->musicid);
+    AudioEngine::stop(g_SimpleAudioEngineDesktop->musicid);
     if (releaseData) {
-        AudioEngine::uncache(g_SimpleAudioEngineLinux->musicpath.c_str());
+        AudioEngine::uncache(g_SimpleAudioEngineDesktop->musicpath.c_str());
     }
 }
 
 void SimpleAudioEngine::pauseBackgroundMusic()
 {
-    AudioEngine::pause(g_SimpleAudioEngineLinux->musicid);
+    AudioEngine::pause(g_SimpleAudioEngineDesktop->musicid);
 }
 
 void SimpleAudioEngine::resumeBackgroundMusic()
 {
-    AudioEngine::resume(g_SimpleAudioEngineLinux->musicid);
+    AudioEngine::resume(g_SimpleAudioEngineDesktop->musicid);
 }
 
 void SimpleAudioEngine::rewindBackgroundMusic()
 {
-    AudioEngine::setCurrentTime(g_SimpleAudioEngineLinux->musicid, 0);
+    AudioEngine::setCurrentTime(g_SimpleAudioEngineDesktop->musicid, 0);
 }
 
 bool SimpleAudioEngine::willPlayBackgroundMusic()
 {
-    return g_SimpleAudioEngineLinux->musicid != -1;
+    return g_SimpleAudioEngineDesktop->musicid != -1;
 }
 
 bool SimpleAudioEngine::isBackgroundMusicPlaying()
 {
-    return AudioEngine::getState(g_SimpleAudioEngineLinux->musicid) == AudioEngine::AudioState::PLAYING;
+    return AudioEngine::getState(g_SimpleAudioEngineDesktop->musicid) == AudioEngine::AudioState::PLAYING;
 }
 
 //
@@ -100,7 +100,7 @@ bool SimpleAudioEngine::isBackgroundMusicPlaying()
  */
 float SimpleAudioEngine::getBackgroundMusicVolume()
 {
-    return AudioEngine::getVolume(g_SimpleAudioEngineLinux->musicid);
+    return AudioEngine::getVolume(g_SimpleAudioEngineDesktop->musicid);
 }
 
 /**
@@ -112,7 +112,7 @@ float SimpleAudioEngine::getBackgroundMusicVolume()
  */
 void SimpleAudioEngine::setBackgroundMusicVolume(float volume)
 {
-    AudioEngine::setVolume(g_SimpleAudioEngineLinux->musicid, volume);
+    AudioEngine::setVolume(g_SimpleAudioEngineDesktop->musicid, volume);
 }
 
 /**
@@ -120,7 +120,7 @@ void SimpleAudioEngine::setBackgroundMusicVolume(float volume)
  */
 float SimpleAudioEngine::getEffectsVolume()
 {
-    return g_SimpleAudioEngineLinux->effectsvolume;
+    return g_SimpleAudioEngineDesktop->effectsvolume;
 }
 
 /**
@@ -130,7 +130,7 @@ float SimpleAudioEngine::getEffectsVolume()
  */
 void SimpleAudioEngine::setEffectsVolume(float volume)
 {
-    g_SimpleAudioEngineLinux->effectsvolume = volume;
+    g_SimpleAudioEngineDesktop->effectsvolume = volume;
 }
 
 /**

@@ -24,8 +24,8 @@
 #include "platform/CCPlatformConfig.h"
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
-#include "audio/linux/AudioPlayer.h"
-#include "audio/linux/AudioCache.h"
+#include "audio/desktop/AudioPlayer.h"
+#include "audio/desktop/AudioCache.h"
 #include "base/CCConsole.h"
 #include "platform/CCFileUtils.h"
 #include "mpg123.h"

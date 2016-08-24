@@ -23,10 +23,10 @@ ELSEIF(ANDROID)
 
 elseif(LINUX)
     set(COCOS_AUDIO_PLATFORM_SRC
-        audio/linux/SimpleAudioEngine.cpp
-        audio/linux/AudioEngine-linux.cpp
-        audio/linux/AudioCache.cpp
-        audio/linux/AudioPlayer.cpp
+        audio/desktop/SimpleAudioEngine.cpp
+        audio/desktop/AudioEngine-desktop.cpp
+        audio/desktop/AudioCache.cpp
+        audio/desktop/AudioPlayer.cpp
     )
 
 elseif(MACOSX)
