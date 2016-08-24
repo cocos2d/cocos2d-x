@@ -111,6 +111,7 @@ Camera::Camera()
 , _viewProjectionDirty(true)
 , _cameraFlag(1)
 , _frustumDirty(true)
+, _viewProjectionUpdated(false)
 , _depth(-1)
 , _fbo(nullptr)
 {
@@ -441,6 +442,7 @@ void Camera::setFrameBufferObject(experimental::FrameBuffer *fbo)
 
 void Camera::apply()
 {
+    _viewProjectionUpdated = _transformUpdated;
     applyFrameBufferObject();
     applyViewport();
 }
