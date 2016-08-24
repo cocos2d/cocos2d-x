@@ -55,7 +55,14 @@ auto sprite = Sprite::create("xxx.pkm");
 
 ### AudioEngin性能提升
 
-Android平台下，AudioEngine使用[OpenSL ES](https://developer.android.com/ndk/guides/audio/opensl-for-android.html)播放声音。从Android 4.2开始，OpenSL ES支持解码声音文件为PCM数据，引擎正是利用这个以特性来缓存解码后数据以提升性能。因此，该性能提升只在Android 4.2及以上版本有效。
+Android平台下，AudioEngine使用[OpenSL ES](https://developer.android.com/ndk/guides/audio/opensl-for-android.html)播放声音。从Android 4.2开始，OpenSL ES支持解码声音文件为PCM数据，引擎正是利用这个以特性来缓存解码后数据以提升性能。因此，该性能提升只在Android 4.2及以上版本有效。**需要先preload，否则第一次播放性能没有很大提升**。
+
+
+![](https://raw.githubusercontent.com/minggo/Pictures/master/audio/audio-performance1.png)
+
+![](https://raw.githubusercontent.com/minggo/Pictures/master/audio/audio-performance2.png)
+
+![](https://raw.githubusercontent.com/minggo/Pictures/master/audio/audio-performance3.png)
 
 ### 集成[AnySDK][1]
 

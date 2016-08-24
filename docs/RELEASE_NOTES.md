@@ -63,7 +63,13 @@ As you can see, the blue block in the middle of the picture is an ETC1 picture w
 
 ### AudioEngine performance for Android 4.2+
 
-AudioEngine uses [OpenSL ES](https://developer.android.com/ndk/guides/audio/opensl-for-android.html) on Android, and it supports decoding audio source file to PCM data in codes since Android 4.2. Now AudioEngine uses this feature to fix the performance issue. The performane is the same as before if running on Android 4.1 or lower version.
+AudioEngine uses [OpenSL ES](https://developer.android.com/ndk/guides/audio/opensl-for-android.html) on Android, and it supports decoding audio source file to PCM data in codes since Android 4.2. Now AudioEngine uses this feature to fix the performance issue. The performane is the same as before if running on Android 4.1 or lower version. **Should preload first, or there is not performance improved for first time playing of the audio.**
+
+![](https://raw.githubusercontent.com/minggo/Pictures/master/audio/audio-performance1.png)
+
+![](https://raw.githubusercontent.com/minggo/Pictures/master/audio/audio-performance2.png)
+
+![](https://raw.githubusercontent.com/minggo/Pictures/master/audio/audio-performance3.png)
 
 ### Dirty region in canvas renderer
 
