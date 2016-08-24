@@ -532,7 +532,7 @@ public class Cocos2dxHelper {
             }
         }
 
-        return false;
+        return defaultValue;
     }
     
     public static int getIntegerForKey(String key, int defaultValue) {
@@ -560,7 +560,7 @@ public class Cocos2dxHelper {
             }
         }
 
-        return 0;
+        return defaultValue;
     }
     
     public static float getFloatForKey(String key, float defaultValue) {
@@ -569,7 +569,7 @@ public class Cocos2dxHelper {
             return settings.getFloat(key, defaultValue);
         }
         catch (Exception ex) {
-            ex.printStackTrace();;
+            ex.printStackTrace();
 
             Map allValues = settings.getAll();
             Object value = allValues.get(key);
@@ -588,7 +588,7 @@ public class Cocos2dxHelper {
             }
         }
 
-        return 0.0f;
+        return defaultValue;
     }
     
     public static double getDoubleForKey(String key, double defaultValue) {
