@@ -326,6 +326,8 @@
         "cocos/audio/android/jni/cddandroidAndroidJavaEngine.h", 
         "cocos/audio/android/utils/Compat.h", 
         "cocos/audio/android/utils/Errors.h", 
+        "cocos/audio/android/utils/Utils.cpp", 
+        "cocos/audio/android/utils/Utils.h", 
         "cocos/audio/apple/AudioCache.h", 
         "cocos/audio/apple/AudioCache.mm", 
         "cocos/audio/apple/AudioEngine-inl.h", 
