@@ -32,32 +32,11 @@ THE SOFTWARE.
 #include "audio/android/PcmAudioService.h"
 #include "audio/android/CCThreadPool.h"
 #include "audio/android/ICallerThreadUtils.h"
+#include "audio/android/utils/Utils.h"
 
 #include <sys/system_properties.h>
 #include <stdlib.h>
 #include <algorithm> // for std::find_if
-#include <cstdio>
-
-namespace
-{
-    int getSDKVersion()
-    {
-        int ret = -1;
-        std::string command = "getprop ro.build.version.sdk";
-        FILE* file = popen(command.c_str(), "r");
-        if (file)
-        {
-            char output[100];
-            if (std::fgets(output, sizeof(output), file) != nullptr)
-                ret = std::atoi(output);
-
-            pclose(file);
-        }
-        
-        return ret;
-    }
-}
-
 
 namespace cocos2d { namespace experimental {
 
@@ -69,7 +48,7 @@ static int getSystemAPILevel()
         return __systemApiLevel;
     }
 
-    int apiLevel = getSDKVersion();
+    int apiLevel = getSystemProperty("ro.build.version.sdk");
     if (apiLevel > 0)
     {
         ALOGD("Android API level: %d", apiLevel);
