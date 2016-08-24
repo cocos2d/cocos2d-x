@@ -850,12 +850,6 @@
     <ClCompile Include="..\..\extensions\physics-nodes\CCPhysicsSprite.cpp">
       <Filter>extension\physics_nodes</Filter>
     </ClCompile>
-    <ClCompile Include="..\audio\win32\MciPlayer.cpp">
-      <Filter>cocosdenshion\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\audio\win32\SimpleAudioEngine.cpp">
-      <Filter>cocosdenshion\Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\network\HttpClient.cpp">
       <Filter>network\Source Files</Filter>
     </ClCompile>
@@ -1268,15 +1262,6 @@
       <Filter>ui\UIWidgets</Filter>
     </ClCompile>
     <ClCompile Include="..\audio\AudioEngine.cpp">
-      <Filter>audioengine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\audio\win32\AudioCache.cpp">
-      <Filter>audioengine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\audio\win32\AudioEngine-win32.cpp">
-      <Filter>audioengine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\audio\win32\AudioPlayer.cpp">
       <Filter>audioengine</Filter>
     </ClCompile>
     <ClCompile Include="..\editor-support\cocostudio\ActionTimeline\CSLoader.cpp">
@@ -1971,6 +1956,18 @@
     <ClCompile Include="..\vr\CCVRGenericRenderer.cpp">
       <Filter>vr</Filter>
     </ClCompile>
+    <ClCompile Include="..\audio\desktop\AudioCache.cpp">
+      <Filter>audioengine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\audio\desktop\AudioEngine-desktop.cpp">
+      <Filter>audioengine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\audio\desktop\AudioPlayer.cpp">
+      <Filter>audioengine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\audio\desktop\SimpleAudioEngine.cpp">
+      <Filter>cocosdenshion\Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\physics\CCPhysicsBody.h">
@@ -2619,9 +2616,6 @@
     <ClInclude Include="..\audio\include\Export.h">
       <Filter>cocosdenshion\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\audio\win32\MciPlayer.h">
-      <Filter>cocosdenshion\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\audio\include\SimpleAudioEngine.h">
       <Filter>cocosdenshion\Header Files</Filter>
     </ClInclude>
@@ -3103,15 +3097,6 @@
       <Filter>ui\UIWidgets</Filter>
     </ClInclude>
     <ClInclude Include="..\audio\include\AudioEngine.h">
-      <Filter>audioengine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\audio\win32\AudioCache.h">
-      <Filter>audioengine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\audio\win32\AudioEngine-win32.h">
-      <Filter>audioengine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\audio\win32\AudioPlayer.h">
       <Filter>audioengine</Filter>
     </ClInclude>
     <ClInclude Include="..\editor-support\cocostudio\ActionTimeline\CSLoader.h">
@@ -3850,6 +3835,15 @@
     </ClInclude>
     <ClInclude Include="..\vr\CCVRGenericRenderer.h">
       <Filter>vr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\audio\desktop\AudioCache.h">
+      <Filter>audioengine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\audio\desktop\AudioEngine-desktop.h">
+      <Filter>audioengine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\audio\desktop\AudioPlayer.h">
+      <Filter>audioengine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

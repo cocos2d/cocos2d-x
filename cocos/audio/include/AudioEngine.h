@@ -1,5 +1,6 @@
 /****************************************************************************
  Copyright (c) 2014-2016 Chukong Technologies Inc.
+ Copyright (c) 2016 Jan-Oliver "Janonard" Opdenhövel
 
  http://www.cocos2d-x.org
 

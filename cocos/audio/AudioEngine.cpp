@@ -1,5 +1,6 @@
 /****************************************************************************
  Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2016 Jan-Oliver "Janonard" Opdenhövel
 
  http://www.cocos2d-x.org
 
@@ -34,11 +35,9 @@
 #include "audio/android/AudioEngine-inl.h"
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC
 #include "audio/apple/AudioEngine-inl.h"
-#elif CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
-#include "audio/win32/AudioEngine-win32.h"
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
 #include "audio/winrt/AudioEngine-winrt.h"
-#elif CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_LINUX || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 #include "audio/desktop/AudioEngine-desktop.h"
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN
 #include "audio/tizen/AudioEngine-tizen.h"
