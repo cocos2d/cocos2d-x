@@ -163,7 +163,7 @@ void PageView::scrollToItem(ssize_t itemIndex)
     ListView::scrollToItem(itemIndex, Vec2::ANCHOR_MIDDLE, Vec2::ANCHOR_MIDDLE);
 }
 
-void PageView::scrollToItem(ssize_t idx, float time)
+void PageView::scrollToItem(ssize_t itemIndex, float time)
 {
     ListView::scrollToItem(itemIndex, Vec2::ANCHOR_MIDDLE, Vec2::ANCHOR_MIDDLE, time >= 0 ? time : _scrollTime);
 }
