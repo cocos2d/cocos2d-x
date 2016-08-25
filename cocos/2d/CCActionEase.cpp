@@ -114,7 +114,7 @@ EaseRateAction* EaseRateAction::create(ActionInterval* action, float rate)
         return easeRateAction;
     }
 
-    delete easeRateAction;
+    CC_SAFE_DELETE(easeRateAction);
     return nullptr;
 }
 
@@ -129,13 +129,16 @@ bool EaseRateAction::initWithAction(ActionInterval *action, float rate)
     return false;
 }
 
+// TODO: Should remove these if possible with MACROs
 EaseRateAction* EaseRateAction::clone() const
 {
-    return EaseRateAction::create(_inner, _rate);
+    CCASSERT(nullptr, "Need to override this method!");
+    return nullptr; // EaseRateAction::create(_inner, _rate);
 }
 
 EaseRateAction* EaseRateAction::reverse() const {
-    return EaseRateAction::create(_inner->reverse(), _rate);
+    CCASSERT(nullptr, "Need to override this method!");
+    return nullptr; // EaseRateAction::create(_inner->reverse(), _rate);
 }
 
 //
@@ -199,7 +202,7 @@ EASE_TEMPLATE_IMPL(EaseCubicActionInOut, tweenfunc::cubicEaseInOut, EaseCubicAct
 // NOTE: Converting these macros into Templates is desirable, but please see
 // issue #16159 [https://github.com/cocos2d/cocos2d-x/pull/16159] for further info
 //
-#define EASERATE_TEMPLATE_IMPL(CLASSNAME, TWEEN_FUNC, REVERSE_CLASSNAME) \
+#define EASERATE_TEMPLATE_IMPL(CLASSNAME, TWEEN_FUNC) \
 CLASSNAME* CLASSNAME::create(cocos2d::ActionInterval *action, float rate) \
 { \
     CLASSNAME *ease = new (std::nothrow) CLASSNAME(); \
@@ -221,13 +224,13 @@ void CLASSNAME::update(float time) { \
     _inner->update(TWEEN_FUNC(time, _rate)); \
 } \
 EaseRateAction* CLASSNAME::reverse() const { \
-    return REVERSE_CLASSNAME::create(_inner->reverse(), 1.f / _rate); \
+    return CLASSNAME::create(_inner->reverse(), 1.f / _rate); \
 }
 
 // NOTE: the original code used the same class for the `reverse()` method
-EASERATE_TEMPLATE_IMPL(EaseIn, tweenfunc::easeIn, EaseIn);
-EASERATE_TEMPLATE_IMPL(EaseOut, tweenfunc::easeOut, EaseOut);
-EASERATE_TEMPLATE_IMPL(EaseInOut, tweenfunc::easeInOut, EaseInOut);
+EASERATE_TEMPLATE_IMPL(EaseIn, tweenfunc::easeIn);
+EASERATE_TEMPLATE_IMPL(EaseOut, tweenfunc::easeOut);
+EASERATE_TEMPLATE_IMPL(EaseInOut, tweenfunc::easeInOut);
 
 //
 // EaseElastic
