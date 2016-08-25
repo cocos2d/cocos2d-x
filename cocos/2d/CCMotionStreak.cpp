@@ -26,14 +26,12 @@ THE SOFTWARE.
 
 #include "2d/CCMotionStreak.h"
 #include "math/CCVertex.h"
-#include "base/ccMacros.h"
 #include "base/CCDirector.h"
 #include "renderer/CCTextureCache.h"
 #include "renderer/ccGLStateCache.h"
-#include "renderer/CCGLProgram.h"
-#include "renderer/CCGLProgramState.h"
-#include "renderer/CCCustomCommand.h"
+#include "renderer/CCTexture2D.h"
 #include "renderer/CCRenderer.h"
+#include "renderer/CCGLProgramState.h"
 
 NS_CC_BEGIN
 
@@ -42,7 +40,6 @@ MotionStreak::MotionStreak()
 , _startingPositionInitialized(false)
 , _texture(nullptr)
 , _blendFunc(BlendFunc::ALPHA_NON_PREMULTIPLIED)
-, _positionR(Vec2::ZERO)
 , _stroke(0.0f)
 , _fadeDelta(0.0f)
 , _minSeg(0.0f)
@@ -69,7 +66,7 @@ MotionStreak::~MotionStreak()
 
 MotionStreak* MotionStreak::create(float fade, float minSeg, float stroke, const Color3B& color, const std::string& path)
 {
-    MotionStreak *ret = new MotionStreak();
+    MotionStreak *ret = new (std::nothrow) MotionStreak();
     if (ret && ret->initWithFade(fade, minSeg, stroke, color, path))
     {
         ret->autorelease();
@@ -82,7 +79,7 @@ MotionStreak* MotionStreak::create(float fade, float minSeg, float stroke, const
 
 MotionStreak* MotionStreak::create(float fade, float minSeg, float stroke, const Color3B& color, Texture2D* texture)
 {
-    MotionStreak *ret = new MotionStreak();
+    MotionStreak *ret = new (std::nothrow) MotionStreak();
     if (ret && ret->initWithFade(fade, minSeg, stroke, color, texture))
     {
         ret->autorelease();
@@ -105,18 +102,20 @@ bool MotionStreak::initWithFade(float fade, float minSeg, float stroke, const Co
 {
     Node::setPosition(Vec2::ZERO);
     setAnchorPoint(Vec2::ZERO);
-    ignoreAnchorPointForPosition(true);
+    setIgnoreAnchorPointForPosition(true);
     _startingPositionInitialized = false;
 
-    _positionR = Vec2::ZERO;
+    _positionR.setZero();
     _fastMode = true;
     _minSeg = (minSeg == -1.0f) ? stroke/5.0f : minSeg;
     _minSeg *= _minSeg;
 
     _stroke = stroke;
     _fadeDelta = 1.0f/fade;
-
-    _maxPoints = (int)(fade*60.0f)+2;
+    
+    double fps = 1/Director::getInstance()->getAnimationInterval();
+    _maxPoints = (int)(fade*fps)+2;
+    
     _nuPoints = 0;
     _pointState = (float *)malloc(sizeof(float) * _maxPoints);
     _pointVertexes = (Vec2*)malloc(sizeof(Vec2) * _maxPoints);
@@ -129,7 +128,7 @@ bool MotionStreak::initWithFade(float fade, float minSeg, float stroke, const Co
     _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
 
     // shader state
-    setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
+    setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR, texture));
 
     setTexture(texture);
     setColor(color);
@@ -169,6 +168,11 @@ void MotionStreak::getPosition(float* x, float* y) const
 float MotionStreak::getPositionX() const
 {
     return _positionR.x;
+}
+
+Vec3 MotionStreak::getPosition3D() const
+{
+    return Vec3(_positionR.x, _positionR.y, getPositionZ());
 }
 
 void MotionStreak::setPositionX(float x)
@@ -382,23 +386,11 @@ void MotionStreak::onDraw(const Mat4 &transform, uint32_t flags)
     GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX );
     GL::blendFunc( _blendFunc.src, _blendFunc.dst );
 
-    GL::bindTexture2D( _texture->getName() );
+    GL::bindTexture2D( _texture );
 
-#ifdef EMSCRIPTEN
-    // Size calculations from ::initWithFade
-    setGLBufferData(_vertices, (sizeof(Vec2) * _maxPoints * 2), 0);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, 0);
-
-    setGLBufferData(_texCoords, (sizeof(Tex2F) * _maxPoints * 2), 1);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, 0, 0);
-
-    setGLBufferData(_colorPointer, (sizeof(GLubyte) * _maxPoints * 2 * 4), 2);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, 0, 0);
-#else
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, _vertices);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, 0, _texCoords);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, 0, _colorPointer);
-#endif // EMSCRIPTEN
 
     glDrawArrays(GL_TRIANGLE_STRIP, 0, (GLsizei)_nuPoints*2);
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, _nuPoints*2);
@@ -408,10 +400,9 @@ void MotionStreak::draw(Renderer *renderer, const Mat4 &transform, uint32_t flag
 {
     if(_nuPoints <= 1)
         return;
-    _customCommand.init(_globalZOrder);
+    _customCommand.init(_globalZOrder, transform, flags);
     _customCommand.func = CC_CALLBACK_0(MotionStreak::onDraw, this, transform, flags);
     renderer->addCommand(&_customCommand);
 }
 
 NS_CC_END
-

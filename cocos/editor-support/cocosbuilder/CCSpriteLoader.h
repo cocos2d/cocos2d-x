@@ -1,14 +1,14 @@
 #ifndef _CCB_CCSPRITELOADER_H_
 #define _CCB_CCSPRITELOADER_H_
 
-#include "CCNodeLoader.h"
+#include "editor-support/cocosbuilder/CCNodeLoader.h"
 
 namespace cocosbuilder {
 
 /* Forward declaration. */
 class CCBReader;
 
-class SpriteLoader : public NodeLoader {
+class CC_DLL SpriteLoader : public NodeLoader {
 public:
     /**
      * @js NA

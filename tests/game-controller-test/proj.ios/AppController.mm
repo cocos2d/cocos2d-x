@@ -25,7 +25,7 @@
 #import "AppController.h"
 #import "cocos2d.h"
 #import "AppDelegate.h"
-#import "CCEAGLView.h"
+#import "platform/ios/CCEAGLView-ios.h"
 #import "RootViewController.h"
 
 @implementation AppController
@@ -52,7 +52,9 @@ static AppDelegate s_sharedApplication;
     
     // Use RootViewController manage CCEAGLView 
     viewController = [[RootViewController alloc] initWithNibName:nil bundle:nil];
+#if !defined(CC_TARGET_OS_TVOS)
     viewController.wantsFullScreenLayout = YES;
+#endif
     viewController.view = eaglView;
 
     // Set RootViewController to window
@@ -69,10 +71,12 @@ static AppDelegate s_sharedApplication;
     
     [window makeKeyAndVisible];
 
+#if !defined(CC_TARGET_OS_TVOS)
     [[UIApplication sharedApplication] setStatusBarHidden: YES];
+#endif
     
     // IMPORTANT: Setting the GLView should be done after creating the RootViewController
-    cocos2d::GLView *glview = cocos2d::GLView::createWithEAGLView(eaglView);
+    cocos2d::GLView *glview = cocos2d::GLViewImpl::createWithEAGLView(eaglView);
     cocos2d::Director::getInstance()->setOpenGLView(glview);
     
     cocos2d::Application *app = cocos2d::Application::getInstance();

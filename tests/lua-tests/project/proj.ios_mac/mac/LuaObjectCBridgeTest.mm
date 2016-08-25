@@ -1,8 +1,8 @@
 #import "LuaObjectCBridgeTest.h"
 
 #include "cocos2d.h"
-#include "CCLuaEngine.h"
-#include "CCLuaBridge.h"
+#include "scripting/lua-bindings/manual/CCLuaEngine.h"
+#include "scripting/lua-bindings/manual/CCLuaBridge.h"
 
 using namespace cocos2d;
 
@@ -73,9 +73,10 @@ static LuaObjectCBridgeTest* s_instance = nil;
     }
 }
 
-- (void)init
+- (id)init
 {
     _scriptHandler = 0;
+    return self;
 }
 
 @end

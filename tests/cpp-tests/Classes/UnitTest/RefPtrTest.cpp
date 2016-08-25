@@ -1,9 +1,12 @@
 #include "RefPtrTest.h"
 
+USING_NS_CC;
+
 void RefPtrTest::onEnter()
 {
     UnitTestDemo::onEnter();
-    
+
+#if (defined(COCOS2D_DEBUG) && COCOS2D_DEBUG > 0)
     // TEST(constructors)
     {
         // Default constructor
@@ -11,7 +14,7 @@ void RefPtrTest::onEnter()
         CC_ASSERT(nullptr == ref1.get());
 
         // Parameter constructor
-        RefPtr<__String> ref2(cocos2d::String::create("Hello"));
+        RefPtr<__String> ref2(__String::create("Hello"));
         CC_ASSERT(strcmp("Hello", ref2->getCString()) == 0);
         CC_ASSERT(2 == ref2->getReferenceCount());
 
@@ -114,6 +117,13 @@ void RefPtrTest::onEnter()
         
         ref1.reset();
         CC_ASSERT((__String*) nullptr == ref1.get());
+
+        RefPtr<__String const> ref2 = __String::create("Hello");
+        CC_ASSERT(strcmp("Hello", ref2.get()->getCString()) == 0);
+        
+        ref2.reset();
+        CC_ASSERT(nullptr == ref2.get());
+        static_assert(std::is_same<const __String*, decltype(ref2.get())>::value, "");
     }
     
     // TEST(reset)
@@ -198,7 +208,7 @@ void RefPtrTest::onEnter()
     
     // TEST(dynamicPointerCast)
     {
-        RefPtr<__String> ref1 = cocos2d::String::create("Hello");
+        RefPtr<__String> ref1 = __String::create("Hello");
         CC_ASSERT(2 == ref1->getReferenceCount());
         
         RefPtr<Ref> ref2 = dynamic_pointer_cast<Ref>(ref1);
@@ -261,6 +271,10 @@ void RefPtrTest::onEnter()
         CC_ASSERT(false == (ref1 > nullptr));
         CC_ASSERT(true == (ref1 <= nullptr));
         CC_ASSERT(true == (ref1 >= nullptr));
+        CC_ASSERT(false == (nullptr < ref1));
+        CC_ASSERT(false == (nullptr > ref1));
+        CC_ASSERT(true == (nullptr <= ref1));
+        CC_ASSERT(true == (nullptr >= ref1));
         
         CC_ASSERT(false == (ref1 == __String::create("Hello")));
         CC_ASSERT(true == (ref1 != __String::create("Hello")));
@@ -277,6 +291,17 @@ void RefPtrTest::onEnter()
         CC_ASSERT(true == (ref1 > ref2));
         CC_ASSERT(false == (ref1 <= ref2));
         CC_ASSERT(true == (ref1 >= ref2));
+
+        CC_ASSERT(false == (ref1 == nullptr));
+        CC_ASSERT(true == (ref1 != nullptr));
+        CC_ASSERT(false == (ref1 < nullptr));
+        CC_ASSERT(true == (ref1 > nullptr));
+        CC_ASSERT(false == (ref1 <= nullptr));
+        CC_ASSERT(true == (ref1 >= nullptr));
+        CC_ASSERT(true == (nullptr < ref1));
+        CC_ASSERT(false == (nullptr > ref1));
+        CC_ASSERT(true == (nullptr <= ref1));
+        CC_ASSERT(false == (nullptr >= ref1));
     }
     
     // TEST(moveConstructor)
@@ -313,6 +338,9 @@ void RefPtrTest::onEnter()
         CC_ASSERT(theString->getReferenceCount() == 2);
         CC_ASSERT(theString->compare("Hello world!") == 0);
     }
+#else
+    log("RefPtr tests are not executed in release mode");
+#endif
 }
 
 std::string RefPtrTest::subtitle() const

@@ -22,10 +22,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "cocostudio/CCBatchNode.h"
-#include "cocostudio/CCArmatureDefine.h"
-#include "cocostudio/CCArmature.h"
-#include "cocostudio/CCSkin.h"
+#include "editor-support/cocostudio/CCBatchNode.h"
+#include "editor-support/cocostudio/CCArmature.h"
+#include "editor-support/cocostudio/CCSkin.h"
 
 #include "renderer/CCRenderer.h"
 #include "renderer/CCGroupCommand.h"
@@ -38,7 +37,7 @@ namespace cocostudio {
 
 BatchNode *BatchNode::create()
 {
-    BatchNode *batchNode = new BatchNode();
+    BatchNode *batchNode = new (std::nothrow) BatchNode();
     if (batchNode && batchNode->init())
     {
         batchNode->autorelease();
@@ -75,7 +74,7 @@ void BatchNode::addChild(Node *child, int zOrder, int tag)
         armature->setBatchNode(this);
         if (_groupCommand == nullptr)
         {
-            _groupCommand = new GroupCommand();
+            _groupCommand = new (std::nothrow) GroupCommand();
         }
     }
 }
@@ -89,7 +88,7 @@ void BatchNode::addChild(cocos2d::Node *child, int zOrder, const std::string &na
         armature->setBatchNode(this);
         if (_groupCommand == nullptr)
         {
-            _groupCommand = new GroupCommand();
+            _groupCommand = new (std::nothrow) GroupCommand();
         }
     }
 }
@@ -115,20 +114,24 @@ void BatchNode::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t 
 
     uint32_t flags = processParentFlags(parentTransform, parentFlags);
 
-    // IMPORTANT:
-    // To ease the migration to v3.0, we still support the Mat4 stack,
-    // but it is deprecated and your code should not rely on it
-    Director* director = Director::getInstance();
-    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
-
-    sortAllChildren();
-    draw(renderer, _modelViewTransform, flags);
-
-    // reset for next frame
-    _orderOfArrival = 0;
-
-    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    if (isVisitableByVisitingCamera())
+    {
+        // IMPORTANT:
+        // To ease the migration to v3.0, we still support the Mat4 stack,
+        // but it is deprecated and your code should not rely on it
+        Director* director = Director::getInstance();
+        director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+        director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
+        
+        sortAllChildren();
+        draw(renderer, _modelViewTransform, flags);
+        
+        // FIX ME: Why need to set _orderOfArrival to 0??
+        // Please refer to https://github.com/cocos2d/cocos2d-x/pull/6920
+        // setOrderOfArrival(0);
+        
+        director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    }
 }
 
 void BatchNode::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)

@@ -2,14 +2,17 @@
 -- avoid memory leak
 collectgarbage("setpause", 100) 
 collectgarbage("setstepmul", 5000)
-	
 
 ----------------
 -- run
+cc.FileUtils:getInstance():addSearchPath("src")
+CC_USE_DEPRECATED_API = true
+require "cocos.init"
+
 local director = cc.Director:getInstance()
 local glView   = director:getOpenGLView()
 if nil == glView then
-    glView = cc.GLView:createWithRect("Lua Tests", cc.rect(0,0,900,640))
+    glView = cc.GLViewImpl:createWithRect("Lua Tests", cc.rect(0,0,900,640))
     director:setOpenGLView(glView)
 end
 
@@ -40,29 +43,6 @@ local function addSearchPath(resPrefix, height)
         table.insert(searchPaths, 1, resPrefix .. "hd")
         table.insert(searchPaths, 1, resPrefix .. "ccs-res")
         table.insert(searchPaths, 1, resPrefix .. "ccs-res/hd")
-        table.insert(searchPaths, 1, resPrefix .. "ccs-res/hd/Images")
-        table.insert(searchPaths, 1, resPrefix .. "ccs-res/hd/scenetest/ArmatureComponentTest")
-        table.insert(searchPaths, 1, resPrefix .. "ccs-res/hd/scenetest/AttributeComponentTest")
-        table.insert(searchPaths, 1, resPrefix .. "ccs-res/hd/scenetest/BackgroundComponentTest")
-        table.insert(searchPaths, 1, resPrefix .. "ccs-res/hd/scenetest/EffectComponentTest")
-        table.insert(searchPaths, 1, resPrefix .. "ccs-res/hd/scenetest/LoadSceneEdtiorFileTest")
-        table.insert(searchPaths, 1, resPrefix .. "ccs-res/hd/scenetest/ParticleComponentTest")
-        table.insert(searchPaths, 1, resPrefix .. "ccs-res/hd/scenetest/SpriteComponentTest")
-        table.insert(searchPaths, 1, resPrefix .. "ccs-res/hd/scenetest/TmxMapComponentTest")
-        table.insert(searchPaths, 1, resPrefix .. "ccs-res/hd/scenetest/UIComponentTest")
-        table.insert(searchPaths, 1, resPrefix .. "ccs-res/hd/scenetest/TriggerTest")
-    else
-        table.insert(searchPaths, 1, resPrefix .. "ccs-res/Images")
-        table.insert(searchPaths, 1, resPrefix .. "ccs-res/scenetest/ArmatureComponentTest")
-        table.insert(searchPaths, 1, resPrefix .. "ccs-res/scenetest/AttributeComponentTest")
-        table.insert(searchPaths, 1, resPrefix .. "ccs-res/scenetest/BackgroundComponentTest")
-        table.insert(searchPaths, 1, resPrefix .. "ccs-res/scenetest/EffectComponentTest")
-        table.insert(searchPaths, 1, resPrefix .. "ccs-res/scenetest/LoadSceneEdtiorFileTest")
-        table.insert(searchPaths, 1, resPrefix .. "ccs-res/scenetest/ParticleComponentTest")
-        table.insert(searchPaths, 1, resPrefix .. "ccs-res/scenetest/SpriteComponentTest")
-        table.insert(searchPaths, 1, resPrefix .. "ccs-res/scenetest/TmxMapComponentTest")
-        table.insert(searchPaths, 1, resPrefix .. "ccs-res/scenetest/UIComponentTest")
-        table.insert(searchPaths, 1, resPrefix .. "ccs-res/scenetest/TriggerTest")
     end
 
     fileUtils:setSearchPaths(searchPaths)
@@ -72,8 +52,7 @@ end
 addSearchPath("res/", screenSize.height)
 addSearchPath("", screenSize.height)
 
-
-require "src/mainMenu"
+require "mainMenu"
 
 local scene = cc.Scene:create()
 scene:addChild(CreateTestMenu())

@@ -1,18 +1,17 @@
-//
-//  WebSocketTest.cpp
-//  TestCpp
-//
-//  Created by James Chen on 5/31/13.
-//
-//
-
 #include "WebSocketTest.h"
 #include "../ExtensionsTest.h"
+#include "testResource.h"
 
 USING_NS_CC;
 USING_NS_CC_EXT;
 
-WebSocketTestLayer::WebSocketTestLayer()
+WebSocketTests::WebSocketTests()
+{
+    ADD_TEST_CASE(WebSocketTest);
+    ADD_TEST_CASE(WebSocketCloseTest);
+}
+
+WebSocketTest::WebSocketTest()
 : _wsiSendText(nullptr)
 , _wsiSendBinary(nullptr)
 , _wsiError(nullptr)
@@ -27,74 +26,55 @@ WebSocketTestLayer::WebSocketTestLayer()
     const int MARGIN = 40;
     const int SPACE = 35;
     
-    auto label = Label::createWithTTF("WebSocket Test", "fonts/arial.ttf", 28);
-    label->setPosition(Vec2(winSize.width / 2, winSize.height - MARGIN));
-    addChild(label, 0);
-    
     auto menuRequest = Menu::create();
     menuRequest->setPosition(Vec2::ZERO);
     addChild(menuRequest);
     
     // Send Text
-    auto labelSendText = Label::createWithTTF("Send Text", "fonts/arial.ttf", 22);
-    auto itemSendText = MenuItemLabel::create(labelSendText, CC_CALLBACK_1(WebSocketTestLayer::onMenuSendTextClicked, this));
+    auto labelSendText = Label::createWithTTF("Send Text", "fonts/arial.ttf", 20);
+    auto itemSendText = MenuItemLabel::create(labelSendText, CC_CALLBACK_1(WebSocketTest::onMenuSendTextClicked, this));
     itemSendText->setPosition(Vec2(winSize.width / 2, winSize.height - MARGIN - SPACE));
     menuRequest->addChild(itemSendText);
     
+    labelSendText = Label::createWithTTF("Send Multiple Text", "fonts/arial.ttf", 20);
+    itemSendText = MenuItemLabel::create(labelSendText, CC_CALLBACK_1(WebSocketTest::onMenuSendMultipleTextClicked, this));
+    itemSendText->setPosition(Vec2(winSize.width / 2, winSize.height - MARGIN - 2 * SPACE));
+    menuRequest->addChild(itemSendText);
+    
     // Send Binary
-    auto labelSendBinary = Label::createWithTTF("Send Binary", "fonts/arial.ttf", 22);
-    auto itemSendBinary = MenuItemLabel::create(labelSendBinary, CC_CALLBACK_1(WebSocketTestLayer::onMenuSendBinaryClicked, this));
-    itemSendBinary->setPosition(Vec2(winSize.width / 2, winSize.height - MARGIN - 2 * SPACE));
+    auto labelSendBinary = Label::createWithTTF("Send Binary", "fonts/arial.ttf", 20);
+    auto itemSendBinary = MenuItemLabel::create(labelSendBinary, CC_CALLBACK_1(WebSocketTest::onMenuSendBinaryClicked, this));
+    itemSendBinary->setPosition(Vec2(winSize.width / 2, winSize.height - MARGIN - 3 * SPACE));
     menuRequest->addChild(itemSendBinary);
     
 
     // Send Text Status Label
-    _sendTextStatus = Label::createWithTTF("Send Text WS is waiting...", "fonts/arial.ttf", 14, Size(160, 100), TextHAlignment::CENTER, TextVAlignment::TOP);
+    _sendTextStatus = Label::createWithTTF("Send Text WS is waiting...", "fonts/arial.ttf", 16, Size(160, 100), TextHAlignment::CENTER, TextVAlignment::TOP);
     _sendTextStatus->setAnchorPoint(Vec2(0, 0));
     _sendTextStatus->setPosition(Vec2(VisibleRect::left().x, VisibleRect::rightBottom().y + 25));
     this->addChild(_sendTextStatus);
     
     // Send Binary Status Label
-    _sendBinaryStatus = Label::createWithTTF("Send Binary WS is waiting...", "fonts/arial.ttf", 14, Size(160, 100), TextHAlignment::CENTER, TextVAlignment::TOP);
+    _sendBinaryStatus = Label::createWithTTF("Send Binary WS is waiting...", "fonts/arial.ttf", 16, Size(160, 100), TextHAlignment::CENTER, TextVAlignment::TOP);
     _sendBinaryStatus->setAnchorPoint(Vec2(0, 0));
     _sendBinaryStatus->setPosition(Vec2(VisibleRect::left().x + 160, VisibleRect::rightBottom().y + 25));
     this->addChild(_sendBinaryStatus);
     
     // Error Label
-    _errorStatus = Label::createWithTTF("Error WS is waiting...", "fonts/arial.ttf", 14, Size(160, 100), TextHAlignment::CENTER, TextVAlignment::TOP);
+    _errorStatus = Label::createWithTTF("Error WS is waiting...", "fonts/arial.ttf", 16, Size(160, 100), TextHAlignment::CENTER, TextVAlignment::TOP);
     _errorStatus->setAnchorPoint(Vec2(0, 0));
     _errorStatus->setPosition(Vec2(VisibleRect::left().x + 320, VisibleRect::rightBottom().y + 25));
     this->addChild(_errorStatus);
     
-    // Back Menu
-    auto itemBack = MenuItemFont::create("Back", CC_CALLBACK_1(WebSocketTestLayer::toExtensionsMainLayer, this));
-    itemBack->setPosition(Vec2(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
-    auto menuBack = Menu::create(itemBack, nullptr);
-    menuBack->setPosition(Vec2::ZERO);
-    addChild(menuBack);
-    
-    _wsiSendText = new network::WebSocket();
-    _wsiSendBinary = new network::WebSocket();
-    _wsiError = new network::WebSocket();
-    
-    if (!_wsiSendText->init(*this, "ws://echo.websocket.org"))
-    {
-        CC_SAFE_DELETE(_wsiSendText);
-    }
-    
-    if (!_wsiSendBinary->init(*this, "ws://echo.websocket.org"))
-    {
-        CC_SAFE_DELETE(_wsiSendBinary);
-    }
-    
-    if (!_wsiError->init(*this, "ws://invalid.url.com"))
-    {
-        CC_SAFE_DELETE(_wsiError);
-    }
+    auto startTestLabel = Label::createWithTTF("Start Test WebSocket", "fonts/arial.ttf", 16);
+    auto startTestItem = MenuItemLabel::create(startTestLabel, CC_CALLBACK_1(WebSocketTest::startTestCallback, this));
+    startTestItem->setPosition(Vec2(VisibleRect::center().x, VisibleRect::bottom().y + 150));
+    _startTestMenu = Menu::create(startTestItem, nullptr);
+    _startTestMenu->setPosition(Vec2::ZERO);
+    this->addChild(_startTestMenu, 1);
 }
 
-
-WebSocketTestLayer::~WebSocketTestLayer()
+WebSocketTest::~WebSocketTest()
 {
     if (_wsiSendText)
         _wsiSendText->close();
@@ -106,8 +86,33 @@ WebSocketTestLayer::~WebSocketTestLayer()
         _wsiError->close();
 }
 
+void WebSocketTest::startTestCallback(Ref* sender)
+{
+    removeChild(_startTestMenu);
+    _startTestMenu = nullptr;
+
+    _wsiSendText = new network::WebSocket();
+    _wsiSendBinary = new network::WebSocket();
+    _wsiError = new network::WebSocket();
+
+    if (!_wsiSendText->init(*this, "ws://echo.websocket.org"))
+    {
+        CC_SAFE_DELETE(_wsiSendText);
+    }
+
+    if (!_wsiSendBinary->init(*this, "ws://echo.websocket.org"))
+    {
+        CC_SAFE_DELETE(_wsiSendBinary);
+    }
+
+    if (!_wsiError->init(*this, "ws://invalid.url.com"))
+    {
+        CC_SAFE_DELETE(_wsiError);
+    }
+}
+
 // Delegate methods
-void WebSocketTestLayer::onOpen(network::WebSocket* ws)
+void WebSocketTest::onOpen(network::WebSocket* ws)
 {
     log("Websocket (%p) opened", ws);
     if (ws == _wsiSendText)
@@ -124,7 +129,7 @@ void WebSocketTestLayer::onOpen(network::WebSocket* ws)
     }
 }
 
-void WebSocketTestLayer::onMessage(network::WebSocket* ws, const network::WebSocket::Data& data)
+void WebSocketTest::onMessage(network::WebSocket* ws, const network::WebSocket::Data& data)
 {
     if (!data.isBinary)
     {
@@ -161,7 +166,7 @@ void WebSocketTestLayer::onMessage(network::WebSocket* ws, const network::WebSoc
     }
 }
 
-void WebSocketTestLayer::onClose(network::WebSocket* ws)
+void WebSocketTest::onClose(network::WebSocket* ws)
 {
     log("websocket instance (%p) closed.", ws);
     if (ws == _wsiSendText)
@@ -180,26 +185,19 @@ void WebSocketTestLayer::onClose(network::WebSocket* ws)
     CC_SAFE_DELETE(ws);
 }
 
-void WebSocketTestLayer::onError(network::WebSocket* ws, const network::WebSocket::ErrorCode& error)
+void WebSocketTest::onError(network::WebSocket* ws, const network::WebSocket::ErrorCode& error)
 {
-    log("Error was fired, error code: %d", error);
+    log("Error was fired, error code: %d", static_cast<int>(error));
     if (ws == _wsiError)
     {
         char buf[100] = {0};
-        sprintf(buf, "an error was fired, code: %d", error);
+        sprintf(buf, "an error was fired, code: %d", static_cast<int>(error));
         _errorStatus->setString(buf);
     }
 }
 
-void WebSocketTestLayer::toExtensionsMainLayer(cocos2d::Ref *sender)
-{
-    auto scene = new ExtensionsTestScene();
-    scene->runThisTest();
-    scene->release();
-}
-
 // Menu Callbacks
-void WebSocketTestLayer::onMenuSendTextClicked(cocos2d::Ref *sender)
+void WebSocketTest::onMenuSendTextClicked(cocos2d::Ref *sender)
 {
     if (! _wsiSendText)
     {
@@ -219,7 +217,29 @@ void WebSocketTestLayer::onMenuSendTextClicked(cocos2d::Ref *sender)
     }
 }
 
-void WebSocketTestLayer::onMenuSendBinaryClicked(cocos2d::Ref *sender)
+void WebSocketTest::onMenuSendMultipleTextClicked(cocos2d::Ref *sender)
+{
+    if (! _wsiSendText)
+    {
+        return;
+    }
+    
+    if (_wsiSendText->getReadyState() == network::WebSocket::State::OPEN)
+    {
+        _sendTextStatus->setString("Send Multiple Text WS is waiting...");
+        for (int index = 0; index < 15; ++index) {
+            _wsiSendText->send(StringUtils::format("Hello WebSocket, text message index:%d", index));
+        }
+    }
+    else
+    {
+        std::string warningStr = "send text websocket instance wasn't ready...";
+        log("%s", warningStr.c_str());
+        _sendTextStatus->setString(warningStr.c_str());
+    }
+}
+
+void WebSocketTest::onMenuSendBinaryClicked(cocos2d::Ref *sender)
 {
     if (! _wsiSendBinary) {
         return;
@@ -239,12 +259,67 @@ void WebSocketTestLayer::onMenuSendBinaryClicked(cocos2d::Ref *sender)
     }
 }
 
-void runWebSocketTest()
+WebSocketCloseTest::WebSocketCloseTest()
+: _wsiTest(nullptr)
 {
-    auto scene = Scene::create();
-    auto layer = new WebSocketTestLayer();
-    scene->addChild(layer);
-    
-    Director::getInstance()->replaceScene(scene);
-    layer->release();
+    auto winSize = Director::getInstance()->getWinSize();
+
+    _wsiTest = new network::WebSocket();
+
+    if (!_wsiTest->init(*this, "ws://echo.websocket.org"))
+    {
+        delete _wsiTest;
+        _wsiTest = nullptr;
+    }
+
+    auto closeItem = MenuItemImage::create(s_pathClose, s_pathClose, [](Ref* sender){
+        Director::getInstance()->end();
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+        exit(0);
+#endif
+    });
+    closeItem->setPosition(VisibleRect::right().x / 2, VisibleRect::top().y * 2 / 3);
+
+    auto menu = Menu::create(closeItem, nullptr);
+    menu->setPosition(Vec2::ZERO);
+    addChild(menu, 1);
+
+    auto notifyLabel = Label::createWithTTF("See log window, when enter there's should have\n'Websocket opened' log,\nwhen close there's should have'websocket closed' log", "fonts/arial.ttf", 20);
+    notifyLabel->setPosition(VisibleRect::right().x / 2, VisibleRect::top().y / 3);
+    notifyLabel->setAlignment(TextHAlignment::CENTER);
+    addChild(notifyLabel, 1);
 }
+
+WebSocketCloseTest::~WebSocketCloseTest()
+{
+    if (_wsiTest != nullptr)
+    {
+        _wsiTest->close();
+    }
+}
+
+// Delegate methods
+void WebSocketCloseTest::onOpen(network::WebSocket* ws)
+{
+    log("Websocket (%p) opened", ws);
+}
+
+void WebSocketCloseTest::onMessage(network::WebSocket* ws, const network::WebSocket::Data& data)
+{
+    log("Websocket get message from %p", ws);
+}
+
+void WebSocketCloseTest::onClose(network::WebSocket* ws)
+{
+    log("websocket (%p) closed.", ws);
+    if (ws == _wsiTest) {
+        _wsiTest = nullptr;
+    }
+    CC_SAFE_DELETE(ws);
+}
+
+void WebSocketCloseTest::onError(network::WebSocket* ws, const network::WebSocket::ErrorCode& error)
+{
+    log("Error was fired, error code: %d", static_cast<int>(error));
+}
+

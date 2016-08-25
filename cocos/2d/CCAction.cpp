@@ -2,7 +2,7 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include "2d/CCActionInterval.h"
 #include "2d/CCNode.h"
 #include "base/CCDirector.h"
-#include "deprecated/CCString.h"
+#include "base/ccUTF8.h"
 
 NS_CC_BEGIN
 //
@@ -40,7 +40,12 @@ Action::Action()
 :_originalTarget(nullptr)
 ,_target(nullptr)
 ,_tag(Action::INVALID_TAG)
+,_flags(0)
 {
+#if CC_ENABLE_SCRIPT_BINDING
+    ScriptEngineProtocol* engine = ScriptEngineManager::getInstance()->getScriptEngine();
+    _scriptType = engine != nullptr ? engine->getScriptType() : kScriptTypeNone;
+#endif
 }
 
 Action::~Action()
@@ -96,7 +101,7 @@ Speed::~Speed()
 
 Speed* Speed::create(ActionInterval* action, float speed)
 {
-    Speed *ret = new Speed();
+    Speed *ret = new (std::nothrow) Speed();
     if (ret && ret->initWithAction(action, speed))
     {
         ret->autorelease();
@@ -108,7 +113,13 @@ Speed* Speed::create(ActionInterval* action, float speed)
 
 bool Speed::initWithAction(ActionInterval *action, float speed)
 {
-    CCASSERT(action != nullptr, "");
+    CCASSERT(action != nullptr, "action must not be NULL");
+    if (action == nullptr)
+    {
+        log("Speed::initWithAction error: action is nullptr!");
+        return false;
+    }
+    
     action->retain();
     _innerAction = action;
     _speed = speed;
@@ -117,22 +128,29 @@ bool Speed::initWithAction(ActionInterval *action, float speed)
 
 Speed *Speed::clone() const
 {
-	// no copy constructor
-	auto a = new Speed();
-	a->initWithAction(_innerAction->clone(), _speed);
-	a->autorelease();
-	return  a;
+    // no copy constructor
+    if (_innerAction)
+        return Speed::create(_innerAction->clone(), _speed);
+    
+    return nullptr;
 }
 
 void Speed::startWithTarget(Node* target)
 {
-    Action::startWithTarget(target);
-    _innerAction->startWithTarget(target);
+    if (target && _innerAction)
+    {
+        Action::startWithTarget(target);
+        _innerAction->startWithTarget(target);
+    }
+    else
+        log("Speed::startWithTarget error: target(%p) or _innerAction(%p) is nullptr!", target, _innerAction);
 }
 
 void Speed::stop()
 {
-    _innerAction->stop();
+    if (_innerAction)
+        _innerAction->stop();
+    
     Action::stop();
 }
 
@@ -148,8 +166,10 @@ bool Speed::isDone() const
 
 Speed *Speed::reverse() const
 {
-
-	return Speed::create(_innerAction->reverse(), _speed);
+    if (_innerAction)
+        return Speed::create(_innerAction->reverse(), _speed);
+    
+    return nullptr;
 }
 
 void Speed::setInnerAction(ActionInterval *action)
@@ -172,23 +192,33 @@ Follow::~Follow()
 
 Follow* Follow::create(Node *followedNode, const Rect& rect/* = Rect::ZERO*/)
 {
-    Follow *follow = new Follow();
-    if (follow && follow->initWithTarget(followedNode, rect))
+    return createWithOffset(followedNode, 0.0, 0.0,rect);
+}
+
+Follow* Follow::createWithOffset(Node* followedNode,float xOffset,float yOffset,const Rect& rect/*= Rect::ZERO*/){
+    
+    
+    Follow *follow = new (std::nothrow) Follow();
+    
+    bool valid;
+    
+    valid = follow->initWithTargetAndOffset(followedNode, xOffset, yOffset,rect);
+
+    if (follow && valid)
     {
         follow->autorelease();
         return follow;
     }
-    CC_SAFE_DELETE(follow);
+    
+    delete follow;
     return nullptr;
+    
 }
-
 Follow* Follow::clone() const
 {
-	// no copy constructor
-	auto a = new Follow();
-	a->initWithTarget(_followedNode, _worldRect);
-	a->autorelease();
-	return a;
+    // no copy constructor
+    return Follow::createWithOffset(_followedNode, _offsetX,_offsetY,_worldRect);
+    
 }
 
 Follow* Follow::reverse() const
@@ -196,28 +226,29 @@ Follow* Follow::reverse() const
     return clone();
 }
 
-bool Follow::initWithTarget(Node *followedNode, const Rect& rect/* = Rect::ZERO*/)
+bool Follow::initWithTargetAndOffset(Node *followedNode, float xOffset,float yOffset,const Rect& rect)
 {
-    CCASSERT(followedNode != nullptr, "");
+    CCASSERT(followedNode != nullptr, "FollowedNode can't be NULL");
+    if(followedNode == nullptr)
+    {
+        log("Follow::initWithTarget error: followedNode is nullptr!");
+        return false;
+    }
  
     followedNode->retain();
     _followedNode = followedNode;
-	_worldRect = rect;
-    if (rect.equals(Rect::ZERO))
-    {
-        _boundarySet = false;
-    }
-    else
-    {
-        _boundarySet = true;
-    }
-    
+    _worldRect = rect;
+    _boundarySet = !rect.equals(Rect::ZERO);
     _boundaryFullyCovered = false;
 
     Size winSize = Director::getInstance()->getWinSize();
-    _fullScreenSize = Vec2(winSize.width, winSize.height);
+    _fullScreenSize.set(winSize.width, winSize.height);
     _halfScreenSize = _fullScreenSize * 0.5f;
-
+    _offsetX=xOffset;
+    _offsetY=yOffset;
+    _halfScreenSize.x += _offsetX;
+    _halfScreenSize.y += _offsetY;
+    
     if (_boundarySet)
     {
         _leftBoundary = -((rect.origin.x+rect.size.width) - _fullScreenSize.x);
@@ -247,6 +278,11 @@ bool Follow::initWithTarget(Node *followedNode, const Rect& rect/* = Rect::ZERO*
     return true;
 }
 
+bool Follow::initWithTarget(Node *followedNode, const Rect& rect /*= Rect::ZERO*/){
+    
+    return initWithTargetAndOffset(followedNode, 0.0, 0.0,rect);
+    
+}
 void Follow::step(float dt)
 {
     CC_UNUSED_PARAM(dt);
@@ -255,12 +291,14 @@ void Follow::step(float dt)
     {
         // whole map fits inside a single screen, no need to modify the position - unless map boundaries are increased
         if(_boundaryFullyCovered)
+        {
             return;
+        }
 
         Vec2 tempPos = _halfScreenSize - _followedNode->getPosition();
 
-        _target->setPosition(Vec2(clampf(tempPos.x, _leftBoundary, _rightBoundary),
-                                   clampf(tempPos.y, _bottomBoundary, _topBoundary)));
+        _target->setPosition(clampf(tempPos.x, _leftBoundary, _rightBoundary),
+                                   clampf(tempPos.y, _bottomBoundary, _topBoundary));
     }
     else
     {

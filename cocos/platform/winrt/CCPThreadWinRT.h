@@ -27,12 +27,15 @@ THE SOFTWARE.
 #define __CCPTHREADWINRT_H__
 
 
-#include "base/CCPlatformConfig.h"
+#include "platform/CCPlatformConfig.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 
-#include "base/CCPlatformMacros.h"
-
+#ifndef WIN32_LEAN_AND_MEAN
+#define WIN32_LEAN_AND_MEAN
+#endif
 #include <Windows.h>
+#include "platform/CCPlatformMacros.h"
+
 
 NS_CC_BEGIN
 

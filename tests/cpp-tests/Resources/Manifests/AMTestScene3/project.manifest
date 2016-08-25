@@ -1,0 +1,16 @@
+{
+	"packageUrl" : "http://cocos2d-x.org/assets/cpp-tests-resources/assets_manager/AMTestScene3/",
+	"remoteManifestUrl" : "http://cocos2d-x.org/assets/cpp-tests-resources/assets_manager/AMTestScene3/project_dev.manifest",
+	"remoteVersionUrl" : "http://cocos2d-x.org/assets/cpp-tests-resources/assets_manager/AMTestScene3/version_dev.manifest",
+	"version" : "1.0.0",
+	"engineVersion" : "3.0 beta",
+
+	"assets" : {
+		"Images/background3.png" : {
+			"md5" : "..."
+		}
+	},
+    
+    "searchPaths" : [
+    ]
+}

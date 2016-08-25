@@ -1,14 +1,14 @@
-#include "CCBKeyframe.h"
+#include "editor-support/cocosbuilder/CCBKeyframe.h"
 
 using namespace cocos2d;
 
 namespace cocosbuilder {
 
 CCBKeyframe::CCBKeyframe()
-: _time(0.0f)
+: _object(nullptr)
+, _time(0.0f)
 , _easingType(EasingType::INSTANT)
 , _easingOpt(0.0f)
-, _object(nullptr)
 {}
 
 CCBKeyframe::~CCBKeyframe()

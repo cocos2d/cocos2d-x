@@ -24,6 +24,10 @@ THE SOFTWARE.
 
 #include "2d/CCTweenFunction.h"
 
+#define _USE_MATH_DEFINES // needed for M_PI and M_PI2
+#include <math.h> // M_PI
+#undef _USE_MATH_DEFINES
+
 NS_CC_BEGIN
 
 namespace tweenfunc {
@@ -432,16 +436,16 @@ float backEaseInOut(float time)
 // Bounce Ease
 float bounceTime(float time)
 {
-    if (time < 1 / 2.75)
+    if (time < 1 / 2.75f)
     {
         return 7.5625f * time * time;
     }
-    else if (time < 2 / 2.75)
+    else if (time < 2 / 2.75f)
     {
         time -= 1.5f / 2.75f;
         return 7.5625f * time * time + 0.75f;
     }
-    else if(time < 2.5 / 2.75)
+    else if(time < 2.5f / 2.75f)
     {
         time -= 2.25f / 2.75f;
         return 7.5625f * time * time + 0.9375f;

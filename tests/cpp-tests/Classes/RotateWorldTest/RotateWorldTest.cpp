@@ -1,6 +1,13 @@
 #include "RotateWorldTest.h"
 #include "../testResource.h"
 
+USING_NS_CC;
+
+RotateWorldTests::RotateWorldTests()
+{
+    ADD_TEST_CASE(RotateWorldTest);
+}
+
 //------------------------------------------------------------------
 //
 // TestLayer
@@ -108,7 +115,7 @@ void RotateWorldMainLayer::onEnter()
 
     white->setScale(0.5f);
     white->setPosition(Vec2(x/4,y/4));
-    white->ignoreAnchorPointForPosition(false);
+    white->setIgnoreAnchorPointForPosition(false);
     white->setPosition(Vec2(x/4*3,y/4*3));
 
     addChild(blue, -1);
@@ -124,13 +131,17 @@ void RotateWorldMainLayer::onEnter()
     white->runAction(rot->clone());
 }
 
-void RotateWorldTestScene::runThisTest()
+bool RotateWorldTest::init()
 {
-    auto layer = RotateWorldMainLayer::create();
+    if (TestCase::init())
+    {
+        auto layer = RotateWorldMainLayer::create();
 
-    addChild(layer);
-    runAction( RotateBy::create(4, -360) );
+        addChild(layer);
+        runAction(RotateBy::create(4, -360));
 
-    Director::getInstance()->replaceScene(this);
+        return true;
+    }
 
+    return false;
 }

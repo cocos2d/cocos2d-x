@@ -1,0 +1,638 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="auto">
+      <UniqueIdentifier>{8d269c90-26ad-4ce8-b355-d8df01d59914}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="manual">
+      <UniqueIdentifier>{25c7b94b-a9a1-4b93-b285-93c9b620e2ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="script">
+      <UniqueIdentifier>{af4b7d5f-f563-4069-ade8-c1a954e6fe5e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tolua">
+      <UniqueIdentifier>{24fae6d6-ebb5-4da1-b0da-3f3845a9e9a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="luajit">
+      <UniqueIdentifier>{cc863463-a948-487a-aacd-dc233c3e5200}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="xxtea">
+      <UniqueIdentifier>{1fa7ff75-c142-4928-8aef-e6a2eb2b465f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="manual\cocos2d">
+      <UniqueIdentifier>{d326dcc4-b1e3-4326-95c2-c14144076fd9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="manual\3d">
+      <UniqueIdentifier>{b886bc56-4c57-48e2-83ee-f0b5ccb9e7ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="manual\cocosdenshion">
+      <UniqueIdentifier>{e88a3956-3c72-495d-bef5-75aa1b1e28a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="manual\cocosbuilder">
+      <UniqueIdentifier>{21be021b-accb-4bf7-9ab5-327661740a5b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="manual\cocostudio">
+      <UniqueIdentifier>{7118046c-b71e-4510-b1ea-71916d909276}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="manual\spine">
+      <UniqueIdentifier>{4422fdad-3112-45d1-8eb4-87d8c08fac74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="manual\extension">
+      <UniqueIdentifier>{c8af8add-e72c-43a7-b89c-c6b9417f3cff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="manual\network">
+      <UniqueIdentifier>{6a51257b-495f-480a-a491-951f58b82c49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="manual\ui">
+      <UniqueIdentifier>{4f89500e-8f3e-4235-a7fc-0613f9e7bd40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="script\cocos2d">
+      <UniqueIdentifier>{8778206d-1979-4f87-8354-0207bda9d8d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="script\cocosbuilder">
+      <UniqueIdentifier>{e2b9c502-c4a1-4d73-8111-0301708ad6cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="script\cocosdenshion">
+      <UniqueIdentifier>{8a10f092-0016-49ee-a656-91ef2e897598}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="script\cocostudio">
+      <UniqueIdentifier>{c62c70e6-0736-4c0d-90bd-366498ec5bfa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="script\extension">
+      <UniqueIdentifier>{735e43a2-a3d3-41be-82c8-8ef9981e0c0f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="script\network">
+      <UniqueIdentifier>{ad7b0aff-cf0d-402f-ab5a-1fbd3502d5c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="script\ui">
+      <UniqueIdentifier>{50b9a5eb-3f97-448b-bfc4-2a983844d2e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="luasocket">
+      <UniqueIdentifier>{617e3909-01ff-4c11-bae5-790787963c34}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="manual\audioengine">
+      <UniqueIdentifier>{08e7d51a-6f8a-4e54-8abe-a86101be8dad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="manual\physics3d">
+      <UniqueIdentifier>{3934b26e-18b0-465a-a89e-69a3417d107e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="manual\navmesh">
+      <UniqueIdentifier>{fa8be49e-8b79-4dc5-8f28-febde1347eda}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\auto\lua_cocos2dx_auto.cpp">
+      <Filter>auto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\tolua\tolua_event.c">
+      <Filter>tolua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\tolua\tolua_is.c">
+      <Filter>tolua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\tolua\tolua_map.c">
+      <Filter>tolua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\tolua\tolua_push.c">
+      <Filter>tolua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\tolua\tolua_to.c">
+      <Filter>tolua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\xxtea\xxtea.cpp">
+      <Filter>xxtea</Filter>
+    </ClCompile>
+    <ClCompile Include="..\auto\lua_cocos2dx_experimental_auto.cpp">
+      <Filter>auto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\CCLuaBridge.cpp">
+      <Filter>manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\CCLuaEngine.cpp">
+      <Filter>manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\CCLuaStack.cpp">
+      <Filter>manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\CCLuaValue.cpp">
+      <Filter>manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\Cocos2dxLuaLoader.cpp">
+      <Filter>manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\LuaBasicConversions.cpp">
+      <Filter>manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\CCComponentLua.cpp">
+      <Filter>manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\tolua_fix.cpp">
+      <Filter>manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\cocos2d\lua_cocos2dx_deprecated.cpp">
+      <Filter>manual\cocos2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\cocos2d\lua_cocos2dx_experimental_manual.cpp">
+      <Filter>manual\cocos2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\cocos2d\lua_cocos2dx_manual.cpp">
+      <Filter>manual\cocos2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\cocos2d\lua_cocos2dx_physics_manual.cpp">
+      <Filter>manual\cocos2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\cocos2d\LuaOpengl.cpp">
+      <Filter>manual\cocos2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\cocos2d\LuaScriptHandlerMgr.cpp">
+      <Filter>manual\cocos2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\auto\lua_cocos2dx_physics_auto.cpp">
+      <Filter>auto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\auto\lua_cocos2dx_3d_auto.cpp">
+      <Filter>auto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\auto\lua_cocos2dx_cocosbuilder_auto.cpp">
+      <Filter>auto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\auto\lua_cocos2dx_cocosdenshion_auto.cpp">
+      <Filter>auto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\auto\lua_cocos2dx_experimental_video_auto.cpp">
+      <Filter>auto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\auto\lua_cocos2dx_extension_auto.cpp">
+      <Filter>auto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\auto\lua_cocos2dx_spine_auto.cpp">
+      <Filter>auto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\auto\lua_cocos2dx_studio_auto.cpp">
+      <Filter>auto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\auto\lua_cocos2dx_ui_auto.cpp">
+      <Filter>auto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\3d\lua_cocos2dx_3d_manual.cpp">
+      <Filter>manual\3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\cocosdenshion\lua_cocos2dx_cocosdenshion_manual.cpp">
+      <Filter>manual\cocosdenshion</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\cocosbuilder\CCBProxy.cpp">
+      <Filter>manual\cocosbuilder</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\cocosbuilder\lua_cocos2dx_cocosbuilder_manual.cpp">
+      <Filter>manual\cocosbuilder</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\cocostudio\lua_cocos2dx_coco_studio_manual.cpp">
+      <Filter>manual\cocostudio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\extension\lua_cocos2dx_extension_manual.cpp">
+      <Filter>manual\extension</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\network\lua_cocos2dx_network_manual.cpp">
+      <Filter>manual\network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\network\lua_extensions.c">
+      <Filter>manual\network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\network\Lua_web_socket.cpp">
+      <Filter>manual\network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\network\lua_xml_http_request.cpp">
+      <Filter>manual\network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\spine\lua_cocos2dx_spine_manual.cpp">
+      <Filter>manual\spine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\spine\LuaSkeletonAnimation.cpp">
+      <Filter>manual\spine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\ui\lua_cocos2dx_experimental_video_manual.cpp">
+      <Filter>manual\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\ui\lua_cocos2dx_ui_manual.cpp">
+      <Filter>manual\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\luasocket\auxiliar.c">
+      <Filter>luasocket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\luasocket\buffer.c">
+      <Filter>luasocket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\luasocket\except.c">
+      <Filter>luasocket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\luasocket\inet.c">
+      <Filter>luasocket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\luasocket\io.c">
+      <Filter>luasocket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\luasocket\luasocket.c">
+      <Filter>luasocket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\luasocket\luasocket_scripts.c">
+      <Filter>luasocket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\luasocket\mime.c">
+      <Filter>luasocket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\luasocket\options.c">
+      <Filter>luasocket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\luasocket\select.c">
+      <Filter>luasocket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\luasocket\tcp.c">
+      <Filter>luasocket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\luasocket\timeout.c">
+      <Filter>luasocket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\luasocket\udp.c">
+      <Filter>luasocket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\external\lua\luasocket\wsocket.c">
+      <Filter>luasocket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\cocostudio\CustomGUIReader.cpp">
+      <Filter>manual\cocostudio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\auto\lua_cocos2dx_audioengine_auto.cpp">
+      <Filter>auto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\audioengine\lua_cocos2dx_audioengine_manual.cpp">
+      <Filter>manual\audioengine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\auto\lua_cocos2dx_csloader_auto.cpp">
+      <Filter>auto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\cocostudio\lua_cocos2dx_csloader_manual.cpp">
+      <Filter>manual\cocostudio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\cocostudio\lua-cocos-studio-conversions.cpp">
+      <Filter>manual\cocostudio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\auto\lua_cocos2dx_experimental_webview_auto.cpp">
+      <Filter>auto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\ui\lua_cocos2dx_experimental_webview_manual.cpp">
+      <Filter>manual\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\auto\lua_cocos2dx_physics3d_auto.cpp">
+      <Filter>auto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\physics3d\lua_cocos2dx_physics3d_manual.cpp">
+      <Filter>manual\physics3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\auto\lua_cocos2dx_navmesh_auto.cpp">
+      <Filter>auto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\navmesh\lua_cocos2dx_navmesh_conversions.cpp">
+      <Filter>manual\navmesh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\navmesh\lua_cocos2dx_navmesh_manual.cpp">
+      <Filter>manual\navmesh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\lua_module_register.cpp">
+      <Filter>manual</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\auto\lua_cocos2dx_auto.hpp">
+      <Filter>auto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\tolua\tolua++.h">
+      <Filter>tolua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\tolua\tolua_event.h">
+      <Filter>tolua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\luajit\include\lauxlib.h">
+      <Filter>luajit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\luajit\include\lua.h">
+      <Filter>luajit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\luajit\include\luaconf.h">
+      <Filter>luajit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\luajit\include\lualib.h">
+      <Filter>luajit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\xxtea\xxtea.h">
+      <Filter>xxtea</Filter>
+    </ClInclude>
+    <ClInclude Include="..\auto\lua_cocos2dx_experimental_auto.hpp">
+      <Filter>auto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\CCLuaBridge.h">
+      <Filter>manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\CCLuaEngine.h">
+      <Filter>manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\CCLuaStack.h">
+      <Filter>manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\CCLuaValue.h">
+      <Filter>manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\Cocos2dxLuaLoader.h">
+      <Filter>manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\LuaBasicConversions.h">
+      <Filter>manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\CCComponentLua.h">
+      <Filter>manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\tolua_fix.h">
+      <Filter>manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\cocos2d\lua_cocos2dx_deprecated.h">
+      <Filter>manual\cocos2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\cocos2d\lua_cocos2dx_experimental_manual.hpp">
+      <Filter>manual\cocos2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\cocos2d\lua_cocos2dx_manual.hpp">
+      <Filter>manual\cocos2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\cocos2d\lua_cocos2dx_physics_manual.hpp">
+      <Filter>manual\cocos2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\cocos2d\LuaOpengl.h">
+      <Filter>manual\cocos2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\cocos2d\LuaScriptHandlerMgr.h">
+      <Filter>manual\cocos2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\auto\lua_cocos2dx_physics_auto.hpp">
+      <Filter>auto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\auto\lua_cocos2dx_3d_auto.hpp">
+      <Filter>auto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\auto\lua_cocos2dx_cocosbuilder_auto.hpp">
+      <Filter>auto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\auto\lua_cocos2dx_cocosdenshion_auto.hpp">
+      <Filter>auto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\auto\lua_cocos2dx_experimental_video_auto.hpp">
+      <Filter>auto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\auto\lua_cocos2dx_extension_auto.hpp">
+      <Filter>auto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\auto\lua_cocos2dx_spine_auto.hpp">
+      <Filter>auto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\auto\lua_cocos2dx_studio_auto.hpp">
+      <Filter>auto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\auto\lua_cocos2dx_ui_auto.hpp">
+      <Filter>auto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\3d\lua_cocos2dx_3d_manual.h">
+      <Filter>manual\3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\cocosdenshion\lua_cocos2dx_cocosdenshion_manual.h">
+      <Filter>manual\cocosdenshion</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\cocosbuilder\CCBProxy.h">
+      <Filter>manual\cocosbuilder</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\cocosbuilder\lua_cocos2dx_cocosbuilder_manual.h">
+      <Filter>manual\cocosbuilder</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\cocostudio\lua_cocos2dx_coco_studio_manual.hpp">
+      <Filter>manual\cocostudio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\extension\lua_cocos2dx_extension_manual.h">
+      <Filter>manual\extension</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\network\lua_cocos2dx_network_manual.h">
+      <Filter>manual\network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\network\lua_extensions.h">
+      <Filter>manual\network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\network\Lua_web_socket.h">
+      <Filter>manual\network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\network\lua_xml_http_request.h">
+      <Filter>manual\network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\spine\lua_cocos2dx_spine_manual.hpp">
+      <Filter>manual\spine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\spine\LuaSkeletonAnimation.h">
+      <Filter>manual\spine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\ui\lua_cocos2dx_experimental_video_manual.hpp">
+      <Filter>manual\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\ui\lua_cocos2dx_ui_manual.hpp">
+      <Filter>manual\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\luasocket\auxiliar.h">
+      <Filter>luasocket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\luasocket\buffer.h">
+      <Filter>luasocket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\luasocket\except.h">
+      <Filter>luasocket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\luasocket\inet.h">
+      <Filter>luasocket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\luasocket\io.h">
+      <Filter>luasocket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\luasocket\luasocket.h">
+      <Filter>luasocket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\luasocket\luasocket_scripts.h">
+      <Filter>luasocket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\luasocket\mime.h">
+      <Filter>luasocket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\luasocket\options.h">
+      <Filter>luasocket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\luasocket\select.h">
+      <Filter>luasocket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\luasocket\socket.h">
+      <Filter>luasocket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\luasocket\tcp.h">
+      <Filter>luasocket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\luasocket\timeout.h">
+      <Filter>luasocket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\luasocket\udp.h">
+      <Filter>luasocket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\lua\luasocket\wsocket.h">
+      <Filter>luasocket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\cocostudio\CustomGUIReader.h">
+      <Filter>manual\cocostudio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\auto\lua_cocos2dx_audioengine_auto.hpp">
+      <Filter>auto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\audioengine\lua_cocos2dx_audioengine_manual.h">
+      <Filter>manual\audioengine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\auto\lua_cocos2dx_csloader_auto.hpp">
+      <Filter>auto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\cocostudio\lua_cocos2dx_csloader_manual.hpp">
+      <Filter>manual\cocostudio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\cocostudio\lua-cocos-studio-conversions.h">
+      <Filter>manual\cocostudio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\auto\lua_cocos2dx_experimental_webview_auto.hpp">
+      <Filter>auto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\ui\lua_cocos2dx_experimental_webview_manual.hpp">
+      <Filter>manual\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\auto\lua_cocos2dx_physics3d_auto.hpp">
+      <Filter>auto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\physics3d\lua_cocos2dx_physics3d_manual.h">
+      <Filter>manual\physics3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\auto\lua_cocos2dx_navmesh_auto.hpp">
+      <Filter>auto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\navmesh\lua_cocos2dx_navmesh_conversions.h">
+      <Filter>manual\navmesh</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\navmesh\lua_cocos2dx_navmesh_manual.h">
+      <Filter>manual\navmesh</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\lua_module_register.h">
+      <Filter>manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\Lua-BindingsExport.h">
+      <Filter>manual</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\script\CCBReaderLoad.lua">
+      <Filter>script\cocosbuilder</Filter>
+    </None>
+    <None Include="..\script\DeprecatedCocosBuilderClass.lua">
+      <Filter>script\cocosbuilder</Filter>
+    </None>
+    <None Include="..\script\DeprecatedCocosDenshionClass.lua">
+      <Filter>script\cocosdenshion</Filter>
+    </None>
+    <None Include="..\script\AudioEngine.lua">
+      <Filter>script\cocosdenshion</Filter>
+    </None>
+    <None Include="..\script\DeprecatedCocosDenshionFunc.lua">
+      <Filter>script\cocosdenshion</Filter>
+    </None>
+    <None Include="..\script\DeprecatedCocoStudioClass.lua">
+      <Filter>script\cocostudio</Filter>
+    </None>
+    <None Include="..\script\DeprecatedCocoStudioFunc.lua">
+      <Filter>script\cocostudio</Filter>
+    </None>
+    <None Include="..\script\StudioConstants.lua">
+      <Filter>script\cocostudio</Filter>
+    </None>
+    <None Include="..\script\DeprecatedExtensionClass.lua">
+      <Filter>script\extension</Filter>
+    </None>
+    <None Include="..\script\DeprecatedExtensionEnum.lua">
+      <Filter>script\extension</Filter>
+    </None>
+    <None Include="..\script\DeprecatedExtensionFunc.lua">
+      <Filter>script\extension</Filter>
+    </None>
+    <None Include="..\script\ExtensionConstants.lua">
+      <Filter>script\extension</Filter>
+    </None>
+    <None Include="..\script\cocos2d\bitExtend.lua">
+      <Filter>script\cocos2d</Filter>
+    </None>
+    <None Include="..\script\cocos2d\Cocos2d.lua">
+      <Filter>script\cocos2d</Filter>
+    </None>
+    <None Include="..\script\cocos2d\Cocos2dConstants.lua">
+      <Filter>script\cocos2d</Filter>
+    </None>
+    <None Include="..\script\cocos2d\DeprecatedCocos2dClass.lua">
+      <Filter>script\cocos2d</Filter>
+    </None>
+    <None Include="..\script\cocos2d\DeprecatedCocos2dEnum.lua">
+      <Filter>script\cocos2d</Filter>
+    </None>
+    <None Include="..\script\cocos2d\DeprecatedCocos2dFunc.lua">
+      <Filter>script\cocos2d</Filter>
+    </None>
+    <None Include="..\script\cocos2d\DeprecatedOpenglEnum.lua">
+      <Filter>script\cocos2d</Filter>
+    </None>
+    <None Include="..\script\cocos2d\DrawPrimitives.lua">
+      <Filter>script\cocos2d</Filter>
+    </None>
+    <None Include="..\script\cocos2d\extern.lua">
+      <Filter>script\cocos2d</Filter>
+    </None>
+    <None Include="..\script\cocos2d\json.lua">
+      <Filter>script\cocos2d</Filter>
+    </None>
+    <None Include="..\script\cocos2d\luaj.lua">
+      <Filter>script\cocos2d</Filter>
+    </None>
+    <None Include="..\script\cocos2d\luaoc.lua">
+      <Filter>script\cocos2d</Filter>
+    </None>
+    <None Include="..\script\cocos2d\Opengl.lua">
+      <Filter>script\cocos2d</Filter>
+    </None>
+    <None Include="..\script\cocos2d\OpenglConstants.lua">
+      <Filter>script\cocos2d</Filter>
+    </None>
+    <None Include="..\script\network\DeprecatedNetworkClass.lua">
+      <Filter>script\network</Filter>
+    </None>
+    <None Include="..\script\network\DeprecatedNetworkEnum.lua">
+      <Filter>script\network</Filter>
+    </None>
+    <None Include="..\script\network\DeprecatedNetworkFunc.lua">
+      <Filter>script\network</Filter>
+    </None>
+    <None Include="..\script\network\NetworkConstants.lua">
+      <Filter>script\network</Filter>
+    </None>
+    <None Include="..\script\ui\DeprecatedUIEnum.lua">
+      <Filter>script\ui</Filter>
+    </None>
+    <None Include="..\script\ui\DeprecatedUIFunc.lua">
+      <Filter>script\ui</Filter>
+    </None>
+    <None Include="..\script\ui\experimentalUIConstants.lua">
+      <Filter>script\ui</Filter>
+    </None>
+    <None Include="..\script\ui\GuiConstants.lua">
+      <Filter>script\ui</Filter>
+    </None>
+  </ItemGroup>
+</Project>

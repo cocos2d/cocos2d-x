@@ -76,8 +76,7 @@ local function updateLayer()
 
     local function update(sender)
         progressLable:setString("")
-
-        getAssetsManager():update()
+        getAssetsManager():checkUpdate()
     end
 
     local function reset(sender)
@@ -104,7 +103,7 @@ local function updateLayer()
             addSearchPath(realPath,true)
         end
 
-        assetsManagerModule = reloadModule("src/AssetsManagerTest/AssetsManagerModule")
+        assetsManagerModule = reloadModule("AssetsManagerTest/AssetsManagerModule")
 
         assetsManagerModule.newScene(AssetsManagerTestMain)
     end

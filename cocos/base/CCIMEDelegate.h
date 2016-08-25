@@ -28,15 +28,23 @@ THE SOFTWARE.
 
 #include <string>
 #include "math/CCGeometry.h"
-
-NS_CC_BEGIN
-extern const std::string CC_DLL STD_STRING_EMPTY;
+#include "base/CCEventKeyboard.h"
 
 /**
- * @addtogroup input
+ * @addtogroup base
  * @{
  */
+NS_CC_BEGIN
 
+/**
+ * A static global empty std::string install.
+ */
+extern const std::string CC_DLL STD_STRING_EMPTY;
+
+
+/**
+ * Keyboard notification event type.
+ */
 typedef struct
 {
     Rect  begin;              // the soft keyboard rectangle when animation begins
@@ -45,22 +53,27 @@ typedef struct
 } IMEKeyboardNotificationInfo;
 
 /**
-@brief    Input method editor delegate.
-*/
+ *@brief    Input method editor delegate.
+ */
 class CC_DLL IMEDelegate
 {
 public:
     /**
+     * Default constructor.
      * @js NA
      * @lua NA
      */
     virtual ~IMEDelegate();
+    
     /**
+     * Default destructor.
      * @js NA
      * @lua NA
      */
     virtual bool attachWithIME();
+    
     /**
+     * Determine whether the IME is detached or not.
      * @js NA
      * @lua NA
      */
@@ -113,6 +126,13 @@ protected:
     virtual void deleteBackward() {}
 
     /**
+    @brief    Called by IMEDispatcher after the user press control key.
+    * @js NA
+    * @lua NA
+    */
+    virtual void controlKey(EventKeyboard::KeyCode keyCode) {}
+
+    /**
     @brief    Called by IMEDispatcher for text stored in delegate.
     * @js NA
     * @lua NA
@@ -151,9 +171,9 @@ protected:
     IMEDelegate();
 };
 
-// end of input group
-/// @}
 
 NS_CC_END
+// end of base group
+/// @}
 
 #endif    // __CC_IME_DELEGATE_H__

@@ -22,8 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "cocostudio/CCProcessBase.h"
-#include "cocostudio/CCUtilMath.h"
+#include "editor-support/cocostudio/CCProcessBase.h"
+#include "editor-support/cocostudio/CCUtilMath.h"
 
 using namespace cocos2d;
 
@@ -80,7 +80,7 @@ void ProcessBase::play(int durationTo, int durationTween,  int loop, int tweenEa
 
     /*
      *  Set m_iTotalFrames to durationTo, it is used for change tween between two animation.
-     *  When changing end, m_iTotalFrames will be setted to _durationTween
+     *  When changing end, m_iTotalFrames will be set to _durationTween
      */
     _nextFrameIndex = durationTo;
     _tweenEasing = (cocos2d::tweenfunc::TweenType)tweenEasing;
@@ -96,7 +96,7 @@ void ProcessBase::update(float dt)
     }
 
     /*
-     *  Fileter the m_iDuration <=0 and dt >1
+     *  Filter the m_iDuration <=0 and dt >1
      *  If dt>1, generally speaking  the reason is the device is stuck.
      */
     if(_rawDuration <= 0 || dt > 1)
@@ -122,7 +122,7 @@ void ProcessBase::update(float dt)
         _currentPercent = _currentFrame / _nextFrameIndex;
 
         /*
-        *	if _currentFrame is bigger or equal than m_iTotalFrames, then reduce it util _currentFrame is
+        *	if _currentFrame is bigger or equal than m_iTotalFrames, then reduce it until _currentFrame is
         *  smaller than m_iTotalFrames
         */
         _currentFrame = fmodf(_currentFrame, _nextFrameIndex);

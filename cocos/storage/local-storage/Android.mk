@@ -5,8 +5,10 @@ LOCAL_MODULE := cocos_localstorage_static
 
 LOCAL_MODULE_FILENAME := liblocalstorage
 
+LOCAL_ARM_MODE := arm
+
 LOCAL_SRC_FILES := LocalStorage.cpp \
-LocalStorageAndroid.cpp 
+LocalStorage-android.cpp 
 
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/..
@@ -14,10 +16,7 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/..
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../..
 
-LOCAL_CFLAGS += -Wno-psabi
-LOCAL_EXPORT_CFLAGS += -Wno-psabi
-
-LOCAL_WHOLE_STATIC_LIBRARIES := cocos2dx_static
+LOCAL_STATIC_LIBRARIES := cocos2dx_internal_static
 
 include $(BUILD_STATIC_LIBRARY)
 

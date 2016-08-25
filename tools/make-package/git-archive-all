@@ -14,6 +14,9 @@ import traceback
 from os import path, extsep
 from subprocess import Popen, PIPE, CalledProcessError
 
+def os_is_win32():
+    return sys.platform == 'win32'
+
 class UnrecognizedFormat:
     def __init__(self, prompt):
         self._prompt = prompt
@@ -66,7 +69,7 @@ class GitArchiver(object):
 
         # Raises an exception if there is no repo under main_repo_abspath.
         try:
-            self.run_shell("[ -d .git ] || git rev-parse --git-dir > /dev/null 2>&1", main_repo_abspath)
+            self.run_shell("git rev-parse", main_repo_abspath)
         except Exception as e:
             raise ValueError("Not a git repository (or any of the parent directories).".format(path=main_repo_abspath))
 
@@ -188,7 +191,11 @@ class GitArchiver(object):
                 if self.verbose:
                     print("Compressing {f} => {a}...".format(f=file_path,
                                                              a=path.join(self.prefix, file_path)))
-                add(file_path, file_path)
+                try:
+                    add(file_path, file_path)
+                except:
+                    print('add %s failed.' % file_path)
+                    pass
             else:
                 print("{f} => {a}".format(f=file_path,
                                           a=path.join(self.prefix, file_path)))
@@ -199,7 +206,11 @@ class GitArchiver(object):
                     print("Compressing {f} => {a}...".format(f=path.join(self.main_repo_abspath, file_path),
                                                              a=path.join(self.prefix, file_path)))
 
-                add(path.join(self.main_repo_abspath, file_path), file_path)
+                try:
+                    add(path.join(self.main_repo_abspath, file_path), file_path)
+                except:
+                    print('add %s failed.' % file_path)
+                    pass
             else:
                 print("{f} => {a}".format(f=path.join(self.main_repo_abspath, file_path),
                                           a=path.join(self.prefix, file_path)))
@@ -227,22 +238,43 @@ class GitArchiver(object):
             extra_folder_path = os.path.join(self.main_repo_abspath, extra_folder_name)
             extra_folders.append(extra_folder_path)
             extra_file_paths = self.unpack_zipfile(zip_file_path, self.main_repo_abspath)
+
+            key_move_dirs = "move_dirs"
             for file_path in extra_file_paths:
                 if file_path.find(extra_folder_path) == -1:
                     raise Exception("Couldn't find extra folder path (%s) in (%s)!" % (extra_folder_path, file_path))
 
                 path_in_zip = extra_to_zip_file + file_path[(len(extra_folder_path)):]
-                add(file_path, path_in_zip)
+                if key_move_dirs in zip_config:
+                    move_dirs = zip_config[key_move_dirs]
+                    related_path = os.path.relpath(file_path, extra_folder_path)
+                    temp_rel_path = related_path.replace('\\', '/')
+                    for move_dir in move_dirs:
+                        if temp_rel_path.startswith(move_dir):
+                            move_to_dir = move_dirs[move_dir]
+                            path_in_zip = os.path.join(move_to_dir, related_path)
+                            break
 
-        outfile_name, outfile_ext = path.splitext(output_path)
-        for extra_dir in config_data["extra_dirs"]:
-            dir_path = path.join(self.main_repo_abspath, extra_dir)
-            list_dirs = os.walk(dir_path)
-            for root,dirs,files in list_dirs:
-                for f in files:
-                    file_path = path.join(root,f)
-                    path_in_zip = file_path[(len(self.main_repo_abspath)+1):]
+                try:
                     add(file_path, path_in_zip)
+                except:
+                    print('add %s failed.' % file_path)
+                    pass
+
+        key_extra_dirs = "extra_dirs"
+        if key_extra_dirs in config_data:
+            for extra_dir in config_data[key_extra_dirs]:
+                dir_path = path.join(self.main_repo_abspath, extra_dir)
+                list_dirs = os.walk(dir_path)
+                for root,dirs,files in list_dirs:
+                    for f in files:
+                        file_path = path.join(root,f)
+                        path_in_zip = file_path[(len(self.main_repo_abspath)+1):]
+                        try:
+                            add(file_path, path_in_zip)
+                        except:
+                            print('add %s failed.' % file_path)
+                            pass
 
         if not dry_run:
             archive.close()
@@ -273,11 +305,20 @@ class GitArchiver(object):
         """
         components = []
 
-        while not path.samefile(abspath, repo_abspath):
-            abspath, tail = path.split(abspath)
+        if os_is_win32():
+            abspath = os.path.normpath(abspath)
+            repo_abspath = os.path.normpath(repo_abspath)
+            while abspath != repo_abspath:
+                abspath, tail = path.split(abspath)
 
-            if len(tail):
-                components.insert(0, tail)
+                if len(tail):
+                    components.insert(0, tail)
+        else:
+            while not path.samefile(abspath, repo_abspath):
+                abspath, tail = path.split(abspath)
+
+                if len(tail):
+                    components.insert(0, tail)
 
         components.insert(0, path.relpath(repo_abspath, repo_abspath))
         return components
@@ -407,8 +448,19 @@ class GitArchiver(object):
             repo_file_path = repo_file_path.strip('"')  # file path relative to current repo
             file_name = path.basename(repo_file_path)
 
+            # The symbolic link propertie is lost after extract the zip file
+            # Loop over files in the link dir and add them to file list
+            absfilepath = path.join(repo_abspath, repo_file_path)
+            if path.islink(absfilepath):
+                if path.isdir(absfilepath):
+                    list_dirs = os.walk(absfilepath)
+                    for root,dirs,files in list_dirs:
+                        for file in files:
+                            main_repo_file_path = os.path.relpath(path.join(root, file), self.main_repo_abspath)
+                            yield main_repo_file_path
+                    continue
             # Only list symlinks and files that don't start with git.
-            if (not path.islink(repo_file_path) and path.isdir(repo_file_path)):
+            elif path.isdir(repo_file_path):
                 continue
 
             main_repo_file_path = path.join(repo_path, repo_file_path)  # file path relative to the main repo

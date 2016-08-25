@@ -24,6 +24,7 @@
 
 #include "base/CCEventListenerAcceleration.h"
 #include "base/CCEventAcceleration.h"
+#include "base/CCConsole.h"
 
 NS_CC_BEGIN
 
@@ -41,7 +42,7 @@ EventListenerAcceleration::~EventListenerAcceleration()
 
 EventListenerAcceleration* EventListenerAcceleration::create(const std::function<void(Acceleration*, Event*)>& callback)
 {
-    EventListenerAcceleration* ret = new EventListenerAcceleration();
+    EventListenerAcceleration* ret = new (std::nothrow) EventListenerAcceleration();
     if (ret && ret->init(callback))
     {
         ret->autorelease();
@@ -72,7 +73,7 @@ bool EventListenerAcceleration::init(const std::function<void(Acceleration*, Eve
 
 EventListenerAcceleration* EventListenerAcceleration::clone()
 {
-    auto ret = new EventListenerAcceleration();
+    auto ret = new (std::nothrow) EventListenerAcceleration();
     
     if (ret && ret->init(onAccelerationEvent))
     {
@@ -88,7 +89,7 @@ EventListenerAcceleration* EventListenerAcceleration::clone()
 
 bool EventListenerAcceleration::checkAvailable()
 {
-    CCASSERT(onAccelerationEvent, "");
+    CCASSERT(onAccelerationEvent, "onAccelerationEvent can't be nullptr!");
     
     return true;
 }

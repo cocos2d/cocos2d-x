@@ -21,15 +21,12 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#include "CCPhysicsContact.h"
+#include "physics/CCPhysicsContact.h"
 #if CC_USE_PHYSICS
-#include "chipmunk.h"
+#include "chipmunk/chipmunk.h"
 
 #include "physics/CCPhysicsBody.h"
-
-#include "chipmunk/CCPhysicsContactInfo_chipmunk.h"
-#include "chipmunk/CCPhysicsHelper_chipmunk.h"
-
+#include "physics/CCPhysicsHelper.h"
 #include "base/CCEventCustom.h"
 
 NS_CC_BEGIN
@@ -42,7 +39,6 @@ PhysicsContact::PhysicsContact()
 , _shapeA(nullptr)
 , _shapeB(nullptr)
 , _eventCode(EventCode::NONE)
-, _info(nullptr)
 , _notificationEnable(true)
 , _result(true)
 , _data(nullptr)
@@ -55,14 +51,13 @@ PhysicsContact::PhysicsContact()
 
 PhysicsContact::~PhysicsContact()
 {
-    CC_SAFE_DELETE(_info);
     CC_SAFE_DELETE(_contactData);
     CC_SAFE_DELETE(_preContactData);
 }
 
 PhysicsContact* PhysicsContact::construct(PhysicsShape* a, PhysicsShape* b)
 {
-    PhysicsContact * contact = new PhysicsContact();
+    PhysicsContact * contact = new (std::nothrow) PhysicsContact();
     if(contact && contact->init(a, b))
     {
         return contact;
@@ -77,8 +72,6 @@ bool PhysicsContact::init(PhysicsShape* a, PhysicsShape* b)
     do
     {
         CC_BREAK_IF(a == nullptr || b == nullptr);
-        
-        CC_BREAK_IF(!(_info = new PhysicsContactInfo(this)));
         
         _shapeA = a;
         _shapeB = b;
@@ -99,14 +92,14 @@ void PhysicsContact::generateContactData()
     cpArbiter* arb = static_cast<cpArbiter*>(_contactInfo);
     CC_SAFE_DELETE(_preContactData);
     _preContactData = _contactData;
-    _contactData = new PhysicsContactData();
+    _contactData = new (std::nothrow) PhysicsContactData();
     _contactData->count = cpArbiterGetCount(arb);
     for (int i=0; i<_contactData->count && i<PhysicsContactData::POINT_MAX; ++i)
     {
-        _contactData->points[i] = PhysicsHelper::cpv2point(cpArbiterGetPoint(arb, i));
+        _contactData->points[i] = PhysicsHelper::cpv2point(cpArbiterGetPointA(arb, i));
     }
     
-    _contactData->normal = _contactData->count > 0 ? PhysicsHelper::cpv2point(cpArbiterGetNormal(arb, 0)) : Vec2::ZERO;
+    _contactData->normal = _contactData->count > 0 ? PhysicsHelper::cpv2point(cpArbiterGetNormal(arb)) : Vec2::ZERO;
 }
 
 // PhysicsContactPreSolve implementation
@@ -121,32 +114,32 @@ PhysicsContactPreSolve::~PhysicsContactPreSolve()
 
 float PhysicsContactPreSolve::getRestitution() const
 {
-    return static_cast<cpArbiter*>(_contactInfo)->e;
+    return cpArbiterGetRestitution(static_cast<cpArbiter*>(_contactInfo));
 }
 
 float PhysicsContactPreSolve::getFriction() const
 {
-    return static_cast<cpArbiter*>(_contactInfo)->u;
+    return cpArbiterGetFriction(static_cast<cpArbiter*>(_contactInfo));
 }
 
 Vec2 PhysicsContactPreSolve::getSurfaceVelocity() const
 {
-    return PhysicsHelper::cpv2point(static_cast<cpArbiter*>(_contactInfo)->surface_vr);
+    return PhysicsHelper::cpv2point(cpArbiterGetSurfaceVelocity(static_cast<cpArbiter*>(_contactInfo)));
 }
 
 void PhysicsContactPreSolve::setRestitution(float restitution)
 {
-    static_cast<cpArbiter*>(_contactInfo)->e = restitution;
+    cpArbiterSetRestitution(static_cast<cpArbiter*>(_contactInfo), restitution);
 }
 
 void PhysicsContactPreSolve::setFriction(float friction)
 {
-    static_cast<cpArbiter*>(_contactInfo)->u = friction;
+    cpArbiterSetFriction(static_cast<cpArbiter*>(_contactInfo), friction);
 }
 
-void PhysicsContactPreSolve::setSurfaceVelocity(const Vect& velocity)
+void PhysicsContactPreSolve::setSurfaceVelocity(const Vec2& velocity)
 {
-    static_cast<cpArbiter*>(_contactInfo)->surface_vr = PhysicsHelper::point2cpv(velocity);
+    cpArbiterSetSurfaceVelocity(static_cast<cpArbiter*>(_contactInfo), PhysicsHelper::point2cpv(velocity));
 }
 
 void PhysicsContactPreSolve::ignore()
@@ -168,24 +161,24 @@ PhysicsContactPostSolve::~PhysicsContactPostSolve()
 
 float PhysicsContactPostSolve::getRestitution() const
 {
-    return static_cast<cpArbiter*>(_contactInfo)->e;
+    return cpArbiterGetRestitution(static_cast<cpArbiter*>(_contactInfo));
 }
 
 float PhysicsContactPostSolve::getFriction() const
 {
-    return static_cast<cpArbiter*>(_contactInfo)->u;
+    return cpArbiterGetFriction(static_cast<cpArbiter*>(_contactInfo));
 }
 
 Vec2 PhysicsContactPostSolve::getSurfaceVelocity() const
 {
-    return PhysicsHelper::cpv2point(static_cast<cpArbiter*>(_contactInfo)->surface_vr);
+    return PhysicsHelper::cpv2point(cpArbiterGetSurfaceVelocity(static_cast<cpArbiter*>(_contactInfo)));
 }
 
 EventListenerPhysicsContact::EventListenerPhysicsContact()
 : onContactBegin(nullptr)
 , onContactPreSolve(nullptr)
 , onContactPostSolve(nullptr)
-, onContactSeperate(nullptr)
+, onContactSeparate(nullptr)
 {
 }
 
@@ -250,12 +243,12 @@ void EventListenerPhysicsContact::onEvent(EventCustom* event)
             }
             break;
         }
-        case PhysicsContact::EventCode::SEPERATE:
+        case PhysicsContact::EventCode::SEPARATE:
         {
-            if (onContactSeperate != nullptr
+            if (onContactSeparate != nullptr
                 && hitTest(contact->getShapeA(), contact->getShapeB()))
             {
-                onContactSeperate(*contact);
+                onContactSeparate(*contact);
             }
             break;
         }
@@ -271,7 +264,7 @@ EventListenerPhysicsContact::~EventListenerPhysicsContact()
 
 EventListenerPhysicsContact* EventListenerPhysicsContact::create()
 {
-    EventListenerPhysicsContact* obj = new EventListenerPhysicsContact();
+    EventListenerPhysicsContact* obj = new (std::nothrow) EventListenerPhysicsContact();
     
     if (obj != nullptr && obj->init())
     {
@@ -293,7 +286,7 @@ bool EventListenerPhysicsContact::hitTest(PhysicsShape* shapeA, PhysicsShape* sh
 bool EventListenerPhysicsContact::checkAvailable()
 {
     if (onContactBegin == nullptr && onContactPreSolve == nullptr
-        && onContactPostSolve == nullptr && onContactSeperate == nullptr)
+        && onContactPostSolve == nullptr && onContactSeparate == nullptr)
     {
         CCASSERT(false, "Invalid PhysicsContactListener.");
         return false;
@@ -311,7 +304,7 @@ EventListenerPhysicsContact* EventListenerPhysicsContact::clone()
         obj->onContactBegin = onContactBegin;
         obj->onContactPreSolve = onContactPreSolve;
         obj->onContactPostSolve = onContactPostSolve;
-        obj->onContactSeperate = onContactSeperate;
+        obj->onContactSeparate = onContactSeparate;
         
         return obj;
     }
@@ -322,7 +315,7 @@ EventListenerPhysicsContact* EventListenerPhysicsContact::clone()
 
 EventListenerPhysicsContactWithBodies* EventListenerPhysicsContactWithBodies::create(PhysicsBody* bodyA, PhysicsBody* bodyB)
 {
-    EventListenerPhysicsContactWithBodies* obj = new EventListenerPhysicsContactWithBodies();
+    EventListenerPhysicsContactWithBodies* obj = new (std::nothrow) EventListenerPhysicsContactWithBodies();
     
     if (obj != nullptr && obj->init())
     {
@@ -369,7 +362,7 @@ EventListenerPhysicsContactWithBodies* EventListenerPhysicsContactWithBodies::cl
         obj->onContactBegin = onContactBegin;
         obj->onContactPreSolve = onContactPreSolve;
         obj->onContactPostSolve = onContactPostSolve;
-        obj->onContactSeperate = onContactSeperate;
+        obj->onContactSeparate = onContactSeparate;
         
         return obj;
     }
@@ -390,7 +383,7 @@ EventListenerPhysicsContactWithShapes::~EventListenerPhysicsContactWithShapes()
 
 EventListenerPhysicsContactWithShapes* EventListenerPhysicsContactWithShapes::create(PhysicsShape* shapeA, PhysicsShape* shapeB)
 {
-    EventListenerPhysicsContactWithShapes* obj = new EventListenerPhysicsContactWithShapes();
+    EventListenerPhysicsContactWithShapes* obj = new (std::nothrow) EventListenerPhysicsContactWithShapes();
     
     if (obj != nullptr && obj->init())
     {
@@ -424,7 +417,7 @@ EventListenerPhysicsContactWithShapes* EventListenerPhysicsContactWithShapes::cl
         obj->onContactBegin = onContactBegin;
         obj->onContactPreSolve = onContactPreSolve;
         obj->onContactPostSolve = onContactPostSolve;
-        obj->onContactSeperate = onContactSeperate;
+        obj->onContactSeparate = onContactSeparate;
         
         return obj;
     }
@@ -444,7 +437,7 @@ EventListenerPhysicsContactWithGroup::~EventListenerPhysicsContactWithGroup()
 
 EventListenerPhysicsContactWithGroup* EventListenerPhysicsContactWithGroup::create(int group)
 {
-    EventListenerPhysicsContactWithGroup* obj = new EventListenerPhysicsContactWithGroup();
+    EventListenerPhysicsContactWithGroup* obj = new (std::nothrow) EventListenerPhysicsContactWithGroup();
     
     if (obj != nullptr && obj->init())
     {
@@ -476,7 +469,7 @@ EventListenerPhysicsContactWithGroup* EventListenerPhysicsContactWithGroup::clon
         obj->onContactBegin = onContactBegin;
         obj->onContactPreSolve = onContactPreSolve;
         obj->onContactPostSolve = onContactPostSolve;
-        obj->onContactSeperate = onContactSeperate;
+        obj->onContactSeparate = onContactSeparate;
         
         return obj;
     }

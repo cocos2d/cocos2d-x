@@ -4,14 +4,14 @@
 #include "base/CCRef.h"
 #include "2d/CCParticleSystemQuad.h"
 
-#include "CCNodeLoader.h"
+#include "editor-support/cocosbuilder/CCNodeLoader.h"
 
 namespace cocosbuilder {
 
 /* Forward declaration. */
 class CCBReader;
 
-class ParticleSystemQuadLoader : public NodeLoader {
+class CC_DLL ParticleSystemQuadLoader : public NodeLoader {
 public:
     /**
      * @js NA

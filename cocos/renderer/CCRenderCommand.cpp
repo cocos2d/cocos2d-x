@@ -24,12 +24,18 @@
 
 
 #include "renderer/CCRenderCommand.h"
+#include "2d/CCCamera.h"
+#include "2d/CCNode.h"
 
 NS_CC_BEGIN
 
 RenderCommand::RenderCommand()
 : _type(RenderCommand::Type::UNKNOWN_COMMAND)
 , _globalOrder(0)
+, _isTransparent(true)
+, _skipBatching(false)
+, _is3D(false)
+, _depth(0)
 {
 }
 
@@ -37,22 +43,21 @@ RenderCommand::~RenderCommand()
 {
 }
 
-void printBits(ssize_t const size, void const * const ptr)
+void RenderCommand::init(float globalZOrder, const cocos2d::Mat4 &transform, uint32_t flags)
 {
-    unsigned char *b = (unsigned char*) ptr;
-    unsigned char byte;
-    ssize_t i, j;
-
-    for (i=size-1;i>=0;i--)
+    _globalOrder = globalZOrder;
+    if (flags & Node::FLAGS_RENDER_AS_3D)
     {
-        for (j=7;j>=0;j--)
-        {
-            byte = b[i] & (1<<j);
-            byte >>= j;
-            printf("%u", byte);
-        }
+        if (Camera::getVisitingCamera())
+            _depth = Camera::getVisitingCamera()->getDepthInView(transform);
+        
+        set3D(true);
     }
-    puts("");
+    else
+    {
+        set3D(false);
+        _depth = 0;
+    }
 }
 
 void RenderCommand::printID()

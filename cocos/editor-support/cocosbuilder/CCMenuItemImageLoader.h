@@ -1,14 +1,14 @@
 #ifndef _CCB_CCMENUITEMIMAGELOADER_H_
 #define _CCB_CCMENUITEMIMAGELOADER_H_
 
-#include "CCMenuItemLoader.h"
+#include "editor-support/cocosbuilder/CCMenuItemLoader.h"
 
 namespace cocosbuilder {
 
 /* Forward declaration. */
 class CCBReader;
 
-class MenuItemImageLoader : public MenuItemLoader {
+class CC_DLL MenuItemImageLoader : public MenuItemLoader {
 public:
     /**
      * @js NA

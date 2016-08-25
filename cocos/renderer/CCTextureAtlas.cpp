@@ -30,6 +30,7 @@ THE SOFTWARE.
 #include <stdlib.h>
 
 #include "base/ccMacros.h"
+#include "base/ccUTF8.h"
 #include "base/CCEventType.h"
 #include "base/CCDirector.h"
 #include "base/CCConfiguration.h"
@@ -40,10 +41,7 @@ THE SOFTWARE.
 #include "renderer/ccGLStateCache.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCTexture2D.h"
-#include "CCGL.h"
-
-
-#include "deprecated/CCString.h"
+#include "platform/CCGL.h"
 
 //According to some tests GL_TRIANGLE_STRIP is slower, MUCH slower. Probably I'm doing something very wrong
 
@@ -120,7 +118,7 @@ void TextureAtlas::setQuads(V3F_C4B_T2F_Quad* quads)
 
 TextureAtlas * TextureAtlas::create(const std::string& file, ssize_t capacity)
 {
-    TextureAtlas * textureAtlas = new TextureAtlas();
+    TextureAtlas * textureAtlas = new (std::nothrow) TextureAtlas();
     if(textureAtlas && textureAtlas->initWithFile(file, capacity))
     {
         textureAtlas->autorelease();
@@ -132,7 +130,7 @@ TextureAtlas * TextureAtlas::create(const std::string& file, ssize_t capacity)
 
 TextureAtlas * TextureAtlas::createWithTexture(Texture2D *texture, ssize_t capacity)
 {
-    TextureAtlas * textureAtlas = new TextureAtlas();
+    TextureAtlas * textureAtlas = new (std::nothrow) TextureAtlas();
     if (textureAtlas && textureAtlas->initWithTexture(texture, capacity))
     {
         textureAtlas->autorelease();
@@ -171,7 +169,7 @@ bool TextureAtlas::initWithTexture(Texture2D *texture, ssize_t capacity)
     CC_SAFE_RETAIN(_texture);
 
     // Re-initialization is not allowed
-    CCASSERT(_quads == nullptr && _indices == nullptr, "");
+    CCASSERT(_quads == nullptr && _indices == nullptr, "_quads and _indices should be nullptr.");
 
     _quads = (V3F_C4B_T2F_Quad*)malloc( _capacity * sizeof(V3F_C4B_T2F_Quad) );
     _indices = (GLushort *)malloc( _capacity * 6 * sizeof(GLushort) );
@@ -392,7 +390,7 @@ void TextureAtlas::insertQuadFromIndex(ssize_t oldIndex, ssize_t newIndex)
         return;
     }
     // because it is ambiguous in iphone, so we implement abs ourselves
-    // unsigned int howMany = abs( oldIndex - newIndex);
+    // unsigned int howMany = std::abs( oldIndex - newIndex);
     auto howMany = (oldIndex - newIndex) > 0 ? (oldIndex - newIndex) :  (newIndex - oldIndex);
     auto dst = oldIndex;
     auto src = oldIndex + 1;
@@ -605,16 +603,17 @@ void TextureAtlas::drawNumberOfQuads(ssize_t numberOfQuads, ssize_t start)
 
     if(!numberOfQuads)
         return;
-
+    
     GL::bindTexture2D(_texture->getName());
 
-    if (Configuration::getInstance()->supportsShareableVAO())
+    auto conf = Configuration::getInstance();
+    if (conf->supportsShareableVAO() && conf->supportsMapBuffer())
     {
         //
         // Using VBO and VAO
         //
 
-        // XXX: update is done in draw... perhaps it should be done in a timer
+        // FIXME:: update is done in draw... perhaps it should be done in a timer
         if (_dirty) 
         {
             glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
@@ -625,9 +624,9 @@ void TextureAtlas::drawNumberOfQuads(ssize_t numberOfQuads, ssize_t start)
 //            glBufferData(GL_ARRAY_BUFFER, sizeof(quads_[0]) * (n-start), &quads_[start], GL_DYNAMIC_DRAW);
 
             // option 3: orphaning + glMapBuffer
-            glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0]) * (numberOfQuads-start), nullptr, GL_DYNAMIC_DRAW);
+            glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0]) * _capacity, nullptr, GL_DYNAMIC_DRAW);
             void *buf = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
-            memcpy(buf, _quads, sizeof(_quads[0])* (numberOfQuads-start));
+            memcpy(buf, _quads, sizeof(_quads[0])* _totalQuads);
             glUnmapBuffer(GL_ARRAY_BUFFER);
             
             glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -642,7 +641,9 @@ void TextureAtlas::drawNumberOfQuads(ssize_t numberOfQuads, ssize_t start)
 #endif
 
         glDrawElements(GL_TRIANGLES, (GLsizei) numberOfQuads*6, GL_UNSIGNED_SHORT, (GLvoid*) (start*6*sizeof(_indices[0])) );
-
+        
+        GL::bindVAO(0);
+        
 #if CC_REBIND_INDICES_BUFFER
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 #endif
@@ -658,10 +659,10 @@ void TextureAtlas::drawNumberOfQuads(ssize_t numberOfQuads, ssize_t start)
 #define kQuadSize sizeof(_quads[0].bl)
         glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
 
-        // XXX: update is done in draw... perhaps it should be done in a timer
+        // FIXME:: update is done in draw... perhaps it should be done in a timer
         if (_dirty) 
         {
-            glBufferSubData(GL_ARRAY_BUFFER, sizeof(_quads[0])*start, sizeof(_quads[0]) * numberOfQuads , &_quads[start] );
+            glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(_quads[0]) * _totalQuads , &_quads[0] );
             _dirty = false;
         }
 
@@ -685,7 +686,7 @@ void TextureAtlas::drawNumberOfQuads(ssize_t numberOfQuads, ssize_t start)
     }
 
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,numberOfQuads*6);
-
+    
     CHECK_GL_ERROR_DEBUG();
 }
 

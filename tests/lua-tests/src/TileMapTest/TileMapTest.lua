@@ -625,6 +625,9 @@ local function TMXOrthoObjectsTest()
 
     local  s = map:getContentSize()
     cclog("ContentSize: %f, %f", s.width,s.height)
+    
+    local drawNode = cc.DrawNode:create()
+    map:addChild(drawNode, 10)
 
     --------cclog("---: Iterating over all the group objets")
     local  group   = map:getObjectGroup("Object Group 1")
@@ -641,30 +644,7 @@ local function TMXOrthoObjectsTest()
             break
         end
         --------cclog("object: %x", dict)
-    end
-
-    --------cclog("---: Fetching 1 object by name")
-    -- local  platform = group:objectNamed("platform")
-    --------cclog("platform: %x", platform)
-    return ret
-end
-
-local function draw()
-
-    local  map = tolua.cast(getChildByTag(kTagTileMap), "cc.TMXTiledMap")
-    local  group = map:getObjectGroup("Object Group 1")
-
-    local  objects = group:getObjects()
-    local  dict = nil
-    local  i = 0
-    local  len = table.getn(objects)
-    for i = 0, len-1, 1 do
-        dict = objects[i + 1]
-
-        if dict == nil then
-            break
-        end
-
+        
         local key = "x"
         local x = dict["x"]
         key = "y"
@@ -673,16 +653,19 @@ local function draw()
         local width = dict["width"]--dynamic_cast<NSNumber*>(dict:objectForKey("width")):getNumber()
         key = "height"
         local height = dict["height"]--dynamic_cast<NSNumber*>(dict:objectForKey("height")):getNumber()
-
-        glLineWidth(3)
-
-        cc.DrawPrimitives.drawLine( cc.p(x, y), cc.p((x+width), y) )
-        cc.DrawPrimitives.drawLine( cc.p((x+width), y), cc.p((x+width), (y+height)) )
-        cc.DrawPrimitives.drawLine( cc.p((x+width), (y+height)), cc.p(x, (y+height)) )
-        cc.DrawPrimitives.drawLine( cc.p(x, (y+height)), cc.p(x, y) )
-
-        glLineWidth(1)
+        
+        local color = cc.c4f(1,1,1,1)
+        drawNode:drawLine( cc.p(x, y), cc.p((x+width), y), color)
+        drawNode:drawLine( cc.p((x+width), y), cc.p((x+width), (y+height)), color)
+        drawNode:drawLine( cc.p((x+width), (y+height)), cc.p(x, (y+height)), color)
+        drawNode:drawLine( cc.p(x, (y+height)), cc.p(x, y), color)
     end
+
+    --------cclog("---: Fetching 1 object by name")
+    -- local  platform = group:objectNamed("platform")
+    --------cclog("platform: %x", platform)
+
+    return ret
 end
 
 --------------------------------------------------------------------
@@ -701,6 +684,9 @@ local function TMXIsoObjectsTest()
 
     local  group = map:getObjectGroup("Object Group 1")
 
+    local drawNode = cc.DrawNode:create()
+    map:addChild(drawNode, 10)
+
     --UxMutableArray* objects = group:objects()
     local  objects = group:getObjects()
     --UxMutableDictionary<std:string>* dict
@@ -714,26 +700,7 @@ local function TMXIsoObjectsTest()
             break
         end
         --------cclog("object: %x", dict)
-    end
-    return ret
-end
-
-local function draw()
-
-    local map = tolua.cast(getChildByTag(kTagTileMap), "cc.TMXTiledMap")
-    local group = map:getObjectGroup("Object Group 1")
-
-    local  objects = group:getObjects()
-    local  dict = nil
-    local  i = 0
-    local  len = table.getn(objects)
-    for i = 0, len-1, 1 do
-        dict = tolua.cast(objects[i + 1], "cc.Dictionary")
-
-        if dict == nil then
-            break
-        end
-
+        
         local key = "x"
         local x = (tolua.cast(dict:objectForKey(key), "cc.String")):intValue()--dynamic_cast<NSNumber*>(dict:objectForKey("x")):getNumber()
         key = "y"
@@ -742,16 +709,14 @@ local function draw()
         local width = (tolua.cast(dict:objectForKey(key), "cc.String")):intValue()--dynamic_cast<NSNumber*>(dict:objectForKey("width")):getNumber()
         key = "height"
         local height = (tolua.cast(dict:objectForKey(key), "cc.String")):intValue()--dynamic_cast<NSNumber*>(dict:objectForKey("height")):getNumber()
-
-        glLineWidth(3)
-
-        cc.DrawPrimitives.drawLine( cc.p(x,y), cc.p(x+width,y) )
-        cc.DrawPrimitives.drawLine( cc.p(x+width,y), cc.p(x+width,y+height) )
-        cc.DrawPrimitives.drawLine( cc.p(x+width,y+height), cc.p(x,y+height) )
-        cc.DrawPrimitives.drawLine( cc.p(x,y+height), cc.p(x,y) )
-
-        glLineWidth(1)
+        
+        local color = cc.c4f(1,1,1,1)
+        drawNode:drawLine( cc.p(x, y), cc.p((x+width), y), color)
+        drawNode:drawLine( cc.p((x+width), y), cc.p((x+width), (y+height)), color)
+        drawNode:drawLine( cc.p((x+width), (y+height)), cc.p(x, (y+height)), color)
+        drawNode:drawLine( cc.p(x, (y+height)), cc.p(x, y), color)
     end
+    return ret
 end
 
 --------------------------------------------------------------------

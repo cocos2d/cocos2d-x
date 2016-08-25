@@ -36,7 +36,7 @@ if [ "$GEN_BINDING"x = "YES"x ]; then
     fi
 
     cd $COCOS2DX_ROOT/tools/travis-scripts
-    ./generate-bindings.sh
+    ./generate-bindings.sh $TRAVIS_BRANCH
 elif [ "$GEN_COCOS_FILES"x = "YES"x ]; then
     if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
         exit 0
@@ -55,7 +55,7 @@ elif [ "$GEN_COCOS_FILES"x = "YES"x ]; then
     fi
 
     cd $COCOS2DX_ROOT/tools/travis-scripts
-    ./generate-cocosfiles.sh
+    ./generate-cocosfiles.sh $TRAVIS_BRANCH
 elif [ "$PLATFORM"x = "android"x ]; then
     export NDK_ROOT=$HOME/bin/android-ndk
 

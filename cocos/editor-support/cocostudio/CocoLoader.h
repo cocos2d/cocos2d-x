@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  Copyright (c) 2013 cocos2d-x.org
  
  http://www.cocos2d-x.org
@@ -25,13 +25,9 @@
 #ifndef _COCOLOADER_H
 #define _COCOLOADER_H
 
-#include <stdio.h>
-#include <vector>
-#include <cstdio>
 #include <stdint.h>
-#include "json/rapidjson.h"
 #include "json/document.h"
-#include "cocostudio/CocosStudioExport.h"
+#include "editor-support/cocostudio/CocosStudioExport.h"
 
 #pragma pack (4)
 

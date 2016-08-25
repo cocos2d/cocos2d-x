@@ -1,0 +1,60 @@
+material sample
+{
+	technique blur
+	{
+		pass 0
+		{
+			shader
+			{
+				defines = THIS_IS_AN_EXAMPLE 1;TOMORROW_IS_HOLIDAY 2
+				vertexShader = Shaders/example_Simple.vsh
+				fragmentShader = Shaders/example_Blur.fsh
+				// Uniforms
+				sampleNum = 5
+				resolution = 100,100
+				// auto bindings
+				blurRadius = DYNAMIC_RADIUS
+			}
+		}
+	}
+	technique outline
+	{
+		pass 0
+		{
+			shader
+			{
+				vertexShader = Shaders/example_Simple.vsh
+				fragmentShader = Shaders/example_Outline.fsh
+				// Uniforms
+				u_radius = 0.01
+				u_threshold = 1.75
+				// Auto bindings
+				u_outlineColor = OUTLINE_COLOR
+			}
+		}
+	}
+	technique noise {
+		pass 0
+		{
+			shader
+			{
+				vertexShader = Shaders/example_Simple.vsh
+				fragmentShader = Shaders/example_Noisy.fsh
+				resolution = 100,100
+			}
+		}
+	}
+	technique edge_detect
+	{
+		pass 0
+		{
+			shader
+			{
+				defines = 
+				vertexShader = Shaders/example_Simple.vsh
+				fragmentShader = Shaders/example_EdgeDetection.fsh
+				resolution = 100, 100
+			}
+		}
+	}
+}

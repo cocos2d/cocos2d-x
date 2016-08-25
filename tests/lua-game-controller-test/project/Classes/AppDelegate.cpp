@@ -2,9 +2,9 @@
 #include "AppDelegate.h"
 #include "audio/include/SimpleAudioEngine.h"
 #include "base/CCScriptSupport.h"
-#include "CCLuaEngine.h"
+#include "scripting/lua-bindings/manual/CCLuaEngine.h"
 #include "scripting/lua-bindings/auto/lua_cocos2dx_controller_auto.hpp"
-#include "scripting/lua-bindings/manual/lua_cocos2dx_controller_manual.hpp"
+#include "scripting/lua-bindings/manual/controller/lua_cocos2dx_controller_manual.hpp"
 
 USING_NS_CC;
 using namespace CocosDenshion;
@@ -38,13 +38,12 @@ bool AppDelegate::applicationDidFinishLaunching()
     }
     lua_pop(L, 1);//statck:...
 #endif
-    
     engine->executeString("require 'src/main.lua'");
 
     return true;
 }
 
-// This function will be called when the app is inactive. When comes a phone call,it's be invoked too
+// This function will be called when the app is inactive. Note, when receiving a phone call it is invoked.
 void AppDelegate::applicationDidEnterBackground()
 {
     Director::getInstance()->stopAnimation();

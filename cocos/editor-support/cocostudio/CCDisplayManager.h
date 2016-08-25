@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
 Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
@@ -25,10 +25,10 @@ THE SOFTWARE.
 #ifndef __CCDISPLAYMANAGER_H__
 #define __CCDISPLAYMANAGER_H__
 
-#include "cocostudio/CCArmatureDefine.h"
-#include "cocostudio/CCDecorativeDisplay.h"
-#include "cocostudio/CCDatas.h"
-#include "cocostudio/CocosStudioExport.h"
+#include "editor-support/cocostudio/CCArmatureDefine.h"
+#include "editor-support/cocostudio/CCDecorativeDisplay.h"
+#include "editor-support/cocostudio/CCDatas.h"
+#include "editor-support/cocostudio/CocosStudioExport.h"
 
 namespace cocostudio {
 
@@ -51,7 +51,7 @@ public:
 
     /**
      * Use BoneData to init the display list.
-     * If display is a sprite, and it have texture info in the TexutreData, then use TexutreData to init the display's anchor point
+     * If display is a sprite, and it have texture info in the TextureData, then use TextureData to init the display's anchor point
      * If the display is a Armature, then create a new Armature
      */
     virtual void initDisplayList(BoneData *boneData);
@@ -61,11 +61,11 @@ public:
      * If index already have a display, then replace it.
      * If index is current display index, then also change display to _index
      *
-     *	@param 	displayData it include the display information, like DisplayType.
-     *					If you want to create a sprite display, then create a SpriteDisplayData param
+     *    @param     displayData it include the display information, like DisplayType.
+     *                    If you want to create a sprite display, then create a SpriteDisplayData param
      *
-     *	@param 	index the index of the display you want to replace or add to
-     *					-1 : append display from back
+     *    @param     index the index of the display you want to replace or add to
+     *                    -1 : append display from back
      */
     void addDisplay(DisplayData *displayData, int index);
 

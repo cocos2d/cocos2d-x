@@ -28,13 +28,21 @@ local function XMLHttpRequestLayer()
             xhr.responseType = cc.XMLHTTPREQUEST_RESPONSE_STRING
             xhr:open("GET", "http://httpbin.org/get")
 
-            local function onReadyStateChange()
-                local statusString = "Http Status Code:"..xhr.statusText
-                labelStatusCode:setString(statusString)
-                print(xhr.response)
+            local function onReadyStateChanged()
+                if xhr.readyState == 4 and (xhr.status >= 200 and xhr.status < 207) then
+                    print(xhr.response)
+                    if not tolua.isnull(labelStatusCode) then
+                        labelStatusCode:setString("Http Status Code:" .. xhr.statusText)
+                    else
+                        print("ERROR: labelStatusCode is invalid!")
+                    end
+                else
+                    print("xhr.readyState is:", xhr.readyState, "xhr.status is: ",xhr.status)
+                end
+                xhr:unregisterScriptHandler()
             end
 
-            xhr:registerScriptHandler(onReadyStateChange)
+            xhr:registerScriptHandler(onReadyStateChanged)
             xhr:send()
 
             labelStatusCode:setString("waiting...")
@@ -52,13 +60,22 @@ local function XMLHttpRequestLayer()
             local xhr = cc.XMLHttpRequest:new()
             xhr.responseType = cc.XMLHTTPREQUEST_RESPONSE_STRING
             xhr:open("POST", "http://httpbin.org/post")
-            local function onReadyStateChange()
-                labelStatusCode:setString("Http Status Code:"..xhr.statusText)
-                print(xhr.response)
+            local function onReadyStateChanged()
+                if xhr.readyState == 4 and (xhr.status >= 200 and xhr.status < 207) then
+                    if not tolua.isnull(labelStatusCode) then
+                        labelStatusCode:setString("Http Status Code:" .. xhr.statusText)
+                    else
+                        print("ERROR: labelStatusCode is invalid!")
+                    end
+                    print(xhr.response)
+                else
+                    print("xhr.readyState is:", xhr.readyState, "xhr.status is: ",xhr.status)
+                end
+                xhr:unregisterScriptHandler()
             end
-            xhr:registerScriptHandler(onReadyStateChange)
+            xhr:registerScriptHandler(onReadyStateChanged)
             xhr:send()
-            
+
             labelStatusCode:setString("waiting...")
         end
 
@@ -75,25 +92,36 @@ local function XMLHttpRequestLayer()
             xhr.responseType = cc.XMLHTTPREQUEST_RESPONSE_ARRAY_BUFFER
             xhr:open("POST", "http://httpbin.org/post")
 
-            local function onReadyStateChange()
-                local response   = xhr.response
-                local size     = table.getn(response)
-                local strInfo = ""
-            
-                for i = 1,size do
-                    if 0 == response[i] then
-                        strInfo = strInfo.."\'\\0\'"
+            local function onReadyStateChanged()
+                if xhr.readyState == 4 and (xhr.status >= 200 and xhr.status < 207) then
+                    local response   = xhr.response
+                    local size     = table.getn(response)
+                    local strInfo = ""
+
+                    for i = 1,size do
+                        if 0 == response[i] then
+                            strInfo = strInfo.."\'\\0\'"
+                        else
+                            strInfo = strInfo..string.char(response[i])
+                        end
+                    end
+
+                    if not tolua.isnull(labelStatusCode) then
+                        labelStatusCode:setString("Http Status Code:" .. xhr.statusText)
                     else
-                        strInfo = strInfo..string.char(response[i])
-                    end 
+                        print("ERROR: labelStatusCode is invalid!")
+                    end
+
+                    print(strInfo)
+                else
+                    print("xhr.readyState is:", xhr.readyState, "xhr.status is: ",xhr.status)
                 end
-                labelStatusCode:setString("Http Status Code:"..xhr.statusText)
-                print(strInfo)
+                xhr:unregisterScriptHandler()
             end
 
-            xhr:registerScriptHandler(onReadyStateChange)
+            xhr:registerScriptHandler(onReadyStateChanged)
             xhr:send()
-            
+
             labelStatusCode:setString("waiting...")
         end
 
@@ -111,18 +139,27 @@ local function XMLHttpRequestLayer()
             xhr.responseType = cc.XMLHTTPREQUEST_RESPONSE_JSON
             xhr:open("POST", "http://httpbin.org/post")
 
-            local function onReadyStateChange()
-                labelStatusCode:setString("Http Status Code:"..xhr.statusText)
-                local response   = xhr.response
-                local output = json.decode(response,1)
-                table.foreach(output,function(i, v) print (i, v) end)
-                print("headers are")
-                table.foreach(output.headers,print)
+            local function onReadyStateChanged()
+                if xhr.readyState == 4 and (xhr.status >= 200 and xhr.status < 207) then
+                    if not tolua.isnull(labelStatusCode) then
+                        labelStatusCode:setString("Http Status Code:" .. xhr.statusText)
+                    else
+                        print("ERROR: labelStatusCode is invalid!")
+                    end
+                    local response   = xhr.response
+                    local output = json.decode(response,1)
+                    table.foreach(output,function(i, v) print (i, v) end)
+                    print("headers are")
+                    table.foreach(output.headers,print)
+                else
+                    print("xhr.readyState is:", xhr.readyState, "xhr.status is: ",xhr.status)
+                end
+                xhr:unregisterScriptHandler()
             end
 
-            xhr:registerScriptHandler(onReadyStateChange)
+            xhr:registerScriptHandler(onReadyStateChanged)
             xhr:send()
-            
+
             labelStatusCode:setString("waiting...")
         end
 

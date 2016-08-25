@@ -1,14 +1,14 @@
 #ifndef _CCB_CCLAYERCOLORLOADER_H_
 #define _CCB_CCLAYERCOLORLOADER_H_
 
-#include "CCLayerLoader.h"
+#include "editor-support/cocosbuilder/CCLayerLoader.h"
 
 namespace cocosbuilder {
 
 /* Forward declaration. */
 class CCBReader;
 
-class LayerColorLoader : public LayerLoader {
+class CC_DLL LayerColorLoader : public LayerLoader {
 public:
     /**
      * @js NA

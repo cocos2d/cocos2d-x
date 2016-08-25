@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2013      Zynga Inc.
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -26,13 +26,15 @@
 #ifndef _CCFontFNT_h_
 #define _CCFontFNT_h_
 
-#include "CCFont.h"
+/// @cond DO_NOT_SHOW
+
+#include "2d/CCFont.h"
 
 NS_CC_BEGIN
 
 class BMFontConfiguration;
 
-class FontFNT : public Font
+class CC_DLL FontFNT : public Font
 {
     
 public:
@@ -44,7 +46,11 @@ public:
     static void purgeCachedData();
     virtual int* getHorizontalKerningForTextUTF16(const std::u16string& text, int &outNumLetters) const override;
     virtual FontAtlas *createFontAtlas() override;
-    
+    void setFontSize(float fontSize);
+    int getOriginalFontSize()const;
+
+    static void reloadBMFontResource(const std::string& fntFilePath);
+
 protected:
     
     FontFNT(BMFontConfiguration *theContfig, const Vec2& imageOffset = Vec2::ZERO);
@@ -60,8 +66,11 @@ private:
     
     BMFontConfiguration * _configuration;
     Vec2                   _imageOffset;
-    
+    //User defined font size
+    float  _fontSize;
 };
+
+/// @endcond
 
 NS_CC_END
 

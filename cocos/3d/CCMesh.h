@@ -26,166 +26,258 @@
 #define __CCMESH_H__
 
 #include <string>
-#include <vector>
+#include <map>
 
 #include "3d/CCBundle3DData.h"
+#include "3d/CCAABB.h"
 
 #include "base/CCRef.h"
-#include "base/ccTypes.h"
 #include "math/CCMath.h"
-#include "renderer/CCGLProgram.h"
+#include "renderer/CCMeshCommand.h"
 
 NS_CC_BEGIN
 
-class EventListenerCustom;
-class EventCustom;
+/**
+ * @addtogroup _3d
+ * @{
+ */
 
-class CC_DLL RenderMeshData
-{
-    friend class Mesh;
-public:
-    RenderMeshData(): _vertexsizeBytes(0)
-    {
-    }
-    bool hasVertexAttrib(int attrib);
-    bool init(const std::vector<float>& positions, const std::vector<float>& normals, const std::vector<float>& texs, const std::vector<unsigned short>& indices);
-    bool init(const std::vector<float>& vertices, int vertexSizeInFloat, const std::vector<unsigned short>& indices, const std::vector<MeshVertexAttrib>& attribs);
-    
-protected:
-    
-    int calVertexSizeBytes();
-    
-    int _vertexsizeBytes;
-    ssize_t _vertexNum;
-    std::vector<float> _vertexs;
-    std::vector<unsigned short> _indices;
-    std::vector<MeshVertexAttrib> _vertexAttribs;
-};
+class Texture2D;
+class MeshSkin;
+class MeshIndexData;
+class GLProgramState;
+class GLProgram;
+class Material;
+class Renderer;
+class Scene;
+class Pass;
 
 /** 
- * Mesh: Geometry with a collection of vertex. 
- * Supporting various vertex formats.
+ * @brief Mesh: contains ref to index buffer, GLProgramState, texture, skin, blend function, aabb and so on
  */
 class CC_DLL Mesh : public Ref
 {
+    friend class Sprite3D;
 public:
-    /** Defines supported index formats. */
-    enum class IndexFormat
-    {
-        INDEX8 = GL_UNSIGNED_BYTE,
-        INDEX16 = GL_UNSIGNED_SHORT,
-    };
-
-    /** Defines supported primitive types. */
-    enum class PrimitiveType
-    {
-        TRIANGLES = GL_TRIANGLES,
-        TRIANGLE_STRIP = GL_TRIANGLE_STRIP,
-        LINES = GL_LINES,
-        LINE_STRIP = GL_LINE_STRIP,
-        POINTS = GL_POINTS
-    };
-
-    /**create mesh from positions, normals, and so on*/
-    static Mesh* create(const std::vector<float>& positions, const std::vector<float>& normals, const std::vector<float>& texs, const std::vector<unsigned short>& indices);
-    
+    typedef std::vector<unsigned short> IndexArray;
+    /**create mesh from positions, normals, and so on, single SubMesh*/
+    static Mesh* create(const std::vector<float>& positions, const std::vector<float>& normals, const std::vector<float>& texs, const IndexArray& indices);
     /**create mesh with vertex attributes*/
-    CC_DEPRECATED_ATTRIBUTE static Mesh* create(const std::vector<float>& vertices, int vertexSizeInFloat, const std::vector<unsigned short>& indices, int numIndex, const std::vector<MeshVertexAttrib>& attribs, int attribCount) { return create(vertices, vertexSizeInFloat, indices, attribs); }
+    CC_DEPRECATED_ATTRIBUTE static Mesh* create(const std::vector<float>& vertices, int perVertexSizeInFloat, const IndexArray& indices, int numIndex, const std::vector<MeshVertexAttrib>& attribs, int attribCount){ return create(vertices, perVertexSizeInFloat, indices, attribs); }
     
-    /**create mesh with vertex attributes*/
-    static Mesh* create(const std::vector<float>& vertices, int vertexSizeInFloat, const std::vector<unsigned short>& indices, const std::vector<MeshVertexAttrib>& attribs);
-
-    /**get vertex buffer*/
-    inline GLuint getVertexBuffer() const { return _vertexBuffer; }
+    /**
+     * @lua NA
+     */
+    static Mesh* create(const std::vector<float>& vertices, int perVertexSizeInFloat, const IndexArray& indices, const std::vector<MeshVertexAttrib>& attribs);
     
+    /** 
+     * create mesh
+     * @lua NA
+     */
+    static Mesh* create(const std::string& name, MeshIndexData* indexData, MeshSkin* skin = nullptr);
+    
+    /**
+     * get vertex buffer
+     * 
+     * @lua NA
+     */
+    GLuint getVertexBuffer() const;
+    /**
+     * has vertex attribute?
+     *
+     * @lua NA
+     */
+    bool hasVertexAttrib(int attrib) const;
     /**get mesh vertex attribute count*/
-    ssize_t getMeshVertexAttribCount() const { return _renderdata._vertexAttribs.size(); }
+    ssize_t getMeshVertexAttribCount() const;
     /**get MeshVertexAttribute by index*/
-    const MeshVertexAttrib& getMeshVertexAttribute(int idx) const { return _renderdata._vertexAttribs[idx]; }
-    /**has vertex attribute?*/
-    bool hasVertexAttrib(int attrib) { return _renderdata.hasVertexAttrib(attrib); }
+    const MeshVertexAttrib& getMeshVertexAttribute(int idx);
     /**get per vertex size in bytes*/
-    int getVertexSizeInBytes() const { return _renderdata._vertexsizeBytes; }
+    int getVertexSizeInBytes() const;
+
+    /**
+     * set texture (diffuse), which is responsible for the main appearance. It is also means main texture, you can also call setTexture(texPath, NTextureData::Usage::Diffuse)
+     * @param texPath texture path
+     */
+    void setTexture(const std::string& texPath);
+    /**
+     * set texture (diffuse), which is responsible for the main appearance. It is also means main texture, you can also call setTexture(texPath, NTextureData::Usage::Diffuse)
+     * @param tex texture to be set
+     */
+    void setTexture(Texture2D* tex);
+    /**
+     * set texture
+     * @param tex texture to be set
+     * @param usage Usage of this texture
+     * @param whether refresh the cache file name
+     */
+    void setTexture(Texture2D* tex, NTextureData::Usage usage,bool cacheFileName = true);
+    /**
+     * set texture
+     * @param texPath texture path
+     * @param usage Usage of this texture
+     */
+    void setTexture(const std::string& texPath, NTextureData::Usage usage);
+    /**
+     * Get texture (diffuse), which is responsible for the main appearance. It is also means main texture, you can also call getTexture(NTextureData::Usage::Diffuse)
+     * @return Texture used, return the texture of first mesh if multiple meshes exist
+     */
+    Texture2D* getTexture() const;
+    /**
+     * Get texture
+     * @param usage Usage of returned texture
+     * @return The texture of this usage, return the texture of first mesh if multiple meshes exist
+     */
+    Texture2D* getTexture(NTextureData::Usage usage);
     
-    /** get primitive type*/
-    PrimitiveType getPrimitiveType() const { return _primitiveType; }
-    /**get index count*/
-    ssize_t getIndexCount() const { return _indexCount; }
-    /**get index format*/
-    IndexFormat getIndexFormat() const { return _indexFormat; }
-    /**get index buffer*/
-    GLuint getIndexBuffer() const {return _indexBuffer; }
+    /**visible getter and setter*/
+    void setVisible(bool visible);
+    bool isVisible() const;
     
-    /**build vertex buffer from renderdata*/
-    void restore();
+    /**
+     * skin getter
+     *
+     * @lua NA
+     */
+    MeshSkin* getSkin() const { return _skin; }
+    
+    /**
+     * mesh index data getter
+     *
+     * @lua NA
+     */
+    MeshIndexData* getMeshIndexData() const { return _meshIndexData; }
+    
+    /**
+     * get GLProgramState
+     * 
+     * @lua NA
+     */
+    GLProgramState* getGLProgramState() const;
+    
+    /**name getter */
+    const std::string& getName() const { return _name; }
+    
+    void setBlendFunc(const BlendFunc &blendFunc);
+    const BlendFunc &getBlendFunc() const;
+    
+    /** 
+     * get primitive type
+     *
+     * @lua NA
+     */
+    GLenum getPrimitiveType() const;
+    /**
+     * get index count
+     *
+     * @lua NA
+     */
+    ssize_t getIndexCount() const;
+    /**
+     * get index format
+     *
+     * @lua NA
+     */
+    GLenum getIndexFormat() const;
+    /**
+     * get index buffer
+     *
+     * @lua NA
+     */
+    GLuint getIndexBuffer() const;
+    
+    /**get AABB*/
+    const AABB& getAABB() const { return _aabb; }
+
+    /**  Sets a new GLProgramState for the Mesh
+     * A new Material will be created for it
+     */
+    void setGLProgramState(GLProgramState* glProgramState);
+
+    /** Sets a new Material to the Mesh */
+    void setMaterial(Material* material);
+
+    /** Returns the Material being used by the Mesh */
+    Material* getMaterial() const;
+
+    void draw(Renderer* renderer, float globalZ, const Mat4& transform, uint32_t flags, unsigned int lightMask, const Vec4& color, bool forceDepthWrite);
+
+    /** 
+     * Get the MeshCommand.
+     */
+    MeshCommand& getMeshCommand() { return _meshCommand; }
+
+    /**skin setter*/
+    void setSkin(MeshSkin* skin);
+    /**Mesh index data setter*/
+    void setMeshIndexData(MeshIndexData* indexdata);
+    /**name setter*/
+    void setName(const std::string& name) { _name = name; }
+ 
+    /** 
+     * calculate the AABB of the mesh
+     * @note the AABB is in the local space, not the world space
+     */
+    void calculateAABB();
+    
+    /**
+     * force set this Sprite3D to 2D render queue
+     */
+    void setForce2DQueue(bool force2D) { _force2DQueue = force2D; }
+
+    std::string getTextureFileName(){ return _texFile; }
 
 CC_CONSTRUCTOR_ACCESS:
-    
+
     Mesh();
     virtual ~Mesh();
-    /**init mesh*/
-    bool init(const std::vector<float>& positions, const std::vector<float>& normals, const std::vector<float>& texs, const std::vector<unsigned short>& indices);
-    
-    /**init mesh*/
-    bool init(const std::vector<float>& vertices, int vertexSizeInFloat, const std::vector<unsigned short>& indices, const std::vector<MeshVertexAttrib>& attribs);
-
-    /**build buffer*/
-    void buildBuffer();
-    /**free buffer*/
-    void cleanAndFreeBuffers();
 
 protected:
-    PrimitiveType _primitiveType;
-    IndexFormat _indexFormat;
-    GLuint _vertexBuffer;
-    GLuint _indexBuffer;
-    ssize_t _indexCount;
+    void resetLightUniformValues();
+    void setLightUniforms(Pass* pass, Scene* scene, const Vec4& color, unsigned int lightmask);
+    void bindMeshCommand();
 
-    RenderMeshData _renderdata;
+    std::map<NTextureData::Usage, Texture2D*> _textures; //textures that submesh is using
+    MeshSkin*           _skin;     //skin
+    bool                _visible; // is the submesh visible
+    bool                _isTransparent; // is this mesh transparent, it is a property of material in fact
+    bool                _force2DQueue; // add this mesh to 2D render queue
+    
+    std::string         _name;
+    MeshCommand         _meshCommand;
+    MeshIndexData*      _meshIndexData;
+    GLProgramState*     _glProgramState;
+    BlendFunc           _blend;
+    bool                _blendDirty;
+    Material*           _material;
+    AABB                _aabb;
+    std::function<void()> _visibleChanged;
+    
+    ///light parameters
+    std::vector<Vec3> _dirLightUniformColorValues;
+    std::vector<Vec3> _dirLightUniformDirValues;
+    
+    std::vector<Vec3> _pointLightUniformColorValues;
+    std::vector<Vec3> _pointLightUniformPositionValues;
+    std::vector<float> _pointLightUniformRangeInverseValues;
+    
+    std::vector<Vec3> _spotLightUniformColorValues;
+    std::vector<Vec3> _spotLightUniformPositionValues;
+    std::vector<Vec3> _spotLightUniformDirValues;
+    std::vector<float> _spotLightUniformInnerAngleCosValues;
+    std::vector<float> _spotLightUniformOuterAngleCosValues;
+    std::vector<float> _spotLightUniformRangeInverseValues;
+
+    std::string _texFile;
 };
 
-/**
- * Mesh Cache
- */
-class MeshCache
-{
-public:
-    /**get & destroy*/
-    static MeshCache* getInstance();
-    static void destroyInstance();
-    
-    /**get mesh from cache*/
-    Mesh* getMesh(const std::string& key) const;
-    
-    /**add mesh to cache*/
-    bool addMesh(const std::string& key, Mesh* mesh);
-    
-    /**remove all meshes*/
-    void removeAllMeshes();
+// end of 3d group
+/// @}
 
-    /**remove unused meshes*/
-    void removeUnusedMesh();
-    
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-    void listenRendererRecreated(EventCustom* event);
-#endif
-    
-CC_CONSTRUCTOR_ACCESS:
-    
-    MeshCache();
-    ~MeshCache();
-    
-protected:
-    
-    static MeshCache* _cacheInstance;//instance
-    
-    std::unordered_map<std::string, Mesh*> _meshes; //cached meshes
-    
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-    EventListenerCustom* _rendererRecreatedListener;
-#endif
-};
+/// @cond
+extern std::string CC_DLL s_uniformSamplerName[];//uniform sampler names array
+/// @endcond
 
 NS_CC_END
 
-#endif // __CCMESH_H_
+#endif // __CCMESH_H__

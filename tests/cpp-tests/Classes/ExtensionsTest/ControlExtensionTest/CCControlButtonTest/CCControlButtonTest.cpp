@@ -25,6 +25,9 @@
 
 #include "CCControlButtonTest.h"
 
+USING_NS_CC;
+USING_NS_CC_EXT;
+
 bool ControlButtonTest_HelloVariableSize::init()
 {
     if (ControlScene::init())
@@ -65,7 +68,7 @@ bool ControlButtonTest_HelloVariableSize::init()
                 button->setColor(Color3B(0, 0, 255));
             }
             
-            button->setPosition(Vec2 (total_width + button->getContentSize().width / 2, button->getContentSize().height / 2));
+            button->setPosition(total_width + button->getContentSize().width / 2, button->getContentSize().height / 2);
             layer->addChild(button);
             
             // Compute the size of the layer
@@ -76,12 +79,12 @@ bool ControlButtonTest_HelloVariableSize::init()
 
         layer->setAnchorPoint(Vec2 (0.5, 0.5));
         layer->setContentSize(Size(total_width, height));
-        layer->setPosition(Vec2(screenSize.width / 2.0f, screenSize.height / 2.0f));
+        layer->setPosition(screenSize.width / 2.0f, screenSize.height / 2.0f);
         
         // Add the black background
-        auto background = Scale9Sprite::create("extensions/buttonBackground.png");
+        auto background = ui::Scale9Sprite::create("extensions/buttonBackground.png");
         background->setContentSize(Size(total_width + 14, height + 14));
-        background->setPosition(Vec2(screenSize.width / 2.0f, screenSize.height / 2.0f));
+        background->setPosition(screenSize.width / 2.0f, screenSize.height / 2.0f);
         addChild(background);
         return true;
     }
@@ -91,8 +94,8 @@ bool ControlButtonTest_HelloVariableSize::init()
 ControlButton *ControlButtonTest_HelloVariableSize::standardButtonWithTitle(const char * title)
 {
     /** Creates and return a button with a default background and title color. */
-    auto backgroundButton = Scale9Sprite::create("extensions/button.png");
-    auto backgroundHighlightedButton = Scale9Sprite::create("extensions/buttonHighlighted.png");
+    auto backgroundButton = ui::Scale9Sprite::create("extensions/button.png");
+    auto backgroundHighlightedButton = ui::Scale9Sprite::create("extensions/buttonHighlighted.png");
     
     auto titleButton = Label::createWithTTF(title, "fonts/Marker Felt.ttf", 30);
 
@@ -127,7 +130,7 @@ bool ControlButtonTest_Event::init()
         // Add a label in which the button events will be displayed
         setDisplayValueLabel(Label::createWithTTF("No Event", "fonts/Marker Felt.ttf", 32));
         _displayValueLabel->setAnchorPoint(Vec2(0.5f, -1));
-        _displayValueLabel->setPosition(Vec2(screenSize.width / 2.0f, screenSize.height / 2.0f));
+        _displayValueLabel->setPosition(screenSize.width / 2.0f, screenSize.height / 2.0f);
         addChild(_displayValueLabel, 1);
 
         setDisplayBitmaskLabel(Label::createWithTTF("No bitmask event", "fonts/Marker Felt.ttf", 24));
@@ -137,8 +140,8 @@ bool ControlButtonTest_Event::init()
         addChild(_displayBitmaskLabel, 1);
 
         // Add the button
-        auto backgroundButton = Scale9Sprite::create("extensions/button.png");
-        auto backgroundHighlightedButton = Scale9Sprite::create("extensions/buttonHighlighted.png");
+        auto backgroundButton = ui::Scale9Sprite::create("extensions/button.png");
+        auto backgroundHighlightedButton = ui::Scale9Sprite::create("extensions/buttonHighlighted.png");
         
         auto titleButton = Label::createWithTTF("Touch Me!", "fonts/Marker Felt.ttf", 30);
 
@@ -149,13 +152,13 @@ bool ControlButtonTest_Event::init()
         controlButton->setTitleColorForState(Color3B::WHITE, Control::State::HIGH_LIGHTED);
         
         controlButton->setAnchorPoint(Vec2(0.5f, 1));
-        controlButton->setPosition(Vec2(screenSize.width / 2.0f, screenSize.height / 2.0f));
+        controlButton->setPosition(screenSize.width / 2.0f, screenSize.height / 2.0f);
         addChild(controlButton, 1);
 
         // Add the black background
-        auto background = Scale9Sprite::create("extensions/buttonBackground.png");
+        auto background = ui::Scale9Sprite::create("extensions/buttonBackground.png");
         background->setContentSize(Size(300, 170));
-        background->setPosition(Vec2(screenSize.width / 2.0f, screenSize.height / 2.0f));
+        background->setPosition(screenSize.width / 2.0f, screenSize.height / 2.0f);
         addChild(background);
         
         // Sets up event handlers
@@ -178,47 +181,47 @@ bool ControlButtonTest_Event::init()
 
 void ControlButtonTest_Event::touchBitmaskAction(Ref *senderz, Control::EventType controlEvent)
 {
-    _displayBitmaskLabel->setString(String::createWithFormat("using bitmask (%d)", controlEvent)->getCString());
+    _displayBitmaskLabel->setString(StringUtils::format("using bitmask (%d)", static_cast<int>(controlEvent)));
 }
 
 void ControlButtonTest_Event::touchDownAction(Ref *senderz, Control::EventType controlEvent)
 {
-    _displayValueLabel->setString(String::createWithFormat("Touch Down")->getCString());
+    _displayValueLabel->setString(StringUtils::format("Touch Down"));
 }
 
 void ControlButtonTest_Event::touchDragInsideAction(Ref *sender, Control::EventType controlEvent)
 {
-    _displayValueLabel->setString(String::createWithFormat("Drag Inside")->getCString());
+    _displayValueLabel->setString(StringUtils::format("Drag Inside"));
 }
 
 void ControlButtonTest_Event::touchDragOutsideAction(Ref *sender, Control::EventType controlEvent)
 {
-    _displayValueLabel->setString(String::createWithFormat("Drag Outside")->getCString());
+    _displayValueLabel->setString(StringUtils::format("Drag Outside"));
 }
 
 void ControlButtonTest_Event::touchDragEnterAction(Ref *sender, Control::EventType controlEvent)
 {
-    _displayValueLabel->setString(String::createWithFormat("Drag Enter")->getCString());
+    _displayValueLabel->setString(StringUtils::format("Drag Enter"));
 }
 
 void ControlButtonTest_Event::touchDragExitAction(Ref *sender, Control::EventType controlEvent)
 {
-    _displayValueLabel->setString(String::createWithFormat("Drag Exit")->getCString());
+    _displayValueLabel->setString(StringUtils::format("Drag Exit"));
 }
 
 void ControlButtonTest_Event::touchUpInsideAction(Ref *sender, Control::EventType controlEvent)
 {
-    _displayValueLabel->setString(String::createWithFormat("Touch Up Inside.")->getCString());
+    _displayValueLabel->setString(StringUtils::format("Touch Up Inside."));
 }
 
 void ControlButtonTest_Event::touchUpOutsideAction(Ref *sender, Control::EventType controlEvent)
 {
-    _displayValueLabel->setString(String::createWithFormat("Touch Up Outside.")->getCString());
+    _displayValueLabel->setString(StringUtils::format("Touch Up Outside."));
 }
 
 void ControlButtonTest_Event::touchCancelAction(Ref *sender, Control::EventType controlEvent)
 {
-    _displayValueLabel->setString(String::createWithFormat("Touch Cancel")->getCString());
+    _displayValueLabel->setString(StringUtils::format("Touch Cancel"));
 }
 
 
@@ -241,11 +244,11 @@ bool ControlButtonTest_Styling::init()
             for (int j = 0; j < 3; j++)
             {
                 // Add the buttons
-                ControlButton *button = standardButtonWithTitle(String::createWithFormat("%d",rand() % 30)->getCString());
+                ControlButton *button = standardButtonWithTitle(StringUtils::format("%d",rand() % 30).c_str());
                 button->setAdjustBackgroundImage(false);  // Tells the button that the background image must not be adjust
                                                     // It'll use the prefered size of the background image
-                button->setPosition(Vec2(button->getContentSize().width / 2 + (button->getContentSize().width + space) * i,
-                                       button->getContentSize().height / 2 + (button->getContentSize().height + space) * j));
+                button->setPosition(button->getContentSize().width / 2 + (button->getContentSize().width + space) * i,
+                                       button->getContentSize().height / 2 + (button->getContentSize().height + space) * j);
                 layer->addChild(button);
                 
                 max_w = MAX(button->getContentSize().width * (i + 1) + space  * i, max_w);
@@ -255,12 +258,12 @@ bool ControlButtonTest_Styling::init()
         
         layer->setAnchorPoint(Vec2(0.5, 0.5));
         layer->setContentSize(Size(max_w, max_h));
-        layer->setPosition(Vec2(screenSize.width / 2.0f, screenSize.height / 2.0f));
+        layer->setPosition(screenSize.width / 2.0f, screenSize.height / 2.0f);
         
         // Add the black background
-        auto backgroundButton = Scale9Sprite::create("extensions/buttonBackground.png");
+        auto backgroundButton = ui::Scale9Sprite::create("extensions/buttonBackground.png");
         backgroundButton->setContentSize(Size(max_w + 14, max_h + 14));
-        backgroundButton->setPosition(Vec2(screenSize.width / 2.0f, screenSize.height / 2.0f));
+        backgroundButton->setPosition(screenSize.width / 2.0f, screenSize.height / 2.0f);
         addChild(backgroundButton);
         return true;
     }
@@ -273,16 +276,16 @@ bool ControlButtonTest_Styling::init()
 ControlButton *ControlButtonTest_Styling::standardButtonWithTitle(const char *title)
 {
     /** Creates and return a button with a default background and title color. */
-    auto backgroundButton = Scale9Sprite::create("extensions/button.png");
+    auto backgroundButton = ui::Scale9Sprite::create("extensions/button.png");
     backgroundButton->setPreferredSize(Size(45, 45));  // Set the prefered size
-    auto backgroundHighlightedButton = Scale9Sprite::create("extensions/buttonHighlighted.png");
+    auto backgroundHighlightedButton = ui::Scale9Sprite::create("extensions/buttonHighlighted.png");
     backgroundHighlightedButton->setPreferredSize(Size(45, 45));  // Set the prefered size
-    
+
     auto titleButton = Label::createWithTTF(title, "fonts/Marker Felt.ttf", 30);
 
     titleButton->setColor(Color3B(159, 168, 176));
     
-    ControlButton *button = ControlButton::create(titleButton, backgroundButton);
+    ControlButton *button = ControlButton::create(titleButton, backgroundButton,false);
     button->setBackgroundSpriteForState(backgroundHighlightedButton, Control::State::HIGH_LIGHTED);
     button->setTitleColorForState(Color3B::WHITE, Control::State::HIGH_LIGHTED);
     

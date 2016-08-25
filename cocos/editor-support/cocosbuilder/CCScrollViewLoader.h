@@ -1,7 +1,7 @@
 #ifndef _CCB_CCSCROLLVIEWLOADER_H_
 #define _CCB_CCSCROLLVIEWLOADER_H_
 
-#include "CCNodeLoader.h"
+#include "editor-support/cocosbuilder/CCNodeLoader.h"
 #include "extensions/GUI/CCScrollView/CCScrollView.h"
 
 namespace cocosbuilder {
@@ -9,7 +9,7 @@ namespace cocosbuilder {
 /* Forward declaration. */
 class CCBReader;
 
-class ScrollViewLoader : public NodeLoader {
+class CC_DLL ScrollViewLoader : public NodeLoader {
 public:
     /**
      * @js NA

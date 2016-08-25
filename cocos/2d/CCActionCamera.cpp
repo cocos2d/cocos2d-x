@@ -2,7 +2,7 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
  
 http://www.cocos2d-x.org
 
@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 #include "2d/CCActionCamera.h"
 #include "2d/CCNode.h"
-#include "CCStdC.h"
+#include "platform/CCStdC.h"
 
 NS_CC_BEGIN
 //
@@ -46,10 +46,15 @@ void ActionCamera::startWithTarget(Node *target)
 
 ActionCamera* ActionCamera::clone() const
 {
-	// no copy constructor
-	auto a = new ActionCamera();
-	a->autorelease();
-	return a;
+    auto action = new (std::nothrow) ActionCamera();
+    if (action)
+    {
+        action->autorelease();
+        return action;
+    }
+    
+    delete action;
+    return nullptr;
 }
 
 ActionCamera * ActionCamera::reverse() const
@@ -60,9 +65,9 @@ ActionCamera * ActionCamera::reverse() const
 
 void ActionCamera::restore()
 {
-    _center = Vec3(0, 0, 0);
-    _eye = Vec3(0, 0, FLT_EPSILON);
-    _up = Vec3(0, 1, 0);
+    _center.setZero();
+    _eye.set(0.0f, 0.0f, FLT_EPSILON);
+    _up.set(0.0f, 1.0f, 0.0f);
 }
 
 void ActionCamera::setEye(const Vec3& eye)
@@ -73,7 +78,7 @@ void ActionCamera::setEye(const Vec3& eye)
 
 void ActionCamera::setEye(float x, float y, float z)
 {
-    _eye = Vec3(x, y, z);
+    _eye.set(x, y, z);
     updateTransform();
 }
 
@@ -96,11 +101,12 @@ void ActionCamera::updateTransform()
 
     Vec2 anchorPoint = _target->getAnchorPointInPoints();
 
-    bool needsTranslation = !anchorPoint.equals(Vec2::ZERO);
+    bool needsTranslation = !anchorPoint.isZero();
 
     Mat4 mv = Mat4::IDENTITY;
 
-    if(needsTranslation) {
+    if(needsTranslation)
+    {
         Mat4 t;
         Mat4::createTranslation(anchorPoint.x, anchorPoint.y, 0, &t);
         mv = mv * t;
@@ -108,16 +114,15 @@ void ActionCamera::updateTransform()
     
     mv = mv * lookupMatrix;
 
-    if(needsTranslation) {
-        
+    if(needsTranslation)
+    {
         Mat4 t;
         Mat4::createTranslation(-anchorPoint.x, -anchorPoint.y, 0, &t);
         mv = mv * t;
     }
 
-    // XXX FIXME TODO
-    // Using the AdditionalTransform is a complete hack.
-    // This should be done by multipliying the lookup-Matrix with the Node's MV matrix
+    // FIXME: Using the AdditionalTransform is a complete hack.
+    // This should be done by multiplying the lookup-Matrix with the Node's MV matrix
     // And then setting the result as the new MV matrix
     // But that operation needs to be done after all the 'updates'.
     // So the Director should emit an 'director_after_update' event.
@@ -148,23 +153,21 @@ OrbitCamera::~OrbitCamera()
 
 OrbitCamera * OrbitCamera::create(float t, float radius, float deltaRadius, float angleZ, float deltaAngleZ, float angleX, float deltaAngleX)
 {
-    OrbitCamera * obitCamera = new OrbitCamera();
-    if(obitCamera->initWithDuration(t, radius, deltaRadius, angleZ, deltaAngleZ, angleX, deltaAngleX))
+    OrbitCamera * obitCamera = new (std::nothrow) OrbitCamera();
+    if(obitCamera && obitCamera->initWithDuration(t, radius, deltaRadius, angleZ, deltaAngleZ, angleX, deltaAngleX))
     {
         obitCamera->autorelease();
         return obitCamera;
     }
-    CC_SAFE_DELETE(obitCamera);
+    
+    delete obitCamera;
     return nullptr;
 }
 
 OrbitCamera* OrbitCamera::clone() const
 {
-	// no copy constructor	
-	auto a = new OrbitCamera();
-	a->initWithDuration(_duration, _radius, _deltaRadius, _angleZ, _deltaAngleZ, _angleX, _deltaAngleX);
-	a->autorelease();
-	return a;
+    // no copy constructor
+    return OrbitCamera::create(_duration, _radius, _deltaRadius, _angleZ, _deltaAngleZ, _angleX, _deltaAngleX);
 }
 
 bool OrbitCamera::initWithDuration(float t, float radius, float deltaRadius, float angleZ, float deltaAngleZ, float angleX, float deltaAngleX)
@@ -191,11 +194,11 @@ void OrbitCamera::startWithTarget(Node *target)
 
     float r, zenith, azimuth;
     this->sphericalRadius(&r, &zenith, &azimuth);
-    if( isnan(_radius) )
+    if( std::isnan(_radius) )
         _radius = r;
-    if( isnan(_angleZ) )
+    if( std::isnan(_angleZ) )
         _angleZ = (float)CC_RADIANS_TO_DEGREES(zenith);
-    if( isnan(_angleX) )
+    if( std::isnan(_angleX) )
         _angleX = (float)CC_RADIANS_TO_DEGREES(azimuth);
 
     _radZ = (float)CC_DEGREES_TO_RADIANS(_angleZ);

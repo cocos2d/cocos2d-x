@@ -22,9 +22,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "cocostudio/CCColliderDetector.h"
-#include "cocostudio/CCBone.h"
-#include "cocostudio/CCTransformHelp.h"
+#include "editor-support/cocostudio/CCColliderDetector.h"
+#include "editor-support/cocostudio/CCBone.h"
+#include "editor-support/cocostudio/CCTransformHelp.h"
 
 
 
@@ -70,7 +70,7 @@ ColliderBody::ColliderBody(ContourData *contourData)
     , _contourData(contourData)
 {
     CC_SAFE_RETAIN(_contourData);
-    _filter = new ColliderFilter();
+    _filter = new (std::nothrow) ColliderFilter();
 
 #if ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
     _calculatedVertexList = Array::create();
@@ -84,7 +84,7 @@ ColliderBody::ColliderBody(ContourData *contourData)
     , _contourData(contourData)
 {
     CC_SAFE_RETAIN(_contourData);
-    _filter = new ColliderFilter();
+    _filter = new (std::nothrow) ColliderFilter();
 
 #if ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
     _calculatedVertexList = Array::create();
@@ -123,7 +123,7 @@ ColliderFilter *ColliderBody::getColliderFilter()
 
 ColliderDetector *ColliderDetector::create()
 {
-    ColliderDetector *pColliderDetector = new ColliderDetector();
+    ColliderDetector *pColliderDetector = new (std::nothrow) ColliderDetector();
     if (pColliderDetector && pColliderDetector->init())
     {
         pColliderDetector->autorelease();
@@ -135,7 +135,7 @@ ColliderDetector *ColliderDetector::create()
 
 ColliderDetector *ColliderDetector::create(Bone *bone)
 {
-    ColliderDetector *pColliderDetector = new ColliderDetector();
+    ColliderDetector *pColliderDetector = new (std::nothrow) ColliderDetector();
     if (pColliderDetector && pColliderDetector->init(bone))
     {
         pColliderDetector->autorelease();
@@ -168,7 +168,7 @@ bool ColliderDetector::init()
     _colliderBodyList.clear();
 
 #if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
-    _filter = new ColliderFilter();
+    _filter = new (std::nothrow) ColliderFilter();
 #endif
 
     return true;
@@ -184,7 +184,7 @@ bool ColliderDetector::init(Bone *bone)
 
 void ColliderDetector::addContourData(ContourData *contourData)
 {
-    ColliderBody *colliderBody = new ColliderBody(contourData);
+    ColliderBody *colliderBody = new (std::nothrow) ColliderBody(contourData);
     _colliderBodyList.pushBack(colliderBody);
     colliderBody->release();
 
@@ -421,7 +421,7 @@ void ColliderDetector::setBody(b2Body *pBody)
 
         ContourData *contourData = colliderBody->getContourData();
         
-        b2Vec2 *b2bv = new b2Vec2[contourData->vertexList.size()];
+        b2Vec2 *b2bv = new (std::nothrow) b2Vec2[contourData->vertexList.size()];
 
         int i = 0;
         for(auto& v : contourData->vertexList)
@@ -470,7 +470,7 @@ void ColliderDetector::setBody(cpBody *pBody)
 
         ssize_t num = contourData->vertexList.size();
         auto vs = contourData->vertexList;
-        cpVect *verts = new cpVect[num];
+        cpVect *verts = new (std::nothrow) cpVect[num];
         for (int i = 0; i < num; i++)
         {
             verts[num - 1 - i].x = vs.at(i).x;

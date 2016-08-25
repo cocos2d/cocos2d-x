@@ -38,7 +38,7 @@ HBox::~HBox()
     
 HBox* HBox::create()
 {
-    HBox* widget = new HBox();
+    HBox* widget = new (std::nothrow) HBox();
     if (widget && widget->init())
     {
         widget->autorelease();
@@ -50,7 +50,7 @@ HBox* HBox::create()
     
 HBox* HBox::create(const cocos2d::Size &size)
 {
-    HBox* widget = new HBox();
+    HBox* widget = new (std::nothrow) HBox();
     if (widget && widget->initWithSize(size))
     {
         widget->autorelease();

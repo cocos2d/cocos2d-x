@@ -1,88 +1,19 @@
 #include "RenderTextureTest.h"
-#include "../testBasic.h"
 
-// Test #1 by Jason Booth (slipster216)
-// Test #3 by David Deaco (ddeaco)
+USING_NS_CC;
+using namespace cocos2d::ui;
 
-
-static std::function<Layer*()> createFunctions[] = {
-    CL(RenderTextureSave),
-    CL(RenderTextureIssue937),
-    CL(RenderTextureZbuffer),
-    CL(RenderTextureTestDepthStencil),
-    CL(RenderTextureTargetNode),
-    CL(SpriteRenderTextureBug),
-    CL(RenderTexturePartTest),
+RenderTextureTests::RenderTextureTests()
+{
+    ADD_TEST_CASE(RenderTextureSave);
+    ADD_TEST_CASE(RenderTextureIssue937);
+    ADD_TEST_CASE(RenderTextureZbuffer);
+    ADD_TEST_CASE(RenderTextureTestDepthStencil);
+    ADD_TEST_CASE(RenderTextureTargetNode);
+    ADD_TEST_CASE(SpriteRenderTextureBug);
+    ADD_TEST_CASE(RenderTexturePartTest);
+    ADD_TEST_CASE(Issue16113Test);
 };
-
-#define MAX_LAYER   (sizeof(createFunctions)/sizeof(createFunctions[0]))
-static int sceneIdx = -1; 
-
-static Layer* nextTestCase()
-{
-    sceneIdx++;
-    sceneIdx = sceneIdx % MAX_LAYER;
-
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
-}
-
-static Layer* backTestCase()
-{
-    sceneIdx--;
-    int total = MAX_LAYER;
-    if( sceneIdx < 0 )
-        sceneIdx += total;    
-
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
-}
-
-static Layer* restartTestCase()
-{
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
-}
-
-void RenderTextureTest::onEnter()
-{
-    BaseTest::onEnter();
-}
-
-void RenderTextureTest::restartCallback(Ref* sender)
-{
-    auto s = new RenderTextureScene();
-    s->addChild(restartTestCase()); 
-
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void RenderTextureTest::nextCallback(Ref* sender)
-{
-    auto s = new RenderTextureScene();
-    s->addChild( nextTestCase() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void RenderTextureTest::backCallback(Ref* sender)
-{
-    auto s = new RenderTextureScene();
-    s->addChild( backTestCase() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
-} 
-
-std::string RenderTextureTest::title() const
-{
-    return "No title";
-}
-
-std::string RenderTextureTest::subtitle() const
-{
-    return "";
-}
 
 /**
 * Impelmentation of RenderTextureSave
@@ -135,25 +66,20 @@ void RenderTextureSave::saveImage(cocos2d::Ref *sender)
 
     char png[20];
     sprintf(png, "image-%d.png", counter);
-    char jpg[20];
-    sprintf(jpg, "image-%d.jpg", counter);
-
-    _target->saveToFile(png, Image::Format::PNG);
-    _target->saveToFile(jpg, Image::Format::JPG);
     
-    std::string fileName = FileUtils::getInstance()->getWritablePath() + jpg;
-    auto action1 = DelayTime::create(1);
-    auto func = [&,fileName]()
+    auto callback = [&](RenderTexture* rt, const std::string& path)
     {
-        auto sprite = Sprite::create(fileName);
+        auto sprite = Sprite::create(path);
         addChild(sprite);
         sprite->setScale(0.3f);
         sprite->setPosition(Vec2(40, 40));
         sprite->setRotation(counter * 3);
     };
-    runAction(Sequence::create(action1, CallFunc::create(func), nullptr));
-
-    CCLOG("Image saved %s and %s", png, jpg);
+    
+    _target->saveToFile(png, Image::Format::PNG, true, callback);
+    //Add this function to avoid crash if we switch to a new scene.
+    Director::getInstance()->getRenderer()->render();
+    CCLOG("Image saved %s", png);
 
     counter++;
 }
@@ -271,14 +197,6 @@ std::string RenderTextureIssue937::title() const
 std::string RenderTextureIssue937::subtitle() const
 {
     return "All images should be equal...";
-}
-
-void RenderTextureScene::runThisTest()
-{
-    auto layer = nextTestCase();
-    addChild(layer);
-
-    Director::getInstance()->replaceScene(this);
 }
 
 /**
@@ -517,19 +435,19 @@ RenderTextureTestDepthStencil::~RenderTextureTestDepthStencil()
 
 void RenderTextureTestDepthStencil::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
-    _renderCmds[0].init(_globalZOrder);
+    _renderCmds[0].init(_globalZOrder, transform, flags);
     _renderCmds[0].func = CC_CALLBACK_0(RenderTextureTestDepthStencil::onBeforeClear, this);
     renderer->addCommand(&_renderCmds[0]);
 
     _rend->beginWithClear(0, 0, 0, 0, 0, 0);
     
-    _renderCmds[1].init(_globalZOrder);
+    _renderCmds[1].init(_globalZOrder, transform, flags);
     _renderCmds[1].func = CC_CALLBACK_0(RenderTextureTestDepthStencil::onBeforeStencil, this);
     renderer->addCommand(&_renderCmds[1]);
 
     _spriteDS->visit();
     
-    _renderCmds[2].init(_globalZOrder);
+    _renderCmds[2].init(_globalZOrder, transform, flags);
     _renderCmds[2].func = CC_CALLBACK_0(RenderTextureTestDepthStencil::onBeforDraw, this);
     renderer->addCommand(&_renderCmds[2]);
 
@@ -537,7 +455,7 @@ void RenderTextureTestDepthStencil::draw(Renderer *renderer, const Mat4 &transfo
     
     _rend->end();
     
-    _renderCmds[3].init(_globalZOrder);
+    _renderCmds[3].init(_globalZOrder, transform, flags);
     _renderCmds[3].func = CC_CALLBACK_0(RenderTextureTestDepthStencil::onAfterDraw, this);
     renderer->addCommand(&_renderCmds[3]);
 }
@@ -545,6 +463,10 @@ void RenderTextureTestDepthStencil::draw(Renderer *renderer, const Mat4 &transfo
 void RenderTextureTestDepthStencil::onBeforeClear()
 {
     glStencilMask(0xFF);
+
+    // Since cocos2d-x v3.7, users should avoid calling GL directly because it will break the internal GL state
+    // But if users must call GL directly, they should update the state manually,
+//    RenderState::StateBlock::_defaultState->setStencilWrite(0xFF);
 }
 
 void RenderTextureTestDepthStencil::onBeforeStencil()
@@ -553,16 +475,30 @@ void RenderTextureTestDepthStencil::onBeforeStencil()
     glEnable(GL_STENCIL_TEST);
     glStencilFunc(GL_NEVER, 1, 0xFF);
     glStencilOp(GL_REPLACE, GL_REPLACE, GL_REPLACE);
+
+    // Since cocos2d-x v3.7, users should avoid calling GL directly because it will break the internal GL state
+    // But if users must call GL directly, they should update the state manually,
+//    RenderState::StateBlock::_defaultState->setStencilTest(true);
+//    RenderState::StateBlock::_defaultState->setStencilFunction(RenderState::STENCIL_NEVER, 1, 0xFF);
+//    RenderState::StateBlock::_defaultState->setStencilOperation(RenderState::STENCIL_OP_REPLACE, RenderState::STENCIL_OP_REPLACE, RenderState::STENCIL_OP_REPLACE);
 }
 
 void RenderTextureTestDepthStencil::onBeforDraw()
 {
     glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
+
+    // Since cocos2d-x v3.7, users should avoid calling GL directly because it will break the internal GL state
+    // But if users must call GL directly, they should update the state manually,
+//    RenderState::StateBlock::_defaultState->setStencilFunction(RenderState::STENCIL_NOTEQUAL, 1, 0xFF);
 }
 
 void RenderTextureTestDepthStencil::onAfterDraw()
 {
     glDisable(GL_STENCIL_TEST);
+
+    // Since cocos2d-x v3.7, users should avoid calling GL directly because it will break the internal GL state
+    // But if users must call GL directly, they should update the state manually,
+//    RenderState::StateBlock::_defaultState->setStencilTest(false);
 }
 
 std::string RenderTextureTestDepthStencil::title() const
@@ -672,7 +608,7 @@ SpriteRenderTextureBug::SimpleSprite::~SimpleSprite()
 
 SpriteRenderTextureBug::SimpleSprite* SpriteRenderTextureBug::SimpleSprite::create(const char* filename, const Rect &rect)
 {
-    auto sprite = new SimpleSprite();
+    auto sprite = new (std::nothrow) SimpleSprite();
     if (sprite && sprite->initWithFile(filename, rect))
     {
         sprite->autorelease();
@@ -762,4 +698,40 @@ std::string SpriteRenderTextureBug::title() const
 std::string SpriteRenderTextureBug::subtitle() const
 {
     return "Touch the screen. Sprite should appear on under the touch";
+}
+
+
+//
+// Issue16113Test
+//
+Issue16113Test::Issue16113Test()
+{
+    auto s = Director::getInstance()->getWinSize();
+
+    // Save Image menu
+    MenuItemFont::setFontSize(16);
+    auto item1 = MenuItemFont::create("Save Image", [&](Ref* ref){
+        auto winSize = Director::getInstance()->getVisibleSize();
+        auto text = Label::createWithTTF("hello world", "fonts/Marker Felt.ttf", 40);
+        text->setTextColor(Color4B::RED);
+        auto target = RenderTexture::create(winSize.width, winSize.height, Texture2D::PixelFormat::RGBA8888);
+        target->beginWithClear(0,0,0,0);
+        text->setPosition(winSize.width / 2,winSize.height/2);
+        text->Node::visit();
+        target->end();
+        target->saveToFile("issue16113.png", Image::Format::PNG);
+    });
+    auto menu = Menu::create(item1, nullptr);
+    this->addChild(menu);
+    menu->setPosition(s.width/2, s.height/2);
+}
+
+std::string Issue16113Test::title() const
+{
+    return "Github Issue 16113";
+}
+
+std::string Issue16113Test::subtitle() const
+{
+    return "aaa.png file without white border on iOS";
 }

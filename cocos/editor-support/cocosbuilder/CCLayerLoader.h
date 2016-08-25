@@ -1,14 +1,14 @@
 #ifndef _CCB_CCLAYERLOADER_H_
 #define _CCB_CCLAYERLOADER_H_
 
-#include "CCNodeLoader.h"
+#include "editor-support/cocosbuilder/CCNodeLoader.h"
 
 namespace cocosbuilder {
 
 /* Forward declaration. */
 class CCBReader;
 
-class LayerLoader : public NodeLoader {
+class CC_DLL LayerLoader : public NodeLoader {
 public:
     /**
      * @js NA

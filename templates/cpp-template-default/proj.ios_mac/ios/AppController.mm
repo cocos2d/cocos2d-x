@@ -23,12 +23,13 @@
  ****************************************************************************/
 
 #import "AppController.h"
-#import "CCEAGLView.h"
 #import "cocos2d.h"
 #import "AppDelegate.h"
 #import "RootViewController.h"
 
 @implementation AppController
+
+@synthesize window;
 
 #pragma mark -
 #pragma mark Application lifecycle
@@ -37,25 +38,15 @@
 static AppDelegate s_sharedApplication;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
-
     // Override point for customization after application launch.
 
     // Add the view controller's view to the window and display.
     window = [[UIWindow alloc] initWithFrame: [[UIScreen mainScreen] bounds]];
 
-    // Init the CCEAGLView
-    CCEAGLView *eaglView = [CCEAGLView viewWithFrame: [window bounds]
-                                     pixelFormat: kEAGLColorFormatRGBA8
-                                     depthFormat: GL_DEPTH24_STENCIL8_OES
-                              preserveBackbuffer: NO
-                                      sharegroup: nil
-                                   multiSampling: NO
-                                 numberOfSamples: 0];
-
-    // Use RootViewController manage CCEAGLView 
-    _viewController = [[RootViewController alloc] initWithNibName:nil bundle:nil];
+    // Use RootViewController to manage CCEAGLView
+    _viewController = [[RootViewController alloc]init];
     _viewController.wantsFullScreenLayout = YES;
-    _viewController.view = eaglView;
+    
 
     // Set RootViewController to window
     if ( [[UIDevice currentDevice].systemVersion floatValue] < 6.0)
@@ -73,11 +64,6 @@ static AppDelegate s_sharedApplication;
 
     [[UIApplication sharedApplication] setStatusBarHidden:true];
 
-    // IMPORTANT: Setting the GLView should be done after creating the RootViewController
-    cocos2d::GLView *glview = cocos2d::GLView::createWithEAGLView(eaglView);
-    cocos2d::Director::getInstance()->setOpenGLView(glview);
-
-    cocos2d::Application::getInstance()->run();
 
     return YES;
 }
@@ -133,10 +119,14 @@ static AppDelegate s_sharedApplication;
 }
 
 
+#if __has_feature(objc_arc)
+#else
 - (void)dealloc {
     [window release];
+    [_viewController release];
     [super dealloc];
 }
+#endif
 
 
 @end

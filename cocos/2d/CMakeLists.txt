@@ -1,14 +1,12 @@
-if(WIN32)
-
-ADD_DEFINITIONS(-DUNICODE -D_UNICODE)
-
-endif()
-
 include_directories(
   ../external/ConvertUTF
+  ../external/poly2tri
+  ../external/poly2tri/common
+  ../external/poly2tri/sweep
 )
 
 set(COCOS_2D_SRC
+
   2d/CCActionCamera.cpp
   2d/CCActionCatmullRom.cpp
   2d/CCAction.cpp
@@ -25,7 +23,10 @@ set(COCOS_2D_SRC
   2d/CCAnimationCache.cpp
   2d/CCAnimation.cpp
   2d/CCAtlasNode.cpp
+  2d/CCCamera.cpp
+  2d/CCCameraBackgroundBrush.cpp
   2d/CCClippingNode.cpp
+  2d/CCClippingRectangleNode.cpp
   2d/CCComponentContainer.cpp
   2d/CCComponent.cpp
   2d/CCDrawingPrimitives.cpp
@@ -47,6 +48,7 @@ set(COCOS_2D_SRC
   2d/CCLabelTextFormatter.cpp
   2d/CCLabelTTF.cpp
   2d/CCLayer.cpp
+  2d/CCLight.cpp
   2d/CCMenu.cpp
   2d/CCMenuItem.cpp
   2d/CCMotionStreak.cpp
@@ -58,12 +60,15 @@ set(COCOS_2D_SRC
   2d/CCParticleSystem.cpp
   2d/CCParticleSystemQuad.cpp
   2d/CCProgressTimer.cpp
+  2d/CCProtectedNode.cpp
   2d/CCRenderTexture.cpp
   2d/CCScene.cpp
   2d/CCSpriteBatchNode.cpp
   2d/CCSprite.cpp
   2d/CCSpriteFrameCache.cpp
   2d/CCSpriteFrame.cpp
+  2d/CCAutoPolygon.cpp
+  ../external/clipper/clipper.cpp
   2d/CCTextFieldTTF.cpp
   2d/CCTileMapAtlas.cpp
   2d/CCTMXLayer.cpp
@@ -74,5 +79,5 @@ set(COCOS_2D_SRC
   2d/CCTransitionPageTurn.cpp
   2d/CCTransitionProgress.cpp
   2d/CCTweenFunction.cpp
-)
 
+)

@@ -2,7 +2,7 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-CopyRight (c) 2013-2014 Chukong Technologies Inc.
+CopyRight (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -25,12 +25,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "2d/CCAnimationCache.h"
-#include "base/ccMacros.h"
-#include "2d/CCAnimation.h"
-#include "2d/CCSpriteFrame.h"
 #include "2d/CCSpriteFrameCache.h"
 #include "platform/CCFileUtils.h"
-#include "deprecated/CCString.h"
 
 using namespace std;
 
@@ -42,7 +38,7 @@ AnimationCache* AnimationCache::getInstance()
 {
     if (! s_sharedAnimationCache)
     {
-        s_sharedAnimationCache = new AnimationCache();
+        s_sharedAnimationCache = new (std::nothrow) AnimationCache();
         s_sharedAnimationCache->init();
     }
 
@@ -75,7 +71,7 @@ void AnimationCache::addAnimation(Animation *animation, const std::string& name)
 
 void AnimationCache::removeAnimation(const std::string& name)
 {
-    if (name.size()==0)
+    if (name.empty())
         return;
 
     _animations.erase(name);
@@ -132,7 +128,7 @@ void AnimationCache::parseVersion1(const ValueMap& animations)
 
         animation = Animation::create(frames, delay, 1);
 
-        AnimationCache::getInstance()->addAnimation(animation, iter->first.c_str());
+        AnimationCache::getInstance()->addAnimation(animation, iter->first);
     }
 }
 
@@ -226,12 +222,18 @@ void AnimationCache::addAnimationsWithDictionary(const ValueMap& dictionary,cons
 /** Read an NSDictionary from a plist file and parse it automatically for animations */
 void AnimationCache::addAnimationsWithFile(const std::string& plist)
 {
-    CCASSERT( plist.size()>0, "Invalid texture file name");
-
-    std::string path = FileUtils::getInstance()->fullPathForFilename(plist);
-    ValueMap dict =  FileUtils::getInstance()->getValueMapFromFile(path);
+    CCASSERT(!plist.empty(), "Invalid texture file name");
+    if (plist.empty()) {
+        log("%s error:file name is empty!", __FUNCTION__);
+        return;
+    }
+    
+    ValueMap dict = FileUtils::getInstance()->getValueMapFromFile(plist);
 
     CCASSERT( !dict.empty(), "CCAnimationCache: File could not be found");
+    if (dict.empty()) {
+        log("AnimationCache::addAnimationsWithFile error:%s not exist!", plist.c_str());
+    }
 
     addAnimationsWithDictionary(dict,plist);
 }

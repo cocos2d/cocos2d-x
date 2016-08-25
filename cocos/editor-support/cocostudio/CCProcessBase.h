@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
 Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
@@ -25,9 +25,9 @@ THE SOFTWARE.
 #ifndef __CCPROCESSBASE_H__
 #define __CCPROCESSBASE_H__
 
-#include "cocostudio/CCArmatureDefine.h"
-#include "cocostudio/CCDatas.h"
-#include "cocostudio/CocosStudioExport.h"
+#include "editor-support/cocostudio/CCArmatureDefine.h"
+#include "editor-support/cocostudio/CCDatas.h"
+#include "editor-support/cocostudio/CocosStudioExport.h"
 
 namespace cocostudio {
 
@@ -138,13 +138,13 @@ protected:
     //! Scale the process speed
     float _processScale;
 
-    //! Set and get whether the aniamtion is pause
+    //! Set and get whether the animation is pause
     bool _isPause;
 
-    //! Set and get whether the aniamtion is complete
+    //! Set and get whether the animation is complete
     bool _isComplete;
 
-    //! Set and get whether the aniamtion is playing
+    //! Set and get whether the animation is playing
     bool _isPlaying;
 
     //! Current percent this process arrived
@@ -164,7 +164,7 @@ protected:
 
 
 protected:
-    //! The durantion frame count will run
+    //! The duration frame count will run
     int _durationTween;
 
     //! Current frame this process arrived, this frame is tween frame

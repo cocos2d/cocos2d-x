@@ -24,14 +24,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#include "CCFastTMXTiledMap.h"
-
-#include <algorithm>
-
-#include "CCTMXXMLParser.h"
-#include "CCFastTMXLayer.h"
-#include "CCSprite.h"
-#include "deprecated/CCString.h"
+#include "2d/CCFastTMXTiledMap.h"
+#include "2d/CCFastTMXLayer.h"
+#include "base/ccUTF8.h"
 
 NS_CC_BEGIN
 namespace experimental {
@@ -40,7 +35,7 @@ namespace experimental {
 
 TMXTiledMap * TMXTiledMap::create(const std::string& tmxFile)
 {
-    TMXTiledMap *ret = new TMXTiledMap();
+    TMXTiledMap *ret = new (std::nothrow) TMXTiledMap();
     if (ret->initWithTMXFile(tmxFile))
     {
         ret->autorelease();
@@ -52,7 +47,7 @@ TMXTiledMap * TMXTiledMap::create(const std::string& tmxFile)
 
 TMXTiledMap* TMXTiledMap::createWithXML(const std::string& tmxString, const std::string& resourcePath)
 {
-    TMXTiledMap *ret = new TMXTiledMap();
+    TMXTiledMap *ret = new (std::nothrow) TMXTiledMap();
     if (ret->initWithXML(tmxString, resourcePath))
     {
         ret->autorelease();
@@ -106,6 +101,9 @@ TMXTiledMap::~TMXTiledMap()
 TMXLayer * TMXTiledMap::parseLayer(TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo)
 {
     TMXTilesetInfo *tileset = tilesetForLayer(layerInfo, mapInfo);
+    if (tileset == nullptr)
+        return nullptr;
+    
     TMXLayer *layer = TMXLayer::create(tileset, layerInfo, mapInfo);
 
     // tell the layerinfo to release the ownership of the tiles map.
@@ -138,7 +136,7 @@ TMXTilesetInfo * TMXTiledMap::tilesetForLayer(TMXLayerInfo *layerInfo, TMXMapInf
                     //    gid = CFSwapInt32( gid );
                     /* We support little endian.*/
                     
-                    // XXX: gid == 0 --> empty tile
+                    // FIXME: gid == 0 --> empty tile
                     if( gid != 0 )
                     {
                         // Optimization: quick return
@@ -175,6 +173,10 @@ void TMXTiledMap::buildWithMapInfo(TMXMapInfo* mapInfo)
         if (layerInfo->_visible)
         {
             TMXLayer *child = parseLayer(layerInfo, mapInfo);
+            if (child == nullptr) {
+                idx++;
+                continue;
+            }
             addChild(child, idx, idx);
             
             // update content size with the max size

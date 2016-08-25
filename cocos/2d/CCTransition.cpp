@@ -26,7 +26,6 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "2d/CCTransition.h"
-#include "base/CCDirector.h"
 #include "2d/CCActionInterval.h"
 #include "2d/CCActionInstant.h"
 #include "2d/CCActionEase.h"
@@ -36,6 +35,8 @@ THE SOFTWARE.
 #include "2d/CCLayer.h"
 #include "2d/CCRenderTexture.h"
 #include "2d/CCNodeGrid.h"
+#include "base/CCDirector.h"
+#include "base/CCEventDispatcher.h"
 
 NS_CC_BEGIN
 
@@ -58,7 +59,7 @@ TransitionScene::~TransitionScene()
 
 TransitionScene * TransitionScene::create(float t, Scene *scene)
 {
-    TransitionScene * pScene = new TransitionScene();
+    TransitionScene * pScene = new (std::nothrow) TransitionScene();
     if(pScene && pScene->initWithDuration(t,scene))
     {
         pScene->autorelease();
@@ -70,13 +71,20 @@ TransitionScene * TransitionScene::create(float t, Scene *scene)
 
 bool TransitionScene::initWithDuration(float t, Scene *scene)
 {
-    CCASSERT( scene != nullptr, "Argument scene must be non-nil");
+    CCASSERT(scene != nullptr, "Argument scene must be non-nil");
 
     if (Scene::init())
     {
         _duration = t;
 
         // retain
+#if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+        auto sEngine = ScriptEngineManager::getInstance()->getScriptEngine();
+        if (sEngine)
+        {
+            sEngine->retainScriptObject(this, scene);
+        }
+#endif // CC_ENABLE_GC_FOR_NATIVE_OBJECTS
         _inScene = scene;
         _inScene->retain();
         _outScene = Director::getInstance()->getRunningScene();
@@ -120,32 +128,39 @@ void TransitionScene::finish()
 {
     // clean up
     _inScene->setVisible(true);
-    _inScene->setPosition(Vec2(0,0));
+    _inScene->setPosition(0,0);
     _inScene->setScale(1.0f);
     _inScene->setRotation(0.0f);
     _inScene->setAdditionalTransform(nullptr);
 
     _outScene->setVisible(false);
-    _outScene->setPosition(Vec2(0,0));
+    _outScene->setPosition(0,0);
     _outScene->setScale(1.0f);
     _outScene->setRotation(0.0f);
     _outScene->setAdditionalTransform(nullptr);
 
     //[self schedule:@selector(setNewScene:) interval:0];
-    this->schedule(schedule_selector(TransitionScene::setNewScene), 0);
+    this->schedule(CC_SCHEDULE_SELECTOR(TransitionScene::setNewScene), 0);
 }
 
 void TransitionScene::setNewScene(float dt)
 {    
     CC_UNUSED_PARAM(dt);
 
-    this->unschedule(schedule_selector(TransitionScene::setNewScene));
+    this->unschedule(CC_SCHEDULE_SELECTOR(TransitionScene::setNewScene));
     
     // Before replacing, save the "send cleanup to scene"
     Director *director = Director::getInstance();
     _isSendCleanupToScene = director->isSendCleanupToScene();
     
     director->replaceScene(_inScene);
+#if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+    auto sEngine = ScriptEngineManager::getInstance()->getScriptEngine();
+    if (sEngine)
+    {
+        sEngine->releaseScriptObject(this, _inScene);
+    }
+#endif // CC_ENABLE_GC_FOR_NATIVE_OBJECTS
     
     // issue #267
     _outScene->setVisible(true);
@@ -161,6 +176,14 @@ void TransitionScene::hideOutShowIn()
 // custom onEnter
 void TransitionScene::onEnter()
 {
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnEnter))
+            return;
+    }
+#endif // #if CC_ENABLE_SCRIPT_BINDING
+    
     Scene::onEnter();
     
     // disable events while transitions
@@ -176,6 +199,14 @@ void TransitionScene::onEnter()
 // custom onExit
 void TransitionScene::onExit()
 {
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnExit))
+            return;
+    }
+#endif // #if CC_ENABLE_SCRIPT_BINDING
+    
     Scene::onExit();
     
     // enable events while transitions
@@ -185,11 +216,24 @@ void TransitionScene::onExit()
     // _inScene should not receive the onEnter callback
     // only the onEnterTransitionDidFinish
     _inScene->onEnterTransitionDidFinish();
+
+#if CC_ENABLE_SCRIPT_BINDING
+    if (ScriptEngineManager::getInstance()->getScriptEngine())
+        ScriptEngineManager::getInstance()->getScriptEngine()->garbageCollect();
+#endif // CC_ENABLE_SCRIPT_BINDING
 }
 
 // custom cleanup
 void TransitionScene::cleanup()
 {
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnCleanup))
+            return;
+    }
+#endif // #if CC_ENABLE_SCRIPT_BINDING
+    
     Scene::cleanup();
 
     if( _isSendCleanupToScene )
@@ -210,7 +254,7 @@ TransitionSceneOriented::~TransitionSceneOriented()
 
 TransitionSceneOriented * TransitionSceneOriented::create(float t, Scene *scene, Orientation orientation)
 {
-    TransitionSceneOriented * newScene = new TransitionSceneOriented();
+    TransitionSceneOriented * newScene = new (std::nothrow) TransitionSceneOriented();
     newScene->initWithDuration(t,scene,orientation);
     newScene->autorelease();
     return newScene;
@@ -234,7 +278,7 @@ TransitionRotoZoom::TransitionRotoZoom()
 
 TransitionRotoZoom* TransitionRotoZoom::create(float t, Scene* scene)                   
 {                                                               
-    TransitionRotoZoom* newScene = new TransitionRotoZoom();
+    TransitionRotoZoom* newScene = new (std::nothrow) TransitionRotoZoom();
     if(newScene && newScene->initWithDuration(t, scene))
     {                                                           
         newScene->autorelease();
@@ -294,7 +338,7 @@ TransitionJumpZoom::~TransitionJumpZoom()
 
 TransitionJumpZoom* TransitionJumpZoom::create(float t, Scene* scene)
 {
-    TransitionJumpZoom* newScene = new TransitionJumpZoom();
+    TransitionJumpZoom* newScene = new (std::nothrow) TransitionJumpZoom();
     if(newScene && newScene->initWithDuration(t, scene))
     {
         newScene->autorelease();
@@ -310,7 +354,7 @@ void TransitionJumpZoom::onEnter()
     Size s = Director::getInstance()->getWinSize();
 
     _inScene->setScale(0.5f);
-    _inScene->setPosition(Vec2(s.width, 0));
+    _inScene->setPosition(s.width, 0);
     _inScene->setAnchorPoint(Vec2(0.5f, 0.5f));
     _outScene->setAnchorPoint(Vec2(0.5f, 0.5f));
 
@@ -349,7 +393,7 @@ TransitionMoveInL::~TransitionMoveInL()
 
 TransitionMoveInL* TransitionMoveInL::create(float t, Scene* scene)
 {
-    TransitionMoveInL* newScene = new TransitionMoveInL();
+    TransitionMoveInL* newScene = new (std::nothrow) TransitionMoveInL();
     if(newScene && newScene->initWithDuration(t, scene))
     {
         newScene->autorelease();
@@ -391,7 +435,7 @@ ActionInterval* TransitionMoveInL::easeActionWithAction(ActionInterval* action)
 void TransitionMoveInL::initScenes()
 {
     Size s = Director::getInstance()->getWinSize();
-    _inScene->setPosition(Vec2(-s.width,0));
+    _inScene->setPosition(-s.width,0);
 }
 
 //
@@ -406,7 +450,7 @@ TransitionMoveInR::~TransitionMoveInR()
 
 TransitionMoveInR* TransitionMoveInR::create(float t, Scene* scene)
 {
-    TransitionMoveInR* newScene = new TransitionMoveInR();
+    TransitionMoveInR* newScene = new (std::nothrow) TransitionMoveInR();
     if(newScene && newScene->initWithDuration(t, scene))
     {
         newScene->autorelease();
@@ -419,7 +463,7 @@ TransitionMoveInR* TransitionMoveInR::create(float t, Scene* scene)
 void TransitionMoveInR::initScenes()
 {
     Size s = Director::getInstance()->getWinSize();
-    _inScene->setPosition( Vec2(s.width,0) );
+    _inScene->setPosition(s.width,0);
 }
 
 //
@@ -434,7 +478,7 @@ TransitionMoveInT::~TransitionMoveInT()
 
 TransitionMoveInT* TransitionMoveInT::create(float t, Scene* scene)
 {
-    TransitionMoveInT* newScene = new TransitionMoveInT();
+    TransitionMoveInT* newScene = new (std::nothrow) TransitionMoveInT();
     if(newScene && newScene->initWithDuration(t, scene))
     {
         newScene->autorelease();
@@ -447,7 +491,7 @@ TransitionMoveInT* TransitionMoveInT::create(float t, Scene* scene)
 void TransitionMoveInT::initScenes()
 {
     Size s = Director::getInstance()->getWinSize();
-    _inScene->setPosition( Vec2(0,s.height) );
+    _inScene->setPosition(0,s.height);
 }
 
 //
@@ -462,7 +506,7 @@ TransitionMoveInB::~TransitionMoveInB()
 
 TransitionMoveInB* TransitionMoveInB::create(float t, Scene* scene)
 {
-    TransitionMoveInB* newScene = new TransitionMoveInB();
+    TransitionMoveInB* newScene = new (std::nothrow) TransitionMoveInB();
     if(newScene && newScene->initWithDuration(t, scene))
     {
         newScene->autorelease();
@@ -475,7 +519,7 @@ TransitionMoveInB* TransitionMoveInB::create(float t, Scene* scene)
 void TransitionMoveInB::initScenes()
 {
     Size s = Director::getInstance()->getWinSize();
-    _inScene->setPosition( Vec2(0,-s.height) );
+    _inScene->setPosition(0,-s.height);
 }
 
 
@@ -523,7 +567,7 @@ void TransitionSlideInL::sceneOrder()
 void TransitionSlideInL:: initScenes()
 {
     Size s = Director::getInstance()->getWinSize();
-    _inScene->setPosition( Vec2(-(s.width-ADJUST_FACTOR),0) );
+    _inScene->setPosition(-(s.width-ADJUST_FACTOR),0);
 }
 
 ActionInterval* TransitionSlideInL::action()
@@ -539,7 +583,7 @@ ActionInterval* TransitionSlideInL::easeActionWithAction(ActionInterval* action)
 
 TransitionSlideInL* TransitionSlideInL::create(float t, Scene* scene)
 {
-    TransitionSlideInL* newScene = new TransitionSlideInL();
+    TransitionSlideInL* newScene = new (std::nothrow) TransitionSlideInL();
     if(newScene && newScene->initWithDuration(t, scene))
     {
         newScene->autorelease();
@@ -561,7 +605,7 @@ TransitionSlideInR::~TransitionSlideInR()
 
 TransitionSlideInR* TransitionSlideInR::create(float t, Scene* scene)
 {
-    TransitionSlideInR* newScene = new TransitionSlideInR();
+    TransitionSlideInR* newScene = new (std::nothrow) TransitionSlideInR();
     if(newScene && newScene->initWithDuration(t, scene))
     {
         newScene->autorelease();
@@ -579,7 +623,7 @@ void TransitionSlideInR::sceneOrder()
 void TransitionSlideInR::initScenes()
 {
     Size s = Director::getInstance()->getWinSize();
-    _inScene->setPosition( Vec2(s.width-ADJUST_FACTOR,0) );
+    _inScene->setPosition(s.width-ADJUST_FACTOR,0);
 }
 
 
@@ -602,7 +646,7 @@ TransitionSlideInT::~TransitionSlideInT()
 
 TransitionSlideInT* TransitionSlideInT::create(float t, Scene* scene)
 {
-    TransitionSlideInT* newScene = new TransitionSlideInT();
+    TransitionSlideInT* newScene = new (std::nothrow) TransitionSlideInT();
     if(newScene && newScene->initWithDuration(t, scene))
     {
         newScene->autorelease();
@@ -620,7 +664,7 @@ void TransitionSlideInT::sceneOrder()
 void TransitionSlideInT::initScenes()
 {
     Size s = Director::getInstance()->getWinSize();
-    _inScene->setPosition( Vec2(0,s.height-ADJUST_FACTOR) );
+    _inScene->setPosition(0,s.height-ADJUST_FACTOR);
 }
 
 
@@ -642,7 +686,7 @@ TransitionSlideInB::~TransitionSlideInB()
 
 TransitionSlideInB* TransitionSlideInB::create(float t, Scene* scene)
 {
-    TransitionSlideInB* newScene = new TransitionSlideInB();
+    TransitionSlideInB* newScene = new (std::nothrow) TransitionSlideInB();
     if(newScene && newScene->initWithDuration(t, scene))
     {
         newScene->autorelease();
@@ -660,7 +704,7 @@ void TransitionSlideInB::sceneOrder()
 void TransitionSlideInB:: initScenes()
 {
     Size s = Director::getInstance()->getWinSize();
-    _inScene->setPosition( Vec2(0,-(s.height-ADJUST_FACTOR)) );
+    _inScene->setPosition(0,-(s.height-ADJUST_FACTOR));
 }
 
 
@@ -682,7 +726,7 @@ TransitionShrinkGrow::~TransitionShrinkGrow()
 
 TransitionShrinkGrow* TransitionShrinkGrow::create(float t, Scene* scene)
 {
-    TransitionShrinkGrow* newScene = new TransitionShrinkGrow();
+    TransitionShrinkGrow* newScene = new (std::nothrow) TransitionShrinkGrow();
     if(newScene && newScene->initWithDuration(t, scene))
     {
         newScene->autorelease();
@@ -780,7 +824,7 @@ void TransitionFlipX::onEnter()
 
 TransitionFlipX* TransitionFlipX::create(float t, Scene* s, Orientation o)
 {
-    TransitionFlipX* newScene = new TransitionFlipX();
+    TransitionFlipX* newScene = new (std::nothrow) TransitionFlipX();
     newScene->initWithDuration(t, s, o);
     newScene->autorelease();
 
@@ -850,7 +894,7 @@ void TransitionFlipY::onEnter()
 
 TransitionFlipY* TransitionFlipY::create(float t, Scene* s, Orientation o)
 {
-    TransitionFlipY* newScene = new TransitionFlipY();
+    TransitionFlipY* newScene = new (std::nothrow) TransitionFlipY();
     newScene->initWithDuration(t, s, o);
     newScene->autorelease();
 
@@ -920,7 +964,7 @@ void TransitionFlipAngular::onEnter()
 
 TransitionFlipAngular* TransitionFlipAngular::create(float t, Scene* s, Orientation o)
 {
-    TransitionFlipAngular* newScene = new TransitionFlipAngular();
+    TransitionFlipAngular* newScene = new (std::nothrow) TransitionFlipAngular();
     newScene->initWithDuration(t, s, o);
     newScene->autorelease();
 
@@ -998,7 +1042,7 @@ void TransitionZoomFlipX::onEnter()
 
 TransitionZoomFlipX* TransitionZoomFlipX::create(float t, Scene* s, Orientation o)
 {
-    TransitionZoomFlipX* newScene = new TransitionZoomFlipX();
+    TransitionZoomFlipX* newScene = new (std::nothrow) TransitionZoomFlipX();
     newScene->initWithDuration(t, s, o);
     newScene->autorelease();
 
@@ -1077,7 +1121,7 @@ void TransitionZoomFlipY::onEnter()
 
 TransitionZoomFlipY* TransitionZoomFlipY::create(float t, Scene* s, Orientation o)
 {
-    TransitionZoomFlipY* newScene = new TransitionZoomFlipY();
+    TransitionZoomFlipY* newScene = new (std::nothrow) TransitionZoomFlipY();
     newScene->initWithDuration(t, s, o);
     newScene->autorelease();
 
@@ -1158,7 +1202,7 @@ void TransitionZoomFlipAngular::onEnter()
 
 TransitionZoomFlipAngular* TransitionZoomFlipAngular::create(float t, Scene* s, Orientation o)
 {
-    TransitionZoomFlipAngular* newScene = new TransitionZoomFlipAngular();
+    TransitionZoomFlipAngular* newScene = new (std::nothrow) TransitionZoomFlipAngular();
     newScene->initWithDuration(t, s, o);
     newScene->autorelease();
 
@@ -1182,7 +1226,7 @@ TransitionFade::~TransitionFade()
 
 TransitionFade * TransitionFade::create(float duration, Scene *scene, const Color3B& color)
 {
-    TransitionFade * transition = new TransitionFade();
+    TransitionFade * transition = new (std::nothrow) TransitionFade();
     transition->initWithDuration(duration, scene, color);
     transition->autorelease();
     return transition;
@@ -1251,7 +1295,7 @@ TransitionCrossFade::~TransitionCrossFade()
 
 TransitionCrossFade* TransitionCrossFade::create(float t, Scene* scene)
 {
-    TransitionCrossFade* newScene = new TransitionCrossFade();
+    TransitionCrossFade* newScene = new (std::nothrow) TransitionCrossFade();
     if(newScene && newScene->initWithDuration(t, scene))
     {
         newScene->autorelease();
@@ -1277,7 +1321,7 @@ void TransitionCrossFade::onEnter()
     LayerColor* layer = LayerColor::create(color);
 
     // create the first render texture for inScene
-    RenderTexture* inTexture = RenderTexture::create((int)size.width, (int)size.height);
+    RenderTexture* inTexture = RenderTexture::create((int)size.width, (int)size.height,Texture2D::PixelFormat::RGBA8888,GL_DEPTH24_STENCIL8);
 
     if (nullptr == inTexture)
     {
@@ -1285,7 +1329,7 @@ void TransitionCrossFade::onEnter()
     }
 
     inTexture->getSprite()->setAnchorPoint( Vec2(0.5f,0.5f) );
-    inTexture->setPosition( Vec2(size.width/2, size.height/2) );
+    inTexture->setPosition(size.width/2, size.height/2);
     inTexture->setAnchorPoint( Vec2(0.5f,0.5f) );
 
     // render inScene to its texturebuffer
@@ -1294,9 +1338,9 @@ void TransitionCrossFade::onEnter()
     inTexture->end();
 
     // create the second render texture for outScene
-    RenderTexture* outTexture = RenderTexture::create((int)size.width, (int)size.height);
+    RenderTexture* outTexture = RenderTexture::create((int)size.width, (int)size.height,Texture2D::PixelFormat::RGBA8888,GL_DEPTH24_STENCIL8);
     outTexture->getSprite()->setAnchorPoint( Vec2(0.5f,0.5f) );
-    outTexture->setPosition( Vec2(size.width/2, size.height/2) );
+    outTexture->setPosition(size.width/2, size.height/2);
     outTexture->setAnchorPoint( Vec2(0.5f,0.5f) );
 
     // render outScene to its texturebuffer
@@ -1362,7 +1406,7 @@ TransitionTurnOffTiles::~TransitionTurnOffTiles()
 
 TransitionTurnOffTiles* TransitionTurnOffTiles::create(float t, Scene* scene)
 {
-    TransitionTurnOffTiles* newScene = new TransitionTurnOffTiles();
+    TransitionTurnOffTiles* newScene = new (std::nothrow) TransitionTurnOffTiles();
     if(newScene && newScene->initWithDuration(t, scene))
     {
         newScene->autorelease();
@@ -1447,7 +1491,7 @@ TransitionSplitCols::~TransitionSplitCols()
 
 TransitionSplitCols* TransitionSplitCols::create(float t, Scene* scene)
 {
-    TransitionSplitCols* newScene = new TransitionSplitCols();
+    TransitionSplitCols* newScene = new (std::nothrow) TransitionSplitCols();
     if(newScene && newScene->initWithDuration(t, scene))
     {
         newScene->autorelease();
@@ -1533,7 +1577,7 @@ ActionInterval* TransitionSplitRows::action()
 
 TransitionSplitRows* TransitionSplitRows::create(float t, Scene* scene)
 {
-    TransitionSplitRows* newScene = new TransitionSplitRows();
+    TransitionSplitRows* newScene = new (std::nothrow) TransitionSplitRows();
     if(newScene && newScene->initWithDuration(t, scene))
     {
         newScene->autorelease();
@@ -1558,7 +1602,7 @@ TransitionFadeTR::~TransitionFadeTR()
 
 TransitionFadeTR* TransitionFadeTR::create(float t, Scene* scene)
 {
-    TransitionFadeTR* newScene = new TransitionFadeTR();
+    TransitionFadeTR* newScene = new (std::nothrow) TransitionFadeTR();
     if(newScene && newScene->initWithDuration(t, scene))
     {
         newScene->autorelease();
@@ -1646,7 +1690,7 @@ TransitionFadeBL::~TransitionFadeBL()
 
 TransitionFadeBL* TransitionFadeBL::create(float t, Scene* scene)
 {
-    TransitionFadeBL* newScene = new TransitionFadeBL();
+    TransitionFadeBL* newScene = new (std::nothrow) TransitionFadeBL();
     if(newScene && newScene->initWithDuration(t, scene))
     {
         newScene->autorelease();
@@ -1674,7 +1718,7 @@ TransitionFadeUp::~TransitionFadeUp()
 
 TransitionFadeUp* TransitionFadeUp::create(float t, Scene* scene)
 {
-    TransitionFadeUp* newScene = new TransitionFadeUp();
+    TransitionFadeUp* newScene = new (std::nothrow) TransitionFadeUp();
     if(newScene && newScene->initWithDuration(t, scene))
     {
         newScene->autorelease();
@@ -1701,7 +1745,7 @@ TransitionFadeDown::~TransitionFadeDown()
 
 TransitionFadeDown* TransitionFadeDown::create(float t, Scene* scene)
 {
-    TransitionFadeDown* newScene = new TransitionFadeDown();
+    TransitionFadeDown* newScene = new (std::nothrow) TransitionFadeDown();
     if(newScene && newScene->initWithDuration(t, scene))
     {
         newScene->autorelease();

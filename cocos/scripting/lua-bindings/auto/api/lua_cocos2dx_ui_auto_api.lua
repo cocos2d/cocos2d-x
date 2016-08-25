@@ -32,8 +32,23 @@
 
 
 --------------------------------------------------------
+-- the ccui AbstractCheckButton
+-- @field [parent=#ccui] AbstractCheckButton#AbstractCheckButton AbstractCheckButton preloaded module
+
+
+--------------------------------------------------------
 -- the ccui CheckBox
 -- @field [parent=#ccui] CheckBox#CheckBox CheckBox preloaded module
+
+
+--------------------------------------------------------
+-- the ccui RadioButton
+-- @field [parent=#ccui] RadioButton#RadioButton RadioButton preloaded module
+
+
+--------------------------------------------------------
+-- the ccui RadioButtonGroup
+-- @field [parent=#ccui] RadioButtonGroup#RadioButtonGroup RadioButtonGroup preloaded module
 
 
 --------------------------------------------------------
@@ -112,6 +127,11 @@
 
 
 --------------------------------------------------------
+-- the ccui RichElementNewLine
+-- @field [parent=#ccui] RichElementNewLine#RichElementNewLine RichElementNewLine preloaded module
+
+
+--------------------------------------------------------
 -- the ccui RichText
 -- @field [parent=#ccui] RichText#RichText RichText preloaded module
 
@@ -129,6 +149,31 @@
 --------------------------------------------------------
 -- the ccui RelativeBox
 -- @field [parent=#ccui] RelativeBox#RelativeBox RelativeBox preloaded module
+
+
+--------------------------------------------------------
+-- the ccui Scale9Sprite
+-- @field [parent=#ccui] Scale9Sprite#Scale9Sprite Scale9Sprite preloaded module
+
+
+--------------------------------------------------------
+-- the ccui EditBox
+-- @field [parent=#ccui] EditBox#EditBox EditBox preloaded module
+
+
+--------------------------------------------------------
+-- the ccui LayoutComponent
+-- @field [parent=#ccui] LayoutComponent#LayoutComponent LayoutComponent preloaded module
+
+
+--------------------------------------------------------
+-- the ccui TabHeader
+-- @field [parent=#ccui] TabHeader#TabHeader TabHeader preloaded module
+
+
+--------------------------------------------------------
+-- the ccui TabControl
+-- @field [parent=#ccui] TabControl#TabControl TabControl preloaded module
 
 
 return nil

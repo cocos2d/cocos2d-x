@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
 Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
@@ -24,11 +24,16 @@ THE SOFTWARE.
 #ifndef __CCSPRITEFRAMECACHEHELPER_H__
 #define __CCSPRITEFRAMECACHEHELPER_H__
 
-#include "base/CCPlatformMacros.h"
-#include "cocostudio/CCArmatureDefine.h"
-#include "cocostudio/CocosStudioExport.h"
-#include <stack>
+#include "platform/CCPlatformMacros.h"
+#include "editor-support/cocostudio/CCArmatureDefine.h"
+#include "editor-support/cocostudio/CocosStudioExport.h"
 #include <string>
+#include <map>
+#include <vector>
+
+namespace cocos2d {
+    class SpriteFrame;
+}
 
 namespace cocostudio {
 
@@ -39,7 +44,7 @@ namespace cocostudio {
 class CC_STUDIO_DLL SpriteFrameCacheHelper
 {
 public:
-	/** @deprecated Use getInstance() instead */
+    /** @deprecated Use getInstance() instead */
     CC_DEPRECATED_ATTRIBUTE static SpriteFrameCacheHelper *sharedSpriteFrameCacheHelper(){ return SpriteFrameCacheHelper::getInstance(); }
 
     static SpriteFrameCacheHelper *getInstance();
@@ -48,14 +53,19 @@ public:
 public:
 
     /**
-     *	@brief	Add sprite frame to CCSpriteFrameCache, it will save display name and it's relative image name
+     *    @brief    Add sprite frame to CCSpriteFrameCache, it will save display name and it's relative image name
      */
     void addSpriteFrameFromFile(const std::string& plistPath, const std::string& imagePath);
+    void removeSpriteFrameFromFile(const std::string& plistPath);
 
 private:
+    void retainSpriteFrames(const std::string& plistPath);
+    void releaseSpriteFrames(const std::string& plistPath);
+
     SpriteFrameCacheHelper();
     ~SpriteFrameCacheHelper();
 
+    std::map<std::string, std::vector<cocos2d::SpriteFrame*> > _usingSpriteFrames;
     static SpriteFrameCacheHelper *_spriteFrameCacheHelper;
 };
 

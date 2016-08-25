@@ -1,61 +1,15 @@
-// #define COCOS2D_DEBUG   1
-
 #include "TextInputTest.h"
 
-//////////////////////////////////////////////////////////////////////////
-// local function
-//////////////////////////////////////////////////////////////////////////
-
-enum 
-{
-    kTextFieldTTFDefaultTest = 0,
-    kTextFieldTTFActionTest,
-    kTextInputTestsCount,
-}; 
+USING_NS_CC;
 
 #define FONT_NAME                       "fonts/Thonburi.ttf"
 #define FONT_SIZE                       36
 
-static int testIdx = -1; 
-
-KeyboardNotificationLayer* createTextInputTest(int nIndex)
+TextInputTests::TextInputTests()
 {
-    switch(nIndex)
-    {
-    case kTextFieldTTFDefaultTest: return new TextFieldTTFDefaultTest();
-    case kTextFieldTTFActionTest: return new TextFieldTTFActionTest();
-    default: return 0;
-    }
-}
-
-Layer* restartTextInputTest()
-{
-    TextInputTest* pContainerLayer = new TextInputTest;
-    pContainerLayer->autorelease();
-
-    auto pTestLayer = createTextInputTest(testIdx);
-    pTestLayer->autorelease();
-    pContainerLayer->addKeyboardNotificationLayer(pTestLayer);
-
-    return pContainerLayer;
-}
-
-Layer* nextTextInputTest()
-{
-    testIdx++;
-    testIdx = testIdx % kTextInputTestsCount;
-
-    return restartTextInputTest();
-}
-
-Layer* backTextInputTest()
-{
-    testIdx--;
-    int total = kTextInputTestsCount;
-    if( testIdx < 0 )
-        testIdx += total;    
-
-    return restartTextInputTest();
+    ADD_TEST_CASE(TextFieldTTFDefaultTest);
+    ADD_TEST_CASE(TextFieldTTFActionTest);
+    ADD_TEST_CASE(TextFieldTTFSecureTextEntryTest);
 }
 
 static Rect getRect(Node * node)
@@ -68,55 +22,9 @@ static Rect getRect(Node * node)
     return rc;
 }
 
-//////////////////////////////////////////////////////////////////////////
-// implement TextInputTest
-//////////////////////////////////////////////////////////////////////////
-
-TextInputTest::TextInputTest()
-: _notificationLayer(0)
-{
-    
-}
-
-void TextInputTest::restartCallback(Ref* sender)
-{
-    auto s = new TextInputTestScene();
-    s->addChild(restartTextInputTest()); 
-
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void TextInputTest::nextCallback(Ref* sender)
-{
-    auto s = new TextInputTestScene();
-    s->addChild( nextTextInputTest() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void TextInputTest::backCallback(Ref* sender)
-{
-    auto s = new TextInputTestScene();
-    s->addChild( backTextInputTest() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void TextInputTest::addKeyboardNotificationLayer(KeyboardNotificationLayer * layer)
-{
-    _notificationLayer = layer;
-    addChild(layer);
-}
-
-std::string TextInputTest::title() const
+std::string KeyboardNotificationLayer::title() const
 {
     return "text input test";
-}
-
-void TextInputTest::onEnter()
-{
-    BaseTest::onEnter();
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -132,12 +40,6 @@ KeyboardNotificationLayer::KeyboardNotificationLayer()
     listener->onTouchEnded = CC_CALLBACK_2(KeyboardNotificationLayer::onTouchEnded, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 }
-
-//void KeyboardNotificationLayer::registerWithTouchDispatcher()
-//{
-//    auto director = Director::getInstance();
-//    director->getTouchDispatcher()->addTargetedDelegate(this, 0, false);
-//}
 
 void KeyboardNotificationLayer::keyboardWillShow(IMEKeyboardNotificationInfo& info)
 {
@@ -196,8 +98,8 @@ void KeyboardNotificationLayer::onTouchEnded(Touch  *touch, Event  *event)
     auto endPos = touch->getLocation();    
 
     float delta = 5.0f;
-    if (::abs(endPos.x - _beginPos.x) > delta
-        || ::abs(endPos.y - _beginPos.y) > delta)
+    if (std::abs(endPos.x - _beginPos.x) > delta
+        || std::abs(endPos.y - _beginPos.y) > delta)
     {
         // not click
         _beginPos.x = _beginPos.y = -1;
@@ -206,14 +108,9 @@ void KeyboardNotificationLayer::onTouchEnded(Touch  *touch, Event  *event)
 
     // decide the trackNode is clicked.
     Rect rect;
-    auto point = convertTouchToNodeSpaceAR(touch);
-    CCLOG("KeyboardNotificationLayer:clickedAt(%f,%f)", point.x, point.y);
-
-    rect = getRect(_trackNode);
-    CCLOG("KeyboardNotificationLayer:TrackNode at(origin:%f,%f, size:%f,%f)",
-        rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
-
-    this->onClickTrackNode(rect.containsPoint(point));
+    rect.size = _trackNode->getContentSize();
+    auto clicked = isScreenPointInRect(endPos, Camera::getVisitingCamera(), _trackNode->getWorldToNodeTransform(), rect, nullptr);
+    this->onClickTrackNode(clicked);
     CCLOG("----------------------------------");
 }
 
@@ -262,7 +159,7 @@ void TextFieldTTFDefaultTest::onEnter()
 #else
     pTextField->setPosition(Vec2(s.width / 2, s.height / 2));
 #endif
-
+    
     _trackNode = pTextField;
 }
 
@@ -445,14 +342,36 @@ void TextFieldTTFActionTest::callbackRemoveNodeWhenDidAction(Node * node)
     this->removeChild(node, true);
 }
 
+
 //////////////////////////////////////////////////////////////////////////
-// implement TextInputTestScene
+// implement TextFieldTTFSecureTextEntryTest
 //////////////////////////////////////////////////////////////////////////
 
-void TextInputTestScene::runThisTest()
+std::string TextFieldTTFSecureTextEntryTest::subtitle() const
 {
-    auto layer = nextTextInputTest();
-    addChild(layer);
+    return "TextFieldTTF with SecureTextEntry test";
+}
 
-    Director::getInstance()->replaceScene(this);
+void TextFieldTTFSecureTextEntryTest::onEnter()
+{
+    KeyboardNotificationLayer::onEnter();
+    
+    // add TextFieldTTF
+    auto s = Director::getInstance()->getWinSize();
+    
+    auto pTextField = TextFieldTTF::textFieldWithPlaceHolder("<click here for input>",
+                                                             FONT_NAME,
+                                                             FONT_SIZE);
+    addChild(pTextField);
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    // on android, TextFieldTTF cannot auto adjust its position when soft-keyboard pop up
+    // so we had to set a higher position to make it visable
+    pTextField->setPosition(Vec2(s.width / 2, s.height/2 + 50));
+#else
+    pTextField->setPosition(Vec2(s.width / 2, s.height / 2));
+#endif
+    pTextField->setSecureTextEntry(true);
+    
+    _trackNode = pTextField;
 }

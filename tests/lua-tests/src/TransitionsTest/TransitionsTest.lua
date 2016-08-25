@@ -1,4 +1,4 @@
-require "src/TransitionsTest/TransitionsName"
+require "TransitionsTest/TransitionsName"
 
 
 local SceneIdx = -1

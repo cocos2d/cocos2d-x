@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<manifest xmlns="http://tizen.org/ns/packages" api-version="2.4" package="org.cocos2dx.lua-tests" version="1.0.0">
+    <ui-application appid="org.cocos2dx.lua-tests" exec="lua-tests" multiple="false" nodisplay="false" taskmanage="true" type="capp">
+        <label>lua-tests</label>
+        <icon>lua-tests.png</icon>
+    </ui-application>
+    <privileges>
+        <privilege>http://tizen.org/privilege/network.get</privilege>
+        <privilege>http://tizen.org/privilege/internet</privilege>
+    </privileges>
+</manifest>

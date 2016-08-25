@@ -1,37 +1,38 @@
-if(WIN32)
-  set(PLATFORM_SRC
-    network/WebSocket.cpp
-  )
 
-  set(PLATFORM_LINK
-    websockets
-  )
-elseif(NOT APPLE)
-  set(PLATFORM_SRC
-    network/WebSocket.cpp
-  )
+if(WINDOWS)
+  set(PLATFORM_LINK websockets)
+elseif(LINUX)
+  set(PLATFORM_LINK websockets ssl crypto)
+elseif(ANDROID)
+  set(PLATFORM_LINK websockets)
+else()
+  set(PLATFORM_LINK websockets)
+endif()
 
-  set(PLATFORM_LINK
-    websockets
-    ssl
-    crypto
-  )
+if(ANDROID)
+   set(COCOS_NETWORK_PLATFORM_SRC
+        network/CCDownloader-android.cpp
+        )
 endif()
 
 set(COCOS_NETWORK_SRC
-  network/HttpClient.cpp
-  network/SocketIO.cpp
-  ${PLATFORM_SRC}
+    ${COCOS_NETWORK_PLATFORM_SRC}
+    network/HttpClient.cpp
+    network/SocketIO.cpp
+    network/WebSocket.cpp
+    network/CCDownloader.cpp
+    network/CCDownloader-curl.cpp
 )
 
-IF (WIN32 AND NOT MINGW)
-  set(COCOS_NETWORK_LINK
-    libcurl_imp
+
+if(MSVC)
+  set(COCOS_NETWORK_LINK 
+    libcurl_imp 
     ${PLATFORM_LINK}
   )
-ELSE()
-  set(COCOS_NETWORK_LINK
+else()
+  set(COCOS_NETWORK_LINK 
     curl
-    ${PLATFORM_LINK}
+    ${PLATFORM_LINK} 
   )
-ENDIF()
+endif()

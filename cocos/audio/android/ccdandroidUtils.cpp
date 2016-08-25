@@ -22,12 +22,13 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#include "ccdandroidUtils.h"
-#include "cocos2d.h"
+#include "audio/android/ccdandroidUtils.h"
 
 #include <jni.h>
 #include <android/log.h>
-#include "jni/JniHelper.h"
+#include "platform/android/jni/JniHelper.h"
+#include "platform/CCFileUtils.h"
+
 
 USING_NS_CC;
 

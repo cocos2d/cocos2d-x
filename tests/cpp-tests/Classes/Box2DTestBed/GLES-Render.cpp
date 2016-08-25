@@ -107,7 +107,7 @@ void GLESDebugDraw::DrawCircle(const b2Vec2& center, float32 radius, const b2Col
     const float32 k_increment = 2.0f * b2_pi / k_segments;
     float32 theta = 0.0f;
     
-    GLfloat*    glVertices = new GLfloat[vertexCount*2];
+    GLfloat*    glVertices = new (std::nothrow) GLfloat[vertexCount*2];
     for (int i = 0; i < k_segments; ++i)
     {
         b2Vec2 v = center + radius * b2Vec2(cosf(theta), sinf(theta));
@@ -138,7 +138,7 @@ void GLESDebugDraw::DrawSolidCircle(const b2Vec2& center, float32 radius, const 
     const float32 k_increment = 2.0f * b2_pi / k_segments;
     float32 theta = 0.0f;
     
-    GLfloat*    glVertices = new GLfloat[vertexCount*2];
+    GLfloat*    glVertices = new (std::nothrow) GLfloat[vertexCount*2];
     for (int i = 0; i < k_segments; ++i)
     {
         b2Vec2 v = center + radius * b2Vec2(cosf(theta), sinf(theta));

@@ -8,10 +8,10 @@
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
- 
+
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
- 
+
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -21,13 +21,11 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCFreeTypeFont.h"
+#include "platform/winrt/CCFreeTypeFont.h"
 #include "base/CCDirector.h"
 #include "platform/CCFileUtils.h"
 
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
 #include <dwrite.h>
-#endif
 #include <map>
 #include <string>
 #include <sstream>
@@ -42,14 +40,16 @@ NS_CC_BEGIN
 static map<std::string, FontBufferInfo> s_fontsNames;
 static FT_Library s_FreeTypeLibrary = nullptr;
 
-CCFreeTypeFont::CCFreeTypeFont() 
+const std::string CCFreeTypeFont::DEFAULT_FONT = "arial";
+
+CCFreeTypeFont::CCFreeTypeFont()
     :m_space(" ")
     , m_face(nullptr)
 {
 
 }
 
-CCFreeTypeFont::~CCFreeTypeFont() 
+CCFreeTypeFont::~CCFreeTypeFont()
 {
     reset();
 }
@@ -87,18 +87,19 @@ unsigned char* CCFreeTypeFont::initWithString(const char * text, const FontDefin
     m_fontFillColorR = textDefinition._fontFillColor.r;
     m_fontFillColorG = textDefinition._fontFillColor.g;
     m_fontFillColorB = textDefinition._fontFillColor.b;
+    m_fontFillColorA = textDefinition._fontAlpha;
 
 #if 0
     // check the cache for the font file buffer
     auto ittFontNames = s_fontsNames.find(textDefinition._fontName);
-    if(ittFontNames != s_fontsNames.end()) 
+    if(ittFontNames != s_fontsNames.end())
     {
         pBuffer = ittFontNames->second.pBuffer;
         size = ittFontNames->second.size;
-    }  
+    }
 #endif // 0
 
-    
+
 	if(!pBuffer)
     {
         // attempt to load font from Resources fonts folder
@@ -111,12 +112,12 @@ unsigned char* CCFreeTypeFont::initWithString(const char * text, const FontDefin
         if(!pBuffer)
         {
             // attempt to load default font from Resources fonts folder
-		    pBuffer = loadFont("Arial", &size);
+            pBuffer = loadFont(DEFAULT_FONT.c_str(), &size);
         }
         if(!pBuffer)
         {
             // attempt to load default font from System fonts folder
-		    pBuffer = loadSystemFont("Arial", &size);
+            pBuffer = loadSystemFont(DEFAULT_FONT.c_str(), &size);
         }
 
         if(!pBuffer) // font not found!
@@ -129,7 +130,7 @@ unsigned char* CCFreeTypeFont::initWithString(const char * text, const FontDefin
         FontBufferInfo info;
         info.pBuffer = pBuffer;
         info.size = size;
-        s_fontsNames[textDefinition._fontName]=info;  
+        s_fontsNames[textDefinition._fontName]=info;
 #endif // 0
 
     }
@@ -178,11 +179,11 @@ unsigned char* CCFreeTypeFont::initWithString(const char * text, const FontDefin
 unsigned char* CCFreeTypeFont::getBitmap(Device::TextAlign eAlignMask, int &width, int &height, ssize_t& dataLength)
 {
     int lineNumber = 0;
-    int totalLines = m_lines.size();
+    int totalLines = static_cast<int>(m_lines.size());
 
     m_width = m_inWidth ? m_inWidth : m_textWidth;
     m_height = m_inHeight ? m_inHeight : m_textHeight;
-    
+
     unsigned int size = m_width * m_height * 4;
     unsigned char* pBuffer = new unsigned char[size];
     dataLength = size;
@@ -209,7 +210,7 @@ FT_Vector CCFreeTypeFont::getPenForAlignment(FTLineInfo* pInfo, Device::TextAlig
 {
     FT_Error error = 0;
     FT_Vector pen;
-    
+
     int top;
     int stringWidth  = pInfo->bbox.xMax - pInfo->bbox.xMin;
     int maxLineNumber = totalLines - 1;
@@ -220,19 +221,19 @@ FT_Vector CCFreeTypeFont::getPenForAlignment(FTLineInfo* pInfo, Device::TextAlig
     {
         case Device::TextAlign::TOP: // Horizontal center and vertical top.
             pen.x = ((m_width  - stringWidth) / 2) - pInfo->bbox.xMin;
-            pen.y = pInfo->bbox.yMax + (lineNumber * m_lineHeight);		    
+            pen.y = pInfo->bbox.yMax + (lineNumber * m_lineHeight);
  		    break;
-			
+
         case Device::TextAlign::TOP_LEFT: // Horizontal left and vertical top.
             pen.x -=pInfo->bbox.xMin;
-            pen.y = pInfo->bbox.yMax + (lineNumber * m_lineHeight);		    
+            pen.y = pInfo->bbox.yMax + (lineNumber * m_lineHeight);
  		    break;
 
 	    case Device::TextAlign::TOP_RIGHT: // Horizontal right and vertical top.
             pen.x = m_width - stringWidth - pInfo->bbox.xMin;
-            pen.y = pInfo->bbox.yMax + (lineNumber * m_lineHeight);		    
+            pen.y = pInfo->bbox.yMax + (lineNumber * m_lineHeight);
 		    break;
- 
+
 	    case Device::TextAlign::BOTTOM_RIGHT: // Horizontal right and vertical bottom.
             pen.x = m_width - stringWidth - pInfo->bbox.xMin;
             pen.y = m_height + pInfo->bbox.yMin - ((maxLineNumber - lineNumber) * m_lineHeight);
@@ -252,20 +253,20 @@ FT_Vector CCFreeTypeFont::getPenForAlignment(FTLineInfo* pInfo, Device::TextAlig
 	    case Device::TextAlign::CENTER: // Horizontal center and vertical center
             pen.x = ((m_width  - stringWidth) / 2) - pInfo->bbox.xMin;
             top = (m_height - m_textHeight) / 2;
-            pen.y = top + (lineNumber * m_lineHeight) + pInfo->bbox.yMax;		    
+            pen.y = top + (lineNumber * m_lineHeight) + pInfo->bbox.yMax;
             break;
 
 	    case Device::TextAlign::RIGHT: // Horizontal right and vertical center.
             pen.x = m_width - stringWidth - pInfo->bbox.xMin;
             top = (m_height - m_textHeight) / 2;
-            pen.y = top + (lineNumber * m_lineHeight) + pInfo->bbox.yMax;		    
+            pen.y = top + (lineNumber * m_lineHeight) + pInfo->bbox.yMax;
   		    break;
 
 	    case Device::TextAlign::LEFT: // Horizontal left and vertical center.
 	    default:
             pen.x -=pInfo->bbox.xMin;
             top = (m_height - m_textHeight) / 2;
-            pen.y = top + (lineNumber * m_lineHeight) + pInfo->bbox.yMax;		    
+            pen.y = top + (lineNumber * m_lineHeight) + pInfo->bbox.yMax;
   		    break;
     }
 
@@ -295,6 +296,7 @@ void CCFreeTypeFont::draw_bitmap(unsigned char* pBuffer, FT_Bitmap*  bitmap, FT_
     FT_Int  i, j, p, q;
     FT_Int  x_max = x + bitmap->width;
     FT_Int  y_max = y + bitmap->rows;
+    float fontAlpha = m_fontFillColorA / 255.0f;
 
     for (i = x, p = 0; i < x_max; i++, p++)
     {
@@ -311,13 +313,13 @@ void CCFreeTypeFont::draw_bitmap(unsigned char* pBuffer, FT_Bitmap*  bitmap, FT_
                 pBuffer[index++] = m_fontFillColorR;
                 pBuffer[index++] = m_fontFillColorG;
                 pBuffer[index++] = m_fontFillColorB;
-                pBuffer[index++] = value;
+                pBuffer[index++] = value * fontAlpha;
            }
         }
-    }  
+    }
 }
 
-void CCFreeTypeFont::endLine() 
+void CCFreeTypeFont::endLine()
 {
     if(m_currentLine)
     {
@@ -327,7 +329,7 @@ void CCFreeTypeFont::endLine()
     }
 }
 
-void CCFreeTypeFont::newLine() 
+void CCFreeTypeFont::newLine()
 {
     m_currentLine = new FTLineInfo();
     m_currentLine->width = 0;
@@ -336,24 +338,24 @@ void CCFreeTypeFont::newLine()
 }
 
 
-FT_Error CCFreeTypeFont::addWord(const std::string& word) 
+FT_Error CCFreeTypeFont::addWord(const std::string& word)
 {
 	std::vector<TGlyph> glyphs; // glyphs for the word
 	FT_BBox             bbox;   // bounding box containing all of the glyphs in the word
     int maxWidth = m_inWidth ? m_inWidth : m_windowWidth;
     std::string newWord;
 
-    if(m_currentLine->width > 0) 
+    if(m_currentLine->width > 0)
     {
         newWord = ' ' + word;
-    } 
+    }
     else
     {
         newWord = word;
     }
 
     FT_Error error = initWordGlyphs(glyphs, newWord, m_currentLine->pen);
-    if(!error) 
+    if(!error)
     {
         compute_bbox(glyphs, &bbox);
         if(m_currentLine->width == 0 || bbox.xMax <= maxWidth)
@@ -369,7 +371,7 @@ FT_Error CCFreeTypeFont::addWord(const std::string& word)
             }
             m_currentLine->width = m_currentLine->bbox.xMax - m_currentLine->bbox.xMin;
         }
-        else 
+        else
         {
             endLine();
             newLine();
@@ -379,7 +381,7 @@ FT_Error CCFreeTypeFont::addWord(const std::string& word)
     return error;
 }
 
-FT_Error CCFreeTypeFont::initGlyphs(const char* text) 
+FT_Error CCFreeTypeFont::initGlyphs(const char* text)
 {
     FT_Error error = 0;
     std::stringstream stringStream(text);
@@ -394,7 +396,7 @@ FT_Error CCFreeTypeFont::initGlyphs(const char* text)
 
     m_lines.clear();
 
-    while(std::getline(stringStream, line) && !error) 
+    while(std::getline(stringStream, line) && !error)
     {
         newLine();
 
@@ -420,14 +422,14 @@ FT_Error CCFreeTypeFont::initGlyphs(const char* text)
 // if linewidth > m_inWidth
 // get words for line
 
-void CCFreeTypeFont::initWords(const char* text) 
+void CCFreeTypeFont::initWords(const char* text)
 {
     std::stringstream stringStream(text);
     std::string line;
     vector<std::string> lines;
     vector<std::string> words;
 
-    while(std::getline(stringStream, line)) 
+    while(std::getline(stringStream, line))
     {
         lines.push_back(line);
     }
@@ -451,9 +453,9 @@ void CCFreeTypeFont::initWords(const char* text)
     }
 }
 
-FT_Error CCFreeTypeFont::initWordGlyphs(std::vector<TGlyph>& glyphs, const std::string& text, FT_Vector& pen) 
+FT_Error CCFreeTypeFont::initWordGlyphs(std::vector<TGlyph>& glyphs, const std::string& text, FT_Vector& pen)
 {
-	FT_GlyphSlot	slot = m_face->glyph; 
+	FT_GlyphSlot	slot = m_face->glyph;
 	FT_UInt			glyph_index;
 	FT_UInt			previous = 0;
 	FT_Error		error = 0;
@@ -461,16 +463,16 @@ FT_Error CCFreeTypeFont::initWordGlyphs(std::vector<TGlyph>& glyphs, const std::
     unsigned int    numGlyphs = 0;
     wchar_t *       pwszBuffer = nullptr;
 
-	int num_chars = text.size();
-	int nBufLen  = num_chars + 1;			
+	int num_chars = static_cast<int>(text.size());
+	int nBufLen  = num_chars + 1;
 	pwszBuffer = new wchar_t[nBufLen];
     if(!pwszBuffer)
     {
         return -1;
     }
-    
+
     memset(pwszBuffer,0,nBufLen);
-    num_chars = MultiByteToWideChar(CP_UTF8, 0, text.c_str(), num_chars, pwszBuffer, nBufLen);		
+    num_chars = MultiByteToWideChar(CP_UTF8, 0, text.c_str(), num_chars, pwszBuffer, nBufLen);
     pwszBuffer[num_chars] = '\0';
 
     glyphs.clear();
@@ -569,13 +571,15 @@ void  CCFreeTypeFont::compute_bbox(std::vector<TGlyph>& glyphs, FT_BBox  *abbox)
         bbox.xMax = 0;
         bbox.yMax = 0;
     }
-  
+
     /* return string bbox */
     *abbox = bbox;
 }
 
-unsigned char* CCFreeTypeFont::loadFont(const char *pFontName, ssize_t *size) 
+unsigned char* CCFreeTypeFont::loadFont(const char *pFontName, ssize_t *size)
 {
+
+
 	std::string lowerCase(pFontName);
 	std::string path(pFontName);
 
@@ -584,10 +588,15 @@ unsigned char* CCFreeTypeFont::loadFont(const char *pFontName, ssize_t *size)
         lowerCase[i] = tolower(lowerCase[i]);
     }
 
+    if (lowerCase == "")
+    {
+        lowerCase = DEFAULT_FONT;
+        path = lowerCase;
+    }
+
     if (std::string::npos == lowerCase.find("fonts/"))
     {
-        path = "fonts/";
-        path += pFontName;
+        path = "fonts/" + lowerCase;
     }
 
     if (std::string::npos == lowerCase.find(".ttf"))
@@ -596,14 +605,19 @@ unsigned char* CCFreeTypeFont::loadFont(const char *pFontName, ssize_t *size)
     }
 
 	std::string fullpath  = FileUtils::getInstance()->fullPathForFilename(path.c_str());
-	return FileUtils::sharedFileUtils()->getFileData(fullpath.c_str(), "rb", size);
+
+    if (fullpath == "")
+    {
+        return nullptr;
+    }
+
+    Data d;
+    FileUtils::getInstance()->getContents(fullpath, &d);
+    return d.takeBuffer(size);
 }
 
-unsigned char* CCFreeTypeFont::loadSystemFont(const char *pFontName, ssize_t *size) 
+unsigned char* CCFreeTypeFont::loadSystemFont(const char *pFontName, ssize_t *size)
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-	return nullptr;
-#else
     std::string aName(pFontName);
     unsigned char* pBuffer = nullptr;
     HRESULT hr = S_OK;
@@ -619,9 +633,9 @@ unsigned char* CCFreeTypeFont::loadSystemFont(const char *pFontName, ssize_t *si
 	BOOL exists;
 	std::wstring fontNameW;
     const void *fontFileReferenceKey = nullptr;
-    UINT32 fontFileReferenceKeySize;            
+    UINT32 fontFileReferenceKeySize;
     void *fragmentContext = nullptr;
- 
+
     for (unsigned int i = 0; i < aName.length(); ++i)
     {
         aName[i] = tolower(aName[i]);
@@ -637,7 +651,7 @@ unsigned char* CCFreeTypeFont::loadSystemFont(const char *pFontName, ssize_t *si
 	    hr  = writeFactory->GetSystemFontCollection(&fontCollection, TRUE);
     }
 
-	//get the font 
+	//get the font
     if(SUCCEEDED(hr))
     {
 	    hr = fontCollection->FindFamilyName(fontNameW.c_str(), &index, &exists);
@@ -692,7 +706,7 @@ unsigned char* CCFreeTypeFont::loadSystemFont(const char *pFontName, ssize_t *si
                 if(SUCCEEDED(hr))
                 {
 	                pBuffer = (unsigned char*)malloc((size_t)fileSize);
-	                memcpy(pBuffer, fragmentStart, (size_t)fileSize);      
+	                memcpy(pBuffer, fragmentStart, (size_t)fileSize);
                     *size = (unsigned long)fileSize;
                 }
             }
@@ -735,8 +749,6 @@ unsigned char* CCFreeTypeFont::loadSystemFont(const char *pFontName, ssize_t *si
     }
 
     return pBuffer;
-#endif
 }
 
 NS_CC_END
-

@@ -109,10 +109,19 @@ Device-Release/
 # CTags
 tags
 
+# Ignore web dir
+/web
+
 #include
 !/tools/cocos2d-console/console/bin/
 !/plugin-x/plugin-x_ios.xcworkspace/
 !/cocos/2d/platform/android/java/res/
+# Permit plugins to ship third-party libraries.
+!/plugin/plugins/*/proj.android/libs/*.jar
+!/plugin/plugins/*/proj.android/libs
+!/tools/bindings-generator/tools/win32/*
+!/cocos/platform/android/java/libs
+!/cocos/platform/android/ControllerManualAdapter/libs
 
 v*-deps-*.zip
 v*-lua-runtime-*.zip

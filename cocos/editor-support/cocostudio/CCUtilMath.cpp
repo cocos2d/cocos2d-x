@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "cocostudio/CCUtilMath.h"
+#include "editor-support/cocostudio/CCUtilMath.h"
 
 using namespace cocos2d;
 
@@ -41,7 +41,7 @@ bool isSpriteContainPoint(Sprite *sprite, Vec2 point, Vec2 &outPoint)
 
 bool isSpriteContainPoint(Sprite *sprite, Vec2 point)
 {
-    Vec2 p = Vec2(0, 0);
+    Vec2 p;
     return isSpriteContainPoint(sprite, point, p);
 }
 

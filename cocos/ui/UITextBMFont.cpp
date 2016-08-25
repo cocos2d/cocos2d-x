@@ -24,6 +24,7 @@ THE SOFTWARE.
 
 #include "ui/UITextBMFont.h"
 #include "2d/CCLabel.h"
+#include "editor-support/cocostudio/CocosStudioExtension.h"
 
 NS_CC_BEGIN
 
@@ -35,7 +36,6 @@ IMPLEMENT_CLASS_GUI_INFO(TextBMFont)
     
 TextBMFont::TextBMFont():
 _labelBMFontRenderer(nullptr),
-_fntFileHasInit(false),
 _fntFileName(""),
 _stringValue(""),
 _labelBMFontRendererAdaptDirty(true)
@@ -49,7 +49,7 @@ TextBMFont::~TextBMFont()
 
 TextBMFont* TextBMFont::create()
 {
-    TextBMFont* widget = new TextBMFont();
+    TextBMFont* widget = new (std::nothrow) TextBMFont();
     if (widget && widget->init())
     {
         widget->autorelease();
@@ -61,7 +61,7 @@ TextBMFont* TextBMFont::create()
     
 TextBMFont* TextBMFont::create(const std::string &text, const std::string &filename)
 {
-    TextBMFont* widget = new TextBMFont();
+    TextBMFont* widget = new (std::nothrow) TextBMFont();
     if (widget && widget->init())
     {
         widget->setFntFile(filename);
@@ -88,17 +88,17 @@ void TextBMFont::setFntFile(const std::string& fileName)
     _fntFileName = fileName;
     _labelBMFontRenderer->setBMFontFilePath(fileName);
     
-    _fntFileHasInit = true;
-    setString(_stringValue);
+    updateContentSizeWithTextureSize(_labelBMFontRenderer->getContentSize());
+    _labelBMFontRendererAdaptDirty = true;
 }
 
 void TextBMFont::setString(const std::string& value)
 {
-    _stringValue = value;
-    if (!_fntFileHasInit)
+    if (value == _labelBMFontRenderer->getString())
     {
         return;
     }
+    _stringValue = value;
     _labelBMFontRenderer->setString(value);
     updateContentSizeWithTextureSize(_labelBMFontRenderer->getContentSize());
     _labelBMFontRendererAdaptDirty = true;
@@ -129,7 +129,7 @@ void TextBMFont::adaptRenderers()
     }
 }
 
-const Size& TextBMFont::getVirtualRendererSize() const
+Size TextBMFont::getVirtualRendererSize() const
 {
     return _labelBMFontRenderer->getContentSize();
 }
@@ -181,6 +181,19 @@ void TextBMFont::copySpecialProperties(Widget *widget)
     }
 }
 
+ResourceData TextBMFont::getRenderFile()
+{
+    ResourceData rData;
+    rData.type = 0;
+    rData.file = _fntFileName;
+    return rData;
+}
+
+void TextBMFont::resetRender()
+{
+    this->removeProtectedChild(_labelBMFontRenderer);
+    this->initRenderer();
+}
 }
 
 NS_CC_END

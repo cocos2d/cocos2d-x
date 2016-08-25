@@ -1,7 +1,7 @@
 #ifndef _CCB_CCMENULOADER_H_
 #define _CCB_CCMENULOADER_H_
 
-#include "CCLayerLoader.h"
+#include "editor-support/cocosbuilder/CCLayerLoader.h"
 #include "base/CCRef.h"
 #include "2d/CCMenu.h"
 
@@ -10,7 +10,7 @@ namespace cocosbuilder {
 /* Forward declaration. */
 class CCBReader;
 
-class MenuLoader : public LayerLoader {
+class CC_DLL MenuLoader : public LayerLoader {
 public:
     /**
      * @js NA

@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
 Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
@@ -25,8 +25,8 @@ THE SOFTWARE.
 #ifndef __CCSSCENEREADER_H__
 #define __CCSSCENEREADER_H__
 
-#include "cocostudio/DictionaryHelper.h"
-#include "cocostudio/CocosStudioExport.h"
+#include "editor-support/cocostudio/DictionaryHelper.h"
+#include "editor-support/cocostudio/CocosStudioExport.h"
 
 namespace cocostudio {
 
@@ -65,9 +65,11 @@ public:
     void setTarget(const std::function<void(cocos2d::Ref* obj, void* doc)>& selector);
     cocos2d::Node* getNodeByTag(int nTag);
     inline AttachComponentType getAttachComponentType(){return _attachComponent;}
-private:
+CC_CONSTRUCTOR_ACCESS:
     SceneReader(void);
     virtual ~SceneReader(void);
+    
+private:
     std::string getComponentClassName(const std::string& name);
 
     cocos2d::Component* createComponent(const std::string classname);

@@ -27,13 +27,17 @@
 
 #include "../UIScene.h"
 
+DEFINE_TEST_SUITE(UITextBMFontTests);
+
 class UITextBMFontTest : public UIScene
 {
 public:
-    bool init();
-    
+    CREATE_FUNC(UITextBMFontTest)
+
+    virtual bool init() override;
+    void printWidgetResources(cocos2d::Ref* sender);
 protected:
-    UI_SCENE_CREATE_FUNC(UITextBMFontTest)
+    cocos2d::ui::TextBMFont* _textBMFont;
 };
 
 #endif /* defined(__TestCpp__UITextBMFontTest__) */

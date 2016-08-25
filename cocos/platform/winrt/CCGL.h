@@ -26,6 +26,29 @@ THE SOFTWARE.
 #ifndef __CCGL_H__
 #define __CCGL_H__
 
-#include "CCGL_Angle.h"
+#define GL_BGRA						GL_BGRA_EXT
+#define	glClearDepth				glClearDepthf
+#define GL_WRITE_ONLY				GL_WRITE_ONLY_OES
+
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
+#include "EGL/egl.h"
+#include "EGL/eglext.h"
+#include "EGL/eglplatform.h"
+#include "GLES2/gl2.h"
+#include "GLES2/gl2ext.h"
+#include "GLES3/gl3.h"
+
+#define glClearDepth                glClearDepthf
+#define glDeleteVertexArrays        glDeleteVertexArraysOES
+#define glGenVertexArrays           glGenVertexArraysOES
+#define glBindVertexArray           glBindVertexArrayOES
+#define glMapBuffer                 glMapBufferOES
+#define glUnmapBuffer               glUnmapBufferOES
+
+#define GL_WRITE_ONLY               GL_WRITE_ONLY_OES
+
+#endif
+
+
 
 #endif // __CCGL_H__

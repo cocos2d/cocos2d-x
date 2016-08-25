@@ -1,7 +1,8 @@
 #include "LabelTest.h"
 #include "../testResource.h"
-#include "renderer/CCRenderer.h"
-#include "renderer/CCCustomCommand.h"
+#include "cocos2d.h"
+
+USING_NS_CC;
 
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
@@ -30,137 +31,40 @@ enum {
     kTagSprite8,
 };
 
-//------------------------------------------------------------------
-//
-// AtlasDemo
-//
-//------------------------------------------------------------------
-
-enum
+LabelTests::LabelTests()
 {
-    IDC_NEXT = 100,
-    IDC_BACK,
-    IDC_RESTART
-};
-
-Layer* nextAtlasAction();
-Layer* backAtlasAction();
-Layer* restartAtlasAction();
-
-static int sceneIdx = -1; 
-
-static std::function<Layer*()> createFunctions[] =
-{
-    CL(LabelAtlasTest),
-    CL(LabelAtlasColorTest),
-    CL(Atlas3),
-    CL(Atlas4),
-    CL(Atlas5),
-    CL(Atlas6),
-    CL(AtlasBitmapColor),
-    CL(AtlasFastBitmap),
-    CL(BitmapFontMultiLine),
-    CL(LabelsEmpty),
-    CL(LabelBMFontHD),
-    CL(LabelAtlasHD),
-    CL(LabelGlyphDesigner),
-    CL(LabelTTFTest),
-    CL(LabelTTFMultiline),
-    CL(LabelTTFChinese),
-    CL(LabelBMFontChinese),
-    CL(BitmapFontMultiLineAlignment),
-    CL(LabelTTFA8Test),
-    CL(BMFontOneAtlas),
-    CL(BMFontUnicode),
-    CL(BMFontInit),
-    CL(TTFFontInit),
-    CL(Issue1343),
-    CL(LabelTTFAlignment),
-    CL(LabelBMFontBounds),
-    CL(TTFFontShadowAndStroke),
+    ADD_TEST_CASE(LabelAtlasTest);
+    ADD_TEST_CASE(LabelAtlasColorTest);
+    ADD_TEST_CASE(Atlas3);
+    ADD_TEST_CASE(Atlas4);
+    ADD_TEST_CASE(Atlas5);
+    ADD_TEST_CASE(Atlas6);
+    ADD_TEST_CASE(AtlasBitmapColor);
+    ADD_TEST_CASE(AtlasFastBitmap);
+    ADD_TEST_CASE(BitmapFontMultiLine);
+    ADD_TEST_CASE(LabelsEmpty);
+    ADD_TEST_CASE(LabelBMFontHD);
+    ADD_TEST_CASE(LabelAtlasHD);
+    ADD_TEST_CASE(LabelGlyphDesigner);
+    ADD_TEST_CASE(LabelTTFTest);
+    ADD_TEST_CASE(LabelTTFMultiline);
+    ADD_TEST_CASE(LabelTTFChinese);
+    ADD_TEST_CASE(LabelBMFontChinese);
+    ADD_TEST_CASE(BitmapFontMultiLineAlignment);
+    ADD_TEST_CASE(LabelTTFOpacityTest);
+    ADD_TEST_CASE(BMFontOneAtlas);
+    ADD_TEST_CASE(BMFontUnicode);
+    ADD_TEST_CASE(BMFontInit);
+    ADD_TEST_CASE(TTFFontInit);
+    ADD_TEST_CASE(Issue1343);
+    ADD_TEST_CASE(LabelTTFAlignment);
+    ADD_TEST_CASE(LabelBMFontBounds);
+    ADD_TEST_CASE(TTFFontShadowAndStroke);
     // should be moved to another test
-    CL(Atlas1),
-    CL(LabelBMFontCrashTest),
-	CL(LabelBMFontBinaryFormat),
-};
-
-#define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
-
-Layer* nextAtlasAction()
-{
-    sceneIdx++;
-    sceneIdx = sceneIdx % MAX_LAYER;
-
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
+    ADD_TEST_CASE(Atlas1);
+    ADD_TEST_CASE(LabelBMFontCrashTest);
+	ADD_TEST_CASE(LabelBMFontBinaryFormat);
 }
-
-Layer* backAtlasAction()
-{
-    sceneIdx--;
-    int total = MAX_LAYER;
-    if( sceneIdx < 0 )
-        sceneIdx += total;    
-    
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
-}
-
-Layer* restartAtlasAction()
-{
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
-} 
-
-
-AtlasDemo::AtlasDemo(void)
-{
-}
-
-AtlasDemo::~AtlasDemo(void)
-{
-}
-
-std::string AtlasDemo::title() const
-{
-    return "No title";
-}
-
-std::string AtlasDemo::subtitle() const
-{
-    return "";
-}
-
-void AtlasDemo::onEnter()
-{
-    BaseTest::onEnter();
-}
-
-void AtlasDemo::restartCallback(Ref* sender)
-{
-    auto s = new AtlasTestScene();
-    s->addChild(restartAtlasAction()); 
-
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void AtlasDemo::nextCallback(Ref* sender)
-{
-    auto s = new AtlasTestScene();
-    s->addChild( nextAtlasAction() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void AtlasDemo::backCallback(Ref* sender)
-{
-    auto s = new AtlasTestScene();
-    s->addChild( backAtlasAction() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
-} 
-
 
 //------------------------------------------------------------------
 //
@@ -257,8 +161,7 @@ LabelAtlasTest::LabelAtlasTest()
     label2->setPosition( Vec2(10,200) );
     label2->setOpacity( 32 );
 
-    schedule(schedule_selector(LabelAtlasTest::step)); 
-    
+    schedule(CC_CALLBACK_1(LabelAtlasTest::step, this), "step_key");
 }
 
 void LabelAtlasTest::step(float dt)
@@ -313,7 +216,7 @@ LabelAtlasColorTest::LabelAtlasColorTest()
 
     _time = 0;
     
-    schedule( schedule_selector(LabelAtlasColorTest::step) ); //:@selector(step:)];
+    schedule(CC_CALLBACK_1(LabelAtlasColorTest::step, this), "step_key");
 }
 
 void LabelAtlasColorTest::actionFinishCallback()
@@ -438,7 +341,7 @@ Atlas3::Atlas3()
     label2->setPosition( VisibleRect::center() );
     label3->setPosition( VisibleRect::rightTop() );
 
-    schedule( schedule_selector(Atlas3::step) );//:@selector(step:)];
+    schedule(CC_CALLBACK_1(Atlas3::step, this), "step_key");
 }
 
 void Atlas3::step(float dt)
@@ -484,11 +387,16 @@ Atlas4::Atlas4()
 {
     _time = 0;
 
+    auto s = Director::getInstance()->getWinSize();
+    
+    auto drawNode = DrawNode::create();
+    drawNode->drawLine( Vec2(0, s.height/2), Vec2(s.width, s.height/2), Color4F(1.0, 1.0, 1.0, 1.0) );
+    drawNode->drawLine( Vec2(s.width/2, 0), Vec2(s.width/2, s.height), Color4F(1.0, 1.0, 1.0, 1.0) );
+    addChild(drawNode, -1);
+
     // Upper Label
     auto label = LabelBMFont::create("Bitmap Font Atlas", "fonts/bitmapFontTest.fnt");
     addChild(label);
-    
-    auto s = Director::getInstance()->getWinSize();
     
     label->setPosition( Vec2(s.width/2, s.height/2) );
     label->setAnchorPoint( Vec2::ANCHOR_MIDDLE );
@@ -529,28 +437,7 @@ Atlas4::Atlas4()
     auto lastChar = (Sprite*) label2->getChildByTag(3);
     lastChar->runAction( rot_4ever->clone() );
     
-    schedule( schedule_selector(Atlas4::step), 0.1f);
-}
-
-void Atlas4::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
-{
-    _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(Atlas4::onDraw, this, transform, flags);
-    renderer->addCommand(&_customCommand);
-}
-
-void Atlas4::onDraw(const Mat4 &transform, uint32_t flags)
-{
-    Director* director = Director::getInstance();
-    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
-    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, transform);
-
-    auto s = Director::getInstance()->getWinSize();
-    DrawPrimitives::drawLine( Vec2(0, s.height/2), Vec2(s.width, s.height/2) );
-    DrawPrimitives::drawLine( Vec2(s.width/2, 0), Vec2(s.width/2, s.height) );
-
-    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    schedule(CC_CALLBACK_1(Atlas4::step, this), 0.1f, "step_key");
 }
 
 void Atlas4::step(float dt)
@@ -815,7 +702,7 @@ LabelsEmpty::LabelsEmpty()
     addChild(label3, 0, kTagBitmapAtlas3);
     label3->setPosition(Vec2(s.width/2, 0+100));
 
-    schedule(schedule_selector(LabelsEmpty::updateStrings), 1.0f);
+    schedule(CC_CALLBACK_1(LabelsEmpty::updateStrings, this), 1.0f, "update_strings_key");
 
     setEmpty = false;
 }
@@ -932,15 +819,6 @@ std::string LabelGlyphDesigner::title() const
 std::string LabelGlyphDesigner::subtitle() const
 {
     return "You should see a font with shawdows and outline";
-}
-
-void AtlasTestScene::runThisTest()
-{
-    sceneIdx = -1;
-    auto layer = nextAtlasAction();
-    addChild(layer);
-
-    Director::getInstance()->replaceScene(this);
 }
 
 //------------------------------------------------------------------
@@ -1343,18 +1221,17 @@ void BitmapFontMultiLineAlignment::snapArrowsToEdge()
         this->_labelShouldRetain->getPosition().y));
 }
 
-/// LabelTTFA8Test
-LabelTTFA8Test::LabelTTFA8Test()
+/// LabelTTFOpacityTest
+LabelTTFOpacityTest::LabelTTFOpacityTest()
 {
     auto s = Director::getInstance()->getWinSize();
 
     auto layer = LayerColor::create(Color4B(128, 128, 128, 255));
     addChild(layer, -10);
 
-    // LabelBMFont
-    auto label1 = LabelTTF::create("Testing A8 Format", "Marker Felt", 48);
+    auto label1 = LabelTTF::create("Testing opacity", "Marker Felt", 48);
     addChild(label1);
-    label1->setColor(Color3B::RED);
+    label1->setFontFillColor(Color3B::RED);
     label1->setPosition(Vec2(s.width/2, s.height/2));
 
     auto fadeOut = FadeOut::create(2);
@@ -1364,12 +1241,12 @@ LabelTTFA8Test::LabelTTFA8Test()
     label1->runAction(forever);
 }
 
-std::string LabelTTFA8Test::title() const
+std::string LabelTTFOpacityTest::title() const
 {
-    return "Testing A8 Format";
+    return "Testing opacity";
 }
 
-std::string LabelTTFA8Test::subtitle() const
+std::string LabelTTFOpacityTest::subtitle() const
 {
     return "RED label, fading In and Out in the center of the screen";
 }
@@ -1556,11 +1433,7 @@ TTFFontShadowAndStroke::TTFFontShadowAndStroke()
     strokeShaodwTextDef._fontFillColor   = tintColorBlue;
     
     // shadow + stroke label
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
-    auto fontStrokeAndShadow = LabelTTF::createWithFontDefinition("Stroke && Shadow Blue Text", strokeShaodwTextDef);
-#else
-    auto fontStrokeAndShadow = LabelTTF::createWithFontDefinition("Stroke &Shadow Blue Text", strokeShaodwTextDef);
-#endif 
+    auto fontStrokeAndShadow = LabelTTF::createWithFontDefinition("Stroke & Shadow Blue Text", strokeShaodwTextDef);
     
     // add label to the scene
     this->addChild(fontStrokeAndShadow);
@@ -1644,36 +1517,13 @@ LabelBMFontBounds::LabelBMFontBounds()
     addChild(layer, -10);
     
     // LabelBMFont
-    label1 = LabelBMFont::create("Testing Glyph Designer", "fonts/boundsTestFont.fnt");
+    auto label1 = LabelBMFont::create("Testing Glyph Designer", "fonts/boundsTestFont.fnt");
     
     addChild(label1);
     label1->setPosition(Vec2(s.width/2, s.height/2));
-}
-
-std::string LabelBMFontBounds::title() const
-{
-    return "Testing LabelBMFont Bounds";
-}
-
-std::string LabelBMFontBounds::subtitle() const
-{
-    return "You should see string enclosed by a box";
-}
-
-void LabelBMFontBounds::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
-{
-    _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(LabelBMFontBounds::onDraw, this, transform, flags);
-    renderer->addCommand(&_customCommand);
-}
-
-void LabelBMFontBounds::onDraw(const Mat4 &transform, uint32_t flags)
-{
-    Director* director = Director::getInstance();
-    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
-    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, transform);
-
+    
+    auto drawNode = DrawNode::create();
+    
     auto labelSize = label1->getContentSize();
     auto origin = Director::getInstance()->getWinSize();
     
@@ -1687,9 +1537,18 @@ void LabelBMFontBounds::onDraw(const Mat4 &transform, uint32_t flags)
         Vec2(labelSize.width + origin.width, labelSize.height + origin.height),
         Vec2(origin.width, labelSize.height + origin.height)
     };
-    DrawPrimitives::drawPoly(vertices, 4, true);
+    drawNode->drawPoly(vertices, 4, true, Color4F(1.0, 1.0, 1.0, 1.0));
+    addChild(drawNode);
+}
 
-    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+std::string LabelBMFontBounds::title() const
+{
+    return "Testing LabelBMFont Bounds";
+}
+
+std::string LabelBMFontBounds::subtitle() const
+{
+    return "You should see string enclosed by a box";
 }
 
 // LabelBMFontCrashTest
@@ -1699,7 +1558,7 @@ void LabelBMFontCrashTest::onEnter()
     
     auto winSize = Director::getInstance()->getWinSize();
     //Create a label and add it
-    auto label1 = new LabelBMFont();
+    auto label1 = new (std::nothrow) LabelBMFont();
     label1->initWithString("test", "fonts/bitmapFontTest2.fnt");
     this->addChild(label1);
     // Visit will call draw where the function "ccGLBindVAO(m_uVAOname);" will be invoked.

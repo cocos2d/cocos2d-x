@@ -5,13 +5,17 @@
 
 #include "../UIScene.h"
 
+DEFINE_TEST_SUITE(UITextAtlasTests);
+
 class UITextAtlasTest : public UIScene
 {
-public:    
-    bool init();
-    
+public:
+    CREATE_FUNC(UITextAtlasTest);
+
+    virtual bool init() override;
+    void printWidgetResources(cocos2d::Ref* sender);
 protected:
-    UI_SCENE_CREATE_FUNC(UITextAtlasTest)
+    cocos2d::ui::TextAtlas* _textAtlas;
 };
 
 #endif /* defined(__TestCpp__UITextAtlasTest__) */

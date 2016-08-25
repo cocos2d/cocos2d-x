@@ -1,7 +1,7 @@
 #ifndef _CCB_CCCONTROLLOADER_H_
 #define _CCB_CCCONTROLLOADER_H_
 
-#include "CCNodeLoader.h"
+#include "editor-support/cocosbuilder/CCNodeLoader.h"
 #include "extensions/GUI/CCControlExtension/CCControl.h"
 
 namespace cocosbuilder {
@@ -9,7 +9,7 @@ namespace cocosbuilder {
 /* Forward declaration. */
 class CCBReader;
 
-class ControlLoader : public NodeLoader {
+class CC_DLL ControlLoader : public NodeLoader {
 public:
     /**
     * @js NA

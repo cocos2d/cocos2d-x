@@ -2,7 +2,7 @@
 #define _CCB_CCNODELOADER_H_
 
 #include "extensions/GUI/CCControlExtension/CCInvocation.h"
-#include "CCBReader.h"
+#include "editor-support/cocosbuilder/CCBReader.h"
 #include "extensions/GUI/CCControlExtension/CCControl.h"
 
 namespace cocosbuilder {
@@ -42,7 +42,7 @@ struct BlockControlData {
 /* Forward declaration. */
 class CCBReader;
 
-class NodeLoader : public cocos2d::Ref {
+class CC_DLL NodeLoader : public cocos2d::Ref {
     public:
         /**
          * @js NA

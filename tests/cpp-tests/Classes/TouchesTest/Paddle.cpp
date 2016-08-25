@@ -1,5 +1,7 @@
 #include "Paddle.h"
 
+USING_NS_CC;
+
 Paddle::Paddle(void)
 {
 }
@@ -16,7 +18,7 @@ Rect Paddle::getRect()
 
 Paddle* Paddle::createWithTexture(Texture2D* aTexture)
 {
-    Paddle* pPaddle = new Paddle();
+    Paddle* pPaddle = new (std::nothrow) Paddle();
     pPaddle->initWithTexture(aTexture);
     pPaddle->autorelease();
 

@@ -1,0 +1,214 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\auto\jsb_cocos2dx_3d_auto.cpp" />
+    <ClCompile Include="..\auto\jsb_cocos2dx_3d_extension_auto.cpp" />
+    <ClCompile Include="..\auto\jsb_cocos2dx_auto.cpp" />
+    <ClCompile Include="..\auto\jsb_cocos2dx_audioengine_auto.cpp" />
+    <ClCompile Include="..\auto\jsb_cocos2dx_builder_auto.cpp" />
+    <ClCompile Include="..\auto\jsb_cocos2dx_extension_auto.cpp" />
+    <ClCompile Include="..\auto\jsb_cocos2dx_navmesh_auto.cpp" />
+    <ClCompile Include="..\auto\jsb_cocos2dx_physics3d_auto.cpp" />
+    <ClCompile Include="..\auto\jsb_cocos2dx_spine_auto.cpp" />
+    <ClCompile Include="..\auto\jsb_cocos2dx_studio_auto.cpp" />
+    <ClCompile Include="..\auto\jsb_cocos2dx_ui_auto.cpp" />
+    <ClCompile Include="..\manual\3d\jsb_cocos2dx_3d_manual.cpp" />
+    <ClCompile Include="..\auto\js_bindings_chipmunk_auto_classes.cpp" />
+    <ClCompile Include="..\auto\js_bindings_chipmunk_functions.cpp" />
+    <ClCompile Include="..\manual\chipmunk\js_bindings_chipmunk_manual.cpp" />
+    <ClCompile Include="..\manual\chipmunk\js_bindings_chipmunk_registration.cpp" />
+    <ClCompile Include="..\manual\cocos2d_specifics.cpp" />
+    <ClCompile Include="..\manual\cocosbuilder\js_bindings_ccbreader.cpp" />
+    <ClCompile Include="..\manual\cocostudio\jsb_cocos2dx_studio_conversions.cpp" />
+    <ClCompile Include="..\manual\cocostudio\jsb_cocos2dx_studio_manual.cpp" />
+    <ClCompile Include="..\manual\component\CCComponentJS.cpp" />
+    <ClCompile Include="..\manual\extension\jsb_cocos2dx_extension_manual.cpp" />
+    <ClCompile Include="..\manual\jsb_event_dispatcher_manual.cpp" />
+    <ClCompile Include="..\manual\jsb_opengl_functions.cpp" />
+    <ClCompile Include="..\manual\jsb_opengl_manual.cpp" />
+    <ClCompile Include="..\manual\jsb_opengl_registration.cpp" />
+    <ClCompile Include="..\manual\js_bindings_core.cpp" />
+    <ClCompile Include="..\manual\js_bindings_opengl.cpp" />
+    <ClCompile Include="..\manual\js_manual_conversions.cpp" />
+    <ClCompile Include="..\manual\js_module_register.cpp" />
+    <ClCompile Include="..\manual\localstorage\js_bindings_system_functions.cpp" />
+    <ClCompile Include="..\manual\localstorage\js_bindings_system_registration.cpp" />
+    <ClCompile Include="..\manual\navmesh\jsb_cocos2dx_navmesh_conversions.cpp" />
+    <ClCompile Include="..\manual\navmesh\jsb_cocos2dx_navmesh_manual.cpp" />
+    <ClCompile Include="..\manual\network\jsb_socketio.cpp" />
+    <ClCompile Include="..\manual\network\jsb_websocket.cpp" />
+    <ClCompile Include="..\manual\network\XMLHTTPRequest.cpp" />
+    <ClCompile Include="..\manual\physics3d\jsb_cocos2dx_physics3d_manual.cpp" />
+    <ClCompile Include="..\manual\ScriptingCore.cpp" />
+    <ClCompile Include="..\manual\spine\jsb_cocos2dx_spine_manual.cpp" />
+    <ClCompile Include="..\manual\ui\jsb_cocos2dx_ui_manual.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\auto\jsb_cocos2dx_3d_auto.hpp" />
+    <ClInclude Include="..\auto\jsb_cocos2dx_3d_extension_auto.hpp" />
+    <ClInclude Include="..\auto\jsb_cocos2dx_auto.hpp" />
+    <ClInclude Include="..\auto\jsb_cocos2dx_audioengine_auto.hpp" />
+    <ClInclude Include="..\auto\jsb_cocos2dx_builder_auto.hpp" />
+    <ClInclude Include="..\auto\jsb_cocos2dx_extension_auto.hpp" />
+    <ClInclude Include="..\auto\jsb_cocos2dx_navmesh_auto.hpp" />
+    <ClInclude Include="..\auto\jsb_cocos2dx_physics3d_auto.hpp" />
+    <ClInclude Include="..\auto\jsb_cocos2dx_spine_auto.hpp" />
+    <ClInclude Include="..\auto\jsb_cocos2dx_studio_auto.hpp" />
+    <ClInclude Include="..\auto\jsb_cocos2dx_ui_auto.hpp" />
+    <ClInclude Include="..\auto\js_bindings_chipmunk_auto_classes.h" />
+    <ClInclude Include="..\auto\js_bindings_chipmunk_auto_classes_registration.h" />
+    <ClInclude Include="..\auto\js_bindings_chipmunk_functions.h" />
+    <ClInclude Include="..\auto\js_bindings_chipmunk_functions_registration.h" />
+    <ClInclude Include="..\manual\3d\jsb_cocos2dx_3d_manual.h" />
+    <ClInclude Include="..\manual\chipmunk\js_bindings_chipmunk_manual.h" />
+    <ClInclude Include="..\manual\chipmunk\js_bindings_chipmunk_registration.h" />
+    <ClInclude Include="..\manual\cocos2d_specifics.hpp" />
+    <ClInclude Include="..\manual\cocosbuilder\cocosbuilder_specifics.hpp" />
+    <ClInclude Include="..\manual\cocosbuilder\js_bindings_ccbreader.h" />
+    <ClInclude Include="..\manual\cocostudio\jsb_cocos2dx_studio_conversions.h" />
+    <ClInclude Include="..\manual\cocostudio\jsb_cocos2dx_studio_manual.h" />
+    <ClInclude Include="..\manual\component\CCComponentJS.h" />
+    <ClInclude Include="..\manual\extension\jsb_cocos2dx_extension_manual.h" />
+    <ClInclude Include="..\manual\js-BindingsExport.h" />
+    <ClInclude Include="..\manual\jsb_event_dispatcher_manual.h" />
+    <ClInclude Include="..\manual\jsb_helper.h" />
+    <ClInclude Include="..\manual\jsb_opengl_functions.h" />
+    <ClInclude Include="..\manual\jsb_opengl_manual.h" />
+    <ClInclude Include="..\manual\jsb_opengl_registration.h" />
+    <ClInclude Include="..\manual\js_bindings_config.h" />
+    <ClInclude Include="..\manual\js_bindings_core.h" />
+    <ClInclude Include="..\manual\js_bindings_opengl.h" />
+    <ClInclude Include="..\manual\js_manual_conversions.h" />
+    <ClInclude Include="..\manual\js_module_register.h" />
+    <ClInclude Include="..\manual\localstorage\js_bindings_system_functions.h" />
+    <ClInclude Include="..\manual\localstorage\js_bindings_system_functions_registration.h" />
+    <ClInclude Include="..\manual\localstorage\js_bindings_system_registration.h" />
+    <ClInclude Include="..\manual\navmesh\jsb_cocos2dx_navmesh_conversions.h" />
+    <ClInclude Include="..\manual\navmesh\jsb_cocos2dx_navmesh_manual.h" />
+    <ClInclude Include="..\manual\network\jsb_socketio.h" />
+    <ClInclude Include="..\manual\network\jsb_websocket.h" />
+    <ClInclude Include="..\manual\network\XMLHTTPRequest.h" />
+    <ClInclude Include="..\manual\physics3d\jsb_cocos2dx_physics3d_manual.h" />
+    <ClInclude Include="..\manual\ScriptingCore.h" />
+    <ClInclude Include="..\manual\spidermonkey_specifics.h" />
+    <ClInclude Include="..\manual\spine\jsb_cocos2dx_spine_manual.h" />
+    <ClInclude Include="..\manual\ui\jsb_cocos2dx_ui_manual.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\2d\libcocos2d.vcxproj">
+      <Project>{98a51ba8-fc3a-415b-ac8f-8c7bd464e93e}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{39379840-825A-45A0-B363-C09FFEF864BD}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>libjscocos2d</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0'">v120</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v120_xp</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '14.0'">v140</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '14.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v140_xp</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0'">v120</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v120_xp</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '14.0'">v140</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '14.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v140_xp</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\2d\cocos2d_headers.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\2d\cocos2d_headers.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration).win32\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IntDir>$(Configuration).win32\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration).win32\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IntDir>$(Configuration).win32\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;_LIB;COCOS2D_DEBUG=1;XP_WIN;JS_HAVE___INTN;JS_INTPTR_TYPE=int;COCOS2D_JAVASCRIPT=1;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_USRJSSTATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)..;$(EngineRoot);$(EngineRoot)cocos;$(EngineRoot)extensions;$(EngineRoot)external;$(ProjectDir)..\auto;$(ProjectDir)..\manual;$(ProjectDir)..\manual\cocostudio;$(ProjectDir)..\manual\navmesh;$(ProjectDir)..\manual\spine;$(ProjectDir)..\..\..\..\external\spidermonkey\include\win32;$(EngineRoot)external\chipmunk\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4068;4101;4800;4251;4244;4099;4083;4700;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <MinimalRebuild>false</MinimalRebuild>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <PreBuildEvent>
+      <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
+
+xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\spidermonkey\prebuilt\win32\*.*" "$(OutDir)"
+</Command>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MinSpace</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_LIB;XP_WIN;JS_HAVE___INTN;JS_INTPTR_TYPE=int;COCOS2D_JAVASCRIPT=1;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_USRJSSTATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)..;$(EngineRoot);$(EngineRoot)cocos;$(EngineRoot)extensions;$(EngineRoot)external;$(ProjectDir)..\auto;$(ProjectDir)..\manual;$(ProjectDir)..\manual\cocostudio;$(ProjectDir)..\manual\navmesh;$(ProjectDir)..\manual\spine;$(ProjectDir)..\..\..\..\external\spidermonkey\include\win32;$(EngineRoot)external\chipmunk\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4068;4101;4800;4251;4244;4099;4083;4700;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <DebugInformationFormat>None</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <PreBuildEvent>
+      <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
+
+xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\spidermonkey\prebuilt\win32\*.*" "$(OutDir)"
+</Command>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

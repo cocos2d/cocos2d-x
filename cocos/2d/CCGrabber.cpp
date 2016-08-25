@@ -23,7 +23,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#include "CCGrabber.h"
+#include "2d/CCGrabber.h"
 #include "base/ccMacros.h"
 #include "renderer/CCTexture2D.h"
 
@@ -68,7 +68,7 @@ void Grabber::beforeRender(Texture2D *texture)
     
     // save clear color
     glGetFloatv(GL_COLOR_CLEAR_VALUE, _oldClearColor);
-    // BUG XXX: doesn't work with RGB565.
+    // FIXME: doesn't work with RGB565.
 
     glClearColor(0, 0, 0, 0);
 

@@ -12,13 +12,15 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     
     <application android:label="@string/app_name"
-		android:icon="@drawable/icon">
+        android:icon="@drawable/icon">
 
-		<!-- Tell Cocos2dxActivity the name of our .so -->
-		<meta-data android:name="android.app.lib_name"
-				   android:value="game_controller_test" />
+        <!-- Tell Cocos2dxActivity the name of our .so -->
+        <meta-data android:name="android.app.lib_name"
+                   android:value="game_controller_test" />
 
         <activity android:name=".AppActivity"
                   android:label="@string/app_name"
@@ -31,6 +33,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
+        <activity 
+            android:name="com.nibiru.lib.controller.InfoActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen"/>
+        <service android:name="com.nibiru.lib.utils.NibiruControllerService" android:process=":controller" >
+            <intent-filter>
+                <action android:name="com.nibiru.controller.service" />
+            </intent-filter>
+        </service>
+        
     </application>
     <supports-screens android:anyDensity="true"
                       android:smallScreens="true"

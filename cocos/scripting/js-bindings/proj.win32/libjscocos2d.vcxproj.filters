@@ -1,0 +1,323 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="manual">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="auto">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="manual\chipmunk">
+      <UniqueIdentifier>{05fe556b-0330-48c1-bfe1-0e7119db20a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="manual\cocosbuilder">
+      <UniqueIdentifier>{1a494d10-c2d0-498c-8b80-2f45fee36640}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="manual\cocostudio">
+      <UniqueIdentifier>{af265b68-4f27-4561-b7ab-299f21212e08}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="manual\extension">
+      <UniqueIdentifier>{f4329991-ce95-4f10-9442-92d63bd6aea1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="manual\localstorage">
+      <UniqueIdentifier>{3248ad6e-d03d-4cce-8846-81aa376fc480}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="manual\network">
+      <UniqueIdentifier>{7b278f66-4153-44d8-ba60-d7b7feed8a17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="manual\spine">
+      <UniqueIdentifier>{59756149-2598-457f-ae42-ad675d5f3783}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="manual\ui">
+      <UniqueIdentifier>{db4d6533-8c6a-4a18-bdd6-c9b98b897458}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="manual\3d">
+      <UniqueIdentifier>{3d1a97d2-47a9-4fc2-8458-a58c4f1fc111}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="manual\experimental">
+      <UniqueIdentifier>{9f37ec66-1e00-4015-baa6-dabdf755f0ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="manual\physics3d">
+      <UniqueIdentifier>{3aaaf02d-80d8-4339-b4cd-89d89ade5293}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="manual\navmesh">
+      <UniqueIdentifier>{8c9f2cd3-9065-4bf5-a073-7697217022e2}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\auto\jsb_cocos2dx_auto.cpp">
+      <Filter>auto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\auto\jsb_cocos2dx_audioengine_auto.cpp">
+      <Filter>auto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\js_manual_conversions.cpp">
+      <Filter>manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\jsb_opengl_functions.cpp">
+      <Filter>manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\jsb_opengl_manual.cpp">
+      <Filter>manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\jsb_opengl_registration.cpp">
+      <Filter>manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\ScriptingCore.cpp">
+      <Filter>manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\cocos2d_specifics.cpp">
+      <Filter>manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\js_bindings_core.cpp">
+      <Filter>manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\js_bindings_opengl.cpp">
+      <Filter>manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\jsb_event_dispatcher_manual.cpp">
+      <Filter>manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\auto\jsb_cocos2dx_builder_auto.cpp">
+      <Filter>auto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\auto\jsb_cocos2dx_extension_auto.cpp">
+      <Filter>auto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\auto\jsb_cocos2dx_spine_auto.cpp">
+      <Filter>auto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\auto\jsb_cocos2dx_studio_auto.cpp">
+      <Filter>auto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\auto\jsb_cocos2dx_ui_auto.cpp">
+      <Filter>auto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\auto\js_bindings_chipmunk_auto_classes.cpp">
+      <Filter>auto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\auto\js_bindings_chipmunk_functions.cpp">
+      <Filter>auto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\chipmunk\js_bindings_chipmunk_manual.cpp">
+      <Filter>manual\chipmunk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\chipmunk\js_bindings_chipmunk_registration.cpp">
+      <Filter>manual\chipmunk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\cocosbuilder\js_bindings_ccbreader.cpp">
+      <Filter>manual\cocosbuilder</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\cocostudio\jsb_cocos2dx_studio_manual.cpp">
+      <Filter>manual\cocostudio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\extension\jsb_cocos2dx_extension_manual.cpp">
+      <Filter>manual\extension</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\localstorage\js_bindings_system_functions.cpp">
+      <Filter>manual\localstorage</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\localstorage\js_bindings_system_registration.cpp">
+      <Filter>manual\localstorage</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\network\jsb_socketio.cpp">
+      <Filter>manual\network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\network\jsb_websocket.cpp">
+      <Filter>manual\network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\network\XMLHTTPRequest.cpp">
+      <Filter>manual\network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\spine\jsb_cocos2dx_spine_manual.cpp">
+      <Filter>manual\spine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\ui\jsb_cocos2dx_ui_manual.cpp">
+      <Filter>manual\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\cocostudio\jsb_cocos2dx_studio_conversions.cpp">
+      <Filter>manual\cocostudio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\auto\jsb_cocos2dx_3d_auto.cpp">
+      <Filter>auto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\auto\jsb_cocos2dx_3d_extension_auto.cpp">
+      <Filter>auto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\3d\jsb_cocos2dx_3d_manual.cpp">
+      <Filter>manual\3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\auto\jsb_cocos2dx_physics3d_auto.cpp">
+      <Filter>auto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\physics3d\jsb_cocos2dx_physics3d_manual.cpp">
+      <Filter>manual\physics3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\auto\jsb_cocos2dx_navmesh_auto.cpp">
+      <Filter>auto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\navmesh\jsb_cocos2dx_navmesh_manual.cpp">
+      <Filter>manual\navmesh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\navmesh\jsb_cocos2dx_navmesh_conversions.cpp">
+      <Filter>manual\navmesh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\component\CCComponentJS.cpp">
+      <Filter>manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\js_module_register.cpp">
+      <Filter>manual</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\auto\jsb_cocos2dx_auto.hpp">
+      <Filter>auto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\auto\jsb_cocos2dx_audioengine_auto.hpp">
+      <Filter>auto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\js_bindings_opengl.h">
+      <Filter>manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\js_manual_conversions.h">
+      <Filter>manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\jsb_helper.h">
+      <Filter>manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\jsb_opengl_functions.h">
+      <Filter>manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\jsb_opengl_manual.h">
+      <Filter>manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\jsb_opengl_registration.h">
+      <Filter>manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\ScriptingCore.h">
+      <Filter>manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\spidermonkey_specifics.h">
+      <Filter>manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\cocos2d_specifics.hpp">
+      <Filter>manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\js_bindings_config.h">
+      <Filter>manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\js_bindings_core.h">
+      <Filter>manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\jsb_event_dispatcher_manual.h">
+      <Filter>manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\auto\jsb_cocos2dx_builder_auto.hpp">
+      <Filter>auto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\auto\jsb_cocos2dx_extension_auto.hpp">
+      <Filter>auto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\auto\jsb_cocos2dx_spine_auto.hpp">
+      <Filter>auto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\auto\jsb_cocos2dx_studio_auto.hpp">
+      <Filter>auto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\auto\jsb_cocos2dx_ui_auto.hpp">
+      <Filter>auto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\auto\js_bindings_chipmunk_auto_classes.h">
+      <Filter>auto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\auto\js_bindings_chipmunk_auto_classes_registration.h">
+      <Filter>auto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\auto\js_bindings_chipmunk_functions.h">
+      <Filter>auto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\auto\js_bindings_chipmunk_functions_registration.h">
+      <Filter>auto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\chipmunk\js_bindings_chipmunk_manual.h">
+      <Filter>manual\chipmunk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\chipmunk\js_bindings_chipmunk_registration.h">
+      <Filter>manual\chipmunk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\cocosbuilder\cocosbuilder_specifics.hpp">
+      <Filter>manual\cocosbuilder</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\cocosbuilder\js_bindings_ccbreader.h">
+      <Filter>manual\cocosbuilder</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\cocostudio\jsb_cocos2dx_studio_manual.h">
+      <Filter>manual\cocostudio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\extension\jsb_cocos2dx_extension_manual.h">
+      <Filter>manual\extension</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\localstorage\js_bindings_system_functions.h">
+      <Filter>manual\localstorage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\localstorage\js_bindings_system_functions_registration.h">
+      <Filter>manual\localstorage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\localstorage\js_bindings_system_registration.h">
+      <Filter>manual\localstorage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\network\jsb_socketio.h">
+      <Filter>manual\network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\network\jsb_websocket.h">
+      <Filter>manual\network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\network\XMLHTTPRequest.h">
+      <Filter>manual\network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\spine\jsb_cocos2dx_spine_manual.h">
+      <Filter>manual\spine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\ui\jsb_cocos2dx_ui_manual.h">
+      <Filter>manual\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\cocostudio\jsb_cocos2dx_studio_conversions.h">
+      <Filter>manual\cocostudio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\auto\jsb_cocos2dx_3d_auto.hpp">
+      <Filter>auto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\auto\jsb_cocos2dx_3d_extension_auto.hpp">
+      <Filter>auto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\3d\jsb_cocos2dx_3d_manual.h">
+      <Filter>manual\3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\auto\jsb_cocos2dx_physics3d_auto.hpp">
+      <Filter>auto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\physics3d\jsb_cocos2dx_physics3d_manual.h">
+      <Filter>manual\physics3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\auto\jsb_cocos2dx_navmesh_auto.hpp">
+      <Filter>auto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\navmesh\jsb_cocos2dx_navmesh_manual.h">
+      <Filter>manual\navmesh</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\navmesh\jsb_cocos2dx_navmesh_conversions.h">
+      <Filter>manual\navmesh</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\component\CCComponentJS.h">
+      <Filter>auto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\js_module_register.h">
+      <Filter>manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\js-BindingsExport.h">
+      <Filter>manual</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

@@ -4,14 +4,14 @@
 #include "base/CCRef.h"
 #include "2d/CCMenuItem.h"
 
-#include "CCLayerLoader.h"
+#include "editor-support/cocosbuilder/CCLayerLoader.h"
 
 namespace cocosbuilder {
 
 /* Forward declaration. */
 class CCBReader;
 
-class MenuItemLoader : public NodeLoader {
+class CC_DLL MenuItemLoader : public NodeLoader {
 public:
     /**
      * @js NA

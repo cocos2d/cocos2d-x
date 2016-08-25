@@ -1,4 +1,4 @@
-require "src/EffectsTest/EffectsName"
+require "EffectsTest/EffectsName"
 
 
 local ActionIdx = -1

@@ -35,7 +35,7 @@ NS_CC_BEGIN
 
 SpriteFrame* SpriteFrame::create(const std::string& filename, const Rect& rect)
 {
-    SpriteFrame *spriteFrame = new SpriteFrame();
+    SpriteFrame *spriteFrame = new (std::nothrow) SpriteFrame();
     spriteFrame->initWithTextureFilename(filename, rect);
     spriteFrame->autorelease();
 
@@ -44,7 +44,7 @@ SpriteFrame* SpriteFrame::create(const std::string& filename, const Rect& rect)
 
 SpriteFrame* SpriteFrame::createWithTexture(Texture2D *texture, const Rect& rect)
 {
-    SpriteFrame *spriteFrame = new SpriteFrame();
+    SpriteFrame *spriteFrame = new (std::nothrow) SpriteFrame();
     spriteFrame->initWithTexture(texture, rect);
     spriteFrame->autorelease();
     
@@ -53,7 +53,7 @@ SpriteFrame* SpriteFrame::createWithTexture(Texture2D *texture, const Rect& rect
 
 SpriteFrame* SpriteFrame::createWithTexture(Texture2D* texture, const Rect& rect, bool rotated, const Vec2& offset, const Size& originalSize)
 {
-    SpriteFrame *spriteFrame = new SpriteFrame();
+    SpriteFrame *spriteFrame = new (std::nothrow) SpriteFrame();
     spriteFrame->initWithTexture(texture, rect, rotated, offset, originalSize);
     spriteFrame->autorelease();
 
@@ -62,14 +62,14 @@ SpriteFrame* SpriteFrame::createWithTexture(Texture2D* texture, const Rect& rect
 
 SpriteFrame* SpriteFrame::create(const std::string& filename, const Rect& rect, bool rotated, const Vec2& offset, const Size& originalSize)
 {
-    SpriteFrame *spriteFrame = new SpriteFrame();
+    SpriteFrame *spriteFrame = new (std::nothrow) SpriteFrame();
     spriteFrame->initWithTextureFilename(filename, rect, rotated, offset, originalSize);
     spriteFrame->autorelease();
 
     return spriteFrame;
 }
 
-SpriteFrame::SpriteFrame(void)
+SpriteFrame::SpriteFrame()
 : _rotated(false)
 , _texture(nullptr)
 {
@@ -104,6 +104,7 @@ bool SpriteFrame::initWithTexture(Texture2D* texture, const Rect& rect, bool rot
     _originalSizeInPixels = originalSize;
     _originalSize = CC_SIZE_PIXELS_TO_POINTS( _originalSizeInPixels );
     _rotated = rotated;
+    _anchorPoint = Vec2(NAN, NAN);
 
     return true;
 }
@@ -119,11 +120,12 @@ bool SpriteFrame::initWithTextureFilename(const std::string& filename, const Rec
     _originalSizeInPixels = originalSize;
     _originalSize = CC_SIZE_PIXELS_TO_POINTS( _originalSizeInPixels );
     _rotated = rotated;
+    _anchorPoint = Vec2(NAN, NAN);
 
     return true;
 }
 
-SpriteFrame::~SpriteFrame(void)
+SpriteFrame::~SpriteFrame()
 {
     CCLOGINFO("deallocing SpriteFrame: %p", this);
     CC_SAFE_RELEASE(_texture);
@@ -132,9 +134,10 @@ SpriteFrame::~SpriteFrame(void)
 SpriteFrame* SpriteFrame::clone() const
 {
 	// no copy constructor	
-    SpriteFrame *copy = new SpriteFrame();
-    copy->initWithTextureFilename(_textureFilename.c_str(), _rectInPixels, _rotated, _offsetInPixels, _originalSizeInPixels);
+    SpriteFrame *copy = new (std::nothrow) SpriteFrame();
+    copy->initWithTextureFilename(_textureFilename, _rectInPixels, _rotated, _offsetInPixels, _originalSizeInPixels);
     copy->setTexture(_texture);
+    copy->setPolygonInfo(_polygonInfo);
     copy->autorelease();
     return copy;
 }
@@ -173,6 +176,21 @@ void SpriteFrame::setOffsetInPixels(const Vec2& offsetInPixels)
     _offset = CC_POINT_PIXELS_TO_POINTS( _offsetInPixels );
 }
 
+const Vec2& SpriteFrame::getAnchorPoint() const
+{
+    return _anchorPoint;
+}
+
+void SpriteFrame::setAnchorPoint(const Vec2& anchorPoint)
+{
+    _anchorPoint = anchorPoint;
+}
+
+bool SpriteFrame::hasAnchorPoint() const
+{
+    return !std::isnan(_anchorPoint.x);
+}
+
 void SpriteFrame::setTexture(Texture2D * texture)
 {
     if( _texture != texture ) {
@@ -182,18 +200,32 @@ void SpriteFrame::setTexture(Texture2D * texture)
     }
 }
 
-Texture2D* SpriteFrame::getTexture(void)
+Texture2D* SpriteFrame::getTexture()
 {
     if( _texture ) {
         return _texture;
     }
 
-    if( _textureFilename.length() > 0 ) {
-        return Director::getInstance()->getTextureCache()->addImage(_textureFilename.c_str());
+    if( !_textureFilename.empty()) {
+        return Director::getInstance()->getTextureCache()->addImage(_textureFilename);
     }
     // no texture or texture filename
     return nullptr;
 }
 
-NS_CC_END
+void SpriteFrame::setPolygonInfo(const PolygonInfo &polygonInfo)
+{
+    _polygonInfo = polygonInfo;
+}
 
+const PolygonInfo& SpriteFrame::getPolygonInfo() const
+{
+    return _polygonInfo;
+}
+
+bool SpriteFrame::hasPolygonInfo() const
+{
+    return _polygonInfo.triangles.vertCount != 0;
+}
+
+NS_CC_END

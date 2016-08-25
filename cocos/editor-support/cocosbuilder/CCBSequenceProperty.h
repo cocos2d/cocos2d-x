@@ -3,11 +3,11 @@
 
 #include "base/CCRef.h"
 #include "base/CCVector.h"
-#include "CCBKeyframe.h"
+#include "editor-support/cocosbuilder/CCBKeyframe.h"
 
 namespace cocosbuilder {
 
-class CCBSequenceProperty : public cocos2d::Ref
+class CC_DLL CCBSequenceProperty : public cocos2d::Ref
 {
 public:
     /**

@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
 Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
@@ -26,8 +26,8 @@ THE SOFTWARE.
 #define __CCBATCHNODE_H__
 
 #include "2d/CCNode.h"
-#include "cocostudio/CCArmatureDefine.h"
-#include "cocostudio/CocosStudioExport.h"
+#include "editor-support/cocostudio/CCArmatureDefine.h"
+#include "editor-support/cocostudio/CocosStudioExport.h"
 
 namespace cocos2d {
     class GroupCommand;
@@ -40,7 +40,7 @@ class CC_STUDIO_DLL BatchNode : public cocos2d::Node
 public:
     static BatchNode *create();
 public:
-	/**
+    /**
      * @js ctor
      */
     BatchNode();

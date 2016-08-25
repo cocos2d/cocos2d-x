@@ -1,35 +1,16 @@
 #ifndef __CONFIGURATIONTEST_H__
 #define __CONFIGURATIONTEST_H__
 
-#include "../testBasic.h"
 #include "../BaseTest.h"
 
-USING_NS_CC;
+DEFINE_TEST_SUITE(ConfigurationTests);
 
-
-// the class inherit from TestScene
-// every Scene each test used must inherit from TestScene,
-// make sure the test have the menu item for back to main menu
-class ConfigurationTestScene : public TestScene
-{
-public:
-    virtual void runThisTest();
-};
-
-class ConfigurationBase : public BaseTest
+class ConfigurationBase : public TestCase
 {
 protected:
 
 public:
-    virtual void onEnter() override;
-    virtual void onExit() override;
-
     virtual std::string title() const override;
-    virtual std::string subtitle() const override;
-
-    void restartCallback(Ref* sender);
-    void nextCallback(Ref* sender);
-    void backCallback(Ref* sender);
 };
 
 class ConfigurationLoadConfig : public ConfigurationBase

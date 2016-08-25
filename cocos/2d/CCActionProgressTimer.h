@@ -1,7 +1,7 @@
 /****************************************************************************
 Copyright (C) 2010      Lam Pham
 Copyright (c) 2010-2012 cocos2d-x.org
-CopyRight (c) 2013-2014 Chukong Technologies Inc.
+CopyRight (c) 2013-2016 Chukong Technologies Inc.
  
 http://www.cocos2d-x.org
 
@@ -36,20 +36,27 @@ NS_CC_BEGIN
  */
 
 /**
-@brief Progress to percentage
+@brief Progress to percentage.
+@details This action show the target node from current percentage to the specified percentage.
+        You should specify the destination percentage when creating the action.
 @since v0.99.1
 */
 class CC_DLL ProgressTo : public ActionInterval
 {
 public:
-    /** Creates and initializes with a duration and a percent */
+    /** 
+     * @brief Create and initializes with a duration and a destination percentage.
+     * @param duration Specify the duration of the ProgressTo action. It's a value in seconds.
+     * @param percent Specify the destination percentage.
+     * @return If the creation success, return a pointer of ProgressTo action; otherwise, return nil.
+     */
     static ProgressTo* create(float duration, float percent);
 
     //
     // Overrides
     //
-	virtual ProgressTo* clone() const override;
-	virtual ProgressTo* reverse() const override;
+    virtual ProgressTo* clone() const override;
+    virtual ProgressTo* reverse() const override;
     virtual void startWithTarget(Node *target) override;
     virtual void update(float time) override;
     
@@ -57,7 +64,12 @@ CC_CONSTRUCTOR_ACCESS:
     ProgressTo() {}
     virtual ~ProgressTo() {}
 
-    /** Initializes with a duration and a percent */
+    /** 
+     * @brief Initializes with a duration and destination percentage. 
+     * @param duration Specify the duration of the ProgressTo action. It's a value in seconds.
+     * @param percent Specify the destination percentage.
+     * @return If the creation success, return true; otherwise, return false.
+     */
     bool initWithDuration(float duration, float percent);
 
 protected:
@@ -69,20 +81,26 @@ private:
 };
 
 /**
-@brief Progress from a percentage to another percentage
+@brief Progress from a percentage to another percentage.
 @since v0.99.1
 */
 class CC_DLL ProgressFromTo : public ActionInterval
 {
 public:
-    /** Creates and initializes the action with a duration, a "from" percentage and a "to" percentage */
+    /** 
+     * @brief Create and initializes the action with a duration, a "from" percentage and a "to" percentage.
+     * @param duration Specify the duration of the ProgressFromTo action. It's a value in seconds.
+     * @param fromPercentage Specify the source percentage.
+     * @param toPercentage Specify the destination percentage.
+     * @return If the creation success, return a pointer of ProgressFromTo action; otherwise, return nil.
+     */
     static ProgressFromTo* create(float duration, float fromPercentage, float toPercentage);
 
     //
     // Overrides
     //
-	virtual ProgressFromTo* clone() const override;
-	virtual ProgressFromTo* reverse() const override;
+    virtual ProgressFromTo* clone() const override;
+    virtual ProgressFromTo* reverse() const override;
     virtual void startWithTarget(Node *target) override;
     virtual void update(float time) override;
     
@@ -90,7 +108,13 @@ CC_CONSTRUCTOR_ACCESS:
     ProgressFromTo() {}
     virtual ~ProgressFromTo() {}
 
-    /** Initializes the action with a duration, a "from" percentage and a "to" percentage */
+    /**
+     * @brief Initializes the action with a duration, a "from" percentage and a "to" percentage.
+     * @param duration Specify the duration of the ProgressFromTo action. It's a value in seconds.
+     * @param fromPercentage Specify the source percentage.
+     * @param toPercentage Specify the destination percentage.
+     * @return If the creation success, return true; otherwise, return false.
+     */
     bool initWithDuration(float duration, float fromPercentage, float toPercentage);
 
 protected:

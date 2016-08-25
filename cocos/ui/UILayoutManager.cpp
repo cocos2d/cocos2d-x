@@ -22,8 +22,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "UILayoutManager.h"
-#include "UILayout.h"
+#include "ui/UILayoutManager.h"
+#include "ui/UILayout.h"
 
 NS_CC_BEGIN
 
@@ -31,7 +31,7 @@ namespace ui {
 
 LinearHorizontalLayoutManager* LinearHorizontalLayoutManager::create()
 {
-    LinearHorizontalLayoutManager* exe = new LinearHorizontalLayoutManager();
+    LinearHorizontalLayoutManager* exe = new (std::nothrow) LinearHorizontalLayoutManager();
     if (exe)
     {
         exe->autorelease();
@@ -88,7 +88,7 @@ void LinearHorizontalLayoutManager::doLayout(LayoutProtocol* layout)
 //LinearVerticalLayoutManager
 LinearVerticalLayoutManager* LinearVerticalLayoutManager::create()
 {
-    LinearVerticalLayoutManager* exe = new LinearVerticalLayoutManager();
+    LinearVerticalLayoutManager* exe = new (std::nothrow) LinearVerticalLayoutManager();
     if (exe)
     {
         exe->autorelease();
@@ -135,7 +135,7 @@ void LinearVerticalLayoutManager::doLayout(LayoutProtocol* layout)
                 Margin mg = layoutParameter->getMargin();
                 finalPosX += mg.left;
                 finalPosY -= mg.top;
-                subWidget->setPosition(Vec2(finalPosX, finalPosY));
+                subWidget->setPosition(finalPosX, finalPosY);
                 topBoundary = subWidget->getPosition().y - subWidget->getAnchorPoint().y * subWidget->getContentSize().height - mg.bottom;
             }
         }
@@ -146,7 +146,7 @@ void LinearVerticalLayoutManager::doLayout(LayoutProtocol* layout)
 
 RelativeLayoutManager* RelativeLayoutManager::create()
 {
-    RelativeLayoutManager* exe = new RelativeLayoutManager();
+    RelativeLayoutManager* exe = new (std::nothrow) RelativeLayoutManager();
     if (exe)
     {
         exe->autorelease();
@@ -203,7 +203,7 @@ Widget* RelativeLayoutManager::getRelativeWidget(Widget* widget)
     return relativeWidget;
 }
     
-bool RelativeLayoutManager::caculateFinalPositionWithRelativeWidget(LayoutProtocol *layout)
+bool RelativeLayoutManager::calculateFinalPositionWithRelativeWidget(LayoutProtocol *layout)
 {
     Vec2 ap = _widget->getAnchorPoint();
     Size cs = _widget->getContentSize();
@@ -426,7 +426,7 @@ bool RelativeLayoutManager::caculateFinalPositionWithRelativeWidget(LayoutProtoc
     return true;
 }
     
-void RelativeLayoutManager::caculateFinalPositionWithRelativeAlign()
+void RelativeLayoutManager::calculateFinalPositionWithRelativeAlign()
 {
     RelativeLayoutParameter* layoutParameter = dynamic_cast<RelativeLayoutParameter*>(_widget->getLayoutParameter());
     
@@ -522,6 +522,16 @@ void RelativeLayoutManager::caculateFinalPositionWithRelativeAlign()
     }
 }
 
+bool RelativeLayoutManager::caculateFinalPositionWithRelativeWidget(LayoutProtocol *layout)
+{
+    return calculateFinalPositionWithRelativeWidget(layout);
+}
+
+void RelativeLayoutManager::caculateFinalPositionWithRelativeAlign()
+{
+    calculateFinalPositionWithRelativeAlign();
+}
+
 void RelativeLayoutManager::doLayout(LayoutProtocol *layout)
 {
     
@@ -543,12 +553,12 @@ void RelativeLayoutManager::doLayout(LayoutProtocol *layout)
                 }
                 
                
-                bool ret = this->caculateFinalPositionWithRelativeWidget(layout);
+                bool ret = this->calculateFinalPositionWithRelativeWidget(layout);
                 if (!ret) {
                     continue;
                 }
                 
-                this->caculateFinalPositionWithRelativeAlign();
+                this->calculateFinalPositionWithRelativeAlign();
             
             
                 _widget->setPosition(Vec2(_finalPositionX, _finalPositionY));

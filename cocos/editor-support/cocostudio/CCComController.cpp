@@ -22,18 +22,21 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "cocostudio/CCComController.h"
+#include "editor-support/cocostudio/CCComController.h"
 #include "2d/CCNode.h"
 
 namespace cocostudio {
 
 IMPLEMENT_CLASS_COMPONENT_INFO(ComController)
-ComController::ComController(void)
+
+const std::string ComController::COMPONENT_NAME = "CCComController";
+
+ComController::ComController()
 {
-    _name = "CCComController";
+    _name = COMPONENT_NAME;
 }
 
-ComController::~ComController(void)
+ComController::~ComController()
 {
 }
 
@@ -54,23 +57,25 @@ void ComController::onExit()
 {
 }
 
+void ComController::onAdd()
+{
+    if (_owner != nullptr)
+    {
+       _owner->scheduleUpdate();
+    }
+}
+
+void ComController::onRemove()
+{
+}
+
 void ComController::update(float delta)
 {
 }
 
-bool ComController::isEnabled() const
+ComController* ComController::create()
 {
-    return _enabled;
-}
-
-void ComController::setEnabled(bool b)
-{
-    _enabled = b;
-}
-
-ComController* ComController::create(void)
-{
-    ComController * pRet = new ComController();
+    ComController * pRet = new (std::nothrow) ComController();
     if (pRet && pRet->init())
     {
         pRet->autorelease();

@@ -2,6 +2,11 @@
 
 using namespace cocos2d;
 
+ReleasePoolTests::ReleasePoolTests()
+{
+    ADD_TEST_CASE(ReleasePoolTest);
+}
+
 class TestObject : public Ref
 {
 public:
@@ -22,8 +27,12 @@ private:
     std::string _name;
 };
 
-void ReleasePoolTestScene::runThisTest()
+bool ReleasePoolTest::init()
 {
+    if (!TestCase::init())
+    {
+        return false;
+    }
     // title
     auto label = Label::createWithTTF("AutoreasePool Test", "fonts/arial.ttf", 32);
     addChild(label, 9999);
@@ -31,7 +40,7 @@ void ReleasePoolTestScene::runThisTest()
     
     // reference count should be added when added into auto release pool
     
-    TestObject *obj = new TestObject("testobj");
+    TestObject *obj = new (std::nothrow) TestObject("testobj");
     obj->autorelease();
     assert(obj->getReferenceCount() == 1);
     
@@ -69,7 +78,7 @@ void ReleasePoolTestScene::runThisTest()
         for (int i = 0; i < 100; ++i)
         {
             snprintf(name, 20, "object%d", i);
-            TestObject *tmpObj = new TestObject(name);
+            TestObject *tmpObj = new (std::nothrow) TestObject(name);
             tmpObj->autorelease();
         }
     }
@@ -81,5 +90,5 @@ void ReleasePoolTestScene::runThisTest()
         PoolManager::destroyInstance();
     }
     
-    Director::getInstance()->replaceScene(this);
+    return true;
 }

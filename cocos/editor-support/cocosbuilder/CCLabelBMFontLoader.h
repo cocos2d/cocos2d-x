@@ -4,14 +4,14 @@
 #include "base/CCRef.h"
 #include "2d/CCLabel.h"
 
-#include "CCNodeLoader.h"
+#include "editor-support/cocosbuilder/CCNodeLoader.h"
 
 namespace cocosbuilder {
 
 /* Forward declaration. */
 class CCBReader;
 
-class LabelBMFontLoader : public NodeLoader {
+class CC_DLL LabelBMFontLoader : public NodeLoader {
 public:
     /**
      * @js NA

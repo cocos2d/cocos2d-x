@@ -22,16 +22,30 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+
+// FIXME: hack, must be included before ziputils
+#ifdef MINIZIP_FROM_SYSTEM
+#include <minizip/unzip.h>
+#else // from our embedded sources
+#include "unzip.h"
+#endif
+
+#include "base/ZipUtils.h"
+
 #include <zlib.h>
 #include <assert.h>
 #include <stdlib.h>
 
-#include "base/ZipUtils.h"
 #include "base/CCData.h"
 #include "base/ccMacros.h"
 #include "platform/CCFileUtils.h"
-#include "unzip.h"
 #include <map>
+
+// FIXME: Other platforms should use upstream minizip like mingw-w64  
+#ifdef MINIZIP_FROM_SYSTEM
+#define unzGoToFirstFile64(A,B,C,D) unzGoToFirstFile2(A,B,C,D, NULL, 0, NULL, 0)
+#define unzGoToNextFile64(A,B,C,D) unzGoToNextFile2(A,B,C,D, NULL, 0, NULL, 0)
+#endif
 
 NS_CC_BEGIN
 
@@ -129,12 +143,12 @@ inline unsigned int ZipUtils::checksumPvr(const unsigned int *data, ssize_t len)
 // Should buffer factor be 1.5 instead of 2 ?
 #define BUFFER_INC_FACTOR (2)
 
-int ZipUtils::inflateMemoryWithHint(unsigned char *in, ssize_t inLength, unsigned char **out, ssize_t *outLength, ssize_t outLenghtHint)
+int ZipUtils::inflateMemoryWithHint(unsigned char *in, ssize_t inLength, unsigned char **out, ssize_t *outLength, ssize_t outLengthHint)
 {
     /* ret value */
     int err = Z_OK;
     
-    ssize_t bufferSize = outLenghtHint;
+    ssize_t bufferSize = outLengthHint;
     *out = (unsigned char*)malloc(bufferSize);
     
     z_stream d_stream; /* decompression stream */
@@ -238,10 +252,10 @@ int ZipUtils::inflateGZipFile(const char *path, unsigned char **out)
     int len;
     unsigned int offset = 0;
     
-    CCASSERT(out, "");
-    CCASSERT(&*out, "");
+    CCASSERT(out, "out can't be nullptr.");
+    CCASSERT(&*out, "&*out can't be nullptr.");
     
-    gzFile inFile = gzopen(path, "rb");
+    gzFile inFile = gzopen(FileUtils::getInstance()->getSuitableFOpen(path).c_str(), "rb");
     if( inFile == nullptr ) {
         CCLOG("cocos2d: ZipUtils: error open gzip file: %s", path);
         return -1;
@@ -484,6 +498,8 @@ void ZipUtils::setPvrEncryptionKey(unsigned int keyPart1, unsigned int keyPart2,
 // from unzip.cpp
 #define UNZ_MAXFILENAMEINZIP 256
 
+static const std::string emptyFilename("");
+
 struct ZipEntryInfo
 {
     unz_file_pos pos;
@@ -500,10 +516,27 @@ public:
     FileListContainer fileList;
 };
 
+ZipFile *ZipFile::createWithBuffer(const void* buffer, uLong size)
+{
+    ZipFile *zip = new (std::nothrow) ZipFile();
+    if (zip && zip->initWithBuffer(buffer, size)) {
+        return zip;
+    } else {
+        if (zip) delete zip;
+        return nullptr;
+    }
+}
+
+ZipFile::ZipFile()
+: _data(new ZipFilePrivate)
+{
+    _data->zipFile = nullptr;
+}
+
 ZipFile::ZipFile(const std::string &zipFile, const std::string &filter)
 : _data(new ZipFilePrivate)
 {
-    _data->zipFile = unzOpen(zipFile.c_str());
+    _data->zipFile = unzOpen(FileUtils::getInstance()->getSuitableFOpen(zipFile).c_str());
     setFilter(filter);
 }
 
@@ -610,6 +643,76 @@ unsigned char *ZipFile::getFileData(const std::string &fileName, ssize_t *size)
     } while (0);
     
     return buffer;
+}
+
+bool ZipFile::getFileData(const std::string &fileName, ResizableBuffer* buffer)
+{
+    bool res = false;
+    do
+    {
+        CC_BREAK_IF(!_data->zipFile);
+        CC_BREAK_IF(fileName.empty());
+        
+        ZipFilePrivate::FileListContainer::const_iterator it = _data->fileList.find(fileName);
+        CC_BREAK_IF(it ==  _data->fileList.end());
+        
+        ZipEntryInfo fileInfo = it->second;
+        
+        int nRet = unzGoToFilePos(_data->zipFile, &fileInfo.pos);
+        CC_BREAK_IF(UNZ_OK != nRet);
+        
+        nRet = unzOpenCurrentFile(_data->zipFile);
+        CC_BREAK_IF(UNZ_OK != nRet);
+        
+        buffer->resize(fileInfo.uncompressed_size);
+        int CC_UNUSED nSize = unzReadCurrentFile(_data->zipFile, buffer->buffer(), static_cast<unsigned int>(fileInfo.uncompressed_size));
+        CCASSERT(nSize == 0 || nSize == (int)fileInfo.uncompressed_size, "the file size is wrong");
+        unzCloseCurrentFile(_data->zipFile);
+        res = true;
+    } while (0);
+    
+    return res;
+}
+
+std::string ZipFile::getFirstFilename()
+{
+    if (unzGoToFirstFile(_data->zipFile) != UNZ_OK) return emptyFilename;
+    std::string path;
+    unz_file_info info;
+    getCurrentFileInfo(&path, &info);
+    return path;
+}
+
+std::string ZipFile::getNextFilename()
+{
+    if (unzGoToNextFile(_data->zipFile) != UNZ_OK) return emptyFilename;
+    std::string path;
+    unz_file_info info;
+    getCurrentFileInfo(&path, &info);
+    return path;
+}
+
+int ZipFile::getCurrentFileInfo(std::string *filename, unz_file_info *info)
+{
+    char path[FILENAME_MAX + 1];
+    int ret = unzGetCurrentFileInfo(_data->zipFile, info, path, sizeof(path), nullptr, 0, nullptr, 0);
+    if (ret != UNZ_OK) {
+        *filename = emptyFilename;
+    } else {
+        filename->assign(path);
+    }
+    return ret;
+}
+
+bool ZipFile::initWithBuffer(const void *buffer, uLong size)
+{
+    if (!buffer || size == 0) return false;
+    
+    _data->zipFile = unzOpenBuffer(buffer, size);
+    if (!_data->zipFile) return false;
+    
+    setFilter(emptyFilename);
+    return true;
 }
 
 NS_CC_END

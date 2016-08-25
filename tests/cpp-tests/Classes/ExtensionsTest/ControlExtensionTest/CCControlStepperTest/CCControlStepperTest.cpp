@@ -25,6 +25,9 @@
 
 #include "CCControlStepperTest.h"
 
+USING_NS_CC;
+USING_NS_CC_EXT;
+
 ControlStepperTest::ControlStepperTest()
 : _displayValueLabel(nullptr)
 {
@@ -43,15 +46,15 @@ bool ControlStepperTest::init()
         auto screenSize = Director::getInstance()->getWinSize();
         
         auto layer = Node::create();
-        layer->setPosition(Vec2 (screenSize.width / 2, screenSize.height / 2));
+        layer->setPosition(screenSize.width / 2, screenSize.height / 2);
         this->addChild(layer, 1);
         
         double layer_width          = 0;
         
         // Add the black background for the text
-        auto background  = Scale9Sprite::create("extensions/buttonBackground.png");
+        auto background  = ui::Scale9Sprite::create("extensions/buttonBackground.png");
         background->setContentSize(Size(100, 50));
-        background->setPosition(Vec2(layer_width + background->getContentSize().width / 2.0f, 0));
+        background->setPosition(layer_width + background->getContentSize().width / 2.0f, 0);
         layer->addChild(background);
         
         this->setDisplayValueLabel(Label::createWithSystemFont("0", "HelveticaNeue-Bold", 30));
@@ -62,7 +65,7 @@ bool ControlStepperTest::init()
         layer_width                 += background->getContentSize().width;
         
         ControlStepper *stepper   = this->makeControlStepper();
-        stepper->setPosition(Vec2(layer_width + 10 + stepper->getContentSize().width / 2, 0));
+        stepper->setPosition(layer_width + 10 + stepper->getContentSize().width / 2, 0);
         stepper->addTargetWithActionForControlEvents(this, cccontrol_selector(ControlStepperTest::valueChanged), Control::EventType::VALUE_CHANGED);
         layer->addChild(stepper);
         
@@ -91,6 +94,6 @@ void ControlStepperTest::valueChanged(Ref *sender, Control::EventType controlEve
 {
     ControlStepper* pControl = (ControlStepper*)sender;
     // Change value of label.
-    _displayValueLabel->setString(String::createWithFormat("%0.02f", (float)pControl->getValue())->getCString());	
+    _displayValueLabel->setString(StringUtils::format("%0.02f", (float)pControl->getValue()));
 }
 

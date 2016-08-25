@@ -25,16 +25,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "CCAtlasNode.h"
+#include "2d/CCAtlasNode.h"
 #include "renderer/CCTextureAtlas.h"
-#include "base/CCDirector.h"
 #include "base/CCDirector.h"
 #include "renderer/CCTextureCache.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCGLProgram.h"
-#include "renderer/CCGLProgramState.h"
-#include "renderer/ccGLStateCache.h"
-#include "math/TransformUtils.h"
 
 NS_CC_BEGIN
 
@@ -62,21 +58,21 @@ AtlasNode::~AtlasNode()
 
 AtlasNode * AtlasNode::create(const std::string& tile, int tileWidth, int tileHeight, int itemsToRender)
 {
-	AtlasNode * ret = new AtlasNode();
-	if (ret->initWithTileFile(tile, tileWidth, tileHeight, itemsToRender))
-	{
-		ret->autorelease();
-		return ret;
-	}
-	CC_SAFE_DELETE(ret);
-	return nullptr;
+    AtlasNode * ret = new (std::nothrow) AtlasNode();
+    if (ret->initWithTileFile(tile, tileWidth, tileHeight, itemsToRender))
+    {
+        ret->autorelease();
+        return ret;
+    }
+    CC_SAFE_DELETE(ret);
+    return nullptr;
 }
 
 bool AtlasNode::initWithTileFile(const std::string& tile, int tileWidth, int tileHeight, int itemsToRender)
 {
     CCASSERT(tile.size() > 0, "file size should not be empty");
     Texture2D *texture = Director::getInstance()->getTextureCache()->addImage(tile);
-	return initWithTexture(texture, tileWidth, tileHeight, itemsToRender);
+    return initWithTexture(texture, tileWidth, tileHeight, itemsToRender);
 }
 
 bool AtlasNode::initWithTexture(Texture2D* texture, int tileWidth, int tileHeight, int itemsToRender)
@@ -89,7 +85,7 @@ bool AtlasNode::initWithTexture(Texture2D* texture, int tileWidth, int tileHeigh
 
     _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
 
-    _textureAtlas = new TextureAtlas();
+    _textureAtlas = new (std::nothrow) TextureAtlas();
     _textureAtlas->initWithTexture(texture, itemsToRender);
 
     if (! _textureAtlas)
@@ -106,7 +102,7 @@ bool AtlasNode::initWithTexture(Texture2D* texture, int tileWidth, int tileHeigh
     _quadsToDraw = itemsToRender;
 
     // shader stuff
-    setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP));
+    setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP, texture));
 
     return true;
 }
@@ -135,15 +131,9 @@ void AtlasNode::updateAtlasValues()
 // AtlasNode - draw
 void AtlasNode::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
-    _quadCommand.init(
-              _globalZOrder,
-              _textureAtlas->getTexture()->getName(),
-              getGLProgramState(),
-              _blendFunc,
-              _textureAtlas->getQuads(),
-              _quadsToDraw,
-              transform);
-
+    // ETC1 ALPHA supports.
+    _quadCommand.init(_globalZOrder, _textureAtlas->getTexture(), getGLProgramState(), _blendFunc, _textureAtlas->getQuads(), _quadsToDraw, transform, flags);
+    
     renderer->addCommand(&_quadCommand);
 
 }
@@ -219,7 +209,15 @@ void AtlasNode::setBlendFunc(const BlendFunc &blendFunc)
 void AtlasNode::updateBlendFunc()
 {
     if( ! _textureAtlas->getTexture()->hasPremultipliedAlpha() )
+    {
         _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
+        setOpacityModifyRGB(false);
+    }
+    else
+    {
+        _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
+        setOpacityModifyRGB(true);
+    }
 }
 
 void AtlasNode::setTexture(Texture2D *texture)

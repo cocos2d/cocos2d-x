@@ -1,7 +1,7 @@
 #ifndef _CCB_CCCONTROLBUTTONLOADER_H_
 #define _CCB_CCCONTROLBUTTONLOADER_H_
 
-#include "CCControlLoader.h"
+#include "editor-support/cocosbuilder/CCControlLoader.h"
 #include "extensions//GUI/CCControlExtension/CCControlButton.h"
 
 namespace cocosbuilder {
@@ -9,7 +9,7 @@ namespace cocosbuilder {
 /* Forward declaration. */
 class CCBReader;
 
-class ControlButtonLoader : public ControlLoader {
+class CC_DLL ControlButtonLoader : public ControlLoader {
     public:
         /**
          * @js NA

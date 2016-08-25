@@ -34,19 +34,17 @@ THE SOFTWARE.
  It was rewritten again, and only a small part of the original HK ideas/code remains in this implementation
 
  */
-#include "CCFastTMXLayer.h"
-#include "CCTMXXMLParser.h"
-#include "CCFastTMXTiledMap.h"
+#include "2d/CCFastTMXLayer.h"
+#include "2d/CCFastTMXTiledMap.h"
 #include "2d/CCSprite.h"
+#include "2d/CCCamera.h"
 #include "renderer/CCTextureCache.h"
 #include "renderer/CCGLProgramCache.h"
-#include "renderer/CCGLProgram.h"
-#include "base/CCDirector.h"
-#include "base/CCConfiguration.h"
+#include "renderer/ccGLStateCache.h"
 #include "renderer/CCRenderer.h"
-#include "deprecated/CCString.h"
-#include "renderer/CCGLProgramStateCache.h"
-#include <algorithm>
+#include "renderer/CCVertexIndexBuffer.h"
+#include "base/CCDirector.h"
+#include "base/ccUTF8.h"
 
 NS_CC_BEGIN
 namespace experimental {
@@ -58,12 +56,13 @@ const int TMXLayer::FAST_TMX_ORIENTATION_ISO = 2;
 // FastTMXLayer - init & alloc & dealloc
 TMXLayer * TMXLayer::create(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo)
 {
-    TMXLayer *ret = new TMXLayer();
+    TMXLayer *ret = new (std::nothrow) TMXLayer();
     if (ret->initWithTilesetInfo(tilesetInfo, layerInfo, mapInfo))
     {
         ret->autorelease();
         return ret;
     }
+    CC_SAFE_DELETE(ret);
     return nullptr;
 }
 
@@ -116,13 +115,15 @@ TMXLayer::TMXLayer()
 , _tiles(nullptr)
 , _tileSet(nullptr)
 , _layerOrientation(FAST_TMX_ORIENTATION_ORTHO)
-,_texture(nullptr)
+, _texture(nullptr)
 , _vertexZvalue(0)
 , _useAutomaticVertexZ(false)
-, _dirty(true)
 , _quadsDirty(true)
+, _dirty(true)
+, _vertexBuffer(nullptr)
+, _vData(nullptr)
+, _indexBuffer(nullptr)
 {
-    _buffersVBO[0] = _buffersVBO[1] = 0;
 }
 
 TMXLayer::~TMXLayer()
@@ -130,25 +131,30 @@ TMXLayer::~TMXLayer()
     CC_SAFE_RELEASE(_tileSet);
     CC_SAFE_RELEASE(_texture);
     CC_SAFE_DELETE_ARRAY(_tiles);
-    if(glIsBuffer(_buffersVBO[0]))
-    {
-        glDeleteBuffers(1, &_buffersVBO[0]);
-    }
+    CC_SAFE_RELEASE(_vData);
+    CC_SAFE_RELEASE(_vertexBuffer);
+    CC_SAFE_RELEASE(_indexBuffer);
     
-    if(glIsBuffer(_buffersVBO[1]))
-    {
-        glDeleteBuffers(1, &_buffersVBO[1]);
-    }
 }
 
 void TMXLayer::draw(Renderer *renderer, const Mat4& transform, uint32_t flags)
 {
     updateTotalQuads();
+
+    bool isViewProjectionUpdated = true;
+    auto visitingCamera = Camera::getVisitingCamera();
+    auto defaultCamera = Camera::getDefaultCamera();
+    if (visitingCamera == defaultCamera) {
+        isViewProjectionUpdated = visitingCamera->isViewProjectionUpdated();
+    }
     
-    if( flags != 0 || _dirty || _quadsDirty )
+    if( flags != 0 || _dirty || _quadsDirty || isViewProjectionUpdated)
     {
-        Size s = Director::getInstance()->getWinSize();
-        auto rect = Rect(0, 0, s.width, s.height);
+        Size s = Director::getInstance()->getVisibleSize();
+        auto rect = Rect(Camera::getVisitingCamera()->getPositionX() - s.width * 0.5f,
+                     Camera::getVisitingCamera()->getPositionY() - s.height * 0.5f,
+                     s.width,
+                     s.height);
         
         Mat4 inv = transform;
         inv.inverse();
@@ -156,43 +162,38 @@ void TMXLayer::draw(Renderer *renderer, const Mat4& transform, uint32_t flags)
         
         updateTiles(rect);
         updateIndexBuffer();
+        updatePrimitives();
         _dirty = false;
     }
     
-    if(_renderCommands.size() < _indicesVertexZNumber.size())
+    if(_renderCommands.size() < static_cast<size_t>(_primitives.size()))
     {
-        _renderCommands.resize(_indicesVertexZNumber.size());
+        _renderCommands.resize(_primitives.size());
     }
     
     int index = 0;
-    for(const auto& iter : _indicesVertexZNumber)
+    for(const auto& iter : _primitives)
     {
-        auto& cmd = _renderCommands[index++];
-        
-        cmd.init(iter.first);
-        cmd.func = CC_CALLBACK_0(TMXLayer::onDraw, this, _indicesVertexZOffsets[iter.first], iter.second);
-        renderer->addCommand(&cmd);
+        if(iter.second->getCount() > 0)
+        {
+            auto& cmd = _renderCommands[index++];
+            auto blendfunc = _texture->hasPremultipliedAlpha() ? BlendFunc::ALPHA_PREMULTIPLIED : BlendFunc::ALPHA_NON_PREMULTIPLIED;
+            cmd.init(iter.first, _texture->getName(), getGLProgramState(), blendfunc, iter.second, _modelViewTransform, flags);
+            renderer->addCommand(&cmd);
+        }
     }
-    
 }
 
-void TMXLayer::onDraw(int offset, int count)
+void TMXLayer::onDraw(Primitive *primitive)
 {
     GL::bindTexture2D(_texture->getName());
     getGLProgramState()->apply(_modelViewTransform);
     
     GL::bindVAO(0);
-    glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
-    
-    GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(V3F_C4B_T2F), (GLvoid*)0);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(V3F_C4B_T2F), (GLvoid*)offsetof(V3F_C4B_T2F, colors));
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, sizeof(V3F_C4B_T2F), (GLvoid*)offsetof(V3F_C4B_T2F, texCoords));
-    glDrawElements(GL_TRIANGLES, (GLsizei)count * 6, GL_UNSIGNED_INT, (GLvoid*)(offset * 6 * sizeof(int)));
+    primitive->draw();
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, count * 4);
+    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, primitive->getCount() * 4);
 }
 
 void TMXLayer::updateTiles(const Rect& culledRect)
@@ -215,7 +216,7 @@ void TMXLayer::updateTiles(const Rect& culledRect)
     // for the bigger tiles.
     int tilesOverX = 0;
     int tilesOverY = 0;
-    // for diagonal oriention tiles
+    // for diagonal orientation tiles
     float tileSizeMax = std::max(tileSize.width, tileSize.height);
     if (_layerOrientation == FAST_TMX_ORIENTATION_ORTHO)
     {
@@ -291,25 +292,32 @@ void TMXLayer::updateTiles(const Rect& culledRect)
 void TMXLayer::updateVertexBuffer()
 {
     GL::bindVAO(0);
-    if(!glIsBuffer(_buffersVBO[0]))
+    if(nullptr == _vData)
     {
-        glGenBuffers(1, &_buffersVBO[0]);
+        _vertexBuffer = VertexBuffer::create(sizeof(V3F_C4B_T2F), (int)_totalQuads.size() * 4);
+        _vData = VertexData::create();
+        _vData->setStream(_vertexBuffer, VertexStreamAttribute(0, GLProgram::VERTEX_ATTRIB_POSITION, GL_FLOAT, 3));
+        _vData->setStream(_vertexBuffer, VertexStreamAttribute(offsetof(V3F_C4B_T2F, colors), GLProgram::VERTEX_ATTRIB_COLOR, GL_UNSIGNED_BYTE, 4, true));
+        _vData->setStream(_vertexBuffer, VertexStreamAttribute(offsetof(V3F_C4B_T2F, texCoords), GLProgram::VERTEX_ATTRIB_TEX_COORD, GL_FLOAT, 2));
+        CC_SAFE_RETAIN(_vData);
+        CC_SAFE_RETAIN(_vertexBuffer);
+    }
+    if(_vertexBuffer)
+    {
+        _vertexBuffer->updateVertices((void*)&_totalQuads[0], (int)_totalQuads.size() * 4, 0);
     }
     
-    glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(V3F_C4B_T2F_Quad) * _totalQuads.size(), (GLvoid*)&_totalQuads[0], GL_STATIC_DRAW);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
 void TMXLayer::updateIndexBuffer()
 {
-    if(!glIsBuffer(_buffersVBO[1]))
+    if(nullptr == _indexBuffer)
     {
-        glGenBuffers(1, &_buffersVBO[1]);
+        _indexBuffer = IndexBuffer::create(IndexBuffer::IndexType::INDEX_TYPE_SHORT_16, (int)_indices.size());
+        CC_SAFE_RETAIN(_indexBuffer);
     }
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(int) * _indices.size(), &_indices[0], GL_DYNAMIC_DRAW);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    _indexBuffer->updateIndices(&_indices[0], (int)_indices.size(), 0);
+    
 }
 
 // FastTMXLayer - setup Tiles
@@ -405,6 +413,29 @@ Mat4 TMXLayer::tileToNodeTransform()
     
 }
 
+void TMXLayer::updatePrimitives()
+{
+    for(const auto& iter : _indicesVertexZNumber)
+    {
+        int start = _indicesVertexZOffsets.at(iter.first);
+        
+        auto primitiveIter= _primitives.find(iter.first);
+        if(primitiveIter == _primitives.end())
+        {
+            auto primitive = Primitive::create(_vData, _indexBuffer, GL_TRIANGLES);
+            primitive->setCount(iter.second * 6);
+            primitive->setStart(start * 6);
+            
+            _primitives.insert(iter.first, primitive);
+        }
+        else
+        {
+            primitiveIter->second->setCount(iter.second * 6);
+            primitiveIter->second->setStart(start * 6);
+        }
+    }
+}
+
 void TMXLayer::updateTotalQuads()
 {
     if(_quadsDirty)
@@ -469,7 +500,7 @@ void TMXLayer::updateTotalQuads()
                 
                 if(tileGID & kTMXTileDiagonalFlag)
                 {
-                    // XXX: not working correcly
+                    // FIXME: not working correctly
                     quad.bl.vertices.x = left;
                     quad.bl.vertices.y = bottom;
                     quad.bl.vertices.z = z;
@@ -547,7 +578,7 @@ Sprite* TMXLayer::getTileAt(const Vec2& tileCoordinate)
     
     // if GID == 0, then no tile is present
     if( gid ) {
-        int index = tileCoordinate.x + tileCoordinate.y * _layerSize.width;
+        int index = (int) tileCoordinate.x + (int) tileCoordinate.y * _layerSize.width;
         
         auto it = _spriteContainer.find(index);
         if (it != _spriteContainer.end())
@@ -582,7 +613,7 @@ int TMXLayer::getTileGIDAt(const Vec2& tileCoordinate, TMXTileFlags* flags/* = n
     CCASSERT(tileCoordinate.x < _layerSize.width && tileCoordinate.y < _layerSize.height && tileCoordinate.x >=0 && tileCoordinate.y >=0, "TMXLayer: invalid position");
     CCASSERT(_tiles, "TMXLayer: the tiles map has been released");
     
-    int idx = static_cast<int>((tileCoordinate.x + tileCoordinate.y * _layerSize.width));
+    int idx = static_cast<int>(((int) tileCoordinate.x + (int) tileCoordinate.y * _layerSize.width));
     
     // Bits on the far end of the 32-bit global tile ID are used for tile flags
     int tile = _tiles[idx];
@@ -648,7 +679,7 @@ void TMXLayer::removeTileAt(const Vec2& tileCoordinate)
     
     if( gid ) {
         
-        int z = tileCoordinate.x + tileCoordinate.y * _layerSize.width;
+        int z = (int) tileCoordinate.x + (int) tileCoordinate.y * _layerSize.width;
         
         // remove tile from GID map
         setFlaggedTileGIDByIndex(z, 0);
@@ -722,19 +753,19 @@ void TMXLayer::parseInternalProperties()
 //CCTMXLayer2 - obtaining positions, offset
 Vec2 TMXLayer::calculateLayerOffset(const Vec2& pos)
 {
-    Vec2 ret = Vec2::ZERO;
+    Vec2 ret;
     switch (_layerOrientation) 
     {
     case FAST_TMX_ORIENTATION_ORTHO:
-        ret = Vec2( pos.x * _mapTileSize.width, -pos.y *_mapTileSize.height);
+        ret.set( pos.x * _mapTileSize.width, -pos.y *_mapTileSize.height);
         break;
     case FAST_TMX_ORIENTATION_ISO:
-        ret = Vec2((_mapTileSize.width /2) * (pos.x - pos.y),
+        ret.set((_mapTileSize.width /2) * (pos.x - pos.y),
                   (_mapTileSize.height /2 ) * (-pos.x - pos.y));
         break;
     case FAST_TMX_ORIENTATION_HEX:
     default:
-        CCASSERT(pos.equals(Vec2::ZERO), "offset for this map not implemented yet");
+        CCASSERT(pos.isZero(), "offset for this map not implemented yet");
         break;
     }
     return ret;    
@@ -767,13 +798,13 @@ void TMXLayer::setTileGID(int gid, const Vec2& tileCoordinate, TMXTileFlags flag
     // empty tile. create a new one
     else if (currentGID == 0)
     {
-        int z = tileCoordinate.x + tileCoordinate.y * _layerSize.width;
+        int z = (int) tileCoordinate.x + (int) tileCoordinate.y * _layerSize.width;
         setFlaggedTileGIDByIndex(z, gidAndFlags);
     }
     // modifying an existing tile with a non-empty tile
     else
     {
-        int z = tileCoordinate.x + tileCoordinate.y * _layerSize.width;
+        int z = (int) tileCoordinate.x + (int) tileCoordinate.y * _layerSize.width;
         auto it = _spriteContainer.find(z);
         if (it != _spriteContainer.end())
         {
@@ -797,7 +828,7 @@ void TMXLayer::setTileGID(int gid, const Vec2& tileCoordinate, TMXTileFlags flag
     }
 }
 
-void TMXLayer::setupTileSprite(Sprite* sprite, Vec2 pos, int gid)
+void TMXLayer::setupTileSprite(Sprite* sprite, const Vec2& pos, int gid)
 {
     sprite->setPosition(getPositionAt(pos));
     sprite->setPositionZ((float)getVertexZForPos(pos));
@@ -814,8 +845,8 @@ void TMXLayer::setupTileSprite(Sprite* sprite, Vec2 pos, int gid)
     {
         // put the anchor in the middle for ease of rotation.
         sprite->setAnchorPoint(Vec2(0.5f,0.5f));
-        sprite->setPosition(Vec2(getPositionAt(pos).x + sprite->getContentSize().height/2,
-                                  getPositionAt(pos).y + sprite->getContentSize().width/2 ) );
+        sprite->setPosition(getPositionAt(pos).x + sprite->getContentSize().height/2,
+                                  getPositionAt(pos).y + sprite->getContentSize().width/2 );
         
         int flag = gid & (kTMXTileHorizontalFlag | kTMXTileVerticalFlag );
         

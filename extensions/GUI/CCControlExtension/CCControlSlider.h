@@ -77,6 +77,7 @@ public:
             Sprite* selectedThumbSprite);
     /**
      * @js ctor
+     * @lua new
      */
     ControlSlider();
     /**
@@ -107,11 +108,11 @@ public:
     virtual bool initWithSprites(Sprite * backgroundSprite, Sprite* progressSprite, Sprite* thumbSprite,
             Sprite* selectedThumbSprite);
 
-    virtual void needsLayout();
+    virtual void needsLayout() override;
 
     virtual void setMaximumValue(float val);
-    virtual void setEnabled(bool enabled);
-    virtual bool isTouchInside(Touch * touch);
+    virtual void setEnabled(bool enabled) override;
+    virtual bool isTouchInside(Touch * touch) override;
     Vec2 locationFromTouch(Touch* touch);
     virtual void setValue(float val);
     virtual void setMinimumValue(float val);
@@ -121,14 +122,14 @@ protected:
     void sliderMoved(Vec2 location);
     void sliderEnded(Vec2 location);
 
-    virtual bool onTouchBegan(Touch* touch, Event* pEvent);
-    virtual void onTouchMoved(Touch *pTouch, Event *pEvent);
-    virtual void onTouchEnded(Touch *pTouch, Event *pEvent);
+    virtual bool onTouchBegan(Touch* touch, Event* pEvent) override;
+    virtual void onTouchMoved(Touch *pTouch, Event *pEvent) override;
+    virtual void onTouchEnded(Touch *pTouch, Event *pEvent) override;
 
     /** Returns the value for the given location. */
     float valueForLocation(Vec2 location);
 
-    //maunally put in the setters
+    //manually put in the setters
     /** Contains the receiver's current value. */
     CC_SYNTHESIZE_READONLY(float, _value, Value);
 

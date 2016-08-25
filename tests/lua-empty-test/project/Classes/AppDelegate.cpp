@@ -2,7 +2,8 @@
 #include "AppDelegate.h"
 #include "audio/include/SimpleAudioEngine.h"
 #include "base/CCScriptSupport.h"
-#include "CCLuaEngine.h"
+#include "scripting/lua-bindings/manual/CCLuaEngine.h"
+#include "scripting/lua-bindings/manual/lua_module_register.h"
 
 USING_NS_CC;
 using namespace CocosDenshion;
@@ -20,12 +21,20 @@ AppDelegate::~AppDelegate()
     //CCScriptEngineManager::destroyInstance();
 }
 
+void AppDelegate::initGLContextAttrs()
+{
+    GLContextAttrs glContextAttrs = {8, 8, 8, 8, 24, 8};
+    
+    GLView::setGLContextAttrs(glContextAttrs);
+}
+
 bool AppDelegate::applicationDidFinishLaunching()
 {
     // register lua engine
     LuaEngine* engine = LuaEngine::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(engine);
-    
+    lua_State* L = engine->getLuaStack()->getLuaState();
+    lua_module_register(L);
     //The call was commented because it will lead to ZeroBrane Studio can't find correct context when debugging
     //engine->executeScriptFile("src/hello.lua");
     engine->executeString("require 'src/hello.lua'");
@@ -33,7 +42,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     return true;
 }
 
-// This function will be called when the app is inactive. When comes a phone call,it's be invoked too
+// This function will be called when the app is inactive. Note, when receiving a phone call it is invoked.
 void AppDelegate::applicationDidEnterBackground()
 {
     Director::getInstance()->stopAnimation();

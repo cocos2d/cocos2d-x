@@ -1,14 +1,14 @@
 #ifndef _CCB_CCLAYERGRADIENTLOADER_H_
 #define _CCB_CCLAYERGRADIENTLOADER_H_
 
-#include "CCLayerLoader.h"
+#include "editor-support/cocosbuilder/CCLayerLoader.h"
 
 namespace cocosbuilder {
 
 /* Forward declaration. */
 class CCBReader;
 
-class LayerGradientLoader : public LayerLoader {
+class CC_DLL LayerGradientLoader : public LayerLoader {
 public:
     /**
      * @js NA

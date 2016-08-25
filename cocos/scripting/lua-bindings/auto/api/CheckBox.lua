@@ -1,99 +1,48 @@
 
 --------------------------------
 -- @module CheckBox
--- @extend Widget
+-- @extend AbstractCheckButton
 -- @parent_module ccui
 
 --------------------------------
--- @function [parent=#CheckBox] getSelectedState 
--- @param self
--- @return bool#bool ret (return value: bool)
-        
---------------------------------
--- @function [parent=#CheckBox] loadTextureBackGroundSelected 
--- @param self
--- @param #string str
--- @param #int texturerestype
-        
---------------------------------
--- @function [parent=#CheckBox] loadTextureBackGroundDisabled 
--- @param self
--- @param #string str
--- @param #int texturerestype
-        
---------------------------------
+-- Add a callback function which would be called when checkbox is selected or unselected.<br>
+-- param callback A std::function with type @see `ccCheckBoxCallback`
 -- @function [parent=#CheckBox] addEventListener 
 -- @param self
--- @param #function func
-        
---------------------------------
--- @function [parent=#CheckBox] loadTextureFrontCross 
--- @param self
--- @param #string str
--- @param #int texturerestype
-        
---------------------------------
--- @function [parent=#CheckBox] loadTextures 
--- @param self
--- @param #string str
--- @param #string str
--- @param #string str
--- @param #string str
--- @param #string str
--- @param #int texturerestype
-        
---------------------------------
--- @function [parent=#CheckBox] loadTextureBackGround 
--- @param self
--- @param #string str
--- @param #int texturerestype
-        
---------------------------------
--- @function [parent=#CheckBox] setSelectedState 
--- @param self
--- @param #bool bool
-        
---------------------------------
--- @function [parent=#CheckBox] loadTextureFrontCrossDisabled 
--- @param self
--- @param #string str
--- @param #int texturerestype
+-- @param #function callback
+-- @return CheckBox#CheckBox self (return value: ccui.CheckBox)
         
 --------------------------------
 -- @overload self, string, string, string, string, string, int         
 -- @overload self         
+-- @overload self, string, string, int         
 -- @function [parent=#CheckBox] create
 -- @param self
--- @param #string str
--- @param #string str
--- @param #string str
--- @param #string str
--- @param #string str
--- @param #int texturerestype
--- @return CheckBox#CheckBox ret (retunr value: ccui.CheckBox)
+-- @param #string backGround
+-- @param #string backGroundSelected
+-- @param #string cross
+-- @param #string backGroundDisabled
+-- @param #string frontCrossDisabled
+-- @param #int texType
+-- @return CheckBox#CheckBox ret (return value: ccui.CheckBox)
 
 --------------------------------
+-- 
 -- @function [parent=#CheckBox] createInstance 
 -- @param self
 -- @return Ref#Ref ret (return value: cc.Ref)
         
 --------------------------------
--- @function [parent=#CheckBox] getVirtualRenderer 
--- @param self
--- @return Node#Node ret (return value: cc.Node)
-        
---------------------------------
+-- 
 -- @function [parent=#CheckBox] getDescription 
 -- @param self
 -- @return string#string ret (return value: string)
         
 --------------------------------
--- @function [parent=#CheckBox] getVirtualRendererSize 
--- @param self
--- @return size_table#size_table ret (return value: size_table)
-        
---------------------------------
+-- Default constructor.<br>
+-- lua new
 -- @function [parent=#CheckBox] CheckBox 
 -- @param self
+-- @return CheckBox#CheckBox self (return value: ccui.CheckBox)
         
 return nil

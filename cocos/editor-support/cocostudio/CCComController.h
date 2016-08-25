@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
 Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
@@ -25,47 +25,61 @@ THE SOFTWARE.
 #ifndef __CC_EXTENTIONS_CCCOMCONTROLLER_H__
 #define __CC_EXTENTIONS_CCCOMCONTROLLER_H__
 
-#include "CCComBase.h"
-#include "cocostudio/CCInputDelegate.h"
-#include "cocostudio/CocosStudioExport.h"
+#include "editor-support/cocostudio/CCComBase.h"
+#include "editor-support/cocostudio/CCInputDelegate.h"
+#include "editor-support/cocostudio/CocosStudioExport.h"
 #include "2d/CCComponent.h"
 
 namespace cocostudio {
 
 class CC_STUDIO_DLL ComController : public cocos2d::Component, public InputDelegate
 {
-
     DECLARE_CLASS_COMPONENT_INFO
 public:
     /**
      *  @js ctor
      */
-    ComController(void);
+    ComController();
     
 public:
+    const static std::string COMPONENT_NAME;
+
+    static ComController* create();
+
     /**
      * @js NA
      * @lua NA
      */
-    virtual ~ComController(void);
+    virtual ~ComController();
+
     virtual bool init() override;
+
     /**
      * @js NA
      * @lua NA
      */
     virtual void onEnter() override;
+
     /**
      * @js NA
      * @lua NA
      */
     virtual void onExit() override;
+
+    /**
+    * @js NA
+    * @lua NA
+    */
+    virtual void onAdd() override;
+
+    /**
+    * @js NA
+    * @lua NA
+    */
+    virtual void onRemove() override;
     virtual void update(float delta) override;
-    virtual bool isEnabled() const override;
-    virtual void setEnabled(bool b) override;
-    
-    static ComController* create(void);
 };
 
 }
 
-#endif  // __FUNDATION__CCCOMPONENT_H__
+#endif  // __CC_EXTENTIONS_CCCOMCONTROLLER_H__
