@@ -152,10 +152,20 @@ void PageView::scrollToPage(ssize_t idx)
 {
     scrollToItem(idx);
 }
+    
+void PageView::scrollToPage(ssize_t idx, float time)
+{
+    scrollToItem(idx, time);
+}
 
 void PageView::scrollToItem(ssize_t itemIndex)
 {
     ListView::scrollToItem(itemIndex, Vec2::ANCHOR_MIDDLE, Vec2::ANCHOR_MIDDLE);
+}
+
+void PageView::scrollToItem(ssize_t itemIndex, float time)
+{
+    ListView::scrollToItem(itemIndex, Vec2::ANCHOR_MIDDLE, Vec2::ANCHOR_MIDDLE, time >= 0 ? time : _scrollTime);
 }
 
 void PageView::setCustomScrollThreshold(float threshold)
