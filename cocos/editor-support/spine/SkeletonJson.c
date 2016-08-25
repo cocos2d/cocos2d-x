@@ -832,7 +832,6 @@ spSkeletonData* spSkeletonJson_readSkeletonData (spSkeletonJson* self, const cha
 					const char* attachmentName = Json_getString(attachmentMap, "name", skinAttachmentName);
 					const char* path = Json_getString(attachmentMap, "path", attachmentName);
 					const char* color;
-					int i;
 					Json* entry;
 
 					const char* typeString = Json_getString(attachmentMap, "type", "region");
@@ -911,14 +910,14 @@ spSkeletonData* spSkeletonJson_readSkeletonData (spSkeletonJson* self, const cha
 							entry = Json_getItem(attachmentMap, "triangles");
 							mesh->trianglesCount = entry->size;
 							mesh->triangles = MALLOC(unsigned short, entry->size);
-							for (entry = entry->child, i = 0; entry; entry = entry->next, ++i)
-								mesh->triangles[i] = (unsigned short)entry->valueInt;
+							for (entry = entry->child, ii = 0; entry; entry = entry->next, ++ii)
+								mesh->triangles[ii] = (unsigned short)entry->valueInt;
 
 							entry = Json_getItem(attachmentMap, "uvs");
 							verticesLength = entry->size;
 							mesh->regionUVs = MALLOC(float, verticesLength);
-							for (entry = entry->child, i = 0; entry; entry = entry->next, ++i)
-								mesh->regionUVs[i] = entry->valueFloat;
+							for (entry = entry->child, ii = 0; entry; entry = entry->next, ++ii)
+								mesh->regionUVs[ii] = entry->valueFloat;
 
 							_readVertices(self, attachmentMap, SUPER(mesh), verticesLength);
 
@@ -930,8 +929,8 @@ spSkeletonData* spSkeletonJson_readSkeletonData (spSkeletonJson* self, const cha
 							if (entry) {
 								mesh->edgesCount = entry->size;
 								mesh->edges = MALLOC(int, entry->size);
-								for (entry = entry->child, i = 0; entry; entry = entry->next, ++i)
-									mesh->edges[i] = entry->valueInt;
+								for (entry = entry->child, ii = 0; entry; entry = entry->next, ++ii)
+									mesh->edges[ii] = entry->valueInt;
 							}
 
 							spAttachmentLoader_configureAttachment(self->attachmentLoader, attachment);
@@ -960,8 +959,8 @@ spSkeletonData* spSkeletonJson_readSkeletonData (spSkeletonJson* self, const cha
 						path->lengths = MALLOC(float, path->lengthsLength);
 
 						curves = Json_getItem(attachmentMap, "lengths");
-						for (curves = curves->child, i = 0; curves; curves = curves->next, ++i) {
-							path->lengths[i] = curves->valueFloat * self->scale;
+						for (curves = curves->child, ii = 0; curves; curves = curves->next, ++ii) {
+							path->lengths[ii] = curves->valueFloat * self->scale;
 						}
 						break;
 					}
