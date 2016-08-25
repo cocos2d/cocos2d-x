@@ -105,6 +105,8 @@ ActionInterval* ActionEase::getInnerAction()
 
 EaseRateAction* EaseRateAction::create(ActionInterval* action, float rate)
 {
+    CCASSERT(action != nullptr, "action cannot be nullptr!");
+
     EaseRateAction *easeRateAction = new (std::nothrow) EaseRateAction();
     if (easeRateAction && easeRateAction->initWithAction(action, rate))
     {
@@ -129,10 +131,7 @@ bool EaseRateAction::initWithAction(ActionInterval *action, float rate)
 
 EaseRateAction* EaseRateAction::clone() const
 {
-    auto a = new (std::nothrow) EaseRateAction();
-    a->initWithAction(_inner->clone(), _rate);
-    a->autorelease();
-    return a;
+    return EaseRateAction::create(_inner, _rate);
 }
 
 EaseRateAction* EaseRateAction::reverse() const {
