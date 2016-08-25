@@ -225,8 +225,9 @@ EaseRateAction* CLASSNAME::reverse() const { \
     return REVERSE_CLASSNAME::create(_inner->reverse(), 1.f / _rate); \
 }
 
-EASERATE_TEMPLATE_IMPL(EaseIn, tweenfunc::easeIn, EaseOut);
-EASERATE_TEMPLATE_IMPL(EaseOut, tweenfunc::easeOut, EaseIn);
+// NOTE: the original code used the same class for the `reverse()` method
+EASERATE_TEMPLATE_IMPL(EaseIn, tweenfunc::easeIn, EaseIn);
+EASERATE_TEMPLATE_IMPL(EaseOut, tweenfunc::easeOut, EaseOut);
 EASERATE_TEMPLATE_IMPL(EaseInOut, tweenfunc::easeInOut, EaseInOut);
 
 //
