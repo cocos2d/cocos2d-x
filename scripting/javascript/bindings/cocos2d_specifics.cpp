@@ -831,7 +831,16 @@ void JSCallFuncWrapper::callbackFunc(CCNode *node) const {
     bool hasExtraData = !JSVAL_IS_VOID(extraData);
     JSObject* thisObj = JSVAL_IS_VOID(jsThisObj) ? NULL : JSVAL_TO_OBJECT(jsThisObj);
     JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
-    js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::CCNode>(cx, node);
+	js_proxy_t *proxy = NULL;
+	if (node) {
+		proxy = js_get_or_create_proxy<cocos2d::CCNode>(cx, node);
+	} 
+	else if (m_pCallFunc) {
+		proxy = js_get_or_create_proxy<cocos2d::CCCallFunc>(cx, m_pCallFunc);
+	}
+	else {
+		return;
+	}
 
     jsval retval;
     if(jsCallback != JSVAL_VOID)
@@ -881,7 +890,7 @@ JSBool js_callFunc(JSContext *cx, uint32_t argc, jsval *vp)
         
         CCCallFunc *ret = (CCCallFunc *)CCCallFuncN::create((CCObject *)tmpCobj, 
                                              callfuncN_selector(JSCallFuncWrapper::callbackFunc));
-        
+		tmpCobj->setCallFunc(ret);
 		js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::CCCallFunc>(cx, ret);
 		JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(proxy->obj));
         

@@ -242,6 +242,7 @@ void ActionObject::play(CCCallFunc* func)
 {
 	this->play();
 	this->m_CallBack = func;
+	CC_SAFE_RETAIN(m_CallBack);
 }
 
 void ActionObject::pause()
@@ -261,6 +262,7 @@ void ActionObject::stop()
 
 	m_pScheduler->unscheduleSelector(schedule_selector(ActionObject::simulationActionUpdate), this);
 	m_bPause = false;
+	CC_SAFE_RELEASE_NULL(m_CallBack);
 }
 
 void ActionObject::updateToFrameByTime(float fTime)
@@ -298,6 +300,7 @@ void ActionObject::simulationActionUpdate(float dt)
 		if (m_CallBack != NULL)
 		{
 			m_CallBack->execute();
+			CC_SAFE_RELEASE_NULL(m_CallBack);
 		}
 		if (m_loop)
 		{
