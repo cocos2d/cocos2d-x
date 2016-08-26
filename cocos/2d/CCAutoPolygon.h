@@ -154,7 +154,7 @@ public:
      * std::vector<Vec2> points = ap.trace(rect);//default threshold is 0.0
      * @endcode
      */
-     std::vector<Vec2> trace(const cocos2d::Rect& rect, const float& threshold = 0.0);
+     std::vector<Vec2> trace(const cocos2d::Rect& rect = cocos2d::Rect::ZERO, const float& threshold = 0.0);
     
     /**
      * reduce the amount of points so its faster for GPU to process and draw
