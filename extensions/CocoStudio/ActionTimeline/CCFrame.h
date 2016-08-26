@@ -35,7 +35,9 @@ class Timeline;
 class CC_EX_DLL Frame : public cocos2d::CCObject
 {
 public:
-
+     Frame();
+     virtual ~Frame();
+    
     virtual void setFrameIndex(unsigned int frameIndex) { _frameIndex = frameIndex; }
     virtual unsigned int getFrameIndex()const { return _frameIndex; }
 
@@ -48,13 +50,12 @@ public:
     virtual void setTween(bool tween) { _tween = tween; }
     virtual bool isTween() const { return _tween; }
 
-    virtual void onEnter(Frame *nextFrame) = 0;
+    virtual void onEnter(Frame *nextFrame) {}
     virtual void apply(float percent) {}
 
-    virtual Frame* clone() = 0;
+    virtual Frame* clone() { return NULL; }
+    
 protected:
-    Frame();
-    virtual ~Frame();
 
     virtual void emitEvent();
     void cloneProperty(Frame* frame);
