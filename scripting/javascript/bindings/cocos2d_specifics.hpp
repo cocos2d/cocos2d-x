@@ -71,6 +71,7 @@ inline js_proxy_t *js_get_or_create_proxy(JSContext *cx, T *native_obj) {
             return NULL;
         }
         
+        JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
         JSObject* js_obj = JS_NewObject(cx, typeProxy->jsclass, typeProxy->proto, typeProxy->parentProto);
         proxy = jsb_new_proxy(native_obj, js_obj);
 #ifdef DEBUG
@@ -101,6 +102,7 @@ public:
     const jsval& getJSCallbackThis() const;
     const jsval& getJSExtraData() const;
 protected:
+	jsval m_jsArmatureWrapper;
     jsval jsCallback;
     jsval jsThisObj;
     jsval extraData;
@@ -127,15 +129,16 @@ public:
 
 class JSCallFuncWrapper: public JSCallbackWrapper {
 public:
-    JSCallFuncWrapper() {}
-    virtual ~JSCallFuncWrapper(void) {
-        return;
-    }
+	JSCallFuncWrapper() : m_pCallFunc(NULL) {}
+    virtual ~JSCallFuncWrapper(void) {}
 
     static void setTargetForNativeNode(CCNode *pNode, JSCallFuncWrapper *target);
     static CCArray * getTargetForNativeNode(CCNode *pNode);
 
     void callbackFunc(CCNode *node) const;
+	void setCallFunc(CCCallFunc* pFunc) { m_pCallFunc = pFunc;  }
+private:
+	CCCallFunc* m_pCallFunc;
 };
 
 
