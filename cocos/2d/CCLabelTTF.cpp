@@ -186,6 +186,12 @@ void LabelTTF::setFontName(const std::string& fontName)
     _contentDirty = true;
 }
 
+void LabelTTF::enableShadow(const Color4B &shadowColor, const Size &shadowOffset, float shadowBlur)
+{
+    _renderLabel->enableShadow(shadowColor,shadowOffset,shadowBlur);
+    _contentDirty = true;
+}
+
 void LabelTTF::enableShadow(const Size &shadowOffset, float shadowOpacity, float shadowBlur, bool updateTexture)
 {
     Color4B temp(Color3B::BLACK);

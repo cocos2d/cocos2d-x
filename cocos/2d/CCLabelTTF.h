@@ -102,7 +102,8 @@ public:
     /** get the text definition used by this label */
     const FontDefinition& getTextDefinition();
     
-    
+    /** enable or disable shadow for the label */
+    void enableShadow(const Color4B &shadowColor, const Size &shadowOffset, float shadowBlur);
     
     /** enable or disable shadow for the label */
     void enableShadow(const Size &shadowOffset, float shadowOpacity, float shadowBlur, bool mustUpdateTexture = true);
