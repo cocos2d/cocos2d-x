@@ -1999,8 +1999,6 @@
         "external/ios/include/cjson/strbuf.h", 
         "external/ios/include/convertutf/ConvertUTF.h", 
         "external/ios/include/curl/curl.h", 
-        "external/ios/include/curl/curlbuild-32.h", 
-        "external/ios/include/curl/curlbuild-64.h", 
         "external/ios/include/curl/curlbuild.h", 
         "external/ios/include/curl/curlrules.h", 
         "external/ios/include/curl/curlver.h", 
