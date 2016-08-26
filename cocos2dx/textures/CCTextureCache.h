@@ -32,6 +32,7 @@ THE SOFTWARE.
 #include "cocoa/CCDictionary.h"
 #include "textures/CCTexture2D.h"
 #include <string>
+#include <map>
 
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
@@ -57,6 +58,8 @@ class CC_DLL CCTextureCache : public CCObject
 {
 protected:
     CCDictionary* m_pTextures;
+	std::map<std::string, std::string> m_pTexturesPixelFormatDir;
+	std::map<std::string, std::string> m_pTexturesPixelFormatFile;
     //pthread_mutex_t                *m_pDictLock;
 
 
@@ -88,6 +91,11 @@ public:
      *  @js getInstance
      */
     static CCTextureCache * sharedTextureCache();
+	
+	
+	void addTexturePixelFormatDir(const char*, const char*);
+	void addTexturePixelFormatFile(const char*, const char*);
+	const char* getPixelFormatStr(const char*);
 
     /** purges the cache. It releases the retained instance.
     @since v0.99.0
