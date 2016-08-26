@@ -228,8 +228,21 @@ void Widget::removeChild(CCNode *child)
 
 void Widget::removeChild(CCNode *child, bool cleanup)
 {
+    Widget* pChildWidget = dynamic_cast<Widget*>(child); //check if the child is a Widget?
     CCNode::removeChild(child, cleanup);
     _widgetChildren->removeObject(child);
+    if(pChildWidget) 
+    {
+        _widgetChildren->removeObject(child);   
+    } 
+    else 
+    {
+        //Because Widget only supports Widgets as children, 
+        //so if child is not a widget, this will lead to memory leak!!!
+        //For example,when you call child->removeFromParentAndCleanup()
+        //neilwu (wuyupeng2007(AT)gmail.com) modify
+        _nodes->removeObject(child); 
+    }
 }
 
 void Widget::removeChildByTag(int tag, bool cleanup)
