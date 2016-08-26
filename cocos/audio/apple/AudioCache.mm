@@ -118,8 +118,10 @@ AudioCache::~AudioCache()
         {
             if (_alBufferId != INVALID_AL_BUFFER_ID && alIsBuffer(_alBufferId))
             {
-                ALOGV("~AudioCache(id=%u), delete buffer: %u", _id, _alBufferId);
+                ALOGV("~AudioCache(id=%u), before delete buffer: %u", _id, _alBufferId);
                 alDeleteBuffers(1, &_alBufferId);
+                CHECK_AL_ERROR_DEBUG();
+                ALOGV("~AudioCache(id=%u), after delete buffer: %u", _id, _alBufferId);
                 _alBufferId = INVALID_AL_BUFFER_ID;
             }
         }
@@ -246,6 +248,7 @@ void AudioCache::readDataTask(unsigned int selfId)
             if (*_isDestroyed) break;
             
             alBufferDataStaticProc(_alBufferId, _format, _pcmData, _dataSize, _sampleRate);
+            CHECK_AL_ERROR_DEBUG();
             
             readInFrames = theFileFormat.mSampleRate * QUEUEBUFFER_TIME_STEP * QUEUEBUFFER_NUM;
             dataSize = _outputFormat.mBytesPerFrame * readInFrames;
@@ -329,6 +332,7 @@ void AudioCache::readDataTask(unsigned int selfId)
         {
             ALOGV("readDataTask failed, delete buffer: %u", _alBufferId);
             alDeleteBuffers(1, &_alBufferId);
+            CHECK_AL_ERROR_DEBUG();
             _alBufferId = INVALID_AL_BUFFER_ID;
         }
     }
