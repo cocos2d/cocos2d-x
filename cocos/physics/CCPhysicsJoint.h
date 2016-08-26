@@ -47,7 +47,7 @@ class PhysicsWorld;
  */
 
 /**
- * @brief An PhysicsJoint object connects two physics bodies together.
+ * @brief A PhysicsJoint object connects two physics bodies together.
  */
 class CC_DLL PhysicsJoint
 {
@@ -56,10 +56,10 @@ protected:
     virtual ~PhysicsJoint() = 0;
 
 public:
-    /**Get physics body a connected to this joint.*/
+    /**Get physics body A connected to this joint.*/
     inline PhysicsBody* getBodyA() const { return _bodyA; }
     
-    /**Get physics body b connected to this joint.*/
+    /**Get physics body B connected to this joint.*/
     inline PhysicsBody* getBodyB() const { return _bodyB; }
 
     /**Get the physics world.*/
@@ -79,13 +79,13 @@ public:
      */
     inline void setTag(int tag) { _tag = tag; }
     
-    /** Determines if the joint is enable. */
+    /** Determines if the joint is enabled. */
     inline bool isEnabled() const { return _enable; }
 
     /** Enable/Disable the joint. */
     void setEnable(bool enable);
     
-    /** Determines if the collision is enable. */
+    /** Determines if the collision is enabled. */
     inline bool isCollisionEnabled() const { return _collisionEnable; }
     
     /** Enable/disable the collision between two bodies. */
@@ -178,16 +178,16 @@ public:
      */
     static PhysicsJointLimit* construct(PhysicsBody* a, PhysicsBody* b, const Vec2& anchr1, const Vec2& anchr2, float min, float max);
 
-    /** Get the anchor point on body a.*/
+    /** Get the anchor point on body A.*/
     Vec2 getAnchr1() const;
     
-    /** Set the anchor point on body a.*/
+    /** Set the anchor point on body A.*/
     void setAnchr1(const Vec2& anchr1);
     
-    /** Get the anchor point on body b.*/
+    /** Get the anchor point on body B.*/
     Vec2 getAnchr2() const;
     
-    /** Set the anchor point on body b.*/
+    /** Set the anchor point on body B.*/
     void setAnchr2(const Vec2& anchr2);
     
     /** Get the allowed min distance of the anchor points.*/
@@ -292,16 +292,16 @@ public:
      */
     static PhysicsJointSpring* construct(PhysicsBody* a, PhysicsBody* b, const Vec2& anchr1, const Vec2& anchr2, float stiffness, float damping);
 
-    /** Get the anchor point on body a.*/
+    /** Get the anchor point on body A.*/
     Vec2 getAnchr1() const;
 
-    /** Set the anchor point on body a.*/
+    /** Set the anchor point on body A.*/
     void setAnchr1(const Vec2& anchr1);
 
-    /** Get the anchor point on body b.*/
+    /** Get the anchor point on body B.*/
     Vec2 getAnchr2() const;
 
-    /** Set the anchor point on body b.*/
+    /** Set the anchor point on body B.*/
     void setAnchr2(const Vec2& anchr2);
     
     /** Get the distance of the anchor points.*/
@@ -392,10 +392,10 @@ public:
      */
     static PhysicsJointRotarySpring* construct(PhysicsBody* a, PhysicsBody* b, float stiffness, float damping);
 
-    /** Get the relative angle in radians from the body a to b.*/
+    /** Get the relative angle in radians from the body A to B.*/
     float getRestAngle() const;
 
-    /** Set the relative angle in radians from the body a to b.*/
+    /** Set the relative angle in radians from the body A to b.*/
     void setRestAngle(float restAngle);
 
     /** Get the spring constant.*/

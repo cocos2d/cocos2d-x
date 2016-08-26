@@ -153,7 +153,7 @@ public:
     /**
     * Remove all bodies from physics world. 
     * 
-    * If this world is not locked, those body are removed immediately, otherwise at next frame.
+    * If this world is not locked, those bodies are removed immediately, otherwise at next frame.
     */
     virtual void removeAllBodies();
     
@@ -169,7 +169,7 @@ public:
     void rayCast(PhysicsRayCastCallbackFunc func, const Vec2& start, const Vec2& end, void* data);
     
     /**
-    * Searches for physics shapes that contains in the rect. 
+    * Searches for physics shapes that are contained in the rect. 
     *
     * Query this physics world to find all shapes overlap rect.
     * @param   func   Func is called for each shape whose bounding box overlaps rect. 
@@ -208,7 +208,7 @@ public:
     PhysicsShape* getShape(const Vec2& point) const;
 
     /**
-    * Get all the bodies that in this physics world.
+    * Get all the bodies that are contained in this physics world.
     *
     * @return A Vector<PhysicsBody*>& object contains all bodies in this physics world. 
     */
@@ -278,7 +278,7 @@ public:
     inline int getUpdateRate() { return _updateRate; }
 
     /**
-     * set the number of substeps in an update of the physics world.
+     * Set the number of substeps in an update of the physics world.
      * 
      * One physics update will be divided into several substeps to increase its accuracy.
      * @param steps An integer number, default value is 1.
