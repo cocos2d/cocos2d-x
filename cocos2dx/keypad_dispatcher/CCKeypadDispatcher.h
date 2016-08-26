@@ -79,6 +79,11 @@ public:
     */
     bool dispatchKeypadMSG(ccKeypadMSGType nMsgType);
 
+	/**
+	@brief dispatch the keydown event
+	*/
+	bool dispatchKeypadDown(int keyCode);
+
 protected:
 
     CCArray* m_pDelegates;
