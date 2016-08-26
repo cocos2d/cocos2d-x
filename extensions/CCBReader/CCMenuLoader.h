@@ -17,7 +17,15 @@ class CC_EX_DLL CCMenuLoader : public CCLayerLoader {
         CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(CCMenuLoader, loader);
 
     protected:
-        CCB_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(CCMenu);
+//        CCB_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(CCMenu);
+    
+    virtual cocos2d::CCMenu * createCCNode(cocos2d::CCNode * pParent, cocos2d::extension::CCBReader * ccbReader) {
+        cocos2d::CCMenu* pMenu = cocos2d::CCMenu::create();
+        
+        pMenu->setContentSize(cocos2d::CCSize(0,0));
+        
+        return pMenu;
+    };
 };
 
 NS_CC_EXT_END
