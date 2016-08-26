@@ -48,25 +48,28 @@ __arr__++)
 
 I found that it's not work in C++. So it keep what it's look like in version 1.0.0-rc3. ---By Bin
 */
-#define CCARRAY_FOREACH(__array__, __object__)                                                                         \
-    if ((__array__) && (__array__)->data->num > 0)                                                                     \
-    for(CCObject** __arr__ = (__array__)->data->arr, **__end__ = (__array__)->data->arr + (__array__)->data->num-1;    \
-    __arr__ <= __end__ && (((__object__) = *__arr__) != NULL/* || true*/);                                             \
-    __arr__++)
+
+/*
+ccArray::arr will be changed when array resize capacity, it result in CCARRAY_FOREACH use wild pointer
+*/
+#define CCARRAY_FOREACH(__array__, __object__)                                                                          \
+	if ((__array__) && (__array__)->data->num > 0)                                                                      \
+	for(unsigned int __index__ = 0;                                                                                     \
+	__index__ < (__array__)->data->num && (((__object__) = (__array__)->data->arr[__index__]) != NULL);                 \
+	__index__++)
 
 #define CCARRAY_FOREACH_REVERSE(__array__, __object__)                                                                  \
     if ((__array__) && (__array__)->data->num > 0)                                                                      \
-    for(CCObject** __arr__ = (__array__)->data->arr + (__array__)->data->num-1, **__end__ = (__array__)->data->arr;     \
-    __arr__ >= __end__ && (((__object__) = *__arr__) != NULL/* || true*/);                                              \
-    __arr__--)
+    for(unsigned int __index__ = (__array__)->data->num;                                                                \
+    __index__ > 0 && (((__object__) = (__array__)->data->arr[__index__ - 1]) != NULL);                                  \
+    __index__--)
 
 #if defined(COCOS2D_DEBUG) && (COCOS2D_DEBUG > 0)
 #define CCARRAY_VERIFY_TYPE(__array__, __type__)                                                                 \
     do {                                                                                                         \
         if ((__array__) && (__array__)->data->num > 0)                                                           \
-            for(CCObject** __arr__ = (__array__)->data->arr,                                                     \
-                **__end__ = (__array__)->data->arr + (__array__)->data->num-1; __arr__ <= __end__; __arr__++)    \
-                CCAssert(dynamic_cast<__type__>(*__arr__), "element type is wrong!");                            \
+			for(unsigned int __index__ = 0; __index__ < (__array__)->data->num; __index__++)                     \
+                CCAssert(dynamic_cast<__type__>((__array__)->data->arr[__index__]), "element type is wrong!");   \
     } while(false)
 #else
 #define CCARRAY_VERIFY_TYPE(__array__, __type__) void(0)
