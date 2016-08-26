@@ -29,6 +29,8 @@
 NS_CC_BEGIN
 
 namespace ui {
+
+TouchEvent_DISPATCHER Widget::WidgetTouchEventDispatcher = NULL;
     
 Widget::Widget():
 _enabled(true),
@@ -42,6 +44,8 @@ _touchMovePos(CCPointZero),
 _touchEndPos(CCPointZero),
 _touchEventListener(NULL),
 _touchEventSelector(NULL),
+_pressStateChangeEventListener(NULL),
+_pressStateChangeSelector(NULL),
 _name("default"),
 _widgetType(WidgetTypeWidget),
 _actionTag(0),
@@ -71,6 +75,9 @@ Widget::~Widget()
 {
     _touchEventListener = NULL;
     _touchEventSelector = NULL;
+	_pressStateChangeEventListener = NULL;
+	_pressStateChangeSelector = NULL;
+
     _widgetChildren->removeAllObjects();
     CC_SAFE_RELEASE(_widgetChildren);
     _layoutParameterDictionary->removeAllObjects();
@@ -129,6 +136,17 @@ void Widget::visit()
     {
         CCNode::visit();
     }    
+}
+
+bool Widget::isUnVisible()
+{
+	if (!isEnabled() || !isVisible())
+	{
+		return true;
+	}
+
+	Widget* widgetParent = getWidgetParent();
+	return widgetParent ? widgetParent->isUnVisible() : false;
 }
 
 void Widget::addChild(CCNode *child)
@@ -264,6 +282,12 @@ void Widget::removeAllChildrenWithCleanup(bool cleanup)
         }
     }
     _widgetChildren->removeAllObjects();
+}
+
+void Widget::setVisible(bool visible) 
+{
+	CCNode::setVisible(visible);
+	setEnabled(visible);
 }
 
 void Widget::setEnabled(bool enabled)
@@ -638,6 +662,10 @@ void Widget::setFocused(bool fucos)
     else
     {
         onPressStateChangedToDisabled();
+		if (_pressStateChangeEventListener && _pressStateChangeSelector)
+		{
+			(_pressStateChangeEventListener->*_pressStateChangeSelector)(this, PRESS_STATE_CHANGE_TO_DISABLE);
+		}
     }
 }
 
@@ -652,6 +680,10 @@ void Widget::setBright(bool bright)
     else
     {
         onPressStateChangedToDisabled();
+		if (_pressStateChangeEventListener && _pressStateChangeSelector)
+		{
+			(_pressStateChangeEventListener->*_pressStateChangeSelector)(this, PRESS_STATE_CHANGE_TO_DISABLE);
+		}
     }
 }
 
@@ -666,9 +698,17 @@ void Widget::setBrightStyle(BrightStyle style)
     {
         case BRIGHT_NORMAL:
             onPressStateChangedToNormal();
+			if (_pressStateChangeEventListener && _pressStateChangeSelector)
+			{
+				(_pressStateChangeEventListener->*_pressStateChangeSelector)(this, PRESS_STATE_CHANGE_TO_NORMAL);
+			}
             break;
         case BRIGHT_HIGHLIGHT:
             onPressStateChangedToPressed();
+			if (_pressStateChangeEventListener && _pressStateChangeSelector)
+			{
+				(_pressStateChangeEventListener->*_pressStateChangeSelector)(this, PRESS_STATE_CHANGE_TO_PRESS);
+			}
             break;
         default:
             break;
@@ -698,7 +738,7 @@ void Widget::didNotSelectSelf()
 bool Widget::onTouchBegan(CCTouch *touch, CCEvent *unused_event)
 {
     _hitted = false;
-    if (isEnabled() && isTouchEnabled())
+	if (isTouchEnabled() && !isUnVisible())
     {
         _touchStartPos = touch->getLocation();
         if(hitTest(_touchStartPos) && clippingParentAreaContainPoint(_touchStartPos))
@@ -712,7 +752,7 @@ bool Widget::onTouchBegan(CCTouch *touch, CCEvent *unused_event)
     }
     setFocused(true);
     Widget* widgetParent = getWidgetParent();
-    if (widgetParent)
+	if (widgetParent && (!WidgetTouchEventDispatcher || !WidgetTouchEventDispatcher(this, TOUCH_EVENT_CHECK_BEGAN)))
     {
         widgetParent->checkChildInfo(0,this,_touchStartPos);
     }
@@ -725,7 +765,7 @@ void Widget::onTouchMoved(CCTouch *touch, CCEvent *unused_event)
     _touchMovePos = touch->getLocation();
     setFocused(hitTest(_touchMovePos));
     Widget* widgetParent = getWidgetParent();
-    if (widgetParent)
+	if (widgetParent && (!WidgetTouchEventDispatcher || !WidgetTouchEventDispatcher(this, TOUCH_EVENT_CHECK_MOVED)))
     {
         widgetParent->checkChildInfo(1,this,_touchMovePos);
     }
@@ -738,7 +778,7 @@ void Widget::onTouchEnded(CCTouch *touch, CCEvent *unused_event)
     bool focus = _focus;
     setFocused(false);
     Widget* widgetParent = getWidgetParent();
-    if (widgetParent)
+	if (widgetParent && (!WidgetTouchEventDispatcher || !WidgetTouchEventDispatcher(this, TOUCH_EVENT_CHECK_ENDED)))
     {
         widgetParent->checkChildInfo(2,this,_touchEndPos);
     }
@@ -750,16 +790,26 @@ void Widget::onTouchEnded(CCTouch *touch, CCEvent *unused_event)
     {
         cancelUpEvent();
     }
+	CCLOG("onTouchEnded->%s", getName());
 }
 
 void Widget::onTouchCancelled(CCTouch *touch, CCEvent *unused_event)
 {
+	if (WidgetTouchEventDispatcher) 
+	{
+		WidgetTouchEventDispatcher(this, TOUCH_EVENT_CHECK_CANCELED);
+	}
     setFocused(false);
     cancelUpEvent();
 }
 
 void Widget::pushDownEvent()
 {
+	if (WidgetTouchEventDispatcher && WidgetTouchEventDispatcher(this, TOUCH_EVENT_BEGAN))
+	{
+		return;
+	}
+
     if (_touchEventListener && _touchEventSelector)
     {
         (_touchEventListener->*_touchEventSelector)(this,TOUCH_EVENT_BEGAN);
@@ -768,6 +818,11 @@ void Widget::pushDownEvent()
 
 void Widget::moveEvent()
 {
+	if (WidgetTouchEventDispatcher && WidgetTouchEventDispatcher(this, TOUCH_EVENT_MOVED))
+	{
+		return;
+	}
+
     if (_touchEventListener && _touchEventSelector)
     {
         (_touchEventListener->*_touchEventSelector)(this,TOUCH_EVENT_MOVED);
@@ -776,6 +831,11 @@ void Widget::moveEvent()
 
 void Widget::releaseUpEvent()
 {
+	if (WidgetTouchEventDispatcher && WidgetTouchEventDispatcher(this, TOUCH_EVENT_ENDED))
+	{
+		return;
+	}
+
     if (_touchEventListener && _touchEventSelector)
     {
         (_touchEventListener->*_touchEventSelector)(this,TOUCH_EVENT_ENDED);
@@ -784,6 +844,11 @@ void Widget::releaseUpEvent()
 
 void Widget::cancelUpEvent()
 {
+	if (WidgetTouchEventDispatcher && WidgetTouchEventDispatcher(this, TOUCH_EVENT_CANCELED))
+	{
+		return;
+	}
+
     if (_touchEventListener && _touchEventSelector)
     {
         (_touchEventListener->*_touchEventSelector)(this,TOUCH_EVENT_CANCELED);
@@ -794,6 +859,12 @@ void Widget::addTouchEventListener(CCObject *target, SEL_TouchEvent selector)
 {
     _touchEventListener = target;
     _touchEventSelector = selector;
+}
+
+void Widget::addPressStateChangeEventListener(CCObject* target, SEL_PressStateEvent selector) 
+{
+	_pressStateChangeEventListener = target;
+	_pressStateChangeSelector = selector;
 }
 
 bool Widget::hitTest(const CCPoint &pt)
