@@ -34,7 +34,8 @@
 #ifndef JSB_ASSERT_ON_FAIL
 #define JSB_ASSERT_ON_FAIL 0
 #endif
-
+#define JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET \
+JSAutoCompartment __jsb_ac(ScriptingCore::getInstance()->getGlobalContext(), ScriptingCore::getInstance()->getGlobalObject());
 
 #if JSB_ASSERT_ON_FAIL
 #define JSB_PRECONDITION( condition, error_msg) do { NSCAssert( condition, [NSString stringWithUTF8String:error_msg] ); } while(0)

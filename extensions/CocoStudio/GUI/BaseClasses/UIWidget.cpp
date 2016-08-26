@@ -26,9 +26,13 @@
 #include "../Layouts/UILayout.h"
 #include "../System/UIHelper.h"
 
+
 NS_CC_BEGIN
 
+
 namespace ui {
+
+TouchEvent_DISPATCHER Widget::WidgetTouchEventDispatcher = NULL;
     
 Widget::Widget():
 _enabled(true),
@@ -760,6 +764,11 @@ void Widget::onTouchCancelled(CCTouch *touch, CCEvent *unused_event)
 
 void Widget::pushDownEvent()
 {
+	if (WidgetTouchEventDispatcher)
+	{
+		WidgetTouchEventDispatcher(this, TOUCH_EVENT_BEGAN);
+	}
+
     if (_touchEventListener && _touchEventSelector)
     {
         (_touchEventListener->*_touchEventSelector)(this,TOUCH_EVENT_BEGAN);
@@ -768,6 +777,11 @@ void Widget::pushDownEvent()
 
 void Widget::moveEvent()
 {
+	if (WidgetTouchEventDispatcher)
+	{
+		WidgetTouchEventDispatcher(this, TOUCH_EVENT_MOVED);
+	}
+
     if (_touchEventListener && _touchEventSelector)
     {
         (_touchEventListener->*_touchEventSelector)(this,TOUCH_EVENT_MOVED);
@@ -776,6 +790,11 @@ void Widget::moveEvent()
 
 void Widget::releaseUpEvent()
 {
+	if (WidgetTouchEventDispatcher)
+	{
+		WidgetTouchEventDispatcher(this, TOUCH_EVENT_ENDED);
+	}
+
     if (_touchEventListener && _touchEventSelector)
     {
         (_touchEventListener->*_touchEventSelector)(this,TOUCH_EVENT_ENDED);
@@ -784,6 +803,11 @@ void Widget::releaseUpEvent()
 
 void Widget::cancelUpEvent()
 {
+	if (WidgetTouchEventDispatcher)
+	{
+		WidgetTouchEventDispatcher(this, TOUCH_EVENT_CANCELED);
+	}
+
     if (_touchEventListener && _touchEventSelector)
     {
         (_touchEventListener->*_touchEventSelector)(this,TOUCH_EVENT_CANCELED);
