@@ -17,4 +17,4 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 COCOS2DX_ROOT="$DIR"/../../..
 xcodebuild -project "$COCOS2DX_ROOT"/build/cocos2d_tests.xcodeproj -scheme "build all tests Mac" -destination "platform=OS X" clean | xcpretty
-xcodebuild -project "$COCOS2DX_ROOT"/build/cocos2d_tests.xcodeproj -scheme "build all tests Mac" -destination "platform=OS X" build | xcpretty
+xcodebuild -project "$COCOS2DX_ROOT"/build/cocos2d_tests.xcodeproj -scheme "cpp-empty-test Mac" -destination "platform=OS X" build | xcpretty
