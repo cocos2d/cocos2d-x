@@ -426,6 +426,7 @@ protected:
     float _autoScrollStopEpsilon;
     ssize_t _previousPageIndex;
     bool _isTouchBegin;
+    bool _isContinuousScrolling;
 };
 
 }

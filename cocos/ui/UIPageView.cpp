@@ -41,7 +41,8 @@ _pageViewEventSelector(nullptr),
 _eventCallback(nullptr),
 _autoScrollStopEpsilon(0.001f),
 _previousPageIndex(-1),
-_isTouchBegin(false)
+_isTouchBegin(false),
+_isContinuousScrolling(false)
 {
 }
 
@@ -189,6 +190,10 @@ void PageView::moveInnerContainer(const Vec2& deltaMove, bool canStartBounceBack
 {
     ListView::moveInnerContainer(deltaMove, canStartBounceBack);
     _currentPageIndex = getIndex(getCenterItemInCurrentView());
+    if(_previousPageIndex != _currentPageIndex && _isContinuousScrolling) {
+        pageTurningEvent();
+        _previousPageIndex = _currentPageIndex;
+    }
     if(_indicator != nullptr)
     {
         _indicator->indicate(_currentPageIndex);
@@ -228,6 +233,9 @@ void PageView::handlePressLogic(Touch *touch)
         _currentPageIndex = getIndex(getCenterItemInCurrentView());
         _previousPageIndex = _currentPageIndex;
         _isTouchBegin = true;
+    }
+    else {
+        _isContinuousScrolling = true;
     }
 }
 
@@ -276,6 +284,8 @@ void PageView::handleReleaseLogic(Touch *touch)
             scrollToItem(_currentPageIndex);
         }
     }
+    
+    
 }
 
 float PageView::getAutoScrollStopEpsilon() const
@@ -289,8 +299,12 @@ void PageView::addEventListenerPageView(Ref *target, SEL_PageViewEvent selector)
     _pageViewEventSelector = selector;
 
     ccScrollViewCallback scrollViewCallback = [=](Ref* ref, ScrollView::EventType type) -> void{
-        if (type == ScrollView::EventType::AUTOSCROLL_ENDED && _previousPageIndex != _currentPageIndex) {
-            pageTurningEvent();
+        if (type == ScrollView::EventType::AUTOSCROLL_ENDED) {
+            if (_previousPageIndex != _currentPageIndex){
+                pageTurningEvent();
+            }
+            _isContinuousScrolling = false;
+            _isTouchBegin = false;
         }
     };
     this->addEventListener(scrollViewCallback);
@@ -311,7 +325,6 @@ void PageView::pageTurningEvent()
     {
         _ccEventCallback(this, static_cast<int>(EventType::TURNING));
     }
-    _isTouchBegin = false;
     this->release();
 }
 
@@ -319,8 +332,12 @@ void PageView::addEventListener(const ccPageViewCallback& callback)
 {
     _eventCallback = callback;
     ccScrollViewCallback scrollViewCallback = [=](Ref* ref, ScrollView::EventType type) -> void{
-        if (type == ScrollView::EventType::AUTOSCROLL_ENDED && _previousPageIndex != _currentPageIndex) {
-            pageTurningEvent();
+        if (type == ScrollView::EventType::AUTOSCROLL_ENDED) {
+            if(_previousPageIndex != _currentPageIndex) {
+                pageTurningEvent();
+            }
+            _isContinuousScrolling = false;
+            _isTouchBegin = false;
         }
     };
     this->addEventListener(scrollViewCallback);
