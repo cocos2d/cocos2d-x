@@ -81,8 +81,8 @@ class CC_JS_DLL ScriptingCore : public cocos2d::ScriptEngineProtocol
 private:
     JSRuntime *_rt;
     JSContext *_cx;
-    mozilla::Maybe<JS::PersistentRootedObject> _global;
-    mozilla::Maybe<JS::PersistentRootedObject> _debugGlobal;
+    JS::PersistentRootedObject *_global;
+    JS::PersistentRootedObject *_debugGlobal;
     SimpleRunLoop* _runLoop;
     bool _jsInited;
     bool _needCleanup;
@@ -495,12 +495,12 @@ public:
      * Gets the debug environment's global object
      * @return @~english The debug environment's global object
      */
-    JSObject* getDebugGlobal() { return _debugGlobal.ref().get(); }
+    JSObject* getDebugGlobal() { return *_debugGlobal; }
     /**@~english
      * Gets the global object
      * @return @~english The global object
      */
-    JSObject* getGlobalObject() { return _global.ref().get(); }
+    JSObject* getGlobalObject() { return  *_global; }
     
     /**@~english
      * Checks whether a C++ function is overrided in js prototype chain
@@ -567,18 +567,16 @@ js_type_class_t *jsb_register_class(JSContext *cx, JSClass *jsClass, JS::HandleO
     std::string typeName = t.s_name();
     if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
     {
+        JS::RootedObject protoRoot(cx, proto);
+        JS::RootedObject protoParentRoot(cx, parentProto);
         p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        memset(p, 0, sizeof(js_type_class_t));
         p->jsclass = jsClass;
-        if (p->proto.empty())
-        {
-            p->proto.construct(cx);
-        }
-        p->proto.ref() = proto;
-        if (p->parentProto.empty())
-        {
-            p->parentProto.construct(cx);
-        }
-        p->parentProto.ref() = parentProto ;
+        auto persistentProtoRoot = new (std::nothrow) JS::PersistentRootedObject(cx, protoRoot);
+        p->proto.set(persistentProtoRoot);
+        
+        auto persistentProtoParentRoot = new (std::nothrow) JS::PersistentRootedObject(cx, protoParentRoot);
+        p->parentProto.set(persistentProtoParentRoot);
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
     return p;
