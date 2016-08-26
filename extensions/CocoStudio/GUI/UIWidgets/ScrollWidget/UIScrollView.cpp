@@ -63,6 +63,37 @@ const CCSize& ScrollInnerContainer::getLayoutSize()
     }
 }
 
+void ScrollInnerContainer::setPosition(const CCPoint& newPosition)
+{
+	Layout::setPosition(newPosition);
+
+	if (!m_pParent)  {
+		return;
+	}
+	doLayout();
+
+	ScrollView* parent = static_cast<ScrollView*>(m_pParent);
+	parent->innerContainerMoving();
+
+	ccArray* arrayWidgetChildren = getChildren()->data;
+	if (arrayWidgetChildren->num <= 0) {
+		return;
+	}
+
+	// spark 不适用于子本身有缩放，旋转的情况，如果有要改为boundbox
+	const CCSize& parentSize = parent->getSize();
+	CCRect visibleRect = CCRectMake(-getLeftInParent(), -getBottomInParent(), parentSize.width, parentSize.height);
+
+
+	for (int i = 0; i < arrayWidgetChildren->num; i++)
+	{
+		Widget* child = static_cast<Widget*>(arrayWidgetChildren->arr[i]);
+		const CCSize& childSize = child->getSize();
+		CCRect childRect = CCRectMake(child->getLeftInParent(), child->getBottomInParent(), childSize.width, childSize.height);
+		child->setVisible(visibleRect.intersectsRect(childRect));
+	}
+}
+
 static const float AUTOSCROLLMAXSPEED = 1000.0f;
 
 const CCPoint SCROLLDIR_UP = CCPoint(0.0f, 1.0f);
@@ -178,27 +209,11 @@ void ScrollView::onSizeChanged()
 
 void ScrollView::setInnerContainerSize(const CCSize &size)
 {
-    float innerSizeWidth = _size.width;
-    float innerSizeHeight = _size.height;
+	float innerSizeWidth = MAX(_size.width, size.width);
+	float innerSizeHeight = MAX(_size.height, size.height);
     CCSize originalInnerSize = _innerContainer->getSize();
-    if (size.width < _size.width)
-    {
-        CCLOG("Inner width <= scrollview width, it will be force sized!");
-    }
-    else
-    {
-        innerSizeWidth = size.width;
-    }
-    if (size.height < _size.height)
-    {
-        CCLOG("Inner height <= scrollview height, it will be force sized!");
-    }
-    else
-    {
-        innerSizeHeight = size.height;
-    }
-    _innerContainer->setSize(CCSize(innerSizeWidth, innerSizeHeight));
 
+    _innerContainer->setSize(CCSize(innerSizeWidth, innerSizeHeight));
     switch (_direction)
     {
         case SCROLLVIEW_DIR_VERTICAL:
@@ -578,6 +593,11 @@ void ScrollView::startAutoScrollChildrenWithDestination(const CCPoint& des, floa
         orSpeed = dis.getLength() / time;
     }
     startAutoScrollChildrenWithOriginalSpeed(dir, orSpeed, attenuated, acceleration);
+}
+
+const CCPoint& ScrollView::getContainerPosition()
+{
+	return _innerContainer->getPosition();
 }
 
 void ScrollView::jumpToDestination(const CCPoint &des)
@@ -1586,7 +1606,9 @@ void ScrollView::interceptTouchEvent(int handleState, Widget *sender, const CCPo
 
 void ScrollView::checkChildInfo(int handleState,Widget* sender,const CCPoint &touchPoint)
 {
-    interceptTouchEvent(handleState, sender, touchPoint);
+	if (_enabled && _touchEnabled) {
+		interceptTouchEvent(handleState, sender, touchPoint);
+	}
 }
 
 void ScrollView::scrollToTopEvent()
@@ -1659,6 +1681,14 @@ void ScrollView::bounceRightEvent()
     {
         (_scrollViewEventListener->*_scrollViewEventSelector)(this, SCROLLVIEW_EVENT_BOUNCE_RIGHT);
     }
+}
+
+void ScrollView::innerContainerMoving()
+{
+	if (_scrollViewEventListener && _scrollViewEventSelector)
+	{
+		(_scrollViewEventListener->*_scrollViewEventSelector)(this, SCROLLVIEW_EVENT_INNERCONTAINERMOVING);
+	}
 }
 
 void ScrollView::addEventListenerScrollView(CCObject *target, SEL_ScrollViewEvent selector)
