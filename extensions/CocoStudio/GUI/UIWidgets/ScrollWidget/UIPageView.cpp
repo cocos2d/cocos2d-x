@@ -182,7 +182,6 @@ void PageView::insertPage(Layout* page, int idx)
     else
     {
         _pages->insertObject(page, idx);
-        page->setPosition(CCPoint(getPositionXByIndex(idx), 0));
         addChild(page);
         CCSize pSize = page->getSize();
         CCSize pvSize = getSize();
@@ -191,12 +190,25 @@ void PageView::insertPage(Layout* page, int idx)
             CCLOG("page size does not match pageview size, it will be force sized!");
             page->setSize(pvSize);
         }
-        int length = _pages->count();
-        for (int i=(idx+1); i<length; i++){
-            Widget* behindPage = static_cast<Widget*>(_pages->objectAtIndex(i));
-            CCPoint formerPos = behindPage->getPosition();
-            behindPage->setPosition(CCPoint(formerPos.x+getSize().width, 0));
-        }
+
+		if (idx > this->_curPageIdx) {
+			page->setPosition(CCPoint(this->getPositionXByIndex(idx), 0));
+			int length = _pages->count();
+			for (int i = idx + 1; i < length; ++i) {
+				Widget* afterPage = static_cast<Widget*>(_pages->objectAtIndex(i));
+				const CCPoint& formerPos = afterPage->getPosition();
+				afterPage->setPosition(CCPoint(formerPos.x + this->getSize().width, 0));
+			}
+		}
+		else {
+			page->setPosition(CCPoint(this->getPositionXByIndex(idx - 1), 0));
+			++this->_curPageIdx;
+			for (int i = 0; i < this->_curPageIdx - 1; ++i) {
+				Widget* behindPage = static_cast<Widget*>(_pages->objectAtIndex(i));
+				const CCPoint& formerPos = behindPage->getPosition();
+				behindPage->setPosition(CCPoint(formerPos.x - this->getSize().width, 0));
+			}
+		}
         updateBoundaryPages();
     }
 }
@@ -525,7 +537,7 @@ void PageView::handleReleaseLogic(const CCPoint &touchPoint)
         int pageCount = _pages->count();
         float curPageLocation = curPagePos.x;
         float pageWidth = getSize().width;
-        float boundary = pageWidth/2.0f;
+        float boundary = pageWidth / 5.0f;
         if (curPageLocation <= -boundary)
         {
             if (_curPageIdx >= pageCount-1)

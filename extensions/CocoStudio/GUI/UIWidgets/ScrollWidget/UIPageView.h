@@ -106,6 +106,8 @@ public:
     void removePageAtIndex(int index);
     
     void removeAllPages();
+
+	Layout* createPage();
     
     /**
      * scroll pageview to index.
@@ -175,7 +177,6 @@ protected:
     virtual CCNode * getChildByTag(int tag) {return Widget::getChildByTag(tag);};
     virtual Widget* getChildByName(const char* name) {return Widget::getChildByName(name);};
     virtual bool init();
-    Layout* createPage();
     float getPositionXByIndex(int idx);
     void updateBoundaryPages();
     virtual void handlePressLogic(const CCPoint &touchPoint);
