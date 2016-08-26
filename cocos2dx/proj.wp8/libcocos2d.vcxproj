@@ -494,6 +494,7 @@
     <ClCompile Include="..\particle_nodes\CCParticleSystemQuad.cpp" />
     <ClCompile Include="..\platform\CCEGLViewProtocol.cpp" />
     <ClCompile Include="..\platform\CCFileUtils.cpp" />
+    <ClCompile Include="..\platform\CCImageCommonWebp.cpp" />
     <ClCompile Include="..\platform\CCSAXParser.cpp" />
     <ClCompile Include="..\platform\CCThread.cpp" />
     <ClCompile Include="..\platform\platform.cpp" />
@@ -722,6 +723,9 @@
     <ClInclude Include="..\touch_dispatcher\CCTouchDispatcher.h" />
     <ClInclude Include="..\touch_dispatcher\CCTouchHandler.h" />
     <ClInclude Include="pch.h" />
+    <ProjectReference Include="..\platform\third_party\wp8\libwebp\lib\libwebp.vcxproj">
+      <Project>{d3fac65e-1074-400b-b7d1-2d7d5ea55461}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsPhone\v$(TargetPlatformVersion)\Microsoft.Cpp.WindowsPhone.$(TargetPlatformVersion).targets" />

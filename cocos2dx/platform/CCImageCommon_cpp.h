@@ -192,13 +192,11 @@ bool CCImage::initWithImageData(void * pData,
             bRet = _initWithTiffData(pData, nDataLen);
             break;
         }
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
        else if (kFmtWebp == eFmt)
         {
             bRet = _initWithWebpData(pData, nDataLen);
             break;
         }
-#endif
         else if (kFmtRawData == eFmt)
         {
             bRet = _initWithRawData(pData, nDataLen, nWidth, nHeight, nBitsPerComponent, false);
