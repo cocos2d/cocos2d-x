@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2013 cocos2d-x.org
-Copyright (c) 2013 Lee, Jae-Hong
+Copyright (c) 2014 Won, KyungYoun
 
 http://www.cocos2d-x.org
 
@@ -23,34 +23,46 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef _OSP_PLAYER_H_
-#define _OSP_PLAYER_H_
+#ifndef _OPENAL_WAV_PLAYER_H_
+#define _OPENAL_WAV_PLAYER_H_
 
-#include <unique_ptr.h>
-#include "PlayerImpl.h"
+#include <new>
+#include <FBase.h>
+#include <FMedia.h>
+#include <AL/alut.h>
+#include <AL/al.h>
+#include "IOpenAlPlayer.h"
 
-class OspPlayer
+/* Note presently OpenAL Player does not use EventDriven Thread and ITimerEventListner
+ * But this is necessary to keep it to test the performance in those conditions too
+ */
+
+class OpenAlWavPlayer
+	: public IOpenAlPlayer
 {
 public:
-    OspPlayer();
-    ~OspPlayer();
-
-    result Initialize();
-    void Open(const char* pFileName, unsigned int uId);
-    void Play(bool bLoop);
-    void Pause();
-    void Stop();
-    void Resume();
-    void Rewind();
-    bool IsPlaying();
-    void SetVolume(int volume);
-    int GetVolume();
-    void Close();
-    unsigned int GetSoundID();
+	OpenAlWavPlayer() ;
+	virtual ~OpenAlWavPlayer();
+	result Construct(const Tizen::Base::String &filePath);
+	result Play(void);
+	result Stop(void);
+	result Pause(void);
+	result SetLoop(bool flag);
+	result SeekTo(long msTime);
+	result SetVolume(int volume);	
+	OpenAlPlayerState GetState(void) const;
 
 private:
-    std::unique_ptr<_PlayerImpl> __pPlayer;
-    unsigned int m_nSoundID;
+	static const int MAX_FILE_NAME = 256;
+	result __FillAlFirstPcmBuffer(const Tizen::Base::String& filePath);
+	result __ConvertError(ALenum error) const;
+
+	ALuint __alBuffer;
+	ALuint __alSource;
+	Tizen::Base::ByteBuffer __srcBuf;
+	Tizen::Base::ByteBuffer __pcmBuf;
+	int __sampleRate;
+	OpenAlPlayerState __openalPlayerState;
 };
 
-#endif // _OSP_PLAYER_H_
+#endif
