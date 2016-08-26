@@ -597,5 +597,9 @@ void CCEGLView::setScissorInPoints(float x , float y , float w , float h)
 	}
 }
 
+bool CCEGLView::HasEnded()
+{
+    return m_windowClosed;
+}
 
 NS_CC_END
