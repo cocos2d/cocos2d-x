@@ -154,6 +154,9 @@ ccLanguageType CCApplication::getCurrentLanguage()
         case LANG_ARABIC:
             ret = kLanguageArabic;
             break;
+        case LANG_BULGARIAN:
+            ret = kLanguageBulgarian;
+            break;
     }
 
     return ret;

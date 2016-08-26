@@ -130,6 +130,10 @@ ccLanguageType CCApplication::getCurrentLanguage()
     {
         ret = kLanguageArabic;
     }
+    else if ([languageCode isEqualToString:@"bg"])
+    {
+        ret = kLanguageBulgarian;
+    }
     
     return ret;
 }
