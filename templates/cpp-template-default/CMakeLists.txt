@@ -39,6 +39,11 @@ set(BUILD_CPP_EMPTY_TEST OFF CACHE BOOL "turn off build cpp-empty-test")
 set(BUILD_CPP_TESTS OFF CACHE BOOL "turn off build cpp-tests")
 set(BUILD_LUA_LIBS OFF CACHE BOOL "turn off build lua related targets")
 set(BUILD_JS_LIBS OFF CACHE BOOL "turn off build js related targets")
+if (CMAKE_BUILD_TYPE STREQUAL "Debug")
+  set(DEBUG_MODE ON CACHE BOOL "turn on debug mode")
+else()
+  set(DEBUG_MODE OFF CACHE BOOL "turn off debug mode")
+endif()
 add_subdirectory(${COCOS2D_ROOT})
 
 # Some macro definitions
