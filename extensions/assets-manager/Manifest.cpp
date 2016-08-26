@@ -179,7 +179,7 @@ std::unordered_map<std::string, Manifest::AssetDiff> Manifest::genDiff(const Man
         }
         
         // Modified
-        auto &valueB = valueIt->second;
+        const auto &valueB = valueIt->second;
         if (valueA.md5 != valueB.md5) {
             AssetDiff diff;
             diff.asset = valueB;
@@ -206,18 +206,84 @@ std::unordered_map<std::string, Manifest::AssetDiff> Manifest::genDiff(const Man
     return diff_map;
 }
 
-void Manifest::genResumeAssetsList(DownloadUnits *units) const
+void Manifest::yieldDiff(const Manifest *b,
+                         const std::function<void(const std::string&, const AssetDiff&)>& onDiff,
+                         const std::function<void(const std::string&)>& onUnchanged) const
+{
+    const std::unordered_map<std::string, Asset> &bAssets = b->getAssets();
+
+    std::unordered_map<std::string, Asset>::const_iterator valueIt;
+    if (onDiff)
+    {
+        for (const auto& asset : _assets)
+        {
+            const auto &key = asset.first;
+            const auto &valueA = asset.second;
+
+            // Deleted
+            valueIt = bAssets.find(key);
+            if (valueIt == bAssets.cend())
+            {
+                AssetDiff diff;
+                diff.asset = valueA;
+                diff.type = DiffType::DELETED;
+                onDiff(key, diff);
+                continue;
+            }
+
+            // Modified
+            const auto &valueB = valueIt->second;
+            if (valueA.md5 != valueB.md5)
+            {
+                AssetDiff diff;
+                diff.asset = valueB;
+                diff.type = DiffType::MODIFIED;
+                onDiff(key, diff);
+            }
+        }
+    }
+    if (onDiff || onUnchanged)
+    {
+        for (const auto& asset : bAssets)
+        {
+            const auto &key = asset.first;
+            const auto &valueB = asset.second;
+
+            // Added
+            valueIt = _assets.find(key);
+            if (valueIt == _assets.cend())
+            {
+                if (onDiff)
+                {
+                    AssetDiff diff;
+                    diff.asset = valueB;
+                    diff.type = DiffType::ADDED;
+                    onDiff(key, diff);
+                }
+            }
+
+            // Unchanged
+            else if (onUnchanged)
+            {
+                onUnchanged(key);
+            }
+        }
+    }
+}
+
+void Manifest::genResumeAssetsList(DownloadUnits *units, const std::function<std::string(const std::string& key, const Asset& asset)>& getAssetStoragePath) const
 {
     for (auto it = _assets.begin(); it != _assets.end(); ++it)
     {
-        Asset asset = it->second;
+        const std::string& key = it->first;
+        const Asset& asset = it->second;
         
         if (asset.downloadState != DownloadState::SUCCESSED)
         {
             DownloadUnit unit;
-            unit.customId = it->first;
+            unit.customId = key;
             unit.srcUrl = _packageUrl + asset.path;
-            unit.storagePath = _manifestRoot + asset.path;
+            unit.storagePath = _manifestRoot + getAssetStoragePath(key, asset);
             units->emplace(unit.customId, unit);
         }
     }

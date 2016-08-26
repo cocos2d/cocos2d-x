@@ -751,6 +751,18 @@ namespace cocos2d { namespace network {
         return coTask;
     }
 
+    void DownloaderCURL::suspend() {
+        CCASSERT(false, "suspend is not implemented for DownloaderCURL.");
+    }
+
+    void DownloaderCURL::resume() {
+        CCASSERT(false, "resume is not implemented for DownloaderCURL.");
+    }
+
+    bool DownloaderCURL::isSuspended() const {
+        return false;
+    }
+
     void DownloaderCURL::_onSchedule(float)
     {
         vector<TaskWrapper> tasks;

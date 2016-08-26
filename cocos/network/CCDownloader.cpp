@@ -177,6 +177,21 @@ namespace cocos2d { namespace network {
         return task;
     }
 
+    void Downloader::suspend()
+    {
+        _impl->suspend();
+    }
+
+    void Downloader::resume()
+    {
+        _impl->resume();
+    }
+
+    bool Downloader::isSuspended() const
+    {
+        return _impl->isSuspended();
+    }
+
 //std::string Downloader::getFileNameFromUrl(const std::string& srcUrl)
 //{
 //    // Find file name and file extension
