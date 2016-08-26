@@ -218,7 +218,7 @@ void ccDrawLine( const CCPoint& origin, const CCPoint& destination )
     CC_INCREMENT_GL_DRAWS(1);
 }
 
-void ccDrawRect( CCPoint origin, CCPoint destination )
+void ccDrawRect(const CCPoint& origin, const CCPoint& destination )
 {
     ccDrawLine(CCPointMake(origin.x, origin.y), CCPointMake(destination.x, origin.y));
     ccDrawLine(CCPointMake(destination.x, origin.y), CCPointMake(destination.x, destination.y));
@@ -226,7 +226,7 @@ void ccDrawRect( CCPoint origin, CCPoint destination )
     ccDrawLine(CCPointMake(origin.x, destination.y), CCPointMake(origin.x, origin.y));
 }
 
-void ccDrawSolidRect( CCPoint origin, CCPoint destination, ccColor4F color )
+void ccDrawSolidRect(const CCPoint& origin, const CCPoint& destination, ccColor4F color )
 {
     CCPoint vertices[] = {
         origin,

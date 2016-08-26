@@ -93,12 +93,12 @@ void CC_DLL ccDrawPoints( const CCPoint *points, unsigned int numberOfPoints );
 void CC_DLL ccDrawLine( const CCPoint& origin, const CCPoint& destination );
 
 /** draws a rectangle given the origin and destination point measured in points. */
-void CC_DLL ccDrawRect( CCPoint origin, CCPoint destination );
+void CC_DLL ccDrawRect(const CCPoint& origin, const CCPoint& destination );
 
 /** draws a solid rectangle given the origin and destination point measured in points.
     @since 1.1
  */
-void CC_DLL ccDrawSolidRect( CCPoint origin, CCPoint destination, ccColor4F color );
+void CC_DLL ccDrawSolidRect(const CCPoint& origin, const CCPoint& destination, ccColor4F color );
 
 /** draws a polygon given a pointer to CCPoint coordinates and the number of vertices measured in points.
 The polygon can be closed or open

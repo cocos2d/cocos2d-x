@@ -131,6 +131,7 @@ void CCLabelAtlas::updateAtlasValues()
 
     CCAssert( n <= m_pTextureAtlas->getCapacity(), "updateAtlasValues: Invalid String length");
     ccV3F_C4B_T2F_Quad* quads = m_pTextureAtlas->getQuads();
+    ccColor4B c = { _displayedColor.r, _displayedColor.g, _displayedColor.b, _displayedOpacity };
     for(unsigned int i = 0; i < n; i++) {
 
         unsigned char a = s[i] - m_uMapStartChar;
@@ -159,19 +160,21 @@ void CCLabelAtlas::updateAtlasValues()
         quads[i].br.texCoords.u = right;
         quads[i].br.texCoords.v = bottom;
 
-        quads[i].bl.vertices.x = (float) (i * m_uItemWidth);
+        float beginX = (float)(i * m_uItemWidth);
+
+        quads[i].bl.vertices.x = beginX;
         quads[i].bl.vertices.y = 0;
         quads[i].bl.vertices.z = 0.0f;
-        quads[i].br.vertices.x = (float)(i * m_uItemWidth + m_uItemWidth);
+        quads[i].br.vertices.x = beginX + m_uItemWidth;
         quads[i].br.vertices.y = 0;
         quads[i].br.vertices.z = 0.0f;
-        quads[i].tl.vertices.x = (float)(i * m_uItemWidth);
+        quads[i].tl.vertices.x = beginX;
         quads[i].tl.vertices.y = (float)(m_uItemHeight);
         quads[i].tl.vertices.z = 0.0f;
-        quads[i].tr.vertices.x = (float)(i * m_uItemWidth + m_uItemWidth);
+        quads[i].tr.vertices.x = beginX + m_uItemWidth;
         quads[i].tr.vertices.y = (float)(m_uItemHeight);
         quads[i].tr.vertices.z = 0.0f;
-        ccColor4B c = { _displayedColor.r, _displayedColor.g, _displayedColor.b, _displayedOpacity };
+
         quads[i].tl.colors = c;
         quads[i].tr.colors = c;
         quads[i].bl.colors = c;
