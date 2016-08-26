@@ -58,6 +58,26 @@ void km_mat4_stack_push(km_mat4_stack* stack, const kmMat4* item)
     }
 }
 
+void km_mat4_stack_duplicate_top(km_mat4_stack* stack)
+{
+    kmMat4* pPreTop = stack->top;
+    stack->top = &stack->stack[stack->item_count];
+    kmMat4Assign(stack->top, pPreTop);
+
+    stack->item_count++;
+
+    if(stack->item_count >= stack->capacity)
+    {
+        kmMat4* temp = NULL;
+        stack->capacity += INCREMENT;
+        temp = stack->stack;
+        stack->stack = (kmMat4*) malloc(stack->capacity*sizeof(kmMat4));
+        memcpy(stack->stack, temp, sizeof(kmMat4)*(stack->capacity - INCREMENT));
+        free(temp);
+        stack->top = &stack->stack[stack->item_count - 1];
+    }
+}
+
 void km_mat4_stack_pop(km_mat4_stack* stack, kmMat4* pOut)
 {
     assert(stack->item_count && "Cannot pop an empty stack");
