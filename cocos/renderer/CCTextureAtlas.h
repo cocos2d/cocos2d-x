@@ -237,6 +237,9 @@ public:
     /** Sets the quads that are going to be rendered. */
     void setQuads(V3F_C4B_T2F_Quad* quads);
     
+    /** EnableDepthWrite or not*/
+    void setDepthWriteMask(bool enabled) { _enableDepthWrite = enabled; }
+    bool getDepthWriteMask() const { return _enableDepthWrite; }
 private:
     void renderCommand();
 
@@ -250,6 +253,7 @@ protected:
     GLuint              _VAOname;
     GLuint              _buffersVBO[2]; //0: vertex  1: indices
     bool                _dirty; //indicates whether or not the array buffer of the VBO needs to be updated
+    bool                _enableDepthWrite; //indicate depthwrite should be enable when rendering
     /** quantity of quads that are going to be drawn */
     ssize_t _totalQuads;
     /** quantity of quads that can be stored with the current texture atlas size */
