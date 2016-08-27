@@ -41,6 +41,15 @@
 #include "platform/CCFileUtils.h"
 #include "mpg123.h"
 
+// Only for linking tests! Is going to be deleted!
+extern "C"
+{
+#include <libavcodec/avcodec.h>
+#include <libavutil/mathematics.h>
+#include <libavformat/avformat.h>
+}
+#include <iostream>
+
 using namespace cocos2d;
 using namespace cocos2d::experimental;
 
@@ -77,6 +86,11 @@ AudioEngineImpl::~AudioEngineImpl()
 
 bool AudioEngineImpl::init()
 {
+	// Only for linking tests! Is going to be deleted!
+	std::cout << "libavutil: gcd of 4 and 8:" << av_gcd(4, 8) << std::endl; // libavutil test
+	std::cout << "libavcodec version:" << avcodec_version() << std::endl; // libavcodec test
+	std::cout << "libavformat version:" << avformat_version() << std::endl; // libavformat test
+	// linking test end
     bool ret = false;
     do{
         s_ALDevice = alcOpenDevice(NULL);
