@@ -1,12 +1,14 @@
 local targetPlatform = cc.Application:getInstance():getTargetPlatform()
 local is64BitIOSDevice     = cc.Application:getInstance():is64BitIOSDevice()
 
+print("is64BitIOSDevice:" .. tostring(is64BitIOSDevice))
+
 if cc.PLATFORM_OS_LINUX ~= targetPlatform and cc.PLATFORM_OS_TIZEN ~= targetPlatform and is64BitIOSDevice ~= true then
 require("ByteCodeEncryptTest/ByteCodeTest")
 require("ByteCodeEncryptTest/ByteCodeAndEncryptTest")
 end
 
-if (cc.PLATFORM_OS_IPHONE == targetPlatform or cc.PLATFORM_OS_IPAD == targetPlatform) and is64BitIOSDevice == true then
+if (cc.PLATFORM_OS_IPHONE == targetPlatform or cc.PLATFORM_OS_IPAD == targetPlatform or cc.PLATFORM_OS_ANDROID == targetPlatform) and is64BitIOSDevice == true then
 require("ByteCodeEncryptTest/ByteCodeAndEncryptTest-arm64")
 require("ByteCodeEncryptTest/ByteCodeTest-arm64")
 end
@@ -65,7 +67,7 @@ local function byteCodeEncryptMainLayer()
             item:setEnabled(false)
         end
 
-        if (cc.PLATFORM_OS_IPHONE == targetPlatform or cc.PLATFORM_OS_IPAD == targetPlatform) and is64BitIOSDevice == true then
+        if (cc.PLATFORM_OS_ANDROID == targetPlatform or cc.PLATFORM_OS_IPHONE == targetPlatform or cc.PLATFORM_OS_IPAD == targetPlatform) and is64BitIOSDevice == true then
             item:setEnabled(true)
         end
     end

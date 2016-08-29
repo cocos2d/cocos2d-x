@@ -22,66 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#pragma once
-
-#include "audio/android/utils/Errors.h"
-
-#include <thread>
-#include <mutex>
-#include <condition_variable>
-#include <atomic>
-#include <vector>
+#include <string>
 
 namespace cocos2d { namespace experimental {
-
-class Track;
-class AudioMixer;
-
-class AudioMixerController
-{
-public:
-
-    struct OutputBuffer
-    {
-        void* buf;
-        size_t size;
-    };
-
-    AudioMixerController(int bufferSizeInFrames, int sampleRate, int channelCount);
-
-    ~AudioMixerController();
-
-    bool init();
-
-    bool addTrack(Track* track);
-    bool hasPlayingTacks();
-
-    void pause();
-    void resume();
-    inline bool isPaused() const { return _isPaused; };
-
-    void mixOneFrame();
-
-    inline OutputBuffer* current() { return &_mixingBuffer; }
-
-private:
-    void destroy();
-    void initTrack(Track* track, std::vector<Track*>& tracksToRemove);
-
-private:
-    int _bufferSizeInFrames;
-    int _sampleRate;
-    int _channelCount;
-
-    AudioMixer* _mixer;
-
-    std::mutex _activeTracksMutex;
-    std::vector<Track*> _activeTracks;
-
-    OutputBuffer _mixingBuffer;
-
-    std::atomic_bool _isPaused;
-    std::atomic_bool _isMixingFrame;
-};
-
-}} // namespace cocos2d { namespace experimental {
+	extern int getSystemProperty(const std::string& property);
+}}

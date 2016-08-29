@@ -23,6 +23,7 @@
 #include <pthread.h>
 #include <new>
 #include "audio/android/cutils/log.h"
+#include "audio/android/utils/Utils.h"
 //#include <cutils/properties.h>
 #include "audio/android/audio_utils/include/audio_utils/primitives.h"
 #include "audio/android/AudioResampler.h"
@@ -106,16 +107,12 @@ static AudioResampler::src_quality defaultQuality = AudioResampler::DEFAULT_QUAL
 
 void AudioResampler::init_routine()
 {
-    char value[PROPERTY_VALUE_MAX];
-    if (__system_property_get("af.resampler.quality", value) > 0) {
-        char *endptr;
-        unsigned long l = strtoul(value, &endptr, 0);
-        if (*endptr == '\0') {
-            defaultQuality = (src_quality) l;
-            ALOGD("forcing AudioResampler quality to %d", defaultQuality);
-            if (defaultQuality < DEFAULT_QUALITY || defaultQuality > VERY_HIGH_QUALITY) {
-                defaultQuality = DEFAULT_QUALITY;
-            }
+    int resamplerQuality = getSystemProperty("af.resampler.quality");
+    if (resamplerQuality > 0) {
+        defaultQuality = (src_quality) resamplerQuality;
+        ALOGD("forcing AudioResampler quality to %d", defaultQuality);
+        if (defaultQuality < DEFAULT_QUALITY || defaultQuality > VERY_HIGH_QUALITY) {
+            defaultQuality = DEFAULT_QUALITY;
         }
     }
 }
