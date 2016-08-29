@@ -129,6 +129,10 @@ static NSSize _calculateRealSizeForString(NSAttributedString **str, id font, NSS
         while (actualSize.size.width > constrainSize.width ||
                actualSize.size.height > constrainSize.height) {
             fontSize = fontSize - 1;
+            if (fontSize < 0) {
+                actualSize = CGRectMake(0, 0, 0, 0);
+                break;
+            }
             
             NSMutableAttributedString *mutableString = [[*str mutableCopy] autorelease];
             *str = __attributedStringWithFontSize(mutableString, fontSize);
@@ -162,6 +166,10 @@ static NSSize _calculateRealSizeForString(NSAttributedString **str, id font, NSS
         while (actualSize.size.height > constrainSize.height
                ||actualSize.size.width > constrainSize.width) {
             fontSize = fontSize - 1;
+            if (fontSize < 0) {
+                actualSize = CGRectMake(0, 0, 0, 0);
+                break;
+            }
             
             NSMutableAttributedString *mutableString = [[*str mutableCopy] autorelease];
             *str = __attributedStringWithFontSize(mutableString, fontSize);
