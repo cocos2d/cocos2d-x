@@ -200,6 +200,13 @@ public:
      */
     inline const Vector<PhysicsShape*>& getShapes() const { return _shapes; }
 
+    /**
+     * Get the first shape of the body shapes.
+     *
+     * @return The first shape in this body.
+     */
+    inline PhysicsShape* getFirstShape() const { return _shapes.size() >= 1 ? _shapes.at(0) : nullptr; }
+
     /** 
      * get the shape of the body.
      *
