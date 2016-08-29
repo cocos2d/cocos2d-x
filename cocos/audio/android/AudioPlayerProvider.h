@@ -88,7 +88,7 @@ private:
 
     UrlAudioPlayer *createUrlAudioPlayer(const AudioFileInfo &info);
 
-    void preloadEffect(const AudioFileInfo &info, const PreloadCallback& cb);
+    void preloadEffect(const AudioFileInfo &info, const PreloadCallback& cb, bool isPreloadInPlay2d);
 
     AudioFileInfo getFileInfo(const std::string &audioFilePath);
 

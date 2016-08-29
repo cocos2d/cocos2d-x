@@ -33,12 +33,12 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
-public class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListener {
+public class Cocos2dxTextInputWrapper implements TextWatcher, OnEditorActionListener {
     // ===========================================================
     // Constants
     // ===========================================================
 
-    private static final String TAG = Cocos2dxTextInputWraper.class.getSimpleName();
+    private static final String TAG = Cocos2dxTextInputWrapper.class.getSimpleName();
 
     // ===========================================================
     // Fields
@@ -52,7 +52,7 @@ public class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListe
     // Constructors
     // ===========================================================
 
-    public Cocos2dxTextInputWraper(final Cocos2dxGLSurfaceView pCocos2dxGLSurfaceView) {
+    public Cocos2dxTextInputWrapper(final Cocos2dxGLSurfaceView pCocos2dxGLSurfaceView) {
         this.mCocos2dxGLSurfaceView = pCocos2dxGLSurfaceView;
     }
 

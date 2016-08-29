@@ -42,6 +42,7 @@ AudioEngineTests::AudioEngineTests()
     ADD_TEST_CASE(AudioPerformanceTest);
     ADD_TEST_CASE(AudioSwitchStateTest);
     ADD_TEST_CASE(AudioSmallFileTest);
+    ADD_TEST_CASE(AudioPauseResumeAfterPlay);
 }
 
 namespace {
@@ -800,6 +801,30 @@ std::string AudioSmallFileTest::title() const
 }
 
 std::string AudioSmallFileTest::subtitle() const
+{
+    return "Should not crash";
+}
+
+/////////////////////////////////////////////////////////////////////////
+bool AudioPauseResumeAfterPlay::init()
+{
+    if (AudioEngineTestDemo::init())
+    {
+        int audioId = AudioEngine::play2d("audio/SoundEffectsFX009/FX082.mp3");
+        AudioEngine::pause(audioId);
+        AudioEngine::resume(audioId);
+        return true;
+    }
+    
+    return false;
+}
+
+std::string AudioPauseResumeAfterPlay::title() const
+{
+    return "pause & resume right after play2d";
+}
+
+std::string AudioPauseResumeAfterPlay::subtitle() const
 {
     return "Should not crash";
 }

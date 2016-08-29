@@ -152,6 +152,15 @@ void bindTexture2D(GLuint textureId)
     GL::bindTexture2DN(0, textureId);
 }
 
+void bindTexture2D(Texture2D* texture)
+{
+    GL::bindTexture2DN(0, texture->getName());
+    auto alphaTexID = texture->getAlphaTextureName();
+    if (alphaTexID > 0) {
+        GL::bindTexture2DN(1, alphaTexID);
+    }
+}
+
 void bindTexture2DN(GLuint textureUnit, GLuint textureId)
 {
 #if CC_ENABLE_GL_STATE_CACHE

@@ -21,67 +21,28 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
+#include "audio/android/utils/Utils.h"
 
-#pragma once
-
-#include "audio/android/utils/Errors.h"
-
-#include <thread>
-#include <mutex>
-#include <condition_variable>
-#include <atomic>
-#include <vector>
+#include <cstdio>
+#include <cstdlib>
 
 namespace cocos2d { namespace experimental {
 
-class Track;
-class AudioMixer;
-
-class AudioMixerController
+int getSystemProperty(const std::string& property)
 {
-public:
-
-    struct OutputBuffer
+    int ret = -1;
+    std::string command = "getprop " + property;
+    FILE* file = popen(command.c_str(), "r");
+    if (file)
     {
-        void* buf;
-        size_t size;
-    };
+        char output[100];
+        if (std::fgets(output, sizeof(output), file) != nullptr)
+            ret = std::atoi(output);
 
-    AudioMixerController(int bufferSizeInFrames, int sampleRate, int channelCount);
+        pclose(file);
+    }
+    
+    return ret;
+}
 
-    ~AudioMixerController();
-
-    bool init();
-
-    bool addTrack(Track* track);
-    bool hasPlayingTacks();
-
-    void pause();
-    void resume();
-    inline bool isPaused() const { return _isPaused; };
-
-    void mixOneFrame();
-
-    inline OutputBuffer* current() { return &_mixingBuffer; }
-
-private:
-    void destroy();
-    void initTrack(Track* track, std::vector<Track*>& tracksToRemove);
-
-private:
-    int _bufferSizeInFrames;
-    int _sampleRate;
-    int _channelCount;
-
-    AudioMixer* _mixer;
-
-    std::mutex _activeTracksMutex;
-    std::vector<Track*> _activeTracks;
-
-    OutputBuffer _mixingBuffer;
-
-    std::atomic_bool _isPaused;
-    std::atomic_bool _isMixingFrame;
-};
-
-}} // namespace cocos2d { namespace experimental {
+}} // end of namespace cocos2d { namespace experimental

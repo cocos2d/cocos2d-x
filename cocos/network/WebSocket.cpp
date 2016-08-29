@@ -595,7 +595,15 @@ void WebSocket::onSubThreadStarted()
 
     info.port = CONTEXT_PORT_NO_LISTEN;
     info.protocols = _wsProtocols;
-    info.extensions = exts;
+    
+    // FIXME: Disable 'permessage-deflate' extension temporarily because of issues:
+    // https://github.com/cocos2d/cocos2d-x/issues/16045, https://github.com/cocos2d/cocos2d-x/issues/15767
+    // libwebsockets issue: https://github.com/warmcat/libwebsockets/issues/593
+    // Currently, we couldn't find out the exact reason.
+    // libwebsockets official said it's probably an issue of user code
+    // since 'libwebsockets' passed AutoBahn stressed Test.
+
+//    info.extensions = exts;
 
     info.gid = -1;
     info.uid = -1;

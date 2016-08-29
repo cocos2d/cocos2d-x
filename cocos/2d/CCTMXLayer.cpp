@@ -92,7 +92,21 @@ bool TMXLayer::initWithTilesetInfo(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *la
 
         _atlasIndexArray = ccCArrayNew(totalNumberOfTiles);
 
-        this->setContentSize(CC_SIZE_PIXELS_TO_POINTS(Size(_layerSize.width * _mapTileSize.width, _layerSize.height * _mapTileSize.height)));
+        float width = 0;
+        float height = 0;
+        if (_layerOrientation == TMXOrientationHex) {
+            if (_staggerAxis == TMXStaggerAxis_X) {
+                height = _mapTileSize.height * (_layerSize.height + 0.5);
+                width = (_mapTileSize.width + _hexSideLength) * ((int)(_layerSize.width / 2)) + _mapTileSize.width * ((int)_layerSize.width % 2);
+            } else {
+                width = _mapTileSize.width * (_layerSize.width + 0.5);
+                height = (_mapTileSize.height + _hexSideLength) * ((int)(_layerSize.height / 2)) + _mapTileSize.height * ((int)_layerSize.height % 2);
+            }
+        } else {
+            width = _layerSize.width * _mapTileSize.width;
+            height = _layerSize.height * _mapTileSize.height;
+        }
+        this->setContentSize(CC_SIZE_PIXELS_TO_POINTS(Size(width, height)));
 
         _useAutomaticVertexZ = false;
         _vertexZvalue = 0;
