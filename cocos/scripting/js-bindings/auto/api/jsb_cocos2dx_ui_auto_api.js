@@ -5179,10 +5179,12 @@ vec2
 
 /**
  * @method scrollToPage
- * @param {long} arg0
- */
-scrollToPage : function (
-long 
+* @param {long|long} long
+* @param {float} float
+*/
+scrollToPage : function(
+long,
+float 
 )
 {
 },
@@ -5199,10 +5201,12 @@ vec2
 
 /**
  * @method scrollToItem
- * @param {long} arg0
- */
-scrollToItem : function (
-long 
+* @param {long|long} long
+* @param {float} float
+*/
+scrollToItem : function(
+long,
+float 
 )
 {
 },

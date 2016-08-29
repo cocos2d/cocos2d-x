@@ -113,13 +113,14 @@
 -- @return PageView#PageView self (return value: ccui.PageView)
         
 --------------------------------
--- Scroll to a page with a given index.<br>
--- param idx   A given index in the PageView. Index start from 0 to pageCount -1.
--- @function [parent=#PageView] scrollToPage 
+-- @overload self, long, float         
+-- @overload self, long         
+-- @function [parent=#PageView] scrollToPage
 -- @param self
 -- @param #long idx
+-- @param #float time
 -- @return PageView#PageView self (return value: ccui.PageView)
-        
+
 --------------------------------
 -- brief Set the page indicator's position using anchor point.<br>
 -- param positionAsAnchorPoint The position as anchor point.
@@ -129,13 +130,14 @@
 -- @return PageView#PageView self (return value: ccui.PageView)
         
 --------------------------------
--- Scroll to a page with a given index.<br>
--- param itemIndex   A given index in the PageView. Index start from 0 to pageCount -1.
--- @function [parent=#PageView] scrollToItem 
+-- @overload self, long, float         
+-- @overload self, long         
+-- @function [parent=#PageView] scrollToItem
 -- @param self
--- @param #long itemIndex
+-- @param #long idx
+-- @param #float time
 -- @return PageView#PageView self (return value: ccui.PageView)
-        
+
 --------------------------------
 -- brief Set color of page indicator's index nodes.<br>
 -- param color Space between nodes in pixel.
