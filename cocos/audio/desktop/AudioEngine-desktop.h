@@ -1,5 +1,6 @@
 /****************************************************************************
  Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2016 Jan-Oliver "Janonard" Opdenhövel
 
  http://www.cocos2d-x.org
 
@@ -23,7 +24,7 @@
  ****************************************************************************/
 #include "platform/CCPlatformConfig.h"
 
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+#if CC_TARGET_PLATFORM == CC_PLATFORM_LINUX || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 
 #ifndef __AUDIO_ENGINE_INL_H_
 #define __AUDIO_ENGINE_INL_H_
@@ -31,8 +32,8 @@
 #include <unordered_map>
 
 #include "base/CCRef.h"
-#include "audio/win32/AudioCache.h"
-#include "audio/win32/AudioPlayer.h"
+#include "audio/desktop/AudioCache.h"
+#include "audio/desktop/AudioPlayer.h"
 
 NS_CC_BEGIN
     namespace experimental{

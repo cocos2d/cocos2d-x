@@ -3,14 +3,12 @@ set(COCOS_AUDIO_SRC
     audio/AudioEngine.cpp
     )
 
-if(WINDOWS)
+if(LINUX OR WINDOWS)
     set(COCOS_AUDIO_PLATFORM_SRC
-        audio/win32/SimpleAudioEngine.cpp
-        audio/win32/MciPlayer.cpp
-        audio/win32/MciPlayer.h
-        audio/win32/AudioEngine-win32.cpp
-        audio/win32/AudioCache.cpp
-        audio/win32/AudioPlayer.cpp
+        audio/desktop/SimpleAudioEngine.cpp
+        audio/desktop/AudioEngine-desktop.cpp
+        audio/desktop/AudioCache.cpp
+        audio/desktop/AudioPlayer.cpp
     )
 
 ELSEIF(ANDROID)
@@ -19,13 +17,6 @@ ELSEIF(ANDROID)
         audio/android/ccdandroidUtils.cpp
         audio/android/cddSimpleAudioEngine.cpp
         audio/android/jni/cddandroidAndroidJavaEngine.cpp
-    )
-
-elseif(LINUX)
-    set(COCOS_AUDIO_PLATFORM_SRC
-        audio/linux/SimpleAudioEngine.cpp
-        audio/linux/AudioEngine-linux.h
-        audio/linux/AudioEngine-linux.cpp
     )
 
 elseif(MACOSX)

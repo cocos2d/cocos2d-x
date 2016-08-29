@@ -1,5 +1,6 @@
 /****************************************************************************
  Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2016 Jan-Oliver "Janonard" Opdenhövel
  
  http://www.cocos2d-x.org
  
@@ -23,9 +24,9 @@
  ****************************************************************************/
 #include "platform/CCPlatformConfig.h"
 
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+#if CC_TARGET_PLATFORM == CC_PLATFORM_LINUX || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 
-#include "audio/win32/AudioCache.h"
+#include "audio/desktop/AudioCache.h"
 #include <thread>
 #include <algorithm>
 #include "vorbis/codec.h"

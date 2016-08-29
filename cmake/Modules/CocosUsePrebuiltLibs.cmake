@@ -101,10 +101,6 @@ set(_OpenalSoft_libs OpenAL32)
 set(_zlib_inc zlib.h)
 set(_zlib_libs z libzlib libz)
 
-set(_fmod_prefix FMOD)
-set(_fmod_inc fmod.hpp)
-set(_fmod_libs fmod fmod64 fmod fmod64)
-
 set(all_prebuilt_libs
   chipmunk
   curl
@@ -127,7 +123,7 @@ if(MSVC)
 endif()
 
 if(LINUX)
-  list(APPEND all_prebuilt_libs fmod)
+  list(APPEND all_prebuilt_libs MP3Decoder OggDecoder OpenalSoft)
 endif()
 
 if(ANDROID)
