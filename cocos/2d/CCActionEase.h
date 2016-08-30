@@ -530,7 +530,7 @@ EASEELASTIC_TEMPLATE_DECL_CLASS(EaseElasticInOut);
  @brief Ease Bezier
  @ingroup Actions
  */
-class EaseBezierAction : public cocos2d::ActionEase
+class CC_DLL EaseBezierAction : public cocos2d::ActionEase
 {
 public:
     /**
