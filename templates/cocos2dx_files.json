@@ -394,7 +394,7 @@
         "cocos/base/CCConsole.cpp", 
         "cocos/base/CCConsole.h", 
         "cocos/base/CCController-android.cpp", 
-        "cocos/base/CCController-iOS.mm", 
+        "cocos/base/CCController-apple.mm", 
         "cocos/base/CCController.cpp", 
         "cocos/base/CCController.h", 
         "cocos/base/CCData.cpp", 
