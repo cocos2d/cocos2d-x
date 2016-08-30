@@ -56,8 +56,6 @@ public:
     //
     // Overrides
     //
-    virtual ActionEase* clone() const { CCASSERT(false, "override clone!"); return nullptr; }
-    virtual ActionEase* reverse() const { CCASSERT(false, "override clone!"); return nullptr; }
     virtual void startWithTarget(Node *target) override;
     virtual void stop() override;
     virtual void update(float time) override;
@@ -101,12 +99,6 @@ public:
     @return Return the rate value of the ease rate action.
     */
     inline float getRate() const { return _rate; }
-
-    //
-    // Overrides
-    //
-    virtual EaseRateAction* clone() const override;
-    virtual EaseRateAction* reverse() const override;
 
 CC_CONSTRUCTOR_ACCESS:
     EaseRateAction() {}

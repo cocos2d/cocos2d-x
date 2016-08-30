@@ -129,19 +129,6 @@ bool EaseRateAction::initWithAction(ActionInterval *action, float rate)
     return false;
 }
 
-// TODO: Should remove these if possible with MACROs
-EaseRateAction* EaseRateAction::clone() const
-{
-    CCASSERT(nullptr, "Need to override this method!");
-    return nullptr; // EaseRateAction::create(_inner, _rate);
-}
-
-EaseRateAction* EaseRateAction::reverse() const
-{
-    CCASSERT(nullptr, "Need to override this method!");
-    return nullptr; // EaseRateAction::create(_inner->reverse(), _rate);
-}
-
 //
 // NOTE: Converting these macros into Templates is desirable, but please see
 // issue #16159 [https://github.com/cocos2d/cocos2d-x/pull/16159] for further info
