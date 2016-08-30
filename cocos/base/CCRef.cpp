@@ -30,6 +30,9 @@ THE SOFTWARE.
 
 #if CC_REF_LEAK_DETECTION
 #include <algorithm>    // std::find
+#include <thread>
+#include <mutex>
+#include <vector>
 #endif
 
 NS_CC_BEGIN
@@ -152,10 +155,12 @@ unsigned int Ref::getReferenceCount() const
 
 #if CC_REF_LEAK_DETECTION
 
-static std::list<Ref*> __refAllocationList;
+static std::vector<Ref*> __refAllocationList;
+static std::mutex __refMutex;
 
 void Ref::printLeaks()
 {
+    std::lock_guard<std::mutex> refLockGuard(__refMutex);
     // Dump Ref object memory leaks
     if (__refAllocationList.empty())
     {
@@ -176,6 +181,7 @@ void Ref::printLeaks()
 
 static void trackRef(Ref* ref)
 {
+    std::lock_guard<std::mutex> refLockGuard(__refMutex);
     CCASSERT(ref, "Invalid parameter, ref should not be null!");
 
     // Create memory allocation record.
@@ -184,6 +190,7 @@ static void trackRef(Ref* ref)
 
 static void untrackRef(Ref* ref)
 {
+    std::lock_guard<std::mutex> refLockGuard(__refMutex);
     auto iter = std::find(__refAllocationList.begin(), __refAllocationList.end(), ref);
     if (iter == __refAllocationList.end())
     {
