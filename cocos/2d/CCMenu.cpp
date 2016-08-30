@@ -137,12 +137,11 @@ bool Menu::initWithArray(const Vector<MenuItem*>& arrayOfItems)
         // menu in the center of the screen
         Size s = Director::getInstance()->getWinSize();
 
-        this->setIgnoreAnchorPointForPosition(true);
-        setAnchorPoint(Vec2(0.5f, 0.5f));
+        this->setIgnoreAnchorPointForPosition(false);
+        this->setAnchorPoint(Vec2(0.5f, 0.5f));
         this->setContentSize(s);
 
-        setPosition(s.width/2, s.height/2);
-        
+        this->setPosition(s.width/2, s.height/2);
         int z=0;
         
         for (auto& item : arrayOfItems)
