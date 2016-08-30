@@ -136,7 +136,8 @@ EaseRateAction* EaseRateAction::clone() const
     return nullptr; // EaseRateAction::create(_inner, _rate);
 }
 
-EaseRateAction* EaseRateAction::reverse() const {
+EaseRateAction* EaseRateAction::reverse() const
+{
     CCASSERT(nullptr, "Need to override this method!");
     return nullptr; // EaseRateAction::create(_inner->reverse(), _rate);
 }

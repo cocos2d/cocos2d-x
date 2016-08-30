@@ -56,8 +56,8 @@ public:
     //
     // Overrides
     //
-    virtual ActionEase* clone() const override = 0;
-    virtual ActionEase* reverse() const override = 0;
+    virtual ActionEase* clone() const { CCASSERT(false, "override clone!"); return nullptr; }
+    virtual ActionEase* reverse() const { CCASSERT(false, "override clone!"); return nullptr; }
     virtual void startWithTarget(Node *target) override;
     virtual void stop() override;
     virtual void update(float time) override;
@@ -443,12 +443,6 @@ public:
      @param fPeriod The value will be set.
     */
     inline void setPeriod(float fPeriod) { _period = fPeriod; }
-
-    //
-    // Overrides
-    //
-	  virtual EaseElastic* clone() const override = 0;
-	  virtual EaseElastic* reverse() const override = 0;
 
 CC_CONSTRUCTOR_ACCESS:
     EaseElastic() {}
