@@ -98,6 +98,9 @@ static void removeItemFromVector(std::vector<T>& v, T item)
 
 void AudioMixerController::initTrack(Track* track, std::vector<Track*>& tracksToRemove)
 {
+    if (track->isInitialized())
+        return;
+
     uint32_t channelMask = audio_channel_out_mask_from_count(2);
     int32_t name = _mixer->getTrackName(channelMask, AUDIO_FORMAT_PCM_16_BIT,
                                         AUDIO_SESSION_OUTPUT_MIX);
@@ -133,7 +136,6 @@ void AudioMixerController::initTrack(Track* track, std::vector<Track*>& tracksTo
                 AudioMixer::CHANNEL_MASK,
                 (void *) (uintptr_t) channelMask);
 
-        track->setState(Track::State::PLAYING);
         track->setName(name);
         _mixer->enable(name);
 
@@ -192,16 +194,9 @@ void AudioMixerController::mixOneFrame()
     {
         state = track->getState();
 
-        if (state == Track::State::IDLE)
+        if (state == Track::State::PLAYING)
         {
             initTrack(track, tracksToRemove);
-        }
-        else if (state == Track::State::PLAYING)
-        {
-            if (!track->isInitialized())
-            {
-                initTrack(track, tracksToRemove);
-            }
 
             int name = track->getName();
             ALOG_ASSERT(name >= 0);
@@ -224,10 +219,7 @@ void AudioMixerController::mixOneFrame()
         }
         else if (state == Track::State::RESUMED)
         {
-            if (!track->isInitialized())
-            {
-                initTrack(track, tracksToRemove);
-            }
+            initTrack(track, tracksToRemove);
 
             if (track->getPrevState() == Track::State::PAUSED)
             {
@@ -241,10 +233,7 @@ void AudioMixerController::mixOneFrame()
         }
         else if (state == Track::State::PAUSED)
         {
-            if (!track->isInitialized())
-            {
-                initTrack(track, tracksToRemove);
-            }
+            initTrack(track, tracksToRemove);
 
             if (track->getPrevState() == Track::State::PLAYING || track->getPrevState() == Track::State::RESUMED)
             {
@@ -259,14 +248,7 @@ void AudioMixerController::mixOneFrame()
         {
             if (track->isInitialized())
             {
-                if (track->getPrevState() != Track::State::IDLE)
-                {
-                    _mixer->deleteTrackName(track->getName());
-                }
-                else
-                {
-                    ALOGV("Stop track (%p) while it's in IDLE state!", track);
-                }
+                _mixer->deleteTrackName(track->getName());
             }
             else
             {
