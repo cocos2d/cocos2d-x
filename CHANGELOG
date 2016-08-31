@@ -10,7 +10,6 @@ cocos2d-x-3.13 Aug 22 2016
 [HIGHLIGHT]     upgrade CURL to 7.50.0
 [HIGHLIGHT]     upgrade Spine to 3.4
 [HIGHLIGHT]     upgrade glfw to 3.2
-[HIGHLIGHT]     upgrade luajit to 2.1.0-beta2
 
 [NEW]           add `Configuration::supportsMapBuffer()`
 [NEW]           support hexagonal tile maps
