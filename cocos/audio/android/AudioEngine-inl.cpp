@@ -225,11 +225,15 @@ int AudioEngineImpl::play2d(const std::string &filePath ,bool loop ,float volume
 
                 int id = player->getId();
 
-                ALOGV("Removing player id=%d", id);
+                ALOGV("Removing player id=%d, state:%d", id, (int)state);
+
                 auto iter = _callbackMap.find(id);
                 if (iter != _callbackMap.end())
                 {
-                    iter->second(id, *AudioEngine::_audioIDInfoMap[id].filePath);
+                    if (state == IAudioPlayer::State::OVER)
+                    {
+                        iter->second(id, *AudioEngine::_audioIDInfoMap[id].filePath);
+                    }
                     _callbackMap.erase(iter);
                 }
                 AudioEngine::remove(id);
