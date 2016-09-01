@@ -14,9 +14,9 @@
 #include <assert.h>
 #include <sys/time.h>
 #include <sys/select.h>
-#import <OpenGL/gl.h>
-#import <OpenGL/glu.h>
-#import <OpenGL/glext.h>
+#include <OpenGL/gl.h>
+#include <OpenGL/glu.h>
+#include <OpenGL/glext.h>
 
 #ifdef __OBJC__
     #import <Cocoa/Cocoa.h>
