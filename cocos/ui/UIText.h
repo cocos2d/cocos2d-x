@@ -37,6 +37,7 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 class Label;
+class Sprite;
 
 namespace ui {
 
@@ -322,6 +323,12 @@ public:
     * Return current effect color value.
     */
     Color4B getEffectColor() const;
+    
+    /**
+     * Provides a way to treat each character like a Sprite.
+     * @warning No support system font.
+     */
+    virtual Sprite * getLetter(int lettetIndex);
 
 CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
