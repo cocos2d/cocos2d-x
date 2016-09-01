@@ -1,19 +1,62 @@
-language: cpp
-env:
-  matrix:
-  - GEN_BINDING=YES
-  - GEN_COCOS_FILES=YES
- # - PLATFORM=mac-ios PUSH_TO_MAC=YES
- # - PLATFORM=linux DEBUG=1 CC_COMPILER=gcc CXX_COMPILER=g++
-  # Disable clang build on linux temporarily since we're using "-stdlib=libc++ " which wasn't installed on travis machine.
-  # - PLATFORM=linux DEBUG=1 CC_COMPILER=clang CXX_COMPILER=clang++
-  # Since switching to C++11 only the ARM version of the nactive client
-  # port currently builds.  TODO(sbc): Re-enable all architectures.
-  # Disabled travis-ci build for native client port since it doesn't support std::thread, std::mutex.
-  # - PLATFORM=nacl DEBUG=1 NACL_ARCH=arm
-#  - PLATFORM=android
-  # - PLATFORM=emscripten DEBUG=1
-  global:
+matrix:
+  include:
+    # linux
+    - os: linux
+      env: BUILD_TARGET=linux
+      language: cpp
+      sudo: required
+      addons:
+        apt:
+          sources:
+            - george-edison55-precise-backports # cmake 3.2.3 / doxygen 1.8.3
+          packages:
+            - cmake
+            - cmake-data
+    # android
+    - os: linux
+      env: BUILD_TARGET=android
+      language: android
+      sudo: required
+      android:
+        components:
+          - android-10
+    # mac lua-tests + js-tests
+    - os: osx
+      env: BUILD_TARGET=mac
+      language: cpp
+      osx_image: xcode7.3
+      sudo: required
+      python:
+        - "2.7"
+      cache: pip
+    # mac cpp-tests
+    - os: osx
+      env: BUILD_TARGET=mac BUILD_CPP=true
+      language: cpp
+      osx_image: xcode7.3
+      sudo: required
+      python:
+        - "2.7"
+      cache: pip
+    # iOS lua-tests + js-tests
+    - os: osx
+      env: BUILD_TARGET=ios
+      language: cpp
+      osx_image: xcode7.3
+      sudo: required
+      python:
+        - "2.7"
+      cache: pip
+    # iOS cpp-tests
+    - os: osx
+      env: BUILD_TARGET=ios BUILD_CPP=true
+      language: cpp
+      osx_image: xcode7.3
+      sudo: required
+      python:
+        - "2.7"
+      cache: pip
+global:
   - secure: |-
       cHXOjAda+t2tmBVuVAiQfvhDN+unToO6hX1rc3dJeGDOk4rlQnylJacjA7o/
       enkWeHagbW2Ja4h7BxQz4h7dada8zEbIbEMK4VEHx6AWwQM+GIEqkJPv5g8k
@@ -28,13 +71,22 @@ env:
       X2Ry/Nb6hGRkH3WS0T3D/KG1+e7lP/TMB9bvo6/locLJ2A6Z1YI=
   - secure: PGMnEvysYv9Mnjrof05v9MU41ZlVO7A7SQb4oLuYqhBf0stvZUVEF4fmkOcXRPAd4Cg41aAbtE8RyGaqIFaKHtjHFtTdisM9XVXqL+eMfv5L+8nFCk4S5Fi/ohglO+FBJ9X/NLfAfRZmlwJR+UedU5AJwqlQbKraNkyv/FmDMUc=
 script:
-- export CC=$CC_COMPILER
-- export CXX=$CXX_COMPILER
 - tools/travis-scripts/run-script.sh
 before_install:
 - tools/travis-scripts/before-install.sh
 
-# whitelist
+cache:
+  bundler: true
+
+notifications:
+  email: false
+
+# blocklist
 branches:
-  only:
-    - v3
+  except:
+  - v1
+  - v2
+  - v4-develop
+  - v3-doc
+  - v3.11_backup
+  - v35-for-tizen

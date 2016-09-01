@@ -9,7 +9,7 @@ if [ ! $(command -v apt-get) ]; then
 fi
 
 #install g++-4.9
-sudo add-apt-repository ppa:ubuntu-toolchain-r/test
+sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y > /dev/null
 sudo apt-get update
 
 #try to remove glfw2
@@ -49,7 +49,7 @@ if [ -n "$MISSING" ]; then
     TXTCOLOR_DEFAULT="\033[0;m"
     TXTCOLOR_GREEN="\033[0;32m"
     echo -e $TXTCOLOR_GREEN"Missing packages: $MISSING.\nYou may be asked for your password for package installation."$TXTCOLOR_DEFAULT
-    sudo apt-get --force-yes --yes install $MISSING
+    sudo apt-get --force-yes --yes install $MISSING > /dev/null
 fi
 
 # install glfw
