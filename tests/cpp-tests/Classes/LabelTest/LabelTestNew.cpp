@@ -3197,7 +3197,7 @@ std::string LabelIssue15214::title() const
 
 std::string LabelIssue15214::subtitle() const
 {
-    return "Font and underline should be of the same color";
+    return "Font + underline: same color with setColor()";
 }
 
 //
