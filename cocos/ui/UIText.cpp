@@ -413,6 +413,11 @@ Color4B Text::getEffectColor() const
     return Color4B(effect.r * 255, effect.g * 255, effect.b * 255, effect.a * 255);
 }
 
+Sprite * Text::getLetter(int lettetIndex)
+{
+    return _labelRenderer->getLetter(lettetIndex);
+}
+
 void Text::setLabelWordWrap(bool value)
 {
     _wordWrapLabel = value;
