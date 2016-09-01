@@ -145,7 +145,7 @@ function generate_pull_request_for_binding_codes_and_cocosfiles()
 
     # generate cocos_files.json and check diff
     echo "Updates cocos_files.json"
-    ./generate-template-files.py
+    $COCOS2DX_ROOT/tools/travis-scripts/generate-template-files.py
     git diff FETCH_HEAD --stat --exit-code "$COCOSFILE_PATH"
     COCOSFILE_DIFF_RETVAL=$?
 
@@ -236,5 +236,8 @@ fi
 # - make cocos robot to send PR to cocos2d-x for new binding codes
 # - generate cocos_files.json for template
 if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
-    run_after_merge
+    # only one job need to send PR, linux virtual machine has better performance
+    if [ $TRAVIS_OS_NAME == "linux" ] && [ $GEN_BINDING_AND_COCOSFILE == "true" ]; then
+        run_after_merge
+    fi
 fi
