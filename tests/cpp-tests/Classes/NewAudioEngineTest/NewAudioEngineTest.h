@@ -210,4 +210,15 @@ public:
     virtual std::string subtitle() const override;
 };
 
+class AudioPreloadSameFileMultipleTimes : public AudioEngineTestDemo
+{
+public:
+    CREATE_FUNC(AudioPreloadSameFileMultipleTimes);
+    
+    virtual void onEnter() override;
+    
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
 #endif /* defined(__NEWAUDIOENGINE_TEST_H_) */

@@ -210,16 +210,16 @@ void AudioPlayerProvider::preloadEffect(const std::string &audioFilePath, const 
         return;
     }
 
+    _pcmCacheMutex.lock();
+    auto&& iter = _pcmCache.find(audioFilePath);
+    if (iter != _pcmCache.end())
     {
-        std::lock_guard<std::mutex> lk(_pcmCacheMutex);
-        auto&& iter = _pcmCache.find(audioFilePath);
-        if (iter != _pcmCache.end())
-        {
-            ALOGV("preload return from cache: (%s)", audioFilePath.c_str());
-            cb(true, iter->second);
-            return;
-        }
+        ALOGV("preload return from cache: (%s)", audioFilePath.c_str());
+        _pcmCacheMutex.unlock();
+        cb(true, iter->second);
+        return;
     }
+    _pcmCacheMutex.unlock();
 
     auto info = getFileInfo(audioFilePath);
     preloadEffect(info, [this, cb, audioFilePath](bool succeed, PcmData data){
@@ -246,17 +246,17 @@ void AudioPlayerProvider::preloadEffect(const AudioFileInfo &info, const Preload
     {
         std::string audioFilePath = info.url;
 
+        // 1. First time check, if it wasn't in the cache, goto 2 step
+        _pcmCacheMutex.lock();
+        auto&& iter = _pcmCache.find(audioFilePath);
+        if (iter != _pcmCache.end())
         {
-            // 1. First time check, if it wasn't in the cache, goto 2 step
-            std::lock_guard<std::mutex> lk(_pcmCacheMutex);
-            auto&& iter = _pcmCache.find(audioFilePath);
-            if (iter != _pcmCache.end())
-            {
-                ALOGV("1. Return pcm data from cache, url: %s", info.url.c_str());
-                cb(true, iter->second);
-                return;
-            }
+            ALOGV("1. Return pcm data from cache, url: %s", info.url.c_str());
+            _pcmCacheMutex.unlock();
+            cb(true, iter->second);
+            return;
         }
+        _pcmCacheMutex.unlock();
 
         {
             // 2. Check whether the audio file is being preloaded, if it has been removed from map just now,
@@ -273,17 +273,19 @@ void AudioPlayerProvider::preloadEffect(const AudioFileInfo &info, const Preload
                 return;
             }
 
-            {   // 3. Check it in cache again. If it has been removed from map just now, the file is in
-                // the cache absolutely.
-                std::lock_guard<std::mutex> lk2(_pcmCacheMutex);
-                auto&& iter = _pcmCache.find(audioFilePath);
-                if (iter != _pcmCache.end())
-                {
-                    ALOGV("2. Return pcm data from cache, url: %s", info.url.c_str());
-                    cb(true, iter->second);
-                    return;
-                }
+           // 3. Check it in cache again. If it has been removed from map just now, the file is in
+            // the cache absolutely.
+            _pcmCacheMutex.lock();
+            auto&& iter = _pcmCache.find(audioFilePath);
+            if (iter != _pcmCache.end())
+            {
+                ALOGV("2. Return pcm data from cache, url: %s", info.url.c_str());
+                _pcmCacheMutex.unlock();
+                cb(true, iter->second);
+                return;
             }
+            _pcmCacheMutex.unlock();
+
 
             PreloadCallbackParam param;
             param.callback = cb;

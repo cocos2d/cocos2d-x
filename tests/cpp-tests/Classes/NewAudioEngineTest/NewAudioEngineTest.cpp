@@ -43,6 +43,7 @@ AudioEngineTests::AudioEngineTests()
     ADD_TEST_CASE(AudioSwitchStateTest);
     ADD_TEST_CASE(AudioSmallFileTest);
     ADD_TEST_CASE(AudioPauseResumeAfterPlay);
+    ADD_TEST_CASE(AudioPreloadSameFileMultipleTimes);
 }
 
 namespace {
@@ -189,7 +190,7 @@ AudioEngineTestDemo::AudioEngineTestDemo()
 void AudioEngineTestDemo::onExit()
 {
     *_isDestroyed = true;
-    AudioEngine::stopAll();
+    AudioEngine::uncacheAll();
     TestCase::onExit();
 }
 
@@ -827,6 +828,35 @@ std::string AudioPauseResumeAfterPlay::title() const
 }
 
 std::string AudioPauseResumeAfterPlay::subtitle() const
+{
+    return "Should not crash";
+}
+
+/////////////////////////////////////////////////////////////////////////
+void AudioPreloadSameFileMultipleTimes::onEnter()
+{
+    AudioEngineTestDemo::onEnter();
+
+    for (int i = 0; i < 10; ++i)
+    {
+        AudioEngine::preload("audio/SoundEffectsFX009/FX082.mp3", [i](bool isSucceed){
+            log("111: %d preload %s", i, isSucceed ? "succeed" : "failed");
+            AudioEngine::preload("audio/SoundEffectsFX009/FX082.mp3", [i](bool isSucceed){
+                log("222: %d preload %s", i, isSucceed ? "succeed" : "failed");
+                AudioEngine::preload("audio/SoundEffectsFX009/FX082.mp3", [i](bool isSucceed){
+                    log("333: %d preload %s", i, isSucceed ? "succeed" : "failed");
+                });
+            });
+        });
+    }
+}
+
+std::string AudioPreloadSameFileMultipleTimes::title() const
+{
+    return "Preload same file multiple times";
+}
+
+std::string AudioPreloadSameFileMultipleTimes::subtitle() const
 {
     return "Should not crash";
 }
