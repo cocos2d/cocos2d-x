@@ -397,20 +397,20 @@ bool AudioDecoder::decodeToPcm()
         value = nullptr;
         valueSize = 0;
         result = (*mdExtrItf)->GetKeySize(mdExtrItf, i, &keySize);
-        SL_RETURN_VAL_IF_FAILED(result, false, "GetKeySize(%d) failed", i);
+        SL_RETURN_VAL_IF_FAILED(result, false, "GetKeySize(%d) failed", (int)i);
 
         result = (*mdExtrItf)->GetValueSize(mdExtrItf, i, &valueSize);
-        SL_RETURN_VAL_IF_FAILED(result, false, "GetValueSize(%d) failed", i);
+        SL_RETURN_VAL_IF_FAILED(result, false, "GetValueSize(%d) failed", (int)i);
 
         keyInfo = (SLMetadataInfo *) malloc(keySize);
         if (nullptr != keyInfo)
         {
             result = (*mdExtrItf)->GetKey(mdExtrItf, i, keySize, keyInfo);
 
-            SL_RETURN_VAL_IF_FAILED(result, false, "GetKey(%d) failed", i);
+            SL_RETURN_VAL_IF_FAILED(result, false, "GetKey(%d) failed", (int)i);
 
             ALOGV("key[%d] size=%d, name=%s, value size=%d",
-                  i, keyInfo->size, keyInfo->data, valueSize);
+                  (int)i, (int)keyInfo->size, keyInfo->data, (int)valueSize);
             /* find out the key index of the metadata we're interested in */
             if (!strcmp((char *) keyInfo->data, ANDROID_KEY_PCMFORMAT_NUMCHANNELS))
             {
@@ -477,7 +477,7 @@ bool AudioDecoder::decodeToPcm()
             _result.pcmBuffer->size() / _result.numChannels / (_result.bitsPerSample / 8);
 
     std::string info = _result.toString();
-    ALOGI("Original audio info: %s, total size: %d", info.c_str(), _result.pcmBuffer->size());
+    ALOGI("Original audio info: %s, total size: %d", info.c_str(), (int)_result.pcmBuffer->size());
     return true;
 }
 
@@ -589,7 +589,7 @@ bool AudioDecoder::resample()
                    (char *) convert + outputFrames * channels * sizeof(int16_t));
     _result.pcmBuffer = buffer;
 
-    ALOGV("pcm buffer size: %d", _result.pcmBuffer->size());
+    ALOGV("pcm buffer size: %d", (int)_result.pcmBuffer->size());
 
     free(convert);
     free(outputVAddr);
@@ -622,7 +622,7 @@ void AudioDecoder::queryAudioInfo()
         ALOGV("Content duration is unknown (in dec callback)");
     } else
     {
-        ALOGV("Content duration is %ums (in dec callback)", durationInMsec);
+        ALOGV("Content duration is %dms (in dec callback)", (int)durationInMsec);
         _result.duration = durationInMsec / 1000.0f;
     }
 
@@ -727,7 +727,7 @@ void AudioDecoder::decodeToPcmCallback(SLAndroidSimpleBufferQueueItf queueItf)
         SLmillisecond msec;
         result = (*_decContext.playItf)->GetPosition(_decContext.playItf, &msec);
         SL_RETURN_IF_FAILED(result, "%s, GetPosition failed", __FUNCTION__);
-        ALOGV("%s called (iteration %d): current position=%u ms", __FUNCTION__, _counter, msec);
+        ALOGV("%s called (iteration %d): current position=%d ms", __FUNCTION__, _counter, (int)msec);
     }
 
     _result.pcmBuffer->insert(_result.pcmBuffer->end(), _decContext.pData,

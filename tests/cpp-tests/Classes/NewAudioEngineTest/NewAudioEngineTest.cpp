@@ -806,17 +806,19 @@ std::string AudioSmallFileTest::subtitle() const
 }
 
 /////////////////////////////////////////////////////////////////////////
-bool AudioPauseResumeAfterPlay::init()
+void AudioPauseResumeAfterPlay::onEnter()
 {
-    if (AudioEngineTestDemo::init())
+    AudioEngineTestDemo::onEnter();
+
+    int audioId = AudioEngine::play2d("audio/SoundEffectsFX009/FX082.mp3");
+    AudioEngine::pause(audioId);
+    AudioEngine::resume(audioId);
+    
+    for (int i = 0; i < 10; ++i)
     {
-        int audioId = AudioEngine::play2d("audio/SoundEffectsFX009/FX082.mp3");
         AudioEngine::pause(audioId);
         AudioEngine::resume(audioId);
-        return true;
     }
-    
-    return false;
 }
 
 std::string AudioPauseResumeAfterPlay::title() const
