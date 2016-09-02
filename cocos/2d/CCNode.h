@@ -165,7 +165,7 @@ public:
      Helper function used by `setLocalZOrder`. Don't use it unless you know what you are doing.
      @js NA
      */
-    CC_DEPRECATED_ATTRIBUTE virtual void _setLocalZOrder(int z);
+    virtual void _setLocalZOrder(int z);
 
     /** !!! ONLY FOR INTERNAL USE
     * Sets the arrival order when this node has a same ZOrder with other children.
