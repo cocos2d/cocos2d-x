@@ -6602,7 +6602,8 @@
         "tools/tojs/cocos2dx_spine.ini", 
         "tools/tojs/cocos2dx_studio.ini", 
         "tools/tojs/cocos2dx_ui.ini", 
-        "tools/tojs/genbindings.py"
+        "tools/tojs/genbindings.py", 
+        "tools/tojs/userconf.ini"
     ], 
     "lua": [
         "cocos/scripting/lua-bindings/CMakeLists.txt", 
@@ -7475,6 +7476,7 @@
         "tools/tolua/cocos2dx_spine.ini", 
         "tools/tolua/cocos2dx_studio.ini", 
         "tools/tolua/cocos2dx_ui.ini", 
-        "tools/tolua/genbindings.py"
+        "tools/tolua/genbindings.py", 
+        "tools/tolua/userconf.ini"
     ]
 }
