@@ -80,7 +80,7 @@
 -- param index A given index in PageView. Index start from 0 to pageCount -1.
 -- @function [parent=#PageView] setCurrentPageIndex 
 -- @param self
--- @param #long index
+-- @param #int index
 -- @return PageView#PageView self (return value: ccui.PageView)
         
 --------------------------------
@@ -113,11 +113,11 @@
 -- @return PageView#PageView self (return value: ccui.PageView)
         
 --------------------------------
--- @overload self, long, float         
--- @overload self, long         
+-- @overload self, int, float         
+-- @overload self, int         
 -- @function [parent=#PageView] scrollToPage
 -- @param self
--- @param #long idx
+-- @param #int idx
 -- @param #float time
 -- @return PageView#PageView self (return value: ccui.PageView)
 
@@ -130,11 +130,11 @@
 -- @return PageView#PageView self (return value: ccui.PageView)
         
 --------------------------------
--- @overload self, long, float         
--- @overload self, long         
+-- @overload self, int, float         
+-- @overload self, int         
 -- @function [parent=#PageView] scrollToItem
 -- @param self
--- @param #long idx
+-- @param #int idx
 -- @param #float time
 -- @return PageView#PageView self (return value: ccui.PageView)
 
@@ -158,7 +158,7 @@
 -- return current page index.
 -- @function [parent=#PageView] getCurrentPageIndex 
 -- @param self
--- @return long#long ret (return value: long)
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- Remove a page of PageView.<br>
@@ -190,7 +190,7 @@
 -- param index  A given index.
 -- @function [parent=#PageView] removePageAtIndex 
 -- @param self
--- @param #long index
+-- @param #int index
 -- @return PageView#PageView self (return value: ccui.PageView)
         
 --------------------------------
