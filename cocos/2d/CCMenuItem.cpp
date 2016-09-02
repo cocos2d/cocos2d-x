@@ -609,20 +609,7 @@ void MenuItemSprite::selected()
 void MenuItemSprite::unselected()
 {
     MenuItem::unselected();
-    if (_normalImage)
-    {
-        _normalImage->setVisible(true);
-
-        if (_selectedImage)
-        {
-            _selectedImage->setVisible(false);
-        }
-
-        if (_disabledImage)
-        {
-            _disabledImage->setVisible(false);
-        }
-    }
+    this->updateImagesVisibility();
 }
 
 void MenuItemSprite::setEnabled(bool bEnabled)
