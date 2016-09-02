@@ -560,10 +560,33 @@ void ScrollView::processAutoScrolling(float deltaTime)
         // Don't let go out of boundary
         Vec2 moveDelta = newPosition - getInnerContainerPosition();
         Vec2 outOfBoundary = getHowMuchOutOfBoundary(moveDelta);
-        if (!fltEqualZero(outOfBoundary))
+
+        if (_direction == Direction::BOTH)
         {
-            newPosition += outOfBoundary;
-            reachedEnd = true;
+            bool reachedEndX = reachedEnd;
+            bool reachedEndY = reachedEnd;
+            if  (fabsf(outOfBoundary.x) > 0.0001f)
+            {
+                newPosition.x += outOfBoundary.x;
+                reachedEndX = true;
+            }
+            
+            if  (fabsf(outOfBoundary.y) > 0.0001f)
+            {
+                newPosition.y += outOfBoundary.y;
+                reachedEndY = true;
+            }
+            
+            if (reachedEndX && reachedEndY)
+                reachedEnd = true;
+        }
+        else
+        {
+            if (!fltEqualZero(outOfBoundary))
+            {
+                newPosition += outOfBoundary;
+                reachedEnd = true;
+            }
         }
     }
 
