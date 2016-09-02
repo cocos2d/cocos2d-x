@@ -88,7 +88,7 @@ void SpriteProgressToRadial::onEnter()
     auto right = ProgressTimer::create(Sprite::create(s_pathBlock));
     right->setType(ProgressTimer::Type::RADIAL);
     // Makes the ridial CCW
-    right->setReverseProgress(true);
+    right->setReverseDirection(true);
     addChild(right);
     right->setPosition(s.width-100, s.height/2);
     right->runAction( RepeatForever::create(to2));
