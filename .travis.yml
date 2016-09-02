@@ -9,6 +9,7 @@ matrix:
         - secure: M31OQaUIBV13aUMylPs2PieKThGs+ED0tj9SKbCKGKxwojl+N2ZhlS53D4Zqoj1ru/3P1X0pPeYvV0uVfM2dpEwRF4BmYVZQSrOKgjK1VfbcN5luWSeuAvq0LNGT99Ao02sKLbcHINiQ4axylPPgsY6+X/aoJNuKqBTQyaaVAo8=
         - secure: M5lyDs0qai15mWHzJdkh0WPfVJJmVZu6SWtYULxatukGPXVwoQvmEtYAwAW+iz6aM+tXksQ/mk6nW5L8UFbHm+n6yrsa5bZU9sGXjilPE8p8bLFYDmIbPRazU+E6pBP3J2CDoAm0XnWkiYQ8feTxKTo6ysLnHAEjyaHTw0+Q1GM=
       sudo: required
+      language: cpp
       addons:
         apt:
           sources:
