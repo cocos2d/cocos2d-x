@@ -10,6 +10,7 @@ matrix:
         - secure: tftMO3qRdESmrrsv9+HaNUyG5sBwJH6mfcYS6jA3NZ88eoCekAyshaPvOyxAHs84G3GNoDrSnPCmj0MaGlAW3XmZUvcJZqLuMjD8yTnjONhVVQpdFQ9hlLEmiNW9OULw2dJANhLO9Nh0R3odunZpvoxff/GX3cBuAVYWffgoM9g=
       language: cpp
       sudo: required
+      language: cpp
       addons:
         apt:
           sources:
