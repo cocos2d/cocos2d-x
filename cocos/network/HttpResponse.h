@@ -89,7 +89,7 @@ public:
 
     /**
      * Get the corresponding HttpRequest object which leads to this response.
-     * There's no paired setter for it, because it's already setted in class constructor
+     * There's no paired setter for it, because it's already set in class constructor
      * @return HttpRequest* the corresponding HttpRequest object which leads to this response.
      */
     inline HttpRequest* getHttpRequest() const

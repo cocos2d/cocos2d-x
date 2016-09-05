@@ -37,7 +37,7 @@ public class Cocos2dxReflectionHelper {
             Log.e("error", "can not find " + constantName + " in " + aClass.getName());
         }
         catch (IllegalAccessException e) {
-            Log.e("error", constantName + " is not accessable");
+            Log.e("error", constantName + " is not accessible");
         }
         catch (IllegalArgumentException e) {
             Log.e("error", "arguments error when get " + constantName);
