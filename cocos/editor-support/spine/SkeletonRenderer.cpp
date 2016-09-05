@@ -152,8 +152,8 @@ void SkeletonRenderer::draw (Renderer* renderer, const Mat4& transform, uint32_t
 	_skeleton->g = nodeColor.g / (float)255;
 	_skeleton->b = nodeColor.b / (float)255;
 	_skeleton->a = getDisplayedOpacity() / (float)255;
-
-	Color4B color;
+    
+    Color4F color;
 	AttachmentVertices* attachmentVertices = nullptr;
 	for (int i = 0, n = _skeleton->slotsCount; i < n; ++i) {
 		spSlot* slot = _skeleton->drawOrder[i];
@@ -164,7 +164,7 @@ void SkeletonRenderer::draw (Renderer* renderer, const Mat4& transform, uint32_t
 			spRegionAttachment* attachment = (spRegionAttachment*)slot->attachment;
 			spRegionAttachment_computeWorldVertices(attachment, slot->bone, _worldVertices);
 			attachmentVertices = getAttachmentVertices(attachment);
-			color.r = attachment->r;
+            color.r = attachment->r;
 			color.g = attachment->g;
 			color.b = attachment->b;
 			color.a = attachment->a;
@@ -174,10 +174,10 @@ void SkeletonRenderer::draw (Renderer* renderer, const Mat4& transform, uint32_t
 			spMeshAttachment* attachment = (spMeshAttachment*)slot->attachment;
 			spMeshAttachment_computeWorldVertices(attachment, slot, _worldVertices);
 			attachmentVertices = getAttachmentVertices(attachment);
-			color.r = attachment->r;
-			color.g = attachment->g;
-			color.b = attachment->b;
-			color.a = attachment->a;
+            color.r = attachment->r;
+            color.g = attachment->g;
+            color.b = attachment->b;
+            color.a = attachment->a;
 			break;
 		}
 		default:
@@ -189,12 +189,17 @@ void SkeletonRenderer::draw (Renderer* renderer, const Mat4& transform, uint32_t
 		color.r *= _skeleton->r * slot->r * multiplier;
 		color.g *= _skeleton->g * slot->g * multiplier;
 		color.b *= _skeleton->b * slot->b * multiplier;
-
+        
+        
+        
 		for (int v = 0, w = 0, vn = attachmentVertices->_triangles->vertCount; v < vn; ++v, w += 2) {
 			V3F_C4B_T2F* vertex = attachmentVertices->_triangles->verts + v;
 			vertex->vertices.x = _worldVertices[w];
 			vertex->vertices.y = _worldVertices[w + 1];
-			vertex->colors = color;
+            vertex->colors.r = (GLubyte)color.r;
+            vertex->colors.g = (GLubyte)color.g;
+            vertex->colors.b = (GLubyte)color.b;
+            vertex->colors.a = (GLubyte)color.a;
 		}
 
 		BlendFunc blendFunc;
