@@ -8295,96 +8295,6 @@ float
 };
 
 /**
- * @class EaseIn
- */
-cc.EaseIn = {
-
-/**
- * @method create
- * @param {cc.ActionInterval} arg0
- * @param {float} arg1
- * @return {cc.EaseIn}
- */
-create : function (
-actioninterval, 
-float 
-)
-{
-    return cc.EaseIn;
-},
-
-/**
- * @method EaseIn
- * @constructor
- */
-EaseIn : function (
-)
-{
-},
-
-};
-
-/**
- * @class EaseOut
- */
-cc.EaseOut = {
-
-/**
- * @method create
- * @param {cc.ActionInterval} arg0
- * @param {float} arg1
- * @return {cc.EaseOut}
- */
-create : function (
-actioninterval, 
-float 
-)
-{
-    return cc.EaseOut;
-},
-
-/**
- * @method EaseOut
- * @constructor
- */
-EaseOut : function (
-)
-{
-},
-
-};
-
-/**
- * @class EaseInOut
- */
-cc.EaseInOut = {
-
-/**
- * @method create
- * @param {cc.ActionInterval} arg0
- * @param {float} arg1
- * @return {cc.EaseInOut}
- */
-create : function (
-actioninterval, 
-float 
-)
-{
-    return cc.EaseInOut;
-},
-
-/**
- * @method EaseInOut
- * @constructor
- */
-EaseInOut : function (
-)
-{
-},
-
-};
-
-/**
  * @class EaseExponentialIn
  */
 cc.EaseExponentialIn = {
@@ -8553,144 +8463,6 @@ EaseSineInOut : function (
 };
 
 /**
- * @class EaseElastic
- */
-cc.EaseElastic = {
-
-/**
- * @method setPeriod
- * @param {float} arg0
- */
-setPeriod : function (
-float 
-)
-{
-},
-
-/**
- * @method initWithAction
- * @param {cc.ActionInterval} arg0
- * @param {float} arg1
- * @return {bool}
- */
-initWithAction : function (
-actioninterval, 
-float 
-)
-{
-    return false;
-},
-
-/**
- * @method getPeriod
- * @return {float}
- */
-getPeriod : function (
-)
-{
-    return 0;
-},
-
-};
-
-/**
- * @class EaseElasticIn
- */
-cc.EaseElasticIn = {
-
-/**
- * @method create
-* @param {cc.ActionInterval|cc.ActionInterval} actioninterval
-* @param {float} float
-* @return {cc.EaseElasticIn|cc.EaseElasticIn}
-*/
-create : function(
-actioninterval,
-float 
-)
-{
-    return cc.EaseElasticIn;
-},
-
-/**
- * @method EaseElasticIn
- * @constructor
- */
-EaseElasticIn : function (
-)
-{
-},
-
-};
-
-/**
- * @class EaseElasticOut
- */
-cc.EaseElasticOut = {
-
-/**
- * @method create
-* @param {cc.ActionInterval|cc.ActionInterval} actioninterval
-* @param {float} float
-* @return {cc.EaseElasticOut|cc.EaseElasticOut}
-*/
-create : function(
-actioninterval,
-float 
-)
-{
-    return cc.EaseElasticOut;
-},
-
-/**
- * @method EaseElasticOut
- * @constructor
- */
-EaseElasticOut : function (
-)
-{
-},
-
-};
-
-/**
- * @class EaseElasticInOut
- */
-cc.EaseElasticInOut = {
-
-/**
- * @method create
-* @param {cc.ActionInterval|cc.ActionInterval} actioninterval
-* @param {float} float
-* @return {cc.EaseElasticInOut|cc.EaseElasticInOut}
-*/
-create : function(
-actioninterval,
-float 
-)
-{
-    return cc.EaseElasticInOut;
-},
-
-/**
- * @method EaseElasticInOut
- * @constructor
- */
-EaseElasticInOut : function (
-)
-{
-},
-
-};
-
-/**
- * @class EaseBounce
- */
-cc.EaseBounce = {
-
-};
-
-/**
  * @class EaseBounceIn
  */
 cc.EaseBounceIn = {
@@ -8852,50 +8624,6 @@ actioninterval
  * @constructor
  */
 EaseBackInOut : function (
-)
-{
-},
-
-};
-
-/**
- * @class EaseBezierAction
- */
-cc.EaseBezierAction = {
-
-/**
- * @method setBezierParamer
- * @param {float} arg0
- * @param {float} arg1
- * @param {float} arg2
- * @param {float} arg3
- */
-setBezierParamer : function (
-float, 
-float, 
-float, 
-float 
-)
-{
-},
-
-/**
- * @method create
- * @param {cc.ActionInterval} arg0
- * @return {cc.EaseBezierAction}
- */
-create : function (
-actioninterval 
-)
-{
-    return cc.EaseBezierAction;
-},
-
-/**
- * @method EaseBezierAction
- * @constructor
- */
-EaseBezierAction : function (
 )
 {
 },
@@ -9316,6 +9044,271 @@ actioninterval
  * @constructor
  */
 EaseCubicActionInOut : function (
+)
+{
+},
+
+};
+
+/**
+ * @class EaseIn
+ */
+cc.EaseIn = {
+
+/**
+ * @method create
+ * @param {cc.ActionInterval} arg0
+ * @param {float} arg1
+ * @return {cc.EaseIn}
+ */
+create : function (
+actioninterval, 
+float 
+)
+{
+    return cc.EaseIn;
+},
+
+/**
+ * @method EaseIn
+ * @constructor
+ */
+EaseIn : function (
+)
+{
+},
+
+};
+
+/**
+ * @class EaseOut
+ */
+cc.EaseOut = {
+
+/**
+ * @method create
+ * @param {cc.ActionInterval} arg0
+ * @param {float} arg1
+ * @return {cc.EaseOut}
+ */
+create : function (
+actioninterval, 
+float 
+)
+{
+    return cc.EaseOut;
+},
+
+/**
+ * @method EaseOut
+ * @constructor
+ */
+EaseOut : function (
+)
+{
+},
+
+};
+
+/**
+ * @class EaseInOut
+ */
+cc.EaseInOut = {
+
+/**
+ * @method create
+ * @param {cc.ActionInterval} arg0
+ * @param {float} arg1
+ * @return {cc.EaseInOut}
+ */
+create : function (
+actioninterval, 
+float 
+)
+{
+    return cc.EaseInOut;
+},
+
+/**
+ * @method EaseInOut
+ * @constructor
+ */
+EaseInOut : function (
+)
+{
+},
+
+};
+
+/**
+ * @class EaseElastic
+ */
+cc.EaseElastic = {
+
+/**
+ * @method setPeriod
+ * @param {float} arg0
+ */
+setPeriod : function (
+float 
+)
+{
+},
+
+/**
+ * @method initWithAction
+ * @param {cc.ActionInterval} arg0
+ * @param {float} arg1
+ * @return {bool}
+ */
+initWithAction : function (
+actioninterval, 
+float 
+)
+{
+    return false;
+},
+
+/**
+ * @method getPeriod
+ * @return {float}
+ */
+getPeriod : function (
+)
+{
+    return 0;
+},
+
+};
+
+/**
+ * @class EaseElasticIn
+ */
+cc.EaseElasticIn = {
+
+/**
+ * @method create
+ * @param {cc.ActionInterval} arg0
+ * @param {float} arg1
+ * @return {cc.EaseElasticIn}
+ */
+create : function (
+actioninterval, 
+float 
+)
+{
+    return cc.EaseElasticIn;
+},
+
+/**
+ * @method EaseElasticIn
+ * @constructor
+ */
+EaseElasticIn : function (
+)
+{
+},
+
+};
+
+/**
+ * @class EaseElasticOut
+ */
+cc.EaseElasticOut = {
+
+/**
+ * @method create
+ * @param {cc.ActionInterval} arg0
+ * @param {float} arg1
+ * @return {cc.EaseElasticOut}
+ */
+create : function (
+actioninterval, 
+float 
+)
+{
+    return cc.EaseElasticOut;
+},
+
+/**
+ * @method EaseElasticOut
+ * @constructor
+ */
+EaseElasticOut : function (
+)
+{
+},
+
+};
+
+/**
+ * @class EaseElasticInOut
+ */
+cc.EaseElasticInOut = {
+
+/**
+ * @method create
+ * @param {cc.ActionInterval} arg0
+ * @param {float} arg1
+ * @return {cc.EaseElasticInOut}
+ */
+create : function (
+actioninterval, 
+float 
+)
+{
+    return cc.EaseElasticInOut;
+},
+
+/**
+ * @method EaseElasticInOut
+ * @constructor
+ */
+EaseElasticInOut : function (
+)
+{
+},
+
+};
+
+/**
+ * @class EaseBezierAction
+ */
+cc.EaseBezierAction = {
+
+/**
+ * @method setBezierParamer
+ * @param {float} arg0
+ * @param {float} arg1
+ * @param {float} arg2
+ * @param {float} arg3
+ */
+setBezierParamer : function (
+float, 
+float, 
+float, 
+float 
+)
+{
+},
+
+/**
+ * @method create
+ * @param {cc.ActionInterval} arg0
+ * @return {cc.EaseBezierAction}
+ */
+create : function (
+actioninterval 
+)
+{
+    return cc.EaseBezierAction;
+},
+
+/**
+ * @method EaseBezierAction
+ * @constructor
+ */
+EaseBezierAction : function (
 )
 {
 },
