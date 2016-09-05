@@ -968,13 +968,13 @@ removeAllComponents : function (
 },
 
 /**
- * @method getOpacity
- * @return {unsigned char}
+ * @method _setLocalZOrder
+ * @param {int} arg0
  */
-getOpacity : function (
+_setLocalZOrder : function (
+int 
 )
 {
-    return 0;
 },
 
 /**
@@ -2053,6 +2053,16 @@ getWorldToNodeAffineTransform : function (
  * @return {float}
  */
 getScale : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getOpacity
+ * @return {unsigned char}
+ */
+getOpacity : function (
 )
 {
     return 0;
