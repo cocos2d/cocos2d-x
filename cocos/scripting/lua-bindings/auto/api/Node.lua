@@ -209,11 +209,11 @@
 -- @return Node#Node self (return value: cc.Node)
         
 --------------------------------
--- Return the node's opacity.<br>
--- return A GLubyte value.
--- @function [parent=#Node] getOpacity 
+-- 
+-- @function [parent=#Node] _setLocalZOrder 
 -- @param self
--- @return unsigned char#unsigned char ret (return value: unsigned char)
+-- @param #int z
+-- @return Node#Node self (return value: cc.Node)
         
 --------------------------------
 -- Modify the camera mask for current node.<br>
@@ -1109,6 +1109,13 @@
 -- @function [parent=#Node] getScale 
 -- @param self
 -- @return float#float ret (return value: float)
+        
+--------------------------------
+-- Return the node's opacity.<br>
+-- return A GLubyte value.
+-- @function [parent=#Node] getOpacity 
+-- @param self
+-- @return unsigned char#unsigned char ret (return value: unsigned char)
         
 --------------------------------
 --  !!! ONLY FOR INTERNAL USE<br>
