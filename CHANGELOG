@@ -1,3 +1,11 @@
+cocos2d-x-3.13.1 Sep 13 2016
+
+[FIX]           Label color broken
+[FIX]           may crash if coming from background by clicking application icon on Android
+[FIX]           object.setString() has not effect if passing a number on JSB
+[FIX]           AudioEngine can not play audio if the audio lies outside APK on Android
+[FIX]           AudioEngine::stop() will trigger `finish` callback on Android
+
 cocos2d-x-3.13 Aug 22 2016
 
 [HIGHLIGHT]     add VR plugin
