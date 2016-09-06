@@ -40,9 +40,12 @@ AudioEngineTests::AudioEngineTests()
     ADD_TEST_CASE(InvalidAudioFileTest);
     ADD_TEST_CASE(LargeAudioFileTest);
     ADD_TEST_CASE(AudioPerformanceTest);
-    ADD_TEST_CASE(AudioSwitchStateTest);
     ADD_TEST_CASE(AudioSmallFileTest);
     ADD_TEST_CASE(AudioPauseResumeAfterPlay);
+    ADD_TEST_CASE(AudioPlayFileInWritablePath);
+    
+    //FIXME: Please keep AudioSwitchStateTest to the last position since this test case doesn't work well on each platforms.
+    ADD_TEST_CASE(AudioSwitchStateTest);
 }
 
 namespace {
@@ -208,18 +211,35 @@ bool AudioControlTest::init()
     _duration = AudioEngine::TIME_UNKNOWN;
     _timeRatio = 0.0f;
     _updateTimeSlider = true;
+    _isStopped = false;
     
     std::string fontFilePath = "fonts/arial.ttf";
     
     auto& layerSize = this->getContentSize();
+    
+    _playOverLabel = Label::createWithSystemFont("Play Over", "", 30);
+    _playOverLabel->setPosition(Vec2(layerSize/2) + Vec2(0, 30));
+    _playOverLabel->setVisible(false);
+    addChild(_playOverLabel, 99999);
     
     auto playItem = TextButton::create("play", [&](TextButton* button){
         if (_audioID == AudioEngine::INVALID_AUDIO_ID) {
             _audioID = AudioEngine::play2d("background.mp3", _loopEnabled, _volume);
             
             if(_audioID != AudioEngine::INVALID_AUDIO_ID) {
+                _isStopped = false;
+                
                 button->setEnabled(false);
                 AudioEngine::setFinishCallback(_audioID, [&](int id, const std::string& filePath){
+                    log("_audioID(%d), _isStopped:(%d), played over!!!", _audioID, _isStopped);
+                    
+                    _playOverLabel->setVisible(true);
+                    
+                    scheduleOnce([&](float dt){
+                        _playOverLabel->setVisible(false);
+                    }, 2.0f, "hide_play_over_label");
+                    
+                    assert(!_isStopped); // Stop audio should not trigger finshed callback
                     _audioID = AudioEngine::INVALID_AUDIO_ID;
                     ((TextButton*)_playItem)->setEnabled(true);
                     
@@ -235,6 +255,7 @@ bool AudioControlTest::init()
     
     auto stopItem = TextButton::create("stop", [&](TextButton* button){
         if (_audioID != AudioEngine::INVALID_AUDIO_ID ) {
+            _isStopped = true;
             AudioEngine::stop(_audioID);
             
             _audioID = AudioEngine::INVALID_AUDIO_ID;
@@ -827,4 +848,47 @@ std::string AudioPauseResumeAfterPlay::title() const
 std::string AudioPauseResumeAfterPlay::subtitle() const
 {
     return "Should not crash";
+}
+
+void AudioPlayFileInWritablePath::onEnter()
+{
+    AudioEngineTestDemo::onEnter();
+    
+    auto fileUtils = FileUtils::getInstance();
+    std::string writablePath = fileUtils->getWritablePath();
+    std::string musicFile = "background.mp3";
+    std::string saveFilePath = writablePath + "background_in_writable_dir.mp3";
+    
+    _oldSearchPaths = fileUtils->getSearchPaths();
+    fileUtils->addSearchPath(writablePath, true);
+
+    if (!fileUtils->isFileExist(saveFilePath))
+    {
+        Data data = fileUtils->getDataFromFile(musicFile);
+        FILE* fp = fopen(saveFilePath.c_str(), "wb");
+        if (fp != nullptr)
+        {
+            fwrite(data.getBytes(), data.getSize(), 1, fp);
+            fclose(fp);
+        }
+    }
+    
+    AudioEngine::play2d(saveFilePath);
+}
+
+void AudioPlayFileInWritablePath::onExit()
+{
+    AudioEngineTestDemo::onExit();
+    
+    FileUtils::getInstance()->setSearchPaths(_oldSearchPaths);
+}
+
+std::string AudioPlayFileInWritablePath::title() const
+{
+    return "Play audio in writable path";
+}
+
+std::string AudioPlayFileInWritablePath::subtitle() const
+{
+    return "Could play audio";
 }

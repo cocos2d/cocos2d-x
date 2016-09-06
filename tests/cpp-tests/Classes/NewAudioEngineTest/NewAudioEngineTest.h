@@ -68,6 +68,8 @@ private:
     void* _playItem;
     void* _timeSlider;
     bool _updateTimeSlider;
+    bool _isStopped;
+    cocos2d::Label* _playOverLabel;
 };
 
 class PlaySimultaneouslyTest : public AudioEngineTestDemo
@@ -208,6 +210,21 @@ public:
     
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
+};
+
+class AudioPlayFileInWritablePath : public AudioEngineTestDemo
+{
+public:
+    CREATE_FUNC(AudioPlayFileInWritablePath);
+    
+    virtual void onEnter() override;
+    virtual void onExit() override;
+    
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+private:
+    std::vector<std::string> _oldSearchPaths;
 };
 
 #endif /* defined(__NEWAUDIOENGINE_TEST_H_) */
