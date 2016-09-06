@@ -28,7 +28,6 @@
 #include <vector>
 #include <locale>
 
-#include "tinyxml2.h"
 #include "platform/CCFileUtils.h"
 #include "platform/CCApplication.h"
 #include "base/CCEventListenerTouch.h"
@@ -38,6 +37,8 @@
 #include "2d/CCSprite.h"
 #include "base/ccUTF8.h"
 #include "ui/UIHelper.h"
+
+#include "platform/CCSAXParser.h"
 
 USING_NS_CC;
 using namespace cocos2d::ui;
@@ -237,7 +238,7 @@ RichElementNewLine* RichElementNewLine::create(int tag, const Color3B& color, GL
 }
 
 /** @brief parse a XML. */
-class MyXMLVisitor: public tinyxml2::XMLVisitor
+class MyXMLVisitor : public SAXDelegator
 {
 public:
     /** @brief underline or strikethrough */
@@ -329,14 +330,12 @@ public:
     
     std::tuple<bool, Color3B> getGlow() const;
     
-    /// Visit an element.
-    virtual bool VisitEnter( const tinyxml2::XMLElement& element, const tinyxml2::XMLAttribute* firstAttribute );
-    
-    /// Visit an element.
-    virtual bool VisitExit( const tinyxml2::XMLElement& element );
-    
-    /// Visit a text node.
-    virtual bool Visit(const tinyxml2::XMLText& text);
+    void startElement(void *ctx, const char *name, const char **atts) override;
+
+    void endElement(void *ctx, const char *name) override;
+
+    void textHandler(void *ctx, const char *s, int len) override;
+
     
     void pushBackFontElement(const Attributes& attribs);
     
@@ -349,7 +348,7 @@ public:
     static void removeTagDescription(const std::string& tag);
     
 private:
-    ValueMap tagAttrMapWithXMLElement(const tinyxml2::XMLElement& element);
+    ValueMap tagAttrMapWithXMLElement(const char ** attrs);
 };
 
 MyXMLVisitor::TagTables MyXMLVisitor::_tagTables;
@@ -620,14 +619,13 @@ std::tuple<bool, Color3B> MyXMLVisitor::getGlow() const
     return std::make_tuple(false, Color3B::WHITE);
 }
 
-bool MyXMLVisitor::VisitEnter( const tinyxml2::XMLElement& element, const tinyxml2::XMLAttribute* firstAttribute )
+void MyXMLVisitor::startElement(void *ctx, const char *elementName, const char **atts)
 {
-    auto elementName = element.Value();
     auto it = _tagTables.find(elementName);
     if (it != _tagTables.end()) {
         auto tagBehavior = it->second;
         if (tagBehavior.handleVisitEnter != nullptr) {
-            ValueMap&& tagAttrValueMap = tagAttrMapWithXMLElement(element);
+            ValueMap&& tagAttrValueMap = tagAttrMapWithXMLElement(atts);
             auto result = tagBehavior.handleVisitEnter(tagAttrValueMap);
             ValueMap& attrValueMap = result.first;
             RichElement* richElement = result.second;
@@ -743,12 +741,10 @@ bool MyXMLVisitor::VisitEnter( const tinyxml2::XMLElement& element, const tinyxm
             }
         }
     }
-    return true;
 }
 
-bool MyXMLVisitor::VisitExit( const tinyxml2::XMLElement& element )
+void MyXMLVisitor::endElement(void *ctx, const char *elementName)
 {
-    auto elementName = element.Value();
     auto it = _tagTables.find(elementName);
     if (it != _tagTables.end()) {
         auto tagBehavior = it->second;
@@ -756,11 +752,11 @@ bool MyXMLVisitor::VisitExit( const tinyxml2::XMLElement& element )
             popBackFontElement();
         }
     }
-    return true;
 }
 
-bool MyXMLVisitor::Visit(const tinyxml2::XMLText& text)
+void MyXMLVisitor::textHandler(void *ctx, const char *str, int len)
 {
+    std::string text(str, len);
     auto color = getColor();
     auto face = getFace();
     auto fontSize = getFontSize();
@@ -790,13 +786,12 @@ bool MyXMLVisitor::Visit(const tinyxml2::XMLText& text)
         flags |= RichElementText::SHADOW_FLAG;
     if (std::get<0>(glow))
         flags |= RichElementText::GLOW_FLAG;
-    
-    auto element = RichElementText::create(0, color, 255, text.Value(), face, fontSize, flags, url,
-                                           std::get<1>(outline), std::get<2>(outline),
-                                           std::get<1>(shadow), std::get<2>(shadow), std::get<3>(shadow),
-                                           std::get<1>(glow));
+
+    auto element = RichElementText::create(0, color, 255, text, face, fontSize, flags, url,
+        std::get<1>(outline), std::get<2>(outline),
+        std::get<1>(shadow), std::get<2>(shadow), std::get<3>(shadow),
+        std::get<1>(glow));
     _richText->pushBackElement(element);
-    return true;
 }
 
 void MyXMLVisitor::pushBackFontElement(const MyXMLVisitor::Attributes& attribs)
@@ -824,12 +819,12 @@ void MyXMLVisitor::removeTagDescription(const std::string& tag)
     MyXMLVisitor::_tagTables.erase(tag);
 }
 
-ValueMap MyXMLVisitor::tagAttrMapWithXMLElement(const tinyxml2::XMLElement& element)
+ValueMap MyXMLVisitor::tagAttrMapWithXMLElement(const char ** attrs)
 {
     ValueMap tagAttrValueMap;
-    for (const tinyxml2::XMLAttribute* attr = element.FirstAttribute(); attr != nullptr; attr = attr->Next()) {
-        if (attr->Name() && attr->Value()) {
-            tagAttrValueMap[std::string(attr->Name())] = std::string(attr->Value());
+    for (const char** attr = attrs; *attr != nullptr; attr = (attrs += 2)) {
+        if (attr[0] && attr[1]) {
+            tagAttrValueMap[attr[0]] = attr[1];
         }
     }
     return tagAttrValueMap;
@@ -942,8 +937,6 @@ bool RichText::initWithXML(const std::string& origxml, const ValueMap& defaults,
     {
         setDefaults(defaults);
         setOpenUrlHandler(handleOpenUrl);
-        
-        tinyxml2::XMLDocument document;
 
         // solves to issues:
         //  - creates defaults values
@@ -952,14 +945,10 @@ bool RichText::initWithXML(const std::string& origxml, const ValueMap& defaults,
         xml += origxml;
         xml += "</font>";
 
-        auto error = document.Parse(xml.c_str(), xml.length());
-        if (error == tinyxml2::XML_SUCCESS)
-        {
-            MyXMLVisitor visitor(this);
-            document.Accept(&visitor);
-            return true;
-        }
-        CCLOG("cocos2d: UI::RichText: Error parsing xml: %s, %s", document.GetErrorStr1(), document.GetErrorStr2());
+        MyXMLVisitor visitor(this);
+        SAXParser parser;
+        parser.setDelegator(&visitor);
+        return parser.parseIntrusive(&xml.front(), xml.length());
     }
     return false;
 }

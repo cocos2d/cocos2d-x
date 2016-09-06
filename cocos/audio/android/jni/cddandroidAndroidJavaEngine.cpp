@@ -27,10 +27,10 @@ THE SOFTWARE.
 
 #include "audio/android/jni/cddandroidAndroidJavaEngine.h"
 #include <stdlib.h>
-#include <cstdio>
 
 #include <sys/system_properties.h>
 #include "audio/android/ccdandroidUtils.h"
+#include "audio/android/utils/Utils.h"
 #include "audio/include/AudioEngine.h"
 #include "platform/android/jni/JniHelper.h"
 
@@ -44,31 +44,11 @@ using namespace cocos2d;
 using namespace cocos2d::experimental;
 using namespace CocosDenshion::android;
 
-namespace
-{
-    int getSDKVersion()
-    {
-        int ret = -1;
-        std::string command = "getprop ro.build.version.sdk";
-        FILE* file = popen(command.c_str(), "r");
-        if (file)
-        {
-            char output[100];
-            if (std::fgets(output, sizeof(output), file) != nullptr)
-                ret = std::atoi(output);
-
-            pclose(file);
-        }
-        
-        return ret;
-    }
-}
-
 AndroidJavaEngine::AndroidJavaEngine()
     : _implementBaseOnAudioEngine(false)
     , _effectVolume(1.f)
 {
-    int sdkVer = getSDKVersion();
+    int sdkVer = getSystemProperty("ro.build.version.sdk");
     if (sdkVer > 0)
     {
         __android_log_print(ANDROID_LOG_DEBUG, "cocos2d", "android SDK version:%d", sdkVer);

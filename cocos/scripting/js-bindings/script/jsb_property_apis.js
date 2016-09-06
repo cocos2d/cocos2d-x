@@ -193,13 +193,6 @@ cc.defineGetterSetter(_proto, "cascadeOpacity", _proto.isCascadeOpacityEnabled, 
 cc.defineGetterSetter(_proto, "color", _proto.getColor, _proto.setColor);
 cc.defineGetterSetter(_proto, "cascadeColor", _proto.isCascadeColorEnabled, _proto.setCascadeColorEnabled);
 
-_proto = cc.LayerRGBA.prototype;
-cc.defineGetterSetter(_proto, "opacityModifyRGB", _proto.isOpacityModifyRGB, _proto.setOpacityModifyRGB);
-cc.defineGetterSetter(_proto, "opacity", _proto.getOpacity, _proto.setOpacity);
-cc.defineGetterSetter(_proto, "cascadeOpacity", _proto.isCascadeOpacityEnabled, _proto.setCascadeOpacityEnabled);
-cc.defineGetterSetter(_proto, "color", _proto.getColor, _proto.setColor);
-cc.defineGetterSetter(_proto, "cascadeColor", _proto.isCascadeColorEnabled, _proto.setCascadeColorEnabled);
-
 _proto = cc.LayerColor.prototype;
 cc.defineGetterSetter(_proto, "width", _proto._getWidth, _proto._setWidth);
 cc.defineGetterSetter(_proto, "height", _proto._getHeight, _proto._setHeight);

@@ -316,7 +316,7 @@ unsigned char* FontFreeType::getGlyphBitmap(unsigned short theChar, long &outWid
         outHeight = _fontRef->glyph->bitmap.rows;
         ret = _fontRef->glyph->bitmap.buffer;
 
-        if (_outlineSize > 0)
+        if (_outlineSize > 0 && outWidth > 0 && outHeight > 0)
         {
             auto copyBitmap = new (std::nothrow) unsigned char[outWidth * outHeight];
             memcpy(copyBitmap,ret,outWidth * outHeight * sizeof(unsigned char));

@@ -71,7 +71,7 @@ void spVertexAttachment_computeWorldVertices1 (spVertexAttachment* self, int sta
 			worldVertices[w + 1] = vx * bone->c + vy * bone->d + y;
 		}
 	} else {
-		int v = 0, skip = 0, i, w, b, n;
+		int v = 0, skip = 0, i;
 		spBone** skeletonBones;
 		for (i = 0; i < start; i += 2) {
 			int n = bones[v];
@@ -80,9 +80,10 @@ void spVertexAttachment_computeWorldVertices1 (spVertexAttachment* self, int sta
 		}
 		skeletonBones = skeleton->bones;
 		if (deformLength == 0) {
+			int w, b;
 			for (w = offset, b = skip * 3; w < count; w += 2) {
 				float wx = x, wy = y;
-				n = bones[v++];
+				int n = bones[v++];
 				n += v;
 				for (; v < n; v++, b += 3) {
 					spBone* bone = skeletonBones[bones[v]];
@@ -94,10 +95,10 @@ void spVertexAttachment_computeWorldVertices1 (spVertexAttachment* self, int sta
 				worldVertices[w + 1] = wy;
 			}
 		} else {
-			int w, b, f, n;
+			int w, b, f;
 			for (w = offset, b = skip * 3, f = skip << 1; w < count; w += 2) {
 				float wx = x, wy = y;
-				n = bones[v++];
+				int n = bones[v++];
 				n += v;
 				for (; v < n; v++, b += 3, f += 2) {
 					spBone* bone = skeletonBones[bones[v]];

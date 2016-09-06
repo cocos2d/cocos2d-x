@@ -123,17 +123,25 @@ public class Cocos2dxHelper {
             int sampleRate = 44100;
             int bufferSizeInFrames = 192;
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            if (Build.VERSION.SDK_INT >= 17) {
                 AudioManager am = (AudioManager) activity.getSystemService(Context.AUDIO_SERVICE);
-                String strSampleRate = am.getProperty(AudioManager.PROPERTY_OUTPUT_SAMPLE_RATE);
-                String strBufferSizeInFrames = am.getProperty(AudioManager.PROPERTY_OUTPUT_FRAMES_PER_BUFFER);
+                // use reflection to remove dependence of API 17 when compiling
+
+                // AudioManager.getProperty(AudioManager.PROPERTY_OUTPUT_SAMPLE_RATE);
+                final Class audioManagerClass = AudioManager.class;
+                Object[] parameters = new Object[]{Cocos2dxReflectionHelper.<String>getConstantValue(audioManagerClass, "PROPERTY_OUTPUT_SAMPLE_RATE")};
+                final String strSampleRate = Cocos2dxReflectionHelper.<String>invokeInstanceMethod(am, "getProperty", new Class[]{String.class}, parameters);
+
+                // AudioManager.getProperty(AudioManager.PROPERTY_OUTPUT_FRAMES_PER_BUFFER);
+                parameters = new Object[]{Cocos2dxReflectionHelper.<String>getConstantValue(audioManagerClass, "PROPERTY_OUTPUT_FRAMES_PER_BUFFER")};
+                final String strBufferSizeInFrames = Cocos2dxReflectionHelper.<String>invokeInstanceMethod(am, "getProperty", new Class[]{String.class}, parameters);
 
                 sampleRate = Integer.parseInt(strSampleRate);
                 bufferSizeInFrames = Integer.parseInt(strBufferSizeInFrames);
 
                 Log.d(TAG, "sampleRate: " + sampleRate + ", framesPerBuffer: " + bufferSizeInFrames);
             } else {
-                Log.d(TAG, "android version is lower than " + Build.VERSION_CODES.JELLY_BEAN_MR1);
+                Log.d(TAG, "android version is lower than 17");
             }
 
             nativeSetAudioDeviceInfo(isSupportLowLatency, sampleRate, bufferSizeInFrames);
@@ -532,7 +540,7 @@ public class Cocos2dxHelper {
             }
         }
 
-        return false;
+        return defaultValue;
     }
     
     public static int getIntegerForKey(String key, int defaultValue) {
@@ -560,7 +568,7 @@ public class Cocos2dxHelper {
             }
         }
 
-        return 0;
+        return defaultValue;
     }
     
     public static float getFloatForKey(String key, float defaultValue) {
@@ -569,7 +577,7 @@ public class Cocos2dxHelper {
             return settings.getFloat(key, defaultValue);
         }
         catch (Exception ex) {
-            ex.printStackTrace();;
+            ex.printStackTrace();
 
             Map allValues = settings.getAll();
             Object value = allValues.get(key);
@@ -588,7 +596,7 @@ public class Cocos2dxHelper {
             }
         }
 
-        return 0.0f;
+        return defaultValue;
     }
     
     public static double getDoubleForKey(String key, double defaultValue) {
