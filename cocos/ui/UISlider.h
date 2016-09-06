@@ -265,6 +265,11 @@ public:
      */
     float getZoomScale()const;
 
+    Sprite* getSlidBallNormalRenderer();
+    Sprite* getSlidBallPressedRenderer();
+    Sprite* getSlidBallDisabledRenderer();
+    Node* getSlidBallRenderer();
+
     ResourceData getBackFile();
     ResourceData getProgressBarFile();
     ResourceData getBallNormalFile();

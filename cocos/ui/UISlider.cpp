@@ -753,6 +753,22 @@ void Slider::copySpecialProperties(Widget *widget)
     }
 }
 
+Sprite* Slider::getSlidBallNormalRenderer() {
+    return _slidBallNormalRenderer;
+}
+
+Sprite* Slider::getSlidBallPressedRenderer() {
+    return _slidBallPressedRenderer;
+}
+
+Sprite* Slider::getSlidBallDisabledRenderer() {
+    return _slidBallDisabledRenderer;
+}
+
+Node* Slider::getSlidBallRenderer() {
+    return _slidBallRenderer;
+}
+
 ResourceData Slider::getBackFile()
 {
     ResourceData rData;
