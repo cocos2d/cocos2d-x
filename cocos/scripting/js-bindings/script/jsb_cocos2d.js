@@ -615,7 +615,7 @@ cc._reuse_color4b = {r:255, g:255, b:255, a:255 };
 
 
 //
-// Basic sturcture : Point
+// Basic structure : Point
 //
 cc.p = function( x, y )
 {
@@ -948,7 +948,7 @@ cc._g = function( x, y )
 };
 
 //
-// Basic sturcture : Size
+// Basic structure : Size
 //
 cc.size = function(w,h)
 {
@@ -1089,7 +1089,7 @@ cc.RectZero = function () {
     return cc.rect(0, 0, 0, 0);
 };
 
-// Basic sturcture : Color
+// Basic structure : Color
 cc.Color = function (r, g, b, a) {
     this.r = r || 0;
     this.g = g || 0;
@@ -1101,7 +1101,7 @@ cc.Color = function (r, g, b, a) {
  * Generate a color object based on multiple forms of parameters
  * @example
  *
- * // 1. All channels seperately as parameters
+ * // 1. All channels separately as parameters
  * var color1 = cc.color(255, 255, 255, 255);
  *
  * // 2. Convert a hex string to a color
@@ -1695,7 +1695,7 @@ cc.arrayVerifyType = function (arr, type) {
 };
 
 /**
- * Searches for the first occurance of object and removes it. If object is not found the function has no effect.
+ * Searches for the first occurrence of object and removes it. If object is not found the function has no effect.
  * @function
  * @param {Array} arr Source Array
  * @param {*} delObj  remove object
@@ -2601,7 +2601,7 @@ cc.MenuItem.prototype.setCallback = function (callback, target) {
 };
 
 //
-// MenuItemImage support sprite frame name as paramter
+// MenuItemImage support sprite frame name as parameter
 //
 var _p = cc.MenuItemImage.prototype;
 _p._setNormalSpriteFrame = _p.setNormalSpriteFrame;

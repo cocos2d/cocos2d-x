@@ -1170,7 +1170,7 @@ DebuggerServer.ObjectActorPreviewers = {
  *        The thread actor to use to create a value grip.
  * @return object|null
  *         An object with one property, "value", which holds the value grip that
- *         represents the given object. Null is returned if we cant preview the
+ *         represents the given object. Null is returned if we can't preview the
  *         object.
  */
 function genericObjectPreviewer(className, classObj, obj, hooks) {
