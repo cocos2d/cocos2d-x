@@ -12,9 +12,10 @@
 ## Bug修复
 
 * Label的颜色错误问题
+* 如果没有设置`design resolution`，应用程序在debug模式下会崩溃
 * 在Android系统，如果通过点击应用图标从后台推前台，可能导致崩溃
 * 在Android系统，如果音乐或音效资源不在APK包里，会导致无法播放
 * 在Android系统，AudioEngine::stop()会回调`finish`回调函数
 * JSB中，如果传入object.setString()的参数类型是数字，没有任何效果
 
-对应的github issue可以从[这里](https://github.com/cocos2d/cocos2d-x/milestone/33)找到
+对应的github issue可以从[这里](https://github.com/cocos2d/cocos2d-x/milestone/33)找到。
