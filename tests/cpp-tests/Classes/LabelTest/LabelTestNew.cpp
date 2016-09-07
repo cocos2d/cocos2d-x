@@ -108,6 +108,7 @@ NewLabelTests::NewLabelTests()
     ADD_TEST_CASE(LabelLocalizationTest);
 
     ADD_TEST_CASE(LabelIssue15214);
+    ADD_TEST_CASE(LabelIssue16471);
 };
 
 LabelFNTColorAndOpacity::LabelFNTColorAndOpacity()
@@ -3152,28 +3153,82 @@ void LabelLocalizationTest::onChangedRadioButtonSelect(RadioButton* radioButton,
     }
 }
 
-// LabelBMFontBinaryFormat
+//
+// LabelIssue15214
+//
 LabelIssue15214::LabelIssue15214()
 {
     auto size = Director::getInstance()->getVisibleSize();
-    Label* label = Label::createWithTTF("CHECK!", "fonts/arial.ttf", 48.0f);
+
+    // 1
+    Label* label = Label::createWithTTF("TTF with setColor()", "fonts/arial.ttf", 24.0f);
     label->enableUnderline();
     label->setColor(cocos2d::Color3B::BLUE);
-    label->setPosition(size.width/2, size.height/3*2);
+    label->setPosition(size.width/2, size.height/5*4);
     this->addChild(label);
-    label = Label::createWithSystemFont("CHECK!", "Verdana", 48.0f);
-    label->enableUnderline();
-    label->setColor(cocos2d::Color3B::BLUE);
-    label->setPosition(size.width/2, size.height/3*1);
-    this->addChild(label);
+
+    // 2
+    Label* label2 = Label::createWithSystemFont("System with setColor()", "Verdana", 24.0f);
+    label2->enableUnderline();
+    label2->setColor(cocos2d::Color3B::BLUE);
+    label2->setPosition(size.width/2, size.height/5*3);
+    this->addChild(label2);
+
+    // 3
+    Label* label3 = Label::createWithTTF("TTF with setTextColor()", "fonts/arial.ttf", 24.0f);
+    label3->enableUnderline();
+    label3->setTextColor(Color4B::BLUE);
+    label3->setPosition(size.width/2, size.height/5*2);
+    this->addChild(label3);
+
+    // 4
+    Label* label4 = Label::createWithSystemFont("System with setTextColor()", "Verdana", 24.0f);
+    label4->enableUnderline();
+    label4->setTextColor(Color4B::BLUE);
+    label4->setPosition(size.width/2, size.height/5*1);
+    this->addChild(label4);
 }
 
 std::string LabelIssue15214::title() const
 {
-    return "Githug Issue 15214";
+    return "Github Issue 15214";
 }
 
 std::string LabelIssue15214::subtitle() const
 {
-    return "Font and underline should be of the same color";
+    return "Font + underline: same color with setColor()";
+}
+
+//
+// LabelIssue16471
+//
+LabelIssue16471::LabelIssue16471()
+{
+    auto size = Director::getInstance()->getVisibleSize();
+
+    auto node = Node::create();
+    addChild(node, 100);
+    node->setPosition(size.width/2, size.height/2);
+
+    // Used Google Translate to translate from Chinese:
+    //    Here is set to false then textLabel: TextColor valid
+    //    set to true testLabel: setTextColor invalid
+    // Original:
+    //    此处设置为false则testLabel:setTextColor有效
+    //    设置为true则testLabel:setTextColor无效
+    // if set false then  testLabel:setTextColor is useful
+    node->setCascadeColorEnabled(true);
+    Label* label = Label::createWithTTF("Should be Yellow", "fonts/arial.ttf", 12);
+    label->setTextColor(Color4B::YELLOW);
+    node->addChild(label);
+}
+
+std::string LabelIssue16471::title() const
+{
+    return "Github Issue 16471";
+}
+
+std::string LabelIssue16471::subtitle() const
+{
+    return "Label should be yellow";
 }
