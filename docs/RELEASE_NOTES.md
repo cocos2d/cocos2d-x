@@ -19,8 +19,11 @@
 
 ## Bug fixed
 
-* Label color broken, [github issue](https://github.com/cocos2d/cocos2d-x/issues/16471)
-* may crash if coming from background by clicking application icon on Android, [github issue](https://github.com/cocos2d/cocos2d-x/issues/16520)
-* object.setString() has not effect if passing a number on JSB, [github issue](https://github.com/cocos2d/cocos2d-x/issues/16459)
-* AudioEngine can not play audio if the audio lies outside APK on Android, [github issue](https://github.com/cocos2d/cocos2d-x/issues/16473)
-* AudioEngine::stop() will trigger `finish` callback on Android, [github issue](https://github.com/cocos2d/cocos2d-x/issues/16490)
+* Label color broken
+* application will crash in debug mode if don't specify a design resolution
+* may crash if coming from background by clicking application icon on Android
+* object.setString() has not effect if passing a number on JSB
+* AudioEngine can not play audio if the audio lies outside APK on Android
+* AudioEngine::stop() will trigger `finish` callback on Android
+
+Can refer to [here](https://github.com/cocos2d/cocos2d-x/milestone/33) for detail information about these issues.
