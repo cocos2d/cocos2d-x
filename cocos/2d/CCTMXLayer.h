@@ -305,6 +305,8 @@ protected:
     Sprite* insertTileForGID(uint32_t gid, const Vec2& pos);
     Sprite* updateTileForGID(uint32_t gid, const Vec2& pos);
 
+    intptr_t getZForPos(const Vec2& pos) const;
+
     /* The layer recognizes some special properties, like cc_vertexz */
     void parseInternalProperties();
     void setupTileSprite(Sprite* sprite, const Vec2& pos, int gid);
