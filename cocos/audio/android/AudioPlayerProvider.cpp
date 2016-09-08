@@ -48,7 +48,7 @@ static int getSystemAPILevel()
         return __systemApiLevel;
     }
 
-    int apiLevel = getSystemProperty("ro.build.version.sdk");
+    int apiLevel = getSDKVersion();
     if (apiLevel > 0)
     {
         ALOGD("Android API level: %d", apiLevel);

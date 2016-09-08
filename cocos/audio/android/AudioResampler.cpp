@@ -107,14 +107,14 @@ static AudioResampler::src_quality defaultQuality = AudioResampler::DEFAULT_QUAL
 
 void AudioResampler::init_routine()
 {
-    int resamplerQuality = getSystemProperty("af.resampler.quality");
-    if (resamplerQuality > 0) {
-        defaultQuality = (src_quality) resamplerQuality;
-        ALOGD("forcing AudioResampler quality to %d", defaultQuality);
-        if (defaultQuality < DEFAULT_QUALITY || defaultQuality > VERY_HIGH_QUALITY) {
-            defaultQuality = DEFAULT_QUALITY;
-        }
-    }
+    // int resamplerQuality = getSystemProperty("af.resampler.quality");
+    // if (resamplerQuality > 0) {
+    //     defaultQuality = (src_quality) resamplerQuality;
+    //     ALOGD("forcing AudioResampler quality to %d", defaultQuality);
+    //     if (defaultQuality < DEFAULT_QUALITY || defaultQuality > VERY_HIGH_QUALITY) {
+    //         defaultQuality = DEFAULT_QUALITY;
+    //     }
+    // }
 }
 
 uint32_t AudioResampler::qualityMHz(src_quality quality)
