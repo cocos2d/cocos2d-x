@@ -28,6 +28,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.Handler;
 import android.os.Looper;
 import android.text.Editable;
 import android.text.InputType;
@@ -157,6 +158,15 @@ public class Cocos2dxEditBoxHelper {
 
                 editBox.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 
+                	 private Handler mHandler = new Handler();
+                	 private Runnable decor_view_settings = new Runnable()
+                     {
+                         public void run() 
+                         {
+                         	mCocos2dxActivity.hideVirtualButton();
+                         }
+                     };
+                	
                     @Override
                     public void onFocusChange(View v, boolean hasFocus) {
                         if (hasFocus) {
@@ -172,6 +182,7 @@ public class Cocos2dxEditBoxHelper {
                             Log.d(TAG, "edit box get focus");
                         } else {
                             editBox.setVisibility(View.GONE);
+                            mHandler.postDelayed(decor_view_settings, 500);
                             // Note that we must to copy a string to prevent string content is modified
                             // on UI thread while 's.toString' is invoked at the same time.
                             final String text = new String(editBox.getText().toString());
