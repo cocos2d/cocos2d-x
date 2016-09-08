@@ -153,6 +153,7 @@
       <AdditionalIncludeDirectories>..\..\Classes;$(EngineRoot)cocos\audio\include;Cocos2dEngine;Generated Files\Cocos2dEngine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <PreprocessorDefinitions>COCOS2D_DEBUG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <IgnoreSpecificDefaultLibraries>MSVCRT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
@@ -176,6 +177,7 @@
       <AdditionalIncludeDirectories>..\..\Classes;$(EngineRoot)cocos\audio\include;Cocos2dEngine;Generated Files\Cocos2dEngine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <PreprocessorDefinitions>COCOS2D_DEBUG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <IgnoreSpecificDefaultLibraries>MSVCRT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
@@ -199,6 +201,7 @@
       <AdditionalIncludeDirectories>..\..\Classes;$(EngineRoot)cocos\audio\include;Cocos2dEngine;Generated Files\Cocos2dEngine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <PreprocessorDefinitions>COCOS2D_DEBUG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <IgnoreSpecificDefaultLibraries>MSVCRT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
