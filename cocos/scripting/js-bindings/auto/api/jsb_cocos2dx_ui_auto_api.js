@@ -3932,6 +3932,16 @@ getBallNormalFile : function (
 },
 
 /**
+ * @method getSlidBallDisabledRenderer
+ * @return {cc.Sprite}
+ */
+getSlidBallDisabledRenderer : function (
+)
+{
+    return cc.Sprite;
+},
+
+/**
  * @method setScale9Enabled
  * @param {bool} arg0
  */
@@ -3985,6 +3995,16 @@ str,
 texturerestype 
 )
 {
+},
+
+/**
+ * @method getSlidBallRenderer
+ * @return {cc.Node}
+ */
+getSlidBallRenderer : function (
+)
+{
+    return cc.Node;
 },
 
 /**
@@ -4047,6 +4067,16 @@ getCapInsetsProgressBarRenderer : function (
 )
 {
     return cc.Rect;
+},
+
+/**
+ * @method getSlidBallPressedRenderer
+ * @return {cc.Sprite}
+ */
+getSlidBallPressedRenderer : function (
+)
+{
+    return cc.Sprite;
 },
 
 /**
@@ -4131,6 +4161,16 @@ str,
 texturerestype 
 )
 {
+},
+
+/**
+ * @method getSlidBallNormalRenderer
+ * @return {cc.Sprite}
+ */
+getSlidBallNormalRenderer : function (
+)
+{
+    return cc.Sprite;
 },
 
 /**
