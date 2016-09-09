@@ -236,6 +236,7 @@ bool AudioPlayer::play2d()
 
 void AudioPlayer::rotateBufferThread(int offsetFrame)
 {
+    bool needToExitThread = false;
     ALint sourceState;
     ALint bufferProcessed = 0;
     ExtAudioFileRef extRef = nullptr;
@@ -247,7 +248,7 @@ void AudioPlayer::rotateBufferThread(int offsetFrame)
     auto frames = _audioCache->_queBufferFrames;
     
     auto error = ExtAudioFileOpenURL(fileURL, &extRef);
-    if(error) {
+    if (error) {
         ALOGE("%s: ExtAudioFileOpenURL FAILED, Error = %ld", __PRETTY_FUNCTION__,(long) error);
         goto ExitBufferThread;
     }
@@ -294,7 +295,7 @@ void AudioPlayer::rotateBufferThread(int offsetFrame)
                         theDataBuffer.mBuffers[0].mDataByteSize = _audioCache->_queBufferBytes;
                         ExtAudioFileRead(extRef, (UInt32*)&frames, &theDataBuffer);
                     } else {
-                        _isDestroyed = true;
+                        needToExitThread = true;
                         break;
                     }
                 }
@@ -307,7 +308,7 @@ void AudioPlayer::rotateBufferThread(int offsetFrame)
         }
         
         std::unique_lock<std::mutex> lk(_sleepMutex);
-        if (_isDestroyed) {
+        if (_isDestroyed || needToExitThread) {
             break;
         }
         
