@@ -96,7 +96,7 @@ cocos2d::Rect SkeletonNode::getBoundingBox() const
         }
     }
     boundingBox.setRect(minx, miny, maxx - minx, maxy - miny);
-    return RectApplyAffineTransform(boundingBox, this->getNodeToParentAffineTransform());;
+    return RectApplyAffineTransform(boundingBox, this->getNodeToParentAffineTransform());
 }
 
 SkeletonNode::SkeletonNode()

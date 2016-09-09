@@ -27,5 +27,5 @@ void main(void)
 	float normDotPosToLight=max(0.0,dot(normal,posToLight));
 	vec4 diffuse=vec4(normDotPosToLight*u_diffuseL,1.0);
 	vec4 ambient=vec4(0.5,0.5,0.5,1);
-	gl_FragColor=texColor*vec4(vec3(diffuse+ambient),diffuse.a);;
+	gl_FragColor=texColor*vec4(vec3(diffuse+ambient),diffuse.a);
 }

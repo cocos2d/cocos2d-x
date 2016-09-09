@@ -265,7 +265,7 @@ bool Bundle3D::loadObj(MeshDatas& meshdatas, MaterialDatas& materialdatas, NodeD
             {
                 hasnormal = true;
                 attrib.vertexAttrib = GLProgram::VERTEX_ATTRIB_NORMAL;
-                attrib.attribSizeBytes = attrib.size * sizeof(float);;
+                attrib.attribSizeBytes = attrib.size * sizeof(float);
                 meshdata->attribs.push_back(attrib);
             }
             if (mesh.texcoords.size())
@@ -1669,7 +1669,7 @@ bool Bundle3D::loadNodesJson(NodeDatas& nodedatas)
 }
 NodeData* Bundle3D::parseNodesRecursivelyJson(const rapidjson::Value& jvalue, bool singleSprite)
 {
-    NodeData* nodedata = new (std::nothrow) NodeData();;
+    NodeData* nodedata = new (std::nothrow) NodeData();
     // id
     nodedata->id = jvalue[ID].GetString();
 
@@ -1694,7 +1694,7 @@ NodeData* Bundle3D::parseNodesRecursivelyJson(const rapidjson::Value& jvalue, bo
 
         for (rapidjson::SizeType i = 0; i < parts.Size(); i++)
         {
-            auto modelnodedata = new (std::nothrow) ModelData();;
+            auto modelnodedata = new (std::nothrow) ModelData();
             const rapidjson::Value& part = parts[i];
             modelnodedata->subMeshId = part[MESHPARTID].GetString();
             modelnodedata->matrialId = part[MATERIALID].GetString();
