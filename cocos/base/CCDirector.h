@@ -745,6 +745,8 @@ protected:
     virtual void setAmbientDirection(float x, float y, float z);
     virtual void setAmbient(bool state, Node* root);
 
+    virtual Vec3 getAmbientDirection();
+
     /**
      *
      * @Director
@@ -756,6 +758,10 @@ protected:
     virtual void setShadowFactor(float factor);
     virtual void setShadow(bool state, Node* root);
 
+    virtual void updateShadowElementState1(Node* element);
+    virtual void updateShadowElementState2(Node* element, bool recursive = false);
+
+    virtual bool getShadowState();
     virtual Node* getShadowTexture();
 
     /**
@@ -776,7 +782,19 @@ protected:
 
     virtual void updateCapture();
 
+    virtual bool getCaptureState();
+
+    virtual int getCaptureTexturesCount();
+
+    virtual float getCaptureWidth();
+    virtual float getCaptureHeight();
+
+    virtual float getCaptureScale();
+
+    virtual Texture2D* getCaptureTextures(int index);
     virtual Node* getCaptureTexture();
+
+    virtual experimental::FrameBuffer* getCaptureFrameBuffer();
 
     /**
      *

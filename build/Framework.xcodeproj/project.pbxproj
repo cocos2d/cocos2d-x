@@ -1596,6 +1596,12 @@
 		78AEAC2B1BD22EE300FA8783 /* Shake.h in Headers */ = {isa = PBXBuildFile; fileRef = 78AEAC281BD22EE300FA8783 /* Shake.h */; };
 		78AEAC2C1BD22EE300FA8783 /* Shake.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78AEAC291BD22EE300FA8783 /* Shake.cpp */; };
 		78AEAC2D1BD22EE300FA8783 /* Shake.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78AEAC291BD22EE300FA8783 /* Shake.cpp */; };
+		78B93DDD1D82BCF3004FA0DE /* Support.h in Headers */ = {isa = PBXBuildFile; fileRef = 78B93DDC1D82BCF3004FA0DE /* Support.h */; };
+		78B93DDE1D82BCF3004FA0DE /* Support.h in Headers */ = {isa = PBXBuildFile; fileRef = 78B93DDC1D82BCF3004FA0DE /* Support.h */; };
+		78B93DDF1D82BCF3004FA0DE /* Support.h in Headers */ = {isa = PBXBuildFile; fileRef = 78B93DDC1D82BCF3004FA0DE /* Support.h */; };
+		78B93DE11D82BD0C004FA0DE /* Support.mm in Sources */ = {isa = PBXBuildFile; fileRef = 78B93DE01D82BD0C004FA0DE /* Support.mm */; };
+		78B93DE21D82BD0C004FA0DE /* Support.mm in Sources */ = {isa = PBXBuildFile; fileRef = 78B93DE01D82BD0C004FA0DE /* Support.mm */; };
+		78B93DE31D82BD0C004FA0DE /* Support.mm in Sources */ = {isa = PBXBuildFile; fileRef = 78B93DE01D82BD0C004FA0DE /* Support.mm */; };
 		78BF8F7F1CF140E900DBBF62 /* libfreetype.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78BF8F7E1CF140E900DBBF62 /* libfreetype.a */; };
 		78BF8F811CF140F800DBBF62 /* libpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78BF8F801CF140F800DBBF62 /* libpng.a */; };
 		78C3536C1CEE7F6500F10068 /* CCAllocatorGlobalNewDelete.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D0FD03401A3B51AA00825BB5 /* CCAllocatorGlobalNewDelete.cpp */; };
@@ -6004,6 +6010,8 @@
 		7894FA3F1BF0A50300A69ED6 /* BackgroundScroll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackgroundScroll.h; sourceTree = "<group>"; };
 		78AEAC281BD22EE300FA8783 /* Shake.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Shake.h; sourceTree = "<group>"; };
 		78AEAC291BD22EE300FA8783 /* Shake.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Shake.cpp; sourceTree = "<group>"; };
+		78B93DDC1D82BCF3004FA0DE /* Support.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Support.h; sourceTree = "<group>"; };
+		78B93DE01D82BD0C004FA0DE /* Support.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = Support.mm; path = ../../apple/support/Support.mm; sourceTree = "<group>"; };
 		78BF8F7E1CF140E900DBBF62 /* libfreetype.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfreetype.a; path = ../external/freetype2/prebuilt/tv/libfreetype.a; sourceTree = "<group>"; };
 		78BF8F801CF140F800DBBF62 /* libpng.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpng.a; path = ../external/png/prebuilt/tv/libpng.a; sourceTree = "<group>"; };
 		78C35A1B1CEE7F6500F10068 /* libcocos2d tv.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2d tv.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -9056,10 +9064,21 @@
 				781B06891BD280A50072FB24 /* services */,
 				781B069E1BD2B2E60072FB24 /* social */,
 				781B06C71BD2D22F0072FB24 /* screenshot */,
+				78B93DDB1D82BCF3004FA0DE /* support */,
 				78382F731C2469640001B3F1 /* vote */,
 			);
 			name = platform;
 			path = "../../cocos2d-tooflya-sdk/platform";
+			sourceTree = "<group>";
+		};
+		78B93DDB1D82BCF3004FA0DE /* support */ = {
+			isa = PBXGroup;
+			children = (
+				78B93DE01D82BD0C004FA0DE /* Support.mm */,
+				78B93DDC1D82BCF3004FA0DE /* Support.h */,
+			);
+			name = support;
+			path = include/support;
 			sourceTree = "<group>";
 		};
 		78E5CC101BCA78BC00CB036E /* translate */ = {
@@ -10631,6 +10650,7 @@
 				B6CAB2431AF9AA1A00B9B856 /* btConvexConcaveCollisionAlgorithm.h in Headers */,
 				299754F6193EC95400A54AC3 /* ObjectFactory.h in Headers */,
 				50ABBD991925AB4100A911A9 /* CCGLProgramStateCache.h in Headers */,
+				78B93DDE1D82BCF3004FA0DE /* Support.h in Headers */,
 				B665E41C1AA80A6600DDB1C5 /* CCPUTextureRotator.h in Headers */,
 				B6CAB2231AF9AA1A00B9B856 /* btCollisionConfiguration.h in Headers */,
 				B6CAB2191AF9AA1A00B9B856 /* btBox2dBox2dCollisionAlgorithm.h in Headers */,
@@ -11514,6 +11534,7 @@
 				78C358161CEE7F6500F10068 /* btMultiBodyJointMotor.h in Headers */,
 				78C358171CEE7F6500F10068 /* btBox2dShape.h in Headers */,
 				78C358181CEE7F6500F10068 /* btEmptyCollisionAlgorithm.h in Headers */,
+				78B93DDF1D82BCF3004FA0DE /* Support.h in Headers */,
 				78C358191CEE7F6500F10068 /* CCPUOnTimeObserverTranslator.h in Headers */,
 				78C3581A1CEE7F6500F10068 /* Translate.h in Headers */,
 				78C3581B1CEE7F6500F10068 /* CCControlExtensions.h in Headers */,
@@ -12454,6 +12475,7 @@
 				B6CAB40E1AF9AA1A00B9B856 /* btMultiBodyJointMotor.h in Headers */,
 				B6CAB2801AF9AA1A00B9B856 /* btBox2dShape.h in Headers */,
 				B6CAB2541AF9AA1A00B9B856 /* btEmptyCollisionAlgorithm.h in Headers */,
+				78B93DDD1D82BCF3004FA0DE /* Support.h in Headers */,
 				B665E3691AA80A6500DDB1C5 /* CCPUOnTimeObserverTranslator.h in Headers */,
 				78E5CC161BCA78BC00CB036E /* Translate.h in Headers */,
 				15AE1BEE19AAE01E00C27E9E /* CCControlExtensions.h in Headers */,
@@ -13728,6 +13750,7 @@
 				50ABBECF1925AB6F00A911A9 /* TGAlib.cpp in Sources */,
 				B6CAB49F1AF9AA1A00B9B856 /* PosixThreadSupport.cpp in Sources */,
 				50ABBE451925AB6F00A911A9 /* CCEvent.cpp in Sources */,
+				78B93DE21D82BD0C004FA0DE /* Support.mm in Sources */,
 				D0FD034F1A3B51AA00825BB5 /* CCAllocatorGlobal.cpp in Sources */,
 				50ABBE611925AB6F00A911A9 /* CCEventListenerAcceleration.cpp in Sources */,
 				50ABBD9F1925AB4100A911A9 /* CCGroupCommand.cpp in Sources */,
@@ -14190,6 +14213,7 @@
 				78C354D01CEE7F6500F10068 /* btRaycastVehicle.cpp in Sources */,
 				78C354D11CEE7F6500F10068 /* Sound.cpp in Sources */,
 				78C354D21CEE7F6500F10068 /* b2WheelJoint.cpp in Sources */,
+				78B93DE31D82BD0C004FA0DE /* Support.mm in Sources */,
 				78C354D31CEE7F6500F10068 /* ObjectFactory.cpp in Sources */,
 				78C354D41CEE7F6500F10068 /* CCLayer.cpp in Sources */,
 				78C354D51CEE7F6500F10068 /* EventData.c in Sources */,
@@ -14674,6 +14698,7 @@
 				B2165EEA19921124000BE3E6 /* CCPrimitiveCommand.cpp in Sources */,
 				B5668D7E1B3838E4003CBD5E /* UIScrollViewBar.cpp in Sources */,
 				B665E32B1AA80A6500DDB1C5 /* CCPUOnCountObserver.cpp in Sources */,
+				78B93DE11D82BD0C004FA0DE /* Support.mm in Sources */,
 				15AE185C19AAD31200C27E9E /* CDOpenALSupport.m in Sources */,
 				B6CAB3B01AF9AA1A00B9B856 /* btFixedConstraint.cpp in Sources */,
 				7894C0881BC9AD7200363FC9 /* ParallaxPool.cpp in Sources */,

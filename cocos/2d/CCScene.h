@@ -209,6 +209,12 @@ protected:
 public:
     void stepPhysicsAndNavigation(float deltaTime);
 #endif
+
+    public:
+    virtual void onRenderStart();
+    virtual void onRenderFinish();
+    virtual void onRenderStart(int index, int step);
+    virtual void onRenderFinish(int index);
 };
 
 // end of _2d group

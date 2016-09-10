@@ -57,7 +57,14 @@ namespace utils
 /**
 * Capture screen implementation, don't use it directly.
 */
-void onCaptureScreen(const std::function<void(bool, const std::string&)>& afterCaptured, const std::string& filename)
+void onCaptureScreen(
+  int width,
+  int height,
+  int x,
+  int y,
+  const std::function<void(bool, const std::string&)>& afterCaptured,
+  const std::string& filename
+)
 {
     static bool startedCapture = false;
 
@@ -75,15 +82,11 @@ void onCaptureScreen(const std::function<void(bool, const std::string&)>& afterC
         startedCapture = true;
     }
 
-
     auto glView = Director::getInstance()->getOpenGLView();
     auto frameSize = glView->getFrameSize();
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
+    #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
     frameSize = frameSize * glView->getFrameZoomFactor() * glView->getRetinaFactor();
-#endif
-
-    int width = static_cast<int>(fmin(frameSize.width, frameSize.height));
-    int height = static_cast<int>(fmin(frameSize.width, frameSize.height));
+    #endif
 
     bool succeed = false;
     std::string outputFile = "";
@@ -97,7 +100,7 @@ void onCaptureScreen(const std::function<void(bool, const std::string&)>& afterC
         }
 
         glPixelStorei(GL_PACK_ALIGNMENT, 1);
-        glReadPixels(frameSize.width / 2 - width / 2, frameSize.height / 2 - height / 2, width, height, GL_RGBA, GL_UNSIGNED_BYTE, buffer.get());
+        glReadPixels(x, y, width, height, GL_RGBA, GL_UNSIGNED_BYTE, buffer.get());
 
         std::shared_ptr<GLubyte> flippedBuffer(new GLubyte[width * height * 4], [](GLubyte* p) { CC_SAFE_DELETE_ARRAY(p); });
         if (!flippedBuffer)
@@ -158,7 +161,13 @@ void onCaptureScreen(const std::function<void(bool, const std::string&)>& afterC
  */
 static EventListenerCustom* s_captureScreenListener;
 static CustomCommand s_captureScreenCommand;
-void captureScreen(const std::function<void(bool, const std::string&)>& afterCaptured, const std::string& filename)
+void captureScreen(
+  int width,
+  int height,
+  int x,
+  int y,
+  const std::function<void(bool, const std::string&)>& afterCaptured, const std::string& filename
+)
 {
     if (s_captureScreenListener)
     {
@@ -166,7 +175,15 @@ void captureScreen(const std::function<void(bool, const std::string&)>& afterCap
         return;
     }
     s_captureScreenCommand.init(std::numeric_limits<float>::max());
-    s_captureScreenCommand.func = std::bind(onCaptureScreen, afterCaptured, filename);
+    s_captureScreenCommand.func = std::bind(
+      onCaptureScreen,
+        width,
+        height,
+        x,
+        y,
+        afterCaptured,
+        filename
+    );
     s_captureScreenListener = Director::getInstance()->getEventDispatcher()->addCustomEventListener(Director::EVENT_AFTER_DRAW, [](EventCustom *event) {
         auto director = Director::getInstance();
         director->getEventDispatcher()->removeEventListener((EventListener*)(s_captureScreenListener));

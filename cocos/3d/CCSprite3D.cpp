@@ -1023,4 +1023,31 @@ static Sprite3DMaterial* getSprite3DMaterialForAttribs(MeshVertexData* meshVerte
     return Sprite3DMaterial::createBuiltInMaterial(type, hasSkin);
 }
 
+
+
+void Sprite3D::enableShadow(bool state)
+{
+  Node::enableShadow(state);
+}
+
+void Sprite3D::enableLight(bool state)
+{
+  Node::enableLight(state);
+
+  if(!this->light)
+  {
+    this->setLightMask(0);
+  }
+}
+
+bool Sprite3D::enableShadow()
+{
+  return Node::enableShadow();
+}
+
+bool Sprite3D::enableLight()
+{
+  return Node::enableLight();
+}
+
 NS_CC_END

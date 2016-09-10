@@ -323,7 +323,7 @@ bool Layer::onTouchBegan(Touch *touch, Event *event)
     }
 #endif
     CC_UNUSED_PARAM(event);
-    CCASSERT(false, "Layer#ccTouchBegan override me");
+    //CCASSERT(false, "Layer#ccTouchBegan override me");
     return true;
 }
 

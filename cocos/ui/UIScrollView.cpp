@@ -1493,6 +1493,10 @@ Widget* ScrollView::findNextFocusedWidget(cocos2d::ui::Widget::FocusDirection di
         return Widget::findNextFocusedWidget(direction, current);
     }
 }
+
+void ScrollView::visit(Renderer *renderer, const Mat4& parentTransform, uint32_t parentFlags)
+{
+}
 }
 
 NS_CC_END

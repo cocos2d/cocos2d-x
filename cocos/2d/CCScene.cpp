@@ -339,4 +339,26 @@ void Scene::stepPhysicsAndNavigation(float deltaTime)
 }
 #endif
 
+/**
+ *
+ *
+ *
+ *
+ */
+void Scene::onRenderStart()
+{
+}
+
+void Scene::onRenderFinish()
+{
+}
+
+void Scene::onRenderStart(int index, int step)
+{
+}
+
+void Scene::onRenderFinish(int index)
+{
+}
+
 NS_CC_END

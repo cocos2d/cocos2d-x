@@ -1569,6 +1569,16 @@ void Director::setAmbient(bool state, Node* root)
   this->ambient.state = state;
 }
 
+Vec3 Director::getAmbientDirection()
+{
+  if(this->ambient.state)
+  {
+    return this->ambient.source1->getDirection();
+  }
+
+  return Vec3(0, 0, 0);
+}
+
 /**
  *
  * @Director
@@ -1590,8 +1600,12 @@ void Director::setShadowFactor(float factor)
   this->shadows.factor = factor;
 }
 
+static Material* m1;
+
 void Director::setShadow(bool state, Node* root)
 {
+  if(!Support::shadows()) return;
+
   if(state)
   {
     if(!this->shadows.state)
@@ -1606,7 +1620,7 @@ void Director::setShadow(bool state, Node* root)
        * | @Generate frame buffer object;
        *
        */
-      this->shadows.frame = FrameBuffer::create(1, width, height);
+      this->shadows.frame = FrameBuffer::create(2, width, height);
       this->shadows.frame->attachRenderTarget(RenderTarget::create(width, height));
       this->shadows.frame->attachDepthStencilTarget(RenderTargetDepthStencil::create(width, height));
 
@@ -1628,6 +1642,14 @@ void Director::setShadow(bool state, Node* root)
         "@director.shadows.active"
       );
 
+      m1 = Material::createWithGLStateProgram(
+        GLProgramState::getOrCreateWithGLProgram(
+          GLProgramCache::getInstance()->getGLProgram("@director.shadows.normal")
+        )
+      );
+
+      m1->retain();
+
       /**
        *
        * @Director
@@ -1635,7 +1657,7 @@ void Director::setShadow(bool state, Node* root)
        * | @Should add shadows frame buffer texture to the default 2D camera;
        *
        */
-      if(true)
+      if(false)
       {
         this->shadows.texture = new Entity(this->shadows.frame->getRenderTarget()->getTexture(), root);
         this->shadows.texture->setScaleX(1 * this->shadows.factor);
@@ -1656,9 +1678,89 @@ void Director::setShadow(bool state, Node* root)
   this->shadows.state = state;
 }
 
+bool Director::getShadowState()
+{
+  return this->shadows.state;
+}
+
 Node* Director::getShadowTexture()
 {
   return this->shadows.texture;
+}
+
+void Director::updateShadowElementState1(Node *element)
+{
+  if(static_cast<Sprite3D*>(element)->enableShadow())
+  {
+    //static_cast<Sprite3D*>(element)->setMaterial(m1);
+    element->setGLProgram(
+      GLProgramCache::getInstance()->getGLProgram("@director.shadows.normal")
+    );
+  }
+
+  /**
+   *
+   *
+   *
+   */
+  for(auto el : element->getChildren())
+  {
+    if(Camera::getVisitingCamera()->isVisibleInFrustum(&static_cast<Sprite3D*>(el)->getAABB()))
+    {
+      this->updateShadowElementState1(el);
+    }
+  }
+}
+
+static float matrix[16] = {
+  0.5f, 0.0f, 0.0f, 0.0f,
+  0.0f, 0.5f, 0.0f, 0.0f,
+  0.0f, 0.0f, 0.5f, 0.0f,
+  0.5f, 0.5f, 0.5f, 1.0f
+};
+
+Mat4 cameraViewportMatrix(matrix);
+Mat4 cameraViewMatrix;
+Mat4 cameraProjectionMatrix;
+Mat4 cameraTransformMatrix;
+
+void Director::updateShadowElementState2(Node *element, bool recursive)
+{
+  if(!recursive)
+  {
+    cameraViewMatrix = this->shadows.camera->getViewMatrix();
+    cameraProjectionMatrix = this->shadows.camera->getProjectionMatrix();
+    cameraTransformMatrix =  cameraViewportMatrix * cameraProjectionMatrix * cameraViewMatrix;
+  }
+
+  /**
+   *
+   *
+   *
+   */
+  if(static_cast<Sprite3D*>(element)->enableShadow())
+  {
+    element->setGLProgram(
+      GLProgramCache::getInstance()->getGLProgram("@director.shadows.active")
+    );
+
+    element->getGLProgramState()->setUniformMat4("modelTransformMatrix", element->getModelViewMatrix());
+    element->getGLProgramState()->setUniformMat4("cameraTransformMatrix", cameraTransformMatrix);
+    element->getGLProgramState()->setUniformTexture("transformTexture", this->shadows.frame->getRenderTarget()->getTexture());
+  }
+
+  /**
+   *
+   *
+   *
+   */
+  for(auto el : element->getChildren())
+  {
+    if(Camera::getVisitingCamera()->isVisibleInFrustum(&static_cast<Sprite3D*>(el)->getAABB()))
+    {
+      this->updateShadowElementState2(el, true);
+    }
+  }
 }
 
 /**
@@ -1711,6 +1813,8 @@ void Director::setCaptureSize(float width, float height)
 
 void Director::setCapture(bool state, Node* root)
 {
+  if(!Support::capture()) return;
+
   if(state)
   {
     if(!this->capture.state)
@@ -1727,7 +1831,7 @@ void Director::setCapture(bool state, Node* root)
        * | @Generate frame buffer object;
        *
        */
-      this->capture.frame = FrameBuffer::create(2, width, height);
+      this->capture.frame = FrameBuffer::create(1, width, height);
       this->capture.frame->attachRenderTarget(RenderTarget::create(width, height));
       this->capture.frame->attachDepthStencilTarget(RenderTargetDepthStencil::create(width, height));
 
@@ -1763,7 +1867,7 @@ void Director::setCapture(bool state, Node* root)
       this->capture.texture->setScaleY(-1 * this->capture.factor);
       this->capture.texture->setPosition(size.width / 2, size.height / 2);
       this->capture.texture->setCameraMask(2);
-      this->capture.texture->setGlobalZOrder(1);
+      this->capture.texture->setGlobalZOrder(-1);
 
       /**
        *
@@ -1788,9 +1892,44 @@ void Director::setCapture(bool state, Node* root)
   this->capture.state = state;
 }
 
+bool Director::getCaptureState()
+{
+  return this->capture.state;
+}
+
+int Director::getCaptureTexturesCount()
+{
+  return this->capture.textures.size();
+}
+
+float Director::getCaptureWidth()
+{
+  return this->capture.width;
+}
+
+float Director::getCaptureHeight()
+{
+  return this->capture.height;
+}
+
+float Director::getCaptureScale()
+{
+  return this->capture.scale;
+}
+
+Texture2D* Director::getCaptureTextures(int index)
+{
+  return this->capture.textures.at(index)->getSprite()->getTexture();
+}
+
 Node* Director::getCaptureTexture()
 {
   return this->capture.texture;
+}
+
+experimental::FrameBuffer* Director::getCaptureFrameBuffer()
+{
+  return this->capture.frame;
 }
 
 void Director::updateCapture()
@@ -1817,55 +1956,51 @@ void Director::updateCapture()
  */
 void Director::onRenderStart()
 {
+  if(this->_runningScene)
+  {
+    this->_runningScene->onRenderStart();
+  }
 }
 
 void Director::onRenderFinish()
 {
+  if(this->_runningScene)
+  {
+    this->_runningScene->onRenderFinish();
+  }
 }
 
 void Director::onRenderStart(int index)
 {
+  if(this->_runningScene)
+  {
+    this->_runningScene->onRenderStart(index, 1);
+  }
+
   if(this->shadows.state)
   {
     if(index == this->shadows.camera->getIndex())
     {
-      for(auto element : this->shadows.element->getChildren())
-      {
-        element->setGLProgram(
-          GLProgramCache::getInstance()->getGLProgram("@director.shadows.normal")
-        );
-      }
+      this->updateShadowElementState1(this->shadows.element);
     }
     else if(index == 1)
     {
-      for(auto element : this->shadows.element->getChildren())
-      {
-        element->setGLProgram(
-          GLProgramCache::getInstance()->getGLProgram("@director.shadows.active")
-        );
-
-        float matrix[16] = {
-          0.5f, 0.0f, 0.0f, 0.0f,
-          0.0f, 0.5f, 0.0f, 0.0f,
-          0.0f, 0.0f, 0.5f, 0.0f,
-          0.5f, 0.5f, 0.5f, 1.0f
-        };
-
-        Mat4  cameraViewportMatrix(matrix);
-        Mat4 cameraViewMatrix = this->shadows.camera->getViewMatrix();
-        Mat4 cameraProjectionMatrix = this->shadows.camera->getProjectionMatrix();
-        Mat4 cameraTransformMatrix =  cameraViewportMatrix * cameraProjectionMatrix * cameraViewMatrix;
-
-        element->getGLProgramState()->setUniformMat4("modelTransformMatrix", element->getModelViewMatrix());
-        element->getGLProgramState()->setUniformMat4("cameraTransformMatrix", cameraTransformMatrix);
-        element->getGLProgramState()->setUniformTexture("transformTexture", this->shadows.frame->getRenderTarget()->getTexture());
-      }
+      this->updateShadowElementState2(this->shadows.element);
     }
+  }
+
+  if(this->_runningScene)
+  {
+    this->_runningScene->onRenderStart(index, 2);
   }
 }
 
 void Director::onRenderFinish(int index)
 {
+  if(this->_runningScene)
+  {
+    this->_runningScene->onRenderFinish(index);
+  }
 }
 
 NS_CC_END
