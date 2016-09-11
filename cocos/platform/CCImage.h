@@ -136,17 +136,17 @@ public:
     bool initWithRawData(const unsigned char * data, ssize_t dataLen, int width, int height, int bitsPerComponent, bool preMulti = false);
 
     // Getters
-    inline unsigned char *   getData()               { return _data; }
-    inline ssize_t           getDataLen()            { return _dataLen; }
-    inline Format            getFileType()           {return _fileType; }
-    inline Texture2D::PixelFormat getRenderFormat()  { return _renderFormat; }
-    inline int               getWidth()              { return _width; }
-    inline int               getHeight()             { return _height; }
-    inline int               getNumberOfMipmaps()    { return _numberOfMipmaps; }
-    inline MipmapInfo*       getMipmaps()            { return _mipmaps; }
-    inline bool              hasPremultipliedAlpha() { return _hasPremultipliedAlpha; }
-    CC_DEPRECATED_ATTRIBUTE inline bool isPremultipliedAlpha()  { return _hasPremultipliedAlpha;   }
-    inline std::string getFilePath() const { return _filePath; }
+    unsigned char *   getData()               { return _data; }
+    ssize_t           getDataLen()            { return _dataLen; }
+    Format            getFileType()           { return _fileType; }
+    Texture2D::PixelFormat getRenderFormat()  { return _renderFormat; }
+    int               getWidth()              { return _width; }
+    int               getHeight()             { return _height; }
+    int               getNumberOfMipmaps()    { return _numberOfMipmaps; }
+    MipmapInfo*       getMipmaps()            { return _mipmaps; }
+    bool              hasPremultipliedAlpha() { return _hasPremultipliedAlpha; }
+    CC_DEPRECATED_ATTRIBUTE bool isPremultipliedAlpha() { return _hasPremultipliedAlpha; }
+    std::string getFilePath() const { return _filePath; }
 
     int                      getBitPerPixel();
     bool                     hasAlpha();

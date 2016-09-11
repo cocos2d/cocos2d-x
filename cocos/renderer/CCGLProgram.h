@@ -495,10 +495,10 @@ public:
     */
     void reset();
     /** returns the OpenGL Program object */
-    inline GLuint getProgram() const { return _program; }
+    GLuint getProgram() const { return _program; }
 
     /** returns the Uniform flags */
-    inline const UniformFlags& getUniformFlags() const { return _flags; }
+    const UniformFlags& getUniformFlags() const { return _flags; }
 
     //DEPRECATED
     CC_DEPRECATED_ATTRIBUTE bool initWithVertexShaderByteArray(const GLchar* vertexByteArray, const GLchar* fragByteArray)

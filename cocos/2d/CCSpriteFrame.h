@@ -104,7 +104,7 @@ public:
      *
      * @return The rect of the sprite frame, in pixels.
      */
-    inline const Rect& getRectInPixels() const { return _rectInPixels; }
+    const Rect& getRectInPixels() const { return _rectInPixels; }
     /** Set rect of the sprite frame.
      *
      * @param rectInPixels The rect of the sprite frame, in pixels.
@@ -115,18 +115,18 @@ public:
      *
      * @return Is rotated if true.
      */
-    inline bool isRotated() const { return _rotated; }
+    bool isRotated() const { return _rotated; }
     /** Set rotated of the sprite frame.
      *
      * @param rotated Rotated the sprite frame if true.
      */
-    inline void setRotated(bool rotated) { _rotated = rotated; }
+    void setRotated(bool rotated) { _rotated = rotated; }
 
     /** Get rect of the frame.
      *
      * @return The rect of the sprite frame.
      */
-    inline const Rect& getRect() const { return _rect; }
+    const Rect& getRect() const { return _rect; }
     /** Set rect of the frame.
      *
      * @param rect The rect of the sprite.
@@ -148,23 +148,23 @@ public:
      *
      * @return The original size of the trimmed image, in pixels.
      */
-    inline const Size& getOriginalSizeInPixels() const { return _originalSizeInPixels; }
+    const Size& getOriginalSizeInPixels() const { return _originalSizeInPixels; }
     /** Set original size of the trimmed image.
      *
      * @param sizeInPixels The original size of the trimmed image, in pixels.
      */
-    inline void setOriginalSizeInPixels(const Size& sizeInPixels) { _originalSizeInPixels = sizeInPixels; }
+    void setOriginalSizeInPixels(const Size& sizeInPixels) { _originalSizeInPixels = sizeInPixels; }
 
     /** Get original size of the trimmed image.
      *
      * @return The original size of the trimmed image.
      */
-    inline const Size& getOriginalSize() const { return _originalSize; }
+    const Size& getOriginalSize() const { return _originalSize; }
     /** Set original size of the trimmed image.
      *
      * @param sizeInPixels The original size of the trimmed image.
      */
-    inline void setOriginalSize(const Size& sizeInPixels) { _originalSize = sizeInPixels; }
+    void setOriginalSize(const Size& sizeInPixels) { _originalSize = sizeInPixels; }
 
     /** Get texture of the frame.
      *

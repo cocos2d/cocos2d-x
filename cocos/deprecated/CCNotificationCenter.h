@@ -116,7 +116,7 @@ public:
      *  @note Only supports Lua Binding now.
      *  @return The script handle.
      */
-    inline int getScriptHandler() const { return _scriptHandler; };
+    int getScriptHandler() const { return _scriptHandler; }
     
     /** @brief Gets observer script handler.
      *  @param name The name of this notification.

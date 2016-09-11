@@ -94,13 +94,13 @@ public:
      * Query TGA image info.
      *@return The TGA image info.
      */
-    inline struct sImageTGA* getTGAInfo() const { return _TGAInfo; };
+    struct sImageTGA* getTGAInfo() const { return _TGAInfo; }
 
     /**
      * Set the TGA image info for TileMapAtlas
      *@param TGAInfo The TGA info in sImageTGA.
      */
-    inline void setTGAInfo(struct sImageTGA* TGAInfo) { _TGAInfo = TGAInfo; };
+    void setTGAInfo(struct sImageTGA* TGAInfo) { _TGAInfo = TGAInfo; }
 
 protected:
     void loadTGAfile(const std::string& file);

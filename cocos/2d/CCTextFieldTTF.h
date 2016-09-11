@@ -152,17 +152,17 @@ public:
     /**
      * @lua NA
      */
-    inline TextFieldDelegate* getDelegate() const { return _delegate; };
+    TextFieldDelegate* getDelegate() const { return _delegate; }
     /**
      * @lua NA
      */
-    inline void setDelegate(TextFieldDelegate* delegate) { _delegate = delegate; };
+    void setDelegate(TextFieldDelegate* delegate) { _delegate = delegate; }
 
     /**
      * Query the currently inputed character count.
      *@return The total input character count.
      */
-    inline std::size_t getCharCount() const { return _charCount; };
+    std::size_t getCharCount() const { return _charCount; }
     
     /**
      * Query the color of place holder.

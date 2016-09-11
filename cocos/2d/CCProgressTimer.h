@@ -67,19 +67,19 @@ public:
      *
      * @return A Type
      */
-    inline Type getType() const { return _type; }
+    Type getType() const { return _type; }
 
     /** Percentages are from 0 to 100.
      *
      * @return Percentages.
      */
-    inline float getPercentage() const {return _percentage; }
+    float getPercentage() const { return _percentage; }
 
     /** The image to show the progress percentage, retain. 
      *
      * @return A sprite.
      */
-    inline Sprite* getSprite() const { return _sprite; }
+    Sprite* getSprite() const { return _sprite; }
     
     /** Set the initial percentage values. 
      *
@@ -103,7 +103,7 @@ public:
      *
      * @return If the direction is Anti-clockwise,it will return true.
      */
-    inline bool isReverseDirection() { return _reverseDirection; };
+    bool isReverseDirection() { return _reverseDirection; };
     
     /** Set the Reverse direction.
      *
@@ -145,13 +145,13 @@ public:
      *    Set the rate to be Vec2(0,1); and set the midpoint to = Vec2(0,.5f).
      * @param barChangeRate A Vec2.
      */
-    inline void setBarChangeRate(const Vec2& barChangeRate ) { _barChangeRate = barChangeRate; }
+    void setBarChangeRate(const Vec2& barChangeRate ) { _barChangeRate = barChangeRate; }
     
     /** Returns the BarChangeRate.
      *
      * @return A barChangeRate.
      */
-    inline Vec2 getBarChangeRate() const { return _barChangeRate; }
+    Vec2 getBarChangeRate() const { return _barChangeRate; }
 
     // Overrides
     virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;

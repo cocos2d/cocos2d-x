@@ -775,7 +775,7 @@ public:
      * @return a Node with the given tag that can be cast to Type T.
     */
     template <typename T>
-    inline T getChildByTag(int tag) const { return static_cast<T>(getChildByTag(tag)); }
+    T getChildByTag(int tag) const { return static_cast<T>(getChildByTag(tag)); }
     
     /**
      * Gets a child from the container with its name.
@@ -795,7 +795,7 @@ public:
      * @return a Node with the given name that can be cast to Type T.
     */
     template <typename T>
-    inline T getChildByName(const std::string& name) const { return static_cast<T>(getChildByName(name)); }
+    T getChildByName(const std::string& name) const { return static_cast<T>(getChildByName(name)); }
     /** Search the children of the receiving node to perform processing for nodes which share a name.
      *
      * @param name The name to search for, supports c++11 regular expression.
@@ -1186,7 +1186,7 @@ public:
     virtual Rect getBoundingBox() const;
 
     /** @deprecated Use getBoundingBox instead */
-    CC_DEPRECATED_ATTRIBUTE inline virtual Rect boundingBox() const { return getBoundingBox(); }
+    CC_DEPRECATED_ATTRIBUTE virtual Rect boundingBox() const { return getBoundingBox(); }
 
     /** Set event dispatcher for scene.
      *
@@ -1552,7 +1552,7 @@ public:
     virtual void setNodeToParentTransform(const Mat4& transform);
 
     /** @deprecated use getNodeToParentTransform() instead */
-    CC_DEPRECATED_ATTRIBUTE inline virtual AffineTransform nodeToParentTransform() const { return getNodeToParentAffineTransform(); }
+    CC_DEPRECATED_ATTRIBUTE virtual AffineTransform nodeToParentTransform() const { return getNodeToParentAffineTransform(); }
 
     /**
      * Returns the matrix that transform parent's space coordinates to the node's (local) space coordinates.
@@ -1564,7 +1564,7 @@ public:
     virtual AffineTransform getParentToNodeAffineTransform() const;
 
     /** @deprecated Use getParentToNodeTransform() instead */
-    CC_DEPRECATED_ATTRIBUTE inline virtual AffineTransform parentToNodeTransform() const { return getParentToNodeAffineTransform(); }
+    CC_DEPRECATED_ATTRIBUTE virtual AffineTransform parentToNodeTransform() const { return getParentToNodeAffineTransform(); }
 
     /**
      * Returns the world affine transform matrix. The matrix is in Pixels.
@@ -1575,7 +1575,7 @@ public:
     virtual AffineTransform getNodeToWorldAffineTransform() const;
 
     /** @deprecated Use getNodeToWorldTransform() instead */
-    CC_DEPRECATED_ATTRIBUTE inline virtual AffineTransform nodeToWorldTransform() const { return getNodeToWorldAffineTransform(); }
+    CC_DEPRECATED_ATTRIBUTE virtual AffineTransform nodeToWorldTransform() const { return getNodeToWorldAffineTransform(); }
 
     /**
      * Returns the inverse world affine transform matrix. The matrix is in Pixels.
@@ -1586,7 +1586,7 @@ public:
     virtual AffineTransform getWorldToNodeAffineTransform() const;
 
     /** @deprecated Use getWorldToNodeTransform() instead */
-    CC_DEPRECATED_ATTRIBUTE inline virtual AffineTransform worldToNodeTransform() const { return getWorldToNodeAffineTransform(); }
+    CC_DEPRECATED_ATTRIBUTE virtual AffineTransform worldToNodeTransform() const { return getWorldToNodeAffineTransform(); }
 
     /// @} end of Transformations
 

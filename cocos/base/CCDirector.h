@@ -155,26 +155,26 @@ public:
     // attribute
 
     /** Gets current running Scene. Director can only run one Scene at a time. */
-    inline Scene* getRunningScene() { return _runningScene; }
+    Scene* getRunningScene() { return _runningScene; }
 
     /** Gets the FPS value. */
-    inline float getAnimationInterval() { return _animationInterval; }
+    float getAnimationInterval() { return _animationInterval; }
     /** Sets the FPS value. FPS = 1/interval. */
     void setAnimationInterval(float interval);
 
     /** Whether or not displaying the FPS on the bottom-left corner of the screen. */
-    inline bool isDisplayStats() { return _displayStats; }
+    bool isDisplayStats() { return _displayStats; }
     /** Display the FPS on the bottom-left corner of the screen. */
-    inline void setDisplayStats(bool displayStats) { _displayStats = displayStats; }
+    void setDisplayStats(bool displayStats) { _displayStats = displayStats; }
     
     /** Get seconds per frame. */
-    inline float getSecondsPerFrame() { return _secondsPerFrame; }
+    float getSecondsPerFrame() { return _secondsPerFrame; }
 
     /** 
      * Get the GLView.
      * @lua NA
      */
-    inline GLView* getOpenGLView() { return _openGLView; }
+    GLView* getOpenGLView() { return _openGLView; }
     /** 
      * Sets the GLView. 
      * @lua NA
@@ -188,7 +188,7 @@ public:
     TextureCache* getTextureCache() const;
 
     /** Whether or not `_nextDeltaTimeZero` is set to 0. */
-    inline bool isNextDeltaTimeZero() { return _nextDeltaTimeZero; }
+    bool isNextDeltaTimeZero() { return _nextDeltaTimeZero; }
     /** 
      * Sets the delta time between current frame and next frame is 0.
      * This value will be used in Schedule, and will affect all functions that are using frame delta time, such as Actions.
@@ -197,16 +197,16 @@ public:
     void setNextDeltaTimeZero(bool nextDeltaTimeZero);
 
     /** Whether or not the Director is paused. */
-    inline bool isPaused() { return _paused; }
+    bool isPaused() { return _paused; }
 
     /** How many frames were called since the director started */
-    inline unsigned int getTotalFrames() { return _totalFrames; }
+    unsigned int getTotalFrames() { return _totalFrames; }
     
     /** Gets an OpenGL projection.
      * @since v0.8.2
      * @lua NA
      */
-    inline Projection getProjection() { return _projection; }
+    Projection getProjection() { return _projection; }
     /** Sets OpenGL projection. */
     void setProjection(Projection projection);
     
@@ -221,7 +221,7 @@ public:
      * If the new scene replaces the old one, the it will receive the "cleanup" message.
      * @since v0.99.0
      */
-    inline bool isSendCleanupToScene() { return _sendCleanupToScene; }
+    bool isSendCleanupToScene() { return _sendCleanupToScene; }
 
     /** This object will be visited after the main scene is visited.
      * This object MUST implement the "visit" function.
@@ -503,7 +503,7 @@ public:
     /**
      * returns whether or not the Director is in a valid state
      */
-    inline bool isValid() const { return !_invalid; }
+    bool isValid() const { return !_invalid; }
 
 protected:
     void reset();

@@ -90,13 +90,13 @@ public:
      *
      * @return The TextureAtlas object.
      */
-    inline TextureAtlas* getTextureAtlas() { return _textureAtlas; }
+    TextureAtlas* getTextureAtlas() { return _textureAtlas; }
 
     /** Sets the TextureAtlas object. 
      *
      * @param textureAtlas The TextureAtlas object.
      */
-    inline void setTextureAtlas(TextureAtlas* textureAtlas)
+    void setTextureAtlas(TextureAtlas* textureAtlas)
     { 
         if (textureAtlas != _textureAtlas)
         {
@@ -111,7 +111,7 @@ public:
      * 
      * @return An array with the descendants (children, gran children, etc.).
      */
-    inline const std::vector<Sprite*>& getDescendants() const { return _descendants; }
+    const std::vector<Sprite*>& getDescendants() const { return _descendants; }
 
     /** Increase the Atlas Capacity. */
     void increaseAtlasCapacity();

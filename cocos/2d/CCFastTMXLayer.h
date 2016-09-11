@@ -151,37 +151,37 @@ public:
      *
      * @return The tile layer name.
      */
-    inline const std::string& getLayerName(){ return _layerName; }
+    const std::string& getLayerName() { return _layerName; }
     
     /** Set the tile layer name.
      *
      * @param layerName The new layer name.
      */
-    inline void setLayerName(const std::string& layerName){ _layerName = layerName; }
+    void setLayerName(const std::string& layerName) { _layerName = layerName; }
 
     /** Size of the layer in tiles.
      *
      * @return Size of the layer in tiles.
      */
-    inline const Size& getLayerSize() const { return _layerSize; };
+    const Size& getLayerSize() const { return _layerSize; }
     
     /** Set the size of the layer in tiles. 
      *
      * @param size The new size of the layer in tiles.
      */
-    inline void setLayerSize(const Size& size) { _layerSize = size; };
+    void setLayerSize(const Size& size) { _layerSize = size; }
     
     /** Size of the map's tile (could be different from the tile's size).
      *
      * @return Size of the map's tile (could be different from the tile's size).
      */
-    inline const Size& getMapTileSize() const { return _mapTileSize; };
+    const Size& getMapTileSize() const { return _mapTileSize; }
     
     /** Set the size of the map's tile. 
      *
      * @param size The new size of the map's tile.
      */
-    inline void setMapTileSize(const Size& size) { _mapTileSize = size; };
+    void setMapTileSize(const Size& size) { _mapTileSize = size; }
     
     /** Pointer to the map of tiles.
      * @js NA
@@ -200,13 +200,13 @@ public:
      *
      * @return Tileset information for the layer.
      */
-    inline TMXTilesetInfo* getTileSet() const { return _tileSet; };
+    TMXTilesetInfo* getTileSet() const { return _tileSet; }
     
     /** Set the tileset information for the layer. 
      *
      * @param info The new tileset information for the layer.
      */
-    inline void setTileSet(TMXTilesetInfo* info) {
+    void setTileSet(TMXTilesetInfo* info) {
         CC_SAFE_RETAIN(info);
         CC_SAFE_RELEASE(_tileSet);
         _tileSet = info;
@@ -216,31 +216,31 @@ public:
      *
      * @return Layer orientation, which is the same as the map orientation.
      */
-    inline int getLayerOrientation() const { return _layerOrientation; };
+    int getLayerOrientation() const { return _layerOrientation; }
     
     /** Set Layer orientation, which is the same as the map orientation. 
      *
      * @param orientation Layer orientation, which is the same as the map orientation.
      */
-    inline void setLayerOrientation(int orientation) { _layerOrientation = orientation; };
+    void setLayerOrientation(int orientation) { _layerOrientation = orientation; }
     
     /** Properties from the layer. They can be added using Tiled. 
      *
      * @return Properties from the layer. They can be added using Tiled.
      */
-    inline const ValueMap& getProperties() const { return _properties; };
+    const ValueMap& getProperties() const { return _properties; }
     
     /** Properties from the layer. They can be added using Tiled.
      *
      * @return Properties from the layer. They can be added using Tiled.
      */
-    inline ValueMap& getProperties() { return _properties; };
+    ValueMap& getProperties() { return _properties; }
     
     /** Set the properties to the layer.
      *
      * @param properties The properties to the layer.
      */
-    inline void setProperties(const ValueMap& properties)
+    void setProperties(const ValueMap& properties)
     {
         _properties = properties;
     };
@@ -291,7 +291,7 @@ protected:
     void updateTotalQuads();
     
     void onDraw(Primitive* primitive);
-    inline int getTileIndexByPos(int x, int y) const { return x + y * (int) _layerSize.width; }
+    int getTileIndexByPos(int x, int y) const { return x + y * (int) _layerSize.width; }
     
     void updateVertexBuffer();
     void updateIndexBuffer();

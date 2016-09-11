@@ -268,7 +268,7 @@ public:
      * Get tag of SIOClient.
      * @return const char* the pointer point to the _tag.
      */
-    inline const char* getTag()
+    const char* getTag()
     {
         return _tag.c_str();
     };

@@ -119,17 +119,17 @@ public:
      *
      * @return A certain target.
      */
-    inline Node* getTarget() const { return _target; }
+    Node* getTarget() const { return _target; }
     /** The action will modify the target properties. 
      *
      * @param target A certain target.
      */
-    inline void setTarget(Node *target) { _target = target; }
+    void setTarget(Node *target) { _target = target; }
     /** Return a original Target. 
      *
      * @return A original Target.
      */
-    inline Node* getOriginalTarget() const { return _originalTarget; }
+    Node* getOriginalTarget() const { return _originalTarget; }
     /** 
      * Set the original target, since target can be nil.
      * Is the target that were used to run the action. Unless you are doing something complex, like ActionManager, you should NOT call this method.
@@ -138,27 +138,27 @@ public:
      *
      * @param originalTarget Is 'assigned', it is not 'retained'.
      */
-    inline void setOriginalTarget(Node *originalTarget) { _originalTarget = originalTarget; }
+    void setOriginalTarget(Node *originalTarget) { _originalTarget = originalTarget; }
     /** Returns a tag that is used to identify the action easily. 
      *
      * @return A tag.
      */
-    inline int getTag() const { return _tag; }
+    int getTag() const { return _tag; }
     /** Changes the tag that is used to identify the action easily. 
      *
      * @param tag Used to identify the action easily.
      */
-    inline void setTag(int tag) { _tag = tag; }
+    void setTag(int tag) { _tag = tag; }
     /** Returns a flag field that is used to group the actions easily.
      *
      * @return A tag.
      */
-    inline unsigned int getFlags() const { return _flags; }
+    unsigned int getFlags() const { return _flags; }
     /** Changes the flag field that is used to group the actions easily.
      *
      * @param flags Used to group the actions easily.
      */
-    inline void setFlags(unsigned int flags) { _flags = flags; }
+    void setFlags(unsigned int flags) { _flags = flags; }
 
 CC_CONSTRUCTOR_ACCESS:
     Action();
@@ -200,12 +200,12 @@ public:
      *
      * @return The duration in seconds of the action.
      */
-    inline float getDuration() const { return _duration; }
+    float getDuration() const { return _duration; }
     /** Set duration in seconds of the action. 
      *
      * @param duration In seconds of the action.
      */
-    inline void setDuration(float duration) { _duration = duration; }
+    void setDuration(float duration) { _duration = duration; }
 
     //
     // Overrides
@@ -256,12 +256,12 @@ public:
      *
      * @return The action speed.
      */
-    inline float getSpeed(void) const { return _speed; }
+    float getSpeed() const { return _speed; }
     /** Alter the speed of the inner function in runtime. 
      *
      * @param speed Alter the speed of the inner function in runtime.
      */
-    inline void setSpeed(float speed) { _speed = speed; }
+    void setSpeed(float speed) { _speed = speed; }
 
     /** Replace the interior action.
      *
@@ -272,7 +272,7 @@ public:
      *
      * @return The interior action.
      */
-    inline ActionInterval* getInnerAction() const { return _innerAction; }
+    ActionInterval* getInnerAction() const { return _innerAction; }
 
     //
     // Override
@@ -348,18 +348,18 @@ public:
      *
      * @return Return boundarySet.
      */
-    inline bool isBoundarySet() const { return _boundarySet; }
+    bool isBoundarySet() const { return _boundarySet; }
     /** Alter behavior - turn on/off boundary. 
      *
      * @param value Turn on/off boundary.
      */
-    inline void setBoundarySet(bool value) { _boundarySet = value; }
+    void setBoundarySet(bool value) { _boundarySet = value; }
     
     /** @deprecated Alter behavior - turn on/off boundary. 
      *
      * @param value Turn on/off boundary.
      */
-    CC_DEPRECATED_ATTRIBUTE inline void setBoudarySet(bool value) { setBoundarySet(value); }
+    CC_DEPRECATED_ATTRIBUTE void setBoudarySet(bool value) { setBoundarySet(value); }
 
     //
     // Override
