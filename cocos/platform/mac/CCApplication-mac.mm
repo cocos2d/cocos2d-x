@@ -36,13 +36,13 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-static long getCurrentMillSecond()
+static long getCurrentMicroSeconds()
 {
     long lLastTime = 0;
     struct timeval stCurrentTime;
     
-    gettimeofday(&stCurrentTime,NULL);
-    lLastTime = stCurrentTime.tv_sec*1000+stCurrentTime.tv_usec*0.001; //millseconds
+    gettimeofday(&stCurrentTime, NULL);
+    lLastTime = stCurrentTime.tv_sec * 1000000L + stCurrentTime.tv_usec; //microseconds
     return lLastTime;
 }
 
@@ -80,15 +80,15 @@ int Application::run()
     
     while (!glview->windowShouldClose())
     {
-        lastTime = getCurrentMillSecond();
+        lastTime = getCurrentMicroSeconds();
         
         director->mainLoop();
         glview->pollEvents();
 
-        curTime = getCurrentMillSecond();
+        curTime = getCurrentMicroSeconds();
         if (curTime - lastTime < _animationInterval)
         {
-            usleep(static_cast<useconds_t>((_animationInterval - curTime + lastTime)*1000));
+            usleep(static_cast<useconds_t>(_animationInterval - curTime + lastTime));
         }
     }
 
@@ -110,7 +110,7 @@ int Application::run()
 
 void Application::setAnimationInterval(float interval)
 {
-    _animationInterval = interval*1000.0f;
+    _animationInterval = static_cast<long>(interval) * 1000000L;
 }
 
 Application::Platform Application::getTargetPlatform()
