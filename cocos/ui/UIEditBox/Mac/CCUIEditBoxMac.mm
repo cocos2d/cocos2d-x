@@ -292,7 +292,7 @@
     self.textInput.ccui_text = text;
 }
 
-- (BOOL)textShouldBeginEditing:(NSText *)textObject;        // YES means do it
+- (BOOL)textShouldBeginEditing:(NSText *)textObject        // YES means do it
 {
     _editState = YES;
     

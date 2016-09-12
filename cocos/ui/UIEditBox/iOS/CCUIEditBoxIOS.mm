@@ -336,7 +336,7 @@
     return YES;
 }
 
-- (BOOL)textViewShouldEndEditing:(UITextView *)textView;
+- (BOOL)textViewShouldEndEditing:(UITextView *)textView
 {
     CCLOG("textFieldShouldEndEditing...");
     _editState = NO;
