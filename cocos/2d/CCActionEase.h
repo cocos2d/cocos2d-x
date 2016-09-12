@@ -138,14 +138,6 @@ private: \
 };
 
 /**
- @class EaseBounce
- @brief EaseBounce type alias.
- @since v0.8.2
- @ingroup Actions
- */
-typedef ActionEase EaseBounce;
-
-/**
  @class EaseExponentialIn
  @brief Ease Exponential In action.
  @details The timeline of inner action will be changed by:
@@ -200,6 +192,14 @@ EASE_TEMPLATE_DECL_CLASS(EaseSineOut);
  @ingroup Actions
  */
 EASE_TEMPLATE_DECL_CLASS(EaseSineInOut);
+
+/**
+ @class EaseBounce
+ @brief EaseBounce abstract class.
+ @since v0.8.2
+ @ingroup Actions
+ */
+class CC_DLL EaseBounce : public ActionEase {};
 
 /**
  @class EaseBounceIn
