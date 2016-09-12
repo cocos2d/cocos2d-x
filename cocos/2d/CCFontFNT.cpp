@@ -143,8 +143,8 @@ public:
     /** initializes a BitmapFontConfiguration with a FNT file */
     bool initWithFNTfile(const std::string& FNTfile);
     
-    inline const std::string& getAtlasName(){ return _atlasName; }
-    inline void setAtlasName(const std::string& atlasName) { _atlasName = atlasName; }
+    const std::string& getAtlasName() { return _atlasName; }
+    void setAtlasName(const std::string& atlasName) { _atlasName = atlasName; }
     
     std::set<unsigned int>* getCharacterSet() const;
 private:

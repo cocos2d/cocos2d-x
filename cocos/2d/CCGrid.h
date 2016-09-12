@@ -74,27 +74,27 @@ public:
     /** @{
     Getter and setter of the active state of the grid.
     */
-    inline bool isActive(void) const { return _active; }
+    bool isActive() const { return _active; }
     void setActive(bool active);
     /**@}*/
 
     /** Get number of times that the grid will be reused. */
-    inline int getReuseGrid(void) const { return _reuseGrid; }
+    int getReuseGrid() const { return _reuseGrid; }
     /** Set number of times that the grid will be reused. */
-    inline void setReuseGrid(int reuseGrid) { _reuseGrid = reuseGrid; }
+    void setReuseGrid(int reuseGrid) { _reuseGrid = reuseGrid; }
 
     /** Size of the grid. */
-    inline const Size& getGridSize(void) const { return _gridSize; }
+    const Size& getGridSize() const { return _gridSize; }
     /**Set the size of the grid.*/
-    inline void setGridSize(const Size& gridSize) { _gridSize = gridSize; }
+    void setGridSize(const Size& gridSize) { _gridSize = gridSize; }
 
     /** Pixels between the grids. */
-    inline const Vec2& getStep(void) const { return _step; }
+    const Vec2& getStep() const { return _step; }
     /**Get the pixels between the grids.*/
-    inline void setStep(const Vec2& step) { _step = step; }
+    void setStep(const Vec2& step) { _step = step; }
 
     /** is texture flipped. */
-    inline bool isTextureFlipped(void) const { return _isTextureFlipped; }
+    bool isTextureFlipped() const { return _isTextureFlipped; }
     /**Set the texture flipped or not.*/
     void setTextureFlipped(bool flipped);
     
@@ -132,7 +132,7 @@ public:
      * @brief Get the effect grid rect.
      * @return Return the effect grid rect.
      */
-    inline const Rect& getGridRect() const {return _gridRect;}
+    const Rect& getGridRect() const { return _gridRect; }
 
 protected:
     bool _active;

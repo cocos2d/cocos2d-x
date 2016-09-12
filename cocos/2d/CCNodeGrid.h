@@ -79,12 +79,12 @@ public:
      * @brief Set the effect grid rect.
      * @param gridRect The effect grid rect.
      */
-    inline void setGridRect(const Rect& gridRect){_gridRect = gridRect;}
+    void setGridRect(const Rect& gridRect) { _gridRect = gridRect; }
     /**
      * @brief Get the effect grid rect.
      * @return Return the effect grid rect.
      */
-    inline const Rect& getGridRect() const { return _gridRect;}
+    const Rect& getGridRect() const { return _gridRect; }
 
     // overrides
     virtual void visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;

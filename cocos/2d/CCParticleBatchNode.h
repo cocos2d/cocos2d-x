@@ -112,13 +112,13 @@ public:
      *
      * @return The texture atlas used for drawing the quads.
      */
-    inline TextureAtlas* getTextureAtlas() const { return _textureAtlas; };
+    TextureAtlas* getTextureAtlas() const { return _textureAtlas; }
     
     /** Sets the texture atlas used for drawing the quads.
      *
      * @param atlas The texture atlas used for drawing the quads.
      */
-    inline void setTextureAtlas(TextureAtlas* atlas) { _textureAtlas = atlas; };
+    void setTextureAtlas(TextureAtlas* atlas) { _textureAtlas = atlas; }
     
     // Overrides
     virtual void visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;

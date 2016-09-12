@@ -75,28 +75,28 @@ public:
     void init(float globalZOrder, const Mat4& modelViewTransform, uint32_t flags);
     
     /** Get global Z order. */
-    inline float getGlobalOrder() const { return _globalOrder; }
+    float getGlobalOrder() const { return _globalOrder; }
 
     /** Returns the Command type. */
-    inline Type getType() const { return _type; }
+    Type getType() const { return _type; }
     
     /** Returns whether is transparent. */
-    inline bool isTransparent() const { return _isTransparent; }
+    bool isTransparent() const { return _isTransparent; }
     
     /** Set transparent flag. */
-    inline void setTransparent(bool isTransparent) { _isTransparent = isTransparent; }
+    void setTransparent(bool isTransparent) { _isTransparent = isTransparent; }
     /**
      Get skip batching status, if a rendering is skip batching, it will be forced to be rendering separately.
      */
-    inline bool isSkipBatching() const { return _skipBatching; }
+    bool isSkipBatching() const { return _skipBatching; }
     /**Set skip batching.*/
-    inline void setSkipBatching(bool value) { _skipBatching = value; }
+    void setSkipBatching(bool value) { _skipBatching = value; }
     /**Whether the command should be rendered at 3D mode.*/
-    inline bool is3D() const { return _is3D; }
+    bool is3D() const { return _is3D; }
     /**Set the command rendered in 3D mode or not.*/
-    inline void set3D(bool value) { _is3D = value; }
+    void set3D(bool value) { _is3D = value; }
     /**Get the depth by current model view matrix.*/
-    inline float getDepth() const { return _depth; }
+    float getDepth() const { return _depth; }
     
 protected:
     /**Constructor.*/

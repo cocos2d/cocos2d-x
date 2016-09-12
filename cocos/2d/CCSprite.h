@@ -306,44 +306,44 @@ public:
      * @js  NA
      * @lua NA
      */
-    inline V3F_C4B_T2F_Quad getQuad() const { return _quad; }
+    V3F_C4B_T2F_Quad getQuad() const { return _quad; }
 
     /**
      * Returns whether or not the texture rectangle is rotated.
      */
-    inline bool isTextureRectRotated() const { return _rectRotated; }
+    bool isTextureRectRotated() const { return _rectRotated; }
 
     /**
      * Returns the index used on the TextureAtlas.
      */
-    inline ssize_t getAtlasIndex() const { return _atlasIndex; }
+    ssize_t getAtlasIndex() const { return _atlasIndex; }
 
     /**
      * Sets the index used on the TextureAtlas.
      *
      * @warning Don't modify this value unless you know what you are doing.
      */
-    inline void setAtlasIndex(ssize_t atlasIndex) { _atlasIndex = atlasIndex; }
+    void setAtlasIndex(ssize_t atlasIndex) { _atlasIndex = atlasIndex; }
 
     /**
      * Returns the rect of the Sprite in points.
      */
-    inline const Rect& getTextureRect() const { return _rect; }
+    const Rect& getTextureRect() const { return _rect; }
 
     /**
      * Gets the weak reference of the TextureAtlas when the sprite is rendered using via SpriteBatchNode.
      */
-    inline TextureAtlas* getTextureAtlas() const { return _textureAtlas; }
+    TextureAtlas* getTextureAtlas() const { return _textureAtlas; }
 
     /**
      * Sets the weak reference of the TextureAtlas when the sprite is rendered using via SpriteBatchNode.
      */
-    inline void setTextureAtlas(TextureAtlas *textureAtlas) { _textureAtlas = textureAtlas; }
+    void setTextureAtlas(TextureAtlas *textureAtlas) { _textureAtlas = textureAtlas; }
 
     /**
      * Gets the offset position of the sprite. Calculated automatically by editors like Zwoptex.
      */
-    inline const Vec2& getOffsetPosition() const { return _offsetPosition; }
+    const Vec2& getOffsetPosition() const { return _offsetPosition; }
 
 
     /**
@@ -428,12 +428,12 @@ public:
     *In lua: local setBlendFunc(local src, local dst).
     *@endcode
     */
-    inline void setBlendFunc(const BlendFunc &blendFunc) override { _blendFunc = blendFunc; }
+    void setBlendFunc(const BlendFunc &blendFunc) override { _blendFunc = blendFunc; }
     /**
     * @js  NA
     * @lua NA
     */
-    inline const BlendFunc& getBlendFunc() const override { return _blendFunc; }
+    const BlendFunc& getBlendFunc() const override { return _blendFunc; }
     /// @}
 
     /**
