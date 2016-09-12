@@ -38272,6 +38272,25 @@ int lua_register_cocos2dx_EaseSineInOut(lua_State* tolua_S)
     return 1;
 }
 
+static int lua_cocos2dx_EaseBounce_finalize(lua_State* tolua_S)
+{
+    printf("luabindings: finalizing LUA object (EaseBounce)");
+    return 0;
+}
+
+int lua_register_cocos2dx_EaseBounce(lua_State* tolua_S)
+{
+    tolua_usertype(tolua_S,"cc.EaseBounce");
+    tolua_cclass(tolua_S,"EaseBounce","cc.EaseBounce","cc.ActionEase",nullptr);
+
+    tolua_beginmodule(tolua_S,"EaseBounce");
+    tolua_endmodule(tolua_S);
+    std::string typeName = typeid(cocos2d::EaseBounce).name();
+    g_luaType[typeName] = "cc.EaseBounce";
+    g_typeCast["EaseBounce"] = "cc.EaseBounce";
+    return 1;
+}
+
 int lua_cocos2dx_EaseBounceIn_create(lua_State* tolua_S)
 {
     int argc = 0;
@@ -100225,6 +100244,7 @@ TOLUA_API int register_all_cocos2dx(lua_State* tolua_S)
 	lua_register_cocos2dx_EaseSineInOut(tolua_S);
 	lua_register_cocos2dx_TransitionFlipAngular(tolua_S);
 	lua_register_cocos2dx_EaseElasticInOut(tolua_S);
+	lua_register_cocos2dx_EaseBounce(tolua_S);
 	lua_register_cocos2dx_Show(tolua_S);
 	lua_register_cocos2dx_FadeOut(tolua_S);
 	lua_register_cocos2dx_CallFunc(tolua_S);

@@ -22820,6 +22820,54 @@ void js_register_cocos2dx_EaseSineInOut(JSContext *cx, JS::HandleObject global) 
     anonEvaluate(cx, global, "(function () { cc.EaseSineInOut.extend = cc.Class.extend; })()");
 }
 
+JSClass  *jsb_cocos2d_EaseBounce_class;
+JSObject *jsb_cocos2d_EaseBounce_prototype;
+
+
+extern JSObject *jsb_cocos2d_ActionEase_prototype;
+
+void js_register_cocos2dx_EaseBounce(JSContext *cx, JS::HandleObject global) {
+    jsb_cocos2d_EaseBounce_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_cocos2d_EaseBounce_class->name = "EaseBounce";
+    jsb_cocos2d_EaseBounce_class->addProperty = JS_PropertyStub;
+    jsb_cocos2d_EaseBounce_class->delProperty = JS_DeletePropertyStub;
+    jsb_cocos2d_EaseBounce_class->getProperty = JS_PropertyStub;
+    jsb_cocos2d_EaseBounce_class->setProperty = JS_StrictPropertyStub;
+    jsb_cocos2d_EaseBounce_class->enumerate = JS_EnumerateStub;
+    jsb_cocos2d_EaseBounce_class->resolve = JS_ResolveStub;
+    jsb_cocos2d_EaseBounce_class->convert = JS_ConvertStub;
+    jsb_cocos2d_EaseBounce_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FS_END
+    };
+
+    JSFunctionSpec *st_funcs = NULL;
+
+    JS::RootedObject parent_proto(cx, jsb_cocos2d_ActionEase_prototype);
+    jsb_cocos2d_EaseBounce_prototype = JS_InitClass(
+        cx, global,
+        parent_proto,
+        jsb_cocos2d_EaseBounce_class,
+        empty_constructor, 0,
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+
+    JS::RootedObject proto(cx, jsb_cocos2d_EaseBounce_prototype);
+    JS::RootedValue className(cx, std_string_to_jsval(cx, "EaseBounce"));
+    JS_SetProperty(cx, proto, "_className", className);
+    JS_SetProperty(cx, proto, "__nativeObj", JS::TrueHandleValue);
+    JS_SetProperty(cx, proto, "__is_ref", JS::TrueHandleValue);
+    // add the proto and JSClass to the type->js info hash table
+    jsb_register_class<cocos2d::EaseBounce>(cx, jsb_cocos2d_EaseBounce_class, proto, parent_proto);
+}
+
 JSClass  *jsb_cocos2d_EaseBounceIn_class;
 JSObject *jsb_cocos2d_EaseBounceIn_prototype;
 
@@ -65069,6 +65117,7 @@ void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj) {
     js_register_cocos2dx_TransitionFlipAngular(cx, ns);
     js_register_cocos2dx_SimpleAudioEngine(cx, ns);
     js_register_cocos2dx_EaseElasticInOut(cx, ns);
+    js_register_cocos2dx_EaseBounce(cx, ns);
     js_register_cocos2dx_Show(cx, ns);
     js_register_cocos2dx_FadeOut(cx, ns);
     js_register_cocos2dx_CallFunc(cx, ns);
