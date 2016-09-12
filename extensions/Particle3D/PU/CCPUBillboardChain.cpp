@@ -579,7 +579,7 @@ void PUBillboardChain::updateVertexBuffer(const Mat4 &camMat)
     } // each segment
 
 
-    _vertexBuffer->updateVertices(&_vertices[0], (int)_vertices.size(), 0);;
+    _vertexBuffer->updateVertices(&_vertices[0], (int)_vertices.size(), 0);
     //pBuffer->unlock();
     //_vertexCameraUsed = cam;
     _vertexContentDirty = false;

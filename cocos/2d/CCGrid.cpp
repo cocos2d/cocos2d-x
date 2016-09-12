@@ -419,7 +419,7 @@ void Grid3D::blit(void)
 
     GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_TEX_COORD );
     _shaderProgram->use();
-    _shaderProgram->setUniformsForBuiltins();;
+    _shaderProgram->setUniformsForBuiltins();
 
     //
     // Attributes

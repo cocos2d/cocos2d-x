@@ -412,8 +412,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
     int i = 0;
     for (UITouch *touch in touches) {
         ids[i] = touch;
-        xs[i] = [touch locationInView: [touch view]].x * self.contentScaleFactor;;
-        ys[i] = [touch locationInView: [touch view]].y * self.contentScaleFactor;;
+        xs[i] = [touch locationInView: [touch view]].x * self.contentScaleFactor;
+        ys[i] = [touch locationInView: [touch view]].y * self.contentScaleFactor;
         ++i;
     }
 
@@ -432,8 +432,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
     int i = 0;
     for (UITouch *touch in touches) {
         ids[i] = touch;
-        xs[i] = [touch locationInView: [touch view]].x * self.contentScaleFactor;;
-        ys[i] = [touch locationInView: [touch view]].y * self.contentScaleFactor;;
+        xs[i] = [touch locationInView: [touch view]].x * self.contentScaleFactor;
+        ys[i] = [touch locationInView: [touch view]].y * self.contentScaleFactor;
 #if defined(__IPHONE_9_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_9_0)
         // running on iOS 9.0 or higher version
         if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 9.0f) {
@@ -457,8 +457,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
     int i = 0;
     for (UITouch *touch in touches) {
         ids[i] = touch;
-        xs[i] = [touch locationInView: [touch view]].x * self.contentScaleFactor;;
-        ys[i] = [touch locationInView: [touch view]].y * self.contentScaleFactor;;
+        xs[i] = [touch locationInView: [touch view]].x * self.contentScaleFactor;
+        ys[i] = [touch locationInView: [touch view]].y * self.contentScaleFactor;
         ++i;
     }
 
@@ -475,8 +475,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
     int i = 0;
     for (UITouch *touch in touches) {
         ids[i] = touch;
-        xs[i] = [touch locationInView: [touch view]].x * self.contentScaleFactor;;
-        ys[i] = [touch locationInView: [touch view]].y * self.contentScaleFactor;;
+        xs[i] = [touch locationInView: [touch view]].x * self.contentScaleFactor;
+        ys[i] = [touch locationInView: [touch view]].y * self.contentScaleFactor;
         ++i;
     }
 
