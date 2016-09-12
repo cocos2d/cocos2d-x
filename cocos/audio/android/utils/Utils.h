@@ -25,5 +25,5 @@ THE SOFTWARE.
 #include <string>
 
 namespace cocos2d { namespace experimental {
-	extern int getSystemProperty(const std::string& property);
+	extern int getSDKVersion();
 }}
