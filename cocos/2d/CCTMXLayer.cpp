@@ -145,7 +145,7 @@ TMXLayer::~TMXLayer()
         _atlasIndexArray = nullptr;
     }
 
-    CC_SAFE_DELETE_ARRAY(_tiles);
+    CC_SAFE_FREE(_tiles);
 }
 
 void TMXLayer::releaseMap()
