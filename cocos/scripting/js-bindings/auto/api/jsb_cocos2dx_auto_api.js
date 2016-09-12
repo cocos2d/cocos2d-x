@@ -8463,6 +8463,13 @@ EaseSineInOut : function (
 };
 
 /**
+ * @class EaseBounce
+ */
+cc.EaseBounce = {
+
+};
+
+/**
  * @class EaseBounceIn
  */
 cc.EaseBounceIn = {

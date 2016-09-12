@@ -417,6 +417,11 @@
 
 
 --------------------------------------------------------
+-- the cc EaseBounce
+-- @field [parent=#cc] EaseBounce#EaseBounce EaseBounce preloaded module
+
+
+--------------------------------------------------------
 -- the cc EaseBounceIn
 -- @field [parent=#cc] EaseBounceIn#EaseBounceIn EaseBounceIn preloaded module
 

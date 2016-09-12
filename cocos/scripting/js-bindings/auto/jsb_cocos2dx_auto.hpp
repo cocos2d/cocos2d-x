@@ -1369,6 +1369,14 @@ void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
 bool js_cocos2dx_EaseSineInOut_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_EaseSineInOut_EaseSineInOut(JSContext *cx, uint32_t argc, jsval *vp);
 
+extern JSClass  *jsb_cocos2d_EaseBounce_class;
+extern JSObject *jsb_cocos2d_EaseBounce_prototype;
+
+bool js_cocos2dx_EaseBounce_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_EaseBounce_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_EaseBounce(JSContext *cx, JS::HandleObject global);
+void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
+
 extern JSClass  *jsb_cocos2d_EaseBounceIn_class;
 extern JSObject *jsb_cocos2d_EaseBounceIn_prototype;
 
