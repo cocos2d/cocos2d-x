@@ -492,8 +492,8 @@ function cc.mat4.getInversed(self)
     return mat4_getInversed(self)
 end
 
-function cc.mat4.transformVector(self, vector, dst)
-    return mat4_transformVector(self, vector, dst)
+function cc.mat4.transformVector(...)
+    return mat4_transformVector(...)
 end
 
 function cc.mat4.multiply(self, mat)
