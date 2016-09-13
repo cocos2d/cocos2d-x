@@ -303,8 +303,8 @@ void Sprite1ETC1AlphaChangeTest::changeSpriteTexture()
         _sprite1->setTexture("Images/etc1-alpha.pkm");
         _sprite1->setTag(11);
     } else {
+        _sprite1->setTexture("Images/r1.png");
         _sprite1->setTag(1);
-        _sprite1->setTexture("grossini_dance_01.png");
     }
 }
 
