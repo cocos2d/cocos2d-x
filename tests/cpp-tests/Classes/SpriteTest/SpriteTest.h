@@ -75,7 +75,7 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 
-    void changeSpriteWithCoords(cocos2d::Vec2 p);
+    void changeSpriteTexture();
     void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
 
     cocos2d::Sprite* _background;

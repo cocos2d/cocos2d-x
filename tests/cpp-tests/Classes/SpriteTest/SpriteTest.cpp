@@ -284,35 +284,33 @@ bool Sprite1ETC1AlphaChangeTest::init()
     if (!SpriteTestDemo::init())
         return false;
 
-    _background = Sprite::create("Images/background2.png");
     auto s = Director::getInstance()->getWinSize();
+
+    _background = Sprite::create("Images/background2.png");
     _background->setPosition(Vec2(s.width / 2, s.height / 2));
     this->addChild(_background);
 
-    auto _sprite1 = Sprite::create("Images/etc1-alpha.pkm");
+    _sprite1 = Sprite::create("Images/etc1-alpha.pkm");
     _sprite1->setPosition(Vec2(s.width / 2, s.height / 2));
     _background->addChild(_sprite1);
 
     return true;
 }
 
-void Sprite1ETC1AlphaChangeTest::changeSpriteWithCoords(Vec2 p)
+void Sprite1ETC1AlphaChangeTest::changeSpriteTexture()
 {
-    if (_sprite1->getTag() == 0) {
-        _sprite1->setTexture("grossini_dance_01.png");
-    } else {
+    if (_sprite1->getTag() == 1) {
         _sprite1->setTexture("Images/etc1-alpha.pkm");
+        _sprite1->setTag(11);
+    } else {
+        _sprite1->setTag(1);
+        _sprite1->setTexture("grossini_dance_01.png");
     }
 }
 
 void Sprite1ETC1AlphaChangeTest::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
 {
-    for (auto touch : touches)
-    {
-        auto location = touch->getLocation();
-
-        changeSpriteWithCoords(location);
-    }
+    changeSpriteTexture();
 }
 
 std::string Sprite1ETC1AlphaChangeTest::title() const

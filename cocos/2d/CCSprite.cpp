@@ -370,9 +370,9 @@ void Sprite::setTexture(Texture2D *texture)
     // accept texture==nil as argument
     CCASSERT( !texture || dynamic_cast<Texture2D*>(texture), "setTexture expects a Texture2D. Invalid argument");
     // ETC1Alpha -> other not supported
-    CCASSERT(_texture->getAlphaTextureName() == 0 && texture->getAlphaTextureName() != 0
+    CCASSERT( ! (texture && texture->getAlphaTextureName() == 0 && _texture && _texture->getAlphaTextureName() != 0)
              , "Setting a non-ETC1Alpha texture on a Sprite that has an ETC1Alpha texture is not currently supported!");
-    if (texture->getAlphaTextureName() != 0)
+    if ( texture && texture->getAlphaTextureName() != 0 )
     {
         setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP, texture));
     }
