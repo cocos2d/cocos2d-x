@@ -2035,21 +2035,32 @@ int lua_cocos2dx_3d_Ray_intersects(lua_State* L)
     argc = lua_gettop(L)-1;
     if(1 == argc)
     {
-        cocos2d::OBB* arg0 = nullptr;
-        ok &= luaval_to_object<cocos2d::OBB>(L, 2, "cc.OBB",&arg0, "cc.Ray:intersects");
+        cocos2d::AABB* aabb = nullptr;
+        cocos2d::OBB* obb = nullptr;
 
-        if (!ok)
-            return 0;
+        ok = luaval_to_object<cocos2d::AABB>(L, 2, "cc.AABB",&aabb, "cc.Ray:intersects");
+        if (ok)
+        {
+            bool ret = self->intersects(*aabb);
+            tolua_pushboolean(L, ret);
+            return 1;
+        }
 
-        bool ret = self->intersects(*arg0);
-        tolua_pushboolean(L, ret);
-        return 1;
+        ok = luaval_to_object<cocos2d::OBB>(L, 2, "cc.OBB",&obb, "cc.Ray:intersects");
+        if (ok)
+        {
+            bool ret = self->intersects(*obb);
+            tolua_pushboolean(L, ret);
+            return 1;
+        }
+
+        return 0;
     }
     luaL_error(L, "%s has wrong number of arguments: %d, was expecting %d \n",  "cc.Ray:intersects",argc, 1);
     return 0;
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
-    tolua_error(L,"#ferror in function 'lua_cocos2dx_3d_get_OBB_center'.",&tolua_err);
+    tolua_error(L,"#ferror in function 'lua_cocos2dx_3d_Ray_intersect'.",&tolua_err);
     return 0;
 #endif
 }
