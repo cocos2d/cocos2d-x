@@ -66,6 +66,22 @@ public:
     cocos2d::Sprite* _background;
 };
 
+class Sprite1ETC1AlphaChangeTest : public SpriteTestDemo
+{
+public:
+    CREATE_FUNC(Sprite1ETC1AlphaChangeTest);
+    Sprite1ETC1AlphaChangeTest();
+    bool init() override;
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+
+    void changeSpriteWithCoords(cocos2d::Vec2 p);
+    void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
+
+    cocos2d::Sprite* _background;
+    cocos2d::Sprite* _sprite1;
+};
+
 class SpriteBatchNode1: public SpriteTestDemo
 {
 public:
