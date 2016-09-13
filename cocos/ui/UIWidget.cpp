@@ -922,6 +922,14 @@ void Widget::onTouchEnded(Touch *touch, Event *unusedEvent)
 
 void Widget::onTouchCancelled(Touch *touch, Event *unusedEvent)
 {
+    /*
+     * Propagate touch events to its parents
+     */
+    if (_propagateTouchEvents)
+    {
+        this->propagateTouchEvent(TouchEventType::CANCELED, this, touch);
+    }
+    
     setMouseOver(false);
     setHighlighted(false);
     cancelUpEvent();
