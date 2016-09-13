@@ -245,8 +245,7 @@ function Physics3DConstraintDemo:extend()
             ret, hitResult = physicsWorld:rayCast(nearP, farP, hitResult)
             if true == ret and nil ~= hitResult.hitObj and hitResult.hitObj:getObjType() == cc.Physics3DObject.PhysicsObjType.RIGID_BODY then
                 local mat = cc.mat4.getInversed(hitResult.hitObj:getWorldTransform())
-                local position = {x = 0, y = 0, z = 0}
-                position = cc.mat4.transformVector(mat, cc.vec4(hitResult.hitPosition.x, hitResult.hitPosition.y, hitResult.hitPosition.z, 1.0),position)
+                local position = cc.mat4.transformVector(mat, cc.vec4(hitResult.hitPosition.x, hitResult.hitPosition.y, hitResult.hitPosition.z, 1.0))
 
                 self._constraint = cc.Physics3DPointToPointConstraint:create(hitResult.hitObj, position)
                 physicsWorld:addPhysics3DConstraint(self._constraint, true)

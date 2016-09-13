@@ -876,11 +876,11 @@ end
 function CameraArcBallDemo:calculateArcBall(axis, angle, p1x, p1y, p2x, p2y)
     local rotation_matrix = cc.mat4.createRotation(self._rotationQuat, cc.mat4.createIdentity())
     --rotation y
-    local uv = mat4_transformVector(rotation_matrix , 0.0, 1.0, 0.0, 0.0, cc.vec3(0.0, 0.0, 0.0))
+    local uv = mat4_transformVector(rotation_matrix , 0.0, 1.0, 0.0, 0.0)
     --rotation x
-    local sv = mat4_transformVector(rotation_matrix, 1.0, 0.0, 0.0, 0.0, cc.vec3(0.0, 0.0, 0.0))
+    local sv = mat4_transformVector(rotation_matrix, 1.0, 0.0, 0.0, 0.0)
     --rotation z 
-    local lv = mat4_transformVector(rotation_matrix, 0.0, 0.0, -1.0, 0.0, cc.vec3(0.0, 0.0, 0.0))
+    local lv = mat4_transformVector(rotation_matrix, 0.0, 0.0, -1.0, 0.0)
     --start point screen transform to 3d
     local projectZ1 = self:projectToSphere(self._radius, p1x, p1y)
     local p1 = cc.vec3(sv.x * p1x + uv.x * p1y - lv.x * projectZ1, sv.y * p1x + uv.y * p1y - lv.y * projectZ1 , sv.z * p1x + uv.z * p1y - lv.z * projectZ1)
