@@ -874,7 +874,7 @@ function CameraArcBallDemo:projectToSphere(r, x, y)
 end
 
 function CameraArcBallDemo:calculateArcBall(axis, angle, p1x, p1y, p2x, p2y)
-    local rotation_matrix = cc.mat4.createRotation(self._rotationQuat, cc.mat4.createIdentity())
+    local rotation_matrix = cc.mat4.createRotation(self._rotationQuat)
     --rotation y
     local uv = mat4_transformVector(rotation_matrix , 0.0, 1.0, 0.0, 0.0)
     --rotation x
@@ -1034,9 +1034,9 @@ end
 
 function CameraArcBallDemo:updateCameraTransform()
     -- body
-    local trans = cc.mat4.createTranslation(cc.vec3(0.0, 10.0, self._distanceZ), cc.mat4.createIdentity())
-    local rot = cc.mat4.new(cc.mat4.createRotation(self._rotationQuat, cc.mat4.createIdentity()))
-    local center = cc.mat4.new(cc.mat4.createTranslation(self._center, cc.mat4.createIdentity()))
+    local trans = cc.mat4.createTranslation(cc.vec3(0.0, 10.0, self._distanceZ))
+    local rot = cc.mat4.new(cc.mat4.createRotation(self._rotationQuat))
+    local center = cc.mat4.new(cc.mat4.createTranslation(self._center))
     local result = cc.mat4.new(center:multiply(rot)):multiply(trans)
 
     self._camera:setNodeToParentTransform(result)
