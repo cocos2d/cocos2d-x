@@ -421,6 +421,18 @@ function cc.vec4(_x, _y, _z, _w)
     return { x = _x, y = _y, z = _z, w = _w }
 end
 
+function cc.vec3add(vec3a, vec3b)
+    return {x = vec3a.x + vec3b.x, y = vec3a.y + vec3b.y, z = vec3a.z + vec3b.z}
+end
+
+function cc.vec3sub(vec3a, vec3b)
+    return {x = vec3a.x - vec3b.x, y = vec3a.y - vec3b.y, z = vec3a.z - vec3b.z}
+end
+
+function cc.vec3mul(vec3, factor)
+    return {x = vec3.x * factor, y = vec3.y * factor, z = vec3.z * factor}
+end
+
 function cc.vec3normalize(vec3)
     local n = vec3.x * vec3.x + vec3.y * vec3.y + vec3.z * vec3.z
     if n == 1.0 then
