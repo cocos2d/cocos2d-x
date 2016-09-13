@@ -8610,23 +8610,18 @@ int tolua_cocos2d_Mat4_createTranslation(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
 #endif
-    if (argc == 4)
+    if (argc == 3 || argc == 4)
     {
 #if COCOS2D_DEBUG >= 1
 
         if ( !tolua_isnumber(tolua_S, 1, 0, &tolua_err) ||
              !tolua_isnumber(tolua_S, 2, 0, &tolua_err)  ||
-             !tolua_isnumber(tolua_S, 3, 0, &tolua_err)  ||
-             !tolua_istable(tolua_S, 4, 0, &tolua_err))
+             !tolua_isnumber(tolua_S, 3, 0, &tolua_err))
             goto tolua_lerror;
         else
 #endif
         {
             cocos2d::Mat4 dst;
-            ok &= luaval_to_mat4(tolua_S, 4, &dst, "cc.Mat4.createTranslation");
-            if (!ok)
-                return 0;
-
             float xTranslation = (float)lua_tonumber(tolua_S, 1);
             float yTranslation = (float)lua_tonumber(tolua_S, 2);
             float zTranslation = (float)lua_tonumber(tolua_S, 3);
@@ -8636,12 +8631,10 @@ int tolua_cocos2d_Mat4_createTranslation(lua_State* tolua_S)
             return 1;
         }
     }
-    else if (argc == 2)
+    else if (argc == 1 || argc == 2)
     {
 #if COCOS2D_DEBUG >= 1
-
-        if ( !tolua_istable(tolua_S, 1, 0, &tolua_err) ||
-             !tolua_istable(tolua_S, 2, 0, &tolua_err))
+        if ( !tolua_istable(tolua_S, 1, 0, &tolua_err))
             goto tolua_lerror;
         else
 #endif
@@ -8650,7 +8643,6 @@ int tolua_cocos2d_Mat4_createTranslation(lua_State* tolua_S)
             cocos2d::Mat4 dst;
 
             ok &= luaval_to_vec3(tolua_S, 1, &translation, "cc.Mat4.createTranslation");
-            ok &= luaval_to_mat4(tolua_S, 2, &dst, "cc.Mat4.createTranslation");
             if (!ok)
                 return 0;
 
