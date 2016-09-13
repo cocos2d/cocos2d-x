@@ -889,17 +889,14 @@ int lua_cocos2dx_3d_AABB_updateMinMax(lua_State* L)
 #endif
 
     argc = lua_gettop(L)-1;
-    if (argc == 2)
+    if (argc == 1)
     {
-        const cocos2d::Vec3* arg0;
-        ssize_t arg1;
+        std::vector<cocos2d::Vec3> vec3vector;
 
-        ok &= luaval_to_object<const cocos2d::Vec3>(L, 2, "cc.Vec3",&arg0, "cc.AABB:updateMinMax");
-
-        ok &= luaval_to_ssize(L, 3, &arg1, "cc.AABB:updateMinMax");
+        ok &= luaval_to_std_vector_vec3(L, 2, &vec3vector, "cc.AABB:updateMinMax");
         if(!ok)
             return 0;
-        cobj->updateMinMax(arg0, arg1);
+        cobj->updateMinMax(&vec3vector[0], vec3vector.size());
         return 0;
     }
     luaL_error(L, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.AABB:updateMinMax",argc, 2);
