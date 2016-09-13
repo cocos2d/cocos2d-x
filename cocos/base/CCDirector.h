@@ -212,9 +212,6 @@ public:
     
     /** Sets the glViewport.*/
     void setViewport();
-
-    /** How many frames were called since the director started */
-    
     
     /** Whether or not the replaced scene will receive the cleanup message.
      * If the new scene is pushed, then the old scene won't receive the "cleanup" message.
