@@ -3201,9 +3201,8 @@ int tolua_cocos2dx_DrawNode_drawCardinalSpline(lua_State* tolua_S)
     cocos2d::DrawNode* self = nullptr;
     bool ok  = true;
 
-    tolua_Error tolua_err;
-
 #if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
     if (!tolua_isusertype(tolua_S,1,"cc.DrawNode",0,&tolua_err)) goto tolua_lerror;
 #endif
 
@@ -3267,9 +3266,8 @@ int tolua_cocos2dx_DrawNode_drawCatmullRom(lua_State* tolua_S)
     cocos2d::DrawNode* self = nullptr;
     bool ok  = true;
 
-    tolua_Error tolua_err;
-
 #if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
     if (!tolua_isusertype(tolua_S,1,"cc.DrawNode",0,&tolua_err)) goto tolua_lerror;
 #endif
 
