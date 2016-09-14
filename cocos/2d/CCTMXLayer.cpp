@@ -497,7 +497,7 @@ Sprite * TMXLayer::appendTileForGID(uint32_t gid, const Vec2& pos)
         Rect rect = _tileSet->getRectForGID(gid);
         rect = CC_RECT_PIXELS_TO_POINTS(rect);
 
-        // Z could be just an integer that gets incremted each time it is called.
+        // Z could be just an integer that gets incremented each time it is called.
         // but that wouldn't work on layers with empty tiles.
         // and it is IMPORTANT that Z returns an unique and bigger number than the previous one.
         // since _atlasIndexArray must be ordered because `bsearch` is used to find the GID for
@@ -519,7 +519,9 @@ Sprite * TMXLayer::appendTileForGID(uint32_t gid, const Vec2& pos)
         // append should be after addQuadFromSprite since it modifies the quantity values
         ccCArrayInsertValueAtIndex(_atlasIndexArray, (void*)z, indexForZ);
 
-//        CCLOG("pos x=%f, y=%f -> z[%zd]=%ld", pos.x, pos.y, indexForZ, z);
+        // Validation for issue #16512
+        CCASSERT(_atlasIndexArray->num == 1 ||
+                 _atlasIndexArray->arr[_atlasIndexArray->num-1] > _atlasIndexArray->arr[_atlasIndexArray->num-2], "Invalid z for _atlasIndexArray");
 
         return tile;
     }
