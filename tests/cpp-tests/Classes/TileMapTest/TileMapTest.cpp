@@ -55,6 +55,7 @@ TileMapTests::TileMapTests()
     ADD_TEST_CASE(TMXHexEvenYTest);
     ADD_TEST_CASE(TMXHexAxisXTest);
     ADD_TEST_CASE(Issue16105Test);
+    ADD_TEST_CASE(Issue16512Test);
 }
 
 TileDemo::TileDemo()
@@ -1513,6 +1514,15 @@ TMXHexOddXTest::TMXHexOddXTest()
 
     Size CC_UNUSED s = map->getContentSize();
     CCLOG("ContentSize: %f, %f", s.width,s.height);
+
+    // Testing issue 16512 as well. Should not crash
+    auto floor = map->getLayer("Ground");
+    for (auto x = 0; x < map->getMapSize().width; x++) {
+        for (auto y = 0; y < map->getMapSize().height; y++) {
+            Vec2 p(x, y);
+            floor->getTileAt(p);
+        }
+    }
 }
 
 std::string TMXHexOddXTest::title() const
@@ -1535,6 +1545,15 @@ TMXHexOddYTest::TMXHexOddYTest()
 
     Size CC_UNUSED s = map->getContentSize();
     CCLOG("ContentSize: %f, %f", s.width,s.height);
+
+    // Testing issue 16512 as well. Should not crash
+    auto floor = map->getLayer("Ground");
+    for (auto x = 0; x < map->getMapSize().width; x++) {
+        for (auto y = 0; y < map->getMapSize().height; y++) {
+            Vec2 p(x, y);
+            floor->getTileAt(p);
+        }
+    }
 }
 
 std::string TMXHexOddYTest::title() const
@@ -1557,6 +1576,15 @@ TMXHexEvenXTest::TMXHexEvenXTest()
 
     Size CC_UNUSED s = map->getContentSize();
     CCLOG("ContentSize: %f, %f", s.width,s.height);
+
+    // Testing issue 16512 as well. Should not crash
+    auto floor = map->getLayer("Ground");
+    for (auto x = 0; x < map->getMapSize().width; x++) {
+        for (auto y = 0; y < map->getMapSize().height; y++) {
+            Vec2 p(x, y);
+            floor->getTileAt(p);
+        }
+    }
 }
 
 std::string TMXHexEvenXTest::title() const
@@ -1579,6 +1607,15 @@ TMXHexEvenYTest::TMXHexEvenYTest()
 
     Size CC_UNUSED s = map->getContentSize();
     CCLOG("ContentSize: %f, %f", s.width,s.height);
+
+    // Testing issue 16512 as well. Should not crash
+    auto floor = map->getLayer("Ground");
+    for (auto x = 0; x < map->getMapSize().width; x++) {
+        for (auto y = 0; y < map->getMapSize().height; y++) {
+            Vec2 p(x, y);
+            floor->getTileAt(p);
+        }
+    }
 }
 
 std::string TMXHexEvenYTest::title() const
@@ -1628,4 +1665,34 @@ Issue16105Test::Issue16105Test()
 std::string Issue16105Test::title() const
 {
     return "Github Issue #16105";
+}
+
+//------------------------------------------------------------------
+//
+// Issue16512Test
+//
+//------------------------------------------------------------------
+Issue16512Test::Issue16512Test()
+{
+    auto color = LayerColor::create( Color4B(64,64,64,255) );
+    addChild(color, -1);
+
+    auto map = TMXTiledMap::create("TileMaps/issue_16512.tmx");
+    addChild(map, 0, kTagTileMap);
+
+    Size CC_UNUSED s = map->getContentSize();
+    CCLOG("ContentSize: %f, %f", s.width,s.height);
+
+    auto floor = map->getLayer("Floor");
+    for (auto x = 0; x < map->getMapSize().width; x++) {
+        for (auto y = 0; y < map->getMapSize().height; y++) {
+            Vec2 p(x, y);
+            floor->getTileAt(p);
+        }
+    }
+}
+
+std::string Issue16512Test::title() const
+{
+    return "Github Issue #16512. Should not crash";
 }
