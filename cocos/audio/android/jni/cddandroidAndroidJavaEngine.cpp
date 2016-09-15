@@ -48,7 +48,7 @@ AndroidJavaEngine::AndroidJavaEngine()
     : _implementBaseOnAudioEngine(false)
     , _effectVolume(1.f)
 {
-    int sdkVer = getSystemProperty("ro.build.version.sdk");
+    int sdkVer = getSDKVersion();
     if (sdkVer > 0)
     {
         __android_log_print(ANDROID_LOG_DEBUG, "cocos2d", "android SDK version:%d", sdkVer);
