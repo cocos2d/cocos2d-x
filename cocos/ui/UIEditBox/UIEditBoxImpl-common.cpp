@@ -122,7 +122,7 @@ void EditBoxImplCommon::setInactiveText(const char* pText)
     float fMaxWidth = _editBox->getContentSize().width;
     float fMaxHeight = _editBox->getContentSize().height;
     Size labelSize = _label->getContentSize();
-    if(labelSize.width > fMaxWidth || labelSize.height > fMaxHeight)
+//    if(labelSize.width > fMaxWidth || labelSize.height > fMaxHeight)
     {
         _label->setDimensions(fMaxWidth, fMaxHeight);
     }
