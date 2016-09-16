@@ -2041,17 +2041,21 @@ int lua_cocos2dx_3d_Ray_intersects(lua_State* L)
         ok = luaval_to_object<cocos2d::AABB>(L, 2, "cc.AABB",&aabb, "cc.Ray:intersects");
         if (ok)
         {
-            bool ret = self->intersects(*aabb);
+            float distance;
+            bool ret = self->intersects(*aabb, &distance);
             tolua_pushboolean(L, ret);
-            return 1;
+            tolua_pushnumber(L, (lua_Number)distance);
+            return 2;
         }
 
         ok = luaval_to_object<cocos2d::OBB>(L, 2, "cc.OBB",&obb, "cc.Ray:intersects");
         if (ok)
         {
-            bool ret = self->intersects(*obb);
+            float distance;
+            bool ret = self->intersects(*obb, &distance);
             tolua_pushboolean(L, ret);
-            return 1;
+            tolua_pushnumber(L, (lua_Number)distance);
+            return 2;
         }
 
         return 0;
