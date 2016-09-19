@@ -64,7 +64,7 @@ CC_CONSTRUCTOR_ACCESS:
     PUOnClearObserver(void) : PUObserver(),
         _continue(false)
     {
-    };
+    }
     virtual ~PUOnClearObserver(void) {};
 
 protected:

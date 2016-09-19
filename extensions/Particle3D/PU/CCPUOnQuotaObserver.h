@@ -52,7 +52,7 @@ CC_CONSTRUCTOR_ACCESS:
     PUOnQuotaObserver(void) : PUObserver(),
         _result(false)
     {
-    };
+    }
     virtual ~PUOnQuotaObserver(void) {};
 
 protected:

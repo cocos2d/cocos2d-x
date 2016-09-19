@@ -210,7 +210,7 @@ public:
         CC_SAFE_RETAIN(info);
         CC_SAFE_RELEASE(_tileSet);
         _tileSet = info;
-    };
+    }
     
     /** Layer orientation, which is the same as the map orientation.
      *
@@ -243,7 +243,7 @@ public:
     void setProperties(const ValueMap& properties)
     {
         _properties = properties;
-    };
+    }
 
     /** Returns the tile (Sprite) at a given a tile coordinate.
      * The returned Sprite will be already added to the TMXLayer. Don't add it again.
