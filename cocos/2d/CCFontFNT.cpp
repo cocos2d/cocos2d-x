@@ -275,8 +275,8 @@ void BMFontConfiguration::purgeFontDefDictionary()
 
 std::set<unsigned int>* BMFontConfiguration::parseConfigFile(const std::string& controlFile)
 {
-    std::string data;
-    if (FileUtils::getInstance()->getContents(controlFile, &data) != FileUtils::Status::OK || data.empty())
+    std::string data = FileUtils::getInstance()->getStringFromFile(controlFile);
+    if (data.empty())
     {
         return nullptr;
     }
