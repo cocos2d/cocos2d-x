@@ -43,6 +43,12 @@
 -- @return Sprite#Sprite self (return value: cc.Sprite)
         
 --------------------------------
+-- / @}
+-- @function [parent=#Sprite] getResourceType 
+-- @param self
+-- @return int#int ret (return value: int)
+        
+--------------------------------
 -- @overload self, cc.Texture2D, rect_table         
 -- @overload self, cc.Texture2D         
 -- @overload self, cc.Texture2D, rect_table, bool         
@@ -88,7 +94,7 @@
 -- Initializes a sprite with an sprite frame name.<br>
 -- A SpriteFrame will be fetched from the SpriteFrameCache by name.<br>
 -- If the SpriteFrame doesn't exist it will raise an exception.<br>
--- param   spriteFrameName  A key string that can fected a volid SpriteFrame from SpriteFrameCache.<br>
+-- param   spriteFrameName  A key string that can fetched a valid SpriteFrame from SpriteFrameCache.<br>
 -- return  True if the sprite is initialized properly, false otherwise.
 -- @function [parent=#Sprite] initWithSpriteFrameName 
 -- @param self
@@ -106,7 +112,7 @@
 -- Returns the index used on the TextureAtlas.
 -- @function [parent=#Sprite] getAtlasIndex 
 -- @param self
--- @return long#long ret (return value: long)
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- Sets the batch node to sprite.<br>
@@ -136,7 +142,7 @@
 -- @function [parent=#Sprite] setDisplayFrameWithAnimationName 
 -- @param self
 -- @param #string animationName
--- @param #long frameIndex
+-- @param #int frameIndex
 -- @return Sprite#Sprite self (return value: cc.Sprite)
         
 --------------------------------
@@ -153,6 +159,12 @@
 -- @return SpriteFrame#SpriteFrame ret (return value: cc.SpriteFrame)
         
 --------------------------------
+-- 
+-- @function [parent=#Sprite] getResourceName 
+-- @param self
+-- @return string#string ret (return value: string)
+        
+--------------------------------
 -- Whether or not the Sprite needs to be updated in the Atlas.<br>
 -- return True if the sprite needs to be updated in the Atlas, false otherwise.
 -- @function [parent=#Sprite] isDirty 
@@ -164,7 +176,7 @@
 -- warning Don't modify this value unless you know what you are doing.
 -- @function [parent=#Sprite] setAtlasIndex 
 -- @param self
--- @param #long atlasIndex
+-- @param #int atlasIndex
 -- @return Sprite#Sprite self (return value: cc.Sprite)
         
 --------------------------------
@@ -254,16 +266,6 @@
 -- @param #rect_table rect
 -- @return Sprite#Sprite self (return value: cc.Sprite)
         
---------------------------------
--- @overload self, string         
--- @overload self         
--- @overload self, string, rect_table         
--- @function [parent=#Sprite] create
--- @param self
--- @param #string filename
--- @param #rect_table rect
--- @return Sprite#Sprite ret (return value: cc.Sprite)
-
 --------------------------------
 -- @overload self, cc.Texture2D, rect_table, bool         
 -- @overload self, cc.Texture2D         
@@ -362,6 +364,13 @@
         
 --------------------------------
 -- 
+-- @function [parent=#Sprite] setIgnoreAnchorPointForPosition 
+-- @param self
+-- @param #bool value
+-- @return Sprite#Sprite self (return value: cc.Sprite)
+        
+--------------------------------
+-- 
 -- @function [parent=#Sprite] draw 
 -- @param self
 -- @param #cc.Renderer renderer
@@ -401,13 +410,6 @@
 -- @param self
 -- @param #cc.Node child
 -- @param #int zOrder
--- @return Sprite#Sprite self (return value: cc.Sprite)
-        
---------------------------------
--- 
--- @function [parent=#Sprite] ignoreAnchorPointForPosition 
--- @param self
--- @param #bool value
 -- @return Sprite#Sprite self (return value: cc.Sprite)
         
 --------------------------------

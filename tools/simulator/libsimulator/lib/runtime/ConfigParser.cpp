@@ -43,7 +43,7 @@ void ConfigParser::readConfig(const string &filepath)
   
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     // revert search path
-    searchPathArray.erase(searchPathArray.end() - 1);
+    searchPathArray.erase(searchPathArray.begin());
     FileUtils::getInstance()->setSearchPaths(searchPathArray);
 #endif
 
@@ -51,7 +51,7 @@ void ConfigParser::readConfig(const string &filepath)
         return;
     
     if (_docRootjson.Parse<0>(fileContent.c_str()).HasParseError()) {
-        cocos2d::log("read json file %s failed because of %s", fullPathFile.c_str(), _docRootjson.GetParseError());
+        cocos2d::log("read json file %s failed because of %d", fullPathFile.c_str(), _docRootjson.GetParseError());
         return;
     }
     

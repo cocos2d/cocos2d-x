@@ -302,8 +302,8 @@ void PUScriptCompiler::visit(PUConcreteNode *node)
             temp2 = *iter;
         
         
-        //brance inner//
-        if(temp1->type == CNT_RBRACE && temp2->type == CNT_LBRACE)
+        //brance inner
+        if(temp1 && temp1->type == CNT_RBRACE && temp2 && temp2->type == CNT_LBRACE)
         {
            
             if(node->children.size() < 2)
@@ -317,7 +317,6 @@ void PUScriptCompiler::visit(PUConcreteNode *node)
             impl->abstract = false;
 
             list<PUConcreteNode*> temp;
-//          printf("token:%s\n",node->token.c_str());
             temp.push_back(node);
             for(PUConcreteNodeList::const_iterator i = node->children.begin(); i != node->children.end(); i++)
             {
@@ -385,8 +384,6 @@ void PUScriptCompiler::visit(PUConcreteNode *node)
         impl->file = node->file;
         impl->value = node->token;
         asn = impl;
-       //  printf("PropertyAbstractNode:%s\n", impl->value.c_str());
-
     }
     
     if(asn)
@@ -410,7 +407,6 @@ void PUScriptCompiler::visit(PUConcreteNode *node)
         else
         {
             _nodes->push_back(asn);
-     //        printf("mNodes:%s\n", atom->value.c_str());
         }
     }
 }

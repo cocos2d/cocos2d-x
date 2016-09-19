@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  Copyright (c) 2014 cocos2d-x.org
  
  http://www.cocos2d-x.org
@@ -25,10 +25,10 @@
 #ifndef __cocos2d_libs__UserCameraReader__
 #define __cocos2d_libs__UserCameraReader__
 
-#include "cocos2d.h"
-#include "cocostudio/CocosStudioExport.h"
-#include "cocostudio/WidgetReader/NodeReaderProtocol.h"
-#include "cocostudio/WidgetReader/NodeReaderDefine.h"
+#include "math/Vec2.h"
+#include "editor-support/cocostudio/CocosStudioExport.h"
+#include "editor-support/cocostudio/WidgetReader/NodeReaderProtocol.h"
+#include "editor-support/cocostudio/WidgetReader/NodeReaderDefine.h"
 
 namespace tinyxml2
 {
@@ -56,7 +56,7 @@ namespace cocostudio
         cocos2d::Node* createNodeWithFlatBuffers(const flatbuffers::Table* userCameraOptions);
         
     protected:
-        
+        int getResourceType(std::string key);
         cocos2d::Vec2 getVec2Attribute(const tinyxml2::XMLAttribute* attribute) const;
     };
 }

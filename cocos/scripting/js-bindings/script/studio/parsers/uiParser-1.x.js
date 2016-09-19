@@ -39,7 +39,9 @@
 
         deferred: function(json, resourcePath, node, file){
             if(node){
-                ccs.actionManager.initWithDictionary(file, json["animation"], node);
+                var version = json["Version"] || json["version"];
+                var versionNum = ccs.uiReader.getVersionInteger(version);
+                ccs.actionManager.initWithDictionary(file, json["animation"], node, versionNum);
                 node.setContentSize(cc.size(json["designWidth"], json["designHeight"]));
             }
         }
@@ -186,7 +188,7 @@
                         widget.pushBackCustomItem(child);
                     } else {
                         if(!(widget instanceof ccui.Layout)) {
-                            if(child.getPositionType() == ccui.Widget.POSITION_PERCENT) {
+                            if(child.getPositionType() === ccui.Widget.POSITION_PERCENT) {
                                 var position = child.getPositionPercent();
                                 var anchor = widget.getAnchorPoint();
                                 child.setPositionPercent(cc.p(position.x + anchor.x, position.y + anchor.y));
@@ -203,7 +205,7 @@
 
     var getPath = function(res, type, path, cb){
         if(path){
-            if(type == 0)
+            if(type === 0)
                 cb(res + path, type);
             else
                 cb(path, type);
@@ -662,6 +664,13 @@
         var va = options["vAlignment"];
         if(va)
             widget.setTextVerticalAlignment(va);
+
+        var r = options["colorR"];
+        var g = options["colorG"];
+        var b = options["colorB"];
+        if (r !== undefined && g !== undefined && b !== undefined) {
+            widget.setTextColor(cc.color(r, g, b));
+        }
     };
 
     var register = [

@@ -24,17 +24,18 @@ THE SOFTWARE.
 Based upon code from the DirectX Tool Kit by Microsoft Corporation,
 obtained from https://directxtk.codeplex.com
 ****************************************************************************/
-#include "WICImageLoader-winrt.h"
+#include "platform/winrt/WICImageLoader-winrt.h"
+#include "platform/winrt/CCWinRTUtils.h"
 
 NS_CC_BEGIN
 
-#if defined(CC_USE_WIC)
+#if CC_USE_WIC
 
 	IWICImagingFactory* WICImageLoader::_wicFactory = NULL;
 
 static WICConvert g_WICConvert[] = 
 {
-	// Note target GUID in this conversion table must be one of those directly supported formats (above).
+	// Note target GUID in this conversion table must be one of those directly supported by cocos2d-x
 
 	{ GUID_WICPixelFormatBlackWhite,            GUID_WICPixelFormat8bppGray }, // DXGI_FORMAT_R8_UNORM
 
@@ -58,30 +59,11 @@ static WICConvert g_WICConvert[] =
 	{ GUID_WICPixelFormat32bppPBGRA,            GUID_WICPixelFormat32bppRGBA }, // DXGI_FORMAT_R8G8B8A8_UNORM 
 	{ GUID_WICPixelFormat32bppPRGBA,            GUID_WICPixelFormat32bppRGBA }, // DXGI_FORMAT_R8G8B8A8_UNORM 
 
-	{ GUID_WICPixelFormat48bppRGB,              GUID_WICPixelFormat64bppRGBA }, // DXGI_FORMAT_R16G16B16A16_UNORM
-	{ GUID_WICPixelFormat48bppBGR,              GUID_WICPixelFormat64bppRGBA }, // DXGI_FORMAT_R16G16B16A16_UNORM
-	{ GUID_WICPixelFormat64bppBGRA,             GUID_WICPixelFormat64bppRGBA }, // DXGI_FORMAT_R16G16B16A16_UNORM
-	{ GUID_WICPixelFormat64bppPRGBA,            GUID_WICPixelFormat64bppRGBA }, // DXGI_FORMAT_R16G16B16A16_UNORM
-	{ GUID_WICPixelFormat64bppPBGRA,            GUID_WICPixelFormat64bppRGBA }, // DXGI_FORMAT_R16G16B16A16_UNORM
+    { GUID_WICPixelFormat48bppRGB,              GUID_WICPixelFormat24bppRGB }, // DXGI_FORMAT_R16G16B16A16_UNORM
+    { GUID_WICPixelFormat48bppBGR,              GUID_WICPixelFormat24bppRGB }, // DXGI_FORMAT_R16G16B16A16_UNORM
 
-	{ GUID_WICPixelFormat48bppRGBFixedPoint,    GUID_WICPixelFormat64bppRGBAHalf }, // DXGI_FORMAT_R16G16B16A16_FLOAT 
-	{ GUID_WICPixelFormat48bppBGRFixedPoint,    GUID_WICPixelFormat64bppRGBAHalf }, // DXGI_FORMAT_R16G16B16A16_FLOAT 
-	{ GUID_WICPixelFormat64bppRGBAFixedPoint,   GUID_WICPixelFormat64bppRGBAHalf }, // DXGI_FORMAT_R16G16B16A16_FLOAT 
-	{ GUID_WICPixelFormat64bppBGRAFixedPoint,   GUID_WICPixelFormat64bppRGBAHalf }, // DXGI_FORMAT_R16G16B16A16_FLOAT 
-	{ GUID_WICPixelFormat64bppRGBFixedPoint,    GUID_WICPixelFormat64bppRGBAHalf }, // DXGI_FORMAT_R16G16B16A16_FLOAT 
-	{ GUID_WICPixelFormat64bppRGBHalf,          GUID_WICPixelFormat64bppRGBAHalf }, // DXGI_FORMAT_R16G16B16A16_FLOAT 
-	{ GUID_WICPixelFormat48bppRGBHalf,          GUID_WICPixelFormat64bppRGBAHalf }, // DXGI_FORMAT_R16G16B16A16_FLOAT 
-
-	{ GUID_WICPixelFormat128bppPRGBAFloat,      GUID_WICPixelFormat128bppRGBAFloat }, // DXGI_FORMAT_R32G32B32A32_FLOAT 
-	{ GUID_WICPixelFormat128bppRGBFloat,        GUID_WICPixelFormat128bppRGBAFloat }, // DXGI_FORMAT_R32G32B32A32_FLOAT 
-	{ GUID_WICPixelFormat128bppRGBAFixedPoint,  GUID_WICPixelFormat128bppRGBAFloat }, // DXGI_FORMAT_R32G32B32A32_FLOAT 
-	{ GUID_WICPixelFormat128bppRGBFixedPoint,   GUID_WICPixelFormat128bppRGBAFloat }, // DXGI_FORMAT_R32G32B32A32_FLOAT 
-	{ GUID_WICPixelFormat32bppRGBE,             GUID_WICPixelFormat128bppRGBAFloat }, // DXGI_FORMAT_R32G32B32A32_FLOAT 
-
-	{ GUID_WICPixelFormat32bppCMYK,             GUID_WICPixelFormat32bppRGBA }, // DXGI_FORMAT_R8G8B8A8_UNORM 
-	{ GUID_WICPixelFormat64bppCMYK,             GUID_WICPixelFormat64bppRGBA }, // DXGI_FORMAT_R16G16B16A16_UNORM
-	{ GUID_WICPixelFormat40bppCMYKAlpha,        GUID_WICPixelFormat64bppRGBA }, // DXGI_FORMAT_R16G16B16A16_UNORM
-	{ GUID_WICPixelFormat80bppCMYKAlpha,        GUID_WICPixelFormat64bppRGBA }, // DXGI_FORMAT_R16G16B16A16_UNORM
+    { GUID_WICPixelFormat48bppRGBFixedPoint,    GUID_WICPixelFormat24bppRGB }, // DXGI_FORMAT_R16G16B16A16_FLOAT 
+    { GUID_WICPixelFormat48bppBGRFixedPoint,    GUID_WICPixelFormat24bppRGB }, // DXGI_FORMAT_R16G16B16A16_FLOAT 
 
 	//#if (_WIN32_WINNT >= _WIN32_WINNT_WIN8) || defined(_WIN7_PLATFORM_UPDATE)
 	//    { GUID_WICPixelFormat32bppRGB,              GUID_WICPixelFormat32bppRGBA }, // DXGI_FORMAT_R8G8B8A8_UNORM
@@ -112,8 +94,8 @@ WICImageLoader::~WICImageLoader()
 
 bool WICImageLoader::decodeImageData(ImageBlob blob, size_t size)
 {
-	bool bRet = false;
-	HRESULT hr = S_FALSE;
+    bool bRet = false;
+    HRESULT hr = E_FAIL;
 
 	IWICStream* pWicStream = NULL;
 	IWICImagingFactory* pWicFactory = getWICFactory();
@@ -125,7 +107,7 @@ bool WICImageLoader::decodeImageData(ImageBlob blob, size_t size)
 
 	if(SUCCEEDED(hr))
 	{
-		hr = pWicStream->InitializeFromMemory((BYTE*)blob, size);
+		hr = pWicStream->InitializeFromMemory((BYTE*)blob, static_cast<DWORD>(size));
 	}
 
 	IWICBitmapDecoder* pDecoder = NULL;
@@ -145,7 +127,7 @@ bool WICImageLoader::decodeImageData(ImageBlob blob, size_t size)
 
 bool WICImageLoader::processImage(IWICBitmapDecoder* pDecoder)
 {
-	HRESULT hr = S_FALSE;
+    HRESULT hr = E_FAIL;
 	IWICBitmapFrameDecode* pFrame = NULL;
 
 	if(NULL != pDecoder)
@@ -190,11 +172,11 @@ bool WICImageLoader::processImage(IWICBitmapDecoder* pDecoder)
 
 		if(NULL != pConv)
 		{
-			hr = pConv->CopyPixels(NULL, rowPitch, _dataLen, _data);
+			hr = pConv->CopyPixels(NULL, static_cast<UINT>(rowPitch), static_cast<UINT>(_dataLen), _data);
 		}
 		else
 		{
-			hr = pFrame->CopyPixels(NULL, rowPitch, _dataLen, _data);
+			hr = pFrame->CopyPixels(NULL, static_cast<UINT>(rowPitch), static_cast<UINT>(_dataLen), _data);
 		}
 	}
 
@@ -258,7 +240,7 @@ HRESULT WICImageLoader::convertFormatIfRequired(IWICBitmapFrameDecode* pFrame, I
 
 size_t WICImageLoader::getBitsPerPixel(WICPixelFormatGUID format)
 {
-	HRESULT hr = S_FALSE;
+    HRESULT hr = E_FAIL;
 
 	IWICImagingFactory* pfactory = getWICFactory();
 
@@ -305,7 +287,7 @@ int WICImageLoader::getWidth()
 	return _width;
 }
 
-int WICImageLoader::getImageData(ImageBlob rawData, size_t dataLen)
+size_t WICImageLoader::getImageData(ImageBlob rawData, size_t dataLen)
 {
 	if(dataLen < _dataLen)
 		return 0;
@@ -315,7 +297,7 @@ int WICImageLoader::getImageData(ImageBlob rawData, size_t dataLen)
 	return _dataLen;
 }
 
-int WICImageLoader::getImageDataSize()
+size_t WICImageLoader::getImageDataSize()
 {
 	return _dataLen;
 }
@@ -340,9 +322,7 @@ bool WICImageLoader::encodeImageData(std::string path, const unsigned char* data
 	}
 
 	if (SUCCEEDED(hr)) {
-		std::wstring wpath;
-		wpath.assign(path.begin(), path.end());
-		hr = pStream->InitializeFromFilename(wpath.c_str(), GENERIC_WRITE);
+		hr = pStream->InitializeFromFilename(StringUtf8ToWideChar(path).c_str(), GENERIC_WRITE);
 	}
 
 	IWICBitmapEncoder* pEnc = NULL;
@@ -383,7 +363,7 @@ bool WICImageLoader::encodeImageData(std::string path, const unsigned char* data
 		size_t bpp = getBitsPerPixel(pixelFormat);
 		size_t stride = (width * bpp + 7) / 8;
 
-		hr = pFrame->WritePixels(height, stride, dataLen, (BYTE*)data);
+		hr = pFrame->WritePixels(height, static_cast<UINT>(stride), static_cast<UINT>(dataLen), (BYTE*)data);
 	}
 
 	if (SUCCEEDED(hr)) {

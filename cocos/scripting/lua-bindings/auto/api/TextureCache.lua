@@ -86,6 +86,27 @@
 -- @return Texture2D#Texture2D ret (return value: cc.Texture2D)
         
 --------------------------------
+-- Get the file path of the texture<br>
+-- param texture A Texture2D object pointer.<br>
+-- return The full path of the file.
+-- @function [parent=#TextureCache] getTextureFilePath 
+-- @param self
+-- @param #cc.Texture2D texture
+-- @return string#string ret (return value: string)
+        
+--------------------------------
+--  Reload texture from a new file.<br>
+-- This function is mainly for editor, won't suggest use it in game for performance reason.<br>
+-- param srcName Original texture file name.<br>
+-- param dstName New texture file name.<br>
+-- since v3.10
+-- @function [parent=#TextureCache] renameTextureWithKey 
+-- @param self
+-- @param #string srcName
+-- @param #string dstName
+-- @return TextureCache#TextureCache self (return value: cc.TextureCache)
+        
+--------------------------------
 --  Removes unused textures.<br>
 -- Textures that have a retain count of 1 will be deleted.<br>
 -- It is convenient to call this method after when starting a new Scene.<br>
@@ -105,6 +126,13 @@
 -- Called by director, please do not called outside.
 -- @function [parent=#TextureCache] waitForQuit 
 -- @param self
+-- @return TextureCache#TextureCache self (return value: cc.TextureCache)
+        
+--------------------------------
+-- 
+-- @function [parent=#TextureCache] setETC1AlphaFileSuffix 
+-- @param self
+-- @param #string suffix
 -- @return TextureCache#TextureCache self (return value: cc.TextureCache)
         
 --------------------------------

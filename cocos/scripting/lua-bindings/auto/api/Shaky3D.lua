@@ -10,7 +10,7 @@
 -- param gridSize Specify the size of the grid.<br>
 -- param range Specify the range of the shaky effect.<br>
 -- param shakeZ Specify whether shake on the z axis.<br>
--- return If the Initialization sucess, return true; otherwise, return false.
+-- return If the Initialization success, return true; otherwise, return false.
 -- @function [parent=#Shaky3D] initWithDuration 
 -- @param self
 -- @param #float duration
@@ -25,7 +25,7 @@
 -- param gridSize Specify the size of the grid.<br>
 -- param range Specify the range of the shaky effect.<br>
 -- param shakeZ Specify whether shake on the z axis.<br>
--- return If the creation sucess, return a pointer of Shaky3D action; otherwise, return nil.
+-- return If the creation success, return a pointer of Shaky3D action; otherwise, return nil.
 -- @function [parent=#Shaky3D] create 
 -- @param self
 -- @param #float initWithDuration

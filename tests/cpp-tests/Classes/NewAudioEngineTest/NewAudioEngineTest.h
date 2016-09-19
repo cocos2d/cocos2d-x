@@ -23,7 +23,6 @@
  ****************************************************************************/
 
 #include "platform/CCPlatformConfig.h"
-#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 
 #ifndef __NEWAUDIOENGINE_TEST_H_
 #define __NEWAUDIOENGINE_TEST_H_
@@ -38,9 +37,12 @@ DEFINE_TEST_SUITE(AudioEngineTests);
 class AudioEngineTestDemo : public TestCase
 {
 public:
+    AudioEngineTestDemo();
+    
     virtual std::string title() const override;
     virtual void onExit() override;
-    
+protected:
+    std::shared_ptr<bool> _isDestroyed;
 };
 
 class AudioControlTest : public AudioEngineTestDemo
@@ -66,6 +68,8 @@ private:
     void* _playItem;
     void* _timeSlider;
     bool _updateTimeSlider;
+    bool _isStopped;
+    cocos2d::Label* _playOverLabel;
 };
 
 class PlaySimultaneouslyTest : public AudioEngineTestDemo
@@ -143,5 +147,95 @@ private:
     
 };
 
+class AudioLoadTest : public AudioEngineTestDemo
+{
+public:
+    CREATE_FUNC(AudioLoadTest);
+
+    virtual bool init() override;
+
+    virtual std::string title() const override;
+};
+
+class AudioIssue11143Test : public AudioEngineTestDemo
+{
+public:
+    CREATE_FUNC(AudioIssue11143Test);
+
+    virtual bool init() override;
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
+class AudioPerformanceTest : public AudioEngineTestDemo
+{
+public:
+    CREATE_FUNC(AudioPerformanceTest);
+    
+    virtual bool init() override;
+    
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
+class AudioSwitchStateTest : public AudioEngineTestDemo
+{
+public:
+    CREATE_FUNC(AudioSwitchStateTest);
+    
+    virtual bool init() override;
+    
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
+class AudioSmallFileTest : public AudioEngineTestDemo
+{
+public:
+    CREATE_FUNC(AudioSmallFileTest);
+    
+    virtual bool init() override;
+    
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
+class AudioPauseResumeAfterPlay : public AudioEngineTestDemo
+{
+public:
+    CREATE_FUNC(AudioPauseResumeAfterPlay);
+    
+    virtual void onEnter() override;
+    
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
+class AudioPreloadSameFileMultipleTimes : public AudioEngineTestDemo
+{
+public:
+    CREATE_FUNC(AudioPreloadSameFileMultipleTimes);
+    
+    virtual void onEnter() override;
+    
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
+class AudioPlayFileInWritablePath : public AudioEngineTestDemo
+{
+public:
+    CREATE_FUNC(AudioPlayFileInWritablePath);
+    
+    virtual void onEnter() override;
+    virtual void onExit() override;
+    
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+private:
+    std::vector<std::string> _oldSearchPaths;
+};
+
 #endif /* defined(__NEWAUDIOENGINE_TEST_H_) */
-#endif

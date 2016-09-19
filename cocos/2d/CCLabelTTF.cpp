@@ -1,7 +1,7 @@
 /****************************************************************************
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -25,7 +25,7 @@ THE SOFTWARE.
 ****************************************************************************/
 #include "2d/CCLabelTTF.h"
 #include "2d/CCLabel.h"
-#include "deprecated/CCString.h"
+#include "base/ccUTF8.h"
 
 NS_CC_BEGIN
 
@@ -223,9 +223,11 @@ void LabelTTF::setTextDefinition(const FontDefinition& theDefinition)
     _contentDirty = true;
 }
 
-const FontDefinition& LabelTTF::getTextDefinition() const
+const FontDefinition& LabelTTF::getTextDefinition()
 {
-    return _renderLabel->getFontDefinition();
+    auto fontDef = _renderLabel->getFontDefinition();
+    memcpy(&_fontDef, &fontDef, sizeof(FontDefinition));
+    return _fontDef;
 }
 
 void LabelTTF::setBlendFunc(const BlendFunc &blendFunc)

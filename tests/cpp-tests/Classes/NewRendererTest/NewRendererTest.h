@@ -50,22 +50,6 @@ protected:
     virtual ~GroupCommandTest();
 };
 
-class NewSpriteBatchTest : public MultiSceneTest
-{
-public:
-
-    CREATE_FUNC(NewSpriteBatchTest);
-    virtual std::string title() const override;
-    virtual std::string subtitle() const override;
-
-    void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
-    void addNewSpriteWithCoords(cocos2d::Vec2 p);
-
-protected:
-    NewSpriteBatchTest();
-    virtual ~NewSpriteBatchTest();
-};
-
 class NewClippingNodeTest : public MultiSceneTest
 {
 public:
@@ -143,6 +127,69 @@ protected:
     void afterCaptured(bool succeed, const std::string& outputFile);
 
     std::string _filename;
+};
+
+class CaptureNodeTest : public MultiSceneTest
+{
+    static const int childTag = 120;
+public:
+    CREATE_FUNC(CaptureNodeTest);
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+
+protected:
+    CaptureNodeTest();
+    ~CaptureNodeTest();
+
+    void onCaptured(cocos2d::Ref*);
+
+    std::string _filename;
+};
+
+class BugAutoCulling : public MultiSceneTest
+{
+public:
+    CREATE_FUNC(BugAutoCulling);
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+protected:
+    BugAutoCulling();
+};
+
+class RendererBatchQuadTri : public MultiSceneTest
+{
+public:
+    CREATE_FUNC(RendererBatchQuadTri);
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+protected:
+    RendererBatchQuadTri();
+};
+
+class RendererUniformBatch : public MultiSceneTest
+{
+public:
+    CREATE_FUNC(RendererUniformBatch);
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+protected:
+    RendererUniformBatch();
+
+    cocos2d::GLProgramState* createBlurGLProgramState();
+    cocos2d::GLProgramState* createSepiaGLProgramState();
+};
+
+class RendererUniformBatch2 : public MultiSceneTest
+{
+public:
+    CREATE_FUNC(RendererUniformBatch2);
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+protected:
+    RendererUniformBatch2();
+
+    cocos2d::GLProgramState* createBlurGLProgramState();
+    cocos2d::GLProgramState* createSepiaGLProgramState();
 };
 
 #endif //__NewRendererTest_H_

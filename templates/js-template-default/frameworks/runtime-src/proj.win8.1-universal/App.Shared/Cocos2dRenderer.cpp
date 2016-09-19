@@ -18,9 +18,8 @@
 
 #include "Cocos2dRenderer.h"
 #include "AppDelegate.h"
-#include "CCGLViewImpl-winrt.h"
-#include "CCApplication.h"
-#include "cocos2d.h"
+#include "platform/winrt/CCGLViewImpl-winrt.h"
+#include "platform/CCApplication.h"
 #include "renderer/CCTextureCache.h"
 
 // These are used by the shader compilation methods.
@@ -32,9 +31,7 @@ using namespace Platform;
 using namespace Windows::UI::Core;
 using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::Graphics::Display;
-
-USING_NS_CC;
-
+using namespace cocos2d;
 
 Cocos2dRenderer::Cocos2dRenderer(int width, int height, float dpi, DisplayOrientations orientation, CoreDispatcher^ dispatcher, Panel^ panel)
     : m_app(nullptr)
@@ -58,7 +55,7 @@ void Cocos2dRenderer::Resume()
     auto director = cocos2d::Director::getInstance();
     auto glview = director->getOpenGLView();
 
-    if (!glview) 
+    if (!glview)
     {
         GLViewImpl* glview = GLViewImpl::create("Test Cpp");
         glview->setDispatcher(m_dispatcher.Get());
@@ -70,6 +67,8 @@ void Cocos2dRenderer::Resume()
     else
     {
         Application::getInstance()->applicationWillEnterForeground();
+        cocos2d::EventCustom foregroundEvent(EVENT_COME_TO_FOREGROUND);
+        cocos2d::Director::getInstance()->getEventDispatcher()->dispatchEvent(&foregroundEvent);
     }
 }
 
@@ -77,9 +76,14 @@ void Cocos2dRenderer::Pause()
 {
     if (Director::getInstance()->getOpenGLView()) {
         Application::getInstance()->applicationDidEnterBackground();
-        //cocos2d::EventCustom backgroundEvent(EVENT_COME_TO_BACKGROUND);
-        //cocos2d::Director::getInstance()->getEventDispatcher()->dispatchEvent(&backgroundEvent);
+        cocos2d::EventCustom backgroundEvent(EVENT_COME_TO_BACKGROUND);
+        cocos2d::Director::getInstance()->getEventDispatcher()->dispatchEvent(&backgroundEvent);
     }
+}
+
+bool Cocos2dRenderer::AppShouldExit()
+{
+    return GLViewImpl::sharedOpenGLView()->AppShouldExit();
 }
 
 void Cocos2dRenderer::DeviceLost()
@@ -107,27 +111,29 @@ void Cocos2dRenderer::DeviceLost()
 
 void Cocos2dRenderer::Draw(GLsizei width, GLsizei height, float dpi, DisplayOrientations orientation)
 {
+    auto glView = GLViewImpl::sharedOpenGLView();
+
     if (orientation != m_orientation)
     {
         m_orientation = orientation;
-        GLViewImpl::sharedOpenGLView()->UpdateOrientation(orientation);
+        glView->UpdateOrientation(orientation);
     }
 
     if (width != m_width || height != m_height)
     {
         m_width = width;
         m_height = height;
-        GLViewImpl::sharedOpenGLView()->UpdateForWindowSizeChange(static_cast<float>(width), static_cast<float>(height));
+        glView->UpdateForWindowSizeChange(static_cast<float>(width), static_cast<float>(height));
     }
 
     if (dpi != m_dpi)
     {
         m_dpi = dpi;
-        GLViewImpl::sharedOpenGLView()->SetDPI(m_dpi);
+        glView->SetDPI(m_dpi);
     }
 
-    GLViewImpl::sharedOpenGLView()->ProcessEvents();
-    GLViewImpl::sharedOpenGLView()->Render();
+    glView->ProcessEvents();
+    glView->Render();
 }
 
 void Cocos2dRenderer::QueuePointerEvent(cocos2d::PointerEventType type, Windows::UI::Core::PointerEventArgs^ args)
@@ -135,9 +141,12 @@ void Cocos2dRenderer::QueuePointerEvent(cocos2d::PointerEventType type, Windows:
     GLViewImpl::sharedOpenGLView()->QueuePointerEvent(type, args);
 }
 
-void Cocos2dRenderer::QueueKeyBoardEvent(cocos2d::Cocos2dKeyEvent type, Windows::UI::Core::KeyEventArgs^ e)
+void Cocos2dRenderer::QueueBackButtonEvent()
 {
-    //GLViewImpl::sharedOpenGLView()->QueuePointerEvent(type, e);
+    GLViewImpl::sharedOpenGLView()->QueueBackKeyPress();
 }
 
-
+void Cocos2dRenderer::QueueKeyboardEvent(WinRTKeyboardEventType type, Windows::UI::Core::KeyEventArgs^ args)
+{
+	GLViewImpl::sharedOpenGLView()->QueueWinRTKeyboardEvent(type, args);
+}

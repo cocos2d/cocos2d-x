@@ -357,10 +357,9 @@ PUBeamRender* PUBeamRender::clone()
     return br;
 }
 
-void PUBeamRender::copyAttributesTo( PURender *render )
+void PUBeamRender::copyAttributesTo(PUBeamRender *beamRender)
 {
-    PURender::copyAttributesTo(render);
-    PUBeamRender *beamRender = static_cast<PUBeamRender*>(render);
+    PURender::copyAttributesTo(beamRender);
     beamRender->setUseVertexColours(_useVertexColours);
     beamRender->setMaxChainElements(_maxChainElements);
     beamRender->setUpdateInterval(_updateInterval);

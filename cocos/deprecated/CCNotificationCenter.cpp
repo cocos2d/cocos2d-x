@@ -1,7 +1,7 @@
 /****************************************************************************
 Copyright (c) 2011      Erawppa
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -53,7 +53,7 @@ __NotificationCenter *__NotificationCenter::getInstance()
 {
     if (!s_sharedNotifCenter)
     {
-        s_sharedNotifCenter = new __NotificationCenter;
+        s_sharedNotifCenter = new (std::nothrow) __NotificationCenter;
     }
     return s_sharedNotifCenter;
 }

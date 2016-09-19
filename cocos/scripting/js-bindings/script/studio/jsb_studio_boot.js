@@ -40,8 +40,8 @@ ccs.actionManager = ccs.ActionManager.getInstance();
 ccs.ActionManager.prototype.clear = function() {
     this.releaseActions();
 };
-ccs.ActionManager.prototype.initWithDictionary = function(file, dic, node) {
-    ccs.actionManager.initWithDictionaryEx(file, JSON.stringify(dic), node);
+ccs.ActionManager.prototype.initWithDictionary = function(file, dic, node, version) {
+    ccs.actionManager.initWithDictionaryEx(file, JSON.stringify(dic), node, version);
 }
 
 /**
@@ -67,3 +67,7 @@ ccs.Sprite.extend = ccs.Sprite.extend || cc.Sprite.extend;
  */
 ccs.Component = ccs.Component || cc.Component;
 ccs.Component.extend = ccs.Component.extend || cc.Component.extend;
+
+ccs.SkinNode = cc.Node;
+ccs.BoneNode.extend = cc.Class.extend;
+ccs.SkeletonNode.extend = cc.Class.extend;

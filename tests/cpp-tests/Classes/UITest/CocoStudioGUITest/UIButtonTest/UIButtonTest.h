@@ -40,8 +40,10 @@ public:
     virtual bool init() override;
     void touchEvent(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
 
+    void printWidgetResources(cocos2d::Ref* sender);
 protected:
     cocos2d::ui::Text* _displayValueLabel;
+    cocos2d::ui::Button* _button;
 };
 
 class UIButtonTest_Scale9 : public UIScene
@@ -246,4 +248,18 @@ public:
 protected:
     cocos2d::ui::Text* _displayValueLabel;
 };
+
+class Issue12249 : public UIScene
+{
+public:
+    CREATE_FUNC(Issue12249);
+    
+    Issue12249();
+    
+    virtual bool init() override;
+    
+protected:
+    cocos2d::ui::Text* _displayValueLabel;
+};
+
 #endif /* defined(__TestCpp__UIButtonTest__) */

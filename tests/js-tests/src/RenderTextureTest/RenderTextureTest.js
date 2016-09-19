@@ -154,10 +154,10 @@ var RenderTextureSave = RenderTextureBaseLayer.extend({
         var distance = cc.pDistance(location, this._lastLocation);
 
         if (distance > 1) {
-            var locLastLocation = this._lastLocation;
+            var locLastLocation = this._lastLocation, i;
             this._target.begin();
             this._brushs = [];
-            for(var i = 0; i < distance; ++i) {
+            for(i = 0; i < distance; ++i) {
                 var diffX = locLastLocation.x - location.x;
                 var diffY = locLastLocation.y - location.y;
                 var delta = i / distance;
@@ -170,10 +170,11 @@ var RenderTextureSave = RenderTextureBaseLayer.extend({
                     scale: Math.random() + 0.25,
                     opacity: 20
                 });
+                sprite.parent = this;
                 sprite.retain();
                 this._brushs.push(sprite);
             }
-            for (var i = 0; i < distance; i++) {
+            for (i = 0; i < distance; i++) {
                 this._brushs[i].visit();
             }
             this._target.end();
@@ -422,54 +423,63 @@ var RenderTextureZbuffer = RenderTextureBaseLayer.extend({
 });
 
 var RenderTextureTestDepthStencil = RenderTextureBaseLayer.extend({
-    ctor:function () {
-        //Need to re-write test case for new renderer
-        this._super();
-        var gl = cc._renderContext;
+    _spriteDraw : null,
+    _rend : null,
 
+    ctor:function () {
+        this._super();
         var winSize = cc.director.getWinSize();
 
-        var sprite = new cc.Sprite(s_fire);
-        sprite.x = winSize.width * 0.25;
-        sprite.y = 0;
-        sprite.scale = 10;
-        //TODO GL_DEPTH24_STENCIL8
-        //var rend = new cc.RenderTexture(winSize.width, winSize.height, cc.TEXTURE_2D_PIXEL_FORMAT_RGBA4444);
-        var rend = new cc.RenderTexture(winSize.width, winSize.height);
+        this._spriteDraw = new cc.Sprite(s_fire);
+        this._spriteDraw.x = winSize.width * 0.25;
+        this._spriteDraw.y = 0;
+        this._spriteDraw.scale = 10;
+
+        this._spriteDraw.x = this._spriteDraw.x + this._spriteDraw.getContentSize().width * this._spriteDraw.getScale() * 0.5;
+        this._spriteDraw.y = this._spriteDraw.y + this._spriteDraw.getContentSize().height * this._spriteDraw.getScale() * 0.5;
+
+        this._rend = new cc.RenderTexture(winSize.width, winSize.height, cc.Texture2D.PIXEL_FORMAT_RGBA4444, gl.DEPTH24_STENCIL8_OES);
+        this._rend.x = winSize.width * 0.5;
+        this._rend.y = winSize.height * 0.5;
+        this.addChild(this._rend);
+        var item = new cc.MenuItemFont("Click Me", this.maskTest, this);
+        var menu = new cc.Menu(item);
+        menu.x = winSize.width - 90;
+        menu.y = winSize.height - 100;
+
+        this.addChild(menu);
+        this.addChild(this._spriteDraw);
+    },
+
+    releaseMask: function () {
+        var gl = cc._renderContext;
+        gl.stencilFunc(gl.NOTEQUAL, 1, 0xFF);
+        gl.stencilOp(gl.KEEP, gl.KEEP, gl.KEEP);
+        gl.disable(gl.STENCIL_TEST);
+        this.onRestartCallback();
+    },
+
+    maskTest: function (sender) {
+        var gl = cc._renderContext;
+
+        gl.clear(gl.STENCIL_BUFFER_BIT);
+        this._rend.beginWithClear(0, 0, 0, 0, 0, 0);
 
         gl.stencilMask(0xFF);
-        rend.beginWithClear(0, 0, 0, 0, 0, 0);
-
-        //! mark sprite quad into stencil buffer
+        cc.eventManager.removeListeners(cc.EventListener.TOUCH_ONE_BY_ONE);
+        gl.stencilFunc(gl.NEVER, 1, 0xFF);
+        gl.stencilOp(gl.REPLACE, gl.REPLACE, gl.REPLACE);
         gl.enable(gl.STENCIL_TEST);
-        gl.stencilFunc(gl.ALWAYS, 1, 0xFF);
-        gl.stencilOp(gl.KEEP, gl.KEEP, gl.REPLACE);
-        gl.colorMask(0, 0, 0, 1);
-        sprite.visit();
 
-        //! move sprite half width and height, and draw only where not marked
-        sprite.x += sprite.width * sprite.scale / 2;
-        sprite.y += sprite.height * sprite.scale / 2;
-        gl.stencilFunc(gl.NOTEQUAL, 1, 0xFF);
-        gl.colorMask(1, 1, 1, 1);
-        sprite.visit();
-
-        rend.end();
-
-        gl.disable(gl.STENCIL_TEST);
-
-        rend.x = winSize.width * 0.5;
-        rend.y = winSize.height * 0.5;
-
-        this.addChild(rend);
+        this._rend.end();
+        this.schedule(this.releaseMask, 0.5);
     },
 
     title:function () {
         return "Testing depthStencil attachment";
     },
-
     subtitle:function () {
-        return "Circle should be missing 1/4 of its region";
+        return "Click to be masked and turn black\n Come back after 0.5s";
     }
 });
 
@@ -521,8 +531,6 @@ var RenderTextureTargetNode = RenderTextureBaseLayer.extend({
 
         renderTexture.x = winSize.width / 2;
         renderTexture.y = winSize.height / 2;
-        //      [renderTexture setPosition:cc.p(s.width, s.height)];
-        //      renderTexture.scale = 2;
 
         /* add the sprites to the render texture */
         renderTexture.addChild(this._sprite1);
@@ -664,7 +672,7 @@ var arrayOfRenderTextureTest = [
     Issue1464
 ];
 
-if(('opengl' in cc.sys.capabilities) && (!cc.sys.isNative) ){
+if(('opengl' in cc.sys.capabilities) && cc._renderType === cc.game.RENDER_TYPE_WEBGL && (!cc.sys.isNative) ){
     arrayOfRenderTextureTest.push(RenderTextureIssue937);
     arrayOfRenderTextureTest.push(RenderTextureZbuffer);
     arrayOfRenderTextureTest.push(RenderTextureTestDepthStencil);

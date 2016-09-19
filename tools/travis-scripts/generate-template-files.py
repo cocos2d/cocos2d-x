@@ -45,7 +45,7 @@ class CocosFileList:
         self.fileList_js=[]
 
         self.luaPath = ["cocos/scripting/lua-bindings", "external/lua", "tools/bindings-generator", "tools/tolua"]
-        self.jsPath = ["cocos/scripting/js-bindings", "external/spidermonkey", "tools/bindings-generator", "tools/tojs", "web"]
+        self.jsPath = ["cocos/scripting/js-bindings", "external/spidermonkey", "tools/bindings-generator", "tools/tojs" ]
 
     def readIngoreFile(self, fileName):
         """

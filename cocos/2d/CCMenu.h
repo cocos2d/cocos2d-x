@@ -1,7 +1,7 @@
 /****************************************************************************
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -63,8 +63,8 @@ public:
      */
     static Menu* create();
     
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-    // WP8 in VS2012 does not support nullptr in variable args lists and variadic templates are also not supported.
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    // VS2013 does not support nullptr in variable args lists and variadic templates are also not supported.
     typedef MenuItem* M;
     static Menu* create(M m1, std::nullptr_t listEnd) { return variadicCreate(m1, NULL); }
     static Menu* create(M m1, M m2, std::nullptr_t listEnd) { return variadicCreate(m1, m2, NULL); }
@@ -92,7 +92,7 @@ public:
 
     /**
      * Creates a Menu with it's item, then use addChild() to add 
-     * other items. It is used for script, it can't init with undetermined
+     * other items. It is used for script, it can't be initialized with undetermined
      * number of variables.
      * @js NA
      */
@@ -142,16 +142,17 @@ public:
     void alignItemsInRowsWithArray(const ValueVector& columns);
 
     /**
-     * Determines if the menu is enable.
+     * Determines if the menu is enabled.
      * @see `setEnabled(bool)`.
      * @return whether the menu is enabled or not.
      */
     virtual bool isEnabled() const { return _enabled; }
 
     /**
-     * Set whether the menu is visible.
+     * Set whether the menu is visible. If set false, interacting with the menu
+     * will have no effect.
      * The default value is true, a menu is default to visible.
-     *@param value true if menu is enable, false if menu is disable.
+     *@param value true if menu is to be enabled, false if menu is to be disabled.
      */
     virtual void setEnabled(bool value) { _enabled = value; };
 
@@ -179,7 +180,7 @@ CC_CONSTRUCTOR_ACCESS:
     /**
      * @js ctor
      */
-    Menu() : _selectedItem(nullptr) {}
+    Menu() : _selectedItem(nullptr), _selectedWithCamera(nullptr) {}
     virtual ~Menu();
 
     /** initializes an empty Menu */
@@ -195,10 +196,10 @@ protected:
     /** whether or not the menu will receive events */
     bool _enabled;
 
-    MenuItem* getItemForTouch(Touch * touch);
+    virtual MenuItem* getItemForTouch(Touch * touch, const Camera *camera);
     State _state;
     MenuItem *_selectedItem;
-
+    const Camera *_selectedWithCamera;
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Menu);
 };

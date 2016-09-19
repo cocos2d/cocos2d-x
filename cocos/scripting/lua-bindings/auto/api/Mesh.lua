@@ -5,20 +5,6 @@
 -- @parent_module cc
 
 --------------------------------
--- @overload self, cc.Texture2D         
--- @overload self, string         
--- @function [parent=#Mesh] setTexture
--- @param self
--- @param #string texPath
--- @return Mesh#Mesh self (return value: cc.Mesh)
-
---------------------------------
--- 
--- @function [parent=#Mesh] getTexture 
--- @param self
--- @return Texture2D#Texture2D ret (return value: cc.Texture2D)
-        
---------------------------------
 --  Returns the Material being used by the Mesh 
 -- @function [parent=#Mesh] getMaterial 
 -- @param self
@@ -94,13 +80,20 @@
 -- get mesh vertex attribute count
 -- @function [parent=#Mesh] getMeshVertexAttribCount 
 -- @param self
--- @return long#long ret (return value: long)
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- 
 -- @function [parent=#Mesh] setBlendFunc 
 -- @param self
 -- @param #cc.BlendFunc blendFunc
+-- @return Mesh#Mesh self (return value: cc.Mesh)
+        
+--------------------------------
+-- force set this Sprite3D to 2D render queue
+-- @function [parent=#Mesh] setForce2DQueue 
+-- @param self
+-- @param #bool force2D
 -- @return Mesh#Mesh self (return value: cc.Mesh)
         
 --------------------------------

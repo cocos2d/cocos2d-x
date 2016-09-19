@@ -238,9 +238,6 @@ bool UIFocusTestVertical::init()
             w->setTag(i);
             w->addTouchEventListener(CC_CALLBACK_2(UIFocusTestVertical::onImageViewClicked, this));
             _verticalLayout->addChild(w);
-            if (i == 2) {
-                w->requestFocus();
-            }
         }
 
         _loopText = Text::create("loop enabled", "Arial", 20);

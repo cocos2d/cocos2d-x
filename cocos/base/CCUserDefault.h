@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -202,6 +202,13 @@ public:
      */
     virtual void flush();
 
+    /**
+    * delete any value by key,
+    * @param key The key to delete value.
+    * @js NA
+    */
+    virtual void deleteValueForKey(const char* key);
+    
     /** Returns the singleton.
      * @js NA
      * @lua NA
@@ -220,7 +227,7 @@ public:
     * If you don't want to system default implementation after setting delegate, you can just pass nullptr
     * to this function.
     *
-    * @warm It will delete previous delegate
+    * @warning It will delete previous delegate
     */
     static void setDelegate(UserDefault *delegate);
 
@@ -237,8 +244,8 @@ public:
      * @js NA
      */
     static const std::string& getXMLFilePath();
-    /** All supported platforms other iOS & Android use xml file to save values. This function checks whether the xml file exists or not.
-     * @return True if the xml file exists, flase if not.
+    /** All supported platforms other iOS & Android and CC_PLATFORM_WINRT use xml file to save values. This function checks whether the xml file exists or not.
+     * @return True if the xml file exists, false if not.
      * @js NA
      */
     static bool isXMLFileExist();

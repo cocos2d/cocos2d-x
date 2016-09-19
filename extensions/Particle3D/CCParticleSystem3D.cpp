@@ -152,7 +152,7 @@ void ParticleSystem3D::removeAllAffector()
 
 Particle3DAffector* ParticleSystem3D::getAffector(int index)
 {
-    CCASSERT(index < _affectors.size(), "wrong index");
+    CCASSERT(index < (int)_affectors.size(), "wrong index");
     return _affectors[index];
 }
 

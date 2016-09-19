@@ -25,6 +25,7 @@
 #ifndef __CCBUNDLE3D_H__
 #define __CCBUNDLE3D_H__
 
+#include "base/CCData.h"
 #include "3d/CCBundle3DData.h"
 #include "3d/CCBundleReader.h"
 #include "json/document.h"
@@ -37,7 +38,6 @@ NS_CC_BEGIN
  */
 
 class Animation3D;
-class Data;
 
 /**
  * @brief Defines a bundle file that contains a collection of assets. Mesh, Material, MeshSkin, Animation
@@ -84,6 +84,12 @@ public:
     virtual bool loadNodes(NodeDatas& nodedatas);
     //since 3.3, to support reskin
     virtual bool loadMaterials(MaterialDatas& materialdatas);
+    
+    /**
+     * load triangle list
+     * @param path the file path to load
+     */
+    static std::vector<Vec3> getTrianglesList(const std::string& path);
     
     //load .obj file
     static bool loadObj(MeshDatas& meshdatas, MaterialDatas& materialdatas, NodeDatas& nodedatas, const std::string& fullPath, const char* mtl_basepath = nullptr);
@@ -171,11 +177,11 @@ protected:
     std::string _version;// the c3b or c3t version
     
     // for json reading
-    char* _jsonBuffer;
+    std::string _jsonBuffer;
     rapidjson::Document _jsonReader;
 
     // for binary reading
-    Data* _binaryBuffer;
+    Data _binaryBuffer;
     BundleReader _binaryReader;
     unsigned int _referenceCount;
     Reference* _references;

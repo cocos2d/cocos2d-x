@@ -36,7 +36,8 @@
 #else
 #include <AL/al.h>
 #endif
-#include "CCPlatformMacros.h"
+#include "platform/CCPlatformMacros.h"
+#include "audio/win32/AudioCache.h"
 
 NS_CC_BEGIN
 namespace experimental{
@@ -55,11 +56,13 @@ public:
     bool setTime(float time);
     float getTime() { return _currTime;}
     bool setLoop(bool loop);
-    
+    void notifyExitThread();
+
 protected:
     void rotateBufferThread(int offsetFrame);
     bool play2d(AudioCache* cache);
-    
+	int readPcmData(char* buffer, int bufferSize, const std::function<int/*readBytes*/(char* /*buf*/, int /*bytesToRead*/)>& fileReader);
+
     AudioCache* _audioCache;
     
     float _volume;
@@ -73,11 +76,12 @@ protected:
     float _currTime;
     bool _timeDirty;
     bool _streamingSource;
-    ALuint _bufferIds[3];
+    ALuint _bufferIds[QUEUEBUFFER_NUM];
     std::thread _rotateBufferThread;
     std::mutex _sleepMutex;
     std::condition_variable _sleepCondition;
-    bool _exitThread; 
+    bool _exitThread;
+    bool _readForRemove;
     
     friend class AudioEngineImpl;
 };

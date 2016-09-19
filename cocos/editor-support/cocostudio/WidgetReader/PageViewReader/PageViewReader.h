@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  Copyright (c) 2014 cocos2d-x.org
  
  http://www.cocos2d-x.org
@@ -25,8 +25,8 @@
 #ifndef __TestCpp__PageViewReader__
 #define __TestCpp__PageViewReader__
 
-#include "cocostudio/WidgetReader/LayoutReader/LayoutReader.h"
-#include "cocostudio/CocosStudioExport.h"
+#include "editor-support/cocostudio/WidgetReader/LayoutReader/LayoutReader.h"
+#include "editor-support/cocostudio/CocosStudioExport.h"
 
 namespace cocostudio
 {

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2012 Zynga Inc.
- * Copyright (c) 2013-2014 Chukong Technologies Inc.
+ * Copyright (c) 2013-2016 Chukong Technologies Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,24 +25,11 @@
 #ifndef __jsb_opengl_manual
 #define __jsb_opengl_manual
 
-#include "js_bindings_config.h"
+#include "scripting/js-bindings/manual/js_bindings_config.h"
 #ifdef JSB_INCLUDE_OPENGL
 
-//#include <Availability.h>
 #include "jsapi.h"
 #include "jsfriendapi.h"
-
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
-
-// compatible with iOS
-#define glClearDepthf glClearDepth
-#define glDepthRangef glDepthRange
-#ifndef glReleaseShaderCompiler
-    #define glReleaseShaderCompiler()
-#endif
-
-#endif // __MAC_OS_X_VERSION_MAX_ALLOWED
 
 // forward declaration of new functions
 bool JSB_glGetSupportedExtensions(JSContext *cx, uint32_t argc, jsval *vp);

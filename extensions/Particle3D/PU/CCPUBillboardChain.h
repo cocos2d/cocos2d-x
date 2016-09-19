@@ -26,9 +26,11 @@
 #ifndef __CC_PU_PARTICLE_3D_BILLBOARD_CHAIN_H__
 #define __CC_PU_PARTICLE_3D_BILLBOARD_CHAIN_H__
 
+#include <vector>
+#include "renderer/CCRenderState.h"
 #include "base/CCRef.h"
 #include "math/CCMath.h"
-#include <vector>
+
 
 NS_CC_BEGIN
 
@@ -54,11 +56,11 @@ public:
 
         Element();
 
-        Element(const Vec3 &position,
+        Element(const Vec3& position,
             float width,
             float texCoord,
-            const Vec4 &colour,
-            const Quaternion &orientation);
+            const Vec4& colour,
+            const Quaternion& orientation);
 
         Vec3 position;
         float width;
@@ -79,7 +81,7 @@ public:
     @param useVertexColours If true, use vertex colours from the chain elements
     @param dynamic If true, buffers are created with the intention of being updated
     */
-    PUBillboardChain(const std::string& name, const std::string &texFile = "", size_t maxElements = 20, size_t numberOfChains = 1, 
+    PUBillboardChain(const std::string& name, const std::string& texFile = "", size_t maxElements = 20, size_t numberOfChains = 1,
         bool useTextureCoords = true, bool useColours = true, bool dynamic = true);
     /// destructor
     virtual ~PUBillboardChain();
@@ -217,19 +219,22 @@ public:
     matrix, the segment corresponding to that point will be facing towards UNIT_Z
     This vector is internally normalized.
     */
-    void setFaceCamera( bool faceCamera, const Vec3 &normalVector=Vec3::UNIT_X );
+    void setFaceCamera( bool faceCamera, const Vec3& normalVector=Vec3::UNIT_X );
 
-    virtual void setDepthTest(bool isDepthTest);
-    virtual void setDepthWrite(bool isDepthWrite);
+    void setDepthTest(bool isDepthTest);
+    void setDepthWrite(bool isDepthWrite);
+    void setBlendFunc(const BlendFunc& blendFunc);
 
-    void render(Renderer* renderer, const Mat4 &transform, ParticleSystem3D* particleSystem);
+    void render(Renderer* renderer, const Mat4& transform, ParticleSystem3D* particleSystem);
 
     // Overridden members follow
-    //void _updateRenderQueue(RenderQueue *);
-    //void getRenderOperation(RenderOperation &);
+    //void _updateRenderQueue(RenderQueue*);
+    //void getRenderOperation(RenderOperation&);
     //virtual bool preRender(SceneManager* sm, RenderSystem* rsys);
-    //void getWorldTransforms(Matrix4 *) const;
+    //void getWorldTransforms(Matrix4*) const;
     /// @copydoc MovableObject::visitRenderables
+
+    GLuint getTextureName();
 
 protected:
 
@@ -240,11 +245,11 @@ protected:
     // Setup buffers
     virtual void setupBuffers(void);
     /// Update the contents of the vertex buffer
-    virtual void updateVertexBuffer(const Mat4 &camMat);
+    virtual void updateVertexBuffer(const Mat4& camMat);
     /// Update the contents of the index buffer
     virtual void updateIndexBuffer(void);
 
-    void init(const std::string &texFile);
+    void init(const std::string& texFile);
 
 protected:
 
@@ -312,14 +317,17 @@ protected:
         Vec2 uv;
         Vec4 color;
     };
-    MeshCommand* _meshCommand;
-    Texture2D*             _texture;
-    GLProgramState*        _glProgramState;
-    IndexBuffer*           _indexBuffer; //index buffer
-    VertexBuffer*          _vertexBuffer; // vertex buffer
+    MeshCommand*            _meshCommand;
+    RenderState::StateBlock* _stateBlock;
+    Texture2D*              _texture;
+    GLProgramState*         _glProgramState;
+    IndexBuffer*            _indexBuffer; //index buffer
+    VertexBuffer*           _vertexBuffer; // vertex buffer
 
     std::vector<VertexInfo> _vertices;
     std::vector<unsigned short> _indices;
+
+    std::string            _texFile;
 };
 
 NS_CC_END

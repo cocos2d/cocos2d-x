@@ -61,14 +61,14 @@ void PrettyPrinterDemo::onEnter()
     PrettyPrinter vistor;
     
     // print dictionary
-    auto dict = Dictionary::createWithContentsOfFile("animations/animations.plist");
+    auto dict = __Dictionary::createWithContentsOfFile("animations/animations.plist");
     dict->acceptVisitor(vistor);
     log("%s", vistor.getResult().c_str());
     log("-------------------------------");
     
     __Set myset;
     for (int i = 0; i < 30; ++i) {
-        myset.addObject(String::createWithFormat("str: %d", i));
+        myset.addObject(__String::createWithFormat("str: %d", i));
     }
     vistor.clear();
     myset.acceptVisitor(vistor);

@@ -1,9 +1,10 @@
 {
     "win32_cfg": {
         "project_path": "../../build",
-        "sln_file": "cocos2d-win32.vc2013.sln",
+        "sln_file": "cocos2d-win32.sln",
         "project_name": "cpp-empty-test",
-        "build_cfg_path": "proj.win32"
+        "build_cfg_path": "proj.win32",
+        "exe_out_dir": "cpp-empty-test"
     }, 
     "linux_cfg": {
         "project_path": "proj.linux",
@@ -24,7 +25,8 @@
         "target_name": "cpp-empty-test Mac"
     },
     "android_cfg": {
-        "project_path": "proj.android"
+        "project_path": "proj.android",
+        "studio_proj_path" : "proj.android-studio"
     },
     "wp8_1_cfg" : {
         "project_path": "../../build",

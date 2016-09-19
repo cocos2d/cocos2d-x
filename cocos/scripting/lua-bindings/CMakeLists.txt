@@ -7,23 +7,7 @@ include_directories(
   ${cocos_root}/external/xxtea
   ${cocos_root}/external
   ${cocos_root}/cocos
-  ${cocos_root}/cocos/ui
-  ${cocos_root}/cocos/2d
-  ${cocos_root}/cocos/3d
-  ${cocos_root}/cocos/base
-  ${cocos_root}/cocos/editor-support/spine
-  ${cocos_root}/cocos/editor-support/cocostudio
-  ${cocos_root}/cocos/editor-support/cocostudio/ActionTimeline
-  ${cocos_root}/cocos/editor-support/cocosbuilder
   ${cocos_root}/cocos/editor-support
-  ${cocos_root}/cocos/platform
-  ${cocos_root}/cocos/audio/include
-  manual
-  manual/extension
-  manual/cocostudio
-  manual/ui
-  manual/cocos2d
-  auto
 )
 
 file(GLOB lua_cocos2d_source_files
@@ -80,7 +64,9 @@ set(lua_bindings_manual_files
     manual/CCLuaValue.cpp
     manual/Cocos2dxLuaLoader.cpp
     manual/LuaBasicConversions.cpp
+    manual/lua_module_register.cpp
     manual/tolua_fix.cpp
+    manual/CCComponentLua.cpp
     manual/cocos2d/LuaOpengl.cpp
     manual/cocos2d/LuaScriptHandlerMgr.cpp
     manual/cocos2d/lua_cocos2dx_deprecated.cpp
@@ -108,6 +94,9 @@ set(lua_bindings_manual_files
     manual/ui/lua_cocos2dx_ui_manual.cpp
     manual/video/lua_cocos2dx_experimental_video_manual.cpp
     manual/audioengine/lua_cocos2dx_audioengine_manual.cpp
+    manual/physics3d/lua_cocos2dx_physics3d_manual.cpp
+    manual/navmesh/lua_cocos2dx_navmesh_conversions.cpp
+    manual/navmesh/lua_cocos2dx_navmesh_manual.cpp
     )
 
 set(lua_bindings_auto_files
@@ -125,10 +114,12 @@ set(lua_bindings_auto_files
     auto/lua_cocos2dx_csloader_auto.cpp
     auto/lua_cocos2dx_ui_auto.cpp
     auto/lua_cocos2dx_audioengine_auto.cpp
+    auto/lua_cocos2dx_physics3d_auto.cpp
+    auto/lua_cocos2dx_navmesh_auto.cpp
     )
 
 if(MACOSX)
-    set(lua_bindings_manual_files 
+    set(lua_bindings_manual_files
         ${lua_bindings_manual_files}
         manual/platform/ios/CCLuaObjcBridge.mm
         )

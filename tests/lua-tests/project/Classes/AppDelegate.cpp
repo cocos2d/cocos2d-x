@@ -1,9 +1,9 @@
 #include "cocos2d.h"
 #include "AppDelegate.h"
-#include "CCLuaEngine.h"
+#include "scripting/lua-bindings/manual/CCLuaEngine.h"
 #include "audio/include/SimpleAudioEngine.h"
 #include "lua_assetsmanager_test_sample.h"
-#include "lua_module_register.h"
+#include "scripting/lua-bindings/manual/lua_module_register.h"
 #include "lua_test_bindings.h"
 
 using namespace CocosDenshion;
@@ -56,7 +56,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     return true;
 }
 
-// This function will be called when the app is inactive. When comes a phone call,it's be invoked too
+// This function will be called when the app is inactive. Note, when receiving a phone call it is invoked.
 void AppDelegate::applicationDidEnterBackground()
 {
     Director::getInstance()->stopAnimation();

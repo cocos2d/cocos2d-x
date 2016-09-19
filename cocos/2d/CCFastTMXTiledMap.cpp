@@ -2,7 +2,7 @@
 Copyright (c) 2009-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -26,7 +26,7 @@ THE SOFTWARE.
 ****************************************************************************/
 #include "2d/CCFastTMXTiledMap.h"
 #include "2d/CCFastTMXLayer.h"
-#include "deprecated/CCString.h"
+#include "base/ccUTF8.h"
 
 NS_CC_BEGIN
 namespace experimental {
@@ -101,6 +101,9 @@ TMXTiledMap::~TMXTiledMap()
 TMXLayer * TMXTiledMap::parseLayer(TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo)
 {
     TMXTilesetInfo *tileset = tilesetForLayer(layerInfo, mapInfo);
+    if (tileset == nullptr)
+        return nullptr;
+    
     TMXLayer *layer = TMXLayer::create(tileset, layerInfo, mapInfo);
 
     // tell the layerinfo to release the ownership of the tiles map.
@@ -170,6 +173,10 @@ void TMXTiledMap::buildWithMapInfo(TMXMapInfo* mapInfo)
         if (layerInfo->_visible)
         {
             TMXLayer *child = parseLayer(layerInfo, mapInfo);
+            if (child == nullptr) {
+                idx++;
+                continue;
+            }
             addChild(child, idx, idx);
             
             // update content size with the max size

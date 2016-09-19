@@ -25,7 +25,6 @@
 #ifndef _PHYSICS3D_TEST_H_
 #define _PHYSICS3D_TEST_H_
 
-#include "../testBasic.h"
 #include "../BaseTest.h"
 #include <string>
 
@@ -39,9 +38,9 @@ DEFINE_TEST_SUITE(Physics3DTests);
 class Physics3DDemoDisabled : public TestCase
 {
 public:
-	CREATE_FUNC(Physics3DDemoDisabled);
+    CREATE_FUNC(Physics3DDemoDisabled);
 
-	virtual void onEnter() override;
+    virtual void onEnter() override;
 };
 #else
 
@@ -140,6 +139,21 @@ public:
     CREATE_FUNC(Physics3DTerrainDemo);
     Physics3DTerrainDemo(){};
     virtual ~Physics3DTerrainDemo(){};
+
+    virtual std::string subtitle() const override;
+
+    virtual bool init() override;
+
+private:
+};
+
+class Physics3DColliderDemo : public Physics3DTestDemo
+{
+public:
+
+    CREATE_FUNC(Physics3DColliderDemo);
+    Physics3DColliderDemo(){};
+    virtual ~Physics3DColliderDemo(){};
 
     virtual std::string subtitle() const override;
 

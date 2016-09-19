@@ -2,6 +2,23 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<false/>
+		<key>NSExceptionDomains</key>
+		<dict>
+			<key>cocos2d-x.org</key>
+			<dict>
+				<key>NSIncludesSubdomains</key>
+				<true/>
+				<key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+				<key>NSTemporaryExceptionMinimumTLSVersion</key>
+				<string>TLSv1.1</string>
+			</dict>
+		</dict>
+	</dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleDisplayName</key>
@@ -33,7 +50,7 @@
 		</dict>
 	</dict>
 	<key>CFBundleIdentifier</key>
-	<string>org.cocos2dx.${PRODUCT_NAME:rfc1034identifier}</string>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -44,6 +61,17 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
+	<key>UIAppFonts</key>
+	<array>
+		<string>fonts/A Damn Mess.ttf</string>
+		<string>fonts/Abberancy.ttf</string>
+		<string>fonts/Abduction.ttf</string>
+		<string>fonts/Paint Boy.ttf</string>
+		<string>fonts/Schwarzwald.ttf</string>
+		<string>fonts/Scissor Cuts.ttf</string>
+	</array>
 	<key>UILaunchImages</key>
 	<array>
 		<dict>
@@ -126,17 +154,6 @@
 			<key>UILaunchImageSize</key>
 			<string>{414, 736}</string>
 		</dict>
-	</array>
-	<key>LSRequiresIPhoneOS</key>
-	<true/>
-	<key>UIAppFonts</key>
-	<array>
-		<string>fonts/A Damn Mess.ttf</string>
-		<string>fonts/Abberancy.ttf</string>
-		<string>fonts/Abduction.ttf</string>
-		<string>fonts/Paint Boy.ttf</string>
-		<string>fonts/Schwarzwald.ttf</string>
-		<string>fonts/Scissor Cuts.ttf</string>
 	</array>
 	<key>UIPrerenderedIcon</key>
 	<true/>

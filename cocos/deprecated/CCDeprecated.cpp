@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2013      cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -22,8 +22,16 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+#include "deprecated/CCDeprecated.h"
 
-#include "cocos2d.h"
+#include "platform/CCPlatformMacros.h"
+#include "math/Vec2.h"
+#include "math/CCGeometry.h"
+#include "base/ccTypes.h"
+#include "renderer/CCGLProgram.h"
+#include "2d/CCDrawingPrimitives.h"
+#include "base/CCDirector.h"
+
 
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"

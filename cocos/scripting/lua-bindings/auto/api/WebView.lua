@@ -57,6 +57,13 @@
 -- @return experimental::ui::WebView#experimental::ui::WebView self (return value: cc.experimental::ui::WebView)
         
 --------------------------------
+-- Set whether the webview bounces at end of scroll of WebView.
+-- @function [parent=#WebView] setBounces 
+-- @param self
+-- @param #bool bounce
+-- @return experimental::ui::WebView#experimental::ui::WebView self (return value: cc.experimental::ui::WebView)
+        
+--------------------------------
 -- Evaluates JavaScript in the context of the currently displayed page.
 -- @function [parent=#WebView] evaluateJS 
 -- @param self
@@ -103,10 +110,22 @@
 -- @return experimental::ui::WebView#experimental::ui::WebView ret (return value: cc.experimental::ui::WebView)
         
 --------------------------------
+-- 
+-- @function [parent=#WebView] onEnter 
+-- @param self
+-- @return experimental::ui::WebView#experimental::ui::WebView self (return value: cc.experimental::ui::WebView)
+        
+--------------------------------
 -- Toggle visibility of WebView.
 -- @function [parent=#WebView] setVisible 
 -- @param self
 -- @param #bool visible
+-- @return experimental::ui::WebView#experimental::ui::WebView self (return value: cc.experimental::ui::WebView)
+        
+--------------------------------
+-- 
+-- @function [parent=#WebView] onExit 
+-- @param self
 -- @return experimental::ui::WebView#experimental::ui::WebView self (return value: cc.experimental::ui::WebView)
         
 --------------------------------

@@ -36,7 +36,7 @@ var ControlStepperTest = ControlScene.extend({
             var layer_width = 0;
 
             // Add the black background for the text
-            var background = new cc.Scale9Sprite("res/extensions/buttonBackground.png");
+            var background = new cc.Scale9Sprite("extensions/buttonBackground.png");
             background.width = 100;
 	        background.height = 50;
             background.x = layer_width + background.width / 2.0;
@@ -72,8 +72,8 @@ var ControlStepperTest = ControlScene.extend({
         return false;
     },
     makeControlStepper:function () {
-        var minusSprite = new cc.Sprite("res/extensions/stepper-minus.png");
-        var plusSprite = new cc.Sprite("res/extensions/stepper-plus.png");
+        var minusSprite = new cc.Sprite("extensions/stepper-minus.png");
+        var plusSprite = new cc.Sprite("extensions/stepper-plus.png");
 
         return new cc.ControlStepper(minusSprite, plusSprite);
     },

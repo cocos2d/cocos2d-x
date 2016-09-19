@@ -1,7 +1,7 @@
 /****************************************************************************
 Copyright (c) 2008      Apple Inc. All Rights Reserved.
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -29,18 +29,23 @@ THE SOFTWARE.
 
 #include <string>
 #include <map>
+#include <unordered_map>
 
 #include "base/CCRef.h"
 #include "math/CCGeometry.h"
 #include "base/ccTypes.h"
-#ifdef EMSCRIPTEN
-#include "CCGLBufferedNode.h"
-#endif // EMSCRIPTEN
 
 NS_CC_BEGIN
 
 class Image;
+class NinePatchInfo;
+class SpriteFrame;
 typedef struct _MipmapInfo MipmapInfo;
+
+namespace ui
+{
+    class Scale9Sprite;
+}
 
 /**
  * @addtogroup _2d
@@ -60,9 +65,6 @@ class GLProgram;
 * Be aware that the content of the generated textures will be upside-down!
 */
 class CC_DLL Texture2D : public Ref
-#ifdef EMSCRIPTEN
-, public GLBufferedNode
-#endif // EMSCRIPTEN
 {
 public:
     /** @typedef Texture2D::PixelFormat
@@ -110,7 +112,7 @@ public:
         ATC_RGB,
         //! ATITC-compressed texture: ATC_EXPLICIT_ALPHA
         ATC_EXPLICIT_ALPHA,
-        //! ATITC-compresed texture: ATC_INTERPOLATED_ALPHA
+        //! ATITC-compressed texture: ATC_INTERPOLATED_ALPHA
         ATC_INTERPOLATED_ALPHA,
         //! Default texture format: AUTO
         DEFAULT = AUTO,
@@ -203,17 +205,17 @@ public:
      */
     virtual ~Texture2D();
     /**
-     Get texutre name, dimensions and coordinates message by a string.
+     Get texture name, dimensions and coordinates message by a string.
      * @js NA
      * @lua NA
      */
     virtual std::string getDescription() const;
 
-	/** Release only the gl texture.
+    /** Release only the gl texture.
      * @js NA
      * @lua NA
      */
-	void releaseGLTexture();
+    void releaseGLTexture();
 
     /** Initializes with a texture2d with data.
      
@@ -260,16 +262,16 @@ public:
     Extensions to make it easy to create a Texture2D object from an image file.
     */
     /** 
-	Initializes a texture from a UIImage object.
+    Initializes a texture from a UIImage object.
 
     We will use the format you specified with setDefaultAlphaPixelFormat to convert the image for texture.
     NOTE: It will not convert the pvr image file.
     @param image An UIImage object.
-	*/
+    */
     bool initWithImage(Image * image);
     
     /** 
-	Initializes a texture from a UIImage object.
+    Initializes a texture from a UIImage object.
 
     We will use the format you passed to the function to convert the image format to the texture format.
     If you pass PixelFormat::Automatic, we will auto detect the image render type and use that type for texture to render.
@@ -286,8 +288,10 @@ public:
      @param dimensions The font dimension.
      @param hAlignment The font horizontal text alignment type.
      @param vAlignment The font vertical text alignment type.
+     @param enableWrap Whether enable text wrap or not.
+     @param overflow Whether shrink font size when content larger than the dimensions.
      */
-    bool initWithString(const char *text,  const std::string &fontName, float fontSize, const Size& dimensions = Size(0, 0), TextHAlignment hAlignment = TextHAlignment::CENTER, TextVAlignment vAlignment = TextVAlignment::TOP);
+    bool initWithString(const char *text,  const std::string &fontName, float fontSize, const Size& dimensions = Size(0, 0), TextHAlignment hAlignment = TextHAlignment::CENTER, TextVAlignment vAlignment = TextVAlignment::TOP, bool enableWrap = true, int overflow = 0);
 
     /** Initializes a texture from a string using a text definition.
      
@@ -309,6 +313,7 @@ public:
     * @endcode
     */
     void setTexParameters(const TexParams& texParams);
+
     /**
      * @js NA
      * @lua NA
@@ -402,12 +407,59 @@ public:
 
     /** Get a shader program from the texture.*/
     GLProgram* getGLProgram() const;
-    
+
+    std::string getPath()const { return _filePath; }
+
+    void setAlphaTexture(Texture2D* alphaTexture);
+
+    GLuint getAlphaTextureName() const;
 public:
     /** Get pixel info map, the key-value pairs is PixelFormat and PixelFormatInfo.*/
     static const PixelFormatInfoMap& getPixelFormatInfoMap();
     
 private:
+    /**
+    * A struct for storing 9-patch image capInsets.
+    */
+
+    class NinePatchInfo
+    {
+    public:
+        Rect capInsetSize;
+        std::unordered_map<SpriteFrame*, Rect> capInsetMap;
+    };
+
+    /**
+     * Whether the texture contains a 9-patch capInset info or not.
+     *
+     * @return True is Texture contains a 9-patch info, false otherwise.
+     */
+    bool isContain9PatchInfo()const;
+
+    /**
+     * Get spriteFrame capInset, If spriteFrame can't be found in 9-patch info map,
+     * then single 9-patch texture capInset will be returned.
+     * If the arg is nullptr, the capInset of single 9-patch texture will be returned.
+     *
+     * @param spriteFrame A SpriteFrame object pointer.
+     *
+     * @return The capInset of the SpriteFrame object.
+     */
+    const Rect& getSpriteFrameCapInset(SpriteFrame* spriteFrame)const;
+    /**
+     * Remove the spriteFrame capInset info when the spriteFrame is removed.
+     *
+     * @param spriteFrame A SpriteFrame object pointer.
+     */
+    void removeSpriteFrameCapInset(SpriteFrame* spriteFrame);
+    /**
+     * Add capInset for sprite atlas.
+     * When handling single texture, pass nullptr in the first arg.
+     *
+     * @param spritframe The sprite frame object.
+     * @param capInsets The parsed capInset from a .9 patch image.
+     */
+    void addSpriteFrameCapInset(SpriteFrame* spritframe, const Rect& capInsets);
 
     /**convert functions*/
 
@@ -442,6 +494,7 @@ private:
     //RGB888 to XXX
     static void convertRGB888ToRGBA8888(const unsigned char* data, ssize_t dataLen, unsigned char* outData);
     static void convertRGB888ToRGB565(const unsigned char* data, ssize_t dataLen, unsigned char* outData);
+    static void convertRGB888ToA8(const unsigned char* data, ssize_t dataLen, unsigned char* outData);
     static void convertRGB888ToI8(const unsigned char* data, ssize_t dataLen, unsigned char* outData);
     static void convertRGB888ToAI88(const unsigned char* data, ssize_t dataLen, unsigned char* outData);
     static void convertRGB888ToRGBA4444(const unsigned char* data, ssize_t dataLen, unsigned char* outData);
@@ -490,6 +543,15 @@ protected:
     static const PixelFormatInfoMap _pixelFormatInfoTables;
 
     bool _antialiasEnabled;
+    NinePatchInfo* _ninePatchInfo;
+    friend class SpriteFrameCache;
+    friend class TextureCache;
+    friend class ui::Scale9Sprite;
+
+    bool _valid;
+    std::string _filePath;
+
+    Texture2D* _alphaTexture;
 };
 
 

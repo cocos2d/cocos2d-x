@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -46,7 +46,7 @@ static long getCurrentMillSecond()
     return lLastTime;
 }
 
-Application* Application::sm_pSharedApplication = 0;
+Application* Application::sm_pSharedApplication = nullptr;
 
 Application::Application()
 : _animationInterval(1.0f/60.0f*1000.0f)
@@ -108,7 +108,7 @@ int Application::run()
     return 0;
 }
 
-void Application::setAnimationInterval(double interval)
+void Application::setAnimationInterval(float interval)
 {
     _animationInterval = interval*1000.0f;
 }
@@ -116,6 +116,14 @@ void Application::setAnimationInterval(double interval)
 Application::Platform Application::getTargetPlatform()
 {
     return Platform::OS_MAC;
+}
+
+std::string Application::getVersion() {
+    NSString* version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+    if (version) {
+        return [version UTF8String];
+    }
+    return "";
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////

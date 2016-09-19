@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  Copyright (c) 2014 cocos2d-x.org
  
  http://www.cocos2d-x.org
@@ -25,9 +25,9 @@
 #ifndef __cocos2d_libs__ProjectNodeReader__
 #define __cocos2d_libs__ProjectNodeReader__
 
-#include "cocos2d.h"
-#include "cocostudio/CocosStudioExport.h"
-#include "cocostudio/WidgetReader/NodeReaderProtocol.h"
+#include "base/CCRef.h"
+#include "editor-support/cocostudio/CocosStudioExport.h"
+#include "editor-support/cocostudio/WidgetReader/NodeReaderProtocol.h"
 
 
 namespace cocostudio

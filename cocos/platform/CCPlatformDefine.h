@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2015 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -37,10 +37,12 @@ THE SOFTWARE.
 #include "platform/android/CCPlatformDefine-android.h"
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 #include "platform/win32/CCPlatformDefine-win32.h"
-#elif CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
 #include "platform/winrt/CCPlatformDefine-winrt.h"
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
 #include "platform/linux/CCPlatformDefine-linux.h"
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN
+#include "platform/tizen/CCPlatformDefine-tizen.h"
 #endif
 
 /// @endcond

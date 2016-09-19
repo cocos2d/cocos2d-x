@@ -26,6 +26,7 @@
 #include "2d/CCSprite.h"
 #include "extensions/ExtensionMacros.h"
 #include "extensions/ExtensionExport.h"
+#include "base/CCEventListenerCustom.h"
 
 #if (CC_ENABLE_CHIPMUNK_INTEGRATION || CC_ENABLE_BOX2D_INTEGRATION)
 
@@ -108,22 +109,28 @@ public:
 
     float getPTMRatio() const;
     void setPTMRatio(float fPTMRatio);
+    virtual void syncPhysicsTransform() const;
 
     // overrides
     virtual const Vec2& getPosition() const override;
     virtual void getPosition(float* x, float* y) const override;
     virtual float getPositionX() const override;
     virtual float getPositionY() const override;
+    virtual Vec3 getPosition3D() const override;
     virtual void setPosition(const Vec2 &position) override;
+    virtual void setPosition(float x, float y) override;
+    virtual void setPositionX(float x) override;
+    virtual void setPositionY(float y) override;
+    virtual void setPosition3D(const Vec3& position) override;
     virtual float getRotation() const override;
     virtual void setRotation(float fRotation) override;
-    virtual void syncPhysicsTransform() const;
-    virtual const Mat4& getNodeToParentTransform() const override;
     
-    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
+    virtual void onEnter() override;
+    virtual void onExit() override;
 
 protected:
     const Vec2& getPosFromPhysics() const;
+    void afterUpdate(EventCustom *event);
 
 protected:
     bool    _ignoreBodyRotation;
@@ -134,6 +141,9 @@ protected:
     // box2d specific
     b2Body  *_pB2Body;
     float   _PTMRatio;
+    
+    // Event for update synchronise physic transform
+    cocos2d::EventListenerCustom* _syncTransform;
 };
 
 NS_CC_EXT_END

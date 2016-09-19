@@ -3,7 +3,7 @@ Copyright 2011 Jeff Lamarche
 Copyright 2012 Goffredo Marocchi
 Copyright 2012 Ricardo Quesada
 Copyright 2012 cocos2d-x.org
-Copyright 2013-2014 Chukong Technologies Inc.
+Copyright 2013-2016 Chukong Technologies Inc.
 
 
 http://www.cocos2d-x.org
@@ -40,7 +40,7 @@ THE SOFTWARE.
 #include "math/CCMath.h"
 
 /**
- * @addtogroup support
+ * @addtogroup renderer
  * @{
  */
 
@@ -86,6 +86,7 @@ struct Uniform
 class CC_DLL GLProgram : public Ref
 {
     friend class GLProgramState;
+    friend class VertexAttribBinding;
 
 public:
     /**Enum the preallocated vertex attribute. */
@@ -109,6 +110,10 @@ public:
         VERTEX_ATTRIB_BLEND_WEIGHT,
         /**Index 8 will be used as Blend index.*/
         VERTEX_ATTRIB_BLEND_INDEX,
+        /**Index 9 will be used as tangent.*/
+        VERTEX_ATTRIB_TANGENT,
+        /**Index 10 will be used as Binormal.*/
+        VERTEX_ATTRIB_BINORMAL,
         VERTEX_ATTRIB_MAX,
 
         // backward compatibility
@@ -147,10 +152,28 @@ public:
         UNIFORM_MAX,
     };
 
+    /** Flags used by the uniforms */
+    struct UniformFlags {
+        unsigned int usesTime:1;
+        unsigned int usesNormal:1;
+        unsigned int usesMVP:1;
+        unsigned int usesMV:1;
+        unsigned int usesP:1;
+        unsigned int usesRandom:1;
+        // handy way to initialize the bitfield
+        UniformFlags() { memset(this, 0, sizeof(*this)); }
+    };
+
     /**
     @name Built Shader types
     @{
     */
+    /** ETC1 ALPHA supports for 2d */
+    static const char* SHADER_NAME_ETC1AS_POSITION_TEXTURE_COLOR;
+    static const char* SHADER_NAME_ETC1AS_POSITION_TEXTURE_COLOR_NO_MVP;
+
+    static const char* SHADER_NAME_ETC1AS_POSITION_TEXTURE_GRAY;
+    static const char* SHADER_NAME_ETC1AS_POSITION_TEXTURE_GRAY_NO_MVP;
 
     /**Built in shader for 2d. Support Position, Texture and Color vertex attribute.*/
     static const char* SHADER_NAME_POSITION_TEXTURE_COLOR;
@@ -166,10 +189,6 @@ public:
     static const char* SHADER_NAME_POSITION_COLOR_TEXASPOINTSIZE;
     /**Built in shader for 2d. Support Position, Color vertex attribute, without multiply vertex by MVP matrix.*/
     static const char* SHADER_NAME_POSITION_COLOR_NO_MVP;
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || defined(WP8_SHADER_COMPILER)
-    /**Built in shader for 2d. Support Position, Color vertex attribute, without multiply vertex by MVP matrix and have a grey scale fragment shader.*/
-    static const char* SHADER_NAME_POSITION_COLOR_NO_MVP_GRAYåSCALE;
-#endif
     /**Built in shader for 2d. Support Position, Texture vertex attribute.*/
     static const char* SHADER_NAME_POSITION_TEXTURE;
     /**Built in shader for 2d. Support Position, Texture vertex attribute. with a specified uniform as color*/
@@ -214,6 +233,15 @@ public:
     */
     static const char* SHADER_3D_SKINPOSITION_NORMAL_TEXTURE;
     /**
+    Built in shader used for 3D, support Position, Bumped Normal, Texture vertex attribute, used in lighting. with color specified by a uniform.
+    */
+    static const char* SHADER_3D_POSITION_BUMPEDNORMAL_TEXTURE;
+    /**
+    Built in shader used for 3D, support Position(skeletal animation by hardware skin), Bumped Normal, Texture vertex attribute,
+    used in lighting. with color specified by a uniform.
+    */
+    static const char* SHADER_3D_SKINPOSITION_BUMPEDNORMAL_TEXTURE;
+    /**
     Built in shader for particles, support Position and Texture, with a color specified by a uniform.
     */
     static const char* SHADER_3D_PARTICLE_TEXTURE;
@@ -231,7 +259,11 @@ public:
      Built in shader for terrain
      */
     static const char* SHADER_3D_TERRAIN;
-
+    
+    /**
+     Built in shader for camera clear
+     */
+    static const char* SHADER_CAMERA_CLEAR;
     /**
     end of built shader types.
     @}
@@ -296,6 +328,10 @@ public:
     static const char* ATTRIBUTE_NAME_BLEND_WEIGHT;
     /**Attribute blend index.*/
     static const char* ATTRIBUTE_NAME_BLEND_INDEX;
+    /**Attribute blend tangent.*/
+    static const char* ATTRIBUTE_NAME_TANGENT;
+    /**Attribute blend binormal.*/
+    static const char* ATTRIBUTE_NAME_BINORMAL;
     /**
     end of Built Attribute names
     @}
@@ -305,13 +341,6 @@ public:
     GLProgram();
     /**Destructor.*/
     virtual ~GLProgram();
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-    /** @{Initializes the CCGLProgram with precompiled shader program. */
-    static GLProgram* createWithPrecompiledProgramByteArray(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray);
-    bool initWithPrecompiledProgramByteArray(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray);
-    /**@}*/
-#endif
 
     /** @{
     Create or Initializes the GLProgram with a vertex and fragment with bytes array.
@@ -444,13 +473,13 @@ public:
 
     /**
      Update the builtin uniforms if they are different than the previous call for this same shader program.
-     */
-    void setUniformsForBuiltins();
-    /**
-     Update the builtin uniforms if they are different than the previous call for this same shader program.
      @param modelView modelView matrix applied to the built in uniform of the shader.
      */
     void setUniformsForBuiltins(const Mat4 &modelView);
+    /**
+     Update the builtin uniforms if they are different than the previous call for this same shader program.
+     */
+    void setUniformsForBuiltins();
 
     /** returns the vertexShader error log */
     std::string getVertexShaderLog() const;
@@ -465,8 +494,11 @@ public:
     when opengl context lost, so don't call it.
     */
     void reset();
-    /*Get the built in openGL handle of the program.*/
-    inline const GLuint getProgram() const { return _program; }
+    /** returns the OpenGL Program object */
+    GLuint getProgram() const { return _program; }
+
+    /** returns the Uniform flags */
+    const UniformFlags& getUniformFlags() const { return _flags; }
 
     //DEPRECATED
     CC_DEPRECATED_ATTRIBUTE bool initWithVertexShaderByteArray(const GLchar* vertexByteArray, const GLchar* fragByteArray)
@@ -481,7 +513,7 @@ protected:
     Update the uniform data in location.
     @param location The location of the uniform.
     @param data Updated data.
-    @oaram bytes Data length in bytes to update.
+    @param bytes Data length in bytes to update.
     */
     bool updateUniformLocation(GLint location, const GLvoid* data, unsigned int bytes);
     /**Get a general description of the shader.*/
@@ -496,6 +528,7 @@ protected:
     /**Compile the shader sources.*/
     bool compileShader(GLuint * shader, GLenum type, const GLchar* source, const std::string& convertedDefines);
     bool compileShader(GLuint * shader, GLenum type, const GLchar* source);
+    void clearShader();
 
     /**OpenGL handle for program.*/
     GLuint            _program;
@@ -508,22 +541,6 @@ protected:
     /**Indicate whether it has a offline shader compiler or not.*/
     bool              _hasShaderCompiler;
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || defined(WP8_SHADER_COMPILER)
-    /**Shader ID in precompiled shaders on Windows phone.*/
-    std::string       _shaderId;
-#endif
-
-    struct flag_struct {
-        unsigned int usesTime:1;
-        unsigned int usesNormal:1;
-        unsigned int usesMVP:1;
-        unsigned int usesMV:1;
-        unsigned int usesP:1;
-        unsigned int usesRandom:1;
-        // handy way to initialize the bitfield
-        flag_struct() { memset(this, 0, sizeof(*this)); }
-    } _flags;
-
     /**User defined Uniforms.*/
     std::unordered_map<std::string, Uniform> _userUniforms;
     /**User defined vertex attributes.*/
@@ -532,6 +549,9 @@ protected:
     std::unordered_map<GLint, std::pair<GLvoid*, unsigned int>> _hashForUniforms;
     //cached director pointer for calling
     Director* _director;
+
+    /*needed uniforms*/
+    UniformFlags _flags;
 };
 
 NS_CC_END

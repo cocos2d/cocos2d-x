@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
 Copyright (c) 2013 cocos2d-x.org
 
 http://www.cocos2d-x.org
@@ -25,9 +25,9 @@ THE SOFTWARE.
 #ifndef __CCTIMELINE_H__
 #define __CCTIMELINE_H__
 
-#include "CCFrame.h"
-#include "CCTimelineMacro.h"
-#include "cocostudio/CocosStudioExport.h"
+#include "editor-support/cocostudio/ActionTimeline/CCFrame.h"
+#include "editor-support/cocostudio/ActionTimeline/CCTimelineMacro.h"
+#include "editor-support/cocostudio/CocosStudioExport.h"
 
 NS_TIMELINE_BEGIN
 
@@ -62,19 +62,19 @@ public:
     virtual Timeline* clone();
 
 protected:
-    virtual void apply(int frameIndex);
+    virtual void apply(unsigned int frameIndex);
 
-    virtual void binarySearchKeyFrame (int frameIndex);
-    virtual void updateCurrentKeyFrame(int frameIndex);
+    virtual void binarySearchKeyFrame (unsigned int frameIndex);
+    virtual void updateCurrentKeyFrame(unsigned int frameIndex);
 
     cocos2d::Vector<Frame*> _frames;
     Frame* _currentKeyFrame;
-    int _currentKeyFrameIndex;
+    unsigned int _currentKeyFrameIndex;
 
-    int _fromIndex;
-    int _toIndex;
-    int _betweenDuration;
-    int _actionTag;
+	unsigned int _fromIndex;
+	unsigned int _toIndex;
+	unsigned int _betweenDuration;
+	unsigned int _actionTag;
 
     ActionTimeline*  _ActionTimeline;
     cocos2d::Node* _node;

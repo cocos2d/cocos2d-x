@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -30,10 +30,10 @@
 #include <unordered_map>
 
 #include "base/CCRef.h"
-#include "CCRenderCommand.h"
+#include "renderer/CCRenderCommand.h"
 
 /**
- * @addtogroup support
+ * @addtogroup renderer
  * @{
  */
 
@@ -56,8 +56,8 @@ protected:
 };
 
 /**
- GroupCommand is used to group several command together, and more, it can be nestd.
- So it is used to generate the hierarchy for the rendcommands. Evey group command will be assigned by a group ID.
+ GroupCommand is used to group several command together, and more, it can be nested.
+ So it is used to generate the hierarchy for the rendcommands. Every group command will be assigned by a group ID.
  */
 class CC_DLL GroupCommand : public RenderCommand
 {
@@ -73,7 +73,7 @@ public:
     void init(float globalOrder);
     
     /**called by renderer, get the group ID.*/
-    inline int getRenderQueueID() const {return _renderQueueID;}
+    int getRenderQueueID() const { return _renderQueueID; }
     
 protected:
     int _renderQueueID;

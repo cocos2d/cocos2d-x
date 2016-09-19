@@ -37,6 +37,13 @@
         
 --------------------------------
 -- 
+-- @function [parent=#SkeletonAnimation] findAnimation 
+-- @param self
+-- @param #string name
+-- @return spAnimation#spAnimation ret (return value: spAnimation)
+        
+--------------------------------
+-- 
 -- @function [parent=#SkeletonAnimation] setCompleteListener 
 -- @param self
 -- @param #function listener
@@ -90,5 +97,11 @@
 -- @function [parent=#SkeletonAnimation] clearTrack 
 -- @param self
 -- @return SkeletonAnimation#SkeletonAnimation self (return value: sp.SkeletonAnimation)
+        
+--------------------------------
+-- 
+-- @function [parent=#SkeletonAnimation] create 
+-- @param self
+-- @return SkeletonAnimation#SkeletonAnimation ret (return value: sp.SkeletonAnimation)
         
 return nil

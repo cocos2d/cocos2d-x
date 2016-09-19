@@ -165,7 +165,7 @@
 -- param tilesetInfo An tileset info.<br>
 -- param layerInfo A layer info.<br>
 -- param mapInfo A map info.<br>
--- return Reruen an autorelease object.
+-- return Return an autorelease object.
 -- @function [parent=#TMXLayer] create 
 -- @param self
 -- @param #cc.TMXTilesetInfo tilesetInfo

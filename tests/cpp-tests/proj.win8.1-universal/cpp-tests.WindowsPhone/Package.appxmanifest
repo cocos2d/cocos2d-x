@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest" xmlns:m3="http://schemas.microsoft.com/appx/2014/manifest" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest">
-  <Identity Name="c123badd-5e39-470a-9efa-6cd05854141e" Publisher="CN=dalestam" Version="1.0.0.0" />
-  <mp:PhoneIdentity PhoneProductId="c123badd-5e39-470a-9efa-6cd05854141e" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
+  <Identity Name="E7A5EF45-9B67-4F3D-94D3-1CA0BC8B836E" Publisher="CN=dalestam" Version="1.0.0.0" />
+  <mp:PhoneIdentity PhoneProductId="64a62759-d01f-4308-be64-ec1c27542892" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>cpp-tests.WindowsPhone</DisplayName>
     <PublisherDisplayName>dalestam</PublisherDisplayName>

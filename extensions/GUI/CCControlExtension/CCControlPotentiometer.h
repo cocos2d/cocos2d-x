@@ -83,7 +83,7 @@ public:
     virtual void onTouchMoved(Touch *pTouch, Event *pEvent) override;
     virtual void onTouchEnded(Touch *pTouch, Event *pEvent) override;
 
-    /** Factorize the event dispath into these methods. */
+    /** Factorize the event dispatch into these methods. */
     void potentiometerBegan(Vec2 location);
     void potentiometerMoved(Vec2 location);
     void potentiometerEnded(Vec2 location);

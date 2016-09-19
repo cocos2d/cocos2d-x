@@ -24,13 +24,14 @@
 #ifndef __CCANIMATIONCURVE_H__
 #define __CCANIMATIONCURVE_H__
 
+#include <cmath>
 #include <functional>
 
 #include "platform/CCPlatformMacros.h"
 #include "base/CCRef.h"
 #include "math/CCMath.h"
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 #undef NEAR
 #endif
 
@@ -66,7 +67,7 @@ public:
     static AnimationCurve* create(float* keytime, float* value, int count);
     
     /**
-     * evalute value of time
+     * evaluate value of time
      * @param time Time to be estimated
      * @param dst Estimated value of that time
      * @param type EvaluateType
@@ -107,6 +108,6 @@ protected:
 
 NS_CC_END
 
-#include "CCAnimationCurve.inl"
+#include "3d/CCAnimationCurve.inl"
 
 #endif

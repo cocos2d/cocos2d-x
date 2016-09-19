@@ -37,8 +37,6 @@ import android.widget.MediaController.MediaPlayerControl;
 import java.io.IOException;
 import java.util.Map;
 
-import com.chukong.cocosplay.client.CocosPlayClient;
-
 public class Cocos2dxVideoView extends SurfaceView implements MediaPlayerControl {
     private String TAG = "Cocos2dxVideoView";
     
@@ -219,10 +217,6 @@ public class Cocos2dxVideoView extends SurfaceView implements MediaPlayerControl
         if (path.startsWith(AssetResourceRoot)) {
             path = path.substring(AssetResourceRoot.length());
         }
-        if (CocosPlayClient.isEnabled() && !CocosPlayClient.isDemo()) {
-            CocosPlayClient.updateAssets(path);
-        }
-        CocosPlayClient.notifyFileLoaded(path);
         if (path.startsWith("/")) {
             mIsAssetRouse = false;
             setVideoURI(Uri.parse(path),null);

@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  Copyright (c) 2014 cocos2d-x.org
  
  http://www.cocos2d-x.org
@@ -46,5 +46,7 @@ cocos2d::ObjectFactory::TInfo className::__Type(#className, &className::createIn
 
 #define CREATE_CLASS_NODE_READER_INFO(className) \
 cocos2d::ObjectFactory::TInfo(#className, &className::createInstance) \
+
+#define FLATSTR_TO_BOOL(str) (str.compare("True") == 0) ? true : false
 
 #endif /* defined(__cocos2d_libs__NodeReaderDefine__) */

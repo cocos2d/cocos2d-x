@@ -57,20 +57,6 @@ getDuration : function (
 },
 
 /**
- * @method create
- * @param {String} arg0
- * @param {String} arg1
- * @return {cc.Animation3D}
- */
-create : function (
-str, 
-str 
-)
-{
-    return cc.Animation3D;
-},
-
-/**
  * @method Animation3D
  * @constructor
  */
@@ -85,6 +71,18 @@ Animation3D : function (
  * @class Animate3D
  */
 jsb.Animate3D = {
+
+/**
+ * @method setKeyFrameUserInfo
+ * @param {int} arg0
+ * @param {map_object} arg1
+ */
+setKeyFrameUserInfo : function (
+int, 
+map 
+)
+{
+},
 
 /**
  * @method getSpeed
@@ -274,109 +272,47 @@ Animate3D : function (
 };
 
 /**
- * @class Skeleton3D
+ * @class TextureCube
  */
-jsb.Skeleton3D = {
+jsb.TextureCube = {
 
 /**
- * @method removeAllBones
+ * @method reloadTexture
+ * @return {bool}
  */
-removeAllBones : function (
+reloadTexture : function (
 )
 {
+    return false;
 },
 
 /**
- * @method addBone
- * @param {cc.Bone3D} arg0
- */
-addBone : function (
-bone3d 
-)
-{
-},
-
-/**
- * @method getBoneByName
+ * @method create
  * @param {String} arg0
- * @return {cc.Bone3D}
+ * @param {String} arg1
+ * @param {String} arg2
+ * @param {String} arg3
+ * @param {String} arg4
+ * @param {String} arg5
+ * @return {cc.TextureCube}
  */
-getBoneByName : function (
+create : function (
+str, 
+str, 
+str, 
+str, 
+str, 
 str 
 )
 {
-    return cc.Bone3D;
+    return cc.TextureCube;
 },
 
 /**
- * @method getRootBone
- * @param {int} arg0
- * @return {cc.Bone3D}
- */
-getRootBone : function (
-int 
-)
-{
-    return cc.Bone3D;
-},
-
-/**
- * @method updateBoneMatrix
- */
-updateBoneMatrix : function (
-)
-{
-},
-
-/**
- * @method getBoneByIndex
- * @param {unsigned int} arg0
- * @return {cc.Bone3D}
- */
-getBoneByIndex : function (
-int 
-)
-{
-    return cc.Bone3D;
-},
-
-/**
- * @method getRootCount
- * @return {long}
- */
-getRootCount : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getBoneIndex
- * @param {cc.Bone3D} arg0
- * @return {int}
- */
-getBoneIndex : function (
-bone3d 
-)
-{
-    return 0;
-},
-
-/**
- * @method getBoneCount
- * @return {long}
- */
-getBoneCount : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method Skeleton3D
+ * @method TextureCube
  * @constructor
  */
-Skeleton3D : function (
+TextureCube : function (
 )
 {
 },
@@ -384,365 +320,27 @@ Skeleton3D : function (
 };
 
 /**
- * @class Sprite3D
+ * @class AttachNode
  */
-jsb.Sprite3D = {
+jsb.AttachNode = {
 
 /**
- * @method setCullFaceEnabled
- * @param {bool} arg0
- */
-setCullFaceEnabled : function (
-bool 
-)
-{
-},
-
-/**
- * @method setTexture
-* @param {cc.Texture2D|String} texture2d
-*/
-setTexture : function(
-str 
-)
-{
-},
-
-/**
- * @method getLightMask
- * @return {unsigned int}
- */
-getLightMask : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method createAttachSprite3DNode
- * @param {cc.NodeData} arg0
- * @param {cc.MaterialDatas} arg1
- */
-createAttachSprite3DNode : function (
-nodedata, 
-materialdatas 
-)
-{
-},
-
-/**
- * @method loadFromFile
- * @param {String} arg0
- * @param {cc.NodeDatas} arg1
- * @param {cc.MeshDatas} arg2
- * @param {cc.MaterialDatas} arg3
- * @return {bool}
- */
-loadFromFile : function (
-str, 
-nodedatas, 
-meshdatas, 
-materialdatas 
-)
-{
-    return false;
-},
-
-/**
- * @method setCullFace
- * @param {unsigned int} arg0
- */
-setCullFace : function (
-int 
-)
-{
-},
-
-/**
- * @method addMesh
- * @param {cc.Mesh} arg0
- */
-addMesh : function (
-mesh 
-)
-{
-},
-
-/**
- * @method removeAllAttachNode
- */
-removeAllAttachNode : function (
-)
-{
-},
-
-/**
- * @method setMaterial
-* @param {cc.Material|cc.Material} material
-* @param {int} int
-*/
-setMaterial : function(
-material,
-int 
-)
-{
-},
-
-/**
- * @method genGLProgramState
- */
-genGLProgramState : function (
-)
-{
-},
-
-/**
- * @method getMesh
- * @return {cc.Mesh}
- */
-getMesh : function (
-)
-{
-    return cc.Mesh;
-},
-
-/**
- * @method createSprite3DNode
- * @param {cc.NodeData} arg0
- * @param {cc.ModelData} arg1
- * @param {cc.MaterialDatas} arg2
- * @return {cc.Sprite3D}
- */
-createSprite3DNode : function (
-nodedata, 
-modeldata, 
-materialdatas 
-)
-{
-    return cc.Sprite3D;
-},
-
-/**
- * @method getMeshCount
- * @return {long}
- */
-getMeshCount : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method onAABBDirty
- */
-onAABBDirty : function (
-)
-{
-},
-
-/**
- * @method getMeshByIndex
- * @param {int} arg0
- * @return {cc.Mesh}
- */
-getMeshByIndex : function (
-int 
-)
-{
-    return cc.Mesh;
-},
-
-/**
- * @method createNode
- * @param {cc.NodeData} arg0
- * @param {cc.Node} arg1
- * @param {cc.MaterialDatas} arg2
- * @param {bool} arg3
- */
-createNode : function (
-nodedata, 
-node, 
-materialdatas, 
-bool 
-)
-{
-},
-
-/**
- * @method isForceDepthWrite
- * @return {bool}
- */
-isForceDepthWrite : function (
-)
-{
-    return false;
-},
-
-/**
- * @method getBlendFunc
- * @return {cc.BlendFunc}
- */
-getBlendFunc : function (
-)
-{
-    return cc.BlendFunc;
-},
-
-/**
- * @method getMeshIndexData
- * @param {String} arg0
- * @return {cc.MeshIndexData}
- */
-getMeshIndexData : function (
-str 
-)
-{
-    return cc.MeshIndexData;
-},
-
-/**
- * @method removeAttachNode
- * @param {String} arg0
- */
-removeAttachNode : function (
-str 
-)
-{
-},
-
-/**
- * @method setLightMask
- * @param {unsigned int} arg0
- */
-setLightMask : function (
-int 
-)
-{
-},
-
-/**
- * @method afterAsyncLoad
- * @param {void} arg0
- */
-afterAsyncLoad : function (
-void 
-)
-{
-},
-
-/**
- * @method loadFromCache
- * @param {String} arg0
- * @return {bool}
- */
-loadFromCache : function (
-str 
-)
-{
-    return false;
-},
-
-/**
- * @method initFrom
- * @param {cc.NodeDatas} arg0
- * @param {cc.MeshDatas} arg1
- * @param {cc.MaterialDatas} arg2
- * @return {bool}
- */
-initFrom : function (
-nodedatas, 
-meshdatas, 
-materialdatas 
-)
-{
-    return false;
-},
-
-/**
- * @method getAttachNode
- * @param {String} arg0
+ * @method create
+ * @param {cc.Bone3D} arg0
  * @return {cc.AttachNode}
  */
-getAttachNode : function (
-str 
+create : function (
+bone3d 
 )
 {
     return cc.AttachNode;
 },
 
 /**
- * @method initWithFile
- * @param {String} arg0
- * @return {bool}
- */
-initWithFile : function (
-str 
-)
-{
-    return false;
-},
-
-/**
- * @method setBlendFunc
- * @param {cc.BlendFunc} arg0
- */
-setBlendFunc : function (
-blendfunc 
-)
-{
-},
-
-/**
- * @method getSkeleton
- * @return {cc.Skeleton3D}
- */
-getSkeleton : function (
-)
-{
-    return cc.Skeleton3D;
-},
-
-/**
- * @method setForceDepthWrite
- * @param {bool} arg0
- */
-setForceDepthWrite : function (
-bool 
-)
-{
-},
-
-/**
- * @method getMeshByName
- * @param {String} arg0
- * @return {cc.Mesh}
- */
-getMeshByName : function (
-str 
-)
-{
-    return cc.Mesh;
-},
-
-/**
- * @method create
-* @param {String|String} str
-* @param {String} str
-* @return {cc.Sprite3D|cc.Sprite3D|cc.Sprite3D}
-*/
-create : function(
-str,
-str 
-)
-{
-    return cc.Sprite3D;
-},
-
-/**
- * @method Sprite3D
+ * @method AttachNode
  * @constructor
  */
-Sprite3D : function (
+AttachNode : function (
 )
 {
 },
@@ -750,44 +348,67 @@ Sprite3D : function (
 };
 
 /**
- * @class Sprite3DCache
+ * @class BillBoard
  */
-jsb.Sprite3DCache = {
+jsb.BillBoard = {
 
 /**
- * @method removeSprite3DData
- * @param {String} arg0
+ * @method getMode
+ * @return {cc.BillBoard::Mode}
  */
-removeSprite3DData : function (
-str 
+getMode : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setMode
+ * @param {cc.BillBoard::Mode} arg0
+ */
+setMode : function (
+mode 
 )
 {
 },
 
 /**
- * @method removeAllSprite3DData
- */
-removeAllSprite3DData : function (
+ * @method create
+* @param {String|cc.BillBoard::Mode|String} str
+* @param {cc.BillBoard::Mode|rect_object} mode
+* @param {cc.BillBoard::Mode} mode
+* @return {cc.BillBoard|cc.BillBoard|cc.BillBoard}
+*/
+create : function(
+str,
+rect,
+mode 
 )
 {
+    return cc.BillBoard;
 },
 
 /**
- * @method destroyInstance
+ * @method createWithTexture
+ * @param {cc.Texture2D} arg0
+ * @param {cc.BillBoard::Mode} arg1
+ * @return {cc.BillBoard}
  */
-destroyInstance : function (
+createWithTexture : function (
+texture2d, 
+mode 
 )
 {
+    return cc.BillBoard;
 },
 
 /**
- * @method getInstance
- * @return {cc.Sprite3DCache}
+ * @method BillBoard
+ * @constructor
  */
-getInstance : function (
+BillBoard : function (
 )
 {
-    return cc.Sprite3DCache;
 },
 
 };
@@ -796,26 +417,6 @@ getInstance : function (
  * @class Mesh
  */
 jsb.Mesh = {
-
-/**
- * @method setTexture
-* @param {cc.Texture2D|String} texture2d
-*/
-setTexture : function(
-str 
-)
-{
-},
-
-/**
- * @method getTexture
- * @return {cc.Texture2D}
- */
-getTexture : function (
-)
-{
-    return cc.Texture2D;
-},
 
 /**
  * @method getSkin
@@ -949,7 +550,7 @@ str
 
 /**
  * @method getIndexCount
- * @return {long}
+ * @return {int}
  */
 getIndexCount : function (
 )
@@ -969,7 +570,7 @@ meshindexdata
 
 /**
  * @method getMeshVertexAttribCount
- * @return {long}
+ * @return {int}
  */
 getMeshVertexAttribCount : function (
 )
@@ -983,6 +584,16 @@ getMeshVertexAttribCount : function (
  */
 setBlendFunc : function (
 blendfunc 
+)
+{
+},
+
+/**
+ * @method setForce2DQueue
+ * @param {bool} arg0
+ */
+setForce2DQueue : function (
+bool 
 )
 {
 },
@@ -1059,141 +670,109 @@ Mesh : function (
 };
 
 /**
- * @class AttachNode
+ * @class Skeleton3D
  */
-jsb.AttachNode = {
+jsb.Skeleton3D = {
 
 /**
- * @method create
- * @param {cc.Bone3D} arg0
- * @return {cc.AttachNode}
+ * @method removeAllBones
  */
-create : function (
+removeAllBones : function (
+)
+{
+},
+
+/**
+ * @method addBone
+ * @param {cc.Bone3D} arg0
+ */
+addBone : function (
 bone3d 
 )
 {
-    return cc.AttachNode;
 },
 
 /**
- * @method AttachNode
- * @constructor
+ * @method getBoneByName
+ * @param {String} arg0
+ * @return {cc.Bone3D}
  */
-AttachNode : function (
+getBoneByName : function (
+str 
+)
+{
+    return cc.Bone3D;
+},
+
+/**
+ * @method getRootBone
+ * @param {int} arg0
+ * @return {cc.Bone3D}
+ */
+getRootBone : function (
+int 
+)
+{
+    return cc.Bone3D;
+},
+
+/**
+ * @method updateBoneMatrix
+ */
+updateBoneMatrix : function (
 )
 {
 },
 
-};
+/**
+ * @method getBoneByIndex
+ * @param {unsigned int} arg0
+ * @return {cc.Bone3D}
+ */
+getBoneByIndex : function (
+int 
+)
+{
+    return cc.Bone3D;
+},
 
 /**
- * @class BillBoard
+ * @method getRootCount
+ * @return {int}
  */
-jsb.BillBoard = {
-
-/**
- * @method getMode
- * @return {cc.BillBoard::Mode}
- */
-getMode : function (
+getRootCount : function (
 )
 {
     return 0;
 },
 
 /**
- * @method setMode
- * @param {cc.BillBoard::Mode} arg0
+ * @method getBoneIndex
+ * @param {cc.Bone3D} arg0
+ * @return {int}
  */
-setMode : function (
-mode 
+getBoneIndex : function (
+bone3d 
 )
 {
+    return 0;
 },
 
 /**
- * @method create
-* @param {String|cc.BillBoard::Mode|String} str
-* @param {cc.BillBoard::Mode|rect_object} mode
-* @param {cc.BillBoard::Mode} mode
-* @return {cc.BillBoard|cc.BillBoard|cc.BillBoard}
-*/
-create : function(
-str,
-rect,
-mode 
-)
-{
-    return cc.BillBoard;
-},
-
-/**
- * @method createWithTexture
- * @param {cc.Texture2D} arg0
- * @param {cc.BillBoard::Mode} arg1
- * @return {cc.BillBoard}
+ * @method getBoneCount
+ * @return {int}
  */
-createWithTexture : function (
-texture2d, 
-mode 
+getBoneCount : function (
 )
 {
-    return cc.BillBoard;
+    return 0;
 },
 
 /**
- * @method BillBoard
+ * @method Skeleton3D
  * @constructor
  */
-BillBoard : function (
-)
-{
-},
-
-};
-
-/**
- * @class TextureCube
- */
-jsb.TextureCube = {
-
-/**
- * @method reloadTexture
- * @return {bool}
- */
-reloadTexture : function (
-)
-{
-    return false;
-},
-
-/**
- * @method create
- * @param {String} arg0
- * @param {String} arg1
- * @param {String} arg2
- * @param {String} arg3
- * @param {String} arg4
- * @param {String} arg5
- * @return {cc.TextureCube}
- */
-create : function (
-str, 
-str, 
-str, 
-str, 
-str, 
-str 
-)
-{
-    return cc.TextureCube;
-},
-
-/**
- * @method TextureCube
- * @constructor
- */
-TextureCube : function (
+Skeleton3D : function (
 )
 {
 },
@@ -1215,20 +794,20 @@ reload : function (
 
 /**
  * @method init
-* @param {String} str
-* @param {String} str
-* @param {String} str
-* @param {String} str
-* @param {String} str
-* @param {String} str
-* @return {bool|bool}
-*/
-init : function(
-str,
-str,
-str,
-str,
-str,
+ * @param {String} arg0
+ * @param {String} arg1
+ * @param {String} arg2
+ * @param {String} arg3
+ * @param {String} arg4
+ * @param {String} arg5
+ * @return {bool}
+ */
+init : function (
+str, 
+str, 
+str, 
+str, 
+str, 
 str 
 )
 {
@@ -1279,32 +858,513 @@ Skybox : function (
 };
 
 /**
- * @class Terrain
+ * @class Sprite3D
  */
-jsb.Terrain = {
+jsb.Sprite3D = {
 
 /**
- * @method initHeightMap
- * @param {char} arg0
+ * @method setCullFaceEnabled
+ * @param {bool} arg0
+ */
+setCullFaceEnabled : function (
+bool 
+)
+{
+},
+
+/**
+ * @method setTexture
+* @param {cc.Texture2D|String} texture2d
+*/
+setTexture : function(
+str 
+)
+{
+},
+
+/**
+ * @method getLightMask
+ * @return {unsigned int}
+ */
+getLightMask : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method createAttachSprite3DNode
+ * @param {cc.NodeData} arg0
+ * @param {cc.MaterialDatas} arg1
+ */
+createAttachSprite3DNode : function (
+nodedata, 
+materialdatas 
+)
+{
+},
+
+/**
+ * @method loadFromFile
+ * @param {String} arg0
+ * @param {cc.NodeDatas} arg1
+ * @param {cc.MeshDatas} arg2
+ * @param {cc.MaterialDatas} arg3
  * @return {bool}
  */
-initHeightMap : function (
-char 
+loadFromFile : function (
+str, 
+nodedatas, 
+meshdatas, 
+materialdatas 
 )
 {
     return false;
 },
 
 /**
- * @method getIntersectionPoint
- * @param {cc.Ray} arg0
- * @return {vec3_object}
+ * @method getMaterial
+ * @param {int} arg0
+ * @return {cc.Material}
  */
-getIntersectionPoint : function (
-ray 
+getMaterial : function (
+int 
 )
 {
-    return cc.Vec3;
+    return cc.Material;
+},
+
+/**
+ * @method setCullFace
+ * @param {unsigned int} arg0
+ */
+setCullFace : function (
+int 
+)
+{
+},
+
+/**
+ * @method getMeshes
+ * @return {Array}
+ */
+getMeshes : function (
+)
+{
+    return new Array();
+},
+
+/**
+ * @method addMesh
+ * @param {cc.Mesh} arg0
+ */
+addMesh : function (
+mesh 
+)
+{
+},
+
+/**
+ * @method removeAllAttachNode
+ */
+removeAllAttachNode : function (
+)
+{
+},
+
+/**
+ * @method setMaterial
+* @param {cc.Material|cc.Material} material
+* @param {int} int
+*/
+setMaterial : function(
+material,
+int 
+)
+{
+},
+
+/**
+ * @method getMesh
+ * @return {cc.Mesh}
+ */
+getMesh : function (
+)
+{
+    return cc.Mesh;
+},
+
+/**
+ * @method createSprite3DNode
+ * @param {cc.NodeData} arg0
+ * @param {cc.ModelData} arg1
+ * @param {cc.MaterialDatas} arg2
+ * @return {cc.Sprite3D}
+ */
+createSprite3DNode : function (
+nodedata, 
+modeldata, 
+materialdatas 
+)
+{
+    return cc.Sprite3D;
+},
+
+/**
+ * @method getMeshCount
+ * @return {int}
+ */
+getMeshCount : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method onAABBDirty
+ */
+onAABBDirty : function (
+)
+{
+},
+
+/**
+ * @method getMeshByIndex
+ * @param {int} arg0
+ * @return {cc.Mesh}
+ */
+getMeshByIndex : function (
+int 
+)
+{
+    return cc.Mesh;
+},
+
+/**
+ * @method createNode
+ * @param {cc.NodeData} arg0
+ * @param {cc.Node} arg1
+ * @param {cc.MaterialDatas} arg2
+ * @param {bool} arg3
+ */
+createNode : function (
+nodedata, 
+node, 
+materialdatas, 
+bool 
+)
+{
+},
+
+/**
+ * @method isForceDepthWrite
+ * @return {bool}
+ */
+isForceDepthWrite : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method getBlendFunc
+ * @return {cc.BlendFunc}
+ */
+getBlendFunc : function (
+)
+{
+    return cc.BlendFunc;
+},
+
+/**
+ * @method getMeshIndexData
+ * @param {String} arg0
+ * @return {cc.MeshIndexData}
+ */
+getMeshIndexData : function (
+str 
+)
+{
+    return cc.MeshIndexData;
+},
+
+/**
+ * @method setLightMask
+ * @param {unsigned int} arg0
+ */
+setLightMask : function (
+int 
+)
+{
+},
+
+/**
+ * @method afterAsyncLoad
+ * @param {void} arg0
+ */
+afterAsyncLoad : function (
+void 
+)
+{
+},
+
+/**
+ * @method loadFromCache
+ * @param {String} arg0
+ * @return {bool}
+ */
+loadFromCache : function (
+str 
+)
+{
+    return false;
+},
+
+/**
+ * @method initFrom
+ * @param {cc.NodeDatas} arg0
+ * @param {cc.MeshDatas} arg1
+ * @param {cc.MaterialDatas} arg2
+ * @return {bool}
+ */
+initFrom : function (
+nodedatas, 
+meshdatas, 
+materialdatas 
+)
+{
+    return false;
+},
+
+/**
+ * @method getAttachNode
+ * @param {String} arg0
+ * @return {cc.AttachNode}
+ */
+getAttachNode : function (
+str 
+)
+{
+    return cc.AttachNode;
+},
+
+/**
+ * @method initWithFile
+ * @param {String} arg0
+ * @return {bool}
+ */
+initWithFile : function (
+str 
+)
+{
+    return false;
+},
+
+/**
+ * @method setBlendFunc
+ * @param {cc.BlendFunc} arg0
+ */
+setBlendFunc : function (
+blendfunc 
+)
+{
+},
+
+/**
+ * @method setForce2DQueue
+ * @param {bool} arg0
+ */
+setForce2DQueue : function (
+bool 
+)
+{
+},
+
+/**
+ * @method genMaterial
+ */
+genMaterial : function (
+)
+{
+},
+
+/**
+ * @method removeAttachNode
+ * @param {String} arg0
+ */
+removeAttachNode : function (
+str 
+)
+{
+},
+
+/**
+ * @method getSkeleton
+ * @return {cc.Skeleton3D}
+ */
+getSkeleton : function (
+)
+{
+    return cc.Skeleton3D;
+},
+
+/**
+ * @method setForceDepthWrite
+ * @param {bool} arg0
+ */
+setForceDepthWrite : function (
+bool 
+)
+{
+},
+
+/**
+ * @method getMeshByName
+ * @param {String} arg0
+ * @return {cc.Mesh}
+ */
+getMeshByName : function (
+str 
+)
+{
+    return cc.Mesh;
+},
+
+/**
+ * @method create
+* @param {String|String} str
+* @param {String} str
+* @return {cc.Sprite3D|cc.Sprite3D|cc.Sprite3D}
+*/
+create : function(
+str,
+str 
+)
+{
+    return cc.Sprite3D;
+},
+
+/**
+ * @method Sprite3D
+ * @constructor
+ */
+Sprite3D : function (
+)
+{
+},
+
+};
+
+/**
+ * @class Sprite3DCache
+ */
+jsb.Sprite3DCache = {
+
+/**
+ * @method removeSprite3DData
+ * @param {String} arg0
+ */
+removeSprite3DData : function (
+str 
+)
+{
+},
+
+/**
+ * @method removeAllSprite3DData
+ */
+removeAllSprite3DData : function (
+)
+{
+},
+
+/**
+ * @method destroyInstance
+ */
+destroyInstance : function (
+)
+{
+},
+
+/**
+ * @method getInstance
+ * @return {cc.Sprite3DCache}
+ */
+getInstance : function (
+)
+{
+    return cc.Sprite3DCache;
+},
+
+};
+
+/**
+ * @class Terrain
+ */
+jsb.Terrain = {
+
+/**
+ * @method initHeightMap
+ * @param {String} arg0
+ * @return {bool}
+ */
+initHeightMap : function (
+str 
+)
+{
+    return false;
+},
+
+/**
+ * @method setMaxDetailMapAmount
+ * @param {int} arg0
+ */
+setMaxDetailMapAmount : function (
+int 
+)
+{
+},
+
+/**
+ * @method setDrawWire
+ * @param {bool} arg0
+ */
+setDrawWire : function (
+bool 
+)
+{
+},
+
+/**
+ * @method setDetailMap
+ * @param {unsigned int} arg0
+ * @param {cc.Terrain::DetailMap} arg1
+ */
+setDetailMap : function (
+int, 
+map 
+)
+{
+},
+
+/**
+ * @method resetHeightMap
+ * @param {String} arg0
+ */
+resetHeightMap : function (
+str 
+)
+{
+},
+
+/**
+ * @method setLightDir
+ * @param {vec3_object} arg0
+ */
+setLightDir : function (
+vec3 
+)
+{
 },
 
 /**
@@ -1340,22 +1400,6 @@ vec2
 },
 
 /**
- * @method getHeight
-* @param {vec2_object|float} vec2
-* @param {vec3_object|float} vec3
-* @param {vec3_object} vec3
-* @return {float|float}
-*/
-getHeight : function(
-float,
-float,
-vec3 
-)
-{
-    return 0;
-},
-
-/**
  * @method initTextures
  * @return {bool}
  */
@@ -1376,6 +1420,74 @@ initProperties : function (
 },
 
 /**
+ * @method getHeight
+* @param {vec2_object|float} vec2
+* @param {vec3_object|float} vec3
+* @param {vec3_object} vec3
+* @return {float|float}
+*/
+getHeight : function(
+float,
+float,
+vec3 
+)
+{
+    return 0;
+},
+
+/**
+ * @method initWithTerrainData
+ * @param {cc.Terrain::TerrainData} arg0
+ * @param {cc.Terrain::CrackFixedType} arg1
+ * @return {bool}
+ */
+initWithTerrainData : function (
+terraindata, 
+crackfixedtype 
+)
+{
+    return false;
+},
+
+/**
+ * @method setLODDistance
+ * @param {float} arg0
+ * @param {float} arg1
+ * @param {float} arg2
+ */
+setLODDistance : function (
+float, 
+float, 
+float 
+)
+{
+},
+
+/**
+ * @method getTerrainSize
+ * @return {size_object}
+ */
+getTerrainSize : function (
+)
+{
+    return cc.Size;
+},
+
+/**
+ * @method getIntersectionPoint
+* @param {cc.Ray|cc.Ray} ray
+* @param {vec3_object} vec3
+* @return {bool|vec3_object}
+*/
+getIntersectionPoint : function(
+ray,
+vec3 
+)
+{
+    return false;
+},
+
+/**
  * @method getNormal
  * @param {int} arg0
  * @param {int} arg1
@@ -1390,31 +1502,9 @@ int
 },
 
 /**
- * @method setDrawWire
- * @param {bool} arg0
- */
-setDrawWire : function (
-bool 
-)
-{
-},
-
-/**
  * @method reload
  */
 reload : function (
-)
-{
-},
-
-/**
- * @method setDetailMap
- * @param {unsigned int} arg0
- * @param {cc.Terrain::DetailMap} arg1
- */
-setDetailMap : function (
-int, 
-map 
 )
 {
 },
@@ -1434,6 +1524,26 @@ int
 },
 
 /**
+ * @method setLightMap
+ * @param {String} arg0
+ */
+setLightMap : function (
+str 
+)
+{
+},
+
+/**
+ * @method setIsEnableFrustumCull
+ * @param {bool} arg0
+ */
+setIsEnableFrustumCull : function (
+bool 
+)
+{
+},
+
+/**
  * @method getMinHeight
  * @return {float}
  */
@@ -1441,30 +1551,6 @@ getMinHeight : function (
 )
 {
     return 0;
-},
-
-/**
- * @method setLODDistance
- * @param {float} arg0
- * @param {float} arg1
- * @param {float} arg2
- */
-setLODDistance : function (
-float, 
-float, 
-float 
-)
-{
-},
-
-/**
- * @method resetHeightMap
- * @param {char} arg0
- */
-resetHeightMap : function (
-char 
-)
-{
 },
 
 /**
@@ -1478,21 +1564,150 @@ getMaxHeight : function (
 },
 
 /**
- * @method setMaxDetailMapAmount
- * @param {int} arg0
+ * @method Terrain
+ * @constructor
  */
-setMaxDetailMapAmount : function (
-int 
+Terrain : function (
+)
+{
+},
+
+};
+
+/**
+ * @class Bundle3D
+ */
+jsb.Bundle3D = {
+
+/**
+ * @method load
+ * @param {String} arg0
+ * @return {bool}
+ */
+load : function (
+str 
+)
+{
+    return false;
+},
+
+/**
+ * @method loadSkinData
+ * @param {String} arg0
+ * @param {cc.SkinData} arg1
+ * @return {bool}
+ */
+loadSkinData : function (
+str, 
+skindata 
+)
+{
+    return false;
+},
+
+/**
+ * @method clear
+ */
+clear : function (
 )
 {
 },
 
 /**
- * @method setIsEnableFrustumCull
- * @param {bool} arg0
+ * @method loadMaterials
+ * @param {cc.MaterialDatas} arg0
+ * @return {bool}
  */
-setIsEnableFrustumCull : function (
-bool 
+loadMaterials : function (
+materialdatas 
+)
+{
+    return false;
+},
+
+/**
+ * @method loadMeshDatas
+ * @param {cc.MeshDatas} arg0
+ * @return {bool}
+ */
+loadMeshDatas : function (
+meshdatas 
+)
+{
+    return false;
+},
+
+/**
+ * @method loadNodes
+ * @param {cc.NodeDatas} arg0
+ * @return {bool}
+ */
+loadNodes : function (
+nodedatas 
+)
+{
+    return false;
+},
+
+/**
+ * @method loadAnimationData
+ * @param {String} arg0
+ * @param {cc.Animation3DData} arg1
+ * @return {bool}
+ */
+loadAnimationData : function (
+str, 
+animation3ddata 
+)
+{
+    return false;
+},
+
+/**
+ * @method createBundle
+ * @return {cc.Bundle3D}
+ */
+createBundle : function (
+)
+{
+    return cc.Bundle3D;
+},
+
+/**
+ * @method destroyBundle
+ * @param {cc.Bundle3D} arg0
+ */
+destroyBundle : function (
+bundle3d 
+)
+{
+},
+
+/**
+ * @method loadObj
+ * @param {cc.MeshDatas} arg0
+ * @param {cc.MaterialDatas} arg1
+ * @param {cc.NodeDatas} arg2
+ * @param {String} arg3
+ * @param {char} arg4
+ * @return {bool}
+ */
+loadObj : function (
+meshdatas, 
+materialdatas, 
+nodedatas, 
+str, 
+char 
+)
+{
+    return false;
+},
+
+/**
+ * @method Bundle3D
+ * @constructor
+ */
+Bundle3D : function (
 )
 {
 },

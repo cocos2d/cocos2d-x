@@ -24,7 +24,7 @@
  ****************************************************************************/
 
 //2015-01-14
-var UITextTest = UIScene.extend({
+var UITextTest = UIMainLayer.extend({
     init: function(){
         if (this._super()) {
             var widgetSize = this._widget.getContentSize();
@@ -42,7 +42,7 @@ var UITextTest = UIScene.extend({
 });
 
 //2015-01-14
-var UITextTest_LineWrap = UIScene.extend({
+var UITextTest_LineWrap = UIMainLayer.extend({
     init: function(){
         if (this._super()) {
             var widgetSize = this._widget.getContentSize();
@@ -74,7 +74,7 @@ var UITextTest_LineWrap = UIScene.extend({
 });
 
 //2015-01-14
-var UILabelTest_Effect = UIScene.extend({
+var UILabelTest_Effect = UIMainLayer.extend({
     init: function(){
         if (this._super()) {
             var widgetSize = this._widget.getContentSize();
@@ -120,7 +120,7 @@ var UILabelTest_Effect = UIScene.extend({
 });
 
 //2015-01-14
-var UITextTest_TTF = UIScene.extend({
+var UITextTest_TTF = UIMainLayer.extend({
     init: function(){
         if(this._super()){
             var widgetSize = this._widget.getContentSize();
@@ -138,7 +138,7 @@ var UITextTest_TTF = UIScene.extend({
 });
 
 //2015-01-14
-var UITextTest_IgnoreConentSize = UIScene.extend({
+var UITextTest_IgnoreConentSize = UIMainLayer.extend({
 
     init: function(){
         if(this._super()){

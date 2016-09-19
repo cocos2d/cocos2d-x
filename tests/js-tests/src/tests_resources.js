@@ -1,6 +1,22 @@
 // Resources prefix
 var s_resprefix = "";
 
+var ccbjs = "";
+// js-test use cpptest resource in debug mode , and in the release mode, console will copy the resource into the res dir
+// so the respath will modify to res,
+if (!cc.sys.isNative)
+{
+    cc.game._loadConfig();
+    if (cc.game.config[cc.game.CONFIG_KEY.engineDir] !== "frameworks/cocos2d-html5") {
+        ccbjs = "../../js-tests/resjs/";
+    }
+    else
+    {
+        ccbjs = "";
+    }
+
+}
+
 var s_pathGrossini = "Images/grossini.png";
 var s_pathSister1 = "Images/grossinis_sister1.png";
 var s_pathSister2 = "Images/grossinis_sister2.png";
@@ -59,40 +75,9 @@ var s_tcc_issue_2 = "animations/tcc_issue_2.png";
 var s_tcc_issue_1_plist = "animations/tcc_issue_1.plist";
 var s_tcc_issue_2_plist = "animations/tcc_issue_2.plist";
 
-var s_Cowboy_json = "armatuCowboy.ExportJson";
-var s_Cowboy_plist = "armatuCowboy0.plist";
-var s_Cowboy_png = "armatuCowboy0.png";
-var s_hero_json = "armatuhero.ExportJson";
-var s_hero0_plist = "armatuhero0.plist";
-var s_hero0_png = "armatuhero0.png";
-var s_horse_json = "armatuhorse.ExportJson";
-var s_horse0_plist = "armatuhorse0.plist";
-var s_horse0_png = "armatuhorse0.png";
-var s_bear_json = "armatubear.ExportJson";
-var s_bear0_plist = "armatubear0.plist";
-var s_bear0_png = "armatubear0.png";
-var s_blood_plist = "armatublood.plist";
-var s_HeroAnimation_json = "armatuHeroAnimation.ExportJson";
-var s_HeroAnimation0_plist = "armatuHeroAnimation0.plist";
-var s_HeroAnimation0_png = "armatuHeroAnimation0.png";
-var s_cyborg_plist = "armatucyborg.plist";
-var s_cyborg_png = "armatucyborg.png";
-var s_cyborg_xml = "armatucyborg.xml";
-var s_Dragon_plist = "armatuDragon.plist";
-var s_Dragon_png = "armatuDragon.png";
-var s_Dragon_xml = "armatuDragon.xml";
-var s_knight_plist = "armatuknight.plist";
-var s_knight_png = "armatuknight.png";
-var s_knight_xml = "armatuknight.xml";
-var s_robot_plist = "armaturobot.plist";
-var s_robot_png = "armaturobot.png";
-var s_robot_xml = "armaturobot.xml";
-var s_weapon_plist = "armatuweapon.plist";
-var s_weapon_png = "armatuweapon.png";
-var s_weapon_xml = "armatuweapon.xml";
-var s_testEasing_json = "armatutestEasing.ExportJson";
-var s_testEasing0_plist = "armatutestEasing0.plist";
-var s_testEasing0_png = "armatutestEasing0.png";
+// Issue CustomIssueAnimationsWithOnlyOneFrame
+var s_testIssueAnimationsWithOnlyOneFrame_json = "ccs-res/cocosui/CustomIssueAnimationsWithOnlyOneFrame/AnimationsWithOnlyOneFrame.json";
+var s_testIssueAnimationsWithOnlyOneFrame_png = "ccs-res/cocosui/CustomIssueAnimationsWithOnlyOneFrame/TheDigitalSpell.png";
 
 var s_s9s_blocks9 = "Images/blocks9ss.png";
 var s_s9s_blocks9_plist = "Images/blocks9ss.plist";
@@ -149,7 +134,7 @@ var s_tileISOOffsetPng = "TileMaps/tile_iso_offset.png";
 var s_tileISOOffsetTmx = "TileMaps/tile_iso_offset.tmx";
 
 var s_fnTuffyBoldItalicCharmapPng = "fonts/tuffy_bold_italic-charmap.png";
-var s_fpsImages = "fonts/fps_images.png";
+var s_fpsImages = "fps_images.png";
 var s_bitmapFontTest = "fonts/bitmapFontTest.png";
 var s_bitmapFontTest2 = "fonts/bitmapFontTest2.png";
 var s_bitmapFontTest3 = "fonts/bitmapFontTest3.png";
@@ -221,6 +206,7 @@ var g_resources = [
     s_pathF1,
     s_pathF2,
     s_pathBlock,
+    s_back2,
     s_back3,
     s_fire,
     s_pathClose,
@@ -308,32 +294,31 @@ var g_touches = [
 var g_s9s_blocks = [
     s_s9s_blocks9_plist,
     s_s9s_blocks9,
-    s_blocks9,
     s_s9s_ui,
     s_s9s_ui_plist
 ];
 
 var g_opengl_resources = [
     //preload shader source
-    "Shaders/example_Outline.fsh",
-    "Shaders/example_Outline.vsh",
-    "Shaders/example_Blur.fsh",
-    "Shaders/example_ColorBars.fsh",
-    "Shaders/example_ColorBars.vsh",
-    "Shaders/example_Flower.fsh",
-    "Shaders/example_Flower.vsh",
-    "Shaders/example_Heart.fsh",
-    "Shaders/example_Heart.vsh",
-    "Shaders/example_Julia.fsh",
-    "Shaders/example_Julia.vsh",
-    "Shaders/example_Mandelbrot.fsh",
-    "Shaders/example_Mandelbrot.vsh",
-    "Shaders/example_Monjori.fsh",
-    "Shaders/example_Monjori.vsh",
-    "Shaders/example_Plasma.fsh",
-    "Shaders/example_Plasma.vsh",
-    "Shaders/example_Twist.fsh",
-    "Shaders/example_Twist.vsh",
+    ccbjs + "Shaders/example_Outline.fsh",
+    ccbjs + "Shaders/example_Outline.vsh",
+    ccbjs + "Shaders/example_Blur.fsh",
+    ccbjs + "Shaders/example_ColorBars.fsh",
+    ccbjs + "Shaders/example_ColorBars.vsh",
+    ccbjs + "Shaders/example_Flower.fsh",
+    ccbjs + "Shaders/example_Flower.vsh",
+    ccbjs + "Shaders/example_Heart.fsh",
+    ccbjs + "Shaders/example_Heart.vsh",
+    ccbjs + "Shaders/example_Julia.fsh",
+    ccbjs + "Shaders/example_Julia.vsh",
+    ccbjs + "Shaders/example_Mandelbrot.fsh",
+    ccbjs + "Shaders/example_Mandelbrot.vsh",
+    ccbjs + "Shaders/example_Monjori.fsh",
+    ccbjs + "Shaders/example_Monjori.vsh",
+    ccbjs + "Shaders/example_Plasma.fsh",
+    ccbjs + "Shaders/example_Plasma.vsh",
+    ccbjs + "Shaders/example_Twist.fsh",
+    ccbjs + "Shaders/example_Twist.vsh",
 
     "fonts/west_england-64.fnt",
     "fonts/west_england-64.png"
@@ -384,8 +369,7 @@ var g_label = [
 ];
 
 var g_transitions = [
-    s_back1,
-    s_back2
+    s_back1
 ];
 
 var g_box2d = [
@@ -393,10 +377,10 @@ var g_box2d = [
 ];
 
 var g_cocosdeshion = [
-    "Sound/background.mp3",
-    "Sound/effect2.mp3"
-    //"Sound/background.ogg",                        //one sound only, cc.audio can auto select other format to load if the sound format isn't supported on some browser.
-    //"Sound/effect2.ogg"
+    "background.mp3",
+    "effect2.mp3"
+    //"background.ogg",                        //one sound only, cc.audio can auto select other format to load if the sound format isn't supported on some browser.
+    //"effect2.ogg"
 ];
 
 var g_parallax = [
@@ -450,22 +434,22 @@ var g_fonts = [
     {
         type:"font",
         name:"Thonburi",
-        srcs:["fonts/Thonburi.eot", "fonts/Thonburi.ttf"]
+        srcs:["../cpp-tests/Resources/fonts/Thonburi.eot", "../cpp-tests/Resources/fonts/Thonburi.ttf"]
     },
     {
         type:"font",
         name:"Schwarzwald Regular",
-        srcs:["fonts/Schwarzwald_Regular.eot", "fonts/Schwarzwald Regular.ttf"]
+        srcs:["../cpp-tests/Resources/fonts/Schwarzwald_Regular.eot", "../cpp-tests/Resources/fonts/Schwarzwald Regular.ttf"]
     },
     {
         type:"font",
         name:"ThonburiBold",
-        srcs:["fonts/ThonburiBold.eot", "fonts/ThonburiBold.ttf"]
+        srcs:["../cpp-tests/Resources/fonts/ThonburiBold.eot", "../cpp-tests/Resources/fonts/ThonburiBold.ttf"]
     },
     {
         type:"font",
         name:"Courier New",
-        srcs:["fonts/Courier New.eot", "fonts/Courier New.ttf"]
+        srcs:["../cpp-tests/Resources/fonts/Courier New.eot", "../cpp-tests/Resources/fonts/Courier New.ttf"]
     }
 ];
 
@@ -478,46 +462,46 @@ var g_extensions = [
     s_extensions_ribbon,
 
     //ccbi resource
-    "ccb/HelloCocosBuilder.ccbi",
-    "ccb/ccb/TestAnimations.ccbi",
-    "ccb/ccb/TestAnimationsSub.ccbi",
-    "ccb/ccb/TestButtons.ccbi",
-    "ccb/ccb/TestHeader.ccbi",
-    "ccb/ccb/TestLabels.ccbi",
-    "ccb/ccb/TestMenus.ccbi",
-    "ccb/ccb/TestParticleSystems.ccbi",
-    "ccb/ccb/TestScrollViews.ccbi",
-    "ccb/ccb/TestScrollViewsContentA.ccbi",
-    "ccb/ccb/TestSprites.ccbi",
+    ccbjs + "ccb/HelloCocosBuilder.ccbi",
+    ccbjs + "ccb/ccb/TestAnimations.ccbi",
+    ccbjs + "ccb/ccb/TestAnimationsSub.ccbi",
+    ccbjs + "ccb/ccb/TestButtons.ccbi",
+    ccbjs + "ccb/ccb/TestHeader.ccbi",
+    ccbjs + "ccb/ccb/TestLabels.ccbi",
+    ccbjs + "ccb/ccb/TestMenus.ccbi",
+    ccbjs + "ccb/ccb/TestParticleSystems.ccbi",
+    ccbjs + "ccb/ccb/TestScrollViews.ccbi",
+    ccbjs + "ccb/ccb/TestScrollViewsContentA.ccbi",
+    ccbjs + "ccb/ccb/TestSprites.ccbi",
 
-    "ccb/ccbParticleStars.png",
-    "ccb/btn-test-0.png",
-    "ccb/animated-grossini.png",
-    "ccb/btn-a-0.png",
-    "ccb/btn-a-1.png",
-    "ccb/btn-a-2.png",
-    "ccb/btn-b-0.png",
-    "ccb/btn-b-1.png",
-    "ccb/btn-b-2.png",
-    "ccb/btn-back-0.png",
-    "ccb/btn-back-1.png",
-    "ccb/btn-test-0.png",
-    "ccb/btn-test-1.png",
-    "ccb/btn-test-2.png",
-    "ccb/burst.png",
-    "ccb/flower.jpg",
-    "ccb/grossini-generic.png",
-    "ccb/jungle.png",
-    "ccb/jungle-left.png",
-    "ccb/jungle-right.png",
-    "ccb/logo.png",
-    "ccb/logo-icon.png",
-    "ccb/markerfelt24shadow.png",
-    "ccb/particle-fire.png",
-    "ccb/particle-smoke.png",
-    "ccb/particle-snow.png",
-    "ccb/particle-stars.png",
-    "ccb/scale-9-demo.png",
+    ccbjs + "ccb/ccbParticleStars.png",
+    ccbjs + "ccb/btn-test-0.png",
+    ccbjs + "ccb/animated-grossini.png",
+    ccbjs + "ccb/btn-a-0.png",
+    ccbjs + "ccb/btn-a-1.png",
+    ccbjs + "ccb/btn-a-2.png",
+    ccbjs + "ccb/btn-b-0.png",
+    ccbjs + "ccb/btn-b-1.png",
+    ccbjs + "ccb/btn-b-2.png",
+    ccbjs + "ccb/btn-back-0.png",
+    ccbjs + "ccb/btn-back-1.png",
+    ccbjs + "ccb/btn-test-0.png",
+    ccbjs + "ccb/btn-test-1.png",
+    ccbjs + "ccb/btn-test-2.png",
+    ccbjs + "ccb/burst.png",
+    ccbjs + "ccb/flower.jpg",
+    ccbjs + "ccb/grossini-generic.png",
+    ccbjs + "ccb/jungle.png",
+    ccbjs + "ccb/jungle-left.png",
+    ccbjs + "ccb/jungle-right.png",
+    ccbjs + "ccb/logo.png",
+    ccbjs + "ccb/logo-icon.png",
+    ccbjs + "ccb/markerfelt24shadow.png",
+    ccbjs + "ccb/particle-fire.png",
+    ccbjs + "ccb/particle-smoke.png",
+    ccbjs + "ccb/particle-snow.png",
+    ccbjs + "ccb/particle-stars.png",
+    ccbjs + "ccb/scale-9-demo.png",
     "extensions/green_edit.png",
     "extensions/orange_edit.png",
     "extensions/yellow_edit.png",
@@ -538,429 +522,70 @@ var g_extensions = [
     "extensions/CCControlColourPickerSpriteSheet.plist",
     "extensions/CCControlColourPickerSpriteSheet.png",
 
-    "ccb/markerfelt24shadow.fnt",
+    ccbjs + "ccb/markerfelt24shadow.fnt",
 
-    "ccb/grossini-generic.plist",
-    "ccb/animated-grossini.plist"
-];
-
-var g_cocoStudio = [
-    //Armature
-    s_Cowboy_json ,
-    s_Cowboy_plist,
-    s_Cowboy_png,
-    s_hero_json,
-    s_hero0_plist,
-    s_hero0_png,
-    s_horse_json,
-    s_horse0_plist,
-    s_horse0_png,
-    s_bear_json,
-    s_bear0_plist,
-    s_bear0_png,
-    s_blood_plist,
-    s_HeroAnimation_json,
-    s_HeroAnimation0_plist,
-    s_HeroAnimation0_png,
-    s_cyborg_plist ,
-    s_cyborg_png ,
-    s_cyborg_xml ,
-    s_Dragon_plist ,
-    s_Dragon_png ,
-    s_Dragon_xml ,
-    s_knight_plist ,
-    s_knight_png ,
-    s_knight_xml ,
-    s_robot_plist ,
-    s_robot_png ,
-    s_robot_xml ,
-    s_weapon_plist ,
-    s_weapon_png ,
-    s_weapon_xml ,
-    s_testEasing_json ,
-    s_testEasing0_plist ,
-    s_testEasing0_png ,
-
-//GUI
-    "Particles/SmallSun.plist",
-    "Images/b1.png",
-    "Images/b2.png",
-    "Images/f1.png",
-    "Images/f2.png",
-    "cocosui/CCS/Button/background.png",
-    "cocosui/CCS/Button/buttonBackground.png",
-    "cocosui/CCS/Button/buttonHighlighted.png",
-    "cocosui/CCS/Button/button_n.png",
-    "cocosui/CCS/Button/button_p.png",
-    "cocosui/CCS/Button/ribbon.png",
-    "cocosui/CCS/Button/Button_1.json",
-    "cocosui/CCS/CheckBox/background.png",
-    "cocosui/CCS/CheckBox/buttonBackground.png",
-    "cocosui/CCS/CheckBox/ribbon.png",
-    "cocosui/CCS/CheckBox/selected01.png",
-    "cocosui/CCS/CheckBox/selected02.png",
-    "cocosui/CCS/CheckBox/checkbox_1.json",
-    "cocosui/CCS/CheckBox/MainScene.json",
-    "cocosui/CCS/CheckBox/Default/CheckBox_Disable.png",
-    "cocosui/CCS/CheckBox/img/btn_music.png",
-    "cocosui/CCS/CheckBox/img/btn_sound_off.png",
-    "cocosui/CCS/ImageView/background.png",
-    "cocosui/CCS/ImageView/buttonBackground.png",
-    "cocosui/CCS/ImageView/buttonHighlighted.png",
-    "cocosui/CCS/ImageView/GUI/image.png",
-    "cocosui/CCS/ImageView/ribbon.png",
-    "cocosui/CCS/ImageView/ImageView_1.json",
-    "cocosui/CCS/LabelAtlas/background.png",
-    "cocosui/CCS/LabelAtlas/buttonBackground.png",
-    "cocosui/CCS/LabelAtlas/GUI/labelatlasimg.png",
-    "cocosui/CCS/LabelAtlas/ribbon.png",
-    "cocosui/CCS/LabelAtlas/labelatlas_1.json",
-    "cocosui/CCS/LabelBMFont/background.png",
-    "cocosui/CCS/LabelBMFont/buttonBackground.png",
-    "cocosui/CCS/LabelBMFont/GUI/missing-font.fnt",
-    "cocosui/CCS/LabelBMFont/GUI/missing-font.png",
-    "cocosui/CCS/LabelBMFont/ribbon.png",
-    "cocosui/CCS/LabelBMFont/labelbmfont_1.json",
-    "cocosui/CCS/Label/background.png",
-    "cocosui/CCS/Label/buttonBackground.png",
-    "cocosui/CCS/Label/ribbon.png",
-    "cocosui/CCS/Label/label_1.json",
-    "cocosui/CCS/Layout/BackgroundImage/background.png",
-    "cocosui/CCS/Layout/BackgroundImage/buttonBackground.png",
-    "cocosui/CCS/Layout/BackgroundImage/button_n.png",
-    "cocosui/CCS/Layout/BackgroundImage/button_p.png",
-    "cocosui/CCS/Layout/BackgroundImage/GUI/image.png",
-    "cocosui/CCS/Layout/BackgroundImage/Hello.png",
-    "cocosui/CCS/Layout/BackgroundImage/ribbon.png",
-    "cocosui/CCS/Layout/BackgroundImage/selected01.png",
-    "cocosui/CCS/Layout/BackgroundImage/selected02.png",
-    "cocosui/CCS/Layout/BackgroundImage/backgroundimage_1.json",
-    "cocosui/CCS/Layout/Color/background.png",
-    "cocosui/CCS/Layout/Color/buttonBackground.png",
-    "cocosui/CCS/Layout/Color/button_n.png",
-    "cocosui/CCS/Layout/Color/button_p.png",
-    "cocosui/CCS/Layout/Color/GUI/image.png",
-    "cocosui/CCS/Layout/Color/ribbon.png",
-    "cocosui/CCS/Layout/Color/selected01.png",
-    "cocosui/CCS/Layout/Color/selected02.png",
-    "cocosui/CCS/Layout/Color/color_1.json",
-    "cocosui/CCS/Layout/Layout/background.png",
-    "cocosui/CCS/Layout/Layout/buttonBackground.png",
-    "cocosui/CCS/Layout/Layout/button_n.png",
-    "cocosui/CCS/Layout/Layout/button_p.png",
-    "cocosui/CCS/Layout/Layout/GUI/image.png",
-    "cocosui/CCS/Layout/Layout/ribbon.png",
-    "cocosui/CCS/Layout/Layout/selected01.png",
-    "cocosui/CCS/Layout/Layout/selected02.png",
-    "cocosui/CCS/Layout/Layout/layout_1.json",
-    "cocosui/CCS/Layout/Gradient_Color/background.png",
-    "cocosui/CCS/Layout/Gradient_Color/buttonBackground.png",
-    "cocosui/CCS/Layout/Gradient_Color/button_n.png",
-    "cocosui/CCS/Layout/Gradient_Color/button_p.png",
-    "cocosui/CCS/Layout/Gradient_Color/GUI/image.png",
-    "cocosui/CCS/Layout/Gradient_Color/ribbon.png",
-    "cocosui/CCS/Layout/Gradient_Color/selected01.png",
-    "cocosui/CCS/Layout/Gradient_Color/selected02.png",
-    "cocosui/CCS/Layout/Gradient_Color/gradient_color_1.json",
-    "cocosui/CCS/Layout/Linear_Horizontal/background.png",
-    "cocosui/CCS/Layout/Linear_Horizontal/buttonBackground.png",
-    "cocosui/CCS/Layout/Linear_Horizontal/button_n.png",
-    "cocosui/CCS/Layout/Linear_Horizontal/button_p.png",
-    "cocosui/CCS/Layout/Linear_Horizontal/GUI/image.png",
-    "cocosui/CCS/Layout/Linear_Horizontal/ribbon.png",
-    "cocosui/CCS/Layout/Linear_Horizontal/selected01.png",
-    "cocosui/CCS/Layout/Linear_Horizontal/selected02.png",
-    "cocosui/CCS/Layout/Linear_Horizontal/linear_horizontal.json",
-    "cocosui/CCS/Layout/Linear_Vertical/background.png",
-    "cocosui/CCS/Layout/Linear_Vertical/buttonBackground.png",
-    "cocosui/CCS/Layout/Linear_Vertical/button_n.png",
-    "cocosui/CCS/Layout/Linear_Vertical/button_p.png",
-    "cocosui/CCS/Layout/Linear_Vertical/GUI/image.png",
-    "cocosui/CCS/Layout/Linear_Vertical/ribbon.png",
-    "cocosui/CCS/Layout/Linear_Vertical/selected01.png",
-    "cocosui/CCS/Layout/Linear_Vertical/selected02.png",
-    "cocosui/CCS/Layout/Linear_Vertical/linear_vertical.json",
-    "cocosui/CCS/Layout/Relative_Align_Location/background.png",
-    "cocosui/CCS/Layout/Relative_Align_Location/buttonBackground.png",
-    "cocosui/CCS/Layout/Relative_Align_Location/button_n.png",
-    "cocosui/CCS/Layout/Relative_Align_Location/button_p.png",
-    "cocosui/CCS/Layout/Relative_Align_Location/GUI/image.png",
-    "cocosui/CCS/Layout/Relative_Align_Location/ribbon.png",
-    "cocosui/CCS/Layout/Relative_Align_Location/selected01.png",
-    "cocosui/CCS/Layout/Relative_Align_Location/selected02.png",
-    "cocosui/CCS/Layout/Relative_Align_Location/relative_align_location.json",
-    "cocosui/CCS/Layout/Relative_Align_Parent/background.png",
-    "cocosui/CCS/Layout/Relative_Align_Parent/buttonBackground.png",
-    "cocosui/CCS/Layout/Relative_Align_Parent/button_n.png",
-    "cocosui/CCS/Layout/Relative_Align_Parent/button_p.png",
-    "cocosui/CCS/Layout/Relative_Align_Parent/GUI/image.png",
-    "cocosui/CCS/Layout/Relative_Align_Parent/ribbon.png",
-    "cocosui/CCS/Layout/Relative_Align_Parent/selected01.png",
-    "cocosui/CCS/Layout/Relative_Align_Parent/selected02.png",
-    "cocosui/CCS/Layout/Relative_Align_Parent/relative_align_parent.json",
-    "cocosui/CCS/Layout/Scale9/background.png",
-    "cocosui/CCS/Layout/Scale9/buttonBackground.png",
-    "cocosui/CCS/Layout/Scale9/button_n.png",
-    "cocosui/CCS/Layout/Scale9/button_p.png",
-    "cocosui/CCS/Layout/Scale9/GUI/image.png",
-    "cocosui/CCS/Layout/Scale9/ribbon.png",
-    "cocosui/CCS/Layout/Scale9/selected01.png",
-    "cocosui/CCS/Layout/Scale9/selected02.png",
-    "cocosui/CCS/Layout/Scale9/slider_bar.png",
-    "cocosui/CCS/Layout/Scale9/scale9.json",
-    "cocosui/CCS/ListView/Horizontal/background.png",
-    "cocosui/CCS/ListView/Horizontal/buttonBackground.png",
-    "cocosui/CCS/ListView/Horizontal/button_p.png",
-    "cocosui/CCS/ListView/Horizontal/GUI/button.png",
-    "cocosui/CCS/ListView/Horizontal/GUI/image.png",
-    "cocosui/CCS/ListView/Horizontal/ribbon.png",
-    "cocosui/CCS/ListView/Horizontal/horizontal_1.json",
-    "cocosui/CCS/ListView/Vertical/background.png",
-    "cocosui/CCS/ListView/Vertical/buttonBackground.png",
-    "cocosui/CCS/ListView/Vertical/button_p.png",
-    "cocosui/CCS/ListView/Vertical/GUI/button.png",
-    "cocosui/CCS/ListView/Vertical/GUI/image.png",
-    "cocosui/CCS/ListView/Vertical/ribbon.png",
-    "cocosui/CCS/ListView/Vertical/vertical_1.json",
-    "cocosui/CCS/LoadingBar/background.png",
-    "cocosui/CCS/LoadingBar/buttonBackground.png",
-    "cocosui/CCS/LoadingBar/GUI/loadingbar.png",
-    "cocosui/CCS/LoadingBar/ribbon.png",
-    "cocosui/CCS/LoadingBar/loadingbar_1.json",
-    "cocosui/CCS/PageView/background.png",
-    "cocosui/CCS/PageView/buttonBackground.png",
-    "cocosui/CCS/PageView/button_n.png",
-    "cocosui/CCS/PageView/ribbon.png",
-    "cocosui/CCS/PageView/pageview_1.json",
-    "cocosui/CCS/ScrollView/Both/background.png",
-    "cocosui/CCS/ScrollView/Both/buttonBackground.png",
-    "cocosui/CCS/ScrollView/Both/button_n.png",
-    "cocosui/CCS/ScrollView/Both/button_p.png",
-    "cocosui/CCS/ScrollView/Both/GUI/image.png",
-    "cocosui/CCS/ScrollView/Both/ribbon.png",
-    "cocosui/CCS/ScrollView/Both/selected01.png",
-    "cocosui/CCS/ScrollView/Both/selected02.png",
-    "cocosui/CCS/ScrollView/Both/both_1.json",
-    "cocosui/CCS/ScrollView/Horizontal/background.png",
-    "cocosui/CCS/ScrollView/Horizontal/buttonBackground.png",
-    "cocosui/CCS/ScrollView/Horizontal/button_n.png",
-    "cocosui/CCS/ScrollView/Horizontal/button_p.png",
-    "cocosui/CCS/ScrollView/Horizontal/GUI/image.png",
-    "cocosui/CCS/ScrollView/Horizontal/ribbon.png",
-    "cocosui/CCS/ScrollView/Horizontal/selected01.png",
-    "cocosui/CCS/ScrollView/Horizontal/selected02.png",
-    "cocosui/CCS/ScrollView/Horizontal/horizontal_1.json",
-    "cocosui/CCS/ScrollView/Vertical/background.png",
-    "cocosui/CCS/ScrollView/Vertical/buttonBackground.png",
-    "cocosui/CCS/ScrollView/Vertical/button_n.png",
-    "cocosui/CCS/ScrollView/Vertical/button_p.png",
-    "cocosui/CCS/ScrollView/Vertical/GUI/image.png",
-    "cocosui/CCS/ScrollView/Vertical/ribbon.png",
-    "cocosui/CCS/ScrollView/Vertical/selected01.png",
-    "cocosui/CCS/ScrollView/Vertical/selected02.png",
-    "cocosui/CCS/ScrollView/Vertical/vertical_1.json",
-    "cocosui/CCS/Slider/2014-1-26 11-42-09.png",
-    "cocosui/CCS/Slider/2014-1-26 11-43-52.png",
-    "cocosui/CCS/Slider/background.png",
-    "cocosui/CCS/Slider/buttonBackground.png",
-    "cocosui/CCS/Slider/ribbon.png",
-    "cocosui/CCS/Slider/silder_progressBar.png",
-    "cocosui/CCS/Slider/slider_bar.png",
-    "cocosui/CCS/Slider/slider_bar_button.png",
-    "cocosui/CCS/Slider/slider_1.json",
-    "cocosui/CCS/TextField/background.png",
-    "cocosui/CCS/TextField/buttonBackground.png",
-    "cocosui/CCS/TextField/ribbon.png",
-    "cocosui/CCS/TextField/textfield_1.json",
-    "cocosui/CCS/WidgetAddNode/background.png",
-    "cocosui/CCS/WidgetAddNode/buttonBackground.png",
-    "cocosui/CCS/WidgetAddNode/ribbon.png",
-    "cocosui/CCS/WidgetAddNode/widget_add_node.json",
-    "Sound/background-music-aac.wav",
-    "Sound/pew-pew-lei.wav",
-    //Components
-    "components/Player.png",
-    "components/Projectile.png",
-    "components/Target.png",
-    //Scene
-    "scenetest/ArmatureComponentTest/ArmatureComponentTest.json",
-    "scenetest/ArmatureComponentTest/fishes/blowFish/Blowfish.ExportJson",
-    "scenetest/ArmatureComponentTest/fishes/blowFish/Blowfish0.plist",
-    "scenetest/ArmatureComponentTest/fishes/blowFish/Blowfish0.png",
-    "scenetest/ArmatureComponentTest/fishes/Butterflyfish/Butterflyfish.ExportJson",
-    "scenetest/ArmatureComponentTest/fishes/Butterflyfish/Butterflyfish0.plist",
-    "scenetest/ArmatureComponentTest/fishes/Butterflyfish/Butterflyfish0.png",
-    "scenetest/ArmatureComponentTest/Images/startMenuBG.png",
-    "scenetest/AttributeComponentTest/AttributeComponentTest.json",
-    "scenetest/AttributeComponentTest/grossinis_sister1.png",
-    "scenetest/AttributeComponentTest/grossinis_sister2.png",
-    "scenetest/AttributeComponentTest/PlayerAttribute.json",
-    "scenetest/BackgroundComponentTest/BackgroundComponentTest.json",
-    "scenetest/BackgroundComponentTest/Images/startMenuBG.png",
-    "scenetest/BackgroundComponentTest/Misc/music_logo.mp3",
-    "scenetest/BackgroundComponentTest/Misc/music_logo.wav",
-    "scenetest/BackgroundComponentTest/Particles/qipao01.plist",
-    "scenetest/BackgroundComponentTest/Particles/qipao01.png",
-    "scenetest/BackgroundComponentTest/startMenu/Fish_UI/starMenuButton01.png",
-    "scenetest/BackgroundComponentTest/startMenu/Fish_UI/starMenuButton02.png",
-    "scenetest/BackgroundComponentTest/startMenu/Fish_UI/ui_logo_001-hd.png",
-    "scenetest/BackgroundComponentTest/startMenu/startMenu_1.json",
-    "scenetest/EffectComponentTest/CowBoy/Cowboy.ExportJson",
-    "scenetest/EffectComponentTest/CowBoy/Cowboy0.plist",
-    "scenetest/EffectComponentTest/CowBoy/Cowboy0.png",
-    "scenetest/EffectComponentTest/EffectComponentTest.json",
-    "scenetest/EffectComponentTest/pew-pew-lei.wav",
-    "scenetest/LoadSceneEdtiorFileTest/fishes/blowFish/Blowfish.ExportJson",
-    "scenetest/LoadSceneEdtiorFileTest/fishes/blowFish/Blowfish0.plist",
-    "scenetest/LoadSceneEdtiorFileTest/fishes/blowFish/Blowfish0.png",
-    "scenetest/LoadSceneEdtiorFileTest/fishes/Butterflyfish/Butterflyfish.ExportJson",
-    "scenetest/LoadSceneEdtiorFileTest/fishes/Butterflyfish/Butterflyfish0.plist",
-    "scenetest/LoadSceneEdtiorFileTest/fishes/Butterflyfish/Butterflyfish0.png",
-    "scenetest/LoadSceneEdtiorFileTest/FishJoy2.json",
-    "scenetest/LoadSceneEdtiorFileTest/Images/startMenuBG.png",
-    "scenetest/LoadSceneEdtiorFileTest/Misc/music_logo.mp3",
-    "scenetest/LoadSceneEdtiorFileTest/Misc/music_logo.wav",
-    "scenetest/LoadSceneEdtiorFileTest/Particles/qipao01.plist",
-    "scenetest/LoadSceneEdtiorFileTest/Particles/qipao01.png",
-    "scenetest/LoadSceneEdtiorFileTest/startMenu/Fish_UI/starMenuButton01.png",
-    "scenetest/LoadSceneEdtiorFileTest/startMenu/Fish_UI/starMenuButton02.png",
-    "scenetest/LoadSceneEdtiorFileTest/startMenu/Fish_UI/ui_logo_001-hd.png",
-    "scenetest/LoadSceneEdtiorFileTest/startMenu/startMenu_1.json",
-    "scenetest/ParticleComponentTest/ParticleComponentTest.json",
-    "scenetest/ParticleComponentTest/SmallSun.plist",
-    "scenetest/ParticleComponentTest/Upsidedown.plist",
-    "scenetest/SpriteComponentTest/grossinis_sister1.png",
-    "scenetest/SpriteComponentTest/grossinis_sister2.png",
-    "scenetest/SpriteComponentTest/SpriteComponentTest.json",
-    "scenetest/TmxMapComponentTest/iso-test.png",
-    "scenetest/TmxMapComponentTest/iso-test.tmx",
-    "scenetest/TmxMapComponentTest/TmxMapComponentTest.json",
-    "scenetest/TriggerTest/fishes/blowFish/Blowfish.ExportJson",
-    "scenetest/TriggerTest/fishes/blowFish/Blowfish0.plist",
-    "scenetest/TriggerTest/fishes/blowFish/Blowfish0.png",
-    "scenetest/TriggerTest/fishes/Butterflyfish/Butterflyfish.ExportJson",
-    "scenetest/TriggerTest/fishes/Butterflyfish/Butterflyfish0.plist",
-    "scenetest/TriggerTest/fishes/Butterflyfish/Butterflyfish0.png",
-    "scenetest/TriggerTest/Images/startMenuBG.png",
-    "scenetest/TriggerTest/TriggerTest.json",
-    "scenetest/UIComponentTest/fishes/blowFish/Blowfish.ExportJson",
-    "scenetest/UIComponentTest/fishes/blowFish/Blowfish0.plist",
-    "scenetest/UIComponentTest/fishes/blowFish/Blowfish0.png",
-    "scenetest/UIComponentTest/fishes/Butterflyfish/Butterflyfish.ExportJson",
-    "scenetest/UIComponentTest/fishes/Butterflyfish/Butterflyfish0.plist",
-    "scenetest/UIComponentTest/fishes/Butterflyfish/Butterflyfish0.png",
-    "scenetest/UIComponentTest/Images/startMenuBG.png",
-    "scenetest/UIComponentTest/starMenuButton/starMenuButton.ExportJson",
-    "scenetest/UIComponentTest/starMenuButton/starMenuButton0.plist",
-    "scenetest/UIComponentTest/starMenuButton/starMenuButton0.png",
-    "scenetest/UIComponentTest/UIComponentTest.json",
-
-    //parser
-    "cocosui/CCS/ccs1_3/CCSV1_3_1.ExportJson",
-    "cocosui/CCS/ccs1_3/CocostudioV1_30.plist",
-    "cocosui/CCS/ccs1_3/CocostudioV1_30.png",
-    "cocosui/CCS/ccs1_3/SmallSun.plist",
-    "cocosui/CCS/ccs1_3/GUI/labelatlasimg.png",
-    "cocosui/CCS/ccs1_3/GUI/missing-font.fnt",
-    "cocosui/CCS/ccs1_3/GUI/missing-font.png",
-    "cocosui/CCS/ccs1_4/CCS1_4_1.ExportJson",
-    "cocosui/CCS/ccs1_4/Cocostudio1_40.plist",
-    "cocosui/CCS/ccs1_4/Cocostudio1_40.png",
-    "cocosui/CCS/ccs1_4/SmallSun.plist",
-    "cocosui/CCS/ccs1_4/GUI/labelatlasimg.png",
-    "cocosui/CCS/ccs1_4/GUI/missing-font.fnt",
-    "cocosui/CCS/ccs1_4/GUI/missing-font.png",
-    "cocosui/CCS/ccs1_5/CCS1_5_1.ExportJson",
-    "cocosui/CCS/ccs1_5/Cocostudio1_50.plist",
-    "cocosui/CCS/ccs1_5/Cocostudio1_50.png",
-    "cocosui/CCS/ccs1_5/SmallSun.plist",
-    "cocosui/CCS/ccs1_5/GUI/labelatlasimg.png",
-    "cocosui/CCS/ccs1_5/GUI/missing-font.fnt",
-    "cocosui/CCS/ccs1_5/GUI/missing-font.png",
-
-    "cocosui/CCS/2.1/MainScene.json",
-    "cocosui/CCS/2.1/plist1/Plist.plist",
-    "cocosui/CCS/2.1/Plist/ui.plist",
-    "cocosui/CCS/2.1/LoadingBar/pipe2.png",
-    "cocosui/CCS/2.1/Slider/2013-8-13 15-44-11.png",
-    "cocosui/CCS/2.1/Slider/teehanlax - iOS 6 - iPhone_slider01.png",
-    "cocosui/CCS/2.1/particle/blue.plist",
-    "cocosui/CCS/2.1/Default/Slider_Back.png",
-    "cocosui/CCS/2.1/Default/SliderNode_Normal.png",
-    "cocosui/CCS/2.1/Default/SliderNode_Press.png",
-    "cocosui/CCS/2.1/Default/SliderNode_Disable.png",
-    "cocosui/CCS/2.1/Default/Slider_PressBar.png",
-    "cocosui/CCS/2.1/Default/defaultParticle.plist",
-    "cocosui/CCS/2.1/Default/TextAtlas.png",
-    "cocosui/CCS/2.1/fonts_weapon_001-hd.png",
-    "cocosui/CCS/2.1/FNT/futura.fnt",
-    "cocosui/CCS/2.1/Default/defaultBMFont.fnt",
-    "cocosui/CCS/2.1/FNT/Heiti18.fnt",
-
-    "Particles/BoilingFoam.plist",
-    "cocosui/CustomImageViewTest/NewProject_2_1.ExportJson",
-    "cocosui/CustomImageViewTest/NewProject_20.plist",
-    "cocosui/CustomImageViewTest/NewProject_20.png"
+    ccbjs + "ccb/grossini-generic.plist",
+    ccbjs + "ccb/animated-grossini.plist"
 ];
 
 var g_ui = [
-    "cocosui/switch-mask.png",
-    "cocosui/animationbuttonnormal.png",
-    "cocosui/animationbuttonpressed.png",
-    "cocosui/arrow.png",
-    "cocosui/b11.png",
-    "cocosui/backtotopnormal.png",
-    "cocosui/backtotoppressed.png",
-    "cocosui/bitmapFontTest2.fnt",
-    "cocosui/bitmapFontTest2.png",
-    "cocosui/button.png",
-    "cocosui/buttonHighlighted.png",
-    "cocosui/ccicon.png",
-    "cocosui/check_box_active.png",
-    "cocosui/check_box_active_disable.png",
-    "cocosui/check_box_active_press.png",
-    "cocosui/check_box_normal.png",
-    "cocosui/check_box_normal_disable.png",
-    "cocosui/check_box_normal_press.png",
-    "cocosui/CloseNormal.png",
-    "cocosui/CloseSelected.png",
-    "cocosui/green_edit.png",
-    "cocosui/grossini-aliases.png",
-    "cocosui/Hello.png",
-    "cocosui/labelatlas.png",
-    "cocosui/loadingbar.png",
-    {type:"font", name:"Marker Felt", srcs:["cocosui/Marker Felt.ttf"]},
-    "cocosui/scrollviewbg.png",
-    "cocosui/slidbar.png",
-    "cocosui/sliderballnormal.png",
-    "cocosui/sliderballpressed.png",
-    "cocosui/sliderProgress.png",
-    "cocosui/sliderProgress2.png",
-    "cocosui/sliderThumb.png",
-    "cocosui/sliderTrack.png",
-    "cocosui/sliderTrack2.png",
-    "cocosui/slider_bar_active_9patch.png",
-    "cocosui/UITest/b1.png",
-    "cocosui/UITest/b2.png",
-    "cocosui/UITest/background.png",
-    "cocosui/UITest/buttonBackground.png",
-    "cocosui/UITest/f1.png",
-    "cocosui/UITest/f2.png",
-    "cocosui/UITest/r1.png",
-    "cocosui/UITest/r2.png",
-    "cocosui/UITest/ribbon.png",
-    "cocosui/UITest/UITest.json",
-    "cocosui/100/100.ExportJson",
-    "cocosui/100/1000.plist",
-    "cocosui/100/1000.png",
+    "ccs-res/cocosui/switch-mask.png",
+    "ccs-res/cocosui/animationbuttonnormal.png",
+    "ccs-res/cocosui/animationbuttonpressed.png",
+    "ccs-res/cocosui/arrow.png",
+    "ccs-res/cocosui/b11.png",
+    "ccs-res/cocosui/backtotopnormal.png",
+    "ccs-res/cocosui/backtotoppressed.png",
+    "ccs-res/cocosui/bitmapFontTest2.fnt",
+    "ccs-res/cocosui/bitmapFontTest2.png",
+    "ccs-res/cocosui/button.png",
+    "ccs-res/cocosui/buttonHighlighted.png",
+    "ccs-res/cocosui/ccicon.png",
+    "ccs-res/cocosui/check_box_active.png",
+    "ccs-res/cocosui/check_box_active_disable.png",
+    "ccs-res/cocosui/check_box_active_press.png",
+    "ccs-res/cocosui/check_box_normal.png",
+    "ccs-res/cocosui/check_box_normal_disable.png",
+    "ccs-res/cocosui/check_box_normal_press.png",
+    s_pathClose,
+    "ccs-res/cocosui/CloseSelected.png",
+    "ccs-res/cocosui/green_edit.png",
+    s_grossini_aliases,
+    "ccs-res/cocosui/Hello.png",
+    "ccs-res/cocosui/labelatlas.png",
+    "ccs-res/cocosui/loadingbar.png",
+    {type:"font", name:"Marker Felt", srcs:["../cpp-tests/Resources/fonts/Marker Felt.ttf"]},
+    "ccs-res/cocosui/scrollviewbg.png",
+    "ccs-res/cocosui/slidbar.png",
+    "ccs-res/cocosui/sliderballnormal.png",
+    "ccs-res/cocosui/sliderballpressed.png",
+    "ccs-res/cocosui/sliderProgress.png",
+    "ccs-res/cocosui/sliderProgress2.png",
+    "ccs-res/cocosui/sliderThumb.png",
+    "ccs-res/cocosui/sliderTrack.png",
+    "ccs-res/cocosui/sliderTrack2.png",
+    "ccs-res/cocosui/slider_bar_active_9patch.png",
+    "ccs-res/cocosui/UITest/b1.png",
+    "ccs-res/cocosui/UITest/b2.png",
+    "ccs-res/cocosui/UITest/background.png",
+    "ccs-res/cocosui/UITest/buttonBackground.png",
+    "ccs-res/cocosui/UITest/f1.png",
+    "ccs-res/cocosui/UITest/f2.png",
+    "ccs-res/cocosui/UITest/r1.png",
+    "ccs-res/cocosui/UITest/r2.png",
+    "ccs-res/cocosui/UITest/ribbon.png",
+    "ccs-res/cocosui/UITest/UITest.json",
+    "ccs-res/cocosui/100/100.ExportJson",
+    "ccs-res/cocosui/100/1000.plist",
+    "ccs-res/cocosui/100/1000.png",
     s_s9s_blocks9_plist,
-    "cocosui/CloseSelected.png"
+    "ccs-res/cocosui/CloseSelected.png"
 ];
 
 var g_performace = [
     "animations/crystals.plist",
     "animations/crystals.png",
-    "Images/fps_images.png",
+    "fps_images.png",
     "Images/spritesheet1.png",
     "Images/sprites_test/sprite-0-0.png",
     "Images/sprites_test/sprite-0-1.png",
@@ -1075,18 +700,17 @@ var g_tilemaps = [
 ];
 
 var g_spine = [
-    "skeletons/spineboy.atlas",
-    "skeletons/spineboy.json",
-    "skeletons/spineboy.png",
-    "skeletons/sprite.png",
-    "skeletons/goblins-ffd.png",
-    "skeletons/goblins-ffd.atlas",
-    "skeletons/goblins-ffd.json"
+    "spine/spineboy.atlas",
+    "spine/spineboy.json",
+    "spine/spineboy.png",
+    "spine/sprite.png",
+    "spine/goblins.png",
+    "spine/goblins.atlas",
+    "spine/goblins.json"
 ];
 
-var g_ccs2 = [
-    "ActionTimeline/boy_1.csb",
-    "ActionTimeline/armature/Cowboy0.plist",
-    "cocosui/UIEditorTest/UILabelBMFont_Editor/GUI/missing-font.fnt",
-    "cocosui/UIEditorTest/UILabelBMFont_Editor/GUI/missing-font.png"
-];
+if (!cc.sys.isNative) {
+    var res = res || {};
+    res.CCControlColourPickerSpriteSheet_plist = "extensions/CCControlColourPickerSpriteSheet.plist";
+    res.CCControlColourPickerSpriteSheet_png = "extensions/CCControlColourPickerSpriteSheet.png";
+}

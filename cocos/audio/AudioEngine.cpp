@@ -24,18 +24,24 @@
 
 #include "platform/CCPlatformConfig.h"
 
-#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
-
 #include "audio/include/AudioEngine.h"
+#include <condition_variable>
+#include <queue>
 #include "platform/CCFileUtils.h"
 #include "base/ccUtils.h"
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-#include "android/AudioEngine-inl.h"
+#include "audio/android/AudioEngine-inl.h"
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC
-#include "apple/AudioEngine-inl.h"
+#include "audio/apple/AudioEngine-inl.h"
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
-#include "win32/AudioEngine-win32.h"
+#include "audio/win32/AudioEngine-win32.h"
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
+#include "audio/winrt/AudioEngine-winrt.h"
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
+#include "audio/linux/AudioEngine-linux.h"
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN
+#include "audio/tizen/AudioEngine-tizen.h"
 #endif
 
 #define TIME_DELAY_PRECISION 0.0001
@@ -59,8 +65,91 @@ AudioEngine::ProfileHelper* AudioEngine::_defaultProfileHelper = nullptr;
 std::unordered_map<int, AudioEngine::AudioInfo> AudioEngine::_audioIDInfoMap;
 AudioEngineImpl* AudioEngine::_audioEngineImpl = nullptr;
 
+AudioEngine::AudioEngineThreadPool* AudioEngine::s_threadPool = nullptr;
+
+class AudioEngine::AudioEngineThreadPool
+{
+public:
+    AudioEngineThreadPool(bool detach, int threads = 4)
+        : _detach(detach)
+        , _stop(false)
+    {
+        for (int index = 0; index < threads; ++index)
+        {
+            _workers.emplace_back(std::thread(std::bind(&AudioEngineThreadPool::threadFunc, this)));
+            if (_detach)
+            {
+                _workers[index].detach();
+            }
+        }
+    }
+
+    void addTask(const std::function<void()> &task){
+        std::unique_lock<std::mutex> lk(_queueMutex);
+        _taskQueue.emplace(task);
+        _taskCondition.notify_one();
+    }
+
+    ~AudioEngineThreadPool()
+    {
+        {
+            std::unique_lock<std::mutex> lk(_queueMutex);
+            _stop = true;
+            _taskCondition.notify_all();
+        }
+
+        if (!_detach)
+        {
+            for (auto&& worker : _workers) {
+                worker.join();
+            }
+        }
+    }
+
+private:
+    void threadFunc()
+    {
+        while (true) {
+            std::function<void()> task = nullptr;
+            {
+                std::unique_lock<std::mutex> lk(_queueMutex);
+                if (_stop)
+                {
+                    break;
+                }
+                if (!_taskQueue.empty())
+                {
+                    task = std::move(_taskQueue.front());
+                    _taskQueue.pop();
+                }
+                else
+                {
+                    _taskCondition.wait(lk);
+                    continue;
+                }
+            }
+
+            task();
+        }
+    }
+
+    std::vector<std::thread>  _workers;
+    std::queue< std::function<void()> > _taskQueue;
+
+    std::mutex _queueMutex;
+    std::condition_variable _taskCondition;
+    bool _detach;
+    bool _stop;
+};
+
 void AudioEngine::end()
 {
+    if (s_threadPool)
+    {
+        delete s_threadPool;
+        s_threadPool = nullptr;
+    }
+
     delete _audioEngineImpl;
     _audioEngineImpl = nullptr;
 
@@ -79,6 +168,18 @@ bool AudioEngine::lazyInit()
            return false;
         }
     }
+
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+    if (_audioEngineImpl && s_threadPool == nullptr)
+    {
+        s_threadPool = new (std::nothrow) AudioEngineThreadPool(true);
+    }
+#elif CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID
+    if (_audioEngineImpl && s_threadPool == nullptr)
+    {
+        s_threadPool = new (std::nothrow) AudioEngineThreadPool(false);
+    }
+#endif
 
     return true;
 }
@@ -138,7 +239,6 @@ int AudioEngine::play2d(const std::string& filePath, bool loop, float volume, co
             auto& audioRef = _audioIDInfoMap[ret];
             audioRef.volume = volume;
             audioRef.loop = loop;
-            audioRef.is3dAudio = false;
             audioRef.filePath = &it->first;
 
             if (profileHelper) {
@@ -264,15 +364,23 @@ void AudioEngine::stopAll()
 
 void AudioEngine::uncache(const std::string &filePath)
 {
-    if(_audioPathIDMap.find(filePath) != _audioPathIDMap.end()){
-        auto itEnd = _audioPathIDMap[filePath].end();
-        for (auto it = _audioPathIDMap[filePath].begin() ; it != itEnd; ++it) {
-            auto audioID = *it;
+    auto audioIDsIter = _audioPathIDMap.find(filePath);
+    if (audioIDsIter != _audioPathIDMap.end())
+    {
+        //@Note: For safely iterating elements from the audioID list, we need to copy the list
+        // since 'AudioEngine::remove' may be invoked in '_audioEngineImpl->stop' synchronously.
+        // If this happens, it will break the iteration, and crash will appear on some devices.
+        std::list<int> copiedIDs(audioIDsIter->second);
+        
+        for (int audioID : copiedIDs)
+        {
             _audioEngineImpl->stop(audioID);
             
             auto itInfo = _audioIDInfoMap.find(audioID);
-            if (itInfo != _audioIDInfoMap.end()){
-                if (itInfo->second.profileHelper) {
+            if (itInfo != _audioIDInfoMap.end())
+            {
+                if (itInfo->second.profileHelper)
+                {
                     itInfo->second.profileHelper->audioIDs.remove(audioID);
                 }
                 _audioIDInfoMap.erase(audioID);
@@ -281,7 +389,8 @@ void AudioEngine::uncache(const std::string &filePath)
         _audioPathIDMap.erase(filePath);
     }
 
-    if (_audioEngineImpl){
+    if (_audioEngineImpl)
+    {
         _audioEngineImpl->uncache(filePath);
     }
 }
@@ -413,4 +522,30 @@ AudioProfile* AudioEngine::getProfile(const std::string &name)
     }
 }
 
-#endif
+void AudioEngine::preload(const std::string& filePath, std::function<void(bool isSuccess)> callback)
+{
+    lazyInit();
+
+    if (_audioEngineImpl)
+    {
+        if (!FileUtils::getInstance()->isFileExist(filePath)){
+            if (callback)
+            {
+                callback(false);
+            }
+            return;
+        }
+
+        _audioEngineImpl->preload(filePath, callback);
+    }
+}
+
+void AudioEngine::addTask(const std::function<void()>& task)
+{
+    lazyInit();
+
+    if (_audioEngineImpl && s_threadPool)
+    {
+        s_threadPool->addTask(task);
+    }
+}

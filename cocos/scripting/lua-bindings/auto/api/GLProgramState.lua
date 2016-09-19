@@ -20,6 +20,16 @@
 -- @return GLProgramState#GLProgramState self (return value: cc.GLProgramState)
 
 --------------------------------
+-- Applies the specified custom auto-binding.<br>
+-- param uniformName Name of the shader uniform.<br>
+-- param autoBinding Name of the auto binding.
+-- @function [parent=#GLProgramState] applyAutoBinding 
+-- @param self
+-- @param #string uniformName
+-- @param #string autoBinding
+-- @return GLProgramState#GLProgramState self (return value: cc.GLProgramState)
+        
+--------------------------------
 -- @overload self, int, vec2_table         
 -- @overload self, string, vec2_table         
 -- @function [parent=#GLProgramState] setUniformVec2
@@ -46,13 +56,19 @@
 -- @return GLProgramState#GLProgramState self (return value: cc.GLProgramState)
         
 --------------------------------
--- @overload self, int, vec4_table, long         
--- @overload self, string, vec4_table, long         
+-- Returns the Node bound to the GLProgramState
+-- @function [parent=#GLProgramState] getNodeBinding 
+-- @param self
+-- @return Node#Node ret (return value: cc.Node)
+        
+--------------------------------
+-- @overload self, int, int, vec4_table         
+-- @overload self, string, int, vec4_table         
 -- @function [parent=#GLProgramState] setUniformVec4v
 -- @param self
 -- @param #string uniformName
+-- @param #int size
 -- @param #vec4_table pointer
--- @param #long size
 -- @return GLProgramState#GLProgramState self (return value: cc.GLProgramState)
 
 --------------------------------
@@ -61,6 +77,17 @@
 -- @function [parent=#GLProgramState] applyGLProgram 
 -- @param self
 -- @param #mat4_table modelView
+-- @return GLProgramState#GLProgramState self (return value: cc.GLProgramState)
+        
+--------------------------------
+-- Sets the node that this render state is bound to.<br>
+-- The specified node is used to apply auto-bindings for the render state.<br>
+-- This is typically set to the node of the model that a material is<br>
+-- applied to.<br>
+-- param node The node to use for applying auto-bindings.
+-- @function [parent=#GLProgramState] setNodeBinding 
+-- @param self
+-- @param #cc.Node node
 -- @return GLProgramState#GLProgramState self (return value: cc.GLProgramState)
         
 --------------------------------
@@ -73,20 +100,33 @@
 -- @return GLProgramState#GLProgramState self (return value: cc.GLProgramState)
 
 --------------------------------
--- @overload self, int, vec2_table, long         
--- @overload self, string, vec2_table, long         
+-- Sets a uniform auto-binding.<br>
+-- This method parses the passed in autoBinding string and attempts to convert it<br>
+-- to an enumeration value. If it matches to one of the predefined strings, it will create a<br>
+-- callback to get the correct value at runtime.<br>
+-- param uniformName The name of the material parameter to store an auto-binding for.<br>
+-- param autoBinding A string matching one of the built-in AutoBinding enum constants.
+-- @function [parent=#GLProgramState] setParameterAutoBinding 
+-- @param self
+-- @param #string uniformName
+-- @param #string autoBinding
+-- @return GLProgramState#GLProgramState self (return value: cc.GLProgramState)
+        
+--------------------------------
+-- @overload self, int, int, vec2_table         
+-- @overload self, string, int, vec2_table         
 -- @function [parent=#GLProgramState] setUniformVec2v
 -- @param self
 -- @param #string uniformName
+-- @param #int size
 -- @param #vec2_table pointer
--- @param #long size
 -- @return GLProgramState#GLProgramState self (return value: cc.GLProgramState)
 
 --------------------------------
 -- Get the number of user defined uniform count.
 -- @function [parent=#GLProgramState] getUniformCount 
 -- @param self
--- @return long#long ret (return value: long)
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- Apply attributes.<br>
@@ -110,13 +150,13 @@
 -- @return GLProgramState#GLProgramState self (return value: cc.GLProgramState)
         
 --------------------------------
--- @overload self, int, float, long         
--- @overload self, string, float, long         
+-- @overload self, int, int, float         
+-- @overload self, string, int, float         
 -- @function [parent=#GLProgramState] setUniformFloatv
 -- @param self
 -- @param #string uniformName
+-- @param #int size
 -- @param #float pointer
--- @param #long size
 -- @return GLProgramState#GLProgramState self (return value: cc.GLProgramState)
 
 --------------------------------
@@ -161,20 +201,20 @@
 -- @return GLProgramState#GLProgramState self (return value: cc.GLProgramState)
 
 --------------------------------
--- @overload self, int, vec3_table, long         
--- @overload self, string, vec3_table, long         
+-- @overload self, int, int, vec3_table         
+-- @overload self, string, int, vec3_table         
 -- @function [parent=#GLProgramState] setUniformVec3v
 -- @param self
 -- @param #string uniformName
+-- @param #int size
 -- @param #vec3_table pointer
--- @param #long size
 -- @return GLProgramState#GLProgramState self (return value: cc.GLProgramState)
 
 --------------------------------
 -- Get the number of vertex attributes.
 -- @function [parent=#GLProgramState] getVertexAttribCount 
 -- @param self
--- @return long#long ret (return value: long)
+-- @return int#int ret (return value: int)
         
 --------------------------------
 --  returns a new instance of GLProgramState for a given GLProgram 
@@ -184,12 +224,14 @@
 -- @return GLProgramState#GLProgramState ret (return value: cc.GLProgramState)
         
 --------------------------------
---  gets-or-creates an instance of GLProgramState for a given GLProgramName 
--- @function [parent=#GLProgramState] getOrCreateWithGLProgramName 
+-- @overload self, string, cc.Texture2D         
+-- @overload self, string         
+-- @function [parent=#GLProgramState] getOrCreateWithGLProgramName
 -- @param self
 -- @param #string glProgramName
+-- @param #cc.Texture2D texture
 -- @return GLProgramState#GLProgramState ret (return value: cc.GLProgramState)
-        
+
 --------------------------------
 --  gets-or-creates an instance of GLProgramState for a given GLProgram 
 -- @function [parent=#GLProgramState] getOrCreateWithGLProgram 

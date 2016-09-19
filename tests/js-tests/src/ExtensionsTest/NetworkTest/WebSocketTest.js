@@ -121,7 +121,12 @@ var WebSocketTestLayer = cc.Layer.extend({
         };
 
         this._wsiSendText.onerror = function(evt) {
-            cc.log("sendText Error was fired");
+            cc.log("_wsiSendText Error was fired");
+           if (cc.sys.isObjectValid(self)) {
+               self._errorStatus.setString("an error was fired");
+           } else {
+               cc.log("WebSocket test layer was destroyed!");
+           }
         };
 
         this._wsiSendText.onclose = function(evt) {
@@ -130,55 +135,64 @@ var WebSocketTestLayer = cc.Layer.extend({
         };
 
 
-        this._wsiSendBinary = new WebSocket("ws://echo.websocket.org");
-        this._wsiSendBinary.binaryType = "arraybuffer";
-        this._wsiSendBinary.onopen = function(evt) {
-            self._sendBinaryStatus.setString("Send Binary WS was opened.");
-        };
+       this._wsiSendBinary = new WebSocket("ws://echo.websocket.org");
+       this._wsiSendBinary.binaryType = "arraybuffer";
+       this._wsiSendBinary.onopen = function(evt) {
+           self._sendBinaryStatus.setString("Send Binary WS was opened.");
+       };
 
-        this._wsiSendBinary.onmessage = function(evt) {
-            self._sendBinaryTimes++;
-            var binary = new Uint16Array(evt.data);
-            var binaryStr = "response bin msg: ";
+       this._wsiSendBinary.onmessage = function(evt) {
+           self._sendBinaryTimes++;
+           var binary = new Uint16Array(evt.data);
+           var binaryStr = "response bin msg: ";
 
-            var str = "";
-            for (var i = 0; i < binary.length; i++) {
-                if (binary[i] == 0)
-                {
-                    str += "\'\\0\'";
-                }
-                else
-                {
-                    var hexChar = "0x" + binary[i].toString("16").toUpperCase();
-                    str += String.fromCharCode(hexChar);
-                }
-            }
+           var str = "";
+           for (var i = 0; i < binary.length; i++) {
+               if (binary[i] == 0)
+               {
+                   str += "\'\\0\'";
+               }
+               else
+               {
+                   var hexChar = "0x" + binary[i].toString("16").toUpperCase();
+                   str += String.fromCharCode(hexChar);
+               }
+           }
 
-            binaryStr += str + ", " + self._sendBinaryTimes;
-            cc.log(binaryStr);
-            self._sendBinaryStatus.setString(binaryStr);
-        };
+           binaryStr += str + ", " + self._sendBinaryTimes;
+           cc.log(binaryStr);
+           self._sendBinaryStatus.setString(binaryStr);
+       };
 
-        this._wsiSendBinary.onerror = function(evt) {
-            cc.log("sendBinary Error was fired");
-        };
+       this._wsiSendBinary.onerror = function(evt) {
+           cc.log("_wsiSendBinary Error was fired");
+            if (cc.sys.isObjectValid(self)) {
+               self._errorStatus.setString("an error was fired");
+           } else {
+               cc.log("WebSocket test layer was destroyed!");
+           }
+       };
 
-        this._wsiSendBinary.onclose = function(evt) {
-            cc.log("_wsiSendBinary websocket instance closed.");
-            self._wsiSendBinary = null;
-        };
+       this._wsiSendBinary.onclose = function(evt) {
+           cc.log("_wsiSendBinary websocket instance closed.");
+           self._wsiSendBinary = null;
+       };
 
-        this._wsiError = new WebSocket("ws://invalid.url.com");
-        this._wsiError.onopen = function(evt) {};
-        this._wsiError.onmessage = function(evt) {};
-        this._wsiError.onerror = function(evt) {
-            cc.log("Error was fired");
-            self._errorStatus.setString("an error was fired");
-        };
-        this._wsiError.onclose = function(evt) {
-            cc.log("_wsiError websocket instance closed.");
-            self._wsiError = null;
-        };
+       this._wsiError = new WebSocket("ws://invalidurlxxxyyy.com");
+       this._wsiError.onopen = function(evt) {};
+       this._wsiError.onmessage = function(evt) {};
+       this._wsiError.onerror = function(evt) {
+           cc.log("_wsiError Error was fired");
+           if (cc.sys.isObjectValid(self)) {
+               self._errorStatus.setString("an error was fired");
+           } else {
+               cc.log("WebSocket test layer was destroyed!");
+           }
+       };
+       this._wsiError.onclose = function(evt) {
+           cc.log("_wsiError websocket instance closed.");
+           self._wsiError = null;
+       };
 
         return true;
     },

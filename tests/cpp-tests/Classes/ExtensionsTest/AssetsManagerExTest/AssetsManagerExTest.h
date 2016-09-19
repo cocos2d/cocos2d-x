@@ -15,7 +15,7 @@ public:
     
     void startDownloadCallback(cocos2d::Ref* sender);
 
-    virtual std::string title() const;
+    virtual std::string title() const override;
 
     virtual bool init() override;
     virtual void onExit() override;

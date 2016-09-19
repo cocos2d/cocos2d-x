@@ -25,12 +25,6 @@
         
 --------------------------------
 -- 
--- @function [parent=#SkeletonRenderer] isOpacityModifyRGB 
--- @param self
--- @return bool#bool ret (return value: bool)
-        
---------------------------------
--- 
 -- @function [parent=#SkeletonRenderer] initWithData 
 -- @param self
 -- @param #spSkeletonData skeletonData
@@ -48,13 +42,6 @@
 -- 
 -- @function [parent=#SkeletonRenderer] setSlotsToSetupPose 
 -- @param self
--- @return SkeletonRenderer#SkeletonRenderer self (return value: sp.SkeletonRenderer)
-        
---------------------------------
--- 
--- @function [parent=#SkeletonRenderer] setOpacityModifyRGB 
--- @param self
--- @param #bool value
 -- @return SkeletonRenderer#SkeletonRenderer self (return value: sp.SkeletonRenderer)
         
 --------------------------------
@@ -137,9 +124,9 @@
 
 --------------------------------
 -- 
--- @function [parent=#SkeletonRenderer] getBoundingBox 
+-- @function [parent=#SkeletonRenderer] create 
 -- @param self
--- @return rect_table#rect_table ret (return value: rect_table)
+-- @return SkeletonRenderer#SkeletonRenderer ret (return value: sp.SkeletonRenderer)
         
 --------------------------------
 -- 
@@ -152,6 +139,25 @@
 -- @function [parent=#SkeletonRenderer] onExit 
 -- @param self
 -- @return SkeletonRenderer#SkeletonRenderer self (return value: sp.SkeletonRenderer)
+        
+--------------------------------
+-- 
+-- @function [parent=#SkeletonRenderer] setOpacityModifyRGB 
+-- @param self
+-- @param #bool value
+-- @return SkeletonRenderer#SkeletonRenderer self (return value: sp.SkeletonRenderer)
+        
+--------------------------------
+-- 
+-- @function [parent=#SkeletonRenderer] getBoundingBox 
+-- @param self
+-- @return rect_table#rect_table ret (return value: rect_table)
+        
+--------------------------------
+-- 
+-- @function [parent=#SkeletonRenderer] isOpacityModifyRGB 
+-- @param self
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- @overload self, spSkeletonData, bool         

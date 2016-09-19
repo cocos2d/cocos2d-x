@@ -1,9 +1,7 @@
-#include "lua_cocos2dx_cocosbuilder_auto.hpp"
-#include "CocosBuilder.h"
-#include "tolua_fix.h"
-#include "LuaBasicConversions.h"
-
-
+#include "scripting/lua-bindings/auto/lua_cocos2dx_cocosbuilder_auto.hpp"
+#include "editor-support/cocosbuilder/CocosBuilder.h"
+#include "scripting/lua-bindings/manual/tolua_fix.h"
+#include "scripting/lua-bindings/manual/LuaBasicConversions.h"
 
 int lua_cocos2dx_cocosbuilder_CCBAnimationManager_moveAnimationsFromNode(lua_State* tolua_S)
 {
@@ -36,9 +34,9 @@ int lua_cocos2dx_cocosbuilder_CCBAnimationManager_moveAnimationsFromNode(lua_Sta
         cocos2d::Node* arg0;
         cocos2d::Node* arg1;
 
-        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0);
+        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0, "cc.CCBAnimationManager:moveAnimationsFromNode");
 
-        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 3, "cc.Node",&arg1);
+        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 3, "cc.Node",&arg1, "cc.CCBAnimationManager:moveAnimationsFromNode");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_cocosbuilder_CCBAnimationManager_moveAnimationsFromNode'", nullptr);
@@ -185,7 +183,7 @@ int lua_cocos2dx_cocosbuilder_CCBAnimationManager_actionForSoundChannel(lua_Stat
     {
         cocosbuilder::CCBSequenceProperty* arg0;
 
-        ok &= luaval_to_object<cocosbuilder::CCBSequenceProperty>(tolua_S, 2, "cc.CCBSequenceProperty",&arg0);
+        ok &= luaval_to_object<cocosbuilder::CCBSequenceProperty>(tolua_S, 2, "cc.CCBSequenceProperty",&arg0, "cc.CCBAnimationManager:actionForSoundChannel");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_cocosbuilder_CCBAnimationManager_actionForSoundChannel'", nullptr);
@@ -239,7 +237,7 @@ int lua_cocos2dx_cocosbuilder_CCBAnimationManager_setBaseValue(lua_State* tolua_
 
         ok &= luaval_to_ccvalue(tolua_S, 2, &arg0, "cc.CCBAnimationManager:setBaseValue");
 
-        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 3, "cc.Node",&arg1);
+        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 3, "cc.Node",&arg1, "cc.CCBAnimationManager:setBaseValue");
 
         ok &= luaval_to_std_string(tolua_S, 4,&arg2, "cc.CCBAnimationManager:setBaseValue");
         if(!ok)
@@ -385,7 +383,7 @@ int lua_cocos2dx_cocosbuilder_CCBAnimationManager_setRootNode(lua_State* tolua_S
     {
         cocos2d::Node* arg0;
 
-        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0);
+        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0, "cc.CCBAnimationManager:setRootNode");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_cocosbuilder_CCBAnimationManager_setRootNode'", nullptr);
@@ -684,9 +682,9 @@ int lua_cocos2dx_cocosbuilder_CCBAnimationManager_setObject(lua_State* tolua_S)
         cocos2d::Node* arg1;
         std::string arg2;
 
-        ok &= luaval_to_object<cocos2d::Ref>(tolua_S, 2, "cc.Ref",&arg0);
+        ok &= luaval_to_object<cocos2d::Ref>(tolua_S, 2, "cc.Ref",&arg0, "cc.CCBAnimationManager:setObject");
 
-        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 3, "cc.Node",&arg1);
+        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 3, "cc.Node",&arg1, "cc.CCBAnimationManager:setObject");
 
         ok &= luaval_to_std_string(tolua_S, 4,&arg2, "cc.CCBAnimationManager:setObject");
         if(!ok)
@@ -738,7 +736,7 @@ int lua_cocos2dx_cocosbuilder_CCBAnimationManager_getContainerSize(lua_State* to
     {
         cocos2d::Node* arg0;
 
-        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0);
+        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0, "cc.CCBAnimationManager:getContainerSize");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_cocosbuilder_CCBAnimationManager_getContainerSize'", nullptr);
@@ -788,7 +786,7 @@ int lua_cocos2dx_cocosbuilder_CCBAnimationManager_actionForCallbackChannel(lua_S
     {
         cocosbuilder::CCBSequenceProperty* arg0;
 
-        ok &= luaval_to_object<cocosbuilder::CCBSequenceProperty>(tolua_S, 2, "cc.CCBSequenceProperty",&arg0);
+        ok &= luaval_to_object<cocosbuilder::CCBSequenceProperty>(tolua_S, 2, "cc.CCBSequenceProperty",&arg0, "cc.CCBAnimationManager:actionForCallbackChannel");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_cocosbuilder_CCBAnimationManager_actionForCallbackChannel'", nullptr);
@@ -1370,7 +1368,7 @@ int lua_cocos2dx_cocosbuilder_CCBAnimationManager_addDocumentOutletNode(lua_Stat
     {
         cocos2d::Node* arg0;
 
-        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0);
+        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0, "cc.CCBAnimationManager:addDocumentOutletNode");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_cocosbuilder_CCBAnimationManager_addDocumentOutletNode'", nullptr);
@@ -1470,7 +1468,7 @@ int lua_cocos2dx_cocosbuilder_CCBAnimationManager_addDocumentCallbackNode(lua_St
     {
         cocos2d::Node* arg0;
 
-        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0);
+        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0, "cc.CCBAnimationManager:addDocumentCallbackNode");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_cocosbuilder_CCBAnimationManager_addDocumentCallbackNode'", nullptr);
@@ -2101,7 +2099,7 @@ int lua_cocos2dx_cocosbuilder_CCBReader_addOwnerOutletNode(lua_State* tolua_S)
     {
         cocos2d::Node* arg0;
 
-        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0);
+        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0, "cc.CCBReader:addOwnerOutletNode");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_cocosbuilder_CCBReader_addOwnerOutletNode'", nullptr);
@@ -2198,7 +2196,7 @@ int lua_cocos2dx_cocosbuilder_CCBReader_readSoundKeyframesForSeq(lua_State* tolu
     {
         cocosbuilder::CCBSequence* arg0;
 
-        ok &= luaval_to_object<cocosbuilder::CCBSequence>(tolua_S, 2, "cc.CCBSequence",&arg0);
+        ok &= luaval_to_object<cocosbuilder::CCBSequence>(tolua_S, 2, "cc.CCBSequence",&arg0, "cc.CCBReader:readSoundKeyframesForSeq");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_cocosbuilder_CCBReader_readSoundKeyframesForSeq'", nullptr);
@@ -2533,7 +2531,7 @@ int lua_cocos2dx_cocosbuilder_CCBReader_setAnimationManager(lua_State* tolua_S)
     {
         cocosbuilder::CCBAnimationManager* arg0;
 
-        ok &= luaval_to_object<cocosbuilder::CCBAnimationManager>(tolua_S, 2, "cc.CCBAnimationManager",&arg0);
+        ok &= luaval_to_object<cocosbuilder::CCBAnimationManager>(tolua_S, 2, "cc.CCBAnimationManager",&arg0, "cc.CCBReader:setAnimationManager");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_cocosbuilder_CCBReader_setAnimationManager'", nullptr);
@@ -2583,7 +2581,7 @@ int lua_cocos2dx_cocosbuilder_CCBReader_readCallbackKeyframesForSeq(lua_State* t
     {
         cocosbuilder::CCBSequence* arg0;
 
-        ok &= luaval_to_object<cocosbuilder::CCBSequence>(tolua_S, 2, "cc.CCBSequence",&arg0);
+        ok &= luaval_to_object<cocosbuilder::CCBSequence>(tolua_S, 2, "cc.CCBSequence",&arg0, "cc.CCBReader:readCallbackKeyframesForSeq");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_cocosbuilder_CCBReader_readCallbackKeyframesForSeq'", nullptr);
@@ -2793,7 +2791,7 @@ int lua_cocos2dx_cocosbuilder_CCBReader_constructor(lua_State* tolua_S)
     do{
         if (argc == 1) {
             cocosbuilder::CCBReader* arg0;
-            ok &= luaval_to_object<cocosbuilder::CCBReader>(tolua_S, 2, "cc.CCBReader",&arg0);
+            ok &= luaval_to_object<cocosbuilder::CCBReader>(tolua_S, 2, "cc.CCBReader",&arg0, "cc.CCBReader:CCBReader");
 
             if (!ok) { break; }
             cobj = new cocosbuilder::CCBReader(arg0);
@@ -2808,7 +2806,7 @@ int lua_cocos2dx_cocosbuilder_CCBReader_constructor(lua_State* tolua_S)
     do{
         if (argc == 1) {
             cocosbuilder::NodeLoaderLibrary* arg0;
-            ok &= luaval_to_object<cocosbuilder::NodeLoaderLibrary>(tolua_S, 2, "cc.NodeLoaderLibrary",&arg0);
+            ok &= luaval_to_object<cocosbuilder::NodeLoaderLibrary>(tolua_S, 2, "cc.NodeLoaderLibrary",&arg0, "cc.CCBReader:CCBReader");
 
             if (!ok) { break; }
             cobj = new cocosbuilder::CCBReader(arg0);
@@ -2823,11 +2821,11 @@ int lua_cocos2dx_cocosbuilder_CCBReader_constructor(lua_State* tolua_S)
     do{
         if (argc == 2) {
             cocosbuilder::NodeLoaderLibrary* arg0;
-            ok &= luaval_to_object<cocosbuilder::NodeLoaderLibrary>(tolua_S, 2, "cc.NodeLoaderLibrary",&arg0);
+            ok &= luaval_to_object<cocosbuilder::NodeLoaderLibrary>(tolua_S, 2, "cc.NodeLoaderLibrary",&arg0, "cc.CCBReader:CCBReader");
 
             if (!ok) { break; }
             cocosbuilder::CCBMemberVariableAssigner* arg1;
-            ok &= luaval_to_object<cocosbuilder::CCBMemberVariableAssigner>(tolua_S, 3, "cc.CCBMemberVariableAssigner",&arg1);
+            ok &= luaval_to_object<cocosbuilder::CCBMemberVariableAssigner>(tolua_S, 3, "cc.CCBMemberVariableAssigner",&arg1, "cc.CCBReader:CCBReader");
 
             if (!ok) { break; }
             cobj = new cocosbuilder::CCBReader(arg0, arg1);
@@ -2842,15 +2840,15 @@ int lua_cocos2dx_cocosbuilder_CCBReader_constructor(lua_State* tolua_S)
     do{
         if (argc == 3) {
             cocosbuilder::NodeLoaderLibrary* arg0;
-            ok &= luaval_to_object<cocosbuilder::NodeLoaderLibrary>(tolua_S, 2, "cc.NodeLoaderLibrary",&arg0);
+            ok &= luaval_to_object<cocosbuilder::NodeLoaderLibrary>(tolua_S, 2, "cc.NodeLoaderLibrary",&arg0, "cc.CCBReader:CCBReader");
 
             if (!ok) { break; }
             cocosbuilder::CCBMemberVariableAssigner* arg1;
-            ok &= luaval_to_object<cocosbuilder::CCBMemberVariableAssigner>(tolua_S, 3, "cc.CCBMemberVariableAssigner",&arg1);
+            ok &= luaval_to_object<cocosbuilder::CCBMemberVariableAssigner>(tolua_S, 3, "cc.CCBMemberVariableAssigner",&arg1, "cc.CCBReader:CCBReader");
 
             if (!ok) { break; }
             cocosbuilder::CCBSelectorResolver* arg2;
-            ok &= luaval_to_object<cocosbuilder::CCBSelectorResolver>(tolua_S, 4, "cc.CCBSelectorResolver",&arg2);
+            ok &= luaval_to_object<cocosbuilder::CCBSelectorResolver>(tolua_S, 4, "cc.CCBSelectorResolver",&arg2, "cc.CCBReader:CCBReader");
 
             if (!ok) { break; }
             cobj = new cocosbuilder::CCBReader(arg0, arg1, arg2);
@@ -2865,19 +2863,19 @@ int lua_cocos2dx_cocosbuilder_CCBReader_constructor(lua_State* tolua_S)
     do{
         if (argc == 4) {
             cocosbuilder::NodeLoaderLibrary* arg0;
-            ok &= luaval_to_object<cocosbuilder::NodeLoaderLibrary>(tolua_S, 2, "cc.NodeLoaderLibrary",&arg0);
+            ok &= luaval_to_object<cocosbuilder::NodeLoaderLibrary>(tolua_S, 2, "cc.NodeLoaderLibrary",&arg0, "cc.CCBReader:CCBReader");
 
             if (!ok) { break; }
             cocosbuilder::CCBMemberVariableAssigner* arg1;
-            ok &= luaval_to_object<cocosbuilder::CCBMemberVariableAssigner>(tolua_S, 3, "cc.CCBMemberVariableAssigner",&arg1);
+            ok &= luaval_to_object<cocosbuilder::CCBMemberVariableAssigner>(tolua_S, 3, "cc.CCBMemberVariableAssigner",&arg1, "cc.CCBReader:CCBReader");
 
             if (!ok) { break; }
             cocosbuilder::CCBSelectorResolver* arg2;
-            ok &= luaval_to_object<cocosbuilder::CCBSelectorResolver>(tolua_S, 4, "cc.CCBSelectorResolver",&arg2);
+            ok &= luaval_to_object<cocosbuilder::CCBSelectorResolver>(tolua_S, 4, "cc.CCBSelectorResolver",&arg2, "cc.CCBReader:CCBReader");
 
             if (!ok) { break; }
             cocosbuilder::NodeLoaderListener* arg3;
-            ok &= luaval_to_object<cocosbuilder::NodeLoaderListener>(tolua_S, 5, "cc.NodeLoaderListener",&arg3);
+            ok &= luaval_to_object<cocosbuilder::NodeLoaderListener>(tolua_S, 5, "cc.NodeLoaderListener",&arg3, "cc.CCBReader:CCBReader");
 
             if (!ok) { break; }
             cobj = new cocosbuilder::CCBReader(arg0, arg1, arg2, arg3);

@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -65,7 +65,7 @@ bool cocos2d::Image::saveToFile(const std::string& filename, bool isToRGB)
     // or want to save as jpg,  remove the alpha channel.
     if (hasAlpha() && bitsPerPixel == 24)
     {
-        pixels = new unsigned char[myDataLength];
+        pixels = new (std::nothrow) unsigned char[myDataLength];
         
         for (int i = 0; i < _height; ++i)
         {
@@ -99,22 +99,20 @@ bool cocos2d::Image::saveToFile(const std::string& filename, bool isToRGB)
     CGImageRelease(iref);    
     CGColorSpaceRelease(colorSpaceRef);
     CGDataProviderRelease(provider);
-    
-    NSData *data;
-                
-    if (saveToPNG)
-    {
-        data = UIImagePNGRepresentation(image);
+
+    // NOTE: Prevent memory leak. Requires ARC enabled.
+    @autoreleasepool {
+        NSData *data;
+        if (saveToPNG) {
+            data = UIImagePNGRepresentation(image);
+        } else {
+            data = UIImageJPEGRepresentation(image, 1.0f);
+        }
+        [data writeToFile:[NSString stringWithUTF8String:filename.c_str()] atomically:YES];
     }
-    else
-    {
-        data = UIImageJPEGRepresentation(image, 1.0f);
-    }
-    
-    [data writeToFile:[NSString stringWithUTF8String:filename.c_str()] atomically:YES];
-        
+
     [image release];
-        
+
     if (needToCopyPixels)
     {
         delete [] pixels;

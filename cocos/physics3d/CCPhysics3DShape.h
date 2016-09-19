@@ -86,7 +86,7 @@ public:
     
     /**
      * create capsule shape
-     * @param radius The radius of casule.
+     * @param radius The radius of capsule.
      * @param height The height (cylinder part).
      */
     static Physics3DShape* createCapsule(float radius, float height);
@@ -130,7 +130,7 @@ public:
     btCollisionShape* getbtShape() const { return _btShape; }
 #endif
     
-protected:
+CC_CONSTRUCTOR_ACCESS:
     Physics3DShape();
     ~Physics3DShape();
     
@@ -147,7 +147,7 @@ protected:
         , bool useDiamondSubdivision);
     bool initCompoundShape(const std::vector<std::pair<Physics3DShape *, Mat4>> &shapes);
     
-    
+protected:
     ShapeType _shapeType; //shape type
     
 #if (CC_ENABLE_BULLET_INTEGRATION)

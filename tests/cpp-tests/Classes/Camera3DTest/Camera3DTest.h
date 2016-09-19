@@ -250,10 +250,21 @@ protected:
     cocos2d::GLProgram*              _shader;
     cocos2d::GLProgramState*         _state;
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     cocos2d::EventListenerCustom* _backToForegroundListener;
 #endif
 };
 
+class CameraFrameBufferTest : public CameraBaseTest
+{
+public:
+    CREATE_FUNC(CameraFrameBufferTest);
+    CameraFrameBufferTest(void);
+    virtual ~CameraFrameBufferTest(void);
+    // overrides
+    virtual std::string title() const override;
+    
+    virtual void onEnter() override;
+};
 
 #endif

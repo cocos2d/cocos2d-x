@@ -253,7 +253,12 @@ var TouchAllAtOnce = EventTest.extend({
             var touch = touches[i];
             var pos = touch.getLocation();
             var id = touch.getID();
-            cc.log("Touch #" + i + ". onTouchesMoved at: " + pos.x + " " + pos.y + " Id:" + id);
+            var force = 0, maxForce = 0;
+            if (touch.getCurrentForce) {
+                force = touch.getCurrentForce();
+                maxForce = touch.getMaxForce();
+            }
+            cc.log("Touch #" + i + ". onTouchesMoved at: " + pos.x + " " + pos.y + " Id:" + id + " current force:" + force + " maximum postible force:" + maxForce);
             target.update_id(id, pos);
         }
     },
@@ -285,10 +290,12 @@ var TouchAllAtOnce = EventTest.extend({
 //
 //------------------------------------------------------------------
 var AccelerometerTest = EventTest.extend({
+    _logIndex:0,
     init:function () {
         this._super();
 
         if( 'accelerometer' in cc.sys.capabilities ) {
+            var self = this;
             // call is called 30 times per second
             cc.inputManager.setAccelerometerInterval(1/30);
             cc.inputManager.setAccelerometerEnabled(true);
@@ -296,7 +303,13 @@ var AccelerometerTest = EventTest.extend({
                 event: cc.EventListener.ACCELERATION,
                 callback: function(accelEvent, event){
                     var target = event.getCurrentTarget();
-                    cc.log('Accel x: '+ accelEvent.x + ' y:' + accelEvent.y + ' z:' + accelEvent.z + ' time:' + accelEvent.timestamp );
+                    self._logIndex++;
+                    if (self._logIndex > 20)
+                    {
+                        cc.log('Accel x: '+ accelEvent.x + ' y:' + accelEvent.y + ' z:' + accelEvent.z + ' time:' + accelEvent.timestamp );    
+                        self._logIndex = 0;
+                    }
+                    
 
                     var w = winSize.width;
                     var h = winSize.height;
@@ -356,7 +369,7 @@ var MouseTest = EventTest.extend({
 
         if( 'mouse' in cc.sys.capabilities ) {
             cc.eventManager.addListener({
-                 event: cc.EventListener.MOUSE,
+                event: cc.EventListener.MOUSE,
                 onMouseDown: function(event){
                     var pos = event.getLocation(), target = event.getCurrentTarget();
                     if(event.getButton() === cc.EventMouse.BUTTON_RIGHT)

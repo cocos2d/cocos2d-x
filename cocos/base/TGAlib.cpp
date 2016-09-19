@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -26,7 +26,7 @@ THE SOFTWARE.
 #include <string.h>
 #include <stdlib.h>
 
-#include "TGAlib.h"
+#include "base/TGAlib.h"
 #include "base/CCData.h"
 #include "platform/CCFileUtils.h"
 

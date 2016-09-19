@@ -86,7 +86,7 @@ void Manifest::loadJson(const std::string& url)
                 if (offset > 0)
                     offset--;
                 std::string errorSnippet = content.substr(offset, 10);
-                CCLOG("File parse error %s at <%s>\n", _json.GetParseError(), errorSnippet.c_str());
+                CCLOG("File parse error %d at <%s>\n", _json.GetParseError(), errorSnippet.c_str());
             }
         }
     }
@@ -160,16 +160,13 @@ bool Manifest::versionEquals(const Manifest *b) const
 std::unordered_map<std::string, Manifest::AssetDiff> Manifest::genDiff(const Manifest *b) const
 {
     std::unordered_map<std::string, AssetDiff> diff_map;
-    std::unordered_map<std::string, Asset> bAssets = b->getAssets();
+    const std::unordered_map<std::string, Asset> &bAssets = b->getAssets();
     
-    std::string key;
-    Asset valueA;
-    Asset valueB;
     std::unordered_map<std::string, Asset>::const_iterator valueIt, it;
     for (it = _assets.begin(); it != _assets.end(); ++it)
     {
-        key = it->first;
-        valueA = it->second;
+        const auto &key = it->first;
+        const auto &valueA = it->second;
         
         // Deleted
         valueIt = bAssets.find(key);
@@ -182,7 +179,7 @@ std::unordered_map<std::string, Manifest::AssetDiff> Manifest::genDiff(const Man
         }
         
         // Modified
-        valueB = valueIt->second;
+        auto &valueB = valueIt->second;
         if (valueA.md5 != valueB.md5) {
             AssetDiff diff;
             diff.asset = valueB;
@@ -193,8 +190,8 @@ std::unordered_map<std::string, Manifest::AssetDiff> Manifest::genDiff(const Man
     
     for (it = bAssets.begin(); it != bAssets.end(); ++it)
     {
-        key = it->first;
-        valueB = it->second;
+        const auto &key = it->first;
+        const auto &valueB = it->second;
         
         // Added
         valueIt = _assets.find(key);
@@ -209,7 +206,7 @@ std::unordered_map<std::string, Manifest::AssetDiff> Manifest::genDiff(const Man
     return diff_map;
 }
 
-void Manifest::genResumeAssetsList(Downloader::DownloadUnits *units) const
+void Manifest::genResumeAssetsList(DownloadUnits *units) const
 {
     for (auto it = _assets.begin(); it != _assets.end(); ++it)
     {
@@ -217,18 +214,10 @@ void Manifest::genResumeAssetsList(Downloader::DownloadUnits *units) const
         
         if (asset.downloadState != DownloadState::SUCCESSED)
         {
-            Downloader::DownloadUnit unit;
+            DownloadUnit unit;
             unit.customId = it->first;
             unit.srcUrl = _packageUrl + asset.path;
             unit.storagePath = _manifestRoot + asset.path;
-            if (asset.downloadState == DownloadState::DOWNLOADING)
-            {
-                unit.resumeDownload = true;
-            }
-            else
-            {
-                unit.resumeDownload = false;
-            }
             units->emplace(unit.customId, unit);
         }
     }
@@ -254,7 +243,12 @@ void Manifest::prependSearchPaths()
 {
     std::vector<std::string> searchPaths = FileUtils::getInstance()->getSearchPaths();
     std::vector<std::string>::iterator iter = searchPaths.begin();
-    searchPaths.insert(iter, _manifestRoot);
+    bool needChangeSearchPaths = false;
+    if (std::find(searchPaths.begin(), searchPaths.end(), _manifestRoot) == searchPaths.end())
+    {
+        searchPaths.insert(iter, _manifestRoot);
+        needChangeSearchPaths = true;
+    }
     
     for (int i = (int)_searchPaths.size()-1; i >= 0; i--)
     {
@@ -264,8 +258,12 @@ void Manifest::prependSearchPaths()
         path = _manifestRoot + path;
         iter = searchPaths.begin();
         searchPaths.insert(iter, path);
+        needChangeSearchPaths = true;
     }
-    FileUtils::getInstance()->setSearchPaths(searchPaths);
+    if (needChangeSearchPaths)
+    {
+        FileUtils::getInstance()->setSearchPaths(searchPaths);
+    }
 }
 
 
@@ -324,15 +322,13 @@ void Manifest::setAssetDownloadState(const std::string &key, const Manifest::Dow
                 rapidjson::Value &assets = _json[KEY_ASSETS];
                 if (assets.IsObject())
                 {
-                    for (rapidjson::Value::MemberIterator itr = assets.MemberonBegin(); itr != assets.MemberonEnd(); ++itr)
+                    for (rapidjson::Value::MemberIterator itr = assets.MemberBegin(); itr != assets.MemberEnd(); ++itr)
                     {
-                        std::string jkey = itr->name.GetString();
-                        if (jkey == key) {
+                        if (key.compare(itr->name.GetString()) == 0) {
                             rapidjson::Value &entry = itr->value;
-                            rapidjson::Value &value = entry[KEY_DOWNLOAD_STATE];
-                            if (value.IsInt())
+                            if (entry.HasMember(KEY_DOWNLOAD_STATE) && entry[KEY_DOWNLOAD_STATE].IsInt())
                             {
-                                value.SetInt((int)state);
+                                entry[KEY_DOWNLOAD_STATE].SetInt((int) state);
                             }
                             else
                             {
@@ -426,7 +422,7 @@ void Manifest::loadVersion(const rapidjson::Document &json)
         const rapidjson::Value& groupVers = json[KEY_GROUP_VERSIONS];
         if (groupVers.IsObject())
         {
-            for (rapidjson::Value::ConstMemberIterator itr = groupVers.MemberonBegin(); itr != groupVers.MemberonEnd(); ++itr)
+            for (rapidjson::Value::ConstMemberIterator itr = groupVers.MemberBegin(); itr != groupVers.MemberEnd(); ++itr)
             {
                 std::string group = itr->name.GetString();
                 std::string version = "0";
@@ -470,7 +466,7 @@ void Manifest::loadManifest(const rapidjson::Document &json)
         const rapidjson::Value& assets = json[KEY_ASSETS];
         if (assets.IsObject())
         {
-            for (rapidjson::Value::ConstMemberIterator itr = assets.MemberonBegin(); itr != assets.MemberonEnd(); ++itr)
+            for (rapidjson::Value::ConstMemberIterator itr = assets.MemberBegin(); itr != assets.MemberEnd(); ++itr)
             {
                 std::string key = itr->name.GetString();
                 Asset asset = parseAsset(key, itr->value);

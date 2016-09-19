@@ -2,7 +2,7 @@
 Copyright (c) 2011      Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -31,10 +31,9 @@ THE SOFTWARE.
 #include "renderer/ccShaders.h"
 #include "base/ccMacros.h"
 #include "base/CCConfiguration.h"
-
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8  || defined(WP8_SHADER_COMPILER)
-#include "ui/shaders/UIShaders.h"
-#endif
+#include "base/CCEventListenerCustom.h"
+#include "base/CCDirector.h"
+#include "base/CCEventDispatcher.h"
 
 NS_CC_BEGIN
 
@@ -50,7 +49,7 @@ enum {
     kShaderType_PositionTexture_uColor,
     kShaderType_PositionTextureA8Color,
     kShaderType_Position_uColor,
-    kShaderType_PositionLengthTexureColor,
+    kShaderType_PositionLengthTextureColor,
     kShaderType_LabelDistanceFieldNormal,
     kShaderType_LabelDistanceFieldGlow,
     kShaderType_UIGrayScale,
@@ -62,17 +61,23 @@ enum {
     kShaderType_3DPositionNormal,
     kShaderType_3DPositionNormalTex,
     kShaderType_3DSkinPositionNormalTex,
+    kShaderType_3DPositionBumpedNormalTex,
+    kShaderType_3DSkinPositionBumpedNormalTex,
     kShaderType_3DParticleTex,
     kShaderType_3DParticleColor,
     kShaderType_3DSkyBox,
     kShaderType_3DTerrain,
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || defined(WP8_SHADER_COMPILER)
-    kShaderType_PositionColor_noMVP_GrayScale,
-#endif
+    kShaderType_CameraClear,
+    // ETC1 ALPHA supports.
+    kShaderType_ETC1ASPositionTextureColor,
+    kShaderType_ETC1ASPositionTextureColor_noMVP,
+
+    kShaderType_ETC1ASPositionTextureGray,
+    kShaderType_ETC1ASPositionTextureGray_noMVP,
     kShaderType_MAX,
 };
 
-static GLProgramCache *_sharedGLProgramCache = 0;
+static GLProgramCache *_sharedGLProgramCache = nullptr;
 
 GLProgramCache* GLProgramCache::getInstance()
 {
@@ -121,6 +126,13 @@ GLProgramCache::~GLProgramCache()
 bool GLProgramCache::init()
 {
     loadDefaultGLPrograms();
+    
+    auto listener = EventListenerCustom::create(Configuration::CONFIG_FILE_LOADED, [this](EventCustom* event){
+        reloadDefaultGLProgramsRelativeToLights();
+    });
+    
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(listener, -1);
+    
     return true;
 }
 
@@ -193,13 +205,12 @@ void GLProgramCache::loadDefaultGLPrograms()
     _programs.insert( std::make_pair(GLProgram::SHADER_NAME_POSITION_U_COLOR, p) );
 
     //
-    // Position, Legth(TexCoords, Color (used by Draw Node basically )
+    // Position, Length(TexCoords, Color (used by Draw Node basically )
     //
     p = new (std::nothrow) GLProgram();
-    loadDefaultGLProgram(p, kShaderType_PositionLengthTexureColor);
+    loadDefaultGLProgram(p, kShaderType_PositionLengthTextureColor);
     _programs.insert( std::make_pair(GLProgram::SHADER_NAME_POSITION_LENGTH_TEXTURE_COLOR, p) );
 
-#if CC_TARGET_PLATFORM != CC_PLATFORM_WP8
     p = new (std::nothrow) GLProgram();
     loadDefaultGLProgram(p, kShaderType_LabelDistanceFieldNormal);
     _programs.insert( std::make_pair(GLProgram::SHADER_NAME_LABEL_DISTANCEFIELD_NORMAL, p) );
@@ -207,7 +218,6 @@ void GLProgramCache::loadDefaultGLPrograms()
     p = new (std::nothrow) GLProgram();
     loadDefaultGLProgram(p, kShaderType_LabelDistanceFieldGlow);
     _programs.insert( std::make_pair(GLProgram::SHADER_NAME_LABEL_DISTANCEFIELD_GLOW, p) );
-#endif
 
     p = new (std::nothrow) GLProgram();
     loadDefaultGLProgram(p, kShaderType_UIGrayScale);
@@ -233,33 +243,63 @@ void GLProgramCache::loadDefaultGLPrograms()
     loadDefaultGLProgram(p, kShaderType_3DSkinPositionTex);
     _programs.insert(std::make_pair(GLProgram::SHADER_3D_SKINPOSITION_TEXTURE, p));
 
-    p = new GLProgram();
+    p = new (std::nothrow) GLProgram();
     loadDefaultGLProgram(p, kShaderType_3DPositionNormal);
     _programs.insert( std::make_pair(GLProgram::SHADER_3D_POSITION_NORMAL, p) );
 
-    p = new GLProgram();
+    p = new (std::nothrow) GLProgram();
     loadDefaultGLProgram(p, kShaderType_3DPositionNormalTex);
     _programs.insert( std::make_pair(GLProgram::SHADER_3D_POSITION_NORMAL_TEXTURE, p) );
 
-    p = new GLProgram();
+    p = new (std::nothrow) GLProgram();
     loadDefaultGLProgram(p, kShaderType_3DSkinPositionNormalTex);
     _programs.insert(std::make_pair(GLProgram::SHADER_3D_SKINPOSITION_NORMAL_TEXTURE, p));
 
-    p = new GLProgram();
+    p = new (std::nothrow) GLProgram();
+    loadDefaultGLProgram(p, kShaderType_3DPositionBumpedNormalTex);
+    _programs.insert(std::make_pair(GLProgram::SHADER_3D_POSITION_BUMPEDNORMAL_TEXTURE, p));
+
+    p = new (std::nothrow) GLProgram();
+    loadDefaultGLProgram(p, kShaderType_3DSkinPositionBumpedNormalTex);
+    _programs.insert(std::make_pair(GLProgram::SHADER_3D_SKINPOSITION_BUMPEDNORMAL_TEXTURE, p));
+
+    p = new (std::nothrow) GLProgram();
     loadDefaultGLProgram(p, kShaderType_3DParticleColor);
     _programs.insert(std::make_pair(GLProgram::SHADER_3D_PARTICLE_COLOR, p));
 
-    p = new GLProgram();
+    p = new (std::nothrow) GLProgram();
     loadDefaultGLProgram(p, kShaderType_3DParticleTex);
     _programs.insert(std::make_pair(GLProgram::SHADER_3D_PARTICLE_TEXTURE, p));
 
-    p = new GLProgram();
+    p = new (std::nothrow) GLProgram();
     loadDefaultGLProgram(p, kShaderType_3DSkyBox);
     _programs.insert(std::make_pair(GLProgram::SHADER_3D_SKYBOX, p));
 
-    p = new GLProgram();
+    p = new (std::nothrow) GLProgram();
     loadDefaultGLProgram(p, kShaderType_3DTerrain);
     _programs.insert(std::make_pair(GLProgram::SHADER_3D_TERRAIN, p));
+    
+    p = new (std::nothrow) GLProgram();
+    loadDefaultGLProgram(p, kShaderType_CameraClear);
+    _programs.insert(std::make_pair(GLProgram::SHADER_CAMERA_CLEAR, p));
+
+    /// ETC1 ALPHA supports.
+    p = new(std::nothrow) GLProgram();
+    loadDefaultGLProgram(p, kShaderType_ETC1ASPositionTextureColor);
+    _programs.insert(std::make_pair(GLProgram::SHADER_NAME_ETC1AS_POSITION_TEXTURE_COLOR, p));
+
+    p = new(std::nothrow) GLProgram();
+    loadDefaultGLProgram(p, kShaderType_ETC1ASPositionTextureColor_noMVP);
+    _programs.insert(std::make_pair(GLProgram::SHADER_NAME_ETC1AS_POSITION_TEXTURE_COLOR_NO_MVP, p));
+
+    /// ETC1 Gray supports.
+    p = new(std::nothrow) GLProgram();
+    loadDefaultGLProgram(p, kShaderType_ETC1ASPositionTextureGray);
+    _programs.insert(std::make_pair(GLProgram::SHADER_NAME_ETC1AS_POSITION_TEXTURE_GRAY, p));
+
+    p = new(std::nothrow) GLProgram();
+    loadDefaultGLProgram(p, kShaderType_ETC1ASPositionTextureGray_noMVP);
+    _programs.insert(std::make_pair(GLProgram::SHADER_NAME_ETC1AS_POSITION_TEXTURE_GRAY_NO_MVP, p));
 }
 
 void GLProgramCache::reloadDefaultGLPrograms()
@@ -332,13 +372,12 @@ void GLProgramCache::reloadDefaultGLPrograms()
     loadDefaultGLProgram(p, kShaderType_Position_uColor);
 
     //
-    // Position, Legth(TexCoords, Color (used by Draw Node basically )
+    // Position, Length(TexCoords, Color (used by Draw Node basically )
     //
     p = getGLProgram(GLProgram::SHADER_NAME_POSITION_LENGTH_TEXTURE_COLOR);
     p->reset();
-    loadDefaultGLProgram(p, kShaderType_PositionLengthTexureColor);
+    loadDefaultGLProgram(p, kShaderType_PositionLengthTextureColor);
 
-#if CC_TARGET_PLATFORM != CC_PLATFORM_WP8
     p = getGLProgram(GLProgram::SHADER_NAME_LABEL_DISTANCEFIELD_NORMAL);
     p->reset();
     loadDefaultGLProgram(p, kShaderType_LabelDistanceFieldNormal);
@@ -346,7 +385,10 @@ void GLProgramCache::reloadDefaultGLPrograms()
     p = getGLProgram(GLProgram::SHADER_NAME_LABEL_DISTANCEFIELD_GLOW);
     p->reset();
     loadDefaultGLProgram(p, kShaderType_LabelDistanceFieldGlow);
-#endif
+
+    p = getGLProgram(GLProgram::SHADER_NAME_POSITION_GRAYSCALE);
+    p->reset();
+    loadDefaultGLProgram(p, kShaderType_UIGrayScale);
 
     p = getGLProgram(GLProgram::SHADER_NAME_LABEL_NORMAL);
     p->reset();
@@ -380,6 +422,14 @@ void GLProgramCache::reloadDefaultGLPrograms()
     p->reset();
     loadDefaultGLProgram(p, kShaderType_3DSkinPositionNormalTex);
 
+    p = getGLProgram(GLProgram::SHADER_3D_POSITION_BUMPEDNORMAL_TEXTURE);
+    p->reset();
+    loadDefaultGLProgram(p, kShaderType_3DPositionBumpedNormalTex);
+
+    p = getGLProgram(GLProgram::SHADER_3D_SKINPOSITION_BUMPEDNORMAL_TEXTURE);
+    p->reset();
+    loadDefaultGLProgram(p, kShaderType_3DSkinPositionBumpedNormalTex);
+
     p = getGLProgram(GLProgram::SHADER_3D_PARTICLE_TEXTURE);
     p->reset();
     loadDefaultGLProgram(p, kShaderType_3DParticleTex);
@@ -395,6 +445,33 @@ void GLProgramCache::reloadDefaultGLPrograms()
     p = getGLProgram(GLProgram::SHADER_3D_TERRAIN);
     p->reset();
     loadDefaultGLProgram(p, kShaderType_3DTerrain);
+    
+    p = getGLProgram(GLProgram::SHADER_CAMERA_CLEAR);
+    p->reset();
+    loadDefaultGLProgram(p, kShaderType_CameraClear);
+}
+
+void GLProgramCache::reloadDefaultGLProgramsRelativeToLights()
+{
+    GLProgram *p = getGLProgram(GLProgram::SHADER_3D_POSITION_NORMAL);
+    p->reset();
+    loadDefaultGLProgram(p, kShaderType_3DPositionNormal);
+    
+    p = getGLProgram(GLProgram::SHADER_3D_POSITION_NORMAL_TEXTURE);
+    p->reset();
+    loadDefaultGLProgram(p, kShaderType_3DPositionNormalTex);
+    
+    p = getGLProgram(GLProgram::SHADER_3D_SKINPOSITION_NORMAL_TEXTURE);
+    p->reset();
+    loadDefaultGLProgram(p, kShaderType_3DSkinPositionNormalTex);
+
+    p = getGLProgram(GLProgram::SHADER_3D_POSITION_BUMPEDNORMAL_TEXTURE);
+    p->reset();
+    loadDefaultGLProgram(p, kShaderType_3DPositionBumpedNormalTex);
+
+    p = getGLProgram(GLProgram::SHADER_3D_SKINPOSITION_BUMPEDNORMAL_TEXTURE);
+    p->reset();
+    loadDefaultGLProgram(p, kShaderType_3DSkinPositionBumpedNormalTex);
 }
 
 void GLProgramCache::loadDefaultGLProgram(GLProgram *p, int type)
@@ -434,17 +511,15 @@ void GLProgramCache::loadDefaultGLProgram(GLProgram *p, int type)
             p->initWithByteArrays(ccPosition_uColor_vert, ccPosition_uColor_frag);
             p->bindAttribLocation("aVertex", GLProgram::VERTEX_ATTRIB_POSITION);
             break;
-        case kShaderType_PositionLengthTexureColor:
+        case kShaderType_PositionLengthTextureColor:
             p->initWithByteArrays(ccPositionColorLengthTexture_vert, ccPositionColorLengthTexture_frag);
             break;
-#if CC_TARGET_PLATFORM != CC_PLATFORM_WP8
         case kShaderType_LabelDistanceFieldNormal:
             p->initWithByteArrays(ccLabel_vert, ccLabelDistanceFieldNormal_frag);
             break;
         case kShaderType_LabelDistanceFieldGlow:
             p->initWithByteArrays(ccLabel_vert, ccLabelDistanceFieldGlow_frag);
             break;
-#endif
         case kShaderType_UIGrayScale:
             p->initWithByteArrays(ccPositionTextureColor_noMVP_vert,
                                   ccPositionTexture_GrayScale_frag);
@@ -482,6 +557,20 @@ void GLProgramCache::loadDefaultGLProgram(GLProgram *p, int type)
                 p->initWithByteArrays((def + std::string(cc3D_SkinPositionNormalTex_vert)).c_str(), (def + std::string(cc3D_ColorNormalTex_frag)).c_str());
             }
             break;
+        case kShaderType_3DPositionBumpedNormalTex:
+            {
+                std::string def = getShaderMacrosForLight();
+                std::string normalMapDef = "\n#define USE_NORMAL_MAPPING 1 \n";
+                p->initWithByteArrays((def + normalMapDef + std::string(cc3D_PositionNormalTex_vert)).c_str(), (def + normalMapDef + std::string(cc3D_ColorNormalTex_frag)).c_str());
+            }
+            break;
+        case kShaderType_3DSkinPositionBumpedNormalTex:
+            {
+                std::string def = getShaderMacrosForLight();
+                std::string normalMapDef = "\n#define USE_NORMAL_MAPPING 1 \n";
+                p->initWithByteArrays((def + normalMapDef + std::string(cc3D_SkinPositionNormalTex_vert)).c_str(), (def + normalMapDef + std::string(cc3D_ColorNormalTex_frag)).c_str());
+            }
+            break;
         case kShaderType_3DParticleTex:
            {
                 p->initWithByteArrays(cc3D_Particle_vert, cc3D_Particle_tex_frag);
@@ -496,11 +585,23 @@ void GLProgramCache::loadDefaultGLProgram(GLProgram *p, int type)
         case kShaderType_3DTerrain:
             p->initWithByteArrays(cc3D_Terrain_vert, cc3D_Terrain_frag);
             break;
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || defined(WP8_SHADER_COMPILER)
-        case kShaderType_PositionColor_noMVP_GrayScale:
-            p->initWithByteArrays(ccPositionTextureColor_noMVP_vert, ccUIGrayScale_frag);
+        case kShaderType_CameraClear:
+            p->initWithByteArrays(ccCameraClearVert, ccCameraClearFrag);
             break;
-#endif
+            /// ETC1 ALPHA supports.
+        case kShaderType_ETC1ASPositionTextureColor:
+            p->initWithByteArrays(ccPositionTextureColor_vert, ccETC1ASPositionTextureColor_frag);
+            break;
+        case kShaderType_ETC1ASPositionTextureColor_noMVP:
+            p->initWithByteArrays(ccPositionTextureColor_noMVP_vert, ccETC1ASPositionTextureColor_frag);
+            break;
+            /// ETC1 GRAY supports.
+        case kShaderType_ETC1ASPositionTextureGray:
+            p->initWithByteArrays(ccPositionTextureColor_vert, ccETC1ASPositionTextureGray_frag);
+            break;
+        case kShaderType_ETC1ASPositionTextureGray_noMVP:
+            p->initWithByteArrays(ccPositionTextureColor_noMVP_vert, ccETC1ASPositionTextureGray_frag);
+            break;
         default:
             CCLOG("cocos2d: %s:%d, error shader type", __FUNCTION__, __LINE__);
             return;

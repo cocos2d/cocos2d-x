@@ -1,0 +1,4 @@
+include ':libcocos2dx_with_controller'
+project(':libcocos2dx_with_controller').projectDir = new File(settingsDir, '../../../cocos/platform/android/libcocos2dx-with-controller')
+include ':GameControllerTest'
+project(':GameControllerTest').projectDir = new File(settingsDir, 'app')

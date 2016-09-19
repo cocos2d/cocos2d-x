@@ -25,7 +25,7 @@
 
 var presentationSceneIdx = -1;
 var centerPos = cc.p(0,0); // will be updated later
-var images_path = 'res/Presentation/';
+var images_path = 'Presentation/';
 
 //------------------------------------------------------------------
 //
@@ -481,7 +481,7 @@ var ParticlesPage = function() {
 	meteor.x = winSize.width*3/4;
 	meteor.y = winSize.height/2;
 
-	var flower = new cc.ParticleSystem("res/Particles/Flower.plist");
+	var flower = new cc.ParticleSystem("Particles/Flower.plist");
 	this.addChild( flower );
 	flower.x = centerPos.x;
 	flower.y = centerPos.y;

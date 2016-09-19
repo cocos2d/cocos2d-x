@@ -26,8 +26,6 @@ THE SOFTWARE.
 #ifndef __MATH_CCGEOMETRY_H__
 #define __MATH_CCGEOMETRY_H__
 
-#include <math.h>
-
 #include "platform/CCPlatformMacros.h"
 #include "base/ccMacros.h"
 #include "math/CCMath.h"
@@ -133,6 +131,11 @@ public:
      * @js NA
      */
     Rect(float x, float y, float width, float height);
+    /**
+     Constructor a rect.
+     * @js NA
+     */
+    Rect(const Vec2& pos, const Size& dimension);
     /**
     Copy constructor.
      * @js NA

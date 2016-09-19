@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2013      Zynga Inc.
- Copyright (c) 2013-2015 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -32,6 +32,7 @@
 
 NS_CC_BEGIN
 
+class Texture2D;
 class FontCharMap : public Font
 {  
 public:

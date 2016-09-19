@@ -35,8 +35,8 @@ function streamXHREventsToLabel ( xhr, label, textbox, method ) {
     // Simple events
     ['loadstart', 'abort', 'error', 'load', 'loadend', 'timeout'].forEach(function (eventname) {
         xhr["on" + eventname] = function () {
-            label.string += "\nEvent : " + eventname
-        }
+            label.string += "\nEvent : " + eventname;
+        };
     });
 
     // Special event
@@ -44,11 +44,11 @@ function streamXHREventsToLabel ( xhr, label, textbox, method ) {
         if (xhr.readyState == 4 && (xhr.status >= 200 && xhr.status <= 207)) {
             var httpStatus = xhr.statusText;
             var response = xhr.responseText.substring(0, 100) + "...";
-            textbox.string = method + " Response (100 chars):\n"
-            textbox.string += response
-            label.string += "\nStatus: Got " + method + " response! " + httpStatus
+            textbox.string = method + " Response (100 chars):\n";
+            textbox.string += response;
+            label.string += "\nStatus: Got " + method + " response! " + httpStatus;
         }
-    }
+    };
 }
 
 
@@ -87,7 +87,7 @@ var XHRTestLayer = cc.Layer.extend({
         var statusGetLabel = new cc.LabelTTF("Status:", "Thonburi", 12);
         this.addChild(statusGetLabel, 1);
 
-        statusGetLabel.x = 10
+        statusGetLabel.x = 10;
         statusGetLabel.y = winSize.height - 100;
         ensureLeftAligned(statusGetLabel);
         statusGetLabel.setString("Status: Send Get Request to httpbin.org");
@@ -103,9 +103,15 @@ var XHRTestLayer = cc.Layer.extend({
         streamXHREventsToLabel(xhr, statusGetLabel, responseLabel, "GET");
         // 5 seconds for timeout
         xhr.timeout = 5000;
-        
+
         //set arguments with <URL>?xxx=xxx&yyy=yyy
-        xhr.open("GET", "http://httpbin.org/get?show_env=1", true);
+        if(cc.sys.isNative){
+            xhr.open("GET", "http://geek.csdn.net/news/detail/33683", true);
+        }else{
+            xhr.open("GET", "http://httpbin.org/get?show_env=1", true);
+        }
+        xhr.setRequestHeader("Accept-Encoding","gzip,deflate");
+
         xhr.send();
     },
 
@@ -124,11 +130,12 @@ var XHRTestLayer = cc.Layer.extend({
         ensureLeftAligned(responseLabel);
         responseLabel.x = winSize.width / 10 * 3;
         responseLabel.y = winSize.height / 2;
-        
+
         var xhr = cc.loader.getXMLHttpRequest();
         streamXHREventsToLabel(xhr, statusPostLabel, responseLabel, "POST");
 
         xhr.open("POST", "http://httpbin.org/post");
+
         //set Content-type "text/plain;charset=UTF-8" to post plain text
         xhr.setRequestHeader("Content-Type","text/plain;charset=UTF-8");
         xhr.send("plain text message");

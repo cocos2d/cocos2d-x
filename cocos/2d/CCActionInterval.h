@@ -2,7 +2,7 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2011      Zynga Inc.
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -61,26 +61,29 @@ then running it again in Reverse mode.
 
 Example:
 
-Action *pingPongAction = Sequence::actions(action, action->reverse(), nullptr);
+@code
+auto action = MoveBy::create(1.0f, Vec2::ONE);
+auto pingPongAction = Sequence::create(action, action->reverse(), nullptr);
+@endcode
 */
 class CC_DLL ActionInterval : public FiniteTimeAction
 {
 public:
     /** How many seconds had elapsed since the actions started to run.
      *
-     * @return The seconds had elapsed since the ations started to run.
+     * @return The seconds had elapsed since the actions started to run.
      */
-    inline float getElapsed(void) { return _elapsed; }
+    float getElapsed() { return _elapsed; }
 
-    /** Sets the ampliture rate, extension in GridAction
+    /** Sets the amplitude rate, extension in GridAction
      *
-     * @param amp   The ampliture rate.
+     * @param amp   The amplitude rate.
      */
     void setAmplitudeRate(float amp);
     
-    /** Gets the ampliture rate, extension in GridAction
+    /** Gets the amplitude rate, extension in GridAction
      *
-     * @return  The ampliture rate.
+     * @return  The amplitude rate.
      */
     float getAmplitudeRate(void);
 
@@ -112,6 +115,9 @@ CC_CONSTRUCTOR_ACCESS:
 protected:
     float _elapsed;
     bool   _firstTick;
+
+protected:
+    bool sendUpdateEventToScript(float dt, Action *actionObject);
 };
 
 /** @class Sequence
@@ -124,8 +130,8 @@ public:
      *
      * @return An autoreleased Sequence object.
      */
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-    // WP8 in VS2012 does not support nullptr in variable args lists and variadic templates are also not supported
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    // VS2013 does not support nullptr in variable args lists and variadic templates are also not supported
     typedef FiniteTimeAction* M;
     static Sequence* create(M m1, std::nullptr_t listEnd) { return variadicCreate(m1, NULL); }
     static Sequence* create(M m1, M m2, std::nullptr_t listEnd) { return variadicCreate(m1, m2, NULL); }
@@ -146,7 +152,7 @@ public:
 
     /** Helper constructor to create an array of sequenceable actions given an array.
      * @code
-     * When this funtion bound to the js or lua,the input params changed
+     * When this function bound to the js or lua,the input params changed
      * in js  :var   create(var   object1,var   object2, ...)
      * in lua :local create(local object1,local object2, ...)
      * @endcode
@@ -184,11 +190,12 @@ public:
     virtual void update(float t) override;
     
 CC_CONSTRUCTOR_ACCESS:
-    Sequence() {}
-    virtual ~Sequence(void);
+    Sequence();
+    virtual ~Sequence();
 
     /** initializes the action */
     bool initWithTwoActions(FiniteTimeAction *pActionOne, FiniteTimeAction *pActionTwo);
+    bool init(const Vector<FiniteTimeAction*>& arrayOfActions);
 
 protected:
     FiniteTimeAction *_actions[2];
@@ -218,7 +225,7 @@ public:
      *
      * @param action The inner action.
      */
-    inline void setInnerAction(FiniteTimeAction *action)
+    void setInnerAction(FiniteTimeAction *action)
     {
         if (_innerAction != action)
         {
@@ -232,7 +239,7 @@ public:
      *
      * @return The inner action.
      */
-    inline FiniteTimeAction* getInnerAction()
+    FiniteTimeAction* getInnerAction()
     {
         return _innerAction;
     }
@@ -288,7 +295,7 @@ public:
      *
      * @param action The inner action.
      */
-    inline void setInnerAction(ActionInterval *action)
+    void setInnerAction(ActionInterval *action)
     {
         if (_innerAction != action)
         {
@@ -302,7 +309,7 @@ public:
      *
      * @return The inner action.
      */
-    inline ActionInterval* getInnerAction()
+    ActionInterval* getInnerAction()
     {
         return _innerAction;
     }
@@ -344,15 +351,15 @@ class CC_DLL Spawn : public ActionInterval
 public:
     /** Helper constructor to create an array of spawned actions.
      * @code
-     * When this funtion bound to the js or lua, the input params changed.
+     * When this function bound to the js or lua, the input params changed.
      * in js  :var   create(var   object1,var   object2, ...)
      * in lua :local create(local object1,local object2, ...)
      * @endcode
      *
      * @return An autoreleased Spawn object.
      */
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-    // WP8 in VS2012 does not support nullptr in variable args lists and variadic templates are also not supported.
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    // VS2013 does not support nullptr in variable args lists and variadic templates are also not supported.
     typedef FiniteTimeAction* M;
     static Spawn* create(M m1, std::nullptr_t listEnd) { return variadicCreate(m1, NULL); }
     static Spawn* create(M m1, M m2, std::nullptr_t listEnd) { return variadicCreate(m1, m2, NULL); }
@@ -390,7 +397,7 @@ public:
     /** Creates the Spawn action.
      *
      * @param action1   The first spawned action.
-     * @param action2   THe second spawned action.
+     * @param action2   The second spawned action.
      * @return An autoreleased Spawn object.
      * @js NA
      */
@@ -409,11 +416,12 @@ public:
     virtual void update(float time) override;
     
 CC_CONSTRUCTOR_ACCESS:
-    Spawn() {}
+    Spawn();
     virtual ~Spawn();
 
     /** initializes the Spawn action with the 2 actions to spawn */
     bool initWithTwoActions(FiniteTimeAction *action1, FiniteTimeAction *action2);
+    bool init(const Vector<FiniteTimeAction*>& arrayOfActions);
 
 protected:
     FiniteTimeAction *_one;
@@ -760,6 +768,92 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(SkewBy);
 };
 
+/** @class ResizeTo
+* @brief Resize a Node object to the final size by modifying it's Size attribute.
+*/
+class  CC_DLL ResizeTo : public ActionInterval 
+{
+public:
+    /**
+    * Creates the action.
+    * @brief Resize a Node object to the final size by modifying it's Size attribute. Works on all nodes where setContentSize is effective. But it's mostly useful for nodes where 9-slice is enabled
+    * @param duration Duration time, in seconds.
+    * @param final_size The target size to reach
+    * @return An autoreleased RotateTo object.
+    */
+    static ResizeTo* create(float duration, const cocos2d::Size& final_size);
+
+    //
+    // Overrides
+    //
+    virtual ResizeTo* clone() const override;
+    void startWithTarget(cocos2d::Node* target) override;
+    void update(float time) override;
+
+CC_CONSTRUCTOR_ACCESS:
+    ResizeTo() {}
+    virtual ~ResizeTo() {}
+    
+    /**
+    * initializes the action
+    * @param duration in seconds
+    * @param final_size in Size type
+    */
+    bool initWithDuration(float duration, const cocos2d::Size& final_size);
+
+protected:
+    cocos2d::Size _initialSize;
+    cocos2d::Size _finalSize;
+    cocos2d::Size _sizeDelta;
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(ResizeTo);
+};
+
+
+/** @class ResizeBy
+* @brief Resize a Node object by a Size. Works on all nodes where setContentSize is effective. But it's mostly useful for nodes where 9-slice is enabled
+*/
+class CC_DLL ResizeBy : public ActionInterval 
+{
+public:
+    /**
+    * Creates the action.
+    *
+    * @param duration Duration time, in seconds.
+    * @param deltaSize The delta size.
+    * @return An autoreleased ResizeBy object.
+    */
+    static ResizeBy* create(float duration, const cocos2d::Size& deltaSize);
+    
+    //
+    // Overrides
+    //
+    virtual ResizeBy* clone() const override;
+    virtual ResizeBy* reverse(void) const  override;
+    virtual void startWithTarget(Node *target) override;
+    /**
+    * @param time in seconds
+    */
+    virtual void update(float time) override;
+
+CC_CONSTRUCTOR_ACCESS:
+    ResizeBy() {}
+    virtual ~ResizeBy() {}
+    
+    /** initializes the action */
+    bool initWithDuration(float duration, const cocos2d::Size& deltaSize);
+
+protected:
+    cocos2d::Size _sizeDelta;
+    cocos2d::Size _startSize;
+    cocos2d::Size _previousSize;
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(ResizeBy);
+};
+
+
 /** @class JumpBy
  * @brief Moves a Node object simulating a parabolic jump movement by modifying it's position attribute.
 */
@@ -872,7 +966,7 @@ public:
      * @code
      * When this function bound to js or lua,the input params are changed.
      * in js: var create(var t,var table)
-     * in lua: lcaol create(local t, local table)
+     * in lua: local create(local t, local table)
      * @endcode
      */
     static BezierBy* create(float t, const ccBezierConfig& c);
@@ -921,7 +1015,7 @@ public:
      * @code
      * when this function bound to js or lua,the input params are changed
      * in js: var create(var t,var table)
-     * in lua: lcaol create(local t, local table)
+     * in lua: local create(local t, local table)
      * @endcode
      */
     static BezierTo* create(float t, const ccBezierConfig& c);
@@ -1439,6 +1533,11 @@ public:
     Animation* getAnimation() { return _animation; }
     const Animation* getAnimation() const { return _animation; }
 
+    /**
+     * Gets the index of sprite frame currently displayed.
+     * @return int  the index of sprite frame currently displayed.
+     */
+    int getCurrentFrameIndex() { return _currFrameIndex; }
     //
     // Overrides
     //
@@ -1462,6 +1561,7 @@ protected:
     std::vector<float>* _splitTimes;
     int             _nextFrame;
     SpriteFrame*    _origFrame;
+    int _currFrameIndex;
     unsigned int    _executedLoops;
     Animation*      _animation;
 
@@ -1550,7 +1650,7 @@ public:
     static ActionFloat* create(float duration, float from, float to, ActionFloatCallback callback);
 
     /**
-     * Overrided ActionInterval methods
+     * Overridden ActionInterval methods
      */
     void startWithTarget(Node* target) override;
     void update(float delta) override;

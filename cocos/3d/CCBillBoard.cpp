@@ -44,54 +44,54 @@ BillBoard::~BillBoard()
 
 BillBoard* BillBoard::createWithTexture(Texture2D *texture, Mode mode)
 {
-    BillBoard *billborad = new (std::nothrow) BillBoard();
-    if (billborad && billborad->initWithTexture(texture))
+    BillBoard *billboard = new (std::nothrow) BillBoard();
+    if (billboard && billboard->initWithTexture(texture))
     {
-        billborad->_mode = mode;
-        billborad->autorelease();
-        return billborad;
+        billboard->_mode = mode;
+        billboard->autorelease();
+        return billboard;
     }
-    CC_SAFE_DELETE(billborad);
+    CC_SAFE_DELETE(billboard);
     return nullptr;
 }
 
 
 BillBoard* BillBoard::create(const std::string& filename, Mode mode)
 {
-    BillBoard *billborad = new (std::nothrow) BillBoard();
-    if (billborad && billborad->initWithFile(filename))
+    BillBoard *billboard = new (std::nothrow) BillBoard();
+    if (billboard && billboard->initWithFile(filename))
     {
-        billborad->_mode = mode;
-        billborad->autorelease();
-        return billborad;
+        billboard->_mode = mode;
+        billboard->autorelease();
+        return billboard;
     }
-    CC_SAFE_DELETE(billborad);
+    CC_SAFE_DELETE(billboard);
     return nullptr;
 }
 
 BillBoard* BillBoard::create(const std::string& filename, const Rect& rect, Mode mode)
 {
-    BillBoard *billborad = new (std::nothrow) BillBoard();
-    if (billborad && billborad->initWithFile(filename, rect))
+    BillBoard *billboard = new (std::nothrow) BillBoard();
+    if (billboard && billboard->initWithFile(filename, rect))
     {
-        billborad->_mode = mode;
-        billborad->autorelease();
-        return billborad;
+        billboard->_mode = mode;
+        billboard->autorelease();
+        return billboard;
     }
-    CC_SAFE_DELETE(billborad);
+    CC_SAFE_DELETE(billboard);
     return nullptr;
 }
 
 BillBoard* BillBoard::create(Mode mode)
 {
-    BillBoard *billborad = new (std::nothrow) BillBoard();
-    if (billborad && billborad->init())
+    BillBoard *billboard = new (std::nothrow) BillBoard();
+    if (billboard && billboard->init())
     {
-        billborad->_mode = mode;
-        billborad->autorelease();
-        return billborad;
+        billboard->_mode = mode;
+        billboard->autorelease();
+        return billboard;
     }
-    CC_SAFE_DELETE(billborad);
+    CC_SAFE_DELETE(billboard);
     return nullptr;
 }
 
@@ -103,8 +103,6 @@ void BillBoard::visit(Renderer *renderer, const Mat4& parentTransform, uint32_t 
         return;
     }
     bool visibleByCamera = isVisitableByVisitingCamera();
-    if (!visibleByCamera && _children.empty())
-        return;
     
     uint32_t flags = processParentFlags(parentTransform, parentFlags);
     
@@ -121,8 +119,6 @@ void BillBoard::visit(Renderer *renderer, const Mat4& parentTransform, uint32_t 
     Director* director = Director::getInstance();
     director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
-    
-    
     
     int i = 0;
     
@@ -230,10 +226,10 @@ void BillBoard::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     //FIXME: frustum culling here
     flags |= Node::FLAGS_RENDER_AS_3D;
-    _quadCommand.init(0, _texture->getName(), getGLProgramState(), _blendFunc, &_quad, 1, _modelViewTransform, flags);
-    _quadCommand.setTransparent(true);
-    _quadCommand.set3D(true);
-    renderer->addCommand(&_quadCommand);
+    _trianglesCommand.init(0, _texture->getName(), getGLProgramState(), _blendFunc, _polyInfo.triangles, _modelViewTransform, flags);
+    _trianglesCommand.setTransparent(true);
+    _trianglesCommand.set3D(true);
+    renderer->addCommand(&_trianglesCommand);
 }
 
 void BillBoard::setMode( Mode mode )

@@ -16,16 +16,19 @@
 * See the License for the specific language governing permissions and limitations under the License.
 */
 
-#include "SimpleAudioEngine.h"
-#include "Audio.h"
+#include "audio/include/SimpleAudioEngine.h"
+#include "audio/winrt/Audio.h"
 
 #include <map>
-//#include "CCCommon.h"
+#include "platform/CCPlatformMacros.h"
+#include "platform/CCFileUtils.h"
+
 using namespace std;
+USING_NS_CC;
 
 namespace CocosDenshion {
 
-Audio* s_audioController = NULL;
+Audio* s_audioController = nullptr;
 bool s_initialized = false;
 
 SimpleAudioEngine* SimpleAudioEngine::getInstance()
@@ -39,7 +42,7 @@ static Audio* sharedAudioController()
 {
     if (! s_audioController || !s_initialized)
     {
-        if(s_audioController == NULL)
+        if (s_audioController == nullptr)
         {
             s_audioController = new Audio;
         }
@@ -81,7 +84,8 @@ void SimpleAudioEngine::playBackgroundMusic(const char* pszFilePath, bool bLoop)
         return;
     }
 
-    sharedAudioController()->PlayBackgroundMusic(pszFilePath, bLoop);
+    string fullPath = FileUtils::getInstance()->fullPathForFilename(pszFilePath);
+    sharedAudioController()->PlayBackgroundMusic(fullPath.c_str(), bLoop);
 }
 
 void SimpleAudioEngine::stopBackgroundMusic(bool bReleaseData)
@@ -121,8 +125,8 @@ bool SimpleAudioEngine::isBackgroundMusicPlaying()
 unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath, bool bLoop,float pitch, float pan, float gain)
 {
     unsigned int sound;
-    sharedAudioController()->PlaySoundEffect(pszFilePath, bLoop, sound);
-    // TODO: need to support playEffect parameters
+    string fullPath = FileUtils::getInstance()->fullPathForFilename(pszFilePath);
+    sharedAudioController()->PlaySoundEffect(fullPath.c_str(), bLoop, sound);    // TODO: need to support playEffect parameters
     return sound;
 }
 
@@ -133,7 +137,8 @@ void SimpleAudioEngine::stopEffect(unsigned int nSoundId)
 
 void SimpleAudioEngine::preloadEffect(const char* pszFilePath)
 {
-    sharedAudioController()->PreloadSoundEffect(pszFilePath);
+    string fullPath = FileUtils::getInstance()->fullPathForFilename(pszFilePath);
+    sharedAudioController()->PreloadSoundEffect(fullPath.c_str());
 }
 
 void SimpleAudioEngine::pauseEffect(unsigned int nSoundId)
@@ -168,7 +173,8 @@ void SimpleAudioEngine::preloadBackgroundMusic(const char* pszFilePath)
 
 void SimpleAudioEngine::unloadEffect(const char* pszFilePath)
 {
-    sharedAudioController()->UnloadSoundEffect(pszFilePath);
+    string fullPath = FileUtils::getInstance()->fullPathForFilename(pszFilePath);
+    sharedAudioController()->UnloadSoundEffect(fullPath.c_str());
 }
 
 //////////////////////////////////////////////////////////////////////////

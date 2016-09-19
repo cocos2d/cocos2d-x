@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCPhysics3D.h"
+#include "physics3d/CCPhysics3D.h"
 
 #if CC_USE_3D_PHYSICS
 
@@ -32,11 +32,27 @@ NS_CC_BEGIN
 
 PhysicsSprite3D* PhysicsSprite3D::create(const std::string &modelPath, Physics3DRigidBodyDes* rigidDes, const cocos2d::Vec3& translateInPhysics, const cocos2d::Quaternion& rotInPhsyics)
 {
-    auto ret = new PhysicsSprite3D();
+    auto ret = new (std::nothrow) PhysicsSprite3D();
     if (ret && ret->initWithFile(modelPath))
     {
         auto obj = Physics3DRigidBody::create(rigidDes);
-        ret->_physicsComponent = Physics3DComponent::create(obj);
+        ret->_physicsComponent = Physics3DComponent::create(obj, translateInPhysics, rotInPhsyics);
+        ret->addComponent(ret->_physicsComponent);
+        ret->_contentSize = ret->getBoundingBox().size;
+        ret->autorelease();
+        return ret;
+    }
+    CC_SAFE_DELETE(ret);
+    return ret;
+}
+
+PhysicsSprite3D* PhysicsSprite3D::createWithCollider(const std::string &modelPath, Physics3DColliderDes* colliderDes, const cocos2d::Vec3& translateInPhysics, const cocos2d::Quaternion& rotInPhsyics)
+{
+    auto ret = new (std::nothrow) PhysicsSprite3D();
+    if (ret && ret->initWithFile(modelPath))
+    {
+        auto obj = Physics3DCollider::create(colliderDes);
+        ret->_physicsComponent = Physics3DComponent::create(obj, translateInPhysics, rotInPhsyics);
         ret->addComponent(ret->_physicsComponent);
         ret->_contentSize = ret->getBoundingBox().size;
         ret->autorelease();
@@ -57,16 +73,16 @@ void PhysicsSprite3D::setSyncFlag(Physics3DComponent::PhysicsSyncFlag syncFlag)
         _physicsComponent->setSyncFlag(syncFlag);
 }
 
-void PhysicsSprite3D::syncToPhysics()
+void PhysicsSprite3D::syncNodeToPhysics()
 {
     if (_physicsComponent)
-        _physicsComponent->syncToPhysics();
+        _physicsComponent->syncNodeToPhysics();
 }
 
-void PhysicsSprite3D::syncToNode()
+void PhysicsSprite3D::syncPhysicsToNode()
 {
     if (_physicsComponent)
-        _physicsComponent->syncToNode();
+        _physicsComponent->syncPhysicsToNode();
 }
 
 PhysicsSprite3D::PhysicsSprite3D()

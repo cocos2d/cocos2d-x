@@ -24,7 +24,7 @@
 
  ****************************************************************************/
 
-#include "CCRenderState.h"
+#include "renderer/CCRenderState.h"
 
 #include <string>
 
@@ -37,28 +37,9 @@ NS_CC_BEGIN
 
 RenderState::StateBlock* RenderState::StateBlock::_defaultState = nullptr;
 
-// Render state override bits
-enum
-{
-    RS_BLEND = (1 << 0),
-    RS_BLEND_FUNC = (1 << 1),
-    RS_CULL_FACE = (1 << 2),
-    RS_DEPTH_TEST = (1 << 3),
-    RS_DEPTH_WRITE = (1 << 4),
-    RS_DEPTH_FUNC = (1 << 5),
-    RS_CULL_FACE_SIDE = (1 << 6),
-    RS_STENCIL_TEST = (1 << 7),
-    RS_STENCIL_WRITE = (1 << 8),
-    RS_STENCIL_FUNC = (1 << 9),
-    RS_STENCIL_OP = (1 << 10),
-    RS_FRONT_FACE = (1 << 11),
-
-    RS_ALL_ONES = 0xFFFFFFFF,
-};
-
 
 RenderState::RenderState()
-: _textures()
+: _texture(nullptr)
 , _hash(0)
 , _hashDirty(true)
 , _parent(nullptr)
@@ -69,12 +50,13 @@ RenderState::RenderState()
 
 RenderState::~RenderState()
 {
+    CC_SAFE_RELEASE(_texture);
     CC_SAFE_RELEASE(_state);
 }
 
 void RenderState::initialize()
 {
-    if (StateBlock::_defaultState == NULL)
+    if (StateBlock::_defaultState == nullptr)
     {
         StateBlock::_defaultState = StateBlock::create();
         CC_SAFE_RETAIN(StateBlock::_defaultState);
@@ -83,7 +65,7 @@ void RenderState::initialize()
 
 void RenderState::finalize()
 {
-    CC_SAFE_RELEASE(StateBlock::_defaultState);
+    CC_SAFE_RELEASE_NULL(StateBlock::_defaultState);
 }
 
 bool RenderState::init(RenderState* parent)
@@ -102,32 +84,27 @@ std::string RenderState::getName() const
 }
 
 
-const Vector<Texture2D*>& RenderState::getTextures() const
-{
-    return _textures;
-}
-
 void RenderState::setTexture(Texture2D* texture)
 {
-    if (_textures.size() > 0)
-        _textures.replace(0, texture);
-    else
-        _textures.pushBack(texture);
+    if (_texture != texture)
+    {
+        CC_SAFE_RELEASE(_texture);
+        _texture = texture;
+        CC_SAFE_RETAIN(_texture);
+    }
 }
 
 Texture2D* RenderState::getTexture() const
 {
-    if (_textures.size() > 0)
-        return _textures.at(0);
-    return nullptr;
+    return _texture;
 }
 
 void RenderState::bind(Pass* pass)
 {
     CC_ASSERT(pass);
 
-    if (_textures.size() > 0)
-        GL::bindTexture2D(_textures.at(0)->getName());
+    if (_texture)
+        GL::bindTexture2D(_texture->getName());
 
     // Get the combined modified state bits for our RenderState hierarchy.
     long stateOverrideBits = _state ? _state->_bits : 0;
@@ -145,7 +122,7 @@ void RenderState::bind(Pass* pass)
     StateBlock::restore(stateOverrideBits);
 
     // Apply renderer state for the entire hierarchy, top-down.
-    rs = NULL;
+    rs = nullptr;
     while ((rs = getTopmost(rs)))
     {
         if (rs->_state)
@@ -161,12 +138,12 @@ RenderState* RenderState::getTopmost(RenderState* below)
     if (rs == below)
     {
         // Nothing below ourself.
-        return NULL;
+        return nullptr;
     }
 
     while (rs)
     {
-        if (rs->_parent == below || rs->_parent == NULL)
+        if (rs->_parent == below || rs->_parent == nullptr)
         {
             // Stop traversing up here.
             return rs;
@@ -174,12 +151,36 @@ RenderState* RenderState::getTopmost(RenderState* below)
         rs = rs->_parent;
     }
 
-    return NULL;
+    return nullptr;
 }
 
 RenderState::StateBlock* RenderState::getStateBlock() const
 {
     return _state;
+}
+
+void RenderState::setStateBlock(RenderState::StateBlock* state)
+{
+    CC_SAFE_RETAIN(state);
+    CC_SAFE_RELEASE(_state);
+    _state = state;
+}
+
+void RenderState::cloneInto(RenderState* renderState) const
+{
+    CCASSERT(renderState, "must be non null");
+
+    // Clone our state block
+    if (_state)
+    {
+        _state->cloneInto(renderState->getStateBlock());
+    }
+
+    renderState->_name = _name;
+    renderState->_texture = _texture;
+    CC_SAFE_RETAIN(renderState->_texture);
+    // weak ref. don't retain
+    renderState->_parent = _parent;
 }
 
 //
@@ -197,7 +198,7 @@ RenderState::StateBlock* RenderState::StateBlock::create()
 }
 
 //
-// The defaults are based on GamePlay3D defaults, with the following chagnes
+// The defaults are based on GamePlay3D defaults, with the following changes
 // _depthWriteEnabled is FALSE
 // _depthTestEnabled is TRUE
 // _blendEnabled is TRUE
@@ -284,37 +285,37 @@ void RenderState::StateBlock::bindNoRestore()
         glDepthFunc((GLenum)_depthFunction);
         _defaultState->_depthFunction = _depthFunction;
     }
-    if ((_bits & RS_STENCIL_TEST) && (_stencilTestEnabled != _defaultState->_stencilTestEnabled))
-    {
-        if (_stencilTestEnabled)
-            glEnable(GL_STENCIL_TEST);
-        else
-            glDisable(GL_STENCIL_TEST);
-        _defaultState->_stencilTestEnabled = _stencilTestEnabled;
-    }
-    if ((_bits & RS_STENCIL_WRITE) && (_stencilWrite != _defaultState->_stencilWrite))
-    {
-        glStencilMask(_stencilWrite);
-        _defaultState->_stencilWrite = _stencilWrite;
-    }
-    if ((_bits & RS_STENCIL_FUNC) && (_stencilFunction != _defaultState->_stencilFunction ||
-                                      _stencilFunctionRef != _defaultState->_stencilFunctionRef ||
-                                      _stencilFunctionMask != _defaultState->_stencilFunctionMask))
-    {
-        glStencilFunc((GLenum)_stencilFunction, _stencilFunctionRef, _stencilFunctionMask);
-        _defaultState->_stencilFunction = _stencilFunction;
-        _defaultState->_stencilFunctionRef = _stencilFunctionRef;
-        _defaultState->_stencilFunctionMask = _stencilFunctionMask;
-    }
-    if ((_bits & RS_STENCIL_OP) && (_stencilOpSfail != _defaultState->_stencilOpSfail ||
-                                    _stencilOpDpfail != _defaultState->_stencilOpDpfail ||
-                                    _stencilOpDppass != _defaultState->_stencilOpDppass))
-    {
-        glStencilOp((GLenum)_stencilOpSfail, (GLenum)_stencilOpDpfail, (GLenum)_stencilOpDppass);
-        _defaultState->_stencilOpSfail = _stencilOpSfail;
-        _defaultState->_stencilOpDpfail = _stencilOpDpfail;
-        _defaultState->_stencilOpDppass = _stencilOpDppass;
-    }
+//    if ((_bits & RS_STENCIL_TEST) && (_stencilTestEnabled != _defaultState->_stencilTestEnabled))
+//    {
+//        if (_stencilTestEnabled)
+//            glEnable(GL_STENCIL_TEST);
+//        else
+//            glDisable(GL_STENCIL_TEST);
+//        _defaultState->_stencilTestEnabled = _stencilTestEnabled;
+//    }
+//    if ((_bits & RS_STENCIL_WRITE) && (_stencilWrite != _defaultState->_stencilWrite))
+//    {
+//        glStencilMask(_stencilWrite);
+//        _defaultState->_stencilWrite = _stencilWrite;
+//    }
+//    if ((_bits & RS_STENCIL_FUNC) && (_stencilFunction != _defaultState->_stencilFunction ||
+//                                      _stencilFunctionRef != _defaultState->_stencilFunctionRef ||
+//                                      _stencilFunctionMask != _defaultState->_stencilFunctionMask))
+//    {
+//        glStencilFunc((GLenum)_stencilFunction, _stencilFunctionRef, _stencilFunctionMask);
+//        _defaultState->_stencilFunction = _stencilFunction;
+//        _defaultState->_stencilFunctionRef = _stencilFunctionRef;
+//        _defaultState->_stencilFunctionMask = _stencilFunctionMask;
+//    }
+//    if ((_bits & RS_STENCIL_OP) && (_stencilOpSfail != _defaultState->_stencilOpSfail ||
+//                                    _stencilOpDpfail != _defaultState->_stencilOpDpfail ||
+//                                    _stencilOpDppass != _defaultState->_stencilOpDppass))
+//    {
+//        glStencilOp((GLenum)_stencilOpSfail, (GLenum)_stencilOpDpfail, (GLenum)_stencilOpDppass);
+//        _defaultState->_stencilOpSfail = _stencilOpSfail;
+//        _defaultState->_stencilOpDpfail = _stencilOpDpfail;
+//        _defaultState->_stencilOpDppass = _stencilOpDppass;
+//    }
 
     _defaultState->_bits |= _bits;
 }
@@ -324,7 +325,8 @@ void RenderState::StateBlock::restore(long stateOverrideBits)
     CC_ASSERT(_defaultState);
 
     // If there is no state to restore (i.e. no non-default state), do nothing.
-    if (_defaultState->_bits == 0)
+//    if (_defaultState->_bits == 0)
+    if ( (stateOverrideBits | _defaultState->_bits) == stateOverrideBits)
     {
         return;
     }
@@ -379,34 +381,73 @@ void RenderState::StateBlock::restore(long stateOverrideBits)
         _defaultState->_bits &= ~RS_DEPTH_FUNC;
         _defaultState->_depthFunction = RenderState::DEPTH_LESS;
     }
-    if (!(stateOverrideBits & RS_STENCIL_TEST) && (_defaultState->_bits & RS_STENCIL_TEST))
+//    if (!(stateOverrideBits & RS_STENCIL_TEST) && (_defaultState->_bits & RS_STENCIL_TEST))
+//    {
+//        glDisable(GL_STENCIL_TEST);
+//        _defaultState->_bits &= ~RS_STENCIL_TEST;
+//        _defaultState->_stencilTestEnabled = false;
+//    }
+//    if (!(stateOverrideBits & RS_STENCIL_WRITE) && (_defaultState->_bits & RS_STENCIL_WRITE))
+//    {
+//        glStencilMask(RS_ALL_ONES);
+//        _defaultState->_bits &= ~RS_STENCIL_WRITE;
+//        _defaultState->_stencilWrite = RS_ALL_ONES;
+//    }
+//    if (!(stateOverrideBits & RS_STENCIL_FUNC) && (_defaultState->_bits & RS_STENCIL_FUNC))
+//    {
+//        glStencilFunc((GLenum)RenderState::STENCIL_ALWAYS, 0, RS_ALL_ONES);
+//        _defaultState->_bits &= ~RS_STENCIL_FUNC;
+//        _defaultState->_stencilFunction = RenderState::STENCIL_ALWAYS;
+//        _defaultState->_stencilFunctionRef = 0;
+//        _defaultState->_stencilFunctionMask = RS_ALL_ONES;
+//    }
+//    if (!(stateOverrideBits & RS_STENCIL_OP) && (_defaultState->_bits & RS_STENCIL_OP))
+//    {
+//        glStencilOp((GLenum)RenderState::STENCIL_OP_KEEP, (GLenum)RenderState::STENCIL_OP_KEEP, (GLenum)RenderState::STENCIL_OP_KEEP);
+//        _defaultState->_bits &= ~RS_STENCIL_OP;
+//        _defaultState->_stencilOpSfail = RenderState::STENCIL_OP_KEEP;
+//        _defaultState->_stencilOpDpfail = RenderState::STENCIL_OP_KEEP;
+//        _defaultState->_stencilOpDppass = RenderState::STENCIL_OP_KEEP;
+//    }
+}
+
+void RenderState::StateBlock::enableDepthWrite()
+{
+    CC_ASSERT(_defaultState);
+
+    // Internal method used to restore depth writing before a
+    // clear operation. This is necessary if the last code to draw before the
+    // next frame leaves depth writing disabled.
+    if (!_defaultState->_depthWriteEnabled)
     {
-        glDisable(GL_STENCIL_TEST);
-        _defaultState->_bits &= ~RS_STENCIL_TEST;
-        _defaultState->_stencilTestEnabled = false;
+        glDepthMask(GL_TRUE);
+        _defaultState->_bits &= ~RS_DEPTH_WRITE;
+        _defaultState->_depthWriteEnabled = true;
     }
-    if (!(stateOverrideBits & RS_STENCIL_WRITE) && (_defaultState->_bits & RS_STENCIL_WRITE))
-    {
-        glStencilMask(RS_ALL_ONES);
-        _defaultState->_bits &= ~RS_STENCIL_WRITE;
-        _defaultState->_stencilWrite = RS_ALL_ONES;
-    }
-    if (!(stateOverrideBits & RS_STENCIL_FUNC) && (_defaultState->_bits & RS_STENCIL_FUNC))
-    {
-        glStencilFunc((GLenum)RenderState::STENCIL_ALWAYS, 0, RS_ALL_ONES);
-        _defaultState->_bits &= ~RS_STENCIL_FUNC;
-        _defaultState->_stencilFunction = RenderState::STENCIL_ALWAYS;
-        _defaultState->_stencilFunctionRef = 0;
-        _defaultState->_stencilFunctionMask = RS_ALL_ONES;
-    }
-    if (!(stateOverrideBits & RS_STENCIL_OP) && (_defaultState->_bits & RS_STENCIL_OP))
-    {
-        glStencilOp((GLenum)RenderState::STENCIL_OP_KEEP, (GLenum)RenderState::STENCIL_OP_KEEP, (GLenum)RenderState::STENCIL_OP_KEEP);
-        _defaultState->_bits &= ~RS_STENCIL_OP;
-        _defaultState->_stencilOpSfail = RenderState::STENCIL_OP_KEEP;
-        _defaultState->_stencilOpDpfail = RenderState::STENCIL_OP_KEEP;
-        _defaultState->_stencilOpDppass = RenderState::STENCIL_OP_KEEP;
-    }
+}
+
+void RenderState::StateBlock::cloneInto(StateBlock* state) const
+{
+    CC_ASSERT(state);
+
+    state->_cullFaceEnabled = _cullFaceEnabled;
+    state->_depthTestEnabled = _depthTestEnabled;
+    state->_depthWriteEnabled = _depthWriteEnabled;
+    state->_depthFunction = _depthFunction;
+    state->_blendEnabled = _blendEnabled;
+    state->_blendSrc = _blendSrc;
+    state->_blendDst = _blendDst;
+    state->_cullFaceSide = _cullFaceSide;
+    state->_frontFace = _frontFace;
+    state->_stencilTestEnabled = _stencilTestEnabled;
+    state->_stencilWrite = _stencilWrite;
+    state->_stencilFunction = _stencilFunction;
+    state->_stencilFunctionRef = _stencilFunctionRef;
+    state->_stencilFunctionMask = _stencilFunctionMask;
+    state->_stencilOpSfail = _stencilOpSfail;
+    state->_stencilOpDpfail = _stencilOpDpfail;
+    state->_stencilOpDppass = _stencilOpDppass;
+    state->_bits = _bits;
 }
 
 static bool parseBoolean(const std::string& value)
@@ -629,38 +670,38 @@ void RenderState::StateBlock::setState(const std::string& name, const std::strin
     {
         setDepthFunction(parseDepthFunc(value));
     }
-    else if (name.compare("stencilTest") == 0)
-    {
-        setStencilTest(parseBoolean(value));
-    }
-    else if (name.compare("stencilWrite") == 0)
-    {
-        setStencilWrite(parseUInt(value));
-    }
-    else if (name.compare("stencilFunc") == 0)
-    {
-        setStencilFunction(parseStencilFunc(value), _stencilFunctionRef, _stencilFunctionMask);
-    }
-    else if (name.compare("stencilFuncRef") == 0)
-    {
-        setStencilFunction(_stencilFunction, parseInt(value), _stencilFunctionMask);
-    }
-    else if (name.compare("stencilFuncMask") == 0)
-    {
-        setStencilFunction(_stencilFunction, _stencilFunctionRef, parseUInt(value));
-    }
-    else if (name.compare("stencilOpSfail") == 0)
-    {
-        setStencilOperation(parseStencilOp(value), _stencilOpDpfail, _stencilOpDppass);
-    }
-    else if (name.compare("stencilOpDpfail") == 0)
-    {
-        setStencilOperation(_stencilOpSfail, parseStencilOp(value), _stencilOpDppass);
-    }
-    else if (name.compare("stencilOpDppass") == 0)
-    {
-        setStencilOperation(_stencilOpSfail, _stencilOpDpfail, parseStencilOp(value));
-    }
+//    else if (name.compare("stencilTest") == 0)
+//    {
+//        setStencilTest(parseBoolean(value));
+//    }
+//    else if (name.compare("stencilWrite") == 0)
+//    {
+//        setStencilWrite(parseUInt(value));
+//    }
+//    else if (name.compare("stencilFunc") == 0)
+//    {
+//        setStencilFunction(parseStencilFunc(value), _stencilFunctionRef, _stencilFunctionMask);
+//    }
+//    else if (name.compare("stencilFuncRef") == 0)
+//    {
+//        setStencilFunction(_stencilFunction, parseInt(value), _stencilFunctionMask);
+//    }
+//    else if (name.compare("stencilFuncMask") == 0)
+//    {
+//        setStencilFunction(_stencilFunction, _stencilFunctionRef, parseUInt(value));
+//    }
+//    else if (name.compare("stencilOpSfail") == 0)
+//    {
+//        setStencilOperation(parseStencilOp(value), _stencilOpDpfail, _stencilOpDppass);
+//    }
+//    else if (name.compare("stencilOpDpfail") == 0)
+//    {
+//        setStencilOperation(_stencilOpSfail, parseStencilOp(value), _stencilOpDppass);
+//    }
+//    else if (name.compare("stencilOpDppass") == 0)
+//    {
+//        setStencilOperation(_stencilOpSfail, _stencilOpDpfail, parseStencilOp(value));
+//    }
     else
     {
         CCLOG("Unsupported render state string '%s'.", name.c_str());
@@ -679,6 +720,14 @@ uint32_t RenderState::StateBlock::getHash() const
     return 0x12345678;
 }
 
+void RenderState::StateBlock::invalidate(long stateBits)
+{
+    CCASSERT(_defaultState, "_default state not created yet. Cannot be invalidated");
+
+    _defaultState->_bits = stateBits;
+    _defaultState->restore(0);
+}
+
 void RenderState::StateBlock::setBlend(bool enabled)
 {
     _blendEnabled = enabled;
@@ -694,26 +743,8 @@ void RenderState::StateBlock::setBlend(bool enabled)
 
 void RenderState::StateBlock::setBlendFunc(const BlendFunc& blendFunc)
 {
-    if (blendFunc == BlendFunc::DISABLE)
-    {
-        setBlendSrc(BLEND_ONE);
-        setBlendDst(BLEND_ZERO);
-    }
-    else if (blendFunc == BlendFunc::ALPHA_PREMULTIPLIED)
-    {
-        setBlendSrc(BLEND_ONE);
-        setBlendDst(BLEND_ONE_MINUS_SRC_ALPHA);
-    }
-    else if (blendFunc == BlendFunc::ALPHA_NON_PREMULTIPLIED)
-    {
-        setBlendSrc(BLEND_SRC_ALPHA);
-        setBlendDst(BLEND_ONE_MINUS_SRC_ALPHA);
-    }
-    else if (blendFunc == BlendFunc::ADDITIVE)
-    {
-        setBlendSrc(BLEND_SRC_ALPHA);
-        setBlendDst(BLEND_ONE);
-    }
+    setBlendSrc((RenderState::Blend)blendFunc.src);
+    setBlendDst((RenderState::Blend)blendFunc.dst);
 }
 
 void RenderState::StateBlock::setBlendSrc(Blend blend)
@@ -825,63 +856,63 @@ void RenderState::StateBlock::setDepthFunction(DepthFunction func)
     }
 }
 
-void RenderState::StateBlock::setStencilTest(bool enabled)
-{
-    _stencilTestEnabled = enabled;
-    if (!enabled)
-    {
-        _bits &= ~RS_STENCIL_TEST;
-    }
-    else
-    {
-        _bits |= RS_STENCIL_TEST;
-    }
-}
-
-void RenderState::StateBlock::setStencilWrite(unsigned int mask)
-{
-    _stencilWrite = mask;
-    if (mask == RS_ALL_ONES)
-    {
-        // Default stencil write
-        _bits &= ~RS_STENCIL_WRITE;
-    }
-    else
-    {
-        _bits |= RS_STENCIL_WRITE;
-    }
-}
-
-void RenderState::StateBlock::setStencilFunction(StencilFunction func, int ref, unsigned int mask)
-{
-    _stencilFunction = func;
-    _stencilFunctionRef = ref;
-    _stencilFunctionMask = mask;
-    if (func == STENCIL_ALWAYS && ref == 0 && mask == RS_ALL_ONES)
-    {
-        // Default stencil function
-        _bits &= ~RS_STENCIL_FUNC;
-    }
-    else
-    {
-        _bits |= RS_STENCIL_FUNC;
-    }
-}
-
-void RenderState::StateBlock::setStencilOperation(StencilOperation sfail, StencilOperation dpfail, StencilOperation dppass)
-{
-    _stencilOpSfail = sfail;
-    _stencilOpDpfail = dpfail;
-    _stencilOpDppass = dppass;
-    if (sfail == STENCIL_OP_KEEP && dpfail == STENCIL_OP_KEEP && dppass == STENCIL_OP_KEEP)
-    {
-        // Default stencil operation
-        _bits &= ~RS_STENCIL_OP;
-    }
-    else
-    {
-        _bits |= RS_STENCIL_OP;
-    }
-}
+//void RenderState::StateBlock::setStencilTest(bool enabled)
+//{
+//    _stencilTestEnabled = enabled;
+//    if (!enabled)
+//    {
+//        _bits &= ~RS_STENCIL_TEST;
+//    }
+//    else
+//    {
+//        _bits |= RS_STENCIL_TEST;
+//    }
+//}
+//
+//void RenderState::StateBlock::setStencilWrite(unsigned int mask)
+//{
+//    _stencilWrite = mask;
+//    if (mask == RS_ALL_ONES)
+//    {
+//        // Default stencil write
+//        _bits &= ~RS_STENCIL_WRITE;
+//    }
+//    else
+//    {
+//        _bits |= RS_STENCIL_WRITE;
+//    }
+//}
+//
+//void RenderState::StateBlock::setStencilFunction(StencilFunction func, int ref, unsigned int mask)
+//{
+//    _stencilFunction = func;
+//    _stencilFunctionRef = ref;
+//    _stencilFunctionMask = mask;
+//    if (func == STENCIL_ALWAYS && ref == 0 && mask == RS_ALL_ONES)
+//    {
+//        // Default stencil function
+//        _bits &= ~RS_STENCIL_FUNC;
+//    }
+//    else
+//    {
+//        _bits |= RS_STENCIL_FUNC;
+//    }
+//}
+//
+//void RenderState::StateBlock::setStencilOperation(StencilOperation sfail, StencilOperation dpfail, StencilOperation dppass)
+//{
+//    _stencilOpSfail = sfail;
+//    _stencilOpDpfail = dpfail;
+//    _stencilOpDppass = dppass;
+//    if (sfail == STENCIL_OP_KEEP && dpfail == STENCIL_OP_KEEP && dppass == STENCIL_OP_KEEP)
+//    {
+//        // Default stencil operation
+//        _bits &= ~RS_STENCIL_OP;
+//    }
+//    else
+//    {
+//        _bits |= RS_STENCIL_OP;
+//    }
+//}
 
 NS_CC_END

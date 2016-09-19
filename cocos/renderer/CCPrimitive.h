@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -28,7 +28,7 @@
 #include "renderer/CCVertexIndexData.h"
 
 /**
- * @addtogroup support
+ * @addtogroup renderer
  * @{
  */
 
@@ -60,14 +60,14 @@ public:
     /**called by rendering framework, will send the data to GLPipeline.*/
     void draw();
     
-    /**Get the start index of primtive.*/
+    /**Get the start index of primitive.*/
     int getStart() const { return _start; }
     /**Get the number of vertices or indices used for drawing.*/
     int getCount() const { return _count; }
     /**Setter for the start index.*/
-    void setStart(int start) { _start = start; }
+    void setStart(int start);
     /**Setter for the count. */
-    void setCount(int count) { _count = count; }
+    void setCount(int count);
     
 protected:
     Primitive();

@@ -40,7 +40,7 @@ var ControlSliderTest = ControlScene.extend({
             this.addChild(this._displayValueLabel);
 
             // Add the slider
-            var slider = new cc.ControlSlider("res/extensions/sliderTrack.png", "res/extensions/sliderProgress.png", "res/extensions/sliderThumb.png");
+            var slider = new cc.ControlSlider("extensions/sliderTrack.png", "extensions/sliderProgress.png", "extensions/sliderThumb.png");
             slider.anchorX = 0.5;
             slider.anchorY = 1.0;
             slider.setMinimumValue(0.0); // Sets the min value of range
@@ -50,9 +50,9 @@ var ControlSliderTest = ControlScene.extend({
             slider.tag = 1;
 
             // When the value of the slider will change, the given selector will be call
-            slider.addTargetWithActionForControlEvents(this, this.valueChanged, cc.CONTROL_EVENT_VALUECHANGED);
+            slider.addTargetWithActionForControlEvents(this, this.upperValueChanged, cc.CONTROL_EVENT_VALUECHANGED);
 
-            var restrictSlider = new cc.ControlSlider("res/extensions/sliderTrack.png", "res/extensions/sliderProgress.png", "res/extensions/sliderThumb.png");
+            var restrictSlider = new cc.ControlSlider("extensions/sliderTrack.png", "extensions/sliderProgress.png", "extensions/sliderThumb.png");
             restrictSlider.anchorX = 0.5;
 	        restrictSlider.anchorY = 1.0;
             restrictSlider.setMinimumValue(0.0); // Sets the min value of range
@@ -65,7 +65,7 @@ var ControlSliderTest = ControlScene.extend({
             restrictSlider.tag = 2;
 
             //same with restricted
-            restrictSlider.addTargetWithActionForControlEvents(this, this.valueChanged, cc.CONTROL_EVENT_VALUECHANGED);
+            restrictSlider.addTargetWithActionForControlEvents(this, this.lowerValueChanged, cc.CONTROL_EVENT_VALUECHANGED);
 
             this.addChild(slider);
             this.addChild(restrictSlider);
@@ -73,12 +73,13 @@ var ControlSliderTest = ControlScene.extend({
         }
         return false;
     },
-    valueChanged:function (sender, controlEvent) {
+    upperValueChanged:function (sender, controlEvent) {
         // Change value of label.
-        if (sender.tag == 1)
-            this._displayValueLabel.setString("Upper slider value = " + sender.getValue().toFixed(2));
-        if (sender.tag == 2)
-            this._displayValueLabel.setString("Lower slider value = " + sender.getValue().toFixed(2));
+        this._displayValueLabel.setString("Upper slider value = " + sender.getValue().toFixed(2));
+    },
+    lowerValueChanged: function (sender, controlEvent) {
+        // Change value of label.
+        this._displayValueLabel.setString("Lower slider value = " + sender.getValue().toFixed(2));
     }
 });
 

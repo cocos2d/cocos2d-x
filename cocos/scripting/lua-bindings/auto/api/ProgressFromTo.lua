@@ -9,7 +9,7 @@
 -- param duration Specify the duration of the ProgressFromTo action. It's a value in seconds.<br>
 -- param fromPercentage Specify the source percentage.<br>
 -- param toPercentage Specify the destination percentage.<br>
--- return If the creation sucess, return true; otherwise, return false.
+-- return If the creation success, return true; otherwise, return false.
 -- @function [parent=#ProgressFromTo] initWithDuration 
 -- @param self
 -- @param #float duration
@@ -22,7 +22,7 @@
 -- param duration Specify the duration of the ProgressFromTo action. It's a value in seconds.<br>
 -- param fromPercentage Specify the source percentage.<br>
 -- param toPercentage Specify the destination percentage.<br>
--- return If the creation sucess, return a pointer of ProgressFromTo action; otherwise, return nil.
+-- return If the creation success, return a pointer of ProgressFromTo action; otherwise, return nil.
 -- @function [parent=#ProgressFromTo] create 
 -- @param self
 -- @param #float duration

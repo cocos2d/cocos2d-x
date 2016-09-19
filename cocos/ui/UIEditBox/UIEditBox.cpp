@@ -23,8 +23,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "UIEditBox.h"
-#include "UIEditBoxImpl.h"
+#include "ui/UIEditBox/UIEditBox.h"
+#include "ui/UIEditBox/UIEditBoxImpl.h"
 
 NS_CC_BEGIN
 
@@ -36,7 +36,7 @@ EditBox::EditBox(void)
 : _editBoxImpl(nullptr)
 , _delegate(nullptr)
 , _editBoxInputMode(EditBox::InputMode::SINGLE_LINE)
-, _editBoxInputFlag(EditBox::InputFlag::INTIAL_CAPS_ALL_CHARACTERS)
+, _editBoxInputFlag(EditBox::InputFlag::LOWERCASE_ALL_CHARACTERS)
 , _keyboardReturnType(KeyboardReturnType::DEFAULT)
 , _backgroundSprite(nullptr)
 , _fontSize(-1)
@@ -71,7 +71,7 @@ EditBox* EditBox::create(const Size& size,
                          const std::string& normalSprite,
                         TextureResType texType /*= TextureResType::LOCAL*/)
 {
-    EditBox* pRet = new EditBox();
+    EditBox* pRet = new (std::nothrow) EditBox();
     
     if (pRet != nullptr && pRet->initWithSizeAndBackgroundSprite(size, normalSprite, texType))
     {
@@ -203,6 +203,7 @@ const char* EditBox::getText(void)
 
 void EditBox::setFont(const char* pFontName, int fontSize)
 {
+    CCASSERT(pFontName != nullptr, "fontName can't be nullptr");
     _fontName = pFontName;
     _fontSize = fontSize;
     if (pFontName != nullptr)
@@ -216,8 +217,9 @@ void EditBox::setFont(const char* pFontName, int fontSize)
 
 void EditBox::setFontName(const char* pFontName)
 {
+    CCASSERT(pFontName != nullptr, "fontName can't be nullptr");
     _fontName = pFontName;
-    if (_editBoxImpl != nullptr && _fontSize != -1)
+    if (_editBoxImpl != nullptr)
     {
         _editBoxImpl->setFont(pFontName, _fontSize);
     }
@@ -226,7 +228,7 @@ void EditBox::setFontName(const char* pFontName)
 void EditBox::setFontSize(int fontSize)
 {
     _fontSize = fontSize;
-    if (_editBoxImpl != nullptr && _fontName.length() > 0)
+    if (_editBoxImpl != nullptr)
     {
         _editBoxImpl->setFont(_fontName.c_str(), _fontSize);
     }
@@ -248,6 +250,7 @@ void EditBox::setFontColor(const Color4B& color)
 
 void EditBox::setPlaceholderFont(const char* pFontName, int fontSize)
 {
+    CCASSERT(pFontName != nullptr, "fontName can't be nullptr");
     _placeholderFontName = pFontName;
     _placeholderFontSize = fontSize;
     if (pFontName != nullptr)
@@ -261,17 +264,18 @@ void EditBox::setPlaceholderFont(const char* pFontName, int fontSize)
 
 void EditBox::setPlaceholderFontName(const char* pFontName)
 {
+    CCASSERT(pFontName != nullptr, "fontName can't be nullptr");
     _placeholderFontName = pFontName;
-    if (_editBoxImpl != nullptr && _placeholderFontSize != -1)
+    if (_editBoxImpl != nullptr)
     {
-        _editBoxImpl->setPlaceholderFont(pFontName, _fontSize);
+        _editBoxImpl->setPlaceholderFont(pFontName, _placeholderFontSize);
     }
 }
 
 void EditBox::setPlaceholderFontSize(int fontSize)
 {
     _placeholderFontSize = fontSize;
-    if (_editBoxImpl != nullptr && _placeholderFontName.length() > 0)
+    if (_editBoxImpl != nullptr)
     {
         _editBoxImpl->setPlaceholderFont(_placeholderFontName.c_str(), fontSize);
     }
@@ -400,12 +404,12 @@ std::string EditBox::getDescription() const
     return "EditBox";
 }
 
-void EditBox::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
+void EditBox::draw(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
 {
-    Widget::visit(renderer, parentTransform, parentFlags);
+    Widget::draw(renderer, parentTransform, parentFlags);
     if (_editBoxImpl != nullptr)
     {
-        _editBoxImpl->visit();
+        _editBoxImpl->draw(renderer, parentTransform, parentFlags & FLAGS_TRANSFORM_DIRTY);
     }
 }
 
@@ -439,6 +443,14 @@ void EditBox::updatePosition(float dt)
 
 void EditBox::onExit(void)
 {
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnExit))
+            return;
+    }
+#endif
+    
     Widget::onExit();
     if (_editBoxImpl != nullptr)
     {

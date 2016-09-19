@@ -5,6 +5,14 @@
 -- @parent_module cc
 
 --------------------------------
+-- 
+-- @function [parent=#Animate3D] setKeyFrameUserInfo 
+-- @param self
+-- @param #int keyFrame
+-- @param #map_table userInfo
+-- @return Animate3D#Animate3D self (return value: cc.Animate3D)
+        
+--------------------------------
 -- get & set speed, negative speed means playing reverse 
 -- @function [parent=#Animate3D] getSpeed 
 -- @param self

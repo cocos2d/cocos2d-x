@@ -2,7 +2,7 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -51,13 +51,13 @@ protected:
     Timer();
 public:
     /** get interval in seconds */
-    inline float getInterval() const { return _interval; };
+    float getInterval() const { return _interval; }
     /** set interval in seconds */
-    inline void setInterval(float interval) { _interval = interval; };
+    void setInterval(float interval) { _interval = interval; }
     
     void setupTimerWithInterval(float seconds, unsigned int repeat, float delay);
     
-    virtual void trigger() = 0;
+    virtual void trigger(float dt) = 0;
     virtual void cancel() = 0;
     
     /** triggers the timer */
@@ -84,9 +84,9 @@ public:
     /** Initializes a timer with a target, a selector and an interval in seconds, repeat in number of times to repeat, delay in seconds. */
     bool initWithSelector(Scheduler* scheduler, SEL_SCHEDULE selector, Ref* target, float seconds, unsigned int repeat, float delay);
     
-    inline SEL_SCHEDULE getSelector() const { return _selector; };
+    SEL_SCHEDULE getSelector() const { return _selector; }
     
-    virtual void trigger() override;
+    virtual void trigger(float dt) override;
     virtual void cancel() override;
     
 protected:
@@ -103,10 +103,10 @@ public:
     // Initializes a timer with a target, a lambda and an interval in seconds, repeat in number of times to repeat, delay in seconds.
     bool initWithCallback(Scheduler* scheduler, const ccSchedulerFunc& callback, void *target, const std::string& key, float seconds, unsigned int repeat, float delay);
     
-    inline const ccSchedulerFunc& getCallback() const { return _callback; };
-    inline const std::string& getKey() const { return _key; };
+    const ccSchedulerFunc& getCallback() const { return _callback; }
+    const std::string& getKey() const { return _key; }
     
-    virtual void trigger() override;
+    virtual void trigger(float dt) override;
     virtual void cancel() override;
     
 protected:
@@ -121,9 +121,9 @@ class CC_DLL TimerScriptHandler : public Timer
 {
 public:
     bool initWithScriptHandler(int handler, float seconds);
-    inline int getScriptHandler() const { return _scriptHandler; };
+    int getScriptHandler() const { return _scriptHandler; }
     
-    virtual void trigger() override;
+    virtual void trigger(float dt) override;
     virtual void cancel() override;
     
 private:
@@ -196,7 +196,7 @@ public:
      * Gets the time scale of schedule callbacks.
      * @see Scheduler::setTimeScale()
      */
-    inline float getTimeScale() { return _timeScale; }
+    float getTimeScale() { return _timeScale; }
     /** Modifies the time of all scheduled callbacks.
     You can use this property to create a 'slow motion' or 'fast forward' effect.
     Default is 1.0. To create a 'slow motion' effect, use values below 1.0.
@@ -204,7 +204,7 @@ public:
     @since v0.8
     @warning It will affect EVERY scheduled selector / action.
     */
-    inline void setTimeScale(float timeScale) { _timeScale = timeScale; }
+    void setTimeScale(float timeScale) { _timeScale = timeScale; }
 
     /** 'update' the scheduler.
      * You should NEVER call this method, unless you know what you are doing.
@@ -367,7 +367,7 @@ public:
      */
     bool isScheduled(const std::string& key, void *target);
     
-    /** Checks whether a selector for a given taget is scheduled.
+    /** Checks whether a selector for a given target is scheduled.
      @param selector The selector to be checked.
      @param target The target of the callback.
      @return True if the specified selector is invoked, false if not.
@@ -475,7 +475,7 @@ public:
      */
     CC_DEPRECATED_ATTRIBUTE void unscheduleSelector(SEL_SCHEDULE selector, Ref *target) { unschedule(selector, target); };
     
-    /** Checks whether a selector for a given taget is scheduled.
+    /** Checks whether a selector for a given target is scheduled.
      @deprecated Please use 'Scheduler::isScheduled' instead.
      @since v0.99.3
      @js NA

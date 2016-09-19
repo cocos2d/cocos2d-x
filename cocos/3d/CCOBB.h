@@ -25,7 +25,7 @@
 #ifndef __CC_OBB_H__
 #define __CC_OBB_H__
 
-#include "CCAABB.h"
+#include "3d/CCAABB.h"
 
 NS_CC_BEGIN
 
@@ -35,8 +35,8 @@ NS_CC_BEGIN
  */
 
 /**
- * Oritened Bounding Box(OBB)
- * @brief the OBB is similar to the AABB but the bounding box has the same direction as Sprite3D. so it's collistion detection more precise than AABB
+ * Oriented Bounding Box(OBB)
+ * @brief the OBB is similar to the AABB but the bounding box has the same direction as Sprite3D. so it's collision detection more precise than AABB
  * @js NA
  */
 class CC_DLL OBB
@@ -119,7 +119,7 @@ protected:
     void getInterval(const OBB& box, const Vec3& axis, float &min, float &max) const;
     
     /*
-     * Get the edege of x y z axis direction
+     * Get the edge of x y z axis direction
      */
     Vec3 getEdgeDirection(int index) const;
     
@@ -131,7 +131,7 @@ protected:
 public:
     Vec3 _center;   // obb center
     Vec3 _xAxis;    // x axis of obb, unit vector
-    Vec3 _yAxis;    // y axis of obb, unit vecotr
+    Vec3 _yAxis;    // y axis of obb, unit vector
     Vec3 _zAxis;    // z axis of obb, unit vector
     Vec3 _extentX;  // _xAxis * _extents.x
     Vec3 _extentY;  // _yAxis * _extents.y

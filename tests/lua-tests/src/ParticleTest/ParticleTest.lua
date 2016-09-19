@@ -293,19 +293,21 @@ local ParticleBatchHybrid_parent2 = nil
 local function switchRender(dt)
 	update(dt)
 
-	local cond = (emitter:getBatchNode() ~= nil)
-	emitter:removeFromParent(false)
-	local str = "Particle: Using new parent: "
-	local newParent = nil
-	if cond == true then
-		newParent = ParticleBatchHybrid_parent2
-		str = str .. "Node"
-	else
-		newParent = ParticleBatchHybrid_parent1
-		str = str .. "ParticleBatchNode"
+    if nil ~= emitter then
+    	local cond = (emitter:getBatchNode() ~= nil)
+    	emitter:removeFromParent(false)
+    	local str = "Particle: Using new parent: "
+    	local newParent = nil
+    	if cond == true then
+    		newParent = ParticleBatchHybrid_parent2
+    		str = str .. "Node"
+    	else
+    		newParent = ParticleBatchHybrid_parent1
+    		str = str .. "ParticleBatchNode"
+    	end
+    	newParent:addChild(emitter)
+	    cclog(str)
 	end
-	newParent:addChild(emitter)
-	cclog(str)
 end
 
 local function ParticleBatchHybrid_onEnterOrExit(tag)
@@ -314,7 +316,10 @@ local function ParticleBatchHybrid_onEnterOrExit(tag)
 		ParticleBatchHybrid_entry = scheduler:scheduleScriptFunc(switchRender, 2.0, false)
 	elseif tag == "exit" then
 		scheduler:unscheduleScriptEntry(ParticleBatchHybrid_entry)
-		emitter:release()
+		if nil ~= emitter then
+		    emitter:release()
+		    emitter = nil
+		end
 	end
 end
 
@@ -464,6 +469,24 @@ local function DemoSun()
 
 	titleLabel:setString("ParticleSun")
 	return layer
+end
+
+---------------------------------
+--  DemoPause
+---------------------------------
+local function DemoPause()
+local layer = getBaseLayer()
+
+emitter = cc.ParticleSmoke:create()
+-- emitter:retain()
+background:addChild(emitter, 10)
+
+emitter:setTexture(cc.Director:getInstance():getTextureCache():addImage(s_fire))
+
+setEmitterPosition()
+
+titleLabel:setString("Pasue Particle")
+return layer
 end
 
 ---------------------------------
@@ -1484,6 +1507,8 @@ function CreateParticleLayer()
 	elseif SceneIdx == 40 then return ReorderParticleSystems()
 	elseif SceneIdx == 41 then return PremultipliedAlphaTest()
 	elseif SceneIdx == 42 then return PremultipliedAlphaTest2()
+    elseif SceneIdx == 43  then return DemoPause()
+
 	end
 end
 

@@ -125,7 +125,7 @@ ccui.TextField.prototype._ctor = function(placeholder, fontName, fontSize){
 };
 
 ccui.RichElementText.prototype._ctor = function(tag, color, opacity, text, fontName, fontSize){
-    fontSize !== undefined && this.init(tag, color, opacity, text, fontName, fontSize);
+    fontSize !== undefined && this.init(tag, color, opacity, text, fontName, fontSize, 0, "");
 };
 
 ccui.RichElementImage.prototype._ctor = function(tag, color, opacity, filePath){
@@ -135,6 +135,23 @@ ccui.RichElementImage.prototype._ctor = function(tag, color, opacity, filePath){
 ccui.RichElementCustomNode.prototype._ctor = function(tag, color, opacity, customNode){
     customNode !== undefined && this.init(tag, color, opacity, customNode);
 };
+
+if (ccui.WebView)
+{
+    ccui.WebView.prototype._ctor = function(url){
+        this.init();
+        url !== undefined && this.loadURL(url);
+    };
+}
+
+if (ccui.VideoPlayer)
+{
+    ccui.VideoPlayer.prototype._ctor = function(url){
+        this.init();
+        url !== undefined && this.setURL(url);
+    };
+}
+
 
 cc.Scale9Sprite.prototype._ctor = function(file, rect, capInsets){
     rect = rect || cc.rect(0, 0, 0, 0);
@@ -150,7 +167,7 @@ cc.Scale9Sprite.prototype._ctor = function(file, rect, capInsets){
                 this.initWithFile(file, rect, capInsets);
         }
     }else{
-        this.init();
+        cc.Node.prototype.init.call(this);
     }
 };
 

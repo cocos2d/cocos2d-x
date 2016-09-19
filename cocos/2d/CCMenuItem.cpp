@@ -2,7 +2,7 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2015 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -30,7 +30,7 @@ THE SOFTWARE.
 #include "2d/CCSprite.h"
 #include "2d/CCLabelAtlas.h"
 #include "2d/CCLabel.h"
-#include "deprecated/CCString.h"
+#include "base/ccUTF8.h"
 #include <stdarg.h>
 
 NS_CC_BEGIN
@@ -39,12 +39,8 @@ static int _globalFontSize = kItemSize;
 static std::string _globalFontName = "Marker Felt";
 static bool _globalFontNameRelease = false;
 
-const unsigned int    kCurrentItem = 0xc0c05001;
 const unsigned int    kZoomActionTag = 0xc0c05002;
 
-const unsigned int    kNormalTag = 0x1;
-const unsigned int    kSelectedTag = 0x2;
-const unsigned int    kDisableTag = 0x3;
 //
 // MenuItem
 //
@@ -90,11 +86,6 @@ MenuItem::~MenuItem()
 {
 }
 
-void MenuItem::onExit()
-{
-    Node::onExit();
-}
-
 void MenuItem::selected()
 {
     _selected = true;
@@ -114,10 +105,10 @@ void MenuItem::activate()
             _callback(this);
         }
 #if CC_ENABLE_SCRIPT_BINDING
-        if (kScriptTypeNone != _scriptType)
+        if (kScriptTypeLua == _scriptType)
         {
             BasicScriptData data(this);
-            ScriptEvent scriptEvent(kMenuClickedEvent,&data);
+            ScriptEvent scriptEvent(kMenuClickedEvent, &data);
             ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
         }
 #endif
@@ -237,6 +228,12 @@ void MenuItemLabel::setString(const std::string& label)
 {
     dynamic_cast<LabelProtocol*>(_label)->setString(label);
     this->setContentSize(_label->getContentSize());
+}
+
+std::string MenuItemLabel::getString() const
+{
+    auto label = dynamic_cast<LabelProtocol*>(_label);
+    return label->getString();
 }
 
 void MenuItemLabel::activate()
@@ -467,7 +464,7 @@ void MenuItemSprite::setNormalImage(Node* image)
     {
         if (image)
         {
-            addChild(image, 0, kNormalTag);
+            addChild(image);
             image->setAnchorPoint(Vec2(0, 0));
         }
 
@@ -488,7 +485,7 @@ void MenuItemSprite::setSelectedImage(Node* image)
     {
         if (image)
         {
-            addChild(image, 0, kSelectedTag);
+            addChild(image);
             image->setAnchorPoint(Vec2(0, 0));
         }
 
@@ -508,7 +505,7 @@ void MenuItemSprite::setDisabledImage(Node* image)
     {
         if (image)
         {
-            addChild(image, 0, kDisableTag);
+            addChild(image);
             image->setAnchorPoint(Vec2(0, 0));
         }
 
@@ -612,20 +609,7 @@ void MenuItemSprite::selected()
 void MenuItemSprite::unselected()
 {
     MenuItem::unselected();
-    if (_normalImage)
-    {
-        _normalImage->setVisible(true);
-
-        if (_selectedImage)
-        {
-            _selectedImage->setVisible(false);
-        }
-
-        if (_disabledImage)
-        {
-            _disabledImage->setVisible(false);
-        }
-    }
+    this->updateImagesVisibility();
 }
 
 void MenuItemSprite::setEnabled(bool bEnabled)
@@ -792,6 +776,20 @@ MenuItemToggle * MenuItemToggle::createWithTarget(Ref* target, SEL_MenuHandler s
 {
     MenuItemToggle *ret = new (std::nothrow) MenuItemToggle();
     ret->MenuItem::initWithCallback(std::bind(selector, target, std::placeholders::_1));
+    ret->autorelease();
+#if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+    auto sEngine = ScriptEngineManager::getInstance()->getScriptEngine();
+    if (sEngine)
+    {
+        for (const auto &item : menuItems)
+        {
+            if (item)
+            {
+                sEngine->retainScriptObject(ret, item);
+            }
+        }
+    }
+#endif // CC_ENABLE_GC_FOR_NATIVE_OBJECTS
     ret->_subItems = menuItems;
     ret->_selectedIndex = UINT_MAX;
     ret->setSelectedIndex(0);
@@ -802,6 +800,20 @@ MenuItemToggle * MenuItemToggle::createWithCallback(const ccMenuCallback &callba
 {
     MenuItemToggle *ret = new (std::nothrow) MenuItemToggle();
     ret->MenuItem::initWithCallback(callback);
+    ret->autorelease();
+#if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+    auto sEngine = ScriptEngineManager::getInstance()->getScriptEngine();
+    if (sEngine)
+    {
+        for (const auto &item : menuItems)
+        {
+            if (item)
+            {
+                sEngine->retainScriptObject(ret, item);
+            }
+        }
+    }
+#endif // CC_ENABLE_GC_FOR_NATIVE_OBJECTS
     ret->_subItems = menuItems;
     ret->_selectedIndex = UINT_MAX;
     ret->setSelectedIndex(0);
@@ -820,7 +832,7 @@ MenuItemToggle * MenuItemToggle::createWithTarget(Ref* target, SEL_MenuHandler s
     return ret;
 }
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 MenuItemToggle * MenuItemToggle::createWithCallbackVA(const ccMenuCallback &callback, MenuItem* item, ...)
 {
     va_list args;
@@ -864,9 +876,20 @@ bool MenuItemToggle::initWithCallback(const ccMenuCallback &callback, MenuItem *
 
     int z = 0;
     MenuItem *i = item;
+    
+#if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+    auto sEngine = ScriptEngineManager::getInstance()->getScriptEngine();
+#endif // CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+    
     while(i)
     {
         z++;
+#if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+        if (sEngine)
+        {
+            sEngine->retainScriptObject(this, i);
+        }
+#endif // CC_ENABLE_GC_FOR_NATIVE_OBJECTS
         _subItems.pushBack(i);
         i = va_arg(args, MenuItem*);
     }
@@ -889,7 +912,7 @@ bool MenuItemToggle::initWithItem(MenuItem *item)
 
     if (item)
     {
-        _subItems.pushBack(item);
+        addSubItem(item);
     }
     _selectedIndex = UINT_MAX;
     this->setSelectedIndex(0);
@@ -902,14 +925,25 @@ bool MenuItemToggle::initWithItem(MenuItem *item)
 
 void MenuItemToggle::addSubItem(MenuItem *item)
 {
+#if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+    auto sEngine = ScriptEngineManager::getInstance()->getScriptEngine();
+    if (sEngine)
+    {
+        sEngine->retainScriptObject(this, item);
+    }
+#endif // CC_ENABLE_GC_FOR_NATIVE_OBJECTS
     _subItems.pushBack(item);
 }
 
-MenuItemToggle::~MenuItemToggle()
+void MenuItemToggle::cleanup()
 {
     for(const auto &item : _subItems) {
+#if defined(CC_NATIVE_CONTROL_SCRIPT) && !CC_NATIVE_CONTROL_SCRIPT
+        ScriptEngineManager::getInstance()->getScriptEngine()->releaseScriptObject(this, item);
+#endif
         item->cleanup();
     }
+    MenuItem::cleanup();
 }
 
 void MenuItemToggle::setSelectedIndex(unsigned int index)
@@ -917,17 +951,16 @@ void MenuItemToggle::setSelectedIndex(unsigned int index)
     if( index != _selectedIndex && _subItems.size() > 0 )
     {
         _selectedIndex = index;
-        MenuItem *currentItem = (MenuItem*)getChildByTag(kCurrentItem);
-        if( currentItem )
+        if (_selectedItem)
         {
-            currentItem->removeFromParentAndCleanup(false);
+            _selectedItem->removeFromParentAndCleanup(false);
         }
 
-        MenuItem* item = _subItems.at(_selectedIndex);
-        this->addChild(item, 0, kCurrentItem);
-        Size s = item->getContentSize();
+        _selectedItem = _subItems.at(_selectedIndex);
+        this->addChild(_selectedItem);
+        Size s = _selectedItem->getContentSize();
         this->setContentSize(s);
-        item->setPosition(s.width/2, s.height/2);
+        _selectedItem->setPosition(s.width / 2, s.height / 2);
     }
 }
 

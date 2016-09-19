@@ -42,6 +42,7 @@ NS_CC_BEGIN
 /**
 @brief Clipping Rectangle Node.
 @details A node that clipped with specified rectangle.
+ The region of ClippingRectangleNode doesn't support any transform except scale.
 @js NA
 */
 class CC_DLL ClippingRectangleNode : public Node
@@ -76,7 +77,7 @@ public:
     @brief Get whether the clipping is enabled or not.
     @return Whether the clipping is enabled or not. Default is true.
     */
-    const bool isClippingEnabled() const {
+    bool isClippingEnabled() const {
         return _clippingEnabled;
     }
 

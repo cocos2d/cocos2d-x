@@ -40,6 +40,7 @@ NS_CC_BEGIN
 class GLProgramState;
 class Technique;
 class Node;
+class VertexAttribBinding;
 
 class CC_DLL Pass : public RenderState
 {
@@ -56,17 +57,38 @@ public:
     GLProgramState* getGLProgramState() const;
 
     /** Binds the GLProgramState and the RenderState.
-     This method must be called before call the actuall draw call.
+     This method must be called before call the actual draw call.
      */
     void bind(const Mat4& modelView);
     void bind(const Mat4& modelView, bool bindAttributes);
 
     /** Unbinds the Pass.
-     This method must be called AFTER calling the actuall draw call
+     This method must be called AFTER calling the actual draw call
      */
     void unbind();
 
+    /**
+     * Sets a vertex attribute binding for this pass.
+     *
+     * When a mesh binding is set, the VertexAttribBinding will be automatically
+     * bound when the bind() method is called for the pass.
+     *
+     * @param binding The VertexAttribBinding to set (or NULL to remove an existing binding).
+     */
+    void setVertexAttribBinding(VertexAttribBinding* binding);
+
+    /**
+     * Returns the vertex attribute binding for this pass.
+     *
+     * @return The vertex attribute binding for this pass.
+     */
+    VertexAttribBinding* getVertexAttributeBinding() const;
+
     uint32_t getHash() const;
+
+    /**
+     * Returns a clone (deep-copy) of this instance */
+    Pass* clone() const;
 
 protected:
     Pass();
@@ -78,6 +100,7 @@ protected:
     Node* getTarget() const;
 
     GLProgramState* _glProgramState;
+    VertexAttribBinding* _vertexAttribBinding;
 };
 
 NS_CC_END

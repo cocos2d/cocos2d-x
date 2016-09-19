@@ -30,13 +30,13 @@
 
 #if CC_USE_3D_PHYSICS
 
-#include "CCPhysics3DShape.h"
-#include "CCPhysicsSprite3D.h"
-#include "CCPhysics3DWorld.h"
-#include "CCPhysics3DDebugDrawer.h"
-#include "CCPhysics3DObject.h"
-#include "CCPhysics3DComponent.h"
-#include "CCPhysics3DConstraint.h"
+#include "physics3d/CCPhysics3DShape.h"
+#include "physics3d/CCPhysicsSprite3D.h"
+#include "physics3d/CCPhysics3DWorld.h"
+#include "physics3d/CCPhysics3DDebugDrawer.h"
+#include "physics3d/CCPhysics3DObject.h"
+#include "physics3d/CCPhysics3DComponent.h"
+#include "physics3d/CCPhysics3DConstraint.h"
 
 NS_CC_BEGIN
 
@@ -53,6 +53,7 @@ NS_CC_END
 
 #include "bullet/btBulletCollisionCommon.h"
 #include "bullet/btBulletDynamicsCommon.h"
+#include "bullet/BulletCollision/CollisionDispatch/btGhostObject.h"
 
 //convert between cocos and bullet
 cocos2d::Vec3 convertbtVector3ToVec3(const btVector3 &btVec3);

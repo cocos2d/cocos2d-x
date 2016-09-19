@@ -35,6 +35,16 @@ isEnabled : function (
 },
 
 /**
+ * @method getRender
+ * @return {cc.Particle3DRender}
+ */
+getRender : function (
+)
+{
+    return cc.Particle3DRender;
+},
+
+/**
  * @method isKeepLocal
  * @return {bool}
  */
@@ -472,6 +482,18 @@ float
 removeAllListener : function (
 )
 {
+},
+
+/**
+ * @method initSystem
+ * @param {String} arg0
+ * @return {bool}
+ */
+initSystem : function (
+str 
+)
+{
+    return false;
 },
 
 /**

@@ -34,7 +34,9 @@ using namespace Windows::Foundation;
 #include "base/CCDirector.h"
 #include <algorithm>
 #include "platform/CCFileUtils.h"
-#include "CCWinRTUtils.h"
+#include "platform/winrt/CCWinRTUtils.h"
+#include "platform/CCApplication.h"
+#include "tinyxml2/tinyxml2.h"
 
 /**
 @brief    This function change the PVRFrame show/hide setting in register.
@@ -44,7 +46,7 @@ using namespace Windows::Foundation;
 NS_CC_BEGIN
 
 // sharedApplication pointer
-Application * Application::sm_pSharedApplication = 0;
+Application * Application::sm_pSharedApplication = nullptr;
 
 
 
@@ -55,7 +57,7 @@ Application * Application::sm_pSharedApplication = 0;
 ////////////////////////////////////////////////////////////////////////////////
 
 // sharedApplication pointer
-Application * s_pSharedApplication = 0;
+Application * s_pSharedApplication = nullptr;
 
 Application::Application() :
 m_openURLDelegate(nullptr)
@@ -68,7 +70,7 @@ m_openURLDelegate(nullptr)
 Application::~Application()
 {
     CC_ASSERT(this == sm_pSharedApplication);
-    sm_pSharedApplication = NULL;
+    sm_pSharedApplication = nullptr;
 }
 
 int Application::run()
@@ -83,7 +85,7 @@ int Application::run()
 	return 0;
 }
 
-void Application::setAnimationInterval(double interval)
+void Application::setAnimationInterval(float interval)
 {
     LARGE_INTEGER nFreq;
     QueryPerformanceFrequency(&nFreq);
@@ -116,12 +118,12 @@ const char * Application::getCurrentLanguageCode()
         result = GetUserPreferredUILanguages(MUI_LANGUAGE_NAME, &numLanguages, pwszLanguagesBuffer, &cchLanguagesBuffer);
         if (result) {
 
-            code = CCUnicodeToUtf8(pwszLanguagesBuffer);
+            code = StringWideCharToUtf8(pwszLanguagesBuffer);
         }
 
         if (pwszLanguagesBuffer)
         {
-            delete pwszLanguagesBuffer;
+            delete [] pwszLanguagesBuffer;
         }
     }
 
@@ -214,7 +216,33 @@ LanguageType Application::getCurrentLanguage()
 
 Application::Platform  Application::getTargetPlatform()
 {
-    return Platform::OS_WP8;
+    if (isWindowsPhone())
+    {
+        return Platform::OS_WP8;
+    }
+    else
+    {
+        return Platform::OS_WINRT;
+    }
+}
+
+std::string  Application::getVersion()
+{
+    std::string r("");
+    std::string s = FileUtils::getInstance()->getStringFromFile("WMAppManifest.xml");
+    if (!s.empty()) {
+        tinyxml2::XMLDocument doc;
+        if (!doc.Parse(s.c_str())) {
+            tinyxml2::XMLElement *app = doc.RootElement()->FirstChildElement("App");
+            if (app) {
+                const char* version = app->Attribute("Version");
+                if (version) {
+                    r = version;
+                }
+            }
+        }
+    }
+    return r;
 }
 
 bool Application::openURL(const std::string &url)

@@ -87,6 +87,15 @@
 -- @return CSLoader#CSLoader self (return value: cc.CSLoader)
         
 --------------------------------
+-- @overload self, string, function         
+-- @overload self, string         
+-- @function [parent=#CSLoader] createNodeWithVisibleSize
+-- @param self
+-- @param #string filename
+-- @param #function callback
+-- @return Node#Node ret (return value: cc.Node)
+
+--------------------------------
 -- 
 -- @function [parent=#CSLoader] getInstance 
 -- @param self

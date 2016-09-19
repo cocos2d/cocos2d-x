@@ -2,7 +2,7 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -42,7 +42,7 @@ struct _ccArray;
 /** @class ParallaxNode
  * @brief ParallaxNode: A node that simulates a parallax scroller
 
-The children will be moved faster / slower than the parent according the the parallax ratio.
+The children will be moved faster / slower than the parent according the parallax ratio.
 
 */
 class CC_DLL ParallaxNode : public Node

@@ -23,7 +23,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var UIPageViewTest = UIScene.extend({
+var UIPageViewTest = UIMainLayer.extend({
     init: function () {
         if (this._super()) {
             var widgetSize = this._widget.getContentSize();
@@ -52,7 +52,7 @@ var UIPageViewTest = UIScene.extend({
                 var imageView = new ccui.ImageView();
                 imageView.setTouchEnabled(true);
                 imageView.setScale9Enabled(true);
-                imageView.loadTexture("res/cocosui/scrollviewbg.png");
+                imageView.loadTexture("ccs-res/cocosui/scrollviewbg.png");
                 imageView.setContentSize(cc.size(240, 130));
                 imageView.x = layoutRect.width / 2;
                 imageView.y = layoutRect.height / 2;
@@ -66,9 +66,14 @@ var UIPageViewTest = UIScene.extend({
                 text.y = layoutRect.height / 2;
                 layout.addChild(text);
 
-                pageView.addPage(layout);
+                pageView.addWidgetToPage(layout, i);
             }
+            pageView.setCurPageIndex(1);
             pageView.addEventListener(this.pageViewEvent, this);
+
+            //for test purpose only
+            cc.log(pageView.getPages());
+            cc.log(pageView.getPage(0));
             this._mainNode.addChild(pageView);
 
             return true;
@@ -89,7 +94,7 @@ var UIPageViewTest = UIScene.extend({
 });
 
 //2015-01-14
-var UIPageViewButtonTest = UIScene.extend({
+var UIPageViewButtonTest = UIMainLayer.extend({
     init: function(){
         if (this._super()){
             var widgetSize = this._widget.getContentSize();
@@ -126,7 +131,7 @@ var UIPageViewButtonTest = UIScene.extend({
                     var innerBox = new ccui.VBox();
 
                     for (var j = 0; j < 3; j++) {
-                        var btn = new ccui.Button("res/cocosui/animationbuttonnormal.png", "res/cocosui/animationbuttonpressed.png");
+                        var btn = new ccui.Button("ccs-res/cocosui/animationbuttonnormal.png", "ccs-res/cocosui/animationbuttonpressed.png");
                         btn.setName("button " + j);
                         btn.addTouchEventListener( this.onButtonClicked, this);
                         innerBox.addChild(btn);
@@ -165,7 +170,7 @@ var UIPageViewButtonTest = UIScene.extend({
 });
 
 //2015-01-14
-var UIPageViewCustomScrollThreshold = UIScene.extend({
+var UIPageViewCustomScrollThreshold = UIMainLayer.extend({
     init: function(){
         if (this._super()){
             var widgetSize = this._widget.getContentSize();
@@ -196,7 +201,7 @@ var UIPageViewCustomScrollThreshold = UIScene.extend({
                 var layout = new ccui.Layout();
                 layout.setContentSize(cc.size(240.0, 130.0));
 
-                var imageView = new ccui.ImageView("res/cocosui/scrollviewbg.png");
+                var imageView = new ccui.ImageView("ccs-res/cocosui/scrollviewbg.png");
                 imageView.setScale9Enabled(true);
                 imageView.setContentSize(cc.size(240, 130));
                 imageView.setPosition(cc.p(layout.getContentSize().width / 2.0, layout.getContentSize().height / 2.0));
@@ -214,9 +219,9 @@ var UIPageViewCustomScrollThreshold = UIScene.extend({
             pageView.setName("pageView");
 
             var slider = new ccui.Slider();
-            slider.loadBarTexture("res/cocosui/sliderTrack.png");
-            slider.loadSlidBallTextures("res/cocosui/sliderThumb.png", "res/cocosui/sliderThumb.png", "");
-            slider.loadProgressBarTexture("res/cocosui/sliderProgress.png");
+            slider.loadBarTexture("ccs-res/cocosui/sliderTrack.png");
+            slider.loadSlidBallTextures("ccs-res/cocosui/sliderThumb.png", "ccs-res/cocosui/sliderThumb.png", "");
+            slider.loadProgressBarTexture("ccs-res/cocosui/sliderProgress.png");
             slider.setPosition(cc.p(widgetSize.width / 2.0 , widgetSize.height / 2.0 - 40));
             slider.addEventListener(this.sliderEvent, this);
             slider.setPercent(50);
@@ -240,7 +245,7 @@ var UIPageViewCustomScrollThreshold = UIScene.extend({
 });
 
 //2015-01-14
-var UIPageViewTouchPropagationTest = UIScene.extend({
+var UIPageViewTouchPropagationTest = UIMainLayer.extend({
     init: function(){
         if (this._super()){
             var widgetSize = this._widget.getContentSize();
@@ -275,7 +280,7 @@ var UIPageViewTouchPropagationTest = UIScene.extend({
                     var innerBox = new ccui.VBox();
 
                     for (var j = 0; j < 3; j++) {
-                        var btn = new ccui.Button("res/cocosui/animationbuttonnormal.png", "res/cocosui/animationbuttonpressed.png");
+                        var btn = new ccui.Button("ccs-res/cocosui/animationbuttonnormal.png", "ccs-res/cocosui/animationbuttonpressed.png");
                         btn.setName("button " + j);
                         btn.addTouchEventListener(this.onButtonClicked, this);
                         innerBox.addChild(btn);
@@ -308,21 +313,21 @@ var UIPageViewTouchPropagationTest = UIScene.extend({
             var propagationText = new ccui.Text("Allow Propagation", "Arial", 10);
             propagationText.setAnchorPoint(cc.p(0,0.5));
             propagationText.setTextColor(cc.color.RED);
-            propagationText.setPosition(cc.p(0, pageView.getPosition().y + 50));
+            propagationText.setPosition(cc.p(20, pageView.getPosition().y + 50));
             this._mainNode.addChild(propagationText);
 
             var swallowTouchText = new ccui.Text("Swallow Touches", "Arial", 10);
             swallowTouchText.setAnchorPoint(cc.p(0,0.5));
             swallowTouchText.setTextColor(cc.color.RED);
-            swallowTouchText.setPosition(cc.p(0, pageView.getPosition().y));
+            swallowTouchText.setPosition(cc.p(20, pageView.getPosition().y));
             this._mainNode.addChild(swallowTouchText);
 
             // Create the checkbox
-            var checkBox1 = new ccui.CheckBox("res/cocosui/check_box_normal.png",
-                "res/cocosui/check_box_normal_press.png",
-                "res/cocosui/check_box_active.png",
-                "res/cocosui/check_box_normal_disable.png",
-                "res/cocosui/check_box_active_disable.png");
+            var checkBox1 = new ccui.CheckBox("ccs-res/cocosui/check_box_normal.png",
+                "ccs-res/cocosui/check_box_normal_press.png",
+                "ccs-res/cocosui/check_box_active.png",
+                "ccs-res/cocosui/check_box_normal_disable.png",
+                "ccs-res/cocosui/check_box_active_disable.png");
             var propagationPosition = propagationText.getPosition();
             checkBox1.setPosition(
                 propagationPosition.x + propagationText.getContentSize().width/2,
@@ -333,11 +338,11 @@ var UIPageViewTouchPropagationTest = UIScene.extend({
             this._mainNode.addChild(checkBox1);
 
             // Create the checkbox
-            var checkBox2 = new ccui.CheckBox("res/cocosui/check_box_normal.png",
-                "res/cocosui/check_box_normal_press.png",
-                "res/cocosui/check_box_active.png",
-                "res/cocosui/check_box_normal_disable.png",
-                "res/cocosui/check_box_active_disable.png");
+            var checkBox2 = new ccui.CheckBox("ccs-res/cocosui/check_box_normal.png",
+                "ccs-res/cocosui/check_box_normal_press.png",
+                "ccs-res/cocosui/check_box_active.png",
+                "ccs-res/cocosui/check_box_normal_disable.png",
+                "ccs-res/cocosui/check_box_active_disable.png");
             var swallowPosition = swallowTouchText.getPosition();
             checkBox2.setPosition(
                 swallowPosition.x + swallowTouchText.getContentSize().width/2,
@@ -396,7 +401,7 @@ var UIPageViewTouchPropagationTest = UIScene.extend({
 });
 
 //2015-01-14
-var UIPageViewDynamicAddAndRemoveTest = UIScene.extend({
+var UIPageViewDynamicAddAndRemoveTest = UIMainLayer.extend({
     init: function(){
         var self = this;
         if (this._super()){
@@ -431,8 +436,8 @@ var UIPageViewDynamicAddAndRemoveTest = UIScene.extend({
                 for (var k = 0; k < 2; ++k){
                     var innerBox = new ccui.VBox();
                     for (var j = 0; j < 3; j++){
-                        var btn = new ccui.Button("res/cocosui/animationbuttonnormal.png",
-                            "res/cocosui/animationbuttonpressed.png");
+                        var btn = new ccui.Button("ccs-res/cocosui/animationbuttonnormal.png",
+                            "ccs-res/cocosui/animationbuttonpressed.png");
                         btn.setName("button " + j);
                         innerBox.addChild(btn);
                     }
@@ -452,7 +457,8 @@ var UIPageViewDynamicAddAndRemoveTest = UIScene.extend({
 
             //add buttons
             var button = new ccui.Button();
-//            button.setNormalizedPosition(cc.p(0.12,0.7));
+            button.setAnchorPoint(0, 0.5);
+            button.setTitleFontSize(12);
             button.setPosition(20, 220);
             button.setTitleText("Add A Page");
             button.setZoomScale(0.3);
@@ -465,8 +471,8 @@ var UIPageViewDynamicAddAndRemoveTest = UIScene.extend({
                 for (var k = 0; k < 2; ++k){
                     var innerBox = new ccui.VBox();
                     for (var j = 0; j < 3; j++){
-                        var btn = new ccui.Button("res/cocosui/animationbuttonnormal.png",
-                            "res/cocosui/animationbuttonpressed.png");
+                        var btn = new ccui.Button("ccs-res/cocosui/animationbuttonnormal.png",
+                            "ccs-res/cocosui/animationbuttonpressed.png");
                         btn.setName("button " + j);
                         innerBox.addChild(btn);
                     }
@@ -484,7 +490,8 @@ var UIPageViewDynamicAddAndRemoveTest = UIScene.extend({
             this._mainNode.addChild(button);
 
             var button2 = new ccui.Button();
-//            button2.setNormalizedPosition(cc.p(0.12,0.5));
+            button2.setAnchorPoint(0, 0.5);
+            button2.setTitleFontSize(12);
             button2.setPosition(20, 180);
             button2.setTitleText("Remove A Page");
             button2.setZoomScale(0.3);
@@ -502,7 +509,8 @@ var UIPageViewDynamicAddAndRemoveTest = UIScene.extend({
             this._mainNode.addChild(button2);
 
             var button3 = new ccui.Button();
-//            button3.setNormalizedPosition(cc.p(0.12,0.3));
+            button3.setAnchorPoint(0, 0.5);
+            button3.setTitleFontSize(12);
             button3.setPosition(cc.p(20, 140));
             button3.setTitleText("Remove All Pages");
             button3.setZoomScale(0.3);
@@ -526,5 +534,257 @@ var UIPageViewDynamicAddAndRemoveTest = UIScene.extend({
             default:
                 break;
         }
+    }
+});
+
+var UIPageViewDisableTouchTest = UIMainLayer.extend({
+    init: function () {
+        if(this._super()){
+            var widgetSize = this._widget.getContentSize();
+
+            this._topDisplayLabel.setString("PageView disable touch");
+            this._topDisplayLabel.x = widgetSize.width / 2.0;
+            this._topDisplayLabel.y = widgetSize.height / 2.0 + this._topDisplayLabel.height * 1.5;
+
+            this._bottomDisplayLabel.setString("PageView");
+            this._bottomDisplayLabel.x = widgetSize.width / 2;
+            this._bottomDisplayLabel.y = widgetSize.height / 2 - this._bottomDisplayLabel.height * 3;
+
+            var background = this._widget.getChildByName("background_Panel");
+            var backgroundSize = background.getContentSize();
+
+            var pageView = new ccui.PageView();
+            pageView.setContentSize(cc.size(240, 130));
+            pageView.x = (widgetSize.width - backgroundSize.width) / 2 + (backgroundSize.width - pageView.width) / 2;
+            pageView.y = (widgetSize.height - backgroundSize.height) / 2 + (backgroundSize.height - pageView.height) / 2;
+            pageView.setTouchEnabled(false);
+            pageView.removeAllPages();
+
+            var pageCount = 4;
+            for(var i = 0; i < pageCount; i++){
+                var layout = new ccui.Layout();
+                layout.setContentSize(cc.size(240, 130));
+
+                var imageView = new ccui.ImageView();
+                imageView.setScale9Enabled(true);
+                imageView.loadTexture("ccs-res/cocosui/scrollviewbg.png");
+                imageView.setContentSize(cc.size(240, 130));
+                imageView.x = layout.getContentSize().width / 2;
+                imageView.y = layout.getContentSize().height / 2;
+                layout.addChild(imageView);
+                var pageNumber = i+1;
+                var label = new ccui.Text("page" + pageNumber, "Marker Felt",30);
+                label.setColor(cc.color(192, 192, 192));
+                label.setPosition(cc.p(layout.getContentSize().width / 2, layout.getContentSize().height / 2));
+                layout.addChild(label);
+
+                pageView.insertPage(layout, i);
+            }
+            this._mainNode.addChild(pageView);
+            return true;
+        }
+        return false;
+    }
+});
+
+var UIPageViewJumpToPageTest = UIMainLayer.extend({
+    init: function () {
+        if (this._super()) {
+            var widgetSize = this._widget.getContentSize();
+            //init text
+            this._topDisplayLabel.setString("setCurrentPageIndex API Test");
+            this._topDisplayLabel.setFontSize(14);
+            this._topDisplayLabel.x = widgetSize.width / 2.0;
+            this._topDisplayLabel.y = widgetSize.height / 2.0 + this._topDisplayLabel.height * 4;
+            this._bottomDisplayLabel.setString("");
+            this._bottomDisplayLabel.x = widgetSize.width / 2;
+            this._bottomDisplayLabel.y = widgetSize.height / 2 - this._bottomDisplayLabel.height * 3;
+
+            var background = this._widget.getChildByName("background_Panel");
+
+            // Create the page view
+            var pageView = new ccui.PageView();
+            pageView.setTouchEnabled(true);
+            pageView.setContentSize(cc.size(240, 130));
+            pageView.x = (widgetSize.width - background.width) / 2 + (background.width - pageView.width) / 2;
+            pageView.y = (widgetSize.height - background.height) / 2 + (background.height - pageView.height) / 2;
+            pageView.setIndicatorEnabled(true);
+            pageView.removeAllItems();
+
+            var pageCount = 4;
+            for (var i = 0; i < pageCount; ++i)
+            {
+                var layout = new ccui.Layout();
+                layout.setContentSize(cc.size(240.0, 130.0));
+
+                var imageView = new ccui.ImageView("ccs-res/cocosui/scrollviewbg.png");
+                imageView.setScale9Enabled(true);
+                imageView.setContentSize(cc.size(240, 130));
+                imageView.setPosition(cc.p(layout.width / 2.0, layout.height / 2.0));
+                layout.addChild(imageView);
+
+                var label = new ccui.Text("page " + (i+1), "Arial", 30);
+                label.setColor(cc.color(192, 192, 192));
+                label.setPosition(cc.p(layout.width / 2.0, layout.height / 2.0));
+                layout.addChild(label);
+
+                pageView.insertCustomItem(layout, i);
+            }
+
+            pageView.setCurrentPageIndex(1);
+            //add buttons to jump to specific page
+            var button1 = new ccui.Button();
+            button1.setPosition(cc.p(pageView.x - 50, pageView.y + pageView.height));
+            button1.setTitleText("Jump to Page1");
+
+            button1.addClickEventListener(function(){
+                pageView.setCurrentPageIndex(0);
+            });
+            this._mainNode.addChild(button1);
+
+            var button2 = button1.clone();
+            button2.setTitleText("Jump to Page2");
+            button2.setPosition(cc.p(pageView.x - 50, pageView.y + pageView.height - 50));
+            button2.addClickEventListener(function(){
+                pageView.setCurrentPageIndex(1);
+            });
+            this._mainNode.addChild(button2);
+
+            var button3 = button2.clone();
+            button3.setTitleText("Jump to Page3");
+            button3.setPosition(cc.p(pageView.x + pageView.width + 50, pageView.y + pageView.height));
+            button3.addClickEventListener(function(){
+                pageView.setCurrentPageIndex(2);
+            });
+            this._mainNode.addChild(button3);
+
+            var button4 = button3.clone();
+            button4.setTitleText("Jump to Page4");
+            button4.setPosition(cc.p(pageView.x + pageView.width + 50, pageView.y + pageView.height - 50));
+            button4.addClickEventListener(function(){
+                pageView.setCurrentPageIndex(3);
+            });
+            this._mainNode.addChild(button4);
+
+            this._mainNode.addChild(pageView);
+
+            return true;
+        }
+        return false;
+    }
+});
+
+var UIPageViewChildSizeTest = UIMainLayer.extend({
+    init: function () {
+        if (this._super()) {
+            var widgetSize = this._widget.getContentSize();
+            //init text
+            this._topDisplayLabel.setString("Move by horizontal direction");
+            this._topDisplayLabel.setFontSize(14);
+            this._topDisplayLabel.x = widgetSize.width / 2.0;
+            this._topDisplayLabel.y = widgetSize.height / 2.0 + this._topDisplayLabel.height * 4;
+            this._bottomDisplayLabel.setString("");
+            this._bottomDisplayLabel.x = widgetSize.width / 2;
+            this._bottomDisplayLabel.y = widgetSize.height / 2 - this._bottomDisplayLabel.height * 3;
+
+            var background = this._widget.getChildByName("background_Panel");
+
+            // Create the page view
+            var pageView = new ccui.PageView();
+            pageView.setTouchEnabled(true);
+            pageView.setContentSize(cc.size(240, 130));
+            pageView.x = (widgetSize.width - background.width) / 2 + (background.width - pageView.width) / 2;
+            pageView.y = (widgetSize.height - background.height) / 2 + (background.height - pageView.height) / 2;
+            pageView.setIndicatorEnabled(true);
+            pageView.removeAllItems();
+
+            var pageCount = 4;
+            for (var i = 0; i < pageCount; ++i)
+            {
+                var imageView = new ccui.ImageView("ccs-res/cocosui/scrollviewbg.png");
+                var label = new ccui.Text("page " + (i + 1), "Arial", 30);
+
+                imageView.setScale9Enabled(true);
+                label.setColor(cc.color(192, 192, 192));
+                label.setAnchorPoint(cc.p(0,0));
+                imageView.addChild(label);
+
+                pageView.insertCustomItem(imageView, i);
+            }
+
+            pageView.addEventListener(this.pageViewEvent, this);
+
+            this._mainNode.addChild(pageView);
+
+            return true;
+        }
+        return false;
+    },
+
+    pageViewEvent: function (sender, type) {
+        switch (type) {
+            case ccui.PageView.EVENT_TURNING:
+                var pageView = sender;
+                this._topDisplayLabel.setString("page = " + (pageView.getCurPageIndex().valueOf()-0 + 1));
+                break;
+            default:
+                break;
+        }
+    }
+});
+
+var UIPageViewIndicatorTest = UIMainLayer.extend({
+    init: function () {
+        if(this._super()){
+            var widgetSize = this._widget.getContentSize();
+
+            this._topDisplayLabel.setString("PageView indidcator custom texture\nscale : 0.5, index color: RED");
+            this._topDisplayLabel.setFontSize(14);
+            this._topDisplayLabel.x = widgetSize.width / 2.0;
+            this._topDisplayLabel.y = widgetSize.height / 2.0 + this._topDisplayLabel.height;
+
+            this._bottomDisplayLabel.setString("PageView");
+            this._bottomDisplayLabel.x = widgetSize.width / 2;
+            this._bottomDisplayLabel.y = widgetSize.height / 2 - this._bottomDisplayLabel.height * 3;
+
+            var background = this._widget.getChildByName("background_Panel");
+            var backgroundSize = background.getContentSize();
+
+            var pageView = new ccui.PageView();
+            pageView.setContentSize(cc.size(240, 130));
+            pageView.x = (widgetSize.width - backgroundSize.width) / 2 + (backgroundSize.width - pageView.width) / 2;
+            pageView.y = (widgetSize.height - backgroundSize.height) / 2 + (backgroundSize.height - pageView.height) / 2;
+            pageView.removeAllPages();
+
+            pageView.setIndicatorEnabled(true);
+            pageView.setIndicatorSpaceBetweenIndexNodes(5);
+            pageView.setIndicatorIndexNodesScale(0.5);
+            pageView.setIndicatorIndexNodesTexture("ccs-res/cocosui/green_edit.png");
+            pageView.setIndicatorIndexNodesColor(cc.color.RED);
+
+            var pageCount = 4;
+            for(var i = 0; i < pageCount; i++){
+                var layout = new ccui.Layout();
+                layout.setContentSize(cc.size(240, 130));
+
+                var imageView = new ccui.ImageView();
+                imageView.setScale9Enabled(true);
+                imageView.loadTexture("ccs-res/cocosui/scrollviewbg.png");
+                imageView.setContentSize(cc.size(240, 130));
+                imageView.x = layout.getContentSize().width / 2;
+                imageView.y = layout.getContentSize().height / 2;
+                layout.addChild(imageView);
+                var pageNumber = i+1;
+                var label = new ccui.Text("page" + pageNumber, "Marker Felt",30);
+                label.setColor(cc.color(192, 192, 192));
+                label.setPosition(cc.p(layout.getContentSize().width / 2, layout.getContentSize().height / 2));
+                layout.addChild(label);
+
+                pageView.insertPage(layout, i);
+            }
+            this._mainNode.addChild(pageView);
+            return true;
+        }
+        return false;
     }
 });

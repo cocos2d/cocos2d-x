@@ -2,7 +2,7 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
  
 http://www.cocos2d-x.org
 
@@ -61,7 +61,7 @@ public:
     // Overrides
     virtual void startWithTarget(Node *target) override;
     virtual ActionCamera * reverse() const override;
-	virtual ActionCamera *clone() const override;
+    virtual ActionCamera *clone() const override;
 
     /* Sets the Eye value of the Camera. 
      * 
@@ -125,9 +125,9 @@ public:
      * @param t Duration in seconds.
      * @param radius The start radius.
      * @param deltaRadius The delta radius.
-     * @param angleZ The start Angel in Z.
+     * @param angleZ The start angle in Z.
      * @param deltaAngleZ The delta angle in Z.
-     * @param angleX The start Angel in X.
+     * @param angleX The start angle in X.
      * @param deltaAngleX The delta angle in X.
      * @return An OrbitCamera.
      */
@@ -142,7 +142,7 @@ public:
     void sphericalRadius(float *r, float *zenith, float *azimuth);
 
     // Overrides
-	OrbitCamera *clone() const override;
+    OrbitCamera *clone() const override;
     virtual void startWithTarget(Node *target) override;
     virtual void update(float time) override;
     

@@ -37,8 +37,7 @@
 #include "runtime/ConfigParser.h"
 
 #include "cocos2d.h"
-#include "CCLuaEngine.h"
-#include "CodeIDESupport.h"
+#include "scripting/lua-bindings/manual/CCLuaEngine.h"
 
 #include "platform/mac/PlayerMac.h"
 #include "AppEvent.h"
@@ -566,12 +565,15 @@ static void glfwDropFunc(GLFWwindow *window, int count, const char **files)
     NSData *data = [[note userInfo] objectForKey:NSFileHandleNotificationDataItem];
     NSString *str = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
 
-    //show log to console
-    [_consoleController trace:str];
-    if(_fileHandle!=nil){
-        [_fileHandle writeData:[str dataUsingEncoding:NSUTF8StringEncoding]];
+    if (str)
+    {
+        //show log to console
+        [_consoleController trace:str];
+        if(_fileHandle!=nil)
+        {
+            [_fileHandle writeData:[str dataUsingEncoding:NSUTF8StringEncoding]];
+        }
     }
-
 }
 
 - (void) setZoom:(float)scale

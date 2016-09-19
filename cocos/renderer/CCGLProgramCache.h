@@ -2,7 +2,7 @@
 Copyright (c) 2011      Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -34,7 +34,7 @@ THE SOFTWARE.
 #include "base/CCRef.h"
 
 /**
- * @addtogroup support
+ * @addtogroup renderer
  * @{
  */
 
@@ -90,6 +90,9 @@ public:
     /** adds a GLProgram to the cache for a given name */
     void addGLProgram(GLProgram* program, const std::string &key);
     CC_DEPRECATED_ATTRIBUTE void addProgram(GLProgram* program, const std::string &key) { addGLProgram(program, key); }
+    
+    /** reload default programs these are relative to light */
+    void reloadDefaultGLProgramsRelativeToLights();
 
 private:
     /**

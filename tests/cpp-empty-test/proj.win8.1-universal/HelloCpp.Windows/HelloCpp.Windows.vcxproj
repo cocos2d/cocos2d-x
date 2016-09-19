@@ -28,7 +28,7 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{79a8fcda-4b12-4dd1-b676-ff148d651638}</ProjectGuid>
-    <RootNamespace>cocos2d</RootNamespace>
+    <RootNamespace>CocosAppWinRT</RootNamespace>
     <DefaultLanguage>en-US</DefaultLanguage>
     <MinimumVisualStudioVersion>12.0</MinimumVisualStudioVersion>
     <AppContainerApplication>true</AppContainerApplication>
@@ -112,50 +112,63 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <PackageCertificateKeyFile>HelloCpp.Windows_TemporaryKey.pfx</PackageCertificateKeyFile>
-    <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
+    <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <AppxBundlePlatforms>x86</AppxBundlePlatforms>
-    <PackageCertificateThumbprint>F75DA75441DF3361D325C567D0B34DA34BD31EED</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>2CDFC928D2D9162A1E5F975F5B9203593ACECDFE</PackageCertificateThumbprint>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <ClCompile>
       <AdditionalOptions>/bigobj /Zm200 %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>../../Classes;$(EngineRoot)cocos\platform\win8.1-universal;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot)cocos\platform\win8.1-universal;../../Classes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <SDLCheck>false</SDLCheck>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <PostBuildEvent>
       <Command>echo "Copying Windows 8.1 Universal App CPP template files"
-xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLESPage.xaml" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /eiycq
-xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLESPage.xaml.cpp" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /eiycq
-xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLESPage.xaml.h" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /eiycq
-xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLES.cpp" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /eiycq
-xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLES.h" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /eiycq
-xcopy "$(EngineRoot)cocos\platform\win8.1-universal\Cocos2dRenderer.cpp" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /eiycq
-xcopy "$(EngineRoot)cocos\platform\win8.1-universal\Cocos2dRenderer.h" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /eiycq
-xcopy "$(EngineRoot)cocos\platform\win8.1-universal\pch.cpp" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /eiycq
-xcopy "$(EngineRoot)cocos\platform\win8.1-universal\pch.h" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /eiycq</Command>
+xcopy "$(EngineRoot)tests\cpp-empty-test\proj.win8.1-universal\HelloCpp.Shared\App.xaml" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)tests\cpp-empty-test\proj.win8.1-universal\HelloCpp.Shared\App.xaml.cpp" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)tests\cpp-empty-test\proj.win8.1-universal\HelloCpp.Shared\App.xaml.h" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLESPage.xaml" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLESPage.xaml.cpp" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLESPage.xaml.h" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLES.cpp" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLES.h" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\Cocos2dRenderer.cpp" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\Cocos2dRenderer.h" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\pch.cpp" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\pch.h" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /iycq
+</Command>
     </PostBuildEvent>
+    <Link>
+      <IgnoreSpecificDefaultLibraries>MSVCRT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <ClCompile>
       <AdditionalOptions>/bigobj /Zm200 %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>../../Classes;$(EngineRoot)cocos\platform\win8.1-universal;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot)cocos\platform\win8.1-universal;../../Classes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <SDLCheck>false</SDLCheck>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <PostBuildEvent>
       <Command>echo "Copying Windows 8.1 Universal App CPP template files"
-xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLESPage.xaml" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /eiycq
-xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLESPage.xaml.cpp" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /eiycq
-xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLESPage.xaml.h" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /eiycq
-xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLES.cpp" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /eiycq
-xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLES.h" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /eiycq
-xcopy "$(EngineRoot)cocos\platform\win8.1-universal\Cocos2dRenderer.cpp" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /eiycq
-xcopy "$(EngineRoot)cocos\platform\win8.1-universal\Cocos2dRenderer.h" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /eiycq
-xcopy "$(EngineRoot)cocos\platform\win8.1-universal\pch.cpp" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /eiycq
-xcopy "$(EngineRoot)cocos\platform\win8.1-universal\pch.h" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /eiycq</Command>
+xcopy "$(EngineRoot)tests\cpp-empty-test\proj.win8.1-universal\HelloCpp.Shared\App.xaml" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)tests\cpp-empty-test\proj.win8.1-universal\HelloCpp.Shared\App.xaml.cpp" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)tests\cpp-empty-test\proj.win8.1-universal\HelloCpp.Shared\App.xaml.h" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLESPage.xaml" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLESPage.xaml.cpp" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLESPage.xaml.h" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLES.cpp" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLES.h" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\Cocos2dRenderer.cpp" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\Cocos2dRenderer.h" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\pch.cpp" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\pch.h" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /iycq
+</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -163,41 +176,54 @@ xcopy "$(EngineRoot)cocos\platform\win8.1-universal\pch.h" "$(EngineRoot)templat
       <AdditionalOptions>/bigobj /Zm200 %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>../../Classes;$(EngineRoot)cocos\platform\win8.1-universal;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot)cocos\platform\win8.1-universal;../../Classes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <SDLCheck>false</SDLCheck>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <PostBuildEvent>
       <Command>echo "Copying Windows 8.1 Universal App CPP template files"
-xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLESPage.xaml" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /eiycq
-xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLESPage.xaml.cpp" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /eiycq
-xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLESPage.xaml.h" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /eiycq
-xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLES.cpp" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /eiycq
-xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLES.h" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /eiycq
-xcopy "$(EngineRoot)cocos\platform\win8.1-universal\Cocos2dRenderer.cpp" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /eiycq
-xcopy "$(EngineRoot)cocos\platform\win8.1-universal\Cocos2dRenderer.h" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /eiycq
-xcopy "$(EngineRoot)cocos\platform\win8.1-universal\pch.cpp" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /eiycq
-xcopy "$(EngineRoot)cocos\platform\win8.1-universal\pch.h" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /eiycq</Command>
+xcopy "$(EngineRoot)tests\cpp-empty-test\proj.win8.1-universal\HelloCpp.Shared\App.xaml" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)tests\cpp-empty-test\proj.win8.1-universal\HelloCpp.Shared\App.xaml.cpp" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)tests\cpp-empty-test\proj.win8.1-universal\HelloCpp.Shared\App.xaml.h" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLESPage.xaml" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLESPage.xaml.cpp" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLESPage.xaml.h" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLES.cpp" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLES.h" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\Cocos2dRenderer.cpp" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\Cocos2dRenderer.h" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\pch.cpp" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\pch.h" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /iycq
+</Command>
     </PostBuildEvent>
+    <Link>
+      <IgnoreSpecificDefaultLibraries>MSVCRT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <AdditionalOptions>/bigobj /Zm200 %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>../../Classes;$(EngineRoot)cocos\platform\win8.1-universal;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot)cocos\platform\win8.1-universal;../../Classes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <SDLCheck>false</SDLCheck>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <PostBuildEvent>
       <Command>echo "Copying Windows 8.1 Universal App CPP template files"
-xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLESPage.xaml" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /eiycq
-xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLESPage.xaml.cpp" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /eiycq
-xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLESPage.xaml.h" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /eiycq
-xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLES.cpp" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /eiycq
-xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLES.h" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /eiycq
-xcopy "$(EngineRoot)cocos\platform\win8.1-universal\Cocos2dRenderer.cpp" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /eiycq
-xcopy "$(EngineRoot)cocos\platform\win8.1-universal\Cocos2dRenderer.h" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /eiycq
-xcopy "$(EngineRoot)cocos\platform\win8.1-universal\pch.cpp" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /eiycq
-xcopy "$(EngineRoot)cocos\platform\win8.1-universal\pch.h" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /eiycq</Command>
+xcopy "$(EngineRoot)tests\cpp-empty-test\proj.win8.1-universal\HelloCpp.Shared\App.xaml" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)tests\cpp-empty-test\proj.win8.1-universal\HelloCpp.Shared\App.xaml.cpp" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)tests\cpp-empty-test\proj.win8.1-universal\HelloCpp.Shared\App.xaml.h" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLESPage.xaml" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLESPage.xaml.cpp" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLESPage.xaml.h" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLES.cpp" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLES.h" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\Cocos2dRenderer.cpp" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\Cocos2dRenderer.h" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\pch.cpp" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\pch.h" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /iycq
+</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -205,41 +231,54 @@ xcopy "$(EngineRoot)cocos\platform\win8.1-universal\pch.h" "$(EngineRoot)templat
       <AdditionalOptions>/bigobj /Zm200 %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>../../Classes;$(EngineRoot)cocos\platform\win8.1-universal;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot)cocos\platform\win8.1-universal;../../Classes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <SDLCheck>false</SDLCheck>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <PostBuildEvent>
       <Command>echo "Copying Windows 8.1 Universal App CPP template files"
-xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLESPage.xaml" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /eiycq
-xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLESPage.xaml.cpp" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /eiycq
-xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLESPage.xaml.h" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /eiycq
-xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLES.cpp" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /eiycq
-xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLES.h" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /eiycq
-xcopy "$(EngineRoot)cocos\platform\win8.1-universal\Cocos2dRenderer.cpp" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /eiycq
-xcopy "$(EngineRoot)cocos\platform\win8.1-universal\Cocos2dRenderer.h" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /eiycq
-xcopy "$(EngineRoot)cocos\platform\win8.1-universal\pch.cpp" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /eiycq
-xcopy "$(EngineRoot)cocos\platform\win8.1-universal\pch.h" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /eiycq</Command>
+xcopy "$(EngineRoot)tests\cpp-empty-test\proj.win8.1-universal\HelloCpp.Shared\App.xaml" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)tests\cpp-empty-test\proj.win8.1-universal\HelloCpp.Shared\App.xaml.cpp" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)tests\cpp-empty-test\proj.win8.1-universal\HelloCpp.Shared\App.xaml.h" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLESPage.xaml" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLESPage.xaml.cpp" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLESPage.xaml.h" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLES.cpp" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLES.h" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\Cocos2dRenderer.cpp" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\Cocos2dRenderer.h" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\pch.cpp" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\pch.h" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /iycq
+</Command>
     </PostBuildEvent>
+    <Link>
+      <IgnoreSpecificDefaultLibraries>MSVCRT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <AdditionalOptions>/bigobj /Zm200 %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>../../Classes;$(EngineRoot)cocos\platform\win8.1-universal;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot)cocos\platform\win8.1-universal;../../Classes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <SDLCheck>false</SDLCheck>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <PostBuildEvent>
       <Command>echo "Copying Windows 8.1 Universal App CPP template files"
-xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLESPage.xaml" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /eiycq
-xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLESPage.xaml.cpp" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /eiycq
-xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLESPage.xaml.h" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /eiycq
-xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLES.cpp" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /eiycq
-xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLES.h" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /eiycq
-xcopy "$(EngineRoot)cocos\platform\win8.1-universal\Cocos2dRenderer.cpp" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /eiycq
-xcopy "$(EngineRoot)cocos\platform\win8.1-universal\Cocos2dRenderer.h" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /eiycq
-xcopy "$(EngineRoot)cocos\platform\win8.1-universal\pch.cpp" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /eiycq
-xcopy "$(EngineRoot)cocos\platform\win8.1-universal\pch.h" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /eiycq</Command>
+xcopy "$(EngineRoot)tests\cpp-empty-test\proj.win8.1-universal\HelloCpp.Shared\App.xaml" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)tests\cpp-empty-test\proj.win8.1-universal\HelloCpp.Shared\App.xaml.cpp" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)tests\cpp-empty-test\proj.win8.1-universal\HelloCpp.Shared\App.xaml.h" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLESPage.xaml" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLESPage.xaml.cpp" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLESPage.xaml.h" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLES.cpp" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLES.h" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\Cocos2dRenderer.cpp" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\Cocos2dRenderer.h" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\pch.cpp" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\pch.h" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /iycq
+</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

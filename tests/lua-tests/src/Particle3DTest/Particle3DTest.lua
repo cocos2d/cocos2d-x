@@ -8,7 +8,7 @@ local function baseInit(self)
     self._angle = 0
 
     local targetPlatform = cc.Application:getInstance():getTargetPlatform()
-    if targetPlatform == cc.PLATFORM_OS_MAC  or targetPlatform == cc.PLATFORM_OS_IPHONE  or targetPlatform == cc.PLATFORM_OS_IPAD  then
+    if targetPlatform == cc.PLATFORM_OS_MAC  or targetPlatform == cc.PLATFORM_OS_IPHONE  or targetPlatform == cc.PLATFORM_OS_IPAD or targetPlatform == cc.PLATFORM_OS_TIZEN then
         cc.FileUtils:getInstance():addSearchPath("Particle3D/materials")
         cc.FileUtils:getInstance():addSearchPath("Particle3D/scripts")
     else
@@ -61,9 +61,8 @@ local function baseInit(self)
             local children = ps:getChildren()
             for i= 1, #children do
                 local child = children[i]
-                if nil ~= child then
-                    --UNDO
-                    count = count + #(child:getParticlePool():getActiveParticleList())
+                if nil ~= child and nil ~= child.getAliveParticleCount then
+                    count = count + child:getAliveParticleCount()
                 end
             end
 

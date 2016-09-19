@@ -24,79 +24,48 @@
  ****************************************************************************/
 
 #import "RootViewController.h"
-#import "cocos2d.h"
-#import "platform/ios/CCEAGLView-ios.h"
-#include "ide-support/SimpleConfigParser.h"
+
 
 @implementation RootViewController
 
 /*
  // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-    if ((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])) {
-        // Custom initialization
-    }
-    return self;
-}
-*/
+ - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+ if ((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])) {
+ // Custom initialization
+ }
+ return self;
+ }
+ */
 
 /*
-// Implement loadView to create a view hierarchy programmatically, without using a nib.
-- (void)loadView {
-}
-*/
+ // Implement loadView to create a view hierarchy programmatically, without using a nib.
+ - (void)loadView {
+ }
+ */
 
 /*
-// Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
-- (void)viewDidLoad {
-    [super viewDidLoad];
-}
+ // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
+ - (void)viewDidLoad {
+ [super viewDidLoad];
+ }
  
-*/
+ */
 // Override to allow orientations other than the default portrait orientation.
 // This method is deprecated on ios6
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    if (SimpleConfigParser::getInstance()->isLanscape()) {
-        return UIInterfaceOrientationIsLandscape( interfaceOrientation );
-    }else{
-        return UIInterfaceOrientationIsPortrait( interfaceOrientation );
-    }
+    return UIInterfaceOrientationIsLandscape( interfaceOrientation );
 }
 
 // For ios6, use supportedInterfaceOrientations & shouldAutorotate instead
 - (NSUInteger) supportedInterfaceOrientations{
 #ifdef __IPHONE_6_0
-    if (SimpleConfigParser::getInstance()->isLanscape()) {
-        return UIInterfaceOrientationMaskLandscape;
-    }else{
-        return UIInterfaceOrientationMaskPortraitUpsideDown;
-    }
+    return UIInterfaceOrientationMaskAllButUpsideDown;
 #endif
 }
 
 - (BOOL) shouldAutorotate {
-    if (SimpleConfigParser::getInstance()->isLanscape()) {
-        return YES;
-    }else{
-        return NO;
-    }
-}
-
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
-    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
-
-    cocos2d::GLView *glview = cocos2d::Director::getInstance()->getOpenGLView();
-
-    if (glview)
-    {
-        CCEAGLView *eaglview = (CCEAGLView*) glview->getEAGLView();
-
-        if (eaglview)
-        {
-            CGSize s = CGSizeMake([eaglview getWidth], [eaglview getHeight]);
-            cocos2d::Application::getInstance()->applicationScreenSizeChanged((int) s.width, (int) s.height);
-        }
-    }
+    return YES;
 }
 
 //fix not hide status on ios7

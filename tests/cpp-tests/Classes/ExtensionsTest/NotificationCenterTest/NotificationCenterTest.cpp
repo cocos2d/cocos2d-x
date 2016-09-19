@@ -38,7 +38,7 @@ Light::Light()
 
 Light::~Light()
 {
-    NotificationCenter::getInstance()->removeObserver(this, MSG_SWITCH_STATE);
+    __NotificationCenter::getInstance()->removeObserver(this, MSG_SWITCH_STATE);
 }
 
 Light* Light::lightWithFile(const char* name)
@@ -54,11 +54,11 @@ void Light::setIsConnectToSwitch(bool bConnectToSwitch)
     _connected = bConnectToSwitch;
     if (_connected)
     {
-        NotificationCenter::getInstance()->addObserver(this, CC_CALLFUNCO_SELECTOR(Light::switchStateChanged), MSG_SWITCH_STATE, nullptr);
+        __NotificationCenter::getInstance()->addObserver(this, CC_CALLFUNCO_SELECTOR(Light::switchStateChanged), MSG_SWITCH_STATE, nullptr);
     }
     else
     {
-        NotificationCenter::getInstance()->removeObserver(this, MSG_SWITCH_STATE);
+        __NotificationCenter::getInstance()->removeObserver(this, MSG_SWITCH_STATE);
     }
     updateLightState();
 }
@@ -123,18 +123,18 @@ NotificationCenterTest::NotificationCenterTest()
         light->setIsConnectToSwitch(bConnected);
     }
 
-    NotificationCenter::getInstance()->postNotification(MSG_SWITCH_STATE, (Ref*)(intptr_t)item->getSelectedIndex());
+    __NotificationCenter::getInstance()->postNotification(MSG_SWITCH_STATE, (Ref*)(intptr_t)item->getSelectedIndex());
 
     /* for testing removeAllObservers */
-    NotificationCenter::getInstance()->addObserver(this, CC_CALLFUNCO_SELECTOR(NotificationCenterTest::doNothing), "random-observer1", nullptr);
-    NotificationCenter::getInstance()->addObserver(this, CC_CALLFUNCO_SELECTOR(NotificationCenterTest::doNothing), "random-observer2", nullptr);
-    NotificationCenter::getInstance()->addObserver(this, CC_CALLFUNCO_SELECTOR(NotificationCenterTest::doNothing), "random-observer3", nullptr);
+    __NotificationCenter::getInstance()->addObserver(this, CC_CALLFUNCO_SELECTOR(NotificationCenterTest::doNothing), "random-observer1", nullptr);
+    __NotificationCenter::getInstance()->addObserver(this, CC_CALLFUNCO_SELECTOR(NotificationCenterTest::doNothing), "random-observer2", nullptr);
+    __NotificationCenter::getInstance()->addObserver(this, CC_CALLFUNCO_SELECTOR(NotificationCenterTest::doNothing), "random-observer3", nullptr);
 }
 
 NotificationCenterTest::~NotificationCenterTest()
 {
     /* for testing removeAllObservers */
-    int CC_UNUSED numObserversRemoved = NotificationCenter::getInstance()->removeAllObservers(this);
+    int CC_UNUSED numObserversRemoved = __NotificationCenter::getInstance()->removeAllObservers(this);
     CCASSERT(numObserversRemoved >= 3, "All observers were not removed!");
 }
 
@@ -142,7 +142,7 @@ void NotificationCenterTest::toggleSwitch(Ref *sender)
 {
     auto item = (MenuItemToggle*)sender;
     int index = item->getSelectedIndex();
-    NotificationCenter::getInstance()->postNotification(MSG_SWITCH_STATE, (Ref*)(intptr_t)index);
+    __NotificationCenter::getInstance()->postNotification(MSG_SWITCH_STATE, (Ref*)(intptr_t)index);
 }
 
 void NotificationCenterTest::connectToSwitch(Ref *sender)

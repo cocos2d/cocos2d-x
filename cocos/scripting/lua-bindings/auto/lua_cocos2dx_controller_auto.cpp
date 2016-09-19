@@ -1,10 +1,8 @@
-#include "lua_cocos2dx_controller_auto.hpp"
+#include "scripting/lua-bindings/auto/lua_cocos2dx_controller_auto.hpp"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-#include "CCGameController.h"
-#include "tolua_fix.h"
-#include "LuaBasicConversions.h"
-
-
+#include "base/CCGameController.h"
+#include "scripting/lua-bindings/manual/tolua_fix.h"
+#include "scripting/lua-bindings/manual/LuaBasicConversions.h"
 
 int lua_cocos2dx_controller_Controller_receiveExternalKeyEvent(lua_State* tolua_S)
 {
@@ -734,7 +732,7 @@ int lua_cocos2dx_controller_EventController_constructor(lua_State* tolua_S)
 
             if (!ok) { break; }
             cocos2d::Controller* arg1;
-            ok &= luaval_to_object<cocos2d::Controller>(tolua_S, 3, "cc.Controller",&arg1);
+            ok &= luaval_to_object<cocos2d::Controller>(tolua_S, 3, "cc.Controller",&arg1, "cc.EventController:EventController");
 
             if (!ok) { break; }
             bool arg2;
@@ -757,7 +755,7 @@ int lua_cocos2dx_controller_EventController_constructor(lua_State* tolua_S)
 
             if (!ok) { break; }
             cocos2d::Controller* arg1;
-            ok &= luaval_to_object<cocos2d::Controller>(tolua_S, 3, "cc.Controller",&arg1);
+            ok &= luaval_to_object<cocos2d::Controller>(tolua_S, 3, "cc.Controller",&arg1, "cc.EventController:EventController");
 
             if (!ok) { break; }
             int arg2;

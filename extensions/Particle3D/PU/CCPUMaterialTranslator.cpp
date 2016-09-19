@@ -226,7 +226,7 @@ void PUMaterialPassTranslator::translate( PUScriptCompiler* compiler, PUAbstract
                 PUAbstractNodeList::const_iterator end = prop->values.end();
                 unsigned int n = 0;
                 Vec4 color;
-                float shininess;
+                float shininess = 0.0f;
                 while(it != end)
                 {
                     float v = 0;

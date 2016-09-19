@@ -5,7 +5,7 @@
 -- @parent_module ccexp
 
 --------------------------------
--- brief Get the local video filie name.<br>
+-- brief Get the local video file name.<br>
 -- return The video file name.
 -- @function [parent=#VideoPlayer] getFileName 
 -- @param self
@@ -25,24 +25,12 @@
 -- @return experimental::ui::VideoPlayer#experimental::ui::VideoPlayer self (return value: cc.experimental::ui::VideoPlayer)
         
 --------------------------------
--- Pauses playback.
--- @function [parent=#VideoPlayer] pause 
--- @param self
--- @return experimental::ui::VideoPlayer#experimental::ui::VideoPlayer self (return value: cc.experimental::ui::VideoPlayer)
-        
---------------------------------
 -- Causes the video player to keep aspect ratio or no when displaying the video.<br>
 -- param enable    Specify true to keep aspect ratio or false to scale the video until <br>
 -- both dimensions fit the visible bounds of the view exactly.
 -- @function [parent=#VideoPlayer] setKeepAspectRatioEnabled 
 -- @param self
 -- @param #bool enable
--- @return experimental::ui::VideoPlayer#experimental::ui::VideoPlayer self (return value: cc.experimental::ui::VideoPlayer)
-        
---------------------------------
--- Resumes playback.
--- @function [parent=#VideoPlayer] resume 
--- @param self
 -- @return experimental::ui::VideoPlayer#experimental::ui::VideoPlayer self (return value: cc.experimental::ui::VideoPlayer)
         
 --------------------------------
@@ -122,6 +110,30 @@
 -- @param #cc.Renderer renderer
 -- @param #mat4_table transform
 -- @param #unsigned int flags
+-- @return experimental::ui::VideoPlayer#experimental::ui::VideoPlayer self (return value: cc.experimental::ui::VideoPlayer)
+        
+--------------------------------
+-- Pauses playback.
+-- @function [parent=#VideoPlayer] pause 
+-- @param self
+-- @return experimental::ui::VideoPlayer#experimental::ui::VideoPlayer self (return value: cc.experimental::ui::VideoPlayer)
+        
+--------------------------------
+-- 
+-- @function [parent=#VideoPlayer] onEnter 
+-- @param self
+-- @return experimental::ui::VideoPlayer#experimental::ui::VideoPlayer self (return value: cc.experimental::ui::VideoPlayer)
+        
+--------------------------------
+-- 
+-- @function [parent=#VideoPlayer] onExit 
+-- @param self
+-- @return experimental::ui::VideoPlayer#experimental::ui::VideoPlayer self (return value: cc.experimental::ui::VideoPlayer)
+        
+--------------------------------
+-- Resumes playback.
+-- @function [parent=#VideoPlayer] resume 
+-- @param self
 -- @return experimental::ui::VideoPlayer#experimental::ui::VideoPlayer self (return value: cc.experimental::ui::VideoPlayer)
         
 --------------------------------

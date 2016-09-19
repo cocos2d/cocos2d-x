@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2015 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -35,7 +35,7 @@ NS_CC_BEGIN
 struct FontDefinition;
 
 /**
- * @addtogroup support
+ * @addtogroup platform
  * @{
  */
 
@@ -82,6 +82,15 @@ public:
      * @param keepScreenOn One flag indicating that the screen should remain on.
      */
     static void setKeepScreenOn(bool keepScreenOn);
+
+    /**
+     * Vibrate for the specified amount of time.
+     * If vibrate is not supported, then invoking this method has no effect.
+     * Some platforms limit to a maximum duration of 5 seconds.
+     * Duration is ignored on iOS due to API limitations.
+     * @param duration The duration in seconds.
+     */
+    static void vibrate(float duration);
 
     /**
      * Gets texture data for text.

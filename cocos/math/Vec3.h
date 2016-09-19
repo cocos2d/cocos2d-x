@@ -22,6 +22,7 @@
 #ifndef MATH_VEC3_H
 #define MATH_VEC3_H
 
+#include <cmath>
 #include "math/CCMathBase.h"
 
 /**
@@ -275,7 +276,7 @@ public:
     /**
      * Normalizes this vector.
      *
-     * This method normalizes this Vect3 so that it is of
+     * This method normalizes this Vec3 so that it is of
      * unit length (in other words, the length of the vector
      * after calling this method will be 1.0f). If the vector
      * already has unit length or if the length of the vector
@@ -506,6 +507,6 @@ NS_CC_MATH_END
  end of base group
  @}
  */
-#include "Vec3.inl"
+#include "math/Vec3.inl"
 
 #endif // MATH_VEC3_H

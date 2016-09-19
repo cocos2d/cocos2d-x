@@ -38,8 +38,6 @@ var BaseTestLayerProps = {
 
     ctor:function(colorA, colorB ) {
 
-        cc.sys.garbageCollect();
-
         // default gradient colors
         var a = cc.color(98,99,117,255);
         var b = cc.color(0,0,0,255);
@@ -102,6 +100,8 @@ var BaseTestLayerProps = {
     //
     onEnter:function () {
         this._super();
+
+        cc.sys.garbageCollect();
 
         var t = this.getTitle();
         var label = new cc.LabelTTF(t, "Arial", 28);
@@ -292,3 +292,37 @@ var BaseTestLayerProps = {
 };
 
 var BaseTestLayer = cc.LayerGradient.extend(BaseTestLayerProps);
+
+var FlowControl = function (testArray) {
+
+    var sceneIdx = 0;
+
+    return {
+        length: testArray.length,
+        getId: function () {
+            return sceneIdx;
+        },
+        next: function () {
+            sceneIdx++;
+            sceneIdx = sceneIdx % testArray.length;
+
+            return new testArray[sceneIdx]();
+        },
+        previous: function () {
+            sceneIdx--;
+            if (sceneIdx < 0)
+                sceneIdx += testArray.length;
+
+            return new testArray[sceneIdx]();
+        },
+        current: function () {
+            return new testArray[sceneIdx]();
+        },
+        start: function() {
+            sceneIdx = 0;
+            var s = new cc.Scene();
+            s.addChild(this.current());
+            cc.director.runScene(s);
+        }
+    }
+};

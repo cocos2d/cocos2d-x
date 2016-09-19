@@ -22,10 +22,13 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "ParticleReader.h"
+#include "editor-support/cocostudio/WidgetReader/ParticleReader/ParticleReader.h"
 
-#include "cocostudio/CSParseBinary_generated.h"
-#include "cocostudio/WidgetReader/NodeReader/NodeReader.h"
+#include "base/ccTypes.h"
+#include "2d/CCParticleSystemQuad.h"
+#include "platform/CCFileUtils.h"
+#include "editor-support/cocostudio/CSParseBinary_generated.h"
+#include "editor-support/cocostudio/WidgetReader/NodeReader/NodeReader.h"
 
 #include "tinyxml2.h"
 #include "flatbuffers/flatbuffers.h"
@@ -53,7 +56,7 @@ namespace cocostudio
     {
         if (!_instanceParticleReader)
         {
-            _instanceParticleReader = new ParticleReader();
+            _instanceParticleReader = new (std::nothrow) ParticleReader();
         }
         
         return _instanceParticleReader;
@@ -153,11 +156,11 @@ namespace cocostudio
     void ParticleReader::setPropsWithFlatBuffers(cocos2d::Node *node,
                                                  const flatbuffers::Table *particleOptions)
     {
-        auto particle = static_cast<ParticleSystemQuad*>(node);
+        auto particle = dynamic_cast<ParticleSystemQuad*>(node);
         auto options = (ParticleSystemOptions*)particleOptions;
         
         auto f_blendFunc = options->blendFunc();
-        if (f_blendFunc)
+        if (particle && f_blendFunc)
         {
             cocos2d::BlendFunc blendFunc = cocos2d::BlendFunc::ALPHA_PREMULTIPLIED;
             blendFunc.src = f_blendFunc->src();
@@ -212,9 +215,6 @@ namespace cocostudio
         {
             Node* node = Node::create();
             setPropsWithFlatBuffers(node, (Table*)particleOptions);
-            auto label = Label::create();
-            label->setString(__String::createWithFormat("%s missed", errorFilePath.c_str())->getCString());
-            node->addChild(label);
             return node;
         }
         

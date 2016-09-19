@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -29,7 +29,7 @@
 #include "renderer/CCRenderCommand.h"
 
 /**
- * @addtogroup support
+ * @addtogroup renderer
  * @{
  */
 
@@ -64,16 +64,16 @@ public:
     CC_DEPRECATED_ATTRIBUTE void init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, Primitive* primitive,const Mat4& mv);
     
     /**Get the generated material ID.*/
-    inline uint32_t getMaterialID() const { return _materialID; }
+    uint32_t getMaterialID() const { return _materialID; }
     /**Get the texture ID used for drawing.*/
-    inline GLuint getTextureID() const { return _textureID; }
+    GLuint getTextureID() const { return _textureID; }
     /**Get the glprogramstate used for drawing.*/
-    inline GLProgramState* getGLProgramState() const { return _glProgramState; }
-    /**Get the blend funcion for drawing.*/
-    inline BlendFunc getBlendType() const { return _blendType; }
-    /**Get the modelview matrix when draw the primtive.*/
-    inline const Mat4& getModelView() const { return _mv; }
-    /**Execute and draw the commmand, called by renderer.*/
+    GLProgramState* getGLProgramState() const { return _glProgramState; }
+    /**Get the blend function for drawing.*/
+    BlendFunc getBlendType() const { return _blendType; }
+    /**Get the modelview matrix when draw the primitive.*/
+    const Mat4& getModelView() const { return _mv; }
+    /**Execute and draw the command, called by renderer.*/
     void execute() const;
 protected:
     

@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2013      Zynga Inc.
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -24,27 +24,155 @@
  ****************************************************************************/
 
 #include "2d/CCLabel.h"
+
+#include <algorithm>
+
+#include "2d/CCFont.h"
 #include "2d/CCFontAtlasCache.h"
+#include "2d/CCFontAtlas.h"
 #include "2d/CCSprite.h"
-#include "2d/CCLabelTextFormatter.h"
+#include "2d/CCSpriteBatchNode.h"
+#include "2d/CCDrawNode.h"
+#include "2d/CCCamera.h"
 #include "base/ccUTF8.h"
 #include "platform/CCFileUtils.h"
-#include "2d/CCFont.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/ccGLStateCache.h"
 #include "base/CCDirector.h"
 #include "base/CCEventListenerCustom.h"
 #include "base/CCEventDispatcher.h"
 #include "base/CCEventCustom.h"
-#include "deprecated/CCString.h"
+#include "2d/CCFontFNT.h"
 
 NS_CC_BEGIN
 
-const int Label::DistanceFieldFontSize = 50;
+/**
+ * LabelLetter used to update the quad in texture atlas without SpriteBatchNode.
+ */
+class LabelLetter : public Sprite
+{
+public:
+    LabelLetter()
+    {
+        _textureAtlas = nullptr;
+        _letterVisible = true;
+    }
+
+    static LabelLetter* createWithTexture(Texture2D *texture, const Rect& rect, bool rotated = false)
+    {
+        auto letter = new (std::nothrow) LabelLetter();
+        if (letter && letter->initWithTexture(texture, rect, rotated))
+        {
+            letter->Sprite::setVisible(false);
+            letter->autorelease();
+            return letter;
+        }
+        CC_SAFE_DELETE(letter);
+        return nullptr;
+    }
+    
+    CREATE_FUNC(LabelLetter);
+
+    virtual void updateTransform() override
+    {
+        if (isDirty())
+        {
+            _transformToBatch = getNodeToParentTransform();
+            Size &size = _rect.size;
+
+            float x1 = _offsetPosition.x;
+            float y1 = _offsetPosition.y;
+            float x2 = x1 + size.width;
+            float y2 = y1 + size.height;
+            if (_flippedX)
+            {
+                std::swap(x1, x2);
+            }
+            if (_flippedY)
+            {
+                std::swap(y1, y2);
+            }
+
+            float x = _transformToBatch.m[12];
+            float y = _transformToBatch.m[13];
+
+            float cr = _transformToBatch.m[0];
+            float sr = _transformToBatch.m[1];
+            float cr2 = _transformToBatch.m[5];
+            float sr2 = -_transformToBatch.m[4];
+            float ax = x1 * cr - y1 * sr2 + x;
+            float ay = x1 * sr + y1 * cr2 + y;
+
+            float bx = x2 * cr - y1 * sr2 + x;
+            float by = x2 * sr + y1 * cr2 + y;
+            float cx = x2 * cr - y2 * sr2 + x;
+            float cy = x2 * sr + y2 * cr2 + y;
+            float dx = x1 * cr - y2 * sr2 + x;
+            float dy = x1 * sr + y2 * cr2 + y;
+
+            _quad.bl.vertices.set(SPRITE_RENDER_IN_SUBPIXEL(ax), SPRITE_RENDER_IN_SUBPIXEL(ay), _positionZ);
+            _quad.br.vertices.set(SPRITE_RENDER_IN_SUBPIXEL(bx), SPRITE_RENDER_IN_SUBPIXEL(by), _positionZ);
+            _quad.tl.vertices.set(SPRITE_RENDER_IN_SUBPIXEL(dx), SPRITE_RENDER_IN_SUBPIXEL(dy), _positionZ);
+            _quad.tr.vertices.set(SPRITE_RENDER_IN_SUBPIXEL(cx), SPRITE_RENDER_IN_SUBPIXEL(cy), _positionZ);
+
+            if (_textureAtlas)
+            {
+                _textureAtlas->updateQuad(&_quad, _atlasIndex);
+            }
+
+            _recursiveDirty = false;
+            setDirty(false);
+        }
+
+        Node::updateTransform();
+    }
+
+    virtual void updateColor() override
+    {
+        if (_textureAtlas == nullptr)
+        {
+            return;
+        }
+
+        auto displayedOpacity = _displayedOpacity;
+        if(!_letterVisible)
+        {
+            displayedOpacity = 0.0f;
+        }
+        Color4B color4(_displayedColor.r, _displayedColor.g, _displayedColor.b, displayedOpacity);
+        // special opacity for premultiplied textures
+        if (_opacityModifyRGB)
+        {
+            color4.r *= displayedOpacity / 255.0f;
+            color4.g *= displayedOpacity / 255.0f;
+            color4.b *= displayedOpacity / 255.0f;
+        }
+        _quad.bl.colors = color4;
+        _quad.br.colors = color4;
+        _quad.tl.colors = color4;
+        _quad.tr.colors = color4;
+
+        _textureAtlas->updateQuad(&_quad, _atlasIndex);
+    }
+
+    void setVisible(bool visible) override
+    {
+        _letterVisible = visible;
+        updateColor();
+    }
+    
+    //LabelLetter doesn't need to draw directly.
+    void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override
+    {
+    }
+    
+private:
+    bool _letterVisible;
+};
 
 Label* Label::create()
 {
-    auto ret = new (std::nothrow) Label();
+    auto ret = new (std::nothrow) Label;
 
     if (ret)
     {
@@ -68,7 +196,7 @@ Label* Label::create(const std::string& text, const std::string& font, float fon
 
 Label* Label::createWithSystemFont(const std::string& text, const std::string& font, float fontSize, const Size& dimensions /* = Size::ZERO */, TextHAlignment hAlignment /* = TextHAlignment::LEFT */, TextVAlignment vAlignment /* = TextVAlignment::TOP */)
 {
-    auto ret = new (std::nothrow) Label(nullptr,hAlignment,vAlignment);
+    auto ret = new (std::nothrow) Label(hAlignment,vAlignment);
 
     if (ret)
     {
@@ -82,52 +210,40 @@ Label* Label::createWithSystemFont(const std::string& text, const std::string& f
         return ret;
     }
 
-    delete ret;
     return nullptr;
 }
 
 Label* Label::createWithTTF(const std::string& text, const std::string& fontFile, float fontSize, const Size& dimensions /* = Size::ZERO */, TextHAlignment hAlignment /* = TextHAlignment::LEFT */, TextVAlignment vAlignment /* = TextVAlignment::TOP */)
 {
-    auto ret = new (std::nothrow) Label(nullptr,hAlignment,vAlignment);
+    auto ret = new (std::nothrow) Label(hAlignment,vAlignment);
 
-    if (ret && FileUtils::getInstance()->isFileExist(fontFile))
+    if (ret && ret->initWithTTF(text, fontFile, fontSize, dimensions, hAlignment, vAlignment))
     {
-        TTFConfig ttfConfig(fontFile.c_str(),fontSize,GlyphCollection::DYNAMIC);
-        if (ret->setTTFConfig(ttfConfig))
-        {
-            ret->setDimensions(dimensions.width,dimensions.height);
-            ret->setString(text);
-
-            ret->autorelease();
-
-            return ret;
-        }
-    }
-
-    delete ret;
-    return nullptr;
-}
-
-Label* Label::createWithTTF(const TTFConfig& ttfConfig, const std::string& text, TextHAlignment alignment /* = TextHAlignment::CENTER */, int maxLineWidth /* = 0 */)
-{
-    auto ret = new (std::nothrow) Label(nullptr,alignment);
-
-    if (ret && FileUtils::getInstance()->isFileExist(ttfConfig.fontFilePath) && ret->setTTFConfig(ttfConfig))
-    {
-        ret->setMaxLineWidth(maxLineWidth);
-        ret->setString(text);
         ret->autorelease();
-
         return ret;
     }
 
-    delete ret;
+    CC_SAFE_DELETE(ret);
     return nullptr;
 }
 
-Label* Label::createWithBMFont(const std::string& bmfontFilePath, const std::string& text,const TextHAlignment& alignment /* = TextHAlignment::LEFT */, int maxLineWidth /* = 0 */, const Vec2& imageOffset /* = Vec2::ZERO */)
+Label* Label::createWithTTF(const TTFConfig& ttfConfig, const std::string& text, TextHAlignment hAlignment /* = TextHAlignment::CENTER */, int maxLineWidth /* = 0 */)
 {
-    auto ret = new (std::nothrow) Label(nullptr,alignment);
+    auto ret = new (std::nothrow) Label(hAlignment);
+
+    if (ret && ret->initWithTTF(ttfConfig, text, hAlignment, maxLineWidth))
+    {
+        ret->autorelease();
+        return ret;
+    }
+
+    CC_SAFE_DELETE(ret);
+    return nullptr;
+}
+
+Label* Label::createWithBMFont(const std::string& bmfontFilePath, const std::string& text,const TextHAlignment& hAlignment /* = TextHAlignment::LEFT */, int maxLineWidth /* = 0 */, const Vec2& imageOffset /* = Vec2::ZERO */)
+{
+    auto ret = new (std::nothrow) Label(hAlignment);
 
     if (ret && ret->setBMFontFilePath(bmfontFilePath,imageOffset))
     {
@@ -200,6 +316,34 @@ bool Label::setCharMap(const std::string& plistFile)
     return true;
 }
 
+
+bool Label::initWithTTF(const std::string& text, const std::string& fontFilePath, float fontSize,
+                        const Size& dimensions, TextHAlignment hAlignment, TextVAlignment vAlignment)
+{
+    if (FileUtils::getInstance()->isFileExist(fontFilePath))
+    {
+        TTFConfig ttfConfig(fontFilePath, fontSize, GlyphCollection::DYNAMIC);
+        if (setTTFConfig(ttfConfig))
+        {
+            setDimensions(dimensions.width, dimensions.height);
+            setString(text);
+        }
+        return true;
+    }
+    return false;
+}
+
+bool Label::initWithTTF(const TTFConfig& ttfConfig, const std::string& text, TextHAlignment hAlignment, int maxLineWidth)
+{
+    if (FileUtils::getInstance()->isFileExist(ttfConfig.fontFilePath) && setTTFConfig(ttfConfig))
+    {
+        setMaxLineWidth(maxLineWidth);
+        setString(text);
+        return true;
+    }
+    return false;
+}
+
 bool Label::setCharMap(Texture2D* texture, int itemWidth, int itemHeight, int startCharMap)
 {
     auto newAtlas = FontAtlasCache::getFontAtlasCharMap(texture,itemWidth,itemHeight,startCharMap);
@@ -232,42 +376,35 @@ bool Label::setCharMap(const std::string& charMapFile, int itemWidth, int itemHe
     return true;
 }
 
-Label::Label(FontAtlas *atlas /* = nullptr */, TextHAlignment hAlignment /* = TextHAlignment::LEFT */, 
-             TextVAlignment vAlignment /* = TextVAlignment::TOP */,bool useDistanceField /* = false */,bool useA8Shader /* = false */)
-: _isOpacityModifyRGB(false)
-, _contentDirty(false)
-, _fontAtlas(atlas)
-, _textSprite(nullptr)
-, _compatibleMode(false)
+Label::Label(TextHAlignment hAlignment /* = TextHAlignment::LEFT */, 
+             TextVAlignment vAlignment /* = TextVAlignment::TOP */)
+: _textSprite(nullptr)
+, _shadowNode(nullptr)
+, _fontAtlas(nullptr)
 , _reusedLetter(nullptr)
-, _additionalKerning(0.0f)
-, _commonLineHeight(0.0f)
-, _lineBreakWithoutSpaces(false)
 , _horizontalKernings(nullptr)
-, _maxLineWidth(0.0f)
-, _labelDimensions(Size::ZERO)
-, _labelWidth(0.0f)
-, _labelHeight(0.0f)
-, _hAlignment(hAlignment)
-, _vAlignment(vAlignment)
-, _currNumLines(-1)
-, _fontScale(1.0f)
-, _useDistanceField(useDistanceField)
-, _useA8Shader(useA8Shader)
-, _effectColorF(Color4F::BLACK)
-, _uniformEffectColor(0)
-, _shadowDirty(false)
-, _insideBounds(true)
+, _boldEnabled(false)
+, _underlineNode(nullptr)
+, _strikethroughEnabled(false)
 {
     setAnchorPoint(Vec2::ANCHOR_MIDDLE);
     reset();
+    _hAlignment = hAlignment;
+    _vAlignment = vAlignment;
 
-    auto purgeTextureListener = EventListenerCustom::create(FontAtlas::CMD_PURGE_FONTATLAS, [this](EventCustom* event){
+#if CC_LABEL_DEBUG_DRAW
+    _debugDrawNode = DrawNode::create();
+    addChild(_debugDrawNode);
+#endif
+
+    _purgeTextureListener = EventListenerCustom::create(FontAtlas::CMD_PURGE_FONTATLAS, [this](EventCustom* event){
         if (_fontAtlas && _currentLabelType == LabelType::TTF && event->getUserData() == _fontAtlas)
         {
-            Node::removeAllChildrenWithCleanup(true);
+            for (auto&& it : _letters)
+            {
+                it.second->setTexture(nullptr);
+            }
             _batchNodes.clear();
-            _batchNodes.push_back(this);
 
             if (_fontAtlas)
             {
@@ -275,16 +412,20 @@ Label::Label(FontAtlas *atlas /* = nullptr */, TextHAlignment hAlignment /* = Te
             }
         }
     });
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(purgeTextureListener, this);
+    _eventDispatcher->addEventListenerWithFixedPriority(_purgeTextureListener, 1);
     
-    auto resetTextureListener = EventListenerCustom::create(FontAtlas::CMD_RESET_FONTATLAS, [this](EventCustom* event){
+    _resetTextureListener = EventListenerCustom::create(FontAtlas::CMD_RESET_FONTATLAS, [this](EventCustom* event){
         if (_fontAtlas && _currentLabelType == LabelType::TTF && event->getUserData() == _fontAtlas)
         {
             _fontAtlas = nullptr;
             this->setTTFConfig(_fontConfig);
+            for (auto&& it : _letters)
+            {
+                getLetter(it.first);
+            }
         }
     });
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(resetTextureListener, this);
+    _eventDispatcher->addEventListenerWithFixedPriority(_resetTextureListener, 2);
 }
 
 Label::~Label()
@@ -293,24 +434,27 @@ Label::~Label()
 
     if (_fontAtlas)
     {
+        Node::removeAllChildrenWithCleanup(true);
+        CC_SAFE_RELEASE_NULL(_reusedLetter);
+        _batchNodes.clear();
         FontAtlasCache::releaseFontAtlas(_fontAtlas);
     }
+    _eventDispatcher->removeEventListener(_purgeTextureListener);
+    _eventDispatcher->removeEventListener(_resetTextureListener);
 
-    CC_SAFE_RELEASE_NULL(_reusedLetter);
+    CC_SAFE_RELEASE_NULL(_textSprite);
+    CC_SAFE_RELEASE_NULL(_shadowNode);
 }
 
 void Label::reset()
 {
-    TTFConfig temp;
-    _fontConfig = temp;
-
-    _systemFontDirty = false;
-    _systemFont = "Helvetica";
-    _systemFontSize = 12;
-
+    CC_SAFE_RELEASE_NULL(_textSprite);
+    CC_SAFE_RELEASE_NULL(_shadowNode);
+    Node::removeAllChildrenWithCleanup(true);
+    CC_SAFE_RELEASE_NULL(_reusedLetter);
+    _letters.clear();
     _batchNodes.clear();
-    _batchNodes.push_back(this);
-
+    _lettersInfo.clear();
     if (_fontAtlas)
     {
         FontAtlasCache::releaseFontAtlas(_fontAtlas);
@@ -319,23 +463,87 @@ void Label::reset()
 
     _currentLabelType = LabelType::STRING_TEXTURE;
     _currLabelEffect = LabelEffect::NORMAL;
-    _shadowBlurRadius = 0;
+    _contentDirty = false;
+    _numberOfLines = 0;
+    _lengthOfString = 0;
+    _utf16Text.clear();
+    _utf8Text.clear();
 
-    Node::removeAllChildrenWithCleanup(true);
-    _textSprite = nullptr;
-    _shadowNode = nullptr;
+    TTFConfig temp;
+    _fontConfig = temp;
+    _outlineSize = 0.f;
+    _bmFontPath = "";
+    _systemFontDirty = false;
+    _systemFont = "Helvetica";
+    _systemFontSize = 12;
 
-    CC_SAFE_RELEASE_NULL(_reusedLetter);
+    if (_horizontalKernings)
+    {
+        delete[] _horizontalKernings;
+        _horizontalKernings = nullptr;
+    }
+    _additionalKerning = 0.f;
+    _lineHeight = 0.f;
+    _lineSpacing = 0.f;
+    _maxLineWidth = 0.f;
+    _labelDimensions.width = 0.f;
+    _labelDimensions.height = 0.f;
+    _labelWidth = 0.f;
+    _labelHeight = 0.f;
+    _lineBreakWithoutSpaces = false;
+    _hAlignment = TextHAlignment::LEFT;
+    _vAlignment = TextVAlignment::TOP;
 
+    _effectColorF = Color4F::BLACK;
     _textColor = Color4B::WHITE;
     _textColorF = Color4F::WHITE;
     setColor(Color3B::WHITE);
 
+    _shadowDirty = false;
     _shadowEnabled = false;
+    _shadowBlurRadius = 0.f;
+
+    _useDistanceField = false;
+    _useA8Shader = false;
     _clipEnabled = false;
     _blendFuncDirty = false;
+    _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
+    _isOpacityModifyRGB = false;
+    _insideBounds = true;
+    _enableWrap = true;
+    _bmFontSize = -1;
+    _bmfontScale = 1.0f;
+    _overflow = Overflow::NONE;
+    _originalFontSize = 0.0f;
+    _boldEnabled = false;
+    if (_underlineNode)
+    {
+        removeChild(_underlineNode);
+        _underlineNode = nullptr;
+    }
+    _strikethroughEnabled = false;
+    setRotationSkewX(0);        // reverse italics
 }
 
+//  ETC1 ALPHA supports, for LabelType::BMFONT & LabelType::CHARMAP
+static Texture2D* _getTexture(Label* label)
+ {
+    struct _FontAtlasPub : public FontAtlas
+    {
+        Texture2D* getTexture()
+        {
+            if (!_atlasTextures.empty())
+                return _atlasTextures.begin()->second;
+            return nullptr;
+        }
+    };
+
+    auto fontAtlas = label->getFontAtlas();
+    Texture2D* texture = nullptr;
+    if (fontAtlas != nullptr)
+        texture = ((_FontAtlasPub*)(fontAtlas))->getTexture();
+    return texture;
+}
 void Label::updateShaderProgram()
 {
     switch (_currLabelEffect)
@@ -345,8 +553,10 @@ void Label::updateShaderProgram()
             setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_LABEL_DISTANCEFIELD_NORMAL));
         else if (_useA8Shader)
             setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_LABEL_NORMAL));
+        else if (_shadowEnabled)
+            setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR, _getTexture(this)));
         else
-            setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
+            setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP, _getTexture(this)));
 
         break;
     case cocos2d::LabelEffect::OUTLINE: 
@@ -369,29 +579,24 @@ void Label::updateShaderProgram()
 
 void Label::setFontAtlas(FontAtlas* atlas,bool distanceFieldEnabled /* = false */, bool useA8Shader /* = false */)
 {
+    if(atlas)
+    {
+        _systemFontDirty = false;
+    }
+
     if (atlas == _fontAtlas)
     {
-        FontAtlasCache::releaseFontAtlas(atlas);
         return;
     }
 
     if (_fontAtlas)
     {
+        _batchNodes.clear();
         FontAtlasCache::releaseFontAtlas(_fontAtlas);
         _fontAtlas = nullptr;
     }
 
     _fontAtlas = atlas;
-
-    if (_textureAtlas)
-    {
-        _textureAtlas->setTexture(_fontAtlas->getTexture(0));
-    }
-    else
-    {
-        SpriteBatchNode::initWithTexture(_fontAtlas->getTexture(0), 30);
-    }
-
     if (_reusedLetter == nullptr)
     {
         _reusedLetter = Sprite::create();
@@ -399,20 +604,14 @@ void Label::setFontAtlas(FontAtlas* atlas,bool distanceFieldEnabled /* = false *
         _reusedLetter->retain();
         _reusedLetter->setAnchorPoint(Vec2::ANCHOR_TOP_LEFT);
     }
-    _reusedLetter->setBatchNode(this);
 
     if (_fontAtlas)
     {
-        _commonLineHeight = _fontAtlas->getCommonLineHeight();
+        _lineHeight = _fontAtlas->getLineHeight();
         _contentDirty = true;
+        _systemFontDirty = false;
     }
-#if CC_TARGET_PLATFORM != CC_PLATFORM_WP8
     _useDistanceField = distanceFieldEnabled;
-#else
-    // some older Windows Phones cannot run the ccShader_Label_df.frag program
-    // so we must disable distance field
-    _useDistanceField = false;
-#endif
     _useA8Shader = useA8Shader;
 
     if (_currentLabelType != LabelType::TTF)
@@ -424,50 +623,35 @@ void Label::setFontAtlas(FontAtlas* atlas,bool distanceFieldEnabled /* = false *
 
 bool Label::setTTFConfig(const TTFConfig& ttfConfig)
 {
-    FontAtlas *newAtlas = FontAtlasCache::getFontAtlasTTF(ttfConfig);
+    _originalFontSize = ttfConfig.fontSize;
+    return setTTFConfigInternal(ttfConfig);
+}
 
+bool Label::setBMFontFilePath(const std::string& bmfontFilePath, const Vec2& imageOffset, float fontSize)
+{
+    FontAtlas *newAtlas = FontAtlasCache::getFontAtlasFNT(bmfontFilePath,imageOffset);
+    
     if (!newAtlas)
     {
         reset();
         return false;
     }
-    _systemFontDirty = false;
 
-    _currentLabelType = LabelType::TTF;
-    setFontAtlas(newAtlas,ttfConfig.distanceFieldEnabled,true);
-
-    _fontConfig = ttfConfig;
-    if (_fontConfig.outlineSize > 0)
-    {
-        _fontConfig.distanceFieldEnabled = false;
-        _useDistanceField = false;
-        _useA8Shader = false;
-        _currLabelEffect = LabelEffect::OUTLINE;
-        updateShaderProgram();
-    }
-    else 
-    {
-        _currLabelEffect = LabelEffect::NORMAL;
-        updateShaderProgram();
-        if(ttfConfig.distanceFieldEnabled)
-        {
-            this->setFontScale(1.0f * ttfConfig.fontSize / DistanceFieldFontSize);
+    //assign the default fontSize
+    if (std::abs(fontSize) < FLT_EPSILON) {
+        FontFNT *bmFont = (FontFNT*)newAtlas->getFont();
+        if (bmFont) {
+            float originalFontSize = bmFont->getOriginalFontSize();
+            _bmFontSize = originalFontSize / CC_CONTENT_SCALE_FACTOR();
         }
     }
 
-    return true;
-}
-
-bool Label::setBMFontFilePath(const std::string& bmfontFilePath, const Vec2& imageOffset /* = Vec2::ZERO */)
-{
-    FontAtlas *newAtlas = FontAtlasCache::getFontAtlasFNT(bmfontFilePath,imageOffset);
-
-    if (!newAtlas)
-    {
-        reset();
-        return false;
+    if(fontSize > 0.0f){
+        _bmFontSize = fontSize;
     }
+
     _bmFontPath = bmfontFilePath;
+
     _currentLabelType = LabelType::BMFONT;
     setFontAtlas(newAtlas);
 
@@ -476,15 +660,15 @@ bool Label::setBMFontFilePath(const std::string& bmfontFilePath, const Vec2& ima
 
 void Label::setString(const std::string& text)
 {
-    if (text.compare(_originalUTF8String))
+    if (text.compare(_utf8Text))
     {
-        _originalUTF8String = text;
+        _utf8Text = text;
         _contentDirty = true;
 
         std::u16string utf16String;
-        if (StringUtils::UTF8ToUTF16(_originalUTF8String, utf16String))
+        if (StringUtils::UTF8ToUTF16(_utf8Text, utf16String))
         {
-            _currentUTF16String  = utf16String;
+            _utf16Text  = utf16String;
         }
     }
 }
@@ -511,6 +695,9 @@ void Label::setMaxLineWidth(float maxLineWidth)
 
 void Label::setDimensions(float width, float height)
 {
+    if(_overflow == Overflow::RESIZE_HEIGHT){
+        height = 0;
+    }
     if (height != _labelHeight || width != _labelWidth)
     {
         _labelWidth = width;
@@ -520,7 +707,26 @@ void Label::setDimensions(float width, float height)
 
         _maxLineWidth = width;
         _contentDirty = true;
-    }  
+
+        if(_overflow == Overflow::SHRINK){
+            if (_originalFontSize > 0) {
+                this->restoreFontSize();
+            }
+        }
+    }
+}
+
+void Label::restoreFontSize()
+{
+    if(_currentLabelType == LabelType::TTF){
+        auto ttfConfig = this->getTTFConfig();
+        ttfConfig.fontSize = _originalFontSize;
+        this->setTTFConfigInternal(ttfConfig);
+    }else if(_currentLabelType == LabelType::BMFONT){
+        this->setBMFontSizeInternal(_originalFontSize);
+    }else if(_currentLabelType == LabelType::STRING_TEXTURE){
+        this->setSystemFontSize(_originalFontSize);
+    }
 }
 
 void Label::setLineBreakWithoutSpace(bool breakWithoutSpace)
@@ -532,130 +738,132 @@ void Label::setLineBreakWithoutSpace(bool breakWithoutSpace)
     }
 }
 
-void Label::setScale(float scale)
+void Label::updateLabelLetters()
 {
-    if (_useDistanceField)
+    if (!_letters.empty())
     {
-        scale *= _fontScale;
-    } 
-    Node::setScale(scale);
-}
-
-void Label::setScaleX(float scaleX)
-{
-    if (_useDistanceField)
-    {
-        scaleX *= _fontScale;
-    } 
-    Node::setScaleX(scaleX);
-}
-
-void Label::setScaleY(float scaleY)
-{
-    if (_useDistanceField)
-    {
-        scaleY *= _fontScale;
-    } 
-    Node::setScaleY(scaleY);
-}
-
-float Label::getScaleY() const
-{
-    if (_useDistanceField)
-    {
-        return _scaleY / _fontScale;
-    }
-    else
-    {
-        return _scaleY;
-    }
-}
-
-float Label::getScaleX() const
-{
-    if (_useDistanceField)
-    {
-        return _scaleX / _fontScale;
-    }
-    else
-    {
-        return _scaleX;
-    }
-}
-
-void Label::alignText()
-{
-    if (_fontAtlas == nullptr || _currentUTF16String.empty())
-    {
-        setContentSize(Size::ZERO);
-        return;
-    }
-
-    _fontAtlas->prepareLetterDefinitions(_currentUTF16String);
-    auto& textures = _fontAtlas->getTextures();
-    if (textures.size() > _batchNodes.size())
-    {
-        for (auto index = _batchNodes.size(); index < textures.size(); ++index)
-        {
-            auto batchNode = SpriteBatchNode::createWithTexture(textures.at(index));
-            batchNode->setAnchorPoint(Vec2::ANCHOR_TOP_LEFT);
-            batchNode->setPosition(Vec2::ZERO);
-            Node::addChild(batchNode,0,Node::INVALID_TAG);
-            _batchNodes.push_back(batchNode);
-        }
-    }
-    LabelTextFormatter::createStringSprites(this);    
-    if(_maxLineWidth > 0 && _contentSize.width > _maxLineWidth && LabelTextFormatter::multilineText(this) )      
-        LabelTextFormatter::createStringSprites(this);
-
-    if(_labelWidth > 0 || (_currNumLines > 1 && _hAlignment != TextHAlignment::LEFT))
-        LabelTextFormatter::alignText(this);
-
-    if (!_children.empty())
-    {
-        int strLen = static_cast<int>(_currentUTF16String.length());
         Rect uvRect;
-        Sprite* letterSprite;
-        for (auto index = 0; index < _children.size();) {
-            auto child = _children.at(index);
-            int tag = child->getTag();
-            if (tag >= strLen)
+        LabelLetter* letterSprite;
+        int letterIndex;
+
+        for (auto it = _letters.begin(); it != _letters.end();)
+        {
+            letterIndex = it->first;
+            letterSprite = (LabelLetter*)it->second;
+
+            if (letterIndex >= _lengthOfString)
             {
-                child->removeFromParentAndCleanup(true);
-            }
-            else if (tag >= 0)
-            {
-                letterSprite = dynamic_cast<Sprite*>(child);
-                if (letterSprite)
-                {
-                    auto& letterDef = _lettersInfo[tag].def;
-                    uvRect.size.height = letterDef.height;
-                    uvRect.size.width = letterDef.width;
-                    uvRect.origin.x = letterDef.U;
-                    uvRect.origin.y = letterDef.V;
-                    
-                    letterSprite->setBatchNode(_batchNodes[letterDef.textureID]);
-                    letterSprite->setTextureRect(uvRect, false, uvRect.size);
-                    letterSprite->setPosition(_lettersInfo[tag].position.x + letterDef.width/2,
-                                              _lettersInfo[tag].position.y - letterDef.height/2);
-                }
-                ++index;
+                Node::removeChild(letterSprite, true);
+                it = _letters.erase(it);
             }
             else
             {
-                ++index;
+                auto& letterInfo = _lettersInfo[letterIndex];
+                auto& letterDef = _fontAtlas->_letterDefinitions[letterInfo.utf16Char];
+                uvRect.size.height = letterDef.height;
+                uvRect.size.width = letterDef.width;
+                uvRect.origin.x = letterDef.U;
+                uvRect.origin.y = letterDef.V;
+
+                auto batchNode = _batchNodes.at(letterDef.textureID);
+                letterSprite->setTextureAtlas(batchNode->getTextureAtlas());
+                letterSprite->setTexture(_fontAtlas->getTexture(letterDef.textureID));
+                if (letterDef.width <= 0.f || letterDef.height <= 0.f)
+                {
+                    letterSprite->setTextureAtlas(nullptr);
+                }
+                else
+                {
+                    letterSprite->setTextureRect(uvRect, false, uvRect.size);
+                    letterSprite->setTextureAtlas(_batchNodes.at(letterDef.textureID)->getTextureAtlas());
+                    letterSprite->setAtlasIndex(_lettersInfo[letterIndex].atlasIndex);
+                }
+
+                auto px = letterInfo.positionX + letterDef.width / 2 + _linesOffsetX[letterInfo.lineIndex];
+                auto py = letterInfo.positionY - letterDef.height / 2 + _letterOffsetY;
+                letterSprite->setPosition(px, py);
+
+                this->updateLetterSpriteScale(letterSprite);
+                ++it;
             }
         }
     }
+}
 
-    for (const auto& batchNode : _batchNodes)
+bool Label::alignText()
+{
+    if (_fontAtlas == nullptr || _utf16Text.empty())
     {
-        batchNode->getTextureAtlas()->removeAllQuads();
+        setContentSize(Size::ZERO);
+        return true;
     }
 
-    updateQuads();
+    bool ret = true;
+    do {
+        _fontAtlas->prepareLetterDefinitions(_utf16Text);
+        auto& textures = _fontAtlas->getTextures();
+        if (textures.size() > static_cast<size_t>(_batchNodes.size()))
+        {
+            for (auto index = static_cast<size_t>(_batchNodes.size()); index < textures.size(); ++index)
+            {
+                auto batchNode = SpriteBatchNode::createWithTexture(textures.at(index));
+                if (batchNode)
+                {
+                    _isOpacityModifyRGB = batchNode->getTexture()->hasPremultipliedAlpha();
+                    _blendFunc = batchNode->getBlendFunc();
+                    batchNode->setAnchorPoint(Vec2::ANCHOR_TOP_LEFT);
+                    batchNode->setPosition(Vec2::ZERO);
+                    _batchNodes.pushBack(batchNode);
+                }
+            }
+        }
+        if (_batchNodes.empty())
+        {
+            return true;
+        }
+        // optimize for one-texture-only sceneario
+        // if multiple textures, then we should count how many chars
+        // are per texture
+        if (_batchNodes.size()==1)
+            _batchNodes.at(0)->reserveCapacity(_utf16Text.size());
 
-    updateColor();
+        _reusedLetter->setBatchNode(_batchNodes.at(0));
+        
+        _lengthOfString = 0;
+        _textDesiredHeight = 0.f;
+        _linesWidth.clear();
+        if (_maxLineWidth > 0.f && !_lineBreakWithoutSpaces)
+        {
+            multilineTextWrapByWord();
+        }
+        else
+        {
+            multilineTextWrapByChar();
+        }
+        computeAlignmentOffset();
+
+        if(_overflow == Overflow::SHRINK){
+            float fontSize = this->getRenderingFontSize();
+
+            if(fontSize > 0 &&  isVerticalClamp()){
+                this->shrinkLabelToContentSize(CC_CALLBACK_0(Label::isVerticalClamp, this));
+            }
+        }
+
+        if(!updateQuads()){
+            ret = false;
+            if(_overflow == Overflow::SHRINK){
+                this->shrinkLabelToContentSize(CC_CALLBACK_0(Label::isHorizontalClamp, this));
+            }
+            break;
+        }
+    
+        updateLabelLetters();
+        
+        updateColor();
+    }while (0);
+
+    return ret;
 }
 
 bool Label::computeHorizontalKernings(const std::u16string& stringToRender)
@@ -675,68 +883,161 @@ bool Label::computeHorizontalKernings(const std::u16string& stringToRender)
         return true;
 }
 
-void Label::updateQuads()
+bool Label::isHorizontalClamped(float letterPositionX, int lineIndex)
 {
-    int index;
-    for (int ctr = 0; ctr < _limitShowCount; ++ctr)
-    {
-        auto &letterDef = _lettersInfo[ctr].def;
+    auto wordWidth = this->_linesWidth[lineIndex];
+    bool letterOverClamp = (letterPositionX > _contentSize.width || letterPositionX < 0);
+    if (!_enableWrap) {
+        return letterOverClamp;
+    }else{
+        return (wordWidth > this->_contentSize.width && letterOverClamp);
+    }
+}
 
-        if (letterDef.validDefinition)
+bool Label::updateQuads()
+{
+    bool ret = true;
+    for (auto&& batchNode : _batchNodes)
+    {
+        batchNode->getTextureAtlas()->removeAllQuads();
+    }
+    
+    bool letterClamp = false;
+    for (int ctr = 0; ctr < _lengthOfString; ++ctr)
+    {
+        if (_lettersInfo[ctr].valid)
         {
+            auto& letterDef = _fontAtlas->_letterDefinitions[_lettersInfo[ctr].utf16Char];
+            
             _reusedRect.size.height = letterDef.height;
             _reusedRect.size.width  = letterDef.width;
             _reusedRect.origin.x    = letterDef.U;
             _reusedRect.origin.y    = letterDef.V;
-            _reusedLetter->setTextureRect(_reusedRect,false,_reusedRect.size);
 
-            _reusedLetter->setPosition(_lettersInfo[ctr].position);
-            index = static_cast<int>(_batchNodes[letterDef.textureID]->getTextureAtlas()->getTotalQuads());
-            _lettersInfo[ctr].atlasIndex = index;
-            _batchNodes[letterDef.textureID]->insertQuadFromSprite(_reusedLetter,index);
+            auto py = _lettersInfo[ctr].positionY + _letterOffsetY;
+            if (_labelHeight > 0.f) {
+                if (py > _tailoredTopY)
+                {
+                    auto clipTop = py - _tailoredTopY;
+                    _reusedRect.origin.y += clipTop;
+                    _reusedRect.size.height -= clipTop;
+                    py -= clipTop;
+                }
+                if (py - letterDef.height * _bmfontScale < _tailoredBottomY)
+                {
+                    _reusedRect.size.height = (py < _tailoredBottomY) ? 0.f : (py - _tailoredBottomY);
+                }
+            }
+
+            auto lineIndex = _lettersInfo[ctr].lineIndex;
+            auto px = _lettersInfo[ctr].positionX + letterDef.width/2 * _bmfontScale + _linesOffsetX[lineIndex];
+
+            if(_labelWidth > 0.f){
+                if (this->isHorizontalClamped(px, lineIndex)) {
+                    if(_overflow == Overflow::CLAMP){
+                        _reusedRect.size.width = 0;
+                    }else if(_overflow == Overflow::SHRINK){
+                        if (_contentSize.width > letterDef.width) {
+                            letterClamp = true;
+                            ret = false;
+                            break;
+                        }else{
+                            _reusedRect.size.width = 0;
+                        }
+
+                    }
+                }
+            }
+
+
+            if (_reusedRect.size.height > 0.f && _reusedRect.size.width > 0.f)
+            {
+                _reusedLetter->setTextureRect(_reusedRect, false, _reusedRect.size);
+                float letterPositionX = _lettersInfo[ctr].positionX + _linesOffsetX[_lettersInfo[ctr].lineIndex];
+                _reusedLetter->setPosition(letterPositionX, py);
+                auto index = static_cast<int>(_batchNodes.at(letterDef.textureID)->getTextureAtlas()->getTotalQuads());
+                _lettersInfo[ctr].atlasIndex = index;
+
+                this->updateLetterSpriteScale(_reusedLetter);
+
+                _batchNodes.at(letterDef.textureID)->insertQuadFromSprite(_reusedLetter, index);
+            }
         }     
     }
+
+
+    return ret;
 }
 
-bool Label::recordLetterInfo(const cocos2d::Vec2& point,const FontLetterDefinition& letterDef, int spriteIndex)
+bool Label::setTTFConfigInternal(const TTFConfig& ttfConfig)
 {
-    if (static_cast<std::size_t>(spriteIndex) >= _lettersInfo.size())
+    FontAtlas *newAtlas = FontAtlasCache::getFontAtlasTTF(&ttfConfig);
+
+    if (!newAtlas)
     {
-        LetterInfo tmpInfo;
-        _lettersInfo.push_back(tmpInfo);
+        reset();
+        return false;
     }
 
-    _lettersInfo[spriteIndex].def = letterDef;
-    _lettersInfo[spriteIndex].position = point;
-    _lettersInfo[spriteIndex].contentSize.width = _lettersInfo[spriteIndex].def.width;
-    _lettersInfo[spriteIndex].contentSize.height = _lettersInfo[spriteIndex].def.height;
-    _limitShowCount++;
+    _currentLabelType = LabelType::TTF;
+    setFontAtlas(newAtlas,ttfConfig.distanceFieldEnabled,true);
 
-    return _lettersInfo[spriteIndex].def.validDefinition;
-}
+    _fontConfig = ttfConfig;
 
-bool Label::recordPlaceholderInfo(int spriteIndex)
-{
-    if (static_cast<std::size_t>(spriteIndex) >= _lettersInfo.size())
+    if (_fontConfig.outlineSize > 0)
     {
-        LetterInfo tmpInfo;
-        _lettersInfo.push_back(tmpInfo);
+        _fontConfig.distanceFieldEnabled = false;
+        _useDistanceField = false;
+        _useA8Shader = false;
+        _currLabelEffect = LabelEffect::OUTLINE;
+        updateShaderProgram();
+    }
+    else
+    {
+        _currLabelEffect = LabelEffect::NORMAL;
+        updateShaderProgram();
     }
 
-    _lettersInfo[spriteIndex].def.validDefinition = false;
-    _limitShowCount++;
+    if (_fontConfig.italics)
+        this->enableItalics();
+    if (_fontConfig.bold)
+        this->enableBold();
+    if (_fontConfig.underline)
+        this->enableUnderline();
+    if (_fontConfig.strikethrough)
+        this->enableStrikethrough();
 
-    return false;
+    return true;
 }
 
-void Label::addChild(Node * child, int zOrder/* =0 */, int tag/* =0 */)
+void Label::setBMFontSizeInternal(float fontSize)
 {
-    CCASSERT(0, "addChild: is not supported on Label.");
+    if(_currentLabelType == LabelType::BMFONT){
+        this->setBMFontFilePath(_bmFontPath, Vec2::ZERO, fontSize);
+        _contentDirty = true;
+    }
 }
 
-void Label::sortAllChildren()
+void Label::scaleFontSizeDown(float fontSize)
 {
-    // Label ignore sort children
+    bool shouldUpdateContent = true;
+    if(_currentLabelType == LabelType::TTF){
+        auto ttfConfig = this->getTTFConfig();
+        ttfConfig.fontSize = fontSize;
+        this->setTTFConfigInternal(ttfConfig);
+    }else if(_currentLabelType == LabelType::BMFONT){
+        if (std::abs(fontSize) < FLT_EPSILON) {
+            fontSize = 0.1f;
+            shouldUpdateContent = false;
+        }
+        this->setBMFontSizeInternal(fontSize);
+    }else if (_currentLabelType == LabelType::STRING_TEXTURE){
+        this->setSystemFontSize(fontSize);
+    }
+    
+    if (shouldUpdateContent) {
+        this->updateContent();
+    }
 }
 
 void Label::enableGlow(const Color4B& glowColor)
@@ -752,11 +1053,10 @@ void Label::enableGlow(const Color4B& glowColor)
             _contentDirty = true;
         }
         _currLabelEffect = LabelEffect::GLOW;
-        _effectColor = glowColor;
-        _effectColorF.r = _effectColor.r / 255.0f;
-        _effectColorF.g = _effectColor.g / 255.0f;
-        _effectColorF.b = _effectColor.b / 255.0f;
-        _effectColorF.a = _effectColor.a / 255.0f;
+        _effectColorF.r = glowColor.r / 255.0f;
+        _effectColorF.g = glowColor.g / 255.0f;
+        _effectColorF.b = glowColor.b / 255.0f;
+        _effectColorF.a = glowColor.a / 255.0f;
         updateShaderProgram();
     }
 }
@@ -780,13 +1080,16 @@ void Label::enableOutline(const Color4B& outlineColor,int outlineSize /* = -1 */
                 setTTFConfig(_fontConfig);
             }
         }
-        else if (_effectColor != outlineColor || _outlineSize != outlineSize)
+        else if (_effectColorF != outlineColor || _outlineSize != outlineSize)
         {
-            _effectColor = outlineColor;
-            _outlineSize = outlineSize;
+            _effectColorF.r = outlineColor.r / 255.f;
+            _effectColorF.g = outlineColor.g / 255.f;
+            _effectColorF.b = outlineColor.b / 255.f;
+            _effectColorF.a = outlineColor.a / 255.f;
             _currLabelEffect = LabelEffect::OUTLINE;
             _contentDirty = true;
         }
+        _outlineSize = outlineSize;
     }
 }
 
@@ -795,11 +1098,9 @@ void Label::enableShadow(const Color4B& shadowColor /* = Color4B::BLACK */,const
     _shadowEnabled = true;
     _shadowDirty = true;
 
-    auto contentScaleFactor = CC_CONTENT_SCALE_FACTOR();
-    _shadowOffset.width = offset.width * contentScaleFactor;
-    _shadowOffset.height = offset.height * contentScaleFactor;
+    _shadowOffset.width = offset.width;
+    _shadowOffset.height = offset.height;
     //TODO: support blur for shadow
-    _shadowBlurRadius = 0;
 
     _shadowColor3B.r = shadowColor.r;
     _shadowColor3B.g = shadowColor.g;
@@ -808,13 +1109,14 @@ void Label::enableShadow(const Color4B& shadowColor /* = Color4B::BLACK */,const
 
     if (!_systemFontDirty && !_contentDirty && _textSprite)
     {
+        auto fontDef = _getFontDefinition();
         if (_shadowNode)
         {
             if (shadowColor != _shadowColor4F)
             {
-                Node::removeChild(_shadowNode, true);
+                _shadowNode->release();
                 _shadowNode = nullptr;
-                createShadowSpriteForSystemFont();
+                createShadowSpriteForSystemFont(fontDef);
             }
             else
             {
@@ -823,7 +1125,7 @@ void Label::enableShadow(const Color4B& shadowColor /* = Color4B::BLACK */,const
         }
         else
         {
-            createShadowSpriteForSystemFont();
+            createShadowSpriteForSystemFont(fontDef);
         }
     }
 
@@ -831,219 +1133,134 @@ void Label::enableShadow(const Color4B& shadowColor /* = Color4B::BLACK */,const
     _shadowColor4F.g = shadowColor.g / 255.0f;
     _shadowColor4F.b = shadowColor.b / 255.0f;
     _shadowColor4F.a = shadowColor.a / 255.0f;
+
+    if (_currentLabelType == LabelType::BMFONT || _currentLabelType == LabelType::CHARMAP)
+    {
+        setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(_shadowEnabled ? GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR : GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP, _getTexture(this)));
+    }
+}
+
+void Label::enableItalics()
+{
+    setRotationSkewX(12);
+}
+
+void Label::enableBold()
+{
+    if (!_boldEnabled)
+    {
+        // bold is implemented with outline
+        enableShadow(Color4B::WHITE, Size(0.9f, 0), 0);
+        // add one to kerning
+        setAdditionalKerning(_additionalKerning+1);
+        _boldEnabled = true;
+    }
+}
+
+void Label::enableUnderline()
+{
+    // remove it, just in case to prevent adding two or more
+    if (!_underlineNode)
+    {
+        _underlineNode = DrawNode::create();
+        addChild(_underlineNode, 100000);
+        _contentDirty = true;
+    }
+}
+
+void Label::enableStrikethrough()
+{
+    if (!_strikethroughEnabled)
+    {
+        enableUnderline();
+        _strikethroughEnabled = true;
+    }
 }
 
 void Label::disableEffect()
 {
-    disableEffect(LabelEffect::GLOW);
-    disableEffect(LabelEffect::OUTLINE);
-    disableEffect(LabelEffect::SHADOW);
+    disableEffect(LabelEffect::ALL);
 }
 
 void Label::disableEffect(LabelEffect effect)
 {
     switch (effect)
     {
-    case cocos2d::LabelEffect::NORMAL:
-        break;
-    case cocos2d::LabelEffect::OUTLINE:
-        if (_currLabelEffect == LabelEffect::OUTLINE)
-        {
-            if (_currentLabelType == LabelType::TTF)
+        case cocos2d::LabelEffect::NORMAL:
+            break;
+        case cocos2d::LabelEffect::OUTLINE:
+            if (_currLabelEffect == LabelEffect::OUTLINE)
             {
-                _fontConfig.outlineSize = 0;
-                setTTFConfig(_fontConfig);
+                if (_currentLabelType == LabelType::TTF)
+                {
+                    _fontConfig.outlineSize = 0;
+                    setTTFConfig(_fontConfig);
+                }
+                _currLabelEffect = LabelEffect::NORMAL;
+                _contentDirty = true;
             }
-            
-            _currLabelEffect = LabelEffect::NORMAL;
-            _contentDirty = true;
-        }
-        break;
-    case cocos2d::LabelEffect::SHADOW:
-        if (_shadowEnabled)
-        {
-            _shadowEnabled = false;
-            if (_shadowNode)
+            break;
+        case cocos2d::LabelEffect::SHADOW:
+            if (_shadowEnabled)
             {
-                Node::removeChild(_shadowNode, true);
-                _shadowNode = nullptr;
+                _shadowEnabled = false;
+                CC_SAFE_RELEASE_NULL(_shadowNode);
+                updateShaderProgram();
             }
-        }
-        break;
-    case cocos2d::LabelEffect::GLOW:
-        if (_currLabelEffect == LabelEffect::GLOW)
-        {
-            _currLabelEffect = LabelEffect::NORMAL;
-            updateShaderProgram();
-        }
-        break;
-    case LabelEffect::ALL:
+            break;
+        case cocos2d::LabelEffect::GLOW:
+            if (_currLabelEffect == LabelEffect::GLOW)
+            {
+                _currLabelEffect = LabelEffect::NORMAL;
+                updateShaderProgram();
+            }
+            break;
+        case cocos2d::LabelEffect::ITALICS:
+            setRotationSkewX(0);
+            break;
+        case cocos2d::LabelEffect::BOLD:
+            _boldEnabled = false;
+            _additionalKerning -= 1;
+            disableEffect(LabelEffect::SHADOW);
+            break;
+        case cocos2d::LabelEffect::UNDERLINE:
+            if (_underlineNode) {
+                removeChild(_underlineNode);
+                _underlineNode = nullptr;
+            }
+            break;
+        case cocos2d::LabelEffect::STRIKETHROUGH:
+            _strikethroughEnabled = false;
+            // since it is based on underline, disable it as well
+            disableEffect(LabelEffect::UNDERLINE);
+            break;
+        case LabelEffect::ALL:
         {
             disableEffect(LabelEffect::SHADOW);
             disableEffect(LabelEffect::GLOW);
             disableEffect(LabelEffect::OUTLINE);
+            disableEffect(LabelEffect::ITALICS);
+            disableEffect(LabelEffect::BOLD);
+            disableEffect(LabelEffect::UNDERLINE);
+            disableEffect(LabelEffect::STRIKETHROUGH);
         }
-        break;
-    default:
-        break;
+            break;
+        default:
+            break;
     }
 }
 
-void Label::setFontScale(float fontScale)
-{
-    _fontScale = fontScale * CC_CONTENT_SCALE_FACTOR();
-    Node::setScale(_fontScale);
-}
-
-void Label::onDraw(const Mat4& transform, bool transformUpdated)
-{
-    // Optimization: Fast Dispatch
-    if( _textureAtlas == NULL || (_batchNodes.size() == 1 && _textureAtlas->getTotalQuads() == 0) )
-    {
-        return;
-    }
-
-    auto glprogram = getGLProgram();
-    glprogram->use();
-    GL::blendFunc( _blendFunc.src, _blendFunc.dst );
-
-    if (_shadowEnabled)
-    {
-        if (_currentLabelType == LabelType::TTF)
-        {
-            glprogram->setUniformLocationWith4f(_uniformTextColor,
-                _shadowColor4F.r, _shadowColor4F.g, _shadowColor4F.b, _shadowColor4F.a);
-            if (_currLabelEffect == LabelEffect::OUTLINE || _currLabelEffect == LabelEffect::GLOW)
-            {
-                glprogram->setUniformLocationWith4f(_uniformEffectColor,
-                    _shadowColor4F.r, _shadowColor4F.g, _shadowColor4F.b, _shadowColor4F.a);
-            }
-
-            getGLProgram()->setUniformsForBuiltins(_shadowTransform);
-            for (const auto &child : _children)
-            {
-                child->updateTransform();
-            }
-            for (const auto& batchNode : _batchNodes)
-            {
-                batchNode->getTextureAtlas()->drawQuads();
-            }
-        }
-        else
-        {
-            Color3B oldColor = _realColor;
-            GLubyte oldOPacity = _displayedOpacity;
-            _displayedOpacity = _shadowOpacity;
-            setColor(_shadowColor3B);
-
-            getGLProgram()->setUniformsForBuiltins(_shadowTransform);
-            for (const auto &child : _children)
-            {
-                child->updateTransform();
-            }
-            for (const auto& batchNode : _batchNodes)
-            {
-                batchNode->getTextureAtlas()->drawQuads();
-            }
-
-            _displayedOpacity = oldOPacity;
-            setColor(oldColor);
-        }
-    }
-
-    if (_currentLabelType == LabelType::TTF)
-    {
-        glprogram->setUniformLocationWith4f(_uniformTextColor,
-            _textColorF.r,_textColorF.g,_textColorF.b,_textColorF.a);
-
-        if (_currLabelEffect == LabelEffect::OUTLINE || _currLabelEffect == LabelEffect::GLOW)
-        {
-            glprogram->setUniformLocationWith4f(_uniformEffectColor,
-                _effectColorF.r, _effectColorF.g, _effectColorF.b, _effectColorF.a);
-        }
-    }
-
-    glprogram->setUniformsForBuiltins(transform);
-
-    for(const auto &child: _children)
-    {
-        child->updateTransform();
-    }
-
-    for (const auto& batchNode:_batchNodes)
-    {
-        batchNode->getTextureAtlas()->drawQuads();
-    }
-}
-
-void Label::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
-{
-    // Don't do calculate the culling if the transform was not updated
-    bool transformUpdated = flags & FLAGS_TRANSFORM_DIRTY;
-#if CC_USE_CULLING
-    _insideBounds = transformUpdated ? renderer->checkVisibility(transform, _contentSize) : _insideBounds;
-
-    if(_insideBounds)
-#endif
-    {
-        _customCommand.init(_globalZOrder, transform, flags);
-        _customCommand.func = CC_CALLBACK_0(Label::onDraw, this, transform, transformUpdated);
-
-        renderer->addCommand(&_customCommand);
-    }
-}
-
-void Label::createSpriteForSystemFont()
+void Label::createSpriteForSystemFont(const FontDefinition& fontDef)
 {
     _currentLabelType = LabelType::STRING_TEXTURE;
 
-    if (!_compatibleMode)
-    {
-        _fontDefinition._fontName = _systemFont;
-        _fontDefinition._fontSize = _systemFontSize;
-
-        _fontDefinition._alignment = _hAlignment;
-        _fontDefinition._vertAlignment = _vAlignment;
-
-        _fontDefinition._dimensions.width = _labelWidth;
-        _fontDefinition._dimensions.height = _labelHeight;
-
-        _fontDefinition._fontFillColor.r = _textColor.r;
-        _fontDefinition._fontFillColor.g = _textColor.g;
-        _fontDefinition._fontFillColor.b = _textColor.b;
-        _fontDefinition._fontAlpha = _textColor.a;
-
-        _fontDefinition._shadow._shadowEnabled = false;
-
-        if (_currLabelEffect == LabelEffect::OUTLINE && _outlineSize > 0)
-        {
-            _fontDefinition._stroke._strokeEnabled = true;
-            _fontDefinition._stroke._strokeSize = _outlineSize;
-            _fontDefinition._stroke._strokeColor.r = _effectColor.r;
-            _fontDefinition._stroke._strokeColor.g = _effectColor.g;
-            _fontDefinition._stroke._strokeColor.b = _effectColor.b;
-            _fontDefinition._stroke._strokeAlpha = _effectColor.a;
-        }
-        else
-        {
-            _fontDefinition._stroke._strokeEnabled = false;
-        }
-
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID) && (CC_TARGET_PLATFORM != CC_PLATFORM_IOS)
-        if (_fontDefinition._stroke._strokeEnabled)
-        {
-            CCLOGERROR("Currently only supported on iOS and Android!");
-        }
-        _fontDefinition._stroke._strokeEnabled = false;
-#endif
-    }
-
     auto texture = new (std::nothrow) Texture2D;
-    texture->initWithString(_originalUTF8String.c_str(), _fontDefinition);
+    texture->initWithString(_utf8Text.c_str(), fontDef);
 
     _textSprite = Sprite::createWithTexture(texture);
     //set camera mask using label's camera mask, because _textSprite may be null when setting camera mask to label
     _textSprite->setCameraMask(getCameraMask());
+    _textSprite->setGlobalZOrder(getGlobalZOrder());
     _textSprite->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
     this->setContentSize(_textSprite->getContentSize());
     texture->release();
@@ -1052,22 +1269,21 @@ void Label::createSpriteForSystemFont()
         _textSprite->setBlendFunc(_blendFunc);
     }
 
-    Node::addChild(_textSprite, 0, Node::INVALID_TAG);
-
+    _textSprite->retain();
     _textSprite->updateDisplayedColor(_displayedColor);
     _textSprite->updateDisplayedOpacity(_displayedOpacity);
 }
 
-void Label::createShadowSpriteForSystemFont()
+void Label::createShadowSpriteForSystemFont(const FontDefinition& fontDef)
 {
-    if (!_fontDefinition._stroke._strokeEnabled && _fontDefinition._fontFillColor == _shadowColor3B
-        && (_fontDefinition._fontAlpha == _shadowOpacity))
+    if (!fontDef._stroke._strokeEnabled && fontDef._fontFillColor == _shadowColor3B
+        && (fontDef._fontAlpha == _shadowOpacity))
     {
         _shadowNode = Sprite::createWithTexture(_textSprite->getTexture());
     }
     else
     {
-        auto shadowFontDefinition = _fontDefinition;
+        FontDefinition shadowFontDefinition = fontDef;
         shadowFontDefinition._fontFillColor.r = _shadowColor3B.r;
         shadowFontDefinition._fontFillColor.g = _shadowColor3B.g;
         shadowFontDefinition._fontFillColor.b = _shadowColor3B.b;
@@ -1077,7 +1293,7 @@ void Label::createShadowSpriteForSystemFont()
         shadowFontDefinition._stroke._strokeAlpha = shadowFontDefinition._fontAlpha;
 
         auto texture = new (std::nothrow) Texture2D;
-        texture->initWithString(_originalUTF8String.c_str(), shadowFontDefinition);
+        texture->initWithString(_utf8Text.c_str(), shadowFontDefinition);
         _shadowNode = Sprite::createWithTexture(texture);
         texture->release();
     }
@@ -1089,10 +1305,11 @@ void Label::createShadowSpriteForSystemFont()
             _shadowNode->setBlendFunc(_blendFunc);
         }
         _shadowNode->setCameraMask(getCameraMask());
+        _shadowNode->setGlobalZOrder(getGlobalZOrder());
         _shadowNode->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
         _shadowNode->setPosition(_shadowOffset.width, _shadowOffset.height);
-        Node::addChild(_shadowNode, 0, Node::INVALID_TAG);
 
+        _shadowNode->retain();
         _shadowNode->updateDisplayedColor(_displayedColor);
         _shadowNode->updateDisplayedOpacity(_displayedOpacity);
     }
@@ -1100,7 +1317,7 @@ void Label::createShadowSpriteForSystemFont()
 
 void Label::setCameraMask(unsigned short mask, bool applyChildren)
 {
-    SpriteBatchNode::setCameraMask(mask, applyChildren);
+    Node::setCameraMask(mask, applyChildren);
     
     if (_textSprite)
     {
@@ -1114,20 +1331,35 @@ void Label::setCameraMask(unsigned short mask, bool applyChildren)
 
 void Label::setFontDefinition(const FontDefinition& textDefinition)
 {
-    _fontDefinition = textDefinition;
+    _systemFont = textDefinition._fontName;
+    _systemFontSize = textDefinition._fontSize;
+    _hAlignment = textDefinition._alignment;
+    _vAlignment = textDefinition._vertAlignment;
+    setDimensions(textDefinition._dimensions.width, textDefinition._dimensions.height);
+    Color4B textColor = Color4B(textDefinition._fontFillColor);
+    textColor.a = textDefinition._fontAlpha;
+    setTextColor(textColor);
+    
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID) && (CC_TARGET_PLATFORM != CC_PLATFORM_IOS)
-    if (_fontDefinition._stroke._strokeEnabled)
+    if (textDefinition._stroke._strokeEnabled)
     {
-        CCLOGERROR("Currently only supported on iOS and Android!");
+        CCLOGERROR("Stroke Currently only supported on iOS and Android!");
     }
-    _fontDefinition._stroke._strokeEnabled = false;
+    _outlineSize = 0.f;
+#else
+    if (textDefinition._stroke._strokeEnabled && textDefinition._stroke._strokeSize > 0.f)
+    {
+        Color4B outlineColor = Color4B(textDefinition._stroke._strokeColor);
+        outlineColor.a = textDefinition._stroke._strokeAlpha;
+        enableOutline(outlineColor, textDefinition._stroke._strokeSize);
+    }
 #endif
-    if (_fontDefinition._shadow._shadowEnabled)
+
+    if (textDefinition._shadow._shadowEnabled)
     {
-        _fontDefinition._shadow._shadowEnabled = false;
-        enableShadow(Color4B(0,0,0,255 * _fontDefinition._shadow._shadowOpacity),_fontDefinition._shadow._shadowOffset,_fontDefinition._shadow._shadowBlur);
+        enableShadow(Color4B(0, 0, 0, 255 * textDefinition._shadow._shadowOpacity),
+            textDefinition._shadow._shadowOffset, textDefinition._shadow._shadowBlur);
     }
-    _compatibleMode = true;
 }
 
 void Label::updateContent()
@@ -1137,7 +1369,6 @@ void Label::updateContent()
         if (_fontAtlas)
         {
             _batchNodes.clear();
-            _batchNodes.push_back(this);
 
             FontAtlasCache::releaseFontAtlas(_fontAtlas);
             _fontAtlas = nullptr;
@@ -1146,43 +1377,246 @@ void Label::updateContent()
         _systemFontDirty = false;
     }
 
-    if (_textSprite)
-    {
-        Node::removeChild(_textSprite, true);
-        _textSprite = nullptr;
-        if (_shadowNode)
-        {
-            Node::removeChild(_shadowNode, true);
-            _shadowNode = nullptr;
-        }
-    }
+    CC_SAFE_RELEASE_NULL(_textSprite);
+    CC_SAFE_RELEASE_NULL(_shadowNode);
+    bool updateFinished = true;
 
     if (_fontAtlas)
     {
         std::u16string utf16String;
-        if (StringUtils::UTF8ToUTF16(_originalUTF8String, utf16String))
+        if (StringUtils::UTF8ToUTF16(_utf8Text, utf16String))
         {
-            _currentUTF16String = utf16String;
+            _utf16Text = utf16String;
         }
 
-        computeStringNumLines();
-        computeHorizontalKernings(_currentUTF16String);
-        alignText();
+        computeHorizontalKernings(_utf16Text);
+        updateFinished = alignText();
     }
     else
     {
-        createSpriteForSystemFont();
+        auto fontDef = _getFontDefinition();
+        createSpriteForSystemFont(fontDef);
         if (_shadowEnabled)
         {
-            createShadowSpriteForSystemFont();
+            createShadowSpriteForSystemFont(fontDef);
         }
     }
-    _contentDirty = false;
+
+    if (_underlineNode)
+    {
+        _underlineNode->clear();
+
+        if (_numberOfLines)
+        {
+            // This is the logic for TTF fonts
+            const float charheight = (_textDesiredHeight / _numberOfLines);
+            _underlineNode->setLineWidth(charheight/6);
+
+            // atlas font
+            for (int i=0; i<_numberOfLines; ++i)
+            {
+                float offsety = 0;
+                if (_strikethroughEnabled)
+                    offsety += charheight / 2;
+                // FIXME: Might not work with different vertical alignments
+                float y = (_numberOfLines - i - 1) * charheight + offsety;
+
+                // Github issue #15214. Uses _displayedColor instead of _textColor for the underline.
+                // This is to have the same behavior of SystemFonts.
+                _underlineNode->drawLine(Vec2(_linesOffsetX[i],y), Vec2(_linesWidth[i] + _linesOffsetX[i],y), Color4F(_displayedColor));
+            }
+        }
+        else if (_textSprite)
+        {
+            // ...and is the logic for System fonts
+            float y = 0;
+            const auto spriteSize = _textSprite->getContentSize();
+            _underlineNode->setLineWidth(spriteSize.height/6);
+
+            if (_strikethroughEnabled)
+                // FIXME: system fonts don't report the height of the font correctly. only the size of the texture, which is POT
+                y += spriteSize.height / 2;
+            // FIXME: Might not work with different vertical alignments
+            _underlineNode->drawLine(Vec2(0,y), Vec2(spriteSize.width,y), Color4F(_textSprite->getDisplayedColor()));
+        }
+    }
+
+    if(updateFinished){
+        _contentDirty = false;
+    }
+
+#if CC_LABEL_DEBUG_DRAW
+    _debugDrawNode->clear();
+    Vec2 vertices[4] =
+    {
+        Vec2::ZERO,
+        Vec2(_contentSize.width, 0),
+        Vec2(_contentSize.width, _contentSize.height),
+        Vec2(0, _contentSize.height)
+    };
+    _debugDrawNode->drawPoly(vertices, 4, true, Color4F::WHITE);
+#endif
+}
+
+void Label::setBMFontSize(float fontSize)
+{
+    this->setBMFontSizeInternal(fontSize);
+    _originalFontSize = fontSize;
+}
+
+float Label::getBMFontSize()const
+{
+    return _bmFontSize;
+}
+
+void Label::onDrawShadow(GLProgram* glProgram, const Color4F& shadowColor)
+{
+    if (_currentLabelType == LabelType::TTF)
+    {
+        glProgram->setUniformLocationWith4f(_uniformTextColor,
+            shadowColor.r, shadowColor.g, shadowColor.b, shadowColor.a);
+        if (_currLabelEffect == LabelEffect::OUTLINE || _currLabelEffect == LabelEffect::GLOW)
+        {
+            glProgram->setUniformLocationWith4f(_uniformEffectColor,
+                shadowColor.r, shadowColor.g, shadowColor.b, shadowColor.a);
+        }
+
+        glProgram->setUniformsForBuiltins(_shadowTransform);
+        for (auto&& it : _letters)
+        {
+            it.second->updateTransform();
+        }
+        for (auto&& batchNode : _batchNodes)
+        {
+            batchNode->getTextureAtlas()->drawQuads();
+        }
+    }
+    else
+    {
+        Color3B oldColor = _realColor;
+        GLubyte oldOPacity = _displayedOpacity;
+        _displayedOpacity = shadowColor.a * 255;
+        setColor(Color3B(shadowColor));
+
+        glProgram->setUniformsForBuiltins(_shadowTransform);
+        for (auto&& it : _letters)
+        {
+            it.second->updateTransform();
+        }
+        for (auto&& batchNode : _batchNodes)
+        {
+            batchNode->getTextureAtlas()->drawQuads();
+        }
+
+        _displayedOpacity = oldOPacity;
+        setColor(oldColor);
+    }
+}
+
+void Label::onDraw(const Mat4& transform, bool transformUpdated)
+{
+    auto glprogram = getGLProgram();
+    glprogram->use();
+    GL::blendFunc(_blendFunc.src, _blendFunc.dst);
+
+    if (_shadowEnabled)
+    {
+        if (_boldEnabled)
+            onDrawShadow(glprogram, _textColorF);
+        else
+            onDrawShadow(glprogram, _shadowColor4F);
+    }
+
+    glprogram->setUniformsForBuiltins(transform);
+    for (auto&& it : _letters)
+    {
+        it.second->updateTransform();
+    }
+
+    if (_currentLabelType == LabelType::TTF)
+    {
+        switch (_currLabelEffect) {
+        case LabelEffect::OUTLINE:
+            //draw text with outline
+            glprogram->setUniformLocationWith4f(_uniformTextColor,
+                _textColorF.r, _textColorF.g, _textColorF.b, _textColorF.a);
+            glprogram->setUniformLocationWith4f(_uniformEffectColor,
+                _effectColorF.r, _effectColorF.g, _effectColorF.b, _effectColorF.a);
+            for (auto&& batchNode : _batchNodes)
+            {
+                batchNode->getTextureAtlas()->drawQuads();
+            }
+
+            //draw text without outline
+            glprogram->setUniformLocationWith4f(_uniformEffectColor,
+                _effectColorF.r, _effectColorF.g, _effectColorF.b, 0.f);
+            break;
+        case LabelEffect::GLOW:
+            glprogram->setUniformLocationWith4f(_uniformEffectColor,
+                _effectColorF.r, _effectColorF.g, _effectColorF.b, _effectColorF.a);
+        case LabelEffect::NORMAL:
+            glprogram->setUniformLocationWith4f(_uniformTextColor,
+                _textColorF.r, _textColorF.g, _textColorF.b, _textColorF.a);
+            break;
+        default:
+            break;
+        }
+    }
+
+    for (auto&& batchNode : _batchNodes)
+    {
+        batchNode->getTextureAtlas()->drawQuads();
+    }
+}
+
+void Label::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
+{
+    if (_batchNodes.empty() || _lengthOfString <= 0)
+    {
+        return;
+    }
+    // Don't do calculate the culling if the transform was not updated
+    bool transformUpdated = flags & FLAGS_TRANSFORM_DIRTY;
+#if CC_USE_CULLING
+    auto visitingCamera = Camera::getVisitingCamera();
+    auto defaultCamera = Camera::getDefaultCamera();
+    if (visitingCamera == defaultCamera) {
+        _insideBounds = (transformUpdated || visitingCamera->isViewProjectionUpdated()) ? renderer->checkVisibility(transform, _contentSize) : _insideBounds;
+    }
+    else
+    {
+        _insideBounds = renderer->checkVisibility(transform, _contentSize);
+    }
+
+    if (_insideBounds)
+#endif
+    {
+        if (!_shadowEnabled && (_currentLabelType == LabelType::BMFONT || _currentLabelType == LabelType::CHARMAP))
+        {
+            for (auto&& it : _letters)
+            {
+                it.second->updateTransform();
+            }
+            // ETC1 ALPHA supports for BMFONT & CHARMAP
+            auto textureAtlas = _batchNodes.at(0)->getTextureAtlas();
+            auto texture = textureAtlas->getTexture();
+            _quadCommand.init(_globalZOrder, texture, getGLProgramState(), 
+                _blendFunc, textureAtlas->getQuads(), textureAtlas->getTotalQuads(), transform, flags);
+            renderer->addCommand(&_quadCommand);
+        }
+        else
+        {
+            _customCommand.init(_globalZOrder, transform, flags);
+            _customCommand.func = CC_CALLBACK_0(Label::onDraw, this, transform, transformUpdated);
+
+            renderer->addCommand(&_customCommand);
+        }
+    }
 }
 
 void Label::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
 {
-    if (! _visible || _originalUTF8String.empty())
+    if (! _visible || (_utf8Text.empty() && _children.empty()) )
     {
         return;
     }
@@ -1191,10 +1625,10 @@ void Label::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t pare
     {
         updateContent();
     }
-
+    
     uint32_t flags = processParentFlags(parentTransform, parentFlags);
 
-    if (_shadowEnabled && _shadowBlurRadius <= 0 && (_shadowDirty || (flags & FLAGS_DIRTY_MASK)))
+    if (!_utf8Text.empty() && _shadowEnabled && (_shadowDirty || (flags & FLAGS_DIRTY_MASK)))
     {
         _position.x += _shadowOffset.width;
         _position.y += _shadowOffset.height;
@@ -1209,7 +1643,8 @@ void Label::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t pare
         _shadowDirty = false;
     }
 
-    if (!_textSprite && !isVisitableByVisitingCamera())
+    bool visibleByCamera = isVisitableByVisitingCamera();
+    if (_children.empty() && !_textSprite && !visibleByCamera)
     {
         return;
     }
@@ -1220,6 +1655,40 @@ void Label::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t pare
     _director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     _director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
     
+    if (!_children.empty())
+    {
+        sortAllChildren();
+
+        int i = 0;
+        // draw children zOrder < 0
+        for (; i < _children.size(); i++)
+        {
+            auto node = _children.at(i);
+
+            if (node && node->getLocalZOrder() < 0)
+                node->visit(renderer, _modelViewTransform, flags);
+            else
+                break;
+        }
+        
+        this->drawSelf(visibleByCamera, renderer, flags);
+
+        for (auto it = _children.cbegin() + i; it != _children.cend(); ++it)
+        {
+            (*it)->visit(renderer, _modelViewTransform, flags);
+        }
+            
+    }
+    else
+    {
+        this->drawSelf(visibleByCamera, renderer, flags);
+    }
+
+    _director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+}
+
+void Label::drawSelf(bool visibleByCamera, Renderer* renderer, uint32_t flags)
+{
     if (_textSprite)
     {
         if (_shadowNode)
@@ -1228,16 +1697,10 @@ void Label::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t pare
         }
         _textSprite->visit(renderer, _modelViewTransform, flags);
     }
-    else
+    else if (visibleByCamera && !_utf8Text.empty())
     {
         draw(renderer, _modelViewTransform, flags);
     }
-
-    _director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    
-    // FIX ME: Why need to set _orderOfArrival to 0??
-    // Please refer to https://github.com/cocos2d/cocos2d-x/pull/6920
-    // setOrderOfArrival(0);
 }
 
 void Label::setSystemFontName(const std::string& systemFont)
@@ -1245,6 +1708,7 @@ void Label::setSystemFontName(const std::string& systemFont)
     if (systemFont != _systemFont)
     {
         _systemFont = systemFont;
+        _currentLabelType = LabelType::STRING_TEXTURE;
         _systemFontDirty = true;
     }
 }
@@ -1254,61 +1718,83 @@ void Label::setSystemFontSize(float fontSize)
     if (_systemFontSize != fontSize)
     {
         _systemFontSize = fontSize;
+        _originalFontSize = fontSize;
+        _currentLabelType = LabelType::STRING_TEXTURE;
         _systemFontDirty = true;
     }
 }
 
 ///// PROTOCOL STUFF
-Sprite * Label::getLetter(int letterIndex)
+Sprite* Label::getLetter(int letterIndex)
 {
-    if (_systemFontDirty || _currentLabelType == LabelType::STRING_TEXTURE)
+    Sprite* letter = nullptr;
+    do
     {
-        return nullptr;
-    }
-
-    if (_contentDirty)
-    {
-        updateContent();
-    }
-    
-    if (! _textSprite && letterIndex < _limitShowCount)
-    {
-        const auto &letter = _lettersInfo[letterIndex];
-
-        if(! letter.def.validDefinition)
-            return nullptr;
-
-        Sprite* sp = static_cast<Sprite*>(this->getChildByTag(letterIndex));
-
-        if (!sp)
+        if (_systemFontDirty || _currentLabelType == LabelType::STRING_TEXTURE)
         {
-            Rect uvRect;
-            uvRect.size.height = letter.def.height;
-            uvRect.size.width  = letter.def.width;
-            uvRect.origin.x    = letter.def.U;
-            uvRect.origin.y    = letter.def.V;
-
-            sp = Sprite::createWithTexture(_fontAtlas->getTexture(letter.def.textureID),uvRect);
-            sp->setBatchNode(_batchNodes[letter.def.textureID]);
-            sp->setPosition(letter.position.x + uvRect.size.width / 2,
-                letter.position.y - uvRect.size.height / 2);
-            sp->setOpacity(_realOpacity);
-
-            _batchNodes[letter.def.textureID]->addSpriteWithoutQuad(sp, letter.atlasIndex, letterIndex);
+            break;
         }
-        return sp;
-    }
 
-    return nullptr;
+        auto contentDirty = _contentDirty;
+        if (contentDirty)
+        {
+            updateContent();
+        }
+
+        if (_textSprite == nullptr && letterIndex < _lengthOfString)
+        {
+            const auto &letterInfo = _lettersInfo[letterIndex];
+            if (!letterInfo.valid)
+            {
+                break;
+            }
+
+            if (_letters.find(letterIndex) != _letters.end())
+            {
+                letter = _letters[letterIndex];
+            }
+
+            if (letter == nullptr)
+            {
+                auto& letterDef = _fontAtlas->_letterDefinitions[letterInfo.utf16Char];
+                auto textureID = letterDef.textureID;
+                Rect uvRect;
+                uvRect.size.height = letterDef.height;
+                uvRect.size.width = letterDef.width;
+                uvRect.origin.x = letterDef.U;
+                uvRect.origin.y = letterDef.V;
+
+                if (letterDef.width <= 0.f || letterDef.height <= 0.f)
+                {
+                    letter = LabelLetter::create();
+                }
+                else
+                {
+                    letter = LabelLetter::createWithTexture(_fontAtlas->getTexture(textureID), uvRect);
+                    letter->setTextureAtlas(_batchNodes.at(textureID)->getTextureAtlas());
+                    letter->setAtlasIndex(letterInfo.atlasIndex);
+                    auto px = letterInfo.positionX + uvRect.size.width / 2 + _linesOffsetX[letterInfo.lineIndex];
+                    auto py = letterInfo.positionY - uvRect.size.height / 2 + _letterOffsetY;
+                    letter->setPosition(px,py);
+                    letter->setOpacity(_realOpacity);
+                }
+                
+                addChild(letter);
+                _letters[letterIndex] = letter;
+            }
+        }
+    } while (false);
+
+    return letter;
 }
 
 void Label::setLineHeight(float height)
 {
     CCASSERT(_currentLabelType != LabelType::STRING_TEXTURE, "Not supported system font!");
 
-    if (_commonLineHeight != height)
+    if (_lineHeight != height)
     {
-        _commonLineHeight = height;
+        _lineHeight = height;
         _contentDirty = true;
     }
 }
@@ -1316,17 +1802,36 @@ void Label::setLineHeight(float height)
 float Label::getLineHeight() const
 {
     CCASSERT(_currentLabelType != LabelType::STRING_TEXTURE, "Not supported system font!");
-    return _textSprite ? 0.0f : _commonLineHeight;
+    return _textSprite ? 0.0f : _lineHeight * _bmfontScale;
+}
+
+void Label::setLineSpacing(float height)
+{
+    if (_lineSpacing != height)
+    {
+        _lineSpacing = height;
+        _contentDirty = true;
+    }
+}
+
+float Label::getLineSpacing() const
+{
+    return _lineSpacing;
 }
 
 void Label::setAdditionalKerning(float space)
 {
-    CCASSERT(_currentLabelType != LabelType::STRING_TEXTURE, "Not supported system font!");
-    if (_additionalKerning != space)
+
+    if (_currentLabelType != LabelType::STRING_TEXTURE)
     {
-        _additionalKerning = space;
-        _contentDirty = true;
+        if (_additionalKerning != space)
+        {
+            _additionalKerning = space;
+            _contentDirty = true;
+        }
     }
+    else
+        CCLOG("Label::setAdditionalKerning not supported on LabelType::STRING_TEXTURE");
 }
 
 float Label::getAdditionalKerning() const
@@ -1340,45 +1845,47 @@ void Label::computeStringNumLines()
 {
     int quantityOfLines = 1;
 
-    if (_currentUTF16String.empty())
+    if (_utf16Text.empty())
     {
-        _currNumLines = 0;
+        _numberOfLines = 0;
         return;
     }
 
     // count number of lines
-    size_t stringLen = _currentUTF16String.length();
-    for (size_t i = 0; i < stringLen-1; ++i)
+    size_t stringLen = _utf16Text.length();
+    for (size_t i = 0; i < stringLen - 1; ++i)
     {
-        if (_currentUTF16String[i] == '\n')
+        if (_utf16Text[i] == (char16_t)TextFormatter::NewLine)
         {
             quantityOfLines++;
         }
     }
 
-    _currNumLines = quantityOfLines;
+    _numberOfLines = quantityOfLines;
 }
 
-int Label::getStringNumLines() const {
+int Label::getStringNumLines()
+{
     if (_contentDirty)
     {
-        const_cast<Label*>(this)->updateContent();
+        updateContent();
     }
 
-    return _currNumLines;
+    if (_currentLabelType == LabelType::STRING_TEXTURE)
+    {
+        computeStringNumLines();
+    }
+
+    return _numberOfLines;
 }
 
-int Label::getStringLength() const
+int Label::getStringLength()
 {
-    return static_cast<int>(_currentUTF16String.length());
+    _lengthOfString = static_cast<int>(_utf16Text.length());
+    return _lengthOfString;
 }
 
 // RGBA protocol
-bool Label::isOpacityModifyRGB() const
-{
-    return _isOpacityModifyRGB;
-}
-
 void Label::setOpacityModifyRGB(bool isOpacityModifyRGB)
 {
     if (isOpacityModifyRGB != _isOpacityModifyRGB)
@@ -1390,25 +1897,37 @@ void Label::setOpacityModifyRGB(bool isOpacityModifyRGB)
 
 void Label::updateDisplayedColor(const Color3B& parentColor)
 {
-    _displayedColor.r = _realColor.r * parentColor.r/255.0;
-    _displayedColor.g = _realColor.g * parentColor.g/255.0;
-    _displayedColor.b = _realColor.b * parentColor.b/255.0;
-    updateColor();
+    Node::updateDisplayedColor(parentColor);
 
     if (_textSprite)
     {
         _textSprite->updateDisplayedColor(_displayedColor);
-        if (_shadowNode)
-        {
-            _shadowNode->updateDisplayedColor(_displayedColor);
-        }
+    }
+
+    if (_shadowNode)
+    {
+        _shadowNode->updateDisplayedColor(_displayedColor);
+    }
+
+    if (_underlineNode)
+    {
+        // FIXME: _underlineNode is not a sprite/label. It is a DrawNode
+        // and updating its color doesn't work. it must be re-drawn,
+        // which makes it super expensive to change update it frequently
+        // Correct solution is to update the DrawNode directly since we know it is
+        // a line. Returning a pointer to the line is an option
+        _contentDirty = true;
+    }
+
+    for (auto&& it : _letters)
+    {
+        it.second->updateDisplayedColor(_displayedColor);
     }
 }
 
 void Label::updateDisplayedOpacity(GLubyte parentOpacity)
 {
-    _displayedOpacity = _realOpacity * parentOpacity/255.0;
-    updateColor();
+    Node::updateDisplayedOpacity(parentOpacity);
 
     if (_textSprite)
     {
@@ -1418,31 +1937,35 @@ void Label::updateDisplayedOpacity(GLubyte parentOpacity)
             _shadowNode->updateDisplayedOpacity(_displayedOpacity);
         }
     }
+
+    for (auto&& it : _letters)
+    {
+        it.second->updateDisplayedOpacity(_displayedOpacity);
+    }
 }
 
+// FIXME: it is not clear what is the difference between setTextColor() and setColor()
+// if setTextColor() only changes the text and nothing but the text (no glow, no outline, not underline)
+// that's fine but it should be documented
 void Label::setTextColor(const Color4B &color)
 {
     CCASSERT(_currentLabelType == LabelType::TTF || _currentLabelType == LabelType::STRING_TEXTURE, "Only supported system font and ttf!");
+
+    if (_currentLabelType == LabelType::STRING_TEXTURE && _textColor != color)
+    {
+        _contentDirty = true;
+    }
 
     _textColor = color;
     _textColorF.r = _textColor.r / 255.0f;
     _textColorF.g = _textColor.g / 255.0f;
     _textColorF.b = _textColor.b / 255.0f;
     _textColorF.a = _textColor.a / 255.0f;
-
-    if (_currentLabelType == LabelType::STRING_TEXTURE)
-    {
-        if (_fontDefinition._fontFillColor.r != _textColor.r || _fontDefinition._fontFillColor.g != _textColor.g
-            || _fontDefinition._fontFillColor.b != _textColor.b || _fontDefinition._fontAlpha != _textColor.a)
-        {
-            _contentDirty = true;
-        }
-    }
 }
 
 void Label::updateColor()
 {
-    if (nullptr == _textureAtlas)
+    if (_batchNodes.empty())
     {
         return;
     }
@@ -1459,7 +1982,7 @@ void Label::updateColor()
 
     cocos2d::TextureAtlas* textureAtlas;
     V3F_C4B_T2F_Quad *quads;
-    for (const auto& batchNode:_batchNodes)
+    for (auto&& batchNode:_batchNodes)
     {
         textureAtlas = batchNode->getTextureAtlas();
         quads = textureAtlas->getQuads();
@@ -1478,9 +2001,12 @@ void Label::updateColor()
 
 std::string Label::getDescription() const
 {
-    std::string utf8str;
-    StringUtils::UTF16ToUTF8(_currentUTF16String, utf8str);
-    return StringUtils::format("<Label | Tag = %d, Label = '%s'>", _tag, utf8str.c_str());
+    char tmp[50];
+    sprintf(tmp, "<Label | Tag = %d, Label = >", _tag);
+    std::string ret = tmp;
+    ret += _utf8Text;
+
+    return ret;
 }
 
 const Size& Label::getContentSize() const
@@ -1509,6 +2035,168 @@ void Label::setBlendFunc(const BlendFunc &blendFunc)
         if (_shadowNode)
         {
             _shadowNode->setBlendFunc(blendFunc);
+        }
+    }
+}
+
+void Label::removeAllChildrenWithCleanup(bool cleanup)
+{
+    Node::removeAllChildrenWithCleanup(cleanup);
+    _letters.clear();
+}
+
+void Label::removeChild(Node* child, bool cleanup /* = true */)
+{
+    Node::removeChild(child, cleanup);
+    for (auto&& it : _letters)
+    {
+        if (it.second == child)
+        {
+            _letters.erase(it.first);
+            break;
+        }
+    }
+}
+
+FontDefinition Label::_getFontDefinition() const
+{
+    FontDefinition systemFontDef;
+    systemFontDef._fontName = _systemFont;
+    systemFontDef._fontSize = _systemFontSize;
+    systemFontDef._alignment = _hAlignment;
+    systemFontDef._vertAlignment = _vAlignment;
+    systemFontDef._dimensions.width = _labelWidth;
+    systemFontDef._dimensions.height = _labelHeight;
+    systemFontDef._fontFillColor.r = _textColor.r;
+    systemFontDef._fontFillColor.g = _textColor.g;
+    systemFontDef._fontFillColor.b = _textColor.b;
+    systemFontDef._fontAlpha = _textColor.a;
+    systemFontDef._shadow._shadowEnabled = false;
+    systemFontDef._enableWrap = _enableWrap;
+    systemFontDef._overflow = (int)_overflow;
+
+    if (_currLabelEffect == LabelEffect::OUTLINE && _outlineSize > 0.f)
+    {
+        systemFontDef._stroke._strokeEnabled = true;
+        systemFontDef._stroke._strokeSize = _outlineSize;
+        systemFontDef._stroke._strokeColor.r = _effectColorF.r * 255;
+        systemFontDef._stroke._strokeColor.g = _effectColorF.g * 255;
+        systemFontDef._stroke._strokeColor.b = _effectColorF.b * 255;
+        systemFontDef._stroke._strokeAlpha = _effectColorF.a * 255;
+    }
+    else
+    {
+        systemFontDef._stroke._strokeEnabled = false;
+    }
+
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID) && (CC_TARGET_PLATFORM != CC_PLATFORM_IOS)
+    if (systemFontDef._stroke._strokeEnabled)
+    {
+        CCLOGERROR("Stroke Currently only supported on iOS and Android!");
+    }
+    systemFontDef._stroke._strokeEnabled = false;
+#endif
+
+    return systemFontDef;
+}
+
+void Label::setGlobalZOrder(float globalZOrder)
+{
+    Node::setGlobalZOrder(globalZOrder);
+    if (_textSprite)
+    {
+        _textSprite->setGlobalZOrder(globalZOrder);
+        if (_shadowNode)
+        {
+            _shadowNode->setGlobalZOrder(globalZOrder);
+        }
+    }
+}
+
+float Label::getRenderingFontSize()const
+{
+    float fontSize;
+    if (_currentLabelType == LabelType::BMFONT) {
+        fontSize = _bmFontSize;
+    }else if(_currentLabelType == LabelType::TTF){
+        fontSize = this->getTTFConfig().fontSize;
+    }else if(_currentLabelType == LabelType::STRING_TEXTURE){
+        fontSize = _systemFontSize;
+    }else{ //FIXME: find a way to calculate char map font size
+        fontSize = this->getLineHeight();
+    }
+    return fontSize;
+}
+
+void Label::enableWrap(bool enable)
+{
+    if(enable == _enableWrap || _overflow == Overflow::RESIZE_HEIGHT){
+        return;
+    }
+
+    this->_enableWrap = enable;
+   
+    this->rescaleWithOriginalFontSize();
+    
+    _contentDirty = true;
+}
+
+bool Label::isWrapEnabled()const
+{
+    return this->_enableWrap;
+}
+
+void Label::setOverflow(Overflow overflow)
+{
+    if(_overflow == overflow){
+        return;
+    }
+    
+    if (_currentLabelType == LabelType::CHARMAP) {
+        if (overflow == Overflow::SHRINK) {
+            return;
+        }
+    }
+
+    if(overflow == Overflow::RESIZE_HEIGHT){
+        this->setDimensions(_labelDimensions.width,0);
+        this->enableWrap(true);
+    }
+    _overflow = overflow;
+    
+    this->rescaleWithOriginalFontSize();
+    
+    _contentDirty = true;
+}
+
+void Label::rescaleWithOriginalFontSize()
+{
+    auto renderingFontSize = this->getRenderingFontSize();
+    if (_originalFontSize - renderingFontSize >= 1) {
+        this->scaleFontSizeDown(_originalFontSize);
+    }
+}
+
+Label::Overflow Label::getOverflow()const
+{
+    return _overflow;
+}
+
+void Label::updateLetterSpriteScale(Sprite* sprite)
+{
+    if (_currentLabelType == LabelType::BMFONT && _bmFontSize > 0)
+    {
+        sprite->setScale(_bmfontScale);
+    }
+    else
+    {
+        if (std::abs(_bmFontSize) < FLT_EPSILON)
+        {
+            sprite->setScale(0);
+        }
+        else
+        {
+            sprite->setScale(1.0);
         }
     }
 }

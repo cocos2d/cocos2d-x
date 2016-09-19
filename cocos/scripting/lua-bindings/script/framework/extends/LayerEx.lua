@@ -43,7 +43,7 @@ function Layer:onTouch(callback, isMultiTouches, swallowTouches)
             event.x = args[1]
             event.y = args[2]
         end
-        callback(event)
+        return callback( event )
     end, isMultiTouches, 0, swallowTouches)
     self:setTouchEnabled(true)
     return self

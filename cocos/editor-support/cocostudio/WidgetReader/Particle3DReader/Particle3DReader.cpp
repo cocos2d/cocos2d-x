@@ -22,12 +22,13 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "Particle3DReader.h"
+#include "platform/CCFileUtils.h"
+#include "editor-support/cocostudio/WidgetReader/Particle3DReader/Particle3DReader.h"
 
-#include "cocostudio/CSParseBinary_generated.h"
-#include "cocostudio/CSParse3DBinary_generated.h"
-#include "cocostudio/FlatBuffersSerialize.h"
-#include "cocostudio/WidgetReader/Node3DReader/Node3DReader.h"
+#include "editor-support/cocostudio/CSParseBinary_generated.h"
+#include "editor-support/cocostudio/CSParse3DBinary_generated.h"
+#include "editor-support/cocostudio/FlatBuffersSerialize.h"
+#include "editor-support/cocostudio/WidgetReader/Node3DReader/Node3DReader.h"
 
 #include "tinyxml2.h"
 #include "flatbuffers/flatbuffers.h"
@@ -57,7 +58,7 @@ namespace cocostudio
     {
         if (!_instanceParticle3DReader)
         {
-            _instanceParticle3DReader = new Particle3DReader();
+            _instanceParticle3DReader = new (std::nothrow) Particle3DReader();
         }
         
         return _instanceParticle3DReader;
@@ -147,14 +148,10 @@ namespace cocostudio
         auto fileData = options->fileData();
         std::string path = fileData->path()->c_str();
         
-        ParticleSystem3D* ret = NULL;
-        if(!FileUtils::getInstance()->isFileExist(path))
+        PUParticleSystem3D* ret = PUParticleSystem3D::create();
+        if (FileUtils::getInstance()->isFileExist(path))
         {
-            ret = PUParticleSystem3D::create();
-        }
-        else
-        {
-            ret = PUParticleSystem3D::create(path);
+            ret->initWithFilePath(path);
         }
         
         setPropsWithFlatBuffers(ret, particle3DOptions);

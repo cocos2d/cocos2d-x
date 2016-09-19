@@ -27,13 +27,14 @@
  - Qt3D: http://qt-project.org/
  ****************************************************************************/
 
-#include "CCPass.h"
+#include "renderer/CCPass.h"
 #include "renderer/CCGLProgramState.h"
 #include "renderer/CCGLProgram.h"
 #include "renderer/CCTexture2D.h"
 #include "renderer/ccGLStateCache.h"
 #include "renderer/CCTechnique.h"
 #include "renderer/CCMaterial.h"
+#include "renderer/CCVertexAttribBinding.h"
 
 #include "base/ccTypes.h"
 #include "2d/CCNode.h"
@@ -51,6 +52,7 @@ Pass* Pass::create(Technique* technique)
         pass->autorelease();
         return pass;
     }
+    CC_SAFE_DELETE(pass);
     return nullptr;
 }
 
@@ -62,6 +64,7 @@ Pass* Pass::createWithGLProgramState(Technique* technique, GLProgramState* progr
         pass->autorelease();
         return pass;
     }
+    CC_SAFE_DELETE(pass);
     return nullptr;
 }
 
@@ -81,12 +84,31 @@ bool Pass::initWithGLProgramState(Technique* technique, GLProgramState *glProgra
 
 Pass::Pass()
 : _glProgramState(nullptr)
+, _vertexAttribBinding(nullptr)
 {
 }
 
 Pass::~Pass()
 {
     CC_SAFE_RELEASE(_glProgramState);
+    CC_SAFE_RELEASE(_vertexAttribBinding);
+}
+
+Pass* Pass::clone() const
+{
+    auto pass = new (std::nothrow) Pass();
+    if (pass)
+    {
+        RenderState::cloneInto(pass);
+        pass->_glProgramState = _glProgramState->clone();
+        CC_SAFE_RETAIN(pass->_glProgramState);
+
+        pass->_vertexAttribBinding = _vertexAttribBinding;
+        CC_SAFE_RETAIN(pass->_vertexAttribBinding);
+
+        pass->autorelease();
+    }
+    return pass;
 }
 
 GLProgramState* Pass::getGLProgramState() const
@@ -109,7 +131,7 @@ uint32_t Pass::getHash() const
 {
     if (_hashDirty || _state->isDirty()) {
         uint32_t glProgram = (uint32_t)_glProgramState->getGLProgram()->getProgram();
-        uint32_t textureid = (uint32_t)_textures.at(0)->getName();
+        uint32_t textureid = _texture ? _texture->getName() : -1;
         uint32_t stateblockid = _state->getHash();
 
         _hash = glProgram ^ textureid ^ stateblockid;
@@ -128,15 +150,19 @@ void Pass::bind(const Mat4& modelView)
 
 void Pass::bind(const Mat4& modelView, bool bindAttributes)
 {
+
+    // vertex attribs
+    if (bindAttributes && _vertexAttribBinding)
+        _vertexAttribBinding->bind();
+
     auto glprogramstate = _glProgramState ? _glProgramState : getTarget()->getGLProgramState();
 
     glprogramstate->applyGLProgram(modelView);
-    if (bindAttributes)
-        glprogramstate->applyAttributes();
     glprogramstate->applyUniforms();
 
     //set render state
     RenderState::bind(this);
+
 }
 
 Node* Pass::getTarget() const
@@ -150,6 +176,24 @@ Node* Pass::getTarget() const
 void Pass::unbind()
 {
     RenderState::StateBlock::restore(0);
+
+    _vertexAttribBinding->unbind();
 }
+
+void Pass::setVertexAttribBinding(VertexAttribBinding* binding)
+{
+    if (_vertexAttribBinding != binding)
+    {
+        CC_SAFE_RELEASE(_vertexAttribBinding);
+        _vertexAttribBinding = binding;
+        CC_SAFE_RETAIN(_vertexAttribBinding);
+    }
+}
+
+VertexAttribBinding* Pass::getVertexAttributeBinding() const
+{
+    return _vertexAttribBinding;
+}
+
 
 NS_CC_END

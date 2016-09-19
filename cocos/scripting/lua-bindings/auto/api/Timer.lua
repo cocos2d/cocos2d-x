@@ -37,6 +37,7 @@
 -- 
 -- @function [parent=#Timer] trigger 
 -- @param self
+-- @param #float dt
 -- @return Timer#Timer self (return value: cc.Timer)
         
 --------------------------------

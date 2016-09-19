@@ -465,6 +465,24 @@
                 func: function () {
                     return new UIScrollViewRotated();
                 }
+            },
+            {
+                title: "UIScrollViewDisableTest",
+                func: function () {
+                    return new UIScrollViewDisableTest();
+                }
+            },
+            {
+                title:"UIScrollView Multiple Items Test",
+                func: function () {
+                    return new UIScrollViewTest_Vertical_Multiple();
+                }
+            },
+            {
+                title:"UIScrollView Scroll Bar Test",
+                func: function () {
+                    return new UIScrollViewTest_ScrollBar();
+                }
             }
         ],
         "UIPageView": [
@@ -497,6 +515,30 @@
                 func: function () {
                     return new UIPageViewDynamicAddAndRemoveTest();
                 }
+            },
+            {
+                title: "UIPageViewDisableTouchTest",
+                func: function () {
+                    return new UIPageViewDisableTouchTest();
+                }
+            },
+            {
+                title: "UIPageViewJumpToPageTest",
+                func: function () {
+                    return new UIPageViewJumpToPageTest();
+                }
+            },
+            {
+                title: "UIPageViewChildSizeTest",
+                func: function () {
+                    return new UIPageViewChildSizeTest();
+                }
+            },
+            {
+                title: "UIPageViewIndicatorTest",
+                func: function () {
+                    return new UIPageViewIndicatorTest();
+                }
             }
         ],
         "UIListView": [
@@ -510,6 +552,36 @@
                 title: "UIListViewTest_Horizontal",
                 func: function () {
                     return new UIListViewTest_Horizontal();
+                }
+            },
+            {
+                title:"UIListViewTest_TouchIntercept ",
+                func: function() {
+                    return new UIListViewTest_TouchIntercept();
+                }
+            },
+            {
+                title:"UIListViewTest Scroll to item  vertical",
+                func: function() {
+                    return new UIListViewTest_ScrollToItemVertical();
+                }
+            },
+            {
+                title:"UIListViewTest Scroll to item horizontal",
+                func: function() {
+                    return new UIListViewTest_ScrollToItemHorizontal();
+                }
+            },
+            {
+                title:"UIListViewTest magnetic vertical",
+                func: function() {
+                    return new UIListViewTest_MagneticVertical();
+                }
+            },
+            {
+                title:"UIListViewTest magnetic horizontal",
+                func: function() {
+                    return new UIListViewTest_MagneticHorizontal();
                 }
             }
         ],
@@ -527,22 +599,132 @@
                 func: function () {
                     return new UIRichTextTest();
                 }
+            },
+            {
+                title: "UIRichTextXMLBasic",
+                func: function () {
+                    return new UIRichTextXMLBasic();
+                }
+            },
+            {
+                title: "UIRichTextXMLSmallBig",
+                func: function () {
+                    return new UIRichTextXMLSmallBig();
+                }
+            },
+            {
+                title: "UIRichTextXMLColor",
+                func: function () {
+                    return new UIRichTextXMLColor();
+                }
+            },
+            {
+                title: "UIRichTextXMLSUIB",
+                func: function () {
+                    return new UIRichTextXMLSUIB();
+                }
+            },
+            {
+                title: "UIRichTextXMLSUIB2",
+                func: function () {
+                    return new UIRichTextXMLSUIB2();
+                }
+            },
+            {
+                title: "UIRichTextXMLSUIB3",
+                func: function () {
+                    return new UIRichTextXMLSUIB3();
+                }
+            },
+            {
+                title: "UIRichTextXMLImg",
+                func: function () {
+                    return new UIRichTextXMLImg();
+                }
+            },
+            {
+                title: "UIRichTextXMLUrl",
+                func: function () {
+                    return new UIRichTextXMLUrl();
+                }
+            },
+            {
+                title: "UIRichTextXMLFace",
+                func: function () {
+                    return new UIRichTextXMLFace();
+                }
+            },
+            {
+                title: "UIRichTextXMLBR",
+                func: function () {
+                    return new UIRichTextXMLBR();
+                }
+            },
+            {
+                title: "UIRichTextXMLInvalid",
+                func: function () {
+                    return new UIRichTextXMLInvalid();
+                }
             }
         ]
     };
 
+    if (cc.sys.isNative) {
+        testingItems["UIS9NinePatchTest"] = [
+        {
+                title: "UIS9NinePatchTest",
+                func: function () {
+                    return new UIS9NinePatchTest();
+                }
+            }
+        ];
+    }
+    else {
+        testingItems["UIRichText"] = [
+            {
+                title: "UIRichTextTest",
+                func: function () {
+                    return new UIRichTextTest();
+                }
+            }
+        ];
+    }
+
+    if (cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS || !cc.sys.isNative)
+    {
+        testingItems["UIVideoPlayer"] = [
+            {
+                title: "UIVideoPlayerTest",
+                func: function () {
+                    return new UIVideoPlayerTest();
+                }
+            }
+        ];
+
+        testingItems["UIWebViewTest"] = [
+            {
+                title: "UIWebViewTest",
+                func: function () {
+                    return new UIWebViewTest();
+                }
+            }
+        ];
+    }
+
+    var guiTestScene = null;
     global.GUITestScene = cc.Class.extend({
 
         runThisTest: function(){
-            cc.director.runScene(new listScene);
+            var guiTestScene = new listScene();
+            cc.director.runScene(guiTestScene);
         }
 
     });
 
     var listScene = TestScene.extend({
 
-        onEnter: function(){
-            TestScene.prototype.onEnter.call(this);
+        ctor: function(){
+            TestScene.prototype.ctor.call(this);
 
             var menu = new cc.Menu();
             menu.x = 0;
@@ -567,6 +749,14 @@
             this._menu = menu;
             this.addChild(menu);
 
+            this._length = 0;
+            for(var p in testingItems){
+                this._length++;
+            }
+        },
+
+        onEnter: function(){
+            TestScene.prototype.onEnter.call(this);
             if ('touches' in cc.sys.capabilities)
                 cc.eventManager.addListener({
                     event: cc.EventListener.TOUCH_ALL_AT_ONCE,
@@ -590,11 +780,6 @@
                         return true;
                     }
                 }, this);
-            }
-
-            this._length = 0;
-            for(var p in testingItems){
-                this._length++;
             }
         },
 
@@ -636,10 +821,12 @@
 
         currentUIScene: function () {
             var test = currentTestingArray[this._currentUISceneId];
-            var sence = test.func();
-            sence.init();
-            sence.setSceneTitle(test.title);
-            return sence;
+            var layer = test.func();
+            layer.init();
+            layer.setSceneTitle(test.title);
+            var scene = new UIScene();
+            scene.addChild(layer);
+            return scene;
         }
     };
 

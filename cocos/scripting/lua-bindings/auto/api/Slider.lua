@@ -13,14 +13,12 @@
 -- @return Slider#Slider self (return value: ccui.Slider)
         
 --------------------------------
--- Load disabled state texture for slider ball.<br>
--- param disabled   Disabled state texture.<br>
--- param resType    @see TextureResType .
--- @function [parent=#Slider] loadSlidBallTextureDisabled 
+-- Query the maximum percent of Slider. The default value is 100.<br>
+-- since v3.7<br>
+-- return The maximum percent of the Slider.
+-- @function [parent=#Slider] getMaxPercent 
 -- @param self
--- @param #string disabled
--- @param #int resType
--- @return Slider#Slider self (return value: ccui.Slider)
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- Load normal state texture for slider ball.<br>
@@ -33,16 +31,6 @@
 -- @return Slider#Slider self (return value: ccui.Slider)
         
 --------------------------------
--- Load texture for slider bar.<br>
--- param fileName   File name of texture.<br>
--- param resType    @see TextureResType .
--- @function [parent=#Slider] loadBarTexture 
--- @param self
--- @param #string fileName
--- @param #int resType
--- @return Slider#Slider self (return value: ccui.Slider)
-        
---------------------------------
 -- Load dark state texture for slider progress bar.<br>
 -- param fileName   File path of texture.<br>
 -- param resType    @see TextureResType .
@@ -50,6 +38,48 @@
 -- @param self
 -- @param #string fileName
 -- @param #int resType
+-- @return Slider#Slider self (return value: ccui.Slider)
+        
+--------------------------------
+-- 
+-- @function [parent=#Slider] getBallNormalFile 
+-- @param self
+-- @return ResourceData#ResourceData ret (return value: cc.ResourceData)
+        
+--------------------------------
+-- 
+-- @function [parent=#Slider] getSlidBallDisabledRenderer 
+-- @param self
+-- @return Sprite#Sprite ret (return value: cc.Sprite)
+        
+--------------------------------
+-- Sets if slider is using scale9 renderer.<br>
+-- param able True that using scale9 renderer, false otherwise.
+-- @function [parent=#Slider] setScale9Enabled 
+-- @param self
+-- @param #bool able
+-- @return Slider#Slider self (return value: ccui.Slider)
+        
+--------------------------------
+-- 
+-- @function [parent=#Slider] getBallPressedFile 
+-- @param self
+-- @return ResourceData#ResourceData ret (return value: cc.ResourceData)
+        
+--------------------------------
+-- brief Return a zoom scale<br>
+-- since v3.3
+-- @function [parent=#Slider] getZoomScale 
+-- @param self
+-- @return float#float ret (return value: float)
+        
+--------------------------------
+-- Sets capinsets for progress bar slider, if slider is using scale9 renderer.<br>
+-- param capInsets Capinsets for progress bar slider.<br>
+-- js NA
+-- @function [parent=#Slider] setCapInsetProgressBarRenderer 
+-- @param self
+-- @param #rect_table capInsets
 -- @return Slider#Slider self (return value: ccui.Slider)
         
 --------------------------------
@@ -67,61 +97,10 @@
 -- @return Slider#Slider self (return value: ccui.Slider)
         
 --------------------------------
--- Sets capinsets for progress bar slider, if slider is using scale9 renderer.<br>
--- param capInsets Capinsets for progress bar slider.<br>
--- js NA
--- @function [parent=#Slider] setCapInsetProgressBarRebderer 
+-- 
+-- @function [parent=#Slider] getSlidBallRenderer 
 -- @param self
--- @param #rect_table capInsets
--- @return Slider#Slider self (return value: ccui.Slider)
-        
---------------------------------
--- Sets capinsets for bar slider, if slider is using scale9 renderer.<br>
--- param capInsets Capinsets for bar slider.
--- @function [parent=#Slider] setCapInsetsBarRenderer 
--- @param self
--- @param #rect_table capInsets
--- @return Slider#Slider self (return value: ccui.Slider)
-        
---------------------------------
--- Gets capinsets for progress bar slider, if slider is using scale9 renderer.<br>
--- return Capinsets for progress bar slider.<br>
--- js NA
--- @function [parent=#Slider] getCapInsetsProgressBarRebderer 
--- @param self
--- @return rect_table#rect_table ret (return value: rect_table)
-        
---------------------------------
--- Sets if slider is using scale9 renderer.<br>
--- param able True that using scale9 renderer, false otherwise.
--- @function [parent=#Slider] setScale9Enabled 
--- @param self
--- @param #bool able
--- @return Slider#Slider self (return value: ccui.Slider)
-        
---------------------------------
---  When user pressed the button, the button will zoom to a scale.<br>
--- The final scale of the button  equals (button original scale + _zoomScale)<br>
--- since v3.3
--- @function [parent=#Slider] setZoomScale 
--- @param self
--- @param #float scale
--- @return Slider#Slider self (return value: ccui.Slider)
-        
---------------------------------
--- Sets capinsets for slider, if slider is using scale9 renderer.<br>
--- param capInsets Capinsets for slider.
--- @function [parent=#Slider] setCapInsets 
--- @param self
--- @param #rect_table capInsets
--- @return Slider#Slider self (return value: ccui.Slider)
-        
---------------------------------
--- brief Return a zoom scale<br>
--- since v3.3
--- @function [parent=#Slider] getZoomScale 
--- @param self
--- @return float#float ret (return value: float)
+-- @return Node#Node ret (return value: cc.Node)
         
 --------------------------------
 -- Add call back function called when slider's percent has changed to slider.<br>
@@ -130,6 +109,52 @@
 -- @param self
 -- @param #function callback
 -- @return Slider#Slider self (return value: ccui.Slider)
+        
+--------------------------------
+-- Set a large value could give more control to the precision.<br>
+-- since v3.7<br>
+-- param percent The max percent of Slider.
+-- @function [parent=#Slider] setMaxPercent 
+-- @param self
+-- @param #int percent
+-- @return Slider#Slider self (return value: ccui.Slider)
+        
+--------------------------------
+-- Load texture for slider bar.<br>
+-- param fileName   File name of texture.<br>
+-- param resType    @see TextureResType .
+-- @function [parent=#Slider] loadBarTexture 
+-- @param self
+-- @param #string fileName
+-- @param #int resType
+-- @return Slider#Slider self (return value: ccui.Slider)
+        
+--------------------------------
+-- 
+-- @function [parent=#Slider] getProgressBarFile 
+-- @param self
+-- @return ResourceData#ResourceData ret (return value: cc.ResourceData)
+        
+--------------------------------
+-- Gets capinsets for bar slider, if slider is using scale9 renderer.<br>
+-- return capInsets Capinsets for bar slider.
+-- @function [parent=#Slider] getCapInsetsBarRenderer 
+-- @param self
+-- @return rect_table#rect_table ret (return value: rect_table)
+        
+--------------------------------
+-- Gets capinsets for progress bar slider, if slider is using scale9 renderer.<br>
+-- return Capinsets for progress bar slider.<br>
+-- js NA
+-- @function [parent=#Slider] getCapInsetsProgressBarRenderer 
+-- @param self
+-- @return rect_table#rect_table ret (return value: rect_table)
+        
+--------------------------------
+-- 
+-- @function [parent=#Slider] getSlidBallPressedRenderer 
+-- @param self
+-- @return Sprite#Sprite ret (return value: cc.Sprite)
         
 --------------------------------
 -- Load pressed state texture for slider ball.<br>
@@ -142,6 +167,12 @@
 -- @return Slider#Slider self (return value: ccui.Slider)
         
 --------------------------------
+-- 
+-- @function [parent=#Slider] getBackFile 
+-- @param self
+-- @return ResourceData#ResourceData ret (return value: cc.ResourceData)
+        
+--------------------------------
 -- Gets If slider is using scale9 renderer.<br>
 -- return True that using scale9 renderer, false otherwise.
 -- @function [parent=#Slider] isScale9Enabled 
@@ -149,11 +180,18 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- Gets capinsets for bar slider, if slider is using scale9 renderer.<br>
--- return capInsets Capinsets for bar slider.
--- @function [parent=#Slider] getCapInsetsBarRenderer 
+-- 
+-- @function [parent=#Slider] getBallDisabledFile 
 -- @param self
--- @return rect_table#rect_table ret (return value: rect_table)
+-- @return ResourceData#ResourceData ret (return value: cc.ResourceData)
+        
+--------------------------------
+-- Sets capinsets for bar slider, if slider is using scale9 renderer.<br>
+-- param capInsets Capinsets for bar slider.
+-- @function [parent=#Slider] setCapInsetsBarRenderer 
+-- @param self
+-- @param #rect_table capInsets
+-- @return Slider#Slider self (return value: ccui.Slider)
         
 --------------------------------
 -- Gets the progress direction of slider.<br>
@@ -161,6 +199,39 @@
 -- @function [parent=#Slider] getPercent 
 -- @param self
 -- @return int#int ret (return value: int)
+        
+--------------------------------
+-- Sets capinsets for slider, if slider is using scale9 renderer.<br>
+-- param capInsets Capinsets for slider.
+-- @function [parent=#Slider] setCapInsets 
+-- @param self
+-- @param #rect_table capInsets
+-- @return Slider#Slider self (return value: ccui.Slider)
+        
+--------------------------------
+-- Load disabled state texture for slider ball.<br>
+-- param disabled   Disabled state texture.<br>
+-- param resType    @see TextureResType .
+-- @function [parent=#Slider] loadSlidBallTextureDisabled 
+-- @param self
+-- @param #string disabled
+-- @param #int resType
+-- @return Slider#Slider self (return value: ccui.Slider)
+        
+--------------------------------
+-- 
+-- @function [parent=#Slider] getSlidBallNormalRenderer 
+-- @param self
+-- @return Sprite#Sprite ret (return value: cc.Sprite)
+        
+--------------------------------
+--  When user pressed the button, the button will zoom to a scale.<br>
+-- The final scale of the button  equals (button original scale + _zoomScale)<br>
+-- since v3.3
+-- @function [parent=#Slider] setZoomScale 
+-- @param self
+-- @param #float scale
+-- @return Slider#Slider self (return value: ccui.Slider)
         
 --------------------------------
 -- @overload self, string, string, int         
@@ -202,6 +273,8 @@
 -- @function [parent=#Slider] hitTest 
 -- @param self
 -- @param #vec2_table pt
+-- @param #cc.Camera camera
+-- @param #vec3_table p
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------

@@ -10,11 +10,22 @@ if(WINDOWS)
 elseif(MACOSX)
   set(COCOS_UI_SPECIFIC_SRC
       ui/UIEditBox/UIEditBoxImpl-mac.mm
+      ui/UIEditBox/Mac/CCUIEditBoxMac.mm
+      ui/UIEditBox/Mac/CCUIMultilineTextField.m
+      ui/UIEditBox/Mac/CCUIPasswordTextField.m
+      ui/UIEditBox/Mac/CCUISingleLineTextField.m
+      ui/UIEditBox/Mac/CCUITextFieldFormatter.m
       )
 elseif(LINUX)
   set(COCOS_UI_SPECIFIC_SRC
-      ui/UIEditBox/UIEditBoxImpl-stub.cpp
+      ui/UIEditBox/UIEditBoxImpl-linux.cpp
       )
+ELSEIF(ANDROID)
+    set(COCOS_UI_SPECIFIC_SRC
+        ui/UIEditBox/UIEditBoxImpl-android.cpp
+        ui/UIVideoPlayer-android.cpp
+        ui/UIWebViewImpl-android.cpp
+    )
 endif()
 
 #todo: android UIWebViewImpl and UIVideoPlayer
@@ -24,7 +35,9 @@ set(COCOS_UI_SRC
 
   ui/CocosGUI.cpp
   ui/UIButton.cpp
+  ui/UIAbstractCheckButton.cpp
   ui/UICheckBox.cpp
+  ui/UIRadioButton.cpp
   ui/UIDeprecated.cpp
   ui/UIHBox.cpp
   ui/UIHelper.cpp
@@ -35,10 +48,12 @@ set(COCOS_UI_SRC
   ui/UIListView.cpp
   ui/UILoadingBar.cpp
   ui/UIPageView.cpp
+  ui/UIPageViewIndicator.cpp
   ui/UIRelativeBox.cpp
   ui/UIRichText.cpp
   ui/UIScale9Sprite.cpp
   ui/UIScrollView.cpp
+  ui/UIScrollViewBar.cpp
   ui/UISlider.cpp
   ui/UIText.cpp
   ui/UITextAtlas.cpp
@@ -49,6 +64,8 @@ set(COCOS_UI_SRC
   ui/UIWidget.cpp
   ui/UIEditBox/UIEditBox.cpp
   ui/UILayoutComponent.cpp
+  ui/UIEditBox/UIEditBoxImpl-common.cpp
+  ui/UITabControl.cpp
   ${COCOS_UI_SPECIFIC_SRC}
 
 )

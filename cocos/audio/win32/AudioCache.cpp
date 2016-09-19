@@ -21,29 +21,91 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+
+#define LOG_TAG "AudioCache"
+
 #include "platform/CCPlatformConfig.h"
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 
-#include "AudioCache.h"
+#include "audio/win32/AudioCache.h"
 #include <thread>
 #include <algorithm>
-#include "base/CCConsole.h"
-#include "platform/CCFileUtils.h"
-#include "mpg123.h"
 #include "vorbis/codec.h"
 #include "vorbis/vorbisfile.h"
-#include "base/ccUtils.h"
+#include "platform/CCFileUtils.h"
+#include "mpg123.h"
+#include "base/CCDirector.h"
+#include "base/CCScheduler.h"
+
+#include <windows.h>
 
 #define PCMDATA_CACHEMAXSIZE 2621440
 
 using namespace cocos2d::experimental;
+
+//FIXME: Move _winLog, winLog to a separated file 
+static void _winLog(const char *format, va_list args)
+{
+    static const int MAX_LOG_LENGTH = 16 * 1024;
+    int bufferSize = MAX_LOG_LENGTH;
+    char* buf = nullptr;
+
+    do
+    {
+        buf = new (std::nothrow) char[bufferSize];
+        if (buf == nullptr)
+            return; // not enough memory
+
+        int ret = vsnprintf(buf, bufferSize - 3, format, args);
+        if (ret < 0)
+        {
+            bufferSize *= 2;
+
+            delete[] buf;
+        }
+        else
+            break;
+
+    } while (true);
+
+    strcat(buf, "\n");
+
+    int pos = 0;
+    int len = strlen(buf);
+    char tempBuf[MAX_LOG_LENGTH + 1] = { 0 };
+    WCHAR wszBuf[MAX_LOG_LENGTH + 1] = { 0 };
+
+    do
+    {
+        std::copy(buf + pos, buf + pos + MAX_LOG_LENGTH, tempBuf);
+
+        tempBuf[MAX_LOG_LENGTH] = 0;
+
+        MultiByteToWideChar(CP_UTF8, 0, tempBuf, -1, wszBuf, sizeof(wszBuf));
+        OutputDebugStringW(wszBuf);
+
+        pos += MAX_LOG_LENGTH;
+
+    } while (pos < len);
+
+    delete[] buf;
+}
+
+void audioLog(const char * format, ...)
+{
+    va_list args;
+    va_start(args, format);
+    _winLog(format, args);
+    va_end(args);
+}
 
 AudioCache::AudioCache()
 : _pcmData(nullptr)
 , _pcmDataSize(0)
 , _bytesOfRead(0)
 , _alBufferReady(false)
+, _loadFail(false)
 , _fileFormat(FileFormat::UNKNOWN)
 , _queBufferFrames(0)
 , _queBufferBytes(0)
@@ -99,7 +161,7 @@ void AudioCache::readDataTask()
              vf = new OggVorbis_File;
              int openCode;
              if (openCode = ov_fopen(FileUtils::getInstance()->getSuitableFOpen(_fileFullPath).c_str(), vf)){
-                 log("Input does not appear to be an Ogg bitstream: %s. Code: 0x%x\n", _fileFullPath.c_str(), openCode);
+                 ALOGE("Input does not appear to be an Ogg bitstream: %s. Code: 0x%x\n", _fileFullPath.c_str(), openCode);
                  goto ExitThread;
              }
 
@@ -118,13 +180,13 @@ void AudioCache::readDataTask()
              int error = MPG123_OK;
              mpg123handle = mpg123_new(nullptr, &error);
              if (!mpg123handle){
-                 log("Basic setup goes wrong: %s", mpg123_plain_strerror(error));
+                 ALOGE("Basic setup goes wrong: %s", mpg123_plain_strerror(error));
                  goto ExitThread;
              }
 
              if (mpg123_open(mpg123handle,_fileFullPath.c_str()) != MPG123_OK || 
                  mpg123_getformat(mpg123handle, &rate, &_channels, &_mp3Encoding) != MPG123_OK) {
-                 log("Trouble with mpg123: %s\n", mpg123_strerror(mpg123handle) );
+                 ALOGE("Trouble with mpg123: %s\n", mpg123_strerror(mpg123handle) );
                  goto ExitThread;
              }
 
@@ -255,12 +317,19 @@ ExitThread:
     
     _readDataTaskMutex.unlock();
     if (_queBufferFrames > 0)
+    {
         _alBufferReady = true;
+    } 
+    else
+    {
+        _loadFail = true;
+    }
     
-    invokingCallbacks();
+    invokingLoadCallbacks();
+    invokingPlayCallbacks();
 }
 
-void AudioCache::invokingCallbacks()
+void AudioCache::invokingPlayCallbacks()
 {
     _callbackMutex.lock();
     auto count = _callbacks.size();
@@ -271,7 +340,7 @@ void AudioCache::invokingCallbacks()
     _callbackMutex.unlock();
 }
 
-void AudioCache::addCallbacks(const std::function<void ()> &callback)
+void AudioCache::addPlayCallback(const std::function<void()>& callback)
 {
     _callbackMutex.lock();
     if (_alBufferReady) {
@@ -280,6 +349,31 @@ void AudioCache::addCallbacks(const std::function<void ()> &callback)
         _callbacks.push_back(callback);
     }
     _callbackMutex.unlock();
+}
+
+void AudioCache::invokingLoadCallbacks()
+{
+    auto scheduler = Director::getInstance()->getScheduler();
+    scheduler->performFunctionInCocosThread([&](){
+        auto count = _loadCallbacks.size();
+        for (size_t index = 0; index < count; ++index) {
+            _loadCallbacks[index](_alBufferReady);
+        }
+        _loadCallbacks.clear();
+    });
+}
+
+void AudioCache::addLoadCallback(const std::function<void(bool)>& callback)
+{
+    if (_alBufferReady) {
+        callback(true);
+    }
+    else if (_loadFail){
+        callback(false);
+    }
+    else {
+        _loadCallbacks.push_back(callback);
+    }
 }
 
 #endif

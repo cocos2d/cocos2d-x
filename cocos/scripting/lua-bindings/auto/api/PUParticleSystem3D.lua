@@ -95,7 +95,7 @@
         
 --------------------------------
 --  Forces emission of particles.<br>
--- remarks The number of requested particles are the exact number that are emitted. No down-scalling is applied.
+-- remarks The number of requested particles are the exact number that are emitted. No down-scaling is applied.
 -- @function [parent=#PUParticleSystem3D] forceEmission 
 -- @param self
 -- @param #cc.PUEmitter emitter
@@ -246,6 +246,13 @@
 -- @function [parent=#PUParticleSystem3D] removeAllListener 
 -- @param self
 -- @return PUParticleSystem3D#PUParticleSystem3D self (return value: cc.PUParticleSystem3D)
+        
+--------------------------------
+-- 
+-- @function [parent=#PUParticleSystem3D] initSystem 
+-- @param self
+-- @param #string filePath
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- 

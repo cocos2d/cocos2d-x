@@ -6,6 +6,12 @@
 
 --------------------------------
 -- 
+-- @function [parent=#Scene] initWithPhysics 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
 -- @function [parent=#Scene] setCameraOrderDirty 
 -- @param self
 -- @return Scene#Scene self (return value: cc.Scene)
@@ -17,6 +23,15 @@
 -- @function [parent=#Scene] render 
 -- @param self
 -- @param #cc.Renderer renderer
+-- @param #mat4_table eyeTransform
+-- @param #mat4_table eyeProjection
+-- @return Scene#Scene self (return value: cc.Scene)
+        
+--------------------------------
+-- 
+-- @function [parent=#Scene] stepPhysicsAndNavigation 
+-- @param self
+-- @param #float deltaTime
 -- @return Scene#Scene self (return value: cc.Scene)
         
 --------------------------------
@@ -25,6 +40,14 @@
 -- @param self
 -- @param #cc.EventCustom event
 -- @return Scene#Scene self (return value: cc.Scene)
+        
+--------------------------------
+--  Get the physics world of the scene.<br>
+-- return The physics world of the scene.<br>
+-- js NA
+-- @function [parent=#Scene] getPhysicsWorld 
+-- @param self
+-- @return PhysicsWorld#PhysicsWorld ret (return value: cc.PhysicsWorld)
         
 --------------------------------
 -- 
@@ -59,15 +82,13 @@
 -- @return Scene#Scene ret (return value: cc.Scene)
         
 --------------------------------
--- @overload self, cc.Node, int, string         
--- @overload self, cc.Node, int, int         
--- @function [parent=#Scene] addChild
+--  Create a scene with physics.<br>
+-- return An autoreleased Scene object with physics.<br>
+-- js NA
+-- @function [parent=#Scene] createWithPhysics 
 -- @param self
--- @param #cc.Node child
--- @param #int zOrder
--- @param #int tag
--- @return Scene#Scene self (return value: cc.Scene)
-
+-- @return Scene#Scene ret (return value: cc.Scene)
+        
 --------------------------------
 -- 
 -- @function [parent=#Scene] init 

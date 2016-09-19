@@ -1,17 +1,17 @@
 
 if(MACOSX OR APPLE)
   set(COCOS_BASE_SPECIFIC_SRC
-    base/CCUserDefault-apple.mm)
+    base/CCUserDefault-apple.mm
+  )
+
+elseif(ANDROID)
+  set(COCOS_BASE_SPECIFIC_SRC
+    base/CCUserDefault-android.cpp
+    base/CCController-android.cpp
+  )
 endif()
 
-# todo: android support via base/CCUserDefaultAndroid.cpp
-# todo: also base/CCController-android.cpp
-
 set(COCOS_BASE_SRC
-  base/allocator/CCAllocatorDiagnostics.cpp
-  base/allocator/CCAllocatorGlobal.cpp
-  base/allocator/CCAllocatorGlobalNewDelete.cpp
-  base/ccFPSImages.c
   base/CCAsyncTaskPool.cpp
   base/CCAutoreleasePool.cpp
   base/CCConfiguration.cpp
@@ -19,6 +19,7 @@ set(COCOS_BASE_SRC
   base/CCController.cpp
   base/CCData.cpp
   base/CCDataVisitor.cpp
+  base/CCNinePatchImageParser.cpp
   base/CCDirector.cpp
   base/CCEvent.cpp
   base/CCEventAcceleration.cpp
@@ -40,6 +41,7 @@ set(COCOS_BASE_SRC
   base/CCIMEDispatcher.cpp
   base/CCNS.cpp
   base/CCProfiling.cpp
+  base/CCProperties.cpp
   base/CCRef.cpp
   base/CCScheduler.cpp
   base/CCScriptSupport.cpp
@@ -47,11 +49,16 @@ set(COCOS_BASE_SRC
   base/CCUserDefault.cpp
   base/CCValue.cpp
   base/ObjectFactory.cpp
+  base/CCStencilStateManager.cpp
   base/TGAlib.cpp
   base/ZipUtils.cpp
+  base/allocator/CCAllocatorDiagnostics.cpp
+  base/allocator/CCAllocatorGlobal.cpp
+  base/allocator/CCAllocatorGlobalNewDelete.cpp
   base/atitc.cpp
   base/base64.cpp
   base/ccCArray.cpp
+  base/ccFPSImages.c
   base/ccRandom.cpp
   base/ccTypes.cpp
   base/ccUTF8.cpp

@@ -135,10 +135,13 @@ var particleSceneArr = [
     },
     function() {
         return new ParticleResizeTest();
+    },
+    function() {
+        return new DemoPause();
     }
 ];
 
-if( 'opengl' in cc.sys.capabilities ){
+if( 'opengl' in cc.sys.capabilities && cc._renderType === cc.game.RENDER_TYPE_WEBGL){
     particleSceneArr.push( function () {
         return new ParallaxParticle();
     });
@@ -295,7 +298,7 @@ var ParticleDemo = BaseTestLayer.extend({
 
         this.addChild(menu, 100);
         //TODO
-        var labelAtlas = new cc.LabelAtlas("0123456789", s_fpsImages, 16, 24, '.');
+        var labelAtlas = new cc.LabelAtlas("0123456789", s_fpsImages, 12, 32, '.');
         this.addChild(labelAtlas, 100, TAG_LABEL_ATLAS);
         labelAtlas.x = s.width - 66;
         labelAtlas.y = 50;
@@ -431,6 +434,23 @@ var DemoSun = ParticleDemo.extend({
         return "ParticleSun";
     }
 });
+
+var DemoPause = ParticleDemo.extend({
+    onEnter:function () {
+    this._super();
+
+    this._emitter = new cc.ParticleSmoke();
+    this._background.addChild(this._emitter, 10);
+    this._emitter.texture = cc.textureCache.addImage(s_fire);
+    if (this._emitter.setShapeType)
+    this._emitter.setShapeType(cc.ParticleSystem.BALL_SHAPE);
+
+    this.setEmitterPosition();
+    },
+    title:function () {
+    return "Pause Particle";
+    }
+    });
 
 var DemoGalaxy = ParticleDemo.extend({
     onEnter:function () {

@@ -34,9 +34,8 @@ var SysTestBase = BaseTestLayer.extend({
     _subtitle:"",
 
     ctor:function() {
-        this._super(cc.color(0,0,0,255), cc.color(98,99,117,255));
+        this._super(cc.color(0,0,0,0), cc.color(98,99,117,0));
     },
-
     onRestartCallback:function (sender) {
         var s = new SysTestScene();
         s.addChild(restartSysTest());
@@ -65,6 +64,35 @@ var SysTestBase = BaseTestLayer.extend({
 
 //------------------------------------------------------------------
 //
+// setClearColorTest
+//
+//------------------------------------------------------------------
+var setClearColorTest = SysTestBase.extend({
+    _title:"Set clearColor to red with alpha = 0 ",
+    ctor:function()
+    {
+        this._super();
+        var bg = new cc.Sprite(s_back,cc.rect(0,0, 200, 200));
+        bg.x = winSize.width/2;
+        bg.y = winSize.height/2;
+        this.addChild(bg);
+        return true;
+    },
+    onEnter:function()
+    {
+        this._super();
+        var clearColor = cc.color(255, 0, 0, 0);
+        director.setClearColor(clearColor);
+    },
+    onExit:function()
+    {
+        director.setClearColor(cc.color(0, 0, 0, 255));
+        this._super();
+    }
+});
+
+//------------------------------------------------------------------
+//
 // LocalStorageTest
 //
 //------------------------------------------------------------------
@@ -77,19 +105,37 @@ var LocalStorageTest = SysTestBase.extend({
 
         var key = 'key_' + Math.random();
         var ls = cc.sys.localStorage;
-        cc.log(1);
+        cc.log("- Adding items");
         ls.setItem(key, "Hello world");
+        var key1 = "1" + key;
+        ls.setItem(key1, "Hello JavaScript");
+        var key2 = "2" + key;
+        ls.setItem(key2, "Hello Cocos2d-JS");
+        var key3 = "3" + key;
+        ls.setItem(key3, "Hello Cocos");
 
-        cc.log(2);
+        cc.log("- Getting Hello world");
         var r = ls.getItem(key);
         cc.log(r);
 
-        cc.log(3);
+        cc.log("- Removing Hello world");
         ls.removeItem(key);
 
-        cc.log(4);
+        cc.log("- Getting Hello world");
         r = ls.getItem(key);
         cc.log(r);
+
+        cc.log("- Getting other items");
+        cc.log( ls.getItem(key1) );
+        cc.log( ls.getItem(key2) );
+        cc.log( ls.getItem(key3) );
+
+        cc.log("- Clearing local storage");
+        ls.clear();
+        cc.log("- Getting other items");
+        cc.log( ls.getItem(key1) );
+        cc.log( ls.getItem(key2) );
+        cc.log( ls.getItem(key3) );
     }
 
 });
@@ -118,7 +164,6 @@ var SysTestScene = TestScene.extend({
         sysTestSceneIdx = (num || num == 0) ? (num - 1) : -1;
         var layer = nextSysTest();
         this.addChild(layer);
-
         director.runScene(this);
     }
 });
@@ -137,25 +182,22 @@ var ScriptTestLayer = SysTestBase.extend({
         {
             return;
         }
+        var that = this;
         var manifestPath = "Manifests/ScriptTest/project.manifest";
         var storagePath = ((jsb.fileUtils ? jsb.fileUtils.getWritablePath() : "/") + "JSBTests/AssetsManagerTest/ScriptTest/");
         cc.log("Storage path for this test : " + storagePath);
 
-        if (this._am)
-        {
+        if (this._am){
             this._am.release();
             this._am = null;
         }
 
         this._am = new jsb.AssetsManager(manifestPath, storagePath);
         this._am.retain();
-        if (!this._am.getLocalManifest().isLoaded())
-        {
+        if (!this._am.getLocalManifest().isLoaded()){
             cc.log("Fail to update assets, step skipped.");
             that.clickMeShowTempLayer();
-        }
-        else {
-            var that = this;
+        }else {
             var listener = new jsb.EventListenerAssetsManager(this._am, function (event) {
                 var scene;
                 switch (event.getEventCode()) {
@@ -201,12 +243,9 @@ var ScriptTestLayer = SysTestBase.extend({
     },
     clickMeReloadTempLayer:function(){
         cc.sys.cleanScript(tempJSFileName);
-        if (!cc.sys.isNative)
-        {
+        if (!cc.sys.isNative){
             this.clickMeShowTempLayer();
-        }
-        else
-        {
+        }else{
             this.startDownload();
         }
 
@@ -303,7 +342,8 @@ var OpenURLTest = SysTestBase.extend({
 var arrayOfSysTest = [
     LocalStorageTest,
     CapabilitiesTest,
-    OpenURLTest
+    OpenURLTest,
+    setClearColorTest
 ];
 
 if (cc.sys.isNative && cc.sys.OS_WINDOWS != cc.sys.os) {

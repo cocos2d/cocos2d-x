@@ -1,6 +1,6 @@
  /****************************************************************************
  Copyright (c) 2013      Edward Zhou
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -25,7 +25,7 @@
 
 #ifndef LUASKELETONANIMATION_H_
 #define LUASKELETONANIMATION_H_
-#include "spine-cocos2dx.h"
+#include "editor-support/spine/spine-cocos2dx.h"
 
 /// @cond
 class LuaSkeletonAnimation: public spine::SkeletonAnimation {

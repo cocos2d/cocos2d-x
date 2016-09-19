@@ -35,7 +35,7 @@ bool ControlColourPickerTest::init()
         layer_width += colourPicker->getContentSize().width;
 
         // Add the black background for the text
-        auto background = Scale9Sprite::create("extensions/buttonBackground.png");
+        auto background = ui::Scale9Sprite::create("extensions/buttonBackground.png");
         background->setContentSize(Size(150, 50));
         background->setPosition(layer_width + background->getContentSize().width / 2.0f, 0);
         layer->addChild(background);
@@ -68,7 +68,7 @@ ControlColourPickerTest::~ControlColourPickerTest()
 void ControlColourPickerTest::colourValueChanged(Ref *sender, Control::EventType controlEvent)
 {
     ControlColourPicker* pPicker = (ControlColourPicker*)sender;
-    _colorLabel->setString(String::createWithFormat("#%02X%02X%02X",pPicker->getColor().r, pPicker->getColor().g, pPicker->getColor().b)->getCString());
+    _colorLabel->setString(StringUtils::format("#%02X%02X%02X",pPicker->getColor().r, pPicker->getColor().g, pPicker->getColor().b));
 }
 
 

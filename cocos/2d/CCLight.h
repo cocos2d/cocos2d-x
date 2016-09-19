@@ -245,7 +245,7 @@ public:
      *
      * @param outerAngle The angle of spot light (in radians).
      */
-    void setOuterAngle(float angle);
+    void setOuterAngle(float outerAngle);
     
     /**
      * Returns the outer angle of the spot light (in radians).

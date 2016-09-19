@@ -1,10 +1,15 @@
-#include "cocos2d.h"
-
-#include "CCNodeLoader.h"
-#include "CCBSelectorResolver.h"
-#include "CCBMemberVariableAssigner.h"
-#include "CCBAnimationManager.h"
-#include "CCNode+CCBRelativePositioning.h"
+#include "editor-support/cocosbuilder/CCNodeLoader.h"
+#include "editor-support/cocosbuilder/CCBSelectorResolver.h"
+#include "editor-support/cocosbuilder/CCBMemberVariableAssigner.h"
+#include "editor-support/cocosbuilder/CCBAnimationManager.h"
+#include "editor-support/cocosbuilder/CCNode+CCBRelativePositioning.h"
+#include "deprecated/CCArray.h"
+#include "deprecated/CCString.h"
+#include "base/CCDirector.h"
+#include "renderer/CCTextureCache.h"
+#include "2d/CCSpriteFrameCache.h"
+#include "2d/CCAnimationCache.h"
+#include "platform/CCFileUtils.h"
 
 
 using namespace std;
@@ -99,11 +104,11 @@ void NodeLoader::parseProperties(Node * pNode, Node * pParent, CCBReader * ccbRe
             __Array *extraPropsNames = static_cast<__Array*>(pNode->getUserObject());
             if (! extraPropsNames)
             {
-                extraPropsNames = Array::create();
+                extraPropsNames = __Array::create();
                 pNode->setUserObject(extraPropsNames);
             }
             
-            extraPropsNames->addObject(String::create(propertyName));
+            extraPropsNames->addObject(__String::create(propertyName));
         }
 
         switch(type) 
@@ -468,7 +473,7 @@ float * NodeLoader::parsePropTypeFloatXY(Node * pNode, Node * pParent, CCBReader
     float x = ccbReader->readFloat();
     float y = ccbReader->readFloat();
 
-    float * floatXY = new float[2];
+    float * floatXY = new (std::nothrow) float[2];
     floatXY[0] = x;
     floatXY[1] = y;
 
@@ -499,7 +504,7 @@ float * NodeLoader::parsePropTypeScaleLock(Node * pNode, Node * pParent, CCBRead
         y *= ccbReader->getResolutionScale();
     }
     
-    float * scaleLock = new float[2];
+    float * scaleLock = new (std::nothrow) float[2];
     scaleLock[0] = x;
     scaleLock[1] = y;
 
@@ -549,7 +554,7 @@ float * NodeLoader::parsePropTypeFloatVar(Node * pNode, Node * pParent, CCBReade
     float f = ccbReader->readFloat();
     float fVar = ccbReader->readFloat();
     
-    float * arr = new float[2];
+    float * arr = new (std::nothrow) float[2];
     arr[0] = f;
     arr[1] = fVar;
     
@@ -575,12 +580,12 @@ SpriteFrame * NodeLoader::parsePropTypeSpriteFrame(Node * pNode, Node * pParent,
     std::string spriteFile = ccbReader->readCachedString();
     
     SpriteFrame *spriteFrame = nullptr;
-    if (spriteFile.length() != 0)
+    if (!spriteFile.empty())
     {
-        if (spriteSheet.length() == 0)
+        if (spriteSheet.empty())
         {
             spriteFile = ccbReader->getCCBRootPath() + spriteFile;
-            Texture2D * texture = Director::getInstance()->getTextureCache()->addImage(spriteFile.c_str());
+            Texture2D * texture = Director::getInstance()->getTextureCache()->addImage(spriteFile);
             if(texture != nullptr) {
                 Rect bounds = Rect(0, 0, texture->getContentSize().width, texture->getContentSize().height);
                 spriteFrame = SpriteFrame::createWithTexture(texture, bounds);
@@ -593,11 +598,11 @@ SpriteFrame * NodeLoader::parsePropTypeSpriteFrame(Node * pNode, Node * pParent,
             // Load the sprite sheet only if it is not loaded
             if (ccbReader->getLoadedSpriteSheet().find(spriteSheet) == ccbReader->getLoadedSpriteSheet().end())
             {
-                frameCache->addSpriteFramesWithFile(spriteSheet.c_str());
+                frameCache->addSpriteFramesWithFile(spriteSheet);
                 ccbReader->getLoadedSpriteSheet().insert(spriteSheet);
             }
             
-            spriteFrame = frameCache->getSpriteFrameByName(spriteFile.c_str());
+            spriteFrame = frameCache->getSpriteFrameByName(spriteFile);
         }
         
         if (ccbReader->getAnimatedProperties()->find(pPropertyName) != ccbReader->getAnimatedProperties()->end())
@@ -623,12 +628,12 @@ Animation * NodeLoader::parsePropTypeAnimation(Node * pNode, Node * pParent, CCB
     animation = CCBReader::lastPathComponent(animation.c_str());
     animationFile = CCBReader::lastPathComponent(animationFile.c_str());
     
-    if (animation.length() > 0) 
+    if (!animation.empty()) 
     {
         AnimationCache * animationCache = AnimationCache::getInstance();
-        animationCache->addAnimationsWithFile(animationFile.c_str());
+        animationCache->addAnimationsWithFile(animationFile);
         
-        ccAnimation = animationCache->getAnimation(animation.c_str());
+        ccAnimation = animationCache->getAnimation(animation);
     }
     return ccAnimation;
 }
@@ -636,9 +641,9 @@ Animation * NodeLoader::parsePropTypeAnimation(Node * pNode, Node * pParent, CCB
 Texture2D * NodeLoader::parsePropTypeTexture(Node * pNode, Node * pParent, CCBReader * ccbReader) {
     std::string spriteFile = ccbReader->getCCBRootPath() + ccbReader->readCachedString();
     
-    if (spriteFile.length() > 0)
+    if (!spriteFile.empty())
     {
-        return Director::getInstance()->getTextureCache()->addImage(spriteFile.c_str());
+        return Director::getInstance()->getTextureCache()->addImage(spriteFile);
     }
     else 
     {
@@ -705,7 +710,7 @@ bool * NodeLoader::parsePropTypeFlip(Node * pNode, Node * pParent, CCBReader * c
     bool flipX = ccbReader->readBool();
     bool flipY = ccbReader->readBool();
 
-    bool * arr = new bool[2];
+    bool * arr = new (std::nothrow) bool[2];
     arr[0] = flipX;
     arr[1] = flipY;
 
@@ -775,7 +780,7 @@ BlockData * NodeLoader::parsePropTypeBlock(Node * pNode, Node * pParent, CCBRead
             
             if(target != nullptr)
             {
-                if(selectorName.length() > 0)
+                if(!selectorName.empty())
                 {
                     SEL_MenuHandler selMenuHandler = 0;
                     
@@ -856,7 +861,7 @@ BlockControlData * NodeLoader::parsePropTypeBlockControl(Node * pNode, Node * pP
             
             if(target != nullptr)
             {
-                if(selectorName.length() > 0)
+                if(!selectorName.empty())
                 {
                     Control::Handler selControlHandler = 0;
                     
@@ -925,7 +930,7 @@ Node * NodeLoader::parsePropTypeCCBFile(Node * pNode, Node * pParent, CCBReader 
     ccbFileName = ccbFileWithoutPathExtension + ".ccbi";
     
     // Load sub file
-    std::string path = FileUtils::getInstance()->fullPathForFilename(ccbFileName.c_str());
+    std::string path = FileUtils::getInstance()->fullPathForFilename(ccbFileName);
 
     auto dataPtr = std::make_shared<Data>(FileUtils::getInstance()->getDataFromFile(path));
     
@@ -968,7 +973,8 @@ Node * NodeLoader::parsePropTypeCCBFile(Node * pNode, Node * pParent, CCBReader 
         auto& ownerCallbackNodes = reader->getOwnerCallbackNodes();
         if (!ownerCallbackNames.empty() && !ownerCallbackNodes.empty())
         {
-            CCASSERT(ownerCallbackNames.size() == ownerCallbackNodes.size(), "");
+            CCASSERT(ownerCallbackNames.size() == ownerCallbackNodes.size(),
+                     "ownerCallbackNames size should equal to ownerCallbackNodes size.");
             ssize_t nCount = ownerCallbackNames.size();
             
             for (ssize_t i = 0 ; i < nCount; i++)
@@ -982,7 +988,8 @@ Node * NodeLoader::parsePropTypeCCBFile(Node * pNode, Node * pParent, CCBReader 
         auto ownerOutletNodes = reader->getOwnerOutletNodes();
         if (!ownerOutletNames.empty() && !ownerOutletNodes.empty())
         {
-            CCASSERT(ownerOutletNames.size() == ownerOutletNodes.size(), "");
+            CCASSERT(ownerOutletNames.size() == ownerOutletNodes.size(),
+                     "ownerOutletNames size should be equal to ownerOutletNodes's size.");
             ssize_t nCount = ownerOutletNames.size();
             
             for (ssize_t i = 0 ; i < nCount; i++)
@@ -1090,7 +1097,7 @@ void NodeLoader::onHandlePropTypeCheck(Node * pNode, Node * pParent, const char*
     if(strcmp(pPropertyName, PROPERTY_VISIBLE) == 0) {
         pNode->setVisible(pCheck);
     } else if(strcmp(pPropertyName, PROPERTY_IGNOREANCHORPOINTFORPOSITION) == 0) {
-        pNode->ignoreAnchorPointForPosition(pCheck);
+        pNode->setIgnoreAnchorPointForPosition(pCheck);
     } else {
         //ASSERT_FAIL_UNEXPECTED_PROPERTY(pPropertyName);
         // It may be a custom property, add it to custom property dictionary.

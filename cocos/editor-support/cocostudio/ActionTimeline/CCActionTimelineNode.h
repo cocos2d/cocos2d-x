@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  Copyright (c) 2013 cocos2d-x.org
  
  http://www.cocos2d-x.org
@@ -25,9 +25,9 @@
 #ifndef __COCOSSTUDIO_CCACTIONTIMELINENODE_H__
 #define __COCOSSTUDIO_CCACTIONTIMELINENODE_H__
 
-#include "CCActionTimeline.h"
-#include "CCTimelineMacro.h"
-#include "cocostudio/CocosStudioExport.h"
+#include "editor-support/cocostudio/ActionTimeline/CCActionTimeline.h"
+#include "editor-support/cocostudio/ActionTimeline/CCTimelineMacro.h"
+#include "editor-support/cocostudio/CocosStudioExport.h"
 
 NS_TIMELINE_BEGIN
 

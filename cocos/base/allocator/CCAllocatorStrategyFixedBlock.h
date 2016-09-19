@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014-2015 Chukong Technologies Inc.
+ Copyright (c) 2014-2016 Chukong Technologies Inc.
  Author: Justin Graham (https://github.com/mannewalis)
  
  http://www.cocos2d-x.org
@@ -222,7 +222,7 @@ protected:
 protected:
         
     // @brief Returns the size of a page in bytes + overhead.
-    const size_t pageSize() const
+    size_t pageSize() const
     {
         return AllocatorBase::kDefaultAlignment + AllocatorBase::nextPow2BlockSize(block_size) * _pageSize;
     }

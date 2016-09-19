@@ -2,7 +2,7 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -108,11 +108,11 @@ Color4B::Color4B(GLubyte _r, GLubyte _g, GLubyte _b, GLubyte _a)
 , a(_a)
 {}
 
-Color4B::Color4B(const Color3B& color)
+Color4B::Color4B(const Color3B& color, GLubyte _a)
 : r(color.r)
 , g(color.g)
 , b(color.b)
-, a(255)
+, a(_a)
 {}
 
 Color4B::Color4B(const Color4F& color)
@@ -170,11 +170,11 @@ Color4F::Color4F(float _r, float _g, float _b, float _a)
 , a(_a)
 {}
 
-Color4F::Color4F(const Color3B& color)
+Color4F::Color4F(const Color3B& color, float _a)
 : r(color.r / 255.0f)
 , g(color.g / 255.0f)
 , b(color.b / 255.0f)
-, a(1.0f)
+, a(_a)
 {}
 
 Color4F::Color4F(const Color4B& color)

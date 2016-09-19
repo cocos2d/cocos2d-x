@@ -24,11 +24,8 @@ THE SOFTWARE.
 ****************************************************************************/
 #include "platform/CCCommon.h"
 #include "platform/CCStdC.h"
-#include "CCWinRTUtils.h"
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || defined(WP8_SHADER_COMPILER)
-#include "platform/wp8/CCGLViewImpl-wp8.h"
-#endif
+#include "platform/winrt/CCGLViewImpl-winrt.h"
+#include "platform/winrt/CCWinRTUtils.h"
 
 #if defined(VLD_DEBUG_MEMORY)
 #include <vld.h>
@@ -40,11 +37,9 @@ NS_CC_BEGIN
 void MessageBox(const char * pszMsg, const char * pszTitle)
 {
     // Create the message dialog and set its content
-    Platform::String^ message = ref new Platform::String(CCUtf8ToUnicode(pszMsg, -1).c_str());
-    Platform::String^ title = ref new Platform::String(CCUtf8ToUnicode(pszTitle, -1).c_str());
-#ifndef WP8_SHADER_COMPILER
+    Platform::String^ message = PlatformStringFromString(pszMsg);
+    Platform::String^ title = PlatformStringFromString(pszTitle);
     GLViewImpl::sharedOpenGLView()->ShowMessageBox(title, message);
-#endif
 }
 
 

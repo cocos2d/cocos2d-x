@@ -54,7 +54,7 @@
 -- param outerAngle The angle of spot light (in radians).
 -- @function [parent=#SpotLight] setOuterAngle 
 -- @param self
--- @param #float angle
+-- @param #float outerAngle
 -- @return SpotLight#SpotLight self (return value: cc.SpotLight)
         
 --------------------------------

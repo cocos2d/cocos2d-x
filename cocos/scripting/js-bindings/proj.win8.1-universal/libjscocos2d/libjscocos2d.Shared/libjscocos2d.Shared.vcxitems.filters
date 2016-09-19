@@ -8,6 +8,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_auto.hpp">
       <Filter>auto</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_audioengine_auto.hpp">
+      <Filter>auto</Filter>
+    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_builder_auto.hpp">
       <Filter>auto</Filter>
     </ClInclude>
@@ -62,18 +65,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\3d\jsb_cocos2dx_3d_manual.h">
       <Filter>manual</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\chipmunk\js_bindings_chipmunk_auto_classes.h">
-      <Filter>manual\chipmunk</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\chipmunk\js_bindings_chipmunk_auto_classes_registration.h">
-      <Filter>manual\chipmunk</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\chipmunk\js_bindings_chipmunk_functions.h">
-      <Filter>manual\chipmunk</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\chipmunk\js_bindings_chipmunk_functions_registration.h">
-      <Filter>manual\chipmunk</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\chipmunk\js_bindings_chipmunk_manual.h">
       <Filter>manual\chipmunk</Filter>
     </ClInclude>
@@ -122,12 +113,41 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_3d_extension_auto.hpp">
       <Filter>auto</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_physics3d_auto.hpp">
+      <Filter>auto</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\physics3d\jsb_cocos2dx_physics3d_manual.h">
+      <Filter>manual\physics3d</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\navmesh\jsb_cocos2dx_navmesh_conversions.h">
+      <Filter>manual\navmesh</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\navmesh\jsb_cocos2dx_navmesh_manual.h">
+      <Filter>manual\navmesh</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_navmesh_auto.hpp">
+      <Filter>auto</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\component\CCComponentJS.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\js_module_register.h">
+      <Filter>manual</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\js-BindingsExport.h">
+      <Filter>manual</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\auto\js_bindings_chipmunk_auto_classes.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\auto\js_bindings_chipmunk_auto_classes_registration.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\auto\js_bindings_chipmunk_functions.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\auto\js_bindings_chipmunk_functions_registration.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_3d_auto.cpp">
       <Filter>auto</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_auto.cpp">
+      <Filter>auto</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_audioengine_auto.cpp">
       <Filter>auto</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_builder_auto.cpp">
@@ -175,12 +195,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\3d\jsb_cocos2dx_3d_manual.cpp">
       <Filter>manual</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\chipmunk\js_bindings_chipmunk_auto_classes.cpp">
-      <Filter>manual\chipmunk</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\chipmunk\js_bindings_chipmunk_functions.cpp">
-      <Filter>manual\chipmunk</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\chipmunk\js_bindings_chipmunk_manual.cpp">
       <Filter>manual\chipmunk</Filter>
     </ClCompile>
@@ -223,6 +237,27 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_3d_extension_auto.cpp">
       <Filter>auto</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_physics3d_auto.cpp">
+      <Filter>auto</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\physics3d\jsb_cocos2dx_physics3d_manual.cpp">
+      <Filter>manual\physics3d</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\navmesh\jsb_cocos2dx_navmesh_conversions.cpp">
+      <Filter>manual\navmesh</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\navmesh\jsb_cocos2dx_navmesh_manual.cpp">
+      <Filter>manual\navmesh</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_navmesh_auto.cpp">
+      <Filter>auto</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\component\CCComponentJS.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\js_module_register.cpp">
+      <Filter>manual</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\auto\js_bindings_chipmunk_auto_classes.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\auto\js_bindings_chipmunk_functions.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="auto">
@@ -260,6 +295,15 @@
     </Filter>
     <Filter Include="manual\ui">
       <UniqueIdentifier>{d5fa188f-db09-4c4b-a366-682bf76fcea2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="manual\experimental">
+      <UniqueIdentifier>{ddd3651e-c6e7-4dea-80c1-a0a3dc51a740}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="manual\physics3d">
+      <UniqueIdentifier>{511b128d-2604-48af-88e1-8cc0eba79e19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="manual\navmesh">
+      <UniqueIdentifier>{39b1e456-740e-4665-a251-5dc38687acf8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

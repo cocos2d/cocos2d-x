@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  Copyright (c) 2013 cocos2d-x.org
  
  http://www.cocos2d-x.org
@@ -27,7 +27,7 @@
 
 #include <stdint.h>
 #include "json/document.h"
-#include "cocostudio/CocosStudioExport.h"
+#include "editor-support/cocostudio/CocosStudioExport.h"
 
 #pragma pack (4)
 

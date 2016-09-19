@@ -174,7 +174,7 @@ function cc.pIsSegmentIntersect(pt1,pt2,pt3,pt4)
     local s,t,ret = 0,0,false
     ret,s,t =cc.pIsLineIntersect(pt1, pt2, pt3, pt4,s,t)
 
-    if ret and  s >= 0.0 and s <= 1.0 and t >= 0.0 and t <= 0.0 then
+    if ret and  s >= 0.0 and s <= 1.0 and t >= 0.0 and t <= 1.0 then
         return true
     end
 
@@ -309,7 +309,7 @@ function cc.convertColor(input, typ)
             ret = {r = input.r, g = input.g, b = input.b}
         end
         if input.a then
-            if math.ceil(input.a) ~= input.a or input.a >= 1 then
+            if math.ceil(input.a) ~= input.a or input.a <= 1 then
                 ret.a = input.a * 255
             else
                 ret.a = input.a
@@ -324,7 +324,7 @@ function cc.convertColor(input, typ)
             ret = {r = input.r / 255, g = input.g / 255, b = input.b / 255}
         end
         if input.a then
-            if math.ceil(input.a) ~= input.a or input.a >= 1 then
+            if math.ceil(input.a) ~= input.a or input.a <= 1 then
                 ret.a = input.a
             else
                 ret.a = input.a / 255
@@ -557,4 +557,24 @@ function cc.mat4.createRotation(q, dst)
     dst[16] = 1.0
 
     return dst
+end
+
+function cc.mat4.translate(self,vec3)
+    return mat4_translate(self,vec3)
+end
+
+function cc.mat4.createRotationZ(self,angle)
+    return mat4_createRotationZ(self,angle)
+end
+
+function cc.mat4.setIdentity(self)
+    return mat4_setIdentity(self)
+end
+
+function cc.mat4.createTranslation(...)
+    return mat4_createTranslation(...)
+end
+
+function cc.mat4.createRotation(...)
+    return mat4_createRotation(...)
 end

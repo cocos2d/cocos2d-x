@@ -17,9 +17,11 @@
 #include "assets-manager/CCEventAssetsManagerEx.h"
 #include "assets-manager/CCEventListenerAssetsManagerEx.h"
 #include "assets-manager/Manifest.h"
+
 #include "ExtensionDeprecated.h"
 
 // Particle System, include Particle Universe Particle System
+#include "Particle3D/CCParticle3DRender.h"
 #include "Particle3D/CCParticleSystem3D.h"
 #include "Particle3D/PU/CCPUParticleSystem3D.h"
 

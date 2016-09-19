@@ -22,12 +22,12 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#include "UIEditBoxImpl-win32.h"
+#include "ui/UIEditBox/UIEditBoxImpl-win32.h"
 
 #include "platform/CCPlatformConfig.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 
-#include "UIEditBox.h"
+#include "ui/UIEditBox/UIEditBox.h"
 #include <windows.h>
 #include <tchar.h>
 #include <stdio.h>
@@ -36,8 +36,6 @@
 #include "base/ccUTF8.h"
 
 #pragma warning (disable: 4312)
-
-class CWin32InputBox;
 
 // Structure used to orient the inputbox behavior
 struct WIN32INPUTBOX_PARAM
@@ -87,24 +85,45 @@ private:
 	WIN32INPUTBOX_PARAM *_param;
 	static LRESULT CALLBACK DlgProc(HWND, UINT, WPARAM, LPARAM);
 	HWND _hwndEditCtrl;
+	int _recursionDepth;
+	HHOOK _getMsgHook;
+
+	cocos2d::ui::EditBox::KeyboardReturnType _returnType;
+	cocos2d::ui::EditBox::InputMode _inputMode;
+	cocos2d::ui::EditBox::InputFlag _inputFlag;
+	std::function<void (const char *)> _onTextChange;
+	std::function<void (INT_PTR)> _onClose;
 
 	void InitDialog();
-	void SetParam(WIN32INPUTBOX_PARAM *);
-	WIN32INPUTBOX_PARAM * GetParam();
+	static LRESULT CALLBACK GetMsgProc(int code, WPARAM wParam, LPARAM lParam);
 
 public:
 
 	CWin32InputBox(WIN32INPUTBOX_PARAM *);
 	~CWin32InputBox();
 
-	static INT_PTR InputBoxEx(WIN32INPUTBOX_PARAM *);
+	static INT_PTR InputBoxEx(WIN32INPUTBOX_PARAM *,
+		cocos2d::ui::EditBox::KeyboardReturnType eReturnType,
+		cocos2d::ui::EditBox::InputMode eInputMode,
+		cocos2d::ui::EditBox::InputFlag eInputFlag,
+		const std::function<void (const char *)> &onTextChange,
+		const std::function<void (INT_PTR)> &onClose);
+
 	static INT_PTR InputBox(
 		LPCSTR szTitle,
 		LPCSTR szPrompt,
 		std::string* pstrResult,
 		DWORD nMaxLength,
-		bool bMultiLine = false,
-		HWND hwndParent = 0);
+		bool bMultiLine,
+		HWND hwndParent,
+		cocos2d::ui::EditBox::KeyboardReturnType eReturnType,
+		cocos2d::ui::EditBox::InputMode eInputMode,
+		cocos2d::ui::EditBox::InputFlag eInputFlag,
+		const std::function<void (const char *)> &onTextChange,
+		const std::function<void (INT_PTR)> &onClose);
+
+	void SetText(const char *pText);
+	void Close(INT_PTR buttonId);
 };
 
 
@@ -174,13 +193,12 @@ static unsigned char definputbox_dlg[] =
 	0xff, 0xff, 0xff, 0xff, 0xff, 0x82, 0x00, 0x00, 0x00, 0x00, 0x00
 };
 
-static LPCTSTR definputbox_buttonnames[] = { _T("OK"), _T("CANCEL") };
-static const INT_PTR definputbox_buttonids[] = { IDOK, IDCANCEL };
-
 static const INT
 definputbox_id_prompt = 1000,
 definputbox_id_edit1 = 1001,
 definputbox_id_edit2 = 1002;
+
+static CWin32InputBox *s_win32InputBox = nullptr;
 
 WIN32INPUTBOX_PARAM::WIN32INPUTBOX_PARAM()
 {
@@ -205,25 +223,23 @@ WIN32INPUTBOX_PARAM::WIN32INPUTBOX_PARAM()
 
 CWin32InputBox::CWin32InputBox(WIN32INPUTBOX_PARAM *param)
 {
-	_param = param;
+	_param = new (std::nothrow) WIN32INPUTBOX_PARAM(*param);
+	_hwndEditCtrl = NULL;
+	_recursionDepth = 0;
+	_getMsgHook = NULL;
 }
 
 CWin32InputBox::~CWin32InputBox()
 {
-
+	CC_SAFE_DELETE(_param);
 }
 
-void CWin32InputBox::SetParam(WIN32INPUTBOX_PARAM *param)
-{
-	_param = param;
-}
-
-WIN32INPUTBOX_PARAM *CWin32InputBox::GetParam()
-{
-	return _param;
-}
-
-INT_PTR CWin32InputBox::InputBoxEx(WIN32INPUTBOX_PARAM *param)
+INT_PTR CWin32InputBox::InputBoxEx(WIN32INPUTBOX_PARAM *param,
+	cocos2d::ui::EditBox::KeyboardReturnType eReturnType,
+	cocos2d::ui::EditBox::InputMode eInputMode,
+	cocos2d::ui::EditBox::InputFlag eInputFlag,
+	const std::function<void (const char *)> &onTextChange,
+	const std::function<void (INT_PTR)> &onClose)
 {
 	// Check mandatory parameters
 	if (param->pstrResult == nullptr)
@@ -291,12 +307,20 @@ INT_PTR CWin32InputBox::InputBoxEx(WIN32INPUTBOX_PARAM *param)
 			dlgTemplate->y = param->yPos;
 	}
 
-	CWin32InputBox inputbox(param);
+	CCASSERT(s_win32InputBox == nullptr, "Only one instance of Win32InputBox allowed");
 
-	// Resize dialog and SHOW or HIDE multiline
-	INT_PTR r = ::DialogBoxIndirectParam(param->hInstance, dlgTemplate, param->hwndOwner, (DLGPROC)DlgProc, (LPARAM)&inputbox);
+	s_win32InputBox = new (std::nothrow) CWin32InputBox(param);
+	s_win32InputBox->_returnType = eReturnType;
+	s_win32InputBox->_inputMode = eInputMode;
+	s_win32InputBox->_inputFlag = eInputFlag;
+	s_win32InputBox->_onTextChange = onTextChange;
+	s_win32InputBox->_onClose = onClose;
 
-	return r;
+	HWND hDlg = ::CreateDialogIndirectParam(param->hInstance, dlgTemplate, param->hwndOwner, (DLGPROC)DlgProc, (LPARAM)s_win32InputBox);
+	::ShowWindow(hDlg, SW_SHOW);
+	::EnableWindow(param->hwndOwner, FALSE);
+
+	return TRUE;
 }
 
 INT_PTR CWin32InputBox::InputBox(
@@ -305,7 +329,12 @@ INT_PTR CWin32InputBox::InputBox(
 	std::string* pstrResult,
 	DWORD nResultSize,
 	bool bMultiLine,
-	HWND hwndParent)
+	HWND hwndParent,
+	cocos2d::ui::EditBox::KeyboardReturnType eReturnType,
+	cocos2d::ui::EditBox::InputMode eInputMode,
+	cocos2d::ui::EditBox::InputFlag eInputFlag,
+	const std::function<void (const char *)> &onTextChange,
+	const std::function<void (INT_PTR)> &onClose)
 {
 	WIN32INPUTBOX_PARAM param;
 
@@ -315,14 +344,32 @@ INT_PTR CWin32InputBox::InputBox(
 	param.nMaxLength = nResultSize;
 	param.bMultiline = bMultiLine;
 	param.hwndOwner = hwndParent;
-	return InputBoxEx(&param);
+
+	return InputBoxEx(&param, eReturnType, eInputMode, eInputFlag, onTextChange, onClose);
 }
 
 void CWin32InputBox::InitDialog()
 {
-	// Set the button captions
-	for (size_t i = 0; i<sizeof(definputbox_buttonids) / sizeof(definputbox_buttonids[0]); i++)
-		::SetDlgItemText(_param->hDlg, (int)definputbox_buttonids[i], definputbox_buttonnames[i]);
+	// Set the button captions, associated with ReturnType
+	switch (_returnType)
+	{
+	case cocos2d::ui::EditBox::KeyboardReturnType::DEFAULT:
+		::SetDlgItemTextW(_param->hDlg, IDOK, L"OK");
+		break;
+	case cocos2d::ui::EditBox::KeyboardReturnType::DONE:
+		::SetDlgItemTextW(_param->hDlg, IDOK, L"DONE");
+		break;
+	case cocos2d::ui::EditBox::KeyboardReturnType::SEND:
+		::SetDlgItemTextW(_param->hDlg, IDOK, L"SEND");
+		break;
+	case cocos2d::ui::EditBox::KeyboardReturnType::SEARCH:
+		::SetDlgItemTextW(_param->hDlg, IDOK, L"SEARCH");
+		break;
+	case cocos2d::ui::EditBox::KeyboardReturnType::GO:
+		::SetDlgItemTextW(_param->hDlg, IDOK, L"GO");
+		break;
+	}
+	::SetDlgItemTextW(_param->hDlg, IDCANCEL, L"CANCEL");
 
 	// Set other controls
 	std::u16string utf16Title;
@@ -330,7 +377,7 @@ void CWin32InputBox::InitDialog()
 	::SetWindowTextW(_param->hDlg, (LPCWSTR) utf16Title.c_str());
 
 	std::u16string utf16Prompt;
-	cocos2d::StringUtils::UTF8ToUTF16(_param->szTitle, utf16Prompt);
+	cocos2d::StringUtils::UTF8ToUTF16(_param->szPrompt, utf16Prompt);
 	::SetDlgItemTextW(_param->hDlg, definputbox_id_prompt, (LPCWSTR) utf16Prompt.c_str());
 
 	HWND hwndEdit1 = ::GetDlgItem(_param->hDlg, definputbox_id_edit1);
@@ -342,7 +389,7 @@ void CWin32InputBox::InitDialog()
 		_hwndEditCtrl = hwndEdit1;
 
 	std::u16string utf16Result;
-	cocos2d::StringUtils::UTF8ToUTF16(_param->pstrResult->c_str(), utf16Result);
+	cocos2d::StringUtils::UTF8ToUTF16(*_param->pstrResult, utf16Result);
 	::SetWindowTextW(_hwndEditCtrl, (LPCWSTR) utf16Result.c_str());
 
 	RECT rectDlg, rectEdit1, rectEdit2;
@@ -386,89 +433,192 @@ void CWin32InputBox::InitDialog()
 
 		::ShowWindow(hwndEdit2, SW_HIDE);
 	}
+
+	// Sets the text limit of the edit control.
+	// wParam is the maximum number of WCHARs the user can enter. For Unicode text, wParam is the number of characters.
+	// Please refer to https://msdn.microsoft.com/en-us/library/bb761607%28v=vs.85%29.aspx
+	if ((int)_param->nMaxLength > 0)
+	{
+		::SendMessageW(hwndEdit1, EM_LIMITTEXT, (WPARAM)_param->nMaxLength, 0);
+		::SendMessageW(hwndEdit2, EM_LIMITTEXT, (WPARAM)_param->nMaxLength, 0);
+	}
+
+	switch (_inputFlag)
+	{
+	case cocos2d::ui::EditBox::InputFlag::PASSWORD:
+		// Sets a password character displayed in a edit control when the user types text.
+		// Please refer to https://msdn.microsoft.com/en-us/library/bb761653%28v=vs.85%29.aspx
+		::SendMessageW(hwndEdit1, EM_SETPASSWORDCHAR, (WPARAM)L'*', 0);
+		::SendMessageW(hwndEdit2, EM_SETPASSWORDCHAR, (WPARAM)L'*', 0);
+		break;
+	case cocos2d::ui::EditBox::InputFlag::SENSITIVE:
+		break;
+	case cocos2d::ui::EditBox::InputFlag::INITIAL_CAPS_WORD:
+		break;
+	case cocos2d::ui::EditBox::InputFlag::INITIAL_CAPS_SENTENCE:
+		break;
+	case cocos2d::ui::EditBox::InputFlag::INITIAL_CAPS_ALL_CHARACTERS:
+		// Converts all characters to lowercase as they are typed into the edit control.
+		// Please refer to https://msdn.microsoft.com/en-us/library/bb775464%28v=vs.85%29.aspx
+		::SetWindowLongW(hwndEdit1, GWL_STYLE, ::GetWindowLongW(hwndEdit1, GWL_STYLE) | ES_UPPERCASE);
+		::SetWindowLongW(hwndEdit2, GWL_STYLE, ::GetWindowLongW(hwndEdit2, GWL_STYLE) | ES_UPPERCASE);
+		break;
+	default:
+		break;
+	}
+
+	switch (_inputMode)
+	{
+	case cocos2d::ui::EditBox::InputMode::ANY:
+		break;
+	case cocos2d::ui::EditBox::InputMode::EMAIL_ADDRESS:
+		break;
+	case cocos2d::ui::EditBox::InputMode::NUMERIC:
+		// Allows only digits to be entered into the edit control.
+		// Note that, even with this set, it is still possible to paste non-digits into the edit control.
+		// Please refer to https://msdn.microsoft.com/en-us/library/bb775464%28v=vs.85%29.aspx
+		::SetWindowLongW(hwndEdit1, GWL_STYLE, ::GetWindowLongW(hwndEdit1, GWL_STYLE) | ES_NUMBER);
+		::SetWindowLongW(hwndEdit2, GWL_STYLE, ::GetWindowLongW(hwndEdit2, GWL_STYLE) | ES_NUMBER);
+		break;
+	case cocos2d::ui::EditBox::InputMode::PHONE_NUMBER:
+		break;
+	case cocos2d::ui::EditBox::InputMode::URL:
+		break;
+	case cocos2d::ui::EditBox::InputMode::DECIMAL:
+		break;
+	case cocos2d::ui::EditBox::InputMode::SINGLE_LINE:
+		break;
+	default:
+		break;
+	}
+
+	CCASSERT(_getMsgHook == nullptr, "Windows Message hook already set");
+
+	// To make the enter key work, here need a Windows Message hook.
+	// Please refer to https://support.microsoft.com/en-us/kb/187988
+	_getMsgHook = ::SetWindowsHookEx(WH_GETMESSAGE, &CWin32InputBox::GetMsgProc, ::GetModuleHandle(nullptr), ::GetCurrentThreadId());
+}
+
+LRESULT CALLBACK CWin32InputBox::GetMsgProc(int code, WPARAM wParam, LPARAM lParam)
+{
+	if (code == HC_ACTION)
+	{
+		LPMSG lpMsg = (LPMSG)lParam;
+		if (lpMsg->message == WM_KEYDOWN)
+		{
+			if (lpMsg->wParam == VK_RETURN)  // User has hit the ENTER key.
+			{
+				// Translate the message manually.
+				lpMsg->hwnd = s_win32InputBox->_param->hDlg;
+				lpMsg->message = WM_COMMAND;
+				lpMsg->wParam = IDOK;
+			}
+		}
+	}
+	return ::CallNextHookEx(s_win32InputBox->_getMsgHook, code, wParam, lParam);
 }
 
 // Message handler for about box.
 LRESULT CALLBACK CWin32InputBox::DlgProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	CWin32InputBox *_this = (CWin32InputBox *) ::GetWindowLongPtr(hDlg, GWLP_USERDATA);
-	WIN32INPUTBOX_PARAM *param = _this ? _this->GetParam() : 0;
 
 	switch (message)
 	{
 	case WM_INITDIALOG:
 	{
-						  SetWindowLongPtr(hDlg, GWLP_USERDATA, (LONG_PTR)lParam);
+		SetWindowLongPtr(hDlg, GWLP_USERDATA, (LONG_PTR)lParam);
 
-						  _this = (CWin32InputBox *)lParam;
-						  _this->_param->hDlg = hDlg;
-						  _this->InitDialog();
-						  return TRUE;
+		_this = (CWin32InputBox *)lParam;
+		_this->_param->hDlg = hDlg;
+		_this->InitDialog();
+		return TRUE;
 	}
 
 	case WM_COMMAND:
 	{
 #ifdef _MY_DEBUG
-					   CHAR buf[1024];
-					   static int i = 0;
-					   sprintf(buf, "WM_COMMAND: %09d wParam=%08X lParam=%08X\n", i++, wParam, lParam);
-					   OutputDebugString(buf);
+		CHAR buf[1024];
+		static int i = 0;
+		sprintf(buf, "WM_COMMAND: %09d wParam=%08X lParam=%08X\n", i++, wParam, lParam);
+		OutputDebugStringA(buf);
 #endif
-					   INT_PTR buttonId = LOWORD(wParam);
-					   for (size_t i = 0;
-						   i<sizeof(definputbox_buttonids) / sizeof(definputbox_buttonids[0]);
-						   i++)
-					   {
-						   if (buttonId == definputbox_buttonids[i])
-						   {
-							   std::u16string wstrResult;
-							   std::string utf8Result;
+		INT_PTR buttonId = LOWORD(wParam);
+		if (buttonId == IDOK || buttonId == IDCANCEL)
+		{
+			// Yes! Just close the dialog box simply,
+			// because the text of EditBox has been already synced at the moment of text altered in the edit control
+			_this->Close(buttonId);
+			return TRUE;
+		}
 
-							   int inputLength = ::GetWindowTextLengthW(_this->_hwndEditCtrl);
-							   wstrResult.resize(inputLength);
+		// text altered in the edit control
+		// Please refer to https://msdn.microsoft.com/en-us/library/bb761676%28v=vs.85%29.aspx
+		if (HIWORD(wParam) == EN_CHANGE && _this->_recursionDepth == 0)
+		{
+			std::u16string wstrResult;
+			std::string utf8Result;
 
-							   ::GetWindowTextW(
-								   _this->_hwndEditCtrl,
-								   (LPWSTR) const_cast<char16_t*>(wstrResult.c_str()),
-								   inputLength+1);
+			int inputLength = ::GetWindowTextLengthW(_this->_hwndEditCtrl);
+			wstrResult.resize(inputLength);
 
-							   bool conversionResult = cocos2d::StringUtils::UTF16ToUTF8(wstrResult, utf8Result);
-							   _this->_param->pstrResult->clear();
-							   if (conversionResult)
-							   {
-								   DWORD inputLengthAsUTF8 = (DWORD) cocos2d::StringUtils::getCharacterCountInUTF8String(utf8Result);
-								   if ((_this->_param->nMaxLength > 0) &&
-									   (_this->_param->nMaxLength < inputLengthAsUTF8))
-								   {
-									   // LengthFilter
-									   for (size_t pos=0; pos < _this->_param->nMaxLength; pos++)
-									   {
-										   std::string utf8Bytes;
-										   std::u16string utf16Character(1, wstrResult[pos]);
+			::GetWindowTextW(_this->_hwndEditCtrl, (LPWSTR) const_cast<char16_t*>(wstrResult.c_str()), inputLength+1);
+			bool conversionResult = cocos2d::StringUtils::UTF16ToUTF8(wstrResult, utf8Result);
+			_this->_param->pstrResult->clear();
+			++_this->_recursionDepth;  // Prevent recursive calls
+			if (conversionResult)
+			{
+				*(_this->_param->pstrResult) = std::move(utf8Result);
+			}
 
-										   bool utf16toutf8ConversionResult = cocos2d::StringUtils::UTF16ToUTF8(utf16Character, utf8Bytes);
-										   if (utf16toutf8ConversionResult)
-										   {
-											   _this->_param->pstrResult->append(utf8Bytes);
-										   }
-									   }
-								   }
-								   else
-								   {
-									   *(_this->_param->pstrResult) = utf8Result;
-								   }
-							   }
-
-							   ::EndDialog(hDlg, buttonId);
-							   return TRUE;
-						   }
-					   }
+			// Invoke editBoxTextChanged indirectly
+			_this->_onTextChange(_this->_param->pstrResult->c_str());
+			--_this->_recursionDepth;
+			return TRUE;
+		}
 	}
 		break;
 	}
 	return FALSE;
 }
 
+void CWin32InputBox::SetText(const char* pText)
+{
+	if (_hwndEditCtrl != NULL)
+	{
+		std::u16string utf16Text;
+		cocos2d::StringUtils::UTF8ToUTF16(pText, utf16Text);
+
+		// Keep the cursor position
+		// Please refer to :
+		// https://msdn.microsoft.com/en-us/library/bb761598%28v=vs.85%29.aspx
+		// https://msdn.microsoft.com/en-us/library/bb761661%28v=vs.85%29.aspx
+		size_t len = utf16Text.length();
+		DWORD beginPos, endPos;
+		::SendMessageW(_hwndEditCtrl, EM_GETSEL, (WPARAM)&beginPos, (LPARAM)&endPos);
+		::SendMessageW(_hwndEditCtrl, WM_SETTEXT, 0, (LPARAM)utf16Text.c_str());
+		::SendMessageW(_hwndEditCtrl, EM_SETSEL, (WPARAM)std::min<long>(beginPos, len), (LPARAM)std::min<long>(endPos, len));
+	}
+}
+
+void CWin32InputBox::Close(INT_PTR buttonId)
+{
+	if (_getMsgHook != NULL)
+	{
+		::UnhookWindowsHookEx(_getMsgHook);
+		_getMsgHook = NULL;
+	}
+
+	if (_param->hDlg != NULL)
+	{
+		::EnableWindow(_param->hwndOwner, TRUE);
+		::SetFocus(_param->hwndOwner);
+		::DestroyWindow(_param->hDlg);
+		_param->hDlg = NULL;
+
+		_onClose(buttonId);
+	}
+}
 
 NS_CC_BEGIN
 
@@ -476,7 +626,7 @@ namespace ui {
 
 EditBoxImpl* __createSystemEditBox(EditBox* pEditBox)
 {
-    return new EditBoxImplWin(pEditBox);
+    return new (std::nothrow) EditBoxImplWin(pEditBox);
 }
 
 EditBoxImplWin::EditBoxImplWin(EditBox* pEditText)
@@ -484,13 +634,14 @@ EditBoxImplWin::EditBoxImplWin(EditBox* pEditText)
 , _label(nullptr)
 , _labelPlaceHolder(nullptr)
 , _editBoxInputMode(EditBox::InputMode::SINGLE_LINE)
-, _editBoxInputFlag(EditBox::InputFlag::INTIAL_CAPS_ALL_CHARACTERS)
+, _editBoxInputFlag(EditBox::InputFlag::INITIAL_CAPS_ALL_CHARACTERS)
 , _keyboardReturnType(EditBox::KeyboardReturnType::DEFAULT)
 , _colText(Color3B::WHITE)
 , _colPlaceHolder(Color3B::GRAY)
 , _maxLength(-1)
+, _isEditing(false)
 {
-    
+
 }
 
 EditBoxImplWin::~EditBoxImplWin()
@@ -508,7 +659,7 @@ bool EditBoxImplWin::initWithSize(const Size& size)
     //! int fontSize = getFontSizeAccordingHeightJni(size.height-12);
     _label = Label::create();
     _label->setSystemFontSize(size.height-12);
-	// align the text vertically center
+    // align the text vertically center
     _label->setAnchorPoint(Vec2(0, 0.5f));
     _label->setPosition(Vec2(CC_EDIT_BOX_PADDING, size.height / 2.0f));
     _label->setTextColor(_colText);
@@ -516,30 +667,42 @@ bool EditBoxImplWin::initWithSize(const Size& size)
 
     _labelPlaceHolder = Label::create();
     _labelPlaceHolder->setSystemFontSize(size.height-12);
-	// align the text vertically center
+    // align the text vertically center
     _labelPlaceHolder->setAnchorPoint(Vec2(0, 0.5f));
     _labelPlaceHolder->setPosition(CC_EDIT_BOX_PADDING, size.height / 2.0f);
     _labelPlaceHolder->setVisible(false);
     _labelPlaceHolder->setTextColor(_colPlaceHolder);
     _editBox->addChild(_labelPlaceHolder);
-    
+
     _editSize = size;
     return true;
 }
 
 void EditBoxImplWin::setFont(const char* pFontName, int fontSize)
 {
-	if (_label != nullptr)
-	{
-		_label->setSystemFontName(pFontName);
-		_label->setSystemFontSize(fontSize);
-	}
-	
-	if (_labelPlaceHolder != nullptr)
-	{
-		_labelPlaceHolder->setSystemFontName(pFontName);
-		_labelPlaceHolder->setSystemFontSize(fontSize);
-	}
+    if (_label != nullptr)
+    {
+        if (pFontName[0] != '\0')  // To determine whether a string is empty quickly
+        {
+            _label->setSystemFontName(pFontName);
+        }
+        if (fontSize > 0)
+        {
+            _label->setSystemFontSize(fontSize);
+        }
+    }
+
+    if (_labelPlaceHolder != nullptr)
+    {
+        if (pFontName[0] != '\0')  // To determine whether a string is empty quickly
+        {
+            _labelPlaceHolder->setSystemFontName(pFontName);
+        }
+        if (fontSize > 0)
+        {
+            _labelPlaceHolder->setSystemFontSize(fontSize);
+        }
+    }
 }
 
 void EditBoxImplWin::setFontColor(const Color4B& color)
@@ -550,11 +713,17 @@ void EditBoxImplWin::setFontColor(const Color4B& color)
 
 void EditBoxImplWin::setPlaceholderFont(const char* pFontName, int fontSize)
 {
-	if (_labelPlaceHolder != nullptr)
-	{
-		_labelPlaceHolder->setSystemFontName(pFontName);
-		_labelPlaceHolder->setSystemFontSize(fontSize);
-	}
+    if (_labelPlaceHolder != nullptr)
+    {
+        if (pFontName[0] != '\0')  // To determine whether a string is empty quickly
+        {
+            _labelPlaceHolder->setSystemFontName(pFontName);
+        }
+        if (fontSize > 0)
+        {
+            _labelPlaceHolder->setSystemFontSize(fontSize);
+        }
+    }
 }
 
 void EditBoxImplWin::setPlaceholderFontColor(const Color4B& color)
@@ -590,38 +759,39 @@ void EditBoxImplWin::setReturnType(EditBox::KeyboardReturnType returnType)
 
 bool EditBoxImplWin::isEditing()
 {
-    return false;
+    return _isEditing;
 }
 
 void EditBoxImplWin::setText(const char* pText)
 {
     if (pText != nullptr)
     {
+        if (strcmp(_text.c_str(), pText) == 0)  // do nothing if the text is not changed
+        {
+            return;
+        }
+
         _text = pText;
+        if (_isEditing && s_win32InputBox != nullptr)  // set text for the running Win32InputBox
+        {
+            s_win32InputBox->SetText(pText);
+        }
 
         if (_text.length() > 0)
         {
             _labelPlaceHolder->setVisible(false);
 
-            std::string strToShow;
-
-			if (EditBox::InputFlag::PASSWORD == _editBoxInputFlag)
+            if (EditBox::InputFlag::PASSWORD == _editBoxInputFlag)
             {
-				long length = StringUtils::getCharacterCountInUTF8String(_text);
-                for (long i = 0; i < length; i++)
-                {
-                    strToShow.append("*");
-                }
+                long length = StringUtils::getCharacterCountInUTF8String(_text);
+                std::string strToShow(length, '*');  // Fills strToShow with length consecutive copies of character '*'
+                _label->setString(strToShow);
             }
             else
             {
-                strToShow = _text;
+                _label->setString(_text);
             }
 
-            //! std::string strWithEllipsis = getStringWithEllipsisJni(strToShow.c_str(), _editSize.width, _editSize.height-12);
-            //! _label->setString(strWithEllipsis.c_str());
-            _label->setString(strToShow.c_str());
-            
             float maxWidth = _editSize.width - 2 * CC_EDIT_BOX_PADDING;
             auto labelSize = _label->getContentSize();
             if (labelSize.width > maxWidth)
@@ -653,14 +823,14 @@ void EditBoxImplWin::setPlaceHolder(const char* pText)
             _labelPlaceHolder->setVisible(true);
         }
 
-        _labelPlaceHolder->setString(_placeHolder.c_str());
+        _labelPlaceHolder->setString(_placeHolder);
     }
 }
 
 void EditBoxImplWin::setPosition(const Vec2& pos)
 {
-	//_label->setPosition(pos);
-	//_labelPlaceHolder->setPosition(pos);
+    //_label->setPosition(pos);
+    //_labelPlaceHolder->setPosition(pos);
 }
 
 void EditBoxImplWin::setVisible(bool visible)
@@ -673,59 +843,70 @@ void EditBoxImplWin::setContentSize(const Size& size)
 
 void EditBoxImplWin::setAnchorPoint(const Vec2& anchorPoint)
 { // don't need to be implemented on win32 platform.
-	
 }
 
-void EditBoxImplWin::visit(void)
-{   
+void EditBoxImplWin::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
+{
 }
 
 void EditBoxImplWin::openKeyboard()
 {
+    if (s_win32InputBox != nullptr)
+    {
+        return;
+    }
+
     if (_delegate != nullptr)
     {
         _delegate->editBoxEditingDidBegin(_editBox);
     }
 
+    _isEditing = true;
 #if CC_ENABLE_SCRIPT_BINDING
     auto editBox = this->getEditBox();
-    if (editBox && editBox->getScriptEditBoxHandler())
+    if (nullptr != editBox && 0 != editBox->getScriptEditBoxHandler())
     {
-        CommonScriptData data(editBox->getScriptEditBoxHandler(), "began",editBox);
-        ScriptEvent event(kCommonEvent,(void*)&data);
+        CommonScriptData data(editBox->getScriptEditBoxHandler(), "began", editBox);
+        ScriptEvent event(kCommonEvent, (void*)&data);
         ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
     }
 #endif
-    
-	std::string placeHolder = _labelPlaceHolder->getString();
-	if (placeHolder.length() == 0)
-		placeHolder = "Enter value";
 
-	std::string text = getText();
-	auto glView = Director::getInstance()->getOpenGLView();
-	HWND hwnd = glView->getWin32Window();
-	bool didChange = CWin32InputBox::InputBox("Input", placeHolder.c_str(), &text, _maxLength, false, hwnd) == IDOK;
-	
-	if (didChange) 	
-		setText(text.c_str());
+    std::string placeHolder = _labelPlaceHolder->getString();
+    if (placeHolder.length() == 0)
+        placeHolder = "Enter value";
 
-	if (_delegate != nullptr)
-	{
-		if (didChange)
-			_delegate->editBoxTextChanged(_editBox, getText());
-		_delegate->editBoxEditingDidEnd(_editBox);
-		_delegate->editBoxReturn(_editBox);
-	}
-    
+    _editingText = getText();
+    _originalText = _editingText;
+    auto glView = Director::getInstance()->getOpenGLView();
+    HWND hwnd = glView->getWin32Window();
+    CWin32InputBox::InputBox("Input", placeHolder.c_str(), &_editingText, _maxLength, false, hwnd,
+        _keyboardReturnType, _editBoxInputMode, _editBoxInputFlag,
+        std::bind(&EditBoxImplWin::onWin32InputBoxTextChange, this, std::placeholders::_1),
+        std::bind(&EditBoxImplWin::onWin32InputBoxClose, this, std::placeholders::_1));
+}
+
+void EditBoxImplWin::onWin32InputBoxClose(INT_PTR buttonId)
+{
+    bool didChange = buttonId == IDOK;
+    CC_SAFE_DELETE(s_win32InputBox);
+    _isEditing = false;
+
+    setText(didChange ? _editingText.c_str() : _originalText.c_str());
+
+    if (_delegate != nullptr)
+    {
+        _delegate->editBoxTextChanged(_editBox, getText());
+        _delegate->editBoxEditingDidEnd(_editBox);
+        _delegate->editBoxReturn(_editBox);
+    }
+
 #if CC_ENABLE_SCRIPT_BINDING
     if (nullptr != _editBox && 0 != _editBox->getScriptEditBoxHandler())
     {
-        CommonScriptData data(_editBox->getScriptEditBoxHandler(), "changed",_editBox);
+        CommonScriptData data(_editBox->getScriptEditBoxHandler(), "changed", _editBox);
         ScriptEvent event(kCommonEvent,(void*)&data);
-        if (didChange)
-        {
-            ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
-        }
+        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
         memset(data.eventName,0,sizeof(data.eventName));
         strncpy(data.eventName,"ended",sizeof(data.eventName));
         event.data = (void*)&data;
@@ -738,9 +919,36 @@ void EditBoxImplWin::openKeyboard()
 #endif // #if CC_ENABLE_SCRIPT_BINDING
 }
 
+void EditBoxImplWin::onWin32InputBoxTextChange(const char *pText)
+{
+    _isEditing = false;  // Prevent recursive calls
+    setText(pText);
+    _isEditing = true;
+
+    if (_delegate != nullptr)
+    {
+        _delegate->editBoxTextChanged(_editBox, _text);
+    }
+
+#if CC_ENABLE_SCRIPT_BINDING
+    if (nullptr != _editBox && 0 != _editBox->getScriptEditBoxHandler())
+    {
+        CommonScriptData data(_editBox->getScriptEditBoxHandler(), "changed", _editBox);
+        ScriptEvent event(kCommonEvent, (void*)&data);
+        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
+    }
+#endif // #if CC_ENABLE_SCRIPT_BINDING
+}
+
 void EditBoxImplWin::closeKeyboard()
 {
-
+    // close the running Win32InputBox
+    if (s_win32InputBox != nullptr)
+    {
+        s_win32InputBox->Close(IDCANCEL);
+        CC_SAFE_DELETE(s_win32InputBox);
+        _isEditing = false;
+    }
 }
 
 void EditBoxImplWin::onEnter(void)

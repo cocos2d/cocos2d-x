@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -26,7 +26,6 @@
 #ifndef _ActionsTest_H_
 #define _ActionsTest_H_
 
-#include "../testBasic.h"
 #include "../BaseTest.h"
 
 DEFINE_TEST_SUITE(ActionsTests);
@@ -44,15 +43,6 @@ public:
     void centerSprites(unsigned int numberOfSprites);
     void alignSpritesLeft(unsigned int numberOfSprites);
     virtual std::string title() const override;
-};
-
-class ActionManual : public ActionsDemo
-{
-public:
-    CREATE_FUNC(ActionManual);
-
-    virtual void onEnter() override;
-    virtual std::string subtitle() const override;
 };
 
 class ActionMove : public ActionsDemo
@@ -217,10 +207,28 @@ public:
     void callback3(Node* sender, long data);
 };
 
+class ActionSequence3 : public ActionsDemo
+{
+public:
+    CREATE_FUNC(ActionSequence3);
+
+    virtual void onEnter() override;
+    virtual std::string subtitle() const override;
+};
+
 class ActionSpawn : public ActionsDemo
 {
 public:
     CREATE_FUNC(ActionSpawn);
+
+    virtual void onEnter() override;
+    virtual std::string subtitle() const override;
+};
+
+class ActionSpawn2 : public ActionsDemo
+{
+public:
+    CREATE_FUNC(ActionSpawn2);
 
     virtual void onEnter() override;
     virtual std::string subtitle() const override;
@@ -310,15 +318,6 @@ public:
     virtual std::string subtitle() const override;
 };
 
-class ActionRotateJerk : public ActionsDemo
-{
-public:
-    CREATE_FUNC(ActionRotateJerk);
-
-    virtual void onEnter() override;
-    virtual std::string subtitle() const override;
-};
-
 class ActionCallFuncN : public ActionsDemo
 {
 public:
@@ -341,17 +340,6 @@ public:
     void doRemoveFromParentAndCleanup(Node* sender, bool cleanup);
 };
 
-class ActionCallFuncO : public ActionsDemo
-{
-public:
-    CREATE_FUNC(ActionCallFuncO);
-
-    virtual void onEnter() override;
-    virtual std::string title() const override;
-    virtual std::string subtitle() const override;
-    void callback(Node* object, bool cleanup);
-};
-
 class ActionCallFunction : public ActionsDemo
 {
 public:
@@ -371,6 +359,16 @@ class ActionFollow : public ActionsDemo
 public:
     CREATE_FUNC(ActionFollow);
 
+    virtual void onEnter() override;
+    virtual std::string subtitle() const override;
+};
+
+class ActionFollowWithOffset : public ActionsDemo
+{
+    
+public:
+    CREATE_FUNC(ActionFollowWithOffset);
+    
     virtual void onEnter() override;
     virtual std::string subtitle() const override;
 };
@@ -578,6 +576,15 @@ public:
     virtual std::string title() const override;    
 private:
     cocos2d::Vector<Node*> _pausedTargets;
+};
+
+class ActionResize : public ActionsDemo 
+{
+public:
+    CREATE_FUNC(ActionResize);
+
+    virtual void onEnter() override;
+    virtual std::string subtitle() const override;
 };
 
 class ActionFloatTest : public ActionsDemo

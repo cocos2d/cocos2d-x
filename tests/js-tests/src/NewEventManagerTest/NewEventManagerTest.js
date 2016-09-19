@@ -75,16 +75,16 @@ var TouchableSpriteTest =  EventDispatcherTestDemo.extend({
         var size = director.getVisibleSize();
 
         var containerForSprite1 = new cc.Node();
-        var sprite1 = new cc.Sprite("res/Images/CyanSquare.png");
+        var sprite1 = new cc.Sprite("Images/CyanSquare.png");
         sprite1.setPosition(origin.x + size.width/2 - 80, origin.y + size.height/2 + 80);
         containerForSprite1.addChild(sprite1);
         this.addChild(containerForSprite1, 10);
 
-        var sprite2 = new cc.Sprite("res/Images/MagentaSquare.png");
+        var sprite2 = new cc.Sprite("Images/MagentaSquare.png");
         sprite2.setPosition(origin.x + size.width/2, origin.y + size.height/2);
         this.addChild(sprite2, 20);
 
-        var sprite3 = new cc.Sprite("res/Images/YellowSquare.png");
+        var sprite3 = new cc.Sprite("Images/YellowSquare.png");
         sprite3.setPosition(0,0);
         sprite2.addChild(sprite3, 1);
 
@@ -254,19 +254,19 @@ var FixedPriorityTest =  EventDispatcherTestDemo.extend({
         var size = director.getVisibleSize();
 
         var sprite1 = TouchableSprite.create(30);
-        sprite1.setTexture("res/Images/CyanSquare.png");
+        sprite1.setTexture("Images/CyanSquare.png");
         sprite1.x = origin.x + size.width / 2 - 80;
         sprite1.y = origin.y + size.height / 2 + 40;
         this.addChild(sprite1, 10);
 
         var sprite2 = TouchableSprite.create(20);
-        sprite2.setTexture("res/Images/MagentaSquare.png");
+        sprite2.setTexture("Images/MagentaSquare.png");
         sprite2.x = origin.x + size.width / 2;
         sprite2.y = origin.y + size.height / 2;
         this.addChild(sprite2, 20);
 
         var sprite3 = TouchableSprite.create(10);
-        sprite3.setTexture("res/Images/YellowSquare.png");
+        sprite3.setTexture("Images/YellowSquare.png");
         sprite3.x = 0;
         sprite3.y = 0;
         sprite2.addChild(sprite3, 1);
@@ -296,7 +296,7 @@ var RemoveListenerWhenDispatching =  EventDispatcherTestDemo.extend({
         var origin = director.getVisibleOrigin();
         var size = director.getVisibleSize();
 
-        var sprite1 = new cc.Sprite("res/Images/CyanSquare.png");
+        var sprite1 = new cc.Sprite("Images/CyanSquare.png");
         sprite1.setPosition(origin.x + size.width/2, origin.y + size.height/2);
         this.addChild(sprite1, 10);
 
@@ -516,7 +516,7 @@ var SpriteAccelerationEventTest =  EventDispatcherTestDemo.extend({
 
         cc.inputManager.setAccelerometerEnabled(true);
 
-        var sprite = new cc.Sprite("res/Images/ball.png");
+        var sprite = new cc.Sprite("Images/ball.png");
         sprite.setPosition(origin.x + size.width/2, origin.y + size.height/2);
         this.addChild(sprite);
 
@@ -580,7 +580,7 @@ var RemoveAndRetainNodeTest =  EventDispatcherTestDemo.extend({
         var origin = director.getVisibleOrigin();
         var size = director.getVisibleSize();
 
-        this._sprite = new cc.Sprite("res/Images/CyanSquare.png");
+        this._sprite = new cc.Sprite("Images/CyanSquare.png");
         this._sprite.setPosition(origin.x + size.width/2, origin.y + size.height/2);
         this.addChild(this._sprite, 10);
 
@@ -885,11 +885,11 @@ var GlobalZTouchTest = EventDispatcherTestDemo.extend({
         var SPRITE_COUNT = 8, sprite;
         for (var i = 0; i < SPRITE_COUNT; i++) {
             if(i==4) {
-                sprite = new cc.Sprite("res/Images/CyanSquare.png");
+                sprite = new cc.Sprite("Images/CyanSquare.png");
                 this._sprite = sprite;
                 this._sprite.setGlobalZOrder(-1);
             } else
-                sprite = new cc.Sprite("res/Images/YellowSquare.png");
+                sprite = new cc.Sprite("Images/YellowSquare.png");
 
             cc.eventManager.addListener(listener.clone(), sprite);
             this.addChild(sprite);
@@ -1005,17 +1005,17 @@ var StopPropagationTest = EventDispatcherTestDemo.extend({
 
         for (var i = 0; i < SPRITE_COUNT; i++) {
             if(i==4) {
-                sprite1 = new cc.Sprite("res/Images/CyanSquare.png");
+                sprite1 = new cc.Sprite("Images/CyanSquare.png");
                 sprite1.setTag(StopPropagationTest._TAG_BLUE_SPRITE);
                 this.addChild(sprite1, 100);
 
-                sprite2 = new cc.Sprite("res/Images/CyanSquare.png");
+                sprite2 = new cc.Sprite("Images/CyanSquare.png");
                 sprite2.setTag(StopPropagationTest._TAG_BLUE_SPRITE2);
                 this.addChild(sprite2, 100);
             } else {
-                sprite1 = new cc.Sprite("res/Images/YellowSquare.png");
+                sprite1 = new cc.Sprite("Images/YellowSquare.png");
                 this.addChild(sprite1, 0);
-                sprite2 = new cc.Sprite("res/Images/YellowSquare.png");
+                sprite2 = new cc.Sprite("Images/YellowSquare.png");
                 this.addChild(sprite2, 0);
             }
 
@@ -1075,20 +1075,20 @@ var Issue4160 = EventDispatcherTestDemo.extend({
         var size = cc.director.getVisibleSize();
 
         var sprite1 = TouchableSprite.create(-30);
-        sprite1.setTexture("res/Images/CyanSquare.png");
+        sprite1.setTexture("Images/CyanSquare.png");
         sprite1.x = origin.x + (size.width/2) - 80;
         sprite1.y = origin.y + (size.height/2) + 40;
         this.addChild(sprite1, 5);
 
         var sprite2 = TouchableSprite.create(-20);
-        sprite2.setTexture("res/Images/MagentaSquare.png");
+        sprite2.setTexture("Images/MagentaSquare.png");
         sprite2.removeListenerOnTouchEnded(true);
         sprite2.x = origin.x + (size.width/2);
         sprite2.y = origin.y + (size.height/2);
         this.addChild(sprite2, 10);
 
         var sprite3 = TouchableSprite.create(-10);
-        sprite3.setTexture("res/Images/YellowSquare.png");
+        sprite3.setTexture("Images/YellowSquare.png");
         sprite3.x = 0;
         sprite3.y = 0;
         sprite2.addChild(sprite3, 21);
@@ -1119,19 +1119,19 @@ var PauseResumeTargetTest = EventDispatcherTestDemo.extend({
         var size = cc.director.getVisibleSize();
 
         var sprite1 = TouchableSprite.create();
-        sprite1.setTexture("res/Images/CyanSquare.png");
+        sprite1.setTexture("Images/CyanSquare.png");
         sprite1.x = origin.x + size.width / 2 - 180;
         sprite1.y = origin.y + size.height / 2 + 40;
         this.addChild(sprite1, 10);
 
         var sprite2 = TouchableSprite.create();
-        sprite2.setTexture("res/Images/MagentaSquare.png");
+        sprite2.setTexture("Images/MagentaSquare.png");
         sprite2.x = origin.x + size.width / 2 - 100;
         sprite2.y = origin.y + size.height / 2;
         this.addChild(sprite2, 1);
 
         var sprite3 = TouchableSprite.create(100);      // Sprite3 uses fixed priority listener
-        sprite3.setTexture("res/Images/YellowSquare.png");
+        sprite3.setTexture("Images/YellowSquare.png");
         sprite3.x = 0;
         sprite3.y = 0;
         sprite2.addChild(sprite3, -1);

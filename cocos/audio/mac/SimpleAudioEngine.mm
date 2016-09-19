@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "audio/include/SimpleAudioEngine.h"
-#include "SimpleAudioEngine_objc.h"
+#include "audio/mac/SimpleAudioEngine_objc.h"
 #include <string>
 
 #include "platform/CCFileUtils.h"
@@ -170,7 +170,7 @@ void SimpleAudioEngine::end()
     if (s_pEngine)
     {
         delete s_pEngine;
-        s_pEngine = NULL;
+        s_pEngine = nullptr;
     }
     
     static_end();
