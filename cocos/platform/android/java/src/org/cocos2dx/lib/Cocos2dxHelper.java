@@ -750,4 +750,8 @@ public class Cocos2dxHelper {
     public static float[] getCompassValue() {
         return Cocos2dxHelper.sCocos2dxAccelerometer.compassFieldValues;
     }
+
+    public static int getSDKVersion() {
+        return Build.VERSION.SDK_INT;
+    }
 }

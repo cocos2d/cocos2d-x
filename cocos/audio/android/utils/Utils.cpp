@@ -22,27 +22,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "audio/android/utils/Utils.h"
-
-#include <cstdio>
-#include <cstdlib>
+#include "platform/android/jni/JniHelper.h"
 
 namespace cocos2d { namespace experimental {
 
-int getSystemProperty(const std::string& property)
+int getSDKVersion()
 {
-    int ret = -1;
-    std::string command = "getprop " + property;
-    FILE* file = popen(command.c_str(), "r");
-    if (file)
-    {
-        char output[100];
-        if (std::fgets(output, sizeof(output), file) != nullptr)
-            ret = std::atoi(output);
-
-        pclose(file);
-    }
-    
-    return ret;
+    return JniHelper::callStaticIntMethod("org/cocos2dx/lib/Cocos2dxHelper", "getSDKVersion");
 }
 
 }} // end of namespace cocos2d { namespace experimental
