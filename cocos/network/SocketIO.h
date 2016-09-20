@@ -271,7 +271,7 @@ public:
     const char* getTag()
     {
         return _tag.c_str();
-    };
+    }
 
 };
 

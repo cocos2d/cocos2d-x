@@ -234,7 +234,7 @@ public:
     void* getUserData() const
     {
         return _pUserData;
-    };
+    }
     
     /**
      * Set the target and related callback selector.

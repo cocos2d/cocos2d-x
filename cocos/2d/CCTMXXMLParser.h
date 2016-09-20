@@ -203,7 +203,7 @@ public:
     ValueMapIntKey& getTileProperties() { return _tileProperties; };
     void setTileProperties(const ValueMapIntKey& tileProperties) {
         _tileProperties = tileProperties;
-    };
+    }
 
     /// map orientation
     int getOrientation() const { return _orientation; }
@@ -234,21 +234,21 @@ public:
     Vector<TMXLayerInfo*>& getLayers() { return _layers; }
     void setLayers(const Vector<TMXLayerInfo*>& layers) {
         _layers = layers;
-    };
+    }
 
     /// tilesets
     const Vector<TMXTilesetInfo*>& getTilesets() const { return _tilesets; }
     Vector<TMXTilesetInfo*>& getTilesets() { return _tilesets; }
     void setTilesets(const Vector<TMXTilesetInfo*>& tilesets) {
         _tilesets = tilesets;
-    };
+    }
 
     /// ObjectGroups
     const Vector<TMXObjectGroup*>& getObjectGroups() const { return _objectGroups; }
     Vector<TMXObjectGroup*>& getObjectGroups() { return _objectGroups; }
     void setObjectGroups(const Vector<TMXObjectGroup*>& groups) {
         _objectGroups = groups;
-    };
+    }
 
     /// parent element
     int getParentElement() const { return _parentElement; }
@@ -272,7 +272,7 @@ public:
     ValueMap& getProperties() { return _properties; }
     void setProperties(const ValueMap& properties) {
         _properties = properties;
-    };
+    }
     
     // implement pure virtual methods of SAXDelegator
     /**

@@ -59,7 +59,7 @@ public:
 CC_CONSTRUCTOR_ACCESS:
     PUDoExpireEventHandler(void) : PUEventHandler()
     {
-    };
+    }
     virtual ~PUDoExpireEventHandler(void) {};
 };
 

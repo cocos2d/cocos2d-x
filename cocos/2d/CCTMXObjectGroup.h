@@ -111,7 +111,7 @@ public:
      */
     void setProperties(const ValueMap& properties) {
         _properties = properties;
-    };
+    }
     
     /** Gets the array of the objects. 
      *
@@ -126,7 +126,7 @@ public:
      */
     void setObjects(const ValueVector& objects) {
         _objects = objects;
-    };
+    }
     
 protected:
     /** name of the group */

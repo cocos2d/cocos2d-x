@@ -127,7 +127,7 @@ public:
      */
     CC_DEPRECATED_ATTRIBUTE uint32_t tileGIDAt(const Vec2& tileCoordinate, TMXTileFlags* flags = nullptr){
         return getTileGIDAt(tileCoordinate, flags);
-    };
+    }
 
     /** Sets the tile gid (gid = tile global id) at a given tile coordinate.
      * The Tile GID can be obtained by using the method "tileGIDAt" or by using the TMX editor -> Tileset Mgr +1.
@@ -245,7 +245,7 @@ public:
         CC_SAFE_RETAIN(info);
         CC_SAFE_RELEASE(_tileSet);
         _tileSet = info;
-    };
+    }
     
     /** Layer orientation, which is the same as the map orientation.
      *
@@ -277,7 +277,7 @@ public:
      */
     void setProperties(const ValueMap& properties) {
         _properties = properties;
-    };
+    }
     //
     // Override
     //

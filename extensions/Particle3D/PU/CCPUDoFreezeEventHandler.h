@@ -51,7 +51,7 @@ public:
 CC_CONSTRUCTOR_ACCESS:
     PUDoFreezeEventHandler(void) : PUEventHandler()
     {
-    };
+    }
     virtual ~PUDoFreezeEventHandler(void) {};
 };
 

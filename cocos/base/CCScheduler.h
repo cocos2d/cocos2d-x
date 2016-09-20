@@ -447,7 +447,7 @@ public:
     CC_DEPRECATED_ATTRIBUTE void scheduleSelector(SEL_SCHEDULE selector, Ref *target, float interval, unsigned int repeat, float delay, bool paused)
     {
         schedule(selector, target, interval, repeat, delay, paused);
-    };
+    }
     
     /** Calls scheduleSelector with CC_REPEAT_FOREVER and a 0 delay.
      *  @deprecated Please use `Scheduler::schedule` instead.
@@ -456,7 +456,7 @@ public:
     CC_DEPRECATED_ATTRIBUTE void scheduleSelector(SEL_SCHEDULE selector, Ref *target, float interval, bool paused)
     {
         schedule(selector, target, interval, paused);
-    };
+    }
     
     /** Schedules the 'update' selector for a given target with a given priority.
      The 'update' selector will be called every frame.
