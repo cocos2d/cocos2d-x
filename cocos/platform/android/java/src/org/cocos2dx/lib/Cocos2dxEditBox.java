@@ -37,8 +37,9 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
-public class Cocos2dxEditBox extends EditText {
+public class Cocos2dxEditBox extends TextView{ //EditText {
     /**
      * The user is allowed to enter any text, including line breaks.
      */
