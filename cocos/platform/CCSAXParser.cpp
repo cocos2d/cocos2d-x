@@ -163,7 +163,7 @@ bool SAXParser::parseIntrusive(char* xmlData, size_t dataLength)
 
     rapidxml::xml_sax3_parser<> parser(&printer);
     try {
-        parser.parse<>(xmlData, dataLength);
+        parser.parse<>(xmlData, static_cast<int>(dataLength));
         return true;
     }
     catch (rapidxml::parse_error& e)
