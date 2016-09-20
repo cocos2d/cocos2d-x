@@ -307,9 +307,12 @@ float expoEaseInOut(float time)
     {
         time = 0.5f * powf(2, 10 * (time - 1));
     }
-    else
+    else if (time < 2)
     {
         time = 0.5f * (-powf(2, -10 * (time - 1)) + 2);
+    } else
+    {
+        time = 1.0f;
     }
 
     return time;
