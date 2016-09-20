@@ -18,14 +18,17 @@ jni/Java_org_cocos2dx_lib_Cocos2dxAccelerometer.cpp \
 jni/Java_org_cocos2dx_lib_Cocos2dxBitmap.cpp \
 jni/Java_org_cocos2dx_lib_Cocos2dxHelper.cpp \
 jni/Java_org_cocos2dx_lib_Cocos2dxRenderer.cpp \
+jni/Java_org_cocos2dx_lib_Cocos2dxEngineDataManager.cpp \
 jni/JniHelper.cpp \
-jni/TouchesJni.cpp
+jni/TouchesJni.cpp \
+jni/ProcessCpuTracker.cpp
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/.. \
                     $(LOCAL_PATH)/../.. \
+                    $(LOCAL_PATH)/../../../external
 
 LOCAL_EXPORT_LDLIBS := -lGLESv2 \
                        -lEGL \
