@@ -4110,6 +4110,12 @@
 		B29594B51926D5EC003EEF37 /* CCMeshCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B29594B21926D5EC003EEF37 /* CCMeshCommand.cpp */; };
 		B29594B61926D5EC003EEF37 /* CCMeshCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = B29594B31926D5EC003EEF37 /* CCMeshCommand.h */; };
 		B29594B71926D5EC003EEF37 /* CCMeshCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = B29594B31926D5EC003EEF37 /* CCMeshCommand.h */; };
+		B2B91B5E1D90DF19007D66D0 /* CCSpriteV2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2B91B5C1D90DF19007D66D0 /* CCSpriteV2.cpp */; };
+		B2B91B5F1D90DF19007D66D0 /* CCSpriteV2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2B91B5C1D90DF19007D66D0 /* CCSpriteV2.cpp */; };
+		B2B91B601D90DF19007D66D0 /* CCSpriteV2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2B91B5C1D90DF19007D66D0 /* CCSpriteV2.cpp */; };
+		B2B91B611D90DF19007D66D0 /* CCSpriteV2.h in Headers */ = {isa = PBXBuildFile; fileRef = B2B91B5D1D90DF19007D66D0 /* CCSpriteV2.h */; };
+		B2B91B621D90DF19007D66D0 /* CCSpriteV2.h in Headers */ = {isa = PBXBuildFile; fileRef = B2B91B5D1D90DF19007D66D0 /* CCSpriteV2.h */; };
+		B2B91B631D90DF19007D66D0 /* CCSpriteV2.h in Headers */ = {isa = PBXBuildFile; fileRef = B2B91B5D1D90DF19007D66D0 /* CCSpriteV2.h */; };
 		B2CC507C19776DD10041958E /* CCPhysicsJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A170721807CE7A005B8026 /* CCPhysicsJoint.cpp */; };
 		B5668D7D1B3838E4003CBD5E /* UIScrollViewBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5668D7B1B3838E4003CBD5E /* UIScrollViewBar.cpp */; };
 		B5668D7E1B3838E4003CBD5E /* UIScrollViewBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5668D7B1B3838E4003CBD5E /* UIScrollViewBar.cpp */; };
@@ -6940,6 +6946,8 @@
 		B29594B11926D5D9003EEF37 /* ccShader_3D_PositionTex.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_3D_PositionTex.vert; sourceTree = "<group>"; };
 		B29594B21926D5EC003EEF37 /* CCMeshCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCMeshCommand.cpp; sourceTree = "<group>"; };
 		B29594B31926D5EC003EEF37 /* CCMeshCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMeshCommand.h; sourceTree = "<group>"; };
+		B2B91B5C1D90DF19007D66D0 /* CCSpriteV2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCSpriteV2.cpp; path = creator/CCSpriteV2.cpp; sourceTree = "<group>"; };
+		B2B91B5D1D90DF19007D66D0 /* CCSpriteV2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCSpriteV2.h; path = creator/CCSpriteV2.h; sourceTree = "<group>"; };
 		B3AF019E1842FBA400A98B85 /* b2MotorJoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = b2MotorJoint.cpp; sourceTree = "<group>"; };
 		B3AF019F1842FBA400A98B85 /* b2MotorJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2MotorJoint.h; sourceTree = "<group>"; };
 		B5668D7B1B3838E4003CBD5E /* UIScrollViewBar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIScrollViewBar.cpp; sourceTree = "<group>"; };
@@ -8843,6 +8851,7 @@
 		1AD71CF7180E26E600808F54 /* editor-support */ = {
 			isa = PBXGroup;
 			children = (
+				B2B91B5B1D90DC8D007D66D0 /* creator */,
 				1AD71CF8180E26E600808F54 /* cocosbuilder */,
 				1A8C5946180E930E00EF57C3 /* cocostudio */,
 				1AD71D7C180E26E600808F54 /* spine */,
@@ -10274,6 +10283,15 @@
 			);
 			name = 3d;
 			path = ../cocos/3d;
+			sourceTree = "<group>";
+		};
+		B2B91B5B1D90DC8D007D66D0 /* creator */ = {
+			isa = PBXGroup;
+			children = (
+				B2B91B5C1D90DF19007D66D0 /* CCSpriteV2.cpp */,
+				B2B91B5D1D90DF19007D66D0 /* CCSpriteV2.h */,
+			);
+			name = creator;
 			sourceTree = "<group>";
 		};
 		B6C0BF4D1A6F733D00BCF15A /* Particle3D */ = {
@@ -12056,6 +12074,7 @@
 				5020A19B1D49912500E80C72 /* Event.h in Headers */,
 				B6CAB4E91AF9AA1A00B9B856 /* TrbDynBody.h in Headers */,
 				1A570312180BCF190088DEC7 /* CCComponentContainer.h in Headers */,
+				B2B91B611D90DF19007D66D0 /* CCSpriteV2.h in Headers */,
 				15AE1B7119AADA9900C27E9E /* CocosGUI.h in Headers */,
 				B665E2381AA80A6500DDB1C5 /* CCPUBoxEmitterTranslator.h in Headers */,
 				B6CAB4211AF9AA1A00B9B856 /* btMLCPSolver.h in Headers */,
@@ -13109,6 +13128,7 @@
 				507B3FB31C31BDD30067B53E /* UIScrollViewBar.h in Headers */,
 				507B3FB41C31BDD30067B53E /* CCColliderDetector.h in Headers */,
 				507B3FB51C31BDD30067B53E /* btConstraintSolver.h in Headers */,
+				B2B91B631D90DF19007D66D0 /* CCSpriteV2.h in Headers */,
 				507B3FB61C31BDD30067B53E /* CCAllocatorStrategyFixedBlock.h in Headers */,
 				507B3FB71C31BDD30067B53E /* ExtensionMacros.h in Headers */,
 				507B3FB81C31BDD30067B53E /* CDConfig.h in Headers */,
@@ -13667,6 +13687,7 @@
 				B665E2A11AA80A6500DDB1C5 /* CCPUEventHandler.h in Headers */,
 				15AE192D19AAD35100C27E9E /* CCActionFrame.h in Headers */,
 				15AE192F19AAD35100C27E9E /* CCActionFrameEasing.h in Headers */,
+				B2B91B621D90DF19007D66D0 /* CCSpriteV2.h in Headers */,
 				1A570084180BC5A10088DEC7 /* CCActionManager.h in Headers */,
 				50864C921C7BC1B000B3BAB1 /* chipmunk_private.h in Headers */,
 				B665E3151AA80A6500DDB1C5 /* CCPUObserverManager.h in Headers */,
@@ -15035,6 +15056,7 @@
 				15AE189219AAD33D00C27E9E /* CCLayerGradientLoader.cpp in Sources */,
 				B6CAB4471AF9AA1A00B9B856 /* btThreadSupportInterface.cpp in Sources */,
 				15AE1B6A19AADA9900C27E9E /* UIDeprecated.cpp in Sources */,
+				B2B91B5E1D90DF19007D66D0 /* CCSpriteV2.cpp in Sources */,
 				15AE183C19AAD2F700C27E9E /* CCSkeleton3D.cpp in Sources */,
 				B6CAB36F1AF9AA1A00B9B856 /* btGjkConvexCast.cpp in Sources */,
 				B6CAB31B1AF9AA1A00B9B856 /* btContactProcessing.cpp in Sources */,
@@ -16074,6 +16096,7 @@
 				507B3C251C31BDD30067B53E /* UILayout.cpp in Sources */,
 				507B3C261C31BDD30067B53E /* ioapi.cpp in Sources */,
 				507B3C271C31BDD30067B53E /* CCPUMeshSurfaceEmitterTranslator.cpp in Sources */,
+				B2B91B601D90DF19007D66D0 /* CCSpriteV2.cpp in Sources */,
 				5020A1DC1D49912500E80C72 /* Skeleton.c in Sources */,
 				507B3C281C31BDD30067B53E /* CCPUForceField.cpp in Sources */,
 				5020A17C1D49912500E80C72 /* AttachmentVertices.cpp in Sources */,
@@ -16555,6 +16578,7 @@
 				5020A17B1D49912500E80C72 /* AttachmentVertices.cpp in Sources */,
 				B665E2D31AA80A6500DDB1C5 /* CCPUInterParticleColliderTranslator.cpp in Sources */,
 				B665E3331AA80A6500DDB1C5 /* CCPUOnEmissionObserver.cpp in Sources */,
+				B2B91B5F1D90DF19007D66D0 /* CCSpriteV2.cpp in Sources */,
 				1A570082180BC5A10088DEC7 /* CCActionManager.cpp in Sources */,
 				A0534A681B872FFD006B03E5 /* CCDownloader-apple.mm in Sources */,
 				B665E22F1AA80A6500DDB1C5 /* CCPUBoxColliderTranslator.cpp in Sources */,
