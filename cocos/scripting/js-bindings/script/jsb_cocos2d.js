@@ -2810,9 +2810,6 @@ cc.GLProgram.prototype.setUniformLocationWithMatrix4fv = function(){
 
 var jsbSetUniformCallback = cc.GLProgramState.prototype.setUniformCallback;
 cc.GLProgramState.prototype.setUniformCallback = function (uniform, callback) {
-    if (!jsb._root) {
-        jsb._root = {};
-    }
     jsbSetUniformCallback.call(this, uniform, callback);
 };
 
