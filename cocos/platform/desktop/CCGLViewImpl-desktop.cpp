@@ -113,11 +113,23 @@ public:
         }
     }
 
+    static void onGLFWWindowFocusCallback(GLFWwindow* window, int focused)
+    {
+        if (_view)
+        {
+            _view->onGLFWWindowFocusCallback(window, focused);
+        }
+    }
+
 private:
     static GLViewImpl* _view;
 };
 
 GLViewImpl* GLFWEventHandler::_view = nullptr;
+
+const std::string GLViewImpl::EVENT_WINDOW_RESIZED = "glview_window_resized";
+const std::string GLViewImpl::EVENT_WINDOW_FOCUSED = "glview_window_focused";
+const std::string GLViewImpl::EVENT_WINDOW_UNFOCUSED = "glview_window_unfocused";
 
 ////////////////////////////////////////////////////
 
@@ -411,6 +423,7 @@ bool GLViewImpl::initWithRect(const std::string& viewName, Rect rect, float fram
     glfwSetFramebufferSizeCallback(_mainWindow, GLFWEventHandler::onGLFWframebuffersize);
     glfwSetWindowSizeCallback(_mainWindow, GLFWEventHandler::onGLFWWindowSizeFunCallback);
     glfwSetWindowIconifyCallback(_mainWindow, GLFWEventHandler::onGLFWWindowIconifyCallback);
+    glfwSetWindowFocusCallback(_mainWindow, GLFWEventHandler::onGLFWWindowFocusCallback);
 
     setFrameSize(rect.size.width, rect.size.height);
 
@@ -838,6 +851,7 @@ void GLViewImpl::onGLFWWindowSizeFunCallback(GLFWwindow *window, int width, int 
         setFrameSize(frameWidth, frameHeight);
         setDesignResolutionSize(baseDesignSize.width, baseDesignSize.height, baseResolutionPolicy);
         Director::getInstance()->setViewport();
+        Director::getInstance()->getEventDispatcher()->dispatchCustomEvent(GLViewImpl::EVENT_WINDOW_RESIZED, nullptr);
     }
 }
 
@@ -850,6 +864,18 @@ void GLViewImpl::onGLFWWindowIconifyCallback(GLFWwindow* window, int iconified)
     else
     {
         Application::getInstance()->applicationWillEnterForeground();
+    }
+}
+
+void GLViewImpl::onGLFWWindowFocusCallback(GLFWwindow* window, int focused)
+{
+    if (focused == GL_TRUE)
+    {
+        Director::getInstance()->getEventDispatcher()->dispatchCustomEvent(GLViewImpl::EVENT_WINDOW_FOCUSED, nullptr);
+    }
+    else
+    {
+        Director::getInstance()->getEventDispatcher()->dispatchCustomEvent(GLViewImpl::EVENT_WINDOW_UNFOCUSED, nullptr);
     }
 }
 
