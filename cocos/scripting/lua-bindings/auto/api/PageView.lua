@@ -23,10 +23,24 @@
 -- @return PageView#PageView self (return value: ccui.PageView)
         
 --------------------------------
+-- brief Remove all pages of the PageView.
+-- @function [parent=#PageView] removeAllPages 
+-- @param self
+-- @return PageView#PageView self (return value: ccui.PageView)
+        
+--------------------------------
 -- 
 -- @function [parent=#PageView] setAutoScrollStopEpsilon 
 -- @param self
 -- @param #float epsilon
+-- @return PageView#PageView self (return value: ccui.PageView)
+        
+--------------------------------
+-- brief Set scale of page indicator's index nodes.<br>
+-- param indexNodesScale Scale of index nodes.
+-- @function [parent=#PageView] setIndicatorIndexNodesScale 
+-- @param self
+-- @param #float indexNodesScale
 -- @return PageView#PageView self (return value: ccui.PageView)
         
 --------------------------------
@@ -39,7 +53,7 @@
         
 --------------------------------
 -- brief Set color of page indicator's selected index.<br>
--- param spaceBetweenIndexNodes Space between nodes in pixel.
+-- param color Space between nodes in pixel.
 -- @function [parent=#PageView] setIndicatorSelectedIndexColor 
 -- @param self
 -- @param #color3b_table color
@@ -66,8 +80,15 @@
 -- param index A given index in PageView. Index start from 0 to pageCount -1.
 -- @function [parent=#PageView] setCurrentPageIndex 
 -- @param self
--- @param #long index
+-- @param #int index
 -- @return PageView#PageView self (return value: ccui.PageView)
+        
+--------------------------------
+-- brief Get the color of page indicator's index nodes.<br>
+-- return color
+-- @function [parent=#PageView] getIndicatorIndexNodesColor 
+-- @param self
+-- @return color3b_table#color3b_table ret (return value: color3b_table)
         
 --------------------------------
 -- brief Get the color of page indicator's selected index.<br>
@@ -75,6 +96,13 @@
 -- @function [parent=#PageView] getIndicatorSelectedIndexColor 
 -- @param self
 -- @return color3b_table#color3b_table ret (return value: color3b_table)
+        
+--------------------------------
+-- brief Get scale of page indicator's index nodes.<br>
+-- return indexNodesScale
+-- @function [parent=#PageView] getIndicatorIndexNodesScale 
+-- @param self
+-- @return float#float ret (return value: float)
         
 --------------------------------
 -- brief Set the page indicator's position in page view.<br>
@@ -85,13 +113,14 @@
 -- @return PageView#PageView self (return value: ccui.PageView)
         
 --------------------------------
--- Scroll to a page with a given index.<br>
--- param idx   A given index in the PageView. Index start from 0 to pageCount -1.
--- @function [parent=#PageView] scrollToPage 
+-- @overload self, int, float         
+-- @overload self, int         
+-- @function [parent=#PageView] scrollToPage
 -- @param self
--- @param #long idx
+-- @param #int idx
+-- @param #float time
 -- @return PageView#PageView self (return value: ccui.PageView)
-        
+
 --------------------------------
 -- brief Set the page indicator's position using anchor point.<br>
 -- param positionAsAnchorPoint The position as anchor point.
@@ -101,17 +130,20 @@
 -- @return PageView#PageView self (return value: ccui.PageView)
         
 --------------------------------
--- Scroll to a page with a given index.<br>
--- param idx   A given index in the PageView. Index start from 0 to pageCount -1.
--- @function [parent=#PageView] scrollToItem 
+-- @overload self, int, float         
+-- @overload self, int         
+-- @function [parent=#PageView] scrollToItem
 -- @param self
--- @param #long itemIndex
+-- @param #int idx
+-- @param #float time
 -- @return PageView#PageView self (return value: ccui.PageView)
-        
+
 --------------------------------
--- brief Remove all pages of the PageView.
--- @function [parent=#PageView] removeAllPages 
+-- brief Set color of page indicator's index nodes.<br>
+-- param color Space between nodes in pixel.
+-- @function [parent=#PageView] setIndicatorIndexNodesColor 
 -- @param self
+-- @param #color3b_table color
 -- @return PageView#PageView self (return value: ccui.PageView)
         
 --------------------------------
@@ -126,7 +158,7 @@
 -- return current page index.
 -- @function [parent=#PageView] getCurrentPageIndex 
 -- @param self
--- @return long#long ret (return value: long)
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- Remove a page of PageView.<br>
@@ -134,6 +166,16 @@
 -- @function [parent=#PageView] removePage 
 -- @param self
 -- @param #ccui.Widget page
+-- @return PageView#PageView self (return value: ccui.PageView)
+        
+--------------------------------
+-- sets texture for index nodes.<br>
+-- param fileName   File name of texture.<br>
+-- param resType    @see TextureResType .
+-- @function [parent=#PageView] setIndicatorIndexNodesTexture 
+-- @param self
+-- @param #string texName
+-- @param #int texType
 -- @return PageView#PageView self (return value: ccui.PageView)
         
 --------------------------------
@@ -148,7 +190,7 @@
 -- param index  A given index.
 -- @function [parent=#PageView] removePageAtIndex 
 -- @param self
--- @param #long index
+-- @param #int index
 -- @return PageView#PageView self (return value: ccui.PageView)
         
 --------------------------------

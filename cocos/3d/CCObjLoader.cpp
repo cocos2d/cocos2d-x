@@ -572,7 +572,7 @@ namespace tinyobj {
             if (token[0] == 'T' && token[1] == 'r' && isSpace(token[2])) {
                 token += 2;
                 // Invert value of Tr(assume Tr is in range [0, 1])
-                material.dissolve = 1.0 - parseFloat(token);
+                material.dissolve = 1.0f - parseFloat(token);
                 continue;
             }
             

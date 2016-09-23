@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010      cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -68,7 +68,7 @@ namespace utils
     CC_DLL void  captureScreen(const std::function<void(bool, const std::string&)>& afterCaptured, const std::string& filename);
 
     /** Capture a specific Node.
-    * @param startNode: specify the snapshot Node. It chould be cocos2d::Scene
+    * @param startNode specify the snapshot Node. It should be cocos2d::Scene
     * @param scale
     * @returns: return a Image, then can call saveToFile to save the image as "xxx.png or xxx.jpg".
     * @since v3.11
@@ -114,18 +114,26 @@ namespace utils
     CC_DLL Rect getCascadeBoundingBox(Node *node);
 
     /**
-     * Create a sprite instance from base64 encoded image.
+     * Create a sprite instance from base64 encoded image and adds the texture to the Texture Cache.
 
      * @return Returns an instance of sprite
      */
+    CC_DLL Sprite* createSpriteFromBase64Cached(const char* base64String, const char* key);
+
+    /**
+    * Create a sprite instance from base64 encoded image.
+
+    * @return Returns an instance of sprite
+    */
     CC_DLL Sprite* createSpriteFromBase64(const char* base64String);
-    
+
+
     /**
      * Find a child by name recursively
 
      * @return  Returns found node or nullptr
      */
-    CC_DLL Node*  findChild(Node* levelRoot, const char* name);
+    CC_DLL Node*  findChild(Node* levelRoot, const std::string& name);
 
     /**
      * Find a child by tag recursively
@@ -140,7 +148,7 @@ namespace utils
      * @return  Returns found node or nullptr with specified type 'T'
      */
     template<typename T> inline
-    T findChild(Node* levelRoot, const char* name)
+    T findChild(Node* levelRoot, const std::string& name)
     {
         return dynamic_cast<T>(findChild(levelRoot, name));
     }

@@ -24,6 +24,7 @@
  ****************************************************************************/
 
 #include "2d/CCFontFNT.h"
+#include <cmath>
 #include <set>
 #include "base/uthash.h"
 #include "2d/CCFontAtlas.h"
@@ -31,9 +32,8 @@
 #include "base/CCConfiguration.h"
 #include "base/CCDirector.h"
 #include "base/CCMap.h"
+#include "base/ccUTF8.h"
 #include "renderer/CCTextureCache.h"
-
-#include "deprecated/CCString.h"
 
 using namespace std;
 NS_CC_BEGIN
@@ -143,8 +143,8 @@ public:
     /** initializes a BitmapFontConfiguration with a FNT file */
     bool initWithFNTfile(const std::string& FNTfile);
     
-    inline const std::string& getAtlasName(){ return _atlasName; }
-    inline void setAtlasName(const std::string& atlasName) { _atlasName = atlasName; }
+    const std::string& getAtlasName() { return _atlasName; }
+    void setAtlasName(const std::string& atlasName) { _atlasName = atlasName; }
     
     std::set<unsigned int>* getCharacterSet() const;
 private:
@@ -275,39 +275,22 @@ void BMFontConfiguration::purgeFontDefDictionary()
 
 std::set<unsigned int>* BMFontConfiguration::parseConfigFile(const std::string& controlFile)
 {
-    Data data = FileUtils::getInstance()->getDataFromFile(controlFile);
-    CCASSERT((!data.isNull()), "BMFontConfiguration::parseConfigFile | Open file error.");
-    if (data.isNull()) {
+    std::string data = FileUtils::getInstance()->getStringFromFile(controlFile);
+    if (data.empty())
+    {
         return nullptr;
     }
-
-    if (memcmp("BMF", data.getBytes(), 3) == 0) {
+    if (data.size() >= (sizeof("BMP") - 1) && memcmp("BMF", data.c_str(), sizeof("BMP") - 1) == 0) {
         // Handle fnt file of binary format
-        std::set<unsigned int>* ret = parseBinaryConfigFile(data.getBytes(), data.getSize(), controlFile);
+        std::set<unsigned int>* ret = parseBinaryConfigFile((unsigned char*)&data.front(), data.size(), controlFile);
         return ret;
     }
-
-    if (data.getBytes()[0] == 0)
+    if (data[0] == 0)
     {
         CCLOG("cocos2d: Error parsing FNTfile %s", controlFile.c_str());
         return nullptr;
     }
-    
-    // Handle fnt file of string format, allocate one extra byte '\0' at the end since c string needs it.
-    // 'strchr' finds a char until it gets a '\0', if 'contents' self doesn't end with '\0',
-    // 'strchr' will search '\n' out of 'contents' 's buffer size, it will trigger potential and random crashes since
-    // lineLength may bigger than 512 and 'memcpy(line, contents + parseCount, lineLength);' will cause stack buffer overflow.
-    // Please note that 'contents' needs to be freed before this function returns.
-    auto contents = (char*)malloc(data.getSize() + 1);
-    if (contents == nullptr)
-    {
-        CCLOGERROR("BMFontConfiguration::parseConfigFile, out of memory!");
-        return nullptr;
-    }
-    
-    memcpy(contents, data.getBytes(), data.getSize());
-    // Ensure the last byte is '\0'
-    contents[data.getSize()] = '\0';
+    auto contents = data.c_str();
     
     std::set<unsigned int> *validCharsString = new (std::nothrow) std::set<unsigned int>();
     
@@ -372,8 +355,6 @@ std::set<unsigned int>* BMFontConfiguration::parseConfigFile(const std::string& 
         }
     }
     
-    CC_SAFE_FREE(contents);
-    
     return validCharsString;
 }
 
@@ -400,7 +381,7 @@ std::set<unsigned int>* BMFontConfiguration::parseBinaryConfigFile(unsigned char
         {
             /*
              fontSize       2   int      0
-             bitField       1   bits     2  bit 0: smooth, bit 1: unicode, bit 2: italic, bit 3: bold, bit 4: fixedHeigth, bits 5-7: reserved
+             bitField       1   bits     2  bit 0: smooth, bit 1: unicode, bit 2: italic, bit 3: bold, bit 4: fixedHeight, bits 5-7: reserved
              charSet        1   uint     3
              stretchH       2   uint     4
              aa             1   uint     6
@@ -705,11 +686,11 @@ int * FontFNT::getHorizontalKerningForTextUTF16(const std::u16string& text, int 
     outNumLetters = static_cast<int>(text.length());
     
     if (!outNumLetters)
-        return 0;
+        return nullptr;
     
     int *sizes = new (std::nothrow) int[outNumLetters];
     if (!sizes)
-        return 0;
+        return nullptr;
     
     for (int c = 0; c < outNumLetters; ++c)
     {
@@ -770,7 +751,7 @@ FontAtlas * FontFNT::createFontAtlas()
     int originalFontSize = _configuration->_fontSize;
     float originalLineHeight = _configuration->_commonHeight;
     float factor = 0.0f;
-    if (fabs(_fontSize - originalFontSize) < FLT_EPSILON) {
+    if (std::abs(_fontSize - originalFontSize) < FLT_EPSILON) {
         factor = 1.0f;
     }else {
         factor = _fontSize / originalFontSize;

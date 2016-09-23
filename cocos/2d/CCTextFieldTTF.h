@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -152,17 +152,17 @@ public:
     /**
      * @lua NA
      */
-    inline TextFieldDelegate* getDelegate() const { return _delegate; };
+    TextFieldDelegate* getDelegate() const { return _delegate; }
     /**
      * @lua NA
      */
-    inline void setDelegate(TextFieldDelegate* delegate) { _delegate = delegate; };
+    void setDelegate(TextFieldDelegate* delegate) { _delegate = delegate; }
 
     /**
      * Query the currently inputed character count.
      *@return The total input character count.
      */
-    inline std::size_t getCharCount() const { return _charCount; };
+    std::size_t getCharCount() const { return _charCount; }
     
     /**
      * Query the color of place holder.
@@ -227,7 +227,7 @@ public:
      */
     virtual void setSecureTextEntry(bool value);
     virtual void setPasswordTextStyle(const std::string& text);
-    std::string getPasswordTextStyle() const;
+    const std::string& getPasswordTextStyle() const;
 
     /**
      * Query whether the currently display mode is secure text entry or not.

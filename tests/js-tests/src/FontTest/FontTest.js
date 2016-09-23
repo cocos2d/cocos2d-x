@@ -33,6 +33,8 @@ var fontIdx = 0;
 var fontList = [
 
     // System Fonts
+    "sans-serif",
+    "sans-serif-light",
     "Verdana",
     "Lucida Sans Unicode",
     "Bookman Old Style",

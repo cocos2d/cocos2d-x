@@ -644,15 +644,17 @@ static BOOL configured = FALSE;
         case kAMRBStopPlay:
             
             for( CDLongAudioSource *audioSource in audioSourceChannels) {
-                if (audioSource.isPlaying) {
-                    audioSource->systemPaused = YES;
-                    audioSource->systemPauseLocation = audioSource.audioSourcePlayer.currentTime;
-                    [audioSource stop];
-                } else {
-                    //Music is either paused or stopped, if it is paused it will be restarted
-                    //by OS so we will stop it.
-                    audioSource->systemPaused = NO;
-                    [audioSource stop];
+                if (!audioSource->systemPaused) {
+                    if (audioSource.isPlaying) {
+                        audioSource->systemPaused = YES;
+                        audioSource->systemPauseLocation = audioSource.audioSourcePlayer.currentTime;
+                        [audioSource pause];
+                    } else {
+                        //Music is either paused or stopped, if it is paused it will be restarted
+                        //by OS so we will stop it.
+                        audioSource->systemPaused = NO;
+                        [audioSource stop];
+                    }
                 }
             }
             break;

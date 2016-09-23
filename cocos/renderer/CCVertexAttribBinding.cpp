@@ -143,9 +143,6 @@ bool VertexAttribBinding::init(MeshIndexData* meshIndexData, GLProgramState* glP
     // VAO hardware
     if (Configuration::getInstance()->supportsShareableVAO())
     {
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
         glGenVertexArrays(1, &_handle);
         GL::bindVAO(_handle);
         glBindBuffer(GL_ARRAY_BUFFER, meshVertexData->getVertexBuffer()->getVBO());
@@ -166,6 +163,8 @@ bool VertexAttribBinding::init(MeshIndexData* meshIndexData, GLProgramState* glP
         }
 
         GL::bindVAO(0);
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     }
 
     return true;

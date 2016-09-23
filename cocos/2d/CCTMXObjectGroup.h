@@ -3,7 +3,7 @@ Copyright (c) 2010      Neophit
 Copyright (c) 2010      Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -59,13 +59,13 @@ public:
      *
      * @return The group name.
      */
-    inline const std::string& getGroupName() const { return _groupName; }
+    const std::string& getGroupName() const { return _groupName; }
     
     /** Set the group name. 
      *
      * @param groupName A string,it is used to set the group name.
      */
-    inline void setGroupName(const std::string& groupName){ _groupName = groupName; }
+    void setGroupName(const std::string& groupName) { _groupName = groupName; }
 
     /** Return the value for the specific property name. 
      *
@@ -90,43 +90,43 @@ public:
      *
      * @return The offset position of child objects.
      */
-    inline const Vec2& getPositionOffset() const { return _positionOffset; };
+    const Vec2& getPositionOffset() const { return _positionOffset; }
     
     /** Sets the offset position of child objects. 
      *
      * @param offset The offset position of child objects.
      */
-    inline void setPositionOffset(const Vec2& offset) { _positionOffset = offset; };
+    void setPositionOffset(const Vec2& offset) { _positionOffset = offset; }
     
     /** Gets the list of properties stored in a dictionary. 
      *
      * @return The list of properties stored in a dictionary.
      */
-    inline const ValueMap& getProperties() const { return _properties; };
-    inline ValueMap& getProperties() { return _properties; };
+    const ValueMap& getProperties() const { return _properties; }
+    ValueMap& getProperties() { return _properties; }
     
     /** Sets the list of properties.
      *
      * @param properties The list of properties.
      */
-    inline void setProperties(const ValueMap& properties) {
+    void setProperties(const ValueMap& properties) {
         _properties = properties;
-    };
+    }
     
     /** Gets the array of the objects. 
      *
      * @return The array of the objects.
      */
-    inline const ValueVector& getObjects() const { return _objects; };
-    inline ValueVector& getObjects() { return _objects; };
+    const ValueVector& getObjects() const { return _objects; }
+    ValueVector& getObjects() { return _objects; }
     
     /** Sets the array of the objects.
      *
      * @param objects The array of the objects.
      */
-    inline void setObjects(const ValueVector& objects) {
+    void setObjects(const ValueVector& objects) {
         _objects = objects;
-    };
+    }
     
 protected:
     /** name of the group */

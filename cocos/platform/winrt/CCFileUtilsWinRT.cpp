@@ -36,8 +36,8 @@ static std::string s_pszResourcePath;
 static inline std::string convertPathFormatToUnixStyle(const std::string& path)
 {
     std::string ret = path;
-    int len = ret.length();
-    for (int i = 0; i < len; ++i)
+    size_t len = ret.length();
+    for (size_t i = 0; i < len; ++i)
     {
         if (ret[i] == '\\')
         {
@@ -84,13 +84,13 @@ static void _checkPath()
 
 FileUtils* FileUtils::getInstance()
 {
-    if (s_sharedFileUtils == NULL)
+    if (s_sharedFileUtils == nullptr)
     {
         s_sharedFileUtils = new CCFileUtilsWinRT();
         if(!s_sharedFileUtils->init())
         {
           delete s_sharedFileUtils;
-          s_sharedFileUtils = NULL;
+          s_sharedFileUtils = nullptr;
           CCLOG("ERROR: Could not init CCFileUtilsWinRT");
         }
     }
@@ -176,7 +176,7 @@ FileUtils::Status CCFileUtilsWinRT::getContents(const std::string& filename, Res
     {
         buffer->resize(sizeRead);
         CCLOG("Get data from file(%s) failed, error code is %s", filename.data(), std::to_string(::GetLastError()).data());
-        return FileUtils::Status::ReadFaild;
+        return FileUtils::Status::ReadFailed;
     }
     return FileUtils::Status::OK;
 }
@@ -184,7 +184,7 @@ FileUtils::Status CCFileUtilsWinRT::getContents(const std::string& filename, Res
 bool CCFileUtilsWinRT::isFileExistInternal(const std::string& strFilePath) const
 {
     bool ret = false;
-    FILE * pf = 0;
+    FILE * pf = nullptr;
 
     std::string strPath = strFilePath;
     if (!isAbsolutePath(strPath))

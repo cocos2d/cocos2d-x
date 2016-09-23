@@ -44,7 +44,7 @@
         self.frameRect = frameRect;
         
         self.editBox = editBox;
-        self.dataInputMode = cocos2d::ui::EditBox::InputFlag::INITIAL_CAPS_ALL_CHARACTERS;
+        self.dataInputMode = cocos2d::ui::EditBox::InputFlag::LOWERCASE_ALL_CHARACTERS;
         self.keyboardReturnType = cocos2d::ui::EditBox::KeyboardReturnType::DEFAULT;
         
         [self createMultiLineTextField];
@@ -243,6 +243,9 @@
         case cocos2d::ui::EditBox::InputFlag::SENSITIVE:
             CCLOG("SENSITIVE not implemented");
             break;
+        case cocos2d::ui::EditBox::InputFlag::LOWERCASE_ALL_CHARACTERS:
+            CCLOG("LOWERCASE_ALL_CHARACTERS not implemented");
+            break;
         default:
             break;
     }
@@ -289,7 +292,7 @@
     self.textInput.ccui_text = text;
 }
 
-- (BOOL)textShouldBeginEditing:(NSText *)textObject;        // YES means do it
+- (BOOL)textShouldBeginEditing:(NSText *)textObject        // YES means do it
 {
     _editState = YES;
     

@@ -1,72 +1,49 @@
-# v3.11
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-## 新特性
+- [v3.13.1](#v3131)
+  - [Bug修复](#bug%E4%BF%AE%E5%A4%8D)
+  - [Cocos命令的改动](#cocos%E5%91%BD%E4%BB%A4%E7%9A%84%E6%94%B9%E5%8A%A8)
 
-* Chipmunk升级到v7.0.1
-* JSB使用新的内存模型，在JS脚本不需要关心对象的生命周期，该特性默认关闭
-* CURL升级到v7.48
-* OpenSSL升级到v1.0.2g
-* 可以使用VSCode或者新版本的Firefox调试JSB程序
-* 全面升级 WebGL 渲染器
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-## 主要特性的详细介绍
+# v3.13.1
 
-### JSB的新内存模型
+## Bug修复
 
-使用新的内存模型后，开发者不需要关心对象的声明周期。这就意味着不需要在JS代码里手动调用`retain/release`函数。
+* Label的颜色错误问题
+* 如果没有设置`design resolution`，应用程序在debug模式下会崩溃
+* 在Android系统，如果通过点击应用图标从后台推前台，可能导致崩溃
+* 在Android系统，如果音乐或音效资源不在APK包里，会导致无法播放
+* 在Android系统，AudioEngine::stop()会回调`finish`回调函数
+* 使用`SimpleAudioEngine`或者`AudioEngine`播放音效或者背景音乐，在Android 2.3.x会崩溃
+* JSB中，如果传入object.setString()的参数类型是数字，没有任何效果
 
-不过该内存模型默认是关闭的。虽然我们已经做了很多的测试，目前没有发现任何问题，但是保险起见，你需要手动开启该功能，开启的方法是在`base/ccConfig.h`里把`CC_ENABLE_GC_FOR_NATIVE`的值改为1：
+对应的github issue可以从[这里](https://github.com/cocos2d/cocos2d-x/milestone/33)找到。
 
-```c++
-#ifdef CC_ENABLE_SCRIPT_BINDING
-  #ifndef CC_ENABLE_GC_FOR_NATIVE_OBJECTS
-  #define CC_ENABLE_GC_FOR_NATIVE_OBJECTS 1 // change to 1
-  #endif
-#endif
+## Cocos命令的改动
+
+之前的版本，在Android平台下，cocos命令编译代码时会找大于等于指定的API级别的Android SDK，比如`APP_ROOT/proj.android/project.properties`的内容是这样的
+
+```
+target=android-13 // Android API级别
+android.library.reference.1=../../../cocos/platform/android/java
+```
+那么cocos命令会在`ANDROID_SDK_ROOT/platforms`目录下找`android-13`，如果找不到就会找`android-14`，如果找不到的话会找`android-15`直到找到一个合适的级别。
+
+该算法有个问题，假设你只下载了`android-21`，虽然`APP_ROOT/proj.android/project.properties`指定是要使用`android-13`，最终也会使用`android-21`编译。编译出来的程序如果跑在Android 4.0的设备，那么就可能会崩溃。使用高版本Android SDK编译的程序不能保证能在低版本的Andoid系统上运行，就好比用iOS 9编译的程序不能保证运行在iOS 8一样。
+
+从3.13.1开始，cocos命令如果找不到指定的API级别会立即停止。想用指定的API级别编译的话需要使用命令行参数指定：
+
+```
+cocos compile -p android --ap android-19
+```
+注意的事，一旦该命令运行后，那么`APP_ROOT/proj.android/project.properties`的内容就会改动，变成
+
+```
+target=android-19 // Android API级别
+android.library.reference.1=../../../cocos/platform/android/java
 ```
 
-### OpenSSL
-Cocos2d-x已经把__OpenSSL__升级到__1.0.2.g__。
-
-从__2016年7月11__日开始，Google Play将不再接受使用低版本的__OpenSSL__的新应用程序或者应用程序更新。更新程序中使用的__OpenSSL__版本变得十分重要。更详细的信息可以参考[这个帖子](http://discuss.cocos2d-x.org/t/openssl-problem-again/28270)。
-
-如果你使用的是v2.x或者低版本的v3.x引擎，那么你可以只更新__CURL__和__OpenSSL__，具体步骤如下：
-
-* 修改__Cocos2d-x root/external/config.json__文件中的`version`字段。如果是v3.x的话，那么`version`字段的值改为`v3-dpes-92`，如果是v2.x的话，那么值是`v2-deps-5`
-* 在Cocos2d-x根目录下执行__download-deps.py__脚本
-
-```sh
-(jtsm @ 15 ~) $ cd cocos2d-x
-
-(jtsm @ 15 ~/cocos2d-x) $ ./download-deps.py
-
-=======================================================
-==> Prepare to download external libraries!
-==> Ready to download 'v3-deps-92.zip' from 'https://github.com/cocos2d/cocos2d-x-3rd-party-libs-bin/archive/v3-deps-92.zip'
-==> WARNING: Couldnt grab the file size from remote, use 'zip_file_size' section in '/Users/jtsm/Chukong-Inc/cocos2d-x/external/config.json'
-==> Start to download, please wait ...
-==> Downloading finished!
-==> Extracting files, please wait ...
-==> Extraction done! ==> Copying files...
-==> Cleaning...
-```
-有任何问题可以在引擎的[中文论坛](http://forum.cocos.com/)上发帖反馈。
-
-### Cocos2d-x JSB程序调试
-
-v3.11版本之前，不能使用Firefox 30+版本来调试cocos2d-x JSB程序。这个版本修复了该问题，同时支持了web console功能。如果你不了解如何使用Firefox调试cocos2d-x JSB程序，可以参考[这篇文档](This documentation](http://www.cocos2d-x.org/wiki/Javascript_Remote_Debugging)。
-
-当然你也可以使用[VSCode](https://code.visualstudio.com/)来调试，具体的使用方法参考[这篇文档](http://discuss.cocos2d-x.org/t/use-vscode-to-debug-cocos2d-x-jsb-programs/27588)。
-
-### 全面升级 WebGL 渲染器
-
-在v3.11中，为了提升性能，我们重构了WebGL渲染器，下面是几项重要的改进：
-
-1. 在 Android 浏览器上默认开启 WebGL（支持的话）
-2. WebGL 模式下自动批处理 Sprite
-3. Sprite 共享全局的渲染数据缓存，并减少 GL 函数调用
-
-在这些优化后，与旧版本相比，合并贴图后的游戏中draw call数量将得到显著的降低。不仅如此，v3.11中的CPU使用率和内存使用也都得到了降低。在我们的bunnymark测试中，v3.11相比之前的版本有4倍以上的渲染性能提升。当然，这是我们对WebGL渲染器做的第一步升级，在后续版本中，WebGL渲染器还将得到持续优化。
-
-## 其他改动
-更完整的改动列表可以阅读[full changelog](https://github.com/cocos2d/cocos2d-x/blob/v3/CHANGELOG)。
+Android API级别和Android系统版本间存在对应的映射关系，可以参看[该文档](https://developer.android.com/guide/topics/manifest/uses-sdk-element.html)获取详细的内容。

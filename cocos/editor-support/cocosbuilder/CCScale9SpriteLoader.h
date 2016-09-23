@@ -34,7 +34,7 @@ protected:
         pNode->setAnchorPoint(cocos2d::Vec2::ZERO);
         
         return pNode;
-    };
+    }
     /**
      * @js NA
      * @lua NA

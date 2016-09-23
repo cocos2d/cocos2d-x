@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -27,6 +27,7 @@
 #include "2d/CCSpriteFrameCache.h"
 #include "base/CCVector.h"
 #include "base/CCDirector.h"
+#include "base/ccUTF8.h"
 #include "renderer/CCGLProgram.h"
 #include "renderer/ccShaders.h"
 #include "platform/CCImage.h"
@@ -121,7 +122,7 @@ namespace ui {
             if(spriteFrameCache == nullptr) break;
             
             SpriteFrame *frame = spriteFrameCache->getSpriteFrameByName(spriteFrameName);
-            CCASSERT(frame != nullptr, "CCSpriteFrame must be non-NULL");
+            CCASSERT(frame != nullptr, StringUtils::format("CCSpriteFrame: %s must be non-NULL ", spriteFrameName.c_str()).c_str());
             if (frame == nullptr) break;
             
             ret = initWithSpriteFrame(frame, capInsets);
@@ -551,7 +552,9 @@ namespace ui {
             auto vertices = this->calculateVertices(capInsets, originalSize, offsets);
             auto triangles = this->calculateTriangles(uv, vertices);
 
-            _scale9Image->getPolygonInfo().setTriangles(triangles);
+            auto polyInfo = _scale9Image->getPolygonInfo();
+            polyInfo.setTriangles(triangles);
+            _scale9Image->setPolygonInfo(polyInfo);
         }
     }
 
@@ -596,12 +599,12 @@ namespace ui {
         {
         case State::NORMAL:
         {
-            glState = GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP);
+            glState = GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP, _scale9Image != nullptr ? _scale9Image->getTexture() : nullptr);
         }
         break;
         case State::GRAY:
         {
-            glState = GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_GRAYSCALE);
+            glState = GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_GRAYSCALE, _scale9Image != nullptr ? _scale9Image->getTexture() : nullptr);
         }
         default:
             break;
@@ -711,12 +714,13 @@ namespace ui {
             if(_insideBounds)
 #endif
             {
-                auto textureName = _scale9Image->getTexture()->getName();
+                auto texture = _scale9Image->getTexture();
                 auto programState = _scale9Image->getGLProgramState();
                 auto blendFunc = _scale9Image->getBlendFunc();
                 auto& polyInfo = _scale9Image->getPolygonInfo();
                 auto globalZOrder = _scale9Image->getGlobalZOrder();
-                _trianglesCommand.init(globalZOrder,textureName, programState, blendFunc, polyInfo.triangles, transform, flags);
+                // ETC1 ALPHA support
+                _trianglesCommand.init(globalZOrder,texture, programState, blendFunc, polyInfo.triangles, transform, flags);
                 renderer->addCommand(&_trianglesCommand);
                 
 #if CC_SPRITE_DEBUG_DRAW
@@ -1057,7 +1061,7 @@ namespace ui {
         float originalScale = Node::getScaleX();
         if (_flippedX)
         {
-            originalScale = originalScale * -1.0;
+            originalScale = originalScale * -1.0f;
         }
         return originalScale;
     }
@@ -1067,7 +1071,7 @@ namespace ui {
         float originalScale = Node::getScaleY();
         if (_flippedY)
         {
-            originalScale = originalScale * -1.0;
+            originalScale = originalScale * -1.0f;
         }
         return originalScale;
     }

@@ -43,7 +43,7 @@
 # also create a mininal NDK skeleton so ndk-gdb finds the paths
 #
 # the optional parameter defines the path to the android project.
-# uses PROJECT_SOURCE_DIR by default.
+# uses PROJECT_BINARY_DIR by default.
 macro(android_ndk_gdb_enable)
     if(ANDROID)
         # create custom target that depends on the real target so it gets executed afterwards
@@ -52,7 +52,7 @@ macro(android_ndk_gdb_enable)
         if(${ARGC})
             set(ANDROID_PROJECT_DIR ${ARGV0})
         else()
-            set(ANDROID_PROJECT_DIR ${PROJECT_SOURCE_DIR})
+            set(ANDROID_PROJECT_DIR ${PROJECT_BINARY_DIR})
         endif()
 
         set(NDK_GDB_SOLIB_PATH ${ANDROID_PROJECT_DIR}/obj/local/${ANDROID_NDK_ABI_NAME}/)
@@ -75,6 +75,7 @@ macro(android_ndk_gdb_enable)
     
         # 3. copy gdbserver executable
         file(COPY ${ANDROID_NDK}/prebuilt/android-${ANDROID_ARCH_NAME}/gdbserver/gdbserver DESTINATION ${LIBRARY_OUTPUT_PATH})
+        file(RENAME ${LIBRARY_OUTPUT_PATH}/gdbserver ${LIBRARY_OUTPUT_PATH}/gdbserver.so)
     endif()
 endmacro()
 
@@ -82,15 +83,13 @@ endmacro()
 # copies the debug version to NDK_GDB_SOLIB_PATH then strips symbols of original
 macro(android_ndk_gdb_debuggable TARGET_NAME)
     if(ANDROID)
-        get_property(TARGET_LOCATION TARGET ${TARGET_NAME} PROPERTY LOCATION)
-        
         # create custom target that depends on the real target so it gets executed afterwards
         add_dependencies(NDK_GDB ${TARGET_NAME})
     
         # 4. copy lib to obj
-        add_custom_command(TARGET NDK_GDB POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different ${TARGET_LOCATION} ${NDK_GDB_SOLIB_PATH})
+        add_custom_command(TARGET NDK_GDB POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:${TARGET_NAME}> ${NDK_GDB_SOLIB_PATH})
     
         # 5. strip symbols
-        add_custom_command(TARGET NDK_GDB POST_BUILD COMMAND ${CMAKE_STRIP} ${TARGET_LOCATION})
+        add_custom_command(TARGET NDK_GDB POST_BUILD COMMAND ${CMAKE_STRIP} $<TARGET_FILE:${TARGET_NAME}>)
     endif()
 endmacro()

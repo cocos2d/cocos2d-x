@@ -422,7 +422,7 @@ bool js_cocos2dx_Effect3DOutline_setOutlineWidth(JSContext *cx, uint32_t argc, j
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Effect3DOutline_setOutlineWidth : Invalid Native Object");
     if (argc == 1) {
         double arg0;
-        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !std::isnan(arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Effect3DOutline_setOutlineWidth : Error processing arguments");
         cobj->setOutlineWidth(arg0);
         args.rval().setUndefined();

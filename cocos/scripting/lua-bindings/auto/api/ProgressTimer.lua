@@ -12,7 +12,7 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
---  Return the Reverse direction. <br>
+--  Return the Reverse direction.<br>
 -- return If the direction is Anti-clockwise,it will return true.
 -- @function [parent=#ProgressTimer] isReverseDirection 
 -- @param self
@@ -81,13 +81,13 @@
 -- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
--- @overload self, bool         
--- @overload self, bool         
--- @function [parent=#ProgressTimer] setReverseDirection
+--  Set the Reverse direction.<br>
+-- param value If value is false it will clockwise,if is true it will Anti-clockwise.
+-- @function [parent=#ProgressTimer] setReverseDirection 
 -- @param self
--- @param #bool reverse
+-- @param #bool value
 -- @return ProgressTimer#ProgressTimer self (return value: cc.ProgressTimer)
-
+        
 --------------------------------
 --  Returns the Midpoint. <br>
 -- return A Vec2.

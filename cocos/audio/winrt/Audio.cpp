@@ -116,7 +116,7 @@ void Audio::CreateResources()
 
 unsigned int Audio::Hash(const char *key)
 {
-    unsigned int len = strlen(key);
+    unsigned int len = static_cast<unsigned int>(strlen(key));
     const char *end=key+len;
     unsigned int hash;
 
@@ -505,7 +505,7 @@ void Audio::PreloadSoundEffect(const char* pszFilePath, bool isMusic)
     }
 
     m_soundEffects[sound].m_soundID = sound;
-    uint32 bufferLength = reader->getTotalAudioBytes();
+    size_t bufferLength = reader->getTotalAudioBytes();
     WAVEFORMATEX wfx = reader->getWaveFormatInfo();
 
     cocos2d::experimental::AudioDataChunk chunk;
@@ -560,7 +560,7 @@ void Audio::PreloadSoundEffect(const char* pszFilePath, bool isMusic)
 	// Queue in-memory buffer for playback
 	ZeroMemory(&m_soundEffects[sound].m_audioBuffer, sizeof(m_soundEffects[sound].m_audioBuffer));
 
-	m_soundEffects[sound].m_audioBuffer.AudioBytes = m_soundEffects[sound].m_soundEffectBufferLength;
+	m_soundEffects[sound].m_audioBuffer.AudioBytes = static_cast<UINT32>(m_soundEffects[sound].m_soundEffectBufferLength);
 	m_soundEffects[sound].m_audioBuffer.pAudioData = m_soundEffects[sound].m_soundEffectBufferData;
 	m_soundEffects[sound].m_audioBuffer.pContext = &m_soundEffects[sound];
 	m_soundEffects[sound].m_audioBuffer.Flags = XAUDIO2_END_OF_STREAM;

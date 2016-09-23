@@ -57,7 +57,7 @@
         _editState = NO;
         self.frameRect = frameRect;
         self.editBox = editBox;
-        self.dataInputMode = cocos2d::ui::EditBox::InputFlag::INITIAL_CAPS_ALL_CHARACTERS;
+        self.dataInputMode = cocos2d::ui::EditBox::InputFlag::LOWERCASE_ALL_CHARACTERS;
         self.keyboardReturnType = cocos2d::ui::EditBox::KeyboardReturnType::DEFAULT;
         
         [self createMultiLineTextField];
@@ -206,6 +206,10 @@
             self.textInput.autocorrectionType = UITextAutocorrectionTypeNo;
             break;
             
+        case cocos2d::ui::EditBox::InputFlag::LOWERCASE_ALL_CHARACTERS:
+            self.textInput.autocapitalizationType = UITextAutocapitalizationTypeNone;
+            break;
+            
         default:
             break;
     }
@@ -332,7 +336,7 @@
     return YES;
 }
 
-- (BOOL)textViewShouldEndEditing:(UITextView *)textView;
+- (BOOL)textViewShouldEndEditing:(UITextView *)textView
 {
     CCLOG("textFieldShouldEndEditing...");
     _editState = NO;

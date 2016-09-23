@@ -2,7 +2,7 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -109,7 +109,7 @@ public:
      * @param renderer The renderer use to render the scene.
      * @js NA
      */
-    virtual void render(Renderer* renderer);
+    virtual void render(Renderer* renderer, const Mat4& eyeTransform, const Mat4* eyeProjection = nullptr);
     
     /** override function */
     virtual void removeAllChildren() override;
@@ -151,7 +151,7 @@ public:
      * @return The physics world of the scene.
      * @js NA
      */
-    inline PhysicsWorld* getPhysicsWorld() const { return _physicsWorld; }
+    PhysicsWorld* getPhysicsWorld() const { return _physicsWorld; }
 #endif
     
 #if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
@@ -159,7 +159,7 @@ public:
      * @return The 3d physics world of the scene.
      * @js NA
      */
-    inline Physics3DWorld* getPhysics3DWorld() { return _physics3DWorld; }
+    Physics3DWorld* getPhysics3DWorld() { return _physics3DWorld; }
     
     /** 
      * Set Physics3D debug draw camera.

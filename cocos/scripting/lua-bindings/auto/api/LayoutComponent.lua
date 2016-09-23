@@ -270,7 +270,7 @@
         
 --------------------------------
 -- Percent content size is used to adapt node's content size based on parent's content size.<br>
--- If set to true then node's content size will be changed based on the value setted by @see setPercentContentSize<br>
+-- If set to true then node's content size will be changed based on the value set by @see setPercentContentSize<br>
 -- param isUsed True to enable percent content size, false otherwise.
 -- @function [parent=#LayoutComponent] setUsingPercentContentSize 
 -- @param self

@@ -608,6 +608,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClCompile Include="..\platform\win32\CCDevice-win32.cpp" />
     <ClCompile Include="..\platform\win32\CCFileUtils-win32.cpp" />
     <ClCompile Include="..\platform\win32\CCStdC-win32.cpp" />
+    <ClCompile Include="..\platform\win32\CCUtils-win32.cpp" />
     <ClCompile Include="..\renderer\CCBatchCommand.cpp" />
     <ClCompile Include="..\renderer\CCCustomCommand.cpp" />
     <ClCompile Include="..\renderer\CCFrameBuffer.cpp" />
@@ -670,6 +671,10 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClCompile Include="..\ui\UIVBox.cpp" />
     <ClCompile Include="..\ui\UIWebView.cpp" />
     <ClCompile Include="..\ui\UIWidget.cpp" />
+    <ClCompile Include="..\vr\CCVRDistortion.cpp" />
+    <ClCompile Include="..\vr\CCVRDistortionMesh.cpp" />
+    <ClCompile Include="..\vr\CCVRGenericHeadTracker.cpp" />
+    <ClCompile Include="..\vr\CCVRGenericRenderer.cpp" />
     <ClCompile Include="CCAction.cpp" />
     <ClCompile Include="CCActionCamera.cpp" />
     <ClCompile Include="CCActionCatmullRom.cpp" />
@@ -1231,6 +1236,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="..\platform\win32\CCGL-win32.h" />
     <ClInclude Include="..\platform\win32\CCPlatformDefine-win32.h" />
     <ClInclude Include="..\platform\win32\CCStdC-win32.h" />
+    <ClInclude Include="..\platform\win32\CCUtils-win32.h" />
     <ClInclude Include="..\platform\win32\compat\stdint.h" />
     <ClInclude Include="..\renderer\CCBatchCommand.h" />
     <ClInclude Include="..\renderer\CCCustomCommand.h" />
@@ -1295,6 +1301,11 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="..\ui\UIWebView-inl.h" />
     <ClInclude Include="..\ui\UIWebView.h" />
     <ClInclude Include="..\ui\UIWidget.h" />
+    <ClInclude Include="..\vr\CCVRDistortion.h" />
+    <ClInclude Include="..\vr\CCVRDistortionMesh.h" />
+    <ClInclude Include="..\vr\CCVRGenericHeadTracker.h" />
+    <ClInclude Include="..\vr\CCVRGenericRenderer.h" />
+    <ClInclude Include="..\vr\CCVRProtocol.h" />
     <ClInclude Include="CCAction.h" />
     <ClInclude Include="CCActionCamera.h" />
     <ClInclude Include="CCActionCatmullRom.h" />

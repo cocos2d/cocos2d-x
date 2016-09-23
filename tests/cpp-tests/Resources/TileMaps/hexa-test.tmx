@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE map SYSTEM "http://mapeditor.org/dtd/1.0/map.dtd">
-<map version="1.0" orientation="hexagonal" width="5" height="5" tilewidth="175" tileheight="150">
- <tileset name="bla" firstgid="1" tilewidth="175" tileheight="150">
-  <image source="hexa-tiles.png"/>
+<map version="1.0" orientation="hexagonal" renderorder="right-down" width="5" height="5" tilewidth="175" tileheight="150" hexsidelength="88" staggeraxis="x" staggerindex="odd" nextobjectid="1">
+ <tileset firstgid="1" name="bla" tilewidth="175" tileheight="150" tilecount="6" columns="2">
+  <image source="hexa-tiles.png" width="512" height="512"/>
  </tileset>
  <layer name="Layer 0" width="5" height="5">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAAGNiYGBgA2JGIGaC0qxQNiuSGBuUz4amDibGhqQGXQwAD578mGQAAAA=
+   H4sIAAAAAAAAA2NiYGBgA2JGIGaC0qxQNiuSGBuUz4amDibGhqQGXQwAD578mGQAAAA=
   </data>
  </layer>
 </map>

@@ -13,9 +13,6 @@
 
 #include "tinyxml2.h"
 #include "flatbuffers/flatbuffers.h"
-#include "platform/CCFileUtils.h"
-#include "2d/CCSpriteFrameCache.h"
-#include "2d/CCLabel.h"
 
 USING_NS_CC;
 using namespace ui;
@@ -105,7 +102,7 @@ namespace cocostudio
             else if (key == P_NormalData){
                 
                 stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray(cocoLoader);
-                std::string resType = backGroundChildren[2].GetValue(cocoLoader);;
+                std::string resType = backGroundChildren[2].GetValue(cocoLoader);
                 
                 Widget::TextureResType imageFileNameType = (Widget::TextureResType)valueToInt(resType);
                 
@@ -117,7 +114,7 @@ namespace cocostudio
             else if (key == P_PressedData){
                 
                 stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray(cocoLoader);
-                std::string resType = backGroundChildren[2].GetValue(cocoLoader);;
+                std::string resType = backGroundChildren[2].GetValue(cocoLoader);
                 
                 Widget::TextureResType imageFileNameType = (Widget::TextureResType)valueToInt(resType);
                 
@@ -129,7 +126,7 @@ namespace cocostudio
             else if (key == P_DisabledData){
                 
                 stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray(cocoLoader);
-                std::string resType = backGroundChildren[2].GetValue(cocoLoader);;
+                std::string resType = backGroundChildren[2].GetValue(cocoLoader);
                 
                 Widget::TextureResType imageFileNameType = (Widget::TextureResType)valueToInt(resType);
                 
@@ -437,7 +434,7 @@ namespace cocostudio
                     }
                     else if (name == "Type")
                     {
-                        disabledResourceType = getResourceType(value);;
+                        disabledResourceType = getResourceType(value);
                     }
                     else if (name == "Plist")
                     {
@@ -675,6 +672,11 @@ namespace cocostudio
                 if (FileUtils::getInstance()->isFileExist(normalTexturePath))
                 {
                     normalFileExist = true;
+                }
+                else if (SpriteFrameCache::getInstance()->getSpriteFrameByName(normalTexturePath))
+                {
+                    normalFileExist = true;
+                    normalType = 1;
                 }
                 else
                 {

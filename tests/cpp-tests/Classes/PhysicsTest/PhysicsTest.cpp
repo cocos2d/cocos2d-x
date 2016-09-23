@@ -27,6 +27,7 @@ PhysicsTests::PhysicsTests()
     ADD_TEST_CASE(PhysicsFixedUpdate);
     ADD_TEST_CASE(PhysicsTransformTest);
     ADD_TEST_CASE(PhysicsIssue9959);
+    ADD_TEST_CASE(PhysicsIssue15932);
 }
 
 namespace
@@ -961,7 +962,7 @@ void PhysicsDemoPump::onEnter()
     
     // pump
     auto pump = Node::create();
-    auto center = PhysicsShape::getPolyonCenter(vec, 4);
+    auto center = PhysicsShape::getPolygonCenter(vec, 4);
     pump->setPosition(center);
     auto pumpBody = PhysicsBody::createPolygon(vec, 4, PHYSICSBODY_MATERIAL_DEFAULT, -center);
     pump->addComponent(pumpBody);
@@ -1198,7 +1199,7 @@ void PhysicsDemoSlice::clipPoly(PhysicsShapePolygon* shape, Vec2 normal, float d
         }
     }
     
-    Vec2 center = PhysicsShape::getPolyonCenter(points, pointsCount);
+    Vec2 center = PhysicsShape::getPolygonCenter(points, pointsCount);
     Node* node = Node::create();
     PhysicsBody* polyon = PhysicsBody::createPolygon(points, pointsCount, PHYSICSBODY_MATERIAL_DEFAULT, -center);
     node->setPosition(center);
@@ -1864,6 +1865,26 @@ std::string PhysicsIssue9959::title() const
 std::string PhysicsIssue9959::subtitle() const
 {
     return "Test Scale9Sprite run scale/move/rotation action in physics scene";
+}
+
+//
+void PhysicsIssue15932::onEnter()
+{
+    PhysicsDemo::onEnter();
+
+    PhysicsBody *pb=PhysicsBody::createBox(Size(15,5),PhysicsMaterial(0.1f,0.0f,1.0f));
+    this->addComponent(pb);
+    this->removeComponent(pb);
+}
+
+std::string PhysicsIssue15932::title() const
+{
+    return "Github issue #15932";
+}
+
+std::string PhysicsIssue15932::subtitle() const
+{
+    return "addComponent()/removeComponent() should not crash";
 }
 
 #endif

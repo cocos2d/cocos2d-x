@@ -28,7 +28,7 @@
 
 #include "platform/CCFileUtils.h"
 #include "tinyxml2.h"
-
+#include "rapidxml/rapidxml_sax3.hpp"
 
 NS_CC_BEGIN
 
@@ -87,6 +87,37 @@ bool XmlSaxHander::Visit( const tinyxml2::XMLText& text )
     return true;
 }
 
+/// rapidxml SAX handler
+class RapidXmlSaxHander : public rapidxml::xml_sax2_handler
+{
+
+public:
+    RapidXmlSaxHander() :_ccsaxParserImp(0) {};
+
+    void setSAXParserImp(SAXParser* parser)
+    {
+        _ccsaxParserImp = parser;
+    }
+
+    void xmlSAX2StartElement(const char *name, size_t /*len*/, const char **atts, size_t /*attslen*/) override
+    {
+        SAXParser::startElement(_ccsaxParserImp, (const CC_XML_CHAR *)name, (const CC_XML_CHAR **)atts);
+    }
+
+    void xmlSAX2EndElement(const char *name, size_t /*len*/) override
+    {
+        SAXParser::endElement(_ccsaxParserImp, (const CC_XML_CHAR *)name);
+    }
+
+    void xmlSAX2Text(const char *s, size_t len) override
+    {
+        SAXParser::textHandler(_ccsaxParserImp, (const CC_XML_CHAR *)s, len);
+    }
+
+private:
+    SAXParser *_ccsaxParserImp;
+};
+
 SAXParser::SAXParser()
 {
     _delegator = nullptr;
@@ -123,6 +154,25 @@ bool SAXParser::parse(const std::string& filename)
     }
 
     return ret;
+}
+
+bool SAXParser::parseIntrusive(char* xmlData, size_t dataLength)
+{
+    RapidXmlSaxHander printer;
+    printer.setSAXParserImp(this);
+
+    rapidxml::xml_sax3_parser<> parser(&printer);
+    try {
+        parser.parse<>(xmlData, dataLength);
+        return true;
+    }
+    catch (rapidxml::parse_error& e)
+    {
+        CCLOG("cocos2d: SAXParser: Error parsing xml: %s at %s", e.what(), e.where<char>());
+        return false;
+    }
+
+    return false;
 }
 
 void SAXParser::startElement(void *ctx, const CC_XML_CHAR *name, const CC_XML_CHAR **atts)

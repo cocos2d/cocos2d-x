@@ -438,7 +438,7 @@ public:
     float getRestitution() const;
 
     /** Set friction. 
-     *  @param rest The friction.
+     *  @param frict The friction.
     */
     void setFriction(float frict);
 

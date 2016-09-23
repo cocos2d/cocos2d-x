@@ -11,7 +11,6 @@
 
 #include "tinyxml2.h"
 #include "flatbuffers/flatbuffers.h"
-#include "platform/CCFileUtils.h"
 
 USING_NS_CC;
 using namespace ui;
@@ -69,7 +68,7 @@ namespace cocostudio
             
             else if(key == P_FileNameData){
                 stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray(cocoLoader);
-                std::string resType = backGroundChildren[2].GetValue(cocoLoader);;
+                std::string resType = backGroundChildren[2].GetValue(cocoLoader);
                 
                 Widget::TextureResType imageFileNameType = (Widget::TextureResType)valueToInt(resType);
                 

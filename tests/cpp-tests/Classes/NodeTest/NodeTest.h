@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -328,6 +328,17 @@ public:
     virtual void onExit() override;
 
     void test(float dt);
+};
+
+class Issue16100Test : public TestCocosNodeDemo
+{
+public:
+    CREATE_FUNC(Issue16100Test);
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+
+    virtual void onEnter() override;
+    virtual void onExit() override;
 };
 
 #endif

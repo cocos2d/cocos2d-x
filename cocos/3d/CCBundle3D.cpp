@@ -98,10 +98,10 @@ void getChildMap(std::map<int, std::vector<int> >& map, SkinData* skinData, cons
 
     // get transform matrix
     Mat4 transform;
-    const rapidjson::Value& parent_tranform = val[OLDTRANSFORM];
-    for (rapidjson::SizeType j = 0; j < parent_tranform.Size(); j++)
+    const rapidjson::Value& parent_transform = val[OLDTRANSFORM];
+    for (rapidjson::SizeType j = 0; j < parent_transform.Size(); j++)
     {
-        transform.m[j] = parent_tranform[j].GetDouble();
+        transform.m[j] = parent_transform[j].GetDouble();
     }
 
     // set origin matrices
@@ -265,7 +265,7 @@ bool Bundle3D::loadObj(MeshDatas& meshdatas, MaterialDatas& materialdatas, NodeD
             {
                 hasnormal = true;
                 attrib.vertexAttrib = GLProgram::VERTEX_ATTRIB_NORMAL;
-                attrib.attribSizeBytes = attrib.size * sizeof(float);;
+                attrib.attribSizeBytes = attrib.size * sizeof(float);
                 meshdata->attribs.push_back(attrib);
             }
             if (mesh.texcoords.size())
@@ -924,9 +924,9 @@ bool Bundle3D::loadMaterialsBinary(MaterialDatas& materialdatas)
         float  data[14];
         _binaryReader.read(&data,sizeof(float), 14);
         
-        unsigned int textruenum = 1;
-        _binaryReader.read(&textruenum, 4, 1);
-        for(unsigned int j = 0; j < textruenum ; j++ )
+        unsigned int textureNum = 1;
+        _binaryReader.read(&textureNum, 4, 1);
+        for (unsigned int j = 0; j < textureNum; j++)
         {
             NTextureData  textureData;
             textureData.id = _binaryReader.readString();
@@ -1669,7 +1669,7 @@ bool Bundle3D::loadNodesJson(NodeDatas& nodedatas)
 }
 NodeData* Bundle3D::parseNodesRecursivelyJson(const rapidjson::Value& jvalue, bool singleSprite)
 {
-    NodeData* nodedata = new (std::nothrow) NodeData();;
+    NodeData* nodedata = new (std::nothrow) NodeData();
     // id
     nodedata->id = jvalue[ID].GetString();
 
@@ -1694,7 +1694,7 @@ NodeData* Bundle3D::parseNodesRecursivelyJson(const rapidjson::Value& jvalue, bo
 
         for (rapidjson::SizeType i = 0; i < parts.Size(); i++)
         {
-            auto modelnodedata = new (std::nothrow) ModelData();;
+            auto modelnodedata = new (std::nothrow) ModelData();
             const rapidjson::Value& part = parts[i];
             modelnodedata->subMeshId = part[MESHPARTID].GetString();
             modelnodedata->matrialId = part[MATERIALID].GetString();

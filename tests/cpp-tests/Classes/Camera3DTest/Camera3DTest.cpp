@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -1162,7 +1162,6 @@ void CameraArcBallDemo::updateCameraTransform()
     Mat4::createTranslation(_center, &center);
     Mat4 result = center * rot * trans;
     _camera->setNodeToParentTransform(result);
-
 }
 
 void CameraArcBallDemo::switchOperateCallback(Ref* sender)

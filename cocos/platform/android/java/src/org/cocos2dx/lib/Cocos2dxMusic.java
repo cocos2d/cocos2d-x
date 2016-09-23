@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -27,11 +27,9 @@ package org.cocos2dx.lib;
 
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.util.Log;
-import android.content.res.AssetFileDescriptor;
-import com.android.vending.expansion.zipfile.APKExpansionSupport;
-import com.android.vending.expansion.zipfile.ZipResourceFile;
 
 import java.io.FileInputStream;
 
@@ -86,7 +84,7 @@ public class Cocos2dxMusic {
                 this.mBackgroundMediaPlayer.release();
             }
 
-            this.mBackgroundMediaPlayer = this.createMediaplayer(path);
+            this.mBackgroundMediaPlayer = this.createMediaPlayer(path);
 
             // record the path
             this.mCurrentPath = path;
@@ -96,7 +94,7 @@ public class Cocos2dxMusic {
     public void playBackgroundMusic(final String path, final boolean isLoop) {
         if (mCurrentPath == null) {
             // it is the first time to play background music or end() was called
-            mBackgroundMediaPlayer = createMediaplayer(path);
+            mBackgroundMediaPlayer = createMediaPlayer(path);
             mCurrentPath = path;
         } else {
             if (!mCurrentPath.equals(path)) {
@@ -106,7 +104,7 @@ public class Cocos2dxMusic {
                 if (mBackgroundMediaPlayer != null) {
                     mBackgroundMediaPlayer.release();
                 }
-                mBackgroundMediaPlayer = createMediaplayer(path);
+                mBackgroundMediaPlayer = createMediaPlayer(path);
 
                 // record the path
                 mCurrentPath = path;
@@ -138,7 +136,7 @@ public class Cocos2dxMusic {
     public void stopBackgroundMusic() {
         if (this.mBackgroundMediaPlayer != null) {
             mBackgroundMediaPlayer.release();
-            mBackgroundMediaPlayer = createMediaplayer(mCurrentPath);
+            mBackgroundMediaPlayer = createMediaPlayer(mCurrentPath);
             
             /**
              * should set the state, if not, the following sequence will be error
@@ -149,18 +147,26 @@ public class Cocos2dxMusic {
     }
 
     public void pauseBackgroundMusic() {
-        if (this.mBackgroundMediaPlayer != null && this.mBackgroundMediaPlayer.isPlaying()) {
-            this.mBackgroundMediaPlayer.pause();
-            this.mPaused = true;
-            this.mManualPaused = true;
+        try {
+            if (this.mBackgroundMediaPlayer != null && this.mBackgroundMediaPlayer.isPlaying()) {
+                this.mBackgroundMediaPlayer.pause();
+                this.mPaused = true;
+                this.mManualPaused = true;
+            }
+        } catch (IllegalStateException e) {
+            Log.e(TAG, "pauseBackgroundMusic, IllegalStateException was triggered!");
         }
     }
 
     public void resumeBackgroundMusic() {
-        if (this.mBackgroundMediaPlayer != null && this.mPaused) {
-            this.mBackgroundMediaPlayer.start();
-            this.mPaused = false;
-            this.mManualPaused = false;
+        try {
+            if (this.mBackgroundMediaPlayer != null && this.mPaused) {
+                this.mBackgroundMediaPlayer.start();
+                this.mPaused = false;
+                this.mManualPaused = false;
+            }
+        } catch (IllegalStateException e) {
+            Log.e(TAG, "resumeBackgroundMusic, IllegalStateException was triggered!");
         }
     }
 
@@ -170,13 +176,25 @@ public class Cocos2dxMusic {
         }
     }
 
+    public boolean willPlayBackgroundMusic() {
+        // We will play our own background music, if there isn't already some
+        // music active from some other app (eg the user playing their own
+        // music).
+        AudioManager manager =
+            (AudioManager)mContext.getSystemService(Context.AUDIO_SERVICE);
+        return !manager.isMusicActive();
+    }
+
     public boolean isBackgroundMusicPlaying() {
         boolean ret = false;
-
-        if (this.mBackgroundMediaPlayer == null) {
-            ret = false;
-        } else {
-            ret = this.mBackgroundMediaPlayer.isPlaying();
+        try {
+            if (this.mBackgroundMediaPlayer == null) {
+                ret = false;
+            } else {
+                ret = this.mBackgroundMediaPlayer.isPlaying();
+            }
+        } catch (IllegalStateException e) {
+            Log.e(TAG, "isBackgroundMusicPlaying, IllegalStateException was triggered!");
         }
 
         return ret;
@@ -214,18 +232,26 @@ public class Cocos2dxMusic {
     }
 
     public void onEnterBackground(){
-        if (this.mBackgroundMediaPlayer != null && this.mBackgroundMediaPlayer.isPlaying()) {
-            this.mBackgroundMediaPlayer.pause();
-            this.mPaused = true;
+        try {
+            if (this.mBackgroundMediaPlayer != null && this.mBackgroundMediaPlayer.isPlaying()) {
+                this.mBackgroundMediaPlayer.pause();
+                this.mPaused = true;
+            }
+        } catch (IllegalStateException e) {
+            Log.e(TAG, "onEnterBackground, IllegalStateException was triggered!");
         }
     }
     
     public void onEnterForeground(){
-        if(!this.mManualPaused){
-            if (this.mBackgroundMediaPlayer != null && this.mPaused) {
-                this.mBackgroundMediaPlayer.start();
-                this.mPaused = false;
+        try {
+            if (!this.mManualPaused) {
+                if (this.mBackgroundMediaPlayer != null && this.mPaused) {
+                    this.mBackgroundMediaPlayer.start();
+                    this.mPaused = false;
+                }
             }
+        } catch (IllegalStateException e) {
+            Log.e(TAG, "onEnterForeground, IllegalStateException was triggered!");
         }
     }
     
@@ -238,13 +264,12 @@ public class Cocos2dxMusic {
     }
 
     /**
-     * create mediaplayer for music
+     * create MediaPlayer for music
      * 
-     * @param pPath
-     *            the pPath relative to assets
+     * @param path The path relative to assets
      * @return
      */
-    private MediaPlayer createMediaplayer(final String path) {
+    private MediaPlayer createMediaPlayer(final String path) {
         MediaPlayer mediaPlayer = new MediaPlayer();
 
         try {

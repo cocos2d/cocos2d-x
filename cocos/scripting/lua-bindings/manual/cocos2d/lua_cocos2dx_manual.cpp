@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -3201,9 +3201,8 @@ int tolua_cocos2dx_DrawNode_drawCardinalSpline(lua_State* tolua_S)
     cocos2d::DrawNode* self = nullptr;
     bool ok  = true;
 
-    tolua_Error tolua_err;
-
 #if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
     if (!tolua_isusertype(tolua_S,1,"cc.DrawNode",0,&tolua_err)) goto tolua_lerror;
 #endif
 
@@ -3267,9 +3266,8 @@ int tolua_cocos2dx_DrawNode_drawCatmullRom(lua_State* tolua_S)
     cocos2d::DrawNode* self = nullptr;
     bool ok  = true;
 
-    tolua_Error tolua_err;
-
 #if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
     if (!tolua_isusertype(tolua_S,1,"cc.DrawNode",0,&tolua_err)) goto tolua_lerror;
 #endif
 
@@ -7308,9 +7306,9 @@ int lua_cocos2dx_Application_is64BitIOSDevice(lua_State* tolua_S)
     {
         bool is64BitIOSDevice = false;
         Application::Platform platform = cocos2d::Application::getInstance()->getTargetPlatform();
-        if (Application::Platform::OS_IPHONE == platform || Application::Platform::OS_IPAD == platform)
+        if (Application::Platform::OS_IPHONE == platform || Application::Platform::OS_IPAD == platform || Application::Platform::OS_ANDROID == platform)
         {
-#if defined(__arm64__)
+#if defined(__arm64__) || defined(__aarch64__)
             is64BitIOSDevice = true;
 #endif
         }

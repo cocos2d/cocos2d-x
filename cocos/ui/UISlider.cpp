@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -751,6 +751,22 @@ void Slider::copySpecialProperties(Widget *widget)
         _eventCallback = slider->_eventCallback;
         _ccEventCallback = slider->_ccEventCallback;
     }
+}
+
+Sprite* Slider::getSlidBallNormalRenderer() const {
+    return _slidBallNormalRenderer;
+}
+
+Sprite* Slider::getSlidBallPressedRenderer() const {
+    return _slidBallPressedRenderer;
+}
+
+Sprite* Slider::getSlidBallDisabledRenderer() const {
+    return _slidBallDisabledRenderer;
+}
+
+Node* Slider::getSlidBallRenderer() const {
+    return _slidBallRenderer;
 }
 
 ResourceData Slider::getBackFile()

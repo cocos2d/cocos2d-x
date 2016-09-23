@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -227,7 +227,7 @@ public:
     * If you don't want to system default implementation after setting delegate, you can just pass nullptr
     * to this function.
     *
-    * @warm It will delete previous delegate
+    * @warning It will delete previous delegate
     */
     static void setDelegate(UserDefault *delegate);
 

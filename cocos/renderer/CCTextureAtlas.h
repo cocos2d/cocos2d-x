@@ -2,7 +2,7 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -209,9 +209,9 @@ public:
     void listenRendererRecreated(EventCustom* event);
 
     /** Whether or not the array buffer of the VBO needs to be updated.*/
-    inline bool isDirty(void) { return _dirty; }
+    bool isDirty() { return _dirty; }
     /** Specify if the array buffer of the VBO needs to be updated. */
-    inline void setDirty(bool bDirty) { _dirty = bDirty; }
+    void setDirty(bool bDirty) { _dirty = bDirty; }
 
     /**Get quads total amount.
      * @js NA

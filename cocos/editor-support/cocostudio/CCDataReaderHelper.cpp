@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -147,7 +147,7 @@ static std::string readFileContent(const std::string& filename, bool binary) {
     if (binary)
         fs->getContents(filename, &s);
     else
-        s = std::move(fs->getStringFromFile(filename));
+        s = fs->getStringFromFile(filename);
     return s;
 };
 

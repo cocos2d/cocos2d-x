@@ -10,7 +10,6 @@
 
 #include "tinyxml2.h"
 #include "flatbuffers/flatbuffers.h"
-#include "platform/CCFileUtils.h"
 
 USING_NS_CC;
 using namespace ui;

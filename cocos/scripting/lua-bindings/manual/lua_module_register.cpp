@@ -15,7 +15,7 @@
 
 int lua_module_register(lua_State* L)
 {
-    //Dont' change the module register order unless you know what your are doing
+    // Don't change the module register order unless you know what your are doing
     register_cocosdenshion_module(L);
     register_network_module(L);
     register_cocosbuilder_module(L);

@@ -1,7 +1,7 @@
 /****************************************************************************
  Copyright (c) 2010-2012 cocos2d-x.org
  Copyright (c) 2011      Zynga Inc.
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -64,6 +64,8 @@ public:
 private:
     virtual bool isFileExistInternal(const std::string& filePath) const override;
     virtual bool removeDirectory(const std::string& dirPath) override;
+    virtual void valueMapCompact(ValueMap& valueMap) override;
+    virtual void valueVectorCompact(ValueVector& valueVector) override;
 
     struct IMPL;
     std::unique_ptr<IMPL> pimpl_;

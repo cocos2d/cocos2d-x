@@ -2,7 +2,7 @@
  * Created by Rolando Abarca 2012.
  * Copyright (c) 2012 Rolando Abarca. All rights reserved.
  * Copyright (c) 2013 Zynga Inc. All rights reserved.
- * Copyright (c) 2013-2014 Chukong Technologies Inc.
+ * Copyright (c) 2013-2016 Chukong Technologies Inc.
  *
  * Heavy based on: https://github.com/funkaster/FakeWebGL/blob/master/FakeWebGL/WebGL/XMLHTTPRequest.h
  *
@@ -90,7 +90,7 @@ public:
 
     void update(float dt);
 private:
-    void _gotHeader(std::string header);
+    void _gotHeader(std::string& header);
     void _setRequestHeader(const char* field, const char* value);
     void _setHttpRequestHeader();
     void _setHttpRequestData(const char *data, size_t len);

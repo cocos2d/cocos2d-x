@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2011-2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -844,6 +844,22 @@ int LuaStack::luaLoadChunksFromZIP(lua_State *L)
     return 1;
 }
 
+namespace {
+
+void skipBOM(const char*& chunk, int& chunkSize)
+{
+    // UTF-8 BOM? skip
+    if (static_cast<unsigned char>(chunk[0]) == 0xEF &&
+        static_cast<unsigned char>(chunk[1]) == 0xBB &&
+        static_cast<unsigned char>(chunk[2]) == 0xBF)
+    {
+        chunk += 3;
+        chunkSize -= 3;
+    }
+}
+
+} // end anonymous namespace
+
 int LuaStack::luaLoadBuffer(lua_State *L, const char *chunk, int chunkSize, const char *chunkName)
 {
     int r = 0;
@@ -857,11 +873,13 @@ int LuaStack::luaLoadBuffer(lua_State *L, const char *chunk, int chunkSize, cons
                                               (unsigned char*)_xxteaKey,
                                               (xxtea_long)_xxteaKeyLen,
                                               &len);
+        skipBOM((const char*&)result, (int&)len);
         r = luaL_loadbuffer(L, (char*)result, len, chunkName);
         free(result);
     }
     else
     {
+        skipBOM(chunk, chunkSize);
         r = luaL_loadbuffer(L, chunk, chunkSize, chunkName);
     }
 

@@ -64,7 +64,7 @@ public:
     /**
      * create Animate3D
      * @param animation used to generate animate3D
-     * @param formTime 
+     * @param fromTime
      * @param duration Time the Animate3D lasts
      * @return Animate3D created using animate
      */

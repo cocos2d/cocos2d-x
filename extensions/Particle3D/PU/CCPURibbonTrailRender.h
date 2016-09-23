@@ -70,7 +70,7 @@ public:
                 addedToTrail = false;
             }
         }
-    };
+    }
 };
 
 // particle render for quad

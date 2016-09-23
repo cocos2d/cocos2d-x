@@ -32,6 +32,27 @@ NS_CC_BEGIN
 
 namespace StringUtils {
 
+std::string format(const char* format, ...)
+{
+#define CC_MAX_STRING_LENGTH (1024*100)
+    
+    std::string ret;
+    
+    va_list ap;
+    va_start(ap, format);
+    
+    char* buf = (char*)malloc(CC_MAX_STRING_LENGTH);
+    if (buf != nullptr)
+    {
+        vsnprintf(buf, CC_MAX_STRING_LENGTH, format, ap);
+        ret = buf;
+        free(buf);
+    }
+    va_end(ap);
+    
+    return ret;
+}
+
 /*
  * @str:    the string to search through.
  * @c:        the character to not look for.
@@ -210,21 +231,30 @@ bool UTF32ToUTF16(const std::u32string& utf32, std::u16string& outUtf16)
 std::string getStringUTFCharsJNI(JNIEnv* env, jstring srcjStr, bool* ret)
 {
     std::string utf8Str;
-    const unsigned short * unicodeChar = ( const unsigned short *)env->GetStringChars(srcjStr, nullptr);
-    size_t unicodeCharLength = env->GetStringLength(srcjStr);
-    const std::u16string unicodeStr((const char16_t *)unicodeChar, unicodeCharLength);
-    bool flag = UTF16ToUTF8(unicodeStr, utf8Str);
-
-    if (ret)
+    if(srcjStr != nullptr)
     {
-        *ret = flag;
+        const unsigned short * unicodeChar = ( const unsigned short *)env->GetStringChars(srcjStr, nullptr);
+        size_t unicodeCharLength = env->GetStringLength(srcjStr);
+        const std::u16string unicodeStr((const char16_t *)unicodeChar, unicodeCharLength);
+        bool flag = UTF16ToUTF8(unicodeStr, utf8Str);
+        if (ret)
+        {
+            *ret = flag;
+        }
+        if (!flag)
+        {
+            utf8Str = "";
+        }
+        env->ReleaseStringChars(srcjStr, unicodeChar);
     }
-
-    if (!flag)
+    else
     {
+        if (ret)
+        {
+            *ret = false;
+        }
         utf8Str = "";
     }
-    env->ReleaseStringChars(srcjStr, unicodeChar);
     return utf8Str;
 }
 

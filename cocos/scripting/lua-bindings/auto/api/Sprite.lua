@@ -94,7 +94,7 @@
 -- Initializes a sprite with an sprite frame name.<br>
 -- A SpriteFrame will be fetched from the SpriteFrameCache by name.<br>
 -- If the SpriteFrame doesn't exist it will raise an exception.<br>
--- param   spriteFrameName  A key string that can fected a valid SpriteFrame from SpriteFrameCache.<br>
+-- param   spriteFrameName  A key string that can fetched a valid SpriteFrame from SpriteFrameCache.<br>
 -- return  True if the sprite is initialized properly, false otherwise.
 -- @function [parent=#Sprite] initWithSpriteFrameName 
 -- @param self
@@ -112,7 +112,7 @@
 -- Returns the index used on the TextureAtlas.
 -- @function [parent=#Sprite] getAtlasIndex 
 -- @param self
--- @return long#long ret (return value: long)
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- Sets the batch node to sprite.<br>
@@ -142,7 +142,7 @@
 -- @function [parent=#Sprite] setDisplayFrameWithAnimationName 
 -- @param self
 -- @param #string animationName
--- @param #long frameIndex
+-- @param #int frameIndex
 -- @return Sprite#Sprite self (return value: cc.Sprite)
         
 --------------------------------
@@ -176,7 +176,7 @@
 -- warning Don't modify this value unless you know what you are doing.
 -- @function [parent=#Sprite] setAtlasIndex 
 -- @param self
--- @param #long atlasIndex
+-- @param #int atlasIndex
 -- @return Sprite#Sprite self (return value: cc.Sprite)
         
 --------------------------------

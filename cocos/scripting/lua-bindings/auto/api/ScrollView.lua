@@ -525,7 +525,7 @@
 -- @function [parent=#ScrollView] removeChild 
 -- @param self
 -- @param #cc.Node child
--- @param #bool cleaup
+-- @param #bool cleanup
 -- @return ScrollView#ScrollView self (return value: ccui.ScrollView)
         
 --------------------------------
@@ -546,7 +546,7 @@
 -- 
 -- @function [parent=#ScrollView] getChildrenCount 
 -- @param self
--- @return long#long ret (return value: long)
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- Set layout type for scrollview.<br>

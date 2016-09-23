@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -727,10 +727,10 @@ void TextField::deleteBackwardEvent()
     this->release();
 }
 
-void TextField::addEventListenerTextField(Ref *target, SEL_TextFieldEvent selecor)
+void TextField::addEventListenerTextField(Ref *target, SEL_TextFieldEvent selector)
 {
     _textFieldEventListener = target;
-    _textFieldEventSelector = selecor;
+    _textFieldEventSelector = selector;
 }
     
 void TextField::addEventListener(const ccTextFieldCallback& callback)

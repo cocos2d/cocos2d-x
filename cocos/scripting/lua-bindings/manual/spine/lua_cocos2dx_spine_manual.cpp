@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -105,7 +105,7 @@ static int lua_cocos2dx_CCSkeletonAnimation_createWithFile(lua_State* L)
         }
 #endif
         const char* skeletonDataFile = tolua_tostring(L, 2, "");
-        const char* atlasFile = tolua_tostring(L, 3, "");;
+        const char* atlasFile = tolua_tostring(L, 3, "");
         
         auto tolua_ret = LuaSkeletonAnimation::createWithFile(skeletonDataFile, atlasFile);
         

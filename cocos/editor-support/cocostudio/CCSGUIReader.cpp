@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -48,10 +48,6 @@ THE SOFTWARE.
 #include "editor-support/cocostudio/CocoLoader.h"
 #include "tinyxml2.h"
 
-#include "platform/CCFileUtils.h"
-#include "2d/CCSpriteFrameCache.h"
-#include "base/CCDirector.h"
-#include "base/ccUtils.h"
 
 using namespace cocos2d;
 using namespace cocos2d::ui;

@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -991,7 +991,7 @@ bool UIS9BatchTest::init()
         auto addSpriteButton = ui::Button::create("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png");
         addSpriteButton->setPosition(Vec2(winSize.width/2 - 50,winSize.height - 100));
         addSpriteButton->setTitleText("Add Normal Sprite");
-        srand((unsigned)time(nullptr));
+        std::srand((unsigned)time(nullptr));
         addSpriteButton->addClickEventListener([=](Ref*){
             auto spriteFrameName = spriteFrameNameArray[rand()%2];
             auto sprite = Sprite::createWithSpriteFrameName(spriteFrameName);

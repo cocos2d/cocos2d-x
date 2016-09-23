@@ -356,7 +356,11 @@ class SetEnvVar(object):
         if not ndk_root:
             return False
 
-        ndk_build_path = os.path.join(ndk_root, 'ndk-build')
+        if self._isWindows():
+            ndk_build_path = os.path.join(ndk_root, 'ndk-build.cmd')
+        else:
+            ndk_build_path = os.path.join(ndk_root, 'ndk-build')
+
         if os.path.isfile(ndk_build_path):
             return True
         else:

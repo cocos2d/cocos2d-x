@@ -50,8 +50,6 @@ void GridAction::startWithTarget(Node *target)
     ActionInterval::startWithTarget(target);
     cacheTargetAsGridNode();
 
-    GridBase *newgrid = this->getGrid();
-
     GridBase *targetGrid = _gridNodeTarget->getGrid();
 
     if (targetGrid && targetGrid->getReuseGrid() > 0)
@@ -73,6 +71,7 @@ void GridAction::startWithTarget(Node *target)
             targetGrid->setActive(false);
         }
 
+        auto newgrid = this->getGrid();
         _gridNodeTarget->setGrid(newgrid);
         _gridNodeTarget->getGrid()->setActive(true);
     }

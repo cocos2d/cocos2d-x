@@ -78,23 +78,23 @@ public:
      *
      * @return float stroke.
      */
-    inline float getStroke() const { return _stroke; }
+    float getStroke() const { return _stroke; }
     /** Set stroke.
      *
      * @param stroke The width of stroke.
      */
-    inline void setStroke(float stroke) { _stroke = stroke; }
+    void setStroke(float stroke) { _stroke = stroke; }
 
     /** Is the starting position initialized or not.
      *
      * @return True if the starting position is initialized.
      */
-    inline bool isStartingPositionInitialized() const { return _startingPositionInitialized; }
+    bool isStartingPositionInitialized() const { return _startingPositionInitialized; }
     /** Sets the starting position initialized or not.
      *
      * @param bStartingPositionInitialized True if initialized the starting position.
      */
-    inline void setStartingPositionInitialized(bool bStartingPositionInitialized)
+    void setStartingPositionInitialized(bool bStartingPositionInitialized)
     {
         _startingPositionInitialized = bStartingPositionInitialized; 
     }

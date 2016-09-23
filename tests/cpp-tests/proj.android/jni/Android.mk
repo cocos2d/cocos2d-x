@@ -6,6 +6,8 @@ LOCAL_MODULE := cpp_tests_shared
 
 LOCAL_MODULE_FILENAME := libcpp_tests
 
+LOCAL_ARM_MODE := arm
+
 LOCAL_SRC_FILES := main.cpp \
 ../../Classes/ActionManagerTest/ActionManagerTest.cpp \
 ../../Classes/ActionsEaseTest/ActionsEaseTest.cpp \
@@ -21,7 +23,6 @@ LOCAL_SRC_FILES := main.cpp \
 ../../Classes/Box2DTestBed/Test.cpp \
 ../../Classes/Box2DTestBed/TestEntries.cpp \
 ../../Classes/BugsTest/Bug-CCDrawNode.cpp \
-../../Classes/BugsTest/Bug-PageViewLayout.cpp \
 ../../Classes/BugsTest/Bug-1159.cpp \
 ../../Classes/BugsTest/Bug-1174.cpp \
 ../../Classes/BugsTest/Bug-350.cpp \
@@ -33,6 +34,8 @@ LOCAL_SRC_FILES := main.cpp \
 ../../Classes/BugsTest/Bug-899.cpp \
 ../../Classes/BugsTest/Bug-914.cpp \
 ../../Classes/BugsTest/Bug-12847.cpp \
+../../Classes/BugsTest/Bug-15594.cpp \
+../../Classes/BugsTest/Bug-15776.cpp \
 ../../Classes/BugsTest/Bug-Child.cpp \
 ../../Classes/BugsTest/BugsTest.cpp \
 ../../Classes/Camera3DTest/Camera3DTest.cpp \
@@ -151,6 +154,7 @@ LOCAL_SRC_FILES := main.cpp \
 ../../Classes/UserDefaultTest/UserDefaultTest.cpp \
 ../../Classes/VisibleRect.cpp \
 ../../Classes/VibrateTest/VibrateTest.cpp \
+../../Classes/VRTest/VRTest.cpp \
 ../../Classes/ZwoptexTest/ZwoptexTest.cpp \
 ../../Classes/SpriteFrameCacheTest/SpriteFrameCacheTest.cpp \
 ../../Classes/controller.cpp \

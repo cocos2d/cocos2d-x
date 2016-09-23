@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -215,7 +215,7 @@ Renderer::Renderer()
     
     RenderQueue defaultRenderQueue;
     _renderGroups.push_back(defaultRenderQueue);
-    _queuedTriangleCommands.reserve(BATCH_TRIAGCOMMAND_RESEVER_SIZE);
+    _queuedTriangleCommands.reserve(BATCH_TRIAGCOMMAND_RESERVED_SIZE);
 
     // default clear color
     _clearColor = Color4F::BLACK;
@@ -309,7 +309,14 @@ void Renderer::setupVBOAndVAO()
 void Renderer::setupVBO()
 {
     glGenBuffers(2, &_buffersVBO[0]);
-    mapBuffers();
+    // Issue #15652
+    // Should not initialzie VBO with a large size (VBO_SIZE=65536),
+    // it may cause low FPS on some Android devices like LG G4 & Nexus 5X.
+    // It's probably because some implementations of OpenGLES driver will
+    // copy the whole memory of VBO which initialzied at the first time
+    // once glBufferData/glBufferSubData is invoked.
+    // For more discussion, please refer to https://github.com/cocos2d/cocos2d-x/issues/15652
+//    mapBuffers();
 }
 
 void Renderer::mapBuffers()
@@ -396,7 +403,9 @@ void Renderer::processRenderCommand(RenderCommand* command)
         if (cmd->isSkipBatching() || _lastBatchedMeshCommand == nullptr || _lastBatchedMeshCommand->getMaterialID() != cmd->getMaterialID())
         {
             flush3D();
-            
+
+            CCGL_DEBUG_INSERT_EVENT_MARKER("RENDERER_MESH_COMMAND");
+
             if(cmd->isSkipBatching())
             {
                 // XXX: execute() will call bind() and unbind()
@@ -413,6 +422,7 @@ void Renderer::processRenderCommand(RenderCommand* command)
         }
         else
         {
+            CCGL_DEBUG_INSERT_EVENT_MARKER("RENDERER_MESH_COMMAND");
             cmd->batchDraw();
         }
     }
@@ -420,24 +430,29 @@ void Renderer::processRenderCommand(RenderCommand* command)
     {
         flush();
         int renderQueueID = ((GroupCommand*) command)->getRenderQueueID();
+        CCGL_DEBUG_PUSH_GROUP_MARKER("RENDERER_GROUP_COMMAND");
         visitRenderQueue(_renderGroups[renderQueueID]);
+        CCGL_DEBUG_POP_GROUP_MARKER();
     }
     else if(RenderCommand::Type::CUSTOM_COMMAND == commandType)
     {
         flush();
         auto cmd = static_cast<CustomCommand*>(command);
+        CCGL_DEBUG_INSERT_EVENT_MARKER("RENDERER_CUSTOM_COMMAND");
         cmd->execute();
     }
     else if(RenderCommand::Type::BATCH_COMMAND == commandType)
     {
         flush();
         auto cmd = static_cast<BatchCommand*>(command);
+        CCGL_DEBUG_INSERT_EVENT_MARKER("RENDERER_BATCH_COMMAND");
         cmd->execute();
     }
     else if(RenderCommand::Type::PRIMITIVE_COMMAND == commandType)
     {
         flush();
         auto cmd = static_cast<PrimitiveCommand*>(command);
+        CCGL_DEBUG_INSERT_EVENT_MARKER("RENDERER_PRIMITIVE_COMMAND");
         cmd->execute();
     }
     else
@@ -711,6 +726,8 @@ void Renderer::drawBatchedTriangles()
     if(_queuedTriangleCommands.empty())
         return;
 
+    CCGL_DEBUG_INSERT_EVENT_MARKER("RENDERER_BATCH_TRIANGLES");
+
     _filledVertex = 0;
     _filledIndex = 0;
 
@@ -767,7 +784,8 @@ void Renderer::drawBatchedTriangles()
     batchesTotal++;
 
     /************** 2: Copy vertices/indices to GL objects *************/
-    if (Configuration::getInstance()->supportsShareableVAO())
+    auto conf = Configuration::getInstance();
+    if (conf->supportsShareableVAO() && conf->supportsMapBuffer())
     {
         //Bind VAO
         GL::bindVAO(_buffersVAO);
@@ -859,6 +877,8 @@ void Renderer::flush3D()
 {
     if (_lastBatchedMeshCommand)
     {
+        CCGL_DEBUG_INSERT_EVENT_MARKER("RENDERER_BATCH_MESH");
+
         _lastBatchedMeshCommand->postBatchDraw();
         _lastBatchedMeshCommand = nullptr;
     }

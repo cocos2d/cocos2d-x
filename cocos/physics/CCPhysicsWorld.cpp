@@ -32,7 +32,6 @@
 #include "physics/CCPhysicsShape.h"
 #include "physics/CCPhysicsContact.h"
 #include "physics/CCPhysicsJoint.h"
-#include "physics/CCPhysicsContact.h"
 #include "physics/CCPhysicsHelper.h"
 
 #include "2d/CCDrawNode.h"
@@ -648,7 +647,7 @@ void PhysicsWorld::removeJoint(PhysicsJoint* joint, bool destroy)
             return;
         }
 
-        joint->_destoryMark = destroy;
+        joint->_destroyMark = destroy;
 
         bool removedFromDelayAdd = false;
         auto it = std::find(_delayAddJoints.begin(), _delayAddJoints.end(), joint);
@@ -793,7 +792,7 @@ void PhysicsWorld::doRemoveJoint(PhysicsJoint* joint)
         joint->getBodyB()->removeJoint(joint);
     }
 
-    if (joint->_destoryMark)
+    if (joint->_destroyMark)
     {
         delete joint;
     }

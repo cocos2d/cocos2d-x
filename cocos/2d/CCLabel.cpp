@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2013      Zynga Inc.
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -525,6 +525,25 @@ void Label::reset()
     setRotationSkewX(0);        // reverse italics
 }
 
+//  ETC1 ALPHA supports, for LabelType::BMFONT & LabelType::CHARMAP
+static Texture2D* _getTexture(Label* label)
+ {
+    struct _FontAtlasPub : public FontAtlas
+    {
+        Texture2D* getTexture()
+        {
+            if (!_atlasTextures.empty())
+                return _atlasTextures.begin()->second;
+            return nullptr;
+        }
+    };
+
+    auto fontAtlas = label->getFontAtlas();
+    Texture2D* texture = nullptr;
+    if (fontAtlas != nullptr)
+        texture = ((_FontAtlasPub*)(fontAtlas))->getTexture();
+    return texture;
+}
 void Label::updateShaderProgram()
 {
     switch (_currLabelEffect)
@@ -535,9 +554,9 @@ void Label::updateShaderProgram()
         else if (_useA8Shader)
             setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_LABEL_NORMAL));
         else if (_shadowEnabled)
-            setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
+            setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR, _getTexture(this)));
         else
-            setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP));
+            setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP, _getTexture(this)));
 
         break;
     case cocos2d::LabelEffect::OUTLINE: 
@@ -560,9 +579,13 @@ void Label::updateShaderProgram()
 
 void Label::setFontAtlas(FontAtlas* atlas,bool distanceFieldEnabled /* = false */, bool useA8Shader /* = false */)
 {
+    if(atlas)
+    {
+        _systemFontDirty = false;
+    }
+
     if (atlas == _fontAtlas)
     {
-        FontAtlasCache::releaseFontAtlas(atlas);
         return;
     }
 
@@ -615,7 +638,7 @@ bool Label::setBMFontFilePath(const std::string& bmfontFilePath, const Vec2& ima
     }
 
     //assign the default fontSize
-    if (fabs(fontSize) < FLT_EPSILON) {
+    if (std::abs(fontSize) < FLT_EPSILON) {
         FontFNT *bmFont = (FontFNT*)newAtlas->getFont();
         if (bmFont) {
             float originalFontSize = bmFont->getOriginalFontSize();
@@ -798,6 +821,12 @@ bool Label::alignText()
         {
             return true;
         }
+        // optimize for one-texture-only sceneario
+        // if multiple textures, then we should count how many chars
+        // are per texture
+        if (_batchNodes.size()==1)
+            _batchNodes.at(0)->reserveCapacity(_utf16Text.size());
+
         _reusedLetter->setBatchNode(_batchNodes.at(0));
         
         _lengthOfString = 0;
@@ -997,7 +1026,7 @@ void Label::scaleFontSizeDown(float fontSize)
         ttfConfig.fontSize = fontSize;
         this->setTTFConfigInternal(ttfConfig);
     }else if(_currentLabelType == LabelType::BMFONT){
-        if (fabs(fontSize) < FLT_EPSILON) {
+        if (std::abs(fontSize) < FLT_EPSILON) {
             fontSize = 0.1f;
             shouldUpdateContent = false;
         }
@@ -1107,14 +1136,7 @@ void Label::enableShadow(const Color4B& shadowColor /* = Color4B::BLACK */,const
 
     if (_currentLabelType == LabelType::BMFONT || _currentLabelType == LabelType::CHARMAP)
     {
-        if (_shadowEnabled)
-        {
-            setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
-        } 
-        else
-        {
-            setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP));
-        }
+        setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(_shadowEnabled ? GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR : GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP, _getTexture(this)));
     }
 }
 
@@ -1321,7 +1343,7 @@ void Label::setFontDefinition(const FontDefinition& textDefinition)
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID) && (CC_TARGET_PLATFORM != CC_PLATFORM_IOS)
     if (textDefinition._stroke._strokeEnabled)
     {
-        CCLOGERROR("Currently only supported on iOS and Android!");
+        CCLOGERROR("Stroke Currently only supported on iOS and Android!");
     }
     _outlineSize = 0.f;
 #else
@@ -1386,6 +1408,7 @@ void Label::updateContent()
 
         if (_numberOfLines)
         {
+            // This is the logic for TTF fonts
             const float charheight = (_textDesiredHeight / _numberOfLines);
             _underlineNode->setLineWidth(charheight/6);
 
@@ -1397,12 +1420,15 @@ void Label::updateContent()
                     offsety += charheight / 2;
                 // FIXME: Might not work with different vertical alignments
                 float y = (_numberOfLines - i - 1) * charheight + offsety;
-                _underlineNode->drawLine(Vec2(_linesOffsetX[i],y), Vec2(_linesWidth[i] + _linesOffsetX[i],y), _textColorF);
+
+                // Github issue #15214. Uses _displayedColor instead of _textColor for the underline.
+                // This is to have the same behavior of SystemFonts.
+                _underlineNode->drawLine(Vec2(_linesOffsetX[i],y), Vec2(_linesWidth[i] + _linesOffsetX[i],y), Color4F(_displayedColor));
             }
         }
         else if (_textSprite)
         {
-            // system font
+            // ...and is the logic for System fonts
             float y = 0;
             const auto spriteSize = _textSprite->getContentSize();
             _underlineNode->setLineWidth(spriteSize.height/6);
@@ -1571,8 +1597,10 @@ void Label::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
             {
                 it.second->updateTransform();
             }
+            // ETC1 ALPHA supports for BMFONT & CHARMAP
             auto textureAtlas = _batchNodes.at(0)->getTextureAtlas();
-            _quadCommand.init(_globalZOrder, textureAtlas->getTexture()->getName(), getGLProgramState(), 
+            auto texture = textureAtlas->getTexture();
+            _quadCommand.init(_globalZOrder, texture, getGLProgramState(), 
                 _blendFunc, textureAtlas->getQuads(), textureAtlas->getTotalQuads(), transform, flags);
             renderer->addCommand(&_quadCommand);
         }
@@ -1680,6 +1708,7 @@ void Label::setSystemFontName(const std::string& systemFont)
     if (systemFont != _systemFont)
     {
         _systemFont = systemFont;
+        _currentLabelType = LabelType::STRING_TEXTURE;
         _systemFontDirty = true;
     }
 }
@@ -1690,6 +1719,7 @@ void Label::setSystemFontSize(float fontSize)
     {
         _systemFontSize = fontSize;
         _originalFontSize = fontSize;
+        _currentLabelType = LabelType::STRING_TEXTURE;
         _systemFontDirty = true;
     }
 }
@@ -1806,6 +1836,8 @@ void Label::setAdditionalKerning(float space)
 
 float Label::getAdditionalKerning() const
 {
+    CCASSERT(_currentLabelType != LabelType::STRING_TEXTURE, "Not supported system font!");
+
     return _additionalKerning;
 }
 
@@ -1870,18 +1902,26 @@ void Label::updateDisplayedColor(const Color3B& parentColor)
     if (_textSprite)
     {
         _textSprite->updateDisplayedColor(_displayedColor);
-        if (_shadowNode)
-        {
-            _shadowNode->updateDisplayedColor(_displayedColor);
-        }
+    }
 
-        if (_underlineNode)
-            _contentDirty = true;
+    if (_shadowNode)
+    {
+        _shadowNode->updateDisplayedColor(_displayedColor);
+    }
+
+    if (_underlineNode)
+    {
+        // FIXME: _underlineNode is not a sprite/label. It is a DrawNode
+        // and updating its color doesn't work. it must be re-drawn,
+        // which makes it super expensive to change update it frequently
+        // Correct solution is to update the DrawNode directly since we know it is
+        // a line. Returning a pointer to the line is an option
+        _contentDirty = true;
     }
 
     for (auto&& it : _letters)
     {
-        it.second->updateDisplayedColor(_displayedColor);;
+        it.second->updateDisplayedColor(_displayedColor);
     }
 }
 
@@ -1900,10 +1940,13 @@ void Label::updateDisplayedOpacity(GLubyte parentOpacity)
 
     for (auto&& it : _letters)
     {
-        it.second->updateDisplayedOpacity(_displayedOpacity);;
+        it.second->updateDisplayedOpacity(_displayedOpacity);
     }
 }
 
+// FIXME: it is not clear what is the difference between setTextColor() and setColor()
+// if setTextColor() only changes the text and nothing but the text (no glow, no outline, not underline)
+// that's fine but it should be documented
 void Label::setTextColor(const Color4B &color)
 {
     CCASSERT(_currentLabelType == LabelType::TTF || _currentLabelType == LabelType::STRING_TEXTURE, "Only supported system font and ttf!");
@@ -2029,6 +2072,8 @@ FontDefinition Label::_getFontDefinition() const
     systemFontDef._fontFillColor.b = _textColor.b;
     systemFontDef._fontAlpha = _textColor.a;
     systemFontDef._shadow._shadowEnabled = false;
+    systemFontDef._enableWrap = _enableWrap;
+    systemFontDef._overflow = (int)_overflow;
 
     if (_currLabelEffect == LabelEffect::OUTLINE && _outlineSize > 0.f)
     {
@@ -2047,7 +2092,7 @@ FontDefinition Label::_getFontDefinition() const
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID) && (CC_TARGET_PLATFORM != CC_PLATFORM_IOS)
     if (systemFontDef._stroke._strokeEnabled)
     {
-        CCLOGERROR("Currently only supported on iOS and Android!");
+        CCLOGERROR("Stroke Currently only supported on iOS and Android!");
     }
     systemFontDef._stroke._strokeEnabled = false;
 #endif
@@ -2085,8 +2130,7 @@ float Label::getRenderingFontSize()const
 
 void Label::enableWrap(bool enable)
 {
-    if(enable == _enableWrap || _overflow == Overflow::RESIZE_HEIGHT
-       || _currentLabelType == LabelType::STRING_TEXTURE){
+    if(enable == _enableWrap || _overflow == Overflow::RESIZE_HEIGHT){
         return;
     }
 
@@ -2110,12 +2154,6 @@ void Label::setOverflow(Overflow overflow)
     
     if (_currentLabelType == LabelType::CHARMAP) {
         if (overflow == Overflow::SHRINK) {
-            return;
-        }
-    }
-    
-    if (_currentLabelType == LabelType::STRING_TEXTURE) {
-        if (overflow == Overflow::CLAMP || overflow == Overflow::SHRINK) {
             return;
         }
     }
@@ -2152,7 +2190,7 @@ void Label::updateLetterSpriteScale(Sprite* sprite)
     }
     else
     {
-        if(fabs(_bmFontSize)<FLT_EPSILON)
+        if (std::abs(_bmFontSize) < FLT_EPSILON)
         {
             sprite->setScale(0);
         }

@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -53,10 +53,6 @@ public:
     @param interval The time, which expressed in second in second, between current frame and next.
     */
     virtual void setAnimationInterval(float interval) override;
-    
-    /**
-    @brief  Get status bar rectangle in GLView window.
-    */
     
     /**
     @brief  Run the message loop.

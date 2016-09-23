@@ -347,7 +347,7 @@ public:
      *
      * @return The selector target.
      */
-    inline Ref* getTargetCallback()
+    Ref* getTargetCallback()
     {
         return _selectorTarget;
     }
@@ -356,7 +356,7 @@ public:
      *
      * @param sel The selector target.
      */
-    inline void setTargetCallback(Ref* sel)
+    void setTargetCallback(Ref* sel)
     {
         if (sel != _selectorTarget)
         {

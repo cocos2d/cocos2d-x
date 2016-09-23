@@ -39,6 +39,14 @@ AudioEngineTests::AudioEngineTests()
     ADD_TEST_CASE(AudioProfileTest);
     ADD_TEST_CASE(InvalidAudioFileTest);
     ADD_TEST_CASE(LargeAudioFileTest);
+    ADD_TEST_CASE(AudioPerformanceTest);
+    ADD_TEST_CASE(AudioSmallFileTest);
+    ADD_TEST_CASE(AudioPauseResumeAfterPlay);
+    ADD_TEST_CASE(AudioPreloadSameFileMultipleTimes);
+    ADD_TEST_CASE(AudioPlayFileInWritablePath);
+    
+    //FIXME: Please keep AudioSwitchStateTest to the last position since this test case doesn't work well on each platforms.
+    ADD_TEST_CASE(AudioSwitchStateTest);
 }
 
 namespace {
@@ -177,9 +185,15 @@ namespace {
     };
 }
 
+AudioEngineTestDemo::AudioEngineTestDemo()
+: _isDestroyed(std::make_shared<bool>(false))
+{
+}
+
 void AudioEngineTestDemo::onExit()
 {
-    AudioEngine::stopAll();
+    *_isDestroyed = true;
+    AudioEngine::uncacheAll();
     TestCase::onExit();
 }
 
@@ -198,18 +212,35 @@ bool AudioControlTest::init()
     _duration = AudioEngine::TIME_UNKNOWN;
     _timeRatio = 0.0f;
     _updateTimeSlider = true;
+    _isStopped = false;
     
     std::string fontFilePath = "fonts/arial.ttf";
     
     auto& layerSize = this->getContentSize();
+    
+    _playOverLabel = Label::createWithSystemFont("Play Over", "", 30);
+    _playOverLabel->setPosition(Vec2(layerSize/2) + Vec2(0, 30));
+    _playOverLabel->setVisible(false);
+    addChild(_playOverLabel, 99999);
     
     auto playItem = TextButton::create("play", [&](TextButton* button){
         if (_audioID == AudioEngine::INVALID_AUDIO_ID) {
             _audioID = AudioEngine::play2d("background.mp3", _loopEnabled, _volume);
             
             if(_audioID != AudioEngine::INVALID_AUDIO_ID) {
+                _isStopped = false;
+                
                 button->setEnabled(false);
                 AudioEngine::setFinishCallback(_audioID, [&](int id, const std::string& filePath){
+                    log("_audioID(%d), _isStopped:(%d), played over!!!", _audioID, _isStopped);
+                    
+                    _playOverLabel->setVisible(true);
+                    
+                    scheduleOnce([&](float dt){
+                        _playOverLabel->setVisible(false);
+                    }, 2.0f, "hide_play_over_label");
+                    
+                    assert(!_isStopped); // Stop audio should not trigger finshed callback
                     _audioID = AudioEngine::INVALID_AUDIO_ID;
                     ((TextButton*)_playItem)->setEnabled(true);
                     
@@ -225,6 +256,7 @@ bool AudioControlTest::init()
     
     auto stopItem = TextButton::create("stop", [&](TextButton* button){
         if (_audioID != AudioEngine::INVALID_AUDIO_ID ) {
+            _isStopped = true;
             AudioEngine::stop(_audioID);
             
             _audioID = AudioEngine::INVALID_AUDIO_ID;
@@ -356,7 +388,14 @@ bool AudioLoadTest::init()
 
         auto preloadItem = TextButton::create("preload", [&, stateLabel](TextButton* button){
             stateLabel->setString("status:loading...");
-            AudioEngine::preload("audio/SoundEffectsFX009/FX082.mp3", [stateLabel](bool isSuccess){
+            auto isDestroyed = _isDestroyed;
+            AudioEngine::preload("audio/SoundEffectsFX009/FX082.mp3", [isDestroyed, stateLabel](bool isSuccess){
+                if (*isDestroyed)
+                {
+                    CCLOG("AudioLoadTest scene was destroyed, no need to set the label text.");
+                    return;
+                }
+                
                 if (isSuccess)
                 {
                     stateLabel->setString("status:load success");
@@ -608,11 +647,17 @@ bool AudioIssue11143Test::init()
         auto& layerSize = this->getContentSize();
 
         auto playItem = TextButton::create("play", [](TextButton* button){
+            AudioEngine::play2d("audio/SoundEffectsFX009/FX082.mp3", true);
+            AudioEngine::stopAll();
+            
             auto audioId = AudioEngine::play2d("audio/SoundEffectsFX009/FX082.mp3", true);
+            char key[100] = {0};
+            sprintf(key, "play another sound %d", audioId);
             button->scheduleOnce([audioId](float dt){
                 AudioEngine::stop(audioId);
                 AudioEngine::play2d("audio/SoundEffectsFX009/FX083.mp3");
-            }, 2.f, "play another sound");
+            }, 0.3f, key);
+
         });
         playItem->setPosition(layerSize.width * 0.5f, layerSize.height * 0.5f);
         addChild(playItem);
@@ -633,3 +678,249 @@ std::string AudioIssue11143Test::subtitle() const
     return "2 seconds after first sound play,you should hear another sound.";
 }
 
+// Enable profiles for this file
+#undef CC_PROFILER_DISPLAY_TIMERS
+#define CC_PROFILER_DISPLAY_TIMERS() Profiler::getInstance()->displayTimers()
+#undef CC_PROFILER_PURGE_ALL
+#define CC_PROFILER_PURGE_ALL() Profiler::getInstance()->releaseAllTimers()
+
+#undef CC_PROFILER_START
+#define CC_PROFILER_START(__name__) ProfilingBeginTimingBlock(__name__)
+#undef CC_PROFILER_STOP
+#define CC_PROFILER_STOP(__name__) ProfilingEndTimingBlock(__name__)
+#undef CC_PROFILER_RESET
+#define CC_PROFILER_RESET(__name__) ProfilingResetTimingBlock(__name__)
+
+#undef CC_PROFILER_START_CATEGORY
+#define CC_PROFILER_START_CATEGORY(__cat__, __name__) do{ if(__cat__) ProfilingBeginTimingBlock(__name__); } while(0)
+#undef CC_PROFILER_STOP_CATEGORY
+#define CC_PROFILER_STOP_CATEGORY(__cat__, __name__) do{ if(__cat__) ProfilingEndTimingBlock(__name__); } while(0)
+#undef CC_PROFILER_RESET_CATEGORY
+#define CC_PROFILER_RESET_CATEGORY(__cat__, __name__) do{ if(__cat__) ProfilingResetTimingBlock(__name__); } while(0)
+
+#undef CC_PROFILER_START_INSTANCE
+#define CC_PROFILER_START_INSTANCE(__id__, __name__) do{ ProfilingBeginTimingBlock( String::createWithFormat("%08X - %s", __id__, __name__)->getCString() ); } while(0)
+#undef CC_PROFILER_STOP_INSTANCE
+#define CC_PROFILER_STOP_INSTANCE(__id__, __name__) do{ ProfilingEndTimingBlock(    String::createWithFormat("%08X - %s", __id__, __name__)->getCString() ); } while(0)
+#undef CC_PROFILER_RESET_INSTANCE
+#define CC_PROFILER_RESET_INSTANCE(__id__, __name__) do{ ProfilingResetTimingBlock( String::createWithFormat("%08X - %s", __id__, __name__)->getCString() ); } while(0)
+
+bool AudioPerformanceTest::init()
+{
+    if (AudioEngineTestDemo::init())
+    {
+        std::vector<std::string> audioFiles = {
+            "audio/SoundEffectsFX009/FX081.mp3",
+            "audio/SoundEffectsFX009/FX082.mp3",
+            "audio/SoundEffectsFX009/FX083.mp3",
+            "audio/SoundEffectsFX009/FX084.mp3",
+            "audio/SoundEffectsFX009/FX085.mp3",
+            "audio/SoundEffectsFX009/FX086.mp3",
+            "audio/SoundEffectsFX009/FX087.mp3",
+            "audio/SoundEffectsFX009/FX088.mp3",
+            "audio/SoundEffectsFX009/FX089.mp3",
+            "audio/SoundEffectsFX009/FX090.mp3"
+        };
+        
+        for (const auto& audioFile : audioFiles)
+        {
+            AudioEngine::preload(audioFile);
+        }
+        
+        auto& layerSize = this->getContentSize();
+        
+        auto playItem = TextButton::create("Start Test", [this, audioFiles](TextButton* button){
+            button->setEnabled(false);
+            static_cast<TextButton*>(getChildByName("DisplayButton"))->setEnabled(true);
+            
+            unschedule("test");
+            schedule([audioFiles](float dt){
+                int index = cocos2d::random(0, (int)(audioFiles.size()-1));
+                CC_PROFILER_START("play2d");
+                AudioEngine::play2d(audioFiles[index]);
+                CC_PROFILER_STOP("play2d");
+            }, 0.25f, "test");
+        });
+        playItem->setPosition(layerSize.width * 0.5f, layerSize.height * 2 / 3);
+        playItem->setName("PlayButton");
+        addChild(playItem);
+        
+        auto displayItem = TextButton::create("Display Result", [this, playItem](TextButton* button){
+            unschedule("test");
+            AudioEngine::stopAll();
+            CC_PROFILER_DISPLAY_TIMERS();
+            playItem->setEnabled(true);
+            button->setEnabled(false);
+        });
+        displayItem->setEnabled(false);
+        displayItem->setPosition(layerSize.width * 0.5f, layerSize.height / 3);
+        displayItem->setName("DisplayButton");
+        addChild(displayItem);
+        
+        return true;
+    }
+    
+    return false;
+}
+
+std::string AudioPerformanceTest::title() const
+{
+    return "Test Performance of AudioEngine::play2d, audio is played 1 time per second";
+}
+
+std::string AudioPerformanceTest::subtitle() const
+{
+    return "Please see console for the result";
+}
+
+/////////////////////////////////////////////////////////////////////////
+
+bool AudioSwitchStateTest::init()
+{
+    if (AudioEngineTestDemo::init())
+    {
+        schedule([](float dt){
+            
+            AudioEngine::uncacheAll();
+            AudioEngine::preload("audio/SoundEffectsFX009/FX081.mp3");
+            AudioEngine::play2d("audio/SoundEffectsFX009/FX082.mp3");
+            AudioEngine::play2d("audio/LuckyDay.mp3");
+            
+        }, 0.1f, "AudioSwitchStateTest");
+        
+        return true;
+    }
+    
+    return false;
+}
+
+std::string AudioSwitchStateTest::title() const
+{
+    return "play, preload, stop switch test";
+}
+
+std::string AudioSwitchStateTest::subtitle() const
+{
+    return "Should not crash";
+}
+
+/////////////////////////////////////////////////////////////////////////
+
+bool AudioSmallFileTest::init()
+{
+    if (AudioEngineTestDemo::init())
+    {
+        AudioEngine::play2d("audio/SmallFile.mp3");
+        return true;
+    }
+    
+    return false;
+}
+
+std::string AudioSmallFileTest::title() const
+{
+    return "Playing small mp3 file";
+}
+
+std::string AudioSmallFileTest::subtitle() const
+{
+    return "Should not crash";
+}
+
+/////////////////////////////////////////////////////////////////////////
+void AudioPauseResumeAfterPlay::onEnter()
+{
+    AudioEngineTestDemo::onEnter();
+
+    int audioId = AudioEngine::play2d("audio/SoundEffectsFX009/FX082.mp3");
+    AudioEngine::pause(audioId);
+    AudioEngine::resume(audioId);
+    
+    for (int i = 0; i < 10; ++i)
+    {
+        AudioEngine::pause(audioId);
+        AudioEngine::resume(audioId);
+    }
+}
+
+std::string AudioPauseResumeAfterPlay::title() const
+{
+    return "pause & resume right after play2d";
+}
+
+std::string AudioPauseResumeAfterPlay::subtitle() const
+{
+    return "Should not crash";
+}
+
+/////////////////////////////////////////////////////////////////////////
+void AudioPreloadSameFileMultipleTimes::onEnter()
+{
+    AudioEngineTestDemo::onEnter();
+
+    for (int i = 0; i < 10; ++i)
+    {
+        AudioEngine::preload("audio/SoundEffectsFX009/FX082.mp3", [i](bool isSucceed){
+            log("111: %d preload %s", i, isSucceed ? "succeed" : "failed");
+            AudioEngine::preload("audio/SoundEffectsFX009/FX082.mp3", [i](bool isSucceed){
+                log("222: %d preload %s", i, isSucceed ? "succeed" : "failed");
+                AudioEngine::preload("audio/SoundEffectsFX009/FX082.mp3", [i](bool isSucceed){
+                    log("333: %d preload %s", i, isSucceed ? "succeed" : "failed");
+                });
+            });
+        });
+    }
+}
+
+std::string AudioPreloadSameFileMultipleTimes::title() const
+{
+    return "Preload same file multiple times";
+}
+
+std::string AudioPreloadSameFileMultipleTimes::subtitle() const
+{
+    return "Should not crash";
+}
+
+void AudioPlayFileInWritablePath::onEnter()
+{
+    AudioEngineTestDemo::onEnter();
+    
+    auto fileUtils = FileUtils::getInstance();
+    std::string writablePath = fileUtils->getWritablePath();
+    std::string musicFile = "background.mp3";
+    std::string saveFilePath = writablePath + "background_in_writable_dir.mp3";
+    
+    _oldSearchPaths = fileUtils->getSearchPaths();
+    fileUtils->addSearchPath(writablePath, true);
+
+    if (!fileUtils->isFileExist(saveFilePath))
+    {
+        Data data = fileUtils->getDataFromFile(musicFile);
+        FILE* fp = fopen(saveFilePath.c_str(), "wb");
+        if (fp != nullptr)
+        {
+            fwrite(data.getBytes(), data.getSize(), 1, fp);
+            fclose(fp);
+        }
+    }
+    
+    AudioEngine::play2d(saveFilePath);
+}
+
+void AudioPlayFileInWritablePath::onExit()
+{
+    AudioEngineTestDemo::onExit();
+    
+    FileUtils::getInstance()->setSearchPaths(_oldSearchPaths);
+}
+
+std::string AudioPlayFileInWritablePath::title() const
+{
+    return "Play audio in writable path";
+}
+
+std::string AudioPlayFileInWritablePath::subtitle() const
+{
+    return "Could play audio";
+}

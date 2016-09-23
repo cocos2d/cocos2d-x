@@ -359,13 +359,13 @@ void WebViewImpl::setScalesPageToFit(const bool scalesPageToFit) {
 void WebViewImpl::draw(cocos2d::Renderer *renderer, cocos2d::Mat4 const &transform, uint32_t flags) {
     if (flags & cocos2d::Node::FLAGS_TRANSFORM_DIRTY) {
         
-        auto direcrot = cocos2d::Director::getInstance();
-        auto glView = direcrot->getOpenGLView();
+        auto director = cocos2d::Director::getInstance();
+        auto glView = director->getOpenGLView();
         auto frameSize = glView->getFrameSize();
         
         auto scaleFactor = [static_cast<CCEAGLView *>(glView->getEAGLView()) contentScaleFactor];
 
-        auto winSize = direcrot->getWinSize();
+        auto winSize = director->getWinSize();
 
         auto leftBottom = this->_webView->convertToWorldSpace(cocos2d::Vec2::ZERO);
         auto rightTop = this->_webView->convertToWorldSpace(cocos2d::Vec2(this->_webView->getContentSize().width, this->_webView->getContentSize().height));

@@ -12,8 +12,6 @@
 
 #include "tinyxml2.h"
 #include "flatbuffers/flatbuffers.h"
-#include "platform/CCFileUtils.h"
-#include "2d/CCSpriteFrameCache.h"
 
 USING_NS_CC;
 using namespace ui;
@@ -84,7 +82,7 @@ namespace cocostudio
             else if (key == P_TextureData){
                 
                 stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray(cocoLoader);
-                std::string resType = backGroundChildren[2].GetValue(cocoLoader);;
+                std::string resType = backGroundChildren[2].GetValue(cocoLoader);
                 
                 Widget::TextureResType imageFileNameType = (Widget::TextureResType)valueToInt(resType);
                 
@@ -263,6 +261,11 @@ namespace cocostudio
                 if (FileUtils::getInstance()->isFileExist(imageFileName))
                 {
                     fileExist = true;
+                }
+                else if (SpriteFrameCache::getInstance()->getSpriteFrameByName(imageFileName))
+                {
+                    fileExist = true;
+                    imageFileNameType = 1;
                 }
                 else
                 {
