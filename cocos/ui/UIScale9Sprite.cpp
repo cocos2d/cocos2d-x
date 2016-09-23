@@ -483,11 +483,9 @@ namespace ui {
         }
 
         applyBlendFunc();
-        if (getGLProgramState()) {
-            _scale9Image->setGLProgramState(getGLProgramState());
-        } else {
-            this->setState(_brightState);
-        }
+
+        this->setState(_brightState);
+
         if(this->_isPatch9)
         {
             size.width = size.width - 2;
