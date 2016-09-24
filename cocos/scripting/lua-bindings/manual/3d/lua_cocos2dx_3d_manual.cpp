@@ -889,17 +889,14 @@ int lua_cocos2dx_3d_AABB_updateMinMax(lua_State* L)
 #endif
 
     argc = lua_gettop(L)-1;
-    if (argc == 2)
+    if (argc == 1)
     {
-        const cocos2d::Vec3* arg0;
-        ssize_t arg1;
+        std::vector<cocos2d::Vec3> vec3vector;
 
-        ok &= luaval_to_object<const cocos2d::Vec3>(L, 2, "cc.Vec3",&arg0, "cc.AABB:updateMinMax");
-
-        ok &= luaval_to_ssize(L, 3, &arg1, "cc.AABB:updateMinMax");
+        ok &= luaval_to_std_vector_vec3(L, 2, &vec3vector, "cc.AABB:updateMinMax");
         if(!ok)
             return 0;
-        cobj->updateMinMax(arg0, arg1);
+        cobj->updateMinMax(&vec3vector[0], vec3vector.size());
         return 0;
     }
     luaL_error(L, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.AABB:updateMinMax",argc, 2);
@@ -2038,21 +2035,36 @@ int lua_cocos2dx_3d_Ray_intersects(lua_State* L)
     argc = lua_gettop(L)-1;
     if(1 == argc)
     {
-        cocos2d::OBB* arg0 = nullptr;
-        ok &= luaval_to_object<cocos2d::OBB>(L, 2, "cc.OBB",&arg0, "cc.Ray:intersects");
+        cocos2d::AABB* aabb = nullptr;
+        cocos2d::OBB* obb = nullptr;
 
-        if (!ok)
-            return 0;
+        ok = luaval_to_object<cocos2d::AABB>(L, 2, "cc.AABB",&aabb, "cc.Ray:intersects");
+        if (ok)
+        {
+            float distance;
+            bool ret = self->intersects(*aabb, &distance);
+            tolua_pushboolean(L, ret);
+            tolua_pushnumber(L, (lua_Number)distance);
+            return 2;
+        }
 
-        bool ret = self->intersects(*arg0);
-        tolua_pushboolean(L, ret);
-        return 1;
+        ok = luaval_to_object<cocos2d::OBB>(L, 2, "cc.OBB",&obb, "cc.Ray:intersects");
+        if (ok)
+        {
+            float distance;
+            bool ret = self->intersects(*obb, &distance);
+            tolua_pushboolean(L, ret);
+            tolua_pushnumber(L, (lua_Number)distance);
+            return 2;
+        }
+
+        return 0;
     }
     luaL_error(L, "%s has wrong number of arguments: %d, was expecting %d \n",  "cc.Ray:intersects",argc, 1);
     return 0;
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
-    tolua_error(L,"#ferror in function 'lua_cocos2dx_3d_get_OBB_center'.",&tolua_err);
+    tolua_error(L,"#ferror in function 'lua_cocos2dx_3d_Ray_intersect'.",&tolua_err);
     return 0;
 #endif
 }
