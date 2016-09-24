@@ -152,7 +152,7 @@ void TMXLayer::releaseMap()
 {
     if (_tiles)
     {
-        delete [] _tiles;
+        free(_tiles);
         _tiles = nullptr;
     }
 
