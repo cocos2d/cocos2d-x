@@ -280,9 +280,9 @@ public:
     std::string parseText(const std::string& text);
 
     // implement pure virtual methods of SAXDelegator
-    void startElement(void *ctx, const char *name, const char **atts);
-    void endElement(void *ctx, const char *name);
-    void textHandler(void *ctx, const char *ch, int len);
+    void startElement(void *ctx, const char *name, const char **atts) override;
+    void endElement(void *ctx, const char *name) override;
+    void textHandler(void *ctx, const char *ch, size_t len) override;
 
 private:
     cocos2d::SAXParser _parser;
