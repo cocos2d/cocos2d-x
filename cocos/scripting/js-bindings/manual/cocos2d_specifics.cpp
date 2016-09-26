@@ -1271,8 +1271,12 @@ void JSScheduleWrapper::scheduleFunc(float dt)
         {
             JS::HandleValueArray args = JS::HandleValueArray::fromMarkedLocation(1, &data);
             JS::RootedValue retval(cx);
-            JS::RootedObject target(cx, getJSCallbackThis().toObjectOrNull());
-            JS_CallFunctionValue(cx, target, callback, args, &retval);
+            JS::RootedValue targetVal(cx, getJSCallbackThis());
+            if (!targetVal.isNullOrUndefined())
+            {
+                JS::RootedObject target(cx, targetVal.toObjectOrNull());
+                JS_CallFunctionValue(cx, target, callback, args, &retval);
+            }
         }
     }
 }
