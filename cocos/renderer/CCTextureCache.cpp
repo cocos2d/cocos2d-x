@@ -438,20 +438,24 @@ Texture2D* TextureCache::addImage(Image *image, const std::string &key)
             break;
         }
 
-        // prevents overloading the autorelease pool
         texture = new (std::nothrow) Texture2D();
-        texture->initWithImage(image);
 
         if (texture)
         {
-            _textures.insert(std::make_pair(key, texture));
-            texture->retain();
-
-            texture->autorelease();
+            if (texture->initWithImage(image))
+            {
+                _textures.insert(std::make_pair(key, texture));
+            }
+            else
+            {
+                CC_SAFE_RELEASE(texture);
+                texture = nullptr;
+                CCLOG("cocos2d: initWithImage failed!");
+            }
         }
         else
         {
-            CCLOG("cocos2d: Couldn't add UIImage in TextureCache");
+            CCLOG("cocos2d: Allocating memory for Texture2D failed!");
         }
 
     } while (0);
@@ -715,6 +719,9 @@ void VolatileTextureMgr::addImageTexture(Texture2D *tt, const std::string& image
 
 void VolatileTextureMgr::addImage(Texture2D *tt, Image *image)
 {
+    if (tt == nullptr || image == nullptr)
+        return;
+    
     VolatileTexture *vt = findVolotileTexture(tt);
     image->retain();
     vt->_uiImage = image;
