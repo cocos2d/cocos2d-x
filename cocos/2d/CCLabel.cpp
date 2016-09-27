@@ -527,14 +527,18 @@ void Label::reset()
 
 //  ETC1 ALPHA supports, for LabelType::BMFONT & LabelType::CHARMAP
 static Texture2D* _getTexture(Label* label)
- {
+{
     auto fontAtlas = label->getFontAtlas();
     Texture2D* texture = nullptr;
-     if (fontAtlas != nullptr) {
-         texture = fontAtlas->getTextures().begin()->second;
-     }
+    if (fontAtlas != nullptr) {
+        auto textures = fontAtlas->getTextures();
+        if(!textures.empty()) {
+            texture = textures.begin()->second;
+        }
+    }
     return texture;
 }
+
 void Label::updateShaderProgram()
 {
     switch (_currLabelEffect)
