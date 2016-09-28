@@ -60,8 +60,14 @@ bool AppDelegate::applicationDidFinishLaunching()
     //register custom function
     //LuaStack* stack = engine->getLuaStack();
     //register_custom_function(stack->getLuaState());
-
-    if (engine->executeScriptFile("src/main.lua"))
+    
+    #if CC_64BITS
+    FileUtils::getInstance()->addSearchPath("src/64bit");
+#else
+    FileUtils::getInstance()->addSearchPath("src");
+#endif
+    FileUtils::getInstance()->addSearchPath("res");
+    if (engine->executeScriptFile("main.lua"))
     {
         return false;
     }

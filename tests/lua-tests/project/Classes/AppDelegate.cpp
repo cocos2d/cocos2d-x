@@ -50,8 +50,13 @@ bool AppDelegate::applicationDidFinishLaunching()
     }
     lua_pop(L, 1);
 
-
-    pEngine->executeScriptFile("src/controller.lua");
+#if CC_64BITS
+    FileUtils::getInstance()->addSearchPath("src/64bit");
+#else
+    FileUtils::getInstance()->addSearchPath("src");
+#endif
+    FileUtils::getInstance()->addSearchPath("res");
+    pEngine->executeScriptFile("controller.lua");
 
     return true;
 }
