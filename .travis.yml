@@ -24,7 +24,7 @@ matrix:
       sudo: required
       android:
         components:
-          - android-10
+          - android-13
     # mac lua-tests + js-tests
     # - os: osx
     #   env: BUILD_TARGET=mac
