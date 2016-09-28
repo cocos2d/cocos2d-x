@@ -57,6 +57,7 @@ SpriteTests::SpriteTests()
 {
     ADD_TEST_CASE(Sprite1);
     ADD_TEST_CASE(Sprite1ETC1Alpha);
+    ADD_TEST_CASE(Sprite1ETC1AlphaChangeTest);
     ADD_TEST_CASE(SpriteBatchNode1);
     ADD_TEST_CASE(SpriteAnchorPoint);
     ADD_TEST_CASE(SpriteBatchNodeAnchorPoint);
@@ -263,6 +264,63 @@ std::string Sprite1ETC1Alpha::title() const
 std::string Sprite1ETC1Alpha::subtitle() const
 {
     return "Tap screen to add more sprites";
+}
+
+//------------------------------------------------------------------
+//
+// Sprite1ETC1AlphaChangeTest
+//
+//------------------------------------------------------------------
+
+Sprite1ETC1AlphaChangeTest::Sprite1ETC1AlphaChangeTest()
+{
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesEnded = CC_CALLBACK_2(Sprite1ETC1AlphaChangeTest::onTouchesEnded, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+}
+
+bool Sprite1ETC1AlphaChangeTest::init()
+{
+    if (!SpriteTestDemo::init())
+        return false;
+
+    auto s = Director::getInstance()->getWinSize();
+
+    _background = Sprite::create("Images/background2.png");
+    _background->setPosition(Vec2(s.width / 2, s.height / 2));
+    this->addChild(_background);
+
+    _sprite1 = Sprite::create("Images/etc1-alpha.pkm");
+    _sprite1->setPosition(Vec2(s.width / 2, s.height / 2));
+    _background->addChild(_sprite1);
+
+    return true;
+}
+
+void Sprite1ETC1AlphaChangeTest::changeSpriteTexture()
+{
+    if (_sprite1->getTag() == 1) {
+        _sprite1->setTexture("Images/etc1-alpha.pkm");
+        _sprite1->setTag(11);
+    } else {
+        _sprite1->setTexture("Images/r1.png");
+        _sprite1->setTag(1);
+    }
+}
+
+void Sprite1ETC1AlphaChangeTest::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
+{
+    changeSpriteTexture();
+}
+
+std::string Sprite1ETC1AlphaChangeTest::title() const
+{
+    return "Testing Sprite ETC1Alpha change texture to non-ETC1Alpha support";
+}
+
+std::string Sprite1ETC1AlphaChangeTest::subtitle() const
+{
+    return "Tap screen to change texture";
 }
 
 //------------------------------------------------------------------
