@@ -21,15 +21,9 @@ LOCAL_EXPORT_LDLIBS := -lGLESv2 \
                        -llog \
                        -landroid
 
-ifeq ($(TARGET_ARCH_ABI),arm64-v8a)
-LUA_STATIC_LIB := lua_static
-LUA_IMPORT_PATH := lua/lua
-LUA_INCLUDE_PATH := $(LOCAL_PATH)/../../../../external/lua/lua
-else
 LUA_STATIC_LIB := luajit_static
 LUA_IMPORT_PATH := lua/luajit/prebuilt/android
 LUA_INCLUDE_PATH := $(LOCAL_PATH)/../../../../external/lua/luajit/include
-endif
 
 LOCAL_STATIC_LIBRARIES := $(LUA_STATIC_LIB)
 
