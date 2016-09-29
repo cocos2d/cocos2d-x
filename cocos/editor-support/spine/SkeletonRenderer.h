@@ -42,10 +42,22 @@ class AttachmentVertices;
 /* Draws a skeleton. */
 class SkeletonRenderer: public cocos2d::Node, public cocos2d::BlendProtocol {
 public:
+    // FIXME: it seems that these createXXX() functions are not being used, and users
+    // should use SkeletonAnimation::createXXX() instead. We should remove them if so.
 	CREATE_FUNC(SkeletonRenderer);
 	static SkeletonRenderer* createWithData (spSkeletonData* skeletonData, bool ownsSkeletonData = false);
-	static SkeletonRenderer* createWithFile (const std::string& skeletonDataFile, spAtlas* atlas, float scale = 1);
-	static SkeletonRenderer* createWithFile (const std::string& skeletonDataFile, const std::string& atlasFile, float scale = 1);
+	static SkeletonRenderer* createWithJsonFile (const std::string& skeletonDataFile, spAtlas* atlas, float scale = 1);
+	static SkeletonRenderer* createWithJsonFile (const std::string& skeletonDataFile, const std::string& atlasFile, float scale = 1);
+    static SkeletonRenderer* createWithBinaryFile (const std::string& skeletonDataFile, spAtlas* atlas, float scale = 1);
+    static SkeletonRenderer* createWithBinaryFile (const std::string& skeletonDataFile, const std::string& atlasFile, float scale = 1);
+    // Use SkeletonRenderer::createWithJsonFile instead
+    CC_DEPRECATED_ATTRIBUTE static SkeletonRenderer* createWithFile (const std::string& skeletonDataFile, spAtlas* atlas, float scale = 1) {
+        return SkeletonRenderer::createWithJsonFile(skeletonDataFile, atlas, scale);
+    }
+    // Use SkeletonRenderer::createWithJsonFile instead
+    CC_DEPRECATED_ATTRIBUTE static SkeletonRenderer* createWithFile (const std::string& skeletonDataFile, const std::string& atlasFile, float scale = 1) {
+        return SkeletonRenderer::createWithJsonFile(skeletonDataFile, atlasFile, scale);
+    }
 
 	virtual void update (float deltaTime) override;
 	virtual void draw (cocos2d::Renderer* renderer, const cocos2d::Mat4& transform, uint32_t transformFlags) override;
@@ -101,17 +113,13 @@ public:
 
 CC_CONSTRUCTOR_ACCESS:
 	SkeletonRenderer ();
-	SkeletonRenderer (spSkeletonData* skeletonData, bool ownsSkeletonData = false);
-	SkeletonRenderer (const std::string& skeletonDataFile, spAtlas* atlas, float scale = 1);
-	SkeletonRenderer (const std::string& skeletonDataFile, const std::string& atlasFile, float scale = 1);
-
 	virtual ~SkeletonRenderer ();
 
 	void initWithData (spSkeletonData* skeletonData, bool ownsSkeletonData = false);
-	void initWithFile (const std::string& skeletonDataFile, spAtlas* atlas, float scale = 1);
-	void initWithFile (const std::string& skeletonDataFile, const std::string& atlasFile, float scale = 1);
+	void initWithJsonFile (const std::string& skeletonJsonFile, spAtlas* atlas, float scale = 1);
+    void initWithBinaryFile (const std::string& skeletonBinaryFile, spAtlas* atlas, float scale = 1);
 
-	void initialize ();
+	virtual void initialize ();
 
 protected:
 	void setSkeletonData (spSkeletonData* skeletonData, bool ownsSkeletonData);

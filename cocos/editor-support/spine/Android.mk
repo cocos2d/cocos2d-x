@@ -33,6 +33,7 @@ RegionAttachment.c \
 Skeleton.c \
 SkeletonAnimation.cpp \
 SkeletonBatch.cpp \
+SkeletonBinary.cpp \
 SkeletonBounds.c \
 SkeletonData.c \
 SkeletonJson.c \

@@ -25,6 +25,7 @@ set(COCOS_SPINE_SRC
   editor-support/spine/Skeleton.c
   editor-support/spine/SkeletonAnimation.cpp
   editor-support/spine/SkeletonBatch.cpp
+  editor-support/spine/SkeletonBinary.cpp
   editor-support/spine/SkeletonBounds.c
   editor-support/spine/SkeletonData.c
   editor-support/spine/SkeletonJson.c
