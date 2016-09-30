@@ -6967,6 +6967,7 @@
         "cocos/scripting/lua-bindings/auto/api/Sprite.lua", 
         "cocos/scripting/lua-bindings/auto/api/Sprite3D.lua", 
         "cocos/scripting/lua-bindings/auto/api/Sprite3DCache.lua", 
+        "cocos/scripting/lua-bindings/auto/api/Sprite3DMaterial.lua", 
         "cocos/scripting/lua-bindings/auto/api/SpriteBatchNode.lua", 
         "cocos/scripting/lua-bindings/auto/api/SpriteDisplayData.lua", 
         "cocos/scripting/lua-bindings/auto/api/SpriteFrame.lua", 
