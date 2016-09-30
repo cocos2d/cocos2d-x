@@ -1197,43 +1197,19 @@ void Widget::copyClonedWidgetChildren(Widget* model)
     }
 }
 
-GLProgramState* Widget::getNormalGLProgramState()const
+GLProgramState* Widget::getNormalGLProgramState(Texture2D* texture)const
 {
     GLProgramState *glState = nullptr;
 
-    // ETC1 Gray supports.
-    // currently, Only AbstractCheckButton, ui::Slider called this function, them's VirtualRender is Sprite
-    auto virtualRender = const_cast<Widget*>(this)->getVirtualRenderer();
-    Texture2D* virtualTexture = nullptr;
-    if (auto sp = dynamic_cast<Sprite*>(virtualRender))
-    {
-        virtualTexture = sp->getTexture();
-    }
-    else if (auto scale9sp = dynamic_cast<Scale9Sprite*>(virtualRender))
-    {
-        virtualTexture = scale9sp->getSprite() != nullptr ? scale9sp->getSprite()->getTexture() : nullptr;
-    }
-    glState = GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP, virtualTexture);
+    glState = GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP, texture);
     return glState;
 }
 
-GLProgramState* Widget::getGrayGLProgramState()const
+GLProgramState* Widget::getGrayGLProgramState(Texture2D* texture)const
 {
     GLProgramState *glState = nullptr;
 
-    // ETC1 Gray supports.
-    // currently, Only AbstractCheckButton, ui::Slider called this function, them's VirtualRender is Sprite
-    auto virtualRender = const_cast<Widget*>(this)->getVirtualRenderer();
-    Texture2D* virtualTexture = nullptr;
-    if (auto sp = dynamic_cast<cocos2d::Sprite*>(virtualRender))
-    {
-        virtualTexture = sp->getTexture();
-    }
-    else if (auto scale9sp = dynamic_cast<Scale9Sprite*>(virtualRender))
-    {
-        virtualTexture = scale9sp->getSprite() != nullptr ? scale9sp->getSprite()->getTexture() : nullptr;
-    }
-    glState = GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_GRAYSCALE, virtualTexture);
+    glState = GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_GRAYSCALE, texture);
     return glState;
 }
 

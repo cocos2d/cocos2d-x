@@ -498,10 +498,11 @@ namespace ui {
     
     void Scale9Sprite::configureSimpleModeRendering()
     {
-        this->setInsetTop(0);
-        this->setInsetBottom(0);
-        this->setInsetLeft(0);
-        this->setInsetRight(0);
+        this->_insetLeft = 0;
+        this->_insetTop = 0;
+        this->_insetRight = 0;
+        this->_insetBottom = 0;
+        this->updateCapInset();
     }
 
     void Scale9Sprite::createSlicedSprites()
@@ -592,17 +593,20 @@ namespace ui {
 
     void Scale9Sprite::setState(cocos2d::ui::Scale9Sprite::State state)
     {
+        auto getScale9ImageTexture = [this] {
+            return _scale9Image != nullptr ? _scale9Image->getTexture() : nullptr;
+        };
         GLProgramState *glState = nullptr;
         switch (state)
         {
         case State::NORMAL:
         {
-            glState = GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP, _scale9Image != nullptr ? _scale9Image->getTexture() : nullptr);
+            glState = GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP, getScale9ImageTexture());
         }
         break;
         case State::GRAY:
         {
-            glState = GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_GRAYSCALE, _scale9Image != nullptr ? _scale9Image->getTexture() : nullptr);
+            glState = GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_GRAYSCALE, getScale9ImageTexture());
         }
         default:
             break;
