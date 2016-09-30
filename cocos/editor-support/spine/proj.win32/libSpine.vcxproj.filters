@@ -89,7 +89,7 @@
     <ClCompile Include="..\SkeletonBatch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\SkeletonBinary.cpp">
+    <ClCompile Include="..\SkeletonBinary.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\SkeletonBounds.c">
