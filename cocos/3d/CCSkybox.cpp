@@ -126,8 +126,9 @@ void Skybox::initBuffers()
 	// The quad vertex positions are also used in deriving a direction
 	// vector for the cubemap lookup. We choose z = -1 which matches the
 	// negative-z pointing direction of the camera and gives a field of
-	// view of 90deg in both x and y (the field of view should be adjusted
-	// to match the camera, but isn't currently).
+	// view of 90deg in both x and y, if not otherwise adjusted. That fov
+	// is then adjusted to exactly match the camera by applying a prescaling
+	// to the camera's world transformation before sending it to the shader.
 
     // init vertex buffer object
     Vec3 vexBuf[] =
@@ -169,13 +170,17 @@ void Skybox::onDraw(const Mat4& transform, uint32_t flags)
     auto camera = Camera::getVisitingCamera();
     
     Mat4 cameraModelMat = camera->getNodeToWorldTransform();
+    Mat4 projectionMat = camera->getProjectionMatrix();
+    // Ignore the translation
+    cameraModelMat.m[12] = cameraModelMat.m[13] = cameraModelMat.m[14] = 0;
+    // prescale the matrix to account for the camera fov
+    cameraModelMat.scale(1 / projectionMat.m[0], 1 / projectionMat.m[5], 1.0);
     
     auto state = getGLProgramState();
     state->apply(transform);
 
     Vec4 color(_displayedColor.r / 255.f, _displayedColor.g / 255.f, _displayedColor.b / 255.f, 1.f);
     state->setUniformVec4("u_color", color);
-    cameraModelMat.m[12] = cameraModelMat.m[13] = cameraModelMat.m[14] = 0;
     state->setUniformMat4("u_cameraRot", cameraModelMat);
 
     glEnable(GL_DEPTH_TEST);
