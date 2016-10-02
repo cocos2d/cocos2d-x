@@ -25,4 +25,17 @@ private:
     int _numberOfLoadedSprites;
 };
 
+class TextureCacheImmediateTest : public TestCase 
+{
+public: 
+	CREATE_FUNC(TextureCacheImmediateTest);
+
+	TextureCacheImmediateTest();
+	virtual float getDuration() const override { return 3.5f; }
+private:
+	void loadingCallBack(cocos2d::Texture2D *texture);
+	int _numberOfSprites;
+    int _numberOfLoadedSprites;
+};
+
 #endif // _TEXTURECACHE_TEST_H_
