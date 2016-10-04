@@ -467,7 +467,7 @@ private:
         std::vector<CookiesInfo> cookiesInfoVec;
         cookiesInfoVec.clear();
 
-        for (; iter != cookiesVec.end(); iter++)
+        for (; iter != cookiesVec.end(); ++iter)
         {
             std::string cookies = *iter;
             if (cookies.find("#HttpOnly_") != std::string::npos)
@@ -505,7 +505,7 @@ private:
         std::vector<CookiesInfo>::iterator cookiesIter = cookiesInfoVec.begin();
         std::string sendCookiesInfo = "";
         int cookiesCount = 0;
-        for (; cookiesIter != cookiesInfoVec.end(); cookiesIter++)
+        for (; cookiesIter != cookiesInfoVec.end(); ++cookiesIter)
         {
             if (_url.find(cookiesIter->domain) != std::string::npos)
             {
