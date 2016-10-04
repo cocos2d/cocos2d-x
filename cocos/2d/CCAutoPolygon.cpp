@@ -514,7 +514,7 @@ std::vector<Vec2> AutoPolygon::expand(const std::vector<Vec2>& points, const coc
     ClipperLib::Path subj;
     ClipperLib::PolyTree solution;
     ClipperLib::PolyTree out;
-    for(std::vector<Vec2>::const_iterator it = points.begin(); it<points.end(); it++)
+    for(std::vector<Vec2>::const_iterator it = points.begin(); it<points.end(); ++it)
     {
         subj << ClipperLib::IntPoint(it-> x* PRECISION, it->y * PRECISION);
     }
@@ -553,7 +553,7 @@ std::vector<Vec2> AutoPolygon::expand(const std::vector<Vec2>& points, const coc
         p2 = p2->GetNext();
     }
     auto end = p2->Contour.end();
-    for(std::vector<ClipperLib::IntPoint>::const_iterator pt = p2->Contour.begin(); pt < end; pt++)
+    for(std::vector<ClipperLib::IntPoint>::const_iterator pt = p2->Contour.begin(); pt < end; ++pt)
     {
         outPoints.push_back(Vec2(pt->X/PRECISION, pt->Y/PRECISION));
     }
@@ -569,7 +569,7 @@ TrianglesCommand::Triangles AutoPolygon::triangulate(const std::vector<Vec2>& po
         return TrianglesCommand::Triangles();
     }
     std::vector<p2t::Point*> p2points;
-    for(std::vector<Vec2>::const_iterator it = points.begin(); it<points.end(); it++)
+    for(std::vector<Vec2>::const_iterator it = points.begin(); it<points.end(); ++it)
     {
         p2t::Point * p = new (std::nothrow) p2t::Point(it->x, it->y);
         p2points.push_back(p);
@@ -585,7 +585,7 @@ TrianglesCommand::Triangles AutoPolygon::triangulate(const std::vector<Vec2>& po
     unsigned short idx = 0;
     unsigned short vdx = 0;
 
-    for(std::vector<p2t::Triangle*>::const_iterator ite = tris.begin(); ite != tris.end(); ite++)
+    for(std::vector<p2t::Triangle*>::const_iterator ite = tris.begin(); ite != tris.end(); ++ite)
     {
         for(int i = 0; i < 3; i++)
         {
