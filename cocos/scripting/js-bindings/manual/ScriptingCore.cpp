@@ -666,7 +666,7 @@ void ScriptingCore::createGlobalContext() {
 
     runScript("script/jsb_prepare.js");
 
-    for (std::vector<sc_register_sth>::iterator it = registrationList.begin(); it != registrationList.end(); it++) {
+    for (std::vector<sc_register_sth>::iterator it = registrationList.begin(); it != registrationList.end(); ++it) {
         sc_register_sth callback = *it;
         callback(_cx, global);
     }
