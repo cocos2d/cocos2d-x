@@ -83,7 +83,7 @@ void SimpleAudioEngine::end()
     {
         delete p->second;
         p->second = nullptr;
-        p++;
+        ++p;
     }   
     sharedList().clear();
     return;
@@ -205,7 +205,7 @@ void SimpleAudioEngine::pauseEffect(unsigned int nSoundId)
 void SimpleAudioEngine::pauseAllEffects()
 {
     EffectList::iterator iter;
-    for (iter = sharedList().begin(); iter != sharedList().end(); iter++)
+    for (iter = sharedList().begin(); iter != sharedList().end(); ++iter)
     {
         iter->second->Pause();
     }
@@ -223,7 +223,7 @@ void SimpleAudioEngine::resumeEffect(unsigned int nSoundId)
 void SimpleAudioEngine::resumeAllEffects()
 {
     EffectList::iterator iter;
-    for (iter = sharedList().begin(); iter != sharedList().end(); iter++)
+    for (iter = sharedList().begin(); iter != sharedList().end(); ++iter)
     {
         iter->second->Resume();
     }
@@ -232,7 +232,7 @@ void SimpleAudioEngine::resumeAllEffects()
 void SimpleAudioEngine::stopAllEffects()
 {
     EffectList::iterator iter;
-    for (iter = sharedList().begin(); iter != sharedList().end(); iter++)
+    for (iter = sharedList().begin(); iter != sharedList().end(); ++iter)
     {
         iter->second->Stop();
     }
