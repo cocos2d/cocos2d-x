@@ -505,7 +505,7 @@ void DataReaderHelper::addDataAsyncCallBack(float dt)
 void DataReaderHelper::removeConfigFile(const std::string& configFile)
 {
     std::vector<std::string>::iterator it = _configFileList.end();
-    for (std::vector<std::string>::iterator i = _configFileList.begin(); i != _configFileList.end(); i++)
+    for (std::vector<std::string>::iterator i = _configFileList.begin(); i != _configFileList.end(); ++i)
     {
         if (*i == configFile)
         {
