@@ -262,7 +262,7 @@ public:
                         textLines.push_back(currentLine);
                         currentLine.reset();
                         currentPaintPosition = 0;
-                        for ( it = tempGlyphs.begin(); it != tempGlyphs.end(); it++ ) {
+                        for ( it = tempGlyphs.begin(); it != tempGlyphs.end(); ++it ) {
                             if ( currentLine.glyphs.empty() ) {
                                 currentPaintPosition = -(*it).bearingX;
                                 (*it).kerning = 0;
