@@ -167,7 +167,7 @@ ActionObject* ActionManagerEx::stopActionByName(const char* jsonName,const char*
 void ActionManagerEx::releaseActions()
 {
     std::unordered_map<std::string, cocos2d::Vector<ActionObject*>>::iterator iter;
-    for (iter = _actionDic.begin(); iter != _actionDic.end(); iter++)
+    for (iter = _actionDic.begin(); iter != _actionDic.end(); ++iter)
     {
         cocos2d::Vector<ActionObject*> objList = iter->second;
         ssize_t listCount = objList.size();
