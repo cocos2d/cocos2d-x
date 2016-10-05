@@ -43,40 +43,21 @@ using std::max;
 namespace spine {
 
 SkeletonRenderer* SkeletonRenderer::createWithData (spSkeletonData* skeletonData, bool ownsSkeletonData) {
-	SkeletonRenderer* node = new SkeletonRenderer();
-    node->initWithData(skeletonData, ownsSkeletonData);
+	SkeletonRenderer* node = new SkeletonRenderer(skeletonData, ownsSkeletonData);
 	node->autorelease();
 	return node;
 }
 
-SkeletonRenderer* SkeletonRenderer::createWithJsonFile (const std::string& skeletonJsonFile, spAtlas* atlas, float scale) {
-    SkeletonRenderer* node = new SkeletonRenderer();
-    node->initWithJsonFile(skeletonJsonFile, atlas, scale);
-    node->autorelease();
-	return node;
-}
-
-SkeletonRenderer* SkeletonRenderer::createWithJsonFile (const std::string& skeletonJsonFile, const std::string& atlasFile, float scale) {
-    SkeletonRenderer* node = new SkeletonRenderer();
-    spAtlas *atlas = spAtlas_createFromFile(atlasFile.c_str(), 0);
-    node->initWithJsonFile(skeletonJsonFile, atlas, scale);
+SkeletonRenderer* SkeletonRenderer::createWithFile (const std::string& skeletonDataFile, spAtlas* atlas, float scale) {
+	SkeletonRenderer* node = new SkeletonRenderer(skeletonDataFile, atlas, scale);
 	node->autorelease();
 	return node;
 }
 
-SkeletonRenderer* SkeletonRenderer::createWithBinaryFile (const std::string& skeletonBinaryFile, spAtlas* atlas, float scale) {
-    SkeletonRenderer* node = new SkeletonRenderer();
-    node->initWithBinaryFile(skeletonBinaryFile, atlas, scale);
-    node->autorelease();
-    return node;
-}
-
-SkeletonRenderer* SkeletonRenderer::createWithBinaryFile (const std::string& skeletonBinaryFile, const std::string& atlasFile, float scale) {
-    SkeletonRenderer* node = new SkeletonRenderer();
-    spAtlas *atlas = spAtlas_createFromFile(atlasFile.c_str(), 0);
-    node->initWithBinaryFile(skeletonBinaryFile, atlas, scale);
-    node->autorelease();
-    return node;
+SkeletonRenderer* SkeletonRenderer::createWithFile (const std::string& skeletonDataFile, const std::string& atlasFile, float scale) {
+	SkeletonRenderer* node = new SkeletonRenderer(skeletonDataFile, atlasFile, scale);
+	node->autorelease();
+	return node;
 }
 
 void SkeletonRenderer::initialize () {
@@ -97,6 +78,21 @@ SkeletonRenderer::SkeletonRenderer ()
 	: _atlas(nullptr), _attachmentLoader(nullptr), _debugSlots(false), _debugBones(false), _timeScale(1) {
 }
 
+SkeletonRenderer::SkeletonRenderer (spSkeletonData *skeletonData, bool ownsSkeletonData)
+	: _atlas(nullptr), _attachmentLoader(nullptr), _debugSlots(false), _debugBones(false), _timeScale(1) {
+	initWithData(skeletonData, ownsSkeletonData);
+}
+
+SkeletonRenderer::SkeletonRenderer (const std::string& skeletonDataFile, spAtlas* atlas, float scale)
+	: _atlas(nullptr), _attachmentLoader(nullptr), _debugSlots(false), _debugBones(false), _timeScale(1) {
+	initWithJsonFile(skeletonDataFile, atlas, scale);
+}
+
+SkeletonRenderer::SkeletonRenderer (const std::string& skeletonDataFile, const std::string& atlasFile, float scale)
+	: _atlas(nullptr), _attachmentLoader(nullptr), _debugSlots(false), _debugBones(false), _timeScale(1) {
+	initWithJsonFile(skeletonDataFile, atlasFile, scale);
+}
+
 SkeletonRenderer::~SkeletonRenderer () {
 	if (_ownsSkeletonData) spSkeletonData_dispose(_skeleton->data);
 	spSkeleton_dispose(_skeleton);
@@ -111,14 +107,14 @@ void SkeletonRenderer::initWithData (spSkeletonData* skeletonData, bool ownsSkel
 	initialize();
 }
 
-void SkeletonRenderer::initWithJsonFile (const std::string& skeletonJsonFile, spAtlas* atlas, float scale) {
+void SkeletonRenderer::initWithJsonFile (const std::string& skeletonDataFile, spAtlas* atlas, float scale) {
     _atlas = atlas;
 	_attachmentLoader = SUPER(Cocos2dAttachmentLoader_create(_atlas));
 
 	spSkeletonJson* json = spSkeletonJson_createWithLoader(_attachmentLoader);
 	json->scale = scale;
-	spSkeletonData* skeletonData = spSkeletonJson_readSkeletonDataFile(json, skeletonJsonFile.c_str());
-	CCASSERT(skeletonData, json->error ? json->error : "Error reading JSON skeleton data.");
+	spSkeletonData* skeletonData = spSkeletonJson_readSkeletonDataFile(json, skeletonDataFile.c_str());
+	CCASSERT(skeletonData, json->error ? json->error : "Error reading skeleton data.");
 	spSkeletonJson_dispose(json);
 
 	setSkeletonData(skeletonData, true);
@@ -126,20 +122,55 @@ void SkeletonRenderer::initWithJsonFile (const std::string& skeletonJsonFile, sp
 	initialize();
 }
 
-void SkeletonRenderer::initWithBinaryFile (const std::string& skeletonBinaryFile, spAtlas* atlas, float scale) {
+void SkeletonRenderer::initWithJsonFile (const std::string& skeletonDataFile, const std::string& atlasFile, float scale) {
+	_atlas = spAtlas_createFromFile(atlasFile.c_str(), 0);
+	CCASSERT(_atlas, "Error reading atlas file.");
+
+	_attachmentLoader = SUPER(Cocos2dAttachmentLoader_create(_atlas));
+
+	spSkeletonJson* json = spSkeletonJson_createWithLoader(_attachmentLoader);
+	json->scale = scale;
+	spSkeletonData* skeletonData = spSkeletonJson_readSkeletonDataFile(json, skeletonDataFile.c_str());
+	CCASSERT(skeletonData, json->error ? json->error : "Error reading skeleton data file.");
+	spSkeletonJson_dispose(json);
+
+	setSkeletonData(skeletonData, true);
+
+	initialize();
+}
+    
+void SkeletonRenderer::initWithBinaryFile (const std::string& skeletonDataFile, spAtlas* atlas, float scale) {
     _atlas = atlas;
     _attachmentLoader = SUPER(Cocos2dAttachmentLoader_create(_atlas));
-
+    
     spSkeletonBinary* binary = spSkeletonBinary_createWithLoader(_attachmentLoader);
     binary->scale = scale;
-    spSkeletonData* skeletonData = spSkeletonBinary_readSkeletonDataFile(binary, skeletonBinaryFile.c_str());
-    CCASSERT(skeletonData, binary->error ? binary->error : "Error reading binary skeleton data.");
+    spSkeletonData* skeletonData = spSkeletonBinary_readSkeletonDataFile(binary, skeletonDataFile.c_str());
+    CCASSERT(skeletonData, binary->error ? binary->error : "Error reading skeleton data file.");
     spSkeletonBinary_dispose(binary);
-
+    
     setSkeletonData(skeletonData, true);
-
+    
     initialize();
 }
+
+void SkeletonRenderer::initWithBinaryFile (const std::string& skeletonDataFile, const std::string& atlasFile, float scale) {
+    _atlas = spAtlas_createFromFile(atlasFile.c_str(), 0);
+    CCASSERT(_atlas, "Error reading atlas file.");
+    
+    _attachmentLoader = SUPER(Cocos2dAttachmentLoader_create(_atlas));
+    
+    spSkeletonBinary* binary = spSkeletonBinary_createWithLoader(_attachmentLoader);
+    binary->scale = scale;
+    spSkeletonData* skeletonData = spSkeletonBinary_readSkeletonDataFile(binary, skeletonDataFile.c_str());
+    CCASSERT(skeletonData, binary->error ? binary->error : "Error reading skeleton data file.");
+    spSkeletonBinary_dispose(binary);
+    
+    setSkeletonData(skeletonData, true);
+    
+    initialize();
+}
+
 
 void SkeletonRenderer::update (float deltaTime) {
 	spSkeleton_update(_skeleton, deltaTime * _timeScale);

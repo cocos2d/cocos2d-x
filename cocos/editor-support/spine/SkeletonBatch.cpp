@@ -38,34 +38,34 @@ USING_NS_CC;
 using std::max;
 
 namespace spine {
-    
+
     static SkeletonBatch* instance = nullptr;
-    
+
     SkeletonBatch* SkeletonBatch::getInstance () {
         if (!instance) instance = new SkeletonBatch();
         return instance;
     }
-    
+
     void SkeletonBatch::destroyInstance () {
         if (instance) {
             delete instance;
             instance = nullptr;
         }
     }
-    
+
     SkeletonBatch::SkeletonBatch ()
     {
         _firstCommand = new Command();
         _command = _firstCommand;
-        
+
         Director::getInstance()->getEventDispatcher()->addCustomEventListener(EVENT_AFTER_DRAW_RESET_POSITION, [this](EventCustom* eventCustom){
             this->update(0);
         });;
     }
-    
+
     SkeletonBatch::~SkeletonBatch () {
         Director::getInstance()->getEventDispatcher()->removeCustomEventListeners(EVENT_AFTER_DRAW_RESET_POSITION);
-        
+
         Command* command = _firstCommand;
         while (command) {
             Command* next = command->next;
@@ -73,15 +73,21 @@ namespace spine {
             command = next;
         }
     }
-    
+
     void SkeletonBatch::update (float delta) {
         _command = _firstCommand;
     }
-    
+
     void SkeletonBatch::addCommand (cocos2d::Renderer* renderer, float globalZOrder, GLuint textureID, GLProgramState* glProgramState,
                                     BlendFunc blendFunc, const TrianglesCommand::Triangles& triangles, const Mat4& transform, uint32_t transformFlags
                                     ) {
-        _command->triangles->verts = triangles.verts;
+        if (_command->triangles->verts) {
+            free(_command->triangles->verts);
+            _command->triangles->verts = NULL;
+        }
+        
+        _command->triangles->verts = (V3F_C4B_T2F *)malloc(sizeof(V3F_C4B_T2F) * triangles.vertCount);
+        memcpy(_command->triangles->verts, triangles.verts, sizeof(V3F_C4B_T2F) * triangles.vertCount);
         
         _command->triangles->vertCount = triangles.vertCount;
         _command->triangles->indexCount = triangles.indexCount;
@@ -93,17 +99,20 @@ namespace spine {
         if (!_command->next) _command->next = new Command();
         _command = _command->next;
     }
-    
+
     SkeletonBatch::Command::Command () :
     next(nullptr)
     {
         trianglesCommand = new TrianglesCommand();
         triangles = new TrianglesCommand::Triangles();
     }
-    
+
     SkeletonBatch::Command::~Command () {
+        if (triangles->verts) {
+            free(triangles->verts);
+        }
         delete triangles;
         delete trianglesCommand;
     }
-    
+
 }

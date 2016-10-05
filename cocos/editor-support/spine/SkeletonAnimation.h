@@ -51,28 +51,28 @@ public:
 	static SkeletonAnimation* createWithData (spSkeletonData* skeletonData, bool ownsSkeletonData = false);
 	static SkeletonAnimation* createWithJsonFile (const std::string& skeletonJsonFile, spAtlas* atlas, float scale = 1);
 	static SkeletonAnimation* createWithJsonFile (const std::string& skeletonJsonFile, const std::string& atlasFile, float scale = 1);
-    static SkeletonAnimation* createWithBinaryFile (const std::string& skeletonBinaryFile, spAtlas* atlas, float scale = 1);
-    static SkeletonAnimation* createWithBinaryFile (const std::string& skeletonBinaryFile, const std::string& atlasFile, float scale = 1);
+	static SkeletonAnimation* createWithBinaryFile (const std::string& skeletonBinaryFile, spAtlas* atlas, float scale = 1);
+	static SkeletonAnimation* createWithBinaryFile (const std::string& skeletonBinaryFile, const std::string& atlasFile, float scale = 1);
 
-    // Use createWithJsonFile instead
-    CC_DEPRECATED_ATTRIBUTE static SkeletonAnimation* createWithFile (const std::string& skeletonJsonFile, spAtlas* atlas, float scale = 1)
-    {
-        return SkeletonAnimation::createWithJsonFile(skeletonJsonFile, atlas, scale);
-    }
-    // Use createWithJsonFile instead
-    CC_DEPRECATED_ATTRIBUTE static SkeletonAnimation* createWithile (const std::string& skeletonJsonFile, const std::string& atlasFile, float scale = 1)
-    {
-        return SkeletonAnimation::createWithJsonFile(skeletonJsonFile, atlasFile, scale);
-    }
+	// Use createWithJsonFile instead
+	CC_DEPRECATED_ATTRIBUTE static SkeletonAnimation* createWithFile (const std::string& skeletonJsonFile, spAtlas* atlas, float scale = 1)
+	{
+		return SkeletonAnimation::createWithJsonFile(skeletonJsonFile, atlas, scale);
+	}
+	// Use createWithJsonFile instead
+	CC_DEPRECATED_ATTRIBUTE static SkeletonAnimation* createWithile (const std::string& skeletonJsonFile, const std::string& atlasFile, float scale = 1)
+	{
+		return SkeletonAnimation::createWithJsonFile(skeletonJsonFile, atlasFile, scale);
+	}
 
-    virtual void update (float deltaTime) override;
+	virtual void update (float deltaTime) override;
 
 	void setAnimationStateData (spAnimationStateData* stateData);
 	void setMix (const std::string& fromAnimation, const std::string& toAnimation, float duration);
 
 	spTrackEntry* setAnimation (int trackIndex, const std::string& name, bool loop);
 	spTrackEntry* addAnimation (int trackIndex, const std::string& name, bool loop, float delay = 0);
-    spAnimation* findAnimation(const std::string& name) const;
+	spAnimation* findAnimation(const std::string& name) const;
 	spTrackEntry* getCurrent (int trackIndex = 0);
 	void clearTracks ();
 	void clearTrack (int trackIndex = 0);
@@ -95,7 +95,7 @@ public:
 CC_CONSTRUCTOR_ACCESS:
 	SkeletonAnimation ();
 	virtual ~SkeletonAnimation ();
-    virtual void initialize () override;
+	virtual void initialize () override;
 
 protected:
 	spAnimationState* _state;

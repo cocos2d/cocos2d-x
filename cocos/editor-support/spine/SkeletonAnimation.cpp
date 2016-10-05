@@ -73,44 +73,44 @@ void disposeTrackEntry (spTrackEntry* entry) {
 
 SkeletonAnimation* SkeletonAnimation::createWithData (spSkeletonData* skeletonData, bool ownsSkeletonData) {
 	SkeletonAnimation* node = new SkeletonAnimation();
-    node->initWithData(skeletonData, ownsSkeletonData);
+	node->initWithData(skeletonData, ownsSkeletonData);
 	node->autorelease();
 	return node;
 }
 
 SkeletonAnimation* SkeletonAnimation::createWithJsonFile (const std::string& skeletonJsonFile, spAtlas* atlas, float scale) {
 	SkeletonAnimation* node = new SkeletonAnimation();
-    node->initWithJsonFile(skeletonJsonFile, atlas, scale);
-    node->autorelease();
+	node->initWithJsonFile(skeletonJsonFile, atlas, scale);
+	node->autorelease();
 	return node;
 }
 
 SkeletonAnimation* SkeletonAnimation::createWithJsonFile (const std::string& skeletonJsonFile, const std::string& atlasFile, float scale) {
 	SkeletonAnimation* node = new SkeletonAnimation();
-    spAtlas* atlas = spAtlas_createFromFile(atlasFile.c_str(), 0);
-    node->initWithJsonFile(skeletonJsonFile, atlas, scale);
+	spAtlas* atlas = spAtlas_createFromFile(atlasFile.c_str(), 0);
+	node->initWithJsonFile(skeletonJsonFile, atlas, scale);
 	node->autorelease();
 	return node;
 }
 
 SkeletonAnimation* SkeletonAnimation::createWithBinaryFile (const std::string& skeletonBinaryFile, spAtlas* atlas, float scale) {
-    SkeletonAnimation* node = new SkeletonAnimation();
-    node->initWithBinaryFile(skeletonBinaryFile, atlas, scale);
-    node->autorelease();
-    return node;
+	SkeletonAnimation* node = new SkeletonAnimation();
+	node->initWithBinaryFile(skeletonBinaryFile, atlas, scale);
+	node->autorelease();
+	return node;
 }
 
 SkeletonAnimation* SkeletonAnimation::createWithBinaryFile (const std::string& skeletonBinaryFile, const std::string& atlasFile, float scale) {
-    SkeletonAnimation* node = new SkeletonAnimation();
-    spAtlas* atlas = spAtlas_createFromFile(atlasFile.c_str(), 0);
-    node->initWithBinaryFile(skeletonBinaryFile, atlas, scale);
-    node->autorelease();
-    return node;
+	SkeletonAnimation* node = new SkeletonAnimation();
+	spAtlas* atlas = spAtlas_createFromFile(atlasFile.c_str(), 0);
+	node->initWithBinaryFile(skeletonBinaryFile, atlas, scale);
+	node->autorelease();
+	return node;
 }
 
 
 void SkeletonAnimation::initialize () {
-    super::initialize();
+	super::initialize();
 
 	_ownsAnimationStateData = true;
 	_state = spAnimationState_create(spAnimationStateData_create(_skeleton->data));
@@ -142,8 +142,8 @@ void SkeletonAnimation::update (float deltaTime) {
 void SkeletonAnimation::setAnimationStateData (spAnimationStateData* stateData) {
 	CCASSERT(stateData, "stateData cannot be null.");
 
-	if (_ownsAnimationStateData) spAnimationStateData_dispose(_state->data);
-	spAnimationState_dispose(_state);
+    if (_ownsAnimationStateData) spAnimationStateData_dispose(_state->data);
+    spAnimationState_dispose(_state);
 
 	_ownsAnimationStateData = false;
 	_state = spAnimationState_create(stateData);
@@ -172,9 +172,9 @@ spTrackEntry* SkeletonAnimation::addAnimation (int trackIndex, const std::string
 	}
 	return spAnimationState_addAnimation(_state, trackIndex, animation, loop, delay);
 }
-    
+	
 spAnimation* SkeletonAnimation::findAnimation(const std::string& name) const {
-    return spSkeletonData_findAnimation(_skeleton->data, name.c_str());
+	return spSkeletonData_findAnimation(_skeleton->data, name.c_str());
 }
 
 spTrackEntry* SkeletonAnimation::getCurrent (int trackIndex) { 
