@@ -27,7 +27,6 @@ Node* MainScene_create()
     scene_0_0->setOpacityModifyRGB(false);
     scene_0_0->setCascadeOpacityEnabled(true);
     scene_0_0->setTag(-1);
-    scene_0_0->setContentSize(Size(0, 0));
     // New node
     auto tmxtiledmap_1_1 = TMXTiledMap::create("creator_assets/iso-test.tmx");
     tmxtiledmap_1_1->setAnchorPoint(Vec2(0.5, 0.5));
@@ -40,12 +39,11 @@ Node* MainScene_create()
     tmxtiledmap_1_1->setOpacity(255);
     tmxtiledmap_1_1->setOpacityModifyRGB(false);
     tmxtiledmap_1_1->setCascadeOpacityEnabled(true);
-    tmxtiledmap_1_1->setSkewX(0);
     tmxtiledmap_1_1->setTag(-1);
-    tmxtiledmap_1_1->setContentSize(Size(4096, 2048));
+    tmxtiledmap_1_1->setPosition(Vec2(494, 231));
     tmxtiledmap_1_1->setSkewY(0);
     tmxtiledmap_1_1->setRotationSkewY(0);
-    tmxtiledmap_1_1->setPosition(Vec2(494, 231));
+    tmxtiledmap_1_1->setSkewX(0);
     tmxtiledmap_1_1->setRotationSkewX(0);
     scene_0_0->addChild(tmxtiledmap_1_1);
     // New node
@@ -60,12 +58,11 @@ Node* MainScene_create()
     particlesystemquad_1_2->setOpacity(255);
     particlesystemquad_1_2->setOpacityModifyRGB(false);
     particlesystemquad_1_2->setCascadeOpacityEnabled(true);
-    particlesystemquad_1_2->setSkewX(0);
     particlesystemquad_1_2->setTag(-1);
-    particlesystemquad_1_2->setContentSize(Size(0, 0));
+    particlesystemquad_1_2->setPosition(Vec2(115, 251));
     particlesystemquad_1_2->setSkewY(0);
     particlesystemquad_1_2->setRotationSkewY(0);
-    particlesystemquad_1_2->setPosition(Vec2(115, 251));
+    particlesystemquad_1_2->setSkewX(0);
     particlesystemquad_1_2->setRotationSkewX(0);
     scene_0_0->addChild(particlesystemquad_1_2);
     // New node
@@ -81,12 +78,11 @@ Node* MainScene_create()
     sprite_1_3->setOpacity(255);
     sprite_1_3->setOpacityModifyRGB(false);
     sprite_1_3->setCascadeOpacityEnabled(true);
-    sprite_1_3->setSkewX(0);
     sprite_1_3->setTag(-1);
-    sprite_1_3->setContentSize(Size(51, 109));
+    sprite_1_3->setPosition(Vec2(263, 542));
     sprite_1_3->setSkewY(0);
     sprite_1_3->setRotationSkewY(0);
-    sprite_1_3->setPosition(Vec2(263, 542));
+    sprite_1_3->setSkewX(0);
     sprite_1_3->setRotationSkewX(0);
     scene_0_0->addChild(sprite_1_3);
     // New node
@@ -102,54 +98,49 @@ Node* MainScene_create()
     sprite_1_4->setOpacity(255);
     sprite_1_4->setOpacityModifyRGB(false);
     sprite_1_4->setCascadeOpacityEnabled(true);
-    sprite_1_4->setSkewX(0);
     sprite_1_4->setTag(-1);
-    sprite_1_4->setContentSize(Size(51, 109));
+    sprite_1_4->setPosition(Vec2(100, 407));
     sprite_1_4->setSkewY(0);
     sprite_1_4->setRotationSkewY(0);
-    sprite_1_4->setPosition(Vec2(100, 407));
+    sprite_1_4->setSkewX(0);
     sprite_1_4->setRotationSkewX(0);
     scene_0_0->addChild(sprite_1_4);
     // New node
-    auto label_1_5 = Label::create();
+    auto label_1_5 = Label::createWithSystemFont("This is a label", "arial", 40);
     label_1_5->setAnchorPoint(Vec2(0.5, 0.5));
     label_1_5->setScaleY(1);
     label_1_5->setScaleX(1);
     label_1_5->setColor(Color3B(255, 255, 255));
     label_1_5->setName("Label_1");
     label_1_5->setLocalZOrder(0);
-    label_1_5->setString("This is a label");
     label_1_5->setGlobalZOrder(0);
     label_1_5->setOpacity(255);
     label_1_5->setOpacityModifyRGB(false);
     label_1_5->setCascadeOpacityEnabled(true);
-    label_1_5->setSkewX(0);
     label_1_5->setTag(-1);
-    label_1_5->setContentSize(Size(244.55, 40));
+    label_1_5->setPosition(Vec2(437, 606));
     label_1_5->setSkewY(0);
     label_1_5->setRotationSkewY(0);
-    label_1_5->setPosition(Vec2(437, 606));
+    label_1_5->setSkewX(0);
     label_1_5->setRotationSkewX(0);
     scene_0_0->addChild(label_1_5);
     // New node
-    auto label_1_6 = Label::create();
+    auto label_1_6 = Label::createWithSystemFont("This is another label", "arial", 40);
     label_1_6->setAnchorPoint(Vec2(0.5, 0.5));
     label_1_6->setScaleY(1);
     label_1_6->setScaleX(1);
     label_1_6->setColor(Color3B(255, 255, 255));
     label_1_6->setName("Label_2");
     label_1_6->setLocalZOrder(0);
-    label_1_6->setString("This is another label");
     label_1_6->setGlobalZOrder(0);
     label_1_6->setOpacity(255);
     label_1_6->setOpacityModifyRGB(false);
     label_1_6->setCascadeOpacityEnabled(true);
-    label_1_6->setSkewX(0);
     label_1_6->setTag(-1);
-    label_1_6->setContentSize(Size(357.97, 40));
+    label_1_6->setPosition(Vec2(107, 289));
     label_1_6->setSkewY(0);
     label_1_6->setRotationSkewY(0);
-    label_1_6->setPosition(Vec2(107, 289));
+    label_1_6->setSkewX(0);
     label_1_6->setRotationSkewX(0);
     scene_0_0->addChild(label_1_6);
     return scene_0_0;
