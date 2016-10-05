@@ -803,6 +803,12 @@
 		5046AB5C1AF2C4180060550B /* Materials in Resources */ = {isa = PBXBuildFile; fileRef = 5046AB5A1AF2C4180060550B /* Materials */; };
 		504C949C1D1C51BE00E4E9B3 /* VRTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C949A1D1C51BE00E4E9B3 /* VRTest.cpp */; };
 		504C949E1D1C51BE00E4E9B3 /* VRTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C949A1D1C51BE00E4E9B3 /* VRTest.cpp */; };
+		5073FE831DA48A7100957007 /* MainScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5073FE811DA48A7100957007 /* MainScene.cpp */; };
+		5073FE841DA48A7100957007 /* MainScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5073FE811DA48A7100957007 /* MainScene.cpp */; };
+		5073FE851DA48A7100957007 /* MainScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5073FE811DA48A7100957007 /* MainScene.cpp */; };
+		5073FE871DA4939D00957007 /* creator_assets in Resources */ = {isa = PBXBuildFile; fileRef = 5073FE861DA4939D00957007 /* creator_assets */; };
+		5073FE881DA4939D00957007 /* creator_assets in Resources */ = {isa = PBXBuildFile; fileRef = 5073FE861DA4939D00957007 /* creator_assets */; };
+		5073FE891DA4939D00957007 /* creator_assets in Resources */ = {isa = PBXBuildFile; fileRef = 5073FE861DA4939D00957007 /* creator_assets */; };
 		507B41021C31BEA60067B53E /* components in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CB318CED84500F37B72 /* components */; };
 		507B41031C31BEA60067B53E /* Icon-144.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35C7918CECF1400F37B72 /* Icon-144.png */; };
 		507B41041C31BEA60067B53E /* Icon-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35C7D18CECF1400F37B72 /* Icon-50.png */; };
@@ -2488,6 +2494,9 @@
 		5046AB5A1AF2C4180060550B /* Materials */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Materials; path = "../tests/cpp-tests/Resources/Materials"; sourceTree = "<group>"; };
 		504C949A1D1C51BE00E4E9B3 /* VRTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VRTest.cpp; sourceTree = "<group>"; };
 		504C949B1D1C51BE00E4E9B3 /* VRTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VRTest.h; sourceTree = "<group>"; };
+		5073FE811DA48A7100957007 /* MainScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MainScene.cpp; sourceTree = "<group>"; };
+		5073FE821DA48A7100957007 /* MainScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainScene.h; sourceTree = "<group>"; };
+		5073FE861DA4939D00957007 /* creator_assets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = creator_assets; path = "../tests/cpp-tests/Resources/creator_assets"; sourceTree = "<group>"; };
 		507B420D1C31BEA60067B53E /* cpp-tests tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "cpp-tests tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		507B42B01C31E6070067B53E /* js-tests tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "js-tests tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		507B43B91C31FB670067B53E /* lua-tests tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "lua-tests tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -4419,6 +4428,7 @@
 		1AC35CA818CED83500F37B72 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				5073FE861DA4939D00957007 /* creator_assets */,
 				460629771CDB4DBA00B44058 /* ccs-res */,
 				B61E90CA1B12B74B00BE69EA /* NavMesh */,
 				5046AB5A1AF2C4180060550B /* Materials */,
@@ -5056,6 +5066,8 @@
 		503512A21D99F5A800F89EA9 /* CreatorTest */ = {
 			isa = PBXGroup;
 			children = (
+				5073FE811DA48A7100957007 /* MainScene.cpp */,
+				5073FE821DA48A7100957007 /* MainScene.h */,
 				503512A31D99F5A800F89EA9 /* CreatorTest.cpp */,
 				503512A41D99F5A800F89EA9 /* CreatorTest.h */,
 			);
@@ -6239,6 +6251,7 @@
 				1AC35D0018CED84500F37B72 /* pew-pew-lei.wav in Resources */,
 				1AC35CD018CED84500F37B72 /* background.mp3 in Resources */,
 				1AC35CD618CED84500F37B72 /* CocosBuilderExample.ccbproj in Resources */,
+				5073FE871DA4939D00957007 /* creator_assets in Resources */,
 				3E92EA851921A7720094CD21 /* Sprite3DTest in Resources */,
 				1AC35CA318CECF1E00F37B72 /* InfoPlist.strings in Resources */,
 				1AC35CA418CECF1E00F37B72 /* MainMenu.xib in Resources */,
@@ -6306,6 +6319,7 @@
 				507B41191C31BEA60067B53E /* zwoptex in Resources */,
 				507B411A1C31BEA60067B53E /* Images in Resources */,
 				507B411B1C31BEA60067B53E /* Icon-40.png in Resources */,
+				5073FE891DA4939D00957007 /* creator_assets in Resources */,
 				507B411C1C31BEA60067B53E /* Icon-100.png in Resources */,
 				507B411D1C31BEA60067B53E /* pew-pew-lei.wav in Resources */,
 				507B411E1C31BEA60067B53E /* Shaders in Resources */,
@@ -6529,6 +6543,7 @@
 				1AC35CF518CED84500F37B72 /* Images in Resources */,
 				1AC35C9118CECF1400F37B72 /* Icon-40.png in Resources */,
 				1AC35C8B18CECF1400F37B72 /* Icon-100.png in Resources */,
+				5073FE881DA4939D00957007 /* creator_assets in Resources */,
 				1AC35D0118CED84500F37B72 /* pew-pew-lei.wav in Resources */,
 				460629791CDB4DBA00B44058 /* ccs-res in Resources */,
 				1AC35D0518CED84500F37B72 /* Shaders in Resources */,
@@ -7011,6 +7026,7 @@
 				A0BD49FE1AFAFEE50046CCE3 /* Scene3DTest.cpp in Sources */,
 				29080D8D191B595E0066F8DF /* CocosGUIScene.cpp in Sources */,
 				5EBEECB01995247000429821 /* DrawNode3D.cpp in Sources */,
+				5073FE831DA48A7100957007 /* MainScene.cpp in Sources */,
 				1AC35BED18CECF0C00F37B72 /* CCControlStepperTest.cpp in Sources */,
 				1AC35C5918CECF0C00F37B72 /* TextureAtlasEncryptionTest.cpp in Sources */,
 				1AC35B5518CECF0C00F37B72 /* ConfigurationTest.cpp in Sources */,
@@ -7154,6 +7170,7 @@
 				507B418C1C31BEA60067B53E /* FileUtilsTest.cpp in Sources */,
 				27C5CE031C6E0477000CA4B3 /* SpriteFrameCacheTest.cpp in Sources */,
 				507B418E1C31BEA60067B53E /* CurlTest.cpp in Sources */,
+				5073FE851DA48A7100957007 /* MainScene.cpp in Sources */,
 				507B418F1C31BEA60067B53E /* CustomTableViewCell.cpp in Sources */,
 				507B41911C31BEA60067B53E /* CCControlSwitchTest.cpp in Sources */,
 				507B41921C31BEA60067B53E /* BaseTest.cpp in Sources */,
@@ -7342,6 +7359,7 @@
 				1AC35C4618CECF0C00F37B72 /* SceneTest.cpp in Sources */,
 				1AC35B7018CECF0C00F37B72 /* MenuTestLayer.cpp in Sources */,
 				1AC35B5218CECF0C00F37B72 /* ClippingNodeTest.cpp in Sources */,
+				5073FE841DA48A7100957007 /* MainScene.cpp in Sources */,
 				1AC35C1418CECF0C00F37B72 /* LayerTest.cpp in Sources */,
 				29080DD8191B595E0066F8DF /* UITextBMFontTest.cpp in Sources */,
 				1AC35C2018CECF0C00F37B72 /* NodeTest.cpp in Sources */,

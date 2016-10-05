@@ -19,6 +19,8 @@ class RootTests : public TestList
 public:
     RootTests()
     {
+        addTest("Cocos Creator reader", [](){return new (std::nothrow) CreatorTests(); });
+
         addTest("Node: Scene3D", [](){return new (std::nothrow) Scene3DTests(); });
         addTest("ActionManager", [](){return new (std::nothrow) ActionManagerTests(); });
         addTest("Actions - Basic", [](){ return new (std::nothrow) ActionsTests(); });

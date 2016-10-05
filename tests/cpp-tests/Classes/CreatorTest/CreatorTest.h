@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2016 Chukong Technologies Inc.
+ Copyright (c) 2013 cocos2d-x.org
 
  http://www.cocos2d-x.org
 
@@ -22,3 +22,32 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+#ifndef _CREATOR_TEST_H_
+#define _CREATOR_TEST_H_
+
+#include "cocos2d.h"
+#include "../BaseTest.h"
+#include <string>
+
+#include "MainScene.h"
+
+DEFINE_TEST_SUITE(CreatorTests);
+
+class CreatorTestsBase : public TestCase
+{
+protected:
+    std::string    _title;
+
+public:
+};
+
+class CreatorTest1 : public CreatorTestsBase
+{
+public:
+    CREATE_FUNC(CreatorTest1);
+    CreatorTest1();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
+#endif // _CREATOR_TEST_H_
