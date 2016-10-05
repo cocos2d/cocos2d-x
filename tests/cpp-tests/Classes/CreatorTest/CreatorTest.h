@@ -29,7 +29,6 @@
 #include "../BaseTest.h"
 #include <string>
 
-#include "MainScene.h"
 
 DEFINE_TEST_SUITE(CreatorTests);
 

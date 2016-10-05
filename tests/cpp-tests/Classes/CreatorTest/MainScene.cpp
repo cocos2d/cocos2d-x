@@ -72,8 +72,8 @@ Node* MainScene_create()
     auto sprite_1_3 = Sprite::create();
     sprite_1_3->setSpriteFrame("grossini_dance_08");
     sprite_1_3->setAnchorPoint(Vec2(0.5, 0.5));
-    sprite_1_3->setScaleY(1);
-    sprite_1_3->setScaleX(1);
+    sprite_1_3->setScaleY(3);
+    sprite_1_3->setScaleX(2);
     sprite_1_3->setColor(Color3B(255, 255, 255));
     sprite_1_3->setName("New Sprite (Splash)");
     sprite_1_3->setLocalZOrder(0);
@@ -83,10 +83,10 @@ Node* MainScene_create()
     sprite_1_3->setCascadeOpacityEnabled(true);
     sprite_1_3->setSkewX(0);
     sprite_1_3->setTag(-1);
-    sprite_1_3->setContentSize(Size(100, 100));
+    sprite_1_3->setContentSize(Size(51, 109));
     sprite_1_3->setSkewY(0);
     sprite_1_3->setRotationSkewY(0);
-    sprite_1_3->setPosition(Vec2(220, 422));
+    sprite_1_3->setPosition(Vec2(263, 542));
     sprite_1_3->setRotationSkewX(0);
     scene_0_0->addChild(sprite_1_3);
     // New node
@@ -118,6 +118,7 @@ Node* MainScene_create()
     label_1_5->setColor(Color3B(255, 255, 255));
     label_1_5->setName("Label_1");
     label_1_5->setLocalZOrder(0);
+    label_1_5->setString("This is a label");
     label_1_5->setGlobalZOrder(0);
     label_1_5->setOpacity(255);
     label_1_5->setOpacityModifyRGB(false);
@@ -127,7 +128,7 @@ Node* MainScene_create()
     label_1_5->setContentSize(Size(244.55, 40));
     label_1_5->setSkewY(0);
     label_1_5->setRotationSkewY(0);
-    label_1_5->setPosition(Vec2(178, 548));
+    label_1_5->setPosition(Vec2(437, 606));
     label_1_5->setRotationSkewX(0);
     scene_0_0->addChild(label_1_5);
     // New node
@@ -138,6 +139,7 @@ Node* MainScene_create()
     label_1_6->setColor(Color3B(255, 255, 255));
     label_1_6->setName("Label_2");
     label_1_6->setLocalZOrder(0);
+    label_1_6->setString("This is another label");
     label_1_6->setGlobalZOrder(0);
     label_1_6->setOpacity(255);
     label_1_6->setOpacityModifyRGB(false);
@@ -147,7 +149,7 @@ Node* MainScene_create()
     label_1_6->setContentSize(Size(357.97, 40));
     label_1_6->setSkewY(0);
     label_1_6->setRotationSkewY(0);
-    label_1_6->setPosition(Vec2(545, 539));
+    label_1_6->setPosition(Vec2(107, 289));
     label_1_6->setRotationSkewX(0);
     scene_0_0->addChild(label_1_6);
     return scene_0_0;
