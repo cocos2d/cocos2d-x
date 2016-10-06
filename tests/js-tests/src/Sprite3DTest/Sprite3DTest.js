@@ -1596,7 +1596,6 @@ var Sprite3DCubeMapTest = Sprite3DTestDemo.extend({
         var skybox = jsb.Skybox.create();
         skybox.setTexture(textureCube);
         this.addChild(skybox);
-        skybox.setScale(700);
 
         this.addChild(camera);
         this.setCameraMask(2);

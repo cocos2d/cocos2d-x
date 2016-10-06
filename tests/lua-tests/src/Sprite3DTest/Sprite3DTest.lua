@@ -1179,7 +1179,6 @@ function Sprite3DCubeMapTest:addNewSpriteWithCoords(pos)
 
     self._skyBox:setTexture(self._textureCube)
     self:addChild(self._skyBox)
-    self._skyBox:setScale(700)
 
     self:addChild(camera)
     self:setCameraMask(2)
