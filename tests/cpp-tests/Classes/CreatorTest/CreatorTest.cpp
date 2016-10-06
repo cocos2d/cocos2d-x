@@ -27,6 +27,7 @@
 
 #include "CreatorTest1.h"
 #include "CreatorLabels.h"
+#include "CreatorSprites.h"
 
 
 USING_NS_CC;
@@ -34,6 +35,7 @@ USING_NS_CC;
 CreatorTests::CreatorTests()
 {
     ADD_TEST_CASE(CreatorLabels);
+    ADD_TEST_CASE(CreatorSprites);
     ADD_TEST_CASE(CreatorTest1);
 };
 
@@ -81,5 +83,28 @@ std::string CreatorLabels::title() const
 std::string CreatorLabels::subtitle() const
 {
     return "Testing different labels";
+}
+
+//------------------------------------------------------------------
+//
+// CreatorSprites
+//
+//------------------------------------------------------------------
+
+CreatorSprites::CreatorSprites()
+{
+    CreatorSprites_init();
+    auto scene = CreatorSprites_create();
+    addChild(scene);
+}
+
+std::string CreatorSprites::title() const
+{
+    return "";
+}
+
+std::string CreatorSprites::subtitle() const
+{
+    return "Testing different sprites";
 }
 
