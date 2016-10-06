@@ -114,11 +114,13 @@ Node* CreatorTest1_create()
     label_1_5->setScaleX(1);
     label_1_5->setColor(Color3B(255, 255, 255));
     label_1_5->setName("Label_1");
+    label_1_5->setVerticalAlignment(TextVAlignment::CENTER);
     label_1_5->setLocalZOrder(0);
     label_1_5->setGlobalZOrder(0);
     label_1_5->setOpacity(255);
     label_1_5->setOpacityModifyRGB(false);
     label_1_5->setCascadeOpacityEnabled(true);
+    label_1_5->setHorizontalAlignment(TextHAlignment::CENTER);
     label_1_5->setTag(-1);
     label_1_5->setPosition(Vec2(437, 606));
     label_1_5->setSkewY(0);
@@ -133,11 +135,13 @@ Node* CreatorTest1_create()
     label_1_6->setScaleX(1);
     label_1_6->setColor(Color3B(255, 255, 255));
     label_1_6->setName("Label_2");
+    label_1_6->setVerticalAlignment(TextVAlignment::CENTER);
     label_1_6->setLocalZOrder(0);
     label_1_6->setGlobalZOrder(0);
     label_1_6->setOpacity(255);
     label_1_6->setOpacityModifyRGB(false);
     label_1_6->setCascadeOpacityEnabled(true);
+    label_1_6->setHorizontalAlignment(TextHAlignment::CENTER);
     label_1_6->setTag(-1);
     label_1_6->setPosition(Vec2(107, 289));
     label_1_6->setSkewY(0);
