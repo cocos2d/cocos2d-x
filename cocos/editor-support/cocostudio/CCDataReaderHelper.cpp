@@ -504,18 +504,18 @@ void DataReaderHelper::addDataAsyncCallBack(float dt)
 
 void DataReaderHelper::removeConfigFile(const std::string& configFile)
 {
-    std::vector<std::string>::iterator it = _configFileList.end();
-    for (std::vector<std::string>::iterator i = _configFileList.begin(); i != _configFileList.end(); ++i)
+    std::vector<std::string>::iterator it = _configFileList.begin();
+    for (auto& i : _configFileList)
     {
-        if (*i == configFile)
-        {
-            it = i;
-        }
-    }
-
-    if (it != _configFileList.end())
-    {
-        _configFileList.erase(it);
+		if (i == configFile)
+		{
+			if (it != _configFileList.end())
+			{
+				_configFileList.erase(it);
+			}
+			break;
+		}
+		++it;
     }
 }
 
