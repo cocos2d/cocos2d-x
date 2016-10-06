@@ -25,12 +25,15 @@
 #include "CreatorTest.h"
 #include "../testResource.h"
 
-#include "MainScene.h"
+#include "CreatorTest1.h"
+#include "CreatorLabels.h"
+
 
 USING_NS_CC;
 
 CreatorTests::CreatorTests()
 {
+    ADD_TEST_CASE(CreatorLabels);
     ADD_TEST_CASE(CreatorTest1);
 };
 
@@ -42,8 +45,8 @@ CreatorTests::CreatorTests()
 
 CreatorTest1::CreatorTest1()
 {
-    MainScene_init();
-    auto scene = MainScene_create();
+    CreatorTest1_init();
+    auto scene = CreatorTest1_create();
     addChild(scene);
 }
 
@@ -56,3 +59,27 @@ std::string CreatorTest1::subtitle() const
 {
     return "Testing built-in Renderer nodes";
 }
+
+//------------------------------------------------------------------
+//
+// CreatorLabels
+//
+//------------------------------------------------------------------
+
+CreatorLabels::CreatorLabels()
+{
+    CreatorLabels_init();
+    auto scene = CreatorLabels_create();
+    addChild(scene);
+}
+
+std::string CreatorLabels::title() const
+{
+    return "Creator Test #1";
+}
+
+std::string CreatorLabels::subtitle() const
+{
+    return "Testing different labels";
+}
+

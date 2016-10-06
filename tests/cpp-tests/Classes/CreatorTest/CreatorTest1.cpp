@@ -3,19 +3,21 @@
 
 USING_NS_CC;
 
-bool MainScene_init()
+bool CreatorTest1_init()
 {
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
     glview->setDesignResolutionSize(960, 640, ResolutionPolicy::FIXED_HEIGHT);
     auto sf_grossini_dance_08 = SpriteFrame::create("creator_assets/grossini_dance_08.png", Rect(17, 7, 51, 109), false, Vec2(0, -1), Size(85, 121));
     SpriteFrameCache::getInstance()->addSpriteFrame(sf_grossini_dance_08, "grossini_dance_08");
+    auto sf_arial16 = SpriteFrame::create("creator_assets/arial16.png", Rect(0, 0, 510, 61), false, Vec2(-1, 225.5), Size(512, 512));
+    SpriteFrameCache::getInstance()->addSpriteFrame(sf_arial16, "arial16");
     auto sf_iso_test = SpriteFrame::create("creator_assets/iso-test.png", Rect(2, 1, 319, 116), false, Vec2(-94.5, 69), Size(512, 256));
     SpriteFrameCache::getInstance()->addSpriteFrame(sf_iso_test, "iso_test");
 
     return true;
 }
-Node* MainScene_create()
+Node* CreatorTest1_create()
 {
     // New node
     auto scene_0_0 = Scene::create();

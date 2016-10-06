@@ -49,4 +49,14 @@ public:
     virtual std::string subtitle() const override;
 };
 
+class CreatorLabels : public CreatorTestsBase
+{
+public:
+    CREATE_FUNC(CreatorLabels);
+    CreatorLabels();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
+
 #endif // _CREATOR_TEST_H_
