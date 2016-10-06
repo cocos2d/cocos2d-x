@@ -7,7 +7,8 @@ bool CreatorTest1_init()
 {
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
-    glview->setDesignResolutionSize(960, 640, ResolutionPolicy::FIXED_HEIGHT);
+    auto frameSize = glview->getFrameSize();
+    glview->setDesignResolutionSize(frameSize.width / (frameSize.height / 640), frameSize.height / (frameSize.height / 640), ResolutionPolicy::NO_BORDER);
     SpriteFrameCache::getInstance()->addSpriteFramesWithFile("creator_assets/test_polygon.plist");
     auto sf_grossini_dance_08 = SpriteFrame::create("creator_assets/grossini_dance_08.png", Rect(17, 7, 51, 109), false, Vec2(0, -1), Size(85, 121));
     SpriteFrameCache::getInstance()->addSpriteFrame(sf_grossini_dance_08, "grossini_dance_08");
