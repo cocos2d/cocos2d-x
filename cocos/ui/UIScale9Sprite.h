@@ -83,7 +83,8 @@ namespace ui {
         enum class RenderingType
         {
             SIMPLE,
-            SLICE
+            SLICE,
+            TILED
         };
         
     public:

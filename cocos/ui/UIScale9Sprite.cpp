@@ -1117,55 +1117,7 @@ namespace ui {
     {
         auto atlasWidth = tex->getPixelsWide();
         auto atlasHeight = tex->getPixelsHigh();
-
-        //calculate texture coordinate
-        float leftWidth = 0, centerWidth = 0, rightWidth = 0;
-        float topHeight = 0, centerHeight = 0, bottomHeight = 0;
-
-        if (_spriteFrameRotated)
-        {
-            rightWidth = capInsets.origin.y - offsets.y;
-            centerWidth = capInsets.size.height;
-            leftWidth = originalSize.height - centerWidth - capInsets.origin.y - offsets.w;
-
-            topHeight = capInsets.origin.x - offsets.x;
-            centerHeight = capInsets.size.width;
-            bottomHeight = originalSize.width - (capInsets.origin.x + centerHeight) - offsets.z;
-        }
-        else
-        {
-            leftWidth = capInsets.origin.x - offsets.x;
-            centerWidth = capInsets.size.width;
-            rightWidth = originalSize.width - (capInsets.origin.x + centerWidth) - offsets.z;
-
-            topHeight = capInsets.origin.y - offsets.y;
-            centerHeight = capInsets.size.height;
-            bottomHeight = originalSize.height - (capInsets.origin.y + centerHeight) - offsets.w;
-        }
         
-        
-        if(leftWidth<0)
-        {
-            centerWidth += leftWidth;
-            leftWidth = 0;
-        }
-        if(rightWidth<0)
-        {
-            centerWidth += rightWidth;
-            rightWidth = 0;
-        }
-        
-        if(topHeight<0)
-        {
-            centerHeight += topHeight;
-            topHeight = 0;
-        }
-        if(bottomHeight<0)
-        {
-            centerHeight += bottomHeight;
-            bottomHeight = 0;
-        }
-
         auto textureRect = CC_RECT_POINTS_TO_PIXELS(_spriteRect);
         //handle .9.png
         if (_isPatch9)
@@ -1178,43 +1130,126 @@ namespace ui {
                                textureRect.size.height - 2);
         }
 
-        //uv computation should take spritesheet into account.
-        float u0, u1, u2, u3;
-        float v0, v1, v2, v3;
-        if (_spriteFrameRotated)
-        {
-            u0 = textureRect.origin.x / atlasWidth;
-            u1 = (leftWidth + textureRect.origin.x) / atlasWidth;
-            u2 = (leftWidth + centerWidth + textureRect.origin.x) / atlasWidth;
-            u3 = (textureRect.origin.x + textureRect.size.height) / atlasWidth;
-
-            v3 = textureRect.origin.y / atlasHeight;
-            v2 = (topHeight + textureRect.origin.y) / atlasHeight;
-            v1 = (topHeight + centerHeight + textureRect.origin.y) / atlasHeight;
-            v0 = (textureRect.origin.y + textureRect.size.width) / atlasHeight;
-        }
-        else
-        {
-            u0 = textureRect.origin.x / atlasWidth;
-            u1 = (leftWidth + textureRect.origin.x) / atlasWidth;
-            u2 = (leftWidth + centerWidth + textureRect.origin.x) / atlasWidth;
-            u3 = (textureRect.origin.x + textureRect.size.width) / atlasWidth;
-
-            v0 = textureRect.origin.y / atlasHeight;
-            v1 = (topHeight + textureRect.origin.y) / atlasHeight;
-            v2 = (topHeight + centerHeight + textureRect.origin.y) / atlasHeight;
-            v3 = (textureRect.origin.y + textureRect.size.height) / atlasHeight;
-        }
-
-        
+        //calculate texture coordinate
         std::vector<Vec2> uvCoordinates;
-        if (_renderingType == RenderingType::SIMPLE)
+        if (_renderingType == RenderingType::TILED)
         {
-            uvCoordinates = {Vec2(u0,v3), Vec2(u3,v0)};
+            float u0, u3;
+            float v0, v3;
+            float uo, vo;
+            
+            if (_spriteFrameRotated) {
+                u0 = (textureRect.origin.x - offsets.w) / atlasWidth;
+                u3 = (textureRect.origin.x + textureRect.size.height + offsets.y) / atlasWidth;
+                
+                v0 = (textureRect.origin.y - offsets.x) / atlasHeight;
+                v3 = (textureRect.origin.y + textureRect.size.width + offsets.z) / atlasHeight;
+                
+                uo = offsets.x / atlasHeight;
+                vo = offsets.w / atlasWidth;
+            }
+            else {
+                u0 = (textureRect.origin.x - offsets.x) / atlasWidth;
+                u3 = (textureRect.origin.x + textureRect.size.width + offsets.z) / atlasWidth;
+                
+                v0 = (textureRect.origin.y - offsets.y) / atlasHeight;
+                v3 = (textureRect.origin.y + textureRect.size.height + offsets.w) / atlasHeight;
+                
+                uo = offsets.x / atlasWidth;
+                vo = offsets.w / atlasHeight;
+            }
+            
+            uvCoordinates.reserve(3);
+            uvCoordinates.push_back(cocos2d::Vec2(u0, v3));
+            uvCoordinates.push_back(cocos2d::Vec2(u3, v0));
+            uvCoordinates.push_back(cocos2d::Vec2(uo, vo));
         }
         else
         {
-            uvCoordinates = {Vec2(u0,v3), Vec2(u1,v2), Vec2(u2,v1), Vec2(u3,v0)};
+            
+            float leftWidth = 0, centerWidth = 0, rightWidth = 0;
+            float topHeight = 0, centerHeight = 0, bottomHeight = 0;
+
+            if (_spriteFrameRotated)
+            {
+                rightWidth = capInsets.origin.y - offsets.y;
+                centerWidth = capInsets.size.height;
+                leftWidth = originalSize.height - centerWidth - capInsets.origin.y - offsets.w;
+
+                topHeight = capInsets.origin.x - offsets.x;
+                centerHeight = capInsets.size.width;
+                bottomHeight = originalSize.width - (capInsets.origin.x + centerHeight) - offsets.z;
+            }
+            else
+            {
+                leftWidth = capInsets.origin.x - offsets.x;
+                centerWidth = capInsets.size.width;
+                rightWidth = originalSize.width - (capInsets.origin.x + centerWidth) - offsets.z;
+
+                topHeight = capInsets.origin.y - offsets.y;
+                centerHeight = capInsets.size.height;
+                bottomHeight = originalSize.height - (capInsets.origin.y + centerHeight) - offsets.w;
+            }
+            
+            
+            if(leftWidth<0)
+            {
+                centerWidth += leftWidth;
+                leftWidth = 0;
+            }
+            if(rightWidth<0)
+            {
+                centerWidth += rightWidth;
+                rightWidth = 0;
+            }
+            
+            if(topHeight<0)
+            {
+                centerHeight += topHeight;
+                topHeight = 0;
+            }
+            if(bottomHeight<0)
+            {
+                centerHeight += bottomHeight;
+                bottomHeight = 0;
+            }
+
+            //uv computation should take spritesheet into account.
+            float u0, u1, u2, u3;
+            float v0, v1, v2, v3;
+            if (_spriteFrameRotated)
+            {
+                u0 = textureRect.origin.x / atlasWidth;
+                u1 = (leftWidth + textureRect.origin.x) / atlasWidth;
+                u2 = (leftWidth + centerWidth + textureRect.origin.x) / atlasWidth;
+                u3 = (textureRect.origin.x + textureRect.size.height) / atlasWidth;
+
+                v3 = textureRect.origin.y / atlasHeight;
+                v2 = (topHeight + textureRect.origin.y) / atlasHeight;
+                v1 = (topHeight + centerHeight + textureRect.origin.y) / atlasHeight;
+                v0 = (textureRect.origin.y + textureRect.size.width) / atlasHeight;
+            }
+            else
+            {
+                u0 = textureRect.origin.x / atlasWidth;
+                u1 = (leftWidth + textureRect.origin.x) / atlasWidth;
+                u2 = (leftWidth + centerWidth + textureRect.origin.x) / atlasWidth;
+                u3 = (textureRect.origin.x + textureRect.size.width) / atlasWidth;
+
+                v0 = textureRect.origin.y / atlasHeight;
+                v1 = (topHeight + textureRect.origin.y) / atlasHeight;
+                v2 = (topHeight + centerHeight + textureRect.origin.y) / atlasHeight;
+                v3 = (textureRect.origin.y + textureRect.size.height) / atlasHeight;
+            }
+
+            if (_renderingType == RenderingType::SIMPLE)
+            {
+                uvCoordinates = {Vec2(u0,v3), Vec2(u3,v0)};
+            }
+            else
+            {
+                uvCoordinates = {Vec2(u0,v3), Vec2(u1,v2), Vec2(u2,v1), Vec2(u3,v0)};
+            }
         }
 
         return uvCoordinates;
@@ -1243,7 +1278,12 @@ namespace ui {
         float offsetBottom = offsets.w / CC_CONTENT_SCALE_FACTOR();
         
         std::vector<Vec2> vertices;
-        if (_renderingType == RenderingType::SIMPLE)
+        if (_renderingType == RenderingType::TILED)
+        {
+            vertices = {Vec2(offsets.x, offsets.y),
+                        Vec2(offsets.z, offsets.w)};
+        }
+        else if (_renderingType == RenderingType::SIMPLE)
         {
             float hScale = _preferredSize.width / (originalSize.width / CC_CONTENT_SCALE_FACTOR());
             float vScale = _preferredSize.height / (originalSize.height / CC_CONTENT_SCALE_FACTOR());
@@ -1345,19 +1385,9 @@ namespace ui {
     TrianglesCommand::Triangles Scale9Sprite::calculateTriangles(const std::vector<Vec2>& uv,
                                                                 const std::vector<Vec2>& vertices)
     {
-        const unsigned short slicedTotalVertexCount = powf(uv.size(),2);
-        const unsigned short slicedTotalIndices = 6 * powf(uv.size() -1, 2);
         CC_SAFE_DELETE_ARRAY(_sliceVertices);
         CC_SAFE_DELETE_ARRAY(_sliceIndices);
 
-        _sliceVertices = new (std::nothrow) V3F_C4B_T2F[slicedTotalVertexCount];
-        _sliceIndices = new (std::nothrow) unsigned short[slicedTotalIndices];
-
-        unsigned short indicesStart = 0;
-        const unsigned short indicesOffset = 6;
-        const unsigned short sliceQuadIndices[] = {4,0,5, 1,5,0};
-        const unsigned short simpleQuadIndices[] = {0,1,2, 3,2,1};
-        
         auto displayedColor = _scale9Image->getDisplayedColor();
         auto displayedOpacity = _scale9Image->getDisplayedOpacity();
         Color4B color4( displayedColor.r, displayedColor.g, displayedColor.b, displayedOpacity );
@@ -1369,67 +1399,191 @@ namespace ui {
             color4.g *= displayedOpacity/255.0f;
             color4.b *= displayedOpacity/255.0f;
         }
-
-        int vertexCount = (int)(vertices.size() - 1);
-
-        for (int j = 0; j <= vertexCount; ++j)
+        
+        unsigned short slicedTotalVertexCount = 0;
+        unsigned short slicedTotalIndices = 0;
+        
+        if (_renderingType == RenderingType::TILED)
         {
-            for (int i = 0; i <= vertexCount; ++i)
-            {
-                V3F_C4B_T2F vertextData;
-                vertextData.vertices.x = vertices[i].x;
-                vertextData.vertices.y = vertices[j].y;
-
-                if (_spriteFrameRotated)
-                {
-                    vertextData.texCoords.u = uv[j].x;
-                    vertextData.texCoords.v = uv[i].y;
-                }
-                else
-                {
-                    vertextData.texCoords.u = uv[i].x;
-                    vertextData.texCoords.v = uv[j].y;
-                }
-
-                vertextData.colors = color4;
+            auto u0 = uv[0].x;
+            auto v0 = uv[0].y;
+            auto u1 = uv[1].x;
+            auto v1 = uv[1].y;
+            
+            auto uo = uv[2].x;
+            auto vo = uv[2].y;
+            
+            auto rectWidth = _originalSize.width;
+            auto rectHeight = _originalSize.height;
+            
+            //build quads
+            auto hRepeat = getContentSize().width / rectWidth;
+            auto vRepeat = getContentSize().height / rectHeight;
+            
+            Vec4 offsets;
+            offsets.x = vertices[0].x;
+            offsets.y = vertices[0].y;
+            offsets.z = vertices[1].x;
+            offsets.w = vertices[1].y;
+            
+            float offsetLeft = offsets.x / CC_CONTENT_SCALE_FACTOR();
+            float offsetBottom = offsets.w / CC_CONTENT_SCALE_FACTOR();
+            
+            float roTop = offsets.y / rectHeight;
+            float roBottom = offsets.w / rectHeight;
+            //float roLeft = offsets.x / rectWidth;
+            float roRight = offsets.z / rectWidth;
+            
+            
+            const int vertsStep = 4;
+            const int indicesStep = 6;
+            int quadsCount = ceilf(hRepeat) * ceilf(vRepeat);
+            
+            slicedTotalVertexCount = quadsCount * vertsStep;
+            slicedTotalIndices = quadsCount * indicesStep;
+            
+            _sliceVertices = new (std::nothrow) V3F_C4B_T2F[quadsCount * vertsStep];
+            
+            int quadIndex = 0;
+            for (int hindex = 0; hindex < ceilf(hRepeat); ++hindex) {
+                for (int vindex = 0; vindex < ceilf(vRepeat); ++vindex) {
+                    
+                    V3F_C4B_T2F &quad_bl = _sliceVertices[quadIndex];
+                    V3F_C4B_T2F &quad_br = _sliceVertices[quadIndex + 1];
+                    V3F_C4B_T2F &quad_tl = _sliceVertices[quadIndex + 2];
+                    V3F_C4B_T2F &quad_tr = _sliceVertices[quadIndex + 3];
+                    
+                    quadIndex += vertsStep;;
+                    
+                    quad_bl.colors = color4;
+                    quad_br.colors = color4;
+                    quad_tl.colors = color4;
+                    quad_tr.colors = color4;
+                    
+                    float x1 = rectWidth * hindex + offsetLeft;
+                    float y1 = rectHeight * vindex + offsetBottom;
+                    float x2 = rectWidth * fminf(hindex + (1 - roRight), hRepeat);
+                    float y2 = rectHeight * fminf(vindex + (1 - roTop), vRepeat);
+                    
+                    
+                    if(x2 < x1)
+                        x2 = x1;
                 
-                //if slice mode
-                if (_renderingType == RenderingType::SLICE)
-                {
-                    memcpy(_sliceVertices + i + j * 4, &vertextData, sizeof(V3F_C4B_T2F));
-                }
-                else
-                {
-                    memcpy(_sliceVertices + i + j * 2, &vertextData, sizeof(V3F_C4B_T2F));
+                    if(y2 < y1)
+                        y2 = y1;
+                    
+                    quad_bl.vertices = cocos2d::Vec3(x1, y1, 0);
+                    quad_br.vertices = cocos2d::Vec3(x2, y1, 0);
+                    quad_tl.vertices = cocos2d::Vec3(x1, y2, 0);
+                    quad_tr.vertices = cocos2d::Vec3(x2, y2, 0);
+                    
+                    if (!_spriteFrameRotated) {
+                        quad_bl.texCoords = cocos2d::Tex2F(u0 + uo, v0 - vo);
+                        quad_br.texCoords = cocos2d::Tex2F(u0 + (u1 - u0) * fminf((1 - roRight), hRepeat - hindex), v0 - vo);
+                        quad_tl.texCoords = cocos2d::Tex2F(u0 + uo, v0 + (v1 - v0) * fminf((1 - roTop), vRepeat - vindex));
+                        quad_tr.texCoords = cocos2d::Tex2F(u0 + (u1 - u0) * fminf((1 - roRight), hRepeat - hindex), v0 + (v1 - v0) * fminf((1 - roTop), vRepeat - vindex));
+                    } else {
+                        quad_bl.texCoords = cocos2d::Tex2F(u0 + vo, v1 + uo);
+                        quad_br.texCoords = cocos2d::Tex2F(u0 + vo, v1 + (v0 - v1) * fminf((1 - roBottom), hRepeat - hindex));
+                        quad_tl.texCoords = cocos2d::Tex2F(u0 + (u1 - u0) * fminf((1 - roTop), vRepeat - vindex), v1 + uo);
+                        quad_tr.texCoords = cocos2d::Tex2F(u0 + (u1 - u0) * fminf((1 - roTop), vRepeat - vindex), v1 + (v0 - v1) * fminf((1 - roBottom), hRepeat - hindex));
+                        
+                    }
                 }
             }
+            
+            _sliceIndices = new (std::nothrow) unsigned short[slicedTotalIndices];
+
+            unsigned short indices[indicesStep];
+            for(int index = 0; index < quadsCount; ++index) {
+                {
+                    indices[0] = vertsStep * index;
+                    indices[1] = vertsStep * index + 1;
+                    indices[2] = vertsStep * index + 2;
+                    indices[3] = vertsStep * index + 3;
+                    indices[4] = vertsStep * index + 2;
+                    indices[5] = vertsStep * index + 1;
+                }
+                
+                memcpy(&_sliceIndices[indicesStep * index], indices, sizeof(unsigned short) * indicesStep);
+                
+            }
         }
-        
-        if (_renderingType == RenderingType::SLICE)
+        else
         {
+            
+            slicedTotalVertexCount = powf(uv.size(),2);
+            slicedTotalIndices = 6 * powf(uv.size() -1, 2);
+            
+            _sliceVertices = new (std::nothrow) V3F_C4B_T2F[slicedTotalVertexCount];
+            _sliceIndices = new (std::nothrow) unsigned short[slicedTotalIndices];
+            
+            unsigned short indicesStart = 0;
+            const unsigned short indicesOffset = 6;
+            const unsigned short sliceQuadIndices[] = {4,0,5, 1,5,0};
+            const unsigned short simpleQuadIndices[] = {0,1,2, 3,2,1};
+
+            int vertexCount = (int)(vertices.size() - 1);
+
             for (int j = 0; j <= vertexCount; ++j)
             {
                 for (int i = 0; i <= vertexCount; ++i)
                 {
-                    if (i < 3 && j < 3)
+                    V3F_C4B_T2F vertextData;
+                    vertextData.vertices.x = vertices[i].x;
+                    vertextData.vertices.y = vertices[j].y;
+
+                    if (_spriteFrameRotated)
                     {
-                        memcpy(_sliceIndices + indicesStart, sliceQuadIndices, indicesOffset * sizeof(unsigned short));
-                        
-                        for (int k = 0; k  < indicesOffset; ++k)
-                        {
-                            unsigned short actualIndex = (i  + j * 3) * indicesOffset;
-                            _sliceIndices[k + actualIndex] = _sliceIndices[k + actualIndex] + j * 4 + i;
-                        }
-                        indicesStart = indicesStart + indicesOffset;
+                        vertextData.texCoords.u = uv[j].x;
+                        vertextData.texCoords.v = uv[i].y;
                     }
+                    else
+                    {
+                        vertextData.texCoords.u = uv[i].x;
+                        vertextData.texCoords.v = uv[j].y;
+                    }
+
+                    vertextData.colors = color4;
                     
+                    //if slice mode
+                    if (_renderingType == RenderingType::SLICE)
+                    {
+                        memcpy(_sliceVertices + i + j * 4, &vertextData, sizeof(V3F_C4B_T2F));
+                    }
+                    else
+                    {
+                        memcpy(_sliceVertices + i + j * 2, &vertextData, sizeof(V3F_C4B_T2F));
+                    }
                 }
             }
-        }
-        
-        if (_renderingType == RenderingType::SIMPLE)
-        {
-            memcpy(_sliceIndices, simpleQuadIndices, indicesOffset * sizeof(unsigned short));
+            
+            if (_renderingType == RenderingType::SLICE)
+            {
+                for (int j = 0; j <= vertexCount; ++j)
+                {
+                    for (int i = 0; i <= vertexCount; ++i)
+                    {
+                        if (i < 3 && j < 3)
+                        {
+                            memcpy(_sliceIndices + indicesStart, sliceQuadIndices, indicesOffset * sizeof(unsigned short));
+                            
+                            for (int k = 0; k  < indicesOffset; ++k)
+                            {
+                                unsigned short actualIndex = (i  + j * 3) * indicesOffset;
+                                _sliceIndices[k + actualIndex] = _sliceIndices[k + actualIndex] + j * 4 + i;
+                            }
+                            indicesStart = indicesStart + indicesOffset;
+                        }
+                        
+                    }
+                }
+            }
+            
+            if (_renderingType == RenderingType::SIMPLE)
+            {
+                memcpy(_sliceIndices, simpleQuadIndices, indicesOffset * sizeof(unsigned short));
+            }
         }
 
         TrianglesCommand::Triangles triangles;
