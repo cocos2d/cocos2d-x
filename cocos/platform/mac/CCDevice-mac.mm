@@ -208,18 +208,10 @@ static NSFont* _createSystemFont(const char* fontName, int size)
     fntName = [[fntName lastPathComponent] stringByDeletingPathExtension];
     
     // font
-    NSFont *font = [[NSFontManager sharedFontManager]
-                    fontWithFamily:fntName
-                    traits:NSUnboldFontMask | NSUnitalicFontMask
-                    weight:0
-                    size:size];
+    NSFont *font = [NSFont fontWithName:fntName size:size];
     
     if (font == nil) {
-        font = [[NSFontManager sharedFontManager]
-                fontWithFamily:@"Arial"
-                traits:NSUnboldFontMask | NSUnitalicFontMask
-                weight:0
-                size:size];
+        font = [NSFont systemFontOfSize:size];
     }
     return font;
 }
