@@ -52,9 +52,8 @@ bool AppDelegate::applicationDidFinishLaunching()
 
 #if CC_64BITS
     FileUtils::getInstance()->addSearchPath("src/64bit");
-#else
-    FileUtils::getInstance()->addSearchPath("src");
 #endif
+    FileUtils::getInstance()->addSearchPath("src");
     FileUtils::getInstance()->addSearchPath("res");
     pEngine->executeScriptFile("controller.lua");
 
