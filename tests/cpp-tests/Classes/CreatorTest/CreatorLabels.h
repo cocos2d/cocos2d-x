@@ -4,7 +4,6 @@
 #pragma once
 
 #include <cocos2d.h>
-#include <ui/CocosGUI.h>
 
 bool CreatorLabels_init();
 cocos2d::Node* CreatorLabels_create();

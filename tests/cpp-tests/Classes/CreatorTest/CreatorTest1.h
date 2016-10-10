@@ -4,7 +4,6 @@
 #pragma once
 
 #include <cocos2d.h>
-#include <ui/CocosGUI.h>
 
 bool CreatorTest1_init();
 cocos2d::Node* CreatorTest1_create();
