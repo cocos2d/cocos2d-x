@@ -29,6 +29,7 @@ private:
     FloatScaleDescription _imageScale;
     SpriteFrameDescription _spriteFrame;
     Vec4 _margins;
+    BlendFunc _blendFunc;
 };
 
 }

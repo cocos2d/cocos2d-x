@@ -55,6 +55,7 @@ Node *ImageViewLoader::createNodeInstance(const Size &parentSize, float mainScal
             break;
     };
     imageView->setImageScale(getAbsoluteScale(mainScale, additionalScale, _imageScale.scale, _imageScale.type) / CCBXReader::getResolutionScale());
+    imageView->setBlendFunc(_blendFunc);
     return imageView;
 }
 
@@ -64,6 +65,7 @@ void ImageViewLoader::setSpecialProperties(Node* node, const Size &parentSize, f
 
 ImageViewLoader::ImageViewLoader()
     :_imageScale{0,1.f}
+    ,_blendFunc(BlendFunc::ALPHA_PREMULTIPLIED)
 {
     
 }
@@ -73,7 +75,7 @@ ImageViewLoader::~ImageViewLoader(){
     
 void ImageViewLoader::onHandlePropTypeBlendFunc(const std::string &propertyName, bool isExtraProp, const BlendFunc &value) {
     if(propertyName == PROPERTY_BLENDFUNC) {
-        //((LayerColor *)pNode)->setBlendFunc(pBlendFunc);
+        _blendFunc = value;
     } else {
         WidgetLoader::onHandlePropTypeBlendFunc(propertyName, isExtraProp, value);
     }

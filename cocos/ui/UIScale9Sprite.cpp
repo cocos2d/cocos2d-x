@@ -524,11 +524,6 @@ namespace ui {
             {
                 return;
             }
-            
-            if (_renderingType == RenderingType::SIMPLE)
-            {
-                this->configureSimpleModeRendering();
-            }
 
             auto capInsets = CC_RECT_POINTS_TO_PIXELS(_capInsetsInternal);
             auto textureRect = CC_RECT_POINTS_TO_PIXELS(_spriteRect);

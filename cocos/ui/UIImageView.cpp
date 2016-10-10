@@ -330,6 +330,16 @@ float ImageView::getImageScale() const
 {
     return _imageScale;
 }
+    
+void ImageView::setBlendFunc(const BlendFunc &blendFunc)
+{
+    _imageRenderer->setBlendFunc(blendFunc);
+}
+    
+const BlendFunc& ImageView::getBlendFunc() const
+{
+    return _imageRenderer->getBlendFunc();
+}
 
 }
 
