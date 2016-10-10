@@ -108,6 +108,7 @@ void EditBoxImplLinux::nativeOpenKeyboard()
     bool didChange = LinuxInputBox(text);
     if (didChange)
     {
+        this->editBoxDidReturn(text);
         this->editBoxEditingDidEnd(text);
     }
 }

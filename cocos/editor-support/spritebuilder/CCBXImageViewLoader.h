@@ -24,12 +24,14 @@ protected:
     virtual void onHandlePropTypeFloat(const std::string &propertyName, bool isExtraProp, float value) override;
     virtual void onHandlePropTypeOffsets(const std::string &propertyName, bool isExtraProp, const Vec4 &value) override;
     virtual void onHandlePropTypeFloatScale(const std::string &propertyName, bool isExtraProp, const FloatScaleDescription &value) override;
+    virtual void onHandlePropTypeIntegerLabeled(const std::string &propertyName, bool isExtraProp, int value) override;
 private:
     SizeDescription _size;
     FloatScaleDescription _imageScale;
     SpriteFrameDescription _spriteFrame;
     Vec4 _margins;
     BlendFunc _blendFunc;
+    int _renderingType;
 };
 
 }

@@ -949,7 +949,10 @@ void CCBAnimationManager::runAction(Node *pNode, CCBSequenceProperty *pSeqProp, 
 
 void CCBAnimationManager::runAnimationsForSequenceIdTweenDuration(int nSeqId, float fTweenDuration, const std::function<void(cocos2d::Node*, AnimationCompleteType)> &callback)
 {
-    CCASSERT(nSeqId != -1, "Sequence id couldn't be found");
+    printf("CCBAnimationManager::runAnimationsForSequenceIdTweenDuration %i %p\n", nSeqId, this);
+    
+    CCBSequence *seq = getSequence(nSeqId);
+    CCASSERT(seq, "Sequence id couldn't be found");
     
     if(_runningSequence.first)
     {
@@ -959,12 +962,12 @@ void CCBAnimationManager::runAnimationsForSequenceIdTweenDuration(int nSeqId, fl
             _runningSequence.second(_rootNode, AnimationCompleteType::STOPED);
     }
     
-    _rootNode->stopActionByTag(animationTag);
+    _rootNode->stopAllActionsByTag(animationTag);
     
     for (auto nodeSeqIter = _nodeSequences.begin(); nodeSeqIter != _nodeSequences.end(); ++nodeSeqIter)
     {
         Node *node = nodeSeqIter->first;
-        node->stopActionByTag(animationTag);
+        node->stopAllActionsByTag(animationTag);
         
         // Refer to CCBReader::readKeyframe() for the real type of value
         auto seqs = nodeSeqIter->second;
@@ -1017,7 +1020,6 @@ void CCBAnimationManager::runAnimationsForSequenceIdTweenDuration(int nSeqId, fl
     }
     
     // Make callback at end of sequence
-    CCBSequence *seq = getSequence(nSeqId);
     Action *completeAction = Sequence::createWithTwoActions(DelayTime::create(seq->getDuration() + fTweenDuration),
                                                                 CallFunc::create(std::bind(&CCBAnimationManager::sequenceCompleted, this, callback)));
     completeAction->setTag(animationTag);
@@ -1041,7 +1043,7 @@ void CCBAnimationManager::runAnimationsForSequenceIdTweenDuration(int nSeqId, fl
         }
     }
 
-    _runningSequence.first = getSequence(nSeqId);
+    _runningSequence.first = seq;
     _runningSequence.second = callback;
 }
     
@@ -1110,6 +1112,8 @@ void CCBAnimationManager::debug()
 
 void CCBAnimationManager::sequenceCompleted(const std::function<void(cocos2d::Node*, AnimationCompleteType)> &callback)
 {
+    printf("CCBAnimationManager::sequenceCompleted %i %p\n", _runningSequence.first->getSequenceId(), this);
+    
     const char *runningSequenceName = _runningSequence.first->getName();
     int nextSeqId = _runningSequence.first->getChainedSequenceId();
     _runningSequence.first = nullptr;

@@ -305,6 +305,8 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)sender
 {
     if (sender == self.textInput) {
+        const char* inputText = [sender.text UTF8String];
+        getEditBoxImplIOS()->editBoxDidReturn(inputText);
         [sender resignFirstResponder];
     }
     return NO;

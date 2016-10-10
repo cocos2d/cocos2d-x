@@ -262,8 +262,8 @@ static void editBoxCallbackFunc(const char* pText, void* ctx)
     if (thiz->getDelegate() != NULL)
     {
         thiz->getDelegate()->editBoxTextChanged(thiz->getEditBox(), thiz->getText());
-        thiz->getDelegate()->editBoxEditingDidEnd(thiz->getEditBox());
         thiz->getDelegate()->editBoxReturn(thiz->getEditBox());
+        thiz->getDelegate()->editBoxEditingDidEnd(thiz->getEditBox());
     }
 
 #if CC_ENABLE_SCRIPT_BINDING

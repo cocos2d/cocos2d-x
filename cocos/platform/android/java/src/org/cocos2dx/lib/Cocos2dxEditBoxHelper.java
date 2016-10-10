@@ -70,6 +70,11 @@ public class Cocos2dxEditBoxHelper {
         editBoxEditingDidEnd(index, text);
     }
 
+    private static native void editBoxDidReturn(int index, String text);
+    public static void __editBoxDidReturn(int index, String text){
+        editBoxDidReturn(index, text);
+    }
+
 
     public Cocos2dxEditBoxHelper(ResizeLayout layout) {
         Cocos2dxEditBoxHelper.mFrameLayout = layout;
@@ -211,6 +216,13 @@ public class Cocos2dxEditBoxHelper {
                                 (keyCode == KeyEvent.KEYCODE_ENTER)) {
                             //if editbox doesn't support multiline, just hide the keyboard
                             if ((editBox.getInputType() & InputType.TYPE_TEXT_FLAG_MULTI_LINE) != InputType.TYPE_TEXT_FLAG_MULTI_LINE) {
+                                final String text = new String(editBox.getText().toString());
+                                mCocos2dxActivity.runOnGLThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Cocos2dxEditBoxHelper.__editBoxDidReturn(index, text);
+                                    }
+                                });
                                 Cocos2dxEditBoxHelper.closeKeyboardOnUiThread(index);
                                 return true;
                             }

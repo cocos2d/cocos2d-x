@@ -336,6 +336,7 @@ namespace cocos2d {
       });
       auto endHandler = ref new Windows::Foundation::EventHandler<Platform::String^>([this](Platform::Object^ sender, Platform::String^ arg) {
         auto text = PlatformStringToString(arg);
+        this->editBoxDidReturn(text);
         this->editBoxEditingDidEnd(text);
         this->onEndEditing(text);
       });

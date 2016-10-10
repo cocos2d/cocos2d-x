@@ -196,6 +196,8 @@ public:
     virtual void onHandlePropTypeOffsets(const std::string &propertyName, bool isExtraProp, const Vec4 &value);
     
     virtual void onLoaded();
+    virtual void onNodeLoaded(Node *node);
+    
 CC_CONSTRUCTOR_ACCESS:
     NodeLoader();
     ~NodeLoader();
@@ -241,6 +243,27 @@ public:
     virtual cocos2d::Node *createNodeInstance(const cocos2d::Size &parentSize, float mainScale, float additionalScale, cocos2d::spritebuilder::CCBXReaderOwner *owner, cocos2d::Node *rootNode, cocos2d::spritebuilder::CCBXReaderOwner *parentOwner) override
     {
         return CustomNode::create();
+    }
+};
+    
+template <class CustomNode>
+class AdvanceNodeLoader : public NodeLoader {
+public:
+    static NodeLoader* create()
+    {
+        AdvanceNodeLoader *ret = new AdvanceNodeLoader();
+        ret->autorelease();
+        return ret;
+    }
+    
+    virtual cocos2d::Node *createNodeInstance(const cocos2d::Size &parentSize, float mainScale, float additionalScale, cocos2d::spritebuilder::CCBXReaderOwner *owner, cocos2d::Node *rootNode, cocos2d::spritebuilder::CCBXReaderOwner *parentOwner) override
+    {
+        return CustomNode::create();
+    }
+    
+    virtual void onNodeLoaded(Node *node) override
+    {
+        static_cast<CustomNode*>(node)->onLoaded();
     }
 };
 

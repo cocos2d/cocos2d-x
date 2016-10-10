@@ -22,7 +22,7 @@ static const std::string PROPERTY_MARGIN_BOTTOM("marginBottom");
     
 static const std::string PROPERTY_ZOOM_SCALE("zoomScale");
 static const std::string PROPERTY_MAX_PERCENT("maxPercent");
-static const std::string PROPERTY_SLIDER_VALUE("sliderValue");
+static const std::string PROPERTY_SLIDER_VALUE("percent");
     
 static const std::string PROPERTY_IMAGE_SCALE("imageScale");
     

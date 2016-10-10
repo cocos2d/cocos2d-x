@@ -172,6 +172,7 @@
 {
     _editState = NO;
     
+    getEditBoxImplMac()->editBoxDidReturn([self getText]);
     getEditBoxImplMac()->editBoxEditingDidEnd([self getText]);
 }
 
@@ -304,6 +305,7 @@
 {
     _editState = NO;
     
+    getEditBoxImplMac()->editBoxDidReturn([self getText]);
     getEditBoxImplMac()->editBoxEditingDidEnd([self getText]);
 }
 

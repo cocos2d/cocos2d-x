@@ -275,6 +275,8 @@ bool NodeLoader::loadNode(Node *node, const Size &parentSize, float mainScale, f
     if(owner)
         owner->onNodeLoaded(node);
     
+    onNodeLoaded(node);
+    
     return true;
 }
     
@@ -673,6 +675,11 @@ void NodeLoader::onHandlePropTypeOffsets(const std::string &propertyName, bool i
 }
     
 void NodeLoader::onLoaded()
+{
+    
+}
+    
+void NodeLoader::onNodeLoaded(Node *node)
 {
     
 }

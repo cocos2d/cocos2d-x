@@ -102,6 +102,20 @@ public:
      *@return whether button use scale9 renderer or not.
      */
     bool isScale9Enabled()const;
+    
+    /**
+     * Enable tile renderer.
+     *
+     * @param enabled Set to true will use tile renderer, false otherwise.
+     */
+    void setTileEnabled(bool enabled);
+    
+    /**
+     * Query whether button is using tile renderer or not.
+     *@return whether button use tile renderer or not.
+     */
+    bool isTileEnabled()const;
+    
 
     /**
      * Sets capInsets for imageview.
@@ -174,8 +188,12 @@ protected:
     void imageTextureScaleChangedWithSize();
     virtual Widget* createCloneInstance() override;
     virtual void copySpecialProperties(Widget* model) override;
+    
+    void updateRenderType();
+    
 protected:
     bool _scale9Enabled;
+    bool _tileEnabled;
     bool _prevIgnoreSize;
     Rect _capInsets;
     Scale9Sprite* _imageRenderer;

@@ -38,6 +38,7 @@ IMPLEMENT_CLASS_GUI_INFO(ImageView)
 
 ImageView::ImageView():
 _scale9Enabled(false),
+_tileEnabled(false),
 _prevIgnoreSize(true),
 _capInsets(Rect::ZERO),
 _textureFile(""),
@@ -163,7 +164,7 @@ void ImageView::setupTexture()
 void ImageView::setTextureRect(const Rect &rect)
 {
     //This API should be refactor
-    if (_scale9Enabled)
+    if (_scale9Enabled || _tileEnabled)
     {
     }
     else
@@ -180,22 +181,17 @@ void ImageView::setTextureRect(const Rect &rect)
     }
 }
     
-void ImageView::setScale9Enabled(bool able)
+void ImageView::updateRenderType()
 {
-    if (_scale9Enabled == able)
-    {
-        return;
-    }
-    
-    
-    _scale9Enabled = able;
-    if (_scale9Enabled) {
+    if (_tileEnabled){
+        _imageRenderer->setRenderingType(Scale9Sprite::RenderingType::TILED);
+    } else if (_scale9Enabled) {
         _imageRenderer->setRenderingType(Scale9Sprite::RenderingType::SLICE);
-    }else{
+    } else {
         _imageRenderer->setRenderingType(Scale9Sprite::RenderingType::SIMPLE);
     }
     
-    if (_scale9Enabled)
+    if (_scale9Enabled || _tileEnabled)
     {
         bool ignoreBefore = _ignoreSize;
         ignoreContentAdaptWithSize(false);
@@ -209,9 +205,38 @@ void ImageView::setScale9Enabled(bool able)
     _imageRendererAdaptDirty = true;
 }
     
+void ImageView::setScale9Enabled(bool able)
+{
+    if (_scale9Enabled == able)
+    {
+        return;
+    }
+    
+    _scale9Enabled = able;
+    
+    updateRenderType();
+}
+    
 bool ImageView::isScale9Enabled()const
 {
     return _scale9Enabled;
+}
+
+void ImageView::setTileEnabled(bool able)
+{
+    if (_tileEnabled == able)
+    {
+        return;
+    }
+    
+    _tileEnabled = able;
+    
+    updateRenderType();
+}
+
+bool ImageView::isTileEnabled() const
+{
+    return _tileEnabled;
 }
 
 void ImageView::ignoreContentAdaptWithSize(bool ignore)

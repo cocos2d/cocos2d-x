@@ -98,8 +98,8 @@ void EditBoxImplEmcc::onEnterCallback(void *userData)
     
     if (editBoxEmcc->_delegate)
     {
-        editBoxEmcc->_delegate->editBoxEditingDidEnd(editBoxEmcc->_editBox);
         editBoxEmcc->_delegate->editBoxReturn(editBoxEmcc->_editBox);
+        editBoxEmcc->_delegate->editBoxEditingDidEnd(editBoxEmcc->_editBox);
     }
 }
     

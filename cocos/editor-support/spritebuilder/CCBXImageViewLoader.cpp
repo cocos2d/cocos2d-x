@@ -14,6 +14,7 @@ static const std::string PROPERTY_MARGIN_TOP("marginTop");
 static const std::string PROPERTY_MARGIN_RIGHT("marginRight");
 static const std::string PROPERTY_MARGIN_BOTTOM("marginBottom");
 static const std::string PROPERTY_IMAGE_SCALE("imageScale");
+static const std::string PROPERTY_RENDERING_TYPE("renderingType");
 
 ImageViewLoader *ImageViewLoader::create()
 {
@@ -36,7 +37,8 @@ Node *ImageViewLoader::createNodeInstance(const Size &parentSize, float mainScal
                 Size size = _spriteFrame.spriteFrame->getOriginalSize();
                 Rect realMargins(margin.origin.x*size.width,margin.origin.y*size.height,margin.size.width*size.width,margin.size.height*size.height);
                 imageView->loadTexture(_spriteFrame.path, ui::Widget::TextureResType::LOCAL);
-                imageView->setScale9Enabled(_margins != Vec4::ZERO);
+                imageView->setScale9Enabled(_margins != Vec4::ZERO && _renderingType == (int)ui::Scale9Sprite::RenderingType::SLICE);
+                imageView->setTileEnabled(_renderingType == (int)ui::Scale9Sprite::RenderingType::TILED);
                 imageView->setCapInsets(realMargins);
                 imageView->ignoreContentAdaptWithSize(false);
             }
@@ -46,7 +48,8 @@ Node *ImageViewLoader::createNodeInstance(const Size &parentSize, float mainScal
                 Size size = _spriteFrame.spriteFrame->getOriginalSize();
                 Rect realMargins(margin.origin.x*size.width,margin.origin.y*size.height,margin.size.width*size.width,margin.size.height*size.height);
                 imageView->loadTexture(_spriteFrame.path, ui::Widget::TextureResType::PLIST);
-                imageView->setScale9Enabled(_margins != Vec4::ZERO);
+                imageView->setScale9Enabled(_margins != Vec4::ZERO && _renderingType == (int)ui::Scale9Sprite::RenderingType::SLICE);
+                imageView->setTileEnabled(_renderingType == (int)ui::Scale9Sprite::RenderingType::TILED);
                 imageView->setCapInsets(realMargins);
                 imageView->ignoreContentAdaptWithSize(false);
             }
@@ -66,6 +69,7 @@ void ImageViewLoader::setSpecialProperties(Node* node, const Size &parentSize, f
 ImageViewLoader::ImageViewLoader()
     :_imageScale{0,1.f}
     ,_blendFunc(BlendFunc::ALPHA_PREMULTIPLIED)
+    ,_renderingType(1)
 {
     
 }
@@ -121,6 +125,16 @@ void ImageViewLoader::onHandlePropTypeFloatScale(const std::string &propertyName
     } else {
         WidgetLoader::onHandlePropTypeFloatScale(propertyName, isExtraProp, value);
     }
+}
+    
+void ImageViewLoader::onHandlePropTypeIntegerLabeled(const std::string &propertyName, bool isExtraProp, int value)
+{
+    if(propertyName == PROPERTY_RENDERING_TYPE) {
+        _renderingType = value;
+    } else {
+        NodeLoader::onHandlePropTypeFloat(propertyName, isExtraProp, value);
+    }
+    
 }
 
 }

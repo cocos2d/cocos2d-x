@@ -12,6 +12,8 @@ static const std::string PROPERTY_MARGIN_LEFT("marginLeft");
 static const std::string PROPERTY_MARGIN_TOP("marginTop");
 static const std::string PROPERTY_MARGIN_RIGHT("marginRight");
 static const std::string PROPERTY_MARGIN_BOTTOM("marginBottom");
+    
+static const std::string PROPERTY_RENDERING_TYPE("renderingType");
 
 Scale9SpriteLoader *Scale9SpriteLoader::create()
 {
@@ -26,8 +28,20 @@ Node *Scale9SpriteLoader::createNodeInstance(const Size &parentSize, float mainS
     sprite->setAnchorPoint(Vec2(0.0f, 0.0f));
     Rect margin(_margins.x,_margins.y,1.0-_margins.z-_margins.x,1.0-_margins.w-_margins.y);
     Size size = sprite->getOriginalSize();
-    sprite->setRenderingType(_margins == Vec4::ZERO?ui::Scale9Sprite::RenderingType::SIMPLE:ui::Scale9Sprite::RenderingType::SLICE);
     sprite->setCapInsets(Rect(margin.origin.x*size.width,margin.origin.y*size.height,margin.size.width*size.width,margin.size.height*size.height));
+    switch (static_cast<ui::Scale9Sprite::RenderingType>(_renderingType)) {
+        case ui::Scale9Sprite::RenderingType::SIMPLE:
+            sprite->setRenderingType(ui::Scale9Sprite::RenderingType::SIMPLE);
+            break;
+            
+        case ui::Scale9Sprite::RenderingType::TILED:
+            sprite->setRenderingType(ui::Scale9Sprite::RenderingType::TILED);
+            break;
+            
+        case ui::Scale9Sprite::RenderingType::SLICE:
+            sprite->setRenderingType(_margins == Vec4::ZERO?ui::Scale9Sprite::RenderingType::SIMPLE:ui::Scale9Sprite::RenderingType::SLICE);
+            break;
+    }
     return sprite;
 }
 
@@ -39,6 +53,7 @@ void Scale9SpriteLoader::setSpecialProperties(Node* node, const Size &parentSize
 
 Scale9SpriteLoader::Scale9SpriteLoader()
     :_blendFunc(BlendFunc::ALPHA_PREMULTIPLIED)
+    ,_renderingType(1)
 {
     
 }
@@ -86,6 +101,17 @@ void Scale9SpriteLoader::onHandlePropTypeFloat(const std::string &propertyName, 
         NodeLoader::onHandlePropTypeFloat(propertyName, isExtraProp, value);
     }
 }
+
+void Scale9SpriteLoader::onHandlePropTypeIntegerLabeled(const std::string &propertyName, bool isExtraProp, int value)
+{
+    if(propertyName == PROPERTY_RENDERING_TYPE) {
+        _renderingType = value;
+    } else {
+        NodeLoader::onHandlePropTypeFloat(propertyName, isExtraProp, value);
+    }
+
+}
+    
 }
 
 NS_CC_END
