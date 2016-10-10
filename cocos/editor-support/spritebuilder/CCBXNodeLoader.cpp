@@ -671,6 +671,11 @@ void NodeLoader::onHandlePropTypeOffsets(const std::string &propertyName, bool i
 {
     ASSERT_FAIL_UNEXPECTED_PROPERTY(propertyName);
 }
+    
+void NodeLoader::onLoaded()
+{
+    
+}
 
     
 }

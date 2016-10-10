@@ -1458,6 +1458,8 @@ private:
             ccNodeLoader->addChild(child);
         }
         
+        ccNodeLoader->onLoaded();
+        
         return ccNodeLoader;
     }
     

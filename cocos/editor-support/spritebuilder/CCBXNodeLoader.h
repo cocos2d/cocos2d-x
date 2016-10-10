@@ -195,6 +195,7 @@ public:
     virtual void onHandlePropTypeSoundFile(const std::string &propertyName, bool isExtraProp, const std::string &value);
     virtual void onHandlePropTypeOffsets(const std::string &propertyName, bool isExtraProp, const Vec4 &value);
     
+    virtual void onLoaded();
 CC_CONSTRUCTOR_ACCESS:
     NodeLoader();
     ~NodeLoader();

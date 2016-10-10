@@ -959,7 +959,7 @@ void CCBAnimationManager::runAnimationsForSequenceIdTweenDuration(int nSeqId, fl
             _runningSequence.second(_rootNode, AnimationCompleteType::STOPED);
     }
     
-    stopAnimations(false);
+    _rootNode->stopActionByTag(animationTag);
     
     for (auto nodeSeqIter = _nodeSequences.begin(); nodeSeqIter != _nodeSequences.end(); ++nodeSeqIter)
     {
@@ -1045,16 +1045,6 @@ void CCBAnimationManager::runAnimationsForSequenceIdTweenDuration(int nSeqId, fl
     _runningSequence.second = callback;
 }
     
-static void stopAllActionsForNode(cocos2d::Node *node)
-{
-    if(node)
-    {
-        node->stopAllActionsByTag(animationTag);
-        for(cocos2d::Node *child:node->getChildren())
-            stopAllActionsForNode(child);
-    }
-}
-    
 void CCBAnimationManager::stopAnimations(bool reset)
 {
     if(_runningSequence.first)
@@ -1065,7 +1055,13 @@ void CCBAnimationManager::stopAnimations(bool reset)
             _runningSequence.second(_rootNode, AnimationCompleteType::STOPED);
     }
     
-    stopAllActionsForNode(_rootNode);
+    _rootNode->stopActionByTag(animationTag);
+    
+    for (auto nodeSeqIter = _nodeSequences.begin(); nodeSeqIter != _nodeSequences.end(); ++nodeSeqIter)
+    {
+        Node *node = nodeSeqIter->first;
+        node->stopActionByTag(animationTag);
+    }
     
     if(reset)
     {

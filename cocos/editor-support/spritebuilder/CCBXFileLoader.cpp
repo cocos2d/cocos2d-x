@@ -20,14 +20,6 @@ Node *FileLoader::createNodeInstance(const Size &parentSize, float mainScale, fl
         return nullptr;
     
     Node *ret = _file->createNode(parentSize, mainScale, additionalScale, owner, nullptr, nullptr, rootOwner);
-    if(ret)
-    {
-        CCBAnimationManager *animationManager = CCBAnimationManager::fromNode(ret);
-        if(animationManager && _sequenceId!=-2)
-        {
-            animationManager->setAutoPlaySequenceId(_sequenceId);
-        }
-    }
     return ret;
 }
 
@@ -59,6 +51,18 @@ void FileLoader::onHandlePropTypeAnimation(const std::string &propertyName, bool
         _sequenceId = value;
     } else {
         NodeLoader::onHandlePropTypeAnimation(propertyName, isExtraProp, value);
+    }
+}
+    
+void FileLoader::onLoaded()
+{
+    switch (_sequenceId) {
+        case -2:
+            break;
+        default:
+            if(_file)
+                _file->setAutoPlaySequenceId(_sequenceId);
+            break;
     }
 }
 
