@@ -514,9 +514,9 @@ std::vector<Vec2> AutoPolygon::expand(const std::vector<Vec2>& points, const coc
     ClipperLib::Path subj;
     ClipperLib::PolyTree solution;
     ClipperLib::PolyTree out;
-    for(const auto& it : points)
+    for(const auto& pt : points)
     {
-        subj << ClipperLib::IntPoint(it.x* PRECISION, it.y * PRECISION);
+        subj << ClipperLib::IntPoint(pt.x* PRECISION, pt.y * PRECISION);
     }
     ClipperLib::ClipperOffset co;
     co.AddPath(subj, ClipperLib::jtMiter, ClipperLib::etClosedPolygon);
@@ -569,9 +569,9 @@ TrianglesCommand::Triangles AutoPolygon::triangulate(const std::vector<Vec2>& po
         return TrianglesCommand::Triangles();
     }
     std::vector<p2t::Point*> p2points;
-    for(const auto& it : points)
+    for(const auto& pt : points)
     {
-        p2t::Point * p = new (std::nothrow) p2t::Point(it.x, it.y);
+        p2t::Point * p = new (std::nothrow) p2t::Point(pt.x, pt.y);
         p2points.push_back(p);
     }
     p2t::CDT cdt(p2points);
@@ -704,6 +704,7 @@ PolygonInfo AutoPolygon::generateTriangles(const Rect& rect, const float& epsilo
     ret.rect = realRect;
     return ret;
 }
+
 PolygonInfo AutoPolygon::generatePolygon(const std::string& filename, const Rect& rect, const float epsilon, const float threshold)
 {
     AutoPolygon ap(filename);

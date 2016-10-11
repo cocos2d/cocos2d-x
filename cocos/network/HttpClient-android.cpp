@@ -133,16 +133,16 @@ public:
         if(!headers.empty())
         {
             /* append custom headers one by one */
-            for (auto& it : headers)
+            for (auto& header : headers)
             {
-                int len = it.length();
-                int pos = it.find(':');
+                int len = header.length();
+                int pos = header.find(':');
                 if (-1 == pos || pos >= len)
                 {
                     continue;
                 }
-                std::string str1 = it.substr(0, pos);
-                std::string str2 = it.substr(pos + 1, len - pos - 1);
+                std::string str1 = header.substr(0, pos);
+                std::string str2 = header.substr(pos + 1, len - pos - 1);
                 addRequestHeader(str1.c_str(), str2.c_str());
             }
         }
@@ -499,13 +499,13 @@ private:
 
         std::string sendCookiesInfo = "";
         int cookiesCount = 0;
-        for (auto& cookiesIter : cookiesInfoVec)
+        for (auto& cookieInfo : cookiesInfoVec)
         {
-            if (_url.find(cookiesIter.domain) != std::string::npos)
+            if (_url.find(cookieInfo.domain) != std::string::npos)
             {
-                std::string keyValue = cookiesIter.key;
+                std::string keyValue = cookieInfo.key;
                 keyValue.append("=");
-                keyValue.append(cookiesIter.value);
+                keyValue.append(cookieInfo.value);
                 if (cookiesCount != 0)
                     sendCookiesInfo.append(";");
                 
