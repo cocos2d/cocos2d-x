@@ -1,10 +1,10 @@
 /******************************************************************************
  * Spine Runtimes Software License
  * Version 2.3
- *
- * Copyright (c) 2013-2015, Esoteric Software
+ * 
+ * Copyright (c) 2013-2016, Esoteric Software
  * All rights reserved.
- *
+ * 
  * You are granted a perpetual, non-exclusive, non-sublicensable and
  * non-transferable license to use, install, execute and perform the Spine
  * Runtimes Software (the "Software") and derivative works solely for personal
@@ -16,7 +16,7 @@
  * or other intellectual property or proprietary rights notices on or in the
  * Software, including any copy thereof. Redistributions in binary or source
  * form must include this license and terms.
- *
+ * 
  * THIS SOFTWARE IS PROVIDED BY ESOTERIC SOFTWARE "AS IS" AND ANY EXPRESS OR
  * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
@@ -29,43 +29,44 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-#ifndef SPINE_SKELETONBATCH_H_
-#define SPINE_SKELETONBATCH_H_
+#ifndef SPINE_SKELETONBINARY_H_
+#define SPINE_SKELETONBINARY_H_
 
-#include <spine/spine.h>
-#include "cocos2d.h"
+#include <spine/Attachment.h>
+#include <spine/AttachmentLoader.h>
+#include <spine/SkeletonData.h>
+#include <spine/Atlas.h>
 
-namespace spine {
-    
-    class SkeletonBatch {
-    public:
-        static SkeletonBatch* getInstance ();
-        
-        static void destroyInstance ();
-        
-        void update (float delta);
-        
-        void addCommand (cocos2d::Renderer* renderer, float globalOrder, GLuint textureID, cocos2d::GLProgramState* glProgramState,
-                         cocos2d::BlendFunc blendType, const cocos2d::TrianglesCommand:: Triangles& triangles, const cocos2d::Mat4& mv, uint32_t flags);
-        
-    protected:
-        SkeletonBatch ();
-        virtual ~SkeletonBatch ();
-        
-        class Command {
-        public:
-            Command ();
-            virtual ~Command ();
-            
-            cocos2d::TrianglesCommand* trianglesCommand;
-            cocos2d::TrianglesCommand::Triangles* triangles;
-            Command* next;
-        };
-        
-        Command* _firstCommand;
-        Command* _command;
-    };
-    
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+struct spAtlasAttachmentLoader;
+
+typedef struct spSkeletonBinary {
+	float scale;
+	spAttachmentLoader* attachmentLoader;
+	const char* const error;
+} spSkeletonBinary;
+
+spSkeletonBinary* spSkeletonBinary_createWithLoader (spAttachmentLoader* attachmentLoader);
+spSkeletonBinary* spSkeletonBinary_create (spAtlas* atlas);
+void spSkeletonBinary_dispose (spSkeletonBinary* self);
+
+spSkeletonData* spSkeletonBinary_readSkeletonData (spSkeletonBinary* self, const unsigned char* binary, const int length);
+spSkeletonData* spSkeletonBinary_readSkeletonDataFile (spSkeletonBinary* self, const char* path);
+
+#ifdef SPINE_SHORT_NAMES
+typedef spSkeletonBinary SkeletonBinary;
+#define SkeletonBinary_createWithLoader(...) spSkeletonBinary_createWithLoader(__VA_ARGS__)
+#define SkeletonBinary_create(...) spSkeletonBinary_create(__VA_ARGS__)
+#define SkeletonBinary_dispose(...) spSkeletonBinary_dispose(__VA_ARGS__)
+#define SkeletonBinary_readSkeletonData(...) spSkeletonBinary_readSkeletonData(__VA_ARGS__)
+#define SkeletonBinary_readSkeletonDataFile(...) spSkeletonBinary_readSkeletonDataFile(__VA_ARGS__)
+#endif
+
+#ifdef __cplusplus
 }
+#endif
 
-#endif // SPINE_SKELETONBATCH_H_
+#endif /* SPINE_SKELETONBINARY_H_ */

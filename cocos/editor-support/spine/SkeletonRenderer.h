@@ -108,10 +108,12 @@ CC_CONSTRUCTOR_ACCESS:
 	virtual ~SkeletonRenderer ();
 
 	void initWithData (spSkeletonData* skeletonData, bool ownsSkeletonData = false);
-	void initWithFile (const std::string& skeletonDataFile, spAtlas* atlas, float scale = 1);
-	void initWithFile (const std::string& skeletonDataFile, const std::string& atlasFile, float scale = 1);
+	void initWithJsonFile (const std::string& skeletonDataFile, spAtlas* atlas, float scale = 1);
+	void initWithJsonFile (const std::string& skeletonDataFile, const std::string& atlasFile, float scale = 1);
+    void initWithBinaryFile (const std::string& skeletonDataFile, spAtlas* atlas, float scale = 1);
+    void initWithBinaryFile (const std::string& skeletonDataFile, const std::string& atlasFile, float scale = 1);
 
-	void initialize ();
+	virtual void initialize ();
 
 protected:
 	void setSkeletonData (spSkeletonData* skeletonData, bool ownsSkeletonData);
