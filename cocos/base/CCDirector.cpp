@@ -93,6 +93,7 @@ const char *Director::EVENT_AFTER_VISIT = "director_after_visit";
 const char *Director::EVENT_BEFORE_UPDATE = "director_before_update";
 const char *Director::EVENT_AFTER_UPDATE = "director_after_update";
 const char *Director::EVENT_RESET = "director_reset";
+const char *Director::EVENT_BEFORE_DRAW = "director_before_draw";
 
 Director* Director::getInstance()
 {
@@ -163,6 +164,8 @@ bool Director::init(void)
     _eventDispatcher = new (std::nothrow) EventDispatcher();
     _eventAfterDraw = new (std::nothrow) EventCustom(EVENT_AFTER_DRAW);
     _eventAfterDraw->setUserData(this);
+    _eventBeforeDraw = new (std::nothrow) EventCustom(EVENT_BEFORE_DRAW);
+    _eventBeforeDraw->setUserData(this);
     _eventAfterVisit = new (std::nothrow) EventCustom(EVENT_AFTER_VISIT);
     _eventAfterVisit->setUserData(this);
     _eventBeforeUpdate = new (std::nothrow) EventCustom(EVENT_BEFORE_UPDATE);
@@ -199,6 +202,7 @@ Director::~Director(void)
     delete _eventBeforeUpdate;
     delete _eventAfterUpdate;
     delete _eventAfterDraw;
+    delete _eventBeforeDraw;
     delete _eventAfterVisit;
     delete _eventProjectionChanged;
     delete _eventResetDirector;
@@ -284,6 +288,9 @@ void Director::drawScene()
 
     _renderer->clear();
     experimental::FrameBuffer::clearAllFBOs();
+    
+    _eventDispatcher->dispatchEvent(_eventBeforeDraw);
+    
     /* to avoid flickr, nextScene MUST be here: after tick and before draw.
      * FIXME: Which bug is this one. It seems that it can't be reproduced with v0.9
      */

@@ -109,6 +109,8 @@ public:
     static const char* EVENT_AFTER_VISIT;
     /** Director will trigger an event after a scene is drawn, the data is sent to GPU. */
     static const char* EVENT_AFTER_DRAW;
+    /** Director will trigger an event before a scene is drawn, right after clear. */
+    static const char* EVENT_BEFORE_DRAW;
 
     /**
      * @brief Possible OpenGL projections used by director
@@ -549,7 +551,7 @@ protected:
      @since v3.0
      */
     EventDispatcher* _eventDispatcher;
-    EventCustom *_eventProjectionChanged, *_eventAfterDraw, *_eventAfterVisit, *_eventBeforeUpdate, *_eventAfterUpdate, *_eventResetDirector;
+    EventCustom *_eventProjectionChanged, *_eventAfterDraw, *_eventBeforeDraw, *_eventAfterVisit, *_eventBeforeUpdate, *_eventAfterUpdate, *_eventResetDirector;
         
     /* delta time since last tick to main loop */
 	float _deltaTime;
