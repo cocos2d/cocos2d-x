@@ -10,7 +10,7 @@ uniform vec2 resolution;
 void main(void)
 {
    float time = CC_Time[1];
-	 float x = gl_FragCoord.x - (center.x - resolution.x / 2.0);
+    float x = gl_FragCoord.x - (center.x - resolution.x / 2.0);
    float y = gl_FragCoord.y - (center.y - resolution.y / 2.0);
    float mov0 = x+y+cos(sin(time)*2.)*100.+sin(x/100.)*1000.;
    float mov1 = y / resolution.y / 0.2 + time;
