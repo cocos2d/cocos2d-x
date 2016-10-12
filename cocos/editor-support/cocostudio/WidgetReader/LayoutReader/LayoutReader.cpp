@@ -140,7 +140,7 @@ namespace cocostudio
                 
                 stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray(cocoLoader);
                 if (backGroundChildren) {
-                    std::string resType = backGroundChildren[2].GetValue(cocoLoader);;
+                    std::string resType = backGroundChildren[2].GetValue(cocoLoader);
                     
                     Widget::TextureResType imageFileNameType = (Widget::TextureResType)valueToInt(resType);
                     

@@ -1,6 +1,6 @@
  /****************************************************************************
  Copyright (c) 2013      Edward Zhou
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -32,8 +32,8 @@
 using namespace spine;
 USING_NS_CC;
 
-LuaSkeletonAnimation::LuaSkeletonAnimation (const char* skeletonDataFile, const char* atlasFile, float scale)
-: spine::SkeletonAnimation(skeletonDataFile, atlasFile, scale)
+LuaSkeletonAnimation::LuaSkeletonAnimation ()
+: spine::SkeletonAnimation()
 {
 	
 }
@@ -46,7 +46,9 @@ LuaSkeletonAnimation::~LuaSkeletonAnimation()
 
 LuaSkeletonAnimation* LuaSkeletonAnimation::createWithFile (const char* skeletonDataFile, const char* atlasFile, float scale)
 {
-	LuaSkeletonAnimation* node = new (std::nothrow) LuaSkeletonAnimation(skeletonDataFile, atlasFile, scale);
+	LuaSkeletonAnimation* node = new (std::nothrow) LuaSkeletonAnimation();
+    spAtlas* atlas = spAtlas_createFromFile(atlasFile, nullptr);
+    node->initWithJsonFile(skeletonDataFile, atlas, scale);
 	node->autorelease();
 	return node;
 }

@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -698,7 +698,7 @@ void TextFieldTTF::setPasswordTextStyle(const std::string &text)
     }
 }
 
-std::string TextFieldTTF::getPasswordTextStyle()const
+const std::string& TextFieldTTF::getPasswordTextStyle() const
 {
     return _passwordStyleText;
 }

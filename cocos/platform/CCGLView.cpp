@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2015 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -108,6 +108,8 @@ GLView::GLView()
 , _scaleY(1.0f)
 , _resolutionPolicy(ResolutionPolicy::UNKNOWN)
 , _vrImpl(nullptr)
+, _designResolutionSize(0,0)
+, _screenSize(0,0)
 {
 }
 
@@ -202,6 +204,11 @@ const Size& GLView::getFrameSize() const
 void GLView::setFrameSize(float width, float height)
 {
     _screenSize = Size(width, height);
+
+    // Github issue #16003 and #16485
+    // only update the designResolution if it wasn't previously set
+    if (_designResolutionSize.equals(Size::ZERO))
+        _designResolutionSize = _screenSize;
 }
 
 Rect GLView::getVisibleRect() const

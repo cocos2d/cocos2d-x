@@ -3,7 +3,7 @@ Copyright (c) 2011      Максим Аксенов
 Copyright (c) 2009-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -161,7 +161,13 @@ bool TMXMapInfo::initWithTMXFile(const std::string& tmxFile)
 }
 
 TMXMapInfo::TMXMapInfo()
-: _mapSize(Size::ZERO)    
+: _orientation(TMXOrientationOrtho)
+, _staggerAxis(TMXStaggerAxis_Y)
+, _staggerIndex(TMXStaggerIndex_Even)
+, _hexSideLength(0)
+, _parentElement(0)
+, _parentGID(0)
+, _mapSize(Size::ZERO)
 , _tileSize(Size::ZERO)
 , _layerAttribs(0)
 , _storingCharacters(false)
@@ -780,7 +786,7 @@ void TMXMapInfo::endElement(void *ctx, const char *name)
     }
 }
 
-void TMXMapInfo::textHandler(void *ctx, const char *ch, int len)
+void TMXMapInfo::textHandler(void *ctx, const char *ch, size_t len)
 {
     CC_UNUSED_PARAM(ctx);
     TMXMapInfo *tmxMapInfo = this;

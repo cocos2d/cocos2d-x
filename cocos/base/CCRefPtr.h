@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2014      PlayFirst Inc.
- Copyright (c) 2014-2015 Chukong Technologies Inc.
+ Copyright (c) 2014-2016 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -86,42 +86,42 @@ template <typename T> class RefPtr
 {
 public:
     
-    inline RefPtr()
+    RefPtr()
         : _ptr(nullptr)
     {
         
     }
     
-    inline RefPtr(RefPtr<T> && other)
+    RefPtr(RefPtr<T> && other)
     {
         _ptr = other._ptr;
         other._ptr = nullptr;
     }
 
-    inline RefPtr(T * ptr)
+    RefPtr(T * ptr)
         : _ptr(ptr)
     {
         CC_REF_PTR_SAFE_RETAIN(_ptr);
     }
     
-    inline RefPtr(std::nullptr_t ptr)
+    RefPtr(std::nullptr_t ptr)
         : _ptr(nullptr)
     {
         
     }
     
-    inline RefPtr(const RefPtr<T> & other)
+    RefPtr(const RefPtr<T> & other)
         : _ptr(other._ptr)
     {
         CC_REF_PTR_SAFE_RETAIN(_ptr);
     }
     
-    inline ~RefPtr()
+    ~RefPtr()
     {
         CC_REF_PTR_SAFE_RELEASE_NULL(_ptr);
     }
     
-    inline RefPtr<T> & operator = (const RefPtr<T> & other)
+    RefPtr<T> & operator = (const RefPtr<T> & other)
     {
         if (other._ptr != _ptr)
         {
@@ -133,7 +133,7 @@ public:
         return *this;
     }
     
-    inline RefPtr<T> & operator = (RefPtr<T> && other)
+    RefPtr<T> & operator = (RefPtr<T> && other)
     {
         if (&other != this)
         {
@@ -145,7 +145,7 @@ public:
         return *this;
     }
     
-    inline RefPtr<T> & operator = (T * other)
+    RefPtr<T> & operator = (T * other)
     {
         if (other != _ptr)
         {
@@ -157,83 +157,83 @@ public:
         return *this;
     }
     
-    inline RefPtr<T> & operator = (std::nullptr_t other)
+    RefPtr<T> & operator = (std::nullptr_t other)
     {
         CC_REF_PTR_SAFE_RELEASE_NULL(_ptr);
         return *this;
     }
     
-    inline operator T * () const { return _ptr; }
+    operator T * () const { return _ptr; }
     
-    inline T & operator * () const
+    T & operator * () const
     {
         CCASSERT(_ptr, "Attempt to dereference a null pointer!");
         return *_ptr;
     }
     
-    inline T * operator->() const
+    T * operator->() const
     {
         CCASSERT(_ptr, "Attempt to dereference a null pointer!");
         return _ptr;
     }
     
-    inline T * get() const { return _ptr; }
+    T * get() const { return _ptr; }
     
     
-    inline bool operator == (const RefPtr<T> & other) const { return _ptr == other._ptr; }
+    bool operator == (const RefPtr<T> & other) const { return _ptr == other._ptr; }
     
-    inline bool operator == (const T * other) const { return _ptr == other; }
+    bool operator == (const T * other) const { return _ptr == other; }
     
-    inline bool operator == (typename std::remove_const<T>::type * other) const { return _ptr == other; }
+    bool operator == (typename std::remove_const<T>::type * other) const { return _ptr == other; }
     
-    inline bool operator == (const std::nullptr_t other) const { return _ptr == other; }
-    
-    
-    inline bool operator != (const RefPtr<T> & other) const { return _ptr != other._ptr; }
-    
-    inline bool operator != (const T * other) const { return _ptr != other; }
-    
-    inline bool operator != (typename std::remove_const<T>::type * other) const { return _ptr != other; }
-    
-    inline bool operator != (const std::nullptr_t other) const { return _ptr != other; }
+    bool operator == (const std::nullptr_t other) const { return _ptr == other; }
     
     
-    inline bool operator > (const RefPtr<T> & other) const { return _ptr > other._ptr; }
+    bool operator != (const RefPtr<T> & other) const { return _ptr != other._ptr; }
     
-    inline bool operator > (const T * other) const { return _ptr > other; }
+    bool operator != (const T * other) const { return _ptr != other; }
     
-    inline bool operator > (typename std::remove_const<T>::type * other) const { return _ptr > other; }
+    bool operator != (typename std::remove_const<T>::type * other) const { return _ptr != other; }
+    
+    bool operator != (const std::nullptr_t other) const { return _ptr != other; }
     
     
-    inline bool operator < (const RefPtr<T> & other) const { return _ptr < other._ptr; }
+    bool operator > (const RefPtr<T> & other) const { return _ptr > other._ptr; }
     
-    inline bool operator < (const T * other) const { return _ptr < other; }
+    bool operator > (const T * other) const { return _ptr > other; }
     
-    inline bool operator < (typename std::remove_const<T>::type * other) const { return _ptr < other; }
+    bool operator > (typename std::remove_const<T>::type * other) const { return _ptr > other; }
     
-        
-    inline bool operator >= (const RefPtr<T> & other) const { return _ptr >= other._ptr; }
     
-    inline bool operator >= (const T * other) const { return _ptr >= other; }
+    bool operator < (const RefPtr<T> & other) const { return _ptr < other._ptr; }
     
-    inline bool operator >= (typename std::remove_const<T>::type * other) const { return _ptr >= other; }
+    bool operator < (const T * other) const { return _ptr < other; }
+    
+    bool operator < (typename std::remove_const<T>::type * other) const { return _ptr < other; }
     
         
-    inline bool operator <= (const RefPtr<T> & other) const { return _ptr <= other._ptr; }
+    bool operator >= (const RefPtr<T> & other) const { return _ptr >= other._ptr; }
     
-    inline bool operator <= (const T * other) const { return _ptr <= other; }
+    bool operator >= (const T * other) const { return _ptr >= other; }
     
-    inline bool operator <= (typename std::remove_const<T>::type * other) const { return _ptr <= other; }
+    bool operator >= (typename std::remove_const<T>::type * other) const { return _ptr >= other; }
     
         
-    inline operator bool() const { return _ptr != nullptr; }
+    bool operator <= (const RefPtr<T> & other) const { return _ptr <= other._ptr; }
+    
+    bool operator <= (const T * other) const { return _ptr <= other; }
+    
+    bool operator <= (typename std::remove_const<T>::type * other) const { return _ptr <= other; }
+    
         
-    inline void reset()
+    operator bool() const { return _ptr != nullptr; }
+        
+    void reset()
     {
         CC_REF_PTR_SAFE_RELEASE_NULL(_ptr);
     }
         
-    inline void swap(RefPtr<T> & other)
+    void swap(RefPtr<T> & other)
     {
         if (&other != this)
         {
@@ -257,7 +257,7 @@ public:
      *      image = new cocos2d::Image();
      *      image->release();               // Required because new'd object already has a reference count of '1'.
      */
-    inline void weakAssign(const RefPtr<T> & other)
+    void weakAssign(const RefPtr<T> & other)
     {
         CC_REF_PTR_SAFE_RELEASE(_ptr);
         _ptr = other._ptr;

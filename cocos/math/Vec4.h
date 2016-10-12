@@ -343,7 +343,7 @@ public:
      * @param v The vector to add.
      * @return The vector sum.
      */
-    inline const Vec4 operator+(const Vec4& v) const;
+    inline Vec4 operator+(const Vec4& v) const;
 
     /**
      * Adds the given vector to this vector.
@@ -361,7 +361,7 @@ public:
      * @param v The vector to add.
      * @return The vector sum.
      */
-    inline const Vec4 operator-(const Vec4& v) const;
+    inline Vec4 operator-(const Vec4& v) const;
 
     /**
      * Subtracts the given vector from this vector.
@@ -378,7 +378,7 @@ public:
      * 
      * @return The negation of this vector.
      */
-    inline const Vec4 operator-() const;
+    inline Vec4 operator-() const;
 
     /**
      * Calculates the scalar product of this vector with the given value.
@@ -388,7 +388,7 @@ public:
      * @param s The value to scale by.
      * @return The scaled vector.
      */
-    inline const Vec4 operator*(float s) const;
+    inline Vec4 operator*(float s) const;
 
     /**
      * Scales this vector by the given value.
@@ -406,7 +406,7 @@ public:
      * @param s the constant to divide this vector with
      * @return a smaller vector
      */
-    inline const Vec4 operator/(float s) const;
+    inline Vec4 operator/(float s) const;
 
     /**
      * Determines if this vector is less than the given vector.
@@ -456,7 +456,7 @@ public:
  * @param v The vector to scale.
  * @return The scaled vector.
  */
-inline const Vec4 operator*(float x, const Vec4& v);
+inline Vec4 operator*(float x, const Vec4& v);
 
 NS_CC_MATH_END
 /**

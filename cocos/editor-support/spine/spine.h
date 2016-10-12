@@ -48,6 +48,7 @@
 #include <spine/Skeleton.h>
 #include <spine/SkeletonBounds.h>
 #include <spine/SkeletonData.h>
+#include <spine/SkeletonBinary.h>
 #include <spine/SkeletonJson.h>
 #include <spine/Skin.h>
 #include <spine/Slot.h>

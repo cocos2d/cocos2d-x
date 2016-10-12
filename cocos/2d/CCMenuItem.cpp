@@ -2,7 +2,7 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2015 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -609,20 +609,7 @@ void MenuItemSprite::selected()
 void MenuItemSprite::unselected()
 {
     MenuItem::unselected();
-    if (_normalImage)
-    {
-        _normalImage->setVisible(true);
-
-        if (_selectedImage)
-        {
-            _selectedImage->setVisible(false);
-        }
-
-        if (_disabledImage)
-        {
-            _disabledImage->setVisible(false);
-        }
-    }
+    this->updateImagesVisibility();
 }
 
 void MenuItemSprite::setEnabled(bool bEnabled)

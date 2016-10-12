@@ -205,6 +205,12 @@
 -- @return mat4_table#mat4_table ret (return value: mat4_table)
         
 --------------------------------
+-- returns whether or not the Director is in a valid state
+-- @function [parent=#Director] isValid 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 --  The main loop is triggered again.<br>
 -- Call this function only if [stopAnimation] was called earlier.<br>
 -- warning Don't call this function to start the main loop. To run the main loop call runWithScene.

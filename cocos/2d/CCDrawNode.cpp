@@ -1,6 +1,6 @@
 /* Copyright (c) 2012 Scott Lembcke and Howling Moon Software
  * Copyright (c) 2012 cocos2d-x.org
- * Copyright (c) 2013-2014 Chukong Technologies Inc.
+ * Copyright (c) 2013-2016 Chukong Technologies Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -74,11 +74,6 @@ static inline Vec2 v2fneg(const Vec2 &p0)
 static inline float v2fdot(const Vec2 &p0, const Vec2 &p1)
 {
     return  p0.x * p1.x + p0.y * p1.y;
-}
-
-static inline Vec2 v2fforangle(float _a_)
-{
-    return v2f(cosf(_a_), sinf(_a_));
 }
 
 static inline Vec2 v2fnormalize(const Vec2 &p)

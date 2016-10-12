@@ -69,7 +69,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import <QuartzCore/QuartzCore.h>
 
 #import "base/CCDirector.h"
-#import "deprecated/CCSet.h"
 #import "base/CCTouch.h"
 #import "base/CCIMEDispatcher.h"
 #import "platform/ios/CCGLViewImpl-ios.h"
@@ -128,7 +127,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
     return [self initWithFrame:frame pixelFormat:format depthFormat:0 preserveBackbuffer:NO sharegroup:nil multiSampling:NO numberOfSamples:0];
 }
 
-- (id) initWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained sharegroup:(EAGLSharegroup*)sharegroup multiSampling:(BOOL)sampling numberOfSamples:(unsigned int)nSamples;
+- (id) initWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained sharegroup:(EAGLSharegroup*)sharegroup multiSampling:(BOOL)sampling numberOfSamples:(unsigned int)nSamples
 {
     if((self = [super initWithFrame:frame]))
     {
@@ -179,7 +178,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
     return self;
 }
 
-- (void)didMoveToWindow;
+- (void)didMoveToWindow
 {
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(onUIKeyboardNotification:)
@@ -253,6 +252,11 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 - (void) layoutSubviews
 {
+    if (!cocos2d::Director::getInstance()->isValid())
+    {
+        return;
+    }
+    
     [renderer_ resizeFromLayer:(CAEAGLLayer*)self.layer];
     size_ = [renderer_ backingSize];
 
@@ -408,8 +412,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
     int i = 0;
     for (UITouch *touch in touches) {
         ids[i] = touch;
-        xs[i] = [touch locationInView: [touch view]].x * self.contentScaleFactor;;
-        ys[i] = [touch locationInView: [touch view]].y * self.contentScaleFactor;;
+        xs[i] = [touch locationInView: [touch view]].x * self.contentScaleFactor;
+        ys[i] = [touch locationInView: [touch view]].y * self.contentScaleFactor;
         ++i;
     }
 
@@ -428,8 +432,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
     int i = 0;
     for (UITouch *touch in touches) {
         ids[i] = touch;
-        xs[i] = [touch locationInView: [touch view]].x * self.contentScaleFactor;;
-        ys[i] = [touch locationInView: [touch view]].y * self.contentScaleFactor;;
+        xs[i] = [touch locationInView: [touch view]].x * self.contentScaleFactor;
+        ys[i] = [touch locationInView: [touch view]].y * self.contentScaleFactor;
 #if defined(__IPHONE_9_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_9_0)
         // running on iOS 9.0 or higher version
         if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 9.0f) {
@@ -453,8 +457,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
     int i = 0;
     for (UITouch *touch in touches) {
         ids[i] = touch;
-        xs[i] = [touch locationInView: [touch view]].x * self.contentScaleFactor;;
-        ys[i] = [touch locationInView: [touch view]].y * self.contentScaleFactor;;
+        xs[i] = [touch locationInView: [touch view]].x * self.contentScaleFactor;
+        ys[i] = [touch locationInView: [touch view]].y * self.contentScaleFactor;
         ++i;
     }
 
@@ -471,8 +475,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
     int i = 0;
     for (UITouch *touch in touches) {
         ids[i] = touch;
-        xs[i] = [touch locationInView: [touch view]].x * self.contentScaleFactor;;
-        ys[i] = [touch locationInView: [touch view]].y * self.contentScaleFactor;;
+        xs[i] = [touch locationInView: [touch view]].x * self.contentScaleFactor;
+        ys[i] = [touch locationInView: [touch view]].y * self.contentScaleFactor;
         ++i;
     }
 
@@ -555,23 +559,23 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 /* Text may have a selection, either zero-length (a caret) or ranged.  Editing operations are
  * always performed on the text from this selection.  nil corresponds to no selection. */
-- (void)setSelectedTextRange:(UITextRange *)aSelectedTextRange;
+- (void)setSelectedTextRange:(UITextRange *)aSelectedTextRange
 {
     CCLOG("UITextRange:setSelectedTextRange");
 }
-- (UITextRange *)selectedTextRange;
+- (UITextRange *)selectedTextRange
 {
     return [[[UITextRange alloc] init] autorelease];
 }
 
 #pragma mark UITextInput - Replacing and Returning Text
 
-- (NSString *)textInRange:(UITextRange *)range;
+- (NSString *)textInRange:(UITextRange *)range
 {
     CCLOG("textInRange");
     return @"";
 }
-- (void)replaceRange:(UITextRange *)range withText:(NSString *)theText;
+- (void)replaceRange:(UITextRange *)range withText:(NSString *)theText
 {
     CCLOG("replaceRange");
 }
@@ -588,27 +592,27 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
  * Setting marked text either replaces the existing marked text or, if none is present,
  * inserts it from the current selection. */ 
 
-- (void)setMarkedTextRange:(UITextRange *)markedTextRange;
+- (void)setMarkedTextRange:(UITextRange *)markedTextRange
 {
     CCLOG("setMarkedTextRange");
 }
 
-- (UITextRange *)markedTextRange;
+- (UITextRange *)markedTextRange
 {
     CCLOG("markedTextRange");
     return nil; // Nil if no marked text.
 }
-- (void)setMarkedTextStyle:(NSDictionary *)markedTextStyle;
+- (void)setMarkedTextStyle:(NSDictionary *)markedTextStyle
 {
     CCLOG("setMarkedTextStyle");
     
 }
-- (NSDictionary *)markedTextStyle;
+- (NSDictionary *)markedTextStyle
 {
     CCLOG("markedTextStyle");
     return nil;
 }
-- (void)setMarkedText:(NSString *)markedText selectedRange:(NSRange)selectedRange;
+- (void)setMarkedText:(NSString *)markedText selectedRange:(NSRange)selectedRange
 {
     CCLOG("setMarkedText");
     if (markedText == markedText_) {
@@ -620,7 +624,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
     markedText_ = markedText;
     [markedText_ retain];
 }
-- (void)unmarkText;
+- (void)unmarkText
 {
     CCLOG("unmarkText");
     if (nil == markedText_)
@@ -635,40 +639,40 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 #pragma mark Methods for creating ranges and positions.
 
-- (UITextRange *)textRangeFromPosition:(UITextPosition *)fromPosition toPosition:(UITextPosition *)toPosition;
+- (UITextRange *)textRangeFromPosition:(UITextPosition *)fromPosition toPosition:(UITextPosition *)toPosition
 {
     CCLOG("textRangeFromPosition");
     return nil;
 }
-- (UITextPosition *)positionFromPosition:(UITextPosition *)position offset:(NSInteger)offset;
+- (UITextPosition *)positionFromPosition:(UITextPosition *)position offset:(NSInteger)offset
 {
     CCLOG("positionFromPosition");
     return nil;
 }
-- (UITextPosition *)positionFromPosition:(UITextPosition *)position inDirection:(UITextLayoutDirection)direction offset:(NSInteger)offset;
+- (UITextPosition *)positionFromPosition:(UITextPosition *)position inDirection:(UITextLayoutDirection)direction offset:(NSInteger)offset
 {
     CCLOG("positionFromPosition");
     return nil;
 }
 
 /* Simple evaluation of positions */
-- (NSComparisonResult)comparePosition:(UITextPosition *)position toPosition:(UITextPosition *)other;
+- (NSComparisonResult)comparePosition:(UITextPosition *)position toPosition:(UITextPosition *)other
 {
     CCLOG("comparePosition");
     return (NSComparisonResult)0;
 }
-- (NSInteger)offsetFromPosition:(UITextPosition *)from toPosition:(UITextPosition *)toPosition;
+- (NSInteger)offsetFromPosition:(UITextPosition *)from toPosition:(UITextPosition *)toPosition
 {
     CCLOG("offsetFromPosition");
     return 0;
 }
 
-- (UITextPosition *)positionWithinRange:(UITextRange *)range farthestInDirection:(UITextLayoutDirection)direction;
+- (UITextPosition *)positionWithinRange:(UITextRange *)range farthestInDirection:(UITextLayoutDirection)direction
 {
     CCLOG("positionWithinRange");
     return nil;
 }
-- (UITextRange *)characterRangeByExtendingPosition:(UITextPosition *)position inDirection:(UITextLayoutDirection)direction;
+- (UITextRange *)characterRangeByExtendingPosition:(UITextPosition *)position inDirection:(UITextLayoutDirection)direction
 {
     CCLOG("characterRangeByExtendingPosition");
     return nil;
@@ -676,12 +680,12 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 #pragma mark Writing direction
 
-- (UITextWritingDirection)baseWritingDirectionForPosition:(UITextPosition *)position inDirection:(UITextStorageDirection)direction;
+- (UITextWritingDirection)baseWritingDirectionForPosition:(UITextPosition *)position inDirection:(UITextStorageDirection)direction
 {
     CCLOG("baseWritingDirectionForPosition");
     return UITextWritingDirectionNatural;
 }
-- (void)setBaseWritingDirection:(UITextWritingDirection)writingDirection forRange:(UITextRange *)range;
+- (void)setBaseWritingDirection:(UITextWritingDirection)writingDirection forRange:(UITextRange *)range
 {
     CCLOG("setBaseWritingDirection");
 }
@@ -689,12 +693,12 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #pragma mark Geometry
 
 /* Geometry used to provide, for example, a correction rect. */
-- (CGRect)firstRectForRange:(UITextRange *)range;
+- (CGRect)firstRectForRange:(UITextRange *)range
 {
     CCLOG("firstRectForRange");
     return CGRectNull;
 }
-- (CGRect)caretRectForPosition:(UITextPosition *)position;
+- (CGRect)caretRectForPosition:(UITextPosition *)position
 {
     CCLOG("caretRectForPosition");
     return caretRect_;
@@ -703,17 +707,17 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #pragma mark Hit testing
 
 /* JS - Find the closest position to a given point */
-- (UITextPosition *)closestPositionToPoint:(CGPoint)point;
+- (UITextPosition *)closestPositionToPoint:(CGPoint)point
 {
     CCLOG("closestPositionToPoint");
     return nil;
 }
-- (UITextPosition *)closestPositionToPoint:(CGPoint)point withinRange:(UITextRange *)range;
+- (UITextPosition *)closestPositionToPoint:(CGPoint)point withinRange:(UITextRange *)range
 {
     CCLOG("closestPositionToPoint");
     return nil;
 }
-- (UITextRange *)characterRangeAtPoint:(CGPoint)point;
+- (UITextRange *)characterRangeAtPoint:(CGPoint)point
 {
     CCLOG("characterRangeAtPoint");
     return nil;
@@ -727,7 +731,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 #pragma mark - UIKeyboard notification
 
-- (void)onUIKeyboardNotification:(NSNotification *)notif;
+- (void)onUIKeyboardNotification:(NSNotification *)notif
 {
     NSString * type = notif.name;
     

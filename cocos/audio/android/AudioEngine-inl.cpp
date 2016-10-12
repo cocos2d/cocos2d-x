@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014-2015 Chukong Technologies Inc.
+ Copyright (c) 2014-2016 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -83,7 +83,7 @@ static CallerThreadUtils __callerThreadUtils;
 
 static int fdGetter(const std::string& url, off_t* start, off_t* length)
 {
-    int fd = 0;
+    int fd = -1;
     if (cocos2d::FileUtilsAndroid::getObbFile() != nullptr)
     {
         fd = getObbAssetFileDescriptorJNI(url.c_str(), start, length);
@@ -219,17 +219,21 @@ int AudioEngineImpl::play2d(const std::string &filePath ,bool loop ,float volume
 
                 if (state != IAudioPlayer::State::OVER && state != IAudioPlayer::State::STOPPED)
                 {
-                    ALOGV("Ignore state: %d", state);
+                    ALOGV("Ignore state: %d", static_cast<int>(state));
                     return;
                 }
 
                 int id = player->getId();
 
-                ALOGV("Removing player id=%d", id);
+                ALOGV("Removing player id=%d, state:%d", id, (int)state);
+
                 auto iter = _callbackMap.find(id);
                 if (iter != _callbackMap.end())
                 {
-                    iter->second(id, *AudioEngine::_audioIDInfoMap[id].filePath);
+                    if (state == IAudioPlayer::State::OVER)
+                    {
+                        iter->second(id, *AudioEngine::_audioIDInfoMap[id].filePath);
+                    }
                     _callbackMap.erase(iter);
                 }
                 AudioEngine::remove(id);

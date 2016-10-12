@@ -350,7 +350,7 @@ public:
      * @param v The vector to add.
      * @return The vector sum.
      */
-    inline const Vec2 operator+(const Vec2& v) const;
+    inline Vec2 operator+(const Vec2& v) const;
 
     /**
      * Adds the given vector to this vector.
@@ -368,7 +368,7 @@ public:
      * @param v The vector to add.
      * @return The vector sum.
      */
-    inline const Vec2 operator-(const Vec2& v) const;
+    inline Vec2 operator-(const Vec2& v) const;
 
     /**
      * Subtracts the given vector from this vector.
@@ -385,7 +385,7 @@ public:
      * 
      * @return The negation of this vector.
      */
-    inline const Vec2 operator-() const;
+    inline Vec2 operator-() const;
 
     /**
      * Calculates the scalar product of this vector with the given value.
@@ -395,7 +395,7 @@ public:
      * @param s The value to scale by.
      * @return The scaled vector.
      */
-    inline const Vec2 operator*(float s) const;
+    inline Vec2 operator*(float s) const;
 
     /**
      * Scales this vector by the given value.
@@ -413,7 +413,7 @@ public:
      * @param s the constant to divide this vector with
      * @return a smaller vector
      */
-    inline const Vec2 operator/(float s) const;
+    inline Vec2 operator/(float s) const;
 
     /**
      * Determines if this vector is less than the given vector.
@@ -478,7 +478,7 @@ public:
      */
     inline float getLength() const {
         return sqrtf(x*x + y*y);
-    };
+    }
 
     /** Calculates the square length of a Vec2 (not calling sqrt() )
      @return float
@@ -488,7 +488,7 @@ public:
      */
     inline float getLengthSq() const {
         return dot(*this); //x*x + y*y;
-    };
+    }
 
     /** Calculates the square distance between two points (not calling sqrt() )
      @return float
@@ -498,7 +498,7 @@ public:
      */
     inline float getDistanceSq(const Vec2& other) const {
         return (*this - other).getLengthSq();
-    };
+    }
 
     /** Calculates the distance between two points
      @return float
@@ -508,7 +508,7 @@ public:
      */
     inline float getDistance(const Vec2& other) const {
         return (*this - other).getLength();
-    };
+    }
 
     /** @returns the angle in radians between this vector and the x axis
      @since v2.1.4
@@ -517,7 +517,7 @@ public:
      */
     inline float getAngle() const {
         return atan2f(y, x);
-    };
+    }
 
     /** @returns the angle in radians between two vector directions
      @since v2.1.4
@@ -534,7 +534,7 @@ public:
      */
     inline float cross(const Vec2& other) const {
         return x*other.y - y*other.x;
-    };
+    }
 
     /** Calculates perpendicular of v, rotated 90 degrees counter-clockwise -- cross(v, perp(v)) >= 0
      @return Vec2
@@ -544,7 +544,7 @@ public:
      */
     inline Vec2 getPerp() const {
         return Vec2(-y, x);
-    };
+    }
     
     /** Calculates midpoint between two points.
      @return Vec2
@@ -589,7 +589,7 @@ public:
      */
     inline Vec2 getRPerp() const {
         return Vec2(y, -x);
-    };
+    }
 
     /** Calculates the projection of this over other.
      @return Vec2
@@ -599,7 +599,7 @@ public:
      */
     inline Vec2 project(const Vec2& other) const {
         return other * (dot(other)/other.dot(other));
-    };
+    }
 
     /** Complex multiplication of two points ("rotates" two points).
      @return Vec2 vector with an angle of this.getAngle() + other.getAngle(),
@@ -610,7 +610,7 @@ public:
      */
     inline Vec2 rotate(const Vec2& other) const {
         return Vec2(x*other.x - y*other.y, x*other.y + y*other.x);
-    };
+    }
 
     /** Unrotates two points.
      @return Vec2 vector with an angle of this.getAngle() - other.getAngle(),
@@ -621,7 +621,7 @@ public:
      */
     inline Vec2 unrotate(const Vec2& other) const {
         return Vec2(x*other.x + y*other.y, y*other.x - x*other.y);
-    };
+    }
 
     /** Linear Interpolation between two points a and b
      @returns
@@ -634,7 +634,7 @@ public:
      */
     inline Vec2 lerp(const Vec2& other, float alpha) const {
         return *this * (1.f - alpha) + other * alpha;
-    };
+    }
 
     /** Rotates a point counter clockwise by the angle around a pivot
      @param pivot is the pivot, naturally
@@ -755,7 +755,7 @@ public:
  * @param v The vector to scale.
  * @return The scaled vector.
  */
-inline const Vec2 operator*(float x, const Vec2& v);
+inline Vec2 operator*(float x, const Vec2& v);
 
 typedef Vec2 Point;
 

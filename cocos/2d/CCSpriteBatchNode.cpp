@@ -3,7 +3,7 @@ Copyright (c) 2009-2010 Ricardo Quesada
 Copyright (c) 2009      Matt Oswald
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -397,6 +397,19 @@ void SpriteBatchNode::increaseAtlasCapacity()
         static_cast<int>(quantity));
 
     if (! _textureAtlas->resizeCapacity(quantity))
+    {
+        // serious problems
+        CCLOGWARN("cocos2d: WARNING: Not enough memory to resize the atlas");
+        CCASSERT(false, "Not enough memory to resize the atlas");
+    }
+}
+
+void SpriteBatchNode::reserveCapacity(ssize_t newCapacity)
+{
+    if (newCapacity <= _textureAtlas->getCapacity())
+        return;
+
+    if (! _textureAtlas->resizeCapacity(newCapacity))
     {
         // serious problems
         CCLOGWARN("cocos2d: WARNING: Not enough memory to resize the atlas");

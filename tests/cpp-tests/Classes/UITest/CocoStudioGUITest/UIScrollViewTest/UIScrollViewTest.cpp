@@ -190,7 +190,7 @@ bool UIScrollViewTest_Both::init()
 {
     if (UIScene::init())
     {
-        Size widgetSize = _widget->getContentSize();;
+        Size widgetSize = _widget->getContentSize();
         
         // Add a label in which the dragpanel events will be displayed
         _displayValueLabel = Text::create("Move by any direction","fonts/Marker Felt.ttf",32);

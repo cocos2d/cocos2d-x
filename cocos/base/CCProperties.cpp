@@ -30,6 +30,7 @@
 #include "math/Vec3.h"
 #include "math/Vec4.h"
 #include "math/Mat4.h"
+#include "math/Quaternion.h"
 #include "base/ccUTF8.h"
 #include "base/CCData.h"
 

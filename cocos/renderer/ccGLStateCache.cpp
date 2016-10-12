@@ -2,7 +2,7 @@
 Copyright (c) 2011      Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (C) 2013-2014 Chukong Technologies Inc.
+Copyright (C) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -150,6 +150,15 @@ void blendResetToCache(void)
 void bindTexture2D(GLuint textureId)
 {
     GL::bindTexture2DN(0, textureId);
+}
+
+void bindTexture2D(Texture2D* texture)
+{
+    GL::bindTexture2DN(0, texture->getName());
+    auto alphaTexID = texture->getAlphaTextureName();
+    if (alphaTexID > 0) {
+        GL::bindTexture2DN(1, alphaTexID);
+    }
 }
 
 void bindTexture2DN(GLuint textureUnit, GLuint textureId)

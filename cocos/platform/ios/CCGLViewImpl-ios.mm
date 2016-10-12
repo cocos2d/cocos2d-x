@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2010-2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -31,7 +31,6 @@
 #include "platform/ios/CCEAGLView-ios.h"
 #include "platform/ios/CCDirectorCaller-ios.h"
 #include "platform/ios/CCGLViewImpl-ios.h"
-#include "deprecated/CCSet.h"
 #include "base/CCTouch.h"
 
 NS_CC_BEGIN

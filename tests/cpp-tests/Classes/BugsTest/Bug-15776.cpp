@@ -11,6 +11,13 @@
 
 USING_NS_CC;
 
+
+//
+// IMPORTANT:
+// THIS TEST WILL CRASH ON TextureCache::addImage()
+// THIS IS NOT A BUG
+// It is expected to crash there
+//
 bool Bug15776Layer::init()
 {
     if (BugsTestBase::init())
@@ -23,4 +30,14 @@ bool Bug15776Layer::init()
     }
 
     return false;
+}
+
+std::string Bug15776Layer::title() const
+{
+    return "Testing Issue #15776";
+}
+
+std::string Bug15776Layer::subtitle() const
+{
+    return "It should crash on TextureCache::addImage()";
 }

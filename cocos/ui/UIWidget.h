@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -882,13 +882,13 @@ protected:
      *@since v3.4
      */
     
-    GLProgramState* getNormalGLProgramState()const;
+    GLProgramState* getNormalGLProgramState(Texture2D* texture)const;
     
     /**
      * Get a disabled state GLProgramState
      *@since v3.4
      */
-    GLProgramState* getGrayGLProgramState()const;
+    GLProgramState* getGrayGLProgramState(Texture2D* texture)const;
      
     
     //call back function called when size changed.

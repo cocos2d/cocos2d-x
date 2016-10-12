@@ -143,7 +143,7 @@ public:
 
     /** @deprecated Use getNumberOfRunningActionsInTarget() instead.
      */
-    CC_DEPRECATED_ATTRIBUTE inline ssize_t numberOfRunningActionsInTarget(Node *target) const { return getNumberOfRunningActionsInTarget(target); }
+    CC_DEPRECATED_ATTRIBUTE ssize_t numberOfRunningActionsInTarget(Node *target) const { return getNumberOfRunningActionsInTarget(target); }
 
     /** Pauses the target: all running actions and newly added actions will be paused.
      *

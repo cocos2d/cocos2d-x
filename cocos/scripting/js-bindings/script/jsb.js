@@ -21,7 +21,7 @@
  */
 
 //
-// Javascript Bindigns helper file
+// JavaScript Bindings helper file
 //
 
 // DO NOT ALTER THE ORDER

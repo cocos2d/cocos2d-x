@@ -40,6 +40,7 @@ Track::Track(const PcmData &pcmData)
         , _volume(1.0f)
         , _isVolumeDirty(true)
         , _isLoop(false)
+        , _isInitialized(false)
 {
     init(_pcmData.pcmBuffer->data(), _pcmData.numFrames, _pcmData.bitsPerSample / 8 * _pcmData.numChannels);
 }

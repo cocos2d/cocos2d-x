@@ -1,7 +1,7 @@
 /****************************************************************************
 Copyright (c) 2011      ForzeField Studios S.L.
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -80,33 +80,33 @@ public:
      * 
      * @return True if fast mode is enabled.
      */
-    inline bool isFastMode() const { return _fastMode; }
+    bool isFastMode() const { return _fastMode; }
     /** Sets fast mode or not.
      *
      * @param bFastMode True if enabled fast mode.
      */
-    inline void setFastMode(bool bFastMode) { _fastMode = bFastMode; }
+    void setFastMode(bool bFastMode) { _fastMode = bFastMode; }
     /** Get stroke.
      *
      * @return float stroke.
      */
-    inline float getStroke() const { return _stroke; }
+    float getStroke() const { return _stroke; }
     /** Set stroke.
      *
      * @param stroke The width of stroke.
      */
-    inline void setStroke(float stroke) { _stroke = stroke; }
+    void setStroke(float stroke) { _stroke = stroke; }
 
     /** Is the starting position initialized or not.
      *
      * @return True if the starting position is initialized.
      */
-    inline bool isStartingPositionInitialized() const { return _startingPositionInitialized; }
+    bool isStartingPositionInitialized() const { return _startingPositionInitialized; }
     /** Sets the starting position initialized or not.
      *
      * @param bStartingPositionInitialized True if initialized the starting position.
      */
-    inline void setStartingPositionInitialized(bool bStartingPositionInitialized)
+    void setStartingPositionInitialized(bool bStartingPositionInitialized)
     {
         _startingPositionInitialized = bStartingPositionInitialized; 
     }

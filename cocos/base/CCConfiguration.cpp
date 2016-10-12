@@ -1,7 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010      Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -144,7 +144,7 @@ void Configuration::gatherGPUInfo()
     _supportsNPOT = true;
 	_valueDict["gl.supports_NPOT"] = Value(_supportsNPOT);
 	
-    _supportsBGRA8888 = checkForGLExtension("GL_IMG_texture_format_BGRA888");
+    _supportsBGRA8888 = checkForGLExtension("GL_IMG_texture_format_BGRA8888");
 	_valueDict["gl.supports_BGRA8888"] = Value(_supportsBGRA8888);
 
     _supportsDiscardFramebuffer = checkForGLExtension("GL_EXT_discard_framebuffer");

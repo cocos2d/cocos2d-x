@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2013 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -292,7 +292,7 @@ public:
         _state = SAX_NONE;
     }
 
-    void textHandler(void *ctx, const char *ch, int len)
+    void textHandler(void *ctx, const char *ch, size_t len) override
     {
         CC_UNUSED_PARAM(ctx);
         if (_state == SAX_NONE)

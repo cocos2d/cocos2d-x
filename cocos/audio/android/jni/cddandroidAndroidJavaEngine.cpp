@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2015 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -27,10 +27,10 @@ THE SOFTWARE.
 
 #include "audio/android/jni/cddandroidAndroidJavaEngine.h"
 #include <stdlib.h>
-#include <cstdio>
 
 #include <sys/system_properties.h>
 #include "audio/android/ccdandroidUtils.h"
+#include "audio/android/utils/Utils.h"
 #include "audio/include/AudioEngine.h"
 #include "platform/android/jni/JniHelper.h"
 
@@ -43,26 +43,6 @@ static const std::string helperClassName = "org/cocos2dx/lib/Cocos2dxHelper";
 using namespace cocos2d;
 using namespace cocos2d::experimental;
 using namespace CocosDenshion::android;
-
-namespace
-{
-    int getSDKVersion()
-    {
-        int ret = -1;
-        std::string command = "getprop ro.build.version.sdk";
-        FILE* file = popen(command.c_str(), "r");
-        if (file)
-        {
-            char output[100];
-            if (std::fgets(output, sizeof(output), file) != nullptr)
-                ret = std::atoi(output);
-
-            pclose(file);
-        }
-        
-        return ret;
-    }
-}
 
 AndroidJavaEngine::AndroidJavaEngine()
     : _implementBaseOnAudioEngine(false)

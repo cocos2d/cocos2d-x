@@ -36,7 +36,6 @@
 #include <condition_variable>
 #include <vector>
 #include <atomic>
-#include <mutex>
 
 namespace cocos2d { namespace experimental {
 

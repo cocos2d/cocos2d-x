@@ -3,7 +3,7 @@ Copyright 2011 Jeff Lamarche
 Copyright 2012 Goffredo Marocchi
 Copyright 2012 Ricardo Quesada
 Copyright 2012 cocos2d-x.org
-Copyright 2013-2014 Chukong Technologies Inc.
+Copyright 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
  
@@ -487,7 +487,7 @@ void GLProgramState::updateUniformsAndAttributes()
         _vertexAttribsFlags = 0;
         for(auto& attributeValue : _attributes)
         {
-            attributeValue.second._vertexAttrib = _glprogram->getVertexAttrib(attributeValue.first);;
+            attributeValue.second._vertexAttrib = _glprogram->getVertexAttrib(attributeValue.first);
             if(attributeValue.second._enabled)
                 _vertexAttribsFlags |= 1 << attributeValue.second._vertexAttrib->index;
         }

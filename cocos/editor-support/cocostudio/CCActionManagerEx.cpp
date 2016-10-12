@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -166,10 +166,9 @@ ActionObject* ActionManagerEx::stopActionByName(const char* jsonName,const char*
     
 void ActionManagerEx::releaseActions()
 {
-    std::unordered_map<std::string, cocos2d::Vector<ActionObject*>>::iterator iter;
-    for (iter = _actionDic.begin(); iter != _actionDic.end(); iter++)
+    for (auto& iter : _actionDic)
     {
-        cocos2d::Vector<ActionObject*> objList = iter->second;
+        cocos2d::Vector<ActionObject*> objList = iter.second;
         ssize_t listCount = objList.size();
         for (ssize_t i = 0; i < listCount; i++) {
             ActionObject* action = objList.at(i);

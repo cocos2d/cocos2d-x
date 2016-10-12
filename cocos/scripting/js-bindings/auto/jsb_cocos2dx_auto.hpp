@@ -148,7 +148,7 @@ bool js_cocos2dx_Node_setScaleX(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getColor(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_setonEnterTransitionDidFinishCallback(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_removeAllComponents(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Node_getOpacity(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Node__setLocalZOrder(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_setCameraMask(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getTag(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getonEnterTransitionDidFinishCallback(JSContext *cx, uint32_t argc, jsval *vp);
@@ -253,6 +253,7 @@ bool js_cocos2dx_Node_update(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_sortAllChildren(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getWorldToNodeAffineTransform(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getScale(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Node_getOpacity(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_updateOrderOfArrival(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getNormalizedPosition(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getParentToNodeTransform(JSContext *cx, uint32_t argc, jsval *vp);
@@ -367,6 +368,7 @@ bool js_cocos2dx_Director_setDefaultValues(JSContext *cx, uint32_t argc, jsval *
 bool js_cocos2dx_Director_init(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Director_setScheduler(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Director_getMatrix(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Director_isValid(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Director_startAnimation(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Director_getOpenGLView(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Director_getRunningScene(JSContext *cx, uint32_t argc, jsval *vp);
@@ -453,7 +455,6 @@ bool js_cocos2dx_Action_getTag(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Action_setTarget(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Action_isDone(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Action_reverse(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Action_Action(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_cocos2d_FiniteTimeAction_class;
 extern JSObject *jsb_cocos2d_FiniteTimeAction_prototype;
@@ -1308,36 +1309,6 @@ bool js_cocos2dx_EaseRateAction_initWithAction(JSContext *cx, uint32_t argc, jsv
 bool js_cocos2dx_EaseRateAction_getRate(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_EaseRateAction_create(JSContext *cx, uint32_t argc, jsval *vp);
 
-extern JSClass  *jsb_cocos2d_EaseIn_class;
-extern JSObject *jsb_cocos2d_EaseIn_prototype;
-
-bool js_cocos2dx_EaseIn_constructor(JSContext *cx, uint32_t argc, jsval *vp);
-void js_cocos2dx_EaseIn_finalize(JSContext *cx, JSObject *obj);
-void js_register_cocos2dx_EaseIn(JSContext *cx, JS::HandleObject global);
-void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
-bool js_cocos2dx_EaseIn_create(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_EaseIn_EaseIn(JSContext *cx, uint32_t argc, jsval *vp);
-
-extern JSClass  *jsb_cocos2d_EaseOut_class;
-extern JSObject *jsb_cocos2d_EaseOut_prototype;
-
-bool js_cocos2dx_EaseOut_constructor(JSContext *cx, uint32_t argc, jsval *vp);
-void js_cocos2dx_EaseOut_finalize(JSContext *cx, JSObject *obj);
-void js_register_cocos2dx_EaseOut(JSContext *cx, JS::HandleObject global);
-void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
-bool js_cocos2dx_EaseOut_create(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_EaseOut_EaseOut(JSContext *cx, uint32_t argc, jsval *vp);
-
-extern JSClass  *jsb_cocos2d_EaseInOut_class;
-extern JSObject *jsb_cocos2d_EaseInOut_prototype;
-
-bool js_cocos2dx_EaseInOut_constructor(JSContext *cx, uint32_t argc, jsval *vp);
-void js_cocos2dx_EaseInOut_finalize(JSContext *cx, JSObject *obj);
-void js_register_cocos2dx_EaseInOut(JSContext *cx, JS::HandleObject global);
-void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
-bool js_cocos2dx_EaseInOut_create(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_EaseInOut_EaseInOut(JSContext *cx, uint32_t argc, jsval *vp);
-
 extern JSClass  *jsb_cocos2d_EaseExponentialIn_class;
 extern JSObject *jsb_cocos2d_EaseExponentialIn_prototype;
 
@@ -1397,47 +1368,6 @@ void js_register_cocos2dx_EaseSineInOut(JSContext *cx, JS::HandleObject global);
 void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
 bool js_cocos2dx_EaseSineInOut_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_EaseSineInOut_EaseSineInOut(JSContext *cx, uint32_t argc, jsval *vp);
-
-extern JSClass  *jsb_cocos2d_EaseElastic_class;
-extern JSObject *jsb_cocos2d_EaseElastic_prototype;
-
-bool js_cocos2dx_EaseElastic_constructor(JSContext *cx, uint32_t argc, jsval *vp);
-void js_cocos2dx_EaseElastic_finalize(JSContext *cx, JSObject *obj);
-void js_register_cocos2dx_EaseElastic(JSContext *cx, JS::HandleObject global);
-void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
-bool js_cocos2dx_EaseElastic_setPeriod(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_EaseElastic_initWithAction(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_EaseElastic_getPeriod(JSContext *cx, uint32_t argc, jsval *vp);
-
-extern JSClass  *jsb_cocos2d_EaseElasticIn_class;
-extern JSObject *jsb_cocos2d_EaseElasticIn_prototype;
-
-bool js_cocos2dx_EaseElasticIn_constructor(JSContext *cx, uint32_t argc, jsval *vp);
-void js_cocos2dx_EaseElasticIn_finalize(JSContext *cx, JSObject *obj);
-void js_register_cocos2dx_EaseElasticIn(JSContext *cx, JS::HandleObject global);
-void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
-bool js_cocos2dx_EaseElasticIn_create(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_EaseElasticIn_EaseElasticIn(JSContext *cx, uint32_t argc, jsval *vp);
-
-extern JSClass  *jsb_cocos2d_EaseElasticOut_class;
-extern JSObject *jsb_cocos2d_EaseElasticOut_prototype;
-
-bool js_cocos2dx_EaseElasticOut_constructor(JSContext *cx, uint32_t argc, jsval *vp);
-void js_cocos2dx_EaseElasticOut_finalize(JSContext *cx, JSObject *obj);
-void js_register_cocos2dx_EaseElasticOut(JSContext *cx, JS::HandleObject global);
-void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
-bool js_cocos2dx_EaseElasticOut_create(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_EaseElasticOut_EaseElasticOut(JSContext *cx, uint32_t argc, jsval *vp);
-
-extern JSClass  *jsb_cocos2d_EaseElasticInOut_class;
-extern JSObject *jsb_cocos2d_EaseElasticInOut_prototype;
-
-bool js_cocos2dx_EaseElasticInOut_constructor(JSContext *cx, uint32_t argc, jsval *vp);
-void js_cocos2dx_EaseElasticInOut_finalize(JSContext *cx, JSObject *obj);
-void js_register_cocos2dx_EaseElasticInOut(JSContext *cx, JS::HandleObject global);
-void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
-bool js_cocos2dx_EaseElasticInOut_create(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_EaseElasticInOut_EaseElasticInOut(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_cocos2d_EaseBounce_class;
 extern JSObject *jsb_cocos2d_EaseBounce_prototype;
@@ -1506,17 +1436,6 @@ void js_register_cocos2dx_EaseBackInOut(JSContext *cx, JS::HandleObject global);
 void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
 bool js_cocos2dx_EaseBackInOut_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_EaseBackInOut_EaseBackInOut(JSContext *cx, uint32_t argc, jsval *vp);
-
-extern JSClass  *jsb_cocos2d_EaseBezierAction_class;
-extern JSObject *jsb_cocos2d_EaseBezierAction_prototype;
-
-bool js_cocos2dx_EaseBezierAction_constructor(JSContext *cx, uint32_t argc, jsval *vp);
-void js_cocos2dx_EaseBezierAction_finalize(JSContext *cx, JSObject *obj);
-void js_register_cocos2dx_EaseBezierAction(JSContext *cx, JS::HandleObject global);
-void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
-bool js_cocos2dx_EaseBezierAction_setBezierParamer(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_EaseBezierAction_create(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_EaseBezierAction_EaseBezierAction(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_cocos2d_EaseQuadraticActionIn_class;
 extern JSObject *jsb_cocos2d_EaseQuadraticActionIn_prototype;
@@ -1667,6 +1586,88 @@ void js_register_cocos2dx_EaseCubicActionInOut(JSContext *cx, JS::HandleObject g
 void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
 bool js_cocos2dx_EaseCubicActionInOut_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_EaseCubicActionInOut_EaseCubicActionInOut(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocos2d_EaseIn_class;
+extern JSObject *jsb_cocos2d_EaseIn_prototype;
+
+bool js_cocos2dx_EaseIn_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_EaseIn_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_EaseIn(JSContext *cx, JS::HandleObject global);
+void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
+bool js_cocos2dx_EaseIn_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_EaseIn_EaseIn(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocos2d_EaseOut_class;
+extern JSObject *jsb_cocos2d_EaseOut_prototype;
+
+bool js_cocos2dx_EaseOut_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_EaseOut_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_EaseOut(JSContext *cx, JS::HandleObject global);
+void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
+bool js_cocos2dx_EaseOut_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_EaseOut_EaseOut(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocos2d_EaseInOut_class;
+extern JSObject *jsb_cocos2d_EaseInOut_prototype;
+
+bool js_cocos2dx_EaseInOut_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_EaseInOut_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_EaseInOut(JSContext *cx, JS::HandleObject global);
+void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
+bool js_cocos2dx_EaseInOut_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_EaseInOut_EaseInOut(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocos2d_EaseElastic_class;
+extern JSObject *jsb_cocos2d_EaseElastic_prototype;
+
+bool js_cocos2dx_EaseElastic_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_EaseElastic_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_EaseElastic(JSContext *cx, JS::HandleObject global);
+void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
+bool js_cocos2dx_EaseElastic_setPeriod(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_EaseElastic_initWithAction(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_EaseElastic_getPeriod(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocos2d_EaseElasticIn_class;
+extern JSObject *jsb_cocos2d_EaseElasticIn_prototype;
+
+bool js_cocos2dx_EaseElasticIn_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_EaseElasticIn_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_EaseElasticIn(JSContext *cx, JS::HandleObject global);
+void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
+bool js_cocos2dx_EaseElasticIn_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_EaseElasticIn_EaseElasticIn(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocos2d_EaseElasticOut_class;
+extern JSObject *jsb_cocos2d_EaseElasticOut_prototype;
+
+bool js_cocos2dx_EaseElasticOut_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_EaseElasticOut_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_EaseElasticOut(JSContext *cx, JS::HandleObject global);
+void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
+bool js_cocos2dx_EaseElasticOut_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_EaseElasticOut_EaseElasticOut(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocos2d_EaseElasticInOut_class;
+extern JSObject *jsb_cocos2d_EaseElasticInOut_prototype;
+
+bool js_cocos2dx_EaseElasticInOut_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_EaseElasticInOut_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_EaseElasticInOut(JSContext *cx, JS::HandleObject global);
+void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
+bool js_cocos2dx_EaseElasticInOut_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_EaseElasticInOut_EaseElasticInOut(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocos2d_EaseBezierAction_class;
+extern JSObject *jsb_cocos2d_EaseBezierAction_prototype;
+
+bool js_cocos2dx_EaseBezierAction_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_EaseBezierAction_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_EaseBezierAction(JSContext *cx, JS::HandleObject global);
+void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
+bool js_cocos2dx_EaseBezierAction_setBezierParamer(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_EaseBezierAction_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_EaseBezierAction_EaseBezierAction(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_cocos2d_ActionInstant_class;
 extern JSObject *jsb_cocos2d_ActionInstant_prototype;
@@ -3853,24 +3854,25 @@ void js_cocos2dx_SpriteBatchNode_finalize(JSContext *cx, JSObject *obj);
 void js_register_cocos2dx_SpriteBatchNode(JSContext *cx, JS::HandleObject global);
 void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
 bool js_cocos2dx_SpriteBatchNode_appendChild(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_SpriteBatchNode_addSpriteWithoutQuad(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_SpriteBatchNode_reorderBatch(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_SpriteBatchNode_initWithTexture(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_SpriteBatchNode_getBlendFunc(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_SpriteBatchNode_lowestAtlasIndexInChild(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_SpriteBatchNode_atlasIndexForChild(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_SpriteBatchNode_setTextureAtlas(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_SpriteBatchNode_initWithFile(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_SpriteBatchNode_getTexture(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_SpriteBatchNode_increaseAtlasCapacity(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_SpriteBatchNode_getTextureAtlas(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_SpriteBatchNode_insertQuadFromSprite(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_SpriteBatchNode_setTexture(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_SpriteBatchNode_rebuildIndexInOrder(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_SpriteBatchNode_highestAtlasIndexInChild(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_SpriteBatchNode_removeChildAtIndex(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_SpriteBatchNode_removeSpriteFromAtlas(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_SpriteBatchNode_addSpriteWithoutQuad(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_SpriteBatchNode_atlasIndexForChild(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_SpriteBatchNode_increaseAtlasCapacity(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_SpriteBatchNode_lowestAtlasIndexInChild(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_SpriteBatchNode_getBlendFunc(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_SpriteBatchNode_initWithTexture(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_SpriteBatchNode_setTextureAtlas(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_SpriteBatchNode_reserveCapacity(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_SpriteBatchNode_insertQuadFromSprite(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_SpriteBatchNode_initWithFile(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_SpriteBatchNode_setBlendFunc(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_SpriteBatchNode_rebuildIndexInOrder(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_SpriteBatchNode_getTextureAtlas(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_SpriteBatchNode_highestAtlasIndexInChild(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_SpriteBatchNode_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_SpriteBatchNode_createWithTexture(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_SpriteBatchNode_SpriteBatchNode(JSContext *cx, uint32_t argc, jsval *vp);

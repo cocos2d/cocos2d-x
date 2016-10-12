@@ -880,7 +880,6 @@ void SIOClientImpl::onMessage(WebSocket* ws, const WebSocket::Data& data)
                 int control2 = payload.at(0) - '0';
                 CCLOGINFO("Message code: [%i]", control2);
 
-                SocketIOPacket *packetOut = SocketIOPacket::createPacketWithType("event", _version);
                 std::string endpoint = "";
 
                 std::string::size_type a = payload.find("/");
@@ -901,8 +900,6 @@ void SIOClientImpl::onMessage(WebSocket* ws, const WebSocket::Data& data)
 
                 // we didn't find and endpoint and we are in the default namespace
                 if (endpoint == "") endpoint = "/";
-
-                packetOut->setEndpoint(endpoint);
 
                 c = getClient(endpoint);
 

@@ -3,7 +3,7 @@ Copyright 2011 Jeff Lamarche
 Copyright 2012 Goffredo Marocchi
 Copyright 2012 Ricardo Quesada
 Copyright 2012 cocos2d-x.org
-Copyright 2013-2014 Chukong Technologies Inc.
+Copyright 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -568,7 +568,7 @@ bool GLProgram::link()
     // Calling glGetProgramiv(...GL_LINK_STATUS...) will force linking of the program at this moment.
     // Otherwise, they might be linked when they are used for the first time. (I guess this depends on the driver implementation)
     // So it might slow down the "booting" process on certain devices. But, on the other hand it is important to know if the shader
-    // linked succesfully. Some shaders might be downloaded in runtime so, release version should have this check.
+    // linked successfully. Some shaders might be downloaded in runtime so, release version should have this check.
     // For more info, see Github issue #16231
     glGetProgramiv(_program, GL_LINK_STATUS, &status);
 

@@ -51,7 +51,7 @@ public:
 CC_CONSTRUCTOR_ACCESS:
     PUOnExpireObserver(void) : PUObserver()
     {
-    };
+    }
     virtual ~PUOnExpireObserver(void) {};
 };
 
