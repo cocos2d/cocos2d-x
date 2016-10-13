@@ -49,7 +49,7 @@ typedef struct _DataRef
 
 static std::unordered_map<std::string, DataRef> s_cacheFontData;
 
-FontFreeType * FontFreeType::create(const std::string &fontName, float fontSize, GlyphCollection glyphs, const char *customGlyphs,bool distanceFieldEnabled /* = false */,int outline /* = 0 */)
+FontFreeType * FontFreeType::create(const std::string &fontName, float fontSize, GlyphCollection glyphs, const char *customGlyphs,bool distanceFieldEnabled /* = false */,float outline /* = 0 */)
 {
     FontFreeType *tempFont =  new FontFreeType(distanceFieldEnabled,outline);
 
@@ -96,7 +96,7 @@ FT_Library FontFreeType::getFTLibrary()
     return _FTlibrary;
 }
 
-FontFreeType::FontFreeType(bool distanceFieldEnabled /* = false */,int outline /* = 0 */)
+FontFreeType::FontFreeType(bool distanceFieldEnabled /* = false */, float outline /* = 0 */)
 : _fontRef(nullptr)
 , _stroker(nullptr)
 , _distanceFieldEnabled(distanceFieldEnabled)
@@ -106,7 +106,7 @@ FontFreeType::FontFreeType(bool distanceFieldEnabled /* = false */,int outline /
 , _encoding(FT_ENCODING_UNICODE)
 , _usedGlyphs(GlyphCollection::ASCII)
 {
-    if (outline > 0)
+    if (outline > 0.0f)
     {
         _outlineSize = outline * CC_CONTENT_SCALE_FACTOR();
         FT_Stroker_New(FontFreeType::getFTLibrary(), &_stroker);
