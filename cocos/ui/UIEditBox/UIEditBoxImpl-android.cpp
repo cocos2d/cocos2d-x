@@ -47,7 +47,7 @@ namespace ui {
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_ERROR,"",__VA_ARGS__)
 static void editBoxEditingDidBegin(int index);
 static void editBoxEditingDidChanged(int index, const std::string& text);
-static void editBoxEditingDidEnd(int index, const std::string& text);
+static void editBoxEditingDidEnd(int index, const std::string& text, int action);
 extern "C"{
     JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxEditBoxHelper_editBoxEditingDidBegin(JNIEnv *env, jclass, jint index) {
         editBoxEditingDidBegin(index);
@@ -58,9 +58,9 @@ extern "C"{
         editBoxEditingDidChanged(index, textString);
     }
 
-    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxEditBoxHelper_editBoxEditingDidEnd(JNIEnv *env, jclass, jint index, jstring text) {
+    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxEditBoxHelper_editBoxEditingDidEnd(JNIEnv *env, jclass, jint index, jstring text, jint action) {
         std::string textString = StringUtils::getStringUTFCharsJNI(env,text);
-        editBoxEditingDidEnd(index, textString);
+        editBoxEditingDidEnd(index, textString, action);
     }
 }
 
@@ -223,12 +223,12 @@ void editBoxEditingDidChanged(int index, const std::string& text)
     }
 }
 
-void editBoxEditingDidEnd(int index, const std::string& text)
+void editBoxEditingDidEnd(int index, const std::string& text, int action)
 {
     auto it = s_allEditBoxes.find(index);
     if (it != s_allEditBoxes.end())
     {
-        s_allEditBoxes[index]->editBoxEditingDidEnd(text);
+        s_allEditBoxes[index]->editBoxEditingDidEnd(text, static_cast<cocos2d::ui::EditBoxDelegate::EditBoxEndAction>(action));
     }
 }
 

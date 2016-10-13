@@ -143,6 +143,11 @@ void UIEditBoxTest::editBoxEditingDidEnd(cocos2d::ui::EditBox* editBox)
     log("editBox %p DidEnd !", editBox);
 }
 
+void UIEditBoxTest::editBoxEditingDidEndWithAction(cocos2d::ui::EditBox* editBox, cocos2d::ui::EditBoxDelegate::EditBoxEndAction action)
+{
+    log("editBox %p DidEnd with action %d!", editBox, action);
+}
+
 void UIEditBoxTest::editBoxTextChanged(cocos2d::ui::EditBox* editBox, const std::string& text)
 {
     log("editBox %p TextChanged, text: %s ", editBox, text.c_str());
