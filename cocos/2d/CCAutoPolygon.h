@@ -81,6 +81,15 @@ public:
     void setQuad(V3F_C4B_T2F_Quad *quad);
 
     /**
+     * set the data to be a pointer to a number of Quads
+     * the member verts will not be released when this PolygonInfo destructs
+     * as the verts memory are managed by other objects
+     * @param quad  a pointer to the V3F_C4B_T2F_Quad quads
+     */
+    void setQuads(V3F_C4B_T2F_Quad *quads, int numberOfQuads);
+
+
+    /**
      * set the data to be a pointer to a triangles
      * the member verts will not be released when this PolygonInfo destructs
      * as the verts memory are managed by other objects

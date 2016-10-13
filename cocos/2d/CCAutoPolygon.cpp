@@ -36,6 +36,18 @@ THE SOFTWARE.
 USING_NS_CC;
 
 static unsigned short quadIndices[]={0,1,2, 3,2,1};
+static unsigned short quadIndices9[]={
+    0+4*0,1+4*0,2+4*0, 3+4*0,2+4*0,1+4*0,
+    0+4*1,1+4*1,2+4*1, 3+4*1,2+4*1,1+4*1,
+    0+4*2,1+4*2,2+4*2, 3+4*2,2+4*2,1+4*2,
+    0+4*3,1+4*3,2+4*3, 3+4*3,2+4*3,1+4*3,
+    0+4*4,1+4*4,2+4*4, 3+4*4,2+4*4,1+4*4,
+    0+4*5,1+4*5,2+4*5, 3+4*5,2+4*5,1+4*5,
+    0+4*6,1+4*6,2+4*6, 3+4*6,2+4*6,1+4*6,
+    0+4*7,1+4*7,2+4*7, 3+4*7,2+4*7,1+4*7,
+    0+4*8,1+4*8,2+4*8, 3+4*8,2+4*8,1+4*8,
+};
+
 const static float PRECISION = 10.0f;
 
 PolygonInfo::PolygonInfo()
@@ -97,6 +109,18 @@ void PolygonInfo::setQuad(V3F_C4B_T2F_Quad *quad)
     triangles.indices = quadIndices;
     triangles.vertCount = 4;
     triangles.indexCount = 6;
+    triangles.verts = (V3F_C4B_T2F*)quad;
+}
+
+void PolygonInfo::setQuads(V3F_C4B_T2F_Quad *quad, int numberOfQuads)
+{
+    CCASSERT(numberOfQuads > 1 && numberOfQuads <= 9, "Invalid number of Quads");
+
+    releaseVertsAndIndices();
+    isVertsOwner = false;
+    triangles.indices = quadIndices9;
+    triangles.vertCount = 4 * numberOfQuads;
+    triangles.indexCount = 6 * numberOfQuads;
     triangles.verts = (V3F_C4B_T2F*)quad;
 }
 

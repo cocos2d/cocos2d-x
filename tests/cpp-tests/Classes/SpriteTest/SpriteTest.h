@@ -802,4 +802,70 @@ protected:
     cocos2d::Vec3 rotation;
 };
 
+class SpriteSlice9Test1 : public SpriteTestDemo
+{
+public:
+    CREATE_FUNC(SpriteSlice9Test1);
+    SpriteSlice9Test1();
+    virtual std::string title() const override { return "Slice 9 Test #1"; };
+    virtual std::string subtitle() const override { return "Testing Sprite::create()"; };
+};
+
+class SpriteSlice9Test2 : public SpriteTestDemo
+{
+public:
+    CREATE_FUNC(SpriteSlice9Test2);
+    SpriteSlice9Test2();
+    virtual std::string title() const override { return "Slice 9 Test #2"; };
+    virtual std::string subtitle() const override { return "Testing Sprite::createWithSpriteFrameName()"; }
+};
+
+class SpriteSlice9Test3 : public SpriteTestDemo
+{
+public:
+    CREATE_FUNC(SpriteSlice9Test3);
+    SpriteSlice9Test3();
+    virtual std::string title() const override { return "Slice 9 Test #3"; };
+    virtual std::string subtitle() const override { return "Testing scaling a button"; }
+};
+
+class SpriteSlice9Test4 : public SpriteTestDemo
+{
+public:
+    CREATE_FUNC(SpriteSlice9Test4);
+    SpriteSlice9Test4();
+    virtual std::string title() const override { return "Slice 9 Test #4"; };
+    virtual std::string subtitle() const override { return "Testing scaling a button"; }
+};
+
+class SpriteSlice9Test5 : public SpriteTestDemo
+{
+public:
+    CREATE_FUNC(SpriteSlice9Test5);
+    SpriteSlice9Test5();
+    virtual std::string title() const override { return "Slice 9 Test #5"; };
+    virtual std::string subtitle() const override { return "Changing setCenterRect in runtime"; }
+
+    virtual void update(float dt) override;
+
+private:
+    cocos2d::Sprite* _sprites[3];
+    float _elapsed;
+};
+
+class SpriteSlice9Test6 : public SpriteTestDemo
+{
+public:
+    CREATE_FUNC(SpriteSlice9Test6);
+    SpriteSlice9Test6();
+    virtual std::string title() const override { return "Slice 9 Test #6"; };
+    virtual std::string subtitle() const override { return "Changing setCenterRect in runtime #2"; }
+
+    virtual void update(float dt) override;
+
+private:
+    cocos2d::Sprite* _sprites[3];
+    float _elapsed;
+};
+
 #endif
