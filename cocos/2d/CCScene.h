@@ -109,7 +109,7 @@ public:
      * @param renderer The renderer use to render the scene.
      * @js NA
      */
-    virtual void render(Renderer* renderer, const Mat4& eyeTransform, const Mat4* eyeProjection = nullptr);
+    virtual void render(Renderer* renderer, const Mat4* eyeTransforms = nullptr, const Mat4* eyeProjections = nullptr, unsigned int mutiViewCount = 1);
     
     /** override function */
     virtual void removeAllChildren() override;

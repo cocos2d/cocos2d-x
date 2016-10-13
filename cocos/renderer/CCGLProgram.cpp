@@ -116,8 +116,10 @@ const char* GLProgram::SHADER_CAMERA_CLEAR = "ShaderCameraClear";
 // uniform names
 const char* GLProgram::UNIFORM_NAME_AMBIENT_COLOR = "CC_AmbientColor";
 const char* GLProgram::UNIFORM_NAME_P_MATRIX = "CC_PMatrix";
+const char* GLProgram::UNIFORM_NAME_MUTIVIEW_P_MATRIX = "CC_MutiViewPMatrix";
 const char* GLProgram::UNIFORM_NAME_MV_MATRIX = "CC_MVMatrix";
 const char* GLProgram::UNIFORM_NAME_MVP_MATRIX  = "CC_MVPMatrix";
+const char* GLProgram::UNIFORM_NAME_MUTIVIEW_MVP_MATRIX  = "CC_MutiViewMVPMatrix";
 const char* GLProgram::UNIFORM_NAME_NORMAL_MATRIX = "CC_NormalMatrix";
 const char* GLProgram::UNIFORM_NAME_TIME = "CC_Time";
 const char* GLProgram::UNIFORM_NAME_SIN_TIME = "CC_SinTime";
@@ -146,8 +148,10 @@ const char* GLProgram::ATTRIBUTE_NAME_BINORMAL = "a_binormal";
 
 static const char * COCOS2D_SHADER_UNIFORMS =
         "uniform mat4 CC_PMatrix;\n"
+        "uniform mat4 CC_MutiViewPMatrix[4];\n"
         "uniform mat4 CC_MVMatrix;\n"
         "uniform mat4 CC_MVPMatrix;\n"
+        "uniform mat4 CC_MutiViewMVPMatrix[4];\n"
         "uniform mat3 CC_NormalMatrix;\n"
         "uniform vec4 CC_Time;\n"
         "uniform vec4 CC_SinTime;\n"
@@ -516,8 +520,10 @@ void GLProgram::updateUniforms()
 {
     _builtInUniforms[UNIFORM_AMBIENT_COLOR] = glGetUniformLocation(_program, UNIFORM_NAME_AMBIENT_COLOR);
     _builtInUniforms[UNIFORM_P_MATRIX] = glGetUniformLocation(_program, UNIFORM_NAME_P_MATRIX);
+    _builtInUniforms[UNIFORM_MUTIVIEW_P_MATRIX] = glGetUniformLocation(_program, UNIFORM_NAME_MUTIVIEW_P_MATRIX);
     _builtInUniforms[UNIFORM_MV_MATRIX] = glGetUniformLocation(_program, UNIFORM_NAME_MV_MATRIX);
     _builtInUniforms[UNIFORM_MVP_MATRIX] = glGetUniformLocation(_program, UNIFORM_NAME_MVP_MATRIX);
+    _builtInUniforms[UNIFORM_MUTIVIEW_MVP_MATRIX] = glGetUniformLocation(_program, UNIFORM_NAME_MUTIVIEW_MVP_MATRIX);
     _builtInUniforms[UNIFORM_NORMAL_MATRIX] = glGetUniformLocation(_program, UNIFORM_NAME_NORMAL_MATRIX);
 
     _builtInUniforms[UNIFORM_TIME] = glGetUniformLocation(_program, UNIFORM_NAME_TIME);
@@ -532,8 +538,10 @@ void GLProgram::updateUniforms()
     _builtInUniforms[UNIFORM_SAMPLER3] = glGetUniformLocation(_program, UNIFORM_NAME_SAMPLER3);
 
     _flags.usesP = _builtInUniforms[UNIFORM_P_MATRIX] != -1;
+    _flags.usesMutiviewP = _builtInUniforms[UNIFORM_MUTIVIEW_P_MATRIX] != -1;
     _flags.usesMV = _builtInUniforms[UNIFORM_MV_MATRIX] != -1;
     _flags.usesMVP = _builtInUniforms[UNIFORM_MVP_MATRIX] != -1;
+    _flags.usesMutiViewMVP = _builtInUniforms[UNIFORM_MUTIVIEW_MVP_MATRIX] != -1;
     _flags.usesNormal = _builtInUniforms[UNIFORM_NORMAL_MATRIX] != -1;
     _flags.usesTime = (
                        _builtInUniforms[UNIFORM_TIME] != -1 ||
@@ -886,6 +894,16 @@ void GLProgram::setUniformsForBuiltins(const Mat4 &matrixMV)
 
     if (_flags.usesP)
         setUniformLocationWithMatrix4fv(_builtInUniforms[UNIFORM_P_MATRIX], matrixP.m, 1);
+    
+    if (_flags.usesMutiviewP) {
+        unsigned int count = _director->getMatrixStackCount(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+        Mat4 *mats = new Mat4[count];
+        for (unsigned int i = 0; i < count; ++i) {
+            mats[i] = _director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, i);
+        }
+        setUniformLocationWithMatrix4fv(_builtInUniforms[UNIFORM_MUTIVIEW_P_MATRIX], mats[0].m, count);
+        delete[] mats;
+    }
 
     if (_flags.usesMV)
         setUniformLocationWithMatrix4fv(_builtInUniforms[UNIFORM_MV_MATRIX], matrixMV.m, 1);
@@ -896,6 +914,16 @@ void GLProgram::setUniformsForBuiltins(const Mat4 &matrixMV)
         setUniformLocationWithMatrix4fv(_builtInUniforms[UNIFORM_MVP_MATRIX], matrixMVP.m, 1);
     }
 
+    if (_flags.usesMutiViewMVP) {
+        unsigned int count = _director->getMatrixStackCount(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+        Mat4 *matMVPs = new Mat4[count];
+        for (unsigned int i = 0; i < count; ++i) {
+            matMVPs[i] = _director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, i) * matrixMV;
+        }
+        setUniformLocationWithMatrix4fv(_builtInUniforms[UNIFORM_MUTIVIEW_MVP_MATRIX], matMVPs[0].m, count);
+        delete[] matMVPs;
+    }
+    
     if (_flags.usesNormal)
     {
         Mat4 mvInverse = matrixMV;

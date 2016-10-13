@@ -494,7 +494,7 @@ void GLView::renderScene(Scene* scene, Renderer* renderer)
     }
     else
     {
-        scene->render(renderer, Mat4::IDENTITY, nullptr);
+        scene->render(renderer);
     }
 }
 
