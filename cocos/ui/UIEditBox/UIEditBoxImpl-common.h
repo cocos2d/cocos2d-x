@@ -66,7 +66,8 @@ public:
 
     virtual void setMaxLength(int maxLength) override;
     virtual int  getMaxLength() override;
-    
+    virtual void setTextHorizontalAlignment(cocos2d::TextHAlignment alignment) override;
+
     virtual const char* getText(void) override;
     virtual void refreshInactiveText();
     
@@ -103,6 +104,7 @@ public:
     virtual void setNativeInputMode(EditBox::InputMode inputMode) = 0;
     virtual void setNativeInputFlag(EditBox::InputFlag inputFlag) = 0;
     virtual void setNativeReturnType(EditBox::KeyboardReturnType returnType) = 0;
+    virtual void setNativeTextHorizontalAlignment(cocos2d::TextHAlignment alignment) = 0;
     virtual void setNativeText(const char* pText) = 0;
     virtual void setNativePlaceHolder(const char* pText) = 0;
     virtual void setNativeVisible(bool visible) = 0;
@@ -124,7 +126,8 @@ private:
     EditBox::InputMode    _editBoxInputMode;
     EditBox::InputFlag    _editBoxInputFlag;
     EditBox::KeyboardReturnType  _keyboardReturnType;
-    
+    cocos2d::TextHAlignment _alignment;
+
     std::string _text;
     std::string _placeHolder;
     

@@ -54,6 +54,7 @@ EditBoxImplCommon::EditBoxImplCommon(EditBox* pEditText)
 , _colText(Color3B::WHITE)
 , _colPlaceHolder(Color3B::GRAY)
 , _maxLength(-1)
+, _alignment(TextHAlignment::LEFT)
 {
 }
 
@@ -187,6 +188,12 @@ int EditBoxImplCommon::getMaxLength()
     return _maxLength;
 }
 
+void EditBoxImplCommon::setTextHorizontalAlignment(cocos2d::TextHAlignment alignment)
+{
+    _alignment = alignment;
+    this->setNativeTextHorizontalAlignment(alignment);
+}
+
 void EditBoxImplCommon::setInputFlag(EditBox::InputFlag inputFlag)
 {
     _editBoxInputFlag = inputFlag;
@@ -202,6 +209,13 @@ void EditBoxImplCommon::setReturnType(EditBox::KeyboardReturnType returnType)
 void EditBoxImplCommon::refreshInactiveText()
 {
     setInactiveText(_text.c_str());
+
+    _label->setWidth(_contentSize.width);
+    _labelPlaceHolder->setWidth(_contentSize.width);
+
+    _label->setHorizontalAlignment(_alignment);
+    _labelPlaceHolder->setHorizontalAlignment(_alignment);
+
     if(_text.size() == 0)
     {
         _label->setVisible(false);
