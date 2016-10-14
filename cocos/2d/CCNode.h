@@ -28,6 +28,7 @@
 
 #ifndef __CCNODE_H__
 #define __CCNODE_H__
+#ifdef __cplusplus
 
 #include <cstdint>
 #include "base/ccMacros.h"
@@ -2058,5 +2059,29 @@ private:
 /// @}
 
 NS_CC_END
+#endif
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+    
+    static inline void* CCNodeCreate()
+    {
+        cocos2d::Node *node = cocos2d::Node::create();
+        return (void *)node;
+    }
+    
+    static inline const char* CCNodeGetDescription(const void *object)
+    {
+        cocos2d::Node *node = (cocos2d::Node *)object;
+        std::string string = node->getDescription();
+        char *cString = (char*) malloc(string.size() + 1); //as 1 char space for null is also required
+        strcpy(cString, string.c_str());
+        return cString;
+    }
+    
+#ifdef __cplusplus
+}// extern "C"
+#endif
 
 #endif // __CCNODE_H__
