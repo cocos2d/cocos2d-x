@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="hexagonal" renderorder="right-down" width="9" height="9" tilewidth="60" tileheight="39" hexsidelength="30" staggeraxis="x" staggerindex="odd" nextobjectid="1">
+ <tileset firstgid="1" name="Tileset_Hexagonal_FlatTop_60x39_60x60" tilewidth="60" tileheight="60" tilecount="12" columns="4">
+  <image source="issue_16512.png" width="240" height="180"/>
+ </tileset>
+ <layer name="Floor" width="9" height="9">
+  <data encoding="base64" compression="zlib">
+   eJxjY2BgYINiFiTMhoZh4oxIGFktCxZxbGKMSDQbGh9dDRsW89HV4GOj24/N3eh+w+V/ZLXoYgC/VAE0
+  </data>
+ </layer>
+</map>

@@ -147,24 +147,24 @@ struct CC_DLL PUParticle3D : public Particle3D
 
         /** Sets the event flags.
     */
-    inline void setEventFlags(unsigned int flags) {eventFlags = flags;}
+    void setEventFlags(unsigned int flags) { eventFlags = flags; }
 
     /** As setEventFlags, except the flags passed as parameters are appended to the
         existing flags on this object.
     */
-    inline void addEventFlags(unsigned int flags) {eventFlags |= flags;}
+    void addEventFlags(unsigned int flags) { eventFlags |= flags; }
             
     /** The flags passed as parameters are removed from the existing flags.
     */
-    inline void removeEventFlags(unsigned int flags) {eventFlags &= ~flags;}
+    void removeEventFlags(unsigned int flags) { eventFlags &= ~flags; }
         
     /** Return the event flags.
     */
-    inline unsigned int getEventFlags() const {return eventFlags;}
+    unsigned int getEventFlags() const { return eventFlags; }
 
     /** Determines whether it has certain flags set.
     */
-    inline bool hasEventFlags(unsigned int flags) const {return (eventFlags & flags) != 0;}
+    bool hasEventFlags(unsigned int flags) const { return (eventFlags & flags) != 0; }
 
     unsigned int eventFlags;
 
@@ -268,7 +268,7 @@ public:
      */
     void rotationOffset(Vec3& pos);
 
-    inline float getTimeElapsedSinceStart(void) const {return _timeElapsedSinceStart;};
+    float getTimeElapsedSinceStart() const { return _timeElapsedSinceStart; }
 
     /**
      * default particle width

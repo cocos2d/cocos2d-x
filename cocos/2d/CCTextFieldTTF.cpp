@@ -698,7 +698,7 @@ void TextFieldTTF::setPasswordTextStyle(const std::string &text)
     }
 }
 
-std::string TextFieldTTF::getPasswordTextStyle()const
+const std::string& TextFieldTTF::getPasswordTextStyle() const
 {
     return _passwordStyleText;
 }

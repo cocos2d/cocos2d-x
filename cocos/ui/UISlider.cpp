@@ -660,13 +660,13 @@ void Slider::onPressStateChangedToNormal()
     _slidBallPressedRenderer->setVisible(false);
     _slidBallDisabledRenderer->setVisible(false);
     
-    _slidBallNormalRenderer->setGLProgramState(this->getNormalGLProgramState());
+    _slidBallNormalRenderer->setGLProgramState(this->getNormalGLProgramState(_slidBallNormalRenderer->getTexture()));
     _slidBallNormalRenderer->setScale(_sliderBallNormalTextureScaleX, _sliderBallNormalTextureScaleY);
 }
 
 void Slider::onPressStateChangedToPressed()
 {
-    _slidBallNormalRenderer->setGLProgramState(this->getNormalGLProgramState());
+    _slidBallNormalRenderer->setGLProgramState(this->getNormalGLProgramState(_slidBallNormalRenderer->getTexture()));
 
     
     if (!_isSliderBallPressedTextureLoaded)
@@ -686,7 +686,7 @@ void Slider::onPressStateChangedToDisabled()
 {
     if (!_isSliderBallDisabledTexturedLoaded)
     {
-        _slidBallNormalRenderer->setGLProgramState(this->getGrayGLProgramState());
+        _slidBallNormalRenderer->setGLProgramState(this->getGrayGLProgramState(_slidBallNormalRenderer->getTexture()));
         _slidBallNormalRenderer->setVisible(true);
     }
     else
@@ -751,6 +751,22 @@ void Slider::copySpecialProperties(Widget *widget)
         _eventCallback = slider->_eventCallback;
         _ccEventCallback = slider->_ccEventCallback;
     }
+}
+
+Sprite* Slider::getSlidBallNormalRenderer() const {
+    return _slidBallNormalRenderer;
+}
+
+Sprite* Slider::getSlidBallPressedRenderer() const {
+    return _slidBallPressedRenderer;
+}
+
+Sprite* Slider::getSlidBallDisabledRenderer() const {
+    return _slidBallDisabledRenderer;
+}
+
+Node* Slider::getSlidBallRenderer() const {
+    return _slidBallRenderer;
 }
 
 ResourceData Slider::getBackFile()

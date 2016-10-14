@@ -55,10 +55,6 @@ public:
     virtual void setAnimationInterval(float interval) override;
     
     /**
-    @brief  Get status bar rectangle in GLView window.
-    */
-    
-    /**
     @brief  Run the message loop.
     * @js NA
     * @lua NA

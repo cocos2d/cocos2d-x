@@ -157,10 +157,9 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->enableDebugger();
 #endif
 
-    auto pEngine = ScriptingCore::getInstance();
-    ScriptEngineManager::getInstance()->setScriptEngine(pEngine);
+    ScriptEngineManager::getInstance()->setScriptEngine(sc);
 
-    ScriptingCore::getInstance()->runScript("main.js");
+    sc->runScript("main.js");
 
     return true;
 }

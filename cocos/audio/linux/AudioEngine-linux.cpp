@@ -210,14 +210,16 @@ float AudioEngineImpl::getCurrentTime(int audioID)
 
 bool AudioEngineImpl::setCurrentTime(int audioID, float time)
 {
+    bool ret = false;
     try {
         unsigned int position = (unsigned int)(time * 1000.0f);
         FMOD_RESULT result = mapChannelInfo[audioID].channel->setPosition(position, FMOD_TIMEUNIT_MS);
-        ERRCHECK(result);
+        ret = !ERRCHECK(result);
     }
     catch (const std::out_of_range& oor) {
         printf("AudioEngineImpl::setCurrentTime: invalid audioID: %d\n", audioID);
     }
+    return ret;
 }
 
 void AudioEngineImpl::setFinishCallback(int audioID, const std::function<void (int, const std::string &)> &callback)

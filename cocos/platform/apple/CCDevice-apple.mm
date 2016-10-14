@@ -23,6 +23,22 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+#include "platform/CCPlatformConfig.h"
+#include "platform/CCDevice.h"
+
+#if CC_TARGET_PLATFORM == CC_PLATFORM_MAC
+
+#include <Foundation/Foundation.h>
+#include <Cocoa/Cocoa.h>
+#include <string>
+
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+
+#import <UIKit/UIKit.h>
+
+#endif
+
+#include "base/ccTypes.h"
 #include "platform/apple/CCDevice-apple.h"
 
 namespace FontUtils {

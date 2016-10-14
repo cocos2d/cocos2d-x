@@ -203,99 +203,99 @@ public:
     ValueMapIntKey& getTileProperties() { return _tileProperties; };
     void setTileProperties(const ValueMapIntKey& tileProperties) {
         _tileProperties = tileProperties;
-    };
+    }
 
     /// map orientation
-    inline int getOrientation() const { return _orientation; };
-    inline void setOrientation(int orientation) { _orientation = orientation; };
+    int getOrientation() const { return _orientation; }
+    void setOrientation(int orientation) { _orientation = orientation; }
     
     /// map staggeraxis
-    inline int getStaggerAxis() const { return _staggerAxis; };
-    inline void setStaggerAxis(int staggerAxis) { _staggerAxis = staggerAxis; };
+    int getStaggerAxis() const { return _staggerAxis; }
+    void setStaggerAxis(int staggerAxis) { _staggerAxis = staggerAxis; }
 
     /// map stagger index
-    inline int getStaggerIndex() const { return _staggerIndex; };
-    inline void setStaggerIndex(int staggerIndex) { _staggerIndex = staggerIndex; };
+    int getStaggerIndex() const { return _staggerIndex; }
+    void setStaggerIndex(int staggerIndex) { _staggerIndex = staggerIndex; }
 
     /// map hexsidelength
-    inline int getHexSideLength() const { return _hexSideLength; };
-    inline void setHexSideLength(int hexSideLength) { _hexSideLength = hexSideLength; };
+    int getHexSideLength() const { return _hexSideLength; }
+    void setHexSideLength(int hexSideLength) { _hexSideLength = hexSideLength; }
 
     /// map width & height
-    inline const Size& getMapSize() const { return _mapSize; };
-    inline void setMapSize(const Size& mapSize) { _mapSize = mapSize; };
+    const Size& getMapSize() const { return _mapSize; }
+    void setMapSize(const Size& mapSize) { _mapSize = mapSize; }
 
     /// tiles width & height
-    inline const Size& getTileSize() const { return _tileSize; };
-    inline void setTileSize(const Size& tileSize) { _tileSize = tileSize; };
+    const Size& getTileSize() const { return _tileSize; }
+    void setTileSize(const Size& tileSize) { _tileSize = tileSize; }
     
     /// Layers
-    inline const Vector<TMXLayerInfo*>& getLayers() const { return _layers; };
-    inline Vector<TMXLayerInfo*>& getLayers() { return _layers; };
-    inline void setLayers(const Vector<TMXLayerInfo*>& layers) {
+    const Vector<TMXLayerInfo*>& getLayers() const { return _layers; }
+    Vector<TMXLayerInfo*>& getLayers() { return _layers; }
+    void setLayers(const Vector<TMXLayerInfo*>& layers) {
         _layers = layers;
-    };
+    }
 
     /// tilesets
-    inline const Vector<TMXTilesetInfo*>& getTilesets() const { return _tilesets; };
-    inline Vector<TMXTilesetInfo*>& getTilesets() { return _tilesets; };
-    inline void setTilesets(const Vector<TMXTilesetInfo*>& tilesets) {
+    const Vector<TMXTilesetInfo*>& getTilesets() const { return _tilesets; }
+    Vector<TMXTilesetInfo*>& getTilesets() { return _tilesets; }
+    void setTilesets(const Vector<TMXTilesetInfo*>& tilesets) {
         _tilesets = tilesets;
-    };
+    }
 
     /// ObjectGroups
-    inline const Vector<TMXObjectGroup*>& getObjectGroups() const { return _objectGroups; };
-    inline Vector<TMXObjectGroup*>& getObjectGroups() { return _objectGroups; };
-    inline void setObjectGroups(const Vector<TMXObjectGroup*>& groups) {
+    const Vector<TMXObjectGroup*>& getObjectGroups() const { return _objectGroups; }
+    Vector<TMXObjectGroup*>& getObjectGroups() { return _objectGroups; }
+    void setObjectGroups(const Vector<TMXObjectGroup*>& groups) {
         _objectGroups = groups;
-    };
+    }
 
     /// parent element
-    inline int getParentElement() const { return _parentElement; };
-    inline void setParentElement(int element) { _parentElement = element; };
+    int getParentElement() const { return _parentElement; }
+    void setParentElement(int element) { _parentElement = element; }
 
     /// parent GID
-    inline int getParentGID() const { return _parentGID; };
-    inline void setParentGID(int gid) { _parentGID = gid; };
+    int getParentGID() const { return _parentGID; }
+    void setParentGID(int gid) { _parentGID = gid; }
 
     /// layer attribs
-    inline int getLayerAttribs() const { return _layerAttribs; };
-    inline void setLayerAttribs(int layerAttribs) { _layerAttribs = layerAttribs; };
+    int getLayerAttribs() const { return _layerAttribs; }
+    void setLayerAttribs(int layerAttribs) { _layerAttribs = layerAttribs; }
 
     /// is storing characters?
-    inline bool isStoringCharacters() const { return _storingCharacters; };
-    CC_DEPRECATED_ATTRIBUTE inline bool getStoringCharacters() const { return isStoringCharacters(); };
-    inline void setStoringCharacters(bool storingCharacters) { _storingCharacters = storingCharacters; };
+    bool isStoringCharacters() const { return _storingCharacters; }
+    CC_DEPRECATED_ATTRIBUTE bool getStoringCharacters() const { return isStoringCharacters(); }
+    void setStoringCharacters(bool storingCharacters) { _storingCharacters = storingCharacters; }
 
     /// properties
-    inline const ValueMap& getProperties() const { return _properties; }
-    inline ValueMap& getProperties() { return _properties; }
-    inline void setProperties(const ValueMap& properties) {
+    const ValueMap& getProperties() const { return _properties; }
+    ValueMap& getProperties() { return _properties; }
+    void setProperties(const ValueMap& properties) {
         _properties = properties;
-    };
+    }
     
     // implement pure virtual methods of SAXDelegator
     /**
      * @js NA
      * @lua NA
      */
-    void startElement(void *ctx, const char *name, const char **atts);
+    void startElement(void *ctx, const char *name, const char **atts) override;
     /**
      * @js NA
      * @lua NA
      */
-    void endElement(void *ctx, const char *name);
+    void endElement(void *ctx, const char *name) override;
     /**
      * @js NA
      * @lua NA
      */
-    void textHandler(void *ctx, const char *ch, int len);
+    void textHandler(void *ctx, const char *ch, size_t len) override;
     
-    inline const std::string& getCurrentString() const { return _currentString; }
-    inline void setCurrentString(const std::string& currentString){ _currentString = currentString; }
-    inline const std::string& getTMXFileName() const { return _TMXFileName; }
-    inline void setTMXFileName(const std::string& fileName){ _TMXFileName = fileName; }
-    inline const std::string& getExternalTilesetFileName() const { return _externalTilesetFilename; }
+    const std::string& getCurrentString() const { return _currentString; }
+    void setCurrentString(const std::string& currentString){ _currentString = currentString; }
+    const std::string& getTMXFileName() const { return _TMXFileName; }
+    void setTMXFileName(const std::string& fileName){ _TMXFileName = fileName; }
+    const std::string& getExternalTilesetFileName() const { return _externalTilesetFilename; }
 
 protected:
     void internalInit(const std::string& tmxFileName, const std::string& resourcePath);

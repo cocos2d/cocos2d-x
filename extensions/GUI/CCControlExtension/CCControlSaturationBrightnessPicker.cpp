@@ -68,7 +68,7 @@ bool ControlSaturationBrightnessPicker::initWithTargetAndPos(Node* target, Vec2 
                 
         _startPos=pos; // starting position of the colour picker        
         boxPos          = 35;    // starting position of the virtual box area for picking a colour
-        boxSize         = _background->getContentSize().width / 2;;    // the size (width and height) of the virtual box for picking a colour from
+        boxSize         = _background->getContentSize().width / 2;    // the size (width and height) of the virtual box for picking a colour from
         return true;
     }
     else

@@ -85,12 +85,12 @@ SkeletonRenderer::SkeletonRenderer (spSkeletonData *skeletonData, bool ownsSkele
 
 SkeletonRenderer::SkeletonRenderer (const std::string& skeletonDataFile, spAtlas* atlas, float scale)
 	: _atlas(nullptr), _attachmentLoader(nullptr), _debugSlots(false), _debugBones(false), _timeScale(1) {
-	initWithFile(skeletonDataFile, atlas, scale);
+	initWithJsonFile(skeletonDataFile, atlas, scale);
 }
 
 SkeletonRenderer::SkeletonRenderer (const std::string& skeletonDataFile, const std::string& atlasFile, float scale)
 	: _atlas(nullptr), _attachmentLoader(nullptr), _debugSlots(false), _debugBones(false), _timeScale(1) {
-	initWithFile(skeletonDataFile, atlasFile, scale);
+	initWithJsonFile(skeletonDataFile, atlasFile, scale);
 }
 
 SkeletonRenderer::~SkeletonRenderer () {
@@ -98,7 +98,7 @@ SkeletonRenderer::~SkeletonRenderer () {
 	spSkeleton_dispose(_skeleton);
 	if (_atlas) spAtlas_dispose(_atlas);
 	if (_attachmentLoader) spAttachmentLoader_dispose(_attachmentLoader);
-	delete _worldVertices;
+	delete [] _worldVertices;
 }
 
 void SkeletonRenderer::initWithData (spSkeletonData* skeletonData, bool ownsSkeletonData) {
@@ -107,7 +107,7 @@ void SkeletonRenderer::initWithData (spSkeletonData* skeletonData, bool ownsSkel
 	initialize();
 }
 
-void SkeletonRenderer::initWithFile (const std::string& skeletonDataFile, spAtlas* atlas, float scale) {
+void SkeletonRenderer::initWithJsonFile (const std::string& skeletonDataFile, spAtlas* atlas, float scale) {
     _atlas = atlas;
 	_attachmentLoader = SUPER(Cocos2dAttachmentLoader_create(_atlas));
 
@@ -122,7 +122,7 @@ void SkeletonRenderer::initWithFile (const std::string& skeletonDataFile, spAtla
 	initialize();
 }
 
-void SkeletonRenderer::initWithFile (const std::string& skeletonDataFile, const std::string& atlasFile, float scale) {
+void SkeletonRenderer::initWithJsonFile (const std::string& skeletonDataFile, const std::string& atlasFile, float scale) {
 	_atlas = spAtlas_createFromFile(atlasFile.c_str(), 0);
 	CCASSERT(_atlas, "Error reading atlas file.");
 
@@ -138,6 +138,38 @@ void SkeletonRenderer::initWithFile (const std::string& skeletonDataFile, const 
 
 	initialize();
 }
+    
+void SkeletonRenderer::initWithBinaryFile (const std::string& skeletonDataFile, spAtlas* atlas, float scale) {
+    _atlas = atlas;
+    _attachmentLoader = SUPER(Cocos2dAttachmentLoader_create(_atlas));
+    
+    spSkeletonBinary* binary = spSkeletonBinary_createWithLoader(_attachmentLoader);
+    binary->scale = scale;
+    spSkeletonData* skeletonData = spSkeletonBinary_readSkeletonDataFile(binary, skeletonDataFile.c_str());
+    CCASSERT(skeletonData, binary->error ? binary->error : "Error reading skeleton data file.");
+    spSkeletonBinary_dispose(binary);
+    
+    setSkeletonData(skeletonData, true);
+    
+    initialize();
+}
+
+void SkeletonRenderer::initWithBinaryFile (const std::string& skeletonDataFile, const std::string& atlasFile, float scale) {
+    _atlas = spAtlas_createFromFile(atlasFile.c_str(), 0);
+    CCASSERT(_atlas, "Error reading atlas file.");
+    
+    _attachmentLoader = SUPER(Cocos2dAttachmentLoader_create(_atlas));
+    
+    spSkeletonBinary* binary = spSkeletonBinary_createWithLoader(_attachmentLoader);
+    binary->scale = scale;
+    spSkeletonData* skeletonData = spSkeletonBinary_readSkeletonDataFile(binary, skeletonDataFile.c_str());
+    CCASSERT(skeletonData, binary->error ? binary->error : "Error reading skeleton data file.");
+    spSkeletonBinary_dispose(binary);
+    
+    setSkeletonData(skeletonData, true);
+    
+    initialize();
+}
 
 
 void SkeletonRenderer::update (float deltaTime) {
@@ -152,8 +184,8 @@ void SkeletonRenderer::draw (Renderer* renderer, const Mat4& transform, uint32_t
 	_skeleton->g = nodeColor.g / (float)255;
 	_skeleton->b = nodeColor.b / (float)255;
 	_skeleton->a = getDisplayedOpacity() / (float)255;
-
-	Color4B color;
+    
+    Color4F color;
 	AttachmentVertices* attachmentVertices = nullptr;
 	for (int i = 0, n = _skeleton->slotsCount; i < n; ++i) {
 		spSlot* slot = _skeleton->drawOrder[i];
@@ -164,7 +196,7 @@ void SkeletonRenderer::draw (Renderer* renderer, const Mat4& transform, uint32_t
 			spRegionAttachment* attachment = (spRegionAttachment*)slot->attachment;
 			spRegionAttachment_computeWorldVertices(attachment, slot->bone, _worldVertices);
 			attachmentVertices = getAttachmentVertices(attachment);
-			color.r = attachment->r;
+            color.r = attachment->r;
 			color.g = attachment->g;
 			color.b = attachment->b;
 			color.a = attachment->a;
@@ -174,10 +206,10 @@ void SkeletonRenderer::draw (Renderer* renderer, const Mat4& transform, uint32_t
 			spMeshAttachment* attachment = (spMeshAttachment*)slot->attachment;
 			spMeshAttachment_computeWorldVertices(attachment, slot, _worldVertices);
 			attachmentVertices = getAttachmentVertices(attachment);
-			color.r = attachment->r;
-			color.g = attachment->g;
-			color.b = attachment->b;
-			color.a = attachment->a;
+            color.r = attachment->r;
+            color.g = attachment->g;
+            color.b = attachment->b;
+            color.a = attachment->a;
 			break;
 		}
 		default:
@@ -189,12 +221,17 @@ void SkeletonRenderer::draw (Renderer* renderer, const Mat4& transform, uint32_t
 		color.r *= _skeleton->r * slot->r * multiplier;
 		color.g *= _skeleton->g * slot->g * multiplier;
 		color.b *= _skeleton->b * slot->b * multiplier;
-
+        
+        
+        
 		for (int v = 0, w = 0, vn = attachmentVertices->_triangles->vertCount; v < vn; ++v, w += 2) {
 			V3F_C4B_T2F* vertex = attachmentVertices->_triangles->verts + v;
 			vertex->vertices.x = _worldVertices[w];
 			vertex->vertices.y = _worldVertices[w + 1];
-			vertex->colors = color;
+            vertex->colors.r = (GLubyte)color.r;
+            vertex->colors.g = (GLubyte)color.g;
+            vertex->colors.b = (GLubyte)color.b;
+            vertex->colors.a = (GLubyte)color.a;
 		}
 
 		BlendFunc blendFunc;
@@ -282,7 +319,7 @@ AttachmentVertices* SkeletonRenderer::getAttachmentVertices (spMeshAttachment* a
 }
 
 Rect SkeletonRenderer::getBoundingBox () const {
-	float minX = FLT_MAX, minY = FLT_MAX, maxX = FLT_MIN, maxY = FLT_MIN;
+	float minX = FLT_MAX, minY = FLT_MAX, maxX = -FLT_MAX, maxY = -FLT_MAX;
 	float scaleX = getScaleX(), scaleY = getScaleY();
 	for (int i = 0; i < _skeleton->slotsCount; ++i) {
 		spSlot* slot = _skeleton->slots[i];

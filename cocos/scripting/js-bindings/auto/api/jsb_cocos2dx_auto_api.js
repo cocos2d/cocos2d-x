@@ -968,13 +968,13 @@ removeAllComponents : function (
 },
 
 /**
- * @method getOpacity
- * @return {unsigned char}
+ * @method _setLocalZOrder
+ * @param {int} arg0
  */
-getOpacity : function (
+_setLocalZOrder : function (
+int 
 )
 {
-    return 0;
 },
 
 /**
@@ -1331,7 +1331,7 @@ getAnchorPoint : function (
 
 /**
  * @method getNumberOfRunningActions
- * @return {long}
+ * @return {int}
  */
 getNumberOfRunningActions : function (
 )
@@ -1359,7 +1359,7 @@ isVisible : function (
 
 /**
  * @method getChildrenCount
- * @return {long}
+ * @return {int}
  */
 getChildrenCount : function (
 )
@@ -2059,6 +2059,16 @@ getScale : function (
 },
 
 /**
+ * @method getOpacity
+ * @return {unsigned char}
+ */
+getOpacity : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method updateOrderOfArrival
  */
 updateOrderOfArrival : function (
@@ -2172,7 +2182,7 @@ Node : function (
 /**
  * @class __NodeRGBA
  */
-cc.NodeRGBA = {
+cc.__NodeRGBA = {
 
 /**
  * @method __NodeRGBA
@@ -3553,15 +3563,6 @@ reverse : function (
     return cc.Action;
 },
 
-/**
- * @method Action
- * @constructor
- */
-Action : function (
-)
-{
-},
-
 };
 
 /**
@@ -3792,7 +3793,7 @@ hasPremultipliedAlpha : function (
 
 /**
  * @method getDataLen
- * @return {long}
+ * @return {int}
  */
 getDataLen : function (
 )
@@ -3939,7 +3940,7 @@ getMipmaps : function (
 /**
  * @method initWithRawData
  * @param {unsigned char} arg0
- * @param {long} arg1
+ * @param {int} arg1
  * @param {int} arg2
  * @param {int} arg3
  * @param {int} arg4
@@ -3948,7 +3949,7 @@ getMipmaps : function (
  */
 initWithRawData : function (
 char, 
-long, 
+int, 
 int, 
 int, 
 int, 
@@ -4131,12 +4132,12 @@ str
 /**
  * @method setUniformVec2v
 * @param {int|String} int
-* @param {long|long} long
+* @param {int|int} int
 * @param {vec2_object|vec2_object} vec2
 */
 setUniformVec2v : function(
 str,
-long,
+int,
 vec2 
 )
 {
@@ -4144,7 +4145,7 @@ vec2
 
 /**
  * @method getUniformCount
- * @return {long}
+ * @return {int}
  */
 getUniformCount : function (
 )
@@ -4183,12 +4184,12 @@ glprogram
 /**
  * @method setUniformFloatv
 * @param {int|String} int
-* @param {long|long} long
+* @param {int|int} int
 * @param {float|float} float
 */
 setUniformFloatv : function(
 str,
-long,
+int,
 float 
 )
 {
@@ -4251,12 +4252,12 @@ mat4
 /**
  * @method setUniformVec3v
 * @param {int|String} int
-* @param {long|long} long
+* @param {int|int} int
 * @param {vec3_object|vec3_object} vec3
 */
 setUniformVec3v : function(
 str,
-long,
+int,
 vec3 
 )
 {
@@ -4264,7 +4265,7 @@ vec3
 
 /**
  * @method getVertexAttribCount
- * @return {long}
+ * @return {int}
  */
 getVertexAttribCount : function (
 )
@@ -6557,9 +6558,13 @@ char
 
 /**
  * @method getString
+ * @param {char} arg0
+ * @param {char} arg1
  * @return {char}
  */
 getString : function (
+char, 
+char 
 )
 {
     return 0;
@@ -6567,9 +6572,11 @@ getString : function (
 
 /**
  * @method getLong
+ * @param {char} arg0
  * @return {long}
  */
 getLong : function (
+char 
 )
 {
     return 0;
@@ -6677,9 +6684,13 @@ char
 
 /**
  * @method getBool
+ * @param {char} arg0
+ * @param {bool} arg1
  * @return {bool}
  */
 getBool : function (
+char, 
+bool 
 )
 {
     return false;
@@ -6701,9 +6712,11 @@ vec3
 
 /**
  * @method getType
+ * @param {char} arg0
  * @return {cc.Properties::Type}
  */
 getType : function (
+char 
 )
 {
     return 0;
@@ -6721,9 +6734,11 @@ getNextNamespace : function (
 
 /**
  * @method getInt
+ * @param {char} arg0
  * @return {int}
  */
 getInt : function (
+char 
 )
 {
     return 0;
@@ -6783,9 +6798,11 @@ getNextProperty : function (
 
 /**
  * @method getFloat
+ * @param {char} arg0
  * @return {float}
  */
 getFloat : function (
+char 
 )
 {
     return 0;
@@ -8278,96 +8295,6 @@ float
 };
 
 /**
- * @class EaseIn
- */
-cc.EaseIn = {
-
-/**
- * @method create
- * @param {cc.ActionInterval} arg0
- * @param {float} arg1
- * @return {cc.EaseIn}
- */
-create : function (
-actioninterval, 
-float 
-)
-{
-    return cc.EaseIn;
-},
-
-/**
- * @method EaseIn
- * @constructor
- */
-EaseIn : function (
-)
-{
-},
-
-};
-
-/**
- * @class EaseOut
- */
-cc.EaseOut = {
-
-/**
- * @method create
- * @param {cc.ActionInterval} arg0
- * @param {float} arg1
- * @return {cc.EaseOut}
- */
-create : function (
-actioninterval, 
-float 
-)
-{
-    return cc.EaseOut;
-},
-
-/**
- * @method EaseOut
- * @constructor
- */
-EaseOut : function (
-)
-{
-},
-
-};
-
-/**
- * @class EaseInOut
- */
-cc.EaseInOut = {
-
-/**
- * @method create
- * @param {cc.ActionInterval} arg0
- * @param {float} arg1
- * @return {cc.EaseInOut}
- */
-create : function (
-actioninterval, 
-float 
-)
-{
-    return cc.EaseInOut;
-},
-
-/**
- * @method EaseInOut
- * @constructor
- */
-EaseInOut : function (
-)
-{
-},
-
-};
-
-/**
  * @class EaseExponentialIn
  */
 cc.EaseExponentialIn = {
@@ -8529,137 +8456,6 @@ actioninterval
  * @constructor
  */
 EaseSineInOut : function (
-)
-{
-},
-
-};
-
-/**
- * @class EaseElastic
- */
-cc.EaseElastic = {
-
-/**
- * @method setPeriod
- * @param {float} arg0
- */
-setPeriod : function (
-float 
-)
-{
-},
-
-/**
- * @method initWithAction
- * @param {cc.ActionInterval} arg0
- * @param {float} arg1
- * @return {bool}
- */
-initWithAction : function (
-actioninterval, 
-float 
-)
-{
-    return false;
-},
-
-/**
- * @method getPeriod
- * @return {float}
- */
-getPeriod : function (
-)
-{
-    return 0;
-},
-
-};
-
-/**
- * @class EaseElasticIn
- */
-cc.EaseElasticIn = {
-
-/**
- * @method create
-* @param {cc.ActionInterval|cc.ActionInterval} actioninterval
-* @param {float} float
-* @return {cc.EaseElasticIn|cc.EaseElasticIn}
-*/
-create : function(
-actioninterval,
-float 
-)
-{
-    return cc.EaseElasticIn;
-},
-
-/**
- * @method EaseElasticIn
- * @constructor
- */
-EaseElasticIn : function (
-)
-{
-},
-
-};
-
-/**
- * @class EaseElasticOut
- */
-cc.EaseElasticOut = {
-
-/**
- * @method create
-* @param {cc.ActionInterval|cc.ActionInterval} actioninterval
-* @param {float} float
-* @return {cc.EaseElasticOut|cc.EaseElasticOut}
-*/
-create : function(
-actioninterval,
-float 
-)
-{
-    return cc.EaseElasticOut;
-},
-
-/**
- * @method EaseElasticOut
- * @constructor
- */
-EaseElasticOut : function (
-)
-{
-},
-
-};
-
-/**
- * @class EaseElasticInOut
- */
-cc.EaseElasticInOut = {
-
-/**
- * @method create
-* @param {cc.ActionInterval|cc.ActionInterval} actioninterval
-* @param {float} float
-* @return {cc.EaseElasticInOut|cc.EaseElasticInOut}
-*/
-create : function(
-actioninterval,
-float 
-)
-{
-    return cc.EaseElasticInOut;
-},
-
-/**
- * @method EaseElasticInOut
- * @constructor
- */
-EaseElasticInOut : function (
 )
 {
 },
@@ -8835,50 +8631,6 @@ actioninterval
  * @constructor
  */
 EaseBackInOut : function (
-)
-{
-},
-
-};
-
-/**
- * @class EaseBezierAction
- */
-cc.EaseBezierAction = {
-
-/**
- * @method setBezierParamer
- * @param {float} arg0
- * @param {float} arg1
- * @param {float} arg2
- * @param {float} arg3
- */
-setBezierParamer : function (
-float, 
-float, 
-float, 
-float 
-)
-{
-},
-
-/**
- * @method create
- * @param {cc.ActionInterval} arg0
- * @return {cc.EaseBezierAction}
- */
-create : function (
-actioninterval 
-)
-{
-    return cc.EaseBezierAction;
-},
-
-/**
- * @method EaseBezierAction
- * @constructor
- */
-EaseBezierAction : function (
 )
 {
 },
@@ -9299,6 +9051,271 @@ actioninterval
  * @constructor
  */
 EaseCubicActionInOut : function (
+)
+{
+},
+
+};
+
+/**
+ * @class EaseIn
+ */
+cc.EaseIn = {
+
+/**
+ * @method create
+ * @param {cc.ActionInterval} arg0
+ * @param {float} arg1
+ * @return {cc.EaseIn}
+ */
+create : function (
+actioninterval, 
+float 
+)
+{
+    return cc.EaseIn;
+},
+
+/**
+ * @method EaseIn
+ * @constructor
+ */
+EaseIn : function (
+)
+{
+},
+
+};
+
+/**
+ * @class EaseOut
+ */
+cc.EaseOut = {
+
+/**
+ * @method create
+ * @param {cc.ActionInterval} arg0
+ * @param {float} arg1
+ * @return {cc.EaseOut}
+ */
+create : function (
+actioninterval, 
+float 
+)
+{
+    return cc.EaseOut;
+},
+
+/**
+ * @method EaseOut
+ * @constructor
+ */
+EaseOut : function (
+)
+{
+},
+
+};
+
+/**
+ * @class EaseInOut
+ */
+cc.EaseInOut = {
+
+/**
+ * @method create
+ * @param {cc.ActionInterval} arg0
+ * @param {float} arg1
+ * @return {cc.EaseInOut}
+ */
+create : function (
+actioninterval, 
+float 
+)
+{
+    return cc.EaseInOut;
+},
+
+/**
+ * @method EaseInOut
+ * @constructor
+ */
+EaseInOut : function (
+)
+{
+},
+
+};
+
+/**
+ * @class EaseElastic
+ */
+cc.EaseElastic = {
+
+/**
+ * @method setPeriod
+ * @param {float} arg0
+ */
+setPeriod : function (
+float 
+)
+{
+},
+
+/**
+ * @method initWithAction
+ * @param {cc.ActionInterval} arg0
+ * @param {float} arg1
+ * @return {bool}
+ */
+initWithAction : function (
+actioninterval, 
+float 
+)
+{
+    return false;
+},
+
+/**
+ * @method getPeriod
+ * @return {float}
+ */
+getPeriod : function (
+)
+{
+    return 0;
+},
+
+};
+
+/**
+ * @class EaseElasticIn
+ */
+cc.EaseElasticIn = {
+
+/**
+ * @method create
+ * @param {cc.ActionInterval} arg0
+ * @param {float} arg1
+ * @return {cc.EaseElasticIn}
+ */
+create : function (
+actioninterval, 
+float 
+)
+{
+    return cc.EaseElasticIn;
+},
+
+/**
+ * @method EaseElasticIn
+ * @constructor
+ */
+EaseElasticIn : function (
+)
+{
+},
+
+};
+
+/**
+ * @class EaseElasticOut
+ */
+cc.EaseElasticOut = {
+
+/**
+ * @method create
+ * @param {cc.ActionInterval} arg0
+ * @param {float} arg1
+ * @return {cc.EaseElasticOut}
+ */
+create : function (
+actioninterval, 
+float 
+)
+{
+    return cc.EaseElasticOut;
+},
+
+/**
+ * @method EaseElasticOut
+ * @constructor
+ */
+EaseElasticOut : function (
+)
+{
+},
+
+};
+
+/**
+ * @class EaseElasticInOut
+ */
+cc.EaseElasticInOut = {
+
+/**
+ * @method create
+ * @param {cc.ActionInterval} arg0
+ * @param {float} arg1
+ * @return {cc.EaseElasticInOut}
+ */
+create : function (
+actioninterval, 
+float 
+)
+{
+    return cc.EaseElasticInOut;
+},
+
+/**
+ * @method EaseElasticInOut
+ * @constructor
+ */
+EaseElasticInOut : function (
+)
+{
+},
+
+};
+
+/**
+ * @class EaseBezierAction
+ */
+cc.EaseBezierAction = {
+
+/**
+ * @method setBezierParamer
+ * @param {float} arg0
+ * @param {float} arg1
+ * @param {float} arg2
+ * @param {float} arg3
+ */
+setBezierParamer : function (
+float, 
+float, 
+float, 
+float 
+)
+{
+},
+
+/**
+ * @method create
+ * @param {cc.ActionInterval} arg0
+ * @return {cc.EaseBezierAction}
+ */
+create : function (
+actioninterval 
+)
+{
+    return cc.EaseBezierAction;
+},
+
+/**
+ * @method EaseBezierAction
+ * @constructor
+ */
+EaseBezierAction : function (
 )
 {
 },
@@ -10563,7 +10580,7 @@ node
 /**
  * @method getNumberOfRunningActionsInTarget
  * @param {cc.Node} arg0
- * @return {long}
+ * @return {int}
  */
 getNumberOfRunningActionsInTarget : function (
 node 
@@ -11580,7 +11597,7 @@ getBlendFunc : function (
 
 /**
  * @method getQuadsToDraw
- * @return {long}
+ * @return {int}
  */
 getQuadsToDraw : function (
 )
@@ -11618,10 +11635,10 @@ int
 
 /**
  * @method setQuadsToDraw
- * @param {long} arg0
+ * @param {int} arg0
  */
 setQuadsToDraw : function (
-long 
+int 
 )
 {
 },
@@ -13478,7 +13495,7 @@ Layer : function (
 /**
  * @class __LayerRGBA
  */
-cc.LayerRGBA = {
+cc.__LayerRGBA = {
 
 /**
  * @method create
@@ -17230,7 +17247,7 @@ spriteframe
 
 /**
  * @method getAtlasIndex
- * @return {long}
+ * @return {int}
  */
 getAtlasIndex : function (
 )
@@ -17261,11 +17278,11 @@ getBlendFunc : function (
 /**
  * @method setDisplayFrameWithAnimationName
  * @param {String} arg0
- * @param {long} arg1
+ * @param {int} arg1
  */
 setDisplayFrameWithAnimationName : function (
 str, 
-long 
+int 
 )
 {
 },
@@ -17312,10 +17329,10 @@ isDirty : function (
 
 /**
  * @method setAtlasIndex
- * @param {long} arg0
+ * @param {int} arg0
  */
 setAtlasIndex : function (
-long 
+int 
 )
 {
 },
@@ -21079,7 +21096,7 @@ cc.Technique = {
 
 /**
  * @method getPassCount
- * @return {long}
+ * @return {int}
  */
 getPassCount : function (
 )
@@ -21129,11 +21146,11 @@ getName : function (
 
 /**
  * @method getPassByIndex
- * @param {long} arg0
+ * @param {int} arg0
  * @return {cc.Pass}
  */
 getPassByIndex : function (
-long 
+int 
 )
 {
     return cc.Pass;
@@ -21184,7 +21201,7 @@ clone : function (
 
 /**
  * @method getTechniqueCount
- * @return {long}
+ * @return {int}
  */
 getTechniqueCount : function (
 )
@@ -21204,11 +21221,11 @@ str
 
 /**
  * @method getTechniqueByIndex
- * @param {long} arg0
+ * @param {int} arg0
  * @return {cc.Technique}
  */
 getTechniqueByIndex : function (
-long 
+int 
 )
 {
     return cc.Technique;
@@ -21778,11 +21795,11 @@ texture2d
 
 /**
  * @method removeChildAtIndex
- * @param {long} arg0
+ * @param {int} arg0
  * @param {bool} arg1
  */
 removeChildAtIndex : function (
-long, 
+int, 
 bool 
 )
 {
@@ -21818,7 +21835,7 @@ int
  * @method atlasIndexForChild
  * @param {cc.Sprite} arg0
  * @param {int} arg1
- * @return {long}
+ * @return {int}
  */
 atlasIndexForChild : function (
 sprite, 
@@ -21839,7 +21856,7 @@ increaseAtlasCapacity : function (
 /**
  * @method lowestAtlasIndexInChild
  * @param {cc.Sprite} arg0
- * @return {long}
+ * @return {int}
  */
 lowestAtlasIndexInChild : function (
 sprite 
@@ -21861,12 +21878,12 @@ getBlendFunc : function (
 /**
  * @method initWithTexture
  * @param {cc.Texture2D} arg0
- * @param {long} arg1
+ * @param {int} arg1
  * @return {bool}
  */
 initWithTexture : function (
 texture2d, 
-long 
+int 
 )
 {
     return false;
@@ -21884,10 +21901,10 @@ textureatlas
 
 /**
  * @method reserveCapacity
- * @param {long} arg0
+ * @param {int} arg0
  */
 reserveCapacity : function (
-long 
+int 
 )
 {
 },
@@ -21895,11 +21912,11 @@ long
 /**
  * @method insertQuadFromSprite
  * @param {cc.Sprite} arg0
- * @param {long} arg1
+ * @param {int} arg1
  */
 insertQuadFromSprite : function (
 sprite, 
-long 
+int 
 )
 {
 },
@@ -21907,12 +21924,12 @@ long
 /**
  * @method initWithFile
  * @param {String} arg0
- * @param {long} arg1
+ * @param {int} arg1
  * @return {bool}
  */
 initWithFile : function (
 str, 
-long 
+int 
 )
 {
     return false;
@@ -21931,12 +21948,12 @@ blendfunc
 /**
  * @method rebuildIndexInOrder
  * @param {cc.Sprite} arg0
- * @param {long} arg1
- * @return {long}
+ * @param {int} arg1
+ * @return {int}
  */
 rebuildIndexInOrder : function (
 sprite, 
-long 
+int 
 )
 {
     return 0;
@@ -21955,7 +21972,7 @@ getTextureAtlas : function (
 /**
  * @method highestAtlasIndexInChild
  * @param {cc.Sprite} arg0
- * @return {long}
+ * @return {int}
  */
 highestAtlasIndexInChild : function (
 sprite 
@@ -21967,12 +21984,12 @@ sprite
 /**
  * @method create
  * @param {String} arg0
- * @param {long} arg1
+ * @param {int} arg1
  * @return {cc.SpriteBatchNode}
  */
 create : function (
 str, 
-long 
+int 
 )
 {
     return cc.SpriteBatchNode;
@@ -21981,12 +21998,12 @@ long
 /**
  * @method createWithTexture
  * @param {cc.Texture2D} arg0
- * @param {long} arg1
+ * @param {int} arg1
  * @return {cc.SpriteBatchNode}
  */
 createWithTexture : function (
 texture2d, 
-long 
+int 
 )
 {
     return cc.SpriteBatchNode;

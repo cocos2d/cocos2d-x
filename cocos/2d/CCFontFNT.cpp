@@ -143,8 +143,8 @@ public:
     /** initializes a BitmapFontConfiguration with a FNT file */
     bool initWithFNTfile(const std::string& FNTfile);
     
-    inline const std::string& getAtlasName(){ return _atlasName; }
-    inline void setAtlasName(const std::string& atlasName) { _atlasName = atlasName; }
+    const std::string& getAtlasName() { return _atlasName; }
+    void setAtlasName(const std::string& atlasName) { _atlasName = atlasName; }
     
     std::set<unsigned int>* getCharacterSet() const;
 private:
@@ -275,8 +275,8 @@ void BMFontConfiguration::purgeFontDefDictionary()
 
 std::set<unsigned int>* BMFontConfiguration::parseConfigFile(const std::string& controlFile)
 {
-    std::string data;
-    if (FileUtils::getInstance()->getContents(controlFile, &data) != FileUtils::Status::OK || data.empty())
+    std::string data = FileUtils::getInstance()->getStringFromFile(controlFile);
+    if (data.empty())
     {
         return nullptr;
     }

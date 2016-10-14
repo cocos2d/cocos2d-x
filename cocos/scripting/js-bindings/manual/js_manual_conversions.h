@@ -132,14 +132,14 @@ bool jsval_to_ray(JSContext *cx, JS::HandleValue vp, cocos2d::Ray* ret);
 bool jsval_to_resourcedata(JSContext *cx, JS::HandleValue v, cocos2d::ResourceData* ret);
 
 // forward declaration
-CC_JS_DLL js_proxy_t* jsb_get_js_proxy(JSObject* jsObj);
+CC_JS_DLL js_proxy_t* jsb_get_js_proxy(JS::HandleObject jsObj);
 
 template <class T>
 bool jsvals_variadic_to_ccvector( JSContext *cx, /*jsval *vp, int argc,*/const JS::CallArgs& args, cocos2d::Vector<T>* ret)
 {
     bool ok = true;
 
-    for (int i = 0; i < args.length(); i++)
+    for (unsigned i = 0; i < args.length(); i++)
     {
         js_proxy_t* p;
         JS::RootedObject obj(cx, args.get(i).toObjectOrNull());

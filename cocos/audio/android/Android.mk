@@ -26,6 +26,7 @@ LOCAL_SRC_FILES := AudioEngine-inl.cpp \
                    audio_utils/format.c \
                    audio_utils/minifloat.cpp \
                    audio_utils/primitives.c \
+                   utils/Utils.cpp
 
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../include

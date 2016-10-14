@@ -208,11 +208,11 @@ spAtlas* spAtlas_create (const char* begin, int length, const char* dir, void* r
 				page->height = toInt(tuple + 1);
 				if (!readTuple(&begin, end, tuple)) return abortAtlas(self);
 			}
-			page->format = (spAtlasFormat)indexOf(formatNames, 7, tuple);
+			page->format = (spAtlasFormat)indexOf(formatNames, 8, tuple);
 
 			if (!readTuple(&begin, end, tuple)) return abortAtlas(self);
-			page->minFilter = (spAtlasFilter)indexOf(textureFilterNames, 7, tuple);
-			page->magFilter = (spAtlasFilter)indexOf(textureFilterNames, 7, tuple + 1);
+			page->minFilter = (spAtlasFilter)indexOf(textureFilterNames, 8, tuple);
+			page->magFilter = (spAtlasFilter)indexOf(textureFilterNames, 8, tuple + 1);
 
 			if (!readValue(&begin, end, &str)) return abortAtlas(self);
 

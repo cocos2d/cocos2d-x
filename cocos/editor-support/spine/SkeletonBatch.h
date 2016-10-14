@@ -1,10 +1,10 @@
 /******************************************************************************
  * Spine Runtimes Software License
  * Version 2.3
- * 
+ *
  * Copyright (c) 2013-2015, Esoteric Software
  * All rights reserved.
- * 
+ *
  * You are granted a perpetual, non-exclusive, non-sublicensable and
  * non-transferable license to use, install, execute and perform the Spine
  * Runtimes Software (the "Software") and derivative works solely for personal
@@ -16,7 +16,7 @@
  * or other intellectual property or proprietary rights notices on or in the
  * Software, including any copy thereof. Redistributions in binary or source
  * form must include this license and terms.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY ESOTERIC SOFTWARE "AS IS" AND ANY EXPRESS OR
  * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
@@ -36,43 +36,36 @@
 #include "cocos2d.h"
 
 namespace spine {
-
-class SkeletonBatch {
-public:
-	/* Sets the max number of vertices that can be drawn in a single frame. The buffer will grow automatically as needed, but
-	 * setting it to the appropriate is more efficient. Best to call before getInstance is called for the first time. Default is
-	 * 8192. */
-	static void setBufferSize (int vertexCount);
-
-	static SkeletonBatch* getInstance ();
-
-	void update (float delta);
-
-	void addCommand (cocos2d::Renderer* renderer, float globalOrder, GLuint textureID, cocos2d::GLProgramState* glProgramState,
-		cocos2d::BlendFunc blendType, const cocos2d::TrianglesCommand:: Triangles& triangles, const cocos2d::Mat4& mv, uint32_t flags);
-
-protected:
-	SkeletonBatch (int capacity);
-	virtual ~SkeletonBatch ();
-
-	cocos2d::V3F_C4B_T2F* _buffer;
-	int _capacity;
-	int _position;
-
-	class Command {
-	public:
-		Command ();
-		virtual ~Command ();
-
-		cocos2d::TrianglesCommand* trianglesCommand;
-		cocos2d::TrianglesCommand::Triangles* triangles;
-		Command* next;
-	};
-
-	Command* _firstCommand;
-	Command* _command;
-};
-
+    
+    class SkeletonBatch {
+    public:
+        static SkeletonBatch* getInstance ();
+        
+        static void destroyInstance ();
+        
+        void update (float delta);
+        
+        void addCommand (cocos2d::Renderer* renderer, float globalOrder, GLuint textureID, cocos2d::GLProgramState* glProgramState,
+                         cocos2d::BlendFunc blendType, const cocos2d::TrianglesCommand:: Triangles& triangles, const cocos2d::Mat4& mv, uint32_t flags);
+        
+    protected:
+        SkeletonBatch ();
+        virtual ~SkeletonBatch ();
+        
+        class Command {
+        public:
+            Command ();
+            virtual ~Command ();
+            
+            cocos2d::TrianglesCommand* trianglesCommand;
+            cocos2d::TrianglesCommand::Triangles* triangles;
+            Command* next;
+        };
+        
+        Command* _firstCommand;
+        Command* _command;
+    };
+    
 }
 
 #endif // SPINE_SKELETONBATCH_H_

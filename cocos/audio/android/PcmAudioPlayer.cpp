@@ -145,6 +145,7 @@ void PcmAudioPlayer::play()
     // put track to AudioMixerController
     ALOGV("PcmAudioPlayer (%p) play (%s) ...", this, _url.c_str());
     _controller->addTrack(_track);
+    _track->setState(Track::State::PLAYING);
 }
 
 void PcmAudioPlayer::pause()

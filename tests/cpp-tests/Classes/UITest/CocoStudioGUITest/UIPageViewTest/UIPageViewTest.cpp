@@ -84,7 +84,8 @@ bool UIPageViewTest::init()
         
         pageView->removeItem(0);
         pageView->scrollToItem(pageCount - 2);
-        pageView->addEventListener((PageView::ccPageViewCallback)CC_CALLBACK_2(UIPageViewTest::pageViewEvent, this));
+        //This method is deprecated, we used here only testing purpose
+        pageView->addEventListenerPageView(this, pagevieweventselector(UIPageViewTest::pageViewEvent));
         
         _uiLayer->addChild(pageView);
         
@@ -93,11 +94,11 @@ bool UIPageViewTest::init()
     return false;
 }
 
-void UIPageViewTest::pageViewEvent(Ref *pSender, PageView::EventType type)
+void UIPageViewTest::pageViewEvent(Ref *pSender, PageViewEventType type)
 {
     switch (type)
     {
-        case PageView::EventType::TURNING:
+        case PAGEVIEW_EVENT_TURNING:
         {
             PageView* pageView = dynamic_cast<PageView*>(pSender);
             
@@ -199,7 +200,9 @@ bool UIPageViewButtonTest::init()
 
 void UIPageViewButtonTest::onButtonClicked(Ref* sender, Widget::TouchEventType type)
 {
-    log("button %s clicked", static_cast<Button*>(sender)->getName().c_str());
+    if(type == Widget::TouchEventType::ENDED) {
+        log("button %s clicked", static_cast<Button*>(sender)->getName().c_str());
+    }
 }
 
 

@@ -221,7 +221,10 @@ bool Sprite1ETC1Alpha::init()
 
 void Sprite1ETC1Alpha::addNewSpriteWithCoords(Vec2 p)
 {
-    auto sprite = Sprite::create("Images/etc1-alpha.pkm");
+    auto sprite = Sprite::create("Images/grossini_dance_08.png");
+    Texture2D *etcTexture = _director->getTextureCache()->addImage("Images/etc1-alpha.pkm");
+    sprite->setTexture(etcTexture);
+    
     _background->addChild(sprite);
 
     sprite->setPosition(Vec2(p.x, p.y));

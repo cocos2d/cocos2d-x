@@ -404,23 +404,23 @@ public:
     @brief Get the amplitude of the effect.
     @return Return the amplitude of the effect.
     */
-    inline float getAmplitude() const { return _amplitude; }
+    float getAmplitude() const { return _amplitude; }
     /**
     @brief Set the amplitude to the effect.
     @param amplitude The value of amplitude will be set.
     */
-    inline void setAmplitude(float amplitude) { _amplitude = amplitude; }
+    void setAmplitude(float amplitude) { _amplitude = amplitude; }
 
     /**
     @brief Get the amplitude rate of the effect.
     @return Return the amplitude rate of the effect.
     */
-    inline float getAmplitudeRate() const { return _amplitudeRate; }
+    float getAmplitudeRate() const { return _amplitudeRate; }
     /**
     @brief Set the amplitude rate of the effect.
     @param amplitudeRate The value of amplitude rate will be set.
     */
-    inline void setAmplitudeRate(float amplitudeRate) { _amplitudeRate = amplitudeRate; }
+    void setAmplitudeRate(float amplitudeRate) { _amplitudeRate = amplitudeRate; }
 
     // Override
     virtual WavesTiles3D* clone() const override;
@@ -470,23 +470,23 @@ public:
     @brief Get the amplitude of the effect.
     @return Return the amplitude of the effect.
     */
-    inline float getAmplitude() const { return _amplitude; }
+    float getAmplitude() const { return _amplitude; }
     /**
     @brief Set the amplitude to the effect.
     @param amplitude The value of amplitude will be set.
     */
-    inline void setAmplitude(float amplitude) { _amplitude = amplitude; }
+    void setAmplitude(float amplitude) { _amplitude = amplitude; }
 
     /**
     @brief Get the amplitude rate of the effect.
     @return Return the amplitude rate of the effect.
     */
-    inline float getAmplitudeRate() const { return _amplitudeRate; }
+    float getAmplitudeRate() const { return _amplitudeRate; }
     /**
     @brief Set the amplitude rate of the effect.
     @param amplitudeRate The value of amplitude rate will be set.
     */
-    inline void setAmplitudeRate(float amplitudeRate) { _amplitudeRate = amplitudeRate; }
+    void setAmplitudeRate(float amplitudeRate) { _amplitudeRate = amplitudeRate; }
 
     // Override
     virtual JumpTiles3D* clone() const override;

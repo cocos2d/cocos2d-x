@@ -129,6 +129,10 @@ static NSSize _calculateRealSizeForString(NSAttributedString **str, id font, NSS
         while (actualSize.size.width > constrainSize.width ||
                actualSize.size.height > constrainSize.height) {
             fontSize = fontSize - 1;
+            if (fontSize < 0) {
+                actualSize = CGRectMake(0, 0, 0, 0);
+                break;
+            }
             
             NSMutableAttributedString *mutableString = [[*str mutableCopy] autorelease];
             *str = __attributedStringWithFontSize(mutableString, fontSize);
@@ -162,6 +166,10 @@ static NSSize _calculateRealSizeForString(NSAttributedString **str, id font, NSS
         while (actualSize.size.height > constrainSize.height
                ||actualSize.size.width > constrainSize.width) {
             fontSize = fontSize - 1;
+            if (fontSize < 0) {
+                actualSize = CGRectMake(0, 0, 0, 0);
+                break;
+            }
             
             NSMutableAttributedString *mutableString = [[*str mutableCopy] autorelease];
             *str = __attributedStringWithFontSize(mutableString, fontSize);
@@ -200,18 +208,10 @@ static NSFont* _createSystemFont(const char* fontName, int size)
     fntName = [[fntName lastPathComponent] stringByDeletingPathExtension];
     
     // font
-    NSFont *font = [[NSFontManager sharedFontManager]
-                    fontWithFamily:fntName
-                    traits:NSUnboldFontMask | NSUnitalicFontMask
-                    weight:0
-                    size:size];
+    NSFont *font = [NSFont fontWithName:fntName size:size];
     
     if (font == nil) {
-        font = [[NSFontManager sharedFontManager]
-                fontWithFamily:@"Arial"
-                traits:NSUnboldFontMask | NSUnitalicFontMask
-                weight:0
-                size:size];
+        font = [NSFont systemFontOfSize:size];
     }
     return font;
 }

@@ -67,11 +67,11 @@ vec4 getPosition()
     }
 
     vec4 _skinnedPosition;
-    vec4 postion = vec4(a_position, 1.0);
-    _skinnedPosition.x = dot(postion, matrixPalette1);
-    _skinnedPosition.y = dot(postion, matrixPalette2);
-    _skinnedPosition.z = dot(postion, matrixPalette3);
-    _skinnedPosition.w = postion.w;
+    vec4 position = vec4(a_position, 1.0);
+    _skinnedPosition.x = dot(position, matrixPalette1);
+    _skinnedPosition.y = dot(position, matrixPalette2);
+    _skinnedPosition.z = dot(position, matrixPalette3);
+    _skinnedPosition.w = position.w;
     
     return _skinnedPosition;
 }

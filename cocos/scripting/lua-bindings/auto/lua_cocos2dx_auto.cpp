@@ -5251,7 +5251,7 @@ int lua_cocos2dx_Node_removeAllComponents(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_Node_getOpacity(lua_State* tolua_S)
+int lua_cocos2dx_Node__setLocalZOrder(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Node* cobj = nullptr;
@@ -5271,29 +5271,32 @@ int lua_cocos2dx_Node_getOpacity(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getOpacity'", nullptr);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node__setLocalZOrder'", nullptr);
         return 0;
     }
 #endif
 
     argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
+    if (argc == 1) 
     {
+        int arg0;
+
+        ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "cc.Node:_setLocalZOrder");
         if(!ok)
         {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Node_getOpacity'", nullptr);
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Node__setLocalZOrder'", nullptr);
             return 0;
         }
-        uint16_t ret = cobj->getOpacity();
-        tolua_pushnumber(tolua_S,(lua_Number)ret);
+        cobj->_setLocalZOrder(arg0);
+        lua_settop(tolua_S, 1);
         return 1;
     }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Node:getOpacity",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Node:_setLocalZOrder",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Node_getOpacity'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Node__setLocalZOrder'.",&tolua_err);
 #endif
 
     return 0;
@@ -10376,6 +10379,53 @@ int lua_cocos2dx_Node_getScale(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_Node_getOpacity(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Node* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Node",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Node*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getOpacity'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Node_getOpacity'", nullptr);
+            return 0;
+        }
+        uint16_t ret = cobj->getOpacity();
+        tolua_pushnumber(tolua_S,(lua_Number)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Node:getOpacity",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Node_getOpacity'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_Node_updateOrderOfArrival(lua_State* tolua_S)
 {
     int argc = 0;
@@ -10865,7 +10915,7 @@ int lua_register_cocos2dx_Node(lua_State* tolua_S)
         tolua_function(tolua_S,"setRotationSkewX",lua_cocos2dx_Node_setRotationSkewX);
         tolua_function(tolua_S,"setonEnterTransitionDidFinishCallback",lua_cocos2dx_Node_setonEnterTransitionDidFinishCallback);
         tolua_function(tolua_S,"removeAllComponents",lua_cocos2dx_Node_removeAllComponents);
-        tolua_function(tolua_S,"getOpacity",lua_cocos2dx_Node_getOpacity);
+        tolua_function(tolua_S,"_setLocalZOrder",lua_cocos2dx_Node__setLocalZOrder);
         tolua_function(tolua_S,"setCameraMask",lua_cocos2dx_Node_setCameraMask);
         tolua_function(tolua_S,"getTag",lua_cocos2dx_Node_getTag);
         tolua_function(tolua_S,"getGLProgram",lua_cocos2dx_Node_getGLProgram);
@@ -10968,6 +11018,7 @@ int lua_register_cocos2dx_Node(lua_State* tolua_S)
         tolua_function(tolua_S,"sortAllChildren",lua_cocos2dx_Node_sortAllChildren);
         tolua_function(tolua_S,"getWorldToNodeTransform",lua_cocos2dx_Node_getWorldToNodeTransform);
         tolua_function(tolua_S,"getScale",lua_cocos2dx_Node_getScale);
+        tolua_function(tolua_S,"getOpacity",lua_cocos2dx_Node_getOpacity);
         tolua_function(tolua_S,"updateOrderOfArrival",lua_cocos2dx_Node_updateOrderOfArrival);
         tolua_function(tolua_S,"getNormalizedPosition",lua_cocos2dx_Node_getNormalizedPosition);
         tolua_function(tolua_S,"getRotationSkewX",lua_cocos2dx_Node_getRotationSkewX);
@@ -37657,294 +37708,6 @@ int lua_register_cocos2dx_EaseRateAction(lua_State* tolua_S)
     return 1;
 }
 
-int lua_cocos2dx_EaseIn_create(lua_State* tolua_S)
-{
-    int argc = 0;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertable(tolua_S,1,"cc.EaseIn",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    argc = lua_gettop(tolua_S) - 1;
-
-    if (argc == 2)
-    {
-        cocos2d::ActionInterval* arg0;
-        double arg1;
-        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.EaseIn:create");
-        ok &= luaval_to_number(tolua_S, 3,&arg1, "cc.EaseIn:create");
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EaseIn_create'", nullptr);
-            return 0;
-        }
-        cocos2d::EaseIn* ret = cocos2d::EaseIn::create(arg0, arg1);
-        object_to_luaval<cocos2d::EaseIn>(tolua_S, "cc.EaseIn",(cocos2d::EaseIn*)ret);
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "cc.EaseIn:create",argc, 2);
-    return 0;
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_EaseIn_create'.",&tolua_err);
-#endif
-    return 0;
-}
-int lua_cocos2dx_EaseIn_constructor(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::EaseIn* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EaseIn_constructor'", nullptr);
-            return 0;
-        }
-        cobj = new cocos2d::EaseIn();
-        cobj->autorelease();
-        int ID =  (int)cobj->_ID ;
-        int* luaID =  &cobj->_luaID ;
-        toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)cobj,"cc.EaseIn");
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.EaseIn:EaseIn",argc, 0);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_EaseIn_constructor'.",&tolua_err);
-#endif
-
-    return 0;
-}
-
-static int lua_cocos2dx_EaseIn_finalize(lua_State* tolua_S)
-{
-    printf("luabindings: finalizing LUA object (EaseIn)");
-    return 0;
-}
-
-int lua_register_cocos2dx_EaseIn(lua_State* tolua_S)
-{
-    tolua_usertype(tolua_S,"cc.EaseIn");
-    tolua_cclass(tolua_S,"EaseIn","cc.EaseIn","cc.EaseRateAction",nullptr);
-
-    tolua_beginmodule(tolua_S,"EaseIn");
-        tolua_function(tolua_S,"new",lua_cocos2dx_EaseIn_constructor);
-        tolua_function(tolua_S,"create", lua_cocos2dx_EaseIn_create);
-    tolua_endmodule(tolua_S);
-    std::string typeName = typeid(cocos2d::EaseIn).name();
-    g_luaType[typeName] = "cc.EaseIn";
-    g_typeCast["EaseIn"] = "cc.EaseIn";
-    return 1;
-}
-
-int lua_cocos2dx_EaseOut_create(lua_State* tolua_S)
-{
-    int argc = 0;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertable(tolua_S,1,"cc.EaseOut",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    argc = lua_gettop(tolua_S) - 1;
-
-    if (argc == 2)
-    {
-        cocos2d::ActionInterval* arg0;
-        double arg1;
-        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.EaseOut:create");
-        ok &= luaval_to_number(tolua_S, 3,&arg1, "cc.EaseOut:create");
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EaseOut_create'", nullptr);
-            return 0;
-        }
-        cocos2d::EaseOut* ret = cocos2d::EaseOut::create(arg0, arg1);
-        object_to_luaval<cocos2d::EaseOut>(tolua_S, "cc.EaseOut",(cocos2d::EaseOut*)ret);
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "cc.EaseOut:create",argc, 2);
-    return 0;
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_EaseOut_create'.",&tolua_err);
-#endif
-    return 0;
-}
-int lua_cocos2dx_EaseOut_constructor(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::EaseOut* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EaseOut_constructor'", nullptr);
-            return 0;
-        }
-        cobj = new cocos2d::EaseOut();
-        cobj->autorelease();
-        int ID =  (int)cobj->_ID ;
-        int* luaID =  &cobj->_luaID ;
-        toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)cobj,"cc.EaseOut");
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.EaseOut:EaseOut",argc, 0);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_EaseOut_constructor'.",&tolua_err);
-#endif
-
-    return 0;
-}
-
-static int lua_cocos2dx_EaseOut_finalize(lua_State* tolua_S)
-{
-    printf("luabindings: finalizing LUA object (EaseOut)");
-    return 0;
-}
-
-int lua_register_cocos2dx_EaseOut(lua_State* tolua_S)
-{
-    tolua_usertype(tolua_S,"cc.EaseOut");
-    tolua_cclass(tolua_S,"EaseOut","cc.EaseOut","cc.EaseRateAction",nullptr);
-
-    tolua_beginmodule(tolua_S,"EaseOut");
-        tolua_function(tolua_S,"new",lua_cocos2dx_EaseOut_constructor);
-        tolua_function(tolua_S,"create", lua_cocos2dx_EaseOut_create);
-    tolua_endmodule(tolua_S);
-    std::string typeName = typeid(cocos2d::EaseOut).name();
-    g_luaType[typeName] = "cc.EaseOut";
-    g_typeCast["EaseOut"] = "cc.EaseOut";
-    return 1;
-}
-
-int lua_cocos2dx_EaseInOut_create(lua_State* tolua_S)
-{
-    int argc = 0;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertable(tolua_S,1,"cc.EaseInOut",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    argc = lua_gettop(tolua_S) - 1;
-
-    if (argc == 2)
-    {
-        cocos2d::ActionInterval* arg0;
-        double arg1;
-        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.EaseInOut:create");
-        ok &= luaval_to_number(tolua_S, 3,&arg1, "cc.EaseInOut:create");
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EaseInOut_create'", nullptr);
-            return 0;
-        }
-        cocos2d::EaseInOut* ret = cocos2d::EaseInOut::create(arg0, arg1);
-        object_to_luaval<cocos2d::EaseInOut>(tolua_S, "cc.EaseInOut",(cocos2d::EaseInOut*)ret);
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "cc.EaseInOut:create",argc, 2);
-    return 0;
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_EaseInOut_create'.",&tolua_err);
-#endif
-    return 0;
-}
-int lua_cocos2dx_EaseInOut_constructor(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::EaseInOut* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EaseInOut_constructor'", nullptr);
-            return 0;
-        }
-        cobj = new cocos2d::EaseInOut();
-        cobj->autorelease();
-        int ID =  (int)cobj->_ID ;
-        int* luaID =  &cobj->_luaID ;
-        toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)cobj,"cc.EaseInOut");
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.EaseInOut:EaseInOut",argc, 0);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_EaseInOut_constructor'.",&tolua_err);
-#endif
-
-    return 0;
-}
-
-static int lua_cocos2dx_EaseInOut_finalize(lua_State* tolua_S)
-{
-    printf("luabindings: finalizing LUA object (EaseInOut)");
-    return 0;
-}
-
-int lua_register_cocos2dx_EaseInOut(lua_State* tolua_S)
-{
-    tolua_usertype(tolua_S,"cc.EaseInOut");
-    tolua_cclass(tolua_S,"EaseInOut","cc.EaseInOut","cc.EaseRateAction",nullptr);
-
-    tolua_beginmodule(tolua_S,"EaseInOut");
-        tolua_function(tolua_S,"new",lua_cocos2dx_EaseInOut_constructor);
-        tolua_function(tolua_S,"create", lua_cocos2dx_EaseInOut_create);
-    tolua_endmodule(tolua_S);
-    std::string typeName = typeid(cocos2d::EaseInOut).name();
-    g_luaType[typeName] = "cc.EaseInOut";
-    g_typeCast["EaseInOut"] = "cc.EaseInOut";
-    return 1;
-}
-
 int lua_cocos2dx_EaseExponentialIn_create(lua_State* tolua_S)
 {
     int argc = 0;
@@ -38509,519 +38272,6 @@ int lua_register_cocos2dx_EaseSineInOut(lua_State* tolua_S)
     return 1;
 }
 
-int lua_cocos2dx_EaseElastic_setPeriod(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::EaseElastic* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.EaseElastic",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::EaseElastic*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EaseElastic_setPeriod'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 1) 
-    {
-        double arg0;
-
-        ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.EaseElastic:setPeriod");
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EaseElastic_setPeriod'", nullptr);
-            return 0;
-        }
-        cobj->setPeriod(arg0);
-        lua_settop(tolua_S, 1);
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.EaseElastic:setPeriod",argc, 1);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_EaseElastic_setPeriod'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_EaseElastic_initWithAction(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::EaseElastic* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.EaseElastic",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::EaseElastic*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EaseElastic_initWithAction'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 1) 
-    {
-        cocos2d::ActionInterval* arg0;
-
-        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.EaseElastic:initWithAction");
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EaseElastic_initWithAction'", nullptr);
-            return 0;
-        }
-        bool ret = cobj->initWithAction(arg0);
-        tolua_pushboolean(tolua_S,(bool)ret);
-        return 1;
-    }
-    if (argc == 2) 
-    {
-        cocos2d::ActionInterval* arg0;
-        double arg1;
-
-        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.EaseElastic:initWithAction");
-
-        ok &= luaval_to_number(tolua_S, 3,&arg1, "cc.EaseElastic:initWithAction");
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EaseElastic_initWithAction'", nullptr);
-            return 0;
-        }
-        bool ret = cobj->initWithAction(arg0, arg1);
-        tolua_pushboolean(tolua_S,(bool)ret);
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.EaseElastic:initWithAction",argc, 1);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_EaseElastic_initWithAction'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_EaseElastic_getPeriod(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::EaseElastic* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.EaseElastic",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::EaseElastic*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EaseElastic_getPeriod'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EaseElastic_getPeriod'", nullptr);
-            return 0;
-        }
-        double ret = cobj->getPeriod();
-        tolua_pushnumber(tolua_S,(lua_Number)ret);
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.EaseElastic:getPeriod",argc, 0);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_EaseElastic_getPeriod'.",&tolua_err);
-#endif
-
-    return 0;
-}
-static int lua_cocos2dx_EaseElastic_finalize(lua_State* tolua_S)
-{
-    printf("luabindings: finalizing LUA object (EaseElastic)");
-    return 0;
-}
-
-int lua_register_cocos2dx_EaseElastic(lua_State* tolua_S)
-{
-    tolua_usertype(tolua_S,"cc.EaseElastic");
-    tolua_cclass(tolua_S,"EaseElastic","cc.EaseElastic","cc.ActionEase",nullptr);
-
-    tolua_beginmodule(tolua_S,"EaseElastic");
-        tolua_function(tolua_S,"setPeriod",lua_cocos2dx_EaseElastic_setPeriod);
-        tolua_function(tolua_S,"initWithAction",lua_cocos2dx_EaseElastic_initWithAction);
-        tolua_function(tolua_S,"getPeriod",lua_cocos2dx_EaseElastic_getPeriod);
-    tolua_endmodule(tolua_S);
-    std::string typeName = typeid(cocos2d::EaseElastic).name();
-    g_luaType[typeName] = "cc.EaseElastic";
-    g_typeCast["EaseElastic"] = "cc.EaseElastic";
-    return 1;
-}
-
-int lua_cocos2dx_EaseElasticIn_create(lua_State* tolua_S)
-{
-    int argc = 0;
-    bool ok  = true;
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertable(tolua_S,1,"cc.EaseElasticIn",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-
-    do 
-    {
-        if (argc == 1)
-        {
-            cocos2d::ActionInterval* arg0;
-            ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.EaseElasticIn:create");
-            if (!ok) { break; }
-            cocos2d::EaseElasticIn* ret = cocos2d::EaseElasticIn::create(arg0);
-            object_to_luaval<cocos2d::EaseElasticIn>(tolua_S, "cc.EaseElasticIn",(cocos2d::EaseElasticIn*)ret);
-            return 1;
-        }
-    } while (0);
-    ok  = true;
-    do 
-    {
-        if (argc == 2)
-        {
-            cocos2d::ActionInterval* arg0;
-            ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.EaseElasticIn:create");
-            if (!ok) { break; }
-            double arg1;
-            ok &= luaval_to_number(tolua_S, 3,&arg1, "cc.EaseElasticIn:create");
-            if (!ok) { break; }
-            cocos2d::EaseElasticIn* ret = cocos2d::EaseElasticIn::create(arg0, arg1);
-            object_to_luaval<cocos2d::EaseElasticIn>(tolua_S, "cc.EaseElasticIn",(cocos2d::EaseElasticIn*)ret);
-            return 1;
-        }
-    } while (0);
-    ok  = true;
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d", "cc.EaseElasticIn:create",argc, 2);
-    return 0;
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_EaseElasticIn_create'.",&tolua_err);
-#endif
-    return 0;
-}
-int lua_cocos2dx_EaseElasticIn_constructor(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::EaseElasticIn* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EaseElasticIn_constructor'", nullptr);
-            return 0;
-        }
-        cobj = new cocos2d::EaseElasticIn();
-        cobj->autorelease();
-        int ID =  (int)cobj->_ID ;
-        int* luaID =  &cobj->_luaID ;
-        toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)cobj,"cc.EaseElasticIn");
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.EaseElasticIn:EaseElasticIn",argc, 0);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_EaseElasticIn_constructor'.",&tolua_err);
-#endif
-
-    return 0;
-}
-
-static int lua_cocos2dx_EaseElasticIn_finalize(lua_State* tolua_S)
-{
-    printf("luabindings: finalizing LUA object (EaseElasticIn)");
-    return 0;
-}
-
-int lua_register_cocos2dx_EaseElasticIn(lua_State* tolua_S)
-{
-    tolua_usertype(tolua_S,"cc.EaseElasticIn");
-    tolua_cclass(tolua_S,"EaseElasticIn","cc.EaseElasticIn","cc.EaseElastic",nullptr);
-
-    tolua_beginmodule(tolua_S,"EaseElasticIn");
-        tolua_function(tolua_S,"new",lua_cocos2dx_EaseElasticIn_constructor);
-        tolua_function(tolua_S,"create", lua_cocos2dx_EaseElasticIn_create);
-    tolua_endmodule(tolua_S);
-    std::string typeName = typeid(cocos2d::EaseElasticIn).name();
-    g_luaType[typeName] = "cc.EaseElasticIn";
-    g_typeCast["EaseElasticIn"] = "cc.EaseElasticIn";
-    return 1;
-}
-
-int lua_cocos2dx_EaseElasticOut_create(lua_State* tolua_S)
-{
-    int argc = 0;
-    bool ok  = true;
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertable(tolua_S,1,"cc.EaseElasticOut",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-
-    do 
-    {
-        if (argc == 1)
-        {
-            cocos2d::ActionInterval* arg0;
-            ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.EaseElasticOut:create");
-            if (!ok) { break; }
-            cocos2d::EaseElasticOut* ret = cocos2d::EaseElasticOut::create(arg0);
-            object_to_luaval<cocos2d::EaseElasticOut>(tolua_S, "cc.EaseElasticOut",(cocos2d::EaseElasticOut*)ret);
-            return 1;
-        }
-    } while (0);
-    ok  = true;
-    do 
-    {
-        if (argc == 2)
-        {
-            cocos2d::ActionInterval* arg0;
-            ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.EaseElasticOut:create");
-            if (!ok) { break; }
-            double arg1;
-            ok &= luaval_to_number(tolua_S, 3,&arg1, "cc.EaseElasticOut:create");
-            if (!ok) { break; }
-            cocos2d::EaseElasticOut* ret = cocos2d::EaseElasticOut::create(arg0, arg1);
-            object_to_luaval<cocos2d::EaseElasticOut>(tolua_S, "cc.EaseElasticOut",(cocos2d::EaseElasticOut*)ret);
-            return 1;
-        }
-    } while (0);
-    ok  = true;
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d", "cc.EaseElasticOut:create",argc, 2);
-    return 0;
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_EaseElasticOut_create'.",&tolua_err);
-#endif
-    return 0;
-}
-int lua_cocos2dx_EaseElasticOut_constructor(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::EaseElasticOut* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EaseElasticOut_constructor'", nullptr);
-            return 0;
-        }
-        cobj = new cocos2d::EaseElasticOut();
-        cobj->autorelease();
-        int ID =  (int)cobj->_ID ;
-        int* luaID =  &cobj->_luaID ;
-        toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)cobj,"cc.EaseElasticOut");
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.EaseElasticOut:EaseElasticOut",argc, 0);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_EaseElasticOut_constructor'.",&tolua_err);
-#endif
-
-    return 0;
-}
-
-static int lua_cocos2dx_EaseElasticOut_finalize(lua_State* tolua_S)
-{
-    printf("luabindings: finalizing LUA object (EaseElasticOut)");
-    return 0;
-}
-
-int lua_register_cocos2dx_EaseElasticOut(lua_State* tolua_S)
-{
-    tolua_usertype(tolua_S,"cc.EaseElasticOut");
-    tolua_cclass(tolua_S,"EaseElasticOut","cc.EaseElasticOut","cc.EaseElastic",nullptr);
-
-    tolua_beginmodule(tolua_S,"EaseElasticOut");
-        tolua_function(tolua_S,"new",lua_cocos2dx_EaseElasticOut_constructor);
-        tolua_function(tolua_S,"create", lua_cocos2dx_EaseElasticOut_create);
-    tolua_endmodule(tolua_S);
-    std::string typeName = typeid(cocos2d::EaseElasticOut).name();
-    g_luaType[typeName] = "cc.EaseElasticOut";
-    g_typeCast["EaseElasticOut"] = "cc.EaseElasticOut";
-    return 1;
-}
-
-int lua_cocos2dx_EaseElasticInOut_create(lua_State* tolua_S)
-{
-    int argc = 0;
-    bool ok  = true;
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertable(tolua_S,1,"cc.EaseElasticInOut",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-
-    do 
-    {
-        if (argc == 1)
-        {
-            cocos2d::ActionInterval* arg0;
-            ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.EaseElasticInOut:create");
-            if (!ok) { break; }
-            cocos2d::EaseElasticInOut* ret = cocos2d::EaseElasticInOut::create(arg0);
-            object_to_luaval<cocos2d::EaseElasticInOut>(tolua_S, "cc.EaseElasticInOut",(cocos2d::EaseElasticInOut*)ret);
-            return 1;
-        }
-    } while (0);
-    ok  = true;
-    do 
-    {
-        if (argc == 2)
-        {
-            cocos2d::ActionInterval* arg0;
-            ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.EaseElasticInOut:create");
-            if (!ok) { break; }
-            double arg1;
-            ok &= luaval_to_number(tolua_S, 3,&arg1, "cc.EaseElasticInOut:create");
-            if (!ok) { break; }
-            cocos2d::EaseElasticInOut* ret = cocos2d::EaseElasticInOut::create(arg0, arg1);
-            object_to_luaval<cocos2d::EaseElasticInOut>(tolua_S, "cc.EaseElasticInOut",(cocos2d::EaseElasticInOut*)ret);
-            return 1;
-        }
-    } while (0);
-    ok  = true;
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d", "cc.EaseElasticInOut:create",argc, 2);
-    return 0;
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_EaseElasticInOut_create'.",&tolua_err);
-#endif
-    return 0;
-}
-int lua_cocos2dx_EaseElasticInOut_constructor(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::EaseElasticInOut* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EaseElasticInOut_constructor'", nullptr);
-            return 0;
-        }
-        cobj = new cocos2d::EaseElasticInOut();
-        cobj->autorelease();
-        int ID =  (int)cobj->_ID ;
-        int* luaID =  &cobj->_luaID ;
-        toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)cobj,"cc.EaseElasticInOut");
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.EaseElasticInOut:EaseElasticInOut",argc, 0);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_EaseElasticInOut_constructor'.",&tolua_err);
-#endif
-
-    return 0;
-}
-
-static int lua_cocos2dx_EaseElasticInOut_finalize(lua_State* tolua_S)
-{
-    printf("luabindings: finalizing LUA object (EaseElasticInOut)");
-    return 0;
-}
-
-int lua_register_cocos2dx_EaseElasticInOut(lua_State* tolua_S)
-{
-    tolua_usertype(tolua_S,"cc.EaseElasticInOut");
-    tolua_cclass(tolua_S,"EaseElasticInOut","cc.EaseElasticInOut","cc.EaseElastic",nullptr);
-
-    tolua_beginmodule(tolua_S,"EaseElasticInOut");
-        tolua_function(tolua_S,"new",lua_cocos2dx_EaseElasticInOut_constructor);
-        tolua_function(tolua_S,"create", lua_cocos2dx_EaseElasticInOut_create);
-    tolua_endmodule(tolua_S);
-    std::string typeName = typeid(cocos2d::EaseElasticInOut).name();
-    g_luaType[typeName] = "cc.EaseElasticInOut";
-    g_typeCast["EaseElasticInOut"] = "cc.EaseElasticInOut";
-    return 1;
-}
-
 static int lua_cocos2dx_EaseBounce_finalize(lua_State* tolua_S)
 {
     printf("luabindings: finalizing LUA object (EaseBounce)");
@@ -39123,7 +38373,7 @@ static int lua_cocos2dx_EaseBounceIn_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_EaseBounceIn(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.EaseBounceIn");
-    tolua_cclass(tolua_S,"EaseBounceIn","cc.EaseBounceIn","cc.EaseBounce",nullptr);
+    tolua_cclass(tolua_S,"EaseBounceIn","cc.EaseBounceIn","cc.ActionEase",nullptr);
 
     tolua_beginmodule(tolua_S,"EaseBounceIn");
         tolua_function(tolua_S,"new",lua_cocos2dx_EaseBounceIn_constructor);
@@ -39217,7 +38467,7 @@ static int lua_cocos2dx_EaseBounceOut_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_EaseBounceOut(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.EaseBounceOut");
-    tolua_cclass(tolua_S,"EaseBounceOut","cc.EaseBounceOut","cc.EaseBounce",nullptr);
+    tolua_cclass(tolua_S,"EaseBounceOut","cc.EaseBounceOut","cc.ActionEase",nullptr);
 
     tolua_beginmodule(tolua_S,"EaseBounceOut");
         tolua_function(tolua_S,"new",lua_cocos2dx_EaseBounceOut_constructor);
@@ -39311,7 +38561,7 @@ static int lua_cocos2dx_EaseBounceInOut_finalize(lua_State* tolua_S)
 int lua_register_cocos2dx_EaseBounceInOut(lua_State* tolua_S)
 {
     tolua_usertype(tolua_S,"cc.EaseBounceInOut");
-    tolua_cclass(tolua_S,"EaseBounceInOut","cc.EaseBounceInOut","cc.EaseBounce",nullptr);
+    tolua_cclass(tolua_S,"EaseBounceInOut","cc.EaseBounceInOut","cc.ActionEase",nullptr);
 
     tolua_beginmodule(tolua_S,"EaseBounceInOut");
         tolua_function(tolua_S,"new",lua_cocos2dx_EaseBounceInOut_constructor);
@@ -39602,160 +38852,6 @@ int lua_register_cocos2dx_EaseBackInOut(lua_State* tolua_S)
     std::string typeName = typeid(cocos2d::EaseBackInOut).name();
     g_luaType[typeName] = "cc.EaseBackInOut";
     g_typeCast["EaseBackInOut"] = "cc.EaseBackInOut";
-    return 1;
-}
-
-int lua_cocos2dx_EaseBezierAction_setBezierParamer(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::EaseBezierAction* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.EaseBezierAction",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::EaseBezierAction*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EaseBezierAction_setBezierParamer'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 4) 
-    {
-        double arg0;
-        double arg1;
-        double arg2;
-        double arg3;
-
-        ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.EaseBezierAction:setBezierParamer");
-
-        ok &= luaval_to_number(tolua_S, 3,&arg1, "cc.EaseBezierAction:setBezierParamer");
-
-        ok &= luaval_to_number(tolua_S, 4,&arg2, "cc.EaseBezierAction:setBezierParamer");
-
-        ok &= luaval_to_number(tolua_S, 5,&arg3, "cc.EaseBezierAction:setBezierParamer");
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EaseBezierAction_setBezierParamer'", nullptr);
-            return 0;
-        }
-        cobj->setBezierParamer(arg0, arg1, arg2, arg3);
-        lua_settop(tolua_S, 1);
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.EaseBezierAction:setBezierParamer",argc, 4);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_EaseBezierAction_setBezierParamer'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_EaseBezierAction_create(lua_State* tolua_S)
-{
-    int argc = 0;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertable(tolua_S,1,"cc.EaseBezierAction",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    argc = lua_gettop(tolua_S) - 1;
-
-    if (argc == 1)
-    {
-        cocos2d::ActionInterval* arg0;
-        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.EaseBezierAction:create");
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EaseBezierAction_create'", nullptr);
-            return 0;
-        }
-        cocos2d::EaseBezierAction* ret = cocos2d::EaseBezierAction::create(arg0);
-        object_to_luaval<cocos2d::EaseBezierAction>(tolua_S, "cc.EaseBezierAction",(cocos2d::EaseBezierAction*)ret);
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "cc.EaseBezierAction:create",argc, 1);
-    return 0;
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_EaseBezierAction_create'.",&tolua_err);
-#endif
-    return 0;
-}
-int lua_cocos2dx_EaseBezierAction_constructor(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::EaseBezierAction* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EaseBezierAction_constructor'", nullptr);
-            return 0;
-        }
-        cobj = new cocos2d::EaseBezierAction();
-        cobj->autorelease();
-        int ID =  (int)cobj->_ID ;
-        int* luaID =  &cobj->_luaID ;
-        toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)cobj,"cc.EaseBezierAction");
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.EaseBezierAction:EaseBezierAction",argc, 0);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_EaseBezierAction_constructor'.",&tolua_err);
-#endif
-
-    return 0;
-}
-
-static int lua_cocos2dx_EaseBezierAction_finalize(lua_State* tolua_S)
-{
-    printf("luabindings: finalizing LUA object (EaseBezierAction)");
-    return 0;
-}
-
-int lua_register_cocos2dx_EaseBezierAction(lua_State* tolua_S)
-{
-    tolua_usertype(tolua_S,"cc.EaseBezierAction");
-    tolua_cclass(tolua_S,"EaseBezierAction","cc.EaseBezierAction","cc.ActionEase",nullptr);
-
-    tolua_beginmodule(tolua_S,"EaseBezierAction");
-        tolua_function(tolua_S,"new",lua_cocos2dx_EaseBezierAction_constructor);
-        tolua_function(tolua_S,"setBezierParamer",lua_cocos2dx_EaseBezierAction_setBezierParamer);
-        tolua_function(tolua_S,"create", lua_cocos2dx_EaseBezierAction_create);
-    tolua_endmodule(tolua_S);
-    std::string typeName = typeid(cocos2d::EaseBezierAction).name();
-    g_luaType[typeName] = "cc.EaseBezierAction";
-    g_typeCast["EaseBezierAction"] = "cc.EaseBezierAction";
     return 1;
 }
 
@@ -41166,6 +40262,961 @@ int lua_register_cocos2dx_EaseCubicActionInOut(lua_State* tolua_S)
     std::string typeName = typeid(cocos2d::EaseCubicActionInOut).name();
     g_luaType[typeName] = "cc.EaseCubicActionInOut";
     g_typeCast["EaseCubicActionInOut"] = "cc.EaseCubicActionInOut";
+    return 1;
+}
+
+int lua_cocos2dx_EaseIn_create(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"cc.EaseIn",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (argc == 2)
+    {
+        cocos2d::ActionInterval* arg0;
+        double arg1;
+        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.EaseIn:create");
+        ok &= luaval_to_number(tolua_S, 3,&arg1, "cc.EaseIn:create");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EaseIn_create'", nullptr);
+            return 0;
+        }
+        cocos2d::EaseIn* ret = cocos2d::EaseIn::create(arg0, arg1);
+        object_to_luaval<cocos2d::EaseIn>(tolua_S, "cc.EaseIn",(cocos2d::EaseIn*)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "cc.EaseIn:create",argc, 2);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_EaseIn_create'.",&tolua_err);
+#endif
+    return 0;
+}
+int lua_cocos2dx_EaseIn_constructor(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::EaseIn* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EaseIn_constructor'", nullptr);
+            return 0;
+        }
+        cobj = new cocos2d::EaseIn();
+        cobj->autorelease();
+        int ID =  (int)cobj->_ID ;
+        int* luaID =  &cobj->_luaID ;
+        toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)cobj,"cc.EaseIn");
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.EaseIn:EaseIn",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_EaseIn_constructor'.",&tolua_err);
+#endif
+
+    return 0;
+}
+
+static int lua_cocos2dx_EaseIn_finalize(lua_State* tolua_S)
+{
+    printf("luabindings: finalizing LUA object (EaseIn)");
+    return 0;
+}
+
+int lua_register_cocos2dx_EaseIn(lua_State* tolua_S)
+{
+    tolua_usertype(tolua_S,"cc.EaseIn");
+    tolua_cclass(tolua_S,"EaseIn","cc.EaseIn","cc.EaseRateAction",nullptr);
+
+    tolua_beginmodule(tolua_S,"EaseIn");
+        tolua_function(tolua_S,"new",lua_cocos2dx_EaseIn_constructor);
+        tolua_function(tolua_S,"create", lua_cocos2dx_EaseIn_create);
+    tolua_endmodule(tolua_S);
+    std::string typeName = typeid(cocos2d::EaseIn).name();
+    g_luaType[typeName] = "cc.EaseIn";
+    g_typeCast["EaseIn"] = "cc.EaseIn";
+    return 1;
+}
+
+int lua_cocos2dx_EaseOut_create(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"cc.EaseOut",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (argc == 2)
+    {
+        cocos2d::ActionInterval* arg0;
+        double arg1;
+        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.EaseOut:create");
+        ok &= luaval_to_number(tolua_S, 3,&arg1, "cc.EaseOut:create");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EaseOut_create'", nullptr);
+            return 0;
+        }
+        cocos2d::EaseOut* ret = cocos2d::EaseOut::create(arg0, arg1);
+        object_to_luaval<cocos2d::EaseOut>(tolua_S, "cc.EaseOut",(cocos2d::EaseOut*)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "cc.EaseOut:create",argc, 2);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_EaseOut_create'.",&tolua_err);
+#endif
+    return 0;
+}
+int lua_cocos2dx_EaseOut_constructor(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::EaseOut* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EaseOut_constructor'", nullptr);
+            return 0;
+        }
+        cobj = new cocos2d::EaseOut();
+        cobj->autorelease();
+        int ID =  (int)cobj->_ID ;
+        int* luaID =  &cobj->_luaID ;
+        toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)cobj,"cc.EaseOut");
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.EaseOut:EaseOut",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_EaseOut_constructor'.",&tolua_err);
+#endif
+
+    return 0;
+}
+
+static int lua_cocos2dx_EaseOut_finalize(lua_State* tolua_S)
+{
+    printf("luabindings: finalizing LUA object (EaseOut)");
+    return 0;
+}
+
+int lua_register_cocos2dx_EaseOut(lua_State* tolua_S)
+{
+    tolua_usertype(tolua_S,"cc.EaseOut");
+    tolua_cclass(tolua_S,"EaseOut","cc.EaseOut","cc.EaseRateAction",nullptr);
+
+    tolua_beginmodule(tolua_S,"EaseOut");
+        tolua_function(tolua_S,"new",lua_cocos2dx_EaseOut_constructor);
+        tolua_function(tolua_S,"create", lua_cocos2dx_EaseOut_create);
+    tolua_endmodule(tolua_S);
+    std::string typeName = typeid(cocos2d::EaseOut).name();
+    g_luaType[typeName] = "cc.EaseOut";
+    g_typeCast["EaseOut"] = "cc.EaseOut";
+    return 1;
+}
+
+int lua_cocos2dx_EaseInOut_create(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"cc.EaseInOut",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (argc == 2)
+    {
+        cocos2d::ActionInterval* arg0;
+        double arg1;
+        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.EaseInOut:create");
+        ok &= luaval_to_number(tolua_S, 3,&arg1, "cc.EaseInOut:create");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EaseInOut_create'", nullptr);
+            return 0;
+        }
+        cocos2d::EaseInOut* ret = cocos2d::EaseInOut::create(arg0, arg1);
+        object_to_luaval<cocos2d::EaseInOut>(tolua_S, "cc.EaseInOut",(cocos2d::EaseInOut*)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "cc.EaseInOut:create",argc, 2);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_EaseInOut_create'.",&tolua_err);
+#endif
+    return 0;
+}
+int lua_cocos2dx_EaseInOut_constructor(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::EaseInOut* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EaseInOut_constructor'", nullptr);
+            return 0;
+        }
+        cobj = new cocos2d::EaseInOut();
+        cobj->autorelease();
+        int ID =  (int)cobj->_ID ;
+        int* luaID =  &cobj->_luaID ;
+        toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)cobj,"cc.EaseInOut");
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.EaseInOut:EaseInOut",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_EaseInOut_constructor'.",&tolua_err);
+#endif
+
+    return 0;
+}
+
+static int lua_cocos2dx_EaseInOut_finalize(lua_State* tolua_S)
+{
+    printf("luabindings: finalizing LUA object (EaseInOut)");
+    return 0;
+}
+
+int lua_register_cocos2dx_EaseInOut(lua_State* tolua_S)
+{
+    tolua_usertype(tolua_S,"cc.EaseInOut");
+    tolua_cclass(tolua_S,"EaseInOut","cc.EaseInOut","cc.EaseRateAction",nullptr);
+
+    tolua_beginmodule(tolua_S,"EaseInOut");
+        tolua_function(tolua_S,"new",lua_cocos2dx_EaseInOut_constructor);
+        tolua_function(tolua_S,"create", lua_cocos2dx_EaseInOut_create);
+    tolua_endmodule(tolua_S);
+    std::string typeName = typeid(cocos2d::EaseInOut).name();
+    g_luaType[typeName] = "cc.EaseInOut";
+    g_typeCast["EaseInOut"] = "cc.EaseInOut";
+    return 1;
+}
+
+int lua_cocos2dx_EaseElastic_setPeriod(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::EaseElastic* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.EaseElastic",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::EaseElastic*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EaseElastic_setPeriod'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        double arg0;
+
+        ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.EaseElastic:setPeriod");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EaseElastic_setPeriod'", nullptr);
+            return 0;
+        }
+        cobj->setPeriod(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.EaseElastic:setPeriod",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_EaseElastic_setPeriod'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_EaseElastic_initWithAction(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::EaseElastic* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.EaseElastic",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::EaseElastic*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EaseElastic_initWithAction'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        cocos2d::ActionInterval* arg0;
+
+        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.EaseElastic:initWithAction");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EaseElastic_initWithAction'", nullptr);
+            return 0;
+        }
+        bool ret = cobj->initWithAction(arg0);
+        tolua_pushboolean(tolua_S,(bool)ret);
+        return 1;
+    }
+    if (argc == 2) 
+    {
+        cocos2d::ActionInterval* arg0;
+        double arg1;
+
+        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.EaseElastic:initWithAction");
+
+        ok &= luaval_to_number(tolua_S, 3,&arg1, "cc.EaseElastic:initWithAction");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EaseElastic_initWithAction'", nullptr);
+            return 0;
+        }
+        bool ret = cobj->initWithAction(arg0, arg1);
+        tolua_pushboolean(tolua_S,(bool)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.EaseElastic:initWithAction",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_EaseElastic_initWithAction'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_EaseElastic_getPeriod(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::EaseElastic* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.EaseElastic",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::EaseElastic*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EaseElastic_getPeriod'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EaseElastic_getPeriod'", nullptr);
+            return 0;
+        }
+        double ret = cobj->getPeriod();
+        tolua_pushnumber(tolua_S,(lua_Number)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.EaseElastic:getPeriod",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_EaseElastic_getPeriod'.",&tolua_err);
+#endif
+
+    return 0;
+}
+static int lua_cocos2dx_EaseElastic_finalize(lua_State* tolua_S)
+{
+    printf("luabindings: finalizing LUA object (EaseElastic)");
+    return 0;
+}
+
+int lua_register_cocos2dx_EaseElastic(lua_State* tolua_S)
+{
+    tolua_usertype(tolua_S,"cc.EaseElastic");
+    tolua_cclass(tolua_S,"EaseElastic","cc.EaseElastic","cc.ActionEase",nullptr);
+
+    tolua_beginmodule(tolua_S,"EaseElastic");
+        tolua_function(tolua_S,"setPeriod",lua_cocos2dx_EaseElastic_setPeriod);
+        tolua_function(tolua_S,"initWithAction",lua_cocos2dx_EaseElastic_initWithAction);
+        tolua_function(tolua_S,"getPeriod",lua_cocos2dx_EaseElastic_getPeriod);
+    tolua_endmodule(tolua_S);
+    std::string typeName = typeid(cocos2d::EaseElastic).name();
+    g_luaType[typeName] = "cc.EaseElastic";
+    g_typeCast["EaseElastic"] = "cc.EaseElastic";
+    return 1;
+}
+
+int lua_cocos2dx_EaseElasticIn_create(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"cc.EaseElasticIn",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (argc == 1)
+    {
+        cocos2d::ActionInterval* arg0;
+        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.EaseElasticIn:create");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EaseElasticIn_create'", nullptr);
+            return 0;
+        }
+        cocos2d::EaseElasticIn* ret = cocos2d::EaseElasticIn::create(arg0);
+        object_to_luaval<cocos2d::EaseElasticIn>(tolua_S, "cc.EaseElasticIn",(cocos2d::EaseElasticIn*)ret);
+        return 1;
+    }
+    if (argc == 2)
+    {
+        cocos2d::ActionInterval* arg0;
+        double arg1;
+        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.EaseElasticIn:create");
+        ok &= luaval_to_number(tolua_S, 3,&arg1, "cc.EaseElasticIn:create");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EaseElasticIn_create'", nullptr);
+            return 0;
+        }
+        cocos2d::EaseElasticIn* ret = cocos2d::EaseElasticIn::create(arg0, arg1);
+        object_to_luaval<cocos2d::EaseElasticIn>(tolua_S, "cc.EaseElasticIn",(cocos2d::EaseElasticIn*)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "cc.EaseElasticIn:create",argc, 1);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_EaseElasticIn_create'.",&tolua_err);
+#endif
+    return 0;
+}
+int lua_cocos2dx_EaseElasticIn_constructor(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::EaseElasticIn* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EaseElasticIn_constructor'", nullptr);
+            return 0;
+        }
+        cobj = new cocos2d::EaseElasticIn();
+        cobj->autorelease();
+        int ID =  (int)cobj->_ID ;
+        int* luaID =  &cobj->_luaID ;
+        toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)cobj,"cc.EaseElasticIn");
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.EaseElasticIn:EaseElasticIn",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_EaseElasticIn_constructor'.",&tolua_err);
+#endif
+
+    return 0;
+}
+
+static int lua_cocos2dx_EaseElasticIn_finalize(lua_State* tolua_S)
+{
+    printf("luabindings: finalizing LUA object (EaseElasticIn)");
+    return 0;
+}
+
+int lua_register_cocos2dx_EaseElasticIn(lua_State* tolua_S)
+{
+    tolua_usertype(tolua_S,"cc.EaseElasticIn");
+    tolua_cclass(tolua_S,"EaseElasticIn","cc.EaseElasticIn","cc.EaseElastic",nullptr);
+
+    tolua_beginmodule(tolua_S,"EaseElasticIn");
+        tolua_function(tolua_S,"new",lua_cocos2dx_EaseElasticIn_constructor);
+        tolua_function(tolua_S,"create", lua_cocos2dx_EaseElasticIn_create);
+    tolua_endmodule(tolua_S);
+    std::string typeName = typeid(cocos2d::EaseElasticIn).name();
+    g_luaType[typeName] = "cc.EaseElasticIn";
+    g_typeCast["EaseElasticIn"] = "cc.EaseElasticIn";
+    return 1;
+}
+
+int lua_cocos2dx_EaseElasticOut_create(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"cc.EaseElasticOut",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (argc == 1)
+    {
+        cocos2d::ActionInterval* arg0;
+        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.EaseElasticOut:create");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EaseElasticOut_create'", nullptr);
+            return 0;
+        }
+        cocos2d::EaseElasticOut* ret = cocos2d::EaseElasticOut::create(arg0);
+        object_to_luaval<cocos2d::EaseElasticOut>(tolua_S, "cc.EaseElasticOut",(cocos2d::EaseElasticOut*)ret);
+        return 1;
+    }
+    if (argc == 2)
+    {
+        cocos2d::ActionInterval* arg0;
+        double arg1;
+        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.EaseElasticOut:create");
+        ok &= luaval_to_number(tolua_S, 3,&arg1, "cc.EaseElasticOut:create");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EaseElasticOut_create'", nullptr);
+            return 0;
+        }
+        cocos2d::EaseElasticOut* ret = cocos2d::EaseElasticOut::create(arg0, arg1);
+        object_to_luaval<cocos2d::EaseElasticOut>(tolua_S, "cc.EaseElasticOut",(cocos2d::EaseElasticOut*)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "cc.EaseElasticOut:create",argc, 1);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_EaseElasticOut_create'.",&tolua_err);
+#endif
+    return 0;
+}
+int lua_cocos2dx_EaseElasticOut_constructor(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::EaseElasticOut* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EaseElasticOut_constructor'", nullptr);
+            return 0;
+        }
+        cobj = new cocos2d::EaseElasticOut();
+        cobj->autorelease();
+        int ID =  (int)cobj->_ID ;
+        int* luaID =  &cobj->_luaID ;
+        toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)cobj,"cc.EaseElasticOut");
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.EaseElasticOut:EaseElasticOut",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_EaseElasticOut_constructor'.",&tolua_err);
+#endif
+
+    return 0;
+}
+
+static int lua_cocos2dx_EaseElasticOut_finalize(lua_State* tolua_S)
+{
+    printf("luabindings: finalizing LUA object (EaseElasticOut)");
+    return 0;
+}
+
+int lua_register_cocos2dx_EaseElasticOut(lua_State* tolua_S)
+{
+    tolua_usertype(tolua_S,"cc.EaseElasticOut");
+    tolua_cclass(tolua_S,"EaseElasticOut","cc.EaseElasticOut","cc.EaseElastic",nullptr);
+
+    tolua_beginmodule(tolua_S,"EaseElasticOut");
+        tolua_function(tolua_S,"new",lua_cocos2dx_EaseElasticOut_constructor);
+        tolua_function(tolua_S,"create", lua_cocos2dx_EaseElasticOut_create);
+    tolua_endmodule(tolua_S);
+    std::string typeName = typeid(cocos2d::EaseElasticOut).name();
+    g_luaType[typeName] = "cc.EaseElasticOut";
+    g_typeCast["EaseElasticOut"] = "cc.EaseElasticOut";
+    return 1;
+}
+
+int lua_cocos2dx_EaseElasticInOut_create(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"cc.EaseElasticInOut",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (argc == 1)
+    {
+        cocos2d::ActionInterval* arg0;
+        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.EaseElasticInOut:create");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EaseElasticInOut_create'", nullptr);
+            return 0;
+        }
+        cocos2d::EaseElasticInOut* ret = cocos2d::EaseElasticInOut::create(arg0);
+        object_to_luaval<cocos2d::EaseElasticInOut>(tolua_S, "cc.EaseElasticInOut",(cocos2d::EaseElasticInOut*)ret);
+        return 1;
+    }
+    if (argc == 2)
+    {
+        cocos2d::ActionInterval* arg0;
+        double arg1;
+        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.EaseElasticInOut:create");
+        ok &= luaval_to_number(tolua_S, 3,&arg1, "cc.EaseElasticInOut:create");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EaseElasticInOut_create'", nullptr);
+            return 0;
+        }
+        cocos2d::EaseElasticInOut* ret = cocos2d::EaseElasticInOut::create(arg0, arg1);
+        object_to_luaval<cocos2d::EaseElasticInOut>(tolua_S, "cc.EaseElasticInOut",(cocos2d::EaseElasticInOut*)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "cc.EaseElasticInOut:create",argc, 1);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_EaseElasticInOut_create'.",&tolua_err);
+#endif
+    return 0;
+}
+int lua_cocos2dx_EaseElasticInOut_constructor(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::EaseElasticInOut* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EaseElasticInOut_constructor'", nullptr);
+            return 0;
+        }
+        cobj = new cocos2d::EaseElasticInOut();
+        cobj->autorelease();
+        int ID =  (int)cobj->_ID ;
+        int* luaID =  &cobj->_luaID ;
+        toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)cobj,"cc.EaseElasticInOut");
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.EaseElasticInOut:EaseElasticInOut",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_EaseElasticInOut_constructor'.",&tolua_err);
+#endif
+
+    return 0;
+}
+
+static int lua_cocos2dx_EaseElasticInOut_finalize(lua_State* tolua_S)
+{
+    printf("luabindings: finalizing LUA object (EaseElasticInOut)");
+    return 0;
+}
+
+int lua_register_cocos2dx_EaseElasticInOut(lua_State* tolua_S)
+{
+    tolua_usertype(tolua_S,"cc.EaseElasticInOut");
+    tolua_cclass(tolua_S,"EaseElasticInOut","cc.EaseElasticInOut","cc.EaseElastic",nullptr);
+
+    tolua_beginmodule(tolua_S,"EaseElasticInOut");
+        tolua_function(tolua_S,"new",lua_cocos2dx_EaseElasticInOut_constructor);
+        tolua_function(tolua_S,"create", lua_cocos2dx_EaseElasticInOut_create);
+    tolua_endmodule(tolua_S);
+    std::string typeName = typeid(cocos2d::EaseElasticInOut).name();
+    g_luaType[typeName] = "cc.EaseElasticInOut";
+    g_typeCast["EaseElasticInOut"] = "cc.EaseElasticInOut";
+    return 1;
+}
+
+int lua_cocos2dx_EaseBezierAction_setBezierParamer(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::EaseBezierAction* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.EaseBezierAction",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::EaseBezierAction*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EaseBezierAction_setBezierParamer'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 4) 
+    {
+        double arg0;
+        double arg1;
+        double arg2;
+        double arg3;
+
+        ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.EaseBezierAction:setBezierParamer");
+
+        ok &= luaval_to_number(tolua_S, 3,&arg1, "cc.EaseBezierAction:setBezierParamer");
+
+        ok &= luaval_to_number(tolua_S, 4,&arg2, "cc.EaseBezierAction:setBezierParamer");
+
+        ok &= luaval_to_number(tolua_S, 5,&arg3, "cc.EaseBezierAction:setBezierParamer");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EaseBezierAction_setBezierParamer'", nullptr);
+            return 0;
+        }
+        cobj->setBezierParamer(arg0, arg1, arg2, arg3);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.EaseBezierAction:setBezierParamer",argc, 4);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_EaseBezierAction_setBezierParamer'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_EaseBezierAction_create(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"cc.EaseBezierAction",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (argc == 1)
+    {
+        cocos2d::ActionInterval* arg0;
+        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.EaseBezierAction:create");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EaseBezierAction_create'", nullptr);
+            return 0;
+        }
+        cocos2d::EaseBezierAction* ret = cocos2d::EaseBezierAction::create(arg0);
+        object_to_luaval<cocos2d::EaseBezierAction>(tolua_S, "cc.EaseBezierAction",(cocos2d::EaseBezierAction*)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "cc.EaseBezierAction:create",argc, 1);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_EaseBezierAction_create'.",&tolua_err);
+#endif
+    return 0;
+}
+int lua_cocos2dx_EaseBezierAction_constructor(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::EaseBezierAction* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EaseBezierAction_constructor'", nullptr);
+            return 0;
+        }
+        cobj = new cocos2d::EaseBezierAction();
+        cobj->autorelease();
+        int ID =  (int)cobj->_ID ;
+        int* luaID =  &cobj->_luaID ;
+        toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)cobj,"cc.EaseBezierAction");
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.EaseBezierAction:EaseBezierAction",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_EaseBezierAction_constructor'.",&tolua_err);
+#endif
+
+    return 0;
+}
+
+static int lua_cocos2dx_EaseBezierAction_finalize(lua_State* tolua_S)
+{
+    printf("luabindings: finalizing LUA object (EaseBezierAction)");
+    return 0;
+}
+
+int lua_register_cocos2dx_EaseBezierAction(lua_State* tolua_S)
+{
+    tolua_usertype(tolua_S,"cc.EaseBezierAction");
+    tolua_cclass(tolua_S,"EaseBezierAction","cc.EaseBezierAction","cc.ActionEase",nullptr);
+
+    tolua_beginmodule(tolua_S,"EaseBezierAction");
+        tolua_function(tolua_S,"new",lua_cocos2dx_EaseBezierAction_constructor);
+        tolua_function(tolua_S,"setBezierParamer",lua_cocos2dx_EaseBezierAction_setBezierParamer);
+        tolua_function(tolua_S,"create", lua_cocos2dx_EaseBezierAction_create);
+    tolua_endmodule(tolua_S);
+    std::string typeName = typeid(cocos2d::EaseBezierAction).name();
+    g_luaType[typeName] = "cc.EaseBezierAction";
+    g_typeCast["EaseBezierAction"] = "cc.EaseBezierAction";
     return 1;
 }
 
@@ -100151,11 +100202,11 @@ TOLUA_API int register_all_cocos2dx(lua_State* tolua_S)
 	lua_register_cocos2dx_JumpBy(tolua_S);
 	lua_register_cocos2dx_EventListener(tolua_S);
 	lua_register_cocos2dx_EventListenerKeyboard(tolua_S);
-	lua_register_cocos2dx_EventListenerMouse(tolua_S);
+	lua_register_cocos2dx_ActionEase(tolua_S);
+	lua_register_cocos2dx_EaseBounceIn(tolua_S);
 	lua_register_cocos2dx_TransitionRotoZoom(tolua_S);
 	lua_register_cocos2dx_Director(tolua_S);
 	lua_register_cocos2dx_Scheduler(tolua_S);
-	lua_register_cocos2dx_ActionEase(tolua_S);
 	lua_register_cocos2dx_EaseElastic(tolua_S);
 	lua_register_cocos2dx_EaseElasticOut(tolua_S);
 	lua_register_cocos2dx_EaseQuadraticActionInOut(tolua_S);
@@ -100266,7 +100317,7 @@ TOLUA_API int register_all_cocos2dx(lua_State* tolua_S)
 	lua_register_cocos2dx_NodeGrid(tolua_S);
 	lua_register_cocos2dx_TMXLayerInfo(tolua_S);
 	lua_register_cocos2dx_EaseSineIn(tolua_S);
-	lua_register_cocos2dx_EaseBounceIn(tolua_S);
+	lua_register_cocos2dx_EventListenerMouse(tolua_S);
 	lua_register_cocos2dx_Camera(tolua_S);
 	lua_register_cocos2dx_GLProgram(tolua_S);
 	lua_register_cocos2dx_ParticleGalaxy(tolua_S);

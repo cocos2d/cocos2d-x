@@ -91,7 +91,7 @@ void TransitionProgress::onEnter()
     ProgressTimer *node = progressTimerNodeWithRenderTexture(texture);
 
     // create the blend action
-    ActionInterval* layerAction = (ActionInterval*)Sequence::create(
+    auto layerAction = Sequence::create(
         ProgressFromTo::create(_duration, _from, _to),
         CallFunc::create(CC_CALLBACK_0(TransitionScene::finish,this)),
         nullptr);

@@ -185,7 +185,7 @@ private:
         {
             _position = v1;
             _texcoord = v2;
-        };
+        }
         /*the vertex's attributes*/
         cocos2d::Vec3 _position;
         cocos2d::Tex2F _texcoord;

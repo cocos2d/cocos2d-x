@@ -142,7 +142,7 @@ public:
     LayoutParameter() : _margin(Margin())
     {
         _layoutParameterType = Type::NONE;
-    };
+    }
     
     /**
      * Default destructor.
@@ -252,7 +252,7 @@ public:
     : _linearGravity(LinearGravity::NONE)
     {
         _layoutParameterType = Type::LINEAR;
-    };
+    }
     
     /**
      * Default destructor.
@@ -344,7 +344,7 @@ public:
     _put(false)
     {
         _layoutParameterType = Type::RELATIVE;
-    };
+    }
     
     /**
      * Default destructor

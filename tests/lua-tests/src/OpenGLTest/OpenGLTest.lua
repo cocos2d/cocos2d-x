@@ -856,6 +856,10 @@ local function OpenGLTestMainLayer()
 
             local loc = gl.getUniformLocation( program, "CC_MVPMatrix")
 
+            -- Save the old MVP matrix
+            local oldUniformTable = gl.getUniform( program, loc )
+
+            -- Set the new MVP matrix
             gl.uniformMatrix4fv(loc, false, table.getn(pMatrix), pMatrix)
 
             local uniformTable = gl.getUniform( program, loc )
@@ -866,6 +870,9 @@ local function OpenGLTestMainLayer()
                 strFmt = strFmt..strTmp
             end
             print(strFmt)
+
+            -- Revert to the old MVP matrix
+            gl.uniformMatrix4fv(loc, false, table.getn(oldUniformTable), oldUniformTable)
         end
 
         runTest()

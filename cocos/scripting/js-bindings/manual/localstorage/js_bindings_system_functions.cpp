@@ -62,9 +62,13 @@ bool JSB_localStorageSetItem(JSContext *cx, uint32_t argc, jsval *vp) {
 
     ok &= jsval_to_std_string( cx, args.get(0), &arg0 );
     ok &= jsval_to_std_string( cx, args.get(1), &arg1 );
-    JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
+    if( ok ) {
+        localStorageSetItem(arg0 , arg1);
+    }
+    else {
+        log("JSB_localStorageSetItem:Error processing arguments");
+    }
 
-    localStorageSetItem(arg0 , arg1);
     args.rval().setUndefined();
     return true;
 }

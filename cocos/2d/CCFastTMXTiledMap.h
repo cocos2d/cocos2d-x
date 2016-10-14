@@ -141,66 +141,66 @@ public:
      *
      * @return The map's size property measured in tiles.
      */
-    inline const Size& getMapSize() const { return _mapSize; };
+    const Size& getMapSize() const { return _mapSize; }
     
     /** Set the map's size property measured in tiles.
      *
      * @param mapSize The map's size property measured in tiles.
      */
-    inline void setMapSize(const Size& mapSize) { _mapSize = mapSize; };
+    void setMapSize(const Size& mapSize) { _mapSize = mapSize; }
 
     /** The tiles's size property measured in pixels.
      *
      * @return The tiles's size property measured in pixels.
      */
-    inline const Size& getTileSize() const { return _tileSize; };
+    const Size& getTileSize() const { return _tileSize; }
     
     /** Set the tiles's size property measured in pixels. 
      *
      * @param tileSize The tiles's size property measured in pixels.
      */
-    inline void setTileSize(const Size& tileSize) { _tileSize = tileSize; };
+    void setTileSize(const Size& tileSize) { _tileSize = tileSize; }
 
     /** Get map orientation. 
      *
      * @return The map orientation.
      */
-    inline int getMapOrientation() const { return _mapOrientation; };
+    int getMapOrientation() const { return _mapOrientation; }
     
     /** Set map orientation. 
      *
      * @param mapOrientation The map orientation.
      */
-    inline void setMapOrientation(int mapOrientation) { _mapOrientation = mapOrientation; };
+    void setMapOrientation(int mapOrientation) { _mapOrientation = mapOrientation; }
 
     /** Get object groups. 
      *
      * @return Object groups.
      */
-    inline const Vector<TMXObjectGroup*>& getObjectGroups() const { return _objectGroups; };
-    inline Vector<TMXObjectGroup*>& getObjectGroups() { return _objectGroups; };
+    const Vector<TMXObjectGroup*>& getObjectGroups() const { return _objectGroups; }
+    Vector<TMXObjectGroup*>& getObjectGroups() { return _objectGroups; }
     
     /** Set object groups. 
      *
      * @param groups An object groups.
      */
-    inline void setObjectGroups(const Vector<TMXObjectGroup*>& groups) {
+    void setObjectGroups(const Vector<TMXObjectGroup*>& groups) {
         _objectGroups = groups;
-    };
+    }
     
     /** Get properties.
      *
      * @return Properties.
      */
-    inline const ValueMap& getProperties() const { return _properties; };
+    const ValueMap& getProperties() const { return _properties; }
     
     /** Set properties. 
      *
      * @param properties An ValueMap Properties.
      */
-    inline void setProperties(const ValueMap& properties) {
+    void setProperties(const ValueMap& properties) {
         _properties = properties;
-    };
+    }
 
     virtual std::string getDescription() const override;
 

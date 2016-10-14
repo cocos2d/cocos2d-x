@@ -86,8 +86,9 @@ void RuntimeCCSImpl::loadCSDProject(const std::string& file)
                     attribute = attribute->Next();
                 }
             }
-
         }
+
+        delete document;
 
         if (Director::getInstance()->getRunningScene())
         {

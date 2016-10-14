@@ -43,7 +43,7 @@ enum PUInterpolationType
 */
 struct PUControlPointSorter
 {
-    inline bool operator() (const Vec2& a, const Vec2& b)
+    bool operator() (const Vec2& a, const Vec2& b)
     {
         return a.x < b.x;
     }

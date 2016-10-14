@@ -187,7 +187,7 @@ public:
      * Checks if the Value is null.
      * @return True if the Value is null, false if not.
      */
-    inline bool isNull() const { return _type == Type::NONE; }
+    bool isNull() const { return _type == Type::NONE; }
 
     /** Value type wrapped by Value. */
     enum class Type
@@ -217,7 +217,7 @@ public:
     };
 
     /** Gets the value type. */
-    inline Type getType() const { return _type; }
+    Type getType() const { return _type; }
 
     /** Gets the description of the class. */
     std::string getDescription() const;

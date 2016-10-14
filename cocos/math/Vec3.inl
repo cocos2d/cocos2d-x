@@ -119,7 +119,7 @@ inline void Vec3::subtract(const Vec3& v)
     z -= v.z;
 }
 
-inline const Vec3 Vec3::operator+(const Vec3& v) const
+inline Vec3 Vec3::operator+(const Vec3& v) const
 {
     Vec3 result(*this);
     result.add(v);
@@ -132,7 +132,7 @@ inline Vec3& Vec3::operator+=(const Vec3& v)
     return *this;
 }
 
-inline const Vec3 Vec3::operator-(const Vec3& v) const
+inline Vec3 Vec3::operator-(const Vec3& v) const
 {
     Vec3 result(*this);
     result.subtract(v);
@@ -145,14 +145,14 @@ inline Vec3& Vec3::operator-=(const Vec3& v)
     return *this;
 }
 
-inline const Vec3 Vec3::operator-() const
+inline Vec3 Vec3::operator-() const
 {
     Vec3 result(*this);
     result.negate();
     return result;
 }
 
-inline const Vec3 Vec3::operator*(float s) const
+inline Vec3 Vec3::operator*(float s) const
 {
     Vec3 result(*this);
     result.scale(s);
@@ -165,7 +165,7 @@ inline Vec3& Vec3::operator*=(float s)
     return *this;
 }
 
-inline const Vec3 Vec3::operator/(const float s) const
+inline Vec3 Vec3::operator/(const float s) const
 {
     return Vec3(this->x / s, this->y / s, this->z / s);
 }
@@ -180,7 +180,7 @@ inline bool Vec3::operator!=(const Vec3& v) const
     return x!=v.x || y!=v.y || z!=v.z;
 }
 
-inline const Vec3 operator*(float x, const Vec3& v)
+inline Vec3 operator*(float x, const Vec3& v)
 {
     Vec3 result(v);
     result.scale(x);

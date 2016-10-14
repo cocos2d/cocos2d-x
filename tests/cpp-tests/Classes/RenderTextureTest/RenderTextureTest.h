@@ -51,7 +51,7 @@ public:
     void renderScreenShot();
 
 private:
-    cocos2d::SpriteBatchNode *mgr;;
+    cocos2d::SpriteBatchNode *mgr;
 
     cocos2d::Sprite *sp1;
     cocos2d::Sprite *sp2;

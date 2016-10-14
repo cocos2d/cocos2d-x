@@ -209,11 +209,11 @@
 -- @return Node#Node self (return value: cc.Node)
         
 --------------------------------
--- Return the node's opacity.<br>
--- return A GLubyte value.
--- @function [parent=#Node] getOpacity 
+-- 
+-- @function [parent=#Node] _setLocalZOrder 
 -- @param self
--- @return unsigned char#unsigned char ret (return value: unsigned char)
+-- @param #int z
+-- @return Node#Node self (return value: cc.Node)
         
 --------------------------------
 -- Modify the camera mask for current node.<br>
@@ -548,7 +548,7 @@
 -- return The number of actions that are running plus the ones that are schedule to run.
 -- @function [parent=#Node] getNumberOfRunningActions 
 -- @param self
--- @return long#long ret (return value: long)
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- Calls children's updateTransform() method recursively.<br>
@@ -585,7 +585,7 @@
 -- return The amount of children.
 -- @function [parent=#Node] getChildrenCount 
 -- @param self
--- @return long#long ret (return value: long)
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- Converts a Vec2 to node (local) space coordinates. The result is in Points.<br>
@@ -1109,6 +1109,13 @@
 -- @function [parent=#Node] getScale 
 -- @param self
 -- @return float#float ret (return value: float)
+        
+--------------------------------
+-- Return the node's opacity.<br>
+-- return A GLubyte value.
+-- @function [parent=#Node] getOpacity 
+-- @param self
+-- @return unsigned char#unsigned char ret (return value: unsigned char)
         
 --------------------------------
 --  !!! ONLY FOR INTERNAL USE<br>

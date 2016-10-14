@@ -107,7 +107,8 @@ public:
   
   void setDeviceOrientation(int orientation);
   void setMainArgs(int argc, char **argv);
-
+  void setPauseFlag(bool pause){_paused = pause;}
+  bool isPaused(){return _paused;}
 public:
     Evas_Object * _win;
     Evas_Object * _conform;
@@ -123,7 +124,7 @@ public:
 protected:
     long _animationInterval;  //micro second
     std::string _resourceRootPath;
-
+    bool _paused;
     static Application * __instance;
 };
 

@@ -245,8 +245,7 @@ function Physics3DConstraintDemo:extend()
             ret, hitResult = physicsWorld:rayCast(nearP, farP, hitResult)
             if true == ret and nil ~= hitResult.hitObj and hitResult.hitObj:getObjType() == cc.Physics3DObject.PhysicsObjType.RIGID_BODY then
                 local mat = cc.mat4.getInversed(hitResult.hitObj:getWorldTransform())
-                local position = {x = 0, y = 0, z = 0}
-                position = cc.mat4.transformVector(mat, cc.vec4(hitResult.hitPosition.x, hitResult.hitPosition.y, hitResult.hitPosition.z, 1.0),position)
+                local position = cc.mat4.transformVector(mat, cc.vec4(hitResult.hitPosition.x, hitResult.hitPosition.y, hitResult.hitPosition.z, 1.0))
 
                 self._constraint = cc.Physics3DPointToPointConstraint:create(hitResult.hitObj, position)
                 physicsWorld:addPhysics3DConstraint(self._constraint, true)
@@ -655,24 +654,23 @@ function Physics3DTerrainDemo:extend()
     self:addChild(sprite)
 
     local shapeList = {}
-    local localTrans = cc.mat4.createIdentity()
     local bodyshape  = cc.Physics3DShape:createBox(cc.vec3(2.0, 4.0, 2.0))
-    localTrans = cc.mat4.createTranslation(0.0, 2.0, 0.0, localTrans)
+    local localTrans = cc.mat4.createTranslation(0.0, 2.0, 0.0)
     table.insert(shapeList, {bodyshape, localTrans})
 
     local headshape = cc.Physics3DShape:createSphere(1.5)
-    localTrans = cc.mat4.createTranslation(0.6, 5.0, -1.5, localTrans)
+    localTrans = cc.mat4.createTranslation(0.6, 5.0, -1.5)
     table.insert(shapeList, {headshape, localTrans})
 
     local lhandshape = cc.Physics3DShape:createBox(cc.vec3(1.0, 3.0, 1.0))
-    localTrans = cc.mat4.createRotation(cc.vec3(1.0, 0.0, 0.0), 15.0 * math.pi / 180, localTrans)
+    localTrans = cc.mat4.createRotation(cc.vec3(1.0, 0.0, 0.0), 15.0 * math.pi / 180)
     localTrans[13] = -1.5
     localTrans[14] = 2.5
     localTrans[15] = -2.5
     table.insert(shapeList, {lhandshape, localTrans})
 
     local rhandshape = cc.Physics3DShape:createBox(cc.vec3(1.0, 3.0, 1.0))
-    localTrans = cc.mat4.createRotation(cc.vec3(1.0, 0.0, 0.0), -15.0 * math.pi / 180, localTrans)
+    localTrans = cc.mat4.createRotation(cc.vec3(1.0, 0.0, 0.0), -15.0 * math.pi / 180)
     localTrans[13] = 2.0
     localTrans[14] = 2.5
     localTrans[15] = 1.0

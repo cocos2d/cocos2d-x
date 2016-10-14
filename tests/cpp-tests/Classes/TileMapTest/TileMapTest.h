@@ -379,4 +379,13 @@ public:
 
 };
 
+class Issue16512Test : public TileDemo
+{
+public:
+    CREATE_FUNC(Issue16512Test);
+    Issue16512Test();
+    virtual std::string title() const override;
+
+};
+
 #endif
