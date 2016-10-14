@@ -347,6 +347,12 @@ public:
         WRAP_PER_WORD,
         WRAP_PER_CHAR
     };
+
+    enum class AlignToBaseline {
+      NONE,
+      TEXT,
+      ALL
+    };
     
     /**
      * @brief call to open a resource specified by a URL
@@ -363,6 +369,7 @@ public:
     
     static const std::string KEY_VERTICAL_SPACE;                    /*!< key of vertical space */
     static const std::string KEY_WRAP_MODE;                         /*!< key of per word, or per char */
+    static const std::string KEY_ALIGN_TO_BASELINE;                 /*!< key of what is aligned to baseline: all, text only or none */
     static const std::string KEY_FONT_COLOR_STRING;                 /*!< key of font color */
     static const std::string KEY_FONT_SIZE;                         /*!< key of font size */
     static const std::string KEY_FONT_SMALL;                        /*!< key of font size small */
@@ -476,6 +483,8 @@ public:
 
     void setWrapMode(WrapMode wrapMode);                /*!< sets the wrapping mode: WRAP_PER_CHAR or WRAP_PER_WORD */
     WrapMode getWrapMode() const;                       /*!< returns the current wrapping mode */
+    void setAlignToBaseline(AlignToBaseline alignToBaseline); /*!< sets what is aligned to baseline: ALL, TEXT or NONE */
+    AlignToBaseline getAlignToBaseline() const;         /*!< returns what is aligned to baseline */
     void setFontColor(const std::string& color);        /*!< Set the font color. @param color the #RRGGBB hexadecimal notation. */
     std::string getFontColor();                         /*!< return the current font color */
     Color3B getFontColor3B();                           /*!< return the current font color */
@@ -555,7 +564,7 @@ protected:
                             const Color3B& glowColor = Color3B::WHITE);
     void handleImageRenderer(const std::string& fileParh, const Color3B& color, GLubyte opacity, int width, int height, const std::string& url);
     void handleCustomRenderer(Node* renderer);
-    void formarRenderers();
+    void formatRenderers();
     void addNewLine();
     int findSplitPositionForWord(cocos2d::Label* label, const std::string& text);
     int findSplitPositionForChar(cocos2d::Label* label, const std::string& text);

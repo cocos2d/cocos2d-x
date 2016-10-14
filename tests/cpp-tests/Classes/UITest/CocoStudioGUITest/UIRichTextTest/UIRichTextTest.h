@@ -98,6 +98,18 @@ protected:
     cocos2d::ui::RichText* _richText;
 };
 
+class UIRichTextXMLSUIB4 : public UIScene {
+public:
+  CREATE_FUNC(UIRichTextXMLSUIB4);
+
+  bool init() override;
+  void touchEvent(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
+  void switchWrapMode(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
+
+protected:
+  cocos2d::ui::RichText* _richText;
+};
+
 class UIRichTextXMLImg : public UIScene
 {
 public:

@@ -1094,6 +1094,11 @@ bool Texture2D::initWithString(const char *text, const std::string& fontName, fl
 
 bool Texture2D::initWithString(const char *text, const FontDefinition& textDefinition)
 {
+    return initWithString(text, textDefinition, nullptr);
+}
+
+bool Texture2D::initWithString(const char *text, const FontDefinition& textDefinition, float* fontAscent)
+{
     if(!text || 0 == strlen(text))
     {
         return false;
@@ -1145,9 +1150,13 @@ bool Texture2D::initWithString(const char *text, const FontDefinition& textDefin
     textDef._dimensions.height *= contentScaleFactor;
     textDef._stroke._strokeSize *= contentScaleFactor;
     textDef._shadow._shadowEnabled = false;
+
+    float tmpFontAscent = 0.0f;
+    if (!fontAscent)
+        fontAscent = &tmpFontAscent;
     
     bool hasPremultipliedAlpha;
-    Data outData = Device::getTextureDataForText(text, textDef, align, imageWidth, imageHeight, hasPremultipliedAlpha);
+    Data outData = Device::getTextureDataForText(text, textDef, align, imageWidth, imageHeight, hasPremultipliedAlpha, *fontAscent);
     if(outData.isNull())
     {
         return false;

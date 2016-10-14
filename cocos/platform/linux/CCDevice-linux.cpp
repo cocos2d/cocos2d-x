@@ -413,6 +413,8 @@ public:
             return false;
         }
 
+        _fontAscent = static_cast<int>(face->size->metrics.ascender >> 6);
+
         //compute the final line width
         iMaxLineWidth = MAX(iMaxLineWidth, textDefinition._dimensions.width);
 
@@ -478,6 +480,7 @@ public:
     FT_Library library;
 
     unsigned char *_data;
+    float _fontAscent;
     int libError;
     std::vector<LineBreakLine> textLines;
     int iMaxLineWidth;
@@ -490,7 +493,7 @@ static BitmapDC& sharedBitmapDC()
     return s_BmpDC;
 }
 
-Data Device::getTextureDataForText(const char * text, const FontDefinition& textDefinition, TextAlign align, int &width, int &height, bool& hasPremultipliedAlpha)
+Data Device::getTextureDataForText(const char * text, const FontDefinition& textDefinition, TextAlign align, int &width, int &height, bool& hasPremultipliedAlpha, float& fontAscent)
 {
     Data ret;
     do 
@@ -501,6 +504,7 @@ Data Device::getTextureDataForText(const char * text, const FontDefinition& text
         CC_BREAK_IF(! dc._data);
         width = dc.iMaxLineWidth;
         height = dc.iMaxLineHeight;
+        fontAscent = dc._fontAscent;
         dc.reset();
         ret.fastSet(dc._data,width * height * 4);
         hasPremultipliedAlpha = true;

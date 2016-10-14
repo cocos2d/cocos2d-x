@@ -73,6 +73,7 @@ public:
     : _data(nullptr)
     , _width(0)
     , _height(0)
+    , _fontAscent(0)
     {
     }
 
@@ -141,6 +142,7 @@ public:
 public:
     int _width;
     int _height;
+    float _fontAscent;
     unsigned char *_data;
 };
 
@@ -150,7 +152,7 @@ static BitmapDC& sharedBitmapDC()
     return s_BmpDC;
 }
 
-Data Device::getTextureDataForText(const char * text, const FontDefinition& textDefinition, TextAlign align, int &width, int &height, bool& hasPremultipliedAlpha)
+Data Device::getTextureDataForText(const char * text, const FontDefinition& textDefinition, TextAlign align, int &width, int &height, bool& hasPremultipliedAlpha, float& fontAscent)
 {
     Data ret;
     do 
@@ -164,6 +166,7 @@ Data Device::getTextureDataForText(const char * text, const FontDefinition& text
 
         width = dc._width;
         height = dc._height;
+        fontAscent = dc._fontAscent;
         ret.fastSet(dc._data,width * height * 4);
         hasPremultipliedAlpha = true;
     } while (0);
@@ -191,12 +194,13 @@ extern "C"
     /**
     * this method is called by java code to init width, height and pixels data
     */
-    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxBitmap_nativeInitBitmapDC(JNIEnv*  env, jobject thiz, int width, int height, jbyteArray pixels)
+    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxBitmap_nativeInitBitmapDC(JNIEnv*  env, jobject thiz, int width, int height, float fontAscent, jbyteArray pixels)
     {
         int size = width * height * 4;
         cocos2d::BitmapDC& bitmapDC = cocos2d::sharedBitmapDC();
         bitmapDC._width = width;
         bitmapDC._height = height;
+        bitmapDC._fontAscent = fontAscent;
         bitmapDC._data = (unsigned char*)malloc(sizeof(unsigned char) * size);
         env->GetByteArrayRegion(pixels, 0, size, (jbyte*)bitmapDC._data);
     }

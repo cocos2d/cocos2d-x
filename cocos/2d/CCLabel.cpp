@@ -327,8 +327,8 @@ bool Label::initWithTTF(const std::string& text, const std::string& fontFilePath
         {
             setDimensions(dimensions.width, dimensions.height);
             setString(text);
+            return true;
         }
-        return true;
     }
     return false;
 }
@@ -386,6 +386,7 @@ Label::Label(TextHAlignment hAlignment /* = TextHAlignment::LEFT */,
 , _boldEnabled(false)
 , _underlineNode(nullptr)
 , _strikethroughEnabled(false)
+, _fontAscent(0)
 {
     setAnchorPoint(Vec2::ANCHOR_MIDDLE);
     reset();
@@ -522,6 +523,7 @@ void Label::reset()
         _underlineNode = nullptr;
     }
     _strikethroughEnabled = false;
+    _fontAscent = 0;
     setRotationSkewX(0);        // reverse italics
 }
 
@@ -603,6 +605,7 @@ void Label::setFontAtlas(FontAtlas* atlas,bool distanceFieldEnabled /* = false *
     if (_fontAtlas)
     {
         _lineHeight = _fontAtlas->getLineHeight();
+        _fontAscent = _fontAtlas->getAscender();
         _contentDirty = true;
         _systemFontDirty = false;
     }
@@ -646,6 +649,7 @@ bool Label::setBMFontFilePath(const std::string& bmfontFilePath, const Vec2& ima
     }
 
     _bmFontPath = bmfontFilePath;
+    _fontAscent = newAtlas->getAscender();
 
     _currentLabelType = LabelType::BMFONT;
     setFontAtlas(newAtlas);
@@ -1250,7 +1254,7 @@ void Label::createSpriteForSystemFont(const FontDefinition& fontDef)
     _currentLabelType = LabelType::STRING_TEXTURE;
 
     auto texture = new (std::nothrow) Texture2D;
-    texture->initWithString(_utf8Text.c_str(), fontDef);
+    texture->initWithString(_utf8Text.c_str(), fontDef, &_fontAscent);
 
     _textSprite = Sprite::createWithTexture(texture);
     //set camera mask using label's camera mask, because _textSprite may be null when setting camera mask to label

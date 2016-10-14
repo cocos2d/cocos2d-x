@@ -110,6 +110,8 @@ public://@public
 
     //! FNTConfig: Common Height Should be signed (issue #1343)
     int _commonHeight;
+    //! The number of pixels from the absolute top of the line to the base of the characters.
+    int _commonBase;
     //! Padding
     BMFontPadding    _padding;
     //! atlas name
@@ -225,6 +227,7 @@ std::set<unsigned int>* BMFontConfiguration::getCharacterSet() const
 BMFontConfiguration::BMFontConfiguration()
 : _fontDefDictionary(nullptr)
 , _commonHeight(0)
+, _commonBase(0)
 , _kerningDictionary(nullptr)
 , _characterSet(nullptr)
 , _fontSize(0)
@@ -418,6 +421,8 @@ std::set<unsigned int>* BMFontConfiguration::parseBinaryConfigFile(unsigned char
 
             uint16_t lineHeight = 0; memcpy(&lineHeight, pData, 2);
             _commonHeight = lineHeight;
+            uint16_t base = 0; memcpy(&base, pData + 2, 2);
+            _commonBase = base;
 
             uint16_t scaleW = 0; memcpy(&scaleW, pData + 4, 2);
             uint16_t scaleH = 0; memcpy(&scaleH, pData + 6, 2);
@@ -557,7 +562,10 @@ void BMFontConfiguration::parseCommonArguments(const char* line)
     // Height
     auto tmp = strstr(line, "lineHeight=") + 11;
     sscanf(tmp, "%d", &_commonHeight);
-    
+
+    tmp = strstr(line, "base=") + 5;
+    sscanf(tmp, "%d", &_commonBase);
+
 #if COCOS2D_DEBUG > 0
     // scaleW. sanity check
     int value;
@@ -750,6 +758,7 @@ FontAtlas * FontFNT::createFontAtlas()
     // common height
     int originalFontSize = _configuration->_fontSize;
     float originalLineHeight = _configuration->_commonHeight;
+    float originalBase = _configuration->_commonBase;
     float factor = 0.0f;
     if (std::abs(_fontSize - originalFontSize) < FLT_EPSILON) {
         factor = 1.0f;
@@ -758,7 +767,7 @@ FontAtlas * FontFNT::createFontAtlas()
     }
     
     tempAtlas->setLineHeight(originalLineHeight * factor);
-    
+    tempAtlas->setAscender(originalBase * factor);
     
     BMFontDef fontDef;
     tFontDefHashElement *currentElement, *tmp;

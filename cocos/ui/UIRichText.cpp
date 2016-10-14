@@ -35,6 +35,7 @@
 #include "base/CCDirector.h"
 #include "2d/CCLabel.h"
 #include "2d/CCSprite.h"
+#include "2d/CCSpriteFrameCache.h"
 #include "base/ccUTF8.h"
 #include "ui/UIHelper.h"
 
@@ -832,6 +833,7 @@ ValueMap MyXMLVisitor::tagAttrMapWithXMLElement(const char ** attrs)
 
 const std::string RichText::KEY_VERTICAL_SPACE("KEY_VERTICAL_SPACE");
 const std::string RichText::KEY_WRAP_MODE("KEY_WRAP_MODE");
+const std::string RichText::KEY_ALIGN_TO_BASELINE("KEY_ALIGN_TO_BASELINE");
 const std::string RichText::KEY_FONT_COLOR_STRING("KEY_FONT_COLOR_STRING");
 const std::string RichText::KEY_FONT_SIZE("KEY_FONT_SIZE");
 const std::string RichText::KEY_FONT_SMALL("KEY_FONT_SMALL");
@@ -875,6 +877,12 @@ RichText::RichText()
 {
     _defaults[KEY_VERTICAL_SPACE] = 0.0f;
     _defaults[KEY_WRAP_MODE] = static_cast<int>(WrapMode::WRAP_PER_WORD);
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
+    // system font baseline alignment is only supported on Android, Windows, and Linux for now, so we only set the alignment on baseline by default on these platforms
+    _defaults[KEY_ALIGN_TO_BASELINE] = static_cast<int>(AlignToBaseline::ALL);
+#else
+    _defaults[KEY_ALIGN_TO_BASELINE] = static_cast<int>(AlignToBaseline::NONE);
+#endif
     _defaults[KEY_FONT_COLOR_STRING] = "#ffffff";
     _defaults[KEY_FONT_SIZE] = 12.0f;
     _defaults[KEY_FONT_FACE] = "Verdana";
@@ -884,12 +892,12 @@ RichText::RichText()
     _defaults[KEY_ANCHOR_TEXT_LINE] = VALUE_TEXT_LINE_NONE;
     _defaults[KEY_ANCHOR_TEXT_STYLE] = VALUE_TEXT_STYLE_NONE;
 }
-    
+
 RichText::~RichText()
 {
     _richElements.clear();
 }
-    
+
 RichText* RichText::create()
 {
     RichText* widget = new (std::nothrow) RichText();
@@ -991,6 +999,20 @@ void RichText::setWrapMode(RichText::WrapMode wrapMode)
     if (static_cast<RichText::WrapMode>(_defaults.at(KEY_WRAP_MODE).asInt()) != wrapMode)
     {
         _defaults[KEY_WRAP_MODE] = static_cast<int>(wrapMode);
+        _formatTextDirty = true;
+    }
+}
+
+RichText::AlignToBaseline RichText::getAlignToBaseline() const
+{
+    return static_cast<RichText::AlignToBaseline>(_defaults.at(KEY_ALIGN_TO_BASELINE).asInt());
+}
+
+void RichText::setAlignToBaseline(RichText::AlignToBaseline alignToBaseline)
+{
+    if (static_cast<RichText::AlignToBaseline>(_defaults.at(KEY_ALIGN_TO_BASELINE).asInt()) != alignToBaseline)
+    {
+        _defaults[KEY_ALIGN_TO_BASELINE] = static_cast<int>(alignToBaseline);
         _formatTextDirty = true;
     }
 }
@@ -1320,6 +1342,27 @@ void RichText::setOpenUrlHandler(const OpenUrlHandler& handleOpenUrl)
     _handleOpenUrl = handleOpenUrl;
 }
 
+static Label* createTextRenderer(const std::string& text, const std::string& fontName, float fontSize)
+{
+    Label* label;
+    if (FileUtils::getInstance()->isFileExist(fontName)) {
+        label = Label::createWithTTF(text, fontName, fontSize);
+        if (!label)
+            label = Label::createWithBMFont(fontName, text);
+    } else {
+      label = Label::createWithSystemFont(text, fontName, fontSize);
+    }
+    return label;
+}
+
+static Sprite* createImageRenderer(const std::string& filePath)
+{
+    Sprite* sprite = Sprite::create(filePath);
+    if (!sprite)
+        sprite = Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName(filePath));
+    return sprite;
+}
+
 void RichText::formatText()
 {
     if (_formatTextDirty)
@@ -1338,15 +1381,7 @@ void RichText::formatText()
                     case RichElement::Type::TEXT:
                     {
                         RichElementText* elmtText = static_cast<RichElementText*>(element);
-                        Label* label;
-                        if (FileUtils::getInstance()->isFileExist(elmtText->_fontName))
-                        {
-                             label = Label::createWithTTF(elmtText->_text, elmtText->_fontName, elmtText->_fontSize);
-                        }
-                        else
-                        {
-                            label = Label::createWithSystemFont(elmtText->_text, elmtText->_fontName, elmtText->_fontSize);
-                        }
+                        Label* label = createTextRenderer(elmtText->_text, elmtText->_fontName, elmtText->_fontSize);
                         if (elmtText->_flags & RichElementText::ITALICS_FLAG)
                             label->enableItalics();
                         if (elmtText->_flags & RichElementText::BOLD_FLAG)
@@ -1375,7 +1410,7 @@ void RichText::formatText()
                     case RichElement::Type::IMAGE:
                     {
                         RichElementImage* elmtImage = static_cast<RichElementImage*>(element);
-                        elementRenderer = Sprite::create(elmtImage->_filePath);
+                        elementRenderer = createImageRenderer(elmtImage->_filePath);
                         if (elementRenderer && (elmtImage->_height != -1 || elmtImage->_width != -1))
                         {
                             auto currentSize = elementRenderer->getContentSize();
@@ -1454,7 +1489,7 @@ void RichText::formatText()
                 }
             }
         }
-        formarRenderers();
+        formatRenderers();
         _formatTextDirty = false;
     }
 }
@@ -1576,16 +1611,7 @@ void RichText::handleTextRenderer(const std::string& text, const std::string& fo
                                   const Color3B& shadowColor, const cocos2d::Size& shadowOffset, int shadowBlurRadius,
                                   const Color3B& glowColor)
 {
-    auto fileExist = FileUtils::getInstance()->isFileExist(fontName);
-    Label* textRenderer = nullptr;
-    if (fileExist)
-    {
-        textRenderer = Label::createWithTTF(text, fontName, fontSize);
-    } 
-    else
-    {
-        textRenderer = Label::createWithSystemFont(text, fontName, fontSize);
-    }
+    Label* textRenderer = createTextRenderer(text, fontName, fontSize);
     if (flags & RichElementText::ITALICS_FLAG)
         textRenderer->enableItalics();
     if (flags & RichElementText::BOLD_FLAG)
@@ -1622,20 +1648,12 @@ void RichText::handleTextRenderer(const std::string& text, const std::string& fo
 //        if (0 == leftLength) leftLength = 1;
         std::string leftWords = Helper::getSubStringOfUTF8String(text, 0, leftLength);
         int rightStart = leftLength;
-        if (std::isspace(text[rightStart], std::locale()))
+        while (std::isspace(text[rightStart], std::locale()))
             rightStart++;
         std::string cutWords = Helper::getSubStringOfUTF8String(text, rightStart, text.length() - leftLength);
         if (leftLength > 0)
         {
-            Label* leftRenderer = nullptr;
-            if (fileExist)
-            {
-                leftRenderer = Label::createWithTTF(Helper::getSubStringOfUTF8String(leftWords, 0, leftLength), fontName, fontSize);
-            }
-            else
-            {
-                leftRenderer = Label::createWithSystemFont(Helper::getSubStringOfUTF8String(leftWords, 0, leftLength), fontName, fontSize);
-            }
+            Label* leftRenderer = createTextRenderer(Helper::getSubStringOfUTF8String(leftWords, 0, leftLength), fontName, fontSize);
             if (leftRenderer)
             {
                 leftRenderer->setColor(color);
@@ -1682,7 +1700,7 @@ void RichText::handleTextRenderer(const std::string& text, const std::string& fo
     
 void RichText::handleImageRenderer(const std::string& filePath, const Color3B &color, GLubyte opacity, int width, int height, const std::string& url)
 {
-    Sprite* imageRenderer = Sprite::create(filePath);
+    Sprite* imageRenderer = createImageRenderer(filePath);
     if (imageRenderer)
     {
         auto currentSize = imageRenderer->getContentSize();
@@ -1722,27 +1740,63 @@ void RichText::addNewLine()
     _elementRenders.push_back(new Vector<Node*>());
 }
     
-void RichText::formarRenderers()
+void RichText::formatRenderers()
 {
     if (_ignoreSize)
     {
         float newContentSizeWidth = 0.0f;
         float nextPosY = 0.0f;
-        for (auto& element: _elementRenders)
+        for (auto row : _elementRenders)
         {
-            Vector<Node*>* row = element;
+            auto itEnd = row->end();
+            float maxBaseline = 0;
+            
+            if (getAlignToBaseline() != AlignToBaseline::NONE)
+            {
+                for (auto it = row->begin(); it != itEnd; ++it)
+                {
+                    Label* label = dynamic_cast<Label*>(*it);
+                    if (label)
+                    {
+                        float ascent = std::abs(label->getFontAscent() / CC_CONTENT_SCALE_FACTOR());
+                        maxBaseline = std::max(maxBaseline, label->getContentSize().height - ascent);
+                    }
+                }
+            }
+
             float nextPosX = 0.0f;
             float maxY = 0.0f;
-            for (ssize_t j=0; j<row->size(); j++)
+            for (auto it = row->begin(); it != itEnd; ++it)
             {
-                Node* l = row->at(j);
-                l->setAnchorPoint(Vec2::ZERO);
-                l->setPosition(nextPosX, nextPosY);
-                this->addProtectedChild(l, 1);
-                Size iSize = l->getContentSize();
+                auto node = *it;
+                Size iSize = node->getContentSize();
+                float height = iSize.height;
+                float baselineDiff = 0;
+
+                if (getAlignToBaseline() != AlignToBaseline::NONE)
+                {
+                    float baseline = 0;
+                    auto label = dynamic_cast<Label*>(node);
+                    if (label)
+                    {
+                        float labelAscent = std::abs(label->getFontAscent()) / CC_CONTENT_SCALE_FACTOR();
+                        baseline = height - labelAscent;
+                    }
+                    else if (getAlignToBaseline() == AlignToBaseline::TEXT)
+                    {
+                        // if only text elements are aligned on their baseline, all other elements are aligned on the bottom
+                        baseline = maxBaseline;
+                    }
+                    baselineDiff = maxBaseline - baseline;
+                }
+
+                node->setAnchorPoint(Vec2::ZERO);
+                node->setPosition(nextPosX, nextPosY + baselineDiff);
+                this->addProtectedChild(node, 1);
                 newContentSizeWidth += iSize.width;
+
                 nextPosX += iSize.width;
-                maxY = MAX(maxY, iSize.height);
+                maxY = std::max(maxY, height + baselineDiff);
             }
             nextPosY -= maxY;
         }
@@ -1750,48 +1804,107 @@ void RichText::formarRenderers()
     }
     else
     {
-        float newContentSizeHeight = 0.0f;
-        float *maxHeights = new (std::nothrow) float[_elementRenders.size()];
+        std::vector<float> maxHeights(_elementRenders.size());
+        std::vector<float> maxBaselines(_elementRenders.size());
         
-        for (size_t i=0; i<_elementRenders.size(); i++)
+        for (size_t rowIdx = 0; rowIdx < _elementRenders.size(); ++rowIdx)
         {
-            Vector<Node*>* row = (_elementRenders[i]);
-            float maxHeight = 0.0f;
-            for (ssize_t j=0; j<row->size(); j++)
+            Vector<Node*>* row = _elementRenders[rowIdx];
+
+            auto itEnd = row->end();
+            float maxBaseline = 0;
+
+            if (getAlignToBaseline() != AlignToBaseline::NONE)
             {
-                Node* l = row->at(j);
-                maxHeight = MAX(l->getContentSize().height, maxHeight);
+                for (auto it = row->begin(); it != itEnd; ++it)
+                {
+                    float height = (*it)->getContentSize().height;
+                    Label* label = dynamic_cast<Label*>(*it);
+                    if (label)
+                    {
+                        float ascent = std::abs(label->getFontAscent() / CC_CONTENT_SCALE_FACTOR());
+                        maxBaseline = std::max(maxBaseline, height - ascent);
+                    }
+                }
+                maxBaselines[rowIdx] = maxBaseline;
             }
-            maxHeights[i] = maxHeight;
-            newContentSizeHeight += maxHeights[i];
+            else
+            {
+                maxBaselines[rowIdx] = 0;
+            }
+
+            float maxHeight = 0.0f;
+            for (auto it = row->begin(); it != itEnd; ++it)
+            {
+                auto node = *it;
+                float baseline = 0;
+                float height = node->getContentSize().height;
+                float baselineDiff = 0;
+
+                if (getAlignToBaseline() != AlignToBaseline::NONE)
+                {
+                    auto label = dynamic_cast<Label*>(node);
+                    if (label)
+                    {
+                        float ascent = std::abs(label->getFontAscent() / CC_CONTENT_SCALE_FACTOR());
+                        baseline = height - ascent;
+                    }
+                    else if (getAlignToBaseline() == AlignToBaseline::TEXT)
+                    {
+                        // if only text elements are aligned on their baseline, all other elements are aligned on the bottom
+                        baseline = maxBaseline;
+                    }
+                    baselineDiff = maxBaseline - baseline;
+                }
+
+                maxHeight = std::max(height + baselineDiff, maxHeight);
+            }
+            maxHeights[rowIdx] = maxHeight;
         }
         
         float nextPosY = _customSize.height;
-        for (size_t i=0; i<_elementRenders.size(); i++)
+        for (size_t rowIdx = 0; rowIdx < _elementRenders.size(); ++rowIdx)
         {
-            Vector<Node*>* row = (_elementRenders[i]);
+            Vector<Node*>* row = _elementRenders[rowIdx];
             float nextPosX = 0.0f;
-            nextPosY -= (maxHeights[i] + _defaults.at(KEY_VERTICAL_SPACE).asFloat());
+            nextPosY -= (maxHeights[rowIdx] + _defaults.at(KEY_VERTICAL_SPACE).asFloat());
             
-            for (ssize_t j=0; j<row->size(); j++)
+            auto itEnd = row->end();
+            for (auto it = row->begin(); it != itEnd; ++it)
             {
-                Node* l = row->at(j);
-                l->setAnchorPoint(Vec2::ZERO);
-                l->setPosition(nextPosX, nextPosY);
-                this->addProtectedChild(l, 1);
-                nextPosX += l->getContentSize().width;
+                auto node = *it;
+                float baselineDiff = 0;
+
+                if (getAlignToBaseline() != AlignToBaseline::NONE)
+                {
+                    float baseline = 0;
+                    auto label = dynamic_cast<Label*>(node);
+                    if (label)
+                    {
+                        float ascent = std::abs(label->getFontAscent() / CC_CONTENT_SCALE_FACTOR());
+                        baseline = node->getContentSize().height - ascent;
+                    }
+                    else if (getAlignToBaseline() == AlignToBaseline::TEXT)
+                    {
+                        baseline = maxBaselines[rowIdx];
+                    }
+                    baselineDiff = maxBaselines[rowIdx] - baseline;
+                }
+
+                node->setAnchorPoint(Vec2::ZERO);
+                node->setPosition(nextPosX, nextPosY + baselineDiff);
+                this->addProtectedChild(node, 1);
+
+                nextPosX += node->getContentSize().width;
             }
         }
-        delete [] maxHeights;
     }
     
-    size_t length = _elementRenders.size();
-    for (size_t i = 0; i<length; i++)
-	{
-        Vector<Node*>* l = _elementRenders[i];
-        l->clear();
-        delete l;
-	}    
+    for (auto row : _elementRenders)
+    {
+        row->clear();
+        delete row;
+    }    
     _elementRenders.clear();
     
     if (_ignoreSize)
@@ -1805,7 +1918,7 @@ void RichText::formarRenderers()
     }
     updateContentSizeWithTextureSize(_contentSize);
 }
-    
+
 void RichText::adaptRenderers()
 {
     this->formatText();
