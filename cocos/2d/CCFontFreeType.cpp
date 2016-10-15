@@ -51,7 +51,7 @@ static std::unordered_map<std::string, DataRef> s_cacheFontData;
 
 FontFreeType * FontFreeType::create(const std::string &fontName, float fontSize, GlyphCollection glyphs, const char *customGlyphs,bool distanceFieldEnabled /* = false */,int outline /* = 0 */)
 {
-    FontFreeType *tempFont =  new FontFreeType(distanceFieldEnabled,outline);
+    FontFreeType *tempFont =  new (std::nothrow) FontFreeType(distanceFieldEnabled,outline);
 
     if (!tempFont)
         return nullptr;
@@ -195,10 +195,14 @@ FontFreeType::~FontFreeType()
         }
     }
 
-    s_cacheFontData[_fontName].referenceCount -= 1;
-    if (s_cacheFontData[_fontName].referenceCount == 0)
+    auto iter = s_cacheFontData.find(_fontName);
+    if (iter != s_cacheFontData.end())
     {
-        s_cacheFontData.erase(_fontName);
+        iter->second.referenceCount -= 1;
+        if (iter->second.referenceCount == 0)
+        {
+            s_cacheFontData.erase(iter);
+        }
     }
 }
 

@@ -552,7 +552,6 @@ std::vector<Vec2> AutoPolygon::expand(const std::vector<Vec2>& points, const coc
     while(p2->IsHole()){
         p2 = p2->GetNext();
     }
-    auto end = p2->Contour.end();
     for(const auto& pt : p2->Contour)
     {
         outPoints.push_back(Vec2(pt.X/PRECISION, pt.Y/PRECISION));
