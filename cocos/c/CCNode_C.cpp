@@ -123,7 +123,7 @@ extern "C" void CCNodeSetPosition(const void *object, CCVector_C newValue)
 {
     
 }
-
+/*
 extern "C" CCVector_C CCNodeGetNormalizedPosition(const void *object)
 {
     
@@ -133,3 +133,4 @@ extern "C" void CCNodeSetNormalizedPosition(const void *object, CCVector_C newVa
 {
     
 }
+*/

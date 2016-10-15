@@ -10,7 +10,7 @@
 #define CCNode_C_h
 #ifndef __cplusplus
 #import <CCocos2D/CCDefines.h>
-#import <CCocos2D/CCPoint_C.h>
+#import <CCocos2D/CCVector_C.h>
 
 CC_ASSUME_NONNULL_BEGIN
 

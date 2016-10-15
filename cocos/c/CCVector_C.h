@@ -11,7 +11,7 @@
 #ifndef __cplusplus
 #import <CCocos2D/CCDefines.h>
 
-typedef struct __attribute__((swift_name("Vector"))) CCVector_C {
+typedef struct SWIFT_NAME("Vector") CCVector_C {
     float x;
     float y;
 } CCVector_C;

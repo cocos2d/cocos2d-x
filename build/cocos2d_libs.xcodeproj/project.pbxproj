@@ -12259,9 +12259,9 @@
 			children = (
 				6E417CAD1DB1FA5300BD55EE /* CCocos2D.h */,
 				6ECA30D61DB1BB6800F6AD27 /* CCDefines.h */,
+				6E417CB51DB203B300BD55EE /* CCVector_C.h */,
 				6ECA30CC1DB1BA6600F6AD27 /* CCNode_C.h */,
 				6ECA30D01DB1BA8400F6AD27 /* CCNode_C.cpp */,
-				6E417CB51DB203B300BD55EE /* CCVector_C.h */,
 			);
 			name = c;
 			path = ../cocos/c;
