@@ -311,7 +311,11 @@ THE SOFTWARE.
 // eg. #include "deprecated/CCString.h" if you only need cocos2d::__String.
 #include "deprecated/CCDeprecated.h"
 
+// C API
 #include "c/CCDefines.h"
+#include "c/CCNode_C.h"
+#include "c/CCVector_C.h"
+
 
 NS_CC_BEGIN
 

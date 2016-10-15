@@ -8,13 +8,12 @@
 
 #ifndef CCVector_C_h
 #define CCVector_C_h
-#ifndef __cplusplus
 #import <CCocos2D/CCDefines.h>
 
-typedef struct SWIFT_NAME("Vector") CCVector_C {
+struct __attribute__((swift_name("Vector"))) CCVector_C {
     float x;
     float y;
-} CCVector_C;
+};
+typedef struct CCVector_C CCVector_C;
 
-#endif
 #endif /* CCVector_C */

@@ -115,22 +115,28 @@ extern "C" void CCNodeSetScale(const void *object, float newValue)
 extern "C" CCVector_C CCNodeGetPosition(const void *object)
 {
     cocos2d::Node *node = (cocos2d::Node *)object;
-    cocos2d::Vec2 vector = node->getPosition();
-    return { vector.x, vector.y };
+    CCVector_C vector = CCVector_C();
+    node->getPosition(&vector.x, &vector.y);
+    return vector;
 }
 
 extern "C" void CCNodeSetPosition(const void *object, CCVector_C newValue)
 {
-    
+    cocos2d::Node *node = (cocos2d::Node *)object;
+    node->setPosition(newValue.x, newValue.y);
 }
-/*
+
 extern "C" CCVector_C CCNodeGetNormalizedPosition(const void *object)
 {
-    
+    cocos2d::Node *node = (cocos2d::Node *)object;
+    cocos2d::Vec2 vector = node->getNormalizedPosition();
+    return { vector.x, vector.y };
 }
 
 extern "C" void CCNodeSetNormalizedPosition(const void *object, CCVector_C newValue)
 {
-    
+    cocos2d::Node *node = (cocos2d::Node *)object;
+    cocos2d::Vec2 vector = cocos2d::Vec2(newValue.x, newValue.y);
+    node->setNormalizedPosition(vector);
 }
-*/
+
