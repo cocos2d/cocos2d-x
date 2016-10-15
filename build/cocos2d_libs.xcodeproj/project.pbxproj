@@ -4030,6 +4030,13 @@
 		5E9F612B1A3FFE3D0038DE01 /* CCPlane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E9F61241A3FFE3D0038DE01 /* CCPlane.cpp */; };
 		5E9F612C1A3FFE3D0038DE01 /* CCPlane.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E9F61251A3FFE3D0038DE01 /* CCPlane.h */; };
 		5E9F612D1A3FFE3D0038DE01 /* CCPlane.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E9F61251A3FFE3D0038DE01 /* CCPlane.h */; };
+		6E4174E61DB1C3DD00BD55EE /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B21770461977ED34009EE11B /* QuartzCore.framework */; };
+		6E4174E71DB1C3E600BD55EE /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B21770431977ED07009EE11B /* Cocoa.framework */; };
+		6E4174E81DB1C3F100BD55EE /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B21770411977ECF8009EE11B /* ApplicationServices.framework */; };
+		6E4174E91DB1C3F700BD55EE /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B217703B1977ECB4009EE11B /* IOKit.framework */; };
+		6E4174EA1DB1C40000BD55EE /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B217703F1977ECE6009EE11B /* OpenGL.framework */; };
+		6E4174EB1DB1C4F000BD55EE /* libz.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2905E9CC1ACD3D8C00092DD2 /* libz.a */; };
+		6E4174ED1DB1C5BE00BD55EE /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E4174EC1DB1C5BD00BD55EE /* libiconv.tbd */; };
 		6ECA30CD1DB1BA6600F6AD27 /* CCNode_C.h in Headers */ = {isa = PBXBuildFile; fileRef = 6ECA30CC1DB1BA6600F6AD27 /* CCNode_C.h */; };
 		6ECA30CE1DB1BA6600F6AD27 /* CCNode_C.h in Headers */ = {isa = PBXBuildFile; fileRef = 6ECA30CC1DB1BA6600F6AD27 /* CCNode_C.h */; };
 		6ECA30CF1DB1BA6600F6AD27 /* CCNode_C.h in Headers */ = {isa = PBXBuildFile; fileRef = 6ECA30CC1DB1BA6600F6AD27 /* CCNode_C.h */; };
@@ -4039,6 +4046,22 @@
 		6ECA30D71DB1BB6800F6AD27 /* CCDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = 6ECA30D61DB1BB6800F6AD27 /* CCDefines.h */; };
 		6ECA30D81DB1BB6800F6AD27 /* CCDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = 6ECA30D61DB1BB6800F6AD27 /* CCDefines.h */; };
 		6ECA30D91DB1BB6800F6AD27 /* CCDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = 6ECA30D61DB1BB6800F6AD27 /* CCDefines.h */; };
+		6ECA30E51DB1C25D00F6AD27 /* Cocos2DX.h in Headers */ = {isa = PBXBuildFile; fileRef = 6ECA30E31DB1C25D00F6AD27 /* Cocos2DX.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6ECA30EB1DB1C26D00F6AD27 /* libcocos2d Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1551A33F158F2AB200E66CFE /* libcocos2d Mac.a */; };
+		6ECA30EC1DB1C27000F6AD27 /* CCDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = 6ECA30D61DB1BB6800F6AD27 /* CCDefines.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6ECA30ED1DB1C27900F6AD27 /* CCNode_C.h in Headers */ = {isa = PBXBuildFile; fileRef = 6ECA30CC1DB1BA6600F6AD27 /* CCNode_C.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6ECA30EE1DB1C29100F6AD27 /* CCNode_C.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6ECA30D01DB1BA8400F6AD27 /* CCNode_C.cpp */; };
+		6ECA30EF1DB1C33300F6AD27 /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AAF5384180E35A3000584C8 /* libwebsockets.a */; };
+		6ECA30F01DB1C33D00F6AD27 /* libwebp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A5703B7180BD2780088DEC7 /* libwebp.a */; };
+		6ECA30F11DB1C35400F6AD27 /* libtiff.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A5703A0180BD22C0088DEC7 /* libtiff.a */; };
+		6ECA30F21DB1C35A00F6AD27 /* libpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A570360180BD1080088DEC7 /* libpng.a */; };
+		6ECA30F31DB1C36E00F6AD27 /* libjpeg.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A57037A180BD1C90088DEC7 /* libjpeg.a */; };
+		6ECA30F41DB1C37600F6AD27 /* libglfw3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A570346180BD0850088DEC7 /* libglfw3.a */; };
+		6ECA30F51DB1C37B00F6AD27 /* libfreetype.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A57052A180BD31F0088DEC7 /* libfreetype.a */; };
+		6ECA30F61DB1C38600F6AD27 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 292F1A6A1A5250F700E479F8 /* libssl.a */; };
+		6ECA30F71DB1C38600F6AD27 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 292F1A601A52447100E479F8 /* libcrypto.a */; };
+		6ECA30F81DB1C38600F6AD27 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 292F1A611A52447100E479F8 /* libcurl.a */; };
+		6ECA30F91DB1C38B00F6AD27 /* libchipmunk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 29031E0619BFE8D400EFA1DF /* libchipmunk.a */; };
 		826294331AAF001C00CB7CF7 /* HttpAsynConnection-apple.m in Sources */ = {isa = PBXBuildFile; fileRef = 52B47A2A1A5349A3004E4C60 /* HttpAsynConnection-apple.m */; };
 		826294341AAF003E00CB7CF7 /* HttpClient-apple.mm in Sources */ = {isa = PBXBuildFile; fileRef = 52B47A2B1A5349A3004E4C60 /* HttpClient-apple.mm */; };
 		826294351AAF004C00CB7CF7 /* HttpCookie.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 52B47A2C1A5349A3004E4C60 /* HttpCookie.cpp */; };
@@ -5757,6 +5780,16 @@
 		ED9C6A9718599AD8000A5232 /* CCNodeGrid.h in Headers */ = {isa = PBXBuildFile; fileRef = ED9C6A9318599AD8000A5232 /* CCNodeGrid.h */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		6ECA30E91DB1C26700F6AD27 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1551A336158F2AB200E66CFE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1551A33E158F2AB200E66CFE;
+			remoteInfo = "libcocos2d Mac";
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		0634A4C5194B19E400E608AF /* CCActionTimeline.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionTimeline.cpp; sourceTree = "<group>"; };
 		0634A4C6194B19E400E608AF /* CCActionTimeline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionTimeline.h; sourceTree = "<group>"; };
@@ -6910,9 +6943,13 @@
 		5E9F61231A3FFE3D0038DE01 /* CCFrustum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFrustum.h; sourceTree = "<group>"; };
 		5E9F61241A3FFE3D0038DE01 /* CCPlane.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPlane.cpp; sourceTree = "<group>"; };
 		5E9F61251A3FFE3D0038DE01 /* CCPlane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPlane.h; sourceTree = "<group>"; };
+		6E4174EC1DB1C5BD00BD55EE /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
 		6ECA30CC1DB1BA6600F6AD27 /* CCNode_C.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNode_C.h; sourceTree = "<group>"; };
 		6ECA30D01DB1BA8400F6AD27 /* CCNode_C.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCNode_C.cpp; sourceTree = "<group>"; };
 		6ECA30D61DB1BB6800F6AD27 /* CCDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDefines.h; sourceTree = "<group>"; };
+		6ECA30E11DB1C25D00F6AD27 /* Cocos2DX.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Cocos2DX.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6ECA30E31DB1C25D00F6AD27 /* Cocos2DX.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Cocos2DX.h; sourceTree = "<group>"; };
+		6ECA30E41DB1C25D00F6AD27 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8525E3A11B291E42008EE815 /* clipper.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = clipper.hpp; sourceTree = "<group>"; };
 		85B374381B204B9400C488D6 /* clipper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = clipper.cpp; sourceTree = "<group>"; };
 		94A6DF031C7303FD0094AEF7 /* LocalizationManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LocalizationManager.cpp; sourceTree = "<group>"; };
@@ -7835,6 +7872,32 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		6ECA30DD1DB1C25D00F6AD27 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6E4174ED1DB1C5BE00BD55EE /* libiconv.tbd in Frameworks */,
+				6E4174EB1DB1C4F000BD55EE /* libz.a in Frameworks */,
+				6E4174EA1DB1C40000BD55EE /* OpenGL.framework in Frameworks */,
+				6E4174E91DB1C3F700BD55EE /* IOKit.framework in Frameworks */,
+				6E4174E81DB1C3F100BD55EE /* ApplicationServices.framework in Frameworks */,
+				6E4174E71DB1C3E600BD55EE /* Cocoa.framework in Frameworks */,
+				6E4174E61DB1C3DD00BD55EE /* QuartzCore.framework in Frameworks */,
+				6ECA30F21DB1C35A00F6AD27 /* libpng.a in Frameworks */,
+				6ECA30F41DB1C37600F6AD27 /* libglfw3.a in Frameworks */,
+				6ECA30F61DB1C38600F6AD27 /* libssl.a in Frameworks */,
+				6ECA30F11DB1C35400F6AD27 /* libtiff.a in Frameworks */,
+				6ECA30EB1DB1C26D00F6AD27 /* libcocos2d Mac.a in Frameworks */,
+				6ECA30EF1DB1C33300F6AD27 /* libwebsockets.a in Frameworks */,
+				6ECA30F91DB1C38B00F6AD27 /* libchipmunk.a in Frameworks */,
+				6ECA30F71DB1C38600F6AD27 /* libcrypto.a in Frameworks */,
+				6ECA30F01DB1C33D00F6AD27 /* libwebp.a in Frameworks */,
+				6ECA30F31DB1C36E00F6AD27 /* libjpeg.a in Frameworks */,
+				6ECA30F51DB1C37B00F6AD27 /* libfreetype.a in Frameworks */,
+				6ECA30F81DB1C38600F6AD27 /* libcurl.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A07A4CAD1783777C0073F6A7 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -7903,6 +7966,7 @@
 				1AD71CF7180E26E600808F54 /* editor-support */,
 				46A167981807AF4D005B8026 /* extensions */,
 				1A57033E180BD0490088DEC7 /* external */,
+				6ECA30E21DB1C25D00F6AD27 /* Cocos2DX */,
 				1551A341158F2AB200E66CFE /* Frameworks */,
 				46A170851807CE87005B8026 /* math */,
 				B6DD2F351B04805400E47F5F /* navmesh */,
@@ -7925,6 +7989,7 @@
 				1551A33F158F2AB200E66CFE /* libcocos2d Mac.a */,
 				A07A4D641783777C0073F6A7 /* libcocos2d iOS.a */,
 				507B40FD1C31BDD30067B53E /* libcocos2d tvOS.a */,
+				6ECA30E11DB1C25D00F6AD27 /* Cocos2DX.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -7932,6 +7997,7 @@
 		1551A341158F2AB200E66CFE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6E4174EC1DB1C5BD00BD55EE /* libiconv.tbd */,
 				29DC5A1C1CFFE5C000CF2930 /* CoreText.framework */,
 				2905E9CC1ACD3D8C00092DD2 /* libz.a */,
 				292F1A661A524F2700E479F8 /* libssl.dylib */,
@@ -10250,6 +10316,15 @@
 			);
 			name = c;
 			path = ../cocos/c;
+			sourceTree = "<group>";
+		};
+		6ECA30E21DB1C25D00F6AD27 /* Cocos2DX */ = {
+			isa = PBXGroup;
+			children = (
+				6ECA30E31DB1C25D00F6AD27 /* Cocos2DX.h */,
+				6ECA30E41DB1C25D00F6AD27 /* Info.plist */,
+			);
+			path = Cocos2DX;
 			sourceTree = "<group>";
 		};
 		A045F6EC1BA81821005076C7 /* GameNode3DReader */ = {
@@ -13498,6 +13573,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		6ECA30DE1DB1C25D00F6AD27 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6ECA30E51DB1C25D00F6AD27 /* Cocos2DX.h in Headers */,
+				6ECA30ED1DB1C27900F6AD27 /* CCNode_C.h in Headers */,
+				6ECA30EC1DB1C27000F6AD27 /* CCDefines.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A07A4CB11783777C0073F6A7 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -14593,6 +14678,25 @@
 			productReference = 507B40FD1C31BDD30067B53E /* libcocos2d tvOS.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		6ECA30E01DB1C25D00F6AD27 /* Cocos2DX Mac */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6ECA30E61DB1C25D00F6AD27 /* Build configuration list for PBXNativeTarget "Cocos2DX Mac" */;
+			buildPhases = (
+				6ECA30DC1DB1C25D00F6AD27 /* Sources */,
+				6ECA30DD1DB1C25D00F6AD27 /* Frameworks */,
+				6ECA30DE1DB1C25D00F6AD27 /* Headers */,
+				6ECA30DF1DB1C25D00F6AD27 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6ECA30EA1DB1C26700F6AD27 /* PBXTargetDependency */,
+			);
+			name = "Cocos2DX Mac";
+			productName = Cocos2DX;
+			productReference = 6ECA30E11DB1C25D00F6AD27 /* Cocos2DX.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 		A07A4C241783777C0073F6A7 /* libcocos2d iOS */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = A07A4D611783777C0073F6A7 /* Build configuration list for PBXNativeTarget "libcocos2d iOS" */;
@@ -14618,6 +14722,12 @@
 			attributes = {
 				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "";
+				TargetAttributes = {
+					6ECA30E01DB1C25D00F6AD27 = {
+						CreatedOnToolsVersion = 8.0;
+						ProvisioningStyle = Automatic;
+					};
+				};
 			};
 			buildConfigurationList = 1551A339158F2AB200E66CFE /* Build configuration list for PBXProject "cocos2d_libs" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -14634,9 +14744,20 @@
 				1551A33E158F2AB200E66CFE /* libcocos2d Mac */,
 				A07A4C241783777C0073F6A7 /* libcocos2d iOS */,
 				507B39BF1C31BDD30067B53E /* libcocos2d tvOS */,
+				6ECA30E01DB1C25D00F6AD27 /* Cocos2DX Mac */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		6ECA30DF1DB1C25D00F6AD27 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		1551A33B158F2AB200E66CFE /* Sources */ = {
@@ -16361,6 +16482,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		6ECA30DC1DB1C25D00F6AD27 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6ECA30EE1DB1C29100F6AD27 /* CCNode_C.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A07A4C251783777C0073F6A7 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -17223,6 +17352,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		6ECA30EA1DB1C26700F6AD27 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1551A33E158F2AB200E66CFE /* libcocos2d Mac */;
+			targetProxy = 6ECA30E91DB1C26700F6AD27 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
 		1551A34A158F2AB200E66CFE /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -17454,6 +17591,112 @@
 			};
 			name = Release;
 		};
+		6ECA30E71DB1C25D00F6AD27 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CODE_SIGN_IDENTITY = "";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = Cocos2DX/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../external/glfw3/prebuilt/mac\"",
+					"\"$(SRCROOT)/../external/png/prebuilt/mac\"",
+					"\"$(SRCROOT)/../external/jpeg/prebuilt/mac\"",
+					"\"$(SRCROOT)/../external/tiff/prebuilt/mac\"",
+					"\"$(SRCROOT)/../external/webp/prebuilt/mac\"",
+					"\"$(SRCROOT)/../external/freetype2/prebuilt/mac\"",
+					"\"$(SRCROOT)/../external/websockets/prebuilt/mac\"",
+					"\"$(SRCROOT)/../external/chipmunk/prebuilt/mac\"",
+					"\"$(SRCROOT)/../external/curl/prebuilt/mac\"",
+					"\"$(SRCROOT)/../external/zlib/prebuilt/mac\"",
+				);
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = org.pureswift.Cocos2DX;
+				PRODUCT_NAME = Cocos2DX;
+				SKIP_INSTALL = YES;
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/png/include/mac $(SRCROOT)/../external/tiff/include/mac $(SRCROOT)/../external/webp/include/mac $(SRCROOT)/../external/jpeg/include/mac $(SRCROOT)/../external/freetype2/include/mac $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external/websockets/include/mac $(SRCROOT)/../external/curl/include/mac $(SRCROOT)/../external/freetype2/include/mac/freetype2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		6ECA30E81DB1C25D00F6AD27 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CODE_SIGN_IDENTITY = "";
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_NS_ASSERTIONS = NO;
+				FRAMEWORK_VERSION = A;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = Cocos2DX/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../external/glfw3/prebuilt/mac\"",
+					"\"$(SRCROOT)/../external/png/prebuilt/mac\"",
+					"\"$(SRCROOT)/../external/jpeg/prebuilt/mac\"",
+					"\"$(SRCROOT)/../external/tiff/prebuilt/mac\"",
+					"\"$(SRCROOT)/../external/webp/prebuilt/mac\"",
+					"\"$(SRCROOT)/../external/freetype2/prebuilt/mac\"",
+					"\"$(SRCROOT)/../external/websockets/prebuilt/mac\"",
+					"\"$(SRCROOT)/../external/chipmunk/prebuilt/mac\"",
+					"\"$(SRCROOT)/../external/curl/prebuilt/mac\"",
+					"\"$(SRCROOT)/../external/zlib/prebuilt/mac\"",
+				);
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = org.pureswift.Cocos2DX;
+				PRODUCT_NAME = Cocos2DX;
+				SKIP_INSTALL = YES;
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/png/include/mac $(SRCROOT)/../external/tiff/include/mac $(SRCROOT)/../external/webp/include/mac $(SRCROOT)/../external/jpeg/include/mac $(SRCROOT)/../external/freetype2/include/mac $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external/websockets/include/mac $(SRCROOT)/../external/curl/include/mac $(SRCROOT)/../external/freetype2/include/mac/freetype2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
 		A07A4D621783777C0073F6A7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -17547,6 +17790,15 @@
 			buildConfigurations = (
 				507B40FB1C31BDD30067B53E /* Debug */,
 				507B40FC1C31BDD30067B53E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6ECA30E61DB1C25D00F6AD27 /* Build configuration list for PBXNativeTarget "Cocos2DX Mac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6ECA30E71DB1C25D00F6AD27 /* Debug */,
+				6ECA30E81DB1C25D00F6AD27 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -8,7 +8,21 @@
 
 #include <stdio.h>
 
-#ifndef __cplusplus
+#include <cstdint>
+#include "base/ccMacros.h"
+#include "base/CCVector.h"
+#include "base/CCProtocols.h"
+#include "base/CCScriptSupport.h"
+#include "math/CCAffineTransform.h"
+#include "math/CCMath.h"
+#include "2d/CCComponentContainer.h"
+#include "2d/CCComponent.h"
+
+#if CC_USE_PHYSICS
+#include "physics/CCPhysicsBody.h"
+#endif
+
+#include "2d/CCNode.h"
 
 void* CCNodeCreate()
 {
@@ -96,5 +110,3 @@ void CCNodeSetScale(const void *object, float newValue)
     cocos2d::Node *node = (cocos2d::Node *)object;
     node->setScale(newValue);
 }
-
-#endif
