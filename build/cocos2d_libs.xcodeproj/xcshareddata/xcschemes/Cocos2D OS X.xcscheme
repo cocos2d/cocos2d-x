@@ -16,7 +16,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "6ECA30E01DB1C25D00F6AD27"
                BuildableName = "Cocos2D.framework"
-               BlueprintName = "Cocos2D Mac"
+               BlueprintName = "CCocos2D Mac"
                ReferencedContainer = "container:cocos2d_libs.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -47,7 +47,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "6ECA30E01DB1C25D00F6AD27"
             BuildableName = "Cocos2D.framework"
-            BlueprintName = "Cocos2D Mac"
+            BlueprintName = "CCocos2D Mac"
             ReferencedContainer = "container:cocos2d_libs.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -65,7 +65,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "6ECA30E01DB1C25D00F6AD27"
             BuildableName = "Cocos2D.framework"
-            BlueprintName = "Cocos2D Mac"
+            BlueprintName = "CCocos2D Mac"
             ReferencedContainer = "container:cocos2d_libs.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
