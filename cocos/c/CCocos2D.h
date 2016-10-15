@@ -9,8 +9,10 @@
 #ifndef CCocos2D_h
 #define CCocos2D_h
 
-#import <CCocos2D/CCDefines.h>
-#import <CCocos2D/CCNode_C.h>
+// Modular C umbrella header for Cocos2D C API.
 
+#import <CCocos2D/CCDefines.h>
+#import <CCocos2D/CCVector_C.h>
+#import <CCocos2D/CCNode_C.h>
 
 #endif /* CCocos2D_h */

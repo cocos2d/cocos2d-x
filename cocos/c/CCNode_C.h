@@ -9,7 +9,8 @@
 #ifndef CCNode_C_h
 #define CCNode_C_h
 #ifndef __cplusplus
-#import <Cocos2DX/CCDefines.h>
+#import <CCocos2D/CCDefines.h>
+#import <CCocos2D/CCPoint_C.h>
 
 CC_ASSUME_NONNULL_BEGIN
 
@@ -54,6 +55,18 @@ float CCNodeGetScale(const void *object);
 
 SWIFT_PRIVATE
 void CCNodeSetScale(const void *object, float newValue);
+
+SWIFT_PRIVATE
+CCVector_C CCNodeGetPosition(const void *object);
+
+SWIFT_PRIVATE
+void CCNodeSetPosition(const void *object, CCVector_C newValue);
+
+SWIFT_PRIVATE
+CCVector_C CCNodeGetNormalizedPosition(const void *object);
+
+SWIFT_PRIVATE
+void CCNodeSetNormalizedPosition(const void *object, CCVector_C newValue);
 
 CC_ASSUME_NONNULL_END
 

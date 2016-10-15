@@ -5954,6 +5954,10 @@
 		6E417CAF1DB1FA5300BD55EE /* CCocos2D.h in Headers */ = {isa = PBXBuildFile; fileRef = 6E417CAD1DB1FA5300BD55EE /* CCocos2D.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6E417CB01DB1FA5300BD55EE /* CCocos2D.h in Headers */ = {isa = PBXBuildFile; fileRef = 6E417CAD1DB1FA5300BD55EE /* CCocos2D.h */; };
 		6E417CB11DB1FA5300BD55EE /* CCocos2D.h in Headers */ = {isa = PBXBuildFile; fileRef = 6E417CAD1DB1FA5300BD55EE /* CCocos2D.h */; };
+		6E417CB61DB203B300BD55EE /* CCVector_C.h in Headers */ = {isa = PBXBuildFile; fileRef = 6E417CB51DB203B300BD55EE /* CCVector_C.h */; };
+		6E417CB71DB203B300BD55EE /* CCVector_C.h in Headers */ = {isa = PBXBuildFile; fileRef = 6E417CB51DB203B300BD55EE /* CCVector_C.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6E417CB81DB203B300BD55EE /* CCVector_C.h in Headers */ = {isa = PBXBuildFile; fileRef = 6E417CB51DB203B300BD55EE /* CCVector_C.h */; };
+		6E417CB91DB203B300BD55EE /* CCVector_C.h in Headers */ = {isa = PBXBuildFile; fileRef = 6E417CB51DB203B300BD55EE /* CCVector_C.h */; };
 		6ECA30CD1DB1BA6600F6AD27 /* CCNode_C.h in Headers */ = {isa = PBXBuildFile; fileRef = 6ECA30CC1DB1BA6600F6AD27 /* CCNode_C.h */; };
 		6ECA30CE1DB1BA6600F6AD27 /* CCNode_C.h in Headers */ = {isa = PBXBuildFile; fileRef = 6ECA30CC1DB1BA6600F6AD27 /* CCNode_C.h */; };
 		6ECA30CF1DB1BA6600F6AD27 /* CCNode_C.h in Headers */ = {isa = PBXBuildFile; fileRef = 6ECA30CC1DB1BA6600F6AD27 /* CCNode_C.h */; };
@@ -8865,6 +8869,7 @@
 		6E417C9E1DB1F59A00BD55EE /* RecastRasterization.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RecastRasterization.cpp; sourceTree = "<group>"; };
 		6E417C9F1DB1F59A00BD55EE /* RecastRegion.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RecastRegion.cpp; sourceTree = "<group>"; };
 		6E417CAD1DB1FA5300BD55EE /* CCocos2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCocos2D.h; sourceTree = "<group>"; };
+		6E417CB51DB203B300BD55EE /* CCVector_C.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCVector_C.h; sourceTree = "<group>"; };
 		6ECA30CC1DB1BA6600F6AD27 /* CCNode_C.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNode_C.h; sourceTree = "<group>"; };
 		6ECA30D01DB1BA8400F6AD27 /* CCNode_C.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCNode_C.cpp; sourceTree = "<group>"; };
 		6ECA30D61DB1BB6800F6AD27 /* CCDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDefines.h; sourceTree = "<group>"; };
@@ -12256,6 +12261,7 @@
 				6ECA30D61DB1BB6800F6AD27 /* CCDefines.h */,
 				6ECA30CC1DB1BA6600F6AD27 /* CCNode_C.h */,
 				6ECA30D01DB1BA8400F6AD27 /* CCNode_C.cpp */,
+				6E417CB51DB203B300BD55EE /* CCVector_C.h */,
 			);
 			name = c;
 			path = ../cocos/c;
@@ -14041,6 +14047,7 @@
 				15AE18E019AAD35000C27E9E /* TriggerBase.h in Headers */,
 				15AE187D19AAD33D00C27E9E /* CCBFileLoader.h in Headers */,
 				15AE181219AAD2F700C27E9E /* CCAnimation3D.h in Headers */,
+				6E417CB61DB203B300BD55EE /* CCVector_C.h in Headers */,
 				182C5CD81A98F30500C30D34 /* Sprite3DReader.h in Headers */,
 				1A5702F0180BCE750088DEC7 /* CCTMXLayer.h in Headers */,
 				501216961AC47393009A4BEA /* CCPass.h in Headers */,
@@ -15099,6 +15106,7 @@
 				507B3F711C31BDD30067B53E /* btContactConstraint.h in Headers */,
 				507B3F721C31BDD30067B53E /* CCBoneNode.h in Headers */,
 				507B3F731C31BDD30067B53E /* CCPUCollisionAvoidanceAffectorTranslator.h in Headers */,
+				6E417CB91DB203B300BD55EE /* CCVector_C.h in Headers */,
 				507B3F741C31BDD30067B53E /* btParallelConstraintSolver.h in Headers */,
 				507B3F751C31BDD30067B53E /* CCStencilStateManager.hpp in Headers */,
 				507B3F761C31BDD30067B53E /* CCNodeLoaderLibrary.h in Headers */,
@@ -15787,6 +15795,7 @@
 				6E4179451DB1EEDC00BD55EE /* WidgetReader.h in Headers */,
 				6E4179461DB1EEDC00BD55EE /* WidgetReaderProtocol.h in Headers */,
 				6E4179471DB1EEDC00BD55EE /* NodeReaderProtocol.h in Headers */,
+				6E417CB71DB203B300BD55EE /* CCVector_C.h in Headers */,
 				6E4179481DB1EEDC00BD55EE /* NodeReaderDefine.h in Headers */,
 				6E4179491DB1EEDC00BD55EE /* TriggerObj.h in Headers */,
 				6E41794A1DB1EEDC00BD55EE /* TriggerBase.h in Headers */,
@@ -16907,6 +16916,7 @@
 				15AE1ACB19AAD40300C27E9E /* b2MouseJoint.h in Headers */,
 				5020A1F01D49912500E80C72 /* SkeletonBounds.h in Headers */,
 				B665E3491AA80A6500DDB1C5 /* CCPUOnExpireObserverTranslator.h in Headers */,
+				6E417CB81DB203B300BD55EE /* CCVector_C.h in Headers */,
 				50ABBD3F1925AB0000A911A9 /* CCGeometry.h in Headers */,
 				B6CAB4F21AF9AA1A00B9B856 /* Win32ThreadSupport.h in Headers */,
 				B665E3291AA80A6500DDB1C5 /* CCPUOnCollisionObserverTranslator.h in Headers */,
@@ -17704,7 +17714,7 @@
 		1551A336158F2AB200E66CFE /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = "";
 				TargetAttributes = {
 					6ECA30E01DB1C25D00F6AD27 = {
@@ -21572,7 +21582,7 @@
 				);
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = YES;
 				HEADER_SEARCH_PATHS = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../external/png/prebuilt/ios\"",
 					"\"$(SRCROOT)/../external/jpeg/prebuilt/ios\"",
@@ -21606,7 +21616,7 @@
 				);
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = YES;
 				HEADER_SEARCH_PATHS = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../external/png/prebuilt/ios\"",
 					"\"$(SRCROOT)/../external/jpeg/prebuilt/ios\"",

@@ -23,6 +23,7 @@
 #endif
 
 #include "2d/CCNode.h"
+#include "c/CCVector_C.h"
 
 extern "C" void* CCNodeCreate()
 {
@@ -109,4 +110,26 @@ extern "C" void CCNodeSetScale(const void *object, float newValue)
 {
     cocos2d::Node *node = (cocos2d::Node *)object;
     node->setScale(newValue);
+}
+
+extern "C" CCVector_C CCNodeGetPosition(const void *object)
+{
+    cocos2d::Node *node = (cocos2d::Node *)object;
+    cocos2d::Vec2 vector = node->getPosition();
+    return { vector.x, vector.y };
+}
+
+extern "C" void CCNodeSetPosition(const void *object, CCVector_C newValue)
+{
+    
+}
+
+extern "C" CCVector_C CCNodeGetNormalizedPosition(const void *object)
+{
+    
+}
+
+extern "C" void CCNodeSetNormalizedPosition(const void *object, CCVector_C newValue)
+{
+    
 }
