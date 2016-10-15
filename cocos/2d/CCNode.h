@@ -2080,6 +2080,78 @@ extern "C" {
         return cString;
     }
     
+    static inline int CCNodeGetLocalZOrder(const void *object)
+    {
+        cocos2d::Node *node = (cocos2d::Node *)object;
+        return node->getLocalZOrder();
+    }
+    
+    static inline void CCNodeSetLocalZOrder(const void *object, int newValue)
+    {
+        cocos2d::Node *node = (cocos2d::Node *)object;
+        node->setLocalZOrder(newValue);
+    }
+    
+    static inline int CCNodeGetGlobalZOrder(const void *object)
+    {
+        cocos2d::Node *node = (cocos2d::Node *)object;
+        return node->getGlobalZOrder();
+    }
+    
+    static inline void CCNodeSetGlobalZOrder(const void *object, int newValue)
+    {
+        cocos2d::Node *node = (cocos2d::Node *)object;
+        node->setGlobalZOrder(newValue);
+    }
+    
+    static inline float CCNodeGetScaleX(const void *object)
+    {
+        cocos2d::Node *node = (cocos2d::Node *)object;
+        return node->getScaleX();
+    }
+    
+    static inline void CCNodeSetScaleX(const void *object, float newValue)
+    {
+        cocos2d::Node *node = (cocos2d::Node *)object;
+        node->setScaleX(newValue);
+    }
+    
+    static inline float CCNodeGetScaleY(const void *object)
+    {
+        cocos2d::Node *node = (cocos2d::Node *)object;
+        return node->getScaleY();
+    }
+    
+    static inline void CCNodeSetScaleY(const void *object, float newValue)
+    {
+        cocos2d::Node *node = (cocos2d::Node *)object;
+        node->setScaleY(newValue);
+    }
+    
+    static inline float CCNodeGetScaleZ(const void *object)
+    {
+        cocos2d::Node *node = (cocos2d::Node *)object;
+        return node->getScaleZ();
+    }
+    
+    static inline void CCNodeSetScaleZ(const void *object, float newValue)
+    {
+        cocos2d::Node *node = (cocos2d::Node *)object;
+        node->setScaleZ(newValue);
+    }
+    
+    static inline float CCNodeGetScale(const void *object)
+    {
+        cocos2d::Node *node = (cocos2d::Node *)object;
+        return node->getScale();
+    }
+    
+    static inline void CCNodeSetScale(const void *object, float newValue)
+    {
+        cocos2d::Node *node = (cocos2d::Node *)object;
+        node->setScale(newValue);
+    }
+    
 #ifdef __cplusplus
 }// extern "C"
 #endif
