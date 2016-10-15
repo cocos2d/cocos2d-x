@@ -10,10 +10,17 @@
 #define CCVector_C_h
 #import <CCocos2D/CCDefines.h>
 
-struct __attribute__((swift_name("Vector"))) CCVector_C {
+struct __attribute__((swift_name("Vector2"))) CCVector2_C {
     float x;
     float y;
 };
-typedef struct CCVector_C CCVector_C;
+typedef struct CCVector2_C CCVector2_C;
+
+struct __attribute__((swift_name("Vector3"))) CCVector3_C {
+    float x;
+    float y;
+    float z;
+};
+typedef struct CCVector3_C CCVector3_C;
 
 #endif /* CCVector_C */

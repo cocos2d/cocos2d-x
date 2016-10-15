@@ -57,16 +57,22 @@ SWIFT_PRIVATE
 void CCNodeSetScale(const void *object, float newValue);
 
 SWIFT_PRIVATE
-CCVector_C CCNodeGetPosition(const void *object);
+CCVector2_C CCNodeGetPosition(const void *object);
 
 SWIFT_PRIVATE
-void CCNodeSetPosition(const void *object, CCVector_C newValue);
+void CCNodeSetPosition(const void *object, CCVector2_C newValue);
 
 SWIFT_PRIVATE
-CCVector_C CCNodeGetNormalizedPosition(const void *object);
+CCVector2_C CCNodeGetNormalizedPosition(const void *object);
 
 SWIFT_PRIVATE
-void CCNodeSetNormalizedPosition(const void *object, CCVector_C newValue);
+void CCNodeSetNormalizedPosition(const void *object, CCVector2_C newValue);
+
+SWIFT_PRIVATE
+CCVector3_C CCNodeGetPosition3D(const void *object);
+
+SWIFT_PRIVATE
+void CCNodeSetPosition3D(const void *object, CCVector3_C newValue);
 
 CC_ASSUME_NONNULL_END
 
