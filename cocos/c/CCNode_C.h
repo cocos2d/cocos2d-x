@@ -155,6 +155,12 @@ int CCNodeGetTag(const void *object);
 SWIFT_PRIVATE
 void CCNodeSetTag(const void *object, int newValue);
 
+SWIFT_PRIVATE
+const void * _Nullable CCNodeGetParent(const void *object);
+
+SWIFT_PRIVATE
+void CCNodeSetParent(const void *object, const void * _Nullable parent);
+
 #pragma mark - Methods
 
 SWIFT_PRIVATE

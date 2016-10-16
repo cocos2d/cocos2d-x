@@ -24,6 +24,7 @@
 
 #include "2d/CCNode.h"
 #include "c/CCVector_C.h"
+#include "c/CCDefines.h"
 
 USING_NS_CC;
 
@@ -321,6 +322,20 @@ extern "C" void CCNodeSetTag(const void *object, int newValue)
 {
     Node *node = (Node *)object;
     node->setTag(newValue);
+}
+
+extern "C" const void * _Nullable CCNodeGetParent(const void *object)
+{
+    Node *node = (Node *)object;
+    Node *parent = node->getParent();
+    return (void *)parent;
+}
+
+extern "C" void CCNodeSetParent(const void *object, const void * _Nullable parentObject)
+{
+    Node *node = (Node *)object;
+    Node *parent = (Node *)parentObject;
+    node->setParent(parent);
 }
 
 #pragma mark - Methods
