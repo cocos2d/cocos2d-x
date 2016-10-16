@@ -164,6 +164,9 @@ void CCNodeSetParent(const void *object, const void * _Nullable parent);
 SWIFT_PRIVATE
 bool CCNodeGetRunning(const void *object);
 
+SWIFT_PRIVATE
+CCVector4_C CCNodeGetBoundingBox(const void *object);
+
 #pragma mark - Methods
 
 SWIFT_PRIVATE

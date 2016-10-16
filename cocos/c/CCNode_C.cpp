@@ -344,6 +344,13 @@ extern "C" bool CCNodeGetRunning(const void *object)
     return node->isRunning();
 }
 
+extern "C" CCVector4_C CCNodeGetBoundingBox(const void *object)
+{
+    Node *node = (Node *)object;
+    Rect vector = node->getBoundingBox();
+    return { vector.origin.x, vector.origin.y, vector.size.width, vector.size.height };
+}
+
 #pragma mark - Methods
 
 extern "C" void CCNodeAddChild(const void *object, const void *childObject)
