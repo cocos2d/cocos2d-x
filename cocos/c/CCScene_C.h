@@ -19,10 +19,10 @@ CC_ASSUME_NONNULL_BEGIN
 #pragma mark - Initialization
 
 SWIFT_PRIVATE
-void* CCSpriteCreate();
+void* CCSceneCreate();
 
 SWIFT_PRIVATE
-void* _Nullable CCSpriteCreateWithFilename(const char *filename);
+void* CCSceneCreateWithSize(CCVector2_C size);
 
 CC_ASSUME_NONNULL_END
 
