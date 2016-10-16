@@ -160,6 +160,15 @@ void CCNodeSetTag(const void *object, int newValue);
 SWIFT_PRIVATE
 void CCNodeAddChild(const void *object, const void *child);
 
+SWIFT_PRIVATE
+void CCNodeAddChildWithLocalZOrder(const void *object, const void *child, int localZOrder);
+
+SWIFT_PRIVATE
+void CCNodeAddChildWithLocalZOrderAndTag(const void *object, const void *child, int localZOrder, int tag);
+
+SWIFT_PRIVATE
+void CCNodeAddChildWithLocalZOrderAndName(const void *object, const void *child, int localZOrder, const char *name);
+
 CC_ASSUME_NONNULL_END
 
 #endif

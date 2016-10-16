@@ -233,77 +233,125 @@ extern "C" void CCNodeSetVisible(const void *object, bool newValue)
 
 extern "C" float CCNodeGetRotation(const void *object)
 {
-    
+    Node *node = (Node *)object;
+    return node->getRotation();
 }
 
 extern "C" void CCNodeSetRotation(const void *object, float newValue)
 {
-    
+    Node *node = (Node *)object;
+    node->setRotation(newValue);
 }
 
 extern "C" CCVector3_C CCNodeGetRotation3D(const void *object)
 {
-    
+    Node *node = (Node *)object;
+    Vec3 vector = node->getRotation3D();
+    return { vector.x, vector.y, vector.z };
 }
 
 extern "C" void CCNodeSetRotation3D(const void *object, CCVector3_C newValue)
 {
-    
+    Node *node = (Node *)object;
+    Vec3 vector = Vec3(newValue.x, newValue.y, newValue.z);
+    node->setRotation3D(vector);
 }
 
 extern "C" CCVector4_C CCNodeGetRotationByQuaternion(const void *object)
 {
-    
+    Node *node = (Node *)object;
+    Quaternion vector = node->getRotationQuat();
+    return { vector.x, vector.y, vector.z, vector.w };
 }
 
 extern "C" void CCNodeSetRotationByQuaternion(const void *object, CCVector4_C newValue)
 {
-    
+    Node *node = (Node *)object;
+    Quaternion vector = Quaternion(newValue.x, newValue.y, newValue.z, newValue.w);
+    node->setRotationQuat(vector);
 }
 
 extern "C" float CCNodeGetRotationSkewX(const void *object)
 {
-    
+    Node *node = (Node *)object;
+    return node->getRotationSkewX();
 }
 
 extern "C" void CCNodeSetRotationSkewX(const void *object, float newValue)
 {
-    
+    Node *node = (Node *)object;
+    node->setRotationSkewX(newValue);
 }
 
 extern "C" float CCNodeGetRotationSkewY(const void *object)
 {
-    
+    Node *node = (Node *)object;
+    return node->getRotationSkewY();
 }
 
 extern "C" void CCNodeSetRotationSkewY(const void *object, float newValue)
 {
-    
+    Node *node = (Node *)object;
+    node->setRotationSkewY(newValue);
 }
 
 extern "C" const char* CCNodeGetName(const void *object)
 {
-    
+    Node *node = (Node *)object;
+    std::string string = node->getName();
+    char *cString = (char*) malloc(string.size() + 1); //as 1 char space for null is also required
+    strcpy(cString, string.c_str());
+    return cString;
 }
 
 extern "C" void CCNodeSetName(const void *object, const char* newValue)
 {
-    
+    Node *node = (Node *)object;
+    std::string string = std::string(newValue);
+    node->setName(string);
 }
 
 extern "C" int CCNodeGetTag(const void *object)
 {
-    
+    Node *node = (Node *)object;
+    return node->getTag();
 }
 
 extern "C" void CCNodeSetTag(const void *object, int newValue)
 {
-    
+    Node *node = (Node *)object;
+    node->setTag(newValue);
 }
 
 #pragma mark - Methods
 
-extern "C" void CCNodeAddChild(const void *object, const void *child)
+extern "C" void CCNodeAddChild(const void *object, const void *childObject)
 {
-    
+    Node *node = (Node *)object;
+    Node *child = (Node *)childObject;
+    node->addChild(child);
 }
+
+extern "C" void CCNodeAddChildWithLocalZOrder(const void *object, const void *childObject, int localZOrder)
+{
+    Node *node = (Node *)object;
+    Node *child = (Node *)childObject;
+    node->addChild(child, localZOrder);
+}
+
+extern "C" void CCNodeAddChildWithLocalZOrderAndTag(const void *object, const void *childObject, int localZOrder, int tag)
+{
+    Node *node = (Node *)object;
+    Node *child = (Node *)childObject;
+    node->addChild(child, localZOrder, tag);
+}
+
+extern "C" void CCNodeAddChildWithLocalZOrderAndName(const void *object, const void *childObject, int localZOrder, const char* name)
+{
+    Node *node = (Node *)object;
+    Node *child = (Node *)childObject;
+    std::string string = std::string(name);
+    node->addChild(child, localZOrder, string);
+}
+
+
