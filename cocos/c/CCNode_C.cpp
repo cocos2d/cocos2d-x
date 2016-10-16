@@ -338,6 +338,12 @@ extern "C" void CCNodeSetParent(const void *object, const void * _Nullable paren
     node->setParent(parent);
 }
 
+extern "C" bool CCNodeGetRunning(const void *object)
+{
+    Node *node = (Node *)object;
+    return node->isRunning();
+}
+
 #pragma mark - Methods
 
 extern "C" void CCNodeAddChild(const void *object, const void *childObject)
@@ -367,6 +373,19 @@ extern "C" void CCNodeAddChildWithLocalZOrderAndName(const void *object, const v
     Node *child = (Node *)childObject;
     std::string string = std::string(name);
     node->addChild(child, localZOrder, string);
+}
+
+extern "C" void CCNodeRemoveFromParent(const void *object, bool cleanup)
+{
+    Node *node = (Node *)object;
+    node->removeFromParentAndCleanup(cleanup);
+}
+
+extern "C" void CCNodeRemoveChild(const void *object, const void *childObject, bool cleanup)
+{
+    Node *node = (Node *)object;
+    Node *child = (Node *)childObject;
+    node->removeChild(child, cleanup);
 }
 
 

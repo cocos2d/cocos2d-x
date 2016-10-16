@@ -161,6 +161,9 @@ const void * _Nullable CCNodeGetParent(const void *object);
 SWIFT_PRIVATE
 void CCNodeSetParent(const void *object, const void * _Nullable parent);
 
+SWIFT_PRIVATE
+bool CCNodeGetRunning(const void *object);
+
 #pragma mark - Methods
 
 SWIFT_PRIVATE
@@ -174,6 +177,12 @@ void CCNodeAddChildWithLocalZOrderAndTag(const void *object, const void *child, 
 
 SWIFT_PRIVATE
 void CCNodeAddChildWithLocalZOrderAndName(const void *object, const void *child, int localZOrder, const char *name);
+
+SWIFT_PRIVATE
+void CCNodeRemoveFromParent(const void *object, bool cleanup);
+
+SWIFT_PRIVATE
+void CCNodeRemoveChild(const void *object, const void *child, bool cleanup);
 
 CC_ASSUME_NONNULL_END
 
