@@ -151,7 +151,7 @@ void ControlSaturationBrightnessPicker::updateSliderPosition(Vec2 sliderPosition
     if (sliderPosition.y < _startPos.y + boxPos)                        sliderPosition.y = _startPos.y + boxPos;
     else if (sliderPosition.y > _startPos.y + boxPos + boxSize)        sliderPosition.y = _startPos.y + boxPos + boxSize;
     
-    // Use the position / slider width to determin the percentage the dragger is at
+    // Use the position / slider width to determine the percentage the dragger is at
     _saturation = 1.0f - fabs((_startPos.x + (float)boxPos - sliderPosition.x)/(float)boxSize);
     _brightness = fabs((_startPos.y + (float)boxPos - sliderPosition.y)/(float)boxSize);
 }
