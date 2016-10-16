@@ -311,11 +311,9 @@ THE SOFTWARE.
 // eg. #include "deprecated/CCString.h" if you only need cocos2d::__String.
 #include "deprecated/CCDeprecated.h"
 
-// C API
-#include "c/CCDefines.h"
-#include "c/CCNode_C.h"
-#include "c/CCVector_C.h"
-
+// C API is separate from C++ API
+// and is accessed with angle brackets
+// #import <CCocos2D/CCocos2D.h> // Add this to use the C API
 
 NS_CC_BEGIN
 

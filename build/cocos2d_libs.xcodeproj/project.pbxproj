@@ -5963,7 +5963,7 @@
 		6E417CC51DB2F85700BD55EE /* CCSprite_C.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6E417CC11DB2F85700BD55EE /* CCSprite_C.cpp */; };
 		6E417CC61DB2F85700BD55EE /* CCSprite_C.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6E417CC11DB2F85700BD55EE /* CCSprite_C.cpp */; };
 		6E417CC71DB2F85700BD55EE /* CCSprite_C.h in Headers */ = {isa = PBXBuildFile; fileRef = 6E417CC21DB2F85700BD55EE /* CCSprite_C.h */; };
-		6E417CC81DB2F85700BD55EE /* CCSprite_C.h in Headers */ = {isa = PBXBuildFile; fileRef = 6E417CC21DB2F85700BD55EE /* CCSprite_C.h */; };
+		6E417CC81DB2F85700BD55EE /* CCSprite_C.h in Headers */ = {isa = PBXBuildFile; fileRef = 6E417CC21DB2F85700BD55EE /* CCSprite_C.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6E417CC91DB2F85700BD55EE /* CCSprite_C.h in Headers */ = {isa = PBXBuildFile; fileRef = 6E417CC21DB2F85700BD55EE /* CCSprite_C.h */; };
 		6E417CCA1DB2F85700BD55EE /* CCSprite_C.h in Headers */ = {isa = PBXBuildFile; fileRef = 6E417CC21DB2F85700BD55EE /* CCSprite_C.h */; };
 		6ECA30CD1DB1BA6600F6AD27 /* CCNode_C.h in Headers */ = {isa = PBXBuildFile; fileRef = 6ECA30CC1DB1BA6600F6AD27 /* CCNode_C.h */; };

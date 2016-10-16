@@ -27,11 +27,15 @@
 
 USING_NS_CC;
 
+#pragma mark - Initialization
+
 extern "C" void* CCNodeCreate()
 {
     Node *node = Node::create();
     return (void *)node;
 }
+
+#pragma mark - Properties
 
 extern "C" const char* CCNodeGetDescription(const void *object)
 {
@@ -154,4 +158,152 @@ extern "C" void CCNodeSetPosition3D(const void *object, CCVector3_C newValue)
     Node *node = (Node *)object;
     Vec3 vector = Vec3(newValue.x, newValue.y, newValue.z);
     node->setPosition3D(vector);
+}
+
+extern "C" float CCNodeGetSkewX(const void *object)
+{
+    Node *node = (Node *)object;
+    return node->getSkewX();
+}
+
+extern "C" void CCNodeSetSkewX(const void *object, float newValue)
+{
+    Node *node = (Node *)object;
+    node->setSkewX(newValue);
+}
+
+extern "C" float CCNodeGetSkewY(const void *object)
+{
+    Node *node = (Node *)object;
+    return node->getSkewY();
+}
+
+extern "C" void CCNodeSetSkewY(const void *object, float newValue)
+{
+    Node *node = (Node *)object;
+    node->setSkewY(newValue);
+}
+
+extern "C" CCVector2_C CCNodeGetAnchorPoint(const void *object)
+{
+    Node *node = (Node *)object;
+    Vec2 vector = node->getAnchorPoint();
+    return { vector.x, vector.y };
+}
+
+extern "C" void CCNodeSetAnchorPoint(const void *object, CCVector2_C newValue)
+{
+    Node *node = (Node *)object;
+    Vec2 vector = Vec2(newValue.x, newValue.y);
+    node->setAnchorPoint(vector);
+}
+
+extern "C" CCVector2_C CCNodeGetAnchorPointInPoints(const void *object)
+{
+    Node *node = (Node *)object;
+    Vec2 vector = node->getAnchorPointInPoints();
+    return { vector.x, vector.y };
+}
+
+extern "C" CCVector2_C CCNodeGetContentSize(const void *object)
+{
+    Node *node = (Node *)object;
+    Size size = node->getContentSize();
+    return { size.width, size.height };
+}
+
+extern "C" void CCNodeSetContentSize(const void *object, CCVector2_C newValue)
+{
+    Node *node = (Node *)object;
+    Size size = Size(newValue.x, newValue.y);
+    node->setContentSize(size);
+}
+
+extern "C" bool CCNodeGetVisible(const void *object)
+{
+    Node *node = (Node *)object;
+    return node->isVisible();
+}
+
+extern "C" void CCNodeSetVisible(const void *object, bool newValue)
+{
+    Node *node = (Node *)object;
+    node->setVisible(newValue);
+}
+
+extern "C" float CCNodeGetRotation(const void *object)
+{
+    
+}
+
+extern "C" void CCNodeSetRotation(const void *object, float newValue)
+{
+    
+}
+
+extern "C" CCVector3_C CCNodeGetRotation3D(const void *object)
+{
+    
+}
+
+extern "C" void CCNodeSetRotation3D(const void *object, CCVector3_C newValue)
+{
+    
+}
+
+extern "C" CCVector4_C CCNodeGetRotationByQuaternion(const void *object)
+{
+    
+}
+
+extern "C" void CCNodeSetRotationByQuaternion(const void *object, CCVector4_C newValue)
+{
+    
+}
+
+extern "C" float CCNodeGetRotationSkewX(const void *object)
+{
+    
+}
+
+extern "C" void CCNodeSetRotationSkewX(const void *object, float newValue)
+{
+    
+}
+
+extern "C" float CCNodeGetRotationSkewY(const void *object)
+{
+    
+}
+
+extern "C" void CCNodeSetRotationSkewY(const void *object, float newValue)
+{
+    
+}
+
+extern "C" const char* CCNodeGetName(const void *object)
+{
+    
+}
+
+extern "C" void CCNodeSetName(const void *object, const char* newValue)
+{
+    
+}
+
+extern "C" int CCNodeGetTag(const void *object)
+{
+    
+}
+
+extern "C" void CCNodeSetTag(const void *object, int newValue)
+{
+    
+}
+
+#pragma mark - Methods
+
+extern "C" void CCNodeAddChild(const void *object, const void *child)
+{
+    
 }

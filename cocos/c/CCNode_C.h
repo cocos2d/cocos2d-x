@@ -16,8 +16,12 @@
 
 CC_ASSUME_NONNULL_BEGIN
 
+#pragma mark - Initialization
+
 SWIFT_PRIVATE
 void* CCNodeCreate();
+
+#pragma mark - Properties
 
 SWIFT_PRIVATE
 const char* CCNodeGetDescription(const void *object);
@@ -120,6 +124,41 @@ CCVector3_C CCNodeGetRotation3D(const void *object);
 
 SWIFT_PRIVATE
 void CCNodeSetRotation3D(const void *object, CCVector3_C newValue);
+
+SWIFT_PRIVATE
+CCVector4_C CCNodeGetRotationByQuaternion(const void *object);
+
+SWIFT_PRIVATE
+void CCNodeSetRotationByQuaternion(const void *object, CCVector4_C newValue);
+
+SWIFT_PRIVATE
+float CCNodeGetRotationSkewX(const void *object);
+
+SWIFT_PRIVATE
+void CCNodeSetRotationSkewX(const void *object, float newValue);
+
+SWIFT_PRIVATE
+float CCNodeGetRotationSkewY(const void *object);
+
+SWIFT_PRIVATE
+void CCNodeSetRotationSkewY(const void *object, float newValue);
+
+SWIFT_PRIVATE
+const char* CCNodeGetName(const void *object);
+
+SWIFT_PRIVATE
+void CCNodeSetName(const void *object, const char* newValue);
+
+SWIFT_PRIVATE
+int CCNodeGetTag(const void *object);
+
+SWIFT_PRIVATE
+void CCNodeSetTag(const void *object, int newValue);
+
+#pragma mark - Methods
+
+SWIFT_PRIVATE
+void CCNodeAddChild(const void *object, const void *child);
 
 CC_ASSUME_NONNULL_END
 
