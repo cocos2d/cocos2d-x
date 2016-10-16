@@ -23,4 +23,12 @@ struct __attribute__((swift_name("Vector3"))) CCVector3_C {
 };
 typedef struct CCVector3_C CCVector3_C;
 
+struct __attribute__((swift_name("Vector4"))) CCVector4_C {
+    float x;
+    float y;
+    float z;
+    float w;
+};
+typedef struct CCVector4_C CCVector4_C;
+
 #endif /* CCVector_C */

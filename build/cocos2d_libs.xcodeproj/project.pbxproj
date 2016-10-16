@@ -5958,6 +5958,14 @@
 		6E417CB71DB203B300BD55EE /* CCVector_C.h in Headers */ = {isa = PBXBuildFile; fileRef = 6E417CB51DB203B300BD55EE /* CCVector_C.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6E417CB81DB203B300BD55EE /* CCVector_C.h in Headers */ = {isa = PBXBuildFile; fileRef = 6E417CB51DB203B300BD55EE /* CCVector_C.h */; };
 		6E417CB91DB203B300BD55EE /* CCVector_C.h in Headers */ = {isa = PBXBuildFile; fileRef = 6E417CB51DB203B300BD55EE /* CCVector_C.h */; };
+		6E417CC31DB2F85700BD55EE /* CCSprite_C.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6E417CC11DB2F85700BD55EE /* CCSprite_C.cpp */; };
+		6E417CC41DB2F85700BD55EE /* CCSprite_C.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6E417CC11DB2F85700BD55EE /* CCSprite_C.cpp */; };
+		6E417CC51DB2F85700BD55EE /* CCSprite_C.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6E417CC11DB2F85700BD55EE /* CCSprite_C.cpp */; };
+		6E417CC61DB2F85700BD55EE /* CCSprite_C.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6E417CC11DB2F85700BD55EE /* CCSprite_C.cpp */; };
+		6E417CC71DB2F85700BD55EE /* CCSprite_C.h in Headers */ = {isa = PBXBuildFile; fileRef = 6E417CC21DB2F85700BD55EE /* CCSprite_C.h */; };
+		6E417CC81DB2F85700BD55EE /* CCSprite_C.h in Headers */ = {isa = PBXBuildFile; fileRef = 6E417CC21DB2F85700BD55EE /* CCSprite_C.h */; };
+		6E417CC91DB2F85700BD55EE /* CCSprite_C.h in Headers */ = {isa = PBXBuildFile; fileRef = 6E417CC21DB2F85700BD55EE /* CCSprite_C.h */; };
+		6E417CCA1DB2F85700BD55EE /* CCSprite_C.h in Headers */ = {isa = PBXBuildFile; fileRef = 6E417CC21DB2F85700BD55EE /* CCSprite_C.h */; };
 		6ECA30CD1DB1BA6600F6AD27 /* CCNode_C.h in Headers */ = {isa = PBXBuildFile; fileRef = 6ECA30CC1DB1BA6600F6AD27 /* CCNode_C.h */; };
 		6ECA30CE1DB1BA6600F6AD27 /* CCNode_C.h in Headers */ = {isa = PBXBuildFile; fileRef = 6ECA30CC1DB1BA6600F6AD27 /* CCNode_C.h */; };
 		6ECA30CF1DB1BA6600F6AD27 /* CCNode_C.h in Headers */ = {isa = PBXBuildFile; fileRef = 6ECA30CC1DB1BA6600F6AD27 /* CCNode_C.h */; };
@@ -8870,6 +8878,8 @@
 		6E417C9F1DB1F59A00BD55EE /* RecastRegion.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RecastRegion.cpp; sourceTree = "<group>"; };
 		6E417CAD1DB1FA5300BD55EE /* CCocos2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCocos2D.h; sourceTree = "<group>"; };
 		6E417CB51DB203B300BD55EE /* CCVector_C.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCVector_C.h; sourceTree = "<group>"; };
+		6E417CC11DB2F85700BD55EE /* CCSprite_C.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSprite_C.cpp; sourceTree = "<group>"; };
+		6E417CC21DB2F85700BD55EE /* CCSprite_C.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSprite_C.h; sourceTree = "<group>"; };
 		6ECA30CC1DB1BA6600F6AD27 /* CCNode_C.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNode_C.h; sourceTree = "<group>"; };
 		6ECA30D01DB1BA8400F6AD27 /* CCNode_C.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCNode_C.cpp; sourceTree = "<group>"; };
 		6ECA30D61DB1BB6800F6AD27 /* CCDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDefines.h; sourceTree = "<group>"; };
@@ -12262,6 +12272,8 @@
 				6E417CB51DB203B300BD55EE /* CCVector_C.h */,
 				6ECA30CC1DB1BA6600F6AD27 /* CCNode_C.h */,
 				6ECA30D01DB1BA8400F6AD27 /* CCNode_C.cpp */,
+				6E417CC21DB2F85700BD55EE /* CCSprite_C.h */,
+				6E417CC11DB2F85700BD55EE /* CCSprite_C.cpp */,
 			);
 			name = c;
 			path = ../cocos/c;
@@ -13913,6 +13925,7 @@
 				15AE18F119AAD35000C27E9E /* CCArmatureAnimation.h in Headers */,
 				1A57022F180BCC1A0088DEC7 /* CCParticleSystemQuad.h in Headers */,
 				50864C8B1C7BC1B000B3BAB1 /* chipmunk.h in Headers */,
+				6E417CC71DB2F85700BD55EE /* CCSprite_C.h in Headers */,
 				B6CAB4EB1AF9AA1A00B9B856 /* TrbStateVec.h in Headers */,
 				B6CAB2831AF9AA1A00B9B856 /* btBoxShape.h in Headers */,
 				B665E37C1AA80A6500DDB1C5 /* CCPUParticleSystem3D.h in Headers */,
@@ -14972,6 +14985,7 @@
 				507B3EF41C31BDD30067B53E /* b2Body.h in Headers */,
 				5020A1911D49912500E80C72 /* BoundingBoxAttachment.h in Headers */,
 				507B3EF51C31BDD30067B53E /* CCTableView.h in Headers */,
+				6E417CCA1DB2F85700BD55EE /* CCSprite_C.h in Headers */,
 				507B3EF61C31BDD30067B53E /* CCPUPositionEmitterTranslator.h in Headers */,
 				507B3EF71C31BDD30067B53E /* CCParticleSystem3D.h in Headers */,
 				507B3EF81C31BDD30067B53E /* CCPUDoExpireEventHandler.h in Headers */,
@@ -16109,6 +16123,7 @@
 				6E417A7E1DB1EEDC00BD55EE /* btGhostObject.h in Headers */,
 				6E417A7F1DB1EEDC00BD55EE /* btHashedSimplePairCache.h in Headers */,
 				6E417A801DB1EEDC00BD55EE /* btInternalEdgeUtility.h in Headers */,
+				6E417CC81DB2F85700BD55EE /* CCSprite_C.h in Headers */,
 				6E417A811DB1EEDC00BD55EE /* btManifoldResult.h in Headers */,
 				6E417A821DB1EEDC00BD55EE /* btSimulationIslandManager.h in Headers */,
 				6E417A831DB1EEDC00BD55EE /* btSphereBoxCollisionAlgorithm.h in Headers */,
@@ -17351,6 +17366,7 @@
 				5020A1541D49912500E80C72 /* Animation.h in Headers */,
 				B6CAB3281AF9AA1A00B9B856 /* btGImpactBvh.h in Headers */,
 				B6DD2FB61B04825B00E47F5F /* RecastDump.h in Headers */,
+				6E417CC91DB2F85700BD55EE /* CCSprite_C.h in Headers */,
 				50ABBDAC1925AB4100A911A9 /* CCRenderCommandPool.h in Headers */,
 				B6CAB24C1AF9AA1A00B9B856 /* btConvexPlaneCollisionAlgorithm.h in Headers */,
 				B665E3CD1AA80A6600DDB1C5 /* CCPUScaleVelocityAffectorTranslator.h in Headers */,
@@ -17946,6 +17962,7 @@
 				B665E3A61AA80A6500DDB1C5 /* CCPURandomiser.cpp in Sources */,
 				B665E3CA1AA80A6600DDB1C5 /* CCPUScaleVelocityAffectorTranslator.cpp in Sources */,
 				1A57008D180BC5A10088DEC7 /* CCActionTiledGrid.cpp in Sources */,
+				6E417CC31DB2F85700BD55EE /* CCSprite_C.cpp in Sources */,
 				5070031F1B69735200E83DDD /* HttpClient.cpp in Sources */,
 				B665E26E1AA80A6500DDB1C5 /* CCPUDoFreezeEventHandlerTranslator.cpp in Sources */,
 				B6DD2FF11B04825B00E47F5F /* DetourTileCacheBuilder.cpp in Sources */,
@@ -19306,6 +19323,7 @@
 				507B3C631C31BDD30067B53E /* LayoutReader.cpp in Sources */,
 				507B3C641C31BDD30067B53E /* CCDeprecated.cpp in Sources */,
 				507B3C651C31BDD30067B53E /* CCInputDelegate.cpp in Sources */,
+				6E417CC61DB2F85700BD55EE /* CCSprite_C.cpp in Sources */,
 				507B3C661C31BDD30067B53E /* btGImpactCollisionAlgorithm.cpp in Sources */,
 				507B3C671C31BDD30067B53E /* UIImageView.cpp in Sources */,
 				507B3C681C31BDD30067B53E /* DetourCrowd.cpp in Sources */,
@@ -19528,6 +19546,7 @@
 				6E41781E1DB1EE7D00BD55EE /* Json.c in Sources */,
 				6E41781F1DB1EE7D00BD55EE /* MeshAttachment.c in Sources */,
 				6E4178201DB1EE7D00BD55EE /* PathAttachment.c in Sources */,
+				6E417CC41DB2F85700BD55EE /* CCSprite_C.cpp in Sources */,
 				6E4178211DB1EE7D00BD55EE /* PathConstraint.c in Sources */,
 				6E4178221DB1EE7D00BD55EE /* PathConstraintData.c in Sources */,
 				6E4178231DB1EE7D00BD55EE /* RegionAttachment.c in Sources */,
@@ -20478,6 +20497,7 @@
 				B6CAB2D61AF9AA1A00B9B856 /* btOptimizedBvh.cpp in Sources */,
 				52B47A301A5349A3004E4C60 /* HttpClient-apple.mm in Sources */,
 				B665E2131AA80A6500DDB1C5 /* CCPUBaseForceAffectorTranslator.cpp in Sources */,
+				6E417CC51DB2F85700BD55EE /* CCSprite_C.cpp in Sources */,
 				382384081A25900F002C4610 /* FlatBuffersSerialize.cpp in Sources */,
 				B68779011A8CA82E00643ABF /* CCParticle3DRender.cpp in Sources */,
 				DABC9FAA19E7DFA900FA252C /* CCClippingRectangleNode.cpp in Sources */,

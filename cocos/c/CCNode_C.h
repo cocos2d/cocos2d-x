@@ -9,6 +9,8 @@
 #ifndef CCNode_C_h
 #define CCNode_C_h
 #ifndef __cplusplus
+#include <stdint.h>
+#include <stdbool.h>
 #import <CCocos2D/CCDefines.h>
 #import <CCocos2D/CCVector_C.h>
 
@@ -73,6 +75,51 @@ CCVector3_C CCNodeGetPosition3D(const void *object);
 
 SWIFT_PRIVATE
 void CCNodeSetPosition3D(const void *object, CCVector3_C newValue);
+
+SWIFT_PRIVATE
+float CCNodeGetSkewX(const void *object);
+
+SWIFT_PRIVATE
+void CCNodeSetSkewX(const void *object, float newValue);
+
+SWIFT_PRIVATE
+float CCNodeGetSkewY(const void *object);
+
+SWIFT_PRIVATE
+void CCNodeSetSkewY(const void *object, float newValue);
+
+SWIFT_PRIVATE
+CCVector2_C CCNodeGetAnchorPoint(const void *object);
+
+SWIFT_PRIVATE
+void CCNodeSetAnchorPoint(const void *object, CCVector2_C newValue);
+
+SWIFT_PRIVATE
+CCVector2_C CCNodeGetAnchorPointInPoints(const void *object);
+
+SWIFT_PRIVATE
+CCVector2_C CCNodeGetContentSize(const void *object);
+
+SWIFT_PRIVATE
+void CCNodeSetContentSize(const void *object, CCVector2_C newValue);
+
+SWIFT_PRIVATE
+bool CCNodeGetVisible(const void *object);
+
+SWIFT_PRIVATE
+void CCNodeSetVisible(const void *object, bool newValue);
+
+SWIFT_PRIVATE
+float CCNodeGetRotation(const void *object);
+
+SWIFT_PRIVATE
+void CCNodeSetRotation(const void *object, float newValue);
+
+SWIFT_PRIVATE
+CCVector3_C CCNodeGetRotation3D(const void *object);
+
+SWIFT_PRIVATE
+void CCNodeSetRotation3D(const void *object, CCVector3_C newValue);
 
 CC_ASSUME_NONNULL_END
 
