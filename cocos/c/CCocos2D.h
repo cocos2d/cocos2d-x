@@ -15,6 +15,7 @@
 #import <CCocos2D/CCVector_C.h>
 #import <CCocos2D/CCNode_C.h>
 #import <CCocos2D/CCSprite_C.h>
-
+#import <CCocos2D/CCScene_C.h>
+#import <CCocos2D/CCApplication_C.h>
 
 #endif /* CCocos2D_h */

@@ -36,3 +36,10 @@ extern "C" void* CCSpriteCreate()
     Sprite *sprite = Sprite::create();
     return (void *)sprite;
 }
+
+extern "C" void* _Nullable CCSpriteCreateWithFilename(const char *filename)
+{
+    std::string string = std::string(filename);
+    Sprite *sprite = Sprite::create(string);
+    return (void *)sprite;
+}
