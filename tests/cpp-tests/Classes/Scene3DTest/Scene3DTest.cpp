@@ -382,7 +382,6 @@ void Scene3DTestScene::createWorld3D()
     _skyBox = Skybox::create();
     _skyBox->setCameraMask(s_CM[LAYER_BACKGROUND]);
     _skyBox->setTexture(_textureCube);
-    _skyBox->setScale(700.f);
 
     // create terrain
     Terrain::DetailMap r("TerrainTest/dirt.jpg");

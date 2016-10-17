@@ -349,7 +349,6 @@ function Scene3DTest:create3DWorld()
     self._skyBox = cc.Skybox:create()
     self._skyBox:setCameraMask(s_CM[GAME_LAYER.LAYER_SKYBOX])
     self._skyBox:setTexture(self._textureCube)
-    self._skyBox:setScale(700.0)
     self:addChild(self._skyBox)
 
     local targetPlatform = cc.Application:getInstance():getTargetPlatform()
