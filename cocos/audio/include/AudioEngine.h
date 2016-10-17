@@ -127,12 +127,13 @@ public:
      * @param filePath The path of an audio file.
      * @param loop Whether audio instance loop or not.
      * @param volume Volume value (range from 0.0 to 1.0).
+     * @param pitch Pitch value (0.0f, any]
      * @param profile A profile for audio instance. When profile is not specified, default profile will be used.
      * @return An audio ID. It allows you to dynamically change the behavior of an audio instance on the fly.
      *
      * @see `AudioProfile`
      */
-    static int play2d(const std::string& filePath, bool loop = false, float volume = 1.0f, const AudioProfile *profile = nullptr);
+    static int play2d(const std::string& filePath, bool loop = false, float volume = 1.0f, float pitch = 1.f, const AudioProfile *profile = nullptr);
     
     /** 
      * Sets whether an audio instance loop or not.
@@ -158,6 +159,14 @@ public:
      */
     static void setVolume(int audioID, float volume);
 
+    /**
+     * Sets pitch for an audio instance.
+     *
+     * @param audioID An audioID returned by the play2d function.
+     * @param pitch Pitch value (range from 0.0 to inf, but practical range is 0.0 to 2.0).
+     */
+    static void setPitch(int audioID, float pitch);
+
     /** 
      * Gets the volume value of an audio instance.
      *
@@ -165,6 +174,14 @@ public:
      * @return Volume value (range from 0.0 to 1.0).
      */
     static float getVolume(int audioID);
+
+    /**
+     * Gets the pitch value of an audio instance.
+     *
+     * @param audioID An audioID returned by the play2d function.
+     * @return Pitch value (range from 0.0 to inf).
+     */
+    static float getPitch(int audioID);
 
     /** 
      * Pause an audio instance.
@@ -319,6 +336,7 @@ protected:
         ProfileHelper* profileHelper;
         
         float volume;
+        float pitch;
         bool loop;
         float duration;
         AudioState state;

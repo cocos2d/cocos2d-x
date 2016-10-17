@@ -184,7 +184,7 @@ bool AudioEngine::lazyInit()
     return true;
 }
 
-int AudioEngine::play2d(const std::string& filePath, bool loop, float volume, const AudioProfile *profile)
+int AudioEngine::play2d(const std::string& filePath, bool loop, float volume, float pitch, const AudioProfile *profile)
 {
     int ret = AudioEngine::INVALID_AUDIO_ID;
 
@@ -222,15 +222,11 @@ int AudioEngine::play2d(const std::string& filePath, bool loop, float volume, co
                  }
              }
         }
+
+        volume = clampf(volume, 0.f, 1.f);
+        pitch = clampf(pitch, 0.f, 1.f);
         
-        if (volume < 0.0f) {
-            volume = 0.0f;
-        }
-        else if (volume > 1.0f){
-            volume = 1.0f;
-        }
-        
-        ret = _audioEngineImpl->play2d(filePath, loop, volume);
+        ret = _audioEngineImpl->play2d(filePath, loop, volume, pitch);
         if (ret != INVALID_AUDIO_ID)
         {
             _audioPathIDMap[filePath].push_back(ret);
@@ -238,6 +234,7 @@ int AudioEngine::play2d(const std::string& filePath, bool loop, float volume, co
             
             auto& audioRef = _audioIDInfoMap[ret];
             audioRef.volume = volume;
+            audioRef.pitch = pitch;
             audioRef.loop = loop;
             audioRef.filePath = &it->first;
 
@@ -275,6 +272,21 @@ void AudioEngine::setVolume(int audioID, float volume)
         if (it->second.volume != volume){
             _audioEngineImpl->setVolume(audioID, volume);
             it->second.volume = volume;
+        }
+    }
+}
+
+void AudioEngine::setPitch(int audioID, float pitch)
+{
+    auto it = _audioIDInfoMap.find(audioID);
+    if (it != _audioIDInfoMap.end()){
+        if (pitch < 0.0f) {
+            pitch = 0.0f;
+        }
+
+        if (it->second.pitch != pitch){
+            _audioEngineImpl->setPitch(audioID, pitch);
+            it->second.pitch = pitch;
         }
     }
 }
@@ -477,6 +489,18 @@ float AudioEngine::getVolume(int audioID)
     }
 
     log("AudioEngine::getVolume-->The audio instance %d is non-existent", audioID);
+    return 0.0f;
+}
+
+float AudioEngine::getPitch(int audioID)
+{
+    auto tmpIterator = _audioIDInfoMap.find(audioID);
+    if (tmpIterator != _audioIDInfoMap.end())
+    {
+        return tmpIterator->second.pitch;
+    }
+
+    log("AudioEngine::getPitch-->The audio instance %d is non-existent", audioID);
     return 0.0f;
 }
 

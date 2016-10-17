@@ -209,6 +209,7 @@ bool AudioControlTest::init()
     _audioID = AudioEngine::INVALID_AUDIO_ID;
     _loopEnabled = false;
     _volume = 1.0f;
+    _pitch = 1.0f;
     _duration = AudioEngine::TIME_UNKNOWN;
     _timeRatio = 0.0f;
     _updateTimeSlider = true;
@@ -295,7 +296,7 @@ bool AudioControlTest::init()
             button->setString("enable-loop");
         }
     });
-    loopItem->setPosition(layerSize.width * 0.5f, layerSize.height * 0.5f);
+    loopItem->setPosition(layerSize.width * 0.5f, layerSize.height * 0.55f);
     addChild(loopItem);
     
     auto volumeSlider = SliderEx::create();
@@ -307,8 +308,21 @@ bool AudioControlTest::init()
             AudioEngine::setVolume(_audioID, _volume);
         }
     });
-    volumeSlider->setPosition(Vec2(layerSize.width * 0.5f,layerSize.height * 0.35f));
+    volumeSlider->setPosition(Vec2(layerSize.width * 0.5f,layerSize.height * 0.45f));
     addChild(volumeSlider);
+
+    // NOTE: currently allow pitch from 0.1 (slow, 10% speed / pitched low) to 2 (2x higher)
+    auto pitchSlider = SliderEx::create();
+    pitchSlider->setPercent(50);
+    pitchSlider->addEventListener([&](Ref* sender, Slider::EventType event){
+        SliderEx *slider = dynamic_cast<SliderEx *>(sender);
+        _pitch = slider->getRatio() * 1.9f + .1f; // log(x)
+        if (_audioID != AudioEngine::INVALID_AUDIO_ID ) {
+            AudioEngine::setPitch(_audioID, _pitch);
+        }
+    });
+    pitchSlider->setPosition(Vec2(layerSize.width * 0.5f,layerSize.height * 0.35f));
+    addChild(pitchSlider);
     
     auto timeSlider = SliderEx::create();
     timeSlider->addEventListener([&](Ref* sender, Slider::EventType event){
@@ -339,7 +353,14 @@ bool AudioControlTest::init()
     volumeLabel->setAnchorPoint(Vec2::ANCHOR_MIDDLE_RIGHT);
     volumeLabel->setPosition(volumeSliderPos.x - sliderSize.width / 2, volumeSliderPos.y);
     addChild(volumeLabel);
-    
+
+    auto& pitchSliderPos = pitchSlider->getPosition();
+    auto& pitchSliderSize = pitchSlider->getContentSize();
+    auto pitchLabel = Label::createWithTTF("pitch:  ", fontFilePath, 20);
+    pitchLabel->setAnchorPoint(Vec2::ANCHOR_MIDDLE_RIGHT);
+    pitchLabel->setPosition(pitchSliderPos.x - pitchSliderSize.width / 2, pitchSliderPos.y);
+    addChild(pitchLabel);
+
     auto& timeSliderPos = timeSlider->getPosition();
     auto timeLabel = Label::createWithTTF("time:  ", fontFilePath, 20);
     timeLabel->setAnchorPoint(Vec2::ANCHOR_MIDDLE_RIGHT);
@@ -507,7 +528,7 @@ bool AudioProfileTest::init()
         
         auto playItem = TextButton::create(text, [&](TextButton* button){
             int index = button->getTag();
-            auto id = AudioEngine::play2d(_files[index], false, 1.0f, &_audioProfile);
+            auto id = AudioEngine::play2d(_files[index], false, 1.0f, 1.f, &_audioProfile);
             if(id != AudioEngine::INVALID_AUDIO_ID){
                 _time = _minDelay;
                 _audioCount += 1;

@@ -295,7 +295,7 @@ AudioCache* AudioEngineImpl::preload(const std::string& filePath, std::function<
     return audioCache;
 }
 
-int AudioEngineImpl::play2d(const std::string &filePath ,bool loop ,float volume)
+int AudioEngineImpl::play2d(const std::string &filePath ,bool loop ,float volume, float pitch)
 {
     if (s_ALDevice == nullptr) {
         return AudioEngine::INVALID_AUDIO_ID;
@@ -322,6 +322,7 @@ int AudioEngineImpl::play2d(const std::string &filePath ,bool loop ,float volume
     
     player->_alSource = alSource;
     player->_loop = loop;
+    player->_pitch = pitch;
     player->_volume = volume;
     
     auto audioCache = preload(filePath, nullptr);
@@ -383,6 +384,21 @@ void AudioEngineImpl::setVolume(int audioID,float volume)
     if (player->_ready) {
         alSourcef(_audioPlayers[audioID]->_alSource, AL_GAIN, volume);
         
+        auto error = alGetError();
+        if (error != AL_NO_ERROR) {
+            ALOGE("%s: audio id = %d, error = %x", __PRETTY_FUNCTION__,audioID,error);
+        }
+    }
+}
+
+void AudioEngineImpl::setPitch(int audioID,float pitch)
+{
+    auto player = _audioPlayers[audioID];
+    player->_pitch = pitch;
+
+    if (player->_ready) {
+        alSourcef(_audioPlayers[audioID]->_alSource, AL_PITCH, pitch);
+
         auto error = alGetError();
         if (error != AL_NO_ERROR) {
             ALOGE("%s: audio id = %d, error = %x", __PRETTY_FUNCTION__,audioID,error);
