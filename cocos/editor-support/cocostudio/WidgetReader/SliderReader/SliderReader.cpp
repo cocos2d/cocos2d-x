@@ -185,7 +185,7 @@ namespace cocostudio
         std::string pressedFileName = this->getResourcePath(pressedDic, P_Path, (Widget::TextureResType)pressedType);
         slider->loadSlidBallTexturePressed(pressedFileName, (Widget::TextureResType)pressedType);
         
-        //loading silder ball disable texture
+        //loading slider ball disable texture
         const rapidjson::Value& disabledDic = DICTOOL->getSubDictionary_json(options, P_BallDisabledData);
         int disabledType = DICTOOL->getIntValue_json(disabledDic, P_ResourceType);
         std::string disabledFileName = this->getResourcePath(disabledDic, P_Path, (Widget::TextureResType)disabledType);
@@ -680,7 +680,7 @@ namespace cocostudio
         //    slider->addChild(label);
         //}
         
-        //loading silder ball disable texture
+        //loading slider ball disable texture
         bool disabledFileExist = false;
         std::string disabledErrorFilePath = "";
         auto disabledDic = options->ballDisabledData();
