@@ -197,7 +197,7 @@ function NavMeshBaseTestDemo:moveAgents(des)
                 local linkdata = agent:getCurrentOffMeshLinkData()
 
                 agent:getOwner():setPosition3D(jump(linkdata.startPosition, linkdata.endPosition, 10.0, data))
-                local dir = cc.vec3(linkdata.endPosition.x - linkdata.startPosition.x, linkdata.endPosition.y - linkdata.startPosition.y, linkdata.endPosition.z - linkdata.startPosition.z)
+                local dir = cc.vec3sub(linkdata.endPosition, linkdata.startPosition)
                 dir.y = 0.0
                 dir = cc.vec3normalize(dir)
                 local axes = cc.vec3(0.0, 0.0, 0.0)
@@ -206,7 +206,7 @@ function NavMeshBaseTestDemo:moveAgents(des)
 
                 axes = vec3_cross(refAxes, dir, axes)
 
-                local angle = refAxes.x * dir.x + refAxes.y * dir.y + refAxes.z * dir.z
+                local angle = cc.vec3dot(refAxes, dir)
 
                 local quaternion = cc.quaternion_createFromAxisAngle(axes, math.acos(angle))
 
