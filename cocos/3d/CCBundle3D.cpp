@@ -1017,11 +1017,11 @@ bool  Bundle3D::loadMaterialsJson(MaterialDatas& materialdatas)
         materialData.id = material_val[ID].GetString();
         if (material_val.HasMember(TEXTURES))
         {
-            const rapidjson::Value& testure_array = material_val[TEXTURES];
-            for (rapidjson::SizeType j = 0; j < testure_array.Size(); j++)
+            const rapidjson::Value& texture_array = material_val[TEXTURES];
+            for (rapidjson::SizeType j = 0; j < texture_array.Size(); j++)
             {
                 NTextureData  textureData;
-                const rapidjson::Value& texture_val = testure_array[j];
+                const rapidjson::Value& texture_val = texture_array[j];
                 std::string filename = texture_val[FILENAME].GetString();
                 textureData.filename = filename.empty() ? filename : _modelPath + filename;
                 textureData.type  = parseGLTextureType(texture_val["type"].GetString());
