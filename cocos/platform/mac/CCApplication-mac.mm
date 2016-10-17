@@ -42,7 +42,7 @@ static long getCurrentMillSecond()
     struct timeval stCurrentTime;
     
     gettimeofday(&stCurrentTime,NULL);
-    lLastTime = stCurrentTime.tv_sec*1000+stCurrentTime.tv_usec*0.001; //millseconds
+    lLastTime = stCurrentTime.tv_sec*1000+stCurrentTime.tv_usec*0.001; // milliseconds
     return lLastTime;
 }
 

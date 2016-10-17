@@ -13,8 +13,8 @@ using namespace spine;
 class SkeletonAnimationCullingFix : public SkeletonAnimation
 {
 public:
-    SkeletonAnimationCullingFix(const std::string& skeletonDataFile, const std::string& atlasFile, float scale)
-    : SkeletonAnimation(skeletonDataFile, atlasFile, scale)
+    SkeletonAnimationCullingFix()
+    : SkeletonAnimation()
     {}
     
     virtual void draw(cocos2d::Renderer* renderer, const cocos2d::Mat4& transform, uint32_t transformFlags) override
@@ -26,7 +26,9 @@ public:
     
     static SkeletonAnimationCullingFix* createWithFile (const std::string& skeletonDataFile, const std::string& atlasFile, float scale = 1)
     {
-        SkeletonAnimationCullingFix* node = new SkeletonAnimationCullingFix(skeletonDataFile, atlasFile, scale);
+        SkeletonAnimationCullingFix* node = new SkeletonAnimationCullingFix();
+        spAtlas* atlas = spAtlas_createFromFile(atlasFile.c_str(), 0);
+        node->initWithJsonFile(skeletonDataFile, atlas, scale);
         node->autorelease();
         return node;
     }
@@ -380,7 +382,6 @@ void Scene3DTestScene::createWorld3D()
     _skyBox = Skybox::create();
     _skyBox->setCameraMask(s_CM[LAYER_BACKGROUND]);
     _skyBox->setTexture(_textureCube);
-    _skyBox->setScale(700.f);
 
     // create terrain
     Terrain::DetailMap r("TerrainTest/dirt.jpg");

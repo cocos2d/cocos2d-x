@@ -1657,6 +1657,15 @@
 		5030C0421CE6DF8B00C5D3E7 /* CCVRGenericHeadTracker.h in Headers */ = {isa = PBXBuildFile; fileRef = 5030C03E1CE6DF8B00C5D3E7 /* CCVRGenericHeadTracker.h */; };
 		5030C0431CE6DF8B00C5D3E7 /* CCVRGenericHeadTracker.h in Headers */ = {isa = PBXBuildFile; fileRef = 5030C03E1CE6DF8B00C5D3E7 /* CCVRGenericHeadTracker.h */; };
 		5030C0441CE6DF8B00C5D3E7 /* CCVRGenericHeadTracker.h in Headers */ = {isa = PBXBuildFile; fileRef = 5030C03E1CE6DF8B00C5D3E7 /* CCVRGenericHeadTracker.h */; };
+		503341991D9DC7B400770EC7 /* kvec.h in Headers */ = {isa = PBXBuildFile; fileRef = 503341961D9DC7B400770EC7 /* kvec.h */; };
+		5033419A1D9DC7B400770EC7 /* kvec.h in Headers */ = {isa = PBXBuildFile; fileRef = 503341961D9DC7B400770EC7 /* kvec.h */; };
+		5033419B1D9DC7B400770EC7 /* kvec.h in Headers */ = {isa = PBXBuildFile; fileRef = 503341961D9DC7B400770EC7 /* kvec.h */; };
+		5033419C1D9DC7B400770EC7 /* SkeletonBinary.c in Sources */ = {isa = PBXBuildFile; fileRef = 503341971D9DC7B400770EC7 /* SkeletonBinary.c */; };
+		5033419D1D9DC7B400770EC7 /* SkeletonBinary.c in Sources */ = {isa = PBXBuildFile; fileRef = 503341971D9DC7B400770EC7 /* SkeletonBinary.c */; };
+		5033419E1D9DC7B400770EC7 /* SkeletonBinary.c in Sources */ = {isa = PBXBuildFile; fileRef = 503341971D9DC7B400770EC7 /* SkeletonBinary.c */; };
+		5033419F1D9DC7B400770EC7 /* SkeletonBinary.h in Headers */ = {isa = PBXBuildFile; fileRef = 503341981D9DC7B400770EC7 /* SkeletonBinary.h */; };
+		503341A01D9DC7B400770EC7 /* SkeletonBinary.h in Headers */ = {isa = PBXBuildFile; fileRef = 503341981D9DC7B400770EC7 /* SkeletonBinary.h */; };
+		503341A11D9DC7B400770EC7 /* SkeletonBinary.h in Headers */ = {isa = PBXBuildFile; fileRef = 503341981D9DC7B400770EC7 /* SkeletonBinary.h */; };
 		5034CA21191D591100CE6051 /* ccShader_PositionTextureColorAlphaTest.frag in Headers */ = {isa = PBXBuildFile; fileRef = 5034C9FB191D591000CE6051 /* ccShader_PositionTextureColorAlphaTest.frag */; };
 		5034CA22191D591100CE6051 /* ccShader_PositionTextureColorAlphaTest.frag in Headers */ = {isa = PBXBuildFile; fileRef = 5034C9FB191D591000CE6051 /* ccShader_PositionTextureColorAlphaTest.frag */; };
 		5034CA2B191D591100CE6051 /* ccShader_PositionTextureA8Color.vert in Headers */ = {isa = PBXBuildFile; fileRef = 5034CA00191D591000CE6051 /* ccShader_PositionTextureA8Color.vert */; };
@@ -6555,6 +6564,9 @@
 		50272539190BF1B900AAF4ED /* cocos2d.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cocos2d.cpp; path = ../cocos/cocos2d.cpp; sourceTree = "<group>"; };
 		502AF9771D0711B8006AF256 /* CCVRGenericHeadTracker.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = CCVRGenericHeadTracker.cpp; sourceTree = "<group>"; };
 		5030C03E1CE6DF8B00C5D3E7 /* CCVRGenericHeadTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCVRGenericHeadTracker.h; sourceTree = "<group>"; };
+		503341961D9DC7B400770EC7 /* kvec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kvec.h; sourceTree = "<group>"; };
+		503341971D9DC7B400770EC7 /* SkeletonBinary.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = SkeletonBinary.c; sourceTree = "<group>"; };
+		503341981D9DC7B400770EC7 /* SkeletonBinary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SkeletonBinary.h; sourceTree = "<group>"; };
 		5034C9FB191D591000CE6051 /* ccShader_PositionTextureColorAlphaTest.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_PositionTextureColorAlphaTest.frag; sourceTree = "<group>"; };
 		5034CA00191D591000CE6051 /* ccShader_PositionTextureA8Color.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_PositionTextureA8Color.vert; sourceTree = "<group>"; };
 		5034CA01191D591000CE6051 /* ccShader_PositionTextureA8Color.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_PositionTextureA8Color.frag; sourceTree = "<group>"; };
@@ -8910,6 +8922,9 @@
 		1AD71D7C180E26E600808F54 /* spine */ = {
 			isa = PBXGroup;
 			children = (
+				503341961D9DC7B400770EC7 /* kvec.h */,
+				503341971D9DC7B400770EC7 /* SkeletonBinary.c */,
+				503341981D9DC7B400770EC7 /* SkeletonBinary.h */,
 				5020A1051D49912500E80C72 /* Animation.c */,
 				5020A1061D49912500E80C72 /* Animation.h */,
 				5020A1071D49912500E80C72 /* AnimationState.c */,
@@ -12077,6 +12092,7 @@
 				15AE190C19AAD35000C27E9E /* CCDisplayFactory.h in Headers */,
 				15AE1A8B19AAD40300C27E9E /* b2PulleyJoint.h in Headers */,
 				50864CA61C7BC1B000B3BAB1 /* cpConstraint.h in Headers */,
+				5033419F1D9DC7B400770EC7 /* SkeletonBinary.h in Headers */,
 				B5CE6DCA1B3C05BA002B0419 /* UIRadioButton.h in Headers */,
 				15AE1A5119AAD40300C27E9E /* b2BlockAllocator.h in Headers */,
 				15AE199119AAD37200C27E9E /* ImageViewReader.h in Headers */,
@@ -12272,6 +12288,7 @@
 				B665E1F41AA80A6500DDB1C5 /* CCPUAffector.h in Headers */,
 				1A01C69E18F57BE800EFE3A6 /* CCString.h in Headers */,
 				50ABC00F1926664800A911A9 /* CCFileUtils.h in Headers */,
+				503341991D9DC7B400770EC7 /* kvec.h in Headers */,
 				B665E2981AA80A6500DDB1C5 /* CCPUEmitterManager.h in Headers */,
 				15AE1A3719AAD3D500C27E9E /* b2PolygonShape.h in Headers */,
 				182C5CAE1A95961600C30D34 /* CSParse3DBinary_generated.h in Headers */,
@@ -13130,6 +13147,7 @@
 				507B3FC91C31BDD30067B53E /* SpuConvexPenetrationDepthSolver.h in Headers */,
 				507B3FCA1C31BDD30067B53E /* CCPUBaseForceAffectorTranslator.h in Headers */,
 				507B3FCB1C31BDD30067B53E /* CCSet.h in Headers */,
+				503341A11D9DC7B400770EC7 /* SkeletonBinary.h in Headers */,
 				507B3FCC1C31BDD30067B53E /* CCPUSphereColliderTranslator.h in Headers */,
 				50864CBD1C7BC1B000B3BAB1 /* cpPinJoint.h in Headers */,
 				507B3FCD1C31BDD30067B53E /* utlist.h in Headers */,
@@ -13325,6 +13343,7 @@
 				507B40821C31BDD30067B53E /* CCComAudio.h in Headers */,
 				507B40831C31BDD30067B53E /* CCDictionary.h in Headers */,
 				507B40841C31BDD30067B53E /* CCPUOnClearObserverTranslator.h in Headers */,
+				5033419B1D9DC7B400770EC7 /* kvec.h in Headers */,
 				507B40851C31BDD30067B53E /* ccShader_PositionTexture.frag in Headers */,
 				507B40861C31BDD30067B53E /* CCFastTMXTiledMap.h in Headers */,
 				50864CDB1C7BC1B100B3BAB1 /* cpSpace.h in Headers */,
@@ -14227,6 +14246,7 @@
 				B6CAB24C1AF9AA1A00B9B856 /* btConvexPlaneCollisionAlgorithm.h in Headers */,
 				B665E3CD1AA80A6600DDB1C5 /* CCPUScaleVelocityAffectorTranslator.h in Headers */,
 				B6CAB4321AF9AA1A00B9B856 /* btWheelInfo.h in Headers */,
+				503341A01D9DC7B400770EC7 /* SkeletonBinary.h in Headers */,
 				B665E3711AA80A6500DDB1C5 /* CCPUOnVelocityObserverTranslator.h in Headers */,
 				5034CA3C191D591100CE6051 /* ccShader_PositionColor.vert in Headers */,
 				B665E3F51AA80A6600DDB1C5 /* CCPUSlaveEmitter.h in Headers */,
@@ -14324,6 +14344,7 @@
 				B665E1FD1AA80A6500DDB1C5 /* CCPUAffectorTranslator.h in Headers */,
 				299CF1FE19A434BC00C378C1 /* ccRandom.h in Headers */,
 				B665E3BD1AA80A6500DDB1C5 /* CCPURibbonTrailRender.h in Headers */,
+				5033419A1D9DC7B400770EC7 /* kvec.h in Headers */,
 				50ABBDBC1925AB4100A911A9 /* CCTextureAtlas.h in Headers */,
 				B6DD2FC01B04825B00E47F5F /* DetourCommon.h in Headers */,
 				B6CAAFE91AF9A9E100B9B856 /* CCPhysics3DComponent.h in Headers */,
@@ -15360,6 +15381,7 @@
 				15AE18E319AAD35000C27E9E /* TriggerObj.cpp in Sources */,
 				15AE1BA119AADFDF00C27E9E /* UILayoutParameter.cpp in Sources */,
 				50ABC0211926664800A911A9 /* CCGLViewImpl-desktop.cpp in Sources */,
+				5033419C1D9DC7B400770EC7 /* SkeletonBinary.c in Sources */,
 				5020A1D41D49912500E80C72 /* RegionAttachment.c in Sources */,
 				50ABC00D1926664800A911A9 /* CCFileUtils.cpp in Sources */,
 				50ABBE4D1925AB6F00A911A9 /* CCEventCustom.cpp in Sources */,
@@ -16146,6 +16168,7 @@
 				507B3C6C1C31BDD30067B53E /* CCPUPathFollower.cpp in Sources */,
 				507B3C6D1C31BDD30067B53E /* CCPhysicsDebugNode.cpp in Sources */,
 				507B3C6E1C31BDD30067B53E /* btContactProcessing.cpp in Sources */,
+				5033419E1D9DC7B400770EC7 /* SkeletonBinary.c in Sources */,
 				507B3C6F1C31BDD30067B53E /* btMultiBodyPoint2Point.cpp in Sources */,
 				507B3C701C31BDD30067B53E /* CCBatchCommand.cpp in Sources */,
 				507B3C711C31BDD30067B53E /* CCPUBeamRender.cpp in Sources */,
@@ -16997,6 +17020,7 @@
 				15AE195719AAD35100C27E9E /* CCInputDelegate.cpp in Sources */,
 				B6CAB32A1AF9AA1A00B9B856 /* btGImpactCollisionAlgorithm.cpp in Sources */,
 				15AE1B8A19AADA9A00C27E9E /* UIImageView.cpp in Sources */,
+				5033419D1D9DC7B400770EC7 /* SkeletonBinary.c in Sources */,
 				B6DD2FD61B04825B00E47F5F /* DetourCrowd.cpp in Sources */,
 				50ABBD391925AB0000A911A9 /* CCAffineTransform.cpp in Sources */,
 				B6CAB5421AF9AA1A00B9B856 /* MiniCL.cpp in Sources */,

@@ -198,7 +198,7 @@ void TMXLayer::onDraw(Primitive *primitive)
 
 void TMXLayer::updateTiles(const Rect& culledRect)
 {
-    Rect visibleTiles = culledRect;
+    Rect visibleTiles = Rect(culledRect.origin, culledRect.size * Director::getInstance()->getContentScaleFactor());
     Size mapTileSize = CC_SIZE_PIXELS_TO_POINTS(_mapTileSize);
     Size tileSize = CC_SIZE_PIXELS_TO_POINTS(_tileSet->_tileSize);
     Mat4 nodeToTileTransform = _tileToNodeTransform.getInversed();

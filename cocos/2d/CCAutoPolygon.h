@@ -158,7 +158,7 @@ public:
     
     /**
      * reduce the amount of points so its faster for GPU to process and draw
-     * based on Ramer-Douglas-Puecker algorithm
+     * based on Ramer-Douglas-Peucker algorithm
      * @param   points  a vector of Vec2 points as input
      * @param   rect    a texture rect for specify an area of the image to avoid over reduction
      * @param   epsilon the perpendicular distance where points smaller than this value will be discarded
