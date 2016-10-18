@@ -156,12 +156,12 @@ static int processTask(HttpClient* client, HttpRequest* request, NSString* reque
     if(!headers.empty())
     {
         /* append custom headers one by one */
-        for (std::vector<std::string>::iterator it = headers.begin(); it != headers.end(); ++it)
+        for (auto& header : headers)
         {
-            unsigned long i = it->find(':', 0);
-            unsigned long length = it->size();
-            std::string field = it->substr(0, i);
-            std::string value = it->substr(i+1, length-i);
+            unsigned long i = header.find(':', 0);
+            unsigned long length = header.size();
+            std::string field = header.substr(0, i);
+            std::string value = header.substr(i+1, length-i);
             NSString *headerField = [NSString stringWithUTF8String:field.c_str()];
             NSString *headerValue = [NSString stringWithUTF8String:value.c_str()];
             [nsrequest setValue:headerValue forHTTPHeaderField:headerField];

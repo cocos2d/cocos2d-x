@@ -38,9 +38,9 @@ namespace network {
     static void formatHeaders(std::vector<std::string>& headers)
     {
 #if defined(_XBOX_ONE)
-        for(auto iter = headers.begin(); iter != headers.end(); ++iter)
+        for(auto& header : headers)
         {
-            (*iter) += "\r\n";
+            header += "\r\n";
         }
 
         // append default headers
@@ -664,13 +664,13 @@ namespace network {
         std::string cookieInfo = "";
         int cCnt = 0;
 
-        for(auto iter = cookies->begin(); iter != cookies->end(); iter++)
+        for(auto& cookie : *cookies)
         {
-            if(url.find(iter->domain) != std::string::npos)
+            if(url.find(cookie.domain) != std::string::npos)
             {
-                std::string keyVal = iter->name;
+                std::string keyVal = cookie.name;
                 keyVal.append("=");
-                keyVal.append(iter->value);
+                keyVal.append(cookie.value);
                 if(cCnt != 0) {
                     cookieInfo.append(";");
                 }

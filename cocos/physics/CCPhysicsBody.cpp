@@ -109,10 +109,8 @@ PhysicsBody::PhysicsBody()
 
 PhysicsBody::~PhysicsBody()
 {
-    for (auto it = _joints.begin(); it != _joints.end(); ++it)
+    for (auto& joint : _joints)
     {
-        PhysicsJoint* joint = *it;
-        
         PhysicsBody* other = joint->getBodyA() == this ? joint->getBodyB() : joint->getBodyA();
         other->removeJoint(joint);
         delete joint;
@@ -349,7 +347,7 @@ void PhysicsBody::setRotation(float rotation)
 
 void PhysicsBody::setScale(float scaleX, float scaleY)
 {
-    for (auto shape : _shapes)
+    for (auto& shape : _shapes)
     {
         _area -= shape->getArea();
         if (!_massSetByUser)

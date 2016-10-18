@@ -116,8 +116,8 @@ GLProgramCache::GLProgramCache()
 
 GLProgramCache::~GLProgramCache()
 {
-    for( auto it = _programs.begin(); it != _programs.end(); ++it ) {
-        (it->second)->release();
+    for(auto& program : _programs) {
+        program.second->release();
     }
 
     CCLOGINFO("deallocing GLProgramCache: %p", this);
