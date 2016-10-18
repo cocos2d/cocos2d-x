@@ -93,7 +93,7 @@ typedef struct _FontDefHashElement
 // Equal function for targetSet.
 typedef struct _KerningHashElement
 {
-    int				key;        // key for the hash. 16-bit for 1st element, 16-bit for 2nd element
+    uint64_t		key;        // key for the hash. 32-bit for 1st element, 32-bit for 2nd element
     int				amount;
     UT_hash_handle	hh;
 } tKerningHashElement;
@@ -506,8 +506,8 @@ std::set<unsigned int>* BMFontConfiguration::parseBinaryConfigFile(unsigned char
 
                 tKerningHashElement *element = (tKerningHashElement *)calloc( sizeof( *element ), 1 );
                 element->amount = amount;
-                element->key = (first<<16) | (second&0xffff);
-                HASH_ADD_INT(_kerningDictionary,key, element);
+                element->key = ((uint64_t)first<<32) | ((uint64_t)second&0xffffffffll);
+                HASH_ADD(hh, _kerningDictionary, key, sizeof(uint64_t), element);
             }
         }
 
@@ -633,8 +633,8 @@ void BMFontConfiguration::parseKerningEntry(const char* line)
 
     tKerningHashElement *element = (tKerningHashElement *)calloc( sizeof( *element ), 1 );
     element->amount = amount;
-    element->key = (first<<16) | (second&0xffff);
-    HASH_ADD_INT(_kerningDictionary,key, element);
+    element->key = ((uint64_t)first<<32) | ((uint64_t)second&0xffffffffll);
+    HASH_ADD(hh, _kerningDictionary, key, sizeof(uint64_t), element);
 }
 
 FontFNT * FontFNT::create(const std::string& fntFilePath, const Vec2& imageOffset /* = Vec2::ZERO */)
@@ -681,7 +681,7 @@ void FontFNT::purgeCachedData()
     }
 }
 
-int * FontFNT::getHorizontalKerningForTextUTF16(const std::u16string& text, int &outNumLetters) const
+int * FontFNT::getHorizontalKerningForTextUTF32(const std::u32string& text, int &outNumLetters) const
 {
     outNumLetters = static_cast<int>(text.length());
     
@@ -703,15 +703,15 @@ int * FontFNT::getHorizontalKerningForTextUTF16(const std::u16string& text, int 
     return sizes;
 }
 
-int  FontFNT::getHorizontalKerningForChars(unsigned short firstChar, unsigned short secondChar) const
+int  FontFNT::getHorizontalKerningForChars(char32_t firstChar, char32_t secondChar) const
 {
     int ret = 0;
-    unsigned int key = (firstChar << 16) | (secondChar & 0xffff);
+    unsigned long long key = ((uint64_t)firstChar << 32) | ((uint64_t)secondChar & 0xffffffffll);
     
     if (_configuration->_kerningDictionary)
     {
         tKerningHashElement *element = nullptr;
-        HASH_FIND_INT(_configuration->_kerningDictionary, &key, element);
+        HASH_FIND(hh, _configuration->_kerningDictionary, &key, sizeof(uint64_t), element);
         
         if (element)
             ret = element->amount;

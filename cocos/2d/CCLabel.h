@@ -623,7 +623,7 @@ CC_CONSTRUCTOR_ACCESS:
 protected:
     struct LetterInfo
     {
-        char16_t utf16Char;
+        char32_t utf32Char;
         bool valid;
         float positionX;
         float positionY;
@@ -648,7 +648,7 @@ protected:
 
     bool multilineTextWrapByChar();
     bool multilineTextWrapByWord();
-    bool multilineTextWrap(const std::function<int(const std::u16string&, int, int)>& lambda);
+    bool multilineTextWrap(const std::function<int(const std::u32string&, int, int)>& lambda);
     void shrinkLabelToContentSize(const std::function<bool(void)>& lambda);
     bool isHorizontalClamp();
     bool isVerticalClamp();
@@ -658,10 +658,10 @@ protected:
     void updateLabelLetters();
     virtual bool alignText();
     void computeAlignmentOffset();
-    bool computeHorizontalKernings(const std::u16string& stringToRender);
+    bool computeHorizontalKernings(const std::u32string& stringToRender);
 
-    void recordLetterInfo(const cocos2d::Vec2& point, char16_t utf16Char, int letterIndex, int lineIndex);
-    void recordPlaceholderInfo(int letterIndex, char16_t utf16Char);
+    void recordLetterInfo(const cocos2d::Vec2& point, char32_t utf32Char, int letterIndex, int lineIndex);
+    void recordPlaceholderInfo(int letterIndex, char32_t utf16Char);
     
     bool updateQuads();
 
@@ -676,8 +676,8 @@ protected:
     bool isHorizontalClamped(float letterPositionX, int lineInex);
     void restoreFontSize();
     void updateLetterSpriteScale(Sprite* sprite);
-    int getFirstCharLen(const std::u16string& utf16Text, int startIndex, int textLen);
-    int getFirstWordLen(const std::u16string& utf16Text, int startIndex, int textLen);
+    int getFirstCharLen(const std::u32string& utf32Text, int startIndex, int textLen);
+    int getFirstWordLen(const std::u32string& utf32Text, int startIndex, int textLen);
 
     void reset();
 
@@ -687,7 +687,7 @@ protected:
 
     LabelType _currentLabelType;
     bool _contentDirty;
-    std::u16string _utf16Text;
+    std::u32string _utf32Text;
     std::string _utf8Text;
     int _numberOfLines;
 
