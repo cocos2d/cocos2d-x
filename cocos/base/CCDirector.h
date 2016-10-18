@@ -456,14 +456,18 @@ public:
      * @js NA
      */
     void pushMatrix(MATRIX_STACK_TYPE type);
+    void pushMatrix(MATRIX_STACK_TYPE type, unsigned int index);
+    
     /** Pops the top matrix of the specified type of matrix stack.
      * @js NA
      */
     void popMatrix(MATRIX_STACK_TYPE type);
+    void popMatrix(MATRIX_STACK_TYPE type, unsigned int index);
     /** Adds an identity matrix to the top of specified type of matrix stack.
      * @js NA
      */
     void loadIdentityMatrix(MATRIX_STACK_TYPE type);
+    void loadIdentityMatrix(MATRIX_STACK_TYPE type, unsigned int index);
     /**
      * Adds a matrix to the top of specified type of matrix stack.
      * 
@@ -472,6 +476,7 @@ public:
      * @js NA
      */
     void loadMatrix(MATRIX_STACK_TYPE type, const Mat4& mat);
+    void loadMatrix(MATRIX_STACK_TYPE type, const Mat4& mat, unsigned int index);
     /**
      * Multiplies a matrix to the top of specified type of matrix stack.
      *
@@ -480,16 +485,19 @@ public:
      * @js NA
      */
     void multiplyMatrix(MATRIX_STACK_TYPE type, const Mat4& mat);
+    void multiplyMatrix(MATRIX_STACK_TYPE type, const Mat4& mat, unsigned int index);
     /**
      * Gets the top matrix of specified type of matrix stack.
      * @js NA
      */
     const Mat4& getMatrix(MATRIX_STACK_TYPE type) const;
+    const Mat4& getMatrix(MATRIX_STACK_TYPE type, unsigned int index) const;
     /**
      * Clear all types of matrix stack, and add identity matrix to these matrix stacks.
      * @js NA
      */
     void resetMatrixStack();
+    void resetMatrixStack(unsigned int stackCount);
 
     /**
      * returns the cocos2d thread id.
@@ -528,7 +536,10 @@ protected:
     void initMatrixStack();
 
     std::stack<Mat4> _modelViewMatrixStack;
-    std::stack<Mat4> _projectionMatrixStack;
+    /** In order to support GL MultiView features, we need to use the matrix array,
+        but we don't know the number of MultiView, so using the vector instead.
+     */
+    std::vector< std::stack<Mat4> > _projectionMatrixStackList;
     std::stack<Mat4> _textureMatrixStack;
 
     /** Scheduler associated with this director
