@@ -487,6 +487,26 @@ void Director::resetMatrixStack(unsigned int stackCount)
     _textureMatrixStack.push(Mat4::IDENTITY);
 }
 
+unsigned int Director::getMatrixStackSize(MATRIX_STACK_TYPE type)
+{
+    if(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW == type)
+    {
+        return 1;
+    }
+    else if(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION == type)
+    {
+        return _projectionMatrixStackList.size();
+    }
+    else if(MATRIX_STACK_TYPE::MATRIX_STACK_TEXTURE == type)
+    {
+        return 1;
+    }
+    else
+    {
+        CCASSERT(false, "unknown matrix stack type");
+    }
+}
+
 void Director::popMatrix(MATRIX_STACK_TYPE type)
 {
     if(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW == type)

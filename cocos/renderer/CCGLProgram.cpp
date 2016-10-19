@@ -929,7 +929,9 @@ void GLProgram::setUniformsForBuiltins(const Mat4 &matrixMV)
     if (_flags.usesMultiViewP)
     {
         Mat4 mats[4];
-        for (unsigned int i = 0; i < 4; ++i) {
+        unsigned int stackSize = _director->getMatrixStackSize(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION) <= 4?
+                                 _director->getMatrixStackSize(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION): 4;
+        for (unsigned int i = 0; i < stackSize; ++i) {
             mats[i] = _director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, i);
         }
         setUniformLocationWithMatrix4fv(_builtInUniforms[UNIFORM_MULTIVIEW_P_MATRIX], mats[0].m, 4);
@@ -947,7 +949,9 @@ void GLProgram::setUniformsForBuiltins(const Mat4 &matrixMV)
     if (_flags.usesMultiViewMVP)
     {
         Mat4 mats[4];
-        for (unsigned int i = 0; i < 4; ++i) {
+        unsigned int stackSize = _director->getMatrixStackSize(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION) <= 4?
+                                 _director->getMatrixStackSize(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION): 4;
+        for (unsigned int i = 0; i < stackSize; ++i) {
             mats[i] = _director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, i) * matrixMV;
         }
         setUniformLocationWithMatrix4fv(_builtInUniforms[UNIFORM_MULTIVIEW_MVP_MATRIX], mats[0].m, 4);

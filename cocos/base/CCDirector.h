@@ -498,6 +498,7 @@ public:
      */
     void resetMatrixStack();
     void resetMatrixStack(unsigned int stackCount);
+    unsigned int getMatrixStackSize(MATRIX_STACK_TYPE type);
 
     /**
      * returns the cocos2d thread id.
