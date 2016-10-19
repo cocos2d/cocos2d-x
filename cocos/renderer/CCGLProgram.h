@@ -127,10 +127,14 @@ public:
         UNIFORM_AMBIENT_COLOR,
         /**Projection matrix.*/
         UNIFORM_P_MATRIX,
+        /**Mutiview Projection matrix.*/
+        UNIFORM_MUTIVIEW_P_MATRIX,
         /**Model view matrix.*/
         UNIFORM_MV_MATRIX,
         /**Model view projection matrix.*/
         UNIFORM_MVP_MATRIX,
+        /**Mutiview Model view projection matrix.*/
+        UNIFORM_MUTIVIEW_MVP_MATRIX,
         /**Normal matrix.*/
         UNIFORM_NORMAL_MATRIX,
         /**Time.*/
@@ -157,8 +161,10 @@ public:
         unsigned int usesTime:1;
         unsigned int usesNormal:1;
         unsigned int usesMVP:1;
+        unsigned int usesMutiViewMVP:1;
         unsigned int usesMV:1;
         unsigned int usesP:1;
+        unsigned int usesMutiviewP:1;
         unsigned int usesRandom:1;
         // handy way to initialize the bitfield
         UniformFlags() { memset(this, 0, sizeof(*this)); }
@@ -277,10 +283,14 @@ public:
     static const char* UNIFORM_NAME_AMBIENT_COLOR;
     /**Projection Matrix uniform.*/
     static const char* UNIFORM_NAME_P_MATRIX;
+    /**Mutiview Projection Matrix uniform.*/
+    static const char* UNIFORM_NAME_MUTIVIEW_P_MATRIX;
     /**Model view matrix uniform.*/
     static const char* UNIFORM_NAME_MV_MATRIX;
     /**Model view projection uniform.*/
     static const char* UNIFORM_NAME_MVP_MATRIX;
+    /**Mutiview Model view projection uniform.*/
+    static const char* UNIFORM_NAME_MUTIVIEW_MVP_MATRIX;
     /**Normal matrix uniform.*/
     static const char* UNIFORM_NAME_NORMAL_MATRIX;
     /**Time uniform.*/
