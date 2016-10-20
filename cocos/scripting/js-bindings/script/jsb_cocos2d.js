@@ -2590,7 +2590,7 @@ cc.Texture2D.prototype.setTexParameters = function (texParams, magFilter, wrapS,
     this._setTexParameters(minFilter, magFilter, wrapS, wrapT);
 };
 
-cc.Texture2D.prototype.handleLoadedTexture = function (premultipled) {};
+cc.Texture2D.prototype.handleLoadedTexture = function (premultiplied) {};
 
 // 
 // MenuItem setCallback support target

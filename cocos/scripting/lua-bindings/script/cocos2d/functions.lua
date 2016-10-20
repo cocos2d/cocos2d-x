@@ -49,7 +49,7 @@ local function dump_value_(v)
     return tostring(v)
 end
 
-function dump(value, desciption, nesting)
+function dump(value, description, nesting)
     if type(nesting) ~= "number" then nesting = 3 end
 
     local lookupTable = {}
@@ -58,22 +58,22 @@ function dump(value, desciption, nesting)
     local traceback = string.split(debug.traceback("", 2), "\n")
     print("dump from: " .. string.trim(traceback[3]))
 
-    local function dump_(value, desciption, indent, nest, keylen)
-        desciption = desciption or "<var>"
+    local function dump_(value, description, indent, nest, keylen)
+        description = description or "<var>"
         local spc = ""
         if type(keylen) == "number" then
-            spc = string.rep(" ", keylen - string.len(dump_value_(desciption)))
+            spc = string.rep(" ", keylen - string.len(dump_value_(description)))
         end
         if type(value) ~= "table" then
-            result[#result +1 ] = string.format("%s%s%s = %s", indent, dump_value_(desciption), spc, dump_value_(value))
+            result[#result +1 ] = string.format("%s%s%s = %s", indent, dump_value_(description), spc, dump_value_(value))
         elseif lookupTable[tostring(value)] then
-            result[#result +1 ] = string.format("%s%s%s = *REF*", indent, dump_value_(desciption), spc)
+            result[#result +1 ] = string.format("%s%s%s = *REF*", indent, dump_value_(description), spc)
         else
             lookupTable[tostring(value)] = true
             if nest > nesting then
-                result[#result +1 ] = string.format("%s%s = *MAX NESTING*", indent, dump_value_(desciption))
+                result[#result +1 ] = string.format("%s%s = *MAX NESTING*", indent, dump_value_(description))
             else
-                result[#result +1 ] = string.format("%s%s = {", indent, dump_value_(desciption))
+                result[#result +1 ] = string.format("%s%s = {", indent, dump_value_(description))
                 local indent2 = indent.."    "
                 local keys = {}
                 local keylen = 0
@@ -99,7 +99,7 @@ function dump(value, desciption, nesting)
             end
         end
     end
-    dump_(value, desciption, "- ", 1)
+    dump_(value, description, "- ", 1)
 
     for i, line in ipairs(result) do
         print(line)
