@@ -184,7 +184,7 @@ GLProgram* GLProgram::createWithByteArrays(const GLchar* vShaderByteArray, const
         ret->autorelease();
         return ret;
     }
-    
+
     CC_SAFE_DELETE(ret);
     return nullptr;
 }
@@ -208,7 +208,7 @@ GLProgram* GLProgram::createWithFilenames(const std::string& vShaderFilename, co
         ret->autorelease();
         return ret;
     }
-    
+
     CC_SAFE_DELETE(ret);
     return nullptr;
 }
@@ -256,14 +256,14 @@ bool GLProgram::initWithByteArrays(const GLchar* vShaderByteArray, const GLchar*
 {
     _program = glCreateProgram();
     CHECK_GL_ERROR_DEBUG();
-    
+
     // convert defines here. If we do it in "compileShader" we will do it twice.
     // a cache for the defines could be useful, but seems like overkill at this point
     std::string replacedDefines = "";
     replaceDefines(compileTimeDefines, replacedDefines);
-    
+
     _vertShader = _fragShader = 0;
-    
+
     if (vShaderByteArray)
     {
         if (!compileShader(&_vertShader, GL_VERTEX_SHADER, vShaderByteArray, compileTimeHeaders, replacedDefines))
@@ -272,7 +272,7 @@ bool GLProgram::initWithByteArrays(const GLchar* vShaderByteArray, const GLchar*
             return false;
         }
     }
-    
+
     // Create and compile fragment shader
     if (fShaderByteArray)
     {
@@ -282,22 +282,22 @@ bool GLProgram::initWithByteArrays(const GLchar* vShaderByteArray, const GLchar*
             return false;
         }
     }
-    
+
     if (_vertShader)
     {
         glAttachShader(_program, _vertShader);
     }
     CHECK_GL_ERROR_DEBUG();
-    
+
     if (_fragShader)
     {
         glAttachShader(_program, _fragShader);
     }
-    
+
     _hashForUniforms.clear();
-    
+
     CHECK_GL_ERROR_DEBUG();
-    
+
     return true;
 }
 
@@ -478,12 +478,12 @@ bool GLProgram::compileShader(GLuint* shader, GLenum type, const GLchar* source,
 bool GLProgram::compileShader(GLuint * shader, GLenum type, const GLchar* source, const std::string& compileTimeHeaders, const std::string& convertedDefines)
 {
     GLint status;
-    
+
     if (!source)
     {
         return false;
     }
-    
+
     std::string headersDef;
     if (compileTimeHeaders.empty()) {
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
@@ -494,28 +494,28 @@ bool GLProgram::compileShader(GLuint * shader, GLenum type, const GLchar* source
     }else{
         headersDef = compileTimeHeaders;
     }
-    
+
     const GLchar *sources[] = {
         headersDef.c_str(),
         COCOS2D_SHADER_UNIFORMS,
         convertedDefines.c_str(),
         source};
-    
+
     *shader = glCreateShader(type);
     glShaderSource(*shader, sizeof(sources)/sizeof(*sources), sources, nullptr);
     glCompileShader(*shader);
-    
+
     glGetShaderiv(*shader, GL_COMPILE_STATUS, &status);
-    
+
     if (! status)
     {
         GLsizei length;
         glGetShaderiv(*shader, GL_SHADER_SOURCE_LENGTH, &length);
         GLchar* src = (GLchar *)malloc(sizeof(GLchar) * length);
-        
+
         glGetShaderSource(*shader, length, nullptr, src);
         CCLOG("cocos2d: ERROR: Failed to compile shader:\n%s", src);
-        
+
         if (type == GL_VERTEX_SHADER)
         {
             CCLOG("cocos2d: %s", getVertexShaderLog().c_str());
@@ -525,10 +525,10 @@ bool GLProgram::compileShader(GLuint * shader, GLenum type, const GLchar* source
             CCLOG("cocos2d: %s", getFragmentShaderLog().c_str());
         }
         free(src);
-        
+
         return false;
     }
-    
+
     return (status == GL_TRUE);
 }
 
@@ -929,10 +929,10 @@ void GLProgram::setUniformsForBuiltins(const Mat4 &matrixMV)
     if (_flags.usesMultiViewP)
     {
         Mat4 mats[4];
-        unsigned int stackSize = _director->getMatrixStackSize(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION) <= 4?
-                                 _director->getMatrixStackSize(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION): 4;
+        unsigned int stackSize = _director->getProjectionMatrixStackSize() <= 4?
+                                 _director->getProjectionMatrixStackSize(): 4;
         for (unsigned int i = 0; i < stackSize; ++i) {
-            mats[i] = _director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, i);
+            mats[i] = _director->getProjectionMatrix(i);
         }
         setUniformLocationWithMatrix4fv(_builtInUniforms[UNIFORM_MULTIVIEW_P_MATRIX], mats[0].m, 4);
     }
@@ -949,10 +949,10 @@ void GLProgram::setUniformsForBuiltins(const Mat4 &matrixMV)
     if (_flags.usesMultiViewMVP)
     {
         Mat4 mats[4];
-        unsigned int stackSize = _director->getMatrixStackSize(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION) <= 4?
-                                 _director->getMatrixStackSize(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION): 4;
+        unsigned int stackSize = _director->getProjectionMatrixStackSize() <= 4?
+                                 _director->getProjectionMatrixStackSize(): 4;
         for (unsigned int i = 0; i < stackSize; ++i) {
-            mats[i] = _director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, i) * matrixMV;
+            mats[i] = _director->getProjectionMatrix(i) * matrixMV;
         }
         setUniformLocationWithMatrix4fv(_builtInUniforms[UNIFORM_MULTIVIEW_MVP_MATRIX], mats[0].m, 4);
     }

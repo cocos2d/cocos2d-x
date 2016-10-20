@@ -186,69 +186,7 @@ const std::vector<Camera*>& Scene::getCameras()
 
 void Scene::render(Renderer* renderer, const Mat4& eyeTransform, const Mat4* eyeProjection)
 {
-    auto director = Director::getInstance();
-    Camera* defaultCamera = nullptr;
-    const auto& transform = getNodeToParentTransform();
-
-    for (const auto& camera : getCameras())
-    {
-        if (!camera->isVisible())
-            continue;
-
-        Camera::_visitingCamera = camera;
-        if (Camera::_visitingCamera->getCameraFlag() == CameraFlag::DEFAULT)
-        {
-            defaultCamera = Camera::_visitingCamera;
-        }
-
-        // There are two ways to modify the "default camera" with the eye Transform:
-        // a) modify the "nodeToParentTransform" matrix
-        // b) modify the "additional transform" matrix
-        // both alternatives are correct, if the user manually modifies the camera with a camera->setPosition()
-        // then the "nodeToParent transform" will be lost.
-        // And it is important that the change is "permanent", because the matrix might be used for calculate
-        // culling and other stuff.
-        if (eyeProjection)
-            camera->setAdditionalProjection(*eyeProjection * camera->getProjectionMatrix().getInversed());
-        camera->setAdditionalTransform(eyeTransform.getInversed());
-
-        director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-        director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, Camera::_visitingCamera->getViewProjectionMatrix());
-        camera->apply();
-        //clear background with max depth
-        camera->clearBackground();
-        //visit the scene
-        visit(renderer, transform, 0);
-#if CC_USE_NAVMESH
-        if (_navMesh && _navMeshDebugCamera == camera)
-        {
-            _navMesh->debugDraw(renderer);
-        }
-#endif
-
-        renderer->render();
-        camera->restore();
-
-        director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-
-        // we shouldn't restore the transform matrix since it could be used
-        // from "update" or other parts of the game to calculate culling or something else.
-//        camera->setNodeToParentTransform(eyeCopy);
-    }
-
-#if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
-    if (_physics3DWorld && _physics3DWorld->isDebugDrawEnabled())
-    {
-        director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-        director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, _physics3dDebugCamera != nullptr ? _physics3dDebugCamera->getViewProjectionMatrix() : defaultCamera->getViewProjectionMatrix());
-        _physics3DWorld->debugDraw(renderer);
-        renderer->render();
-        director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-    }
-#endif
-
-    Camera::_visitingCamera = nullptr;
-//    experimental::FrameBuffer::applyDefaultFBO();
+    render(renderer, &eyeTransform, eyeProjection, 1);
 }
 
 void Scene::render(Renderer* renderer, const Mat4* eyeTransforms, const Mat4* eyeProjections, unsigned int multiViewCount)
@@ -256,7 +194,7 @@ void Scene::render(Renderer* renderer, const Mat4* eyeTransforms, const Mat4* ey
     auto director = Director::getInstance();
     Camera* defaultCamera = nullptr;
     const auto& transform = getNodeToParentTransform();
-    
+
     for (const auto& camera : getCameras())
     {
         if (!camera->isVisible())
@@ -267,7 +205,7 @@ void Scene::render(Renderer* renderer, const Mat4* eyeTransforms, const Mat4* ey
         {
             defaultCamera = Camera::_visitingCamera;
         }
-        
+   
         // There are two ways to modify the "default camera" with the eye Transform:
         // a) modify the "nodeToParentTransform" matrix
         // b) modify the "additional transform" matrix
@@ -280,10 +218,10 @@ void Scene::render(Renderer* renderer, const Mat4* eyeTransforms, const Mat4* ey
                 camera->setAdditionalProjection(eyeProjections[i] * camera->getProjectionMatrix().getInversed());
             if (eyeTransforms)
                 camera->setAdditionalTransform(eyeTransforms[i].getInversed());
-            director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, i);
-            director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, Camera::_visitingCamera->getViewProjectionMatrix(), i);
+            director->pushProjectionMatrix(i);
+            director->loadProjectionMatrix(Camera::_visitingCamera->getViewProjectionMatrix(), i);
         }
-        
+
         camera->apply();
         //clear background with max depth
         camera->clearBackground();
@@ -295,18 +233,18 @@ void Scene::render(Renderer* renderer, const Mat4* eyeTransforms, const Mat4* ey
             _navMesh->debugDraw(renderer);
         }
 #endif
-        
+
         renderer->render();
         camera->restore();
-        
+
         for (unsigned int i = 0; i < multiViewCount; ++i)
-            director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, i);
-        
+            director->popProjectionMatrix(i);
+
         // we shouldn't restore the transform matrix since it could be used
         // from "update" or other parts of the game to calculate culling or something else.
         //        camera->setNodeToParentTransform(eyeCopy);
     }
-    
+
 #if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
     if (_physics3DWorld && _physics3DWorld->isDebugDrawEnabled())
     {
@@ -316,18 +254,18 @@ void Scene::render(Renderer* renderer, const Mat4* eyeTransforms, const Mat4* ey
                 physics3dDebugCamera->setAdditionalProjection(eyeProjections[i] * physics3dDebugCamera->getProjectionMatrix().getInversed());
             if (eyeTransforms)
                 physics3dDebugCamera->setAdditionalTransform(eyeTransforms[i].getInversed());
-            director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, i);
-            director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, physics3dDebugCamera->getViewProjectionMatrix(), i);
+            director->pushProjectionMatrix(i);
+            director->loadProjectionMatrix(physics3dDebugCamera->getViewProjectionMatrix(), i);
         }
-        
+
         _physics3DWorld->debugDraw(renderer);
         renderer->render();
-        
+
         for (unsigned int i = 0; i < multiViewCount; ++i)
-            director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, i);
+            director->popProjectionMatrix(i);
     }
 #endif
-    
+
     Camera::_visitingCamera = nullptr;
     //    experimental::FrameBuffer::applyDefaultFBO();
 }
