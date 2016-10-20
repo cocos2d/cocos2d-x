@@ -199,13 +199,13 @@ void Scene::render(Renderer* renderer, const Mat4* eyeTransforms, const Mat4* ey
     {
         if (!camera->isVisible())
             continue;
-        
+
         Camera::_visitingCamera = camera;
         if (Camera::_visitingCamera->getCameraFlag() == CameraFlag::DEFAULT)
         {
             defaultCamera = Camera::_visitingCamera;
         }
-   
+
         // There are two ways to modify the "default camera" with the eye Transform:
         // a) modify the "nodeToParentTransform" matrix
         // b) modify the "additional transform" matrix
@@ -242,7 +242,7 @@ void Scene::render(Renderer* renderer, const Mat4* eyeTransforms, const Mat4* ey
 
         // we shouldn't restore the transform matrix since it could be used
         // from "update" or other parts of the game to calculate culling or something else.
-        //        camera->setNodeToParentTransform(eyeCopy);
+//        camera->setNodeToParentTransform(eyeCopy);
     }
 
 #if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
@@ -267,7 +267,7 @@ void Scene::render(Renderer* renderer, const Mat4* eyeTransforms, const Mat4* ey
 #endif
 
     Camera::_visitingCamera = nullptr;
-    //    experimental::FrameBuffer::applyDefaultFBO();
+//    experimental::FrameBuffer::applyDefaultFBO();
 }
 
 void Scene::removeAllChildren()

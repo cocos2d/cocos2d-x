@@ -316,7 +316,7 @@ bool GLProgram::initWithFilenames(const std::string& vShaderFilename, const std:
     auto fileUtils = FileUtils::getInstance();
     std::string vertexSource = fileUtils->getStringFromFile(FileUtils::getInstance()->fullPathForFilename(vShaderFilename));
     std::string fragmentSource = fileUtils->getStringFromFile(FileUtils::getInstance()->fullPathForFilename(fShaderFilename));
-    
+
     return initWithByteArrays(vertexSource.c_str(), fragmentSource.c_str(), compileTimeHeaders, compileTimeDefines);
 }
 
