@@ -13,8 +13,8 @@ using namespace spine;
 class SkeletonAnimationCullingFix : public SkeletonAnimation
 {
 public:
-    SkeletonAnimationCullingFix(const std::string& skeletonDataFile, const std::string& atlasFile, float scale)
-    : SkeletonAnimation(skeletonDataFile, atlasFile, scale)
+    SkeletonAnimationCullingFix()
+    : SkeletonAnimation()
     {}
     
     virtual void draw(cocos2d::Renderer* renderer, const cocos2d::Mat4& transform, uint32_t transformFlags) override
@@ -26,7 +26,9 @@ public:
     
     static SkeletonAnimationCullingFix* createWithFile (const std::string& skeletonDataFile, const std::string& atlasFile, float scale = 1)
     {
-        SkeletonAnimationCullingFix* node = new SkeletonAnimationCullingFix(skeletonDataFile, atlasFile, scale);
+        SkeletonAnimationCullingFix* node = new SkeletonAnimationCullingFix();
+        spAtlas* atlas = spAtlas_createFromFile(atlasFile.c_str(), 0);
+        node->initWithJsonFile(skeletonDataFile, atlas, scale);
         node->autorelease();
         return node;
     }

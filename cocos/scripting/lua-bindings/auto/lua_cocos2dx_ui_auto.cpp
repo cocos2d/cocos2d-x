@@ -36083,7 +36083,7 @@ int lua_cocos2dx_ui_TabHeader_getTitleText(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_TabHeader_getTitleText'", nullptr);
             return 0;
         }
-        const std::string ret = cobj->getTitleText();
+        std::string ret = cobj->getTitleText();
         tolua_pushcppstring(tolua_S,ret);
         return 1;
     }
@@ -36277,7 +36277,7 @@ int lua_cocos2dx_ui_TabHeader_getTitleFontName(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_TabHeader_getTitleFontName'", nullptr);
             return 0;
         }
-        const std::string ret = cobj->getTitleFontName();
+        std::string ret = cobj->getTitleFontName();
         tolua_pushcppstring(tolua_S,ret);
         return 1;
     }

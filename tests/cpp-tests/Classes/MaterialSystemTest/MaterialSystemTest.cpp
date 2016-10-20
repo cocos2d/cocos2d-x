@@ -67,7 +67,7 @@ void Material_Sprite3DTest::onEnter()
     sprite->setScale(8.f);
     sprite->setTexture("Sprite3DTest/boss.png");
     this->addChild(sprite);
-    sprite->setNormalizedPosition(Vec2(0.5,0.5));
+    sprite->setPositionNormalized(Vec2(0.5,0.5));
 }
 
 std::string Material_Sprite3DTest::subtitle() const
@@ -123,22 +123,22 @@ void Material_2DEffects::onEnter()
     Material *mat1 = Material::createWithProperties(properties);
 
     auto spriteBlur = Sprite::create("Images/grossini.png");
-    spriteBlur->setNormalizedPosition(Vec2(0.2f, 0.5f));
+    spriteBlur->setPositionNormalized(Vec2(0.2f, 0.5f));
     this->addChild(spriteBlur);
     spriteBlur->setGLProgramState(mat1->getTechniqueByName("blur")->getPassByIndex(0)->getGLProgramState());
 
     auto spriteOutline = Sprite::create("Images/grossini.png");
-    spriteOutline->setNormalizedPosition(Vec2(0.4f, 0.5f));
+    spriteOutline->setPositionNormalized(Vec2(0.4f, 0.5f));
     this->addChild(spriteOutline);
     spriteOutline->setGLProgramState(mat1->getTechniqueByName("outline")->getPassByIndex(0)->getGLProgramState());
 
     auto spriteNoise = Sprite::create("Images/grossini.png");
-    spriteNoise->setNormalizedPosition(Vec2(0.6f, 0.5f));
+    spriteNoise->setPositionNormalized(Vec2(0.6f, 0.5f));
     this->addChild(spriteNoise);
     spriteNoise->setGLProgramState(mat1->getTechniqueByName("noise")->getPassByIndex(0)->getGLProgramState());
 
     auto spriteEdgeDetect = Sprite::create("Images/grossini.png");
-    spriteEdgeDetect->setNormalizedPosition(Vec2(0.8f, 0.5f));
+    spriteEdgeDetect->setPositionNormalized(Vec2(0.8f, 0.5f));
     this->addChild(spriteEdgeDetect);
     spriteEdgeDetect->setGLProgramState(mat1->getTechniqueByName("edge_detect")->getPassByIndex(0)->getGLProgramState());
 
@@ -220,22 +220,22 @@ void Material_AutoBindings::onEnter()
     Material *mat1 = Material::createWithProperties(properties);
 
     auto spriteBlur = Sprite::create("Images/grossini.png");
-    spriteBlur->setNormalizedPosition(Vec2(0.2f, 0.5f));
+    spriteBlur->setPositionNormalized(Vec2(0.2f, 0.5f));
     this->addChild(spriteBlur);
     spriteBlur->setGLProgramState(mat1->getTechniqueByName("blur")->getPassByIndex(0)->getGLProgramState());
 
     auto spriteOutline = Sprite::create("Images/grossini.png");
-    spriteOutline->setNormalizedPosition(Vec2(0.4f, 0.5f));
+    spriteOutline->setPositionNormalized(Vec2(0.4f, 0.5f));
     this->addChild(spriteOutline);
     spriteOutline->setGLProgramState(mat1->getTechniqueByName("outline")->getPassByIndex(0)->getGLProgramState());
 
     auto spriteNoise = Sprite::create("Images/grossini.png");
-    spriteNoise->setNormalizedPosition(Vec2(0.6f, 0.5f));
+    spriteNoise->setPositionNormalized(Vec2(0.6f, 0.5f));
     this->addChild(spriteNoise);
     spriteNoise->setGLProgramState(mat1->getTechniqueByName("noise")->getPassByIndex(0)->getGLProgramState());
 
     auto spriteEdgeDetect = Sprite::create("Images/grossini.png");
-    spriteEdgeDetect->setNormalizedPosition(Vec2(0.8f, 0.5f));
+    spriteEdgeDetect->setPositionNormalized(Vec2(0.8f, 0.5f));
     this->addChild(spriteEdgeDetect);
     spriteEdgeDetect->setGLProgramState(mat1->getTechniqueByName("edge_detect")->getPassByIndex(0)->getGLProgramState());
 
@@ -258,7 +258,7 @@ void Material_setTechnique::onEnter()
     auto sprite = Sprite3D::create("Sprite3DTest/boss1.obj");
     sprite->setScale(6);
     this->addChild(sprite);
-    sprite->setNormalizedPosition(Vec2(0.5,0.5));
+    sprite->setPositionNormalized(Vec2(0.5,0.5));
     _sprite = sprite;
 
 
@@ -318,7 +318,7 @@ void Material_clone::onEnter()
     auto sprite = Sprite3D::create("Sprite3DTest/boss1.obj");
     sprite->setScale(3);
     this->addChild(sprite);
-    sprite->setNormalizedPosition(Vec2(0.25, 0.5));
+    sprite->setPositionNormalized(Vec2(0.25, 0.5));
 
     Material *mat = Material::createWithFilename("Materials/3d_effects.material");
     sprite->setMaterial(mat);
@@ -331,7 +331,7 @@ void Material_clone::onEnter()
     auto sprite2 = Sprite3D::create("Sprite3DTest/boss1.obj");
     sprite2->setScale(3);
     this->addChild(sprite2);
-    sprite2->setNormalizedPosition(Vec2(0.5, 0.5));
+    sprite2->setPositionNormalized(Vec2(0.5, 0.5));
     sprite2->setMaterial(mat);
     sprite2->runAction(repeat->clone());
 
@@ -339,7 +339,7 @@ void Material_clone::onEnter()
     auto sprite3 = Sprite3D::create("Sprite3DTest/boss1.obj");
     sprite3->setScale(3);
     this->addChild(sprite3);
-    sprite3->setNormalizedPosition(Vec2(0.75, 0.5));
+    sprite3->setPositionNormalized(Vec2(0.75, 0.5));
     auto mat2 = mat->clone();
     sprite3->setMaterial(mat2);
     sprite3->runAction(repeat->clone());
@@ -457,19 +457,19 @@ void Material_invalidate::onEnter()
     sprite->setScale(5);
     sprite->setRotation3D(Vec3(0,180,0));
     addChild(sprite);
-    sprite->setNormalizedPosition(Vec2(0.3f,0.3f));
+    sprite->setPositionNormalized(Vec2(0.3f,0.3f));
 
     auto rotate = RotateBy::create(5, Vec3(0,360,0));
     auto repeat = RepeatForever::create(rotate);
     sprite->runAction(repeat);
 
     // SPINE
-    auto skeletonNode = spine::SkeletonAnimation::createWithFile("spine/goblins.json", "spine/goblins.atlas", 1.5f);
+    auto skeletonNode = spine::SkeletonAnimation::createWithJsonFile("spine/goblins.json", "spine/goblins.atlas", 1.5f);
     skeletonNode->setAnimation(0, "walk", true);
     skeletonNode->setSkin("goblin");
 
     skeletonNode->setScale(0.25);
-    skeletonNode->setNormalizedPosition(Vec2(0.6f,0.3f));
+    skeletonNode->setPositionNormalized(Vec2(0.6f,0.3f));
     this->addChild(skeletonNode);
 }
 
@@ -526,19 +526,19 @@ void Material_renderState::onEnter()
     sprite->setScale(5);
     sprite->setRotation3D(Vec3(0,180,0));
     addChild(sprite);
-    sprite->setNormalizedPosition(Vec2(0.3f,0.3f));
+    sprite->setPositionNormalized(Vec2(0.3f,0.3f));
 
     auto rotate = RotateBy::create(5, Vec3(0,360,0));
     auto repeat = RepeatForever::create(rotate);
     sprite->runAction(repeat);
 
     // SPINE
-    auto skeletonNode = spine::SkeletonAnimation::createWithFile("spine/goblins.json", "spine/goblins.atlas", 1.5f);
+    auto skeletonNode = spine::SkeletonAnimation::createWithJsonFile("spine/goblins.json", "spine/goblins.atlas", 1.5f);
     skeletonNode->setAnimation(0, "walk", true);
     skeletonNode->setSkin("goblin");
 
     skeletonNode->setScale(0.25);
-    skeletonNode->setNormalizedPosition(Vec2(0.6f,0.3f));
+    skeletonNode->setPositionNormalized(Vec2(0.6f,0.3f));
     this->addChild(skeletonNode);
 
     _stateBlock.setDepthTest(false);

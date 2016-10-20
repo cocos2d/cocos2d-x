@@ -37,7 +37,13 @@ bool AppDelegate::applicationDidFinishLaunching()
     lua_module_register(L);
     //The call was commented because it will lead to ZeroBrane Studio can't find correct context when debugging
     //engine->executeScriptFile("src/hello.lua");
-    engine->executeString("require 'src/hello.lua'");
+    
+#if CC_64BITS
+    FileUtils::getInstance()->addSearchPath("src/64bit");
+#endif
+    FileUtils::getInstance()->addSearchPath("src");
+    FileUtils::getInstance()->addSearchPath("res");
+    engine->executeString("require 'hello.lua'");
 
     return true;
 }

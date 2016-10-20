@@ -492,8 +492,8 @@ function cc.mat4.getInversed(self)
     return mat4_getInversed(self)
 end
 
-function cc.mat4.transformVector(self, vector, dst)
-    return mat4_transformVector(self, vector, dst)
+function cc.mat4.transformVector(...)
+    return mat4_transformVector(...)
 end
 
 function cc.mat4.multiply(self, mat)
@@ -509,54 +509,6 @@ function cc.mat4.createIdentity()
                        0.0, 1.0, 0.0, 0.0,
                        0.0, 0.0, 1.0, 0.0,
                        0.0, 0.0, 0.0, 1.0)
-end
-
-function cc.mat4.createTranslation(translation, dst)
-    assert(type(translation) == "table" and type(dst) == "table", "The type of input parameters should be table")
-    dst = cc.mat4.createIdentity()
-    dst[13] = translation.x
-    dst[14] = translation.y
-    dst[15] = translation.z
-    return dst
-end
-
-function cc.mat4.createRotation(q, dst)
-    assert(type(q) == "table" and type(dst) == "table", "The type of input parameters should be table")
-    local x2 = q.x + q.x
-    local y2 = q.y + q.y
-    local z2 = q.z + q.z
-
-    local xx2 = q.x * x2
-    local yy2 = q.y * y2
-    local zz2 = q.z * z2
-    local xy2 = q.x * y2
-    local xz2 = q.x * z2
-    local yz2 = q.y * z2
-    local wx2 = q.w * x2
-    local wy2 = q.w * y2
-    local wz2 = q.w * z2
-
-    dst[1] = 1.0 - yy2 - zz2
-    dst[2] = xy2 + wz2
-    dst[3] = xz2 - wy2
-    dst[4] = 0.0
-
-    dst[5] = xy2 - wz2
-    dst[6] = 1.0 - xx2 - zz2
-    dst[7] = yz2 + wx2
-    dst[8] = 0.0
-
-    dst[9] = xz2 + wy2
-    dst[10] = yz2 - wx2
-    dst[11] = 1.0 - xx2 - yy2
-    dst[12] = 0.0
-
-    dst[13] = 0.0
-    dst[14] = 0.0
-    dst[15] = 0.0
-    dst[16] = 1.0
-
-    return dst
 end
 
 function cc.mat4.translate(self,vec3)

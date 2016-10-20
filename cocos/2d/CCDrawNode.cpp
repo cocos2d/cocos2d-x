@@ -76,11 +76,6 @@ static inline float v2fdot(const Vec2 &p0, const Vec2 &p1)
     return  p0.x * p1.x + p0.y * p1.y;
 }
 
-static inline Vec2 v2fforangle(float _a_)
-{
-    return v2f(cosf(_a_), sinf(_a_));
-}
-
 static inline Vec2 v2fnormalize(const Vec2 &p)
 {
     Vec2 r(p.x, p.y);

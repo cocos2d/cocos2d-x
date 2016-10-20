@@ -262,14 +262,14 @@ public:
                         textLines.push_back(currentLine);
                         currentLine.reset();
                         currentPaintPosition = 0;
-                        for ( it = tempGlyphs.begin(); it != tempGlyphs.end(); it++ ) {
+                        for ( auto& glyph : tempGlyphs ) {
                             if ( currentLine.glyphs.empty() ) {
-                                currentPaintPosition = -(*it).bearingX;
-                                (*it).kerning = 0;
+                                currentPaintPosition = -glyph.bearingX;
+                                glyph.kerning = 0;
                             }
-                            (*it).paintPosition = currentPaintPosition + (*it).bearingX + (*it).kerning;
-                            currentLine.glyphs.push_back((*it));
-                            currentPaintPosition += (*it).kerning + (*it).horizAdvance;
+                            glyph.paintPosition = currentPaintPosition + glyph.bearingX + glyph.kerning;
+                            currentLine.glyphs.push_back(glyph);
+                            currentPaintPosition += glyph.kerning + glyph.horizAdvance;
                         }
                     } else {
                         // the current word is too big to fit into one line, insert line break right here

@@ -184,7 +184,6 @@ void Control::removeTargetWithActionForControlEvents(Ref* target, Handler action
 void Control::removeTargetWithActionForControlEvent(Ref* target, Handler action, EventType controlEvent)
 {
     // Retrieve all invocations for the given control event
-    //<Invocation*>
     auto& eventInvocationList = this->dispatchListforControlEvent(controlEvent);
     
     //remove all invocations if the target and action are null
