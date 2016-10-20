@@ -19,26 +19,22 @@ def calculate_built_samples(args):
     'js' for all javascript tests
     '''
 
-    if 'all' in args:
-        return ALL_SAMPLES
-
     targets = []
-    if 'cpp' in args:
-        targets += CPP_SAMPLES
-        args.remove('cpp')
-    if 'lua' in args:
-        targets += LUA_SAMPLES
-        args.remove('lua')
-    if 'js' in args:
-        targets += JS_SAMPLES
-        args.remove('js')
+    for arg in args:
+        if arg == 'all':
+            targets += ALL_SAMPLES
+        elif arg == 'cpp':
+            targets += CPP_SAMPLES
+        elif arg == 'lua':
+            targets += LUA_SAMPLES
+        elif arg == 'js':
+            targets += JS_SAMPLES
+        else:
+            targets.append(arg)
 
-    targets += args
-
-    # remove duplicate elements, for example
-    # python android-build.py cpp hellocpp
+    # remove duplicates
     targets = set(targets)
-    return list(targets)
+    return targets
 
 def do_build(app_android_root, build_mode, app_abi, platform):
 
@@ -54,8 +50,8 @@ def build_samples(target, build_mode, app_abi, api_level):
 
     if build_mode is None:
         build_mode = 'debug'
-    elif build_mode != 'release':
-        build_mode = 'debug'
+    if build_mode not in ['debug', 'release']:
+        raise Exception('Unknown build mode: ' + build_mode)
 
     if app_abi is None:
         app_abi = 'armeabi-v7a'
