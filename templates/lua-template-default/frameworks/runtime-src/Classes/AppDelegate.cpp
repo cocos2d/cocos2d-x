@@ -3,6 +3,8 @@
 #include "audio/include/SimpleAudioEngine.h"
 #include "cocos2d.h"
 #include "scripting/lua-bindings/manual/lua_module_register.h"
+//VR_PLATFORM_INCLUDES_BEGIN
+//VR_PLATFORM_INCLUDES_END
 
 using namespace CocosDenshion;
 
@@ -60,6 +62,12 @@ bool AppDelegate::applicationDidFinishLaunching()
     //register custom function
     //LuaStack* stack = engine->getLuaStack();
     //register_custom_function(stack->getLuaState());
+
+    auto glview = Director::getInstance()->getOpenGLView();
+//VR_PLATFORM_SOURCES_BEGIN
+    auto vrImpl = new VRGenericRenderer;
+    glview->setVR(vrImpl);
+//VR_PLATFORM_SOURCES_END
 
     if (engine->executeScriptFile("src/main.lua"))
     {

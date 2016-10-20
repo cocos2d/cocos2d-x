@@ -43,6 +43,8 @@
 #include "cocos/scripting/js-bindings/manual/platform/ios/JavaScriptObjCBridge.h"
 #endif
 
+//VR_PLATFORM_INCLUDES_BEGIN
+//VR_PLATFORM_INCLUDES_END
 USING_NS_CC;
 using namespace CocosDenshion;
 
@@ -75,6 +77,11 @@ bool AppDelegate::applicationDidFinishLaunching()
 #endif
         director->setOpenGLView(glview);
 }
+
+//VR_PLATFORM_SOURCES_BEGIN
+    auto vrImpl = new VRGenericRenderer;
+    glview->setVR(vrImpl);
+//VR_PLATFORM_SOURCES_END
 
     // set FPS. the default value is 1.0/60 if you don't call this
     director->setAnimationInterval(1.0f / 60);

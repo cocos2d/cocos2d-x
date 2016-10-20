@@ -4,12 +4,17 @@
     android:installLocation="auto">
 
     <uses-feature android:glEsVersion="0x00020000" />
-    
+
+    <!-- _COCOS_VR_ANDROID_MANIFEST_SDK_BEGIN_ -->
+    <!-- _COCOS_VR_ANDROID_MANIFEST_SDK_END_ -->
+        
     <application
         android:label="@string/app_name"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher">
-        
+
+        <!-- _COCOS_VR_ANDROID_MANIFEST_APPLICATION_BEGIN_ -->
+        <!-- _COCOS_VR_ANDROID_MANIFEST_APPLICATION_END_ -->        
         <!-- Tell Cocos2dxActivity the name of our .so -->
 		<meta-data android:name="android.app.lib_name"
 				   android:value="cocos2dlua" />

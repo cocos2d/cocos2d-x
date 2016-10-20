@@ -1,5 +1,7 @@
 #include "AppDelegate.h"
 #include "HelloWorldScene.h"
+//VR_PLATFORM_INCLUDES_BEGIN
+//VR_PLATFORM_INCLUDES_END
 
 USING_NS_CC;
 
@@ -73,6 +75,10 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     register_all_packages();
 
+//VR_PLATFORM_SOURCES_BEGIN
+    auto vrImpl = new VRGenericRenderer;
+    glview->setVR(vrImpl);
+//VR_PLATFORM_SOURCES_END
     // create a scene. it's an autorelease object
     auto scene = HelloWorld::createScene();
 

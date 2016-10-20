@@ -28,9 +28,11 @@ package org.cocos2dx.javascript;
 
 import org.cocos2dx.lib.Cocos2dxActivity;
 import org.cocos2dx.lib.Cocos2dxGLSurfaceView;
+import android.os.Bundle;
 
 public class AppActivity extends Cocos2dxActivity {
 	
+    private VRSDKWrapper mVRSDKWrapper;
     @Override
     public Cocos2dxGLSurfaceView onCreateView() {
         Cocos2dxGLSurfaceView glSurfaceView = new Cocos2dxGLSurfaceView(this);
@@ -38,5 +40,42 @@ public class AppActivity extends Cocos2dxActivity {
         glSurfaceView.setEGLConfigChooser(5, 6, 5, 0, 16, 8);
 
         return glSurfaceView;
+    }
+    
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mVRSDKWrapper = new VRSDKWrapper();
+        mVRSDKWrapper.onCreate(this);
+    }
+    
+    @Override
+    protected void onDestroy(){
+        mVRSDKWrapper.onDestroy();
+        super.onDestroy();
+    }
+    
+    @Override
+    protected void onResume(){
+        super.onResume();
+        mVRSDKWrapper.onResume();
+    }
+    
+    @Override
+    protected void onPause(){
+        super.onPause();
+        mVRSDKWrapper.onPause();
+    }
+    
+    @Override
+    protected void onRestart(){
+        super.onRestart();
+        mVRSDKWrapper.onRestart();
+    }
+    
+    @Override
+    protected void onStop(){
+        super.onStop();
+        mVRSDKWrapper.onStop();
     }
 }

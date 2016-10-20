@@ -6,6 +6,7 @@ $(call import-add-path,$(LOCAL_PATH)/../../cocos2d)
 $(call import-add-path,$(LOCAL_PATH)/../../cocos2d/external)
 $(call import-add-path,$(LOCAL_PATH)/../../cocos2d/cocos)
 $(call import-add-path,$(LOCAL_PATH)/../../cocos2d/cocos/audio/include)
+$(call import-add-path,$(LOCAL_PATH)/../../vrsdks)
 
 LOCAL_MODULE := MyGame_shared
 
@@ -16,9 +17,13 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/HelloWorldScene.cpp
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes
+LOCAL_C_INCLUDES += $(LOCAL_PATH)/../../vrsdks
 
 # _COCOS_HEADER_ANDROID_BEGIN
 # _COCOS_HEADER_ANDROID_END
+
+# _COCOS_VR_HEADER_ANDROID_BEGIN
+# _COCOS_VR_HEADER_ANDROID_END
 
 
 LOCAL_STATIC_LIBRARIES := cocos2dx_static
@@ -26,9 +31,15 @@ LOCAL_STATIC_LIBRARIES := cocos2dx_static
 # _COCOS_LIB_ANDROID_BEGIN
 # _COCOS_LIB_ANDROID_END
 
+# _COCOS_VR_LIB_ANDROID_BEGIN
+# _COCOS_VR_LIB_ANDROID_END
+
 include $(BUILD_SHARED_LIBRARY)
 
 $(call import-module,.)
 
 # _COCOS_LIB_IMPORT_ANDROID_BEGIN
 # _COCOS_LIB_IMPORT_ANDROID_END
+
+# _COCOS_VR_LIB_IMPORT_ANDROID_BEGIN
+# _COCOS_VR_LIB_IMPORT_ANDROID_END
