@@ -19,6 +19,7 @@ bool CreatorLabels_init()
 
     // Files from .png
     auto sf_grossinis_sister2_png = SpriteFrame::create("creator_assets/test_polygon.png", Rect(279, 26, 55, 130), false, Vec2(0, -2), Size(56, 138));
+    sf_grossinis_sister2_png->setCenterRect(Rect(17,36,21,32));
     spriteFrameCache->addSpriteFrame(sf_grossinis_sister2_png, "grossinis_sister2.png");
     auto sf_test_polygon = SpriteFrame::create("creator_assets/test_polygon.png", Rect(4, 2, 380, 152), false, Vec2(0.5, 0.5), Size(387, 157));
     spriteFrameCache->addSpriteFrame(sf_test_polygon, "test_polygon");

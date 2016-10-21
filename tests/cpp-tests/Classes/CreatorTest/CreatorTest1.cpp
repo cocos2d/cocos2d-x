@@ -19,6 +19,7 @@ bool CreatorTest1_init()
 
     // Files from .png
     auto sf_grossinis_sister2_png = SpriteFrame::create("creator_assets/test_polygon.png", Rect(279, 26, 55, 130), false, Vec2(0, -2), Size(56, 138));
+    sf_grossinis_sister2_png->setCenterRect(Rect(17,36,21,32));
     spriteFrameCache->addSpriteFrame(sf_grossinis_sister2_png, "grossinis_sister2.png");
     auto sf_test_polygon = SpriteFrame::create("creator_assets/test_polygon.png", Rect(4, 2, 380, 152), false, Vec2(0.5, 0.5), Size(387, 157));
     spriteFrameCache->addSpriteFrame(sf_test_polygon, "test_polygon");
@@ -98,7 +99,6 @@ Node* CreatorTest1_create()
     tmxtiledmap_1_1->setCascadeOpacityEnabled(true);
     tmxtiledmap_1_1->setSkewX(0);
     tmxtiledmap_1_1->setTag(-1);
-    tmxtiledmap_1_1->setContentSize(Size(4096, 2048));
     tmxtiledmap_1_1->setSkewY(0);
     tmxtiledmap_1_1->setRotationSkewY(0);
     tmxtiledmap_1_1->setPosition(Vec2(494, 231));
@@ -144,6 +144,7 @@ Node* CreatorTest1_create()
     sprite_1_3->setRotationSkewY(0);
     sprite_1_3->setPosition(Vec2(263, 542));
     sprite_1_3->setRotationSkewX(0);
+    sprite_1_3->setCenterRectNormalized(Rect(0,0,1,1));
     scene_0_0->addChild(sprite_1_3);
     // New node
     auto sprite_1_4 = Sprite::create();
@@ -165,6 +166,7 @@ Node* CreatorTest1_create()
     sprite_1_4->setRotationSkewY(0);
     sprite_1_4->setPosition(Vec2(100, 407));
     sprite_1_4->setRotationSkewX(0);
+    sprite_1_4->setCenterRectNormalized(Rect(0,0,1,1));
     scene_0_0->addChild(sprite_1_4);
     // New node
     auto label_1_5 = Label::createWithSystemFont("This is a label", "arial", 40);
