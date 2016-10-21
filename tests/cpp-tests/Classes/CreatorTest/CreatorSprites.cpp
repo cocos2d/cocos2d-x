@@ -60,7 +60,7 @@ bool CreatorSprites_init()
     sf_default_scrollbar->setCenterRect(Rect(10,0,10,11));
     spriteFrameCache->addSpriteFrame(sf_default_scrollbar, "default_scrollbar");
     auto sf_grossinis_sister1_png = SpriteFrame::create("creator_assets/test_polygon.png", Rect(336, 1, 50, 116), false, Vec2(0, -11), Size(52, 139));
-    sf_grossinis_sister1_png->setCenterRect(Rect(0,58,25,58));
+    sf_grossinis_sister1_png->setCenterRect(Rect(7,71,34,39));
     spriteFrameCache->addSpriteFrame(sf_grossinis_sister1_png, "grossinis_sister1.png");
     auto sf_default_progressbar_bg = SpriteFrame::create("creator_assets/image/default_progressbar_bg.png", Rect(0, 0, 60, 15), false, Vec2(0, 0), Size(60, 15));
     sf_default_progressbar_bg->setCenterRect(Rect(5,0,50,15));

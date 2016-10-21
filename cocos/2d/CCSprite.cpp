@@ -522,10 +522,10 @@ void Sprite::setCenterRect(const cocos2d::Rect &rectInPoints)
     if (!_originalContentSize.equals(Size::ZERO))
     {
         Rect rect = rectInPoints;
-        const float x = rect.origin.x / _originalContentSize.width;
-        const float y = rect.origin.y / _originalContentSize.height;
-        const float w = rect.size.width / _originalContentSize.width;
-        const float h = rect.size.height / _originalContentSize.height;
+        const float x = rect.origin.x / _rect.size.width;
+        const float y = rect.origin.y / _rect.size.height;
+        const float w = rect.size.width / _rect.size.width;
+        const float h = rect.size.height / _rect.size.height;
         setCenterRectNormalized(Rect(x,y,w,h));
     }
 }
