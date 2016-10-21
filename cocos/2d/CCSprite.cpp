@@ -428,7 +428,7 @@ void Sprite::updatePoly()
     if (_numberOfSlices == 1) {
         setTextureCoords(_rect, &_quad);
         const Rect copyRect(0, 0, _rect.size.width * _strechFactor.x, _rect.size.height * _strechFactor.y);
-        setVertexCoords(copyRect, _originalContentSize, &_quad);
+        setVertexCoords(copyRect, _rect.size, &_quad);
         _polyInfo.setQuad(&_quad);
     } else {
         // in theory it can support 3 slices as well, but let's stick to 9 only
@@ -490,15 +490,25 @@ void Sprite::setCenterRectNormalized(const cocos2d::Rect &rect)
     if (!_centerRect.equals(rect)) {
         _centerRect = rect;
 
-        if (_numberOfSlices != 9) {
-            _numberOfSlices = 9;
-            _quads = (V3F_C4B_T2F_Quad*) malloc(sizeof(*_quads) * 9);
+        // convert it to 1-slice
+        if (rect.equals(Rect(0,0,1,1))) {
+            _numberOfSlices = 1;
+            free(_quads);
+            _quads = nullptr;
+        }
+        else
+        {
+            // convert it to 9-slice if it isn't already
+            if (_numberOfSlices != 9) {
+                _numberOfSlices = 9;
+                _quads = (V3F_C4B_T2F_Quad*) malloc(sizeof(*_quads) * 9);
 
-            for (int i=0; i<9; ++i) {
-                _quads[i].bl.colors = Color4B::WHITE;
-                _quads[i].br.colors = Color4B::WHITE;
-                _quads[i].tl.colors = Color4B::WHITE;
-                _quads[i].tr.colors = Color4B::WHITE;
+                for (int i=0; i<9; ++i) {
+                    _quads[i].bl.colors = Color4B::WHITE;
+                    _quads[i].br.colors = Color4B::WHITE;
+                    _quads[i].tl.colors = Color4B::WHITE;
+                    _quads[i].tr.colors = Color4B::WHITE;
+                }
             }
         }
 
@@ -507,15 +517,15 @@ void Sprite::setCenterRectNormalized(const cocos2d::Rect &rect)
     }
 }
 
-void Sprite::setCenterRect(const cocos2d::Rect &rectInPixels)
+void Sprite::setCenterRect(const cocos2d::Rect &rectInPoints)
 {
     if (!_originalContentSize.equals(Size::ZERO))
     {
-        Rect rect = CC_RECT_PIXELS_TO_POINTS(rectInPixels);
-        const float x = rect.origin.x / _originalContentSize.width;
-        const float y = rect.origin.y / _originalContentSize.height;
-        const float w = rect.size.width / _originalContentSize.width;
-        const float h = rect.size.height / _originalContentSize.height;
+        Rect rect = rectInPoints;
+        const float x = rect.origin.x / _rect.size.width;
+        const float y = rect.origin.y / _rect.size.height;
+        const float w = rect.size.width / _rect.size.width;
+        const float h = rect.size.height / _rect.size.height;
         setCenterRectNormalized(Rect(x,y,w,h));
     }
 }
@@ -1071,22 +1081,29 @@ void Sprite::setContentSize(const Size& size)
 void Sprite::updateStretchFactor()
 {
     const Size size = getContentSize();
-    if (_numberOfSlices == 9) {
-        const float x1 = _originalContentSize.width * _centerRect.origin.x;
-        const float x2 = _originalContentSize.width * _centerRect.size.width;
-        const float x3 = _originalContentSize.width * (1 - _centerRect.origin.x - _centerRect.size.width);
+    const float adjustedWidth = size.width - (_originalContentSize.width - _rect.size.width);
+    const float adjustedHeight = size.height - (_originalContentSize.height - _rect.size.height);
 
-        const float y1 = _originalContentSize.height * _centerRect.origin.y;
-        const float y2 = _originalContentSize.height * _centerRect.size.height;
-        const float y3 = _originalContentSize.height * (1 - _centerRect.origin.y - _centerRect.size.height);
-
-        const float x_factor = (size.width - x1 - x3) / x2;
-        const float y_factor = (size.height - y1 - y3) / y2;
+    if (_numberOfSlices == 1)
+    {
+        const float x_factor = adjustedWidth / _rect.size.width;
+        const float y_factor = adjustedHeight / _rect.size.height;
 
         _strechFactor = Vec2(x_factor, y_factor);
-    } else {
-        const float x_factor = size.width / _originalContentSize.width;
-        const float y_factor = size.height / _originalContentSize.height;
+    }
+    else
+    {
+        const float x1 = _rect.size.width * _centerRect.origin.x;
+        const float x2 = _rect.size.width * _centerRect.size.width;
+        const float x3 = _rect.size.width * (1 - _centerRect.origin.x - _centerRect.size.width);
+
+        const float y1 = _rect.size.height * _centerRect.origin.y;
+        const float y2 = _rect.size.height * _centerRect.size.height;
+        const float y3 = _rect.size.height * (1 - _centerRect.origin.y - _centerRect.size.height);
+
+        const float x_factor = (adjustedWidth - x1 - x3) / x2;
+        const float y_factor = (adjustedHeight - y1 - y3) / y2;
+
         _strechFactor = Vec2(x_factor, y_factor);
     }
 }
@@ -1225,13 +1242,17 @@ void Sprite::setSpriteFrame(SpriteFrame *spriteFrame)
     _rectRotated = spriteFrame->isRotated();
     setTextureRect(spriteFrame->getRect(), _rectRotated, spriteFrame->getOriginalSize());
     
-    if(spriteFrame->hasPolygonInfo())
+    if (spriteFrame->hasPolygonInfo())
     {
         _polyInfo = spriteFrame->getPolygonInfo();
     }
     if (spriteFrame->hasAnchorPoint())
     {
         setAnchorPoint(spriteFrame->getAnchorPoint());
+    }
+    if (spriteFrame->hasCenterRect())
+    {
+        setCenterRect(spriteFrame->getCenterRect());
     }
 }
 

@@ -263,7 +263,7 @@ public:
 
     /* setCenterRect
      *
-     * Like `setCenterRectNormalized`, but instead of being in normalized coordinates, it is in pixels coordinates
+     * Like `setCenterRectNormalized`, but instead of being in normalized coordinates, it is in points coordinates
      */
     virtual void setCenterRect(const Rect& rect);
 
@@ -655,7 +655,7 @@ protected:
 
     Rect _centerRect;                       /// Rectangle to implement "slice 9"
     int _numberOfSlices;                    /// how many sprite slices: 1 or 9
-    Vec2 _strechFactor;                     /// by how many pixels it should strech the sprite when in scale 9
+    Vec2 _strechFactor;                     /// strech factor to match the contentSize. for 1- and 9- slice sprites
     Size _originalContentSize;              /// original content size
 
 

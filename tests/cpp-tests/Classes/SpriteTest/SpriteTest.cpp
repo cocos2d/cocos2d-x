@@ -5422,9 +5422,9 @@ SpriteSlice9Test4::SpriteSlice9Test4()
 
         // enable slice 9, only in the first row
         if (i==2) {
-            s1->setCenterRect(Rect(6, 14, 2, 4));
-            s2->setCenterRect(Rect(6, 14, 2, 4));
-            s3->setCenterRect(Rect(6, 14, 2, 4));
+            s1->setCenterRect(CC_RECT_PIXELS_TO_POINTS(Rect(6, 14, 2, 4)));
+            s2->setCenterRect(CC_RECT_PIXELS_TO_POINTS(Rect(6, 14, 2, 4)));
+            s3->setCenterRect(CC_RECT_PIXELS_TO_POINTS(Rect(6, 14, 2, 4)));
         }
 
         // "anchor points"

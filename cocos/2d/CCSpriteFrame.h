@@ -133,6 +133,27 @@ public:
      */
     void setRect(const Rect& rect);
 
+    /** Get center rect of the frame.
+     *
+     * Useful to create 9-slice sprites
+     *
+     * @return The center rect of the sprite frame in points
+     */
+    const Rect& getCenterRect() const { return _centerRect; }
+
+    /** Set the center rect of the frame in points
+     *
+     * Useful to create 9-slice sprites
+     *
+     * @param rect The rect of the sprite.
+     */
+    void setCenterRect(const Rect& centerRect);
+
+    /** hasCenterRect
+     @return Whether or not it has a centerRect
+     */
+    bool hasCenterRect() const;
+
     /** Get offset of the frame.
      * 
      * @return The offset of the sprite frame, in pixels.
@@ -265,6 +286,7 @@ protected:
     Rect _rectInPixels;
     bool   _rotated;
     Rect _rect;
+    Rect _centerRect;
     Vec2 _offsetInPixels;
     Size _originalSizeInPixels;
     Texture2D *_texture;
