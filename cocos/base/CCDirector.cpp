@@ -445,14 +445,14 @@ void Director::initMatrixStack()
     {
         _modelViewMatrixStack.pop();
     }
-    
+
     _projectionMatrixStackList.clear();
-    
+
     while (!_textureMatrixStack.empty())
     {
         _textureMatrixStack.pop();
     }
-    
+
     _modelViewMatrixStack.push(Mat4::IDENTITY);
     std::stack<Mat4> projectionMatrixStack;
     projectionMatrixStack.push(Mat4::IDENTITY);
@@ -465,26 +465,13 @@ void Director::resetMatrixStack()
     initMatrixStack();
 }
 
-void Director::resetMatrixStack(unsigned int stackCount)
+void Director::initProjectionMatrixStack(unsigned int stackCount)
 {
-    while (!_modelViewMatrixStack.empty())
-    {
-        _modelViewMatrixStack.pop();
-    }
-    
     _projectionMatrixStackList.clear();
-    
-    while (!_textureMatrixStack.empty())
-    {
-        _textureMatrixStack.pop();
-    }
-    
-    _modelViewMatrixStack.push(Mat4::IDENTITY);
     std::stack<Mat4> projectionMatrixStack;
     projectionMatrixStack.push(Mat4::IDENTITY);
     for (unsigned int i = 0; i < stackCount; ++i)
         _projectionMatrixStackList.push_back(projectionMatrixStack);
-    _textureMatrixStack.push(Mat4::IDENTITY);
 }
 
 unsigned int Director::getProjectionMatrixStackSize()

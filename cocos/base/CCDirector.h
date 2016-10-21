@@ -497,7 +497,7 @@ public:
      * @js NA
      */
     void resetMatrixStack();
-    void resetMatrixStack(unsigned int stackCount);
+    void initProjectionMatrixStack(unsigned int stackCount);
     unsigned int getProjectionMatrixStackSize();
 
     /**
