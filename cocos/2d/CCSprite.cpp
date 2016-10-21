@@ -490,15 +490,25 @@ void Sprite::setCenterRectNormalized(const cocos2d::Rect &rect)
     if (!_centerRect.equals(rect)) {
         _centerRect = rect;
 
-        if (_numberOfSlices != 9) {
-            _numberOfSlices = 9;
-            _quads = (V3F_C4B_T2F_Quad*) malloc(sizeof(*_quads) * 9);
+        // convert it to 1-slice
+        if (rect.equals(Rect(0,0,1,1))) {
+            _numberOfSlices = 1;
+            free(_quads);
+            _quads = nullptr;
+        }
+        else
+        {
+            // convert it to 9-slice if it isn't already
+            if (_numberOfSlices != 9) {
+                _numberOfSlices = 9;
+                _quads = (V3F_C4B_T2F_Quad*) malloc(sizeof(*_quads) * 9);
 
-            for (int i=0; i<9; ++i) {
-                _quads[i].bl.colors = Color4B::WHITE;
-                _quads[i].br.colors = Color4B::WHITE;
-                _quads[i].tl.colors = Color4B::WHITE;
-                _quads[i].tr.colors = Color4B::WHITE;
+                for (int i=0; i<9; ++i) {
+                    _quads[i].bl.colors = Color4B::WHITE;
+                    _quads[i].br.colors = Color4B::WHITE;
+                    _quads[i].tl.colors = Color4B::WHITE;
+                    _quads[i].tr.colors = Color4B::WHITE;
+                }
             }
         }
 
@@ -507,11 +517,11 @@ void Sprite::setCenterRectNormalized(const cocos2d::Rect &rect)
     }
 }
 
-void Sprite::setCenterRect(const cocos2d::Rect &rectInPixels)
+void Sprite::setCenterRect(const cocos2d::Rect &rectInPoints)
 {
     if (!_originalContentSize.equals(Size::ZERO))
     {
-        Rect rect = CC_RECT_PIXELS_TO_POINTS(rectInPixels);
+        Rect rect = rectInPoints;
         const float x = rect.origin.x / _originalContentSize.width;
         const float y = rect.origin.y / _originalContentSize.height;
         const float w = rect.size.width / _originalContentSize.width;
@@ -1225,13 +1235,17 @@ void Sprite::setSpriteFrame(SpriteFrame *spriteFrame)
     _rectRotated = spriteFrame->isRotated();
     setTextureRect(spriteFrame->getRect(), _rectRotated, spriteFrame->getOriginalSize());
     
-    if(spriteFrame->hasPolygonInfo())
+    if (spriteFrame->hasPolygonInfo())
     {
         _polyInfo = spriteFrame->getPolygonInfo();
     }
     if (spriteFrame->hasAnchorPoint())
     {
         setAnchorPoint(spriteFrame->getAnchorPoint());
+    }
+    if (spriteFrame->hasCenterRect())
+    {
+        setCenterRect(spriteFrame->getCenterRect());
     }
 }
 
