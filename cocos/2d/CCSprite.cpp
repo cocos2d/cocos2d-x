@@ -428,7 +428,7 @@ void Sprite::updatePoly()
     if (_numberOfSlices == 1) {
         setTextureCoords(_rect, &_quad);
         const Rect copyRect(0, 0, _rect.size.width * _strechFactor.x, _rect.size.height * _strechFactor.y);
-        setVertexCoords(copyRect, _originalContentSize, &_quad);
+        setVertexCoords(copyRect, _rect.size, &_quad);
         _polyInfo.setQuad(&_quad);
     } else {
         // in theory it can support 3 slices as well, but let's stick to 9 only
@@ -1081,22 +1081,29 @@ void Sprite::setContentSize(const Size& size)
 void Sprite::updateStretchFactor()
 {
     const Size size = getContentSize();
-    if (_numberOfSlices == 9) {
-        const float x1 = _originalContentSize.width * _centerRect.origin.x;
-        const float x2 = _originalContentSize.width * _centerRect.size.width;
-        const float x3 = _originalContentSize.width * (1 - _centerRect.origin.x - _centerRect.size.width);
+    const float adjustedWidth = size.width - (_originalContentSize.width - _rect.size.width);
+    const float adjustedHeight = size.height - (_originalContentSize.height - _rect.size.height);
 
-        const float y1 = _originalContentSize.height * _centerRect.origin.y;
-        const float y2 = _originalContentSize.height * _centerRect.size.height;
-        const float y3 = _originalContentSize.height * (1 - _centerRect.origin.y - _centerRect.size.height);
-
-        const float x_factor = (size.width - x1 - x3) / x2;
-        const float y_factor = (size.height - y1 - y3) / y2;
+    if (_numberOfSlices == 1)
+    {
+        const float x_factor = adjustedWidth / _rect.size.width;
+        const float y_factor = adjustedHeight / _rect.size.height;
 
         _strechFactor = Vec2(x_factor, y_factor);
-    } else {
-        const float x_factor = size.width / _originalContentSize.width;
-        const float y_factor = size.height / _originalContentSize.height;
+    }
+    else
+    {
+        const float x1 = _rect.size.width * _centerRect.origin.x;
+        const float x2 = _rect.size.width * _centerRect.size.width;
+        const float x3 = _rect.size.width * (1 - _centerRect.origin.x - _centerRect.size.width);
+
+        const float y1 = _rect.size.height * _centerRect.origin.y;
+        const float y2 = _rect.size.height * _centerRect.size.height;
+        const float y3 = _rect.size.height * (1 - _centerRect.origin.y - _centerRect.size.height);
+
+        const float x_factor = (adjustedWidth - x1 - x3) / x2;
+        const float y_factor = (adjustedHeight - y1 - y3) / y2;
+
         _strechFactor = Vec2(x_factor, y_factor);
     }
 }
