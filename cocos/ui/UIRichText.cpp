@@ -1724,66 +1724,47 @@ void RichText::addNewLine()
     
 void RichText::formarRenderers()
 {
-    if (_ignoreSize)
-    {
-        float newContentSizeWidth = 0.0f;
-        float nextPosY = 0.0f;
-        for (auto& element: _elementRenders)
-        {
-            Vector<Node*>* row = element;
-            float nextPosX = 0.0f;
-            float maxY = 0.0f;
-            for (ssize_t j=0; j<row->size(); j++)
-            {
-                Node* l = row->at(j);
-                l->setAnchorPoint(Vec2::ZERO);
-                l->setPosition(nextPosX, nextPosY);
-                this->addProtectedChild(l, 1);
-                Size iSize = l->getContentSize();
-                newContentSizeWidth += iSize.width;
-                nextPosX += iSize.width;
-                maxY = MAX(maxY, iSize.height);
-            }
-            nextPosY -= maxY;
-        }
-        this->setContentSize(Size(newContentSizeWidth, -nextPosY));
-    }
-    else
-    {
-        float newContentSizeHeight = 0.0f;
-        float *maxHeights = new (std::nothrow) float[_elementRenders.size()];
+    float newContentSizeWidth = 0.0f;
+    float newContentSizeHeight = 0.0f;
+    float *maxHeights = new (std::nothrow) float[_elementRenders.size()];
+    
+    for (size_t i = 0; i < _elementRenders.size(); i++) {
+        if (0 < i)
+            newContentSizeHeight += _defaults.at(KEY_VERTICAL_SPACE).asFloat();
         
-        for (size_t i=0; i<_elementRenders.size(); i++)
-        {
-            Vector<Node*>* row = (_elementRenders[i]);
-            float maxHeight = 0.0f;
-            for (ssize_t j=0; j<row->size(); j++)
-            {
-                Node* l = row->at(j);
-                maxHeight = MAX(l->getContentSize().height, maxHeight);
-            }
-            maxHeights[i] = maxHeight;
-            newContentSizeHeight += maxHeights[i];
-        }
+        Vector<Node*>* row = _elementRenders[i];
+        float maxWidth = 0.0f;
+        float maxHeight = 0.0f;
         
-        float nextPosY = _customSize.height;
-        for (size_t i=0; i<_elementRenders.size(); i++)
-        {
-            Vector<Node*>* row = (_elementRenders[i]);
-            float nextPosX = 0.0f;
-            nextPosY -= (maxHeights[i] + _defaults.at(KEY_VERTICAL_SPACE).asFloat());
-            
-            for (ssize_t j=0; j<row->size(); j++)
-            {
-                Node* l = row->at(j);
-                l->setAnchorPoint(Vec2::ZERO);
-                l->setPosition(nextPosX, nextPosY);
-                this->addProtectedChild(l, 1);
-                nextPosX += l->getContentSize().width;
-            }
+        for (ssize_t j=0; j < row->size(); j++) {
+            Node* l = row->at(j);
+            Size contentSize = l->getContentSize();
+            maxWidth += contentSize.width;
+            maxHeight = MAX(maxHeight, contentSize.height);
         }
-        delete [] maxHeights;
+        newContentSizeWidth = MAX(newContentSizeWidth, maxWidth);
+        maxHeights[i] = maxHeight;
+        newContentSizeHeight += maxHeight;
     }
+    this->setContentSize(Size((_ignoreSize ? newContentSizeWidth : this->getContentSize().width),
+                              newContentSizeHeight));
+    
+    float nextPosY = newContentSizeHeight;
+    for (size_t i = 0; i < _elementRenders.size(); i++) {
+        Vector<Node*>* row = _elementRenders[i];
+        float nextPosX = 0.0f;
+        nextPosY -= maxHeights[i];
+        
+        for (ssize_t j = 0; j < row->size(); j++) {
+            Node* l = row->at(j);
+            l->setAnchorPoint(Vec2::ZERO);
+            l->setPosition(nextPosX, nextPosY);
+            this->addProtectedChild(l, 1);
+            nextPosX += l->getContentSize().width;
+        }
+        nextPosY -= _defaults.at(KEY_VERTICAL_SPACE).asFloat();
+    }
+    delete [] maxHeights;
     
     size_t length = _elementRenders.size();
     for (size_t i = 0; i<length; i++)
