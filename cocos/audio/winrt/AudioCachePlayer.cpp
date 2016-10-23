@@ -337,6 +337,22 @@ void AudioPlayer::setVolume(float volume)
     }
 }
 
+void AudioPlayer::setPitch(float pitch)
+{
+	CCASSERT("AudioPlayer::setPitch not implemented yet in cache player!");
+	// NOTE(stevetranby): Range for XAudio2 is (1/1,024 - 1,024/1)
+	// TODO: use XAUDIO2_MIN_FREQ_RATIO, XAUDIO2_MIN_FREQ_RATIO instead of hard code consts
+	auto ratio =  clampf(pitch, .0001f, 1000.f); // 1.f / 1024.f, 1024.f / 1.f);
+    if (_xaMasterVoice != nullptr){
+        if (FAILED(_xaMasterVoice->SetFrequencyRatio(pitch))) {
+            error();
+        }
+        else {
+            _pitch = pitch;
+        }
+    }
+}
+
 bool AudioPlayer::play2d(AudioCache* cache)
 {
     bool ret = false;

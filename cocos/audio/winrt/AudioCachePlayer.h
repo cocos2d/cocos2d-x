@@ -61,10 +61,10 @@ public:
 protected:
     void invokePlayCallbacks();
     void invokeLoadCallbacks();
-    
+
 private:
     AudioCache(const AudioCache&);
-    AudioCache& operator=(const AudioCache&); 
+    AudioCache& operator=(const AudioCache&);
 
 private:
     bool _retry;
@@ -97,13 +97,14 @@ private:
      float getCurrentTime();
      bool setTime(float time);
      void setVolume(float volume);
+     void setPitch(float pitch);
      bool play2d(AudioCache* cache);
      AudioPlayerState getState() { return _state; }
 
  protected:
      AudioPlayer(AudioPlayer&);
      AudioPlayer& operator=(AudioPlayer&);
-     
+
      void init();
      void free();
      void error();
@@ -140,7 +141,7 @@ private:
      bool _isStreaming;
      UINT64 _totalSamples;
      UINT64 _samplesOffset;
-     
+
      XAUDIO2_BUFFER _xaBuffer;
      IXAudio2SourceVoice *_xaSourceVoice;
      IXAudio2MasteringVoice *_xaMasterVoice;
@@ -152,7 +153,7 @@ private:
      AudioPlayerState _state;
      std::queue<AudioDataChunk> _cachedBufferQ;
      std::function<void(int, const std::string &)> _finishCallback;
-     
+
 
      friend class AudioEngineImpl;
  };

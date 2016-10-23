@@ -63,7 +63,7 @@ private:
     float _duration;
     int _audioID;
     bool _initSucceed;
-    
+
     std::function<void (int, const std::string &)> _finishCallback;
 
     friend class AudioEngineImpl;
@@ -78,6 +78,7 @@ public:
     bool init();
     int play2d(const std::string &fileFullPath ,bool loop ,float volume);
     void setVolume(int audioID,float volume);
+    void setPitch(int audioID,float pitch);
     void setLoop(int audioID, bool loop);
     void pause(int audioID);
     void resume(int audioID);
@@ -90,7 +91,7 @@ public:
 
     void uncache(const std::string& filePath){}
     void uncacheAll(){}
-    
+
     void update(float dt);
 
     void preload(const std::string& filePath, std::function<void(bool)> callback);
@@ -105,7 +106,7 @@ private:
     std::vector<int> _toRemoveAudioIDs;
 
     int currentAudioID;
-    
+
     bool _lazyInitLoop;
 };
 

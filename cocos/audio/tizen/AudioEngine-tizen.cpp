@@ -352,6 +352,13 @@ void AudioEngineImpl::setVolume(int audioID,float volume)
     player_set_volume(player._playerHandle, volume, volume);
 }
 
+void AudioEngineImpl::setPitch(int audioID, float pitch)
+{
+    CCASSERT("Setting pitch is not supported on Tizen!");
+    //auto& player = _audioPlayers[audioID];
+    //player_set_pitch(player._playerHandle, pitch, pitch);
+}
+
 void AudioEngineImpl::setLoop(int audioID, bool loop)
 {
     auto& player = _audioPlayers[audioID];
