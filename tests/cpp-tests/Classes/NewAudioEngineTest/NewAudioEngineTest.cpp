@@ -528,7 +528,7 @@ bool AudioProfileTest::init()
         
         auto playItem = TextButton::create(text, [&](TextButton* button){
             int index = button->getTag();
-            auto id = AudioEngine::play2d(_files[index], false, 1.0f, 1.f, &_audioProfile);
+            auto id = AudioEngine::play2d(_files[index], false, 1.0f, &_audioProfile);
             if(id != AudioEngine::INVALID_AUDIO_ID){
                 _time = _minDelay;
                 _audioCount += 1;

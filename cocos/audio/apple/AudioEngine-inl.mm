@@ -322,7 +322,6 @@ int AudioEngineImpl::play2d(const std::string &filePath ,bool loop ,float volume
 
     player->_alSource = alSource;
     player->_loop = loop;
-    player->_pitch = pitch;
     player->_volume = volume;
 
     auto audioCache = preload(filePath, nullptr);
