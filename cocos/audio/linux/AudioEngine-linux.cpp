@@ -87,7 +87,6 @@ int AudioEngineImpl::play2d(const std::string &fileFullPath, bool loop, float vo
         mapChannelInfo[id].loop=loop;
         mapChannelInfo[id].channel->setPaused(true);
         mapChannelInfo[id].volume = volume;
-        mapChannelInfo[id].pitch = pitch;
         AudioEngine::_audioIDInfoMap[id].state = AudioEngine::AudioState::PAUSED;
         resume(id);
     }
