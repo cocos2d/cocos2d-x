@@ -239,6 +239,8 @@ void BillBoardTest::addNewBillBoradWithCoords(Vec3 p)
     {
         auto billborad = BillBoard::create(imgs[(unsigned int)(CCRANDOM_0_1() * 1 + 0.5)]);
         billborad->setScale(0.5f);
+        //billborad->setFlippedX(true);
+        billborad->setRotation3D(Vec3(0,180,0));
         billborad->setPosition3D(Vec3(p.x, p.y,  -150.0f + 30 * i));
         billborad->setOpacity(CCRANDOM_0_1() * 128 + 128);
         
