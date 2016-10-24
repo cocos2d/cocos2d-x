@@ -72,6 +72,7 @@ CocosNodeTests::CocosNodeTests()
     ADD_TEST_CASE(NodeNormalizedPositionBugTest);
     ADD_TEST_CASE(NodeNameTest);
     ADD_TEST_CASE(Issue16100Test);
+    ADD_TEST_CASE(Issue16735Test);
 }
 
 TestCocosNodeDemo::TestCocosNodeDemo(void)
@@ -372,7 +373,7 @@ StressTest2::StressTest2()
     fire->setPosition( Vec2(80, s.height/2-50) );
     
     auto copy_seq3 = seq3->clone();
-    
+
     fire->runAction( RepeatForever::create(copy_seq3) );
     sublayer->addChild(fire, 2);
             
@@ -1512,3 +1513,47 @@ std::string Issue16100Test::subtitle() const
     return "Sprite should appear on the screen";
 }
 
+//------------------------------------------------------------------
+//
+// Issue16735Test
+//
+//------------------------------------------------------------------
+void Issue16735Test::onEnter()
+{
+    TestCocosNodeDemo::onEnter();
+
+    auto visibleSize = Director::getInstance()->getVisibleSize();
+    auto origin = Director::getInstance()->getVisibleOrigin();
+
+    auto sprite1 = Sprite::create("Images/grossini.png");
+    sprite1->setPosition(Vec2(visibleSize / 2) + origin);
+    addChild(sprite1);
+
+    auto sprite2 = Sprite::create("Images/grossini.png");
+    sprite2->setPosition(Vec2(visibleSize / 2) + origin);
+    sprite2->setSkewX(30);
+    sprite2->setScale(2);
+    sprite2->setRotation(30);
+    addChild(sprite2);
+
+    auto d = DrawNode::create();
+    d->drawLine(Vec2(origin.x, origin.y + visibleSize.height/2), Vec2(origin.x + visibleSize.width, origin.y + visibleSize.height/2), Color4F::RED);
+    d->drawLine(Vec2(origin.x + visibleSize.width/2, origin.y), Vec2(origin.x + visibleSize.width/2, origin.y + visibleSize.height), Color4F::RED);
+    
+    addChild(d);
+}
+
+void Issue16735Test::onExit()
+{
+    TestCocosNodeDemo::onExit();
+}
+
+std::string Issue16735Test::title() const
+{
+    return "Issue 16735";
+}
+
+std::string Issue16735Test::subtitle() const
+{
+    return "Sprite should appear on the center of screen";
+}
