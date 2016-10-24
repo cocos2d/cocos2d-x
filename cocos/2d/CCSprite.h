@@ -251,13 +251,13 @@ public:
      * setCenterRectNormalized
      *
      * Useful to implement "9 sliced" sprites.
-     * The default value is (0,0) - (1,1), which means that only one "slice" will be used: From bottom-left (0,0) to top-right (1,1).
-     * If the value is different than (0,0), (1,1), then sprite will be sliced into a 3 x 3 grid. The four corners of this grid are applied without
+     * The default value is (0,0) - (1,1), which means that only one "slice" will be used: From top-left (0,0) to bottom-right (1,1).
+     * If the value is different than (0,0), (1,1), then the sprite will be sliced into a 3 x 3 grid. The four corners of this grid are applied without
      * performing any scaling. The upper- and lower-middle parts are scaled horizontally, and the left- and right-middle parts are scaled vertically.
      * The center is scaled in both directions.
-     * The scaling will be based the Sprite's contentSize.
+     * Important: The scaling is based the Sprite's trimmed size.
      *
-     * Limitations: Does not work when the sprite is a child of `SpriteBatchNode`.
+     * Limitations: Does not work when the sprite is part of `SpriteBatchNode`.
      */
     virtual void setCenterRectNormalized(const Rect& rect);
 
