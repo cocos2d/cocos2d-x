@@ -868,4 +868,13 @@ private:
     float _elapsed;
 };
 
+class SpriteSlice9Test7 : public SpriteTestDemo
+{
+public:
+    CREATE_FUNC(SpriteSlice9Test7);
+    SpriteSlice9Test7();
+    virtual std::string title() const override { return "Slice 9 Test #7"; };
+    virtual std::string subtitle() const override { return "Testing offset"; }
+};
+
 #endif

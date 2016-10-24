@@ -485,8 +485,12 @@ void Sprite::updatePoly()
     }
 }
 
-void Sprite::setCenterRectNormalized(const cocos2d::Rect &rect)
+void Sprite::setCenterRectNormalized(const cocos2d::Rect &rectTopLeft)
 {
+    // FIMXE: Rect is has origin on top-left (like text coordinate).
+    // but all the logic has been done using bottom-left as origin. So it is easier to invert Y
+    // here, than in the rest of the places... but it is not as clean.
+    Rect rect(rectTopLeft.origin.x, 1 - rectTopLeft.origin.y - rectTopLeft.size.height, rectTopLeft.size.width, rectTopLeft.size.height);
     if (!_centerRect.equals(rect)) {
         _centerRect = rect;
 
