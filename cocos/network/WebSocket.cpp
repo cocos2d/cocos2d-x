@@ -439,7 +439,7 @@ bool WebSocket::init(const Delegate& delegate,
     else
     {
         char* name = new (std::nothrow) char[20];
-        strcpy(name, "default-protocol");
+        strcpy(name, "");
         _wsProtocols[0].name = name;
         _wsProtocols[0].callback = WebSocketCallbackWrapper::onSocketCallback;
         _wsProtocols[0].rx_buffer_size = WS_RX_BUFFER_SIZE;
@@ -635,7 +635,7 @@ void WebSocket::onSubThreadStarted()
 
         _wsInstance = lws_client_connect(_wsContext, _host.c_str(), _port, _SSLConnection,
                                              _path.c_str(), ads_port.c_str(), ads_port.c_str(),
-                                             name.c_str(), -1);
+                                         (name.size() > 0 ? name.c_str() : NULL), -1);
 
         if (nullptr == _wsInstance)
         {
