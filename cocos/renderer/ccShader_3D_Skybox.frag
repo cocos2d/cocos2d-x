@@ -1,9 +1,9 @@
 const char* cc3D_Skybox_frag = STRINGIFY(
-\n#ifdef GL_ES\n
+#ifdef GL_ES
 varying mediump vec3        v_reflect;
-\n#else\n
+#else
 varying vec3        v_reflect;
-\n#endif\n
+#endif
 uniform samplerCube u_Env;
 uniform vec4 u_color;
 
