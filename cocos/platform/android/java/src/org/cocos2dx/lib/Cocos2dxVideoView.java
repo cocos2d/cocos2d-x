@@ -109,8 +109,10 @@ public class Cocos2dxVideoView extends SurfaceView implements MediaPlayerControl
             Log.i(TAG, ""+mViewWidth+ ":" +mViewHeight);
         }
         else {
-            setMeasuredDimension(mVisibleWidth, mVisibleHeight);
-            Log.i(TAG, ""+mVisibleWidth+ ":" +mVisibleHeight);
+            int usedWidth = getDefaultSize(mFullScreenWidth, mVisibleWidth);
+            int usedHeight = getDefaultSize(mFullScreenHeight, mVisibleHeight);
+            setMeasuredDimension(usedWidth, usedHeight);
+            Log.i(TAG, ""+usedWidth+ ":" +usedHeight);
         }
         
     }
