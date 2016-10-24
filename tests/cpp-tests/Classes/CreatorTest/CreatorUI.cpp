@@ -19,12 +19,12 @@ bool CreatorUI_init()
 
     // Files from .png
     auto sf_grossinis_sister2_png = SpriteFrame::create("creator_assets/test_polygon.png", Rect(279, 26, 55, 130), false, Vec2(0, -2), Size(56, 138));
-    sf_grossinis_sister2_png->setCenterRect(Rect(17,36,21,32));
+    sf_grossinis_sister2_png->setCenterRect(Rect(17,62,21,32));
     spriteFrameCache->addSpriteFrame(sf_grossinis_sister2_png, "grossinis_sister2.png");
     auto sf_test_polygon = SpriteFrame::create("creator_assets/test_polygon.png", Rect(4, 2, 380, 152), false, Vec2(0.5, 0.5), Size(387, 157));
     spriteFrameCache->addSpriteFrame(sf_test_polygon, "test_polygon");
     auto sf_default_btn_normal = SpriteFrame::create("creator_assets/image/default_btn_normal.png", Rect(0, 0, 40, 40), false, Vec2(0, 0), Size(40, 40));
-    sf_default_btn_normal->setCenterRect(Rect(3,7,34,30));
+    sf_default_btn_normal->setCenterRect(Rect(3,3,34,30));
     spriteFrameCache->addSpriteFrame(sf_default_btn_normal, "default_btn_normal");
     auto sf_default_scrollbar_bg = SpriteFrame::create("creator_assets/image/default_scrollbar_bg.png", Rect(0, 0, 30, 15), false, Vec2(0, 0), Size(30, 15));
     sf_default_scrollbar_bg->setCenterRect(Rect(10,0,10,15));
@@ -40,13 +40,13 @@ bool CreatorUI_init()
     auto sf_default_sprite = SpriteFrame::create("creator_assets/image/default_sprite.png", Rect(0, 2, 40, 36), false, Vec2(0, 0), Size(40, 40));
     spriteFrameCache->addSpriteFrame(sf_default_sprite, "default_sprite");
     auto sf_default_btn_disabled = SpriteFrame::create("creator_assets/image/default_btn_disabled.png", Rect(0, 0, 40, 40), false, Vec2(0, 0), Size(40, 40));
-    sf_default_btn_disabled->setCenterRect(Rect(4,8,32,28));
+    sf_default_btn_disabled->setCenterRect(Rect(4,4,32,28));
     spriteFrameCache->addSpriteFrame(sf_default_btn_disabled, "default_btn_disabled");
     auto sf_default_btn_pressed = SpriteFrame::create("creator_assets/image/default_btn_pressed.png", Rect(0, 0, 40, 40), false, Vec2(0, 0), Size(40, 40));
     sf_default_btn_pressed->setCenterRect(Rect(3,4,34,32));
     spriteFrameCache->addSpriteFrame(sf_default_btn_pressed, "default_btn_pressed");
     auto sf_default_scrollbar_vertical_bg = SpriteFrame::create("creator_assets/image/default_scrollbar_vertical_bg.png", Rect(0, 0, 15, 30), false, Vec2(0, 0), Size(15, 30));
-    sf_default_scrollbar_vertical_bg->setCenterRect(Rect(0,8,15,15));
+    sf_default_scrollbar_vertical_bg->setCenterRect(Rect(0,7,15,15));
     spriteFrameCache->addSpriteFrame(sf_default_scrollbar_vertical_bg, "default_scrollbar_vertical_bg");
     auto sf_default_progressbar = SpriteFrame::create("creator_assets/image/default_progressbar.png", Rect(0, 0, 30, 15), false, Vec2(0, 0), Size(30, 15));
     sf_default_progressbar->setCenterRect(Rect(5,0,20,15));
@@ -61,7 +61,7 @@ bool CreatorUI_init()
     sf_default_scrollbar->setCenterRect(Rect(10,0,10,11));
     spriteFrameCache->addSpriteFrame(sf_default_scrollbar, "default_scrollbar");
     auto sf_grossinis_sister1_png = SpriteFrame::create("creator_assets/test_polygon.png", Rect(336, 1, 50, 116), false, Vec2(0, -11), Size(52, 139));
-    sf_grossinis_sister1_png->setCenterRect(Rect(7,71,34,39));
+    sf_grossinis_sister1_png->setCenterRect(Rect(7,6,34,39));
     spriteFrameCache->addSpriteFrame(sf_grossinis_sister1_png, "grossinis_sister1.png");
     auto sf_default_progressbar_bg = SpriteFrame::create("creator_assets/image/default_progressbar_bg.png", Rect(0, 0, 60, 15), false, Vec2(0, 0), Size(60, 15));
     sf_default_progressbar_bg->setCenterRect(Rect(5,0,50,15));
