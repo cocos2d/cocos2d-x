@@ -1,0 +1,15 @@
+{
+    "copy_resources": [
+        {
+            "from": "../Resources",
+            "to": "",
+            "exclude": [
+                ".gitignore",
+                ".Ds_Store"
+            ]
+        }
+    ],
+    "depend_projs": [
+        "../../../build/tizen"
+    ]
+}
