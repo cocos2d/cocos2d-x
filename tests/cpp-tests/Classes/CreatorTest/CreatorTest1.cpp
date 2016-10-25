@@ -2,6 +2,7 @@
 ////// DO     NOT     EDIT //////
 
 #include <ui/CocosGUI.h>
+#include "creator_utils.h"
 
 USING_NS_CC;
 
@@ -139,7 +140,7 @@ Node* CreatorTest1_create()
     sprite_1_3->setCascadeOpacityEnabled(true);
     sprite_1_3->setSkewX(0);
     sprite_1_3->setTag(-1);
-    sprite_1_3->setContentSize(Size(51, 109));
+    sprite_1_3->setContentSize(Size(85, 121));
     sprite_1_3->setSkewY(0);
     sprite_1_3->setRotationSkewY(0);
     sprite_1_3->setPosition(Vec2(263, 542));
@@ -161,7 +162,7 @@ Node* CreatorTest1_create()
     sprite_1_4->setCascadeOpacityEnabled(true);
     sprite_1_4->setSkewX(0);
     sprite_1_4->setTag(-1);
-    sprite_1_4->setContentSize(Size(51, 109));
+    sprite_1_4->setContentSize(Size(85, 121));
     sprite_1_4->setSkewY(0);
     sprite_1_4->setRotationSkewY(0);
     sprite_1_4->setPosition(Vec2(100, 407));

@@ -420,6 +420,7 @@ void Sprite::setTextureRect(const Rect& rect, bool rotated, const Size& untrimme
     _originalContentSize = untrimmedSize;
 
     setVertexRect(rect);
+    updateStretchFactor();
     updatePoly();
 }
 
@@ -1295,10 +1296,10 @@ SpriteFrame* Sprite::getSpriteFrame() const
         return this->_spriteFrame;
     }
     return SpriteFrame::createWithTexture(_texture,
-                                           CC_RECT_POINTS_TO_PIXELS(_rect),
-                                           _rectRotated,
-                                           CC_POINT_POINTS_TO_PIXELS(_unflippedOffsetPositionFromCenter),
-                                           CC_SIZE_POINTS_TO_PIXELS(_contentSize));
+                                          CC_RECT_POINTS_TO_PIXELS(_rect),
+                                          _rectRotated,
+                                          CC_POINT_POINTS_TO_PIXELS(_unflippedOffsetPositionFromCenter),
+                                          CC_SIZE_POINTS_TO_PIXELS(_originalContentSize));
 }
 
 SpriteBatchNode* Sprite::getBatchNode() const

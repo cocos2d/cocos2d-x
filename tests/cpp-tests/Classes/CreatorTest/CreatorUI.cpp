@@ -2,6 +2,7 @@
 ////// DO     NOT     EDIT //////
 
 #include <ui/CocosGUI.h>
+#include "creator_utils.h"
 
 USING_NS_CC;
 

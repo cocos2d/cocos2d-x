@@ -131,6 +131,7 @@ SpriteTests::SpriteTests()
     ADD_TEST_CASE(SpriteSlice9Test4);
     ADD_TEST_CASE(SpriteSlice9Test5);
     ADD_TEST_CASE(SpriteSlice9Test6);
+    ADD_TEST_CASE(SpriteGetSpriteFrameTest);
 };
 
 //------------------------------------------------------------------
@@ -5589,5 +5590,42 @@ void SpriteSlice9Test6::update(float dt)
         Rect rect((1-x)/2, (1-y)/2, x, y);
         _sprites[i]->setCenterRectNormalized(rect);
     }
+}
+
+//------------------------------------------------------------------
+//
+// Sprite::getSpriteFrame() test
+//
+//------------------------------------------------------------------
+SpriteGetSpriteFrameTest::SpriteGetSpriteFrameTest()
+{
+    Size s = Director::getInstance()->getVisibleSize();
+
+    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("animations/grossini_family.plist");
+    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("animations/grossini.plist");
+
+
+    //Create reference sprite that's rotating based on there anchor point
+    auto s1 = Sprite::createWithSpriteFrameName("grossini.png");
+    addChild(s1);
+    s1->getTexture()->setAliasTexParameters();
+    s1->setPosition(s.width/2-s.width/3, s.height/2);
+    s1->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+    s1->setContentSize(s1->getContentSize()*2);
+    s1->setSpriteFrame(s1->getSpriteFrame());
+
+    //Create reference sprite that's rotating based on there anchor point
+    auto s2 = Sprite::createWithSpriteFrameName("grossini.png");
+    addChild(s2);
+    s2->setPosition(s.width*2/4, s.height/2);
+    s2->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+
+    //Create reference sprite that's rotating based on there anchor point
+    auto s3 = Sprite::createWithSpriteFrameName("grossini.png");
+    addChild(s3);
+    s3->setTextureRect(CC_RECT_PIXELS_TO_POINTS(Rect(128,0,64,128)));
+    s3->setPosition(s.width/2+s.width/3, s.height/2);
+    s3->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+    s3->setSpriteFrame(s3->getSpriteFrame());
 }
 

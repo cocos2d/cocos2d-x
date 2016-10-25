@@ -868,4 +868,13 @@ private:
     float _elapsed;
 };
 
+class SpriteGetSpriteFrameTest : public SpriteTestDemo
+{
+public:
+    CREATE_FUNC(SpriteGetSpriteFrameTest);
+    SpriteGetSpriteFrameTest();
+    virtual std::string title() const override { return "Sprite::getSpriteFrame(*)"; };
+    virtual std::string subtitle() const override { return "setting after getting should be the same"; }
+};
+
 #endif

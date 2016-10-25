@@ -1189,6 +1189,9 @@
 		507B44361C336EFA0067B53E /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ABCA35418CD9A820087CE3A /* OpenGL.framework */; };
 		507B44471C3370050067B53E /* main.js in Resources */ = {isa = PBXBuildFile; fileRef = 507B44451C3370050067B53E /* main.js */; };
 		507B44481C3370050067B53E /* project.json in Resources */ = {isa = PBXBuildFile; fileRef = 507B44461C3370050067B53E /* project.json */; };
+		5085F71F1DBED88D00104AB2 /* creator_utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5085F71D1DBED88D00104AB2 /* creator_utils.cpp */; };
+		5085F7201DBED88D00104AB2 /* creator_utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5085F71D1DBED88D00104AB2 /* creator_utils.cpp */; };
+		5085F7211DBED88D00104AB2 /* creator_utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5085F71D1DBED88D00104AB2 /* creator_utils.cpp */; };
 		50921EAF1B746D5F00C085CC /* DownloaderTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50921EAD1B746D5F00C085CC /* DownloaderTest.cpp */; };
 		50921EB01B746D5F00C085CC /* DownloaderTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50921EAD1B746D5F00C085CC /* DownloaderTest.cpp */; };
 		50ACD8951DA5D1A800A5706E /* CreatorLabels.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ACD8911DA5D1A800A5706E /* CreatorLabels.cpp */; };
@@ -2511,6 +2514,8 @@
 		507B44431C336EFA0067B53E /* js-memory-gc-tests Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "js-memory-gc-tests Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		507B44451C3370050067B53E /* main.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = main.js; path = "../tests/js-memory-gc-tests/main.js"; sourceTree = "<group>"; };
 		507B44461C3370050067B53E /* project.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = project.json; path = "../tests/js-memory-gc-tests/project.json"; sourceTree = "<group>"; };
+		5085F71D1DBED88D00104AB2 /* creator_utils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = creator_utils.cpp; sourceTree = "<group>"; };
+		5085F71E1DBED88D00104AB2 /* creator_utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = creator_utils.h; sourceTree = "<group>"; };
 		50921EAD1B746D5F00C085CC /* DownloaderTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DownloaderTest.cpp; sourceTree = "<group>"; };
 		50921EAE1B746D5F00C085CC /* DownloaderTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownloaderTest.h; sourceTree = "<group>"; };
 		50ACD8911DA5D1A800A5706E /* CreatorLabels.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CreatorLabels.cpp; sourceTree = "<group>"; };
@@ -5081,6 +5086,8 @@
 		503512A21D99F5A800F89EA9 /* CreatorTest */ = {
 			isa = PBXGroup;
 			children = (
+				5085F71D1DBED88D00104AB2 /* creator_utils.cpp */,
+				5085F71E1DBED88D00104AB2 /* creator_utils.h */,
 				50ACD8A51DA8607A00A5706E /* CreatorUI.cpp */,
 				50ACD8A61DA8607A00A5706E /* CreatorUI.h */,
 				50ACD89B1DA6062A00A5706E /* CreatorSprites.cpp */,
@@ -6958,6 +6965,7 @@
 				1AC35BE318CECF0C00F37B72 /* CCControlColourPickerTest.cpp in Sources */,
 				29080DB1191B595E0066F8DF /* UILayoutTest.cpp in Sources */,
 				1AC35B2318CECF0C00F37B72 /* ActionsEaseTest.cpp in Sources */,
+				5085F71F1DBED88D00104AB2 /* creator_utils.cpp in Sources */,
 				1AC35C1918CECF0C00F37B72 /* MutiTouchTest.cpp in Sources */,
 				29080DBD191B595E0066F8DF /* UIPageViewTest.cpp in Sources */,
 				1AC35B2918CECF0C00F37B72 /* AppDelegate.cpp in Sources */,
@@ -7250,6 +7258,7 @@
 				507B41DC1C31BEA60067B53E /* UITextTest.cpp in Sources */,
 				507B41DE1C31BEA60067B53E /* TableViewTestScene.cpp in Sources */,
 				507B41DF1C31BEA60067B53E /* ShaderTest2.cpp in Sources */,
+				5085F7211DBED88D00104AB2 /* creator_utils.cpp in Sources */,
 				507B41E01C31BEA60067B53E /* UnitTest.cpp in Sources */,
 				507B41E21C31BEA60067B53E /* Bug-458.cpp in Sources */,
 				507B41E31C31BEA60067B53E /* UIScene.cpp in Sources */,
@@ -7451,6 +7460,7 @@
 				1AC35C8618CECF1400F37B72 /* RootViewController.mm in Sources */,
 				1AC35C5C18CECF0C00F37B72 /* TileMapTest.cpp in Sources */,
 				29080DC2191B595E0066F8DF /* UIRichTextTest.cpp in Sources */,
+				5085F7201DBED88D00104AB2 /* creator_utils.cpp in Sources */,
 				3EA0FB72191C844400B170C8 /* UIVideoPlayerTest.cpp in Sources */,
 				1AC35B4818CECF0C00F37B72 /* Bug-899.cpp in Sources */,
 				1AC35C1C18CECF0C00F37B72 /* NewEventDispatcherTest.cpp in Sources */,

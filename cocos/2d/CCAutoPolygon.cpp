@@ -114,7 +114,7 @@ void PolygonInfo::setQuad(V3F_C4B_T2F_Quad *quad)
 
 void PolygonInfo::setQuads(V3F_C4B_T2F_Quad *quad, int numberOfQuads)
 {
-    CCASSERT(numberOfQuads > 1 && numberOfQuads <= 9, "Invalid number of Quads");
+    CCASSERT(numberOfQuads >= 1 && numberOfQuads <= 9, "Invalid number of Quads");
 
     releaseVertsAndIndices();
     isVertsOwner = false;
