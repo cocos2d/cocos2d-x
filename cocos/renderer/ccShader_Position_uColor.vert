@@ -29,11 +29,11 @@ attribute vec4 a_position;
 uniform vec4 u_color;
 uniform float u_pointSize;
 
-\n#ifdef GL_ES\n
+#ifdef GL_ES
 varying lowp vec4 v_fragmentColor;
-\n#else\n
+#else
 varying vec4 v_fragmentColor;
-\n#endif\n
+#endif
 
 void main()
 {

@@ -21,7 +21,7 @@
 
 const char* ccPositionColorLengthTexture_vert = STRINGIFY(
 
-\n#ifdef GL_ES\n
+#ifdef GL_ES
 attribute mediump vec4 a_position;
 attribute mediump vec2 a_texcoord;
 attribute mediump vec4 a_color;
@@ -29,7 +29,7 @@ attribute mediump vec4 a_color;
 varying mediump vec4 v_color;
 varying mediump vec2 v_texcoord;
 
-\n#else\n
+#else
 
 attribute vec4 a_position;
 attribute vec2 a_texcoord;
@@ -38,7 +38,7 @@ attribute vec4 a_color;
 varying vec4 v_color;
 varying vec2 v_texcoord;
 
-\n#endif\n
+#endif
 
 void main()
 {

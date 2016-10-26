@@ -29,11 +29,11 @@ attribute vec4 a_color;
 
 attribute vec2 a_texCoord;
 
-\n#ifdef GL_ES\n
+#ifdef GL_ES
 varying lowp vec4 v_fragmentColor;
-\n#else\n
+#else
 varying vec4 v_fragmentColor;
-\n#endif\n
+#endif
 
 void main()
 {
