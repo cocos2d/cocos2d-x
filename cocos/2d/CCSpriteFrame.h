@@ -141,11 +141,17 @@ public:
      */
     const Rect& getCenterRect() const { return _centerRect; }
 
-    /** Set the center rect of the frame in points
+     /**
+     * setCenterRect
      *
-     * Useful to create 9-slice sprites
+     * Useful to implement "9 sliced" sprites.
+     * The sprite will be sliced into a 3 x 3 grid. The four corners of this grid are applied without
+     * performing any scaling. The upper- and lower-middle parts are scaled horizontally, and the left- and right-middle parts are scaled vertically.
+     * The center is scaled in both directions.
+     * Important: The scaling is based the Sprite's trimmed size.
      *
-     * @param rect The rect of the sprite.
+     * Limitations: Does not work when the sprite is part of `SpriteBatchNode`.
+     * @param centerRect the Rect in points
      */
     void setCenterRect(const Rect& centerRect);
 

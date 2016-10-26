@@ -117,13 +117,20 @@ public:
      * @return sum of all triangle area size
      */
     float getArea() const;
-    
-    Rect rect;
-    std::string filename;
+
+    const Rect& getRect() const { return _rect; }
+    void setRect(const Rect& rect) { _rect = rect; }
+    const std::string& getFilename() const { return _filename; }
+    void setFilename(const std::string& filename ) { _filename = filename; }
+
+    // FIXME: this should be a property, not a public ivar
     TrianglesCommand::Triangles triangles;
+
 protected:
-    bool isVertsOwner;
-    
+    bool _isVertsOwner;
+    Rect _rect;
+    std::string _filename;
+
 private:
     void releaseVertsAndIndices();
 };

@@ -245,11 +245,11 @@ bool Sprite::initWithPolygon(const cocos2d::PolygonInfo &info)
 {
     bool ret = false;
     
-    Texture2D *texture = _director->getTextureCache()->addImage(info.filename);
+    Texture2D *texture = _director->getTextureCache()->addImage(info.getFilename());
     if(texture && initWithTexture(texture))
     {
         _polyInfo = info;
-        Node::setContentSize(_polyInfo.rect.size / _director->getContentScaleFactor());
+        Node::setContentSize(_polyInfo.getRect().size / _director->getContentScaleFactor());
         ret = true;
     }
     
@@ -801,7 +801,7 @@ void Sprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
             _texture, 
             getGLProgramState(), 
             _blendFunc, 
-            _polyInfo.triangles, 
+            _polyInfo.triangles,
             transform, 
             flags);
 
