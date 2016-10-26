@@ -41,11 +41,14 @@ using namespace cocos2d::ui;
 
 Scale9Sprite::Scale9Sprite()
 : _previousCenterRect(Rect(0,0,1,1))
+, _brightState(State::NORMAL)
+, _renderingType(RenderingType::SLICE)
+, _insetLeft(0)
+, _insetTop(0)
+, _insetRight(1)
+, _insetBottom(1)
+, _isPatch9(false)
 {
-#if CC_SPRITE_DEBUG_DRAW
-    _debugDrawNode = DrawNode::create();
-    addChild(_debugDrawNode);
-#endif //CC_SPRITE_DEBUG_DRAW
 }
 
 Scale9Sprite::~Scale9Sprite()
@@ -116,14 +119,31 @@ bool Scale9Sprite::init(Sprite* sprite,
                         const Rect& capInsets)
 {
     bool ret = false;
+
+    Rect actualCapInsets = capInsets;
+
     if (sprite) {
         auto texture = sprite->getTexture();
+
+        if (texture->isContain9PatchInfo())
+        {
+            auto& parsedCapInset = texture->getSpriteFrameCapInset(sprite->getSpriteFrame());
+            if(!parsedCapInset.equals(Rect::ZERO))
+            {
+                _isPatch9 = true;
+
+                // override capInsets?
+                if(capInsets.equals(Rect::ZERO))
+                    actualCapInsets = parsedCapInset;
+            }
+        }
+
         auto spriteFrame = SpriteFrame::createWithTexture(texture, rect, rotated, offset, originalSize);
         ret = initWithSpriteFrame(spriteFrame);
     } else {
         ret = initWithTexture(nullptr, rect, rotated);
     }
-    setCapInsets(capInsets);
+    setCapInsets(actualCapInsets);
     return ret;
 
 }
@@ -317,7 +337,21 @@ Scale9Sprite::State Scale9Sprite::getState() const
 void Scale9Sprite::setState(Scale9Sprite::State state)
 {
     if (_brightState != state) {
-        // FIXME
+        _brightState = state;
+
+        GLProgramState *glState = nullptr;
+        switch (state)
+        {
+            case State::NORMAL:
+                glState = GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP, getTexture());
+                break;
+            case State::GRAY:
+                glState = GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_GRAYSCALE, getTexture());
+            default:
+                break;
+        }
+
+        setGLProgramState(glState);
         _brightState = state;
     }
 }
@@ -335,7 +369,6 @@ void Scale9Sprite::setPreferredSize(const Size& preferredSize)
 
 void Scale9Sprite::setCapInsets(const Rect& capInsets)
 {
-    _capInsetsInternal = capInsets;
     setCenterRect(capInsets);
 }
 
@@ -366,40 +399,40 @@ void Scale9Sprite::setInsetBottom(float insetBottom)
 void Scale9Sprite::updateCapInset()
 {
     Rect centerRect(_insetLeft, _insetTop, _insetRight-_insetLeft, _insetBottom-_insetTop);
-    setCenterRect(centerRect);
+    setCenterRectNormalized(centerRect);
 }
 
-Size Scale9Sprite::getOriginalSize()const
+Size Scale9Sprite::getOriginalSize() const
 {
     return _originalContentSize;
 }
 
 Size Scale9Sprite::getPreferredSize() const
 {
-    return _contentSize;
+    return getContentSize();
 }
 
-Rect Scale9Sprite::getCapInsets()const
+Rect Scale9Sprite::getCapInsets() const
 {
-    return _capInsetsInternal;
+    return getCenterRect();
 }
 
-float Scale9Sprite::getInsetLeft()const
+float Scale9Sprite::getInsetLeft() const
 {
     return _insetLeft;
 }
 
-float Scale9Sprite::getInsetTop()const
+float Scale9Sprite::getInsetTop() const
 {
     return _insetTop;
 }
 
-float Scale9Sprite::getInsetRight()const
+float Scale9Sprite::getInsetRight() const
 {
     return _insetRight;
 }
 
-float Scale9Sprite::getInsetBottom()const
+float Scale9Sprite::getInsetBottom() const
 {
     return _insetBottom;
 }
@@ -452,9 +485,9 @@ void Scale9Sprite::setRenderingType(Scale9Sprite::RenderingType type)
         _renderingType = type;
         if (_renderingType == RenderingType::SIMPLE) {
             _previousCenterRect = getCenterRectNormalized();
-            setCenterRect(Rect(0,0,1,1));
+            setCenterRectNormalized(Rect(0,0,1,1));
         } else {
-            setCenterRect(_previousCenterRect);
+            setCenterRectNormalized(_previousCenterRect);
         }
     }
 }
@@ -466,6 +499,6 @@ Scale9Sprite::RenderingType Scale9Sprite::getRenderingType() const
 
 void Scale9Sprite::resetRender()
 {
-    // FIXME
+    // nothing
 }
 

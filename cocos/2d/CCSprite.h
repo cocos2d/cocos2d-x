@@ -261,18 +261,20 @@ public:
      */
     virtual void setCenterRectNormalized(const Rect& rect);
 
-    /* setCenterRect
-     *
-     * Like `setCenterRectNormalized`, but instead of being in normalized coordinates, it is in points coordinates
-     */
-    virtual void setCenterRect(const Rect& rect);
-
     /**
      * getCenterRectNormalized
      *
      * Returns the centerRect in normalized coordinates
      */
     virtual Rect getCenterRectNormalized() const;
+
+    /* setCenterRect
+     *
+     * Like `setCenterRectNormalized`, but instead of being in normalized coordinates, it is in points coordinates
+     */
+    virtual void setCenterRect(const Rect& rect);
+
+    virtual Rect getCenterRect() const;
 
     /** @{
      * Sets a new SpriteFrame to the Sprite.

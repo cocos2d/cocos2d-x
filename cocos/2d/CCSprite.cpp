@@ -537,7 +537,19 @@ void Sprite::setCenterRect(const cocos2d::Rect &rectInPoints)
 
 Rect Sprite::getCenterRectNormalized() const
 {
-    return _centerRect;
+    // FIXME: _centerRect is in bottom-left coords, but should converted to top-left
+    Rect ret(_centerRect.origin.x, 1 - _centerRect.origin.y - _centerRect.size.height, _centerRect.size.width, _centerRect.size.height);
+    return ret;
+}
+
+Rect Sprite::getCenterRect() const
+{
+    Rect rect = getCenterRectNormalized();
+    rect.origin.x *= _rect.size.width;
+    rect.origin.y *= _rect.size.height;
+    rect.size.width *= _rect.size.width;
+    rect.size.height *= _rect.size.height;
+    return rect;
 }
 
 // override this method to generate "double scale" sprites

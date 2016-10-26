@@ -558,7 +558,6 @@ namespace ui {
         bool _isPatch9;
 
         Rect _previousCenterRect;
-        Rect _capInsetsInternal;
 
         float _insetLeft;
         float _insetRight;
