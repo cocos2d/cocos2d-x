@@ -367,11 +367,6 @@ void Scale9Sprite::setPreferredSize(const Size& preferredSize)
     setContentSize(preferredSize);
 }
 
-void Scale9Sprite::setCapInsets(const Rect& capInsets)
-{
-    setCenterRect(capInsets);
-}
-
 void Scale9Sprite::setInsetLeft(float insetLeft)
 {
     _insetLeft = insetLeft;
@@ -399,7 +394,7 @@ void Scale9Sprite::setInsetBottom(float insetBottom)
 void Scale9Sprite::updateCapInset()
 {
     Rect centerRect(_insetLeft, _insetTop, _insetRight-_insetLeft, _insetBottom-_insetTop);
-    setCenterRectNormalized(centerRect);
+    setCapInsetsNormalized(centerRect);
 }
 
 Size Scale9Sprite::getOriginalSize() const
@@ -410,11 +405,6 @@ Size Scale9Sprite::getOriginalSize() const
 Size Scale9Sprite::getPreferredSize() const
 {
     return getContentSize();
-}
-
-Rect Scale9Sprite::getCapInsets() const
-{
-    return getCenterRect();
 }
 
 float Scale9Sprite::getInsetLeft() const
@@ -484,10 +474,10 @@ void Scale9Sprite::setRenderingType(Scale9Sprite::RenderingType type)
     if (_renderingType != type) {
         _renderingType = type;
         if (_renderingType == RenderingType::SIMPLE) {
-            _previousCenterRect = getCenterRectNormalized();
-            setCenterRectNormalized(Rect(0,0,1,1));
+            _previousCenterRect = getCapInsetsNormalized();
+            setCapInsetsNormalized(Rect(0,0,1,1));
         } else {
-            setCenterRectNormalized(_previousCenterRect);
+            setCapInsetsNormalized(_previousCenterRect);
         }
     }
 }

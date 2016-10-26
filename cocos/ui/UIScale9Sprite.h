@@ -437,21 +437,7 @@ namespace ui {
          * @return Scale9Sprite's preferred size.
          */
         Size getPreferredSize() const;
-        
-        /**
-         * @brief Change the cap inset size.
-         *
-         * @param rect A delimitation zone.
-         */
-        void setCapInsets(const Rect& rect);
-        
-        /**
-         * @brief Query the Scale9Sprite's preferred size.
-         *
-         * @return Scale9Sprite's cap inset.
-         */
-        Rect getCapInsets() const;
-        
+                
         /**
          * @brief Change the left sprite's cap inset.
          *
