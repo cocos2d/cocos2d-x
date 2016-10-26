@@ -112,7 +112,7 @@ bool ImageView::init(const std::string &imageFileName, TextureResType texType)
 void ImageView::initRenderer()
 {
     _imageRenderer = Scale9Sprite::create();
-    _imageRenderer->setRenderingType(Scale9Sprite::RenderingType::SIMPLE);
+    _imageRenderer->setScale9Enabled(false);
     
     addProtectedChild(_imageRenderer, IMAGE_RENDERER_Z, -1);
 }
@@ -186,13 +186,8 @@ void ImageView::setScale9Enabled(bool able)
         return;
     }
     
-    
     _scale9Enabled = able;
-    if (_scale9Enabled) {
-        _imageRenderer->setRenderingType(Scale9Sprite::RenderingType::SLICE);
-    }else{
-        _imageRenderer->setRenderingType(Scale9Sprite::RenderingType::SIMPLE);
-    }
+    _imageRenderer->setScale9Enabled(_scale9Enabled);
     
     if (_scale9Enabled)
     {
