@@ -252,7 +252,7 @@ iskindof_ = function(cls, name)
     if type(__index) == "table" and rawget(__index, "__cname") == name then return true end
 
     if rawget(cls, "__cname") == name then return true end
-    local __supers = rawget(cls, "__supers")
+    local __supers = rawget(__index, "__supers")
     if not __supers then return false end
     for _, super in ipairs(__supers) do
         if iskindof_(super, name) then return true end
