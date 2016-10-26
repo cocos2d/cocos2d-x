@@ -301,7 +301,7 @@ namespace ui {
                           const Vec2 &offset,
                           const Size &originalSize,
                           const Rect& capInsets);
-        
+
         /**
          * @brief Initializes a 9-slice sprite with a sprite batchnode.
          * Once the sprite is created, you can then call its "setContentSize:" method
@@ -541,7 +541,7 @@ namespace ui {
 
     protected:
         void updateCapInset();
-        void checkPatch9(Texture2D* texture);
+        void setupSlice9(Texture2D* texture, const Rect& capInsets);
 
         bool _isPatch9;
 

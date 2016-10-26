@@ -51,12 +51,10 @@ Scale9Sprite* Scale9Sprite::create()
     return nullptr;
 }
 
-Scale9Sprite* Scale9Sprite::create(const std::string& file,
-                                   const Rect& rect,
-                                   const Rect& capInsets)
+Scale9Sprite* Scale9Sprite::create(const std::string& filename, const Rect& rect, const Rect& capInsets)
 {
     Scale9Sprite* ret = new (std::nothrow) Scale9Sprite();
-    if (ret && ret->initWithFile(file, rect, capInsets))
+    if (ret && ret->initWithFile(filename, rect, capInsets))
     {
         ret->autorelease();
         return ret;
@@ -65,20 +63,12 @@ Scale9Sprite* Scale9Sprite::create(const std::string& file,
     return nullptr;
 }
 
-Scale9Sprite* Scale9Sprite::create(const std::string& file, const Rect& rect)
+Scale9Sprite* Scale9Sprite::create(const std::string& filename, const Rect& rect)
 {
-    Scale9Sprite* ret = new (std::nothrow) Scale9Sprite();
-    if (ret && ret->initWithFile(file, rect))
-    {
-        ret->autorelease();
-        return ret;
-    }
-    CC_SAFE_DELETE(ret);
-    return nullptr;
+    return create(filename, rect, Rect::ZERO);
 }
 
-Scale9Sprite* Scale9Sprite::create(const Rect& capInsets,
-                                   const std::string& file)
+Scale9Sprite* Scale9Sprite::create(const Rect& capInsets, const std::string& file)
 {
     Scale9Sprite* ret = new (std::nothrow) Scale9Sprite();
     if (ret && ret->initWithFile(capInsets, file))
@@ -90,17 +80,9 @@ Scale9Sprite* Scale9Sprite::create(const Rect& capInsets,
     return nullptr;
 }
 
-Scale9Sprite* Scale9Sprite::create(const std::string& file)
+Scale9Sprite* Scale9Sprite::create(const std::string& fileaname)
 {
-    Scale9Sprite* ret = new (std::nothrow) Scale9Sprite();
-    if (ret && ret->initWithFile(file))
-    {
-        ret->checkPatch9(ret->getTexture());
-        ret->autorelease();
-        return ret;
-    }
-    CC_SAFE_DELETE(ret);
-    return nullptr;
+    return create(Rect::ZERO, fileaname);
 }
 
 
@@ -118,15 +100,7 @@ Scale9Sprite* Scale9Sprite::createWithSpriteFrame(SpriteFrame* spriteFrame, cons
 
 Scale9Sprite* Scale9Sprite::createWithSpriteFrame(SpriteFrame* spriteFrame)
 {
-    Scale9Sprite* ret = new (std::nothrow) Scale9Sprite();
-    if (ret && ret->initWithSpriteFrame(spriteFrame))
-    {
-        ret->checkPatch9(ret->getTexture());
-        ret->autorelease();
-        return ret;
-    }
-    CC_SAFE_DELETE(ret);
-    return nullptr;
+    return createWithSpriteFrame(spriteFrame, Rect::ZERO);
 }
 
 Scale9Sprite* Scale9Sprite::createWithSpriteFrameName(const std::string& spriteFrameName, const Rect& capInsets)
@@ -144,9 +118,8 @@ Scale9Sprite* Scale9Sprite::createWithSpriteFrameName(const std::string& spriteF
 Scale9Sprite* Scale9Sprite::createWithSpriteFrameName(const std::string& spriteFrameName)
 {
     Scale9Sprite* ret = new (std::nothrow) Scale9Sprite();
-    if (ret && ret->initWithSpriteFrameName(spriteFrameName))
+    if (ret && ret->initWithSpriteFrameName(spriteFrameName, Rect::ZERO))
     {
-        ret->checkPatch9(ret->getTexture());
         ret->autorelease();
         return ret;
     }
@@ -174,45 +147,30 @@ Scale9Sprite::~Scale9Sprite()
 
 bool Scale9Sprite::initWithFile(const Rect& capInsets, const std::string& file)
 {
-    return initWithFile(file, Rect::ZERO, capInsets);
-}
-
-bool Scale9Sprite::initWithSpriteFrame(SpriteFrame* spriteFrame,
-                                       const Rect& capInsets)
-{
-    bool ret = false;
-    do {
-        Texture2D* texture = spriteFrame->getTexture();
-        CCASSERT(texture != nullptr, "Texture2D must be not null");
-        if(texture == nullptr) break;
-        
-        Sprite *sprite = Sprite::createWithSpriteFrame(spriteFrame);
-        CCASSERT(sprite != nullptr, "Sprite must be not null");
-        if(sprite == nullptr) break;
-        
-        ret = init(sprite,
-                   spriteFrame->getRect(),
-                   spriteFrame->isRotated(),
-                   spriteFrame->getOffset(),
-                   spriteFrame->getOriginalSize(),
-                   capInsets);
-    } while (false);
-    
+    bool ret = initWithFile(file);
+    setupSlice9(getTexture(), capInsets);
     return ret;
 }
 
-bool Scale9Sprite::initWithSpriteFrameName(const std::string& spriteFrameName,
-                                           const Rect& capInsets)
+bool Scale9Sprite::initWithSpriteFrame(SpriteFrame* spriteFrame, const Rect& capInsets)
 {
+    bool ret = initWithSpriteFrame(spriteFrame);
+    setupSlice9(getTexture(), capInsets);
+    return ret;
+}
 
+bool Scale9Sprite::initWithSpriteFrameName(const std::string& spriteFrameName, const Rect& capInsets)
+{
     bool ret = initWithSpriteFrameName(spriteFrameName);
-    setCapInsets(capInsets);
+    setupSlice9(getTexture(), capInsets);
     return ret;
 }
 
 bool Scale9Sprite::init()
 {
-    return init(nullptr, Rect::ZERO, Rect::ZERO);
+    bool ret = Sprite::init();
+    setupSlice9(getTexture(), Rect::ZERO);
+    return ret;
 }
 
 bool Scale9Sprite::init(Sprite* sprite, const Rect& rect, const Rect& capInsets)
@@ -220,70 +178,58 @@ bool Scale9Sprite::init(Sprite* sprite, const Rect& rect, const Rect& capInsets)
     return init(sprite, rect, false, capInsets);
 }
 
-bool Scale9Sprite::init(Sprite* sprite,
-                        const Rect& rect,
-                        bool rotated,
-                        const Rect& capInsets)
+bool Scale9Sprite::init(Sprite* sprite, const Rect& rect, bool rotated, const Rect& capInsets)
 {
     return init(sprite, rect, rotated, Vec2::ZERO, rect.size, capInsets);
 }
 
-bool Scale9Sprite::init(Sprite* sprite,
-                        const Rect& rect,
-                        bool rotated,
-                        const Vec2 &offset,
-                        const Size &originalSize,
-                        const Rect& capInsets)
+bool Scale9Sprite::init(Sprite* sprite, const Rect& origRect, bool rotated, const Vec2 &offset, const Size &originalSize, const Rect& capInsets)
 {
     bool ret = false;
 
     Rect actualCapInsets = capInsets;
+    Rect rect(origRect);
 
     if (sprite) {
         auto texture = sprite->getTexture();
+
+        if (origRect.equals(Rect::ZERO))
+            rect.size = texture->getContentSize();
+
         auto spriteFrame = SpriteFrame::createWithTexture(texture, rect, rotated, offset, originalSize);
         ret = initWithSpriteFrame(spriteFrame);
 
         if (!capInsets.equals(Rect::ZERO))
-            checkPatch9(texture);
+            setupSlice9(texture, capInsets);
         else
             setCapInsets(actualCapInsets);
     } else {
         ret = initWithTexture(nullptr, rect, rotated);
-        setCapInsets(actualCapInsets);
+        setupSlice9(nullptr, capInsets);
     }
     return ret;
 }
 
-bool Scale9Sprite::initWithBatchNode(cocos2d::SpriteBatchNode *batchnode,
-                                     const cocos2d::Rect &rect,
-                                     bool rotated,
-                                     const cocos2d::Rect &capInsets)
+bool Scale9Sprite::initWithBatchNode(SpriteBatchNode *batchnode, const Rect &rect, bool rotated, const Rect &capInsets)
 {
     auto sprite = Sprite::createWithTexture(batchnode->getTexture());
     return init(sprite, rect, rotated, capInsets);
 }
 
-bool Scale9Sprite::initWithBatchNode(cocos2d::SpriteBatchNode *batchnode,
-                                     const cocos2d::Rect &rect,
-                                     const cocos2d::Rect &capInsets)
+bool Scale9Sprite::initWithFile(const std::string& filename, const Rect& rect, const Rect& capInsets)
 {
-    auto sprite = Sprite::createWithTexture(batchnode->getTexture());
-    return init(sprite, rect, false, capInsets);
-}
-bool Scale9Sprite::initWithFile(const std::string& file,
-                                const Rect& rect,
-                                const Rect& capInsets)
-{
-    auto ret = initWithFile(file, rect);
+    bool ret = initWithFile(filename, rect);
     setCapInsets(capInsets);
     return ret;
 }
 
-bool Scale9Sprite::updateWithBatchNode(cocos2d::SpriteBatchNode *batchnode,
-                                       const cocos2d::Rect &originalRect,
-                                       bool rotated,
-                                       const cocos2d::Rect &capInsets)
+bool Scale9Sprite::initWithBatchNode(SpriteBatchNode *batchnode, const Rect &rect, const Rect &capInsets)
+{
+    auto sprite = Sprite::createWithTexture(batchnode->getTexture());
+    return init(sprite, rect, false, capInsets);
+}
+
+bool Scale9Sprite::updateWithBatchNode(SpriteBatchNode *batchnode, const Rect &originalRect, bool rotated, const Rect &capInsets)
 {
     Sprite *sprite = Sprite::createWithTexture(batchnode->getTexture());
     return updateWithSprite(sprite,
@@ -383,8 +329,11 @@ void Scale9Sprite::setInsetBottom(float insetBottom)
 
 void Scale9Sprite::updateCapInset()
 {
-    Rect centerRect(_insetLeft, _insetTop, _insetRight-_insetLeft, _insetBottom-_insetTop);
-    setCapInsetsNormalized(centerRect);
+    Rect capInsets(_insetLeft,
+                   _insetTop,
+                   1 - _insetRight - _insetLeft,
+                   1 - _insetBottom-_insetTop);
+    setCapInsetsNormalized(capInsets);
 }
 
 Size Scale9Sprite::getOriginalSize() const
@@ -482,10 +431,15 @@ void Scale9Sprite::resetRender()
     // nothing
 }
 
-void Scale9Sprite::checkPatch9(Texture2D* texture)
+void Scale9Sprite::setupSlice9(Texture2D* texture, const Rect& capInsets)
 {
-    if (texture->isContain9PatchInfo()) {
+    if (capInsets.equals(Rect::ZERO))
+        setCapInsetsNormalized(Rect(1/3.f, 1/3.f, 1/3.f, 1/3.f));
+    else setCapInsets(capInsets);
+
+    if (texture && texture->isContain9PatchInfo()) {
         auto& parsedCapInset = texture->getSpriteFrameCapInset(getSpriteFrame());
+
         if(!parsedCapInset.equals(Rect::ZERO))
         {
             _isPatch9 = true;
