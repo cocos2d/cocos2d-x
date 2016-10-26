@@ -40,6 +40,7 @@ using namespace cocos2d;
 using namespace cocos2d::ui;
 
 Scale9Sprite::Scale9Sprite()
+: _previousCenterRect(Rect(0,0,1,1))
 {
 #if CC_SPRITE_DEBUG_DRAW
     _debugDrawNode = DrawNode::create();
@@ -70,11 +71,11 @@ bool Scale9Sprite::initWithSpriteFrame(SpriteFrame* spriteFrame,
         if(sprite == nullptr) break;
         
         ret = init(sprite,
-                                  spriteFrame->getRect(),
-                                  spriteFrame->isRotated(),
-                                  spriteFrame->getOffset(),
-                                  spriteFrame->getOriginalSize(),
-                                  capInsets);
+                   spriteFrame->getRect(),
+                   spriteFrame->isRotated(),
+                   spriteFrame->getOffset(),
+                   spriteFrame->getOriginalSize(),
+                   capInsets);
     } while (false);
     
     return ret;
@@ -192,7 +193,6 @@ Scale9Sprite* Scale9Sprite::create(const std::string& file, const Rect& rect)
 }
 
 
-
 Scale9Sprite* Scale9Sprite::create(const Rect& capInsets,
                                    const std::string& file)
 {
@@ -220,8 +220,7 @@ Scale9Sprite* Scale9Sprite::create(const std::string& file)
 }
 
 
-Scale9Sprite* Scale9Sprite::createWithSpriteFrame(SpriteFrame* spriteFrame,
-                                                  const Rect& capInsets)
+Scale9Sprite* Scale9Sprite::createWithSpriteFrame(SpriteFrame* spriteFrame, const Rect& capInsets)
 {
     Scale9Sprite* ret = new (std::nothrow) Scale9Sprite();
     if (ret && ret->initWithSpriteFrame(spriteFrame, capInsets) )
@@ -245,8 +244,7 @@ Scale9Sprite* Scale9Sprite::createWithSpriteFrame(SpriteFrame* spriteFrame)
     return nullptr;
 }
 
-Scale9Sprite* Scale9Sprite::createWithSpriteFrameName(const std::string& spriteFrameName,
-                                                      const Rect& capInsets)
+Scale9Sprite* Scale9Sprite::createWithSpriteFrameName(const std::string& spriteFrameName, const Rect& capInsets)
 {
     Scale9Sprite* ret = new (std::nothrow) Scale9Sprite();
     if (ret && ret->initWithSpriteFrameName(spriteFrameName, capInsets) )
@@ -279,11 +277,11 @@ bool Scale9Sprite::updateWithBatchNode(cocos2d::SpriteBatchNode *batchnode,
 {
     Sprite *sprite = Sprite::createWithTexture(batchnode->getTexture());
     return updateWithSprite(sprite,
-                                  originalRect,
-                                  rotated,
-                                  Vec2::ZERO,
-                                  originalRect.size,
-                                  capInsets);
+                            originalRect,
+                            rotated,
+                            Vec2::ZERO,
+                            originalRect.size,
+                            capInsets);
 }
 
 bool Scale9Sprite::updateWithSprite(Sprite* sprite,
@@ -318,12 +316,16 @@ Scale9Sprite::State Scale9Sprite::getState() const
 
 void Scale9Sprite::setState(Scale9Sprite::State state)
 {
-    // FIXME
+    if (_brightState != state) {
+        // FIXME
+        _brightState = state;
+    }
 }
 
 void Scale9Sprite::setSpriteFrame(SpriteFrame * spriteFrame, const Rect& capInsets)
 {
-    // FIXME
+    setSpriteFrame(spriteFrame);
+    setCapInsets(capInsets);
 }
 
 void Scale9Sprite::setPreferredSize(const Size& preferredSize)
@@ -369,12 +371,12 @@ void Scale9Sprite::updateCapInset()
 
 Size Scale9Sprite::getOriginalSize()const
 {
-    return _originalSize;
+    return _originalContentSize;
 }
 
 Size Scale9Sprite::getPreferredSize() const
 {
-    return _preferredSize;
+    return _contentSize;
 }
 
 Rect Scale9Sprite::getCapInsets()const
@@ -404,13 +406,13 @@ float Scale9Sprite::getInsetBottom()const
 
 void Scale9Sprite::setScale9Enabled(bool enabled)
 {
-    // FIXME
+    RenderingType type = enabled ? RenderingType::SLICE : RenderingType::SIMPLE;
+    setRenderingType(type);
 }
 
 bool Scale9Sprite::isScale9Enabled() const
 {
-    // FIXME
-    return true;
+    return (_renderingType == RenderingType::SLICE);
 }
 
 Sprite* Scale9Sprite::getSprite()
@@ -446,11 +448,18 @@ Sprite* Scale9Sprite::getSprite()
 
 void Scale9Sprite::setRenderingType(Scale9Sprite::RenderingType type)
 {
-    // FIXME
-    _renderingType = type;
+    if (_renderingType != type) {
+        _renderingType = type;
+        if (_renderingType == RenderingType::SIMPLE) {
+            _previousCenterRect = getCenterRectNormalized();
+            setCenterRect(Rect(0,0,1,1));
+        } else {
+            setCenterRect(_previousCenterRect);
+        }
+    }
 }
 
-Scale9Sprite::RenderingType Scale9Sprite::getRenderingType()const
+Scale9Sprite::RenderingType Scale9Sprite::getRenderingType() const
 {
     return _renderingType;
 }

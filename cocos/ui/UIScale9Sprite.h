@@ -555,12 +555,11 @@ namespace ui {
     protected:
         void updateCapInset();
 
-        Size _preferredSize;
-        Size _originalSize;
-
         bool _isPatch9;
 
+        Rect _previousCenterRect;
         Rect _capInsetsInternal;
+
         float _insetLeft;
         float _insetRight;
         float _insetTop;
