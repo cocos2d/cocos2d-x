@@ -39,8 +39,125 @@
 using namespace cocos2d;
 using namespace cocos2d::ui;
 
+Scale9Sprite* Scale9Sprite::create()
+{
+    Scale9Sprite *ret = new (std::nothrow) Scale9Sprite();
+    if (ret && ret->init())
+    {
+        ret->autorelease();
+        return ret;
+    }
+    CC_SAFE_DELETE(ret);
+    return nullptr;
+}
+
+Scale9Sprite* Scale9Sprite::create(const std::string& file,
+                                   const Rect& rect,
+                                   const Rect& capInsets)
+{
+    Scale9Sprite* ret = new (std::nothrow) Scale9Sprite();
+    if (ret && ret->initWithFile(file, rect, capInsets))
+    {
+        ret->autorelease();
+        return ret;
+    }
+    CC_SAFE_DELETE(ret);
+    return nullptr;
+}
+
+Scale9Sprite* Scale9Sprite::create(const std::string& file, const Rect& rect)
+{
+    Scale9Sprite* ret = new (std::nothrow) Scale9Sprite();
+    if (ret && ret->initWithFile(file, rect))
+    {
+        ret->autorelease();
+        return ret;
+    }
+    CC_SAFE_DELETE(ret);
+    return nullptr;
+}
+
+Scale9Sprite* Scale9Sprite::create(const Rect& capInsets,
+                                   const std::string& file)
+{
+    Scale9Sprite* ret = new (std::nothrow) Scale9Sprite();
+    if (ret && ret->initWithFile(capInsets, file))
+    {
+        ret->autorelease();
+        return ret;
+    }
+    CC_SAFE_DELETE(ret);
+    return nullptr;
+}
+
+Scale9Sprite* Scale9Sprite::create(const std::string& file)
+{
+    Scale9Sprite* ret = new (std::nothrow) Scale9Sprite();
+    if (ret && ret->initWithFile(file))
+    {
+        ret->checkPatch9(ret->getTexture());
+        ret->autorelease();
+        return ret;
+    }
+    CC_SAFE_DELETE(ret);
+    return nullptr;
+}
+
+
+Scale9Sprite* Scale9Sprite::createWithSpriteFrame(SpriteFrame* spriteFrame, const Rect& capInsets)
+{
+    Scale9Sprite* ret = new (std::nothrow) Scale9Sprite();
+    if (ret && ret->initWithSpriteFrame(spriteFrame, capInsets))
+    {
+        ret->autorelease();
+        return ret;
+    }
+    CC_SAFE_DELETE(ret);
+    return nullptr;
+}
+
+Scale9Sprite* Scale9Sprite::createWithSpriteFrame(SpriteFrame* spriteFrame)
+{
+    Scale9Sprite* ret = new (std::nothrow) Scale9Sprite();
+    if (ret && ret->initWithSpriteFrame(spriteFrame))
+    {
+        ret->checkPatch9(ret->getTexture());
+        ret->autorelease();
+        return ret;
+    }
+    CC_SAFE_DELETE(ret);
+    return nullptr;
+}
+
+Scale9Sprite* Scale9Sprite::createWithSpriteFrameName(const std::string& spriteFrameName, const Rect& capInsets)
+{
+    Scale9Sprite* ret = new (std::nothrow) Scale9Sprite();
+    if (ret && ret->initWithSpriteFrameName(spriteFrameName, capInsets))
+    {
+        ret->autorelease();
+        return ret;
+    }
+    CC_SAFE_DELETE(ret);
+    return nullptr;
+}
+
+Scale9Sprite* Scale9Sprite::createWithSpriteFrameName(const std::string& spriteFrameName)
+{
+    Scale9Sprite* ret = new (std::nothrow) Scale9Sprite();
+    if (ret && ret->initWithSpriteFrameName(spriteFrameName))
+    {
+        ret->checkPatch9(ret->getTexture());
+        ret->autorelease();
+        return ret;
+    }
+    CC_SAFE_DELETE(ret);
+
+    log("Could not allocate Scale9Sprite()");
+    return nullptr;
+}
+
 Scale9Sprite::Scale9Sprite()
-: _previousCenterRect(Rect(0,0,1,1))
+: _previousCapInsetsNormalized(Rect(0,0,1,1))
 , _brightState(State::NORMAL)
 , _renderingType(RenderingType::SLICE)
 , _insetLeft(0)
@@ -124,28 +241,18 @@ bool Scale9Sprite::init(Sprite* sprite,
 
     if (sprite) {
         auto texture = sprite->getTexture();
-
-        if (texture->isContain9PatchInfo())
-        {
-            auto& parsedCapInset = texture->getSpriteFrameCapInset(sprite->getSpriteFrame());
-            if(!parsedCapInset.equals(Rect::ZERO))
-            {
-                _isPatch9 = true;
-
-                // override capInsets?
-                if(capInsets.equals(Rect::ZERO))
-                    actualCapInsets = parsedCapInset;
-            }
-        }
-
         auto spriteFrame = SpriteFrame::createWithTexture(texture, rect, rotated, offset, originalSize);
         ret = initWithSpriteFrame(spriteFrame);
+
+        if (!capInsets.equals(Rect::ZERO))
+            checkPatch9(texture);
+        else
+            setCapInsets(actualCapInsets);
     } else {
         ret = initWithTexture(nullptr, rect, rotated);
+        setCapInsets(actualCapInsets);
     }
-    setCapInsets(actualCapInsets);
     return ret;
-
 }
 
 bool Scale9Sprite::initWithBatchNode(cocos2d::SpriteBatchNode *batchnode,
@@ -171,123 +278,6 @@ bool Scale9Sprite::initWithFile(const std::string& file,
     auto ret = initWithFile(file, rect);
     setCapInsets(capInsets);
     return ret;
-}
-
-Scale9Sprite* Scale9Sprite::create()
-{
-    Scale9Sprite *ret = new (std::nothrow) Scale9Sprite();
-    if (ret && ret->init())
-    {
-        ret->autorelease();
-        return ret;
-    }
-    CC_SAFE_DELETE(ret);
-    return nullptr;
-}
-
-Scale9Sprite* Scale9Sprite::create(const std::string& file,
-                                   const Rect& rect,
-                                   const Rect& capInsets)
-{
-    Scale9Sprite* ret = new (std::nothrow) Scale9Sprite();
-    if (ret && ret->initWithFile(file, rect, capInsets))
-    {
-        ret->autorelease();
-        return ret;
-    }
-    CC_SAFE_DELETE(ret);
-    return nullptr;
-}
-
-
-Scale9Sprite* Scale9Sprite::create(const std::string& file, const Rect& rect)
-{
-    Scale9Sprite* ret = new (std::nothrow) Scale9Sprite();
-    if (ret && ret->initWithFile(file, rect))
-    {
-        ret->autorelease();
-        return ret;
-    }
-    CC_SAFE_DELETE(ret);
-    return nullptr;
-}
-
-
-Scale9Sprite* Scale9Sprite::create(const Rect& capInsets,
-                                   const std::string& file)
-{
-    Scale9Sprite* ret = new (std::nothrow) Scale9Sprite();
-    if (ret && ret->initWithFile(capInsets, file))
-    {
-        ret->autorelease();
-        return ret;
-    }
-    CC_SAFE_DELETE(ret);
-    return nullptr;
-}
-
-
-Scale9Sprite* Scale9Sprite::create(const std::string& file)
-{
-    Scale9Sprite* ret = new (std::nothrow) Scale9Sprite();
-    if (ret && ret->initWithFile(file) )
-    {
-        ret->autorelease();
-        return ret;
-    }
-    CC_SAFE_DELETE(ret);
-    return nullptr;
-}
-
-
-Scale9Sprite* Scale9Sprite::createWithSpriteFrame(SpriteFrame* spriteFrame, const Rect& capInsets)
-{
-    Scale9Sprite* ret = new (std::nothrow) Scale9Sprite();
-    if (ret && ret->initWithSpriteFrame(spriteFrame, capInsets) )
-    {
-        ret->autorelease();
-        return ret;
-    }
-    CC_SAFE_DELETE(ret);
-    return nullptr;
-}
-
-Scale9Sprite* Scale9Sprite::createWithSpriteFrame(SpriteFrame* spriteFrame)
-{
-    Scale9Sprite* ret = new (std::nothrow) Scale9Sprite();
-    if (ret && ret->initWithSpriteFrame(spriteFrame) )
-    {
-        ret->autorelease();
-        return ret;
-    }
-    CC_SAFE_DELETE(ret);
-    return nullptr;
-}
-
-Scale9Sprite* Scale9Sprite::createWithSpriteFrameName(const std::string& spriteFrameName, const Rect& capInsets)
-{
-    Scale9Sprite* ret = new (std::nothrow) Scale9Sprite();
-    if (ret && ret->initWithSpriteFrameName(spriteFrameName, capInsets) )
-    {
-        ret->autorelease();
-        return ret;
-    }
-    CC_SAFE_DELETE(ret);
-    return nullptr;
-}
-
-Scale9Sprite* Scale9Sprite::createWithSpriteFrameName(const std::string& spriteFrameName)
-{
-    Scale9Sprite* ret = new (std::nothrow) Scale9Sprite();
-    if (ret && ret->initWithSpriteFrameName(spriteFrameName) )
-    {
-        ret->autorelease();
-        return ret;
-    }
-    CC_SAFE_DELETE(ret);
-
-    log("Could not allocate Scale9Sprite()");
-    return nullptr;
 }
 
 bool Scale9Sprite::updateWithBatchNode(cocos2d::SpriteBatchNode *batchnode,
@@ -474,10 +464,10 @@ void Scale9Sprite::setRenderingType(Scale9Sprite::RenderingType type)
     if (_renderingType != type) {
         _renderingType = type;
         if (_renderingType == RenderingType::SIMPLE) {
-            _previousCenterRect = getCapInsetsNormalized();
+            _previousCapInsetsNormalized = getCapInsetsNormalized();
             setCapInsetsNormalized(Rect(0,0,1,1));
         } else {
-            setCapInsetsNormalized(_previousCenterRect);
+            setCapInsetsNormalized(_previousCapInsetsNormalized);
         }
     }
 }
@@ -490,5 +480,26 @@ Scale9Sprite::RenderingType Scale9Sprite::getRenderingType() const
 void Scale9Sprite::resetRender()
 {
     // nothing
+}
+
+void Scale9Sprite::checkPatch9(Texture2D* texture)
+{
+    if (texture->isContain9PatchInfo()) {
+        auto& parsedCapInset = texture->getSpriteFrameCapInset(getSpriteFrame());
+        if(!parsedCapInset.equals(Rect::ZERO))
+        {
+            _isPatch9 = true;
+            setCapInsets(parsedCapInset);
+
+            // adjust texture rect. 1.3f seems to be the magic number
+            // to avoid artifacts
+            auto rect = getTextureRect();
+            rect.origin.x += 1.3f;
+            rect.origin.y += 1.3f;
+            rect.size.width -= 2;
+            rect.size.height -= 2;
+            setTextureRect(rect);
+        }
+    }
 }
 

@@ -38,6 +38,7 @@
  */
 NS_CC_BEGIN
 class DrawNode;
+class Texture2D;
 
 namespace ui {
     
@@ -540,10 +541,11 @@ namespace ui {
 
     protected:
         void updateCapInset();
+        void checkPatch9(Texture2D* texture);
 
         bool _isPatch9;
 
-        Rect _previousCenterRect;
+        Rect _previousCapInsetsNormalized;
 
         float _insetLeft;
         float _insetRight;
