@@ -2372,6 +2372,10 @@ JSObject* jsb_get_or_create_weak_jsobject(JSContext *cx, void *native, js_type_c
     JS::RootedObject jsObj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
     proxy = jsb_new_proxy(native, jsObj);
 
+    JS::RootedObject flag(cx, JS_NewObject(cx, nullptr, JS::NullPtr(), JS::NullPtr()));
+    JS::RootedValue flagVal(cx, OBJECT_TO_JSVAL(flag));
+    JS_SetProperty(cx, jsObj, "__cppCreated", flagVal);
+
 #if ! CC_ENABLE_GC_FOR_NATIVE_OBJECTS
     JS::AddNamedObjectRoot(cx, &proxy->obj, debug);
 #else
