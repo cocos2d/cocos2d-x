@@ -1,4 +1,4 @@
-/****************************************************************************
+s/****************************************************************************
  Copyright (c) 2014-2016 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
@@ -56,8 +56,9 @@ public:
     ~AudioEngineImpl();
 
     bool init();
-    int play2d(const std::string &fileFullPath ,bool loop ,float volume);
-    void setVolume(int audioID,float volume);
+    int play2d(const std::string &fileFullPath, bool loop, float volume);
+    void setVolume(int audioID, float volume);
+    void setPitch(int audioID, float pitch);
     void setLoop(int audioID, bool loop);
     void pause(int audioID);
     void resume(int audioID);
@@ -90,7 +91,7 @@ private:
     EventListener* _onResumeListener;
 
     int _audioIDIndex;
-    
+
     bool _lazyInitLoop;
 };
 

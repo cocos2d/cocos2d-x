@@ -300,7 +300,7 @@ void TemplateVectorTest::onEnter()
 
     // Self assignment
     Vector<Node*> vecSelfAssign = createVector();
-    vecSelfAssign = vecSelfAssign;
+    //vecSelfAssign = vecSelfAssign;
     CCASSERT(vecSelfAssign.size() == 20, "vecSelfAssign's size is 20.");
 
     for (const auto& child : vecSelfAssign)
@@ -309,7 +309,7 @@ void TemplateVectorTest::onEnter()
         CCASSERT(child->getReferenceCount() == 2, "child's reference count is 2.");
     }
 
-    vecSelfAssign = std::move(vecSelfAssign);
+    //vecSelfAssign = std::move(vecSelfAssign);
     CCASSERT(vecSelfAssign.size() == 20, "vecSelfAssign's size is 20.");
 
     for (const auto& child : vecSelfAssign)
@@ -508,7 +508,7 @@ void TemplateMapTest::onEnter()
 
     // Self assignment
     Map<std::string, Node*> mapForSelfAssign = createMap();
-    mapForSelfAssign = mapForSelfAssign;
+    //mapForSelfAssign = mapForSelfAssign;
     CCASSERT(mapForSelfAssign.size() == 20, "mapForSelfAssign's size is 20.");
 
     for (const auto& e : mapForSelfAssign)
@@ -517,7 +517,7 @@ void TemplateMapTest::onEnter()
         CCASSERT(e.second->getReferenceCount() == 2, "e.second's reference count is 2.");
     }
 
-    mapForSelfAssign = std::move(mapForSelfAssign);
+    //mapForSelfAssign = std::move(mapForSelfAssign);
     CCASSERT(mapForSelfAssign.size() == 20, "mapForSelfAssign's size is 20.");
 
     for (const auto& e : mapForSelfAssign)

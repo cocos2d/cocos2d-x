@@ -1,18 +1,18 @@
 /****************************************************************************
  Copyright (c) 2014 Chukong Technologies Inc.
- 
+
  http://www.cocos2d-x.org
- 
+
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
- 
+
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
- 
+
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -53,16 +53,16 @@ AudioEngineImpl::AudioEngineImpl()
 : _lazyInitLoop(true)
 , _currentAudioID(0)
 {
-    
+
 }
 
 AudioEngineImpl::~AudioEngineImpl()
 {
     if (s_ALContext) {
         alDeleteSources(MAX_AUDIOINSTANCES, _alSources);
-        
+
         _audioCaches.clear();
-        
+
         alcMakeContextCurrent(nullptr);
         alcDestroyContext(s_ALContext);
         s_ALContext = nullptr;
@@ -81,27 +81,27 @@ bool AudioEngineImpl::init()
     bool ret = false;
     do{
         s_ALDevice = alcOpenDevice(NULL);
-        
+
         if (s_ALDevice) {
             auto alError = alGetError();
             s_ALContext = alcCreateContext(s_ALDevice, NULL);
             alcMakeContextCurrent(s_ALContext);
-            
+
             alGenSources(MAX_AUDIOINSTANCES, _alSources);
             alError = alGetError();
             if(alError != AL_NO_ERROR){
                 ALOGE("%s:generating sources fail! error = %x\n", __FUNCTION__, alError);
                 break;
             }
-            
+
             for (int i = 0; i < MAX_AUDIOINSTANCES; ++i) {
                 _alSourceUsed[_alSources[i]] = false;
             }
-            
+
             ret = true;
         }
     }while (false);
-    
+
     return ret;
 }
 
@@ -109,7 +109,7 @@ AudioCache* AudioEngineImpl::preload(const std::string& filePath, std::function<
 {
     AudioCache* audioCache = nullptr;
 
-    do 
+    do
     {
         auto it = _audioCaches.find(filePath);
         if (it != _audioCaches.end())
@@ -165,7 +165,7 @@ AudioCache* AudioEngineImpl::preload(const std::string& filePath, std::function<
         if (audioCache)
         {
             audioCache->addLoadCallback(callback);
-        } 
+        }
         else
         {
             callback(false);
@@ -189,28 +189,28 @@ int AudioEngineImpl::play2d(const std::string &filePath ,bool loop ,float volume
     if(!availableSourceExist){
         return AudioEngine::INVALID_AUDIO_ID;
     }
-    
+
     AudioCache* audioCache = preload(filePath, nullptr);
     if (audioCache == nullptr)
     {
         return AudioEngine::INVALID_AUDIO_ID;
     }
-    
+
     auto player = &_audioPlayers[_currentAudioID];
     player->_alSource = alSource;
     player->_loop = loop;
     player->_volume = volume;
     audioCache->addPlayCallback(std::bind(&AudioEngineImpl::_play2d, this, audioCache, _currentAudioID));
-    
+
     _alSourceUsed[alSource] = true;
-    
+
     if (_lazyInitLoop) {
         _lazyInitLoop = false;
-        
+
         auto scheduler = cocos2d::Director::getInstance()->getScheduler();
         scheduler->schedule(schedule_selector(AudioEngineImpl::update), this, 0.05f, false);
     }
-    
+
     return _currentAudioID++;
 }
 
@@ -241,10 +241,25 @@ void AudioEngineImpl::setVolume(int audioID,float volume)
 {
     auto& player = _audioPlayers[audioID];
     player._volume = volume;
-    
+
     if (player._ready) {
         alSourcef(_audioPlayers[audioID]._alSource, AL_GAIN, volume);
-        
+
+        auto error = alGetError();
+        if (error != AL_NO_ERROR) {
+            ALOGE("%s: audio id = %d, error = %x\n", __FUNCTION__,audioID,error);
+        }
+    }
+}
+
+void AudioEngineImpl::setPitch(int audioID, float pitch)
+{
+    auto& player = _audioPlayers[audioID];
+    player._pitch = pitch;
+
+    if (player._ready) {
+        alSourcef(_audioPlayers[audioID]._alSource, AL_PITCH, pitch);
+
         auto error = alGetError();
         if (error != AL_NO_ERROR) {
             ALOGE("%s: audio id = %d, error = %x\n", __FUNCTION__,audioID,error);
@@ -255,7 +270,7 @@ void AudioEngineImpl::setVolume(int audioID,float volume)
 void AudioEngineImpl::setLoop(int audioID, bool loop)
 {
     auto& player = _audioPlayers[audioID];
-    
+
     if (player._ready) {
         if (player._streamingSource) {
             player.setLoop(loop);
@@ -265,7 +280,7 @@ void AudioEngineImpl::setLoop(int audioID, bool loop)
             } else {
                 alSourcei(player._alSource, AL_LOOPING, AL_FALSE);
             }
-            
+
             auto error = alGetError();
             if (error != AL_NO_ERROR) {
                 ALOGE("%s: audio id = %d, error = %x\n", __FUNCTION__,audioID,error);
@@ -281,13 +296,13 @@ bool AudioEngineImpl::pause(int audioID)
 {
     bool ret = true;
     alSourcePause(_audioPlayers[audioID]._alSource);
-    
+
     auto error = alGetError();
     if (error != AL_NO_ERROR) {
         ret = false;
         ALOGE("%s: audio id = %d, error = %x\n", __FUNCTION__,audioID,error);
     }
-    
+
     return ret;
 }
 
@@ -295,13 +310,13 @@ bool AudioEngineImpl::resume(int audioID)
 {
     bool ret = true;
     alSourcePlay(_audioPlayers[audioID]._alSource);
-    
+
     auto error = alGetError();
     if (error != AL_NO_ERROR) {
         ret = false;
         ALOGE("%s: audio id = %d, error = %x\n", __FUNCTION__,audioID,error);
     }
-    
+
     return ret;
 }
 
@@ -311,27 +326,27 @@ bool AudioEngineImpl::stop(int audioID)
     auto& player = _audioPlayers[audioID];
     if (player._ready) {
         alSourceStop(player._alSource);
-        
+
         auto error = alGetError();
         if (error != AL_NO_ERROR) {
             ret = false;
             ALOGE("%s: audio id = %d, error = %x\n", __FUNCTION__,audioID,error);
         }
     }
-    
+
     alSourcei(player._alSource, AL_BUFFER, NULL);
-    
+
     _alSourceUsed[player._alSource] = false;
     if (player._streamingSource)
     {
         player._ready = false;
         player.notifyExitThread();
-    } 
+    }
     else
     {
         _audioPlayers.erase(audioID);
     }
-    
+
     return ret;
 }
 
@@ -343,8 +358,8 @@ void AudioEngineImpl::stopAll()
         alSourcei(_alSources[index], AL_BUFFER, NULL);
         _alSourceUsed[_alSources[index]] = false;
     }
-    
-    for (auto it = _audioPlayers.begin(); it != _audioPlayers.end();) 
+
+    for (auto it = _audioPlayers.begin(); it != _audioPlayers.end();)
     {
         auto& player = it->second;
         if (player._streamingSource)
@@ -379,14 +394,14 @@ float AudioEngineImpl::getCurrentTime(int audioID)
             ret = player.getTime();
         } else {
             alGetSourcef(player._alSource, AL_SEC_OFFSET, &ret);
-            
+
             auto error = alGetError();
             if (error != AL_NO_ERROR) {
                 ALOGE("%s, audio id:%d,error code:%x", __FUNCTION__,audioID,error);
             }
         }
     }
-    
+
     return ret;
 }
 
@@ -394,19 +409,19 @@ bool AudioEngineImpl::setCurrentTime(int audioID, float time)
 {
     bool ret = false;
     auto& player = _audioPlayers[audioID];
-    
+
     do {
         if (!player._ready) {
             break;
         }
-        
+
         if (player._streamingSource) {
             ret = player.setTime(time);
             break;
         }
         else {
             alSourcef(player._alSource, AL_SEC_OFFSET, time);
-            
+
             auto error = alGetError();
             if (error != AL_NO_ERROR) {
                 ALOGE("%s: audio id = %d, error = %x\n", __FUNCTION__,audioID,error);
@@ -414,7 +429,7 @@ bool AudioEngineImpl::setCurrentTime(int audioID, float time)
             ret = true;
         }
     } while (0);
-    
+
     return ret;
 }
 
@@ -427,7 +442,7 @@ void AudioEngineImpl::update(float dt)
 {
     ALint sourceState;
     int audioID;
-    
+
     if (_threadMutex.try_lock()) {
         size_t removeAudioCount = _toRemoveAudioIDs.size();
         for (size_t index = 0; index < removeAudioCount; ++index) {
@@ -455,12 +470,12 @@ void AudioEngineImpl::update(float dt)
         }
         _threadMutex.unlock();
     }
-    
+
     for (auto it = _audioPlayers.begin(); it != _audioPlayers.end(); ) {
         audioID = it->first;
         auto& player = it->second;
         alGetSourcei(player._alSource, AL_SOURCE_STATE, &sourceState);
-        
+
         if (player._readForRemove && !player._ready)
         {
             it = _audioPlayers.erase(it);
@@ -471,15 +486,15 @@ void AudioEngineImpl::update(float dt)
                 auto& audioInfo = AudioEngine::_audioIDInfoMap[audioID];
                 player._finishCallbak(audioID, *audioInfo.filePath);
             }
-            
+
             AudioEngine::remove(audioID);
-            
+
             if (player._streamingSource)
             {
                 player._ready = false;
                 player.notifyExitThread();
                 ++it;
-            } 
+            }
             else
             {
                 it = _audioPlayers.erase(it);
@@ -489,10 +504,10 @@ void AudioEngineImpl::update(float dt)
             ++it;
         }
     }
-    
+
     if(_audioPlayers.empty()){
         _lazyInitLoop = true;
-        
+
         auto scheduler = cocos2d::Director::getInstance()->getScheduler();
         scheduler->unschedule(schedule_selector(AudioEngineImpl::update), this);
     }

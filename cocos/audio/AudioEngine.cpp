@@ -203,7 +203,7 @@ int AudioEngine::play2d(const std::string& filePath, bool loop, float volume, co
             profileHelper = &_audioPathProfileHelperMap[profile->name];
             profileHelper->profile = *profile;
         }
-        
+
         if (_audioIDInfoMap.size() >= _maxInstances) {
             log("Fail to play %s cause by limited max instance of AudioEngine",filePath.c_str());
             break;
@@ -222,20 +222,15 @@ int AudioEngine::play2d(const std::string& filePath, bool loop, float volume, co
                  }
              }
         }
-        
-        if (volume < 0.0f) {
-            volume = 0.0f;
-        }
-        else if (volume > 1.0f){
-            volume = 1.0f;
-        }
-        
+
+        volume = clampf(volume, 0.f, 1.f);
+
         ret = _audioEngineImpl->play2d(filePath, loop, volume);
         if (ret != INVALID_AUDIO_ID)
         {
             _audioPathIDMap[filePath].push_back(ret);
             auto it = _audioPathIDMap.find(filePath);
-            
+
             auto& audioRef = _audioIDInfoMap[ret];
             audioRef.volume = volume;
             audioRef.loop = loop;
@@ -265,16 +260,22 @@ void AudioEngine::setVolume(int audioID, float volume)
 {
     auto it = _audioIDInfoMap.find(audioID);
     if (it != _audioIDInfoMap.end()){
-        if (volume < 0.0f) {
-            volume = 0.0f;
-        }
-        else if (volume > 1.0f){
-            volume = 1.0f;
-        }
-
+        volume = clampf(volume, 0.f, 1.f);
         if (it->second.volume != volume){
             _audioEngineImpl->setVolume(audioID, volume);
             it->second.volume = volume;
+        }
+    }
+}
+
+void AudioEngine::setPitch(int audioID, float pitch)
+{
+    auto it = _audioIDInfoMap.find(audioID);
+    if (it != _audioIDInfoMap.end()){
+        pitch = clampf(pitch, 0.f, 10000.f); // 10000x pitch, seriously?
+        if (it->second.pitch != pitch){
+            _audioEngineImpl->setPitch(audioID, pitch);
+            it->second.pitch = pitch;
         }
     }
 }
@@ -371,11 +372,11 @@ void AudioEngine::uncache(const std::string &filePath)
         // since 'AudioEngine::remove' may be invoked in '_audioEngineImpl->stop' synchronously.
         // If this happens, it will break the iteration, and crash will appear on some devices.
         std::list<int> copiedIDs(audioIDsIter->second);
-        
+
         for (int audioID : copiedIDs)
         {
             _audioEngineImpl->stop(audioID);
-            
+
             auto itInfo = _audioIDInfoMap.find(audioID);
             if (itInfo != _audioIDInfoMap.end())
             {
@@ -415,7 +416,7 @@ float AudioEngine::getDuration(int audioID)
         }
         return it->second.duration;
     }
-    
+
     return TIME_UNKNOWN;
 }
 
@@ -463,7 +464,7 @@ bool AudioEngine::isLoop(int audioID)
     {
         return tmpIterator->second.loop;
     }
-    
+
     log("AudioEngine::isLoop-->The audio instance %d is non-existent", audioID);
     return false;
 }
@@ -480,6 +481,18 @@ float AudioEngine::getVolume(int audioID)
     return 0.0f;
 }
 
+float AudioEngine::getPitch(int audioID)
+{
+    auto tmpIterator = _audioIDInfoMap.find(audioID);
+    if (tmpIterator != _audioIDInfoMap.end())
+    {
+        return tmpIterator->second.pitch;
+    }
+
+    log("AudioEngine::getPitch-->The audio instance %d is non-existent", audioID);
+    return 0.0f;
+}
+
 AudioEngine::AudioState AudioEngine::getState(int audioID)
 {
     auto tmpIterator = _audioIDInfoMap.find(audioID);
@@ -487,7 +500,7 @@ AudioEngine::AudioState AudioEngine::getState(int audioID)
     {
         return tmpIterator->second.state;
     }
-    
+
     return AudioState::ERROR;
 }
 
@@ -498,7 +511,7 @@ AudioProfile* AudioEngine::getProfile(int audioID)
     {
         return &it->second.profileHelper->profile;
     }
-    
+
     return nullptr;
 }
 
@@ -508,7 +521,7 @@ AudioProfile* AudioEngine::getDefaultProfile()
     {
         _defaultProfileHelper = new (std::nothrow) ProfileHelper();
     }
-    
+
     return &_defaultProfileHelper->profile;
 }
 

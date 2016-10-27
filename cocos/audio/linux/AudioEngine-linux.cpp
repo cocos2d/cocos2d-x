@@ -103,6 +103,16 @@ void AudioEngineImpl::setVolume(int audioID, float volume)
     }
 }
 
+void AudioEngineImpl::setPitch(int audioID, float pitch)
+{
+    try {
+        mapChannelInfo[audioID].channel->setPitch(pitch);
+    }
+    catch (const std::out_of_range& oor) {
+        printf("AudioEngineImpl::setVolume: invalid audioID: %d\n", audioID);
+    }
+}
+
 void AudioEngineImpl::setLoop(int audioID, bool loop)
 {
     try {
@@ -140,6 +150,7 @@ bool AudioEngineImpl::resume(int audioID)
             channel->setMode(mapChannelInfo[audioID].loop ? FMOD_LOOP_NORMAL : FMOD_LOOP_OFF);
             channel->setLoopCount(mapChannelInfo[audioID].loop ? -1 : 0);
             channel->setVolume(mapChannelInfo[audioID].volume);
+            channel->setPitch(mapChannelInfo[audioID].pitch);
             channel->setUserData(reinterpret_cast<void *>(static_cast<std::intptr_t>(mapChannelInfo[audioID].id)));
             mapChannelInfo[audioID].channel = channel;
         }

@@ -853,6 +853,12 @@ bool UIListViewTest_Magnetic::init()
             eNextType = ListView::MagneticType::NONE;
             sString = "NONE";
         }
+        else
+        {
+            eNextType = ListView::MagneticType::NONE;
+            sString = "NONE";
+        }
+
         _listView->setMagneticType(eNextType);
         _titleLabel->setString(StringUtils::format("MagneticType - %s", sString.c_str()));
     });

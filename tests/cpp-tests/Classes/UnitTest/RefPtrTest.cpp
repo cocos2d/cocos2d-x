@@ -313,7 +313,7 @@ void RefPtrTest::onEnter()
         
         // Note: std::move will turn the rvalue into an rvalue reference and thus cause the move constructor to be invoked.
         // Have to use this because the compiler will try and optimize how we handle the return value otherwise and skip the move constructor.
-        RefPtr<__String> theString(std::move(someFunc()));
+        RefPtr<__String> theString(someFunc());
         CC_ASSERT(theString->getReferenceCount() == 2);
         CC_ASSERT(theString->compare("Hello world!") == 0);
         
