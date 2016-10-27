@@ -21,6 +21,9 @@
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #include "JNITest/JNITest.h"
 #endif
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
+#include "WindowTest/WindowTest.h"
+#endif
 
 // sort them alphabetically. thanks
 #include "ActionManagerTest/ActionManagerTest.h"
