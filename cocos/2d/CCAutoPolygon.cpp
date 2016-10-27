@@ -35,13 +35,24 @@ THE SOFTWARE.
 
 USING_NS_CC;
 
-static unsigned short quadIndices[]={0,1,2, 3,2,1};
+static unsigned short quadIndices9[]={
+    0+4*0,1+4*0,2+4*0, 3+4*0,2+4*0,1+4*0,
+    0+4*1,1+4*1,2+4*1, 3+4*1,2+4*1,1+4*1,
+    0+4*2,1+4*2,2+4*2, 3+4*2,2+4*2,1+4*2,
+    0+4*3,1+4*3,2+4*3, 3+4*3,2+4*3,1+4*3,
+    0+4*4,1+4*4,2+4*4, 3+4*4,2+4*4,1+4*4,
+    0+4*5,1+4*5,2+4*5, 3+4*5,2+4*5,1+4*5,
+    0+4*6,1+4*6,2+4*6, 3+4*6,2+4*6,1+4*6,
+    0+4*7,1+4*7,2+4*7, 3+4*7,2+4*7,1+4*7,
+    0+4*8,1+4*8,2+4*8, 3+4*8,2+4*8,1+4*8,
+};
+
 const static float PRECISION = 10.0f;
 
 PolygonInfo::PolygonInfo()
-: rect(cocos2d::Rect::ZERO)
-, filename("")
-, isVertsOwner(true)
+: _rect(Rect::ZERO)
+, _filename("")
+, _isVertsOwner(true)
 {
     triangles.verts = nullptr;
     triangles.indices = nullptr;
@@ -51,12 +62,12 @@ PolygonInfo::PolygonInfo()
 
 PolygonInfo::PolygonInfo(const PolygonInfo& other)
 : triangles()
-, rect()
-, isVertsOwner(true)
+, _rect()
+, _isVertsOwner(true)
 {
-    filename = other.filename;
-    isVertsOwner = true;
-    rect = other.rect;
+    _filename = other._filename;
+    _isVertsOwner = true;
+    _rect = other._rect;
     triangles.verts = new (std::nothrow) V3F_C4B_T2F[other.triangles.vertCount];
     triangles.indices = new (std::nothrow) unsigned short[other.triangles.indexCount];
     CCASSERT(triangles.verts && triangles.indices, "not enough memory");
@@ -71,9 +82,9 @@ PolygonInfo& PolygonInfo::operator= (const PolygonInfo& other)
     if(this != &other)
     {
         releaseVertsAndIndices();
-        filename = other.filename;
-        isVertsOwner = true;
-        rect = other.rect;
+        _filename = other._filename;
+        _isVertsOwner = true;
+        _rect = other._rect;
         triangles.verts = new (std::nothrow) V3F_C4B_T2F[other.triangles.vertCount];
         triangles.indices = new (std::nothrow) unsigned short[other.triangles.indexCount];
         CCASSERT(triangles.verts && triangles.indices, "not enough memory");
@@ -93,17 +104,29 @@ PolygonInfo::~PolygonInfo()
 void PolygonInfo::setQuad(V3F_C4B_T2F_Quad *quad)
 {
     releaseVertsAndIndices();
-    isVertsOwner = false;
-    triangles.indices = quadIndices;
+    _isVertsOwner = false;
+    triangles.indices = quadIndices9;
     triangles.vertCount = 4;
     triangles.indexCount = 6;
+    triangles.verts = (V3F_C4B_T2F*)quad;
+}
+
+void PolygonInfo::setQuads(V3F_C4B_T2F_Quad *quad, int numberOfQuads)
+{
+    CCASSERT(numberOfQuads >= 1 && numberOfQuads <= 9, "Invalid number of Quads");
+
+    releaseVertsAndIndices();
+    _isVertsOwner = false;
+    triangles.indices = quadIndices9;
+    triangles.vertCount = 4 * numberOfQuads;
+    triangles.indexCount = 6 * numberOfQuads;
     triangles.verts = (V3F_C4B_T2F*)quad;
 }
 
 void PolygonInfo::setTriangles(const TrianglesCommand::Triangles& other)
 {
     this->releaseVertsAndIndices();
-    isVertsOwner = false;
+    _isVertsOwner = false;
     
     this->triangles.vertCount = other.vertCount;
     this->triangles.indexCount = other.indexCount;
@@ -113,7 +136,7 @@ void PolygonInfo::setTriangles(const TrianglesCommand::Triangles& other)
 
 void PolygonInfo::releaseVertsAndIndices()
 {
-    if(isVertsOwner)
+    if(_isVertsOwner)
     {
         if(nullptr != triangles.verts)
         {
@@ -699,8 +722,8 @@ PolygonInfo AutoPolygon::generateTriangles(const Rect& rect, const float& epsilo
     calculateUV(realRect, tri.verts, tri.vertCount);
     PolygonInfo ret;
     ret.triangles = tri;
-    ret.filename = _filename;
-    ret.rect = realRect;
+    ret.setFilename(_filename);
+    ret.setRect(realRect);
     return ret;
 }
 

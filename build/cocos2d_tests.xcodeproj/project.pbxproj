@@ -5808,20 +5808,8 @@
 					1D6058900D05DD3D006BFB54 = {
 						DevelopmentTeam = U7E7529TA5;
 					};
-					507B40FE1C31BEA60067B53E = {
-						DevelopmentTeam = MDDB52YB8L;
-					};
-					507B427E1C31E6070067B53E = {
-						DevelopmentTeam = MDDB52YB8L;
-					};
 					507B43541C31FB340067B53E = {
 						CreatedOnToolsVersion = 7.2;
-					};
-					507B43611C31FB670067B53E = {
-						DevelopmentTeam = MDDB52YB8L;
-					};
-					507B43C31C3201360067B53E = {
-						DevelopmentTeam = MDDB52YB8L;
 					};
 				};
 			};
@@ -8401,6 +8389,7 @@
 		507B420B1C31BEA60067B53E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEVELOPMENT_TEAM = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "../tests/cpp-tests/proj.ios/Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -8424,6 +8413,7 @@
 		507B420C1C31BEA60067B53E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEVELOPMENT_TEAM = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "../tests/cpp-tests/proj.ios/Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -8448,6 +8438,7 @@
 		507B42AE1C31E6070067B53E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEVELOPMENT_TEAM = "";
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -8472,6 +8463,7 @@
 		507B42AF1C31E6070067B53E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEVELOPMENT_TEAM = "";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -8512,6 +8504,7 @@
 		507B43B71C31FB670067B53E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEVELOPMENT_TEAM = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_TARGET_OS_TVOS,
@@ -8533,6 +8526,7 @@
 		507B43B81C31FB670067B53E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEVELOPMENT_TEAM = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_TARGET_OS_TVOS,
@@ -8555,6 +8549,7 @@
 		507B43F01C3201360067B53E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEVELOPMENT_TEAM = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_TARGET_OS_TVOS,
@@ -8571,6 +8566,7 @@
 		507B43F11C3201360067B53E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEVELOPMENT_TEAM = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_TARGET_OS_TVOS,
@@ -8785,6 +8781,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "../tests/cpp-tests/proj.ios/Prefix.pch";
@@ -8811,6 +8808,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "../tests/cpp-tests/proj.ios/Prefix.pch";

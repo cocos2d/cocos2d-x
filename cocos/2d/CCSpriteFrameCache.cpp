@@ -132,7 +132,7 @@ void SpriteFrameCache::initializePolygonInfo(const Size &textureSize,
     info.triangles.verts = vertexData;
     info.triangles.indexCount = static_cast<int>(indexCount);
     info.triangles.indices = indexData;
-    info.rect = Rect(0, 0, spriteSize.width, spriteSize.height);
+    info.setRect(Rect(0, 0, spriteSize.width, spriteSize.height));
 }
 
 void SpriteFrameCache::addSpriteFramesWithDictionary(ValueMap& dictionary, Texture2D* texture)
