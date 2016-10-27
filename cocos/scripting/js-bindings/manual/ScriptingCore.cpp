@@ -520,11 +520,7 @@ void ScriptingCore::string_report(JS::HandleValue val) {
 bool ScriptingCore::evalString(const char *string, JS::MutableHandleValue outVal, const char *filename, JSContext* cx, JS::HandleObject global)
 {
     JSAutoCompartment ac(cx, global);
-    JS::PersistentRootedScript script(cx);
-    if (script == nullptr) {
-        return false;
-    }
-    
+    JS::RootedScript script(cx);
     JS::CompileOptions op(cx);
     op.setUTF8(true);
     
