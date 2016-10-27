@@ -167,6 +167,12 @@ void EditBoxImplAndroid::setNativeReturnType(EditBox::KeyboardReturnType returnT
                                     _editBoxIndex, static_cast<int>(returnType));
 }
 
+void EditBoxImplAndroid::setNativeTextHorizontalAlignment(cocos2d::TextHAlignment alignment)
+{
+    JniHelper::callStaticVoidMethod(editBoxClassName, "setTextHorizontalAlignment", 
+                                    _editBoxIndex, static_cast<int>(alignment));
+}
+
 bool EditBoxImplAndroid::isEditing()
 {
     return false;

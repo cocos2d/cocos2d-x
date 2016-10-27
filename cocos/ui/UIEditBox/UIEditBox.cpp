@@ -45,6 +45,7 @@ EditBox::EditBox(void)
 , _colPlaceHolder(Color3B::GRAY)
 , _maxLength(0)
 , _adjustHeight(0.0f)
+, _alignment(cocos2d::TextHAlignment::LEFT)
 #if CC_ENABLE_SCRIPT_BINDING
 , _scriptEditBoxHandler(0)
 #endif
@@ -350,6 +351,14 @@ void EditBox::setReturnType(EditBox::KeyboardReturnType returnType)
     if (_editBoxImpl != nullptr)
     {
         _editBoxImpl->setReturnType(returnType);
+    }
+}
+
+  void EditBox::setTextHorizontalAlignment(cocos2d::TextHAlignment alignment)
+{
+    if (_editBoxImpl != nullptr)
+    {
+        _editBoxImpl->setTextHorizontalAlignment(alignment);
     }
 }
 
