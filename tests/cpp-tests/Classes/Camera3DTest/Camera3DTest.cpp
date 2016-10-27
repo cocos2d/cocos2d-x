@@ -56,7 +56,7 @@ CameraRotationTest::CameraRotationTest()
     auto s = Director::getInstance()->getWinSize();
     
     _camControlNode = Node::create();
-    _camControlNode->setNormalizedPosition(Vec2(.5,.5));
+    _camControlNode->setPositionNormalized(Vec2(.5,.5));
     addChild(_camControlNode);
 
     _camNode = Node::create();

@@ -794,12 +794,18 @@
 		500D1CD31CF4A48B00535D35 /* Bug-15594.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500D1CD11CF4A48B00535D35 /* Bug-15594.cpp */; };
 		500D1CD41CF4A48B00535D35 /* Bug-15594.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500D1CD11CF4A48B00535D35 /* Bug-15594.cpp */; };
 		500D1CD51CF4A48B00535D35 /* Bug-15594.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500D1CD11CF4A48B00535D35 /* Bug-15594.cpp */; };
+		503512A51D99F5A800F89EA9 /* CreatorTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 503512A31D99F5A800F89EA9 /* CreatorTest.cpp */; };
+		503512A61D99F5A800F89EA9 /* CreatorTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 503512A31D99F5A800F89EA9 /* CreatorTest.cpp */; };
+		503512A71D99F5A800F89EA9 /* CreatorTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 503512A31D99F5A800F89EA9 /* CreatorTest.cpp */; };
 		5046AB4A1AF2A8D80060550B /* MaterialSystemTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5046AB481AF2A8D80060550B /* MaterialSystemTest.cpp */; };
 		5046AB4B1AF2A8D80060550B /* MaterialSystemTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5046AB481AF2A8D80060550B /* MaterialSystemTest.cpp */; };
 		5046AB5B1AF2C4180060550B /* Materials in Resources */ = {isa = PBXBuildFile; fileRef = 5046AB5A1AF2C4180060550B /* Materials */; };
 		5046AB5C1AF2C4180060550B /* Materials in Resources */ = {isa = PBXBuildFile; fileRef = 5046AB5A1AF2C4180060550B /* Materials */; };
 		504C949C1D1C51BE00E4E9B3 /* VRTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C949A1D1C51BE00E4E9B3 /* VRTest.cpp */; };
 		504C949E1D1C51BE00E4E9B3 /* VRTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C949A1D1C51BE00E4E9B3 /* VRTest.cpp */; };
+		5073FE871DA4939D00957007 /* creator_assets in Resources */ = {isa = PBXBuildFile; fileRef = 5073FE861DA4939D00957007 /* creator_assets */; };
+		5073FE881DA4939D00957007 /* creator_assets in Resources */ = {isa = PBXBuildFile; fileRef = 5073FE861DA4939D00957007 /* creator_assets */; };
+		5073FE891DA4939D00957007 /* creator_assets in Resources */ = {isa = PBXBuildFile; fileRef = 5073FE861DA4939D00957007 /* creator_assets */; };
 		507B41021C31BEA60067B53E /* components in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CB318CED84500F37B72 /* components */; };
 		507B41031C31BEA60067B53E /* Icon-144.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35C7918CECF1400F37B72 /* Icon-144.png */; };
 		507B41041C31BEA60067B53E /* Icon-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35C7D18CECF1400F37B72 /* Icon-50.png */; };
@@ -1183,8 +1189,23 @@
 		507B44361C336EFA0067B53E /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ABCA35418CD9A820087CE3A /* OpenGL.framework */; };
 		507B44471C3370050067B53E /* main.js in Resources */ = {isa = PBXBuildFile; fileRef = 507B44451C3370050067B53E /* main.js */; };
 		507B44481C3370050067B53E /* project.json in Resources */ = {isa = PBXBuildFile; fileRef = 507B44461C3370050067B53E /* project.json */; };
+		5085F71F1DBED88D00104AB2 /* creator_utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5085F71D1DBED88D00104AB2 /* creator_utils.cpp */; };
+		5085F7201DBED88D00104AB2 /* creator_utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5085F71D1DBED88D00104AB2 /* creator_utils.cpp */; };
+		5085F7211DBED88D00104AB2 /* creator_utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5085F71D1DBED88D00104AB2 /* creator_utils.cpp */; };
 		50921EAF1B746D5F00C085CC /* DownloaderTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50921EAD1B746D5F00C085CC /* DownloaderTest.cpp */; };
 		50921EB01B746D5F00C085CC /* DownloaderTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50921EAD1B746D5F00C085CC /* DownloaderTest.cpp */; };
+		50ACD8951DA5D1A800A5706E /* CreatorLabels.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ACD8911DA5D1A800A5706E /* CreatorLabels.cpp */; };
+		50ACD8961DA5D1A800A5706E /* CreatorLabels.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ACD8911DA5D1A800A5706E /* CreatorLabels.cpp */; };
+		50ACD8971DA5D1A800A5706E /* CreatorLabels.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ACD8911DA5D1A800A5706E /* CreatorLabels.cpp */; };
+		50ACD8981DA5D1A800A5706E /* CreatorTest1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ACD8931DA5D1A800A5706E /* CreatorTest1.cpp */; };
+		50ACD8991DA5D1A800A5706E /* CreatorTest1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ACD8931DA5D1A800A5706E /* CreatorTest1.cpp */; };
+		50ACD89A1DA5D1A800A5706E /* CreatorTest1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ACD8931DA5D1A800A5706E /* CreatorTest1.cpp */; };
+		50ACD89D1DA6062A00A5706E /* CreatorSprites.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ACD89B1DA6062A00A5706E /* CreatorSprites.cpp */; };
+		50ACD89E1DA6062A00A5706E /* CreatorSprites.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ACD89B1DA6062A00A5706E /* CreatorSprites.cpp */; };
+		50ACD89F1DA6062A00A5706E /* CreatorSprites.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ACD89B1DA6062A00A5706E /* CreatorSprites.cpp */; };
+		50ACD8A71DA8607A00A5706E /* CreatorUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ACD8A51DA8607A00A5706E /* CreatorUI.cpp */; };
+		50ACD8A81DA8607A00A5706E /* CreatorUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ACD8A51DA8607A00A5706E /* CreatorUI.cpp */; };
+		50ACD8A91DA8607A00A5706E /* CreatorUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ACD8A51DA8607A00A5706E /* CreatorUI.cpp */; };
 		50D6E2511D1D1782000974D4 /* VRTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C949A1D1C51BE00E4E9B3 /* VRTest.cpp */; };
 		50FC18521C3371C000DD15A3 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50FC17C51C3371C000DD15A3 /* AppDelegate.cpp */; };
 		50FC188C1C3371C000DD15A3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 50FC18211C3371C000DD15A3 /* InfoPlist.strings */; };
@@ -2472,6 +2493,8 @@
 		4B5C5BB41CA114DB00D55A14 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS9.1.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
 		500D1CD11CF4A48B00535D35 /* Bug-15594.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "Bug-15594.cpp"; sourceTree = "<group>"; };
 		500D1CD21CF4A48B00535D35 /* Bug-15594.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bug-15594.h"; sourceTree = "<group>"; };
+		503512A31D99F5A800F89EA9 /* CreatorTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CreatorTest.cpp; sourceTree = "<group>"; };
+		503512A41D99F5A800F89EA9 /* CreatorTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreatorTest.h; sourceTree = "<group>"; };
 		503FAE1B1D74B6C30036585D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		503FAE1D1D74B6C30036585D /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		503FAE1E1D74B6C30036585D /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Icon.icns; sourceTree = "<group>"; };
@@ -2483,6 +2506,7 @@
 		5046AB5A1AF2C4180060550B /* Materials */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Materials; path = "../tests/cpp-tests/Resources/Materials"; sourceTree = "<group>"; };
 		504C949A1D1C51BE00E4E9B3 /* VRTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VRTest.cpp; sourceTree = "<group>"; };
 		504C949B1D1C51BE00E4E9B3 /* VRTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VRTest.h; sourceTree = "<group>"; };
+		5073FE861DA4939D00957007 /* creator_assets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = creator_assets; path = "../tests/cpp-tests/Resources/creator_assets"; sourceTree = "<group>"; };
 		507B420D1C31BEA60067B53E /* cpp-tests tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "cpp-tests tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		507B42B01C31E6070067B53E /* js-tests tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "js-tests tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		507B43B91C31FB670067B53E /* lua-tests tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "lua-tests tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2490,8 +2514,18 @@
 		507B44431C336EFA0067B53E /* js-memory-gc-tests Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "js-memory-gc-tests Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		507B44451C3370050067B53E /* main.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = main.js; path = "../tests/js-memory-gc-tests/main.js"; sourceTree = "<group>"; };
 		507B44461C3370050067B53E /* project.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = project.json; path = "../tests/js-memory-gc-tests/project.json"; sourceTree = "<group>"; };
+		5085F71D1DBED88D00104AB2 /* creator_utils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = creator_utils.cpp; sourceTree = "<group>"; };
+		5085F71E1DBED88D00104AB2 /* creator_utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = creator_utils.h; sourceTree = "<group>"; };
 		50921EAD1B746D5F00C085CC /* DownloaderTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DownloaderTest.cpp; sourceTree = "<group>"; };
 		50921EAE1B746D5F00C085CC /* DownloaderTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownloaderTest.h; sourceTree = "<group>"; };
+		50ACD8911DA5D1A800A5706E /* CreatorLabels.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CreatorLabels.cpp; sourceTree = "<group>"; };
+		50ACD8921DA5D1A800A5706E /* CreatorLabels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreatorLabels.h; sourceTree = "<group>"; };
+		50ACD8931DA5D1A800A5706E /* CreatorTest1.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CreatorTest1.cpp; sourceTree = "<group>"; };
+		50ACD8941DA5D1A800A5706E /* CreatorTest1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreatorTest1.h; sourceTree = "<group>"; };
+		50ACD89B1DA6062A00A5706E /* CreatorSprites.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CreatorSprites.cpp; sourceTree = "<group>"; };
+		50ACD89C1DA6062A00A5706E /* CreatorSprites.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreatorSprites.h; sourceTree = "<group>"; };
+		50ACD8A51DA8607A00A5706E /* CreatorUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CreatorUI.cpp; sourceTree = "<group>"; };
+		50ACD8A61DA8607A00A5706E /* CreatorUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreatorUI.h; sourceTree = "<group>"; };
 		50FC17C51C3371C000DD15A3 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
 		50FC17C61C3371C000DD15A3 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		50FC180B1C3371C000DD15A3 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
@@ -3440,6 +3474,7 @@
 		1AC3592418CECF0A00F37B72 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				503512A21D99F5A800F89EA9 /* CreatorTest */,
 				504C94991D1C51BE00E4E9B3 /* VRTest */,
 				50921EAC1B746D5F00C085CC /* DownloaderTest */,
 				B6DD2FF91B04972B00E47F5F /* NavMeshTest */,
@@ -4413,6 +4448,7 @@
 		1AC35CA818CED83500F37B72 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				5073FE861DA4939D00957007 /* creator_assets */,
 				460629771CDB4DBA00B44058 /* ccs-res */,
 				B61E90CA1B12B74B00BE69EA /* NavMesh */,
 				5046AB5A1AF2C4180060550B /* Materials */,
@@ -5045,6 +5081,25 @@
 				507B42111C31BEA70067B53E /* libcocos2d tvOS.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		503512A21D99F5A800F89EA9 /* CreatorTest */ = {
+			isa = PBXGroup;
+			children = (
+				5085F71D1DBED88D00104AB2 /* creator_utils.cpp */,
+				5085F71E1DBED88D00104AB2 /* creator_utils.h */,
+				50ACD8A51DA8607A00A5706E /* CreatorUI.cpp */,
+				50ACD8A61DA8607A00A5706E /* CreatorUI.h */,
+				50ACD89B1DA6062A00A5706E /* CreatorSprites.cpp */,
+				50ACD89C1DA6062A00A5706E /* CreatorSprites.h */,
+				50ACD8911DA5D1A800A5706E /* CreatorLabels.cpp */,
+				50ACD8921DA5D1A800A5706E /* CreatorLabels.h */,
+				50ACD8931DA5D1A800A5706E /* CreatorTest1.cpp */,
+				50ACD8941DA5D1A800A5706E /* CreatorTest1.h */,
+				503512A31D99F5A800F89EA9 /* CreatorTest.cpp */,
+				503512A41D99F5A800F89EA9 /* CreatorTest.h */,
+			);
+			path = CreatorTest;
 			sourceTree = "<group>";
 		};
 		503FAE191D74B6C30036585D /* proj.mac */ = {
@@ -5808,20 +5863,11 @@
 					1D6058900D05DD3D006BFB54 = {
 						DevelopmentTeam = U7E7529TA5;
 					};
-					507B40FE1C31BEA60067B53E = {
-						DevelopmentTeam = MDDB52YB8L;
-					};
-					507B427E1C31E6070067B53E = {
-						DevelopmentTeam = MDDB52YB8L;
-					};
 					507B43541C31FB340067B53E = {
 						CreatedOnToolsVersion = 7.2;
 					};
-					507B43611C31FB670067B53E = {
-						DevelopmentTeam = MDDB52YB8L;
-					};
-					507B43C31C3201360067B53E = {
-						DevelopmentTeam = MDDB52YB8L;
+					A07A517F1783A1D20073F6A7 = {
+						DevelopmentTeam = V9GM3JGLHY;
 					};
 				};
 			};
@@ -6224,6 +6270,7 @@
 				1AC35D0018CED84500F37B72 /* pew-pew-lei.wav in Resources */,
 				1AC35CD018CED84500F37B72 /* background.mp3 in Resources */,
 				1AC35CD618CED84500F37B72 /* CocosBuilderExample.ccbproj in Resources */,
+				5073FE871DA4939D00957007 /* creator_assets in Resources */,
 				3E92EA851921A7720094CD21 /* Sprite3DTest in Resources */,
 				1AC35CA318CECF1E00F37B72 /* InfoPlist.strings in Resources */,
 				1AC35CA418CECF1E00F37B72 /* MainMenu.xib in Resources */,
@@ -6291,6 +6338,7 @@
 				507B41191C31BEA60067B53E /* zwoptex in Resources */,
 				507B411A1C31BEA60067B53E /* Images in Resources */,
 				507B411B1C31BEA60067B53E /* Icon-40.png in Resources */,
+				5073FE891DA4939D00957007 /* creator_assets in Resources */,
 				507B411C1C31BEA60067B53E /* Icon-100.png in Resources */,
 				507B411D1C31BEA60067B53E /* pew-pew-lei.wav in Resources */,
 				507B411E1C31BEA60067B53E /* Shaders in Resources */,
@@ -6514,6 +6562,7 @@
 				1AC35CF518CED84500F37B72 /* Images in Resources */,
 				1AC35C9118CECF1400F37B72 /* Icon-40.png in Resources */,
 				1AC35C8B18CECF1400F37B72 /* Icon-100.png in Resources */,
+				5073FE881DA4939D00957007 /* creator_assets in Resources */,
 				1AC35D0118CED84500F37B72 /* pew-pew-lei.wav in Resources */,
 				460629791CDB4DBA00B44058 /* ccs-res in Resources */,
 				1AC35D0518CED84500F37B72 /* Shaders in Resources */,
@@ -6916,6 +6965,7 @@
 				1AC35BE318CECF0C00F37B72 /* CCControlColourPickerTest.cpp in Sources */,
 				29080DB1191B595E0066F8DF /* UILayoutTest.cpp in Sources */,
 				1AC35B2318CECF0C00F37B72 /* ActionsEaseTest.cpp in Sources */,
+				5085F71F1DBED88D00104AB2 /* creator_utils.cpp in Sources */,
 				1AC35C1918CECF0C00F37B72 /* MutiTouchTest.cpp in Sources */,
 				29080DBD191B595E0066F8DF /* UIPageViewTest.cpp in Sources */,
 				1AC35B2918CECF0C00F37B72 /* AppDelegate.cpp in Sources */,
@@ -6941,6 +6991,7 @@
 				B603F1AF1AC8EA4E00A9579C /* TerrainTest.cpp in Sources */,
 				29080DC7191B595E0066F8DF /* UISceneManager.cpp in Sources */,
 				1AC35B4918CECF0C00F37B72 /* Bug-914.cpp in Sources */,
+				50ACD8981DA5D1A800A5706E /* CreatorTest1.cpp in Sources */,
 				1AC35B6318CECF0C00F37B72 /* EffectsAdvancedTest.cpp in Sources */,
 				B6CAB54E1AF9AA6C00B9B856 /* Physics3DTest.cpp in Sources */,
 				B639932E1A490EC700B07923 /* Particle3DTest.cpp in Sources */,
@@ -6960,6 +7011,7 @@
 				1AC35BF718CECF0C00F37B72 /* SocketIOTest.cpp in Sources */,
 				1AC35C4F18CECF0C00F37B72 /* SpriteTest.cpp in Sources */,
 				1AC35C0318CECF0C00F37B72 /* FileUtilsTest.cpp in Sources */,
+				50ACD89D1DA6062A00A5706E /* CreatorSprites.cpp in Sources */,
 				B5CE6DD11B3C08F8002B0419 /* UIRadioButtonTest.cpp in Sources */,
 				B6C039D919C95D83007207DC /* LightTest.cpp in Sources */,
 				1AC35B5B18CECF0C00F37B72 /* CurlTest.cpp in Sources */,
@@ -6969,6 +7021,7 @@
 				3E9E75D0199324CB005B7047 /* Camera3DTest.cpp in Sources */,
 				29080DC1191B595E0066F8DF /* UIRichTextTest.cpp in Sources */,
 				1AC35B2B18CECF0C00F37B72 /* BaseTest.cpp in Sources */,
+				50ACD8A71DA8607A00A5706E /* CreatorUI.cpp in Sources */,
 				1AC35BE718CECF0C00F37B72 /* CCControlScene.cpp in Sources */,
 				B609E67319C18DAD003D0074 /* BillBoardTest.cpp in Sources */,
 				292CF01419A1965E00E8E6A0 /* UIEditBoxTest.cpp in Sources */,
@@ -7001,6 +7054,7 @@
 				1AC35B5518CECF0C00F37B72 /* ConfigurationTest.cpp in Sources */,
 				1AC35BE518CECF0C00F37B72 /* CCControlPotentiometerTest.cpp in Sources */,
 				1AC35C5B18CECF0C00F37B72 /* TileMapTest.cpp in Sources */,
+				50ACD8951DA5D1A800A5706E /* CreatorLabels.cpp in Sources */,
 				1AC35B4718CECF0C00F37B72 /* Bug-899.cpp in Sources */,
 				1AC35C1B18CECF0C00F37B72 /* NewEventDispatcherTest.cpp in Sources */,
 				1AC35B3318CECF0C00F37B72 /* Test.cpp in Sources */,
@@ -7015,6 +7069,7 @@
 				1AC35B6518CECF0C00F37B72 /* EffectsTest.cpp in Sources */,
 				1AC35B7118CECF0C00F37B72 /* TestHeaderLayer.cpp in Sources */,
 				94D793D91B4B7A3600F60F10 /* Bug-CCDrawNode.cpp in Sources */,
+				503512A51D99F5A800F89EA9 /* CreatorTest.cpp in Sources */,
 				1AC35B2118CECF0C00F37B72 /* ActionManagerTest.cpp in Sources */,
 				1AC35C3D18CECF0C00F37B72 /* PhysicsTest.cpp in Sources */,
 				29080DAD191B595E0066F8DF /* UIImageViewTest.cpp in Sources */,
@@ -7095,6 +7150,7 @@
 				507B41591C31BEA60067B53E /* UILoadingBarTest.cpp in Sources */,
 				507B415B1C31BEA60067B53E /* SceneTest.cpp in Sources */,
 				507B415E1C31BEA60067B53E /* MenuTestLayer.cpp in Sources */,
+				503512A71D99F5A800F89EA9 /* CreatorTest.cpp in Sources */,
 				507B415F1C31BEA60067B53E /* ClippingNodeTest.cpp in Sources */,
 				507B41601C31BEA60067B53E /* LayerTest.cpp in Sources */,
 				507B41611C31BEA60067B53E /* UITextBMFontTest.cpp in Sources */,
@@ -7159,17 +7215,21 @@
 				507B41A91C31BEA60067B53E /* ChipmunkTest.cpp in Sources */,
 				507B41AB1C31BEA60067B53E /* ConsoleTest.cpp in Sources */,
 				507B41AC1C31BEA60067B53E /* IntervalTest.cpp in Sources */,
+				50ACD89F1DA6062A00A5706E /* CreatorSprites.cpp in Sources */,
 				507B41AD1C31BEA60067B53E /* UISliderTest.cpp in Sources */,
 				507B41AE1C31BEA60067B53E /* CCControlStepperTest.cpp in Sources */,
 				507B41AF1C31BEA60067B53E /* UIButtonTest.cpp in Sources */,
 				507B41B01C31BEA60067B53E /* TextureAtlasEncryptionTest.cpp in Sources */,
 				507B41B11C31BEA60067B53E /* ConfigurationTest.cpp in Sources */,
+				50ACD89A1DA5D1A800A5706E /* CreatorTest1.cpp in Sources */,
 				507B41B21C31BEA60067B53E /* CCControlPotentiometerTest.cpp in Sources */,
 				507B41B31C31BEA60067B53E /* RootViewController.mm in Sources */,
 				507B41B41C31BEA60067B53E /* TileMapTest.cpp in Sources */,
+				50ACD8971DA5D1A800A5706E /* CreatorLabels.cpp in Sources */,
 				507B41B51C31BEA60067B53E /* UIRichTextTest.cpp in Sources */,
 				507B41B71C31BEA60067B53E /* Bug-899.cpp in Sources */,
 				507B41B81C31BEA60067B53E /* NewEventDispatcherTest.cpp in Sources */,
+				50ACD8A91DA8607A00A5706E /* CreatorUI.cpp in Sources */,
 				507B41BE1C31BEA60067B53E /* Test.cpp in Sources */,
 				507B41BF1C31BEA60067B53E /* ParticleTest.cpp in Sources */,
 				507B41C01C31BEA60067B53E /* TouchesTest.cpp in Sources */,
@@ -7198,6 +7258,7 @@
 				507B41DC1C31BEA60067B53E /* UITextTest.cpp in Sources */,
 				507B41DE1C31BEA60067B53E /* TableViewTestScene.cpp in Sources */,
 				507B41DF1C31BEA60067B53E /* ShaderTest2.cpp in Sources */,
+				5085F7211DBED88D00104AB2 /* creator_utils.cpp in Sources */,
 				507B41E01C31BEA60067B53E /* UnitTest.cpp in Sources */,
 				507B41E21C31BEA60067B53E /* Bug-458.cpp in Sources */,
 				507B41E31C31BEA60067B53E /* UIScene.cpp in Sources */,
@@ -7300,6 +7361,7 @@
 				1AC35C5418CECF0C00F37B72 /* TextInputTest.cpp in Sources */,
 				1AC35B4618CECF0C00F37B72 /* Bug-886.cpp in Sources */,
 				1AC35BE218CECF0C00F37B72 /* CCControlButtonTest.cpp in Sources */,
+				50ACD8991DA5D1A800A5706E /* CreatorTest1.cpp in Sources */,
 				1AC35BEC18CECF0C00F37B72 /* CCControlSliderTest.cpp in Sources */,
 				1AC35C4E18CECF0C00F37B72 /* SpineTest.cpp in Sources */,
 				B6CAB54F1AF9AA6C00B9B856 /* Physics3DTest.cpp in Sources */,
@@ -7331,6 +7393,7 @@
 				29080DE4191B595E0066F8DF /* UIWidgetAddNodeTest.cpp in Sources */,
 				1AC35C4218CECF0C00F37B72 /* RenderTextureTest.cpp in Sources */,
 				1AC35C1618CECF0C00F37B72 /* MenuTest.cpp in Sources */,
+				50ACD8A81DA8607A00A5706E /* CreatorUI.cpp in Sources */,
 				1AC35C6818CECF0C00F37B72 /* UserDefaultTest.cpp in Sources */,
 				29080D1D191B574B0066F8DF /* UITest.cpp in Sources */,
 				3E9E75D1199324CB005B7047 /* Camera3DTest.cpp in Sources */,
@@ -7365,6 +7428,7 @@
 				1AC35C0418CECF0C00F37B72 /* FileUtilsTest.cpp in Sources */,
 				1AC35B5C18CECF0C00F37B72 /* CurlTest.cpp in Sources */,
 				1AC35C0018CECF0C00F37B72 /* CustomTableViewCell.cpp in Sources */,
+				50ACD8961DA5D1A800A5706E /* CreatorLabels.cpp in Sources */,
 				500D1CD41CF4A48B00535D35 /* Bug-15594.cpp in Sources */,
 				1AC35BF018CECF0C00F37B72 /* CCControlSwitchTest.cpp in Sources */,
 				1AC35B2C18CECF0C00F37B72 /* BaseTest.cpp in Sources */,
@@ -7396,6 +7460,7 @@
 				1AC35C8618CECF1400F37B72 /* RootViewController.mm in Sources */,
 				1AC35C5C18CECF0C00F37B72 /* TileMapTest.cpp in Sources */,
 				29080DC2191B595E0066F8DF /* UIRichTextTest.cpp in Sources */,
+				5085F7201DBED88D00104AB2 /* creator_utils.cpp in Sources */,
 				3EA0FB72191C844400B170C8 /* UIVideoPlayerTest.cpp in Sources */,
 				1AC35B4818CECF0C00F37B72 /* Bug-899.cpp in Sources */,
 				1AC35C1C18CECF0C00F37B72 /* NewEventDispatcherTest.cpp in Sources */,
@@ -7408,6 +7473,7 @@
 				1AC35B6618CECF0C00F37B72 /* EffectsTest.cpp in Sources */,
 				1AC35B7218CECF0C00F37B72 /* TestHeaderLayer.cpp in Sources */,
 				50D6E2511D1D1782000974D4 /* VRTest.cpp in Sources */,
+				50ACD89E1DA6062A00A5706E /* CreatorSprites.cpp in Sources */,
 				1AC35B2218CECF0C00F37B72 /* ActionManagerTest.cpp in Sources */,
 				1AC35C3E18CECF0C00F37B72 /* PhysicsTest.cpp in Sources */,
 				29080DB2191B595E0066F8DF /* UILayoutTest.cpp in Sources */,
@@ -7436,6 +7502,7 @@
 				3E92EA831921A1400094CD21 /* Sprite3DTest.cpp in Sources */,
 				1AC35B5A18CECF0C00F37B72 /* controller.cpp in Sources */,
 				1AC35BEA18CECF0C00F37B72 /* CCControlSceneManager.cpp in Sources */,
+				503512A61D99F5A800F89EA9 /* CreatorTest.cpp in Sources */,
 				1AC35B7418CECF0C00F37B72 /* TimelineCallbackTestLayer.cpp in Sources */,
 				94D793DA1B4B7A3600F60F10 /* Bug-CCDrawNode.cpp in Sources */,
 				1AC35BFC18CECF0C00F37B72 /* NotificationCenterTest.cpp in Sources */,
@@ -8401,6 +8468,7 @@
 		507B420B1C31BEA60067B53E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEVELOPMENT_TEAM = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "../tests/cpp-tests/proj.ios/Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -8424,6 +8492,7 @@
 		507B420C1C31BEA60067B53E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEVELOPMENT_TEAM = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "../tests/cpp-tests/proj.ios/Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -8448,6 +8517,7 @@
 		507B42AE1C31E6070067B53E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEVELOPMENT_TEAM = "";
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -8472,6 +8542,7 @@
 		507B42AF1C31E6070067B53E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEVELOPMENT_TEAM = "";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -8512,6 +8583,7 @@
 		507B43B71C31FB670067B53E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEVELOPMENT_TEAM = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_TARGET_OS_TVOS,
@@ -8533,6 +8605,7 @@
 		507B43B81C31FB670067B53E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEVELOPMENT_TEAM = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_TARGET_OS_TVOS,
@@ -8555,6 +8628,7 @@
 		507B43F01C3201360067B53E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEVELOPMENT_TEAM = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_TARGET_OS_TVOS,
@@ -8571,6 +8645,7 @@
 		507B43F11C3201360067B53E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEVELOPMENT_TEAM = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_TARGET_OS_TVOS,
@@ -8785,6 +8860,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = V9GM3JGLHY;
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "../tests/cpp-tests/proj.ios/Prefix.pch";
@@ -8811,6 +8887,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = V9GM3JGLHY;
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "../tests/cpp-tests/proj.ios/Prefix.pch";

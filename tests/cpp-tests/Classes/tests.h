@@ -35,6 +35,7 @@
 #include "CocosDenshionTest/CocosDenshionTest.h"
 #include "ConfigurationTest/ConfigurationTest.h"
 #include "ConsoleTest/ConsoleTest.h"
+#include "CreatorTest/CreatorTest.h"
 #include "CurrentLanguageTest/CurrentLanguageTest.h"
 #include "DataVisitorTest/DataVisitorTest.h"
 #include "DownloaderTest/DownloaderTest.h"

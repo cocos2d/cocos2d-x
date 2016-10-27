@@ -558,13 +558,13 @@ void Node::setPositionZ(float positionZ)
 }
 
 /// position getter
-const Vec2& Node::getNormalizedPosition() const
+const Vec2& Node::getPositionNormalized() const
 {
     return _normalizedPosition;
 }
 
 /// position setter
-void Node::setNormalizedPosition(const Vec2& position)
+void Node::setPositionNormalized(const Vec2& position)
 {
     if (_normalizedPosition.equals(position))
         return;
@@ -1176,7 +1176,7 @@ uint32_t Node::processParentFlags(const Mat4& parentTransform, uint32_t parentFl
 {
     if(_usingNormalizedPosition)
     {
-        CCASSERT(_parent, "setNormalizedPosition() doesn't work with orphan nodes");
+        CCASSERT(_parent, "setPositionNormalized() doesn't work with orphan nodes");
         if ((parentFlags & FLAGS_CONTENT_SIZE_DIRTY) || _normalizedPositionDirty)
         {
             auto& s = _parent->getContentSize();
