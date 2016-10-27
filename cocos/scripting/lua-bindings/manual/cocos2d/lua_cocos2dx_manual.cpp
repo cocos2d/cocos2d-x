@@ -7640,7 +7640,7 @@ int lua_cocos2dx_get_PolygonInfo_rect(lua_State* tolua_S)
         return 0;
     }
 #endif
-    rect_to_luaval(tolua_S, cobj->rect);
+    rect_to_luaval(tolua_S, cobj->getRect());
     return 1;
 
 #if COCOS2D_DEBUG >= 1
@@ -7677,7 +7677,9 @@ int lua_cocos2dx_set_PolygonInfo_rect(lua_State* tolua_S)
         if (!tolua_istable(tolua_S, 2, 0, &tolua_err))
             goto tolua_lerror;
 #endif
-        luaval_to_rect(tolua_S, 2, &self->rect);
+        Rect outRect;
+        luaval_to_rect(tolua_S, 2, &outRect);
+        self->setRect(outRect);
         return 0;
     }
 
@@ -7707,7 +7709,7 @@ int lua_cocos2dx_get_PolygonInfo_filename(lua_State* tolua_S)
         return 0;
     }
 #endif
-    tolua_pushcppstring(tolua_S, cobj->filename);
+    tolua_pushcppstring(tolua_S, cobj->getFilename());
     return 1;
 
 #if COCOS2D_DEBUG >= 1
@@ -7740,7 +7742,9 @@ int lua_cocos2dx_set_PolygonInfo_filename(lua_State* tolua_S)
 
     if (1 == argc)
     {
-        luaval_to_std_string(tolua_S, 2, &self->filename);
+        std::string outFilename;
+        luaval_to_std_string(tolua_S, 2, &outFilename);
+        self->setFilename(outFilename);
         return 0;
     }
 
