@@ -141,7 +141,7 @@ void Audio::ReleaseResources()
         m_soundEffectMasteringVoice = nullptr;
     }
 
-    for (auto& EffectIter = m_soundEffects)
+    for (auto& EffectIter : m_soundEffects)
 	{
         if (EffectIter.second.m_soundEffectSourceVoice != nullptr)
         {
