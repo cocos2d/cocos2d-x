@@ -920,6 +920,15 @@ std::vector<Mesh*> Sprite3D::getMeshArrayByName(const std::string& name) const
     return meshes;
 }
 
+Mesh* Sprite3D::getMesh() const 
+{ 
+    if(_meshes.empty())
+    {
+        return nullptr;
+    }
+    return _meshes.at(0); 
+}
+
 MeshSkin* Sprite3D::getSkin() const
 {
     for (const auto& it : _meshes) {
