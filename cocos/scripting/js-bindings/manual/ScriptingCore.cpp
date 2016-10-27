@@ -521,9 +521,6 @@ bool ScriptingCore::evalString(const char *string, JS::MutableHandleValue outVal
 {
     JSAutoCompartment ac(cx, global);
     JS::PersistentRootedScript script(cx);
-    if (script == nullptr) {
-        return false;
-    }
     
     JS::CompileOptions op(cx);
     op.setUTF8(true);
