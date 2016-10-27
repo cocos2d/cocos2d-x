@@ -37,6 +37,13 @@
         
 --------------------------------
 -- 
+-- @function [parent=#SkeletonAnimation] findAnimation 
+-- @param self
+-- @param #string name
+-- @return spAnimation#spAnimation ret (return value: spAnimation)
+        
+--------------------------------
+-- 
 -- @function [parent=#SkeletonAnimation] setCompleteListener 
 -- @param self
 -- @param #function listener
@@ -75,12 +82,6 @@
         
 --------------------------------
 -- 
--- @function [parent=#SkeletonAnimation] initialize 
--- @param self
--- @return SkeletonAnimation#SkeletonAnimation self (return value: sp.SkeletonAnimation)
-        
---------------------------------
--- 
 -- @function [parent=#SkeletonAnimation] clearTracks 
 -- @param self
 -- @return SkeletonAnimation#SkeletonAnimation self (return value: sp.SkeletonAnimation)
@@ -88,6 +89,38 @@
 --------------------------------
 -- 
 -- @function [parent=#SkeletonAnimation] clearTrack 
+-- @param self
+-- @return SkeletonAnimation#SkeletonAnimation self (return value: sp.SkeletonAnimation)
+        
+--------------------------------
+-- @overload self, string, string, float         
+-- @overload self, string, spAtlas, float         
+-- @function [parent=#SkeletonAnimation] createWithBinaryFile
+-- @param self
+-- @param #string skeletonBinaryFile
+-- @param #spAtlas atlas
+-- @param #float scale
+-- @return SkeletonAnimation#SkeletonAnimation ret (return value: sp.SkeletonAnimation)
+
+--------------------------------
+-- 
+-- @function [parent=#SkeletonAnimation] create 
+-- @param self
+-- @return SkeletonAnimation#SkeletonAnimation ret (return value: sp.SkeletonAnimation)
+        
+--------------------------------
+-- @overload self, string, string, float         
+-- @overload self, string, spAtlas, float         
+-- @function [parent=#SkeletonAnimation] createWithJsonFile
+-- @param self
+-- @param #string skeletonJsonFile
+-- @param #spAtlas atlas
+-- @param #float scale
+-- @return SkeletonAnimation#SkeletonAnimation ret (return value: sp.SkeletonAnimation)
+
+--------------------------------
+-- 
+-- @function [parent=#SkeletonAnimation] initialize 
 -- @param self
 -- @return SkeletonAnimation#SkeletonAnimation self (return value: sp.SkeletonAnimation)
         

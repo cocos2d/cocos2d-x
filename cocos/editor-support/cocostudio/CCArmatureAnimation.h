@@ -1,5 +1,5 @@
 ﻿/****************************************************************************
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -26,9 +26,9 @@ THE SOFTWARE.
 #ifndef __CCANIMATION_H__
 #define __CCANIMATION_H__
 
-#include "cocostudio/CCProcessBase.h"
-#include "cocostudio/CCTween.h"
-#include "cocostudio/CocosStudioExport.h"
+#include "editor-support/cocostudio/CCProcessBase.h"
+#include "editor-support/cocostudio/CCTween.h"
+#include "editor-support/cocostudio/CocosStudioExport.h"
 #include <queue>
 
 namespace cocostudio {
@@ -283,7 +283,7 @@ protected:
 
     int _toIndex;                                //! The frame index in MovementData->m_pMovFrameDataArr, it's different from m_iFrameIndex.
 
-    cocos2d::Vector<Tween*> _tweenList;
+    std::vector<Tween*> _tweenList;
 
     bool _ignoreFrameEvent;
     

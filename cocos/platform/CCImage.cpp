@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -79,14 +79,14 @@ extern "C"
 #endif // CC_USE_WEBP
 
 #include "base/ccMacros.h"
-#include "CCCommon.h"
-#include "CCStdC.h"
-#include "CCFileUtils.h"
+#include "platform/CCCommon.h"
+#include "platform/CCStdC.h"
+#include "platform/CCFileUtils.h"
 #include "base/CCConfiguration.h"
 #include "base/ccUtils.h"
 #include "base/ZipUtils.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-#include "android/CCFileUtils-android.h"
+#include "platform/android/CCFileUtils-android.h"
 #endif
 
 #define CC_GL_ATC_RGB_AMD                                          0x8C92
@@ -400,7 +400,7 @@ namespace
         uint32_t bytesOfKeyValueData;
     };
 }
-//atittc struct end
+//atitc struct end
 
 //////////////////////////////////////////////////////////////////////////
 
@@ -455,6 +455,7 @@ Texture2D::PixelFormat getDevicePixelFormat(Texture2D::PixelFormat format)
 //////////////////////////////////////////////////////////////////////////
 // Implement Image
 //////////////////////////////////////////////////////////////////////////
+bool Image::PNG_PREMULTIPLIED_ALPHA_ENABLED = true;
 
 Image::Image()
 : _data(nullptr)
@@ -465,7 +466,7 @@ Image::Image()
 , _fileType(Format::UNKNOWN)
 , _renderFormat(Texture2D::PixelFormat::NONE)
 , _numberOfMipmaps(0)
-, _hasPremultipliedAlpha(true)
+, _hasPremultipliedAlpha(false)
 {
 
 }
@@ -724,7 +725,6 @@ Image::Format Image::detectFormat(const unsigned char * data, ssize_t dataLen)
     }
     else
     {
-        CCLOG("cocos2d: can't detect image format");
         return Format::UNKNOWN;
     }
 }
@@ -803,7 +803,7 @@ namespace
 #endif // CC_USE_JPEG
 }
 
-#ifdef CC_USE_WIC
+#if CC_USE_WIC
 bool Image::decodeWithWIC(const unsigned char *data, ssize_t dataLen)
 {
     bool bRet = false;
@@ -813,7 +813,6 @@ bool Image::decodeWithWIC(const unsigned char *data, ssize_t dataLen)
     {
         _width = img.getWidth();
         _height = img.getHeight();
-        _hasPremultipliedAlpha = false;
 
         WICPixelFormatGUID format = img.getPixelFormat();
 
@@ -844,7 +843,7 @@ bool Image::decodeWithWIC(const unsigned char *data, ssize_t dataLen)
 
         _dataLen = img.getImageDataSize();
 
-        CCAssert(_dataLen > 0, "Image: Decompressed data length is invalid");
+        CCASSERT(_dataLen > 0, "Image: Decompressed data length is invalid");
 
         _data = new (std::nothrow) unsigned char[_dataLen];
         bRet = (img.getImageData(_data, _dataLen) > 0);
@@ -963,7 +962,6 @@ bool Image::initWithJpgData(const unsigned char * data, ssize_t dataLen)
         /* init image info */
         _width  = cinfo.output_width;
         _height = cinfo.output_height;
-        _hasPremultipliedAlpha = false;
 
         _dataLen = cinfo.output_width*cinfo.output_height*cinfo.output_components;
         _data = static_cast<unsigned char*>(malloc(_dataLen * sizeof(unsigned char)));
@@ -1025,7 +1023,7 @@ bool Image::initWithPngData(const unsigned char * data, ssize_t dataLen)
         info_ptr = png_create_info_struct(png_ptr);
         CC_BREAK_IF(!info_ptr);
 
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA && CC_TARGET_PLATFORM != CC_PLATFORM_NACL)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA && CC_TARGET_PLATFORM != CC_PLATFORM_NACL && CC_TARGET_PLATFORM != CC_PLATFORM_TIZEN)
         CC_BREAK_IF(setjmp(png_jmpbuf(png_ptr)));
 #endif
 
@@ -1125,13 +1123,9 @@ bool Image::initWithPngData(const unsigned char * data, ssize_t dataLen)
         png_read_end(png_ptr, nullptr);
 
         // premultiplied alpha for RGBA8888
-        if (color_type == PNG_COLOR_TYPE_RGB_ALPHA)
+        if (PNG_PREMULTIPLIED_ALPHA_ENABLED && color_type == PNG_COLOR_TYPE_RGB_ALPHA)
         {
             premultipliedAlpha();
-        }
-        else
-        {
-            _hasPremultipliedAlpha = false;
         }
 
         if (row_pointers != nullptr)
@@ -1583,8 +1577,6 @@ bool Image::initWithPVRv3Data(const unsigned char * data, ssize_t dataLen)
     {
         _hasPremultipliedAlpha = true;
     }
-    else
-        _hasPremultipliedAlpha = false;
     
     // sizing
     int width = CC_SWAP_INT32_LITTLE_TO_HOST(header->width);
@@ -1599,7 +1591,7 @@ bool Image::initWithPVRv3Data(const unsigned char * data, ssize_t dataLen)
     memcpy(_data, static_cast<const unsigned char*>(data) + sizeof(PVRv3TexHeader) + header->metadataLength, _dataLen);
     
     _numberOfMipmaps = header->numberOfMipmaps;
-    CCAssert(_numberOfMipmaps < MIPMAP_MAX, "Image: Maximum number of mimpaps reached. Increase the CC_MIPMAP_MAX value");
+    CCASSERT(_numberOfMipmaps < MIPMAP_MAX, "Image: Maximum number of mimpaps reached. Increase the CC_MIPMAP_MAX value");
     
     for (int i = 0; i < _numberOfMipmaps; i++)
     {
@@ -1687,7 +1679,7 @@ bool Image::initWithPVRv3Data(const unsigned char * data, ssize_t dataLen)
         }
         
         dataOffset += packetLength;
-        CCAssert(dataOffset <= _dataLen, "CCTexurePVR: Invalid length");
+        CCASSERT(dataOffset <= _dataLen, "Image: Invalid length");
         
         
         width = MAX(width >> 1, 1);
@@ -1810,9 +1802,7 @@ bool Image::initWithTGAData(tImageTGA* tgaData)
         _data = tgaData->imageData;
         _dataLen = _width * _height * tgaData->pixelDepth / 8;
         _fileType = Format::TGA;
-        
-        _hasPremultipliedAlpha = false;
-        
+
         ret = true;
         
     }while(false);
@@ -1838,7 +1828,7 @@ bool Image::initWithTGAData(tImageTGA* tgaData)
 
 namespace
 {
-    static const uint32_t makeFourCC(char ch0, char ch1, char ch2, char ch3)
+    static uint32_t makeFourCC(char ch0, char ch1, char ch2, char ch3)
     {
         const uint32_t fourCC = ((uint32_t)(char)(ch0) | ((uint32_t)(char)(ch1) << 8) | ((uint32_t)(char)(ch2) << 16) | ((uint32_t)(char)(ch3) << 24 ));
         return fourCC;
@@ -1847,7 +1837,6 @@ namespace
 
 bool Image::initWithS3TCData(const unsigned char * data, ssize_t dataLen)
 {
-    _hasPremultipliedAlpha = false;
     const uint32_t FOURCC_DXT1 = makeFourCC('D', 'X', 'T', '1');
     const uint32_t FOURCC_DXT3 = makeFourCC('D', 'X', 'T', '3');
     const uint32_t FOURCC_DXT5 = makeFourCC('D', 'X', 'T', '5');
@@ -2127,7 +2116,7 @@ bool Image::initWithWebpData(const unsigned char * data, ssize_t dataLen)
         _height   = config.input.height;
         
         //we ask webp to give data with premultiplied alpha
-        _hasPremultipliedAlpha = config.input.has_alpha;
+        _hasPremultipliedAlpha = (config.input.has_alpha != 0);
         
         _dataLen = _width * _height * (config.input.has_alpha?4:3);
         _data = static_cast<unsigned char*>(malloc(_dataLen * sizeof(unsigned char)));
@@ -2241,7 +2230,7 @@ bool Image::saveImageToPNG(const std::string& filePath, bool isToRGB)
             png_destroy_write_struct(&png_ptr, nullptr);
             break;
         }
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA && CC_TARGET_PLATFORM != CC_PLATFORM_NACL)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA && CC_TARGET_PLATFORM != CC_PLATFORM_NACL && CC_TARGET_PLATFORM != CC_PLATFORM_TIZEN)
         if (setjmp(png_jmpbuf(png_ptr)))
         {
             fclose(fp);
@@ -2451,6 +2440,10 @@ bool Image::saveImageToJPG(const std::string& filePath)
 
 void Image::premultipliedAlpha()
 {
+#if CC_ENABLE_PREMULTIPLIED_ALPHA == 0
+        _hasPremultipliedAlpha = false;
+        return;
+#else
     CCASSERT(_renderFormat == Texture2D::PixelFormat::RGBA8888, "The pixel format should be RGBA8888!");
     
     unsigned int* fourBytes = (unsigned int*)_data;
@@ -2461,6 +2454,7 @@ void Image::premultipliedAlpha()
     }
     
     _hasPremultipliedAlpha = true;
+#endif
 }
 
 

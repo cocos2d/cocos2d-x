@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -126,6 +126,8 @@ public:
 
     ResourceData getRenderFile();
 
+    virtual void setGLProgram(GLProgram* glProgram) override;
+    virtual void setGLProgramState(cocos2d::GLProgramState* glProgramState) override;
 CC_CONSTRUCTOR_ACCESS:
     //initializes state of widget.
     virtual bool init() override;

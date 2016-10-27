@@ -24,12 +24,12 @@
 #ifndef __JS_COCOSBUILDER_SPECIFICS_H__
 #define __JS_COCOSBUILDER_SPECIFICS_H__
 
-#include "../cocos2d_specifics.hpp"
+#include "scripting/js-bindings/manual/cocos2d_specifics.hpp"
 
 class JSCCBAnimationWrapper: public JSCallbackWrapper 
 {
 public:
-    JSCCBAnimationWrapper() {}
+    JSCCBAnimationWrapper(JS::HandleValue owner) : JSCallbackWrapper(owner) {}
     virtual ~JSCCBAnimationWrapper() {}
     
     void animationCompleteCallback()

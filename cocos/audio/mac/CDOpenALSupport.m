@@ -43,8 +43,8 @@
  $Id: CDOpenALSupport.h 16 2010-03-11 06:22:10Z steveoldmeadow $
  */
 
-#import "CDOpenALSupport.h"
-#import "CocosDenshion.h"
+#import "audio/mac/CDOpenALSupport.h"
+#import "audio/mac/CocosDenshion.h"
 #import <AudioToolbox/AudioToolbox.h>
 #import <AudioToolbox/ExtendedAudioFile.h>
 

@@ -53,7 +53,7 @@ public:
 CC_CONSTRUCTOR_ACCESS:
     PUDoStopSystemEventHandler(void) : PUEventHandler()
     {
-    };
+    }
     virtual ~PUDoStopSystemEventHandler(void) {};
 };
 

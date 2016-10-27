@@ -26,8 +26,8 @@ THE SOFTWARE.
 #ifndef __WINRT_INPUT_EVENT__
 #define __WINRT_INPUT_EVENT__
 
-#include "CCPlatformMacros.h"
-#include "InputEventTypes.h"
+#include "platform/CCPlatformMacros.h"
+#include "platform/winrt/InputEventTypes.h"
 #include "base/ccTypes.h"
 #include <agile.h>
 

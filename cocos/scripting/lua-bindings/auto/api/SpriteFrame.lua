@@ -36,6 +36,14 @@
 -- @return SpriteFrame#SpriteFrame self (return value: cc.SpriteFrame)
         
 --------------------------------
+--  Get center rect of the frame.<br>
+-- Useful to create 9-slice sprites<br>
+-- return The center rect of the sprite frame in points
+-- @function [parent=#SpriteFrame] getCapInsets 
+-- @param self
+-- @return rect_table#rect_table ret (return value: rect_table)
+        
+--------------------------------
 --  Get original size of the trimmed image.<br>
 -- return The original size of the trimmed image, in pixels.
 -- @function [parent=#SpriteFrame] getOriginalSizeInPixels 
@@ -133,6 +141,13 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
+--  hasCenterRect<br>
+-- return Whether or not it has a centerRect
+-- @function [parent=#SpriteFrame] hasCenterRect 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 --  Set rotated of the sprite frame.<br>
 -- param rotated Rotated the sprite frame if true.
 -- @function [parent=#SpriteFrame] setRotated 
@@ -161,6 +176,20 @@
 -- @function [parent=#SpriteFrame] getAnchorPoint 
 -- @param self
 -- @return vec2_table#vec2_table ret (return value: vec2_table)
+        
+--------------------------------
+-- setCenterRect<br>
+-- Useful to implement "9 sliced" sprites.<br>
+-- The sprite will be sliced into a 3 x 3 grid. The four corners of this grid are applied without<br>
+-- performing any scaling. The upper- and lower-middle parts are scaled horizontally, and the left- and right-middle parts are scaled vertically.<br>
+-- The center is scaled in both directions.<br>
+-- Important: The scaling is based the Sprite's trimmed size.<br>
+-- Limitations: Does not work when the sprite is part of `SpriteBatchNode`.<br>
+-- param centerRect the Rect in points
+-- @function [parent=#SpriteFrame] setCapInsets 
+-- @param self
+-- @param #rect_table centerRect
+-- @return SpriteFrame#SpriteFrame self (return value: cc.SpriteFrame)
         
 --------------------------------
 --  Check if anchor point is defined for the frame.<br>

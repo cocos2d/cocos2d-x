@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -28,7 +28,7 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 namespace ui {
-    
+
 IMPLEMENT_CLASS_GUI_INFO(PageView)
 
 PageView::PageView():
@@ -38,7 +38,10 @@ _currentPageIndex(-1),
 _childFocusCancelOffset(5.0f),
 _pageViewEventListener(nullptr),
 _pageViewEventSelector(nullptr),
-_eventCallback(nullptr)
+_eventCallback(nullptr),
+_autoScrollStopEpsilon(0.001f),
+_previousPageIndex(-1),
+_isTouchBegin(false)
 {
 }
 
@@ -59,7 +62,7 @@ PageView* PageView::create()
     CC_SAFE_DELETE(widget);
     return nullptr;
 }
-    
+
 bool PageView::init()
 {
     if (ListView::init())
@@ -131,7 +134,7 @@ void PageView::removePageAtIndex(ssize_t index)
 {
     removeItem(index);
 }
-    
+
 void PageView::removeAllPages()
 {
     removeAllItems();
@@ -151,10 +154,20 @@ void PageView::scrollToPage(ssize_t idx)
 {
     scrollToItem(idx);
 }
+    
+void PageView::scrollToPage(ssize_t idx, float time)
+{
+    scrollToItem(idx, time);
+}
 
 void PageView::scrollToItem(ssize_t itemIndex)
 {
     ListView::scrollToItem(itemIndex, Vec2::ANCHOR_MIDDLE, Vec2::ANCHOR_MIDDLE);
+}
+
+void PageView::scrollToItem(ssize_t itemIndex, float time)
+{
+    ListView::scrollToItem(itemIndex, Vec2::ANCHOR_MIDDLE, Vec2::ANCHOR_MIDDLE, time >= 0 ? time : _scrollTime);
 }
 
 void PageView::setCustomScrollThreshold(float threshold)
@@ -166,15 +179,20 @@ float PageView::getCustomScrollThreshold()const
 {
     return 0;
 }
-    
+
 void PageView::setUsingCustomScrollThreshold(bool flag)
 {
     CCLOG("PageView::setUsingCustomScrollThreshold() has no effect!");
 }
-    
+
 bool PageView::isUsingCustomScrollThreshold()const
 {
     return false;
+}
+
+void PageView::setAutoScrollStopEpsilon(float epsilon)
+{
+    _autoScrollStopEpsilon = epsilon;
 }
 
 void PageView::moveInnerContainer(const Vec2& deltaMove, bool canStartBounceBack)
@@ -213,6 +231,16 @@ void PageView::refreshIndicatorPosition()
     }
 }
 
+void PageView::handlePressLogic(Touch *touch)
+{
+    ListView::handlePressLogic(touch);
+    if (!_isTouchBegin) {
+        _currentPageIndex = getIndex(getCenterItemInCurrentView());
+        _previousPageIndex = _currentPageIndex;
+        _isTouchBegin = true;
+    }
+}
+
 void PageView::handleReleaseLogic(Touch *touch)
 {
     // Use `ScrollView` method in order to avoid `startMagneticScroll()` by `ListView`.
@@ -222,7 +250,6 @@ void PageView::handleReleaseLogic(Touch *touch)
     {
         return;
     }
-
     Vec2 touchMoveVelocity = flattenVectorByDirection(calculateTouchMoveVelocity());
 
     static const float INERTIA_THRESHOLD = 500;
@@ -254,11 +281,29 @@ void PageView::handleReleaseLogic(Touch *touch)
             {
                 --_currentPageIndex;
             }
-            _currentPageIndex = MIN(_currentPageIndex, _items.size());
+            _currentPageIndex = MIN(_currentPageIndex, _items.size() - 1);
             _currentPageIndex = MAX(_currentPageIndex, 0);
             scrollToItem(_currentPageIndex);
         }
     }
+}
+
+float PageView::getAutoScrollStopEpsilon() const
+{
+    return _autoScrollStopEpsilon;
+}
+
+void PageView::addEventListenerPageView(Ref *target, SEL_PageViewEvent selector)
+{
+    _pageViewEventListener = target;
+    _pageViewEventSelector = selector;
+
+    ccScrollViewCallback scrollViewCallback = [=](Ref* ref, ScrollView::EventType type) -> void{
+        if (type == ScrollView::EventType::AUTOSCROLL_ENDED && _previousPageIndex != _currentPageIndex) {
+            pageTurningEvent();
+        }
+    };
+    this->addEventListener(scrollViewCallback);
 }
 
 void PageView::pageTurningEvent()
@@ -276,18 +321,19 @@ void PageView::pageTurningEvent()
     {
         _ccEventCallback(this, static_cast<int>(EventType::TURNING));
     }
+    _isTouchBegin = false;
     this->release();
 }
 
-void PageView::addEventListenerPageView(Ref *target, SEL_PageViewEvent selector)
-{
-    _pageViewEventListener = target;
-    _pageViewEventSelector = selector;
-}
-    
 void PageView::addEventListener(const ccPageViewCallback& callback)
 {
     _eventCallback = callback;
+    ccScrollViewCallback scrollViewCallback = [=](Ref* ref, ScrollView::EventType type) -> void{
+        if (type == ScrollView::EventType::AUTOSCROLL_ENDED && _previousPageIndex != _currentPageIndex) {
+            pageTurningEvent();
+        }
+    };
+    this->addEventListener(scrollViewCallback);
 }
 
 ssize_t PageView::getCurPageIndex() const
@@ -312,7 +358,7 @@ Vector<Layout*>& PageView::getPages()
 
 Layout* PageView::getPage(ssize_t index)
 {
-    if (index < 0 || index >= this->getPages().size())
+    if (index < 0 || index >= this->getItems().size())
     {
         return nullptr;
     }
@@ -347,6 +393,12 @@ void PageView::copySpecialProperties(Widget *widget)
         _ccEventCallback = pageView->_ccEventCallback;
         _pageViewEventListener = pageView->_pageViewEventListener;
         _pageViewEventSelector = pageView->_pageViewEventSelector;
+        _currentPageIndex = pageView->_currentPageIndex;
+        _previousPageIndex = pageView->_previousPageIndex;
+        _childFocusCancelOffset = pageView->_childFocusCancelOffset;
+        _autoScrollStopEpsilon = pageView->_autoScrollStopEpsilon;
+        _indicatorPositionAsAnchorPoint = pageView->_indicatorPositionAsAnchorPoint;
+        _isTouchBegin = pageView->_isTouchBegin;
     }
 }
 
@@ -425,6 +477,44 @@ const Color3B& PageView::getIndicatorSelectedIndexColor() const
 {
     CCASSERT(_indicator != nullptr, "");
     return _indicator->getSelectedIndexColor();
+}
+
+void PageView::setIndicatorIndexNodesColor(const Color3B& color)
+{
+    if(_indicator != nullptr)
+    {
+        _indicator->setIndexNodesColor(color);
+    }
+}
+
+const Color3B& PageView::getIndicatorIndexNodesColor() const
+{
+    CCASSERT(_indicator != nullptr, "");
+    return _indicator->getIndexNodesColor();
+}
+
+void PageView::setIndicatorIndexNodesScale(float indexNodesScale)
+{
+    if(_indicator != nullptr)
+    {
+        _indicator->setIndexNodesScale(indexNodesScale);
+        _indicator->indicate(_currentPageIndex);
+    }
+}
+
+float PageView::getIndicatorIndexNodesScale() const
+{
+    CCASSERT(_indicator != nullptr, "");
+    return _indicator->getIndexNodesScale();
+}
+
+void PageView::setIndicatorIndexNodesTexture(const std::string& texName,Widget::TextureResType texType)
+{
+    if(_indicator != nullptr)
+    {
+        _indicator->setIndexNodesTexture(texName, texType);
+        _indicator->indicate(_currentPageIndex);
+    }
 }
 
 void PageView::remedyLayoutParameter(Widget *item)

@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010      cocos2d-x.org
-Copyright (C) 2013-2014 Chukong Technologies Inc.
+Copyright (C) 2013-2016 Chukong Technologies Inc.
  
 http://www.cocos2d-x.org
 
@@ -144,19 +144,22 @@ bool IMEDispatcher::attachDelegateWithIME(IMEDelegate * delegate)
 
         if (_impl->_delegateWithIme)
         {
-            // if old delegate canDetachWithIME return false 
-            // or pDelegate canAttachWithIME return false,
-            // do nothing.
-            CC_BREAK_IF(! _impl->_delegateWithIme->canDetachWithIME()
-                || ! delegate->canAttachWithIME());
+            if (_impl->_delegateWithIme != delegate)
+            {
+                // if old delegate canDetachWithIME return false 
+                // or pDelegate canAttachWithIME return false,
+                // do nothing.
+                CC_BREAK_IF(!_impl->_delegateWithIme->canDetachWithIME()
+                    || !delegate->canAttachWithIME());
 
-            // detach first
-            IMEDelegate * oldDelegate = _impl->_delegateWithIme;
-            _impl->_delegateWithIme = 0;
-            oldDelegate->didDetachWithIME();
+                // detach first
+                IMEDelegate * oldDelegate = _impl->_delegateWithIme;
+                _impl->_delegateWithIme = 0;
+                oldDelegate->didDetachWithIME();
 
-            _impl->_delegateWithIme = *iter;
-            delegate->didAttachWithIME();
+                _impl->_delegateWithIme = *iter;
+                delegate->didAttachWithIME();
+            }
             ret = true;
             break;
         }
@@ -240,6 +243,19 @@ void IMEDispatcher::dispatchDeleteBackward()
     } while (0);
 }
 
+void IMEDispatcher::dispatchControlKey(EventKeyboard::KeyCode keyCode)
+{
+    do
+    {
+        CC_BREAK_IF(!_impl);
+
+        // there is no delegate attached to IME
+        CC_BREAK_IF(!_impl->_delegateWithIme);
+
+        _impl->_delegateWithIme->controlKey(keyCode);
+    } while (0);
+}
+
 const std::string& IMEDispatcher::getContentText()
 {
     if (_impl && _impl->_delegateWithIme)
@@ -257,7 +273,7 @@ void IMEDispatcher::dispatchKeyboardWillShow(IMEKeyboardNotificationInfo& info)
 {
     if (_impl)
     {
-        IMEDelegate * delegate = 0;
+        IMEDelegate * delegate = nullptr;
         DelegateIter last = _impl->_delegateList.end();
         for (DelegateIter first = _impl->_delegateList.begin(); first != last; ++first)
         {
@@ -274,7 +290,7 @@ void IMEDispatcher::dispatchKeyboardDidShow(IMEKeyboardNotificationInfo& info)
 {
     if (_impl)
     {
-        IMEDelegate * delegate = 0;
+        IMEDelegate * delegate = nullptr;
         DelegateIter last = _impl->_delegateList.end();
         for (DelegateIter first = _impl->_delegateList.begin(); first != last; ++first)
         {
@@ -291,7 +307,7 @@ void IMEDispatcher::dispatchKeyboardWillHide(IMEKeyboardNotificationInfo& info)
 {
     if (_impl)
     {
-        IMEDelegate * delegate = 0;
+        IMEDelegate * delegate = nullptr;
         DelegateIter last = _impl->_delegateList.end();
         for (DelegateIter first = _impl->_delegateList.begin(); first != last; ++first)
         {
@@ -308,7 +324,7 @@ void IMEDispatcher::dispatchKeyboardDidHide(IMEKeyboardNotificationInfo& info)
 {
     if (_impl)
     {
-        IMEDelegate * delegate = 0;
+        IMEDelegate * delegate = nullptr;
         DelegateIter last = _impl->_delegateList.end();
         for (DelegateIter first = _impl->_delegateList.begin(); first != last; ++first)
         {

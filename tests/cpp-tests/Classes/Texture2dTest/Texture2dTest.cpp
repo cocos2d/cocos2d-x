@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -263,7 +263,7 @@ void TextureWEBP::onEnter()
     addChild(img);
     log("%s\n", Director::getInstance()->getTextureCache()->getCachedTextureInfo().c_str());
     Texture2D* texture = Director::getInstance()->getTextureCache()->getTextureForKey("Images/test_image.webp");
-    log("pixel format:%d, premultiplied alpha:%d\n", texture->getPixelFormat(), texture->hasPremultipliedAlpha());
+    log("pixel format:%d, premultiplied alpha:%d\n", static_cast<int>(texture->getPixelFormat()), texture->hasPremultipliedAlpha());
 }
 
 std::string TextureWEBP::title() const
@@ -286,7 +286,7 @@ void TextureWEBPNoAlpha::onEnter()
     addChild(img);
     log("%s\n", Director::getInstance()->getTextureCache()->getCachedTextureInfo().c_str());
     Texture2D* texture = Director::getInstance()->getTextureCache()->getTextureForKey("Images/test_image_no_alpha.webp");
-    log("pixel format:%d, premultiplied alpha:%d\n", texture->getPixelFormat(), texture->hasPremultipliedAlpha());
+    log("pixel format:%d, premultiplied alpha:%d\n", static_cast<int>(texture->getPixelFormat()), texture->hasPremultipliedAlpha());
 }
 
 std::string TextureWEBPNoAlpha::title() const

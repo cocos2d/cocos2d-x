@@ -24,14 +24,14 @@
 
 #ifdef __ANDROID__
 
-#include "UIWebViewImpl-android.h"
+#include "ui/UIWebViewImpl-android.h"
 
 #include <unordered_map>
 #include <stdlib.h>
 #include <string>
 #include "platform/android/jni/JniHelper.h"
 
-#include "UIWebView.h"
+#include "ui/UIWebView.h"
 #include "platform/CCGLView.h"
 #include "base/CCDirector.h"
 #include "platform/CCFileUtils.h"
@@ -179,7 +179,7 @@ namespace cocos2d {
             }
 
             void WebViewImpl::loadHTMLString(const std::string &string, const std::string &baseURL) {
-                JniHelper::callStaticVoidMethod(className, "loadHTMLString", _viewTag, string, baseURL);
+                JniHelper::callStaticVoidMethod(className, "loadHTMLString", _viewTag, string, getFixedBaseUrl(baseURL));
             }
 
             void WebViewImpl::loadURL(const std::string &url) {
@@ -280,6 +280,10 @@ namespace cocos2d {
 
             void WebViewImpl::setVisible(bool visible) {
                 JniHelper::callStaticVoidMethod(className, "setVisible", _viewTag, visible);
+            }
+
+            void WebViewImpl::setBounces(bool bounces) {
+                // empty function as this was mainly a fix for iOS
             }
         } // namespace ui
     } // namespace experimental

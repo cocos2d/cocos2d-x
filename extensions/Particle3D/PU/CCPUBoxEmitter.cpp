@@ -45,7 +45,7 @@ CCPUBoxEmitter::CCPUBoxEmitter(void) :
 {
 }
 //-----------------------------------------------------------------------
-const float CCPUBoxEmitter::getHeight(void) const
+float CCPUBoxEmitter::getHeight() const
 {
     return _height;
 }
@@ -56,7 +56,7 @@ void CCPUBoxEmitter::setHeight(const float height)
     _yRange = 0.5f * height;
 }
 //-----------------------------------------------------------------------
-const float CCPUBoxEmitter::getWidth(void) const
+float CCPUBoxEmitter::getWidth() const
 {
     return _width;
 }
@@ -67,7 +67,7 @@ void CCPUBoxEmitter::setWidth(const float width)
     _xRange = 0.5f * width;
 }
 //-----------------------------------------------------------------------
-const float CCPUBoxEmitter::getDepth(void) const
+float CCPUBoxEmitter::getDepth() const
 {
     return _depth;
 }

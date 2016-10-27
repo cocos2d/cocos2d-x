@@ -23,6 +23,8 @@
 -- @function [parent=#Scene] render 
 -- @param self
 -- @param #cc.Renderer renderer
+-- @param #mat4_table eyeTransform
+-- @param #mat4_table eyeProjection
 -- @return Scene#Scene self (return value: cc.Scene)
         
 --------------------------------

@@ -43,6 +43,13 @@
 -- @return Sprite#Sprite self (return value: cc.Sprite)
         
 --------------------------------
+-- brief Returns the Cap Insets rect<br>
+-- return Scale9Sprite's cap inset.
+-- @function [parent=#Sprite] getCapInsets 
+-- @param self
+-- @return rect_table#rect_table ret (return value: rect_table)
+        
+--------------------------------
 -- / @}
 -- @function [parent=#Sprite] getResourceType 
 -- @param self
@@ -81,6 +88,17 @@
 -- @return Sprite#Sprite self (return value: cc.Sprite)
         
 --------------------------------
+-- Returns the flag which indicates whether the sprite is flipped horizontally or not.<br>
+-- It only flips the texture of the sprite, and not the texture of the sprite's children.<br>
+-- Also, flipping the texture doesn't alter the anchorPoint.<br>
+-- If you want to flip the anchorPoint too, and/or to flip the children too use:<br>
+-- sprite->setScaleX(sprite->getScaleX() * -1);<br>
+-- return true if the sprite is flipped horizontally, false otherwise.
+-- @function [parent=#Sprite] isFlippedX 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 -- @overload self, rect_table, bool, size_table         
 -- @overload self, rect_table         
 -- @function [parent=#Sprite] setTextureRect
@@ -94,11 +112,22 @@
 -- Initializes a sprite with an sprite frame name.<br>
 -- A SpriteFrame will be fetched from the SpriteFrameCache by name.<br>
 -- If the SpriteFrame doesn't exist it will raise an exception.<br>
--- param   spriteFrameName  A key string that can fected a valid SpriteFrame from SpriteFrameCache.<br>
+-- param   spriteFrameName  A key string that can fetched a valid SpriteFrame from SpriteFrameCache.<br>
 -- return  True if the sprite is initialized properly, false otherwise.
 -- @function [parent=#Sprite] initWithSpriteFrameName 
 -- @param self
 -- @param #string spriteFrameName
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- Return the flag which indicates whether the sprite is flipped vertically or not.<br>
+-- It only flips the texture of the sprite, and not the texture of the sprite's children.<br>
+-- Also, flipping the texture doesn't alter the anchorPoint.<br>
+-- If you want to flip the anchorPoint too, and/or to flip the children too use:<br>
+-- sprite->setScaleY(sprite->getScaleY() * -1);<br>
+-- return true if the sprite is flipped vertically, false otherwise.
+-- @function [parent=#Sprite] isFlippedY 
+-- @param self
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
@@ -112,7 +141,14 @@
 -- Returns the index used on the TextureAtlas.
 -- @function [parent=#Sprite] getAtlasIndex 
 -- @param self
--- @return long#long ret (return value: long)
+-- @return int#int ret (return value: int)
+        
+--------------------------------
+-- getCapInsetsNormalized<br>
+-- Returns the CapInsets in normalized coordinates
+-- @function [parent=#Sprite] getCapInsetsNormalized 
+-- @param self
+-- @return rect_table#rect_table ret (return value: rect_table)
         
 --------------------------------
 -- Sets the batch node to sprite.<br>
@@ -142,7 +178,7 @@
 -- @function [parent=#Sprite] setDisplayFrameWithAnimationName 
 -- @param self
 -- @param #string animationName
--- @param #long frameIndex
+-- @param #int frameIndex
 -- @return Sprite#Sprite self (return value: cc.Sprite)
         
 --------------------------------
@@ -176,7 +212,7 @@
 -- warning Don't modify this value unless you know what you are doing.
 -- @function [parent=#Sprite] setAtlasIndex 
 -- @param self
--- @param #long atlasIndex
+-- @param #int atlasIndex
 -- @return Sprite#Sprite self (return value: cc.Sprite)
         
 --------------------------------
@@ -235,26 +271,25 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- Returns the flag which indicates whether the sprite is flipped horizontally or not.<br>
--- It only flips the texture of the sprite, and not the texture of the sprite's children.<br>
--- Also, flipping the texture doesn't alter the anchorPoint.<br>
--- If you want to flip the anchorPoint too, and/or to flip the children too use:<br>
--- sprite->setScaleX(sprite->getScaleX() * -1);<br>
--- return true if the sprite is flipped horizontally, false otherwise.
--- @function [parent=#Sprite] isFlippedX 
+-- 
+-- @function [parent=#Sprite] setCapInsets 
 -- @param self
--- @return bool#bool ret (return value: bool)
+-- @param #rect_table rect
+-- @return Sprite#Sprite self (return value: cc.Sprite)
         
 --------------------------------
--- Return the flag which indicates whether the sprite is flipped vertically or not.<br>
--- It only flips the texture of the sprite, and not the texture of the sprite's children.<br>
--- Also, flipping the texture doesn't alter the anchorPoint.<br>
--- If you want to flip the anchorPoint too, and/or to flip the children too use:<br>
--- sprite->setScaleY(sprite->getScaleY() * -1);<br>
--- return true if the sprite is flipped vertically, false otherwise.
--- @function [parent=#Sprite] isFlippedY 
+-- setCapInsetsNormalized<br>
+-- Useful to implement "9 sliced" sprites.<br>
+-- The default value is (0,0) - (1,1), which means that only one "slice" will be used: From top-left (0,0) to bottom-right (1,1).<br>
+-- If the value is different than (0,0), (1,1), then the sprite will be sliced into a 3 x 3 grid. The four corners of this grid are applied without<br>
+-- performing any scaling. The upper- and lower-middle parts are scaled horizontally, and the left- and right-middle parts are scaled vertically.<br>
+-- The center is scaled in both directions.<br>
+-- Important: The scaling is based the Sprite's trimmed size.<br>
+-- Limitations: Does not work when the sprite is part of `SpriteBatchNode`.
+-- @function [parent=#Sprite] setCapInsetsNormalized 
 -- @param self
--- @return bool#bool ret (return value: bool)
+-- @param #rect_table rect
+-- @return Sprite#Sprite self (return value: cc.Sprite)
         
 --------------------------------
 -- Sets the vertex rect.<br>
@@ -338,6 +373,13 @@
 
 --------------------------------
 -- 
+-- @function [parent=#Sprite] setContentSize 
+-- @param self
+-- @param #size_table size
+-- @return Sprite#Sprite self (return value: cc.Sprite)
+        
+--------------------------------
+-- 
 -- @function [parent=#Sprite] isOpacityModifyRGB 
 -- @param self
 -- @return bool#bool ret (return value: bool)
@@ -360,6 +402,13 @@
 -- @function [parent=#Sprite] setRotation 
 -- @param self
 -- @param #float rotation
+-- @return Sprite#Sprite self (return value: cc.Sprite)
+        
+--------------------------------
+-- 
+-- @function [parent=#Sprite] setIgnoreAnchorPointForPosition 
+-- @param self
+-- @param #bool value
 -- @return Sprite#Sprite self (return value: cc.Sprite)
         
 --------------------------------
@@ -403,13 +452,6 @@
 -- @param self
 -- @param #cc.Node child
 -- @param #int zOrder
--- @return Sprite#Sprite self (return value: cc.Sprite)
-        
---------------------------------
--- 
--- @function [parent=#Sprite] ignoreAnchorPointForPosition 
--- @param self
--- @param #bool value
 -- @return Sprite#Sprite self (return value: cc.Sprite)
         
 --------------------------------

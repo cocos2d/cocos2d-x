@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -22,11 +22,12 @@
  THE SOFTWARE.
 ****************************************************************************/
 
-#include "UIScale9Sprite.h"
+#include "ui/UIScale9Sprite.h"
 #include "2d/CCSprite.h"
 #include "2d/CCSpriteFrameCache.h"
 #include "base/CCVector.h"
 #include "base/CCDirector.h"
+#include "base/ccUTF8.h"
 #include "renderer/CCGLProgram.h"
 #include "renderer/ccShaders.h"
 #include "platform/CCImage.h"
@@ -87,11 +88,11 @@ namespace ui {
         bool ret = false;
         do {
             Texture2D* texture = spriteFrame->getTexture();
-            CCASSERT(texture != NULL, "CCTexture must be not nil");
+            CCASSERT(texture != nullptr, "Texture2D must be not null");
             if(texture == nullptr) break;
             
             Sprite *sprite = Sprite::createWithSpriteFrame(spriteFrame);
-            CCASSERT(sprite != NULL, "sprite must be not nil");
+            CCASSERT(sprite != nullptr, "Sprite must be not null");
             if(sprite == nullptr) break;
             
             ret = this->init(sprite,
@@ -106,7 +107,7 @@ namespace ui {
     }
     bool Scale9Sprite::initWithSpriteFrame(SpriteFrame* spriteFrame)
     {
-        CCASSERT(spriteFrame != NULL, "Invalid spriteFrame for sprite");
+        CCASSERT(spriteFrame != nullptr, "Invalid spriteFrame for sprite");
         bool pReturn = this->initWithSpriteFrame(spriteFrame, Rect::ZERO);
         return pReturn;
     }
@@ -121,7 +122,7 @@ namespace ui {
             if(spriteFrameCache == nullptr) break;
             
             SpriteFrame *frame = spriteFrameCache->getSpriteFrameByName(spriteFrameName);
-            CCASSERT(frame != nullptr, "CCSpriteFrame must be non-NULL");
+            CCASSERT(frame != nullptr, StringUtils::format("CCSpriteFrame: %s must be non-NULL ", spriteFrameName.c_str()).c_str());
             if (frame == nullptr) break;
             
             ret = initWithSpriteFrame(frame, capInsets);
@@ -137,7 +138,7 @@ namespace ui {
 
     bool Scale9Sprite::init()
     {
-        return this->init(NULL, Rect::ZERO, Rect::ZERO);
+        return this->init(nullptr, Rect::ZERO, Rect::ZERO);
     }
 
     bool Scale9Sprite::init(Sprite* sprite, const Rect& rect, const Rect& capInsets)
@@ -236,7 +237,7 @@ namespace ui {
             return pReturn;
         }
         CC_SAFE_DELETE(pReturn);
-        return NULL;
+        return nullptr;
     }
 
     Scale9Sprite* Scale9Sprite::create(const std::string& file,
@@ -250,7 +251,7 @@ namespace ui {
             return pReturn;
         }
         CC_SAFE_DELETE(pReturn);
-        return NULL;
+        return nullptr;
     }
 
 
@@ -263,7 +264,7 @@ namespace ui {
             return pReturn;
         }
         CC_SAFE_DELETE(pReturn);
-        return NULL;
+        return nullptr;
     }
 
 
@@ -278,7 +279,7 @@ namespace ui {
             return pReturn;
         }
         CC_SAFE_DELETE(pReturn);
-        return NULL;
+        return nullptr;
     }
 
 
@@ -291,7 +292,7 @@ namespace ui {
             return pReturn;
         }
         CC_SAFE_DELETE(pReturn);
-        return NULL;
+        return nullptr;
     }
 
 
@@ -305,7 +306,7 @@ namespace ui {
             return pReturn;
         }
         CC_SAFE_DELETE(pReturn);
-        return NULL;
+        return nullptr;
     }
 
     Scale9Sprite* Scale9Sprite::createWithSpriteFrame(SpriteFrame* spriteFrame)
@@ -317,7 +318,7 @@ namespace ui {
             return pReturn;
         }
         CC_SAFE_DELETE(pReturn);
-        return NULL;
+        return nullptr;
     }
 
 
@@ -331,7 +332,7 @@ namespace ui {
             return pReturn;
         }
         CC_SAFE_DELETE(pReturn);
-        return NULL;
+        return nullptr;
     }
 
     Scale9Sprite* Scale9Sprite::createWithSpriteFrameName(const std::string& spriteFrameName)
@@ -345,8 +346,7 @@ namespace ui {
         CC_SAFE_DELETE(pReturn);
 
         log("Could not allocate Scale9Sprite()");
-        return NULL;
-
+        return nullptr;
     }
 
     void Scale9Sprite::cleanupSlicedSprites()
@@ -483,7 +483,9 @@ namespace ui {
         }
 
         applyBlendFunc();
+
         this->setState(_brightState);
+
         if(this->_isPatch9)
         {
             size.width = size.width - 2;
@@ -496,10 +498,11 @@ namespace ui {
     
     void Scale9Sprite::configureSimpleModeRendering()
     {
-        this->setInsetTop(0);
-        this->setInsetBottom(0);
-        this->setInsetLeft(0);
-        this->setInsetRight(0);
+        this->_insetLeft = 0;
+        this->_insetTop = 0;
+        this->_insetRight = 0;
+        this->_insetBottom = 0;
+        this->updateCapInset();
     }
 
     void Scale9Sprite::createSlicedSprites()
@@ -548,7 +551,9 @@ namespace ui {
             auto vertices = this->calculateVertices(capInsets, originalSize, offsets);
             auto triangles = this->calculateTriangles(uv, vertices);
 
-            _scale9Image->getPolygonInfo().setTriangles(triangles);
+            auto polyInfo = _scale9Image->getPolygonInfo();
+            polyInfo.setTriangles(triangles);
+            _scale9Image->setPolygonInfo(polyInfo);
         }
     }
 
@@ -578,7 +583,7 @@ namespace ui {
             return pReturn;
         }
         CC_SAFE_DELETE(pReturn);
-        return NULL;
+        return nullptr;
     }
     
     Scale9Sprite::State Scale9Sprite::getState()const
@@ -588,27 +593,26 @@ namespace ui {
 
     void Scale9Sprite::setState(cocos2d::ui::Scale9Sprite::State state)
     {
+        auto getScale9ImageTexture = [this] {
+            return _scale9Image != nullptr ? _scale9Image->getTexture() : nullptr;
+        };
         GLProgramState *glState = nullptr;
         switch (state)
         {
         case State::NORMAL:
         {
-            glState = GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP);
+            glState = GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP, getScale9ImageTexture());
         }
         break;
         case State::GRAY:
         {
-            glState = GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_GRAYSCALE);
+            glState = GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_GRAYSCALE, getScale9ImageTexture());
         }
         default:
             break;
         }
         
-        if (nullptr != _scale9Image)
-        {
-            _scale9Image->setGLProgramState(glState);
-        }
-
+        setGLProgramState(glState);
         _brightState = state;
     }
 
@@ -712,12 +716,13 @@ namespace ui {
             if(_insideBounds)
 #endif
             {
-                auto textureName = _scale9Image->getTexture()->getName();
+                auto texture = _scale9Image->getTexture();
                 auto programState = _scale9Image->getGLProgramState();
                 auto blendFunc = _scale9Image->getBlendFunc();
                 auto& polyInfo = _scale9Image->getPolygonInfo();
                 auto globalZOrder = _scale9Image->getGlobalZOrder();
-                _trianglesCommand.init(globalZOrder,textureName, programState, blendFunc, polyInfo.triangles, transform, flags);
+                // ETC1 ALPHA support
+                _trianglesCommand.init(globalZOrder,texture, programState, blendFunc, polyInfo.triangles, transform, flags);
                 renderer->addCommand(&_trianglesCommand);
                 
 #if CC_SPRITE_DEBUG_DRAW
@@ -774,7 +779,7 @@ namespace ui {
         //
         // draw children and protectedChildren zOrder < 0
         //
-        for( ; i < _children.size(); i++ )
+        for(auto size = _children.size(); i < size; i++)
         {
             auto node = _children.at(i);
 
@@ -799,7 +804,7 @@ namespace ui {
             _scale9Image->visit(renderer, _modelViewTransform, flags);
         }
 
-        for(auto it=_children.cbegin()+i; it != _children.cend(); ++it)
+        for(auto it=_children.cbegin()+i, itCend = _children.cend(); it != itCend; ++it)
             (*it)->visit(renderer, _modelViewTransform, flags);
 
         // FIX ME: Why need to set _orderOfArrival to 0??
@@ -979,6 +984,20 @@ namespace ui {
             child->updateDisplayedOpacity(255);
         }
     }
+    
+    void Scale9Sprite::setGLProgram(GLProgram *glprogram) {
+        Node::setGLProgram(glprogram);
+        if (_scale9Image) {
+            _scale9Image->setGLProgram(glprogram);
+        }
+    }
+    
+    void Scale9Sprite::setGLProgramState(GLProgramState *glProgramState) {
+        Node::setGLProgramState(glProgramState);
+        if (_scale9Image) {
+            _scale9Image->setGLProgramState(glProgramState);
+        }
+    }
 
     Sprite* Scale9Sprite::getSprite()const
     {
@@ -1044,7 +1063,7 @@ namespace ui {
         float originalScale = Node::getScaleX();
         if (_flippedX)
         {
-            originalScale = originalScale * -1.0;
+            originalScale = originalScale * -1.0f;
         }
         return originalScale;
     }
@@ -1054,7 +1073,7 @@ namespace ui {
         float originalScale = Node::getScaleY();
         if (_flippedY)
         {
-            originalScale = originalScale * -1.0;
+            originalScale = originalScale * -1.0f;
         }
         return originalScale;
     }

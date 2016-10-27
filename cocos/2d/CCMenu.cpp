@@ -1,7 +1,7 @@
 /****************************************************************************
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -29,8 +29,8 @@ THE SOFTWARE.
 #include "base/CCTouch.h"
 #include "base/CCEventListenerTouch.h"
 #include "base/CCEventDispatcher.h"
+#include "base/ccUTF8.h"
 #include "platform/CCStdC.h"
-#include "deprecated/CCString.h"
 
 #include <vector>
 
@@ -137,7 +137,7 @@ bool Menu::initWithArray(const Vector<MenuItem*>& arrayOfItems)
         // menu in the center of the screen
         Size s = Director::getInstance()->getWinSize();
 
-        this->ignoreAnchorPointForPosition(true);
+        this->setIgnoreAnchorPointForPosition(true);
         setAnchorPoint(Vec2(0.5f, 0.5f));
         this->setContentSize(s);
 
@@ -238,10 +238,9 @@ void Menu::onExit()
 
 void Menu::removeChild(Node* child, bool cleanup)
 {
-    MenuItem *menuItem = dynamic_cast<MenuItem*>(child);
-    CCASSERT(menuItem != nullptr, "Menu only supports MenuItem objects as children");
+    CCASSERT(dynamic_cast<MenuItem*>(child) != nullptr, "Menu only supports MenuItem objects as children");
     
-    if (_selectedItem == menuItem)
+    if (_selectedItem == child)
     {
         _selectedItem = nullptr;
     }
@@ -266,8 +265,8 @@ bool Menu::onTouchBegan(Touch* touch, Event* event)
             return false;
         }
     }
-    
     _selectedItem = this->getItemForTouch(touch, camera);
+
     if (_selectedItem)
     {
         _state = Menu::State::TRACKING_TOUCH;
@@ -559,21 +558,18 @@ void Menu::alignItemsInRowsWithArray(const ValueVector& columns)
 MenuItem* Menu::getItemForTouch(Touch *touch, const Camera *camera)
 {
     Vec2 touchLocation = touch->getLocation();
-    if (!_children.empty())
+    for (const auto &item: _children)
     {
-        for (auto iter = _children.crbegin(); iter != _children.crend(); ++iter)
+        MenuItem* child = dynamic_cast<MenuItem*>(item);
+        if (nullptr == child || false == child->isVisible() || false == child->isEnabled())
         {
-            MenuItem* child = dynamic_cast<MenuItem*>(*iter);
-            if (nullptr == child || false == child->isVisible() || false == child->isEnabled())
-            {
-                continue;
-            }
-            Rect rect;
-            rect.size = child->getContentSize();
-            if (isScreenPointInRect(touchLocation, camera, child->getWorldToNodeTransform(), rect, nullptr))
-            {
-                return child;
-            }
+            continue;
+        }
+        Rect rect;
+        rect.size = child->getContentSize();
+        if (isScreenPointInRect(touchLocation, camera, child->getWorldToNodeTransform(), rect, nullptr))
+        {
+            return child;
         }
     }
     return nullptr;

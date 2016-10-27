@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2012      cocos2d-x.org
-Copyright (c) 2013-2015 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -29,7 +29,7 @@ THE SOFTWARE.
 
 #include "base/uthash.h"
 #include "base/CCRef.h"
-#include "CCArray.h"
+#include "deprecated/CCArray.h"
 #include "deprecated/CCString.h"
 
 NS_CC_BEGIN
@@ -97,7 +97,7 @@ public:
      *
      * @return  The string key of this element.
      */
-    inline const char* getStrKey() const
+    const char* getStrKey() const
     {
         CCASSERT(_strKey[0] != '\0', "Should not call this function for integer dictionary");
         return _strKey;
@@ -110,7 +110,7 @@ public:
      *
      * @return  The integer key of this element.
      */
-    inline intptr_t getIntKey() const
+    intptr_t getIntKey() const
     {
         CCASSERT(_strKey[0] == '\0', "Should not call this function for string dictionary");
         return _intKey;
@@ -121,7 +121,7 @@ public:
      *
      * @return  The object of this element.
      */
-    inline Ref* getObject() const { return _object; }
+    Ref* getObject() const { return _object; }
 
 private:
     // The max length of string key.
@@ -275,7 +275,7 @@ public:
 
     /** Insert an object to dictionary, and match it with the specified string key.
      *
-     *  @note Whe the first time this method is invoked, the key type will be set to string.
+     *  @note When the first time this method is invoked, the key type will be set to string.
      *        After that you can't setObject with an integer key.
      *        If the dictionary contains the key you passed, the object matching the key will be released and removed from dictionary.
      *        Then the new object will be inserted after that.
@@ -420,7 +420,7 @@ public:
      *  @js NA
      *  @lua NA
      */
-    virtual __Dictionary* clone() const;
+    virtual __Dictionary* clone() const override;
     
 private:
     /** 

@@ -2,7 +2,7 @@
 Copyright (c) 2009-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -57,6 +57,26 @@ enum
     
     /** Isometric staggered orientation. */
     TMXOrientationStaggered,
+};
+
+/** Possible stagger axis of the TMX map. */
+enum
+{
+    /** Stagger Axis x. */
+    TMXStaggerAxis_X,
+    
+    /** Stagger Axis y. */
+    TMXStaggerAxis_Y,
+};
+
+/** Possible stagger index of the TMX map. */
+enum
+{
+    /** Stagger Index: Odd */
+    TMXStaggerIndex_Odd,
+
+    /** Stagger Index: Even */
+    TMXStaggerIndex_Even,
 };
 
 /** @brief TMXTiledMap knows how to parse and render a TMX map.
@@ -186,66 +206,66 @@ public:
      *
      * @return The map's size property measured in tiles.
      */
-    inline const Size& getMapSize() const { return _mapSize; };
+    const Size& getMapSize() const { return _mapSize; }
     
     /** Set the map's size property measured in tiles. 
      *
      * @param mapSize The map's size property measured in tiles.
      */
-    inline void setMapSize(const Size& mapSize) { _mapSize = mapSize; };
+    void setMapSize(const Size& mapSize) { _mapSize = mapSize; }
 
     /** The tiles's size property measured in pixels. 
      *
      * @return The tiles's size property measured in pixels.
      */
-    inline const Size& getTileSize() const { return _tileSize; };
+    const Size& getTileSize() const { return _tileSize; }
     
     /** Set the tiles's size property measured in pixels. 
      *
      * @param tileSize The tiles's size property measured in pixels.
      */
-    inline void setTileSize(const Size& tileSize) { _tileSize = tileSize; };
+    void setTileSize(const Size& tileSize) { _tileSize = tileSize; }
 
     /** Map orientation. 
      *
      * @return Map orientation.
      */
-    inline int getMapOrientation() const { return _mapOrientation; };
+    int getMapOrientation() const { return _mapOrientation; }
     
     /** Set map orientation. 
      *
      * @param mapOrientation The map orientation.
      */
-    inline void setMapOrientation(int mapOrientation) { _mapOrientation = mapOrientation; };
+    void setMapOrientation(int mapOrientation) { _mapOrientation = mapOrientation; }
 
     /** Get the Object groups. 
      *
      * @return The object groups.
      */
-    inline const Vector<TMXObjectGroup*>& getObjectGroups() const { return _objectGroups; };
-    inline Vector<TMXObjectGroup*>& getObjectGroups() { return _objectGroups; };
+    const Vector<TMXObjectGroup*>& getObjectGroups() const { return _objectGroups; }
+    Vector<TMXObjectGroup*>& getObjectGroups() { return _objectGroups; }
     
     /** Set the object groups. 
      *
      * @param groups The object groups.
      */
-    inline void setObjectGroups(const Vector<TMXObjectGroup*>& groups) {
+    void setObjectGroups(const Vector<TMXObjectGroup*>& groups) {
         _objectGroups = groups;
-    };
+    }
     
     /** Properties. 
      *
      * @return Properties.
      */
-    inline ValueMap& getProperties() { return _properties; };
+    ValueMap& getProperties() { return _properties; }
     
     /** Set the properties.
      *
      * @param properties A  Type of ValueMap to set the properties.
      */
-    inline void setProperties(const ValueMap& properties) {
+    void setProperties(const ValueMap& properties) {
         _properties = properties;
-    };
+    }
     
     /** Get the description.
      * @js NA
@@ -253,7 +273,7 @@ public:
     virtual std::string getDescription() const override;
 
     int  getLayerNum();
-    const std::string getResourceFile() const { return _tmxFile; }
+    const std::string& getResourceFile() const { return _tmxFile; }
 
 CC_CONSTRUCTOR_ACCESS:
     /**

@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -24,6 +24,8 @@ THE SOFTWARE.
  ****************************************************************************/
 package org.cocos2dx.lib;
 
+import android.content.pm.PackageManager;
+import android.media.AudioManager;
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
@@ -31,23 +33,37 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Environment;
 import android.os.IBinder;
+import android.os.ParcelFileDescriptor;
 import android.os.Vibrator;
 import android.preference.PreferenceManager.OnActivityResultListener;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
+import android.hardware.SensorManager;
+
+import com.android.vending.expansion.zipfile.APKExpansionSupport;
+import com.android.vending.expansion.zipfile.ZipResourceFile;
 
 import com.enhance.gameservice.IGameTuningService;
 
+import java.io.IOException;
+import java.io.File;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.LinkedHashSet;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+
 
 public class Cocos2dxHelper {
     // ===========================================================
@@ -55,6 +71,7 @@ public class Cocos2dxHelper {
     // ===========================================================
     private static final String PREFS_NAME = "Cocos2dxPrefsFile";
     private static final int RUNNABLES_PER_FRAME = 5;
+    private static final String TAG = Cocos2dxHelper.class.getSimpleName();
 
     // ===========================================================
     // Fields
@@ -65,6 +82,7 @@ public class Cocos2dxHelper {
     private static AssetManager sAssetManager;
     private static Cocos2dxAccelerometer sCocos2dxAccelerometer;
     private static boolean sAccelerometerEnabled;
+    private static boolean sCompassEnabled;
     private static boolean sActivityVisible;
     private static String sPackageName;
     private static String sFileDirectory;
@@ -76,6 +94,12 @@ public class Cocos2dxHelper {
     private static IGameTuningService mGameServiceBinder = null;
     private static final int BOOST_TIME = 7;
     //Enhance API modification end
+
+    // The absolute path to the OBB if it exists, else the absolute path to the APK.
+    private static String sAssetsPath = "";
+    
+    // The OBB file
+    private static ZipResourceFile sOBBFile = null;
 
     // ===========================================================
     // Constructors
@@ -90,12 +114,44 @@ public class Cocos2dxHelper {
         sActivity = activity;
         Cocos2dxHelper.sCocos2dxHelperListener = (Cocos2dxHelperListener)activity;
         if (!sInited) {
+
+            PackageManager pm = activity.getPackageManager();
+            boolean isSupportLowLatency = pm.hasSystemFeature(PackageManager.FEATURE_AUDIO_LOW_LATENCY);
+
+            Log.d(TAG, "isSupportLowLatency:" + isSupportLowLatency);
+
+            int sampleRate = 44100;
+            int bufferSizeInFrames = 192;
+
+            if (Build.VERSION.SDK_INT >= 17) {
+                AudioManager am = (AudioManager) activity.getSystemService(Context.AUDIO_SERVICE);
+                // use reflection to remove dependence of API 17 when compiling
+
+                // AudioManager.getProperty(AudioManager.PROPERTY_OUTPUT_SAMPLE_RATE);
+                final Class audioManagerClass = AudioManager.class;
+                Object[] parameters = new Object[]{Cocos2dxReflectionHelper.<String>getConstantValue(audioManagerClass, "PROPERTY_OUTPUT_SAMPLE_RATE")};
+                final String strSampleRate = Cocos2dxReflectionHelper.<String>invokeInstanceMethod(am, "getProperty", new Class[]{String.class}, parameters);
+
+                // AudioManager.getProperty(AudioManager.PROPERTY_OUTPUT_FRAMES_PER_BUFFER);
+                parameters = new Object[]{Cocos2dxReflectionHelper.<String>getConstantValue(audioManagerClass, "PROPERTY_OUTPUT_FRAMES_PER_BUFFER")};
+                final String strBufferSizeInFrames = Cocos2dxReflectionHelper.<String>invokeInstanceMethod(am, "getProperty", new Class[]{String.class}, parameters);
+
+                sampleRate = Integer.parseInt(strSampleRate);
+                bufferSizeInFrames = Integer.parseInt(strBufferSizeInFrames);
+
+                Log.d(TAG, "sampleRate: " + sampleRate + ", framesPerBuffer: " + bufferSizeInFrames);
+            } else {
+                Log.d(TAG, "android version is lower than 17");
+            }
+
+            nativeSetAudioDeviceInfo(isSupportLowLatency, sampleRate, bufferSizeInFrames);
+
             final ApplicationInfo applicationInfo = activity.getApplicationInfo();
-                    
+            
             Cocos2dxHelper.sPackageName = applicationInfo.packageName;
             Cocos2dxHelper.sFileDirectory = activity.getFilesDir().getAbsolutePath();
             
-            Cocos2dxHelper.nativeSetApkPath(applicationInfo.sourceDir);
+            Cocos2dxHelper.nativeSetApkPath(Cocos2dxHelper.getAssetsPath());
     
             Cocos2dxHelper.sCocos2dxAccelerometer = new Cocos2dxAccelerometer(activity);
             Cocos2dxHelper.sCocos2dMusic = new Cocos2dxMusic(activity);
@@ -114,7 +170,46 @@ public class Cocos2dxHelper {
             serviceIntent.setPackage("com.enhance.gameservice");
             boolean suc = activity.getApplicationContext().bindService(serviceIntent, connection, Context.BIND_AUTO_CREATE);
             //Enhance API modification end
+            
+            int versionCode = 1;
+            try {
+                versionCode = Cocos2dxActivity.getContext().getPackageManager().getPackageInfo(Cocos2dxHelper.getCocos2dxPackageName(), 0).versionCode;
+            } catch (NameNotFoundException e) {
+                e.printStackTrace();
+            }
+            try {
+                Cocos2dxHelper.sOBBFile = APKExpansionSupport.getAPKExpansionZipFile(Cocos2dxActivity.getContext(), versionCode, 0);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
+    }
+    
+    // This function returns the absolute path to the OBB if it exists,
+    // else it returns the absolute path to the APK.
+    public static String getAssetsPath()
+    {
+        if (Cocos2dxHelper.sAssetsPath == "") {
+            int versionCode = 1;
+            try {
+                versionCode = Cocos2dxHelper.sActivity.getPackageManager().getPackageInfo(Cocos2dxHelper.sPackageName, 0).versionCode;
+            } catch (NameNotFoundException e) {
+                e.printStackTrace();
+            }
+            String pathToOBB = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/obb/" + Cocos2dxHelper.sPackageName + "/main." + versionCode + "." + Cocos2dxHelper.sPackageName + ".obb";
+            File obbFile = new File(pathToOBB);
+            if (obbFile.exists())
+                Cocos2dxHelper.sAssetsPath = pathToOBB;
+            else
+                Cocos2dxHelper.sAssetsPath = Cocos2dxHelper.sActivity.getApplicationInfo().sourceDir;
+        }
+        
+        return Cocos2dxHelper.sAssetsPath;
+    }
+    
+    public static ZipResourceFile getObbFile()
+    {
+        return Cocos2dxHelper.sOBBFile;
     }
     
     //Enhance API modification begin
@@ -164,6 +259,8 @@ public class Cocos2dxHelper {
 
     private static native void nativeSetContext(final Context pContext, final AssetManager pAssetManager);
 
+    private static native void nativeSetAudioDeviceInfo(boolean isSupportLowLatency, int deviceSampleRate, int audioBufferSizeInFames);
+
     public static String getCocos2dxPackageName() {
         return Cocos2dxHelper.sPackageName;
     }
@@ -185,9 +282,13 @@ public class Cocos2dxHelper {
 
     public static void enableAccelerometer() {
         Cocos2dxHelper.sAccelerometerEnabled = true;
-        Cocos2dxHelper.sCocos2dxAccelerometer.enable();
+        Cocos2dxHelper.sCocos2dxAccelerometer.enableAccel();
     }
 
+    public static void enableCompass() {
+        Cocos2dxHelper.sCompassEnabled = true;
+        Cocos2dxHelper.sCocos2dxAccelerometer.enableCompass();
+    }
 
     public static void setAccelerometerInterval(float interval) {
         Cocos2dxHelper.sCocos2dxAccelerometer.setInterval(interval);
@@ -226,6 +327,29 @@ public class Cocos2dxHelper {
         }
         return ret;
     }
+    
+    public static long[] getObbAssetFileDescriptor(final String path) {
+        long[] array = new long[3];
+        if (Cocos2dxHelper.sOBBFile != null) {
+            AssetFileDescriptor descriptor = Cocos2dxHelper.sOBBFile.getAssetFileDescriptor(path);
+            if (descriptor != null) {
+                try {
+                    ParcelFileDescriptor parcel = descriptor.getParcelFileDescriptor();
+                    Method method = parcel.getClass().getMethod("getFd", new Class[] {});
+                    array[0] = (Integer)method.invoke(parcel);
+                    array[1] = descriptor.getStartOffset();
+                    array[2] = descriptor.getLength();
+                } catch (NoSuchMethodException e) {
+                    Log.e(Cocos2dxHelper.TAG, "Accessing file descriptor directly from the OBB is only supported from Android 3.1 (API level 12) and above.");
+                } catch (IllegalAccessException e) {
+                    Log.e(Cocos2dxHelper.TAG, e.toString());
+                } catch (InvocationTargetException e) {
+                    Log.e(Cocos2dxHelper.TAG, e.toString());
+                }
+            }
+        }
+        return array;
+    }
 
     public static void preloadBackgroundMusic(final String pPath) {
         Cocos2dxHelper.sCocos2dMusic.preloadBackgroundMusic(pPath);
@@ -249,6 +373,10 @@ public class Cocos2dxHelper {
 
     public static void rewindBackgroundMusic() {
         Cocos2dxHelper.sCocos2dMusic.rewindBackgroundMusic();
+    }
+
+    public static boolean willPlayBackgroundMusic() {
+        return Cocos2dxHelper.sCocos2dMusic.willPlayBackgroundMusic();
     }
 
     public static boolean isBackgroundMusicPlaying() {
@@ -315,7 +443,10 @@ public class Cocos2dxHelper {
     public static void onResume() {
         sActivityVisible = true;
         if (Cocos2dxHelper.sAccelerometerEnabled) {
-            Cocos2dxHelper.sCocos2dxAccelerometer.enable();
+            Cocos2dxHelper.sCocos2dxAccelerometer.enableAccel();
+        }
+        if (Cocos2dxHelper.sCompassEnabled) {
+            Cocos2dxHelper.sCocos2dxAccelerometer.enableCompass();
         }
     }
 
@@ -409,7 +540,7 @@ public class Cocos2dxHelper {
             }
         }
 
-        return false;
+        return defaultValue;
     }
     
     public static int getIntegerForKey(String key, int defaultValue) {
@@ -437,7 +568,7 @@ public class Cocos2dxHelper {
             }
         }
 
-        return 0;
+        return defaultValue;
     }
     
     public static float getFloatForKey(String key, float defaultValue) {
@@ -446,7 +577,7 @@ public class Cocos2dxHelper {
             return settings.getFloat(key, defaultValue);
         }
         catch (Exception ex) {
-            ex.printStackTrace();;
+            ex.printStackTrace();
 
             Map allValues = settings.getAll();
             Object value = allValues.get(key);
@@ -465,7 +596,7 @@ public class Cocos2dxHelper {
             }
         }
 
-        return 0.0f;
+        return defaultValue;
     }
     
     public static double getDoubleForKey(String key, double defaultValue) {
@@ -489,21 +620,21 @@ public class Cocos2dxHelper {
         SharedPreferences settings = sActivity.getSharedPreferences(Cocos2dxHelper.PREFS_NAME, 0);
         SharedPreferences.Editor editor = settings.edit();
         editor.putBoolean(key, value);
-        editor.commit();
+        editor.apply();
     }
     
     public static void setIntegerForKey(String key, int value) {
         SharedPreferences settings = sActivity.getSharedPreferences(Cocos2dxHelper.PREFS_NAME, 0);
         SharedPreferences.Editor editor = settings.edit();
         editor.putInt(key, value);
-        editor.commit();
+        editor.apply();
     }
     
     public static void setFloatForKey(String key, float value) {
         SharedPreferences settings = sActivity.getSharedPreferences(Cocos2dxHelper.PREFS_NAME, 0);
         SharedPreferences.Editor editor = settings.edit();
         editor.putFloat(key, value);
-        editor.commit();
+        editor.apply();
     }
     
     public static void setDoubleForKey(String key, double value) {
@@ -511,21 +642,21 @@ public class Cocos2dxHelper {
         SharedPreferences settings = sActivity.getSharedPreferences(Cocos2dxHelper.PREFS_NAME, 0);
         SharedPreferences.Editor editor = settings.edit();
         editor.putFloat(key, (float)value);
-        editor.commit();
+        editor.apply();
     }
     
     public static void setStringForKey(String key, String value) {
         SharedPreferences settings = sActivity.getSharedPreferences(Cocos2dxHelper.PREFS_NAME, 0);
         SharedPreferences.Editor editor = settings.edit();
         editor.putString(key, value);
-        editor.commit();
+        editor.apply();
     }
     
     public static void deleteValueForKey(String key) {
         SharedPreferences settings = sActivity.getSharedPreferences(Cocos2dxHelper.PREFS_NAME, 0);
         SharedPreferences.Editor editor = settings.edit();
         editor.remove(key);
-        editor.commit();
+        editor.apply();
     }
 
     public static byte[] conversionEncoding(byte[] text, String fromCharset,String newCharset)
@@ -610,5 +741,17 @@ public class Cocos2dxHelper {
             return -1;
         }
     }
+
     //Enhance API modification end     
+    public static float[] getAccelValue() {
+        return Cocos2dxHelper.sCocos2dxAccelerometer.accelerometerValues;
+    }
+
+    public static float[] getCompassValue() {
+        return Cocos2dxHelper.sCocos2dxAccelerometer.compassFieldValues;
+    }
+
+    public static int getSDKVersion() {
+        return Build.VERSION.SDK_INT;
+    }
 }

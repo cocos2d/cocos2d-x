@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -30,14 +30,12 @@
 #include "base/CCEventListenerCustom.h"
 #include "base/CCEventDispatcher.h"
 #include "base/CCEventType.h"
-#include "base/CCConfiguration.h"
 #include "2d/CCLight.h"
 #include "renderer/ccGLStateCache.h"
 #include "renderer/CCGLProgramState.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCTextureAtlas.h"
 #include "renderer/CCTexture2D.h"
-#include "renderer/ccGLStateCache.h"
 #include "renderer/CCTechnique.h"
 #include "renderer/CCMaterial.h"
 #include "renderer/CCPass.h"
@@ -76,7 +74,7 @@ void MeshCommand::init(float globalZOrder,
                        const cocos2d::Mat4 &mv,
                        uint32_t flags)
 {
-    CCASSERT(material, "material cannot be nill");
+    CCASSERT(material, "material cannot be null");
 
     RenderCommand::init(globalZOrder, mv, flags);
 
@@ -105,8 +103,8 @@ void MeshCommand::init(float globalZOrder,
                        const cocos2d::Mat4& mv,
                        uint32_t flags)
 {
-    CCASSERT(glProgramState, "GLProgramState cannot be nill");
-    CCASSERT(stateBlock, "StateBlock cannot be nill");
+    CCASSERT(glProgramState, "GLProgramState cannot be null");
+    CCASSERT(stateBlock, "StateBlock cannot be null");
     CCASSERT(!_material, "cannot init with GLProgramState if previously inited without GLProgramState");
 
     RenderCommand::init(globalZOrder, mv, flags);

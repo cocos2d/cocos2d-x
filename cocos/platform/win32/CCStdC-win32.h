@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -45,8 +45,10 @@ typedef SSIZE_T ssize_t;
     #define _USE_MATH_DEFINES       // make M_PI can be use
 #endif
 
+#if _MSC_VER < 1800
 #if !defined(isnan)
     #define isnan   _isnan
+#endif
 #endif
 
 #if _MSC_VER < 1900
@@ -87,7 +89,7 @@ typedef SSIZE_T ssize_t;
 #if _MSC_VER >= 1600 || defined(__MINGW32__)
     #include <stdint.h>
 #else
-    #include "./compat/stdint.h"
+    #include "platform/win32/compat/stdint.h"
 #endif
 
 #define _WINSOCKAPI_

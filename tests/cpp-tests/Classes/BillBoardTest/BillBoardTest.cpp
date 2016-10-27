@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -48,7 +48,7 @@ BillBoardTests::BillBoardTests()
 BillBoardRotationTest::BillBoardRotationTest()
 {
     auto root = Sprite3D::create();
-    root->setNormalizedPosition(Vec2(.5,.25));
+    root->setPositionNormalized(Vec2(.5,.25));
     addChild(root);
     
     auto model = Sprite3D::create("Sprite3DTest/orc.c3b");

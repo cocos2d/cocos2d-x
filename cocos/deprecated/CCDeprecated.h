@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2013      cocos2d-x.org
- Copyright (c) 2013-2015 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -32,8 +32,66 @@
 #define __COCOS2D_CCDEPRECATED_H__
 
 #include <math.h>
-#include "math/CCGeometry.h"
+
+#include "2d/CCActionCamera.h"
+#include "2d/CCActionCatmullRom.h"
+#include "2d/CCActionEase.h"
+#include "2d/CCActionGrid.h"
+#include "2d/CCActionGrid3D.h"
+#include "2d/CCActionInstant.h"
+#include "2d/CCActionPageTurn3D.h"
+#include "2d/CCActionProgressTimer.h"
+#include "2d/CCActionTiledGrid.h"
+#include "2d/CCActionTween.h"
+#include "2d/CCAnimationCache.h"
+#include "2d/CCAtlasNode.h"
+#include "2d/CCClippingNode.h"
+#include "2d/CCGrid.h"
+#include "2d/CCLabelAtlas.h"
+#include "2d/CCLabelBMFont.h"
+#include "2d/CCLabelTTF.h"
+#include "2d/CCLayer.h"
+#include "2d/CCMenu.h"
+#include "2d/CCMenuItem.h"
+#include "2d/CCMotionStreak.h"
+#include "2d/CCParallaxNode.h"
+#include "2d/CCParticleBatchNode.h"
+#include "2d/CCParticleExamples.h"
+#include "2d/CCParticleSystemQuad.h"
+#include "2d/CCProgressTimer.h"
+#include "2d/CCSpriteFrameCache.h"
+#include "2d/CCTMXLayer.h"
+#include "2d/CCTMXObjectGroup.h"
+#include "2d/CCTMXTiledMap.h"
+#include "2d/CCTMXXMLParser.h"
+#include "2d/CCTextFieldTTF.h"
+#include "2d/CCTileMapAtlas.h"
+#include "2d/CCTransition.h"
+#include "2d/CCTransitionPageTurn.h"
+#include "2d/CCTransitionProgress.h"
+#include "base/CCConfiguration.h"
+#include "base/CCDataVisitor.h"
+#include "base/CCEvent.h"
+#include "base/CCIMEDelegate.h"
+#include "base/CCScheduler.h"
+#include "base/CCUserDefault.h"
 #include "base/ccTypes.h"
+#include "deprecated/CCArray.h"
+#include "deprecated/CCBool.h"
+#include "deprecated/CCDictionary.h"
+#include "deprecated/CCDouble.h"
+#include "deprecated/CCFloat.h"
+#include "deprecated/CCInteger.h"
+#include "deprecated/CCNotificationCenter.h"
+#include "deprecated/CCSet.h"
+#include "math/CCAffineTransform.h"
+#include "math/CCGeometry.h"
+#include "platform/CCApplication.h"
+#include "platform/CCFileUtils.h"
+#include "renderer/CCGLProgram.h"
+#include "renderer/CCGLProgramCache.h"
+#include "renderer/CCTextureAtlas.h"
+#include "renderer/ccGLStateCache.h"
 
 NS_CC_BEGIN
 

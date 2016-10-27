@@ -26,7 +26,7 @@
 #ifndef __UIEditBoxIMPL_H__
 #define __UIEditBoxIMPL_H__
 
-#include "UIEditBox.h"
+#include "ui/UIEditBox/UIEditBox.h"
 
 
 namespace cocos2d {

@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2011      Laschweinski
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -26,7 +26,7 @@ THE SOFTWARE.
 #include "platform/CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
 
-#include "CCApplication-linux.h"
+#include "platform/linux/CCApplication-linux.h"
 #include <unistd.h>
 #include <sys/time.h>
 #include <string>
@@ -37,14 +37,14 @@ NS_CC_BEGIN
 
 
 // sharedApplication pointer
-Application * Application::sm_pSharedApplication = 0;
+Application * Application::sm_pSharedApplication = nullptr;
 
 static long getCurrentMillSecond() {
     long lLastTime;
     struct timeval stCurrentTime;
 
     gettimeofday(&stCurrentTime,NULL);
-    lLastTime = stCurrentTime.tv_sec*1000+stCurrentTime.tv_usec*0.001; //millseconds
+    lLastTime = stCurrentTime.tv_sec*1000+stCurrentTime.tv_usec*0.001; // milliseconds
     return lLastTime;
 }
 
@@ -58,7 +58,7 @@ Application::Application()
 Application::~Application()
 {
     CC_ASSERT(this == sm_pSharedApplication);
-    sm_pSharedApplication = NULL;
+    sm_pSharedApplication = nullptr;
 }
 
 int Application::run()
@@ -143,7 +143,7 @@ std::string Application::getVersion()
 
 bool Application::openURL(const std::string &url)
 {
-    std::string op = std::string("open ").append(url);
+    std::string op = std::string("xdg-open ").append(url);
     return system(op.c_str())!=-1;
 }
 

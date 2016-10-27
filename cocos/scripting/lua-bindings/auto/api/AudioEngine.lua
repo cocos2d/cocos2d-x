@@ -60,13 +60,6 @@
 -- @return experimental::AudioEngine#experimental::AudioEngine self (return value: cc.experimental::AudioEngine)
         
 --------------------------------
--- Release objects relating to AudioEngine.<br>
--- warning It must be called before the application exit.
--- @function [parent=#AudioEngine] end 
--- @param self
--- @return experimental::AudioEngine#experimental::AudioEngine self (return value: cc.experimental::AudioEngine)
-        
---------------------------------
 -- Gets the maximum number of simultaneous audio instance of AudioEngine.
 -- @function [parent=#AudioEngine] getMaxAudioInstance 
 -- @param self
@@ -169,6 +162,14 @@
 -- @function [parent=#AudioEngine] stop 
 -- @param self
 -- @param #int audioID
+-- @return experimental::AudioEngine#experimental::AudioEngine self (return value: cc.experimental::AudioEngine)
+        
+--------------------------------
+-- Release objects relating to AudioEngine.<br>
+-- warning It must be called before the application exit.<br>
+-- lua endToLua
+-- @function [parent=#AudioEngine] end 
+-- @param self
 -- @return experimental::AudioEngine#experimental::AudioEngine self (return value: cc.experimental::AudioEngine)
         
 --------------------------------

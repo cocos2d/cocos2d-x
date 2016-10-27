@@ -16,6 +16,11 @@ elseif(MACOSX)
 elseif(LINUX)
   set(PLATFORM_SRC proj.linux/main.cpp)
   set(RES_PREFIX "/Resources")
+elseif(ANDROID)
+  set(PLATFORM_SRC
+          Classes/JNITest/JNITest.cpp
+          proj.android/jni/main.cpp)
+  set(RES_PREFIX "/Resources")
 else()
   message( FATAL_ERROR "Unsupported platform, CMake will exit" )
 endif()
@@ -30,7 +35,6 @@ set(TESTS_SRC
   Classes/BaseTest.cpp
   Classes/BillBoardTest/BillBoardTest.cpp
   Classes/BugsTest/Bug-CCDrawNode.cpp
-  Classes/BugsTest/Bug-PageViewLayout.cpp
   Classes/BugsTest/Bug-1159.cpp
   Classes/BugsTest/Bug-1174.cpp
   Classes/BugsTest/Bug-350.cpp
@@ -42,6 +46,8 @@ set(TESTS_SRC
   Classes/BugsTest/Bug-899.cpp
   Classes/BugsTest/Bug-914.cpp
   Classes/BugsTest/Bug-12847.cpp
+  Classes/BugsTest/Bug-15594.cpp
+  Classes/BugsTest/Bug-15776.cpp
   Classes/BugsTest/Bug-Child.cpp
   Classes/BugsTest/BugsTest.cpp
   Classes/Camera3DTest/Camera3DTest.cpp
@@ -49,8 +55,6 @@ set(TESTS_SRC
   Classes/ClickAndMoveTest/ClickAndMoveTest.cpp
   Classes/ClippingNodeTest/ClippingNodeTest.cpp
   Classes/CocosDenshionTest/CocosDenshionTest.cpp
-  Classes/CocosStudio3DTest/CocosStudio3DTest.cpp
-  Classes/CocosStudio3DTest/CocosStudio3DTest.cpp  
   Classes/ConfigurationTest/ConfigurationTest.cpp
   Classes/ConsoleTest/ConsoleTest.cpp
   Classes/CurlTest/CurlTest.cpp
@@ -61,17 +65,6 @@ set(TESTS_SRC
   Classes/EffectsAdvancedTest/EffectsAdvancedTest.cpp
   Classes/EffectsTest/EffectsTest.cpp
   Classes/ExtensionsTest/AssetsManagerExTest/AssetsManagerExTest.cpp
-  Classes/ExtensionsTest/CocoStudioActionTimelineTest/ActionTimelineTestScene.cpp
-  Classes/ExtensionsTest/CocoStudioArmatureTest/ArmatureScene.cpp
-  Classes/ExtensionsTest/CocoStudioComponentsTest/ComponentsTestScene.cpp
-  Classes/ExtensionsTest/CocoStudioComponentsTest/EnemyController.cpp
-  Classes/ExtensionsTest/CocoStudioComponentsTest/GameOverScene.cpp
-  Classes/ExtensionsTest/CocoStudioComponentsTest/PlayerController.cpp
-  Classes/ExtensionsTest/CocoStudioComponentsTest/ProjectileController.cpp
-  Classes/ExtensionsTest/CocoStudioComponentsTest/SceneController.cpp
-  Classes/ExtensionsTest/CocoStudioSceneTest/SceneEditorTest.cpp
-  Classes/ExtensionsTest/CocoStudioSceneTest/TriggerCode/acts.cpp
-  Classes/ExtensionsTest/CocoStudioSceneTest/TriggerCode/cons.cpp
   Classes/ExtensionsTest/CocosBuilderTest/AnimationsTest/AnimationsTestLayer.cpp
   Classes/ExtensionsTest/CocosBuilderTest/ButtonTest/ButtonTestLayer.cpp
   Classes/ExtensionsTest/CocosBuilderTest/CocosBuilderTest.cpp
@@ -138,58 +131,28 @@ set(TESTS_SRC
   Classes/TouchesTest/Paddle.cpp
   Classes/TouchesTest/TouchesTest.cpp
   Classes/TransitionsTest/TransitionsTest.cpp
-  Classes/UITest/CocoStudioGUITest/CocoStudioGUITest.cpp
   Classes/UITest/CocoStudioGUITest/CocosGUIScene.cpp
-  Classes/UITest/CocoStudioGUITest/CocostudioParserTest.cpp 
-  Classes/UITest/CocoStudioGUITest/CocostudioParserTest/CocostudioParserJsonTest.cpp
-  Classes/UITest/CocoStudioGUITest/CustomGUIScene.cpp
-  Classes/UITest/CocoStudioGUITest/CustomTest/CustomImageTest/CustomImageTest.cpp
-  Classes/UITest/CocoStudioGUITest/CustomTest/CustomParticleWidgetTest/CustomParticleWidgetTest.cpp
-  Classes/UITest/CocoStudioGUITest/CustomTest/CustomWidgetCallbackBindTest/CustomRootNode.cpp
-  Classes/UITest/CocoStudioGUITest/CustomTest/CustomWidgetCallbackBindTest/CustomRootNodeReader.cpp
-  Classes/UITest/CocoStudioGUITest/CustomTest/CustomWidgetCallbackBindTest/CustomWidgetCallbackBindTest.cpp
-  Classes/UITest/CocoStudioGUITest/CustomWidget/CustomImageView.cpp
-  Classes/UITest/CocoStudioGUITest/CustomWidget/CustomImageViewReader.cpp
-  Classes/UITest/CocoStudioGUITest/CustomWidget/CustomParticleWidget.cpp
-  Classes/UITest/CocoStudioGUITest/CustomWidget/CustomParticleWidgetReader.cpp
-  Classes/UITest/CocoStudioGUITest/CustomWidget/CustomReader.cpp
-  Classes/UITest/CocoStudioGUITest/GUIEditorTest.cpp
   Classes/UITest/CocoStudioGUITest/UIButtonTest/UIButtonTest.cpp
-  Classes/UITest/CocoStudioGUITest/UIButtonTest/UIButtonTest_Editor.cpp
   Classes/UITest/CocoStudioGUITest/UICheckBoxTest/UICheckBoxTest.cpp
-  Classes/UITest/CocoStudioGUITest/UICheckBoxTest/UICheckBoxTest_Editor.cpp
   Classes/UITest/CocoStudioGUITest/UIRadioButtonTest/UIRadioButtonTest.cpp
   Classes/UITest/CocoStudioGUITest/UIFocusTest/UIFocusTest.cpp
   Classes/UITest/CocoStudioGUITest/UIImageViewTest/UIImageViewTest.cpp
-  Classes/UITest/CocoStudioGUITest/UIImageViewTest/UIImageViewTest_Editor.cpp
   Classes/UITest/CocoStudioGUITest/UILayoutTest/UILayoutTest.cpp
-  Classes/UITest/CocoStudioGUITest/UILayoutTest/UILayoutTest_Editor.cpp
   Classes/UITest/CocoStudioGUITest/UIListViewTest/UIListViewTest.cpp
-  Classes/UITest/CocoStudioGUITest/UIListViewTest/UIListViewTest_Editor.cpp
   Classes/UITest/CocoStudioGUITest/UILoadingBarTest/UILoadingBarTest.cpp
-  Classes/UITest/CocoStudioGUITest/UILoadingBarTest/UILoadingBarTest_Editor.cpp
   Classes/UITest/CocoStudioGUITest/UIPageViewTest/UIPageViewTest.cpp
-  Classes/UITest/CocoStudioGUITest/UIPageViewTest/UIPageViewTest_Editor.cpp
   Classes/UITest/CocoStudioGUITest/UIRichTextTest/UIRichTextTest.cpp
   Classes/UITest/CocoStudioGUITest/UIScale9SpriteTest.cpp
   Classes/UITest/CocoStudioGUITest/UIScene.cpp
   Classes/UITest/CocoStudioGUITest/UISceneManager.cpp
-  Classes/UITest/CocoStudioGUITest/UISceneManager_Editor.cpp
-  Classes/UITest/CocoStudioGUITest/UIScene_Editor.cpp
   Classes/UITest/CocoStudioGUITest/UIScrollViewTest/UIScrollViewTest.cpp
-  Classes/UITest/CocoStudioGUITest/UIScrollViewTest/UIScrollViewTest_Editor.cpp
   Classes/UITest/CocoStudioGUITest/UISliderTest/UISliderTest.cpp
-  Classes/UITest/CocoStudioGUITest/UISliderTest/UISliderTest_Editor.cpp
   Classes/UITest/CocoStudioGUITest/UITextAtlasTest/UITextAtlasTest.cpp
-  Classes/UITest/CocoStudioGUITest/UITextAtlasTest/UITextAtlasTest_Editor.cpp
   Classes/UITest/CocoStudioGUITest/UITextBMFontTest/UITextBMFontTest.cpp
-  Classes/UITest/CocoStudioGUITest/UITextBMFontTest/UITextBMFontTest_Editor.cpp
   Classes/UITest/CocoStudioGUITest/UITextFieldTest/UITextFieldTest.cpp
-  Classes/UITest/CocoStudioGUITest/UITextFieldTest/UITextFieldTest_Editor.cpp
   Classes/UITest/CocoStudioGUITest/UITextTest/UITextTest.cpp
-  Classes/UITest/CocoStudioGUITest/UITextTest/UITextTest_Editor.cpp
   Classes/UITest/CocoStudioGUITest/UIWidgetAddNodeTest/UIWidgetAddNodeTest.cpp
-  Classes/UITest/CocoStudioGUITest/UIWidgetAddNodeTest/UIWidgetAddNodeTest_Editor.cpp
+  Classes/UITest/CocoStudioGUITest/UITabControlTest/UITabControlTest.cpp
   Classes/UITest/UITest.cpp
   Classes/UnitTest/RefPtrTest.cpp
   Classes/UnitTest/UnitTest.cpp
@@ -197,8 +160,11 @@ set(TESTS_SRC
   Classes/VisibleRect.cpp
   Classes/VibrateTest/VibrateTest.cpp
   Classes/ZwoptexTest/ZwoptexTest.cpp
+  Classes/SpriteFrameCacheTest/SpriteFrameCacheTest.cpp
   Classes/controller.cpp
   Classes/testBasic.cpp
+  Classes/VRTest/VRTest.cpp
+  Classes/VRTest/VRTest.h
   ${PLATFORM_SRC}
 )
 
@@ -231,35 +197,26 @@ else()
         Classes/ExtensionsTest/NetworkTest/SocketIOTest.cpp
         Classes/ExtensionsTest/NetworkTest/WebSocketTest.cpp
 
-        Classes/UITest/CocoStudioGUITest/CocoStudioGUITest.cpp
-        Classes/UITest/CocoStudioGUITest/CocosGUIScene.cpp
-        Classes/UITest/CocoStudioGUITest/CocostudioParserTest.cpp
-        Classes/UITest/CocoStudioGUITest/CustomGUIScene.cpp
-        Classes/UITest/CocoStudioGUITest/GUIEditorTest.cpp
         Classes/UITest/CocoStudioGUITest/UIEditBoxTest.cpp
-        Classes/UITest/CocoStudioGUITest/UIScale9SpriteTest.cpp
-        Classes/UITest/CocoStudioGUITest/UIScene.cpp
-        Classes/UITest/CocoStudioGUITest/UISceneManager.cpp
-        Classes/UITest/CocoStudioGUITest/UISceneManager_Editor.cpp
-        Classes/UITest/CocoStudioGUITest/UIScene_Editor.cpp
     )
 endif()
-
 
 include_directories(
   Classes
   ${CMAKE_SOURCE_DIR}/cocos/editor-support
 )
 
-# add the executable
-add_executable(${APP_NAME}
-  ${TESTS_SRC}
-  ${EXTENDED_TESTS_SRC}
-)
+if(ANDROID)
+    add_library(${APP_NAME} SHARED ${TESTS_SRC} ${EXTENDED_TESTS_SRC})
+    IF(CMAKE_BUILD_TYPE MATCHES RELEASE)
+        ADD_CUSTOM_COMMAND(TARGET ${APP_NAME} POST_BUILD COMMAND ${CMAKE_STRIP} lib${APP_NAME}.so)
+    ENDIF()
+else()
+    # add the executable
+    add_executable(${APP_NAME} ${TESTS_SRC} ${EXTENDED_TESTS_SRC})
+endif()
 
-target_link_libraries(${APP_NAME}
-  cocos2d
-)
+target_link_libraries(${APP_NAME} cocos2d)
 
 cocos_use_pkg(${APP_NAME} CURL)
 
@@ -268,12 +225,13 @@ if(MACOSX OR APPLE)
       MACOSX_BUNDLE 1
       RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
       )
-
+ELSEIF(ANDROID)
+    set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${APP_NAME}")
+    set_target_properties(${APP_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${APP_BIN_DIR}")
 else()
     set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${APP_NAME}")
-
     set_target_properties(${APP_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${APP_BIN_DIR}")
-
+    
     pre_build(${APP_NAME}
       COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/Resources ${APP_BIN_DIR}${RES_PREFIX}
       )

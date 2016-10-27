@@ -24,6 +24,7 @@
 #ifndef __CCANIMATIONCURVE_H__
 #define __CCANIMATIONCURVE_H__
 
+#include <cmath>
 #include <functional>
 
 #include "platform/CCPlatformMacros.h"
@@ -107,6 +108,6 @@ protected:
 
 NS_CC_END
 
-#include "CCAnimationCurve.inl"
+#include "3d/CCAnimationCurve.inl"
 
 #endif

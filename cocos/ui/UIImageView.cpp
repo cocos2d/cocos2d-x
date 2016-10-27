@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -301,6 +301,18 @@ ResourceData ImageView::getRenderFile()
     rData.type = (int)_imageTexType;
     rData.file = _textureFile;
     return rData;
+}
+    
+void ImageView::setGLProgram(GLProgram* glProgram)
+{
+    Widget::setGLProgram(glProgram);
+    _imageRenderer->setGLProgram(glProgram);
+}
+    
+void ImageView::setGLProgramState(cocos2d::GLProgramState* glProgramState)
+{
+    Widget::setGLProgramState(glProgramState);
+    _imageRenderer->setGLProgramState(glProgramState);
 }
 
 }

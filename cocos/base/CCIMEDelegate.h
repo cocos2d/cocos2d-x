@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010 cocos2d-x.org
-Copyright (C) 2013-2014 Chukong Technologies Inc.
+Copyright (C) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -28,6 +28,7 @@ THE SOFTWARE.
 
 #include <string>
 #include "math/CCGeometry.h"
+#include "base/CCEventKeyboard.h"
 
 /**
  * @addtogroup base
@@ -123,6 +124,13 @@ protected:
     * @lua NA
     */
     virtual void deleteBackward() {}
+
+    /**
+    @brief    Called by IMEDispatcher after the user press control key.
+    * @js NA
+    * @lua NA
+    */
+    virtual void controlKey(EventKeyboard::KeyCode keyCode) {}
 
     /**
     @brief    Called by IMEDispatcher for text stored in delegate.

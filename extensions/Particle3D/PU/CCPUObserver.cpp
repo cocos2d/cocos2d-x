@@ -170,7 +170,7 @@ PUEventHandler* PUObserver::getEventHandler (size_t index) const
 PUEventHandler* PUObserver::getEventHandler (const std::string& eventHandlerName) const
 {
     if (eventHandlerName.empty())
-        return 0;
+        return nullptr;
 
     ParticleEventHandlerConstIterator it;
     ParticleEventHandlerConstIterator itEnd = _eventHandlers.end();
@@ -182,7 +182,7 @@ PUEventHandler* PUObserver::getEventHandler (const std::string& eventHandlerName
         }
     }
 
-    return 0;
+    return nullptr;
 }
 //-----------------------------------------------------------------------
 size_t PUObserver::getNumEventHandlers (void) const

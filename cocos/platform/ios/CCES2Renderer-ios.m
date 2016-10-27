@@ -2,7 +2,7 @@
  Copyright (c) 2010      Ricardo Quesada
  Copyright (c) 2010-2012 cocos2d-x.org
  Corpyight (c) 2011      Zynga Inc.
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -32,9 +32,9 @@
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 
-#import "CCES2Renderer-ios.h"
+#import "platform/ios/CCES2Renderer-ios.h"
 #import "platform/CCPlatformMacros.h"
-#import "OpenGL_Internal-ios.h"
+#import "platform/ios/OpenGL_Internal-ios.h"
 
 #if !defined(COCOS2D_DEBUG) || COCOS2D_DEBUG == 0
 #define NSLog(...)       do {} while (0)

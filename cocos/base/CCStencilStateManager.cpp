@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2010-2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -23,7 +23,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCStencilStateManager.hpp"
+#include "base/CCStencilStateManager.hpp"
 #include "base/CCDirector.h"
 #include "renderer/CCGLProgramCache.h"
 #include "renderer/ccGLStateCache.h"
@@ -38,7 +38,6 @@
 NS_CC_BEGIN
 
 GLint StencilStateManager::s_layer = -1;
-static GLint g_sStencilBits = -1;
 
 StencilStateManager::StencilStateManager()
 : _alphaThreshold(1.0f)
@@ -57,17 +56,6 @@ StencilStateManager::StencilStateManager()
 , _currentAlphaTestRef(1)
 
 {
-    // get (only once) the number of bits of the stencil buffer
-    static bool once = true;
-    if (once)
-    {
-        glGetIntegerv(GL_STENCIL_BITS, &g_sStencilBits);
-        if (g_sStencilBits <= 0)
-        {
-            CCLOG("Stencil buffer is not enabled.");
-        }
-        once = false;
-    }
 }
 
 void StencilStateManager::drawFullScreenQuadClearStencil()

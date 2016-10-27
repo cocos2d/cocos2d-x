@@ -2,7 +2,7 @@
 Copyright (c) 2008-2011 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -73,7 +73,6 @@ SpriteFrame::SpriteFrame()
 : _rotated(false)
 , _texture(nullptr)
 {
-    
 }
 
 bool SpriteFrame::initWithTexture(Texture2D* texture, const Rect& rect)
@@ -105,6 +104,7 @@ bool SpriteFrame::initWithTexture(Texture2D* texture, const Rect& rect, bool rot
     _originalSize = CC_SIZE_PIXELS_TO_POINTS( _originalSizeInPixels );
     _rotated = rotated;
     _anchorPoint = Vec2(NAN, NAN);
+    _capInsetsNormalized = Rect(NAN, NAN, NAN, NAN);
 
     return true;
 }
@@ -121,6 +121,7 @@ bool SpriteFrame::initWithTextureFilename(const std::string& filename, const Rec
     _originalSize = CC_SIZE_PIXELS_TO_POINTS( _originalSizeInPixels );
     _rotated = rotated;
     _anchorPoint = Vec2(NAN, NAN);
+    _capInsetsNormalized = Rect(NAN, NAN, NAN, NAN);
 
     return true;
 }
@@ -135,8 +136,9 @@ SpriteFrame* SpriteFrame::clone() const
 {
 	// no copy constructor	
     SpriteFrame *copy = new (std::nothrow) SpriteFrame();
-    copy->initWithTextureFilename(_textureFilename.c_str(), _rectInPixels, _rotated, _offsetInPixels, _originalSizeInPixels);
+    copy->initWithTextureFilename(_textureFilename, _rectInPixels, _rotated, _offsetInPixels, _originalSizeInPixels);
     copy->setTexture(_texture);
+    copy->setPolygonInfo(_polygonInfo);
     copy->autorelease();
     return copy;
 }
@@ -151,6 +153,16 @@ void SpriteFrame::setRectInPixels(const Rect& rectInPixels)
 {
     _rectInPixels = rectInPixels;
     _rect = CC_RECT_PIXELS_TO_POINTS(rectInPixels);
+}
+
+void SpriteFrame::setCapInsets(const Rect& centerRect)
+{
+    _capInsetsNormalized = CC_RECT_PIXELS_TO_POINTS(centerRect);
+}
+
+bool SpriteFrame::hasCenterRect() const
+{
+    return !std::isnan(_capInsetsNormalized.origin.x);
 }
 
 const Vec2& SpriteFrame::getOffset() const
@@ -187,7 +199,7 @@ void SpriteFrame::setAnchorPoint(const Vec2& anchorPoint)
 
 bool SpriteFrame::hasAnchorPoint() const
 {
-    return !isnan(_anchorPoint.x);
+    return !std::isnan(_anchorPoint.x);
 }
 
 void SpriteFrame::setTexture(Texture2D * texture)
@@ -206,7 +218,7 @@ Texture2D* SpriteFrame::getTexture()
     }
 
     if( !_textureFilename.empty()) {
-        return Director::getInstance()->getTextureCache()->addImage(_textureFilename.c_str());
+        return Director::getInstance()->getTextureCache()->addImage(_textureFilename);
     }
     // no texture or texture filename
     return nullptr;
@@ -217,7 +229,7 @@ void SpriteFrame::setPolygonInfo(const PolygonInfo &polygonInfo)
     _polygonInfo = polygonInfo;
 }
 
-const PolygonInfo &SpriteFrame::getPolygonInfo() const
+const PolygonInfo& SpriteFrame::getPolygonInfo() const
 {
     return _polygonInfo;
 }

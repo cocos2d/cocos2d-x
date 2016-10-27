@@ -20,7 +20,7 @@
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
 
-#include "AudioCachePlayer.h"
+#include "audio/winrt/AudioCachePlayer.h"
 #include "base/CCDirector.h"
 #include "base/CCScheduler.h"
 
@@ -489,7 +489,7 @@ bool AudioPlayer::submitBuffers()
         if (!_cachedBufferQ.size() || (_isStreaming && _cachedBufferQ.size() < QUEUEBUFFER_NUM)) {
             AudioDataChunk chunk;
             if (_cache->getChunk(chunk) && chunk._dataSize) {
-                _xaBuffer.AudioBytes = chunk._dataSize;
+                _xaBuffer.AudioBytes = static_cast<UINT32>(chunk._dataSize);
                 _xaBuffer.pAudioData = chunk._data->data();
                 _xaBuffer.Flags = chunk._endOfStream ? XAUDIO2_END_OF_STREAM : 0;
                 _cachedBufferQ.push(chunk);

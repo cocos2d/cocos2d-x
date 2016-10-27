@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2013      Zynga Inc.
- Copyright (c) 2013-2015 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -67,7 +67,6 @@ public:
     static void unloadFontAtlasTTF(const std::string& fontFileName);
 
 private:
-    static std::string generateFontName(const std::string& fontFileName, float size, bool useDistanceField);
     static std::unordered_map<std::string, FontAtlas *> _atlasMap;
 };
 

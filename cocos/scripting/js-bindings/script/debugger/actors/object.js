@@ -676,6 +676,15 @@ ObjectActor.prototype = {
         functionDisplayName: stack.functionDisplayName
       };
     });
+  },
+   
+  /**
+   * Added by minggo
+   * To get the name of this object. It is used to get function name,
+   * which is needed by dispalying function name in stack strace.
+   */
+  onName: function() {
+    return { from: this.actorID, name: this.obj.name };
   }
 };
 
@@ -694,7 +703,8 @@ ObjectActor.prototype.requestTypes = {
   "dependentPromises": ObjectActor.prototype.onDependentPromises,
   "allocationStack": ObjectActor.prototype.onAllocationStack,
   "fulfillmentStack": ObjectActor.prototype.onFulfillmentStack,
-  "rejectionStack": ObjectActor.prototype.onRejectionStack
+  "rejectionStack": ObjectActor.prototype.onRejectionStack,
+  "name": ObjectActor.prototype.onName, // added by minggo
 };
 
 /**
@@ -1160,7 +1170,7 @@ DebuggerServer.ObjectActorPreviewers = {
  *        The thread actor to use to create a value grip.
  * @return object|null
  *         An object with one property, "value", which holds the value grip that
- *         represents the given object. Null is returned if we cant preview the
+ *         represents the given object. Null is returned if we can't preview the
  *         object.
  */
 function genericObjectPreviewer(className, classObj, obj, hooks) {

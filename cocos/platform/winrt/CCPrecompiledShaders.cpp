@@ -22,10 +22,10 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#include "CCPrecompiledShaders.h"
-#include "CCWinRTUtils.h"
+#include "platform/winrt/CCPrecompiledShaders.h"
+#include "platform/winrt/CCWinRTUtils.h"
 #include "renderer/CCGLProgram.h"
-#include "sha1.h"
+#include "platform/winrt/sha1.h"
 
 using namespace Windows::Graphics::Display;
 using namespace Windows::Storage;
@@ -38,7 +38,7 @@ using namespace concurrency;
 NS_CC_BEGIN
 
 // singleton stuff
-static CCPrecompiledShaders *s_pPrecompiledShaders = NULL;
+static CCPrecompiledShaders *s_pPrecompiledShaders = nullptr;
 
 #define SHADER_NAME_PREFIX "s_"
 
@@ -64,7 +64,7 @@ void CCPrecompiledShaders::Init(void)
     m_programs.clear();
     m_precompiledPrograms.clear();
 
-    // add existing precomiled programs to dictionary
+    // add existing precompiled programs to dictionary
     loadPrecompiledPrograms();
 }
 
@@ -83,16 +83,16 @@ static std::string computeHash(const GLchar* vShaderByteArray, const GLchar* fSh
 
     if(!err)
     {
-        err = SHA1Input(&sha,(const unsigned char *) vShaderByteArray,strlen(vShaderByteArray));
+        err = SHA1Input(&sha,(const unsigned char *) vShaderByteArray,static_cast<unsigned int>(strlen(vShaderByteArray)));
     }
     if(!err)
     {
-        err = SHA1Input(&sha,(const unsigned char *) fShaderByteArray,strlen(fShaderByteArray));
+        err = SHA1Input(&sha,(const unsigned char *) fShaderByteArray, static_cast<unsigned int>(strlen(fShaderByteArray)));
     }
     if(!err)
     {
         char* shader_version = (char*) glGetString(GL_SHADING_LANGUAGE_VERSION);
-        err = SHA1Input(&sha,(const unsigned char *) shader_version,strlen(shader_version));
+        err = SHA1Input(&sha,(const unsigned char *) shader_version, static_cast<unsigned int>(strlen(shader_version)));
     }
     if(!err)
     {
@@ -207,9 +207,9 @@ void CCPrecompiledShaders::savePrecompiledPrograms(Windows::Storage::StorageFold
         dataWriter->WriteString(L"#define PRECOMPILED_SHADERS\n\n");
 
 
-        for (auto iter = m_programs.begin(); iter != m_programs.end(); ++iter) 
+        for (auto& iter : m_programs)
         {
-            CompiledProgram* p = (CompiledProgram*)iter->second;
+            CompiledProgram* p = (CompiledProgram*)iter.second;
             Platform::String^ keyName = PlatformStringFromString(p->key);
             Platform::String^ programName = SHADER_NAME_PREFIX + keyName;
 

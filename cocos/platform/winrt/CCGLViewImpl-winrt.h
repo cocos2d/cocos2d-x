@@ -26,9 +26,9 @@ THE SOFTWARE.
 #ifndef __CC_EGLVIEWIMPL_WINRT_H__
 #define __CC_EGLVIEWIMPL_WINRT_H__
 
-#include "CCStdC.h"
+#include "platform/winrt/CCStdC.h"
 #include "platform/CCCommon.h"
-#include "Keyboard-winrt.h"
+#include "platform/winrt/Keyboard-winrt.h"
 #include "platform/CCGLView.h"
 #include "base/CCEventKeyboard.h"
 

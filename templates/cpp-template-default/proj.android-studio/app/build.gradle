@@ -47,3 +47,14 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':libcocos2dx')
 }
+
+task cleanAssets(type: Delete) {
+    delete 'assets'
+}
+task copyAssets(type: Copy) {
+    from '../../Resources'
+    into 'assets'
+}
+
+clean.dependsOn cleanAssets
+preBuild.dependsOn copyAssets

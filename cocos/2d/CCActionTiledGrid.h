@@ -1,7 +1,7 @@
 /****************************************************************************
 Copyright (c) 2009      On-Core
 Copyright (c) 2010-2012 cocos2d-x.org
-CopyRight (c) 2013-2014 Chukong Technologies Inc.
+CopyRight (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -55,7 +55,7 @@ public:
     static ShakyTiles3D* create(float duration, const Size& gridSize, int range, bool shakeZ);
 
     // Override
-	virtual ShakyTiles3D* clone() const override;
+    virtual ShakyTiles3D* clone() const override;
     virtual void update(float time) override;
     
 CC_CONSTRUCTOR_ACCESS:
@@ -100,7 +100,7 @@ public:
     static ShatteredTiles3D* create(float duration, const Size& gridSize, int range, bool shatterZ);
 
     // Override
-	virtual ShatteredTiles3D* clone() const override;
+    virtual ShatteredTiles3D* clone() const override;
     virtual void update(float time) override;
     
 CC_CONSTRUCTOR_ACCESS:
@@ -152,7 +152,7 @@ public:
     // Overrides
     virtual void startWithTarget(Node *target) override;
     virtual void update(float time) override;
-	virtual ShuffleTiles* clone() const override;
+    virtual ShuffleTiles* clone() const override;
     
 CC_CONSTRUCTOR_ACCESS:
     ShuffleTiles() {}
@@ -221,7 +221,7 @@ public:
 
     // Overrides
     virtual void update(float time) override;
-	virtual FadeOutTRTiles* clone() const override;
+    virtual FadeOutTRTiles* clone() const override;
 
 CC_CONSTRUCTOR_ACCESS:
     FadeOutTRTiles() {}
@@ -248,7 +248,7 @@ public:
 
     // Overrides
     virtual float testFunc(const Size& pos, float time) override;
-	virtual FadeOutBLTiles* clone() const override;
+    virtual FadeOutBLTiles* clone() const override;
 
 CC_CONSTRUCTOR_ACCESS:
     FadeOutBLTiles() {}
@@ -276,7 +276,7 @@ public:
     virtual void transformTile(const Vec2& pos, float distance) override;
 
     // Overrides
-	virtual FadeOutUpTiles* clone() const override;
+    virtual FadeOutUpTiles* clone() const override;
     virtual float testFunc(const Size& pos, float time) override;
 
 CC_CONSTRUCTOR_ACCESS:
@@ -303,7 +303,7 @@ public:
     static FadeOutDownTiles* create(float duration, const Size& gridSize);
 
     // Overrides
-	virtual FadeOutDownTiles* clone() const override;
+    virtual FadeOutDownTiles* clone() const override;
     virtual float testFunc(const Size& pos, float time) override;
 
 CC_CONSTRUCTOR_ACCESS:
@@ -404,26 +404,26 @@ public:
     @brief Get the amplitude of the effect.
     @return Return the amplitude of the effect.
     */
-    inline float getAmplitude() const { return _amplitude; }
+    float getAmplitude() const { return _amplitude; }
     /**
     @brief Set the amplitude to the effect.
     @param amplitude The value of amplitude will be set.
     */
-    inline void setAmplitude(float amplitude) { _amplitude = amplitude; }
+    void setAmplitude(float amplitude) { _amplitude = amplitude; }
 
     /**
     @brief Get the amplitude rate of the effect.
     @return Return the amplitude rate of the effect.
     */
-    inline float getAmplitudeRate() const { return _amplitudeRate; }
+    float getAmplitudeRate() const { return _amplitudeRate; }
     /**
     @brief Set the amplitude rate of the effect.
     @param amplitudeRate The value of amplitude rate will be set.
     */
-    inline void setAmplitudeRate(float amplitudeRate) { _amplitudeRate = amplitudeRate; }
+    void setAmplitudeRate(float amplitudeRate) { _amplitudeRate = amplitudeRate; }
 
     // Override
-	virtual WavesTiles3D* clone() const override;
+    virtual WavesTiles3D* clone() const override;
     virtual void update(float time) override;
     
 CC_CONSTRUCTOR_ACCESS:
@@ -470,26 +470,26 @@ public:
     @brief Get the amplitude of the effect.
     @return Return the amplitude of the effect.
     */
-    inline float getAmplitude() const { return _amplitude; }
+    float getAmplitude() const { return _amplitude; }
     /**
     @brief Set the amplitude to the effect.
     @param amplitude The value of amplitude will be set.
     */
-    inline void setAmplitude(float amplitude) { _amplitude = amplitude; }
+    void setAmplitude(float amplitude) { _amplitude = amplitude; }
 
     /**
     @brief Get the amplitude rate of the effect.
     @return Return the amplitude rate of the effect.
     */
-    inline float getAmplitudeRate() const { return _amplitudeRate; }
+    float getAmplitudeRate() const { return _amplitudeRate; }
     /**
     @brief Set the amplitude rate of the effect.
     @param amplitudeRate The value of amplitude rate will be set.
     */
-    inline void setAmplitudeRate(float amplitudeRate) { _amplitudeRate = amplitudeRate; }
+    void setAmplitudeRate(float amplitudeRate) { _amplitudeRate = amplitudeRate; }
 
     // Override
-	virtual JumpTiles3D* clone() const override;
+    virtual JumpTiles3D* clone() const override;
     virtual void update(float time) override;
     
 CC_CONSTRUCTOR_ACCESS:
@@ -532,7 +532,7 @@ public :
     static SplitRows* create(float duration, unsigned int rows);
 
     // Overrides
-	virtual SplitRows* clone() const override;
+    virtual SplitRows* clone() const override;
     virtual void update(float time) override;
     virtual void startWithTarget(Node *target) override;
     
@@ -574,7 +574,7 @@ public:
     static SplitCols* create(float duration, unsigned int cols);
 
     // Overrides
-	virtual SplitCols* clone() const override;
+    virtual SplitCols* clone() const override;
     /**
      * @param time in seconds
      */

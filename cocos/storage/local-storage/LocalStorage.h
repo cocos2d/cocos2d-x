@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2012 Zynga Inc.
-Copyright (c) 2013-2015 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -27,7 +27,7 @@ THE SOFTWARE.
 #define __JSB_LOCALSTORAGE_H
 
 #include <string>
-#include "CCPlatformMacros.h"
+#include "platform/CCPlatformMacros.h"
 
 /**
  * @addtogroup storage

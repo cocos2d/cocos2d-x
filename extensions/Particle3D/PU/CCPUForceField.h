@@ -47,7 +47,7 @@ public:
         _persistence(1.0f),
         _worldSize(DEFAULT_WORLDSIZE)
     {
-    };
+    }
     virtual ~PUForceFieldCalculationFactory(void){};
 
     /** Generates the force field
@@ -186,7 +186,7 @@ class PUForceField
             
         /** Get/Set the Forcefield type
         */
-        const ForceFieldType getForceFieldType(void) const;
+        ForceFieldType getForceFieldType() const;
         void setForceFieldType(const ForceFieldType forceFieldType);
 
     protected:

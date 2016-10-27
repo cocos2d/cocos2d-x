@@ -1,7 +1,7 @@
-#include "jsb_cocos2dx_experimental_webView_auto.hpp"
+#include "scripting/js-bindings/auto/jsb_cocos2dx_experimental_webView_auto.hpp"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS) && !defined(CC_TARGET_OS_TVOS)
-#include "cocos2d_specifics.hpp"
-#include "UIWebView.h"
+#include "scripting/js-bindings/manual/cocos2d_specifics.hpp"
+#include "ui/UIWebView.h"
 
 template<class T>
 static bool dummy_constructor(JSContext *cx, uint32_t argc, jsval *vp)
@@ -18,7 +18,7 @@ static bool js_is_native_obj(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     args.rval().setBoolean(true);
-    return true;    
+    return true;
 }
 JSClass  *jsb_cocos2d_experimental_ui_WebView_class;
 JSObject *jsb_cocos2d_experimental_ui_WebView_prototype;
@@ -179,6 +179,26 @@ bool js_cocos2dx_experimental_webView_WebView_loadURL(JSContext *cx, uint32_t ar
     }
 
     JS_ReportError(cx, "js_cocos2dx_experimental_webView_WebView_loadURL : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_experimental_webView_WebView_setBounces(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::experimental::ui::WebView* cobj = (cocos2d::experimental::ui::WebView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_experimental_webView_WebView_setBounces : Invalid Native Object");
+    if (argc == 1) {
+        bool arg0;
+        arg0 = JS::ToBoolean(args.get(0));
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_experimental_webView_WebView_setBounces : Error processing arguments");
+        cobj->setBounces(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_experimental_webView_WebView_setBounces : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_cocos2dx_experimental_webView_WebView_evaluateJS(JSContext *cx, uint32_t argc, jsval *vp)
@@ -369,11 +389,9 @@ void js_register_cocos2dx_experimental_webView_WebView(JSContext *cx, JS::Handle
     jsb_cocos2d_experimental_ui_WebView_class->enumerate = JS_EnumerateStub;
     jsb_cocos2d_experimental_ui_WebView_class->resolve = JS_ResolveStub;
     jsb_cocos2d_experimental_ui_WebView_class->convert = JS_ConvertStub;
-    jsb_cocos2d_experimental_ui_WebView_class->finalize = jsb_ref_finalize;
     jsb_cocos2d_experimental_ui_WebView_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
 
     static JSPropertySpec properties[] = {
-        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_PS_END
     };
 
@@ -386,6 +404,7 @@ void js_register_cocos2dx_experimental_webView_WebView(JSContext *cx, JS::Handle
         JS_FN("getOnDidFailLoading", js_cocos2dx_experimental_webView_WebView_getOnDidFailLoading, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("loadFile", js_cocos2dx_experimental_webView_WebView_loadFile, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("loadURL", js_cocos2dx_experimental_webView_WebView_loadURL, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setBounces", js_cocos2dx_experimental_webView_WebView_setBounces, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("evaluateJS", js_cocos2dx_experimental_webView_WebView_evaluateJS, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getOnJSCallback", js_cocos2dx_experimental_webView_WebView_getOnJSCallback, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("canGoForward", js_cocos2dx_experimental_webView_WebView_canGoForward, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -413,8 +432,12 @@ void js_register_cocos2dx_experimental_webView_WebView(JSContext *cx, JS::Handle
         NULL, // no static properties
         st_funcs);
 
-    // add the proto and JSClass to the type->js info hash table
     JS::RootedObject proto(cx, jsb_cocos2d_experimental_ui_WebView_prototype);
+    JS::RootedValue className(cx, std_string_to_jsval(cx, "WebView"));
+    JS_SetProperty(cx, proto, "_className", className);
+    JS_SetProperty(cx, proto, "__nativeObj", JS::TrueHandleValue);
+    JS_SetProperty(cx, proto, "__is_ref", JS::TrueHandleValue);
+    // add the proto and JSClass to the type->js info hash table
     jsb_register_class<cocos2d::experimental::ui::WebView>(cx, jsb_cocos2d_experimental_ui_WebView_class, proto, parent_proto);
 }
 

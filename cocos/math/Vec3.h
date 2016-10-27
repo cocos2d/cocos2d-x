@@ -22,6 +22,7 @@
 #ifndef MATH_VEC3_H
 #define MATH_VEC3_H
 
+#include <cmath>
 #include "math/CCMathBase.h"
 
 /**
@@ -375,7 +376,7 @@ public:
      * @param v The vector to add.
      * @return The vector sum.
      */
-    inline const Vec3 operator+(const Vec3& v) const;
+    inline Vec3 operator+(const Vec3& v) const;
 
     /**
      * Adds the given vector to this vector.
@@ -393,7 +394,7 @@ public:
      * @param v The vector to subtract.
      * @return The vector difference.
      */
-    inline const Vec3 operator-(const Vec3& v) const;
+    inline Vec3 operator-(const Vec3& v) const;
 
     /**
      * Subtracts the given vector from this vector.
@@ -410,7 +411,7 @@ public:
      * 
      * @return The negation of this vector.
      */
-    inline const Vec3 operator-() const;
+    inline Vec3 operator-() const;
 
     /**
      * Calculates the scalar product of this vector with the given value.
@@ -420,7 +421,7 @@ public:
      * @param s The value to scale by.
      * @return The scaled vector.
      */
-    inline const Vec3 operator*(float s) const;
+    inline Vec3 operator*(float s) const;
 
     /**
      * Scales this vector by the given value.
@@ -438,7 +439,7 @@ public:
      * @param s the constant to divide this vector with
      * @return a smaller vector
      */
-    inline const Vec3 operator/(float s) const;
+    inline Vec3 operator/(float s) const;
 
     /** Returns true if the vector's scalar components are all greater
      that the ones of the vector it is compared against.
@@ -497,7 +498,7 @@ public:
  * @param v The vector to scale.
  * @return The scaled vector.
  */
-inline const Vec3 operator*(float x, const Vec3& v);
+inline Vec3 operator*(float x, const Vec3& v);
 
 //typedef Vec3 Point3;
 
@@ -506,6 +507,6 @@ NS_CC_MATH_END
  end of base group
  @}
  */
-#include "Vec3.inl"
+#include "math/Vec3.inl"
 
 #endif // MATH_VEC3_H

@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include "platform/CCFileUtils.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-#include "CCWinRTUtils.h"
+#include "platform/winrt/CCWinRTUtils.h"
 
 using namespace Windows::Storage;
 using namespace Windows::Foundation;
@@ -246,7 +246,7 @@ void UserDefault::setDataForKey(const char* pKey, const Data& value) {
         return;
     }
 
-    char *encodedData = 0;
+    char *encodedData = nullptr;
     base64Encode(value.getBytes(), static_cast<unsigned int>(value.getSize()), &encodedData);
 
     setPlatformKeyValue(pKey, dynamic_cast<PropertyValue^>(PropertyValue::CreateString(PlatformStringFromString(encodedData))));

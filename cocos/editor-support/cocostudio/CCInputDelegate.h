@@ -1,5 +1,5 @@
 ﻿/****************************************************************************
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -31,7 +31,7 @@ THE SOFTWARE.
 #include "base/ccTypes.h"
 #include "base/CCEventKeyboard.h"
 #include "base/CCEventListener.h"
-#include "cocostudio/CocosStudioExport.h"
+#include "editor-support/cocostudio/CocosStudioExport.h"
 
 namespace cocos2d {
     class __Set;

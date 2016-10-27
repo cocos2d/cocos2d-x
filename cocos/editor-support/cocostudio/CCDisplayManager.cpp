@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -22,11 +22,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "cocostudio/CCDisplayManager.h"
-#include "cocostudio/CCBone.h"
-#include "cocostudio/CCArmature.h"
-#include "cocostudio/CCUtilMath.h"
-#include "cocostudio/CCSkin.h"
+#include "editor-support/cocostudio/CCDisplayManager.h"
+#include "editor-support/cocostudio/CCBone.h"
+#include "editor-support/cocostudio/CCArmature.h"
+#include "editor-support/cocostudio/CCUtilMath.h"
+#include "editor-support/cocostudio/CCSkin.h"
 
 #include "2d/CCParticleSystemQuad.h"
 

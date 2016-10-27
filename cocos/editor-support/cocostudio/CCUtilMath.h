@@ -1,5 +1,5 @@
 ﻿/****************************************************************************
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -26,8 +26,8 @@ THE SOFTWARE.
 #define __CCUTILMATH_H__
 
 #include "2d/CCSprite.h"
-#include "cocostudio/CCArmatureDefine.h"
-#include "cocostudio/CocosStudioExport.h"
+#include "editor-support/cocostudio/CCArmatureDefine.h"
+#include "editor-support/cocostudio/CocosStudioExport.h"
 #include <math.h>
 
 namespace cocostudio {

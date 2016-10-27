@@ -359,7 +359,7 @@ public:
      * @param q The quaternion to multiply.
      * @return The quaternion product.
      */
-    inline const Quaternion operator*(const Quaternion& q) const;
+    inline Quaternion operator*(const Quaternion& q) const;
 
     /**
      * Calculates the quaternion product of this quaternion with the given vec3.
@@ -415,6 +415,6 @@ NS_CC_MATH_END
  end of base group
  @}
  */
-#include "Quaternion.inl"
+#include "math/Quaternion.inl"
 
 #endif

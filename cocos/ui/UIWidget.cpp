@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -35,6 +35,8 @@ THE SOFTWARE.
 #include "renderer/CCGLProgramState.h"
 #include "renderer/ccShaders.h"
 #include "2d/CCCamera.h"
+#include "2d/CCSprite.h"
+#include "ui/UIScale9Sprite.h"
 
 NS_CC_BEGIN
 
@@ -1195,17 +1197,19 @@ void Widget::copyClonedWidgetChildren(Widget* model)
     }
 }
 
-GLProgramState* Widget::getNormalGLProgramState()const
+GLProgramState* Widget::getNormalGLProgramState(Texture2D* texture)const
 {
     GLProgramState *glState = nullptr;
-    glState = GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP);
+
+    glState = GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP, texture);
     return glState;
 }
 
-GLProgramState* Widget::getGrayGLProgramState()const
+GLProgramState* Widget::getGrayGLProgramState(Texture2D* texture)const
 {
     GLProgramState *glState = nullptr;
-    glState = GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_GRAYSCALE);
+
+    glState = GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_GRAYSCALE, texture);
     return glState;
 }
 
@@ -1242,6 +1246,8 @@ void Widget::copyProperties(Widget *widget)
     setFlippedY(widget->isFlippedY());
     setColor(widget->getColor());
     setOpacity(widget->getOpacity());
+    setCascadeColorEnabled(widget->isCascadeColorEnabled());
+    setCascadeOpacityEnabled(widget->isCascadeOpacityEnabled());
     _touchEventCallback = widget->_touchEventCallback;
     _touchEventListener = widget->_touchEventListener;
     _touchEventSelector = widget->_touchEventSelector;
@@ -1253,9 +1259,9 @@ void Widget::copyProperties(Widget *widget)
     copySpecialProperties(widget);
 
     Map<int, LayoutParameter*>& layoutParameterDic = widget->_layoutParameterDictionary;
-    for (auto iter = layoutParameterDic.begin(); iter != layoutParameterDic.end(); ++iter)
+    for (auto& iter : layoutParameterDic)
     {
-        setLayoutParameter(iter->second->clone());
+        setLayoutParameter(iter.second->clone());
     }
 }
 
@@ -1310,7 +1316,7 @@ void Widget::copyProperties(Widget *widget)
         float originalScale = Node::getScaleX();
         if (_flippedX)
         {
-            originalScale = originalScale * -1.0;
+            originalScale = originalScale * -1.0f;
         }
         return originalScale;
     }
@@ -1320,7 +1326,7 @@ void Widget::copyProperties(Widget *widget)
         float originalScale = Node::getScaleY();
         if (_flippedY)
         {
-            originalScale = originalScale * -1.0;
+            originalScale = originalScale * -1.0f;
         }
         return originalScale;
     }

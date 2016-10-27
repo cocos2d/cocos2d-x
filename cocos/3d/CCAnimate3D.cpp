@@ -248,7 +248,7 @@ void Animate3D::startWithTarget(Node *target)
                 action->_accTransTime = 0.0f;
                 action->_weight = 1.0f;
                 action->_lastTime = 0.f;
-                
+                s_runningAnimates.erase(target);
                 s_fadeInAnimates[target] = this;
                 _accTransTime = 0.0f;
                 _state = Animate3D::Animate3DState::FadeIn;
@@ -337,7 +337,7 @@ void Animate3D::update(float t)
                 float* trans = nullptr, *rot = nullptr, *scale = nullptr;
                 if (_playReverse){
                     t = 1 - t;
-                    lastTime = 1.0 - lastTime;
+                    lastTime = 1.0f - lastTime;
                 }
                 
                 t = _start + t * _last;

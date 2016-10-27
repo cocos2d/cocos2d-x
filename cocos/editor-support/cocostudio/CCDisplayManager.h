@@ -1,5 +1,5 @@
 ﻿/****************************************************************************
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -25,10 +25,10 @@ THE SOFTWARE.
 #ifndef __CCDISPLAYMANAGER_H__
 #define __CCDISPLAYMANAGER_H__
 
-#include "cocostudio/CCArmatureDefine.h"
-#include "cocostudio/CCDecorativeDisplay.h"
-#include "cocostudio/CCDatas.h"
-#include "cocostudio/CocosStudioExport.h"
+#include "editor-support/cocostudio/CCArmatureDefine.h"
+#include "editor-support/cocostudio/CCDecorativeDisplay.h"
+#include "editor-support/cocostudio/CCDatas.h"
+#include "editor-support/cocostudio/CocosStudioExport.h"
 
 namespace cocostudio {
 

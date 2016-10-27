@@ -1,7 +1,7 @@
 /****************************************************************************
 Copyright (c) 2008      Apple Inc. All Rights Reserved.
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -211,11 +211,11 @@ public:
      */
     virtual std::string getDescription() const;
 
-	/** Release only the gl texture.
+    /** Release only the gl texture.
      * @js NA
      * @lua NA
      */
-	void releaseGLTexture();
+    void releaseGLTexture();
 
     /** Initializes with a texture2d with data.
      
@@ -262,16 +262,16 @@ public:
     Extensions to make it easy to create a Texture2D object from an image file.
     */
     /** 
-	Initializes a texture from a UIImage object.
+    Initializes a texture from a UIImage object.
 
     We will use the format you specified with setDefaultAlphaPixelFormat to convert the image for texture.
     NOTE: It will not convert the pvr image file.
     @param image An UIImage object.
-	*/
+    */
     bool initWithImage(Image * image);
     
     /** 
-	Initializes a texture from a UIImage object.
+    Initializes a texture from a UIImage object.
 
     We will use the format you passed to the function to convert the image format to the texture format.
     If you pass PixelFormat::Automatic, we will auto detect the image render type and use that type for texture to render.
@@ -288,8 +288,10 @@ public:
      @param dimensions The font dimension.
      @param hAlignment The font horizontal text alignment type.
      @param vAlignment The font vertical text alignment type.
+     @param enableWrap Whether enable text wrap or not.
+     @param overflow Whether shrink font size when content larger than the dimensions.
      */
-    bool initWithString(const char *text,  const std::string &fontName, float fontSize, const Size& dimensions = Size(0, 0), TextHAlignment hAlignment = TextHAlignment::CENTER, TextVAlignment vAlignment = TextVAlignment::TOP);
+    bool initWithString(const char *text,  const std::string &fontName, float fontSize, const Size& dimensions = Size(0, 0), TextHAlignment hAlignment = TextHAlignment::CENTER, TextVAlignment vAlignment = TextVAlignment::TOP, bool enableWrap = true, int overflow = 0);
 
     /** Initializes a texture from a string using a text definition.
      
@@ -408,6 +410,9 @@ public:
 
     std::string getPath()const { return _filePath; }
 
+    void setAlphaTexture(Texture2D* alphaTexture);
+
+    GLuint getAlphaTextureName() const;
 public:
     /** Get pixel info map, the key-value pairs is PixelFormat and PixelFormatInfo.*/
     static const PixelFormatInfoMap& getPixelFormatInfoMap();
@@ -489,6 +494,7 @@ private:
     //RGB888 to XXX
     static void convertRGB888ToRGBA8888(const unsigned char* data, ssize_t dataLen, unsigned char* outData);
     static void convertRGB888ToRGB565(const unsigned char* data, ssize_t dataLen, unsigned char* outData);
+    static void convertRGB888ToA8(const unsigned char* data, ssize_t dataLen, unsigned char* outData);
     static void convertRGB888ToI8(const unsigned char* data, ssize_t dataLen, unsigned char* outData);
     static void convertRGB888ToAI88(const unsigned char* data, ssize_t dataLen, unsigned char* outData);
     static void convertRGB888ToRGBA4444(const unsigned char* data, ssize_t dataLen, unsigned char* outData);
@@ -544,6 +550,8 @@ protected:
 
     bool _valid;
     std::string _filePath;
+
+    Texture2D* _alphaTexture;
 };
 
 

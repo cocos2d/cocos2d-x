@@ -1,5 +1,5 @@
 ﻿/****************************************************************************
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -25,9 +25,9 @@ THE SOFTWARE.
 #ifndef __CC_EXTENTIONS_CCCOMCONTROLLER_H__
 #define __CC_EXTENTIONS_CCCOMCONTROLLER_H__
 
-#include "CCComBase.h"
-#include "cocostudio/CCInputDelegate.h"
-#include "cocostudio/CocosStudioExport.h"
+#include "editor-support/cocostudio/CCComBase.h"
+#include "editor-support/cocostudio/CCInputDelegate.h"
+#include "editor-support/cocostudio/CocosStudioExport.h"
 #include "2d/CCComponent.h"
 
 namespace cocostudio {

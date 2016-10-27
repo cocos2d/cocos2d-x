@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -27,7 +27,7 @@
 
 #include "../testResource.h"
 
-#include "cocos/ui/UILoadingBar.h"
+#include "ui/UILoadingBar.h"
 #include "network/CCDownloader.h"
 
 USING_NS_CC;

@@ -142,7 +142,7 @@ void ControlHuePicker::updateSliderPosition(Vec2 location)
     float angle             = atan2f(dy, dx);
     float angleDeg          = CC_RADIANS_TO_DEGREES(angle) + 180.0f;
     
-    // use the position / slider width to determin the percentage the dragger is at
+    // use the position / slider width to determine the percentage the dragger is at
     setHue(angleDeg);
     
     // send Control callback

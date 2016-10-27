@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010      cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -25,6 +25,7 @@ THE SOFTWARE.
 
 #include "base/ccUtils.h"
 
+#include <cmath>
 #include <stdlib.h>
 
 #include "base/CCDirector.h"
@@ -33,9 +34,12 @@ THE SOFTWARE.
 #include "base/base64.h"
 #include "renderer/CCCustomCommand.h"
 #include "renderer/CCRenderer.h"
+#include "renderer/CCTextureCache.h"
+
 #include "platform/CCImage.h"
 #include "platform/CCFileUtils.h"
 #include "2d/CCSprite.h"
+#include "2d/CCRenderTexture.h"
 
 NS_CC_BEGIN
 
@@ -133,7 +137,7 @@ void onCaptureScreen(const std::function<void(bool, const std::string&)>& afterC
                 startedCapture = false;
             };
 
-            AsyncTaskPool::getInstance()->enqueue(AsyncTaskPool::TaskType::TASK_IO, mainThread, (void*)NULL, [image, outputFile]()
+            AsyncTaskPool::getInstance()->enqueue(AsyncTaskPool::TaskType::TASK_IO, mainThread, nullptr, [image, outputFile]()
             {
                 succeedSaveToFile = image->saveToFile(outputFile);
                 delete image;
@@ -172,6 +176,49 @@ void captureScreen(const std::function<void(bool, const std::string&)>& afterCap
         director->getRenderer()->addCommand(&s_captureScreenCommand);
         director->getRenderer()->render();
     });
+}
+
+Image* captureNode(Node* startNode, float scale)
+{ // The best snapshot API, support Scene and any Node
+    auto& size = startNode->getContentSize();
+
+    Director::getInstance()->setNextDeltaTimeZero(true);
+
+    RenderTexture* finalRtx = nullptr;
+
+    auto rtx = RenderTexture::create(size.width, size.height, Texture2D::PixelFormat::RGBA8888, GL_DEPTH24_STENCIL8);
+    // rtx->setKeepMatrix(true);
+    Point savedPos = startNode->getPosition();
+    Point anchor;
+    if (!startNode->isIgnoreAnchorPointForPosition()) {
+        anchor = startNode->getAnchorPoint();
+    }
+    startNode->setPosition(Point(size.width * anchor.x, size.height * anchor.y));
+    rtx->begin(); 
+    startNode->visit();
+    rtx->end();
+    startNode->setPosition(savedPos);
+
+    if (std::abs(scale - 1.0f) < 1e-6f/* no scale */)
+        finalRtx = rtx;
+    else {
+        /* scale */
+        auto finalRect = Rect(0, 0, size.width, size.height);
+        Sprite *sprite = Sprite::createWithTexture(rtx->getSprite()->getTexture(), finalRect);
+        sprite->setAnchorPoint(Point(0, 0));
+        sprite->setFlippedY(true);
+
+        finalRtx = RenderTexture::create(size.width * scale, size.height * scale, Texture2D::PixelFormat::RGBA8888, GL_DEPTH24_STENCIL8);
+
+        sprite->setScale(scale); // or use finalRtx->setKeepMatrix(true);
+        finalRtx->begin(); 
+        sprite->visit();
+        finalRtx->end();
+    }
+
+    Director::getInstance()->getRenderer()->render();
+
+    return finalRtx->newImage();
 }
 
 std::vector<Node*> findChildren(const Node &node, const std::string &name)
@@ -219,7 +266,7 @@ long long getTimeInMilliseconds()
 {
     struct timeval tv;
     gettimeofday (&tv, nullptr);
-    return tv.tv_sec * 1000 + tv.tv_usec / 1000;
+    return (long long)tv.tv_sec * 1000 + tv.tv_usec / 1000;
 }
 
 Rect getCascadeBoundingBox(Node *node)
@@ -266,15 +313,48 @@ Rect getCascadeBoundingBox(Node *node)
     return cbb;
 }
 
+Sprite* createSpriteFromBase64Cached(const char* base64String, const char* key)
+{
+    Texture2D* texture = Director::getInstance()->getTextureCache()->getTextureForKey(key);
+
+    if (texture == nullptr)
+    {
+        unsigned char* decoded;
+        int length = base64Decode((const unsigned char*)base64String, (unsigned int)strlen(base64String), &decoded);
+
+        Image *image = new (std::nothrow) Image();
+        bool imageResult = image->initWithImageData(decoded, length);
+        CCASSERT(imageResult, "Failed to create image from base64!");
+        free(decoded);
+
+        if (!imageResult) {
+            CC_SAFE_RELEASE_NULL(image);
+            return nullptr;
+        }
+
+        texture = Director::getInstance()->getTextureCache()->addImage(image, key);
+        image->release();
+    }
+
+    Sprite* sprite = Sprite::createWithTexture(texture);
+    
+    return sprite;
+}
+
 Sprite* createSpriteFromBase64(const char* base64String)
 {
     unsigned char* decoded;
-    int length = base64Decode((const unsigned char*) base64String, (unsigned int) strlen(base64String), &decoded);
+    int length = base64Decode((const unsigned char*)base64String, (unsigned int)strlen(base64String), &decoded);
 
     Image *image = new (std::nothrow) Image();
     bool imageResult = image->initWithImageData(decoded, length);
     CCASSERT(imageResult, "Failed to create image from base64!");
     free(decoded);
+
+    if (!imageResult) {
+        CC_SAFE_RELEASE_NULL(image);
+        return nullptr;
+    }
 
     Texture2D *texture = new (std::nothrow) Texture2D();
     texture->initWithImage(image);
@@ -283,8 +363,49 @@ Sprite* createSpriteFromBase64(const char* base64String)
 
     Sprite* sprite = Sprite::createWithTexture(texture);
     texture->release();
-    
+
     return sprite;
+}
+
+Node* findChild(Node* levelRoot, const std::string& name)
+{
+    if (levelRoot == nullptr || name.empty())
+        return nullptr;
+
+    // Find this node
+    auto target = levelRoot->getChildByName(name);
+    if (target != nullptr)
+        return target;
+
+    // Find recursively
+    for (auto& child : levelRoot->getChildren())
+    {
+        target = findChild(child, name);
+        if (target != nullptr)
+            return target;
+    }
+    return nullptr;
+}
+
+Node* findChild(Node* levelRoot, int tag)
+{
+    if (levelRoot == nullptr || tag == Node::INVALID_TAG)
+        return nullptr;
+
+    // Find this node
+    auto target = levelRoot->getChildByTag(tag);
+    if (target != nullptr)
+        return target;
+
+    // Find recursively
+    for (auto& child : levelRoot->getChildren())
+    {
+        target = findChild(child, tag);
+        if (target != nullptr)
+            return target;
+    }
+
+    return nullptr;
 }
 
 }

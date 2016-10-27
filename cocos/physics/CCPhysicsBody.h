@@ -198,7 +198,14 @@ public:
      * 
      * @return A Vector<PhysicsShape*> object contains PhysicsShape pointer.
      */
-    inline const Vector<PhysicsShape*>& getShapes() const { return _shapes; }
+    const Vector<PhysicsShape*>& getShapes() const { return _shapes; }
+
+    /**
+     * Get the first shape of the body shapes.
+     *
+     * @return The first shape in this body.
+     */
+    PhysicsShape* getFirstShape() const { return _shapes.size() >= 1 ? _shapes.at(0) : nullptr; }
 
     /** 
      * get the shape of the body.
@@ -278,10 +285,10 @@ public:
     void removeFromWorld();
     
     /** get the world body added to. */
-    inline PhysicsWorld* getWorld() const { return _world; }
+    PhysicsWorld* getWorld() const { return _world; }
 
     /** get all joints the body have */
-    inline const std::vector<PhysicsJoint*>& getJoints() const { return _joints; }
+    const std::vector<PhysicsJoint*>& getJoints() const { return _joints; }
     
     /** get the node the body set to. */
     Node* getNode() const { return _owner; }
@@ -369,7 +376,7 @@ public:
      *
      * A dynamic body will effect with gravity.
      */
-    inline bool isDynamic() const { return _dynamic; }
+    bool isDynamic() const { return _dynamic; }
     /**
      * @brief Set dynamic to body.
      * 
@@ -385,7 +392,7 @@ public:
     void setMass(float mass);
     
     /** Get the body mass. */
-    inline float getMass() const { return _mass; }
+    float getMass() const { return _mass; }
 
     /**
      * @brief Add mass to body.
@@ -406,7 +413,7 @@ public:
     void setMoment(float moment);
     
     /** Get the body moment of inertia. */
-    inline float getMoment() const { return _moment; }
+    float getMoment() const { return _moment; }
     
     /**
      * @brief Add moment of inertia to body.
@@ -420,7 +427,7 @@ public:
     void addMoment(float moment);
     
     /** get linear damping. */
-    inline float getLinearDamping() const { return _linearDamping; }
+    float getLinearDamping() const { return _linearDamping; }
     
     /** 
      * Set linear damping.
@@ -428,10 +435,10 @@ public:
      * it is used to simulate fluid or air friction forces on the body.
      * @param damping The value is 0.0f to 1.0f.
      */
-    inline void setLinearDamping(float damping) { _linearDamping = damping; updateDamping(); }
+    void setLinearDamping(float damping) { _linearDamping = damping; updateDamping(); }
     
     /** Get angular damping. */
-    inline float getAngularDamping() const { return _angularDamping; }
+    float getAngularDamping() const { return _angularDamping; }
 
     /**
      * Set angular damping.
@@ -439,7 +446,7 @@ public:
      * It is used to simulate fluid or air friction forces on the body.
      * @param damping The value is 0.0f to 1.0f.
      */
-    inline void setAngularDamping(float damping) { _angularDamping = damping; updateDamping(); }
+    void setAngularDamping(float damping) { _angularDamping = damping; updateDamping(); }
     
     /** Whether the body is at rest. */
     bool isResting() const;
@@ -455,22 +462,22 @@ public:
     virtual void setEnabled(bool enable) override;
     
     /** Whether the body can rotation. */
-    inline bool isRotationEnabled() const { return _rotationEnabled; }
+    bool isRotationEnabled() const { return _rotationEnabled; }
     
     /** Set the body is allow rotation or not */
     void setRotationEnable(bool enable);
     
     /** Whether this physics body is affected by the physics world's gravitational force. */
-    inline bool isGravityEnabled() const { return _gravityEnabled; }
+    bool isGravityEnabled() const { return _gravityEnabled; }
     
     /** Set the body is affected by the physics world's gravitational force or not. */
     void setGravityEnable(bool enable);
     
     /** Get the body's tag. */
-    inline int getTag() const { return _tag; }
+    int getTag() const { return _tag; }
     
     /** set the body's tag. */
-    inline void setTag(int tag) { _tag = tag; }
+    void setTag(int tag) { _tag = tag; }
     
     /** Convert the world point to local. */
     Vec2 world2Local(const Vec2& point);
@@ -502,7 +509,7 @@ protected:
     
     void removeJoint(PhysicsJoint* joint);
 
-    inline void updateDamping() { _isDamping = _linearDamping != 0.0f ||  _angularDamping != 0.0f; }
+    void updateDamping() { _isDamping = _linearDamping != 0.0f ||  _angularDamping != 0.0f; }
 
     void addToPhysicsWorld();
     void removeFromPhysicsWorld();
@@ -524,6 +531,8 @@ protected:
     float _area;
     float _density;
     float _moment;
+    float _velocityLimit;
+    float _angularVelocityLimit;
     bool _isDamping;
     float _linearDamping;
     float _angularDamping;

@@ -1,9 +1,9 @@
-#include "CCBAnimationManager.h"
+#include "editor-support/cocosbuilder/CCBAnimationManager.h"
 
-#include "CCBReader.h"
-#include "CCNode+CCBRelativePositioning.h"
+#include "editor-support/cocosbuilder/CCBReader.h"
+#include "editor-support/cocosbuilder/CCNode+CCBRelativePositioning.h"
 #include "audio/include/SimpleAudioEngine.h"
-#include "CCBSelectorResolver.h"
+#include "editor-support/cocosbuilder/CCBSelectorResolver.h"
 
 #include <string>
 #include <sstream>

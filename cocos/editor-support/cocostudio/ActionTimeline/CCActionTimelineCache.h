@@ -27,11 +27,11 @@ THE SOFTWARE.
 
 #include <unordered_map>
 #include "base/CCMap.h"
+#include "base/CCData.h"
 
-#include "cocostudio/DictionaryHelper.h"
-#include "CCTimelineMacro.h"
-#include "cocostudio/CocosStudioExport.h"
-#include "cocos2d.h"
+#include "editor-support/cocostudio/DictionaryHelper.h"
+#include "editor-support/cocostudio/ActionTimeline/CCTimelineMacro.h"
+#include "editor-support/cocostudio/CocosStudioExport.h"
 
 namespace flatbuffers
 {

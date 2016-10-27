@@ -3,7 +3,7 @@
  Copyright (c) 2009      Valentin Milea
  Copyright (c) 2010-2012 cocos2d-x.org
  Copyright (c) 2011      Zynga Inc.
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -29,6 +29,7 @@
 #ifndef __CCNODE_H__
 #define __CCNODE_H__
 
+#include <cstdint>
 #include "base/ccMacros.h"
 #include "base/CCVector.h"
 #include "base/CCProtocols.h"
@@ -37,6 +38,10 @@
 #include "math/CCMath.h"
 #include "2d/CCComponentContainer.h"
 #include "2d/CCComponent.h"
+
+#if CC_USE_PHYSICS
+#include "physics/CCPhysicsBody.h"
+#endif
 
 NS_CC_BEGIN
 
@@ -70,8 +75,6 @@ enum {
     kNodeOnExitTransitionDidStart,
     kNodeOnCleanup
 };
-
-bool CC_DLL nodeComparisonLess(Node* n1, Node* n2);
 
 class EventListener;
 
@@ -142,12 +145,12 @@ public:
     /**
      LocalZOrder is the 'key' used to sort the node relative to its siblings.
 
-     The Node's parent will sort all its children based ont the LocalZOrder value.
+     The Node's parent will sort all its children based on the LocalZOrder value.
      If two nodes have the same LocalZOrder, then the node that was added first to the children's array will be in front of the other node in the array.
      
      Also, the Scene Graph is traversed using the "In-Order" tree traversal algorithm ( http://en.wikipedia.org/wiki/Tree_traversal#In-order )
-     And Nodes that have LocalZOder values < 0 are the "left" subtree
-     While Nodes with LocalZOder >=0 are the "right" subtree.
+     And Nodes that have LocalZOrder values < 0 are the "left" subtree
+     While Nodes with LocalZOrder >=0 are the "right" subtree.
      
      @see `setGlobalZOrder`
      @see `setVertexZ`
@@ -162,7 +165,19 @@ public:
      Helper function used by `setLocalZOrder`. Don't use it unless you know what you are doing.
      @js NA
      */
-    CC_DEPRECATED_ATTRIBUTE virtual void _setLocalZOrder(int z);
+    virtual void _setLocalZOrder(int z);
+
+    /** !!! ONLY FOR INTERNAL USE
+    * Sets the arrival order when this node has a same ZOrder with other children.
+    *
+    * A node which called addChild subsequently will take a larger arrival order,
+    * If two children have the same Z order, the child with larger arrival order will be drawn later.
+    *
+    * @warning This method is used internally for localZOrder sorting, don't change this manually
+    *
+    * @param orderOfArrival   The arrival order.
+    */
+    void updateOrderOfArrival();
 
     /**
      * Gets the local Z order of this node.
@@ -171,14 +186,16 @@ public:
      *
      * @return The local (relative to its siblings) Z order.
      */
+
     virtual int getLocalZOrder() const { return _localZOrder; }
+
     CC_DEPRECATED_ATTRIBUTE virtual int getZOrder() const { return getLocalZOrder(); }
 
     /**
-     Defines the oder in which the nodes are renderer.
+     Defines the order in which the nodes are renderer.
      Nodes that have a Global Z Order lower, are renderer first.
      
-     In case two or more nodes have the same Global Z Order, the oder is not guaranteed.
+     In case two or more nodes have the same Global Z Order, the order is not guaranteed.
      The only exception if the Nodes have a Global Z Order == 0. In that case, the Scene Graph order is used.
      
      By default, all nodes have a Global Z Order = 0. That means that by default, the Scene Graph order is used to render the nodes.
@@ -322,7 +339,9 @@ public:
      *
      * @param position The normalized position (x,y) of the node, using value between 0 and 1.
      */
-    virtual void setNormalizedPosition(const Vec2 &position);
+    virtual void setPositionNormalized(const Vec2 &position);
+    // FIXME: should get deprecated in v4.0
+    virtual void setNormalizedPosition(const Vec2 &position) { setPositionNormalized(position); }
 
     /**
      * Gets the position (x,y) of the node in its parent's coordinate system.
@@ -340,7 +359,9 @@ public:
      * 
      * @return The normalized position.
      */
-    virtual const Vec2& getNormalizedPosition() const;
+    virtual const Vec2& getPositionNormalized() const;
+    // FIXME: should get deprecated in v4.0
+    virtual const Vec2& getNormalizedPosition() const { return getPositionNormalized(); }
 
     /**
      * Sets the position (x,y) of the node in its parent's coordinate system.
@@ -664,27 +685,6 @@ public:
     virtual float getRotationSkewY() const;
     CC_DEPRECATED_ATTRIBUTE virtual float getRotationY() const { return getRotationSkewY(); }
 
-    /**
-     * Sets the arrival order when this node has a same ZOrder with other children.
-     *
-     * A node which called addChild subsequently will take a larger arrival order,
-     * If two children have the same Z order, the child with larger arrival order will be drawn later.
-     *
-     * @warning This method is used internally for localZOrder sorting, don't change this manually
-     *
-     * @param orderOfArrival   The arrival order.
-     */
-    void setOrderOfArrival(int orderOfArrival);
-    /**
-     * Returns the arrival order, indicates which children is added previously.
-     *
-     * @see `setOrderOfArrival(unsigned int)`
-     *
-     * @return The arrival order.
-     */
-    int getOrderOfArrival() const;
-
-
     /** @deprecated No longer needed
     * @lua NA
     */
@@ -701,13 +701,14 @@ public:
      * The default value is false, while in Layer and Scene are true.
      *
      * @param ignore    true if anchor point will be (0,0) when you position this node.
-     * @todo This method should be renamed as setIgnoreAnchorPointForPosition(bool) or something with "set".
      */
-    virtual void ignoreAnchorPointForPosition(bool ignore);
+    virtual void setIgnoreAnchorPointForPosition(bool ignore);
+    CC_DEPRECATED_ATTRIBUTE virtual void ignoreAnchorPointForPosition(bool ignore) { setIgnoreAnchorPointForPosition(ignore); }
+    
     /**
      * Gets whether the anchor point will be (0,0) when you position this node.
      *
-     * @see `ignoreAnchorPointForPosition(bool)`
+     * @see `setIgnoreAnchorPointForPosition(bool)`
      *
      * @return true if the anchor point will be (0,0) when you position this node.
      */
@@ -778,7 +779,7 @@ public:
      * @return a Node with the given tag that can be cast to Type T.
     */
     template <typename T>
-    inline T getChildByTag(int tag) const { return static_cast<T>(getChildByTag(tag)); }
+    T getChildByTag(int tag) const { return static_cast<T>(getChildByTag(tag)); }
     
     /**
      * Gets a child from the container with its name.
@@ -798,7 +799,7 @@ public:
      * @return a Node with the given name that can be cast to Type T.
     */
     template <typename T>
-    inline T getChildByName(const std::string& name) const { return static_cast<T>(getChildByName(name)); }
+    T getChildByName(const std::string& name) const { return static_cast<T>(getChildByName(name)); }
     /** Search the children of the receiving node to perform processing for nodes which share a name.
      *
      * @param name The name to search for, supports c++11 regular expression.
@@ -929,6 +930,25 @@ public:
      * @note Don't call this manually unless a child added needs to be removed in the same frame.
      */
     virtual void sortAllChildren();
+
+    /**
+    * Sorts helper function
+    *
+    */
+    template<typename _T> inline
+    static void sortNodes(cocos2d::Vector<_T*>& nodes)
+    {
+        static_assert(std::is_base_of<Node, _T>::value, "Node::sortNodes: Only accept derived of Node!");
+#if CC_64BITS
+        std::sort(std::begin(nodes), std::end(nodes), [](_T* n1, _T* n2) {
+            return (n1->_localZOrderAndArrival < n2->_localZOrderAndArrival);
+        });
+#else
+        std::stable_sort(std::begin(nodes), std::end(nodes), [](_T* n1, _T* n2) {
+            return n1->_localZOrder < n2->_localZOrder;
+        });
+#endif
+    }
 
     /// @} end of Children and Parent
     
@@ -1170,7 +1190,7 @@ public:
     virtual Rect getBoundingBox() const;
 
     /** @deprecated Use getBoundingBox instead */
-    CC_DEPRECATED_ATTRIBUTE inline virtual Rect boundingBox() const { return getBoundingBox(); }
+    CC_DEPRECATED_ATTRIBUTE virtual Rect boundingBox() const { return getBoundingBox(); }
 
     /** Set event dispatcher for scene.
      *
@@ -1260,7 +1280,6 @@ public:
      * Composable actions are counted as 1 action. Example:
      *    If you are running 1 Sequence of 7 actions, it will return 1.
      *    If you are running 7 Sequences of 2 actions, it will return 7.
-     * @todo Rename to getNumberOfRunningActions()
      *
      * @return The number of actions that are running plus the ones that are schedule to run.
      */
@@ -1537,7 +1556,7 @@ public:
     virtual void setNodeToParentTransform(const Mat4& transform);
 
     /** @deprecated use getNodeToParentTransform() instead */
-    CC_DEPRECATED_ATTRIBUTE inline virtual AffineTransform nodeToParentTransform() const { return getNodeToParentAffineTransform(); }
+    CC_DEPRECATED_ATTRIBUTE virtual AffineTransform nodeToParentTransform() const { return getNodeToParentAffineTransform(); }
 
     /**
      * Returns the matrix that transform parent's space coordinates to the node's (local) space coordinates.
@@ -1549,7 +1568,7 @@ public:
     virtual AffineTransform getParentToNodeAffineTransform() const;
 
     /** @deprecated Use getParentToNodeTransform() instead */
-    CC_DEPRECATED_ATTRIBUTE inline virtual AffineTransform parentToNodeTransform() const { return getParentToNodeAffineTransform(); }
+    CC_DEPRECATED_ATTRIBUTE virtual AffineTransform parentToNodeTransform() const { return getParentToNodeAffineTransform(); }
 
     /**
      * Returns the world affine transform matrix. The matrix is in Pixels.
@@ -1560,7 +1579,7 @@ public:
     virtual AffineTransform getNodeToWorldAffineTransform() const;
 
     /** @deprecated Use getNodeToWorldTransform() instead */
-    CC_DEPRECATED_ATTRIBUTE inline virtual AffineTransform nodeToWorldTransform() const { return getNodeToWorldAffineTransform(); }
+    CC_DEPRECATED_ATTRIBUTE virtual AffineTransform nodeToWorldTransform() const { return getNodeToWorldAffineTransform(); }
 
     /**
      * Returns the inverse world affine transform matrix. The matrix is in Pixels.
@@ -1571,7 +1590,7 @@ public:
     virtual AffineTransform getWorldToNodeAffineTransform() const;
 
     /** @deprecated Use getWorldToNodeTransform() instead */
-    CC_DEPRECATED_ATTRIBUTE inline virtual AffineTransform worldToNodeTransform() const { return getWorldToNodeAffineTransform(); }
+    CC_DEPRECATED_ATTRIBUTE virtual AffineTransform worldToNodeTransform() const { return getWorldToNodeAffineTransform(); }
 
     /// @} end of Transformations
 
@@ -1629,7 +1648,7 @@ public:
      */
     Vec2 convertTouchToNodeSpaceAR(Touch * touch) const;
 
-	/**
+    /**
      *  Sets an additional transform matrix to the node.
      *
      *  In order to remove it, call it again with the argument `nullptr`.
@@ -1639,7 +1658,8 @@ public:
      *
      * @param additionalTransform An additional transform matrix.
      */
-    void setAdditionalTransform(Mat4* additionalTransform);
+    void setAdditionalTransform(const Mat4* additionalTransform);
+    void setAdditionalTransform(const Mat4& additionalTransform);
     void setAdditionalTransform(const AffineTransform& additionalTransform);
 
     /// @} end of Coordinate Converters
@@ -1684,34 +1704,133 @@ public:
     /// @} end of component functions
     
     // overrides
+    /**
+     * Return the node's opacity.
+     * @return A GLubyte value.
+     */
     virtual GLubyte getOpacity() const;
+    /**
+     * Return the node's display opacity.
+     * The difference between opacity and displayedOpacity is:
+     * The displayedOpacity is what's the final rendering opacity of node.
+     * @return A GLubyte value.
+     */
     virtual GLubyte getDisplayedOpacity() const;
+    /**
+     * Change node opacity.
+     * @param opacity A GLubyte opacity value.
+     */
     virtual void setOpacity(GLubyte opacity);
+    /**
+     * Update the displayed opacity of node with it's parent opacity;
+     * @param parentOpacity The opacity of parent node.
+     */
     virtual void updateDisplayedOpacity(GLubyte parentOpacity);
+    /**
+     * Whether cascadeOpacity is enabled or not.
+     * @return A boolean value.
+     */
     virtual bool isCascadeOpacityEnabled() const;
+    /**
+     * Change node's cascadeOpacity property.
+     * @param cascadeOpacityEnabled True to enable cascadeOpacity, false otherwise.
+     */
     virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled);
-    
+
+    /**
+     * Query node's color value.
+     * @return A Color3B color value.
+     */
     virtual const Color3B& getColor() const;
+    /**
+     * Query node's displayed color.
+     * @return A Color3B color value.
+     */
     virtual const Color3B& getDisplayedColor() const;
+    /**
+     * Change the color of node.
+     * @param color A Color3B color value.
+     */
     virtual void setColor(const Color3B& color);
+    /**
+     * Update node's displayed color with its parent color.
+     * @param parentColor A Color3B color value.
+     */
     virtual void updateDisplayedColor(const Color3B& parentColor);
+    /**
+     * Query whether cascadeColor is enabled or not.
+     * @return Whether cascadeColor is enabled or not.
+     */
     virtual bool isCascadeColorEnabled() const;
+    /**
+     * If you want node's color affect the children node's color, then set it to true.
+     * Otherwise, set it to false.
+     * @param cascadeColorEnabled A boolean value.
+     */
     virtual void setCascadeColorEnabled(bool cascadeColorEnabled);
-    
+
+    /**
+     *  If you want the opacity affect the color property, then set to true.
+     * @param value A boolean value.
+     */
     virtual void setOpacityModifyRGB(bool value) {CC_UNUSED_PARAM(value);}
+    /**
+     * If node opacity will modify the RGB color value, then you should override this method and return true.
+     * @return A boolean value, true indicates that opacity will modify color; false otherwise.
+     */
     virtual bool isOpacityModifyRGB() const { return false; };
 
+    /**
+     * Set the callback of event onEnter.
+     * @param callback A std::function<void()> callback.
+     */
     void setOnEnterCallback(const std::function<void()>& callback) { _onEnterCallback = callback; }
-    const std::function<void()>& getOnEnterCallback() const { return _onEnterCallback; }   
+    /**
+     * Get the callback of event onEnter.
+     * @return A std:function<void()> callback.
+     */
+    const std::function<void()>& getOnEnterCallback() const { return _onEnterCallback; }
+    /**
+     * Set the callback of event onExit.
+     * @param callback A std::function<void()> callback.
+     */
     void setOnExitCallback(const std::function<void()>& callback) { _onExitCallback = callback; }
-    const std::function<void()>& getOnExitCallback() const { return _onExitCallback; }   
+    /**
+     * Get the callback of event onExit.
+     * @return A std::function<void()>.
+     */
+    const std::function<void()>& getOnExitCallback() const { return _onExitCallback; }
+    /**
+     * Set the callback of event EnterTransitionDidFinish.
+     * @param callback A std::function<void()> callback.
+     */
     void setonEnterTransitionDidFinishCallback(const std::function<void()>& callback) { _onEnterTransitionDidFinishCallback = callback; }
-    const std::function<void()>& getonEnterTransitionDidFinishCallback() const { return _onEnterTransitionDidFinishCallback; }   
+    /**
+     * Get the callback of event EnterTransitionDidFinish.
+     * @return std::function<void()>
+     */
+    const std::function<void()>& getonEnterTransitionDidFinishCallback() const { return _onEnterTransitionDidFinishCallback; }
+    /**
+     * Set the callback of event ExitTransitionDidStart.
+     * @param callback A std::function<void()> callback.
+     */
     void setonExitTransitionDidStartCallback(const std::function<void()>& callback) { _onExitTransitionDidStartCallback = callback; }
+    /**
+     * Get the callback of event ExitTransitionDidStart.
+     * @return std::function<void()>
+     */
     const std::function<void()>& getonExitTransitionDidStartCallback() const { return _onExitTransitionDidStartCallback; }
     
-    /** get & set camera mask, the node is visible by the camera whose camera flag & node's camera mask is true */
+    /**
+     * get & set camera mask, the node is visible by the camera whose camera flag & node's camera mask is true
+     */
     unsigned short getCameraMask() const { return _cameraMask; }
+    /**
+     * Modify the camera mask for current node.
+     * If applyChildren is true, then it will modify the camera mask of its children recursively.
+     * @param mask A unsigned short bit for mask.
+     * @param applyChildren A boolean value to determine whether the mask bit should apply to its children or not.
+     */
     virtual void setCameraMask(unsigned short mask, bool applyChildren = true);
 
 CC_CONSTRUCTOR_ACCESS:
@@ -1766,13 +1885,13 @@ protected:
     float _rotationZ_X;             ///< rotation angle on Z-axis, component X
     float _rotationZ_Y;             ///< rotation angle on Z-axis, component Y
     
-    Quaternion _rotationQuat;      ///rotation using quaternion, if _rotationZ_X == _rotationZ_Y, _rotationQuat = RotationZ_X * RotationY * RotationX, else _rotationQuat = RotationY * RotationX
+    Quaternion _rotationQuat;       ///rotation using quaternion, if _rotationZ_X == _rotationZ_Y, _rotationQuat = RotationZ_X * RotationY * RotationX, else _rotationQuat = RotationY * RotationX
 
     float _scaleX;                  ///< scaling factor on x-axis
     float _scaleY;                  ///< scaling factor on y-axis
     float _scaleZ;                  ///< scaling factor on z-axis
 
-    Vec2 _position;                ///< position of the node
+    Vec2 _position;                 ///< position of the node
     float _positionZ;               ///< OpenGL real Z position
     Vec2 _normalizedPosition;
     bool _usingNormalizedPosition;
@@ -1781,40 +1900,42 @@ protected:
     float _skewX;                   ///< skew angle on x-axis
     float _skewY;                   ///< skew angle on y-axis
 
-    Vec2 _anchorPointInPoints;     ///< anchor point in points
-    Vec2 _anchorPoint;             ///< anchor point normalized (NOT in points)
+    Vec2 _anchorPointInPoints;      ///< anchor point in points
+    Vec2 _anchorPoint;              ///< anchor point normalized (NOT in points)
 
     Size _contentSize;              ///< untransformed size of the node
     bool _contentSizeDirty;         ///< whether or not the contentSize is dirty
 
-    Mat4 _modelViewTransform;    ///< ModelView transform of the Node.
+    Mat4 _modelViewTransform;       ///< ModelView transform of the Node.
 
     // "cache" variables are allowed to be mutable
-    mutable Mat4 _transform;      ///< transform
+    mutable Mat4 _transform;        ///< transform
     mutable bool _transformDirty;   ///< transform dirty flag
-    mutable Mat4 _inverse;        ///< inverse transform
+    mutable Mat4 _inverse;          ///< inverse transform
     mutable bool _inverseDirty;     ///< inverse transform dirty flag
-    mutable Mat4 _additionalTransform; ///< transform
-    bool _useAdditionalTransform;   ///< The flag to check whether the additional transform is dirty
+    mutable Mat4* _additionalTransform; ///< two transforms needed by additional transforms
+    mutable bool _additionalTransformDirty; ///< transform dirty ?
     bool _transformUpdated;         ///< Whether or not the Transform object was updated since the last frame
 
-    int _localZOrder;               ///< Local order (relative to its siblings) used to sort the node
+    std::int64_t _localZOrderAndArrival; /// cache, for 64bits compress optimize.
+    int _localZOrder; /// < Local order (relative to its siblings) used to sort the node
+
     float _globalZOrder;            ///< Global order used to sort the node
+
+    static unsigned int s_globalOrderOfArrival;
 
     Vector<Node*> _children;        ///< array of children nodes
     Node *_parent;                  ///< weak reference to parent node
     Director* _director;            //cached director pointer to improve rendering performance
-    int _tag;                         ///< a tag. Can be any number you assigned just to identify this node
+    int _tag;                       ///< a tag. Can be any number you assigned just to identify this node
     
-    std::string _name;               ///<a string label, an user defined string to identify this node
-    size_t _hashOfName;            ///<hash value of _name, used for speed in getChildByName
+    std::string _name;              ///<a string label, an user defined string to identify this node
+    size_t _hashOfName;             ///<hash value of _name, used for speed in getChildByName
 
     void *_userData;                ///< A user assigned void pointer, Can be point to any cpp object
     Ref *_userObject;               ///< A user assigned Object
 
     GLProgramState *_glProgramState; ///< OpenGL Program State
-
-    int _orderOfArrival;            ///< used to preserve sequence while sorting children with the same localZOrder
 
     Scheduler *_scheduler;          ///< scheduler used to schedule timers and updates
 
@@ -1841,15 +1962,13 @@ protected:
     ComponentContainer *_componentContainer;        ///< Dictionary of components
     
     // opacity controls
-    GLubyte		_displayedOpacity;
+    GLubyte     _displayedOpacity;
     GLubyte     _realOpacity;
-    Color3B	    _displayedColor;
+    Color3B     _displayedColor;
     Color3B     _realColor;
-    bool		_cascadeColorEnabled;
+    bool        _cascadeColorEnabled;
     bool        _cascadeOpacityEnabled;
 
-    static int s_globalOrderOfArrival;
-    
     // camera mask, it is visible only when _cameraMask & current camera' camera flag is true
     unsigned short _cameraMask;
     
@@ -1862,8 +1981,13 @@ protected:
 #if CC_USE_PHYSICS
     PhysicsBody* _physicsBody;
 public:
-    void setPhysicsBody(Component* physicsBody) 
-    { 
+    void setPhysicsBody(PhysicsBody* physicsBody)
+    {
+        if (_physicsBody != nullptr)
+        {
+            removeComponent(_physicsBody);
+        }
+
         addComponent(physicsBody);
     }
     PhysicsBody* getPhysicsBody() const { return _physicsBody; }
@@ -1874,7 +1998,6 @@ public:
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Node);
 };
-
 
 /**
  * This is a helper function, checks a GL screen point is in content rectangle space.

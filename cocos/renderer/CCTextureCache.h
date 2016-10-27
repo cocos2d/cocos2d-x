@@ -2,7 +2,7 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -28,7 +28,6 @@ THE SOFTWARE.
 #ifndef __CCTEXTURE_CACHE_H__
 #define __CCTEXTURE_CACHE_H__
 
-#include <string>
 #include <mutex>
 #include <thread>
 #include <condition_variable>
@@ -42,7 +41,6 @@ THE SOFTWARE.
 #include "platform/CCImage.h"
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
-    #include "platform/CCImage.h"
     #include <list>
 #endif
 
@@ -84,6 +82,9 @@ public:
      */
     CC_DEPRECATED_ATTRIBUTE static void reloadAllTextures();
 
+    // ETC1 ALPHA supports.
+    static void setETC1AlphaFileSuffix(const std::string& suffix);
+
 public:
     /**
      * @js ctor
@@ -100,7 +101,7 @@ public:
      */
     virtual std::string getDescription() const;
 
-//    Dictionary* snapshotTextures();
+    // Dictionary* snapshotTextures();
 
     /** Returns a Texture2D object given an filename.
     * If the filename was not previously loaded, it will create a new Texture2D.
@@ -202,7 +203,7 @@ public:
      *
      * @return The full path of the file.
      */
-    const std::string getTextureFilePath(Texture2D* texture)const;
+    std::string getTextureFilePath(Texture2D* texture) const;
 
     /** Reload texture from a new file.
     * This function is mainly for editor, won't suggest use it in game for performance reason.
@@ -212,7 +213,7 @@ public:
     *
     * @since v3.10
     */
-    void renameTextureWithKey(const std::string srcName, const std::string dstName);
+    void renameTextureWithKey(const std::string& srcName, const std::string& dstName);
 
 
 private:
@@ -239,6 +240,8 @@ protected:
     int _asyncRefCount;
 
     std::unordered_map<std::string, Texture2D*> _textures;
+
+    static std::string s_etc1AlphaFileSuffix;
 };
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA

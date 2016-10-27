@@ -1,14 +1,17 @@
 
 
-#include "LayoutReader.h"
+#include "editor-support/cocostudio/WidgetReader/LayoutReader/LayoutReader.h"
 
 #include "ui/UILayout.h"
-#include "cocostudio/CocoLoader.h"
+#include "editor-support/cocostudio/CocoLoader.h"
 #include "ui/UIScrollView.h"
 #include "ui/UIPageView.h"
 #include "ui/UIListView.h"
-#include "cocostudio/CSParseBinary_generated.h"
-#include "cocostudio/FlatBuffersSerialize.h"
+#include "editor-support/cocostudio/CSParseBinary_generated.h"
+#include "editor-support/cocostudio/FlatBuffersSerialize.h"
+#include "base/CCDirector.h"
+#include "platform/CCFileUtils.h"
+#include "2d/CCSpriteFrameCache.h"
 
 #include "tinyxml2.h"
 #include "flatbuffers/flatbuffers.h"
@@ -137,7 +140,7 @@ namespace cocostudio
                 
                 stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray(cocoLoader);
                 if (backGroundChildren) {
-                    std::string resType = backGroundChildren[2].GetValue(cocoLoader);;
+                    std::string resType = backGroundChildren[2].GetValue(cocoLoader);
                     
                     Widget::TextureResType imageFileNameType = (Widget::TextureResType)valueToInt(resType);
                     
@@ -675,12 +678,6 @@ namespace cocostudio
             {
                 panel->setBackGroundImage(imageFileName, (Widget::TextureResType)imageFileNameType);
             }
-            //else
-            //{
-            //    auto label = Label::create();
-            //    label->setString(__String::createWithFormat("%s missed", errorFilePath.c_str())->getCString());
-            //    panel->addChild(label);
-            //}
         }
         
         auto widgetOptions = options->widgetOptions();

@@ -4,7 +4,7 @@
 
   <ItemDefinitionGroup>
     <ClCompile>
-      <AdditionalIncludeDirectories>$(EngineRoot)cocos\scripting\js-bindings\manual;$(EngineRoot)cocos\scripting\js-bindings\auto;$(EngineRoot)external\spidermonkey\include\$(COCOS2D_PLATFORM);$(EngineRoot)cocos\base;%(AdditionalIncludeDirectories);</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot)external\spidermonkey\include\$(COCOS2D_PLATFORM);%(AdditionalIncludeDirectories);</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalDependencies>mozjs-33.lib;%(AdditionalDependencies)</AdditionalDependencies>

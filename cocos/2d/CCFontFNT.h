@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2013      Zynga Inc.
- Copyright (c) 2013-2015 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -28,7 +28,7 @@
 
 /// @cond DO_NOT_SHOW
 
-#include "CCFont.h"
+#include "2d/CCFont.h"
 
 NS_CC_BEGIN
 

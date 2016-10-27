@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2012      cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -30,13 +30,13 @@ extern "C" {
 #include "lua.h"
 }
 
-#include "cocos2d.h"
-#include "base/CCScriptSupport.h"
-#include "CCLuaStack.h"
-#include "CCLuaValue.h"
-#include "cocos2d/LuaScriptHandlerMgr.h"
-#include "Lua-BindingsExport.h"
 
+#include "base/CCScriptSupport.h"
+#include "scripting/lua-bindings/manual/CCLuaStack.h"
+#include "scripting/lua-bindings/manual/CCLuaValue.h"
+#include "scripting/lua-bindings/manual/cocos2d/LuaScriptHandlerMgr.h"
+#include "scripting/lua-bindings/manual/Lua-BindingsExport.h"
+#include "deprecated/CCNotificationCenter.h"
 
 /**
  * @addtogroup lua

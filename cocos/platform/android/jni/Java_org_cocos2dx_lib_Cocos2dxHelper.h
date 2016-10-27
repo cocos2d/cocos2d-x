@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -31,6 +31,10 @@ typedef void (*EditTextCallback)(const char* text, void* ctx);
 
 extern const char * getApkPath();
 extern std::string getPackageNameJNI();
+extern int getObbAssetFileDescriptorJNI(const char* path, long* startOffset, long* size);
 extern void conversionEncodingJNI(const char* src, int byteSize, const char* fromCharset, char* dst, const char* newCharset);
+
+extern int getDeviceSampleRate();
+extern int getDeviceAudioBufferSizeInFrames();
 
 #endif /* __Java_org_cocos2dx_lib_Cocos2dxHelper_H__ */

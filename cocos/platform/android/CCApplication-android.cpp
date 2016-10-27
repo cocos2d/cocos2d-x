@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -27,7 +27,7 @@ THE SOFTWARE.
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 
 #include "platform/android/jni/JniHelper.h"
-#include "CCApplication.h"
+#include "platform/CCApplication.h"
 #include "base/CCDirector.h"
 #include <android/log.h>
 #include <jni.h>
@@ -49,7 +49,7 @@ static const std::string helperClassName = "org/cocos2dx/lib/Cocos2dxHelper";
 NS_CC_BEGIN
 
 // sharedApplication pointer
-Application * Application::sm_pSharedApplication = 0;
+Application * Application::sm_pSharedApplication = nullptr;
 
 Application::Application()
 {
@@ -60,7 +60,7 @@ Application::Application()
 Application::~Application()
 {
     CCAssert(this == sm_pSharedApplication, "");
-    sm_pSharedApplication = NULL;
+    sm_pSharedApplication = nullptr;
 }
 
 int Application::run()
@@ -70,7 +70,7 @@ int Application::run()
     {
         return 0;
     }
-    
+
     return -1;
 }
 
@@ -107,7 +107,7 @@ LanguageType Application::getCurrentLanguage()
     std::string languageName = JniHelper::callStaticStringMethod(helperClassName, "getCurrentLanguage");
     const char* pLanguageName = languageName.c_str();
     LanguageType ret = LanguageType::ENGLISH;
-    
+
     if (0 == strcmp("zh", pLanguageName))
     {
         ret = LanguageType::CHINESE;
@@ -209,4 +209,3 @@ void Application::applicationScreenSizeChanged(int newWidth, int newHeight) {
 NS_CC_END
 
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-

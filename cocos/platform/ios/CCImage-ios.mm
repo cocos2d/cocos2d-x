@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -99,22 +99,20 @@ bool cocos2d::Image::saveToFile(const std::string& filename, bool isToRGB)
     CGImageRelease(iref);    
     CGColorSpaceRelease(colorSpaceRef);
     CGDataProviderRelease(provider);
-    
-    NSData *data;
-                
-    if (saveToPNG)
-    {
-        data = UIImagePNGRepresentation(image);
+
+    // NOTE: Prevent memory leak. Requires ARC enabled.
+    @autoreleasepool {
+        NSData *data;
+        if (saveToPNG) {
+            data = UIImagePNGRepresentation(image);
+        } else {
+            data = UIImageJPEGRepresentation(image, 1.0f);
+        }
+        [data writeToFile:[NSString stringWithUTF8String:filename.c_str()] atomically:YES];
     }
-    else
-    {
-        data = UIImageJPEGRepresentation(image, 1.0f);
-    }
-    
-    [data writeToFile:[NSString stringWithUTF8String:filename.c_str()] atomically:YES];
-        
+
     [image release];
-        
+
     if (needToCopyPixels)
     {
         delete [] pixels;

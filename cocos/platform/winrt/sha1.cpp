@@ -50,7 +50,7 @@
  *
  */
 
-#include "sha1.h"
+#include "platform/winrt/sha1.h"
 
 /*
  *  Define the SHA1 circular left shift macro

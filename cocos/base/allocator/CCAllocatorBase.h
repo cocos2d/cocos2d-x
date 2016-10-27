@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014-2015 Chukong Technologies Inc.
+ Copyright (c) 2014-2016 Chukong Technologies Inc.
  Author: Justin Graham (https://github.com/mannewalis)
  
  http://www.cocos2d-x.org

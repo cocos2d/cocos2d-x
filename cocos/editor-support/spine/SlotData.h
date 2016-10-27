@@ -43,6 +43,7 @@ typedef enum {
 } spBlendMode;
 
 typedef struct spSlotData {
+	const int index;
 	const char* const name;
 	const spBoneData* const boneData;
 	const char* attachmentName;
@@ -51,6 +52,7 @@ typedef struct spSlotData {
 
 #ifdef __cplusplus
 	spSlotData() :
+		index(0),
 		name(0),
 		boneData(0),
 		attachmentName(0),
@@ -60,7 +62,7 @@ typedef struct spSlotData {
 #endif
 } spSlotData;
 
-spSlotData* spSlotData_create (const char* name, spBoneData* boneData);
+spSlotData* spSlotData_create (const int index, const char* name, spBoneData* boneData);
 void spSlotData_dispose (spSlotData* self);
 
 /* @param attachmentName May be 0 for no setup pose attachment. */

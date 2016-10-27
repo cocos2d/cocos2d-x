@@ -133,17 +133,28 @@ function runScene4(sender) {
 function runScene5(sender) {
     var scene = new cc.Scene();
     
+    var TREE_TAG = 888;
     var tree = createTree(5, cc.rect(0, 0, cc.winSize.width, cc.winSize.height));
-    scene.addChild(tree);
+    scene.addChild(tree, 0, TREE_TAG);
+
+    var fontDef = new cc.FontDefinition();
+    fontDef.fontName = "Arial";
+    fontDef.fontSize = 20;
+    fontDef.boundingWidth = cc.winSize.width * 0.8;
+    var label = new cc.LabelTTF("Click 'Replace Tree' to create a new tree and the current tree should be garbage collected", fontDef);
+    label.setPosition(cc.winSize.width / 2, cc.winSize.height / 2);
+    scene.addChild(label, 10);
 
     // menu
     var menu = new cc.Menu();
     var button = new cc.MenuItemFont("Replace Tree", function () {
-        var s = tree.parent;
-        tree.removeFromParent(true);
         var levels = 4 + Math.floor( Math.random() * 4 );
-        tree = createTree(levels, cc.rect(0, 0, cc.winSize.width, cc.winSize.height));
-        s.addChild(tree);
+        var newTree = createTree(levels, cc.rect(0, 0, cc.winSize.width, cc.winSize.height));
+        label.string = "Now click 'Run GC', you should see a list of finalize message, the number should match the number of old tree nodes";
+        cc.log("Now click 'Run GC', you should see a list of finalize message, the number should match the number of old tree nodes");
+        var oldTree = scene.getChildByTag(TREE_TAG);
+        oldTree.removeFromParent(true);
+        scene.addChild(newTree, 0, TREE_TAG);
     });
     button.fontSize = 20;
     button.fontName = "Arial";
@@ -194,13 +205,74 @@ function runScene6 () {
     return scene;
 }
 
+function runScene7 () {
+    var scene = new cc.Scene();
+
+    var fontDef = new cc.FontDefinition();
+    fontDef.fontName = "Arial";
+    fontDef.fontSize = 20;
+    fontDef.boundingWidth = cc.winSize.width * 0.8;
+    var label = new cc.LabelTTF("Click screen to remove button and it should be garbage collected", fontDef);
+    label.setPosition(cc.winSize.width / 2, cc.winSize.height / 2 + 100);
+    scene.addChild(label);
+
+    var menu = new cc.Menu();
+    var button = new cc.MenuItemFont("Remove myself", function () {
+        cc.sys.garbageCollect();
+        cc.sys.garbageCollect();
+        label.string = "Now click 'Run GC', you should see finalize message of button";
+        cc.log("Now click 'Run GC', you should see finalize message of button");
+        menu.removeAllChildren(true);
+    }, menu);
+    menu.addChild(button);
+    menu.setPosition(cc.winSize.width / 2, cc.winSize.height / 2);
+    scene.addChild(menu);
+
+    return scene;
+}
+
+function runScene8 () {
+    var scene = new cc.Scene();
+
+    var fontDef = new cc.FontDefinition();
+    fontDef.fontName = "Arial";
+    fontDef.fontSize = 20;
+    fontDef.boundingWidth = cc.winSize.width * 0.8;
+    var label = new cc.LabelTTF("Click screen to remove button and it should be garbage collected", fontDef);
+    label.setPosition(cc.winSize.width / 2, cc.winSize.height / 2 + 100);
+    scene.addChild(label);
+
+    var scrollView = new cc.ScrollView();
+    var obj = {
+        scrollView: scrollView
+    };
+    scrollView.setDelegate(obj);
+
+    var menu = new cc.Menu();
+    menu.scrollView = scrollView;
+    var button = new cc.MenuItemFont("Remove ScrollView (invisible)", function () {
+        cc.sys.garbageCollect();
+        label.string = "Now you should see finalize message of ScrollView";
+        cc.log("Now you should see finalize message of ScrollView");
+        delete menu.scrollView;
+        cc.sys.garbageCollect();
+    }, menu);
+    menu.addChild(button);
+    menu.setPosition(cc.winSize.width / 2, cc.winSize.height / 2);
+    scene.addChild(menu);
+
+    return scene;
+}
+
 var tests = [
     runScene1,
     runScene2,
     runScene3,
     runScene4,
     runScene5,
-    runScene6
+    runScene6,
+    runScene7,
+    runScene8
 ];
 
 var replaceScene = (function () {

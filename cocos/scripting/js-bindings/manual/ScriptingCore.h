@@ -1,7 +1,7 @@
 /*
  * Created by Rolando Abarca on 3/14/12.
  * Copyright (c) 2012 Zynga Inc. All rights reserved.
- * Copyright (c) 2013-2014 Chukong Technologies Inc.
+ * Copyright (c) 2013-2016 Chukong Technologies Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,19 +28,19 @@
 
 #include "jsapi.h"
 #include "jsfriendapi.h"
-#include "cocos2d.h"
+
 #include "ui/CocosGUI.h"
-#include "js_bindings_config.h"
-#include "js_bindings_core.h"
-#include "spidermonkey_specifics.h"
-#include "js_manual_conversions.h"
+#include "scripting/js-bindings/manual/js_bindings_config.h"
+#include "scripting/js-bindings/manual/js_bindings_core.h"
+#include "scripting/js-bindings/manual/spidermonkey_specifics.h"
+#include "scripting/js-bindings/manual/js_manual_conversions.h"
 #include "mozilla/Maybe.h"
-#include "js-BindingsExport.h"
+#include "scripting/js-bindings/manual/js-BindingsExport.h"
 
 #include <assert.h>
 #include <memory>
 
-#define ENGINE_VERSION "Cocos2d-JS v3.10"
+#define ENGINE_VERSION "Cocos2d-JS v3.13"
 
 void js_log(const char *format, ...);
 
@@ -81,9 +81,11 @@ class CC_JS_DLL ScriptingCore : public cocos2d::ScriptEngineProtocol
 private:
     JSRuntime *_rt;
     JSContext *_cx;
-    mozilla::Maybe<JS::PersistentRootedObject> _global;
-    mozilla::Maybe<JS::PersistentRootedObject> _debugGlobal;
+    JS::PersistentRootedObject *_global;
+    JS::PersistentRootedObject *_debugGlobal;
     SimpleRunLoop* _runLoop;
+    bool _jsInited;
+    bool _needCleanup;
 
     bool _callFromScript;
     ScriptingCore();
@@ -101,6 +103,36 @@ public:
      * @return `cocos2d::kScriptTypeJavascript`
      */
     virtual cocos2d::ccScriptType getScriptType() override { return cocos2d::kScriptTypeJavascript; };
+    
+    /**
+     * Reflect the retain relationship to script scope
+     */
+    virtual void retainScriptObject(cocos2d::Ref* owner, cocos2d::Ref* target) override;
+    
+    /**
+     * Add the script object to root object
+     */
+    virtual void rootScriptObject(cocos2d::Ref* target) override;
+    
+    /**
+     * Reflect the release relationship to script scope
+     */
+    virtual void releaseScriptObject(cocos2d::Ref* owner, cocos2d::Ref* target) override;
+    
+    /**
+     * Remove the script object from root object
+     */
+    virtual void unrootScriptObject(cocos2d::Ref* target) override;
+    
+    /**
+     * Release all children in script scope
+     */
+    virtual void releaseAllChildrenRecursive(cocos2d::Node *node) override;
+    
+    /**
+     * Release all native refs for the given owner in script scope
+     */
+    virtual void releaseAllNativeRefs(cocos2d::Ref* owner) override;
     
     /**
      * @brief @~english Removes the C++ object's linked JavaScript proxy object from JavaScript context
@@ -256,22 +288,22 @@ public:
      @param path @~english The script file path
      @return @~english Script object
      */
-    JSScript* getScript(const char *path);
-    
+    JS::PersistentRootedScript* getScript(const std::string& path);
+
     /**@~english
      * Compile the specified js file
      * @param path    @~english The path of the script to be compiled
      * @param global    @~english The js global object
      * @param cx        @~english The js context
      */
-    void compileScript(const char *path, JS::HandleObject global, JSContext* cx = NULL);
-    
+    JS::PersistentRootedScript* compileScript(const std::string& path, JS::HandleObject global, JSContext* cx = nullptr);
+
     /**@~english
      * Run the specified js file
      * @param path @~english The path of the script to be executed
      * @return @~english Return true if succeed, otherwise return false.
      */
-    bool runScript(const char *path);
+    bool runScript(const std::string& path);
     /**@~english
      * Run the specified js file
      * @param path @~english The path of the script to be executed
@@ -279,8 +311,8 @@ public:
      * @param global @~english The context to execute the script
      * @return @~english Return true if succeed, otherwise return false.
      */
-    bool runScript(const char *path, JS::HandleObject global, JSContext* cx = NULL);
-    
+    bool runScript(const std::string& path, JS::HandleObject global, JSContext* cx = NULL);
+
     /**@~english
      * Require the specified js file
      * The difference between run and require is that require returns the export object of the script
@@ -312,7 +344,7 @@ public:
      * Gets the cached script objects for all executed js file
      * @return @~english The cached script object map
      */
-    std::unordered_map<std::string, JSScript*> &getFileScript();
+    std::unordered_map<std::string, JS::PersistentRootedScript*>& getFileScript();
     /**@~english
      * Clean all script objects
      */
@@ -373,7 +405,7 @@ public:
     /**@~english
      * Simulate a multi touch event and dispatch it to a js object.
      * @param eventType @~english The touch event type
-     * @param touches @~english Touchs list for multitouch
+     * @param touches @~english Touches list for multitouch
      * @param obj @~english The js object
      * @return @~english Return 1 if succeed, otherwise return 0.
      */
@@ -439,22 +471,6 @@ public:
      */
     static bool dumpRoot(JSContext *cx, uint32_t argc, jsval *vp);
     /**@~english
-     * Adds a js object to root so that it won't be touched by the garbage collection, it should be invoked from script environment
-     * Bound to `__jsc__.addGCRootObject`
-     * @param cx @~english The js context
-     * @param argc @~english The arguments count
-     * @param vp @~english The arguments
-     */
-    static bool addRootJS(JSContext *cx, uint32_t argc, jsval *vp);
-    /**@~english
-     * Removes a js object from root, it should be invoked from script environment
-     * Bound to `__jsc__.removeGCRootObject`
-     * @param cx @~english The js context
-     * @param argc @~english The arguments count
-     * @param vp @~english The arguments
-     */
-    static bool removeRootJS(JSContext *cx, uint32_t argc, jsval *vp);
-    /**@~english
      * Check whether a js object's C++ proxy is still valid, it should be invoked from script environment
      * Bound to `window.__isObjectValid`
      * @param cx @~english The js context
@@ -478,12 +494,12 @@ public:
      * Gets the debug environment's global object
      * @return @~english The debug environment's global object
      */
-    JSObject* getDebugGlobal() { return _debugGlobal.ref().get(); }
+    JSObject* getDebugGlobal() { return _debugGlobal->get(); }
     /**@~english
      * Gets the global object
      * @return @~english The global object
      */
-    JSObject* getGlobalObject() { return _global.ref().get(); }
+    JSObject* getGlobalObject() { return _global->get(); }
     
     /**@~english
      * Checks whether a C++ function is overrided in js prototype chain
@@ -493,7 +509,7 @@ public:
      * @return @~english The global object
      */
     bool isFunctionOverridedInJS(JS::HandleObject obj, const std::string& name, JSNative native);
-
+    
     /**
      * Roots the associated JSObj.
      * The GC won't collected rooted objects. This function is only called
@@ -531,7 +547,7 @@ public:
     bool handleMouseEvent(void* nativeObj, cocos2d::EventMouse::MouseEventType eventType, cocos2d::Event* event);
     bool handleMouseEvent(void* nativeObj, cocos2d::EventMouse::MouseEventType eventType, cocos2d::Event* event, JS::MutableHandleValue jsvalRet);
 
-    bool handleKeybardEvent(void* nativeObj, cocos2d::EventKeyboard::KeyCode keyCode, bool isPressed, cocos2d::Event* event);
+    bool handleKeyboardEvent(void* nativeObj, cocos2d::EventKeyboard::KeyCode keyCode, bool isPressed, cocos2d::Event* event);
     bool handleFocusEvent(void* nativeObj, cocos2d::ui::Widget* widgetLoseFocus, cocos2d::ui::Widget* widgetGetFocus);
 
     void restartVM();
@@ -545,23 +561,20 @@ bool jsb_get_reserved_slot(JSObject *obj, uint32_t idx, jsval& ret);
 template <class T>
 js_type_class_t *jsb_register_class(JSContext *cx, JSClass *jsClass, JS::HandleObject proto, JS::HandleObject parentProto)
 {
-    TypeTest<T> t;
     js_type_class_t *p = nullptr;
-    std::string typeName = t.s_name();
+    std::string typeName = TypeTest<T>::s_name();
     if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
     {
+        JS::RootedObject protoRoot(cx, proto);
+        JS::RootedObject protoParentRoot(cx, parentProto);
         p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        memset(p, 0, sizeof(js_type_class_t));
         p->jsclass = jsClass;
-        if (p->proto.empty())
-        {
-            p->proto.construct(cx);
-        }
-        p->proto.ref() = proto;
-        if (p->parentProto.empty())
-        {
-            p->parentProto.construct(cx);
-        }
-        p->parentProto.ref() = parentProto ;
+        auto persistentProtoRoot = new (std::nothrow) JS::PersistentRootedObject(cx, protoRoot);
+        p->proto.set(persistentProtoRoot);
+        
+        auto persistentProtoParentRoot = new (std::nothrow) JS::PersistentRootedObject(cx, protoParentRoot);
+        p->parentProto.set(persistentProtoParentRoot);
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
     return p;
@@ -573,11 +586,14 @@ js_proxy_t* jsb_new_proxy(void* nativeObj, JS::HandleObject jsObj);
 /** returns the proxy associated with the Native* */
 js_proxy_t* jsb_get_native_proxy(void* nativeObj);
 /** returns the proxy associated with the JSObject* */
-js_proxy_t* jsb_get_js_proxy(JSObject* jsObj);
+js_proxy_t* jsb_get_js_proxy(JS::HandleObject jsObj);
 /** deprecated: use jsb_remove_proxy(js_proxy_t* proxy) instead */
 void jsb_remove_proxy(js_proxy_t* nativeProxy, js_proxy_t* jsProxy);
 /** removes both the native and js proxies */
 void jsb_remove_proxy(js_proxy_t* proxy);
+/** removes the native js object proxy and unroot the js object (if necessary), 
+ it's often used when JS object is created by native object */
+void removeJSObject(JSContext* cx, cocos2d::Ref* nativeObj);
 
 /**
  * Generic initialization function for subclasses of Ref
@@ -593,18 +609,13 @@ void jsb_ref_init(JSContext* cx, JS::Heap<JSObject*> *obj, cocos2d::Ref* ref, co
 void jsb_ref_autoreleased_init(JSContext* cx, JS::Heap<JSObject*> *obj, cocos2d::Ref* ref, const char* debug);
 
 /**
- * Generic finalize used by objects that are subclass of Ref
- */
-void jsb_ref_finalize(JSFreeOp* fop, JSObject* obj);
-
-/**
- Disassociates oldRef from jsobj, and associates a new Ref.
- Useful for the EaseActions and others
+ * Disassociates oldRef from jsobj, and associates a new Ref.
+ * Useful for the EaseActions and others
  */
 void jsb_ref_rebind(JSContext* cx, JS::HandleObject jsobj, js_proxy_t *js2native_proxy, cocos2d::Ref* oldRef, cocos2d::Ref* newRef, const char* debug);
 
 /**
- Creates a new JSObject of a certain type (typeClass) and creates a proxy associated with and the Ref
+ * Creates a new JSObject of a certain type (typeClass) and creates a proxy associated with and the Ref
  */
 JSObject* jsb_ref_create_jsobject(JSContext *cx, cocos2d::Ref *ref, js_type_class_t *typeClass, const char* debug);
 
@@ -617,20 +628,43 @@ JSObject* jsb_ref_create_jsobject(JSContext *cx, cocos2d::Ref *ref, js_type_clas
 JSObject* jsb_ref_autoreleased_create_jsobject(JSContext *cx, cocos2d::Ref *ref, js_type_class_t *typeClass, const char* debug);
 
 /**
- It will try to get the associated JSObjct for ref.
- If it can't find it, it will create a new one associating it to Ref.
- Call this function for objects that were already created and initialized, when returning `getChild()`
+ * It will try to get the associated JSObjct for the native object.
+ * The reference created from JSObject to native object is weak because it won't retain it.
+ * The behavior is exactly the same with 'jsb_ref_create_jsobject' when CC_ENABLE_GC_FOR_NATIVE_OBJECTS deactivated.
  */
-JS::HandleObject jsb_ref_get_or_create_jsobject(JSContext *cx, cocos2d::Ref *ref, js_type_class_t *typeClass, const char* debug);
+JSObject* jsb_create_weak_jsobject(JSContext *cx, void *native, js_type_class_t *typeClass, const char* debug);
 
 /**
- It will try to get the associated JSObjct for ref.
- If it can't find it, it will create a new one associating it to Ref
- Call this function for objects that might return an already existing copy when you create them. For example, `Animation3D::create()`;
+ * It will try to get the associated JSObjct for ref.
+ * If it can't find it, it will create a new one associating it to Ref.
+ * Call this function for objects that were already created and initialized, when returning `getChild()`
+ */
+JSObject* jsb_ref_get_or_create_jsobject(JSContext *cx, cocos2d::Ref *ref, js_type_class_t *typeClass, const char* debug);
+
+/**
+ * It will try to get the associated JSObjct for ref.
+ * If it can't find it, it will create a new one associating it to Ref
+ * Call this function for objects that might return an already existing copy when you create them. For example, `Animation3D::create()`;
  */
 JSObject* jsb_ref_autoreleased_get_or_create_jsobject(JSContext *cx, cocos2d::Ref *ref, js_type_class_t *typeClass, const char* debug);
 
+/**
+ * It will try to get the associated JSObjct for the native object.
+ * If it can't find it, it will create a new one associating it to the native object.
+ * The reference created from JSObject to native object is weak because it won't retain it.
+ * The behavior is exactly the same with 'jsb_ref_get_or_create_jsobject' when CC_ENABLE_GC_FOR_NATIVE_OBJECTS deactivated.
+ */
+CC_JS_DLL JSObject* jsb_get_or_create_weak_jsobject(JSContext *cx, void *native, js_type_class_t *typeClass, const char* debug);
 
-JS::HandleObject jsb_get_or_create_weak_jsobject(JSContext *cx, void *native, js_type_class_t *typeClass, const char* debug);
+/**
+ * Register finalize hook and its owner as an entry in _js_hook_owner_map,
+ * so that we can find the owner of a FinalizeHook in its finalize function
+ */
+void jsb_register_finalize_hook(JSObject *hook, JSObject *owner);
+
+/**
+ * Remove the entry of finalize hook and its owner in _js_hook_owner_map
+ */
+JSObject *jsb_get_and_remove_hook_owner(JSObject *hook);
 
 #endif /* __SCRIPTING_CORE_H__ */

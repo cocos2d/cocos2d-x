@@ -102,7 +102,7 @@ MeshVertexData* MeshVertexData::create(const MeshData& meshdata)
     }
     
     bool needCalcAABB = (meshdata.subMeshAABB.size() != meshdata.subMeshIndices.size());
-    for (size_t i = 0; i < meshdata.subMeshIndices.size(); i++) {
+    for (size_t i = 0, size = meshdata.subMeshIndices.size(); i < size; ++i) {
 
         auto& index = meshdata.subMeshIndices[i];
         auto indexBuffer = IndexBuffer::create(IndexBuffer::IndexType::INDEX_TYPE_SHORT_16, (int)(index.size()));

@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2015 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -98,6 +98,11 @@ public class Cocos2dxEditBox extends EditText {
      * Capitalize all characters automatically.
      */
     private final int kEditBoxInputFlagInitialCapsAllCharacters = 4;
+
+    /**
+     *  Lowercase all characters automatically.
+     */
+    private final int kEditBoxInputFlagLowercaseAllCharacters = 5;
 
     private final int kKeyboardReturnTypeDefault = 0;
     private final int kKeyboardReturnTypeDone = 1;
@@ -242,6 +247,9 @@ public class Cocos2dxEditBox extends EditText {
                 break;
             case kEditBoxInputFlagInitialCapsAllCharacters:
                 this.mInputFlagConstraints = InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS;
+                break;
+            case kEditBoxInputFlagLowercaseAllCharacters:
+                this.mInputFlagConstraints = InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_NORMAL;
                 break;
             default:
                 break;

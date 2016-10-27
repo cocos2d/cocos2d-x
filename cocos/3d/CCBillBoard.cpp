@@ -44,54 +44,54 @@ BillBoard::~BillBoard()
 
 BillBoard* BillBoard::createWithTexture(Texture2D *texture, Mode mode)
 {
-    BillBoard *billborad = new (std::nothrow) BillBoard();
-    if (billborad && billborad->initWithTexture(texture))
+    BillBoard *billboard = new (std::nothrow) BillBoard();
+    if (billboard && billboard->initWithTexture(texture))
     {
-        billborad->_mode = mode;
-        billborad->autorelease();
-        return billborad;
+        billboard->_mode = mode;
+        billboard->autorelease();
+        return billboard;
     }
-    CC_SAFE_DELETE(billborad);
+    CC_SAFE_DELETE(billboard);
     return nullptr;
 }
 
 
 BillBoard* BillBoard::create(const std::string& filename, Mode mode)
 {
-    BillBoard *billborad = new (std::nothrow) BillBoard();
-    if (billborad && billborad->initWithFile(filename))
+    BillBoard *billboard = new (std::nothrow) BillBoard();
+    if (billboard && billboard->initWithFile(filename))
     {
-        billborad->_mode = mode;
-        billborad->autorelease();
-        return billborad;
+        billboard->_mode = mode;
+        billboard->autorelease();
+        return billboard;
     }
-    CC_SAFE_DELETE(billborad);
+    CC_SAFE_DELETE(billboard);
     return nullptr;
 }
 
 BillBoard* BillBoard::create(const std::string& filename, const Rect& rect, Mode mode)
 {
-    BillBoard *billborad = new (std::nothrow) BillBoard();
-    if (billborad && billborad->initWithFile(filename, rect))
+    BillBoard *billboard = new (std::nothrow) BillBoard();
+    if (billboard && billboard->initWithFile(filename, rect))
     {
-        billborad->_mode = mode;
-        billborad->autorelease();
-        return billborad;
+        billboard->_mode = mode;
+        billboard->autorelease();
+        return billboard;
     }
-    CC_SAFE_DELETE(billborad);
+    CC_SAFE_DELETE(billboard);
     return nullptr;
 }
 
 BillBoard* BillBoard::create(Mode mode)
 {
-    BillBoard *billborad = new (std::nothrow) BillBoard();
-    if (billborad && billborad->init())
+    BillBoard *billboard = new (std::nothrow) BillBoard();
+    if (billboard && billboard->init())
     {
-        billborad->_mode = mode;
-        billborad->autorelease();
-        return billborad;
+        billboard->_mode = mode;
+        billboard->autorelease();
+        return billboard;
     }
-    CC_SAFE_DELETE(billborad);
+    CC_SAFE_DELETE(billboard);
     return nullptr;
 }
 
@@ -126,7 +126,7 @@ void BillBoard::visit(Renderer *renderer, const Mat4& parentTransform, uint32_t 
     {
         sortAllChildren();
         // draw children zOrder < 0
-        for( ; i < _children.size(); i++ )
+        for(auto size = _children.size(); i < size; ++i)
         {
             auto node = _children.at(i);
             
@@ -138,8 +138,8 @@ void BillBoard::visit(Renderer *renderer, const Mat4& parentTransform, uint32_t 
         // self draw
         if (visibleByCamera)
             this->draw(renderer, _modelViewTransform, flags);
-        
-        for(auto it=_children.cbegin()+i; it != _children.cend(); ++it)
+
+        for(auto it=_children.cbegin()+i, itCend = _children.cend(); it != itCend; ++it)
             (*it)->visit(renderer, _modelViewTransform, flags);
     }
     else if (visibleByCamera)

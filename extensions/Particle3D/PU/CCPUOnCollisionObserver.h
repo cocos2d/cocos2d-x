@@ -46,7 +46,7 @@ public:
 CC_CONSTRUCTOR_ACCESS:
     PUOnCollisionObserver(void) : PUObserver()
     {
-    };
+    }
     virtual ~PUOnCollisionObserver(void) {};
 };
 

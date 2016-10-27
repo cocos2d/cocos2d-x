@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -21,13 +21,13 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#include "lua_xml_http_request.h"
+#include "scripting/lua-bindings/manual/network/lua_xml_http_request.h"
 #include <string>
-#include "tolua_fix.h"
-#include "CCLuaStack.h"
-#include "CCLuaValue.h"
-#include "CCLuaEngine.h"
-#include "LuaScriptHandlerMgr.h"
+#include "scripting/lua-bindings/manual/tolua_fix.h"
+#include "scripting/lua-bindings/manual/CCLuaStack.h"
+#include "scripting/lua-bindings/manual/CCLuaValue.h"
+#include "scripting/lua-bindings/manual/CCLuaEngine.h"
+#include "scripting/lua-bindings/manual/cocos2d/LuaScriptHandlerMgr.h"
 
 
 using namespace cocos2d;
@@ -789,7 +789,7 @@ static int lua_cocos2dx_XMLHttpRequest_open(lua_State* L)
                 self->getHttpRequest()->setRequestType(network::HttpRequest::Type::UNKNOWN);
             }
             
-            self->getHttpRequest()->setUrl(url.c_str());
+            self->getHttpRequest()->setUrl(url);
             
         }
         

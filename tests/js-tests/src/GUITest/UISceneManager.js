@@ -477,6 +477,12 @@
                 func: function () {
                     return new UIScrollViewTest_Vertical_Multiple();
                 }
+            },
+            {
+                title:"UIScrollView Scroll Bar Test",
+                func: function () {
+                    return new UIScrollViewTest_ScrollBar();
+                }
             }
         ],
         "UIPageView": [
@@ -515,6 +521,24 @@
                 func: function () {
                     return new UIPageViewDisableTouchTest();
                 }
+            },
+            {
+                title: "UIPageViewJumpToPageTest",
+                func: function () {
+                    return new UIPageViewJumpToPageTest();
+                }
+            },
+            {
+                title: "UIPageViewChildSizeTest",
+                func: function () {
+                    return new UIPageViewChildSizeTest();
+                }
+            },
+            {
+                title: "UIPageViewIndicatorTest",
+                func: function () {
+                    return new UIPageViewIndicatorTest();
+                }
             }
         ],
         "UIListView": [
@@ -534,6 +558,30 @@
                 title:"UIListViewTest_TouchIntercept ",
                 func: function() {
                     return new UIListViewTest_TouchIntercept();
+                }
+            },
+            {
+                title:"UIListViewTest Scroll to item  vertical",
+                func: function() {
+                    return new UIListViewTest_ScrollToItemVertical();
+                }
+            },
+            {
+                title:"UIListViewTest Scroll to item horizontal",
+                func: function() {
+                    return new UIListViewTest_ScrollToItemHorizontal();
+                }
+            },
+            {
+                title:"UIListViewTest magnetic vertical",
+                func: function() {
+                    return new UIListViewTest_MagneticVertical();
+                }
+            },
+            {
+                title:"UIListViewTest magnetic horizontal",
+                func: function() {
+                    return new UIListViewTest_MagneticHorizontal();
                 }
             }
         ],
@@ -631,6 +679,16 @@
             }
         ];
     }
+    else {
+        testingItems["UIRichText"] = [
+            {
+                title: "UIRichTextTest",
+                func: function () {
+                    return new UIRichTextTest();
+                }
+            }
+        ];
+    }
 
     if (cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS || !cc.sys.isNative)
     {
@@ -657,8 +715,7 @@
     global.GUITestScene = cc.Class.extend({
 
         runThisTest: function(){
-            if(guiTestScene === null || !cc.sys.isObjectValid(guiTestScene))
-                guiTestScene = new listScene;
+            var guiTestScene = new listScene();
             cc.director.runScene(guiTestScene);
         }
 

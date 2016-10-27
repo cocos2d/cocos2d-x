@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -25,14 +25,13 @@ THE SOFTWARE.
 #ifndef __CCDATAREADERHELPER_H__
 #define __CCDATAREADERHELPER_H__
 
-#include "cocostudio/CCArmatureDefine.h"
-#include "cocostudio/CCDatas.h"
-#include "cocostudio/CCArmature.h"
-#include "cocostudio/DictionaryHelper.h"
-#include "cocostudio/CocosStudioExport.h"
+#include "editor-support/cocostudio/CCArmatureDefine.h"
+#include "editor-support/cocostudio/CCDatas.h"
+#include "editor-support/cocostudio/CCArmature.h"
+#include "editor-support/cocostudio/DictionaryHelper.h"
+#include "editor-support/cocostudio/CocosStudioExport.h"
 
 #include "json/document.h"
-#include "DictionaryHelper.h"
 
 #include <string>
 #include <queue>

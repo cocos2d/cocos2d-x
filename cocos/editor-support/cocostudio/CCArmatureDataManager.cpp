@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -24,10 +24,10 @@ THE SOFTWARE.
 
 #include "2d/CCSpriteFrameCache.h"
 
-#include "cocostudio/CCArmatureDataManager.h"
-#include "cocostudio/CCTransformHelp.h"
-#include "cocostudio/CCDataReaderHelper.h"
-#include "cocostudio/CCSpriteFrameCacheHelper.h"
+#include "editor-support/cocostudio/CCArmatureDataManager.h"
+#include "editor-support/cocostudio/CCTransformHelp.h"
+#include "editor-support/cocostudio/CCDataReaderHelper.h"
+#include "editor-support/cocostudio/CCSpriteFrameCacheHelper.h"
 
 using namespace cocos2d;
 
@@ -96,17 +96,17 @@ void ArmatureDataManager::removeArmatureFileInfo(const std::string& configFilePa
     {
         for (std::string str : data->armatures)
         {
-            removeArmatureData(str.c_str());
+            removeArmatureData(str);
         }
 
         for (std::string str : data->animations)
         {
-            removeAnimationData(str.c_str());
+            removeAnimationData(str);
         }
 
         for (std::string str : data->textures)
         {
-            removeTextureData(str.c_str());
+            removeTextureData(str);
         }
 
         for (std::string str : data->plistFiles)

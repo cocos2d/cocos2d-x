@@ -1,7 +1,7 @@
 /****************************************************************************
  Copyright (c) 2012      greathqy
  Copyright (c) 2012      cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -24,7 +24,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "HttpClient.h"
+#include "network/HttpClient.h"
 #include <queue>
 #include <errno.h>
 #include <curl/curl.h>
@@ -253,8 +253,8 @@ public:
         if(!headers.empty())
         {
             /* append custom headers one by one */
-            for (std::vector<std::string>::iterator it = headers.begin(); it != headers.end(); ++it)
-                _headers = curl_slist_append(_headers,it->c_str());
+            for (auto& header : headers)
+                _headers = curl_slist_append(_headers,header.c_str());
             /* set custom headers for curl */
             if (!setOption(CURLOPT_HTTPHEADER, _headers))
                 return false;
@@ -411,7 +411,7 @@ HttpClient::HttpClient()
 
 HttpClient::~HttpClient()
 {
-	CC_SAFE_DELETE(_requestSentinel);
+	CC_SAFE_RELEASE(_requestSentinel);
 	CCLOG("HttpClient destructor");
 }
 

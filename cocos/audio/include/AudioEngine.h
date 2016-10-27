@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014-2015 Chukong Technologies Inc.
+ Copyright (c) 2014-2016 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -33,7 +33,7 @@
 #include <unordered_map>
 
 #include "platform/CCPlatformMacros.h"
-#include "Export.h"
+#include "audio/include/Export.h"
 
 #ifdef ERROR
 #undef ERROR
@@ -110,6 +110,7 @@ public:
      * Release objects relating to AudioEngine.
      *
      * @warning It must be called before the application exit.
+     * @lua endToLua
      */
     static void end();
     

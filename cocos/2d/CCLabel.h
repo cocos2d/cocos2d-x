@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2013      Zynga Inc.
- Copyright (c) 2013-2015 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -80,6 +80,13 @@ typedef struct _ttfConfig
         }
     }
 } TTFConfig;
+
+enum class TextFormatter : char
+{
+    NewLine = '\n',
+    CarriageReturn = '\r',
+    NextCharNoChangeX = '\b'
+};
 
 class Sprite;
 class SpriteBatchNode;
@@ -302,7 +309,7 @@ public:
     /** Sets the text that this Label is to display.*/
     virtual void setString(const std::string& text) override;
 
-    /** Return the text the Label is displaying.*/
+    /** Return the text the Label is currently displaying.*/
     virtual const std::string& getString() const override {  return _utf8Text; }
 
     /**
@@ -364,11 +371,11 @@ public:
     /**
      * Enables strikethrough.
      * Underline and Strikethrough cannot be enabled at the same time.
-     * Strikethough is like an underline but at the middle of the glyph
+     * Strikethrough is like an underline but at the middle of the glyph
      */
     void enableStrikethrough();
     /**
-     * Disable all effect to Label.
+     * Disable all effect applied to Label.
      * @warning Please use disableEffect(LabelEffect::ALL) instead of this API.
      */
     virtual void disableEffect();
@@ -505,7 +512,7 @@ public:
      * Makes the Label exactly this untransformed height.
      *
      * The Label's height be used for text align if the value not equal zero.
-     * The text will display of incomplete when the size of Label not enough to support display all text.
+     * The text will display incomplete if the size of Label is not large enough to display all text.
      */
     void setHeight(float height){ setDimensions(_labelWidth, height); }
     float getHeight() const { return _labelHeight; }
@@ -518,12 +525,12 @@ public:
     virtual void updateContent();
 
     /**
-     * Provides a way to treats each character like a Sprite.
+     * Provides a way to treat each character like a Sprite.
      * @warning No support system font.
      */
     virtual Sprite * getLetter(int lettetIndex);
 
-    /** Makes the Label to clip upper and lower margin for reduce height of Label.*/
+    /** Clips upper and lower margin to reduce height of Label.*/
     void setClipMarginEnabled(bool clipEnabled) { _clipEnabled = clipEnabled; }
 
     bool isClipMarginEnabled() const { return _clipEnabled; }
@@ -641,8 +648,8 @@ protected:
 
     bool multilineTextWrapByChar();
     bool multilineTextWrapByWord();
-    bool multilineTextWrap(std::function<int(const std::u16string&, int, int)> lambda);
-    void shrinkLabelToContentSize(std::function<bool(void)> lambda);
+    bool multilineTextWrap(const std::function<int(const std::u16string&, int, int)>& lambda);
+    void shrinkLabelToContentSize(const std::function<bool(void)>& lambda);
     bool isHorizontalClamp();
     bool isVerticalClamp();
     float getRenderingFontSize()const;
@@ -669,6 +676,8 @@ protected:
     bool isHorizontalClamped(float letterPositionX, int lineInex);
     void restoreFontSize();
     void updateLetterSpriteScale(Sprite* sprite);
+    int getFirstCharLen(const std::u16string& utf16Text, int startIndex, int textLen);
+    int getFirstWordLen(const std::u16string& utf16Text, int startIndex, int textLen);
 
     void reset();
 

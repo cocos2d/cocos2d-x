@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -26,22 +26,28 @@ THE SOFTWARE.
 #include "platform/CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 
-#include "CCFileUtils-android.h"
+#include "platform/android/CCFileUtils-android.h"
 #include "platform/CCCommon.h"
 #include "platform/android/jni/JniHelper.h"
+#include "platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
 #include "android/asset_manager.h"
 #include "android/asset_manager_jni.h"
+#include "base/ZipUtils.h"
 #include <stdlib.h>
 #include <sys/stat.h>
 
 #define  LOG_TAG    "CCFileUtils-android.cpp"
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
 
+#define  ASSETS_FOLDER_NAME          "assets/"
+#define  ASSETS_FOLDER_NAME_LENGTH   7
+
 using namespace std;
 
 NS_CC_BEGIN
 
 AAssetManager* FileUtilsAndroid::assetmanager = nullptr;
+ZipFile* FileUtilsAndroid::obbfile = nullptr;
 
 void FileUtilsAndroid::setassetmanager(AAssetManager* a) {
     if (nullptr == a) {
@@ -57,7 +63,7 @@ FileUtils* FileUtils::getInstance()
     if (s_sharedFileUtils == nullptr)
     {
         s_sharedFileUtils = new FileUtilsAndroid();
-        if(!s_sharedFileUtils->init())
+        if (!s_sharedFileUtils->init())
         {
           delete s_sharedFileUtils;
           s_sharedFileUtils = nullptr;
@@ -73,11 +79,22 @@ FileUtilsAndroid::FileUtilsAndroid()
 
 FileUtilsAndroid::~FileUtilsAndroid()
 {
+    if (obbfile)
+    {
+        delete obbfile;
+        obbfile = nullptr;
+    }
 }
 
 bool FileUtilsAndroid::init()
 {
-    _defaultResRootPath = "assets/";
+    _defaultResRootPath = ASSETS_FOLDER_NAME;
+    
+    std::string assetsPath(getApkPath());
+    if (assetsPath.find("/obb/") != std::string::npos)
+    {
+        obbfile = new ZipFile(assetsPath);
+    }
 
     return FileUtils::init();
 }
@@ -149,9 +166,14 @@ bool FileUtilsAndroid::isFileExistInternal(const std::string& strFilePath) const
         const char* s = strFilePath.c_str();
 
         // Found "assets/" at the beginning of the path and we don't want it
-        if (strFilePath.find(_defaultResRootPath) == 0) s += strlen("assets/");
-
-        if (FileUtilsAndroid::assetmanager) {
+        if (strFilePath.find(_defaultResRootPath) == 0) s += _defaultResRootPath.length();
+        
+        if (obbfile && obbfile->fileExists(s))
+        {
+            bFound = true;
+        }
+        else if (FileUtilsAndroid::assetmanager)
+        {
             AAsset* aa = AAssetManager_open(FileUtilsAndroid::assetmanager, s, AASSET_MODE_UNKNOWN);
             if (aa)
             {
@@ -165,7 +187,7 @@ bool FileUtilsAndroid::isFileExistInternal(const std::string& strFilePath) const
     else
     {
         FILE *fp = fopen(strFilePath.c_str(), "r");
-        if(fp)
+        if (fp)
         {
             bFound = true;
             fclose(fp);
@@ -182,11 +204,7 @@ bool FileUtilsAndroid::isDirectoryExistInternal(const std::string& dirPath) cons
     }
 
     const char* s = dirPath.c_str();
-    bool startWithAssets = (dirPath.find("assets/") == 0);
-    int lenOfAssets = 7;
-
-    std::string tmpStr;
-
+    
     // find absolute path in flash memory
     if (s[0] == '/')
     {
@@ -197,23 +215,26 @@ bool FileUtilsAndroid::isDirectoryExistInternal(const std::string& dirPath) cons
             return S_ISDIR(st.st_mode);
         }
     }
-
-    // find it in apk's assets dir
-    // Found "assets/" at the beginning of the path and we don't want it
-    CCLOG("find in apk dirPath(%s)", s);
-    if (startWithAssets)
+    else
     {
-        s += lenOfAssets;
-    }
-    if (FileUtilsAndroid::assetmanager)
-    {
-        AAssetDir* aa = AAssetManager_openDir(FileUtilsAndroid::assetmanager, s);
-        if (aa && AAssetDir_getNextFileName(aa))
+        // find it in apk's assets dir
+        // Found "assets/" at the beginning of the path and we don't want it
+        CCLOG("find in apk dirPath(%s)", s);
+        if (dirPath.find(ASSETS_FOLDER_NAME) == 0)
         {
-            AAssetDir_close(aa);
-            return true;
+            s += ASSETS_FOLDER_NAME_LENGTH;
+        }
+        if (FileUtilsAndroid::assetmanager)
+        {
+            AAssetDir* aa = AAssetManager_openDir(FileUtilsAndroid::assetmanager, s);
+            if (aa && AAssetDir_getNextFileName(aa))
+            {
+                AAssetDir_close(aa);
+                return true;
+            }
         }
     }
+    
     return false;
 }
 
@@ -230,210 +251,56 @@ bool FileUtilsAndroid::isAbsolutePath(const std::string& strPath) const
     return false;
 }
 
-Data FileUtilsAndroid::getData(const std::string& filename, bool forString)
+FileUtils::Status FileUtilsAndroid::getContents(const std::string& filename, ResizableBuffer* buffer)
 {
+    static const std::string apkprefix("assets/");
     if (filename.empty())
-    {
-        return Data::Null;
-    }
-
-    unsigned char* data = nullptr;
-    ssize_t size = 0;
-    string fullPath = fullPathForFilename(filename);
-
-    if (fullPath[0] != '/')
-    {
-        string relativePath = string();
-
-        size_t position = fullPath.find("assets/");
-        if (0 == position) {
-            // "assets/" is at the beginning of the path and we don't want it
-            relativePath += fullPath.substr(strlen("assets/"));
-        } else {
-            relativePath += fullPath;
-        }
-        CCLOGINFO("relative path = %s", relativePath.c_str());
-
-        if (nullptr == FileUtilsAndroid::assetmanager) {
-            LOGD("... FileUtilsAndroid::assetmanager is nullptr");
-            return Data::Null;
-        }
-
-        // read asset data
-        AAsset* asset =
-            AAssetManager_open(FileUtilsAndroid::assetmanager,
-                               relativePath.c_str(),
-                               AASSET_MODE_UNKNOWN);
-        if (nullptr == asset) {
-            LOGD("asset is nullptr");
-            return Data::Null;
-        }
-
-        off_t fileSize = AAsset_getLength(asset);
-
-        if (forString)
-        {
-            data = (unsigned char*) malloc(fileSize + 1);
-            data[fileSize] = '\0';
-        }
-        else
-        {
-            data = (unsigned char*) malloc(fileSize);
-        }
-
-        int bytesread = AAsset_read(asset, (void*)data, fileSize);
-        size = bytesread;
-
-        AAsset_close(asset);
-    }
-    else
-    {
-        do
-        {
-            // read rrom other path than user set it
-            //CCLOG("GETTING FILE ABSOLUTE DATA: %s", filename);
-            const char* mode = nullptr;
-            if (forString)
-                mode = "rt";
-            else
-                mode = "rb";
-
-            FILE *fp = fopen(fullPath.c_str(), mode);
-            CC_BREAK_IF(!fp);
-
-            long fileSize;
-            fseek(fp,0,SEEK_END);
-            fileSize = ftell(fp);
-            fseek(fp,0,SEEK_SET);
-            if (forString)
-            {
-                data = (unsigned char*) malloc(fileSize + 1);
-                data[fileSize] = '\0';
-            }
-            else
-            {
-                data = (unsigned char*) malloc(fileSize);
-            }
-            fileSize = fread(data,sizeof(unsigned char), fileSize,fp);
-            fclose(fp);
-
-            size = fileSize;
-        } while (0);
-    }
-
-    Data ret;
-    if (data == nullptr || size == 0)
-    {
-        std::string msg = "Get data from file(";
-        msg.append(filename).append(") failed!");
-        CCLOG("%s", msg.c_str());
-    }
-    else
-    {
-        ret.fastSet(data, size);
-    }
-
-    return ret;
-}
-
-std::string FileUtilsAndroid::getStringFromFile(const std::string& filename)
-{
-    Data data = getData(filename, true);
-    if (data.isNull())
-        return "";
-
-    std::string ret((const char*)data.getBytes());
-    return ret;
-}
-
-Data FileUtilsAndroid::getDataFromFile(const std::string& filename)
-{
-    return getData(filename, false);
-}
-
-unsigned char* FileUtilsAndroid::getFileData(const std::string& filename, const char* mode, ssize_t * size)
-{
-    unsigned char * data = 0;
-
-    if ( filename.empty() || (! mode) )
-    {
-        return 0;
-    }
+        return FileUtils::Status::NotExists;
 
     string fullPath = fullPathForFilename(filename);
 
-    if (fullPath[0] != '/')
-    {
-        string relativePath = string();
+    if (fullPath[0] == '/')
+        return FileUtils::getContents(fullPath, buffer);
 
-        size_t position = fullPath.find("assets/");
-        if (0 == position) {
-            // "assets/" is at the beginning of the path and we don't want it
-            relativePath += fullPath.substr(strlen("assets/"));
-        } else {
-            relativePath += fullPath;
-        }
-        LOGD("relative path = %s", relativePath.c_str());
-
-        if (nullptr == FileUtilsAndroid::assetmanager) {
-            LOGD("... FileUtilsAndroid::assetmanager is nullptr");
-            return nullptr;
-        }
-
-        // read asset data
-        AAsset* asset =
-            AAssetManager_open(FileUtilsAndroid::assetmanager,
-                               relativePath.c_str(),
-                               AASSET_MODE_UNKNOWN);
-        if (nullptr == asset) {
-            LOGD("asset is nullptr");
-            return nullptr;
-        }
-
-        off_t fileSize = AAsset_getLength(asset);
-
-        data = (unsigned char*) malloc(fileSize);
-
-        int bytesread = AAsset_read(asset, (void*)data, fileSize);
-        if (size)
-        {
-            *size = bytesread;
-        }
-
-        AAsset_close(asset);
+    string relativePath = string();
+    size_t position = fullPath.find(apkprefix);
+    if (0 == position) {
+        // "assets/" is at the beginning of the path and we don't want it
+        relativePath += fullPath.substr(apkprefix.size());
+    } else {
+        relativePath = fullPath;
     }
-    else
+    
+    if (obbfile)
     {
-        do
-        {
-            // read rrom other path than user set it
-            //CCLOG("GETTING FILE ABSOLUTE DATA: %s", filename);
-            FILE *fp = fopen(fullPath.c_str(), mode);
-            CC_BREAK_IF(!fp);
-
-            long fileSize;
-            fseek(fp,0,SEEK_END);
-            fileSize = ftell(fp);
-            fseek(fp,0,SEEK_SET);
-            data = (unsigned char*) malloc(fileSize);
-            fileSize = fread(data,sizeof(unsigned char), fileSize,fp);
-            fclose(fp);
-
-            if (size)
-            {
-                *size = fileSize;
-            }
-        } while (0);
+        if (obbfile->getFileData(relativePath, buffer))
+            return FileUtils::Status::OK;
     }
 
-    if (! data)
-    {
-        std::string msg = "Get data from file(";
-        msg.append(filename).append(") failed!");
-        CCLOG("%s", msg.c_str());
+    if (nullptr == assetmanager) {
+        LOGD("... FileUtilsAndroid::assetmanager is nullptr");
+        return FileUtils::Status::NotInitialized;
     }
 
-    return data;
+    AAsset* asset = AAssetManager_open(assetmanager, relativePath.data(), AASSET_MODE_UNKNOWN);
+    if (nullptr == asset) {
+        LOGD("asset is nullptr");
+        return FileUtils::Status::OpenFailed;
+    }
+
+    auto size = AAsset_getLength(asset);
+    buffer->resize(size);
+
+    int readsize = AAsset_read(asset, buffer->buffer(), size);
+    AAsset_close(asset);
+
+    if (readsize < size) {
+        if (readsize >= 0)
+            buffer->resize(readsize);
+        return FileUtils::Status::ReadFailed;
+    }
+
+    return FileUtils::Status::OK;
 }
 
 string FileUtilsAndroid::getWritablePath() const

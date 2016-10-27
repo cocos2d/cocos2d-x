@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -61,6 +61,16 @@ NodeGrid::NodeGrid()
 
 void NodeGrid::setTarget(Node* target)
 {
+#if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+    auto sEngine = ScriptEngineManager::getInstance()->getScriptEngine();
+    if (sEngine)
+    {
+        if (_gridTarget)
+            sEngine->releaseScriptObject(this, _gridTarget);
+        if (target)
+            sEngine->retainScriptObject(this, target);
+    }
+#endif // CC_ENABLE_GC_FOR_NATIVE_OBJECTS
     CC_SAFE_RELEASE(_gridTarget);
     CC_SAFE_RETAIN(target);
     _gridTarget = target;
@@ -138,7 +148,7 @@ void NodeGrid::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t p
     {
         sortAllChildren();
         // draw children zOrder < 0
-        for( ; i < _children.size(); i++ )
+        for(auto size = _children.size(); i < size; ++i)
         {
             auto node = _children.at(i);
 
@@ -151,7 +161,7 @@ void NodeGrid::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t p
         if (visibleByCamera)
             this->draw(renderer, _modelViewTransform, dirty);
 
-        for(auto it=_children.cbegin()+i; it != _children.cend(); ++it) {
+        for(auto it=_children.cbegin()+i, itCend = _children.cend(); it != itCend; ++it) {
             (*it)->visit(renderer, _modelViewTransform, dirty);
         }
     }

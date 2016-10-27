@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -119,7 +119,7 @@ public:
      * Return the total inputed characters.
      *@return Total inputed character count.
      */
-    int getCharCount()const;
+    std::size_t getCharCount()const;
     
     
     /**
@@ -209,8 +209,6 @@ public:
 protected:
     bool _maxLengthEnabled;
     int _maxLength;
-    bool _passwordEnabled;
-    std::string _passwordStyleText;
     bool _attachWithIME;
     bool _detachWithIME;
     bool _insertText;
@@ -557,9 +555,9 @@ public:
      * Add a event listener to TextField, when some predefined event happens, the callback will be called.
      *@deprecated Use @see `addEventListener` instead.
      *@param target A pointer of `Ref*` type.
-     *@param selecor A member function pointer with type of `SEL_TextFieldEvent`.
+     *@param selector A member function pointer with type of `SEL_TextFieldEvent`.
      */
-    CC_DEPRECATED_ATTRIBUTE void addEventListenerTextField(Ref* target, SEL_TextFieldEvent selecor);
+    CC_DEPRECATED_ATTRIBUTE void addEventListenerTextField(Ref* target, SEL_TextFieldEvent selector);
     /**
      * Add a event listener to TextField, when some predefined event happens, the callback will be called.
      *@param callback A callback function with type of `ccTextFieldCallback`.
@@ -623,6 +621,30 @@ public:
      */
     TextVAlignment getTextVerticalAlignment() const;
     
+    /**
+     * Set enable cursor use.
+     * @js NA
+     */
+    void setCursorEnabled(bool enabled);
+    
+    /**
+     * Set char showing cursor.
+     * @js NA
+     */
+    void setCursorChar(char cursor);
+    
+    /**
+     * Set cursor position, if enabled
+     * @js NA
+     */
+    void setCursorPosition(std::size_t cursorPosition);
+    
+    /**
+     * Set cursor position to hit letter, if enabled
+     * @js NA
+     */
+    void setCursorFromPoint(const Vec2 &point, const Camera* camera);
+    
 CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
     
@@ -661,7 +683,6 @@ protected:
 #endif
     ccTextFieldCallback _eventCallback;
     
-    std::string _passwordStyleText;
     bool _textFieldRendererAdaptDirty;
 private:
     enum class FontType

@@ -123,7 +123,7 @@ float Vec2::distance(const Vec2& v) const
     float dx = v.x - x;
     float dy = v.y - y;
 
-    return sqrt(dx * dx + dy * dy);
+    return std::sqrt(dx * dx + dy * dy);
 }
 
 float Vec2::dot(const Vec2& v1, const Vec2& v2)
@@ -133,7 +133,7 @@ float Vec2::dot(const Vec2& v1, const Vec2& v2)
 
 float Vec2::length() const
 {
-    return sqrt(x * x + y * y);
+    return std::sqrt(x * x + y * y);
 }
 
 void Vec2::normalize()
@@ -143,7 +143,7 @@ void Vec2::normalize()
     if (n == 1.0f)
         return;
     
-    n = sqrt(n);
+    n = std::sqrt(n);
     // Too close to zero.
     if (n < MATH_TOLERANCE)
         return;
@@ -162,8 +162,8 @@ Vec2 Vec2::getNormalized() const
 
 void Vec2::rotate(const Vec2& point, float angle)
 {
-    double sinAngle = sin(angle);
-    double cosAngle = cos(angle);
+    float sinAngle = std::sin(angle);
+    float cosAngle = std::cos(angle);
 
     if (point.isZero())
     {
@@ -199,8 +199,8 @@ void Vec2::subtract(const Vec2& v1, const Vec2& v2, Vec2* dst)
 
 bool Vec2::equals(const Vec2& target) const
 {
-    return (fabs(this->x - target.x) < FLT_EPSILON)
-        && (fabs(this->y - target.y) < FLT_EPSILON);
+    return (std::abs(this->x - target.x) < FLT_EPSILON)
+        && (std::abs(this->y - target.y) < FLT_EPSILON);
 }
 
 bool Vec2::fuzzyEquals(const Vec2& b, float var) const
@@ -216,7 +216,7 @@ float Vec2::getAngle(const Vec2& other) const
     Vec2 a2 = getNormalized();
     Vec2 b2 = other.getNormalized();
     float angle = atan2f(a2.cross(b2), a2.dot(b2));
-    if( fabs(angle) < FLT_EPSILON ) return 0.f;
+    if (std::abs(angle) < FLT_EPSILON) return 0.f;
     return angle;
 }
 

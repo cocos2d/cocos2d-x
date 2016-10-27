@@ -1,7 +1,7 @@
 /****************************************************************************
 Copyright (c) 2009      Jason Booth
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -329,6 +329,7 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat 
         _sprite->setFlippedY(true);
 
         _sprite->setBlendFunc( BlendFunc::ALPHA_PREMULTIPLIED );
+        _sprite->setOpacityModifyRGB(true);
 
         glBindRenderbuffer(GL_RENDERBUFFER, oldRBO);
         glBindFramebuffer(GL_FRAMEBUFFER, _oldFBO);
@@ -345,6 +346,23 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat 
     CC_SAFE_FREE(data);
     
     return ret;
+}
+
+void RenderTexture::setSprite(Sprite* sprite)
+{
+#if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+    auto sEngine = ScriptEngineManager::getInstance()->getScriptEngine();
+    if (sEngine)
+    {
+        if (sprite)
+            sEngine->retainScriptObject(this, sprite);
+        if (_sprite)
+            sEngine->releaseScriptObject(this, _sprite);
+    }
+#endif // CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+    CC_SAFE_RETAIN(sprite);
+    CC_SAFE_RELEASE(_sprite);
+    _sprite = sprite;
 }
 
 void RenderTexture::setKeepMatrix(bool keepMatrix)
@@ -503,7 +521,7 @@ void RenderTexture::onSaveToFile(const std::string& filename, bool isRGBA)
     Image *image = newImage(true);
     if (image)
     {
-        image->saveToFile(filename.c_str(), !isRGBA);
+        image->saveToFile(filename, !isRGBA);
     }
     if(_saveFileCallback)
     {
@@ -549,7 +567,7 @@ Image* RenderTexture::newImage(bool fliimage)
         glBindFramebuffer(GL_FRAMEBUFFER, _FBO);
 
         // TODO: move this to configuration, so we don't check it every time
-        /*  Certain Qualcomm Andreno gpu's will retain data in memory after a frame buffer switch which corrupts the render to the texture. The solution is to clear the frame buffer before rendering to the texture. However, calling glClear has the unintended result of clearing the current texture. Create a temporary texture to overcome this. At the end of RenderTexture::begin(), switch the attached texture to the second one, call glClear, and then switch back to the original texture. This solution is unnecessary for other devices as they don't have the same issue with switching frame buffers.
+        /*  Certain Qualcomm Adreno GPU's will retain data in memory after a frame buffer switch which corrupts the render to the texture. The solution is to clear the frame buffer before rendering to the texture. However, calling glClear has the unintended result of clearing the current texture. Create a temporary texture to overcome this. At the end of RenderTexture::begin(), switch the attached texture to the second one, call glClear, and then switch back to the original texture. This solution is unnecessary for other devices as they don't have the same issue with switching frame buffers.
          */
         if (Configuration::getInstance()->checkForGLExtension("GL_QCOM"))
         {
@@ -634,7 +652,7 @@ void RenderTexture::onBegin()
     glBindFramebuffer(GL_FRAMEBUFFER, _FBO);
 
     // TODO: move this to configuration, so we don't check it every time
-    /*  Certain Qualcomm Andreno gpu's will retain data in memory after a frame buffer switch which corrupts the render to the texture. The solution is to clear the frame buffer before rendering to the texture. However, calling glClear has the unintended result of clearing the current texture. Create a temporary texture to overcome this. At the end of RenderTexture::begin(), switch the attached texture to the second one, call glClear, and then switch back to the original texture. This solution is unnecessary for other devices as they don't have the same issue with switching frame buffers.
+    /*  Certain Qualcomm Adreno GPU's will retain data in memory after a frame buffer switch which corrupts the render to the texture. The solution is to clear the frame buffer before rendering to the texture. However, calling glClear has the unintended result of clearing the current texture. Create a temporary texture to overcome this. At the end of RenderTexture::begin(), switch the attached texture to the second one, call glClear, and then switch back to the original texture. This solution is unnecessary for other devices as they don't have the same issue with switching frame buffers.
      */
     if (Configuration::getInstance()->checkForGLExtension("GL_QCOM"))
     {

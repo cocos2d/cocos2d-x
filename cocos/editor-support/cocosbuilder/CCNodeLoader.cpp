@@ -1,10 +1,15 @@
-#include "cocos2d.h"
-
-#include "CCNodeLoader.h"
-#include "CCBSelectorResolver.h"
-#include "CCBMemberVariableAssigner.h"
-#include "CCBAnimationManager.h"
-#include "CCNode+CCBRelativePositioning.h"
+#include "editor-support/cocosbuilder/CCNodeLoader.h"
+#include "editor-support/cocosbuilder/CCBSelectorResolver.h"
+#include "editor-support/cocosbuilder/CCBMemberVariableAssigner.h"
+#include "editor-support/cocosbuilder/CCBAnimationManager.h"
+#include "editor-support/cocosbuilder/CCNode+CCBRelativePositioning.h"
+#include "deprecated/CCArray.h"
+#include "deprecated/CCString.h"
+#include "base/CCDirector.h"
+#include "renderer/CCTextureCache.h"
+#include "2d/CCSpriteFrameCache.h"
+#include "2d/CCAnimationCache.h"
+#include "platform/CCFileUtils.h"
 
 
 using namespace std;
@@ -580,7 +585,7 @@ SpriteFrame * NodeLoader::parsePropTypeSpriteFrame(Node * pNode, Node * pParent,
         if (spriteSheet.empty())
         {
             spriteFile = ccbReader->getCCBRootPath() + spriteFile;
-            Texture2D * texture = Director::getInstance()->getTextureCache()->addImage(spriteFile.c_str());
+            Texture2D * texture = Director::getInstance()->getTextureCache()->addImage(spriteFile);
             if(texture != nullptr) {
                 Rect bounds = Rect(0, 0, texture->getContentSize().width, texture->getContentSize().height);
                 spriteFrame = SpriteFrame::createWithTexture(texture, bounds);
@@ -593,11 +598,11 @@ SpriteFrame * NodeLoader::parsePropTypeSpriteFrame(Node * pNode, Node * pParent,
             // Load the sprite sheet only if it is not loaded
             if (ccbReader->getLoadedSpriteSheet().find(spriteSheet) == ccbReader->getLoadedSpriteSheet().end())
             {
-                frameCache->addSpriteFramesWithFile(spriteSheet.c_str());
+                frameCache->addSpriteFramesWithFile(spriteSheet);
                 ccbReader->getLoadedSpriteSheet().insert(spriteSheet);
             }
             
-            spriteFrame = frameCache->getSpriteFrameByName(spriteFile.c_str());
+            spriteFrame = frameCache->getSpriteFrameByName(spriteFile);
         }
         
         if (ccbReader->getAnimatedProperties()->find(pPropertyName) != ccbReader->getAnimatedProperties()->end())
@@ -626,9 +631,9 @@ Animation * NodeLoader::parsePropTypeAnimation(Node * pNode, Node * pParent, CCB
     if (!animation.empty()) 
     {
         AnimationCache * animationCache = AnimationCache::getInstance();
-        animationCache->addAnimationsWithFile(animationFile.c_str());
+        animationCache->addAnimationsWithFile(animationFile);
         
-        ccAnimation = animationCache->getAnimation(animation.c_str());
+        ccAnimation = animationCache->getAnimation(animation);
     }
     return ccAnimation;
 }
@@ -638,7 +643,7 @@ Texture2D * NodeLoader::parsePropTypeTexture(Node * pNode, Node * pParent, CCBRe
     
     if (!spriteFile.empty())
     {
-        return Director::getInstance()->getTextureCache()->addImage(spriteFile.c_str());
+        return Director::getInstance()->getTextureCache()->addImage(spriteFile);
     }
     else 
     {
@@ -925,7 +930,7 @@ Node * NodeLoader::parsePropTypeCCBFile(Node * pNode, Node * pParent, CCBReader 
     ccbFileName = ccbFileWithoutPathExtension + ".ccbi";
     
     // Load sub file
-    std::string path = FileUtils::getInstance()->fullPathForFilename(ccbFileName.c_str());
+    std::string path = FileUtils::getInstance()->fullPathForFilename(ccbFileName);
 
     auto dataPtr = std::make_shared<Data>(FileUtils::getInstance()->getDataFromFile(path));
     
@@ -1092,7 +1097,7 @@ void NodeLoader::onHandlePropTypeCheck(Node * pNode, Node * pParent, const char*
     if(strcmp(pPropertyName, PROPERTY_VISIBLE) == 0) {
         pNode->setVisible(pCheck);
     } else if(strcmp(pPropertyName, PROPERTY_IGNOREANCHORPOINTFORPOSITION) == 0) {
-        pNode->ignoreAnchorPointForPosition(pCheck);
+        pNode->setIgnoreAnchorPointForPosition(pCheck);
     } else {
         //ASSERT_FAIL_UNEXPECTED_PROPERTY(pPropertyName);
         // It may be a custom property, add it to custom property dictionary.

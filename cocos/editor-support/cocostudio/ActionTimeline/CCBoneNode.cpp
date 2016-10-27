@@ -28,8 +28,8 @@ THE SOFTWARE.
 #include "renderer/CCGLProgram.h"
 #include "renderer/CCGLProgramState.h"
 
-#include "CCBoneNode.h"
-#include "CCSkeletonNode.h"
+#include "editor-support/cocostudio/ActionTimeline/CCBoneNode.h"
+#include "editor-support/cocostudio/ActionTimeline/CCSkeletonNode.h"
 
 NS_TIMELINE_BEGIN
 
@@ -550,8 +550,8 @@ void BoneNode::sortAllChildren()
 {
     if (_reorderChildDirty)
     {
-        std::sort(_childBones.begin(), _childBones.end(), cocos2d::nodeComparisonLess);
-        std::sort(_boneSkins.begin(), _boneSkins.end(), cocos2d::nodeComparisonLess);
+        sortNodes(_childBones);
+        sortNodes(_boneSkins);
         Node::sortAllChildren();
     }
 }
@@ -572,7 +572,7 @@ bool BoneNode::isPointOnRack(const cocos2d::Vec2& bonePoint)
         if (_rackLength != 0.0f && _rackWidth != 0.0f)
         {
             float a1 = (_squareVertices[2].y - _squareVertices[3].y) / (_squareVertices[3].x - _squareVertices[0].x);
-            float a2 = (_squareVertices[2].y - _squareVertices[3].y) / (_squareVertices[0].x - _squareVertices[1].x);;
+            float a2 = (_squareVertices[2].y - _squareVertices[3].y) / (_squareVertices[0].x - _squareVertices[1].x);
             float b1 = a1 * _squareVertices[3].x;
             float y1 = bonePoint.y - _squareVertices[1].y;
             if (y1 >= a1 * bonePoint.x - b1 &&
@@ -616,15 +616,6 @@ void BoneNode::batchBoneDrawToSkeleton(BoneNode* bone) const
         bone->_rootSkeleton->_batchedBoneColors[count + i] = bone->_squareColors[i];
     }
     bone->_rootSkeleton->_batchedVeticesCount += 4;
-    count += 4;
-#ifdef CC_STUDIO_ENABLED_VIEW
-    for (int i = 0; i < 4; i++)
-    {
-        bone->_rootSkeleton->_batchedBoneVetices[count + i] = vpos[i];
-        bone->_rootSkeleton->_batchedBoneColors[count + i] = bone->_squareColors[i];
-    }
-    bone->_rootSkeleton->_batchedVeticesCount += 4;
-#endif //CC_STUDIO_ENABLED_VIEW
 }
 
 

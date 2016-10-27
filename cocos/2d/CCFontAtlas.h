@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2013      Zynga Inc.
- Copyright (c) 2013-2015 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -78,7 +78,7 @@ public:
     
     bool prepareLetterDefinitions(const std::u16string& utf16String);
 
-    inline const std::unordered_map<ssize_t, Texture2D*>& getTextures() const{ return _atlasTextures;}
+    const std::unordered_map<ssize_t, Texture2D*>& getTextures() const { return _atlasTextures; }
     void  addTexture(Texture2D *texture, int slot);
     float getLineHeight() const { return _lineHeight; }
     void  setLineHeight(float newHeight);
@@ -109,10 +109,9 @@ public:
      void setAliasTexParameters();
 
 protected:
+    void reset();
+    
     void releaseTextures();
-
-    /** @deprecated Use method releaseTextures() instead */
-    CC_DEPRECATED_ATTRIBUTE void relaseTextures();
 
     void findNewCharacters(const std::u16string& u16Text, std::unordered_map<unsigned short, unsigned short>& charCodeMap);
 

@@ -59,7 +59,7 @@ public:
     
     /**
      * initialise
-     * @param lpbuffer The data buffer pointer
+     * @param buffer The data buffer pointer
      * @param length The data buffer size
      */
     void init(char* buffer, ssize_t length);

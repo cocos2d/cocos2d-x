@@ -139,7 +139,7 @@ public:
     /* @brief Sets storage path.
      *
      * @param storagePath The path to store downloaded resources.
-     * @warm The path should be a valid path.
+     * @warning The path should be a valid path.
      */
     void setStoragePath(const char* storagePath);
     
@@ -159,7 +159,7 @@ public:
      */
     void setConnectionTimeout(unsigned int timeout);
     
-    /** @brief Gets connection time out in secondes
+    /** @brief Gets connection time out in seconds
      */
     unsigned int getConnectionTimeout();
 

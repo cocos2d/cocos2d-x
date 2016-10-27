@@ -24,8 +24,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCAllocatorDiagnostics.h"
-#include "CCAllocatorGlobal.h"
+#include "base/allocator/CCAllocatorDiagnostics.h"
+#include "base/allocator/CCAllocatorGlobal.h"
 
 NS_CC_BEGIN
 NS_CC_ALLOCATOR_BEGIN

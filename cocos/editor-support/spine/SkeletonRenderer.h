@@ -37,18 +37,19 @@
 
 namespace spine {
 
-class PolygonBatch;
+class AttachmentVertices;
 
-/** Draws a skeleton. */
+/* Draws a skeleton. */
 class SkeletonRenderer: public cocos2d::Node, public cocos2d::BlendProtocol {
 public:
+	CREATE_FUNC(SkeletonRenderer);
 	static SkeletonRenderer* createWithData (spSkeletonData* skeletonData, bool ownsSkeletonData = false);
 	static SkeletonRenderer* createWithFile (const std::string& skeletonDataFile, spAtlas* atlas, float scale = 1);
 	static SkeletonRenderer* createWithFile (const std::string& skeletonDataFile, const std::string& atlasFile, float scale = 1);
 
 	virtual void update (float deltaTime) override;
 	virtual void draw (cocos2d::Renderer* renderer, const cocos2d::Mat4& transform, uint32_t transformFlags) override;
-	virtual void drawSkeleton (const cocos2d::Mat4& transform, uint32_t transformFlags);
+    virtual void drawDebug (cocos2d::Renderer* renderer, const cocos2d::Mat4& transform, uint32_t transformFlags);
 	virtual cocos2d::Rect getBoundingBox () const override;
 	virtual void onEnter () override;
 	virtual void onExit () override;
@@ -58,6 +59,7 @@ public:
 	void setTimeScale(float scale);
 	float getTimeScale() const;
 
+	/*  */
 	void setDebugSlotsEnabled(bool enabled);
 	bool getDebugSlotsEnabled() const;
 
@@ -106,22 +108,23 @@ CC_CONSTRUCTOR_ACCESS:
 	virtual ~SkeletonRenderer ();
 
 	void initWithData (spSkeletonData* skeletonData, bool ownsSkeletonData = false);
-	void initWithFile (const std::string& skeletonDataFile, spAtlas* atlas, float scale = 1);
-	void initWithFile (const std::string& skeletonDataFile, const std::string& atlasFile, float scale = 1);
+	void initWithJsonFile (const std::string& skeletonDataFile, spAtlas* atlas, float scale = 1);
+	void initWithJsonFile (const std::string& skeletonDataFile, const std::string& atlasFile, float scale = 1);
+    void initWithBinaryFile (const std::string& skeletonDataFile, spAtlas* atlas, float scale = 1);
+    void initWithBinaryFile (const std::string& skeletonDataFile, const std::string& atlasFile, float scale = 1);
 
-	void initialize ();
+	virtual void initialize ();
 
 protected:
 	void setSkeletonData (spSkeletonData* skeletonData, bool ownsSkeletonData);
-	virtual cocos2d::Texture2D* getTexture (spRegionAttachment* attachment) const;
-	virtual cocos2d::Texture2D* getTexture (spMeshAttachment* attachment) const;
-	virtual cocos2d::Texture2D* getTexture (spSkinnedMeshAttachment* attachment) const;
+	virtual AttachmentVertices* getAttachmentVertices (spRegionAttachment* attachment) const;
+	virtual AttachmentVertices* getAttachmentVertices (spMeshAttachment* attachment) const;
 
 	bool _ownsSkeletonData;
 	spAtlas* _atlas;
-	cocos2d::CustomCommand _drawCommand;
+	spAttachmentLoader* _attachmentLoader;
+	cocos2d::CustomCommand _debugCommand;
 	cocos2d::BlendFunc _blendFunc;
-	PolygonBatch* _batch;
 	float* _worldVertices;
 	bool _premultipliedAlpha;
 	spSkeleton* _skeleton;

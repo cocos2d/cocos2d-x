@@ -41,7 +41,7 @@ class Vec2;
 class Vec3;
 class Vec4;
 class Mat4;
-class Data;
+class Quaternion;
 class Data;
 
 
@@ -159,8 +159,6 @@ class Data;
  */
 class CC_DLL Properties
 {
-    friend class Game;
-
 public:
 
     /**

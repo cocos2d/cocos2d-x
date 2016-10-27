@@ -29,9 +29,9 @@ THE SOFTWARE.
 #include "base/CCProtocols.h"
 #include "2d/CCNode.h"
 #include "renderer/CCCustomCommand.h"
-#include "CCTimelineMacro.h"
-#include "cocostudio/CocosStudioExport.h"
-#include "CCSkinNode.h"
+#include "editor-support/cocostudio/ActionTimeline/CCTimelineMacro.h"
+#include "editor-support/cocostudio/CocosStudioExport.h"
+#include "editor-support/cocostudio/ActionTimeline/CCSkinNode.h"
 
 
 NS_TIMELINE_BEGIN
@@ -110,7 +110,7 @@ public:
     virtual const cocos2d::BlendFunc & getBlendFunc() const override { return _blendFunc; }
 
     // debug draw show, bone's debugdraw can be draw when bone is visible
-    // when bone's added to skeleton, DebugDrawEnabled controled by skeleton's DebugDrawEnabled
+    // when bone's added to skeleton, DebugDrawEnabled controlled by skeleton's DebugDrawEnabled
     virtual void setDebugDrawEnabled(bool isDebugDraw);
     virtual bool isDebugDrawEnabled() const { return _isRackShow; }
 

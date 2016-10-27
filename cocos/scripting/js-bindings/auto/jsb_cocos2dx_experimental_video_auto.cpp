@@ -1,7 +1,7 @@
-#include "jsb_cocos2dx_experimental_video_auto.hpp"
+#include "scripting/js-bindings/auto/jsb_cocos2dx_experimental_video_auto.hpp"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS) && !defined(CC_TARGET_OS_TVOS)
-#include "cocos2d_specifics.hpp"
-#include "UIVideoPlayer.h"
+#include "scripting/js-bindings/manual/cocos2d_specifics.hpp"
+#include "ui/UIVideoPlayer.h"
 
 template<class T>
 static bool dummy_constructor(JSContext *cx, uint32_t argc, jsval *vp)
@@ -18,7 +18,7 @@ static bool js_is_native_obj(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     args.rval().setBoolean(true);
-    return true;    
+    return true;
 }
 JSClass  *jsb_cocos2d_experimental_ui_VideoPlayer_class;
 JSObject *jsb_cocos2d_experimental_ui_VideoPlayer_prototype;
@@ -255,7 +255,7 @@ bool js_cocos2dx_experimental_video_VideoPlayer_seekTo(JSContext *cx, uint32_t a
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_experimental_video_VideoPlayer_seekTo : Invalid Native Object");
     if (argc == 1) {
         double arg0 = 0;
-        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !std::isnan(arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_experimental_video_VideoPlayer_seekTo : Error processing arguments");
         cobj->seekTo(arg0);
         args.rval().setUndefined();
@@ -309,11 +309,9 @@ void js_register_cocos2dx_experimental_video_VideoPlayer(JSContext *cx, JS::Hand
     jsb_cocos2d_experimental_ui_VideoPlayer_class->enumerate = JS_EnumerateStub;
     jsb_cocos2d_experimental_ui_VideoPlayer_class->resolve = JS_ResolveStub;
     jsb_cocos2d_experimental_ui_VideoPlayer_class->convert = JS_ConvertStub;
-    jsb_cocos2d_experimental_ui_VideoPlayer_class->finalize = jsb_ref_finalize;
     jsb_cocos2d_experimental_ui_VideoPlayer_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
 
     static JSPropertySpec properties[] = {
-        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_PS_END
     };
 
@@ -350,8 +348,12 @@ void js_register_cocos2dx_experimental_video_VideoPlayer(JSContext *cx, JS::Hand
         NULL, // no static properties
         st_funcs);
 
-    // add the proto and JSClass to the type->js info hash table
     JS::RootedObject proto(cx, jsb_cocos2d_experimental_ui_VideoPlayer_prototype);
+    JS::RootedValue className(cx, std_string_to_jsval(cx, "VideoPlayer"));
+    JS_SetProperty(cx, proto, "_className", className);
+    JS_SetProperty(cx, proto, "__nativeObj", JS::TrueHandleValue);
+    JS_SetProperty(cx, proto, "__is_ref", JS::TrueHandleValue);
+    // add the proto and JSClass to the type->js info hash table
     jsb_register_class<cocos2d::experimental::ui::VideoPlayer>(cx, jsb_cocos2d_experimental_ui_VideoPlayer_class, proto, parent_proto);
 }
 

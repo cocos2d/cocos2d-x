@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -23,8 +23,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "CCGLViewImpl-desktop.h"
+#include "platform/desktop/CCGLViewImpl-desktop.h"
 
+#include <cmath>
 #include <unordered_map>
 
 #include "platform/CCApplication.h"
@@ -37,7 +38,6 @@ THE SOFTWARE.
 #include "base/ccUtils.h"
 #include "base/ccUTF8.h"
 #include "2d/CCCamera.h"
-#include "deprecated/CCString.h"
 
 NS_CC_BEGIN
 
@@ -113,11 +113,23 @@ public:
         }
     }
 
+    static void onGLFWWindowFocusCallback(GLFWwindow* window, int focused)
+    {
+        if (_view)
+        {
+            _view->onGLFWWindowFocusCallback(window, focused);
+        }
+    }
+
 private:
     static GLViewImpl* _view;
 };
 
 GLViewImpl* GLFWEventHandler::_view = nullptr;
+
+const std::string GLViewImpl::EVENT_WINDOW_RESIZED = "glview_window_resized";
+const std::string GLViewImpl::EVENT_WINDOW_FOCUSED = "glview_window_focused";
+const std::string GLViewImpl::EVENT_WINDOW_UNFOCUSED = "glview_window_unfocused";
 
 ////////////////////////////////////////////////////
 
@@ -300,8 +312,13 @@ GLViewImpl::~GLViewImpl()
 
 GLViewImpl* GLViewImpl::create(const std::string& viewName)
 {
+    return GLViewImpl::create(viewName, false);
+}
+
+GLViewImpl* GLViewImpl::create(const std::string& viewName, bool resizable)
+{
     auto ret = new (std::nothrow) GLViewImpl;
-    if(ret && ret->initWithRect(viewName, Rect(0, 0, 960, 640), 1.0f, false)) {
+    if(ret && ret->initWithRect(viewName, Rect(0, 0, 960, 640), 1.0f, resizable)) {
         ret->autorelease();
         return ret;
     }
@@ -356,10 +373,10 @@ bool GLViewImpl::initWithRect(const std::string& viewName, Rect rect, float fram
     glfwWindowHint(GLFW_DEPTH_BITS,_glContextAttrs.depthBits);
     glfwWindowHint(GLFW_STENCIL_BITS,_glContextAttrs.stencilBits);
 
-    int needWidth = rect.size.width * _frameZoomFactor;
-    int neeHeight = rect.size.height * _frameZoomFactor;
+    int neededWidth = rect.size.width * _frameZoomFactor;
+    int neededHeight = rect.size.height * _frameZoomFactor;
 
-    _mainWindow = glfwCreateWindow(needWidth, neeHeight, _viewName.c_str(), _monitor, nullptr);
+    _mainWindow = glfwCreateWindow(neededWidth, neededHeight, _viewName.c_str(), _monitor, nullptr);
 
     if (_mainWindow == nullptr)
     {
@@ -386,11 +403,11 @@ bool GLViewImpl::initWithRect(const std::string& viewName, Rect rect, float fram
     */
     int realW = 0, realH = 0;
     glfwGetWindowSize(_mainWindow, &realW, &realH);
-    if (realW != needWidth)
+    if (realW != neededWidth)
     {
         rect.size.width = realW / _frameZoomFactor;
     }
-    if (realH != neeHeight)
+    if (realH != neededHeight)
     {
         rect.size.height = realH / _frameZoomFactor;
     }
@@ -406,6 +423,7 @@ bool GLViewImpl::initWithRect(const std::string& viewName, Rect rect, float fram
     glfwSetFramebufferSizeCallback(_mainWindow, GLFWEventHandler::onGLFWframebuffersize);
     glfwSetWindowSizeCallback(_mainWindow, GLFWEventHandler::onGLFWWindowSizeFunCallback);
     glfwSetWindowIconifyCallback(_mainWindow, GLFWEventHandler::onGLFWWindowIconifyCallback);
+    glfwSetWindowFocusCallback(_mainWindow, GLFWEventHandler::onGLFWWindowFocusCallback);
 
     setFrameSize(rect.size.width, rect.size.height);
 
@@ -427,6 +445,9 @@ bool GLViewImpl::initWithRect(const std::string& viewName, Rect rect, float fram
     // Enable point size by default.
     glEnable(GL_VERTEX_PROGRAM_POINT_SIZE);
 
+//    // GLFW v3.2 no longer emits "onGLFWWindowSizeFunCallback" at creation time. Force default viewport:
+//    setViewPortInPoints(0, 0, neededWidth, neededHeight);
+//
     return true;
 }
 
@@ -529,7 +550,7 @@ void GLViewImpl::setFrameZoomFactor(float zoomFactor)
 {
     CCASSERT(zoomFactor > 0.0f, "zoomFactor must be larger than 0");
 
-    if (fabs(_frameZoomFactor - zoomFactor) < FLT_EPSILON)
+    if (std::abs(_frameZoomFactor - zoomFactor) < FLT_EPSILON)
     {
         return;
     }
@@ -616,7 +637,14 @@ Rect GLViewImpl::getScissorRect() const
 
 void GLViewImpl::onGLFWError(int errorID, const char* errorDesc)
 {
-    _glfwError = StringUtils::format("GLFWError #%d Happen, %s", errorID, errorDesc);
+    if (_mainWindow)
+    {
+        _glfwError = StringUtils::format("GLFWError #%d Happen, %s", errorID, errorDesc);
+    }
+    else
+    {
+        _glfwError.append(StringUtils::format("GLFWError #%d Happen, %s\n", errorID, errorDesc));
+    }
     CCLOGERROR("%s", _glfwError.c_str());
 }
 
@@ -728,10 +756,27 @@ void GLViewImpl::onGLFWKeyCallback(GLFWwindow *window, int key, int scancode, in
         auto dispatcher = Director::getInstance()->getEventDispatcher();
         dispatcher->dispatchEvent(&event);
     }
-    
-    if (GLFW_RELEASE != action && g_keyCodeMap[key] == EventKeyboard::KeyCode::KEY_BACKSPACE)
+
+    if (GLFW_RELEASE != action)
     {
-        IMEDispatcher::sharedDispatcher()->dispatchDeleteBackward();
+        switch (g_keyCodeMap[key])
+        {
+        case EventKeyboard::KeyCode::KEY_BACKSPACE:
+            IMEDispatcher::sharedDispatcher()->dispatchDeleteBackward();
+            break;
+        case EventKeyboard::KeyCode::KEY_HOME:
+        case EventKeyboard::KeyCode::KEY_KP_HOME:
+        case EventKeyboard::KeyCode::KEY_DELETE:
+        case EventKeyboard::KeyCode::KEY_KP_DELETE:
+        case EventKeyboard::KeyCode::KEY_END:
+        case EventKeyboard::KeyCode::KEY_LEFT_ARROW:
+        case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
+        case EventKeyboard::KeyCode::KEY_ESCAPE:
+            IMEDispatcher::sharedDispatcher()->dispatchControlKey(g_keyCodeMap[key]);
+            break;
+        default:
+            break;
+        }
     }
 }
 
@@ -741,7 +786,23 @@ void GLViewImpl::onGLFWCharCallback(GLFWwindow *window, unsigned int character)
     std::string utf8String;
 
     StringUtils::UTF16ToUTF8( wcharString, utf8String );
-    IMEDispatcher::sharedDispatcher()->dispatchInsertText( utf8String.c_str(), utf8String.size() );
+    static std::set<std::string> controlUnicode = {
+        "\xEF\x9C\x80", // up
+        "\xEF\x9C\x81", // down
+        "\xEF\x9C\x82", // left
+        "\xEF\x9C\x83", // right
+        "\xEF\x9C\xA8", // delete
+        "\xEF\x9C\xA9", // home
+        "\xEF\x9C\xAB", // end
+        "\xEF\x9C\xAC", // pageup
+        "\xEF\x9C\xAD", // pagedown
+        "\xEF\x9C\xB9"  // clear
+    };
+    // Check for send control key
+    if (controlUnicode.find(utf8String) == controlUnicode.end())
+    {
+        IMEDispatcher::sharedDispatcher()->dispatchInsertText( utf8String.c_str(), utf8String.size() );
+    }
 }
 
 void GLViewImpl::onGLFWWindowPosCallback(GLFWwindow *windows, int x, int y)
@@ -756,7 +817,7 @@ void GLViewImpl::onGLFWframebuffersize(GLFWwindow* window, int w, int h)
     float factorX = frameSizeW / w * _retinaFactor * _frameZoomFactor;
     float factorY = frameSizeH / h * _retinaFactor * _frameZoomFactor;
 
-    if (fabs(factorX - 0.5f) < FLT_EPSILON && fabs(factorY - 0.5f) < FLT_EPSILON )
+    if (std::abs(factorX - 0.5f) < FLT_EPSILON && std::abs(factorY - 0.5f) < FLT_EPSILON)
     {
         _isInRetinaMonitor = true;
         if (_isRetinaEnabled)
@@ -770,7 +831,7 @@ void GLViewImpl::onGLFWframebuffersize(GLFWwindow* window, int w, int h)
 
         glfwSetWindowSize(window, static_cast<int>(frameSizeW * 0.5f * _retinaFactor * _frameZoomFactor) , static_cast<int>(frameSizeH * 0.5f * _retinaFactor * _frameZoomFactor));
     }
-    else if(fabs(factorX - 2.0f) < FLT_EPSILON && fabs(factorY - 2.0f) < FLT_EPSILON)
+    else if (std::abs(factorX - 2.0f) < FLT_EPSILON && std::abs(factorY - 2.0f) < FLT_EPSILON)
     {
         _isInRetinaMonitor = false;
         _retinaFactor = 1;
@@ -780,12 +841,18 @@ void GLViewImpl::onGLFWframebuffersize(GLFWwindow* window, int w, int h)
 
 void GLViewImpl::onGLFWWindowSizeFunCallback(GLFWwindow *window, int width, int height)
 {
-    int frameWidth = width / _frameZoomFactor;
-    int frameHeight = height / _frameZoomFactor;
-    setFrameSize(frameWidth, frameHeight);
-    
-    updateDesignResolutionSize();
-    Director::getInstance()->setViewport();
+    if (width && height && _resolutionPolicy != ResolutionPolicy::UNKNOWN)
+    {
+        Size baseDesignSize = _designResolutionSize;
+        ResolutionPolicy baseResolutionPolicy = _resolutionPolicy;
+
+        int frameWidth = width / _frameZoomFactor;
+        int frameHeight = height / _frameZoomFactor;
+        setFrameSize(frameWidth, frameHeight);
+        setDesignResolutionSize(baseDesignSize.width, baseDesignSize.height, baseResolutionPolicy);
+        Director::getInstance()->setViewport();
+        Director::getInstance()->getEventDispatcher()->dispatchCustomEvent(GLViewImpl::EVENT_WINDOW_RESIZED, nullptr);
+    }
 }
 
 void GLViewImpl::onGLFWWindowIconifyCallback(GLFWwindow* window, int iconified)
@@ -797,6 +864,18 @@ void GLViewImpl::onGLFWWindowIconifyCallback(GLFWwindow* window, int iconified)
     else
     {
         Application::getInstance()->applicationWillEnterForeground();
+    }
+}
+
+void GLViewImpl::onGLFWWindowFocusCallback(GLFWwindow* window, int focused)
+{
+    if (focused == GL_TRUE)
+    {
+        Director::getInstance()->getEventDispatcher()->dispatchCustomEvent(GLViewImpl::EVENT_WINDOW_FOCUSED, nullptr);
+    }
+    else
+    {
+        Director::getInstance()->getEventDispatcher()->dispatchCustomEvent(GLViewImpl::EVENT_WINDOW_UNFOCUSED, nullptr);
     }
 }
 

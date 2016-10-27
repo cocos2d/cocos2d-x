@@ -26,7 +26,7 @@
 
 // CCConfig.js
 //
-cc.ENGINE_VERSION = "Cocos2d-JS v3.10";
+cc.ENGINE_VERSION = "Cocos2d-JS v3.13";
 
 cc.FIX_ARTIFACTS_BY_STRECHING_TEXEL = 0;
 cc.DIRECTOR_STATS_POSITION = {x: 0, y: 0};
@@ -615,7 +615,7 @@ cc._reuse_color4b = {r:255, g:255, b:255, a:255 };
 
 
 //
-// Basic sturcture : Point
+// Basic structure : Point
 //
 cc.p = function( x, y )
 {
@@ -948,7 +948,7 @@ cc._g = function( x, y )
 };
 
 //
-// Basic sturcture : Size
+// Basic structure : Size
 //
 cc.size = function(w,h)
 {
@@ -1089,7 +1089,7 @@ cc.RectZero = function () {
     return cc.rect(0, 0, 0, 0);
 };
 
-// Basic sturcture : Color
+// Basic structure : Color
 cc.Color = function (r, g, b, a) {
     this.r = r || 0;
     this.g = g || 0;
@@ -1101,7 +1101,7 @@ cc.Color = function (r, g, b, a) {
  * Generate a color object based on multiple forms of parameters
  * @example
  *
- * // 1. All channels seperately as parameters
+ * // 1. All channels separately as parameters
  * var color1 = cc.color(255, 255, 255, 255);
  *
  * // 2. Convert a hex string to a color
@@ -1595,14 +1595,7 @@ cc.Director.EVENT_BEFORE_UPDATE = "director_before_update";
 cc.Director.EVENT_AFTER_UPDATE = "director_after_update";
 cc.Director.EVENT_BEFORE_SCENE_LAUNCH = "director_before_scene_launch";
 
-cc.Director.prototype.runScene = function(scene){
-    if (!this.getRunningScene()) {
-        this.runWithScene(scene);
-    }
-    else {
-        this.replaceScene(scene);
-    }
-};
+cc.Director.prototype.runScene = cc.Director.prototype.replaceScene;
 
 cc.visibleRect = {
     topLeft:cc.p(0,0),
@@ -1702,7 +1695,7 @@ cc.arrayVerifyType = function (arr, type) {
 };
 
 /**
- * Searches for the first occurance of object and removes it. If object is not found the function has no effect.
+ * Searches for the first occurrence of object and removes it. If object is not found the function has no effect.
  * @function
  * @param {Array} arr Source Array
  * @param {*} delObj  remove object
@@ -2597,7 +2590,7 @@ cc.Texture2D.prototype.setTexParameters = function (texParams, magFilter, wrapS,
     this._setTexParameters(minFilter, magFilter, wrapS, wrapT);
 };
 
-cc.Texture2D.prototype.handleLoadedTexture = function (premultipled) {};
+cc.Texture2D.prototype.handleLoadedTexture = function (premultiplied) {};
 
 // 
 // MenuItem setCallback support target
@@ -2608,7 +2601,7 @@ cc.MenuItem.prototype.setCallback = function (callback, target) {
 };
 
 //
-// MenuItemImage support sprite frame name as paramter
+// MenuItemImage support sprite frame name as parameter
 //
 var _p = cc.MenuItemImage.prototype;
 _p._setNormalSpriteFrame = _p.setNormalSpriteFrame;
@@ -2632,6 +2625,26 @@ _p.setDisabledSpriteFrame = function(frame) {
 
 cc.MenuItemToggle.prototype.selectedItem = cc.MenuItemToggle.prototype.getSelectedItem;
 
+
+// playMusic searchPaths
+if (cc.sys.os === cc.sys.OS_ANDROID && cc.audioEngine) {
+    cc.audioEngine._playMusic = cc.audioEngine.playMusic;
+    cc.audioEngine.playMusic = function () {
+        var args = arguments;
+        var searchPaths = jsb.fileUtils.getSearchPaths();
+        var path = args[0];
+        searchPaths.some(function (item) {
+            var temp = item + '/' + path;
+            var exists = jsb.fileUtils.isFileExist(temp);
+            if (exists) {
+                path = temp;
+                return true;
+            }
+        });
+        args[0] = path;
+        cc.audioEngine._playMusic.apply(cc.audioEngine, args);
+    };
+}
 
 //
 // LabelTTF API wrappers
@@ -2793,6 +2806,16 @@ cc.GLProgram.prototype.setUniformLocationWithMatrix4fv = function(){
     var tempArray = Array.prototype.slice.call(arguments);
     tempArray = Array.prototype.concat.call(tempArray, 4);
     this.setUniformLocationWithMatrixfvUnion.apply(this, tempArray);
+};
+
+var jsbSetUniformCallback = cc.GLProgramState.prototype.setUniformCallback;
+cc.GLProgramState.prototype.setUniformCallback = function (uniform, callback) {
+    if (!jsb._root) {
+        jsb._root = {};
+    }
+    var owner = jsb._root;
+    jsb.addRoot(owner, callback);
+    jsbSetUniformCallback.call(this, uniform, callback);
 };
 
 

@@ -2,7 +2,7 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -247,6 +247,41 @@ public:
      */
     virtual void setVertexRect(const Rect& rect);
 
+    /**
+     * setCapInsetsNormalized
+     *
+     * Useful to implement "9 sliced" sprites.
+     * The default value is (0,0) - (1,1), which means that only one "slice" will be used: From top-left (0,0) to bottom-right (1,1).
+     * If the value is different than (0,0), (1,1), then the sprite will be sliced into a 3 x 3 grid. The four corners of this grid are applied without
+     * performing any scaling. The upper- and lower-middle parts are scaled horizontally, and the left- and right-middle parts are scaled vertically.
+     * The center is scaled in both directions.
+     * Important: The scaling is based the Sprite's trimmed size.
+     *
+     * Limitations: Does not work when the sprite is part of `SpriteBatchNode`.
+     */
+    virtual void setCapInsetsNormalized(const Rect& rect);
+
+    /**
+     * getCapInsetsNormalized
+     *
+     * Returns the CapInsets in normalized coordinates
+     */
+    virtual Rect getCapInsetsNormalized() const;
+
+    /* setCapInsets
+     *
+     * Like `setCapInsetsNormalized`, but instead of being in normalized coordinates, it is in points coordinates
+     */
+    virtual void setCapInsets(const Rect& rect);
+
+    /**
+     * @brief Returns the Cap Insets rect
+     *
+     * @return Scale9Sprite's cap inset.
+     */
+    virtual Rect getCapInsets() const;
+
+
     /** @{
      * Sets a new SpriteFrame to the Sprite.
      */
@@ -306,44 +341,44 @@ public:
      * @js  NA
      * @lua NA
      */
-    inline V3F_C4B_T2F_Quad getQuad() const { return _quad; }
+    V3F_C4B_T2F_Quad getQuad() const { return _quad; }
 
     /**
      * Returns whether or not the texture rectangle is rotated.
      */
-    inline bool isTextureRectRotated() const { return _rectRotated; }
+    bool isTextureRectRotated() const { return _rectRotated; }
 
     /**
      * Returns the index used on the TextureAtlas.
      */
-    inline ssize_t getAtlasIndex() const { return _atlasIndex; }
+    ssize_t getAtlasIndex() const { return _atlasIndex; }
 
     /**
      * Sets the index used on the TextureAtlas.
      *
      * @warning Don't modify this value unless you know what you are doing.
      */
-    inline void setAtlasIndex(ssize_t atlasIndex) { _atlasIndex = atlasIndex; }
+    void setAtlasIndex(ssize_t atlasIndex) { _atlasIndex = atlasIndex; }
 
     /**
      * Returns the rect of the Sprite in points.
      */
-    inline const Rect& getTextureRect() const { return _rect; }
+    const Rect& getTextureRect() const { return _rect; }
 
     /**
      * Gets the weak reference of the TextureAtlas when the sprite is rendered using via SpriteBatchNode.
      */
-    inline TextureAtlas* getTextureAtlas() const { return _textureAtlas; }
+    TextureAtlas* getTextureAtlas() const { return _textureAtlas; }
 
     /**
      * Sets the weak reference of the TextureAtlas when the sprite is rendered using via SpriteBatchNode.
      */
-    inline void setTextureAtlas(TextureAtlas *textureAtlas) { _textureAtlas = textureAtlas; }
+    void setTextureAtlas(TextureAtlas *textureAtlas) { _textureAtlas = textureAtlas; }
 
     /**
      * Gets the offset position of the sprite. Calculated automatically by editors like Zwoptex.
      */
-    inline const Vec2& getOffsetPosition() const { return _offsetPosition; }
+    const Vec2& getOffsetPosition() const { return _offsetPosition; }
 
 
     /**
@@ -406,9 +441,9 @@ public:
     /**
      * returns a reference of the polygon information associated with this sprite
      *
-     * @return a copy of PolygonInfo
+     * @return a reference of PolygonInfo
      */
-    PolygonInfo& getPolygonInfo();
+    const PolygonInfo& getPolygonInfo() const;
 
     /**
      * set the sprite to use this new PolygonInfo
@@ -428,12 +463,12 @@ public:
     *In lua: local setBlendFunc(local src, local dst).
     *@endcode
     */
-    inline void setBlendFunc(const BlendFunc &blendFunc) override { _blendFunc = blendFunc; }
+    void setBlendFunc(const BlendFunc &blendFunc) override { _blendFunc = blendFunc; }
     /**
     * @js  NA
     * @lua NA
     */
-    inline const BlendFunc& getBlendFunc() const override { return _blendFunc; }
+    const BlendFunc& getBlendFunc() const override { return _blendFunc; }
     /// @}
 
     /**
@@ -467,15 +502,18 @@ public:
     virtual void setScale(float scale) override;
     virtual void setPositionZ(float positionZ) override;
     virtual void setAnchorPoint(const Vec2& anchor) override;
-    virtual void ignoreAnchorPointForPosition(bool value) override;
+    virtual void setContentSize(const Size& size) override;
+    
+    virtual void setIgnoreAnchorPointForPosition(bool value) override;
+    
     virtual void setVisible(bool bVisible) override;
     virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
     virtual void setOpacityModifyRGB(bool modify) override;
     virtual bool isOpacityModifyRGB() const override;
     /// @}
 
-    const int getResourceType() const { return _fileType; }
-    const std::string getResourceName() const { return _fileName; }
+    int getResourceType() const { return _fileType; }
+    const std::string& getResourceName() const { return _fileName; }
 
 CC_CONSTRUCTOR_ACCESS :
 	/**
@@ -484,7 +522,7 @@ CC_CONSTRUCTOR_ACCESS :
     Sprite();
     virtual ~Sprite();
 
-    /* Initializes an empty sprite with nothing init. */
+    /* Initializes an empty sprite with no parameters. */
     virtual bool init() override;
 
     /**
@@ -548,7 +586,7 @@ CC_CONSTRUCTOR_ACCESS :
      * A SpriteFrame will be fetched from the SpriteFrameCache by name.
      * If the SpriteFrame doesn't exist it will raise an exception.
      *
-     * @param   spriteFrameName  A key string that can fected a valid SpriteFrame from SpriteFrameCache.
+     * @param   spriteFrameName  A key string that can fetched a valid SpriteFrame from SpriteFrameCache.
      * @return  True if the sprite is initialized properly, false otherwise.
      */
     virtual bool initWithSpriteFrameName(const std::string& spriteFrameName);
@@ -583,12 +621,15 @@ CC_CONSTRUCTOR_ACCESS :
 protected:
 
     void updateColor() override;
-    virtual void setTextureCoords(Rect rect);
+    virtual void setTextureCoords(const Rect& rect);
+    virtual void setTextureCoords(const Rect& rect, V3F_C4B_T2F_Quad* outQuad);
+    virtual void setVertexCoords(const Rect& rect, const Size& imageSize, V3F_C4B_T2F_Quad* outQuad);
     virtual void updateBlendFunc();
     virtual void setReorderChildDirtyRecursively();
     virtual void setDirtyRecursively(bool value);
 
-
+    void updatePoly();
+    void updateStretchFactor();
     
     //
     // Data used when the sprite is rendered using a SpriteSheet
@@ -618,7 +659,13 @@ protected:
 
     // texture
     Rect _rect;                             /// Rectangle of Texture2D
-    bool   _rectRotated;                    /// Whether the texture is rotated
+    bool _rectRotated;                      /// Whether the texture is rotated
+
+    Rect _capInsetsNormalized;              /// Rectangle to implement "slice 9"
+    int _numberOfSlices;                    /// how many sprite slices: 1 or 9
+    Vec2 _strechFactor;                     /// strech factor to match the contentSize. for 1- and 9- slice sprites
+    Size _originalContentSize;              /// original content size
+
 
     // Offset Position (used by Zwoptex)
     Vec2 _offsetPosition;
@@ -626,6 +673,7 @@ protected:
 
     // vertex coords, texture coords and color info
     V3F_C4B_T2F_Quad _quad;
+    V3F_C4B_T2F_Quad* _quads;
     PolygonInfo  _polyInfo;
 
     // opacity and RGB protocol

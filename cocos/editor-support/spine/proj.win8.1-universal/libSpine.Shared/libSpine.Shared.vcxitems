@@ -10,7 +10,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot)cocos\editor-support;%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -38,6 +38,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\AttachmentLoader.c">
       <CompileAsWinRT>false</CompileAsWinRT>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\AttachmentVertices.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Bone.c">
       <CompileAsWinRT>false</CompileAsWinRT>
     </ClCompile>
@@ -47,6 +48,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\BoundingBoxAttachment.c">
       <CompileAsWinRT>false</CompileAsWinRT>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Cocos2dAttachmentLoader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Event.c">
       <CompileAsWinRT>false</CompileAsWinRT>
     </ClCompile>
@@ -68,7 +70,15 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\MeshAttachment.c">
       <CompileAsWinRT>false</CompileAsWinRT>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\PolygonBatch.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\PathAttachment.c">
+      <CompileAsWinRT>false</CompileAsWinRT>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\PathConstraint.c">
+      <CompileAsWinRT>false</CompileAsWinRT>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\PathConstraintData.c">
+      <CompileAsWinRT>false</CompileAsWinRT>
+    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\RegionAttachment.c">
       <CompileAsWinRT>false</CompileAsWinRT>
     </ClCompile>
@@ -76,6 +86,10 @@
       <CompileAsWinRT>false</CompileAsWinRT>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\SkeletonAnimation.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\SkeletonBatch.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\SkeletonBinary.c">
+      <CompileAsWinRT>false</CompileAsWinRT>
+    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\SkeletonBounds.c">
       <CompileAsWinRT>false</CompileAsWinRT>
     </ClCompile>
@@ -89,9 +103,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Skin.c">
       <CompileAsWinRT>false</CompileAsWinRT>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\SkinnedMeshAttachment.c">
-      <CompileAsWinRT>false</CompileAsWinRT>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Slot.c">
       <CompileAsWinRT>false</CompileAsWinRT>
     </ClCompile>
@@ -99,6 +110,15 @@
       <CompileAsWinRT>false</CompileAsWinRT>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\spine-cocos2dx.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\TransformConstraint.c">
+      <CompileAsWinRT>false</CompileAsWinRT>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\TransformConstraintData.c">
+      <CompileAsWinRT>false</CompileAsWinRT>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\VertexAttachment.c">
+      <CompileAsWinRT>false</CompileAsWinRT>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Animation.h" />
@@ -108,9 +128,11 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\AtlasAttachmentLoader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Attachment.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\AttachmentLoader.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\AttachmentVertices.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Bone.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BoneData.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\BoundingBoxAttachment.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Cocos2dAttachmentLoader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Event.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\EventData.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\extension.h" />
@@ -118,19 +140,25 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\IkConstraintData.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Json.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\MeshAttachment.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\PolygonBatch.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\PathAttachment.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\PathConstraint.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\PathConstraintData.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\RegionAttachment.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Skeleton.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\SkeletonAnimation.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\SkeletonBatch.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\SkeletonBinary.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\SkeletonBounds.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\SkeletonData.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\SkeletonJson.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\SkeletonRenderer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Skin.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\SkinnedMeshAttachment.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Slot.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\SlotData.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\spine-cocos2dx.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\spine.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\TransformConstraint.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\TransformConstraintData.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\VertexAttachment.h" />
   </ItemGroup>
 </Project>

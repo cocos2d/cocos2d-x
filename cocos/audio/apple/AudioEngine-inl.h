@@ -31,8 +31,8 @@
 #include <unordered_map>
 
 #include "base/CCRef.h"
-#include "AudioCache.h"
-#include "AudioPlayer.h"
+#include "audio/apple/AudioCache.h"
+#include "audio/apple/AudioPlayer.h"
 
 NS_CC_BEGIN
 class Scheduler;

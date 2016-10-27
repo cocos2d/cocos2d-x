@@ -1,4 +1,4 @@
-#include "CCLabelTTFLoader.h"
+#include "editor-support/cocosbuilder/CCLabelTTFLoader.h"
 
 using namespace cocos2d;
 

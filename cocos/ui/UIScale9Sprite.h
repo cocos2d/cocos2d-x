@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -443,7 +443,7 @@ namespace ui {
          * @brief Update Scale9Sprite with a specified sprite.
          *
          * @deprecated Use @see `updateWithSprite` instead.
-         * @param sprite A sprite pointer.
+         * @param batchnode A sprite batch pointer.
          * @param originalRect A delimitation zone.
          * @param rotated Whether the sprite is rotated or not.
          * @param capInsets The Values to use for the cap insets.
@@ -601,7 +601,8 @@ namespace ui {
         virtual void updateDisplayedColor(const Color3B& parentColor) override;
         virtual void disableCascadeColor() override;
         virtual void disableCascadeOpacity() override;
-        
+        virtual void setGLProgram(GLProgram *glprogram) override;
+        virtual void setGLProgramState(GLProgramState *glProgramState) override;
         
         /**
          * @brief Get the original no 9-sliced sprite

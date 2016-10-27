@@ -1,7 +1,7 @@
 /****************************************************************************
 Copyright (c) 2012      greathqy
 Copyright (c) 2012      cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -27,7 +27,7 @@ THE SOFTWARE.
 #include "platform/CCPlatformConfig.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 
-#include "HttpClient.h"
+#include "network/HttpClient.h"
 
 #include <thread>
 #include <queue>
@@ -40,7 +40,7 @@ THE SOFTWARE.
 #include "base/CCScheduler.h"
 
 #include "platform/CCFileUtils.h"
-#include "HttpConnection-winrt.h"
+#include "network/HttpConnection-winrt.h"
 
 NS_CC_BEGIN
 

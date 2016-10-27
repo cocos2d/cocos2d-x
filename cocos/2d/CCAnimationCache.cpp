@@ -2,7 +2,7 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-CopyRight (c) 2013-2014 Chukong Technologies Inc.
+CopyRight (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -71,7 +71,7 @@ void AnimationCache::addAnimation(Animation *animation, const std::string& name)
 
 void AnimationCache::removeAnimation(const std::string& name)
 {
-    if (name.size()==0)
+    if (name.empty())
         return;
 
     _animations.erase(name);
@@ -86,16 +86,16 @@ void AnimationCache::parseVersion1(const ValueMap& animations)
 {
     SpriteFrameCache *frameCache = SpriteFrameCache::getInstance();
 
-    for (auto iter = animations.cbegin(); iter != animations.cend(); ++iter)
+    for (const auto& anim : animations)
     {
-        const ValueMap& animationDict = iter->second.asValueMap();
+        const ValueMap& animationDict = anim.second.asValueMap();
         const ValueVector& frameNames = animationDict.at("frames").asValueVector();
         float delay = animationDict.at("delay").asFloat();
         Animation* animation = nullptr;
 
         if ( frameNames.empty() )
         {
-            CCLOG("cocos2d: AnimationCache: Animation '%s' found in dictionary without any frames - cannot add to animation cache.", iter->first.c_str());
+            CCLOG("cocos2d: AnimationCache: Animation '%s' found in dictionary without any frames - cannot add to animation cache.", anim.first.c_str());
             continue;
         }
 
@@ -107,7 +107,7 @@ void AnimationCache::parseVersion1(const ValueMap& animations)
             SpriteFrame* spriteFrame = frameCache->getSpriteFrameByName(frameName.asString());
 
             if ( ! spriteFrame ) {
-                CCLOG("cocos2d: AnimationCache: Animation '%s' refers to frame '%s' which is not currently in the SpriteFrameCache. This frame will not be added to the animation.", iter->first.c_str(), frameName.asString().c_str());
+                CCLOG("cocos2d: AnimationCache: Animation '%s' refers to frame '%s' which is not currently in the SpriteFrameCache. This frame will not be added to the animation.", anim.first.c_str(), frameName.asString().c_str());
 
                 continue;
             }
@@ -118,17 +118,17 @@ void AnimationCache::parseVersion1(const ValueMap& animations)
 
         if ( frames.empty() )
         {
-            CCLOG("cocos2d: AnimationCache: None of the frames for animation '%s' were found in the SpriteFrameCache. Animation is not being added to the Animation Cache.", iter->first.c_str());
+            CCLOG("cocos2d: AnimationCache: None of the frames for animation '%s' were found in the SpriteFrameCache. Animation is not being added to the Animation Cache.", anim.first.c_str());
             continue;
         }
         else if ( frames.size() != frameNameSize )
         {
-            CCLOG("cocos2d: AnimationCache: An animation in your dictionary refers to a frame which is not in the SpriteFrameCache. Some or all of the frames for the animation '%s' may be missing.", iter->first.c_str());
+            CCLOG("cocos2d: AnimationCache: An animation in your dictionary refers to a frame which is not in the SpriteFrameCache. Some or all of the frames for the animation '%s' may be missing.", anim.first.c_str());
         }
 
         animation = Animation::create(frames, delay, 1);
 
-        AnimationCache::getInstance()->addAnimation(animation, iter->first.c_str());
+        AnimationCache::getInstance()->addAnimation(animation, anim.first);
     }
 }
 
@@ -136,10 +136,10 @@ void AnimationCache::parseVersion2(const ValueMap& animations)
 {
     SpriteFrameCache *frameCache = SpriteFrameCache::getInstance();
 
-    for (auto iter = animations.cbegin(); iter != animations.cend(); ++iter)
+    for (const auto& anim : animations)
     {
-        std::string name = iter->first;
-        ValueMap& animationDict = const_cast<ValueMap&>(iter->second.asValueMap());
+        std::string name = anim.first;
+        ValueMap& animationDict = const_cast<ValueMap&>(anim.second.asValueMap());
 
         const Value& loops = animationDict["loops"];
         bool restoreOriginalFrame = animationDict["restoreOriginalFrame"].asBool();
@@ -222,12 +222,18 @@ void AnimationCache::addAnimationsWithDictionary(const ValueMap& dictionary,cons
 /** Read an NSDictionary from a plist file and parse it automatically for animations */
 void AnimationCache::addAnimationsWithFile(const std::string& plist)
 {
-    CCASSERT( plist.size()>0, "Invalid texture file name");
-
-    std::string path = FileUtils::getInstance()->fullPathForFilename(plist);
-    ValueMap dict =  FileUtils::getInstance()->getValueMapFromFile(path);
+    CCASSERT(!plist.empty(), "Invalid texture file name");
+    if (plist.empty()) {
+        log("%s error:file name is empty!", __FUNCTION__);
+        return;
+    }
+    
+    ValueMap dict = FileUtils::getInstance()->getValueMapFromFile(plist);
 
     CCASSERT( !dict.empty(), "CCAnimationCache: File could not be found");
+    if (dict.empty()) {
+        log("AnimationCache::addAnimationsWithFile error:%s not exist!", plist.c_str());
+    }
 
     addAnimationsWithDictionary(dict,plist);
 }

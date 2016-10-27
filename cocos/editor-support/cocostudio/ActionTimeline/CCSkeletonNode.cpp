@@ -21,7 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#include "CCSkeletonNode.h"
+#include "editor-support/cocostudio/ActionTimeline/CCSkeletonNode.h"
 
 #include "base/CCDirector.h"
 #include "math/TransformUtils.h"
@@ -96,7 +96,7 @@ cocos2d::Rect SkeletonNode::getBoundingBox() const
         }
     }
     boundingBox.setRect(minx, miny, maxx - minx, maxy - miny);
-    return RectApplyAffineTransform(boundingBox, this->getNodeToParentAffineTransform());;
+    return RectApplyAffineTransform(boundingBox, this->getNodeToParentAffineTransform());
 }
 
 SkeletonNode::SkeletonNode()
@@ -247,10 +247,10 @@ void SkeletonNode::batchDrawAllSubBones(const cocos2d::Mat4 &transform)
     glLineWidth(1);
     glEnable(GL_LINE_SMOOTH);
     glHint(GL_LINE_SMOOTH_HINT, GL_DONT_CARE);
-    for (int i = 0; i < _batchedVeticesCount; i += 8)
+    for (int i = 0; i < _batchedVeticesCount; i += 4 )
     {
         glDrawArrays(GL_TRIANGLE_FAN, i, 4);
-        glDrawArrays(GL_LINE_LOOP, i + 4, 4);
+        glDrawArrays(GL_LINE_LOOP, i, 4);
     }
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, _batchedVeticesCount);
 #else
@@ -363,7 +363,7 @@ void SkeletonNode::updateOrderedAllbones()
 
 void SkeletonNode::sortOrderedAllBones()
 {
-    std::sort(_subOrderedAllBones.begin(), _subOrderedAllBones.end(), cocos2d::nodeComparisonLess);
+    sortNodes(this->_subOrderedAllBones);
 }
 
 NS_TIMELINE_END

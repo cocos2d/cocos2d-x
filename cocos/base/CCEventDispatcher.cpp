@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -31,7 +31,7 @@
 #include "base/CCEventListenerKeyboard.h"
 #include "base/CCEventListenerCustom.h"
 #include "base/CCEventListenerFocus.h"
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 #include "base/CCEventListenerController.h"
 #endif
 #include "2d/CCScene.h"
@@ -94,7 +94,7 @@ static EventListener::ListenerID __getListenerID(Event* event)
             // return UNKNOWN instead.
             CCASSERT(false, "Don't call this method if the event is for touch.");
             break;
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
         case Event::Type::GAME_CONTROLLER:
             ret = EventListenerController::LISTENER_ID;
             break;
@@ -383,7 +383,7 @@ void EventDispatcher::removeEventListenersForTarget(Node* target, bool recursive
         {
             listener->setAssociatedNode(nullptr);   // Ensure no dangling ptr to the target node.
             listener->setRegistered(false);
-            listener->release();
+            releaseListener(listener);
             iter = _toAddedListeners.erase(iter);
         }
         else
@@ -450,7 +450,13 @@ void EventDispatcher::addEventListener(EventListener* listener)
     {
         _toAddedListeners.push_back(listener);
     }
-
+#if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+    auto sEngine = ScriptEngineManager::getInstance()->getScriptEngine();
+    if (sEngine)
+    {
+        sEngine->retainScriptObject(this, listener);
+    }
+#endif // CC_ENABLE_GC_FOR_NATIVE_OBJECTS
     listener->retain();
 }
 
@@ -598,6 +604,10 @@ void EventDispatcher::removeEventListener(EventListener* listener)
 {
     if (listener == nullptr)
         return;
+    
+    // just return if listener is in _toRemovedListeners to avoid remove listeners more than once
+    if (std::find(_toRemovedListeners.begin(), _toRemovedListeners.end(), listener) != _toRemovedListeners.end())
+        return;
 
     bool isFound = false;
     
@@ -621,7 +631,7 @@ void EventDispatcher::removeEventListener(EventListener* listener)
                 if (_inDispatch == 0)
                 {
                     iter = listeners->erase(iter);
-                    CC_SAFE_RELEASE(l);
+                    releaseListener(l);
                 }
                 else
                 {
@@ -685,7 +695,7 @@ void EventDispatcher::removeEventListener(EventListener* listener)
 
     if (isFound)
     {
-        CC_SAFE_RELEASE(listener);
+        releaseListener(listener);
     }
     else
     {
@@ -694,7 +704,7 @@ void EventDispatcher::removeEventListener(EventListener* listener)
             if (*iter == listener)
             {
                 listener->setRegistered(false);
-                listener->release();
+                releaseListener(listener);
                 _toAddedListeners.erase(iter);
                 break;
             }
@@ -707,9 +717,9 @@ void EventDispatcher::setPriority(EventListener* listener, int fixedPriority)
     if (listener == nullptr)
         return;
     
-    for (auto iter = _listenerMap.begin(); iter != _listenerMap.end(); ++iter)
+    for (auto& iter : _listenerMap)
     {
-        auto fixedPriorityListeners = iter->second->getFixedPriorityListeners();
+        auto fixedPriorityListeners = iter.second->getFixedPriorityListeners();
         if (fixedPriorityListeners)
         {
             auto found = std::find(fixedPriorityListeners->begin(), fixedPriorityListeners->end(), listener);
@@ -836,10 +846,9 @@ void EventDispatcher::dispatchTouchEventToListeners(EventListenerVector* listene
             // get a copy of cameras, prevent it's been modified in listener callback
             // if camera's depth is greater, process it earlier
             auto cameras = scene->getCameras();
-            Camera* camera;
-            for (int j = int(cameras.size()) - 1; j >= 0; --j)
+            for (auto rit = cameras.rbegin(), ritRend = cameras.rend(); rit != ritRend; ++rit)
             {
-                camera = cameras[j];
+                Camera* camera = *rit;
                 if (camera->isVisible() == false)
                 {
                     continue;
@@ -961,9 +970,8 @@ void EventDispatcher::dispatchTouchEvent(EventTouch* event)
     if (oneByOneListeners)
     {
         auto mutableTouchesIter = mutableTouches.begin();
-        auto touchesIter = originalTouches.begin();
         
-        for (; touchesIter != originalTouches.end(); ++touchesIter)
+        for (auto& touches : originalTouches)
         {
             bool isSwallowed = false;
 
@@ -985,15 +993,15 @@ void EventDispatcher::dispatchTouchEvent(EventTouch* event)
                 {
                     if (listener->onTouchBegan)
                     {
-                        isClaimed = listener->onTouchBegan(*touchesIter, event);
+                        isClaimed = listener->onTouchBegan(touches, event);
                         if (isClaimed && listener->_isRegistered)
                         {
-                            listener->_claimedTouches.push_back(*touchesIter);
+                            listener->_claimedTouches.push_back(touches);
                         }
                     }
                 }
                 else if (listener->_claimedTouches.size() > 0
-                         && ((removedIter = std::find(listener->_claimedTouches.begin(), listener->_claimedTouches.end(), *touchesIter)) != listener->_claimedTouches.end()))
+                         && ((removedIter = std::find(listener->_claimedTouches.begin(), listener->_claimedTouches.end(), touches)) != listener->_claimedTouches.end()))
                 {
                     isClaimed = true;
                     
@@ -1002,13 +1010,13 @@ void EventDispatcher::dispatchTouchEvent(EventTouch* event)
                         case EventTouch::EventCode::MOVED:
                             if (listener->onTouchMoved)
                             {
-                                listener->onTouchMoved(*touchesIter, event);
+                                listener->onTouchMoved(touches, event);
                             }
                             break;
                         case EventTouch::EventCode::ENDED:
                             if (listener->onTouchEnded)
                             {
-                                listener->onTouchEnded(*touchesIter, event);
+                                listener->onTouchEnded(touches, event);
                             }
                             if (listener->_isRegistered)
                             {
@@ -1018,7 +1026,7 @@ void EventDispatcher::dispatchTouchEvent(EventTouch* event)
                         case EventTouch::EventCode::CANCELLED:
                             if (listener->onTouchCancelled)
                             {
-                                listener->onTouchCancelled(*touchesIter, event);
+                                listener->onTouchCancelled(touches, event);
                             }
                             if (listener->_isRegistered)
                             {
@@ -1038,8 +1046,8 @@ void EventDispatcher::dispatchTouchEvent(EventTouch* event)
                     return true;
                 }
                 
-                CCASSERT((*touchesIter)->getID() == (*mutableTouchesIter)->getID(),
-                         "touchesIter ID should be equal to mutableTouchesIter's ID.");
+                CCASSERT(touches->getID() == (*mutableTouchesIter)->getID(),
+                         "touches ID should be equal to mutableTouchesIter's ID.");
                 
                 if (isClaimed && listener->_isRegistered && listener->_needSwallow)
                 {
@@ -1161,7 +1169,7 @@ void EventDispatcher::updateListeners(Event* event)
                     auto matchIter = std::find(_toRemovedListeners.begin(), _toRemovedListeners.end(), l);
                     if (matchIter != _toRemovedListeners.end())
                         _toRemovedListeners.erase(matchIter);
-                    l->release();
+                    releaseListener(l);
                 }
                 else
                 {
@@ -1182,7 +1190,7 @@ void EventDispatcher::updateListeners(Event* event)
                     auto matchIter = std::find(_toRemovedListeners.begin(), _toRemovedListeners.end(), l);
                     if (matchIter != _toRemovedListeners.end())
                         _toRemovedListeners.erase(matchIter);
-                    l->release();
+                    releaseListener(l);
                 }
                 else
                 {
@@ -1403,7 +1411,7 @@ void EventDispatcher::removeEventListenersForListenerID(const EventListener::Lis
                 if (_inDispatch == 0)
                 {
                     iter = listenerVector->erase(iter);
-                    CC_SAFE_RELEASE(l);
+                    releaseListener(l);
                 }
                 else
                 {
@@ -1432,7 +1440,7 @@ void EventDispatcher::removeEventListenersForListenerID(const EventListener::Lis
         if ((*iter)->getListenerID() == listenerID)
         {
             (*iter)->setRegistered(false);
-            (*iter)->release();
+            releaseListener(*iter);
             iter = _toAddedListeners.erase(iter);
         }
         else
@@ -1478,7 +1486,8 @@ void EventDispatcher::removeCustomEventListeners(const std::string& customEventN
 void EventDispatcher::removeAllEventListeners()
 {
     bool cleanMap = true;
-    std::vector<EventListener::ListenerID> types(_listenerMap.size());
+    std::vector<EventListener::ListenerID> types;
+    types.reserve(_listenerMap.size());
     
     for (const auto& e : _listenerMap)
     {
@@ -1550,7 +1559,7 @@ void EventDispatcher::cleanToRemovedListeners()
         auto listenersIter = _listenerMap.find(l->getListenerID());
         if (listenersIter == _listenerMap.end())
         {
-            CC_SAFE_RELEASE(l);
+            releaseListener(l);
             continue;
         }
 
@@ -1565,7 +1574,7 @@ void EventDispatcher::cleanToRemovedListeners()
             if (machedIter != sceneGraphPriorityListeners->end())
             {
                 find = true;
-                CC_SAFE_RELEASE(l);
+                releaseListener(l);
                 sceneGraphPriorityListeners->erase(machedIter);
             }
         }
@@ -1576,7 +1585,7 @@ void EventDispatcher::cleanToRemovedListeners()
             if (machedIter != fixedPriorityListeners->end())
             {
                 find = true;
-                CC_SAFE_RELEASE(l);
+                releaseListener(l);
                 fixedPriorityListeners->erase(machedIter);
             }
         }
@@ -1598,6 +1607,18 @@ void EventDispatcher::cleanToRemovedListeners()
     }
 
     _toRemovedListeners.clear();
+}
+
+void EventDispatcher::releaseListener(EventListener* listener)
+{
+#if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+    auto sEngine = ScriptEngineManager::getInstance()->getScriptEngine();
+    if (listener && sEngine)
+    {
+        sEngine->releaseScriptObject(this, listener);
+    }
+#endif // CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+    CC_SAFE_RELEASE(listener);
 }
 
 NS_CC_END

@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "cocostudio/CCInputDelegate.h"
+#include "editor-support/cocostudio/CCInputDelegate.h"
 #include "base/CCDirector.h"
 #include "platform/CCDevice.h"
 #include "base/CCEventListenerTouch.h"

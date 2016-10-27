@@ -957,7 +957,7 @@ local function PhysicsDemoPump()
     
     -- pump
     local pump = cc.Node:create()
-    local center = cc.PhysicsShape:getPolyonCenter(vec)
+    local center = cc.PhysicsShape:getPolygonCenter(vec)
     pump:setPosition(center)
     local pumpB = cc.PhysicsBody:createPolygon(vec, 
                                                cc.PHYSICSBODY_MATERIAL_DEFAULT, 
@@ -1034,7 +1034,7 @@ local function PhysicsDemoSlice()
           j = i
         end
     
-        local center = cc.PhysicsShape:getPolyonCenter(points)
+        local center = cc.PhysicsShape:getPolygonCenter(points)
         local node = cc.Node:create()
         local polyon = cc.PhysicsBody:createPolygon(points, 
                                                     cc.PHYSICSBODY_MATERIAL_DEFAULT, 

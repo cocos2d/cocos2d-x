@@ -303,12 +303,11 @@ Bone3D* Skeleton3D::getRootBone(int index) const
 
 int Skeleton3D::getBoneIndex(Bone3D* bone) const
 {
-    int i = 0;
-    for (; i < _bones.size(); i++) {
+    for (int i = 0, size = _bones.size(); i < size; ++i) {
         if (_bones.at(i) == bone)
             return i;
     }
-    
+
     return -1;
 }
 

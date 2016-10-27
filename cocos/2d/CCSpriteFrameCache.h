@@ -4,7 +4,7 @@ Copyright (c) 2009      Jason Booth
 Copyright (c) 2009      Robert J Payne
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -246,7 +246,11 @@ protected:
     /*Adds multiple Sprite Frames with a dictionary. The texture will be associated with the created sprite frames.
      */
     void addSpriteFramesWithDictionary(ValueMap& dictionary, Texture2D *texture);
-
+    
+    /*Adds multiple Sprite Frames with a dictionary. The texture will be associated with the created sprite frames.
+     */
+    void addSpriteFramesWithDictionary(ValueMap& dictionary, const std::string &texturePath);
+    
     /** Removes multiple Sprite Frames from Dictionary.
     * @since v0.99.5
     */

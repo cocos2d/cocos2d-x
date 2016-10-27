@@ -185,6 +185,11 @@ namespace ui {
              * Capitalize all characters automatically.
              */
             INITIAL_CAPS_ALL_CHARACTERS,
+            
+            /**
+             * Lowercase all characters automatically.
+             */
+            LOWERCASE_ALL_CHARACTERS
         };
             
         /**

@@ -25,10 +25,12 @@
 #ifndef __cocos2d_libs__CSLoader__
 #define __cocos2d_libs__CSLoader__
 
-#include "cocostudio/DictionaryHelper.h"
-#include "cocostudio/CocosStudioExport.h"
-#include "cocos2d.h"
+#include "editor-support/cocostudio/DictionaryHelper.h"
+#include "editor-support/cocostudio/CocosStudioExport.h"
+
 #include "base/ObjectFactory.h"
+#include "base/CCData.h"
+#include "ui/UIWidget.h"
 
 namespace flatbuffers
 {

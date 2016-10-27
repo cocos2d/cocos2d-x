@@ -2,7 +2,7 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
  
 http://www.cocos2d-x.org
 
@@ -44,7 +44,7 @@ class Camera;
  *@brief Base class for Camera actions.
  *@ingroup Actions
  */
-class CC_DLL ActionCamera : public ActionInterval //<NSCopying> 
+class CC_DLL ActionCamera : public ActionInterval
 {
 public:
     /**
@@ -61,7 +61,7 @@ public:
     // Overrides
     virtual void startWithTarget(Node *target) override;
     virtual ActionCamera * reverse() const override;
-	virtual ActionCamera *clone() const override;
+    virtual ActionCamera *clone() const override;
 
     /* Sets the Eye value of the Camera. 
      * 
@@ -117,7 +117,7 @@ protected:
  * Orbits the camera around the center of the screen using spherical coordinates.
  * @ingroup Actions
  */
-class CC_DLL OrbitCamera : public ActionCamera //<NSCopying> 
+class CC_DLL OrbitCamera : public ActionCamera
 {
 public:
     /** Creates a OrbitCamera action with radius, delta-radius,  z, deltaZ, x, deltaX. 
@@ -142,7 +142,7 @@ public:
     void sphericalRadius(float *r, float *zenith, float *azimuth);
 
     // Overrides
-	OrbitCamera *clone() const override;
+    OrbitCamera *clone() const override;
     virtual void startWithTarget(Node *target) override;
     virtual void update(float time) override;
     

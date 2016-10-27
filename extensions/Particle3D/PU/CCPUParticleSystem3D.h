@@ -147,24 +147,24 @@ struct CC_DLL PUParticle3D : public Particle3D
 
         /** Sets the event flags.
     */
-    inline void setEventFlags(unsigned int flags) {eventFlags = flags;}
+    void setEventFlags(unsigned int flags) { eventFlags = flags; }
 
     /** As setEventFlags, except the flags passed as parameters are appended to the
         existing flags on this object.
     */
-    inline void addEventFlags(unsigned int flags) {eventFlags |= flags;}
+    void addEventFlags(unsigned int flags) { eventFlags |= flags; }
             
     /** The flags passed as parameters are removed from the existing flags.
     */
-    inline void removeEventFlags(unsigned int flags) {eventFlags &= ~flags;}
+    void removeEventFlags(unsigned int flags) { eventFlags &= ~flags; }
         
     /** Return the event flags.
     */
-    inline unsigned int getEventFlags() const {return eventFlags;}
+    unsigned int getEventFlags() const { return eventFlags; }
 
     /** Determines whether it has certain flags set.
     */
-    inline bool hasEventFlags(unsigned int flags) const {return (eventFlags & flags) != 0;}
+    bool hasEventFlags(unsigned int flags) const { return (eventFlags & flags) != 0; }
 
     unsigned int eventFlags;
 
@@ -268,24 +268,24 @@ public:
      */
     void rotationOffset(Vec3& pos);
 
-    inline float getTimeElapsedSinceStart(void) const {return _timeElapsedSinceStart;};
+    float getTimeElapsedSinceStart() const { return _timeElapsedSinceStart; }
 
     /**
      * default particle width
      */
-    const float getDefaultWidth(void) const;
+    float getDefaultWidth() const;
     void setDefaultWidth(const float width);
 
     /** 
      * default particle height
      */
-    const float getDefaultHeight(void) const;
+    float getDefaultHeight() const;
     void setDefaultHeight(const float height);
 
     /** 
      * default particle depth
      */
-    const float getDefaultDepth(void) const;
+    float getDefaultDepth() const;
     void setDefaultDepth(const float depth);
 
     Vec3 getDerivedPosition();
@@ -303,10 +303,10 @@ public:
     void setMaxVelocity(float maxVelocity);
 
     void setMaterialName(const std::string &name) { _matName = name; };
-    const std::string getMaterialName() const { return _matName; };
+    const std::string& getMaterialName() const { return _matName; };
 
     /** Forces emission of particles.
-     * @remarks The number of requested particles are the exact number that are emitted. No down-scalling is applied.
+     * @remarks The number of requested particles are the exact number that are emitted. No down-scaling is applied.
      */
     void forceEmission(PUEmitter* emitter, unsigned requested);
 

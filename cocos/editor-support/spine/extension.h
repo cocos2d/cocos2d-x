@@ -11,8 +11,8 @@
 
  - Classes intended for inheritance provide init/deinit functions which subclasses must call in their create/dispose functions.
 
- - Polymorphism is done by a base class providing function pointers in its init function. The public API delegates to this
- function.
+ - Polymorphism is done by a base class providing function pointers in its init function. The public API delegates to these
+ function pointers.
 
  - Subclasses do not provide a dispose function, instead the base class' dispose function should be used, which will delegate to
  a dispose function pointer.
@@ -58,8 +58,11 @@
 #define MALLOC_STR(TO,FROM) strcpy(CONST_CAST(char*, TO) = (char*)MALLOC(char, strlen(FROM) + 1), FROM)
 
 #define PI 3.1415926535897932385f
+#define PI2 (PI * 2)
 #define DEG_RAD (PI / 180)
 #define RAD_DEG (180 / PI)
+
+#define ABS(A) ((A) < 0? -(A): (A))
 
 #ifdef __STDC_VERSION__
 #define FMOD(A,B) fmodf(A, B)
@@ -77,6 +80,18 @@
 #define ACOS(A) (float)acos(A)
 #endif
 
+#define SIN_DEG(A) SIN((A) * DEG_RAD)
+#define COS_DEG(A) COS((A) * DEG_RAD)
+#define CLAMP(x, min, max) ((x) < (min) ? (min) : ((x) > (max) ? (max) : (x)))
+#ifndef MIN
+#define MIN(x, y) ((x) < (y) ? (x) : (y))
+#endif
+#ifndef MAX
+#define MAX(x, y) ((x) > (y) ? (x) : (y))
+#endif
+
+#define UNUSED(x) (void)(x)
+
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
@@ -84,10 +99,11 @@
 #include <spine/Animation.h>
 #include <spine/Atlas.h>
 #include <spine/AttachmentLoader.h>
+#include <spine/VertexAttachment.h>
 #include <spine/RegionAttachment.h>
 #include <spine/MeshAttachment.h>
-#include <spine/SkinnedMeshAttachment.h>
 #include <spine/BoundingBoxAttachment.h>
+#include <spine/PathAttachment.h>
 #include <spine/AnimationState.h>
 
 #ifdef __cplusplus
@@ -146,11 +162,16 @@ void _spTrackEntry_dispose (spTrackEntry* self);
 
 /**/
 
-void _spAttachmentLoader_init (spAttachmentLoader* self, /**/
-void (*dispose) (spAttachmentLoader* self), /**/
-		spAttachment* (*newAttachment) (spAttachmentLoader* self, spSkin* skin, spAttachmentType type, const char* name,
-				const char* path));
+/* configureAttachment and disposeAttachment may be 0. */
+void _spAttachmentLoader_init (spAttachmentLoader* self,
+	void (*dispose) (spAttachmentLoader* self),
+	spAttachment* (*createAttachment) (spAttachmentLoader* self, spSkin* skin, spAttachmentType type, const char* name,
+		const char* path),
+	void (*configureAttachment) (spAttachmentLoader* self, spAttachment*),
+	void (*disposeAttachment) (spAttachmentLoader* self, spAttachment*)
+);
 void _spAttachmentLoader_deinit (spAttachmentLoader* self);
+/* Can only be called from createAttachment. */
 void _spAttachmentLoader_setError (spAttachmentLoader* self, const char* error1, const char* error2);
 void _spAttachmentLoader_setUnknownTypeError (spAttachmentLoader* self, spAttachmentType type);
 
@@ -163,21 +184,23 @@ void _spAttachmentLoader_setUnknownTypeError (spAttachmentLoader* self, spAttach
 
 /**/
 
-void _spAttachment_init (spAttachment* self, const char* name, spAttachmentType type, /**/
+void _spAttachment_init (spAttachment* self, const char* name, spAttachmentType type,
 void (*dispose) (spAttachment* self));
 void _spAttachment_deinit (spAttachment* self);
+void _spVertexAttachment_deinit (spVertexAttachment* self);
 
 #ifdef SPINE_SHORT_NAMES
 #define _Attachment_init(...) _spAttachment_init(__VA_ARGS__)
 #define _Attachment_deinit(...) _spAttachment_deinit(__VA_ARGS__)
+#define _VertexAttachment_deinit(...) _spVertexAttachment_deinit(__VA_ARGS__)
 #endif
 
 /**/
 
-void _spTimeline_init (spTimeline* self, spTimelineType type, /**/
-void (*dispose) (spTimeline* self), /**/
-		void (*apply) (const spTimeline* self, spSkeleton* skeleton, float lastTime, float time, spEvent** firedEvents,
-				int* eventsCount, float alpha));
+void _spTimeline_init (spTimeline* self, spTimelineType type,
+	void (*dispose) (spTimeline* self),
+	void (*apply) (const spTimeline* self, spSkeleton* skeleton, float lastTime, float time, spEvent** firedEvents,
+		int* eventsCount, float alpha));
 void _spTimeline_deinit (spTimeline* self);
 
 #ifdef SPINE_SHORT_NAMES
@@ -187,10 +210,10 @@ void _spTimeline_deinit (spTimeline* self);
 
 /**/
 
-void _spCurveTimeline_init (spCurveTimeline* self, spTimelineType type, int framesCount, /**/
-void (*dispose) (spTimeline* self), /**/
-		void (*apply) (const spTimeline* self, spSkeleton* skeleton, float lastTime, float time, spEvent** firedEvents,
-				int* eventsCount, float alpha));
+void _spCurveTimeline_init (spCurveTimeline* self, spTimelineType type, int framesCount,
+	void (*dispose) (spTimeline* self),
+	void (*apply) (const spTimeline* self, spSkeleton* skeleton, float lastTime, float time, spEvent** firedEvents,
+		int* eventsCount, float alpha));
 void _spCurveTimeline_deinit (spCurveTimeline* self);
 
 #ifdef SPINE_SHORT_NAMES

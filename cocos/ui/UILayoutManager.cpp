@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -22,8 +22,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "UILayoutManager.h"
-#include "UILayout.h"
+#include "ui/UILayoutManager.h"
+#include "ui/UILayout.h"
 
 NS_CC_BEGIN
 

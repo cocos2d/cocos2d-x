@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2012 Zynga Inc.
- * Copyright (c) 2013-2014 Chukong Technologies Inc.
+ * Copyright (c) 2013-2016 Chukong Technologies Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,13 +21,13 @@
  * THE SOFTWARE.
  */
 
-#include "js_bindings_config.h"
-#include "js_bindings_core.h"
-#include "local-storage/LocalStorage.h"
-#include "cocos2d.h"
+#include "scripting/js-bindings/manual/js_bindings_config.h"
+#include "scripting/js-bindings/manual/js_bindings_core.h"
+#include "storage/local-storage/LocalStorage.h"
+#include "platform/CCFileUtils.h"
 
 // system
-#include "js_bindings_system_functions.h"
+#include "scripting/js-bindings/manual/localstorage/js_bindings_system_functions.h"
 
 
 void jsb_register_system( JSContext *_cx,  JS::HandleObject object)
@@ -51,14 +51,14 @@ void jsb_register_system( JSContext *_cx,  JS::HandleObject object)
 
     // sys.localStorage functions
     JS::RootedObject system(_cx, ls);
-#include "js_bindings_system_functions_registration.h"
+#include "scripting/js-bindings/manual/localstorage/js_bindings_system_functions_registration.h"
     
     // Init DB with full path
     //NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
     //NSString *fullpath = [path stringByAppendingPathComponent:@"jsb.sqlite"];
     std::string strFilePath = cocos2d::FileUtils::getInstance()->getWritablePath();
     strFilePath += "/jsb.sqlite";
-    localStorageInit(strFilePath.c_str());
+    localStorageInit(strFilePath);
     
 }
 

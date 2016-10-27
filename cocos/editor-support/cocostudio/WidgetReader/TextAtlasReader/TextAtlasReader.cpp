@@ -1,11 +1,13 @@
 
 
-#include "TextAtlasReader.h"
+#include "editor-support/cocostudio/WidgetReader/TextAtlasReader/TextAtlasReader.h"
 
 #include "ui/UITextAtlas.h"
-#include "cocostudio/CocoLoader.h"
-#include "cocostudio/CSParseBinary_generated.h"
-#include "cocostudio/FlatBuffersSerialize.h"
+#include "platform/CCFileUtils.h"
+
+#include "editor-support/cocostudio/CocoLoader.h"
+#include "editor-support/cocostudio/CSParseBinary_generated.h"
+#include "editor-support/cocostudio/FlatBuffersSerialize.h"
 
 #include "tinyxml2.h"
 #include "flatbuffers/flatbuffers.h"
@@ -78,7 +80,7 @@ namespace cocostudio
             }
             else if(key == P_CharMapFileData){
                 stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray(cocoLoader);
-                std::string resType = backGroundChildren[2].GetValue(cocoLoader);;
+                std::string resType = backGroundChildren[2].GetValue(cocoLoader);
                 
                 Widget::TextureResType imageFileNameType = (Widget::TextureResType)valueToInt(resType);
                 
@@ -274,13 +276,6 @@ namespace cocostudio
                     errorFilePath = cmfPath;
                     fileExist = false;
                 }
-                
-                //if (!fileExist)
-                //{
-                //    auto label = Label::create();
-                //    label->setString(__String::createWithFormat("%s missed", errorFilePath.c_str())->getCString());
-                //    labelAtlas->addChild(label);
-                //}
                 break;
             }
                 

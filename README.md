@@ -13,7 +13,7 @@ cocos2d-x
 
 [cocos2d-x][1] is a multi-platform framework for building 2d games, interactive books, demos and other graphical applications.
 It is based on [cocos2d-iphone][2], but instead of using Objective-C, it uses C++.
-It works on iOS, Android, Windows Phone and Store Apps, OS X, Windows, Linux and Web platforms.
+It works on iOS, Android, Tizen, Windows Phone and Store Apps, OS X, Windows, Linux and Web platforms.
 
 **Cocos2d-x Framework Architecture**:
 
@@ -77,6 +77,13 @@ You can also create a JS project or Lua project with `-l js` or `-l lua`.
 
     $ cocos run -p mac
 
+### Build and run a new project for Tizen ###
+
+The cocos command line tools doesn't support Tizen yet, you have to use Tizen IDE to do the build.
+
+Please refer to this [guide](http://cocos2d-x.org/docs/installation/Tizen/index.html ).
+
+
 ### Build and run a new project for Linux ###
 
 If you never run cocos2d-x on Linux, you need to install all dependencies by the
@@ -128,10 +135,9 @@ Or you can publish your game to `publish/html5/` folder:
 
 Documentations and samples
 -------------
-
-* [Online API Reference](http://cocos2d-x.org/wiki/Reference) _Note that Cocos2d-x and Cocos2d-JS have different API set_
-* [Programmers Guide](http://cocos2d-x.org/programmersguide/)
-* [Temporary Cocos2d-JS documents](http://cocos2d-x.org/docs/manual/framework/html5/en)
+* [All Docs in a single place!](http://cocos2d-x.org/docs/)
+* [Online API Reference](http://cocos2d-x.org/docs/api-ref/index.html) _Note that Cocos2d-x, Cocos2d-JS and Cocos Creator have different API set_
+* [Programmers Guide](http://cocos2d-x.org/docs/programmers-guide/2/index.html)
 * [Latest Release Note](https://github.com/cocos2d/cocos2d-x/blob/v3/docs/RELEASE_NOTES.md)
 * [Changelog](https://github.com/cocos2d/cocos2d-x/blob/v3/CHANGELOG)
 * [Cocos2d sample games](https://github.com/cocos2d/cocos2d-x-samples) _More samples will be added in v3.8_
@@ -143,7 +149,7 @@ Main features
    * Sprites and Sprite Sheets
    * Effects: Lens, Ripple, Waves, Liquid, etc.
    * Actions (behaviours):
-     * Trasformation Actions: Move, Rotate, Scale, Fade, Tint, etc.
+     * Transformation Actions: Move, Rotate, Scale, Fade, Tint, etc.
      * Composable actions: Sequence, Spawn, Repeat, Reverse
      * Ease Actions: Exp, Sin, Cubic, Elastic, etc.
      * Misc actions: CallFunc, OrbitCamera, Follow, Tween
@@ -171,22 +177,24 @@ Main features
 Build Requirements
 ------------------
 
-* Mac OS X 10.7+, Xcode 5.1+
+* Mac OS X 10.7+, Xcode 7+
 * or Ubuntu 12.10+, CMake 2.6+
 * or Windows 7+, VS 2013+
 * Python 2.7.5
-* NDK r10c+ is required to build Android games
+* NDK r11+ is required to build Android games
+* Tizen SDK 2.3+ is required to build Tizen games
 * Windows Phone/Store 8.1 VS 2013 Update 4+ or VS 2015
 * Windows Phone/Store 10.0 VS 2015
 * JRE or JDK 1.6+ is required for web publishing
 
 Runtime Requirements
 --------------------
-  * iOS 6.0+ for iPhone / iPad games
-  * Android 2.3+ for Android games
+  * iOS 7.0+ for iPhone / iPad games
+  * Android 2.3.3+ for Android games
+  * Tizen 2.3+ or 2.4+ for Tizen games
   * Windows 8.1 or Windows 10.0 for Windows Phone/Store 8.1 games
   * Windows 10.0 for Windows Phone/Store 10.0  games
-  * OS X v10.6+ for Mac games
+  * OS X v10.9+ for Mac games
   * Windows 7+ for Win games
   * Modern browsers and IE 9+ for web games
 
@@ -259,10 +267,14 @@ $ adb install ../tests/cpp-empty-test/proj.android/bin/CppEmptyTest-debug.apk
 
 Then click item on Android device to run tests. Available value of `-p` is the API level, cocos2d-x supports from level 10.
 
+* For Tizen
+
+Please refer to this [guide](http://cocos2d-x.org/docs/installation/Tizen/index.html ).
+
 Learning Resources
 --------------------------------
 
-* [Programmers Guide](http://cocos2d-x.org/programmersguide/)
+* [Programmers Guide](http://cocos2d-x.org/docs/programmers-guide/2/index.html)
 * [Sonar Systems Videos](https://www.youtube.com/user/sonarsystemslimited/search?query=cocos2d-x)
 * [Android Fundamentals](https://developer.android.com/guide/components/fundamentals.html)
 * [Make School Tutorials](https://www.makeschool.com/tutorials/)
@@ -278,6 +290,12 @@ You can help us spread the word about cocos2d-x! We would surely appreciate it!
 * Read our [Blog](http://blog.cocos2d-x.org/) and promote it on your social media.
 * Become a [Regional Coordinator](http://discuss.cocos2d-x.org/t/we-need-regional-coordinators/24104)
 
+See what we are planning!
+--------------------------------
+You can see exactly what we are planning to do with the Cocos family of products.
+
+* [Cocos2d-x roadmap](https://trello.com/b/Np6obnuE/cocos2d-x-roadmap)
+
 Where to get help
 --------------------------------
 
@@ -287,8 +305,7 @@ Where to get help
 * `cpp-tests` project. This project is our basis for testing. Use this project to
 learn how we implement the functionality of the engine. This project is located in
 __cocos2d-x_root/build.__
-* [API Reference](http://cocos2d-x.org/wiki/Reference).
-* [Temporary Cocos2d-JS documents](http://cocos2d-x.org/docs/manual/framework/html5/en)
+* [API Reference](http://cocos2d-x.org/docs/api-ref/index.html).
 * [Latest Release Note](https://github.com/cocos2d/cocos2d-x/blob/v3/docs/RELEASE_NOTES.md)
 * [Changelog](https://github.com/cocos2d/cocos2d-x/blob/v3/CHANGELOG)
 
@@ -301,11 +318,10 @@ Did you find a bug? Do you have feature request? Do you want to merge a feature?
 
   * [contributing to cocos2d-x][8]
 
-
 Contact us
 ----------
 
-   * Forum: [http://forum.cocos2d-x.org][9]
+   * Forum: [http://discuss.cocos2d-x.org][9]
    * Twitter: [http://www.twitter.com/cocos2dx][10]
    * Weibo: [http://t.sina.com.cn/cocos2dx][11]
    * IRC: [https://webchat.freenode.net/][12] (#cocos2d and #cocos2d-x channels)
@@ -318,7 +334,7 @@ Contact us
 [6]: http://www.chipmunk-physics.net "Chipmunk2D"
 [7]: http://esotericsoftware.com/ "http://esotericsoftware.com/"
 [8]: https://github.com/cocos2d/cocos2d-x/blob/v3/CONTRIBUTING.md
-[9]: http://forum.cocos2d-x.org "http://forum.cocos2d-x.org"
+[9]: http://discuss.cocos2d-x.org "http://discuss.cocos2d-x.org"
 [10]: http://www.twitter.com/cocos2dx "http://www.twitter.com/cocos2dx"
 [11]: http://t.sina.com.cn/cocos2dx "http://t.sina.com.cn/cocos2dx"
 [12]: https://webchat.freenode.net/ "https://webchat.freenode.net/"

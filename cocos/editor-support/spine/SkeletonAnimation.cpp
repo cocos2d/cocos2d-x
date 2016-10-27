@@ -58,38 +58,60 @@ typedef struct _TrackEntryListeners {
 
 static _TrackEntryListeners* getListeners (spTrackEntry* entry) {
 	if (!entry->rendererObject) {
-		entry->rendererObject = NEW(spine::_TrackEntryListeners);
+		entry->rendererObject = new spine::_TrackEntryListeners();
 		entry->listener = trackEntryCallback;
 	}
 	return (_TrackEntryListeners*)entry->rendererObject;
 }
 
 void disposeTrackEntry (spTrackEntry* entry) {
-	if (entry->rendererObject) FREE(entry->rendererObject);
+	if (entry->rendererObject) delete (spine::_TrackEntryListeners*)entry->rendererObject;
 	_spTrackEntry_dispose(entry);
 }
 
 //
 
 SkeletonAnimation* SkeletonAnimation::createWithData (spSkeletonData* skeletonData, bool ownsSkeletonData) {
-	SkeletonAnimation* node = new SkeletonAnimation(skeletonData, ownsSkeletonData);
+	SkeletonAnimation* node = new SkeletonAnimation();
+	node->initWithData(skeletonData, ownsSkeletonData);
 	node->autorelease();
 	return node;
 }
 
-SkeletonAnimation* SkeletonAnimation::createWithFile (const std::string& skeletonDataFile, spAtlas* atlas, float scale) {
-	SkeletonAnimation* node = new SkeletonAnimation(skeletonDataFile, atlas, scale);
+SkeletonAnimation* SkeletonAnimation::createWithJsonFile (const std::string& skeletonJsonFile, spAtlas* atlas, float scale) {
+	SkeletonAnimation* node = new SkeletonAnimation();
+	node->initWithJsonFile(skeletonJsonFile, atlas, scale);
 	node->autorelease();
 	return node;
 }
 
-SkeletonAnimation* SkeletonAnimation::createWithFile (const std::string& skeletonDataFile, const std::string& atlasFile, float scale) {
-	SkeletonAnimation* node = new SkeletonAnimation(skeletonDataFile, atlasFile, scale);
+SkeletonAnimation* SkeletonAnimation::createWithJsonFile (const std::string& skeletonJsonFile, const std::string& atlasFile, float scale) {
+	SkeletonAnimation* node = new SkeletonAnimation();
+	spAtlas* atlas = spAtlas_createFromFile(atlasFile.c_str(), 0);
+	node->initWithJsonFile(skeletonJsonFile, atlas, scale);
 	node->autorelease();
 	return node;
 }
+
+SkeletonAnimation* SkeletonAnimation::createWithBinaryFile (const std::string& skeletonBinaryFile, spAtlas* atlas, float scale) {
+	SkeletonAnimation* node = new SkeletonAnimation();
+	node->initWithBinaryFile(skeletonBinaryFile, atlas, scale);
+	node->autorelease();
+	return node;
+}
+
+SkeletonAnimation* SkeletonAnimation::createWithBinaryFile (const std::string& skeletonBinaryFile, const std::string& atlasFile, float scale) {
+	SkeletonAnimation* node = new SkeletonAnimation();
+	spAtlas* atlas = spAtlas_createFromFile(atlasFile.c_str(), 0);
+	node->initWithBinaryFile(skeletonBinaryFile, atlas, scale);
+	node->autorelease();
+	return node;
+}
+
 
 void SkeletonAnimation::initialize () {
+	super::initialize();
+
 	_ownsAnimationStateData = true;
 	_state = spAnimationState_create(spAnimationStateData_create(_skeleton->data));
 	_state->rendererObject = this;
@@ -101,21 +123,6 @@ void SkeletonAnimation::initialize () {
 
 SkeletonAnimation::SkeletonAnimation ()
 		: SkeletonRenderer() {
-}
-
-SkeletonAnimation::SkeletonAnimation (spSkeletonData *skeletonData, bool ownsSkeletonData)
-		: SkeletonRenderer(skeletonData, ownsSkeletonData) {
-	initialize();
-}
-
-SkeletonAnimation::SkeletonAnimation (const std::string& skeletonDataFile, spAtlas* atlas, float scale)
-		: SkeletonRenderer(skeletonDataFile, atlas, scale) {
-	initialize();
-}
-
-SkeletonAnimation::SkeletonAnimation (const std::string& skeletonDataFile, const std::string& atlasFile, float scale)
-		: SkeletonRenderer(skeletonDataFile, atlasFile, scale) {
-	initialize();
 }
 
 SkeletonAnimation::~SkeletonAnimation () {
@@ -135,8 +142,8 @@ void SkeletonAnimation::update (float deltaTime) {
 void SkeletonAnimation::setAnimationStateData (spAnimationStateData* stateData) {
 	CCASSERT(stateData, "stateData cannot be null.");
 
-	if (_ownsAnimationStateData) spAnimationStateData_dispose(_state->data);
-	spAnimationState_dispose(_state);
+    if (_ownsAnimationStateData) spAnimationStateData_dispose(_state->data);
+    spAnimationState_dispose(_state);
 
 	_ownsAnimationStateData = false;
 	_state = spAnimationState_create(stateData);
@@ -164,6 +171,10 @@ spTrackEntry* SkeletonAnimation::addAnimation (int trackIndex, const std::string
 		return 0;
 	}
 	return spAnimationState_addAnimation(_state, trackIndex, animation, loop, delay);
+}
+	
+spAnimation* SkeletonAnimation::findAnimation(const std::string& name) const {
+	return spSkeletonData_findAnimation(_skeleton->data, name.c_str());
 }
 
 spTrackEntry* SkeletonAnimation::getCurrent (int trackIndex) { 

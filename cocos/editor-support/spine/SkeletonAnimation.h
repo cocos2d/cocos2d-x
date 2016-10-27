@@ -47,17 +47,32 @@ typedef std::function<void(int trackIndex, spEvent* event)> EventListener;
   * played later. */
 class SkeletonAnimation: public SkeletonRenderer {
 public:
+	CREATE_FUNC(SkeletonAnimation);
 	static SkeletonAnimation* createWithData (spSkeletonData* skeletonData, bool ownsSkeletonData = false);
-	static SkeletonAnimation* createWithFile (const std::string& skeletonDataFile, spAtlas* atlas, float scale = 1);
-	static SkeletonAnimation* createWithFile (const std::string& skeletonDataFile, const std::string& atlasFile, float scale = 1);
+	static SkeletonAnimation* createWithJsonFile (const std::string& skeletonJsonFile, spAtlas* atlas, float scale = 1);
+	static SkeletonAnimation* createWithJsonFile (const std::string& skeletonJsonFile, const std::string& atlasFile, float scale = 1);
+	static SkeletonAnimation* createWithBinaryFile (const std::string& skeletonBinaryFile, spAtlas* atlas, float scale = 1);
+	static SkeletonAnimation* createWithBinaryFile (const std::string& skeletonBinaryFile, const std::string& atlasFile, float scale = 1);
 
-	virtual void update (float deltaTime);
+	// Use createWithJsonFile instead
+	CC_DEPRECATED_ATTRIBUTE static SkeletonAnimation* createWithFile (const std::string& skeletonJsonFile, spAtlas* atlas, float scale = 1)
+	{
+		return SkeletonAnimation::createWithJsonFile(skeletonJsonFile, atlas, scale);
+	}
+	// Use createWithJsonFile instead
+	CC_DEPRECATED_ATTRIBUTE static SkeletonAnimation* createWithile (const std::string& skeletonJsonFile, const std::string& atlasFile, float scale = 1)
+	{
+		return SkeletonAnimation::createWithJsonFile(skeletonJsonFile, atlasFile, scale);
+	}
+
+	virtual void update (float deltaTime) override;
 
 	void setAnimationStateData (spAnimationStateData* stateData);
 	void setMix (const std::string& fromAnimation, const std::string& toAnimation, float duration);
 
 	spTrackEntry* setAnimation (int trackIndex, const std::string& name, bool loop);
 	spTrackEntry* addAnimation (int trackIndex, const std::string& name, bool loop, float delay = 0);
+	spAnimation* findAnimation(const std::string& name) const;
 	spTrackEntry* getCurrent (int trackIndex = 0);
 	void clearTracks ();
 	void clearTrack (int trackIndex = 0);
@@ -79,11 +94,8 @@ public:
 
 CC_CONSTRUCTOR_ACCESS:
 	SkeletonAnimation ();
-	SkeletonAnimation (spSkeletonData* skeletonData, bool ownsSkeletonData = false);
-	SkeletonAnimation (const std::string&skeletonDataFile, spAtlas* atlas, float scale = 1);
-	SkeletonAnimation (const std::string& skeletonDataFile, const std::string& atlasFile, float scale = 1);
 	virtual ~SkeletonAnimation ();
-	void initialize ();
+	virtual void initialize () override;
 
 protected:
 	spAnimationState* _state;

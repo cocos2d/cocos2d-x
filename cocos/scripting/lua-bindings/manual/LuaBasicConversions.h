@@ -1,18 +1,18 @@
 /****************************************************************************
- Copyright (c) 2013-2014 Chukong Technologies Inc.
- 
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+
  http://www.cocos2d-x.org
- 
+
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
- 
+
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
- 
+
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -24,14 +24,30 @@
 #ifndef __COCOS2DX_SCRIPTING_LUA_COCOS2DXSUPPORT_LUABAISCCONVERSIONS_H__
 #define __COCOS2DX_SCRIPTING_LUA_COCOS2DXSUPPORT_LUABAISCCONVERSIONS_H__
 
+#include <unordered_map>
+#include <string>
+
 extern "C" {
 #include "lua.h"
 #include "tolua++.h"
 }
-#include "tolua_fix.h"
-#include "cocos2d.h"
-#include "Lua-BindingsExport.h"
+#include "scripting/lua-bindings/manual/tolua_fix.h"
+
+#include "scripting/lua-bindings/manual/Lua-BindingsExport.h"
 #include "editor-support/cocostudio/CocosStudioExtension.h"
+#include "2d/CCLabel.h"
+#include "2d/CCSprite.h"
+#include "3d/CCBundle3D.h"
+#include "base/CCValue.h"
+#include "base/ccTypes.h"
+#include "deprecated/CCArray.h"
+#include "deprecated/CCDictionary.h"
+#include "physics/CCPhysicsContact.h"
+#include "physics/CCPhysicsJoint.h"
+#include "physics/CCPhysicsShape.h"
+#include "physics/CCPhysicsWorld.h"
+#include "renderer/CCGLProgram.h"
+
 
 using namespace cocos2d;
 
@@ -53,15 +69,15 @@ cocos2d::log(__VA_ARGS__);                                                  \
  */
 
 /**
- * If the typename of userdata at the given accepteable index of stack is equal to type it return true,otherwise return false .
+ * If the typename of userdata at the given acceptable index of stack is equal to type it return true, otherwise return false.
  * If def != 0, lo could greater than the top index of stack, return value is true.
  * If the value of the given index is nil, return value also is true.
  *
  * @param L the current lua_State.
- * @param lo the given accpetable index of stack.
+ * @param lo the given acceptable index of stack.
  * @param type the typename used to judge.
  * @param def whether has default value.
- * @return Return true if the typename of userdata at the given accepteable index of stack is equal to type, otherwise return false.
+ * @return Return true if the typename of userdata at the given acceptable index of stack is equal to type, otherwise return false.
  */
 extern bool luaval_is_usertype(lua_State* L,int lo,const char* type, int def);
 // to native
@@ -76,109 +92,109 @@ extern bool luaval_is_usertype(lua_State* L,int lo,const char* type, int def);
 
 
 /**
- * Get a unsigned long value from the given accpetable index of stack.
- * If the value at the given accpetable index of stack is a number or a string convertible to a number it returns true, otherwise returns false .
+ * Get a unsigned long value from the given acceptable index of stack.
+ * If the value at the given acceptable index of stack is a number or a string convertible to a number it returns true, otherwise returns false.
  *
  * @param L the current lua_State.
- * @param lo the given accpetable index of stack.
+ * @param lo the given acceptable index of stack.
  * @param outValue the pointer to store the value converted from the Lua value.
  * @param funcName the name of calling function, it is used for error output in the debug model.
- * @return Return true if the value at the given accpetable index of stack is a number or a string convertible to a number, otherwise return false.
+ * @return Return true if the value at the given acceptable index of stack is a number or a string convertible to a number, otherwise return false.
  */
 extern bool luaval_to_ulong(lua_State* L,int lo, unsigned long* outValue, const char* funcName="");
 
 /**
- * Get a unsigned short value from the given accpetable index of stack.
- * If the value at the given accpetable index of stack is a number or a string convertible to a number it returns true, otherwise returns false .
+ * Get a unsigned short value from the given acceptable index of stack.
+ * If the value at the given acceptable index of stack is a number or a string convertible to a number it returns true, otherwise returns false.
  *
  * @param L the current lua_State.
- * @param lo the given accpetable index of stack.
+ * @param lo the given acceptable index of stack.
  * @param outValue the pointer to store the unsigned short value converted from the Lua value.
  * @param funcName the name of calling function, it is used for error output in the debug model.
- * @return Return true if the value at the given accpetable index of stack is a number or a string convertible to a number, otherwise return false.
+ * @return Return true if the value at the given acceptable index of stack is a number or a string convertible to a number, otherwise return false.
  */
 extern bool luaval_to_ushort(lua_State* L, int lo, unsigned short* outValue, const char* funcName = "");
 
 /**
- * Get a int value from the given accpetable index of stack.
- * If the value at the given accpetable index of stack is a number or a string convertible to a number it returns true, otherwise returns false .
+ * Get a int value from the given acceptable index of stack.
+ * If the value at the given acceptable index of stack is a number or a string convertible to a number it returns true, otherwise returns false.
  *
  * @param L the current lua_State.
- * @param lo the given accpetable index of stack.
+ * @param lo the given acceptable index of stack.
  * @param outValue the pointer to store the int value converted from the Lua value.
  * @param funcName the name of calling function, it is used for error output in the debug model.
- * @return Return true if the value at the given accpetable index of stack is a number or a string convertible to a number, otherwise return false.
+ * @return Return true if the value at the given acceptable index of stack is a number or a string convertible to a number, otherwise return false.
  */
 extern bool luaval_to_int32(lua_State* L,int lo,int* outValue, const char* funcName = "");
 
 /**
- * Get a unsigned int value from the given accpetable index of stack.
- * If the value at the given accpetable index of stack is a number or a string convertible to a number it returns true, otherwise returns false .
+ * Get a unsigned int value from the given acceptable index of stack.
+ * If the value at the given acceptable index of stack is a number or a string convertible to a number it returns true, otherwise returns false.
  *
  * @param L the current lua_State.
- * @param lo the given accpetable index of stack.
+ * @param lo the given acceptable index of stack.
  * @param outValue the pointer to store the unsigned int value converted from the Lua value.
  * @param funcName the name of calling function, it is used for error output in the debug model.
- * @return Return true if the value at the given accpetable index of stack is a number or a string convertible to a number, otherwise return false.
+ * @return Return true if the value at the given acceptable index of stack is a number or a string convertible to a number, otherwise return false.
  */
 extern bool luaval_to_uint32(lua_State* L, int lo, unsigned int* outValue, const char* funcName = "");
 
 /**
- * Get a uint16_t value from the given accpetable index of stack.
- * If the value at the given accpetable index of stack is a number or a string convertible to a number it returns true, otherwise returns false .
+ * Get a uint16_t value from the given acceptable index of stack.
+ * If the value at the given acceptable index of stack is a number or a string convertible to a number it returns true, otherwise returns false.
  *
  * @param L the current lua_State.
- * @param lo the given accpetable index of stack.
+ * @param lo the given acceptable index of stack.
  * @param outValue the pointer to store the uint16_t value converted from the Lua value.
  * @param funcName the name of calling function, it is used for error output in the debug model.
- * @return Return true if the value at the given accpetable index of stack is a number or a string convertible to a number, otherwise return false.
+ * @return Return true if the value at the given acceptable index of stack is a number or a string convertible to a number, otherwise return false.
  */
 extern bool luaval_to_uint16(lua_State* L,int lo,uint16_t* outValue, const char* funcName = "");
 
 /**
- * Get a boolean value from the given accpetable index of stack.
- * If the value at the given accpetable index of stack has type boolean it returns true, otherwise returns false.
+ * Get a boolean value from the given acceptable index of stack.
+ * If the value at the given acceptable index of stack has type boolean it returns true, otherwise returns false.
  * Any Lua value is different from false and nil, the value of conversion is true, otherwise the value is false.
- * If the lo is non-valid index, the value of coversion also is false.
+ * If the lo is non-valid index, the value of conversion also is false.
  *
  * @param L the current lua_State.
- * @param lo the given accpetable index of stack.
+ * @param lo the given acceptable index of stack.
  * @param outValue the pointer to store the boolean value converted from the Lua value.
  * @param funcName the name of calling function, it is used for error output in the debug model.
- * @return Return true if the value at the given accpetable index of stack is a number or a string convertible to a number, otherwise return false.
+ * @return Return true if the value at the given acceptable index of stack is a number or a string convertible to a number, otherwise return false.
  */
 extern CC_LUA_DLL bool luaval_to_boolean(lua_State* L,int lo,bool* outValue, const char* funcName = "");
 
 /**
- * Get a double value from the given accpetable index of stack.
- * If the value at the given accpetable index of stack is a number or a string convertible to a number it returns true, otherwise returns false.
+ * Get a double value from the given acceptable index of stack.
+ * If the value at the given acceptable index of stack is a number or a string convertible to a number it returns true, otherwise returns false.
  *
  * @param L the current lua_State.
- * @param lo the given accpetable index of stack.
+ * @param lo the given acceptable index of stack.
  * @param outValue the pointer to store the double value converted from the Lua value.
  * @param funcName the name of calling function, it is used for error output in the debug model.
- * @return Return true if the value at the given accpetable index of stack is a number or a string convertible to a number, otherwise return false.
+ * @return Return true if the value at the given acceptable index of stack is a number or a string convertible to a number, otherwise return false.
  */
 extern bool luaval_to_number(lua_State* L,int lo,double* outValue, const char* funcName = "");
 
 /**
- * Get a long long value from the given accpetable index of stack.
- * If the value at the given accpetable index of stack is a number or a string convertible to a number it returns true, otherwise returns false.
+ * Get a long long value from the given acceptable index of stack.
+ * If the value at the given acceptable index of stack is a number or a string convertible to a number it returns true, otherwise returns false.
  *
  * @param L the current lua_State.
- * @param lo the given accpetable index of stack.
+ * @param lo the given acceptable index of stack.
  * @param outValue the pointer to store the long long value converted from the Lua value.
  * @param funcName the name of calling function, it is used for error output in the debug model.
- * @return Return true if the value at the given accpetable index of stack is a number or a string convertible to a number, otherwise return false.
+ * @return Return true if the value at the given acceptable index of stack is a number or a string convertible to a number, otherwise return false.
  */
 extern bool luaval_to_long_long(lua_State* L,int lo,long long* outValue, const char* funcName = "");
 
 /**
- * Get a std::string value from the given accpetable index of stack.
- * If the value at the given accpetable index of stack is a string or a number convertible to a string it returns true, otherwise returns false.
+ * Get a std::string value from the given acceptable index of stack.
+ * If the value at the given acceptable index of stack is a string or a number convertible to a string it returns true, otherwise returns false.
  *
  * @param L the current lua_State.
- * @param lo the given accpetable index of stack.
+ * @param lo the given acceptable index of stack.
  * @param outValue the pointer to store std::string value converted from the Lua value.
  * @param funcName the name of calling function, it is used for error output in the debug model.
  * @return Return true if the value at the given acceptable index of stack is a string or a number convertible to a string, otherwise return false.
@@ -186,169 +202,169 @@ extern bool luaval_to_long_long(lua_State* L,int lo,long long* outValue, const c
 extern CC_LUA_DLL bool luaval_to_std_string(lua_State* L, int lo, std::string* outValue, const char* funcName = "");
 
 /**
- * Get a long value from the given accpetable index of stack.
- * If the value at the given accpetable index of stack is a number or a string convertible to a number it returns true, otherwise returns false.
+ * Get a long value from the given acceptable index of stack.
+ * If the value at the given acceptable index of stack is a number or a string convertible to a number it returns true, otherwise returns false.
  *
  * @param L the current lua_State.
- * @param lo the given accpetable index of stack.
+ * @param lo the given acceptable index of stack.
  * @param outValue the pointer to store the long value converted from the Lua value.
  * @param funcName the name of calling function, it is used for error output in the debug model.
- * @return Return true if the value at the given accpetable index of stack is a number or a string convertible to a number, otherwise return false.
+ * @return Return true if the value at the given acceptable index of stack is a number or a string convertible to a number, otherwise return false.
  */
 extern bool luaval_to_long(lua_State* L,int lo, long* outValue, const char* funcName = "");
 
 /**
- * Get a ssize_t value from the given accpetable index of stack.
- * If the value at the given accpetable index of stack is a number or a string convertible to a number it returns true, otherwise returns false.
+ * Get a ssize_t value from the given acceptable index of stack.
+ * If the value at the given acceptable index of stack is a number or a string convertible to a number it returns true, otherwise returns false.
  *
  * @param L the current lua_State.
- * @param lo the given accpetable index of stack.
+ * @param lo the given acceptable index of stack.
  * @param outValue the pointer to store the ssize_t value converted from the Lua value.
  * @param funcName the name of calling function, it is used for error output in the debug model.
- * @return Return true if the value at the given accpetable index of stack is a number or a string convertible to a number, otherwise return false.
+ * @return Return true if the value at the given acceptable index of stack is a number or a string convertible to a number, otherwise return false.
  */
 extern bool luaval_to_ssize(lua_State* L,int lo, ssize_t* outValue, const char* funcName = "");
 
 /**
- * Get a Size object value from the given accpetable index of stack.
- * If the value at the given accpetable index of stack is a table it returns true, otherwise returns false.
+ * Get a Size object value from the given acceptable index of stack.
+ * If the value at the given acceptable index of stack is a table it returns true, otherwise returns false.
  * If the table has the `width` and `height` key and the corresponding values are not nil, this function would assign the values to the corresponding members of outValue. Otherwise, the value of members of outValue would be 0.
  *
  * @param L the current lua_State.
- * @param lo the given accpetable index of stack.
+ * @param lo the given acceptable index of stack.
  * @param outValue the pointer to a Size object which stores the values from the Lua table.
  * @param funcName the name of calling function, it is used for error output in the debug model.
- * @return Return true if the value at the given accpetable index of stack is a table, otherwise return false.
+ * @return Return true if the value at the given acceptable index of stack is a table, otherwise return false.
  */
 extern bool luaval_to_size(lua_State* L,int lo,Size* outValue, const char* funcName = "");
 
 /**
- * Get a Rect object value from the given accpetable index of stack.
- * If the value at the given accpetable index of stack is a table it returns true, otherwise returns false.
+ * Get a Rect object value from the given acceptable index of stack.
+ * If the value at the given acceptable index of stack is a table it returns true, otherwise returns false.
  * If the table has the `x`,`y`,`width` and `height` keys and the corresponding values are not nil, this function would assign the values to the corresponding members of outValue. Otherwise, the value of members of outValue would be 0.
  *
  * @param L the current lua_State.
- * @param lo the given accpetable index of stack.
+ * @param lo the given acceptable index of stack.
  * @param outValue the pointer to a Rect object which stores the values from the Lua table.
  * @param funcName the name of calling function, it is used for error output in the debug model.
- * @return Return true if the value at the given accpetable index of stack is a table, otherwise return false.
+ * @return Return true if the value at the given acceptable index of stack is a table, otherwise return false.
  */
 extern bool luaval_to_rect(lua_State* L,int lo,Rect* outValue, const char* funcName = "");
 
 /**
- * Get a Color3B object value from the given accpetable index of stack.
- * If the value at the given accpetable index of stack is a table it returns true, otherwise returns false.
+ * Get a Color3B object value from the given acceptable index of stack.
+ * If the value at the given acceptable index of stack is a table it returns true, otherwise returns false.
  * If the table has the `r`,`g` and `b` keys and the corresponding values are not nil, this function would assign the values to the corresponding members of outValue. Otherwise, the value of members of outValue would be 0.
  *
  * @param L the current lua_State.
- * @param lo the given accpetable index of stack.
+ * @param lo the given acceptable index of stack.
  * @param outValue the pointer to a Color3B object which stores the values from the Lua table.
  * @param funcName the name of calling function, it is used for error output in the debug model.
- * @return Return true if the value at the given accpetable index of stack is a table, otherwise return false.
+ * @return Return true if the value at the given acceptable index of stack is a table, otherwise return false.
  */
 extern CC_LUA_DLL bool luaval_to_color3b(lua_State* L,int lo,Color3B* outValue, const char* funcName = "");
 
 /**
- * Get a Color4B object value from the given accpetable index of stack.
- * If the value at the given accpetable index of stack is a table it returns true, otherwise returns false.
+ * Get a Color4B object value from the given acceptable index of stack.
+ * If the value at the given acceptable index of stack is a table it returns true, otherwise returns false.
  * If the table has the `r`,`g`, `b` and 'a' keys and the corresponding values are not nil, this function would assign the values to the corresponding members of outValue. Otherwise, the value of members of outValue would be 0.
  *
  * @param L the current lua_State.
- * @param lo the given accpetable index of stack.
+ * @param lo the given acceptable index of stack.
  * @param outValue the pointer to a Color4B object which stores the values from the Lua table.
  * @param funcName the name of calling function, it is used for error output in the debug model.
- * @return Return true if the value at the given accpetable index of stack is a table, otherwise return false.
+ * @return Return true if the value at the given acceptable index of stack is a table, otherwise return false.
  */
 extern bool luaval_to_color4b(lua_State* L,int lo,Color4B* outValue, const char* funcName = "");
 
 /**
- * Get a Color4F object value from the given accpetable index of stack.
- * If the value at the given accpetable index of stack is a table it returns true, otherwise returns false.
+ * Get a Color4F object value from the given acceptable index of stack.
+ * If the value at the given acceptable index of stack is a table it returns true, otherwise returns false.
  * If the table has the `r`,`g`, `b` and 'a' keys and the corresponding values are not nil, this function would assign the values to the corresponding members of outValue. Otherwise, the value of members of outValue would be 0.
  *
  * @param L the current lua_State.
- * @param lo the given accpetable index of stack.
+ * @param lo the given acceptable index of stack.
  * @param outValue the pointer to a Color4F object which stores the values from the Lua table.
  * @param funcName the name of calling function, it is used for error output in the debug model.
- * @return Return true if the value at the given accpetable index of stack is a table, otherwise return false.
+ * @return Return true if the value at the given acceptable index of stack is a table, otherwise return false.
  */
 extern bool luaval_to_color4f(lua_State* L,int lo,Color4F* outValue, const char* funcName = "");
 #if CC_USE_PHYSICS
 
 /**
- * Get a PhysicsMaterial object value from the given accpetable index of stack.
- * If the value at the given accpetable index of stack is a table it returns true, otherwise returns false.
+ * Get a PhysicsMaterial object value from the given acceptable index of stack.
+ * If the value at the given acceptable index of stack is a table it returns true, otherwise returns false.
  * If the table has the `density`,`restitution` and 'friction' keys and the corresponding values are not nil, this function would assign the values to the corresponding members of outValue. Otherwise, the value of members of outValue would be 0.
  *
  * @param L the current lua_State.
- * @param lo the given accpetable index of stack.
+ * @param lo the given acceptable index of stack.
  * @param outValue the pointer to a cocos2d::PhysicsMaterial object which stores the values from the Lua table.
  * @param funcName the name of calling function, it is used for error output in the debug model.
- * @return Return true if the value at the given accpetable index of stack is a table, otherwise return false.
+ * @return Return true if the value at the given acceptable index of stack is a table, otherwise return false.
  */
 extern bool luaval_to_physics_material(lua_State* L,int lo, cocos2d::PhysicsMaterial* outValue, const char* funcName = "");
 #endif //#if CC_USE_PHYSICS
 
 /**
- * If the value at the given accpetable index of stack is a table it returns true, otherwise returns false.
+ * If the value at the given acceptable index of stack is a table it returns true, otherwise returns false.
  * If the table has the `a`, `b`, `c`, `d` , `tx` and `ty` keys and the corresponding values are not nil, this function would assign the values to the corresponding members of outValue. Otherwise, the value of members of outValue would be 0.
  *
  * @param L the current lua_State.
- * @param lo the given accpetable index of stack.
+ * @param lo the given acceptable index of stack.
  * @param outValue the pointer to a AffineTransform object which stores the values from the Lua table.
  * @param funcName the name of calling function, it is used for error output in the debug model.
- * @return Return true if the value at the given accpetable index of stack is a table, otherwise return false.
+ * @return Return true if the value at the given acceptable index of stack is a table, otherwise return false.
  */
 extern bool luaval_to_affinetransform(lua_State* L,int lo, AffineTransform* outValue, const char* funcName = "");
 
 /**
- * Get a FontDefinition object value from the given accpetable index of stack.
- * If the value at the given accpetable index of stack is a table it returns true, otherwise returns false.
+ * Get a FontDefinition object value from the given acceptable index of stack.
+ * If the value at the given acceptable index of stack is a table it returns true, otherwise returns false.
  * If the table has the `fontName`, `fontSize`, `fontAlignmentH`, `fontAlignmentV` , `fontFillColor` ,`fontDimensions`, `shadowEnabled` and `strokeEnabled` keys and the corresponding values are not nil, this function would assign the values to the corresponding members of outValue. Otherwise, the value of members of outValue would be 0.
  * If the values about `shadowEnabled` and `strokeEnabled` are true, there would be more keys such as `shadowOffset`, `shadowBlur` ,`shadowOpacity`, `strokeColor`, and `strokeSize`.
  * @param L the current lua_State.
- * @param lo the given accpetable index of stack.
+ * @param lo the given acceptable index of stack.
  * @param outValue the pointer to a FontDefinition object which stores the values from the Lua table.
  * @param funcName the name of calling function, it is used for error output in the debug model.
- * @return Return true if the value at the given accpetable index of stack is a table, otherwise return false.
+ * @return Return true if the value at the given acceptable index of stack is a table, otherwise return false.
  */
 extern bool luaval_to_fontdefinition(lua_State* L, int lo, FontDefinition* outValue , const char* funcName = "");
 
 /**
- * Get a Mat object value from the given accpetable index of stack.
- * If the value at the given accpetable index of stack is a table it returns true, otherwise returns false.
+ * Get a Mat object value from the given acceptable index of stack.
+ * If the value at the given acceptable index of stack is a table it returns true, otherwise returns false.
  * The table is array-table which begin the index starts at 1.
  *
  * @param L the current lua_State.
- * @param lo the given accpetable index of stack.
+ * @param lo the given acceptable index of stack.
  * @param outValue the pointer to a Mat object which stores the values from the Lua table.
  * @param funcName the name of calling function, it is used for error output in the debug model.
- * @return Return true if the value at the given accpetable index of stack is a table, otherwise return false.
+ * @return Return true if the value at the given acceptable index of stack is a table, otherwise return false.
  */
 extern bool luaval_to_mat4(lua_State* L, int lo, cocos2d::Mat4* outValue , const char* funcName = "");
 
 /**
- * Get a __Array object value from the given accpetable index of stack.
+ * Get a __Array object value from the given acceptable index of stack.
  * Because __Array is deprecated, so this function would be not called anymore.
  */
 extern bool luaval_to_array(lua_State* L,int lo, __Array** outValue, const char* funcName = "");
 
 /**
- * Get a __Dictionary object value from the given accpetable index of stack.
+ * Get a __Dictionary object value from the given acceptable index of stack.
  * Because __Dictionary is deprecated, so this function would be not called anymore.
  */
 extern bool luaval_to_dictionary(lua_State* L,int lo, __Dictionary** outValue, const char* funcName = "");
 
 /**
- * Get a array of Vec2 object from the given accpetable index of stack.
- * If the value at the given accpetable index of stack is a table it returns true, otherwise returns false.
+ * Get a array of Vec2 object from the given acceptable index of stack.
+ * If the value at the given acceptable index of stack is a table it returns true, otherwise returns false.
  *
  * @param L the current lua_State.
- * @param lo the given accpetable index of stack.
+ * @param lo the given acceptable index of stack.
  * @param points the pointer to a array of Vec2 object which stores the values from the Lua table.
  * @param numPoints a int pointer to store the size of a Vec2 object array.
  * @param funcName the name of calling function, it is used for error output in the debug model.
- * @return Return true if the value at the given accpetable index of stack is a table, otherwise return false.
+ * @return Return true if the value at the given acceptable index of stack is a table, otherwise return false.
  */
 extern bool luaval_to_array_of_vec2(lua_State* L,int lo,cocos2d::Vec2 **points, int *numPoints, const char* funcName = "");
 
@@ -369,99 +385,99 @@ extern bool luavals_variadic_to_array(lua_State* L,int argc, __Array** ret);
 extern bool luavals_variadic_to_ccvaluevector(lua_State* L, int argc, cocos2d::ValueVector* ret);
 
 /**
- * Get a Vec2 object value from the given accpetable index of stack.
- * If the value at the given accpetable index of stack is a table it returns true, otherwise returns false.
+ * Get a Vec2 object value from the given acceptable index of stack.
+ * If the value at the given acceptable index of stack is a table it returns true, otherwise returns false.
  * If the table has the `x`,and 'y' keys and the corresponding values are not nil, this function would assign the values to the corresponding members of outValue. Otherwise, the value of members of outValue would be 0.
  *
  * @param L the current lua_State.
- * @param lo the given accpetable index of stack.
+ * @param lo the given acceptable index of stack.
  * @param outValue the pointer to a Vec2 object which stores the values from the Lua table.
  * @param funcName the name of calling function, it is used for error output in the debug model.
- * @return Return true if the value at the given accpetable index of stack is a table, otherwise return false.
+ * @return Return true if the value at the given acceptable index of stack is a table, otherwise return false.
  */
 extern bool luaval_to_vec2(lua_State* L,int lo,cocos2d::Vec2* outValue, const char* funcName = "");
 
 /**
- * Get a Vec3 object value from the given accpetable index of stack.
- * If the value at the given accpetable index of stack is a table it returns true, otherwise returns false.
+ * Get a Vec3 object value from the given acceptable index of stack.
+ * If the value at the given acceptable index of stack is a table it returns true, otherwise returns false.
  * If the table has the `x`, 'y' and `z` keys and the corresponding values are not nil, this function would assign the values to the corresponding members of outValue. Otherwise, the value of members of outValue would be 0.
  *
  * @param L the current lua_State.
- * @param lo the given accpetable index of stack.
+ * @param lo the given acceptable index of stack.
  * @param outValue the pointer to a Vec3 object which stores the values from the Lua table.
  * @param funcName the name of calling function, it is used for error output in the debug model.
- * @return Return true if the value at the given accpetable index of stack is a table, otherwise return false.
+ * @return Return true if the value at the given acceptable index of stack is a table, otherwise return false.
  */
 extern bool luaval_to_vec3(lua_State* L,int lo,cocos2d::Vec3* outValue, const char* funcName = "");
 
 /**
- * Get a Vec4 object value from the given accpetable index of stack.
- * If the value at the given accpetable index of stack is a table it returns true, otherwise returns false.
+ * Get a Vec4 object value from the given acceptable index of stack.
+ * If the value at the given acceptable index of stack is a table it returns true, otherwise returns false.
  * If the table has the `x`, 'y', `z` and `w` keys and the corresponding values are not nil, this function would assign the values to the corresponding members of outValue. Otherwise, the value of members of outValue would be 0.
  *
  * @param L the current lua_State.
- * @param lo the given accpetable index of stack.
+ * @param lo the given acceptable index of stack.
  * @param outValue the pointer to a Vec4 object which stores the values from the Lua table.
  * @param funcName the name of calling function, it is used for error output in the debug model.
- * @return Return true if the value at the given accpetable index of stack is a table, otherwise return false.
+ * @return Return true if the value at the given acceptable index of stack is a table, otherwise return false.
  */
 extern bool luaval_to_vec4(lua_State* L,int lo,cocos2d::Vec4* outValue, const char* funcName = "");
 
 /**
- * Get a BlendFunc object value from the given accpetable index of stack.
- * If the value at the given accpetable index of stack is a table it returns true, otherwise returns false.
+ * Get a BlendFunc object value from the given acceptable index of stack.
+ * If the value at the given acceptable index of stack is a table it returns true, otherwise returns false.
  * If the table has the `src` and 'dst' keys and the corresponding values are not nil, this function would assign the values to the corresponding members of outValue. Otherwise, the value of members of outValue would be 0.
  *
  * @param L the current lua_State.
- * @param lo the given accpetable index of stack.
+ * @param lo the given acceptable index of stack.
  * @param outValue the pointer to a BlendFunc object which stores the values from the Lua table.
  * @param funcName the name of calling function, it is used for error output in the debug model.
- * @return Return true if the value at the given accpetable index of stack is a table, otherwise return false.
+ * @return Return true if the value at the given acceptable index of stack is a table, otherwise return false.
  */
 extern bool luaval_to_blendfunc(lua_State* L, int lo, cocos2d::BlendFunc* outValue, const char* funcName = "");
 
 /**
- * Get a TTFConfig object value from the given accpetable index of stack.
- * If the value at the given accpetable index of stack is a table it returns true, otherwise returns false.
+ * Get a TTFConfig object value from the given acceptable index of stack.
+ * If the value at the given acceptable index of stack is a table it returns true, otherwise returns false.
  * If the table has the `fontFilePath`, `fontSize`, `glyphs`, `customGlyphs`, `distanceFieldEnabled` and 'outlineSize' keys and the corresponding values are not nil, this function would assign the values to the corresponding members of outValue. Otherwise, the value of members of outValue would be given the default value.
  *
  * @param L the current lua_State.
- * @param lo the given accpetable index of stack.
+ * @param lo the given acceptable index of stack.
  * @param outValue the pointer to a TTFConfig object which stores the values from the Lua table.
  * @param funcName the name of calling function, it is used for error output in the debug model.
- * @return Return true if the value at the given accpetable index of stack is a table, otherwise return false.
+ * @return Return true if the value at the given acceptable index of stack is a table, otherwise return false.
  */
 extern bool luaval_to_ttfconfig(lua_State* L, int lo, cocos2d::TTFConfig* outValue, const char* funcName = "");
 
 /**
- * Get a Uniform object value from the given accpetable index of stack.
- * If the value at the given accpetable index of stack is a table it returns true, otherwise returns false.
+ * Get a Uniform object value from the given acceptable index of stack.
+ * If the value at the given acceptable index of stack is a table it returns true, otherwise returns false.
  * If the table has the `location`, `size`, `type` and `name` keys and the corresponding values are not nil, this function would assign the values to the corresponding members of outValue. Otherwise, the value of members of outValue would be given the default value.
  *
  * @param L the current lua_State.
- * @param lo the given accpetable index of stack.
+ * @param lo the given acceptable index of stack.
  * @param outValue the pointer to a Uniform object which stores the values from the Lua table.
  * @param funcName the name of calling function, it is used for error output in the debug model.
- * @return Return true if the value at the given accpetable index of stack is a table, otherwise return false.
+ * @return Return true if the value at the given acceptable index of stack is a table, otherwise return false.
  */
 extern bool luaval_to_uniform(lua_State* L, int lo, cocos2d::Uniform* outValue, const char* funcName = "");
 
 /**
- * Get a VertexAttrib object value from the given accpetable index of stack.
- * If the value at the given accpetable index of stack is a table it returns true, otherwise returns false.
+ * Get a VertexAttrib object value from the given acceptable index of stack.
+ * If the value at the given acceptable index of stack is a table it returns true, otherwise returns false.
  * If the table has the `index`, `size`, `type` and `name` keys and the corresponding values are not nil, this function would assign the values to the corresponding members of outValue. Otherwise, the value of members of outValue would be given the default value.
  *
  * @param L the current lua_State.
- * @param lo the given accpetable index of stack.
+ * @param lo the given acceptable index of stack.
  * @param outValue the pointer to a VertexAttrib object which stores the values from the Lua table.
  * @param funcName the name of calling function, it is used for error output in the debug model.
- * @return Return true if the value at the given accpetable index of stack is a table, otherwise return false.
+ * @return Return true if the value at the given acceptable index of stack is a table, otherwise return false.
  */
 extern bool luaval_to_vertexattrib(lua_State* L, int lo, cocos2d::VertexAttrib* outValue, const char* funcName = "");
 
 
 /**
- * Get a Vec2 object value from the given accpetable index of stack.
+ * Get a Vec2 object value from the given acceptable index of stack.
  * At current, the Point is typedef of Vec2.
  * @see luaval_to_vec2
  */
@@ -492,15 +508,15 @@ bool luavals_variadic_to_ccvector( lua_State* L, int argc, cocos2d::Vector<T>* r
 {
     if (nullptr == L || argc == 0 )
         return false;
-    
+
     bool ok = true;
-    
+
     for (int i = 0; i < argc; i++)
     {
         if (lua_isuserdata(L, i + 2))
         {
             tolua_Error err;
-            
+
             if (!tolua_isusertype(L, i + 2, "cc.Ref", 0, &err))
             {
                 ok = false;
@@ -510,7 +526,7 @@ bool luavals_variadic_to_ccvector( lua_State* L, int argc, cocos2d::Vector<T>* r
             ret->pushBack(obj);
         }
     }
-    
+
     return ok;
 }
 
@@ -519,23 +535,23 @@ bool luavals_variadic_to_ccvector( lua_State* L, int argc, cocos2d::Vector<T>* r
  * Get a cocos2d::Vector of type T objects from a Lua table in the stack.
  *
  * @param L the current lua_State.
- * @param lo the given accpetable index of stack.
+ * @param lo the given acceptable index of stack.
  * @param ret a cocos2d::Vector of type T objects.
  * @param funcName the name of calling function, it is used for error output in the debug model.
- * @return Return true if the value at the given accpetable index of stack is a table, otherwise return false.
+ * @return Return true if the value at the given acceptable index of stack is a table, otherwise return false.
  */
 template <class T>
 bool luaval_to_ccvector(lua_State* L, int lo , cocos2d::Vector<T>* ret, const char* funcName = "")
 {
     if (nullptr == L || nullptr == ret)
         return false;
-    
+
     bool ok = true;
-    
+
     tolua_Error tolua_err;
     if (!tolua_istable(L, lo, 0, &tolua_err) )
         ok = false;
-    
+
     if (ok)
     {
         size_t len = lua_objlen(L, lo);
@@ -543,22 +559,22 @@ bool luaval_to_ccvector(lua_State* L, int lo , cocos2d::Vector<T>* ret, const ch
         {
             lua_pushnumber(L, i + 1);
             lua_gettable(L, lo);
-            
+
             if (lua_isnil(L, -1) || !lua_isuserdata(L, -1))
             {
                 lua_pop(L, 1);
                 continue;
             }
-            
+
 
             T cobj = static_cast<T>(tolua_tousertype(L, -1, NULL) );
             if (NULL != cobj)
                 ret->pushBack(cobj);
-            
+
             lua_pop(L, 1);
         }
     }
-    
+
     return ok;
 }
 
@@ -566,10 +582,10 @@ bool luaval_to_ccvector(lua_State* L, int lo , cocos2d::Vector<T>* ret, const ch
  * Get a pointer points to a std::vector<std::string> from a Lua array table in the stack.
  *
  * @param L the current lua_State.
- * @param lo the given accpetable index of stack.
+ * @param lo the given acceptable index of stack.
  * @param ret a pointer points to a std::vector<std::string>.
  * @param funcName the name of calling function, it is used for error output in the debug model.
- * @return Return true if the value at the given accpetable index of stack is a table, otherwise return false.
+ * @return Return true if the value at the given acceptable index of stack is a table, otherwise return false.
  */
 CC_LUA_DLL bool   luaval_to_std_vector_string(lua_State* L, int lo, std::vector<std::string>* ret, const char* funcName = "");
 
@@ -577,10 +593,10 @@ CC_LUA_DLL bool   luaval_to_std_vector_string(lua_State* L, int lo, std::vector<
  * Get a pointer points to a std::vector<std::int> from a Lua array table in the stack.
  *
  * @param L the current lua_State.
- * @param lo the given accpetable index of stack.
+ * @param lo the given acceptable index of stack.
  * @param ret a pointer points to a std::vector<int>.
  * @param funcName the name of calling function, it is used for error output in the debug model.
- * @return Return true if the value at the given accpetable index of stack is a table, otherwise return false.
+ * @return Return true if the value at the given acceptable index of stack is a table, otherwise return false.
  */
 bool luaval_to_std_vector_int(lua_State* L, int lo, std::vector<int>* ret, const char* funcName = "");
 
@@ -589,17 +605,17 @@ bool luaval_to_std_vector_int(lua_State* L, int lo, std::vector<int>* ret, const
  * Get a pointer points to a cocos2d::Map whose key/value pair is string value and T object from a Lua hash-map table in the stack.
  *
  * @param L the current lua_State.
- * @param lo the given accpetable index of stack.
+ * @param lo the given acceptable index of stack.
  * @param ret a pointer points to a cocos2d::Map whose key/value pair is string value and T object.
  * @param funcName the name of calling function, it is used for error output in the debug model.
- * @return Return true if the value at the given accpetable index of stack is a table, otherwise return false.
+ * @return Return true if the value at the given acceptable index of stack is a table, otherwise return false.
  */
 template <class T>
 bool luaval_to_ccmap_string_key(lua_State* L, int lo, cocos2d::Map<std::string, T>* ret, const char* funcName = "")
 {
     if(nullptr == L || nullptr == ret || lua_gettop(L) < lo)
         return false;
-    
+
     tolua_Error tolua_err;
     bool ok = true;
     if (!tolua_istable(L, lo, 0, &tolua_err))
@@ -609,7 +625,7 @@ bool luaval_to_ccmap_string_key(lua_State* L, int lo, cocos2d::Map<std::string, 
 #endif
         ok = false;
     }
-    
+
     if (ok)
     {
         std::string stringKey = "";
@@ -621,31 +637,31 @@ bool luaval_to_ccmap_string_key(lua_State* L, int lo, cocos2d::Map<std::string, 
                 lua_pop(L, 1);                                      /* removes 'value'; keep 'key' for next iteration*/
                 continue;
             }
-            
+
             if (lua_isnil(L, -1) || !lua_isuserdata(L, -1))
             {
                 lua_pop(L, 1);
                 continue;
             }
-            
+
             luaval_to_std_string(L, -2, &stringKey);
             T obj = static_cast<T>(tolua_tousertype(L, -1, NULL) );
             if (nullptr != obj)
                 ret->insert(stringKey, obj);
-                
+
             lua_pop(L, 1);                                          /* L: lotable ..... key */
         }
     }
-    
+
     return ok;
 }
 
 /**
- * Get a cocos2d::Value object from the given accpetable index of stack.
+ * Get a cocos2d::Value object from the given acceptable index of stack.
  * The type of Lua value at the index could be a Lua table, LUA_TSTRING, LUA_TBOOLEAN and LUA_TNUMBER.
  *
  * @param L the current lua_State.
- * @param lo the given accpetable index of stack.
+ * @param lo the given acceptable index of stack.
  * @param ret a pointer points to a cocos2d::Value object.
  * @param funcName the name of calling function, it is used for error output in the debug model.
  * @return Return true if the L and ret is not nullptr,otherwise return false.
@@ -653,11 +669,11 @@ bool luaval_to_ccmap_string_key(lua_State* L, int lo, cocos2d::Map<std::string, 
 extern bool luaval_to_ccvalue(lua_State* L, int lo, cocos2d::Value* ret, const char* funcName = "");
 
 /**
- * Get a cocos2d::ValueMap object from the given accpetable index of stack.
+ * Get a cocos2d::ValueMap object from the given acceptable index of stack.
  * The type of Lua value at the index should be a Lua table.
  *
  * @param L the current lua_State.
- * @param lo the given accpetable index of stack.
+ * @param lo the given acceptable index of stack.
  * @param ret a pointer points to a cocos2d::ValueMap object.
  * @param funcName the name of calling function, it is used for error output in the debug model.
  * @return Return true if the type of Lua value at the index is a Lua table, otherwise return false.
@@ -665,11 +681,11 @@ extern bool luaval_to_ccvalue(lua_State* L, int lo, cocos2d::Value* ret, const c
 extern bool luaval_to_ccvaluemap(lua_State* L, int lo, cocos2d::ValueMap* ret, const char* funcName = "");
 
 /**
- * Get a cocos2d::ValueMapIntKey object from the given accpetable index of stack.
+ * Get a cocos2d::ValueMapIntKey object from the given acceptable index of stack.
  * The type of Lua value at the index should be a Lua table.
  *
  * @param L the current lua_State.
- * @param lo the given accpetable index of stack.
+ * @param lo the given acceptable index of stack.
  * @param ret a pointer points to a cocos2d::ValueMapIntKey object.
  * @param funcName the name of calling function, it is used for error output in the debug model.
  * @return Return true if the type of Lua value at the index is a Lua table, otherwise return false.
@@ -677,11 +693,11 @@ extern bool luaval_to_ccvaluemap(lua_State* L, int lo, cocos2d::ValueMap* ret, c
 extern bool luaval_to_ccvaluemapintkey(lua_State* L, int lo, cocos2d::ValueMapIntKey* ret, const char* funcName = "");
 
 /**
- * Get a cocos2d::ValueVector object from the given accpetable index of stack.
+ * Get a cocos2d::ValueVector object from the given acceptable index of stack.
  * The type of Lua value at the index should be a Lua array table.
  *
  * @param L the current lua_State.
- * @param lo the given accpetable index of stack.
+ * @param lo the given acceptable index of stack.
  * @param ret a pointer points to a cocos2d::ValueVector object.
  * @param funcName the name of calling function, it is used for error output in the debug model.
  * @return Return true if the type of Lua value at the index is a Lua table, otherwise return false.
@@ -690,10 +706,10 @@ extern bool luaval_to_ccvaluevector(lua_State* L, int lo, cocos2d::ValueVector* 
 
 
 /**
- * Get a Type T object from the given accpetable index of stack.
+ * Get a Type T object from the given acceptable index of stack.
  *
  * @param L the current lua_State.
- * @param lo the given accpetable index of stack.
+ * @param lo the given acceptable index of stack.
  * @param type a string pointer points to the type name.
  * @param ret the pointer points to a Type T object.
  * @return Return true if the type of Lua value at the index is a Lua userdata, otherwise return false.
@@ -703,27 +719,27 @@ bool luaval_to_object(lua_State* L, int lo, const char* type, T** ret, const cha
 {
     if(nullptr == L || lua_gettop(L) < lo)
         return false;
-    
+
     if (!luaval_is_usertype(L, lo, type, 0))
         return false;
-    
+
     *ret = static_cast<T*>(tolua_tousertype(L, lo, 0));
-    
+
     if (nullptr == *ret)
         CCLOG("Warning: %s argument %d is invalid native object(nullptr)", funcName, lo);
-    
+
     return true;
 }
 
 /**
- * Get a cocos2d::MeshVertexAttrib object value from the given accpetable index of stack.
- * If the value at the given accpetable index of stack is a table it returns true, otherwise returns false.
+ * Get a cocos2d::MeshVertexAttrib object value from the given acceptable index of stack.
+ * If the value at the given acceptable index of stack is a table it returns true, otherwise returns false.
  * If the table has the `size`, `type`, `vertexAttrib`, `vertexAttrib` and `attribSizeBytes` keys and the corresponding values are not nil, this function would assign the values to the corresponding members of outValue.
  * @param L the current lua_State.
- * @param lo the given accpetable index of stack.
+ * @param lo the given acceptable index of stack.
  * @param ret the pointer to a cocos2d::MeshVertexAttrib object which stores the values from the Lua table.
  * @param funcName the name of calling function, it is used for error output in the debug model.
- * @return Return true if the value at the given accpetable index of stack is a table, otherwise return false.
+ * @return Return true if the value at the given acceptable index of stack is a table, otherwise return false.
  */
 extern bool luaval_to_mesh_vertex_attrib(lua_State* L, int lo, cocos2d::MeshVertexAttrib* ret, const char* funcName = "");
 
@@ -731,10 +747,10 @@ extern bool luaval_to_mesh_vertex_attrib(lua_State* L, int lo, cocos2d::MeshVert
  * Get a pointer points to a std::vector<float> from a Lua array table in the stack.
  *
  * @param L the current lua_State.
- * @param lo the given accpetable index of stack.
+ * @param lo the given acceptable index of stack.
  * @param ret a pointer points to a std::vector<float>.
  * @param funcName the name of calling function, it is used for error output in the debug model.
- * @return Return true if the value at the given accpetable index of stack is a table, otherwise return false.
+ * @return Return true if the value at the given acceptable index of stack is a table, otherwise return false.
  */
 extern bool luaval_to_std_vector_float(lua_State* L, int lo, std::vector<float>* ret, const char* funcName = "");
 
@@ -742,59 +758,59 @@ extern bool luaval_to_std_vector_float(lua_State* L, int lo, std::vector<float>*
  * Get a pointer points to a std::vector<unsigned shortt> from a Lua array table in the stack.
  *
  * @param L the current lua_State.
- * @param lo the given accpetable index of stack.
+ * @param lo the given acceptable index of stack.
  * @param ret a pointer points to a std::vector<unsigned short>.
  * @param funcName the name of calling function, it is used for error output in the debug model.
- * @return Return true if the value at the given accpetable index of stack is a table, otherwise return false.
+ * @return Return true if the value at the given acceptable index of stack is a table, otherwise return false.
  */
 extern bool luaval_to_std_vector_ushort(lua_State* L, int lo, std::vector<unsigned short>* ret, const char* funcName = "");
 
 /**
- * Get a cocos2d::Quaternion object value from the given accpetable index of stack.
- * If the value at the given accpetable index of stack is a table it returns true, otherwise returns false.
+ * Get a cocos2d::Quaternion object value from the given acceptable index of stack.
+ * If the value at the given acceptable index of stack is a table it returns true, otherwise returns false.
  * If the table has the `x`, `y`, `z` and `w` keys and the corresponding values are not nil, this function would assign the values to the corresponding members of outValue.Otherwise, the value of members of outValue would be 0.
  * @param L the current lua_State.
- * @param lo the given accpetable index of stack.
+ * @param lo the given acceptable index of stack.
  * @param outValue the pointer to a cocos2d::Quaternion object which stores the values from the Lua table.
  * @param funcName the name of calling function, it is used for error output in the debug model.
- * @return true if the value at the given accpetable index of stack is a table, otherwise return false.
+ * @return true if the value at the given acceptable index of stack is a table, otherwise return false.
  */
 extern bool luaval_to_quaternion(lua_State* L,int lo,cocos2d::Quaternion* outValue, const char* funcName = "");
 
 /**
- * Get a cocos2d::Texture2D::TexParams object value from the given accpetable index of stack.
- * If the value at the given accpetable index of stack is a table it returns true, otherwise returns false.
+ * Get a cocos2d::Texture2D::TexParams object value from the given acceptable index of stack.
+ * If the value at the given acceptable index of stack is a table it returns true, otherwise returns false.
  * If the table has the `minFilter`, `magFilter`, `wrapS` and `wrapT` keys and the corresponding values are not nil, this function would assign the values to the corresponding members of outValue.Otherwise, the value of members of outValue would be 0.
  * @param L the current lua_State.
- * @param lo the given accpetable index of stack.
+ * @param lo the given acceptable index of stack.
  * @param outValue the pointer to a cocos2d::Quaternion object which stores the values from the Lua table.
  * @param funcName the name of calling function, it is used for error output in the debug model.
- * @return true if the value at the given accpetable index of stack is a table, otherwise return false.
+ * @return true if the value at the given acceptable index of stack is a table, otherwise return false.
  */
 extern bool luaval_to_texparams(lua_State* L,int lo,cocos2d::Texture2D::TexParams* outValue, const char* funcName = "");
 
 /**
- * Get a cocos2d::V3F_C4B_T2F object value from the given accpetable index of stack.
- * If the value at the given accpetable index of stack is a table it returns true, otherwise returns false.
+ * Get a cocos2d::V3F_C4B_T2F object value from the given acceptable index of stack.
+ * If the value at the given acceptable index of stack is a table it returns true, otherwise returns false.
  * If the table has the `vertices`, `colors`, and `texCoords` keys and the corresponding values are not nil, this function would assign the values to the corresponding members of outValue.
  * @param L the current lua_State.
- * @param lo the given accpetable index of stack.
+ * @param lo the given acceptable index of stack.
  * @param outValue the pointer to a cocos2d::V3F_C4B_T2F object which stores the values from the Lua table.
  * @param funcName the name of calling function, it is used for error output in the debug model.
- * @return true if the value at the given accpetable index of stack is a table, otherwise return false.
+ * @return true if the value at the given acceptable index of stack is a table, otherwise return false.
  */
 extern bool luaval_to_v3f_c4b_t2f(lua_State* L,int lo,cocos2d::V3F_C4B_T2F* outValue, const char* funcName = "");
 
 
 /**
- * Get a cocos2d::Tex2F object value from the given accpetable index of stack.
- * If the value at the given accpetable index of stack is a table it returns true, otherwise returns false.
+ * Get a cocos2d::Tex2F object value from the given acceptable index of stack.
+ * If the value at the given acceptable index of stack is a table it returns true, otherwise returns false.
  * If the table has the `u`, and `v` keys and the corresponding values are not nil, this function would assign the values to the corresponding members of outValue.Otherwise, the value of members of outValue would be 0.
  * @param L the current lua_State.
- * @param lo the given accpetable index of stack.
+ * @param lo the given acceptable index of stack.
  * @param outValue the pointer to a cocos2d::Tex2F object which stores the values from the Lua table.
  * @param funcName the name of calling function, it is used for error output in the debug model.
- * @return true if the value at the given accpetable index of stack is a table, otherwise return false.
+ * @return true if the value at the given acceptable index of stack is a table, otherwise return false.
  */
 extern bool luaval_to_tex2f(lua_State* L, int lo, cocos2d::Tex2F* outValue, const char* funcName = "");
 
@@ -802,10 +818,10 @@ extern bool luaval_to_tex2f(lua_State* L, int lo, cocos2d::Tex2F* outValue, cons
  * Get a pointer points to a std::vector<cocos2d::V3F_C4B_T2F> from a Lua array table in the stack.
  *
  * @param L the current lua_State.
- * @param lo the given accpetable index of stack.
+ * @param lo the given acceptable index of stack.
  * @param ret a pointer points to a std::vector<cocos2d::V3F_C4B_T2F>.
  * @param funcName the name of calling function, it is used for error output in the debug model.
- * @return Return true if the value at the given accpetable index of stack is a table, otherwise return false.
+ * @return Return true if the value at the given acceptable index of stack is a table, otherwise return false.
  */
 extern bool luaval_to_std_vector_v3f_c4b_t2f(lua_State* L, int lo, std::vector<cocos2d::V3F_C4B_T2F>* ret, const char* funcName = "");
 
@@ -813,10 +829,10 @@ extern bool luaval_to_std_vector_v3f_c4b_t2f(lua_State* L, int lo, std::vector<c
  * Get a pointer points to a std::vector<cocos2d::Vec2> from a Lua array table in the stack.
  *
  * @param L the current lua_State.
- * @param lo the given accpetable index of stack.
+ * @param lo the given acceptable index of stack.
  * @param ret a pointer points to a std::vector<cocos2d::Vec2>.
  * @param funcName the name of calling function, it is used for error output in the debug model.
- * @return Return true if the value at the given accpetable index of stack is a table, otherwise return false.
+ * @return Return true if the value at the given acceptable index of stack is a table, otherwise return false.
  */
 extern bool luaval_to_std_vector_vec2(lua_State* L, int lo, std::vector<cocos2d::Vec2>* ret, const char* funcName = "");
 
@@ -824,10 +840,10 @@ extern bool luaval_to_std_vector_vec2(lua_State* L, int lo, std::vector<cocos2d:
  * Get a pointer points to a std::vector<cocos2d::Vec3> from a Lua array table in the stack.
  *
  * @param L the current lua_State.
- * @param lo the given accpetable index of stack.
+ * @param lo the given acceptable index of stack.
  * @param ret a pointer points to a std::vector<cocos2d::Vec3>.
  * @param funcName the name of calling function, it is used for error output in the debug model.
- * @return Return true if the value at the given accpetable index of stack is a table, otherwise return false.
+ * @return Return true if the value at the given acceptable index of stack is a table, otherwise return false.
  */
 extern bool luaval_to_std_vector_vec3(lua_State* L, int lo, std::vector<cocos2d::Vec3>* ret, const char* funcName = "");
 
@@ -1047,16 +1063,16 @@ template <class T>
 void ccvector_to_luaval(lua_State* L,const cocos2d::Vector<T>& inValue)
 {
     lua_newtable(L);
-    
+
     if (nullptr == L)
         return;
-    
+
     int indexTable = 1;
     for (const auto& obj : inValue)
     {
         if (nullptr == obj)
             continue;
-        
+
 
         if (nullptr != dynamic_cast<cocos2d::Ref *>(obj))
         {
@@ -1087,10 +1103,10 @@ template <class T>
 void ccmap_string_key_to_luaval(lua_State* L, const cocos2d::Map<std::string, T>& v)
 {
     lua_newtable(L);
-    
+
     if(nullptr == L)
         return;
-    
+
     for (auto iter = v.begin(); iter != v.end(); ++iter)
     {
         std::string key = iter->first;
@@ -1180,7 +1196,7 @@ const char* getLuaTypeName(T* ret,const char* type)
             return type;
         }
     }
-    
+
     return nullptr;
 }
 

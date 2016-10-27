@@ -1,11 +1,11 @@
 #ifndef __CCBPROXY_H_
 #define __CCBPROXY_H_
 
-#include "cocos2d.h"
-#include "CCLuaEngine.h"
+
+#include "scripting/lua-bindings/manual/CCLuaEngine.h"
 #include "audio/include/SimpleAudioEngine.h"
 #include "extensions/cocos-ext.h"
-#include "cocosbuilder/CocosBuilder.h"
+#include "editor-support/cocosbuilder/CocosBuilder.h"
 
 USING_NS_CC;
 USING_NS_CC_EXT;
