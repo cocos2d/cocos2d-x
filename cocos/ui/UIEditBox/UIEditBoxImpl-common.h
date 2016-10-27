@@ -92,8 +92,8 @@ public:
     
     void editBoxEditingDidBegin();
     void editBoxEditingChanged(const std::string& text);
-    void editBoxEditingDidEnd(const std::string& text);
-    
+    void editBoxEditingDidEnd(const std::string& text, EditBoxDelegate::EditBoxEndAction action = EditBoxDelegate::EditBoxEndAction::UNKNOWN);
+
     virtual bool isEditing() override = 0;
     virtual void createNativeControl(const Rect& frame) = 0;
     virtual void setNativeFont(const char* pFontName, int fontSize) = 0;

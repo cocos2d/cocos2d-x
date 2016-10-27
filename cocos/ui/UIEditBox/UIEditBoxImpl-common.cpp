@@ -314,7 +314,7 @@ void EditBoxImplCommon::editBoxEditingDidBegin()
 #endif
 }
 
-void EditBoxImplCommon::editBoxEditingDidEnd(const std::string& text)
+  void EditBoxImplCommon::editBoxEditingDidEnd(const std::string& text, EditBoxDelegate::EditBoxEndAction action)
 {
     // LOGD("textFieldShouldEndEditing...");
     _text = text;
@@ -322,6 +322,7 @@ void EditBoxImplCommon::editBoxEditingDidEnd(const std::string& text)
     cocos2d::ui::EditBoxDelegate *pDelegate = _editBox->getDelegate();
     if (pDelegate != nullptr)
     {
+        pDelegate->editBoxEditingDidEndWithAction(_editBox, action);
         pDelegate->editBoxEditingDidEnd(_editBox);
         pDelegate->editBoxReturn(_editBox);
     }
