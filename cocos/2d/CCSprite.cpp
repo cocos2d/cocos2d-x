@@ -448,19 +448,27 @@ void Sprite::updatePoly()
         const float osh = _rect.size.height;
 
         // textCoords Data: Y must be inverted.
+        const float u0 = oox + osw * 0;
+        const float u1 = oox + osw * x1;
+        const float u2 = oox + osw * x2;
+        const float v0 = ooy + osh - (osh * y1);
+        const float v1 = ooy + osh * (1-y2);
+        const float v2 = ooy + osh * 0;
+
         const Rect texRects[9] = {
-            Rect(oox + osw * 0,  ooy + osh - (osh * y1),   osw * x1,      osh * y1),         // bottom-left
-            Rect(oox + osw * x1, ooy + osh - (osh * y1),   osw * (x2-x1), osh * y1),         // bottom
-            Rect(oox + osw * x2, ooy + osh - (osh * y1),   osw * (1-x2),  osh * y1),         // bottom-right
+            Rect(u0, v0,    osw * x1,      osh * y1),         // bottom-left
+            Rect(u1, v0,    osw * (x2-x1), osh * y1),         // bottom
+            Rect(u2, v0,    osw * (1-x2),  osh * y1),         // bottom-right
 
-            Rect(oox + osw * 0,  ooy + osh * (1-y2),       osw * x1,      osh * (y2-y1)),    // left
-            Rect(oox + osw * x1, ooy + osh * (1-y2),       osw * (x2-x1), osh * (y2-y1)),    // center
-            Rect(oox + osw * x2, ooy + osh * (1-y2),       osw * (1-x2),  osh * (y2-y1)),    // right
+            Rect(u0, v1,    osw * x1,      osh * (y2-y1)),    // left
+            Rect(u1, v1,    osw * (x2-x1), osh * (y2-y1)),    // center
+            Rect(u2, v1,    osw * (1-x2),  osh * (y2-y1)),    // right
 
-            Rect(oox + osw * 0,  ooy + osh * 0,            osw * x1,      osh * (1-y2)),     // top-left
-            Rect(oox + osw * x1, ooy + osh * 0,            osw * (x2-x1), osh * (1-y2)),     // top
-            Rect(oox + osw * x2, ooy + osh * 0,            osw * (1-x2),  osh * (1-y2)),     // top-right
+            Rect(u0, v2,    osw * x1,      osh * (1-y2)),     // top-left
+            Rect(u1, v2,    osw * (x2-x1), osh * (1-y2)),     // top
+            Rect(u2, v2,    osw * (1-x2),  osh * (1-y2)),     // top-right
         };
+
         // vertex Data.
         const float x2_x1_strech = osw * (x2-x1) * _strechFactor.x;
         const float y2_y1_strech = osh * (y2-y1) * _strechFactor.y;
@@ -478,8 +486,10 @@ void Sprite::updatePoly()
             Rect(osw * x1 + x2_x1_strech, osh * y1 + y2_y1_strech,  osw * (1-x2),  osh * (1-y2)),   // top-right
         };
 
+        const int rotatedIdx[] = {6, 3, 0, 7, 4, 1, 8, 5, 2};
         for (int i=0; i<_numberOfSlices; ++i) {
-            setTextureCoords(texRects[i], &_quads[i]);
+            const int texIdx = _rectRotated ? rotatedIdx[i] : i;
+            setTextureCoords(texRects[texIdx], &_quads[i]);
             setVertexCoords(verticesRects[i], _rect.size, &_quads[i]);
         }
         _polyInfo.setQuads(_quads, _numberOfSlices);
@@ -587,9 +597,9 @@ void Sprite::setTextureCoords(const Rect& rectInPoints, V3F_C4B_T2F_Quad* outQua
         bottom  = top+(rectInPixels.size.width*2-2) / (2*atlasHeight);
 #else
         left    = rectInPixels.origin.x / atlasWidth;
-        right   = (rectInPixels.origin.x+rectInPixels.size.height) / atlasWidth;
+        right   = (rectInPixels.origin.x + rectInPixels.size.height) / atlasWidth;
         top     = rectInPixels.origin.y / atlasHeight;
-        bottom  = (rectInPixels.origin.y+rectInPixels.size.width) / atlasHeight;
+        bottom  = (rectInPixels.origin.y + rectInPixels.size.width) / atlasHeight;
 #endif // CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
 
         if (_flippedX)
