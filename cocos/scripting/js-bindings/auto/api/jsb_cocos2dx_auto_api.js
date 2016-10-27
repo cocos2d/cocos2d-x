@@ -848,6 +848,16 @@ func
 },
 
 /**
+ * @method setActionManager
+ * @param {cc.ActionManager} arg0
+ */
+setActionManager : function (
+actionmanager 
+)
+{
+},
+
+/**
  * @method isIgnoreAnchorPointForPosition
  * @return {bool}
  */
@@ -1248,6 +1258,16 @@ getOnEnterCallback : function (
 },
 
 /**
+ * @method setPositionNormalized
+ * @param {vec2_object} arg0
+ */
+setPositionNormalized : function (
+vec2 
+)
+{
+},
+
+/**
  * @method isOpacityModifyRGB
  * @return {bool}
  */
@@ -1644,13 +1664,13 @@ getScheduler : function(
 },
 
 /**
- * @method setActionManager
- * @param {cc.ActionManager} arg0
+ * @method getPositionNormalized
+ * @return {vec2_object}
  */
-setActionManager : function (
-actionmanager 
+getPositionNormalized : function (
 )
 {
+    return cc.Vec2;
 },
 
 /**
@@ -4375,6 +4395,16 @@ vec2
 },
 
 /**
+ * @method getCapInsets
+ * @return {rect_object}
+ */
+getCapInsets : function (
+)
+{
+    return cc.Rect;
+},
+
+/**
  * @method getOriginalSizeInPixels
  * @return {size_object}
  */
@@ -4515,6 +4545,16 @@ isRotated : function (
 },
 
 /**
+ * @method hasCenterRect
+ * @return {bool}
+ */
+hasCenterRect : function (
+)
+{
+    return false;
+},
+
+/**
  * @method setRotated
  * @param {bool} arg0
  */
@@ -4552,6 +4592,16 @@ getAnchorPoint : function (
 )
 {
     return cc.Vec2;
+},
+
+/**
+ * @method setCapInsets
+ * @param {rect_object} arg0
+ */
+setCapInsets : function (
+rect 
+)
+{
 },
 
 /**
@@ -17152,6 +17202,16 @@ float
 },
 
 /**
+ * @method getCapInsets
+ * @return {rect_object}
+ */
+getCapInsets : function (
+)
+{
+    return cc.Rect;
+},
+
+/**
  * @method getResourceType
  * @return {int}
  */
@@ -17208,6 +17268,16 @@ bool
 },
 
 /**
+ * @method isFlippedX
+ * @return {bool}
+ */
+isFlippedX : function (
+)
+{
+    return false;
+},
+
+/**
  * @method setTextureRect
 * @param {rect_object|rect_object} rect
 * @param {bool} bool
@@ -17234,6 +17304,16 @@ str
 },
 
 /**
+ * @method isFlippedY
+ * @return {bool}
+ */
+isFlippedY : function (
+)
+{
+    return false;
+},
+
+/**
  * @method isFrameDisplayed
  * @param {cc.SpriteFrame} arg0
  * @return {bool}
@@ -17253,6 +17333,16 @@ getAtlasIndex : function (
 )
 {
     return 0;
+},
+
+/**
+ * @method getCapInsetsNormalized
+ * @return {rect_object}
+ */
+getCapInsetsNormalized : function (
+)
+{
+    return cc.Rect;
 },
 
 /**
@@ -17414,23 +17504,23 @@ spriteframe
 },
 
 /**
- * @method isFlippedX
- * @return {bool}
+ * @method setCapInsets
+ * @param {rect_object} arg0
  */
-isFlippedX : function (
+setCapInsets : function (
+rect 
 )
 {
-    return false;
 },
 
 /**
- * @method isFlippedY
- * @return {bool}
+ * @method setCapInsetsNormalized
+ * @param {rect_object} arg0
  */
-isFlippedY : function (
+setCapInsetsNormalized : function (
+rect 
 )
 {
-    return false;
 },
 
 /**

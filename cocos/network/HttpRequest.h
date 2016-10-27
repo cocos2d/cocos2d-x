@@ -292,7 +292,6 @@ public:
         _prxy( SEL_HttpResponse cb ) :_cb(cb) {}
         /** Destructor. */
         ~_prxy(){};
-        /** Destructor. */
         operator SEL_HttpResponse() const { return _cb; }
         CC_DEPRECATED_ATTRIBUTE operator SEL_CallFuncND()   const { return (SEL_CallFuncND) _cb; }
     protected:
@@ -325,9 +324,9 @@ public:
      * @param headers The string vector of custom-defined headers.
      */
     void setHeaders(const std::vector<std::string>& headers)
-       {
-           _headers = headers;
-       }
+    {
+        _headers = headers;
+    }
 
     /**
      * Get custom headers.
@@ -365,7 +364,7 @@ protected:
     SEL_HttpResponse            _pSelector;      /// callback function, e.g. MyLayer::onHttpResponse(HttpClient *sender, HttpResponse * response)
     ccHttpRequestCallback       _pCallback;      /// C++11 style callbacks
     void*                       _pUserData;      /// You can add your customed data here
-    std::vector<std::string>    _headers;              /// custom http headers
+    std::vector<std::string>    _headers;        /// custom http headers
 };
 
 }

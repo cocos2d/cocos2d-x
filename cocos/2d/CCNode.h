@@ -339,7 +339,9 @@ public:
      *
      * @param position The normalized position (x,y) of the node, using value between 0 and 1.
      */
-    virtual void setNormalizedPosition(const Vec2 &position);
+    virtual void setPositionNormalized(const Vec2 &position);
+    // FIXME: should get deprecated in v4.0
+    virtual void setNormalizedPosition(const Vec2 &position) { setPositionNormalized(position); }
 
     /**
      * Gets the position (x,y) of the node in its parent's coordinate system.
@@ -357,7 +359,9 @@ public:
      * 
      * @return The normalized position.
      */
-    virtual const Vec2& getNormalizedPosition() const;
+    virtual const Vec2& getPositionNormalized() const;
+    // FIXME: should get deprecated in v4.0
+    virtual const Vec2& getNormalizedPosition() const { return getPositionNormalized(); }
 
     /**
      * Sets the position (x,y) of the node in its parent's coordinate system.

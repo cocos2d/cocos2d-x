@@ -1139,7 +1139,7 @@ NodeNormalizedPositionTest1::NodeNormalizedPositionTest1()
 
     for(int i=0; i<5; i++) {
         sprites[i] = Sprite::create("Images/grossini.png");
-        sprites[i]->setNormalizedPosition(positions[i]);
+        sprites[i]->setPositionNormalized(positions[i]);
         addChild(sprites[i]);
     }
 }
@@ -1172,7 +1172,7 @@ NodeNormalizedPositionTest2::NodeNormalizedPositionTest2()
 
     for(int i=0; i<5; i++) {
         sprites[i] = Sprite::create("Images/grossini.png");
-        sprites[i]->setNormalizedPosition(positions[i]);
+        sprites[i]->setPositionNormalized(positions[i]);
         addChild(sprites[i]);
     }
     scheduleUpdate();
@@ -1181,7 +1181,7 @@ NodeNormalizedPositionTest2::NodeNormalizedPositionTest2()
     _copyContentSize = getContentSize();
 
 //    setAnchorPoint(Vec2(0.5,0.5));
-//    setNormalizedPosition(Vec2(0.5,0.5));
+//    setPositionNormalized(Vec2(0.5,0.5));
 }
 
 std::string NodeNormalizedPositionTest2::title() const
@@ -1221,7 +1221,7 @@ NodeNormalizedPositionBugTest::NodeNormalizedPositionBugTest()
 
     
     sprite = Sprite::create("Images/grossini.png");
-    sprite->setNormalizedPosition(position);
+    sprite->setPositionNormalized(position);
     addChild(sprite);
     
     scheduleUpdate();
@@ -1243,7 +1243,7 @@ void NodeNormalizedPositionBugTest::update(float dt)
     
     // for 5 seconds
     float norm = clampf(sinf(_accum), 0, 1.0);
-    sprite->setNormalizedPosition(Vec2(norm,norm));
+    sprite->setPositionNormalized(Vec2(norm,norm));
 }
 
 std::string NodeNameTest::title() const

@@ -130,9 +130,9 @@ CC_CONSTRUCTOR_ACCESS: \
     CLASSNAME() { } \
 public: \
     static CLASSNAME* create(ActionInterval* action); \
-    CLASSNAME* clone() const override; \
-    void update(float time) override; \
-    ActionEase* reverse() const override; \
+    virtual CLASSNAME* clone() const override; \
+    virtual void update(float time) override; \
+    virtual ActionEase* reverse() const override; \
 private: \
     CC_DISALLOW_COPY_AND_ASSIGN(CLASSNAME); \
 };
@@ -379,9 +379,9 @@ CC_CONSTRUCTOR_ACCESS: \
     CLASSNAME() { } \
 public: \
     static CLASSNAME* create(ActionInterval* action, float rate); \
-    CLASSNAME* clone() const override; \
-    void update(float time) override; \
-    EaseRateAction* reverse() const override; \
+    virtual CLASSNAME* clone() const override; \
+    virtual void update(float time) override; \
+    virtual EaseRateAction* reverse() const override; \
 private: \
     CC_DISALLOW_COPY_AND_ASSIGN(CLASSNAME); \
 };
@@ -466,9 +466,9 @@ CC_CONSTRUCTOR_ACCESS: \
     CLASSNAME() { } \
 public: \
     static CLASSNAME* create(ActionInterval* action, float rate = 0.3f); \
-    CLASSNAME* clone() const override; \
-    void update(float time) override; \
-    EaseElastic* reverse() const override; \
+    virtual CLASSNAME* clone() const override; \
+    virtual void update(float time) override; \
+    virtual EaseElastic* reverse() const override; \
 private: \
     CC_DISALLOW_COPY_AND_ASSIGN(CLASSNAME); \
 };

@@ -97,7 +97,7 @@ Sprite3DForceDepthTest::Sprite3DForceDepthTest()
 {
     auto orc = cocos2d::Sprite3D::create("Sprite3DTest/orc.c3b");
     orc->setScale(5);
-    orc->setNormalizedPosition(Vec2(.5f,.3f));
+    orc->setPositionNormalized(Vec2(.5f,.3f));
     orc->setPositionZ(40);
     orc->setRotation3D(Vec3(0,180,0));
     orc->setGlobalZOrder(-1);
@@ -107,7 +107,7 @@ Sprite3DForceDepthTest::Sprite3DForceDepthTest()
     auto ship = Sprite3D::create("Sprite3DTest/boss1.obj");
     ship->setScale(5);
     ship->setTexture("Sprite3DTest/boss.png");
-    ship->setNormalizedPosition(Vec2(.5,.5));
+    ship->setPositionNormalized(Vec2(.5,.5));
     ship->setRotation3D(Vec3(90,0,0));
     ship->setForceDepthWrite(true);
     
@@ -132,7 +132,7 @@ std::string Sprite3DForceDepthTest::subtitle() const
 Sprite3DEmptyTest::Sprite3DEmptyTest()
 {
     auto s = Sprite3D::create();
-    s->setNormalizedPosition(Vec2(.5,.5));
+    s->setPositionNormalized(Vec2(.5,.5));
     auto l = Label::create();
     l->setString("Test");
     s->addChild(l);

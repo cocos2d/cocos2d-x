@@ -47,10 +47,8 @@ void HttpCookie::readFile()
 
         _cookies.clear();
 
-        for(auto iter = cookiesVec.begin();iter != cookiesVec.end(); iter++)
+        for(auto& cookie : cookiesVec)
         {
-            std::string cookie = *iter;
-
             if(cookie.length() == 0)
                 continue;
 
@@ -95,10 +93,10 @@ const std::vector<CookiesInfo>* HttpCookie::getCookies() const
 
 const CookiesInfo* HttpCookie::getMatchCookie(const std::string& url) const
 {
-    for(auto iter = _cookies.begin(); iter != _cookies.end(); iter++)
+    for(auto& cookie : _cookies)
     {
-        if(url.find(iter->domain) != std::string::npos)
-            return &(*iter);
+        if(url.find(cookie.domain) != std::string::npos)
+            return &cookie;
     }
 
     return nullptr;
@@ -106,11 +104,11 @@ const CookiesInfo* HttpCookie::getMatchCookie(const std::string& url) const
 
 void HttpCookie::updateOrAddCookie(CookiesInfo* cookie)
 {
-    for(auto iter = _cookies.begin(); iter != _cookies.end(); iter++)
+    for(auto& _cookie : _cookies)
     {
-        if(cookie->domain == iter->domain)
+        if(cookie->domain == _cookie.domain)
         {
-            *iter = *cookie;
+            _cookie = *cookie;
             return;
         }
     }
@@ -128,22 +126,22 @@ void HttpCookie::writeFile()
           out);
 
     std::string line;
-    for(auto iter = _cookies.begin(); iter != _cookies.end(); iter++)
+    for(auto& cookie : _cookies)
     {
         line.clear();
-        line.append(iter->domain);
+        line.append(cookie.domain);
         line.append(1, '\t');
-        iter->tailmatch ? line.append("TRUE") : line.append("FALSE");
+        cookie.tailmatch ? line.append("TRUE") : line.append("FALSE");
         line.append(1, '\t');
-        line.append(iter->path);
+        line.append(cookie.path);
         line.append(1, '\t');
-        iter->secure ? line.append("TRUE") : line.append("FALSE");
+        cookie.secure ? line.append("TRUE") : line.append("FALSE");
         line.append(1, '\t');
-        line.append(iter->expires);
+        line.append(cookie.expires);
         line.append(1, '\t');
-        line.append(iter->name);
+        line.append(cookie.name);
         line.append(1, '\t');
-        line.append(iter->value);
+        line.append(cookie.value);
         //line.append(1, '\n');
 
         fprintf(out, "%s\n", line.c_str());

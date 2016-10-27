@@ -279,17 +279,17 @@ public:
      * @js NA
      * @lua NA
      */
-    void startElement(void *ctx, const char *name, const char **atts);
+    void startElement(void *ctx, const char *name, const char **atts) override;
     /**
      * @js NA
      * @lua NA
      */
-    void endElement(void *ctx, const char *name);
+    void endElement(void *ctx, const char *name) override;
     /**
      * @js NA
      * @lua NA
      */
-    void textHandler(void *ctx, const char *ch, int len);
+    void textHandler(void *ctx, const char *ch, size_t len) override;
     
     const std::string& getCurrentString() const { return _currentString; }
     void setCurrentString(const std::string& currentString){ _currentString = currentString; }

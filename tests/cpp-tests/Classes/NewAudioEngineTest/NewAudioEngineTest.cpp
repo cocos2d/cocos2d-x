@@ -464,7 +464,7 @@ bool PlaySimultaneouslyTest::init()
         }
         log("diff time:%lf",utils::gettime() - startTime);
     });
-    playItem->setNormalizedPosition(Vec2(0.5f,0.5f));
+    playItem->setPositionNormalized(Vec2(0.5f,0.5f));
     this->addChild(playItem);
     _playItem = playItem;
     
@@ -525,7 +525,7 @@ bool AudioProfileTest::init()
             
         });
         playItem->setTag(index);
-        playItem->setNormalizedPosition(pos);
+        playItem->setPositionNormalized(pos);
         this->addChild(playItem);
         pos.y -= 0.15f;
         
@@ -547,7 +547,7 @@ bool AudioProfileTest::init()
     
     auto timeSlider = SliderEx::create();
     timeSlider->setEnabled(false);
-    timeSlider->setNormalizedPosition(pos);
+    timeSlider->setPositionNormalized(pos);
     addChild(timeSlider);
     _timeSlider = timeSlider;
     
@@ -591,13 +591,13 @@ bool InvalidAudioFileTest::init()
         AudioEngine::play2d("background.caf"); 
 #endif
     });
-    playItem->setNormalizedPosition(Vec2(0.5f, 0.6f));
+    playItem->setPositionNormalized(Vec2(0.5f, 0.6f));
     this->addChild(playItem);
     
     auto playItem2 = TextButton::create("play not-existent file", [&](TextButton* button){
         AudioEngine::play2d("not-existent file.mp3");
     });
-    playItem2->setNormalizedPosition(Vec2(0.5f, 0.4f));
+    playItem2->setPositionNormalized(Vec2(0.5f, 0.4f));
     this->addChild(playItem2);
     
     return ret;
@@ -625,7 +625,7 @@ bool LargeAudioFileTest::init()
     auto playItem = TextButton::create("play large audio file", [&](TextButton* button){
         AudioEngine::play2d("audio/LuckyDay.mp3");
     });
-    playItem->setNormalizedPosition(Vec2::ANCHOR_MIDDLE);
+    playItem->setPositionNormalized(Vec2::ANCHOR_MIDDLE);
     this->addChild(playItem);
     
     return ret;

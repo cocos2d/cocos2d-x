@@ -44,6 +44,7 @@ set(COCOS_PLATFORM_SPECIFIC_SRC
   platform/apple/CCLock-apple.cpp
   platform/apple/CCFileUtils-apple.mm
   platform/apple/CCThread-apple.mm
+  platform/apple/CCDevice-apple.mm
   platform/desktop/CCGLViewImpl-desktop.cpp
 )
 

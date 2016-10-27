@@ -148,7 +148,7 @@ CLASSNAME* CLASSNAME::create(cocos2d::ActionInterval *action) \
 } \
 CLASSNAME* CLASSNAME::clone() const \
 { \
-    if(_inner) return CLASSNAME::create(_inner); \
+    if(_inner) return CLASSNAME::create(_inner->clone()); \
     return nullptr; \
 } \
 void CLASSNAME::update(float time) { \
@@ -205,7 +205,7 @@ CLASSNAME* CLASSNAME::create(cocos2d::ActionInterval *action, float rate) \
 } \
 CLASSNAME* CLASSNAME::clone() const \
 { \
-    if(_inner) return CLASSNAME::create(_inner, _rate); \
+    if(_inner) return CLASSNAME::create(_inner->clone(), _rate); \
     return nullptr; \
 } \
 void CLASSNAME::update(float time) { \
@@ -254,7 +254,7 @@ CLASSNAME* CLASSNAME::create(cocos2d::ActionInterval *action, float period /* = 
 } \
 CLASSNAME* CLASSNAME::clone() const \
 { \
-    if(_inner) return CLASSNAME::create(_inner, _period); \
+    if(_inner) return CLASSNAME::create(_inner->clone(), _period); \
     return nullptr; \
 } \
 void CLASSNAME::update(float time) { \

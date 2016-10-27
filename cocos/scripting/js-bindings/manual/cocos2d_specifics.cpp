@@ -4713,7 +4713,7 @@ void __JSPlistDelegator::endElement(void *ctx, const char *name) {
     }
 }
 
-void __JSPlistDelegator::textHandler(void *ctx, const char *ch, int len) {
+void __JSPlistDelegator::textHandler(void *ctx, const char *ch, size_t len) {
     CC_UNUSED_PARAM(ctx);
     std::string text((char*)ch, 0, len);
 
@@ -5524,7 +5524,7 @@ bool js_get_PolygonInfo_rect(JSContext* cx, uint32_t argc, jsval* vp)
     cocos2d::PolygonInfo* cobj = (cocos2d::PolygonInfo *)(proxy ? proxy->ptr : nullptr);
     if (cobj)
     {
-        jsval ret = ccrect_to_jsval(cx, cobj->rect);
+        jsval ret = ccrect_to_jsval(cx, cobj->getRect());
 
         if (ret != JSVAL_NULL)
         {
@@ -5546,7 +5546,9 @@ bool js_set_PolygonInfo_rect(JSContext* cx, uint32_t argc, jsval* vp)
     if (cobj)
     {
         JS::RootedValue jsrect(cx, args.get(0));
-        jsval_to_ccrect(cx, jsrect, &cobj->rect);
+        Rect rectOut;
+        jsval_to_ccrect(cx, jsrect, &rectOut);
+        cobj->setRect(rectOut);
         return true;
     }
     JS_ReportError(cx, "js_set_PolygonInfo_rect : Invalid native object.");
@@ -5562,7 +5564,7 @@ bool js_get_PolygonInfo_filename(JSContext* cx, uint32_t argc, jsval* vp)
     cocos2d::PolygonInfo* cobj = (cocos2d::PolygonInfo *)(proxy ? proxy->ptr : nullptr);
     if (cobj)
     {
-        jsval ret = std_string_to_jsval(cx, cobj->filename);
+        jsval ret = std_string_to_jsval(cx, cobj->getFilename());
 
         if (ret != JSVAL_NULL)
         {
@@ -5584,7 +5586,9 @@ bool js_set_PolygonInfo_filename(JSContext* cx, uint32_t argc, jsval* vp)
     if (cobj)
     {
         JS::RootedValue jsstr(cx, args.get(0));
-        jsval_to_std_string(cx, jsstr, &cobj->filename);
+        std::string outFilename;
+        jsval_to_std_string(cx, jsstr, &outFilename);
+        cobj->setFilename(outFilename);
         return true;
     }
     JS_ReportError(cx, "js_set_PolygonInfo_filename : Invalid native object.");

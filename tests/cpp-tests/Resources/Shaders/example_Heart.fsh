@@ -9,7 +9,7 @@ uniform vec2 resolution;
 
 void main(void)
 {
-		float time = CC_Time[1];
+    float time = CC_Time[1];
     vec2 p = 2.0 * (gl_FragCoord.xy - center.xy) / resolution.xy;
 
     // animate

@@ -81,6 +81,15 @@ public:
     void setQuad(V3F_C4B_T2F_Quad *quad);
 
     /**
+     * set the data to be a pointer to a number of Quads
+     * the member verts will not be released when this PolygonInfo destructs
+     * as the verts memory are managed by other objects
+     * @param quad  a pointer to the V3F_C4B_T2F_Quad quads
+     */
+    void setQuads(V3F_C4B_T2F_Quad *quads, int numberOfQuads);
+
+
+    /**
      * set the data to be a pointer to a triangles
      * the member verts will not be released when this PolygonInfo destructs
      * as the verts memory are managed by other objects
@@ -108,13 +117,20 @@ public:
      * @return sum of all triangle area size
      */
     float getArea() const;
-    
-    Rect rect;
-    std::string filename;
+
+    const Rect& getRect() const { return _rect; }
+    void setRect(const Rect& rect) { _rect = rect; }
+    const std::string& getFilename() const { return _filename; }
+    void setFilename(const std::string& filename ) { _filename = filename; }
+
+    // FIXME: this should be a property, not a public ivar
     TrianglesCommand::Triangles triangles;
+
 protected:
-    bool isVertsOwner;
-    
+    bool _isVertsOwner;
+    Rect _rect;
+    std::string _filename;
+
 private:
     void releaseVertsAndIndices();
 };
@@ -158,7 +174,7 @@ public:
     
     /**
      * reduce the amount of points so its faster for GPU to process and draw
-     * based on Ramer-Douglas-Puecker algorithm
+     * based on Ramer-Douglas-Peucker algorithm
      * @param   points  a vector of Vec2 points as input
      * @param   rect    a texture rect for specify an area of the image to avoid over reduction
      * @param   epsilon the perpendicular distance where points smaller than this value will be discarded

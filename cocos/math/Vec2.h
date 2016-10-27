@@ -350,7 +350,7 @@ public:
      * @param v The vector to add.
      * @return The vector sum.
      */
-    inline const Vec2 operator+(const Vec2& v) const;
+    inline Vec2 operator+(const Vec2& v) const;
 
     /**
      * Adds the given vector to this vector.
@@ -368,7 +368,7 @@ public:
      * @param v The vector to add.
      * @return The vector sum.
      */
-    inline const Vec2 operator-(const Vec2& v) const;
+    inline Vec2 operator-(const Vec2& v) const;
 
     /**
      * Subtracts the given vector from this vector.
@@ -385,7 +385,7 @@ public:
      * 
      * @return The negation of this vector.
      */
-    inline const Vec2 operator-() const;
+    inline Vec2 operator-() const;
 
     /**
      * Calculates the scalar product of this vector with the given value.
@@ -395,7 +395,7 @@ public:
      * @param s The value to scale by.
      * @return The scaled vector.
      */
-    inline const Vec2 operator*(float s) const;
+    inline Vec2 operator*(float s) const;
 
     /**
      * Scales this vector by the given value.
@@ -413,7 +413,7 @@ public:
      * @param s the constant to divide this vector with
      * @return a smaller vector
      */
-    inline const Vec2 operator/(float s) const;
+    inline Vec2 operator/(float s) const;
 
     /**
      * Determines if this vector is less than the given vector.
@@ -755,7 +755,7 @@ public:
  * @param v The vector to scale.
  * @return The scaled vector.
  */
-inline const Vec2 operator*(float x, const Vec2& v);
+inline Vec2 operator*(float x, const Vec2& v);
 
 typedef Vec2 Point;
 

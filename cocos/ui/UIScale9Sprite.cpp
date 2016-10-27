@@ -483,11 +483,9 @@ namespace ui {
         }
 
         applyBlendFunc();
-        if (getGLProgramState()) {
-            _scale9Image->setGLProgramState(getGLProgramState());
-        } else {
-            this->setState(_brightState);
-        }
+
+        this->setState(_brightState);
+
         if(this->_isPatch9)
         {
             size.width = size.width - 2;
@@ -500,10 +498,11 @@ namespace ui {
     
     void Scale9Sprite::configureSimpleModeRendering()
     {
-        this->setInsetTop(0);
-        this->setInsetBottom(0);
-        this->setInsetLeft(0);
-        this->setInsetRight(0);
+        this->_insetLeft = 0;
+        this->_insetTop = 0;
+        this->_insetRight = 0;
+        this->_insetBottom = 0;
+        this->updateCapInset();
     }
 
     void Scale9Sprite::createSlicedSprites()
@@ -594,17 +593,20 @@ namespace ui {
 
     void Scale9Sprite::setState(cocos2d::ui::Scale9Sprite::State state)
     {
+        auto getScale9ImageTexture = [this] {
+            return _scale9Image != nullptr ? _scale9Image->getTexture() : nullptr;
+        };
         GLProgramState *glState = nullptr;
         switch (state)
         {
         case State::NORMAL:
         {
-            glState = GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP, _scale9Image != nullptr ? _scale9Image->getTexture() : nullptr);
+            glState = GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP, getScale9ImageTexture());
         }
         break;
         case State::GRAY:
         {
-            glState = GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_GRAYSCALE, _scale9Image != nullptr ? _scale9Image->getTexture() : nullptr);
+            glState = GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_GRAYSCALE, getScale9ImageTexture());
         }
         default:
             break;
@@ -777,7 +779,7 @@ namespace ui {
         //
         // draw children and protectedChildren zOrder < 0
         //
-        for( ; i < _children.size(); i++ )
+        for(auto size = _children.size(); i < size; i++)
         {
             auto node = _children.at(i);
 
@@ -802,7 +804,7 @@ namespace ui {
             _scale9Image->visit(renderer, _modelViewTransform, flags);
         }
 
-        for(auto it=_children.cbegin()+i; it != _children.cend(); ++it)
+        for(auto it=_children.cbegin()+i, itCend = _children.cend(); it != itCend; ++it)
             (*it)->visit(renderer, _modelViewTransform, flags);
 
         // FIX ME: Why need to set _orderOfArrival to 0??

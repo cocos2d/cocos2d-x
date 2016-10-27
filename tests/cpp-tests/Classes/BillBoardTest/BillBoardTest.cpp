@@ -48,7 +48,7 @@ BillBoardTests::BillBoardTests()
 BillBoardRotationTest::BillBoardRotationTest()
 {
     auto root = Sprite3D::create();
-    root->setNormalizedPosition(Vec2(.5,.25));
+    root->setPositionNormalized(Vec2(.5,.25));
     addChild(root);
     
     auto model = Sprite3D::create("Sprite3DTest/orc.c3b");

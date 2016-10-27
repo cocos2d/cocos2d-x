@@ -98,7 +98,7 @@ public:
     std::vector<Mesh*> getMeshArrayByName(const std::string& name) const;
 
     /**get mesh*/
-    Mesh* getMesh() const { return _meshes.at(0); }
+    Mesh* getMesh() const;
     
     /** get mesh count */
     ssize_t getMeshCount() const { return _meshes.size(); }

@@ -68,19 +68,6 @@ static Vec2 cpVert2Point(const cpVect &vert)
     return Vec2(vert.x, vert.y);
 }
 
-static Vec2* cpVertArray2ccpArrayN(const cpVect* cpVertArray, unsigned int count)
-{
-    if (count == 0) return nullptr;
-    Vec2* pPoints = new (std::nothrow) Vec2[count];
-    
-    for (unsigned int i = 0; i < count; ++i)
-    {
-        pPoints[i].x = cpVertArray[i].x;
-        pPoints[i].y = cpVertArray[i].y;
-    }
-    return pPoints;
-}
-
 static void DrawShape(cpShape *shape, DrawNode *renderer)
 {
     cpBody *body = cpShapeGetBody(shape);
