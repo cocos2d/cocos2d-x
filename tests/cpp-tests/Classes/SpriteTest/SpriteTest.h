@@ -802,6 +802,15 @@ protected:
     cocos2d::Vec3 rotation;
 };
 
+class SpriteGetSpriteFrameTest : public SpriteTestDemo
+{
+public:
+    CREATE_FUNC(SpriteGetSpriteFrameTest);
+    SpriteGetSpriteFrameTest();
+    virtual std::string title() const override { return "getSpriteFrameTest()"; };
+    virtual std::string subtitle() const override { return "Testing it"; }
+};
+
 class SpriteSlice9Test1 : public SpriteTestDemo
 {
 public:
@@ -875,6 +884,24 @@ public:
     SpriteSlice9Test7();
     virtual std::string title() const override { return "Slice 9 Test #7"; };
     virtual std::string subtitle() const override { return "Testing offset"; }
+};
+
+class SpriteSlice9Test8 : public SpriteTestDemo
+{
+public:
+    CREATE_FUNC(SpriteSlice9Test8);
+    SpriteSlice9Test8();
+    virtual std::string title() const override { return "Slice 9 Test #8"; };
+    virtual std::string subtitle() const override { return "Testing flipX, flipY"; }
+};
+
+class SpriteSlice9Test9 : public SpriteTestDemo
+{
+public:
+    CREATE_FUNC(SpriteSlice9Test9);
+    SpriteSlice9Test9();
+    virtual std::string title() const override { return "Slice 9 Test #9"; };
+    virtual std::string subtitle() const override { return "Testing rotated frames"; }
 };
 
 #endif

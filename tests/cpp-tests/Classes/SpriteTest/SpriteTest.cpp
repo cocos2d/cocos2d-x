@@ -125,6 +125,7 @@ SpriteTests::SpriteTests()
     ADD_TEST_CASE(SpriteCullTest1);
     ADD_TEST_CASE(SpriteCullTest2);
     ADD_TEST_CASE(Sprite3DRotationTest);
+    ADD_TEST_CASE(SpriteGetSpriteFrameTest);
     ADD_TEST_CASE(SpriteSlice9Test1);
     ADD_TEST_CASE(SpriteSlice9Test2);
     ADD_TEST_CASE(SpriteSlice9Test3);
@@ -132,6 +133,8 @@ SpriteTests::SpriteTests()
     ADD_TEST_CASE(SpriteSlice9Test5);
     ADD_TEST_CASE(SpriteSlice9Test6);
     ADD_TEST_CASE(SpriteSlice9Test7);
+    ADD_TEST_CASE(SpriteSlice9Test8);
+    ADD_TEST_CASE(SpriteSlice9Test9);
 };
 
 //------------------------------------------------------------------
@@ -1345,10 +1348,10 @@ void SpriteFlip::flipSprites(float dt)
     bool x = sprite1->isFlippedX();
     bool y = sprite2->isFlippedY();
     
-    CCLOG("Pre: %f", sprite1->getContentSize().height);
+    CCLOG("Pre: %g", sprite1->getContentSize().height);
     sprite1->setFlippedX(!x);
     sprite2->setFlippedY(!y);
-    CCLOG("Post: %f", sprite1->getContentSize().height);
+    CCLOG("Post: %g", sprite1->getContentSize().height);
 }
 
 std::string SpriteFlip::title() const
@@ -1394,10 +1397,10 @@ void SpriteBatchNodeFlip::flipSprites(float dt)
     bool x = sprite1->isFlippedX();
     bool y = sprite2->isFlippedY();
     
-    CCLOG("Pre: %f", sprite1->getContentSize().height);
+    CCLOG("Pre: %g", sprite1->getContentSize().height);
     sprite1->setFlippedX(!x);
     sprite2->setFlippedY(!y);
-    CCLOG("Post: %f", sprite1->getContentSize().height);
+    CCLOG("Post: %g", sprite1->getContentSize().height);
 }
 
 std::string SpriteBatchNodeFlip::title() const
@@ -5190,6 +5193,43 @@ Sprite3DRotationTest::Sprite3DRotationTest()
 
 //------------------------------------------------------------------
 //
+// Sprite::getSpriteFrame() test
+//
+//------------------------------------------------------------------
+SpriteGetSpriteFrameTest::SpriteGetSpriteFrameTest()
+{
+    Size s = Director::getInstance()->getVisibleSize();
+
+    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("animations/grossini_family.plist");
+    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("animations/grossini.plist");
+
+
+    //Create reference sprite that's rotating based on there anchor point
+    auto s1 = Sprite::createWithSpriteFrameName("grossini.png");
+    addChild(s1);
+    s1->getTexture()->setAliasTexParameters();
+    s1->setPosition(s.width/2-s.width/3, s.height/2);
+    s1->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+    s1->setContentSize(s1->getContentSize()*2);
+    s1->setSpriteFrame(s1->getSpriteFrame());
+
+    //Create reference sprite that's rotating based on there anchor point
+    auto s2 = Sprite::createWithSpriteFrameName("grossini.png");
+    addChild(s2);
+    s2->setPosition(s.width*2/4, s.height/2);
+    s2->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+
+    //Create reference sprite that's rotating based on there anchor point
+    auto s3 = Sprite::createWithSpriteFrameName("grossini.png");
+    addChild(s3);
+    s3->setTextureRect(CC_RECT_PIXELS_TO_POINTS(Rect(128,0,64,128)));
+    s3->setPosition(s.width/2+s.width/3, s.height/2);
+    s3->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+    s3->setSpriteFrame(s3->getSpriteFrame());
+}
+
+//------------------------------------------------------------------
+//
 // Slice9 Test #1
 //
 //------------------------------------------------------------------
@@ -5229,9 +5269,9 @@ SpriteSlice9Test1::SpriteSlice9Test1()
         s3->runAction(action3);
 
         if (i==2) {
-            s3->setCenterRectNormalized(Rect(0.4, 0.4, 0.2, 0.2));
-            s2->setCenterRectNormalized(Rect(0.4, 0.4, 0.2, 0.2));
-            s1->setCenterRectNormalized(Rect(0.4, 0.4, 0.2, 0.2));
+            s3->setCapInsetsNormalized(Rect(0.4, 0.4, 0.2, 0.2));
+            s2->setCapInsetsNormalized(Rect(0.4, 0.4, 0.2, 0.2));
+            s1->setCapInsetsNormalized(Rect(0.4, 0.4, 0.2, 0.2));
         }
 
         // "anchor points"
@@ -5294,9 +5334,9 @@ SpriteSlice9Test2::SpriteSlice9Test2()
         s3->runAction(action3);
 
         if (i==2) {
-            s3->setCenterRectNormalized(Rect(0.4, 0.4, 0.2, 0.2));
-            s2->setCenterRectNormalized(Rect(0.4, 0.4, 0.2, 0.2));
-            s1->setCenterRectNormalized(Rect(0.4, 0.4, 0.2, 0.2));
+            s3->setCapInsetsNormalized(Rect(0.4, 0.4, 0.2, 0.2));
+            s2->setCapInsetsNormalized(Rect(0.4, 0.4, 0.2, 0.2));
+            s1->setCapInsetsNormalized(Rect(0.4, 0.4, 0.2, 0.2));
         }
 
         // "anchor points"
@@ -5358,9 +5398,9 @@ SpriteSlice9Test3::SpriteSlice9Test3()
 
         // enable slice 9, only in the first row
         if (i==2) {
-            s1->setCenterRectNormalized(Rect(0.4, 0.4, 0.2, 0.2));
-            s2->setCenterRectNormalized(Rect(0.4, 0.4, 0.2, 0.2));
-            s3->setCenterRectNormalized(Rect(0.4, 0.4, 0.2, 0.2));
+            s1->setCapInsetsNormalized(Rect(0.4, 0.4, 0.2, 0.2));
+            s2->setCapInsetsNormalized(Rect(0.4, 0.4, 0.2, 0.2));
+            s3->setCapInsetsNormalized(Rect(0.4, 0.4, 0.2, 0.2));
         }
 
 
@@ -5423,9 +5463,9 @@ SpriteSlice9Test4::SpriteSlice9Test4()
 
         // enable slice 9, only in the first row
         if (i==2) {
-            s1->setCenterRect(CC_RECT_PIXELS_TO_POINTS(Rect(6, 14, 2, 4)));
-            s2->setCenterRect(CC_RECT_PIXELS_TO_POINTS(Rect(6, 14, 2, 4)));
-            s3->setCenterRect(CC_RECT_PIXELS_TO_POINTS(Rect(6, 14, 2, 4)));
+            s1->setCapInsets(CC_RECT_PIXELS_TO_POINTS(Rect(6, 14, 2, 4)));
+            s2->setCapInsets(CC_RECT_PIXELS_TO_POINTS(Rect(6, 14, 2, 4)));
+            s3->setCapInsets(CC_RECT_PIXELS_TO_POINTS(Rect(6, 14, 2, 4)));
         }
 
         // "anchor points"
@@ -5467,7 +5507,7 @@ SpriteSlice9Test5::SpriteSlice9Test5()
     s1->setPosition(s.width/2-s.width/3, s.height/2);
     s1->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
     s1->setContentSize(Size(s.width/3, s.height));
-    s1->setCenterRectNormalized(Rect(0,0,1,1));
+    s1->setCapInsetsNormalized(Rect(0,0,1,1));
     _sprites[0] = s1;
 
     //Create reference sprite that's rotating based on there anchor point
@@ -5477,7 +5517,7 @@ SpriteSlice9Test5::SpriteSlice9Test5()
     s2->setPosition(s.width*2/4, s.height/2);
     s2->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
     s2->setContentSize(Size(s.width/3, s.height));
-    s2->setCenterRectNormalized(Rect(0,0,1,1));
+    s2->setCapInsetsNormalized(Rect(0,0,1,1));
     _sprites[1] = s2;
 
     //Create reference sprite that's rotating based on there anchor point
@@ -5487,7 +5527,7 @@ SpriteSlice9Test5::SpriteSlice9Test5()
     s3->setPosition(s.width/2+s.width/3, s.height/2);
     s3->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
     s3->setContentSize(Size(s.width/3, s.height));
-    s3->setCenterRectNormalized(Rect(0,0,1,1));
+    s3->setCapInsetsNormalized(Rect(0,0,1,1));
     _sprites[2] = s3;
 
     scheduleUpdate();
@@ -5515,7 +5555,7 @@ void SpriteSlice9Test5::update(float dt)
         }
 
         Rect rect(x,y,0.2, 0.2);
-        _sprites[i]->setCenterRectNormalized(rect);
+        _sprites[i]->setCapInsetsNormalized(rect);
     }
 }
 
@@ -5540,7 +5580,7 @@ SpriteSlice9Test6::SpriteSlice9Test6()
     s1->setPosition(s.width/2-s.width/3, s.height/2);
     s1->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
     s1->setContentSize(Size(s.width/3, s.height));
-    s1->setCenterRectNormalized(Rect(0,0,1,1));
+    s1->setCapInsetsNormalized(Rect(0,0,1,1));
     _sprites[0] = s1;
 
     //Create reference sprite that's rotating based on there anchor point
@@ -5550,7 +5590,7 @@ SpriteSlice9Test6::SpriteSlice9Test6()
     s2->setPosition(s.width*2/4, s.height/2);
     s2->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
     s2->setContentSize(Size(s.width/3, s.height));
-    s2->setCenterRectNormalized(Rect(0,0,1,1));
+    s2->setCapInsetsNormalized(Rect(0,0,1,1));
     _sprites[1] = s2;
 
     //Create reference sprite that's rotating based on there anchor point
@@ -5560,7 +5600,7 @@ SpriteSlice9Test6::SpriteSlice9Test6()
     s3->setPosition(s.width/2+s.width/3, s.height/2);
     s3->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
     s3->setContentSize(Size(s.width/3, s.height));
-    s3->setCenterRectNormalized(Rect(0,0,1,1));
+    s3->setCapInsetsNormalized(Rect(0,0,1,1));
     _sprites[2] = s3;
 
     scheduleUpdate();
@@ -5588,7 +5628,7 @@ void SpriteSlice9Test6::update(float dt)
         }
 
         Rect rect((1-x)/2, (1-y)/2, x, y);
-        _sprites[i]->setCenterRectNormalized(rect);
+        _sprites[i]->setCapInsetsNormalized(rect);
     }
 }
 
@@ -5613,7 +5653,7 @@ SpriteSlice9Test7::SpriteSlice9Test7()
     s1->setPosition(s.width/2-s.width/3, s.height/2);
     s1->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
     s1->setContentSize(Size(s.width/3, s.height));
-    s1->setCenterRectNormalized(Rect(0,0,0.5,0.5));
+    s1->setCapInsetsNormalized(Rect(0,0,0.5,0.5));
 
     //Create reference sprite that's rotating based on there anchor point
     auto s2 = Sprite::create("Images/grossinis_heads.png");
@@ -5622,7 +5662,7 @@ SpriteSlice9Test7::SpriteSlice9Test7()
     s2->setPosition(s.width*2/4, s.height/2);
     s2->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
     s2->setContentSize(Size(s.width/3, s.height));
-    s2->setCenterRectNormalized(Rect(0.25,0.25,0.5,0.5));
+    s2->setCapInsetsNormalized(Rect(0.25,0.25,0.5,0.5));
 
     //Create reference sprite that's rotating based on there anchor point
     auto s3 = Sprite::create("Images/grossinis_heads.png");
@@ -5631,6 +5671,81 @@ SpriteSlice9Test7::SpriteSlice9Test7()
     s3->setPosition(s.width/2+s.width/3, s.height/2);
     s3->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
     s3->setContentSize(Size(s.width/3, s.height));
-    s3->setCenterRectNormalized(Rect(0.5,0.5,0.5,0.5));
+    s3->setCapInsetsNormalized(Rect(0.5,0.5,0.5,0.5));
+}
+
+//------------------------------------------------------------------
+//
+// Slice9 Test #8
+//
+//------------------------------------------------------------------
+SpriteSlice9Test8::SpriteSlice9Test8()
+{
+    Size s = Director::getInstance()->getVisibleSize();
+
+    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("animations/grossini_family.plist");
+    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("animations/grossini.plist");
+
+
+    auto s1 = Sprite::createWithSpriteFrameName("grossinis_sister1.png");
+    addChild(s1);
+    s1->setPosition(s.width/2-s.width/3, s.height/2);
+    s1->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+    s1->setCapInsetsNormalized(Rect(1/3.f, 1/3.f, 1/3.f, 1/3.f));
+    s1->setContentSize(s1->getContentSize()*2);
+    s1->setFlippedX(true);
+
+    auto s2 = Sprite::createWithSpriteFrameName("grossini.png");
+    addChild(s2);
+    s2->setPosition(s.width*2/4, s.height/2);
+    s2->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+    s2->setCapInsetsNormalized(Rect(1/3.f, 1/3.f, 1/3.f, 1/3.f));
+    s2->setContentSize(s2->getContentSize()*2);
+
+    //Create reference sprite that's rotating based on there anchor point
+    auto s3 = Sprite::createWithSpriteFrameName("grossinis_sister2.png");
+    addChild(s3);
+    s3->setPosition(s.width/2+s.width/3, s.height/2);
+    s3->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+    s3->setCapInsetsNormalized(Rect(1/3.f, 1/3.f, 1/3.f, 1/3.f));
+    s3->setContentSize(s3->getContentSize()*2);
+    s3->setFlippedY(true);
+}
+
+//------------------------------------------------------------------
+//
+// Slice9 Test #9
+//
+//------------------------------------------------------------------
+SpriteSlice9Test9::SpriteSlice9Test9()
+{
+    Size s = Director::getInstance()->getVisibleSize();
+
+    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("Images/blocks9ss.plist");
+
+
+    auto s1 = Sprite::createWithSpriteFrameName("blocks9r.png");
+    addChild(s1);
+    s1->setPosition(s.width/2-s.width/3, s.height/2);
+    s1->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+    s1->setCapInsetsNormalized(Rect(1/3.f, 1/3.f, 1/3.f, 1/3.f));
+    s1->setContentSize(s1->getContentSize()*1.5);
+    s1->setFlippedX(true);
+
+    auto s2 = Sprite::createWithSpriteFrameName("blocks9r.png");
+    addChild(s2);
+    s2->setPosition(s.width*2/4, s.height/2);
+    s2->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+    s2->setCapInsetsNormalized(Rect(1/3.f, 1/3.f, 1/3.f, 1/3.f));
+    s2->setContentSize(s2->getContentSize()*1.5);
+
+    //Create reference sprite that's rotating based on there anchor point
+    auto s3 = Sprite::createWithSpriteFrameName("blocks9r.png");
+    addChild(s3);
+    s3->setPosition(s.width/2+s.width/3, s.height/2);
+    s3->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+    s3->setCapInsetsNormalized(Rect(1/3.f, 1/3.f, 1/3.f, 1/3.f));
+    s3->setContentSize(s3->getContentSize()*1.5);
+    s3->setFlippedY(true);
 }
 
