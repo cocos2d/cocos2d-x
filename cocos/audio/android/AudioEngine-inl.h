@@ -88,7 +88,7 @@ private:
     std::unordered_map<int, IAudioPlayer*>  _audioPlayers;
     std::unordered_map<int, std::function<void (int, const std::string &)>> _callbackMap;
 
-    // UrlAudioPlayers which need resume while enter foreground
+    // UrlAudioPlayers which need to resumed while entering foreground
     std::vector<IAudioPlayer*> _urlAudioPlayersNeedResume;
 
     AudioPlayerProvider* _audioPlayerProvider;
