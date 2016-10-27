@@ -86,9 +86,9 @@ Profiler::~Profiler(void)
 
 void Profiler::displayTimers()
 {
-    for (auto iter = _activeTimers.begin(); iter != _activeTimers.end(); ++iter)
+    for (auto& iter : _activeTimers)
     {
-        ProfilingTimer* timer = iter->second;
+        ProfilingTimer* timer = iter.second;
         log("%s", timer->getDescription().c_str());
     }
 }

@@ -372,7 +372,7 @@ namespace tinyobj {
         }
         
         // Flatten vertices and indices
-        for (size_t i = 0; i < faceGroup.size(); i++) {
+        for (size_t i = 0, size = faceGroup.size(); i < size; ++i) {
             const std::vector<vertex_index> &face = faceGroup[i];
             
             vertex_index i0 = face[0];
@@ -414,7 +414,7 @@ namespace tinyobj {
     
     static std::string& replacePathSeperator(std::string& path)
     {
-        for (std::string::size_type i = 0; i < path.size(); i++) {
+        for (std::string::size_type i = 0, size = path.size(); i < size; ++i) {
             if (path[i] == '\\')
                 path[i] = '/';
         }
@@ -762,9 +762,12 @@ namespace tinyobj {
                 token += strspn(token, " \t");
                 
                 std::vector<vertex_index> face;
+                auto first = static_cast<int>(v.size() / 3);
+                auto second = static_cast<int>(vn.size() / 3);
+                auto third = static_cast<int>(vt.size() / 2);
                 while (!isNewLine(token[0])) {
                     vertex_index vi =
-                    parseTriple(token, static_cast<int>(v.size() / 3), static_cast<int>(vn.size() / 3), static_cast<int>(vt.size() / 2));
+                    parseTriple(token, first, second, third);
                     face.push_back(vi);
                     size_t n = strspn(token, " \t\r");
                     token += n;

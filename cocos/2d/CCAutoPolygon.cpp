@@ -468,7 +468,7 @@ std::vector<cocos2d::Vec2> AutoPolygon::rdp(const std::vector<cocos2d::Vec2>& v,
     int index = -1;
     float dist = 0;
     //not looping first and last point
-    for(size_t i = 1; i < v.size()-1; i++)
+    for(size_t i = 1, size = v.size(); i < size-1; ++i)
     {
         float cdist = perpendicularDistance(v[i], v.front(), v.back());
         if(cdist > dist)
@@ -609,7 +609,7 @@ TrianglesCommand::Triangles AutoPolygon::triangulate(const std::vector<Vec2>& po
 
     for(const auto& ite : tris)
     {
-        for(int i = 0; i < 3; i++)
+        for(int i = 0; i < 3; ++i)
         {
             auto p = ite->GetPoint(i);
             auto v3 = Vec3(p->x, p->y, 0);
@@ -685,7 +685,7 @@ void AutoPolygon::calculateUV(const Rect& rect, V3F_C4B_T2F* verts, const ssize_
     float texHeight = _height;
 
     auto end = &verts[count];
-    for(auto i = verts; i != end; i++)
+    for(auto i = verts; i != end; ++i)
     {
         // for every point, offset with the center point
         float u = (i->vertices.x*_scaleFactor + rect.origin.x) / texWidth;
