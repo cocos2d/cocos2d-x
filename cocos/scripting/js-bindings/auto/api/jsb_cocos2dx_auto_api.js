@@ -2230,14 +2230,16 @@ setCameraOrderDirty : function (
 
 /**
  * @method render
- * @param {cc.Renderer} arg0
- * @param {mat4_object} arg1
- * @param {mat4_object} arg2
- */
-render : function (
-renderer, 
-mat4, 
-mat4 
+* @param {cc.Renderer|cc.Renderer} renderer
+* @param {mat4_object|mat4_object} mat4
+* @param {mat4_object|mat4_object} mat4
+* @param {unsigned int} int
+*/
+render : function(
+renderer,
+mat4,
+mat4,
+int 
 )
 {
 },
@@ -2688,11 +2690,41 @@ pause : function (
 },
 
 /**
+ * @method pushProjectionMatrix
+ * @param {unsigned int} arg0
+ */
+pushProjectionMatrix : function (
+int 
+)
+{
+},
+
+/**
+ * @method popProjectionMatrix
+ * @param {unsigned int} arg0
+ */
+popProjectionMatrix : function (
+int 
+)
+{
+},
+
+/**
  * @method setEventDispatcher
  * @param {cc.EventDispatcher} arg0
  */
 setEventDispatcher : function (
 eventdispatcher 
+)
+{
+},
+
+/**
+ * @method loadProjectionIdentityMatrix
+ * @param {unsigned int} arg0
+ */
+loadProjectionIdentityMatrix : function (
+int 
 )
 {
 },
@@ -2935,6 +2967,18 @@ init : function (
  */
 setScheduler : function (
 scheduler 
+)
+{
+},
+
+/**
+ * @method multiplyProjectionMatrix
+ * @param {mat4_object} arg0
+ * @param {unsigned int} arg1
+ */
+multiplyProjectionMatrix : function (
+mat4, 
+int 
 )
 {
 },
@@ -3207,6 +3251,28 @@ getVisibleSize : function (
 )
 {
     return cc.Size;
+},
+
+/**
+ * @method loadProjectionMatrix
+ * @param {mat4_object} arg0
+ * @param {unsigned int} arg1
+ */
+loadProjectionMatrix : function (
+mat4, 
+int 
+)
+{
+},
+
+/**
+ * @method initProjectionMatrixStack
+ * @param {unsigned int} arg0
+ */
+initProjectionMatrixStack : function (
+int 
+)
+{
 },
 
 /**
@@ -20634,14 +20700,16 @@ str
 
 /**
  * @method initWithByteArrays
-* @param {char|char} char
-* @param {char|char} char
+* @param {char|char|char} char
+* @param {char|char|char} char
+* @param {String|String} str
 * @param {String} str
-* @return {bool|bool}
+* @return {bool|bool|bool}
 */
 initWithByteArrays : function(
 char,
 char,
+str,
 str 
 )
 {
@@ -20662,12 +20730,14 @@ float
 
 /**
  * @method initWithFilenames
-* @param {String|String} str
+* @param {String|String|String} str
+* @param {String|String|String} str
 * @param {String|String} str
 * @param {String} str
-* @return {bool|bool}
+* @return {bool|bool|bool}
 */
 initWithFilenames : function(
+str,
 str,
 str,
 str 
@@ -20858,14 +20928,16 @@ int
 
 /**
  * @method createWithByteArrays
-* @param {char|char} char
-* @param {char|char} char
+* @param {char|char|char} char
+* @param {char|char|char} char
+* @param {String|String} str
 * @param {String} str
-* @return {cc.GLProgram|cc.GLProgram}
+* @return {cc.GLProgram|cc.GLProgram|cc.GLProgram}
 */
 createWithByteArrays : function(
 char,
 char,
+str,
 str 
 )
 {
@@ -20874,12 +20946,14 @@ str
 
 /**
  * @method createWithFilenames
-* @param {String|String} str
+* @param {String|String|String} str
+* @param {String|String|String} str
 * @param {String|String} str
 * @param {String} str
-* @return {cc.GLProgram|cc.GLProgram}
+* @return {cc.GLProgram|cc.GLProgram|cc.GLProgram}
 */
 createWithFilenames : function(
+str,
 str,
 str,
 str 
