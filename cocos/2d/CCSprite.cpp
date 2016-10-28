@@ -311,7 +311,7 @@ Sprite::Sprite(void)
 , _texture(nullptr)
 , _spriteFrame(nullptr)
 , _insideBounds(true)
-, _capInsetsNormalized(0,0,1,1)
+, _centerRectNormalized(0,0,1,1)
 , _numberOfSlices(1)
 , _quads(nullptr)
 , _strechFactor(Vec2::ONE)
@@ -436,10 +436,10 @@ void Sprite::updatePoly()
         CCASSERT(_numberOfSlices == 9, "Invalid number of slices");
 
         // center rect
-        const float x1 = _capInsetsNormalized.origin.x;
-        const float y1 = _capInsetsNormalized.origin.y;
-        const float x2 = _capInsetsNormalized.origin.x + _capInsetsNormalized.size.width;
-        const float y2 = _capInsetsNormalized.origin.y + _capInsetsNormalized.size.height;
+        const float x1 = _centerRectNormalized.origin.x;
+        const float y1 = _centerRectNormalized.origin.y;
+        const float x2 = _centerRectNormalized.origin.x + _centerRectNormalized.size.width;
+        const float y2 = _centerRectNormalized.origin.y + _centerRectNormalized.size.height;
 
         // "O"riginal rect
         const float oox = _rect.origin.x;
@@ -496,14 +496,14 @@ void Sprite::updatePoly()
     }
 }
 
-void Sprite::setCapInsetsNormalized(const cocos2d::Rect &rectTopLeft)
+void Sprite::setCenterRectNormalized(const cocos2d::Rect &rectTopLeft)
 {
     // FIMXE: Rect is has origin on top-left (like text coordinate).
     // but all the logic has been done using bottom-left as origin. So it is easier to invert Y
     // here, than in the rest of the places... but it is not as clean.
     Rect rect(rectTopLeft.origin.x, 1 - rectTopLeft.origin.y - rectTopLeft.size.height, rectTopLeft.size.width, rectTopLeft.size.height);
-    if (!_capInsetsNormalized.equals(rect)) {
-        _capInsetsNormalized = rect;
+    if (!_centerRectNormalized.equals(rect)) {
+        _centerRectNormalized = rect;
 
         // convert it to 1-slice
         if (rect.equals(Rect(0,0,1,1))) {
@@ -532,7 +532,7 @@ void Sprite::setCapInsetsNormalized(const cocos2d::Rect &rectTopLeft)
     }
 }
 
-void Sprite::setCapInsets(const cocos2d::Rect &rectInPoints)
+void Sprite::setCenterRect(const cocos2d::Rect &rectInPoints)
 {
     if (!_originalContentSize.equals(Size::ZERO))
     {
@@ -541,20 +541,20 @@ void Sprite::setCapInsets(const cocos2d::Rect &rectInPoints)
         const float y = rect.origin.y / _rect.size.height;
         const float w = rect.size.width / _rect.size.width;
         const float h = rect.size.height / _rect.size.height;
-        setCapInsetsNormalized(Rect(x,y,w,h));
+        setCenterRectNormalized(Rect(x,y,w,h));
     }
 }
 
-Rect Sprite::getCapInsetsNormalized() const
+Rect Sprite::getCenterRectNormalized() const
 {
-    // FIXME: _capInsetsNormalized is in bottom-left coords, but should converted to top-left
-    Rect ret(_capInsetsNormalized.origin.x, 1 - _capInsetsNormalized.origin.y - _capInsetsNormalized.size.height, _capInsetsNormalized.size.width, _capInsetsNormalized.size.height);
+    // FIXME: _centerRectNormalized is in bottom-left coords, but should converted to top-left
+    Rect ret(_centerRectNormalized.origin.x, 1 - _centerRectNormalized.origin.y - _centerRectNormalized.size.height, _centerRectNormalized.size.width, _centerRectNormalized.size.height);
     return ret;
 }
 
-Rect Sprite::getCapInsets() const
+Rect Sprite::getCenterRect() const
 {
-    Rect rect = getCapInsetsNormalized();
+    Rect rect = getCenterRectNormalized();
     rect.origin.x *= _rect.size.width;
     rect.origin.y *= _rect.size.height;
     rect.size.width *= _rect.size.width;
@@ -1120,13 +1120,13 @@ void Sprite::updateStretchFactor()
     }
     else
     {
-        const float x1 = _rect.size.width * _capInsetsNormalized.origin.x;
-        const float x2 = _rect.size.width * _capInsetsNormalized.size.width;
-        const float x3 = _rect.size.width * (1 - _capInsetsNormalized.origin.x - _capInsetsNormalized.size.width);
+        const float x1 = _rect.size.width * _centerRectNormalized.origin.x;
+        const float x2 = _rect.size.width * _centerRectNormalized.size.width;
+        const float x3 = _rect.size.width * (1 - _centerRectNormalized.origin.x - _centerRectNormalized.size.width);
 
-        const float y1 = _rect.size.height * _capInsetsNormalized.origin.y;
-        const float y2 = _rect.size.height * _capInsetsNormalized.size.height;
-        const float y3 = _rect.size.height * (1 - _capInsetsNormalized.origin.y - _capInsetsNormalized.size.height);
+        const float y1 = _rect.size.height * _centerRectNormalized.origin.y;
+        const float y2 = _rect.size.height * _centerRectNormalized.size.height;
+        const float y3 = _rect.size.height * (1 - _centerRectNormalized.origin.y - _centerRectNormalized.size.height);
 
         const float x_factor = (adjustedWidth - x1 - x3) / x2;
         const float y_factor = (adjustedHeight - y1 - y3) / y2;
@@ -1279,7 +1279,7 @@ void Sprite::setSpriteFrame(SpriteFrame *spriteFrame)
     }
     if (spriteFrame->hasCenterRect())
     {
-        setCapInsets(spriteFrame->getCapInsets());
+        setCenterRect(spriteFrame->getCenterRect());
     }
 }
 

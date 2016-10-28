@@ -130,7 +130,7 @@ Scale9Sprite* Scale9Sprite::createWithSpriteFrameName(const std::string& spriteF
 }
 
 Scale9Sprite::Scale9Sprite()
-: _previousCapInsetsNormalized(Rect(0,0,1,1))
+: _previousCenterRectNormalized(Rect(0,0,1,1))
 , _brightState(State::NORMAL)
 , _renderingType(RenderingType::SLICE)
 , _insetLeft(0)
@@ -202,7 +202,7 @@ bool Scale9Sprite::init(Sprite* sprite, const Rect& origRect, bool rotated, cons
         if (!capInsets.equals(Rect::ZERO))
             setupSlice9(texture, capInsets);
         else
-            setCapInsets(actualCapInsets);
+            setCenterRect(actualCapInsets);
     } else {
         ret = initWithTexture(nullptr, rect, rotated);
         setupSlice9(nullptr, capInsets);
@@ -219,7 +219,7 @@ bool Scale9Sprite::initWithBatchNode(SpriteBatchNode *batchnode, const Rect &rec
 bool Scale9Sprite::initWithFile(const std::string& filename, const Rect& rect, const Rect& capInsets)
 {
     bool ret = initWithFile(filename, rect);
-    setCapInsets(capInsets);
+    setCenterRect(capInsets);
     return ret;
 }
 
@@ -295,7 +295,7 @@ void Scale9Sprite::setState(Scale9Sprite::State state)
 void Scale9Sprite::setSpriteFrame(SpriteFrame * spriteFrame, const Rect& capInsets)
 {
     setSpriteFrame(spriteFrame);
-    setCapInsets(capInsets);
+    setCenterRect(capInsets);
 }
 
 void Scale9Sprite::setPreferredSize(const Size& preferredSize)
@@ -333,7 +333,7 @@ void Scale9Sprite::updateCapInset()
                    _insetTop,
                    1 - _insetRight - _insetLeft,
                    1 - _insetBottom-_insetTop);
-    setCapInsetsNormalized(capInsets);
+    setCenterRectNormalized(capInsets);
 }
 
 Size Scale9Sprite::getOriginalSize() const
@@ -413,10 +413,10 @@ void Scale9Sprite::setRenderingType(Scale9Sprite::RenderingType type)
     if (_renderingType != type) {
         _renderingType = type;
         if (_renderingType == RenderingType::SIMPLE) {
-            _previousCapInsetsNormalized = getCapInsetsNormalized();
-            setCapInsetsNormalized(Rect(0,0,1,1));
+            _previousCenterRectNormalized = getCenterRectNormalized();
+            setCenterRectNormalized(Rect(0,0,1,1));
         } else {
-            setCapInsetsNormalized(_previousCapInsetsNormalized);
+            setCenterRectNormalized(_previousCenterRectNormalized);
         }
     }
 }
@@ -434,8 +434,8 @@ void Scale9Sprite::resetRender()
 void Scale9Sprite::setupSlice9(Texture2D* texture, const Rect& capInsets)
 {
     if (capInsets.equals(Rect::ZERO))
-        setCapInsetsNormalized(Rect(1/3.f, 1/3.f, 1/3.f, 1/3.f));
-    else setCapInsets(capInsets);
+        setCenterRectNormalized(Rect(1/3.f, 1/3.f, 1/3.f, 1/3.f));
+    else setCenterRect(capInsets);
 
     if (texture && texture->isContain9PatchInfo()) {
         auto& parsedCapInset = texture->getSpriteFrameCapInset(getSpriteFrame());
@@ -443,7 +443,7 @@ void Scale9Sprite::setupSlice9(Texture2D* texture, const Rect& capInsets)
         if(!parsedCapInset.equals(Rect::ZERO))
         {
             _isPatch9 = true;
-            setCapInsets(parsedCapInset);
+            setCenterRect(parsedCapInset);
 
             // adjust texture rect. 1.3f seems to be the magic number
             // to avoid artifacts

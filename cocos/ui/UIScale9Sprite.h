@@ -537,6 +537,15 @@ namespace ui {
          */
         RenderingType getRenderingType() const;
 
+        /**
+         * Set the Cap Insets in Points
+         */
+        void setCapInsets(const Rect& insets) { setCenterRect(insets); }
+        /**
+         * Returns the Cap Insets
+         */
+        Rect getCapInsets() const { return getCenterRect(); }
+
         void resetRender();
 
     protected:
@@ -545,7 +554,7 @@ namespace ui {
 
         bool _isPatch9;
 
-        Rect _previousCapInsetsNormalized;
+        Rect _previousCenterRectNormalized;
 
         float _insetLeft;
         float _insetRight;

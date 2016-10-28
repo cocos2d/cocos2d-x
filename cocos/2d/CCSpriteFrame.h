@@ -139,7 +139,7 @@ public:
      *
      * @return The center rect of the sprite frame in points
      */
-    const Rect& getCapInsets() const { return _capInsetsNormalized; }
+    const Rect& getCenterRect() const { return _centerRect; }
 
      /**
      * setCenterRect
@@ -153,7 +153,7 @@ public:
      * Limitations: Does not work when the sprite is part of `SpriteBatchNode`.
      * @param centerRect the Rect in points
      */
-    void setCapInsets(const Rect& centerRect);
+    void setCenterRectInPixels(const Rect& centerRect);
 
     /** hasCenterRect
      @return Whether or not it has a centerRect
@@ -292,7 +292,7 @@ protected:
     Rect _rectInPixels;
     bool   _rotated;
     Rect _rect;
-    Rect _capInsetsNormalized;
+    Rect _centerRect;
     Vec2 _offsetInPixels;
     Size _originalSizeInPixels;
     Texture2D *_texture;
