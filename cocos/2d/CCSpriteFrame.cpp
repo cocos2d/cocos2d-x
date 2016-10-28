@@ -104,7 +104,7 @@ bool SpriteFrame::initWithTexture(Texture2D* texture, const Rect& rect, bool rot
     _originalSize = CC_SIZE_PIXELS_TO_POINTS( _originalSizeInPixels );
     _rotated = rotated;
     _anchorPoint = Vec2(NAN, NAN);
-    _capInsetsNormalized = Rect(NAN, NAN, NAN, NAN);
+    _centerRect = Rect(NAN, NAN, NAN, NAN);
 
     return true;
 }
@@ -121,7 +121,7 @@ bool SpriteFrame::initWithTextureFilename(const std::string& filename, const Rec
     _originalSize = CC_SIZE_PIXELS_TO_POINTS( _originalSizeInPixels );
     _rotated = rotated;
     _anchorPoint = Vec2(NAN, NAN);
-    _capInsetsNormalized = Rect(NAN, NAN, NAN, NAN);
+    _centerRect = Rect(NAN, NAN, NAN, NAN);
 
     return true;
 }
@@ -155,14 +155,14 @@ void SpriteFrame::setRectInPixels(const Rect& rectInPixels)
     _rect = CC_RECT_PIXELS_TO_POINTS(rectInPixels);
 }
 
-void SpriteFrame::setCapInsets(const Rect& centerRect)
+void SpriteFrame::setCenterRectInPixels(const Rect& centerRect)
 {
-    _capInsetsNormalized = CC_RECT_PIXELS_TO_POINTS(centerRect);
+    _centerRect = CC_RECT_PIXELS_TO_POINTS(centerRect);
 }
 
 bool SpriteFrame::hasCenterRect() const
 {
-    return !std::isnan(_capInsetsNormalized.origin.x);
+    return !std::isnan(_centerRect.origin.x);
 }
 
 const Vec2& SpriteFrame::getOffset() const
