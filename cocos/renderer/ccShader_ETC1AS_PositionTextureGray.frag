@@ -24,9 +24,9 @@
  */
 
 const char* ccETC1ASPositionTextureGray_frag = STRINGIFY(
-#ifdef GL_ES
+\n#ifdef GL_ES\n
     precision mediump float;
-#endif
+\n#endif\n
 
 varying vec4 v_fragmentColor;
 varying vec2 v_texCoord;

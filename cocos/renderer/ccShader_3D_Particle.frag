@@ -1,13 +1,13 @@
 
 const char* cc3D_Particle_tex_frag = STRINGIFY(
 
-#ifdef GL_ES
+\n#ifdef GL_ES\n
 varying mediump vec2 TextureCoordOut;
 varying mediump vec4 ColorOut;
-#else
+\n#else\n
 varying vec4 ColorOut;
 varying vec2 TextureCoordOut;
-#endif
+\n#endif\n
 uniform vec4 u_color;
 
 void main(void)
@@ -18,11 +18,11 @@ void main(void)
 
 const char* cc3D_Particle_color_frag = STRINGIFY(
                                                
-#ifdef GL_ES
+\n#ifdef GL_ES\n
 varying mediump vec4 ColorOut;
-#else
+\n#else\n
 varying vec4 ColorOut;
-#endif
+\n#endif\n
 uniform vec4 u_color;
 
 void main(void)

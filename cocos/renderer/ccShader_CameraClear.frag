@@ -1,13 +1,13 @@
 
 const char* ccCameraClearFrag = STRINGIFY(
 
-#ifdef GL_ES
+\n#ifdef GL_ES\n
 varying mediump vec2 v_texCoord;
 varying mediump vec3 v_color;
-#else
+\n#else\n
 varying vec2 v_texCoord;
 varying vec3 v_color;
-#endif
+\n#endif\n
 void main()
 {
     gl_FragColor = vec4(v_color, 1.0);

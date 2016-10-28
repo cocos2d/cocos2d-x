@@ -6,13 +6,13 @@ uniform float depth;
 attribute vec4 a_position;
 attribute vec2 a_texCoord;
 attribute vec3 a_color;
-#ifdef GL_ES
+\n#ifdef GL_ES\n
 varying mediump vec2 v_texCoord;
 varying mediump vec3 v_color;
-#else
+\n#else\n
 varying vec2 v_texCoord;
 varying vec3 v_color;
-#endif
+\n#endif\n
 void main()
 {
     gl_Position = a_position;

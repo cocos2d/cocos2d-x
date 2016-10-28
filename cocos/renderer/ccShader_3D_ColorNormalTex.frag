@@ -1,78 +1,78 @@
 
 const char* cc3D_ColorNormalTex_frag = STRINGIFY(
 
-#if (MAX_DIRECTIONAL_LIGHT_NUM > 0)
+\n#if (MAX_DIRECTIONAL_LIGHT_NUM > 0)\n
 uniform vec3 u_DirLightSourceColor[MAX_DIRECTIONAL_LIGHT_NUM];
 uniform vec3 u_DirLightSourceDirection[MAX_DIRECTIONAL_LIGHT_NUM];
-#endif
-#if (MAX_POINT_LIGHT_NUM > 0)
+\n#endif\n
+\n#if (MAX_POINT_LIGHT_NUM > 0)\n
 uniform vec3 u_PointLightSourceColor[MAX_POINT_LIGHT_NUM];
 uniform float u_PointLightSourceRangeInverse[MAX_POINT_LIGHT_NUM];
-#endif
-#if (MAX_SPOT_LIGHT_NUM > 0)
+\n#endif\n
+\n#if (MAX_SPOT_LIGHT_NUM > 0)\n
 uniform vec3 u_SpotLightSourceColor[MAX_SPOT_LIGHT_NUM];
 uniform vec3 u_SpotLightSourceDirection[MAX_SPOT_LIGHT_NUM]; 
 uniform float u_SpotLightSourceInnerAngleCos[MAX_SPOT_LIGHT_NUM];
 uniform float u_SpotLightSourceOuterAngleCos[MAX_SPOT_LIGHT_NUM];
 uniform float u_SpotLightSourceRangeInverse[MAX_SPOT_LIGHT_NUM];
-#endif
+\n#endif\n
 uniform vec3 u_AmbientLightSourceColor;
 
-#ifdef GL_ES
+\n#ifdef GL_ES\n
 varying mediump vec2 TextureCoordOut;
 
-#ifdef USE_NORMAL_MAPPING
-#if MAX_DIRECTIONAL_LIGHT_NUM
+\n#ifdef USE_NORMAL_MAPPING\n
+\n#if MAX_DIRECTIONAL_LIGHT_NUM\n
 varying mediump vec3 v_dirLightDirection[MAX_DIRECTIONAL_LIGHT_NUM];
-#endif
-#endif
-#if MAX_POINT_LIGHT_NUM
+\n#endif\n
+\n#endif\n
+\n#if MAX_POINT_LIGHT_NUM\n
 varying mediump vec3 v_vertexToPointLightDirection[MAX_POINT_LIGHT_NUM];
-#endif
-#if MAX_SPOT_LIGHT_NUM
+\n#endif\n
+\n#if MAX_SPOT_LIGHT_NUM\n
 varying mediump vec3 v_vertexToSpotLightDirection[MAX_SPOT_LIGHT_NUM];
-#ifdef USE_NORMAL_MAPPING
+\n#ifdef USE_NORMAL_MAPPING\n
 varying mediump vec3 v_spotLightDirection[MAX_SPOT_LIGHT_NUM];
-#endif
-#endif
+\n#endif\n
+\n#endif\n
 
-#ifndef USE_NORMAL_MAPPING
-#if ((MAX_DIRECTIONAL_LIGHT_NUM > 0) || (MAX_POINT_LIGHT_NUM > 0) || (MAX_SPOT_LIGHT_NUM > 0))
+\n#ifndef USE_NORMAL_MAPPING\n
+\n#if ((MAX_DIRECTIONAL_LIGHT_NUM > 0) || (MAX_POINT_LIGHT_NUM > 0) || (MAX_SPOT_LIGHT_NUM > 0))\n
 varying mediump vec3 v_normal;
-#endif
-#endif
+\n#endif\n
+\n#endif\n
 
-#else
+\n#else\n
 
 varying vec2 TextureCoordOut;
 
-#ifdef USE_NORMAL_MAPPING
-#if MAX_DIRECTIONAL_LIGHT_NUM
+\n#ifdef USE_NORMAL_MAPPING\n
+\n#if MAX_DIRECTIONAL_LIGHT_NUM\n
 varying vec3 v_dirLightDirection[MAX_DIRECTIONAL_LIGHT_NUM];
-#endif
-#endif
-#if MAX_POINT_LIGHT_NUM
+\n#endif\n
+\n#endif\n
+\n#if MAX_POINT_LIGHT_NUM\n
 varying vec3 v_vertexToPointLightDirection[MAX_POINT_LIGHT_NUM];
-#endif
-#if MAX_SPOT_LIGHT_NUM
+\n#endif\n
+\n#if MAX_SPOT_LIGHT_NUM\n
 varying vec3 v_vertexToSpotLightDirection[MAX_SPOT_LIGHT_NUM];
-#ifdef USE_NORMAL_MAPPING
+\n#ifdef USE_NORMAL_MAPPING\n
 varying vec3 v_spotLightDirection[MAX_SPOT_LIGHT_NUM];
-#endif
-#endif
+\n#endif\n
+\n#endif\n
 
-#ifndef USE_NORMAL_MAPPING
-#if ((MAX_DIRECTIONAL_LIGHT_NUM > 0) || (MAX_POINT_LIGHT_NUM > 0) || (MAX_SPOT_LIGHT_NUM > 0))
+\n#ifndef USE_NORMAL_MAPPING\n
+\n#if ((MAX_DIRECTIONAL_LIGHT_NUM > 0) || (MAX_POINT_LIGHT_NUM > 0) || (MAX_SPOT_LIGHT_NUM > 0))\n
 varying vec3 v_normal;
-#endif
-#endif
+\n#endif\n
+\n#endif\n
 
-#endif
+\n#endif\n
 
 uniform vec4 u_color;
-#ifdef USE_NORMAL_MAPPING
+\n#ifdef USE_NORMAL_MAPPING\n
 uniform sampler2D u_normalTex;
-#endif
+\n#endif\n
 
 vec3 computeLighting(vec3 normalVector, vec3 lightDirection, vec3 lightColor, float attenuation)
 {
@@ -85,43 +85,43 @@ vec3 computeLighting(vec3 normalVector, vec3 lightDirection, vec3 lightColor, fl
 void main(void)
 {
 
-#ifdef USE_NORMAL_MAPPING
-    #if ((MAX_DIRECTIONAL_LIGHT_NUM > 0) || (MAX_POINT_LIGHT_NUM > 0) || (MAX_SPOT_LIGHT_NUM > 0))
+\n#ifdef USE_NORMAL_MAPPING\n
+    \n#if ((MAX_DIRECTIONAL_LIGHT_NUM > 0) || (MAX_POINT_LIGHT_NUM > 0) || (MAX_SPOT_LIGHT_NUM > 0))\n
         vec3 normal  = normalize(2.0 * texture2D(u_normalTex, TextureCoordOut).xyz - 1.0);
-    #endif
-#else
-    #if ((MAX_DIRECTIONAL_LIGHT_NUM > 0) || (MAX_POINT_LIGHT_NUM > 0) || (MAX_SPOT_LIGHT_NUM > 0))
+    \n#endif\n
+\n#else\n
+    \n#if ((MAX_DIRECTIONAL_LIGHT_NUM > 0) || (MAX_POINT_LIGHT_NUM > 0) || (MAX_SPOT_LIGHT_NUM > 0))\n
         vec3 normal  = normalize(v_normal);
-    #endif
-#endif
+    \n#endif\n
+\n#endif\n
 
     vec4 combinedColor = vec4(u_AmbientLightSourceColor, 1.0);
 
     // Directional light contribution
-#if (MAX_DIRECTIONAL_LIGHT_NUM > 0)
+\n#if (MAX_DIRECTIONAL_LIGHT_NUM > 0)\n
     for (int i = 0; i < MAX_DIRECTIONAL_LIGHT_NUM; ++i)
     {
-#ifdef USE_NORMAL_MAPPING
+\n#ifdef USE_NORMAL_MAPPING\n
         vec3 lightDirection = normalize(v_dirLightDirection[i] * 2.0);
-#else
+\n#else\n
         vec3 lightDirection = normalize(u_DirLightSourceDirection[i] * 2.0);
-#endif
+\n#endif\n
         combinedColor.xyz += computeLighting(normal, -lightDirection, u_DirLightSourceColor[i], 1.0);
     }
-#endif
+\n#endif\n
 
     // Point light contribution
-#if (MAX_POINT_LIGHT_NUM > 0)
+\n#if (MAX_POINT_LIGHT_NUM > 0)\n
     for (int i = 0; i < MAX_POINT_LIGHT_NUM; ++i)
     {
         vec3 ldir = v_vertexToPointLightDirection[i] * u_PointLightSourceRangeInverse[i];
         float attenuation = clamp(1.0 - dot(ldir, ldir), 0.0, 1.0);
         combinedColor.xyz += computeLighting(normal, normalize(v_vertexToPointLightDirection[i]), u_PointLightSourceColor[i], attenuation);
     }
-#endif
+\n#endif\n
 
     // Spot light contribution
-#if (MAX_SPOT_LIGHT_NUM > 0)
+\n#if (MAX_SPOT_LIGHT_NUM > 0)\n
     for (int i = 0; i < MAX_SPOT_LIGHT_NUM; ++i)
     {
         // Compute range attenuation
@@ -129,11 +129,11 @@ void main(void)
         float attenuation = clamp(1.0 - dot(ldir, ldir), 0.0, 1.0);
         vec3 vertexToSpotLightDirection = normalize(v_vertexToSpotLightDirection[i]);
 
-#ifdef USE_NORMAL_MAPPING
+\n#ifdef USE_NORMAL_MAPPING\n
         vec3 spotLightDirection = normalize(v_spotLightDirection[i] * 2.0);
-#else
+\n#else\n
         vec3 spotLightDirection = normalize(u_SpotLightSourceDirection[i] * 2.0);
-#endif
+\n#endif\n
 
         // "-lightDirection" is used because light direction points in opposite direction to spot direction.
         float spotCurrentAngleCos = dot(spotLightDirection, -vertexToSpotLightDirection);
@@ -143,13 +143,13 @@ void main(void)
         attenuation = clamp(attenuation, 0.0, 1.0);
         combinedColor.xyz += computeLighting(normal, vertexToSpotLightDirection, u_SpotLightSourceColor[i], attenuation);
     }
-#endif
+\n#endif\n
 
-#if ((MAX_DIRECTIONAL_LIGHT_NUM > 0) || (MAX_POINT_LIGHT_NUM > 0) || (MAX_SPOT_LIGHT_NUM > 0))
+\n#if ((MAX_DIRECTIONAL_LIGHT_NUM > 0) || (MAX_POINT_LIGHT_NUM > 0) || (MAX_SPOT_LIGHT_NUM > 0))\n
     gl_FragColor = texture2D(CC_Texture0, TextureCoordOut) * u_color * combinedColor;
-#else
+\n#else\n
     gl_FragColor = texture2D(CC_Texture0, TextureCoordOut) * u_color;
-#endif
+\n#endif\n
 
 }
 );

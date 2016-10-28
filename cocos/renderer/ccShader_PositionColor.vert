@@ -28,11 +28,11 @@ const char* ccPositionColor_vert = STRINGIFY(
 attribute vec4 a_position;
 attribute vec4 a_color;
 
-#ifdef GL_ES
+\n#ifdef GL_ES\n
 varying lowp vec4 v_fragmentColor;
-#else
+\n#else\n
 varying vec4 v_fragmentColor;
-#endif
+\n#endif\n
 
 void main()
 {
