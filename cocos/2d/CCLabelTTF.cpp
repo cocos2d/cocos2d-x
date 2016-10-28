@@ -188,6 +188,7 @@ void LabelTTF::setFontName(const std::string& fontName)
 
 void LabelTTF::enableShadow(const Size &shadowOffset, float shadowOpacity, float shadowBlur, bool updateTexture)
 {
+    CC_UNUSED_PARAM(updateTexture);
     Color4B temp(Color3B::BLACK);
     temp.a = 255 * shadowOpacity;
     _renderLabel->enableShadow(temp,shadowOffset,shadowBlur);
@@ -196,24 +197,28 @@ void LabelTTF::enableShadow(const Size &shadowOffset, float shadowOpacity, float
 
 void LabelTTF::disableShadow(bool updateTexture)
 {
+    CC_UNUSED_PARAM(updateTexture);
     _renderLabel->disableEffect();
     _contentDirty = true;
 }
 
 void LabelTTF::enableStroke(const Color3B &strokeColor, float strokeSize, bool updateTexture)
 {
+    CC_UNUSED_PARAM(updateTexture);
     _renderLabel->enableOutline(Color4B(strokeColor),strokeSize);
     _contentDirty = true;
 }
 
 void LabelTTF::disableStroke(bool updateTexture)
 {
+    CC_UNUSED_PARAM(updateTexture);
     _renderLabel->disableEffect();
     _contentDirty = true;
 }
 
 void LabelTTF::setFontFillColor(const Color3B &tintColor, bool updateTexture)
 {
+    CC_UNUSED_PARAM(updateTexture);
     _renderLabel->setTextColor(Color4B(tintColor));
 }
 

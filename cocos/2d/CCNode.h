@@ -688,7 +688,7 @@ public:
     /** @deprecated No longer needed
     * @lua NA
     */
-    CC_DEPRECATED_ATTRIBUTE void setGLServerState(int serverState) { /* ignore */ };
+    CC_DEPRECATED_ATTRIBUTE void setGLServerState(int serverState) { CC_UNUSED_PARAM(serverState); /* ignore */ };
     /** @deprecated No longer needed
     * @lua NA
     */

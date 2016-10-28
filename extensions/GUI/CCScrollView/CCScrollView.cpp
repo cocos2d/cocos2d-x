@@ -159,6 +159,7 @@ bool ScrollView::isNodeVisible(Node* node)
 
 void ScrollView::pause(Ref* sender)
 {
+    CC_UNUSED_PARAM(sender);
     _container->pause();
 
     auto& children = _container->getChildren();
@@ -169,6 +170,7 @@ void ScrollView::pause(Ref* sender)
 
 void ScrollView::resume(Ref* sender)
 {
+    CC_UNUSED_PARAM(sender);
     auto& children = _container->getChildren();
     for(const auto &child : children) {
         child->resume();
@@ -322,6 +324,7 @@ void ScrollView::setZoomScaleInDuration(float s, float dt)
 
 void ScrollView::updateTweenAction(float value, const std::string& key)
 {
+    CC_UNUSED_PARAM(key);
     this->setZoomScale(value);
 }
 
@@ -417,6 +420,7 @@ Vec2 ScrollView::minContainerOffset()
 
 void ScrollView::deaccelerateScrolling(float dt)
 {
+    CC_UNUSED_PARAM(dt);
     if (_dragging)
     {
         this->unschedule(CC_SCHEDULE_SELECTOR(ScrollView::deaccelerateScrolling));
@@ -457,6 +461,7 @@ void ScrollView::deaccelerateScrolling(float dt)
 
 void ScrollView::stoppedAnimatedScroll(Node * node)
 {
+    CC_UNUSED_PARAM(node);
     this->unschedule(CC_SCHEDULE_SELECTOR(ScrollView::performedAnimatedScroll));
     // After the animation stopped, "scrollViewDidScroll" should be invoked, this could fix the bug of lack of tableview cells.
     if (_delegate != nullptr)
@@ -467,6 +472,7 @@ void ScrollView::stoppedAnimatedScroll(Node * node)
 
 void ScrollView::performedAnimatedScroll(float dt)
 {
+    CC_UNUSED_PARAM(dt);
     if (_dragging)
     {
         this->unschedule(CC_SCHEDULE_SELECTOR(ScrollView::performedAnimatedScroll));
@@ -683,6 +689,7 @@ void ScrollView::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t
 
 bool ScrollView::onTouchBegan(Touch* touch, Event* event)
 {
+    CC_UNUSED_PARAM(event);
     if (!this->isVisible() || !this->hasVisibleParents())
     {
         return false;
@@ -726,6 +733,7 @@ bool ScrollView::onTouchBegan(Touch* touch, Event* event)
 
 void ScrollView::onTouchMoved(Touch* touch, Event* event)
 {
+    CC_UNUSED_PARAM(event);
     if (!this->isVisible())
     {
         return;
@@ -822,6 +830,7 @@ void ScrollView::onTouchMoved(Touch* touch, Event* event)
 
 void ScrollView::onTouchEnded(Touch* touch, Event* event)
 {
+    CC_UNUSED_PARAM(event);
     if (!this->isVisible())
     {
         return;
@@ -847,6 +856,7 @@ void ScrollView::onTouchEnded(Touch* touch, Event* event)
 
 void ScrollView::onTouchCancelled(Touch* touch, Event* event)
 {
+    CC_UNUSED_PARAM(event);
     if (!this->isVisible())
     {
         return;

@@ -62,6 +62,7 @@ void PUDoScaleEventHandler::setScaleFraction(const float scaleFraction)
 //-----------------------------------------------------------------------
 void PUDoScaleEventHandler::handle (PUParticleSystem3D* particleSystem, PUParticle3D* particle, float timeElapsed)
 {
+    CC_UNUSED_PARAM(particleSystem);
     if (!particle)
         return;
 

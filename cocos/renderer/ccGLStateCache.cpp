@@ -211,6 +211,7 @@ void deleteTexture(GLuint textureId)
 
 void deleteTextureN(GLuint textureUnit, GLuint textureId)
 {
+    CC_UNUSED_PARAM(textureUnit);
     deleteTexture(textureId);
 }
 

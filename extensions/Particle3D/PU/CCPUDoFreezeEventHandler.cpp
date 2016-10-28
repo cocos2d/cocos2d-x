@@ -32,6 +32,8 @@ NS_CC_BEGIN
 //-----------------------------------------------------------------------
 void PUDoFreezeEventHandler::handle (PUParticleSystem3D* particleSystem, PUParticle3D* particle, float timeElapsed)
 {
+    CC_UNUSED_PARAM(particleSystem);
+    CC_UNUSED_PARAM(timeElapsed);
     if (!particle)
         return;
 

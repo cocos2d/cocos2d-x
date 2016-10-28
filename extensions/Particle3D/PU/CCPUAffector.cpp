@@ -44,7 +44,8 @@ PUAffector::~PUAffector()
 
 void PUAffector::updatePUAffector(PUParticle3D* particle, float delta)
 {
-    
+    CC_UNUSED_PARAM(particle);
+    CC_UNUSED_PARAM(delta);
 }
 
 const Vec3& PUAffector::getDerivedPosition()
@@ -141,12 +142,12 @@ void PUAffector::notifyResume()
 
 void PUAffector::preUpdateAffector( float deltaTime )
 {
-
+    CC_UNUSED_PARAM(deltaTime);
 }
 
 void PUAffector::postUpdateAffector( float deltaTime )
 {
-
+    CC_UNUSED_PARAM(deltaTime);
 }
 
 void PUAffector::prepare()
@@ -161,7 +162,7 @@ void PUAffector::unPrepare()
 
 void PUAffector::initParticleForEmission( PUParticle3D* particle )
 {
-
+    CC_UNUSED_PARAM(particle);
 }
 
 void PUAffector::notifyRescaled(const Vec3& scale)
@@ -171,7 +172,8 @@ void PUAffector::notifyRescaled(const Vec3& scale)
 
 void PUAffector::firstParticleUpdate( PUParticle3D *particle, float deltaTime )
 {
-
+    CC_UNUSED_PARAM(particle);
+    CC_UNUSED_PARAM(deltaTime);
 }
 
 void PUAffector::setMass( float mass )

@@ -53,6 +53,8 @@ void PUCollisionAvoidanceAffector::setRadius(float radius)
 //-----------------------------------------------------------------------
 void PUCollisionAvoidanceAffector::updatePUAffector( PUParticle3D *particle, float deltaTime )
 {
+    CC_UNUSED_PARAM(particle);
+    CC_UNUSED_PARAM(deltaTime);
     CCASSERT(0, "nonsupport yet");
     //for (auto iter : _particleSystem->getParticles())
     //{

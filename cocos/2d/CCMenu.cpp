@@ -252,6 +252,7 @@ void Menu::removeChild(Node* child, bool cleanup)
 
 bool Menu::onTouchBegan(Touch* touch, Event* event)
 {
+    CC_UNUSED_PARAM(event);
     auto camera = Camera::getVisitingCamera();
     if (_state != Menu::State::WAITING || ! _visible || !_enabled || !camera)
     {
@@ -281,6 +282,8 @@ bool Menu::onTouchBegan(Touch* touch, Event* event)
 
 void Menu::onTouchEnded(Touch* touch, Event* event)
 {
+    CC_UNUSED_PARAM(touch);
+    CC_UNUSED_PARAM(event);
     CCASSERT(_state == Menu::State::TRACKING_TOUCH, "[Menu ccTouchEnded] -- invalid state");
     this->retain();
     if (_selectedItem)
@@ -295,6 +298,8 @@ void Menu::onTouchEnded(Touch* touch, Event* event)
 
 void Menu::onTouchCancelled(Touch* touch, Event* event)
 {
+    CC_UNUSED_PARAM(touch);
+    CC_UNUSED_PARAM(event);
     CCASSERT(_state == Menu::State::TRACKING_TOUCH, "[Menu ccTouchCancelled] -- invalid state");
     this->retain();
     if (_selectedItem)
@@ -307,6 +312,7 @@ void Menu::onTouchCancelled(Touch* touch, Event* event)
 
 void Menu::onTouchMoved(Touch* touch, Event* event)
 {
+    CC_UNUSED_PARAM(event);
     CCASSERT(_state == Menu::State::TRACKING_TOUCH, "[Menu ccTouchMoved] -- invalid state");
     MenuItem *currentItem = this->getItemForTouch(touch, _selectedWithCamera);
     if (currentItem != _selectedItem)

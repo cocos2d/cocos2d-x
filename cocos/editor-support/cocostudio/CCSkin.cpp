@@ -231,6 +231,7 @@ Mat4 Skin::getNodeToWorldTransformAR() const
 
 void Skin::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
+    CC_UNUSED_PARAM(transform);
     auto mv = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 
     // TODO: implement z order

@@ -243,6 +243,7 @@ const BlendFunc& MotionStreak3D::getBlendFunc(void) const
 
 void MotionStreak3D::setOpacity(GLubyte opacity)
 {
+    CC_UNUSED_PARAM(opacity);
     CCASSERT(false, "Set opacity no supported");
 }
 
@@ -378,6 +379,7 @@ void MotionStreak3D::reset()
 
 void MotionStreak3D::onDraw(const Mat4 &transform, uint32_t flags)
 {  
+    CC_UNUSED_PARAM(flags);
     getGLProgram()->use();
     getGLProgram()->setUniformsForBuiltins(transform);
 

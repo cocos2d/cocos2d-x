@@ -338,6 +338,7 @@ void Console::Command::delSubCommand(const std::string& subCmdName)
 
 void Console::Command::commandHelp(int fd, const std::string& args)
 {
+    CC_UNUSED_PARAM(args);
     if (! help.empty()) {
         Console::Utility::mydprintf(fd, "%s\n", help.c_str());
     }
@@ -1004,6 +1005,7 @@ void Console::createCommandVersion()
 
 void Console::commandAllocator(int fd, const std::string& args)
 {
+    CC_UNUSED_PARAM(args);
 #if CC_ENABLE_ALLOCATOR_DIAGNOSTICS
     auto info = allocator::AllocatorDiagnostics::instance()->diagnostics();
     Console::Utility::mydprintf(fd, info.c_str());
@@ -1014,6 +1016,7 @@ void Console::commandAllocator(int fd, const std::string& args)
 
 void Console::commandConfig(int fd, const std::string& args)
 {
+    CC_UNUSED_PARAM(args);
     Scheduler *sched = Director::getInstance()->getScheduler();
     sched->performFunctionInCocosThread( [=](){
         Console::Utility::mydprintf(fd, "%s", Configuration::getInstance()->getInfo().c_str());
@@ -1023,16 +1026,20 @@ void Console::commandConfig(int fd, const std::string& args)
 
 void Console::commandDebugMsg(int fd, const std::string& args)
 {
+    CC_UNUSED_PARAM(args);
     Console::Utility::mydprintf(fd, "Debug message is: %s\n", _sendDebugStrings ? "on" : "off");
 }
 
 void Console::commandDebugMsgSubCommandOnOff(int fd, const std::string& args)
 {
+    CC_UNUSED_PARAM(fd);
     _sendDebugStrings = (args.compare("on") == 0);
 }
 
 void Console::commandDirectorSubCommandPause(int fd, const std::string& args)
 {
+    CC_UNUSED_PARAM(fd);
+    CC_UNUSED_PARAM(args);
     auto director = Director::getInstance();
     Scheduler *sched = director->getScheduler();
     sched->performFunctionInCocosThread( [](){
@@ -1042,12 +1049,16 @@ void Console::commandDirectorSubCommandPause(int fd, const std::string& args)
 
 void Console::commandDirectorSubCommandResume(int fd, const std::string& args)
 {
+    CC_UNUSED_PARAM(fd);
+    CC_UNUSED_PARAM(args);
     auto director = Director::getInstance();
     director->resume();
 }
 
 void Console::commandDirectorSubCommandStop(int fd, const std::string& args)
 {
+    CC_UNUSED_PARAM(fd);
+    CC_UNUSED_PARAM(args);
     auto director = Director::getInstance();
     Scheduler *sched = director->getScheduler();
     sched->performFunctionInCocosThread( [](){
@@ -1057,18 +1068,23 @@ void Console::commandDirectorSubCommandStop(int fd, const std::string& args)
 
 void Console::commandDirectorSubCommandStart(int fd, const std::string& args)
 {
+    CC_UNUSED_PARAM(fd);
+    CC_UNUSED_PARAM(args);
     auto director = Director::getInstance();
     director->startAnimation();
 }
 
 void Console::commandDirectorSubCommandEnd(int fd, const std::string& args)
 {
+    CC_UNUSED_PARAM(fd);
+    CC_UNUSED_PARAM(args);
     auto director = Director::getInstance();
     director->end();
 }
 
 void Console::commandExit(int fd, const std::string& args)
 {
+    CC_UNUSED_PARAM(args);
     FD_CLR(fd, &_read_set);
     _fds.erase(std::remove(_fds.begin(), _fds.end(), fd), _fds.end());
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
@@ -1080,22 +1096,27 @@ void Console::commandExit(int fd, const std::string& args)
 
 void Console::commandFileUtils(int fd, const std::string& args)
 {
+    CC_UNUSED_PARAM(args);
     Scheduler *sched = Director::getInstance()->getScheduler();
     sched->performFunctionInCocosThread( std::bind(&Console::printFileUtils, this, fd) );
 }
 
 void Console::commandFileUtilsSubCommandFlush(int fd, const std::string& args)
 {
+    CC_UNUSED_PARAM(fd);
+    CC_UNUSED_PARAM(args);
     FileUtils::getInstance()->purgeCachedEntries();
 }
 
 void Console::commandFps(int fd, const std::string& args)
 {
+    CC_UNUSED_PARAM(args);
     Console::Utility::mydprintf(fd, "FPS is: %s\n", Director::getInstance()->isDisplayStats() ? "on" : "off");
 }
 
 void Console::commandFpsSubCommandOnOff(int fd, const std::string& args)
 {
+    CC_UNUSED_PARAM(fd);
     bool state = (args.compare("on") == 0);
     Director *dir = Director::getInstance();
     Scheduler *sched = dir->getScheduler();
@@ -1104,11 +1125,13 @@ void Console::commandFpsSubCommandOnOff(int fd, const std::string& args)
 
 void Console::commandHelp(int fd, const std::string& args)
 {
+    CC_UNUSED_PARAM(args);
     sendHelp(fd, _commands, "\nAvailable commands:\n");
 }
 
 void Console::commandProjection(int fd, const std::string& args)
 {
+    CC_UNUSED_PARAM(args);
     auto director = Director::getInstance();
     char buf[20];
     auto proj = director->getProjection();
@@ -1132,6 +1155,8 @@ void Console::commandProjection(int fd, const std::string& args)
 
 void Console::commandProjectionSubCommand2d(int fd, const std::string& args)
 {
+    CC_UNUSED_PARAM(fd);
+    CC_UNUSED_PARAM(args);
     auto director = Director::getInstance();
     Scheduler *sched = director->getScheduler();
     sched->performFunctionInCocosThread( [=](){
@@ -1141,6 +1166,8 @@ void Console::commandProjectionSubCommand2d(int fd, const std::string& args)
 
 void Console::commandProjectionSubCommand3d(int fd, const std::string& args)
 {
+    CC_UNUSED_PARAM(fd);
+    CC_UNUSED_PARAM(args);
     auto director = Director::getInstance();
     Scheduler *sched = director->getScheduler();
     sched->performFunctionInCocosThread( [=](){
@@ -1150,6 +1177,7 @@ void Console::commandProjectionSubCommand3d(int fd, const std::string& args)
 
 void Console::commandResolution(int fd, const std::string& args)
 {
+    CC_UNUSED_PARAM(fd);
     int width, height, policy;
     
     std::istringstream stream( args );
@@ -1163,6 +1191,7 @@ void Console::commandResolution(int fd, const std::string& args)
 
 void Console::commandResolutionSubCommandEmpty(int fd, const std::string& args)
 {
+    CC_UNUSED_PARAM(args);
     auto director = Director::getInstance();
     Size points = director->getWinSize();
     Size pixels = director->getWinSizeInPixels();
@@ -1190,12 +1219,14 @@ void Console::commandResolutionSubCommandEmpty(int fd, const std::string& args)
 
 void Console::commandSceneGraph(int fd, const std::string& args)
 {
+    CC_UNUSED_PARAM(args);
     Scheduler *sched = Director::getInstance()->getScheduler();
     sched->performFunctionInCocosThread( std::bind(&Console::printSceneGraphBoot, this, fd) );
 }
 
 void Console::commandTextures(int fd, const std::string& args)
 {
+    CC_UNUSED_PARAM(args);
     Scheduler *sched = Director::getInstance()->getScheduler();
     sched->performFunctionInCocosThread( [=](){
         Console::Utility::mydprintf(fd, "%s", Director::getInstance()->getTextureCache()->getCachedTextureInfo().c_str());
@@ -1205,6 +1236,8 @@ void Console::commandTextures(int fd, const std::string& args)
 
 void Console::commandTexturesSubCommandFlush(int fd, const std::string& args)
 {
+    CC_UNUSED_PARAM(fd);
+    CC_UNUSED_PARAM(args);
     Scheduler *sched = Director::getInstance()->getScheduler();
     sched->performFunctionInCocosThread( [](){
         Director::getInstance()->getTextureCache()->removeAllTextures();
@@ -1413,6 +1446,7 @@ void Console::commandUpload(int fd)
 
 void Console::commandVersion(int fd, const std::string& args)
 {
+    CC_UNUSED_PARAM(args);
     Console::Utility::mydprintf(fd, "%s\n", cocos2dVersion());
 }
 

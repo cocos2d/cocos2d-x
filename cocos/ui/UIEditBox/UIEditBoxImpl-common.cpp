@@ -258,6 +258,8 @@ void EditBoxImplCommon::setContentSize(const Size& size)
 
 void EditBoxImplCommon::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
+    CC_UNUSED_PARAM(renderer);
+    CC_UNUSED_PARAM(transform);
     if(flags)
     {
         auto rect = ui::Helper::convertBoundingBoxToScreen(_editBox);
@@ -289,6 +291,7 @@ void EditBoxImplCommon::closeKeyboard()
 
 void EditBoxImplCommon::onEndEditing(const std::string& text)
 {
+    CC_UNUSED_PARAM(text);
     this->setNativeVisible(false);
     
     refreshInactiveText();

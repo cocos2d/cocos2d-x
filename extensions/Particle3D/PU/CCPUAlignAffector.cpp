@@ -54,6 +54,7 @@ void PUAlignAffector::setResize(bool resize)
 
 void PUAlignAffector::updatePUAffector( PUParticle3D *particle, float deltaTime )
 {
+    CC_UNUSED_PARAM(deltaTime);
     //auto particles = _particleSystem->getParticles();
     //if (!particles.empty())
     {
@@ -77,6 +78,7 @@ void PUAlignAffector::updatePUAffector( PUParticle3D *particle, float deltaTime 
 
 void PUAlignAffector::firstParticleUpdate( PUParticle3D *particle, float deltaTime )
 {
+    CC_UNUSED_PARAM(deltaTime);
     _previousParticle = particle;
 }
 

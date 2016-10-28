@@ -74,6 +74,9 @@ void Label::computeAlignmentOffset()
 
 int Label::getFirstCharLen(const std::u16string& utf16Text, int startIndex, int textLen)
 {
+    CC_UNUSED_PARAM(utf16Text);
+    CC_UNUSED_PARAM(startIndex);
+    CC_UNUSED_PARAM(textLen);
     return 1;
 }
 

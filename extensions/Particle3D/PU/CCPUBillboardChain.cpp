@@ -79,7 +79,7 @@ PUBillboardChain::PUBillboardChain(const std::string& name, const std::string &t
                                _vertexBuffer(nullptr),
                                _texFile(texFile)
 {
-
+    CC_UNUSED_PARAM(name);
     _stateBlock = RenderState::StateBlock::create();
     CC_SAFE_RETAIN(_stateBlock);
 

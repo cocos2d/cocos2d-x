@@ -41,6 +41,7 @@ PUSlaveBehaviour::~PUSlaveBehaviour()
 
 void PUSlaveBehaviour::updateBehaviour( PUParticle3D *particle, float deltaTime )
 {
+    CC_UNUSED_PARAM(deltaTime);
     if (masterParticle && !masterParticle->hasEventFlags(PUParticle3D::PEF_EXPIRED))
     {
         particle->position = masterParticle->position;

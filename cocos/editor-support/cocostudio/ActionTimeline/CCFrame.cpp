@@ -116,6 +116,8 @@ VisibleFrame::VisibleFrame()
 
 void VisibleFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 {
+    CC_UNUSED_PARAM(nextFrame);
+    CC_UNUSED_PARAM(currentFrameIndex);
     if (_node)
     {
         _node->setVisible(_visible);
@@ -162,6 +164,8 @@ void TextureFrame::setNode(Node* node)
 
 void TextureFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 {
+    CC_UNUSED_PARAM(nextFrame);
+    CC_UNUSED_PARAM(currentFrameIndex);
     if(_sprite)
     {
         auto spriteBlendFunc = _sprite->getBlendFunc();
@@ -210,6 +214,7 @@ RotationFrame::RotationFrame()
 
 void RotationFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 {
+    CC_UNUSED_PARAM(currentFrameIndex);
     if (_node == nullptr)
     {
         return;
@@ -265,6 +270,7 @@ SkewFrame::SkewFrame()
 
 void SkewFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 {
+    CC_UNUSED_PARAM(currentFrameIndex);
     if (_node == nullptr)
     {
 	    return;
@@ -325,6 +331,7 @@ RotationSkewFrame::RotationSkewFrame()
 
 void RotationSkewFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 {
+    CC_UNUSED_PARAM(currentFrameIndex);
     if (_node == nullptr)
     {
 	    return;
@@ -384,6 +391,7 @@ PositionFrame::PositionFrame()
 
 void PositionFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 {
+    CC_UNUSED_PARAM(currentFrameIndex);
     if (_node == nullptr)
     {
 	    return;
@@ -443,6 +451,7 @@ ScaleFrame::ScaleFrame()
 
 void ScaleFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 {
+    CC_UNUSED_PARAM(currentFrameIndex);
     if (_node == nullptr)
     {
 	    return;
@@ -502,6 +511,7 @@ AnchorPointFrame::AnchorPointFrame()
 
 void AnchorPointFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 {
+    CC_UNUSED_PARAM(currentFrameIndex);
     if (_node == nullptr)
     {
 	    return;
@@ -563,6 +573,8 @@ InnerActionFrame::InnerActionFrame()
 
 void InnerActionFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 {
+    CC_UNUSED_PARAM(nextFrame);
+    CC_UNUSED_PARAM(currentFrameIndex);
     if (_node == nullptr)
     {
 	    return;
@@ -692,6 +704,7 @@ ColorFrame::ColorFrame()
 
 void ColorFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 {
+    CC_UNUSED_PARAM(currentFrameIndex);
     if (_node == nullptr)
     {
 	    return;
@@ -750,6 +763,7 @@ AlphaFrame::AlphaFrame()
 
 void AlphaFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 {
+    CC_UNUSED_PARAM(currentFrameIndex);
     if (_node == nullptr)
     {
 	    return;
@@ -814,6 +828,7 @@ void EventFrame::setNode(cocos2d::Node* node)
 
 void EventFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 {
+    CC_UNUSED_PARAM(nextFrame);
     if (static_cast<int>(_frameIndex) < _action->getStartFrame() || static_cast<int>(_frameIndex) > _action->getEndFrame())
         return;
 
@@ -853,6 +868,8 @@ ZOrderFrame::ZOrderFrame()
 
 void ZOrderFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 {
+    CC_UNUSED_PARAM(nextFrame);
+    CC_UNUSED_PARAM(currentFrameIndex);
     if(_node)
         _node->setLocalZOrder(_zorder);
 }
@@ -889,6 +906,8 @@ BlendFuncFrame::BlendFuncFrame()
 
 void BlendFuncFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 {
+    CC_UNUSED_PARAM(nextFrame);
+    CC_UNUSED_PARAM(currentFrameIndex);
     if(_node)
     {
         auto blendnode = dynamic_cast<BlendProtocol*>(_node);
@@ -929,8 +948,10 @@ PlayableFrame::PlayableFrame()
     
 }
 
-void PlayableFrame::onEnter(Frame *nextFrame, int currentFrameINdex)
+void PlayableFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 {
+    CC_UNUSED_PARAM(nextFrame);
+    CC_UNUSED_PARAM(currentFrameIndex);
     auto playableNode = dynamic_cast<PlayableProtocol*>(_node);
     if (nullptr == playableNode) // may be a playable component
         playableNode = dynamic_cast<PlayableProtocol*>(_node->getComponent(PLAYABLE_EXTENTION));

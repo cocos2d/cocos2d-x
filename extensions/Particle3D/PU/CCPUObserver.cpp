@@ -305,12 +305,13 @@ void PUObserver::updateObserver( PUParticle3D *particle, float deltaTime, bool f
 
 void PUObserver::postUpdateObserver( float deltaTime )
 {
-
+    CC_UNUSED_PARAM(deltaTime);
 }
 
 void PUObserver::firstParticleUpdate( PUParticle3D *particle, float deltaTime )
 {
-
+    CC_UNUSED_PARAM(particle);
+    CC_UNUSED_PARAM(deltaTime);
 }
 
 void PUObserver::copyAttributesTo( PUObserver* observer )

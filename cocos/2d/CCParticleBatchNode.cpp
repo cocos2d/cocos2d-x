@@ -399,6 +399,7 @@ void ParticleBatchNode::removeAllChildrenWithCleanup(bool doCleanup)
 
 void ParticleBatchNode::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
+    CC_UNUSED_PARAM(transform);
     CC_PROFILER_START("CCParticleBatchNode - draw");
 
     if( _textureAtlas->getTotalQuads() == 0 )

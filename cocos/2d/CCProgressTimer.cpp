@@ -504,7 +504,7 @@ Vec2 ProgressTimer::boundaryTexCoord(char index)
 
 void ProgressTimer::onDraw(const Mat4 &transform, uint32_t flags)
 {
-
+    CC_UNUSED_PARAM(flags);
     getGLProgram()->use();
     getGLProgram()->setUniformsForBuiltins(transform);
 

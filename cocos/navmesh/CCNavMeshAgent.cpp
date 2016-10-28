@@ -329,6 +329,7 @@ void NavMeshAgent::preUpdate(float delta)
 
 void NavMeshAgent::postUpdate(float delta)
 {
+    CC_UNUSED_PARAM(delta);
     if ((_syncFlag & AGENT_TO_NODE) != 0)
         syncToNode();
 }

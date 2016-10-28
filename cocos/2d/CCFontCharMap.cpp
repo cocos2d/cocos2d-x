@@ -100,6 +100,8 @@ FontCharMap::~FontCharMap()
 
 int* FontCharMap::getHorizontalKerningForTextUTF16(const std::u16string& text, int &outNumLetters) const
 {
+    CC_UNUSED_PARAM(text);
+    CC_UNUSED_PARAM(outNumLetters);
     return nullptr;
 }
 

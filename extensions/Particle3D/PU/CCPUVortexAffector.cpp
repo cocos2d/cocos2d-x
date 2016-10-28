@@ -80,6 +80,7 @@ float PUVortexAffector::calculateRotationSpeed(void)
 
 void PUVortexAffector::updatePUAffector( PUParticle3D *particle, float deltaTime )
 {
+    CC_UNUSED_PARAM(deltaTime);
     //for (auto iter : _particleSystem->getParticles())
     {
         //PUParticle3D *particle = iter;

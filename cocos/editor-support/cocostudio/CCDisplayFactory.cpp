@@ -238,6 +238,7 @@ void DisplayFactory::createArmatureDisplay(Bone *bone, DecorativeDisplay *decoDi
 }
 void DisplayFactory::updateArmatureDisplay(Bone *bone, Node *display, float dt)
 {
+    CC_UNUSED_PARAM(bone);
     Armature *armature = (Armature *)display;
     if(armature)
     {

@@ -156,6 +156,7 @@ void FontAtlas::purgeTexturesAtlas()
 
 void FontAtlas::listenRendererRecreated(EventCustom *event)
 {
+    CC_UNUSED_PARAM(event);
     purgeTexturesAtlas();
 }
 

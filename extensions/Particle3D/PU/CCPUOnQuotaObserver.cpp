@@ -31,11 +31,14 @@ NS_CC_BEGIN
 //-----------------------------------------------------------------------
 bool PUOnQuotaObserver::observe (PUParticle3D* particle, float timeElapsed)
 {
+    CC_UNUSED_PARAM(particle);
+    CC_UNUSED_PARAM(timeElapsed);
     return _result;
 }
 //-----------------------------------------------------------------------
 void PUOnQuotaObserver::postUpdateObserver(float deltaTime)
 {
+    CC_UNUSED_PARAM(deltaTime);
     _result = false;
     unsigned int quota = 0;
     if (_particleTypeToObserveSet)

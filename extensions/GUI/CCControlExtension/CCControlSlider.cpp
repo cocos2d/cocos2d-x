@@ -248,6 +248,7 @@ Vec2 ControlSlider::locationFromTouch(Touch* touch)
 
 bool ControlSlider::onTouchBegan(Touch* touch, Event* pEvent)
 {
+    CC_UNUSED_PARAM(pEvent);
     if (!isTouchInside(touch) || !isEnabled() || !isVisible())
     {
         return false;
@@ -260,12 +261,15 @@ bool ControlSlider::onTouchBegan(Touch* touch, Event* pEvent)
 
 void ControlSlider::onTouchMoved(Touch *pTouch, Event *pEvent)
 {
+    CC_UNUSED_PARAM(pEvent);
     Vec2 location = locationFromTouch(pTouch);
     sliderMoved(location);
 }
 
 void ControlSlider::onTouchEnded(Touch *pTouch, Event *pEvent)
 {
+    CC_UNUSED_PARAM(pTouch);
+    CC_UNUSED_PARAM(pEvent);
     sliderEnded(Vec2::ZERO);
 }
 
@@ -305,6 +309,7 @@ void ControlSlider::sliderMoved(Vec2 location)
 
 void ControlSlider::sliderEnded(Vec2 location)
 {
+    CC_UNUSED_PARAM(location);
     if (this->isSelected())
     {
         setValue(valueForLocation(_thumbSprite->getPosition()));

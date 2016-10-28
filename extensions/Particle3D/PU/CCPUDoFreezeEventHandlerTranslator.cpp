@@ -36,11 +36,15 @@ PUDoFreezeEventHandlerTranslator::PUDoFreezeEventHandlerTranslator()
 //-------------------------------------------------------------------------
 bool PUDoFreezeEventHandlerTranslator::translateChildProperty( PUScriptCompiler* compiler, PUAbstractNode *node )
 {
+    CC_UNUSED_PARAM(compiler);
+    CC_UNUSED_PARAM(node);
     return false;
 }
 
 bool PUDoFreezeEventHandlerTranslator::translateChildObject( PUScriptCompiler* compiler, PUAbstractNode *node )
 {
+    CC_UNUSED_PARAM(compiler);
+    CC_UNUSED_PARAM(node);
     // No objects
     return false;
 }

@@ -80,11 +80,13 @@ int ActionFrame::getEasingType()
 
 ActionInterval* ActionFrame::getAction(float fDuration)
 {
+    CC_UNUSED_PARAM(fDuration);
 	log("Need a definition of <getAction> for ActionFrame");
 	return nullptr;
 }
 ActionInterval* ActionFrame::getAction(float fDuration,ActionFrame* srcFrame)
 {
+    CC_UNUSED_PARAM(srcFrame);
 	return this->getAction(fDuration);
 }
 

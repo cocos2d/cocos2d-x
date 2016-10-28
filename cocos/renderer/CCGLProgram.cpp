@@ -200,6 +200,7 @@ GLProgram* GLProgram::createWithFilenames(const std::string& vShaderFilename, co
 
 GLProgram* GLProgram::createWithFilenames(const std::string& vShaderFilename, const std::string& fShaderFilename, const std::string& compileTimeHeaders, const std::string& compileTimeDefines)
 {
+    CC_UNUSED_PARAM(compileTimeHeaders);
     auto ret = new (std::nothrow) GLProgram();
     if(ret && ret->initWithFilenames(vShaderFilename, fShaderFilename, compileTimeDefines)) {
         ret->link();

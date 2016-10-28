@@ -182,6 +182,7 @@ bool ControlSaturationBrightnessPicker::checkSliderPosition(Vec2 location)
 
 bool ControlSaturationBrightnessPicker::onTouchBegan(Touch* touch, Event* event)
 {
+    CC_UNUSED_PARAM(event);
     if (!isEnabled() || !isVisible())
     {
         return false;
@@ -197,6 +198,7 @@ bool ControlSaturationBrightnessPicker::onTouchBegan(Touch* touch, Event* event)
 
 void ControlSaturationBrightnessPicker::onTouchMoved(Touch* touch, Event* event)
 {
+    CC_UNUSED_PARAM(event);
     // Get the touch location
     Vec2 touchLocation=getTouchLocation(touch);
 

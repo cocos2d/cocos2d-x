@@ -72,7 +72,7 @@ protected:
     Frame();
     virtual ~Frame();
     
-    virtual void onApply(float percent) {};
+    virtual void onApply(float percent) { CC_UNUSED_PARAM(percent); };
     //update percent depends _tweenType, and return the Calculated percent
     virtual float tweenPercent(float percent);
     

@@ -114,6 +114,7 @@ void PUMaterialCache::addMaterial( PUMaterial *material )
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 int iterPath(const char *fpath, const struct stat *sb, int typeflag)
 {
+    CC_UNUSED_PARAM(sb);
     if(typeflag == FTW_F)
     {
         if (FileUtils::getInstance()->getFileExtension(fpath) == ".material")

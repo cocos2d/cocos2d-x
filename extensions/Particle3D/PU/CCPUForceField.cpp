@@ -112,6 +112,7 @@ void PURealTimeForceFieldCalculationFactory::generate(unsigned int forceFieldSiz
                                                     double persistence, 
                                                     const Vec3& worldSize)
 {
+    CC_UNUSED_PARAM(forceFieldSize);
     _octaves = octaves;
     _frequency = frequency;
     _amplitude = amplitude;

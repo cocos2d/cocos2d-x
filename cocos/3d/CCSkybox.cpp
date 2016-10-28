@@ -167,6 +167,7 @@ void Skybox::draw(Renderer* renderer, const Mat4& transform, uint32_t flags)
 
 void Skybox::onDraw(const Mat4& transform, uint32_t flags)
 {
+    CC_UNUSED_PARAM(flags);
     auto camera = Camera::getVisitingCamera();
     
     Mat4 cameraModelMat = camera->getNodeToWorldTransform();

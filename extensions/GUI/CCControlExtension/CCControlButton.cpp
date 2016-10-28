@@ -594,6 +594,7 @@ void ControlButton::needsLayout()
 
 bool ControlButton::onTouchBegan(Touch *pTouch, Event *pEvent)
 {
+    CC_UNUSED_PARAM(pEvent);
     if (!isTouchInside(pTouch) || !isEnabled() || !isVisible() || !hasVisibleParents() )
     {
         return false;
@@ -614,7 +615,8 @@ bool ControlButton::onTouchBegan(Touch *pTouch, Event *pEvent)
 }
 
 void ControlButton::onTouchMoved(Touch *pTouch, Event *pEvent)
-{    
+{
+    CC_UNUSED_PARAM(pEvent);
     if (!isEnabled() || !isPushed() || isSelected())
     {
         if (isHighlighted())
@@ -647,6 +649,7 @@ void ControlButton::onTouchMoved(Touch *pTouch, Event *pEvent)
 }
 void ControlButton::onTouchEnded(Touch *pTouch, Event *pEvent)
 {
+    CC_UNUSED_PARAM(pEvent);
     _isPushed = false;
     setHighlighted(false);
     
@@ -723,6 +726,8 @@ void ControlButton::updateDisplayedColor(const Color3B& parentColor)
 
 void ControlButton::onTouchCancelled(Touch *pTouch, Event *pEvent)
 {
+    CC_UNUSED_PARAM(pTouch);
+    CC_UNUSED_PARAM(pEvent);
     _isPushed = false;
     setHighlighted(false);
     sendActionsForControlEvents(Control::EventType::TOUCH_CANCEL);

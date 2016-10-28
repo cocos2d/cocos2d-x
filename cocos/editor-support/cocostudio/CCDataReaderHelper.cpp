@@ -444,6 +444,7 @@ void DataReaderHelper::addDataFromFileAsync(const std::string& imagePath, const 
 
 void DataReaderHelper::addDataAsyncCallBack(float dt)
 {
+    CC_UNUSED_PARAM(dt);
     // the data is generated in loading thread
     std::queue<DataInfo *> *dataQueue = _dataQueue;
 
@@ -639,6 +640,7 @@ ArmatureData *DataReaderHelper::decodeArmature(tinyxml2::XMLElement *armatureXML
 
 BoneData *DataReaderHelper::decodeBone(tinyxml2::XMLElement *boneXML, tinyxml2::XMLElement *parentXml, DataInfo *dataInfo)
 {
+    CC_UNUSED_PARAM(parentXml);
     BoneData *boneData = new (std::nothrow) BoneData();
     boneData->init();
 
@@ -667,6 +669,7 @@ BoneData *DataReaderHelper::decodeBone(tinyxml2::XMLElement *boneXML, tinyxml2::
 
 DisplayData *DataReaderHelper::decodeBoneDisplay(tinyxml2::XMLElement *displayXML, DataInfo *dataInfo)
 {
+    CC_UNUSED_PARAM(dataInfo);
     int _isArmature = 0;
 
     DisplayData *displayData;
@@ -940,6 +943,7 @@ MovementBoneData *DataReaderHelper::decodeMovementBone(tinyxml2::XMLElement *mov
 
 FrameData *DataReaderHelper::decodeFrame(tinyxml2::XMLElement *frameXML,  tinyxml2::XMLElement *parentFrameXml, BoneData *boneData, DataInfo *dataInfo)
 {
+    CC_UNUSED_PARAM(boneData);
     float x = 0, y = 0, scale_x = 0, scale_y = 0, skew_x = 0, skew_y = 0, tweenRotate = 0;
     int duration = 0, displayIndex = 0, zOrder = 0, tweenEasing = 0, blendType = 0;
 
@@ -1184,6 +1188,7 @@ TextureData *DataReaderHelper::decodeTexture(tinyxml2::XMLElement *textureXML, D
 
 ContourData *DataReaderHelper::decodeContour(tinyxml2::XMLElement *contourXML, DataInfo *dataInfo)
 {
+    CC_UNUSED_PARAM(dataInfo);
     ContourData *contourData = new (std::nothrow) ContourData();
     contourData->init();
 

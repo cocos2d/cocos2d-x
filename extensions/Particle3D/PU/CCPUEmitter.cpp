@@ -169,12 +169,13 @@ PUEmitter::~PUEmitter()
 
 void PUEmitter::updateEmitter(Particle3D *particle, float deltaTime)
 {
-    
+    CC_UNUSED_PARAM(particle);
+    CC_UNUSED_PARAM(deltaTime);
 }
 
 void PUEmitter::emit(int count)
 {
-    
+    CC_UNUSED_PARAM(count);
 }
 
 void PUEmitter::initParticlePosition( PUParticle3D* particle )
@@ -398,11 +399,12 @@ void PUEmitter::unPrepare()
 
 void PUEmitter::preUpdateEmitter( float deltaTime )
 {
-
+    CC_UNUSED_PARAM(deltaTime);
 }
 
 void PUEmitter::postUpdateEmitter( float deltaTime )
 {
+    CC_UNUSED_PARAM(deltaTime);
     Vec3 currentPos = getDerivedPosition();
     _latestPositionDiff = currentPos - _latestPosition;
     _latestPosition = currentPos;

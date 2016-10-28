@@ -179,6 +179,7 @@ void ParticleSystem3D::update(float delta)
 
 void ParticleSystem3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
+    CC_UNUSED_PARAM(flags);
     if (getAliveParticleCount() && _render)
     {
         _render->render(renderer, transform, this);

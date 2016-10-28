@@ -106,6 +106,7 @@ void PUSphereCollider::calculateDirectionAfterCollision(PUParticle3D* particle, 
 
 void PUSphereCollider::updatePUAffector( PUParticle3D *particle, float deltaTime )
 {
+    CC_UNUSED_PARAM(deltaTime);
     //for (auto iter : _particleSystem->getParticles())
     {
         //PUParticle3D *particle = iter;
@@ -187,6 +188,7 @@ void PUSphereCollider::updatePUAffector( PUParticle3D *particle, float deltaTime
 
 void PUSphereCollider::preUpdateAffector( float deltaTime )
 {
+    CC_UNUSED_PARAM(deltaTime);
     // Calculate the affectors' center position.
     _sphere.setCenter(getDerivedPosition());
 }

@@ -93,6 +93,7 @@ RenderTexture::~RenderTexture()
 
 void RenderTexture::listenToBackground(EventCustom *event)
 {
+    CC_UNUSED_PARAM(event);
     // We have not found a way to dispatch the enter background message before the texture data are destroyed.
     // So we disable this pair of message handler at present.
 #if CC_ENABLE_CACHE_TEXTURE_DATA
@@ -123,6 +124,7 @@ void RenderTexture::listenToBackground(EventCustom *event)
 
 void RenderTexture::listenToForeground(EventCustom *event)
 {
+    CC_UNUSED_PARAM(event);
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     // -- regenerate frame buffer object and attach the texture
     glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_oldFBO);

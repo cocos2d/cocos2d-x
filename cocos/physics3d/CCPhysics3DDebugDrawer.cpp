@@ -57,6 +57,7 @@ void Physics3DDebugDrawer::drawLine( const btVector3& from,const btVector3& to,c
 
 void Physics3DDebugDrawer::drawContactPoint( const btVector3& PointOnB,const btVector3& normalOnB,btScalar distance,int lifeTime,const btVector3& color )
 {
+    CC_UNUSED_PARAM(lifeTime);
     drawLine(PointOnB, PointOnB + normalOnB * distance, color);
 }
 
@@ -67,7 +68,8 @@ void Physics3DDebugDrawer::reportErrorWarning( const char* warningString )
 
 void Physics3DDebugDrawer::draw3dText( const btVector3& location,const char* textString )
 {
-
+    CC_UNUSED_PARAM(location);
+    CC_UNUSED_PARAM(textString);
 }
 
 void Physics3DDebugDrawer::setDebugMode( int debugMode )
@@ -129,6 +131,7 @@ void Physics3DDebugDrawer::ensureCapacity( int count )
 
 void Physics3DDebugDrawer::drawImplementation( const Mat4 &transform, uint32_t flags )
 {
+    CC_UNUSED_PARAM(flags);
     _program->use();
     _program->setUniformsForBuiltins(transform);
     glEnable(GL_DEPTH_TEST);

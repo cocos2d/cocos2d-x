@@ -443,6 +443,7 @@ void BoneNode::updateColor()
 
 void BoneNode::updateDisplayedColor(const cocos2d::Color3B& parentColor)
 {
+    CC_UNUSED_PARAM(parentColor);
     if (_cascadeColorEnabled)
     {
         for (const auto &child : _boneSkins)
@@ -454,6 +455,7 @@ void BoneNode::updateDisplayedColor(const cocos2d::Color3B& parentColor)
 
 void BoneNode::updateDisplayedOpacity(GLubyte parentOpacity)
 {
+    CC_UNUSED_PARAM(parentOpacity);
     if (_cascadeOpacityEnabled)
     {
         for (const auto& child : _boneSkins)
@@ -481,6 +483,7 @@ void BoneNode::disableCascadeColor()
 
 void BoneNode::onDraw(const cocos2d::Mat4 &transform, uint32_t flags)
 {
+    CC_UNUSED_PARAM(flags);
     getGLProgram()->use();
     getGLProgram()->setUniformsForBuiltins(transform);
 

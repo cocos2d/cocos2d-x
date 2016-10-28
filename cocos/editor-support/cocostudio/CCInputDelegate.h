@@ -106,15 +106,15 @@ public:
     /**
      * @js NA
      */
-    virtual void onAcceleration(cocos2d::Acceleration* acc, cocos2d::Event* event) {};
+    virtual void onAcceleration(cocos2d::Acceleration* acc, cocos2d::Event* event) {CC_UNUSED_PARAM(acc); CC_UNUSED_PARAM(event);};
     /**
      * @js NA
      */
-    virtual void onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event) {};
+    virtual void onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event) {CC_UNUSED_PARAM(keyCode); CC_UNUSED_PARAM(event);};
     /**
      * @js NA
      */
-    virtual void onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event) {};
+    virtual void onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event) {CC_UNUSED_PARAM(keyCode); CC_UNUSED_PARAM(event);};
     /**
      * @js NA
      */

@@ -107,7 +107,7 @@ public:
     virtual float getSpeedScale() const;
 
     //! The animation update speed
-    CC_DEPRECATED_ATTRIBUTE virtual void setAnimationInternal(float animationInternal) {}
+    CC_DEPRECATED_ATTRIBUTE virtual void setAnimationInternal(float animationInternal) { CC_UNUSED_PARAM(animationInternal); }
 
     using ProcessBase::play;
     /**

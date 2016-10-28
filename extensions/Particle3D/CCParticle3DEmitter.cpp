@@ -40,12 +40,13 @@ Particle3DEmitter::~Particle3DEmitter()
 
 void Particle3DEmitter::updateEmitter(Particle3D* particle, float deltaTime)
 {
-    
+    CC_UNUSED_PARAM(particle);
+    CC_UNUSED_PARAM(deltaTime);
 }
 
 void Particle3DEmitter::emit(int count)
 {
-    
+    CC_UNUSED_PARAM(count);
 }
 
 NS_CC_END

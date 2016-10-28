@@ -204,7 +204,7 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual void onError(AssetsManager::ErrorCode errorCode) {};
+    virtual void onError(AssetsManager::ErrorCode errorCode) { CC_UNUSED_PARAM(errorCode); };
     /** @brief Call back function for recording downloading percent
         @param percent How much percent downloaded
         @warning    This call back function just for recording downloading percent.
@@ -213,7 +213,7 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual void onProgress(int percent) {};
+    virtual void onProgress(int percent) { CC_UNUSED_PARAM(percent); };
     /** @brief Call back function for success
      * @js NA
      * @lua NA

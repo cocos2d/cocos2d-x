@@ -143,6 +143,7 @@ void PUBeamRender::particleEmitted( PUParticleSystem3D* particleSystem, PUPartic
 
 void PUBeamRender::particleExpired( PUParticleSystem3D* particleSystem, PUParticle3D* particle )
 {
+    CC_UNUSED_PARAM(particleSystem);
     if (particle->visualData)
     {
         PUParticle3DBeamVisualData* beamRendererVisualData = static_cast<PUParticle3DBeamVisualData*>(particle->visualData);
@@ -287,6 +288,7 @@ void PUBeamRender::unPrepare()
 
 void PUBeamRender::updateRender( PUParticle3D *particle, float deltaTime, bool firstParticle )
 {
+    CC_UNUSED_PARAM(firstParticle);
     if (!particle->visualData)
         return;
 

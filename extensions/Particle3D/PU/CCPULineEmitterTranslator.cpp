@@ -150,6 +150,8 @@ bool PULineEmitterTranslator::translateChildProperty( PUScriptCompiler* compiler
 
 bool PULineEmitterTranslator::translateChildObject( PUScriptCompiler* compiler, PUAbstractNode *node )
 {
+    CC_UNUSED_PARAM(compiler);
+    CC_UNUSED_PARAM(node);
     // No objects
     return false;
 }

@@ -45,7 +45,7 @@ class PUParticle3DBeamVisualData : public Ref
             billboardChain(bbChain){};
 
         // Set the chain visible or invisible (PU 1.4)
-        void setVisible(bool visible){/* No implementation */};
+        void setVisible(bool visible){ CC_UNUSED_PARAM(visible); /* No implementation */ };
 
         /** The is no decent way to make the individual chains/elements invisible. The width of each element is set to 0 to make it invisible.
             PU 1.4

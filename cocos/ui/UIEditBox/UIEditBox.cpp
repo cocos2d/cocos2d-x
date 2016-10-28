@@ -62,6 +62,7 @@ EditBox::~EditBox(void)
 
 void EditBox::touchDownAction(Ref *sender, TouchEventType controlEvent)
 {
+    CC_UNUSED_PARAM(sender);
     if (controlEvent == Widget::TouchEventType::ENDED) {
         _editBoxImpl->openKeyboard();
     }
@@ -88,6 +89,8 @@ EditBox* EditBox::create(const Size& size,
     
 EditBox* EditBox::create(const cocos2d::Size &size, cocos2d::ui::Scale9Sprite *normalSprite, ui::Scale9Sprite *pressedSprite, Scale9Sprite* disabledSprite)
 {
+    CC_UNUSED_PARAM(pressedSprite);
+    CC_UNUSED_PARAM(disabledSprite);
     EditBox* pRet = new (std::nothrow) EditBox();
     
     if (pRet != nullptr && pRet->initWithSizeAndBackgroundSprite(size, normalSprite))
@@ -492,7 +495,7 @@ void EditBox::keyboardWillShow(IMEKeyboardNotificationInfo& info)
 
 void EditBox::keyboardDidShow(IMEKeyboardNotificationInfo& info)
 {
-	
+	CC_UNUSED_PARAM(info);
 }
 
 void EditBox::keyboardWillHide(IMEKeyboardNotificationInfo& info)
@@ -506,7 +509,7 @@ void EditBox::keyboardWillHide(IMEKeyboardNotificationInfo& info)
 
 void EditBox::keyboardDidHide(IMEKeyboardNotificationInfo& info)
 {
-	
+	CC_UNUSED_PARAM(info);
 }
 
 #if CC_ENABLE_SCRIPT_BINDING

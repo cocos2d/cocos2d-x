@@ -264,6 +264,7 @@ void ActionObject::updateToFrameByTime(float fTime)
 
 void ActionObject::simulationActionUpdate(float dt)
 {
+    CC_UNUSED_PARAM(dt);
 	bool isEnd = true;
     
     for(const auto &e : _actionNodeList)

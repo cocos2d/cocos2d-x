@@ -50,7 +50,7 @@ public:
     virtual ~NavMeshDebugDraw();
 
     virtual void depthMask(bool state)override;
-    virtual void texture(bool state)override{};
+    virtual void texture(bool state)override { CC_UNUSED_PARAM(state); };
     virtual void begin(duDebugDrawPrimitives prim, float size = 1.0f) override;
 
     virtual void vertex(const float* pos, unsigned int color) override;

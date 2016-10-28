@@ -49,11 +49,16 @@ void PUOnRandomObserver::preUpdateObserver(float deltaTime)
 //-----------------------------------------------------------------------
 void PUOnRandomObserver::updateObserver(PUParticle3D *particle, float deltaTime, bool firstParticle)
 {
+    CC_UNUSED_PARAM(particle);
+    CC_UNUSED_PARAM(deltaTime);
+    CC_UNUSED_PARAM(firstParticle);
     // No need to determine per particle
 }
 //-----------------------------------------------------------------------
 bool PUOnRandomObserver::observe (PUParticle3D* particle, float timeElapsed)
 {
+    CC_UNUSED_PARAM(particle);
+    CC_UNUSED_PARAM(timeElapsed);
     return (CCRANDOM_0_1() > _threshold);
 }
 

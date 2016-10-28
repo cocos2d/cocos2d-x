@@ -87,6 +87,7 @@ PUColorAffector::ColorMapIterator PUColorAffector::findNearestColorMapIterator(f
 
 void PUColorAffector::updatePUAffector( PUParticle3D *particle, float deltaTime )
 {
+    CC_UNUSED_PARAM(deltaTime);
     // Fast rejection
     if (_colorMap.empty())
         return;

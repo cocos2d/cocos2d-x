@@ -68,6 +68,8 @@ void PUVelocityMatchingAffector::setRadius(float radius)
 
 void PUVelocityMatchingAffector::updatePUAffector( PUParticle3D *particle, float deltaTime )
 {
+    CC_UNUSED_PARAM(particle);
+    CC_UNUSED_PARAM(deltaTime);
     //for (auto iter : _particleSystem->getParticles())
     //{
     //    PUParticle3D *particle = iter;

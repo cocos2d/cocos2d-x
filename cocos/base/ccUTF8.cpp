@@ -487,6 +487,8 @@ char * cc_utf16_to_utf8 (const unsigned short  *str,
                   long            *items_read,
                   long            *items_written)
 {
+    CC_UNUSED_PARAM(items_read);
+    CC_UNUSED_PARAM(items_written);
     if (str == nullptr)
         return nullptr;
     

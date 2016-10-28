@@ -163,6 +163,7 @@ void ControlColourPicker::updateHueAndControlPicker()
 
 void ControlColourPicker::hueSliderValueChanged(Ref * sender, Control::EventType controlEvent)
 {
+    CC_UNUSED_PARAM(controlEvent);
     _hsv.h      = ((ControlHuePicker*)sender)->getHue();
 
     // Update the value
@@ -177,6 +178,7 @@ void ControlColourPicker::hueSliderValueChanged(Ref * sender, Control::EventType
 
 void ControlColourPicker::colourSliderValueChanged(Ref * sender, Control::EventType controlEvent)
 {
+    CC_UNUSED_PARAM(controlEvent);
     _hsv.s=((ControlSaturationBrightnessPicker*)sender)->getSaturation();
     _hsv.v=((ControlSaturationBrightnessPicker*)sender)->getBrightness();
 
@@ -193,6 +195,8 @@ void ControlColourPicker::colourSliderValueChanged(Ref * sender, Control::EventT
 //ignore all touches, handled by children
 bool ControlColourPicker::onTouchBegan(Touch* touch, Event* pEvent)
 {
+    CC_UNUSED_PARAM(touch);
+    CC_UNUSED_PARAM(pEvent);
     return false;
 }
 

@@ -53,12 +53,12 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual void scrollViewDidScroll(ScrollView* view) {};
+    virtual void scrollViewDidScroll(ScrollView* view) { CC_UNUSED_PARAM(view); };
     /**
      * @js NA
      * @lua NA
      */
-    virtual void scrollViewDidZoom(ScrollView* view) {};
+    virtual void scrollViewDidZoom(ScrollView* view) { CC_UNUSED_PARAM(view); };
 };
 
 

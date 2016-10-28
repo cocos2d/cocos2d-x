@@ -185,6 +185,7 @@ inline bool BundleReader::read<char>(char *ptr)
 template<>
 inline bool BundleReader::read<std::string>(std::string *ptr)
 {
+    CC_UNUSED_PARAM(ptr);
     CCLOG("can not read std::string, use readString() instead");
     return false;
 }

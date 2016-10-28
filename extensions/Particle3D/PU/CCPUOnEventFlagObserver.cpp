@@ -40,6 +40,7 @@ PUOnEventFlagObserver::PUOnEventFlagObserver(void) :
 //-----------------------------------------------------------------------
 bool PUOnEventFlagObserver::observe (PUParticle3D* particle, float timeElapsed)
 {
+    CC_UNUSED_PARAM(timeElapsed);
     if (!particle)
         return false;
 

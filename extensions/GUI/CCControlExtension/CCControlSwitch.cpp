@@ -212,6 +212,7 @@ bool ControlSwitchSprite::initWithMaskSprite(
 
 void ControlSwitchSprite::updateTweenAction(float value, const std::string& key)
 {
+    CC_UNUSED_PARAM(key);
     CCLOGINFO("key = %s, value = %f", key.c_str(), value);
     setSliderXPosition(value);
 }
@@ -398,6 +399,7 @@ Vec2 ControlSwitch::locationFromTouch(Touch* pTouch)
 
 bool ControlSwitch::onTouchBegan(Touch *pTouch, Event *pEvent)
 {
+    CC_UNUSED_PARAM(pEvent);
     if (!isTouchInside(pTouch) || !isEnabled() || !isVisible())
     {
         return false;
@@ -417,6 +419,7 @@ bool ControlSwitch::onTouchBegan(Touch *pTouch, Event *pEvent)
 
 void ControlSwitch::onTouchMoved(Touch *pTouch, Event *pEvent)
 {
+    CC_UNUSED_PARAM(pEvent);
     Vec2 location    = this->locationFromTouch(pTouch);
     location            = Vec2(location.x - _initialTouchXPosition, 0);
     
@@ -427,6 +430,7 @@ void ControlSwitch::onTouchMoved(Touch *pTouch, Event *pEvent)
 
 void ControlSwitch::onTouchEnded(Touch *pTouch, Event *pEvent)
 {
+    CC_UNUSED_PARAM(pEvent);
     Vec2 location   = this->locationFromTouch(pTouch);
     
     _switchSprite->getThumbSprite()->setColor(Color3B::WHITE);
@@ -443,6 +447,7 @@ void ControlSwitch::onTouchEnded(Touch *pTouch, Event *pEvent)
 
 void ControlSwitch::onTouchCancelled(Touch *pTouch, Event *pEvent)
 {
+    CC_UNUSED_PARAM(pEvent);
     Vec2 location   = this->locationFromTouch(pTouch);
     
     _switchSprite->getThumbSprite()->setColor(Color3B::WHITE);

@@ -1163,6 +1163,9 @@ void Node::draw()
 
 void Node::draw(Renderer* renderer, const Mat4 &transform, uint32_t flags)
 {
+    CC_UNUSED_PARAM(renderer);
+    CC_UNUSED_PARAM(transform);
+    CC_UNUSED_PARAM(flags);
 }
 
 void Node::visit()

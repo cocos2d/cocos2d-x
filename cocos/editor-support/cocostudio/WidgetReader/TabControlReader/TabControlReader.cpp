@@ -988,11 +988,14 @@ flatbuffers::Offset<flatbuffers::TabItemOption> TabItemReader::createTabItemOpti
 
 void TabItemReader::setPropsWithFlatBuffers(cocos2d::Node* node, const flatbuffers::Table* nodeOption)
 {
+    CC_UNUSED_PARAM(node);
+    CC_UNUSED_PARAM(nodeOption);
     // do nothing
 }
 
 cocos2d::Node* TabItemReader::createNodeWithFlatBuffers(const flatbuffers::Table* nodeOptions)
 {
+    CC_UNUSED_PARAM(nodeOptions);
     // do nothing
     return nullptr;
 }
@@ -1000,7 +1003,8 @@ cocos2d::Node* TabItemReader::createNodeWithFlatBuffers(const flatbuffers::Table
 flatbuffers::Offset<flatbuffers::Table> TabItemReader::createOptionsWithFlatBuffers(
                                                                                     const tinyxml2::XMLElement* objectData, flatbuffers::FlatBufferBuilder* builder)
 {
-    
+    CC_UNUSED_PARAM(objectData);
+    CC_UNUSED_PARAM(builder);
     // nothing
     return flatbuffers::Offset<flatbuffers::Table>();
 }

@@ -130,6 +130,7 @@ void onCaptureScreen(const std::function<void(bool, const std::string&)>& afterC
             static bool succeedSaveToFile = false;
             std::function<void(void*)> mainThread = [afterCaptured, outputFile](void* param)
             {
+                CC_UNUSED_PARAM(param);
                 if (afterCaptured)
                 {
                     afterCaptured(succeedSaveToFile, outputFile);
@@ -170,6 +171,7 @@ void captureScreen(const std::function<void(bool, const std::string&)>& afterCap
     s_captureScreenCommand.init(std::numeric_limits<float>::max());
     s_captureScreenCommand.func = std::bind(onCaptureScreen, afterCaptured, filename);
     s_captureScreenListener = Director::getInstance()->getEventDispatcher()->addCustomEventListener(Director::EVENT_AFTER_DRAW, [](EventCustom *event) {
+        CC_UNUSED_PARAM(event);
         auto director = Director::getInstance();
         director->getEventDispatcher()->removeEventListener((EventListener*)(s_captureScreenListener));
         s_captureScreenListener = nullptr;

@@ -62,6 +62,7 @@ void PUSlaveEmitter::setMasterEmitterName(const std::string& masterEmitterName)
 //-----------------------------------------------------------------------
 void PUSlaveEmitter::particleEmitted(PUParticleSystem3D* particleSystem, PUParticle3D* particle)
 {
+    CC_UNUSED_PARAM(particleSystem);
     if (_masterEmitterNameSet && _masterEmitterName != particle->parentEmitter->getName())
     {
         // Ignore particle

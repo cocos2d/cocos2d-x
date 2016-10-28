@@ -110,6 +110,7 @@ void Component::onRemove()
 
 void Component::update(float delta)
 {
+    CC_UNUSED_PARAM(delta);
 #if CC_ENABLE_SCRIPT_BINDING
     if (_scriptType == kScriptTypeJavascript)
     {
@@ -120,6 +121,7 @@ void Component::update(float delta)
 
 bool Component::serialize(void *ar)
 {
+    CC_UNUSED_PARAM(ar);
     return true;
 }
 

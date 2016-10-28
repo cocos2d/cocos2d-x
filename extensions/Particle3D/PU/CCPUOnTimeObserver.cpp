@@ -60,6 +60,7 @@ void PUOnTimeObserver::preUpdateObserver(float deltaTime)
 //-----------------------------------------------------------------------
 bool PUOnTimeObserver::observe (PUParticle3D* particle, float timeElapsed)
 {
+    CC_UNUSED_PARAM(timeElapsed);
     if (_compare == CO_GREATER_THAN)
     {
         if (_sinceStartSystem)

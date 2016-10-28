@@ -26,6 +26,8 @@ public:
 protected:
     virtual cocos2d::Menu * createNode(cocos2d::Node * pParent, cocosbuilder::CCBReader * ccbReader)
     {
+        CC_UNUSED_PARAM(pParent);
+        CC_UNUSED_PARAM(ccbReader);
         cocos2d::Menu * pMenu = cocos2d::Menu::create();
         
         pMenu->setContentSize(cocos2d::Size::ZERO);

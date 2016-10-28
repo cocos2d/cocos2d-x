@@ -112,6 +112,7 @@ void PageView::setDirection(PageView::Direction direction)
 
 void PageView::addWidgetToPage(Widget *widget, ssize_t pageIdx, bool forceCreate)
 {
+    CC_UNUSED_PARAM(forceCreate);
     insertCustomItem(widget, pageIdx);
 }
 
@@ -172,6 +173,7 @@ void PageView::scrollToItem(ssize_t itemIndex, float time)
 
 void PageView::setCustomScrollThreshold(float threshold)
 {
+    CC_UNUSED_PARAM(threshold);
     CCLOG("PageView::setCustomScrollThreshold() has no effect!");
 }
 
@@ -182,6 +184,7 @@ float PageView::getCustomScrollThreshold()const
 
 void PageView::setUsingCustomScrollThreshold(bool flag)
 {
+    CC_UNUSED_PARAM(flag);
     CCLOG("PageView::setUsingCustomScrollThreshold() has no effect!");
 }
 
@@ -299,6 +302,7 @@ void PageView::addEventListenerPageView(Ref *target, SEL_PageViewEvent selector)
     _pageViewEventSelector = selector;
 
     ccScrollViewCallback scrollViewCallback = [=](Ref* ref, ScrollView::EventType type) -> void{
+        CC_UNUSED_PARAM(ref);
         if (type == ScrollView::EventType::AUTOSCROLL_ENDED && _previousPageIndex != _currentPageIndex) {
             pageTurningEvent();
         }
@@ -329,6 +333,7 @@ void PageView::addEventListener(const ccPageViewCallback& callback)
 {
     _eventCallback = callback;
     ccScrollViewCallback scrollViewCallback = [=](Ref* ref, ScrollView::EventType type) -> void{
+        CC_UNUSED_PARAM(ref);
         if (type == ScrollView::EventType::AUTOSCROLL_ENDED && _previousPageIndex != _currentPageIndex) {
             pageTurningEvent();
         }

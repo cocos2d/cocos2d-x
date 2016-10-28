@@ -609,13 +609,14 @@ bool Image::isPng(const unsigned char * data, ssize_t dataLen)
 
 bool Image::isEtc(const unsigned char * data, ssize_t dataLen)
 {
+    CC_UNUSED_PARAM(dataLen);
     return etc1_pkm_is_valid((etc1_byte*)data) ? true : false;
 }
 
 
 bool Image::isS3TC(const unsigned char * data, ssize_t dataLen)
 {
-
+    CC_UNUSED_PARAM(dataLen);
     S3TCTexHeader *header = (S3TCTexHeader *)data;
     
     if (strncmp(header->fileCode, "DDS", 3) != 0)
@@ -627,6 +628,7 @@ bool Image::isS3TC(const unsigned char * data, ssize_t dataLen)
 
 bool Image::isATITC(const unsigned char *data, ssize_t dataLen)
 {
+    CC_UNUSED_PARAM(dataLen);
     ATITCTexHeader *header = (ATITCTexHeader *)data;
     
     if (strncmp(&header->identifier[1], "KTX", 3) != 0)
@@ -1331,6 +1333,7 @@ namespace
 {
     bool testFormatForPvr2TCSupport(PVR2TexturePixelFormat format)
     {
+        CC_UNUSED_PARAM(format);
         return true;
     }
     
@@ -1697,6 +1700,7 @@ bool Image::initWithPVRv3Data(const unsigned char * data, ssize_t dataLen)
 
 bool Image::initWithETCData(const unsigned char * data, ssize_t dataLen)
 {
+    CC_UNUSED_PARAM(dataLen);
     const etc1_byte* header = static_cast<const etc1_byte*>(data);
     
     //check the data
@@ -2146,6 +2150,8 @@ bool Image::initWithWebpData(const unsigned char * data, ssize_t dataLen)
 
 bool Image::initWithRawData(const unsigned char * data, ssize_t dataLen, int width, int height, int bitsPerComponent, bool preMulti)
 {
+    CC_UNUSED_PARAM(dataLen);
+    CC_UNUSED_PARAM(bitsPerComponent);
     bool ret = false;
     do 
     {

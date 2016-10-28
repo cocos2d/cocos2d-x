@@ -116,6 +116,7 @@ void PURandomiser::preUpdateAffector(float deltaTime)
 //-----------------------------------------------------------------------
 void PURandomiser::updatePUAffector( PUParticle3D *particle, float deltaTime )
 {
+    CC_UNUSED_PARAM(deltaTime);
     //for (auto iter : _particleSystem->getParticles())
     {
         //PUParticle3D *particle = iter;
@@ -146,6 +147,7 @@ void PURandomiser::updatePUAffector( PUParticle3D *particle, float deltaTime )
 //-----------------------------------------------------------------------
 void PURandomiser::postUpdateAffector(float deltaTime)
 {
+    CC_UNUSED_PARAM(deltaTime);
     _update = false;
 }
 

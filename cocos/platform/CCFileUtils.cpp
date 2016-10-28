@@ -530,10 +530,27 @@ static tinyxml2::XMLElement* generateElementForArray(const ValueVector& array, t
 #else
 
 /* The subclass FileUtilsApple should override these two method. */
-ValueMap FileUtils::getValueMapFromFile(const std::string& filename) {return ValueMap();}
-ValueMap FileUtils::getValueMapFromData(const char* filedata, int filesize) {return ValueMap();}
-ValueVector FileUtils::getValueVectorFromFile(const std::string& filename) {return ValueVector();}
-bool FileUtils::writeToFile(const ValueMap& dict, const std::string &fullPath) {return false;}
+ValueMap FileUtils::getValueMapFromFile(const std::string& filename) {
+    CC_UNUSED_PARAM(filename);
+    return ValueMap();
+}
+
+ValueMap FileUtils::getValueMapFromData(const char* filedata, int filesize) {
+    CC_UNUSED_PARAM(filedata);
+    CC_UNUSED_PARAM(filesize);
+    return ValueMap();
+}
+
+ValueVector FileUtils::getValueVectorFromFile(const std::string& filename) {
+    CC_UNUSED_PARAM(filename);
+    return ValueVector();
+}
+
+bool FileUtils::writeToFile(const ValueMap& dict, const std::string &fullPath) {
+    CC_UNUSED_PARAM(dict);
+    CC_UNUSED_PARAM(fullPath);
+    return false;
+}
 
 #endif /* (CC_TARGET_PLATFORM != CC_PLATFORM_IOS) && (CC_TARGET_PLATFORM != CC_PLATFORM_MAC) */
 
@@ -1262,10 +1279,12 @@ std::string FileUtils::getFileExtension(const std::string& filePath) const
 
 void FileUtils::valueMapCompact(ValueMap& valueMap)
 {
+    CC_UNUSED_PARAM(valueMap);
 }
 
 void FileUtils::valueVectorCompact(ValueVector& valueVector)
 {
+    CC_UNUSED_PARAM(valueVector);
 }
 
 NS_CC_END

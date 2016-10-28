@@ -73,6 +73,8 @@ void ProcessBase::stop()
 
 void ProcessBase::play(int durationTo, int durationTween,  int loop, int tweenEasing)
 {
+    CC_UNUSED_PARAM(durationTween);
+    CC_UNUSED_PARAM(loop);
     _isComplete = false;
     _isPause = false;
     _isPlaying = true;

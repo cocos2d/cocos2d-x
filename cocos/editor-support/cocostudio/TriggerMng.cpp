@@ -519,6 +519,7 @@ ArmatureMovementDispatcher::~ArmatureMovementDispatcher(void)
 
   void ArmatureMovementDispatcher::removeAnnimationEventCallBack(Ref *pTarget, SEL_MovementEventCallFunc mecf)
   {
+      CC_UNUSED_PARAM(mecf);
 	  _mapEventAnimation->erase(pTarget);
   }
   

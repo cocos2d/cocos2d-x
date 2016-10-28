@@ -83,6 +83,7 @@ namespace cocos2d { namespace network {
                                        int64_t totalBytesExpected,
                                        std::function<int64_t(void *buffer, int64_t len)>& transferDataToBuffer)
         {
+            CC_UNUSED_PARAM(transferDataToBuffer);
             if (onTaskProgress)
             {
                 onTaskProgress(task, bytesReceived, totalBytesReceived, totalBytesExpected);
