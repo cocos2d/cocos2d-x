@@ -52,6 +52,7 @@ namespace ui {
     void setFontSize(int fontSize);
     void setInputFlag(int inputFlags);
     void setInputMode(int inputMode);
+    void setTextHorizontalAlignment(int alignment);
     void setMaxLength(int maxLength);
     void setPosition(Windows::Foundation::Rect rect);
     void setSize(Windows::Foundation::Size size);
@@ -70,6 +71,7 @@ namespace ui {
     Windows::UI::Xaml::Controls::Control^ createTextBox();
     void removeTextBox();
     void setInputScope(TextBox^ textBox);
+    void _setTextHorizontalAlignment(TextBox^ textBox);
 
     // Properties
     Windows::Foundation::Rect _rect;
@@ -78,6 +80,7 @@ namespace ui {
     Platform::String^ _initialText;
     int _fontSize;
     Platform::String^ _fontFamily;
+    int _alignment;
     int _inputMode;
     int _inputFlag;
     bool _password;
@@ -126,6 +129,7 @@ namespace ui {
     virtual void setNativeInputMode(EditBox::InputMode inputMode) override;
     virtual void setNativeInputFlag(EditBox::InputFlag inputFlag) override;
     virtual void setNativeReturnType(EditBox::KeyboardReturnType returnType) override { CCLOG("Warning! You can't change WinRT return type"); }
+    virtual void setNativeTextHorizontalAlignment(cocos2d::TextHAlignment alignment);
     virtual void setNativeText(const char* pText) override;
     virtual void setNativePlaceHolder(const char* pText) override { CCLOG("Warning! You can't change WinRT placeholder text"); }
     virtual void setNativeVisible(bool visible) override;
