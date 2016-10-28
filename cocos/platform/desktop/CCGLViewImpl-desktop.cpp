@@ -564,7 +564,7 @@ float GLViewImpl::getFrameZoomFactor() const
     return _frameZoomFactor;
 }
 
-bool GLViewImpl::isFullscreen() {
+bool GLViewImpl::isFullscreen() const {
     return (_monitor != nullptr);
 }
 
@@ -618,13 +618,13 @@ void GLViewImpl::setWindowed(int width, int height) {
     }
 }
 
-int GLViewImpl::getMonitorCount() {
+int GLViewImpl::getMonitorCount() const {
     int count = 0;
     glfwGetMonitors(&count);
     return count;
 }
 
-Size GLViewImpl::getMonitorSize() {
+Size GLViewImpl::getMonitorSize() const {
     GLFWmonitor* monitor = _monitor;
     if (nullptr == monitor) {
         GLFWwindow* window = this->getWindow();

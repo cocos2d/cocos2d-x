@@ -15,10 +15,8 @@ std::string WindowTest::title() const {
 
 void WindowTestWindowed1::onEnter() {
     WindowTest::onEnter();
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     GLViewImpl* view = (GLViewImpl*)Director::getInstance()->getOpenGLView();
     view->setWindowed(480, 320);
-#endif
 }
 
 std::string WindowTestWindowed1::subtitle() const {
@@ -27,10 +25,8 @@ std::string WindowTestWindowed1::subtitle() const {
 
 void WindowTestWindowed2::onEnter() {
     WindowTest::onEnter();
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     GLViewImpl* view = (GLViewImpl*)Director::getInstance()->getOpenGLView();
     view->setWindowed(960, 640);
-#endif
 }
 
 std::string WindowTestWindowed2::subtitle() const {
@@ -39,10 +35,8 @@ std::string WindowTestWindowed2::subtitle() const {
 
 void WindowTestFullscreen1::onEnter() {
     WindowTest::onEnter();
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     GLViewImpl* view = (GLViewImpl*)Director::getInstance()->getOpenGLView();
     view->setFullscreen();
-#endif
 }
 
 std::string WindowTestFullscreen1::subtitle() const {
@@ -51,10 +45,8 @@ std::string WindowTestFullscreen1::subtitle() const {
 
 void WindowTestFullscreen2::onEnter() {
     WindowTest::onEnter();
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     GLViewImpl* view = (GLViewImpl*)Director::getInstance()->getOpenGLView();
     view->setFullscreen(1);
-#endif
 }
 
 std::string WindowTestFullscreen2::subtitle() const {

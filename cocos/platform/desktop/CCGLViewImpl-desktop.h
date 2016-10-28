@@ -79,13 +79,13 @@ public:
     void pollEvents() override;
     GLFWwindow* getWindow() const { return _mainWindow; }
 
-    bool isFullscreen();
+    bool isFullscreen() const;
     void setFullscreen();
     void setFullscreen(int monitorIndex);
     void setFullscreen(const GLFWvidmode &videoMode, GLFWmonitor *monitor);
     void setWindowed(int width, int height);
-    int getMonitorCount();
-    Size getMonitorSize();
+    int getMonitorCount() const;
+    Size getMonitorSize() const;
 
     /* override functions */
     virtual bool isOpenGLReady() override;
