@@ -630,7 +630,7 @@ protected:
 
     void updatePoly();
     void updateStretchFactor();
-    
+
     //
     // Data used when the sprite is rendered using a SpriteSheet
     //

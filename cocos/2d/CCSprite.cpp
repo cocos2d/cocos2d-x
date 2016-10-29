@@ -436,10 +436,10 @@ void Sprite::updatePoly()
         CCASSERT(_numberOfSlices == 9, "Invalid number of slices");
 
         // center rect
-        const float x1 = _centerRectNormalized.origin.x;
-        const float y1 = _centerRectNormalized.origin.y;
-        const float x2 = _centerRectNormalized.origin.x + _centerRectNormalized.size.width;
-        const float y2 = _centerRectNormalized.origin.y + _centerRectNormalized.size.height;
+        const float cx1 = _centerRectNormalized.origin.x;
+        const float cy1 = _centerRectNormalized.origin.y;
+        const float cx2 = _centerRectNormalized.origin.x + _centerRectNormalized.size.width;
+        const float cy2 = _centerRectNormalized.origin.y + _centerRectNormalized.size.height;
 
         // "O"riginal rect
         const float oox = _rect.origin.x;
@@ -449,46 +449,91 @@ void Sprite::updatePoly()
 
         // textCoords Data: Y must be inverted.
         const float u0 = oox + osw * 0;
-        const float u1 = oox + osw * x1;
-        const float u2 = oox + osw * x2;
-        const float v0 = ooy + osh - (osh * y1);
-        const float v1 = ooy + osh * (1-y2);
+        const float u1 = oox + osw * cx1;
+        const float u2 = oox + osw * cx2;
+        const float v0 = ooy + osh - (osh * cy1);
+        const float v1 = ooy + osh * (1 - cy2);
         const float v2 = ooy + osh * 0;
 
         const Rect texRects[9] = {
-            Rect(u0, v0,    osw * x1,      osh * y1),         // bottom-left
-            Rect(u1, v0,    osw * (x2-x1), osh * y1),         // bottom
-            Rect(u2, v0,    osw * (1-x2),  osh * y1),         // bottom-right
+            Rect(u0, v0,    osw * cx1,       osh * cy1),         // bottom-left
+            Rect(u1, v0,    osw * (cx2-cx1), osh * cy1),         // bottom
+            Rect(u2, v0,    osw * (1-cx2),   osh * cy1),         // bottom-right
 
-            Rect(u0, v1,    osw * x1,      osh * (y2-y1)),    // left
-            Rect(u1, v1,    osw * (x2-x1), osh * (y2-y1)),    // center
-            Rect(u2, v1,    osw * (1-x2),  osh * (y2-y1)),    // right
+            Rect(u0, v1,    osw * cx1,       osh * (cy2-cy1)),   // left
+            Rect(u1, v1,    osw * (cx2-cx1), osh * (cy2-cy1)),   // center
+            Rect(u2, v1,    osw * (1-cx2),   osh * (cy2-cy1)),   // right
 
-            Rect(u0, v2,    osw * x1,      osh * (1-y2)),     // top-left
-            Rect(u1, v2,    osw * (x2-x1), osh * (1-y2)),     // top
-            Rect(u2, v2,    osw * (1-x2),  osh * (1-y2)),     // top-right
+            Rect(u0, v2,    osw * cx1,       osh * (1-cy2)),     // top-left
+            Rect(u1, v2,    osw * (cx2-cx1), osh * (1-cy2)),     // top
+            Rect(u2, v2,    osw * (1-cx2),   osh * (1-cy2)),     // top-right
         };
 
         // vertex Data.
-        const float x2_x1_strech = osw * (x2-x1) * _strechFactor.x;
-        const float y2_y1_strech = osh * (y2-y1) * _strechFactor.y;
+
+        // sizes
+        float x0_s = osw * cx1;
+        float x1_s = osw * (cx2-cx1) * _strechFactor.x;
+        float x2_s = osw * (1-cx2);
+        float y0_s = osh * cy1;
+        float y1_s = osh * (cy2-cy1) * _strechFactor.y;
+        float y2_s = osh * (1-cy2);
+
+        // It is easier to call "updateXY", but it will be slower.
+        // so the flipping is calculated here at the cost of adding
+        // just a little bit more of complexity.
+
+        // swap sizes to calculate offset correctly
+        if (_flippedX)
+            std::swap(x0_s, x2_s);
+        if (_flippedY)
+            std::swap(y0_s, y2_s);
+
+        // origins
+        float x0 = 0;
+        float x1 = x0 + x0_s;
+        float x2 = x1 + x1_s;
+        float y0 = 0;
+        float y1 = y0 + y0_s;
+        float y2 = y1 + y1_s;
+
+        // swap origin, but restore size to its original value
+        if (_flippedX) {
+            std::swap(x0, x2);
+            std::swap(x0_s, x2_s);
+        }
+        if (_flippedY) {
+            std::swap(y0, y2);
+            std::swap(y0_s, y2_s);
+        }
+
         const Rect verticesRects[9] = {
-            Rect(osw * 0,  osh * 0,                     osw * x1, osh * y1),                // bottom-left
-            Rect(osw * x1, osh * 0,                     x2_x1_strech, osh * y1),            // bottom
-            Rect(osw * x1 + x2_x1_strech, osh * 0,      osw * (1-x2),  osh * y1),           // bottom-right
+            Rect(x0, y0,  x0_s, y0_s),      // bottom-left
+            Rect(x1, y0,  x1_s, y0_s),      // bottom
+            Rect(x2, y0,  x2_s, y0_s),      // bottom-right
 
-            Rect(osw * 0, osh * y1,                     osw * x1, y2_y1_strech),            // left
-            Rect(osw * x1, osh * y1,                    x2_x1_strech, y2_y1_strech),        // center
-            Rect(osw * x1 + x2_x1_strech,  osh * y1,    osw * (1-x2), y2_y1_strech),        // right
+            Rect(x0, y1,  x0_s, y1_s),      // left
+            Rect(x1, y1,  x1_s, y1_s),      // center
+            Rect(x2, y1,  x2_s, y1_s),      // right
 
-            Rect(osw * 0, osh * y1 + y2_y1_strech,                  osw * x1, osh * (1-y2)),        // top-left
-            Rect(osw * x1, osh * y1 + y2_y1_strech,                 x2_x1_strech, osh * (1-y2)),    // top
-            Rect(osw * x1 + x2_x1_strech, osh * y1 + y2_y1_strech,  osw * (1-x2),  osh * (1-y2)),   // top-right
+            Rect(x0, y2,  x0_s, y2_s),      // top-left
+            Rect(x1, y2,  x1_s, y2_s),      // top
+            Rect(x2, y2,  x2_s, y2_s),      // top-right
         };
 
-        const int rotatedIdx[] = {6, 3, 0, 7, 4, 1, 8, 5, 2};
+        static const int normalIdx[] = {
+            0, 1, 2,
+            3, 4, 5,
+            6, 7 ,8
+        };
+        static const int rotatedIdx[] = {
+            6, 3, 0,
+            7, 4, 1,
+            8, 5, 2};
+        const int* idx = _rectRotated ? rotatedIdx : normalIdx;
+
         for (int i=0; i<_numberOfSlices; ++i) {
-            const int texIdx = _rectRotated ? rotatedIdx[i] : i;
+            int texIdx = idx[i];
             setTextureCoords(texRects[texIdx], &_quads[i]);
             setVertexCoords(verticesRects[i], _rect.size, &_quads[i]);
         }
@@ -548,7 +593,10 @@ void Sprite::setCenterRect(const cocos2d::Rect &rectInPoints)
 Rect Sprite::getCenterRectNormalized() const
 {
     // FIXME: _centerRectNormalized is in bottom-left coords, but should converted to top-left
-    Rect ret(_centerRectNormalized.origin.x, 1 - _centerRectNormalized.origin.y - _centerRectNormalized.size.height, _centerRectNormalized.size.width, _centerRectNormalized.size.height);
+    Rect ret(_centerRectNormalized.origin.x,
+             1 - _centerRectNormalized.origin.y - _centerRectNormalized.size.height,
+             _centerRectNormalized.size.width,
+             _centerRectNormalized.size.height);
     return ret;
 }
 
@@ -1140,10 +1188,12 @@ void Sprite::setFlippedX(bool flippedX)
     if (_flippedX != flippedX)
     {
         _flippedX = flippedX;
+
         for (ssize_t i = 0; i < _polyInfo.triangles.vertCount; i++) {
             auto& v = _polyInfo.triangles.verts[i].vertices;
-            v.x = _contentSize.width -v.x;
+            v.x = _contentSize.width - v.x;
         }
+
         if (_textureAtlas) {
             setDirty(true);
         }
@@ -1160,10 +1210,12 @@ void Sprite::setFlippedY(bool flippedY)
     if (_flippedY != flippedY)
     {
         _flippedY = flippedY;
+
         for (ssize_t i = 0; i < _polyInfo.triangles.vertCount; i++) {
             auto& v = _polyInfo.triangles.verts[i].vertices;
-            v.y = _contentSize.height -v.y;
+            v.y = _contentSize.height - v.y;
         }
+
         if (_textureAtlas) {
             setDirty(true);
         }
