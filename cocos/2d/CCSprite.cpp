@@ -470,6 +470,8 @@ void Sprite::updatePoly()
         };
 
         // vertex Data.
+
+        // sizes
         float x0_s = osw * cx1;
         float x1_s = osw * (cx2-cx1) * _strechFactor.x;
         float x2_s = osw * (1-cx2);
@@ -477,11 +479,17 @@ void Sprite::updatePoly()
         float y1_s = osh * (cy2-cy1) * _strechFactor.y;
         float y2_s = osh * (1-cy2);
 
+        // It is easier to call "updateXY", but it will be slower.
+        // so the flipping is calculated here at the cost of adding
+        // just a little bit more of complexity.
+
+        // swap sizes to calculate offset correctly
         if (_flippedX)
             std::swap(x0_s, x2_s);
         if (_flippedY)
             std::swap(y0_s, y2_s);
 
+        // origins
         float x0 = 0;
         float x1 = x0 + x0_s;
         float x2 = x1 + x1_s;
@@ -489,11 +497,15 @@ void Sprite::updatePoly()
         float y1 = y0 + y0_s;
         float y2 = y1 + y1_s;
 
-        if (_flippedX)
+        // swap origin, but restore size to its original value
+        if (_flippedX) {
             std::swap(x0, x2);
-        if (_flippedY)
+            std::swap(x0_s, x2_s);
+        }
+        if (_flippedY) {
             std::swap(y0, y2);
-
+            std::swap(y0_s, y2_s);
+        }
 
         const Rect verticesRects[9] = {
             Rect(x0, y0,  x0_s, y0_s),      // bottom-left
@@ -526,22 +538,6 @@ void Sprite::updatePoly()
             setVertexCoords(verticesRects[i], _rect.size, &_quads[i]);
         }
         _polyInfo.setQuads(_quads, _numberOfSlices);
-//        updateFlipXY(_flippedX, _flippedY);
-    }
-}
-
-void Sprite::updateFlipXY(bool flipX, bool flipY)
-{
-    if (flipX | flipY) {
-        for (ssize_t i = 0; i < _polyInfo.triangles.vertCount; i++) {
-            auto& v = _polyInfo.triangles.verts[i].vertices;
-            if (flipX) {
-                v.x = _contentSize.width - v.x;
-            }
-            if (flipY) {
-                v.y = _contentSize.height - v.y;
-            }
-        }
     }
 }
 
@@ -597,7 +593,10 @@ void Sprite::setCenterRect(const cocos2d::Rect &rectInPoints)
 Rect Sprite::getCenterRectNormalized() const
 {
     // FIXME: _centerRectNormalized is in bottom-left coords, but should converted to top-left
-    Rect ret(_centerRectNormalized.origin.x, 1 - _centerRectNormalized.origin.y - _centerRectNormalized.size.height, _centerRectNormalized.size.width, _centerRectNormalized.size.height);
+    Rect ret(_centerRectNormalized.origin.x,
+             1 - _centerRectNormalized.origin.y - _centerRectNormalized.size.height,
+             _centerRectNormalized.size.width,
+             _centerRectNormalized.size.height);
     return ret;
 }
 
@@ -1190,7 +1189,10 @@ void Sprite::setFlippedX(bool flippedX)
     {
         _flippedX = flippedX;
 
-        updateFlipXY(true, false);
+        for (ssize_t i = 0; i < _polyInfo.triangles.vertCount; i++) {
+            auto& v = _polyInfo.triangles.verts[i].vertices;
+            v.x = _contentSize.width - v.x;
+        }
 
         if (_textureAtlas) {
             setDirty(true);
@@ -1209,7 +1211,10 @@ void Sprite::setFlippedY(bool flippedY)
     {
         _flippedY = flippedY;
 
-        updateFlipXY(false, true);
+        for (ssize_t i = 0; i < _polyInfo.triangles.vertCount; i++) {
+            auto& v = _polyInfo.triangles.verts[i].vertices;
+            v.y = _contentSize.height - v.y;
+        }
 
         if (_textureAtlas) {
             setDirty(true);
