@@ -892,9 +892,18 @@ public:
     CREATE_FUNC(SpriteSlice9Test9);
     SpriteSlice9Test9();
     virtual std::string title() const override { return "Slice 9 Test #9"; };
-    virtual std::string subtitle() const override { return "Rotated Sprites"; }
+    virtual std::string subtitle() const override { return "Flipped sprites #2"; }
 };
 
+
+class SpriteSlice9Test10 : public SpriteTestDemo
+{
+public:
+    CREATE_FUNC(SpriteSlice9Test10);
+    SpriteSlice9Test10();
+    virtual std::string title() const override { return "Slice 10 Test #9"; };
+    virtual std::string subtitle() const override { return "Rotated Sprites"; }
+};
 
 
 class SpriteGetSpriteFrameTest : public SpriteTestDemo

@@ -175,9 +175,9 @@ bool UIScale9SpriteHierarchialTest::init()
         cocos2d::ui::Scale9Sprite *sp2 = ui::Scale9Sprite::create("cocosui/animationbuttonnormal.png");
         sp2->setPreferredSize(sp1->getContentSize() * 1.2f);
         sp2->setColor(Color3B::GREEN);
-        sp2->setFlippedX(true);
         sp2->setContentSize(Size(100,100));
-        
+        sp2->setFlippedX(true);
+
         sp1->addChild(sp2);
         
         return true;
