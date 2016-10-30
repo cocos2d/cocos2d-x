@@ -248,7 +248,7 @@ public:
     virtual void setVertexRect(const Rect& rect);
 
     /**
-     * setCapInsetsNormalized
+     * setCenterRectNormalized
      *
      * Useful to implement "9 sliced" sprites.
      * The default value is (0,0) - (1,1), which means that only one "slice" will be used: From top-left (0,0) to bottom-right (1,1).
@@ -259,27 +259,27 @@ public:
      *
      * Limitations: Does not work when the sprite is part of `SpriteBatchNode`.
      */
-    virtual void setCapInsetsNormalized(const Rect& rect);
+    virtual void setCenterRectNormalized(const Rect& rect);
 
     /**
-     * getCapInsetsNormalized
+     * getCenterRectNormalized
      *
-     * Returns the CapInsets in normalized coordinates
+     * Returns the CenterRect in normalized coordinates
      */
-    virtual Rect getCapInsetsNormalized() const;
+    virtual Rect getCenterRectNormalized() const;
 
-    /* setCapInsets
+    /* setCenterRect
      *
-     * Like `setCapInsetsNormalized`, but instead of being in normalized coordinates, it is in points coordinates
+     * Like `setCenterRectNormalized`, but instead of being in normalized coordinates, it is in points coordinates
      */
-    virtual void setCapInsets(const Rect& rect);
+    virtual void setCenterRect(const Rect& rect);
 
     /**
      * @brief Returns the Cap Insets rect
      *
      * @return Scale9Sprite's cap inset.
      */
-    virtual Rect getCapInsets() const;
+    virtual Rect getCenterRect() const;
 
 
     /** @{
@@ -630,7 +630,7 @@ protected:
 
     void updatePoly();
     void updateStretchFactor();
-    
+
     //
     // Data used when the sprite is rendered using a SpriteSheet
     //
@@ -661,7 +661,7 @@ protected:
     Rect _rect;                             /// Rectangle of Texture2D
     bool _rectRotated;                      /// Whether the texture is rotated
 
-    Rect _capInsetsNormalized;              /// Rectangle to implement "slice 9"
+    Rect _centerRectNormalized;             /// Rectangle to implement "slice 9"
     int _numberOfSlices;                    /// how many sprite slices: 1 or 9
     Vec2 _strechFactor;                     /// strech factor to match the contentSize. for 1- and 9- slice sprites
     Size _originalContentSize;              /// original content size
