@@ -355,7 +355,7 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
         {
             TMXLayerInfo* layer = tmxMapInfo->getLayers().back();
             Size layerSize = layer->_layerSize;
-            uint32_t gid = static_cast<uint32_t>(attributeDict["gid"].asInt());
+            uint32_t gid = static_cast<uint32_t>(attributeDict["gid"].asUnsignedInt());
             int tilesAmount = layerSize.width*layerSize.height;
             
             if (_xmlTileIndex < tilesAmount)
