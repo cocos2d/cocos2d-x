@@ -45,14 +45,14 @@ NS_CC_BEGIN
 class CC_DLL RandomHelper {
 public:
     template<typename T>
-    static inline T random_real(T min, T max) {
+    static T random_real(T min, T max) {
         std::uniform_real_distribution<T> dist(min, max);
         auto &mt = RandomHelper::getEngine();
         return dist(mt);
     }
 
     template<typename T>
-    static inline T random_int(T min, T max) {
+    static T random_int(T min, T max) {
         std::uniform_int_distribution<T> dist(min, max);
         auto &mt = RandomHelper::getEngine();
         return dist(mt);

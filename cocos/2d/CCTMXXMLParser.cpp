@@ -161,7 +161,13 @@ bool TMXMapInfo::initWithTMXFile(const std::string& tmxFile)
 }
 
 TMXMapInfo::TMXMapInfo()
-: _mapSize(Size::ZERO)    
+: _orientation(TMXOrientationOrtho)
+, _staggerAxis(TMXStaggerAxis_Y)
+, _staggerIndex(TMXStaggerIndex_Even)
+, _hexSideLength(0)
+, _parentElement(0)
+, _parentGID(0)
+, _mapSize(Size::ZERO)
 , _tileSize(Size::ZERO)
 , _layerAttribs(0)
 , _storingCharacters(false)
@@ -349,7 +355,7 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
         {
             TMXLayerInfo* layer = tmxMapInfo->getLayers().back();
             Size layerSize = layer->_layerSize;
-            uint32_t gid = static_cast<uint32_t>(attributeDict["gid"].asInt());
+            uint32_t gid = static_cast<uint32_t>(attributeDict["gid"].asUnsignedInt());
             int tilesAmount = layerSize.width*layerSize.height;
             
             if (_xmlTileIndex < tilesAmount)
@@ -740,7 +746,7 @@ void TMXMapInfo::endElement(void *ctx, const char *name)
 
             uint32_t* bufferPtr = reinterpret_cast<uint32_t*>(buffer);
             for(auto gidToken : gidTokens) {
-                auto tileGid = (uint32_t)strtol(gidToken.c_str(), nullptr, 10);
+                auto tileGid = (uint32_t)strtoul(gidToken.c_str(), nullptr, 10);
                 *bufferPtr = tileGid;
                 bufferPtr++;
             }
@@ -780,7 +786,7 @@ void TMXMapInfo::endElement(void *ctx, const char *name)
     }
 }
 
-void TMXMapInfo::textHandler(void *ctx, const char *ch, int len)
+void TMXMapInfo::textHandler(void *ctx, const char *ch, size_t len)
 {
     CC_UNUSED_PARAM(ctx);
     TMXMapInfo *tmxMapInfo = this;

@@ -86,10 +86,12 @@
 -- @return Node#Node self (return value: cc.Node)
         
 --------------------------------
--- Pauses all scheduled selectors, actions and event listeners.<br>
--- This method is called internally by onExit.
--- @function [parent=#Node] pause 
+-- Sets the ActionManager object that is used by all actions.<br>
+-- warning If you set a new ActionManager, then previously created actions will be removed.<br>
+-- param actionManager     A ActionManager object that is used by all actions.
+-- @function [parent=#Node] setActionManager 
 -- @param self
+-- @param #cc.ActionManager actionManager
 -- @return Node#Node self (return value: cc.Node)
         
 --------------------------------
@@ -209,11 +211,11 @@
 -- @return Node#Node self (return value: cc.Node)
         
 --------------------------------
--- Return the node's opacity.<br>
--- return A GLubyte value.
--- @function [parent=#Node] getOpacity 
+-- 
+-- @function [parent=#Node] _setLocalZOrder 
 -- @param self
--- @return unsigned char#unsigned char ret (return value: unsigned char)
+-- @param #int z
+-- @return Node#Node self (return value: cc.Node)
         
 --------------------------------
 -- Modify the camera mask for current node.<br>
@@ -331,15 +333,7 @@
 -- @return Node#Node self (return value: cc.Node)
         
 --------------------------------
---  Sets the position (x,y) using values between 0 and 1.<br>
--- The positions in pixels is calculated like the following:<br>
--- code pseudo code<br>
--- void setNormalizedPosition(Vec2 pos) {<br>
--- Size s = getParent()->getContentSize();<br>
--- _position = pos * s;<br>
--- }<br>
--- endcode<br>
--- param position The normalized position (x,y) of the node, using value between 0 and 1.
+-- 
 -- @function [parent=#Node] setNormalizedPosition 
 -- @param self
 -- @param #vec2_table position
@@ -441,6 +435,28 @@
 -- @param self
 -- @param #vec2_table worldPoint
 -- @return vec2_table#vec2_table ret (return value: vec2_table)
+        
+--------------------------------
+--  Sets the position (x,y) using values between 0 and 1.<br>
+-- The positions in pixels is calculated like the following:<br>
+-- code pseudo code<br>
+-- void setNormalizedPosition(Vec2 pos) {<br>
+-- Size s = getParent()->getContentSize();<br>
+-- _position = pos * s;<br>
+-- }<br>
+-- endcode<br>
+-- param position The normalized position (x,y) of the node, using value between 0 and 1.
+-- @function [parent=#Node] setPositionNormalized 
+-- @param self
+-- @param #vec2_table position
+-- @return Node#Node self (return value: cc.Node)
+        
+--------------------------------
+-- Pauses all scheduled selectors, actions and event listeners.<br>
+-- This method is called internally by onExit.
+-- @function [parent=#Node] pause 
+-- @param self
+-- @return Node#Node self (return value: cc.Node)
         
 --------------------------------
 -- If node opacity will modify the RGB color value, then you should override this method and return true.<br>
@@ -548,7 +564,7 @@
 -- return The number of actions that are running plus the ones that are schedule to run.
 -- @function [parent=#Node] getNumberOfRunningActions 
 -- @param self
--- @return long#long ret (return value: long)
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- Calls children's updateTransform() method recursively.<br>
@@ -585,7 +601,7 @@
 -- return The amount of children.
 -- @function [parent=#Node] getChildrenCount 
 -- @param self
--- @return long#long ret (return value: long)
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- Converts a Vec2 to node (local) space coordinates. The result is in Points.<br>
@@ -753,13 +769,11 @@
 -- @return AffineTransform#AffineTransform ret (return value: cc.AffineTransform)
         
 --------------------------------
--- Sets the ActionManager object that is used by all actions.<br>
--- warning If you set a new ActionManager, then previously created actions will be removed.<br>
--- param actionManager     A ActionManager object that is used by all actions.
--- @function [parent=#Node] setActionManager 
+--  Returns the normalized position.<br>
+-- return The normalized position.
+-- @function [parent=#Node] getPositionNormalized 
 -- @param self
--- @param #cc.ActionManager actionManager
--- @return Node#Node self (return value: cc.Node)
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
 -- Change the color of node.<br>
@@ -1111,6 +1125,13 @@
 -- @return float#float ret (return value: float)
         
 --------------------------------
+-- Return the node's opacity.<br>
+-- return A GLubyte value.
+-- @function [parent=#Node] getOpacity 
+-- @param self
+-- @return unsigned char#unsigned char ret (return value: unsigned char)
+        
+--------------------------------
 --  !!! ONLY FOR INTERNAL USE<br>
 -- Sets the arrival order when this node has a same ZOrder with other children.<br>
 -- A node which called addChild subsequently will take a larger arrival order,<br>
@@ -1122,8 +1143,7 @@
 -- @return Node#Node self (return value: cc.Node)
         
 --------------------------------
---  Returns the normalized position.<br>
--- return The normalized position.
+-- 
 -- @function [parent=#Node] getNormalizedPosition 
 -- @param self
 -- @return vec2_table#vec2_table ret (return value: vec2_table)

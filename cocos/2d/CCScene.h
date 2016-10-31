@@ -104,13 +104,24 @@ public:
      * @js NA
      */
     const std::vector<BaseLight*>& getLights() const { return _lights; }
-    
+
     /** Render the scene.
      * @param renderer The renderer use to render the scene.
+     * @param eyeTransform The AdditionalTransform of camera.
+     * @param eyeProjection The projection matrix of camera.
      * @js NA
      */
     virtual void render(Renderer* renderer, const Mat4& eyeTransform, const Mat4* eyeProjection = nullptr);
-    
+
+    /** Render the scene.
+     * @param renderer The renderer use to render the scene.
+     * @param eyeTransforms The AdditionalTransform List of camera of multiView.
+     * @param eyeProjections The projection matrix List of camera of multiView.
+     * @param multiViewCount The number of multiView.
+     * @js NA
+     */
+    virtual void render(Renderer* renderer, const Mat4* eyeTransforms, const Mat4* eyeProjections, unsigned int multiViewCount);
+
     /** override function */
     virtual void removeAllChildren() override;
     
@@ -151,7 +162,7 @@ public:
      * @return The physics world of the scene.
      * @js NA
      */
-    inline PhysicsWorld* getPhysicsWorld() const { return _physicsWorld; }
+    PhysicsWorld* getPhysicsWorld() const { return _physicsWorld; }
 #endif
     
 #if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
@@ -159,7 +170,7 @@ public:
      * @return The 3d physics world of the scene.
      * @js NA
      */
-    inline Physics3DWorld* getPhysics3DWorld() { return _physics3DWorld; }
+    Physics3DWorld* getPhysics3DWorld() { return _physics3DWorld; }
     
     /** 
      * Set Physics3D debug draw camera.

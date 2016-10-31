@@ -448,8 +448,8 @@ public:
      */
     void clear()
     {
-        for( auto it = std::begin(_data); it != std::end(_data); ++it ) {
-            (*it)->release();
+        for( auto& it : _data) {
+            it->release();
         }
         _data.clear();
     }

@@ -487,7 +487,7 @@ void GLProgramState::updateUniformsAndAttributes()
         _vertexAttribsFlags = 0;
         for(auto& attributeValue : _attributes)
         {
-            attributeValue.second._vertexAttrib = _glprogram->getVertexAttrib(attributeValue.first);;
+            attributeValue.second._vertexAttrib = _glprogram->getVertexAttrib(attributeValue.first);
             if(attributeValue.second._enabled)
                 _vertexAttribsFlags |= 1 << attributeValue.second._vertexAttrib->index;
         }

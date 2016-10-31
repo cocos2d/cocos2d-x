@@ -73,7 +73,6 @@ SpriteFrame::SpriteFrame()
 : _rotated(false)
 , _texture(nullptr)
 {
-    
 }
 
 bool SpriteFrame::initWithTexture(Texture2D* texture, const Rect& rect)
@@ -105,6 +104,7 @@ bool SpriteFrame::initWithTexture(Texture2D* texture, const Rect& rect, bool rot
     _originalSize = CC_SIZE_PIXELS_TO_POINTS( _originalSizeInPixels );
     _rotated = rotated;
     _anchorPoint = Vec2(NAN, NAN);
+    _centerRect = Rect(NAN, NAN, NAN, NAN);
 
     return true;
 }
@@ -121,6 +121,7 @@ bool SpriteFrame::initWithTextureFilename(const std::string& filename, const Rec
     _originalSize = CC_SIZE_PIXELS_TO_POINTS( _originalSizeInPixels );
     _rotated = rotated;
     _anchorPoint = Vec2(NAN, NAN);
+    _centerRect = Rect(NAN, NAN, NAN, NAN);
 
     return true;
 }
@@ -152,6 +153,16 @@ void SpriteFrame::setRectInPixels(const Rect& rectInPixels)
 {
     _rectInPixels = rectInPixels;
     _rect = CC_RECT_PIXELS_TO_POINTS(rectInPixels);
+}
+
+void SpriteFrame::setCenterRectInPixels(const Rect& centerRect)
+{
+    _centerRect = CC_RECT_PIXELS_TO_POINTS(centerRect);
+}
+
+bool SpriteFrame::hasCenterRect() const
+{
+    return !std::isnan(_centerRect.origin.x);
 }
 
 const Vec2& SpriteFrame::getOffset() const

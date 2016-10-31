@@ -923,7 +923,7 @@ void TwoSchedulers::onEnter()
     //
 
     // Create a new scheduler, and link it to the main scheduler
-    sched2 = new (std::nothrow) Scheduler();;
+    sched2 = new (std::nothrow) Scheduler();
     defaultScheduler->scheduleUpdate(sched2, 0, false);
 
     // Create a new ActionManager, and link it to the new scheudler

@@ -452,9 +452,9 @@ void SIOClientImpl::handshakeResponse(HttpClient *sender, HttpResponse *response
         CCLOGERROR("SIOClientImpl::handshake() failed");
         CCLOGERROR("error buffer: %s", response->getErrorBuffer());
 
-        for (auto iter = _clients.begin(); iter != _clients.end(); ++iter)
+        for (auto& client : _clients)
         {
-            iter->second->getDelegate()->onError(iter->second, response->getErrorBuffer());
+            client.second->getDelegate()->onError(client.second, response->getErrorBuffer());
         }
 
         return;
@@ -466,7 +466,7 @@ void SIOClientImpl::handshakeResponse(HttpClient *sender, HttpResponse *response
     std::stringstream s;
     s.str("");
 
-    for (unsigned int i = 0; i < buffer->size(); i++)
+    for (unsigned int i = 0, size = buffer->size(); i < size; ++i)
     {
         s << (*buffer)[i];
     }
@@ -733,9 +733,9 @@ void SIOClientImpl::onOpen(WebSocket* ws)
 
     Director::getInstance()->getScheduler()->schedule(CC_SCHEDULE_SELECTOR(SIOClientImpl::heartbeat), this, (_heartbeat * .9f), false);
 
-    for (auto iter = _clients.begin(); iter != _clients.end(); ++iter)
+    for (auto& client : _clients)
     {
-        iter->second->onOpen();
+        client.second->onOpen();
     }
 
     CCLOGINFO("SIOClientImpl::onOpen socket connected!");
@@ -880,7 +880,6 @@ void SIOClientImpl::onMessage(WebSocket* ws, const WebSocket::Data& data)
                 int control2 = payload.at(0) - '0';
                 CCLOGINFO("Message code: [%i]", control2);
 
-                SocketIOPacket *packetOut = SocketIOPacket::createPacketWithType("event", _version);
                 std::string endpoint = "";
 
                 std::string::size_type a = payload.find("/");
@@ -901,8 +900,6 @@ void SIOClientImpl::onMessage(WebSocket* ws, const WebSocket::Data& data)
 
                 // we didn't find and endpoint and we are in the default namespace
                 if (endpoint == "") endpoint = "/";
-
-                packetOut->setEndpoint(endpoint);
 
                 c = getClient(endpoint);
 
@@ -981,9 +978,9 @@ void SIOClientImpl::onClose(WebSocket* ws)
     CC_UNUSED_PARAM(ws);
     if (!_clients.empty())
     {
-        for (auto iter = _clients.begin(); iter != _clients.end(); ++iter)
+        for (auto& client : _clients)
         {
-            iter->second->socketClosed();
+            client.second->socketClosed();
         }
         // discard this client
         _connected = false;

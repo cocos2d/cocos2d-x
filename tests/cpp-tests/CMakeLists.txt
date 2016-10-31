@@ -168,6 +168,12 @@ set(TESTS_SRC
   ${PLATFORM_SRC}
 )
 
+if(WIN32 OR MACOSX OR LINUX)
+  list(APPEND TESTS_SRC
+    Classes/WindowTest/WindowTest.cpp
+    )
+endif()
+
 if(USE_CHIPMUNK)
   include_directories(${CHIPMUNK_INCLUDE_DIRS})
 endif()

@@ -25,9 +25,9 @@
 
 const char* ccPositionTexture_frag = STRINGIFY(
 
-\n#ifdef GL_ES\n
+#ifdef GL_ES
 precision lowp float;
-\n#endif\n
+#endif
 
 varying vec2 v_texCoord;
 

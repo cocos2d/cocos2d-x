@@ -1,3 +1,94 @@
+cocos2d-x-3.13.1 Sep 13 2016
+
+[FIX]           Label color broken
+[FIX]           application will crash in debug mode if don't specify a design resolution
+[FIX]           application may crash if coming from background by clicking application icon on Android
+[FIX]           AudioEngine can not play audio if the audio lies outside APK on Android
+[FIX]           AudioEngine::stop() will trigger `finish` callback on Android
+[FIX]           application will crash if using SimpleAudioEngine or new AudioEngine to play audio on Android 2.3.x
+[FIX]           object.setString() has not effect if passing a number on JSB
+
+cocos2d-x-3.13 Aug 22 2016
+
+[HIGHLIGHT]     add VR plugin
+[HIGHLIGHT]     support ETC1 alpha channel
+[HIGHLIGHT]     fix AudioEngine performance for Android 4.2+
+[HIGHLIGHT]     improve canvas renderer performance with dirty region
+[HIGHLIGHT]     add Andorid arm-64 support
+[HIGHLIGHT]     use luajit for Android arm-64
+[HIGHLIGHT]     switch to use gcc 4.9
+[HIGHLIGHT]     upgrade CURL to 7.50.0
+[HIGHLIGHT]     upgrade Spine to 3.4
+[HIGHLIGHT]     upgrade glfw to 3.2
+
+[NEW]           add `Configuration::supportsMapBuffer()`
+[NEW]           support hexagonal tile maps
+[NEW]           add `ListView::setScrollDuration()`
+[NEW]           implement `SimpleAudioEngine::willPlayBackgroundMusic()` on Android
+[NEW]           implement `AudioEngine::preload()` on Android
+[NEW]           add `cc.Node['.classname']` to get class name for tolua C++ class in lua
+[NEW]           support direct load in web engine to show scene without loading all resources, resources will be loaded asynchronously
+[NEW]           add `cc.view.setOrientation` API to force orientation in web browser
+
+[REFINE]        move back to use gcc 4.9 on Android to fix some crash bugs
+[REFINE]        optimize Node sorting speed for 64-bit
+[REFINE]        using `chrono::steady_clock()` instread of gettimeofday for FPS calculation
+[REFINE]        use `fstat` instead of `fseek` and `ftell` for performance to read file content
+[REFINE]        use std::string reference instead of char* for `utils::findChild()`
+[REFINE]        make `MotionStreak` _maxPoints framerate independent
+[REFINE]        support utf-8 bom lua script
+[REFINE]        can show utf-8 characters in MessageBox and lua log on win32
+[REFINE]        improve stability of new WebGL renderer provided in v3.12
+[REFINE]        update js auto binding settings with new ndk version
+[REFINE]        improve evalString implementation which was rely on deprecated API
+[REFINE]        improve js bindings code quality by merging part of cocos2d-x-lite repo
+[REFINE]        sources path in sourcemap of web engine are now relative
+
+[FIX]           `GLProgram::link()` only check result in debug mode or WinRT
+[FIX]           PageView::clone() misses cloing some member variables
+[FIX]           potential crash of `AudioEngine::uncache()`
+[FIX]           websocket receives package size > 1023 error
+[FIX]           the color of underline is different from the text color
+[FIX]           memory leak in `MenuItemToggle::create()`
+[FIX]           crash after removing a physics body right after adding it
+[FIX]           SpriteBatchNode crash if CC_SPRITE_DEBUG_DRAW is enabled
+[FIX]           memory leak in `Data::move()`
+[FIX]           crash in `EaseExpoentialOut::clone()`
+[FIX]           buffer over-read in `GLProgram::updateUniformLocation()`
+[FIX]           `dirty` variable incorrectly reset with a multiple camera setup causing drawing issues on Sprite
+[FIX]           fix label text formatter right alignment
+[FIX]           `bsd_signal` link error on Android
+[FIX]           crash while decoding small MP3 file on Android
+[FIX]           `AppDelegate::applicationWillEnterForeground()` is invoked at launch on Android
+[FIX]           fix `relocation overflow in R_ARM_THM_CALL` on Android
+[FIX]           navigation bar doesn't hide if show and dismiss keyboard on Android
+[FIX]           `utils::getTimeInMilliseconds()` may return wrong value on Android
+[FiX]           link error that `bsd_sinal` is not defined if building with API level 21+ and uses libwebsockets on Android
+[FIX]           compiling error with Android 6.0(API 23)
+[FIX]           music is not resumed when app is reactived on iOS
+[FIX]           random crash in `alGenBuffers` at startup on iOS
+[FIX]           can not play audio if uncache and play audio many times on iOS
+[FIX]           `Text::create()` crash if it contains invalid string on iOS
+[FIX]           `FileUtils::removeDirectory()` can not work on all platforms except iOS and Mac
+[FIX]           can not compile cocos2d-x on Mac OS X 10.10 and lower
+[FIX]           new js project link error on linux
+[FIX]           AudioEngine can not play large ogg file on Windows
+[FIX]           design resolution broken after minimize on desk platforms
+[FIX]           can not get the `backClicked` in lua
+[FIX]           `cc.convertColor` issue in lua
+[FIX]           browser version detection
+[FIX]           compiling error with `cocos gen-libs`
+[FIX]           spine track entry can circle reference each other
+[FIX]           global object can leak during restart in JSB
+[FIX]           progress timer nested sprite can't change color in Canvas
+[FIX]           layout refresh issue in web engine
+[FIX]           dom element position synchronization issue in web engine
+[FIX]           armature position shake when parent node move in web engine
+[FIX]           rendering issue for Armature using sprite as display in bone in web engine
+[FIX]           Scale9Sprite GRAY state isn't correct in WebGL
+[FIX]           touch startPoint can be overwrote in web engine
+[FIX]           syncStatus transform dirty flag isn't resetting in web engine
+
 cocos2d-x-3.12 Jul 06 2016
 
 [HIGHLIGHT]     add VR support

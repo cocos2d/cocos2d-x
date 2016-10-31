@@ -22,7 +22,7 @@
 
 NS_CC_MATH_BEGIN
 
-inline const Mat4 Mat4::operator+(const Mat4& mat) const
+inline Mat4 Mat4::operator+(const Mat4& mat) const
 {
     Mat4 result(*this);
     result.add(mat);
@@ -35,7 +35,7 @@ inline Mat4& Mat4::operator+=(const Mat4& mat)
     return *this;
 }
 
-inline const Mat4 Mat4::operator-(const Mat4& mat) const
+inline Mat4 Mat4::operator-(const Mat4& mat) const
 {
     Mat4 result(*this);
     result.subtract(mat);
@@ -48,14 +48,14 @@ inline Mat4& Mat4::operator-=(const Mat4& mat)
     return *this;
 }
 
-inline const Mat4 Mat4::operator-() const
+inline Mat4 Mat4::operator-() const
 {
     Mat4 mat(*this);
     mat.negate();
     return mat;
 }
 
-inline const Mat4 Mat4::operator*(const Mat4& mat) const
+inline Mat4 Mat4::operator*(const Mat4& mat) const
 {
     Mat4 result(*this);
     result.multiply(mat);
@@ -74,7 +74,7 @@ inline Vec3& operator*=(Vec3& v, const Mat4& m)
     return v;
 }
 
-inline const Vec3 operator*(const Mat4& m, const Vec3& v)
+inline Vec3 operator*(const Mat4& m, const Vec3& v)
 {
     Vec3 x;
     m.transformVector(v, &x);
@@ -87,7 +87,7 @@ inline Vec4& operator*=(Vec4& v, const Mat4& m)
     return v;
 }
 
-inline const Vec4 operator*(const Mat4& m, const Vec4& v)
+inline Vec4 operator*(const Mat4& m, const Vec4& v)
 {
     Vec4 x;
     m.transformVector(v, &x);

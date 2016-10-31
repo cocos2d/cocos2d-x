@@ -65,7 +65,7 @@ public:
     */
     void execute();
     //TODO: This function is not used, it should be removed.
-    inline bool isTranslucent() { return true; }
+    bool isTranslucent() { return true; }
     /**Callback function.*/
     std::function<void()> func;
 

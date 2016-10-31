@@ -48,14 +48,14 @@ public:
         return true;
     }
     
-    inline const Vec2& getRatio() const { return _ratio; };
-    inline void setRatio(const Vec2& ratio) { _ratio = ratio; };
+    const Vec2& getRatio() const { return _ratio; }
+    void setRatio(const Vec2& ratio) { _ratio = ratio; }
 
-    inline const Vec2& getOffset() const { return _offset; };
-    inline void setOffset(const Vec2& offset) { _offset = offset; };
+    const Vec2& getOffset() const { return _offset; }
+    void setOffset(const Vec2& offset) { _offset = offset; }
     
-    inline Node* getChild() const { return _child; };
-    inline void setChild(Node* child) { _child = child; };
+    Node* getChild() const { return _child; }
+    void setChild(Node* child) { _child = child; }
     
 private:
     Vec2 _ratio;

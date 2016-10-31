@@ -423,8 +423,8 @@ namespace cocos2d { namespace network {
             if (statusCode >= 400)
             {
                 std::vector<unsigned char> buf; // just a placeholder
-                const char *orignalURL = [task.originalRequest.URL.absoluteString cStringUsingEncoding:NSUTF8StringEncoding];
-                std::string errorMessage = cocos2d::StringUtils::format("Downloader: Failed to download %s with status code (%d)", orignalURL, (int)statusCode);
+                const char *originalURL = [task.originalRequest.URL.absoluteString cStringUsingEncoding:NSUTF8StringEncoding];
+                std::string errorMessage = cocos2d::StringUtils::format("Downloader: Failed to download %s with status code (%d)", originalURL, (int)statusCode);
 
                 _outer->onTaskFinish(*[wrapper get],
                                      cocos2d::network::DownloadTask::ERROR_IMPL_INTERNAL,

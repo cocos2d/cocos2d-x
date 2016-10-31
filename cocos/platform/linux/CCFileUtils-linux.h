@@ -51,8 +51,8 @@ private:
     std::string _writablePath;
 public:
     /* override functions */
-    bool init();
-    virtual std::string getWritablePath() const;
+    bool init() override;
+    virtual std::string getWritablePath() const override;
 private:
     virtual bool isFileExistInternal(const std::string& strFilePath) const override;
 };

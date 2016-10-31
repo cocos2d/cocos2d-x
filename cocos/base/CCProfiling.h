@@ -127,7 +127,7 @@ public:
      * @js NA
      * @lua NA
      */
-    inline const std::chrono::high_resolution_clock::time_point& getStartTime(void) { return _startTime; };
+    const std::chrono::high_resolution_clock::time_point& getStartTime() { return _startTime; }
 
     /** resets the timer properties
      * @js NA

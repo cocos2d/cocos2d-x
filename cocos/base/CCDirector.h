@@ -149,32 +149,32 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual ~Director();
-    virtual bool init();
+    ~Director();
+    bool init();
 
     // attribute
 
     /** Gets current running Scene. Director can only run one Scene at a time. */
-    inline Scene* getRunningScene() { return _runningScene; }
+    Scene* getRunningScene() { return _runningScene; }
 
     /** Gets the FPS value. */
-    inline float getAnimationInterval() { return _animationInterval; }
+    float getAnimationInterval() { return _animationInterval; }
     /** Sets the FPS value. FPS = 1/interval. */
-    virtual void setAnimationInterval(float interval) = 0;
+    void setAnimationInterval(float interval);
 
     /** Whether or not displaying the FPS on the bottom-left corner of the screen. */
-    inline bool isDisplayStats() { return _displayStats; }
+    bool isDisplayStats() { return _displayStats; }
     /** Display the FPS on the bottom-left corner of the screen. */
-    inline void setDisplayStats(bool displayStats) { _displayStats = displayStats; }
+    void setDisplayStats(bool displayStats) { _displayStats = displayStats; }
     
     /** Get seconds per frame. */
-    inline float getSecondsPerFrame() { return _secondsPerFrame; }
+    float getSecondsPerFrame() { return _secondsPerFrame; }
 
     /** 
      * Get the GLView.
      * @lua NA
      */
-    inline GLView* getOpenGLView() { return _openGLView; }
+    GLView* getOpenGLView() { return _openGLView; }
     /** 
      * Sets the GLView. 
      * @lua NA
@@ -188,7 +188,7 @@ public:
     TextureCache* getTextureCache() const;
 
     /** Whether or not `_nextDeltaTimeZero` is set to 0. */
-    inline bool isNextDeltaTimeZero() { return _nextDeltaTimeZero; }
+    bool isNextDeltaTimeZero() { return _nextDeltaTimeZero; }
     /** 
      * Sets the delta time between current frame and next frame is 0.
      * This value will be used in Schedule, and will affect all functions that are using frame delta time, such as Actions.
@@ -197,31 +197,28 @@ public:
     void setNextDeltaTimeZero(bool nextDeltaTimeZero);
 
     /** Whether or not the Director is paused. */
-    inline bool isPaused() { return _paused; }
+    bool isPaused() { return _paused; }
 
     /** How many frames were called since the director started */
-    inline unsigned int getTotalFrames() { return _totalFrames; }
+    unsigned int getTotalFrames() { return _totalFrames; }
     
     /** Gets an OpenGL projection.
      * @since v0.8.2
      * @lua NA
      */
-    inline Projection getProjection() { return _projection; }
+    Projection getProjection() { return _projection; }
     /** Sets OpenGL projection. */
     void setProjection(Projection projection);
     
     /** Sets the glViewport.*/
     void setViewport();
-
-    /** How many frames were called since the director started */
-    
     
     /** Whether or not the replaced scene will receive the cleanup message.
      * If the new scene is pushed, then the old scene won't receive the "cleanup" message.
      * If the new scene replaces the old one, the it will receive the "cleanup" message.
      * @since v0.99.0
      */
-    inline bool isSendCleanupToScene() { return _sendCleanupToScene; }
+    bool isSendCleanupToScene() { return _sendCleanupToScene; }
 
     /** This object will be visited after the main scene is visited.
      * This object MUST implement the "visit" function.
@@ -344,13 +341,13 @@ public:
     /** Stops the animation. Nothing will be drawn. The main loop won't be triggered anymore.
      * If you don't want to pause your animation call [pause] instead.
      */
-    virtual void stopAnimation() = 0;
+    void stopAnimation();
 
     /** The main loop is triggered again.
      * Call this function only if [stopAnimation] was called earlier.
      * @warning Don't call this function to start the main loop. To run the main loop call runWithScene.
      */
-    virtual void startAnimation() = 0;
+    void startAnimation();
 
     /** Draw the scene.
      * This method is called every frame. Don't call it manually.
@@ -388,7 +385,7 @@ public:
     /** Enables/disables OpenGL depth test. */
     void setDepthTest(bool on);
 
-    virtual void mainLoop() = 0;
+    void mainLoop();
 
     /** The size in pixels of the surface. It could be different than the screen size.
      * High-res devices might have a higher surface size than the screen size.
@@ -459,14 +456,36 @@ public:
      * @js NA
      */
     void pushMatrix(MATRIX_STACK_TYPE type);
+
+    /**
+     * Clones a projection matrix and put it to the top of projection matrix stack.
+     * @param index The index of projection matrix stack.
+     * @js NA
+     */
+    void pushProjectionMatrix(unsigned int index);
+
     /** Pops the top matrix of the specified type of matrix stack.
      * @js NA
      */
     void popMatrix(MATRIX_STACK_TYPE type);
+
+    /** Pops the top matrix of the projection matrix stack.
+     * @param index The index of projection matrix stack.
+     * @js NA
+     */
+    void popProjectionMatrix(unsigned int index);
+
     /** Adds an identity matrix to the top of specified type of matrix stack.
      * @js NA
      */
     void loadIdentityMatrix(MATRIX_STACK_TYPE type);
+
+    /** Adds an identity matrix to the top of projection matrix stack.
+     * @param index The index of projection matrix stack.
+     * @js NA
+     */
+    void loadProjectionIdentityMatrix(unsigned int index);
+
     /**
      * Adds a matrix to the top of specified type of matrix stack.
      * 
@@ -475,6 +494,16 @@ public:
      * @js NA
      */
     void loadMatrix(MATRIX_STACK_TYPE type, const Mat4& mat);
+
+    /**
+     * Adds a matrix to the top of projection matrix stack.
+     *
+     * @param mat The matrix that to be added.
+     * @param index The index of projection matrix stack.
+     * @js NA
+     */
+    void loadProjectionMatrix(const Mat4& mat, unsigned int index);
+
     /**
      * Multiplies a matrix to the top of specified type of matrix stack.
      *
@@ -483,11 +512,29 @@ public:
      * @js NA
      */
     void multiplyMatrix(MATRIX_STACK_TYPE type, const Mat4& mat);
+
+    /**
+     * Multiplies a matrix to the top of projection matrix stack.
+     *
+     * @param mat The matrix that to be multiplied.
+     * @param index The index of projection matrix stack.
+     * @js NA
+     */
+    void multiplyProjectionMatrix(const Mat4& mat, unsigned int index);
+
     /**
      * Gets the top matrix of specified type of matrix stack.
      * @js NA
      */
     const Mat4& getMatrix(MATRIX_STACK_TYPE type) const;
+
+    /**
+     * Gets the top matrix of projection matrix stack.
+     * @param index The index of projection matrix stack.
+     * @js NA
+     */
+    const Mat4& getProjectionMatrix(unsigned int index) const;
+
     /**
      * Clear all types of matrix stack, and add identity matrix to these matrix stacks.
      * @js NA
@@ -495,10 +542,28 @@ public:
     void resetMatrixStack();
 
     /**
+     * Init the projection matrix stack.
+     * @param stackCount The size of projection matrix stack.
+     * @js NA
+     */
+    void initProjectionMatrixStack(unsigned int stackCount);
+
+    /**
+     * Get the size of projection matrix stack.
+     * @js NA
+     */
+    unsigned int getProjectionMatrixStackSize();
+
+    /**
      * returns the cocos2d thread id.
      Useful to know if certain code is already running on the cocos2d thread
      */
     const std::thread::id& getCocos2dThreadId() const { return _cocos2d_thread_id; }
+
+    /**
+     * returns whether or not the Director is in a valid state
+     */
+    bool isValid() const { return !_invalid; }
 
 protected:
     void reset();
@@ -526,7 +591,10 @@ protected:
     void initMatrixStack();
 
     std::stack<Mat4> _modelViewMatrixStack;
-    std::stack<Mat4> _projectionMatrixStack;
+    /** In order to support GL MultiView features, we need to use the matrix array,
+        but we don't know the number of MultiView, so using the vector instead.
+     */
+    std::vector< std::stack<Mat4> > _projectionMatrixStackList;
     std::stack<Mat4> _textureMatrixStack;
 
     /** Scheduler associated with this director
@@ -621,41 +689,21 @@ protected:
     /* cocos2d thread id */
     std::thread::id _cocos2d_thread_id;
 
+    /* whether or not the director is in a valid state */
+    bool _invalid;
+
     // GLView will recreate stats labels to fit visible rect
     friend class GLView;
 };
 
+// FIXME: Added for backward compatibility in case
+// someone is subclassing it.
+// Should be removed in v4.0
+class DisplayLinkDirector : public Director
+{};
+
 // end of base group
 /** @} */
-
-/** 
- @brief DisplayLinkDirector is a Director that synchronizes timers with the refresh rate of the display.
- 
- Features and Limitations:
-  - Scheduled timers & drawing are synchronizes with the refresh rate of the display
-  - Only supports animation intervals of 1/60 1/30 & 1/15
- 
- @since v0.8.2
- */
-class DisplayLinkDirector : public Director
-{
-public:
-    DisplayLinkDirector() 
-        : _invalid(false)
-    {}
-    virtual ~DisplayLinkDirector(){}
-
-    //
-    // Overrides
-    //
-    virtual void mainLoop() override;
-    virtual void setAnimationInterval(float value) override;
-    virtual void startAnimation() override;
-    virtual void stopAnimation() override;
-
-protected:
-    bool _invalid;
-};
 
 NS_CC_END
 

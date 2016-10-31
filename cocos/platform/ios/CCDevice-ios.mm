@@ -93,6 +93,11 @@ static CGSize _calculateShrinkedSizeForString(NSAttributedString **str, id font,
                actualSize.size.height > constrainSize.height) {
             fontSize = fontSize - 1;
 
+            if(fontSize < 0) {
+                actualSize = CGRectMake(0, 0, 0, 0);
+                break;
+            }
+
             NSMutableAttributedString *mutableString = [[*str mutableCopy] autorelease];
             *str = __attributedStringWithFontSize(mutableString, fontSize);
 
@@ -122,6 +127,10 @@ static CGSize _calculateShrinkedSizeForString(NSAttributedString **str, id font,
         while (actualSize.size.height > constrainSize.height ||
                actualSize.size.width > constrainSize.width) {
             fontSize = fontSize - 1;
+            if(fontSize < 0) {
+                actualSize = CGRectMake(0, 0, 0, 0);
+                break;
+            }
             
             NSMutableAttributedString *mutableString = [[*str mutableCopy] autorelease];
             *str = __attributedStringWithFontSize(mutableString, fontSize);

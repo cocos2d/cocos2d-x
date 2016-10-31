@@ -166,6 +166,14 @@ public:
      * @param idx   A given index in the PageView. Index start from 0 to pageCount -1.
      */
     void scrollToPage(ssize_t idx);
+    
+    /**
+     * Scroll to a page with a given index and with a given scroll time.
+     *
+     * @param idx   A given index in the PageView. Index start from 0 to pageCount -1.
+     * @param time  Scroll time must be >= 0. Otherwise last set scroll time will be used.
+     */
+    void scrollToPage(ssize_t idx, float time);
 
     /**
      * Scroll to a page with a given index.
@@ -173,6 +181,14 @@ public:
      * @param itemIndex   A given index in the PageView. Index start from 0 to pageCount -1.
      */
     void scrollToItem(ssize_t itemIndex);
+    
+    /**
+     * Scroll to a item with a given index and with a given scroll time.
+     *
+     * @param idx   A given index in the PageView. Index start from 0 to pageCount -1.
+     * @param time  Scroll time must be >= 0. Otherwise last set scrolltime will be used.
+     */
+    void scrollToItem(ssize_t idx, float time);
 
     /**
      * Gets current displayed page index.
@@ -394,6 +410,7 @@ protected:
     virtual void onItemListChanged() override;
     virtual void onSizeChanged() override;
     virtual void handleReleaseLogic(Touch *touch) override;
+    virtual void handlePressLogic(Touch *touch) override;
 
     virtual Widget* createCloneInstance() override;
     virtual void copySpecialProperties(Widget* model) override;
@@ -423,6 +440,8 @@ protected:
 #endif
     ccPageViewCallback _eventCallback;
     float _autoScrollStopEpsilon;
+    ssize_t _previousPageIndex;
+    bool _isTouchBegin;
 };
 
 }

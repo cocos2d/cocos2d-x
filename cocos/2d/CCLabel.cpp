@@ -527,23 +527,18 @@ void Label::reset()
 
 //  ETC1 ALPHA supports, for LabelType::BMFONT & LabelType::CHARMAP
 static Texture2D* _getTexture(Label* label)
- {
-    struct _FontAtlasPub : public FontAtlas
-    {
-        Texture2D* getTexture()
-        {
-            if (!_atlasTextures.empty())
-                return _atlasTextures.begin()->second;
-            return nullptr;
-        }
-    };
-
+{
     auto fontAtlas = label->getFontAtlas();
     Texture2D* texture = nullptr;
-    if (fontAtlas != nullptr)
-        texture = ((_FontAtlasPub*)(fontAtlas))->getTexture();
+    if (fontAtlas != nullptr) {
+        auto textures = fontAtlas->getTextures();
+        if(!textures.empty()) {
+            texture = textures.begin()->second;
+        }
+    }
     return texture;
 }
+
 void Label::updateShaderProgram()
 {
     switch (_currLabelEffect)
@@ -586,7 +581,6 @@ void Label::setFontAtlas(FontAtlas* atlas,bool distanceFieldEnabled /* = false *
 
     if (atlas == _fontAtlas)
     {
-        FontAtlasCache::releaseFontAtlas(atlas);
         return;
     }
 
@@ -803,9 +797,10 @@ bool Label::alignText()
     do {
         _fontAtlas->prepareLetterDefinitions(_utf16Text);
         auto& textures = _fontAtlas->getTextures();
-        if (textures.size() > static_cast<size_t>(_batchNodes.size()))
+        auto size = textures.size();
+        if (size > static_cast<size_t>(_batchNodes.size()))
         {
-            for (auto index = static_cast<size_t>(_batchNodes.size()); index < textures.size(); ++index)
+            for (auto index = static_cast<size_t>(_batchNodes.size()); index < size; ++index)
             {
                 auto batchNode = SpriteBatchNode::createWithTexture(textures.at(index));
                 if (batchNode)
@@ -822,6 +817,12 @@ bool Label::alignText()
         {
             return true;
         }
+        // optimize for one-texture-only sceneario
+        // if multiple textures, then we should count how many chars
+        // are per texture
+        if (_batchNodes.size()==1)
+            _batchNodes.at(0)->reserveCapacity(_utf16Text.size());
+
         _reusedLetter->setBatchNode(_batchNodes.at(0));
         
         _lengthOfString = 0;
@@ -1403,6 +1404,7 @@ void Label::updateContent()
 
         if (_numberOfLines)
         {
+            // This is the logic for TTF fonts
             const float charheight = (_textDesiredHeight / _numberOfLines);
             _underlineNode->setLineWidth(charheight/6);
 
@@ -1414,12 +1416,15 @@ void Label::updateContent()
                     offsety += charheight / 2;
                 // FIXME: Might not work with different vertical alignments
                 float y = (_numberOfLines - i - 1) * charheight + offsety;
-                _underlineNode->drawLine(Vec2(_linesOffsetX[i],y), Vec2(_linesWidth[i] + _linesOffsetX[i],y), _textColorF);
+
+                // Github issue #15214. Uses _displayedColor instead of _textColor for the underline.
+                // This is to have the same behavior of SystemFonts.
+                _underlineNode->drawLine(Vec2(_linesOffsetX[i],y), Vec2(_linesWidth[i] + _linesOffsetX[i],y), Color4F(_displayedColor));
             }
         }
         else if (_textSprite)
         {
-            // system font
+            // ...and is the logic for System fonts
             float y = 0;
             const auto spriteSize = _textSprite->getContentSize();
             _underlineNode->setLineWidth(spriteSize.height/6);
@@ -1652,7 +1657,7 @@ void Label::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t pare
 
         int i = 0;
         // draw children zOrder < 0
-        for (; i < _children.size(); i++)
+        for (auto size = _children.size(); i < size; ++i)
         {
             auto node = _children.at(i);
 
@@ -1664,7 +1669,7 @@ void Label::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t pare
         
         this->drawSelf(visibleByCamera, renderer, flags);
 
-        for (auto it = _children.cbegin() + i; it != _children.cend(); ++it)
+        for (auto it = _children.cbegin() + i, itCend = _children.cend(); it != itCend; ++it)
         {
             (*it)->visit(renderer, _modelViewTransform, flags);
         }
@@ -1890,9 +1895,6 @@ void Label::updateDisplayedColor(const Color3B& parentColor)
 {
     Node::updateDisplayedColor(parentColor);
 
-    if (_currentLabelType == LabelType::TTF || _currentLabelType == LabelType::STRING_TEXTURE)
-        setTextColor(Color4B(_displayedColor));
-
     if (_textSprite)
     {
         _textSprite->updateDisplayedColor(_displayedColor);
@@ -1905,12 +1907,17 @@ void Label::updateDisplayedColor(const Color3B& parentColor)
 
     if (_underlineNode)
     {
+        // FIXME: _underlineNode is not a sprite/label. It is a DrawNode
+        // and updating its color doesn't work. it must be re-drawn,
+        // which makes it super expensive to change update it frequently
+        // Correct solution is to update the DrawNode directly since we know it is
+        // a line. Returning a pointer to the line is an option
         _contentDirty = true;
     }
 
     for (auto&& it : _letters)
     {
-        it.second->updateDisplayedColor(_displayedColor);;
+        it.second->updateDisplayedColor(_displayedColor);
     }
 }
 
@@ -1929,10 +1936,13 @@ void Label::updateDisplayedOpacity(GLubyte parentOpacity)
 
     for (auto&& it : _letters)
     {
-        it.second->updateDisplayedOpacity(_displayedOpacity);;
+        it.second->updateDisplayedOpacity(_displayedOpacity);
     }
 }
 
+// FIXME: it is not clear what is the difference between setTextColor() and setColor()
+// if setTextColor() only changes the text and nothing but the text (no glow, no outline, not underline)
+// that's fine but it should be documented
 void Label::setTextColor(const Color4B &color)
 {
     CCASSERT(_currentLabelType == LabelType::TTF || _currentLabelType == LabelType::STRING_TEXTURE, "Only supported system font and ttf!");

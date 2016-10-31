@@ -31,26 +31,11 @@
 -- @return float#float ret (return value: float)
         
 --------------------------------
--- brief Creates the action with the inner action and the rate parameter.<br>
--- param action A given ActionInterval<br>
--- param rate A given rate<br>
--- return An autoreleased EaseRateAction object.
+-- 
 -- @function [parent=#EaseRateAction] create 
 -- @param self
 -- @param #cc.ActionInterval action
 -- @param #float rate
--- @return EaseRateAction#EaseRateAction ret (return value: cc.EaseRateAction)
-        
---------------------------------
--- 
--- @function [parent=#EaseRateAction] clone 
--- @param self
--- @return EaseRateAction#EaseRateAction ret (return value: cc.EaseRateAction)
-        
---------------------------------
--- 
--- @function [parent=#EaseRateAction] reverse 
--- @param self
 -- @return EaseRateAction#EaseRateAction ret (return value: cc.EaseRateAction)
         
 return nil

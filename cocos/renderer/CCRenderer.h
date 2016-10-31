@@ -103,9 +103,9 @@ public:
     /**Realloc command queues and reserve with given size. Note: this clears any existing commands.*/
     void realloc(size_t reserveSize);
     /**Get a sub group of the render queue.*/
-    inline std::vector<RenderCommand*>& getSubQueue(QUEUE_GROUP group) { return _commands[group]; }
+    std::vector<RenderCommand*>& getSubQueue(QUEUE_GROUP group) { return _commands[group]; }
     /**Get the number of render commands contained in a subqueue.*/
-    inline ssize_t getSubQueueSize(QUEUE_GROUP group) const { return _commands[group].size();}
+    ssize_t getSubQueueSize(QUEUE_GROUP group) const { return _commands[group].size(); }
 
     /**Save the current DepthState, CullState, DepthWriteState render state.*/
     void saveRenderState();
@@ -201,7 +201,7 @@ public:
     void setDepthTest(bool enable);
     
     //This will not be used outside.
-    inline GroupCommandManager* getGroupCommandManager() const { return _groupCommandManager; };
+    GroupCommandManager* getGroupCommandManager() const { return _groupCommandManager; }
 
     /** returns whether or not a rectangle is visible or not */
     bool checkVisibility(const Mat4& transform, const Size& size);

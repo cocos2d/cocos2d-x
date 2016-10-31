@@ -87,6 +87,9 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\SkeletonAnimation.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\SkeletonBatch.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\SkeletonBinary.c">
+      <CompileAsWinRT>false</CompileAsWinRT>
+    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\SkeletonBounds.c">
       <CompileAsWinRT>false</CompileAsWinRT>
     </ClCompile>
@@ -144,6 +147,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Skeleton.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\SkeletonAnimation.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\SkeletonBatch.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\SkeletonBinary.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\SkeletonBounds.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\SkeletonData.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\SkeletonJson.h" />

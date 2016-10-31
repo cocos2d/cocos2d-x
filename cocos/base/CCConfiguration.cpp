@@ -144,7 +144,7 @@ void Configuration::gatherGPUInfo()
     _supportsNPOT = true;
 	_valueDict["gl.supports_NPOT"] = Value(_supportsNPOT);
 	
-    _supportsBGRA8888 = checkForGLExtension("GL_IMG_texture_format_BGRA888");
+    _supportsBGRA8888 = checkForGLExtension("GL_IMG_texture_format_BGRA8888");
 	_valueDict["gl.supports_BGRA8888"] = Value(_supportsBGRA8888);
 
     _supportsDiscardFramebuffer = checkForGLExtension("GL_EXT_discard_framebuffer");
@@ -384,12 +384,12 @@ void Configuration::loadConfigFile(const std::string& filename)
 	// Add all keys in the existing dictionary
     
 	const auto& dataMap = dataIter->second.asValueMap();
-    for (auto dataMapIter = dataMap.cbegin(); dataMapIter != dataMap.cend(); ++dataMapIter)
+    for (const auto& dataMapIter : dataMap)
     {
-        if (_valueDict.find(dataMapIter->first) == _valueDict.cend())
-            _valueDict[dataMapIter->first] = dataMapIter->second;
+        if (_valueDict.find(dataMapIter.first) == _valueDict.cend())
+            _valueDict[dataMapIter.first] = dataMapIter.second;
         else
-            CCLOG("Key already present. Ignoring '%s'",dataMapIter->first.c_str());
+            CCLOG("Key already present. Ignoring '%s'",dataMapIter.first.c_str());
     }
     
     //light info

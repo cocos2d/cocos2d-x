@@ -117,8 +117,8 @@ TMXTilesetInfo * TMXTiledMap::tilesetForLayer(TMXLayerInfo *layerInfo, TMXMapInf
 {
     Size size = layerInfo->_layerSize;
     auto& tilesets = mapInfo->getTilesets();
-    
-    for (auto iter = tilesets.crbegin(); iter != tilesets.crend(); ++iter)
+
+    for (auto iter = tilesets.crbegin(), iterCrend = tilesets.crend(); iter != iterCrend; ++iter)
     {
         TMXTilesetInfo* tilesetInfo = *iter;
         if (tilesetInfo)
@@ -219,9 +219,8 @@ TMXObjectGroup * TMXTiledMap::getObjectGroup(const std::string& groupName) const
     if (_objectGroups.size()>0)
     {
         TMXObjectGroup* objectGroup = nullptr;
-        for (auto iter = _objectGroups.cbegin(); iter != _objectGroups.cend(); ++iter)
+        for (const auto& objectGroup : _objectGroups)
         {
-            objectGroup = *iter;
             if (objectGroup && objectGroup->getGroupName() == groupName)
             {
                 return objectGroup;

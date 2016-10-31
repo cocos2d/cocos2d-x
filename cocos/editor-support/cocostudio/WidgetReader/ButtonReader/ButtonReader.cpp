@@ -102,7 +102,7 @@ namespace cocostudio
             else if (key == P_NormalData){
                 
                 stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray(cocoLoader);
-                std::string resType = backGroundChildren[2].GetValue(cocoLoader);;
+                std::string resType = backGroundChildren[2].GetValue(cocoLoader);
                 
                 Widget::TextureResType imageFileNameType = (Widget::TextureResType)valueToInt(resType);
                 
@@ -114,7 +114,7 @@ namespace cocostudio
             else if (key == P_PressedData){
                 
                 stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray(cocoLoader);
-                std::string resType = backGroundChildren[2].GetValue(cocoLoader);;
+                std::string resType = backGroundChildren[2].GetValue(cocoLoader);
                 
                 Widget::TextureResType imageFileNameType = (Widget::TextureResType)valueToInt(resType);
                 
@@ -126,7 +126,7 @@ namespace cocostudio
             else if (key == P_DisabledData){
                 
                 stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray(cocoLoader);
-                std::string resType = backGroundChildren[2].GetValue(cocoLoader);;
+                std::string resType = backGroundChildren[2].GetValue(cocoLoader);
                 
                 Widget::TextureResType imageFileNameType = (Widget::TextureResType)valueToInt(resType);
                 
@@ -434,7 +434,7 @@ namespace cocostudio
                     }
                     else if (name == "Type")
                     {
-                        disabledResourceType = getResourceType(value);;
+                        disabledResourceType = getResourceType(value);
                     }
                     else if (name == "Plist")
                     {

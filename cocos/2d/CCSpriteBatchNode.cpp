@@ -404,6 +404,19 @@ void SpriteBatchNode::increaseAtlasCapacity()
     }
 }
 
+void SpriteBatchNode::reserveCapacity(ssize_t newCapacity)
+{
+    if (newCapacity <= _textureAtlas->getCapacity())
+        return;
+
+    if (! _textureAtlas->resizeCapacity(newCapacity))
+    {
+        // serious problems
+        CCLOGWARN("cocos2d: WARNING: Not enough memory to resize the atlas");
+        CCASSERT(false, "Not enough memory to resize the atlas");
+    }
+}
+
 ssize_t SpriteBatchNode::rebuildIndexInOrder(Sprite *parent, ssize_t index)
 {
     CCASSERT(index>=0 && index < _children.size(), "Invalid index");
@@ -574,7 +587,7 @@ void SpriteBatchNode::removeSpriteFromAtlas(Sprite *sprite)
         auto next = std::next(it);
 
         Sprite *spr = nullptr;
-        for(; next != _descendants.end(); ++next) {
+        for(auto nextEnd = _descendants.end(); next != nextEnd; ++next) {
             spr = *next;
             spr->setAtlasIndex( spr->getAtlasIndex() - 1 );
         }
@@ -691,7 +704,7 @@ SpriteBatchNode * SpriteBatchNode::addSpriteWithoutQuad(Sprite*child, int z, int
 
     // FIXME:: optimize with a binary search
     auto it = _descendants.begin();
-    for (; it != _descendants.end(); ++it)
+    for (auto itEnd = _descendants.end(); it != itEnd; ++it)
     {
         if((*it)->getAtlasIndex() >= z)
             break;

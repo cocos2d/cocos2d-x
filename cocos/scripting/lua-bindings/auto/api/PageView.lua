@@ -80,7 +80,7 @@
 -- param index A given index in PageView. Index start from 0 to pageCount -1.
 -- @function [parent=#PageView] setCurrentPageIndex 
 -- @param self
--- @param #long index
+-- @param #int index
 -- @return PageView#PageView self (return value: ccui.PageView)
         
 --------------------------------
@@ -113,13 +113,14 @@
 -- @return PageView#PageView self (return value: ccui.PageView)
         
 --------------------------------
--- Scroll to a page with a given index.<br>
--- param idx   A given index in the PageView. Index start from 0 to pageCount -1.
--- @function [parent=#PageView] scrollToPage 
+-- @overload self, int, float         
+-- @overload self, int         
+-- @function [parent=#PageView] scrollToPage
 -- @param self
--- @param #long idx
+-- @param #int idx
+-- @param #float time
 -- @return PageView#PageView self (return value: ccui.PageView)
-        
+
 --------------------------------
 -- brief Set the page indicator's position using anchor point.<br>
 -- param positionAsAnchorPoint The position as anchor point.
@@ -129,13 +130,14 @@
 -- @return PageView#PageView self (return value: ccui.PageView)
         
 --------------------------------
--- Scroll to a page with a given index.<br>
--- param itemIndex   A given index in the PageView. Index start from 0 to pageCount -1.
--- @function [parent=#PageView] scrollToItem 
+-- @overload self, int, float         
+-- @overload self, int         
+-- @function [parent=#PageView] scrollToItem
 -- @param self
--- @param #long itemIndex
+-- @param #int idx
+-- @param #float time
 -- @return PageView#PageView self (return value: ccui.PageView)
-        
+
 --------------------------------
 -- brief Set color of page indicator's index nodes.<br>
 -- param color Space between nodes in pixel.
@@ -156,7 +158,7 @@
 -- return current page index.
 -- @function [parent=#PageView] getCurrentPageIndex 
 -- @param self
--- @return long#long ret (return value: long)
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- Remove a page of PageView.<br>
@@ -188,7 +190,7 @@
 -- param index  A given index.
 -- @function [parent=#PageView] removePageAtIndex 
 -- @param self
--- @param #long index
+-- @param #int index
 -- @return PageView#PageView self (return value: ccui.PageView)
         
 --------------------------------

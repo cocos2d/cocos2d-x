@@ -294,7 +294,7 @@ void ProtectedNode::visit(Renderer* renderer, const Mat4 &parentTransform, uint3
     //
     // draw children and protectedChildren zOrder < 0
     //
-    for( ; i < _children.size(); i++ )
+    for(auto size = _children.size(); i < size; ++i)
     {
         auto node = _children.at(i);
         
@@ -303,8 +303,8 @@ void ProtectedNode::visit(Renderer* renderer, const Mat4 &parentTransform, uint3
         else
             break;
     }
-    
-    for( ; j < _protectedChildren.size(); j++ )
+
+    for(auto size = _protectedChildren.size(); j < size; ++j)
     {
         auto node = _protectedChildren.at(j);
         
@@ -323,10 +323,10 @@ void ProtectedNode::visit(Renderer* renderer, const Mat4 &parentTransform, uint3
     //
     // draw children and protectedChildren zOrder >= 0
     //
-    for(auto it=_protectedChildren.cbegin()+j; it != _protectedChildren.cend(); ++it)
+    for(auto it=_protectedChildren.cbegin()+j, itCend = _protectedChildren.cend(); it != itCend; ++it)
         (*it)->visit(renderer, _modelViewTransform, flags);
-    
-    for(auto it=_children.cbegin()+i; it != _children.cend(); ++it)
+
+    for(auto it=_children.cbegin()+i, itCend = _children.cend(); it != itCend; ++it)
         (*it)->visit(renderer, _modelViewTransform, flags);
     
     // FIX ME: Why need to set _orderOfArrival to 0??

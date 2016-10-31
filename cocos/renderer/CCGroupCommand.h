@@ -73,7 +73,7 @@ public:
     void init(float globalOrder);
     
     /**called by renderer, get the group ID.*/
-    inline int getRenderQueueID() const {return _renderQueueID;}
+    int getRenderQueueID() const { return _renderQueueID; }
     
 protected:
     int _renderQueueID;

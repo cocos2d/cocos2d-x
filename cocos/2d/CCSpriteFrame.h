@@ -104,7 +104,7 @@ public:
      *
      * @return The rect of the sprite frame, in pixels.
      */
-    inline const Rect& getRectInPixels() const { return _rectInPixels; }
+    const Rect& getRectInPixels() const { return _rectInPixels; }
     /** Set rect of the sprite frame.
      *
      * @param rectInPixels The rect of the sprite frame, in pixels.
@@ -115,23 +115,50 @@ public:
      *
      * @return Is rotated if true.
      */
-    inline bool isRotated() const { return _rotated; }
+    bool isRotated() const { return _rotated; }
     /** Set rotated of the sprite frame.
      *
      * @param rotated Rotated the sprite frame if true.
      */
-    inline void setRotated(bool rotated) { _rotated = rotated; }
+    void setRotated(bool rotated) { _rotated = rotated; }
 
     /** Get rect of the frame.
      *
      * @return The rect of the sprite frame.
      */
-    inline const Rect& getRect() const { return _rect; }
+    const Rect& getRect() const { return _rect; }
     /** Set rect of the frame.
      *
      * @param rect The rect of the sprite.
      */
     void setRect(const Rect& rect);
+
+    /** Get center rect of the frame.
+     *
+     * Useful to create 9-slice sprites
+     *
+     * @return The center rect of the sprite frame in points
+     */
+    const Rect& getCenterRect() const { return _centerRect; }
+
+     /**
+     * setCenterRect
+     *
+     * Useful to implement "9 sliced" sprites.
+     * The sprite will be sliced into a 3 x 3 grid. The four corners of this grid are applied without
+     * performing any scaling. The upper- and lower-middle parts are scaled horizontally, and the left- and right-middle parts are scaled vertically.
+     * The center is scaled in both directions.
+     * Important: The scaling is based the Sprite's trimmed size.
+     *
+     * Limitations: Does not work when the sprite is part of `SpriteBatchNode`.
+     * @param centerRect the Rect in points
+     */
+    void setCenterRectInPixels(const Rect& centerRect);
+
+    /** hasCenterRect
+     @return Whether or not it has a centerRect
+     */
+    bool hasCenterRect() const;
 
     /** Get offset of the frame.
      * 
@@ -148,23 +175,23 @@ public:
      *
      * @return The original size of the trimmed image, in pixels.
      */
-    inline const Size& getOriginalSizeInPixels() const { return _originalSizeInPixels; }
+    const Size& getOriginalSizeInPixels() const { return _originalSizeInPixels; }
     /** Set original size of the trimmed image.
      *
      * @param sizeInPixels The original size of the trimmed image, in pixels.
      */
-    inline void setOriginalSizeInPixels(const Size& sizeInPixels) { _originalSizeInPixels = sizeInPixels; }
+    void setOriginalSizeInPixels(const Size& sizeInPixels) { _originalSizeInPixels = sizeInPixels; }
 
     /** Get original size of the trimmed image.
      *
      * @return The original size of the trimmed image.
      */
-    inline const Size& getOriginalSize() const { return _originalSize; }
+    const Size& getOriginalSize() const { return _originalSize; }
     /** Set original size of the trimmed image.
      *
      * @param sizeInPixels The original size of the trimmed image.
      */
-    inline void setOriginalSize(const Size& sizeInPixels) { _originalSize = sizeInPixels; }
+    void setOriginalSize(const Size& sizeInPixels) { _originalSize = sizeInPixels; }
 
     /** Get texture of the frame.
      *
@@ -265,6 +292,7 @@ protected:
     Rect _rectInPixels;
     bool   _rotated;
     Rect _rect;
+    Rect _centerRect;
     Vec2 _offsetInPixels;
     Size _originalSizeInPixels;
     Texture2D *_texture;

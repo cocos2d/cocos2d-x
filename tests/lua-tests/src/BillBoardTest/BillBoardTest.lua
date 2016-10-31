@@ -82,8 +82,8 @@ function BillBoardTest:init()
             cameraRightDir.y=0
 
             local cameraPos=  self._camera:getPosition3D()
-            cameraPos = cc.vec3(cameraPos.x + cameraDir.x * newPos.y * 0.5, cameraPos.y + cameraDir.y * newPos.y * 0.5, cameraPos.z + cameraDir.z * newPos.y * 0.5)
-            cameraPos = cc.vec3(cameraPos.x + cameraRightDir.x * newPos.x * 0.5, cameraPos.y + cameraRightDir.y * newPos.x * 0.5, cameraPos.z + cameraRightDir.z * newPos.x * 0.5)
+            cameraPos = cc.vec3add(cameraPos, cc.vec2mul(cameraDir, newPos.y * 0.5))
+            cameraPos = cc.vec3add(cameraPos, cc.vec2mul(cameraRightDir, newPos.x * 0.5))
             self._camera:setPosition3D(cameraPos)
         end
     end, cc.Handler.EVENT_TOUCHES_MOVED)

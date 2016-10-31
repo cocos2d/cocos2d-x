@@ -89,10 +89,10 @@ public:
 
     /**
      * Get the corresponding HttpRequest object which leads to this response.
-     * There's no paired setter for it, because it's already setted in class constructor
+     * There's no paired setter for it, because it's already set in class constructor
      * @return HttpRequest* the corresponding HttpRequest object which leads to this response.
      */
-    inline HttpRequest* getHttpRequest() const
+    HttpRequest* getHttpRequest() const
     {
         return _pHttpRequest;
     }
@@ -103,7 +103,7 @@ public:
      * If this getter returns false, you can call getResponseCode and getErrorBuffer to find more details.
      * @return bool the flag that represent whether the http request return successfully or not.
      */
-    inline bool isSucceed() const
+    bool isSucceed() const
     {
         return _succeed;
     }
@@ -112,7 +112,7 @@ public:
      * Get the http response data.
      * @return std::vector<char>* the pointer that point to the _responseData.
      */
-    inline std::vector<char>* getResponseData()
+    std::vector<char>* getResponseData()
     {
         return &_responseData;
     }
@@ -121,7 +121,7 @@ public:
      * Get the response headers.
      * @return std::vector<char>* the pointer that point to the _responseHeader.
      */
-    inline std::vector<char>* getResponseHeader()
+    std::vector<char>* getResponseHeader()
     {
         return &_responseHeader;
     }
@@ -132,7 +132,7 @@ public:
      * If _responseCode is not 200, you should check the meaning for _responseCode by the net.
      * @return long the value of _responseCode
      */
-    inline long getResponseCode() const
+    long getResponseCode() const
     {
         return _responseCode;
     }
@@ -141,7 +141,7 @@ public:
      * Get the error buffer which will tell you more about the reason why http request failed.
      * @return const char* the pointer that point to _errorBuffer.
      */
-    inline const char* getErrorBuffer() const
+    const char* getErrorBuffer() const
     {
         return _errorBuffer.c_str();
     }
@@ -155,7 +155,7 @@ public:
      * This setter is mainly used in HttpClient, users mustn't set it directly
      * @param value the flag represent whether the http request is successful or not.
      */
-    inline void setSucceed(bool value)
+    void setSucceed(bool value)
     {
         _succeed = value;
     }
@@ -164,7 +164,7 @@ public:
      * Set the http response data buffer, it is used by HttpClient.
      * @param data the pointer point to the response data buffer.
      */
-    inline void setResponseData(std::vector<char>* data)
+    void setResponseData(std::vector<char>* data)
     {
         _responseData = *data;
     }
@@ -173,7 +173,7 @@ public:
      * Set the http response headers buffer, it is used by HttpClient.
      * @param data the pointer point to the response headers buffer.
      */
-    inline void setResponseHeader(std::vector<char>* data)
+    void setResponseHeader(std::vector<char>* data)
     {
         _responseHeader = *data;
     }
@@ -183,7 +183,7 @@ public:
      * Set the http response code.
      * @param value the http response code that represent whether the request is successful or not.
      */
-    inline void setResponseCode(long value)
+    void setResponseCode(long value)
     {
         _responseCode = value;
     }
@@ -193,7 +193,7 @@ public:
      * Set the error buffer which will tell you more the reason why http request failed.
      * @param value a string pointer that point to the reason.
      */
-    inline void setErrorBuffer(const char* value)
+    void setErrorBuffer(const char* value)
     {
         _errorBuffer.clear();
         _errorBuffer.assign(value);
@@ -204,7 +204,7 @@ public:
      * @param value a string pointer that point to response data buffer.
      * @param n the defined size that the response data buffer would be copied.
      */
-    inline void setResponseDataString(const char* value, size_t n)
+    void setResponseDataString(const char* value, size_t n)
     {
         _responseDataString.clear();
         _responseDataString.assign(value, n);
@@ -214,7 +214,7 @@ public:
      * Get the string pointer that point to the response data.
      * @return const char* the string pointer that point to the response data.
      */
-    inline const char* getResponseDataString() const
+    const char* getResponseDataString() const
     {
         return _responseDataString.c_str();
     }
