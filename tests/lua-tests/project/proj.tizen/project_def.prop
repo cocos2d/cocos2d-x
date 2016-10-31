@@ -41,6 +41,7 @@ USER_INC_FILES =
 
 ## C++ Compiler
 USER_CPP_INC_DIRS = ../Classes \
+                    ../../../.. \
                     ../../../../cocos \
                     ../../../../cocos/editor-support \
                     ../../../../cocos/platform \

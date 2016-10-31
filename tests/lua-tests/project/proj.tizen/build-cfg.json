@@ -13,6 +13,13 @@
             "to": "res"
         },
         {
+            "from": "../../../cpp-tests/Resources",
+            "to": "res",
+            "exclude": [
+                "*.gz"
+            ]
+        },
+        {
             "from": "../../../../cocos/scripting/lua-bindings/script/",
             "to": "src/cocos"
         }
