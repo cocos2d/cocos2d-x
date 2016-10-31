@@ -564,6 +564,80 @@ float GLViewImpl::getFrameZoomFactor() const
     return _frameZoomFactor;
 }
 
+bool GLViewImpl::isFullscreen() const {
+    return (_monitor != nullptr);
+}
+
+void GLViewImpl::setFullscreen() {
+    if (this->isFullscreen()) {
+        return;
+    }
+    _monitor = glfwGetPrimaryMonitor();
+    if (nullptr == _monitor) {
+        return;
+    }
+    const GLFWvidmode* videoMode = glfwGetVideoMode(_monitor);
+    this->setFullscreen(*videoMode, _monitor);
+}
+
+void GLViewImpl::setFullscreen(int monitorIndex) {
+    // set fullscreen on specific monitor
+    int count = 0;
+    GLFWmonitor** monitors = glfwGetMonitors(&count);
+    if (monitorIndex < 0 || monitorIndex >= count) {
+        return;
+    }
+    GLFWmonitor* monitor = monitors[monitorIndex];
+    if (nullptr == monitor) {
+        return;
+    }
+    const GLFWvidmode* videoMode = glfwGetVideoMode(monitor);
+    this->setFullscreen(*videoMode, monitor);
+}
+
+void GLViewImpl::setFullscreen(const GLFWvidmode &videoMode, GLFWmonitor *monitor) {
+    _monitor = monitor;
+    glfwSetWindowMonitor(_mainWindow, _monitor, 0, 0, videoMode.width, videoMode.height, videoMode.refreshRate);
+}
+
+void GLViewImpl::setWindowed(int width, int height) {
+    if (!this->isFullscreen()) {
+        this->setFrameSize(width, height);
+    } else {
+        const GLFWvidmode* videoMode = glfwGetVideoMode(_monitor);
+        int xpos = 0, ypos = 0;
+        glfwGetMonitorPos(_monitor, &xpos, &ypos);
+        xpos += (videoMode->width - width) * 0.5;
+        ypos += (videoMode->height - height) * 0.5;
+        _monitor = nullptr;
+        glfwSetWindowMonitor(_mainWindow, nullptr, xpos, ypos, width, height, GLFW_DONT_CARE);
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+        // on mac window will sometimes lose title when windowed
+        glfwSetWindowTitle(_mainWindow, _viewName.c_str());
+#endif
+    }
+}
+
+int GLViewImpl::getMonitorCount() const {
+    int count = 0;
+    glfwGetMonitors(&count);
+    return count;
+}
+
+Size GLViewImpl::getMonitorSize() const {
+    GLFWmonitor* monitor = _monitor;
+    if (nullptr == monitor) {
+        GLFWwindow* window = this->getWindow();
+        monitor = glfwGetWindowMonitor(window);
+    }
+    if (nullptr != monitor) {
+        const GLFWvidmode* videoMode = glfwGetVideoMode(monitor);
+        Size size = Size(videoMode->width, videoMode->height);
+        return size;
+    }
+    return Size::ZERO;
+}
+
 void GLViewImpl::updateFrameSize()
 {
     if (_screenSize.width > 0 && _screenSize.height > 0)
