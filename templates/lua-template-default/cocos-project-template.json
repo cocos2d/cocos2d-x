@@ -173,7 +173,8 @@
                 "frameworks/runtime-src/proj.ios_mac/mac/SimulatorApp.mm",
                 "frameworks/runtime-src/proj.ios_mac/PROJECT_NAME.xcodeproj/project.pbxproj",
                 "frameworks/runtime-src/proj.tizen/.project",
-                "frameworks/runtime-src/proj.tizen/tizen-manifest.xml"
+                "frameworks/runtime-src/proj.tizen/tizen-manifest.xml",
+                "frameworks/runtime-src/proj.tizen/project_def.prop"
             ]
         },
         "project_replace_package_name": {
