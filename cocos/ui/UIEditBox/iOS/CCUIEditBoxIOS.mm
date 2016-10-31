@@ -239,6 +239,10 @@
             self.textInput.returnKeyType = UIReturnKeyGo;
             break;
             
+        case cocos2d::ui::EditBox::KeyboardReturnType::NEXT:
+            self.textInput.returnKeyType = UIReturnKeyNext;
+            break;
+
         default:
             self.textInput.returnKeyType = UIReturnKeyDefault;
             break;
