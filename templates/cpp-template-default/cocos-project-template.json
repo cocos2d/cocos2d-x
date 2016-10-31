@@ -60,8 +60,7 @@
                "proj.win10/App/Package.appxmanifest",
                "CMakeLists.txt",
                "proj.tizen/.project",
-               "proj.tizen/tizen-manifest.xml",
-               "proj.tizen/project_def.prop"
+               "proj.tizen/tizen-manifest.xml"
             ]
          },
          "project_replace_package_name":{

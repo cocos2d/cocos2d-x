@@ -1,6 +1,6 @@
 
 # Project Name
-APPNAME = HelloCpp
+APPNAME = hellocpp
 
 # Project Type
 type = app

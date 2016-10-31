@@ -1,6 +1,6 @@
 
 # Project Name
-APPNAME = HelloLua
+APPNAME = hellolua
 
 # Project Type
 type = app
