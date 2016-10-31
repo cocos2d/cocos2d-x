@@ -27,7 +27,7 @@ USER_UNDEFS =
 USER_CPP_UNDEFS = 
 
 # User Libraries
-USER_LIBS = cocos2dx websockets chipmunk png jpeg tiff webp luacocos2d
+USER_LIBS = luacocos2d cocos2dx websockets chipmunk png jpeg tiff webp
 
 # User Objects
 USER_OBJS = 
