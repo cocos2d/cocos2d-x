@@ -4461,16 +4461,6 @@ vec2
 },
 
 /**
- * @method getCapInsets
- * @return {rect_object}
- */
-getCapInsets : function (
-)
-{
-    return cc.Rect;
-},
-
-/**
  * @method getOriginalSizeInPixels
  * @return {size_object}
  */
@@ -4491,6 +4481,16 @@ size
 },
 
 /**
+ * @method getCenterRect
+ * @return {rect_object}
+ */
+getCenterRect : function (
+)
+{
+    return cc.Rect;
+},
+
+/**
  * @method setRectInPixels
  * @param {rect_object} arg0
  */
@@ -4508,6 +4508,16 @@ getRect : function (
 )
 {
     return cc.Rect;
+},
+
+/**
+ * @method setCenterRectInPixels
+ * @param {rect_object} arg0
+ */
+setCenterRectInPixels : function (
+rect 
+)
+{
 },
 
 /**
@@ -4658,16 +4668,6 @@ getAnchorPoint : function (
 )
 {
     return cc.Vec2;
-},
-
-/**
- * @method setCapInsets
- * @param {rect_object} arg0
- */
-setCapInsets : function (
-rect 
-)
-{
 },
 
 /**
@@ -17268,16 +17268,6 @@ float
 },
 
 /**
- * @method getCapInsets
- * @return {rect_object}
- */
-getCapInsets : function (
-)
-{
-    return cc.Rect;
-},
-
-/**
  * @method getResourceType
  * @return {int}
  */
@@ -17288,19 +17278,15 @@ getResourceType : function (
 },
 
 /**
- * @method initWithTexture
-* @param {cc.Texture2D|cc.Texture2D|cc.Texture2D} texture2d
-* @param {rect_object|rect_object} rect
-* @param {bool} bool
-* @return {bool|bool|bool}
-*/
-initWithTexture : function(
-texture2d,
-rect,
-bool 
+ * @method setDisplayFrameWithAnimationName
+ * @param {String} arg0
+ * @param {int} arg1
+ */
+setDisplayFrameWithAnimationName : function (
+str, 
+int 
 )
 {
-    return false;
 },
 
 /**
@@ -17324,6 +17310,16 @@ getOffsetPosition : function (
 },
 
 /**
+ * @method getCenterRect
+ * @return {rect_object}
+ */
+getCenterRect : function (
+)
+{
+    return cc.Rect;
+},
+
+/**
  * @method removeAllChildrenWithCleanup
  * @param {bool} arg0
  */
@@ -17334,13 +17330,13 @@ bool
 },
 
 /**
- * @method isFlippedX
- * @return {bool}
+ * @method setCenterRectNormalized
+ * @param {rect_object} arg0
  */
-isFlippedX : function (
+setCenterRectNormalized : function (
+rect 
 )
 {
-    return false;
 },
 
 /**
@@ -17370,16 +17366,6 @@ str
 },
 
 /**
- * @method isFlippedY
- * @return {bool}
- */
-isFlippedY : function (
-)
-{
-    return false;
-},
-
-/**
  * @method isFrameDisplayed
  * @param {cc.SpriteFrame} arg0
  * @return {bool}
@@ -17399,16 +17385,6 @@ getAtlasIndex : function (
 )
 {
     return 0;
-},
-
-/**
- * @method getCapInsetsNormalized
- * @return {rect_object}
- */
-getCapInsetsNormalized : function (
-)
-{
-    return cc.Rect;
 },
 
 /**
@@ -17432,13 +17408,11 @@ getBlendFunc : function (
 },
 
 /**
- * @method setDisplayFrameWithAnimationName
- * @param {String} arg0
- * @param {int} arg1
+ * @method setCenterRect
+ * @param {rect_object} arg0
  */
-setDisplayFrameWithAnimationName : function (
-str, 
-int 
+setCenterRect : function (
+rect 
 )
 {
 },
@@ -17484,6 +17458,16 @@ isDirty : function (
 },
 
 /**
+ * @method getCenterRectNormalized
+ * @return {rect_object}
+ */
+getCenterRectNormalized : function (
+)
+{
+    return cc.Rect;
+},
+
+/**
  * @method setAtlasIndex
  * @param {int} arg0
  */
@@ -17491,6 +17475,22 @@ setAtlasIndex : function (
 int 
 )
 {
+},
+
+/**
+ * @method initWithTexture
+* @param {cc.Texture2D|cc.Texture2D|cc.Texture2D} texture2d
+* @param {rect_object|rect_object} rect
+* @param {bool} bool
+* @return {bool|bool|bool}
+*/
+initWithTexture : function(
+texture2d,
+rect,
+bool 
+)
+{
+    return false;
 },
 
 /**
@@ -17570,23 +17570,23 @@ spriteframe
 },
 
 /**
- * @method setCapInsets
- * @param {rect_object} arg0
+ * @method isFlippedX
+ * @return {bool}
  */
-setCapInsets : function (
-rect 
+isFlippedX : function (
 )
 {
+    return false;
 },
 
 /**
- * @method setCapInsetsNormalized
- * @param {rect_object} arg0
+ * @method isFlippedY
+ * @return {bool}
  */
-setCapInsetsNormalized : function (
-rect 
+isFlippedY : function (
 )
 {
+    return false;
 },
 
 /**
