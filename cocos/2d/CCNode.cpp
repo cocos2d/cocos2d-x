@@ -1672,21 +1672,11 @@ const Mat4& Node::getNodeToParentTransform() const
         }
         
         bool needsSkewMatrix = ( _skewX || _skewY );
-        
-        
-        Vec2 anchorPoint(_anchorPointInPoints.x * _scaleX, _anchorPointInPoints.y * _scaleY);
-        
-        // calculate real position
-        if (! needsSkewMatrix && !_anchorPointInPoints.isZero())
-        {
-            x += -anchorPoint.x;
-            y += -anchorPoint.y;
-        }
-        
+
         // Build Transform Matrix = translation * rotation * scale
         Mat4 translation;
         //move to anchor point first, then rotate
-        Mat4::createTranslation(x + anchorPoint.x, y + anchorPoint.y, z, &translation);
+        Mat4::createTranslation(x, y, z, &translation);
         
         Mat4::createRotation(_rotationQuat, &_transform);
         
@@ -1707,10 +1697,7 @@ const Mat4& Node::getNodeToParentTransform() const
             _transform.m[1] = sy * m0 + cx * m1, _transform.m[5] = sy * m4 + cx * m5, _transform.m[9] = sy * m8 + cx * m9;
         }
         _transform = translation * _transform;
-        //move by (-anchorPoint.x, -anchorPoint.y, 0) after rotation
-        _transform.translate(-anchorPoint.x, -anchorPoint.y, 0);
-        
-        
+
         if (_scaleX != 1.f)
         {
             _transform.m[0] *= _scaleX, _transform.m[1] *= _scaleX, _transform.m[2] *= _scaleX;
@@ -1738,15 +1725,15 @@ const Mat4& Node::getNodeToParentTransform() const
             Mat4 skewMatrix(skewMatArray);
             
             _transform = _transform * skewMatrix;
-            
-            // adjust anchor point
-            if (!_anchorPointInPoints.isZero())
-            {
-                // FIXME:: Argh, Mat4 needs a "translate" method.
-                // FIXME:: Although this is faster than multiplying a vec4 * mat4
-                _transform.m[12] += _transform.m[0] * -_anchorPointInPoints.x + _transform.m[4] * -_anchorPointInPoints.y;
-                _transform.m[13] += _transform.m[1] * -_anchorPointInPoints.x + _transform.m[5] * -_anchorPointInPoints.y;
-            }
+        }
+
+        // adjust anchor point
+        if (!_anchorPointInPoints.isZero())
+        {
+            // FIXME:: Argh, Mat4 needs a "translate" method.
+            // FIXME:: Although this is faster than multiplying a vec4 * mat4
+            _transform.m[12] += _transform.m[0] * -_anchorPointInPoints.x + _transform.m[4] * -_anchorPointInPoints.y;
+            _transform.m[13] += _transform.m[1] * -_anchorPointInPoints.x + _transform.m[5] * -_anchorPointInPoints.y;
         }
     }
 
