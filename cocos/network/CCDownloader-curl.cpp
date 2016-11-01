@@ -624,7 +624,8 @@ namespace cocos2d { namespace network {
                 }
 
                 // process tasks in _requestList
-                while (0 == countOfMaxProcessingTasks || coTaskMap.size() < countOfMaxProcessingTasks)
+                auto size = coTaskMap.size();
+                while (0 == countOfMaxProcessingTasks || size < countOfMaxProcessingTasks)
                 {
                     // get task wrapper from request queue
                     TaskWrapper wrapper;

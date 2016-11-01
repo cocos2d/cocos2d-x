@@ -12,12 +12,39 @@
 -- @return Director#Director self (return value: cc.Director)
         
 --------------------------------
+-- Clones a projection matrix and put it to the top of projection matrix stack.<br>
+-- param index The index of projection matrix stack.<br>
+-- js NA
+-- @function [parent=#Director] pushProjectionMatrix 
+-- @param self
+-- @param #unsigned int index
+-- @return Director#Director self (return value: cc.Director)
+        
+--------------------------------
+--  Pops the top matrix of the projection matrix stack.<br>
+-- param index The index of projection matrix stack.<br>
+-- js NA
+-- @function [parent=#Director] popProjectionMatrix 
+-- @param self
+-- @param #unsigned int index
+-- @return Director#Director self (return value: cc.Director)
+        
+--------------------------------
 --  Sets the EventDispatcher associated with this director.<br>
 -- since v3.0<br>
 -- js NA
 -- @function [parent=#Director] setEventDispatcher 
 -- @param self
 -- @param #cc.EventDispatcher dispatcher
+-- @return Director#Director self (return value: cc.Director)
+        
+--------------------------------
+--  Adds an identity matrix to the top of projection matrix stack.<br>
+-- param index The index of projection matrix stack.<br>
+-- js NA
+-- @function [parent=#Director] loadProjectionIdentityMatrix 
+-- @param self
+-- @param #unsigned int index
 -- @return Director#Director self (return value: cc.Director)
         
 --------------------------------
@@ -194,6 +221,17 @@
 -- @function [parent=#Director] setScheduler 
 -- @param self
 -- @param #cc.Scheduler scheduler
+-- @return Director#Director self (return value: cc.Director)
+        
+--------------------------------
+-- Multiplies a matrix to the top of projection matrix stack.<br>
+-- param mat The matrix that to be multiplied.<br>
+-- param index The index of projection matrix stack.<br>
+-- js NA
+-- @function [parent=#Director] multiplyProjectionMatrix 
+-- @param self
+-- @param #mat4_table mat
+-- @param #unsigned int index
 -- @return Director#Director self (return value: cc.Director)
         
 --------------------------------
@@ -425,6 +463,26 @@
 -- @function [parent=#Director] getVisibleSize 
 -- @param self
 -- @return size_table#size_table ret (return value: size_table)
+        
+--------------------------------
+-- Adds a matrix to the top of projection matrix stack.<br>
+-- param mat The matrix that to be added.<br>
+-- param index The index of projection matrix stack.<br>
+-- js NA
+-- @function [parent=#Director] loadProjectionMatrix 
+-- @param self
+-- @param #mat4_table mat
+-- @param #unsigned int index
+-- @return Director#Director self (return value: cc.Director)
+        
+--------------------------------
+-- Init the projection matrix stack.<br>
+-- param stackCount The size of projection matrix stack.<br>
+-- js NA
+-- @function [parent=#Director] initProjectionMatrixStack 
+-- @param self
+-- @param #unsigned int stackCount
+-- @return Director#Director self (return value: cc.Director)
         
 --------------------------------
 --  Gets the Scheduler associated with this director.<br>

@@ -355,7 +355,7 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
         {
             TMXLayerInfo* layer = tmxMapInfo->getLayers().back();
             Size layerSize = layer->_layerSize;
-            uint32_t gid = static_cast<uint32_t>(attributeDict["gid"].asInt());
+            uint32_t gid = static_cast<uint32_t>(attributeDict["gid"].asUnsignedInt());
             int tilesAmount = layerSize.width*layerSize.height;
             
             if (_xmlTileIndex < tilesAmount)
@@ -746,7 +746,7 @@ void TMXMapInfo::endElement(void *ctx, const char *name)
 
             uint32_t* bufferPtr = reinterpret_cast<uint32_t*>(buffer);
             for(auto gidToken : gidTokens) {
-                auto tileGid = (uint32_t)strtol(gidToken.c_str(), nullptr, 10);
+                auto tileGid = (uint32_t)strtoul(gidToken.c_str(), nullptr, 10);
                 *bufferPtr = tileGid;
                 bufferPtr++;
             }

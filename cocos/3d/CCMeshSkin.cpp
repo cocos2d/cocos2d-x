@@ -86,8 +86,7 @@ Bone3D* MeshSkin::getBoneByName(const std::string& id) const
 
 int MeshSkin::getBoneIndex(Bone3D* bone) const
 {
-    int i = 0;
-    for (; i < _skinBones.size(); i++) {
+    for (int i = 0, size = _skinBones.size(); i < size; ++i) {
         if (_skinBones.at(i) == bone)
             return i;
     }
@@ -147,7 +146,7 @@ Bone3D* MeshSkin::getRootBone() const
 
 const Mat4& MeshSkin::getInvBindPose(const Bone3D* bone)
 {
-    for (ssize_t i = 0; i < _skinBones.size(); i++) {
+    for (ssize_t i = 0, size = _skinBones.size(); i < size; ++i) {
         if (_skinBones.at(i) == bone)
         {
             return _invBindPoses.at(i);

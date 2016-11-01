@@ -74,6 +74,9 @@ public:
 
 private:
 
+    void onEnterBackground(EventCustom* event);
+    void onEnterForeground(EventCustom* event);
+
     // engine interfaces
     SLObjectItf _engineObject;
     SLEngineItf _engineEngine;
@@ -84,6 +87,9 @@ private:
     //audioID,AudioInfo
     std::unordered_map<int, IAudioPlayer*>  _audioPlayers;
     std::unordered_map<int, std::function<void (int, const std::string &)>> _callbackMap;
+
+    // UrlAudioPlayers which need to resumed while entering foreground
+    std::vector<IAudioPlayer*> _urlAudioPlayersNeedResume;
 
     AudioPlayerProvider* _audioPlayerProvider;
     EventListener* _onPauseListener;

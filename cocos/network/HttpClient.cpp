@@ -253,8 +253,8 @@ public:
         if(!headers.empty())
         {
             /* append custom headers one by one */
-            for (std::vector<std::string>::iterator it = headers.begin(); it != headers.end(); ++it)
-                _headers = curl_slist_append(_headers,it->c_str());
+            for (auto& header : headers)
+                _headers = curl_slist_append(_headers,header.c_str());
             /* set custom headers for curl */
             if (!setOption(CURLOPT_HTTPHEADER, _headers))
                 return false;

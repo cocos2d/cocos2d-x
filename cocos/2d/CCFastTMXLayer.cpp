@@ -556,10 +556,10 @@ void TMXLayer::updateTotalQuads()
         }
         
         int offset = 0;
-        for(auto iter = _indicesVertexZOffsets.begin(); iter != _indicesVertexZOffsets.end(); ++iter)
+        for(auto& vertexZOffset : _indicesVertexZOffsets)
         {
-            std::swap(offset, iter->second);
-            offset += iter->second;
+            std::swap(offset, vertexZOffset.second);
+            offset += vertexZOffset.second;
         }
         updateVertexBuffer();
         

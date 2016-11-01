@@ -625,12 +625,6 @@ void js_remove_object_reference(JS::HandleValue owner, JS::HandleValue target)
     JSContext *cx = engine->getGlobalContext();
     JS::RootedObject ownerObj(cx, owner.toObjectOrNull());
     JS::RootedObject targetObj(cx, target.toObjectOrNull());
-    js_proxy_t *pOwner = jsb_get_js_proxy(ownerObj);
-    js_proxy_t *pTarget = jsb_get_js_proxy(targetObj);
-    if (!pOwner || !pTarget)
-    {
-        return;
-    }
 
     JS::RootedObject global(cx, engine->getGlobalObject());
     JS::RootedObject jsbObj(cx);
@@ -5530,7 +5524,7 @@ bool js_get_PolygonInfo_rect(JSContext* cx, uint32_t argc, jsval* vp)
     cocos2d::PolygonInfo* cobj = (cocos2d::PolygonInfo *)(proxy ? proxy->ptr : nullptr);
     if (cobj)
     {
-        jsval ret = ccrect_to_jsval(cx, cobj->rect);
+        jsval ret = ccrect_to_jsval(cx, cobj->getRect());
 
         if (ret != JSVAL_NULL)
         {
@@ -5552,7 +5546,9 @@ bool js_set_PolygonInfo_rect(JSContext* cx, uint32_t argc, jsval* vp)
     if (cobj)
     {
         JS::RootedValue jsrect(cx, args.get(0));
-        jsval_to_ccrect(cx, jsrect, &cobj->rect);
+        Rect rectOut;
+        jsval_to_ccrect(cx, jsrect, &rectOut);
+        cobj->setRect(rectOut);
         return true;
     }
     JS_ReportError(cx, "js_set_PolygonInfo_rect : Invalid native object.");
@@ -5568,7 +5564,7 @@ bool js_get_PolygonInfo_filename(JSContext* cx, uint32_t argc, jsval* vp)
     cocos2d::PolygonInfo* cobj = (cocos2d::PolygonInfo *)(proxy ? proxy->ptr : nullptr);
     if (cobj)
     {
-        jsval ret = std_string_to_jsval(cx, cobj->filename);
+        jsval ret = std_string_to_jsval(cx, cobj->getFilename());
 
         if (ret != JSVAL_NULL)
         {
@@ -5590,7 +5586,9 @@ bool js_set_PolygonInfo_filename(JSContext* cx, uint32_t argc, jsval* vp)
     if (cobj)
     {
         JS::RootedValue jsstr(cx, args.get(0));
-        jsval_to_std_string(cx, jsstr, &cobj->filename);
+        std::string outFilename;
+        jsval_to_std_string(cx, jsstr, &outFilename);
+        cobj->setFilename(outFilename);
         return true;
     }
     JS_ReportError(cx, "js_set_PolygonInfo_filename : Invalid native object.");

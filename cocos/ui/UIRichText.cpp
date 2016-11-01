@@ -511,7 +511,7 @@ MyXMLVisitor::~MyXMLVisitor()
 
 Color3B MyXMLVisitor::getColor() const
 {
-    for (auto i = _fontElements.rbegin(); i != _fontElements.rend(); ++i)
+    for (auto i = _fontElements.rbegin(), iRend = _fontElements.rend(); i != iRend; ++i)
     {
         if (i->hasColor)
             return i->color;
@@ -521,7 +521,7 @@ Color3B MyXMLVisitor::getColor() const
 
 float MyXMLVisitor::getFontSize() const
 {
-    for (auto i = _fontElements.rbegin(); i != _fontElements.rend(); ++i)
+    for (auto i = _fontElements.rbegin(), iRend = _fontElements.rend(); i != iRend; ++i)
     {
         if (i->fontSize != -1)
             return i->fontSize;
@@ -531,7 +531,7 @@ float MyXMLVisitor::getFontSize() const
 
 std::string MyXMLVisitor::getFace() const
 {
-    for (auto i = _fontElements.rbegin(); i != _fontElements.rend(); ++i)
+    for (auto i = _fontElements.rbegin(), iRend = _fontElements.rend(); i != iRend; ++i)
     {
         if (i->face.size() != 0)
             return i->face;
@@ -541,7 +541,7 @@ std::string MyXMLVisitor::getFace() const
 
 std::string MyXMLVisitor::getURL() const
 {
-    for (auto i = _fontElements.rbegin(); i != _fontElements.rend(); ++i)
+    for (auto i = _fontElements.rbegin(), iRend = _fontElements.rend(); i != iRend; ++i)
     {
         if (i->url.size() != 0)
             return i->url;
@@ -551,7 +551,7 @@ std::string MyXMLVisitor::getURL() const
 
 bool MyXMLVisitor::getBold() const
 {
-    for (auto i = _fontElements.rbegin(); i != _fontElements.rend(); ++i)
+    for (auto i = _fontElements.rbegin(), iRend = _fontElements.rend(); i != iRend; ++i)
     {
         if (i->bold)
             return true;
@@ -561,7 +561,7 @@ bool MyXMLVisitor::getBold() const
 
 bool MyXMLVisitor::getItalics() const
 {
-    for (auto i = _fontElements.rbegin(); i != _fontElements.rend(); ++i)
+    for (auto i = _fontElements.rbegin(), iRend = _fontElements.rend(); i != iRend; ++i)
     {
         if (i->italics)
             return true;
@@ -571,7 +571,7 @@ bool MyXMLVisitor::getItalics() const
 
 bool MyXMLVisitor::getUnderline() const
 {
-    for (auto i = _fontElements.rbegin(); i != _fontElements.rend(); ++i)
+    for (auto i = _fontElements.rbegin(), iRend = _fontElements.rend(); i != iRend; ++i)
     {
         if (i->line == StyleLine::UNDERLINE)
             return true;
@@ -581,7 +581,7 @@ bool MyXMLVisitor::getUnderline() const
 
 bool MyXMLVisitor::getStrikethrough() const
 {
-    for (auto i = _fontElements.rbegin(); i != _fontElements.rend(); ++i)
+    for (auto i = _fontElements.rbegin(), iRend = _fontElements.rend(); i != iRend; ++i)
     {
         if (i->line == StyleLine::STRIKETHROUGH)
             return true;
@@ -591,7 +591,7 @@ bool MyXMLVisitor::getStrikethrough() const
 
 std::tuple<bool, Color3B, int> MyXMLVisitor::getOutline() const
 {
-    for (auto i = _fontElements.rbegin(); i != _fontElements.rend(); ++i)
+    for (auto i = _fontElements.rbegin(), iRend = _fontElements.rend(); i != iRend; ++i)
     {
         if (i->effect == StyleEffect::OUTLINE)
             return std::make_tuple(true, i->outlineColor, i->outlineSize);
@@ -601,7 +601,7 @@ std::tuple<bool, Color3B, int> MyXMLVisitor::getOutline() const
 
 std::tuple<bool, Color3B, cocos2d::Size, int> MyXMLVisitor::getShadow() const
 {
-    for (auto i = _fontElements.rbegin(); i != _fontElements.rend(); ++i)
+    for (auto i = _fontElements.rbegin(), iRend = _fontElements.rend(); i != iRend; ++i)
     {
         if (i->effect == StyleEffect::SHADOW)
             return std::make_tuple(true, i->shadowColor, i->shadowOffset, i->shadowBlurRadius);
@@ -611,7 +611,7 @@ std::tuple<bool, Color3B, cocos2d::Size, int> MyXMLVisitor::getShadow() const
 
 std::tuple<bool, Color3B> MyXMLVisitor::getGlow() const
 {
-    for (auto i = _fontElements.rbegin(); i != _fontElements.rend(); ++i)
+    for (auto i = _fontElements.rbegin(), iRend = _fontElements.rend(); i != iRend; ++i)
     {
         if (i->effect == StyleEffect::GLOW)
             return std::make_tuple(true, i->glowColor);
@@ -1329,7 +1329,7 @@ void RichText::formatText()
         if (_ignoreSize)
         {
             addNewLine();
-            for (ssize_t i=0; i<_richElements.size(); i++)
+            for (ssize_t i=0, size = _richElements.size(); i<size; ++i)
             {
                 RichElement* element = _richElements.at(i);
                 Node* elementRenderer = nullptr;
@@ -1417,7 +1417,7 @@ void RichText::formatText()
         else
         {
             addNewLine();
-            for (ssize_t i=0; i<_richElements.size(); i++)
+            for (ssize_t i=0, size = _richElements.size(); i<size; ++i)
             {
                 RichElement* element = static_cast<RichElement*>(_richElements.at(i));
                 switch (element->_type)
@@ -1472,7 +1472,7 @@ static int getPrevWord(const std::string& text, int idx)
 
 static bool isWrappable(const std::string& text)
 {
-    for (size_t i = 0; i < text.length(); ++i)
+    for (size_t i = 0, size = text.length(); i < size; ++i)
     {
         if (!std::isalnum(text[i], std::locale()))
             return true;
@@ -1733,7 +1733,7 @@ void RichText::formarRenderers()
             Vector<Node*>* row = element;
             float nextPosX = 0.0f;
             float maxY = 0.0f;
-            for (ssize_t j=0; j<row->size(); j++)
+            for (ssize_t j=0, size = row->size(); j<size; j++)
             {
                 Node* l = row->at(j);
                 l->setAnchorPoint(Vec2::ZERO);
@@ -1753,11 +1753,11 @@ void RichText::formarRenderers()
         float newContentSizeHeight = 0.0f;
         float *maxHeights = new (std::nothrow) float[_elementRenders.size()];
         
-        for (size_t i=0; i<_elementRenders.size(); i++)
+        for (size_t i=0, size = _elementRenders.size(); i<size; i++)
         {
             Vector<Node*>* row = (_elementRenders[i]);
             float maxHeight = 0.0f;
-            for (ssize_t j=0; j<row->size(); j++)
+            for (ssize_t j=0, size = row->size(); j<size; j++)
             {
                 Node* l = row->at(j);
                 maxHeight = MAX(l->getContentSize().height, maxHeight);
@@ -1767,13 +1767,13 @@ void RichText::formarRenderers()
         }
         
         float nextPosY = _customSize.height;
-        for (size_t i=0; i<_elementRenders.size(); i++)
+        for (size_t i=0, size = _elementRenders.size(); i<size; i++)
         {
             Vector<Node*>* row = (_elementRenders[i]);
             float nextPosX = 0.0f;
             nextPosY -= (maxHeights[i] + _defaults.at(KEY_VERTICAL_SPACE).asFloat());
             
-            for (ssize_t j=0; j<row->size(); j++)
+            for (ssize_t j=0, size = row->size(); j<size; j++)
             {
                 Node* l = row->at(j);
                 l->setAnchorPoint(Vec2::ZERO);

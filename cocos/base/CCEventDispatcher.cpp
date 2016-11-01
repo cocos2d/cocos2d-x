@@ -717,9 +717,9 @@ void EventDispatcher::setPriority(EventListener* listener, int fixedPriority)
     if (listener == nullptr)
         return;
     
-    for (auto iter = _listenerMap.begin(); iter != _listenerMap.end(); ++iter)
+    for (auto& iter : _listenerMap)
     {
-        auto fixedPriorityListeners = iter->second->getFixedPriorityListeners();
+        auto fixedPriorityListeners = iter.second->getFixedPriorityListeners();
         if (fixedPriorityListeners)
         {
             auto found = std::find(fixedPriorityListeners->begin(), fixedPriorityListeners->end(), listener);
@@ -846,7 +846,7 @@ void EventDispatcher::dispatchTouchEventToListeners(EventListenerVector* listene
             // get a copy of cameras, prevent it's been modified in listener callback
             // if camera's depth is greater, process it earlier
             auto cameras = scene->getCameras();
-            for (auto rit = cameras.rbegin(); rit != cameras.rend(); ++rit)
+            for (auto rit = cameras.rbegin(), ritRend = cameras.rend(); rit != ritRend; ++rit)
             {
                 Camera* camera = *rit;
                 if (camera->isVisible() == false)
@@ -970,9 +970,8 @@ void EventDispatcher::dispatchTouchEvent(EventTouch* event)
     if (oneByOneListeners)
     {
         auto mutableTouchesIter = mutableTouches.begin();
-        auto touchesIter = originalTouches.begin();
         
-        for (; touchesIter != originalTouches.end(); ++touchesIter)
+        for (auto& touches : originalTouches)
         {
             bool isSwallowed = false;
 
@@ -994,15 +993,15 @@ void EventDispatcher::dispatchTouchEvent(EventTouch* event)
                 {
                     if (listener->onTouchBegan)
                     {
-                        isClaimed = listener->onTouchBegan(*touchesIter, event);
+                        isClaimed = listener->onTouchBegan(touches, event);
                         if (isClaimed && listener->_isRegistered)
                         {
-                            listener->_claimedTouches.push_back(*touchesIter);
+                            listener->_claimedTouches.push_back(touches);
                         }
                     }
                 }
                 else if (listener->_claimedTouches.size() > 0
-                         && ((removedIter = std::find(listener->_claimedTouches.begin(), listener->_claimedTouches.end(), *touchesIter)) != listener->_claimedTouches.end()))
+                         && ((removedIter = std::find(listener->_claimedTouches.begin(), listener->_claimedTouches.end(), touches)) != listener->_claimedTouches.end()))
                 {
                     isClaimed = true;
                     
@@ -1011,13 +1010,13 @@ void EventDispatcher::dispatchTouchEvent(EventTouch* event)
                         case EventTouch::EventCode::MOVED:
                             if (listener->onTouchMoved)
                             {
-                                listener->onTouchMoved(*touchesIter, event);
+                                listener->onTouchMoved(touches, event);
                             }
                             break;
                         case EventTouch::EventCode::ENDED:
                             if (listener->onTouchEnded)
                             {
-                                listener->onTouchEnded(*touchesIter, event);
+                                listener->onTouchEnded(touches, event);
                             }
                             if (listener->_isRegistered)
                             {
@@ -1027,7 +1026,7 @@ void EventDispatcher::dispatchTouchEvent(EventTouch* event)
                         case EventTouch::EventCode::CANCELLED:
                             if (listener->onTouchCancelled)
                             {
-                                listener->onTouchCancelled(*touchesIter, event);
+                                listener->onTouchCancelled(touches, event);
                             }
                             if (listener->_isRegistered)
                             {
@@ -1047,8 +1046,8 @@ void EventDispatcher::dispatchTouchEvent(EventTouch* event)
                     return true;
                 }
                 
-                CCASSERT((*touchesIter)->getID() == (*mutableTouchesIter)->getID(),
-                         "touchesIter ID should be equal to mutableTouchesIter's ID.");
+                CCASSERT(touches->getID() == (*mutableTouchesIter)->getID(),
+                         "touches ID should be equal to mutableTouchesIter's ID.");
                 
                 if (isClaimed && listener->_isRegistered && listener->_needSwallow)
                 {
