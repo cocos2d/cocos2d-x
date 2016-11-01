@@ -4186,6 +4186,12 @@
 		A5B57D4B1A3B919900CCBDB4 /* SpriteBuilder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5B57CE01A3B919900CCBDB4 /* SpriteBuilder.cpp */; };
 		A5B57D4C1A3B919900CCBDB4 /* SpriteBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = A5B57CE11A3B919900CCBDB4 /* SpriteBuilder.h */; };
 		A5B57D4D1A3B919900CCBDB4 /* SpriteBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = A5B57CE11A3B919900CCBDB4 /* SpriteBuilder.h */; };
+		A5E1A90E1DF5A0C80070716C /* CCBXNodeLoaderCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5E1A90C1DF5A0C80070716C /* CCBXNodeLoaderCache.cpp */; };
+		A5E1A90F1DF5A0C80070716C /* CCBXNodeLoaderCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5E1A90C1DF5A0C80070716C /* CCBXNodeLoaderCache.cpp */; };
+		A5E1A9101DF5A0C80070716C /* CCBXNodeLoaderCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5E1A90C1DF5A0C80070716C /* CCBXNodeLoaderCache.cpp */; };
+		A5E1A9111DF5A0C80070716C /* CCBXNodeLoaderCache.h in Headers */ = {isa = PBXBuildFile; fileRef = A5E1A90D1DF5A0C80070716C /* CCBXNodeLoaderCache.h */; };
+		A5E1A9121DF5A0C80070716C /* CCBXNodeLoaderCache.h in Headers */ = {isa = PBXBuildFile; fileRef = A5E1A90D1DF5A0C80070716C /* CCBXNodeLoaderCache.h */; };
+		A5E1A9131DF5A0C80070716C /* CCBXNodeLoaderCache.h in Headers */ = {isa = PBXBuildFile; fileRef = A5E1A90D1DF5A0C80070716C /* CCBXNodeLoaderCache.h */; };
 		A5FD79BE1D2A63DC00E11101 /* HttpClient-emcc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5FD79BD1D2A63DC00E11101 /* HttpClient-emcc.cpp */; };
 		A5FD79C01D2A63EA00E11101 /* WebSocket-emcc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5FD79BF1D2A63EA00E11101 /* WebSocket-emcc.cpp */; };
 		B2165EEA19921124000BE3E6 /* CCPrimitiveCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B257B45E198A353E00D9A687 /* CCPrimitiveCommand.cpp */; };
@@ -7091,6 +7097,8 @@
 		A5B57CE11A3B919900CCBDB4 /* SpriteBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SpriteBuilder.h; path = spritebuilder/SpriteBuilder.h; sourceTree = "<group>"; };
 		A5C27CB81DD1E4490069F627 /* UIEditBoxImpl-emcc.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = "UIEditBoxImpl-emcc.cpp"; sourceTree = "<group>"; };
 		A5C27CB91DD1E4490069F627 /* UIEditBoxImpl-emcc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIEditBoxImpl-emcc.h"; sourceTree = "<group>"; };
+		A5E1A90C1DF5A0C80070716C /* CCBXNodeLoaderCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCBXNodeLoaderCache.cpp; path = spritebuilder/CCBXNodeLoaderCache.cpp; sourceTree = "<group>"; };
+		A5E1A90D1DF5A0C80070716C /* CCBXNodeLoaderCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCBXNodeLoaderCache.h; path = spritebuilder/CCBXNodeLoaderCache.h; sourceTree = "<group>"; };
 		A5FD79BD1D2A63DC00E11101 /* HttpClient-emcc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "HttpClient-emcc.cpp"; sourceTree = "<group>"; };
 		A5FD79BF1D2A63EA00E11101 /* WebSocket-emcc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "WebSocket-emcc.cpp"; sourceTree = "<group>"; };
 		B20564AA1A6E5744001C1B6E /* ccShader_PositionColorTextureAsPointsize.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_PositionColorTextureAsPointsize.vert; sourceTree = "<group>"; };
@@ -10460,6 +10468,8 @@
 				A5B57CC11A3B919900CCBDB4 /* CCBXNodeLoader.h */,
 				A5B57CC21A3B919900CCBDB4 /* CCBXNodeLoaderLibrary.cpp */,
 				A5B57CC31A3B919900CCBDB4 /* CCBXNodeLoaderLibrary.h */,
+				A5E1A90C1DF5A0C80070716C /* CCBXNodeLoaderCache.cpp */,
+				A5E1A90D1DF5A0C80070716C /* CCBXNodeLoaderCache.h */,
 				A5B57CC41A3B919900CCBDB4 /* CCBXParser.cpp */,
 				A5B57CC51A3B919900CCBDB4 /* CCBXParser.h */,
 				A5B57CC61A3B919900CCBDB4 /* CCBXParticleSystemQuadLoader.cpp */,
@@ -12513,6 +12523,7 @@
 				B665E3581AA80A6500DDB1C5 /* CCPUOnQuotaObserverTranslator.h in Headers */,
 				B6CAB2371AF9AA1A00B9B856 /* btCompoundCollisionAlgorithm.h in Headers */,
 				5020A2071D49912500E80C72 /* Skin.h in Headers */,
+				A5E1A9111DF5A0C80070716C /* CCBXNodeLoaderCache.h in Headers */,
 				B665E3DC1AA80A6600DDB1C5 /* CCPUScriptTranslator.h in Headers */,
 				B6CAB49B1AF9AA1A00B9B856 /* HeapManager.h in Headers */,
 				15AE183619AAD2F700C27E9E /* CCObjLoader.h in Headers */,
@@ -12834,6 +12845,7 @@
 				507B3D7E1C31BDD30067B53E /* CCAnimation3D.h in Headers */,
 				507B3D7F1C31BDD30067B53E /* CCValue.h in Headers */,
 				507B3D801C31BDD30067B53E /* CCUIMultilineTextField.h in Headers */,
+				A5E1A9131DF5A0C80070716C /* CCBXNodeLoaderCache.h in Headers */,
 				507B3D811C31BDD30067B53E /* btConvexHull.h in Headers */,
 				507B3D821C31BDD30067B53E /* firePngData.h in Headers */,
 				507B3D831C31BDD30067B53E /* CCPrimitive.h in Headers */,
@@ -14846,6 +14858,7 @@
 				15AE1A4619AAD3D500C27E9E /* b2TimeOfImpact.h in Headers */,
 				B665E2291AA80A6500DDB1C5 /* CCPUBillboardChain.h in Headers */,
 				50ABBE601925AB6F00A911A9 /* CCEventListener.h in Headers */,
+				A5E1A9121DF5A0C80070716C /* CCBXNodeLoaderCache.h in Headers */,
 				4D76BE3D1A4AAF0A00102962 /* CCActionTimelineNode.h in Headers */,
 				B6CAB2CC1AF9AA1A00B9B856 /* btMinkowskiSumShape.h in Headers */,
 				B6CAB3561AF9AA1A00B9B856 /* gim_linear_math.h in Headers */,
@@ -15664,6 +15677,7 @@
 				826294331AAF001C00CB7CF7 /* HttpAsynConnection-apple.m in Sources */,
 				B6CAAFE61AF9A9E100B9B856 /* CCPhysics3DComponent.cpp in Sources */,
 				B68778F81A8CA82E00643ABF /* CCParticle3DAffector.cpp in Sources */,
+				A5E1A90E1DF5A0C80070716C /* CCBXNodeLoaderCache.cpp in Sources */,
 				15AE19A019AAD39600C27E9E /* TextAtlasReader.cpp in Sources */,
 				15AE1A2A19AAD3D500C27E9E /* b2Distance.cpp in Sources */,
 				5020A1B61D49912500E80C72 /* Json.c in Sources */,
@@ -16197,6 +16211,7 @@
 				507B3B221C31BDD30067B53E /* CCPUOnEventFlagObserverTranslator.cpp in Sources */,
 				507B3B231C31BDD30067B53E /* CCColliderDetector.cpp in Sources */,
 				507B3B241C31BDD30067B53E /* btGjkPairDetector.cpp in Sources */,
+				A5E1A9101DF5A0C80070716C /* CCBXNodeLoaderCache.cpp in Sources */,
 				507B3B251C31BDD30067B53E /* b2Math.cpp in Sources */,
 				507B3B261C31BDD30067B53E /* btManifoldResult.cpp in Sources */,
 				507B3B271C31BDD30067B53E /* CCPUParticleFollowerTranslator.cpp in Sources */,
@@ -16747,6 +16762,7 @@
 				15AE183D19AAD2F700C27E9E /* CCSkeleton3D.cpp in Sources */,
 				B6DD2FF21B04825B00E47F5F /* DetourTileCacheBuilder.cpp in Sources */,
 				503DD8E11926736A00CD74DD /* CCApplication-ios.mm in Sources */,
+				A5E1A90F1DF5A0C80070716C /* CCBXNodeLoaderCache.cpp in Sources */,
 				15AE1AAC19AAD40300C27E9E /* b2WorldCallbacks.cpp in Sources */,
 				B6CAB20C1AF9AA1A00B9B856 /* btQuantizedBvh.cpp in Sources */,
 				B6CAB3F21AF9AA1A00B9B856 /* btSimpleDynamicsWorld.cpp in Sources */,

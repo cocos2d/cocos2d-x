@@ -11,6 +11,7 @@
 
 #include "CCBXParser.h"
 #include "CCBXNodeLoaderLibrary.h"
+#include "CCBXNodeLoaderCache.h"
 #include "CCBXNodeLoader.h"
 #include "base/CCDirector.h"
 #include "CCBXReaderParams.h"
@@ -21,18 +22,18 @@ namespace spritebuilder {
     
 float CCBXReader::_resolutionScale = 1.0f;
 Map<std::string,CCBReaderParams*> CCBXReader::_paramsMap;
-    Map<std::string,CCBXReader*> CCBXReader::_cache;
+Map<std::string,CCBXReader*> CCBXReader::_cache;
 bool CCBXReader::_playSound = true;
     
-CCBXReader* CCBXReader::addToCache(const std::string &pCCBFileName, const std::string &rootPath, const NodeLoaderLibrary *library)
+CCBXReader* CCBXReader::addToCache(const std::string &pCCBFileName, const std::string &rootPath, const NodeLoaderLibrary *library, NodeLoaderCache *cache)
 {
-    CCBXReader* reader = CCBXReader::createFromFile(pCCBFileName, rootPath, library);
+    CCBXReader* reader = CCBXReader::createFromFile(pCCBFileName, rootPath, library, cache);
     if(reader)
         _cache.insert(pCCBFileName, reader);
     return reader;
 }
 
-bool CCBXReader::removeFromCache(const std::string &pCCBFileName, const std::string &rootPath, const NodeLoaderLibrary *library)
+bool CCBXReader::removeFromCache(const std::string &pCCBFileName)
 {
     auto it = _cache.find(pCCBFileName);
     if(it!=_cache.end())
@@ -41,6 +42,11 @@ bool CCBXReader::removeFromCache(const std::string &pCCBFileName, const std::str
         return true;
     }
     return false;
+}
+    
+void CCBXReader::clearCache()
+{
+    _cache.clear();
 }
     
 void CCBXReader::setPlaySound(bool value)
@@ -53,7 +59,7 @@ bool CCBXReader::getPlaySound()
     return _playSound;
 }
     
-CCBXReader* CCBXReader::createFromFile(const std::string &pCCBFileName, const std::string &rootPath, const NodeLoaderLibrary *library)
+CCBXReader* CCBXReader::createFromFile(const std::string &pCCBFileName, const std::string &rootPath, const NodeLoaderLibrary *library, NodeLoaderCache *cache)
 {
     auto it = _cache.find(pCCBFileName);
     if(it!=_cache.end())
@@ -63,7 +69,14 @@ CCBXReader* CCBXReader::createFromFile(const std::string &pCCBFileName, const st
     CCBReaderParams* params = createParams(rootPath);
     if(!params)
         return nullptr;
-    NodeLoader * loader = ParseCCBXFile(pCCBFileName, library?library:NodeLoaderLibrary::getDefault(), rootPath, params);
+    
+    if(!library)
+        library = NodeLoaderLibrary::getDefault();
+    
+    if(!cache)
+        cache = NodeLoaderCache::create();
+    
+    NodeLoader * loader = ParseCCBXFile(pCCBFileName, *library, *cache, rootPath, params);
     if(!loader)
         return nullptr;
     CCBXReader *ret = new CCBXReader(rootPath, params, loader);
@@ -71,12 +84,19 @@ CCBXReader* CCBXReader::createFromFile(const std::string &pCCBFileName, const st
     return ret;
 }
     
-CCBXReader* CCBXReader::createFromData(const Data &data, const std::string &rootPath, const NodeLoaderLibrary *library)
+CCBXReader* CCBXReader::createFromData(const Data &data, const std::string &rootPath, const NodeLoaderLibrary *library, NodeLoaderCache *cache)
 {
     CCBReaderParams* params = createParams(rootPath);
     if(!params)
         return nullptr;
-    NodeLoader * loader = ParseCCBXData(data, library?library:NodeLoaderLibrary::getDefault(), rootPath, params);
+    
+    if(!library)
+        library = NodeLoaderLibrary::getDefault();
+    
+    if(!cache)
+        cache = NodeLoaderCache::create();
+    
+    NodeLoader * loader = ParseCCBXData(data, *library, *cache, rootPath, params);
     if(!loader)
         return nullptr;
     CCBXReader *ret = new CCBXReader(rootPath, params, loader);

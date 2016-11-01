@@ -17,6 +17,7 @@ set(COCOS_SB_SRC
   editor-support/spritebuilder/CCBXNodeGradientLoader.cpp
   editor-support/spritebuilder/CCBXNodeLoader.cpp
   editor-support/spritebuilder/CCBXNodeLoaderLibrary.cpp
+  editor-support/spritebuilder/CCBXNodeLoaderCache.cpp
   editor-support/spritebuilder/CCBXParser.cpp
   editor-support/spritebuilder/CCBXParticleSystemQuadLoader.cpp
   editor-support/spritebuilder/CCBXProgressTimerLoader.cpp

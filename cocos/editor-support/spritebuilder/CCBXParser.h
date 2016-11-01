@@ -19,11 +19,12 @@ namespace spritebuilder {
     
     class NodeLoader;
     class NodeLoaderLibrary;
+    class NodeLoaderCache;
     class CCBSequence;
     class CCBReaderParams;
     
-    NodeLoader* ParseCCBXData(const Data &data, const NodeLoaderLibrary *library, const std::string &rootPath, const CCBReaderParams* params);
-    NodeLoader* ParseCCBXFile(const std::string &filename, const NodeLoaderLibrary *library, const std::string &rootPath, const CCBReaderParams* params);
+    NodeLoader* ParseCCBXData(const Data &data, const NodeLoaderLibrary &library, NodeLoaderCache &cache, const std::string &rootPath, const CCBReaderParams* params);
+    NodeLoader* ParseCCBXFile(const std::string &filename, const NodeLoaderLibrary &library, NodeLoaderCache &cache, const std::string &rootPath, const CCBReaderParams* params);
 }
 
 NS_CC_END

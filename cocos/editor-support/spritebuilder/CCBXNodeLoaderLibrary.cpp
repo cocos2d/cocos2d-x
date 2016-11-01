@@ -63,20 +63,18 @@ NodeLoaderLibrary *NodeLoaderLibrary::getDefault()
     
 NodeLoaderLibrary *NodeLoaderLibrary::copyDefault()
 {
-    if (!s_SharedNodeLoaderLibrary)
+    return getDefault()->copy();
+}
+    
+NodeLoaderLibrary *NodeLoaderLibrary::copy() const
+{
+    NodeLoaderLibrary *ret = new(std::nothrow) NodeLoaderLibrary();
+    if(ret)
     {
-        NodeLoaderLibrary *ret = new(std::nothrow) NodeLoaderLibrary();
         ret->autorelease();
-        ret->registerDefaultLoaders();
-        return ret;
+        ret->_loaders = _loaders;
     }
-    else
-    {
-        NodeLoaderLibrary *ret = new(std::nothrow) NodeLoaderLibrary(*s_SharedNodeLoaderLibrary);
-        ret->autorelease();
-        ret->registerDefaultLoaders();
-        return ret;
-    }
+    return ret;
 }
 
 NodeLoader *NodeLoaderLibrary::createNodeLoader(const std::string &name) const

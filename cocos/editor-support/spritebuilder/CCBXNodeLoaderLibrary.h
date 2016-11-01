@@ -29,6 +29,8 @@ public:
     static NodeLoaderLibrary *getDefault();
     static NodeLoaderLibrary *copyDefault();
     
+    NodeLoaderLibrary *copy() const;
+    
     NodeLoader *createNodeLoader(const std::string &name) const;
     void registerNodeLoader(const std::string &name, const NodeLoaderCreateFuntion &func);
     void removeNodeLoader(const std::string &name);
@@ -39,6 +41,7 @@ CC_CONSTRUCTOR_ACCESS:
 private:
     std::map<std::string, NodeLoaderCreateFuntion> _loaders;
     void registerDefaultLoaders();
+    CC_DISALLOW_COPY_AND_ASSIGN(NodeLoaderLibrary);
 };
     
 }

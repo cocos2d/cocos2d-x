@@ -2027,6 +2027,9 @@
     <ClCompile Include="..\editor-support\spritebuilder\CCBXNodeLoaderLibrary.cpp">
       <Filter>spritebuilder\Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\editor-support\spritebuilder\CCBXNodeLoaderCache.cpp">
+      <Filter>spritebuilder\Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="..\editor-support\spritebuilder\CCBXParser.cpp">
       <Filter>spritebuilder\Source Files</Filter>
     </ClCompile>
@@ -3951,6 +3954,9 @@
     </ClInclude>
     <ClInclude Include="..\vr\CCVRGenericRenderer.h">
       <Filter>vr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\editor-support\spritebuilder\CCBXNodeLoaderCache.h">
+      <Filter>spritebuilder\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

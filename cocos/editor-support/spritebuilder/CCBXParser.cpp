@@ -18,6 +18,7 @@
 #include "physics/CCPhysicsBody.h"
 #include "platform/CCFileUtils.h"
 #include "CCBXNodeLoaderLibrary.h"
+#include "CCBXNodeLoaderCache.h"
 #include "CCBXReaderParams.h"
 
 #define CCBX_MIN_VERSION 7
@@ -171,10 +172,10 @@ private:
 class InternalReader
 {
 public:
-    static  NodeLoader* parse(const Data &data, const NodeLoaderLibrary *library, const std::string &rootPath, const CCBReaderParams* params)
+    static  NodeLoader* parse(const Data &data, const NodeLoaderLibrary &library, NodeLoaderCache &cache, const std::string &rootPath, const CCBReaderParams* params)
     {
         InternalReader reader(data, rootPath, params);
-        return reader.parse(library);
+        return reader.parse(library, cache);
     }
 private:
     enum class FloatType {
@@ -238,7 +239,7 @@ private:
         return path;
     }
     
-    NodeLoader* parse(const NodeLoaderLibrary *library)
+    NodeLoader* parse(const NodeLoaderLibrary &library, NodeLoaderCache &cache)
     {
         if (! readHeader())
         {
@@ -260,7 +261,7 @@ private:
         
         //setAnimationManagers(am);
         
-        NodeLoader* loader = readNodeGraph(library);
+        NodeLoader* loader = readNodeGraph(library, cache);
         
         if(loader)
         {
@@ -402,7 +403,7 @@ private:
         /* Read version. */
         _version = readInt(false);
         if((_version > CCBX_MAX_VERSION)||(_version < CCBX_MIN_VERSION)) {
-            log("WARNING! Incompatible ccbx file version (file: %d reader min: %d reader max: %d)", _version, CCBX_MIN_VERSION, CCBX_MAX_VERSION);
+            CCLOG("WARNING! Incompatible ccbx file version (file: %d reader min: %d reader max: %d)", _version, CCBX_MIN_VERSION, CCBX_MAX_VERSION);
             return false;
         }
         
@@ -770,7 +771,7 @@ private:
         return ret;
     }
     
-    NodeLoader *parsePropTypeCCBFile(const NodeLoaderLibrary *library)
+    NodeLoader *parsePropTypeCCBFile(const NodeLoaderLibrary &library, NodeLoaderCache &cache)
     {
         std::string ccbFileName = _rootPath + readCachedString();
         
@@ -783,9 +784,14 @@ private:
         
         // Load sub file
         //std::string path = FileUtils::getInstance()->fullPathForFilename(ccbFileName.c_str());
-        
-        Data data = FileUtils::getInstance()->getDataFromFile(ccbFileName);
-        NodeLoader *ret = InternalReader::parse(data, library, _rootPath, _params);
+        NodeLoader *ret = cache.get(ccbFileName);
+        if(!ret)
+        {
+            Data data = FileUtils::getInstance()->getDataFromFile(ccbFileName);
+            ret = InternalReader::parse(data, library, cache, _rootPath, _params);
+            if(ret)
+                cache.add(ccbFileName, ret);
+        }
         
         
         /*reader->_bytes = dataPtr.getBytes();
@@ -865,7 +871,7 @@ private:
     }
 
     
-    void parseProperties(NodeLoader * loader, const NodeLoaderLibrary *library, const std::set<std::string> &animatedProperties)
+    void parseProperties(NodeLoader * loader, const NodeLoaderLibrary &library, NodeLoaderCache &cache, const std::set<std::string> &animatedProperties)
     {
         int numRegularProps = readInt(false);
         int numExturaProps = readInt(false);
@@ -1125,7 +1131,7 @@ private:
                 }
                 case PropertyType::CCB_FILE:
                 {
-                    NodeLoader * ccbNodeLoader = parsePropTypeCCBFile(library);
+                    NodeLoader * ccbNodeLoader = parsePropTypeCCBFile(library, cache);
                     loader->onHandlePropTypeCCBFile(propertyName, isExtraProp, ccbNodeLoader);
                     break;
                 }
@@ -1268,7 +1274,7 @@ private:
         return  keyframe;
     }
     
-    NodeLoader * readNodeGraph(const NodeLoaderLibrary *library)
+    NodeLoader * readNodeGraph(const NodeLoaderLibrary &library, NodeLoaderCache &cache)
     {
         /* Read class name. */
         std::string className = this->readCachedString();
@@ -1281,11 +1287,11 @@ private:
             memberVarAssignmentName = this->readCachedString();
         }
         
-        NodeLoader *ccNodeLoader = library->createNodeLoader(className);
+        NodeLoader *ccNodeLoader = library.createNodeLoader(className);
         
         if (! ccNodeLoader)
         {
-            log("no corresponding node loader for %s", className.c_str());
+            CCLOG("no corresponding node loader for %s", className.c_str());
             return nullptr;
         }
         
@@ -1343,7 +1349,7 @@ private:
         /*int uuid = */readInt(false);
         
         // Read properties
-        parseProperties(ccNodeLoader, library, animatedProps);
+        parseProperties(ccNodeLoader, library, cache, animatedProps);
         
         bool hasPhysicsBody = false;
         
@@ -1454,7 +1460,7 @@ private:
         int numChildren = this->readInt(false);
         for(int i = 0; i < numChildren; i++)
         {
-            NodeLoader * child = this->readNodeGraph(library);
+            NodeLoader * child = this->readNodeGraph(library, cache);
             ccNodeLoader->addChild(child);
         }
         
@@ -1472,14 +1478,22 @@ private:
     const CCBReaderParams *_params;
 };
     
-NodeLoader* ParseCCBXData(const Data &data, const NodeLoaderLibrary *library, const std::string &rootPath, const CCBReaderParams* params)
+NodeLoader* ParseCCBXData(const Data &data, const NodeLoaderLibrary &library, NodeLoaderCache &cache, const std::string &rootPath, const CCBReaderParams* params)
 {
-    return InternalReader::parse(data, library, rootPath, params);
+    return InternalReader::parse(data, library, cache, rootPath, params);
 }
-NodeLoader* ParseCCBXFile(const std::string &filename, const NodeLoaderLibrary *library, const std::string &rootPath, const CCBReaderParams* params)
+
+NodeLoader* ParseCCBXFile(const std::string &filename, const NodeLoaderLibrary &library, NodeLoaderCache &cache, const std::string &rootPath, const CCBReaderParams* params)
 {
-    Data data = FileUtils::getInstance()->getDataFromFile(filename);
-    return InternalReader::parse(data, library, rootPath, params);
+    NodeLoader* ret = cache.get(filename);
+    if(!ret)
+    {
+        Data data = FileUtils::getInstance()->getDataFromFile(filename);
+        ret = InternalReader::parse(data, library, cache, rootPath, params);
+        if(ret)
+            cache.add(filename, ret);
+    }
+    return ret;
 }
     
 }

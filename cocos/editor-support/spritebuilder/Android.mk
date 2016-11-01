@@ -18,6 +18,7 @@ CCBXNodeColorLoader.cpp \
 CCBXNodeGradientLoader.cpp \
 CCBXNodeLoader.cpp \
 CCBXNodeLoaderLibrary.cpp \
+CCBXNodeLoaderCache.cpp \
 CCBXParser.cpp \
 CCBXParticleSystemQuadLoader.cpp \
 CCBXProgressTimerLoader.cpp \
