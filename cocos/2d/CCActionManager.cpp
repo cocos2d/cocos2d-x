@@ -398,6 +398,32 @@ ssize_t ActionManager::getNumberOfRunningActionsInTarget(const Node *target) con
     return 0;
 }
 
+// FIXME: Passing "const O *" instead of "const O&" because HASH_FIND_IT requires the address of a pointer
+// and, it is not possible to get the address of a reference
+size_t ActionManager::getNumberOfRunningActionsInTargetByTag(const Node *target,
+                                                             int tag)
+{
+    CCASSERT(tag != Action::INVALID_TAG, "Invalid tag value!");
+
+    tHashElement *element = nullptr;
+    HASH_FIND_PTR(_targets, &target, element);
+
+    if(!element || !element->actions)
+        return 0;
+
+    int count = 0;
+    auto limit = element->actions->num;
+    for(int i = 0; i < limit; ++i)
+    {
+        auto action = (Action *)element->actions->arr[i];
+        if(action->getTag() == tag)
+            ++count;
+    }
+
+    return count;
+}
+
+
 // main loop
 void ActionManager::update(float dt)
 {
