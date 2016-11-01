@@ -1,6 +1,6 @@
 
 const char* ccCameraClearVert = STRINGIFY(
-                                          
+
 uniform float depth;
 
 attribute vec4 a_position;

@@ -17,7 +17,7 @@ void main(void)
 );
 
 const char* cc3D_Particle_color_frag = STRINGIFY(
-                                               
+
 \n#ifdef GL_ES\n
 varying mediump vec4 ColorOut;
 \n#else\n
