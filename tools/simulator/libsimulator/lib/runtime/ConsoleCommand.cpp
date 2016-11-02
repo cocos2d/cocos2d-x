@@ -25,7 +25,7 @@ THE SOFTWARE.
 #include "Runtime.h"
 #include "ConfigParser.h"
 #include "ConsoleCommand.h"
-#include "json/document.h"
+#include "json/document-wrapper.h"
 #include "json/filestream.h"
 #include "json/stringbuffer.h"
 

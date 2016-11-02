@@ -11,7 +11,7 @@
 #include "cocos2d.h"
 
 // encode / decode json
-#include "json/document.h"
+#include "json/document-wrapper.h"
 #include "json/filestream.h"
 #include "json/stringbuffer.h"
 #include "json/writer.h"

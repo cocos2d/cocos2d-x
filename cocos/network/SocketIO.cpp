@@ -37,7 +37,7 @@
 #include "network/HttpClient.h"
 
 #include "json/rapidjson.h"
-#include "json/document.h"
+#include "json/document-wrapper.h"
 #include "json/stringbuffer.h"
 #include "json/writer.h"
 
