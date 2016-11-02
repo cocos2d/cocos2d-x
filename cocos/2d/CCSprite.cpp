@@ -429,7 +429,7 @@ void Sprite::updatePoly()
     if (_numberOfSlices == 1) {
         setTextureCoords(_rect, &_quad);
         const Rect copyRect(0, 0, _rect.size.width * _strechFactor.x, _rect.size.height * _strechFactor.y);
-        setVertexCoords(copyRect, _rect.size, &_quad);
+        setVertexCoords(copyRect, &_quad);
         _polyInfo.setQuad(&_quad);
     } else {
         // in theory it can support 3 slices as well, but let's stick to 9 only
@@ -535,7 +535,7 @@ void Sprite::updatePoly()
         for (int i=0; i<_numberOfSlices; ++i) {
             int texIdx = idx[i];
             setTextureCoords(texRects[texIdx], &_quads[i]);
-            setVertexCoords(verticesRects[i], _rect.size, &_quads[i]);
+            setVertexCoords(verticesRects[i], &_quads[i]);
         }
         _polyInfo.setQuads(_quads, _numberOfSlices);
     }
@@ -704,7 +704,7 @@ void Sprite::setTextureCoords(const Rect& rectInPoints, V3F_C4B_T2F_Quad* outQua
     }
 }
 
-void Sprite::setVertexCoords(const Rect& rect, const Size& imageSize, V3F_C4B_T2F_Quad* outQuad)
+void Sprite::setVertexCoords(const Rect& rect, V3F_C4B_T2F_Quad* outQuad)
 {
     // container size is the Size that contains the "unsliced" sprite
 
@@ -721,8 +721,8 @@ void Sprite::setVertexCoords(const Rect& rect, const Size& imageSize, V3F_C4B_T2
         relativeOffsetY = -relativeOffsetY;
     }
 
-    _offsetPosition.x = relativeOffsetX + (_originalContentSize.width - imageSize.width) / 2;
-    _offsetPosition.y = relativeOffsetY + (_originalContentSize.height - imageSize.height) / 2;
+    _offsetPosition.x = relativeOffsetX + (_originalContentSize.width - _rect.size.width) / 2;
+    _offsetPosition.y = relativeOffsetY + (_originalContentSize.height - _rect.size.height) / 2;
 
     // rendering using batch node
     if (_batchNode)
@@ -1156,6 +1156,8 @@ void Sprite::setContentSize(const Size& size)
 void Sprite::updateStretchFactor()
 {
     const Size size = getContentSize();
+
+    // adjustedSize = the new _rect size 
     const float adjustedWidth = size.width - (_originalContentSize.width - _rect.size.width);
     const float adjustedHeight = size.height - (_originalContentSize.height - _rect.size.height);
 
