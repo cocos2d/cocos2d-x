@@ -164,6 +164,9 @@ public:
     //LabelLetter doesn't need to draw directly.
     void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override
     {
+        CC_UNUSED_PARAM(renderer);
+        CC_UNUSED_PARAM(transform);
+        CC_UNUSED_PARAM(flags);
     }
     
 private:
@@ -320,6 +323,8 @@ bool Label::setCharMap(const std::string& plistFile)
 bool Label::initWithTTF(const std::string& text, const std::string& fontFilePath, float fontSize,
                         const Size& dimensions, TextHAlignment hAlignment, TextVAlignment vAlignment)
 {
+    CC_UNUSED_PARAM(hAlignment);
+    CC_UNUSED_PARAM(vAlignment);
     if (FileUtils::getInstance()->isFileExist(fontFilePath))
     {
         TTFConfig ttfConfig(fontFilePath, fontSize, GlyphCollection::DYNAMIC);
@@ -335,6 +340,7 @@ bool Label::initWithTTF(const std::string& text, const std::string& fontFilePath
 
 bool Label::initWithTTF(const TTFConfig& ttfConfig, const std::string& text, TextHAlignment hAlignment, int maxLineWidth)
 {
+    CC_UNUSED_PARAM(hAlignment);
     if (FileUtils::getInstance()->isFileExist(ttfConfig.fontFilePath) && setTTFConfig(ttfConfig))
     {
         setMaxLineWidth(maxLineWidth);
@@ -1091,6 +1097,7 @@ void Label::enableOutline(const Color4B& outlineColor,int outlineSize /* = -1 */
 
 void Label::enableShadow(const Color4B& shadowColor /* = Color4B::BLACK */,const Size &offset /* = Size(2 ,-2)*/, int blurRadius /* = 0 */)
 {
+    CC_UNUSED_PARAM(blurRadius);
     _shadowEnabled = true;
     _shadowDirty = true;
 
@@ -1511,6 +1518,7 @@ void Label::onDrawShadow(GLProgram* glProgram, const Color4F& shadowColor)
 
 void Label::onDraw(const Mat4& transform, bool transformUpdated)
 {
+    CC_UNUSED_PARAM(transformUpdated);
     auto glprogram = getGLProgram();
     glprogram->use();
     GL::blendFunc(_blendFunc.src, _blendFunc.dst);

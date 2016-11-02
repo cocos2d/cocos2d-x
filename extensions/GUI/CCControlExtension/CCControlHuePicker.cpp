@@ -165,6 +165,7 @@ bool ControlHuePicker::checkSliderPosition(Vec2 location)
 
 bool ControlHuePicker::onTouchBegan(Touch* touch, Event* event)
 {
+    CC_UNUSED_PARAM(event);
     if (!isEnabled() || !isVisible())
     {
         return false;
@@ -180,6 +181,7 @@ bool ControlHuePicker::onTouchBegan(Touch* touch, Event* event)
 
 void ControlHuePicker::onTouchMoved(Touch* touch, Event* event)
 {
+    CC_UNUSED_PARAM(event);
     // Get the touch location
     Vec2 touchLocation=getTouchLocation(touch);
 

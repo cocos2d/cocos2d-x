@@ -118,6 +118,7 @@ void PULineAffector::preUpdateAffector(float deltaTime)
 
 void PULineAffector::updatePUAffector( PUParticle3D *particle, float deltaTime )
 {
+    CC_UNUSED_PARAM(deltaTime);
     //_first = true;
     //for (auto iter : _particleSystem->getParticles())
     {
@@ -149,11 +150,14 @@ void PULineAffector::updatePUAffector( PUParticle3D *particle, float deltaTime )
 //-----------------------------------------------------------------------
 void PULineAffector::postUpdateAffector(float deltaTime)
 {
+    CC_UNUSED_PARAM(deltaTime);
     _update = false;
 }
 
 void PULineAffector::firstParticleUpdate( PUParticle3D *particle, float deltaTime )
 {
+    CC_UNUSED_PARAM(particle);
+    CC_UNUSED_PARAM(deltaTime);
     _first = true;
 }
 

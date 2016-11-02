@@ -30,6 +30,8 @@ NS_CC_BEGIN
 //-----------------------------------------------------------------------
 void PUDoStopSystemEventHandler::handle (PUParticleSystem3D* particleSystem, PUParticle3D* particle, float timeElapsed)
 {
+    CC_UNUSED_PARAM(particle);
+    CC_UNUSED_PARAM(timeElapsed);
     ParticleSystem3D *parent = particleSystem->getParentParticleSystem();
     if (parent)
         parent->stopParticleSystem();

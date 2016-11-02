@@ -652,32 +652,32 @@ public:
     /**
      * Reflect the retain relationship to script scope
      */
-    virtual void retainScriptObject(Ref* owner, Ref* target) {};
+    virtual void retainScriptObject(Ref* owner, Ref* target) { CC_UNUSED_PARAM(owner); CC_UNUSED_PARAM(target); };
     
     /**
      * Add the script object to root object
      */
-    virtual void rootScriptObject(Ref* target) {};
+    virtual void rootScriptObject(Ref* target) { CC_UNUSED_PARAM(target); };
     
     /**
      * Reflect the release relationship to script scope
      */
-    virtual void releaseScriptObject(Ref* owner, Ref* target) {};
+    virtual void releaseScriptObject(Ref* owner, Ref* target) { CC_UNUSED_PARAM(owner); CC_UNUSED_PARAM(target); };
     
     /**
      * Remove the script object from root object
      */
-    virtual void unrootScriptObject(Ref* target) {};
+    virtual void unrootScriptObject(Ref* target) { CC_UNUSED_PARAM(target); };
     
     /**
      * Release all children native refs for the given node in script scope
      */
-    virtual void releaseAllChildrenRecursive(Node* node) {};
+    virtual void releaseAllChildrenRecursive(Node* node) { CC_UNUSED_PARAM(node); };
     
     /**
      * Release all native refs for the given owner in script scope
      */
-    virtual void releaseAllNativeRefs(cocos2d::Ref* owner) {};
+    virtual void releaseAllNativeRefs(cocos2d::Ref* owner) { CC_UNUSED_PARAM(owner); };
 
     /** 
      * Remove script object,The specific meaning should refer to the ScriptType.
@@ -686,7 +686,7 @@ public:
      * @lua NA
      * @js NA
      */
-    virtual void removeScriptObjectByObject(Ref* obj) {};
+    virtual void removeScriptObjectByObject(Ref* obj) { CC_UNUSED_PARAM(obj); };
     
     /** 
      * Remove script function handler, only LuaEngine class need to implement this function.
@@ -694,7 +694,7 @@ public:
      * @lua NA
      * @js NA
      */
-    virtual void removeScriptHandler(int handler) {};
+    virtual void removeScriptHandler(int handler) { CC_UNUSED_PARAM(handler); };
     
     /** 
      * Reallocate script function handler, only LuaEngine class need to implement this function.
@@ -702,7 +702,7 @@ public:
      * @lua NA
      * @js NA
      */
-    virtual int reallocateScriptHandler(int handler) { return 0;}
+    virtual int reallocateScriptHandler(int handler) { CC_UNUSED_PARAM(handler); return 0;}
     
     /**
      * Execute script code contained in the given string.
@@ -792,12 +792,12 @@ public:
     /** Root a Reference.
      It tells the Garbage Collector that the associated Scripting object should not be collected
      */
-    virtual void rootObject(Ref* obj) {}
+    virtual void rootObject(Ref* obj) { CC_UNUSED_PARAM(obj); }
 
     /** Unroot a Reference.
      It tells the Garbage Collector that the associated Scripting object can be collected
      */
-    virtual void unrootObject(Ref* obj) {}
+    virtual void unrootObject(Ref* obj) { CC_UNUSED_PARAM(obj); }
 
     /** Triggers the garbage collector */
     virtual void garbageCollect() {}

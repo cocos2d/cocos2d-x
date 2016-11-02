@@ -48,6 +48,7 @@ PUOnPositionObserver::PUOnPositionObserver(void) :
 //-----------------------------------------------------------------------
 bool PUOnPositionObserver::observe (PUParticle3D* particle, float timeElapsed)
 {
+    CC_UNUSED_PARAM(timeElapsed);
     if (!particle)
         return false;
 

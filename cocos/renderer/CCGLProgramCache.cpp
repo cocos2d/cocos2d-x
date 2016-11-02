@@ -128,6 +128,7 @@ bool GLProgramCache::init()
     loadDefaultGLPrograms();
     
     auto listener = EventListenerCustom::create(Configuration::CONFIG_FILE_LOADED, [this](EventCustom* event){
+        CC_UNUSED_PARAM(event);
         reloadDefaultGLProgramsRelativeToLights();
     });
     

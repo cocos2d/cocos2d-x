@@ -71,6 +71,7 @@ void ComController::onRemove()
 
 void ComController::update(float delta)
 {
+    CC_UNUSED_PARAM(delta);
 }
 
 ComController* ComController::create()

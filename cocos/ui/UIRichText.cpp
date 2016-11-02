@@ -77,6 +77,7 @@ public:
 
     void onTouchesEnded(const std::vector<Touch*>& touches, Event *event)
     {
+        CC_UNUSED_PARAM(event);
         for (const auto& touch: touches)
         {
             // FIXME: Node::getBoundBox() doesn't return it in local coordinates... so create one manually.
@@ -376,6 +377,7 @@ MyXMLVisitor::MyXMLVisitor(RichText* richText)
     });
     
     MyXMLVisitor::setTagDescription("b", true, [](const ValueMap& tagAttrValueMap) {
+        CC_UNUSED_PARAM(tagAttrValueMap);
         // no supported attributes
         ValueMap attrValueMap;
         attrValueMap[RichText::KEY_TEXT_BOLD] = true;
@@ -383,6 +385,7 @@ MyXMLVisitor::MyXMLVisitor(RichText* richText)
     });
     
     MyXMLVisitor::setTagDescription("i", true, [](const ValueMap& tagAttrValueMap) {
+        CC_UNUSED_PARAM(tagAttrValueMap);
         // no supported attributes
         ValueMap attrValueMap;
         attrValueMap[RichText::KEY_TEXT_ITALIC] = true;
@@ -390,6 +393,7 @@ MyXMLVisitor::MyXMLVisitor(RichText* richText)
     });
     
     MyXMLVisitor::setTagDescription("del", true, [](const ValueMap& tagAttrValueMap) {
+        CC_UNUSED_PARAM(tagAttrValueMap);
         // no supported attributes
         ValueMap attrValueMap;
         attrValueMap[RichText::KEY_TEXT_LINE] = RichText::VALUE_TEXT_LINE_DEL;
@@ -397,6 +401,7 @@ MyXMLVisitor::MyXMLVisitor(RichText* richText)
     });
     
     MyXMLVisitor::setTagDescription("u", true, [](const ValueMap& tagAttrValueMap) {
+        CC_UNUSED_PARAM(tagAttrValueMap);
         // no supported attributes
         ValueMap attrValueMap;
         attrValueMap[RichText::KEY_TEXT_LINE] = RichText::VALUE_TEXT_LINE_UNDER;
@@ -404,12 +409,14 @@ MyXMLVisitor::MyXMLVisitor(RichText* richText)
     });
     
     MyXMLVisitor::setTagDescription("small", true, [](const ValueMap& tagAttrValueMap) {
+        CC_UNUSED_PARAM(tagAttrValueMap);
         ValueMap attrValueMap;
         attrValueMap[RichText::KEY_FONT_SMALL] = true;
         return make_pair(attrValueMap, nullptr);
     });
     
     MyXMLVisitor::setTagDescription("big", true, [](const ValueMap& tagAttrValueMap) {
+        CC_UNUSED_PARAM(tagAttrValueMap);
         ValueMap attrValueMap;
         attrValueMap[RichText::KEY_FONT_BIG] = true;
         return make_pair(attrValueMap, nullptr);
@@ -452,6 +459,7 @@ MyXMLVisitor::MyXMLVisitor(RichText* richText)
     });
     
     MyXMLVisitor::setTagDescription("br", false, [](const ValueMap& tagAttrValueMap)  {
+        CC_UNUSED_PARAM(tagAttrValueMap);
         RichElementNewLine* richElement = RichElementNewLine::create(0, Color3B::WHITE, 255);
         return make_pair(ValueMap(), richElement);
     });
@@ -621,6 +629,7 @@ std::tuple<bool, Color3B> MyXMLVisitor::getGlow() const
 
 void MyXMLVisitor::startElement(void *ctx, const char *elementName, const char **atts)
 {
+    CC_UNUSED_PARAM(ctx);
     auto it = _tagTables.find(elementName);
     if (it != _tagTables.end()) {
         auto tagBehavior = it->second;
@@ -745,6 +754,7 @@ void MyXMLVisitor::startElement(void *ctx, const char *elementName, const char *
 
 void MyXMLVisitor::endElement(void *ctx, const char *elementName)
 {
+    CC_UNUSED_PARAM(ctx);
     auto it = _tagTables.find(elementName);
     if (it != _tagTables.end()) {
         auto tagBehavior = it->second;
@@ -756,6 +766,7 @@ void MyXMLVisitor::endElement(void *ctx, const char *elementName)
 
 void MyXMLVisitor::textHandler(void *ctx, const char *str, size_t len)
 {
+    CC_UNUSED_PARAM(ctx);
     std::string text(str, len);
     auto color = getColor();
     auto face = getFace();
@@ -1682,6 +1693,8 @@ void RichText::handleTextRenderer(const std::string& text, const std::string& fo
     
 void RichText::handleImageRenderer(const std::string& filePath, const Color3B &color, GLubyte opacity, int width, int height, const std::string& url)
 {
+    CC_UNUSED_PARAM(color);
+    CC_UNUSED_PARAM(opacity);
     Sprite* imageRenderer = Sprite::create(filePath);
     if (imageRenderer)
     {

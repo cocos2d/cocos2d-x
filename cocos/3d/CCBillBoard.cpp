@@ -224,6 +224,7 @@ bool BillBoard::calculateBillbaordTransform()
 
 void BillBoard::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
+    CC_UNUSED_PARAM(transform);
     //FIXME: frustum culling here
     flags |= Node::FLAGS_RENDER_AS_3D;
     _trianglesCommand.init(0, _texture->getName(), getGLProgramState(), _blendFunc, _polyInfo.triangles, _modelViewTransform, flags);

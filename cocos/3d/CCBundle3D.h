@@ -113,14 +113,14 @@ protected:
     bool loadMaterialsBinary(MaterialDatas& materialdatas);
     bool loadMaterialsBinary_0_1(MaterialDatas& materialdatas);
     bool loadMaterialsBinary_0_2(MaterialDatas& materialdatas);
-    bool loadMeshDataJson(MeshData* meshdata){return true;}
-    bool loadMeshDataJson_0_1(MeshData* meshdata){return true;}
-    bool loadMeshDataJson_0_2(MeshData* meshdata){return true;}
+    bool loadMeshDataJson(MeshData* meshdata){CC_UNUSED_PARAM(meshdata); return true;}
+    bool loadMeshDataJson_0_1(MeshData* meshdata){CC_UNUSED_PARAM(meshdata); return true;}
+    bool loadMeshDataJson_0_2(MeshData* meshdata){CC_UNUSED_PARAM(meshdata); return true;}
     bool loadSkinDataJson(SkinData* skindata);
     bool loadSkinDataBinary(SkinData* skindata);
-    bool loadMaterialDataJson(MaterialData* materialdata){return true;}
-    bool loadMaterialDataJson_0_1(MaterialData* materialdata){return true;}
-    bool loadMaterialDataJson_0_2(MaterialData* materialdata){return true;}
+    bool loadMaterialDataJson(MaterialData* materialdata){CC_UNUSED_PARAM(materialdata); return true;}
+    bool loadMaterialDataJson_0_1(MaterialData* materialdata){CC_UNUSED_PARAM(materialdata); return true;}
+    bool loadMaterialDataJson_0_2(MaterialData* materialdata){CC_UNUSED_PARAM(materialdata); return true;}
     bool loadAnimationDataJson(const std::string& id,Animation3DData* animationdata);
     bool loadAnimationDataBinary(const std::string& id,Animation3DData* animationdata);
 

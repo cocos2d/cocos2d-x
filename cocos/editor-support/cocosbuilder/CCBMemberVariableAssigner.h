@@ -49,7 +49,7 @@ class CC_DLL CCBMemberVariableAssigner {
          *  @param value                The value of the property.
          *  @return Whether the assignment was successful.
          */
-        virtual bool onAssignCCBCustomProperty(cocos2d::Ref* target, const char* memberVariableName, const cocos2d::Value& value) { return false; };
+        virtual bool onAssignCCBCustomProperty(cocos2d::Ref* target, const char* memberVariableName, const cocos2d::Value& value) { CC_UNUSED_PARAM(target); CC_UNUSED_PARAM(memberVariableName); CC_UNUSED_PARAM(value); return false; };
 };
 
 }

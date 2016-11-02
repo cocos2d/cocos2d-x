@@ -30,6 +30,7 @@ NS_CC_BEGIN
 //-----------------------------------------------------------------------
 bool PUOnEmissionObserver::observe (PUParticle3D* particle, float timeElapsed)
 {
+    CC_UNUSED_PARAM(timeElapsed);
     if (!particle)
         return false;
 

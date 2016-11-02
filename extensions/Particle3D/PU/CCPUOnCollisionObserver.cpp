@@ -31,6 +31,7 @@ NS_CC_BEGIN
 
 bool PUOnCollisionObserver::observe( PUParticle3D* particle, float timeElapsed )
 {
+    CC_UNUSED_PARAM(timeElapsed);
     return particle->hasEventFlags(PUParticle3D::PEF_COLLIDED);
 }
 

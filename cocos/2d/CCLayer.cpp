@@ -585,6 +585,7 @@ void LayerColor::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 
 void LayerColor::onDraw(const Mat4& transform, uint32_t flags)
 {
+    CC_UNUSED_PARAM(flags);
     getGLProgram()->use();
     getGLProgram()->setUniformsForBuiltins(transform);
     

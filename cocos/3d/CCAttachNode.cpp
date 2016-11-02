@@ -76,6 +76,7 @@ const Mat4& AttachNode::getNodeToParentTransform() const
 
 void AttachNode::visit(Renderer *renderer, const Mat4& parentTransform, uint32_t parentFlags)
 {
+    CC_UNUSED_PARAM(parentFlags);
     Node::visit(renderer, parentTransform, Node::FLAGS_DIRTY_MASK);
 }
 NS_CC_END

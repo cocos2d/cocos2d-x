@@ -46,6 +46,7 @@ PUOnVelocityObserver::PUOnVelocityObserver(void) :
 //-----------------------------------------------------------------------
 bool PUOnVelocityObserver::observe (PUParticle3D* particle, float timeElapsed)
 {
+    CC_UNUSED_PARAM(timeElapsed);
     if (!particle)
         return false;
 

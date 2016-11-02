@@ -1223,6 +1223,8 @@ public:
      */
     virtual void translate(PUScriptCompiler* compiler, PUAbstractNode *node)
     {
+        CC_UNUSED_PARAM(compiler);
+        CC_UNUSED_PARAM(node);
         // No own implementation
     }
     
@@ -1230,6 +1232,8 @@ public:
      */
     virtual bool translateChildProperty(PUScriptCompiler* compiler, PUAbstractNode *node)
     {
+        CC_UNUSED_PARAM(compiler);
+        CC_UNUSED_PARAM(node);
         // No own implementation
         return false;
     }
@@ -1238,6 +1242,8 @@ public:
      */
     virtual bool translateChildObject(PUScriptCompiler* compiler, PUAbstractNode *node)
     {
+        CC_UNUSED_PARAM(compiler);
+        CC_UNUSED_PARAM(node);
         // No own implementation
         return false;
     }

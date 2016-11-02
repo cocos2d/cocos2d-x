@@ -430,6 +430,7 @@ Layout::ClippingType Layout::getClippingType()const
     
 void Layout::setStencilClippingSize(const Size &size)
 {
+    CC_UNUSED_PARAM(size);
     if (_clippingEnabled && _clippingType == ClippingType::STENCIL)
     {
         Vec2 rect[4];

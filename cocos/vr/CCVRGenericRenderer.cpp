@@ -61,7 +61,7 @@ VRGenericRenderer::~VRGenericRenderer()
 
 void VRGenericRenderer::setup(GLView* glview)
 {
-//    CC_UNUSED(glview);
+    CC_UNUSED_PARAM(glview);
 
     // set origin to 0,0 in case origin is not 0,0
     auto vp = Camera::getDefaultViewport();

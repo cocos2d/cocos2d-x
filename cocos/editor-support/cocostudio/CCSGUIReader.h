@@ -155,16 +155,30 @@ public:
     
     //added for binary parsing
     virtual cocos2d::ui::Widget* createWidgetFromBinary(CocoLoader* cocoLoader,
-                                                        stExpCocoNode*	pCocoNode,
-                                                        const char* fileName)override{return nullptr;}
+                                                        stExpCocoNode* pCocoNode,
+                                                        const char* fileName)override {
+        CC_UNUSED_PARAM(cocoLoader);
+        CC_UNUSED_PARAM(pCocoNode);
+        CC_UNUSED_PARAM(fileName);
+        return nullptr;
+    }
     
     virtual cocos2d::ui::Widget* widgetFromBinary(CocoLoader* cocoLoader,
-                                                  stExpCocoNode*	pCocoNode) override {return nullptr;}
+                                                  stExpCocoNode*	pCocoNode) override {
+        CC_UNUSED_PARAM(cocoLoader);
+        CC_UNUSED_PARAM(pCocoNode);
+        return nullptr;
+    }
     
     virtual void setPropsForAllWidgetFromBinary(WidgetReaderProtocol* reader,
                                                 cocos2d::ui::Widget* widget,
                                                 CocoLoader* cocoLoader,
-                                                stExpCocoNode*	pCocoNode) override {}
+                                                stExpCocoNode*	pCocoNode) override {
+        CC_UNUSED_PARAM(reader);
+        CC_UNUSED_PARAM(widget);
+        CC_UNUSED_PARAM(cocoLoader);
+        CC_UNUSED_PARAM(pCocoNode);
+    }
 
     virtual void setPropsForWidgetFromJsonDictionary(cocos2d::ui::Widget* widget,const rapidjson::Value& options);
     
@@ -218,6 +232,10 @@ public:
                                                       cocos2d::ui::Widget* widget,
                                                       CocoLoader* cocoLoader,
                                                       stExpCocoNode*	pCocoNode) {
+        CC_UNUSED_PARAM(classType);
+        CC_UNUSED_PARAM(widget);
+        CC_UNUSED_PARAM(cocoLoader);
+        CC_UNUSED_PARAM(pCocoNode);
         //TODO: custom property
     }
     

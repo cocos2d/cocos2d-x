@@ -97,6 +97,9 @@ public:
     virtual bool onVisit(TextFieldTTF * sender,Renderer *renderer, const Mat4 &transform, uint32_t flags)
     {
         CC_UNUSED_PARAM(sender);
+        CC_UNUSED_PARAM(renderer);
+        CC_UNUSED_PARAM(transform);
+        CC_UNUSED_PARAM(flags);
         return false;
     }
 };

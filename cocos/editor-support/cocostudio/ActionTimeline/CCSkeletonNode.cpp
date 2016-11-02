@@ -265,6 +265,7 @@ void SkeletonNode::batchDrawAllSubBones(const cocos2d::Mat4 &transform)
 
 void SkeletonNode::onDraw(const cocos2d::Mat4 &transform, uint32_t flags)
 {
+    CC_UNUSED_PARAM(flags);
     getGLProgram()->use();
     getGLProgram()->setUniformsForBuiltins(transform);
 

@@ -231,6 +231,7 @@ Mesh* Mesh::create(const std::vector<float>& positions, const std::vector<float>
 
 Mesh* Mesh::create(const std::vector<float>& vertices, int perVertexSizeInFloat, const IndexArray& indices, const std::vector<MeshVertexAttrib>& attribs)
 {
+    CC_UNUSED_PARAM(perVertexSizeInFloat);
     MeshData meshdata;
     meshdata.attribs = attribs;
     meshdata.vertex = vertices;
@@ -374,6 +375,7 @@ Material* Mesh::getMaterial() const
 
 void Mesh::draw(Renderer* renderer, float globalZOrder, const Mat4& transform, uint32_t flags, unsigned int lightMask, const Vec4& color, bool forceDepthWrite)
 {
+    CC_UNUSED_PARAM(forceDepthWrite);
     if (! isVisible())
         return;
 

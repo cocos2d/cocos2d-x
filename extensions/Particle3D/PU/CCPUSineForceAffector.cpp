@@ -91,6 +91,7 @@ void PUSineForceAffector::setFrequencyMax(const float frequencyMax)
 
 void PUSineForceAffector::updatePUAffector( PUParticle3D *particle, float deltaTime )
 {
+    CC_UNUSED_PARAM(deltaTime);
     //for (auto iter : _particleSystem->getParticles())
     {
         //PUParticle3D *particle = iter;

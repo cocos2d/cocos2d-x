@@ -80,6 +80,7 @@ void PUParticle3DInterParticleCollider::unPrepare()
 //-----------------------------------------------------------------------
 bool PUParticle3DInterParticleCollider::validateAndExecuteSphereCollision (PUParticle3D* particle1, PUParticle3D* particle2, float timeElapsed)
 {
+    CC_UNUSED_PARAM(timeElapsed);
     PUParticle3D* vp1 = static_cast<PUParticle3D*>(particle1);
     PUParticle3D* vp2 = static_cast<PUParticle3D*>(particle2);
     if ((vp1->position - vp2->position).length() < _adjustment * (vp1->radius + vp2->radius))
@@ -128,6 +129,8 @@ bool PUParticle3DInterParticleCollider::validateAndExecuteSphereCollision (PUPar
 
 void PUParticle3DInterParticleCollider::updatePUAffector( PUParticle3D *particle, float deltaTime )
 {
+    CC_UNUSED_PARAM(particle);
+    CC_UNUSED_PARAM(deltaTime);
     //CCASSERT(0, "nonsupport yet");
     //for (auto iter : _particleSystem->getParticles())
     //{

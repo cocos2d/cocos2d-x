@@ -50,6 +50,7 @@ void PUOnCountObserver::notifyStart (void)
 //-----------------------------------------------------------------------
 bool PUOnCountObserver::observe (PUParticle3D* particle, float timeElapsed)
 {
+    CC_UNUSED_PARAM(timeElapsed);
     if (!particle)
         return false;
 

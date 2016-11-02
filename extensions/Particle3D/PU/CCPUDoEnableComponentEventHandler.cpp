@@ -39,6 +39,8 @@ PUDoEnableComponentEventHandler::PUDoEnableComponentEventHandler(void) :
 //-----------------------------------------------------------------------
 void PUDoEnableComponentEventHandler::handle (PUParticleSystem3D* particleSystem, PUParticle3D* particle, float timeElapsed)
 {
+    CC_UNUSED_PARAM(particle);
+    CC_UNUSED_PARAM(timeElapsed);
     /** Search for the component.
     */
     //ParticleTechnique* technique = 0;

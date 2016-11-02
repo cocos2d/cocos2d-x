@@ -48,11 +48,13 @@ bool BaseTriggerCondition::detect()
 
 void BaseTriggerCondition::serialize(const rapidjson::Value &val)
 {
+    CC_UNUSED_PARAM(val);
 }
     
 void BaseTriggerCondition::serialize(cocostudio::CocoLoader *cocoLoader, cocostudio::stExpCocoNode *cocoNode)
 {
-    
+    CC_UNUSED_PARAM(cocoLoader);
+    CC_UNUSED_PARAM(cocoNode);
 }
 
 void BaseTriggerCondition::removeAll()
@@ -79,10 +81,13 @@ void BaseTriggerAction::done()
 
 void BaseTriggerAction::serialize(const rapidjson::Value &val)
 {
+    CC_UNUSED_PARAM(val);
 }
 
 void BaseTriggerAction::serialize(cocostudio::CocoLoader *cocoLoader, cocostudio::stExpCocoNode *cocoNode)
 {
+    CC_UNUSED_PARAM(cocoLoader);
+    CC_UNUSED_PARAM(cocoNode);
 }
 
 void BaseTriggerAction::removeAll()
@@ -230,6 +235,7 @@ void TriggerObj::serialize(const rapidjson::Value &val)
         std::string custom_event_name(buf);
 
         EventListenerCustom* listener = EventListenerCustom::create(custom_event_name, [=](EventCustom* evt){
+            CC_UNUSED_PARAM(evt);
             if (detect())
             {
                 done();
@@ -321,6 +327,7 @@ void TriggerObj::serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stEx
                 std::string custom_event_name(buf);
                 
                 EventListenerCustom* listener = EventListenerCustom::create(custom_event_name, [=](EventCustom* evt){
+                    CC_UNUSED_PARAM(evt);
                     if (detect())
                     {
                         done();

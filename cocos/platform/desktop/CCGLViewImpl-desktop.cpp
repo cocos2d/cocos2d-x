@@ -724,6 +724,8 @@ void GLViewImpl::onGLFWError(int errorID, const char* errorDesc)
 
 void GLViewImpl::onGLFWMouseCallBack(GLFWwindow* window, int button, int action, int modify)
 {
+    CC_UNUSED_PARAM(window);
+    CC_UNUSED_PARAM(modify);
     if(GLFW_MOUSE_BUTTON_LEFT == button)
     {
         if(GLFW_PRESS == action)
@@ -813,6 +815,7 @@ void GLViewImpl::onGLFWMouseMoveCallBack(GLFWwindow* window, double x, double y)
 
 void GLViewImpl::onGLFWMouseScrollCallback(GLFWwindow* window, double x, double y)
 {
+    CC_UNUSED_PARAM(window);
     EventMouse event(EventMouse::MouseEventType::MOUSE_SCROLL);
     //Because OpenGL and cocos2d-x uses different Y axis, we need to convert the coordinate here
     float cursorX = (_mouseX - _viewPortRect.origin.x) / _scaleX;
@@ -824,6 +827,9 @@ void GLViewImpl::onGLFWMouseScrollCallback(GLFWwindow* window, double x, double 
 
 void GLViewImpl::onGLFWKeyCallback(GLFWwindow *window, int key, int scancode, int action, int mods)
 {
+    CC_UNUSED_PARAM(window);
+    CC_UNUSED_PARAM(scancode);
+    CC_UNUSED_PARAM(mods);
     if (GLFW_REPEAT != action)
     {
         EventKeyboard event(g_keyCodeMap[key], GLFW_PRESS == action);
@@ -856,6 +862,7 @@ void GLViewImpl::onGLFWKeyCallback(GLFWwindow *window, int key, int scancode, in
 
 void GLViewImpl::onGLFWCharCallback(GLFWwindow *window, unsigned int character)
 {
+    CC_UNUSED_PARAM(window);
     char16_t wcharString[2] = { (char16_t) character, 0 };
     std::string utf8String;
 
@@ -881,6 +888,9 @@ void GLViewImpl::onGLFWCharCallback(GLFWwindow *window, unsigned int character)
 
 void GLViewImpl::onGLFWWindowPosCallback(GLFWwindow *windows, int x, int y)
 {
+    CC_UNUSED_PARAM(windows);
+    CC_UNUSED_PARAM(x);
+    CC_UNUSED_PARAM(y);
     Director::getInstance()->setViewport();
 }
 
@@ -915,6 +925,7 @@ void GLViewImpl::onGLFWframebuffersize(GLFWwindow* window, int w, int h)
 
 void GLViewImpl::onGLFWWindowSizeFunCallback(GLFWwindow *window, int width, int height)
 {
+    CC_UNUSED_PARAM(window);
     if (width && height && _resolutionPolicy != ResolutionPolicy::UNKNOWN)
     {
         Size baseDesignSize = _designResolutionSize;
@@ -931,6 +942,7 @@ void GLViewImpl::onGLFWWindowSizeFunCallback(GLFWwindow *window, int width, int 
 
 void GLViewImpl::onGLFWWindowIconifyCallback(GLFWwindow* window, int iconified)
 {
+    CC_UNUSED_PARAM(window);
     if (iconified == GL_TRUE)
     {
         Application::getInstance()->applicationDidEnterBackground();
@@ -943,6 +955,7 @@ void GLViewImpl::onGLFWWindowIconifyCallback(GLFWwindow* window, int iconified)
 
 void GLViewImpl::onGLFWWindowFocusCallback(GLFWwindow* window, int focused)
 {
+    CC_UNUSED_PARAM(window);
     if (focused == GL_TRUE)
     {
         Director::getInstance()->getEventDispatcher()->dispatchCustomEvent(GLViewImpl::EVENT_WINDOW_FOCUSED, nullptr);

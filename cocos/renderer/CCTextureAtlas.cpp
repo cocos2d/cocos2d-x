@@ -212,7 +212,8 @@ bool TextureAtlas::initWithTexture(Texture2D *texture, ssize_t capacity)
 }
 
 void TextureAtlas::listenRendererRecreated(EventCustom* event)
-{  
+{
+    CC_UNUSED_PARAM(event);
     if (Configuration::getInstance()->supportsShareableVAO())
     {
         setupVBOandVAO();

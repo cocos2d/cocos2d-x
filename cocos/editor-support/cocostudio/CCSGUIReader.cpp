@@ -1198,14 +1198,18 @@ void WidgetPropertiesReader0250::setPropsForLabelBMFontFromJsonDictionary(Widget
     
 void WidgetPropertiesReader0250::setPropsForAllWidgetFromJsonDictionary(WidgetReaderProtocol *reader, Widget *widget, const rapidjson::Value &options)
 {
-    
+    CC_UNUSED_PARAM(reader);
+    CC_UNUSED_PARAM(widget);
+    CC_UNUSED_PARAM(options);
 }
 
 void WidgetPropertiesReader0250::setPropsForAllCustomWidgetFromJsonDictionary(const std::string &classType,
                                                                               cocos2d::ui::Widget *widget,
                                                                               const rapidjson::Value &customOptions)
 {
-    
+    CC_UNUSED_PARAM(classType);
+    CC_UNUSED_PARAM(widget);
+    CC_UNUSED_PARAM(customOptions);
 }
 
 

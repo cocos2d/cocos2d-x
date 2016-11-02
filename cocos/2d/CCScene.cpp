@@ -163,6 +163,7 @@ std::string Scene::getDescription() const
 
 void Scene::onProjectionChanged(EventCustom* event)
 {
+    CC_UNUSED_PARAM(event);
     if (_defaultCamera)
     {
         _defaultCamera->initDefault();

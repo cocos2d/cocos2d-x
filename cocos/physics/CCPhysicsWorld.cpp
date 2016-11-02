@@ -96,6 +96,7 @@ bool PhysicsWorldCallback::continues = true;
 
 cpBool PhysicsWorldCallback::collisionBeginCallbackFunc(cpArbiter *arb, struct cpSpace *space, PhysicsWorld *world)
 {
+    CC_UNUSED_PARAM(space);
     CP_ARBITER_GET_SHAPES(arb, a, b);
     
     PhysicsShape *shapeA = static_cast<PhysicsShape*>(cpShapeGetUserData(a));
@@ -111,16 +112,19 @@ cpBool PhysicsWorldCallback::collisionBeginCallbackFunc(cpArbiter *arb, struct c
 
 cpBool PhysicsWorldCallback::collisionPreSolveCallbackFunc(cpArbiter *arb, cpSpace *space, PhysicsWorld *world)
 {
+    CC_UNUSED_PARAM(space);
     return world->collisionPreSolveCallback(*static_cast<PhysicsContact*>(cpArbiterGetUserData(arb)));
 }
 
 void PhysicsWorldCallback::collisionPostSolveCallbackFunc(cpArbiter *arb, cpSpace *space, PhysicsWorld *world)
 {
+    CC_UNUSED_PARAM(space);
     world->collisionPostSolveCallback(*static_cast<PhysicsContact*>(cpArbiterGetUserData(arb)));
 }
 
 void PhysicsWorldCallback::collisionSeparateCallbackFunc(cpArbiter *arb, cpSpace *space, PhysicsWorld *world)
 {
+    CC_UNUSED_PARAM(space);
     PhysicsContact* contact = static_cast<PhysicsContact*>(cpArbiterGetUserData(arb));
     
     world->collisionSeparateCallback(*contact);
@@ -166,6 +170,9 @@ void PhysicsWorldCallback::queryRectCallbackFunc(cpShape *shape, RectQueryCallba
 
 void PhysicsWorldCallback::getShapesAtPointFunc(cpShape *shape, cpVect point, cpFloat distance, cpVect gradient, Vector<PhysicsShape*>* arr)
 {
+    CC_UNUSED_PARAM(point);
+    CC_UNUSED_PARAM(distance);
+    CC_UNUSED_PARAM(gradient);
     PhysicsShape *physicsShape = static_cast<PhysicsShape*>(cpShapeGetUserData(shape));
     CC_ASSERT(physicsShape != nullptr);
     arr->pushBack(physicsShape);
@@ -173,6 +180,9 @@ void PhysicsWorldCallback::getShapesAtPointFunc(cpShape *shape, cpVect point, cp
 
 void PhysicsWorldCallback::queryPointFunc(cpShape *shape, cpVect point, cpFloat distance, cpVect gradient, PointQueryCallbackInfo *info)
 {
+    CC_UNUSED_PARAM(point);
+    CC_UNUSED_PARAM(distance);
+    CC_UNUSED_PARAM(gradient);
     PhysicsShape *physicsShape = static_cast<PhysicsShape*>(cpShapeGetUserData(shape));
     CC_ASSERT(physicsShape != nullptr);
     PhysicsWorldCallback::continues = info->func(*info->world, *physicsShape, info->data);
@@ -190,6 +200,7 @@ static inline cpSpaceDebugColor LAColor(float l, float a){
 
 static void DrawCircle(cpVect p, cpFloat a, cpFloat r, cpSpaceDebugColor outline, cpSpaceDebugColor fill, cpDataPointer data)
 {
+    CC_UNUSED_PARAM(a);
     const Color4F fillColor(fill.r, fill.g, fill.b, fill.a);
     const Color4F outlineColor(outline.r, outline.g, outline.b, outline.a);
     DrawNode* drawNode = static_cast<DrawNode*>(data);
@@ -210,6 +221,7 @@ static void DrawCircle(cpVect p, cpFloat a, cpFloat r, cpSpaceDebugColor outline
 
 static void DrawFatSegment(cpVect a, cpVect b, cpFloat r, cpSpaceDebugColor outline, cpSpaceDebugColor fill, cpDataPointer data)
 {
+    CC_UNUSED_PARAM(fill);
     const Color4F outlineColor(outline.r, outline.g, outline.b, outline.a);
     DrawNode* drawNode = static_cast<DrawNode*>(data);
     drawNode->drawSegment(PhysicsHelper::cpv2point(a),
@@ -224,6 +236,7 @@ static void DrawSegment(cpVect a, cpVect b, cpSpaceDebugColor color, cpDataPoint
 
 static void DrawPolygon(int count, const cpVect *verts, cpFloat r, cpSpaceDebugColor outline, cpSpaceDebugColor fill, cpDataPointer data)
 {
+    CC_UNUSED_PARAM(r);
     const Color4F fillColor(fill.r, fill.g, fill.b, fill.a);
     const Color4F outlineColor(outline.r, outline.g, outline.b, outline.a);
     DrawNode* drawNode = static_cast<DrawNode*>(data);
@@ -239,6 +252,7 @@ static void DrawPolygon(int count, const cpVect *verts, cpFloat r, cpSpaceDebugC
 
 static void DrawDot(cpFloat size, cpVect pos, cpSpaceDebugColor color, cpDataPointer data)
 {
+    CC_UNUSED_PARAM(size);
     const Color4F dotColor(color.r, color.g, color.b, color.a);
     DrawNode* drawNode = static_cast<DrawNode*>(data);
     drawNode->drawDot(PhysicsHelper::cpv2point(pos), 2, dotColor);
@@ -246,6 +260,7 @@ static void DrawDot(cpFloat size, cpVect pos, cpSpaceDebugColor color, cpDataPoi
 
 static cpSpaceDebugColor ColorForShape(cpShape *shape, cpDataPointer data)
 {
+    CC_UNUSED_PARAM(data);
     if(cpShapeGetSensor(shape)){
         return LAColor(1.0f, 0.3f);
     } else {

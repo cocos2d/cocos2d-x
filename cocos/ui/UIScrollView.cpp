@@ -863,6 +863,7 @@ void ScrollView::gatherTouchMove(const Vec2& delta)
 
 void ScrollView::handlePressLogic(Touch *touch)
 {
+    CC_UNUSED_PARAM(touch);
     _bePressed = true;
     _autoScrolling = false;
     

@@ -37,12 +37,16 @@ void PUOnClearObserver::notifyStart (void)
 //-----------------------------------------------------------------------
 bool PUOnClearObserver::observe (PUParticle3D* particle, float timeElapsed)
 {
+    CC_UNUSED_PARAM(particle);
+    CC_UNUSED_PARAM(timeElapsed);
     // This function always returns false, but is never called (but it must be implemented).
     return false;
 }
 //-----------------------------------------------------------------------
 void PUOnClearObserver::updateObserver(PUParticle3D* particle, float timeElapsed, bool firstParticle)
 {
+    CC_UNUSED_PARAM(particle);
+    CC_UNUSED_PARAM(timeElapsed);
     // Override the _processParticle() function, because we don't observe individual particles.
     if (firstParticle)
     {

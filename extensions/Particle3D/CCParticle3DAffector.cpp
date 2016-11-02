@@ -41,7 +41,8 @@ Particle3DAffector::~Particle3DAffector()
 
 void Particle3DAffector::updateAffector(Particle3D* particle, float deltaTime)
 {
-    
+    CC_UNUSED_PARAM(particle);
+    CC_UNUSED_PARAM(deltaTime);
 }
 
 NS_CC_END

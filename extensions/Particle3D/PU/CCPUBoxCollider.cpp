@@ -196,6 +196,7 @@ bool PUBoxCollider::isSmallestValue(float value, const Vec3& particlePosition)
 
 void PUBoxCollider::updatePUAffector( PUParticle3D *particle, float deltaTime )
 {
+    CC_UNUSED_PARAM(deltaTime);
     //for (auto iter : _particleSystem->getParticles())
     {
         //PUParticle3D *particle = iter;

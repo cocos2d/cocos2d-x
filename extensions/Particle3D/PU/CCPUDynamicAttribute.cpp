@@ -70,6 +70,7 @@ void PUDynamicAttributeFixed::setValue (float value)
 //-----------------------------------------------------------------------
 float PUDynamicAttributeFixed::getValue (float x)
 {
+    CC_UNUSED_PARAM(x);
     return _value;
 }
 
@@ -134,6 +135,7 @@ void PUDynamicAttributeRandom::setMinMax (float min, float max)
 //-----------------------------------------------------------------------
 float PUDynamicAttributeRandom::getValue (float x)
 {
+    CC_UNUSED_PARAM(x);
     return cocos2d::random(_min, _max);
 }
 
@@ -354,6 +356,7 @@ PUDynamicAttributeOscillate::PUDynamicAttributeOscillate (void) :
 //-----------------------------------------------------------------------
 PUDynamicAttributeOscillate::PUDynamicAttributeOscillate (const PUDynamicAttributeOscillate& dynamicAttributeOscillate)
 {
+    CC_UNUSED_PARAM(dynamicAttributeOscillate);
     _type = PUDynamicAttribute::DAT_OSCILLATE;
 }
 //-----------------------------------------------------------------------

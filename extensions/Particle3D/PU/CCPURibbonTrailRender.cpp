@@ -120,11 +120,15 @@ PURibbonTrailRender::~PURibbonTrailRender()
 
 void PURibbonTrailRender::particleEmitted( PUParticleSystem3D* particleSystem, PUParticle3D* particle )
 {
+    CC_UNUSED_PARAM(particleSystem);
+    CC_UNUSED_PARAM(particle);
     // Assigning visual data already done in _updateRenderQueue()
 }
 
 void PURibbonTrailRender::particleExpired( PUParticleSystem3D* particleSystem, PUParticle3D* particle )
 {
+    CC_UNUSED_PARAM(particleSystem);
+    CC_UNUSED_PARAM(particle);
     if (particle->visualData)
     {
         PURibbonTrailVisualData* ribbonTrailRendererVisualData = static_cast<PURibbonTrailVisualData*>(particle->visualData);
@@ -301,6 +305,8 @@ void PURibbonTrailRender::unPrepare()
 
 void PURibbonTrailRender::updateRender( PUParticle3D *particle, float deltaTime, bool firstParticle )
 {
+    CC_UNUSED_PARAM(particle);
+    CC_UNUSED_PARAM(firstParticle);
     if (_trail)
         _trail->update(deltaTime);
 }

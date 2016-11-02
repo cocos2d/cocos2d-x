@@ -317,6 +317,8 @@ bool Controller::isConnected() const
 
 void Controller::receiveExternalKeyEvent(int externalKeyCode,bool receive)
 {
+    CC_UNUSED_PARAM(externalKeyCode);
+    CC_UNUSED_PARAM(receive);
 }
 
 NS_CC_END

@@ -65,7 +65,7 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual void tableCellHighlight(TableView* table, TableViewCell* cell){};
+    virtual void tableCellHighlight(TableView* table, TableViewCell* cell) { CC_UNUSED_PARAM(table); CC_UNUSED_PARAM(cell); };
 
     /**
      * Delegate to respond a table cell release event
@@ -75,7 +75,7 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual void tableCellUnhighlight(TableView* table, TableViewCell* cell){};
+    virtual void tableCellUnhighlight(TableView* table, TableViewCell* cell) { CC_UNUSED_PARAM(table); CC_UNUSED_PARAM(cell); };
 
     /**
      * Delegate called when the cell is about to be recycled. Immediately
@@ -87,7 +87,7 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual void tableCellWillRecycle(TableView* table, TableViewCell* cell){};
+    virtual void tableCellWillRecycle(TableView* table, TableViewCell* cell) { CC_UNUSED_PARAM(table); CC_UNUSED_PARAM(cell); };
 
 };
 
@@ -111,6 +111,7 @@ public:
      * @return size of a cell at given index
      */
     virtual Size tableCellSizeForIndex(TableView *table, ssize_t idx) {
+        CC_UNUSED_PARAM(idx);
         return cellSizeForTable(table);
     };
     /**
@@ -120,6 +121,7 @@ public:
      * @return cell size
      */
     virtual Size cellSizeForTable(TableView *table) {
+        CC_UNUSED_PARAM(table);
         return Size::ZERO;
     };
     /**
@@ -272,7 +274,7 @@ public:
 
     // Overrides
     virtual void scrollViewDidScroll(ScrollView* view) override;
-    virtual void scrollViewDidZoom(ScrollView* view)  override {}
+    virtual void scrollViewDidZoom(ScrollView* view)  override { CC_UNUSED_PARAM(view); }
     virtual bool onTouchBegan(Touch *pTouch, Event *pEvent) override;
     virtual void onTouchMoved(Touch *pTouch, Event *pEvent) override;
     virtual void onTouchEnded(Touch *pTouch, Event *pEvent) override;

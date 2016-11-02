@@ -450,6 +450,7 @@ void TableView::_updateCellPositions()
 
 void TableView::scrollViewDidScroll(ScrollView* view)
 {
+    CC_UNUSED_PARAM(view);
     long countOfItems = _dataSource->numberOfCellsInTableView(this);
     if (0 == countOfItems)
     {

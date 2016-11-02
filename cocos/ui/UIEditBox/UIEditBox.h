@@ -58,21 +58,21 @@ namespace ui {
          * This method is called when an edit box gains focus after keyboard is shown.
          * @param editBox The edit box object that generated the event.
          */
-        virtual void editBoxEditingDidBegin(EditBox* editBox) {};
+        virtual void editBoxEditingDidBegin(EditBox* editBox) { CC_UNUSED_PARAM(editBox); };
             
             
         /**
          * This method is called when an edit box loses focus after keyboard is hidden.
          * @param editBox The edit box object that generated the event.
          */
-        virtual void editBoxEditingDidEnd(EditBox* editBox) {};
+        virtual void editBoxEditingDidEnd(EditBox* editBox) { CC_UNUSED_PARAM(editBox); };
             
         /**
          * This method is called when the edit box text was changed.
          * @param editBox The edit box object that generated the event.
          * @param text The new text.
          */
-        virtual void editBoxTextChanged(EditBox* editBox, const std::string& text) {};
+        virtual void editBoxTextChanged(EditBox* editBox, const std::string& text) { CC_UNUSED_PARAM(editBox); CC_UNUSED_PARAM(text); };
             
         /**
          * This method is called when the return button was pressed or the outside area of keyboard was touched.

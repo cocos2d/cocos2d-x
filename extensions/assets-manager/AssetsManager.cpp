@@ -70,6 +70,9 @@ AssetsManager::AssetsManager(const char* packageUrl/* =nullptr */, const char* v
                                       int errorCodeInternal,
                                       const std::string& errorStr)
     {
+        CC_UNUSED_PARAM(task);
+        CC_UNUSED_PARAM(errorCodeInternal);
+        CC_UNUSED_PARAM(errorStr);
         _isDownloading = false;
         
         if (nullptr == _delegate)
@@ -86,6 +89,7 @@ AssetsManager::AssetsManager(const char* packageUrl/* =nullptr */, const char* v
                                          int64_t totalBytesReceived,
                                          int64_t totalBytesExpected)
     {
+        CC_UNUSED_PARAM(bytesReceived);
         if(FileUtils::getInstance()->getFileExtension(task.requestURL) != ".zip")
         {
             // get version progress don't report
@@ -106,6 +110,7 @@ AssetsManager::AssetsManager(const char* packageUrl/* =nullptr */, const char* v
     _downloader->onDataTaskSuccess = [this](const DownloadTask& task,
                                             std::vector<unsigned char>& data)
     {
+        CC_UNUSED_PARAM(task);
         // store version info to member _version
         const char *p = (char *)data.data();
         _version.insert(_version.end(), p, p + data.size());
@@ -152,6 +157,7 @@ AssetsManager::AssetsManager(const char* packageUrl/* =nullptr */, const char* v
     // after download package, do uncompress operation
     _downloader->onFileTaskSuccess = [this](const DownloadTask& task)
     {
+        CC_UNUSED_PARAM(task);
         downloadAndUncompress();
     };
 }

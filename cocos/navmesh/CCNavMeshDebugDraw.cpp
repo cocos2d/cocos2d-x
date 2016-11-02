@@ -55,7 +55,12 @@ NavMeshDebugDraw::NavMeshDebugDraw()
 
 void NavMeshDebugDraw::vertex(const float x, const float y, const float z, unsigned int color, const float u, const float v)
 {
-
+    CC_UNUSED_PARAM(x);
+    CC_UNUSED_PARAM(y);
+    CC_UNUSED_PARAM(z);
+    CC_UNUSED_PARAM(color);
+    CC_UNUSED_PARAM(u);
+    CC_UNUSED_PARAM(v);
 }
 
 void NavMeshDebugDraw::vertex(const float* pos, unsigned int color, const float* uv)
@@ -136,6 +141,7 @@ GLenum NavMeshDebugDraw::getPrimitiveType(duDebugDrawPrimitives prim)
 
 void NavMeshDebugDraw::drawImplement(const cocos2d::Mat4& transform, uint32_t flags)
 {
+    CC_UNUSED_PARAM(flags);
     _program->use();
     _program->setUniformsForBuiltins(transform);
 

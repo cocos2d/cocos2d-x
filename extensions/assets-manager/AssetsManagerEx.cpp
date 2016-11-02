@@ -87,6 +87,7 @@ AssetsManagerEx::AssetsManagerEx(const std::string& manifestUrl, const std::stri
                                          int64_t totalBytesReceived,
                                          int64_t totalBytesExpected)
     {
+        CC_UNUSED_PARAM(bytesReceived);
         this->onProgress(totalBytesExpected, totalBytesReceived, task.requestURL, task.identifier);
     };
     _downloader->onFileTaskSuccess = [this](const network::DownloadTask& task)
@@ -180,6 +181,7 @@ void AssetsManagerEx::prepareLocalManifest()
 
 void AssetsManagerEx::loadLocalManifest(const std::string& manifestUrl)
 {
+    CC_UNUSED_PARAM(manifestUrl);
     Manifest *cachedManifest = nullptr;
     // Find the cached manifest file
     if (_fileUtils->isFileExist(_cacheManifestPath))
@@ -873,6 +875,7 @@ void AssetsManagerEx::onError(const network::DownloadTask& task,
 
 void AssetsManagerEx::onProgress(double total, double downloaded, const std::string &url, const std::string &customId)
 {
+    CC_UNUSED_PARAM(url);
     if (customId == VERSION_ID || customId == MANIFEST_ID)
     {
         _percent = 100 * downloaded / total;
@@ -925,6 +928,7 @@ void AssetsManagerEx::onProgress(double total, double downloaded, const std::str
 
 void AssetsManagerEx::onSuccess(const std::string &srcUrl, const std::string &storagePath, const std::string &customId)
 {
+    CC_UNUSED_PARAM(srcUrl);
     if (customId == VERSION_ID)
     {
         _updateState = State::VERSION_LOADED;

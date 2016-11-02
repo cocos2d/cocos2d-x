@@ -78,6 +78,7 @@ Widget::FocusNavigationController::~FocusNavigationController()
 
 void Widget::FocusNavigationController::onKeypadKeyPressed(EventKeyboard::KeyCode  keyCode, Event *event)
 {
+    CC_UNUSED_PARAM(event);
     if (_enableFocusNavigation && _firstFocusedWidget)
     {
         if (keyCode == EventKeyboard::KeyCode::KEY_DPAD_DOWN)
@@ -772,6 +773,7 @@ bool Widget::isSwallowTouches()const
 
 bool Widget::onTouchBegan(Touch *touch, Event *unusedEvent)
 {
+    CC_UNUSED_PARAM(unusedEvent);
     _hitted = false;
     if (isVisible() && isEnabled() && isAncestorsEnabled() && isAncestorsVisible(this) )
     {
@@ -816,6 +818,7 @@ void Widget::propagateTouchEvent(cocos2d::ui::Widget::TouchEventType event, coco
 
 void Widget::onTouchMoved(Touch *touch, Event *unusedEvent)
 {
+    CC_UNUSED_PARAM(unusedEvent);
     _touchMovePosition = touch->getLocation();
 
     setHighlighted(hitTest(_touchMovePosition, _hittedByCamera, nullptr));
@@ -833,6 +836,7 @@ void Widget::onTouchMoved(Touch *touch, Event *unusedEvent)
 
 void Widget::onTouchEnded(Touch *touch, Event *unusedEvent)
 {
+    CC_UNUSED_PARAM(unusedEvent);
     _touchEndPosition = touch->getLocation();
 
     /*
@@ -858,6 +862,8 @@ void Widget::onTouchEnded(Touch *touch, Event *unusedEvent)
 
 void Widget::onTouchCancelled(Touch *touch, Event *unusedEvent)
 {
+    CC_UNUSED_PARAM(touch);
+    CC_UNUSED_PARAM(unusedEvent);
     setHighlighted(false);
     cancelUpEvent();
 }
@@ -1215,7 +1221,7 @@ GLProgramState* Widget::getGrayGLProgramState(Texture2D* texture)const
 
 void Widget::copySpecialProperties(Widget* model)
 {
-
+    CC_UNUSED_PARAM(model);
 }
 
 void Widget::copyProperties(Widget *widget)

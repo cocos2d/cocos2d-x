@@ -381,6 +381,7 @@ public:
     ///this method is mainly for expert/internal use only.
     virtual void addOverlappingObjectInternal(btBroadphaseProxy* otherProxy, btBroadphaseProxy* thisProxy = nullptr) override
     {
+        CC_UNUSED_PARAM(thisProxy);
         btCollisionObject* otherObject = (btCollisionObject*)otherProxy->m_clientObject;
         btAssert(otherObject);
         ///if this linearSearch becomes too slow (too many overlapping objects) we should add a more appropriate data structure
@@ -397,6 +398,8 @@ public:
     ///this method is mainly for expert/internal use only.
     virtual void removeOverlappingObjectInternal(btBroadphaseProxy* otherProxy, btDispatcher* dispatcher, btBroadphaseProxy* thisProxy = nullptr) override
     {
+        CC_UNUSED_PARAM(dispatcher);
+        CC_UNUSED_PARAM(thisProxy);
         btCollisionObject* otherObject = (btCollisionObject*)otherProxy->m_clientObject;
         btAssert(otherObject);
         int index = m_overlappingObjects.findLinearSearch(otherObject);

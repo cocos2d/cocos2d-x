@@ -36,11 +36,15 @@ PUOnClearObserverTranslator::PUOnClearObserverTranslator()
 //-------------------------------------------------------------------------
 bool PUOnClearObserverTranslator::translateChildProperty( PUScriptCompiler* compiler, PUAbstractNode *node )
 {
+    CC_UNUSED_PARAM(compiler);
+    CC_UNUSED_PARAM(node);
     return false;
 }
 
 bool PUOnClearObserverTranslator::translateChildObject( PUScriptCompiler* compiler, PUAbstractNode *node )
 {
+    CC_UNUSED_PARAM(compiler);
+    CC_UNUSED_PARAM(node);
     // No objects
     return false;
 }

@@ -51,6 +51,7 @@ void PUFlockCenteringAffector::updatePUAffector( PUParticle3D *particle, float d
 
 void PUFlockCenteringAffector::preUpdateAffector( float deltaTime )
 {
+    CC_UNUSED_PARAM(deltaTime);
     if (_count != 0)
     {
         // Calculate the average of the previous update

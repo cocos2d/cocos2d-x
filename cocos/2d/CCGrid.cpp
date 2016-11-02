@@ -233,6 +233,7 @@ void GridBase::beforeDraw(void)
 
 void GridBase::afterDraw(cocos2d::Node *target)
 {
+    CC_UNUSED_PARAM(target);
     _grabber->afterRender(_texture);
 
     // restore projection

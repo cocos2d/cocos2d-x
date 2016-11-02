@@ -257,6 +257,7 @@ void TextureCache::loadImage()
 
 void TextureCache::addImageAsyncCallBack(float dt)
 {
+    CC_UNUSED_PARAM(dt);
     Texture2D *texture = nullptr;
     AsyncStruct *asyncStruct = nullptr;
     while (true)

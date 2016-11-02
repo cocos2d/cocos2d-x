@@ -130,7 +130,7 @@ protected:
     * @js NA
     * @lua NA
     */
-    virtual void controlKey(EventKeyboard::KeyCode keyCode) {}
+    virtual void controlKey(EventKeyboard::KeyCode keyCode) {CC_UNUSED_PARAM(keyCode);}
 
     /**
     @brief    Called by IMEDispatcher for text stored in delegate.

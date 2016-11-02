@@ -68,6 +68,7 @@ void PUParticleFollower::setMinDistance(float minDistance)
 
 void PUParticleFollower::updatePUAffector( PUParticle3D *particle, float deltaTime )
 {
+    CC_UNUSED_PARAM(deltaTime);
     //_first = true;
     //for (auto iter : _particleSystem->getParticles())
     {
@@ -93,6 +94,8 @@ void PUParticleFollower::updatePUAffector( PUParticle3D *particle, float deltaTi
 
 void PUParticleFollower::firstParticleUpdate( PUParticle3D *particle, float deltaTime )
 {
+    CC_UNUSED_PARAM(particle);
+    CC_UNUSED_PARAM(deltaTime);
     _first = true;
 }
 

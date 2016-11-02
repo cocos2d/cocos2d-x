@@ -321,6 +321,7 @@ void DrawNode::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 
 void DrawNode::onDraw(const Mat4 &transform, uint32_t flags)
 {
+    CC_UNUSED_PARAM(flags);
     getGLProgramState()->apply(transform);
     
     GL::blendFunc(_blendFunc.src, _blendFunc.dst);
@@ -363,6 +364,7 @@ void DrawNode::onDraw(const Mat4 &transform, uint32_t flags)
 
 void DrawNode::onDrawGLLine(const Mat4 &transform, uint32_t flags)
 {
+    CC_UNUSED_PARAM(flags);
     auto glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_LENGTH_TEXTURE_COLOR);
     glProgram->use();
     glProgram->setUniformsForBuiltins(transform);
@@ -407,6 +409,7 @@ void DrawNode::onDrawGLLine(const Mat4 &transform, uint32_t flags)
 
 void DrawNode::onDrawGLPoint(const Mat4 &transform, uint32_t flags)
 {
+    CC_UNUSED_PARAM(flags);
     auto glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_COLOR_TEXASPOINTSIZE);
     glProgram->use();
     glProgram->setUniformsForBuiltins(transform);

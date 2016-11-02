@@ -173,6 +173,9 @@ MeshInfo::MeshInfo (const std::string& meshName,
     const Vec3& scale) : 
     mDistribution(distribution)
 {
+    CC_UNUSED_PARAM(meshName);
+    CC_UNUSED_PARAM(orientation);
+    CC_UNUSED_PARAM(scale);
     //Ogre::MeshPtr mesh = Ogre::MeshManager::getSingleton().load(meshName, Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
     //getMeshInformation(mesh, Vec3::ZERO, orientation, scale);
 }

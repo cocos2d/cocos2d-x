@@ -333,6 +333,7 @@ bool Bundle3D::loadObj(MeshDatas& meshdatas, MaterialDatas& materialdatas, NodeD
 
 bool Bundle3D::loadSkinData(const std::string& id, SkinData* skindata)
 {
+    CC_UNUSED_PARAM(id);
     skindata->resetData();
 
     if (_isBinary)

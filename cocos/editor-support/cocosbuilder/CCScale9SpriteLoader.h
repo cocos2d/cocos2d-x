@@ -29,6 +29,8 @@ protected:
      * @lua NA
      */
     virtual cocos2d::ui::Scale9Sprite * createNode(cocos2d::Node * pParent, cocosbuilder::CCBReader * ccbReader) {
+        CC_UNUSED_PARAM(pParent);
+        CC_UNUSED_PARAM(ccbReader);
         cocos2d::ui::Scale9Sprite* pNode = cocos2d::ui::Scale9Sprite::create();
         
         pNode->setAnchorPoint(cocos2d::Vec2::ZERO);

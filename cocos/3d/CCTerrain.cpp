@@ -128,6 +128,7 @@ void Terrain::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, 
 
 void Terrain::onDraw(const Mat4 &transform, uint32_t flags)
 {
+    CC_UNUSED_PARAM(flags);
     auto modelMatrix = getNodeToWorldTransform();
     if(memcmp(&modelMatrix,&_terrainModelMatrix,sizeof(Mat4))!=0)
     {
@@ -981,6 +982,7 @@ void Terrain::Chunk::bindAndDraw()
 
 void Terrain::Chunk::generate(int imgWidth, int imageHei, int m, int n, const unsigned char * data)
 {
+    CC_UNUSED_PARAM(data);
     _posY = m;
     _posX = n;
     switch (_terrain->_crackFixedType)

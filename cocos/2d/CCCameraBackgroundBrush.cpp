@@ -123,6 +123,7 @@ bool CameraBackgroundDepthBrush::init()
 
 void CameraBackgroundDepthBrush::drawBackground(Camera* camera)
 {
+    CC_UNUSED_PARAM(camera);
     GLboolean oldDepthTest;
     GLint oldDepthFunc;
     GLboolean oldDepthMask;

@@ -73,7 +73,7 @@ namespace cocos2d {
             /**
              * check the editbox's position, update it when needed
              */
-            virtual void updatePosition(float dt){};
+            virtual void updatePosition(float dt) { CC_UNUSED_PARAM(dt); };
             /**
              * @js NA
              * @lua NA

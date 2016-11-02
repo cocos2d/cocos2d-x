@@ -59,6 +59,8 @@ bool PUOnEventFlagObserverTranslator::translateChildProperty( PUScriptCompiler* 
 
 bool PUOnEventFlagObserverTranslator::translateChildObject( PUScriptCompiler* compiler, PUAbstractNode *node )
 {
+    CC_UNUSED_PARAM(compiler);
+    CC_UNUSED_PARAM(node);
     // No objects
     return false;
 }

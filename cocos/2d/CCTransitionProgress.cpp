@@ -124,6 +124,7 @@ void TransitionProgress::setupTransition()
 
 ProgressTimer* TransitionProgress::progressTimerNodeWithRenderTexture(RenderTexture* texture)
 {
+    CC_UNUSED_PARAM(texture);
     CCASSERT(false, "override me - abstract class");
     return nullptr;
 }

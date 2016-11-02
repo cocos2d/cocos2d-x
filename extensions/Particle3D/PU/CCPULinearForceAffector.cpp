@@ -39,6 +39,7 @@ void PULinearForceAffector::preUpdateAffector(float deltaTime)
 
 void PULinearForceAffector::updatePUAffector( PUParticle3D *particle, float deltaTime )
 {
+    CC_UNUSED_PARAM(deltaTime);
     //for (auto iter : _particleSystem->getParticles())
     {
         //PUParticle3D *particle = iter;

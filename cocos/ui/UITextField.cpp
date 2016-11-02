@@ -73,12 +73,14 @@ void UICCTextField::onEnter()
 
 bool UICCTextField::onTextFieldAttachWithIME(TextFieldTTF *pSender)
 {
+    CC_UNUSED_PARAM(pSender);
     setAttachWithIME(true);
     return false;
 }
 
 bool UICCTextField::onTextFieldInsertText(TextFieldTTF *pSender, const char *text, size_t nLen)
 {
+    CC_UNUSED_PARAM(pSender);
     if (nLen == 1 && strcmp(text, "\n") == 0)
     {
         return false;
@@ -97,12 +99,16 @@ bool UICCTextField::onTextFieldInsertText(TextFieldTTF *pSender, const char *tex
 
 bool UICCTextField::onTextFieldDeleteBackward(TextFieldTTF *pSender, const char *delText, size_t nLen)
 {
+    CC_UNUSED_PARAM(pSender);
+    CC_UNUSED_PARAM(delText);
+    CC_UNUSED_PARAM(nLen);
     setDeleteBackward(true);
     return false;
 }
 
 bool UICCTextField::onTextFieldDetachWithIME(TextFieldTTF *pSender)
 {
+    CC_UNUSED_PARAM(pSender);
     setDetachWithIME(true);
     return false;
 }
@@ -372,6 +378,7 @@ void TextField::setTouchAreaEnabled(bool enable)
     
 bool TextField::hitTest(const Vec2 &pt, const Camera* camera, Vec3 *p) const
 {
+    CC_UNUSED_PARAM(p);
     if (false == _useTouchArea)
     {
         return Widget::hitTest(pt, camera, nullptr);
@@ -584,6 +591,7 @@ const char* TextField::getPasswordStyleText()const
 
 void TextField::update(float dt)
 {
+    CC_UNUSED_PARAM(dt);
     if (getDetachWithIME())
     {
         detachWithIMEEvent();
