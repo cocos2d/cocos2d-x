@@ -1,6 +1,6 @@
 
-const char* ccCameraClearVert = STRINGIFY(
-                                          
+const char* ccCameraClearVert = R"(
+
 uniform float depth;
 
 attribute vec4 a_position;
@@ -21,4 +21,4 @@ void main()
     v_texCoord = a_texCoord;
     v_color = a_color;
 }
-);
+)";

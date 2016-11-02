@@ -1,4 +1,4 @@
-const char* cc3D_Skybox_frag = STRINGIFY(
+const char* cc3D_Skybox_frag = R"(
 #ifdef GL_ES
 varying mediump vec3        v_reflect;
 #else
@@ -11,4 +11,4 @@ void main(void)
 {
     gl_FragColor = textureCube(u_Env, v_reflect) * u_color;
 }
-);
+)";

@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-const char* ccPositionColorTextureAsPointsize_vert = STRINGIFY(
+const char* ccPositionColorTextureAsPointsize_vert = R"(
 
 attribute vec4 a_position;
 attribute vec4 a_color;
@@ -41,4 +41,4 @@ void main()
     gl_PointSize = a_texCoord.x;
     v_fragmentColor = a_color;
 }
-);
+)";

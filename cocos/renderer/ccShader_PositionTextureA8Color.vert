@@ -23,7 +23,7 @@
  * THE SOFTWARE.
  */
 
-const char* ccPositionTextureA8Color_vert = STRINGIFY(
+const char* ccPositionTextureA8Color_vert = R"(
 
 attribute vec4 a_position;
 attribute vec2 a_texCoord;
@@ -43,4 +43,4 @@ void main()
     v_fragmentColor = a_color;
     v_texCoord = a_texCoord;
 }
-);
+)";

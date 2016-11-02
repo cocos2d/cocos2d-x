@@ -1,5 +1,5 @@
 
-const char* cc3D_Terrain_vert = STRINGIFY(
+const char* cc3D_Terrain_vert = R"(
 attribute vec4 a_position;
 attribute vec2 a_texCoord;
 attribute vec3 a_normal;
@@ -16,4 +16,4 @@ void main()
     v_texCoord = a_texCoord;
     v_normal = a_normal;
 }
-);
+)";

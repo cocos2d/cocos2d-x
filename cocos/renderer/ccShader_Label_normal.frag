@@ -23,7 +23,7 @@
  * THE SOFTWARE.
  */
 
-const char* ccLabelNormal_frag = STRINGIFY(
+const char* ccLabelNormal_frag = R"(
 #ifdef GL_ES
 precision lowp float;
 #endif
@@ -39,4 +39,4 @@ void main()
         u_textColor.a * texture2D(CC_Texture0, v_texCoord).a// A from texture & uniform
     );
 }
-);
+)";
