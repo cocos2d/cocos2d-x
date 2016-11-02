@@ -640,13 +640,16 @@ namespace tinyobj {
             filepath = matId;
         }
         
+        std::string err = "";
+        
         std::istringstream matIStream(cocos2d::FileUtils::getInstance()->getStringFromFile(filepath));
-        std::string err = LoadMtl(matMap, materials, matIStream);
         if (!matIStream) {
             std::stringstream ss;
             ss << "WARN: Material file [ " << filepath << " ] not found. Created a default material.";
             err += ss.str();
         }
+        err += LoadMtl(matMap, materials, matIStream);
+
         return err;
     }
     
