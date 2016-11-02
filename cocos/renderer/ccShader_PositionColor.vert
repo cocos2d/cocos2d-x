@@ -23,20 +23,20 @@
  * THE SOFTWARE.
  */
 
-const char* ccPositionColor_vert = STRINGIFY(
+const char* ccPositionColor_vert = R"(
 
 attribute vec4 a_position;
 attribute vec4 a_color;
 
-\n#ifdef GL_ES\n
+#ifdef GL_ES
 varying lowp vec4 v_fragmentColor;
-\n#else\n
+#else
 varying vec4 v_fragmentColor;
-\n#endif\n
+#endif
 
 void main()
 {
     gl_Position = CC_MVPMatrix * a_position;
     v_fragmentColor = a_color;
 }
-);
+)";
