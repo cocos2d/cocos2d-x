@@ -538,13 +538,13 @@ namespace ui {
         RenderingType getRenderingType() const;
 
         /**
-         * Set the Cap Insets in Points
+         * Set the Cap Insets in Points using the untrimmed size as reference
          */
-        void setCapInsets(const Rect& insets) { setCenterRect(insets); }
+        void setCapInsets(const Rect& insets);
         /**
          * Returns the Cap Insets
          */
-        Rect getCapInsets() const { return getCenterRect(); }
+        Rect getCapInsets() const;
 
         void resetRender();
 

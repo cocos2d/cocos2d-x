@@ -457,3 +457,12 @@ void Scale9Sprite::setupSlice9(Texture2D* texture, const Rect& capInsets)
     }
 }
 
+void Scale9Sprite::setCapInsets(const cocos2d::Rect &insets)
+{
+    setCenterRect(insets);
+}
+
+Rect Scale9Sprite::getCapInsets() const
+{
+    return getCenterRect();
+}
