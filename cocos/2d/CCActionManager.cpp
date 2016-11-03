@@ -90,7 +90,7 @@ void ActionManager::actionAllocWithHashElement(tHashElement *element)
 
 void ActionManager::removeActionAtIndex(ssize_t index, tHashElement *element)
 {
-    Action *action = static_cast<Action *>(element->actions->arr[index]);
+    Action *action = static_cast<Action*>(element->actions->arr[index]);
 
     if (action == element->currentAction && (! element->currentActionSalvaged))
     {
@@ -415,7 +415,7 @@ size_t ActionManager::getNumberOfRunningActionsInTargetByTag(const Node *target,
     auto limit = element->actions->num;
     for(int i = 0; i < limit; ++i)
     {
-        auto action = static_cast<Action *>element->actions->arr[i];
+        auto action = static_cast<Action*>(element->actions->arr[i]);
         if(action->getTag() == tag)
             ++count;
     }
