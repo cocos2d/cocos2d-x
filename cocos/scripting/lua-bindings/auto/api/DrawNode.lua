@@ -47,7 +47,7 @@
 -- 
 -- @function [parent=#DrawNode] setLineWidth 
 -- @param self
--- @param #int lineWidth
+-- @param #float lineWidth
 -- @return DrawNode#DrawNode self (return value: cc.DrawNode)
         
 --------------------------------

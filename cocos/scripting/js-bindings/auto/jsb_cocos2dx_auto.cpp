@@ -33097,8 +33097,8 @@ bool js_cocos2dx_DrawNode_setLineWidth(JSContext *cx, uint32_t argc, jsval *vp)
     cocos2d::DrawNode* cobj = (cocos2d::DrawNode *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_DrawNode_setLineWidth : Invalid Native Object");
     if (argc == 1) {
-        int arg0 = 0;
-        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
+        double arg0 = 0;
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !std::isnan(arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_DrawNode_setLineWidth : Error processing arguments");
         cobj->setLineWidth(arg0);
         args.rval().setUndefined();
@@ -33629,8 +33629,8 @@ bool js_cocos2dx_DrawNode_create(JSContext *cx, uint32_t argc, jsval *vp)
         return true;
     }
     if (argc == 1) {
-        int arg0 = 0;
-        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
+        double arg0 = 0;
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !std::isnan(arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_DrawNode_create : Error processing arguments");
 
         auto ret = cocos2d::DrawNode::create(arg0);
