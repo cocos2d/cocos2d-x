@@ -158,6 +158,24 @@ void Button::createTitleRenderer()
     addProtectedChild(_titleRenderer, TITLE_RENDERER_Z, -1);
 }
 
+/** replaces the current Label node with a new one */
+void Button::setTitleLabel(Label* label)
+{
+    if (_titleRenderer != label) {
+        CC_SAFE_RELEASE(_titleRenderer);
+        _titleRenderer = label;
+        CC_SAFE_RETAIN(_titleRenderer);
+
+        addProtectedChild(_titleRenderer, TITLE_RENDERER_Z, -1);
+    }
+}
+
+/** returns the current Label being used */
+Label* Button::getTitleLabel() const
+{
+    return _titleRenderer;
+}
+
 void Button::setScale9Enabled(bool able)
 {
     if (_scale9Enabled == able)
@@ -453,7 +471,7 @@ void Button::onPressStateChangedToNormal()
             _buttonNormalRenderer->setScale(1.0);
             _buttonClickedRenderer->setScale(1.0);
 
-            if(nullptr != _titleRenderer)
+            if (nullptr != _titleRenderer)
             {
                 _titleRenderer->stopAllActions();
                 if (_unifySize)
@@ -474,7 +492,7 @@ void Button::onPressStateChangedToNormal()
         _buttonNormalRenderer->stopAllActions();
         _buttonNormalRenderer->setScale(1.0);
 
-        if(nullptr != _titleRenderer)
+        if (nullptr != _titleRenderer)
         {
             _titleRenderer->stopAllActions();
             _titleRenderer->setScaleX(1.0f);
@@ -507,7 +525,7 @@ void Button::onPressStateChangedToPressed()
             _buttonNormalRenderer->setScale(1.0f + _zoomScale,
                                             1.0f + _zoomScale);
 
-            if(nullptr != _titleRenderer)
+            if (nullptr != _titleRenderer)
             {
                 _titleRenderer->stopAllActions();
                 Action *zoomTitleAction = ScaleTo::create(ZOOM_ACTION_TIME_STEP,
@@ -525,7 +543,7 @@ void Button::onPressStateChangedToPressed()
         _buttonNormalRenderer->stopAllActions();
         _buttonNormalRenderer->setScale(1.0f +_zoomScale, 1.0f + _zoomScale);
 
-        if(nullptr != _titleRenderer)
+        if (nullptr != _titleRenderer)
         {
             _titleRenderer->stopAllActions();
             _titleRenderer->setScaleX(1.0f + _zoomScale);
@@ -586,7 +604,7 @@ void Button::updateContentSize()
 void Button::onSizeChanged()
 {
     Widget::onSizeChanged();
-    if(nullptr != _titleRenderer)
+    if (nullptr != _titleRenderer)
     {
         updateTitleLocation();
     }
