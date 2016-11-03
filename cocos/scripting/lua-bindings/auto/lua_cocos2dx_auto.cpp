@@ -51782,9 +51782,9 @@ int lua_cocos2dx_DrawNode_setLineWidth(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        int arg0;
+        double arg0;
 
-        ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "cc.DrawNode:setLineWidth");
+        ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.DrawNode:setLineWidth");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_DrawNode_setLineWidth'", nullptr);
@@ -52698,8 +52698,8 @@ int lua_cocos2dx_DrawNode_create(lua_State* tolua_S)
     }
     if (argc == 1)
     {
-        int arg0;
-        ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "cc.DrawNode:create");
+        double arg0;
+        ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.DrawNode:create");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_DrawNode_create'", nullptr);
@@ -52746,9 +52746,9 @@ int lua_cocos2dx_DrawNode_constructor(lua_State* tolua_S)
     }
     if (argc == 1) 
     {
-        int arg0;
+        double arg0;
 
-        ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "cc.DrawNode:DrawNode");
+        ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.DrawNode:DrawNode");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_DrawNode_constructor'", nullptr);
