@@ -1005,7 +1005,7 @@ bool js_performance_now(JSContext *cx, uint32_t argc, jsval *vp)
 	JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 	auto now = steady_clock::now();
 	auto micro = duration_cast<microseconds>(now - ScriptingCore::getInstance()->getEngineStartTime()).count();
-	args.rval().set(DOUBLE_TO_JSVAL((double)micro / 3));
+	args.rval().set(DOUBLE_TO_JSVAL((double)micro * 0.001));
 	return true;
 }
 
