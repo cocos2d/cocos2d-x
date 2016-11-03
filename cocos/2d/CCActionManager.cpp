@@ -90,7 +90,7 @@ void ActionManager::actionAllocWithHashElement(tHashElement *element)
 
 void ActionManager::removeActionAtIndex(ssize_t index, tHashElement *element)
 {
-    Action *action = (Action*)element->actions->arr[index];
+    Action *action = static_cast<Action *>(element->actions->arr[index]);
 
     if (action == element->currentAction && (! element->currentActionSalvaged))
     {
@@ -275,7 +275,7 @@ void ActionManager::removeActionByTag(int tag, Node *target)
         auto limit = element->actions->num;
         for (int i = 0; i < limit; ++i)
         {
-            Action *action = (Action*)element->actions->arr[i];
+            Action *action = static_cast<Action*>(element->actions->arr[i]);
 
             if (action->getTag() == (int)tag && action->getOriginalTarget() == target)
             {
@@ -303,8 +303,8 @@ void ActionManager::removeAllActionsByTag(int tag, Node *target)
         auto limit = element->actions->num;
         for (int i = 0; i < limit;)
         {
-            Action *action = (Action*)element->actions->arr[i];
-            
+            Action *action = static_cast<Action*>(element->actions->arr[i]);
+
             if (action->getTag() == (int)tag && action->getOriginalTarget() == target)
             {
                 removeActionAtIndex(i, element);
@@ -338,7 +338,7 @@ void ActionManager::removeActionsByFlags(unsigned int flags, Node *target)
         auto limit = element->actions->num;
         for (int i = 0; i < limit;)
         {
-            Action *action = (Action*)element->actions->arr[i];
+            Action *action = static_cast<Action*>(element->actions->arr[i]);
 
             if ((action->getFlags() & flags) != 0 && action->getOriginalTarget() == target)
             {
@@ -371,7 +371,7 @@ Action* ActionManager::getActionByTag(int tag, const Node *target) const
             auto limit = element->actions->num;
             for (int i = 0; i < limit; ++i)
             {
-                Action *action = (Action*)element->actions->arr[i];
+                Action *action = static_cast<Action*>(element->actions->arr[i]);
 
                 if (action->getTag() == (int)tag)
                 {
@@ -415,7 +415,7 @@ size_t ActionManager::getNumberOfRunningActionsInTargetByTag(const Node *target,
     auto limit = element->actions->num;
     for(int i = 0; i < limit; ++i)
     {
-        auto action = (Action *)element->actions->arr[i];
+        auto action = static_cast<Action *>element->actions->arr[i];
         if(action->getTag() == tag)
             ++count;
     }
@@ -438,7 +438,7 @@ void ActionManager::update(float dt)
             for (_currentTarget->actionIndex = 0; _currentTarget->actionIndex < _currentTarget->actions->num;
                 _currentTarget->actionIndex++)
             {
-                _currentTarget->currentAction = (Action*)_currentTarget->actions->arr[_currentTarget->actionIndex];
+                _currentTarget->currentAction = static_cast<Action*>(_currentTarget->actions->arr[_currentTarget->actionIndex]);
                 if (_currentTarget->currentAction == nullptr)
                 {
                     continue;
