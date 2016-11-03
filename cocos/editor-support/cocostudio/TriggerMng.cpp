@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "editor-support/cocostudio/TriggerMng.h"
-#include "json/filestream.h"
+#include "json/filereadstream.h"
 #include "json/prettywriter.h"
 #include "json/stringbuffer.h"
 #include "base/CCDirector.h"

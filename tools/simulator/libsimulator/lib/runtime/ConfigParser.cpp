@@ -1,5 +1,5 @@
 #include "ConfigParser.h"
-#include "json/filestream.h"
+#include "json/filereadstream.h"
 #include "json/stringbuffer.h"
 #include "json/writer.h"
 #include "FileServer.h"

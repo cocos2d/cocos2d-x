@@ -12,7 +12,7 @@
 
 // encode / decode json
 #include "json/document-wrapper.h"
-#include "json/filestream.h"
+#include "json/filereadstream.h"
 #include "json/stringbuffer.h"
 #include "json/writer.h"
 #include "SimulatorExport.h"
