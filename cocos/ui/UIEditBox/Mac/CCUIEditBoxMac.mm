@@ -171,8 +171,8 @@
 - (void)controlTextDidEndEditing:(NSNotification *)notification
 {
     _editState = NO;
-    
-    getEditBoxImplMac()->editBoxEditingDidEnd([self getText]);
+
+    getEditBoxImplMac()->editBoxEditingDidEnd([self getText], [self getEndAction:notification]);
 }
 
 - (void)setMaxLength:(int)length
@@ -303,8 +303,22 @@
 - (void)textDidEndEditing:(NSNotification *)notification
 {
     _editState = NO;
-    
-    getEditBoxImplMac()->editBoxEditingDidEnd([self getText]);
+
+    getEditBoxImplMac()->editBoxEditingDidEnd([self getText], [self getEndAction:notification]);
+}
+
+- (cocos2d::ui::EditBoxDelegate::EditBoxEndAction)getEndAction:(NSNotification *)notification
+{
+    auto type = cocos2d::ui::EditBoxDelegate::EditBoxEndAction::UNKNOWN;
+    NSUInteger reasonForEnding = [[[notification userInfo] objectForKey:@"NSTextMovement"] unsignedIntValue];
+    if (reasonForEnding == NSTabTextMovement) {
+        type = cocos2d::ui::EditBoxDelegate::EditBoxEndAction::TAB_TO_NEXT;
+    } else if (reasonForEnding == NSBacktabTextMovement) {
+        type = cocos2d::ui::EditBoxDelegate::EditBoxEndAction::TAB_TO_PREVIOUS;
+    } else if (reasonForEnding == NSReturnTextMovement) {
+        type = cocos2d::ui::EditBoxDelegate::EditBoxEndAction::RETURN;
+    }
+    return type;
 }
 
 - (void)textDidChange:(NSNotification *)notification
