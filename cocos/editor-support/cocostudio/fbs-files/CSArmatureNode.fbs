@@ -1,0 +1,26 @@
+// CSParseBinary IDL file
+
+namespace flatbuffers;
+
+table WidgetOptions
+{
+    
+}
+
+table CSArmatureNodeOption
+{
+    nodeOptions:WidgetOptions;
+
+    fileData:ResourceItemData;
+    isLoop:bool = true;
+    isAutoPlay:bool = true;
+    currentAnimationName:string;
+}
+
+root_type CSArmatureNodeOption;
+
+table ResourceItemData
+{
+    type:int = 0;
+    path:string;
+}
