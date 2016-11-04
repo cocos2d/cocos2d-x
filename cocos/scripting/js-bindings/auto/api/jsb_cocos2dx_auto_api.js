@@ -1634,6 +1634,16 @@ str
 },
 
 /**
+ * @method update
+ * @param {float} arg0
+ */
+update : function (
+float 
+)
+{
+},
+
+/**
  * @method getDisplayedOpacity
  * @return {unsigned char}
  */
@@ -2041,13 +2051,15 @@ vec3
 },
 
 /**
- * @method update
- * @param {float} arg0
+ * @method getNumberOfRunningActionsByTag
+ * @param {int} arg0
+ * @return {int}
  */
-update : function (
-float 
+getNumberOfRunningActionsByTag : function (
+int 
 )
 {
+    return 0;
 },
 
 /**
@@ -10736,6 +10748,16 @@ action
 },
 
 /**
+ * @method pauseAllRunningActions
+ * @return {Array}
+ */
+pauseAllRunningActions : function (
+)
+{
+    return new Array();
+},
+
+/**
  * @method removeAllActionsByTag
  * @param {int} arg0
  * @param {cc.Node} arg1
@@ -10748,13 +10770,17 @@ node
 },
 
 /**
- * @method pauseAllRunningActions
- * @return {Array}
+ * @method getNumberOfRunningActionsInTargetByTag
+ * @param {cc.Node} arg0
+ * @param {int} arg1
+ * @return {unsigned long}
  */
-pauseAllRunningActions : function (
+getNumberOfRunningActionsInTargetByTag : function (
+node, 
+int 
 )
 {
-    return new Array();
+    return 0;
 },
 
 /**

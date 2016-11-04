@@ -212,6 +212,7 @@ bool js_cocos2dx_Node_getActionByTag(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_setRotationSkewX(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_setRotationSkewY(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_setName(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Node_update(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getDisplayedOpacity(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getLocalZOrder(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getScheduler(JSContext *cx, uint32_t argc, jsval *vp);
@@ -251,7 +252,7 @@ bool js_cocos2dx_Node_enumerateChildren(JSContext *cx, uint32_t argc, jsval *vp)
 bool js_cocos2dx_Node_getonExitTransitionDidStartCallback(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_removeFromParentAndCleanup(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_setPosition3D(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Node_update(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Node_getNumberOfRunningActionsByTag(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_sortAllChildren(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getWorldToNodeAffineTransform(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getScale(JSContext *cx, uint32_t argc, jsval *vp);
@@ -1976,8 +1977,9 @@ bool js_cocos2dx_ActionManager_getNumberOfRunningActionsInTarget(JSContext *cx, 
 bool js_cocos2dx_ActionManager_removeAllActionsFromTarget(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ActionManager_resumeTargets(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ActionManager_removeAction(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_ActionManager_removeAllActionsByTag(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ActionManager_pauseAllRunningActions(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ActionManager_removeAllActionsByTag(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ActionManager_getNumberOfRunningActionsInTargetByTag(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ActionManager_ActionManager(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_cocos2d_PageTurn3D_class;
