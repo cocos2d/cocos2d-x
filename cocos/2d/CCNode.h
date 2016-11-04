@@ -1285,6 +1285,23 @@ public:
      */
     ssize_t getNumberOfRunningActions() const;
 
+    /**
+     * Returns the numbers of actions that are running plus the ones that are
+     * schedule to run (actions in actionsToAdd and actions arrays) with a
+     * specific tag.
+     *
+     * Composable actions are counted as 1 action. Example:
+     *    If you are running 1 Sequence of 7 actions, it will return 1.
+     *    If you are running 7 Sequences of 2 actions, it will return 7.
+     *
+     * @param  tag The tag that will be searched.
+     *
+     * @return The number of actions that are running plus the
+     *         ones that are schedule to run with specific tag.
+     */
+    ssize_t getNumberOfRunningActionsByTag(int tag) const;
+
+
     /** @deprecated Use getNumberOfRunningActions() instead */
     CC_DEPRECATED_ATTRIBUTE ssize_t numberOfRunningActions() const { return getNumberOfRunningActions(); };
 

@@ -145,6 +145,24 @@ public:
      */
     CC_DEPRECATED_ATTRIBUTE ssize_t numberOfRunningActionsInTarget(Node *target) const { return getNumberOfRunningActionsInTarget(target); }
 
+
+    /** Returns the numbers of actions that are running in a
+     *  certain target with a specific tag.
+     * Like getNumberOfRunningActionsInTarget Composable actions
+     * are counted as 1 action. Example:
+     * - If you are running 1 Sequence of 7 actions, it will return 1.
+     * - If you are running 7 Sequences of 2 actions, it will return 7.
+     *
+     * @param target    A certain target.
+     * @param tag       Tag that will be searched.
+     * @return  The numbers of actions that are running in a certain target
+     *          with a specific tag.
+     * @see getNumberOfRunningActionsInTarget
+     * @js NA
+     */
+    size_t getNumberOfRunningActionsInTargetByTag(const Node *target, int tag);
+
+
     /** Pauses the target: all running actions and newly added actions will be paused.
      *
      * @param target    A certain target.
