@@ -1192,9 +1192,6 @@ namespace
     
     static tmsize_t tiffWriteProc(thandle_t fd, void* buf, tmsize_t size)
     {
-        CC_UNUSED_PARAM(fd);
-        CC_UNUSED_PARAM(buf);
-        CC_UNUSED_PARAM(size);
         return 0;
     }
     
@@ -1238,23 +1235,16 @@ namespace
     
     static int tiffCloseProc(thandle_t fd)
     {
-        CC_UNUSED_PARAM(fd);
         return 0;
     }
     
     static int tiffMapProc(thandle_t fd, void** base, toff_t* size)
     {
-        CC_UNUSED_PARAM(fd);
-        CC_UNUSED_PARAM(base);
-        CC_UNUSED_PARAM(size);
         return 0;
     }
     
     static void tiffUnmapProc(thandle_t fd, void* base, toff_t size)
     {
-        CC_UNUSED_PARAM(fd);
-        CC_UNUSED_PARAM(base);
-        CC_UNUSED_PARAM(size);
     }
 }
 #endif // CC_USE_TIFF

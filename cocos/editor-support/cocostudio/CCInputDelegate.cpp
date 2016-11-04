@@ -58,51 +58,35 @@ InputDelegate::~InputDelegate(void)
 
 bool InputDelegate::onTouchBegan(Touch *pTouch, Event *pEvent)
 {
-    CC_UNUSED_PARAM(pTouch);
-    CC_UNUSED_PARAM(pEvent);
     return true;
 }
 
 void InputDelegate::onTouchMoved(Touch *pTouch, Event *pEvent)
 {
-    CC_UNUSED_PARAM(pTouch);
-    CC_UNUSED_PARAM(pEvent);
 }
     
 void InputDelegate::onTouchEnded(Touch *pTouch, Event *pEvent)
 {
-    CC_UNUSED_PARAM(pTouch);
-    CC_UNUSED_PARAM(pEvent);
 }
 
 void InputDelegate::onTouchCancelled(Touch *pTouch, Event *pEvent)
 {
-    CC_UNUSED_PARAM(pTouch);
-    CC_UNUSED_PARAM(pEvent);
 }    
 
 void InputDelegate::onTouchesBegan(const std::vector<Touch*>& pTouches, Event *pEvent)
 {
-    CC_UNUSED_PARAM(pTouches);
-    CC_UNUSED_PARAM(pEvent);
 }
 
 void InputDelegate::onTouchesMoved(const std::vector<Touch*>& pTouches, Event *pEvent)
 {
-    CC_UNUSED_PARAM(pTouches);
-    CC_UNUSED_PARAM(pEvent);
 }
 
 void InputDelegate::onTouchesEnded(const std::vector<Touch*>& pTouches, Event *pEvent)
 {
-    CC_UNUSED_PARAM(pTouches);
-    CC_UNUSED_PARAM(pEvent);
 }
 
 void InputDelegate::onTouchesCancelled(const std::vector<Touch*>& pTouches, Event *pEvent)
 {
-    CC_UNUSED_PARAM(pTouches);
-    CC_UNUSED_PARAM(pEvent);
 }
 
 bool InputDelegate::isTouchEnabled() const

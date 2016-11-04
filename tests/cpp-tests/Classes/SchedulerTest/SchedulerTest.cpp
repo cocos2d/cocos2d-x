@@ -534,7 +534,6 @@ TestNode::~TestNode()
 
 void TestNode::update(float dt)
 {
-    CC_UNUSED_PARAM(dt);
     log("%s", _string.c_str());
 }
 

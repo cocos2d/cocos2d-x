@@ -104,7 +104,6 @@ private:
 
     bool onTouchBegan(Touch  *touch, Event  *event)
     {
-        CC_UNUSED_PARAM(event);
         const bool hits = touchHits(touch);
         if (hits)
             scaleButtonTo(0.9f);
@@ -113,7 +112,6 @@ private:
 
     void onTouchEnded(Touch  *touch, Event  *event)
     {
-        CC_UNUSED_PARAM(event);
         const bool hits = touchHits(touch);
         if (hits && _onTriggered)
             _onTriggered();
@@ -122,7 +120,6 @@ private:
 
     void onTouchCancelled(Touch  *touch, Event  *event)
     {
-        CC_UNUSED_PARAM(event);
         scaleButtonTo(1);
     }
 

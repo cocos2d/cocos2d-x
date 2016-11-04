@@ -424,7 +424,6 @@ bool iscjk_unicode(unsigned short ch)
 
 long cc_utf8_strlen (const char * p, int max)
 {
-    CC_UNUSED_PARAM(max);
     if (p == nullptr)
         return -1;
     return StringUtils::getCharacterCountInUTF8String(p);

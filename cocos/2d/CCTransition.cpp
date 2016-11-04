@@ -145,8 +145,6 @@ void TransitionScene::finish()
 
 void TransitionScene::setNewScene(float dt)
 {    
-    CC_UNUSED_PARAM(dt);
-
     this->unschedule(CC_SCHEDULE_SELECTOR(TransitionScene::setNewScene));
     
     // Before replacing, save the "send cleanup to scene"

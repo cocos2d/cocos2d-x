@@ -87,17 +87,11 @@ ParallaxNode * ParallaxNode::create()
 
 void ParallaxNode::addChild(Node * child, int zOrder, int tag)
 {
-    CC_UNUSED_PARAM(zOrder);
-    CC_UNUSED_PARAM(child);
-    CC_UNUSED_PARAM(tag);
     CCASSERT(0,"ParallaxNode: use addChild:z:parallaxRatio:positionOffset instead");
 }
 
 void ParallaxNode::addChild(Node * child, int zOrder, const std::string &name)
 {
-    CC_UNUSED_PARAM(zOrder);
-    CC_UNUSED_PARAM(child);
-    CC_UNUSED_PARAM(name);
     CCASSERT(0,"ParallaxNode: use addChild:z:parallaxRatio:positionOffset instead");
 }
 

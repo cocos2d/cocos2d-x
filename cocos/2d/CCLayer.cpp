@@ -248,8 +248,6 @@ void Layer::setAccelerometerInterval(double interval) {
 
 void Layer::onAcceleration(Acceleration* acc, Event* unused_event)
 {
-    CC_UNUSED_PARAM(acc);
-    CC_UNUSED_PARAM(unused_event);
 #if CC_ENABLE_SCRIPT_BINDING
     if(kScriptTypeNone != _scriptType)
     {
@@ -262,13 +260,10 @@ void Layer::onAcceleration(Acceleration* acc, Event* unused_event)
 
 void Layer::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* unused_event)
 {
-    CC_UNUSED_PARAM(keyCode);
-    CC_UNUSED_PARAM(unused_event);
 }
 
 void Layer::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* unused_event)
 {
-    CC_UNUSED_PARAM(unused_event);
 #if CC_ENABLE_SCRIPT_BINDING
     if(kScriptTypeNone != _scriptType)
     {
@@ -320,7 +315,6 @@ bool Layer::onTouchBegan(Touch *touch, Event *event)
         return executeScriptTouchHandler(EventTouch::EventCode::BEGAN, touch, event) == 0 ? false : true;
     }
 #endif
-    CC_UNUSED_PARAM(event);
     CCASSERT(false, "Layer#ccTouchBegan override me");
     return true;
 }
@@ -334,8 +328,6 @@ void Layer::onTouchMoved(Touch *touch, Event *event)
         return;
     }
 #endif
-    
-    CC_UNUSED_PARAM(event);
 }
 
 void Layer::onTouchEnded(Touch *touch, Event *event)
@@ -347,8 +339,6 @@ void Layer::onTouchEnded(Touch *touch, Event *event)
         return;
     }
 #endif
-    
-    CC_UNUSED_PARAM(event);
 }
 
 void Layer::onTouchCancelled(Touch *touch, Event *event)
@@ -360,8 +350,6 @@ void Layer::onTouchCancelled(Touch *touch, Event *event)
         return;
     }
 #endif
-    
-    CC_UNUSED_PARAM(event);
 }    
 
 void Layer::onTouchesBegan(const std::vector<Touch*>& touches, Event *event)
@@ -373,7 +361,6 @@ void Layer::onTouchesBegan(const std::vector<Touch*>& touches, Event *event)
         return;
     }
 #endif
-    CC_UNUSED_PARAM(event);
 }
 
 void Layer::onTouchesMoved(const std::vector<Touch*>& touches, Event *event)
@@ -385,8 +372,6 @@ void Layer::onTouchesMoved(const std::vector<Touch*>& touches, Event *event)
         return;
     }
 #endif
-    
-    CC_UNUSED_PARAM(event);
 }
 
 void Layer::onTouchesEnded(const std::vector<Touch*>& touches, Event *event)
@@ -398,7 +383,6 @@ void Layer::onTouchesEnded(const std::vector<Touch*>& touches, Event *event)
         return;
     }
 #endif
-    CC_UNUSED_PARAM(event);
 }
 
 void Layer::onTouchesCancelled(const std::vector<Touch*>& touches, Event *event)
@@ -410,7 +394,6 @@ void Layer::onTouchesCancelled(const std::vector<Touch*>& touches, Event *event)
         return;
     }
 #endif
-    CC_UNUSED_PARAM(event);
 }
 
 std::string Layer::getDescription() const

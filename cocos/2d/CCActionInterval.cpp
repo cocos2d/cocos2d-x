@@ -75,12 +75,10 @@ ExtraAction* ExtraAction::reverse() const
 
 void ExtraAction::update(float time)
 {
-    CC_UNUSED_PARAM(time);
 }
 
 void ExtraAction::step(float dt)
 {
-    CC_UNUSED_PARAM(dt);
 }
 
 //
@@ -146,7 +144,6 @@ void ActionInterval::step(float dt)
 
 void ActionInterval::setAmplitudeRate(float amp)
 {
-    CC_UNUSED_PARAM(amp);
     // Abstract class needs implementation
     CCASSERT(0, "Subclass should implement this method!");
 }
@@ -2422,7 +2419,6 @@ DelayTime* DelayTime::clone() const
 
 void DelayTime::update(float time)
 {
-    CC_UNUSED_PARAM(time);
     return;
 }
 

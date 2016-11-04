@@ -761,7 +761,7 @@ public:
      * @lua NA
      * @js NA
      */
-    virtual void setCalledFromScript(bool callFromScript) { CC_UNUSED_PARAM(callFromScript); };
+    virtual void setCalledFromScript(bool callFromScript) {};
     
     /** 
      * Useless for Lua.

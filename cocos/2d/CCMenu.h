@@ -171,7 +171,7 @@ public:
     
     virtual void onEnter() override;
     virtual void onExit() override;
-    virtual void setOpacityModifyRGB(bool bValue) override {CC_UNUSED_PARAM(bValue);}
+    virtual void setOpacityModifyRGB(bool bValue) override {}
     virtual bool isOpacityModifyRGB(void) const override { return false;}
 
     virtual std::string getDescription() const override;

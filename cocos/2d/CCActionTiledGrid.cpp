@@ -75,7 +75,6 @@ ShakyTiles3D* ShakyTiles3D::clone() const
 
 void ShakyTiles3D::update(float time)
 {
-    CC_UNUSED_PARAM(time);
     int i, j;
 
     for (i = 0; i < _gridSize.width; ++i)
@@ -147,7 +146,6 @@ ShatteredTiles3D* ShatteredTiles3D::clone() const
 
 void ShatteredTiles3D::update(float time)
 {
-    CC_UNUSED_PARAM(time);
     int i, j;
 
     if (_once == false)

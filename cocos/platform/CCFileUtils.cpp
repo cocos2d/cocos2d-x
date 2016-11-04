@@ -131,8 +131,6 @@ public:
 
     void startElement(void *ctx, const char *name, const char **atts)
     {
-        CC_UNUSED_PARAM(ctx);
-        CC_UNUSED_PARAM(atts);
         const std::string sName(name);
         if( sName == "dict" )
         {
@@ -222,7 +220,6 @@ public:
 
     void endElement(void *ctx, const char *name)
     {
-        CC_UNUSED_PARAM(ctx);
         SAXState curState = _stateStack.empty() ? SAX_DICT : _stateStack.top();
         const std::string sName((char*)name);
         if( sName == "dict" )
@@ -294,7 +291,6 @@ public:
 
     void textHandler(void *ctx, const char *ch, size_t len) override
     {
-        CC_UNUSED_PARAM(ctx);
         if (_state == SAX_NONE)
         {
             return;

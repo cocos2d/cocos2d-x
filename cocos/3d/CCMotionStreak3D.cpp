@@ -254,7 +254,6 @@ GLubyte MotionStreak3D::getOpacity(void) const
 
 void MotionStreak3D::setOpacityModifyRGB(bool bValue)
 {
-    CC_UNUSED_PARAM(bValue);
 }
 
 bool MotionStreak3D::isOpacityModifyRGB(void) const

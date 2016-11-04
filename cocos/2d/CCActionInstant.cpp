@@ -47,7 +47,6 @@ bool ActionInstant::isDone() const
 
 void ActionInstant::step(float dt)
 {
-    CC_UNUSED_PARAM(dt);
     float updateDt = 1;
 #if CC_ENABLE_SCRIPT_BINDING
     if (_scriptType == kScriptTypeJavascript)
@@ -61,7 +60,6 @@ void ActionInstant::step(float dt)
 
 void ActionInstant::update(float time)
 {
-    CC_UNUSED_PARAM(time);
     // nothing
 }
 
@@ -83,7 +81,6 @@ Show* Show::create()
 
 void Show::update(float time)
 {
-    CC_UNUSED_PARAM(time);
     _target->setVisible(true);
 }
 
@@ -115,7 +112,6 @@ Hide * Hide::create()
 
 void Hide::update(float time)
 {
-    CC_UNUSED_PARAM(time);
     _target->setVisible(false);
 }
 
@@ -147,7 +143,6 @@ ToggleVisibility * ToggleVisibility::create()
 
 void ToggleVisibility::update(float time) 
 {
-    CC_UNUSED_PARAM(time);
     _target->setVisible(!_target->isVisible());
 }
 
@@ -185,7 +180,6 @@ bool RemoveSelf::init(bool isNeedCleanUp)
 
 void RemoveSelf::update(float time)
 {
-    CC_UNUSED_PARAM(time);
     _target->removeFromParentAndCleanup(_isNeedCleanUp);
 }
 
@@ -226,7 +220,6 @@ bool FlipX::initWithFlipX(bool x)
 
 void FlipX::update(float time)
 {
-    CC_UNUSED_PARAM(time);
     static_cast<Sprite*>(_target)->setFlippedX(_flipX);
 }
 
@@ -266,7 +259,6 @@ bool FlipY::initWithFlipY(bool y)
 
 void FlipY::update(float time)
 {
-    CC_UNUSED_PARAM(time);
     static_cast<Sprite*>(_target)->setFlippedY(_flipY);
 }
 
@@ -319,7 +311,6 @@ Place * Place::reverse() const
 
 void Place::update(float time)
 {
-    CC_UNUSED_PARAM(time);
     _target->setPosition(_position);
 }
 
@@ -409,7 +400,6 @@ CallFunc * CallFunc::reverse() const
 
 void CallFunc::update(float time)
 {
-    CC_UNUSED_PARAM(time);
     this->execute();
 }
 

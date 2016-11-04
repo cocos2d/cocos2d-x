@@ -170,7 +170,6 @@ void JSTouchDelegate::unregisterTouchDelegate()
 
 bool JSTouchDelegate::onTouchBegan(Touch *touch, Event *event)
 {
-    CC_UNUSED_PARAM(event);
     JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
     JS::RootedValue retval(cx);
     bool bRet = false;
@@ -189,21 +188,18 @@ bool JSTouchDelegate::onTouchBegan(Touch *touch, Event *event)
 
 void JSTouchDelegate::onTouchMoved(Touch *touch, Event *event)
 {
-    CC_UNUSED_PARAM(event);
     JS::RootedObject obj(ScriptingCore::getInstance()->getGlobalContext(), _obj);
     ScriptingCore::getInstance()->executeCustomTouchEvent(EventTouch::EventCode::MOVED, touch, obj);
 }
 
 void JSTouchDelegate::onTouchEnded(Touch *touch, Event *event)
 {
-    CC_UNUSED_PARAM(event);
     JS::RootedObject obj(ScriptingCore::getInstance()->getGlobalContext(), _obj);
     ScriptingCore::getInstance()->executeCustomTouchEvent(EventTouch::EventCode::ENDED, touch, obj);
 }
 
 void JSTouchDelegate::onTouchCancelled(Touch *touch, Event *event)
 {
-    CC_UNUSED_PARAM(event);
     JS::RootedObject obj(ScriptingCore::getInstance()->getGlobalContext(), _obj);
     ScriptingCore::getInstance()->executeCustomTouchEvent(EventTouch::EventCode::CANCELLED, touch, obj);
 }
@@ -211,28 +207,24 @@ void JSTouchDelegate::onTouchCancelled(Touch *touch, Event *event)
 // optional
 void JSTouchDelegate::onTouchesBegan(const std::vector<Touch*>& touches, Event *event)
 {
-    CC_UNUSED_PARAM(event);
     JS::RootedObject obj(ScriptingCore::getInstance()->getGlobalContext(), _obj);
     ScriptingCore::getInstance()->executeCustomTouchesEvent(EventTouch::EventCode::BEGAN, touches, obj);
 }
 
 void JSTouchDelegate::onTouchesMoved(const std::vector<Touch*>& touches, Event *event)
 {
-    CC_UNUSED_PARAM(event);
     JS::RootedObject obj(ScriptingCore::getInstance()->getGlobalContext(), _obj);
     ScriptingCore::getInstance()->executeCustomTouchesEvent(EventTouch::EventCode::MOVED, touches, obj);
 }
 
 void JSTouchDelegate::onTouchesEnded(const std::vector<Touch*>& touches, Event *event)
 {
-    CC_UNUSED_PARAM(event);
     JS::RootedObject obj(ScriptingCore::getInstance()->getGlobalContext(), _obj);
     ScriptingCore::getInstance()->executeCustomTouchesEvent(EventTouch::EventCode::ENDED, touches, obj);
 }
 
 void JSTouchDelegate::onTouchesCancelled(const std::vector<Touch*>& touches, Event *event)
 {
-    CC_UNUSED_PARAM(event);
     JS::RootedObject obj(ScriptingCore::getInstance()->getGlobalContext(), _obj);
     ScriptingCore::getInstance()->executeCustomTouchesEvent(EventTouch::EventCode::CANCELLED, touches, obj);
 }
@@ -4714,7 +4706,6 @@ void __JSPlistDelegator::endElement(void *ctx, const char *name) {
 }
 
 void __JSPlistDelegator::textHandler(void *ctx, const char *ch, size_t len) {
-    CC_UNUSED_PARAM(ctx);
     std::string text((char*)ch, 0, len);
 
     if (_isStoringCharacters)

@@ -217,7 +217,6 @@ bool TMXMapInfo::parseXMLFile(const std::string& xmlFilename)
 // the XML parser calls here with all the elements
 void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
 {    
-    CC_UNUSED_PARAM(ctx);
     TMXMapInfo *tmxMapInfo = this;
     std::string elementName = name;
     ValueMap attributeDict;
@@ -667,7 +666,6 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
 
 void TMXMapInfo::endElement(void *ctx, const char *name)
 {
-    CC_UNUSED_PARAM(ctx);
     TMXMapInfo *tmxMapInfo = this;
     std::string elementName = name;
 
@@ -788,7 +786,6 @@ void TMXMapInfo::endElement(void *ctx, const char *name)
 
 void TMXMapInfo::textHandler(void *ctx, const char *ch, size_t len)
 {
-    CC_UNUSED_PARAM(ctx);
     TMXMapInfo *tmxMapInfo = this;
     std::string text(ch, 0, len);
 

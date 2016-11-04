@@ -766,7 +766,6 @@ public:
      * @deprecated use `getCurrentFocusedWidget` instead.
      */
     CC_DEPRECATED_ATTRIBUTE Widget* getCurrentFocusedWidget(bool isWidget){
-        CC_UNUSED_PARAM(isWidget);
         return getCurrentFocusedWidget();
     }
 

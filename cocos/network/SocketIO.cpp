@@ -435,7 +435,6 @@ void SIOClientImpl::handshake()
 void SIOClientImpl::handshakeResponse(HttpClient *sender, HttpResponse *response)
 {
     CCLOGINFO("SIOClientImpl::handshakeResponse() called");
-    CC_UNUSED_PARAM(sender);
 
     if (0 != strlen(response->getHttpRequest()->getTag()))
     {
@@ -668,7 +667,6 @@ void SIOClientImpl::disconnectFromEndpoint(const std::string& endpoint)
 
 void SIOClientImpl::heartbeat(float dt)
 {
-    CC_UNUSED_PARAM(dt);
     SocketIOPacket *packet = SocketIOPacket::createPacketWithType("heartbeat", _version);
 
     this->send(packet);
@@ -720,7 +718,6 @@ void SIOClientImpl::emit(const std::string& endpoint, const std::string& eventna
 
 void SIOClientImpl::onOpen(WebSocket* ws)
 {
-    CC_UNUSED_PARAM(ws);
     _connected = true;
 
     SocketIO::getInstance()->addSocket(_uri, this);
@@ -744,7 +741,6 @@ void SIOClientImpl::onOpen(WebSocket* ws)
 void SIOClientImpl::onMessage(WebSocket* ws, const WebSocket::Data& data)
 {
     CCLOGINFO("SIOClientImpl::onMessage received: %s", data.bytes);
-    CC_UNUSED_PARAM(ws);
 
     std::string payload = data.bytes;
     int control = atoi(payload.substr(0, 1).c_str());
@@ -975,7 +971,6 @@ void SIOClientImpl::onMessage(WebSocket* ws, const WebSocket::Data& data)
 
 void SIOClientImpl::onClose(WebSocket* ws)
 {
-    CC_UNUSED_PARAM(ws);
     if (!_clients.empty())
     {
         for (auto& client : _clients)
@@ -995,7 +990,6 @@ void SIOClientImpl::onClose(WebSocket* ws)
 
 void SIOClientImpl::onError(WebSocket* ws, const WebSocket::ErrorCode& error)
 {
-    CC_UNUSED_PARAM(ws);
     CCLOGERROR("Websocket error received: %d", static_cast<int>(error));
 }
 
