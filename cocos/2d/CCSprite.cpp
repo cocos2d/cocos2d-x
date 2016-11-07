@@ -649,33 +649,18 @@ void Sprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
     {
         return;
     }
-    
 
-    {
-        _trianglesCommand.init(_globalZOrder, _texture->getName(), getGLProgramState(), _blendFunc, _polyInfo.triangles, transform, flags);
+  CC_2D_CULLING_FUNCTION
+  {
+      _trianglesCommand.init(_globalZOrder,
+          _texture->getName(),
+          getGLProgramState(), 
+          _blendFunc, 
+          _polyInfo.triangles, 
+          transform, 
+          flags);
+
         renderer->addCommand(&_trianglesCommand);
-        
-#if CC_SPRITE_DEBUG_DRAW
-        _debugDrawNode->clear();
-        auto count = _polyInfo.triangles.indexCount/3;
-        auto indices = _polyInfo.triangles.indices;
-        auto verts = _polyInfo.triangles.verts;
-        for(ssize_t i = 0; i < count; i++)
-        {
-            //draw 3 lines
-            Vec3 from =verts[indices[i*3]].vertices;
-            Vec3 to = verts[indices[i*3+1]].vertices;
-            _debugDrawNode->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::WHITE);
-            
-            from =verts[indices[i*3+1]].vertices;
-            to = verts[indices[i*3+2]].vertices;
-            _debugDrawNode->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::WHITE);
-            
-            from =verts[indices[i*3+2]].vertices;
-            to = verts[indices[i*3]].vertices;
-            _debugDrawNode->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::WHITE);
-        }
-#endif //CC_SPRITE_DEBUG_DRAW
     }
 }
 

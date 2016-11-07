@@ -201,10 +201,6 @@ void Scene::render(Renderer* renderer)
             continue;
         
         Camera::_visitingCamera = camera;
-        if (Camera::_visitingCamera->getCameraFlag() == CameraFlag::DEFAULT)
-        {
-            defaultCamera = Camera::_visitingCamera;
-        }
 
         director->onRenderStart(camera->getIndex());
         director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
@@ -225,7 +221,7 @@ void Scene::render(Renderer* renderer)
     if (_physics3DWorld && _physics3DWorld->isDebugDrawEnabled())
     {
         director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-        director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, _physics3dDebugCamera != nullptr ? _physics3dDebugCamera->getViewProjectionMatrix() : defaultCamera->getViewProjectionMatrix());
+        director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, _physics3dDebugCamera != nullptr ? _physics3dDebugCamera->getViewProjectionMatrix() : Camera::getCameraElements()->getViewProjectionMatrix());
         _physics3DWorld->debugDraw(renderer);
         renderer->render();
         director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);

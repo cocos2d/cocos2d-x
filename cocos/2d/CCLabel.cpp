@@ -1649,6 +1649,8 @@ void Label::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t pare
 
 void Label::drawSelf(bool visibleByCamera, Renderer* renderer, uint32_t flags)
 {
+  CC_2D_CULLING_FUNCTION
+  {
     if (_textSprite)
     {
         if (_shadowNode)
@@ -1661,6 +1663,7 @@ void Label::drawSelf(bool visibleByCamera, Renderer* renderer, uint32_t flags)
     {
         draw(renderer, _modelViewTransform, flags);
     }
+  }
 }
 
 void Label::setSystemFontName(const std::string& systemFont)

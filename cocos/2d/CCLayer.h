@@ -89,28 +89,28 @@ public:
      * @return if return false, onTouchMoved, onTouchEnded, onTouchCancelled will never called.
      * @js NA
      */
-    virtual bool onTouchBegan(Touch *touch, Event *unused_event);
+    virtual bool onTouchBegan(Touch *touch, Event *unused_event) override;
     /** Callback function for touch moved.
     *
     * @param touch Touch information.
     * @param unused_event Event information.
     * @js NA
     */
-    virtual void onTouchMoved(Touch *touch, Event *unused_event);
+    virtual void onTouchMoved(Touch *touch, Event *unused_event) override;
     /** Callback function for touch ended.
     *
     * @param touch Touch information.
     * @param unused_event Event information.
     * @js NA
     */
-    virtual void onTouchEnded(Touch *touch, Event *unused_event);
+    virtual void onTouchEnded(Touch *touch, Event *unused_event) override;
     /** Callback function for touch cancelled.
     *
     * @param touch Touch information.
     * @param unused_event Event information.
     * @js NA
     */
-    virtual void onTouchCancelled(Touch *touch, Event *unused_event);
+    virtual void onTouchCancelled(Touch *touch, Event *unused_event) override;
 
     /** Callback function for multiple touches began.
     *

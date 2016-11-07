@@ -41,6 +41,30 @@ NS_CC_BEGIN
 Camera* Camera::_visitingCamera = nullptr;
 experimental::Viewport Camera::_defaultViewport;
 
+
+Camera* Camera::cameraBackground = nullptr;
+Camera* Camera::cameraElements = nullptr;
+
+void Camera::setCameraBackground(Camera* camera)
+{
+  Camera::cameraBackground = camera;
+}
+
+void Camera::setCameraElements(Camera* camera)
+{
+  Camera::cameraElements = camera;
+}
+
+Camera* Camera::getCameraBackground()
+{
+  return Camera::cameraBackground;
+}
+
+Camera* Camera::getCameraElements()
+{
+  return Camera::cameraElements;
+}
+
 Camera* Camera::getDefaultCamera()
 {
     auto scene = Director::getInstance()->getRunningScene();

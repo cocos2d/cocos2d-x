@@ -280,7 +280,9 @@ protected:
     AsyncLoadParam             _asyncLoadParam;
 
     public:
-    virtual void enableShadow(bool state) override;
+    float shadowIndex = 0.0;
+
+    virtual void enableShadow(bool state, float shadowIndex = 0.0) override;
     virtual void enableLight(bool state) override;
 
     virtual bool enableShadow() override;

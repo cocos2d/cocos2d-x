@@ -2050,10 +2050,10 @@ private:
 
   framework::Pool* pool = nullptr;
 
-  Node* _create();
-  Node* _destroy(bool action = false);
+  virtual Node* _create();
+  virtual Node* _destroy(bool action = false);
 
-  Node* _clone();
+  virtual Node* _clone();
 
   virtual void onCreate();
   virtual void onDestroy(bool action = false);
@@ -2083,7 +2083,7 @@ private:
   virtual void onEnterShow();
   virtual void onExitHide();
 
-  virtual void enableShadow(bool state);
+  virtual void enableShadow(bool state, float shadowIndex = 0.0);
   virtual void enableLight(bool state);
 
   virtual bool enableShadow();

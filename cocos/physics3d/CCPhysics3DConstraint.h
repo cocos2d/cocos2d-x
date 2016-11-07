@@ -579,6 +579,79 @@ CC_CONSTRUCTOR_ACCESS:
     virtual ~Physics3D6DofConstraint(){}
 };
 
+
+
+class CC_DLL Physics3D6DofSpringConstraint : public Physics3DConstraint
+{
+public:
+    /**
+     * create 6 dof constraint
+     * @param rbA rigid body A
+     * @param rbB rigid body B
+     * @param frameInA frame in A's local space
+     * @param frameInB frame in B's local space
+     * @param useLinearReferenceFrameA use fixed frame A for linear limits
+     */
+    static Physics3D6DofSpringConstraint* create(Physics3DRigidBody* rbA, Physics3DRigidBody* rbB, const cocos2d::Mat4& frameInA, const cocos2d::Mat4& frameInB, bool useLinearReferenceFrameA);
+    
+    /**
+     * create 6 dof constraint
+     * @param rbB rigid body B
+     * @param frameInB frame in B's local space
+     * @param useLinearReferenceFrameB use fixed frame B for linear limits
+     */
+    static Physics3D6DofSpringConstraint* create(Physics3DRigidBody* rbB, const cocos2d::Mat4& frameInB, bool useLinearReferenceFrameB);
+    
+    /**set linear lower limit*/
+    void setLinearLowerLimit(const cocos2d::Vec3& linearLower);
+    
+    /**get linear lower limit*/
+    cocos2d::Vec3 getLinearLowerLimit() const;
+    
+    /**set linear upper limit*/
+    void setLinearUpperLimit(const cocos2d::Vec3& linearUpper);
+    
+    /**get linear upper limit*/
+    cocos2d::Vec3 getLinearUpperLimit() const;
+    
+    /**set angular lower limit*/
+    void setAngularLowerLimit(const cocos2d::Vec3& angularLower);
+    
+    /**get angular lower limit*/
+    cocos2d::Vec3 getAngularLowerLimit() const;
+    
+    /**set angular upper limit*/
+    void setAngularUpperLimit(const cocos2d::Vec3& angularUpper);
+    
+    /**get angular upper limit*/
+    cocos2d::Vec3 getAngularUpperLimit() const;
+
+    void enableSpring(int index, bool onOff);
+    void setStiffness(int index, float stiffness);
+    void setDamping(int index, float damping);
+
+    void setEquilibriumPoint();
+    
+    /** 
+     * is limited?
+     * @param limitIndex first 3 are linear, next 3 are angular
+     */
+    bool isLimited(int limitIndex) const;
+    
+    /** access for UseFrameOffset*/
+    bool getUseFrameOffset() const;
+    /**set use frame offset*/
+    void setUseFrameOffset(bool frameOffsetOnOff) const;
+
+    
+CC_CONSTRUCTOR_ACCESS:
+    Physics3D6DofSpringConstraint()
+    {
+        _type = ConstraintType::SIX_DOF;
+    }
+    virtual ~Physics3D6DofSpringConstraint(){}
+};
+
 // end of 3d group
 /// @}
 

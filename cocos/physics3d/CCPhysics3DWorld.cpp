@@ -123,7 +123,7 @@ bool Physics3DWorld::isDebugDrawEnabled() const
     return _btPhyiscsWorld->getDebugDrawer() != nullptr;
 }
 
-void Physics3DWorld::addPhysics3DObject(Physics3DObject* physicsObj)
+void Physics3DWorld::addPhysics3DObject(Physics3DObject* physicsObj, short group, short mask)
 {
     auto it = std::find(_objects.begin(), _objects.end(), physicsObj);
     if (it == _objects.end())
@@ -235,7 +235,7 @@ void Physics3DWorld::stepSimulate(float dt)
         {
             it->preSimulate();
         }
-        _btPhyiscsWorld->stepSimulation(dt, 3);
+        _btPhyiscsWorld->stepSimulation(1.0 / 60.0);
         //sync dynamic node after simulation
         for (auto it : _physicsComponents)
         {

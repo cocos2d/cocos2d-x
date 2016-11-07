@@ -1025,9 +1025,16 @@ static Sprite3DMaterial* getSprite3DMaterialForAttribs(MeshVertexData* meshVerte
 
 
 
-void Sprite3D::enableShadow(bool state)
+void Sprite3D::enableShadow(bool state, float shadowIndex)
 {
   Node::enableShadow(state);
+
+  /**
+   *
+   *
+   *
+   */
+  this->shadowIndex = shadowIndex;
 }
 
 void Sprite3D::enableLight(bool state)
@@ -1036,7 +1043,7 @@ void Sprite3D::enableLight(bool state)
 
   if(!this->light)
   {
-    this->setLightMask(0);
+    //this->setLightMask(0);
   }
 }
 

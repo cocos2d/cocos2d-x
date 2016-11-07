@@ -296,7 +296,7 @@ THE SOFTWARE.
 /** Support JPEG or not. If your application don't use jpeg format picture, you can undefine this macro to save package size.
  */
 #ifndef CC_USE_JPEG
-#define CC_USE_JPEG  0
+#define CC_USE_JPEG  1
 #endif // CC_USE_JPEG
 
 /** Support TIFF or not. If your application don't use TIFF format picture, you can undefine this macro to save package size.
@@ -412,6 +412,16 @@ THE SOFTWARE.
  */
 #ifndef CC_USE_DEFAULT_CAMERA
 #define CC_USE_DEFAULT_CAMERA 0
+#endif
+
+/** @def CC_2D_CULLING_FUNCTION
+ * Is using default camera for a 2D game.
+ */
+#ifndef CC_2D_CULLING_FUNCTION
+#define CC_2D_CULLING_FUNCTION \
+auto position = AABB(Vec3::ZERO, Vec3(this->getContentSize().width, this->getContentSize().height, this->getPositionZ())); \
+position.transform(this->getNodeToWorldTransform()); \
+if(Camera::getCameraBackground()->isVisibleInFrustum(&position))
 #endif
 
 #endif // __CCCONFIG_H__

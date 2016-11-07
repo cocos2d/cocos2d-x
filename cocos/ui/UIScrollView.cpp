@@ -76,7 +76,7 @@ _horizontalScrollBar(nullptr),
 _scrollViewEventListener(nullptr),
 _scrollViewEventSelector(nullptr),
 _eventCallback(nullptr),
-_sens(3.0)
+_sens(1.0)
 {
     setTouchEnabled(true);
     _propagateTouchEvents = false;
@@ -1492,10 +1492,6 @@ Widget* ScrollView::findNextFocusedWidget(cocos2d::ui::Widget::FocusDirection di
     {
         return Widget::findNextFocusedWidget(direction, current);
     }
-}
-
-void ScrollView::visit(Renderer *renderer, const Mat4& parentTransform, uint32_t parentFlags)
-{
 }
 }
 

@@ -2588,7 +2588,7 @@ bool Node::enableLight()
   return this->light;
 }
 
-void Node::enableShadow(bool state)
+void Node::enableShadow(bool state, float shadowIndex)
 {
   this->shadow = state;
 }

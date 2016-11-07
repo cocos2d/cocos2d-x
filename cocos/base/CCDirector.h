@@ -791,7 +791,9 @@ protected:
 
     virtual float getCaptureScale();
 
+    virtual RenderTexture* getCaptureRenderTextures(int index);
     virtual Texture2D* getCaptureTextures(int index);
+
     virtual Node* getCaptureTexture();
 
     virtual experimental::FrameBuffer* getCaptureFrameBuffer();

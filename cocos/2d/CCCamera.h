@@ -332,6 +332,14 @@ public:
     static void setDefaultViewport(const experimental::Viewport& vp) { _defaultViewport = vp; }
 
     virtual Camera* deepCopy() override;
+
+    static Camera* cameraBackground;
+    static Camera* cameraElements;
+
+    static void setCameraBackground(Camera* camera);
+    static void setCameraElements(Camera* camera);
+    static Camera* getCameraBackground();
+    static Camera* getCameraElements();
 };
 
 NS_CC_END
