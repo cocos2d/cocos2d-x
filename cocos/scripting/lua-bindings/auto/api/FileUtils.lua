@@ -52,7 +52,7 @@
         
 --------------------------------
 -- Sets the filenameLookup dictionary.<br>
--- param pFilenameLookupDict The dictionary for replacing filename.<br>
+-- param filenameLookupDict The dictionary for replacing filename.<br>
 -- since v2.1
 -- @function [parent=#FileUtils] setFilenameLookupDictionary 
 -- @param self
@@ -287,7 +287,7 @@
 --------------------------------
 -- Gets full path from a file name and the path of the relative file.<br>
 -- param filename The file name.<br>
--- param pszRelativeFile The path of the relative file.<br>
+-- param relativeFile The path of the relative file.<br>
 -- return The full path.<br>
 -- e.g. filename: hello.png, pszRelativeFile: /User/path1/path2/hello.plist<br>
 -- Return: /User/path1/path2/hello.pvr (If there a a key(hello.png)-value(hello.pvr) in FilenameLookup dictionary. )
@@ -300,7 +300,7 @@
 --------------------------------
 -- Windows fopen can't support UTF-8 filename<br>
 -- Need convert all parameters fopen and other 3rd-party libs<br>
--- param filename std::string name file for conversion from utf-8<br>
+-- param filenameUtf8 std::string name file for conversion from utf-8<br>
 -- return std::string ansi filename in current locale
 -- @function [parent=#FileUtils] getSuitableFOpen 
 -- @param self

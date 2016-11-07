@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2015 Chukong Technologies Inc.
+Copyright (c) 2015-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -40,7 +40,7 @@ THE SOFTWARE.
 namespace cocos2d { namespace network
 {
     class DownloadTask;
-    
+
     class CC_DLL IDownloadTask
     {
     public:
@@ -51,20 +51,21 @@ namespace cocos2d { namespace network
     {
     public:
         virtual ~IDownloaderImpl(){}
-        
+
         std::function<void(const DownloadTask& task,
                            int64_t bytesReceived,
                            int64_t totalBytesReceived,
                            int64_t totalBytesExpected,
                            std::function<int64_t(void *buffer, int64_t len)>& transferDataToBuffer)> onTaskProgress;
-        
+
         std::function<void(const DownloadTask& task,
                            int errorCode,
                            int errorCodeInternal,
                            const std::string& errorStr,
                            std::vector<unsigned char>& data)> onTaskFinish;
-        
+
         virtual IDownloadTask *createCoTask(std::shared_ptr<const DownloadTask>& task) = 0;
     };
 
 }}  // namespace cocos2d::network
+

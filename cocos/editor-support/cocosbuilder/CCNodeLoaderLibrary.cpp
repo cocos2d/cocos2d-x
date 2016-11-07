@@ -70,8 +70,8 @@ NodeLoader * NodeLoaderLibrary::getNodeLoader(const char* pClassName) {
 
 void NodeLoaderLibrary::purge(bool pReleaseNodeLoaders) {
     if(pReleaseNodeLoaders) {
-        for(NodeLoaderMap::iterator it = this->_nodeLoaders.begin(); it != this->_nodeLoaders.end(); it++) {
-            it->second->release();
+        for(auto& it : this->_nodeLoaders) {
+            it.second->release();
         }
     }
     this->_nodeLoaders.clear();

@@ -96,7 +96,7 @@ cocos2d::Rect SkeletonNode::getBoundingBox() const
         }
     }
     boundingBox.setRect(minx, miny, maxx - minx, maxy - miny);
-    return RectApplyAffineTransform(boundingBox, this->getNodeToParentAffineTransform());;
+    return RectApplyAffineTransform(boundingBox, this->getNodeToParentAffineTransform());
 }
 
 SkeletonNode::SkeletonNode()
@@ -363,7 +363,7 @@ void SkeletonNode::updateOrderedAllbones()
 
 void SkeletonNode::sortOrderedAllBones()
 {
-    std::sort(_subOrderedAllBones.begin(), _subOrderedAllBones.end(), cocos2d::nodeComparisonLess);
+    sortNodes(this->_subOrderedAllBones);
 }
 
 NS_TIMELINE_END

@@ -137,7 +137,7 @@ bool UIRadioButtonTwoGroupsTest::init()
 {
     if (UIScene::init())
     {
-        Size widgetSize = _widget->getContentSize();;
+        Size widgetSize = _widget->getContentSize();
         
         // Add a label in which the radio button events will be displayed
         _groupEventLabel = Text::create("RadioButtonGroup : No Event", "fonts/Marker Felt.ttf", 25);
@@ -295,7 +295,7 @@ bool UIRadioButtonTabTest::init()
 {
     if (UIScene::init())
     {
-        Size widgetSize = _widget->getContentSize();;
+        Size widgetSize = _widget->getContentSize();
         
         static const float BUTTON_SCALE = 0.5f;
         const float buttonWidth = 350 * BUTTON_SCALE / Director::getInstance()->getContentScaleFactor();

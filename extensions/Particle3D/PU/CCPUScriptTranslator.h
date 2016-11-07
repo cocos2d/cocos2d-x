@@ -1224,7 +1224,7 @@ public:
     virtual void translate(PUScriptCompiler* compiler, PUAbstractNode *node)
     {
         // No own implementation
-    };
+    }
     
     /** Only parses a certain child property
      */
@@ -1232,7 +1232,7 @@ public:
     {
         // No own implementation
         return false;
-    };
+    }
     
     /** Only parses a certain child objec
      */
@@ -1240,7 +1240,7 @@ public:
     {
         // No own implementation
         return false;
-    };
+    }
     
     /** Parse Vector2
      */

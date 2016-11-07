@@ -36,6 +36,7 @@
 #include "math/Vec2.h"
 #include "ui/UIHelper.h"
 #include "base/CCDirector.h"
+#include "platform/CCFileUtils.h"
 
 NS_CC_BEGIN
 
@@ -46,7 +47,7 @@ namespace ui {
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_ERROR,"",__VA_ARGS__)
 static void editBoxEditingDidBegin(int index);
 static void editBoxEditingDidChanged(int index, const std::string& text);
-static void editBoxEditingDidEnd(int index, const std::string& text);
+static void editBoxEditingDidEnd(int index, const std::string& text, int action);
 extern "C"{
     JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxEditBoxHelper_editBoxEditingDidBegin(JNIEnv *env, jclass, jint index) {
         editBoxEditingDidBegin(index);
@@ -57,9 +58,9 @@ extern "C"{
         editBoxEditingDidChanged(index, textString);
     }
 
-    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxEditBoxHelper_editBoxEditingDidEnd(JNIEnv *env, jclass, jint index, jstring text) {
+    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxEditBoxHelper_editBoxEditingDidEnd(JNIEnv *env, jclass, jint index, jstring text, jint action) {
         std::string textString = StringUtils::getStringUTFCharsJNI(env,text);
-        editBoxEditingDidEnd(index, textString);
+        editBoxEditingDidEnd(index, textString, action);
     }
 }
 
@@ -112,8 +113,17 @@ void EditBoxImplAndroid::setNativeFont(const char* pFontName, int fontSize)
 {
     auto director = cocos2d::Director::getInstance();
     auto glView = director->getOpenGLView();
-    JniHelper::callStaticVoidMethod(editBoxClassName, "setFont", 
-                                    _editBoxIndex, pFontName, 
+    auto isFontFileExists = cocos2d::FileUtils::getInstance()->isFileExist(pFontName);
+    std::string realFontPath = pFontName;
+    if(isFontFileExists) {
+        realFontPath = cocos2d::FileUtils::getInstance()->fullPathForFilename(pFontName);
+        if (realFontPath.find("assets/") == 0)
+        {
+            realFontPath = realFontPath.substr(strlen("assets/"));   // Chop out the 'assets/' portion of the path.
+        }
+    }
+    JniHelper::callStaticVoidMethod(editBoxClassName, "setFont",
+                                    _editBoxIndex, realFontPath,
                                     (float)fontSize * glView->getScaleX());
 }
 
@@ -125,7 +135,7 @@ void EditBoxImplAndroid::setNativeFontColor(const Color4B& color)
 
 void EditBoxImplAndroid::setNativePlaceholderFont(const char* pFontName, int fontSize)
 {
-    CCLOG("Wraning! You can't change Andriod Hint fontName and fontSize");
+    CCLOG("Warning! You can't change Android Hint fontName and fontSize");
 }
 
 void EditBoxImplAndroid::setNativePlaceholderFontColor(const Color4B& color)
@@ -187,8 +197,7 @@ void EditBoxImplAndroid::updateNativeFrame(const Rect& rect)
 
 void EditBoxImplAndroid::nativeOpenKeyboard()
 {
-    //it will also open up the soft keyboard
-    JniHelper::callStaticVoidMethod(editBoxClassName, "setVisible", _editBoxIndex, true);
+    JniHelper::callStaticVoidMethod(editBoxClassName, "openKeyboard", _editBoxIndex);
 }
 
 
@@ -214,18 +223,18 @@ void editBoxEditingDidChanged(int index, const std::string& text)
     }
 }
 
-void editBoxEditingDidEnd(int index, const std::string& text)
+void editBoxEditingDidEnd(int index, const std::string& text, int action)
 {
     auto it = s_allEditBoxes.find(index);
     if (it != s_allEditBoxes.end())
     {
-        s_allEditBoxes[index]->editBoxEditingDidEnd(text);
+        s_allEditBoxes[index]->editBoxEditingDidEnd(text, static_cast<cocos2d::ui::EditBoxDelegate::EditBoxEndAction>(action));
     }
 }
 
 const char* EditBoxImplAndroid::getNativeDefaultFontName()
 {
-    return "";
+    return "sans-serif";
 }
 
 } //end of ui namespace

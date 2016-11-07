@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -34,7 +34,7 @@ NS_CC_BEGIN
 
 #define CURSOR_TIME_SHOW_HIDE 0.5f
 #define CURSOR_DEFAULT_CHAR '|'
-
+#define PASSWORD_STYLE_TEXT_DEFAULT "\xe2\x80\xa2"
 static int _calcCharCount(const char * text)
 {
     int n = 0;
@@ -63,7 +63,7 @@ TextFieldTTF::TextFieldTTF()
 , _placeHolder("")   // prevent Label initWithString assertion
 , _colorText(Color4B::WHITE)
 , _secureTextEntry(false)
-,_passwordStyleText("\u25CF")
+, _passwordStyleText(PASSWORD_STYLE_TEXT_DEFAULT)
 , _cursorEnabled(false)
 , _cursorPosition(0)
 , _cursorChar(CURSOR_DEFAULT_CHAR)
@@ -337,7 +337,7 @@ void TextFieldTTF::setCursorPosition(std::size_t cursorPosition)
     if (_cursorEnabled && cursorPosition <= (std::size_t)_charCount)
     {
         _cursorPosition = cursorPosition;
-        _cursorShowingTime = CURSOR_TIME_SHOW_HIDE*2.0;
+        _cursorShowingTime = CURSOR_TIME_SHOW_HIDE * 2.0f;
     }
 }
 
@@ -698,7 +698,7 @@ void TextFieldTTF::setPasswordTextStyle(const std::string &text)
     }
 }
 
-std::string TextFieldTTF::getPasswordTextStyle()const
+const std::string& TextFieldTTF::getPasswordTextStyle() const
 {
     return _passwordStyleText;
 }

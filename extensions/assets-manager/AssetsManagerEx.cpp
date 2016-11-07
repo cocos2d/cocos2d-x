@@ -23,7 +23,7 @@
  ****************************************************************************/
 #include "AssetsManagerEx.h"
 #include "CCEventListenerAssetsManagerEx.h"
-#include "deprecated/CCString.h"
+#include "base/ccUTF8.h"
 #include "base/CCDirector.h"
 
 #include <stdio.h>
@@ -34,9 +34,6 @@
 #include "unzip.h"
 #endif
 #include "base/CCAsyncTaskPool.h"
-
-using namespace cocos2d;
-using namespace std;
 
 NS_CC_EXT_BEGIN
 
@@ -65,7 +62,7 @@ AssetsManagerEx::AssetsManagerEx(const std::string& manifestUrl, const std::stri
 , _localManifest(nullptr)
 , _tempManifest(nullptr)
 , _remoteManifest(nullptr)
-, _waitToUpdate(false)
+, _updateEntry(UpdateEntry::NONE)
 , _percent(0)
 , _percentByFile(0)
 , _totalToDownload(0)
@@ -77,11 +74,10 @@ AssetsManagerEx::AssetsManagerEx(const std::string& manifestUrl, const std::stri
     std::string pointer = StringUtils::format("%p", this);
     _eventName = EventListenerAssetsManagerEx::LISTENER_ID + pointer;
     _fileUtils = FileUtils::getInstance();
-    _updateState = State::UNCHECKED;
 
     _downloader = std::shared_ptr<network::Downloader>(new network::Downloader);
 //    _downloader->setConnectionTimeout(DEFAULT_CONNECTION_TIMEOUT);
-    _downloader->onTaskError = bind(&AssetsManagerEx::onError, this, placeholders::_1, placeholders::_2, placeholders::_3, placeholders::_4);
+    _downloader->onTaskError = std::bind(&AssetsManagerEx::onError, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4);
     _downloader->onTaskProgress = [this](const network::DownloadTask& task,
                                          int64_t bytesReceived,
                                          int64_t totalBytesReceived,
@@ -423,6 +419,32 @@ void AssetsManagerEx::decompressDownloadedZip()
 
 void AssetsManagerEx::dispatchUpdateEvent(EventAssetsManagerEx::EventCode code, const std::string &assetId/* = ""*/, const std::string &message/* = ""*/, int curle_code/* = CURLE_OK*/, int curlm_code/* = CURLM_OK*/)
 {
+    switch (code)
+    {
+        case EventAssetsManagerEx::EventCode::ERROR_UPDATING:
+        case EventAssetsManagerEx::EventCode::ERROR_PARSE_MANIFEST:
+        case EventAssetsManagerEx::EventCode::ERROR_NO_LOCAL_MANIFEST:
+        case EventAssetsManagerEx::EventCode::ERROR_DECOMPRESS:
+        case EventAssetsManagerEx::EventCode::ERROR_DOWNLOAD_MANIFEST:
+        case EventAssetsManagerEx::EventCode::UPDATE_FAILED:
+        case EventAssetsManagerEx::EventCode::UPDATE_FINISHED:
+        case EventAssetsManagerEx::EventCode::ALREADY_UP_TO_DATE:
+            _updateEntry = UpdateEntry::NONE;
+            break;
+        case EventAssetsManagerEx::EventCode::UPDATE_PROGRESSION:
+            break;
+        case EventAssetsManagerEx::EventCode::ASSET_UPDATED:
+            break;
+        case EventAssetsManagerEx::EventCode::NEW_VERSION_FOUND:
+            if (_updateEntry == UpdateEntry::CHECK_UPDATE)
+            {
+                _updateEntry = UpdateEntry::NONE;
+            }
+            break;
+        default:
+            break;
+    }
+
     EventAssetsManagerEx event(_eventName, this, code, _percent, _percentByFile, assetId, message, curle_code, curlm_code);
     _eventDispatcher->dispatchEvent(&event);
 }
@@ -476,11 +498,14 @@ void AssetsManagerEx::parseVersion()
         }
         else
         {
+            // Save the old update entry type since its value may be changed in event listener.
+            UpdateEntry oldUpdateEntry = _updateEntry;
+
             _updateState = State::NEED_UPDATE;
             dispatchUpdateEvent(EventAssetsManagerEx::EventCode::NEW_VERSION_FOUND);
 
             // Wait to update so continue the process
-            if (_waitToUpdate)
+            if (oldUpdateEntry == UpdateEntry::DO_UPDATE)
             {
                 _updateState = State::PREDOWNLOAD_MANIFEST;
                 downloadManifest();
@@ -494,7 +519,13 @@ void AssetsManagerEx::downloadManifest()
     if (_updateState != State::PREDOWNLOAD_MANIFEST)
         return;
 
-    std::string manifestUrl = _localManifest->getManifestFileUrl();
+    std::string manifestUrl;
+    if (_remoteManifest->isVersionLoaded()) {
+        manifestUrl = _remoteManifest->getManifestFileUrl();
+    } else {
+        manifestUrl = _localManifest->getManifestFileUrl();
+    }
+
     if (manifestUrl.size() > 0)
     {
         _updateState = State::DOWNLOADING_MANIFEST;
@@ -519,7 +550,7 @@ void AssetsManagerEx::parseManifest()
 
     if (!_remoteManifest->isLoaded())
     {
-        CCLOG("AssetsManagerEx : Error parsing manifest file\n");
+        CCLOG("AssetsManagerEx : Error parsing manifest file, %s", _tempManifestPath.c_str());
         dispatchUpdateEvent(EventAssetsManagerEx::EventCode::ERROR_PARSE_MANIFEST);
         _updateState = State::UNCHECKED;
     }
@@ -535,7 +566,7 @@ void AssetsManagerEx::parseManifest()
             _updateState = State::NEED_UPDATE;
             dispatchUpdateEvent(EventAssetsManagerEx::EventCode::NEW_VERSION_FOUND);
 
-            if (_waitToUpdate)
+            if (_updateEntry == UpdateEntry::DO_UPDATE)
             {
                 startUpdate();
             }
@@ -625,8 +656,6 @@ void AssetsManagerEx::startUpdate()
             dispatchUpdateEvent(EventAssetsManagerEx::EventCode::UPDATE_PROGRESSION, "", msg);
         }
     }
-
-    _waitToUpdate = false;
 }
 
 void AssetsManagerEx::updateSucceed()
@@ -658,8 +687,8 @@ void AssetsManagerEx::updateSucceed()
     _compressedFiles.clear();
 
     std::function<void(void*)> mainThread = [this](void* param) {
-        AsyncData* asyncData = (AsyncData*)param;
-        if (asyncData->errorCompressedFile.empty())
+        auto asyncDataInner = reinterpret_cast<AsyncData*>(param);
+        if (asyncDataInner->errorCompressedFile.empty())
         {
             // 5. Set update state
             _updateState = State::UP_TO_DATE;
@@ -669,10 +698,10 @@ void AssetsManagerEx::updateSucceed()
         else
         {
             _updateState = State::FAIL_TO_UPDATE;
-            dispatchUpdateEvent(EventAssetsManagerEx::EventCode::ERROR_DECOMPRESS, "", "Unable to decompress file " + asyncData->errorCompressedFile);
+            dispatchUpdateEvent(EventAssetsManagerEx::EventCode::ERROR_DECOMPRESS, "", "Unable to decompress file " + asyncDataInner->errorCompressedFile);
         }
 
-        delete asyncData;
+        delete asyncDataInner;
     };
     AsyncTaskPool::getInstance()->enqueue(AsyncTaskPool::TaskType::TASK_OTHER, mainThread, (void*)asyncData, [this, asyncData]() {
         // Decompress all compressed files
@@ -689,6 +718,12 @@ void AssetsManagerEx::updateSucceed()
 
 void AssetsManagerEx::checkUpdate()
 {
+    if (_updateEntry != UpdateEntry::NONE)
+    {
+        CCLOGERROR("AssetsManagerEx::checkUpdate, updateEntry isn't NONE");
+        return;
+    }
+
     if (!_inited){
         CCLOG("AssetsManagerEx : Manifests uninited.\n");
         dispatchUpdateEvent(EventAssetsManagerEx::EventCode::ERROR_NO_LOCAL_MANIFEST);
@@ -700,6 +735,8 @@ void AssetsManagerEx::checkUpdate()
         dispatchUpdateEvent(EventAssetsManagerEx::EventCode::ERROR_NO_LOCAL_MANIFEST);
         return;
     }
+
+    _updateEntry = UpdateEntry::CHECK_UPDATE;
 
     switch (_updateState) {
         case State::UNCHECKED:
@@ -726,6 +763,12 @@ void AssetsManagerEx::checkUpdate()
 
 void AssetsManagerEx::update()
 {
+    if (_updateEntry != UpdateEntry::NONE)
+    {
+        CCLOGERROR("AssetsManagerEx::update, updateEntry isn't NONE");
+        return;
+    }
+
     if (!_inited){
         CCLOG("AssetsManagerEx : Manifests uninited.\n");
         dispatchUpdateEvent(EventAssetsManagerEx::EventCode::ERROR_NO_LOCAL_MANIFEST);
@@ -738,7 +781,7 @@ void AssetsManagerEx::update()
         return;
     }
 
-    _waitToUpdate = true;
+    _updateEntry = UpdateEntry::DO_UPDATE;
 
     switch (_updateState) {
         case State::UNCHECKED:
@@ -771,7 +814,6 @@ void AssetsManagerEx::update()
             // Manifest not loaded yet
             if (!_remoteManifest->isLoaded())
             {
-                _waitToUpdate = true;
                 _updateState = State::PREDOWNLOAD_MANIFEST;
                 downloadManifest();
             }
@@ -784,7 +826,7 @@ void AssetsManagerEx::update()
         case State::UP_TO_DATE:
         case State::UPDATING:
         case State::UNZIPPING:
-            _waitToUpdate = false;
+            _updateEntry = UpdateEntry::NONE;
             break;
         default:
             break;

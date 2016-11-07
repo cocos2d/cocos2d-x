@@ -92,7 +92,7 @@
 -- @function [parent=#ActionManager] getNumberOfRunningActionsInTarget 
 -- @param self
 -- @param #cc.Node target
--- @return long#long ret (return value: long)
+-- @return int#int ret (return value: int)
         
 --------------------------------
 --  Removes all actions from a certain target.<br>
@@ -120,6 +120,13 @@
 -- @return ActionManager#ActionManager self (return value: cc.ActionManager)
         
 --------------------------------
+--  Pauses all running actions, returning a list of targets whose actions were paused.<br>
+-- return  A list of targets whose actions were paused.
+-- @function [parent=#ActionManager] pauseAllRunningActions 
+-- @param self
+-- @return array_table#array_table ret (return value: array_table)
+        
+--------------------------------
 --  Removes all actions given its tag and the target.<br>
 -- param tag       The actions' tag.<br>
 -- param target    A certain target.<br>
@@ -131,11 +138,23 @@
 -- @return ActionManager#ActionManager self (return value: cc.ActionManager)
         
 --------------------------------
---  Pauses all running actions, returning a list of targets whose actions were paused.<br>
--- return  A list of targets whose actions were paused.
--- @function [parent=#ActionManager] pauseAllRunningActions 
+--  Returns the numbers of actions that are running in a<br>
+-- certain target with a specific tag.<br>
+-- Like getNumberOfRunningActionsInTarget Composable actions<br>
+-- are counted as 1 action. Example:<br>
+-- - If you are running 1 Sequence of 7 actions, it will return 1.<br>
+-- - If you are running 7 Sequences of 2 actions, it will return 7.<br>
+-- param target    A certain target.<br>
+-- param tag       Tag that will be searched.<br>
+-- return  The numbers of actions that are running in a certain target<br>
+-- with a specific tag.<br>
+-- see getNumberOfRunningActionsInTarget<br>
+-- js NA
+-- @function [parent=#ActionManager] getNumberOfRunningActionsInTargetByTag 
 -- @param self
--- @return array_table#array_table ret (return value: array_table)
+-- @param #cc.Node target
+-- @param #int tag
+-- @return unsigned long#unsigned long ret (return value: unsigned long)
         
 --------------------------------
 -- js ctor

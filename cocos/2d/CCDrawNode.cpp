@@ -1,6 +1,6 @@
 /* Copyright (c) 2012 Scott Lembcke and Howling Moon Software
  * Copyright (c) 2012 cocos2d-x.org
- * Copyright (c) 2013-2014 Chukong Technologies Inc.
+ * Copyright (c) 2013-2016 Chukong Technologies Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -76,11 +76,6 @@ static inline float v2fdot(const Vec2 &p0, const Vec2 &p1)
     return  p0.x * p1.x + p0.y * p1.y;
 }
 
-static inline Vec2 v2fforangle(float _a_)
-{
-    return v2f(cosf(_a_), sinf(_a_));
-}
-
 static inline Vec2 v2fnormalize(const Vec2 &p)
 {
     Vec2 r(p.x, p.y);
@@ -104,7 +99,7 @@ static inline Tex2F __t(const Vec2 &v)
 
 // implementation of DrawNode
 
-DrawNode::DrawNode(int lineWidth)
+DrawNode::DrawNode(GLfloat lineWidth)
 : _vao(0)
 , _vbo(0)
 , _vaoGLPoint(0)
@@ -155,7 +150,7 @@ DrawNode::~DrawNode()
     }
 }
 
-DrawNode* DrawNode::create(int defaultLineWidth)
+DrawNode* DrawNode::create(GLfloat defaultLineWidth)
 {
     DrawNode* ret = new (std::nothrow) DrawNode(defaultLineWidth);
     if (ret && ret->init())
@@ -771,7 +766,7 @@ void DrawNode::drawPolygon(const Vec2 *verts, int count, const Color4F &fillColo
 {
     CCASSERT(count >= 0, "invalid count value");
     
-    bool outline = (borderColor.a > 0.0 && borderWidth > 0.0);
+    bool outline = (borderColor.a > 0.0f && borderWidth > 0.0f);
     
     auto  triangle_count = outline ? (3*count - 2) : (count - 2);
     auto vertex_count = 3*triangle_count;
@@ -806,7 +801,7 @@ void DrawNode::drawPolygon(const Vec2 *verts, int count, const Color4F &fillColo
             Vec2 n1 = v2fnormalize(v2fperp(v2fsub(v1, v0)));
             Vec2 n2 = v2fnormalize(v2fperp(v2fsub(v2, v1)));
             
-            Vec2 offset = v2fmult(v2fadd(n1, n2), 1.0/(v2fdot(n1, n2) + 1.0));
+            Vec2 offset = v2fmult(v2fadd(n1, n2), 1.0f / (v2fdot(n1, n2) + 1.0f));
             struct ExtrudeVerts tmp = {offset, n2};
             extrude[i] = tmp;
         }
@@ -939,12 +934,12 @@ void DrawNode::setBlendFunc(const BlendFunc &blendFunc)
     _blendFunc = blendFunc;
 }
 
-void DrawNode::setLineWidth(int lineWidth)
+void DrawNode::setLineWidth(GLfloat lineWidth)
 {
     _lineWidth = lineWidth;
 }
 
-float DrawNode::getLineWidth()
+GLfloat DrawNode::getLineWidth()
 {
     return this->_lineWidth;
 }

@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -39,6 +39,7 @@ _gravity(Gravity::CENTER_VERTICAL),
 _magneticType(MagneticType::NONE),
 _magneticAllowedOutOfBoundary(true),
 _itemsMargin(0.0f),
+_scrollTime(DEFAULT_TIME_IN_SEC_FOR_SCROLL_TO_ITEM),
 _curSelectedIndex(-1),
 _innerContainerDoLayoutDirty(true),
 _listViewEventListener(nullptr),
@@ -294,7 +295,7 @@ void ListView::addChild(Node* child, int zOrder, const std::string &name)
     }
 }
     
-void ListView::removeChild(cocos2d::Node *child, bool cleaup)
+void ListView::removeChild(cocos2d::Node *child, bool cleanup)
 {
     Widget* widget = dynamic_cast<Widget*>(child);
     if (nullptr != widget)
@@ -315,7 +316,7 @@ void ListView::removeChild(cocos2d::Node *child, bool cleaup)
         onItemListChanged();
     }
    
-    ScrollView::removeChild(child, cleaup);
+    ScrollView::removeChild(child, cleanup);
 }
     
 void ListView::removeAllChildren()
@@ -438,6 +439,17 @@ void ListView::setItemsMargin(float margin)
 float ListView::getItemsMargin()const
 {
     return _itemsMargin;
+}
+
+void ListView::setScrollDuration(float time)
+{
+    if (time >= 0)
+        _scrollTime = time;
+}
+
+float ListView::getScrollDuration() const 
+{
+    return _scrollTime;
 }
 
 void ListView::setDirection(Direction dir)
@@ -775,7 +787,7 @@ void ListView::jumpToItem(ssize_t itemIndex, const Vec2& positionRatioInView, co
 
 void ListView::scrollToItem(ssize_t itemIndex, const Vec2& positionRatioInView, const Vec2& itemAnchorPoint)
 {
-    scrollToItem(itemIndex, positionRatioInView, itemAnchorPoint, DEFAULT_TIME_IN_SEC_FOR_SCROLL_TO_ITEM);
+    scrollToItem(itemIndex, positionRatioInView, itemAnchorPoint, _scrollTime);
 }
 
 void ListView::scrollToItem(ssize_t itemIndex, const Vec2& positionRatioInView, const Vec2& itemAnchorPoint, float timeInSec)
@@ -792,6 +804,17 @@ void ListView::scrollToItem(ssize_t itemIndex, const Vec2& positionRatioInView, 
 ssize_t ListView::getCurSelectedIndex() const
 {
     return _curSelectedIndex;
+}
+
+void ListView::setCurSelectedIndex(int itemIndex)
+{
+    Widget* item = getItem(itemIndex);
+    if (item == nullptr)
+    {
+        return;
+    }
+    _curSelectedIndex = itemIndex;
+    this->selectedItemEvent(cocos2d::ui::Widget::TouchEventType::ENDED);
 }
 
 void ListView::onSizeChanged()

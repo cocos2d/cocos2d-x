@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013-2015 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -46,10 +46,10 @@ public:
 //            CCLOG("All RenderCommand should not be used when Pool is released!");
 //        }
         _freePool.clear();
-        for (typename std::list<T*>::iterator iter = _allocatedPoolBlocks.begin(); iter != _allocatedPoolBlocks.end(); ++iter)
+        for (auto& allocatedPoolBlock : _allocatedPoolBlocks)
         {
-            delete[] *iter;
-            *iter = nullptr;
+            delete[] allocatedPoolBlock;
+            allocatedPoolBlock = nullptr;
         }
         _allocatedPoolBlocks.clear();
     }

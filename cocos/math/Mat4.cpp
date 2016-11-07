@@ -19,6 +19,8 @@
  */
 
 #include "math/Mat4.h"
+
+#include <cmath>
 #include "math/Quaternion.h"
 #include "math/MathUtil.h"
 #include "base/ccMacros.h"
@@ -108,12 +110,12 @@ void Mat4::createPerspective(float fieldOfView, float aspectRatio,
 
     float f_n = 1.0f / (zFarPlane - zNearPlane);
     float theta = MATH_DEG_TO_RAD(fieldOfView) * 0.5f;
-    if (fabs(fmod(theta, MATH_PIOVER2)) < MATH_EPSILON)
+    if (std::abs(std::fmod(theta, MATH_PIOVER2)) < MATH_EPSILON)
     {
         CCLOGERROR("Invalid field of view value (%f) causes attempted calculation tan(%f), which is undefined.", fieldOfView, theta);
         return;
     }
-    float divisor = tan(theta);
+    float divisor = std::tan(theta);
     GP_ASSERT(divisor);
     float factor = 1.0f / divisor;
 
@@ -293,7 +295,7 @@ void Mat4::createRotation(const Vec3& axis, float angle, Mat4* dst)
     if (n != 1.0f)
     {
         // Not normalized.
-        n = sqrt(n);
+        n = std::sqrt(n);
         // Prevent divide too close to zero.
         if (n > 0.000001f)
         {
@@ -304,8 +306,8 @@ void Mat4::createRotation(const Vec3& axis, float angle, Mat4* dst)
         }
     }
 
-    float c = cos(angle);
-    float s = sin(angle);
+    float c = std::cos(angle);
+    float s = std::sin(angle);
 
     float t = 1.0f - c;
     float tx = t * x;
@@ -345,8 +347,8 @@ void Mat4::createRotationX(float angle, Mat4* dst)
 
     memcpy(dst, &IDENTITY, MATRIX_SIZE);
 
-    float c = cos(angle);
-    float s = sin(angle);
+    float c = std::cos(angle);
+    float s = std::sin(angle);
 
     dst->m[5]  = c;
     dst->m[6]  = s;
@@ -360,8 +362,8 @@ void Mat4::createRotationY(float angle, Mat4* dst)
 
     memcpy(dst, &IDENTITY, MATRIX_SIZE);
 
-    float c = cos(angle);
-    float s = sin(angle);
+    float c = std::cos(angle);
+    float s = std::sin(angle);
 
     dst->m[0]  = c;
     dst->m[2]  = -s;
@@ -375,8 +377,8 @@ void Mat4::createRotationZ(float angle, Mat4* dst)
 
     memcpy(dst, &IDENTITY, MATRIX_SIZE);
 
-    float c = cos(angle);
-    float s = sin(angle);
+    float c = std::cos(angle);
+    float s = std::sin(angle);
 
     dst->m[0] = c;
     dst->m[1] = s;
@@ -479,7 +481,7 @@ bool Mat4::decompose(Vec3* scale, Quaternion* rotation, Vec3* translation) const
         return true;
 
     // Scale too close to zero, can't decompose rotation.
-    if (scaleX < MATH_TOLERANCE || scaleY < MATH_TOLERANCE || fabs(scaleZ) < MATH_TOLERANCE)
+    if (scaleX < MATH_TOLERANCE || scaleY < MATH_TOLERANCE || std::abs(scaleZ) < MATH_TOLERANCE)
         return false;
 
     float rn;
@@ -505,7 +507,7 @@ bool Mat4::decompose(Vec3* scale, Quaternion* rotation, Vec3* translation) const
 
     if (trace > MATH_EPSILON)
     {
-        float s = 0.5f / sqrt(trace);
+        float s = 0.5f / std::sqrt(trace);
         rotation->w = 0.25f / s;
         rotation->x = (yaxis.z - zaxis.y) * s;
         rotation->y = (zaxis.x - xaxis.z) * s;
@@ -517,7 +519,7 @@ bool Mat4::decompose(Vec3* scale, Quaternion* rotation, Vec3* translation) const
         // we will never divide by zero in the code below.
         if (xaxis.x > yaxis.y && xaxis.x > zaxis.z)
         {
-            float s = 0.5f / sqrt(1.0f + xaxis.x - yaxis.y - zaxis.z);
+            float s = 0.5f / std::sqrt(1.0f + xaxis.x - yaxis.y - zaxis.z);
             rotation->w = (yaxis.z - zaxis.y) * s;
             rotation->x = 0.25f / s;
             rotation->y = (yaxis.x + xaxis.y) * s;
@@ -525,7 +527,7 @@ bool Mat4::decompose(Vec3* scale, Quaternion* rotation, Vec3* translation) const
         }
         else if (yaxis.y > zaxis.z)
         {
-            float s = 0.5f / sqrt(1.0f + yaxis.y - xaxis.x - zaxis.z);
+            float s = 0.5f / std::sqrt(1.0f + yaxis.y - xaxis.x - zaxis.z);
             rotation->w = (zaxis.x - xaxis.z) * s;
             rotation->x = (yaxis.x + xaxis.y) * s;
             rotation->y = 0.25f / s;
@@ -533,7 +535,7 @@ bool Mat4::decompose(Vec3* scale, Quaternion* rotation, Vec3* translation) const
         }
         else
         {
-            float s = 0.5f / sqrt(1.0f + zaxis.z - xaxis.x - yaxis.y );
+            float s = 0.5f / std::sqrt(1.0f + zaxis.z - xaxis.x - yaxis.y);
             rotation->w = (xaxis.y - yaxis.x ) * s;
             rotation->x = (zaxis.x + xaxis.z ) * s;
             rotation->y = (zaxis.y + yaxis.z ) * s;
@@ -658,7 +660,7 @@ bool Mat4::inverse()
     float det = a0 * b5 - a1 * b4 + a2 * b3 + a3 * b2 - a4 * b1 + a5 * b0;
 
     // Close to zero, can't invert.
-    if (fabs(det) <= MATH_TOLERANCE)
+    if (std::abs(det) <= MATH_TOLERANCE)
         return false;
 
     // Support the case where m == dst.

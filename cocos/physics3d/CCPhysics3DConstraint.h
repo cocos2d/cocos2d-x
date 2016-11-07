@@ -110,7 +110,7 @@ public:
     /**
      * override the number of constraint solver iterations used to solve this constraint, -1 will use the default number of iterations, as specified in SolverInfo.m_numIterations
      */
-    void setOverrideNumSolverIterations(int overideNumIterations);
+    void setOverrideNumSolverIterations(int overrideNumIterations);
     
 #if (CC_ENABLE_BULLET_INTEGRATION)
     btTypedConstraint* getbtContraint() { return _constraint; }

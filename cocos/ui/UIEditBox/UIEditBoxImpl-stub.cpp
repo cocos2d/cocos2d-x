@@ -8,7 +8,7 @@ namespace ui {
 
 EditBoxImpl* __createSystemEditBox(EditBox* pEditBox)
 {
-    return NULL;
+    return nullptr;
 }
 
 }

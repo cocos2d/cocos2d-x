@@ -640,7 +640,7 @@ Frame* ActionTimelineCache::loadPositionFrameWithFlatBuffers(const flatbuffers::
 {
     PositionFrame* frame = PositionFrame::create();
     
-    auto f_position = flatbuffers->postion();
+    auto f_position = flatbuffers->position();
     Vec2 position(f_position->x(), f_position->y());
     frame->setPosition(position);
     

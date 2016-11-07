@@ -6,6 +6,8 @@ LOCAL_MODULE := lua_empty_test_shared
 
 LOCAL_MODULE_FILENAME := liblua_empty_test
 
+LOCAL_ARM_MODE := arm
+
 LOCAL_SRC_FILES := main.cpp \
                    ../../../Classes/AppDelegate.cpp
 

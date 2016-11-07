@@ -73,9 +73,37 @@ bool
 },
 
 /**
+ * @method initWithJsonFile
+* @param {String|String} str
+* @param {String|spAtlas} str
+* @param {float|float} float
+*/
+initWithJsonFile : function(
+str,
+spatlas,
+float 
+)
+{
+},
+
+/**
  * @method setSlotsToSetupPose
  */
 setSlotsToSetupPose : function (
+)
+{
+},
+
+/**
+ * @method initWithBinaryFile
+* @param {String|String} str
+* @param {String|spAtlas} str
+* @param {float|float} float
+*/
+initWithBinaryFile : function(
+str,
+spatlas,
+float 
 )
 {
 },
@@ -96,18 +124,6 @@ getBlendFunc : function (
 )
 {
     return cc.BlendFunc;
-},
-
-/**
- * @method drawSkeleton
- * @param {mat4_object} arg0
- * @param {unsigned int} arg1
- */
-drawSkeleton : function (
-mat4, 
-int 
-)
-{
 },
 
 /**
@@ -157,20 +173,6 @@ getTimeScale : function (
 },
 
 /**
- * @method initWithFile
-* @param {String|String} str
-* @param {String|spAtlas} str
-* @param {float|float} float
-*/
-initWithFile : function(
-str,
-spatlas,
-float 
-)
-{
-},
-
-/**
  * @method setBlendFunc
  * @param {cc.BlendFunc} arg0
  */
@@ -203,15 +205,29 @@ getSkeleton : function (
 },
 
 /**
+ * @method drawDebug
+ * @param {cc.Renderer} arg0
+ * @param {mat4_object} arg1
+ * @param {unsigned int} arg2
+ */
+drawDebug : function (
+renderer, 
+mat4, 
+int 
+)
+{
+},
+
+/**
  * @method createWithFile
 * @param {String|String} str
-* @param {String|spAtlas} str
+* @param {spAtlas|String} spatlas
 * @param {float|float} float
-* @return {sp.SkeletonRenderer|sp.SkeletonRenderer}
+* @return {sp.SkeletonRenderer|sp.SkeletonRenderer|sp.SkeletonRenderer}
 */
 createWithFile : function(
 str,
-spatlas,
+str,
 float 
 )
 {
@@ -313,13 +329,15 @@ func
 },
 
 /**
- * @method update
- * @param {float} arg0
+ * @method findAnimation
+ * @param {String} arg0
+ * @return {spAnimation}
  */
-update : function (
-float 
+findAnimation : function (
+str 
 )
 {
+    return spAnimation;
 },
 
 /**
@@ -379,14 +397,6 @@ func
 },
 
 /**
- * @method initialize
- */
-initialize : function (
-)
-{
-},
-
-/**
  * @method clearTracks
  */
 clearTracks : function (
@@ -419,13 +429,39 @@ int
 },
 
 /**
- * @method createWithFile
+ * @method createWithBinaryFile
 * @param {String|String} str
 * @param {String|spAtlas} str
 * @param {float|float} float
 * @return {sp.SkeletonAnimation|sp.SkeletonAnimation}
 */
-createWithFile : function(
+createWithBinaryFile : function(
+str,
+spatlas,
+float 
+)
+{
+    return sp.SkeletonAnimation;
+},
+
+/**
+ * @method create
+ * @return {sp.SkeletonAnimation}
+ */
+create : function (
+)
+{
+    return sp.SkeletonAnimation;
+},
+
+/**
+ * @method createWithJsonFile
+* @param {String|String} str
+* @param {String|spAtlas} str
+* @param {float|float} float
+* @return {sp.SkeletonAnimation|sp.SkeletonAnimation}
+*/
+createWithJsonFile : function(
 str,
 spatlas,
 float 
@@ -437,14 +473,8 @@ float
 /**
  * @method SkeletonAnimation
  * @constructor
-* @param {spSkeletonData|String|String} spskeletondata
-* @param {bool|spAtlas|String} bool
-* @param {float|float} float
-*/
-SkeletonAnimation : function(
-str,
-str,
-float 
+ */
+SkeletonAnimation : function (
 )
 {
 },

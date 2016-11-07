@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2015 Chris Hannon http://www.channon.us
- Copyright (c) 2013-2015 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -37,7 +37,7 @@
 #include "network/HttpClient.h"
 
 #include "json/rapidjson.h"
-#include "json/document.h"
+#include "json/document-wrapper.h"
 #include "json/stringbuffer.h"
 #include "json/writer.h"
 
@@ -76,7 +76,7 @@ public:
     std::vector<std::string> getData()const{ return _args; };
     virtual std::string stringify()const;
 
-    static SocketIOPacket * createPacketWithType(std::string type, SocketIOVersion version);
+    static SocketIOPacket * createPacketWithType(const std::string& type, SocketIOVersion version);
     static SocketIOPacket * createPacketWithTypeIndex(int type, SocketIOVersion version);
 protected:
     std::string _pId;//id message
@@ -154,7 +154,7 @@ std::string SocketIOPacket::toString()const
     encoded << this->_separator;
 
 
-    if (_args.size() != 0)
+    if (!_args.empty())
     {
         std::string ackpId = "";
         // This is an acknowledgement packet, so, prepend the ack pid to the data
@@ -171,7 +171,7 @@ std::string SocketIOPacket::toString()const
 int SocketIOPacket::typeAsNumber()const
 {
     std::string::size_type num = 0;
-    std::vector<std::string>::const_iterator item = std::find(_types.begin(), _types.end(), _type);
+    auto item = std::find(_types.begin(), _types.end(), _type);
     if (item != _types.end())
     {
         num = item - _types.begin();
@@ -251,7 +251,7 @@ SocketIOPacketV10x::SocketIOPacketV10x()
 int SocketIOPacketV10x::typeAsNumber()const
 {
     std::vector<std::string>::size_type num = 0;
-    std::vector<std::string>::const_iterator item = std::find(_typesMessage.begin(), _typesMessage.end(), _type);
+    auto item = std::find(_typesMessage.begin(), _typesMessage.end(), _type);
     if (item != _typesMessage.end())
     {//it's a message
         num = item - _typesMessage.begin();
@@ -302,7 +302,7 @@ SocketIOPacketV10x::~SocketIOPacketV10x()
     _endpoint = "";
 }
 
-SocketIOPacket * SocketIOPacket::createPacketWithType(std::string type, SocketIOPacket::SocketIOVersion version)
+SocketIOPacket * SocketIOPacket::createPacketWithType(const std::string& type, SocketIOPacket::SocketIOVersion version)
 {
     SocketIOPacket *ret;
     switch (version)
@@ -355,7 +355,7 @@ private:
 
 public:
     SIOClientImpl(const std::string& host, int port);
-    virtual ~SIOClientImpl(void);
+    virtual ~SIOClientImpl();
 
     static SIOClientImpl* create(const std::string& host, int port);
 
@@ -452,9 +452,9 @@ void SIOClientImpl::handshakeResponse(HttpClient *sender, HttpResponse *response
         CCLOGERROR("SIOClientImpl::handshake() failed");
         CCLOGERROR("error buffer: %s", response->getErrorBuffer());
 
-        for (auto iter = _clients.begin(); iter != _clients.end(); ++iter)
+        for (auto& client : _clients)
         {
-            iter->second->getDelegate()->onError(iter->second, response->getErrorBuffer());
+            client.second->getDelegate()->onError(client.second, response->getErrorBuffer());
         }
 
         return;
@@ -466,7 +466,7 @@ void SIOClientImpl::handshakeResponse(HttpClient *sender, HttpResponse *response
     std::stringstream s;
     s.str("");
 
-    for (unsigned int i = 0; i < buffer->size(); i++)
+    for (unsigned int i = 0, size = buffer->size(); i < size; ++i)
     {
         s << (*buffer)[i];
     }
@@ -681,19 +681,19 @@ void SIOClientImpl::send(const std::string& endpoint, const std::string& s)
 {
     switch (_version) {
     case SocketIOPacket::SocketIOVersion::V09x:
-		{
-			SocketIOPacket *packet = SocketIOPacket::createPacketWithType("message", _version);
-			packet->setEndpoint(endpoint);
-			packet->addData(s);
-			this->send(packet);
-			break;
-		}
+        {
+            SocketIOPacket *packet = SocketIOPacket::createPacketWithType("message", _version);
+            packet->setEndpoint(endpoint);
+            packet->addData(s);
+            this->send(packet);
+            break;
+        }
     case SocketIOPacket::SocketIOVersion::V10x:
-		{
-			this->emit(endpoint, "message", s);
-			break;
-		}
-	}
+        {
+            this->emit(endpoint, "message", s);
+            break;
+        }
+    }
 }
 
 void SIOClientImpl::send(SocketIOPacket *packet)
@@ -733,9 +733,9 @@ void SIOClientImpl::onOpen(WebSocket* ws)
 
     Director::getInstance()->getScheduler()->schedule(CC_SCHEDULE_SELECTOR(SIOClientImpl::heartbeat), this, (_heartbeat * .9f), false);
 
-    for (auto iter = _clients.begin(); iter != _clients.end(); ++iter)
+    for (auto& client : _clients)
     {
-        iter->second->onOpen();
+        client.second->onOpen();
     }
 
     CCLOGINFO("SIOClientImpl::onOpen socket connected!");
@@ -877,11 +877,9 @@ void SIOClientImpl::onMessage(WebSocket* ws, const WebSocket::Data& data)
                 break;
             case 4:
             {
-                const char second = payload.at(0);
-                int control2 = atoi(&second);
-                CCLOGINFO("Message code: [%i]", control);
+                int control2 = payload.at(0) - '0';
+                CCLOGINFO("Message code: [%i]", control2);
 
-                SocketIOPacket *packetOut = SocketIOPacket::createPacketWithType("event", _version);
                 std::string endpoint = "";
 
                 std::string::size_type a = payload.find("/");
@@ -902,8 +900,6 @@ void SIOClientImpl::onMessage(WebSocket* ws, const WebSocket::Data& data)
 
                 // we didn't find and endpoint and we are in the default namespace
                 if (endpoint == "") endpoint = "/";
-
-                packetOut->setEndpoint(endpoint);
 
                 c = getClient(endpoint);
 
@@ -935,7 +931,7 @@ void SIOClientImpl::onMessage(WebSocket* ws, const WebSocket::Data& data)
 
                     std::string eventname = payload.substr(payloadFirstSlashPos + 1,
                                                            payloadSecondSlashPos - payloadFirstSlashPos + 1);
-                    
+
                     CCLOGINFO("event name %s between %i and %i", eventname.c_str(),
                               payloadFirstSlashPos, payloadSecondSlashPos);
 
@@ -982,13 +978,15 @@ void SIOClientImpl::onClose(WebSocket* ws)
     CC_UNUSED_PARAM(ws);
     if (!_clients.empty())
     {
-        for (auto iter = _clients.begin(); iter != _clients.end(); ++iter)
+        for (auto& client : _clients)
         {
-            iter->second->socketClosed();
+            client.second->socketClosed();
         }
         // discard this client
         _connected = false;
-        Director::getInstance()->getScheduler()->unscheduleAllForTarget(this);
+        if (Director::getInstance())
+            Director::getInstance()->getScheduler()->unscheduleAllForTarget(this);
+        
         SocketIO::getInstance()->removeSocket(_uri);
     }
 
@@ -1013,7 +1011,7 @@ SIOClient::SIOClient(const std::string& host, int port, const std::string& path,
 
 }
 
-SIOClient::~SIOClient(void)
+SIOClient::~SIOClient()
 {
     if (_connected)
     {
@@ -1100,7 +1098,7 @@ void SIOClient::fireEvent(const std::string& eventName, const std::string& data)
 
     CCLOGINFO("SIOClient::fireEvent no native event with name %s found", eventName.c_str());
 }
-    
+
 void SIOClient::setTag(const char* tag)
 {
     _tag = tag;
@@ -1113,7 +1111,7 @@ SocketIO::SocketIO()
 {
 }
 
-SocketIO::~SocketIO(void)
+SocketIO::~SocketIO()
 {
 }
 
@@ -1203,24 +1201,24 @@ SIOClient* SocketIO::connect(const std::string& uri, SocketIO::SIODelegate& dele
             socket->addClient(path, c);
 
             socket->connectToEndpoint(path);
-        }else{
-	    CCLOG("SocketIO: disconnect previous client");
-	    c->disconnect();
-	
-	    CCLOG("SocketIO: recreate a new socket, new client, connect");
-	    SIOClientImpl* newSocket = nullptr;
-	    SIOClient *newC = nullptr;
-	
-	    newSocket = SIOClientImpl::create(host, port);
-	
-    	    newC = new (std::nothrow) SIOClient(host, port, path, newSocket, delegate);
-	
-	    newSocket->addClient(path, newC);
-	
-	    newSocket->connect();
-	
-	    return newC;
-	}
+        }
+        else
+        {
+            CCLOG("SocketIO: disconnect previous client");
+            c->disconnect();
+
+            CCLOG("SocketIO: recreate a new socket, new client, connect");
+            SIOClientImpl* newSocket = nullptr;
+            SIOClient *newC = nullptr;
+
+            newSocket = SIOClientImpl::create(host, port);
+            newC = new (std::nothrow) SIOClient(host, port, path, newSocket, delegate);
+
+            newSocket->addClient(path, newC);
+            newSocket->connect();
+
+            return newC;
+        }
     }
 
     return c;
@@ -1244,3 +1242,4 @@ void SocketIO::removeSocket(const std::string& uri)
 }
 
 NS_CC_END
+

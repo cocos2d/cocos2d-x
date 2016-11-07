@@ -26,6 +26,7 @@ if(WINDOWS)
 
 set(COCOS_PLATFORM_SPECIFIC_SRC
   platform/win32/CCStdC-win32.cpp
+  platform/win32/CCUtils-win32.cpp
   platform/win32/CCFileUtils-win32.cpp
   platform/win32/CCCommon-win32.cpp
   platform/win32/CCApplication-win32.cpp
@@ -43,6 +44,7 @@ set(COCOS_PLATFORM_SPECIFIC_SRC
   platform/apple/CCLock-apple.cpp
   platform/apple/CCFileUtils-apple.mm
   platform/apple/CCThread-apple.mm
+  platform/apple/CCDevice-apple.mm
   platform/desktop/CCGLViewImpl-desktop.cpp
 )
 
@@ -87,6 +89,12 @@ set(COCOS2DX_ANDROID_STATIC
 
 add_library(cocos2dxandroid_static STATIC ${COCOS2DX_ANDROID_STATIC})
 set_property(TARGET cocos2dxandroid_static PROPERTY POSITION_INDEPENDENT_CODE TRUE)
+set_target_properties(cocos2dxandroid_static
+  PROPERTIES
+  ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+  LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+  VERSION "${COCOS2D_X_VERSION}"
+)
 
 endif()
 

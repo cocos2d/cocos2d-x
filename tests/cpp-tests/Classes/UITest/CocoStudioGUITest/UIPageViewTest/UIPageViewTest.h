@@ -38,7 +38,7 @@ public:
     ~UIPageViewTest();
     virtual bool init() override;
 
-    void pageViewEvent(cocos2d::Ref* sender, cocos2d::ui::PageView::EventType type);
+    void pageViewEvent(cocos2d::Ref* sender, cocos2d::ui::PageViewEventType type);
 
 protected:
 
@@ -152,6 +152,20 @@ public:
 
 protected:
 
+    cocos2d::ui::Text* _displayValueLabel;
+};
+
+class UIPageViewIndicatorTest : public UIScene
+{
+public:
+    CREATE_FUNC(UIPageViewIndicatorTest);
+    
+    UIPageViewIndicatorTest();
+    ~UIPageViewIndicatorTest();
+    virtual bool init() override;
+    
+protected:
+    
     cocos2d::ui::Text* _displayValueLabel;
 };
 

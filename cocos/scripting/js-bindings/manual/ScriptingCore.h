@@ -1,7 +1,7 @@
 /*
  * Created by Rolando Abarca on 3/14/12.
  * Copyright (c) 2012 Zynga Inc. All rights reserved.
- * Copyright (c) 2013-2014 Chukong Technologies Inc.
+ * Copyright (c) 2013-2016 Chukong Technologies Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -39,8 +39,9 @@
 
 #include <assert.h>
 #include <memory>
+#include <chrono>
 
-#define ENGINE_VERSION "Cocos2d-JS v3.11"
+#define ENGINE_VERSION "Cocos2d-JS v3.13"
 
 void js_log(const char *format, ...);
 
@@ -81,15 +82,17 @@ class CC_JS_DLL ScriptingCore : public cocos2d::ScriptEngineProtocol
 private:
     JSRuntime *_rt;
     JSContext *_cx;
-    mozilla::Maybe<JS::PersistentRootedObject> _global;
-    mozilla::Maybe<JS::PersistentRootedObject> _debugGlobal;
+    JS::PersistentRootedObject *_global;
+    JS::PersistentRootedObject *_debugGlobal;
     SimpleRunLoop* _runLoop;
     bool _jsInited;
+    bool _needCleanup;
 
     bool _callFromScript;
     ScriptingCore();
+
+	std::chrono::steady_clock::time_point _engineStartTime;
 public:
-    
     ~ScriptingCore();
 
     /**@~english
@@ -288,22 +291,22 @@ public:
      @param path @~english The script file path
      @return @~english Script object
      */
-    JSScript* getScript(const char *path);
-    
+    JS::PersistentRootedScript* getScript(const std::string& path);
+
     /**@~english
      * Compile the specified js file
      * @param path    @~english The path of the script to be compiled
      * @param global    @~english The js global object
      * @param cx        @~english The js context
      */
-    void compileScript(const char *path, JS::HandleObject global, JSContext* cx = NULL);
-    
+    JS::PersistentRootedScript* compileScript(const std::string& path, JS::HandleObject global, JSContext* cx = nullptr);
+
     /**@~english
      * Run the specified js file
      * @param path @~english The path of the script to be executed
      * @return @~english Return true if succeed, otherwise return false.
      */
-    bool runScript(const char *path);
+    bool runScript(const std::string& path);
     /**@~english
      * Run the specified js file
      * @param path @~english The path of the script to be executed
@@ -311,8 +314,8 @@ public:
      * @param global @~english The context to execute the script
      * @return @~english Return true if succeed, otherwise return false.
      */
-    bool runScript(const char *path, JS::HandleObject global, JSContext* cx = NULL);
-    
+    bool runScript(const std::string& path, JS::HandleObject global, JSContext* cx = NULL);
+
     /**@~english
      * Require the specified js file
      * The difference between run and require is that require returns the export object of the script
@@ -344,11 +347,16 @@ public:
      * Gets the cached script objects for all executed js file
      * @return @~english The cached script object map
      */
-    std::unordered_map<std::string, JSScript*> &getFileScript();
+    std::unordered_map<std::string, JS::PersistentRootedScript*>& getFileScript();
     /**@~english
      * Clean all script objects
      */
     void cleanAllScript();
+
+	/**@~english
+	* Gets the time that the ScriptingCore was initalized
+	*/
+	std::chrono::steady_clock::time_point getEngineStartTime() const;
     
     /**@~english
      * Initialize everything, including the js context, js global object etc.
@@ -405,7 +413,7 @@ public:
     /**@~english
      * Simulate a multi touch event and dispatch it to a js object.
      * @param eventType @~english The touch event type
-     * @param touches @~english Touchs list for multitouch
+     * @param touches @~english Touches list for multitouch
      * @param obj @~english The js object
      * @return @~english Return 1 if succeed, otherwise return 0.
      */
@@ -494,12 +502,12 @@ public:
      * Gets the debug environment's global object
      * @return @~english The debug environment's global object
      */
-    JSObject* getDebugGlobal() { return _debugGlobal.ref().get(); }
+    JSObject* getDebugGlobal() { return _debugGlobal->get(); }
     /**@~english
      * Gets the global object
      * @return @~english The global object
      */
-    JSObject* getGlobalObject() { return _global.ref().get(); }
+    JSObject* getGlobalObject() { return _global->get(); }
     
     /**@~english
      * Checks whether a C++ function is overrided in js prototype chain
@@ -547,7 +555,7 @@ public:
     bool handleMouseEvent(void* nativeObj, cocos2d::EventMouse::MouseEventType eventType, cocos2d::Event* event);
     bool handleMouseEvent(void* nativeObj, cocos2d::EventMouse::MouseEventType eventType, cocos2d::Event* event, JS::MutableHandleValue jsvalRet);
 
-    bool handleKeybardEvent(void* nativeObj, cocos2d::EventKeyboard::KeyCode keyCode, bool isPressed, cocos2d::Event* event);
+    bool handleKeyboardEvent(void* nativeObj, cocos2d::EventKeyboard::KeyCode keyCode, bool isPressed, cocos2d::Event* event);
     bool handleFocusEvent(void* nativeObj, cocos2d::ui::Widget* widgetLoseFocus, cocos2d::ui::Widget* widgetGetFocus);
 
     void restartVM();
@@ -561,23 +569,20 @@ bool jsb_get_reserved_slot(JSObject *obj, uint32_t idx, jsval& ret);
 template <class T>
 js_type_class_t *jsb_register_class(JSContext *cx, JSClass *jsClass, JS::HandleObject proto, JS::HandleObject parentProto)
 {
-    TypeTest<T> t;
     js_type_class_t *p = nullptr;
-    std::string typeName = t.s_name();
+    std::string typeName = TypeTest<T>::s_name();
     if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
     {
+        JS::RootedObject protoRoot(cx, proto);
+        JS::RootedObject protoParentRoot(cx, parentProto);
         p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        memset(p, 0, sizeof(js_type_class_t));
         p->jsclass = jsClass;
-        if (p->proto.empty())
-        {
-            p->proto.construct(cx);
-        }
-        p->proto.ref() = proto;
-        if (p->parentProto.empty())
-        {
-            p->parentProto.construct(cx);
-        }
-        p->parentProto.ref() = parentProto ;
+        auto persistentProtoRoot = new (std::nothrow) JS::PersistentRootedObject(cx, protoRoot);
+        p->proto.set(persistentProtoRoot);
+        
+        auto persistentProtoParentRoot = new (std::nothrow) JS::PersistentRootedObject(cx, protoParentRoot);
+        p->parentProto.set(persistentProtoParentRoot);
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
     return p;
@@ -589,7 +594,7 @@ js_proxy_t* jsb_new_proxy(void* nativeObj, JS::HandleObject jsObj);
 /** returns the proxy associated with the Native* */
 js_proxy_t* jsb_get_native_proxy(void* nativeObj);
 /** returns the proxy associated with the JSObject* */
-js_proxy_t* jsb_get_js_proxy(JSObject* jsObj);
+js_proxy_t* jsb_get_js_proxy(JS::HandleObject jsObj);
 /** deprecated: use jsb_remove_proxy(js_proxy_t* proxy) instead */
 void jsb_remove_proxy(js_proxy_t* nativeProxy, js_proxy_t* jsProxy);
 /** removes both the native and js proxies */
@@ -633,7 +638,7 @@ JSObject* jsb_ref_autoreleased_create_jsobject(JSContext *cx, cocos2d::Ref *ref,
 /**
  * It will try to get the associated JSObjct for the native object.
  * The reference created from JSObject to native object is weak because it won't retain it.
- * The behavior is exactly the same with 'jsb_ref_create_jsobject' when CC_ENABLE_GC_FOR_NATIVE_OBJECTS desactivated.
+ * The behavior is exactly the same with 'jsb_ref_create_jsobject' when CC_ENABLE_GC_FOR_NATIVE_OBJECTS deactivated.
  */
 JSObject* jsb_create_weak_jsobject(JSContext *cx, void *native, js_type_class_t *typeClass, const char* debug);
 
@@ -655,7 +660,7 @@ JSObject* jsb_ref_autoreleased_get_or_create_jsobject(JSContext *cx, cocos2d::Re
  * It will try to get the associated JSObjct for the native object.
  * If it can't find it, it will create a new one associating it to the native object.
  * The reference created from JSObject to native object is weak because it won't retain it.
- * The behavior is exactly the same with 'jsb_ref_get_or_create_jsobject' when CC_ENABLE_GC_FOR_NATIVE_OBJECTS desactivated.
+ * The behavior is exactly the same with 'jsb_ref_get_or_create_jsobject' when CC_ENABLE_GC_FOR_NATIVE_OBJECTS deactivated.
  */
 CC_JS_DLL JSObject* jsb_get_or_create_weak_jsobject(JSContext *cx, void *native, js_type_class_t *typeClass, const char* debug);
 

@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -69,6 +69,7 @@ Sprite3DTests::Sprite3DTests()
     ADD_TEST_CASE(MotionStreak3DTest);
     ADD_TEST_CASE(Sprite3DPropertyTest);
     ADD_TEST_CASE(Sprite3DNormalMappingTest);
+    ADD_TEST_CASE(Issue16155Test);
 };
 
 //------------------------------------------------------------------
@@ -96,7 +97,7 @@ Sprite3DForceDepthTest::Sprite3DForceDepthTest()
 {
     auto orc = cocos2d::Sprite3D::create("Sprite3DTest/orc.c3b");
     orc->setScale(5);
-    orc->setNormalizedPosition(Vec2(.5f,.3f));
+    orc->setPositionNormalized(Vec2(.5f,.3f));
     orc->setPositionZ(40);
     orc->setRotation3D(Vec3(0,180,0));
     orc->setGlobalZOrder(-1);
@@ -106,7 +107,7 @@ Sprite3DForceDepthTest::Sprite3DForceDepthTest()
     auto ship = Sprite3D::create("Sprite3DTest/boss1.obj");
     ship->setScale(5);
     ship->setTexture("Sprite3DTest/boss.png");
-    ship->setNormalizedPosition(Vec2(.5,.5));
+    ship->setPositionNormalized(Vec2(.5,.5));
     ship->setRotation3D(Vec3(90,0,0));
     ship->setForceDepthWrite(true);
     
@@ -131,7 +132,7 @@ std::string Sprite3DForceDepthTest::subtitle() const
 Sprite3DEmptyTest::Sprite3DEmptyTest()
 {
     auto s = Sprite3D::create();
-    s->setNormalizedPosition(Vec2(.5,.5));
+    s->setPositionNormalized(Vec2(.5,.5));
     auto l = Label::create();
     l->setString("Test");
     s->addChild(l);
@@ -2588,6 +2589,9 @@ std::string Sprite3DNormalMappingTest::subtitle() const
     return "";
 }
 
+//
+//
+//
 Sprite3DPropertyTest::Sprite3DPropertyTest()
 {
     auto s = Director::getInstance()->getWinSize();
@@ -2688,4 +2692,29 @@ void Sprite3DPropertyTest::refreshSpriteRender()
         }
         mesh->setTexture(cacheTex, cocos2d::NTextureData::Usage::Diffuse, false);
     }
+}
+
+//
+// Issue16155Test
+//
+Issue16155Test::Issue16155Test()
+{
+    auto s = Director::getInstance()->getWinSize();
+
+    auto sprite = Sprite3D::create("Sprite3DTest/orc.c3b");
+
+    int rcBefore = sprite->getMeshByIndex(0)->getTexture()->getReferenceCount();
+    addChild(sprite);
+    removeChild(sprite);
+
+    cocos2d::log("Issue 16155: Ref count:%d. Run this test again. RC should be the same", rcBefore);
+}
+
+std::string Issue16155Test::title() const
+{
+    return "Issue16155 Test";
+}
+std::string Issue16155Test::subtitle() const
+{
+    return "Should not leak texture. See console";
 }

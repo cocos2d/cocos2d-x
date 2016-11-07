@@ -82,9 +82,9 @@ static void accelerometer_sensor_cb(sensor_h _sensor, sensor_event_s *sensor_dat
 
     double tmp = _acceleration->x;
     Application *app = Application::getInstance();
-    int oritentation = elm_win_rotation_get(app->_win);
+    int orientation = elm_win_rotation_get(app->_win);
 
-   switch (oritentation)
+    switch (orientation)
     {
     case 0:
         _acceleration->x = _acceleration->y;
@@ -106,7 +106,7 @@ static void accelerometer_sensor_cb(sensor_h _sensor, sensor_event_s *sensor_dat
         _acceleration->y = -tmp;
         break;
     default:
-        CCLOG("unknow orientation");
+        CCLOG("unknown orientation");
     }
 
     cocos2d::EventAcceleration event(*_acceleration);

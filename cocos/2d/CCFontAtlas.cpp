@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2013      Zynga Inc.
- Copyright (c) 2013-2015 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
 
@@ -265,7 +265,20 @@ void FontAtlas::findNewCharacters(const std::u16string& u16Text, std::unordered_
     //find new characters
     if (_letterDefinitions.empty())
     {
-        newChars = u16Text;
+        // fixed #16169: new android project crash in android 5.0.2 device (Nexus 7) when use 3.12.
+        // While using clang compiler with gnustl_static on android, the copy assignment operator of `std::u16string`
+        // will affect the memory validity, it means after `newChars` is destroyed, the memory of `u16Text` holds
+        // will be a dead region. `u16text` represents the variable in `Label::_utf16Text`, when somewhere
+        // allocates memory by `malloc, realloc, new, new[]`, the generated memory address may be the same
+        // as `Label::_utf16Text` holds. If doing a `memset` or other memory operations, the original `Label::_utf16Text`
+        // will be in an unknown state. Meanwhile, a bunch lots of logic which depends on `Label::_utf16Text`
+        // will be broken.
+        
+        // newChars = u16Text;
+        
+        // Using `append` method is a workaround for this issue. So please be carefully while using the assignment operator
+        // of `std::u16string`.
+        newChars.append(u16Text);
     }
     else
     {
@@ -340,7 +353,7 @@ bool FontAtlas::prepareLetterDefinitions(const std::u16string& utf16Text)
             tempDef.validDefinition = true;
             tempDef.width = tempRect.size.width + _letterPadding + _letterEdgeExtend;
             tempDef.height = tempRect.size.height + _letterPadding + _letterEdgeExtend;
-            tempDef.offsetX = tempRect.origin.x + adjustForDistanceMap + adjustForExtend;
+            tempDef.offsetX = tempRect.origin.x - adjustForDistanceMap - adjustForExtend;
             tempDef.offsetY = _fontAscender + tempRect.origin.y - adjustForDistanceMap - adjustForExtend;
 
             if (_currentPageOrigX + tempDef.width > CacheTextureWidth)

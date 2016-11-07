@@ -98,7 +98,20 @@ public:
 
     /** create default camera, the camera type depends on Director::getProjection, the depth of the default camera is 0 */
     static Camera* create();
-    
+
+    /**
+     * Get the visiting camera , the visiting camera shall be set on Scene::render
+     */
+    static const Camera* getVisitingCamera();
+
+    static const experimental::Viewport& getDefaultViewport();
+    static void setDefaultViewport(const experimental::Viewport& vp);
+
+    /**
+     * Get the default camera of the current running scene.
+     */
+    static Camera* getDefaultCamera();
+
     /**
     * Gets the type of camera.
     *
@@ -228,15 +241,6 @@ public:
     virtual void onExit() override;
 
     /**
-     * Get the visiting camera , the visiting camera shall be set on Scene::render
-     */
-    static const Camera* getVisitingCamera() { return _visitingCamera; }
-
-    /**
-     * Get the default camera of the current running scene.
-     */
-    static Camera* getDefaultCamera();
-    /**
      Before rendering scene with this camera, the background need to be cleared. It clears the depth buffer with max depth by default. Use setBackgroundBrush to modify the default behavior
      */
     void clearBackground();
@@ -245,31 +249,36 @@ public:
      */
     void apply();
     /**
+     Restore the FBO, RenderTargets and viewport.
+     */
+    void restore();
+
+    /**
      Set FBO, which will attach several render target for the rendered result.
-    */
+     */
     void setFrameBufferObject(experimental::FrameBuffer* fbo);
     /**
      Set Viewport for camera.
      */
-    void setViewport(const experimental::Viewport& vp) { _viewport = vp; }
-    
+    void setViewport(const experimental::Viewport& vp);
+
     /**
      * Whether or not the viewprojection matrix was updated since the last frame.
      * @return True if the viewprojection matrix was updated since the last frame.
      */
     bool isViewProjectionUpdated() const {return _viewProjectionUpdated;}
-    
+
     /**
      * set the background brush. See CameraBackgroundBrush for more information.
      * @param clearBrush Brush used to clear the background
      */
     void setBackgroundBrush(CameraBackgroundBrush* clearBrush);
-    
+
     /**
      * Get clear brush
      */
     CameraBackgroundBrush* getBackgroundBrush() const { return _clearBrush; }
-    
+
     virtual void visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;
 
     bool isBrushValid();
@@ -277,28 +286,34 @@ public:
 CC_CONSTRUCTOR_ACCESS:
     Camera();
     ~Camera();
-    
+
     /**
      * Set the scene,this method shall not be invoke manually
      */
     void setScene(Scene* scene);
-    
+
     /**set additional matrix for the projection matrix, it multiplies mat to projection matrix when called, used by WP8*/
     void setAdditionalProjection(const Mat4& mat);
-    
+
     /** init camera */
     bool initDefault();
     bool initPerspective(float fieldOfView, float aspectRatio, float nearPlane, float farPlane);
     bool initOrthographic(float zoomX, float zoomY, float nearPlane, float farPlane);
     void applyFrameBufferObject();
     void applyViewport();
+    void restoreFrameBufferObject();
+    void restoreViewport();
+
 protected:
+    static Camera* _visitingCamera;
+    static experimental::Viewport _defaultViewport;
 
     Scene* _scene; //Scene camera belongs to
     Mat4 _projection;
     mutable Mat4 _view;
     mutable Mat4 _viewInv;
     mutable Mat4 _viewProjection;
+
     Vec3 _up;
     Camera::Type _type;
     float _fieldOfView;
@@ -312,18 +327,12 @@ protected:
     mutable Frustum _frustum;   // camera frustum
     mutable bool _frustumDirty;
     int8_t  _depth;                 //camera depth, the depth of camera with CameraFlag::DEFAULT flag is 0 by default, a camera with larger depth is drawn on top of camera with smaller depth
-    static Camera* _visitingCamera;
-    
+
     CameraBackgroundBrush* _clearBrush; //brush used to clear the back ground
-    
+
     experimental::Viewport _viewport;
-    
     experimental::FrameBuffer* _fbo;
-protected:
-    static experimental::Viewport _defaultViewport;
-public:
-    static const experimental::Viewport& getDefaultViewport() { return _defaultViewport; }
-    static void setDefaultViewport(const experimental::Viewport& vp) { _defaultViewport = vp; }
+    GLint _oldViewport[4];
 };
 
 NS_CC_END

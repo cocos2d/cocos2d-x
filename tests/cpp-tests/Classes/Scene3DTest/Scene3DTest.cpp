@@ -13,20 +13,22 @@ using namespace spine;
 class SkeletonAnimationCullingFix : public SkeletonAnimation
 {
 public:
-    SkeletonAnimationCullingFix(const std::string& skeletonDataFile, const std::string& atlasFile, float scale)
-    : SkeletonAnimation(skeletonDataFile, atlasFile, scale)
+    SkeletonAnimationCullingFix()
+    : SkeletonAnimation()
     {}
     
-    virtual void drawSkeleton (const cocos2d::Mat4& transform, uint32_t transformFlags) override
+    virtual void draw(cocos2d::Renderer* renderer, const cocos2d::Mat4& transform, uint32_t transformFlags) override
     {
         glDisable(GL_CULL_FACE);
-        SkeletonAnimation::drawSkeleton(transform, transformFlags);
+        SkeletonAnimation::draw(renderer, transform, transformFlags);
         RenderState::StateBlock::invalidate(cocos2d::RenderState::StateBlock::RS_ALL_ONES);
     }
     
     static SkeletonAnimationCullingFix* createWithFile (const std::string& skeletonDataFile, const std::string& atlasFile, float scale = 1)
     {
-        SkeletonAnimationCullingFix* node = new SkeletonAnimationCullingFix(skeletonDataFile, atlasFile, scale);
+        SkeletonAnimationCullingFix* node = new SkeletonAnimationCullingFix();
+        spAtlas* atlas = spAtlas_createFromFile(atlasFile.c_str(), 0);
+        node->initWithJsonFile(skeletonDataFile, atlas, scale);
         node->autorelease();
         return node;
     }
@@ -380,7 +382,6 @@ void Scene3DTestScene::createWorld3D()
     _skyBox = Skybox::create();
     _skyBox->setCameraMask(s_CM[LAYER_BACKGROUND]);
     _skyBox->setTexture(_textureCube);
-    _skyBox->setScale(700.f);
 
     // create terrain
     Terrain::DetailMap r("TerrainTest/dirt.jpg");
@@ -393,7 +394,7 @@ void Scene3DTestScene::createWorld3D()
     _terrain = Terrain::create(data,Terrain::CrackFixedType::SKIRT);
     _terrain->setMaxDetailMapAmount(4);
     _terrain->setDrawWire(false);
-    
+
     _terrain->setSkirtHeightRatio(3);
     _terrain->setLODDistance(64,128,192);
     
@@ -703,9 +704,7 @@ void Scene3DTestScene::createDetailDlg()
     
     // add a spine ffd animation on it
     auto skeletonNode =
-        SkeletonAnimationCullingFix::createWithFile("spine/goblins-ffd.json",
-                                          "spine/goblins-ffd.atlas",
-                                          1.5f);
+        SkeletonAnimationCullingFix::createWithFile("spine/goblins.json", "spine/goblins.atlas", 1.5f);
     skeletonNode->setAnimation(0, "walk", true);
     skeletonNode->setSkin("goblin");
     

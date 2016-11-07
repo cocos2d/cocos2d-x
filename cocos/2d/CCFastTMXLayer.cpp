@@ -2,7 +2,7 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 Copyright (c) 2011 HKASoftware
 
@@ -44,7 +44,7 @@ THE SOFTWARE.
 #include "renderer/CCRenderer.h"
 #include "renderer/CCVertexIndexBuffer.h"
 #include "base/CCDirector.h"
-#include "deprecated/CCString.h"
+#include "base/ccUTF8.h"
 
 NS_CC_BEGIN
 namespace experimental {
@@ -130,7 +130,7 @@ TMXLayer::~TMXLayer()
 {
     CC_SAFE_RELEASE(_tileSet);
     CC_SAFE_RELEASE(_texture);
-    CC_SAFE_DELETE_ARRAY(_tiles);
+    CC_SAFE_FREE(_tiles);
     CC_SAFE_RELEASE(_vData);
     CC_SAFE_RELEASE(_vertexBuffer);
     CC_SAFE_RELEASE(_indexBuffer);
@@ -151,8 +151,8 @@ void TMXLayer::draw(Renderer *renderer, const Mat4& transform, uint32_t flags)
     if( flags != 0 || _dirty || _quadsDirty || isViewProjectionUpdated)
     {
         Size s = Director::getInstance()->getVisibleSize();
-        auto rect = Rect(Camera::getVisitingCamera()->getPositionX() - s.width * 0.5,
-                     Camera::getVisitingCamera()->getPositionY() - s.height * 0.5,
+        auto rect = Rect(Camera::getVisitingCamera()->getPositionX() - s.width * 0.5f,
+                     Camera::getVisitingCamera()->getPositionY() - s.height * 0.5f,
                      s.width,
                      s.height);
         
@@ -198,7 +198,7 @@ void TMXLayer::onDraw(Primitive *primitive)
 
 void TMXLayer::updateTiles(const Rect& culledRect)
 {
-    Rect visibleTiles = culledRect;
+    Rect visibleTiles = Rect(culledRect.origin, culledRect.size * Director::getInstance()->getContentScaleFactor());
     Size mapTileSize = CC_SIZE_PIXELS_TO_POINTS(_mapTileSize);
     Size tileSize = CC_SIZE_PIXELS_TO_POINTS(_tileSet->_tileSize);
     Mat4 nodeToTileTransform = _tileToNodeTransform.getInversed();
@@ -556,10 +556,10 @@ void TMXLayer::updateTotalQuads()
         }
         
         int offset = 0;
-        for(auto iter = _indicesVertexZOffsets.begin(); iter != _indicesVertexZOffsets.end(); ++iter)
+        for(auto& vertexZOffset : _indicesVertexZOffsets)
         {
-            std::swap(offset, iter->second);
-            offset += iter->second;
+            std::swap(offset, vertexZOffset.second);
+            offset += vertexZOffset.second;
         }
         updateVertexBuffer();
         
@@ -828,7 +828,7 @@ void TMXLayer::setTileGID(int gid, const Vec2& tileCoordinate, TMXTileFlags flag
     }
 }
 
-void TMXLayer::setupTileSprite(Sprite* sprite, Vec2 pos, int gid)
+void TMXLayer::setupTileSprite(Sprite* sprite, const Vec2& pos, int gid)
 {
     sprite->setPosition(getPositionAt(pos));
     sprite->setPositionZ((float)getVertexZForPos(pos));

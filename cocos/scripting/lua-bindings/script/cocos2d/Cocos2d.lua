@@ -309,7 +309,7 @@ function cc.convertColor(input, typ)
             ret = {r = input.r, g = input.g, b = input.b}
         end
         if input.a then
-            if math.ceil(input.a) ~= input.a or input.a >= 1 then
+            if math.ceil(input.a) ~= input.a or input.a <= 1 then
                 ret.a = input.a * 255
             else
                 ret.a = input.a
@@ -324,7 +324,7 @@ function cc.convertColor(input, typ)
             ret = {r = input.r / 255, g = input.g / 255, b = input.b / 255}
         end
         if input.a then
-            if math.ceil(input.a) ~= input.a or input.a >= 1 then
+            if math.ceil(input.a) ~= input.a or input.a <= 1 then
                 ret.a = input.a
             else
                 ret.a = input.a / 255
@@ -421,8 +421,24 @@ function cc.vec4(_x, _y, _z, _w)
     return { x = _x, y = _y, z = _z, w = _w }
 end
 
+function cc.vec3add(vec3a, vec3b)
+    return {x = vec3a.x + vec3b.x, y = vec3a.y + vec3b.y, z = vec3a.z + vec3b.z}
+end
+
+function cc.vec3sub(vec3a, vec3b)
+    return {x = vec3a.x - vec3b.x, y = vec3a.y - vec3b.y, z = vec3a.z - vec3b.z}
+end
+
+function cc.vec3mul(vec3, factor)
+    return {x = vec3.x * factor, y = vec3.y * factor, z = vec3.z * factor}
+end
+
+function cc.vec3dot(vec3a, vec3b)
+    return vec3a.x * vec3b.x + vec3a.y * vec3b.y + vec3a.z * vec3b.z
+end
+
 function cc.vec3normalize(vec3)
-    local n = vec3.x * vec3.x + vec3.y * vec3.y + vec3.z * vec3.z
+    local n = cc.vec3dot(vec3, vec3)
     if n == 1.0 then
         return vec3
     end
@@ -433,8 +449,7 @@ function cc.vec3normalize(vec3)
         return vec3
     end
 
-    n = 1.0 / n
-    return {x = vec3.x * n, y = vec3.y * n, z = vec3.z * n}
+    return cc.vec3mul(vec3, 1.0/n)
 end
 
 function cc.quaternion(_x, _y ,_z,_w)
@@ -492,8 +507,8 @@ function cc.mat4.getInversed(self)
     return mat4_getInversed(self)
 end
 
-function cc.mat4.transformVector(self, vector, dst)
-    return mat4_transformVector(self, vector, dst)
+function cc.mat4.transformVector(...)
+    return mat4_transformVector(...)
 end
 
 function cc.mat4.multiply(self, mat)
@@ -509,54 +524,6 @@ function cc.mat4.createIdentity()
                        0.0, 1.0, 0.0, 0.0,
                        0.0, 0.0, 1.0, 0.0,
                        0.0, 0.0, 0.0, 1.0)
-end
-
-function cc.mat4.createTranslation(translation, dst)
-    assert(type(translation) == "table" and type(dst) == "table", "The type of input parameters should be table")
-    dst = cc.mat4.createIdentity()
-    dst[13] = translation.x
-    dst[14] = translation.y
-    dst[15] = translation.z
-    return dst
-end
-
-function cc.mat4.createRotation(q, dst)
-    assert(type(q) == "table" and type(dst) == "table", "The type of input parameters should be table")
-    local x2 = q.x + q.x
-    local y2 = q.y + q.y
-    local z2 = q.z + q.z
-
-    local xx2 = q.x * x2
-    local yy2 = q.y * y2
-    local zz2 = q.z * z2
-    local xy2 = q.x * y2
-    local xz2 = q.x * z2
-    local yz2 = q.y * z2
-    local wx2 = q.w * x2
-    local wy2 = q.w * y2
-    local wz2 = q.w * z2
-
-    dst[1] = 1.0 - yy2 - zz2
-    dst[2] = xy2 + wz2
-    dst[3] = xz2 - wy2
-    dst[4] = 0.0
-
-    dst[5] = xy2 - wz2
-    dst[6] = 1.0 - xx2 - zz2
-    dst[7] = yz2 + wx2
-    dst[8] = 0.0
-
-    dst[9] = xz2 + wy2
-    dst[10] = yz2 - wx2
-    dst[11] = 1.0 - xx2 - yy2
-    dst[12] = 0.0
-
-    dst[13] = 0.0
-    dst[14] = 0.0
-    dst[15] = 0.0
-    dst[16] = 1.0
-
-    return dst
 end
 
 function cc.mat4.translate(self,vec3)

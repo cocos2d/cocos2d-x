@@ -1,5 +1,5 @@
 ﻿/****************************************************************************
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -25,7 +25,7 @@ THE SOFTWARE.
 #ifndef __DICTIONARYHELPER_H__
 #define __DICTIONARYHELPER_H__
 
-#include "json/document.h"
+#include "json/document-wrapper.h"
 #include "editor-support/cocostudio/CocosStudioExport.h"
 
 #define DICTOOL DictionaryHelper::getInstance()

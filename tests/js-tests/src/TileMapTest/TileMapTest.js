@@ -223,14 +223,6 @@ var TMXOrthoTest2 = TileDemo.extend({
     title:function () {
         return "TMX Orthogonal test 2";
     },
-    onEnter:function () {
-        this._super();
-        director.setProjection(cc.Director.PROJECTION_3D);
-    },
-    onExit:function () {
-        this._super();
-        director.setProjection(cc.Director.PROJECTION_DEFAULT);
-    },
 
     // Automation
     pixel1:{"0":192, "1":144, "2":16, "3":255},
@@ -532,6 +524,7 @@ var TMXIsoTest = TileDemo.extend({
         // move map to the center of the screen
         var ms = map.getMapSize();
         var ts = map.getTileSize();
+        // map.setPosition(-ms.width * ts.width / 2, -ms.height * ts.height / 2);
         map.runAction(cc.moveTo(1.0, cc.p(-ms.width * ts.width / 2, -ms.height * ts.height / 2)));
     },
     title:function () {
@@ -1116,21 +1109,17 @@ var TMXIsoVertexZ = TMXFixBugLayer.extend({
     },
     onEnter:function () {
         this._super();
-        // TIP: 2d projection should be used
         director.setDepthTest(true);
-        director.setProjection(cc.Director.PROJECTION_2D);
     },
     onExit:function () {
-        // At exit use any other projection.
-        director.setProjection(cc.Director.PROJECTION_DEFAULT);
         director.setDepthTest(false);
         this._super();
     },
     repositionSprite:function (dt) {
         // tile height is 64x32
         // map size: 30x30
-        var z = -( (this.tamara.y + 32) / 16);
-        this.tamara.vertexZ = z;
+        var layer = this.tamara.parent;
+        this.tamara.vertexZ = layer.vertexZ + cc.renderer.assignedZStep * (1 - this.tamara.y / layer.height);
     },
     //
     // Automation
@@ -1191,21 +1180,17 @@ var TMXOrthoVertexZ = TMXFixBugLayer.extend({
     },
     onEnter:function () {
         this._super();
-
-        // TIP: 2d projection should be used
         director.setDepthTest(true);
-        director.setProjection(cc.Director.PROJECTION_2D);
     },
     onExit:function () {
-        // At exit use any other projection.
-        director.setProjection(cc.Director.PROJECTION_DEFAULT);
         director.setDepthTest(false);
         this._super();
     },
     repositionSprite:function (dt) {
         // tile height is 101x81
         // map size: 12x12
-        this.tamara.vertexZ = -(this.tamara.y + 81) / 81;
+        var layer = this.tamara.parent;
+        this.tamara.vertexZ = layer.vertexZ + cc.renderer.assignedZStep * Math.floor(12 - this.tamara.y / 81) / 12;
     },
     //
     // Automation
@@ -1670,17 +1655,8 @@ var TileMapTestScene = TestScene.extend({
         tileTestSceneIdx = (num || num == 0) ? (num - 1) : -1;
         var layer = nextTileMapTest();
         this.addChild(layer);
-        // fix bug #486, #419.
-        // "test" is the default value in CCDirector::setGLDefaultValues()
-        // but TransitionTest may setDepthTest(false), we should revert it here
-        cc.director.setDepthTest(true);
 
         director.runScene(this);
-    },
-    onExit:function () {
-        cc.log("onExit");
-        cc.director.setDepthTest(false);
-        this._super();
     }
 });
 

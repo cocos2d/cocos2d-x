@@ -1,0 +1,12 @@
+namespace flatbuffers;
+
+table LanguageItem {
+    key:string;
+    value:string;
+}
+
+table LanguageSet {
+    languageItems:[LanguageItem];
+}
+
+root_type LanguageSet;

@@ -116,8 +116,7 @@ static bool stringEndWith(const std::string str, const std::string needle)
 
 static void initGLContextAttrs()
 {
-    //set OpenGL context attributions,now can only set six attributions:
-    //red,green,blue,alpha,depth,stencil
+    // set OpenGL context attributes: red,green,blue,alpha,depth,stencil
     GLContextAttrs glContextAttrs = {8, 8, 8, 8, 24, 8};
 
     GLView::setGLContextAttrs(glContextAttrs);
@@ -190,7 +189,7 @@ void SimulatorWin::openNewPlayerWithProjectConfig(const ProjectConfig &config)
     STARTUPINFO si = {0};
     si.cb = sizeof(STARTUPINFO);
 
-#define MAX_COMMAND 1024 // lenth of commandLine is always beyond MAX_PATH
+#define MAX_COMMAND 1024 // length of commandLine is always beyond MAX_PATH
 
     WCHAR command[MAX_COMMAND];
     memset(command, 0, sizeof(command));

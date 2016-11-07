@@ -754,9 +754,9 @@ void ShaderMultiTexture::changeTexture(Ref*)
         "Images/grossinis_sister1.png",
         "Images/grossinis_sister2.png"
     };
-    auto textrue = Director::getInstance()->getTextureCache()->addImage(textureFiles[_changedTextureId++ % textureFilesCount]);
+    auto texture = Director::getInstance()->getTextureCache()->addImage(textureFiles[_changedTextureId++ % textureFilesCount]);
     Sprite* right = dynamic_cast<Sprite*>(getChildByTag(rightSpriteTag));
-    right->setTexture(textrue);
+    right->setTexture(texture);
     auto programState = _sprite->getGLProgramState();
     programState->setUniformTexture("u_texture1", right->getTexture());
 }

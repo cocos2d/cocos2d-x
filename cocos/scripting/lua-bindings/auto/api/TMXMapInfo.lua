@@ -5,10 +5,16 @@
 
 --------------------------------
 -- 
--- @function [parent=#TMXMapInfo] setObjectGroups 
+-- @function [parent=#TMXMapInfo] setCurrentString 
 -- @param self
--- @param #array_table groups
+-- @param #string currentString
 -- @return TMXMapInfo#TMXMapInfo self (return value: cc.TMXMapInfo)
+        
+--------------------------------
+-- / map hexsidelength
+-- @function [parent=#TMXMapInfo] getHexSideLength 
+-- @param self
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- 
@@ -31,10 +37,11 @@
 -- @return int#int ret (return value: int)
         
 --------------------------------
--- / is storing characters?
--- @function [parent=#TMXMapInfo] isStoringCharacters 
+-- 
+-- @function [parent=#TMXMapInfo] setObjectGroups 
 -- @param self
--- @return bool#bool ret (return value: bool)
+-- @param #array_table groups
+-- @return TMXMapInfo#TMXMapInfo self (return value: cc.TMXMapInfo)
         
 --------------------------------
 -- 
@@ -77,6 +84,19 @@
 -- @param self
 -- @return array_table#array_table ret (return value: array_table)
 
+--------------------------------
+-- / map staggeraxis
+-- @function [parent=#TMXMapInfo] getStaggerAxis 
+-- @param self
+-- @return int#int ret (return value: int)
+        
+--------------------------------
+-- 
+-- @function [parent=#TMXMapInfo] setHexSideLength 
+-- @param self
+-- @param #int hexSideLength
+-- @return TMXMapInfo#TMXMapInfo self (return value: cc.TMXMapInfo)
+        
 --------------------------------
 -- @overload self         
 -- @overload self         
@@ -131,6 +151,12 @@
 -- @return map_table#map_table ret (return value: map_table)
         
 --------------------------------
+-- / is storing characters?
+-- @function [parent=#TMXMapInfo] isStoringCharacters 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 -- 
 -- @function [parent=#TMXMapInfo] getExternalTilesetFileName 
 -- @param self
@@ -151,9 +177,9 @@
         
 --------------------------------
 -- 
--- @function [parent=#TMXMapInfo] setCurrentString 
+-- @function [parent=#TMXMapInfo] setStaggerIndex 
 -- @param self
--- @param #string currentString
+-- @param #int staggerIndex
 -- @return TMXMapInfo#TMXMapInfo self (return value: cc.TMXMapInfo)
         
 --------------------------------
@@ -186,9 +212,22 @@
         
 --------------------------------
 -- 
+-- @function [parent=#TMXMapInfo] getCurrentString 
+-- @param self
+-- @return string#string ret (return value: string)
+        
+--------------------------------
+-- 
 -- @function [parent=#TMXMapInfo] setStoringCharacters 
 -- @param self
 -- @param #bool storingCharacters
+-- @return TMXMapInfo#TMXMapInfo self (return value: cc.TMXMapInfo)
+        
+--------------------------------
+-- 
+-- @function [parent=#TMXMapInfo] setStaggerAxis 
+-- @param self
+-- @param #int staggerAxis
 -- @return TMXMapInfo#TMXMapInfo self (return value: cc.TMXMapInfo)
         
 --------------------------------
@@ -212,10 +251,10 @@
 -- @return map_table#map_table ret (return value: map_table)
 
 --------------------------------
--- 
--- @function [parent=#TMXMapInfo] getCurrentString 
+-- / map stagger index
+-- @function [parent=#TMXMapInfo] getStaggerIndex 
 -- @param self
--- @return string#string ret (return value: string)
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- 

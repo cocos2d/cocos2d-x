@@ -2,7 +2,7 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -395,6 +395,14 @@ THE SOFTWARE.
 
 #ifndef CC_FILEUTILS_APPLE_ENABLE_OBJC
 #define CC_FILEUTILS_APPLE_ENABLE_OBJC  1
+#endif
+
+/** @def CC_ENABLE_PREMULTIPLIED_ALPHA
+ * If enabled, all textures will be preprocessed to multiply its rgb components
+ * by its alpha component.
+ */
+#ifndef CC_ENABLE_PREMULTIPLIED_ALPHA
+# define CC_ENABLE_PREMULTIPLIED_ALPHA 1
 #endif
 
 #endif // __CCCONFIG_H__

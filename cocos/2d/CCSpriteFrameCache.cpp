@@ -4,7 +4,7 @@ Copyright (c) 2009      Jason Booth
 Copyright (c) 2009      Robert J Payne
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -37,13 +37,11 @@ THE SOFTWARE.
 #include "platform/CCFileUtils.h"
 #include "base/CCNS.h"
 #include "base/ccMacros.h"
+#include "base/ccUTF8.h"
 #include "base/CCDirector.h"
 #include "renderer/CCTexture2D.h"
 #include "renderer/CCTextureCache.h"
 #include "base/CCNinePatchImageParser.h"
-
-#include "deprecated/CCString.h"
-
 
 using namespace std;
 
@@ -134,7 +132,7 @@ void SpriteFrameCache::initializePolygonInfo(const Size &textureSize,
     info.triangles.verts = vertexData;
     info.triangles.indexCount = static_cast<int>(indexCount);
     info.triangles.indices = indexData;
-    info.rect = Rect(0, 0, spriteSize.width, spriteSize.height);
+    info.setRect(Rect(0, 0, spriteSize.width, spriteSize.height));
 }
 
 void SpriteFrameCache::addSpriteFramesWithDictionary(ValueMap& dictionary, Texture2D* texture)
@@ -176,10 +174,10 @@ void SpriteFrameCache::addSpriteFramesWithDictionary(ValueMap& dictionary, Textu
     auto textureFileName = Director::getInstance()->getTextureCache()->getTextureFilePath(texture);
     Image* image = nullptr;
     NinePatchImageParser parser;
-    for (auto iter = framesDict.begin(); iter != framesDict.end(); ++iter)
+    for (auto& iter : framesDict)
     {
-        ValueMap& frameDict = iter->second.asValueMap();
-        std::string spriteFrameName = iter->first;
+        ValueMap& frameDict = iter.second.asValueMap();
+        std::string spriteFrameName = iter.first;
         SpriteFrame* spriteFrame = _spriteFrames.at(spriteFrameName);
         if (spriteFrame)
         {
@@ -202,8 +200,8 @@ void SpriteFrameCache::addSpriteFramesWithDictionary(ValueMap& dictionary, Textu
                 CCLOGWARN("cocos2d: WARNING: originalWidth/Height not found on the SpriteFrame. AnchorPoint won't work as expected. Regenerate the .plist");
             }
             // abs ow/oh
-            ow = abs(ow);
-            oh = abs(oh);
+            ow = std::abs(ow);
+            oh = std::abs(oh);
             // create frame
             spriteFrame = SpriteFrame::createWithTexture(texture,
                                                          Rect(x, y, w, h),
@@ -463,14 +461,14 @@ void SpriteFrameCache::removeUnusedSpriteFrames()
     bool removed = false;
     std::vector<std::string> toRemoveFrames;
     
-    for (auto iter = _spriteFrames.begin(); iter != _spriteFrames.end(); ++iter)
+    for (auto& iter : _spriteFrames)
     {
-        SpriteFrame* spriteFrame = iter->second;
+        SpriteFrame* spriteFrame = iter.second;
         if( spriteFrame->getReferenceCount() == 1 )
         {
-            toRemoveFrames.push_back(iter->first);
+            toRemoveFrames.push_back(iter.first);
             spriteFrame->getTexture()->removeSpriteFrameCapInset(spriteFrame);
-            CCLOG("cocos2d: SpriteFrameCache: removing unused frame: %s", iter->first.c_str());
+            CCLOG("cocos2d: SpriteFrameCache: removing unused frame: %s", iter.first.c_str());
             removed = true;
         }
     }
@@ -546,11 +544,11 @@ void SpriteFrameCache::removeSpriteFramesFromDictionary(ValueMap& dictionary)
     ValueMap framesDict = dictionary["frames"].asValueMap();
     std::vector<std::string> keysToRemove;
 
-    for (auto iter = framesDict.cbegin(); iter != framesDict.cend(); ++iter)
+    for (const auto& iter : framesDict)
     {
-        if (_spriteFrames.at(iter->first))
+        if (_spriteFrames.at(iter.first))
         {
-            keysToRemove.push_back(iter->first);
+            keysToRemove.push_back(iter.first);
         }
     }
 
@@ -561,9 +559,9 @@ void SpriteFrameCache::removeSpriteFramesFromTexture(Texture2D* texture)
 {
     std::vector<std::string> keysToRemove;
 
-    for (auto iter = _spriteFrames.cbegin(); iter != _spriteFrames.cend(); ++iter)
+    for (auto& iter : _spriteFrames)
     {
-        std::string key = iter->first;
+        std::string key = iter.first;
         SpriteFrame* frame = _spriteFrames.at(key);
         if (frame && (frame->getTexture() == texture))
         {
@@ -608,10 +606,10 @@ void SpriteFrameCache::reloadSpriteFramesWithDictionary(ValueMap& dictionary, Te
     // check the format
     CCASSERT(format >= 0 && format <= 3, "format is not supported for SpriteFrameCache addSpriteFramesWithDictionary:textureFilename:");
 
-    for (auto iter = framesDict.begin(); iter != framesDict.end(); ++iter)
+    for (auto& iter : framesDict)
     {
-        ValueMap& frameDict = iter->second.asValueMap();
-        std::string spriteFrameName = iter->first;
+        ValueMap& frameDict = iter.second.asValueMap();
+        std::string spriteFrameName = iter.first;
 
         auto it = _spriteFrames.find(spriteFrameName);
         if (it != _spriteFrames.end())
@@ -634,11 +632,11 @@ void SpriteFrameCache::reloadSpriteFramesWithDictionary(ValueMap& dictionary, Te
             // check ow/oh
             if (!ow || !oh)
             {
-                CCLOGWARN("cocos2d: WARNING: originalWidth/Height not found on the SpriteFrame. AnchorPoint won't work as expected. Regenrate the .plist");
+                CCLOGWARN("cocos2d: WARNING: originalWidth/Height not found on the SpriteFrame. AnchorPoint won't work as expected. Regenerate the .plist");
             }
             // abs ow/oh
-            ow = abs(ow);
-            oh = abs(oh);
+            ow = std::abs(ow);
+            oh = std::abs(oh);
             // create frame
             spriteFrame = SpriteFrame::createWithTexture(texture,
                 Rect(x, y, w, h),

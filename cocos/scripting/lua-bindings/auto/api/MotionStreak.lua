@@ -108,11 +108,11 @@
 -- @overload self, float, float, float, color3b_table, string         
 -- @function [parent=#MotionStreak] create
 -- @param self
--- @param #float fade
+-- @param #float timeToFade
 -- @param #float minSeg
--- @param #float stroke
--- @param #color3b_table color
--- @param #string path
+-- @param #float strokeWidth
+-- @param #color3b_table strokeColor
+-- @param #string imagePath
 -- @return MotionStreak#MotionStreak ret (return value: cc.MotionStreak)
 
 --------------------------------

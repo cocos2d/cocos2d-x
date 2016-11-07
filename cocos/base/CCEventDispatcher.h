@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -218,10 +218,10 @@ protected:
         void clearFixedListeners();
         void clear();
         
-        inline std::vector<EventListener*>* getFixedPriorityListeners() const { return _fixedListeners; };
-        inline std::vector<EventListener*>* getSceneGraphPriorityListeners() const { return _sceneGraphListeners; };
-        inline ssize_t getGt0Index() const { return _gt0Index; };
-        inline void setGt0Index(ssize_t index) { _gt0Index = index; };
+        std::vector<EventListener*>* getFixedPriorityListeners() const { return _fixedListeners; }
+        std::vector<EventListener*>* getSceneGraphPriorityListeners() const { return _sceneGraphListeners; }
+        ssize_t getGt0Index() const { return _gt0Index; }
+        void setGt0Index(ssize_t index) { _gt0Index = index; }
     private:
         std::vector<EventListener*>* _fixedListeners;
         std::vector<EventListener*>* _sceneGraphListeners;

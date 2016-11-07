@@ -1,7 +1,7 @@
 /****************************************************************************
  Copyright (c) 2010-2012 cocos2d-x.org
  Copyright (c) 2011      Zynga Inc.
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -46,6 +46,7 @@ class CC_DLL FileUtilsApple : public FileUtils
 {
 public:
     FileUtilsApple();
+    virtual ~FileUtilsApple();
     /* override functions */
     virtual std::string getWritablePath() const override;
     virtual std::string getFullPathForDirectoryAndFilename(const std::string& directory, const std::string& filename) const override;
@@ -63,6 +64,8 @@ public:
 private:
     virtual bool isFileExistInternal(const std::string& filePath) const override;
     virtual bool removeDirectory(const std::string& dirPath) override;
+    virtual void valueMapCompact(ValueMap& valueMap) override;
+    virtual void valueVectorCompact(ValueVector& valueVector) override;
 
     struct IMPL;
     std::unique_ptr<IMPL> pimpl_;

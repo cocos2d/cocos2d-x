@@ -29,11 +29,12 @@
 
 // FIXME: using ndk-r10c will cause the next function could not be found. It may be a bug of ndk-r10c.
 // Here is the workaround method to fix the problem.
-#ifdef __aarch64__
-extern "C" size_t __ctype_get_mb_cur_max(void) {
-    return (size_t) sizeof(wchar_t);
-}
-#endif
+// Fixed, at least, in NDK 12b
+//#ifdef __aarch64__
+//extern "C" size_t __ctype_get_mb_cur_max(void) {
+//    return (size_t) sizeof(wchar_t);
+//}
+//#endif
 
 NS_CC_BEGIN
 

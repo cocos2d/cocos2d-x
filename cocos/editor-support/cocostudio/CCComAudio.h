@@ -1,5 +1,5 @@
 ﻿/****************************************************************************
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -75,6 +75,9 @@ public:
 
     virtual bool serialize(void* r) override;
 public:
+    /**
+    * @lua endToLua
+    */
     void end();
     void preloadBackgroundMusic(const char* pszFilePath);
     void playBackgroundMusic(const char* pszFilePath, bool bLoop);

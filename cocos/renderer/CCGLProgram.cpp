@@ -3,7 +3,7 @@ Copyright 2011 Jeff Lamarche
 Copyright 2012 Goffredo Marocchi
 Copyright 2012 Ricardo Quesada
 Copyright 2012 cocos2d-x.org
-Copyright 2013-2014 Chukong Technologies Inc.
+Copyright 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -33,11 +33,9 @@ THE SOFTWARE.
 #endif
 
 #include "base/CCDirector.h"
-#include "base/uthash.h"
+#include "base/ccUTF8.h"
 #include "renderer/ccGLStateCache.h"
 #include "platform/CCFileUtils.h"
-
-#include "deprecated/CCString.h"
 
 // helper functions
 
@@ -74,6 +72,11 @@ static void replaceDefines(const std::string& compileTimeDefines, std::string& o
 
 
 NS_CC_BEGIN
+const char* GLProgram::SHADER_NAME_ETC1AS_POSITION_TEXTURE_COLOR = "#ShaderETC1ASPositionTextureColor";
+const char* GLProgram::SHADER_NAME_ETC1AS_POSITION_TEXTURE_COLOR_NO_MVP = "#ShaderETC1ASPositionTextureColor_noMVP";
+
+const char* GLProgram::SHADER_NAME_ETC1AS_POSITION_TEXTURE_GRAY = "#ShaderETC1ASPositionTextureGray";
+const char* GLProgram::SHADER_NAME_ETC1AS_POSITION_TEXTURE_GRAY_NO_MVP = "#ShaderETC1ASPositionTextureGray_noMVP";
 
 const char* GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR = "ShaderPositionTextureColor";
 const char* GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP = "ShaderPositionTextureColor_noMVP";
@@ -112,8 +115,10 @@ const char* GLProgram::SHADER_CAMERA_CLEAR = "ShaderCameraClear";
 // uniform names
 const char* GLProgram::UNIFORM_NAME_AMBIENT_COLOR = "CC_AmbientColor";
 const char* GLProgram::UNIFORM_NAME_P_MATRIX = "CC_PMatrix";
+const char* GLProgram::UNIFORM_NAME_MULTIVIEW_P_MATRIX = "CC_MultiViewPMatrix";
 const char* GLProgram::UNIFORM_NAME_MV_MATRIX = "CC_MVMatrix";
 const char* GLProgram::UNIFORM_NAME_MVP_MATRIX  = "CC_MVPMatrix";
+const char* GLProgram::UNIFORM_NAME_MULTIVIEW_MVP_MATRIX  = "CC_MultiViewMVPMatrix";
 const char* GLProgram::UNIFORM_NAME_NORMAL_MATRIX = "CC_NormalMatrix";
 const char* GLProgram::UNIFORM_NAME_TIME = "CC_Time";
 const char* GLProgram::UNIFORM_NAME_SIN_TIME = "CC_SinTime";
@@ -142,8 +147,10 @@ const char* GLProgram::ATTRIBUTE_NAME_BINORMAL = "a_binormal";
 
 static const char * COCOS2D_SHADER_UNIFORMS =
         "uniform mat4 CC_PMatrix;\n"
+        "uniform mat4 CC_MultiViewPMatrix[4];\n"
         "uniform mat4 CC_MVMatrix;\n"
         "uniform mat4 CC_MVPMatrix;\n"
+        "uniform mat4 CC_MultiViewMVPMatrix[4];\n"
         "uniform mat3 CC_NormalMatrix;\n"
         "uniform vec4 CC_Time;\n"
         "uniform vec4 CC_SinTime;\n"
@@ -164,8 +171,13 @@ GLProgram* GLProgram::createWithByteArrays(const GLchar* vShaderByteArray, const
 
 GLProgram* GLProgram::createWithByteArrays(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray, const std::string& compileTimeDefines)
 {
+    return createWithByteArrays(vShaderByteArray, fShaderByteArray, EMPTY_DEFINE, compileTimeDefines);
+}
+
+GLProgram* GLProgram::createWithByteArrays(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray, const std::string& compileTimeHeaders, const std::string& compileTimeDefines)
+{
     auto ret = new (std::nothrow) GLProgram();
-    if(ret && ret->initWithByteArrays(vShaderByteArray, fShaderByteArray, compileTimeDefines)) {
+    if(ret && ret->initWithByteArrays(vShaderByteArray, fShaderByteArray, compileTimeHeaders, compileTimeDefines)) {
         ret->link();
         ret->updateUniforms();
         ret->autorelease();
@@ -176,13 +188,17 @@ GLProgram* GLProgram::createWithByteArrays(const GLchar* vShaderByteArray, const
     return nullptr;
 }
 
-
 GLProgram* GLProgram::createWithFilenames(const std::string& vShaderFilename, const std::string& fShaderFilename)
 {
     return createWithFilenames(vShaderFilename, fShaderFilename, EMPTY_DEFINE);
 }
 
 GLProgram* GLProgram::createWithFilenames(const std::string& vShaderFilename, const std::string& fShaderFilename, const std::string& compileTimeDefines)
+{
+    return createWithFilenames(vShaderFilename, fShaderFilename, EMPTY_DEFINE, compileTimeDefines);
+}
+
+GLProgram* GLProgram::createWithFilenames(const std::string& vShaderFilename, const std::string& fShaderFilename, const std::string& compileTimeHeaders, const std::string& compileTimeDefines)
 {
     auto ret = new (std::nothrow) GLProgram();
     if(ret && ret->initWithFilenames(vShaderFilename, fShaderFilename, compileTimeDefines)) {
@@ -232,6 +248,11 @@ bool GLProgram::initWithByteArrays(const GLchar* vShaderByteArray, const GLchar*
 
 bool GLProgram::initWithByteArrays(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray, const std::string& compileTimeDefines)
 {
+    return initWithByteArrays(vShaderByteArray, fShaderByteArray, "", compileTimeDefines);
+}
+
+bool GLProgram::initWithByteArrays(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray, const std::string& compileTimeHeaders, const std::string& compileTimeDefines)
+{
     _program = glCreateProgram();
     CHECK_GL_ERROR_DEBUG();
 
@@ -244,17 +265,17 @@ bool GLProgram::initWithByteArrays(const GLchar* vShaderByteArray, const GLchar*
 
     if (vShaderByteArray)
     {
-        if (!compileShader(&_vertShader, GL_VERTEX_SHADER, vShaderByteArray, replacedDefines))
+        if (!compileShader(&_vertShader, GL_VERTEX_SHADER, vShaderByteArray, compileTimeHeaders, replacedDefines))
         {
             CCLOG("cocos2d: ERROR: Failed to compile vertex shader");
             return false;
-       }
+        }
     }
 
     // Create and compile fragment shader
     if (fShaderByteArray)
     {
-        if (!compileShader(&_fragShader, GL_FRAGMENT_SHADER, fShaderByteArray, replacedDefines))
+        if (!compileShader(&_fragShader, GL_FRAGMENT_SHADER, fShaderByteArray, compileTimeHeaders, replacedDefines))
         {
             CCLOG("cocos2d: ERROR: Failed to compile fragment shader");
             return false;
@@ -286,11 +307,16 @@ bool GLProgram::initWithFilenames(const std::string& vShaderFilename, const std:
 
 bool GLProgram::initWithFilenames(const std::string& vShaderFilename, const std::string& fShaderFilename, const std::string& compileTimeDefines)
 {
+    return initWithFilenames(vShaderFilename, fShaderFilename, EMPTY_DEFINE, compileTimeDefines);
+}
+
+bool GLProgram::initWithFilenames(const std::string& vShaderFilename, const std::string& fShaderFilename, const std::string& compileTimeHeaders, const std::string& compileTimeDefines)
+{
     auto fileUtils = FileUtils::getInstance();
     std::string vertexSource = fileUtils->getStringFromFile(FileUtils::getInstance()->fullPathForFilename(vShaderFilename));
     std::string fragmentSource = fileUtils->getStringFromFile(FileUtils::getInstance()->fullPathForFilename(fShaderFilename));
 
-    return initWithByteArrays(vertexSource.c_str(), fragmentSource.c_str(), compileTimeDefines);
+    return initWithByteArrays(vertexSource.c_str(), fragmentSource.c_str(), compileTimeHeaders, compileTimeDefines);
 }
 
 void GLProgram::bindPredefinedVertexAttribs()
@@ -349,7 +375,7 @@ void GLProgram::parseVertexAttribs()
     else
     {
         GLchar ErrorLog[1024];
-        glGetProgramInfoLog(_program, sizeof(ErrorLog), NULL, ErrorLog);
+        glGetProgramInfoLog(_program, sizeof(ErrorLog), nullptr, ErrorLog);
         CCLOG("Error linking shader program: '%s'\n", ErrorLog);
     }
 }
@@ -407,7 +433,7 @@ void GLProgram::parseUniforms()
     else
     {
         GLchar ErrorLog[1024];
-        glGetProgramInfoLog(_program, sizeof(ErrorLog), NULL, ErrorLog);
+        glGetProgramInfoLog(_program, sizeof(ErrorLog), nullptr, ErrorLog);
         CCLOG("Error linking shader program: '%s'\n", ErrorLog);
 
     }
@@ -445,6 +471,11 @@ bool GLProgram::compileShader(GLuint * shader, GLenum type, const GLchar* source
 
 bool GLProgram::compileShader(GLuint* shader, GLenum type, const GLchar* source, const std::string& convertedDefines)
 {
+    return compileShader(shader, type, source, "", convertedDefines);
+}
+
+bool GLProgram::compileShader(GLuint * shader, GLenum type, const GLchar* source, const std::string& compileTimeHeaders, const std::string& convertedDefines)
+{
     GLint status;
 
     if (!source)
@@ -452,12 +483,19 @@ bool GLProgram::compileShader(GLuint* shader, GLenum type, const GLchar* source,
         return false;
     }
 
-    const GLchar *sources[] = {
+    std::string headersDef;
+    if (compileTimeHeaders.empty()) {
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
-        (type == GL_VERTEX_SHADER ? "precision mediump float;\n precision mediump int;\n" : "precision mediump float;\n precision mediump int;\n"),
+        headersDef = (type == GL_VERTEX_SHADER ? "precision mediump float;\n precision mediump int;\n" : "precision mediump float;\n precision mediump int;\n");
 #elif (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32 && CC_TARGET_PLATFORM != CC_PLATFORM_LINUX && CC_TARGET_PLATFORM != CC_PLATFORM_MAC)
-        (type == GL_VERTEX_SHADER ? "precision highp float;\n precision highp int;\n" : "precision mediump float;\n precision mediump int;\n"),
+        headersDef = (type == GL_VERTEX_SHADER ? "precision highp float;\n precision highp int;\n" : "precision mediump float;\n precision mediump int;\n");
 #endif
+    }else{
+        headersDef = compileTimeHeaders;
+    }
+
+    const GLchar *sources[] = {
+        headersDef.c_str(),
         COCOS2D_SHADER_UNIFORMS,
         convertedDefines.c_str(),
         source};
@@ -512,8 +550,10 @@ void GLProgram::updateUniforms()
 {
     _builtInUniforms[UNIFORM_AMBIENT_COLOR] = glGetUniformLocation(_program, UNIFORM_NAME_AMBIENT_COLOR);
     _builtInUniforms[UNIFORM_P_MATRIX] = glGetUniformLocation(_program, UNIFORM_NAME_P_MATRIX);
+    _builtInUniforms[UNIFORM_MULTIVIEW_P_MATRIX] = glGetUniformLocation(_program, UNIFORM_NAME_MULTIVIEW_P_MATRIX);
     _builtInUniforms[UNIFORM_MV_MATRIX] = glGetUniformLocation(_program, UNIFORM_NAME_MV_MATRIX);
     _builtInUniforms[UNIFORM_MVP_MATRIX] = glGetUniformLocation(_program, UNIFORM_NAME_MVP_MATRIX);
+    _builtInUniforms[UNIFORM_MULTIVIEW_MVP_MATRIX] = glGetUniformLocation(_program, UNIFORM_NAME_MULTIVIEW_MVP_MATRIX);
     _builtInUniforms[UNIFORM_NORMAL_MATRIX] = glGetUniformLocation(_program, UNIFORM_NAME_NORMAL_MATRIX);
 
     _builtInUniforms[UNIFORM_TIME] = glGetUniformLocation(_program, UNIFORM_NAME_TIME);
@@ -528,8 +568,10 @@ void GLProgram::updateUniforms()
     _builtInUniforms[UNIFORM_SAMPLER3] = glGetUniformLocation(_program, UNIFORM_NAME_SAMPLER3);
 
     _flags.usesP = _builtInUniforms[UNIFORM_P_MATRIX] != -1;
+    _flags.usesMultiViewP = _builtInUniforms[UNIFORM_MULTIVIEW_P_MATRIX] != -1;
     _flags.usesMV = _builtInUniforms[UNIFORM_MV_MATRIX] != -1;
     _flags.usesMVP = _builtInUniforms[UNIFORM_MVP_MATRIX] != -1;
+    _flags.usesMultiViewMVP = _builtInUniforms[UNIFORM_MULTIVIEW_MVP_MATRIX] != -1;
     _flags.usesNormal = _builtInUniforms[UNIFORM_NORMAL_MATRIX] != -1;
     _flags.usesTime = (
                        _builtInUniforms[UNIFORM_TIME] != -1 ||
@@ -561,12 +603,11 @@ bool GLProgram::link()
 
     glLinkProgram(_program);
 
-    parseVertexAttribs();
-    parseUniforms();
-
-    clearShader();
-
-#if DEBUG || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    // Calling glGetProgramiv(...GL_LINK_STATUS...) will force linking of the program at this moment.
+    // Otherwise, they might be linked when they are used for the first time. (I guess this depends on the driver implementation)
+    // So it might slow down the "booting" process on certain devices. But, on the other hand it is important to know if the shader
+    // linked successfully. Some shaders might be downloaded in runtime so, release version should have this check.
+    // For more info, see Github issue #16231
     glGetProgramiv(_program, GL_LINK_STATUS, &status);
 
     if (status == GL_FALSE)
@@ -575,7 +616,13 @@ bool GLProgram::link()
         GL::deleteProgram(_program);
         _program = 0;
     }
-#endif
+    else
+    {
+        parseVertexAttribs();
+        parseUniforms();
+
+        clearShader();
+    }
 
     return (status == GL_TRUE);
 }
@@ -652,17 +699,17 @@ bool GLProgram::updateUniformLocation(GLint location, const GLvoid* data, unsign
     }
     else
     {
-        if (memcmp(element->second.first, data, bytes) == 0)
+        if (element->second.second < bytes)
         {
-            updated = false;
+            GLvoid* value = realloc(element->second.first, bytes);
+            memcpy(value, data, bytes);
+            _hashForUniforms[location] = std::make_pair(value, bytes);
         }
         else
         {
-            if (element->second.second < bytes)
+            if (memcmp(element->second.first, data, bytes) == 0)
             {
-                GLvoid* value = realloc(element->second.first, bytes);
-                memcpy(value, data, bytes );
-                _hashForUniforms[location] = std::make_pair(value, bytes);
+                updated = false;
             }
             else
                 memcpy(element->second.first, data, bytes);
@@ -877,6 +924,17 @@ void GLProgram::setUniformsForBuiltins(const Mat4 &matrixMV)
 
     if (_flags.usesP)
         setUniformLocationWithMatrix4fv(_builtInUniforms[UNIFORM_P_MATRIX], matrixP.m, 1);
+    
+    if (_flags.usesMultiViewP)
+    {
+        Mat4 mats[4];
+        unsigned int stackSize = _director->getProjectionMatrixStackSize() <= 4?
+                                 _director->getProjectionMatrixStackSize(): 4;
+        for (unsigned int i = 0; i < stackSize; ++i) {
+            mats[i] = _director->getProjectionMatrix(i);
+        }
+        setUniformLocationWithMatrix4fv(_builtInUniforms[UNIFORM_MULTIVIEW_P_MATRIX], mats[0].m, 4);
+    }
 
     if (_flags.usesMV)
         setUniformLocationWithMatrix4fv(_builtInUniforms[UNIFORM_MV_MATRIX], matrixMV.m, 1);
@@ -885,6 +943,17 @@ void GLProgram::setUniformsForBuiltins(const Mat4 &matrixMV)
     {
         Mat4 matrixMVP = matrixP * matrixMV;
         setUniformLocationWithMatrix4fv(_builtInUniforms[UNIFORM_MVP_MATRIX], matrixMVP.m, 1);
+    }
+    
+    if (_flags.usesMultiViewMVP)
+    {
+        Mat4 mats[4];
+        unsigned int stackSize = _director->getProjectionMatrixStackSize() <= 4?
+                                 _director->getProjectionMatrixStackSize(): 4;
+        for (unsigned int i = 0; i < stackSize; ++i) {
+            mats[i] = _director->getProjectionMatrix(i) * matrixMV;
+        }
+        setUniformLocationWithMatrix4fv(_builtInUniforms[UNIFORM_MULTIVIEW_MVP_MATRIX], mats[0].m, 4);
     }
 
     if (_flags.usesNormal)
@@ -906,9 +975,9 @@ void GLProgram::setUniformsForBuiltins(const Mat4 &matrixMV)
         // Getting Mach time per frame per shader using time could be extremely expensive.
         float time = _director->getTotalFrames() * _director->getAnimationInterval();
 
-        setUniformLocationWith4f(_builtInUniforms[GLProgram::UNIFORM_TIME], time/10.0, time, time*2, time*4);
-        setUniformLocationWith4f(_builtInUniforms[GLProgram::UNIFORM_SIN_TIME], time/8.0, time/4.0, time/2.0, sinf(time));
-        setUniformLocationWith4f(_builtInUniforms[GLProgram::UNIFORM_COS_TIME], time/8.0, time/4.0, time/2.0, cosf(time));
+        setUniformLocationWith4f(_builtInUniforms[GLProgram::UNIFORM_TIME], time/10.0f, time, time*2, time*4);
+        setUniformLocationWith4f(_builtInUniforms[GLProgram::UNIFORM_SIN_TIME], time/8.0f, time/4.0f, time/2.0f, sinf(time));
+        setUniformLocationWith4f(_builtInUniforms[GLProgram::UNIFORM_COS_TIME], time/8.0f, time/4.0f, time/2.0f, cosf(time));
     }
 
     if (_flags.usesRandom)

@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -247,7 +247,7 @@ std::vector<std::string> Console::Utility::split(const std::string& s, char deli
 }
 
 //isFloat taken from http://stackoverflow.com/questions/447206/c-isfloat-function
-bool Console::Utility::isFloat(std::string myString) {
+bool Console::Utility::isFloat(const std::string& myString) {
     std::istringstream iss(myString);
     float f;
     iss >> std::noskipws >> f; // noskipws considers leading whitespace invalid
@@ -422,7 +422,7 @@ bool Console::listenOnTCP(int port)
 
     bzero(&hints, sizeof(struct addrinfo));
     hints.ai_flags = AI_PASSIVE;
-    hints.ai_family = AF_INET; // AF_UNSPEC: Do we need IPv6 ?
+    hints.ai_family = AF_UNSPEC;
     hints.ai_socktype = SOCK_STREAM;
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
@@ -1221,7 +1221,7 @@ void Console::commandTouchSubCommandTap(int fd, const std::string& args)
         float x = utils::atof(argv[1].c_str());
         float y = utils::atof(argv[2].c_str());
         
-        srand ((unsigned)time(nullptr));
+        std::srand ((unsigned)time(nullptr));
         _touchId = rand();
         Scheduler *sched = Director::getInstance()->getScheduler();
         sched->performFunctionInCocosThread( [&](){
@@ -1250,7 +1250,7 @@ void Console::commandTouchSubCommandSwipe(int fd, const std::string& args)
         float x2 = utils::atof(argv[3].c_str());
         float y2 = utils::atof(argv[4].c_str());
         
-        srand ((unsigned)time(nullptr));
+        std::srand ((unsigned)time(nullptr));
         _touchId = rand();
         
         Scheduler *sched = Director::getInstance()->getScheduler();
@@ -1471,9 +1471,9 @@ void Console::printFileUtils(int fd)
 void Console::sendHelp(int fd, const std::map<std::string, Command>& commands, const char* msg)
 {
     Console::Utility::sendToConsole(fd, msg, strlen(msg));
-    for(auto it=commands.begin();it!=commands.end();++it)
+    for(auto& it : commands)
     {
-        auto command = it->second;
+        auto command = it.second;
         if (command.help.empty()) continue;
         
         Console::Utility::mydprintf(fd, "\t%s", command.name.c_str());

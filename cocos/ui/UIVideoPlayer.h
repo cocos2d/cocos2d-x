@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014-2015 Chukong Technologies Inc.
+ Copyright (c) 2014-2016 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -172,6 +172,8 @@ namespace experimental{
             virtual void onPlayEvent(int event);
             virtual void setVisible(bool visible) override;
             virtual void draw(Renderer *renderer, const Mat4& transform, uint32_t flags) override;
+            virtual void onEnter() override;
+            virtual void onExit() override;
 
         protected:
             virtual cocos2d::ui::Widget* createCloneInstance() override;

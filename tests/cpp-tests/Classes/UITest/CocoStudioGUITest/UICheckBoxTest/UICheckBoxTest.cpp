@@ -25,7 +25,7 @@ bool UICheckBoxTest::init()
 {
     if (UIScene::init())
     {
-        Size widgetSize = _widget->getContentSize();;
+        Size widgetSize = _widget->getContentSize();
         
         // Add a label in which the checkbox events will be displayed
         _displayValueLabel = Text::create("No Event", "fonts/Marker Felt.ttf", 32);
@@ -111,7 +111,7 @@ bool UICheckBoxDefaultBehaviorTest::init()
 {
     if (UIScene::init())
     {
-        Size widgetSize = _widget->getContentSize();;
+        Size widgetSize = _widget->getContentSize();
         
         // Add a label in which the checkbox events will be displayed
         _displayValueLabel = Text::create("No Event", "fonts/Marker Felt.ttf", 32);
@@ -180,7 +180,7 @@ bool UICheckBoxCopyTest::init()
 {
     if (UIScene::init())
     {
-        Size widgetSize = _widget->getContentSize();;
+        Size widgetSize = _widget->getContentSize();
 
         // Add a label in which the checkbox events will be displayed
         _displayValueLabel = Text::create("No Event", "fonts/Marker Felt.ttf", 32);

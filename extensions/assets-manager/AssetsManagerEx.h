@@ -38,7 +38,7 @@
 #include "Manifest.h"
 #include "extensions/ExtensionMacros.h"
 #include "extensions/ExtensionExport.h"
-#include "json/document.h"
+#include "json/document-wrapper.h"
 
 
 NS_CC_EXT_BEGIN
@@ -235,7 +235,14 @@ private:
     Manifest *_remoteManifest;
     
     //! Whether user have requested to update
-    bool _waitToUpdate;
+    enum class UpdateEntry : char
+    {
+        NONE,
+        CHECK_UPDATE,
+        DO_UPDATE
+    };
+
+    UpdateEntry _updateEntry;
     
     //! All assets unit to download
     DownloadUnits _downloadUnits;

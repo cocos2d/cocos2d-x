@@ -68,7 +68,7 @@ bool ControlSaturationBrightnessPicker::initWithTargetAndPos(Node* target, Vec2 
                 
         _startPos=pos; // starting position of the colour picker        
         boxPos          = 35;    // starting position of the virtual box area for picking a colour
-        boxSize         = _background->getContentSize().width / 2;;    // the size (width and height) of the virtual box for picking a colour from
+        boxSize         = _background->getContentSize().width / 2;    // the size (width and height) of the virtual box for picking a colour from
         return true;
     }
     else
@@ -151,7 +151,7 @@ void ControlSaturationBrightnessPicker::updateSliderPosition(Vec2 sliderPosition
     if (sliderPosition.y < _startPos.y + boxPos)                        sliderPosition.y = _startPos.y + boxPos;
     else if (sliderPosition.y > _startPos.y + boxPos + boxSize)        sliderPosition.y = _startPos.y + boxPos + boxSize;
     
-    // Use the position / slider width to determin the percentage the dragger is at
+    // Use the position / slider width to determine the percentage the dragger is at
     _saturation = 1.0f - fabs((_startPos.x + (float)boxPos - sliderPosition.x)/(float)boxSize);
     _brightness = fabs((_startPos.y + (float)boxPos - sliderPosition.y)/(float)boxSize);
 }

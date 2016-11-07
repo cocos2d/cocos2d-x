@@ -157,15 +157,14 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->enableDebugger();
 #endif
 
-    auto pEngine = ScriptingCore::getInstance();
-    ScriptEngineManager::getInstance()->setScriptEngine(pEngine);
+    ScriptEngineManager::getInstance()->setScriptEngine(sc);
 
-    ScriptingCore::getInstance()->runScript("main.js");
+    sc->runScript("main.js");
 
     return true;
 }
 
-// This function will be called when the app is inactive. When comes a phone call,it's be invoked too
+// This function will be called when the app is inactive. Note, when receiving a phone call it is invoked.
 void AppDelegate::applicationDidEnterBackground()
 {
     auto director = Director::getInstance();

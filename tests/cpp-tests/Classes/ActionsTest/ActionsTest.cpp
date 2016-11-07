@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -26,12 +26,14 @@
 #include "ActionsTest.h"
 #include "../testResource.h"
 #include "cocos2d.h"
+#include "ui/CocosGUI.h"
 
 #include "renderer/CCRenderer.h"
 #include "renderer/CCCustomCommand.h"
 #include "renderer/CCGroupCommand.h"
 
 USING_NS_CC;
+using namespace cocos2d::ui;
 
 ActionsTests::ActionsTests()
 {
@@ -79,6 +81,7 @@ ActionsTests::ActionsTests()
     ADD_TEST_CASE(ActionCardinalSplineStacked);
     ADD_TEST_CASE(ActionCatmullRomStacked);
     ADD_TEST_CASE(PauseResumeActions);
+    ADD_TEST_CASE(ActionResize);
     ADD_TEST_CASE(Issue1305);
     ADD_TEST_CASE(Issue1305_2);
     ADD_TEST_CASE(Issue1288);
@@ -2199,6 +2202,69 @@ std::string PauseResumeActions::title() const
 std::string PauseResumeActions::subtitle() const
 {
     return "All actions pause at 3s and resume at 5s";
+}
+
+//------------------------------------------------------------------
+//
+//    ActionResize
+//    Works on all nodes where setContentSize is effective. 
+//    But it's mostly useful for nodes where 9-slice is enabled
+//
+//------------------------------------------------------------------
+void ActionResize::onEnter() 
+{
+    ActionsDemo::onEnter();
+
+    _grossini->setVisible(false);
+    _tamara->setVisible(false);
+    _kathia->setVisible(false);
+
+    Size widgetSize = getContentSize();
+
+    Text* alert = Text::create("ImageView Content ResizeTo ResizeBy action. \nTop: ResizeTo/ResizeBy on a 9-slice ImageView  \nBottom: ScaleTo/ScaleBy on a 9-slice ImageView (for comparison)", "fonts/Marker Felt.ttf", 14);
+    alert->setColor(Color3B(159, 168, 176));
+    alert->setPosition(Vec2(widgetSize.width / 2.0f,
+                            widgetSize.height / 2.0f - alert->getContentSize().height * 1.125f));
+
+    addChild(alert);
+
+    // Create the imageview
+    Vec2 offset(0.0f, 50.0f);
+    ImageView* imageViewResize = ImageView::create("cocosui/buttonHighlighted.png");
+    imageViewResize->setScale9Enabled(true);
+    imageViewResize->setContentSize(Size(50, 40));
+    imageViewResize->setPosition(Vec2((widgetSize.width / 2.0f) + offset.x,
+                                (widgetSize.height / 2.0f) + offset.y));
+
+    auto resizeDown = cocos2d::ResizeTo::create(2.8f, Size(50, 40));
+    auto resizeUp = cocos2d::ResizeTo::create(2.8f, Size(300, 40));
+
+    auto resizeByDown = cocos2d::ResizeBy::create(1.8f, Size(0, -30));
+    auto resizeByUp = cocos2d::ResizeBy::create(1.8f, Size(0, 30));
+    addChild(imageViewResize);
+    auto rep = RepeatForever::create(Sequence::create(resizeUp, resizeDown, resizeByDown, resizeByUp, nullptr));
+    imageViewResize->runAction(rep);
+
+    // Create another imageview that scale to see the difference
+    ImageView* imageViewScale = ImageView::create("cocosui/buttonHighlighted.png");
+    imageViewScale->setScale9Enabled(true);
+    imageViewScale->setContentSize(Size(50, 40));
+    imageViewScale->setPosition(Vec2(widgetSize.width / 2.0f,
+                                 widgetSize.height / 2.0f));
+
+    auto scaleDownScale = cocos2d::ScaleTo::create(2.8f, 1.0f);
+    auto scaleUpScale = cocos2d::ScaleTo::create(2.8f, 6.0f, 1.0f);
+
+    auto scaleByDownScale = cocos2d::ScaleBy::create(1.8f, 1.0f, 0.25f);
+    auto scaleByUpScale = cocos2d::ScaleBy::create(1.8f, 1.0f, 4.0f);
+    addChild(imageViewScale);
+    auto rep2 = RepeatForever::create(Sequence::create(scaleUpScale, scaleDownScale, scaleByDownScale, scaleByUpScale, nullptr));
+    imageViewScale->runAction(rep2);
+}
+
+std::string ActionResize::subtitle() const 
+{
+    return "ResizeTo / ResizeBy";
 }
 
 //------------------------------------------------------------------

@@ -6,6 +6,8 @@ LOCAL_MODULE := cpp_empty_test_shared
 
 LOCAL_MODULE_FILENAME := libcpp_empty_test
 
+LOCAL_ARM_MODE := arm
+
 LOCAL_SRC_FILES := main.cpp \
                    ../../Classes/AppDelegate.cpp \
                    ../../Classes/HelloWorldScene.cpp

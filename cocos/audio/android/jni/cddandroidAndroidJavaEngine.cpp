@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2015 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -23,16 +23,18 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
+#define  LOG_TAG    "cocosdenshion::android::AndroidJavaEngine"
+
 #include "audio/android/jni/cddandroidAndroidJavaEngine.h"
 #include <stdlib.h>
-#include <android/log.h>
+
 #include <sys/system_properties.h>
 #include "audio/android/ccdandroidUtils.h"
+#include "audio/android/utils/Utils.h"
 #include "audio/include/AudioEngine.h"
 #include "platform/android/jni/JniHelper.h"
 
 // logging
-#define  LOG_TAG    "cocosdenshion::android::AndroidJavaEngine"
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
 
 // Java class
@@ -46,20 +48,18 @@ AndroidJavaEngine::AndroidJavaEngine()
     : _implementBaseOnAudioEngine(false)
     , _effectVolume(1.f)
 {
-    char sdk_ver_str[PROP_VALUE_MAX] = "0";
-    auto len = __system_property_get("ro.build.version.sdk", sdk_ver_str);
-    if (len > 0)
+    int sdkVer = getSDKVersion();
+    if (sdkVer > 0)
     {
-        auto sdk_ver = atoi(sdk_ver_str);
-        __android_log_print(ANDROID_LOG_DEBUG, "cocos2d", "android build version:%d", sdk_ver);
-        if (sdk_ver == 21)
+        __android_log_print(ANDROID_LOG_DEBUG, "cocos2d", "android SDK version:%d", sdkVer);
+        if (sdkVer == 21)
         {
             _implementBaseOnAudioEngine = true;
         }
     }
     else
     {
-        __android_log_print(ANDROID_LOG_DEBUG, "cocos2d", "%s", "Fail to get android build version.");
+        __android_log_print(ANDROID_LOG_DEBUG, "cocos2d", "%s", "Fail to get android SDK version.");
     }
 }
 
@@ -101,7 +101,7 @@ void AndroidJavaEngine::rewindBackgroundMusic() {
 }
 
 bool AndroidJavaEngine::willPlayBackgroundMusic() {
-    return true;
+    return JniHelper::callStaticBooleanMethod(helperClassName, "willPlayBackgroundMusic");
 }
 
 bool AndroidJavaEngine::isBackgroundMusicPlaying() {

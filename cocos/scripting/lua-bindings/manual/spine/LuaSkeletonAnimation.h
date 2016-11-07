@@ -1,6 +1,6 @@
  /****************************************************************************
  Copyright (c) 2013      Edward Zhou
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -32,7 +32,7 @@ class LuaSkeletonAnimation: public spine::SkeletonAnimation {
 public:
 	static LuaSkeletonAnimation* createWithFile (const char* skeletonDataFile, const char* atlasFile, float scale = 1);
 
-	LuaSkeletonAnimation (const char* skeletonDataFile, const char* atlasFile, float scale = 1);
+	LuaSkeletonAnimation ();
 
 	virtual ~LuaSkeletonAnimation();
 };

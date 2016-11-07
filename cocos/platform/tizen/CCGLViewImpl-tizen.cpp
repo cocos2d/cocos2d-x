@@ -97,7 +97,7 @@ bool GLViewImpl::isOpenGLReady()
 
 void GLViewImpl::end()
 {
-    exit(0);
+	ui_app_exit();
 }
 
 void GLViewImpl::swapBuffers()

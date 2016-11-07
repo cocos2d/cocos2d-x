@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -199,7 +199,7 @@
         CFRelease(certArrayRef);
     }
     //Did our custom trust chain evaluate successfully?
-    return trustResult = kSecTrustResultUnspecified || trustResult == kSecTrustResultProceed;    
+    return trustResult == kSecTrustResultUnspecified || trustResult == kSecTrustResultProceed;    
 }
 
 - (void) connection:(NSURLConnection *)connection willSendRequestForAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge

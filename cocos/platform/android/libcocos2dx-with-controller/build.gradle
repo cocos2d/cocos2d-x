@@ -26,5 +26,6 @@ android {
 }
 
 dependencies {
+    compile fileTree(dir: '../java/libs', include: ['*.jar'])
     compile fileTree(dir: '../ControllerManualAdapter/libs', include: ['*.jar'])
 }

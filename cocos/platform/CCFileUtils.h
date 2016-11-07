@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2013 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -64,7 +64,12 @@ public:
         _buffer->resize((size + sizeof(CharT) - 1) / sizeof(CharT));
     }
     virtual void* buffer() const override {
-        return &_buffer->front();
+        // can not invoke string::front() if it is empty
+
+        if (_buffer->empty())
+            return nullptr;
+        else
+            return &_buffer->front();
     }
 };
 
@@ -78,7 +83,12 @@ public:
         _buffer->resize((size + sizeof(T) - 1) / sizeof(T));
     }
     virtual void* buffer() const override {
-        return &_buffer->front();
+        // can not invoke vector::front() if it is empty
+
+        if (_buffer->empty())
+            return nullptr;
+        else
+            return &_buffer->front();
     }
 };
 
@@ -166,7 +176,7 @@ public:
         OK = 0,
         NotExists = 1, // File not exists
         OpenFailed = 2, // Open file failed.
-        ReadFaild = 3, // Read failed
+        ReadFailed = 3, // Read failed
         NotInitialized = 4, // FileUtils is not initializes
         TooLarge = 5, // The file is too large (great than 2^32-1)
         ObtainSizeFailed = 6 // Failed to obtain the file size.
@@ -181,8 +191,7 @@ public:
      *
      *  The template version of can accept cocos2d::Data, std::basic_string and std::vector.
      *
-     *  <pre>
-     *  {@code
+     *  @code
      *  std::string sbuf;
      *  FileUtils::getInstance()->getContents("path/to/file", &sbuf);
      *
@@ -191,8 +200,7 @@ public:
      *
      *  Data dbuf;
      *  FileUtils::getInstance()->getContents("path/to/file", &dbuf);
-     *  }
-     * </pre
+     *  @endcode
      *
      *  Note: if you read to std::vector<T> and std::basic_string<T> where T is not 8 bit type,
      *  you may get 0 ~ sizeof(T)-1 bytes padding.
@@ -200,8 +208,7 @@ public:
      *  - To write a new buffer class works with getContents, just extend ResizableBuffer.
      *  - To write a adapter for existing class, write a specialized ResizableBufferAdapter for that class, see follow code.
      *
-     *  <pre>
-     *  {@code
+     *  @code
      *  NS_CC_BEGIN // ResizableBufferAdapter needed in cocos2d namespace.
      *  template<>
      *  class ResizableBufferAdapter<AlreadyExistsBuffer> : public ResizableBuffer {
@@ -217,8 +224,7 @@ public:
      *      }
      *  };
      *  NS_CC_END
-     *  }
-     * </pre
+     *  @endcode
      *
      *  @param[in]  filename The resource file name which contains the path.
      *  @param[out] buffer The buffer where the file contents are store to.
@@ -226,7 +232,7 @@ public:
      *      - Status::OK when there is no error, the buffer is filled with the contents of file.
      *      - Status::NotExists when file not exists, the buffer will not changed.
      *      - Status::OpenFailed when cannot open file, the buffer will not changed.
-     *      - Status::ReadFaild when read end up before read whole, the buffer will fill with already read bytes.
+     *      - Status::ReadFailed when read end up before read whole, the buffer will fill with already read bytes.
      *      - Status::NotInitialized when FileUtils is not initializes, the buffer will not changed.
      *      - Status::TooLarge when there file to be read is too large (> 2^32-1), the buffer will not changed.
      *      - Status::ObtainSizeFailed when failed to obtain the file size, the buffer will not changed.
@@ -350,7 +356,7 @@ public:
     /**
      *  Sets the filenameLookup dictionary.
      *
-     *  @param pFilenameLookupDict The dictionary for replacing filename.
+     *  @param filenameLookupDict The dictionary for replacing filename.
      *  @since v2.1
      */
     virtual void setFilenameLookupDictionary(const ValueMap& filenameLookupDict);
@@ -358,7 +364,7 @@ public:
     /**
      *  Gets full path from a file name and the path of the relative file.
      *  @param filename The file name.
-     *  @param pszRelativeFile The path of the relative file.
+     *  @param relativeFile The path of the relative file.
      *  @return The full path.
      *          e.g. filename: hello.png, pszRelativeFile: /User/path1/path2/hello.plist
      *               Return: /User/path1/path2/hello.pvr (If there a a key(hello.png)-value(hello.pvr) in FilenameLookup dictionary. )
@@ -521,7 +527,7 @@ public:
     * Windows fopen can't support UTF-8 filename
     * Need convert all parameters fopen and other 3rd-party libs
     *
-    * @param filename std::string name file for conversion from utf-8
+    * @param filenameUtf8 std::string name file for conversion from utf-8
     * @return std::string ansi filename in current locale
     */
     virtual std::string getSuitableFOpen(const std::string& filenameUtf8) const;
@@ -728,6 +734,11 @@ protected:
      */
     static FileUtils* s_sharedFileUtils;
 
+    /**
+     *  Remove null value key (for iOS)
+     */
+    virtual void valueMapCompact(ValueMap& valueMap);
+    virtual void valueVectorCompact(ValueVector& valueVector);
 };
 
 // end of support group

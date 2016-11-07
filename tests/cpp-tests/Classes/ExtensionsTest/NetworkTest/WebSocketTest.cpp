@@ -268,7 +268,8 @@ WebSocketCloseTest::WebSocketCloseTest()
 
     if (!_wsiTest->init(*this, "ws://echo.websocket.org"))
     {
-        CC_SAFE_DELETE(_wsiTest);
+        delete _wsiTest;
+        _wsiTest = nullptr;
     }
 
     auto closeItem = MenuItemImage::create(s_pathClose, s_pathClose, [](Ref* sender){

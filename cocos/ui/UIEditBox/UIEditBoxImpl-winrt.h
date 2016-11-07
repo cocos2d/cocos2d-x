@@ -42,7 +42,7 @@ namespace ui {
   public:
     EditBoxWinRT(Windows::Foundation::EventHandler<Platform::String^>^ beginHandler,
       Windows::Foundation::EventHandler<Platform::String^>^ changeHandler,
-      Windows::Foundation::EventHandler<Platform::String^>^ endHandler);
+      Windows::Foundation::EventHandler<cocos2d::EndEventArgs^>^ endHandler);
 
     void closeKeyboard();
     bool isEditing();
@@ -95,7 +95,7 @@ namespace ui {
 
     Windows::Foundation::EventHandler<Platform::String^>^ _beginHandler = nullptr;
     Windows::Foundation::EventHandler<Platform::String^>^ _changeHandler = nullptr;
-    Windows::Foundation::EventHandler<Platform::String^>^ _endHandler = nullptr;
+    Windows::Foundation::EventHandler<EndEventArgs^>^ _endHandler = nullptr;
 
     Windows::Foundation::EventRegistrationToken _unfocusToken;
     Windows::Foundation::EventRegistrationToken _changeToken;

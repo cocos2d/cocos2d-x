@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2010-2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -427,13 +427,14 @@ bool WebSocket::init(const Delegate& delegate,
     if (protocols && protocols->size() > 0)
     {
         int i = 0;
-        for (std::vector<std::string>::const_iterator iter = protocols->begin(); iter != protocols->end(); ++iter, ++i)
+        for (auto& protocol : *protocols)
         {
-            char* name = new (std::nothrow) char[(*iter).length()+1];
-            strcpy(name, (*iter).c_str());
+            char* name = new (std::nothrow) char[protocol.length()+1];
+            strcpy(name, protocol.c_str());
             _wsProtocols[i].name = name;
             _wsProtocols[i].callback = WebSocketCallbackWrapper::onSocketCallback;
             _wsProtocols[i].rx_buffer_size = WS_RX_BUFFER_SIZE;
+            ++i;
         }
     }
     else
@@ -570,13 +571,10 @@ void WebSocket::onSubThreadStarted()
         {
             "permessage-deflate",
             lws_extension_callback_pm_deflate,
-            // iOS doesn't support client_no_context_takeover extension in the current version, it will cause iOS connection fail
-            // It may be a bug of lib websocket iOS build
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+            // client_no_context_takeover extension is not supported in the current version, it will cause connection fail
+            // It may be a bug of lib websocket build
+//            "permessage-deflate; client_no_context_takeover; client_max_window_bits"
             "permessage-deflate; client_max_window_bits"
-#else 
-            "permessage-deflate; client_no_context_takeover; client_max_window_bits"
-#endif
         },
         {
             "deflate-frame",
@@ -598,7 +596,15 @@ void WebSocket::onSubThreadStarted()
 
     info.port = CONTEXT_PORT_NO_LISTEN;
     info.protocols = _wsProtocols;
-    info.extensions = exts;
+    
+    // FIXME: Disable 'permessage-deflate' extension temporarily because of issues:
+    // https://github.com/cocos2d/cocos2d-x/issues/16045, https://github.com/cocos2d/cocos2d-x/issues/15767
+    // libwebsockets issue: https://github.com/warmcat/libwebsockets/issues/593
+    // Currently, we couldn't find out the exact reason.
+    // libwebsockets official said it's probably an issue of user code
+    // since 'libwebsockets' passed AutoBahn stressed Test.
+
+//    info.extensions = exts;
 
     info.gid = -1;
     info.uid = -1;
@@ -797,7 +803,7 @@ void WebSocket::onClientReceivedData(void* in, ssize_t len)
     }
     else
     {
-        LOGD("Emtpy message received, index=%d!\n", packageIndex);
+        LOGD("Empty message received, index=%d!\n", packageIndex);
     }
 
     // If no more data pending, send it to the client thread
@@ -814,7 +820,7 @@ void WebSocket::onClientReceivedData(void* in, ssize_t len)
 
         ssize_t frameSize = frameData->size();
 
-        bool isBinary = lws_frame_is_binary(_wsInstance);
+        bool isBinary = (lws_frame_is_binary(_wsInstance) != 0);
 
         if (!isBinary)
         {

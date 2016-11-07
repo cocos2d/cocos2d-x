@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2013      cocos2d-x.org
- Copyright (c) 2013-2015 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -89,7 +89,6 @@
 #include "platform/CCApplication.h"
 #include "platform/CCFileUtils.h"
 #include "renderer/CCGLProgram.h"
-#include "renderer/CCGLProgramCache.h"
 #include "renderer/CCGLProgramCache.h"
 #include "renderer/CCTextureAtlas.h"
 #include "renderer/ccGLStateCache.h"

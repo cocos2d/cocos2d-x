@@ -1,7 +1,7 @@
 /*
  * Created by Rohan Kuruvilla
  * Copyright (c) 2012 Zynga Inc.
- * Copyright (c) 2013-2014 Chukong Technologies Inc.
+ * Copyright (c) 2013-2016 Chukong Technologies Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -37,8 +37,20 @@
 #include "scripting/js-bindings/manual/cocos2d_specifics.hpp"
 #include "scripting/js-bindings/manual/js_bindings_config.h"
 
-
 USING_NS_CC;
+
+namespace
+{
+    class StringRef : public cocos2d::Ref
+    {
+    public:
+        CREATE_FUNC(StringRef);
+
+        virtual bool init() { return true; }
+
+        std::string data;
+    };
+};
 
 // JSStringWrapper
 JSStringWrapper::JSStringWrapper()
@@ -364,18 +376,12 @@ bool jsval_to_charptr( JSContext *cx, JS::HandleValue vp, const char **ret )
     JSString *jsstr = JS::ToString( cx, vp );
     JSB_PRECONDITION2( jsstr, cx, false, "invalid string" );
 
-    //XXX: what's this?
-    // root it
-//    vp = STRING_TO_JSVAL(jsstr);
-
     JSStringWrapper strWrapper(jsstr);
 
-    // XXX: It is converted to String and then back to char* to autorelease the created object.
-    __String *tmp = __String::create(strWrapper.get());
+    auto tmp = StringRef::create();
+    tmp->data = strWrapper.get();
 
-    JSB_PRECONDITION2( tmp, cx, false, "Error creating string from UTF8");
-
-    *ret = tmp->getCString();
+    *ret = tmp->data.c_str();
 
     return true;
 }
@@ -482,7 +488,7 @@ bool jsval_to_ushort( JSContext *cx, JS::HandleValue vp, unsigned short *outval 
     double dp;
     ok &= JS::ToNumber(cx, vp, &dp);
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
-    ok &= !isnan(dp);
+    ok &= !std::isnan(dp);
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
 
     *outval = (unsigned short)dp;
@@ -496,7 +502,7 @@ bool jsval_to_int32( JSContext *cx, JS::HandleValue vp, int32_t *outval )
     double dp;
     ok &= JS::ToNumber(cx, vp, &dp);
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
-    ok &= !isnan(dp);
+    ok &= !std::isnan(dp);
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
 
     *outval = (int32_t)dp;
@@ -510,7 +516,7 @@ bool jsval_to_uint32( JSContext *cx, JS::HandleValue vp, uint32_t *outval )
     double dp;
     ok &= JS::ToNumber(cx, vp, &dp);
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
-    ok &= !isnan(dp);
+    ok &= !std::isnan(dp);
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
 
     *outval = (uint32_t)dp;
@@ -524,7 +530,7 @@ bool jsval_to_uint16( JSContext *cx, JS::HandleValue vp, uint16_t *outval )
     double dp;
     ok &= JS::ToNumber(cx, vp, &dp);
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
-    ok &= !isnan(dp);
+    ok &= !std::isnan(dp);
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
 
     *outval = (uint16_t)dp;
@@ -596,13 +602,17 @@ bool jsval_to_long_long(JSContext *cx, JS::HandleValue vp, long long* r)
 }
 
 bool jsval_to_std_string(JSContext *cx, JS::HandleValue v, std::string* ret) {
-    if(v.isString() || v.isNumber())
+    if (v.isString() || v.isBoolean() || v.isNumber())
     {
         JSString *tmp = JS::ToString(cx, v);
         JSB_PRECONDITION3(tmp, cx, false, "Error processing arguments");
 
         JSStringWrapper str(tmp);
         *ret = str.get();
+        return true;
+    }
+    if (v.isNullOrUndefined()) {
+        *ret = "";
         return true;
     }
 
@@ -675,7 +685,8 @@ bool jsval_to_quaternion( JSContext *cx, JS::HandleValue v, cocos2d::Quaternion*
         JS::ToNumber(cx, y, &yy) &&
         JS::ToNumber(cx, z, &zz) &&
         JS::ToNumber(cx, w, &ww) &&
-        !isnan(xx) && !isnan(yy) && !isnan(zz) && !isnan(ww);
+        !std::isnan(xx) && !std::isnan(yy) && !std::isnan(zz) && !std::
+isnan(ww);
 
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
 
@@ -1006,6 +1017,8 @@ bool jsval_to_ccarray_of_CCPoint(JSContext* cx, JS::HandleValue v, Point **point
         JS_GetElement(cx, jsobj, i, &valarg);
 
         ok = jsval_to_ccpoint(cx, valarg, &array[i]);
+        if(!ok)
+            delete [] array;
         JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
     }
 
@@ -1538,7 +1551,7 @@ bool jsval_to_vector2(JSContext *cx, JS::HandleValue vp, cocos2d::Vec2* ret)
     JS_GetProperty(cx, tmp, "y", &jsy) &&
     JS::ToNumber(cx, jsx, &x) &&
     JS::ToNumber(cx, jsy, &y) &&
-    !isnan(x) && !isnan(y);
+    !std::isnan(x) && !std::isnan(y);
 
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
 
@@ -1562,7 +1575,7 @@ bool jsval_to_vector3(JSContext *cx, JS::HandleValue vp, cocos2d::Vec3* ret)
     JS::ToNumber(cx, jsx, &x) &&
     JS::ToNumber(cx, jsy, &y) &&
     JS::ToNumber(cx, jsz, &z) &&
-    !isnan(x) && !isnan(y) && !isnan(z);
+    !std::isnan(x) && !std::isnan(y) && !std::isnan(z);
 
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
 
@@ -1590,7 +1603,7 @@ bool jsval_to_vector4(JSContext *cx, JS::HandleValue vp, cocos2d::Vec4* ret)
     JS::ToNumber(cx, jsy, &y) &&
     JS::ToNumber(cx, jsz, &z) &&
     JS::ToNumber(cx, jsw, &w) &&
-    !isnan(x) && !isnan(y) && !isnan(z) && !isnan(w);
+    !std::isnan(x) && !std::isnan(y) && !std::isnan(z) && !std::isnan(w);
 
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
 
@@ -1657,7 +1670,7 @@ bool jsval_to_cctex2f(JSContext* cx, JS::HandleValue vp, cocos2d::Tex2F* ret)
     JS_GetProperty(cx, tmp, "y", &jsy) &&
     JS::ToNumber(cx, jsx, &x) &&
     JS::ToNumber(cx, jsy, &y) &&
-    !isnan(x) && !isnan(y);
+    !std::isnan(x) && !std::isnan(y);
 
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
 
@@ -1846,7 +1859,7 @@ jsval ccarray_to_jsval(JSContext* cx, __Array *arr)
             }  else if ((boolVal = dynamic_cast<__Bool*>(obj))) {
                 arrElement = BOOLEAN_TO_JSVAL(boolVal->getValue() ? true : false);
             } else {
-                CCASSERT(false, "the type isn't suppored.");
+                CCASSERT(false, "the type isn't supported.");
             }
         }
         if (!JS_SetElement(cx, jsretArr, i, arrElement)) {
@@ -1898,7 +1911,7 @@ jsval ccdictionary_to_jsval(JSContext* cx, __Dictionary* dict)
             } else if ((boolVal = dynamic_cast<__Bool*>(obj))) {
                 dictElement = BOOLEAN_TO_JSVAL(boolVal->getValue() ? true : false);
             } else {
-                CCASSERT(false, "the type isn't suppored.");
+                CCASSERT(false, "the type isn't supported.");
             }
         }
         const char* key = pElement->getStrKey();
@@ -2890,7 +2903,7 @@ jsval vector_vec2_to_jsval(JSContext *cx, const std::vector<cocos2d::Vec2>& v)
     JS::RootedObject jsretArr(cx, JS_NewArrayObject(cx, v.size()));
 
     int i = 0;
-    for (const cocos2d::Vec2 obj : v)
+    for (const cocos2d::Vec2& obj : v)
     {
         JS::RootedValue arrElement(cx);
         arrElement = vector2_to_jsval(cx, obj);

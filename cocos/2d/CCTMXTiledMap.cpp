@@ -2,7 +2,7 @@
 Copyright (c) 2009-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include "2d/CCTMXXMLParser.h"
 #include "2d/CCTMXLayer.h"
 #include "2d/CCSprite.h"
-#include "deprecated/CCString.h" // For StringUtils::format
+#include "base/ccUTF8.h"
 
 NS_CC_BEGIN
 
@@ -130,7 +130,7 @@ TMXTilesetInfo * TMXTiledMap::tilesetForLayer(TMXLayerInfo *layerInfo, TMXMapInf
     if (tilesets.size()>0)
     {
         TMXTilesetInfo* tileset = nullptr;
-        for (auto iter = tilesets.crbegin(); iter != tilesets.crend(); ++iter)
+        for (auto iter = tilesets.crbegin(), iterCrend = tilesets.crend(); iter != iterCrend; ++iter)
         {
             tileset = *iter;
             if (tileset)
@@ -231,9 +231,8 @@ TMXObjectGroup * TMXTiledMap::getObjectGroup(const std::string& groupName) const
     if (_objectGroups.size()>0)
     {
         TMXObjectGroup* objectGroup = nullptr;
-        for (auto iter = _objectGroups.cbegin(); iter != _objectGroups.cend(); ++iter)
+        for (const auto& objectGroup : _objectGroups)
         {
-            objectGroup = *iter;
             if (objectGroup && objectGroup->getGroupName() == groupName)
             {
                 return objectGroup;

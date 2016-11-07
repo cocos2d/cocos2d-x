@@ -139,7 +139,7 @@ public:
     /* @brief Sets storage path.
      *
      * @param storagePath The path to store downloaded resources.
-     * @warm The path should be a valid path.
+     * @warning The path should be a valid path.
      */
     void setStoragePath(const char* storagePath);
     

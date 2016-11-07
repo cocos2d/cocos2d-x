@@ -2,7 +2,7 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -54,17 +54,8 @@ public:
      * @memberof PolygonInfo
      * @return PolygonInfo object
      */
-    PolygonInfo():
-    rect(cocos2d::Rect::ZERO),
-    filename(""),
-    isVertsOwner(true)
-    {
-        triangles.verts = nullptr;
-        triangles.indices = nullptr;
-        triangles.vertCount = 0;
-        triangles.indexCount = 0;
-    };
-    
+    PolygonInfo();
+
     /**
      * Create an polygoninfo from the data of another Polygoninfo
      * @param other     another PolygonInfo to be copied
@@ -90,12 +81,21 @@ public:
     void setQuad(V3F_C4B_T2F_Quad *quad);
 
     /**
+     * set the data to be a pointer to a number of Quads
+     * the member verts will not be released when this PolygonInfo destructs
+     * as the verts memory are managed by other objects
+     * @param quad  a pointer to the V3F_C4B_T2F_Quad quads
+     */
+    void setQuads(V3F_C4B_T2F_Quad *quads, int numberOfQuads);
+
+
+    /**
      * set the data to be a pointer to a triangles
      * the member verts will not be released when this PolygonInfo destructs
      * as the verts memory are managed by other objects
      * @param triangles  a pointer to the TrianglesCommand::Triangles object
      */
-    void setTriangles(TrianglesCommand::Triangles triangles);
+    void setTriangles(const TrianglesCommand::Triangles& triangles);
 
     /**
      * get vertex count
@@ -117,13 +117,20 @@ public:
      * @return sum of all triangle area size
      */
     float getArea() const;
-    
-    Rect rect;
-    std::string filename;
+
+    const Rect& getRect() const { return _rect; }
+    void setRect(const Rect& rect) { _rect = rect; }
+    const std::string& getFilename() const { return _filename; }
+    void setFilename(const std::string& filename ) { _filename = filename; }
+
+    // FIXME: this should be a property, not a public ivar
     TrianglesCommand::Triangles triangles;
+
 protected:
-    bool isVertsOwner;
-    
+    bool _isVertsOwner;
+    Rect _rect;
+    std::string _filename;
+
 private:
     void releaseVertsAndIndices();
 };
@@ -167,7 +174,7 @@ public:
     
     /**
      * reduce the amount of points so its faster for GPU to process and draw
-     * based on Ramer-Douglas-Puecker algorithm
+     * based on Ramer-Douglas-Peucker algorithm
      * @param   points  a vector of Vec2 points as input
      * @param   rect    a texture rect for specify an area of the image to avoid over reduction
      * @param   epsilon the perpendicular distance where points smaller than this value will be discarded
@@ -260,7 +267,7 @@ protected:
     int getIndexFromPos(const unsigned int& x, const unsigned int& y){return y*_width+x;};
     cocos2d::Vec2 getPosFromIndex(const unsigned int& i){return cocos2d::Vec2(i%_width, i/_width);};
 
-    std::vector<cocos2d::Vec2> rdp(std::vector<cocos2d::Vec2> v, const float& optimization);
+    std::vector<cocos2d::Vec2> rdp(const std::vector<cocos2d::Vec2>& v, float optimization);
     float perpendicularDistance(const cocos2d::Vec2& i, const cocos2d::Vec2& start, const cocos2d::Vec2& end);
 
     //real rect is the size that is in scale with the texture file

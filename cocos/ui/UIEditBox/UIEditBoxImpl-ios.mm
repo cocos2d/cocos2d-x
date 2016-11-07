@@ -227,6 +227,9 @@ UIFont* EditBoxImplIOS::constructFont(const char *fontName, int fontSize)
     if (strlen(fontName) > 0)
     {
         textFont = [UIFont fontWithName:fntName size:fontSize];
+        if (textFont == nil) {
+            textFont = [UIFont systemFontOfSize:fontSize];
+        }
     }
     else
     {

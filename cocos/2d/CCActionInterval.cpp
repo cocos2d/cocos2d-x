@@ -508,7 +508,7 @@ void Repeat::update(float dt)
         }
 
         // fix for issue #1288, incorrect end value of repeat
-        if(fabs(dt - 1.0f) < FLT_EPSILON && _total < _times)
+        if (std::abs(dt - 1.0f) < FLT_EPSILON && _total < _times)
         {
             if (!(sendUpdateEventToScript(1.0f, _innerAction)))
                 _innerAction->update(1.0f);
@@ -1460,6 +1460,129 @@ SkewBy* SkewBy::reverse() const
     return SkewBy::create(_duration, -_skewX, -_skewY);
 }
 
+ResizeTo* ResizeTo::create(float duration, const cocos2d::Size& final_size)
+{
+    ResizeTo *ret = new (std::nothrow) ResizeTo();
+    
+    if (ret)
+    {
+        if (ret->initWithDuration(duration, final_size))
+        {
+            ret->autorelease();
+        } 
+        else
+        {
+            delete ret;
+            ret = nullptr;
+        }
+    }
+    
+    return ret;
+}
+
+ResizeTo* ResizeTo::clone(void) const
+{
+    // no copy constructor
+    ResizeTo* a = new (std::nothrow) ResizeTo();
+    a->initWithDuration(_duration, _finalSize);
+    a->autorelease();
+
+    return a;
+}
+
+void ResizeTo::startWithTarget(cocos2d::Node* target)
+{
+    ActionInterval::startWithTarget(target);
+    _initialSize = target->getContentSize();
+    _sizeDelta = _finalSize - _initialSize;
+}
+
+void ResizeTo::update(float time)
+{
+    if (_target)
+    {
+        auto new_size = _initialSize + (_sizeDelta * time);
+        _target->setContentSize(new_size);
+    }
+}
+
+bool ResizeTo::initWithDuration(float duration, const cocos2d::Size& final_size)
+{
+    if (cocos2d::ActionInterval::initWithDuration(duration))
+    {
+        _finalSize = final_size;
+        return true;
+    }
+
+    return false;
+}
+
+//
+// ResizeBy
+//
+
+ResizeBy* ResizeBy::create(float duration, const cocos2d::Size& deltaSize)
+{
+    ResizeBy *ret = new (std::nothrow) ResizeBy();
+    
+    if (ret)
+    {
+        if (ret->initWithDuration(duration, deltaSize))
+        {
+            ret->autorelease();
+        } 
+        else
+        {
+              delete ret;
+              ret = nullptr;
+        }
+    }
+    
+    return ret;
+}
+
+ResizeBy* ResizeBy::clone() const
+{
+    // no copy constructor
+    auto a = new (std::nothrow) ResizeBy();
+    a->initWithDuration(_duration, _sizeDelta);
+    a->autorelease();
+    return a;
+}
+
+void ResizeBy::startWithTarget(Node *target)
+{
+    ActionInterval::startWithTarget(target);
+    _previousSize = _startSize = target->getContentSize();
+}
+
+ResizeBy* ResizeBy::reverse() const
+{
+    cocos2d::Size newSize(-_sizeDelta.width, -_sizeDelta.height);
+    return ResizeBy::create(_duration, newSize);
+}
+
+void ResizeBy::update(float t)
+{
+    if (_target)
+    {
+        _target->setContentSize(_startSize + (_sizeDelta * t));
+    }
+}
+
+bool ResizeBy::initWithDuration(float duration, const cocos2d::Size& deltaSize)
+{
+    bool ret = false;
+    
+    if (ActionInterval::initWithDuration(duration))
+    {
+        _sizeDelta = deltaSize;
+        ret = true;
+    }
+    
+    return ret;
+}
+
 //
 // JumpBy
 //
@@ -1958,7 +2081,7 @@ bool Blink::initWithDuration(float duration, int blinks)
 
 void Blink::stop()
 {
-    if(NULL != _target)
+    if (nullptr != _target)
         _target->setVisible(_originalState);
     ActionInterval::stop();
 }
@@ -2501,7 +2624,9 @@ void Animate::stop()
 {
     if (_animation->getRestoreOriginalFrame() && _target)
     {
+        auto blend = static_cast<Sprite*>(_target)->getBlendFunc();
         static_cast<Sprite*>(_target)->setSpriteFrame(_origFrame);
+        static_cast<Sprite*>(_target)->setBlendFunc(blend);
     }
 
     ActionInterval::stop();
@@ -2536,10 +2661,12 @@ void Animate::update(float t)
 
         if( splitTime <= t )
         {
+            auto blend = static_cast<Sprite*>(_target)->getBlendFunc();
             _currFrameIndex = i;
             AnimationFrame* frame = frames.at(_currFrameIndex);
             frameToDisplay = frame->getSpriteFrame();
             static_cast<Sprite*>(_target)->setSpriteFrame(frameToDisplay);
+            static_cast<Sprite*>(_target)->setBlendFunc(blend);
 
             const ValueMap& dict = frame->getUserInfo();
             if ( !dict.empty() )
@@ -2568,7 +2695,7 @@ Animate* Animate::reverse() const
    
     if (!oldArray.empty())
     {
-        for (auto iter = oldArray.crbegin(); iter != oldArray.crend(); ++iter)
+        for (auto iter = oldArray.crbegin(), iterCrend = oldArray.crend(); iter != iterCrend; ++iter)
         {
             AnimationFrame* animFrame = *iter;
             if (!animFrame)

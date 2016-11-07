@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2013      Zynga Inc.
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
  
 http://www.cocos2d-x.org
 
@@ -51,7 +51,7 @@ static std::unordered_map<std::string, DataRef> s_cacheFontData;
 
 FontFreeType * FontFreeType::create(const std::string &fontName, float fontSize, GlyphCollection glyphs, const char *customGlyphs,bool distanceFieldEnabled /* = false */,int outline /* = 0 */)
 {
-    FontFreeType *tempFont =  new FontFreeType(distanceFieldEnabled,outline);
+    FontFreeType *tempFont =  new (std::nothrow) FontFreeType(distanceFieldEnabled,outline);
 
     if (!tempFont)
         return nullptr;
@@ -195,10 +195,14 @@ FontFreeType::~FontFreeType()
         }
     }
 
-    s_cacheFontData[_fontName].referenceCount -= 1;
-    if (s_cacheFontData[_fontName].referenceCount == 0)
+    auto iter = s_cacheFontData.find(_fontName);
+    if (iter != s_cacheFontData.end())
     {
-        s_cacheFontData.erase(_fontName);
+        iter->second.referenceCount -= 1;
+        if (iter->second.referenceCount == 0)
+        {
+            s_cacheFontData.erase(iter);
+        }
     }
 }
 
@@ -215,7 +219,7 @@ FontAtlas * FontFreeType::createFontAtlas()
                 _fontAtlas->prepareLetterDefinitions(utf16);
             }
         }
-        this->release();
+        this->autorelease();
     }
     
     return _fontAtlas;
@@ -316,7 +320,7 @@ unsigned char* FontFreeType::getGlyphBitmap(unsigned short theChar, long &outWid
         outHeight = _fontRef->glyph->bitmap.rows;
         ret = _fontRef->glyph->bitmap.buffer;
 
-        if (_outlineSize > 0)
+        if (_outlineSize > 0 && outWidth > 0 && outHeight > 0)
         {
             auto copyBitmap = new (std::nothrow) unsigned char[outWidth * outHeight];
             memcpy(copyBitmap,ret,outWidth * outHeight * sizeof(unsigned char));

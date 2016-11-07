@@ -1,7 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010      Stuart Carnie
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2015 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -127,7 +127,7 @@ public:
      * @js NA
      * @lua NA
      */
-    inline const std::chrono::high_resolution_clock::time_point& getStartTime(void) { return _startTime; };
+    const std::chrono::high_resolution_clock::time_point& getStartTime() { return _startTime; }
 
     /** resets the timer properties
      * @js NA

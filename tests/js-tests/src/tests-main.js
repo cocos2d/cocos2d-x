@@ -215,7 +215,7 @@ var TestController = cc.LayerGradient.extend({
     onCloseCallback:function () {
         if (cc.sys.isNative)
         {
-            cc.director.end();
+            cc.game.end();
         }
         else {
             window.history && window.history.go(-1);
@@ -310,15 +310,6 @@ var testNames = [
         linksrc:"src/CocosDenshionTest/CocosDenshionTest.js",
         testScene:function () {
             return new CocosDenshionTestScene();
-        }
-    },
-    {
-        title:"CocoStudio Test",
-        resource:g_cocoStudio,
-        platforms: PLATFORM_ALL,
-        linksrc:"",
-        testScene:function () {
-            return new CocoStudioTestScene();
         }
     },
     {
@@ -554,6 +545,14 @@ var testNames = [
         linksrc:"src/PathTest/PathTest.js",
         testScene:function () {
             return new PathTestScene();
+        }
+    },
+    {
+        title:"PerformanceNow Tests",
+        platforms: PLATFORM_ALL,
+        linksrc:"src/PerformanceNowTest/PerformanceNowTest.js",
+        testScene:function() {
+            return new PerformanceNowTestScene();
         }
     },
     {

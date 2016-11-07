@@ -88,7 +88,7 @@ public:
      * @js NA
      * @param controlPoint A control point.
      */
-    void addControlPoint(Vec2 controlPoint);
+    void addControlPoint(const Vec2& controlPoint);
 
     /** Inserts a controlPoint at index.
      *
@@ -205,12 +205,12 @@ public:
      *
      * @return A PointArray.
      */
-    inline PointArray* getPoints() { return _points; }
+    PointArray* getPoints() { return _points; }
     /**
      * @js NA
      * @lua NA
      */
-    inline void setPoints(PointArray* points)
+    void setPoints(PointArray* points)
     {
         CC_SAFE_RETAIN(points);
         CC_SAFE_RELEASE(_points);

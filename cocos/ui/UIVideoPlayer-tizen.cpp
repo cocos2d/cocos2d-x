@@ -243,7 +243,7 @@ void VideoPlayer::setKeepAspectRatioEnabled(bool enable)
 void VideoPlayer::drawDebugData()
 {
     Director* director = Director::getInstance();
-    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
+    CCASSERT(nullptr != director, "Director is null when setting matrix stack");
 
     director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
@@ -298,7 +298,6 @@ void VideoPlayer::play()
         {
             player_set_display_mode(impl->_player, PLAYER_DISPLAY_MODE_FULL_SCREEN);
         }
-        player_set_display_visible(impl->_player, true);
 
         player_set_completed_cb(impl->_player, _player_completed_cb, this);
         player_set_interrupted_cb(impl->_player, _player_interrupted_cb, this);
@@ -309,6 +308,7 @@ void VideoPlayer::play()
         {
             this->onPlayEvent((int)VideoPlayer::EventType::PLAYING);
         }
+        this->setVisible(true);
     }
 }
 
@@ -365,15 +365,36 @@ bool VideoPlayer::isPlaying() const
     return _isPlaying;
 }
 
+void VideoPlayer::onEnter()
+{
+    Widget::onEnter();
+    if (isVisible())
+    {
+        _VideoPlayerTizen* impl = (_VideoPlayerTizen*)_videoView;
+        player_set_display_visible(impl->_player, true);
+    }
+}
+
+void VideoPlayer::onExit()
+{
+    Widget::onExit();
+    _VideoPlayerTizen* impl = (_VideoPlayerTizen*)_videoView;
+    player_set_display_visible(impl->_player, false);
+}
+
 void VideoPlayer::setVisible(bool visible)
 {
     cocos2d::ui::Widget::setVisible(visible);
+    _VideoPlayerTizen* impl = (_VideoPlayerTizen*)_videoView;
 
-    if (! _videoURL.empty())
+    if (!visible)
     {
-        _VideoPlayerTizen* impl = (_VideoPlayerTizen*)_videoView;
-        player_set_display_visible(impl->_player, visible);
-    } 
+        player_set_display_visible(impl->_player, false);
+    }
+    else if(isRunning())
+    {
+        player_set_display_visible(impl->_player, true);
+    }
 }
 
 void VideoPlayer::addEventListener(const VideoPlayer::ccVideoPlayerCallback& callback)
