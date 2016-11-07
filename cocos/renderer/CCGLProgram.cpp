@@ -695,7 +695,7 @@ bool GLProgram::updateUniformLocation(GLint location, const GLvoid* data, unsign
     {
         GLvoid* value = malloc(bytes);
         memcpy(value, data, bytes );
-        _hashForUniforms.insert(std::make_pair(location, std::make_pair(value, bytes)));
+        _hashForUniforms.emplace(location, std::make_pair(value, bytes));
     }
     else
     {

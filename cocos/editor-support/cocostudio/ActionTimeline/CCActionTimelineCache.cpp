@@ -504,7 +504,7 @@ ActionTimeline* ActionTimelineCache::createActionWithDataBuffer(const cocos2d::D
         Timeline* timeline = loadTimelineWithFlatBuffers(timelineFlatBuf);
         if (timeline)
         {
-            properTimelineMap.insert(std::make_pair(timelineFlatBuf->property()->c_str(), timeline));
+            properTimelineMap.emplace(timelineFlatBuf->property()->c_str(), timeline);
         }
     }
 
@@ -998,7 +998,7 @@ ActionTimeline* ActionTimelineCache::createActionWithFlatBuffersForSimulator(con
         Timeline* timeline = loadTimelineWithFlatBuffers(timelineFlatBuf);
         if (timeline)
         {
-            properTimelineMap.insert(std::make_pair(timelineFlatBuf->property()->c_str(), timeline));
+            properTimelineMap.emplace(timelineFlatBuf->property()->c_str(), timeline);
         }
     }
 
