@@ -459,7 +459,12 @@ void Scale9Sprite::setupSlice9(Texture2D* texture, const Rect& capInsets)
 
 void Scale9Sprite::setCapInsets(const cocos2d::Rect &insets)
 {
-    setCenterRect(insets);
+    if (insets.equals(Rect::ZERO))
+        // FIXME: Apparently UIButton might use an  insets == Rect::ZERO for 0.333f
+        // so, we should emulate that behavior
+        setCenterRectNormalized(Rect(1/3.0f, 1/3.0f, 1/3.0f, 1/3.0f));
+    else
+        setCenterRect(insets);
 }
 
 Rect Scale9Sprite::getCapInsets() const
