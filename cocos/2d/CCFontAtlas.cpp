@@ -154,7 +154,7 @@ void FontAtlas::purgeTexturesAtlas()
     }
 }
 
-void FontAtlas::listenRendererRecreated(EventCustom *event)
+void FontAtlas::listenRendererRecreated(EventCustom * /*event*/)
 {
     purgeTexturesAtlas();
 }

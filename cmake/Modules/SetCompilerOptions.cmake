@@ -50,7 +50,7 @@ macro (SetCompilerOptions)
 	  endforeach()
 
 	else()
-	  set(CMAKE_C_FLAGS_DEBUG "-g -Wall -Wextra")
+        set(CMAKE_C_FLAGS_DEBUG "-g -Wall -Wextra -Werror")
 	  set(CMAKE_CXX_FLAGS_DEBUG ${CMAKE_C_FLAGS_DEBUG})
 	  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu99 -fPIC")
 	  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wno-deprecated-declarations -Wno-reorder -Wno-invalid-offsetof -fPIC")

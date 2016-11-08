@@ -319,7 +319,7 @@ void DrawNode::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
     }
 }
 
-void DrawNode::onDraw(const Mat4 &transform, uint32_t flags)
+void DrawNode::onDraw(const Mat4 &transform, uint32_t /*flags*/)
 {
     getGLProgramState()->apply(transform);
     
@@ -361,7 +361,7 @@ void DrawNode::onDraw(const Mat4 &transform, uint32_t flags)
     CHECK_GL_ERROR_DEBUG();
 }
 
-void DrawNode::onDrawGLLine(const Mat4 &transform, uint32_t flags)
+void DrawNode::onDrawGLLine(const Mat4 &transform, uint32_t /*flags*/)
 {
     auto glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_LENGTH_TEXTURE_COLOR);
     glProgram->use();
@@ -405,7 +405,7 @@ void DrawNode::onDrawGLLine(const Mat4 &transform, uint32_t flags)
     CHECK_GL_ERROR_DEBUG();
 }
 
-void DrawNode::onDrawGLPoint(const Mat4 &transform, uint32_t flags)
+void DrawNode::onDrawGLPoint(const Mat4 &transform, uint32_t /*flags*/)
 {
     auto glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_COLOR_TEXASPOINTSIZE);
     glProgram->use();

@@ -263,7 +263,7 @@ void TMXLayer::parseInternalProperties()
     }
 }
 
-void TMXLayer::setupTileSprite(Sprite* sprite, const Vec2& pos, int gid)
+void TMXLayer::setupTileSprite(Sprite* sprite, const Vec2& pos, uint32_t gid)
 {
     sprite->setPosition(getPositionAt(pos));
     sprite->setPositionZ((float)getVertexZForPos(pos));
