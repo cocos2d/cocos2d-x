@@ -35,7 +35,7 @@ NS_CC_BEGIN
 #define CURSOR_TIME_SHOW_HIDE 0.5f
 #define CURSOR_DEFAULT_CHAR '|'
 #define PASSWORD_STYLE_TEXT_DEFAULT "\xe2\x80\xa2"
-static int _calcCharCount(const char * text)
+static std::size_t _calcCharCount(const char * text)
 {
     int n = 0;
     char ch = 0;
@@ -235,7 +235,7 @@ void TextFieldTTF::insertText(const char * text, size_t len)
             return;
         }
 
-        int countInsertChar = _calcCharCount(insert.c_str());
+        std::size_t countInsertChar = _calcCharCount(insert.c_str());
         _charCount += countInsertChar;
 
         if (_cursorEnabled)
@@ -474,7 +474,8 @@ void TextFieldTTF::setString(const std::string &text)
 {
     std::string displayText;
 
-    int charCount = 0;
+    std::size_t charCount = 0;
+
     if (!text.empty())
     {
         _inputText = text;

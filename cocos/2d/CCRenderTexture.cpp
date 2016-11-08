@@ -91,7 +91,7 @@ RenderTexture::~RenderTexture()
     CC_SAFE_DELETE(_UITextureImage);
 }
 
-void RenderTexture::listenToBackground(EventCustom *event)
+void RenderTexture::listenToBackground(EventCustom* /*event*/)
 {
     // We have not found a way to dispatch the enter background message before the texture data are destroyed.
     // So we disable this pair of message handler at present.
@@ -121,7 +121,7 @@ void RenderTexture::listenToBackground(EventCustom *event)
 #endif
 }
 
-void RenderTexture::listenToForeground(EventCustom *event)
+void RenderTexture::listenToForeground(EventCustom* /*event*/)
 {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     // -- regenerate frame buffer object and attach the texture

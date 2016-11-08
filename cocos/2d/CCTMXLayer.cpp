@@ -284,7 +284,7 @@ void TMXLayer::setupTileSprite(Sprite* sprite, const Vec2& pos, uint32_t gid)
         sprite->setPosition(getPositionAt(pos).x + sprite->getContentSize().height/2,
            getPositionAt(pos).y + sprite->getContentSize().width/2 );
 
-        int flag = gid & (kTMXTileHorizontalFlag | kTMXTileVerticalFlag );
+        auto flag = gid & (kTMXTileHorizontalFlag | kTMXTileVerticalFlag );
 
         // handle the 4 diagonally flipped states.
         if (flag == kTMXTileHorizontalFlag)

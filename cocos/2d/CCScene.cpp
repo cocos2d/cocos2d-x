@@ -161,7 +161,7 @@ std::string Scene::getDescription() const
     return StringUtils::format("<Scene | tag = %d>", _tag);
 }
 
-void Scene::onProjectionChanged(EventCustom* event)
+void Scene::onProjectionChanged(EventCustom* /*event*/)
 {
     if (_defaultCamera)
     {
