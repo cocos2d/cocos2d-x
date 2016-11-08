@@ -85,12 +85,12 @@ ParallaxNode * ParallaxNode::create()
     return ret;
 }
 
-void ParallaxNode::addChild(Node * child, int zOrder, int tag)
+void ParallaxNode::addChild(Node* /*child*/, int /*zOrder*/, int /*tag*/)
 {
     CCASSERT(0,"ParallaxNode: use addChild:z:parallaxRatio:positionOffset instead");
 }
 
-void ParallaxNode::addChild(Node * child, int zOrder, const std::string &name)
+void ParallaxNode::addChild(Node* /*child*/, int /*zOrder*/, const std::string& /*name*/)
 {
     CCASSERT(0,"ParallaxNode: use addChild:z:parallaxRatio:positionOffset instead");
 }

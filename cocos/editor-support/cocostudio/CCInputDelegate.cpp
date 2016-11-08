@@ -56,36 +56,36 @@ InputDelegate::~InputDelegate(void)
     Device::setAccelerometerEnabled(false);
 }
 
-bool InputDelegate::onTouchBegan(Touch *pTouch, Event *pEvent)
+bool InputDelegate::onTouchBegan(Touch */*pTouch*/, Event */*pEvent*/)
 {
     return true;
 }
 
-void InputDelegate::onTouchMoved(Touch *pTouch, Event *pEvent)
+void InputDelegate::onTouchMoved(Touch */*pTouch*/, Event */*pEvent*/)
 {
 }
     
-void InputDelegate::onTouchEnded(Touch *pTouch, Event *pEvent)
+void InputDelegate::onTouchEnded(Touch */*pTouch*/, Event */*pEvent*/)
 {
 }
 
-void InputDelegate::onTouchCancelled(Touch *pTouch, Event *pEvent)
+void InputDelegate::onTouchCancelled(Touch */*pTouch*/, Event */*pEvent*/)
 {
 }    
 
-void InputDelegate::onTouchesBegan(const std::vector<Touch*>& pTouches, Event *pEvent)
+void InputDelegate::onTouchesBegan(const std::vector<Touch*>& /*pTouches*/, Event */*pEvent*/)
 {
 }
 
-void InputDelegate::onTouchesMoved(const std::vector<Touch*>& pTouches, Event *pEvent)
+void InputDelegate::onTouchesMoved(const std::vector<Touch*>& /*pTouches*/, Event */*pEvent*/)
 {
 }
 
-void InputDelegate::onTouchesEnded(const std::vector<Touch*>& pTouches, Event *pEvent)
+void InputDelegate::onTouchesEnded(const std::vector<Touch*>& /*pTouches*/, Event */*pEvent*/)
 {
 }
 
-void InputDelegate::onTouchesCancelled(const std::vector<Touch*>& pTouches, Event *pEvent)
+void InputDelegate::onTouchesCancelled(const std::vector<Touch*>& /*pTouches*/, Event */*pEvent*/)
 {
 }
 

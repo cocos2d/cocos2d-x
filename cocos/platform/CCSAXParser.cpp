@@ -127,7 +127,7 @@ SAXParser::~SAXParser(void)
 {
 }
 
-bool SAXParser::init(const char *encoding)
+bool SAXParser::init(const char */*encoding*/)
 {
     // nothing to do
     return true;

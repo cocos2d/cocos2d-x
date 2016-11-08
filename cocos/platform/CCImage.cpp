@@ -1190,7 +1190,7 @@ namespace
         return p;
     }
     
-    static tmsize_t tiffWriteProc(thandle_t fd, void* buf, tmsize_t size)
+    static tmsize_t tiffWriteProc(thandle_t /*fd*/, void* /*buf*/, tmsize_t /*size*/)
     {
         return 0;
     }
@@ -1233,17 +1233,17 @@ namespace
         return imageSrc->size;
     }
     
-    static int tiffCloseProc(thandle_t fd)
+    static int tiffCloseProc(thandle_t /*fd*/)
     {
         return 0;
     }
     
-    static int tiffMapProc(thandle_t fd, void** base, toff_t* size)
+    static int tiffMapProc(thandle_t /*fd*/, void** /*base*/, toff_t* /*size*/)
     {
         return 0;
     }
     
-    static void tiffUnmapProc(thandle_t fd, void* base, toff_t size)
+    static void tiffUnmapProc(thandle_t /*fd*/, void* /*base*/, toff_t /*size*/)
     {
     }
 }
@@ -1319,7 +1319,7 @@ bool Image::initWithTiffData(const unsigned char * data, ssize_t dataLen)
 
 namespace
 {
-    bool testFormatForPvr2TCSupport(PVR2TexturePixelFormat format)
+    bool testFormatForPvr2TCSupport(PVR2TexturePixelFormat /*format*/)
     {
         return true;
     }
@@ -1685,7 +1685,7 @@ bool Image::initWithPVRv3Data(const unsigned char * data, ssize_t dataLen)
     return true;
 }
 
-bool Image::initWithETCData(const unsigned char * data, ssize_t dataLen)
+bool Image::initWithETCData(const unsigned char * data, ssize_t /*dataLen*/)
 {
     const etc1_byte* header = static_cast<const etc1_byte*>(data);
     
@@ -2134,7 +2134,7 @@ bool Image::initWithWebpData(const unsigned char * data, ssize_t dataLen)
 }
 
 
-bool Image::initWithRawData(const unsigned char * data, ssize_t dataLen, int width, int height, int bitsPerComponent, bool preMulti)
+bool Image::initWithRawData(const unsigned char * data, ssize_t /*dataLen*/, int width, int height, int /*bitsPerComponent*/, bool preMulti)
 {
     bool ret = false;
     do 

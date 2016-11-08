@@ -73,12 +73,12 @@ bool Action::isDone() const
     return true;
 }
 
-void Action::step(float dt)
+void Action::step(float /*dt*/)
 {
     CCLOG("[Action step]. override me");
 }
 
-void Action::update(float time)
+void Action::update(float /*time*/)
 {
     CCLOG("[Action update]. override me");
 }
@@ -281,7 +281,7 @@ bool Follow::initWithTarget(Node *followedNode, const Rect& rect /*= Rect::ZERO*
     return initWithTargetAndOffset(followedNode, 0.0, 0.0,rect);
     
 }
-void Follow::step(float dt)
+void Follow::step(float /*dt*/)
 {
     if(_boundarySet)
     {

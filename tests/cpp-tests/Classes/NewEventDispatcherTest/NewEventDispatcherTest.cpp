@@ -953,7 +953,7 @@ StopPropagationTest::StopPropagationTest()
     };
     
     auto keyboardEventListener = EventListenerKeyboard::create();
-    keyboardEventListener->onKeyPressed = [](EventKeyboard::KeyCode key, Event* event){
+    keyboardEventListener->onKeyPressed = [](EventKeyboard::KeyCode /*key*/, Event* event){
         auto target = static_cast<Sprite*>(event->getCurrentTarget());
         CCASSERT(target->getTag() == TAG_BLUE_SPRITE || target->getTag() == TAG_BLUE_SPRITE2, "Yellow blocks shouldn't response event.");
         // Stop propagation, so yellow blocks will not be able to receive event.

@@ -276,7 +276,7 @@ EventListenerPhysicsContact* EventListenerPhysicsContact::create()
     return nullptr;
 }
 
-bool EventListenerPhysicsContact::hitTest(PhysicsShape* shapeA, PhysicsShape* shapeB)
+bool EventListenerPhysicsContact::hitTest(PhysicsShape* /*shapeA*/, PhysicsShape* /*shapeB*/)
 {
     return true;
 }

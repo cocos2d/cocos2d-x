@@ -73,11 +73,11 @@ ExtraAction* ExtraAction::reverse() const
     return ExtraAction::create();
 }
 
-void ExtraAction::update(float time)
+void ExtraAction::update(float /*time*/)
 {
 }
 
-void ExtraAction::step(float dt)
+void ExtraAction::step(float /*dt*/)
 {
 }
 
@@ -2417,7 +2417,7 @@ DelayTime* DelayTime::clone() const
     return DelayTime::create(_duration);
 }
 
-void DelayTime::update(float time)
+void DelayTime::update(float /*time*/)
 {
     return;
 }

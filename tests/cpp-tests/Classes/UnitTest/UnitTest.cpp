@@ -606,9 +606,8 @@ std::string ValueTest::subtitle() const
     return "Value Test, should not crash";
 }
 
-void ValueTest::constFunc(const Value& value) const
+void ValueTest::constFunc(const Value& /*value*/) const
 {
-    
 }
 
 // UTFConversionTest

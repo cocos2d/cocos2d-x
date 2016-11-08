@@ -336,7 +336,7 @@ void Lens3D::setPosition(const Vec2& pos)
     }
 }
 
-void Lens3D::update(float time)
+void Lens3D::update(float /*time*/)
 {
     if (_dirty)
     {
@@ -497,7 +497,7 @@ Shaky3D* Shaky3D::clone() const
     return a;
 }
 
-void Shaky3D::update(float time)
+void Shaky3D::update(float /*time*/)
 {
     int i, j;
 

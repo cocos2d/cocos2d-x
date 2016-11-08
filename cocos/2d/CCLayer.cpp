@@ -246,7 +246,7 @@ void Layer::setAccelerometerInterval(double interval) {
     }
 }
 
-void Layer::onAcceleration(Acceleration* acc, Event* unused_event)
+void Layer::onAcceleration(Acceleration* acc, Event* /*unused_event*/)
 {
 #if CC_ENABLE_SCRIPT_BINDING
     if(kScriptTypeNone != _scriptType)
@@ -258,11 +258,11 @@ void Layer::onAcceleration(Acceleration* acc, Event* unused_event)
 #endif
 }
 
-void Layer::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* unused_event)
+void Layer::onKeyPressed(EventKeyboard::KeyCode /*keyCode*/, Event* /*unused_event*/)
 {
 }
 
-void Layer::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* unused_event)
+void Layer::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* /*unused_event*/)
 {
 #if CC_ENABLE_SCRIPT_BINDING
     if(kScriptTypeNone != _scriptType)
@@ -566,7 +566,7 @@ void LayerColor::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
     }
 }
 
-void LayerColor::onDraw(const Mat4& transform, uint32_t flags)
+void LayerColor::onDraw(const Mat4& transform, uint32_t /*flags*/)
 {
     getGLProgram()->use();
     getGLProgram()->setUniformsForBuiltins(transform);

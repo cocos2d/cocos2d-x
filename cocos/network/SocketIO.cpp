@@ -432,7 +432,7 @@ void SIOClientImpl::handshake()
     return;
 }
 
-void SIOClientImpl::handshakeResponse(HttpClient *sender, HttpResponse *response)
+void SIOClientImpl::handshakeResponse(HttpClient */*sender*/, HttpResponse *response)
 {
     CCLOGINFO("SIOClientImpl::handshakeResponse() called");
 
@@ -665,7 +665,7 @@ void SIOClientImpl::disconnectFromEndpoint(const std::string& endpoint)
     }
 }
 
-void SIOClientImpl::heartbeat(float dt)
+void SIOClientImpl::heartbeat(float /*dt*/)
 {
     SocketIOPacket *packet = SocketIOPacket::createPacketWithType("heartbeat", _version);
 
@@ -716,7 +716,7 @@ void SIOClientImpl::emit(const std::string& endpoint, const std::string& eventna
     this->send(packet);
 }
 
-void SIOClientImpl::onOpen(WebSocket* ws)
+void SIOClientImpl::onOpen(WebSocket* /*ws*/)
 {
     _connected = true;
 
@@ -738,7 +738,7 @@ void SIOClientImpl::onOpen(WebSocket* ws)
     CCLOGINFO("SIOClientImpl::onOpen socket connected!");
 }
 
-void SIOClientImpl::onMessage(WebSocket* ws, const WebSocket::Data& data)
+void SIOClientImpl::onMessage(WebSocket* /*ws*/, const WebSocket::Data& data)
 {
     CCLOGINFO("SIOClientImpl::onMessage received: %s", data.bytes);
 
@@ -969,7 +969,7 @@ void SIOClientImpl::onMessage(WebSocket* ws, const WebSocket::Data& data)
     return;
 }
 
-void SIOClientImpl::onClose(WebSocket* ws)
+void SIOClientImpl::onClose(WebSocket* /*ws*/)
 {
     if (!_clients.empty())
     {
@@ -988,7 +988,7 @@ void SIOClientImpl::onClose(WebSocket* ws)
     this->release();
 }
 
-void SIOClientImpl::onError(WebSocket* ws, const WebSocket::ErrorCode& error)
+void SIOClientImpl::onError(WebSocket* /*ws*/, const WebSocket::ErrorCode& error)
 {
     CCLOGERROR("Websocket error received: %d", static_cast<int>(error));
 }

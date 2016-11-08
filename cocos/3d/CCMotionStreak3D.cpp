@@ -241,7 +241,7 @@ const BlendFunc& MotionStreak3D::getBlendFunc(void) const
     return _blendFunc;
 }
 
-void MotionStreak3D::setOpacity(GLubyte opacity)
+void MotionStreak3D::setOpacity(GLubyte /*opacity*/)
 {
     CCASSERT(false, "Set opacity no supported");
 }
@@ -252,7 +252,7 @@ GLubyte MotionStreak3D::getOpacity(void) const
     return 0;
 }
 
-void MotionStreak3D::setOpacityModifyRGB(bool bValue)
+void MotionStreak3D::setOpacityModifyRGB(bool /*bValue*/)
 {
 }
 
@@ -375,7 +375,7 @@ void MotionStreak3D::reset()
     _nuPoints = 0;
 }
 
-void MotionStreak3D::onDraw(const Mat4 &transform, uint32_t flags)
+void MotionStreak3D::onDraw(const Mat4 &transform, uint32_t /*flags*/)
 {  
     getGLProgram()->use();
     getGLProgram()->setUniformsForBuiltins(transform);
