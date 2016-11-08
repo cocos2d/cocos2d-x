@@ -167,6 +167,7 @@ void Button::setTitleLabel(Label* label)
         CC_SAFE_RETAIN(_titleRenderer);
 
         addProtectedChild(_titleRenderer, TITLE_RENDERER_Z, -1);
+        updateTitleLocation();
     }
 }
 

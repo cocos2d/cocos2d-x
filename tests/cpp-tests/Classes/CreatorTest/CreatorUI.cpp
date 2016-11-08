@@ -105,6 +105,7 @@ Node* CreatorUI_create()
     uibutton_1_1->setOpacity(255);
     uibutton_1_1->setOpacityModifyRGB(false);
     uibutton_1_1->setCascadeOpacityEnabled(true);
+    uibutton_1_1->ignoreContentAdaptWithSize(false);
     uibutton_1_1->setSkewX(0);
     uibutton_1_1->setTag(-1);
     uibutton_1_1->setContentSize(Size(200, 40));
