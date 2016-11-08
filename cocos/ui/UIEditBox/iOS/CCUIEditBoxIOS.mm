@@ -135,6 +135,16 @@
     self.textInput.ccui_textColor = color;
 }
 
+- (void)setPlaceholderFont:(UIFont *)font
+{
+    self.textInput.ccui_placeholderLabel.font = font;
+}
+
+- (void)setPlaceholderTextColor:(UIColor *)color
+{
+    self.textInput.ccui_placeholderLabel.textColor = color;
+}
+
 - (void)setInputMode:(cocos2d::ui::EditBox::InputMode)inputMode
 {
     //multiline input

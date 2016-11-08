@@ -46,6 +46,15 @@
     return nil;
 }
 
+- (UILabel *)ccui_placeholderLabel
+{
+    SEL selector = @selector(placeHolderLabel);
+    if ([self respondsToSelector:selector]) {
+        return [self performSelector:selector];
+    }
+    return nil;
+}
+
 - (void)ccui_setPlaceholder:(NSString *)ccui_placeholder
 {
     SEL selector = @selector(setPlaceholder:);
