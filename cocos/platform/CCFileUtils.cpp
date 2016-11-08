@@ -795,7 +795,7 @@ std::string FileUtils::fullPathForFilename(const std::string &filename) const
             if (!fullpath.empty())
             {
                 // Using the filename passed in as key.
-                _fullPathCache.insert(std::make_pair(filename, fullpath));
+                _fullPathCache.emplace(filename, fullpath);
                 return fullpath;
             }
 
@@ -1015,7 +1015,7 @@ bool FileUtils::isDirectoryExist(const std::string& dirPath) const
             fullpath = fullPathForFilename(searchIt + dirPath + resolutionIt);
             if (isDirectoryExistInternal(fullpath))
             {
-                _fullPathCache.insert(std::make_pair(dirPath, fullpath));
+                _fullPathCache.emplace(dirPath, fullpath);
                 return true;
             }
         }
