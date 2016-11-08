@@ -63,7 +63,7 @@ bool AudioEngineImpl::init()
     result = FMOD::System_Create(&pSystem);
     ERRCHECKWITHEXIT(result);
 
-    result = pSystem->setOutput(FMOD_OUTPUTTYPE_PULSEAUDIO);
+    result = pSystem->setOutput(FMOD_OUTPUTTYPE_AUTODETECT);
     ERRCHECKWITHEXIT(result);
 
     result = pSystem->init(32, FMOD_INIT_NORMAL, 0);
