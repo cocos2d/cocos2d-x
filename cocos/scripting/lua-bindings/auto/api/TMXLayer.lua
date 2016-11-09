@@ -89,7 +89,7 @@
 -- @param self
 -- @param #cc.Sprite sprite
 -- @param #vec2_table pos
--- @param #int gid
+-- @param #unsigned int gid
 -- @return experimental::TMXLayer#experimental::TMXLayer self (return value: cc.experimental::TMXLayer)
         
 --------------------------------
