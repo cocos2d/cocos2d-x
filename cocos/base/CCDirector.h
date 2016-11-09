@@ -723,6 +723,7 @@ protected:
       float height;
 
       experimental::FrameBuffer* frame;
+      experimental::FrameBuffer* resolve_frame;
       Camera* camera;
       Sprite* texture;
       Sprite* element;
@@ -797,6 +798,7 @@ protected:
     virtual Node* getCaptureTexture();
 
     virtual experimental::FrameBuffer* getCaptureFrameBuffer();
+    virtual experimental::FrameBuffer* getCaptureResolveFrameBuffer();
 
     /**
      *

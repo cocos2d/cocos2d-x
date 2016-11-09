@@ -101,6 +101,8 @@
 
 - (BOOL)resizeFromLayer:(CAEAGLLayer *)layer
 {
+    glBindFramebuffer(GL_FRAMEBUFFER, defaultFramebuffer_);
+
     // Allocate color buffer backing based on the current layer size
     glBindRenderbuffer(GL_RENDERBUFFER, colorRenderbuffer_);
 

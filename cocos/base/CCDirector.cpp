@@ -1620,7 +1620,7 @@ void Director::setShadow(bool state, Node* root)
        * | @Generate frame buffer object;
        *
        */
-      this->shadows.frame = FrameBuffer::create(2, width, height);
+      this->shadows.frame = FrameBuffer::create(1, width, height);
       this->shadows.frame->attachRenderTarget(RenderTarget::create(width, height));
       this->shadows.frame->attachDepthStencilTarget(RenderTargetDepthStencil::create(width, height));
 
@@ -1829,8 +1829,8 @@ void Director::setCapture(bool state, Node* root)
     {
       auto size = this->getWinSizeInPixels();
 
-      auto width = size.width / this->capture.factor;
-      auto height = size.height / this->capture.factor;
+      auto width = size.width * this->capture.factor;
+      auto height = size.height * this->capture.factor;
 
       /**
        *
@@ -1839,10 +1839,16 @@ void Director::setCapture(bool state, Node* root)
        * | @Generate frame buffer object;
        *
        */
+      this->capture.resolve_frame = FrameBuffer::create(1, width, height);
+      this->capture.resolve_frame->retain();
+      this->capture.resolve_frame->attachRenderTarget(RenderTarget::create(width, height));
+      this->capture.resolve_frame->applyFBO();
+
       this->capture.frame = FrameBuffer::create(1, width, height);
-      this->capture.frame->attachRenderTarget(RenderTarget::create(width, height));
-      this->capture.frame->attachDepthStencilTarget(RenderTargetDepthStencil::create(width, height));
-      this->capture.frame->getRenderTarget()->getTexture()->setAntiAliasTexParameters();
+      this->capture.frame->retain();
+      this->capture.frame->attachRenderTarget(RenderTargetRenderBuffer::create(width, height, 2));
+      this->capture.frame->attachDepthStencilTarget(RenderTargetDepthStencil::create(width, height, 2));
+      this->capture.frame->applyFBO();
 
       this->capture.camera->setFrameBufferObject(this->capture.frame);
 
@@ -1871,9 +1877,9 @@ void Director::setCapture(bool state, Node* root)
        * | @Should add capture frame buffer texture to the default 2D camera;
        *
        */
-      this->capture.texture = new Entity(this->capture.frame->getRenderTarget()->getTexture(), root, true);
-      this->capture.texture->setScaleX(1 * this->capture.factor);
-      this->capture.texture->setScaleY(-1 * this->capture.factor);
+      this->capture.texture = new Entity(this->capture.resolve_frame->getRenderTarget()->getTexture(), root, true);
+      this->capture.texture->setScaleX(1 / this->capture.factor);
+      this->capture.texture->setScaleY(-1 / this->capture.factor);
       this->capture.texture->setPosition(size.width / 2, size.height / 2);
       this->capture.texture->setCameraMask(2);
       this->capture.texture->setGlobalZOrder(-1);
@@ -1947,6 +1953,11 @@ experimental::FrameBuffer* Director::getCaptureFrameBuffer()
   return this->capture.frame;
 }
 
+experimental::FrameBuffer* Director::getCaptureResolveFrameBuffer()
+{
+  return this->capture.resolve_frame;
+}
+
 void Director::updateCapture()
 {
   auto render = this->capture.textures.at(this->capture.textures.size() - 1);
@@ -2015,6 +2026,21 @@ void Director::onRenderFinish(int index)
   if(this->_runningScene)
   {
     this->_runningScene->onRenderFinish(index);
+  }
+
+  /**
+   *
+   *
+   *
+   */
+  if(this->getCaptureState())
+  {
+    if(this->capture.camera->index == index)
+    {
+      glBindFramebuffer(GL_READ_FRAMEBUFFER_APPLE, Director::getInstance()->getCaptureFrameBuffer()->getFBO());
+      glBindFramebuffer(GL_DRAW_FRAMEBUFFER_APPLE, Director::getInstance()->getCaptureResolveFrameBuffer()->getFBO());
+      glResolveMultisampleFramebufferAPPLE();
+    }
   }
 }
 
