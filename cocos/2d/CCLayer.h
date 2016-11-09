@@ -144,7 +144,7 @@ public:
       @deprecated Please override onAcceleration 
       @js NA
      */
-    CC_DEPRECATED_ATTRIBUTE virtual void didAccelerate(Acceleration* accelerationValue) final {};
+    CC_DEPRECATED_ATTRIBUTE virtual void didAccelerate(Acceleration* /*accelerationValue*/) final {};
 
 	/* Callback function should not be deprecated, it will generate lots of warnings.
 	Since 'setAccelerometerEnabled' was deprecated, it will make warnings if developer overrides onAcceleration and invokes setAccelerometerEnabled(true) instead of using EventDispatcher::addEventListenerWithXXX.
@@ -210,13 +210,13 @@ public:
       Please use onKeyPressed instead. 
       @js NA
      */
-    CC_DEPRECATED_ATTRIBUTE virtual void keyPressed(int keyCode) final {};
+    CC_DEPRECATED_ATTRIBUTE virtual void keyPressed(int /*keyCode*/) final {};
     
     /** 
       Please use onKeyReleased instead. 
       @js NA
      */
-    CC_DEPRECATED_ATTRIBUTE virtual void keyReleased(int keyCode) final {};
+    CC_DEPRECATED_ATTRIBUTE virtual void keyReleased(int /*keyCode*/) final {};
 
 	/* Callback function should not be deprecated, it will generate lots of warnings.
 	Since 'setKeyboardEnabled' was deprecated, it will make warnings if developer overrides onKeyXXX and invokes setKeyboardEnabled(true) instead of using EventDispatcher::addEventListenerWithXXX.

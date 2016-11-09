@@ -431,7 +431,9 @@ namespace ui {
          * @param returnType One of the EditBox::KeyboardReturnType constants.
          */
         void setReturnType(EditBox::KeyboardReturnType returnType);
-            
+
+        void setTextHorizontalAlignment(cocos2d::TextHAlignment alignment);
+
         /* override functions */
         virtual void setPosition(const Vec2& pos) override;
         virtual void setVisible(bool visible) override;
@@ -495,7 +497,8 @@ namespace ui {
         InputMode    _editBoxInputMode;
         InputFlag    _editBoxInputFlag;
         EditBox::KeyboardReturnType  _keyboardReturnType;
-            
+        cocos2d::TextHAlignment _alignment;
+
         Scale9Sprite *_backgroundSprite;
         std::string _text;
         std::string _placeHolder;

@@ -226,7 +226,7 @@ void TMXMapInfo::startElement(void */*ctx*/, const char *name, const char **atts
         {
             std::string key = atts[i];
             std::string value = atts[i+1];
-            attributeDict.insert(std::make_pair(key, Value(value)));
+            attributeDict.emplace(key, Value(value));
         }
     }
     if (elementName == "map")
@@ -536,7 +536,7 @@ void TMXMapInfo::startElement(void */*ctx*/, const char *name, const char **atts
             // The parent element is the map
             Value value = attributeDict["value"];
             std::string key = attributeDict["name"].asString();
-            tmxMapInfo->getProperties().insert(std::make_pair(key, value));
+            tmxMapInfo->getProperties().emplace(key, value);
         }
         else if ( tmxMapInfo->getParentElement() == TMXPropertyLayer )
         {
@@ -545,7 +545,7 @@ void TMXMapInfo::startElement(void */*ctx*/, const char *name, const char **atts
             Value value = attributeDict["value"];
             std::string key = attributeDict["name"].asString();
             // Add the property to the layer
-            layer->getProperties().insert(std::make_pair(key, value));
+            layer->getProperties().emplace(key, value);
         }
         else if ( tmxMapInfo->getParentElement() == TMXPropertyObjectGroup ) 
         {
@@ -553,7 +553,7 @@ void TMXMapInfo::startElement(void */*ctx*/, const char *name, const char **atts
             TMXObjectGroup* objectGroup = tmxMapInfo->getObjectGroups().back();
             Value value = attributeDict["value"];
             std::string key = attributeDict["name"].asString();
-            objectGroup->getProperties().insert(std::make_pair(key, value));
+            objectGroup->getProperties().emplace(key, value);
         }
         else if ( tmxMapInfo->getParentElement() == TMXPropertyObject )
         {

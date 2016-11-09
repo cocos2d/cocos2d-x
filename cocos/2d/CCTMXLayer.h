@@ -309,7 +309,7 @@ protected:
 
     /* The layer recognizes some special properties, like cc_vertexz */
     void parseInternalProperties();
-    void setupTileSprite(Sprite* sprite, const Vec2& pos, int gid);
+    void setupTileSprite(Sprite* sprite, const Vec2& pos, uint32_t gid);
     Sprite* reusedTileWithRect(const Rect& rect);
     int getVertexZForPos(const Vec2& pos);
 

@@ -413,7 +413,7 @@ void EventDispatcher::associateNodeAndEventListener(Node* node, EventListener* l
     else
     {
         listeners = new (std::nothrow) std::vector<EventListener*>();
-        _nodeListenersMap.insert(std::make_pair(node, listeners));
+        _nodeListenersMap.emplace(node, listeners);
     }
     
     listeners->push_back(listener);
@@ -469,7 +469,7 @@ void EventDispatcher::forceAddEventListener(EventListener* listener)
     {
         
         listeners = new (std::nothrow) EventListenerVector();
-        _listenerMap.insert(std::make_pair(listenerID, listeners));
+        _listenerMap.emplace(listenerID, listeners);
     }
     else
     {
@@ -1543,7 +1543,7 @@ void EventDispatcher::setDirty(const EventListener::ListenerID& listenerID, Dirt
     auto iter = _priorityDirtyFlagMap.find(listenerID);
     if (iter == _priorityDirtyFlagMap.end())
     {
-        _priorityDirtyFlagMap.insert(std::make_pair(listenerID, flag));
+        _priorityDirtyFlagMap.emplace(listenerID, flag);
     }
     else
     {

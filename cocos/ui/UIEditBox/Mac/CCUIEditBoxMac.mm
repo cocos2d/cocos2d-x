@@ -86,6 +86,7 @@
     textInput.ccui_placeholder = _textInput.ccui_placeholder ?: @"";
     textInput.ccui_font = _textInput.ccui_font ?: [NSFont systemFontOfSize:self.frameRect.size.height*3/2];
     textInput.ccui_maxLength = getEditBoxImplMac()->getMaxLength();
+    textInput.ccui_alignment = _textInput.ccui_alignment;
     
     [_textInput removeFromSuperview];
     [_textInput release];
@@ -254,6 +255,14 @@
 - (void)setReturnType:(cocos2d::ui::EditBox::KeyboardReturnType)returnType
 {
     CCLOG("setReturnType not implemented");
+}
+
+- (void)setTextHorizontalAlignment:(cocos2d::TextHAlignment)alignment
+{
+    // swizzle center & right, for some reason they're backwards on !TARGET_OS_IPHONE
+    if (alignment == cocos2d::TextHAlignment::CENTER) alignment = cocos2d::TextHAlignment::RIGHT;
+    else if (alignment == cocos2d::TextHAlignment::RIGHT) alignment = cocos2d::TextHAlignment::CENTER;
+    self.textInput.ccui_alignment = static_cast<NSTextAlignment>(alignment);
 }
 
 - (void)setPlaceHolder:(const char *)text

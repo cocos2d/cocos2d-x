@@ -115,7 +115,11 @@ public class Cocos2dxEditBox extends EditText {
     public static final int kEndActionNext = 1;
     public static final int kEndActionReturn = 3;
 
-    private int mInputFlagConstraints;
+    private static final int kTextHorizontalAlignmentLeft = 0;
+    private static final int kTextHorizontalAlignmentCenter = 1;
+    private static final int kTextHorizontalAlignmentRight = 2;
+
+    private int mInputFlagConstraints; 
     private int mInputModeConstraints;
     private  int mMaxLength;
 
@@ -182,6 +186,23 @@ public class Cocos2dxEditBox extends EditText {
                 break;
             default:
                 this.setImeOptions(EditorInfo.IME_ACTION_NONE | EditorInfo.IME_FLAG_NO_EXTRACT_UI);
+                break;
+        }
+    }
+
+    public void setTextHorizontalAlignment(int alignment) {
+        switch (alignment) {
+            case kTextHorizontalAlignmentLeft:
+                this.setGravity(Gravity.LEFT);
+                break;
+            case kTextHorizontalAlignmentCenter:
+                this.setGravity(Gravity.CENTER);
+                break;
+            case kTextHorizontalAlignmentRight:
+                this.setGravity(Gravity.RIGHT);
+                break;
+            default:
+                this.setGravity(Gravity.LEFT);
                 break;
         }
     }

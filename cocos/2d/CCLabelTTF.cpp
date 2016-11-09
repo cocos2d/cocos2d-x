@@ -186,7 +186,7 @@ void LabelTTF::setFontName(const std::string& fontName)
     _contentDirty = true;
 }
 
-void LabelTTF::enableShadow(const Size &shadowOffset, float shadowOpacity, float shadowBlur, bool updateTexture)
+void LabelTTF::enableShadow(const Size &shadowOffset, float shadowOpacity, float shadowBlur, bool /*updateTexture*/)
 {
     Color4B temp(Color3B::BLACK);
     temp.a = 255 * shadowOpacity;
@@ -194,25 +194,25 @@ void LabelTTF::enableShadow(const Size &shadowOffset, float shadowOpacity, float
     _contentDirty = true;
 }
 
-void LabelTTF::disableShadow(bool updateTexture)
+void LabelTTF::disableShadow(bool /*updateTexture*/)
 {
     _renderLabel->disableEffect();
     _contentDirty = true;
 }
 
-void LabelTTF::enableStroke(const Color3B &strokeColor, float strokeSize, bool updateTexture)
+void LabelTTF::enableStroke(const Color3B &strokeColor, float strokeSize, bool /*updateTexture*/)
 {
     _renderLabel->enableOutline(Color4B(strokeColor),strokeSize);
     _contentDirty = true;
 }
 
-void LabelTTF::disableStroke(bool updateTexture)
+void LabelTTF::disableStroke(bool /*updateTexture*/)
 {
     _renderLabel->disableEffect();
     _contentDirty = true;
 }
 
-void LabelTTF::setFontFillColor(const Color3B &tintColor, bool updateTexture)
+void LabelTTF::setFontFillColor(const Color3B &tintColor, bool /*updateTexture*/)
 {
     _renderLabel->setTextColor(Color4B(tintColor));
 }

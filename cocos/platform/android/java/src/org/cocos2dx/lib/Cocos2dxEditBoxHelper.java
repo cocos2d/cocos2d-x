@@ -362,6 +362,18 @@ public class Cocos2dxEditBoxHelper {
         });
     }
 
+    public static void setTextHorizontalAlignment(final int index, final int alignment) {
+        mCocos2dxActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Cocos2dxEditBox editBox = mEditBoxArray.get(index);
+                if (editBox != null) {
+                    editBox.setTextHorizontalAlignment(alignment);
+                }
+            }
+        });
+    }
+
     public static void setInputMode(final int index, final int inputMode) {
         mCocos2dxActivity.runOnUiThread(new Runnable() {
             @Override
