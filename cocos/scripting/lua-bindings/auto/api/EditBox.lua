@@ -238,6 +238,13 @@
 -- @return EditBox#EditBox self (return value: ccui.EditBox)
         
 --------------------------------
+-- 
+-- @function [parent=#EditBox] setTextHorizontalAlignment 
+-- @param self
+-- @param #int alignment
+-- @return EditBox#EditBox self (return value: ccui.EditBox)
+        
+--------------------------------
 -- @overload self, size_table, string, int         
 -- @overload self, size_table, ccui.Scale9Sprite, ccui.Scale9Sprite, ccui.Scale9Sprite         
 -- @function [parent=#EditBox] create

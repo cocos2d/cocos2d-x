@@ -522,13 +522,13 @@ int lua_cocos2dx_experimental_TMXLayer_setupTileSprite(lua_State* tolua_S)
     {
         cocos2d::Sprite* arg0;
         cocos2d::Vec2 arg1;
-        int arg2;
+        unsigned int arg2;
 
         ok &= luaval_to_object<cocos2d::Sprite>(tolua_S, 2, "cc.Sprite",&arg0, "ccexp.TMXLayer:setupTileSprite");
 
         ok &= luaval_to_vec2(tolua_S, 3, &arg1, "ccexp.TMXLayer:setupTileSprite");
 
-        ok &= luaval_to_int32(tolua_S, 4,(int *)&arg2, "ccexp.TMXLayer:setupTileSprite");
+        ok &= luaval_to_uint32(tolua_S, 4,&arg2, "ccexp.TMXLayer:setupTileSprite");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_experimental_TMXLayer_setupTileSprite'", nullptr);
