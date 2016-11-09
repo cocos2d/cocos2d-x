@@ -98,7 +98,7 @@ FontCharMap::~FontCharMap()
 
 }
 
-int* FontCharMap::getHorizontalKerningForTextUTF16(const std::u16string& text, int &outNumLetters) const
+int* FontCharMap::getHorizontalKerningForTextUTF16(const std::u16string& /*text*/, int & /*outNumLetters*/) const
 {
     return nullptr;
 }

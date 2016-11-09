@@ -231,7 +231,7 @@ void GridBase::beforeDraw(void)
     _grabber->beforeRender(_texture);
 }
 
-void GridBase::afterDraw(cocos2d::Node *target)
+void GridBase::afterDraw(cocos2d::Node * /*target*/)
 {
     _grabber->afterRender(_texture);
 

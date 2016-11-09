@@ -94,7 +94,7 @@ public:
      *@brief    If the sender doesn't want to draw, return true.
      * @js NA
      */
-    virtual bool onVisit(TextFieldTTF * sender,Renderer *renderer, const Mat4 &transform, uint32_t flags)
+    virtual bool onVisit(TextFieldTTF* sender, Renderer* /*renderer*/, const Mat4 & /*transform*/, uint32_t /*flags*/)
     {
         CC_UNUSED_PARAM(sender);
         return false;

@@ -1161,7 +1161,7 @@ void Node::draw()
     draw(renderer, _modelViewTransform, true);
 }
 
-void Node::draw(Renderer* renderer, const Mat4 &transform, uint32_t flags)
+void Node::draw(Renderer* /*renderer*/, const Mat4 & /*transform*/, uint32_t /*flags*/)
 {
 }
 
