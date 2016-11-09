@@ -68,6 +68,16 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 
     private boolean mSoftKeyboardShown = false;
 
+    public boolean isMultipleTouchEnabled() {
+        return mMultipleTouchEnabled;
+    }
+
+    public void setMultipleTouchEnabled(boolean multipleTouchEnabled) {
+        this.mMultipleTouchEnabled = multipleTouchEnabled;
+    }
+
+    private boolean mMultipleTouchEnabled = true;
+
 
     // ===========================================================
     // Constructors
@@ -218,6 +228,9 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
         switch (pMotionEvent.getAction() & MotionEvent.ACTION_MASK) {
             case MotionEvent.ACTION_POINTER_DOWN:
                 final int indexPointerDown = pMotionEvent.getAction() >> MotionEvent.ACTION_POINTER_INDEX_SHIFT;
+                if (!mMultipleTouchEnabled && indexPointerDown != 0) {
+                    break;
+                }
                 final int idPointerDown = pMotionEvent.getPointerId(indexPointerDown);
                 final float xPointerDown = pMotionEvent.getX(indexPointerDown);
                 final float yPointerDown = pMotionEvent.getY(indexPointerDown);
@@ -255,6 +268,9 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 
             case MotionEvent.ACTION_POINTER_UP:
                 final int indexPointUp = pMotionEvent.getAction() >> MotionEvent.ACTION_POINTER_INDEX_SHIFT;
+                if (!mMultipleTouchEnabled && indexPointUp != 0) {
+                    break;
+                }
                 final int idPointerUp = pMotionEvent.getPointerId(indexPointUp);
                 final float xPointerUp = pMotionEvent.getX(indexPointUp);
                 final float yPointerUp = pMotionEvent.getY(indexPointUp);
