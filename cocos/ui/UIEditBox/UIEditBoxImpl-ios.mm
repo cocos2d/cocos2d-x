@@ -159,6 +159,11 @@ void EditBoxImplIOS::setNativeReturnType(EditBox::KeyboardReturnType returnType)
     [_systemControl setReturnType:returnType];
 }
 
+void EditBoxImplIOS::setNativeTextHorizontalAlignment(cocos2d::TextHAlignment alignment)
+{
+    [_systemControl setTextHorizontalAlignment:alignment];
+}
+
 void EditBoxImplIOS::setNativeText(const char* pText)
 {
     NSString* nsText =[NSString stringWithUTF8String:pText];

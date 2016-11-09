@@ -38,6 +38,7 @@ static const int CC_EDIT_BOX_PADDING = 5;
 @property (nonatomic, retain, setter=ccui_setTextColor:) UIColor *ccui_textColor;
 @property (nonatomic, retain, setter=ccui_setFont:) UIFont *ccui_font;
 @property (nonatomic, assign, setter=ccui_setSecureTextEntry:) BOOL ccui_secureTextEntry;
+@property (nonatomic, assign, setter=ccui_setTextHorizontalAlignment:) NSTextAlignment ccui_alignment;
 
 /* can only set. and not get, since the getter will only return one delegate implementation */
 - (void)ccui_setDelegate:(id<UITextFieldDelegate, UITextViewDelegate>)delegate;

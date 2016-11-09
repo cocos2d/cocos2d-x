@@ -259,6 +259,11 @@
     }
 }
 
+- (void)setTextHorizontalAlignment:(cocos2d::TextHAlignment)alignment
+{
+    self.textInput.ccui_alignment = static_cast<NSTextAlignment>(alignment);
+}
+
 - (void)setText:(NSString *)text
 {
     self.textInput.ccui_text = text;
