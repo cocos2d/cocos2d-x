@@ -76,7 +76,7 @@ void PUGravityAffector::updatePUAffector( PUParticle3D *particle, float deltaTim
     }
 }
 
-void PUGravityAffector::preUpdateAffector( float deltaTime )
+void PUGravityAffector::preUpdateAffector( float /*deltaTime*/ )
 {
     getDerivedPosition();
 }

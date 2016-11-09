@@ -143,7 +143,7 @@ void TransitionScene::finish()
     this->schedule(CC_SCHEDULE_SELECTOR(TransitionScene::setNewScene), 0);
 }
 
-void TransitionScene::setNewScene(float dt)
+void TransitionScene::setNewScene(float /*dt*/)
 {    
     this->unschedule(CC_SCHEDULE_SELECTOR(TransitionScene::setNewScene));
     

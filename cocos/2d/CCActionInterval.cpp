@@ -142,7 +142,7 @@ void ActionInterval::step(float dt)
     this->update(updateDt);
 }
 
-void ActionInterval::setAmplitudeRate(float amp)
+void ActionInterval::setAmplitudeRate(float /*amp*/)
 {
     // Abstract class needs implementation
     CCASSERT(0, "Subclass should implement this method!");

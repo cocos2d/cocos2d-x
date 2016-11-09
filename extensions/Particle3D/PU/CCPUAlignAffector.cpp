@@ -52,7 +52,7 @@ void PUAlignAffector::setResize(bool resize)
     _resize = resize;
 }
 
-void PUAlignAffector::updatePUAffector( PUParticle3D *particle, float deltaTime )
+void PUAlignAffector::updatePUAffector( PUParticle3D *particle, float /*deltaTime*/ )
 {
     //auto particles = _particleSystem->getParticles();
     //if (!particles.empty())
@@ -75,7 +75,7 @@ void PUAlignAffector::updatePUAffector( PUParticle3D *particle, float deltaTime 
     }
 }
 
-void PUAlignAffector::firstParticleUpdate( PUParticle3D *particle, float deltaTime )
+void PUAlignAffector::firstParticleUpdate( PUParticle3D *particle, float /*deltaTime*/ )
 {
     _previousParticle = particle;
 }

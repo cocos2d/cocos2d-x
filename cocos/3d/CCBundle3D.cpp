@@ -330,7 +330,7 @@ bool Bundle3D::loadObj(MeshDatas& meshdatas, MaterialDatas& materialdatas, NodeD
     return false;
 }
 
-bool Bundle3D::loadSkinData(const std::string& id, SkinData* skindata)
+bool Bundle3D::loadSkinData(const std::string& /*id*/, SkinData* skindata)
 {
     skindata->resetData();
 

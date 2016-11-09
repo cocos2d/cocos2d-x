@@ -68,7 +68,7 @@ void PUDynamicAttributeFixed::setValue (float value)
     _value = value;
 }
 //-----------------------------------------------------------------------
-float PUDynamicAttributeFixed::getValue (float x)
+float PUDynamicAttributeFixed::getValue (float /*x*/)
 {
     return _value;
 }
@@ -132,7 +132,7 @@ void PUDynamicAttributeRandom::setMinMax (float min, float max)
     _max = max;
 }
 //-----------------------------------------------------------------------
-float PUDynamicAttributeRandom::getValue (float x)
+float PUDynamicAttributeRandom::getValue (float /*x*/)
 {
     return cocos2d::random(_min, _max);
 }
@@ -352,7 +352,7 @@ PUDynamicAttributeOscillate::PUDynamicAttributeOscillate (void) :
     _type = PUDynamicAttribute::DAT_OSCILLATE;
 }
 //-----------------------------------------------------------------------
-PUDynamicAttributeOscillate::PUDynamicAttributeOscillate (const PUDynamicAttributeOscillate& dynamicAttributeOscillate)
+PUDynamicAttributeOscillate::PUDynamicAttributeOscillate (const PUDynamicAttributeOscillate& /*dynamicAttributeOscillate*/)
 {
     _type = PUDynamicAttribute::DAT_OSCILLATE;
 }

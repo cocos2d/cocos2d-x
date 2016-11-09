@@ -69,7 +69,7 @@ void ComController::onRemove()
 {
 }
 
-void ComController::update(float delta)
+void ComController::update(float /*delta*/)
 {
 }
 

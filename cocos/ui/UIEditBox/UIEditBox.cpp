@@ -87,7 +87,7 @@ EditBox* EditBox::create(const Size& size,
 }
     
     
-EditBox* EditBox::create(const cocos2d::Size &size, cocos2d::ui::Scale9Sprite *normalSprite, ui::Scale9Sprite *pressedSprite, Scale9Sprite* disabledSprite)
+EditBox* EditBox::create(const cocos2d::Size &size, cocos2d::ui::Scale9Sprite *normalSprite, ui::Scale9Sprite */*pressedSprite*/, Scale9Sprite* /*disabledSprite*/)
 {
     EditBox* pRet = new (std::nothrow) EditBox();
     
