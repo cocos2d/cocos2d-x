@@ -75,7 +75,7 @@ public:
         _touchListener->release();
     }
 
-    void onTouchesEnded(const std::vector<Touch*>& touches, Event */*event*/)
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event* /*event*/)
     {
         for (const auto& touch: touches)
         {
@@ -619,7 +619,7 @@ std::tuple<bool, Color3B> MyXMLVisitor::getGlow() const
     return std::make_tuple(false, Color3B::WHITE);
 }
 
-void MyXMLVisitor::startElement(void */*ctx*/, const char *elementName, const char **atts)
+void MyXMLVisitor::startElement(void* /*ctx*/, const char *elementName, const char **atts)
 {
     auto it = _tagTables.find(elementName);
     if (it != _tagTables.end()) {
@@ -743,7 +743,7 @@ void MyXMLVisitor::startElement(void */*ctx*/, const char *elementName, const ch
     }
 }
 
-void MyXMLVisitor::endElement(void */*ctx*/, const char *elementName)
+void MyXMLVisitor::endElement(void* /*ctx*/, const char *elementName)
 {
     auto it = _tagTables.find(elementName);
     if (it != _tagTables.end()) {
@@ -754,7 +754,7 @@ void MyXMLVisitor::endElement(void */*ctx*/, const char *elementName)
     }
 }
 
-void MyXMLVisitor::textHandler(void */*ctx*/, const char *str, size_t len)
+void MyXMLVisitor::textHandler(void* /*ctx*/, const char *str, size_t len)
 {
     std::string text(str, len);
     auto color = getColor();

@@ -102,7 +102,7 @@ private:
         return area.containsPoint(_child->convertToNodeSpace(touch->getLocation()));
     }
 
-    bool onTouchBegan(Touch *touch, Event */*event*/)
+    bool onTouchBegan(Touch *touch, Event* /*event*/)
     {
         const bool hits = touchHits(touch);
         if (hits)
@@ -110,7 +110,7 @@ private:
         return hits;
     }
 
-    void onTouchEnded(Touch *touch, Event */*event*/)
+    void onTouchEnded(Touch *touch, Event* /*event*/)
     {
         const bool hits = touchHits(touch);
         if (hits && _onTriggered)
@@ -118,7 +118,7 @@ private:
         scaleButtonTo(1);
     }
 
-    void onTouchCancelled(Touch */*touch*/, Event */*event*/)
+    void onTouchCancelled(Touch* /*touch*/, Event* /*event*/)
     {
         scaleButtonTo(1);
     }

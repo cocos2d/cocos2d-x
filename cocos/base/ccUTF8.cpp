@@ -483,8 +483,8 @@ unsigned short* cc_utf8_to_utf16(const char* str_old, int length/* = -1*/, int* 
 
 char * cc_utf16_to_utf8 (const unsigned short  *str,
                   int             len,
-                  long            */*items_read*/,
-                  long            */*items_written*/)
+                  long            * /*items_read*/,
+                  long            * /*items_written*/)
 {
     if (str == nullptr)
         return nullptr;

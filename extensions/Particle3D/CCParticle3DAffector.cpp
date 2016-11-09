@@ -39,7 +39,7 @@ Particle3DAffector::~Particle3DAffector()
     _particleSystem = nullptr;
 }
 
-void Particle3DAffector::updateAffector(Particle3D* particle, float deltaTime)
+void Particle3DAffector::updateAffector(Particle3D* /*particle*/, float /*deltaTime*/)
 {
     
 }

@@ -1132,7 +1132,7 @@ void PhysicsDemoSlice::onEnter()
     _sliceTag = 1;
     
     auto touchListener = EventListenerTouchOneByOne::create();
-    touchListener->onTouchBegan = [](Touch* touch, Event* /*event*/)->bool{ return true; };
+    touchListener->onTouchBegan = [](Touch* /*touch*/, Event* /*event*/)->bool{ return true; };
     touchListener->onTouchEnded = CC_CALLBACK_2(PhysicsDemoSlice::onTouchEnded, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
     
@@ -1148,7 +1148,7 @@ void PhysicsDemoSlice::onEnter()
     addChild(box);
 }
 
-bool PhysicsDemoSlice::slice(PhysicsWorld &/*world*/, const PhysicsRayCastInfo& info, void */*data*/)
+bool PhysicsDemoSlice::slice(PhysicsWorld &/*world*/, const PhysicsRayCastInfo& info, void* /*data*/)
 {
     if (info.shape->getBody()->getTag() != _sliceTag)
     {
@@ -1212,7 +1212,7 @@ void PhysicsDemoSlice::clipPoly(PhysicsShapePolygon* shape, Vec2 normal, float d
     delete[] points;
 }
 
-void PhysicsDemoSlice::onTouchEnded(Touch *touch, Event */*event*/)
+void PhysicsDemoSlice::onTouchEnded(Touch *touch, Event* /*event*/)
 {
     auto func = CC_CALLBACK_3(PhysicsDemoSlice::slice, this);
     getPhysicsWorld()->rayCast(func, touch->getStartLocation(), touch->getLocation(), nullptr);
@@ -1758,7 +1758,7 @@ std::string PhysicsFixedUpdate::subtitle() const
     return "The secend ball should not run across the wall";
 }
 
-bool PhysicsTransformTest::onTouchBegan(Touch *touch, Event */*event*/)
+bool PhysicsTransformTest::onTouchBegan(Touch *touch, Event* /*event*/)
 {
     _parentSprite->setPosition(_rootLayer->convertTouchToNodeSpace(touch));
     return false;

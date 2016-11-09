@@ -57,7 +57,7 @@ bool PUPathFollowerTranslator::translateChildProperty( PUScriptCompiler* compile
     return false;
 }
 
-bool PUPathFollowerTranslator::translateChildObject( PUScriptCompiler* compiler, PUAbstractNode *node )
+bool PUPathFollowerTranslator::translateChildObject( PUScriptCompiler* /*compiler*/, PUAbstractNode* /*node*/ )
 {
     // No objects
     return false;

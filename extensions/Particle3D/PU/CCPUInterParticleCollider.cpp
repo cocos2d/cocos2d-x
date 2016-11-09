@@ -126,7 +126,7 @@ bool PUParticle3DInterParticleCollider::validateAndExecuteSphereCollision (PUPar
 }
 //-----------------------------------------------------------------------
 
-void PUParticle3DInterParticleCollider::updatePUAffector( PUParticle3D */*particle*/, float /*deltaTime*/ )
+void PUParticle3DInterParticleCollider::updatePUAffector( PUParticle3D* /*particle*/, float /*deltaTime*/ )
 {
     //CCASSERT(0, "nonsupport yet");
     //for (auto iter : _particleSystem->getParticles())

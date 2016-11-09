@@ -94,7 +94,7 @@ public:
 
 bool PhysicsWorldCallback::continues = true;
 
-cpBool PhysicsWorldCallback::collisionBeginCallbackFunc(cpArbiter *arb, struct cpSpace */*space*/, PhysicsWorld *world)
+cpBool PhysicsWorldCallback::collisionBeginCallbackFunc(cpArbiter *arb, struct cpSpace* /*space*/, PhysicsWorld *world)
 {
     CP_ARBITER_GET_SHAPES(arb, a, b);
     
@@ -109,17 +109,17 @@ cpBool PhysicsWorldCallback::collisionBeginCallbackFunc(cpArbiter *arb, struct c
     return world->collisionBeginCallback(*contact);
 }
 
-cpBool PhysicsWorldCallback::collisionPreSolveCallbackFunc(cpArbiter *arb, cpSpace */*space*/, PhysicsWorld *world)
+cpBool PhysicsWorldCallback::collisionPreSolveCallbackFunc(cpArbiter *arb, cpSpace* /*space*/, PhysicsWorld *world)
 {
     return world->collisionPreSolveCallback(*static_cast<PhysicsContact*>(cpArbiterGetUserData(arb)));
 }
 
-void PhysicsWorldCallback::collisionPostSolveCallbackFunc(cpArbiter *arb, cpSpace */*space*/, PhysicsWorld *world)
+void PhysicsWorldCallback::collisionPostSolveCallbackFunc(cpArbiter *arb, cpSpace* /*space*/, PhysicsWorld *world)
 {
     world->collisionPostSolveCallback(*static_cast<PhysicsContact*>(cpArbiterGetUserData(arb)));
 }
 
-void PhysicsWorldCallback::collisionSeparateCallbackFunc(cpArbiter *arb, cpSpace */*space*/, PhysicsWorld *world)
+void PhysicsWorldCallback::collisionSeparateCallbackFunc(cpArbiter *arb, cpSpace* /*space*/, PhysicsWorld *world)
 {
     PhysicsContact* contact = static_cast<PhysicsContact*>(cpArbiterGetUserData(arb));
     

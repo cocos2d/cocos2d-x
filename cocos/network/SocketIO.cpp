@@ -432,7 +432,7 @@ void SIOClientImpl::handshake()
     return;
 }
 
-void SIOClientImpl::handshakeResponse(HttpClient */*sender*/, HttpResponse *response)
+void SIOClientImpl::handshakeResponse(HttpClient* /*sender*/, HttpResponse *response)
 {
     CCLOGINFO("SIOClientImpl::handshakeResponse() called");
 

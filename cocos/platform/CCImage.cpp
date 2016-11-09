@@ -607,13 +607,13 @@ bool Image::isPng(const unsigned char * data, ssize_t dataLen)
 }
 
 
-bool Image::isEtc(const unsigned char * data, ssize_t dataLen)
+bool Image::isEtc(const unsigned char * data, ssize_t /*dataLen*/)
 {
     return etc1_pkm_is_valid((etc1_byte*)data) ? true : false;
 }
 
 
-bool Image::isS3TC(const unsigned char * data, ssize_t dataLen)
+bool Image::isS3TC(const unsigned char * data, ssize_t /*dataLen*/)
 {
 
     S3TCTexHeader *header = (S3TCTexHeader *)data;
@@ -625,7 +625,7 @@ bool Image::isS3TC(const unsigned char * data, ssize_t dataLen)
     return true;
 }
 
-bool Image::isATITC(const unsigned char *data, ssize_t dataLen)
+bool Image::isATITC(const unsigned char *data, ssize_t /*dataLen*/)
 {
     ATITCTexHeader *header = (ATITCTexHeader *)data;
     
@@ -1685,7 +1685,7 @@ bool Image::initWithPVRv3Data(const unsigned char * data, ssize_t dataLen)
     return true;
 }
 
-bool Image::initWithETCData(const unsigned char * data, ssize_t /*dataLen*/)
+bool Image::initWithETCData(const unsigned char * data, ssize_t dataLen)
 {
     const etc1_byte* header = static_cast<const etc1_byte*>(data);
     

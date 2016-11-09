@@ -73,7 +73,7 @@ bool NavMeshObstacle::initWith(float radius, float height)
     return true;
 }
 
-void cocos2d::NavMeshObstacle::removeFrom(dtTileCache */*tileCache*/)
+void cocos2d::NavMeshObstacle::removeFrom(dtTileCache* /*tileCache*/)
 {
     _tileCache->removeObstacle(_obstacleID);
     _tileCache = nullptr;

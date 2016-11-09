@@ -113,14 +113,14 @@ int Layer::executeScriptTouchesHandler(EventTouch::EventCode eventType, const st
     return 0;
 }
 
-bool Layer::ccTouchBegan(Touch */*pTouch*/, Event */*pEvent*/) {return false;};
-void Layer::ccTouchMoved(Touch */*pTouch*/, Event */*pEvent*/) {}
-void Layer::ccTouchEnded(Touch */*pTouch*/, Event */*pEvent*/) {}
-void Layer::ccTouchCancelled(Touch */*pTouch*/, Event */*pEvent*/) {}
-void Layer::ccTouchesBegan(__Set */*pTouches*/, Event */*pEvent*/) {}
-void Layer::ccTouchesMoved(__Set */*pTouches*/, Event */*pEvent*/) {}
-void Layer::ccTouchesEnded(__Set */*pTouches*/, Event */*pEvent*/) {}
-void Layer::ccTouchesCancelled(__Set */*pTouches*/, Event */*pEvent*/) {}
+bool Layer::ccTouchBegan(Touch* /*pTouch*/, Event* /*pEvent*/) {return false;};
+void Layer::ccTouchMoved(Touch* /*pTouch*/, Event* /*pEvent*/) {}
+void Layer::ccTouchEnded(Touch* /*pTouch*/, Event* /*pEvent*/) {}
+void Layer::ccTouchCancelled(Touch* /*pTouch*/, Event* /*pEvent*/) {}
+void Layer::ccTouchesBegan(__Set* /*pTouches*/, Event* /*pEvent*/) {}
+void Layer::ccTouchesMoved(__Set* /*pTouches*/, Event* /*pEvent*/) {}
+void Layer::ccTouchesEnded(__Set* /*pTouches*/, Event* /*pEvent*/) {}
+void Layer::ccTouchesCancelled(__Set* /*pTouches*/, Event* /*pEvent*/) {}
 
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"

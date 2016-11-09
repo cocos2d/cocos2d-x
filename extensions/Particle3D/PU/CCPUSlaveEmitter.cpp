@@ -60,7 +60,7 @@ void PUSlaveEmitter::setMasterEmitterName(const std::string& masterEmitterName)
     _masterEmitterNameSet = true;
 }
 //-----------------------------------------------------------------------
-void PUSlaveEmitter::particleEmitted(PUParticleSystem3D* particleSystem, PUParticle3D* particle)
+void PUSlaveEmitter::particleEmitted(PUParticleSystem3D* /*particleSystem*/, PUParticle3D* particle)
 {
     if (_masterEmitterNameSet && _masterEmitterName != particle->parentEmitter->getName())
     {

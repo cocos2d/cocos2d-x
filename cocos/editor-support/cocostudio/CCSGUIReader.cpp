@@ -1196,14 +1196,14 @@ void WidgetPropertiesReader0250::setPropsForLabelBMFontFromJsonDictionary(Widget
     setColorPropsForWidgetFromJsonDictionary(widget,options);
 }
     
-void WidgetPropertiesReader0250::setPropsForAllWidgetFromJsonDictionary(WidgetReaderProtocol *reader, Widget *widget, const rapidjson::Value &options)
+void WidgetPropertiesReader0250::setPropsForAllWidgetFromJsonDictionary(WidgetReaderProtocol* /*reader*/, Widget* /*widget*/, const rapidjson::Value& /*options*/)
 {
     
 }
 
-void WidgetPropertiesReader0250::setPropsForAllCustomWidgetFromJsonDictionary(const std::string &classType,
-                                                                              cocos2d::ui::Widget *widget,
-                                                                              const rapidjson::Value &customOptions)
+void WidgetPropertiesReader0250::setPropsForAllCustomWidgetFromJsonDictionary(const std::string& /*classType*/,
+                                                                              cocos2d::ui::Widget* /*widget*/,
+                                                                              const rapidjson::Value& /*customOptions*/)
 {
     
 }
