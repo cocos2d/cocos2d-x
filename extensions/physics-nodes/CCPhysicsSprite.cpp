@@ -438,7 +438,7 @@ void PhysicsSprite::onExit()
     Node::onExit();
 }
 
-void PhysicsSprite::afterUpdate(EventCustom *event)
+void PhysicsSprite::afterUpdate(EventCustom* /*event*/)
 {
     syncPhysicsTransform();
     

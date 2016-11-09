@@ -225,7 +225,7 @@ float ControlPotentiometer::angleInDegreesBetweenLineFromPoint_toPoint_toLineFro
     return (atanA - atanB) * 180 / M_PI;
 }
 
-void ControlPotentiometer::potentiometerBegan(Vec2 location)
+void ControlPotentiometer::potentiometerBegan(Vec2 /*location*/)
 {
     setSelected(true);
     getThumbSprite()->setColor(Color3B::GRAY);
@@ -254,7 +254,7 @@ void ControlPotentiometer::potentiometerMoved(Vec2 location)
     _previousLocation    = location;
 }
 
-void ControlPotentiometer::potentiometerEnded(Vec2 location)
+void ControlPotentiometer::potentiometerEnded(Vec2 /*location*/)
 {
     getThumbSprite()->setColor(Color3B::WHITE);
     setSelected(false);

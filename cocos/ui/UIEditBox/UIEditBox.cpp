@@ -61,7 +61,7 @@ EditBox::~EditBox(void)
 }
 
 
-void EditBox::touchDownAction(Ref *sender, TouchEventType controlEvent)
+void EditBox::touchDownAction(Ref */*sender*/, TouchEventType controlEvent)
 {
     if (controlEvent == Widget::TouchEventType::ENDED) {
         _editBoxImpl->openKeyboard();
@@ -499,7 +499,7 @@ void EditBox::keyboardWillShow(IMEKeyboardNotificationInfo& info)
     }
 }
 
-void EditBox::keyboardDidShow(IMEKeyboardNotificationInfo& info)
+void EditBox::keyboardDidShow(IMEKeyboardNotificationInfo& /*info*/)
 {
 	
 }
@@ -513,7 +513,7 @@ void EditBox::keyboardWillHide(IMEKeyboardNotificationInfo& info)
     }
 }
 
-void EditBox::keyboardDidHide(IMEKeyboardNotificationInfo& info)
+void EditBox::keyboardDidHide(IMEKeyboardNotificationInfo& /*info*/)
 {
 	
 }

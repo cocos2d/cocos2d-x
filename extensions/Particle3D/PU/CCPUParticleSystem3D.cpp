@@ -1307,7 +1307,7 @@ bool PUParticleSystem3D::makeParticleLocal( PUParticle3D* particle )
     return true;
 }
 
-void PUParticleSystem3D::processMotion( PUParticle3D* particle, float timeElapsed, const Vec3 &scl, bool firstParticle )
+void PUParticleSystem3D::processMotion( PUParticle3D* particle, float timeElapsed, const Vec3 &scl, bool /*firstParticle*/ )
 {
     if (particle->isFreezed())
     return;

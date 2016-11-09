@@ -58,7 +58,7 @@ void PUOnTimeObserver::preUpdateObserver(float deltaTime)
     }
 }
 //-----------------------------------------------------------------------
-bool PUOnTimeObserver::observe (PUParticle3D* particle, float timeElapsed)
+bool PUOnTimeObserver::observe (PUParticle3D* particle, float /*timeElapsed*/)
 {
     if (_compare == CO_GREATER_THAN)
     {

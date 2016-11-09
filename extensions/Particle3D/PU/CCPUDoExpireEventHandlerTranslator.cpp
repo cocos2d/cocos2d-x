@@ -34,12 +34,12 @@ PUDoExpireEventHandlerTranslator::PUDoExpireEventHandlerTranslator()
 {
 }
 //-------------------------------------------------------------------------
-bool PUDoExpireEventHandlerTranslator::translateChildProperty( PUScriptCompiler* compiler, PUAbstractNode *node )
+bool PUDoExpireEventHandlerTranslator::translateChildProperty( PUScriptCompiler* /*compiler*/, PUAbstractNode* /*node*/ )
 {
     return false;
 }
 
-bool PUDoExpireEventHandlerTranslator::translateChildObject( PUScriptCompiler* compiler, PUAbstractNode *node )
+bool PUDoExpireEventHandlerTranslator::translateChildObject( PUScriptCompiler* /*compiler*/, PUAbstractNode* /*node*/ )
 {
     // No objects
     return false;

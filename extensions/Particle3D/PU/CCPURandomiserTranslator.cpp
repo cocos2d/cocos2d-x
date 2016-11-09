@@ -174,7 +174,7 @@ bool PURandomiserTranslator::translateChildProperty( PUScriptCompiler* compiler,
     return false;
 }
 
-bool PURandomiserTranslator::translateChildObject( PUScriptCompiler* compiler, PUAbstractNode *node )
+bool PURandomiserTranslator::translateChildObject( PUScriptCompiler* /*compiler*/, PUAbstractNode* /*node*/ )
 {
     // No objects
     return false;

@@ -861,7 +861,7 @@ void ScrollView::gatherTouchMove(const Vec2& delta)
     _touchMovePreviousTimestamp = timestamp;
 }
 
-void ScrollView::handlePressLogic(Touch *touch)
+void ScrollView::handlePressLogic(Touch* /*touch*/)
 {
     _bePressed = true;
     _autoScrolling = false;

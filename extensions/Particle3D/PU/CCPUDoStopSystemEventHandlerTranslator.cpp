@@ -34,12 +34,12 @@ PUDoStopSystemEventHandlerTranslator::PUDoStopSystemEventHandlerTranslator()
 {
 }
 //-------------------------------------------------------------------------
-bool PUDoStopSystemEventHandlerTranslator::translateChildProperty( PUScriptCompiler* compiler, PUAbstractNode *node )
+bool PUDoStopSystemEventHandlerTranslator::translateChildProperty( PUScriptCompiler* /*compiler*/, PUAbstractNode* /*node*/ )
 {
     return false;
 }
 
-bool PUDoStopSystemEventHandlerTranslator::translateChildObject( PUScriptCompiler* compiler, PUAbstractNode *node )
+bool PUDoStopSystemEventHandlerTranslator::translateChildObject( PUScriptCompiler* /*compiler*/, PUAbstractNode* /*node*/ )
 {
     // No objects
     return false;
