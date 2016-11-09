@@ -7069,6 +7069,16 @@ int
 },
 
 /**
+ * @method setTextHorizontalAlignment
+ * @param {cc.TextHAlignment} arg0
+ */
+setTextHorizontalAlignment : function (
+texthalignment 
+)
+{
+},
+
+/**
  * @method create
 * @param {size_object|size_object} size
 * @param {String|ccui.Scale9Sprite} str
