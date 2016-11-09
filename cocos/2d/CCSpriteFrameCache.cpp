@@ -446,6 +446,7 @@ bool SpriteFrameCache::isSpriteFramesWithFileLoaded(const std::string& plist) co
 
 void SpriteFrameCache::addSpriteFrame(SpriteFrame* frame, const std::string& frameName)
 {
+    CCASSERT(frame, "frame should not be nil");
     _spriteFrames.insert(frameName, frame);
 }
 

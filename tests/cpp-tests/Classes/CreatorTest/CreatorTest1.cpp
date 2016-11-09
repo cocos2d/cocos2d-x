@@ -43,6 +43,8 @@ bool CreatorTest1_init()
     auto sf_default_panel = SpriteFrame::create("creator_assets/image/default_panel.png", Rect(0, 0, 20, 20), false, Vec2(0, 0), Size(20, 20));
     sf_default_panel->setCenterRectInPixels(Rect(4,3,12,14));
     spriteFrameCache->addSpriteFrame(sf_default_panel, "default_panel");
+    auto sf_default_toggle_checkmark = SpriteFrame::create("creator_assets/image/default_toggle_checkmark.png", Rect(5, 3, 20, 19), false, Vec2(1, 1.5), Size(28, 28));
+    spriteFrameCache->addSpriteFrame(sf_default_toggle_checkmark, "default_toggle_checkmark");
     auto sf_default_btn_pressed = SpriteFrame::create("creator_assets/image/default_btn_pressed.png", Rect(0, 0, 40, 40), false, Vec2(0, 0), Size(40, 40));
     sf_default_btn_pressed->setCenterRectInPixels(Rect(3,4,34,32));
     spriteFrameCache->addSpriteFrame(sf_default_btn_pressed, "default_btn_pressed");
@@ -53,6 +55,8 @@ bool CreatorTest1_init()
     auto sf_default_btn_normal = SpriteFrame::create("creator_assets/image/default_btn_normal.png", Rect(0, 0, 40, 40), false, Vec2(0, 0), Size(40, 40));
     sf_default_btn_normal->setCenterRectInPixels(Rect(3,3,34,30));
     spriteFrameCache->addSpriteFrame(sf_default_btn_normal, "default_btn_normal");
+    auto sf_default_toggle_normal = SpriteFrame::create("creator_assets/image/default_toggle_normal.png", Rect(0, 0, 28, 28), false, Vec2(0, 0), Size(28, 28));
+    spriteFrameCache->addSpriteFrame(sf_default_toggle_normal, "default_toggle_normal");
     auto sf_grossini_dance_08 = SpriteFrame::create("creator_assets/grossini_dance_08.png", Rect(17, 7, 51, 109), false, Vec2(0, -1), Size(85, 121));
     spriteFrameCache->addSpriteFrame(sf_grossini_dance_08, "grossini_dance_08");
     auto sf_default_progressbar_bg = SpriteFrame::create("creator_assets/image/default_progressbar_bg.png", Rect(0, 0, 60, 15), false, Vec2(0, 0), Size(60, 15));
@@ -60,8 +64,16 @@ bool CreatorTest1_init()
     spriteFrameCache->addSpriteFrame(sf_default_progressbar_bg, "default_progressbar_bg");
     auto sf_island_polygon_png = SpriteFrame::create("creator_assets/test_polygon.png", Rect(1, 1, 287, 152), false, Vec2(16, 7), Size(320, 200));
     spriteFrameCache->addSpriteFrame(sf_island_polygon_png, "island_polygon.png");
+    auto sf_default_toggle_disabled = SpriteFrame::create("creator_assets/image/default_toggle_disabled.png", Rect(0, 0, 28, 28), false, Vec2(0, 0), Size(28, 28));
+    spriteFrameCache->addSpriteFrame(sf_default_toggle_disabled, "default_toggle_disabled");
+    auto sf_default_radio_button_on = SpriteFrame::create("creator_assets/image/default_radio_button_on.png", Rect(0, 0, 32, 32), false, Vec2(0, 0), Size(32, 32));
+    spriteFrameCache->addSpriteFrame(sf_default_radio_button_on, "default_radio_button_on");
     auto sf_ui = SpriteFrame::create("creator_assets/ui.png", Rect(2, 2, 124, 221), false, Vec2(0, 15.5), Size(128, 256));
     spriteFrameCache->addSpriteFrame(sf_ui, "ui");
+    auto sf_default_toggle_pressed = SpriteFrame::create("creator_assets/image/default_toggle_pressed.png", Rect(0, 0, 28, 28), false, Vec2(0, 0), Size(28, 28));
+    spriteFrameCache->addSpriteFrame(sf_default_toggle_pressed, "default_toggle_pressed");
+    auto sf_default_radio_button_off = SpriteFrame::create("creator_assets/image/default_radio_button_off.png", Rect(2, 2, 28, 30), false, Vec2(0, -1), Size(32, 32));
+    spriteFrameCache->addSpriteFrame(sf_default_radio_button_off, "default_radio_button_off");
     auto sf_default_scrollbar_bg = SpriteFrame::create("creator_assets/image/default_scrollbar_bg.png", Rect(0, 0, 30, 15), false, Vec2(0, 0), Size(30, 15));
     sf_default_scrollbar_bg->setCenterRectInPixels(Rect(10,0,10,15));
     spriteFrameCache->addSpriteFrame(sf_default_scrollbar_bg, "default_scrollbar_bg");
