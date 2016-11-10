@@ -25,14 +25,9 @@
 #ifndef __cocos2d_libs__ExtensionDeprecated__
 #define __cocos2d_libs__ExtensionDeprecated__
 
-#include "ui/UIEditBox/UIEditBox.h"
 #include "ExtensionMacros.h"
 
 NS_CC_EXT_BEGIN
-
-CC_DEPRECATED_ATTRIBUTE typedef ui::EditBox EditBox;
-CC_DEPRECATED_ATTRIBUTE typedef ui::EditBoxDelegate EditBoxDelegate;
-CC_DEPRECATED_ATTRIBUTE typedef ui::Scale9Sprite Scale9Sprite;
 
 NS_CC_EXT_END
 

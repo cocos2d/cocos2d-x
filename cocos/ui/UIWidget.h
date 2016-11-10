@@ -557,28 +557,28 @@ public:
      *@param unusedEvent The touch event info.
      *@return True if user want to handle touches, false otherwise.
      */
-    virtual bool onTouchBegan(Touch *touch, Event *unusedEvent);
+    virtual bool onTouchBegan(Touch *touch, Event *unusedEvent) override;
 
     /**
      * A callback which will be called when touch moved event is issued.
      *@param touch The touch info.
      *@param unusedEvent The touch event info.
      */
-    virtual void onTouchMoved(Touch *touch, Event *unusedEvent);
+    virtual void onTouchMoved(Touch *touch, Event *unusedEvent) override;
 
     /**
      * A callback which will be called when touch ended event is issued.
      *@param touch The touch info.
      *@param unusedEvent The touch event info.
      */
-    virtual void onTouchEnded(Touch *touch, Event *unusedEvent);
+    virtual void onTouchEnded(Touch *touch, Event *unusedEvent) override;
 
     /**
      * A callback which will be called when touch cancelled event is issued.
      *@param touch The touch info.
      *@param unusedEvent The touch event info.
      */
-    virtual void onTouchCancelled(Touch *touch, Event *unusedEvent);
+    virtual void onTouchCancelled(Touch *touch, Event *unusedEvent) override;
 
     /**
      * Sets a LayoutParameter to widget.

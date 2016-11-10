@@ -170,9 +170,11 @@ bool RenderTargetRenderBuffer::init(unsigned int width, unsigned int height, int
     glGenRenderbuffers(1, &_colorBuffer);
     glBindRenderbuffer(GL_RENDERBUFFER, _colorBuffer);
     //todo: this could have a param
+    #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
     if(samples > 0)
       glRenderbufferStorageMultisampleAPPLE(GL_RENDERBUFFER, samples, GL_RGBA8_OES, width, height);
     else
+    #endif
       glRenderbufferStorage(GL_RENDERBUFFER, _format, width, height);
     glBindRenderbuffer(GL_RENDERBUFFER, oldRenderBuffer);
 
@@ -233,9 +235,11 @@ bool RenderTargetDepthStencil::init(unsigned int width, unsigned int height, int
     //generate depthStencil
     glGenRenderbuffers(1, &_depthStencilBuffer);
     glBindRenderbuffer(GL_RENDERBUFFER, _depthStencilBuffer);
+    #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
     if(samples > 0)
       glRenderbufferStorageMultisampleAPPLE(GL_RENDERBUFFER, samples, GL_DEPTH24_STENCIL8, width, height);
     else
+    #endif
       glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, width, height);
     glBindRenderbuffer(GL_RENDERBUFFER, oldRenderBuffer);
     

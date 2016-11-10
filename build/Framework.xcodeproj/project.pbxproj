@@ -297,16 +297,12 @@
 		15AE1B5619AADA9900C27E9E /* UIScrollView.h in Headers */ = {isa = PBXBuildFile; fileRef = 2905FA0818CF08D000240AA3 /* UIScrollView.h */; };
 		15AE1B5719AADA9900C27E9E /* UISlider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2905FA0918CF08D000240AA3 /* UISlider.cpp */; };
 		15AE1B5819AADA9900C27E9E /* UISlider.h in Headers */ = {isa = PBXBuildFile; fileRef = 2905FA0A18CF08D100240AA3 /* UISlider.h */; };
-		15AE1B5919AADA9900C27E9E /* UIText.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2905FA0B18CF08D100240AA3 /* UIText.cpp */; };
-		15AE1B5A19AADA9900C27E9E /* UIText.h in Headers */ = {isa = PBXBuildFile; fileRef = 2905FA0C18CF08D100240AA3 /* UIText.h */; };
 		15AE1B5B19AADA9900C27E9E /* UITextAtlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2905FA0D18CF08D100240AA3 /* UITextAtlas.cpp */; };
 		15AE1B5C19AADA9900C27E9E /* UITextAtlas.h in Headers */ = {isa = PBXBuildFile; fileRef = 2905FA0E18CF08D100240AA3 /* UITextAtlas.h */; };
 		15AE1B5D19AADA9900C27E9E /* UITextBMFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2905FA0F18CF08D100240AA3 /* UITextBMFont.cpp */; };
 		15AE1B5E19AADA9900C27E9E /* UITextBMFont.h in Headers */ = {isa = PBXBuildFile; fileRef = 2905FA1018CF08D100240AA3 /* UITextBMFont.h */; };
 		15AE1B5F19AADA9900C27E9E /* UITextField.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2905FA1118CF08D100240AA3 /* UITextField.cpp */; };
 		15AE1B6019AADA9900C27E9E /* UITextField.h in Headers */ = {isa = PBXBuildFile; fileRef = 2905FA1218CF08D100240AA3 /* UITextField.h */; };
-		15AE1B6119AADA9900C27E9E /* UIButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2905F9F018CF08D000240AA3 /* UIButton.cpp */; };
-		15AE1B6219AADA9900C27E9E /* UIButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 2905F9F118CF08D000240AA3 /* UIButton.h */; };
 		15AE1B6319AADA9900C27E9E /* UICheckBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2905F9F218CF08D000240AA3 /* UICheckBox.cpp */; };
 		15AE1B6419AADA9900C27E9E /* UICheckBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 2905F9F318CF08D000240AA3 /* UICheckBox.h */; };
 		15AE1B6519AADA9900C27E9E /* UIImageView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2905F9F618CF08D000240AA3 /* UIImageView.cpp */; };
@@ -334,16 +330,12 @@
 		15AE1B7B19AADA9A00C27E9E /* UIScrollView.h in Headers */ = {isa = PBXBuildFile; fileRef = 2905FA0818CF08D000240AA3 /* UIScrollView.h */; };
 		15AE1B7C19AADA9A00C27E9E /* UISlider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2905FA0918CF08D000240AA3 /* UISlider.cpp */; };
 		15AE1B7D19AADA9A00C27E9E /* UISlider.h in Headers */ = {isa = PBXBuildFile; fileRef = 2905FA0A18CF08D100240AA3 /* UISlider.h */; };
-		15AE1B7E19AADA9A00C27E9E /* UIText.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2905FA0B18CF08D100240AA3 /* UIText.cpp */; };
-		15AE1B7F19AADA9A00C27E9E /* UIText.h in Headers */ = {isa = PBXBuildFile; fileRef = 2905FA0C18CF08D100240AA3 /* UIText.h */; };
 		15AE1B8019AADA9A00C27E9E /* UITextAtlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2905FA0D18CF08D100240AA3 /* UITextAtlas.cpp */; };
 		15AE1B8119AADA9A00C27E9E /* UITextAtlas.h in Headers */ = {isa = PBXBuildFile; fileRef = 2905FA0E18CF08D100240AA3 /* UITextAtlas.h */; };
 		15AE1B8219AADA9A00C27E9E /* UITextBMFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2905FA0F18CF08D100240AA3 /* UITextBMFont.cpp */; };
 		15AE1B8319AADA9A00C27E9E /* UITextBMFont.h in Headers */ = {isa = PBXBuildFile; fileRef = 2905FA1018CF08D100240AA3 /* UITextBMFont.h */; };
 		15AE1B8419AADA9A00C27E9E /* UITextField.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2905FA1118CF08D100240AA3 /* UITextField.cpp */; };
 		15AE1B8519AADA9A00C27E9E /* UITextField.h in Headers */ = {isa = PBXBuildFile; fileRef = 2905FA1218CF08D100240AA3 /* UITextField.h */; };
-		15AE1B8619AADA9A00C27E9E /* UIButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2905F9F018CF08D000240AA3 /* UIButton.cpp */; };
-		15AE1B8719AADA9A00C27E9E /* UIButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 2905F9F118CF08D000240AA3 /* UIButton.h */; };
 		15AE1B8819AADA9A00C27E9E /* UICheckBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2905F9F218CF08D000240AA3 /* UICheckBox.cpp */; };
 		15AE1B8919AADA9A00C27E9E /* UICheckBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 2905F9F318CF08D000240AA3 /* UICheckBox.h */; };
 		15AE1B8A19AADA9A00C27E9E /* UIImageView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2905F9F618CF08D000240AA3 /* UIImageView.cpp */; };
@@ -825,26 +817,6 @@
 		291901441B05895600F8B4BA /* CCNinePatchImageParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 291901411B05895600F8B4BA /* CCNinePatchImageParser.h */; };
 		291901451B05895600F8B4BA /* CCNinePatchImageParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 291901421B05895600F8B4BA /* CCNinePatchImageParser.cpp */; };
 		291901461B05895600F8B4BA /* CCNinePatchImageParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 291901421B05895600F8B4BA /* CCNinePatchImageParser.cpp */; };
-		292DB13D19B4574100A80320 /* UIEditBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 292DB12F19B4574100A80320 /* UIEditBox.cpp */; };
-		292DB13E19B4574100A80320 /* UIEditBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 292DB12F19B4574100A80320 /* UIEditBox.cpp */; };
-		292DB13F19B4574100A80320 /* UIEditBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 292DB13019B4574100A80320 /* UIEditBox.h */; };
-		292DB14019B4574100A80320 /* UIEditBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 292DB13019B4574100A80320 /* UIEditBox.h */; };
-		292DB14119B4574100A80320 /* UIEditBoxImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = 292DB13119B4574100A80320 /* UIEditBoxImpl.h */; };
-		292DB14219B4574100A80320 /* UIEditBoxImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = 292DB13119B4574100A80320 /* UIEditBoxImpl.h */; };
-		292DB14319B4574100A80320 /* UIEditBoxImpl-android.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 292DB13219B4574100A80320 /* UIEditBoxImpl-android.cpp */; };
-		292DB14419B4574100A80320 /* UIEditBoxImpl-android.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 292DB13219B4574100A80320 /* UIEditBoxImpl-android.cpp */; };
-		292DB14519B4574100A80320 /* UIEditBoxImpl-android.h in Headers */ = {isa = PBXBuildFile; fileRef = 292DB13319B4574100A80320 /* UIEditBoxImpl-android.h */; };
-		292DB14619B4574100A80320 /* UIEditBoxImpl-android.h in Headers */ = {isa = PBXBuildFile; fileRef = 292DB13319B4574100A80320 /* UIEditBoxImpl-android.h */; };
-		292DB14719B4574100A80320 /* UIEditBoxImpl-ios.h in Headers */ = {isa = PBXBuildFile; fileRef = 292DB13419B4574100A80320 /* UIEditBoxImpl-ios.h */; };
-		292DB14819B4574100A80320 /* UIEditBoxImpl-ios.h in Headers */ = {isa = PBXBuildFile; fileRef = 292DB13419B4574100A80320 /* UIEditBoxImpl-ios.h */; };
-		292DB14919B4574100A80320 /* UIEditBoxImpl-ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 292DB13519B4574100A80320 /* UIEditBoxImpl-ios.mm */; };
-		292DB14A19B4574100A80320 /* UIEditBoxImpl-ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 292DB13519B4574100A80320 /* UIEditBoxImpl-ios.mm */; };
-		292DB14B19B4574100A80320 /* UIEditBoxImpl-mac.h in Headers */ = {isa = PBXBuildFile; fileRef = 292DB13619B4574100A80320 /* UIEditBoxImpl-mac.h */; };
-		292DB14C19B4574100A80320 /* UIEditBoxImpl-mac.h in Headers */ = {isa = PBXBuildFile; fileRef = 292DB13619B4574100A80320 /* UIEditBoxImpl-mac.h */; };
-		292DB14D19B4574100A80320 /* UIEditBoxImpl-mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 292DB13719B4574100A80320 /* UIEditBoxImpl-mac.mm */; };
-		292DB14E19B4574100A80320 /* UIEditBoxImpl-mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 292DB13719B4574100A80320 /* UIEditBoxImpl-mac.mm */; };
-		292DB14F19B4574100A80320 /* UIEditBoxImpl-stub.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 292DB13819B4574100A80320 /* UIEditBoxImpl-stub.cpp */; };
-		292DB15019B4574100A80320 /* UIEditBoxImpl-stub.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 292DB13819B4574100A80320 /* UIEditBoxImpl-stub.cpp */; };
 		292DB15F19B461CA00A80320 /* ExtensionDeprecated.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 292DB15D19B461CA00A80320 /* ExtensionDeprecated.cpp */; };
 		292DB16019B461CA00A80320 /* ExtensionDeprecated.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 292DB15D19B461CA00A80320 /* ExtensionDeprecated.cpp */; };
 		292DB16119B461CA00A80320 /* ExtensionDeprecated.h in Headers */ = {isa = PBXBuildFile; fileRef = 292DB15E19B461CA00A80320 /* ExtensionDeprecated.h */; };
@@ -857,17 +829,6 @@
 		29394CF519B01DBA00D2DE1A /* UIWebViewImpl-ios.h in Headers */ = {isa = PBXBuildFile; fileRef = 29394CEE19B01DBA00D2DE1A /* UIWebViewImpl-ios.h */; };
 		29394CF619B01DBA00D2DE1A /* UIWebViewImpl-ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 29394CEF19B01DBA00D2DE1A /* UIWebViewImpl-ios.mm */; };
 		29394CF719B01DBA00D2DE1A /* UIWebViewImpl-ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 29394CEF19B01DBA00D2DE1A /* UIWebViewImpl-ios.mm */; };
-		2980F0221BA9A5550059E678 /* CCUIEditBoxIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 2980F0171BA9A5550059E678 /* CCUIEditBoxIOS.h */; };
-		2980F0231BA9A5550059E678 /* CCUIEditBoxIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2980F0181BA9A5550059E678 /* CCUIEditBoxIOS.mm */; };
-		2980F0241BA9A5550059E678 /* CCUIMultilineTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = 2980F0191BA9A5550059E678 /* CCUIMultilineTextField.h */; };
-		2980F0251BA9A5550059E678 /* CCUIMultilineTextField.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2980F01A1BA9A5550059E678 /* CCUIMultilineTextField.mm */; };
-		2980F0261BA9A5550059E678 /* CCUISingleLineTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = 2980F01B1BA9A5550059E678 /* CCUISingleLineTextField.h */; };
-		2980F0271BA9A5550059E678 /* CCUISingleLineTextField.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2980F01C1BA9A5550059E678 /* CCUISingleLineTextField.mm */; };
-		2980F0281BA9A5550059E678 /* CCUITextInput.h in Headers */ = {isa = PBXBuildFile; fileRef = 2980F01D1BA9A5550059E678 /* CCUITextInput.h */; };
-		2980F0291BA9A5550059E678 /* UITextField+CCUITextInput.h in Headers */ = {isa = PBXBuildFile; fileRef = 2980F01E1BA9A5550059E678 /* UITextField+CCUITextInput.h */; };
-		2980F02A1BA9A5550059E678 /* UITextField+CCUITextInput.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2980F01F1BA9A5550059E678 /* UITextField+CCUITextInput.mm */; };
-		2980F02B1BA9A5550059E678 /* UITextView+CCUITextInput.h in Headers */ = {isa = PBXBuildFile; fileRef = 2980F0201BA9A5550059E678 /* UITextView+CCUITextInput.h */; };
-		2980F02C1BA9A5550059E678 /* UITextView+CCUITextInput.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2980F0211BA9A5550059E678 /* UITextView+CCUITextInput.mm */; };
 		2986667F18B1B246000E39CA /* CCTweenFunction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2986667818B1B079000E39CA /* CCTweenFunction.cpp */; };
 		299754F4193EC95400A54AC3 /* ObjectFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 299754F2193EC95400A54AC3 /* ObjectFactory.cpp */; };
 		299754F5193EC95400A54AC3 /* ObjectFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 299754F2193EC95400A54AC3 /* ObjectFactory.cpp */; };
@@ -1414,10 +1375,6 @@
 		50ED2BD919BE5D5D00A0AB90 /* CCEventListenerController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E6176631960F89B00DE83F5 /* CCEventListenerController.cpp */; };
 		50ED2BDA19BE76D300A0AB90 /* UIVideoPlayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EA0FB69191C841D00B170C8 /* UIVideoPlayer.h */; };
 		50ED2BDB19BE76D500A0AB90 /* UIVideoPlayer-ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3EA0FB6A191C841D00B170C8 /* UIVideoPlayer-ios.mm */; };
-		50ED2BE019BEAF7900A0AB90 /* UIEditBoxImpl-win32.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ED2BDC19BEAF7900A0AB90 /* UIEditBoxImpl-win32.h */; };
-		50ED2BE119BEAF7900A0AB90 /* UIEditBoxImpl-win32.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ED2BDC19BEAF7900A0AB90 /* UIEditBoxImpl-win32.h */; };
-		50ED2BE419BEAF7900A0AB90 /* UIEditBoxImpl-win32.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ED2BDE19BEAF7900A0AB90 /* UIEditBoxImpl-win32.cpp */; };
-		50ED2BE519BEAF7900A0AB90 /* UIEditBoxImpl-win32.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ED2BDE19BEAF7900A0AB90 /* UIEditBoxImpl-win32.cpp */; };
 		52B47A2E1A5349A3004E4C60 /* HttpAsynConnection-apple.h in Headers */ = {isa = PBXBuildFile; fileRef = 52B47A291A5349A3004E4C60 /* HttpAsynConnection-apple.h */; };
 		52B47A2F1A5349A3004E4C60 /* HttpAsynConnection-apple.m in Sources */ = {isa = PBXBuildFile; fileRef = 52B47A2A1A5349A3004E4C60 /* HttpAsynConnection-apple.m */; };
 		52B47A301A5349A3004E4C60 /* HttpClient-apple.mm in Sources */ = {isa = PBXBuildFile; fileRef = 52B47A2B1A5349A3004E4C60 /* HttpClient-apple.mm */; };
@@ -1438,10 +1395,10 @@
 		781B067A1BD2693A0072FB24 /* Internal.mm in Sources */ = {isa = PBXBuildFile; fileRef = 781B06791BD2693A0072FB24 /* Internal.mm */; };
 		781B067C1BD26E1E0072FB24 /* Events.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 781B067B1BD26E1E0072FB24 /* Events.cpp */; };
 		781B067D1BD26E1E0072FB24 /* Events.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 781B067B1BD26E1E0072FB24 /* Events.cpp */; };
-		781B06831BD2713D0072FB24 /* Config.h in Headers */ = {isa = PBXBuildFile; fileRef = 781B06821BD2713D0072FB24 /* Config.h */; };
-		781B06841BD2713D0072FB24 /* Config.h in Headers */ = {isa = PBXBuildFile; fileRef = 781B06821BD2713D0072FB24 /* Config.h */; };
-		781B06861BD272DD0072FB24 /* Config.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 781B06851BD272DD0072FB24 /* Config.cpp */; };
-		781B06871BD272DD0072FB24 /* Config.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 781B06851BD272DD0072FB24 /* Config.cpp */; };
+		781B06831BD2713D0072FB24 /* Parameters.h in Headers */ = {isa = PBXBuildFile; fileRef = 781B06821BD2713D0072FB24 /* Parameters.h */; };
+		781B06841BD2713D0072FB24 /* Parameters.h in Headers */ = {isa = PBXBuildFile; fileRef = 781B06821BD2713D0072FB24 /* Parameters.h */; };
+		781B06861BD272DD0072FB24 /* Parameters.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 781B06851BD272DD0072FB24 /* Parameters.cpp */; };
+		781B06871BD272DD0072FB24 /* Parameters.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 781B06851BD272DD0072FB24 /* Parameters.cpp */; };
 		781B068B1BD280A50072FB24 /* Services.h in Headers */ = {isa = PBXBuildFile; fileRef = 781B068A1BD280A50072FB24 /* Services.h */; };
 		781B068D1BD280D10072FB24 /* Services.mm in Sources */ = {isa = PBXBuildFile; fileRef = 781B068C1BD280D10072FB24 /* Services.mm */; };
 		781B068E1BD2AB610072FB24 /* Platform.h in Headers */ = {isa = PBXBuildFile; fileRef = 781B066F1BD269210072FB24 /* Platform.h */; };
@@ -1486,6 +1443,12 @@
 		78382F761C2469640001B3F1 /* Vote.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78382F741C2469640001B3F1 /* Vote.cpp */; };
 		78382F791C2469640001B3F1 /* Vote.h in Headers */ = {isa = PBXBuildFile; fileRef = 78382F751C2469640001B3F1 /* Vote.h */; };
 		78382F7C1C24698E0001B3F1 /* Vote.mm in Sources */ = {isa = PBXBuildFile; fileRef = 78382F7B1C24698E0001B3F1 /* Vote.mm */; };
+		783FFB191DD4E21300095B83 /* UI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7895F3611DCFDC03008E0A05 /* UI.cpp */; };
+		783FFB1A1DD4E21B00095B83 /* UI.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7895F3591DCFD7C0008E0A05 /* UI.mm */; };
+		783FFB1B1DD4E21C00095B83 /* UI.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7895F3591DCFD7C0008E0A05 /* UI.mm */; };
+		783FFB1C1DD4E21F00095B83 /* UI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7895F3611DCFDC03008E0A05 /* UI.cpp */; };
+		783FFB1D1DD4E22600095B83 /* UI.h in Headers */ = {isa = PBXBuildFile; fileRef = 7895F35B1DCFD7D4008E0A05 /* UI.h */; };
+		783FFB1E1DD4E22600095B83 /* UI.h in Headers */ = {isa = PBXBuildFile; fileRef = 7895F35B1DCFD7D4008E0A05 /* UI.h */; };
 		7843AB9B1C2230B80011F47C /* libfreetype.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A57052D180BD3280088DEC7 /* libfreetype.a */; };
 		7843ACDF1C224C980011F47C /* libglfw3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A570346180BD0850088DEC7 /* libglfw3.a */; };
 		78456FCF1CF134130050A832 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78456FCE1CF134130050A832 /* Foundation.framework */; };
@@ -1638,7 +1601,6 @@
 		78C353831CEE7F6500F10068 /* CCPURandomiserTranslator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B665E1A81AA80A6500DDB1C5 /* CCPURandomiserTranslator.cpp */; };
 		78C353841CEE7F6500F10068 /* DetourPathCorridor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6DD2F991B04825B00E47F5F /* DetourPathCorridor.cpp */; };
 		78C353851CEE7F6500F10068 /* CCNotificationCenter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A01C6A218F58F7500EFE3A6 /* CCNotificationCenter.cpp */; };
-		78C353861CEE7F6500F10068 /* UIEditBoxImpl-mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 292DB13719B4574100A80320 /* UIEditBoxImpl-mac.mm */; };
 		78C353871CEE7F6500F10068 /* SpuGatheringCollisionDispatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6CAB1941AF9AA1A00B9B856 /* SpuGatheringCollisionDispatcher.cpp */; };
 		78C353881CEE7F6500F10068 /* btPoint2PointConstraint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6CAB1001AF9AA1900B9B856 /* btPoint2PointConstraint.cpp */; };
 		78C353891CEE7F6500F10068 /* CCPURandomiser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B665E1A61AA80A6500DDB1C5 /* CCPURandomiser.cpp */; };
@@ -1751,7 +1713,6 @@
 		78C353F41CEE7F6500F10068 /* CCPUGravityAffector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B665E1361AA80A6500DDB1C5 /* CCPUGravityAffector.cpp */; };
 		78C353F51CEE7F6500F10068 /* CCPULineAffectorTranslator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B665E1441AA80A6500DDB1C5 /* CCPULineAffectorTranslator.cpp */; };
 		78C353F61CEE7F6500F10068 /* b2ContactSolver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A168F21807AF9C005B8026 /* b2ContactSolver.cpp */; };
-		78C353F71CEE7F6500F10068 /* UIEditBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 292DB12F19B4574100A80320 /* UIEditBox.cpp */; };
 		78C353F81CEE7F6500F10068 /* extension.c in Sources */ = {isa = PBXBuildFile; fileRef = B29A7DA919EE1B7700872B35 /* extension.c */; };
 		78C353F91CEE7F6500F10068 /* gim_box_set.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6CAB0BA1AF9AA1900B9B856 /* gim_box_set.cpp */; };
 		78C353FA1CEE7F6500F10068 /* btGjkConvexCast.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6CAB0D01AF9AA1900B9B856 /* btGjkConvexCast.cpp */; };
@@ -1806,7 +1767,6 @@
 		78C3542C1CEE7F6500F10068 /* idl_gen_cpp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 382383E71A258FA7002C4610 /* idl_gen_cpp.cpp */; };
 		78C3542D1CEE7F6500F10068 /* CCPURibbonTrail.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B665E1AE1AA80A6500DDB1C5 /* CCPURibbonTrail.cpp */; };
 		78C3542E1CEE7F6500F10068 /* CCPUAffector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B665E0CC1AA80A6500DDB1C5 /* CCPUAffector.cpp */; };
-		78C3542F1CEE7F6500F10068 /* UIText.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2905FA0B18CF08D100240AA3 /* UIText.cpp */; };
 		78C354301CEE7F6500F10068 /* btTriangleCallback.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6CAB0931AF9AA1900B9B856 /* btTriangleCallback.cpp */; };
 		78C354311CEE7F6500F10068 /* b2CollidePolygon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A168BA1807AF9C005B8026 /* b2CollidePolygon.cpp */; };
 		78C354321CEE7F6500F10068 /* b2CircleContact.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A168EE1807AF9C005B8026 /* b2CircleContact.cpp */; };
@@ -1814,7 +1774,6 @@
 		78C354341CEE7F6500F10068 /* DetourLocalBoundary.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6DD2F951B04825B00E47F5F /* DetourLocalBoundary.cpp */; };
 		78C354351CEE7F6500F10068 /* TransformUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ABBD2D1925AB0000A911A9 /* TransformUtils.cpp */; };
 		78C354361CEE7F6500F10068 /* CCPUInterParticleCollider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B665E13A1AA80A6500DDB1C5 /* CCPUInterParticleCollider.cpp */; };
-		78C354371CEE7F6500F10068 /* UIEditBoxImpl-android.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 292DB13219B4574100A80320 /* UIEditBoxImpl-android.cpp */; };
 		78C354381CEE7F6500F10068 /* CCActionInstant.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A570053180BC5A10088DEC7 /* CCActionInstant.cpp */; };
 		78C354391CEE7F6500F10068 /* b2FrictionJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A168FF1807AF9C005B8026 /* b2FrictionJoint.cpp */; };
 		78C3543A1CEE7F6500F10068 /* DetourObstacleAvoidance.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6DD2F971B04825B00E47F5F /* DetourObstacleAvoidance.cpp */; };
@@ -1888,7 +1847,6 @@
 		78C3547E1CEE7F6500F10068 /* CCEventListenerAssetsManagerEx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15B3707219EE414C00ABE682 /* CCEventListenerAssetsManagerEx.cpp */; };
 		78C3547F1CEE7F6500F10068 /* btMultiBody.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6CAB1191AF9AA1900B9B856 /* btMultiBody.cpp */; };
 		78C354801CEE7F6500F10068 /* CCCommon-ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 503DD8D01926736A00CD74DD /* CCCommon-ios.mm */; };
-		78C354811CEE7F6500F10068 /* UIEditBoxImpl-ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 292DB13519B4574100A80320 /* UIEditBoxImpl-ios.mm */; };
 		78C354821CEE7F6500F10068 /* CCNavMeshObstacle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B677B0C51B18492D006762CB /* CCNavMeshObstacle.cpp */; };
 		78C354831CEE7F6500F10068 /* btGhostObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6CAB0401AF9AA1900B9B856 /* btGhostObject.cpp */; };
 		78C354841CEE7F6500F10068 /* b2BlockAllocator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A168CE1807AF9C005B8026 /* b2BlockAllocator.cpp */; };
@@ -1933,7 +1891,6 @@
 		78C354AB1CEE7F6500F10068 /* UIListView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2905F9FE18CF08D000240AA3 /* UIListView.cpp */; };
 		78C354AC1CEE7F6500F10068 /* CCLabelAtlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A570192180BCB590088DEC7 /* CCLabelAtlas.cpp */; };
 		78C354AD1CEE7F6500F10068 /* CCAutoPolygon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15FB20721AE7BF8600C31518 /* CCAutoPolygon.cpp */; };
-		78C354AE1CEE7F6500F10068 /* UIEditBoxImpl-common.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0E749F51BA8FD7F001A8332 /* UIEditBoxImpl-common.cpp */; };
 		78C354AF1CEE7F6500F10068 /* btMultiSapBroadphase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6CAB0151AF9AA1900B9B856 /* btMultiSapBroadphase.cpp */; };
 		78C354B01CEE7F6500F10068 /* b2CollideEdge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A168B91807AF9C005B8026 /* b2CollideEdge.cpp */; };
 		78C354B11CEE7F6500F10068 /* CCLabelBMFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A570194180BCB590088DEC7 /* CCLabelBMFont.cpp */; };
@@ -1989,7 +1946,6 @@
 		78C354E31CEE7F6500F10068 /* Slot.c in Sources */ = {isa = PBXBuildFile; fileRef = B29A7DBD19EE1B7700872B35 /* Slot.c */; };
 		78C354E41CEE7F6500F10068 /* CCPUCollisionAvoidanceAffectorTranslator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B665E0F61AA80A6500DDB1C5 /* CCPUCollisionAvoidanceAffectorTranslator.cpp */; };
 		78C354E51CEE7F6500F10068 /* CCThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ABBF2B1926664700A911A9 /* CCThread.cpp */; };
-		78C354E61CEE7F6500F10068 /* CCUISingleLineTextField.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2980F01C1BA9A5550059E678 /* CCUISingleLineTextField.mm */; };
 		78C354E71CEE7F6500F10068 /* Background.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7894C06C1BC9710300363FC9 /* Background.cpp */; };
 		78C354E81CEE7F6500F10068 /* AttachmentLoader.c in Sources */ = {isa = PBXBuildFile; fileRef = B29A7DA019EE1B7700872B35 /* AttachmentLoader.c */; };
 		78C354E91CEE7F6500F10068 /* CCTransitionPageTurn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A5701DA180BCB8C0088DEC7 /* CCTransitionPageTurn.cpp */; };
@@ -2005,7 +1961,6 @@
 		78C354F31CEE7F6500F10068 /* btGpu3DGridBroadphase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6CAB13A1AF9AA1900B9B856 /* btGpu3DGridBroadphase.cpp */; };
 		78C354F41CEE7F6500F10068 /* Mat4.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ABBD231925AB0000A911A9 /* Mat4.cpp */; };
 		78C354F51CEE7F6500F10068 /* CCClippingNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A570200180BCBD40088DEC7 /* CCClippingNode.cpp */; };
-		78C354F61CEE7F6500F10068 /* UIButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2905F9F018CF08D000240AA3 /* UIButton.cpp */; };
 		78C354F71CEE7F6500F10068 /* CCMotionStreak.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A570206180BCBDF0088DEC7 /* CCMotionStreak.cpp */; };
 		78C354F81CEE7F6500F10068 /* CCProgressTimer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A57020C180BCBF40088DEC7 /* CCProgressTimer.cpp */; };
 		78C354F91CEE7F6500F10068 /* CCGLViewImpl-ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 503DD8DB1926736A00CD74DD /* CCGLViewImpl-ios.mm */; };
@@ -2016,7 +1971,6 @@
 		78C354FE1CEE7F6500F10068 /* CCRenderTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A57020E180BCBF40088DEC7 /* CCRenderTexture.cpp */; };
 		78C354FF1CEE7F6500F10068 /* btStridingMeshInterface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6CAB08D1AF9AA1900B9B856 /* btStridingMeshInterface.cpp */; };
 		78C355001CEE7F6500F10068 /* CCParticleBatchNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A570219180BCC1A0088DEC7 /* CCParticleBatchNode.cpp */; };
-		78C355011CEE7F6500F10068 /* UIEditBoxImpl-stub.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 292DB13819B4574100A80320 /* UIEditBoxImpl-stub.cpp */; };
 		78C355021CEE7F6500F10068 /* CCPUDoEnableComponentEventHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B665E1001AA80A6500DDB1C5 /* CCPUDoEnableComponentEventHandler.cpp */; };
 		78C355031CEE7F6500F10068 /* CCPUOnExpireObserver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B665E1741AA80A6500DDB1C5 /* CCPUOnExpireObserver.cpp */; };
 		78C355041CEE7F6500F10068 /* SimpleAudioEngine.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46A15FEB1807A56F005B8026 /* SimpleAudioEngine.mm */; };
@@ -2076,7 +2030,6 @@
 		78C3553B1CEE7F6500F10068 /* CCSpriteFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A57027A180BCC900088DEC7 /* CCSpriteFrame.cpp */; };
 		78C3553C1CEE7F6500F10068 /* HttpConnection-winrt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 507003191B69735200E83DDD /* HttpConnection-winrt.cpp */; };
 		78C3553D1CEE7F6500F10068 /* btContactConstraint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6CAB0F01AF9AA1900B9B856 /* btContactConstraint.cpp */; };
-		78C3553E1CEE7F6500F10068 /* UITextField+CCUITextInput.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2980F01F1BA9A5550059E678 /* UITextField+CCUITextInput.mm */; };
 		78C3553F1CEE7F6500F10068 /* TiledEntity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7894BFAF1BC9168700363FC9 /* TiledEntity.cpp */; };
 		78C355401CEE7F6500F10068 /* CCPUCollisionAvoidanceAffector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B665E0F41AA80A6500DDB1C5 /* CCPUCollisionAvoidanceAffector.cpp */; };
 		78C355411CEE7F6500F10068 /* btConvex2dConvex2dAlgorithm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6CAB0341AF9AA1900B9B856 /* btConvex2dConvex2dAlgorithm.cpp */; };
@@ -2180,7 +2133,6 @@
 		78C355A31CEE7F6500F10068 /* CCPUEmitterTranslator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B665E1201AA80A6500DDB1C5 /* CCPUEmitterTranslator.cpp */; };
 		78C355A41CEE7F6500F10068 /* CCCustomCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ABBD661925AB4100A911A9 /* CCCustomCommand.cpp */; };
 		78C355A51CEE7F6500F10068 /* btWheelInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6CAB1371AF9AA1900B9B856 /* btWheelInfo.cpp */; };
-		78C355A61CEE7F6500F10068 /* UITextView+CCUITextInput.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2980F0211BA9A5550059E678 /* UITextView+CCUITextInput.mm */; };
 		78C355A71CEE7F6500F10068 /* CCProfiling.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ABBDFB1925AB6E00A911A9 /* CCProfiling.cpp */; };
 		78C355A81CEE7F6500F10068 /* CCTechnique.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 501216981AC473A3009A4BEA /* CCTechnique.cpp */; };
 		78C355A91CEE7F6500F10068 /* CCMeshVertexIndexData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15AE17F719AAD2F700C27E9E /* CCMeshVertexIndexData.cpp */; };
@@ -2251,7 +2203,7 @@
 		78C355EA1CEE7F6500F10068 /* CCScriptSupport.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ABBE031925AB6E00A911A9 /* CCScriptSupport.cpp */; };
 		78C355EB1CEE7F6500F10068 /* btDiscreteDynamicsWorld.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6CAB1101AF9AA1900B9B856 /* btDiscreteDynamicsWorld.cpp */; };
 		78C355EC1CEE7F6500F10068 /* CCMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5012169E1AC473AD009A4BEA /* CCMaterial.cpp */; };
-		78C355ED1CEE7F6500F10068 /* Config.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 781B06851BD272DD0072FB24 /* Config.cpp */; };
+		78C355ED1CEE7F6500F10068 /* Parameters.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 781B06851BD272DD0072FB24 /* Parameters.cpp */; };
 		78C355EE1CEE7F6500F10068 /* CCPUPointEmitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B665E19E1AA80A6500DDB1C5 /* CCPUPointEmitter.cpp */; };
 		78C355EF1CEE7F6500F10068 /* btAxisSweep3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6CAB0081AF9AA1900B9B856 /* btAxisSweep3.cpp */; };
 		78C355F01CEE7F6500F10068 /* CCStencilStateManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78F458B11CE71EFC00A70B02 /* CCStencilStateManager.cpp */; };
@@ -2267,7 +2219,6 @@
 		78C355FA1CEE7F6500F10068 /* btConcaveShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6CAB0621AF9AA1900B9B856 /* btConcaveShape.cpp */; };
 		78C355FB1CEE7F6500F10068 /* btMultimaterialTriangleMeshShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6CAB07D1AF9AA1900B9B856 /* btMultimaterialTriangleMeshShape.cpp */; };
 		78C355FC1CEE7F6500F10068 /* LocalStorage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AAF584C180E40B9000584C8 /* LocalStorage.cpp */; };
-		78C355FD1CEE7F6500F10068 /* UIEditBoxImpl-win32.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ED2BDE19BEAF7900A0AB90 /* UIEditBoxImpl-win32.cpp */; };
 		78C355FE1CEE7F6500F10068 /* btCollisionDispatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6CAB0291AF9AA1900B9B856 /* btCollisionDispatcher.cpp */; };
 		78C355FF1CEE7F6500F10068 /* CCPUOnQuotaObserver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B665E17C1AA80A6500DDB1C5 /* CCPUOnQuotaObserver.cpp */; };
 		78C356001CEE7F6500F10068 /* Motion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 785C58711BD506F200B71D89 /* Motion.cpp */; };
@@ -2289,7 +2240,6 @@
 		78C356101CEE7F6500F10068 /* CCPUObserverManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B665E15C1AA80A6500DDB1C5 /* CCPUObserverManager.cpp */; };
 		78C356111CEE7F6500F10068 /* AudioPlayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50CB247419D9C5A100687767 /* AudioPlayer.mm */; };
 		78C356121CEE7F6500F10068 /* CCRef.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ABBDFE1925AB6E00A911A9 /* CCRef.cpp */; };
-		78C356131CEE7F6500F10068 /* CCUIMultilineTextField.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2980F01A1BA9A5550059E678 /* CCUIMultilineTextField.mm */; };
 		78C356141CEE7F6500F10068 /* clipper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 85B374381B204B9400C488D6 /* clipper.cpp */; };
 		78C356151CEE7F6500F10068 /* btBox2dShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6CAB0551AF9AA1900B9B856 /* btBox2dShape.cpp */; };
 		78C356161CEE7F6500F10068 /* CocosGUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2905F9E918CF08D000240AA3 /* CocosGUI.cpp */; };
@@ -2345,7 +2295,6 @@
 		78C356481CEE7F6500F10068 /* CCObjLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15AE17FB19AAD2F700C27E9E /* CCObjLoader.cpp */; };
 		78C356491CEE7F6500F10068 /* CCAllocatorDiagnostics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D0FD033C1A3B51AA00825BB5 /* CCAllocatorDiagnostics.cpp */; };
 		78C3564A1CEE7F6500F10068 /* CCPUOnClearObserverTranslator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B665E1621AA80A6500DDB1C5 /* CCPUOnClearObserverTranslator.cpp */; };
-		78C3564B1CEE7F6500F10068 /* CCUIEditBoxIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2980F0181BA9A5550059E678 /* CCUIEditBoxIOS.mm */; };
 		78C3564C1CEE7F6500F10068 /* CCPUVertexEmitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B665E1EC1AA80A6500DDB1C5 /* CCPUVertexEmitter.cpp */; };
 		78C3564D1CEE7F6500F10068 /* CCNavMeshUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B677B0C71B18492D006762CB /* CCNavMeshUtils.cpp */; };
 		78C3564E1CEE7F6500F10068 /* CCPUScaleVelocityAffector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B665E1B61AA80A6500DDB1C5 /* CCPUScaleVelocityAffector.cpp */; };
@@ -2385,10 +2334,8 @@
 		78C356701CEE7F6500F10068 /* WebSocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AAF5368180E3374000584C8 /* WebSocket.cpp */; };
 		78C356751CEE7F6500F10068 /* CCStdC-ios.h in Headers */ = {isa = PBXBuildFile; fileRef = 503DD8DE1926736A00CD74DD /* CCStdC-ios.h */; };
 		78C356761CEE7F6500F10068 /* b2Math.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A168D41807AF9C005B8026 /* b2Math.h */; };
-		78C356771CEE7F6500F10068 /* CCUITextInput.h in Headers */ = {isa = PBXBuildFile; fileRef = 2980F01D1BA9A5550059E678 /* CCUITextInput.h */; };
 		78C356781CEE7F6500F10068 /* btGenericPoolAllocator.h in Headers */ = {isa = PBXBuildFile; fileRef = B6CAB0A81AF9AA1900B9B856 /* btGenericPoolAllocator.h */; };
 		78C356791CEE7F6500F10068 /* CCPUPathFollower.h in Headers */ = {isa = PBXBuildFile; fileRef = B665E1951AA80A6500DDB1C5 /* CCPUPathFollower.h */; };
-		78C3567A1CEE7F6500F10068 /* UITextField+CCUITextInput.h in Headers */ = {isa = PBXBuildFile; fileRef = 2980F01E1BA9A5550059E678 /* UITextField+CCUITextInput.h */; };
 		78C3567B1CEE7F6500F10068 /* CCPhysicsContact.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A170711807CE7A005B8026 /* CCPhysicsContact.h */; };
 		78C3567C1CEE7F6500F10068 /* btGjkPairDetector.h in Headers */ = {isa = PBXBuildFile; fileRef = B6CAB0D71AF9AA1900B9B856 /* btGjkPairDetector.h */; };
 		78C3567D1CEE7F6500F10068 /* btTriangleShape.h in Headers */ = {isa = PBXBuildFile; fileRef = B6CAB09E1AF9AA1900B9B856 /* btTriangleShape.h */; };
@@ -2412,7 +2359,6 @@
 		78C356901CEE7F6500F10068 /* btConvexInternalShape.h in Headers */ = {isa = PBXBuildFile; fileRef = B6CAB06B1AF9AA1900B9B856 /* btConvexInternalShape.h */; };
 		78C356911CEE7F6500F10068 /* AnimatedEntity.h in Headers */ = {isa = PBXBuildFile; fileRef = 7894BFA61BC9168700363FC9 /* AnimatedEntity.h */; };
 		78C356921CEE7F6500F10068 /* CCPUParticleFollowerTranslator.h in Headers */ = {isa = PBXBuildFile; fileRef = B665E18F1AA80A6500DDB1C5 /* CCPUParticleFollowerTranslator.h */; };
-		78C356931CEE7F6500F10068 /* UIEditBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 292DB13019B4574100A80320 /* UIEditBox.h */; };
 		78C356941CEE7F6500F10068 /* CCAffineTransform.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ABBD1C1925AB0000A911A9 /* CCAffineTransform.h */; };
 		78C356951CEE7F6500F10068 /* ccShader_PositionColorLengthTexture.vert in Headers */ = {isa = PBXBuildFile; fileRef = 5034CA06191D591000CE6051 /* ccShader_PositionColorLengthTexture.vert */; };
 		78C356961CEE7F6500F10068 /* UITextAtlas.h in Headers */ = {isa = PBXBuildFile; fileRef = 2905FA0E18CF08D100240AA3 /* UITextAtlas.h */; };
@@ -2447,7 +2393,6 @@
 		78C356B31CEE7F6500F10068 /* btGeneric6DofConstraint.h in Headers */ = {isa = PBXBuildFile; fileRef = B6CAB0F81AF9AA1900B9B856 /* btGeneric6DofConstraint.h */; };
 		78C356B41CEE7F6500F10068 /* btTriangleBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = B6CAB0921AF9AA1900B9B856 /* btTriangleBuffer.h */; };
 		78C356B51CEE7F6500F10068 /* b2CircleShape.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A168C71807AF9C005B8026 /* b2CircleShape.h */; };
-		78C356B61CEE7F6500F10068 /* UIEditBoxImpl-common.h in Headers */ = {isa = PBXBuildFile; fileRef = A0E749F61BA8FD7F001A8332 /* UIEditBoxImpl-common.h */; };
 		78C356B71CEE7F6500F10068 /* btConvexHullShape.h in Headers */ = {isa = PBXBuildFile; fileRef = B6CAB0691AF9AA1900B9B856 /* btConvexHullShape.h */; };
 		78C356B81CEE7F6500F10068 /* ccFPSImages.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ABBDF41925AB6E00A911A9 /* ccFPSImages.h */; };
 		78C356B91CEE7F6500F10068 /* btCylinderShape.h in Headers */ = {isa = PBXBuildFile; fileRef = B6CAB0751AF9AA1900B9B856 /* btCylinderShape.h */; };
@@ -2487,7 +2432,6 @@
 		78C356DB1CEE7F6500F10068 /* btStackAlloc.h in Headers */ = {isa = PBXBuildFile; fileRef = B6CAB1D11AF9AA1A00B9B856 /* btStackAlloc.h */; };
 		78C356DC1CEE7F6500F10068 /* CCAnimation3D.h in Headers */ = {isa = PBXBuildFile; fileRef = 15AE17E919AAD2F700C27E9E /* CCAnimation3D.h */; };
 		78C356DD1CEE7F6500F10068 /* CCValue.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ABBE121925AB6F00A911A9 /* CCValue.h */; };
-		78C356DE1CEE7F6500F10068 /* CCUIMultilineTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = 2980F0191BA9A5550059E678 /* CCUIMultilineTextField.h */; };
 		78C356DF1CEE7F6500F10068 /* btConvexHull.h in Headers */ = {isa = PBXBuildFile; fileRef = B6CAB1B81AF9AA1A00B9B856 /* btConvexHull.h */; };
 		78C356E01CEE7F6500F10068 /* firePngData.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ABBE161925AB6F00A911A9 /* firePngData.h */; };
 		78C356E11CEE7F6500F10068 /* CCPrimitive.h in Headers */ = {isa = PBXBuildFile; fileRef = B257B44D1989D5E800D9A687 /* CCPrimitive.h */; };
@@ -2604,7 +2548,6 @@
 		78C357501CEE7F6500F10068 /* Vote.h in Headers */ = {isa = PBXBuildFile; fileRef = 78382F751C2469640001B3F1 /* Vote.h */; };
 		78C357511CEE7F6500F10068 /* CCAttachNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 15AE17ED19AAD2F700C27E9E /* CCAttachNode.h */; };
 		78C357521CEE7F6500F10068 /* btCompoundCompoundCollisionAlgorithm.h in Headers */ = {isa = PBXBuildFile; fileRef = B6CAB0331AF9AA1900B9B856 /* btCompoundCompoundCollisionAlgorithm.h */; };
-		78C357531CEE7F6500F10068 /* UIEditBoxImpl-mac.h in Headers */ = {isa = PBXBuildFile; fileRef = 292DB13619B4574100A80320 /* UIEditBoxImpl-mac.h */; };
 		78C357541CEE7F6500F10068 /* CCControlHuePicker.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A1683D1807AF4E005B8026 /* CCControlHuePicker.h */; };
 		78C357551CEE7F6500F10068 /* CCPUOnRandomObserverTranslator.h in Headers */ = {isa = PBXBuildFile; fileRef = B665E1831AA80A6500DDB1C5 /* CCPUOnRandomObserverTranslator.h */; };
 		78C357561CEE7F6500F10068 /* CCPUObserver.h in Headers */ = {isa = PBXBuildFile; fileRef = B665E15B1AA80A6500DDB1C5 /* CCPUObserver.h */; };
@@ -2664,7 +2607,6 @@
 		78C3578C1CEE7F6500F10068 /* btStaticPlaneShape.h in Headers */ = {isa = PBXBuildFile; fileRef = B6CAB08C1AF9AA1900B9B856 /* btStaticPlaneShape.h */; };
 		78C3578D1CEE7F6500F10068 /* Media.h in Headers */ = {isa = PBXBuildFile; fileRef = 781B06981BD2B0490072FB24 /* Media.h */; };
 		78C3578E1CEE7F6500F10068 /* btPolyhedralConvexShape.h in Headers */ = {isa = PBXBuildFile; fileRef = B6CAB0841AF9AA1900B9B856 /* btPolyhedralConvexShape.h */; };
-		78C3578F1CEE7F6500F10068 /* UIEditBoxImpl-ios.h in Headers */ = {isa = PBXBuildFile; fileRef = 292DB13419B4574100A80320 /* UIEditBoxImpl-ios.h */; };
 		78C357901CEE7F6500F10068 /* MiniCLTaskScheduler.h in Headers */ = {isa = PBXBuildFile; fileRef = B6CAB1E01AF9AA1A00B9B856 /* MiniCLTaskScheduler.h */; };
 		78C357911CEE7F6500F10068 /* gim_tri_collision.h in Headers */ = {isa = PBXBuildFile; fileRef = B6CAB0C81AF9AA1900B9B856 /* gim_tri_collision.h */; };
 		78C357921CEE7F6500F10068 /* AudioEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E2BDADD19C030ED0055CDCD /* AudioEngine.h */; };
@@ -2678,7 +2620,6 @@
 		78C3579A1CEE7F6500F10068 /* CCTrianglesCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = B230ED7019B417AE00364AA8 /* CCTrianglesCommand.h */; };
 		78C3579B1CEE7F6500F10068 /* CCPUDynamicAttributeTranslator.h in Headers */ = {isa = PBXBuildFile; fileRef = B665E11B1AA80A6500DDB1C5 /* CCPUDynamicAttributeTranslator.h */; };
 		78C3579C1CEE7F6500F10068 /* btSequentialImpulseConstraintSolver.h in Headers */ = {isa = PBXBuildFile; fileRef = B6CAB1031AF9AA1900B9B856 /* btSequentialImpulseConstraintSolver.h */; };
-		78C3579D1CEE7F6500F10068 /* UIEditBoxImpl-win32.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ED2BDC19BEAF7900A0AB90 /* UIEditBoxImpl-win32.h */; };
 		78C3579E1CEE7F6500F10068 /* b2MouseJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A169061807AF9C005B8026 /* b2MouseJoint.h */; };
 		78C3579F1CEE7F6500F10068 /* CCPUOnExpireObserverTranslator.h in Headers */ = {isa = PBXBuildFile; fileRef = B665E1771AA80A6500DDB1C5 /* CCPUOnExpireObserverTranslator.h */; };
 		78C357A01CEE7F6500F10068 /* CCGeometry.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ABBD1E1925AB0000A911A9 /* CCGeometry.h */; };
@@ -2736,7 +2677,6 @@
 		78C357D41CEE7F6500F10068 /* HttpClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AAF5363180E3374000584C8 /* HttpClient.h */; };
 		78C357D51CEE7F6500F10068 /* btCollisionConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = B6CAB0271AF9AA1900B9B856 /* btCollisionConfiguration.h */; };
 		78C357D61CEE7F6500F10068 /* DetourNavMeshBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = B6DD2F8C1B04825B00E47F5F /* DetourNavMeshBuilder.h */; };
-		78C357D71CEE7F6500F10068 /* UIEditBoxImpl-android.h in Headers */ = {isa = PBXBuildFile; fileRef = 292DB13319B4574100A80320 /* UIEditBoxImpl-android.h */; };
 		78C357D81CEE7F6500F10068 /* Screenshot.h in Headers */ = {isa = PBXBuildFile; fileRef = 781B06C91BD2D22F0072FB24 /* Screenshot.h */; };
 		78C357D91CEE7F6500F10068 /* PlatformDefinitions.h in Headers */ = {isa = PBXBuildFile; fileRef = B6CAB1851AF9AA1A00B9B856 /* PlatformDefinitions.h */; };
 		78C357DA1CEE7F6500F10068 /* CCPUJetAffectorTranslator.h in Headers */ = {isa = PBXBuildFile; fileRef = B665E1411AA80A6500DDB1C5 /* CCPUJetAffectorTranslator.h */; };
@@ -2885,7 +2825,6 @@
 		78C358691CEE7F6500F10068 /* CCParticleSystemQuad.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A570220180BCC1A0088DEC7 /* CCParticleSystemQuad.h */; };
 		78C3586A1CEE7F6500F10068 /* idl.h in Headers */ = {isa = PBXBuildFile; fileRef = 382383E61A258FA7002C4610 /* idl.h */; };
 		78C3586B1CEE7F6500F10068 /* UIWebView.h in Headers */ = {isa = PBXBuildFile; fileRef = 29394CEC19B01DBA00D2DE1A /* UIWebView.h */; };
-		78C3586C1CEE7F6500F10068 /* CCUISingleLineTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = 2980F01B1BA9A5550059E678 /* CCUISingleLineTextField.h */; };
 		78C3586D1CEE7F6500F10068 /* TrbStateVec.h in Headers */ = {isa = PBXBuildFile; fileRef = B6CAB1AE1AF9AA1A00B9B856 /* TrbStateVec.h */; };
 		78C3586E1CEE7F6500F10068 /* CCFastTMXLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = B24AA982195A675C007B4522 /* CCFastTMXLayer.h */; };
 		78C3586F1CEE7F6500F10068 /* b2EdgeAndCircleContact.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A168F51807AF9C005B8026 /* b2EdgeAndCircleContact.h */; };
@@ -2900,7 +2839,6 @@
 		78C358781CEE7F6500F10068 /* CCProtectedNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 15EFA210198A2BB5000C57D3 /* CCProtectedNode.h */; };
 		78C358791CEE7F6500F10068 /* btCollisionCreateFunc.h in Headers */ = {isa = PBXBuildFile; fileRef = B6CAB0281AF9AA1900B9B856 /* btCollisionCreateFunc.h */; };
 		78C3587A1CEE7F6500F10068 /* b2BroadPhase.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A168B71807AF9C005B8026 /* b2BroadPhase.h */; };
-		78C3587B1CEE7F6500F10068 /* UIButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 2905F9F118CF08D000240AA3 /* UIButton.h */; };
 		78C3587C1CEE7F6500F10068 /* btSubSimplexConvexCast.h in Headers */ = {isa = PBXBuildFile; fileRef = B6CAB0E41AF9AA1900B9B856 /* btSubSimplexConvexCast.h */; };
 		78C3587D1CEE7F6500F10068 /* CCDirector.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ABBDD31925AB6E00A911A9 /* CCDirector.h */; };
 		78C3587E1CEE7F6500F10068 /* btGImpactQuantizedBvh.h in Headers */ = {isa = PBXBuildFile; fileRef = B6CAB0B01AF9AA1900B9B856 /* btGImpactQuantizedBvh.h */; };
@@ -2911,7 +2849,6 @@
 		78C358831CEE7F6500F10068 /* btQuantizedBvh.h in Headers */ = {isa = PBXBuildFile; fileRef = B6CAB01B1AF9AA1900B9B856 /* btQuantizedBvh.h */; };
 		78C358841CEE7F6500F10068 /* CCPUDoAffectorEventHandlerTranslator.h in Headers */ = {isa = PBXBuildFile; fileRef = B665E0FF1AA80A6500DDB1C5 /* CCPUDoAffectorEventHandlerTranslator.h */; };
 		78C358851CEE7F6500F10068 /* CCPUAffectorManager.h in Headers */ = {isa = PBXBuildFile; fileRef = B665E0CF1AA80A6500DDB1C5 /* CCPUAffectorManager.h */; };
-		78C358861CEE7F6500F10068 /* CCUIEditBoxIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 2980F0171BA9A5550059E678 /* CCUIEditBoxIOS.h */; };
 		78C358871CEE7F6500F10068 /* CCPUBoxEmitter.h in Headers */ = {isa = PBXBuildFile; fileRef = B665E0ED1AA80A6500DDB1C5 /* CCPUBoxEmitter.h */; };
 		78C358881CEE7F6500F10068 /* btConvexPenetrationDepthSolver.h in Headers */ = {isa = PBXBuildFile; fileRef = B6CAB0CE1AF9AA1900B9B856 /* btConvexPenetrationDepthSolver.h */; };
 		78C358891CEE7F6500F10068 /* btSolveProjectedGaussSeidel.h in Headers */ = {isa = PBXBuildFile; fileRef = B6CAB1321AF9AA1900B9B856 /* btSolveProjectedGaussSeidel.h */; };
@@ -2924,7 +2861,6 @@
 		78C358901CEE7F6500F10068 /* DetourNode.h in Headers */ = {isa = PBXBuildFile; fileRef = B6DD2F901B04825B00E47F5F /* DetourNode.h */; };
 		78C358911CEE7F6500F10068 /* CCSpriteBatchNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A570279180BCC900088DEC7 /* CCSpriteBatchNode.h */; };
 		78C358921CEE7F6500F10068 /* CCSpriteFrame.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A57027B180BCC900088DEC7 /* CCSpriteFrame.h */; };
-		78C358931CEE7F6500F10068 /* UIText.h in Headers */ = {isa = PBXBuildFile; fileRef = 2905FA0C18CF08D100240AA3 /* UIText.h */; };
 		78C358941CEE7F6500F10068 /* SlotData.h in Headers */ = {isa = PBXBuildFile; fileRef = B29A7DC019EE1B7700872B35 /* SlotData.h */; };
 		78C358951CEE7F6500F10068 /* CCPhysics3DShape.h in Headers */ = {isa = PBXBuildFile; fileRef = B6CAAFDD1AF9A9E100B9B856 /* CCPhysics3DShape.h */; };
 		78C358961CEE7F6500F10068 /* CCPUScriptLexer.h in Headers */ = {isa = PBXBuildFile; fileRef = B665E1BD1AA80A6500DDB1C5 /* CCPUScriptLexer.h */; };
@@ -2953,10 +2889,9 @@
 		78C358AD1CEE7F6500F10068 /* CCPUCollisionAvoidanceAffectorTranslator.h in Headers */ = {isa = PBXBuildFile; fileRef = B665E0F71AA80A6500DDB1C5 /* CCPUCollisionAvoidanceAffectorTranslator.h */; };
 		78C358AE1CEE7F6500F10068 /* Background.h in Headers */ = {isa = PBXBuildFile; fileRef = 7894C06B1BC9710300363FC9 /* Background.h */; };
 		78C358AF1CEE7F6500F10068 /* btParallelConstraintSolver.h in Headers */ = {isa = PBXBuildFile; fileRef = B6CAB1431AF9AA1900B9B856 /* btParallelConstraintSolver.h */; };
-		78C358B01CEE7F6500F10068 /* Config.h in Headers */ = {isa = PBXBuildFile; fileRef = 781B06821BD2713D0072FB24 /* Config.h */; };
+		78C358B01CEE7F6500F10068 /* Parameters.h in Headers */ = {isa = PBXBuildFile; fileRef = 781B06821BD2713D0072FB24 /* Parameters.h */; };
 		78C358B11CEE7F6500F10068 /* b2DistanceJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A168FE1807AF9C005B8026 /* b2DistanceJoint.h */; };
 		78C358B21CEE7F6500F10068 /* btQuickprof.h in Headers */ = {isa = PBXBuildFile; fileRef = B6CAB1CC1AF9AA1A00B9B856 /* btQuickprof.h */; };
-		78C358B31CEE7F6500F10068 /* UITextView+CCUITextInput.h in Headers */ = {isa = PBXBuildFile; fileRef = 2980F0201BA9A5550059E678 /* UITextView+CCUITextInput.h */; };
 		78C358B41CEE7F6500F10068 /* CCEventListenerMouse.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ABBDEB1925AB6E00A911A9 /* CCEventListenerMouse.h */; };
 		78C358B51CEE7F6500F10068 /* CCAllocatorMutex.h in Headers */ = {isa = PBXBuildFile; fileRef = D0FD03421A3B51AA00825BB5 /* CCAllocatorMutex.h */; };
 		78C358B61CEE7F6500F10068 /* EventData.h in Headers */ = {isa = PBXBuildFile; fileRef = B29A7DAF19EE1B7700872B35 /* EventData.h */; };
@@ -2984,7 +2919,6 @@
 		78C358CC1CEE7F6500F10068 /* b2FrictionJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A169001807AF9C005B8026 /* b2FrictionJoint.h */; };
 		78C358CD1CEE7F6500F10068 /* UIScale9Sprite.h in Headers */ = {isa = PBXBuildFile; fileRef = 2958244A19873D8E00F9746D /* UIScale9Sprite.h */; };
 		78C358CE1CEE7F6500F10068 /* btBoxShape.h in Headers */ = {isa = PBXBuildFile; fileRef = B6CAB0581AF9AA1900B9B856 /* btBoxShape.h */; };
-		78C358CF1CEE7F6500F10068 /* UIEditBoxImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = 292DB13119B4574100A80320 /* UIEditBoxImpl.h */; };
 		78C358D01CEE7F6500F10068 /* btTransform.h in Headers */ = {isa = PBXBuildFile; fileRef = B6CAB1D21AF9AA1A00B9B856 /* btTransform.h */; };
 		78C358D11CEE7F6500F10068 /* TranslateTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 78938EA31BCC7E94009CB065 /* TranslateTypes.h */; };
 		78C358D21CEE7F6500F10068 /* CCParallaxNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A5702FF180BCE890088DEC7 /* CCParallaxNode.h */; };
@@ -3370,10 +3304,6 @@
 		A0534A6B1B87306E006B03E5 /* CCIDownloaderImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = A0534A691B87306E006B03E5 /* CCIDownloaderImpl.h */; };
 		A05DCF9D1B90584E00EE040B /* CCDownloader-curl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A05DCF9B1B90584E00EE040B /* CCDownloader-curl.cpp */; };
 		A05DCF9E1B90584E00EE040B /* CCDownloader-curl.h in Headers */ = {isa = PBXBuildFile; fileRef = A05DCF9C1B90584E00EE040B /* CCDownloader-curl.h */; };
-		A0E749F71BA8FD7F001A8332 /* UIEditBoxImpl-common.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0E749F51BA8FD7F001A8332 /* UIEditBoxImpl-common.cpp */; };
-		A0E749F81BA8FD7F001A8332 /* UIEditBoxImpl-common.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0E749F51BA8FD7F001A8332 /* UIEditBoxImpl-common.cpp */; };
-		A0E749F91BA8FD7F001A8332 /* UIEditBoxImpl-common.h in Headers */ = {isa = PBXBuildFile; fileRef = A0E749F61BA8FD7F001A8332 /* UIEditBoxImpl-common.h */; };
-		A0E749FA1BA8FD7F001A8332 /* UIEditBoxImpl-common.h in Headers */ = {isa = PBXBuildFile; fileRef = A0E749F61BA8FD7F001A8332 /* UIEditBoxImpl-common.h */; };
 		B2165EEA19921124000BE3E6 /* CCPrimitiveCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B257B45E198A353E00D9A687 /* CCPrimitiveCommand.cpp */; };
 		B230ED7119B417AE00364AA8 /* CCTrianglesCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B230ED6F19B417AE00364AA8 /* CCTrianglesCommand.cpp */; };
 		B230ED7219B417AE00364AA8 /* CCTrianglesCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B230ED6F19B417AE00364AA8 /* CCTrianglesCommand.cpp */; };
@@ -5374,8 +5304,6 @@
 		2905F9E918CF08D000240AA3 /* CocosGUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CocosGUI.cpp; sourceTree = "<group>"; };
 		2905F9EA18CF08D000240AA3 /* CocosGUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocosGUI.h; sourceTree = "<group>"; };
 		2905F9EB18CF08D000240AA3 /* GUIDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GUIDefine.h; sourceTree = "<group>"; };
-		2905F9F018CF08D000240AA3 /* UIButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIButton.cpp; sourceTree = "<group>"; };
-		2905F9F118CF08D000240AA3 /* UIButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIButton.h; sourceTree = "<group>"; };
 		2905F9F218CF08D000240AA3 /* UICheckBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UICheckBox.cpp; sourceTree = "<group>"; };
 		2905F9F318CF08D000240AA3 /* UICheckBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICheckBox.h; sourceTree = "<group>"; };
 		2905F9F418CF08D000240AA3 /* UIHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIHelper.cpp; sourceTree = "<group>"; };
@@ -5398,8 +5326,6 @@
 		2905FA0818CF08D000240AA3 /* UIScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIScrollView.h; sourceTree = "<group>"; };
 		2905FA0918CF08D000240AA3 /* UISlider.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UISlider.cpp; sourceTree = "<group>"; };
 		2905FA0A18CF08D100240AA3 /* UISlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UISlider.h; sourceTree = "<group>"; };
-		2905FA0B18CF08D100240AA3 /* UIText.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIText.cpp; sourceTree = "<group>"; };
-		2905FA0C18CF08D100240AA3 /* UIText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIText.h; sourceTree = "<group>"; };
 		2905FA0D18CF08D100240AA3 /* UITextAtlas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UITextAtlas.cpp; sourceTree = "<group>"; };
 		2905FA0E18CF08D100240AA3 /* UITextAtlas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITextAtlas.h; sourceTree = "<group>"; };
 		2905FA0F18CF08D100240AA3 /* UITextBMFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UITextBMFont.cpp; sourceTree = "<group>"; };
@@ -5411,16 +5337,6 @@
 		29080DEB191B82CE0066F8DF /* UIDeprecated.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UIDeprecated.h; sourceTree = "<group>"; };
 		291901411B05895600F8B4BA /* CCNinePatchImageParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCNinePatchImageParser.h; path = ../base/CCNinePatchImageParser.h; sourceTree = "<group>"; };
 		291901421B05895600F8B4BA /* CCNinePatchImageParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCNinePatchImageParser.cpp; path = ../base/CCNinePatchImageParser.cpp; sourceTree = "<group>"; };
-		292DB12F19B4574100A80320 /* UIEditBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIEditBox.cpp; sourceTree = "<group>"; };
-		292DB13019B4574100A80320 /* UIEditBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIEditBox.h; sourceTree = "<group>"; };
-		292DB13119B4574100A80320 /* UIEditBoxImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIEditBoxImpl.h; sourceTree = "<group>"; };
-		292DB13219B4574100A80320 /* UIEditBoxImpl-android.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "UIEditBoxImpl-android.cpp"; sourceTree = "<group>"; };
-		292DB13319B4574100A80320 /* UIEditBoxImpl-android.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIEditBoxImpl-android.h"; sourceTree = "<group>"; };
-		292DB13419B4574100A80320 /* UIEditBoxImpl-ios.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIEditBoxImpl-ios.h"; sourceTree = "<group>"; };
-		292DB13519B4574100A80320 /* UIEditBoxImpl-ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "UIEditBoxImpl-ios.mm"; sourceTree = "<group>"; };
-		292DB13619B4574100A80320 /* UIEditBoxImpl-mac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIEditBoxImpl-mac.h"; sourceTree = "<group>"; };
-		292DB13719B4574100A80320 /* UIEditBoxImpl-mac.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "UIEditBoxImpl-mac.mm"; sourceTree = "<group>"; };
-		292DB13819B4574100A80320 /* UIEditBoxImpl-stub.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "UIEditBoxImpl-stub.cpp"; sourceTree = "<group>"; };
 		292DB15D19B461CA00A80320 /* ExtensionDeprecated.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ExtensionDeprecated.cpp; sourceTree = "<group>"; };
 		292DB15E19B461CA00A80320 /* ExtensionDeprecated.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExtensionDeprecated.h; sourceTree = "<group>"; };
 		292F1A5B1A5151CE00E479F8 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcrypto.a; sourceTree = "<group>"; };
@@ -5434,17 +5350,6 @@
 		29394CEF19B01DBA00D2DE1A /* UIWebViewImpl-ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "UIWebViewImpl-ios.mm"; sourceTree = "<group>"; };
 		2958244919873D8E00F9746D /* UIScale9Sprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIScale9Sprite.cpp; sourceTree = "<group>"; };
 		2958244A19873D8E00F9746D /* UIScale9Sprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIScale9Sprite.h; sourceTree = "<group>"; };
-		2980F0171BA9A5550059E678 /* CCUIEditBoxIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCUIEditBoxIOS.h; sourceTree = "<group>"; };
-		2980F0181BA9A5550059E678 /* CCUIEditBoxIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCUIEditBoxIOS.mm; sourceTree = "<group>"; };
-		2980F0191BA9A5550059E678 /* CCUIMultilineTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCUIMultilineTextField.h; sourceTree = "<group>"; };
-		2980F01A1BA9A5550059E678 /* CCUIMultilineTextField.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCUIMultilineTextField.mm; sourceTree = "<group>"; };
-		2980F01B1BA9A5550059E678 /* CCUISingleLineTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCUISingleLineTextField.h; sourceTree = "<group>"; };
-		2980F01C1BA9A5550059E678 /* CCUISingleLineTextField.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCUISingleLineTextField.mm; sourceTree = "<group>"; };
-		2980F01D1BA9A5550059E678 /* CCUITextInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCUITextInput.h; sourceTree = "<group>"; };
-		2980F01E1BA9A5550059E678 /* UITextField+CCUITextInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextField+CCUITextInput.h"; sourceTree = "<group>"; };
-		2980F01F1BA9A5550059E678 /* UITextField+CCUITextInput.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "UITextField+CCUITextInput.mm"; sourceTree = "<group>"; };
-		2980F0201BA9A5550059E678 /* UITextView+CCUITextInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextView+CCUITextInput.h"; sourceTree = "<group>"; };
-		2980F0211BA9A5550059E678 /* UITextView+CCUITextInput.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "UITextView+CCUITextInput.mm"; sourceTree = "<group>"; };
 		2986667818B1B079000E39CA /* CCTweenFunction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTweenFunction.cpp; sourceTree = "<group>"; };
 		2986667918B1B079000E39CA /* CCTweenFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTweenFunction.h; sourceTree = "<group>"; };
 		299754F2193EC95400A54AC3 /* ObjectFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ObjectFactory.cpp; path = ../base/ObjectFactory.cpp; sourceTree = "<group>"; };
@@ -5919,8 +5824,6 @@
 		50E6D33118E174130051CA34 /* UIRelativeBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIRelativeBox.h; sourceTree = "<group>"; };
 		50E6D33218E174130051CA34 /* UIVBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIVBox.cpp; sourceTree = "<group>"; };
 		50E6D33318E174130051CA34 /* UIVBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIVBox.h; sourceTree = "<group>"; };
-		50ED2BDC19BEAF7900A0AB90 /* UIEditBoxImpl-win32.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIEditBoxImpl-win32.h"; sourceTree = "<group>"; };
-		50ED2BDE19BEAF7900A0AB90 /* UIEditBoxImpl-win32.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "UIEditBoxImpl-win32.cpp"; sourceTree = "<group>"; };
 		52B47A291A5349A3004E4C60 /* HttpAsynConnection-apple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "HttpAsynConnection-apple.h"; sourceTree = "<group>"; };
 		52B47A2A1A5349A3004E4C60 /* HttpAsynConnection-apple.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "HttpAsynConnection-apple.m"; sourceTree = "<group>"; };
 		52B47A2B1A5349A3004E4C60 /* HttpClient-apple.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "HttpClient-apple.mm"; sourceTree = "<group>"; };
@@ -5936,8 +5839,8 @@
 		781B06771BD269310072FB24 /* Analytics.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = Analytics.mm; path = ../../apple/analytics/Analytics.mm; sourceTree = "<group>"; };
 		781B06791BD2693A0072FB24 /* Internal.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = Internal.mm; path = ../../apple/internal/Internal.mm; sourceTree = "<group>"; };
 		781B067B1BD26E1E0072FB24 /* Events.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Events.cpp; path = ../support/Events.cpp; sourceTree = "<group>"; };
-		781B06821BD2713D0072FB24 /* Config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Config.h; path = ../support/Config.h; sourceTree = "<group>"; };
-		781B06851BD272DD0072FB24 /* Config.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Config.cpp; path = ../support/Config.cpp; sourceTree = "<group>"; };
+		781B06821BD2713D0072FB24 /* Parameters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Parameters.h; path = ../support/Parameters.h; sourceTree = "<group>"; };
+		781B06851BD272DD0072FB24 /* Parameters.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Parameters.cpp; path = ../support/Parameters.cpp; sourceTree = "<group>"; };
 		781B068A1BD280A50072FB24 /* Services.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Services.h; sourceTree = "<group>"; };
 		781B068C1BD280D10072FB24 /* Services.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = Services.mm; path = ../../apple/services/Services.mm; sourceTree = "<group>"; };
 		781B06981BD2B0490072FB24 /* Media.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Media.h; sourceTree = "<group>"; };
@@ -6049,8 +5952,6 @@
 		A05DCF9B1B90584E00EE040B /* CCDownloader-curl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "CCDownloader-curl.cpp"; sourceTree = "<group>"; };
 		A05DCF9C1B90584E00EE040B /* CCDownloader-curl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CCDownloader-curl.h"; sourceTree = "<group>"; };
 		A07A4D641783777C0073F6A7 /* libcocos2d iphone.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2d iphone.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		A0E749F51BA8FD7F001A8332 /* UIEditBoxImpl-common.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "UIEditBoxImpl-common.cpp"; sourceTree = "<group>"; };
-		A0E749F61BA8FD7F001A8332 /* UIEditBoxImpl-common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIEditBoxImpl-common.h"; sourceTree = "<group>"; };
 		B20564AA1A6E5744001C1B6E /* ccShader_PositionColorTextureAsPointsize.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_PositionColorTextureAsPointsize.vert; sourceTree = "<group>"; };
 		B230ED6F19B417AE00364AA8 /* CCTrianglesCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTrianglesCommand.cpp; sourceTree = "<group>"; };
 		B230ED7019B417AE00364AA8 /* CCTrianglesCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTrianglesCommand.h; sourceTree = "<group>"; };
@@ -7940,28 +7841,6 @@
 			path = ../cocos/ui;
 			sourceTree = "<group>";
 		};
-		292DB12E19B4574100A80320 /* UIEditBox */ = {
-			isa = PBXGroup;
-			children = (
-				2980F0161BA9A5550059E678 /* iOS */,
-				A0E749F51BA8FD7F001A8332 /* UIEditBoxImpl-common.cpp */,
-				A0E749F61BA8FD7F001A8332 /* UIEditBoxImpl-common.h */,
-				50ED2BDC19BEAF7900A0AB90 /* UIEditBoxImpl-win32.h */,
-				50ED2BDE19BEAF7900A0AB90 /* UIEditBoxImpl-win32.cpp */,
-				292DB12F19B4574100A80320 /* UIEditBox.cpp */,
-				292DB13019B4574100A80320 /* UIEditBox.h */,
-				292DB13119B4574100A80320 /* UIEditBoxImpl.h */,
-				292DB13219B4574100A80320 /* UIEditBoxImpl-android.cpp */,
-				292DB13319B4574100A80320 /* UIEditBoxImpl-android.h */,
-				292DB13419B4574100A80320 /* UIEditBoxImpl-ios.h */,
-				292DB13519B4574100A80320 /* UIEditBoxImpl-ios.mm */,
-				292DB13619B4574100A80320 /* UIEditBoxImpl-mac.h */,
-				292DB13719B4574100A80320 /* UIEditBoxImpl-mac.mm */,
-				292DB13819B4574100A80320 /* UIEditBoxImpl-stub.cpp */,
-			);
-			path = UIEditBox;
-			sourceTree = "<group>";
-		};
 		292F1A5F1A52446100E479F8 /* mac */ = {
 			isa = PBXGroup;
 			children = (
@@ -7970,24 +7849,6 @@
 				292F1A611A52447100E479F8 /* libcurl.a */,
 			);
 			name = mac;
-			sourceTree = "<group>";
-		};
-		2980F0161BA9A5550059E678 /* iOS */ = {
-			isa = PBXGroup;
-			children = (
-				2980F0171BA9A5550059E678 /* CCUIEditBoxIOS.h */,
-				2980F0181BA9A5550059E678 /* CCUIEditBoxIOS.mm */,
-				2980F0191BA9A5550059E678 /* CCUIMultilineTextField.h */,
-				2980F01A1BA9A5550059E678 /* CCUIMultilineTextField.mm */,
-				2980F01B1BA9A5550059E678 /* CCUISingleLineTextField.h */,
-				2980F01C1BA9A5550059E678 /* CCUISingleLineTextField.mm */,
-				2980F01D1BA9A5550059E678 /* CCUITextInput.h */,
-				2980F01E1BA9A5550059E678 /* UITextField+CCUITextInput.h */,
-				2980F01F1BA9A5550059E678 /* UITextField+CCUITextInput.mm */,
-				2980F0201BA9A5550059E678 /* UITextView+CCUITextInput.h */,
-				2980F0211BA9A5550059E678 /* UITextView+CCUITextInput.mm */,
-			);
-			path = iOS;
 			sourceTree = "<group>";
 		};
 		29CB8F501929D63600C841D6 /* layout */ = {
@@ -8043,7 +7904,6 @@
 		29CB8F531929D67D00C841D6 /* widgets */ = {
 			isa = PBXGroup;
 			children = (
-				292DB12E19B4574100A80320 /* UIEditBox */,
 				78F458AB1CE71E6000A70B02 /* UIPageViewIndicator.cpp */,
 				78F458AC1CE71E6000A70B02 /* UIPageViewIndicator.h */,
 				2905F9FE18CF08D000240AA3 /* UIListView.cpp */,
@@ -8060,16 +7920,12 @@
 				B5668D7C1B3838E4003CBD5E /* UIScrollViewBar.h */,
 				2905FA0918CF08D000240AA3 /* UISlider.cpp */,
 				2905FA0A18CF08D100240AA3 /* UISlider.h */,
-				2905FA0B18CF08D100240AA3 /* UIText.cpp */,
-				2905FA0C18CF08D100240AA3 /* UIText.h */,
 				2905FA0D18CF08D100240AA3 /* UITextAtlas.cpp */,
 				2905FA0E18CF08D100240AA3 /* UITextAtlas.h */,
 				2905FA0F18CF08D100240AA3 /* UITextBMFont.cpp */,
 				2905FA1018CF08D100240AA3 /* UITextBMFont.h */,
 				2905FA1118CF08D100240AA3 /* UITextField.cpp */,
 				2905FA1218CF08D100240AA3 /* UITextField.h */,
-				2905F9F018CF08D000240AA3 /* UIButton.cpp */,
-				2905F9F118CF08D000240AA3 /* UIButton.h */,
 				B5CE6DBC1B3BF2B1002B0419 /* UIAbstractCheckButton.cpp */,
 				B5CE6DBD1B3BF2B1002B0419 /* UIAbstractCheckButton.h */,
 				2905F9F218CF08D000240AA3 /* UICheckBox.cpp */,
@@ -8970,8 +8826,8 @@
 		7894BFB41BC9168700363FC9 /* support */ = {
 			isa = PBXGroup;
 			children = (
-				781B06851BD272DD0072FB24 /* Config.cpp */,
-				781B06821BD2713D0072FB24 /* Config.h */,
+				781B06851BD272DD0072FB24 /* Parameters.cpp */,
+				781B06821BD2713D0072FB24 /* Parameters.h */,
 				781B067B1BD26E1E0072FB24 /* Events.cpp */,
 				7894C0151BC9235500363FC9 /* Events.h */,
 				78E5CBFA1BCA446B00CB036E /* Storage.h */,
@@ -10213,7 +10069,6 @@
 				38B8E2E319E671D2002D7CE7 /* UILayoutComponent.h in Headers */,
 				B6D38B8C1AC3AFAC00043997 /* CCSkybox.h in Headers */,
 				5034CA39191D591100CE6051 /* ccShader_PositionColorLengthTexture.frag in Headers */,
-				292DB14B19B4574100A80320 /* UIEditBoxImpl-mac.h in Headers */,
 				B6CAB39D1AF9AA1A00B9B856 /* btCharacterControllerInterface.h in Headers */,
 				B29A7E3F19EE1B7700872B35 /* AnimationState.h in Headers */,
 				B6CAB50F1AF9AA1A00B9B856 /* btList.h in Headers */,
@@ -10228,7 +10083,6 @@
 				B6CAB2331AF9AA1A00B9B856 /* btCollisionWorld.h in Headers */,
 				B29A7DFD19EE1B7700872B35 /* IkConstraintData.h in Headers */,
 				50ABBEA51925AB6F00A911A9 /* CCScriptSupport.h in Headers */,
-				292DB14519B4574100A80320 /* UIEditBoxImpl-android.h in Headers */,
 				15AE1B9A19AADFDF00C27E9E /* UIHBox.h in Headers */,
 				B665E2E41AA80A6500DDB1C5 /* CCPULineAffectorTranslator.h in Headers */,
 				B665E2781AA80A6500DDB1C5 /* CCPUDoPlacementParticleEventHandlerTranslator.h in Headers */,
@@ -10350,7 +10204,7 @@
 				5034CA3B191D591100CE6051 /* ccShader_PositionColor.vert in Headers */,
 				7894C08B1BC9CF2700363FC9 /* BackgroundColor.h in Headers */,
 				B665E3101AA80A6500DDB1C5 /* CCPUObserver.h in Headers */,
-				781B06831BD2713D0072FB24 /* Config.h in Headers */,
+				781B06831BD2713D0072FB24 /* Parameters.h in Headers */,
 				B6CAB2071AF9AA1A00B9B856 /* btOverlappingPairCache.h in Headers */,
 				1A570077180BC5A10088DEC7 /* CCActionGrid3D.h in Headers */,
 				1A57007B180BC5A10088DEC7 /* CCActionInstant.h in Headers */,
@@ -10393,7 +10247,6 @@
 				B6CAB5271AF9AA1A00B9B856 /* btRandom.h in Headers */,
 				B6CAB28D1AF9AA1A00B9B856 /* btCollisionMargin.h in Headers */,
 				B6CAB1FB1AF9AA1A00B9B856 /* btDbvtBroadphase.h in Headers */,
-				15AE1B6219AADA9900C27E9E /* UIButton.h in Headers */,
 				B6CAB4CF1AF9AA1A00B9B856 /* SpuContactResult.h in Headers */,
 				B6CAB4E11AF9AA1A00B9B856 /* SpuSampleTask.h in Headers */,
 				50ABBDB71925AB4100A911A9 /* CCTexture2D.h in Headers */,
@@ -10493,7 +10346,6 @@
 				B6CAB2F31AF9AA1A00B9B856 /* btTetrahedronShape.h in Headers */,
 				B6CAB4231AF9AA1A00B9B856 /* btMLCPSolverInterface.h in Headers */,
 				B6DD2FE31B04825B00E47F5F /* DetourPathCorridor.h in Headers */,
-				50ED2BE019BEAF7900A0AB90 /* UIEditBoxImpl-win32.h in Headers */,
 				B6CAB5011AF9AA1A00B9B856 /* btConvexHullComputer.h in Headers */,
 				15AE1A6519AAD40300C27E9E /* b2TimeStep.h in Headers */,
 				15AE182E19AAD2F700C27E9E /* CCMeshVertexIndexData.h in Headers */,
@@ -10653,7 +10505,6 @@
 				B6CAB4DB1AF9AA1A00B9B856 /* SpuMinkowskiPenetrationDepthSolver.h in Headers */,
 				B6CAB4F91AF9AA1A00B9B856 /* btAlignedObjectArray.h in Headers */,
 				5034CA49191D591100CE6051 /* ccShader_Label_df.frag in Headers */,
-				292DB14119B4574100A80320 /* UIEditBoxImpl.h in Headers */,
 				A045F6D81BA81577005076C7 /* CCTextureCube.h in Headers */,
 				B29A7DD919EE1B7700872B35 /* SkeletonRenderer.h in Headers */,
 				B6DD2FC11B04825B00E47F5F /* DetourMath.h in Headers */,
@@ -10674,7 +10525,6 @@
 				5034CA3D191D591100CE6051 /* ccShader_PositionColor.frag in Headers */,
 				A0534A6A1B87306E006B03E5 /* CCIDownloaderImpl.h in Headers */,
 				1A570280180BCC900088DEC7 /* CCSprite.h in Headers */,
-				292DB14719B4574100A80320 /* UIEditBoxImpl-ios.h in Headers */,
 				B665E3FC1AA80A6600DDB1C5 /* CCPUSphere.h in Headers */,
 				B6CAB51B1AF9AA1A00B9B856 /* btPolarDecomposition.h in Headers */,
 				15AE1A9119AAD40300C27E9E /* b2WeldJoint.h in Headers */,
@@ -10697,7 +10547,6 @@
 				781B06991BD2B0490072FB24 /* Media.h in Headers */,
 				5027253A190BF1B900AAF4ED /* cocos2d.h in Headers */,
 				B665E3041AA80A6500DDB1C5 /* CCPUMeshSurfaceEmitter.h in Headers */,
-				15AE1B5A19AADA9900C27E9E /* UIText.h in Headers */,
 				B665E21C1AA80A6500DDB1C5 /* CCPUBehaviour.h in Headers */,
 				15AE184A19AAD30500C27E9E /* Export.h in Headers */,
 				B6CAB3051AF9AA1A00B9B856 /* btTriangleInfoMap.h in Headers */,
@@ -10985,6 +10834,7 @@
 				50ABBD5A1925AB0000A911A9 /* Vec2.h in Headers */,
 				B665E2581AA80A6500DDB1C5 /* CCPUDoAffectorEventHandlerTranslator.h in Headers */,
 				B6CAB50D1AF9AA1A00B9B856 /* btIDebugDraw.h in Headers */,
+				783FFB1D1DD4E22600095B83 /* UI.h in Headers */,
 				B665E2F81AA80A6500DDB1C5 /* CCPUListener.h in Headers */,
 				B6CAB3F91AF9AA1A00B9B856 /* btMultiBody.h in Headers */,
 				15AE1BDB19AAE01E00C27E9E /* CCControlSwitch.h in Headers */,
@@ -11037,7 +10887,6 @@
 				50ABBEB91925AB6F00A911A9 /* ccUTF8.h in Headers */,
 				B6CAB3C51AF9AA1A00B9B856 /* btHingeConstraint.h in Headers */,
 				B665E2241AA80A6500DDB1C5 /* CCPUBehaviourTranslator.h in Headers */,
-				292DB13F19B4574100A80320 /* UIEditBox.h in Headers */,
 				B665E3881AA80A6500DDB1C5 /* CCPUPathFollowerTranslator.h in Headers */,
 				B665E2541AA80A6500DDB1C5 /* CCPUDoAffectorEventHandler.h in Headers */,
 				50ABBE671925AB6F00A911A9 /* CCEventListenerCustom.h in Headers */,
@@ -11045,7 +10894,6 @@
 				B6CAB2D71AF9AA1A00B9B856 /* btOptimizedBvh.h in Headers */,
 				50ABBE2F1925AB6F00A911A9 /* ccConfig.h in Headers */,
 				1AAF5851180E40B9000584C8 /* LocalStorage.h in Headers */,
-				A0E749F91BA8FD7F001A8332 /* UIEditBoxImpl-common.h in Headers */,
 				1A01C69018F57BE800EFE3A6 /* CCDictionary.h in Headers */,
 				B6CAB4ED1AF9AA1A00B9B856 /* vectormath2bullet.h in Headers */,
 				1A9DCA29180E6955007A3AD4 /* CCGLBufferedNode.h in Headers */,
@@ -11131,10 +10979,8 @@
 			files = (
 				78C356751CEE7F6500F10068 /* CCStdC-ios.h in Headers */,
 				78C356761CEE7F6500F10068 /* b2Math.h in Headers */,
-				78C356771CEE7F6500F10068 /* CCUITextInput.h in Headers */,
 				78C356781CEE7F6500F10068 /* btGenericPoolAllocator.h in Headers */,
 				78C356791CEE7F6500F10068 /* CCPUPathFollower.h in Headers */,
-				78C3567A1CEE7F6500F10068 /* UITextField+CCUITextInput.h in Headers */,
 				78C3567B1CEE7F6500F10068 /* CCPhysicsContact.h in Headers */,
 				78C3567C1CEE7F6500F10068 /* btGjkPairDetector.h in Headers */,
 				78C3567D1CEE7F6500F10068 /* btTriangleShape.h in Headers */,
@@ -11158,7 +11004,6 @@
 				78C356901CEE7F6500F10068 /* btConvexInternalShape.h in Headers */,
 				78C356911CEE7F6500F10068 /* AnimatedEntity.h in Headers */,
 				78C356921CEE7F6500F10068 /* CCPUParticleFollowerTranslator.h in Headers */,
-				78C356931CEE7F6500F10068 /* UIEditBox.h in Headers */,
 				78C356941CEE7F6500F10068 /* CCAffineTransform.h in Headers */,
 				78C356951CEE7F6500F10068 /* ccShader_PositionColorLengthTexture.vert in Headers */,
 				78C356961CEE7F6500F10068 /* UITextAtlas.h in Headers */,
@@ -11193,7 +11038,6 @@
 				78C356B31CEE7F6500F10068 /* btGeneric6DofConstraint.h in Headers */,
 				78C356B41CEE7F6500F10068 /* btTriangleBuffer.h in Headers */,
 				78C356B51CEE7F6500F10068 /* b2CircleShape.h in Headers */,
-				78C356B61CEE7F6500F10068 /* UIEditBoxImpl-common.h in Headers */,
 				78C356B71CEE7F6500F10068 /* btConvexHullShape.h in Headers */,
 				78C356B81CEE7F6500F10068 /* ccFPSImages.h in Headers */,
 				78C356B91CEE7F6500F10068 /* btCylinderShape.h in Headers */,
@@ -11233,7 +11077,6 @@
 				78C356DB1CEE7F6500F10068 /* btStackAlloc.h in Headers */,
 				78C356DC1CEE7F6500F10068 /* CCAnimation3D.h in Headers */,
 				78C356DD1CEE7F6500F10068 /* CCValue.h in Headers */,
-				78C356DE1CEE7F6500F10068 /* CCUIMultilineTextField.h in Headers */,
 				78C356DF1CEE7F6500F10068 /* btConvexHull.h in Headers */,
 				78C356E01CEE7F6500F10068 /* firePngData.h in Headers */,
 				78C356E11CEE7F6500F10068 /* CCPrimitive.h in Headers */,
@@ -11352,7 +11195,6 @@
 				78C357501CEE7F6500F10068 /* Vote.h in Headers */,
 				78C357511CEE7F6500F10068 /* CCAttachNode.h in Headers */,
 				78C357521CEE7F6500F10068 /* btCompoundCompoundCollisionAlgorithm.h in Headers */,
-				78C357531CEE7F6500F10068 /* UIEditBoxImpl-mac.h in Headers */,
 				78C357541CEE7F6500F10068 /* CCControlHuePicker.h in Headers */,
 				78C357551CEE7F6500F10068 /* CCPUOnRandomObserverTranslator.h in Headers */,
 				78C357561CEE7F6500F10068 /* CCPUObserver.h in Headers */,
@@ -11412,7 +11254,6 @@
 				78C3578C1CEE7F6500F10068 /* btStaticPlaneShape.h in Headers */,
 				78C3578D1CEE7F6500F10068 /* Media.h in Headers */,
 				78C3578E1CEE7F6500F10068 /* btPolyhedralConvexShape.h in Headers */,
-				78C3578F1CEE7F6500F10068 /* UIEditBoxImpl-ios.h in Headers */,
 				78C357901CEE7F6500F10068 /* MiniCLTaskScheduler.h in Headers */,
 				78C357911CEE7F6500F10068 /* gim_tri_collision.h in Headers */,
 				78C357921CEE7F6500F10068 /* AudioEngine.h in Headers */,
@@ -11426,7 +11267,6 @@
 				78C3579A1CEE7F6500F10068 /* CCTrianglesCommand.h in Headers */,
 				78C3579B1CEE7F6500F10068 /* CCPUDynamicAttributeTranslator.h in Headers */,
 				78C3579C1CEE7F6500F10068 /* btSequentialImpulseConstraintSolver.h in Headers */,
-				78C3579D1CEE7F6500F10068 /* UIEditBoxImpl-win32.h in Headers */,
 				78C3579E1CEE7F6500F10068 /* b2MouseJoint.h in Headers */,
 				78C3579F1CEE7F6500F10068 /* CCPUOnExpireObserverTranslator.h in Headers */,
 				78C357A01CEE7F6500F10068 /* CCGeometry.h in Headers */,
@@ -11484,7 +11324,6 @@
 				78C357D41CEE7F6500F10068 /* HttpClient.h in Headers */,
 				78C357D51CEE7F6500F10068 /* btCollisionConfiguration.h in Headers */,
 				78C357D61CEE7F6500F10068 /* DetourNavMeshBuilder.h in Headers */,
-				78C357D71CEE7F6500F10068 /* UIEditBoxImpl-android.h in Headers */,
 				78C357D81CEE7F6500F10068 /* Screenshot.h in Headers */,
 				78C357D91CEE7F6500F10068 /* PlatformDefinitions.h in Headers */,
 				78C357DA1CEE7F6500F10068 /* CCPUJetAffectorTranslator.h in Headers */,
@@ -11547,6 +11386,7 @@
 				78C358131CEE7F6500F10068 /* CCRenderState.h in Headers */,
 				78C358141CEE7F6500F10068 /* btOverlappingPairCache.h in Headers */,
 				78C358151CEE7F6500F10068 /* CCLayer.h in Headers */,
+				783FFB1E1DD4E22600095B83 /* UI.h in Headers */,
 				78C358161CEE7F6500F10068 /* btMultiBodyJointMotor.h in Headers */,
 				78C358171CEE7F6500F10068 /* btBox2dShape.h in Headers */,
 				78C358181CEE7F6500F10068 /* btEmptyCollisionAlgorithm.h in Headers */,
@@ -11634,7 +11474,6 @@
 				78C358691CEE7F6500F10068 /* CCParticleSystemQuad.h in Headers */,
 				78C3586A1CEE7F6500F10068 /* idl.h in Headers */,
 				78C3586B1CEE7F6500F10068 /* UIWebView.h in Headers */,
-				78C3586C1CEE7F6500F10068 /* CCUISingleLineTextField.h in Headers */,
 				78C3586D1CEE7F6500F10068 /* TrbStateVec.h in Headers */,
 				78C3586E1CEE7F6500F10068 /* CCFastTMXLayer.h in Headers */,
 				78C3586F1CEE7F6500F10068 /* b2EdgeAndCircleContact.h in Headers */,
@@ -11649,7 +11488,6 @@
 				78C358781CEE7F6500F10068 /* CCProtectedNode.h in Headers */,
 				78C358791CEE7F6500F10068 /* btCollisionCreateFunc.h in Headers */,
 				78C3587A1CEE7F6500F10068 /* b2BroadPhase.h in Headers */,
-				78C3587B1CEE7F6500F10068 /* UIButton.h in Headers */,
 				78C3587C1CEE7F6500F10068 /* btSubSimplexConvexCast.h in Headers */,
 				78C3587D1CEE7F6500F10068 /* CCDirector.h in Headers */,
 				78C3587E1CEE7F6500F10068 /* btGImpactQuantizedBvh.h in Headers */,
@@ -11660,7 +11498,6 @@
 				78C358831CEE7F6500F10068 /* btQuantizedBvh.h in Headers */,
 				78C358841CEE7F6500F10068 /* CCPUDoAffectorEventHandlerTranslator.h in Headers */,
 				78C358851CEE7F6500F10068 /* CCPUAffectorManager.h in Headers */,
-				78C358861CEE7F6500F10068 /* CCUIEditBoxIOS.h in Headers */,
 				78C358871CEE7F6500F10068 /* CCPUBoxEmitter.h in Headers */,
 				78C358881CEE7F6500F10068 /* btConvexPenetrationDepthSolver.h in Headers */,
 				78C358891CEE7F6500F10068 /* btSolveProjectedGaussSeidel.h in Headers */,
@@ -11673,7 +11510,6 @@
 				78C358901CEE7F6500F10068 /* DetourNode.h in Headers */,
 				78C358911CEE7F6500F10068 /* CCSpriteBatchNode.h in Headers */,
 				78C358921CEE7F6500F10068 /* CCSpriteFrame.h in Headers */,
-				78C358931CEE7F6500F10068 /* UIText.h in Headers */,
 				78C358941CEE7F6500F10068 /* SlotData.h in Headers */,
 				78C358951CEE7F6500F10068 /* CCPhysics3DShape.h in Headers */,
 				78C358961CEE7F6500F10068 /* CCPUScriptLexer.h in Headers */,
@@ -11702,10 +11538,9 @@
 				78C358AD1CEE7F6500F10068 /* CCPUCollisionAvoidanceAffectorTranslator.h in Headers */,
 				78C358AE1CEE7F6500F10068 /* Background.h in Headers */,
 				78C358AF1CEE7F6500F10068 /* btParallelConstraintSolver.h in Headers */,
-				78C358B01CEE7F6500F10068 /* Config.h in Headers */,
+				78C358B01CEE7F6500F10068 /* Parameters.h in Headers */,
 				78C358B11CEE7F6500F10068 /* b2DistanceJoint.h in Headers */,
 				78C358B21CEE7F6500F10068 /* btQuickprof.h in Headers */,
-				78C358B31CEE7F6500F10068 /* UITextView+CCUITextInput.h in Headers */,
 				78C358B41CEE7F6500F10068 /* CCEventListenerMouse.h in Headers */,
 				78C358B51CEE7F6500F10068 /* CCAllocatorMutex.h in Headers */,
 				78C358B61CEE7F6500F10068 /* EventData.h in Headers */,
@@ -11733,7 +11568,6 @@
 				78C358CC1CEE7F6500F10068 /* b2FrictionJoint.h in Headers */,
 				78C358CD1CEE7F6500F10068 /* UIScale9Sprite.h in Headers */,
 				78C358CE1CEE7F6500F10068 /* btBoxShape.h in Headers */,
-				78C358CF1CEE7F6500F10068 /* UIEditBoxImpl.h in Headers */,
 				78C358D01CEE7F6500F10068 /* btTransform.h in Headers */,
 				78C358D11CEE7F6500F10068 /* TranslateTypes.h in Headers */,
 				78C358D21CEE7F6500F10068 /* CCParallaxNode.h in Headers */,
@@ -12071,10 +11905,8 @@
 			files = (
 				503DD8F01926736A00CD74DD /* CCStdC-ios.h in Headers */,
 				15AE1A9A19AAD40300C27E9E /* b2Math.h in Headers */,
-				2980F0281BA9A5550059E678 /* CCUITextInput.h in Headers */,
 				B6CAB3221AF9AA1A00B9B856 /* btGenericPoolAllocator.h in Headers */,
 				B665E3851AA80A6500DDB1C5 /* CCPUPathFollower.h in Headers */,
-				2980F0291BA9A5550059E678 /* UITextField+CCUITextInput.h in Headers */,
 				46A170FF1807CECB005B8026 /* CCPhysicsContact.h in Headers */,
 				B6CAB37E1AF9AA1A00B9B856 /* btGjkPairDetector.h in Headers */,
 				B6CAB3101AF9AA1A00B9B856 /* btTriangleShape.h in Headers */,
@@ -12098,7 +11930,6 @@
 				B6CAB2AA1AF9AA1A00B9B856 /* btConvexInternalShape.h in Headers */,
 				7894BFC81BC9168700363FC9 /* AnimatedEntity.h in Headers */,
 				B665E3791AA80A6500DDB1C5 /* CCPUParticleFollowerTranslator.h in Headers */,
-				292DB14019B4574100A80320 /* UIEditBox.h in Headers */,
 				50ABBD3B1925AB0000A911A9 /* CCAffineTransform.h in Headers */,
 				5034CA38191D591100CE6051 /* ccShader_PositionColorLengthTexture.vert in Headers */,
 				15AE1B8119AADA9A00C27E9E /* UITextAtlas.h in Headers */,
@@ -12133,7 +11964,6 @@
 				B6CAB3BA1AF9AA1A00B9B856 /* btGeneric6DofConstraint.h in Headers */,
 				B6CAB2F81AF9AA1A00B9B856 /* btTriangleBuffer.h in Headers */,
 				15AE1A4A19AAD3D500C27E9E /* b2CircleShape.h in Headers */,
-				A0E749FA1BA8FD7F001A8332 /* UIEditBoxImpl-common.h in Headers */,
 				B6CAB2A61AF9AA1A00B9B856 /* btConvexHullShape.h in Headers */,
 				50ABBE861925AB6F00A911A9 /* ccFPSImages.h in Headers */,
 				B6CAB2BE1AF9AA1A00B9B856 /* btCylinderShape.h in Headers */,
@@ -12173,7 +12003,6 @@
 				B6CAB5301AF9AA1A00B9B856 /* btStackAlloc.h in Headers */,
 				15AE181319AAD2F700C27E9E /* CCAnimation3D.h in Headers */,
 				50ABBEC21925AB6F00A911A9 /* CCValue.h in Headers */,
-				2980F0241BA9A5550059E678 /* CCUIMultilineTextField.h in Headers */,
 				B6CAB4FE1AF9AA1A00B9B856 /* btConvexHull.h in Headers */,
 				50ABBECA1925AB6F00A911A9 /* firePngData.h in Headers */,
 				B257B4511989D5E800D9A687 /* CCPrimitive.h in Headers */,
@@ -12292,7 +12121,6 @@
 				78382F791C2469640001B3F1 /* Vote.h in Headers */,
 				15AE181919AAD2F700C27E9E /* CCAttachNode.h in Headers */,
 				B6CAB23C1AF9AA1A00B9B856 /* btCompoundCompoundCollisionAlgorithm.h in Headers */,
-				292DB14C19B4574100A80320 /* UIEditBoxImpl-mac.h in Headers */,
 				15AE1BF019AAE01E00C27E9E /* CCControlHuePicker.h in Headers */,
 				B665E3611AA80A6500DDB1C5 /* CCPUOnRandomObserverTranslator.h in Headers */,
 				B665E3111AA80A6500DDB1C5 /* CCPUObserver.h in Headers */,
@@ -12352,7 +12180,6 @@
 				B6CAB2EC1AF9AA1A00B9B856 /* btStaticPlaneShape.h in Headers */,
 				781B069A1BD2B0490072FB24 /* Media.h in Headers */,
 				B6CAB2DC1AF9AA1A00B9B856 /* btPolyhedralConvexShape.h in Headers */,
-				292DB14819B4574100A80320 /* UIEditBoxImpl-ios.h in Headers */,
 				B6CAB54A1AF9AA1A00B9B856 /* MiniCLTaskScheduler.h in Headers */,
 				B6CAB3621AF9AA1A00B9B856 /* gim_tri_collision.h in Headers */,
 				3E2BDADE19C030ED0055CDCD /* AudioEngine.h in Headers */,
@@ -12366,7 +12193,6 @@
 				B230ED7419B417AE00364AA8 /* CCTrianglesCommand.h in Headers */,
 				B665E2911AA80A6500DDB1C5 /* CCPUDynamicAttributeTranslator.h in Headers */,
 				B6CAB3D01AF9AA1A00B9B856 /* btSequentialImpulseConstraintSolver.h in Headers */,
-				50ED2BE119BEAF7900A0AB90 /* UIEditBoxImpl-win32.h in Headers */,
 				15AE1ACB19AAD40300C27E9E /* b2MouseJoint.h in Headers */,
 				B665E3491AA80A6500DDB1C5 /* CCPUOnExpireObserverTranslator.h in Headers */,
 				50ABBD3F1925AB0000A911A9 /* CCGeometry.h in Headers */,
@@ -12424,7 +12250,6 @@
 				15AE1BBA19AADFF000C27E9E /* HttpClient.h in Headers */,
 				B6CAB2241AF9AA1A00B9B856 /* btCollisionConfiguration.h in Headers */,
 				B6DD2FCA1B04825B00E47F5F /* DetourNavMeshBuilder.h in Headers */,
-				292DB14619B4574100A80320 /* UIEditBoxImpl-android.h in Headers */,
 				781B06CD1BD2D22F0072FB24 /* Screenshot.h in Headers */,
 				B6CAB49E1AF9AA1A00B9B856 /* PlatformDefinitions.h in Headers */,
 				B665E2DD1AA80A6500DDB1C5 /* CCPUJetAffectorTranslator.h in Headers */,
@@ -12575,7 +12400,6 @@
 				1A570230180BCC1A0088DEC7 /* CCParticleSystemQuad.h in Headers */,
 				382383F31A258FA7002C4610 /* idl.h in Headers */,
 				29394CF119B01DBA00D2DE1A /* UIWebView.h in Headers */,
-				2980F0261BA9A5550059E678 /* CCUISingleLineTextField.h in Headers */,
 				B6CAB4EC1AF9AA1A00B9B856 /* TrbStateVec.h in Headers */,
 				B24AA988195A675C007B4522 /* CCFastTMXLayer.h in Headers */,
 				15AE1AB919AAD40300C27E9E /* b2EdgeAndCircleContact.h in Headers */,
@@ -12590,7 +12414,6 @@
 				15EFA214198A2BB5000C57D3 /* CCProtectedNode.h in Headers */,
 				B6CAB2261AF9AA1A00B9B856 /* btCollisionCreateFunc.h in Headers */,
 				15AE1A3B19AAD3D500C27E9E /* b2BroadPhase.h in Headers */,
-				15AE1B8719AADA9A00C27E9E /* UIButton.h in Headers */,
 				B6CAB3981AF9AA1A00B9B856 /* btSubSimplexConvexCast.h in Headers */,
 				50ABBE441925AB6F00A911A9 /* CCDirector.h in Headers */,
 				B6CAB3321AF9AA1A00B9B856 /* btGImpactQuantizedBvh.h in Headers */,
@@ -12601,7 +12424,6 @@
 				B6CAB20E1AF9AA1A00B9B856 /* btQuantizedBvh.h in Headers */,
 				B665E2591AA80A6500DDB1C5 /* CCPUDoAffectorEventHandlerTranslator.h in Headers */,
 				B665E1F91AA80A6500DDB1C5 /* CCPUAffectorManager.h in Headers */,
-				2980F0221BA9A5550059E678 /* CCUIEditBoxIOS.h in Headers */,
 				B665E2351AA80A6500DDB1C5 /* CCPUBoxEmitter.h in Headers */,
 				B6CAB36C1AF9AA1A00B9B856 /* btConvexPenetrationDepthSolver.h in Headers */,
 				B6CAB4281AF9AA1A00B9B856 /* btSolveProjectedGaussSeidel.h in Headers */,
@@ -12614,7 +12436,6 @@
 				B6DD2FD21B04825B00E47F5F /* DetourNode.h in Headers */,
 				1A570285180BCC900088DEC7 /* CCSpriteBatchNode.h in Headers */,
 				1A570289180BCC900088DEC7 /* CCSpriteFrame.h in Headers */,
-				15AE1B7F19AADA9A00C27E9E /* UIText.h in Headers */,
 				B29A7E3419EE1B7700872B35 /* SlotData.h in Headers */,
 				B6CAAFF91AF9A9E100B9B856 /* CCPhysics3DShape.h in Headers */,
 				B665E3D51AA80A6600DDB1C5 /* CCPUScriptLexer.h in Headers */,
@@ -12643,10 +12464,9 @@
 				B665E2491AA80A6500DDB1C5 /* CCPUCollisionAvoidanceAffectorTranslator.h in Headers */,
 				7894C06E1BC9710300363FC9 /* Background.h in Headers */,
 				B6CAB4461AF9AA1A00B9B856 /* btParallelConstraintSolver.h in Headers */,
-				781B06841BD2713D0072FB24 /* Config.h in Headers */,
+				781B06841BD2713D0072FB24 /* Parameters.h in Headers */,
 				15AE1AC319AAD40300C27E9E /* b2DistanceJoint.h in Headers */,
 				B6CAB5261AF9AA1A00B9B856 /* btQuickprof.h in Headers */,
-				2980F02B1BA9A5550059E678 /* UITextView+CCUITextInput.h in Headers */,
 				50ABBE741925AB6F00A911A9 /* CCEventListenerMouse.h in Headers */,
 				D0FD03581A3B51AA00825BB5 /* CCAllocatorMutex.h in Headers */,
 				B29A7E1219EE1B7700872B35 /* EventData.h in Headers */,
@@ -12674,7 +12494,6 @@
 				15AE1AC519AAD40300C27E9E /* b2FrictionJoint.h in Headers */,
 				15AE1B8D19AADA9A00C27E9E /* UIScale9Sprite.h in Headers */,
 				B6CAB2841AF9AA1A00B9B856 /* btBoxShape.h in Headers */,
-				292DB14219B4574100A80320 /* UIEditBoxImpl.h in Headers */,
 				B6CAB5321AF9AA1A00B9B856 /* btTransform.h in Headers */,
 				78938EA51BCC7E94009CB065 /* TranslateTypes.h in Headers */,
 				1A570303180BCE890088DEC7 /* CCParallaxNode.h in Headers */,
@@ -13066,7 +12885,7 @@
 		1551A336158F2AB200E66CFE /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 0810;
 				ORGANIZATIONNAME = "";
 			};
 			buildConfigurationList = 1551A339158F2AB200E66CFE /* Build configuration list for PBXProject "Framework" */;
@@ -13100,7 +12919,6 @@
 				B29A7E3B19EE1B7700872B35 /* Animation.c in Sources */,
 				15AE1BDE19AAE01E00C27E9E /* CCInvocation.cpp in Sources */,
 				B665E2F21AA80A6500DDB1C5 /* CCPULineEmitterTranslator.cpp in Sources */,
-				292DB14F19B4574100A80320 /* UIEditBoxImpl-stub.cpp in Sources */,
 				B29A7E0B19EE1B7700872B35 /* Atlas.c in Sources */,
 				1A01C68A18F57BE800EFE3A6 /* CCDeprecated.cpp in Sources */,
 				B6CAB2F51AF9AA1A00B9B856 /* btTriangleBuffer.cpp in Sources */,
@@ -13139,9 +12957,10 @@
 				ED9C6A9418599AD8000A5232 /* CCNodeGrid.cpp in Sources */,
 				15AE1A2C19AAD3D500C27E9E /* b2DynamicTree.cpp in Sources */,
 				B665E36A1AA80A6500DDB1C5 /* CCPUOnVelocityObserver.cpp in Sources */,
+				783FFB191DD4E21300095B83 /* UI.cpp in Sources */,
 				B665E3961AA80A6500DDB1C5 /* CCPUPointEmitter.cpp in Sources */,
 				15AE184019AAD2F700C27E9E /* CCSprite3D.cpp in Sources */,
-				781B06861BD272DD0072FB24 /* Config.cpp in Sources */,
+				781B06861BD272DD0072FB24 /* Parameters.cpp in Sources */,
 				B6CAB2E51AF9AA1A00B9B856 /* btSphereShape.cpp in Sources */,
 				B5CE6DBE1B3BF2B1002B0419 /* UIAbstractCheckButton.cpp in Sources */,
 				B6CAB41F1AF9AA1A00B9B856 /* btMLCPSolver.cpp in Sources */,
@@ -13154,6 +12973,7 @@
 				B6CAB3A31AF9AA1A00B9B856 /* btConeTwistConstraint.cpp in Sources */,
 				B665E24E1AA80A6500DDB1C5 /* CCPUColorAffectorTranslator.cpp in Sources */,
 				B6CAB1E71AF9AA1A00B9B856 /* btAxisSweep3.cpp in Sources */,
+				783FFB1A1DD4E21B00095B83 /* UI.mm in Sources */,
 				B6CAB2D91AF9AA1A00B9B856 /* btPolyhedralConvexShape.cpp in Sources */,
 				15AE1B9B19AADFDF00C27E9E /* UIRelativeBox.cpp in Sources */,
 				B665E3E21AA80A6600DDB1C5 /* CCPUSineForceAffector.cpp in Sources */,
@@ -13299,7 +13119,6 @@
 				B677B0C91B18492D006762CB /* CCNavMesh.cpp in Sources */,
 				B665E1F61AA80A6500DDB1C5 /* CCPUAffectorManager.cpp in Sources */,
 				781B06D61BD3678E0072FB24 /* Purchase.mm in Sources */,
-				292DB14919B4574100A80320 /* UIEditBoxImpl-ios.mm in Sources */,
 				B6CAB2511AF9AA1A00B9B856 /* btEmptyCollisionAlgorithm.cpp in Sources */,
 				15AE181019AAD2F700C27E9E /* CCAnimation3D.cpp in Sources */,
 				1A01C68418F57BE800EFE3A6 /* CCArray.cpp in Sources */,
@@ -13351,7 +13170,6 @@
 				1A5701BD180BCB5A0088DEC7 /* CCLabelAtlas.cpp in Sources */,
 				15AE1B5319AADA9900C27E9E /* UIRichText.cpp in Sources */,
 				B665E3121AA80A6500DDB1C5 /* CCPUObserverManager.cpp in Sources */,
-				292DB13D19B4574100A80320 /* UIEditBox.cpp in Sources */,
 				50ABBE551925AB6F00A911A9 /* CCEventFocus.cpp in Sources */,
 				B6CAB4C51AF9AA1A00B9B856 /* boxBoxDistance.cpp in Sources */,
 				B6CAB29F1AF9AA1A00B9B856 /* btConvex2dShape.cpp in Sources */,
@@ -13387,7 +13205,6 @@
 				50ABBE711925AB6F00A911A9 /* CCEventListenerMouse.cpp in Sources */,
 				B6CAB3C91AF9AA1A00B9B856 /* btPoint2PointConstraint.cpp in Sources */,
 				1A5701DE180BCB8C0088DEC7 /* CCLayer.cpp in Sources */,
-				15AE1B5919AADA9900C27E9E /* UIText.cpp in Sources */,
 				15B3707C19EE414C00ABE682 /* CCEventAssetsManagerEx.cpp in Sources */,
 				3EACC9A419F5014D00EB3C5E /* CCLight.cpp in Sources */,
 				B6CAB4C91AF9AA1A00B9B856 /* SpuCollisionShapes.cpp in Sources */,
@@ -13445,7 +13262,6 @@
 				1A570210180BCBF40088DEC7 /* CCProgressTimer.cpp in Sources */,
 				501216941AC47393009A4BEA /* CCPass.cpp in Sources */,
 				292DB15F19B461CA00A80320 /* ExtensionDeprecated.cpp in Sources */,
-				292DB14D19B4574100A80320 /* UIEditBoxImpl-mac.mm in Sources */,
 				50ABBDB51925AB4100A911A9 /* CCTexture2D.cpp in Sources */,
 				B29A7DD719EE1B7700872B35 /* SkeletonData.c in Sources */,
 				3EACC9A019F5014D00EB3C5E /* CCCamera.cpp in Sources */,
@@ -13455,7 +13271,6 @@
 				781B06E61BD37FC80072FB24 /* Heyzap.mm in Sources */,
 				A045F6DC1BA816A1005076C7 /* CCCameraBackgroundBrush.cpp in Sources */,
 				B665E25A1AA80A6500DDB1C5 /* CCPUDoEnableComponentEventHandler.cpp in Sources */,
-				A0E749F71BA8FD7F001A8332 /* UIEditBoxImpl-common.cpp in Sources */,
 				B6DD2FB31B04825B00E47F5F /* RecastDump.cpp in Sources */,
 				B6CAB2BB1AF9AA1A00B9B856 /* btCylinderShape.cpp in Sources */,
 				78F458AD1CE71E6000A70B02 /* UIPageViewIndicator.cpp in Sources */,
@@ -13463,7 +13278,6 @@
 				B6CAAFFA1AF9A9E100B9B856 /* CCPhysics3DWorld.cpp in Sources */,
 				B665E2DE1AA80A6500DDB1C5 /* CCPULineAffector.cpp in Sources */,
 				B6CAB5471AF9AA1A00B9B856 /* MiniCLTaskScheduler.cpp in Sources */,
-				15AE1B6119AADA9900C27E9E /* UIButton.cpp in Sources */,
 				15AE1A5519AAD40300C27E9E /* b2Math.cpp in Sources */,
 				B276EF651988D1D500CD400F /* CCVertexIndexBuffer.cpp in Sources */,
 				50ABBE411925AB6F00A911A9 /* CCDirector.cpp in Sources */,
@@ -13716,10 +13530,8 @@
 				B677B0D11B18492D006762CB /* CCNavMeshDebugDraw.cpp in Sources */,
 				15AE1A2819AAD3D500C27E9E /* b2Collision.cpp in Sources */,
 				15AE1B6719AADA9900C27E9E /* UIScale9Sprite.cpp in Sources */,
-				292DB14319B4574100A80320 /* UIEditBoxImpl-android.cpp in Sources */,
 				B665E2EA1AA80A6500DDB1C5 /* CCPULinearForceAffectorTranslator.cpp in Sources */,
 				15AE1A5219AAD40300C27E9E /* b2Draw.cpp in Sources */,
-				50ED2BE419BEAF7900A0AB90 /* UIEditBoxImpl-win32.cpp in Sources */,
 				50ABBE1F1925AB6F00A911A9 /* atitc.cpp in Sources */,
 				1A01C69818F57BE800EFE3A6 /* CCSet.cpp in Sources */,
 				B6CAB2351AF9AA1A00B9B856 /* btCompoundCollisionAlgorithm.cpp in Sources */,
@@ -13894,7 +13706,6 @@
 				78C353831CEE7F6500F10068 /* CCPURandomiserTranslator.cpp in Sources */,
 				78C353841CEE7F6500F10068 /* DetourPathCorridor.cpp in Sources */,
 				78C353851CEE7F6500F10068 /* CCNotificationCenter.cpp in Sources */,
-				78C353861CEE7F6500F10068 /* UIEditBoxImpl-mac.mm in Sources */,
 				78C353871CEE7F6500F10068 /* SpuGatheringCollisionDispatcher.cpp in Sources */,
 				78C353881CEE7F6500F10068 /* btPoint2PointConstraint.cpp in Sources */,
 				78C353891CEE7F6500F10068 /* CCPURandomiser.cpp in Sources */,
@@ -13930,6 +13741,7 @@
 				78C353A71CEE7F6500F10068 /* CCPrimitiveCommand.cpp in Sources */,
 				78C353A81CEE7F6500F10068 /* UIScrollViewBar.cpp in Sources */,
 				78C353A91CEE7F6500F10068 /* CCPUOnCountObserver.cpp in Sources */,
+				783FFB1B1DD4E21C00095B83 /* UI.mm in Sources */,
 				78C353AA1CEE7F6500F10068 /* CDOpenALSupport.m in Sources */,
 				78C353AB1CEE7F6500F10068 /* btFixedConstraint.cpp in Sources */,
 				78C353AC1CEE7F6500F10068 /* ParallaxPool.cpp in Sources */,
@@ -14007,7 +13819,6 @@
 				78C353F41CEE7F6500F10068 /* CCPUGravityAffector.cpp in Sources */,
 				78C353F51CEE7F6500F10068 /* CCPULineAffectorTranslator.cpp in Sources */,
 				78C353F61CEE7F6500F10068 /* b2ContactSolver.cpp in Sources */,
-				78C353F71CEE7F6500F10068 /* UIEditBox.cpp in Sources */,
 				78C353F81CEE7F6500F10068 /* extension.c in Sources */,
 				78C353F91CEE7F6500F10068 /* gim_box_set.cpp in Sources */,
 				78C353FA1CEE7F6500F10068 /* btGjkConvexCast.cpp in Sources */,
@@ -14026,6 +13837,7 @@
 				78C354081CEE7F6500F10068 /* b2CollideCircle.cpp in Sources */,
 				78C354091CEE7F6500F10068 /* CCPass.cpp in Sources */,
 				78C3540A1CEE7F6500F10068 /* CCEventListenerKeyboard.cpp in Sources */,
+				783FFB1C1DD4E21F00095B83 /* UI.cpp in Sources */,
 				78C3540B1CEE7F6500F10068 /* CCPUGravityAffectorTranslator.cpp in Sources */,
 				78C3540C1CEE7F6500F10068 /* RotateGlobalBy.cpp in Sources */,
 				78C3540D1CEE7F6500F10068 /* AudioEngine-inl.mm in Sources */,
@@ -14063,7 +13875,6 @@
 				78C3542C1CEE7F6500F10068 /* idl_gen_cpp.cpp in Sources */,
 				78C3542D1CEE7F6500F10068 /* CCPURibbonTrail.cpp in Sources */,
 				78C3542E1CEE7F6500F10068 /* CCPUAffector.cpp in Sources */,
-				78C3542F1CEE7F6500F10068 /* UIText.cpp in Sources */,
 				78C354301CEE7F6500F10068 /* btTriangleCallback.cpp in Sources */,
 				78C354311CEE7F6500F10068 /* b2CollidePolygon.cpp in Sources */,
 				78C354321CEE7F6500F10068 /* b2CircleContact.cpp in Sources */,
@@ -14071,7 +13882,6 @@
 				78C354341CEE7F6500F10068 /* DetourLocalBoundary.cpp in Sources */,
 				78C354351CEE7F6500F10068 /* TransformUtils.cpp in Sources */,
 				78C354361CEE7F6500F10068 /* CCPUInterParticleCollider.cpp in Sources */,
-				78C354371CEE7F6500F10068 /* UIEditBoxImpl-android.cpp in Sources */,
 				78C354381CEE7F6500F10068 /* CCActionInstant.cpp in Sources */,
 				78C354391CEE7F6500F10068 /* b2FrictionJoint.cpp in Sources */,
 				78C3543A1CEE7F6500F10068 /* DetourObstacleAvoidance.cpp in Sources */,
@@ -14145,7 +13955,6 @@
 				78C3547E1CEE7F6500F10068 /* CCEventListenerAssetsManagerEx.cpp in Sources */,
 				78C3547F1CEE7F6500F10068 /* btMultiBody.cpp in Sources */,
 				78C354801CEE7F6500F10068 /* CCCommon-ios.mm in Sources */,
-				78C354811CEE7F6500F10068 /* UIEditBoxImpl-ios.mm in Sources */,
 				78C354821CEE7F6500F10068 /* CCNavMeshObstacle.cpp in Sources */,
 				78C354831CEE7F6500F10068 /* btGhostObject.cpp in Sources */,
 				78C354841CEE7F6500F10068 /* b2BlockAllocator.cpp in Sources */,
@@ -14190,7 +13999,6 @@
 				78C354AB1CEE7F6500F10068 /* UIListView.cpp in Sources */,
 				78C354AC1CEE7F6500F10068 /* CCLabelAtlas.cpp in Sources */,
 				78C354AD1CEE7F6500F10068 /* CCAutoPolygon.cpp in Sources */,
-				78C354AE1CEE7F6500F10068 /* UIEditBoxImpl-common.cpp in Sources */,
 				78C354AF1CEE7F6500F10068 /* btMultiSapBroadphase.cpp in Sources */,
 				78C354B01CEE7F6500F10068 /* b2CollideEdge.cpp in Sources */,
 				78C354B11CEE7F6500F10068 /* CCLabelBMFont.cpp in Sources */,
@@ -14248,7 +14056,6 @@
 				78C354E31CEE7F6500F10068 /* Slot.c in Sources */,
 				78C354E41CEE7F6500F10068 /* CCPUCollisionAvoidanceAffectorTranslator.cpp in Sources */,
 				78C354E51CEE7F6500F10068 /* CCThread.cpp in Sources */,
-				78C354E61CEE7F6500F10068 /* CCUISingleLineTextField.mm in Sources */,
 				78C354E71CEE7F6500F10068 /* Background.cpp in Sources */,
 				78C354E81CEE7F6500F10068 /* AttachmentLoader.c in Sources */,
 				78C354E91CEE7F6500F10068 /* CCTransitionPageTurn.cpp in Sources */,
@@ -14264,7 +14071,6 @@
 				78C354F31CEE7F6500F10068 /* btGpu3DGridBroadphase.cpp in Sources */,
 				78C354F41CEE7F6500F10068 /* Mat4.cpp in Sources */,
 				78C354F51CEE7F6500F10068 /* CCClippingNode.cpp in Sources */,
-				78C354F61CEE7F6500F10068 /* UIButton.cpp in Sources */,
 				78C354F71CEE7F6500F10068 /* CCMotionStreak.cpp in Sources */,
 				78C354F81CEE7F6500F10068 /* CCProgressTimer.cpp in Sources */,
 				78C354F91CEE7F6500F10068 /* CCGLViewImpl-ios.mm in Sources */,
@@ -14275,7 +14081,6 @@
 				78C354FE1CEE7F6500F10068 /* CCRenderTexture.cpp in Sources */,
 				78C354FF1CEE7F6500F10068 /* btStridingMeshInterface.cpp in Sources */,
 				78C355001CEE7F6500F10068 /* CCParticleBatchNode.cpp in Sources */,
-				78C355011CEE7F6500F10068 /* UIEditBoxImpl-stub.cpp in Sources */,
 				78C355021CEE7F6500F10068 /* CCPUDoEnableComponentEventHandler.cpp in Sources */,
 				78C355031CEE7F6500F10068 /* CCPUOnExpireObserver.cpp in Sources */,
 				78C355041CEE7F6500F10068 /* SimpleAudioEngine.mm in Sources */,
@@ -14335,7 +14140,6 @@
 				78C3553B1CEE7F6500F10068 /* CCSpriteFrame.cpp in Sources */,
 				78C3553C1CEE7F6500F10068 /* HttpConnection-winrt.cpp in Sources */,
 				78C3553D1CEE7F6500F10068 /* btContactConstraint.cpp in Sources */,
-				78C3553E1CEE7F6500F10068 /* UITextField+CCUITextInput.mm in Sources */,
 				78C3553F1CEE7F6500F10068 /* TiledEntity.cpp in Sources */,
 				78C355401CEE7F6500F10068 /* CCPUCollisionAvoidanceAffector.cpp in Sources */,
 				78C355411CEE7F6500F10068 /* btConvex2dConvex2dAlgorithm.cpp in Sources */,
@@ -14439,7 +14243,6 @@
 				78C355A31CEE7F6500F10068 /* CCPUEmitterTranslator.cpp in Sources */,
 				78C355A41CEE7F6500F10068 /* CCCustomCommand.cpp in Sources */,
 				78C355A51CEE7F6500F10068 /* btWheelInfo.cpp in Sources */,
-				78C355A61CEE7F6500F10068 /* UITextView+CCUITextInput.mm in Sources */,
 				78C355A71CEE7F6500F10068 /* CCProfiling.cpp in Sources */,
 				78C355A81CEE7F6500F10068 /* CCTechnique.cpp in Sources */,
 				78C355A91CEE7F6500F10068 /* CCMeshVertexIndexData.cpp in Sources */,
@@ -14510,7 +14313,7 @@
 				78C355EA1CEE7F6500F10068 /* CCScriptSupport.cpp in Sources */,
 				78C355EB1CEE7F6500F10068 /* btDiscreteDynamicsWorld.cpp in Sources */,
 				78C355EC1CEE7F6500F10068 /* CCMaterial.cpp in Sources */,
-				78C355ED1CEE7F6500F10068 /* Config.cpp in Sources */,
+				78C355ED1CEE7F6500F10068 /* Parameters.cpp in Sources */,
 				78C355EE1CEE7F6500F10068 /* CCPUPointEmitter.cpp in Sources */,
 				78C355EF1CEE7F6500F10068 /* btAxisSweep3.cpp in Sources */,
 				78C355F01CEE7F6500F10068 /* CCStencilStateManager.cpp in Sources */,
@@ -14526,7 +14329,6 @@
 				78C355FA1CEE7F6500F10068 /* btConcaveShape.cpp in Sources */,
 				78C355FB1CEE7F6500F10068 /* btMultimaterialTriangleMeshShape.cpp in Sources */,
 				78C355FC1CEE7F6500F10068 /* LocalStorage.cpp in Sources */,
-				78C355FD1CEE7F6500F10068 /* UIEditBoxImpl-win32.cpp in Sources */,
 				78C355FE1CEE7F6500F10068 /* btCollisionDispatcher.cpp in Sources */,
 				78C355FF1CEE7F6500F10068 /* CCPUOnQuotaObserver.cpp in Sources */,
 				78C356001CEE7F6500F10068 /* Motion.cpp in Sources */,
@@ -14548,7 +14350,6 @@
 				78C356101CEE7F6500F10068 /* CCPUObserverManager.cpp in Sources */,
 				78C356111CEE7F6500F10068 /* AudioPlayer.mm in Sources */,
 				78C356121CEE7F6500F10068 /* CCRef.cpp in Sources */,
-				78C356131CEE7F6500F10068 /* CCUIMultilineTextField.mm in Sources */,
 				78C356141CEE7F6500F10068 /* clipper.cpp in Sources */,
 				78C356151CEE7F6500F10068 /* btBox2dShape.cpp in Sources */,
 				78C356161CEE7F6500F10068 /* CocosGUI.cpp in Sources */,
@@ -14604,7 +14405,6 @@
 				78C356481CEE7F6500F10068 /* CCObjLoader.cpp in Sources */,
 				78C356491CEE7F6500F10068 /* CCAllocatorDiagnostics.cpp in Sources */,
 				78C3564A1CEE7F6500F10068 /* CCPUOnClearObserverTranslator.cpp in Sources */,
-				78C3564B1CEE7F6500F10068 /* CCUIEditBoxIOS.mm in Sources */,
 				78C3564C1CEE7F6500F10068 /* CCPUVertexEmitter.cpp in Sources */,
 				78C3564D1CEE7F6500F10068 /* CCNavMeshUtils.cpp in Sources */,
 				78C3564E1CEE7F6500F10068 /* CCPUScaleVelocityAffector.cpp in Sources */,
@@ -14676,7 +14476,6 @@
 				B665E3AB1AA80A6500DDB1C5 /* CCPURandomiserTranslator.cpp in Sources */,
 				B6DD2FE21B04825B00E47F5F /* DetourPathCorridor.cpp in Sources */,
 				1A01C6A518F58F7500EFE3A6 /* CCNotificationCenter.cpp in Sources */,
-				292DB14E19B4574100A80320 /* UIEditBoxImpl-mac.mm in Sources */,
 				B6CAB4BC1AF9AA1A00B9B856 /* SpuGatheringCollisionDispatcher.cpp in Sources */,
 				B6CAB3CA1AF9AA1A00B9B856 /* btPoint2PointConstraint.cpp in Sources */,
 				B665E3A71AA80A6500DDB1C5 /* CCPURandomiser.cpp in Sources */,
@@ -14790,7 +14589,6 @@
 				B665E2C71AA80A6500DDB1C5 /* CCPUGravityAffector.cpp in Sources */,
 				B665E2E31AA80A6500DDB1C5 /* CCPULineAffectorTranslator.cpp in Sources */,
 				15AE1AB619AAD40300C27E9E /* b2ContactSolver.cpp in Sources */,
-				292DB13E19B4574100A80320 /* UIEditBox.cpp in Sources */,
 				B29A7E0619EE1B7700872B35 /* extension.c in Sources */,
 				B6CAB3461AF9AA1A00B9B856 /* gim_box_set.cpp in Sources */,
 				B6CAB3701AF9AA1A00B9B856 /* btGjkConvexCast.cpp in Sources */,
@@ -14846,7 +14644,6 @@
 				382383F51A258FA7002C4610 /* idl_gen_cpp.cpp in Sources */,
 				B665E3B71AA80A6500DDB1C5 /* CCPURibbonTrail.cpp in Sources */,
 				B665E1F31AA80A6500DDB1C5 /* CCPUAffector.cpp in Sources */,
-				15AE1B7E19AADA9A00C27E9E /* UIText.cpp in Sources */,
 				B6CAB2FA1AF9AA1A00B9B856 /* btTriangleCallback.cpp in Sources */,
 				15AE1A3E19AAD3D500C27E9E /* b2CollidePolygon.cpp in Sources */,
 				15AE1AB219AAD40300C27E9E /* b2CircleContact.cpp in Sources */,
@@ -14854,7 +14651,6 @@
 				B6DD2FDA1B04825B00E47F5F /* DetourLocalBoundary.cpp in Sources */,
 				50ABBD551925AB0000A911A9 /* TransformUtils.cpp in Sources */,
 				B665E2CF1AA80A6500DDB1C5 /* CCPUInterParticleCollider.cpp in Sources */,
-				292DB14419B4574100A80320 /* UIEditBoxImpl-android.cpp in Sources */,
 				1A57007A180BC5A10088DEC7 /* CCActionInstant.cpp in Sources */,
 				15AE1AC419AAD40300C27E9E /* b2FrictionJoint.cpp in Sources */,
 				B6DD2FDE1B04825B00E47F5F /* DetourObstacleAvoidance.cpp in Sources */,
@@ -14928,7 +14724,6 @@
 				15B3708119EE414C00ABE682 /* CCEventListenerAssetsManagerEx.cpp in Sources */,
 				B6CAB3F81AF9AA1A00B9B856 /* btMultiBody.cpp in Sources */,
 				503DD8E21926736A00CD74DD /* CCCommon-ios.mm in Sources */,
-				292DB14A19B4574100A80320 /* UIEditBoxImpl-ios.mm in Sources */,
 				B677B0D61B18492D006762CB /* CCNavMeshObstacle.cpp in Sources */,
 				78741BE21D3D22C700D7A423 /* Facebook.mm in Sources */,
 				B6CAB2561AF9AA1A00B9B856 /* btGhostObject.cpp in Sources */,
@@ -14974,7 +14769,6 @@
 				15AE1B7219AADA9A00C27E9E /* UIListView.cpp in Sources */,
 				1A5701BE180BCB5A0088DEC7 /* CCLabelAtlas.cpp in Sources */,
 				15FB20751AE7BF8600C31518 /* CCAutoPolygon.cpp in Sources */,
-				A0E749F81BA8FD7F001A8332 /* UIEditBoxImpl-common.cpp in Sources */,
 				B6CAB2021AF9AA1A00B9B856 /* btMultiSapBroadphase.cpp in Sources */,
 				15AE1A3D19AAD3D500C27E9E /* b2CollideEdge.cpp in Sources */,
 				1A5701C2180BCB5A0088DEC7 /* CCLabelBMFont.cpp in Sources */,
@@ -15030,7 +14824,6 @@
 				B29A7E2E19EE1B7700872B35 /* Slot.c in Sources */,
 				B665E2471AA80A6500DDB1C5 /* CCPUCollisionAvoidanceAffectorTranslator.cpp in Sources */,
 				50ABC01E1926664800A911A9 /* CCThread.cpp in Sources */,
-				2980F0271BA9A5550059E678 /* CCUISingleLineTextField.mm in Sources */,
 				7894C0701BC9710300363FC9 /* Background.cpp in Sources */,
 				B29A7DF419EE1B7700872B35 /* AttachmentLoader.c in Sources */,
 				1A5701EB180BCB8C0088DEC7 /* CCTransitionPageTurn.cpp in Sources */,
@@ -15046,7 +14839,6 @@
 				B6CAB4341AF9AA1A00B9B856 /* btGpu3DGridBroadphase.cpp in Sources */,
 				50ABBD491925AB0000A911A9 /* Mat4.cpp in Sources */,
 				1A570203180BCBD40088DEC7 /* CCClippingNode.cpp in Sources */,
-				15AE1B8619AADA9A00C27E9E /* UIButton.cpp in Sources */,
 				1A570209180BCBDF0088DEC7 /* CCMotionStreak.cpp in Sources */,
 				1A570211180BCBF40088DEC7 /* CCProgressTimer.cpp in Sources */,
 				503DD8ED1926736A00CD74DD /* CCGLViewImpl-ios.mm in Sources */,
@@ -15057,7 +14849,6 @@
 				1A570215180BCBF40088DEC7 /* CCRenderTexture.cpp in Sources */,
 				B6CAB2EE1AF9AA1A00B9B856 /* btStridingMeshInterface.cpp in Sources */,
 				1A570222180BCC1A0088DEC7 /* CCParticleBatchNode.cpp in Sources */,
-				292DB15019B4574100A80320 /* UIEditBoxImpl-stub.cpp in Sources */,
 				B665E25B1AA80A6500DDB1C5 /* CCPUDoEnableComponentEventHandler.cpp in Sources */,
 				B665E3431AA80A6500DDB1C5 /* CCPUOnExpireObserver.cpp in Sources */,
 				15AE185F19AAD31200C27E9E /* SimpleAudioEngine.mm in Sources */,
@@ -15117,7 +14908,6 @@
 				1A570287180BCC900088DEC7 /* CCSpriteFrame.cpp in Sources */,
 				507003221B69735300E83DDD /* HttpConnection-winrt.cpp in Sources */,
 				B6CAB3AA1AF9AA1A00B9B856 /* btContactConstraint.cpp in Sources */,
-				2980F02A1BA9A5550059E678 /* UITextField+CCUITextInput.mm in Sources */,
 				7894BFDA1BC9168700363FC9 /* TiledEntity.cpp in Sources */,
 				B665E2431AA80A6500DDB1C5 /* CCPUCollisionAvoidanceAffector.cpp in Sources */,
 				B6CAB23E1AF9AA1A00B9B856 /* btConvex2dConvex2dAlgorithm.cpp in Sources */,
@@ -15222,7 +15012,6 @@
 				B665E29B1AA80A6500DDB1C5 /* CCPUEmitterTranslator.cpp in Sources */,
 				50ABBD881925AB4100A911A9 /* CCCustomCommand.cpp in Sources */,
 				B6CAB4301AF9AA1A00B9B856 /* btWheelInfo.cpp in Sources */,
-				2980F02C1BA9A5550059E678 /* UITextView+CCUITextInput.mm in Sources */,
 				50ABBE941925AB6F00A911A9 /* CCProfiling.cpp in Sources */,
 				5012169B1AC473A3009A4BEA /* CCTechnique.cpp in Sources */,
 				15AE182D19AAD2F700C27E9E /* CCMeshVertexIndexData.cpp in Sources */,
@@ -15295,7 +15084,7 @@
 				50ABBEA41925AB6F00A911A9 /* CCScriptSupport.cpp in Sources */,
 				B6CAB3E81AF9AA1A00B9B856 /* btDiscreteDynamicsWorld.cpp in Sources */,
 				501216A11AC473AD009A4BEA /* CCMaterial.cpp in Sources */,
-				781B06871BD272DD0072FB24 /* Config.cpp in Sources */,
+				781B06871BD272DD0072FB24 /* Parameters.cpp in Sources */,
 				B665E3971AA80A6500DDB1C5 /* CCPUPointEmitter.cpp in Sources */,
 				B6CAB1E81AF9AA1A00B9B856 /* btAxisSweep3.cpp in Sources */,
 				78F458B41CE71EFC00A70B02 /* CCStencilStateManager.cpp in Sources */,
@@ -15311,7 +15100,6 @@
 				B6CAB2981AF9AA1A00B9B856 /* btConcaveShape.cpp in Sources */,
 				B6CAB2CE1AF9AA1A00B9B856 /* btMultimaterialTriangleMeshShape.cpp in Sources */,
 				1AAF5850180E40B9000584C8 /* LocalStorage.cpp in Sources */,
-				50ED2BE519BEAF7900A0AB90 /* UIEditBoxImpl-win32.cpp in Sources */,
 				B6CAB2281AF9AA1A00B9B856 /* btCollisionDispatcher.cpp in Sources */,
 				B665E3531AA80A6500DDB1C5 /* CCPUOnQuotaObserver.cpp in Sources */,
 				785C58741BD506F200B71D89 /* Motion.cpp in Sources */,
@@ -15333,7 +15121,6 @@
 				B665E3131AA80A6500DDB1C5 /* CCPUObserverManager.cpp in Sources */,
 				50CB248019D9C5A100687767 /* AudioPlayer.mm in Sources */,
 				50ABBE9A1925AB6F00A911A9 /* CCRef.cpp in Sources */,
-				2980F0251BA9A5550059E678 /* CCUIMultilineTextField.mm in Sources */,
 				85B3743B1B204B9400C488D6 /* clipper.cpp in Sources */,
 				B6CAB27E1AF9AA1A00B9B856 /* btBox2dShape.cpp in Sources */,
 				15AE1B9519AADA9A00C27E9E /* CocosGUI.cpp in Sources */,
@@ -15389,7 +15176,6 @@
 				15AE183519AAD2F700C27E9E /* CCObjLoader.cpp in Sources */,
 				D0FD034C1A3B51AA00825BB5 /* CCAllocatorDiagnostics.cpp in Sources */,
 				B665E31F1AA80A6500DDB1C5 /* CCPUOnClearObserverTranslator.cpp in Sources */,
-				2980F0231BA9A5550059E678 /* CCUIEditBoxIOS.mm in Sources */,
 				B665E4331AA80A6600DDB1C5 /* CCPUVertexEmitter.cpp in Sources */,
 				B677B0DA1B18492D006762CB /* CCNavMeshUtils.cpp in Sources */,
 				B665E3C71AA80A6600DDB1C5 /* CCPUScaleVelocityAffector.cpp in Sources */,
@@ -15441,10 +15227,19 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = USE_FILE32API;
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
@@ -15455,7 +15250,9 @@
 				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = YES;
 				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = YES;
 				GCC_WARN_SHADOW = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
@@ -15475,7 +15272,16 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = USE_FILE32API;
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = YES;
@@ -15485,7 +15291,9 @@
 				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = YES;
 				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = YES;
 				GCC_WARN_SHADOW = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
@@ -15672,11 +15480,10 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_TARGET_OS_IPHONE,
-					"COCOS2D_DEBUG=1",
 				);
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = YES;
 				HEADER_SEARCH_PATHS = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../external/png/prebuilt/ios",
@@ -15696,7 +15503,7 @@
 				SEPARATE_STRIP = NO;
 				STRIP_STYLE = "non-global";
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../ $(SRCROOT)/../external/freetype2/include/ios $(SRCROOT)/../external/curl/include/ios $(SRCROOT)/../external/webp/include/ios $(SRCROOT)/../external/tiff/include/ios $(SRCROOT)/../external/jpeg/include/ios $(SRCROOT)/../external/png/include/ios $(SRCROOT)/../external/websockets/include/ios $(SRCROOT)/../external/chipmunk/include/chipmunk $(SRCROOT)/../external/freetype2/include/ios/freetype2 $(SRCROOT)/../external/json $(SRCROOT)/../external $(SRCROOT)/../../cocos2d-apple-library/Sources $(SRCROOT)/../../cocos2d-apple-library/Sources/Libraries/GoogleAnalytics";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../ $(SRCROOT)/../external/freetype2/include/ios $(SRCROOT)/../external/curl/include/ios $(SRCROOT)/../external/webp/include/ios $(SRCROOT)/../external/tiff/include/ios $(SRCROOT)/../external/jpeg/include/ios $(SRCROOT)/../external/png/include/ios $(SRCROOT)/../external/websockets/include/ios $(SRCROOT)/../external/chipmunk/include/chipmunk $(SRCROOT)/../external/freetype2/include/ios/freetype2 $(SRCROOT)/../external/json $(SRCROOT)/../external $(SRCROOT)/../../cocos2d-apple-library/Sources/**";
 				VALID_ARCHS = "armv7 arm64";
 			};
 			name = Debug;
@@ -15717,11 +15524,10 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_TARGET_OS_IPHONE,
-					"COCOS2D_DEBUG=1",
 				);
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = YES;
 				HEADER_SEARCH_PATHS = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../external/png/prebuilt/ios",
@@ -15742,7 +15548,7 @@
 				SEPARATE_STRIP = NO;
 				STRIP_STYLE = "non-global";
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../ $(SRCROOT)/../external/freetype2/include/ios $(SRCROOT)/../external/curl/include/ios $(SRCROOT)/../external/webp/include/ios $(SRCROOT)/../external/tiff/include/ios $(SRCROOT)/../external/jpeg/include/ios $(SRCROOT)/../external/png/include/ios $(SRCROOT)/../external/websockets/include/ios $(SRCROOT)/../external/chipmunk/include/chipmunk $(SRCROOT)/../external/freetype2/include/ios/freetype2 $(SRCROOT)/../external/json $(SRCROOT)/../external $(SRCROOT)/../../cocos2d-apple-library/Sources $(SRCROOT)/../../cocos2d-apple-library/Sources/Libraries/GoogleAnalytics";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../ $(SRCROOT)/../external/freetype2/include/ios $(SRCROOT)/../external/curl/include/ios $(SRCROOT)/../external/webp/include/ios $(SRCROOT)/../external/tiff/include/ios $(SRCROOT)/../external/jpeg/include/ios $(SRCROOT)/../external/png/include/ios $(SRCROOT)/../external/websockets/include/ios $(SRCROOT)/../external/chipmunk/include/chipmunk $(SRCROOT)/../external/freetype2/include/ios/freetype2 $(SRCROOT)/../external/json $(SRCROOT)/../external $(SRCROOT)/../../cocos2d-apple-library/Sources/**";
 				VALID_ARCHS = "armv7 arm64";
 			};
 			name = Release;

@@ -1838,7 +1838,10 @@ void Director::setCapture(bool state, Node* root)
        * | @Capture;
        * | @Generate frame buffer object;
        *
+       * @TODO: Add setting for the multisamples count;
+       *
        */
+      #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
       this->capture.resolve_frame = FrameBuffer::create(1, width, height);
       this->capture.resolve_frame->retain();
       this->capture.resolve_frame->attachRenderTarget(RenderTarget::create(width, height));
@@ -1846,11 +1849,18 @@ void Director::setCapture(bool state, Node* root)
 
       this->capture.frame = FrameBuffer::create(1, width, height);
       this->capture.frame->retain();
-      this->capture.frame->attachRenderTarget(RenderTargetRenderBuffer::create(width, height, 2));
-      this->capture.frame->attachDepthStencilTarget(RenderTargetDepthStencil::create(width, height, 2));
+      this->capture.frame->attachRenderTarget(RenderTargetRenderBuffer::create(width, height, 4));
+      this->capture.frame->attachDepthStencilTarget(RenderTargetDepthStencil::create(width, height, 4));
       this->capture.frame->applyFBO();
 
       this->capture.camera->setFrameBufferObject(this->capture.frame);
+      #else
+      this->capture.frame = FrameBuffer::create(1, width, height);
+      this->capture.frame->attachRenderTarget(RenderTarget::create(width, height));
+      this->capture.frame->attachDepthStencilTarget(RenderTargetDepthStencil::create(width, height));
+
+      this->capture.camera->setFrameBufferObject(this->capture.frame);
+      #endif
 
       /**
        *
@@ -1877,7 +1887,11 @@ void Director::setCapture(bool state, Node* root)
        * | @Should add capture frame buffer texture to the default 2D camera;
        *
        */
+      #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
       this->capture.texture = new Entity(this->capture.resolve_frame->getRenderTarget()->getTexture(), root, true);
+      #else
+      this->capture.texture = new Entity(this->capture.frame->getRenderTarget()->getTexture(), root, true);
+      #endif
       this->capture.texture->setScaleX(1 / this->capture.factor);
       this->capture.texture->setScaleY(-1 / this->capture.factor);
       this->capture.texture->setPosition(size.width / 2, size.height / 2);
@@ -2033,6 +2047,7 @@ void Director::onRenderFinish(int index)
    *
    *
    */
+  #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
   if(this->getCaptureState())
   {
     if(this->capture.camera->index == index)
@@ -2042,6 +2057,7 @@ void Director::onRenderFinish(int index)
       glResolveMultisampleFramebufferAPPLE();
     }
   }
+  #endif
 }
 
 NS_CC_END

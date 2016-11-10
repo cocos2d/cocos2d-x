@@ -34,8 +34,6 @@ THE SOFTWARE.
 #include "base/ccCArray.h"
 #include "base/uthash.h"
 
-#include "Config.h"
-
 NS_CC_BEGIN
 //
 // singleton stuff
