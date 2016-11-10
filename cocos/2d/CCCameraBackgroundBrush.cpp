@@ -95,12 +95,17 @@ CameraBackgroundDepthBrush::~CameraBackgroundDepthBrush()
 CameraBackgroundDepthBrush* CameraBackgroundDepthBrush::create(float depth)
 {
     auto ret = new (std::nothrow) CameraBackgroundDepthBrush();
-    if (nullptr != ret)
+    
+    if (nullptr != ret && ret->init())
     {
         ret->_depth = depth;
-        ret->init();
         ret->autorelease();
     }
+    else
+    {
+        CC_SAFE_DELETE(ret);
+    }
+
     return ret;
 }
 
@@ -222,12 +227,15 @@ CameraBackgroundColorBrush* CameraBackgroundColorBrush::create(const Color4F& co
 {
     auto ret = new (std::nothrow) CameraBackgroundColorBrush();
 
-    if (nullptr != ret)
+    if (nullptr != ret && ret->init())
     {
-        ret->init();
         ret->setColor(color);
         ret->setDepth(depth);
         ret->autorelease();
+    }
+    else
+    {
+        CC_SAFE_DELETE(ret);
     }
 
     return ret;
@@ -271,11 +279,23 @@ CameraBackgroundSkyBoxBrush::~CameraBackgroundSkyBoxBrush()
     }
 }
 
-CameraBackgroundSkyBoxBrush* CameraBackgroundSkyBoxBrush::create(const std::string& positive_x, const std::string& negative_x, const std::string& positive_y, const std::string& negative_y, const std::string& positive_z, const std::string& negative_z)
+CameraBackgroundSkyBoxBrush* CameraBackgroundSkyBoxBrush::create(
+    const std::string& positive_x,
+    const std::string& negative_x,
+    const std::string& positive_y,
+    const std::string& negative_y,
+    const std::string& positive_z,
+    const std::string& negative_z
+    )
 {
     CameraBackgroundSkyBoxBrush* ret = nullptr;
 
-    auto texture = TextureCube::create(positive_x, negative_x, positive_y, negative_y, positive_z, negative_z);
+    auto texture = TextureCube::create(positive_x,
+                                       negative_x,
+                                       positive_y,
+                                       negative_y,
+                                       positive_z,
+                                       negative_z);
 
     if (texture != nullptr)
     {
@@ -289,11 +309,15 @@ CameraBackgroundSkyBoxBrush* CameraBackgroundSkyBoxBrush::create(const std::stri
 
         ret = new (std::nothrow) CameraBackgroundSkyBoxBrush;
 
-        if (nullptr != ret)
+        if (nullptr != ret && ret->init())
         {
-            ret->init();
             ret->setTexture(texture);
             ret->autorelease();
+        }
+        else
+        {
+            CC_SAFE_DELETE(texture);
+            CC_SAFE_DELETE(ret);
         }
     }
 
@@ -302,11 +326,17 @@ CameraBackgroundSkyBoxBrush* CameraBackgroundSkyBoxBrush::create(const std::stri
 
 CameraBackgroundSkyBoxBrush* CameraBackgroundSkyBoxBrush::create()
 {
-    auto ret = new(std::nothrow)CameraBackgroundSkyBoxBrush();
+    auto ret = new (std::nothrow) CameraBackgroundSkyBoxBrush();
     
-    ret->init();
-    
-    ret->autorelease();
+    if (nullptr != ret && ret->init())
+    {
+        ret->autorelease();
+    }
+    else
+    {
+        CC_SAFE_DELETE(ret);
+    }
+
     return ret;
 }
 
