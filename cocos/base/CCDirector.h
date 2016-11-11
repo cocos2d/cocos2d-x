@@ -712,6 +712,7 @@ protected:
      */
     struct Capture {
       bool state = false;
+      bool available = false;
 
       int count;
       int time;
@@ -722,8 +723,8 @@ protected:
       float width;
       float height;
 
-      experimental::FrameBuffer* frame;
-      experimental::FrameBuffer* resolve_frame;
+      experimental::FrameBuffer* frame = nullptr;
+      experimental::FrameBuffer* resolve_frame = nullptr;
       Camera* camera;
       Sprite* texture;
       Sprite* element;
@@ -784,6 +785,7 @@ protected:
     virtual void updateCapture();
 
     virtual bool getCaptureState();
+    virtual bool getCaptureAvailable();
 
     virtual int getCaptureTexturesCount();
 
