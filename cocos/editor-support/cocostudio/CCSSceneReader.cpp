@@ -90,7 +90,7 @@ cocos2d::Node* SceneReader::createNodeWithSceneFile(const std::string &fileName,
                     _node = Node::create();
                     int  nCount = 0;
                     std::vector<Component*> _vecComs;
-                    ComRender *pRender = nullptr;
+                    //ComRender *pRender = nullptr;
                     std::string key = tpChildArray[15].GetName(&tCocoLoader);
                     if (key == "components")
                     {
@@ -122,7 +122,7 @@ cocos2d::Node* SceneReader::createNodeWithSceneFile(const std::string &fileName,
                                 ComRender *pTRender = dynamic_cast<ComRender*>(pCom);
                                 if (pTRender != nullptr)
                                 {
-                                    pRender = pTRender;
+                                    //pRender = pTRender;
                                 }
                                 else
                                 {

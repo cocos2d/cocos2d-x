@@ -154,17 +154,20 @@ public:
     virtual cocos2d::ui::Widget* widgetFromJsonDictionary(const rapidjson::Value& dic) override;
     
     //added for binary parsing
-    virtual cocos2d::ui::Widget* createWidgetFromBinary(CocoLoader* cocoLoader,
-                                                        stExpCocoNode*	pCocoNode,
-                                                        const char* fileName)override{return nullptr;}
+    virtual cocos2d::ui::Widget* createWidgetFromBinary(CocoLoader* /*cocoLoader*/,
+                                                        stExpCocoNode* /*pCocoNode*/,
+                                                        const char* /*fileName*/) override
+    { return nullptr; }
     
-    virtual cocos2d::ui::Widget* widgetFromBinary(CocoLoader* cocoLoader,
-                                                  stExpCocoNode*	pCocoNode) override {return nullptr;}
+    virtual cocos2d::ui::Widget* widgetFromBinary(CocoLoader* /*cocoLoader*/,
+                                                  stExpCocoNode* /*pCocoNode*/) override
+    { return nullptr; }
     
-    virtual void setPropsForAllWidgetFromBinary(WidgetReaderProtocol* reader,
-                                                cocos2d::ui::Widget* widget,
-                                                CocoLoader* cocoLoader,
-                                                stExpCocoNode*	pCocoNode) override {}
+    virtual void setPropsForAllWidgetFromBinary(WidgetReaderProtocol* /*reader*/,
+                                                cocos2d::ui::Widget* /*widget*/,
+                                                CocoLoader* /*cocoLoader*/,
+                                                stExpCocoNode* /*pCocoNode*/) override
+    {}
 
     virtual void setPropsForWidgetFromJsonDictionary(cocos2d::ui::Widget* widget,const rapidjson::Value& options);
     
@@ -214,10 +217,11 @@ public:
                                                 CocoLoader* cocoLoader,
                                                 stExpCocoNode*	pCocoNode) override;
     
-    virtual void setPropsForAllCustomWidgetFromBinary(const std::string& classType,
-                                                      cocos2d::ui::Widget* widget,
-                                                      CocoLoader* cocoLoader,
-                                                      stExpCocoNode*	pCocoNode) {
+    virtual void setPropsForAllCustomWidgetFromBinary(const std::string & /*classType*/,
+                                                      cocos2d::ui::Widget* /*widget*/,
+                                                      CocoLoader* /*cocoLoader*/,
+                                                      stExpCocoNode* /*pCocoNode*/)
+    {
         //TODO: custom property
     }
     
