@@ -1299,7 +1299,9 @@ TransitionCrossFade* TransitionCrossFade::create(float t, Scene* scene)
     return nullptr;
 }
 
-void TransitionCrossFade::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
+void TransitionCrossFade::draw(Renderer* /*renderer*/,
+                               const Mat4 & /*transform*/,
+                               uint32_t /*flags*/)
 {
     // override draw since both scenes (textures) are rendered in 1 scene
 }

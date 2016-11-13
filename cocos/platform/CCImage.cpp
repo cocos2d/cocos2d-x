@@ -607,33 +607,24 @@ bool Image::isPng(const unsigned char * data, ssize_t dataLen)
 }
 
 
-bool Image::isEtc(const unsigned char * data, ssize_t dataLen)
+bool Image::isEtc(const unsigned char * data, ssize_t /*dataLen*/)
 {
-    return etc1_pkm_is_valid((etc1_byte*)data) ? true : false;
+    return etc1_pkm_is_valid(static_cast<const etc1_byte*>(data));
 }
 
 
-bool Image::isS3TC(const unsigned char * data, ssize_t dataLen)
+bool Image::isS3TC(const unsigned char * data, ssize_t /*dataLen*/)
 {
+    const S3TCTexHeader* header = reinterpret_cast<const S3TCTexHeader*>(data);
 
-    S3TCTexHeader *header = (S3TCTexHeader *)data;
-    
-    if (strncmp(header->fileCode, "DDS", 3) != 0)
-    {
-        return false;
-    }
-    return true;
+    return (strncmp(header->fileCode, "DDS", 3) == 0);
 }
 
-bool Image::isATITC(const unsigned char *data, ssize_t dataLen)
+bool Image::isATITC(const unsigned char *data, ssize_t /*dataLen*/)
 {
-    ATITCTexHeader *header = (ATITCTexHeader *)data;
+    const ATITCTexHeader* header = reinterpret_cast<const ATITCTexHeader*>(data);
     
-    if (strncmp(&header->identifier[1], "KTX", 3) != 0)
-    {
-        return false;
-    }
-    return true;
+    return (strncmp(&header->identifier[1], "KTX", 3) == 0);
 }
 
 bool Image::isJpg(const unsigned char * data, ssize_t dataLen)
@@ -1329,7 +1320,7 @@ bool Image::initWithTiffData(const unsigned char * data, ssize_t dataLen)
 
 namespace
 {
-    bool testFormatForPvr2TCSupport(PVR2TexturePixelFormat format)
+    bool testFormatForPvr2TCSupport(PVR2TexturePixelFormat /*format*/)
     {
         return true;
     }
@@ -1722,6 +1713,8 @@ bool Image::initWithETCData(const unsigned char * data, ssize_t dataLen)
         _data = static_cast<unsigned char*>(malloc(_dataLen * sizeof(unsigned char)));
         memcpy(_data, static_cast<const unsigned char*>(data) + ETC_PKM_HEADER_SIZE, _dataLen);
         return true;
+#else
+        CC_UNUSED_PARAM(dataLen);
 #endif
     }
     else
@@ -2144,7 +2137,7 @@ bool Image::initWithWebpData(const unsigned char * data, ssize_t dataLen)
 }
 
 
-bool Image::initWithRawData(const unsigned char * data, ssize_t dataLen, int width, int height, int bitsPerComponent, bool preMulti)
+bool Image::initWithRawData(const unsigned char * data, ssize_t /*dataLen*/, int width, int height, int /*bitsPerComponent*/, bool preMulti)
 {
     bool ret = false;
     do 
