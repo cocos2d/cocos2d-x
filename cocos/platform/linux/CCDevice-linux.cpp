@@ -104,12 +104,12 @@ int Device::getDPI()
     return dpi;
 }
 
-void Device::setAccelerometerEnabled(bool isEnabled)
+void Device::setAccelerometerEnabled(bool /*isEnabled*/)
 {
 
 }
 
-void Device::setAccelerometerInterval(float interval)
+void Device::setAccelerometerInterval(float /*interval*/)
 {
 
 }
@@ -172,7 +172,7 @@ public:
         return 0;
     }
 
-    bool isBreakPoint(FT_UInt currentCharacter, FT_UInt previousCharacter) {
+    bool isBreakPoint(FT_UInt /*currentCharacter*/, FT_UInt previousCharacter) {
         if ( previousCharacter == '-' || previousCharacter == '/' || previousCharacter == '\\' ) {
             // we can insert a line break after one of these characters
             return true;
@@ -180,7 +180,7 @@ public:
         return false;
     }
 
-    bool divideString(FT_Face face, const char* sText, int iMaxWidth, int iMaxHeight) {
+    bool divideString(FT_Face face, const char* sText, int iMaxWidth, int /*iMaxHeight*/) {
         const char* pText = sText;
         textLines.clear();
         iMaxLineWidth = 0;
@@ -310,7 +310,7 @@ public:
     /**
      * compute the start pos of every line
      */
-    int computeLineStart(FT_Face face, Device::TextAlign eAlignMask, int line) {
+    int computeLineStart(FT_Face /*face*/, Device::TextAlign eAlignMask, int line) {
                 int lineWidth = textLines.at(line).lineWidth;
         if (eAlignMask == Device::TextAlign::CENTER || eAlignMask == Device::TextAlign::TOP || eAlignMask == Device::TextAlign::BOTTOM) {
             return (iMaxLineWidth - lineWidth) / 2;
@@ -438,21 +438,23 @@ public:
                     continue;
                 }
 
-                FT_Bitmap& bitmap = face->glyph->bitmap;
+                FT_Bitmap & bitmap = face->glyph->bitmap;
+
                 int yoffset = iCurYCursor - (face->glyph->metrics.horiBearingY >> 6);
                 int xoffset = iCurXCursor + glyph.paintPosition;
 
-                for (int y = 0; y < bitmap.rows; ++y) {
-                    int iY = yoffset + y;
-                    if (iY>=iMaxLineHeight) {
-                        //exceed the height truncate
-                        break;
-                    }
-                    iY *= iMaxLineWidth;
+                const int max_rows_with_offset =
+                    std::min(static_cast<int>(bitmap.rows) + yoffset, iMaxLineHeight);
+                const int width = bitmap.width;
 
-                    int bitmap_y = y * bitmap.width;
+                for (int y = yoffset; y < max_rows_with_offset; ++y)
+                {
+                    int iY = y * iMaxLineWidth;
 
-                    for (int x = 0; x < bitmap.width; ++x) {
+                    int bitmap_y = y * width;
+
+                    for (int x = 0; x < width; ++x)
+                    {
                         unsigned char cTemp = bitmap.buffer[bitmap_y + x];
                         if (cTemp == 0) {
                             continue;
