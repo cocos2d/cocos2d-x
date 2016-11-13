@@ -46,7 +46,7 @@ public:
         return malloc(size);
     }
     
-    CC_ALLOCATOR_INLINE void deallocate(void* address, size_t size = 0)
+    CC_ALLOCATOR_INLINE void deallocate(void* address, size_t /*size*/ = 0)
     {
         if (nullptr != address)
             free(address);
