@@ -90,7 +90,10 @@ static void printWebSocketLog(int level, const char *line)
     printf("%s%s\n", buf, line);
 #endif
 
-#endif // #if COCOS2D_DEBUG > 0
+#else // #if COCOS2D_DEBUG > 0
+    CC_UNUSED_PARAM(level);
+    CC_UNUSED_PARAM(line);
+#endif
 }
 
 NS_CC_BEGIN
@@ -604,6 +607,7 @@ void WebSocket::onSubThreadStarted()
     // libwebsockets official said it's probably an issue of user code
     // since 'libwebsockets' passed AutoBahn stressed Test.
 
+    CC_UNUSED_PARAM(exts);
 //    info.extensions = exts;
 
     info.gid = -1;
@@ -927,9 +931,11 @@ void WebSocket::onConnectionClosed()
     });
 }
 
-int WebSocket::onSocketCallback(struct lws *wsi,
-                     int reason,
-                     void *user, void *in, ssize_t len)
+int WebSocket::onSocketCallback(struct lws* /*wsi*/,
+                                int         reason,
+                                void*       /*user*/,
+                                void*       in,
+                                ssize_t     len)
 {
     //LOGD("socket callback for %d reason\n", reason);
 

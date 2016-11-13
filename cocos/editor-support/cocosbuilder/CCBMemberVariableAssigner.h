@@ -29,7 +29,7 @@ class CC_DLL CCBMemberVariableAssigner {
          * @js NA
          * @lua NA
          */
-        virtual ~CCBMemberVariableAssigner() {};
+        virtual ~CCBMemberVariableAssigner() {}
 
         /**
          *  The callback function of assigning member variable.
@@ -49,7 +49,10 @@ class CC_DLL CCBMemberVariableAssigner {
          *  @param value                The value of the property.
          *  @return Whether the assignment was successful.
          */
-        virtual bool onAssignCCBCustomProperty(cocos2d::Ref* target, const char* memberVariableName, const cocos2d::Value& value) { return false; };
+        virtual bool onAssignCCBCustomProperty(cocos2d::Ref* /*target*/,
+                                               const char* /*memberVariableName*/,
+                                               const cocos2d::Value & /*value*/)
+        { return false; }
 };
 
 }
