@@ -46,24 +46,23 @@ bool BaseTriggerCondition::detect()
     return true;
 }
 
-void BaseTriggerCondition::serialize(const rapidjson::Value &val)
+void BaseTriggerCondition::serialize(const rapidjson::Value & /*val*/)
 {
 }
     
-void BaseTriggerCondition::serialize(cocostudio::CocoLoader *cocoLoader, cocostudio::stExpCocoNode *cocoNode)
+void BaseTriggerCondition::serialize(cocostudio::CocoLoader* /*cocoLoader*/, cocostudio::stExpCocoNode* /*cocoNode*/)
 {
-    
 }
 
 void BaseTriggerCondition::removeAll()
 {
 }
 
-BaseTriggerAction::BaseTriggerAction(void)
+BaseTriggerAction::BaseTriggerAction()
 {
 }
 
-BaseTriggerAction::~BaseTriggerAction(void)
+BaseTriggerAction::~BaseTriggerAction()
 {
 }
 
@@ -77,11 +76,12 @@ void BaseTriggerAction::done()
 
 }
 
-void BaseTriggerAction::serialize(const rapidjson::Value &val)
+void BaseTriggerAction::serialize(const rapidjson::Value & /*val*/)
 {
 }
 
-void BaseTriggerAction::serialize(cocostudio::CocoLoader *cocoLoader, cocostudio::stExpCocoNode *cocoNode)
+void BaseTriggerAction::serialize(cocostudio::CocoLoader* /*cocoLoader*/,
+                                  cocostudio::stExpCocoNode* /*cocoNode*/)
 {
 }
 
@@ -89,13 +89,13 @@ void BaseTriggerAction::removeAll()
 {
 }
 
-TriggerObj::TriggerObj(void)
+TriggerObj::TriggerObj()
 :_id(UINT_MAX)
 ,_enabled(true)
 {
 }
 
-TriggerObj::~TriggerObj(void)
+TriggerObj::~TriggerObj()
 {
 }
 
