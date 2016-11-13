@@ -53,9 +53,13 @@ NavMeshDebugDraw::NavMeshDebugDraw()
     glGenBuffers(1, &_vbo);
 }
 
-void NavMeshDebugDraw::vertex(const float x, const float y, const float z, unsigned int color, const float u, const float v)
+void NavMeshDebugDraw::vertex(const float /*x*/,
+                              const float /*y*/,
+                              const float /*z*/,
+                              unsigned int /*color*/,
+                              const float /*u*/,
+                              const float /*v*/)
 {
-
 }
 
 void NavMeshDebugDraw::vertex(const float* pos, unsigned int color, const float* uv)
@@ -134,7 +138,7 @@ GLenum NavMeshDebugDraw::getPrimitiveType(duDebugDrawPrimitives prim)
     }
 }
 
-void NavMeshDebugDraw::drawImplement(const cocos2d::Mat4& transform, uint32_t flags)
+void NavMeshDebugDraw::drawImplement(const cocos2d::Mat4& transform, uint32_t /*flags*/)
 {
     _program->use();
     _program->setUniformsForBuiltins(transform);
