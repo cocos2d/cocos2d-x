@@ -55,7 +55,11 @@ void Physics3DDebugDrawer::drawLine( const btVector3& from,const btVector3& to,c
     _dirty = true;
 }
 
-void Physics3DDebugDrawer::drawContactPoint( const btVector3& PointOnB,const btVector3& normalOnB,btScalar distance,int lifeTime,const btVector3& color )
+void Physics3DDebugDrawer::drawContactPoint(const btVector3& PointOnB,
+                                            const btVector3& normalOnB,
+                                            btScalar distance,
+                                            int /*lifeTime*/,
+                                            const btVector3& color)
 {
     drawLine(PointOnB, PointOnB + normalOnB * distance, color);
 }
@@ -63,9 +67,10 @@ void Physics3DDebugDrawer::drawContactPoint( const btVector3& PointOnB,const btV
 void Physics3DDebugDrawer::reportErrorWarning( const char* warningString )
 {
     CCLOG("%s", warningString);
+    CC_UNUSED_PARAM(warningString);
 }
 
-void Physics3DDebugDrawer::draw3dText( const btVector3& location,const char* textString )
+void Physics3DDebugDrawer::draw3dText(const btVector3& /*location*/, const char* /*textString*/)
 {
 
 }
@@ -127,7 +132,7 @@ void Physics3DDebugDrawer::ensureCapacity( int count )
     }
 }
 
-void Physics3DDebugDrawer::drawImplementation( const Mat4 &transform, uint32_t flags )
+void Physics3DDebugDrawer::drawImplementation(const Mat4 & transform, uint32_t /*flags*/)
 {
     _program->use();
     _program->setUniformsForBuiltins(transform);
