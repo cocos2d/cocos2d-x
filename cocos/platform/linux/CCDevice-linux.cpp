@@ -442,22 +442,22 @@ public:
                 int yoffset = iCurYCursor - (face->glyph->metrics.horiBearingY >> 6);
                 int xoffset = iCurXCursor + glyph.paintPosition;
 
-                const int max_rows_with_offset =
-                    std::min(static_cast<int>(bitmap.rows) + yoffset, iMaxLineHeight);
-                const int width = bitmap.width;
+                const int max_y_with_offset
+                    = std::min(static_cast<int>(bitmap.rows) + yoffset, iMaxLineHeight)
+                    * iMaxLineWidth;
 
-                for (int y = yoffset, bitmap_pos = 0; y < max_rows_with_offset; ++y)
+                const int max_x_with_offset = xoffset + bitmap.width;
+
+                unsigned bitmap_pos = 0;
+
+                for (int y = yoffset * iMaxLineWidth; y < max_y_with_offset; y += iMaxLineWidth)
                 {
-                    int iY = y * iMaxLineWidth;
-
-                    for (int x = 0; x < width; ++x, ++bitmap_pos)
+                    for (int x = xoffset; x < max_x_with_offset; ++x)
                     {
-                        int iX = xoffset + x;
-
                         //FIXME:wrong text color
-                        uint32_t iTemp = bitmap.buffer[bitmap_pos];
+                        uint32_t iTemp = bitmap.buffer[bitmap_pos++];
                         iTemp = iTemp << 24 | iTemp << 16 | iTemp << 8 | iTemp;
-                        reinterpret_cast<uint32_t*>(_data)[iY + iX] = iTemp;
+                        reinterpret_cast<uint32_t*>(_data)[y + x] = iTemp;
                     }
                 }
             }
