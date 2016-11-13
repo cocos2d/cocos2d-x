@@ -33,7 +33,8 @@ bool ERRCHECK(FMOD_RESULT result)
 FMOD_RESULT F_CALLBACK channelCallback(FMOD_CHANNELCONTROL *channelcontrol,
                                        FMOD_CHANNELCONTROL_TYPE controltype,
                                        FMOD_CHANNELCONTROL_CALLBACK_TYPE callbacktype,
-                                       void *commandData1, void *commandData2)
+                                       void* /*commandData1*/,
+                                       void* /*commandData2*/)
 {
     if (controltype == FMOD_CHANNELCONTROL_CHANNEL && callbacktype == FMOD_CHANNELCONTROL_CALLBACK_END) {
         g_AudioEngineImpl->onSoundFinished((FMOD::Channel *)channelcontrol);
@@ -316,7 +317,7 @@ int AudioEngineImpl::preload(const std::string& filePath, std::function<void(boo
     return id;
 }
 
-void AudioEngineImpl::update(float dt)
+void AudioEngineImpl::update(float /*dt*/)
 {
     pSystem->update();
 }

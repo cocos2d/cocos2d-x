@@ -147,7 +147,7 @@ void SimpleAudioEngine::setEffectsVolume(float volume)
  *     - no pitch effect on Samsung Galaxy S2 with OpenSL backend enabled;
  *     - no pitch/pan/gain on win32.
  */
-unsigned int SimpleAudioEngine::playEffect(const char* filePath, bool loop, float pitch, float pan, float gain)
+unsigned int SimpleAudioEngine::playEffect(const char* filePath, bool loop, float /*pitch*/, float /*pan*/, float gain)
 {
     return AudioEngine::play2d(filePath, loop, gain);
 }
