@@ -236,7 +236,7 @@ void DisplayFactory::createArmatureDisplay(Bone *bone, DecorativeDisplay *decoDi
 
     decoDisplay->setDisplay(armature);
 }
-void DisplayFactory::updateArmatureDisplay(Bone *bone, Node *display, float dt)
+void DisplayFactory::updateArmatureDisplay(Bone* /*bone*/, Node* display, float dt)
 {
     Armature *armature = (Armature *)display;
     if(armature)
@@ -248,7 +248,7 @@ void DisplayFactory::updateArmatureDisplay(Bone *bone, Node *display, float dt)
 
 
 
-void DisplayFactory::addParticleDisplay(Bone *bone, DecorativeDisplay *decoDisplay, DisplayData *displayData)
+void DisplayFactory::addParticleDisplay(Bone* bone, DecorativeDisplay* decoDisplay, DisplayData *displayData)
 {
     ParticleDisplayData *adp = ParticleDisplayData::create();
     adp->copy((ParticleDisplayData *)displayData);
@@ -256,7 +256,7 @@ void DisplayFactory::addParticleDisplay(Bone *bone, DecorativeDisplay *decoDispl
 
     createParticleDisplay(bone, decoDisplay);
 }
-void DisplayFactory::createParticleDisplay(Bone *bone, DecorativeDisplay *decoDisplay)
+void DisplayFactory::createParticleDisplay(Bone* bone, DecorativeDisplay* decoDisplay)
 {
     ParticleDisplayData *displayData = (ParticleDisplayData *)decoDisplay->getDisplayData();
     ParticleSystem *system = ParticleSystemQuad::create(displayData->displayName);
@@ -272,7 +272,7 @@ void DisplayFactory::createParticleDisplay(Bone *bone, DecorativeDisplay *decoDi
 
     decoDisplay->setDisplay(system);
 }
-void DisplayFactory::updateParticleDisplay(Bone *bone, Node *display, float dt)
+void DisplayFactory::updateParticleDisplay(Bone* bone, Node* display, float dt)
 {
     ParticleSystem *system = (ParticleSystem *)display;
     BaseData node;
