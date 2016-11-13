@@ -128,14 +128,15 @@ void onCaptureScreen(const std::function<void(bool, const std::string&)>& afterC
 
             // Save image in AsyncTaskPool::TaskType::TASK_IO thread, and call afterCaptured in mainThread
             static bool succeedSaveToFile = false;
-            std::function<void(void*)> mainThread = [afterCaptured, outputFile](void* param)
-            {
-                if (afterCaptured)
+            std::function<void(void*)> mainThread =
+                [afterCaptured, outputFile](void*)
                 {
-                    afterCaptured(succeedSaveToFile, outputFile);
-                }
-                startedCapture = false;
-            };
+                    if (afterCaptured)
+                    {
+                        afterCaptured(succeedSaveToFile, outputFile);
+                    }
+                    startedCapture = false;
+                };
 
             AsyncTaskPool::getInstance()->enqueue(AsyncTaskPool::TaskType::TASK_IO, mainThread, nullptr, [image, outputFile]()
             {
@@ -159,7 +160,9 @@ void onCaptureScreen(const std::function<void(bool, const std::string&)>& afterC
  * Capture screen interface
  */
 static EventListenerCustom* s_captureScreenListener;
+
 static CustomCommand s_captureScreenCommand;
+
 void captureScreen(const std::function<void(bool, const std::string&)>& afterCaptured, const std::string& filename)
 {
     if (s_captureScreenListener)
@@ -167,15 +170,22 @@ void captureScreen(const std::function<void(bool, const std::string&)>& afterCap
         CCLOG("Warning: CaptureScreen has been called already, don't call more than once in one frame.");
         return;
     }
+
     s_captureScreenCommand.init(std::numeric_limits<float>::max());
     s_captureScreenCommand.func = std::bind(onCaptureScreen, afterCaptured, filename);
-    s_captureScreenListener = Director::getInstance()->getEventDispatcher()->addCustomEventListener(Director::EVENT_AFTER_DRAW, [](EventCustom *event) {
-        auto director = Director::getInstance();
-        director->getEventDispatcher()->removeEventListener((EventListener*)(s_captureScreenListener));
-        s_captureScreenListener = nullptr;
-        director->getRenderer()->addCommand(&s_captureScreenCommand);
-        director->getRenderer()->render();
-    });
+
+    auto captureScreenListener =
+        [](EventCustom* /*event*/) {
+            auto director = Director::getInstance();
+            director->getEventDispatcher()->removeEventListener((EventListener*)(s_captureScreenListener));
+            s_captureScreenListener = nullptr;
+            director->getRenderer()->addCommand(&s_captureScreenCommand);
+            director->getRenderer()->render();
+        };
+
+    auto eventDispatcher = Director::getInstance()->getEventDispatcher();
+
+    s_captureScreenListener = eventDispatcher->addCustomEventListener(Director::EVENT_AFTER_DRAW, captureScreenListener);
 }
 
 Image* captureNode(Node* startNode, float scale)
