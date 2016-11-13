@@ -54,7 +54,7 @@ NavMeshObstacle::NavMeshObstacle()
 : _radius(0.0f)
 , _height(0.0f)
 , _tileCache(nullptr)
-, _obstacleID(-1)
+, _obstacleID(UNDEFINED_OBSTACLE_ID)
 , _syncFlag(NODE_AND_NODE)
 {
 
@@ -73,11 +73,11 @@ bool NavMeshObstacle::initWith(float radius, float height)
     return true;
 }
 
-void cocos2d::NavMeshObstacle::removeFrom(dtTileCache *tileCache)
+void cocos2d::NavMeshObstacle::removeFrom(dtTileCache* /*tileCache*/)
 {
     _tileCache->removeObstacle(_obstacleID);
     _tileCache = nullptr;
-    _obstacleID = -1;
+    _obstacleID = UNDEFINED_OBSTACLE_ID;
 }
 
 void cocos2d::NavMeshObstacle::addTo(dtTileCache *tileCache)
@@ -89,7 +89,7 @@ void cocos2d::NavMeshObstacle::addTo(dtTileCache *tileCache)
 
 void cocos2d::NavMeshObstacle::onExit()
 {
-    if (_obstacleID == -1) return;
+    if (_obstacleID == UNDEFINED_OBSTACLE_ID) return;
     Component::onExit();
     auto scene = _owner->getScene();
     if (scene && scene->getNavMesh()){
@@ -99,7 +99,7 @@ void cocos2d::NavMeshObstacle::onExit()
 
 void cocos2d::NavMeshObstacle::onEnter()
 {
-    if (_obstacleID != -1) return;
+    if (_obstacleID != UNDEFINED_OBSTACLE_ID) return;
     Component::onEnter();
     auto scene = _owner->getScene();
     if (scene && scene->getNavMesh()){
@@ -107,13 +107,13 @@ void cocos2d::NavMeshObstacle::onEnter()
     }
 }
 
-void cocos2d::NavMeshObstacle::postUpdate(float delta)
+void cocos2d::NavMeshObstacle::postUpdate(float /*delta*/)
 {
     if ((_syncFlag & OBSTACLE_TO_NODE) != 0)
         syncToNode();
 }
 
-void cocos2d::NavMeshObstacle::preUpdate(float delta)
+void cocos2d::NavMeshObstacle::preUpdate(float /*delta*/)
 {
     if ((_syncFlag & NODE_TO_OBSTACLE) != 0)
         syncToObstacle();

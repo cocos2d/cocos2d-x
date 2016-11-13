@@ -455,27 +455,6 @@ static bool parseBoolean(const std::string& value)
     return (value.compare("true")==0);
 }
 
-static int parseInt(const std::string& value)
-{
-    // Android NDK 10 doesn't support std::stoi a/ std::stoul
-#if CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID
-    return std::stoi(value);
-#else
-    return atoi(value.c_str());
-#endif
-}
-
-static unsigned int parseUInt(const std::string& value)
-{
-    // Android NDK 10 doesn't support std::stoi a/ std::stoul
-#if CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID
-    return (unsigned int)std::stoul(value);
-#else
-    return (unsigned int)atoi(value.c_str());
-#endif
-
-}
-
 static RenderState::Blend parseBlend(const std::string& value)
 {
     // Convert the string to uppercase for comparison.
@@ -576,62 +555,6 @@ static RenderState::FrontFace parseFrontFace(const std::string& value)
     }
 }
 
-static RenderState::StencilFunction parseStencilFunc(const std::string& value)
-{
-    // Convert string to uppercase for comparison
-    std::string upper(value);
-    std::transform(upper.begin(), upper.end(), upper.begin(), (int(*)(int))toupper);
-    if (upper == "NEVER")
-        return RenderState::STENCIL_NEVER;
-    else if (upper == "LESS")
-        return RenderState::STENCIL_LESS;
-    else if (upper == "EQUAL")
-        return RenderState::STENCIL_EQUAL;
-    else if (upper == "LEQUAL")
-        return RenderState::STENCIL_LEQUAL;
-    else if (upper == "GREATER")
-        return RenderState::STENCIL_GREATER;
-    else if (upper == "NOTEQUAL")
-        return RenderState::STENCIL_NOTEQUAL;
-    else if (upper == "GEQUAL")
-        return RenderState::STENCIL_GEQUAL;
-    else if (upper == "ALWAYS")
-        return RenderState::STENCIL_ALWAYS;
-    else
-    {
-        CCLOG("Unsupported stencil function value (%s). Will default to STENCIL_ALWAYS if errors are treated as warnings)", value.c_str());
-        return RenderState::STENCIL_ALWAYS;
-    }
-}
-
-static RenderState::StencilOperation parseStencilOp(const std::string& value)
-{
-    // Convert string to uppercase for comparison
-    std::string upper(value);
-    std::transform(upper.begin(), upper.end(), upper.begin(), (int(*)(int))toupper);
-    if (upper == "KEEP")
-        return RenderState::STENCIL_OP_KEEP;
-    else if (upper == "ZERO")
-        return RenderState::STENCIL_OP_ZERO;
-    else if (upper == "REPLACE")
-        return RenderState::STENCIL_OP_REPLACE;
-    else if (upper == "INCR")
-        return RenderState::STENCIL_OP_INCR;
-    else if (upper == "DECR")
-        return RenderState::STENCIL_OP_DECR;
-    else if (upper == "INVERT")
-        return RenderState::STENCIL_OP_INVERT;
-    else if (upper == "INCR_WRAP")
-        return RenderState::STENCIL_OP_INCR_WRAP;
-    else if (upper == "DECR_WRAP")
-        return RenderState::STENCIL_OP_DECR_WRAP;
-    else
-    {
-        CCLOG("Unsupported stencil operation value (%s). Will default to STENCIL_OP_KEEP if errors are treated as warnings)", value.c_str());
-        return RenderState::STENCIL_OP_KEEP;
-    }
-}
-
 void RenderState::StateBlock::setState(const std::string& name, const std::string& value)
 {
     if (name.compare("blend") == 0)
@@ -670,38 +593,6 @@ void RenderState::StateBlock::setState(const std::string& name, const std::strin
     {
         setDepthFunction(parseDepthFunc(value));
     }
-//    else if (name.compare("stencilTest") == 0)
-//    {
-//        setStencilTest(parseBoolean(value));
-//    }
-//    else if (name.compare("stencilWrite") == 0)
-//    {
-//        setStencilWrite(parseUInt(value));
-//    }
-//    else if (name.compare("stencilFunc") == 0)
-//    {
-//        setStencilFunction(parseStencilFunc(value), _stencilFunctionRef, _stencilFunctionMask);
-//    }
-//    else if (name.compare("stencilFuncRef") == 0)
-//    {
-//        setStencilFunction(_stencilFunction, parseInt(value), _stencilFunctionMask);
-//    }
-//    else if (name.compare("stencilFuncMask") == 0)
-//    {
-//        setStencilFunction(_stencilFunction, _stencilFunctionRef, parseUInt(value));
-//    }
-//    else if (name.compare("stencilOpSfail") == 0)
-//    {
-//        setStencilOperation(parseStencilOp(value), _stencilOpDpfail, _stencilOpDppass);
-//    }
-//    else if (name.compare("stencilOpDpfail") == 0)
-//    {
-//        setStencilOperation(_stencilOpSfail, parseStencilOp(value), _stencilOpDppass);
-//    }
-//    else if (name.compare("stencilOpDppass") == 0)
-//    {
-//        setStencilOperation(_stencilOpSfail, _stencilOpDpfail, parseStencilOp(value));
-//    }
     else
     {
         CCLOG("Unsupported render state string '%s'.", name.c_str());

@@ -127,9 +127,10 @@ bool GLProgramCache::init()
 {
     loadDefaultGLPrograms();
     
-    auto listener = EventListenerCustom::create(Configuration::CONFIG_FILE_LOADED, [this](EventCustom* event){
-        reloadDefaultGLProgramsRelativeToLights();
-    });
+    auto listener = EventListenerCustom::create(Configuration::CONFIG_FILE_LOADED,
+                                                [this](EventCustom* /*event*/){
+                                                    reloadDefaultGLProgramsRelativeToLights();
+                                                });
     
     Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(listener, -1);
     
