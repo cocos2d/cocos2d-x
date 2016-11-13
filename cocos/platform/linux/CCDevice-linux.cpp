@@ -421,8 +421,7 @@ public:
         int txtHeight = (lineHeight * textLines.size());
         iMaxLineHeight = MAX(txtHeight, textDefinition._dimensions.height);
 
-        _data = (unsigned char*)malloc(sizeof(unsigned char) * (iMaxLineWidth * iMaxLineHeight * 4));
-        memset(_data,0, iMaxLineWidth * iMaxLineHeight*4);
+        _data = (unsigned char*)calloc(iMaxLineWidth * iMaxLineHeight * 4, sizeof(unsigned char));
 
         int iCurYCursor = computeLineStartY(face, eAlignMask, txtHeight, iMaxLineHeight);
 
@@ -447,23 +446,18 @@ public:
                     std::min(static_cast<int>(bitmap.rows) + yoffset, iMaxLineHeight);
                 const int width = bitmap.width;
 
-                for (int y = yoffset; y < max_rows_with_offset; ++y)
+                for (int y = yoffset, bitmap_pos = 0; y < max_rows_with_offset; ++y)
                 {
                     int iY = y * iMaxLineWidth;
 
-                    int bitmap_y = y * width;
-
-                    for (int x = 0; x < width; ++x)
+                    for (int x = 0; x < width; ++x, ++bitmap_pos)
                     {
-                        unsigned char cTemp = bitmap.buffer[bitmap_y + x];
-                        if (cTemp == 0) {
-                            continue;
-                        }
-
                         int iX = xoffset + x;
+
                         //FIXME:wrong text color
-                        int iTemp = cTemp << 24 | cTemp << 16 | cTemp << 8 | cTemp;
-                        *(int*) &_data[(iY + iX) * 4 + 0] = iTemp;
+                        uint32_t iTemp = bitmap.buffer[bitmap_pos];
+                        iTemp = iTemp << 24 | iTemp << 16 | iTemp << 8 | iTemp;
+                        reinterpret_cast<uint32_t*>(_data)[iY + iX] = iTemp;
                     }
                 }
             }
