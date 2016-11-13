@@ -112,6 +112,9 @@ private:
     NavMeshObstacleSyncFlag _syncFlag;
     dtObstacleRef _obstacleID;
     dtTileCache *_tileCache;
+
+    static const dtObstacleRef UNDEFINED_OBSTACLE_ID =
+        static_cast<dtObstacleRef>(-1);
 };
 
 /** @} */
