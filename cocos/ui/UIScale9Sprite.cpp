@@ -524,7 +524,6 @@ namespace ui {
 
             auto capInsets = CC_RECT_POINTS_TO_PIXELS(_capInsetsInternal);
             auto textureRect = CC_RECT_POINTS_TO_PIXELS(_spriteRect);
-            auto spriteRectSize = _spriteRect.size;
             auto originalSize = CC_SIZE_POINTS_TO_PIXELS(_originalSize);
             auto offset = CC_POINT_POINTS_TO_PIXELS(_offset);
             
