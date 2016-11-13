@@ -125,7 +125,7 @@ public:
     
     virtual ~AllocatorStrategyGlobalSmallBlock()
     {
-        for (int i = 0; i <= kMaxSmallBlockPower; ++i)
+        for (unsigned i = 0; i <= kMaxSmallBlockPower; ++i)
             if (_smallBlockAllocators[i])
                 ccAllocatorGlobal.deallocate(_smallBlockAllocators[i]);
         
