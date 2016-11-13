@@ -325,11 +325,16 @@ Animate3DQuality Configuration::getAnimate3DQuality() const
 //
 // generic getters for properties
 //
-const Value& Configuration::getValue(const std::string& key, const Value& defaultValue) const
+const Value& Configuration::getValue(const std::string & key,
+                                     const Value& defaultValue) const
 {
     auto iter = _valueDict.find(key);
+
     if (iter != _valueDict.cend())
-        return _valueDict.at(key);
+    {
+        return iter->second;
+    }
+
 	return defaultValue;
 }
 

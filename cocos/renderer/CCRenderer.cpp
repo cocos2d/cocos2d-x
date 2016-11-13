@@ -736,13 +736,16 @@ void Renderer::drawBatchedTriangles()
     _triBatchesToDraw[0].indicesToDraw = 0;
     _triBatchesToDraw[0].cmd = nullptr;
 
+    using materialid_type =
+        decltype(static_cast<TrianglesCommand*>(nullptr)->getMaterialID());
+
+    materialid_type prevMaterialID = static_cast<materialid_type>(-1);
     int batchesTotal = 0;
-    int prevMaterialID = -1;
     bool firstCommand = true;
 
     for(const auto& cmd : _queuedTriangleCommands)
     {
-        auto currentMaterialID = cmd->getMaterialID();
+        materialid_type currentMaterialID = cmd->getMaterialID();
         const bool batchable = !cmd->isSkipBatching();
 
         fillVerticesAndIndices(cmd);
@@ -750,7 +753,11 @@ void Renderer::drawBatchedTriangles()
         // in the same batch ?
         if (batchable && (prevMaterialID == currentMaterialID || firstCommand))
         {
-            CC_ASSERT(firstCommand || _triBatchesToDraw[batchesTotal].cmd->getMaterialID() == cmd->getMaterialID() && "argh... error in logic");
+            CC_ASSERT((firstCommand
+                       || (_triBatchesToDraw[batchesTotal].cmd->getMaterialID()
+                           == cmd->getMaterialID()))
+                      && "argh... error in logic");
+
             _triBatchesToDraw[batchesTotal].indicesToDraw += cmd->getIndexCount();
             _triBatchesToDraw[batchesTotal].cmd = cmd;
         }

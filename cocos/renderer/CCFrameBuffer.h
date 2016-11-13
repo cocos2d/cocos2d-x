@@ -190,8 +190,8 @@ private:
     Color4F _clearColor;
     float   _clearDepth;
     int8_t  _clearStencil;
-    int _width;
-    int _height;
+    unsigned int _width;
+    unsigned int _height;
     RenderTargetBase* _rt;
     RenderTargetDepthStencil* _rtDepthStencil;
     bool _isDefault;

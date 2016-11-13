@@ -255,7 +255,7 @@ void TextureCache::loadImage()
     }
 }
 
-void TextureCache::addImageAsyncCallBack(float dt)
+void TextureCache::addImageAsyncCallBack(float /*dt*/)
 {
     Texture2D *texture = nullptr;
     AsyncStruct *asyncStruct = nullptr;

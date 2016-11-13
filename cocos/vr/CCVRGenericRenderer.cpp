@@ -59,10 +59,8 @@ VRGenericRenderer::~VRGenericRenderer()
     CC_SAFE_DELETE(_rightDistortionMesh);
 }
 
-void VRGenericRenderer::setup(GLView* glview)
+void VRGenericRenderer::setup(GLView* /*glview*/)
 {
-//    CC_UNUSED(glview);
-
     // set origin to 0,0 in case origin is not 0,0
     auto vp = Camera::getDefaultViewport();
 
