@@ -168,7 +168,7 @@ void ScrollView::setInnerContainerSize(const Size &size)
 {
     float innerSizeWidth = _contentSize.width;
     float innerSizeHeight = _contentSize.height;
-    Size originalInnerSize = _innerContainer->getContentSize();
+
     if (size.width < _contentSize.width)
     {
         CCLOG("Inner width <= scrollview width, it will be force sized!");
@@ -861,7 +861,7 @@ void ScrollView::gatherTouchMove(const Vec2& delta)
     _touchMovePreviousTimestamp = timestamp;
 }
 
-void ScrollView::handlePressLogic(Touch *touch)
+void ScrollView::handlePressLogic(Touch* /*touch*/)
 {
     _bePressed = true;
     _autoScrolling = false;

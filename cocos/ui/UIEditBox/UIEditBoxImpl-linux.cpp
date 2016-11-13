@@ -33,7 +33,7 @@
 #include <gtk/gtk.h>
 
 // destroy dialog when lost focus
-static void dialogFocusOutCallback(GtkWidget* widget, gpointer user_data)
+static void dialogFocusOutCallback(GtkWidget* widget, gpointer /*user_data*/)
 {
     gtk_widget_destroy(widget);
 }

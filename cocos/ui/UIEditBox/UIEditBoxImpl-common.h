@@ -73,8 +73,8 @@ public:
     
     virtual void setContentSize(const Size& size) override;
     
-    virtual void setAnchorPoint(const Vec2& anchorPoint) override {}
-    virtual void setPosition(const Vec2& pos) override {}
+    virtual void setAnchorPoint(const Vec2 & /*anchorPoint*/) override {}
+    virtual void setPosition(const Vec2 & /*pos*/) override {}
     
     /**
      * @js NA
@@ -112,7 +112,7 @@ public:
     virtual const char* getNativeDefaultFontName() = 0;
     virtual void nativeOpenKeyboard() = 0;
     virtual void nativeCloseKeyboard() = 0;
-    virtual void setNativeMaxLength(int maxLength) {};
+    virtual void setNativeMaxLength(int /*maxLength*/) {}
 
 
 private:
@@ -120,7 +120,8 @@ private:
     void         setInactiveText(const char* pText);
     void         refreshLabelAlignment();
     void         placeInactiveLabels();
-    virtual void doAnimationWhenKeyboardMove(float duration, float distance)override {};
+    virtual void doAnimationWhenKeyboardMove(float /*duration*/,
+                                             float /*distance*/) override {}
 
     Label* _label;
     Label* _labelPlaceHolder;
