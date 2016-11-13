@@ -209,7 +209,7 @@ void deleteTexture(GLuint textureId)
 	glDeleteTextures(1, &textureId);
 }
 
-void deleteTextureN(GLuint textureUnit, GLuint textureId)
+void deleteTextureN(GLuint /*textureUnit*/, GLuint textureId)
 {
     deleteTexture(textureId);
 }
