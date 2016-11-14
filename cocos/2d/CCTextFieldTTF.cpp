@@ -52,6 +52,31 @@ static std::size_t _calcCharCount(const char * text)
     return n;
 }
 
+bool TextFieldDelegate::onTextFieldAttachWithIME(TextFieldTTF* /*sender*/)
+{
+    return false;
+}
+
+bool TextFieldDelegate::onTextFieldDetachWithIME(TextFieldTTF* /*sender*/)
+{
+    return false;
+}
+
+bool TextFieldDelegate::onTextFieldInsertText(TextFieldTTF* /*sender*/, const char* /*text*/, size_t /*nLen*/)
+{
+    return false;
+}
+
+bool TextFieldDelegate::onTextFieldDeleteBackward(TextFieldTTF* /*sender*/, const char* /*delText*/, size_t /*nLen*/)
+{
+    return false;
+}
+
+bool TextFieldDelegate::onVisit(TextFieldTTF* /*sender*/, Renderer* /*renderer*/, const Mat4& /*transform*/, uint32_t /*flags*/)
+{
+    return false;
+}
+
 //////////////////////////////////////////////////////////////////////////
 // constructor and destructor
 //////////////////////////////////////////////////////////////////////////
