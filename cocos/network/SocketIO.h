@@ -60,6 +60,7 @@ in the onClose method the pointer should be set to NULL or used to connect to a 
 #define __CC_SOCKETIO_H__
 
 #include <string>
+#include <unordered_map>
 #include "platform/CCPlatformMacros.h"
 #include "base/CCMap.h"
 
