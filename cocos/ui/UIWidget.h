@@ -765,9 +765,7 @@ public:
      *                  otherwise, it will return a widget or a layout.
      * @deprecated use `getCurrentFocusedWidget` instead.
      */
-    CC_DEPRECATED_ATTRIBUTE Widget* getCurrentFocusedWidget(bool isWidget){
-        return getCurrentFocusedWidget();
-    }
+    CC_DEPRECATED_ATTRIBUTE Widget* getCurrentFocusedWidget(bool isWidget);
 
     /**
      * Return a current focused widget in your UI scene.

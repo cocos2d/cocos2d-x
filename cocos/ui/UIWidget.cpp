@@ -1465,6 +1465,10 @@ void Widget::onFocusChange(Widget* widgetLostFocus, Widget* widgetGetFocus)
         widgetGetFocus->setFocused(true);
     }
 }
+    
+Widget* Widget::getCurrentFocusedWidget(bool /*isWidget*/){
+    return getCurrentFocusedWidget();
+}
 
 Widget* Widget::getCurrentFocusedWidget()
 {

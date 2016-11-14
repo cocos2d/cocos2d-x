@@ -95,8 +95,11 @@ int Layer::executeScriptTouchHandler(EventTouch::EventCode eventType, Touch* tou
         ScriptEvent scriptEvent(kTouchEvent, &data);
         return ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
     }
+#else
+    CC_UNUSED_PARAM(eventType);
+    CC_UNUSED_PARAM(touch);
+    CC_UNUSED_PARAM(event);
 #endif
-    //can not reach it
     return 0;
 }
 
@@ -109,6 +112,10 @@ int Layer::executeScriptTouchesHandler(EventTouch::EventCode eventType, const st
         ScriptEvent scriptEvent(kTouchesEvent, &data);
         return ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
     }
+#else
+    CC_UNUSED_PARAM(eventType);
+    CC_UNUSED_PARAM(touches);
+    CC_UNUSED_PARAM(event);
 #endif
     return 0;
 }
@@ -264,6 +271,8 @@ void Layer::onAcceleration(Acceleration* acc, Event* /*unused_event*/)
         ScriptEvent event(kAccelerometerEvent,&data);
         ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
     }
+#else
+    CC_UNUSED_PARAM(acc);
 #endif
 }
 
@@ -280,6 +289,8 @@ void Layer::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* /*unused_event*
         ScriptEvent event(kKeypadEvent,&data);
         ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
     }
+#else
+    CC_UNUSED_PARAM(keyCode);
 #endif
 }
 
@@ -323,6 +334,9 @@ bool Layer::onTouchBegan(Touch *touch, Event *event)
     {
         return executeScriptTouchHandler(EventTouch::EventCode::BEGAN, touch, event) == 0 ? false : true;
     }
+#else
+    CC_UNUSED_PARAM(touch);
+    CC_UNUSED_PARAM(event);
 #endif
     CCASSERT(false, "Layer#ccTouchBegan override me");
     return true;
@@ -336,6 +350,9 @@ void Layer::onTouchMoved(Touch *touch, Event *event)
         executeScriptTouchHandler(EventTouch::EventCode::MOVED, touch, event);
         return;
     }
+#else
+    CC_UNUSED_PARAM(touch);
+    CC_UNUSED_PARAM(event);
 #endif
 }
 
@@ -347,6 +364,9 @@ void Layer::onTouchEnded(Touch *touch, Event *event)
         executeScriptTouchHandler(EventTouch::EventCode::ENDED, touch, event);
         return;
     }
+#else
+    CC_UNUSED_PARAM(touch);
+    CC_UNUSED_PARAM(event);
 #endif
 }
 
@@ -358,6 +378,9 @@ void Layer::onTouchCancelled(Touch *touch, Event *event)
         executeScriptTouchHandler(EventTouch::EventCode::CANCELLED, touch, event);
         return;
     }
+#else
+    CC_UNUSED_PARAM(touch);
+    CC_UNUSED_PARAM(event);
 #endif
 }    
 
@@ -369,6 +392,9 @@ void Layer::onTouchesBegan(const std::vector<Touch*>& touches, Event *event)
         executeScriptTouchesHandler(EventTouch::EventCode::BEGAN, touches, event);
         return;
     }
+#else
+    CC_UNUSED_PARAM(touches);
+    CC_UNUSED_PARAM(event);
 #endif
 }
 
@@ -380,6 +406,9 @@ void Layer::onTouchesMoved(const std::vector<Touch*>& touches, Event *event)
         executeScriptTouchesHandler(EventTouch::EventCode::MOVED, touches, event);
         return;
     }
+#else
+    CC_UNUSED_PARAM(touches);
+    CC_UNUSED_PARAM(event);
 #endif
 }
 
@@ -391,6 +420,9 @@ void Layer::onTouchesEnded(const std::vector<Touch*>& touches, Event *event)
         executeScriptTouchesHandler(EventTouch::EventCode::ENDED, touches, event);
         return;
     }
+#else
+    CC_UNUSED_PARAM(touches);
+    CC_UNUSED_PARAM(event);
 #endif
 }
 
@@ -402,6 +434,9 @@ void Layer::onTouchesCancelled(const std::vector<Touch*>& touches, Event *event)
         executeScriptTouchesHandler(EventTouch::EventCode::CANCELLED, touches, event);
         return;
     }
+#else
+    CC_UNUSED_PARAM(touches);
+    CC_UNUSED_PARAM(event);
 #endif
 }
 

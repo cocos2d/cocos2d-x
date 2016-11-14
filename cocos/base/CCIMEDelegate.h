@@ -116,7 +116,7 @@ protected:
     * @js NA
     * @lua NA
     */
-    virtual void insertText(const char * text, size_t len) {}
+    virtual void insertText(const char* /*text*/, size_t /*len*/) {}
 
     /**
     @brief    Called by IMEDispatcher after the user clicks the backward key.
@@ -146,22 +146,22 @@ protected:
      * @js NA
      * @lua NA
      */
-    virtual void keyboardWillShow(IMEKeyboardNotificationInfo& info)   {}
+    virtual void keyboardWillShow(IMEKeyboardNotificationInfo& /*info*/)   {}
     /**
      * @js NA
      * @lua NA
      */
-    virtual void keyboardDidShow(IMEKeyboardNotificationInfo& info)    {}
+    virtual void keyboardDidShow(IMEKeyboardNotificationInfo& /*info*/)    {}
     /**
      * @js NA
      * @lua NA
      */
-    virtual void keyboardWillHide(IMEKeyboardNotificationInfo& info)   {}
+    virtual void keyboardWillHide(IMEKeyboardNotificationInfo& /*info*/)   {}
     /**
      * @js NA
      * @lua NA
      */
-    virtual void keyboardDidHide(IMEKeyboardNotificationInfo& info)    {}
+    virtual void keyboardDidHide(IMEKeyboardNotificationInfo& /*info*/)    {}
 
 protected:
     /**
