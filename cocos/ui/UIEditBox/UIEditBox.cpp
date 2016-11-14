@@ -61,7 +61,7 @@ EditBox::~EditBox(void)
 }
 
 
-void EditBox::touchDownAction(Ref */*sender*/, TouchEventType controlEvent)
+void EditBox::touchDownAction(Ref* /*sender*/, TouchEventType controlEvent)
 {
     if (controlEvent == Widget::TouchEventType::ENDED) {
         _editBoxImpl->openKeyboard();

@@ -23,3 +23,21 @@
  ****************************************************************************/
 
 #include "editor-support/cocostudio/WidgetCallBackHandlerProtocol.h"
+
+USING_NS_CC;
+using namespace cocos2d::ui;
+
+Widget::ccWidgetTouchCallback onLocateTouchCallback(const std::string& /*callBackName*/)
+{
+    return nullptr;
+}
+
+Widget::ccWidgetClickCallback onLocateClickCallback(const std::string& /*callBackName*/)
+{
+    return nullptr;
+}
+
+Widget::ccWidgetEventCallback onLocateEventCallback(const std::string& /*callBackName*/)
+{
+    return nullptr;
+}

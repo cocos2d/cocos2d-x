@@ -161,6 +161,12 @@ void MotionStreak3D::setPosition3D(const Vec3& position)
     _positionR = position;
 }
 
+void MotionStreak3D::setRotation3D(const Vec3& /*rotation*/)
+{}
+
+void MotionStreak3D::setRotationQuat(const Quaternion& /*quat*/)
+{}
+
 const Vec2& MotionStreak3D::getPosition() const
 {
     _positionR2D.x = _positionR.x;

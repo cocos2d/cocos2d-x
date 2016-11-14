@@ -79,6 +79,10 @@ void PUSlaveEmitter::particleEmitted(PUParticleSystem3D* /*particleSystem*/, PUP
     static_cast<PUParticleSystem3D *>(_particleSystem)->forceEmission(this, 1); // Just emit one, to be in sync with the master.
     _isEnabled = false;
 }
+
+void PUSlaveEmitter::particleExpired(PUParticleSystem3D* /*particleSystem*/, PUParticle3D* /*particle*/)
+{}
+
 //-----------------------------------------------------------------------
 void PUSlaveEmitter::initParticlePosition(PUParticle3D* particle)
 {
