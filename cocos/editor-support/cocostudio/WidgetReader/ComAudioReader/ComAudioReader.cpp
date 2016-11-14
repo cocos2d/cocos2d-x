@@ -194,4 +194,9 @@ namespace cocostudio
         return component;
     }
     
+    cocos2d::Node* createNodeWithFlatBuffers(const flatbuffers::Table*)
+    {
+        return nullptr;
+    }
+
 }

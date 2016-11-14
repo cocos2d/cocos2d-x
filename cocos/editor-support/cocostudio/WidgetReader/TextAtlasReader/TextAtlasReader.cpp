@@ -255,13 +255,10 @@ namespace cocostudio
             {
                 const char* cmfPath = cmftDic->path()->c_str();
                 
-                bool fileExist = false;
                 std::string errorFilePath = "";
                 
                 if (FileUtils::getInstance()->isFileExist(cmfPath))
                 {
-                    fileExist = true;
-                    
                     std::string stringValue = options->stringValue()->c_str();
                     int itemWidth = options->itemWidth();
                     int itemHeight = options->itemHeight();
@@ -274,7 +271,6 @@ namespace cocostudio
                 else
                 {
                     errorFilePath = cmfPath;
-                    fileExist = false;
                 }
                 break;
             }
