@@ -80,6 +80,8 @@ public:
         _highestCount = 0;
         AllocatorDiagnostics::instance()->trackAllocator(this);
         AllocatorBase::setTag(tag ? tag : typeid(AllocatorStrategyFixedBlock).name());
+#else
+        CC_UNUSED_PARAM(tag);
 #endif
     }
     

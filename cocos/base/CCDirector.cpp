@@ -223,14 +223,23 @@ void Director::setDefaultValues(void)
 
     // GL projection
     std::string projection = conf->getValue("cocos2d.x.gl.projection", Value("3d")).asString();
+
     if (projection == "3d")
+    {
         _projection = Projection::_3D;
+    }
     else if (projection == "2d")
+    {
         _projection = Projection::_2D;
+    }
     else if (projection == "custom")
+    {
         _projection = Projection::CUSTOM;
+    }
     else
+    {
         CCASSERT(false, "Invalid projection value");
+    }
 
     // Default pixel format for PNG images with alpha
     std::string pixel_format = conf->getValue("cocos2d.x.texture.pixel_format_for_png", Value("rgba8888")).asString();

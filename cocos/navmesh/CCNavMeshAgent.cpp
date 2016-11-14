@@ -327,7 +327,7 @@ void NavMeshAgent::preUpdate(float delta)
     }
 }
 
-void NavMeshAgent::postUpdate(float delta)
+void NavMeshAgent::postUpdate(float /*delta*/)
 {
     if ((_syncFlag & AGENT_TO_NODE) != 0)
         syncToNode();

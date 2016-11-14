@@ -186,16 +186,19 @@ namespace cocostudio
                             tileset = *iter;
                             if (tileset)
                             {
-                                for( int y=0; y < size.height; y++ )
+                                for (unsigned y = 0, height = size.height; y < height; y++)
                                 {
-                                    for( int x=0; x < size.width; x++ )
+                                    for (unsigned x = 0, width = size.width; x < width; x++)
                                     {
-                                        int pos = static_cast<int>(x + size.width * y);
-                                        int gid = layerInfo->_tiles[ pos ];
+                                        auto pos = x + width * y;
+                                        auto gid = layerInfo->_tiles[ pos ];
                                         
                                         if( gid != 0 )
                                         {
-                                            if( (gid & kTMXFlippedMask) >= tileset->_firstGid )
+                                            if (tileset->_firstGid < 0
+                                                || ((gid & kTMXFlippedMask)
+                                                    >= static_cast<unsigned>(tileset->_firstGid))
+                                            )
                                             {
                                                 valid = true;
                                                 break;

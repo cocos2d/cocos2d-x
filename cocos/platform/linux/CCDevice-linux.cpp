@@ -104,12 +104,12 @@ int Device::getDPI()
     return dpi;
 }
 
-void Device::setAccelerometerEnabled(bool isEnabled)
+void Device::setAccelerometerEnabled(bool /*isEnabled*/)
 {
 
 }
 
-void Device::setAccelerometerInterval(float interval)
+void Device::setAccelerometerInterval(float /*interval*/)
 {
 
 }
@@ -172,7 +172,7 @@ public:
         return 0;
     }
 
-    bool isBreakPoint(FT_UInt currentCharacter, FT_UInt previousCharacter) {
+    bool isBreakPoint(FT_UInt /*currentCharacter*/, FT_UInt previousCharacter) {
         if ( previousCharacter == '-' || previousCharacter == '/' || previousCharacter == '\\' ) {
             // we can insert a line break after one of these characters
             return true;
@@ -180,7 +180,7 @@ public:
         return false;
     }
 
-    bool divideString(FT_Face face, const char* sText, int iMaxWidth, int iMaxHeight) {
+    bool divideString(FT_Face face, const char* sText, int iMaxWidth, int /*iMaxHeight*/) {
         const char* pText = sText;
         textLines.clear();
         iMaxLineWidth = 0;
@@ -310,7 +310,7 @@ public:
     /**
      * compute the start pos of every line
      */
-    int computeLineStart(FT_Face face, Device::TextAlign eAlignMask, int line) {
+    int computeLineStart(FT_Face /*face*/, Device::TextAlign eAlignMask, int line) {
                 int lineWidth = textLines.at(line).lineWidth;
         if (eAlignMask == Device::TextAlign::CENTER || eAlignMask == Device::TextAlign::TOP || eAlignMask == Device::TextAlign::BOTTOM) {
             return (iMaxLineWidth - lineWidth) / 2;
@@ -421,8 +421,7 @@ public:
         int txtHeight = (lineHeight * textLines.size());
         iMaxLineHeight = MAX(txtHeight, textDefinition._dimensions.height);
 
-        _data = (unsigned char*)malloc(sizeof(unsigned char) * (iMaxLineWidth * iMaxLineHeight * 4));
-        memset(_data,0, iMaxLineWidth * iMaxLineHeight*4);
+        _data = (unsigned char*)calloc(iMaxLineWidth * iMaxLineHeight * 4, sizeof(unsigned char));
 
         int iCurYCursor = computeLineStartY(face, eAlignMask, txtHeight, iMaxLineHeight);
 
@@ -438,30 +437,27 @@ public:
                     continue;
                 }
 
-                FT_Bitmap& bitmap = face->glyph->bitmap;
+                FT_Bitmap & bitmap = face->glyph->bitmap;
+
                 int yoffset = iCurYCursor - (face->glyph->metrics.horiBearingY >> 6);
                 int xoffset = iCurXCursor + glyph.paintPosition;
 
-                for (int y = 0; y < bitmap.rows; ++y) {
-                    int iY = yoffset + y;
-                    if (iY>=iMaxLineHeight) {
-                        //exceed the height truncate
-                        break;
-                    }
-                    iY *= iMaxLineWidth;
+                const int max_y_with_offset
+                    = std::min(static_cast<int>(bitmap.rows) + yoffset, iMaxLineHeight)
+                    * iMaxLineWidth;
 
-                    int bitmap_y = y * bitmap.width;
+                const int max_x_with_offset = xoffset + bitmap.width;
 
-                    for (int x = 0; x < bitmap.width; ++x) {
-                        unsigned char cTemp = bitmap.buffer[bitmap_y + x];
-                        if (cTemp == 0) {
-                            continue;
-                        }
+                unsigned bitmap_pos = 0;
 
-                        int iX = xoffset + x;
+                for (int y = yoffset * iMaxLineWidth; y < max_y_with_offset; y += iMaxLineWidth)
+                {
+                    for (int x = xoffset; x < max_x_with_offset; ++x)
+                    {
                         //FIXME:wrong text color
-                        int iTemp = cTemp << 24 | cTemp << 16 | cTemp << 8 | cTemp;
-                        *(int*) &_data[(iY + iX) * 4 + 0] = iTemp;
+                        uint32_t iTemp = bitmap.buffer[bitmap_pos++];
+                        iTemp = iTemp << 24 | iTemp << 16 | iTemp << 8 | iTemp;
+                        reinterpret_cast<uint32_t*>(_data)[y + x] = iTemp;
                     }
                 }
             }

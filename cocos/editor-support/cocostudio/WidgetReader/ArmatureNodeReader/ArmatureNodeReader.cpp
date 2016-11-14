@@ -125,15 +125,12 @@ void ArmatureNodeReader::setPropsWithFlatBuffers(cocos2d::Node *node,
 	auto* custom = static_cast<Armature*>(node);
 	auto options = (flatbuffers::CSArmatureNodeOption*)nodeOptions;
     
-    bool fileExist = false;
     std::string errorFilePath = "";
 
 	std::string filepath(options->fileData()->path()->c_str());    
     
     if (FileUtils::getInstance()->isFileExist(filepath))
     {
-        fileExist = true;
-        
         std::string fullpath = FileUtils::getInstance()->fullPathForFilename(filepath);
         
         std::string dirpath = fullpath.substr(0, fullpath.find_last_of("/"));
@@ -153,7 +150,6 @@ void ArmatureNodeReader::setPropsWithFlatBuffers(cocos2d::Node *node,
     else
     {
         errorFilePath = filepath;
-        fileExist = false;
     }
 }
 
@@ -180,10 +176,12 @@ std::string ArmatureNodeReader::getArmatureName(const std::string& exporJsonPath
 	size_t end = exporJsonPath.find_last_of(".");
 	size_t start = exporJsonPath.find_last_of("\\") + 1;
 	size_t start1 = exporJsonPath.find_last_of("/") + 1;
+
 	if (start < start1)
 		start = start1;
 
-	if (start == -1)
+	if (start == std::string::npos)
 		start = 0;
+
 	return  exporJsonPath.substr(start, end - start);
 }
