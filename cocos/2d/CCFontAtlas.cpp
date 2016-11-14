@@ -209,7 +209,7 @@ void FontAtlas::conversionU16TOGB2312(const std::u16string& u16Text, std::unorde
 #else
         if (_iconv == nullptr)
         {
-            _iconv = iconv_open("gb2312", "utf-16le");
+            _iconv = iconv_open("GBK//TRANSLIT", "UTF-16LE");
         }
 
         if (_iconv == (iconv_t)-1)
