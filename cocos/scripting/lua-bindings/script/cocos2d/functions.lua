@@ -338,9 +338,8 @@ function math.angle2radian(angle)
     return angle * pi_div_180
 end
 
-local pi_mul_180 = math.pi * 180
 function math.radian2angle(radian)
-    return radian / pi_mul_180
+    return radian * 180 / math.pi
 end
 
 function io.exists(path)
