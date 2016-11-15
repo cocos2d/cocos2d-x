@@ -36,13 +36,13 @@ _behaviourScale(Vec3::ONE)
 PUBehaviour::~PUBehaviour( void )
 {}
 
-void updateBehaviour(PUParticle3D* /*particle*/, float /*deltaTime*/)
+void PUBehaviour::updateBehaviour(PUParticle3D* /*particle*/, float /*deltaTime*/)
 {}
 
-void initParticleForEmission(PUParticle3D* /*particle*/)
+void PUBehaviour::initParticleForEmission(PUParticle3D* /*particle*/)
 {}
 
-void initParticleForExpiration(PUParticle3D* /*particle*/, float /*timeElapsed*/)
+void PUBehaviour::initParticleForExpiration(PUParticle3D* /*particle*/, float /*timeElapsed*/)
 {}
 
 PUBehaviour* PUBehaviour::clone()
