@@ -272,14 +272,14 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
                             break;
                         }
                     }
-                    break;
+                } else {
+                    this.queueEvent(new Runnable() {
+                        @Override
+                        public void run() {
+                            Cocos2dxGLSurfaceView.this.mCocos2dxRenderer.handleActionMove(ids, xs, ys);
+                        }
+                    });
                 }
-                this.queueEvent(new Runnable() {
-                    @Override
-                    public void run() {
-                        Cocos2dxGLSurfaceView.this.mCocos2dxRenderer.handleActionMove(ids, xs, ys);
-                    }
-                });
                 break;
 
             case MotionEvent.ACTION_POINTER_UP:
@@ -330,14 +330,14 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
                             break;
                         }
                     }
-                    break;
+                } else {
+                    this.queueEvent(new Runnable() {
+                        @Override
+                        public void run() {
+                            Cocos2dxGLSurfaceView.this.mCocos2dxRenderer.handleActionCancel(ids, xs, ys);
+                        }
+                    });
                 }
-                this.queueEvent(new Runnable() {
-                    @Override
-                    public void run() {
-                        Cocos2dxGLSurfaceView.this.mCocos2dxRenderer.handleActionCancel(ids, xs, ys);
-                    }
-                });
                 break;
         }
 
