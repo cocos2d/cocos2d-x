@@ -629,6 +629,11 @@ void Scheduler::unscheduleAllWithMinPriority(int minPriority)
 #if CC_ENABLE_SCRIPT_BINDING
     _scriptHandlerEntries.clear();
 #endif
+    
+    {
+        std::unique_lock<std::mutex> lock(_performMutex);
+        _functionsToPerform.clear();
+    }
 }
 
 void Scheduler::unscheduleAllForTarget(void *target)
