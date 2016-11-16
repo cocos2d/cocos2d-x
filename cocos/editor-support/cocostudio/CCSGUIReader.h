@@ -95,9 +95,9 @@ protected:
     std::string m_strFilePath;
     cocos2d::ValueMap _fileDesignSizes;
     
-    typedef std::map<std::string, SEL_ParseEvent>  ParseCallBackMap;
+    typedef std::unordered_map<std::string, SEL_ParseEvent>  ParseCallBackMap;
     ParseCallBackMap _mapParseSelector;
-    typedef std::map<std::string, Ref*> ParseObjectMap;
+    typedef std::unordered_map<std::string, Ref*> ParseObjectMap;
     ParseObjectMap _mapObject;
     
 public:

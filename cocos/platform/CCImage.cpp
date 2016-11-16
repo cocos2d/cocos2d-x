@@ -213,7 +213,7 @@ namespace
         
         
     // v2
-    typedef const std::map<PVR2TexturePixelFormat, Texture2D::PixelFormat> _pixel2_formathash;
+    typedef const std::unordered_map<PVR2TexturePixelFormat, Texture2D::PixelFormat> _pixel2_formathash;
     
     static const _pixel2_formathash::value_type v2_pixel_formathash_value[] =
     {
@@ -235,7 +235,7 @@ namespace
     static const _pixel2_formathash v2_pixel_formathash(v2_pixel_formathash_value, v2_pixel_formathash_value + PVR2_MAX_TABLE_ELEMENTS);
         
     // v3
-    typedef const std::map<PVR3TexturePixelFormat, Texture2D::PixelFormat> _pixel3_formathash;
+    typedef const std::unordered_map<PVR3TexturePixelFormat, Texture2D::PixelFormat> _pixel3_formathash;
     static _pixel3_formathash::value_type v3_pixel_formathash_value[] =
     {
         _pixel3_formathash::value_type(PVR3TexturePixelFormat::BGRA8888,    Texture2D::PixelFormat::BGRA8888),

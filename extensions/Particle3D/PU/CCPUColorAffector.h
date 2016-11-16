@@ -36,8 +36,8 @@ NS_CC_BEGIN
 class  CC_DLL PUColorAffector : public PUAffector
 {
 public:
-    typedef std::map<float, Vec4> ColorMap;
-    typedef std::map<float, Vec4>::iterator ColorMapIterator;
+    typedef std::unordered_map<float, Vec4> ColorMap;
+    typedef std::unordered_map<float, Vec4>::iterator ColorMapIterator;
     enum ColorOperation
     {
         CAO_MULTIPLY,

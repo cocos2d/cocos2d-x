@@ -65,7 +65,7 @@ private:
     SpriteFrameCacheHelper();
     ~SpriteFrameCacheHelper();
 
-    std::map<std::string, std::vector<cocos2d::SpriteFrame*> > _usingSpriteFrames;
+    std::unordered_map<std::string, std::vector<cocos2d::SpriteFrame*> > _usingSpriteFrames;
     static SpriteFrameCacheHelper *_spriteFrameCacheHelper;
 };
 

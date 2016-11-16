@@ -41,7 +41,7 @@ namespace {
     static Touch* g_touches[EventTouch::MAX_TOUCHES] = { nullptr };
     static unsigned int g_indexBitsUsed = 0;
     // System touch pointer ID (It may not be ascending order number) <-> Ascending order number from 0
-    static std::map<intptr_t, int> g_touchIdReorderMap;
+    static std::unordered_map<intptr_t, int> g_touchIdReorderMap;
     
     static int getUnUsedIndex()
     {

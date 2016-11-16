@@ -214,7 +214,7 @@ protected:
     /** emit frame event, call it when enter a frame*/
     virtual void emitFrameEvent(Frame* frame);
 
-    std::map<int, cocos2d::Vector<Timeline*>> _timelineMap;
+    std::unordered_map<int, cocos2d::Vector<Timeline*>> _timelineMap;
     cocos2d::Vector<Timeline*> _timelineList;
 
     int     _duration;
@@ -229,8 +229,8 @@ protected:
 
     std::function<void(Frame*)> _frameEventListener;
     std::function<void()> _lastFrameListener;
-    std::map<int, std::map<std::string, std::function<void()> > > _frameEndCallFuncs;
-    std::map<std::string, AnimationInfo> _animationInfos;
+    std::unordered_map<int, std::unordered_map<std::string, std::function<void()> > > _frameEndCallFuncs;
+    std::unordered_map<std::string, AnimationInfo> _animationInfos;
 };
 
 NS_TIMELINE_END
