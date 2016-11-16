@@ -329,11 +329,7 @@ void Scale9Sprite::setInsetBottom(float insetBottom)
 
 void Scale9Sprite::updateCapInset()
 {
-    Rect capInsets(Rect::ZERO);
-
-    // don't change it is already zero
-    if (_insetLeft != 0 || _insetRight !=0 || _insetTop !=0 || _insetBottom != 0)
-        capInsets.setRect(_insetLeft,
+    Rect capInsets(_insetLeft,
                    _insetTop,
                    _originalContentSize.width - _insetRight - _insetLeft,
                    _originalContentSize.height - _insetBottom -_insetTop);
@@ -466,8 +462,8 @@ void Scale9Sprite::setCapInsets(const cocos2d::Rect &insetsCopy)
     // When Insets == Zero --> we should use a 1/3 of its untrimmed size
     if (insets.equals(Rect::ZERO)) {
         insets = Rect( _originalContentSize.width / 3.0f,
-                      _originalContentSize.width / 3.0f,
                       _originalContentSize.height / 3.0f,
+                      _originalContentSize.width / 3.0f,
                       _originalContentSize.height / 3.0f);
     }
 
@@ -488,8 +484,8 @@ void Scale9Sprite::setCapInsets(const cocos2d::Rect &insetsCopy)
 
     // centerRect uses the trimmed frame origin as 0,0.
     // so, recenter inset rect
-    insets.setRect(x1 - (_rect.origin.x),
-                   y1 - (_rect.origin.y),
+    insets.setRect(x1 - (_rect.origin.x - _offsetPosition.x),
+                   y1 - (_rect.origin.y - _offsetPosition.y),
                    x2 - x1,
                    y2 - y1);
 

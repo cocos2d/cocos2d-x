@@ -110,7 +110,7 @@ bool UIScale9SpriteTest::init()
         sp1->setColor(Color3B::GREEN);
         this->addChild(sp1);
         sp1->runAction((FiniteTimeAction*)action2);
-        
+
         cocos2d::ui::Scale9Sprite *sp2 = ui::Scale9Sprite::create("cocosui/animationbuttonnormal.png");
         sp2->setPosition(350, 160);
         sp2->setPreferredSize(sp1->getContentSize() * 1.2f);
@@ -120,7 +120,7 @@ bool UIScale9SpriteTest::init()
         this->addChild(sp2);
         auto action3 = action->clone();
         sp2->runAction((FiniteTimeAction*)action3);
-               
+
         return true;
     }
     return false;
