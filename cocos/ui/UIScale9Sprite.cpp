@@ -473,19 +473,19 @@ void Scale9Sprite::setCapInsets(const cocos2d::Rect &insetsCopy)
 
     // use _rect coordinates. recenter origin to calculate the
     // intersecting rectangle
-    insets.origin.x += (_rect.origin.x - _offsetPosition.x);
-    insets.origin.y += (_rect.origin.y - _offsetPosition.y);
+    insets.origin.x += (_originalContentSize.width - _rect.size.width) / 2 + _offsetPosition.x;
+    insets.origin.y += (_originalContentSize.height - _rect.size.height) / 2 + _offsetPosition.y;
 
     // intersecting rectangle
-    const float x1 = std::max(insets.origin.x, _rect.origin.x);
-    const float y1 = std::max(insets.origin.y, _rect.origin.y);
-    const float x2 = std::min(insets.origin.x + insets.size.width, _rect.origin.x + _rect.size.width);
-    const float y2 = std::min(insets.origin.y + insets.size.height, _rect.origin.y + _rect.size.height);
+    const float x1 = std::max(insets.origin.x, 0.0f);
+    const float y1 = std::max(insets.origin.y, 0.0f);
+    const float x2 = std::min(insets.origin.x + insets.size.width, 0.0f + _rect.size.width);
+    const float y2 = std::min(insets.origin.y + insets.size.height, 0.0f + _rect.size.height);
 
     // centerRect uses the trimmed frame origin as 0,0.
     // so, recenter inset rect
-    insets.setRect(x1 - (_rect.origin.x - _offsetPosition.x),
-                   y1 - (_rect.origin.y - _offsetPosition.y),
+    insets.setRect(x1,
+                   y1,
                    x2 - x1,
                    y2 - y1);
 
