@@ -34,12 +34,12 @@ PUOnEmissionObserverTranslator::PUOnEmissionObserverTranslator()
 {
 }
 //-------------------------------------------------------------------------
-bool PUOnEmissionObserverTranslator::translateChildProperty( PUScriptCompiler* compiler, PUAbstractNode *node )
+bool PUOnEmissionObserverTranslator::translateChildProperty( PUScriptCompiler* /*compiler*/, PUAbstractNode* /*node*/ )
 {
     return false;
 }
 
-bool PUOnEmissionObserverTranslator::translateChildObject( PUScriptCompiler* compiler, PUAbstractNode *node )
+bool PUOnEmissionObserverTranslator::translateChildObject( PUScriptCompiler* /*compiler*/, PUAbstractNode* /*node*/ )
 {
     // No objects
     return false;

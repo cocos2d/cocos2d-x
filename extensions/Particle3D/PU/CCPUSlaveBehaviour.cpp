@@ -39,7 +39,7 @@ PUSlaveBehaviour::~PUSlaveBehaviour()
 
 }
 
-void PUSlaveBehaviour::updateBehaviour( PUParticle3D *particle, float deltaTime )
+void PUSlaveBehaviour::updateBehaviour( PUParticle3D *particle, float /*deltaTime*/ )
 {
     if (masterParticle && !masterParticle->hasEventFlags(PUParticle3D::PEF_EXPIRED))
     {

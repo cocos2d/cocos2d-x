@@ -38,7 +38,7 @@ PUOnEventFlagObserver::PUOnEventFlagObserver(void) :
 {
 }
 //-----------------------------------------------------------------------
-bool PUOnEventFlagObserver::observe (PUParticle3D* particle, float timeElapsed)
+bool PUOnEventFlagObserver::observe (PUParticle3D* particle, float /*timeElapsed*/)
 {
     if (!particle)
         return false;

@@ -54,15 +54,16 @@ public:
     virtual void prepare() {};
     virtual void unPrepare() {};
 
-    virtual void updateBehaviour(PUParticle3D *particle, float deltaTime) {};
+    virtual void updateBehaviour(PUParticle3D *particle, float deltaTime);
 
     /** Perform initialising activities as soon as the particle with which the ParticleBehaviour is
         associated, is emitted.
     */
-    virtual void initParticleForEmission(PUParticle3D* particle){/* No implementation */};
+    
+    virtual void initParticleForEmission(PUParticle3D* particle);
     /** Perform some action if a particle expires.
     */
-    virtual void initParticleForExpiration(PUParticle3D* particle, float timeElapsed){/* No implementation */};
+    virtual void initParticleForExpiration(PUParticle3D* particle, float timeElapsed);
 
     virtual PUBehaviour* clone();
     virtual void copyAttributesTo (PUBehaviour* behaviour);

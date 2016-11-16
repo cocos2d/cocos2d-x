@@ -73,7 +73,7 @@ bool NavMeshObstacle::initWith(float radius, float height)
     return true;
 }
 
-void cocos2d::NavMeshObstacle::removeFrom(dtTileCache *tileCache)
+void cocos2d::NavMeshObstacle::removeFrom(dtTileCache* /*tileCache*/)
 {
     _tileCache->removeObstacle(_obstacleID);
     _tileCache = nullptr;
@@ -107,13 +107,13 @@ void cocos2d::NavMeshObstacle::onEnter()
     }
 }
 
-void cocos2d::NavMeshObstacle::postUpdate(float delta)
+void cocos2d::NavMeshObstacle::postUpdate(float /*delta*/)
 {
     if ((_syncFlag & OBSTACLE_TO_NODE) != 0)
         syncToNode();
 }
 
-void cocos2d::NavMeshObstacle::preUpdate(float delta)
+void cocos2d::NavMeshObstacle::preUpdate(float /*delta*/)
 {
     if ((_syncFlag & NODE_TO_OBSTACLE) != 0)
         syncToObstacle();

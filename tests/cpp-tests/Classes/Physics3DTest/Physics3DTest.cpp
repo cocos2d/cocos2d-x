@@ -111,7 +111,7 @@ bool Physics3DTestDemo::init()
         
         TTFConfig ttfConfig("fonts/arial.ttf", 10);
         auto label = Label::createWithTTF(ttfConfig,"DebugDraw OFF");
-        auto menuItem = MenuItemLabel::create(label, [=](Ref *ref){
+        auto menuItem = MenuItemLabel::create(label, [=](Ref* /*ref*/){
             if (getPhysics3DWorld()->isDebugDrawEnabled()){
                 getPhysics3DWorld()->setDebugDrawEnable(false);
                 label->setString("DebugDraw OFF");
@@ -182,7 +182,7 @@ Physics3DTestDemo::Physics3DTestDemo( void )
 
 }
 
-void Physics3DTestDemo::update( float delta )
+void Physics3DTestDemo::update( float /*delta*/ )
 {
     
 }

@@ -37,7 +37,7 @@ PUDoEnableComponentEventHandler::PUDoEnableComponentEventHandler(void) :
 {
 }
 //-----------------------------------------------------------------------
-void PUDoEnableComponentEventHandler::handle (PUParticleSystem3D* particleSystem, PUParticle3D* particle, float timeElapsed)
+void PUDoEnableComponentEventHandler::handle (PUParticleSystem3D* particleSystem, PUParticle3D* /*particle*/, float /*timeElapsed*/)
 {
     /** Search for the component.
     */

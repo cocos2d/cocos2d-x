@@ -85,7 +85,7 @@ PUColorAffector::ColorMapIterator PUColorAffector::findNearestColorMapIterator(f
     return --it;
 }
 
-void PUColorAffector::updatePUAffector( PUParticle3D *particle, float deltaTime )
+void PUColorAffector::updatePUAffector( PUParticle3D *particle, float /*deltaTime*/ )
 {
     // Fast rejection
     if (_colorMap.empty())

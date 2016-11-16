@@ -308,9 +308,9 @@ bool PUScriptTranslator::passValidateProperty(PUScriptCompiler* compiler,
 }
 
 //-------------------------------------------------------------------------
-bool PUScriptTranslator::passValidatePropertyNoValues(PUScriptCompiler* compiler,
+bool PUScriptTranslator::passValidatePropertyNoValues(PUScriptCompiler* /*compiler*/,
                                                     PUPropertyAbstractNode* prop,
-                                                    const std::string& token2)
+                                                    const std::string& /*token2*/)
 {
     if(prop->values.empty())
     {
@@ -320,9 +320,9 @@ bool PUScriptTranslator::passValidatePropertyNoValues(PUScriptCompiler* compiler
     return true;
 }
 //-------------------------------------------------------------------------
-bool PUScriptTranslator::passValidatePropertyNumberOfValues(PUScriptCompiler* compiler,
+bool PUScriptTranslator::passValidatePropertyNumberOfValues(PUScriptCompiler* /*compiler*/,
                                                           PUPropertyAbstractNode* prop,
-                                                          const std::string& token2,
+                                                          const std::string& /*token2*/,
                                                           unsigned short numberOfValues)
 {
     if(prop->values.size() > numberOfValues)
@@ -332,9 +332,9 @@ bool PUScriptTranslator::passValidatePropertyNumberOfValues(PUScriptCompiler* co
     return true;
 }
 //-------------------------------------------------------------------------
-bool PUScriptTranslator::passValidatePropertyNumberOfValuesRange(PUScriptCompiler* compiler,
+bool PUScriptTranslator::passValidatePropertyNumberOfValuesRange(PUScriptCompiler* /*compiler*/,
                                                                PUPropertyAbstractNode* prop,
-                                                               const std::string& token2,
+                                                               const std::string& /*token2*/,
                                                                unsigned short minNumberOfValues,
                                                                unsigned short maxNumberOfValues)
 {
@@ -345,7 +345,7 @@ bool PUScriptTranslator::passValidatePropertyNumberOfValuesRange(PUScriptCompile
     return true;
 }
 //-------------------------------------------------------------------------
-bool PUScriptTranslator::passValidatePropertyValidReal(PUScriptCompiler* compiler,
+bool PUScriptTranslator::passValidatePropertyValidReal(PUScriptCompiler* /*compiler*/,
                                                      PUPropertyAbstractNode* prop)
 {
     float val = 0.0f;
@@ -360,7 +360,7 @@ bool PUScriptTranslator::passValidatePropertyValidReal(PUScriptCompiler* compile
 }
 
 //-------------------------------------------------------------------------
-bool PUScriptTranslator::passValidatePropertyValidInt(PUScriptCompiler* compiler,
+bool PUScriptTranslator::passValidatePropertyValidInt(PUScriptCompiler* /*compiler*/,
                                                     PUPropertyAbstractNode* prop)
 {
     int val = 0;
@@ -374,7 +374,7 @@ bool PUScriptTranslator::passValidatePropertyValidInt(PUScriptCompiler* compiler
     return false;
 }
 //-------------------------------------------------------------------------
-bool PUScriptTranslator::passValidatePropertyValidUint(PUScriptCompiler* compiler,
+bool PUScriptTranslator::passValidatePropertyValidUint(PUScriptCompiler* /*compiler*/,
                                                      PUPropertyAbstractNode* prop)
 {
     unsigned int val = 0;
@@ -389,7 +389,7 @@ bool PUScriptTranslator::passValidatePropertyValidUint(PUScriptCompiler* compile
 }
 
 //-------------------------------------------------------------------------
-bool PUScriptTranslator::passValidatePropertyValidBool(PUScriptCompiler* compiler,
+bool PUScriptTranslator::passValidatePropertyValidBool(PUScriptCompiler* /*compiler*/,
                                                      PUPropertyAbstractNode* prop)
 {
     bool val;
@@ -403,7 +403,7 @@ bool PUScriptTranslator::passValidatePropertyValidBool(PUScriptCompiler* compile
     return false;
 }
 //-------------------------------------------------------------------------
-bool PUScriptTranslator::passValidatePropertyValidVector2(PUScriptCompiler* compiler, 
+bool PUScriptTranslator::passValidatePropertyValidVector2(PUScriptCompiler* /*compiler*/,
                                                         PUPropertyAbstractNode* prop)
 {
     Vec2 val;
@@ -417,7 +417,7 @@ bool PUScriptTranslator::passValidatePropertyValidVector2(PUScriptCompiler* comp
     return false;
 }
 //-------------------------------------------------------------------------
-bool PUScriptTranslator::passValidatePropertyValidVector3(PUScriptCompiler* compiler, 
+bool PUScriptTranslator::passValidatePropertyValidVector3(PUScriptCompiler* /*compiler*/,
                                                         PUPropertyAbstractNode* prop)
 {
     Vec3 val;
@@ -431,7 +431,7 @@ bool PUScriptTranslator::passValidatePropertyValidVector3(PUScriptCompiler* comp
     return false;
 }
 //-------------------------------------------------------------------------
-bool PUScriptTranslator::passValidatePropertyValidVector4(PUScriptCompiler* compiler, 
+bool PUScriptTranslator::passValidatePropertyValidVector4(PUScriptCompiler* /*compiler*/,
                                                         PUPropertyAbstractNode* prop)
 {
     Vec4 val;
@@ -445,7 +445,7 @@ bool PUScriptTranslator::passValidatePropertyValidVector4(PUScriptCompiler* comp
     return false;
 }
 //-------------------------------------------------------------------------
-bool PUScriptTranslator::passValidatePropertyValidQuaternion(PUScriptCompiler* compiler, 
+bool PUScriptTranslator::passValidatePropertyValidQuaternion(PUScriptCompiler* /*compiler*/,
                                                            PUPropertyAbstractNode* prop)
 {
     Quaternion val;
@@ -459,8 +459,8 @@ bool PUScriptTranslator::passValidatePropertyValidQuaternion(PUScriptCompiler* c
     return false;
 }
 //-------------------------------------------------------------------------
-void PUScriptTranslator::errorUnexpectedToken(PUScriptCompiler* compiler, 
-                                            PUAbstractNode* token2)
+void PUScriptTranslator::errorUnexpectedToken(PUScriptCompiler* /*compiler*/,
+                                            PUAbstractNode* /*token2*/)
 {
 //    CCLOGERROR("PU Compiler: token2 is not recognized tokenFile:%s tokenLine:%s",)
 //    printf()
@@ -468,8 +468,8 @@ void PUScriptTranslator::errorUnexpectedToken(PUScriptCompiler* compiler,
 //                       );
 }
 //-------------------------------------------------------------------------
-void PUScriptTranslator::errorUnexpectedProperty(PUScriptCompiler* compiler, 
-                                               PUPropertyAbstractNode* prop)
+void PUScriptTranslator::errorUnexpectedProperty(PUScriptCompiler* /*compiler*/,
+                                               PUPropertyAbstractNode* /*prop*/)
 {
 //    compiler->addError(ScriptCompiler::CE_UNEXPECTEDTOKEN, prop->file, prop->line, 
 //                       "PU Compiler: token \"" + prop->name + "\" is not recognized");

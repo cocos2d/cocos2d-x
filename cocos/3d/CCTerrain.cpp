@@ -126,7 +126,7 @@ void Terrain::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, 
     renderer->addCommand(&_customCommand);
 }
 
-void Terrain::onDraw(const Mat4 &transform, uint32_t flags)
+void Terrain::onDraw(const Mat4 &transform, uint32_t /*flags*/)
 {
     auto modelMatrix = getNodeToWorldTransform();
     if(memcmp(&modelMatrix,&_terrainModelMatrix,sizeof(Mat4))!=0)
@@ -979,7 +979,7 @@ void Terrain::Chunk::bindAndDraw()
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, _chunkIndices._size);
 }
 
-void Terrain::Chunk::generate(int imgWidth, int imageHei, int m, int n, const unsigned char * data)
+void Terrain::Chunk::generate(int imgWidth, int imageHei, int m, int n, const unsigned char * /*data*/)
 {
     _posY = m;
     _posX = n;

@@ -247,6 +247,20 @@ Vec2 Control::getTouchLocation(Touch* touch)
     return touchLocation;
 }
 
+bool Control::onTouchBegan(Touch* /*touch*/, Event* /*event*/) {
+    return false;
+}
+
+void Control::onTouchMoved(Touch* /*touch*/, Event* /*event*/)
+{}
+
+void Control::onTouchEnded(Touch* /*touch*/, Event* /*event*/)
+{}
+
+void Control::onTouchCancelled(Touch* /*touch*/, Event* /*event*/)
+{}
+
+
 bool Control::isTouchInside(Touch* touch)
 {
     Vec2 touchLocation = touch->getLocation(); // Get the touch position

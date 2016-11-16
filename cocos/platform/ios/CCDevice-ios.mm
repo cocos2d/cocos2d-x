@@ -596,7 +596,6 @@ void Device::setKeepScreenOn(bool value)
 void Device::vibrate(float duration)
 {
     // See https://developer.apple.com/library/ios/documentation/AudioToolbox/Reference/SystemSoundServicesReference/index.html#//apple_ref/c/econst/kSystemSoundID_Vibrate
-    CC_UNUSED_PARAM(duration);
 
     // automatically vibrates for approximately 0.4 seconds
     AudioServicesPlayAlertSound(kSystemSoundID_Vibrate);

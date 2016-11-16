@@ -198,7 +198,7 @@ GLProgram* GLProgram::createWithFilenames(const std::string& vShaderFilename, co
     return createWithFilenames(vShaderFilename, fShaderFilename, EMPTY_DEFINE, compileTimeDefines);
 }
 
-GLProgram* GLProgram::createWithFilenames(const std::string& vShaderFilename, const std::string& fShaderFilename, const std::string& compileTimeHeaders, const std::string& compileTimeDefines)
+GLProgram* GLProgram::createWithFilenames(const std::string& vShaderFilename, const std::string& fShaderFilename, const std::string& /*compileTimeHeaders*/, const std::string& compileTimeDefines)
 {
     auto ret = new (std::nothrow) GLProgram();
     if(ret && ret->initWithFilenames(vShaderFilename, fShaderFilename, compileTimeDefines)) {

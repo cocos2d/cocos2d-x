@@ -200,7 +200,7 @@ bool PUDoPlacementParticleEventHandlerTranslator::translateChildProperty( PUScri
     return false;
 }
 
-bool PUDoPlacementParticleEventHandlerTranslator::translateChildObject( PUScriptCompiler* compiler, PUAbstractNode *node )
+bool PUDoPlacementParticleEventHandlerTranslator::translateChildObject( PUScriptCompiler* /*compiler*/, PUAbstractNode* /*node*/ )
 {
     // No objects
     return false;

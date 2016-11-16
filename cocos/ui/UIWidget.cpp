@@ -76,7 +76,7 @@ Widget::FocusNavigationController::~FocusNavigationController()
     this->removeKeyboardEventListener();
 }
 
-void Widget::FocusNavigationController::onKeypadKeyPressed(EventKeyboard::KeyCode  keyCode, Event *event)
+void Widget::FocusNavigationController::onKeypadKeyPressed(EventKeyboard::KeyCode  keyCode, Event* /*event*/)
 {
     if (_enableFocusNavigation && _firstFocusedWidget)
     {
@@ -770,7 +770,7 @@ bool Widget::isSwallowTouches()const
     return false;
 }
 
-bool Widget::onTouchBegan(Touch *touch, Event *unusedEvent)
+bool Widget::onTouchBegan(Touch *touch, Event* /*unusedEvent*/)
 {
     _hitted = false;
     if (isVisible() && isEnabled() && isAncestorsEnabled() && isAncestorsVisible(this) )
@@ -814,7 +814,7 @@ void Widget::propagateTouchEvent(cocos2d::ui::Widget::TouchEventType event, coco
     }
 }
 
-void Widget::onTouchMoved(Touch *touch, Event *unusedEvent)
+void Widget::onTouchMoved(Touch *touch, Event* /*unusedEvent*/)
 {
     _touchMovePosition = touch->getLocation();
 
@@ -831,7 +831,7 @@ void Widget::onTouchMoved(Touch *touch, Event *unusedEvent)
     moveEvent();
 }
 
-void Widget::onTouchEnded(Touch *touch, Event *unusedEvent)
+void Widget::onTouchEnded(Touch *touch, Event* /*unusedEvent*/)
 {
     _touchEndPosition = touch->getLocation();
 
@@ -856,7 +856,7 @@ void Widget::onTouchEnded(Touch *touch, Event *unusedEvent)
     }
 }
 
-void Widget::onTouchCancelled(Touch *touch, Event *unusedEvent)
+void Widget::onTouchCancelled(Touch* /*touch*/, Event* /*unusedEvent*/)
 {
     setHighlighted(false);
     cancelUpEvent();
@@ -1213,7 +1213,7 @@ GLProgramState* Widget::getGrayGLProgramState(Texture2D* texture)const
     return glState;
 }
 
-void Widget::copySpecialProperties(Widget* model)
+void Widget::copySpecialProperties(Widget* /*model*/)
 {
 
 }
@@ -1464,6 +1464,10 @@ void Widget::onFocusChange(Widget* widgetLostFocus, Widget* widgetGetFocus)
     {
         widgetGetFocus->setFocused(true);
     }
+}
+    
+Widget* Widget::getCurrentFocusedWidget(bool /*isWidget*/){
+    return getCurrentFocusedWidget();
 }
 
 Widget* Widget::getCurrentFocusedWidget()

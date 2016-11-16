@@ -41,6 +41,9 @@
 
 NS_CC_BEGIN
 
+void PURender::updateRender(PUParticle3D* /*particle*/, float /*deltaTime*/, bool /*firstParticle*/)
+{}
+
 void PURender::copyAttributesTo( PURender *render )
 {
     Particle3DRender::copyAttributesTo(render);

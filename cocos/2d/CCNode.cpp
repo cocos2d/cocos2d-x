@@ -2028,6 +2028,14 @@ void Node::disableCascadeOpacity()
     }
 }
 
+void Node::setOpacityModifyRGB(bool /*value*/)
+{}
+
+bool Node::isOpacityModifyRGB() const
+{
+    return false;
+}
+
 const Color3B& Node::getColor(void) const
 {
     return _realColor;

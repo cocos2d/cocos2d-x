@@ -516,7 +516,7 @@ ArmatureMovementDispatcher::~ArmatureMovementDispatcher(void)
 	  _mapEventAnimation->emplace(pTarget, mecf);
   }
 
-  void ArmatureMovementDispatcher::removeAnnimationEventCallBack(Ref *pTarget, SEL_MovementEventCallFunc mecf)
+  void ArmatureMovementDispatcher::removeAnnimationEventCallBack(Ref *pTarget, SEL_MovementEventCallFunc /*mecf*/)
   {
 	  _mapEventAnimation->erase(pTarget);
   }

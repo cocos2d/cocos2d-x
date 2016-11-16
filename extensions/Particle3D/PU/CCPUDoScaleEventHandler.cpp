@@ -60,7 +60,7 @@ void PUDoScaleEventHandler::setScaleFraction(const float scaleFraction)
     _scaleFraction = scaleFraction;
 }
 //-----------------------------------------------------------------------
-void PUDoScaleEventHandler::handle (PUParticleSystem3D* particleSystem, PUParticle3D* particle, float timeElapsed)
+void PUDoScaleEventHandler::handle (PUParticleSystem3D* /*particleSystem*/, PUParticle3D* particle, float timeElapsed)
 {
     if (!particle)
         return;

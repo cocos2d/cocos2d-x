@@ -126,7 +126,7 @@ public:
 
     /** No implementation.
     */
-    virtual void particleExpired(PUParticleSystem3D* particleSystem, PUParticle3D* particle) override {};
+    virtual void particleExpired(PUParticleSystem3D* particleSystem, PUParticle3D* particle) override;
 
     virtual void copyAttributesTo (PUEventHandler* eventHandler) override;
 

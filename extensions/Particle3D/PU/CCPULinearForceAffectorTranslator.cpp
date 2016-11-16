@@ -44,7 +44,7 @@ bool PULinearForceAffectorTranslator::translateChildProperty( PUScriptCompiler* 
     return BaseForceAffectorTranslator.translateChildProperty(compiler, node);
 }
 
-bool PULinearForceAffectorTranslator::translateChildObject( PUScriptCompiler* compiler, PUAbstractNode *node )
+bool PULinearForceAffectorTranslator::translateChildObject( PUScriptCompiler* /*compiler*/, PUAbstractNode* /*node*/ )
 {
     // No objects
     return false;

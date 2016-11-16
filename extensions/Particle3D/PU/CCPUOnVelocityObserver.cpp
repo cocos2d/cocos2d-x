@@ -44,7 +44,7 @@ PUOnVelocityObserver::PUOnVelocityObserver(void) :
 {
 };
 //-----------------------------------------------------------------------
-bool PUOnVelocityObserver::observe (PUParticle3D* particle, float timeElapsed)
+bool PUOnVelocityObserver::observe (PUParticle3D* particle, float /*timeElapsed*/)
 {
     if (!particle)
         return false;

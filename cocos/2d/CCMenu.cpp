@@ -575,6 +575,14 @@ MenuItem* Menu::getItemForTouch(Touch *touch, const Camera *camera)
     return nullptr;
 }
 
+void Menu::setOpacityModifyRGB(bool /*value*/)
+{}
+
+bool Menu::isOpacityModifyRGB() const
+{
+    return false;
+}
+
 std::string Menu::getDescription() const
 {
     return StringUtils::format("<Menu | Tag = %d>", _tag);
