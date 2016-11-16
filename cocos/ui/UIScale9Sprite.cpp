@@ -202,7 +202,7 @@ bool Scale9Sprite::init(Sprite* sprite, const Rect& origRect, bool rotated, cons
         if (!capInsets.equals(Rect::ZERO))
             setupSlice9(texture, capInsets);
         else
-            setCenterRect(actualCapInsets);
+            setCapInsets(actualCapInsets);
     } else {
         ret = initWithTexture(nullptr, rect, rotated);
         setupSlice9(nullptr, capInsets);
@@ -219,7 +219,7 @@ bool Scale9Sprite::initWithBatchNode(SpriteBatchNode *batchnode, const Rect &rec
 bool Scale9Sprite::initWithFile(const std::string& filename, const Rect& rect, const Rect& capInsets)
 {
     bool ret = initWithFile(filename, rect);
-    setCenterRect(capInsets);
+    setCapInsets(capInsets);
     return ret;
 }
 
@@ -295,7 +295,7 @@ void Scale9Sprite::setState(Scale9Sprite::State state)
 void Scale9Sprite::setSpriteFrame(SpriteFrame * spriteFrame, const Rect& capInsets)
 {
     setSpriteFrame(spriteFrame);
-    setCenterRect(capInsets);
+    setCapInsets(capInsets);
 }
 
 void Scale9Sprite::setPreferredSize(const Size& preferredSize)
@@ -329,11 +329,15 @@ void Scale9Sprite::setInsetBottom(float insetBottom)
 
 void Scale9Sprite::updateCapInset()
 {
-    Rect capInsets(_insetLeft,
+    Rect capInsets(Rect::ZERO);
+
+    // don't change it is already zero
+    if (_insetLeft != 0 || _insetRight !=0 || _insetTop !=0 || _insetBottom != 0)
+        capInsets.setRect(_insetLeft,
                    _insetTop,
-                   1 - _insetRight - _insetLeft,
-                   1 - _insetBottom-_insetTop);
-    setCenterRectNormalized(capInsets);
+                   _originalContentSize.width - _insetRight - _insetLeft,
+                   _originalContentSize.height - _insetBottom -_insetTop);
+    setCapInsets(capInsets);
 }
 
 Size Scale9Sprite::getOriginalSize() const
@@ -433,9 +437,7 @@ void Scale9Sprite::resetRender()
 
 void Scale9Sprite::setupSlice9(Texture2D* texture, const Rect& capInsets)
 {
-    if (capInsets.equals(Rect::ZERO))
-        setCenterRectNormalized(Rect(1/3.f, 1/3.f, 1/3.f, 1/3.f));
-    else setCenterRect(capInsets);
+    setCapInsets(capInsets);
 
     if (texture && texture->isContain9PatchInfo()) {
         auto& parsedCapInset = texture->getSpriteFrameCapInset(getSpriteFrame());
@@ -443,7 +445,7 @@ void Scale9Sprite::setupSlice9(Texture2D* texture, const Rect& capInsets)
         if(!parsedCapInset.equals(Rect::ZERO))
         {
             _isPatch9 = true;
-            setCenterRect(parsedCapInset);
+            setCapInsets(parsedCapInset);
 
             // adjust texture rect. 1.3f seems to be the magic number
             // to avoid artifacts
@@ -457,14 +459,41 @@ void Scale9Sprite::setupSlice9(Texture2D* texture, const Rect& capInsets)
     }
 }
 
-void Scale9Sprite::setCapInsets(const cocos2d::Rect &insets)
+void Scale9Sprite::setCapInsets(const cocos2d::Rect &insetsCopy)
 {
-    if (insets.equals(Rect::ZERO))
-        // FIXME: Apparently UIButton might use an  insets == Rect::ZERO for 0.333f
-        // so, we should emulate that behavior
-        setCenterRectNormalized(Rect(1/3.0f, 1/3.0f, 1/3.0f, 1/3.0f));
-    else
-        setCenterRect(insets);
+    Rect insets = insetsCopy;
+
+    // When Insets == Zero --> we should use a 1/3 of its untrimmed size
+    if (insets.equals(Rect::ZERO)) {
+        insets = Rect( _originalContentSize.width / 3.0f,
+                      _originalContentSize.width / 3.0f,
+                      _originalContentSize.height / 3.0f,
+                      _originalContentSize.height / 3.0f);
+    }
+
+    // we have to convert from untrimmed to trimmed
+    // Sprite::setCenterRect is using trimmed values (to be compatible with Cocos Creator)
+    // Scale9Sprite::setCapInsects uses untrimmed values (which makes more sense)
+
+    // use _rect coordinates. recenter origin to calculate the
+    // intersecting rectangle
+    insets.origin.x += (_rect.origin.x - _offsetPosition.x);
+    insets.origin.y += (_rect.origin.y - _offsetPosition.y);
+
+    // intersecting rectangle
+    const float x1 = std::max(insets.origin.x, _rect.origin.x);
+    const float y1 = std::max(insets.origin.y, _rect.origin.y);
+    const float x2 = std::min(insets.origin.x + insets.size.width, _rect.origin.x + _rect.size.width);
+    const float y2 = std::min(insets.origin.y + insets.size.height, _rect.origin.y + _rect.size.height);
+
+    // centerRect uses the trimmed frame origin as 0,0.
+    // so, recenter inset rect
+    insets.setRect(x1 - (_rect.origin.x),
+                   y1 - (_rect.origin.y),
+                   x2 - x1,
+                   y2 - y1);
+
+    setCenterRect(insets);
 }
 
 Rect Scale9Sprite::getCapInsets() const
