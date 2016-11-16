@@ -724,6 +724,13 @@ void Sprite::setVertexCoords(const Rect& rect, V3F_C4B_T2F_Quad* outQuad)
     _offsetPosition.x = relativeOffsetX + (_originalContentSize.width - _rect.size.width) / 2;
     _offsetPosition.y = relativeOffsetY + (_originalContentSize.height - _rect.size.height) / 2;
 
+    // FIXME: Streching should be appliced to the "offset" as well
+    // but probably it should be calculated in the caller function. It will be tidier
+    if (_numberOfSlices == 1) {
+        _offsetPosition.x *= _strechFactor.x;
+        _offsetPosition.y *= _strechFactor.y;
+    }
+
     // rendering using batch node
     if (_batchNode)
     {
@@ -1163,9 +1170,10 @@ void Sprite::updateStretchFactor()
 
     if (_numberOfSlices == 1)
     {
-        const float x_factor = adjustedWidth / _rect.size.width;
-        const float y_factor = adjustedHeight / _rect.size.height;
-
+//        const float x_factor = adjustedWidth / _rect.size.width;
+//        const float y_factor = adjustedHeight / _rect.size.height;
+        const float x_factor = size.width / _originalContentSize.width;
+        const float y_factor = size.height / _originalContentSize.height;
         _strechFactor = Vec2(x_factor, y_factor);
     }
     else
