@@ -1,9 +1,13 @@
 set(APP_NAME cpp-tests)
 
 # Use same method as in cocos library
-cocos_find_package(CURL CURL REQUIRED)
-cocos_find_package(FONTCONFIG FONTCONFIG REQUIRED)
+if(LINUX)
+  foreach(_pkg FONTCONFIG GTK3)
+    cocos_find_package(${_pkg} ${_pkg} REQUIRED)
+  endforeach()
+endif()
 cocos_find_package(FREETYPE FREETYPE REQUIRED)
+cocos_find_package(CURL CURL REQUIRED)
 
 if(WIN32)
   set(PLATFORM_SRC proj.win32/main.cpp)
@@ -226,9 +230,14 @@ endif()
 
 target_link_libraries(${APP_NAME} cocos2d)
 
-cocos_use_pkg(${APP_NAME} CURL)
-cocos_use_pkg(${APP_NAME} FONTCONFIG)
-cocos_use_pkg(${APP_NAME} FREETYPE)
+if(LINUX)
+  foreach(_pkg FONTCONFIG GTK3)
+    cocos_use_pkg(${APP_NAME} ${_pkg})
+  endforeach()
+endif()
+foreach(pkg FREETYPE CURL)
+  cocos_use_pkg(${APP_NAME} ${pkg})
+endforeach()
 
 if(MACOSX OR APPLE)
   set_target_properties(${APP_NAME} PROPERTIES
