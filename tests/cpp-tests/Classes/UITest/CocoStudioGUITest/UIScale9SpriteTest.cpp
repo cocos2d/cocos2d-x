@@ -656,18 +656,20 @@ bool UIS9FrameNameSpriteSheetRotatedInsetsScaled::init()
 bool UIS9FrameNameSpriteSheetRotatedSetCapInsetLater::init()
 {
     if (UIScene::init()) {
-        SpriteFrameCache::getInstance()->addSpriteFramesWithFile(s_s9s_blocks9_plist);
+        SpriteFrameCache::getInstance()->addSpriteFramesWithFile("Images/blocks9ss_riq.plist");
+        SpriteFrameCache::getInstance()->addSpriteFramesWithFile("Images/blocks9ss.plist");
 
         auto winSize = Director::getInstance()->getWinSize();
         float x = winSize.width / 2;
         float y = 0 + (winSize.height / 2);
         
-        auto blocks_scaled_with_insets = ui::Scale9Sprite::createWithSpriteFrameName("blocks9r.png");
+        auto blocks_scaled_with_insets = ui::Scale9Sprite::createWithSpriteFrameName("blocks9r_riq.png");
         
-        blocks_scaled_with_insets->setInsetLeft(32);
-        blocks_scaled_with_insets->setInsetRight(32);
-        
-        blocks_scaled_with_insets->setPreferredSize(Size(32*5.5f, 32*4));
+//        blocks_scaled_with_insets->setInsetLeft(32);
+//        blocks_scaled_with_insets->setInsetRight(32);
+        blocks_scaled_with_insets->setCapInsets(Rect(16,1,64,90));
+
+//        blocks_scaled_with_insets->setPreferredSize(Size(32*5.5f, 32*4));
         blocks_scaled_with_insets->setPosition(Vec2(x, y));
         
         this->addChild(blocks_scaled_with_insets);

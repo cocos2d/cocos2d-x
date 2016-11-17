@@ -455,18 +455,31 @@ void Sprite::updatePoly()
         const float v1 = ooy + osh * (1 - cy2);
         const float v2 = ooy + osh * 0;
 
+        float w0 = osw * cx1;
+        float w1 = osw * (cx2-cx1);
+        float w2 = osw * (1-cx2);
+        float h0 = osh * cy1;
+        float h1 = osh * (cy2-cy1);
+        float h2 = osh * (1-cy2);
+
+//        if (_rectRotated) {
+//            std::swap(w0, h0);
+//            std::swap(w1, h1);
+//            std::swap(w2, h2);
+//        }
+
         const Rect texRects[9] = {
-            Rect(u0, v0,    osw * cx1,       osh * cy1),         // bottom-left
-            Rect(u1, v0,    osw * (cx2-cx1), osh * cy1),         // bottom
-            Rect(u2, v0,    osw * (1-cx2),   osh * cy1),         // bottom-right
+            Rect(u0, v0, w0, h0),   // bottom-left
+            Rect(u1, v0, w1, h0),   // bottom
+            Rect(u2, v0, w2, h0),   // bottom-right
 
-            Rect(u0, v1,    osw * cx1,       osh * (cy2-cy1)),   // left
-            Rect(u1, v1,    osw * (cx2-cx1), osh * (cy2-cy1)),   // center
-            Rect(u2, v1,    osw * (1-cx2),   osh * (cy2-cy1)),   // right
+            Rect(u0, v1, w0, h1),   // left
+            Rect(u1, v1, w1, h1),   // center
+            Rect(u2, v1, w2, h1),   // right
 
-            Rect(u0, v2,    osw * cx1,       osh * (1-cy2)),     // top-left
-            Rect(u1, v2,    osw * (cx2-cx1), osh * (1-cy2)),     // top
-            Rect(u2, v2,    osw * (1-cx2),   osh * (1-cy2)),     // top-right
+            Rect(u0, v2, w0, h2),   // top-left
+            Rect(u1, v2, w1, h2),   // top
+            Rect(u2, v2, w2, h2),   // top-right
         };
 
         // vertex Data.
@@ -1164,14 +1177,8 @@ void Sprite::updateStretchFactor()
 {
     const Size size = getContentSize();
 
-    // adjustedSize = the new _rect size 
-    const float adjustedWidth = size.width - (_originalContentSize.width - _rect.size.width);
-    const float adjustedHeight = size.height - (_originalContentSize.height - _rect.size.height);
-
     if (_numberOfSlices == 1)
     {
-//        const float x_factor = adjustedWidth / _rect.size.width;
-//        const float y_factor = adjustedHeight / _rect.size.height;
         const float x_factor = size.width / _originalContentSize.width;
         const float y_factor = size.height / _originalContentSize.height;
         _strechFactor = Vec2(x_factor, y_factor);
@@ -1185,6 +1192,10 @@ void Sprite::updateStretchFactor()
         const float y1 = _rect.size.height * _centerRectNormalized.origin.y;
         const float y2 = _rect.size.height * _centerRectNormalized.size.height;
         const float y3 = _rect.size.height * (1 - _centerRectNormalized.origin.y - _centerRectNormalized.size.height);
+
+        // adjustedSize = the new _rect size
+        const float adjustedWidth = size.width - (_originalContentSize.width - _rect.size.width);
+        const float adjustedHeight = size.height - (_originalContentSize.height - _rect.size.height);
 
         const float x_factor = (adjustedWidth - x1 - x3) / x2;
         const float y_factor = (adjustedHeight - y1 - y3) / y2;
