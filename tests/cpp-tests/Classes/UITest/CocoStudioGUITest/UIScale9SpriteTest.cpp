@@ -667,7 +667,7 @@ bool UIS9FrameNameSpriteSheetRotatedSetCapInsetLater::init()
         
 //        blocks_scaled_with_insets->setInsetLeft(32);
 //        blocks_scaled_with_insets->setInsetRight(32);
-        blocks_scaled_with_insets->setCapInsets(Rect(16,1,64,90));
+        blocks_scaled_with_insets->setCapInsets(Rect(16,16,64,64));
 
 //        blocks_scaled_with_insets->setPreferredSize(Size(32*5.5f, 32*4));
         blocks_scaled_with_insets->setPosition(Vec2(x, y));

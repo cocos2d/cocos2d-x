@@ -455,18 +455,12 @@ void Sprite::updatePoly()
         const float v1 = ooy + osh * (1 - cy2);
         const float v2 = ooy + osh * 0;
 
-        float w0 = osw * cx1;
-        float w1 = osw * (cx2-cx1);
-        float w2 = osw * (1-cx2);
-        float h0 = osh * cy1;
-        float h1 = osh * (cy2-cy1);
-        float h2 = osh * (1-cy2);
-
-//        if (_rectRotated) {
-//            std::swap(w0, h0);
-//            std::swap(w1, h1);
-//            std::swap(w2, h2);
-//        }
+        const float w0 = osw * cx1;
+        const float w1 = osw * (cx2-cx1);
+        const float w2 = osw * (1-cx2);
+        const float h0 = osh * cy1;
+        const float h1 = osh * (cy2-cy1);
+        const float h2 = osh * (1-cy2);
 
         const Rect texRects[9] = {
             Rect(u0, v0, w0, h0),   // bottom-left
