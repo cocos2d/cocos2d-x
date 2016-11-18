@@ -8336,7 +8336,7 @@
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/../tests/cpp-tests/proj.mac/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/glfw3/include/mac";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external/freetype2/include/mac/freetype2";
 			};
 			name = Debug;
 		};
@@ -8352,7 +8352,7 @@
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/../tests/cpp-tests/proj.mac/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/glfw3/include/mac";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external/freetype2/include/mac/freetype2";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -8420,7 +8420,7 @@
 				SDKROOT = appletvos;
 				STRIP_PNG_TEXT = NO;
 				TVOS_DEPLOYMENT_TARGET = 9.1;
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/curl/include/ios";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/curl/include/ios $(SRCROOT)/../external/freetype2/include/ios/freetype2";
 			};
 			name = Debug;
 		};
@@ -8444,7 +8444,7 @@
 				SDKROOT = appletvos;
 				STRIP_PNG_TEXT = NO;
 				TVOS_DEPLOYMENT_TARGET = 9.1;
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/curl/include/ios";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/curl/include/ios $(SRCROOT)/../external/freetype2/include/ios/freetype2";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -8813,7 +8813,7 @@
 				SDKROOT = iphoneos;
 				STRIP_PNG_TEXT = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/curl/include/ios";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/curl/include/ios $(SRCROOT)/../external/freetype2/include/ios/freetype2";
 				VALID_ARCHS = "arm64 armv7";
 			};
 			name = Debug;
@@ -8840,7 +8840,7 @@
 				SDKROOT = iphoneos;
 				STRIP_PNG_TEXT = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/curl/include/ios";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/curl/include/ios $(SRCROOT)/../external/freetype2/include/ios/freetype2";
 				VALIDATE_PRODUCT = YES;
 				VALID_ARCHS = "arm64 armv7";
 			};
