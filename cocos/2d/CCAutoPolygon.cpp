@@ -416,14 +416,9 @@ std::vector<cocos2d::Vec2> AutoPolygon::marchSquare(const Rect& rect, const Vec2
             _points.back().x = (float)(curx-rect.origin.x) / _scaleFactor;
             _points.back().y = (float)(rect.size.height - cury + rect.origin.y) / _scaleFactor;
         }
-        else if(problem)
+        else
         {
-            //TODO: we triangulation cannot work collinear points, so we need to modify same point a little
-            //TODO: maybe we can detect if we go into a hole and coming back the hole, we should extract those points and remove them
-            _points.push_back(Vec2((float)(curx- rect.origin.x) / _scaleFactor, (float)(rect.size.height - cury + rect.origin.y) / _scaleFactor));
-        }
-        else{
-            _points.push_back(Vec2((float)(curx-rect.origin.x) / _scaleFactor, (float)(rect.size.height - cury + rect.origin.y) / _scaleFactor));
+            _points.push_back(Vec2((float)(curx - rect.origin.x) / _scaleFactor, (float)(rect.size.height - cury + rect.origin.y) / _scaleFactor));
         }
 
         count++;
