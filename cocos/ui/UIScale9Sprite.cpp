@@ -255,7 +255,13 @@ bool Scale9Sprite::updateWithSprite(Sprite* sprite,
                                     const Size &originalSize,
                                     const Rect& capInsets)
 {
-    // FIXME
+    SpriteFrame *spriteframe = SpriteFrame::createWithTexture(sprite->getTexture(),
+                                                              CC_RECT_POINTS_TO_PIXELS(textureRect),
+                                                              rotated,
+                                                              CC_POINT_POINTS_TO_PIXELS(offset),
+                                                              CC_SIZE_POINTS_TO_PIXELS(originalSize));
+    setSpriteFrame(spriteframe);
+    setCapInsets(capInsets);
     return true;
 }
 
