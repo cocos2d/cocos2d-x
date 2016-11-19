@@ -267,7 +267,19 @@ bool Scale9Sprite::updateWithSprite(Sprite* sprite,
 
 Scale9Sprite* Scale9Sprite::resizableSpriteWithCapInsets(const Rect& capInsets) const
 {
-    // FIXME
+    Scale9Sprite* ret = new (std::nothrow) Scale9Sprite();
+
+    if (ret && ret->init(const_cast<Scale9Sprite*>(this),
+                         _rect,
+                         _rectRotated,
+                         Vec2::ZERO,
+                         _originalContentSize,
+                         capInsets) )
+    {
+        ret->autorelease();
+        return ret;
+    }
+    CC_SAFE_DELETE(ret);
     return nullptr;
 }
 
