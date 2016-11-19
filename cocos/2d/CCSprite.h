@@ -451,6 +451,13 @@ public:
      * @param PolygonInfo the polygon information object
      */
     void setPolygonInfo(const PolygonInfo& info);
+
+    /** whether or not contentSize streches the sprite's texture */
+    void setStrechEnabled(bool enabled);
+
+    /** returns whether or not contentSize streches the sprite's texture */
+    bool getStrechEnabled() const;
+
     //
     // Overrides
     //
@@ -687,6 +694,8 @@ protected:
 
     std::string _fileName;
     int _fileType;
+
+    bool _strechEnabled;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Sprite);

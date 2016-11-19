@@ -316,6 +316,7 @@ Sprite::Sprite(void)
 , _quads(nullptr)
 , _strechFactor(Vec2::ONE)
 , _originalContentSize(Size::ZERO)
+, _strechEnabled(true)
 {
 #if CC_SPRITE_DEBUG_DRAW
     _debugDrawNode = DrawNode::create();
@@ -1167,34 +1168,55 @@ void Sprite::setContentSize(const Size& size)
     updatePoly();
 }
 
+void Sprite::setStrechEnabled(bool enabled)
+{
+    if (_strechEnabled != enabled) {
+        _strechEnabled = enabled;
+        updateStretchFactor();
+        updatePoly();
+    }
+}
+
+bool Sprite::getStrechEnabled() const
+{
+    return _strechEnabled;
+}
+
 void Sprite::updateStretchFactor()
 {
-    const Size size = getContentSize();
-
-    if (_numberOfSlices == 1)
+    if (_strechEnabled)
     {
-        const float x_factor = size.width / _originalContentSize.width;
-        const float y_factor = size.height / _originalContentSize.height;
-        _strechFactor = Vec2(x_factor, y_factor);
+        const Size size = getContentSize();
+
+        if (_numberOfSlices == 1)
+        {
+            const float x_factor = size.width / _originalContentSize.width;
+            const float y_factor = size.height / _originalContentSize.height;
+            _strechFactor = Vec2(x_factor, y_factor);
+        }
+        else
+        {
+            const float x1 = _rect.size.width * _centerRectNormalized.origin.x;
+            const float x2 = _rect.size.width * _centerRectNormalized.size.width;
+            const float x3 = _rect.size.width * (1 - _centerRectNormalized.origin.x - _centerRectNormalized.size.width);
+
+            const float y1 = _rect.size.height * _centerRectNormalized.origin.y;
+            const float y2 = _rect.size.height * _centerRectNormalized.size.height;
+            const float y3 = _rect.size.height * (1 - _centerRectNormalized.origin.y - _centerRectNormalized.size.height);
+
+            // adjustedSize = the new _rect size
+            const float adjustedWidth = size.width - (_originalContentSize.width - _rect.size.width);
+            const float adjustedHeight = size.height - (_originalContentSize.height - _rect.size.height);
+
+            const float x_factor = (adjustedWidth - x1 - x3) / x2;
+            const float y_factor = (adjustedHeight - y1 - y3) / y2;
+
+            _strechFactor = Vec2(x_factor, y_factor);
+        }
     }
     else
     {
-        const float x1 = _rect.size.width * _centerRectNormalized.origin.x;
-        const float x2 = _rect.size.width * _centerRectNormalized.size.width;
-        const float x3 = _rect.size.width * (1 - _centerRectNormalized.origin.x - _centerRectNormalized.size.width);
-
-        const float y1 = _rect.size.height * _centerRectNormalized.origin.y;
-        const float y2 = _rect.size.height * _centerRectNormalized.size.height;
-        const float y3 = _rect.size.height * (1 - _centerRectNormalized.origin.y - _centerRectNormalized.size.height);
-
-        // adjustedSize = the new _rect size
-        const float adjustedWidth = size.width - (_originalContentSize.width - _rect.size.width);
-        const float adjustedHeight = size.height - (_originalContentSize.height - _rect.size.height);
-
-        const float x_factor = (adjustedWidth - x1 - x3) / x2;
-        const float y_factor = (adjustedHeight - y1 - y3) / y2;
-
-        _strechFactor = Vec2(x_factor, y_factor);
+        _strechFactor = Vec2::ONE;
     }
 }
 

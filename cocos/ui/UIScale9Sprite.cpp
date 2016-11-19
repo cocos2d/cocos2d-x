@@ -147,27 +147,31 @@ Scale9Sprite::~Scale9Sprite()
 
 bool Scale9Sprite::initWithFile(const Rect& capInsets, const std::string& file)
 {
-    bool ret = initWithFile(file);
+    // calls super
+    bool ret = Sprite::initWithFile(file);
     setupSlice9(getTexture(), capInsets);
     return ret;
 }
 
 bool Scale9Sprite::initWithSpriteFrame(SpriteFrame* spriteFrame, const Rect& capInsets)
 {
-    bool ret = initWithSpriteFrame(spriteFrame);
+    // calls super
+    bool ret = Sprite::initWithSpriteFrame(spriteFrame);
     setupSlice9(getTexture(), capInsets);
     return ret;
 }
 
 bool Scale9Sprite::initWithSpriteFrameName(const std::string& spriteFrameName, const Rect& capInsets)
 {
-    bool ret = initWithSpriteFrameName(spriteFrameName);
+    // calls super
+    bool ret = Sprite::initWithSpriteFrameName(spriteFrameName);
     setupSlice9(getTexture(), capInsets);
     return ret;
 }
 
 bool Scale9Sprite::init()
 {
+    // calls super
     bool ret = Sprite::init();
     setupSlice9(getTexture(), Rect::ZERO);
     return ret;
@@ -218,7 +222,8 @@ bool Scale9Sprite::initWithBatchNode(SpriteBatchNode *batchnode, const Rect &rec
 
 bool Scale9Sprite::initWithFile(const std::string& filename, const Rect& rect, const Rect& capInsets)
 {
-    bool ret = initWithFile(filename, rect);
+    // calls super
+    bool ret = Sprite::initWithFile(filename, rect);
     setCapInsets(capInsets);
     return ret;
 }
@@ -267,8 +272,8 @@ bool Scale9Sprite::updateWithSprite(Sprite* sprite,
 
 Scale9Sprite* Scale9Sprite::resizableSpriteWithCapInsets(const Rect& capInsets) const
 {
+    // FIXME: there are no test cases for this method
     Scale9Sprite* ret = new (std::nothrow) Scale9Sprite();
-
     if (ret && ret->init(const_cast<Scale9Sprite*>(this),
                          _rect,
                          _rectRotated,
@@ -388,6 +393,10 @@ void Scale9Sprite::setScale9Enabled(bool enabled)
 {
     RenderingType type = enabled ? RenderingType::SLICE : RenderingType::SIMPLE;
     setRenderingType(type);
+
+    // only enable strech en scale9 is enabled
+    // for backward compatibiliy, since Sprite streches the texture no matter the rendering type
+    setStrechEnabled(enabled);
 }
 
 bool Scale9Sprite::isScale9Enabled() const
@@ -446,7 +455,7 @@ Scale9Sprite::RenderingType Scale9Sprite::getRenderingType() const
 
 void Scale9Sprite::resetRender()
 {
-    // nothing
+    // nothing. keeping it to be backwards compatible
 }
 
 void Scale9Sprite::setupSlice9(Texture2D* texture, const Rect& capInsets)
