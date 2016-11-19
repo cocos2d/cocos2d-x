@@ -225,7 +225,7 @@ bool Bundle3D::loadObj(MeshDatas& meshdatas, MaterialDatas& materialdatas, NodeD
         char str[20];
         std::string dir = "";
         auto last = fullPath.rfind("/");
-        if (last != -1)
+        if (last != std::string::npos)
             dir = fullPath.substr(0, last + 1);
         for (auto& material : materials) {
             NMaterialData materialdata;
