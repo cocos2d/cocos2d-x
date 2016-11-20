@@ -37,7 +37,14 @@
 // cocos2d application instance
 static AppDelegate s_sharedApplication;
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+    cocos2d::Application *app = cocos2d::Application::getInstance();
+    
+    // Initialize the GLView attributes
+    app->initGLContextAttrs();
+    cocos2d::GLViewImpl::convertAttrs();
+    
     // Override point for customization after application launch.
 
     // Add the view controller's view to the window and display.
@@ -63,7 +70,13 @@ static AppDelegate s_sharedApplication;
     [window makeKeyAndVisible];
 
     [[UIApplication sharedApplication] setStatusBarHidden:true];
-
+    
+    // IMPORTANT: Setting the GLView should be done after creating the RootViewController
+    cocos2d::GLView *glview = cocos2d::GLViewImpl::createWithEAGLView((__bridge void *)_viewController.view);
+    cocos2d::Director::getInstance()->setOpenGLView(glview);
+    
+    //run the cocos2d-x game scene
+    app->run();
 
     return YES;
 }
