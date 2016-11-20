@@ -31,6 +31,7 @@
 #include <algorithm>
 #include <sstream>
 #include <iterator>
+#include "base/ccUTF8.h"
 #include "base/CCDirector.h"
 #include "base/CCScheduler.h"
 #include "network/WebSocket.h"
@@ -392,13 +393,10 @@ public:
 SIOClientImpl::SIOClientImpl(const std::string& host, int port) :
     _port(port),
     _host(host),
-    _connected(false)
+    _connected(false),
+    _uri(host + ":" + StringUtils::toString(port)),
+    _ws(nullptr)
 {
-    std::stringstream s;
-    s << host << ":" << port;
-    _uri = s.str();
-
-    _ws = nullptr;
 }
 
 SIOClientImpl::~SIOClientImpl()
