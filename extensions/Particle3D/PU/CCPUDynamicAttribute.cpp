@@ -171,10 +171,10 @@ PUDynamicAttributeCurved::PUDynamicAttributeCurved (PUInterpolationType interpol
 //-----------------------------------------------------------------------
 PUDynamicAttributeCurved::PUDynamicAttributeCurved (const PUDynamicAttributeCurved& dynamicAttributeCurved) :
     _interpolationType(dynamicAttributeCurved._interpolationType),
-    _spline(dynamicAttributeCurved._spline)
+    _spline(dynamicAttributeCurved._spline),
+    _range(dynamicAttributeCurved._range)
 {
     _type = PUDynamicAttribute::DAT_CURVED;
-    _range = dynamicAttributeCurved._range;
 
     // Copy controlpoints
     for (const auto& controlPoint : dynamicAttributeCurved._controlPoints)
