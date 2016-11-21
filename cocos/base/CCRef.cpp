@@ -82,23 +82,23 @@ Ref::~Ref()
 
 
 #if CC_REF_LEAK_DETECTION
-    if (_referenceCount != 0)
+    if (_referenceCount.load() != 0)
         untrackRef(this);
 #endif
 }
 
 void Ref::retain()
 {
-    CCASSERT(_referenceCount > 0, "reference count should be greater than 0");
+    CCASSERT(_referenceCount.load() > 0, "reference count should be greater than 0");
     ++_referenceCount;
 }
 
 void Ref::release()
 {
-    CCASSERT(_referenceCount > 0, "reference count should be greater than 0");
+    CCASSERT(_referenceCount.load() > 0, "reference count should be greater than 0");
     --_referenceCount;
 
-    if (_referenceCount == 0)
+    if (_referenceCount.load() == 0)
     {
 #if defined(COCOS2D_DEBUG) && (COCOS2D_DEBUG > 0)
         auto poolManager = PoolManager::getInstance();
@@ -150,7 +150,7 @@ Ref* Ref::autorelease()
 
 unsigned int Ref::getReferenceCount() const
 {
-    return _referenceCount;
+    return _referenceCount.load();
 }
 
 #if CC_REF_LEAK_DETECTION
