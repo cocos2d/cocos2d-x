@@ -61,7 +61,7 @@ public:
      *  @js NA
      *  @lua NA
      */
-    virtual void setSkinData(const BaseData &data);
+    virtual void setSkinData(BaseData & data);
     /**
      *  @js NA
      *  @lua NA

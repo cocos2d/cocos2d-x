@@ -139,7 +139,7 @@ void DisplayManager::addDisplay(Node *display, int index)
         if (SpriteDisplayData *spriteDisplayData = (SpriteDisplayData *)decoDisplay->getDisplayData())
         {
             skin->setSkinData(spriteDisplayData->skinData);
-            ((SpriteDisplayData *)displayData)->skinData = spriteDisplayData->skinData;
+            spriteDisplayData->skinData.copy( &((SpriteDisplayData *)displayData)->skinData );
         }
         else
         {
@@ -153,7 +153,7 @@ void DisplayManager::addDisplay(Node *display, int index)
                 {
                     find = true;
                     skin->setSkinData(sdd->skinData);
-                    static_cast<SpriteDisplayData*>(displayData)->skinData = sdd->skinData;
+                    sdd->skinData.copy(&static_cast<SpriteDisplayData*>(displayData)->skinData);
                     break;
                 }
             }
