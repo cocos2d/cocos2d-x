@@ -149,7 +149,7 @@ public:
 
 protected:
     /// count of references
-    std::atomic_uint _referenceCount;
+    std::atomic<unsigned int> _referenceCount;
 
     friend class AutoreleasePool;
 
