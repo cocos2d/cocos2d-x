@@ -42,6 +42,7 @@
 #define MUTEX_UNLOCK(m) \
     pthread_mutex_unlock(&m);
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
+#define _WINSOCKAPI_
 #include "windows.h"
 #define MUTEX HANDLE
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32

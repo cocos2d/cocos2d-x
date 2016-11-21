@@ -1,7 +1,7 @@
 /// @cond DO_NOT_SHOW
 
 #if defined(_MSC_VER)
-const unsigned char __firePngData[] __declspec(align(8)) = {
+const unsigned char __declspec(align(8)) __firePngData[] = {
 #else
 const unsigned char __firePngData[] __attribute__((aligned(8))) = {
 #endif

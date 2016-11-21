@@ -26,7 +26,7 @@
 #include "base/ccFPSImages.h"
 
 #if defined(_MSC_VER)
-unsigned char cc_fps_images_png[] __declspec(align(8)) = {
+unsigned char __declspec(align(8)) cc_fps_images_png[] = {
 #else
 unsigned char cc_fps_images_png[] __attribute__((aligned(8))) = {
 #endif

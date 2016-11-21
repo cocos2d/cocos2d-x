@@ -22,7 +22,11 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 #include <string.h>
 #include <stdlib.h>
 
+#ifdef _MSC_VER
+#define DETEX_INLINE_ONLY inline
+#else
 #define DETEX_INLINE_ONLY __attribute__((always_inline)) inline
+#endif
 #define DETEX_RESTRICT __restrict
 #define DETEX_API
 
