@@ -63,7 +63,7 @@ public:
 
 protected:
     void setupGLProgram();
-    void renderDistortionMesh(DistortionMesh *mesh, GLint textureID);
+    void renderDistortionMesh(DistortionMesh *mesh, Texture2D* texture);
     DistortionMesh* createDistortionMesh(VREye::EyeType eyeType);
 
     experimental::FrameBuffer* _fb;

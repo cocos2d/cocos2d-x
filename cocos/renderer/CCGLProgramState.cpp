@@ -65,10 +65,20 @@ UniformValue::UniformValue(Uniform *uniform, GLProgram* glprogram)
 {
 }
 
+UniformValue::UniformValue(const UniformValue& o)
+{
+    *this = o;
+}
+
 UniformValue::~UniformValue()
 {
 	if (_type == Type::CALLBACK_FN)
 		delete _value.callback;
+
+    if (_uniform->type == GL_SAMPLER_2D)
+    {
+        CC_SAFE_RELEASE(_value.tex.texture);
+    }
 }
 
 void UniformValue::apply()
@@ -165,8 +175,24 @@ void UniformValue::setTexture(GLuint textureId, GLuint textureUnit)
     //CCASSERT(_uniform->type == GL_SAMPLER_2D, "Wrong type. expecting GL_SAMPLER_2D");
     _value.tex.textureId = textureId;
     _value.tex.textureUnit = textureUnit;
+    _value.tex.texture = nullptr;
     _type = Type::VALUE;
 }
+
+void UniformValue::setTexture(Texture2D* texture, GLuint textureUnit)
+{
+    CCASSERT(texture != nullptr, "texture is nullptr");
+
+    _value.tex.textureId = texture->getName();
+    _value.tex.textureUnit = textureUnit;
+
+    CC_SAFE_RELEASE(_value.tex.texture);
+    CC_SAFE_RETAIN(texture);
+    _value.tex.texture = texture;
+
+    _type = Type::VALUE;
+}
+
 void UniformValue::setInt(int value)
 {
     CCASSERT(_uniform->type == GL_INT, "Wrong type: expecting GL_INT");
@@ -241,6 +267,23 @@ void UniformValue::setMat4(const Mat4& value)
     CCASSERT(_uniform->type == GL_FLOAT_MAT4, "_uniform's type should be equal GL_FLOAT_MAT4.");
 	memcpy(_value.matrixValue, &value, sizeof(_value.matrixValue));
     _type = Type::VALUE;
+}
+
+UniformValue& UniformValue::operator=(const UniformValue& o)
+{
+    _uniform = o._uniform;
+    _glprogram = o._glprogram;
+    _type = o._type;
+    _value = o._value;
+    
+    if (_uniform->type == GL_SAMPLER_2D)
+    {
+        if (_value.tex.texture)
+        {
+            CC_SAFE_RETAIN(_value.tex.texture);
+        }
+    }
+    return *this;
 }
 
 //
@@ -397,7 +440,10 @@ GLProgramState::~GLProgramState()
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundlistener);
 #endif
-    
+
+    _uniforms.clear();
+    _attributes.clear();
+
     CC_SAFE_RELEASE(_glprogram);
 }
 
@@ -447,7 +493,7 @@ bool GLProgramState::init(GLProgram* glprogram)
 
     for(auto &uniform : _glprogram->_userUniforms) {
         UniformValue value(&uniform.second, _glprogram);
-        _uniforms[uniform.second.location] = value;
+        _uniforms[uniform.second.location] = std::move(value);
         _uniformsByName[uniform.first] = uniform.second.location;
     }
 
@@ -456,10 +502,11 @@ bool GLProgramState::init(GLProgram* glprogram)
 
 void GLProgramState::resetGLProgram()
 {
-    CC_SAFE_RELEASE(_glprogram);
-    _glprogram = nullptr;
     _uniforms.clear();
     _attributes.clear();
+
+    CC_SAFE_RELEASE(_glprogram);
+    _glprogram = nullptr;
     // first texture is GL_TEXTURE1
     _textureUnitIndex = 1;
     _nodeBinding = nullptr;
@@ -812,13 +859,45 @@ void GLProgramState::setUniformMat4(GLint uniformLocation, const Mat4& value)
 void GLProgramState::setUniformTexture(const std::string& uniformName, Texture2D *texture)
 {
     CCASSERT(texture, "Invalid texture");
-    setUniformTexture(uniformName, texture->getName());
+    auto v = getUniformValue(uniformName);
+    if (v)
+    {
+        if (_boundTextureUnits.find(uniformName) != _boundTextureUnits.end())
+        {
+            v->setTexture(texture, _boundTextureUnits[uniformName]);
+        }
+        else
+        {
+            v->setTexture(texture, _textureUnitIndex);
+            _boundTextureUnits[uniformName] = _textureUnitIndex++;
+        }
+    }
+    else
+    {
+        CCLOG("cocos2d: warning: Uniform not found: %s", uniformName.c_str());
+    }
 }
 
 void GLProgramState::setUniformTexture(GLint uniformLocation, Texture2D *texture)
 {
     CCASSERT(texture, "Invalid texture");
-    setUniformTexture(uniformLocation, texture->getName());
+    auto v = getUniformValue(uniformLocation);
+    if (v)
+    {
+        if (_boundTextureUnits.find(v->_uniform->name) != _boundTextureUnits.end())
+        {
+            v->setTexture(texture, _boundTextureUnits[v->_uniform->name]);
+        }
+        else
+        {
+            v->setTexture(texture, _textureUnitIndex);
+            _boundTextureUnits[v->_uniform->name] = _textureUnitIndex++;
+        }
+    }
+    else
+    {
+        CCLOG("cocos2d: warning: Uniform at location not found: %i", uniformLocation);
+    }
 }
 
 void GLProgramState::setUniformTexture(const std::string& uniformName, GLuint textureId)
