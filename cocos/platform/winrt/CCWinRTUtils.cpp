@@ -51,15 +51,14 @@ bool isWindowsPhone()
 {
 #if _MSC_VER >= 1900
     if (Windows::Foundation::Metadata::ApiInformation::IsTypePresent("Windows.Phone.UI.Input.HardwareButtons"))
-    {
         return true;
-    }
+    else
+        return false;
 #elif (WINAPI_FAMILY == WINAPI_FAMILY_PHONE_APP)
     return true;
 #else
     return false;
 #endif
-    return false;
 }
 
 CC_DEPRECATED_ATTRIBUTE std::wstring CC_DLL CCUtf8ToUnicode(const char * pszUtf8Str, unsigned len /*= -1*/)
