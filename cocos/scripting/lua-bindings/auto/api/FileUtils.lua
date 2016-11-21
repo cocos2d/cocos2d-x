@@ -158,6 +158,17 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
+-- Gets the new filename from the filename lookup dictionary.<br>
+-- It is possible to have a override names.<br>
+-- param filename The original filename.<br>
+-- return The new filename after searching in the filename lookup dictionary.<br>
+-- If the original filename wasn't in the dictionary, it will return the original filename.
+-- @function [parent=#FileUtils] getNewFilename 
+-- @param self
+-- @param #string filename
+-- @return string#string ret (return value: string)
+        
+--------------------------------
 -- Converts the contents of a file to a ValueMap.<br>
 -- param filename The filename of the file to gets content.<br>
 -- return ValueMap of the file contents.<br>
