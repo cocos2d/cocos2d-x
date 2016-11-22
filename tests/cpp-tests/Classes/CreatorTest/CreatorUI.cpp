@@ -197,7 +197,7 @@ Node* CreatorUI_create()
     uibutton_5->setAnchorPoint(Vec2(0.5, 0.5));
     uibutton_5->setScaleY(1);
     uibutton_5->setScaleX(1);
-    uibutton_5->setColor(Color3B(0, 255, 82));
+    uibutton_5->setColor(Color3B(245, 0, 255));
     uibutton_5->setName("Button");
     uibutton_5->setLocalZOrder(0);
     uibutton_5->setGlobalZOrder(0);

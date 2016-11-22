@@ -429,7 +429,15 @@ void Sprite::updatePoly()
 {
     if (_numberOfSlices == 1) {
         setTextureCoords(_rect, &_quad);
-        const Rect copyRect(0, 0, _rect.size.width * _strechFactor.x, _rect.size.height * _strechFactor.y);
+        Rect copyRect;
+        if (_strechEnabled) {
+            copyRect = Rect(0, 0, _rect.size.width * _strechFactor.x, _rect.size.height * _strechFactor.y);
+        } else {
+            copyRect = Rect((_contentSize.width - _originalContentSize.width) / 2.0f,
+                            (_contentSize.height - _originalContentSize.height) / 2.0f,
+                            _rect.size.width,
+                            _rect.size.height);
+        }
         setVertexCoords(copyRect, &_quad);
         _polyInfo.setQuad(&_quad);
     } else {
@@ -732,7 +740,7 @@ void Sprite::setVertexCoords(const Rect& rect, V3F_C4B_T2F_Quad* outQuad)
     _offsetPosition.x = relativeOffsetX + (_originalContentSize.width - _rect.size.width) / 2;
     _offsetPosition.y = relativeOffsetY + (_originalContentSize.height - _rect.size.height) / 2;
 
-    // FIXME: Streching should be appliced to the "offset" as well
+    // FIXME: Streching should be applied to the "offset" as well
     // but probably it should be calculated in the caller function. It will be tidier
     if (_numberOfSlices == 1) {
         _offsetPosition.x *= _strechFactor.x;
@@ -1172,6 +1180,11 @@ void Sprite::setStrechEnabled(bool enabled)
 {
     if (_strechEnabled != enabled) {
         _strechEnabled = enabled;
+
+        // disabled centerrect / number of slices if disabled
+        if (!enabled)
+            setCenterRectNormalized(Rect(0,0,1,1));
+
         updateStretchFactor();
         updatePoly();
     }
@@ -1184,39 +1197,34 @@ bool Sprite::getStrechEnabled() const
 
 void Sprite::updateStretchFactor()
 {
-    if (_strechEnabled)
+    const Size size = getContentSize();
+
+    if (_numberOfSlices == 1)
     {
-        const Size size = getContentSize();
-
-        if (_numberOfSlices == 1)
-        {
-            const float x_factor = size.width / _originalContentSize.width;
-            const float y_factor = size.height / _originalContentSize.height;
-            _strechFactor = Vec2(x_factor, y_factor);
-        }
-        else
-        {
-            const float x1 = _rect.size.width * _centerRectNormalized.origin.x;
-            const float x2 = _rect.size.width * _centerRectNormalized.size.width;
-            const float x3 = _rect.size.width * (1 - _centerRectNormalized.origin.x - _centerRectNormalized.size.width);
-
-            const float y1 = _rect.size.height * _centerRectNormalized.origin.y;
-            const float y2 = _rect.size.height * _centerRectNormalized.size.height;
-            const float y3 = _rect.size.height * (1 - _centerRectNormalized.origin.y - _centerRectNormalized.size.height);
-
-            // adjustedSize = the new _rect size
-            const float adjustedWidth = size.width - (_originalContentSize.width - _rect.size.width);
-            const float adjustedHeight = size.height - (_originalContentSize.height - _rect.size.height);
-
-            const float x_factor = (adjustedWidth - x1 - x3) / x2;
-            const float y_factor = (adjustedHeight - y1 - y3) / y2;
-
-            _strechFactor = Vec2(x_factor, y_factor);
-        }
+        // If strech is disabled, calculate the strech anyway
+        // since it is needed to calculate the offset
+        const float x_factor = size.width / _originalContentSize.width;
+        const float y_factor = size.height / _originalContentSize.height;
+        _strechFactor = Vec2(x_factor, y_factor);
     }
     else
     {
-        _strechFactor = Vec2::ONE;
+        const float x1 = _rect.size.width * _centerRectNormalized.origin.x;
+        const float x2 = _rect.size.width * _centerRectNormalized.size.width;
+        const float x3 = _rect.size.width * (1 - _centerRectNormalized.origin.x - _centerRectNormalized.size.width);
+
+        const float y1 = _rect.size.height * _centerRectNormalized.origin.y;
+        const float y2 = _rect.size.height * _centerRectNormalized.size.height;
+        const float y3 = _rect.size.height * (1 - _centerRectNormalized.origin.y - _centerRectNormalized.size.height);
+
+        // adjustedSize = the new _rect size
+        const float adjustedWidth = size.width - (_originalContentSize.width - _rect.size.width);
+        const float adjustedHeight = size.height - (_originalContentSize.height - _rect.size.height);
+
+        const float x_factor = (adjustedWidth - x1 - x3) / x2;
+        const float y_factor = (adjustedHeight - y1 - y3) / y2;
+
+        _strechFactor = Vec2(x_factor, y_factor);
     }
 }
 
