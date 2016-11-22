@@ -263,6 +263,86 @@ public:
      */
     void setTitleAlignment(TextHAlignment hAlignment, TextVAlignment vAlignment);
 
+    /**
+     * Enable shadow for the title's text.
+     * @todo support blur for shadow effect
+     * 
+     * @param shadowColor The color of shadow effect.
+     * @param offset The offset of shadow effect.
+     * @param blurRadius The blur radius of shadow effect.
+     * @since v3.11
+     */
+    void enableShadow(const Color4B& shadowColor = Color4B::BLACK,
+                      const Size& offset = Size(2, -2),
+                      int blurRadius = 0);
+
+    /**
+    * Return whether the shadow effect is enabled.
+    * @since v3.11
+    */
+    bool isShadowEnabled() const;
+    
+    /**
+    * Return the shadow effect color value.
+    * @since v3.11
+    */
+    Color4B getShadowColor() const;
+
+    /**
+    * Return shadow effect offset value.
+    * @since v3.11
+    */
+    Size getShadowOffset() const;
+
+    /**
+    * Return the shadow effect blur radius.
+    * @since v3.11
+    */
+    float getShadowBlurRadius() const;
+
+    /**
+     * Enable outline for the title's text.
+     * It only works on IOS and Android when you use System fonts.
+     *
+     * @param outlineColor The color of outline.
+     * @param outlineSize The size of outline.
+     * @since v3.11
+     */
+    void enableOutline(const Color4B& outlineColor, int outlineSize = 1);
+
+    /**
+    * Return the outline effect size value.
+    * @since v3.11
+    */
+    int getOutlineSize() const;
+
+    /** 
+     * Disable all text effects, including shadow, outline and glow.
+     * @since v3.11
+     */
+    void disableEffect();
+
+    /**
+     * Disable specific text effect.
+     * Use LabelEffect parameter to specify which effect should be disabled.
+     *
+     * @see `LabelEffect`
+     * @since v3.11
+     */
+    void disableEffect(LabelEffect effect);
+
+    /**
+     * Return current effect type.
+     * @since v3.11
+     */
+    LabelEffect getLabelEffectType() const;
+
+    /**
+     * Return current effect color value.
+     * @since v3.11
+     */
+    Color4B getEffectColor() const;
+
     /** @brief When user pressed the button, the button will zoom to a scale.
      * The final scale of the button  equals (button original scale + _zoomScale)
      * @since v3.3
