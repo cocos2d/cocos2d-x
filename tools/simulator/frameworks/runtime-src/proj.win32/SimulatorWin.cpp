@@ -105,7 +105,7 @@ std::string getCurAppPath(void)
     return fuldir;
 }
 
-static bool stringEndWith(const std::string str, const std::string needle)
+static bool stringEndWith(const std::string& str, const std::string& needle)
 {
     if (str.length() >= needle.length())
     {

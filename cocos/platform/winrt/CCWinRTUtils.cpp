@@ -356,7 +356,7 @@ std::string computeHashForFile(const std::string& filePath)
     return ret;
 }
 
-bool createMappedCacheFile(const std::string& srcFilePath, std::string& cacheFilePath, std::string ext)
+bool createMappedCacheFile(const std::string& srcFilePath, std::string& cacheFilePath, const std::string& ext /* = "" */)
 {
     bool ret = false;
     auto folderPath = FileUtils::getInstance()->getWritablePath();

@@ -169,19 +169,16 @@ PUDynamicAttributeCurved::PUDynamicAttributeCurved (PUInterpolationType interpol
     _type = PUDynamicAttribute::DAT_CURVED;
 }
 //-----------------------------------------------------------------------
-PUDynamicAttributeCurved::PUDynamicAttributeCurved (const PUDynamicAttributeCurved& dynamicAttributeCurved)
+PUDynamicAttributeCurved::PUDynamicAttributeCurved (const PUDynamicAttributeCurved& dynamicAttributeCurved) :
+    _interpolationType(dynamicAttributeCurved._interpolationType),
+    _spline(dynamicAttributeCurved._spline),
+    _range(dynamicAttributeCurved._range)
 {
     _type = PUDynamicAttribute::DAT_CURVED;
-    _interpolationType = dynamicAttributeCurved._interpolationType;
-    _spline = dynamicAttributeCurved._spline;
-    _range = dynamicAttributeCurved._range;
 
     // Copy controlpoints
-    PUDynamicAttributeCurved::ControlPointList::const_iterator it; // Need const_iterator here!
-    PUDynamicAttributeCurved::ControlPointList::const_iterator itEnd = dynamicAttributeCurved._controlPoints.end();
-    for (it = dynamicAttributeCurved._controlPoints.begin(); it != itEnd; ++it)
+    for (const auto& controlPoint : dynamicAttributeCurved._controlPoints)
     {
-        Vec2 controlPoint = *it;
         _controlPoints.push_back (controlPoint);
     }
     processControlPoints();

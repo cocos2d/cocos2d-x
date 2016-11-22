@@ -490,7 +490,7 @@ AssetsManager* AssetsManager::create(const char* packageUrl, const char* version
     class DelegateProtocolImpl : public AssetsManagerDelegateProtocol 
     {
     public :
-        DelegateProtocolImpl(ErrorCallback aErrorCallback, ProgressCallback aProgressCallback, SuccessCallback aSuccessCallback)
+        DelegateProtocolImpl(ErrorCallback& aErrorCallback, ProgressCallback& aProgressCallback, SuccessCallback& aSuccessCallback)
         : errorCallback(aErrorCallback), progressCallback(aProgressCallback), successCallback(aSuccessCallback)
         {}
 

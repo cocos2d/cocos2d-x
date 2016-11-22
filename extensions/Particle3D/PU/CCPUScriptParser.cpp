@@ -38,13 +38,12 @@ PUScriptParser::~PUScriptParser()
 }
 void traceScriptParserCell(PUConcreteNodeList& nodes,int level)
 {
-      PUConcreteNodeList::const_iterator it = nodes.begin();
-    for(;it != nodes.end();it++)
+    for(const auto& node : nodes)
     {
-        printf("%s,##%d\n",(*it)->token.c_str(),level);
-        if((*it)->children.size() != 0)
+        printf("%s,##%d\n",node->token.c_str(),level);
+        if(node->children.size() != 0)
         {
-            traceScriptParserCell((*it)->children,level+1);
+            traceScriptParserCell(node->children,level+1);
         }
     }
 }
@@ -306,7 +305,7 @@ void PUScriptParser::parse(PUConcreteNodeList& nodes,const PUScriptTokenList& to
                     }
                     
                     // Move it backwards once, since the end of the loop moves it forwards again anyway
-                    j--;
+                    --j;
                     i = j;
                     
                     // Insert the node
