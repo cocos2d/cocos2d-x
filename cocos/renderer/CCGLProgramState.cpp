@@ -72,8 +72,8 @@ UniformValue::UniformValue(const UniformValue& o)
 
 UniformValue::~UniformValue()
 {
-	if (_type == Type::CALLBACK_FN)
-		delete _value.callback;
+    if (_type == Type::CALLBACK_FN)
+        delete _value.callback;
 
     if (_uniform->type == GL_SAMPLER_2D)
     {
@@ -157,12 +157,12 @@ void UniformValue::apply()
 
 void UniformValue::setCallback(const std::function<void(GLProgram*, Uniform*)> &callback)
 {
-	// delete previously set callback
-	// TODO: memory will leak if the user does:
-	//    value->setCallback();
-	//    value->setFloat();
+    // delete previously set callback
+    // TODO: memory will leak if the user does:
+    //    value->setCallback();
+    //    value->setFloat();
     if (_type == Type::CALLBACK_FN)
-		delete _value.callback;
+        delete _value.callback;
 
     _value.callback = new (std::nothrow) std::function<void(GLProgram*, Uniform*)>();
 	*_value.callback = callback;
@@ -246,7 +246,6 @@ void UniformValue::setVec3v(ssize_t size, const Vec3* pointer)
     _value.v3f.pointer = (const float*)pointer;
     _value.v3f.size = (GLsizei)size;
     _type = Type::POINTER;
-
 }
 
 void UniformValue::setVec4(const Vec4& value)
@@ -280,10 +279,7 @@ UniformValue& UniformValue::operator=(const UniformValue& o)
     
     if (_uniform->type == GL_SAMPLER_2D)
     {
-        if (_value.tex.texture)
-        {
-            CC_SAFE_RETAIN(_value.tex.texture);
-        }
+        CC_SAFE_RETAIN(_value.tex.texture);
     }
     return *this;
 }
