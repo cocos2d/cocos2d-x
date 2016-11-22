@@ -456,7 +456,9 @@ void Sprite::updatePoly()
         const float osw = _rect.size.width;
         const float osh = _rect.size.height;
 
+        //
         // textCoords Data: Y must be inverted.
+        //
         const float u0 = oox + osw * 0;
         const float u1 = oox + osw * cx1;
         const float u2 = oox + osw * cx2;
@@ -471,7 +473,7 @@ void Sprite::updatePoly()
         const float h1 = osh * (cy2-cy1);
         const float h2 = osh * (1-cy2);
 
-        const Rect texRects[9] = {
+        const Rect texRects_normal[9] = {
             Rect(u0, v0, w0, h0),   // bottom-left
             Rect(u1, v0, w1, h0),   // bottom
             Rect(u2, v0, w2, h0),   // bottom-right
@@ -485,7 +487,25 @@ void Sprite::updatePoly()
             Rect(u2, v2, w2, h2),   // top-right
         };
 
+        const Rect texRects_rotated[9] = {
+            Rect(u0, v0 - h2 - h1,              w0, h0),        // top-left
+            Rect(u0, v0 - h2,                   w1, h0),        // left
+            Rect(u0, v0,                        w2, h0),        // bottom-left
+
+            Rect(u0 + w0, v0 - h2 - h1,         w0, h1),        // top
+            Rect(u0 + w0, v0 - h2,              w1, h1),        // center
+            Rect(u0 + w0, v0,                   w2, h1),        // bottom
+
+            Rect(u0 + w0 + w1, v0 - h2 - h1,    w0, h2),        // top-right
+            Rect(u0 + w0 + w1, v0 - h2,         w1, h2),        // right
+            Rect(u0 + w0 + w1, v0,              w2, h2),        // bottom-right
+        };
+
+        const Rect* texRects = _rectRotated ? texRects_rotated : texRects_normal;
+
+        //
         // vertex Data.
+        //
 
         // sizes
         float x0_s = osw * cx1;
@@ -537,20 +557,8 @@ void Sprite::updatePoly()
             Rect(x2, y2,  x2_s, y2_s),      // top-right
         };
 
-        static const int normalIdx[] = {
-            0, 1, 2,
-            3, 4, 5,
-            6, 7 ,8
-        };
-        static const int rotatedIdx[] = {
-            6, 3, 0,
-            7, 4, 1,
-            8, 5, 2};
-        const int* idx = _rectRotated ? rotatedIdx : normalIdx;
-
         for (int i=0; i<_numberOfSlices; ++i) {
-            int texIdx = idx[i];
-            setTextureCoords(texRects[texIdx], &_quads[i]);
+            setTextureCoords(texRects[i], &_quads[i]);
             setVertexCoords(verticesRects[i], &_quads[i]);
         }
         _polyInfo.setQuads(_quads, _numberOfSlices);
