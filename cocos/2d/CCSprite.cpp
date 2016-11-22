@@ -445,16 +445,20 @@ void Sprite::updatePoly()
         CCASSERT(_numberOfSlices == 9, "Invalid number of slices");
 
         // center rect
-        const float cx1 = _centerRectNormalized.origin.x;
-        const float cy1 = _centerRectNormalized.origin.y;
-        const float cx2 = _centerRectNormalized.origin.x + _centerRectNormalized.size.width;
-        const float cy2 = _centerRectNormalized.origin.y + _centerRectNormalized.size.height;
+        float cx1 = _centerRectNormalized.origin.x;
+        float cy1 = _centerRectNormalized.origin.y;
+        float cx2 = _centerRectNormalized.origin.x + _centerRectNormalized.size.width;
+        float cy2 = _centerRectNormalized.origin.y + _centerRectNormalized.size.height;
 
         // "O"riginal rect
         const float oox = _rect.origin.x;
         const float ooy = _rect.origin.y;
-        const float osw = _rect.size.width;
-        const float osh = _rect.size.height;
+        float osw = _rect.size.width;
+        float osh = _rect.size.height;
+        if (_rectRotated) {
+            std::swap(cx1, cy1);
+            std::swap(cx2, cy2);
+        }
 
         //
         // textCoords Data: Y must be inverted.
@@ -474,31 +478,31 @@ void Sprite::updatePoly()
         const float h2 = osh * (1-cy2);
 
         const Rect texRects_normal[9] = {
-            Rect(u0, v0, w0, h0),   // bottom-left
-            Rect(u1, v0, w1, h0),   // bottom
-            Rect(u2, v0, w2, h0),   // bottom-right
+            Rect(u0, v0,    w0, h0),   // bottom-left
+            Rect(u1, v0,    w1, h0),   // bottom
+            Rect(u2, v0,    w2, h0),   // bottom-right
 
-            Rect(u0, v1, w0, h1),   // left
-            Rect(u1, v1, w1, h1),   // center
-            Rect(u2, v1, w2, h1),   // right
+            Rect(u0, v1,    w0, h1),   // left
+            Rect(u1, v1,    w1, h1),   // center
+            Rect(u2, v1,    w2, h1),   // right
 
-            Rect(u0, v2, w0, h2),   // top-left
-            Rect(u1, v2, w1, h2),   // top
-            Rect(u2, v2, w2, h2),   // top-right
+            Rect(u0, v2,    w0, h2),   // top-left
+            Rect(u1, v2,    w1, h2),   // top
+            Rect(u2, v2,    w2, h2),   // top-right
         };
 
         const Rect texRects_rotated[9] = {
-            Rect(u0, v0 - h2 - h1,              w0, h0),        // top-left
-            Rect(u0, v0 - h2,                   w1, h0),        // left
-            Rect(u0, v0,                        w2, h0),        // bottom-left
+            Rect(u0, v2,    w0, h0),        // top-left
+            Rect(u0, v1,    w1, h0),        // left
+            Rect(u0, v0,    w2, h0),        // bottom-left
 
-            Rect(u0 + w0, v0 - h2 - h1,         w0, h1),        // top
-            Rect(u0 + w0, v0 - h2,              w1, h1),        // center
-            Rect(u0 + w0, v0,                   w2, h1),        // bottom
+            Rect(u1, v2,    w0, h1),        // top
+            Rect(u1, v1,    w1, h1),        // center
+            Rect(u1, v0,    w2, h1),        // bottom
 
-            Rect(u0 + w0 + w1, v0 - h2 - h1,    w0, h2),        // top-right
-            Rect(u0 + w0 + w1, v0 - h2,         w1, h2),        // right
-            Rect(u0 + w0 + w1, v0,              w2, h2),        // bottom-right
+            Rect(u2, v2,    w0, h2),        // top-right
+            Rect(u2, v1,    w1, h2),        // right
+            Rect(u2, v0,    w2, h2),        // bottom-right
         };
 
         const Rect* texRects = _rectRotated ? texRects_rotated : texRects_normal;

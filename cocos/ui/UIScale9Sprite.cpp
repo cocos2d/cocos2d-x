@@ -135,8 +135,8 @@ Scale9Sprite::Scale9Sprite()
 , _renderingType(RenderingType::SLICE)
 , _insetLeft(0)
 , _insetTop(0)
-, _insetRight(1)
-, _insetBottom(1)
+, _insetRight(0)
+, _insetBottom(0)
 , _isPatch9(false)
 {
 }
