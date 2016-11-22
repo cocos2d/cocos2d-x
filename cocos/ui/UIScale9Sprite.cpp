@@ -467,17 +467,18 @@ void Scale9Sprite::setupSlice9(Texture2D* texture, const Rect& capInsets)
 
         if(!parsedCapInset.equals(Rect::ZERO))
         {
-            _isPatch9 = true;
-            setCapInsets(parsedCapInset);
-
             // adjust texture rect. 1.3f seems to be the magic number
             // to avoid artifacts
             auto rect = getTextureRect();
             rect.origin.x += 1.3f;
             rect.origin.y += 1.3f;
-            rect.size.width -= 2;
-            rect.size.height -= 2;
+            rect.size.width -= 2.0f;
+            rect.size.height -= 2.0f;
             setTextureRect(rect);
+
+            // and after adjusting the texture, set the new cap insets
+            _isPatch9 = true;
+            setCapInsets(parsedCapInset);
         }
     }
 }
