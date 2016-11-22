@@ -183,14 +183,16 @@ void UniformValue::setTexture(Texture2D* texture, GLuint textureUnit)
 {
     CCASSERT(texture != nullptr, "texture is nullptr");
 
-    _value.tex.textureId = texture->getName();
-    _value.tex.textureUnit = textureUnit;
+    if (texture != _value.tex.texture)
+    {
+        CC_SAFE_RELEASE(_value.tex.texture);
+        CC_SAFE_RETAIN(texture);
+        _value.tex.texture = texture;
 
-    CC_SAFE_RELEASE(_value.tex.texture);
-    CC_SAFE_RETAIN(texture);
-    _value.tex.texture = texture;
-
-    _type = Type::VALUE;
+        _value.tex.textureId = texture->getName();
+        _value.tex.textureUnit = textureUnit;
+        _type = Type::VALUE;
+    }
 }
 
 void UniformValue::setInt(int value)
@@ -441,6 +443,9 @@ GLProgramState::~GLProgramState()
     Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundlistener);
 #endif
 
+    // _uniforms must be cleared before releasing _glprogram since
+    // the destructor of UniformValue will call a weak pointer
+    // which points to the member variable in GLProgram.
     _uniforms.clear();
     _attributes.clear();
 
@@ -502,6 +507,9 @@ bool GLProgramState::init(GLProgram* glprogram)
 
 void GLProgramState::resetGLProgram()
 {
+    // _uniforms must be cleared before releasing _glprogram since
+    // the destructor of UniformValue will call a weak pointer
+    // which points to the member variable in GLProgram.
     _uniforms.clear();
     _attributes.clear();
 

@@ -147,7 +147,7 @@ protected:
         float v4Value[4];
         float matrixValue[16];
         struct {
-            GLuint textureId;
+            GLuint textureId; // textureId will be deprecated since we use 'texture->getName()' to get textureId.
             GLuint textureUnit;
             Texture2D* texture;
         } tex;
