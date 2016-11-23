@@ -629,11 +629,6 @@ void Scheduler::unscheduleAllWithMinPriority(int minPriority)
 #if CC_ENABLE_SCRIPT_BINDING
     _scriptHandlerEntries.clear();
 #endif
-    
-    {
-        std::unique_lock<std::mutex> lock(_performMutex);
-        _functionsToPerform.clear();
-    }
 }
 
 void Scheduler::unscheduleAllForTarget(void *target)
@@ -828,6 +823,12 @@ void Scheduler::performFunctionInCocosThread(const std::function<void ()> &funct
     _functionsToPerform.push_back(function);
 
     _performMutex.unlock();
+}
+
+void Scheduler::removeAllFunctionsToBePerformedInCocosThread()
+{
+    std::unique_lock<std::mutex> lock(_performMutex);
+    _functionsToPerform.clear();
 }
 
 // main loop
