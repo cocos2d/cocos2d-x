@@ -326,4 +326,18 @@ public:
     void update(float dt) override;
 };
 
+class SchedulerRemoveAllFunctionsToBePerformedInCocosThread : public SchedulerTestLayer
+{
+public:
+    CREATE_FUNC(SchedulerRemoveAllFunctionsToBePerformedInCocosThread);
+    
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    void onEnter() override;
+    void update(float dt) override;
+    
+private:
+    cocos2d::Sprite *_sprite;
+};
+
 #endif
