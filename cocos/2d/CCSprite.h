@@ -456,7 +456,7 @@ public:
     void setStrechEnabled(bool enabled);
 
     /** returns whether or not contentSize streches the sprite's texture */
-    bool getStrechEnabled() const;
+    bool isStrechEnabled() const;
 
     //
     // Overrides

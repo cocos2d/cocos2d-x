@@ -426,12 +426,26 @@ void Sprite::setTextureRect(const Rect& rect, bool rotated, const Size& untrimme
 
 void Sprite::updatePoly()
 {
+    // There are 3 cases:
+    //
+    // A) a non 9-sliced, non streched
+    //    contentsize doesn't not affect the streching, since there is no streching
+    //    this was the original behavior, and we keep it for backwards compatibility reasons
+    //    When non-streching is enabled, we have to change the offset in order to "fill the empty" space at the
+    //    left-top of the texture
+    // B) non 9-sliced, streched
+    //    the texture is streched to the content size
+    // C) 9-sliced, streched
+    //    the sprite is 9-sliced and streched.
     if (_numberOfSlices == 1) {
         setTextureCoords(_rect, &_quad);
         Rect copyRect;
         if (_strechEnabled) {
+            // case B)
             copyRect = Rect(0, 0, _rect.size.width * _strechFactor.x, _rect.size.height * _strechFactor.y);
         } else {
+            // case A)
+            // modify origin to put the sprite in the correct offset
             copyRect = Rect((_contentSize.width - _originalContentSize.width) / 2.0f,
                             (_contentSize.height - _originalContentSize.height) / 2.0f,
                             _rect.size.width,
@@ -440,8 +454,53 @@ void Sprite::updatePoly()
         setVertexCoords(copyRect, &_quad);
         _polyInfo.setQuad(&_quad);
     } else {
+        // case C)
+
         // in theory it can support 3 slices as well, but let's stick to 9 only
         CCASSERT(_numberOfSlices == 9, "Invalid number of slices");
+
+
+        // How the texture is split
+        //
+        //  u,v: are the texture coordinates
+        //  w,h: are the width and heights
+        //
+        //      w0    w1   w2
+        // v2 +----+------+--+
+        //    |    |      |  |
+        //    |    |      |  |
+        //    | 6  |   7  | 8|  h2
+        //    |    |      |  |
+        // v1 +----+------+--|
+        //    |    |      |  |
+        //    | 3  |   4  | 5|  h1
+        // v0 +----+------+--|
+        //    |    |      |  |
+        //    | 0  |   1  | 2|  h0
+        //    |    |      |  |
+        //    +----+------+--+
+        //    u0   u1    u2
+        //
+        //
+        //  and when the texture is roated, it will get transformed to:
+        //  not only the rects have a different position, but also u,v
+        //  points to the bottom-left and not top-right of the texture
+        //  so some swaping/origin/reordering needs to be done in order
+        //  to support rotated slice-9 correctly
+        //
+        //        w0      w1   w2
+        // v2 +------+----+--------+
+        //    |      |    |        |
+        //    |   0  |  3 |    6   |
+        // v1 +------+----+--------+
+        //    |      |    |        |
+        //    |   1  |  4 |    7   |
+        //    |      |    |        |
+        // v0 +------+----+--------+
+        //    |   2  |  5 |    8   |
+        //    +------+----+--------+
+        //    u0      u1     u2
+
 
         // center rect
         float cx1 = _centerRectNormalized.origin.x;
@@ -454,12 +513,13 @@ void Sprite::updatePoly()
         const float ooy = _rect.origin.y;
         const float osw = _rect.size.width;
         const float osh = _rect.size.height;
+
         if (_rectRotated) {
             std::swap(cx1, cy1);
             std::swap(cx2, cy2);
 
             // when the texture is rotated, the the centerRect starts from the "bottom" (left)
-            // but it should start from the stop, so invert it
+            // but it should start from the top, so invert it
             cy2 = 1 - cy2;
             cy1 = 1 - cy1;
             std::swap(cy1, cy2);
@@ -681,6 +741,16 @@ void Sprite::setTextureCoords(const Rect& rectInPoints, V3F_C4B_T2F_Quad* outQua
     float rw = rectInPixels.size.width;
     float rh = rectInPixels.size.height;
 
+    // if the rect is rotated, it means that the frame is rotated 90 degrees (clockwise) and:
+    //  - rectInpoints: origin will be the bottom-left of the frame (and not the top-right)
+    //  - size: represents the unrotated texture size
+    //
+    // so what we have to do is:
+    //  - swap texture width and height
+    //  - take into account the origin
+    //  - flip X instead of Y when flipY is enabled
+    //  - flip Y instead of X when flipX is enabled
+
     if (_rectRotated)
         std::swap(rw, rh);
 
@@ -695,6 +765,7 @@ void Sprite::setTextureCoords(const Rect& rectInPoints, V3F_C4B_T2F_Quad* outQua
     float top     = rectInPixels.origin.y / atlasHeight;
     float bottom  = (rectInPixels.origin.y + rh) / atlasHeight;
 #endif // CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
+
 
     if ((_flippedX && !_rectRotated) || (_flippedY && _rectRotated))
     {
@@ -1198,7 +1269,7 @@ void Sprite::setStrechEnabled(bool enabled)
     }
 }
 
-bool Sprite::getStrechEnabled() const
+bool Sprite::isStrechEnabled() const
 {
     return _strechEnabled;
 }
