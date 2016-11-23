@@ -139,6 +139,9 @@ bool Director::init(void)
     
     // restart ?
     _restartDirectorInNextLoop = false;
+    
+    // invalid ?
+    _invalid = false;
 
     _winSizeInPoints = Size::ZERO;
 
