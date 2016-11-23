@@ -1160,6 +1160,12 @@ void SchedulerRemoveAllFunctionsToBePerformedInCocosThread::onEnter()
     this->scheduleUpdate();
 }
 
+void SchedulerRemoveAllFunctionsToBePerformedInCocosThread::onExit()
+{
+    SchedulerTestLayer::onExit();
+    this->unscheduleUpdate();
+}
+
 void SchedulerRemoveAllFunctionsToBePerformedInCocosThread::update(float dt) {
     Director::getInstance()->getScheduler()->performFunctionInCocosThread([this] () {
         _sprite->setVisible(false);
