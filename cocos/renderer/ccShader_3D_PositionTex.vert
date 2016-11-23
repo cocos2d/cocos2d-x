@@ -1,5 +1,5 @@
 
-const char* cc3D_PositionTex_vert = STRINGIFY(
+const char* cc3D_PositionTex_vert = R"(
 
 attribute vec4 a_position;
 attribute vec2 a_texCoord;
@@ -12,9 +12,9 @@ void main(void)
     TextureCoordOut = a_texCoord;
     TextureCoordOut.y = 1.0 - TextureCoordOut.y;
 }
-);
+)";
 
-const char* cc3D_SkinPositionTex_vert = STRINGIFY(
+const char* cc3D_SkinPositionTex_vert = R"(
 attribute vec3 a_position;
 
 attribute vec4 a_blendWeight;
@@ -85,4 +85,4 @@ void main()
     TextureCoordOut.y = 1.0 - TextureCoordOut.y;
 }
 
-);
+)";

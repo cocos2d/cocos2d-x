@@ -117,8 +117,8 @@ TMXTilesetInfo * TMXTiledMap::tilesetForLayer(TMXLayerInfo *layerInfo, TMXMapInf
 {
     Size size = layerInfo->_layerSize;
     auto& tilesets = mapInfo->getTilesets();
-    
-    for (auto iter = tilesets.crbegin(); iter != tilesets.crend(); ++iter)
+
+    for (auto iter = tilesets.crbegin(), iterCrend = tilesets.crend(); iter != iterCrend; ++iter)
     {
         TMXTilesetInfo* tilesetInfo = *iter;
         if (tilesetInfo)
@@ -127,8 +127,8 @@ TMXTilesetInfo * TMXTiledMap::tilesetForLayer(TMXLayerInfo *layerInfo, TMXMapInf
             {
                 for( int x=0; x < size.width; x++ )
                 {
-                    int pos = static_cast<int>(x + size.width * y);
-                    int gid = layerInfo->_tiles[ pos ];
+                    uint32_t pos = static_cast<uint32_t>(x + size.width * y);
+                    uint32_t gid = layerInfo->_tiles[ pos ];
                     
                     // gid are stored in little endian.
                     // if host is big endian, then swap
@@ -141,8 +141,11 @@ TMXTilesetInfo * TMXTiledMap::tilesetForLayer(TMXLayerInfo *layerInfo, TMXMapInf
                     {
                         // Optimization: quick return
                         // if the layer is invalid (more than 1 tileset per layer) an CCAssert will be thrown later
-                        if( (gid & kTMXFlippedMask) >= tilesetInfo->_firstGid )
+                        if( (gid & kTMXFlippedMask)
+                            >= static_cast<uint32_t>(tilesetInfo->_firstGid))
+                        {
                             return tilesetInfo;
+                        }
                     }
                 }
             }
@@ -218,10 +221,8 @@ TMXObjectGroup * TMXTiledMap::getObjectGroup(const std::string& groupName) const
 
     if (_objectGroups.size()>0)
     {
-        TMXObjectGroup* objectGroup = nullptr;
-        for (auto iter = _objectGroups.cbegin(); iter != _objectGroups.cend(); ++iter)
+        for (const auto& objectGroup : _objectGroups)
         {
-            objectGroup = *iter;
             if (objectGroup && objectGroup->getGroupName() == groupName)
             {
                 return objectGroup;

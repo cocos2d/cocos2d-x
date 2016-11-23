@@ -34,12 +34,12 @@ PUOnQuotaObserverTranslator::PUOnQuotaObserverTranslator()
 {
 }
 //-------------------------------------------------------------------------
-bool PUOnQuotaObserverTranslator::translateChildProperty( PUScriptCompiler* compiler, PUAbstractNode *node )
+bool PUOnQuotaObserverTranslator::translateChildProperty( PUScriptCompiler* /*compiler*/, PUAbstractNode* /*node*/ )
 {
     return false;
 }
 
-bool PUOnQuotaObserverTranslator::translateChildObject( PUScriptCompiler* compiler, PUAbstractNode *node )
+bool PUOnQuotaObserverTranslator::translateChildObject( PUScriptCompiler* /*compiler*/, PUAbstractNode* /*node*/ )
 {
     // No objects
     return false;

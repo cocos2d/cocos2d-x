@@ -142,7 +142,7 @@ void ControlHuePicker::updateSliderPosition(Vec2 location)
     float angle             = atan2f(dy, dx);
     float angleDeg          = CC_RADIANS_TO_DEGREES(angle) + 180.0f;
     
-    // use the position / slider width to determin the percentage the dragger is at
+    // use the position / slider width to determine the percentage the dragger is at
     setHue(angleDeg);
     
     // send Control callback
@@ -163,7 +163,7 @@ bool ControlHuePicker::checkSliderPosition(Vec2 location)
     return false;
 }
 
-bool ControlHuePicker::onTouchBegan(Touch* touch, Event* event)
+bool ControlHuePicker::onTouchBegan(Touch* touch, Event* /*event*/)
 {
     if (!isEnabled() || !isVisible())
     {
@@ -178,7 +178,7 @@ bool ControlHuePicker::onTouchBegan(Touch* touch, Event* event)
 }
 
 
-void ControlHuePicker::onTouchMoved(Touch* touch, Event* event)
+void ControlHuePicker::onTouchMoved(Touch* touch, Event* /*event*/)
 {
     // Get the touch location
     Vec2 touchLocation=getTouchLocation(touch);

@@ -28,6 +28,23 @@
 
 NS_CC_EXT_BEGIN
 
+void TableViewDelegate::tableCellHighlight(TableView* /*table*/, TableViewCell* /*cell*/)
+{}
+
+void TableViewDelegate::tableCellUnhighlight(TableView* /*table*/, TableViewCell* /*cell*/)
+{}
+
+void TableViewDelegate::tableCellWillRecycle(TableView* /*table*/, TableViewCell* /*cell*/)
+{}
+
+Size TableViewDataSource::tableCellSizeForIndex(TableView* table, ssize_t /*idx*/) {
+    return cellSizeForTable(table);
+}
+
+Size TableViewDataSource::cellSizeForTable(TableView* /*table*/) {
+    return Size::ZERO;
+}
+
 TableView* TableView::create()
 {
     return TableView::create(nullptr, Size::ZERO);
@@ -448,7 +465,7 @@ void TableView::_updateCellPositions()
 
 }
 
-void TableView::scrollViewDidScroll(ScrollView* view)
+void TableView::scrollViewDidScroll(ScrollView* /*view*/)
 {
     long countOfItems = _dataSource->numberOfCellsInTableView(this);
     if (0 == countOfItems)

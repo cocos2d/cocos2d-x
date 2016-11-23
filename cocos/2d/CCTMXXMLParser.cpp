@@ -215,9 +215,8 @@ bool TMXMapInfo::parseXMLFile(const std::string& xmlFilename)
 }
 
 // the XML parser calls here with all the elements
-void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
+void TMXMapInfo::startElement(void* /*ctx*/, const char *name, const char **atts)
 {    
-    CC_UNUSED_PARAM(ctx);
     TMXMapInfo *tmxMapInfo = this;
     std::string elementName = name;
     ValueMap attributeDict;
@@ -227,7 +226,7 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
         {
             std::string key = atts[i];
             std::string value = atts[i+1];
-            attributeDict.insert(std::make_pair(key, Value(value)));
+            attributeDict.emplace(key, Value(value));
         }
     }
     if (elementName == "map")
@@ -355,7 +354,7 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
         {
             TMXLayerInfo* layer = tmxMapInfo->getLayers().back();
             Size layerSize = layer->_layerSize;
-            uint32_t gid = static_cast<uint32_t>(attributeDict["gid"].asInt());
+            uint32_t gid = static_cast<uint32_t>(attributeDict["gid"].asUnsignedInt());
             int tilesAmount = layerSize.width*layerSize.height;
             
             if (_xmlTileIndex < tilesAmount)
@@ -537,7 +536,7 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
             // The parent element is the map
             Value value = attributeDict["value"];
             std::string key = attributeDict["name"].asString();
-            tmxMapInfo->getProperties().insert(std::make_pair(key, value));
+            tmxMapInfo->getProperties().emplace(key, value);
         }
         else if ( tmxMapInfo->getParentElement() == TMXPropertyLayer )
         {
@@ -546,7 +545,7 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
             Value value = attributeDict["value"];
             std::string key = attributeDict["name"].asString();
             // Add the property to the layer
-            layer->getProperties().insert(std::make_pair(key, value));
+            layer->getProperties().emplace(key, value);
         }
         else if ( tmxMapInfo->getParentElement() == TMXPropertyObjectGroup ) 
         {
@@ -554,7 +553,7 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
             TMXObjectGroup* objectGroup = tmxMapInfo->getObjectGroups().back();
             Value value = attributeDict["value"];
             std::string key = attributeDict["name"].asString();
-            objectGroup->getProperties().insert(std::make_pair(key, value));
+            objectGroup->getProperties().emplace(key, value);
         }
         else if ( tmxMapInfo->getParentElement() == TMXPropertyObject )
         {
@@ -665,9 +664,8 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
     }
 }
 
-void TMXMapInfo::endElement(void *ctx, const char *name)
+void TMXMapInfo::endElement(void* /*ctx*/, const char *name)
 {
-    CC_UNUSED_PARAM(ctx);
     TMXMapInfo *tmxMapInfo = this;
     std::string elementName = name;
 
@@ -746,7 +744,7 @@ void TMXMapInfo::endElement(void *ctx, const char *name)
 
             uint32_t* bufferPtr = reinterpret_cast<uint32_t*>(buffer);
             for(auto gidToken : gidTokens) {
-                auto tileGid = (uint32_t)strtol(gidToken.c_str(), nullptr, 10);
+                auto tileGid = (uint32_t)strtoul(gidToken.c_str(), nullptr, 10);
                 *bufferPtr = tileGid;
                 bufferPtr++;
             }
@@ -786,9 +784,8 @@ void TMXMapInfo::endElement(void *ctx, const char *name)
     }
 }
 
-void TMXMapInfo::textHandler(void *ctx, const char *ch, int len)
+void TMXMapInfo::textHandler(void* /*ctx*/, const char *ch, size_t len)
 {
-    CC_UNUSED_PARAM(ctx);
     TMXMapInfo *tmxMapInfo = this;
     std::string text(ch, 0, len);
 

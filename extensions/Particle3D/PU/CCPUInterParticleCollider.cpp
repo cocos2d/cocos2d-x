@@ -78,7 +78,7 @@ void PUParticle3DInterParticleCollider::unPrepare()
     //particleTechnique->setSpatialHashingUsed(false);
 }
 //-----------------------------------------------------------------------
-bool PUParticle3DInterParticleCollider::validateAndExecuteSphereCollision (PUParticle3D* particle1, PUParticle3D* particle2, float timeElapsed)
+bool PUParticle3DInterParticleCollider::validateAndExecuteSphereCollision (PUParticle3D* particle1, PUParticle3D* particle2, float /*timeElapsed*/)
 {
     PUParticle3D* vp1 = static_cast<PUParticle3D*>(particle1);
     PUParticle3D* vp2 = static_cast<PUParticle3D*>(particle2);
@@ -126,7 +126,7 @@ bool PUParticle3DInterParticleCollider::validateAndExecuteSphereCollision (PUPar
 }
 //-----------------------------------------------------------------------
 
-void PUParticle3DInterParticleCollider::updatePUAffector( PUParticle3D *particle, float deltaTime )
+void PUParticle3DInterParticleCollider::updatePUAffector( PUParticle3D* /*particle*/, float /*deltaTime*/ )
 {
     //CCASSERT(0, "nonsupport yet");
     //for (auto iter : _particleSystem->getParticles())

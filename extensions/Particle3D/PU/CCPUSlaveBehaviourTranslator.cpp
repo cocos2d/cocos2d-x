@@ -32,12 +32,12 @@ PUSlaveBehaviourTranslator::PUSlaveBehaviourTranslator()
 {
 }
 
-bool PUSlaveBehaviourTranslator::translateChildProperty( PUScriptCompiler* compiler, PUAbstractNode *node )
+bool PUSlaveBehaviourTranslator::translateChildProperty( PUScriptCompiler* /*compiler*/, PUAbstractNode* /*node*/ )
 {
     return false;
 }
 
-bool PUSlaveBehaviourTranslator::translateChildObject( PUScriptCompiler* compiler, PUAbstractNode *node )
+bool PUSlaveBehaviourTranslator::translateChildObject( PUScriptCompiler* /*compiler*/, PUAbstractNode* /*node*/ )
 {
     return false;
 }

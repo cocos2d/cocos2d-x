@@ -186,7 +186,7 @@ public:
      */
     void setObjectGroups(const Vector<TMXObjectGroup*>& groups) {
         _objectGroups = groups;
-    };
+    }
     
     /** Get properties.
      *
@@ -200,7 +200,7 @@ public:
      */
     void setProperties(const ValueMap& properties) {
         _properties = properties;
-    };
+    }
 
     virtual std::string getDescription() const override;
 

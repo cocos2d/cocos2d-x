@@ -135,6 +135,16 @@
     self.textInput.ccui_textColor = color;
 }
 
+- (void)setPlaceholderFont:(UIFont *)font
+{
+    self.textInput.ccui_placeholderLabel.font = font;
+}
+
+- (void)setPlaceholderTextColor:(UIColor *)color
+{
+    self.textInput.ccui_placeholderLabel.textColor = color;
+}
+
 - (void)setInputMode:(cocos2d::ui::EditBox::InputMode)inputMode
 {
     //multiline input
@@ -239,10 +249,19 @@
             self.textInput.returnKeyType = UIReturnKeyGo;
             break;
             
+        case cocos2d::ui::EditBox::KeyboardReturnType::NEXT:
+            self.textInput.returnKeyType = UIReturnKeyNext;
+            break;
+
         default:
             self.textInput.returnKeyType = UIReturnKeyDefault;
             break;
     }
+}
+
+- (void)setTextHorizontalAlignment:(cocos2d::TextHAlignment)alignment
+{
+    self.textInput.ccui_alignment = static_cast<NSTextAlignment>(alignment);
 }
 
 - (void)setText:(NSString *)text
@@ -263,6 +282,20 @@
 - (NSString *)getDefaultFontName
 {
     return self.textInput.ccui_font.fontName ?: @"";
+}
+
+- (cocos2d::ui::EditBoxDelegate::EditBoxEndAction)getEndAction
+{
+    cocos2d::ui::EditBoxDelegate::EditBoxEndAction action = cocos2d::ui::EditBoxDelegate::EditBoxEndAction::UNKNOWN;
+    if (self.returnPressed) {
+        if (self.keyboardReturnType == cocos2d::ui::EditBox::KeyboardReturnType::NEXT) {
+            action = cocos2d::ui::EditBoxDelegate::EditBoxEndAction::TAB_TO_NEXT;
+        } else if (self.keyboardReturnType == cocos2d::ui::EditBox::KeyboardReturnType::GO ||
+                 self.keyboardReturnType == cocos2d::ui::EditBox::KeyboardReturnType::SEND) {
+            action = cocos2d::ui::EditBoxDelegate::EditBoxEndAction::RETURN;
+        }
+    }
+    return action;
 }
 
 - (void)setPlaceHolder:(NSString *)text
@@ -305,6 +338,7 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)sender
 {
     if (sender == self.textInput) {
+        self.returnPressed = YES;
         [sender resignFirstResponder];
     }
     return NO;
@@ -324,6 +358,7 @@
 {
     CCLOG("textFieldShouldBeginEditing...");
     _editState = YES;
+    _returnPressed = NO;
     
     auto view = cocos2d::Director::getInstance()->getOpenGLView();
     CCEAGLView *eaglview = (CCEAGLView *) view->getEAGLView();
@@ -341,9 +376,9 @@
     CCLOG("textFieldShouldEndEditing...");
     _editState = NO;
     getEditBoxImplIOS()->refreshInactiveText();
-    
+
     const char* inputText = [textView.text UTF8String];
-    getEditBoxImplIOS()->editBoxEditingDidEnd(inputText);
+    getEditBoxImplIOS()->editBoxEditingDidEnd(inputText, [self getEndAction]);
     
     return YES;
 }
@@ -422,8 +457,8 @@
     CCLOG("textFieldShouldEndEditing...");
     _editState = NO;
     const char* inputText = [sender.text UTF8String];
-    
-    getEditBoxImplIOS()->editBoxEditingDidEnd(inputText);
+
+    getEditBoxImplIOS()->editBoxEditingDidEnd(inputText, [self getEndAction]);
     
     return YES;
 }

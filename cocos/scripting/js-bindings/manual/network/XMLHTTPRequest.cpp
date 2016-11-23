@@ -400,7 +400,6 @@ JS_BINDED_CONSTRUCTOR_IMPL(MinXmlHttpRequest)
     js_proxy_t *p = jsb_new_proxy(req, obj);
 
 #if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
-    CC_UNUSED_PARAM(p);
     js_add_FinalizeHook(cx, obj);
     // don't retain it, already retained
 #if COCOS2D_DEBUG > 1

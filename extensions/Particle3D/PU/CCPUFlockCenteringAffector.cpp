@@ -49,7 +49,7 @@ void PUFlockCenteringAffector::updatePUAffector( PUParticle3D *particle, float d
     }
 }
 
-void PUFlockCenteringAffector::preUpdateAffector( float deltaTime )
+void PUFlockCenteringAffector::preUpdateAffector( float /*deltaTime*/ )
 {
     if (_count != 0)
     {

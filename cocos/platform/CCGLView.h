@@ -180,7 +180,7 @@ public:
      * 
      * @param zoomFactor The zoom factor for frame.
      */
-    virtual void setFrameZoomFactor(float zoomFactor) {}
+    virtual void setFrameZoomFactor(float /*zoomFactor*/) {}
     
     /** Get zoom factor for frame. This methods are for
      * debugging big resolution (e.g.new ipad) app on desktop.
@@ -194,7 +194,7 @@ public:
      *
      * @param isVisible Hide or Show the mouse cursor if there is one.
      */
-    virtual void setCursorVisible(bool isVisible) {}
+    virtual void setCursorVisible(bool /*isVisible*/) {}
 
     /** Get retina factor.
      *
@@ -203,7 +203,7 @@ public:
     virtual int getRetinaFactor() const { return 1; }
 
     /** Only works on ios platform. Set Content Scale of the Factor. */
-    virtual bool setContentScaleFactor(float scaleFactor) { return false; }
+    virtual bool setContentScaleFactor(float /*scaleFactor*/) { return false; }
     
     /** Only works on ios platform. Get Content Scale of the Factor. */
     virtual float getContentScaleFactor() const { return 1.0; }

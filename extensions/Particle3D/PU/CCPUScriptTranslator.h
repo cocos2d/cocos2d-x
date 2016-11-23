@@ -1221,26 +1221,26 @@ public:
     
     /** @See ScriptTranslator
      */
-    virtual void translate(PUScriptCompiler* compiler, PUAbstractNode *node)
+    virtual void translate(PUScriptCompiler* /*compiler*/, PUAbstractNode* /*node*/)
     {
         // No own implementation
-    };
+    }
     
     /** Only parses a certain child property
      */
-    virtual bool translateChildProperty(PUScriptCompiler* compiler, PUAbstractNode *node)
+    virtual bool translateChildProperty(PUScriptCompiler* /*compiler*/, PUAbstractNode* /*node*/)
     {
         // No own implementation
         return false;
-    };
+    }
     
     /** Only parses a certain child objec
      */
-    virtual bool translateChildObject(PUScriptCompiler* compiler, PUAbstractNode *node)
+    virtual bool translateChildObject(PUScriptCompiler* /*compiler*/, PUAbstractNode* /*node*/)
     {
         // No own implementation
         return false;
-    };
+    }
     
     /** Parse Vector2
      */

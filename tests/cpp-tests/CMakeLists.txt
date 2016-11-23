@@ -1,6 +1,12 @@
 set(APP_NAME cpp-tests)
 
 # Use same method as in cocos library
+if(LINUX)
+  foreach(_pkg FONTCONFIG GTK3)
+    cocos_find_package(${_pkg} ${_pkg} REQUIRED)
+  endforeach()
+endif()
+cocos_find_package(FREETYPE FREETYPE REQUIRED)
 cocos_find_package(CURL CURL REQUIRED)
 
 if(WIN32)
@@ -168,6 +174,12 @@ set(TESTS_SRC
   ${PLATFORM_SRC}
 )
 
+if(WIN32 OR MACOSX OR LINUX)
+  list(APPEND TESTS_SRC
+    Classes/WindowTest/WindowTest.cpp
+    )
+endif()
+
 if(USE_CHIPMUNK)
   include_directories(${CHIPMUNK_INCLUDE_DIRS})
 endif()
@@ -218,7 +230,14 @@ endif()
 
 target_link_libraries(${APP_NAME} cocos2d)
 
-cocos_use_pkg(${APP_NAME} CURL)
+if(LINUX)
+  foreach(_pkg FONTCONFIG GTK3)
+    cocos_use_pkg(${APP_NAME} ${_pkg})
+  endforeach()
+endif()
+foreach(pkg FREETYPE CURL)
+  cocos_use_pkg(${APP_NAME} ${pkg})
+endforeach()
 
 if(MACOSX OR APPLE)
   set_target_properties(${APP_NAME} PROPERTIES

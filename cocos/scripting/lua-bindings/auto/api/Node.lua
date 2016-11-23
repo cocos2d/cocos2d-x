@@ -86,10 +86,12 @@
 -- @return Node#Node self (return value: cc.Node)
         
 --------------------------------
--- Pauses all scheduled selectors, actions and event listeners.<br>
--- This method is called internally by onExit.
--- @function [parent=#Node] pause 
+-- Sets the ActionManager object that is used by all actions.<br>
+-- warning If you set a new ActionManager, then previously created actions will be removed.<br>
+-- param actionManager     A ActionManager object that is used by all actions.
+-- @function [parent=#Node] setActionManager 
 -- @param self
+-- @param #cc.ActionManager actionManager
 -- @return Node#Node self (return value: cc.Node)
         
 --------------------------------
@@ -331,15 +333,7 @@
 -- @return Node#Node self (return value: cc.Node)
         
 --------------------------------
---  Sets the position (x,y) using values between 0 and 1.<br>
--- The positions in pixels is calculated like the following:<br>
--- code pseudo code<br>
--- void setNormalizedPosition(Vec2 pos) {<br>
--- Size s = getParent()->getContentSize();<br>
--- _position = pos * s;<br>
--- }<br>
--- endcode<br>
--- param position The normalized position (x,y) of the node, using value between 0 and 1.
+-- 
 -- @function [parent=#Node] setNormalizedPosition 
 -- @param self
 -- @param #vec2_table position
@@ -441,6 +435,28 @@
 -- @param self
 -- @param #vec2_table worldPoint
 -- @return vec2_table#vec2_table ret (return value: vec2_table)
+        
+--------------------------------
+--  Sets the position (x,y) using values between 0 and 1.<br>
+-- The positions in pixels is calculated like the following:<br>
+-- code pseudo code<br>
+-- void setNormalizedPosition(Vec2 pos) {<br>
+-- Size s = getParent()->getContentSize();<br>
+-- _position = pos * s;<br>
+-- }<br>
+-- endcode<br>
+-- param position The normalized position (x,y) of the node, using value between 0 and 1.
+-- @function [parent=#Node] setPositionNormalized 
+-- @param self
+-- @param #vec2_table position
+-- @return Node#Node self (return value: cc.Node)
+        
+--------------------------------
+-- Pauses all scheduled selectors, actions and event listeners.<br>
+-- This method is called internally by onExit.
+-- @function [parent=#Node] pause 
+-- @param self
+-- @return Node#Node self (return value: cc.Node)
         
 --------------------------------
 -- If node opacity will modify the RGB color value, then you should override this method and return true.<br>
@@ -723,6 +739,14 @@
 -- @return Node#Node self (return value: cc.Node)
         
 --------------------------------
+-- Update method will be called automatically every frame if "scheduleUpdate" is called, and the node is "live".<br>
+-- param delta In seconds.
+-- @function [parent=#Node] update 
+-- @param self
+-- @param #float delta
+-- @return Node#Node self (return value: cc.Node)
+        
+--------------------------------
 -- Return the node's display opacity.<br>
 -- The difference between opacity and displayedOpacity is:<br>
 -- The displayedOpacity is what's the final rendering opacity of node.<br>
@@ -753,13 +777,11 @@
 -- @return AffineTransform#AffineTransform ret (return value: cc.AffineTransform)
         
 --------------------------------
--- Sets the ActionManager object that is used by all actions.<br>
--- warning If you set a new ActionManager, then previously created actions will be removed.<br>
--- param actionManager     A ActionManager object that is used by all actions.
--- @function [parent=#Node] setActionManager 
+--  Returns the normalized position.<br>
+-- return The normalized position.
+-- @function [parent=#Node] getPositionNormalized 
 -- @param self
--- @param #cc.ActionManager actionManager
--- @return Node#Node self (return value: cc.Node)
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
 -- Change the color of node.<br>
@@ -1079,12 +1101,19 @@
 -- @return Node#Node self (return value: cc.Node)
         
 --------------------------------
--- Update method will be called automatically every frame if "scheduleUpdate" is called, and the node is "live".<br>
--- param delta In seconds.
--- @function [parent=#Node] update 
+-- Returns the numbers of actions that are running plus the ones that are<br>
+-- schedule to run (actions in actionsToAdd and actions arrays) with a<br>
+-- specific tag.<br>
+-- Composable actions are counted as 1 action. Example:<br>
+-- If you are running 1 Sequence of 7 actions, it will return 1.<br>
+-- If you are running 7 Sequences of 2 actions, it will return 7.<br>
+-- param  tag The tag that will be searched.<br>
+-- return The number of actions that are running plus the<br>
+-- ones that are schedule to run with specific tag.
+-- @function [parent=#Node] getNumberOfRunningActionsByTag 
 -- @param self
--- @param #float delta
--- @return Node#Node self (return value: cc.Node)
+-- @param #int tag
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- Sorts the children array once before drawing, instead of every time when a child is added or reordered.<br>
@@ -1129,8 +1158,7 @@
 -- @return Node#Node self (return value: cc.Node)
         
 --------------------------------
---  Returns the normalized position.<br>
--- return The normalized position.
+-- 
 -- @function [parent=#Node] getNormalizedPosition 
 -- @param self
 -- @return vec2_table#vec2_table ret (return value: vec2_table)

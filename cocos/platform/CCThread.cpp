@@ -36,7 +36,7 @@ void* ThreadHelper::createAutoreleasePool()
     return nullptr;
 }
 
-void ThreadHelper::releaseAutoreleasePool(void* autoreleasePool)
+void ThreadHelper::releaseAutoreleasePool(void* /*autoreleasePool*/)
 {
     
 }

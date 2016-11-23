@@ -116,8 +116,8 @@ GLProgramCache::GLProgramCache()
 
 GLProgramCache::~GLProgramCache()
 {
-    for( auto it = _programs.begin(); it != _programs.end(); ++it ) {
-        (it->second)->release();
+    for(auto& program : _programs) {
+        program.second->release();
     }
 
     CCLOGINFO("deallocing GLProgramCache: %p", this);
@@ -127,7 +127,7 @@ bool GLProgramCache::init()
 {
     loadDefaultGLPrograms();
     
-    auto listener = EventListenerCustom::create(Configuration::CONFIG_FILE_LOADED, [this](EventCustom* event){
+    auto listener = EventListenerCustom::create(Configuration::CONFIG_FILE_LOADED, [this](EventCustom* /*event*/){
         reloadDefaultGLProgramsRelativeToLights();
     });
     
@@ -141,165 +141,165 @@ void GLProgramCache::loadDefaultGLPrograms()
     // Position Texture Color shader
     GLProgram *p = new (std::nothrow) GLProgram();
     loadDefaultGLProgram(p, kShaderType_PositionTextureColor);
-    _programs.insert( std::make_pair( GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR, p ) );
+    _programs.emplace(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR, p);
 
     // Position Texture Color without MVP shader
     p = new (std::nothrow) GLProgram();
     loadDefaultGLProgram(p, kShaderType_PositionTextureColor_noMVP);
-    _programs.insert( std::make_pair( GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP, p ) );
+    _programs.emplace(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP, p);
 
     // Position Texture Color alpha test
     p = new (std::nothrow) GLProgram();
     loadDefaultGLProgram(p, kShaderType_PositionTextureColorAlphaTest);
-    _programs.insert( std::make_pair(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST, p) );
+    _programs.emplace(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST, p);
 
     // Position Texture Color alpha test
     p = new (std::nothrow) GLProgram();
     loadDefaultGLProgram(p, kShaderType_PositionTextureColorAlphaTestNoMV);
-    _programs.insert( std::make_pair(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST_NO_MV, p) );
+    _programs.emplace(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST_NO_MV, p);
     //
     // Position, Color shader
     //
     p = new (std::nothrow) GLProgram();
     loadDefaultGLProgram(p, kShaderType_PositionColor);
-    _programs.insert( std::make_pair(GLProgram::SHADER_NAME_POSITION_COLOR, p) );
+    _programs.emplace(GLProgram::SHADER_NAME_POSITION_COLOR, p);
 
     // Position, Color, PointSize shader
     p = new (std::nothrow) GLProgram();
     loadDefaultGLProgram(p, kShaderType_PositionColorTextureAsPointsize);
-    _programs.insert( std::make_pair(GLProgram::SHADER_NAME_POSITION_COLOR_TEXASPOINTSIZE, p) );
+    _programs.emplace(GLProgram::SHADER_NAME_POSITION_COLOR_TEXASPOINTSIZE, p);
 
     //
     // Position, Color shader no MVP
     //
     p = new (std::nothrow) GLProgram();
     loadDefaultGLProgram(p, kShaderType_PositionColor_noMVP);
-    _programs.insert( std::make_pair(GLProgram::SHADER_NAME_POSITION_COLOR_NO_MVP, p) );
+    _programs.emplace(GLProgram::SHADER_NAME_POSITION_COLOR_NO_MVP, p);
 
     //
     // Position Texture shader
     //
     p = new (std::nothrow) GLProgram();
     loadDefaultGLProgram(p, kShaderType_PositionTexture);
-    _programs.insert( std::make_pair( GLProgram::SHADER_NAME_POSITION_TEXTURE, p) );
+    _programs.emplace(GLProgram::SHADER_NAME_POSITION_TEXTURE, p);
 
     //
     // Position, Texture attribs, 1 Color as uniform shader
     //
     p = new (std::nothrow) GLProgram();
     loadDefaultGLProgram(p, kShaderType_PositionTexture_uColor);
-    _programs.insert( std::make_pair( GLProgram::SHADER_NAME_POSITION_TEXTURE_U_COLOR, p) );
+    _programs.emplace(GLProgram::SHADER_NAME_POSITION_TEXTURE_U_COLOR, p);
 
     //
     // Position Texture A8 Color shader
     //
     p = new (std::nothrow) GLProgram();
     loadDefaultGLProgram(p, kShaderType_PositionTextureA8Color);
-    _programs.insert( std::make_pair(GLProgram::SHADER_NAME_POSITION_TEXTURE_A8_COLOR, p) );
+    _programs.emplace(GLProgram::SHADER_NAME_POSITION_TEXTURE_A8_COLOR, p);
 
     //
     // Position and 1 color passed as a uniform (to simulate glColor4ub )
     //
     p = new (std::nothrow) GLProgram();
     loadDefaultGLProgram(p, kShaderType_Position_uColor);
-    _programs.insert( std::make_pair(GLProgram::SHADER_NAME_POSITION_U_COLOR, p) );
+    _programs.emplace(GLProgram::SHADER_NAME_POSITION_U_COLOR, p);
 
     //
     // Position, Length(TexCoords, Color (used by Draw Node basically )
     //
     p = new (std::nothrow) GLProgram();
     loadDefaultGLProgram(p, kShaderType_PositionLengthTextureColor);
-    _programs.insert( std::make_pair(GLProgram::SHADER_NAME_POSITION_LENGTH_TEXTURE_COLOR, p) );
+    _programs.emplace(GLProgram::SHADER_NAME_POSITION_LENGTH_TEXTURE_COLOR, p);
 
     p = new (std::nothrow) GLProgram();
     loadDefaultGLProgram(p, kShaderType_LabelDistanceFieldNormal);
-    _programs.insert( std::make_pair(GLProgram::SHADER_NAME_LABEL_DISTANCEFIELD_NORMAL, p) );
+    _programs.emplace(GLProgram::SHADER_NAME_LABEL_DISTANCEFIELD_NORMAL, p);
 
     p = new (std::nothrow) GLProgram();
     loadDefaultGLProgram(p, kShaderType_LabelDistanceFieldGlow);
-    _programs.insert( std::make_pair(GLProgram::SHADER_NAME_LABEL_DISTANCEFIELD_GLOW, p) );
+    _programs.emplace(GLProgram::SHADER_NAME_LABEL_DISTANCEFIELD_GLOW, p);
 
     p = new (std::nothrow) GLProgram();
     loadDefaultGLProgram(p, kShaderType_UIGrayScale);
-    _programs.insert(std::make_pair(GLProgram::SHADER_NAME_POSITION_GRAYSCALE, p));
+    _programs.emplace(GLProgram::SHADER_NAME_POSITION_GRAYSCALE, p);
 
     p = new (std::nothrow) GLProgram();
     loadDefaultGLProgram(p, kShaderType_LabelNormal);
-    _programs.insert( std::make_pair(GLProgram::SHADER_NAME_LABEL_NORMAL, p) );
+    _programs.emplace(GLProgram::SHADER_NAME_LABEL_NORMAL, p);
 
     p = new (std::nothrow) GLProgram();
     loadDefaultGLProgram(p, kShaderType_LabelOutline);
-    _programs.insert( std::make_pair(GLProgram::SHADER_NAME_LABEL_OUTLINE, p) );
+    _programs.emplace(GLProgram::SHADER_NAME_LABEL_OUTLINE, p);
 
     p = new (std::nothrow) GLProgram();
     loadDefaultGLProgram(p, kShaderType_3DPosition);
-    _programs.insert( std::make_pair(GLProgram::SHADER_3D_POSITION, p) );
+    _programs.emplace(GLProgram::SHADER_3D_POSITION, p);
 
     p = new (std::nothrow) GLProgram();
     loadDefaultGLProgram(p, kShaderType_3DPositionTex);
-    _programs.insert( std::make_pair(GLProgram::SHADER_3D_POSITION_TEXTURE, p) );
+    _programs.emplace(GLProgram::SHADER_3D_POSITION_TEXTURE, p);
 
     p = new (std::nothrow) GLProgram();
     loadDefaultGLProgram(p, kShaderType_3DSkinPositionTex);
-    _programs.insert(std::make_pair(GLProgram::SHADER_3D_SKINPOSITION_TEXTURE, p));
+    _programs.emplace(GLProgram::SHADER_3D_SKINPOSITION_TEXTURE, p);
 
     p = new (std::nothrow) GLProgram();
     loadDefaultGLProgram(p, kShaderType_3DPositionNormal);
-    _programs.insert( std::make_pair(GLProgram::SHADER_3D_POSITION_NORMAL, p) );
+    _programs.emplace(GLProgram::SHADER_3D_POSITION_NORMAL, p);
 
     p = new (std::nothrow) GLProgram();
     loadDefaultGLProgram(p, kShaderType_3DPositionNormalTex);
-    _programs.insert( std::make_pair(GLProgram::SHADER_3D_POSITION_NORMAL_TEXTURE, p) );
+    _programs.emplace(GLProgram::SHADER_3D_POSITION_NORMAL_TEXTURE, p);
 
     p = new (std::nothrow) GLProgram();
     loadDefaultGLProgram(p, kShaderType_3DSkinPositionNormalTex);
-    _programs.insert(std::make_pair(GLProgram::SHADER_3D_SKINPOSITION_NORMAL_TEXTURE, p));
+    _programs.emplace(GLProgram::SHADER_3D_SKINPOSITION_NORMAL_TEXTURE, p);
 
     p = new (std::nothrow) GLProgram();
     loadDefaultGLProgram(p, kShaderType_3DPositionBumpedNormalTex);
-    _programs.insert(std::make_pair(GLProgram::SHADER_3D_POSITION_BUMPEDNORMAL_TEXTURE, p));
+    _programs.emplace(GLProgram::SHADER_3D_POSITION_BUMPEDNORMAL_TEXTURE, p);
 
     p = new (std::nothrow) GLProgram();
     loadDefaultGLProgram(p, kShaderType_3DSkinPositionBumpedNormalTex);
-    _programs.insert(std::make_pair(GLProgram::SHADER_3D_SKINPOSITION_BUMPEDNORMAL_TEXTURE, p));
+    _programs.emplace(GLProgram::SHADER_3D_SKINPOSITION_BUMPEDNORMAL_TEXTURE, p);
 
     p = new (std::nothrow) GLProgram();
     loadDefaultGLProgram(p, kShaderType_3DParticleColor);
-    _programs.insert(std::make_pair(GLProgram::SHADER_3D_PARTICLE_COLOR, p));
+    _programs.emplace(GLProgram::SHADER_3D_PARTICLE_COLOR, p);
 
     p = new (std::nothrow) GLProgram();
     loadDefaultGLProgram(p, kShaderType_3DParticleTex);
-    _programs.insert(std::make_pair(GLProgram::SHADER_3D_PARTICLE_TEXTURE, p));
+    _programs.emplace(GLProgram::SHADER_3D_PARTICLE_TEXTURE, p);
 
     p = new (std::nothrow) GLProgram();
     loadDefaultGLProgram(p, kShaderType_3DSkyBox);
-    _programs.insert(std::make_pair(GLProgram::SHADER_3D_SKYBOX, p));
+    _programs.emplace(GLProgram::SHADER_3D_SKYBOX, p);
 
     p = new (std::nothrow) GLProgram();
     loadDefaultGLProgram(p, kShaderType_3DTerrain);
-    _programs.insert(std::make_pair(GLProgram::SHADER_3D_TERRAIN, p));
+    _programs.emplace(GLProgram::SHADER_3D_TERRAIN, p);
     
     p = new (std::nothrow) GLProgram();
     loadDefaultGLProgram(p, kShaderType_CameraClear);
-    _programs.insert(std::make_pair(GLProgram::SHADER_CAMERA_CLEAR, p));
+    _programs.emplace(GLProgram::SHADER_CAMERA_CLEAR, p);
 
     /// ETC1 ALPHA supports.
     p = new(std::nothrow) GLProgram();
     loadDefaultGLProgram(p, kShaderType_ETC1ASPositionTextureColor);
-    _programs.insert(std::make_pair(GLProgram::SHADER_NAME_ETC1AS_POSITION_TEXTURE_COLOR, p));
+    _programs.emplace(GLProgram::SHADER_NAME_ETC1AS_POSITION_TEXTURE_COLOR, p);
 
     p = new(std::nothrow) GLProgram();
     loadDefaultGLProgram(p, kShaderType_ETC1ASPositionTextureColor_noMVP);
-    _programs.insert(std::make_pair(GLProgram::SHADER_NAME_ETC1AS_POSITION_TEXTURE_COLOR_NO_MVP, p));
+    _programs.emplace(GLProgram::SHADER_NAME_ETC1AS_POSITION_TEXTURE_COLOR_NO_MVP, p);
 
     /// ETC1 Gray supports.
     p = new(std::nothrow) GLProgram();
     loadDefaultGLProgram(p, kShaderType_ETC1ASPositionTextureGray);
-    _programs.insert(std::make_pair(GLProgram::SHADER_NAME_ETC1AS_POSITION_TEXTURE_GRAY, p));
+    _programs.emplace(GLProgram::SHADER_NAME_ETC1AS_POSITION_TEXTURE_GRAY, p);
 
     p = new(std::nothrow) GLProgram();
     loadDefaultGLProgram(p, kShaderType_ETC1ASPositionTextureGray_noMVP);
-    _programs.insert(std::make_pair(GLProgram::SHADER_NAME_ETC1AS_POSITION_TEXTURE_GRAY_NO_MVP, p));
+    _programs.emplace(GLProgram::SHADER_NAME_ETC1AS_POSITION_TEXTURE_GRAY_NO_MVP, p);
 }
 
 void GLProgramCache::reloadDefaultGLPrograms()

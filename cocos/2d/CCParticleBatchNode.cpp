@@ -271,7 +271,7 @@ void ParticleBatchNode::reorderChild(Node * aChild, int zOrder)
 
             // Find new AtlasIndex
             int newAtlasIndex = 0;
-            for( int i=0;i < _children.size();i++)
+            for(int i=0, size = _children.size(); i < size; ++i)
             {
                 ParticleSystem* node = static_cast<ParticleSystem*>(_children.at(i));
                 if( node == child )
@@ -397,7 +397,7 @@ void ParticleBatchNode::removeAllChildrenWithCleanup(bool doCleanup)
     _textureAtlas->removeAllQuads();
 }
 
-void ParticleBatchNode::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
+void ParticleBatchNode::draw(Renderer* renderer, const Mat4 & /*transform*/, uint32_t flags)
 {
     CC_PROFILER_START("CCParticleBatchNode - draw");
 

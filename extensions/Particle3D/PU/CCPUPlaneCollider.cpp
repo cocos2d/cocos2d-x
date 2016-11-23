@@ -53,7 +53,7 @@ void PUPlaneCollider::setNormal(const Vec3& normal)
     _plane.redefine(_normal, getDerivedPosition()); // Changed in 1.3.1
 }
 //-----------------------------------------------------------------------
-void PUPlaneCollider::notifyRescaled(const Vec3& scale)
+void PUPlaneCollider::notifyRescaled(const Vec3& /*scale*/)
 {
     // Function added in 1.3.1
     _plane.redefine(_normal, getDerivedPosition());

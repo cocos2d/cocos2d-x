@@ -79,6 +79,14 @@ public:
     void pollEvents() override;
     GLFWwindow* getWindow() const { return _mainWindow; }
 
+    bool isFullscreen() const;
+    void setFullscreen();
+    void setFullscreen(int monitorIndex);
+    void setFullscreen(const GLFWvidmode &videoMode, GLFWmonitor *monitor);
+    void setWindowed(int width, int height);
+    int getMonitorCount() const;
+    Size getMonitorSize() const;
+
     /* override functions */
     virtual bool isOpenGLReady() override;
     virtual void end() override;
@@ -135,6 +143,7 @@ protected:
     void onGLFWframebuffersize(GLFWwindow* window, int w, int h);
     void onGLFWWindowSizeFunCallback(GLFWwindow *window, int width, int height);
     void onGLFWWindowIconifyCallback(GLFWwindow* window, int iconified);
+    void onGLFWWindowFocusCallback(GLFWwindow* window, int focused);
 
     bool _captured;
     bool _supportTouch;
@@ -153,6 +162,12 @@ protected:
     float _mouseY;
 
     friend class GLFWEventHandler;
+    
+public:
+    // View will trigger an event when window is resized, gains or loses focus
+    static const std::string EVENT_WINDOW_RESIZED;
+    static const std::string EVENT_WINDOW_FOCUSED;
+    static const std::string EVENT_WINDOW_UNFOCUSED;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(GLViewImpl);

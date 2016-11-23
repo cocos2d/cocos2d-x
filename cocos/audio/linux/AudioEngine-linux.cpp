@@ -63,7 +63,7 @@ bool AudioEngineImpl::init()
     result = FMOD::System_Create(&pSystem);
     ERRCHECKWITHEXIT(result);
 
-    result = pSystem->setOutput(FMOD_OUTPUTTYPE_PULSEAUDIO);
+    result = pSystem->setOutput(FMOD_OUTPUTTYPE_AUTODETECT);
     ERRCHECKWITHEXIT(result);
 
     result = pSystem->init(32, FMOD_INIT_NORMAL, 0);
@@ -170,8 +170,8 @@ bool AudioEngineImpl::stop(int audioID)
 
 void AudioEngineImpl::stopAll()
 {
-    for (auto it = mapChannelInfo.begin(); it != mapChannelInfo.end(); ++it) {
-        ChannelInfo & audioRef = it->second;
+    for (auto& it : mapChannelInfo) {
+        ChannelInfo & audioRef = it.second;
         audioRef.channel->stop();
         audioRef.channel = nullptr;
     }
@@ -210,14 +210,16 @@ float AudioEngineImpl::getCurrentTime(int audioID)
 
 bool AudioEngineImpl::setCurrentTime(int audioID, float time)
 {
+    bool ret = false;
     try {
         unsigned int position = (unsigned int)(time * 1000.0f);
         FMOD_RESULT result = mapChannelInfo[audioID].channel->setPosition(position, FMOD_TIMEUNIT_MS);
-        ERRCHECK(result);
+        ret = !ERRCHECK(result);
     }
     catch (const std::out_of_range& oor) {
         printf("AudioEngineImpl::setCurrentTime: invalid audioID: %d\n", audioID);
     }
+    return ret;
 }
 
 void AudioEngineImpl::setFinishCallback(int audioID, const std::function<void (int, const std::string &)> &callback)
@@ -267,8 +269,8 @@ void AudioEngineImpl::uncache(const std::string& path)
 
 void AudioEngineImpl::uncacheAll()
 {
-    for (auto it = mapSound.cbegin(); it != mapSound.cend(); ++it) {
-        auto sound = it->second;
+    for (const auto& it : mapSound) {
+        auto sound = it.second;
         if (sound) {
             sound->release();
         }

@@ -24,7 +24,7 @@
                "proj.win10/App/PROJECT_NAME.vcxproj",
                "proj.win10/App/PROJECT_NAME.vcxproj.filters",
                "proj.win10/App/PROJECT_NAME_TemporaryKey.pfx",
-	       "proj.tizen/shared/res/PROJECT_NAME.png"
+	            "proj.tizen/shared/res/PROJECT_NAME.png"
             ]
          },
          "project_replace_project_name":{

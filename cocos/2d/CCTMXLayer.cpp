@@ -152,7 +152,7 @@ void TMXLayer::releaseMap()
 {
     if (_tiles)
     {
-        delete [] _tiles;
+        free(_tiles);
         _tiles = nullptr;
     }
 
@@ -263,7 +263,7 @@ void TMXLayer::parseInternalProperties()
     }
 }
 
-void TMXLayer::setupTileSprite(Sprite* sprite, const Vec2& pos, int gid)
+void TMXLayer::setupTileSprite(Sprite* sprite, const Vec2& pos, uint32_t gid)
 {
     sprite->setPosition(getPositionAt(pos));
     sprite->setPositionZ((float)getVertexZForPos(pos));
@@ -284,7 +284,7 @@ void TMXLayer::setupTileSprite(Sprite* sprite, const Vec2& pos, int gid)
         sprite->setPosition(getPositionAt(pos).x + sprite->getContentSize().height/2,
            getPositionAt(pos).y + sprite->getContentSize().width/2 );
 
-        int flag = gid & (kTMXTileHorizontalFlag | kTMXTileVerticalFlag );
+        auto flag = gid & (kTMXTileHorizontalFlag | kTMXTileVerticalFlag );
 
         // handle the 4 diagonally flipped states.
         if (flag == kTMXTileHorizontalFlag)
@@ -618,11 +618,8 @@ void TMXLayer::setTileGID(uint32_t gid, const Vec2& pos, TMXTileFlags flags)
     }
 }
 
-void TMXLayer::addChild(Node * child, int zOrder, int tag)
+void TMXLayer::addChild(Node* /*child*/, int /*zOrder*/, int /*tag*/)
 {
-    CC_UNUSED_PARAM(child);
-    CC_UNUSED_PARAM(zOrder);
-    CC_UNUSED_PARAM(tag);
     CCASSERT(0, "addChild: is not supported on TMXLayer. Instead use setTileGID:at:/tileAt:");
 }
 

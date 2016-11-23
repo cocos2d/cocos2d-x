@@ -57,7 +57,7 @@ orientation(ori)
 {
 }
 //-----------------------------------------------------------------------
-PUBillboardChain::PUBillboardChain(const std::string& name, const std::string &texFile, size_t maxElements,
+PUBillboardChain::PUBillboardChain(const std::string& /*name*/, const std::string &texFile, size_t maxElements,
                                size_t numberOfChains, bool useTextureCoords, bool useColours, bool dynamic)
                                :_maxElementsPerChain(maxElements),
                                _chainCount(numberOfChains),

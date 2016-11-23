@@ -32,7 +32,7 @@ class LuaSkeletonAnimation: public spine::SkeletonAnimation {
 public:
 	static LuaSkeletonAnimation* createWithFile (const char* skeletonDataFile, const char* atlasFile, float scale = 1);
 
-	LuaSkeletonAnimation (const char* skeletonDataFile, const char* atlasFile, float scale = 1);
+	LuaSkeletonAnimation ();
 
 	virtual ~LuaSkeletonAnimation();
 };

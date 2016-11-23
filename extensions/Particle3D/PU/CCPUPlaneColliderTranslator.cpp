@@ -77,7 +77,7 @@ bool PUPlaneColliderTranslator::translateChildProperty( PUScriptCompiler* compil
     return false;
 }
 
-bool PUPlaneColliderTranslator::translateChildObject( PUScriptCompiler* compiler, PUAbstractNode *node )
+bool PUPlaneColliderTranslator::translateChildObject( PUScriptCompiler* /*compiler*/, PUAbstractNode* /*node*/ )
 {
     // No objects
     return false;

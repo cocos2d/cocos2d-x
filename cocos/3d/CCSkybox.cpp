@@ -109,11 +109,30 @@ void Skybox::initBuffers()
         glGenVertexArrays(1, &_vao);
         GL::bindVAO(_vao);
     }
+	// The skybox is rendered using a purpose-built shader which makes use of
+	// the shader language's inherent support for cubemaps. Hence there is no
+	// need to build a cube mesh. All that is needed is a single quad that
+	// covers the entire screen. The vertex shader will draw the appropriate
+	// view of the cubemap onto that quad.
+	//
+	// The vertex shader does not apply either the model/view matrix or the
+	// projection matrix, so the appropriate quad is one with unit coordinates
+	// in the x and y dimensions. Such a quad will exacly cover the screen.
+	// To ensure that the skybox is rendered behind all other objects, z needs
+	// to be 1.0, but the vertex shader overwrites z to 1.0, so - for the sake
+	// of z-buffering - it is unimportant what we set it to for the verticies
+	// of the quad.
+	//
+	// The quad vertex positions are also used in deriving a direction
+	// vector for the cubemap lookup. We choose z = -1 which matches the
+	// negative-z pointing direction of the camera and gives a field of
+	// view of 90deg in both x and y, if not otherwise adjusted. That fov
+	// is then adjusted to exactly match the camera by applying a prescaling
+	// to the camera's world transformation before sending it to the shader.
 
     // init vertex buffer object
     Vec3 vexBuf[] =
     {
-        Vec3(1, -1, 1),  Vec3(1, 1, 1),  Vec3(-1, 1, 1),  Vec3(-1, -1, 1),
         Vec3(1, -1, -1), Vec3(1, 1, -1), Vec3(-1, 1, -1), Vec3(-1, -1, -1)
     };
 
@@ -122,13 +141,7 @@ void Skybox::initBuffers()
     glBufferData(GL_ARRAY_BUFFER, sizeof(vexBuf), vexBuf, GL_STATIC_DRAW);
 
     // init index buffer object
-    const unsigned char idxBuf[] = {  2, 1, 0, 3, 2, 0, // font
-        1, 5, 4, 1, 4, 0, // right
-        4, 5, 6, 4, 6, 7, // back
-        7, 6, 2, 7, 2, 3, // left
-        2, 6, 5, 2, 5, 1, // up
-        3, 0, 4, 3, 4, 7  // down
-    };
+    const unsigned char idxBuf[] = {0, 1, 2, 0, 2, 3};
 
     glGenBuffers(1, &_indexBuffer);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
@@ -152,18 +165,22 @@ void Skybox::draw(Renderer* renderer, const Mat4& transform, uint32_t flags)
     renderer->addCommand(&_customCommand);
 }
 
-void Skybox::onDraw(const Mat4& transform, uint32_t flags)
+void Skybox::onDraw(const Mat4& transform, uint32_t /*flags*/)
 {
     auto camera = Camera::getVisitingCamera();
     
     Mat4 cameraModelMat = camera->getNodeToWorldTransform();
+    Mat4 projectionMat = camera->getProjectionMatrix();
+    // Ignore the translation
+    cameraModelMat.m[12] = cameraModelMat.m[13] = cameraModelMat.m[14] = 0;
+    // prescale the matrix to account for the camera fov
+    cameraModelMat.scale(1 / projectionMat.m[0], 1 / projectionMat.m[5], 1.0);
     
     auto state = getGLProgramState();
     state->apply(transform);
 
     Vec4 color(_displayedColor.r / 255.f, _displayedColor.g / 255.f, _displayedColor.b / 255.f, 1.f);
     state->setUniformVec4("u_color", color);
-    cameraModelMat.m[12] = cameraModelMat.m[13] = cameraModelMat.m[14] = 0;
     state->setUniformMat4("u_cameraRot", cameraModelMat);
 
     glEnable(GL_DEPTH_TEST);
@@ -195,7 +212,7 @@ void Skybox::onDraw(const Mat4& transform, uint32_t flags)
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
     }
 
-    glDrawElements(GL_TRIANGLES, (GLsizei)36, GL_UNSIGNED_BYTE, nullptr);
+    glDrawElements(GL_TRIANGLES, (GLsizei)6, GL_UNSIGNED_BYTE, nullptr);
 
     if (Configuration::getInstance()->supportsShareableVAO())
     {
@@ -207,7 +224,7 @@ void Skybox::onDraw(const Mat4& transform, uint32_t flags)
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     }
 
-    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, 8);
+    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, 4);
 
     CHECK_GL_ERROR_DEBUG();
 }

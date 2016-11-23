@@ -251,7 +251,7 @@ public:
      */
     void setObjectGroups(const Vector<TMXObjectGroup*>& groups) {
         _objectGroups = groups;
-    };
+    }
     
     /** Properties. 
      *
@@ -265,7 +265,7 @@ public:
      */
     void setProperties(const ValueMap& properties) {
         _properties = properties;
-    };
+    }
     
     /** Get the description.
      * @js NA

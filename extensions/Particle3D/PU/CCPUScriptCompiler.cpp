@@ -1,19 +1,19 @@
 /****************************************************************************
  Copyright (C) 2013 Henry van Merode. All rights reserved.
  Copyright (c) 2015 Chukong Technologies Inc.
- 
+
  http://www.cocos2d-x.org
- 
+
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
- 
+
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
- 
+
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -69,7 +69,7 @@ std::string PUObjectAbstractNode::getValue() const
 
 void PUObjectAbstractNode::addVariable(const std::string &inName)
 {
-    _env.insert(std::make_pair(inName, ""));
+    _env.emplace(inName, "");
 }
 
 void PUObjectAbstractNode::setVariable(const std::string &inName, const std::string &value)
@@ -83,7 +83,7 @@ std::pair<bool,std::string> PUObjectAbstractNode::getVariable(const std::string 
     std::map<std::string,std::string>::const_iterator i = _env.find(inName);
     if(i != _env.end())
         return std::make_pair(true, i->second);
-    
+
     PUObjectAbstractNode *parentNode = (PUObjectAbstractNode*)this->parent;
     while(parentNode)
     {
@@ -212,7 +212,7 @@ bool PUScriptCompiler::compile(const PUConcreteNodeList &nodes, const std::strin
     //        translator->translate(this, *i);
     //    }
     //}
-    
+
     //for (auto iter : aNodes){
     //    delete iter;
     //}
@@ -255,7 +255,7 @@ const PUAbstractNodeList* PUScriptCompiler::compile(const std::string &file, boo
 
 void PUScriptCompiler::convertToAST(const PUConcreteNodeList &nodes,PUAbstractNodeList &aNodes)
 {
-    
+
     _current = NULL;
     _nodes = &aNodes;
     visitList(nodes);
@@ -272,20 +272,17 @@ void PUScriptCompiler::convertToAST(const PUConcreteNodeList &nodes,PUAbstractNo
 
 void PUScriptCompiler::visitList(const PUConcreteNodeList &nodes)
 {
-    
-   
-    for(PUConcreteNodeList::const_iterator i = nodes.begin(); i != nodes.end(); i++)
+    for(const auto& node : nodes)
     {
-        this->visit(*i);
+        this->visit(node);
     }
-
 }
 
 
 void PUScriptCompiler::visit(PUConcreteNode *node)
 {
     PUAbstractNode* asn = NULL;
-    
+
     // Handle properties and objects here
     if(!node->children.empty())
     {
@@ -296,21 +293,21 @@ void PUScriptCompiler::visit(PUConcreteNode *node)
         if(iter != node->children.rend())
         {
             temp1 = *iter;
-            iter++;
+            ++iter;
         }
         if(iter != node->children.rend())
             temp2 = *iter;
-        
-        
+
+
         //brance inner
         if(temp1 && temp1->type == CNT_RBRACE && temp2 && temp2->type == CNT_LBRACE)
         {
-           
+
             if(node->children.size() < 2)
             {
                 return;
             }
-            
+
             PUObjectAbstractNode *impl = new  (std::nothrow) PUObjectAbstractNode(_current);
             impl->line = node->line;
             impl->file = node->file;
@@ -318,39 +315,34 @@ void PUScriptCompiler::visit(PUConcreteNode *node)
 
             list<PUConcreteNode*> temp;
             temp.push_back(node);
-            for(PUConcreteNodeList::const_iterator i = node->children.begin(); i != node->children.end(); i++)
+            for(const auto& child : node->children)
             {
-                temp.push_back(*i);
+                temp.push_back(child);
             }
-            
+
             //add brance type//
             PUConcreteNodeList::const_iterator iter1 = temp.begin();
             impl->cls = (*iter1)->token;
-          
-            iter1++;
+            ++iter1;
 
             //add brance name//
             if(iter1 != temp.end() && ((*iter1)->type == CNT_WORD))
             {
-                
                 impl->name = (*iter1)->token;
-               
-                iter1++;
+                ++iter1;
             }
-            
+
             while(iter1 != temp.end() && (*iter1)->type != CNT_LBRACE)
             {
-                
                 PUAtomAbstractNode *atom = new (std::nothrow) PUAtomAbstractNode(impl);
                 atom->file = (*iter1)->file;
                 atom->line = (*iter1)->line;
                 atom->type = ANT_ATOM;
                 atom->value = (*iter1)->token;
                 impl->values.push_back(atom);
-                iter1++;
-               
+                ++iter1;
             }
-            
+
             asn = impl;
             _current = impl;
             visitList(temp2->children);
@@ -363,18 +355,15 @@ void PUScriptCompiler::visit(PUConcreteNode *node)
             impl->line = node->line;
             impl->file = node->file;
             impl->name = node->token;
-            
-           
-            
+
             asn = impl;
             _current = impl;
-            
+
             // Visit the children of the {
             visitList(node->children);
-            
+
             // Go back up the stack
             _current = impl->parent;
-            
         }
     }
     else
@@ -385,7 +374,7 @@ void PUScriptCompiler::visit(PUConcreteNode *node)
         impl->value = node->token;
         asn = impl;
     }
-    
+
     if(asn)
     {
         if(_current)
@@ -400,8 +389,6 @@ void PUScriptCompiler::visit(PUConcreteNode *node)
             {
                 PUObjectAbstractNode *impl = reinterpret_cast<PUObjectAbstractNode*>(_current);
                 impl->children.push_back(asn);
-
-
             }
         }
         else

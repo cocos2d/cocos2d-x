@@ -127,6 +127,8 @@ Vec3 lowPass(const Vec3& input, const Vec3& prev)
 
 #endif // (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+
 static Mat4 getRotateEulerMatrix(float x, float y, float z)
 {
     x *= static_cast<float>(M_PI) / 180.0f;
@@ -159,6 +161,8 @@ static Mat4 getRotateEulerMatrix(float x, float y, float z)
     matrix.m[15] = 1.0f;
     return matrix;
 }
+
+#endif
 
 VRGenericHeadTracker::VRGenericHeadTracker()
 : _localPosition(Vec3::ZERO)

@@ -76,7 +76,7 @@ Widget::FocusNavigationController::~FocusNavigationController()
     this->removeKeyboardEventListener();
 }
 
-void Widget::FocusNavigationController::onKeypadKeyPressed(EventKeyboard::KeyCode  keyCode, Event *event)
+void Widget::FocusNavigationController::onKeypadKeyPressed(EventKeyboard::KeyCode  keyCode, Event* /*event*/)
 {
     if (_enableFocusNavigation && _firstFocusedWidget)
     {
@@ -770,7 +770,7 @@ bool Widget::isSwallowTouches()const
     return false;
 }
 
-bool Widget::onTouchBegan(Touch *touch, Event *unusedEvent)
+bool Widget::onTouchBegan(Touch *touch, Event* /*unusedEvent*/)
 {
     _hitted = false;
     if (isVisible() && isEnabled() && isAncestorsEnabled() && isAncestorsVisible(this) )
@@ -814,7 +814,7 @@ void Widget::propagateTouchEvent(cocos2d::ui::Widget::TouchEventType event, coco
     }
 }
 
-void Widget::onTouchMoved(Touch *touch, Event *unusedEvent)
+void Widget::onTouchMoved(Touch *touch, Event* /*unusedEvent*/)
 {
     _touchMovePosition = touch->getLocation();
 
@@ -831,7 +831,7 @@ void Widget::onTouchMoved(Touch *touch, Event *unusedEvent)
     moveEvent();
 }
 
-void Widget::onTouchEnded(Touch *touch, Event *unusedEvent)
+void Widget::onTouchEnded(Touch *touch, Event* /*unusedEvent*/)
 {
     _touchEndPosition = touch->getLocation();
 
@@ -856,7 +856,7 @@ void Widget::onTouchEnded(Touch *touch, Event *unusedEvent)
     }
 }
 
-void Widget::onTouchCancelled(Touch *touch, Event *unusedEvent)
+void Widget::onTouchCancelled(Touch* /*touch*/, Event* /*unusedEvent*/)
 {
     setHighlighted(false);
     cancelUpEvent();
@@ -1197,47 +1197,23 @@ void Widget::copyClonedWidgetChildren(Widget* model)
     }
 }
 
-GLProgramState* Widget::getNormalGLProgramState()const
+GLProgramState* Widget::getNormalGLProgramState(Texture2D* texture)const
 {
     GLProgramState *glState = nullptr;
 
-    // ETC1 Gray supports.
-    // currently, Only AbstractCheckButton, ui::Slider called this function, them's VirtualRender is Sprite
-    auto virtualRender = const_cast<Widget*>(this)->getVirtualRenderer();
-    Texture2D* virtualTexture = nullptr;
-    if (auto sp = dynamic_cast<Sprite*>(virtualRender))
-    {
-        virtualTexture = sp->getTexture();
-    }
-    else if (auto scale9sp = dynamic_cast<Scale9Sprite*>(virtualRender))
-    {
-        virtualTexture = scale9sp->getSprite() != nullptr ? scale9sp->getSprite()->getTexture() : nullptr;
-    }
-    glState = GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP, virtualTexture);
+    glState = GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP, texture);
     return glState;
 }
 
-GLProgramState* Widget::getGrayGLProgramState()const
+GLProgramState* Widget::getGrayGLProgramState(Texture2D* texture)const
 {
     GLProgramState *glState = nullptr;
 
-    // ETC1 Gray supports.
-    // currently, Only AbstractCheckButton, ui::Slider called this function, them's VirtualRender is Sprite
-    auto virtualRender = const_cast<Widget*>(this)->getVirtualRenderer();
-    Texture2D* virtualTexture = nullptr;
-    if (auto sp = dynamic_cast<cocos2d::Sprite*>(virtualRender))
-    {
-        virtualTexture = sp->getTexture();
-    }
-    else if (auto scale9sp = dynamic_cast<Scale9Sprite*>(virtualRender))
-    {
-        virtualTexture = scale9sp->getSprite() != nullptr ? scale9sp->getSprite()->getTexture() : nullptr;
-    }
-    glState = GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_GRAYSCALE, virtualTexture);
+    glState = GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_GRAYSCALE, texture);
     return glState;
 }
 
-void Widget::copySpecialProperties(Widget* model)
+void Widget::copySpecialProperties(Widget* /*model*/)
 {
 
 }
@@ -1283,9 +1259,9 @@ void Widget::copyProperties(Widget *widget)
     copySpecialProperties(widget);
 
     Map<int, LayoutParameter*>& layoutParameterDic = widget->_layoutParameterDictionary;
-    for (auto iter = layoutParameterDic.begin(); iter != layoutParameterDic.end(); ++iter)
+    for (auto& iter : layoutParameterDic)
     {
-        setLayoutParameter(iter->second->clone());
+        setLayoutParameter(iter.second->clone());
     }
 }
 
@@ -1488,6 +1464,10 @@ void Widget::onFocusChange(Widget* widgetLostFocus, Widget* widgetGetFocus)
     {
         widgetGetFocus->setFocused(true);
     }
+}
+    
+Widget* Widget::getCurrentFocusedWidget(bool /*isWidget*/){
+    return getCurrentFocusedWidget();
 }
 
 Widget* Widget::getCurrentFocusedWidget()

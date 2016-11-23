@@ -119,7 +119,7 @@ bool PUMeshSurfaceEmitterTranslator::translateChildProperty( PUScriptCompiler* c
     return false;
 }
 
-bool PUMeshSurfaceEmitterTranslator::translateChildObject( PUScriptCompiler* compiler, PUAbstractNode *node )
+bool PUMeshSurfaceEmitterTranslator::translateChildObject( PUScriptCompiler* /*compiler*/, PUAbstractNode* /*node*/ )
 {
     // No objects
     return false;

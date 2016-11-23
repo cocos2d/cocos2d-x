@@ -103,7 +103,7 @@ bool PUSineForceAffectorTranslator::translateChildProperty( PUScriptCompiler* co
     return false;
 }
 
-bool PUSineForceAffectorTranslator::translateChildObject( PUScriptCompiler* compiler, PUAbstractNode *node )
+bool PUSineForceAffectorTranslator::translateChildObject( PUScriptCompiler* /*compiler*/, PUAbstractNode* /*node*/ )
 {
     // No objects
     return false;

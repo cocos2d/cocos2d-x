@@ -442,7 +442,7 @@ void DataReaderHelper::addDataFromFileAsync(const std::string& imagePath, const 
     _sleepCondition.notify_one();
 }
 
-void DataReaderHelper::addDataAsyncCallBack(float dt)
+void DataReaderHelper::addDataAsyncCallBack(float /*dt*/)
 {
     // the data is generated in loading thread
     std::queue<DataInfo *> *dataQueue = _dataQueue;
@@ -504,21 +504,16 @@ void DataReaderHelper::addDataAsyncCallBack(float dt)
 
 void DataReaderHelper::removeConfigFile(const std::string& configFile)
 {
-    std::vector<std::string>::iterator it = _configFileList.end();
-    for (std::vector<std::string>::iterator i = _configFileList.begin(); i != _configFileList.end(); i++)
+    auto it_end = _configFileList.end();
+    for (auto it = _configFileList.begin(); it != it_end; ++it)
     {
-        if (*i == configFile)
+        if (*it == configFile)
         {
-            it = i;
+            _configFileList.erase(it);
+            break;
         }
     }
-
-    if (it != _configFileList.end())
-    {
-        _configFileList.erase(it);
-    }
 }
-
 
 
 void DataReaderHelper::addDataFromCache(const std::string& pFileContent, DataInfo *dataInfo)
@@ -642,7 +637,7 @@ ArmatureData *DataReaderHelper::decodeArmature(tinyxml2::XMLElement *armatureXML
     return armatureData;
 }
 
-BoneData *DataReaderHelper::decodeBone(tinyxml2::XMLElement *boneXML, tinyxml2::XMLElement *parentXml, DataInfo *dataInfo)
+BoneData *DataReaderHelper::decodeBone(tinyxml2::XMLElement *boneXML, tinyxml2::XMLElement* /*parentXml*/, DataInfo *dataInfo)
 {
     BoneData *boneData = new (std::nothrow) BoneData();
     boneData->init();
@@ -670,7 +665,7 @@ BoneData *DataReaderHelper::decodeBone(tinyxml2::XMLElement *boneXML, tinyxml2::
     return boneData;
 }
 
-DisplayData *DataReaderHelper::decodeBoneDisplay(tinyxml2::XMLElement *displayXML, DataInfo *dataInfo)
+DisplayData *DataReaderHelper::decodeBoneDisplay(tinyxml2::XMLElement *displayXML, DataInfo* /*dataInfo*/)
 {
     int _isArmature = 0;
 
@@ -943,7 +938,7 @@ MovementBoneData *DataReaderHelper::decodeMovementBone(tinyxml2::XMLElement *mov
     return movBoneData;
 }
 
-FrameData *DataReaderHelper::decodeFrame(tinyxml2::XMLElement *frameXML,  tinyxml2::XMLElement *parentFrameXml, BoneData *boneData, DataInfo *dataInfo)
+FrameData *DataReaderHelper::decodeFrame(tinyxml2::XMLElement *frameXML,  tinyxml2::XMLElement *parentFrameXml, BoneData* /*boneData*/, DataInfo *dataInfo)
 {
     float x = 0, y = 0, scale_x = 0, scale_y = 0, skew_x = 0, skew_y = 0, tweenRotate = 0;
     int duration = 0, displayIndex = 0, zOrder = 0, tweenEasing = 0, blendType = 0;
@@ -1187,7 +1182,7 @@ TextureData *DataReaderHelper::decodeTexture(tinyxml2::XMLElement *textureXML, D
     return textureData;
 }
 
-ContourData *DataReaderHelper::decodeContour(tinyxml2::XMLElement *contourXML, DataInfo *dataInfo)
+ContourData *DataReaderHelper::decodeContour(tinyxml2::XMLElement *contourXML, DataInfo* /*dataInfo*/)
 {
     ContourData *contourData = new (std::nothrow) ContourData();
     contourData->init();

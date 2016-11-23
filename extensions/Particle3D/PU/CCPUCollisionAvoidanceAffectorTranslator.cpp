@@ -56,7 +56,7 @@ bool PUCollisionAvoidanceAffectorTranslator::translateChildProperty( PUScriptCom
     return false;
 }
 
-bool PUCollisionAvoidanceAffectorTranslator::translateChildObject( PUScriptCompiler* compiler, PUAbstractNode *node )
+bool PUCollisionAvoidanceAffectorTranslator::translateChildObject( PUScriptCompiler* /*compiler*/, PUAbstractNode* /*node*/ )
 {
     // No objects
     return false;

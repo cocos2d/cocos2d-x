@@ -848,6 +848,16 @@ func
 },
 
 /**
+ * @method setActionManager
+ * @param {cc.ActionManager} arg0
+ */
+setActionManager : function (
+actionmanager 
+)
+{
+},
+
+/**
  * @method isIgnoreAnchorPointForPosition
  * @return {bool}
  */
@@ -1248,6 +1258,16 @@ getOnEnterCallback : function (
 },
 
 /**
+ * @method setPositionNormalized
+ * @param {vec2_object} arg0
+ */
+setPositionNormalized : function (
+vec2 
+)
+{
+},
+
+/**
  * @method isOpacityModifyRGB
  * @return {bool}
  */
@@ -1614,6 +1634,16 @@ str
 },
 
 /**
+ * @method update
+ * @param {float} arg0
+ */
+update : function (
+float 
+)
+{
+},
+
+/**
  * @method getDisplayedOpacity
  * @return {unsigned char}
  */
@@ -1644,13 +1674,13 @@ getScheduler : function(
 },
 
 /**
- * @method setActionManager
- * @param {cc.ActionManager} arg0
+ * @method getPositionNormalized
+ * @return {vec2_object}
  */
-setActionManager : function (
-actionmanager 
+getPositionNormalized : function (
 )
 {
+    return cc.Vec2;
 },
 
 /**
@@ -2021,13 +2051,15 @@ vec3
 },
 
 /**
- * @method update
- * @param {float} arg0
+ * @method getNumberOfRunningActionsByTag
+ * @param {int} arg0
+ * @return {int}
  */
-update : function (
-float 
+getNumberOfRunningActionsByTag : function (
+int 
 )
 {
+    return 0;
 },
 
 /**
@@ -2210,14 +2242,16 @@ setCameraOrderDirty : function (
 
 /**
  * @method render
- * @param {cc.Renderer} arg0
- * @param {mat4_object} arg1
- * @param {mat4_object} arg2
- */
-render : function (
-renderer, 
-mat4, 
-mat4 
+* @param {cc.Renderer|cc.Renderer} renderer
+* @param {mat4_object|mat4_object} mat4
+* @param {mat4_object|mat4_object} mat4
+* @param {unsigned int} int
+*/
+render : function(
+renderer,
+mat4,
+mat4,
+int 
 )
 {
 },
@@ -2668,11 +2702,41 @@ pause : function (
 },
 
 /**
+ * @method pushProjectionMatrix
+ * @param {unsigned int} arg0
+ */
+pushProjectionMatrix : function (
+int 
+)
+{
+},
+
+/**
+ * @method popProjectionMatrix
+ * @param {unsigned int} arg0
+ */
+popProjectionMatrix : function (
+int 
+)
+{
+},
+
+/**
  * @method setEventDispatcher
  * @param {cc.EventDispatcher} arg0
  */
 setEventDispatcher : function (
 eventdispatcher 
+)
+{
+},
+
+/**
+ * @method loadProjectionIdentityMatrix
+ * @param {unsigned int} arg0
+ */
+loadProjectionIdentityMatrix : function (
+int 
 )
 {
 },
@@ -2915,6 +2979,18 @@ init : function (
  */
 setScheduler : function (
 scheduler 
+)
+{
+},
+
+/**
+ * @method multiplyProjectionMatrix
+ * @param {mat4_object} arg0
+ * @param {unsigned int} arg1
+ */
+multiplyProjectionMatrix : function (
+mat4, 
+int 
 )
 {
 },
@@ -3187,6 +3263,28 @@ getVisibleSize : function (
 )
 {
     return cc.Size;
+},
+
+/**
+ * @method loadProjectionMatrix
+ * @param {mat4_object} arg0
+ * @param {unsigned int} arg1
+ */
+loadProjectionMatrix : function (
+mat4, 
+int 
+)
+{
+},
+
+/**
+ * @method initProjectionMatrixStack
+ * @param {unsigned int} arg0
+ */
+initProjectionMatrixStack : function (
+int 
+)
+{
 },
 
 /**
@@ -4395,6 +4493,16 @@ size
 },
 
 /**
+ * @method getCenterRect
+ * @return {rect_object}
+ */
+getCenterRect : function (
+)
+{
+    return cc.Rect;
+},
+
+/**
  * @method setRectInPixels
  * @param {rect_object} arg0
  */
@@ -4412,6 +4520,16 @@ getRect : function (
 )
 {
     return cc.Rect;
+},
+
+/**
+ * @method setCenterRectInPixels
+ * @param {rect_object} arg0
+ */
+setCenterRectInPixels : function (
+rect 
+)
+{
 },
 
 /**
@@ -4509,6 +4627,16 @@ getRectInPixels : function (
  * @return {bool}
  */
 isRotated : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method hasCenterRect
+ * @return {bool}
+ */
+hasCenterRect : function (
 )
 {
     return false;
@@ -7029,6 +7157,18 @@ str
 )
 {
     return false;
+},
+
+/**
+ * @method getNewFilename
+ * @param {String} arg0
+ * @return {String}
+ */
+getNewFilename : function (
+str 
+)
+{
+    return ;
 },
 
 /**
@@ -10620,6 +10760,16 @@ action
 },
 
 /**
+ * @method pauseAllRunningActions
+ * @return {Array}
+ */
+pauseAllRunningActions : function (
+)
+{
+    return new Array();
+},
+
+/**
  * @method removeAllActionsByTag
  * @param {int} arg0
  * @param {cc.Node} arg1
@@ -10632,13 +10782,17 @@ node
 },
 
 /**
- * @method pauseAllRunningActions
- * @return {Array}
+ * @method getNumberOfRunningActionsInTargetByTag
+ * @param {cc.Node} arg0
+ * @param {int} arg1
+ * @return {unsigned long}
  */
-pauseAllRunningActions : function (
+getNumberOfRunningActionsInTargetByTag : function (
+node, 
+int 
 )
 {
-    return new Array();
+    return 0;
 },
 
 /**
@@ -11847,10 +12001,10 @@ color4f
 
 /**
  * @method setLineWidth
- * @param {int} arg0
+ * @param {float} arg0
  */
 setLineWidth : function (
-int 
+float 
 )
 {
 },
@@ -17162,19 +17316,15 @@ getResourceType : function (
 },
 
 /**
- * @method initWithTexture
-* @param {cc.Texture2D|cc.Texture2D|cc.Texture2D} texture2d
-* @param {rect_object|rect_object} rect
-* @param {bool} bool
-* @return {bool|bool|bool}
-*/
-initWithTexture : function(
-texture2d,
-rect,
-bool 
+ * @method setDisplayFrameWithAnimationName
+ * @param {String} arg0
+ * @param {int} arg1
+ */
+setDisplayFrameWithAnimationName : function (
+str, 
+int 
 )
 {
-    return false;
 },
 
 /**
@@ -17198,11 +17348,31 @@ getOffsetPosition : function (
 },
 
 /**
+ * @method getCenterRect
+ * @return {rect_object}
+ */
+getCenterRect : function (
+)
+{
+    return cc.Rect;
+},
+
+/**
  * @method removeAllChildrenWithCleanup
  * @param {bool} arg0
  */
 removeAllChildrenWithCleanup : function (
 bool 
+)
+{
+},
+
+/**
+ * @method setCenterRectNormalized
+ * @param {rect_object} arg0
+ */
+setCenterRectNormalized : function (
+rect 
 )
 {
 },
@@ -17276,13 +17446,11 @@ getBlendFunc : function (
 },
 
 /**
- * @method setDisplayFrameWithAnimationName
- * @param {String} arg0
- * @param {int} arg1
+ * @method setCenterRect
+ * @param {rect_object} arg0
  */
-setDisplayFrameWithAnimationName : function (
-str, 
-int 
+setCenterRect : function (
+rect 
 )
 {
 },
@@ -17328,6 +17496,16 @@ isDirty : function (
 },
 
 /**
+ * @method getCenterRectNormalized
+ * @return {rect_object}
+ */
+getCenterRectNormalized : function (
+)
+{
+    return cc.Rect;
+},
+
+/**
  * @method setAtlasIndex
  * @param {int} arg0
  */
@@ -17335,6 +17513,22 @@ setAtlasIndex : function (
 int 
 )
 {
+},
+
+/**
+ * @method initWithTexture
+* @param {cc.Texture2D|cc.Texture2D|cc.Texture2D} texture2d
+* @param {rect_object|rect_object} rect
+* @param {bool} bool
+* @return {bool|bool|bool}
+*/
+initWithTexture : function(
+texture2d,
+rect,
+bool 
+)
+{
+    return false;
 },
 
 /**
@@ -20544,14 +20738,16 @@ str
 
 /**
  * @method initWithByteArrays
-* @param {char|char} char
-* @param {char|char} char
+* @param {char|char|char} char
+* @param {char|char|char} char
+* @param {String|String} str
 * @param {String} str
-* @return {bool|bool}
+* @return {bool|bool|bool}
 */
 initWithByteArrays : function(
 char,
 char,
+str,
 str 
 )
 {
@@ -20572,12 +20768,14 @@ float
 
 /**
  * @method initWithFilenames
-* @param {String|String} str
+* @param {String|String|String} str
+* @param {String|String|String} str
 * @param {String|String} str
 * @param {String} str
-* @return {bool|bool}
+* @return {bool|bool|bool}
 */
 initWithFilenames : function(
+str,
 str,
 str,
 str 
@@ -20768,14 +20966,16 @@ int
 
 /**
  * @method createWithByteArrays
-* @param {char|char} char
-* @param {char|char} char
+* @param {char|char|char} char
+* @param {char|char|char} char
+* @param {String|String} str
 * @param {String} str
-* @return {cc.GLProgram|cc.GLProgram}
+* @return {cc.GLProgram|cc.GLProgram|cc.GLProgram}
 */
 createWithByteArrays : function(
 char,
 char,
+str,
 str 
 )
 {
@@ -20784,12 +20984,14 @@ str
 
 /**
  * @method createWithFilenames
-* @param {String|String} str
+* @param {String|String|String} str
+* @param {String|String|String} str
 * @param {String|String} str
 * @param {String} str
-* @return {cc.GLProgram|cc.GLProgram}
+* @return {cc.GLProgram|cc.GLProgram|cc.GLProgram}
 */
 createWithFilenames : function(
+str,
 str,
 str,
 str 

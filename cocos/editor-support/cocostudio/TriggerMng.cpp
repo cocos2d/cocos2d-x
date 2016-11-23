@@ -23,7 +23,6 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "editor-support/cocostudio/TriggerMng.h"
-#include "json/filestream.h"
 #include "json/prettywriter.h"
 #include "json/stringbuffer.h"
 #include "base/CCDirector.h"
@@ -418,7 +417,7 @@ void TriggerMng::addArmatureMovementCallBack(Armature *pAr, Ref *pTarget, SEL_Mo
 		amd = new (std::nothrow) ArmatureMovementDispatcher();
         pAr->getAnimation()->setMovementEventCallFunc(CC_CALLBACK_0(ArmatureMovementDispatcher::animationEvent, amd, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
         amd->addAnimationEventCallBack(pTarget, mecf);
-		_movementDispatches->insert(std::make_pair(pAr, amd));
+		_movementDispatches->emplace(pAr, amd);
 
 	}
 	else
@@ -514,10 +513,10 @@ ArmatureMovementDispatcher::~ArmatureMovementDispatcher(void)
 
   void ArmatureMovementDispatcher::addAnimationEventCallBack(Ref *pTarget, SEL_MovementEventCallFunc mecf)
   {
-	  _mapEventAnimation->insert(std::make_pair(pTarget, mecf));
+	  _mapEventAnimation->emplace(pTarget, mecf);
   }
 
-  void ArmatureMovementDispatcher::removeAnnimationEventCallBack(Ref *pTarget, SEL_MovementEventCallFunc mecf)
+  void ArmatureMovementDispatcher::removeAnnimationEventCallBack(Ref *pTarget, SEL_MovementEventCallFunc /*mecf*/)
   {
 	  _mapEventAnimation->erase(pTarget);
   }

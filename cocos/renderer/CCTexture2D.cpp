@@ -553,7 +553,7 @@ bool Texture2D::hasPremultipliedAlpha() const
     return _hasPremultipliedAlpha;
 }
 
-bool Texture2D::initWithData(const void *data, ssize_t dataLen, Texture2D::PixelFormat pixelFormat, int pixelsWide, int pixelsHigh, const Size& contentSize)
+bool Texture2D::initWithData(const void *data, ssize_t dataLen, Texture2D::PixelFormat pixelFormat, int pixelsWide, int pixelsHigh, const Size& /*contentSize*/)
 {
     CCASSERT(dataLen>0 && pixelsWide>0 && pixelsHigh>0, "Invalid size");
 
@@ -1499,7 +1499,7 @@ void Texture2D::setAlphaTexture(Texture2D* alphaTexture)
     if (alphaTexture != nullptr) {
         this->_alphaTexture = alphaTexture;
         this->_alphaTexture->retain();
-        this->_hasPremultipliedAlpha = true; // PremultipliedAlpha shoud be true.
+        this->_hasPremultipliedAlpha = true; // PremultipliedAlpha should be true.
     }
 }
 NS_CC_END

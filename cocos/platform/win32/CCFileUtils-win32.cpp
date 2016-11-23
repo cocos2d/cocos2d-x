@@ -350,7 +350,7 @@ bool FileUtilsWin32::createDirectory(const std::string& dirPath)
     if ((GetFileAttributes(path.c_str())) == INVALID_FILE_ATTRIBUTES)
     {
         subpath = L"";
-        for (unsigned int i = 0; i < dirs.size(); ++i)
+        for (unsigned int i = 0, size = dirs.size(); i < size; ++i)
         {
             subpath += dirs[i];
 

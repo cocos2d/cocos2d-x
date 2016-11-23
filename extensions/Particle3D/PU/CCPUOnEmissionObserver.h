@@ -48,7 +48,7 @@ public:
 CC_CONSTRUCTOR_ACCESS:
     PUOnEmissionObserver(void) : PUObserver()
     {
-    };
+    }
     virtual ~PUOnEmissionObserver(void) {};
 };
 

@@ -133,6 +133,33 @@ public:
      */
     void setRect(const Rect& rect);
 
+    /** Get center rect of the frame.
+     *
+     * Useful to create 9-slice sprites
+     *
+     * @return The center rect of the sprite frame in points
+     */
+    const Rect& getCenterRect() const { return _centerRect; }
+
+     /**
+     * setCenterRect
+     *
+     * Useful to implement "9 sliced" sprites.
+     * The sprite will be sliced into a 3 x 3 grid. The four corners of this grid are applied without
+     * performing any scaling. The upper- and lower-middle parts are scaled horizontally, and the left- and right-middle parts are scaled vertically.
+     * The center is scaled in both directions.
+     * Important: The scaling is based the Sprite's trimmed size.
+     *
+     * Limitations: Does not work when the sprite is part of `SpriteBatchNode`.
+     * @param centerRect the Rect in points
+     */
+    void setCenterRectInPixels(const Rect& centerRect);
+
+    /** hasCenterRect
+     @return Whether or not it has a centerRect
+     */
+    bool hasCenterRect() const;
+
     /** Get offset of the frame.
      * 
      * @return The offset of the sprite frame, in pixels.
@@ -265,6 +292,7 @@ protected:
     Rect _rectInPixels;
     bool   _rotated;
     Rect _rect;
+    Rect _centerRect;
     Vec2 _offsetInPixels;
     Size _originalSizeInPixels;
     Texture2D *_texture;

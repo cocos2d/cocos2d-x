@@ -247,6 +247,41 @@ public:
      */
     virtual void setVertexRect(const Rect& rect);
 
+    /**
+     * setCenterRectNormalized
+     *
+     * Useful to implement "9 sliced" sprites.
+     * The default value is (0,0) - (1,1), which means that only one "slice" will be used: From top-left (0,0) to bottom-right (1,1).
+     * If the value is different than (0,0), (1,1), then the sprite will be sliced into a 3 x 3 grid. The four corners of this grid are applied without
+     * performing any scaling. The upper- and lower-middle parts are scaled horizontally, and the left- and right-middle parts are scaled vertically.
+     * The center is scaled in both directions.
+     * Important: The scaling is based the Sprite's trimmed size.
+     *
+     * Limitations: Does not work when the sprite is part of `SpriteBatchNode`.
+     */
+    virtual void setCenterRectNormalized(const Rect& rect);
+
+    /**
+     * getCenterRectNormalized
+     *
+     * Returns the CenterRect in normalized coordinates
+     */
+    virtual Rect getCenterRectNormalized() const;
+
+    /* setCenterRect
+     *
+     * Like `setCenterRectNormalized`, but instead of being in normalized coordinates, it is in points coordinates
+     */
+    virtual void setCenterRect(const Rect& rect);
+
+    /**
+     * @brief Returns the Cap Insets rect
+     *
+     * @return Scale9Sprite's cap inset.
+     */
+    virtual Rect getCenterRect() const;
+
+
     /** @{
      * Sets a new SpriteFrame to the Sprite.
      */
@@ -467,6 +502,7 @@ public:
     virtual void setScale(float scale) override;
     virtual void setPositionZ(float positionZ) override;
     virtual void setAnchorPoint(const Vec2& anchor) override;
+    virtual void setContentSize(const Size& size) override;
     
     virtual void setIgnoreAnchorPointForPosition(bool value) override;
     
@@ -586,12 +622,15 @@ protected:
 
     void updateColor() override;
     virtual void setTextureCoords(const Rect& rect);
+    virtual void setTextureCoords(const Rect& rect, V3F_C4B_T2F_Quad* outQuad);
+    virtual void setVertexCoords(const Rect& rect, const Size& imageSize, V3F_C4B_T2F_Quad* outQuad);
     virtual void updateBlendFunc();
     virtual void setReorderChildDirtyRecursively();
     virtual void setDirtyRecursively(bool value);
 
+    void updatePoly();
+    void updateStretchFactor();
 
-    
     //
     // Data used when the sprite is rendered using a SpriteSheet
     //
@@ -620,7 +659,13 @@ protected:
 
     // texture
     Rect _rect;                             /// Rectangle of Texture2D
-    bool   _rectRotated;                    /// Whether the texture is rotated
+    bool _rectRotated;                      /// Whether the texture is rotated
+
+    Rect _centerRectNormalized;             /// Rectangle to implement "slice 9"
+    int _numberOfSlices;                    /// how many sprite slices: 1 or 9
+    Vec2 _strechFactor;                     /// strech factor to match the contentSize. for 1- and 9- slice sprites
+    Size _originalContentSize;              /// original content size
+
 
     // Offset Position (used by Zwoptex)
     Vec2 _offsetPosition;
@@ -628,6 +673,7 @@ protected:
 
     // vertex coords, texture coords and color info
     V3F_C4B_T2F_Quad _quad;
+    V3F_C4B_T2F_Quad* _quads;
     PolygonInfo  _polyInfo;
 
     // opacity and RGB protocol

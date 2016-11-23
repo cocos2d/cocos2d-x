@@ -29,12 +29,12 @@
 NS_CC_BEGIN
 
 //-----------------------------------------------------------------------
-bool PUOnQuotaObserver::observe (PUParticle3D* particle, float timeElapsed)
+bool PUOnQuotaObserver::observe (PUParticle3D* /*particle*/, float /*timeElapsed*/)
 {
     return _result;
 }
 //-----------------------------------------------------------------------
-void PUOnQuotaObserver::postUpdateObserver(float deltaTime)
+void PUOnQuotaObserver::postUpdateObserver(float /*deltaTime*/)
 {
     _result = false;
     unsigned int quota = 0;

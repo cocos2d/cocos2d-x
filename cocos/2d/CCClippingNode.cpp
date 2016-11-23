@@ -56,7 +56,8 @@ static void setProgram(Node *n, GLProgram *p)
 
 ClippingNode::ClippingNode()
 : _stencil(nullptr)
-,_stencilStateManager(new StencilStateManager())
+, _stencilStateManager(new StencilStateManager())
+, _originStencilProgram(nullptr)
 {
 }
 
@@ -228,7 +229,6 @@ void ClippingNode::visit(Renderer *renderer, const Mat4 &parentTransform, uint32
         // we need to recursively apply this shader to all the nodes in the stencil node
         // FIXME: we should have a way to apply shader to all nodes without having to do this
         setProgram(_stencil, program);
-        
 #endif
 
     }
@@ -245,7 +245,7 @@ void ClippingNode::visit(Renderer *renderer, const Mat4 &parentTransform, uint32
     {
         sortAllChildren();
         // draw children zOrder < 0
-        for( ; i < _children.size(); i++ )
+        for(auto size = _children.size(); i < size; ++i)
         {
             auto node = _children.at(i);
             
@@ -257,8 +257,8 @@ void ClippingNode::visit(Renderer *renderer, const Mat4 &parentTransform, uint32
         // self draw
         if (visibleByCamera)
             this->draw(renderer, _modelViewTransform, flags);
-        
-        for(auto it=_children.cbegin()+i; it != _children.cend(); ++it)
+
+        for(auto it=_children.cbegin()+i, itCend = _children.cend(); it != itCend; ++it)
             (*it)->visit(renderer, _modelViewTransform, flags);
     }
     else if (visibleByCamera)
@@ -324,6 +324,9 @@ void ClippingNode::setStencil(Node *stencil)
             _stencil->onEnterTransitionDidFinish();
         }
     }
+    
+    if (_stencil != nullptr)
+        _originStencilProgram = _stencil->getGLProgram();
 }
 
 bool ClippingNode::hasContent() const
@@ -338,6 +341,14 @@ GLfloat ClippingNode::getAlphaThreshold() const
 
 void ClippingNode::setAlphaThreshold(GLfloat alphaThreshold)
 {
+#if CC_CLIPPING_NODE_OPENGLES
+    if (alphaThreshold == 1 && alphaThreshold != _stencilStateManager->getAlphaThreshold())
+    {
+        // should reset program used by _stencil
+        setProgram(_stencil, _originStencilProgram);
+    }
+#endif
+    
     _stencilStateManager->setAlphaThreshold(alphaThreshold);
 }
 

@@ -211,7 +211,7 @@ bool TextureAtlas::initWithTexture(Texture2D *texture, ssize_t capacity)
     return true;
 }
 
-void TextureAtlas::listenRendererRecreated(EventCustom* event)
+void TextureAtlas::listenRendererRecreated(EventCustom* /*event*/)
 {  
     if (Configuration::getInstance()->supportsShareableVAO())
     {
@@ -452,58 +452,65 @@ void TextureAtlas::removeAllQuads()
 // TextureAtlas - Resize
 bool TextureAtlas::resizeCapacity(ssize_t newCapacity)
 {
-    CCASSERT(newCapacity>=0, "capacity >= 0");
-    if( newCapacity == _capacity )
+    CCASSERT(newCapacity >= 0, "capacity >= 0");
+    if (newCapacity == _capacity)
     {
         return true;
     }
-    auto oldCapactiy = _capacity;
-    // update capacity and totolQuads
+    auto oldCapacity = _capacity;
+
+    // update capacity and totalQuads
     _totalQuads = MIN(_totalQuads, newCapacity);
     _capacity = newCapacity;
 
     V3F_C4B_T2F_Quad* tmpQuads = nullptr;
     GLushort* tmpIndices = nullptr;
-    
+
     // when calling initWithTexture(fileName, 0) on bada device, calloc(0, 1) will fail and return nullptr,
     // so here must judge whether _quads and _indices is nullptr.
+
+    ssize_t _quads_size = sizeof(_quads[0]);
+    ssize_t new_quads_size = _capacity * _quads_size;
     if (_quads == nullptr)
     {
-        tmpQuads = (V3F_C4B_T2F_Quad*)malloc( _capacity * sizeof(_quads[0]) );
+        tmpQuads = (V3F_C4B_T2F_Quad*)malloc(new_quads_size);
         if (tmpQuads != nullptr)
         {
-            memset(tmpQuads, 0, _capacity * sizeof(_quads[0]) );
+            memset(tmpQuads, 0, new_quads_size);
         }
     }
     else
     {
-        tmpQuads = (V3F_C4B_T2F_Quad*)realloc( _quads, sizeof(_quads[0]) * _capacity );
-        if (tmpQuads != nullptr && _capacity > oldCapactiy)
+        tmpQuads = (V3F_C4B_T2F_Quad*)realloc(_quads, new_quads_size);
+        if (tmpQuads != nullptr && _capacity > oldCapacity)
         {
-            memset(tmpQuads+oldCapactiy, 0, (_capacity - oldCapactiy)*sizeof(_quads[0]) );
+            memset(tmpQuads + oldCapacity, 0, (_capacity - oldCapacity)*_quads_size);
         }
         _quads = nullptr;
     }
 
+    ssize_t _indices_size = sizeof(_indices[0]);
+    ssize_t new_size = _capacity * 6 * _indices_size;
+
     if (_indices == nullptr)
-    {    
-        tmpIndices = (GLushort*)malloc( _capacity * 6 * sizeof(_indices[0]) );
+    {
+        tmpIndices = (GLushort*)malloc(new_size);
         if (tmpIndices != nullptr)
         {
-            memset( tmpIndices, 0, _capacity * 6 * sizeof(_indices[0]) );
+            memset(tmpIndices, 0, new_size);
         }
     }
     else
     {
-        tmpIndices = (GLushort*)realloc( _indices, sizeof(_indices[0]) * _capacity * 6 );
-        if (tmpIndices != nullptr && _capacity > oldCapactiy)
+        tmpIndices = (GLushort*)realloc(_indices, new_size);
+        if (tmpIndices != nullptr && _capacity > oldCapacity)
         {
-            memset( tmpIndices+oldCapactiy, 0, (_capacity-oldCapactiy) * 6 * sizeof(_indices[0]) );
+            memset(tmpIndices + oldCapacity, 0, (_capacity - oldCapacity) * 6 * _indices_size);
         }
         _indices = nullptr;
     }
 
-    if( ! ( tmpQuads && tmpIndices) ) {
+    if (!(tmpQuads && tmpIndices)) {
         CCLOG("cocos2d: TextureAtlas: not enough memory");
         CC_SAFE_FREE(tmpQuads);
         CC_SAFE_FREE(tmpIndices);
@@ -524,6 +531,7 @@ bool TextureAtlas::resizeCapacity(ssize_t newCapacity)
 
     return true;
 }
+
 
 void TextureAtlas::increaseTotalQuadsWith(ssize_t amount)
 {
@@ -604,7 +612,7 @@ void TextureAtlas::drawNumberOfQuads(ssize_t numberOfQuads, ssize_t start)
     if(!numberOfQuads)
         return;
     
-    GL::bindTexture2D(_texture->getName());
+    GL::bindTexture2D(_texture);
 
     auto conf = Configuration::getInstance();
     if (conf->supportsShareableVAO() && conf->supportsMapBuffer())

@@ -224,6 +224,7 @@ xcopy "$(OutDir)..\*.dll" "$(OutDir)" /D /Y</Command>
     <ClCompile Include="..\Classes\UnitTest\UnitTest.cpp" />
     <ClCompile Include="..\Classes\VisibleRect.cpp" />
     <ClCompile Include="..\Classes\VRTest\VRTest.cpp" />
+    <ClCompile Include="..\Classes\WindowTest\WindowTest.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
     <ClCompile Include="..\Classes\controller.cpp" />
@@ -381,6 +382,7 @@ xcopy "$(OutDir)..\*.dll" "$(OutDir)" /D /Y</Command>
     <ClInclude Include="..\Classes\UnitTest\UnitTest.h" />
     <ClInclude Include="..\Classes\VisibleRect.h" />
     <ClInclude Include="..\Classes\VRTest\VRTest.h" />
+    <ClInclude Include="..\Classes\WindowTest\WindowTest.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="..\Classes\AppDelegate.h" />
     <ClInclude Include="..\Classes\controller.h" />

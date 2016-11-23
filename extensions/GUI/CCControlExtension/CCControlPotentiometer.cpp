@@ -174,7 +174,7 @@ bool ControlPotentiometer::isTouchInside(Touch * touch)
     return distance < MIN(getContentSize().width / 2, getContentSize().height / 2);
 }
 
-bool ControlPotentiometer::onTouchBegan(Touch *pTouch, Event *pEvent)
+bool ControlPotentiometer::onTouchBegan(Touch *pTouch, Event* /*pEvent*/)
 {
     if (!this->isTouchInside(pTouch) || !this->isEnabled() || !isVisible())
     {
@@ -188,14 +188,14 @@ bool ControlPotentiometer::onTouchBegan(Touch *pTouch, Event *pEvent)
     return true;
 }
 
-void ControlPotentiometer::onTouchMoved(Touch *pTouch, Event *pEvent)
+void ControlPotentiometer::onTouchMoved(Touch *pTouch, Event* /*pEvent*/)
 {
     Vec2 location    = this->getTouchLocation(pTouch);
 
     this->potentiometerMoved(location);
 }
 
-void ControlPotentiometer::onTouchEnded(Touch *pTouch, Event *pEvent)
+void ControlPotentiometer::onTouchEnded(Touch* /*pTouch*/, Event* /*pEvent*/)
 {
     this->potentiometerEnded(Vec2::ZERO);
 }
@@ -225,7 +225,7 @@ float ControlPotentiometer::angleInDegreesBetweenLineFromPoint_toPoint_toLineFro
     return (atanA - atanB) * 180 / M_PI;
 }
 
-void ControlPotentiometer::potentiometerBegan(Vec2 location)
+void ControlPotentiometer::potentiometerBegan(Vec2 /*location*/)
 {
     setSelected(true);
     getThumbSprite()->setColor(Color3B::GRAY);
@@ -254,7 +254,7 @@ void ControlPotentiometer::potentiometerMoved(Vec2 location)
     _previousLocation    = location;
 }
 
-void ControlPotentiometer::potentiometerEnded(Vec2 location)
+void ControlPotentiometer::potentiometerEnded(Vec2 /*location*/)
 {
     getThumbSprite()->setColor(Color3B::WHITE);
     setSelected(false);

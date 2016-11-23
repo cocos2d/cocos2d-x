@@ -45,6 +45,7 @@ EditBox::EditBox(void)
 , _colPlaceHolder(Color3B::GRAY)
 , _maxLength(0)
 , _adjustHeight(0.0f)
+, _alignment(cocos2d::TextHAlignment::LEFT)
 #if CC_ENABLE_SCRIPT_BINDING
 , _scriptEditBoxHandler(0)
 #endif
@@ -60,7 +61,7 @@ EditBox::~EditBox(void)
 }
 
 
-void EditBox::touchDownAction(Ref *sender, TouchEventType controlEvent)
+void EditBox::touchDownAction(Ref* /*sender*/, TouchEventType controlEvent)
 {
     if (controlEvent == Widget::TouchEventType::ENDED) {
         _editBoxImpl->openKeyboard();
@@ -86,7 +87,7 @@ EditBox* EditBox::create(const Size& size,
 }
     
     
-EditBox* EditBox::create(const cocos2d::Size &size, cocos2d::ui::Scale9Sprite *normalSprite, ui::Scale9Sprite *pressedSprite, Scale9Sprite* disabledSprite)
+EditBox* EditBox::create(const cocos2d::Size &size, cocos2d::ui::Scale9Sprite *normalSprite, ui::Scale9Sprite* /*pressedSprite*/, Scale9Sprite* /*disabledSprite*/)
 {
     EditBox* pRet = new (std::nothrow) EditBox();
     
@@ -353,6 +354,14 @@ void EditBox::setReturnType(EditBox::KeyboardReturnType returnType)
     }
 }
 
+  void EditBox::setTextHorizontalAlignment(cocos2d::TextHAlignment alignment)
+{
+    if (_editBoxImpl != nullptr)
+    {
+        _editBoxImpl->setTextHorizontalAlignment(alignment);
+    }
+}
+
 /* override function */
 void EditBox::setPosition(const Vec2& pos)
 {
@@ -490,7 +499,7 @@ void EditBox::keyboardWillShow(IMEKeyboardNotificationInfo& info)
     }
 }
 
-void EditBox::keyboardDidShow(IMEKeyboardNotificationInfo& info)
+void EditBox::keyboardDidShow(IMEKeyboardNotificationInfo& /*info*/)
 {
 	
 }
@@ -504,7 +513,7 @@ void EditBox::keyboardWillHide(IMEKeyboardNotificationInfo& info)
     }
 }
 
-void EditBox::keyboardDidHide(IMEKeyboardNotificationInfo& info)
+void EditBox::keyboardDidHide(IMEKeyboardNotificationInfo& /*info*/)
 {
 	
 }

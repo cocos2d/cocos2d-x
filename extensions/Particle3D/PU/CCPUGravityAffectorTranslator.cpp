@@ -56,7 +56,7 @@ bool PUGravityAffectorTranslator::translateChildProperty( PUScriptCompiler* comp
     return false;
 }
 
-bool PUGravityAffectorTranslator::translateChildObject( PUScriptCompiler* compiler, PUAbstractNode *node )
+bool PUGravityAffectorTranslator::translateChildObject( PUScriptCompiler* /*compiler*/, PUAbstractNode* /*node*/ )
 {
     // No objects
     return false;

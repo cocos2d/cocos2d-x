@@ -196,11 +196,9 @@ void PrettyPrinter::visit(const __Set *p)
     
     setIndentLevel(_indentLevel+1);
 
-    int i = 0;
     __Set* tmp = const_cast<__Set*>(p);
-    __SetIterator it = tmp->begin();
 
-    for (; it != tmp->end(); ++it, ++i) {
+    for (int i = 0, tmp_size = tmp->count(); i < tmp_size; ++i) {
         if (i > 0) {
             _result += "\n";
         }

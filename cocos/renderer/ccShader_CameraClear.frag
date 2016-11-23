@@ -1,15 +1,15 @@
 
-const char* ccCameraClearFrag = STRINGIFY(
+const char* ccCameraClearFrag = R"(
 
-\n#ifdef GL_ES\n
+#ifdef GL_ES
 varying mediump vec2 v_texCoord;
 varying mediump vec3 v_color;
-\n#else\n
+#else
 varying vec2 v_texCoord;
 varying vec3 v_color;
-\n#endif\n
+#endif
 void main()
 {
     gl_FragColor = vec4(v_color, 1.0);
 }
-);
+)";

@@ -52,6 +52,17 @@ namespace ui {
     class CC_GUI_DLL EditBoxDelegate
     {
     public:
+
+        /**
+         * Reason for ending edit (for platforms where it is known)
+         */
+        enum class EditBoxEndAction {
+            UNKNOWN,
+            TAB_TO_NEXT,
+            TAB_TO_PREVIOUS,
+            RETURN
+        };
+
         virtual ~EditBoxDelegate() {};
             
         /**
@@ -64,8 +75,9 @@ namespace ui {
         /**
          * This method is called when an edit box loses focus after keyboard is hidden.
          * @param editBox The edit box object that generated the event.
+         * @deprecated Use editBoxEditingDidEndWithAction() instead to receive reason for end
          */
-        virtual void editBoxEditingDidEnd(EditBox* editBox) {};
+        CC_DEPRECATED_ATTRIBUTE virtual void editBoxEditingDidEnd(EditBox* editBox) {};
             
         /**
          * This method is called when the edit box text was changed.
@@ -79,7 +91,13 @@ namespace ui {
          * @param editBox The edit box object that generated the event.
          */
         virtual void editBoxReturn(EditBox* editBox) = 0;
-            
+
+        /**
+         * This method is called when an edit box loses focus after keyboard is hidden.
+         * @param editBox The edit box object that generated the event.
+         * @param type The reason why editing ended.
+         */
+        virtual void editBoxEditingDidEndWithAction(EditBox* editBox, EditBoxEndAction action) {};
     };
         
     /**
@@ -104,7 +122,8 @@ namespace ui {
             DONE,
             SEND,
             SEARCH,
-            GO
+            GO,
+            NEXT
         };
             
         /**
@@ -412,7 +431,9 @@ namespace ui {
          * @param returnType One of the EditBox::KeyboardReturnType constants.
          */
         void setReturnType(EditBox::KeyboardReturnType returnType);
-            
+
+        void setTextHorizontalAlignment(cocos2d::TextHAlignment alignment);
+
         /* override functions */
         virtual void setPosition(const Vec2& pos) override;
         virtual void setVisible(bool visible) override;
@@ -476,7 +497,8 @@ namespace ui {
         InputMode    _editBoxInputMode;
         InputFlag    _editBoxInputFlag;
         EditBox::KeyboardReturnType  _keyboardReturnType;
-            
+        cocos2d::TextHAlignment _alignment;
+
         Scale9Sprite *_backgroundSprite;
         std::string _text;
         std::string _placeHolder;

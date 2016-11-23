@@ -210,7 +210,7 @@ public:
         CC_SAFE_RETAIN(info);
         CC_SAFE_RELEASE(_tileSet);
         _tileSet = info;
-    };
+    }
     
     /** Layer orientation, which is the same as the map orientation.
      *
@@ -243,7 +243,7 @@ public:
     void setProperties(const ValueMap& properties)
     {
         _properties = properties;
-    };
+    }
 
     /** Returns the tile (Sprite) at a given a tile coordinate.
      * The returned Sprite will be already added to the TMXLayer. Don't add it again.
@@ -261,7 +261,7 @@ public:
      * @param pos The tile coordinate.
      * @param gid The tile gid.
      */
-    void setupTileSprite(Sprite* sprite, const Vec2& pos, int gid);
+    void setupTileSprite(Sprite* sprite, const Vec2& pos, uint32_t gid);
 
     //
     // Override
@@ -285,7 +285,7 @@ protected:
     int getVertexZForPos(const Vec2& pos);
     
     //Flip flags is packed into gid
-    void setFlaggedTileGIDByIndex(int index, int gid);
+    void setFlaggedTileGIDByIndex(int index, uint32_t gid);
     
     //
     void updateTotalQuads();

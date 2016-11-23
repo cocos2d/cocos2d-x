@@ -59,10 +59,8 @@ void Grabber::grab(Texture2D *texture)
     glBindFramebuffer(GL_FRAMEBUFFER, _oldFBO);
 }
 
-void Grabber::beforeRender(Texture2D *texture)
+void Grabber::beforeRender(Texture2D* /*texture*/)
 {
-    CC_UNUSED_PARAM(texture);
-
     glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_oldFBO);
     glBindFramebuffer(GL_FRAMEBUFFER, _FBO);
     
@@ -81,10 +79,8 @@ void Grabber::beforeRender(Texture2D *texture)
 //  glColorMask(true, true, true, false);    // #631
 }
 
-void Grabber::afterRender(cocos2d::Texture2D *texture)
+void Grabber::afterRender(cocos2d::Texture2D* /*texture*/)
 {
-    CC_UNUSED_PARAM(texture);
-
     glBindFramebuffer(GL_FRAMEBUFFER, _oldFBO);
 //  glColorMask(true, true, true, true);    // #631
     

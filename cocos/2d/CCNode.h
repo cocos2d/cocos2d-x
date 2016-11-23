@@ -339,7 +339,9 @@ public:
      *
      * @param position The normalized position (x,y) of the node, using value between 0 and 1.
      */
-    virtual void setNormalizedPosition(const Vec2 &position);
+    virtual void setPositionNormalized(const Vec2 &position);
+    // FIXME: should get deprecated in v4.0
+    virtual void setNormalizedPosition(const Vec2 &position) { setPositionNormalized(position); }
 
     /**
      * Gets the position (x,y) of the node in its parent's coordinate system.
@@ -357,7 +359,9 @@ public:
      * 
      * @return The normalized position.
      */
-    virtual const Vec2& getNormalizedPosition() const;
+    virtual const Vec2& getPositionNormalized() const;
+    // FIXME: should get deprecated in v4.0
+    virtual const Vec2& getNormalizedPosition() const { return getPositionNormalized(); }
 
     /**
      * Sets the position (x,y) of the node in its parent's coordinate system.
@@ -684,7 +688,7 @@ public:
     /** @deprecated No longer needed
     * @lua NA
     */
-    CC_DEPRECATED_ATTRIBUTE void setGLServerState(int serverState) { /* ignore */ };
+    CC_DEPRECATED_ATTRIBUTE void setGLServerState(int /*serverState*/) {}
     /** @deprecated No longer needed
     * @lua NA
     */
@@ -1281,6 +1285,23 @@ public:
      */
     ssize_t getNumberOfRunningActions() const;
 
+    /**
+     * Returns the numbers of actions that are running plus the ones that are
+     * schedule to run (actions in actionsToAdd and actions arrays) with a
+     * specific tag.
+     *
+     * Composable actions are counted as 1 action. Example:
+     *    If you are running 1 Sequence of 7 actions, it will return 1.
+     *    If you are running 7 Sequences of 2 actions, it will return 7.
+     *
+     * @param  tag The tag that will be searched.
+     *
+     * @return The number of actions that are running plus the
+     *         ones that are schedule to run with specific tag.
+     */
+    ssize_t getNumberOfRunningActionsByTag(int tag) const;
+
+
     /** @deprecated Use getNumberOfRunningActions() instead */
     CC_DEPRECATED_ATTRIBUTE ssize_t numberOfRunningActions() const { return getNumberOfRunningActions(); };
 
@@ -1769,12 +1790,12 @@ public:
      *  If you want the opacity affect the color property, then set to true.
      * @param value A boolean value.
      */
-    virtual void setOpacityModifyRGB(bool value) {CC_UNUSED_PARAM(value);}
+    virtual void setOpacityModifyRGB(bool value);
     /**
      * If node opacity will modify the RGB color value, then you should override this method and return true.
      * @return A boolean value, true indicates that opacity will modify color; false otherwise.
      */
-    virtual bool isOpacityModifyRGB() const { return false; };
+    virtual bool isOpacityModifyRGB() const;
 
     /**
      * Set the callback of event onEnter.

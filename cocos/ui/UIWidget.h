@@ -765,10 +765,7 @@ public:
      *                  otherwise, it will return a widget or a layout.
      * @deprecated use `getCurrentFocusedWidget` instead.
      */
-    CC_DEPRECATED_ATTRIBUTE Widget* getCurrentFocusedWidget(bool isWidget){
-        CC_UNUSED_PARAM(isWidget);
-        return getCurrentFocusedWidget();
-    }
+    CC_DEPRECATED_ATTRIBUTE Widget* getCurrentFocusedWidget(bool isWidget);
 
     /**
      * Return a current focused widget in your UI scene.
@@ -882,13 +879,13 @@ protected:
      *@since v3.4
      */
     
-    GLProgramState* getNormalGLProgramState()const;
+    GLProgramState* getNormalGLProgramState(Texture2D* texture)const;
     
     /**
      * Get a disabled state GLProgramState
      *@since v3.4
      */
-    GLProgramState* getGrayGLProgramState()const;
+    GLProgramState* getGrayGLProgramState(Texture2D* texture)const;
      
     
     //call back function called when size changed.

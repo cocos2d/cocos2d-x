@@ -60,7 +60,7 @@ void PUSlaveEmitter::setMasterEmitterName(const std::string& masterEmitterName)
     _masterEmitterNameSet = true;
 }
 //-----------------------------------------------------------------------
-void PUSlaveEmitter::particleEmitted(PUParticleSystem3D* particleSystem, PUParticle3D* particle)
+void PUSlaveEmitter::particleEmitted(PUParticleSystem3D* /*particleSystem*/, PUParticle3D* particle)
 {
     if (_masterEmitterNameSet && _masterEmitterName != particle->parentEmitter->getName())
     {
@@ -79,6 +79,10 @@ void PUSlaveEmitter::particleEmitted(PUParticleSystem3D* particleSystem, PUParti
     static_cast<PUParticleSystem3D *>(_particleSystem)->forceEmission(this, 1); // Just emit one, to be in sync with the master.
     _isEnabled = false;
 }
+
+void PUSlaveEmitter::particleExpired(PUParticleSystem3D* /*particleSystem*/, PUParticle3D* /*particle*/)
+{}
+
 //-----------------------------------------------------------------------
 void PUSlaveEmitter::initParticlePosition(PUParticle3D* particle)
 {

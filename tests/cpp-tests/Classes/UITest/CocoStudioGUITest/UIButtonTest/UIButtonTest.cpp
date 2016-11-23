@@ -753,7 +753,7 @@ bool UIButtonTextOnly::init()
 
         // Create the button
         auto button = Button::create();
-        button->setNormalizedPosition(Vec2(0.5f, 0.5f));
+        button->setPositionNormalized(Vec2(0.5f, 0.5f));
 
         button->setTitleText("PLAY GAME");
         CCLOG("content size should be greater than 0:  width = %f, height = %f", button->getContentSize().width,
@@ -799,7 +799,7 @@ bool UIButtonIgnoreContentSizeTest::init()
                                      "cocosui/animationbuttonpressed.png");
         button->ignoreContentAdaptWithSize(false);
         button->setContentSize(Size(200,100));
-        button->setNormalizedPosition(Vec2(0.3f, 0.5f));
+        button->setPositionNormalized(Vec2(0.3f, 0.5f));
         button->setTitleText("PLAY GAME");
         button->setZoomScale(0.3f);
         button->setPressedActionEnabled(true);
@@ -814,7 +814,7 @@ bool UIButtonIgnoreContentSizeTest::init()
                                      "cocosui/animationbuttonpressed.png");
         button2->ignoreContentAdaptWithSize(false);
         button2->setContentSize(Size(200,100));
-        button2->setNormalizedPosition(Vec2(0.8f, 0.5f));
+        button2->setPositionNormalized(Vec2(0.8f, 0.5f));
         button2->setTitleText("PLAY GAME");
         button2->setZoomScale(0.3f);
         button2->setPressedActionEnabled(true);
@@ -857,7 +857,7 @@ bool UIButtonTitleEffectTest::init()
         // Create the button
         auto button = Button::create("cocosui/animationbuttonnormal.png",
                                      "cocosui/animationbuttonpressed.png");
-        button->setNormalizedPosition(Vec2(0.3f, 0.5f));
+        button->setPositionNormalized(Vec2(0.3f, 0.5f));
         button->setTitleText("PLAY GAME");
         button->setTitleFontName("fonts/Marker Felt.ttf");
         button->setZoomScale(0.3f);
@@ -873,7 +873,7 @@ bool UIButtonTitleEffectTest::init()
         // Create the button
         auto button2 = Button::create("cocosui/animationbuttonnormal.png",
                                       "cocosui/animationbuttonpressed.png");
-        button2->setNormalizedPosition(Vec2(0.8f, 0.5f));
+        button2->setPositionNormalized(Vec2(0.8f, 0.5f));
         button2->setTitleText("PLAY GAME");
         auto title2 = button2->getTitleRenderer();
         title2->enableOutline(Color4B::GREEN, 3);
@@ -902,14 +902,14 @@ bool UIButtonFlipTest::init()
 
         // Add a label in which the button events will be displayed
         _displayValueLabel = Text::create("Button X Flipped", "fonts/Marker Felt.ttf",20);
-        _displayValueLabel->setNormalizedPosition(Vec2(0.3f, 0.7f));
+        _displayValueLabel->setPositionNormalized(Vec2(0.3f, 0.7f));
         _uiLayer->addChild(_displayValueLabel);
 
 
         // Create the button
         auto button = Button::create("cocosui/animationbuttonnormal.png",
                                      "cocosui/animationbuttonpressed.png");
-        button->setNormalizedPosition(Vec2(0.3f, 0.5f));
+        button->setPositionNormalized(Vec2(0.3f, 0.5f));
         button->setTitleText("PLAY GAME");
         button->setTitleFontName("fonts/Marker Felt.ttf");
         button->setZoomScale(0.3f);
@@ -923,13 +923,13 @@ bool UIButtonFlipTest::init()
         // Create the button
         auto button2 = Button::create("cocosui/animationbuttonnormal.png",
                                       "cocosui/animationbuttonpressed.png");
-        button2->setNormalizedPosition(Vec2(0.8f, 0.5f));
+        button2->setPositionNormalized(Vec2(0.8f, 0.5f));
         button2->setTitleText("PLAY GAME");
         button2->setFlippedY(true);
         _uiLayer->addChild(button2);
 
         auto titleLabel = Text::create("Button Y flipped", "Arial", 20);
-        titleLabel->setNormalizedPosition(Vec2(0.8f, 0.7f));
+        titleLabel->setPositionNormalized(Vec2(0.8f, 0.7f));
         this->addChild(titleLabel);
 
         return true;

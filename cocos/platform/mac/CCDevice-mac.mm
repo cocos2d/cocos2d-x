@@ -208,18 +208,10 @@ static NSFont* _createSystemFont(const char* fontName, int size)
     fntName = [[fntName lastPathComponent] stringByDeletingPathExtension];
     
     // font
-    NSFont *font = [[NSFontManager sharedFontManager]
-                    fontWithFamily:fntName
-                    traits:NSUnboldFontMask | NSUnitalicFontMask
-                    weight:0
-                    size:size];
+    NSFont *font = [NSFont fontWithName:fntName size:size];
     
     if (font == nil) {
-        font = [[NSFontManager sharedFontManager]
-                fontWithFamily:@"Arial"
-                traits:NSUnboldFontMask | NSUnitalicFontMask
-                weight:0
-                size:size];
+        font = [NSFont systemFontOfSize:size];
     }
     return font;
 }
@@ -369,12 +361,10 @@ Data Device::getTextureDataForText(const char * text, const FontDefinition& text
 
 void Device::setKeepScreenOn(bool value)
 {
-    CC_UNUSED_PARAM(value);
 }
 
 void Device::vibrate(float duration)
 {
-    CC_UNUSED_PARAM(duration);
 }
 
 NS_CC_END

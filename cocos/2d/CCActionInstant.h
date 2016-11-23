@@ -41,7 +41,7 @@ NS_CC_BEGIN
 /** @class ActionInstant
 * @brief Instant actions are immediate actions. They don't have a duration like the IntervalAction actions.
 **/
-class CC_DLL ActionInstant : public FiniteTimeAction //<NSCopying>
+class CC_DLL ActionInstant : public FiniteTimeAction
 {
 public:
     //
@@ -276,7 +276,7 @@ private:
 /** @class Place
 * @brief Places the node in a certain position.
 */
-class CC_DLL Place : public ActionInstant //<NSCopying>
+class CC_DLL Place : public ActionInstant
 {
 public:
 
@@ -315,7 +315,7 @@ private:
 /** @class CallFunc
 * @brief Calls a 'callback'.
 */
-class CC_DLL CallFunc : public ActionInstant //<NSCopying>
+class CC_DLL CallFunc : public ActionInstant
 {
 public:
     /** Creates the action with the callback of type std::function<void()>.

@@ -320,7 +320,7 @@ void GLView::handleTouchesBegin(int num, intptr_t ids[], float xs[], float ys[])
             
             CCLOGINFO("x = %f y = %f", touch->getLocationInView().x, touch->getLocationInView().y);
             
-            g_touchIdReorderMap.insert(std::make_pair(id, unusedIndex));
+            g_touchIdReorderMap.emplace(id, unusedIndex);
             touchEvent._touches.push_back(touch);
         }
     }

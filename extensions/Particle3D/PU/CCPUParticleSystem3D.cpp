@@ -1048,6 +1048,8 @@ void PUParticleSystem3D::convertToUnixStylePath( std::string &path )
     for (auto &iter : path){
         if (iter == '\\') iter = '/';
     }
+#else
+    CC_UNUSED_PARAM(path);
 #endif
 }
 
@@ -1307,7 +1309,7 @@ bool PUParticleSystem3D::makeParticleLocal( PUParticle3D* particle )
     return true;
 }
 
-void PUParticleSystem3D::processMotion( PUParticle3D* particle, float timeElapsed, const Vec3 &scl, bool firstParticle )
+void PUParticleSystem3D::processMotion( PUParticle3D* particle, float timeElapsed, const Vec3 &scl, bool /*firstParticle*/ )
 {
     if (particle->isFreezed())
     return;

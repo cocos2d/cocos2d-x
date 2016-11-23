@@ -31,4 +31,26 @@ public:
     virtual std::string title() const override;
 };
 
+class FontNoReplacementTest : public TestCase
+{
+public:
+	static FontNoReplacementTest* create();
+	~FontNoReplacementTest();
+	virtual void onEnter() override;
+	virtual std::string title() const override;
+protected:
+	FontNoReplacementTest();
+
+	bool _replace;
+};
+
+class FontReplacementTest : public FontNoReplacementTest
+{
+public:
+	static FontReplacementTest* create();
+	virtual std::string title() const override;
+protected:
+	FontReplacementTest();
+};
+
 #endif // _FONT_TEST_H_

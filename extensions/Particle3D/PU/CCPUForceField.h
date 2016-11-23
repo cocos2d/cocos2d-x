@@ -47,7 +47,7 @@ public:
         _persistence(1.0f),
         _worldSize(DEFAULT_WORLDSIZE)
     {
-    };
+    }
     virtual ~PUForceFieldCalculationFactory(void){};
 
     /** Generates the force field

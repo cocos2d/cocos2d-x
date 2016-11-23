@@ -67,10 +67,9 @@ bool PointArray::initWithCapacity(ssize_t capacity)
 PointArray* PointArray::clone() const
 {
     vector<Vec2*> *newArray = new (std::nothrow) vector<Vec2*>();
-    vector<Vec2*>::iterator iter;
-    for (iter = _controlPoints->begin(); iter != _controlPoints->end(); ++iter)
+    for (auto& controlPoint : *_controlPoints)
     {
-        newArray->push_back(new Vec2((*iter)->x, (*iter)->y));
+        newArray->push_back(new Vec2(controlPoint->x, controlPoint->y));
     }
     
     PointArray *points = new (std::nothrow) PointArray();
@@ -85,10 +84,9 @@ PointArray::~PointArray()
 {
     CCLOGINFO("deallocing PointArray: %p", this);
 
-    vector<Vec2*>::iterator iter;
-    for (iter = _controlPoints->begin(); iter != _controlPoints->end(); ++iter)
+    for (auto& controlPoint : *_controlPoints)
     {
-        delete *iter;
+        delete controlPoint;
     }
     delete _controlPoints;
 }
@@ -106,9 +104,9 @@ void PointArray::setControlPoints(vector<Vec2*> *controlPoints)
     
     // delete old points
     vector<Vec2*>::iterator iter;
-    for (iter = _controlPoints->begin(); iter != _controlPoints->end(); ++iter)
+    for (auto& controlPoint : *_controlPoints)
     {
-        delete *iter;
+        delete controlPoint;
     }
     delete _controlPoints;
     
@@ -155,9 +153,8 @@ ssize_t PointArray::count() const
 PointArray* PointArray::reverse() const
 {
     vector<Vec2*> *newArray = new (std::nothrow) vector<Vec2*>();
-    vector<Vec2*>::reverse_iterator iter;
     Vec2 *point = nullptr;
-    for (iter = _controlPoints->rbegin(); iter != _controlPoints->rend(); ++iter)
+    for (auto iter = _controlPoints->rbegin(), iterRend = _controlPoints->rend(); iter != iterRend; ++iter)
     {
         point = *iter;
         newArray->push_back(new Vec2(point->x, point->y));

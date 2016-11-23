@@ -102,27 +102,24 @@ private:
         return area.containsPoint(_child->convertToNodeSpace(touch->getLocation()));
     }
 
-    bool onTouchBegan(Touch  *touch, Event  *event)
+    bool onTouchBegan(Touch *touch, Event* /*event*/)
     {
-        CC_UNUSED_PARAM(event);
         const bool hits = touchHits(touch);
         if (hits)
             scaleButtonTo(0.9f);
         return hits;
     }
 
-    void onTouchEnded(Touch  *touch, Event  *event)
+    void onTouchEnded(Touch *touch, Event* /*event*/)
     {
-        CC_UNUSED_PARAM(event);
         const bool hits = touchHits(touch);
         if (hits && _onTriggered)
             _onTriggered();
         scaleButtonTo(1);
     }
 
-    void onTouchCancelled(Touch  *touch, Event  *event)
+    void onTouchCancelled(Touch* /*touch*/, Event* /*event*/)
     {
-        CC_UNUSED_PARAM(event);
         scaleButtonTo(1);
     }
 

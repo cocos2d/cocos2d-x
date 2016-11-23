@@ -29,7 +29,7 @@
 NS_CC_BEGIN
 
 //-----------------------------------------------------------------------
-bool PUOnExpireObserver::observe (PUParticle3D* particle, float timeElapsed)
+bool PUOnExpireObserver::observe (PUParticle3D* particle, float /*timeElapsed*/)
 {
     if (!particle)
         return false;

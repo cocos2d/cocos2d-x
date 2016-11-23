@@ -126,7 +126,7 @@ void Terrain::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, 
     renderer->addCommand(&_customCommand);
 }
 
-void Terrain::onDraw(const Mat4 &transform, uint32_t flags)
+void Terrain::onDraw(const Mat4 &transform, uint32_t /*flags*/)
 {
     auto modelMatrix = getNodeToWorldTransform();
     if(memcmp(&modelMatrix,&_terrainModelMatrix,sizeof(Mat4))!=0)
@@ -161,7 +161,7 @@ void Terrain::onDraw(const Mat4 &transform, uint32_t flags)
         glUniform1i(_alphaIsHasAlphaMapLocation,0);
     }else
     {
-        for(int i =0;i<_maxDetailMapValue;i++)
+        for(int i =0;i<_maxDetailMapValue;++i)
         {
             GL::bindTexture2DN(i,_detailMapTextures[i]->getName());
             glUniform1i(_detailMapLocation[i],i);
@@ -305,7 +305,7 @@ void Terrain::setChunksLOD(const Vec3& cameraPos)
             auto center = aabb.getCenter();
             float dist = Vec2(center.x, center.z).distance(Vec2(cameraPos.x, cameraPos.z));
             _chunkesArray[m][n]->_currentLod = 3;
-            for(int i =0;i<3;i++)
+            for(int i =0;i<3;++i)
             {
                 if(dist<=_lodDistance[i])
                 {
@@ -364,8 +364,8 @@ float Terrain::getHeight(float x, float z, Vec3 * normal) const
             normal->normalize();
             //(*normal) = (1-u)*(1-v)*getNormal(i,j)+ (1-u)*v*getNormal(i,j+1) + u*(1-v)*getNormal(i+1,j)+ u*v*getNormal(i+1,j+1);
         }
-        float reuslt =  (1-u)*(1-v)*getImageHeight(i,j)*getScaleY() + (1-u)*v*getImageHeight(i,j+1)*getScaleY() + u*(1-v)*getImageHeight(i+1,j)*getScaleY() + u*v*getImageHeight(i+1,j+1)*getScaleY();
-        return reuslt;
+        float result = (1-u)*(1-v)*getImageHeight(i,j)*getScaleY() + (1-u)*v*getImageHeight(i,j+1)*getScaleY() + u*(1-v)*getImageHeight(i+1,j)*getScaleY() + u*v*getImageHeight(i+1,j+1)*getScaleY();
+        return result;
     }
 }
 
@@ -398,7 +398,7 @@ void Terrain::loadVertices()
 {
     _maxHeight = -99999;
     _minHeight = 99999;
-    for(int i =0;i<_imageHeight;i++)
+    for(int i =0;i<_imageHeight;++i)
     {
         for(int j =0;j<_imageWidth;j++)
         {
@@ -436,7 +436,7 @@ void Terrain::calculateNormal()
             _indices.push_back (nLocIndex + _imageWidth+1);
         }
     }
-    for (unsigned int i = 0 ; i < _indices.size() ; i += 3) {
+    for (unsigned int i = 0, size = _indices.size(); i < size; i += 3) {
         unsigned int Index0 = _indices[i];
         unsigned int Index1 = _indices[i + 1];
         unsigned int Index2 = _indices[i + 2];
@@ -450,7 +450,7 @@ void Terrain::calculateNormal()
         _vertices[Index2]._normal += Normal;
     }
 
-    for (unsigned int i = 0 ; i < _vertices.size() ; i++) {
+    for (unsigned int i = 0, size = _vertices.size(); i < size; ++i) {
         _vertices[i]._normal.normalize();
     }
     //global indices no need at all
@@ -481,14 +481,14 @@ Terrain::~Terrain()
     CC_SAFE_RELEASE(_lightMap);
     CC_SAFE_RELEASE(_heightMapImage);
     delete _quadRoot;
-    for(int i=0;i<4;i++)
+    for(int i=0;i<4;++i)
     {
         if(_detailMapTextures[i])
         {
             _detailMapTextures[i]->release();
         }
     }
-    for(int i = 0;i<MAX_CHUNKES;i++)
+    for(int i = 0;i<MAX_CHUNKES;++i)
     {
         for(int j = 0;j<MAX_CHUNKES;j++)
         {
@@ -499,12 +499,12 @@ Terrain::~Terrain()
         }
     }
 
-    for(size_t i =0;i<_chunkLodIndicesSet.size();i++)
+    for(size_t i =0, size = _chunkLodIndicesSet.size(); i < size; ++i)
     {
         glDeleteBuffers(1,&(_chunkLodIndicesSet[i]._chunkIndices._indices));
     }
 
-    for(size_t i =0;i<_chunkLodIndicesSkirtSet.size();i++)
+    for(size_t i =0, size = _chunkLodIndicesSkirtSet.size(); i < size; ++i)
     {
         glDeleteBuffers(1,&(_chunkLodIndicesSkirtSet[i]._chunkIndices._indices));
     }
@@ -543,7 +543,7 @@ cocos2d::Vec3 Terrain::getIntersectionPoint(const Ray & ray) const
 
 bool Terrain::getIntersectionPoint(const Ray & ray_, Vec3 & intersectionPoint) const
 {
-	// convert ray from world space to local space
+    // convert ray from world space to local space
     Ray ray(ray_);
     getWorldToNodeTransform().transformPoint(&(ray._origin));
 
@@ -635,7 +635,7 @@ void Terrain::resetHeightMap(const std::string& heightMap)
     _heightMapImage->release();
     _vertices.clear();
     free(_data);
-    for(int i = 0;i<MAX_CHUNKES;i++)
+    for(int i = 0;i<MAX_CHUNKES;++i)
     {
         for(int j = 0;j<MAX_CHUNKES;j++)
         {
@@ -674,7 +674,7 @@ std::vector<float> Terrain::getHeightData() const
 {
     std::vector<float> data;
     data.resize(_imageWidth * _imageHeight);
-    for (int i = 0; i < _imageHeight; i++) {
+    for (int i = 0; i < _imageHeight; ++i) {
         for (int j = 0; j < _imageWidth; j++) {
             int idx = i * _imageWidth + j;
             data[idx] = (_vertices[idx]._position.y);
@@ -730,7 +730,7 @@ Terrain::ChunkIndices Terrain::lookForIndicesLOD(int neighborLod[4], int selfLod
         int test[5];
         memcpy(test,neighborLod,sizeof(int [4]));
         test[4] = selfLod;
-        for(size_t i =0;i<_chunkLodIndicesSet.size();i++)
+        for(size_t i =0, size = _chunkLodIndicesSet.size(); i < size; ++i)
         {
             if(memcmp(test,_chunkLodIndicesSet[i]._relativeLod,sizeof(test))==0)
             {
@@ -766,8 +766,7 @@ Terrain::ChunkIndices Terrain::lookForIndicesLODSkrit(int selfLod, bool * result
     (*result) = false;
     return badResult;
     }
-
-    for(size_t i =0;i<_chunkLodIndicesSkirtSet.size();i++)
+    for(size_t i = 0, size = _chunkLodIndicesSkirtSet.size(); i < size; ++i)
     {
         if(_chunkLodIndicesSkirtSet[i]._selfLod == selfLod)
         {
@@ -819,7 +818,7 @@ void Terrain::cacheUniformAttribLocation()
     _texcordLocation = glGetAttribLocation(this->getGLProgram()->getProgram(),"a_texCoord");
     _normalLocation = glGetAttribLocation(this->getGLProgram()->getProgram(),"a_normal");
     _alphaMapLocation = -1;
-    for(int i =0;i<4;i++)
+    for(int i =0;i<4;++i)
     {
         _detailMapLocation[i] = -1;
         _detailMapSizeLocation[i] = -1;
@@ -832,7 +831,7 @@ void Terrain::cacheUniformAttribLocation()
         _detailMapLocation[0] = glGetUniformLocation(glProgram->getProgram(),"u_texture0");
     }else
     {
-        for(int i =0;i<_maxDetailMapValue;i++)
+        for(int i =0;i<_maxDetailMapValue;++i)
         {
             char str[20];
             sprintf(str,"u_texture%d",i);
@@ -849,7 +848,7 @@ void Terrain::cacheUniformAttribLocation()
 
 bool Terrain::initTextures()
 {
-    for (int i = 0; i < 4; i++)
+    for (int i = 0; i < 4; ++i)
     {
         _detailMapTextures[i] = nullptr;
     }
@@ -883,7 +882,7 @@ bool Terrain::initTextures()
         _alphaMap->setTexParameters(texParam);
         delete image;
 
-        for(int i =0;i<_terrainData._detailMapAmount;i++)
+        for(int i =0;i<_terrainData._detailMapAmount;++i)
         {
             auto textImage = new (std::nothrow)Image();
             textImage->initWithImageFile(_terrainData._detailMaps[i]._detailMapSrc);
@@ -936,7 +935,7 @@ void Terrain::Chunk::finish()
 
     calculateSlope();
 
-    for(int i =0;i<4;i++)
+    for(int i =0;i<4;++i)
     {
         int step = 1<<_currentLod;
         //reserve the indices size, the first part is the core part of the chunk, the second part & third part is for fix crack
@@ -980,7 +979,7 @@ void Terrain::Chunk::bindAndDraw()
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, _chunkIndices._size);
 }
 
-void Terrain::Chunk::generate(int imgWidth, int imageHei, int m, int n, const unsigned char * data)
+void Terrain::Chunk::generate(int imgWidth, int imageHei, int m, int n, const unsigned char * /*data*/)
 {
     _posY = m;
     _posX = n;
@@ -988,7 +987,7 @@ void Terrain::Chunk::generate(int imgWidth, int imageHei, int m, int n, const un
     {
     case CrackFixedType::SKIRT:
         {
-            for(int i=_size.height*m;i<=_size.height*(m+1);i++)
+            for(int i=_size.height*m;i<=_size.height*(m+1);++i)
             {
                 if(i>=imageHei) break;
                 for(int j=_size.width*n;j<=_size.width*(n+1);j++)
@@ -1003,7 +1002,7 @@ void Terrain::Chunk::generate(int imgWidth, int imageHei, int m, int n, const un
             float skirtHeight =  _terrain->_skirtRatio *_terrain->_terrainData._mapScale*8;
             //#1
             _terrain->_skirtVerticesOffset[0] = (int)_originalVertices.size();
-            for(int i =_size.height*m;i<=_size.height*(m+1);i++)
+            for(int i =_size.height*m;i<=_size.height*(m+1);++i)
             {
                 auto v = _terrain->_vertices[i*imgWidth +_size.width*(n+1)];
                 v._position.y -= skirtHeight;
@@ -1021,7 +1020,7 @@ void Terrain::Chunk::generate(int imgWidth, int imageHei, int m, int n, const un
 
             //#3
             _terrain->_skirtVerticesOffset[2] = (int)_originalVertices.size();
-            for(int i =_size.height*m;i<=_size.height*(m+1);i++)
+            for(int i =_size.height*m;i<=_size.height*(m+1);++i)
             {
                 auto v = _terrain->_vertices[i*imgWidth + _size.width*n];
                 v._position.y -= skirtHeight;
@@ -1041,7 +1040,7 @@ void Terrain::Chunk::generate(int imgWidth, int imageHei, int m, int n, const un
         break;
     case CrackFixedType::INCREASE_LOWER:
         {
-            for(int i=_size.height*m;i<=_size.height*(m+1);i++)
+            for(int i=_size.height*m;i<=_size.height*(m+1);++i)
             {
                 if(i>=imageHei) break;
                 for(int j=_size.width*n;j<=_size.width*(n+1);j++)
@@ -1055,7 +1054,7 @@ void Terrain::Chunk::generate(int imgWidth, int imageHei, int m, int n, const un
         break;
     }
     //store triangle:
-    for (int i = 0; i < _size.height; i++)
+    for (int i = 0; i < _size.height; ++i)
     {
         for (int j = 0; j < _size.width; j++)
         {
@@ -1080,7 +1079,7 @@ Terrain::Chunk::Chunk()
     _back = nullptr;
     _front = nullptr;
     _oldLod = -1;
-    for(int i =0;i<4;i++)
+    for(int i =0;i<4;++i)
     {
         _neighborOldLOD[i] = -1;
     }
@@ -1293,7 +1292,7 @@ void Terrain::Chunk::updateIndicesLOD()
 void Terrain::Chunk::calculateAABB()
 {
     std::vector<Vec3>pos;
-    for(size_t i =0;i<_originalVertices.size();i++)
+    for(size_t i = 0, size = _originalVertices.size(); i < size; ++i)
     {
         pos.push_back(_originalVertices[i]._position);
     }
@@ -1304,7 +1303,7 @@ void Terrain::Chunk::calculateSlope()
 {
     //find max slope
     auto lowest = _originalVertices[0]._position;
-    for(size_t i = 0;i<_originalVertices.size();i++)
+    for(size_t i = 0, size = _originalVertices.size(); i < size; ++i)
     {
         if(_originalVertices[i]._position.y< lowest.y)
         {
@@ -1312,7 +1311,7 @@ void Terrain::Chunk::calculateSlope()
         }
     }
     auto highest = _originalVertices[0]._position;
-    for(size_t i = 0;i<_originalVertices.size();i++)
+    for(size_t i = 0, size = _originalVertices.size(); i < size; ++i)
     {
         if(_originalVertices[i]._position.y> highest.y)
         {

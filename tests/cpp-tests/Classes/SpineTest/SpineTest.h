@@ -115,4 +115,82 @@ public:
 	CREATE_FUNC (SpineTestPerformanceLayer);
 };
 
+
+class SpineTestLayerNormalBin: public SpineTestLayer {
+private:
+    spine::SkeletonAnimation* skeletonNode;
+
+public:
+    virtual std::string title() const override
+    {
+        return "Spine Test";
+    }
+    virtual std::string subtitle() const override
+    {
+        return "Normal Spine - Binary file";
+    }
+    virtual bool init () override;
+    virtual void update (float deltaTime) override;
+    //    void animationStateEvent (spine::SkeletonAnimation* node, int trackIndex, spEventType type, spEvent* event, int loopCount);
+
+    CREATE_FUNC (SpineTestLayerNormalBin);
+};
+
+class SpineTestLayerFFDBin: public SpineTestLayer {
+private:
+    spine::SkeletonAnimation* skeletonNode;
+
+public:
+    virtual std::string title() const override
+    {
+        return "Spine Test";
+    }
+    virtual std::string subtitle() const override
+    {
+        return "FFD Spine - Binary File";
+    }
+    virtual bool init () override;
+    virtual void update (float deltaTime) override;
+    //    void animationStateEvent (spine::SkeletonAnimation* node, int trackIndex, spEventType type, spEvent* event, int loopCount);
+
+    CREATE_FUNC (SpineTestLayerFFDBin);
+};
+
+class SpineTestLayerRaporBin: public SpineTestLayer
+{
+public:
+    virtual std::string title() const override
+    {
+        return "Spine Test";
+    }
+    virtual std::string subtitle() const override
+    {
+        return "Raptor Test - Binary File";
+    }
+    virtual bool init () override;
+
+    CREATE_FUNC (SpineTestLayerRaporBin);
+
+private:
+    spine::SkeletonAnimation* skeletonNode;
+};
+
+class SpineTestPerformanceLayerBin: public SpineTestLayer
+{
+public:
+    virtual std::string title() const override
+    {
+        return "Spine Test";
+    }
+    virtual std::string subtitle() const override
+    {
+        return "Performance Test for Spine - Binary File";
+    }
+    virtual bool init () override;
+    virtual void update (float deltaTime) override;
+    //    void animationStateEvent (spine::SkeletonAnimation* node, int trackIndex, spEventType type, spEvent* event, int loopCount);
+
+    CREATE_FUNC (SpineTestPerformanceLayerBin);
+};
+
 #endif // _EXAMPLELAYER_H_

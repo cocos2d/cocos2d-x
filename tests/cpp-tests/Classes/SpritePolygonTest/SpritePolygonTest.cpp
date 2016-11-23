@@ -321,7 +321,7 @@ void SpritePolygonTestSlider::updateLabel(const cocos2d::Sprite *sp, const Polyg
 {
     Label *label = (Label*)(sp->getChildByName(sp->getName()));
     auto filename = sp->getName();
-    auto size = pinfo.rect.size/Director::getInstance()->getContentScaleFactor();
+    auto size = pinfo.getRect().size/Director::getInstance()->getContentScaleFactor();
     label->setString(filename+"\nVerts: "+Value((int)pinfo.getVertCount()).asString()+ "\nPixels: "+Value((int)(pinfo.getArea()/(size.width*size.height)*100)).asString()+"%");
 }
 

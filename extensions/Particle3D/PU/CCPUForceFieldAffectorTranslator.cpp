@@ -262,7 +262,7 @@ bool PUForceFieldAffectorTranslator::translateChildProperty( PUScriptCompiler* c
     return false;
 }
 
-bool PUForceFieldAffectorTranslator::translateChildObject( PUScriptCompiler* compiler, PUAbstractNode *node )
+bool PUForceFieldAffectorTranslator::translateChildObject( PUScriptCompiler* /*compiler*/, PUAbstractNode* /*node*/ )
 {
     // No objects
     return false;

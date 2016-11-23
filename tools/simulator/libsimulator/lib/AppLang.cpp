@@ -8,9 +8,9 @@
 USING_NS_CC;
 
 AppLang::AppLang()
-    : _hasInit(false)
+    : _hasInit(false),
+    _localizationFileName("lang")
 {
-    _localizationFileName = "lang";
 }
 
 void AppLang::readLocalizationFile()

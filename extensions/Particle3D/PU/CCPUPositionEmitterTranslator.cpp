@@ -70,7 +70,7 @@ bool PUPositionEmitterTranslator::translateChildProperty( PUScriptCompiler* comp
     return false;
 }
 
-bool PUPositionEmitterTranslator::translateChildObject( PUScriptCompiler* compiler, PUAbstractNode *node )
+bool PUPositionEmitterTranslator::translateChildObject( PUScriptCompiler* /*compiler*/, PUAbstractNode* /*node*/ )
 {
     // No objects
     return false;

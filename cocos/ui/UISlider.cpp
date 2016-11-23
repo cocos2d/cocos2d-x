@@ -456,7 +456,7 @@ void Slider::setPercent(int percent)
     }
 }
     
-bool Slider::hitTest(const cocos2d::Vec2 &pt, const Camera *camera, Vec3 *p) const
+bool Slider::hitTest(const cocos2d::Vec2 &pt, const Camera *camera, Vec3* /*p*/) const
 {
     Rect rect;
     rect.size = _slidBallNormalRenderer->getContentSize();
@@ -479,7 +479,7 @@ bool Slider::onTouchBegan(Touch *touch, Event *unusedEvent)
     return pass;
 }
 
-void Slider::onTouchMoved(Touch *touch, Event *unusedEvent)
+void Slider::onTouchMoved(Touch *touch, Event* /*unusedEvent*/)
 {
     _touchMovePosition = touch->getLocation();
     setPercent(getPercentWithBallPos(_touchMovePosition));
@@ -660,13 +660,13 @@ void Slider::onPressStateChangedToNormal()
     _slidBallPressedRenderer->setVisible(false);
     _slidBallDisabledRenderer->setVisible(false);
     
-    _slidBallNormalRenderer->setGLProgramState(this->getNormalGLProgramState());
+    _slidBallNormalRenderer->setGLProgramState(this->getNormalGLProgramState(_slidBallNormalRenderer->getTexture()));
     _slidBallNormalRenderer->setScale(_sliderBallNormalTextureScaleX, _sliderBallNormalTextureScaleY);
 }
 
 void Slider::onPressStateChangedToPressed()
 {
-    _slidBallNormalRenderer->setGLProgramState(this->getNormalGLProgramState());
+    _slidBallNormalRenderer->setGLProgramState(this->getNormalGLProgramState(_slidBallNormalRenderer->getTexture()));
 
     
     if (!_isSliderBallPressedTextureLoaded)
@@ -686,7 +686,7 @@ void Slider::onPressStateChangedToDisabled()
 {
     if (!_isSliderBallDisabledTexturedLoaded)
     {
-        _slidBallNormalRenderer->setGLProgramState(this->getGrayGLProgramState());
+        _slidBallNormalRenderer->setGLProgramState(this->getGrayGLProgramState(_slidBallNormalRenderer->getTexture()));
         _slidBallNormalRenderer->setVisible(true);
     }
     else

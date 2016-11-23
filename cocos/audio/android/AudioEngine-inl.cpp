@@ -49,7 +49,8 @@
 #include "audio/android/IAudioPlayer.h"
 #include "audio/android/ICallerThreadUtils.h"
 #include "audio/android/AudioPlayerProvider.h"
-#include "audio/android/cutils/log.h" 
+#include "audio/android/cutils/log.h"
+#include "audio/android/UrlAudioPlayer.h"
 
 using namespace cocos2d;
 using namespace cocos2d::experimental;
@@ -175,24 +176,53 @@ bool AudioEngineImpl::init()
 
         _audioPlayerProvider = new AudioPlayerProvider(_engineEngine, _outputMixObject, getDeviceSampleRate(), getDeviceAudioBufferSizeInFrames(), fdGetter, &__callerThreadUtils);
 
-        _onPauseListener = Director::getInstance()->getEventDispatcher()->addCustomEventListener(EVENT_COME_TO_BACKGROUND, [this](EventCustom*){
-            if (_audioPlayerProvider != nullptr)
-            {
-                _audioPlayerProvider->pause();
-            }
-        });
+        _onPauseListener = Director::getInstance()->getEventDispatcher()->addCustomEventListener(EVENT_COME_TO_BACKGROUND, CC_CALLBACK_1(AudioEngineImpl::onEnterBackground, this));
 
-        _onResumeListener = Director::getInstance()->getEventDispatcher()->addCustomEventListener(EVENT_COME_TO_FOREGROUND, [this](EventCustom*){
-            if (_audioPlayerProvider != nullptr)
-            {
-                _audioPlayerProvider->resume();
-            }
-        });
+        _onResumeListener = Director::getInstance()->getEventDispatcher()->addCustomEventListener(EVENT_COME_TO_FOREGROUND, CC_CALLBACK_1(AudioEngineImpl::onEnterForeground, this));
 
         ret = true;
     }while (false);
 
     return ret;
+}
+
+void AudioEngineImpl::onEnterBackground(EventCustom* event)
+{
+    // _audioPlayerProvider->pause() pauses AudioMixer and PcmAudioService,
+    // but UrlAudioPlayers could not be paused.
+    if (_audioPlayerProvider != nullptr)
+    {
+        _audioPlayerProvider->pause();
+    }
+
+    // pause UrlAudioPlayers which are playing.
+    for (auto&& e : _audioPlayers)
+    {
+        auto player = e.second;
+        if (dynamic_cast<UrlAudioPlayer*>(player) != nullptr
+            && player->getState() == IAudioPlayer::State::PLAYING)
+        {
+            _urlAudioPlayersNeedResume.push_back(player);
+            player->pause();
+        }
+    }
+}
+
+void AudioEngineImpl::onEnterForeground(EventCustom* event)
+{
+    // _audioPlayerProvider->resume() resumes AudioMixer and PcmAudioService,
+    // but UrlAudioPlayers could not be resumed.
+    if (_audioPlayerProvider != nullptr)
+    {
+        _audioPlayerProvider->resume();
+    }
+
+    // resume UrlAudioPlayers
+    for (auto&& player : _urlAudioPlayersNeedResume)
+    {
+        player->resume();
+    }
+    _urlAudioPlayersNeedResume.clear();
 }
 
 int AudioEngineImpl::play2d(const std::string &filePath ,bool loop ,float volume)

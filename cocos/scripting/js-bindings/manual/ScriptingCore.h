@@ -39,6 +39,7 @@
 
 #include <assert.h>
 #include <memory>
+#include <chrono>
 
 #define ENGINE_VERSION "Cocos2d-JS v3.13"
 
@@ -89,6 +90,8 @@ private:
 
     bool _callFromScript;
     ScriptingCore();
+
+	std::chrono::steady_clock::time_point _engineStartTime;
 public:
     ~ScriptingCore();
 
@@ -349,6 +352,11 @@ public:
      * Clean all script objects
      */
     void cleanAllScript();
+
+	/**@~english
+	* Gets the time that the ScriptingCore was initalized
+	*/
+	std::chrono::steady_clock::time_point getEngineStartTime() const;
     
     /**@~english
      * Initialize everything, including the js context, js global object etc.

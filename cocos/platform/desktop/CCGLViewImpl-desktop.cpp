@@ -113,11 +113,23 @@ public:
         }
     }
 
+    static void onGLFWWindowFocusCallback(GLFWwindow* window, int focused)
+    {
+        if (_view)
+        {
+            _view->onGLFWWindowFocusCallback(window, focused);
+        }
+    }
+
 private:
     static GLViewImpl* _view;
 };
 
 GLViewImpl* GLFWEventHandler::_view = nullptr;
+
+const std::string GLViewImpl::EVENT_WINDOW_RESIZED = "glview_window_resized";
+const std::string GLViewImpl::EVENT_WINDOW_FOCUSED = "glview_window_focused";
+const std::string GLViewImpl::EVENT_WINDOW_UNFOCUSED = "glview_window_unfocused";
 
 ////////////////////////////////////////////////////
 
@@ -411,6 +423,7 @@ bool GLViewImpl::initWithRect(const std::string& viewName, Rect rect, float fram
     glfwSetFramebufferSizeCallback(_mainWindow, GLFWEventHandler::onGLFWframebuffersize);
     glfwSetWindowSizeCallback(_mainWindow, GLFWEventHandler::onGLFWWindowSizeFunCallback);
     glfwSetWindowIconifyCallback(_mainWindow, GLFWEventHandler::onGLFWWindowIconifyCallback);
+    glfwSetWindowFocusCallback(_mainWindow, GLFWEventHandler::onGLFWWindowFocusCallback);
 
     setFrameSize(rect.size.width, rect.size.height);
 
@@ -551,6 +564,80 @@ float GLViewImpl::getFrameZoomFactor() const
     return _frameZoomFactor;
 }
 
+bool GLViewImpl::isFullscreen() const {
+    return (_monitor != nullptr);
+}
+
+void GLViewImpl::setFullscreen() {
+    if (this->isFullscreen()) {
+        return;
+    }
+    _monitor = glfwGetPrimaryMonitor();
+    if (nullptr == _monitor) {
+        return;
+    }
+    const GLFWvidmode* videoMode = glfwGetVideoMode(_monitor);
+    this->setFullscreen(*videoMode, _monitor);
+}
+
+void GLViewImpl::setFullscreen(int monitorIndex) {
+    // set fullscreen on specific monitor
+    int count = 0;
+    GLFWmonitor** monitors = glfwGetMonitors(&count);
+    if (monitorIndex < 0 || monitorIndex >= count) {
+        return;
+    }
+    GLFWmonitor* monitor = monitors[monitorIndex];
+    if (nullptr == monitor) {
+        return;
+    }
+    const GLFWvidmode* videoMode = glfwGetVideoMode(monitor);
+    this->setFullscreen(*videoMode, monitor);
+}
+
+void GLViewImpl::setFullscreen(const GLFWvidmode &videoMode, GLFWmonitor *monitor) {
+    _monitor = monitor;
+    glfwSetWindowMonitor(_mainWindow, _monitor, 0, 0, videoMode.width, videoMode.height, videoMode.refreshRate);
+}
+
+void GLViewImpl::setWindowed(int width, int height) {
+    if (!this->isFullscreen()) {
+        this->setFrameSize(width, height);
+    } else {
+        const GLFWvidmode* videoMode = glfwGetVideoMode(_monitor);
+        int xpos = 0, ypos = 0;
+        glfwGetMonitorPos(_monitor, &xpos, &ypos);
+        xpos += (videoMode->width - width) * 0.5;
+        ypos += (videoMode->height - height) * 0.5;
+        _monitor = nullptr;
+        glfwSetWindowMonitor(_mainWindow, nullptr, xpos, ypos, width, height, GLFW_DONT_CARE);
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+        // on mac window will sometimes lose title when windowed
+        glfwSetWindowTitle(_mainWindow, _viewName.c_str());
+#endif
+    }
+}
+
+int GLViewImpl::getMonitorCount() const {
+    int count = 0;
+    glfwGetMonitors(&count);
+    return count;
+}
+
+Size GLViewImpl::getMonitorSize() const {
+    GLFWmonitor* monitor = _monitor;
+    if (nullptr == monitor) {
+        GLFWwindow* window = this->getWindow();
+        monitor = glfwGetWindowMonitor(window);
+    }
+    if (nullptr != monitor) {
+        const GLFWvidmode* videoMode = glfwGetVideoMode(monitor);
+        Size size = Size(videoMode->width, videoMode->height);
+        return size;
+    }
+    return Size::ZERO;
+}
+
 void GLViewImpl::updateFrameSize()
 {
     if (_screenSize.width > 0 && _screenSize.height > 0)
@@ -635,7 +722,7 @@ void GLViewImpl::onGLFWError(int errorID, const char* errorDesc)
     CCLOGERROR("%s", _glfwError.c_str());
 }
 
-void GLViewImpl::onGLFWMouseCallBack(GLFWwindow* window, int button, int action, int modify)
+void GLViewImpl::onGLFWMouseCallBack(GLFWwindow* /*window*/, int button, int action, int /*modify*/)
 {
     if(GLFW_MOUSE_BUTTON_LEFT == button)
     {
@@ -724,7 +811,7 @@ void GLViewImpl::onGLFWMouseMoveCallBack(GLFWwindow* window, double x, double y)
     Director::getInstance()->getEventDispatcher()->dispatchEvent(&event);
 }
 
-void GLViewImpl::onGLFWMouseScrollCallback(GLFWwindow* window, double x, double y)
+void GLViewImpl::onGLFWMouseScrollCallback(GLFWwindow* /*window*/, double x, double y)
 {
     EventMouse event(EventMouse::MouseEventType::MOUSE_SCROLL);
     //Because OpenGL and cocos2d-x uses different Y axis, we need to convert the coordinate here
@@ -735,7 +822,7 @@ void GLViewImpl::onGLFWMouseScrollCallback(GLFWwindow* window, double x, double 
     Director::getInstance()->getEventDispatcher()->dispatchEvent(&event);
 }
 
-void GLViewImpl::onGLFWKeyCallback(GLFWwindow *window, int key, int scancode, int action, int mods)
+void GLViewImpl::onGLFWKeyCallback(GLFWwindow* /*window*/, int key, int /*scancode*/, int action, int /*mods*/)
 {
     if (GLFW_REPEAT != action)
     {
@@ -767,7 +854,7 @@ void GLViewImpl::onGLFWKeyCallback(GLFWwindow *window, int key, int scancode, in
     }
 }
 
-void GLViewImpl::onGLFWCharCallback(GLFWwindow *window, unsigned int character)
+void GLViewImpl::onGLFWCharCallback(GLFWwindow* /*window*/, unsigned int character)
 {
     char16_t wcharString[2] = { (char16_t) character, 0 };
     std::string utf8String;
@@ -792,7 +879,7 @@ void GLViewImpl::onGLFWCharCallback(GLFWwindow *window, unsigned int character)
     }
 }
 
-void GLViewImpl::onGLFWWindowPosCallback(GLFWwindow *windows, int x, int y)
+void GLViewImpl::onGLFWWindowPosCallback(GLFWwindow* /*window*/, int /*x*/, int /*y*/)
 {
     Director::getInstance()->setViewport();
 }
@@ -826,7 +913,7 @@ void GLViewImpl::onGLFWframebuffersize(GLFWwindow* window, int w, int h)
     }
 }
 
-void GLViewImpl::onGLFWWindowSizeFunCallback(GLFWwindow *window, int width, int height)
+void GLViewImpl::onGLFWWindowSizeFunCallback(GLFWwindow* /*window*/, int width, int height)
 {
     if (width && height && _resolutionPolicy != ResolutionPolicy::UNKNOWN)
     {
@@ -838,10 +925,11 @@ void GLViewImpl::onGLFWWindowSizeFunCallback(GLFWwindow *window, int width, int 
         setFrameSize(frameWidth, frameHeight);
         setDesignResolutionSize(baseDesignSize.width, baseDesignSize.height, baseResolutionPolicy);
         Director::getInstance()->setViewport();
+        Director::getInstance()->getEventDispatcher()->dispatchCustomEvent(GLViewImpl::EVENT_WINDOW_RESIZED, nullptr);
     }
 }
 
-void GLViewImpl::onGLFWWindowIconifyCallback(GLFWwindow* window, int iconified)
+void GLViewImpl::onGLFWWindowIconifyCallback(GLFWwindow* /*window*/, int iconified)
 {
     if (iconified == GL_TRUE)
     {
@@ -850,6 +938,18 @@ void GLViewImpl::onGLFWWindowIconifyCallback(GLFWwindow* window, int iconified)
     else
     {
         Application::getInstance()->applicationWillEnterForeground();
+    }
+}
+
+void GLViewImpl::onGLFWWindowFocusCallback(GLFWwindow* /*window*/, int focused)
+{
+    if (focused == GL_TRUE)
+    {
+        Director::getInstance()->getEventDispatcher()->dispatchCustomEvent(GLViewImpl::EVENT_WINDOW_FOCUSED, nullptr);
+    }
+    else
+    {
+        Director::getInstance()->getEventDispatcher()->dispatchCustomEvent(GLViewImpl::EVENT_WINDOW_UNFOCUSED, nullptr);
     }
 }
 
