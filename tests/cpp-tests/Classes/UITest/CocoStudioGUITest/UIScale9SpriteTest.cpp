@@ -664,14 +664,10 @@ bool UIS9FrameNameSpriteSheetRotatedSetCapInsetLater::init()
 
         auto blocks_scaled_with_insets = ui::Scale9Sprite::createWithSpriteFrameName("blocks9r.png");
 
-//        blocks_scaled_with_insets->setInsetLeft(16);
-//        blocks_scaled_with_insets->setInsetRight(32);
-//        blocks_scaled_with_insets->setInsetTop(10);
-//        blocks_scaled_with_insets->setInsetBottom(20);
+        blocks_scaled_with_insets->setInsetLeft(32);
+        blocks_scaled_with_insets->setInsetRight(32);
 
-        blocks_scaled_with_insets->setCapInsets(Rect(16, 16, 64, 64));
-
-//        blocks_scaled_with_insets->setPreferredSize(Size(32*5.5f, 32*4));
+        blocks_scaled_with_insets->setPreferredSize(Size(32*5.5f, 32*4));
         blocks_scaled_with_insets->setPosition(Vec2(x, y));
 
         this->addChild(blocks_scaled_with_insets);

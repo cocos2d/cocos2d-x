@@ -453,11 +453,17 @@ void Sprite::updatePoly()
         // "O"riginal rect
         const float oox = _rect.origin.x;
         const float ooy = _rect.origin.y;
-        float osw = _rect.size.width;
-        float osh = _rect.size.height;
+        const float osw = _rect.size.width;
+        const float osh = _rect.size.height;
         if (_rectRotated) {
             std::swap(cx1, cy1);
             std::swap(cx2, cy2);
+
+            // when the texture is rotated, the the centerRect starts from the "bottom" (left)
+            // but it should start from the stop, so invert it
+            cy2 = 1 - cy2;
+            cy1 = 1 - cy1;
+            std::swap(cy1, cy2);
         }
 
         //
@@ -491,18 +497,20 @@ void Sprite::updatePoly()
             Rect(u2, v2,    w2, h2),   // top-right
         };
 
+        // swap width and height because setTextureCoords()
+        // will expects the hight and width to be swapped
         const Rect texRects_rotated[9] = {
-            Rect(u0, v2,    w0, h0),        // top-left
-            Rect(u0, v1,    w1, h0),        // left
-            Rect(u0, v0,    w2, h0),        // bottom-left
+            Rect(u0, v2,    h2, w0),        // top-left
+            Rect(u0, v1,    h1, w0),        // left
+            Rect(u0, v0,    h0, w0),        // bottom-left
 
-            Rect(u1, v2,    w0, h1),        // top
-            Rect(u1, v1,    w1, h1),        // center
-            Rect(u1, v0,    w2, h1),        // bottom
+            Rect(u1, v2,    h2, w1),        // top
+            Rect(u1, v1,    h1, w1),        // center
+            Rect(u1, v0,    h0, w1),        // bottom
 
-            Rect(u2, v2,    w0, h2),        // top-right
-            Rect(u2, v1,    w1, h2),        // right
-            Rect(u2, v0,    w2, h2),        // bottom-right
+            Rect(u2, v2,    h2, w2),        // top-right
+            Rect(u2, v1,    h1, w2),        // right
+            Rect(u2, v0,    h0, w2),        // bottom-right
         };
 
         const Rect* texRects = _rectRotated ? texRects_rotated : texRects_normal;
@@ -510,6 +518,14 @@ void Sprite::updatePoly()
         //
         // vertex Data.
         //
+
+        // reset center rect since it is altered when when the texture
+        // is rotated
+        cx1 = _centerRectNormalized.origin.x;
+        cy1 = _centerRectNormalized.origin.y;
+        cx2 = _centerRectNormalized.origin.x + _centerRectNormalized.size.width;
+        cy2 = _centerRectNormalized.origin.y + _centerRectNormalized.size.height;
+
 
         // sizes
         float x0_s = osw * cx1;
@@ -610,6 +626,7 @@ void Sprite::setCenterRect(const cocos2d::Rect &rectInPoints)
     if (!_originalContentSize.equals(Size::ZERO))
     {
         Rect rect = rectInPoints;
+
         const float x = rect.origin.x / _rect.size.width;
         const float y = rect.origin.y / _rect.size.height;
         const float w = rect.size.width / _rect.size.width;
@@ -657,37 +674,41 @@ void Sprite::setTextureCoords(const Rect& rectInPoints, V3F_C4B_T2F_Quad* outQua
         return;
     }
 
-    auto rectInPixels = CC_RECT_POINTS_TO_PIXELS(rectInPoints);
+    const auto rectInPixels = CC_RECT_POINTS_TO_PIXELS(rectInPoints);
 
-    float atlasWidth = (float)tex->getPixelsWide();
-    float atlasHeight = (float)tex->getPixelsHigh();
+    const float atlasWidth = (float)tex->getPixelsWide();
+    const float atlasHeight = (float)tex->getPixelsHigh();
 
-    float left, right, top, bottom;
+    float rw = rectInPixels.size.width;
+    float rh = rectInPixels.size.height;
+
+    if (_rectRotated)
+        std::swap(rw, rh);
+
+#if CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
+    float left    = (2*rectInPixels.origin.x+1) / (2*atlasWidth);
+    float right   = left+(rw*2-2) / (2*atlasWidth);
+    float top     = (2*rectInPixels.origin.y+1) / (2*atlasHeight);
+    float bottom  = top+(rh*2-2) / (2*atlasHeight);
+#else
+    float left    = rectInPixels.origin.x / atlasWidth;
+    float right   = (rectInPixels.origin.x + rw) / atlasWidth;
+    float top     = rectInPixels.origin.y / atlasHeight;
+    float bottom  = (rectInPixels.origin.y + rh) / atlasHeight;
+#endif // CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
+
+    if ((_flippedX && !_rectRotated) || (_flippedY && _rectRotated))
+    {
+        std::swap(left, right);
+    }
+
+    if ((_flippedY && !_rectRotated) || (_flippedX && _rectRotated))
+    {
+        std::swap(top, bottom);
+    }
 
     if (_rectRotated)
     {
-#if CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
-        left    = (2*rectInPixels.origin.x+1) / (2*atlasWidth);
-        right   = left+(rectInPixels.size.height*2-2) / (2*atlasWidth);
-        top     = (2*rectInPixels.origin.y+1) / (2*atlasHeight);
-        bottom  = top+(rectInPixels.size.width*2-2) / (2*atlasHeight);
-#else
-        left    = rectInPixels.origin.x / atlasWidth;
-        right   = (rectInPixels.origin.x + rectInPixels.size.height) / atlasWidth;
-        top     = rectInPixels.origin.y / atlasHeight;
-        bottom  = (rectInPixels.origin.y + rectInPixels.size.width) / atlasHeight;
-#endif // CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
-
-        if (_flippedX)
-        {
-            std::swap(top, bottom);
-        }
-
-        if (_flippedY)
-        {
-            std::swap(left, right);
-        }
-
         outQuad->bl.texCoords.u = left;
         outQuad->bl.texCoords.v = top;
         outQuad->br.texCoords.u = left;
@@ -699,28 +720,6 @@ void Sprite::setTextureCoords(const Rect& rectInPoints, V3F_C4B_T2F_Quad* outQua
     }
     else
     {
-#if CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
-        left    = (2*rectInPixels.origin.x+1) / (2*atlasWidth);
-        right   = left + (rectInPixels.size.width*2-2) / (2*atlasWidth);
-        top     = (2*rectInPixels.origin.y+1) / (2*atlasHeight);
-        bottom  = top + (rectInPixels.size.height*2-2) / (2*atlasHeight);
-#else
-        left    = rectInPixels.origin.x / atlasWidth;
-        right   = (rectInPixels.origin.x + rectInPixels.size.width) / atlasWidth;
-        top     = rectInPixels.origin.y / atlasHeight;
-        bottom  = (rectInPixels.origin.y + rectInPixels.size.height) / atlasHeight;
-#endif // ! CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
-
-        if(_flippedX)
-        {
-            std::swap(left, right);
-        }
-
-        if(_flippedY)
-        {
-            std::swap(top, bottom);
-        }
-
         outQuad->bl.texCoords.u = left;
         outQuad->bl.texCoords.v = bottom;
         outQuad->br.texCoords.u = right;
@@ -734,8 +733,6 @@ void Sprite::setTextureCoords(const Rect& rectInPoints, V3F_C4B_T2F_Quad* outQua
 
 void Sprite::setVertexCoords(const Rect& rect, V3F_C4B_T2F_Quad* outQuad)
 {
-    // container size is the Size that contains the "unsliced" sprite
-
     float relativeOffsetX = _unflippedOffsetPositionFromCenter.x;
     float relativeOffsetY = _unflippedOffsetPositionFromCenter.y;
 
@@ -1246,13 +1243,10 @@ void Sprite::setFlippedX(bool flippedX)
     {
         _flippedX = flippedX;
 
-        for (ssize_t i = 0; i < _polyInfo.triangles.vertCount; i++) {
-            auto& v = _polyInfo.triangles.verts[i].vertices;
-            v.x = _contentSize.width - v.x;
-        }
-
-        if (_textureAtlas) {
+        if (_batchNode) {
             setDirty(true);
+        } else {
+            updatePoly();
         }
     }
 }
@@ -1268,13 +1262,10 @@ void Sprite::setFlippedY(bool flippedY)
     {
         _flippedY = flippedY;
 
-        for (ssize_t i = 0; i < _polyInfo.triangles.vertCount; i++) {
-            auto& v = _polyInfo.triangles.verts[i].vertices;
-            v.y = _contentSize.height - v.y;
-        }
-
-        if (_textureAtlas) {
+        if (_batchNode) {
             setDirty(true);
+        } else {
+            updatePoly();
         }
     }
 }
