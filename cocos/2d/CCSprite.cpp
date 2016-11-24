@@ -482,22 +482,22 @@ void Sprite::updatePoly()
         //    u0   u1    u2
         //
         //
-        //  and when the texture is roated, it will get transformed to:
+        //  and when the texture is rotated, it will get transformed.
         //  not only the rects have a different position, but also u,v
         //  points to the bottom-left and not top-right of the texture
         //  so some swaping/origin/reordering needs to be done in order
         //  to support rotated slice-9 correctly
         //
-        //        w0      w1   w2
+        //       w0    w1     w2
         // v2 +------+----+--------+
         //    |      |    |        |
-        //    |   0  |  3 |    6   |
+        //    |   0  |  3 |    6   | h2
         // v1 +------+----+--------+
         //    |      |    |        |
-        //    |   1  |  4 |    7   |
+        //    |   1  |  4 |    7   | h1
         //    |      |    |        |
         // v0 +------+----+--------+
-        //    |   2  |  5 |    8   |
+        //    |   2  |  5 |    8   | h0
         //    +------+----+--------+
         //    u0      u1     u2
 
@@ -518,8 +518,8 @@ void Sprite::updatePoly()
             std::swap(cx1, cy1);
             std::swap(cx2, cy2);
 
-            // when the texture is rotated, the the centerRect starts from the "bottom" (left)
-            // but it should start from the top, so invert it
+            // when the texture is rotated, then the centerRect starts from the "bottom" (left)
+            // but when it is not rotated, it starts from the top, so invert it
             cy2 = 1 - cy2;
             cy1 = 1 - cy1;
             std::swap(cy1, cy2);
@@ -594,10 +594,8 @@ void Sprite::updatePoly()
         float y1_s = osh * (cy2-cy1) * _strechFactor.y;
         float y2_s = osh * (1-cy2);
 
-        // It is easier to call "updateXY", but it will be slower.
-        // so the flipping is calculated here at the cost of adding
-        // just a little bit more of complexity.
 
+        // is it flipped?
         // swap sizes to calculate offset correctly
         if (_flippedX)
             std::swap(x0_s, x2_s);
