@@ -235,7 +235,7 @@ bool Sprite::initWithSpriteFrame(SpriteFrame *spriteFrame)
         return false;
     }
 
-    bool bRet = initWithTexture(spriteFrame->getTexture(), spriteFrame->getRect());
+    bool bRet = initWithTexture(spriteFrame->getTexture(), spriteFrame->getRect(), spriteFrame->isRotated());
     setSpriteFrame(spriteFrame);
 
     return bRet;
@@ -511,8 +511,8 @@ void Sprite::updatePoly()
         // "O"riginal rect
         const float oox = _rect.origin.x;
         const float ooy = _rect.origin.y;
-        const float osw = _rect.size.width;
-        const float osh = _rect.size.height;
+        float osw = _rect.size.width;
+        float osh = _rect.size.height;
 
         if (_rectRotated) {
             std::swap(cx1, cy1);
@@ -523,6 +523,7 @@ void Sprite::updatePoly()
             cy2 = 1 - cy2;
             cy1 = 1 - cy1;
             std::swap(cy1, cy2);
+            std::swap(osw, osh);
         }
 
         //
@@ -584,7 +585,8 @@ void Sprite::updatePoly()
         cy1 = _centerRectNormalized.origin.y;
         cx2 = _centerRectNormalized.origin.x + _centerRectNormalized.size.width;
         cy2 = _centerRectNormalized.origin.y + _centerRectNormalized.size.height;
-
+        if (_rectRotated)
+            std::swap(osw, osh);
 
         // sizes
         float x0_s = osw * cx1;
