@@ -1740,6 +1740,7 @@ const Mat4& Node::getNodeToParentTransform() const
             // FIXME:: Although this is faster than multiplying a vec4 * mat4
             _transform.m[12] += _transform.m[0] * -_anchorPointInPoints.x + _transform.m[4] * -_anchorPointInPoints.y;
             _transform.m[13] += _transform.m[1] * -_anchorPointInPoints.x + _transform.m[5] * -_anchorPointInPoints.y;
+            _transform.m[14] += _transform.m[2] * -_anchorPointInPoints.x + _transform.m[6] * -_anchorPointInPoints.y;
         }
     }
 
