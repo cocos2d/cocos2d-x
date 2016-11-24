@@ -58,6 +58,11 @@ macro (SetCompilerOptions)
 	    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
 	  endif()
 	endif(MSVC)
+	
+	if(CLANG AND ANDROID AND ANDROID_ARM_MODE STREQUAL thumb AND ANDROID_ABI STREQUAL armeabi)
+      string(REPLACE "-mthumb" "-marm" CMAKE_C_FLAGS ${CMAKE_C_FLAGS})
+      string(REPLACE "-mthumb" "-marm" CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS})
+    endif()
 
 	# Some macro definitions
 	if(WINDOWS)

@@ -15,10 +15,28 @@ if(WINDOWS)
 
 ELSEIF(ANDROID)
     set(COCOS_AUDIO_PLATFORM_SRC
-        audio/android/AudioEngine-inl.cpp
-        audio/android/ccdandroidUtils.cpp
-        audio/android/cddSimpleAudioEngine.cpp
-        audio/android/jni/cddandroidAndroidJavaEngine.cpp
+		audio/android/cddSimpleAudioEngine.cpp
+		audio/android/ccdandroidUtils.cpp
+		audio/android/AudioEngine-inl.cpp
+		audio/android/CCThreadPool.cpp
+		audio/android/AssetFd.cpp
+		audio/android/AudioDecoder.cpp
+		audio/android/AudioPlayerProvider.cpp
+		audio/android/AudioResampler.cpp
+		audio/android/AudioResamplerCubic.cpp
+		audio/android/PcmBufferProvider.cpp
+		audio/android/PcmAudioPlayer.cpp
+		audio/android/UrlAudioPlayer.cpp
+		audio/android/PcmData.cpp
+		audio/android/AudioMixerController.cpp
+		audio/android/AudioMixer.cpp
+		audio/android/PcmAudioService.cpp
+		audio/android/Track.cpp
+		audio/android/audio_utils/format.c
+		audio/android/audio_utils/minifloat.cpp
+		audio/android/audio_utils/primitives.c
+		audio/android/utils/Utils.cpp
+		audio/android/jni/cddandroidAndroidJavaEngine.cpp
     )
 
 elseif(LINUX)

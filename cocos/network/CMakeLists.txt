@@ -11,19 +11,20 @@ else()
 endif()
 
 if(ANDROID)
-   set(COCOS_NETWORK_PLATFORM_SRC
-        network/CCDownloader-android.cpp
-        )
-endif()
-
-if(EMSCRIPTEN)
+  set(COCOS_NETWORK_SRC
+    network/HttpClient-android.cpp
+    network/SocketIO.cpp
+    network/WebSocket.cpp
+    network/CCDownloader.cpp
+    network/CCDownloader-android.cpp
+  )
+elseif(EMSCRIPTEN)
   set(COCOS_NETWORK_SRC
     network/HttpClient-emcc.cpp
     network/WebSocket-emcc.cpp
   )
 else()
   set(COCOS_NETWORK_SRC
-    ${COCOS_NETWORK_PLATFORM_SRC}
     network/HttpClient.cpp
     network/SocketIO.cpp
     network/WebSocket.cpp
@@ -32,11 +33,14 @@ else()
   )
 endif()
 
-
 if(MSVC)
   set(COCOS_NETWORK_LINK 
     libcurl_imp 
     ${PLATFORM_LINK}
+  )
+elseif(ANDROID)
+  set(COCOS_NETWORK_LINK
+    ${PLATFORM_LINK} 
   )
 elseif(EMSCRIPTEN)
   set(COCOS_NETWORK_LINK 
