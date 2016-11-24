@@ -501,8 +501,10 @@ void Scale9Sprite::setCapInsets(const cocos2d::Rect &insetsCopy)
 
     // use _rect coordinates. recenter origin to calculate the
     // intersecting rectangle
-    insets.origin.x -= _offsetPosition.x;
-    insets.origin.y -= _offsetPosition.y;
+    // can't use _offsetPosition since it is calculated using bottom-left as origin,
+    // and the center rect is calculated using top-left
+    insets.origin.x -= (_originalContentSize.width - _rect.size.width) / 2 + _unflippedOffsetPositionFromCenter.x;
+    insets.origin.y -= (_originalContentSize.height - _rect.size.height) / 2 - _unflippedOffsetPositionFromCenter.y;
 
     // intersecting rectangle
     const float x1 = std::max(insets.origin.x, 0.0f);

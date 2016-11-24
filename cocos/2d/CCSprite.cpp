@@ -235,7 +235,7 @@ bool Sprite::initWithSpriteFrame(SpriteFrame *spriteFrame)
         return false;
     }
 
-    bool bRet = initWithTexture(spriteFrame->getTexture(), spriteFrame->getRect());
+    bool bRet = initWithTexture(spriteFrame->getTexture(), spriteFrame->getRect(), spriteFrame->isRotated());
     setSpriteFrame(spriteFrame);
 
     return bRet;
@@ -511,8 +511,8 @@ void Sprite::updatePoly()
         // "O"riginal rect
         const float oox = _rect.origin.x;
         const float ooy = _rect.origin.y;
-        const float osw = _rect.size.width;
-        const float osh = _rect.size.height;
+        float osw = _rect.size.width;
+        float osh = _rect.size.height;
 
         if (_rectRotated) {
             std::swap(cx1, cy1);
@@ -523,24 +523,26 @@ void Sprite::updatePoly()
             cy2 = 1 - cy2;
             cy1 = 1 - cy1;
             std::swap(cy1, cy2);
+            std::swap(osw, osh);
         }
 
         //
         // textCoords Data: Y must be inverted.
         //
-        const float u0 = oox + osw * 0;
-        const float u1 = oox + osw * cx1;
-        const float u2 = oox + osw * cx2;
-        const float v0 = ooy + osh - (osh * cy1);
-        const float v1 = ooy + osh * (1 - cy2);
-        const float v2 = ooy + osh * 0;
-
         const float w0 = osw * cx1;
         const float w1 = osw * (cx2-cx1);
         const float w2 = osw * (1-cx2);
         const float h0 = osh * cy1;
         const float h1 = osh * (cy2-cy1);
         const float h2 = osh * (1-cy2);
+
+        const float u0 = oox;
+        const float u1 = u0 + w0;
+        const float u2 = u1 + w1;
+        const float v2 = ooy;
+        const float v1 = v2 + h2;
+        const float v0 = v1 + h1;
+
 
         const Rect texRects_normal[9] = {
             Rect(u0, v0,    w0, h0),   // bottom-left
@@ -584,7 +586,8 @@ void Sprite::updatePoly()
         cy1 = _centerRectNormalized.origin.y;
         cx2 = _centerRectNormalized.origin.x + _centerRectNormalized.size.width;
         cy2 = _centerRectNormalized.origin.y + _centerRectNormalized.size.height;
-
+        if (_rectRotated)
+            std::swap(osw, osh);
 
         // sizes
         float x0_s = osw * cx1;
