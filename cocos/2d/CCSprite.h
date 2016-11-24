@@ -451,6 +451,13 @@ public:
      * @param PolygonInfo the polygon information object
      */
     void setPolygonInfo(const PolygonInfo& info);
+
+    /** whether or not contentSize streches the sprite's texture */
+    void setStrechEnabled(bool enabled);
+
+    /** returns whether or not contentSize streches the sprite's texture */
+    bool isStrechEnabled() const;
+
     //
     // Overrides
     //
@@ -623,7 +630,7 @@ protected:
     void updateColor() override;
     virtual void setTextureCoords(const Rect& rect);
     virtual void setTextureCoords(const Rect& rect, V3F_C4B_T2F_Quad* outQuad);
-    virtual void setVertexCoords(const Rect& rect, const Size& imageSize, V3F_C4B_T2F_Quad* outQuad);
+    virtual void setVertexCoords(const Rect& rect, V3F_C4B_T2F_Quad* outQuad);
     virtual void updateBlendFunc();
     virtual void setReorderChildDirtyRecursively();
     virtual void setDirtyRecursively(bool value);
@@ -687,6 +694,8 @@ protected:
 
     std::string _fileName;
     int _fileType;
+
+    bool _strechEnabled;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Sprite);
