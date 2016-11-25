@@ -1,0 +1,1517 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|ARM">
+      <Configuration>Debug</Configuration>
+      <Platform>ARM</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|ARM">
+      <Configuration>Release</Configuration>
+      <Platform>ARM</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x86">
+      <Configuration>Debug</Configuration>
+      <Platform>x86</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x86">
+      <Configuration>Release</Configuration>
+      <Platform>x86</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{0a6f61a9-fc68-4326-955d-420195b9d5fe}</ProjectGuid>
+    <Keyword>Android</Keyword>
+    <RootNamespace>Cocos2dcpp</RootNamespace>
+    <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
+    <ApplicationType>Android</ApplicationType>
+    <ApplicationTypeRevision>2.0</ApplicationTypeRevision>
+    <ProjectName>Cocos2dcpp</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>Clang_3_8</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>Clang_3_8</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>Clang_3_8</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>Clang_3_8</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings" />
+  <ImportGroup Label="Shared" />
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
+    <Import Project="cocos2dx_android.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
+    <Import Project="cocos2dx_android.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
+    <Import Project="cocos2dx_android.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
+    <Import Project="cocos2dx_android.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
+    <IncludePath>$(VS_NdkRoot)\sources\android\cpufeatures;$(VS_NdkRoot)\platforms\android-19\arch-x86\usr\include;$(ProjectDir)\..\..\cocos2d\external\curl\include\android;$(ProjectDir)\..\..\cocos2d\external\bullet;$(ProjectDir)\..\..\cocos2d\external\chipmunk\include\chipmunk;$(ProjectDir)\..\..\cocos2d\external\clipper;$(ProjectDir)\..\..\cocos2d\external\ConvertUTF;$(ProjectDir)\..\..\cocos2d\external\curl\include\android\curl;$(ProjectDir)\..\..\cocos2d\external\flatbuffers;$(ProjectDir)\..\..\cocos2d\external\jpeg\include\android;$(ProjectDir)\..\..\cocos2d\external\json;$(ProjectDir)\..\..\cocos2d\external\png\include\android;$(ProjectDir)\..\..\cocos2d\external\poly2tri;$(ProjectDir)\..\..\cocos2d\external\recast\Recast;$(ProjectDir)\..\..\cocos2d\external\sqlite3\include;$(ProjectDir)\..\..\cocos2d\external\tiff\include\android;$(ProjectDir)\..\..\cocos2d\external\unzip;$(ProjectDir)\..\..\cocos2d\external\webp\include\android;$(ProjectDir)\..\..\cocos2d\external\websockets\include\android;$(ProjectDir)\..\..\cocos2d\external\tinyxml2;$(ProjectDir)\..\..\cocos2d\cocos\audio\android;$(ProjectDir)\..\..\cocos2d\cocos\audio\include;$(ProjectDir)\..\..\cocos2d\cocos\platform\android;$(ProjectDir)\..\..\cocos2d\cocos\platform\android\jni;$(ProjectDir)..\..\cocos2d\cocos\platform\android\jni;$(LLVMToolchainPrebuiltRoot)\lib\clang\$(LLVMVersion)\include;$(ProjectDir)\cocos2d\cocos;$(ProjectDir)\..\..\proj.visualstudio\Cocos2dcpp\;$(ProjectDir)\..\..\cocos2d\external\xxtea;$(ProjectDir)\..\..\cocos2d\external\xxhash;$(ProjectDir)\..\..\cocos2d\external;$(ProjectDir)\..\..\cocos2d\external\edtaa3func;$(ProjectDir)\..\..\cocos2d\external\freetype2\include\android\freetype2;$(ProjectDir)\..\..\cocos2d\cocos\platform;$(ProjectDir)\..\..\cocos2d\cocos</IncludePath>
+    <LibraryPath>
+    </LibraryPath>
+    <UseMultiToolTask>true</UseMultiToolTask>
+    <TargetName>libcocos2dcpp</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
+    <IncludePath>$(VS_NdkRoot)\sources\android\cpufeatures;$(VS_NdkRoot)\platforms\android-19\arch-x86\usr\include;$(ProjectDir)\..\..\cocos2d\external\curl\include\android;$(ProjectDir)\..\..\cocos2d\external\bullet;$(ProjectDir)\..\..\cocos2d\external\chipmunk\include\chipmunk;$(ProjectDir)\..\..\cocos2d\external\clipper;$(ProjectDir)\..\..\cocos2d\external\ConvertUTF;$(ProjectDir)\..\..\cocos2d\external\curl\include\android\curl;$(ProjectDir)\..\..\cocos2d\external\flatbuffers;$(ProjectDir)\..\..\cocos2d\external\jpeg\include\android;$(ProjectDir)\..\..\cocos2d\external\json;$(ProjectDir)\..\..\cocos2d\external\png\include\android;$(ProjectDir)\..\..\cocos2d\external\poly2tri;$(ProjectDir)\..\..\cocos2d\external\recast\Recast;$(ProjectDir)\..\..\cocos2d\external\sqlite3\include;$(ProjectDir)\..\..\cocos2d\external\tiff\include\android;$(ProjectDir)\..\..\cocos2d\external\unzip;$(ProjectDir)\..\..\cocos2d\external\webp\include\android;$(ProjectDir)\..\..\cocos2d\external\websockets\include\android;$(ProjectDir)\..\..\cocos2d\external\tinyxml2;$(ProjectDir)\..\..\cocos2d\cocos\audio\android;$(ProjectDir)\..\..\cocos2d\cocos\audio\include;$(ProjectDir)\..\..\cocos2d\cocos\platform\android;$(ProjectDir)\..\..\cocos2d\cocos\platform\android\jni;$(ProjectDir)..\..\cocos2d\cocos\platform\android\jni;$(LLVMToolchainPrebuiltRoot)\lib\clang\$(LLVMVersion)\include;$(ProjectDir)\cocos2d\cocos;$(ProjectDir)\..\..\proj.visualstudio\Cocos2dcpp\;$(ProjectDir)\..\..\cocos2d\external\xxtea;$(ProjectDir)\..\..\cocos2d\external\xxhash;$(ProjectDir)\..\..\cocos2d\external;$(ProjectDir)\..\..\cocos2d\external\edtaa3func;$(ProjectDir)\..\..\cocos2d\external\freetype2\include\android\freetype2;$(ProjectDir)\..\..\cocos2d\cocos\platform;$(ProjectDir)\..\..\cocos2d\cocos</IncludePath>
+    <LibraryPath>
+    </LibraryPath>
+    <UseMultiToolTask>true</UseMultiToolTask>
+    <TargetName>libcocos2dcpp</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
+    <LibraryPath>
+    </LibraryPath>
+    <UseMultiToolTask>true</UseMultiToolTask>
+    <TargetName>libcocos2dcpp</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
+    <IncludePath>$(VS_NdkRoot)\sources\android\cpufeatures;$(VS_NdkRoot)\platforms\android-19\arch-arm\usr\include;$(ProjectDir)\..\..\cocos2d\external\curl\include\android;$(ProjectDir)\..\..\cocos2d\external\bullet;$(ProjectDir)\..\..\cocos2d\external\chipmunk\include\chipmunk;$(ProjectDir)\..\..\cocos2d\external\clipper;$(ProjectDir)\..\..\cocos2d\external\ConvertUTF;$(ProjectDir)\..\..\cocos2d\external\curl\include\android\curl;$(ProjectDir)\..\..\cocos2d\external\flatbuffers;$(ProjectDir)\..\..\cocos2d\external\jpeg\include\android;$(ProjectDir)\..\..\cocos2d\external\json;$(ProjectDir)\..\..\cocos2d\external\png\include\android;$(ProjectDir)\..\..\cocos2d\external\poly2tri;$(ProjectDir)\..\..\cocos2d\external\recast\Recast;$(ProjectDir)\..\..\cocos2d\external\sqlite3\include;$(ProjectDir)\..\..\cocos2d\external\tiff\include\android;$(ProjectDir)\..\..\cocos2d\external\unzip;$(ProjectDir)\..\..\cocos2d\external\webp\include\android;$(ProjectDir)\..\..\cocos2d\external\websockets\include\android;$(ProjectDir)\..\..\cocos2d\external\tinyxml2;$(ProjectDir)\..\..\cocos2d\cocos\audio\android;$(ProjectDir)\..\..\cocos2d\cocos\audio\include;$(ProjectDir)\..\..\cocos2d\cocos\platform\android;$(ProjectDir)\..\..\cocos2d\cocos\platform\android\jni;$(ProjectDir)..\..\cocos2d\cocos\platform\android\jni;$(LLVMToolchainPrebuiltRoot)\lib\clang\$(LLVMVersion)\include;$(ProjectDir)\cocos2d\cocos;$(ProjectDir)\..\..\proj.visualstudio\Cocos2dcpp\;$(ProjectDir)\..\..\cocos2d\external\xxtea;$(ProjectDir)\..\..\cocos2d\external\xxhash;$(ProjectDir)\..\..\cocos2d\external;$(ProjectDir)\..\..\cocos2d\external\edtaa3func;$(ProjectDir)\..\..\cocos2d\external\freetype2\include\android\freetype2;$(ProjectDir)\..\..\cocos2d\cocos\platform;$(ProjectDir)\..\..\cocos2d\cocos</IncludePath>
+    <LibraryPath>
+    </LibraryPath>
+    <UseMultiToolTask>true</UseMultiToolTask>
+    <TargetName>libcocos2dcpp</TargetName>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>$(AndroidSDKAPILevelRoot)\arch-x86\usr\include\SLES;$(AndroidSDKAPILevelRoot)\arch-x86\usr\include;$(ProjectDir)\jni;$(Sysroot)\usr\include;$(StlIncludeDirectories);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <CppLanguageStandard>c++11</CppLanguageStandard>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <PreprocessorDefinitions>ANDROID;USE_FILE32API;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <CLanguageStandard>gnu11</CLanguageStandard>
+      <ExceptionHandling>Enabled</ExceptionHandling>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(ProjectDir)\..\..\cocos2d\external\png\prebuilt\android\x86;$(ProjectDir)\..\..\cocos2d\external\jpeg\prebuilt\android\x86;$(ProjectDir)\..\..\cocos2d\external\zlib\prebuilt\android\x86;$(ProjectDir)\..\..\cocos2d\external\webp\prebuilt\android\x86;$(ProjectDir)\..\..\cocos2d\external\tiff\prebuilt\android\x86;$(ProjectDir)\..\..\cocos2d\external\chipmunk\prebuilt\android\x86;$(ProjectDir)\..\..\cocos2d\external\websockets\prebuilt\android\x86;$(ProjectDir)\..\..\cocos2d\external\freetype2\prebuilt\android\x86;$(ProjectDir)\..\..\cocos2d\external\curl\prebuilt\android\x86;$(VS_NdkRoot)\sources\cxx-stl\gnu-libstdc++\4.9\libs\x86</AdditionalLibraryDirectories>
+      <SharedLibrarySearchPath>
+      </SharedLibrarySearchPath>
+      <AdditionalDependencies>$(AndroidAPILevelPath)\$(AndroidAPILevel)\arch-x86\usr\lib\libOpenSLES.so;$(AndroidAPILevelPath)\$(AndroidAPILevel)\arch-x86\usr\lib\libEGL.so;$(ProjectDir)\..\..\cocos2d\external\zlib\prebuilt\android\x86\libz.a;%(AdditionalDependencies)</AdditionalDependencies>
+      <LibraryDependencies>png;jpeg;GLESv2;c;m;freetype;curl;ssl;crypto;websockets;chipmunk;tiff;webp;%(LibraryDependencies)</LibraryDependencies>
+      <ShowProgress>true</ShowProgress>
+      <VerboseOutput>false</VerboseOutput>
+      <AdditionalOptions>-v %(AdditionalOptions)</AdditionalOptions>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>$(AndroidSDKAPILevelRoot)\arch-x86\usr\include\SLES;$(AndroidSDKAPILevelRoot)\arch-x86\usr\include;$(ProjectDir)\jni;$(Sysroot)\usr\include;$(StlIncludeDirectories);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <CppLanguageStandard>c++11</CppLanguageStandard>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <PreprocessorDefinitions>ANDROID;USE_FILE32API;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <CLanguageStandard>gnu11</CLanguageStandard>
+      <ExceptionHandling>Enabled</ExceptionHandling>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(ProjectDir)\..\..\cocos2d\external\png\prebuilt\android\x86;$(ProjectDir)\..\..\cocos2d\external\jpeg\prebuilt\android\x86;$(ProjectDir)\..\..\cocos2d\external\zlib\prebuilt\android\x86;$(ProjectDir)\..\..\cocos2d\external\webp\prebuilt\android\x86;$(ProjectDir)\..\..\cocos2d\external\tiff\prebuilt\android\x86;$(ProjectDir)\..\..\cocos2d\external\chipmunk\prebuilt\android\x86;$(ProjectDir)\..\..\cocos2d\external\websockets\prebuilt\android\x86;$(ProjectDir)\..\..\cocos2d\external\freetype2\prebuilt\android\x86;$(ProjectDir)\..\..\cocos2d\external\curl\prebuilt\android\x86;$(VS_NdkRoot)\sources\cxx-stl\gnu-libstdc++\4.9\libs\x86</AdditionalLibraryDirectories>
+      <SharedLibrarySearchPath>
+      </SharedLibrarySearchPath>
+      <AdditionalDependencies>$(AndroidAPILevelPath)\$(AndroidAPILevel)\arch-x86\usr\lib\libOpenSLES.so;$(AndroidAPILevelPath)\$(AndroidAPILevel)\arch-x86\usr\lib\libEGL.so;$(ProjectDir)\..\..\cocos2d\external\zlib\prebuilt\android\x86\libz.a;%(AdditionalDependencies)</AdditionalDependencies>
+      <LibraryDependencies>png;jpeg;GLESv2;c;m;freetype;curl;ssl;crypto;websockets;chipmunk;tiff;webp;%(LibraryDependencies)</LibraryDependencies>
+      <ShowProgress>true</ShowProgress>
+      <VerboseOutput>false</VerboseOutput>
+      <AdditionalOptions>-v %(AdditionalOptions)</AdditionalOptions>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <CppLanguageStandard>c++11</CppLanguageStandard>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <PreprocessorDefinitions>ANDROID;USE_FILE32API;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <CLanguageStandard>gnu11</CLanguageStandard>
+      <ExceptionHandling>Enabled</ExceptionHandling>
+      <AdditionalOptions>-Wno-format %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <SharedLibrarySearchPath>
+      </SharedLibrarySearchPath>
+      <AdditionalOptions>-v %(AdditionalOptions)</AdditionalOptions>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>$(AndroidSDKAPILevelRoot)\arch-arm\usr\include\SLES;$(AndroidSDKAPILevelRoot)\arch-arm\usr\include;$(ProjectDir)\jni;$(Sysroot)\usr\include;$(StlIncludeDirectories);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <CppLanguageStandard>c++11</CppLanguageStandard>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <PreprocessorDefinitions>ANDROID;USE_FILE32API;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <CLanguageStandard>gnu11</CLanguageStandard>
+      <ExceptionHandling>Enabled</ExceptionHandling>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(ProjectDir)\..\..\cocos2d\external\png\prebuilt\android\armeabi-v7a;$(ProjectDir)\..\..\cocos2d\external\jpeg\prebuilt\android\armeabi-v7a;$(ProjectDir)\..\..\cocos2d\external\zlib\prebuilt\android\armeabi-v7a;$(ProjectDir)\..\..\cocos2d\external\webp\prebuilt\android\armeabi-v7a;$(ProjectDir)\..\..\cocos2d\external\tiff\prebuilt\android\armeabi-v7a;$(ProjectDir)\..\..\cocos2d\external\chipmunk\prebuilt\android\armeabi-v7a;$(ProjectDir)\..\..\cocos2d\external\websockets\prebuilt\android\armeabi-v7a;$(ProjectDir)\..\..\cocos2d\external\freetype2\prebuilt\android\armeabi-v7a;$(ProjectDir)\..\..\cocos2d\external\curl\prebuilt\android\armeabi-v7a;$(VS_NdkRoot)\sources\cxx-stl\gnu-libstdc++\4.9\libs\armeabi-v7a</AdditionalLibraryDirectories>
+      <SharedLibrarySearchPath>
+      </SharedLibrarySearchPath>
+      <AdditionalDependencies>$(AndroidAPILevelPath)\$(AndroidAPILevel)\arch-arm\usr\lib\libOpenSLES.so;$(AndroidAPILevelPath)\$(AndroidAPILevel)\arch-arm\usr\lib\libEGL.so;$(ProjectDir)\..\..\cocos2d\external\zlib\prebuilt\android\armeabi-v7a\libz.a;%(AdditionalDependencies)</AdditionalDependencies>
+      <LibraryDependencies>png;jpeg;GLESv2;c;m;freetype;curl;ssl;crypto;websockets;chipmunk;tiff;webp;%(LibraryDependencies)</LibraryDependencies>
+      <ShowProgress>true</ShowProgress>
+      <VerboseOutput>false</VerboseOutput>
+      <AdditionalOptions>-v %(AdditionalOptions)</AdditionalOptions>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="$(VS_NdkRoot)\sources\android\cpufeatures\cpu-features.h" />
+    <ClInclude Include="..\..\Classes\AppDelegate.h" />
+    <ClInclude Include="..\..\Classes\HelloWorldScene.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\2d\CCAction.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\2d\CCActionCamera.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\2d\CCActionCatmullRom.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\2d\CCActionEase.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\2d\CCActionGrid.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\2d\CCActionGrid3D.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\2d\CCActionInstant.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\2d\CCActionInterval.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\2d\CCActionManager.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\2d\CCActionPageTurn3D.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\2d\CCActionProgressTimer.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\2d\CCActionTiledGrid.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\2d\CCActionTween.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\2d\CCAnimation.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\2d\CCAnimationCache.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\2d\CCAtlasNode.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\2d\CCAutoPolygon.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\2d\CCCamera.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\2d\CCCameraBackgroundBrush.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\2d\CCClippingNode.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\2d\CCClippingRectangleNode.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\2d\CCComponent.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\2d\CCComponentContainer.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\2d\CCDrawingPrimitives.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\2d\CCDrawNode.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\2d\CCFastTMXLayer.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\2d\CCFastTMXTiledMap.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\2d\CCFont.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\2d\CCFontAtlas.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\2d\CCFontAtlasCache.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\2d\CCFontCharMap.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\2d\CCFontFNT.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\2d\CCFontFreeType.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\2d\CCGLBufferedNode.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\2d\CCGrabber.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\2d\CCGrid.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\2d\CCLabel.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\2d\CCLabelAtlas.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\2d\CCLabelBMFont.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\2d\CCLabelTextFormatter.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\2d\CCLabelTTF.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\2d\CCLayer.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\2d\CCLight.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\2d\CCMenu.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\2d\CCMenuItem.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\2d\CCMotionStreak.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\2d\CCNode.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\2d\CCNodeGrid.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\2d\CCParallaxNode.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\2d\CCParticleBatchNode.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\2d\CCParticleExamples.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\2d\CCParticleSystem.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\2d\CCParticleSystemQuad.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\2d\CCProgressTimer.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\2d\CCProtectedNode.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\2d\CCRenderTexture.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\2d\CCScene.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\2d\CCSprite.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\2d\CCSpriteBatchNode.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\2d\CCSpriteFrame.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\2d\CCSpriteFrameCache.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\2d\CCTextFieldTTF.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\2d\CCTileMapAtlas.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\2d\CCTMXLayer.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\2d\CCTMXObjectGroup.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\2d\CCTMXTiledMap.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\2d\CCTMXXMLParser.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\2d\CCTransition.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\2d\CCTransitionPageTurn.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\2d\CCTransitionProgress.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\2d\CCTweenFunction.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\3d\CCAABB.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\3d\CCAnimate3D.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\3d\CCAnimation3D.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\3d\CCAnimationCurve.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\3d\CCAttachNode.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\3d\CCBillBoard.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\3d\CCBundle3D.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\3d\CCBundle3DData.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\3d\CCBundleReader.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\3d\CCFrustum.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\3d\CCMesh.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\3d\CCMeshSkin.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\3d\CCMeshVertexIndexData.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\3d\CCMotionStreak3D.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\3d\CCOBB.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\3d\CCObjLoader.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\3d\CCPlane.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\3d\CCRay.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\3d\CCSkeleton3D.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\3d\CCSkybox.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\3d\CCSprite3D.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\3d\CCSprite3DMaterial.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\3d\CCTerrain.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\3d\cocos3d.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\audio\android\AudioEngine-inl.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\audio\android\ccdandroidUtils.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\audio\android\jni\cddandroidAndroidJavaEngine.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\audio\include\AudioEngine.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\audio\include\Export.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\audio\include\SimpleAudioEngine.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\base\allocator\CCAllocatorBase.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\base\allocator\CCAllocatorDiagnostics.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\base\allocator\CCAllocatorGlobal.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\base\allocator\CCAllocatorMacros.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\base\allocator\CCAllocatorMutex.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\base\allocator\CCAllocatorStrategyDefault.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\base\allocator\CCAllocatorStrategyFixedBlock.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\base\allocator\CCAllocatorStrategyGlobalSmallBlock.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\base\allocator\CCAllocatorStrategyPool.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\base\atitc.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\base\base64.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\base\CCAsyncTaskPool.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\base\CCAutoreleasePool.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\base\ccCArray.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\base\ccConfig.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\base\CCConfiguration.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\base\CCConsole.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\base\CCController.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\base\CCData.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\base\CCDataVisitor.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\base\CCDirector.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\base\CCEvent.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\base\CCEventAcceleration.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\base\CCEventController.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\base\CCEventCustom.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\base\CCEventDispatcher.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\base\CCEventFocus.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\base\CCEventKeyboard.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\base\CCEventListener.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\base\CCEventListenerAcceleration.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\base\CCEventListenerController.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\base\CCEventListenerCustom.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\base\CCEventListenerFocus.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\base\CCEventListenerKeyboard.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\base\CCEventListenerMouse.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\base\CCEventListenerTouch.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\base\CCEventMouse.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\base\CCEventTouch.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\base\CCEventType.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\base\ccFPSImages.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\base\CCGameController.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\base\CCIMEDelegate.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\base\CCIMEDispatcher.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\base\ccMacros.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\base\CCMap.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\base\CCNinePatchImageParser.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\base\CCNS.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\base\CCProfiling.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\base\CCProperties.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\base\CCProtocols.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\base\ccRandom.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\base\CCRef.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\base\CCRefPtr.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\base\CCScheduler.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\base\CCScriptSupport.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\base\CCStencilStateManager.hpp" />
+    <ClInclude Include="..\..\cocos2d\cocos\base\CCTouch.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\base\ccTypes.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\base\CCUserDefault.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\base\ccUTF8.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\base\ccUtils.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\base\CCValue.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\base\CCVector.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\base\etc1.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\base\firePngData.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\base\ObjectFactory.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\base\pvr.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\base\s3tc.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\base\TGAlib.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\base\uthash.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\base\utlist.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\base\ZipUtils.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\cocos2d.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\deprecated\CCArray.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\deprecated\CCBool.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\deprecated\CCDeprecated.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\deprecated\CCDictionary.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\deprecated\CCDouble.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\deprecated\CCFloat.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\deprecated\CCInteger.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\deprecated\CCNotificationCenter.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\deprecated\CCSet.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\deprecated\CCString.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\math\CCAffineTransform.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\math\CCGeometry.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\math\CCMath.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\math\CCMathBase.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\math\CCVertex.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\math\Mat4.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\math\MathUtil.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\math\Quaternion.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\math\TransformUtils.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\math\Vec2.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\math\Vec3.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\math\Vec4.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\navmesh\CCNavMesh.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\navmesh\CCNavMeshAgent.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\navmesh\CCNavMeshDebugDraw.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\navmesh\CCNavMeshObstacle.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\navmesh\CCNavMeshUtils.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\network\CCDownloader-android.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\network\CCDownloader-apple.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\network\CCDownloader-curl.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\network\CCDownloader.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\network\CCIDownloaderImpl.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\network\HttpAsynConnection-apple.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\network\HttpClient.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\network\HttpCookie.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\network\HttpRequest.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\network\HttpResponse.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\network\SocketIO.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\network\WebSocket.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\physics3d\CCPhysics3D.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\physics3d\CCPhysics3DComponent.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\physics3d\CCPhysics3DConstraint.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\physics3d\CCPhysics3DDebugDrawer.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\physics3d\CCPhysics3DObject.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\physics3d\CCPhysics3DShape.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\physics3d\CCPhysics3DWorld.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\physics3d\CCPhysicsSprite3D.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\physics\CCPhysicsBody.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\physics\CCPhysicsContact.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\physics\CCPhysicsHelper.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\physics\CCPhysicsJoint.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\physics\CCPhysicsShape.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\physics\CCPhysicsWorld.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\platform\android\CCApplication-android.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\platform\android\CCEnhanceAPI-android.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\platform\android\CCFileUtils-android.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\platform\android\CCGL-android.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\platform\android\CCGLViewImpl-android.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\platform\android\CCPlatformDefine-android.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\platform\android\CCStdC-android.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\platform\android\jni\Java_org_cocos2dx_lib_Cocos2dxBitmap.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\platform\android\jni\Java_org_cocos2dx_lib_Cocos2dxHelper.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\platform\android\jni\JniHelper.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\platform\CCApplication.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\platform\CCApplicationProtocol.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\platform\CCCommon.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\platform\CCDevice.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\platform\CCFileUtils.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\platform\CCGL.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\platform\CCGLView.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\platform\CCImage.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\platform\CCPlatformConfig.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\platform\CCPlatformDefine.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\platform\CCPlatformMacros.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\platform\CCSAXParser.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\platform\CCStdC.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\platform\CCThread.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\renderer\CCBatchCommand.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\renderer\CCCustomCommand.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\renderer\CCFrameBuffer.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\renderer\CCGLProgram.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\renderer\CCGLProgramCache.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\renderer\CCGLProgramState.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\renderer\CCGLProgramStateCache.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\renderer\ccGLStateCache.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\renderer\CCGroupCommand.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\renderer\CCMaterial.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\renderer\CCMeshCommand.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\renderer\CCPass.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\renderer\CCPrimitive.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\renderer\CCPrimitiveCommand.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\renderer\CCQuadCommand.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\renderer\CCRenderCommand.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\renderer\CCRenderCommandPool.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\renderer\CCRenderer.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\renderer\CCRenderState.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\renderer\ccShaders.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\renderer\CCTechnique.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\renderer\CCTexture2D.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\renderer\CCTextureAtlas.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\renderer\CCTextureCache.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\renderer\CCTextureCube.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\renderer\CCTrianglesCommand.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\renderer\CCVertexAttribBinding.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\renderer\CCVertexIndexBuffer.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\renderer\CCVertexIndexData.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\storage\local-storage\LocalStorage.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\ui\CocosGUI.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\ui\GUIDefine.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\ui\GUIExport.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\ui\UIAbstractCheckButton.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\ui\UIButton.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\ui\UICheckBox.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\ui\UIDeprecated.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\ui\UIEditBox\UIEditBox.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\ui\UIEditBox\UIEditBoxImpl-android.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\ui\UIEditBox\UIEditBoxImpl-common.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\ui\UIEditBox\UIEditBoxImpl-ios.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\ui\UIEditBox\UIEditBoxImpl-linux.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\ui\UIEditBox\UIEditBoxImpl-mac.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\ui\UIEditBox\UIEditBoxImpl-win32.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\ui\UIEditBox\UIEditBoxImpl-winrt.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\ui\UIEditBox\UIEditBoxImpl.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\ui\UIHBox.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\ui\UIHelper.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\ui\UIImageView.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\ui\UILayout.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\ui\UILayoutComponent.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\ui\UILayoutManager.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\ui\UILayoutParameter.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\ui\UIListView.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\ui\UILoadingBar.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\ui\UIPageView.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\ui\UIPageViewIndicator.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\ui\UIRadioButton.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\ui\UIRelativeBox.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\ui\UIRichText.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\ui\UIScale9Sprite.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\ui\UIScrollView.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\ui\UIScrollViewBar.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\ui\UISlider.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\ui\UIText.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\ui\UITextAtlas.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\ui\UITextBMFont.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\ui\UITextField.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\ui\UIVBox.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\ui\UIVideoPlayer.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\ui\UIWebView-inl.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\ui\UIWebView.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\ui\UIWebViewImpl-android.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\ui\UIWebViewImpl-ios.h" />
+    <ClInclude Include="..\..\cocos2d\cocos\ui\UIWidget.h" />
+    <ClInclude Include="..\..\cocos2d\external\Box2D\Box2D.h" />
+    <ClInclude Include="..\..\cocos2d\external\Box2D\Collision\b2BroadPhase.h" />
+    <ClInclude Include="..\..\cocos2d\external\Box2D\Collision\b2Collision.h" />
+    <ClInclude Include="..\..\cocos2d\external\Box2D\Collision\b2Distance.h" />
+    <ClInclude Include="..\..\cocos2d\external\Box2D\Collision\b2DynamicTree.h" />
+    <ClInclude Include="..\..\cocos2d\external\Box2D\Collision\b2TimeOfImpact.h" />
+    <ClInclude Include="..\..\cocos2d\external\Box2D\Collision\Shapes\b2ChainShape.h" />
+    <ClInclude Include="..\..\cocos2d\external\Box2D\Collision\Shapes\b2CircleShape.h" />
+    <ClInclude Include="..\..\cocos2d\external\Box2D\Collision\Shapes\b2EdgeShape.h" />
+    <ClInclude Include="..\..\cocos2d\external\Box2D\Collision\Shapes\b2PolygonShape.h" />
+    <ClInclude Include="..\..\cocos2d\external\Box2D\Collision\Shapes\b2Shape.h" />
+    <ClInclude Include="..\..\cocos2d\external\Box2D\Common\b2BlockAllocator.h" />
+    <ClInclude Include="..\..\cocos2d\external\Box2D\Common\b2Draw.h" />
+    <ClInclude Include="..\..\cocos2d\external\Box2D\Common\b2GrowableStack.h" />
+    <ClInclude Include="..\..\cocos2d\external\Box2D\Common\b2Math.h" />
+    <ClInclude Include="..\..\cocos2d\external\Box2D\Common\b2Settings.h" />
+    <ClInclude Include="..\..\cocos2d\external\Box2D\Common\b2StackAllocator.h" />
+    <ClInclude Include="..\..\cocos2d\external\Box2D\Common\b2Timer.h" />
+    <ClInclude Include="..\..\cocos2d\external\Box2D\Dynamics\b2Body.h" />
+    <ClInclude Include="..\..\cocos2d\external\Box2D\Dynamics\b2ContactManager.h" />
+    <ClInclude Include="..\..\cocos2d\external\Box2D\Dynamics\b2Fixture.h" />
+    <ClInclude Include="..\..\cocos2d\external\Box2D\Dynamics\b2Island.h" />
+    <ClInclude Include="..\..\cocos2d\external\Box2D\Dynamics\b2TimeStep.h" />
+    <ClInclude Include="..\..\cocos2d\external\Box2D\Dynamics\b2World.h" />
+    <ClInclude Include="..\..\cocos2d\external\Box2D\Dynamics\b2WorldCallbacks.h" />
+    <ClInclude Include="..\..\cocos2d\external\Box2D\Dynamics\Contacts\b2ChainAndCircleContact.h" />
+    <ClInclude Include="..\..\cocos2d\external\Box2D\Dynamics\Contacts\b2ChainAndPolygonContact.h" />
+    <ClInclude Include="..\..\cocos2d\external\Box2D\Dynamics\Contacts\b2CircleContact.h" />
+    <ClInclude Include="..\..\cocos2d\external\Box2D\Dynamics\Contacts\b2Contact.h" />
+    <ClInclude Include="..\..\cocos2d\external\Box2D\Dynamics\Contacts\b2ContactSolver.h" />
+    <ClInclude Include="..\..\cocos2d\external\Box2D\Dynamics\Contacts\b2EdgeAndCircleContact.h" />
+    <ClInclude Include="..\..\cocos2d\external\Box2D\Dynamics\Contacts\b2EdgeAndPolygonContact.h" />
+    <ClInclude Include="..\..\cocos2d\external\Box2D\Dynamics\Contacts\b2PolygonAndCircleContact.h" />
+    <ClInclude Include="..\..\cocos2d\external\Box2D\Dynamics\Contacts\b2PolygonContact.h" />
+    <ClInclude Include="..\..\cocos2d\external\Box2D\Dynamics\Joints\b2DistanceJoint.h" />
+    <ClInclude Include="..\..\cocos2d\external\Box2D\Dynamics\Joints\b2FrictionJoint.h" />
+    <ClInclude Include="..\..\cocos2d\external\Box2D\Dynamics\Joints\b2GearJoint.h" />
+    <ClInclude Include="..\..\cocos2d\external\Box2D\Dynamics\Joints\b2Joint.h" />
+    <ClInclude Include="..\..\cocos2d\external\Box2D\Dynamics\Joints\b2MotorJoint.h" />
+    <ClInclude Include="..\..\cocos2d\external\Box2D\Dynamics\Joints\b2MouseJoint.h" />
+    <ClInclude Include="..\..\cocos2d\external\Box2D\Dynamics\Joints\b2PrismaticJoint.h" />
+    <ClInclude Include="..\..\cocos2d\external\Box2D\Dynamics\Joints\b2PulleyJoint.h" />
+    <ClInclude Include="..\..\cocos2d\external\Box2D\Dynamics\Joints\b2RevoluteJoint.h" />
+    <ClInclude Include="..\..\cocos2d\external\Box2D\Dynamics\Joints\b2RopeJoint.h" />
+    <ClInclude Include="..\..\cocos2d\external\Box2D\Dynamics\Joints\b2WeldJoint.h" />
+    <ClInclude Include="..\..\cocos2d\external\Box2D\Dynamics\Joints\b2WheelJoint.h" />
+    <ClInclude Include="..\..\cocos2d\external\Box2D\Rope\b2Rope.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\btBulletCollisionCommon.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\btBulletDynamicsCommon.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\Bullet-C-Api.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\BroadphaseCollision\btAxisSweep3.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\BroadphaseCollision\btBroadphaseInterface.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\BroadphaseCollision\btBroadphaseProxy.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\BroadphaseCollision\btCollisionAlgorithm.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\BroadphaseCollision\btDbvt.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\BroadphaseCollision\btDbvtBroadphase.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\BroadphaseCollision\btDispatcher.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\BroadphaseCollision\btMultiSapBroadphase.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\BroadphaseCollision\btOverlappingPairCache.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\BroadphaseCollision\btOverlappingPairCallback.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\BroadphaseCollision\btQuantizedBvh.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\BroadphaseCollision\btSimpleBroadphase.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionDispatch\btActivatingCollisionAlgorithm.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionDispatch\btBox2dBox2dCollisionAlgorithm.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionDispatch\btBoxBoxCollisionAlgorithm.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionDispatch\btBoxBoxDetector.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionDispatch\btCollisionConfiguration.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionDispatch\btCollisionCreateFunc.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionDispatch\btCollisionDispatcher.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionDispatch\btCollisionObject.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionDispatch\btCollisionObjectWrapper.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionDispatch\btCollisionWorld.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionDispatch\btCompoundCollisionAlgorithm.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionDispatch\btCompoundCompoundCollisionAlgorithm.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionDispatch\btConvex2dConvex2dAlgorithm.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionDispatch\btConvexConcaveCollisionAlgorithm.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionDispatch\btConvexConvexAlgorithm.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionDispatch\btConvexPlaneCollisionAlgorithm.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionDispatch\btDefaultCollisionConfiguration.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionDispatch\btEmptyCollisionAlgorithm.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionDispatch\btGhostObject.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionDispatch\btHashedSimplePairCache.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionDispatch\btInternalEdgeUtility.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionDispatch\btManifoldResult.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionDispatch\btSimulationIslandManager.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionDispatch\btSphereBoxCollisionAlgorithm.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionDispatch\btSphereSphereCollisionAlgorithm.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionDispatch\btSphereTriangleCollisionAlgorithm.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionDispatch\btUnionFind.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionDispatch\SphereTriangleDetector.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionShapes\btBox2dShape.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionShapes\btBoxShape.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionShapes\btBvhTriangleMeshShape.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionShapes\btCapsuleShape.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionShapes\btCollisionMargin.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionShapes\btCollisionShape.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionShapes\btCompoundShape.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionShapes\btConcaveShape.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionShapes\btConeShape.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionShapes\btConvex2dShape.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionShapes\btConvexHullShape.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionShapes\btConvexInternalShape.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionShapes\btConvexPointCloudShape.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionShapes\btConvexPolyhedron.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionShapes\btConvexShape.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionShapes\btConvexTriangleMeshShape.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionShapes\btCylinderShape.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionShapes\btEmptyShape.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionShapes\btHeightfieldTerrainShape.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionShapes\btMaterial.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionShapes\btMinkowskiSumShape.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionShapes\btMultimaterialTriangleMeshShape.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionShapes\btMultiSphereShape.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionShapes\btOptimizedBvh.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionShapes\btPolyhedralConvexShape.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionShapes\btScaledBvhTriangleMeshShape.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionShapes\btShapeHull.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionShapes\btSphereShape.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionShapes\btStaticPlaneShape.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionShapes\btStridingMeshInterface.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionShapes\btTetrahedronShape.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionShapes\btTriangleBuffer.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionShapes\btTriangleCallback.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionShapes\btTriangleIndexVertexArray.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionShapes\btTriangleIndexVertexMaterialArray.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionShapes\btTriangleInfoMap.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionShapes\btTriangleMesh.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionShapes\btTriangleMeshShape.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionShapes\btTriangleShape.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionShapes\btUniformScalingShape.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\Gimpact\btBoxCollision.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\Gimpact\btClipPolygon.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\Gimpact\btCompoundFromGimpact.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\Gimpact\btContactProcessing.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\Gimpact\btGenericPoolAllocator.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\Gimpact\btGeometryOperations.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\Gimpact\btGImpactBvh.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\Gimpact\btGImpactCollisionAlgorithm.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\Gimpact\btGImpactMassUtil.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\Gimpact\btGImpactQuantizedBvh.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\Gimpact\btGImpactShape.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\Gimpact\btQuantization.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\Gimpact\btTriangleShapeEx.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\Gimpact\gim_array.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\Gimpact\gim_basic_geometry_operations.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\Gimpact\gim_bitset.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\Gimpact\gim_box_collision.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\Gimpact\gim_box_set.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\Gimpact\gim_clip_polygon.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\Gimpact\gim_contact.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\Gimpact\gim_geometry.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\Gimpact\gim_geom_types.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\Gimpact\gim_hash_table.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\Gimpact\gim_linear_math.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\Gimpact\gim_math.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\Gimpact\gim_memory.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\Gimpact\gim_radixsort.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\Gimpact\gim_tri_collision.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\NarrowPhaseCollision\btContinuousConvexCollision.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\NarrowPhaseCollision\btConvexCast.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\NarrowPhaseCollision\btConvexPenetrationDepthSolver.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\NarrowPhaseCollision\btDiscreteCollisionDetectorInterface.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\NarrowPhaseCollision\btGjkConvexCast.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\NarrowPhaseCollision\btGjkEpa2.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\NarrowPhaseCollision\btGjkEpaPenetrationDepthSolver.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\NarrowPhaseCollision\btGjkPairDetector.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\NarrowPhaseCollision\btManifoldPoint.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\NarrowPhaseCollision\btMinkowskiPenetrationDepthSolver.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\NarrowPhaseCollision\btPersistentManifold.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\NarrowPhaseCollision\btPointCollector.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\NarrowPhaseCollision\btPolyhedralContactClipping.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\NarrowPhaseCollision\btRaycastCallback.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\NarrowPhaseCollision\btSimplexSolverInterface.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\NarrowPhaseCollision\btSubSimplexConvexCast.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletCollision\NarrowPhaseCollision\btVoronoiSimplexSolver.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletDynamics\Character\btCharacterControllerInterface.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletDynamics\Character\btKinematicCharacterController.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletDynamics\ConstraintSolver\btConeTwistConstraint.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletDynamics\ConstraintSolver\btConstraintSolver.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletDynamics\ConstraintSolver\btContactConstraint.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletDynamics\ConstraintSolver\btContactSolverInfo.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletDynamics\ConstraintSolver\btFixedConstraint.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletDynamics\ConstraintSolver\btGearConstraint.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletDynamics\ConstraintSolver\btGeneric6DofConstraint.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletDynamics\ConstraintSolver\btGeneric6DofSpringConstraint.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletDynamics\ConstraintSolver\btHinge2Constraint.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletDynamics\ConstraintSolver\btHingeConstraint.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletDynamics\ConstraintSolver\btJacobianEntry.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletDynamics\ConstraintSolver\btPoint2PointConstraint.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletDynamics\ConstraintSolver\btSequentialImpulseConstraintSolver.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletDynamics\ConstraintSolver\btSliderConstraint.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletDynamics\ConstraintSolver\btSolve2LinearConstraint.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletDynamics\ConstraintSolver\btSolverBody.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletDynamics\ConstraintSolver\btSolverConstraint.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletDynamics\ConstraintSolver\btTypedConstraint.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletDynamics\ConstraintSolver\btUniversalConstraint.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletDynamics\Dynamics\btActionInterface.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletDynamics\Dynamics\btDiscreteDynamicsWorld.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletDynamics\Dynamics\btDynamicsWorld.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletDynamics\Dynamics\btRigidBody.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletDynamics\Dynamics\btSimpleDynamicsWorld.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletDynamics\Featherstone\btMultiBody.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletDynamics\Featherstone\btMultiBodyConstraint.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletDynamics\Featherstone\btMultiBodyConstraintSolver.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletDynamics\Featherstone\btMultiBodyDynamicsWorld.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletDynamics\Featherstone\btMultiBodyJointLimitConstraint.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletDynamics\Featherstone\btMultiBodyJointMotor.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletDynamics\Featherstone\btMultiBodyLink.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletDynamics\Featherstone\btMultiBodyLinkCollider.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletDynamics\Featherstone\btMultiBodyPoint2Point.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletDynamics\Featherstone\btMultiBodySolverConstraint.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletDynamics\MLCPSolvers\btDantzigLCP.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletDynamics\MLCPSolvers\btDantzigSolver.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletDynamics\MLCPSolvers\btMLCPSolver.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletDynamics\MLCPSolvers\btMLCPSolverInterface.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletDynamics\MLCPSolvers\btPATHSolver.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletDynamics\MLCPSolvers\btSolveProjectedGaussSeidel.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletDynamics\Vehicle\btRaycastVehicle.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletDynamics\Vehicle\btVehicleRaycaster.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletDynamics\Vehicle\btWheelInfo.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletMultiThreaded\btGpu3DGridBroadphase.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletMultiThreaded\btGpu3DGridBroadphaseSharedCode.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletMultiThreaded\btGpu3DGridBroadphaseSharedDefs.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletMultiThreaded\btGpu3DGridBroadphaseSharedTypes.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletMultiThreaded\btGpuDefines.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletMultiThreaded\btGpuUtilsSharedCode.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletMultiThreaded\btGpuUtilsSharedDefs.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletMultiThreaded\btParallelConstraintSolver.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletMultiThreaded\btThreadSupportInterface.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletMultiThreaded\HeapManager.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletMultiThreaded\PlatformDefinitions.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletMultiThreaded\PosixThreadSupport.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletMultiThreaded\PpuAddressSpace.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletMultiThreaded\SequentialThreadSupport.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletMultiThreaded\SpuCollisionObjectWrapper.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletMultiThreaded\SpuCollisionTaskProcess.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletMultiThreaded\SpuContactManifoldCollisionAlgorithm.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletMultiThreaded\SpuDoubleBuffer.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletMultiThreaded\SpuFakeDma.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletMultiThreaded\SpuGatheringCollisionDispatcher.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletMultiThreaded\SpuLibspe2Support.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletMultiThreaded\SpuNarrowPhaseCollisionTask\Box.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletMultiThreaded\SpuNarrowPhaseCollisionTask\boxBoxDistance.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletMultiThreaded\SpuNarrowPhaseCollisionTask\SpuCollisionShapes.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletMultiThreaded\SpuNarrowPhaseCollisionTask\SpuContactResult.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletMultiThreaded\SpuNarrowPhaseCollisionTask\SpuConvexPenetrationDepthSolver.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletMultiThreaded\SpuNarrowPhaseCollisionTask\SpuGatheringCollisionTask.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletMultiThreaded\SpuNarrowPhaseCollisionTask\SpuLocalSupport.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletMultiThreaded\SpuNarrowPhaseCollisionTask\SpuMinkowskiPenetrationDepthSolver.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletMultiThreaded\SpuNarrowPhaseCollisionTask\SpuPreferredPenetrationDirections.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletMultiThreaded\SpuSampleTaskProcess.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletMultiThreaded\SpuSampleTask\SpuSampleTask.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletMultiThreaded\SpuSync.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletMultiThreaded\TrbDynBody.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletMultiThreaded\TrbStateVec.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletMultiThreaded\vectormath2bullet.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletMultiThreaded\Win32ThreadSupport.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletSoftBody\btDefaultSoftBodySolver.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletSoftBody\btSoftBody.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletSoftBody\btSoftBodyConcaveCollisionAlgorithm.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletSoftBody\btSoftBodyData.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletSoftBody\btSoftBodyHelpers.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletSoftBody\btSoftBodyInternals.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletSoftBody\btSoftBodyRigidBodyCollisionConfiguration.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletSoftBody\btSoftBodySolvers.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletSoftBody\btSoftBodySolverVertexBuffer.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletSoftBody\btSoftRigidCollisionAlgorithm.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletSoftBody\btSoftRigidDynamicsWorld.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletSoftBody\btSoftSoftCollisionAlgorithm.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\BulletSoftBody\btSparseSDF.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\LinearMath\btAabbUtil2.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\LinearMath\btAlignedAllocator.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\LinearMath\btAlignedObjectArray.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\LinearMath\btConvexHull.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\LinearMath\btConvexHullComputer.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\LinearMath\btDefaultMotionState.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\LinearMath\btGeometryUtil.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\LinearMath\btGrahamScan2dConvexHull.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\LinearMath\btHashMap.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\LinearMath\btIDebugDraw.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\LinearMath\btList.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\LinearMath\btMatrix3x3.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\LinearMath\btMatrixX.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\LinearMath\btMinMax.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\LinearMath\btMotionState.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\LinearMath\btPolarDecomposition.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\LinearMath\btPoolAllocator.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\LinearMath\btQuadWord.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\LinearMath\btQuaternion.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\LinearMath\btQuickprof.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\LinearMath\btRandom.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\LinearMath\btScalar.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\LinearMath\btSerializer.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\LinearMath\btStackAlloc.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\LinearMath\btTransform.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\LinearMath\btTransformUtil.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\LinearMath\btVector3.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\MiniCL\cl.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\MiniCL\cl_gl.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\MiniCL\cl_MiniCL_Defs.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\MiniCL\cl_platform.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\MiniCL\MiniCLTaskScheduler.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\MiniCL\MiniCLTask\MiniCLTask.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\vectormath\neon\boolInVec.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\vectormath\neon\floatInVec.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\vectormath\neon\mat_aos.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\vectormath\neon\quat_aos.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\vectormath\neon\vectormath_aos.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\vectormath\neon\vec_aos.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\vectormath\scalar\boolInVec.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\vectormath\scalar\floatInVec.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\vectormath\scalar\mat_aos.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\vectormath\scalar\quat_aos.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\vectormath\scalar\vectormath_aos.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\vectormath\scalar\vec_aos.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\vectormath\sse\boolInVec.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\vectormath\sse\floatInVec.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\vectormath\sse\mat_aos.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\vectormath\sse\quat_aos.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\vectormath\sse\vecidx_aos.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\vectormath\sse\vectormath_aos.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\vectormath\sse\vec_aos.h" />
+    <ClInclude Include="..\..\cocos2d\external\bullet\vectormath\vmInclude.h" />
+    <ClInclude Include="..\..\cocos2d\external\chipmunk\include\chipmunk\chipmunk.h" />
+    <ClInclude Include="..\..\cocos2d\external\chipmunk\include\chipmunk\chipmunk_ffi.h" />
+    <ClInclude Include="..\..\cocos2d\external\chipmunk\include\chipmunk\chipmunk_private.h" />
+    <ClInclude Include="..\..\cocos2d\external\chipmunk\include\chipmunk\chipmunk_types.h" />
+    <ClInclude Include="..\..\cocos2d\external\chipmunk\include\chipmunk\chipmunk_unsafe.h" />
+    <ClInclude Include="..\..\cocos2d\external\chipmunk\include\chipmunk\constraints\cpConstraint.h" />
+    <ClInclude Include="..\..\cocos2d\external\chipmunk\include\chipmunk\constraints\cpDampedRotarySpring.h" />
+    <ClInclude Include="..\..\cocos2d\external\chipmunk\include\chipmunk\constraints\cpDampedSpring.h" />
+    <ClInclude Include="..\..\cocos2d\external\chipmunk\include\chipmunk\constraints\cpGearJoint.h" />
+    <ClInclude Include="..\..\cocos2d\external\chipmunk\include\chipmunk\constraints\cpGrooveJoint.h" />
+    <ClInclude Include="..\..\cocos2d\external\chipmunk\include\chipmunk\constraints\cpPinJoint.h" />
+    <ClInclude Include="..\..\cocos2d\external\chipmunk\include\chipmunk\constraints\cpPivotJoint.h" />
+    <ClInclude Include="..\..\cocos2d\external\chipmunk\include\chipmunk\constraints\cpRatchetJoint.h" />
+    <ClInclude Include="..\..\cocos2d\external\chipmunk\include\chipmunk\constraints\cpRotaryLimitJoint.h" />
+    <ClInclude Include="..\..\cocos2d\external\chipmunk\include\chipmunk\constraints\cpSimpleMotor.h" />
+    <ClInclude Include="..\..\cocos2d\external\chipmunk\include\chipmunk\constraints\cpSlideJoint.h" />
+    <ClInclude Include="..\..\cocos2d\external\chipmunk\include\chipmunk\constraints\util.h" />
+    <ClInclude Include="..\..\cocos2d\external\chipmunk\include\chipmunk\cpArbiter.h" />
+    <ClInclude Include="..\..\cocos2d\external\chipmunk\include\chipmunk\cpBB.h" />
+    <ClInclude Include="..\..\cocos2d\external\chipmunk\include\chipmunk\cpBody.h" />
+    <ClInclude Include="..\..\cocos2d\external\chipmunk\include\chipmunk\cpPolyShape.h" />
+    <ClInclude Include="..\..\cocos2d\external\chipmunk\include\chipmunk\cpShape.h" />
+    <ClInclude Include="..\..\cocos2d\external\chipmunk\include\chipmunk\cpSpace.h" />
+    <ClInclude Include="..\..\cocos2d\external\chipmunk\include\chipmunk\cpSpatialIndex.h" />
+    <ClInclude Include="..\..\cocos2d\external\chipmunk\include\chipmunk\cpVect.h" />
+    <ClInclude Include="..\..\cocos2d\external\clipper\clipper.hpp" />
+    <ClInclude Include="..\..\cocos2d\external\ConvertUTF\ConvertUTF.h" />
+    <ClInclude Include="..\..\cocos2d\external\curl\include\android\curl\curl.h" />
+    <ClInclude Include="..\..\cocos2d\external\curl\include\android\curl\curlbuild.h" />
+    <ClInclude Include="..\..\cocos2d\external\curl\include\android\curl\curlrules.h" />
+    <ClInclude Include="..\..\cocos2d\external\curl\include\android\curl\curlver.h" />
+    <ClInclude Include="..\..\cocos2d\external\curl\include\android\curl\easy.h" />
+    <ClInclude Include="..\..\cocos2d\external\curl\include\android\curl\mprintf.h" />
+    <ClInclude Include="..\..\cocos2d\external\curl\include\android\curl\multi.h" />
+    <ClInclude Include="..\..\cocos2d\external\curl\include\android\curl\stdcheaders.h" />
+    <ClInclude Include="..\..\cocos2d\external\curl\include\android\curl\typecheck-gcc.h" />
+    <ClInclude Include="..\..\cocos2d\external\edtaa3func\edtaa3func.h" />
+    <ClInclude Include="..\..\cocos2d\external\jpeg\include\android\jconfig.h" />
+    <ClInclude Include="..\..\cocos2d\external\jpeg\include\android\jerror.h" />
+    <ClInclude Include="..\..\cocos2d\external\jpeg\include\android\jmorecfg.h" />
+    <ClInclude Include="..\..\cocos2d\external\jpeg\include\android\jpeglib.h" />
+    <ClInclude Include="..\..\cocos2d\external\png\include\android\png.h" />
+    <ClInclude Include="..\..\cocos2d\external\png\include\android\pngconf.h" />
+    <ClInclude Include="..\..\cocos2d\external\png\include\android\pnglibconf.h" />
+    <ClInclude Include="..\..\cocos2d\external\poly2tri\common\shapes.h" />
+    <ClInclude Include="..\..\cocos2d\external\poly2tri\common\utils.h" />
+    <ClInclude Include="..\..\cocos2d\external\poly2tri\poly2tri.h" />
+    <ClInclude Include="..\..\cocos2d\external\poly2tri\sweep\advancing_front.h" />
+    <ClInclude Include="..\..\cocos2d\external\poly2tri\sweep\cdt.h" />
+    <ClInclude Include="..\..\cocos2d\external\poly2tri\sweep\sweep.h" />
+    <ClInclude Include="..\..\cocos2d\external\poly2tri\sweep\sweep_context.h" />
+    <ClInclude Include="..\..\cocos2d\external\recast\DebugUtils\DebugDraw.h" />
+    <ClInclude Include="..\..\cocos2d\external\recast\DebugUtils\DetourDebugDraw.h" />
+    <ClInclude Include="..\..\cocos2d\external\recast\DebugUtils\RecastDebugDraw.h" />
+    <ClInclude Include="..\..\cocos2d\external\recast\DebugUtils\RecastDump.h" />
+    <ClInclude Include="..\..\cocos2d\external\recast\DetourCrowd\DetourCrowd.h" />
+    <ClInclude Include="..\..\cocos2d\external\recast\DetourCrowd\DetourLocalBoundary.h" />
+    <ClInclude Include="..\..\cocos2d\external\recast\DetourCrowd\DetourObstacleAvoidance.h" />
+    <ClInclude Include="..\..\cocos2d\external\recast\DetourCrowd\DetourPathCorridor.h" />
+    <ClInclude Include="..\..\cocos2d\external\recast\DetourCrowd\DetourPathQueue.h" />
+    <ClInclude Include="..\..\cocos2d\external\recast\DetourCrowd\DetourProximityGrid.h" />
+    <ClInclude Include="..\..\cocos2d\external\recast\DetourTileCache\DetourTileCache.h" />
+    <ClInclude Include="..\..\cocos2d\external\recast\DetourTileCache\DetourTileCacheBuilder.h" />
+    <ClInclude Include="..\..\cocos2d\external\recast\Detour\DetourAlloc.h" />
+    <ClInclude Include="..\..\cocos2d\external\recast\Detour\DetourAssert.h" />
+    <ClInclude Include="..\..\cocos2d\external\recast\Detour\DetourCommon.h" />
+    <ClInclude Include="..\..\cocos2d\external\recast\Detour\DetourMath.h" />
+    <ClInclude Include="..\..\cocos2d\external\recast\Detour\DetourNavMesh.h" />
+    <ClInclude Include="..\..\cocos2d\external\recast\Detour\DetourNavMeshBuilder.h" />
+    <ClInclude Include="..\..\cocos2d\external\recast\Detour\DetourNavMeshQuery.h" />
+    <ClInclude Include="..\..\cocos2d\external\recast\Detour\DetourNode.h" />
+    <ClInclude Include="..\..\cocos2d\external\recast\Detour\DetourStatus.h" />
+    <ClInclude Include="..\..\cocos2d\external\recast\fastlz\fastlz.h" />
+    <ClInclude Include="..\..\cocos2d\external\recast\Recast\Recast.h" />
+    <ClInclude Include="..\..\cocos2d\external\recast\Recast\RecastAlloc.h" />
+    <ClInclude Include="..\..\cocos2d\external\recast\Recast\RecastAssert.h" />
+    <ClInclude Include="..\..\cocos2d\external\tiff\include\android\tiff.h" />
+    <ClInclude Include="..\..\cocos2d\external\tiff\include\android\tiffconf.h" />
+    <ClInclude Include="..\..\cocos2d\external\tiff\include\android\tiffio.h" />
+    <ClInclude Include="..\..\cocos2d\external\tiff\include\android\tiffvers.h" />
+    <ClInclude Include="..\..\cocos2d\external\tinyxml2\tinyxml2.h" />
+    <ClInclude Include="..\..\cocos2d\external\unzip\crypt.h" />
+    <ClInclude Include="..\..\cocos2d\external\unzip\ioapi.h" />
+    <ClInclude Include="..\..\cocos2d\external\unzip\ioapi_mem.h" />
+    <ClInclude Include="..\..\cocos2d\external\unzip\unzip.h" />
+    <ClInclude Include="..\..\cocos2d\external\webp\include\android\decode.h" />
+    <ClInclude Include="..\..\cocos2d\external\webp\include\android\encode.h" />
+    <ClInclude Include="..\..\cocos2d\external\webp\include\android\types.h" />
+    <ClInclude Include="..\..\cocos2d\external\websockets\include\android\libwebsockets.h" />
+    <ClInclude Include="..\..\cocos2d\external\xxhash\xxhash.h" />
+    <ClInclude Include="..\..\cocos2d\external\zlib\include\zconf.h" />
+    <ClInclude Include="..\..\cocos2d\external\zlib\include\zlib.h" />
+    <ClInclude Include="jni\main.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(VS_NdkRoot)\sources\android\cpufeatures\cpu-features.c" />
+    <ClCompile Include="..\..\Classes\AppDelegate.cpp" />
+    <ClCompile Include="..\..\Classes\HelloWorldScene.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\2d\CCAction.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\2d\CCActionCamera.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\2d\CCActionCatmullRom.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\2d\CCActionEase.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\2d\CCActionGrid.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\2d\CCActionGrid3D.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\2d\CCActionInstant.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\2d\CCActionInterval.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\2d\CCActionManager.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\2d\CCActionPageTurn3D.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\2d\CCActionProgressTimer.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\2d\CCActionTiledGrid.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\2d\CCActionTween.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\2d\CCAnimation.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\2d\CCAnimationCache.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\2d\CCAtlasNode.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\2d\CCAutoPolygon.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\2d\CCCamera.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\2d\CCCameraBackgroundBrush.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\2d\CCClippingNode.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\2d\CCClippingRectangleNode.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\2d\CCComponent.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\2d\CCComponentContainer.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\2d\CCDrawingPrimitives.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\2d\CCDrawNode.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\2d\CCFastTMXLayer.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\2d\CCFastTMXTiledMap.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\2d\CCFont.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\2d\CCFontAtlas.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\2d\CCFontAtlasCache.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\2d\CCFontCharMap.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\2d\CCFontFNT.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\2d\CCFontFreeType.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\2d\CCGLBufferedNode.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\2d\CCGrabber.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\2d\CCGrid.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\2d\CCLabel.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\2d\CCLabelAtlas.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\2d\CCLabelBMFont.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\2d\CCLabelTextFormatter.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\2d\CCLabelTTF.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\2d\CCLayer.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\2d\CCLight.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\2d\CCMenu.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\2d\CCMenuItem.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\2d\CCMotionStreak.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\2d\CCNode.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\2d\CCNodeGrid.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\2d\CCParallaxNode.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\2d\CCParticleBatchNode.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\2d\CCParticleExamples.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\2d\CCParticleSystem.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\2d\CCParticleSystemQuad.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\2d\CCProgressTimer.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\2d\CCProtectedNode.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\2d\CCRenderTexture.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\2d\CCScene.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\2d\CCSprite.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\2d\CCSpriteBatchNode.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\2d\CCSpriteFrame.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\2d\CCSpriteFrameCache.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\2d\CCTextFieldTTF.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\2d\CCTileMapAtlas.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\2d\CCTMXLayer.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\2d\CCTMXObjectGroup.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\2d\CCTMXTiledMap.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\2d\CCTMXXMLParser.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\2d\CCTransition.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\2d\CCTransitionPageTurn.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\2d\CCTransitionProgress.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\2d\CCTweenFunction.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\3d\CCAABB.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\3d\CCAnimate3D.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\3d\CCAnimation3D.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\3d\CCAttachNode.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\3d\CCBillBoard.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\3d\CCBundle3D.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\3d\CCBundleReader.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\3d\CCFrustum.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\3d\CCMesh.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\3d\CCMeshSkin.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\3d\CCMeshVertexIndexData.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\3d\CCMotionStreak3D.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\3d\CCOBB.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\3d\CCObjLoader.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\3d\CCPlane.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\3d\CCRay.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\3d\CCSkeleton3D.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\3d\CCSkybox.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\3d\CCSprite3D.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\3d\CCSprite3DMaterial.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\3d\CCTerrain.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\audio\android\AudioEngine-inl.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\audio\android\ccdandroidUtils.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\audio\android\cddSimpleAudioEngine.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\audio\android\jni\cddandroidAndroidJavaEngine.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\audio\AudioEngine.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\base\allocator\CCAllocatorDiagnostics.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\base\allocator\CCAllocatorGlobal.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\base\allocator\CCAllocatorGlobalNewDelete.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\base\atitc.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\base\base64.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\base\CCAsyncTaskPool.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\base\CCAutoreleasePool.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\base\ccCArray.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\base\CCConfiguration.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\base\CCConsole.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\base\CCController-android.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\base\CCController.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\base\CCData.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\base\CCDataVisitor.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\base\CCDirector.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\base\CCEvent.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\base\CCEventAcceleration.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\base\CCEventController.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\base\CCEventCustom.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\base\CCEventDispatcher.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\base\CCEventFocus.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\base\CCEventKeyboard.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\base\CCEventListener.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\base\CCEventListenerAcceleration.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\base\CCEventListenerController.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\base\CCEventListenerCustom.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\base\CCEventListenerFocus.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\base\CCEventListenerKeyboard.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\base\CCEventListenerMouse.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\base\CCEventListenerTouch.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\base\CCEventMouse.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\base\CCEventTouch.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\base\ccFPSImages.c" />
+    <ClCompile Include="..\..\cocos2d\cocos\base\CCIMEDispatcher.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\base\CCNinePatchImageParser.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\base\CCNS.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\base\CCProfiling.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\base\CCProperties.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\base\ccRandom.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\base\CCRef.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\base\CCScheduler.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\base\CCScriptSupport.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\base\CCStencilStateManager.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\base\CCTouch.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\base\ccTypes.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\base\CCUserDefault-android.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\base\CCUserDefault-winrt.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\base\CCUserDefault.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\base\ccUTF8.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\base\ccUtils.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\base\CCValue.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\base\etc1.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\base\ObjectFactory.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\base\pvr.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\base\s3tc.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\base\TGAlib.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\base\ZipUtils.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\cocos2d.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\deprecated\CCArray.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\deprecated\CCDeprecated.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\deprecated\CCDictionary.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\deprecated\CCNotificationCenter.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\deprecated\CCSet.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\deprecated\CCString.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\math\CCAffineTransform.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\math\CCGeometry.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\math\CCVertex.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\math\Mat4.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\math\MathUtil.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\math\Quaternion.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\math\TransformUtils.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\math\Vec2.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\math\Vec3.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\math\Vec4.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\navmesh\CCNavMesh.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\navmesh\CCNavMeshAgent.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\navmesh\CCNavMeshDebugDraw.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\navmesh\CCNavMeshObstacle.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\navmesh\CCNavMeshUtils.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\network\CCDownloader-android.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\network\CCDownloader-curl.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\network\CCDownloader.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\network\HttpClient.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\network\HttpCookie.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\network\SocketIO.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\network\WebSocket.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\physics3d\CCPhysics3D.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\physics3d\CCPhysics3DComponent.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\physics3d\CCPhysics3DConstraint.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\physics3d\CCPhysics3DDebugDrawer.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\physics3d\CCPhysics3DObject.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\physics3d\CCPhysics3DShape.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\physics3d\CCPhysics3DWorld.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\physics3d\CCPhysicsSprite3D.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\physics\CCPhysicsBody.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\physics\CCPhysicsContact.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\physics\CCPhysicsJoint.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\physics\CCPhysicsShape.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\physics\CCPhysicsWorld.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\platform\android\CCApplication-android.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\platform\android\CCCommon-android.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\platform\android\CCDevice-android.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\platform\android\CCEnhanceAPI-android.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\platform\android\CCFileUtils-android.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\platform\android\CCGLViewImpl-android.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\platform\android\javaactivity-android.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\platform\android\jni\Java_org_cocos2dx_lib_Cocos2dxAccelerometer.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\platform\android\jni\Java_org_cocos2dx_lib_Cocos2dxBitmap.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\platform\android\jni\Java_org_cocos2dx_lib_Cocos2dxHelper.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\platform\android\jni\Java_org_cocos2dx_lib_Cocos2dxRenderer.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\platform\android\jni\JniHelper.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\platform\android\jni\TouchesJni.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\platform\CCFileUtils.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\platform\CCGLView.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\platform\CCImage.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\platform\CCSAXParser.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\platform\CCThread.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\renderer\CCBatchCommand.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\renderer\CCCustomCommand.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\renderer\CCFrameBuffer.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\renderer\CCGLProgram.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\renderer\CCGLProgramCache.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\renderer\CCGLProgramState.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\renderer\CCGLProgramStateCache.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\renderer\ccGLStateCache.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\renderer\CCGroupCommand.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\renderer\CCMaterial.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\renderer\CCMeshCommand.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\renderer\CCPass.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\renderer\CCPrimitive.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\renderer\CCPrimitiveCommand.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\renderer\CCQuadCommand.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\renderer\CCRenderCommand.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\renderer\CCRenderer.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\renderer\CCRenderState.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\renderer\ccShaders.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\renderer\CCTechnique.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\renderer\CCTexture2D.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\renderer\CCTextureAtlas.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\renderer\CCTextureCache.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\renderer\CCTextureCube.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\renderer\CCTrianglesCommand.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\renderer\CCVertexAttribBinding.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\renderer\CCVertexIndexBuffer.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\renderer\CCVertexIndexData.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\storage\local-storage\LocalStorage-android.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\storage\local-storage\LocalStorage.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\ui\CocosGUI.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\ui\UIAbstractCheckButton.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\ui\UIButton.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\ui\UICheckBox.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\ui\UIDeprecated.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\ui\UIEditBox\UIEditBox.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\ui\UIEditBox\UIEditBoxImpl-android.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\ui\UIEditBox\UIEditBoxImpl-common.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\ui\UIEditBox\UIEditBoxImpl-linux.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\ui\UIEditBox\UIEditBoxImpl-stub.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\ui\UIEditBox\UIEditBoxImpl-win32.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\ui\UIEditBox\UIEditBoxImpl-winrt.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\ui\UIHBox.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\ui\UIHelper.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\ui\UIImageView.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\ui\UILayout.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\ui\UILayoutComponent.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\ui\UILayoutManager.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\ui\UILayoutParameter.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\ui\UIListView.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\ui\UILoadingBar.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\ui\UIPageView.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\ui\UIPageViewIndicator.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\ui\UIRadioButton.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\ui\UIRelativeBox.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\ui\UIRichText.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\ui\UIScale9Sprite.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\ui\UIScrollView.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\ui\UIScrollViewBar.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\ui\UISlider.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\ui\UIText.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\ui\UITextAtlas.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\ui\UITextBMFont.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\ui\UITextField.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\ui\UIVBox.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\ui\UIVideoPlayer-android.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\ui\UIWebView.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\ui\UIWebViewImpl-android.cpp" />
+    <ClCompile Include="..\..\cocos2d\cocos\ui\UIWidget.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\Box2D\Collision\b2BroadPhase.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\Box2D\Collision\b2CollideCircle.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\Box2D\Collision\b2CollideEdge.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\Box2D\Collision\b2CollidePolygon.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\Box2D\Collision\b2Collision.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\Box2D\Collision\b2Distance.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\Box2D\Collision\b2DynamicTree.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\Box2D\Collision\b2TimeOfImpact.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\Box2D\Collision\Shapes\b2ChainShape.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\Box2D\Collision\Shapes\b2CircleShape.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\Box2D\Collision\Shapes\b2EdgeShape.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\Box2D\Collision\Shapes\b2PolygonShape.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\Box2D\Common\b2BlockAllocator.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\Box2D\Common\b2Draw.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\Box2D\Common\b2Math.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\Box2D\Common\b2Settings.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\Box2D\Common\b2StackAllocator.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\Box2D\Common\b2Timer.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\Box2D\Dynamics\b2Body.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\Box2D\Dynamics\b2ContactManager.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\Box2D\Dynamics\b2Fixture.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\Box2D\Dynamics\b2Island.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\Box2D\Dynamics\b2World.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\Box2D\Dynamics\b2WorldCallbacks.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\Box2D\Dynamics\Contacts\b2ChainAndCircleContact.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\Box2D\Dynamics\Contacts\b2ChainAndPolygonContact.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\Box2D\Dynamics\Contacts\b2CircleContact.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\Box2D\Dynamics\Contacts\b2Contact.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\Box2D\Dynamics\Contacts\b2ContactSolver.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\Box2D\Dynamics\Contacts\b2EdgeAndCircleContact.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\Box2D\Dynamics\Contacts\b2EdgeAndPolygonContact.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\Box2D\Dynamics\Contacts\b2PolygonAndCircleContact.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\Box2D\Dynamics\Contacts\b2PolygonContact.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\Box2D\Dynamics\Joints\b2DistanceJoint.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\Box2D\Dynamics\Joints\b2FrictionJoint.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\Box2D\Dynamics\Joints\b2GearJoint.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\Box2D\Dynamics\Joints\b2Joint.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\Box2D\Dynamics\Joints\b2MotorJoint.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\Box2D\Dynamics\Joints\b2MouseJoint.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\Box2D\Dynamics\Joints\b2PrismaticJoint.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\Box2D\Dynamics\Joints\b2PulleyJoint.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\Box2D\Dynamics\Joints\b2RevoluteJoint.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\Box2D\Dynamics\Joints\b2RopeJoint.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\Box2D\Dynamics\Joints\b2WeldJoint.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\Box2D\Dynamics\Joints\b2WheelJoint.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\Box2D\Rope\b2Rope.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\BroadphaseCollision\btAxisSweep3.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\BroadphaseCollision\btBroadphaseProxy.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\BroadphaseCollision\btCollisionAlgorithm.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\BroadphaseCollision\btDbvt.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\BroadphaseCollision\btDbvtBroadphase.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\BroadphaseCollision\btDispatcher.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\BroadphaseCollision\btMultiSapBroadphase.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\BroadphaseCollision\btOverlappingPairCache.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\BroadphaseCollision\btQuantizedBvh.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\BroadphaseCollision\btSimpleBroadphase.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionDispatch\btActivatingCollisionAlgorithm.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionDispatch\btBox2dBox2dCollisionAlgorithm.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionDispatch\btBoxBoxCollisionAlgorithm.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionDispatch\btBoxBoxDetector.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionDispatch\btCollisionDispatcher.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionDispatch\btCollisionObject.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionDispatch\btCollisionWorld.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionDispatch\btCompoundCollisionAlgorithm.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionDispatch\btCompoundCompoundCollisionAlgorithm.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionDispatch\btConvex2dConvex2dAlgorithm.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionDispatch\btConvexConcaveCollisionAlgorithm.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionDispatch\btConvexConvexAlgorithm.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionDispatch\btConvexPlaneCollisionAlgorithm.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionDispatch\btDefaultCollisionConfiguration.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionDispatch\btEmptyCollisionAlgorithm.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionDispatch\btGhostObject.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionDispatch\btHashedSimplePairCache.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionDispatch\btInternalEdgeUtility.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionDispatch\btManifoldResult.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionDispatch\btSimulationIslandManager.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionDispatch\btSphereBoxCollisionAlgorithm.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionDispatch\btSphereSphereCollisionAlgorithm.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionDispatch\btSphereTriangleCollisionAlgorithm.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionDispatch\btUnionFind.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionDispatch\SphereTriangleDetector.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionShapes\btBox2dShape.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionShapes\btBoxShape.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionShapes\btBvhTriangleMeshShape.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionShapes\btCapsuleShape.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionShapes\btCollisionShape.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionShapes\btCompoundShape.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionShapes\btConcaveShape.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionShapes\btConeShape.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionShapes\btConvex2dShape.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionShapes\btConvexHullShape.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionShapes\btConvexInternalShape.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionShapes\btConvexPointCloudShape.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionShapes\btConvexPolyhedron.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionShapes\btConvexShape.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionShapes\btConvexTriangleMeshShape.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionShapes\btCylinderShape.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionShapes\btEmptyShape.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionShapes\btHeightfieldTerrainShape.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionShapes\btMinkowskiSumShape.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionShapes\btMultimaterialTriangleMeshShape.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionShapes\btMultiSphereShape.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionShapes\btOptimizedBvh.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionShapes\btPolyhedralConvexShape.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionShapes\btScaledBvhTriangleMeshShape.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionShapes\btShapeHull.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionShapes\btSphereShape.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionShapes\btStaticPlaneShape.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionShapes\btStridingMeshInterface.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionShapes\btTetrahedronShape.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionShapes\btTriangleBuffer.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionShapes\btTriangleCallback.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionShapes\btTriangleIndexVertexArray.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionShapes\btTriangleIndexVertexMaterialArray.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionShapes\btTriangleMesh.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionShapes\btTriangleMeshShape.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\CollisionShapes\btUniformScalingShape.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\Gimpact\btContactProcessing.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\Gimpact\btGenericPoolAllocator.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\Gimpact\btGImpactBvh.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\Gimpact\btGImpactCollisionAlgorithm.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\Gimpact\btGImpactQuantizedBvh.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\Gimpact\btGImpactShape.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\Gimpact\btTriangleShapeEx.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\Gimpact\gim_box_set.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\Gimpact\gim_contact.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\Gimpact\gim_memory.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\Gimpact\gim_tri_collision.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\NarrowPhaseCollision\btContinuousConvexCollision.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\NarrowPhaseCollision\btConvexCast.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\NarrowPhaseCollision\btGjkConvexCast.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\NarrowPhaseCollision\btGjkEpa2.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\NarrowPhaseCollision\btGjkEpaPenetrationDepthSolver.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\NarrowPhaseCollision\btGjkPairDetector.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\NarrowPhaseCollision\btMinkowskiPenetrationDepthSolver.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\NarrowPhaseCollision\btPersistentManifold.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\NarrowPhaseCollision\btPolyhedralContactClipping.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\NarrowPhaseCollision\btRaycastCallback.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\NarrowPhaseCollision\btSubSimplexConvexCast.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletCollision\NarrowPhaseCollision\btVoronoiSimplexSolver.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletDynamics\Character\btKinematicCharacterController.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletDynamics\ConstraintSolver\btConeTwistConstraint.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletDynamics\ConstraintSolver\btContactConstraint.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletDynamics\ConstraintSolver\btFixedConstraint.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletDynamics\ConstraintSolver\btGearConstraint.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletDynamics\ConstraintSolver\btGeneric6DofConstraint.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletDynamics\ConstraintSolver\btGeneric6DofSpringConstraint.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletDynamics\ConstraintSolver\btHinge2Constraint.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletDynamics\ConstraintSolver\btHingeConstraint.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletDynamics\ConstraintSolver\btPoint2PointConstraint.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletDynamics\ConstraintSolver\btSequentialImpulseConstraintSolver.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletDynamics\ConstraintSolver\btSliderConstraint.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletDynamics\ConstraintSolver\btSolve2LinearConstraint.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletDynamics\ConstraintSolver\btTypedConstraint.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletDynamics\ConstraintSolver\btUniversalConstraint.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletDynamics\Dynamics\btDiscreteDynamicsWorld.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletDynamics\Dynamics\btRigidBody.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletDynamics\Dynamics\btSimpleDynamicsWorld.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletDynamics\Dynamics\Bullet-C-API.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletDynamics\Featherstone\btMultiBody.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletDynamics\Featherstone\btMultiBodyConstraint.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletDynamics\Featherstone\btMultiBodyConstraintSolver.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletDynamics\Featherstone\btMultiBodyDynamicsWorld.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletDynamics\Featherstone\btMultiBodyJointLimitConstraint.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletDynamics\Featherstone\btMultiBodyJointMotor.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletDynamics\Featherstone\btMultiBodyPoint2Point.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletDynamics\MLCPSolvers\btDantzigLCP.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletDynamics\MLCPSolvers\btMLCPSolver.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletDynamics\Vehicle\btRaycastVehicle.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletDynamics\Vehicle\btWheelInfo.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletMultiThreaded\btGpu3DGridBroadphase.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletMultiThreaded\btParallelConstraintSolver.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletMultiThreaded\btThreadSupportInterface.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletMultiThreaded\PosixThreadSupport.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletMultiThreaded\SequentialThreadSupport.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletMultiThreaded\SpuCollisionObjectWrapper.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletMultiThreaded\SpuCollisionTaskProcess.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletMultiThreaded\SpuContactManifoldCollisionAlgorithm.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletMultiThreaded\SpuFakeDma.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletMultiThreaded\SpuGatheringCollisionDispatcher.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletMultiThreaded\SpuLibspe2Support.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletMultiThreaded\SpuNarrowPhaseCollisionTask\boxBoxDistance.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletMultiThreaded\SpuNarrowPhaseCollisionTask\SpuCollisionShapes.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletMultiThreaded\SpuNarrowPhaseCollisionTask\SpuContactResult.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletMultiThreaded\SpuNarrowPhaseCollisionTask\SpuGatheringCollisionTask.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletMultiThreaded\SpuNarrowPhaseCollisionTask\SpuMinkowskiPenetrationDepthSolver.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletMultiThreaded\SpuSampleTaskProcess.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletMultiThreaded\SpuSampleTask\SpuSampleTask.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletMultiThreaded\Win32ThreadSupport.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletSoftBody\btDefaultSoftBodySolver.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletSoftBody\btSoftBody.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletSoftBody\btSoftBodyConcaveCollisionAlgorithm.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletSoftBody\btSoftBodyHelpers.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletSoftBody\btSoftBodyRigidBodyCollisionConfiguration.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletSoftBody\btSoftRigidCollisionAlgorithm.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletSoftBody\btSoftRigidDynamicsWorld.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\BulletSoftBody\btSoftSoftCollisionAlgorithm.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\LinearMath\btAlignedAllocator.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\LinearMath\btConvexHull.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\LinearMath\btConvexHullComputer.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\LinearMath\btGeometryUtil.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\LinearMath\btPolarDecomposition.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\LinearMath\btQuickprof.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\LinearMath\btSerializer.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\LinearMath\btVector3.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\MiniCL\MiniCL.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\MiniCL\MiniCLTaskScheduler.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\bullet\MiniCL\MiniCLTask\MiniCLTask.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\clipper\clipper.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\ConvertUTF\ConvertUTF.c" />
+    <ClCompile Include="..\..\cocos2d\external\ConvertUTF\ConvertUTFWrapper.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\edtaa3func\edtaa3func.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\poly2tri\common\shapes.cc" />
+    <ClCompile Include="..\..\cocos2d\external\poly2tri\sweep\advancing_front.cc" />
+    <ClCompile Include="..\..\cocos2d\external\poly2tri\sweep\cdt.cc" />
+    <ClCompile Include="..\..\cocos2d\external\poly2tri\sweep\sweep.cc" />
+    <ClCompile Include="..\..\cocos2d\external\poly2tri\sweep\sweep_context.cc" />
+    <ClCompile Include="..\..\cocos2d\external\recast\DebugUtils\DebugDraw.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\recast\DebugUtils\DetourDebugDraw.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\recast\DebugUtils\RecastDebugDraw.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\recast\DebugUtils\RecastDump.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\recast\DetourCrowd\DetourCrowd.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\recast\DetourCrowd\DetourLocalBoundary.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\recast\DetourCrowd\DetourObstacleAvoidance.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\recast\DetourCrowd\DetourPathCorridor.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\recast\DetourCrowd\DetourPathQueue.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\recast\DetourCrowd\DetourProximityGrid.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\recast\DetourTileCache\DetourTileCache.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\recast\DetourTileCache\DetourTileCacheBuilder.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\recast\Detour\DetourAlloc.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\recast\Detour\DetourCommon.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\recast\Detour\DetourNavMesh.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\recast\Detour\DetourNavMeshBuilder.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\recast\Detour\DetourNavMeshQuery.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\recast\Detour\DetourNode.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\recast\fastlz\fastlz.c" />
+    <ClCompile Include="..\..\cocos2d\external\recast\Recast\Recast.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\recast\Recast\RecastAlloc.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\recast\Recast\RecastArea.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\recast\Recast\RecastContour.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\recast\Recast\RecastFilter.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\recast\Recast\RecastLayers.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\recast\Recast\RecastMesh.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\recast\Recast\RecastMeshDetail.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\recast\Recast\RecastRasterization.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\recast\Recast\RecastRegion.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\tinyxml2\tinyxml2.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\unzip\ioapi.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\unzip\ioapi_mem.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\unzip\unzip.cpp" />
+    <ClCompile Include="..\..\cocos2d\external\xxhash\xxhash.c" />
+    <ClCompile Include="jni\main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\cocos2d\cocos\3d\CCAnimationCurve.inl" />
+    <None Include="..\..\cocos2d\cocos\math\Mat4.inl" />
+    <None Include="..\..\cocos2d\cocos\math\MathUtil.inl" />
+    <None Include="..\..\cocos2d\cocos\math\MathUtilNeon.inl" />
+    <None Include="..\..\cocos2d\cocos\math\MathUtilNeon64.inl" />
+    <None Include="..\..\cocos2d\cocos\math\MathUtilSSE.inl" />
+    <None Include="..\..\cocos2d\cocos\math\Quaternion.inl" />
+    <None Include="..\..\cocos2d\cocos\math\Vec2.inl" />
+    <None Include="..\..\cocos2d\cocos\math\Vec3.inl" />
+    <None Include="..\..\cocos2d\cocos\math\Vec4.inl" />
+    <None Include="..\..\cocos2d\cocos\renderer\ccShader_3D_Color.frag" />
+    <None Include="..\..\cocos2d\cocos\renderer\ccShader_3D_ColorNormal.frag" />
+    <None Include="..\..\cocos2d\cocos\renderer\ccShader_3D_ColorNormalTex.frag" />
+    <None Include="..\..\cocos2d\cocos\renderer\ccShader_3D_ColorTex.frag" />
+    <None Include="..\..\cocos2d\cocos\renderer\ccShader_3D_Particle.frag" />
+    <None Include="..\..\cocos2d\cocos\renderer\ccShader_3D_Particle.vert" />
+    <None Include="..\..\cocos2d\cocos\renderer\ccShader_3D_PositionNormalTex.vert" />
+    <None Include="..\..\cocos2d\cocos\renderer\ccShader_3D_PositionTex.vert" />
+    <None Include="..\..\cocos2d\cocos\renderer\ccShader_3D_Skybox.frag" />
+    <None Include="..\..\cocos2d\cocos\renderer\ccShader_3D_Skybox.vert" />
+    <None Include="..\..\cocos2d\cocos\renderer\ccShader_3D_Terrain.frag" />
+    <None Include="..\..\cocos2d\cocos\renderer\ccShader_3D_Terrain.vert" />
+    <None Include="..\..\cocos2d\cocos\renderer\ccShader_CameraClear.frag" />
+    <None Include="..\..\cocos2d\cocos\renderer\ccShader_CameraClear.vert" />
+    <None Include="..\..\cocos2d\cocos\renderer\ccShader_Label.vert" />
+    <None Include="..\..\cocos2d\cocos\renderer\ccShader_Label_df.frag" />
+    <None Include="..\..\cocos2d\cocos\renderer\ccShader_Label_df_glow.frag" />
+    <None Include="..\..\cocos2d\cocos\renderer\ccShader_Label_normal.frag" />
+    <None Include="..\..\cocos2d\cocos\renderer\ccShader_Label_outline.frag" />
+    <None Include="..\..\cocos2d\cocos\renderer\ccShader_PositionColor.frag" />
+    <None Include="..\..\cocos2d\cocos\renderer\ccShader_PositionColor.vert" />
+    <None Include="..\..\cocos2d\cocos\renderer\ccShader_PositionColorLengthTexture.frag" />
+    <None Include="..\..\cocos2d\cocos\renderer\ccShader_PositionColorLengthTexture.vert" />
+    <None Include="..\..\cocos2d\cocos\renderer\ccShader_PositionColorTextureAsPointsize.vert" />
+    <None Include="..\..\cocos2d\cocos\renderer\ccShader_PositionTexture.frag" />
+    <None Include="..\..\cocos2d\cocos\renderer\ccShader_PositionTexture.vert" />
+    <None Include="..\..\cocos2d\cocos\renderer\ccShader_PositionTextureA8Color.frag" />
+    <None Include="..\..\cocos2d\cocos\renderer\ccShader_PositionTextureA8Color.vert" />
+    <None Include="..\..\cocos2d\cocos\renderer\ccShader_PositionTextureColor.frag" />
+    <None Include="..\..\cocos2d\cocos\renderer\ccShader_PositionTextureColor.vert" />
+    <None Include="..\..\cocos2d\cocos\renderer\ccShader_PositionTextureColorAlphaTest.frag" />
+    <None Include="..\..\cocos2d\cocos\renderer\ccShader_PositionTextureColor_noMVP.frag" />
+    <None Include="..\..\cocos2d\cocos\renderer\ccShader_PositionTextureColor_noMVP.vert" />
+    <None Include="..\..\cocos2d\cocos\renderer\ccShader_PositionTexture_uColor.frag" />
+    <None Include="..\..\cocos2d\cocos\renderer\ccShader_PositionTexture_uColor.vert" />
+    <None Include="..\..\cocos2d\cocos\renderer\ccShader_Position_uColor.frag" />
+    <None Include="..\..\cocos2d\cocos\renderer\ccShader_Position_uColor.vert" />
+    <None Include="..\..\cocos2d\cocos\renderer\ccShader_UI_Gray.frag" />
+    <None Include="..\..\cocos2d\cocos\ui\UIWebView.mm" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets" />
+</Project>

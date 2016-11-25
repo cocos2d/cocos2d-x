@@ -1,0 +1,42 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25122.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{39E2626F-3545-4960-A6E8-258AD8476CE5}") = "HelloCpp", "Cocos2d\HelloCpp.androidproj", "{46ED4173-B435-40B1-9597-6DB580EDFAFB}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Cocos2dcpp", "Cocos2dcpp\Cocos2dcpp.vcxproj", "{0A6F61A9-FC68-4326-955D-420195B9D5FE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|ARM = Debug|ARM
+		Debug|x86 = Debug|x86
+		Release|ARM = Release|ARM
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{46ED4173-B435-40B1-9597-6DB580EDFAFB}.Debug|ARM.ActiveCfg = Debug|ARM
+		{46ED4173-B435-40B1-9597-6DB580EDFAFB}.Debug|ARM.Build.0 = Debug|ARM
+		{46ED4173-B435-40B1-9597-6DB580EDFAFB}.Debug|ARM.Deploy.0 = Debug|ARM
+		{46ED4173-B435-40B1-9597-6DB580EDFAFB}.Debug|x86.ActiveCfg = Debug|x86
+		{46ED4173-B435-40B1-9597-6DB580EDFAFB}.Debug|x86.Build.0 = Debug|x86
+		{46ED4173-B435-40B1-9597-6DB580EDFAFB}.Debug|x86.Deploy.0 = Debug|x86
+		{46ED4173-B435-40B1-9597-6DB580EDFAFB}.Release|ARM.ActiveCfg = Release|ARM
+		{46ED4173-B435-40B1-9597-6DB580EDFAFB}.Release|ARM.Build.0 = Release|ARM
+		{46ED4173-B435-40B1-9597-6DB580EDFAFB}.Release|ARM.Deploy.0 = Release|ARM
+		{46ED4173-B435-40B1-9597-6DB580EDFAFB}.Release|x86.ActiveCfg = Release|x86
+		{46ED4173-B435-40B1-9597-6DB580EDFAFB}.Release|x86.Build.0 = Release|x86
+		{46ED4173-B435-40B1-9597-6DB580EDFAFB}.Release|x86.Deploy.0 = Release|x86
+		{0A6F61A9-FC68-4326-955D-420195B9D5FE}.Debug|ARM.ActiveCfg = Debug|ARM
+		{0A6F61A9-FC68-4326-955D-420195B9D5FE}.Debug|ARM.Build.0 = Debug|ARM
+		{0A6F61A9-FC68-4326-955D-420195B9D5FE}.Debug|x86.ActiveCfg = Debug|x86
+		{0A6F61A9-FC68-4326-955D-420195B9D5FE}.Debug|x86.Build.0 = Debug|x86
+		{0A6F61A9-FC68-4326-955D-420195B9D5FE}.Release|ARM.ActiveCfg = Release|ARM
+		{0A6F61A9-FC68-4326-955D-420195B9D5FE}.Release|ARM.Build.0 = Release|ARM
+		{0A6F61A9-FC68-4326-955D-420195B9D5FE}.Release|x86.ActiveCfg = Release|x86
+		{0A6F61A9-FC68-4326-955D-420195B9D5FE}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
