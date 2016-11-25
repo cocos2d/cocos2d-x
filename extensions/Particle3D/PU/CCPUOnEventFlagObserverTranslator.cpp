@@ -57,7 +57,7 @@ bool PUOnEventFlagObserverTranslator::translateChildProperty( PUScriptCompiler* 
     return false;
 }
 
-bool PUOnEventFlagObserverTranslator::translateChildObject( PUScriptCompiler* compiler, PUAbstractNode *node )
+bool PUOnEventFlagObserverTranslator::translateChildObject( PUScriptCompiler* /*compiler*/, PUAbstractNode* /*node*/ )
 {
     // No objects
     return false;

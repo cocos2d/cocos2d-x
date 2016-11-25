@@ -70,7 +70,7 @@ bool PUVelocityMatchingAffectorTranslator::translateChildProperty( PUScriptCompi
     return false;
 }
 
-bool PUVelocityMatchingAffectorTranslator::translateChildObject( PUScriptCompiler* compiler, PUAbstractNode *node )
+bool PUVelocityMatchingAffectorTranslator::translateChildObject( PUScriptCompiler* /*compiler*/, PUAbstractNode* /*node*/ )
 {
     // No objects
     return false;

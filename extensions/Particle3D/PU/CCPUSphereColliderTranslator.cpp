@@ -90,7 +90,7 @@ bool PUSphereColliderTranslator::translateChildProperty( PUScriptCompiler* compi
     return false;
 }
 
-bool PUSphereColliderTranslator::translateChildObject( PUScriptCompiler* compiler, PUAbstractNode *node )
+bool PUSphereColliderTranslator::translateChildObject( PUScriptCompiler* /*compiler*/, PUAbstractNode* /*node*/ )
 {
     // No objects
     return false;

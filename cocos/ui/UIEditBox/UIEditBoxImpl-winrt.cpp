@@ -57,6 +57,7 @@ namespace cocos2d {
       _changeHandler(changeHandler),
       _endHandler(endHandler),
       _color(Windows::UI::Colors::White),
+      _alignment(),
       _initialText(L""),
       _fontFamily(L"Segoe UI"),
       _fontSize(12),
@@ -110,6 +111,7 @@ namespace cocos2d {
       textBox->TextWrapping = _multiline ? TextWrapping::Wrap : TextWrapping::NoWrap;
       textBox->Text = _initialText;
       setInputScope(textBox);
+      _setTextHorizontalAlignment(textBox);
       _changeToken = textBox->TextChanged += ref new Windows::UI::Xaml::Controls::TextChangedEventHandler(this, &cocos2d::ui::EditBoxWinRT::onTextChanged);
       return textBox;
     }
@@ -265,8 +267,28 @@ namespace cocos2d {
       _inputMode = inputMode;
     }
 
+    void EditBoxWinRT::setTextHorizontalAlignment(int alignment) {
+      _alignment = alignment;
+    }
+
     void EditBoxWinRT::setMaxLength(int maxLength) {
       _maxLength = maxLength;
+    }
+
+    void EditBoxWinRT::_setTextHorizontalAlignment(TextBox^ textBox)
+    {
+      switch (_alignment) {
+        default:
+        case 0:
+          textBox->TextAlignment = TextAlignment::Left;
+          break;
+        case 1:
+          textBox->TextAlignment = TextAlignment::Center;
+          break;
+        case 2:
+          textBox->TextAlignment = TextAlignment::Right;
+          break;
+      }
     }
 
     void EditBoxWinRT::setInputScope(TextBox^ textBox)
@@ -389,6 +411,11 @@ namespace cocos2d {
     void UIEditBoxImplWinrt::setNativeInputFlag(EditBox::InputFlag inputFlag)
     {
       _system_control->setInputFlag((int)inputFlag);
+    }
+
+    void UIEditBoxImplWinrt::setNativeTextHorizontalAlignment(cocos2d::TextHAlignment alignment)
+    {
+      _system_control->setTextHorizontalAlignment((int)alignment);
     }
 
     void UIEditBoxImplWinrt::setNativeText(const char* pText)

@@ -61,7 +61,7 @@ PUDoPlacementParticleEventHandler::~PUDoPlacementParticleEventHandler(void)
     // still exist.
 }
 //-----------------------------------------------------------------------
-void PUDoPlacementParticleEventHandler::handle (PUParticleSystem3D* particleSystem, PUParticle3D* particle, float timeElapsed)
+void PUDoPlacementParticleEventHandler::handle (PUParticleSystem3D* particleSystem, PUParticle3D* particle, float /*timeElapsed*/)
 {
     if (!particle)
         return;
@@ -118,7 +118,7 @@ void PUDoPlacementParticleEventHandler::handle (PUParticleSystem3D* particleSyst
     _baseParticle = 0;
 }
 //-----------------------------------------------------------------------
-void PUDoPlacementParticleEventHandler::particleEmitted(PUParticleSystem3D* particleSystem, PUParticle3D* particle)
+void PUDoPlacementParticleEventHandler::particleEmitted(PUParticleSystem3D* /*particleSystem*/, PUParticle3D* particle)
 {
     if (!_baseParticle)
         return;
@@ -221,6 +221,10 @@ void PUDoPlacementParticleEventHandler::particleEmitted(PUParticleSystem3D* part
         }
     }
 }
+
+void PUDoPlacementParticleEventHandler::particleExpired(PUParticleSystem3D* /*particleSystem*/, PUParticle3D* /*particle*/)
+{}
+
 //-----------------------------------------------------------------------
 void PUDoPlacementParticleEventHandler::setForceEmitterName(const std::string& forceEmitterName)
 {

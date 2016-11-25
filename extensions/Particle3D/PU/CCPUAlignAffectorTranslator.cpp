@@ -68,7 +68,7 @@ bool PUAlignAffectorTranslator::translateChildProperty( PUScriptCompiler* compil
     return false;
 }
 
-bool PUAlignAffectorTranslator::translateChildObject( PUScriptCompiler* compiler, PUAbstractNode *node )
+bool PUAlignAffectorTranslator::translateChildObject( PUScriptCompiler* /*compiler*/, PUAbstractNode* /*node*/ )
 {
     // No objects
     return false;

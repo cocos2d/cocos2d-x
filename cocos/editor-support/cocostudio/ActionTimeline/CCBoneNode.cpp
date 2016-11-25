@@ -441,7 +441,7 @@ void BoneNode::updateColor()
     _transformUpdated = _transformDirty = _inverseDirty = _contentSizeDirty = true;
 }
 
-void BoneNode::updateDisplayedColor(const cocos2d::Color3B& parentColor)
+void BoneNode::updateDisplayedColor(const cocos2d::Color3B& /*parentColor*/)
 {
     if (_cascadeColorEnabled)
     {
@@ -452,7 +452,7 @@ void BoneNode::updateDisplayedColor(const cocos2d::Color3B& parentColor)
     }
 }
 
-void BoneNode::updateDisplayedOpacity(GLubyte parentOpacity)
+void BoneNode::updateDisplayedOpacity(GLubyte /*parentOpacity*/)
 {
     if (_cascadeOpacityEnabled)
     {
@@ -479,7 +479,7 @@ void BoneNode::disableCascadeColor()
     }
 }
 
-void BoneNode::onDraw(const cocos2d::Mat4 &transform, uint32_t flags)
+void BoneNode::onDraw(const cocos2d::Mat4 &transform, uint32_t /*flags*/)
 {
     getGLProgram()->use();
     getGLProgram()->setUniformsForBuiltins(transform);

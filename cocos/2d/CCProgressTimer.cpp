@@ -502,7 +502,7 @@ Vec2 ProgressTimer::boundaryTexCoord(char index)
     return Vec2::ZERO;
 }
 
-void ProgressTimer::onDraw(const Mat4 &transform, uint32_t flags)
+void ProgressTimer::onDraw(const Mat4 &transform, uint32_t /*flags*/)
 {
 
     getGLProgram()->use();

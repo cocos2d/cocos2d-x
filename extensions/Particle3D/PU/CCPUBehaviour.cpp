@@ -31,14 +31,19 @@ NS_CC_BEGIN
 PUBehaviour::PUBehaviour( void ): 
 _particleSystem(nullptr),
 _behaviourScale(Vec3::ONE)
-{
-
-}
+{}
 
 PUBehaviour::~PUBehaviour( void )
-{
+{}
 
-}
+void PUBehaviour::updateBehaviour(PUParticle3D* /*particle*/, float /*deltaTime*/)
+{}
+
+void PUBehaviour::initParticleForEmission(PUParticle3D* /*particle*/)
+{}
+
+void PUBehaviour::initParticleForExpiration(PUParticle3D* /*particle*/, float /*timeElapsed*/)
+{}
 
 PUBehaviour* PUBehaviour::clone()
 {

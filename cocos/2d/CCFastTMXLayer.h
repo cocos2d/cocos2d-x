@@ -261,7 +261,7 @@ public:
      * @param pos The tile coordinate.
      * @param gid The tile gid.
      */
-    void setupTileSprite(Sprite* sprite, const Vec2& pos, int gid);
+    void setupTileSprite(Sprite* sprite, const Vec2& pos, uint32_t gid);
 
     //
     // Override
@@ -285,7 +285,7 @@ protected:
     int getVertexZForPos(const Vec2& pos);
     
     //Flip flags is packed into gid
-    void setFlaggedTileGIDByIndex(int index, int gid);
+    void setFlaggedTileGIDByIndex(int index, uint32_t gid);
     
     //
     void updateTotalQuads();

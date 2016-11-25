@@ -118,12 +118,12 @@ PURibbonTrailRender::~PURibbonTrailRender()
     destroyAll();
 }
 
-void PURibbonTrailRender::particleEmitted( PUParticleSystem3D* particleSystem, PUParticle3D* particle )
+void PURibbonTrailRender::particleEmitted( PUParticleSystem3D* /*particleSystem*/, PUParticle3D* /*particle*/ )
 {
     // Assigning visual data already done in _updateRenderQueue()
 }
 
-void PURibbonTrailRender::particleExpired( PUParticleSystem3D* particleSystem, PUParticle3D* particle )
+void PURibbonTrailRender::particleExpired( PUParticleSystem3D* /*particleSystem*/, PUParticle3D* particle )
 {
     if (particle->visualData)
     {
@@ -299,7 +299,7 @@ void PURibbonTrailRender::unPrepare()
     destroyAll();
 }
 
-void PURibbonTrailRender::updateRender( PUParticle3D *particle, float deltaTime, bool firstParticle )
+void PURibbonTrailRender::updateRender( PUParticle3D* /*particle*/, float deltaTime, bool /*firstParticle*/ )
 {
     if (_trail)
         _trail->update(deltaTime);

@@ -23,7 +23,6 @@
  ****************************************************************************/
 
 #include "Manifest.h"
-#include "json/filereadstream.h"
 #include "json/prettywriter.h"
 #include "json/stringbuffer.h"
 

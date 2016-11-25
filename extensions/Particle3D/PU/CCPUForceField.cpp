@@ -105,7 +105,7 @@ void PUForceFieldCalculationFactory::setWorldSize(const Vec3& worldSize)
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-void PURealTimeForceFieldCalculationFactory::generate(unsigned int forceFieldSize, 
+void PURealTimeForceFieldCalculationFactory::generate(unsigned int /*forceFieldSize*/,
                                                     unsigned short octaves, 
                                                     double frequency, 
                                                     double amplitude, 

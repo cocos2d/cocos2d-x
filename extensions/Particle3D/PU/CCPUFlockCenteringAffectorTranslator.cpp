@@ -34,12 +34,12 @@ PUFlockCenteringAffectorTranslator::PUFlockCenteringAffectorTranslator()
 {
 }
 //-------------------------------------------------------------------------
-bool PUFlockCenteringAffectorTranslator::translateChildProperty( PUScriptCompiler* compiler, PUAbstractNode *node )
+bool PUFlockCenteringAffectorTranslator::translateChildProperty( PUScriptCompiler* /*compiler*/, PUAbstractNode* /*node*/ )
 {
     return false;
 }
 
-bool PUFlockCenteringAffectorTranslator::translateChildObject( PUScriptCompiler* compiler, PUAbstractNode *node )
+bool PUFlockCenteringAffectorTranslator::translateChildObject( PUScriptCompiler* /*compiler*/, PUAbstractNode* /*node*/ )
 {
     // No objects
     return false;

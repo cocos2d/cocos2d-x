@@ -88,7 +88,7 @@ bool PUOnTimeObserverTranslator::translateChildProperty( PUScriptCompiler* compi
     return false;
 }
 
-bool PUOnTimeObserverTranslator::translateChildObject( PUScriptCompiler* compiler, PUAbstractNode *node )
+bool PUOnTimeObserverTranslator::translateChildObject( PUScriptCompiler* /*compiler*/, PUAbstractNode* /*node*/ )
 {
     // No objects
     return false;

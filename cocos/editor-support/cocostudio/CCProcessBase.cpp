@@ -71,7 +71,7 @@ void ProcessBase::stop()
     _isPlaying = false;
 }
 
-void ProcessBase::play(int durationTo, int durationTween,  int loop, int tweenEasing)
+void ProcessBase::play(int durationTo, int /*durationTween*/,  int /*loop*/, int tweenEasing)
 {
     _isComplete = false;
     _isPause = false;

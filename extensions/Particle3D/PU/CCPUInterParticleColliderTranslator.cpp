@@ -112,7 +112,7 @@ bool PUInterParticleColliderTranslator::translateChildProperty( PUScriptCompiler
     return false;
 }
 
-bool PUInterParticleColliderTranslator::translateChildObject( PUScriptCompiler* compiler, PUAbstractNode *node )
+bool PUInterParticleColliderTranslator::translateChildObject( PUScriptCompiler* /*compiler*/, PUAbstractNode* /*node*/ )
 {
     // No objects
     return false;

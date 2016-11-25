@@ -1196,18 +1196,36 @@ void WidgetPropertiesReader0250::setPropsForLabelBMFontFromJsonDictionary(Widget
     setColorPropsForWidgetFromJsonDictionary(widget,options);
 }
     
-void WidgetPropertiesReader0250::setPropsForAllWidgetFromJsonDictionary(WidgetReaderProtocol *reader, Widget *widget, const rapidjson::Value &options)
+void WidgetPropertiesReader0250::setPropsForAllWidgetFromJsonDictionary(WidgetReaderProtocol* /*reader*/, Widget* /*widget*/, const rapidjson::Value& /*options*/)
 {
     
 }
 
-void WidgetPropertiesReader0250::setPropsForAllCustomWidgetFromJsonDictionary(const std::string &classType,
-                                                                              cocos2d::ui::Widget *widget,
-                                                                              const rapidjson::Value &customOptions)
+void WidgetPropertiesReader0250::setPropsForAllCustomWidgetFromJsonDictionary(const std::string& /*classType*/,
+                                                                              cocos2d::ui::Widget* /*widget*/,
+                                                                              const rapidjson::Value& /*customOptions*/)
 {
     
 }
 
+Widget* WidgetPropertiesReader0250::createWidgetFromBinary(CocoLoader* /*cocoLoader*/,
+                                                    stExpCocoNode* /*pCocoNode*/,
+                                                    const char* /*fileName*/)
+{
+    return nullptr;
+}
+
+Widget* WidgetPropertiesReader0250::widgetFromBinary(CocoLoader* /*cocoLoader*/,
+                                              stExpCocoNode* /*pCocoNode*/)
+{
+    return nullptr;
+}
+
+void WidgetPropertiesReader0250::setPropsForAllWidgetFromBinary(WidgetReaderProtocol* /*reader*/,
+                                            cocos2d::ui::Widget* /*widget*/,
+                                            CocoLoader* /*cocoLoader*/,
+                                            stExpCocoNode* /*pCocoNode*/)
+{}
 
 /*0.3.0.0~1.0.0.0*/
 Widget* WidgetPropertiesReader0300::createWidget(const rapidjson::Value& data, const char* fullPath, const char* fileName)
@@ -1460,7 +1478,13 @@ void WidgetPropertiesReader0300::setPropsForAllWidgetFromBinary(WidgetReaderProt
 {
     reader->setPropsFromBinary(widget, cocoLoader, cocoNode);
 }
-
+    
+void WidgetPropertiesReader0300::setPropsForAllCustomWidgetFromBinary(const std::string& /*classType*/,
+                                                  cocos2d::ui::Widget* /*widget*/,
+                                                  CocoLoader* /*cocoLoader*/,
+                                                  stExpCocoNode* /*pCocoNode*/) {
+    //TODO: custom property
+}
     
 Widget* WidgetPropertiesReader0300::widgetFromJsonDictionary(const rapidjson::Value& data)
 {

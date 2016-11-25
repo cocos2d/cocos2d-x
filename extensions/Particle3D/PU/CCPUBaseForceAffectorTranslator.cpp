@@ -108,7 +108,7 @@ bool PUBaseForceAffectorTranslator::translateChildProperty( PUScriptCompiler* co
     return false;
 }
 
-bool PUBaseForceAffectorTranslator::translateChildObject( PUScriptCompiler* compiler, PUAbstractNode *node )
+bool PUBaseForceAffectorTranslator::translateChildObject( PUScriptCompiler* /*compiler*/, PUAbstractNode* /*node*/ )
 {
     // No objects
     return false;

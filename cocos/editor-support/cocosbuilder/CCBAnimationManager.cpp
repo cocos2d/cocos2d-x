@@ -999,7 +999,7 @@ CCBSetSpriteFrame* CCBSetSpriteFrame::reverse() const
 	return this->clone();
 }
 
-void CCBSetSpriteFrame::update(float time)
+void CCBSetSpriteFrame::update(float /*time*/)
 {
     static_cast<Sprite*>(_target)->setSpriteFrame(_spriteFrame);
 }
@@ -1050,7 +1050,7 @@ CCBSoundEffect* CCBSoundEffect::reverse() const
 	return this->clone();
 }
 
-void CCBSoundEffect::update(float time)
+void CCBSoundEffect::update(float /*time*/)
 {
     CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(_soundFile.c_str());
 }

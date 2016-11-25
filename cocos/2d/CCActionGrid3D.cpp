@@ -336,9 +336,8 @@ void Lens3D::setPosition(const Vec2& pos)
     }
 }
 
-void Lens3D::update(float time)
+void Lens3D::update(float /*time*/)
 {
-    CC_UNUSED_PARAM(time);
     if (_dirty)
     {
         int i, j;
@@ -498,9 +497,8 @@ Shaky3D* Shaky3D::clone() const
     return a;
 }
 
-void Shaky3D::update(float time)
+void Shaky3D::update(float /*time*/)
 {
-    CC_UNUSED_PARAM(time);
     int i, j;
 
     for (i = 0; i < (_gridSize.width+1); ++i)

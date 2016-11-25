@@ -198,7 +198,7 @@ GLProgram* GLProgram::createWithFilenames(const std::string& vShaderFilename, co
     return createWithFilenames(vShaderFilename, fShaderFilename, EMPTY_DEFINE, compileTimeDefines);
 }
 
-GLProgram* GLProgram::createWithFilenames(const std::string& vShaderFilename, const std::string& fShaderFilename, const std::string& compileTimeHeaders, const std::string& compileTimeDefines)
+GLProgram* GLProgram::createWithFilenames(const std::string& vShaderFilename, const std::string& fShaderFilename, const std::string& /*compileTimeHeaders*/, const std::string& compileTimeDefines)
 {
     auto ret = new (std::nothrow) GLProgram();
     if(ret && ret->initWithFilenames(vShaderFilename, fShaderFilename, compileTimeDefines)) {
@@ -695,7 +695,7 @@ bool GLProgram::updateUniformLocation(GLint location, const GLvoid* data, unsign
     {
         GLvoid* value = malloc(bytes);
         memcpy(value, data, bytes );
-        _hashForUniforms.insert(std::make_pair(location, std::make_pair(value, bytes)));
+        _hashForUniforms.emplace(location, std::make_pair(value, bytes));
     }
     else
     {

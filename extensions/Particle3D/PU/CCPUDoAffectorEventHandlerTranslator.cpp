@@ -70,7 +70,7 @@ bool PUDoAffectorEventHandlerTranslator::translateChildProperty( PUScriptCompile
     return false;
 }
 
-bool PUDoAffectorEventHandlerTranslator::translateChildObject( PUScriptCompiler* compiler, PUAbstractNode *node )
+bool PUDoAffectorEventHandlerTranslator::translateChildObject( PUScriptCompiler* /*compiler*/, PUAbstractNode* /*node*/ )
 {
     // No objects
     return false;

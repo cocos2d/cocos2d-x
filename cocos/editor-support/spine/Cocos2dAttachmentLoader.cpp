@@ -77,7 +77,7 @@ void _Cocos2dAttachmentLoader_configureAttachment (spAttachmentLoader* loader, s
 	}
 }
 
-void _Cocos2dAttachmentLoader_disposeAttachment (spAttachmentLoader* loader, spAttachment* attachment) {
+void _Cocos2dAttachmentLoader_disposeAttachment (spAttachmentLoader* /*loader*/, spAttachment* attachment) {
 	switch (attachment->type) {
 	case SP_ATTACHMENT_REGION: {
 		spRegionAttachment* regionAttachment = SUB_CAST(spRegionAttachment, attachment);

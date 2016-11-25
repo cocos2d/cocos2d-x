@@ -75,7 +75,7 @@ bool PUOnVelocityObserverTranslator::translateChildProperty( PUScriptCompiler* c
     return false;
 }
 
-bool PUOnVelocityObserverTranslator::translateChildObject( PUScriptCompiler* compiler, PUAbstractNode *node )
+bool PUOnVelocityObserverTranslator::translateChildObject( PUScriptCompiler* /*compiler*/, PUAbstractNode* /*node*/ )
 {
     // No objects
     return false;

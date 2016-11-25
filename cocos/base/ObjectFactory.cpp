@@ -120,7 +120,7 @@ Ref* ObjectFactory::createObject(const std::string &name)
 
 void ObjectFactory::registerType(const TInfo &t)
 {
-    _typeMap.insert(std::make_pair(t._class, t));
+    _typeMap.emplace(t._class, t);
 }
 
 NS_CC_END

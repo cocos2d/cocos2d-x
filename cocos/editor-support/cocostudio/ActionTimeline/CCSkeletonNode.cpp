@@ -263,7 +263,7 @@ void SkeletonNode::batchDrawAllSubBones(const cocos2d::Mat4 &transform)
 }
 
 
-void SkeletonNode::onDraw(const cocos2d::Mat4 &transform, uint32_t flags)
+void SkeletonNode::onDraw(const cocos2d::Mat4 &transform, uint32_t /*flags*/)
 {
     getGLProgram()->use();
     getGLProgram()->setUniformsForBuiltins(transform);
@@ -318,7 +318,7 @@ const cocos2d::Map<std::string, BoneNode*>& SkeletonNode::getAllSubBonesMap() co
 
 void SkeletonNode::addSkinGroup(std::string groupName, std::map<std::string, std::string> boneSkinNameMap)
 {
-    _skinGroupMap.insert(std::make_pair(groupName, boneSkinNameMap));
+    _skinGroupMap.emplace(groupName, boneSkinNameMap);
 }
 
 void SkeletonNode::checkSubBonesDirty()

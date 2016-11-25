@@ -250,7 +250,7 @@ void Menu::removeChild(Node* child, bool cleanup)
 
 //Menu - Events
 
-bool Menu::onTouchBegan(Touch* touch, Event* event)
+bool Menu::onTouchBegan(Touch* touch, Event* /*event*/)
 {
     auto camera = Camera::getVisitingCamera();
     if (_state != Menu::State::WAITING || ! _visible || !_enabled || !camera)
@@ -279,7 +279,7 @@ bool Menu::onTouchBegan(Touch* touch, Event* event)
     return false;
 }
 
-void Menu::onTouchEnded(Touch* touch, Event* event)
+void Menu::onTouchEnded(Touch* /*touch*/, Event* /*event*/)
 {
     CCASSERT(_state == Menu::State::TRACKING_TOUCH, "[Menu ccTouchEnded] -- invalid state");
     this->retain();
@@ -293,7 +293,7 @@ void Menu::onTouchEnded(Touch* touch, Event* event)
     this->release();
 }
 
-void Menu::onTouchCancelled(Touch* touch, Event* event)
+void Menu::onTouchCancelled(Touch* /*touch*/, Event* /*event*/)
 {
     CCASSERT(_state == Menu::State::TRACKING_TOUCH, "[Menu ccTouchCancelled] -- invalid state");
     this->retain();
@@ -305,7 +305,7 @@ void Menu::onTouchCancelled(Touch* touch, Event* event)
     this->release();
 }
 
-void Menu::onTouchMoved(Touch* touch, Event* event)
+void Menu::onTouchMoved(Touch* touch, Event* /*event*/)
 {
     CCASSERT(_state == Menu::State::TRACKING_TOUCH, "[Menu ccTouchMoved] -- invalid state");
     MenuItem *currentItem = this->getItemForTouch(touch, _selectedWithCamera);
@@ -573,6 +573,14 @@ MenuItem* Menu::getItemForTouch(Touch *touch, const Camera *camera)
         }
     }
     return nullptr;
+}
+
+void Menu::setOpacityModifyRGB(bool /*value*/)
+{}
+
+bool Menu::isOpacityModifyRGB() const
+{
+    return false;
 }
 
 std::string Menu::getDescription() const

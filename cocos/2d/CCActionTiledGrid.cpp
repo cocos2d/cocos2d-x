@@ -73,9 +73,8 @@ ShakyTiles3D* ShakyTiles3D::clone() const
     return ShakyTiles3D::create(_duration, _gridSize, _randrange, _shakeZ);
 }
 
-void ShakyTiles3D::update(float time)
+void ShakyTiles3D::update(float /*time*/)
 {
-    CC_UNUSED_PARAM(time);
     int i, j;
 
     for (i = 0; i < _gridSize.width; ++i)
@@ -145,9 +144,8 @@ ShatteredTiles3D* ShatteredTiles3D::clone() const
     return ShatteredTiles3D::create(_duration, _gridSize, _randrange, _shatterZ);
 }
 
-void ShatteredTiles3D::update(float time)
+void ShatteredTiles3D::update(float /*time*/)
 {
-    CC_UNUSED_PARAM(time);
     int i, j;
 
     if (_once == false)

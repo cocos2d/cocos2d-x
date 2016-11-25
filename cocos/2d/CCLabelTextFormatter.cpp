@@ -72,7 +72,7 @@ void Label::computeAlignmentOffset()
     }
 }
 
-int Label::getFirstCharLen(const std::u16string& utf16Text, int startIndex, int textLen)
+int Label::getFirstCharLen(const std::u16string& /*utf16Text*/, int /*startIndex*/, int /*textLen*/)
 {
     return 1;
 }

@@ -50,6 +50,7 @@
 - (void)setInputMode:(cocos2d::ui::EditBox::InputMode)inputMode;
 - (void)setInputFlag:(cocos2d::ui::EditBox::InputFlag)flag;
 - (void)setReturnType:(cocos2d::ui::EditBox::KeyboardReturnType)returnType;
+- (void)setTextHorizontalAlignment:(cocos2d::TextHAlignment)alignment;
 
 - (void)setPlaceHolder:(NSString *)text;
 - (void)setVisible:(BOOL)visible;

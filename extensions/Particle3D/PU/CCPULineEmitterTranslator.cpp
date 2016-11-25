@@ -148,7 +148,7 @@ bool PULineEmitterTranslator::translateChildProperty( PUScriptCompiler* compiler
     return false;
 }
 
-bool PULineEmitterTranslator::translateChildObject( PUScriptCompiler* compiler, PUAbstractNode *node )
+bool PULineEmitterTranslator::translateChildObject( PUScriptCompiler* /*compiler*/, PUAbstractNode* /*node*/ )
 {
     // No objects
     return false;

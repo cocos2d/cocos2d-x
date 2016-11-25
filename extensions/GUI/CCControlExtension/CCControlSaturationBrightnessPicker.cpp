@@ -180,7 +180,7 @@ bool ControlSaturationBrightnessPicker::checkSliderPosition(Vec2 location)
 }
 
 
-bool ControlSaturationBrightnessPicker::onTouchBegan(Touch* touch, Event* event)
+bool ControlSaturationBrightnessPicker::onTouchBegan(Touch* touch, Event* /*event*/)
 {
     if (!isEnabled() || !isVisible())
     {
@@ -195,7 +195,7 @@ bool ControlSaturationBrightnessPicker::onTouchBegan(Touch* touch, Event* event)
 }
 
 
-void ControlSaturationBrightnessPicker::onTouchMoved(Touch* touch, Event* event)
+void ControlSaturationBrightnessPicker::onTouchMoved(Touch* touch, Event* /*event*/)
 {
     // Get the touch location
     Vec2 touchLocation=getTouchLocation(touch);

@@ -222,7 +222,7 @@ bool BillBoard::calculateBillbaordTransform()
     return false;
 }
 
-void BillBoard::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
+void BillBoard::draw(Renderer *renderer, const Mat4 &/*transform*/, uint32_t flags)
 {
     //FIXME: frustum culling here
     flags |= Node::FLAGS_RENDER_AS_3D;
