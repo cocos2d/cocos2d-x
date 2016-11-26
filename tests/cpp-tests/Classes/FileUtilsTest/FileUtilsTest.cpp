@@ -18,6 +18,9 @@ FileUtilsTests::FileUtilsTests()
     ADD_TEST_CASE(TestWriteValueMap);
     ADD_TEST_CASE(TestWriteValueVector);
     ADD_TEST_CASE(TestUnicodePath);
+    ADD_TEST_CASE(TestIsFileExistAsync);
+    ADD_TEST_CASE(TestIsDirectoryExistAsync);
+    ADD_TEST_CASE(TestFileFuncsAsync);
 }
 
 // TestResolutionDirectories
@@ -1080,6 +1083,159 @@ std::string TestUnicodePath::title() const
 }
 
 std::string TestUnicodePath::subtitle() const
+{
+    return "";
+}
+
+// TestIsFileExist
+
+void TestIsFileExistAsync::onEnter()
+{
+    FileUtilsDemo::onEnter();
+    auto s = Director::getInstance()->getWinSize();
+    auto sharedFileUtils = FileUtils::getInstance();
+    
+    sharedFileUtils->isFileExist("Images/grossini.png", [=](bool isExist) {
+        CCASSERT(std::this_thread::get_id() == Director::getInstance()->getCocos2dThreadId(), "Callback should be on cocos thread");
+        auto label = Label::createWithSystemFont(isExist ? "Images/grossini.png exists" : "Images/grossini.png doesn't exist", "", 20);
+        label->setPosition(s.width/2, s.height/3);
+        this->addChild(label);
+        
+        isExist = sharedFileUtils->isFileExist("Images/grossini.xcf");
+        label = Label::createWithSystemFont(isExist ? "Images/grossini.xcf exists" : "Images/grossini.xcf doesn't exist", "", 20);
+        label->setPosition(s.width/2, s.height/3*2);
+        this->addChild(label);
+    });
+}
+
+void TestIsFileExistAsync::onExit()
+{
+    
+    FileUtils *sharedFileUtils = FileUtils::getInstance();
+    
+    // reset filename lookup
+    sharedFileUtils->setFilenameLookupDictionary(ValueMap());
+    
+    FileUtilsDemo::onExit();
+}
+
+std::string TestIsFileExistAsync::title() const
+{
+    return "FileUtilsAsync: check whether the file exists";
+}
+
+std::string TestIsFileExistAsync::subtitle() const
+{
+    return "";
+}
+
+void TestIsDirectoryExistAsync::onEnter()
+{
+    FileUtilsDemo::onEnter();
+    auto s = Director::getInstance()->getWinSize();
+    auto util = FileUtils::getInstance();
+    int x = s.width/2, y = s.height/3;
+    
+    std::string dir;
+    auto getMsg = [](bool b, const std::string& dir)-> std::string
+    {
+        char msg[512];
+        snprintf((char *)msg, 512, "%s for dir: \"%s\"", b ? "success" : "failed", dir.c_str());
+        return std::string(msg);
+    };
+    
+    dir = "Images";
+    util->isDirectoryExist(dir, [=](bool exists) {
+        auto label = Label::createWithSystemFont(getMsg(exists, dir), "", 20);
+        label->setPosition(x, y * 2);
+        this->addChild(label);
+        
+        auto dir = util->getWritablePath();
+        util->isDirectoryExist(dir, [=](bool exists) {
+            auto label = Label::createWithSystemFont(getMsg(exists, dir), "", 20);
+            label->setPosition(x, y * 1);
+            this->addChild(label);
+        });
+    });
+}
+
+void TestIsDirectoryExistAsync::onExit()
+{
+    
+    FileUtils *sharedFileUtils = FileUtils::getInstance();
+    
+    // reset filename lookup
+    sharedFileUtils->purgeCachedEntries();
+    
+    FileUtilsDemo::onExit();
+}
+
+std::string TestIsDirectoryExistAsync::title() const
+{
+    return "FileUtilsAsync: check whether the directory exists";
+}
+
+std::string TestIsDirectoryExistAsync::subtitle() const
+{
+    return "";
+}
+
+void TestFileFuncsAsync::onEnter()
+{
+    FileUtilsDemo::onEnter();
+    auto s = Director::getInstance()->getWinSize();
+    auto sharedFileUtils = FileUtils::getInstance();
+    
+    int x = s.width/2,
+    y = s.height/5;
+    
+    std::string filename = "__test.test";
+    std::string filename2 = "__newtest.test";
+    std::string filepath = sharedFileUtils->getWritablePath() + filename;
+    std::string content = "Test string content to put into created file";
+    std::string msg;
+    
+    FILE *out = fopen(filepath.c_str(), "w");
+    fputs(content.c_str(), out);
+    fclose(out);
+    
+    
+    sharedFileUtils->isFileExist(filepath, [=](bool exists) {
+        CCASSERT(exists, "File could not be found");
+        auto label = Label::createWithSystemFont("Test file '__test.test' created", "", 20);
+        label->setPosition(x, y * 4);
+        this->addChild(label);
+        
+        sharedFileUtils->getFileSize(filepath, [=](long size) {
+            auto msg = StringUtils::format("getFileSize: Test file size equals %ld", size);
+            auto label = Label::createWithSystemFont(msg, "", 20);
+            label->setPosition(x, y * 3);
+            this->addChild(label);
+            
+            sharedFileUtils->renameFile(sharedFileUtils->getWritablePath(), filename, filename2, [=] (bool success) {
+                CCASSERT(success, "Was not able to properly rename file");
+                auto label = Label::createWithSystemFont("renameFile: Test file renamed to  '__newtest.test'", "", 20);
+                label->setPosition(x, y * 2);
+                this->addChild(label);
+                
+                sharedFileUtils->removeFile(sharedFileUtils->getWritablePath() + filename2, [=](bool success) {
+                    CCASSERT(success, "Was not able to remove file");
+                    auto label = Label::createWithSystemFont("removeFile: Test file removed", "", 20);
+                    label->setPosition(x, y * 1);
+                    this->addChild(label);
+                });
+            });
+        });
+
+    });
+}
+
+std::string TestFileFuncsAsync::title() const
+{
+    return "FileUtils: file control functions";
+}
+
+std::string TestFileFuncsAsync::subtitle() const
 {
     return "";
 }
