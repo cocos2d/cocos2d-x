@@ -5,6 +5,7 @@
 #include "scripting/lua-bindings/manual/CCComponentLua.h"
 #include "scripting/lua-bindings/manual/tolua_fix.h"
 #include "scripting/lua-bindings/manual/LuaBasicConversions.h"
+#include "lua/lua/lstate.h"
 
 int lua_cocos2dx_Ref_release(lua_State* tolua_S)
 {
