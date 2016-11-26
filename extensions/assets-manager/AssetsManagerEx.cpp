@@ -137,7 +137,9 @@ void AssetsManagerEx::initManifests(const std::string& manifestUrl)
         if (_tempManifest)
         {
             _tempManifest->parse(_tempManifestPath);
-            if (!_tempManifest->isLoaded() && _fileUtils->isFileExist(_tempManifestPath))
+            // 如果成功加载该文件，下面进行startUpdate()更新时会导致执行 if (_tempManifest->isLoaded() && _tempManifest->versionEquals(_remoteManifest))
+            // 下载所有该文件清单的文件。
+            if (_fileUtils->isFileExist(_tempManifestPath))
                 _fileUtils->removeFile(_tempManifestPath);
         }
         else
