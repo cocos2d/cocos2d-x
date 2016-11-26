@@ -34,6 +34,9 @@ THE SOFTWARE.
 #include "base/ccTypes.h"
 #include "base/CCValue.h"
 #include "base/CCData.h"
+#include "base/CCAsyncTaskPool.h"
+#include "base/CCScheduler.h"
+#include "base/CCDirector.h"
 
 NS_CC_BEGIN
 
@@ -163,13 +166,16 @@ public:
      *  Gets string from a file.
      */
     virtual std::string getStringFromFile(const std::string& filename);
+    
+    virtual void getStringFromFile(const std::string& path, std::function<void(std::string&&)>&& callback);
 
     /**
      *  Creates binary data from a file.
      *  @return A data object.
      */
     virtual Data getDataFromFile(const std::string& filename);
-
+    
+    virtual void getDataFromFile(const std::string& filename, std::function<void(Data&&)>&& callback);
 
     enum class Status
     {
@@ -495,7 +501,15 @@ public:
      */
     virtual bool writeStringToFile(const std::string& dataStr, const std::string& fullPath);
 
-
+    /**
+     * Write a string to a file, done async off the main cocos thread
+     *
+     * @param dataStr the string want to save
+     * @param fullPath The full path to the file you want to save a string
+     * @param callback The function called once the string has been written to a file
+     */
+    virtual void writeStringToFile(std::string&& dataStr, const std::string& fullPath, std::function<void(bool)>&& callback);
+    
     /**
      * write Data into a file
      *
@@ -504,6 +518,8 @@ public:
      *@return bool
      */
     virtual bool writeDataToFile(const Data& data, const std::string& fullPath);
+    
+    virtual void writeDataToFile(Data&& data, const std::string& fullPath, std::function<void(bool)>&& callback);
 
     /**
     * write ValueMap into a plist file
@@ -514,6 +530,9 @@ public:
     */
     virtual bool writeValueMapToFile(const ValueMap& dict, const std::string& fullPath);
 
+    virtual void writeValueMapToFile(ValueMap&& dict, const std::string& fullPath, std::function<void(bool)>&& callback);
+    
+    
     /**
     * write ValueVector into a plist file
     *
@@ -522,6 +541,8 @@ public:
     *@return bool
     */
     virtual bool writeValueVectorToFile(const ValueVector& vecData, const std::string& fullPath);
+    
+    virtual void writeValueVectorToFile(ValueVector&& vecData, const std::string& fullPath, std::function<void(bool)>&& callback);
 
     /**
     * Windows fopen can't support UTF-8 filename
@@ -544,6 +565,8 @@ public:
      *  @return True if the file exists, false if not.
      */
     virtual bool isFileExist(const std::string& filename) const;
+    
+    virtual void isFileExist(const std::string& filename, std::function<void(bool)>&& callback);
 
     /**
     *  Gets filename extension is a suffix (separated from the base filename by a dot) in lower case.
@@ -571,6 +594,7 @@ public:
      *  @return True if the directory exists, false if not.
      */
     virtual bool isDirectoryExist(const std::string& dirPath) const;
+    virtual void isDirectoryExist(const std::string& dirPath, std::function<void(bool)>&& callback);
 
     /**
      *  Creates a directory.
@@ -579,6 +603,7 @@ public:
      *  @return True if the directory have been created successfully, false if not.
      */
     virtual bool createDirectory(const std::string& dirPath);
+    virtual void createDirectory(const std::string& dirPath, std::function<void(bool)>&& callback);
 
     /**
      *  Removes a directory.
@@ -587,6 +612,7 @@ public:
      *  @return True if the directory have been removed successfully, false if not.
      */
     virtual bool removeDirectory(const std::string& dirPath);
+    virtual void removeDirectory(const std::string& dirPath, std::function<void(bool)>&& callback);
 
     /**
      *  Removes a file.
@@ -595,6 +621,7 @@ public:
      *  @return True if the file have been removed successfully, false if not.
      */
     virtual bool removeFile(const std::string &filepath);
+    virtual void removeFile(const std::string &filepath, std::function<void(bool)>&& callback);
 
     /**
      *  Renames a file under the given directory.
@@ -605,6 +632,7 @@ public:
      *  @return True if the file have been renamed successfully, false if not.
      */
     virtual bool renameFile(const std::string &path, const std::string &oldname, const std::string &name);
+    virtual void renameFile(const std::string &path, const std::string &oldname, const std::string &name, std::function<void(bool)>&& callback);
 
     /**
      *  Renames a file under the given directory.
@@ -614,7 +642,7 @@ public:
      *  @return True if the file have been renamed successfully, false if not.
      */
     virtual bool renameFile(const std::string &oldfullpath, const std::string &newfullpath);
-
+    virtual void renameFile(const std::string &oldfullpath, const std::string &newfullpath, std::function<void(bool)>&& callback);
     /**
      *  Retrieve the file size.
      *
@@ -623,6 +651,7 @@ public:
      *  @return The file size.
      */
     virtual long getFileSize(const std::string &filepath);
+    virtual void getFileSize(const std::string &filepath, std::function<void(long)>&& callback);
 
     /** Returns the full path cache. */
     const std::unordered_map<std::string, std::string>& getFullPathCache() const { return _fullPathCache; }
@@ -739,6 +768,44 @@ protected:
      */
     virtual void valueMapCompact(ValueMap& valueMap);
     virtual void valueVectorCompact(ValueVector& valueVector);
+    
+    template<typename T>
+    void performOperationOffthread(std::function<T(void)>&& t, std::function<void(T)>&& callback)
+    {
+        auto lambda = std::bind([](const std::function<void(T)>& callbackFn, const std::function<T(void)>& action) {
+                auto rval = action();
+                Director::getInstance()->getScheduler()->performFunctionInCocosThread(std::bind(callbackFn, rval));
+        }, std::forward<std::function<void(T)>>(callback), std::forward<std::function<T(void)>>(t));
+
+        AsyncTaskPool::getInstance()->enqueue(AsyncTaskPool::TaskType::TASK_IO, [](void*){}, nullptr, std::move(lambda));
+    }
+    
+    template<typename ...ARGS>
+    void performOperationOffthreadForBool(ARGS&& ...args)
+    {
+        performOperationOffthread<bool>(std::forward<ARGS>(args)...);
+    }
+    
+    template<typename ...ARGS>
+    void performOperationOffthreadForLong(ARGS&& ...args)
+    {
+        performOperationOffthread<long>(std::forward<ARGS>(args)...);
+    }
+    
+    template<typename T, typename R>
+    void performOperationOffthread(T&& t, std::function<void(R&&)>&& callback)
+    {
+        // Use std::bind to not copying dataStr if dataStr is an rvalue
+        auto lambda = std::bind([](const std::function<void(R&&)>& callbackFn, const T& action) {
+            auto rval = action();
+            auto fn = std::bind([] (const std::function<void (R&&)>& callbackFnc, decltype(rval)& returnVal) {
+                callbackFnc(std::move(returnVal));
+            }, std::forward<decltype(callbackFn)>(callbackFn), std::move(rval));
+            Director::getInstance()->getScheduler()->performFunctionInCocosThread(fn);
+        }, std::forward<decltype(callback)>(callback), std::forward<decltype(t)>(t));
+        
+        AsyncTaskPool::getInstance()->enqueue(AsyncTaskPool::TaskType::TASK_IO, [](void*){}, nullptr, std::move(lambda));
+    }
 };
 
 // end of support group
