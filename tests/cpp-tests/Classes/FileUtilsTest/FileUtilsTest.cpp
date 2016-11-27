@@ -1239,3 +1239,59 @@ std::string TestFileFuncsAsync::subtitle() const
 {
     return "";
 }
+
+void TestWriteStringAsync::onEnter()
+{
+    FileUtilsDemo::onEnter();
+    
+    auto winSize = Director::getInstance()->getWinSize();
+    
+    auto writeResult = Label::createWithTTF("show writeResult", "fonts/Thonburi.ttf", 18);
+    this->addChild(writeResult);
+    writeResult->setPosition(winSize.width / 2, winSize.height * 3 / 4);
+    
+    auto readResult = Label::createWithTTF("show readResult", "fonts/Thonburi.ttf", 18);
+    this->addChild(readResult);
+    readResult->setPosition(winSize.width / 2, winSize.height / 3);
+    
+    std::string writablePath = FileUtils::getInstance()->getWritablePath();
+    std::string fileName = "writeStringTest.txt";
+    
+    // writeTest
+    std::string writeDataStr = "the string data will be write into a file";
+    std::string fullPath = writablePath + fileName;
+    
+    FileUtils::getInstance()->writeStringToFile("foo", fullPath, [=](bool success)
+    {
+        CCASSERT(success, "Write String to data failed");
+    });
+    if (FileUtils::getInstance()->writeStringToFile(writeDataStr, fullPath.c_str()))
+    {
+        log("see the plist file at %s", fullPath.c_str());
+        writeResult->setString("write success:" + writeDataStr);
+    }
+    else
+    {
+        log("write plist file failed");
+        writeResult->setString("write fail");
+    }
+    
+    // readTest
+    std::string readDataStr = FileUtils::getInstance()->getStringFromFile(fullPath);
+    readResult->setString("read success:" + readDataStr);
+}
+
+void TestWriteStringAsync::onExit()
+{
+    FileUtilsDemo::onExit();
+}
+
+std::string TestWriteStringAsync::title() const
+{
+    return "FileUtilsAsync: TestWriteString to files";
+}
+
+std::string TestWriteStringAsync::subtitle() const
+{
+    return "";
+}
