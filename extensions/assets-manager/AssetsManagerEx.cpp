@@ -136,9 +136,9 @@ void AssetsManagerEx::initManifests(const std::string& manifestUrl)
         _tempManifest = new (std::nothrow) Manifest();
         if (_tempManifest)
         {
-            _tempManifest->parse(_tempManifestPath);
-            // 如果成功加载该文件，下面进行startUpdate()更新时会导致执行 if (_tempManifest->isLoaded() && _tempManifest->versionEquals(_remoteManifest))
-            // 下载所有该文件清单的文件。
+            // if load succeed, when it come to startUpdate(), it may execute the condition:
+            // "if (_tempManifest->isLoaded() && _tempManifest->versionEquals(_remoteManifest))"
+            // and download all the resource which we don't need to.
             if (_fileUtils->isFileExist(_tempManifestPath))
                 _fileUtils->removeFile(_tempManifestPath);
         }
