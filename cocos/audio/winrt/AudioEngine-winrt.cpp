@@ -43,10 +43,7 @@ AudioEngineImpl::~AudioEngineImpl()
 
 bool AudioEngineImpl::init()
 {
-    bool ret = false;
-
-    ret = true;
-    return ret;
+    return true;
 }
 
 AudioCache* AudioEngineImpl::preload(const std::string& filePath, std::function<void(bool)> callback)
