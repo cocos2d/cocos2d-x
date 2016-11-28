@@ -1264,7 +1264,7 @@ void TestWriteStringAsync::onEnter()
         CCASSERT(success, "Write String to data failed");
         writeResult->setString("write success:" + writeDataStr);
 
-        FileUtils::getInstance()->getStringFromFile(fullPath, [=](std::string&& value) {
+        FileUtils::getInstance()->getStringFromFile(fullPath, [=](const std::string& value) {
             CCASSERT(!value.empty(), "String should be readable");
             readResult->setString("read success: " + value);
         });
@@ -1312,7 +1312,7 @@ void TestWriteDataAsync::onEnter()
 
     FileUtils::getInstance()->writeDataToFile(writeData, fullPath, [=](bool success) {
         writeResult->setString("Write result success : " + success);
-        FileUtils::getInstance()->getDataFromFile(fullPath, [=](Data&& readData) {
+        FileUtils::getInstance()->getDataFromFile(fullPath, [=](const Data& readData) {
             auto buffer = (unsigned char*)malloc(sizeof(unsigned char) * (readData.getSize() + 1));
             memcpy(buffer, readData.getBytes(), readData.getSize());
             buffer[readData.getSize()] = '\0';
@@ -1393,7 +1393,8 @@ void TestWriteValueMapAsync::onEnter()
     FileUtils::getInstance()->writeValueMapToFile(valueMap, fullPath, [=](bool success) {
         writeResult->setString("Write Result : " + success);
 
-        FileUtils::getInstance()->getValueMapFromFile(fullPath, [=](ValueMap&& readValueMap) {
+        FileUtils::getInstance()->getValueMapFromFile(fullPath, [=](const ValueMap& map) {
+            auto readValueMap = map;
             std::string readDataStr = "read data:\n";
             // read value map data
             ValueMap readMapInMap = readValueMap["data0"].asValueMap();
@@ -1489,7 +1490,8 @@ void TestWriteValueVectorAsync::onEnter()
     std::string fullPath = writablePath + "testWriteValueVector.plist";
     FileUtils::getInstance()->writeValueVectorToFile(array, fullPath, [=](bool success) {
         writeResult->setString("Write Success : " + success);
-        FileUtils::getInstance()->getValueVectorFromFile(fullPath, [=](ValueVector&& readArray) {
+        FileUtils::getInstance()->getValueVectorFromFile(fullPath, [=](const ValueVector& array) {
+            auto readArray = array;
             std::string readDataStr = "read data:\n";
             // read value map data
             ValueMap readMapInArray = readArray.at(0).asValueMap();

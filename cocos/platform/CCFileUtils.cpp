@@ -627,7 +627,7 @@ std::string FileUtils::getStringFromFile(const std::string& filename)
     return s;
 }
 
-void FileUtils::getStringFromFile(const std::string &path, const std::function<void (std::string&&)>& callback)
+void FileUtils::getStringFromFile(const std::string &path, const std::function<void (const std::string&)>& callback)
 {
     // Get the full path on the main thread, to avoid the issue that FileUtil's is not
     // thread safe, and accessing the fullPath cache and searching the search paths is not thread safe
@@ -644,7 +644,7 @@ Data FileUtils::getDataFromFile(const std::string& filename)
     return d;
 }
 
-void FileUtils::getDataFromFile(const std::string& filename, const std::function<void(Data&&)>& callback)
+void FileUtils::getDataFromFile(const std::string& filename, const std::function<void(const Data&)>& callback)
 {
     auto fullPath = fullPathForFilename(filename);
     performOperationOffthread([fullPath]() -> Data {
@@ -1126,7 +1126,7 @@ void FileUtils::getFileSize(const std::string &filepath, const std::function<voi
     }, callback);
 }
 
-void FileUtils::getValueMapFromFile(const std::string& filename, const std::function<void(ValueMap&&)>& callback)
+void FileUtils::getValueMapFromFile(const std::string& filename, const std::function<void(const ValueMap&)>& callback)
 {
     auto fullPath = fullPathForFilename(filename);
     performOperationOffthread([fullPath]() -> ValueMap {
@@ -1134,7 +1134,7 @@ void FileUtils::getValueMapFromFile(const std::string& filename, const std::func
     }, callback);
 }
 
-void FileUtils::getValueVectorFromFile(const std::string& filename, const std::function<void(ValueVector&&)>& callback)
+void FileUtils::getValueVectorFromFile(const std::string& filename, const std::function<void(const ValueVector&)>& callback)
 {
     auto fullPath = fullPathForFilename(filename);
     performOperationOffthread([fullPath]() -> ValueVector {

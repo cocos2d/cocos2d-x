@@ -167,7 +167,7 @@ public:
      */
     virtual std::string getStringFromFile(const std::string& filename);
     
-    virtual void getStringFromFile(const std::string& path, const std::function<void(std::string&&)>& callback);
+    virtual void getStringFromFile(const std::string& path, const std::function<void(const std::string&)>& callback);
 
     /**
      *  Creates binary data from a file.
@@ -175,7 +175,7 @@ public:
      */
     virtual Data getDataFromFile(const std::string& filename);
     
-    virtual void getDataFromFile(const std::string& filename, const std::function<void(Data&&)>& callback);
+    virtual void getDataFromFile(const std::string& filename, const std::function<void(const Data&)>& callback);
 
     enum class Status
     {
@@ -476,7 +476,7 @@ public:
      *  @note This method is used internally.
      */
     virtual ValueMap getValueMapFromFile(const std::string& filename);
-    virtual void getValueMapFromFile(const std::string& filename, const std::function<void(ValueMap&&)>& callback);
+    virtual void getValueMapFromFile(const std::string& filename, const std::function<void(const ValueMap&)>& callback);
 
 
     /** Converts the contents of a file to a ValueMap.
@@ -558,7 +558,7 @@ public:
     // Converts the contents of a file to a ValueVector.
     // This method is used internally.
     virtual ValueVector getValueVectorFromFile(const std::string& filename);
-    virtual void getValueVectorFromFile(const std::string& filename, const std::function<void(ValueVector&&)>& callback);
+    virtual void getValueVectorFromFile(const std::string& filename, const std::function<void(const ValueVector&)>& callback);
 
     /**
      *  Checks whether a file exists.
@@ -802,13 +802,13 @@ protected:
     }
     
     template<typename T, typename R>
-    void performOperationOffthread(const T& action, const std::function<void(R&&)>& callback)
+    void performOperationOffthread(const T& action, const std::function<void(const R&)>& callback)
     {
         // Use std::bind to not copying dataStr if dataStr is an rvalue
         auto lambda = [action, callback]() {
             auto rval = action();
-            auto fn = std::bind([] (const std::function<void (R&&)>& callbackFnc, decltype(rval)& returnVal) {
-                callbackFnc(std::move(returnVal));
+            auto fn = std::bind([] (const std::function<void (const R&)>& callbackFnc, decltype(rval)& returnVal) {
+                callbackFnc(returnVal);
             }, std::forward<decltype(callback)>(callback), std::move(rval));
             Director::getInstance()->getScheduler()->performFunctionInCocosThread(fn);
         };
