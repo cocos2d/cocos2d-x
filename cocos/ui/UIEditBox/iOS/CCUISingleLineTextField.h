@@ -27,7 +27,11 @@
 #import <UIKit/UIKit.h>
 #import "ui/UIEditBox/iOS/UITextField+CCUITextInput.h"
 
-/** TODO: Missing doc - Why is this subclass necessary?
- */
+#pragma mark - UISingleLineTextField implementation
+
 @interface CCUISingleLineTextField : UITextField
+
+@property (nonatomic, retain) UIColor *placeholderTextColor;
+@property (nonatomic, retain) UIFont *placeholderFont;
+
 @end

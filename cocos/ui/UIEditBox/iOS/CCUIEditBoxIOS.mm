@@ -137,12 +137,12 @@
 
 - (void)setPlaceholderFont:(UIFont *)font
 {
-    self.textInput.ccui_placeholderLabel.font = font;
+    self.textInput.ccui_placeholderFont = font;
 }
 
 - (void)setPlaceholderTextColor:(UIColor *)color
 {
-    self.textInput.ccui_placeholderLabel.textColor = color;
+    self.textInput.ccui_placeholderTextColor = color;
 }
 
 - (void)setInputMode:(cocos2d::ui::EditBox::InputMode)inputMode
