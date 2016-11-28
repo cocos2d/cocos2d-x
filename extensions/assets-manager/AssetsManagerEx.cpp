@@ -622,9 +622,11 @@ void AssetsManagerEx::startUpdate()
                 Manifest::AssetDiff diff = it->second;
 
                 // remove downloaded tmp file. it found extName by CCDownloader.cpp:71
-                // 假设玩家在版本0.2更新了一半该文件，然后关掉热更新，服务器更新了几版这个文件，
-                // 下次玩家再次更新该文件，由于已经更新了一半缓存到缓存文件，更新时会更新剩下的文件大小然后进行拼接，
-                // 完成后重命名回来，导致该文件损坏。
+                // Let's suppose then player updated a half file in version 0.2 and turn off the game, and then the 
+                // hot update server had already updated this file with anthor version (said 0.3).
+                // And the player contiune to update this file. It will skip the updated bytes and contiune to download
+                // the rest part. but this file half is ver0.2, half is ver0.3, this file will be damage.
+                // It must cause problem.
                 _fileUtils->removeFile(_storagePath + diff.asset.path + ".tmp");
 
                 if (diff.type == Manifest::DiffType::DELETED)
