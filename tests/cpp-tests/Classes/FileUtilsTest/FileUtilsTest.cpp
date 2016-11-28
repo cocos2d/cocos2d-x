@@ -1309,7 +1309,15 @@ void TestWriteDataAsync::onEnter()
 
 
     FileUtils::getInstance()->writeDataToFile(writeData, fullPath, [=](bool success) {
-        writeResult->setString("Write result success : " + success);
+        if (success)
+        {
+            writeResult->setString("Write result success");
+        } 
+        else
+        {
+            writeResult->setString("Write result failure");
+        }
+        
         FileUtils::getInstance()->getDataFromFile(fullPath, [=](const Data& readData) {
             auto buffer = (unsigned char*)malloc(sizeof(unsigned char) * (readData.getSize() + 1));
             memcpy(buffer, readData.getBytes(), readData.getSize());
