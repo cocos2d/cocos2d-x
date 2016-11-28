@@ -212,17 +212,6 @@ public:
     virtual std::string subtitle() const override;
 };
 
-class TextWritePlistAsync : public FileUtilsDemo
-{
-public:
-    CREATE_FUNC(TextWritePlistAsync);
-    
-    virtual void onEnter() override;
-    virtual void onExit() override;
-    virtual std::string title() const override;
-    virtual std::string subtitle() const override;
-};
-
 class TestWriteStringAsync : public FileUtilsDemo
 {
 public:
@@ -232,19 +221,6 @@ public:
     virtual void onExit() override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-};
-
-class TestGetContentsAsync : public FileUtilsDemo
-{
-public:
-    CREATE_FUNC(TestGetContentsAsync);
-    
-    virtual void onEnter() override;
-    virtual void onExit() override;
-    virtual std::string title() const override;
-    virtual std::string subtitle() const override;
-private:
-    std::string _generatedFile;
 };
 
 class TestWriteDataAsync : public FileUtilsDemo
