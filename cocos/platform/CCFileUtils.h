@@ -476,6 +476,7 @@ public:
      *  @note This method is used internally.
      */
     virtual ValueMap getValueMapFromFile(const std::string& filename);
+	virtual void getValueMapFromFile(const std::string& filename, const std::function<void(ValueMap&&)>& callback);
 
 
     /** Converts the contents of a file to a ValueMap.
@@ -557,6 +558,7 @@ public:
     // Converts the contents of a file to a ValueVector.
     // This method is used internally.
     virtual ValueVector getValueVectorFromFile(const std::string& filename);
+	virtual void getValueVectorFromFile(const std::string& filename, const std::function<void(ValueVector&&)>& callback);
 
     /**
      *  Checks whether a file exists.
@@ -595,7 +597,13 @@ public:
      *  @return True if the directory exists, false if not.
      */
     virtual bool isDirectoryExist(const std::string& dirPath) const;
-    virtual void isDirectoryExist(const std::string& dirPath, const std::function<void(bool)>& callback);
+
+	/**
+	*  Checks whether the absoulate path is a directory, async off of the main cocos thread.
+	* @param dirPath The path of the directory, it must be an absolute path
+	* @param callback that will accept a boolean, true if the file exists, false otherwise
+	*/
+    virtual void isDirectoryExist(const std::string& fullPath, const std::function<void(bool)>& callback);
 
     /**
      *  Creates a directory.

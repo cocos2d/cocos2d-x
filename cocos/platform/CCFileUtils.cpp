@@ -1073,9 +1073,9 @@ bool FileUtils::isDirectoryExist(const std::string& dirPath) const
     return false;
 }
 
-void FileUtils::isDirectoryExist(const std::string& dirPath, const std::function<void(bool)>& callback)
+void FileUtils::isDirectoryExist(const std::string& fullPath, const std::function<void(bool)>& callback)
 {
-    auto fullPath = fullPathForFilename(dirPath);
+	CCASSERT(isAbsolutePath(fullPath), "Async isDirectoryExist only accepts absolute file paths");
     performOperationOffthreadForBool([fullPath]() -> bool {
         return FileUtils::getInstance()->isDirectoryExist(fullPath);
     }, callback);
@@ -1126,7 +1126,21 @@ void FileUtils::getFileSize(const std::string &filepath, const std::function<voi
     }, callback);
 }
 
+void FileUtils::getValueMapFromFile(const std::string& filename, const std::function<void(ValueMap&&)>& callback)
+{
+	auto fullPath = fullPathForFilename(filename);
+	performOperationOffthread([fullPath]() -> ValueMap {
+		return FileUtils::getInstance()->getValueMapFromFile(fullPath);
+	}, callback);
+}
 
+void FileUtils::getValueVectorFromFile(const std::string& filename, const std::function<void(ValueVector&&)>& callback)
+{
+	auto fullPath = fullPathForFilename(filename);
+	performOperationOffthread([fullPath]() -> ValueVector {
+		return FileUtils::getInstance()->getValueVectorFromFile(fullPath);
+	}, callback);
+}
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 // windows os implement should override in platform specific FileUtiles class
