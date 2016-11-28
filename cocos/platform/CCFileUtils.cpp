@@ -1126,22 +1126,6 @@ void FileUtils::getFileSize(const std::string &filepath, const std::function<voi
     }, callback);
 }
 
-void FileUtils::getValueMapFromFile(const std::string& filename, const std::function<void(const ValueMap&)>& callback)
-{
-    auto fullPath = fullPathForFilename(filename);
-    performOperationOffthread([fullPath]() -> ValueMap {
-        return FileUtils::getInstance()->getValueMapFromFile(fullPath);
-    }, callback);
-}
-
-void FileUtils::getValueVectorFromFile(const std::string& filename, const std::function<void(const ValueVector&)>& callback)
-{
-    auto fullPath = fullPathForFilename(filename);
-    performOperationOffthread([fullPath]() -> ValueVector {
-        return FileUtils::getInstance()->getValueVectorFromFile(fullPath);
-    }, callback);
-}
-
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 // windows os implement should override in platform specific FileUtiles class
 bool FileUtils::isDirectoryExistInternal(const std::string& dirPath) const

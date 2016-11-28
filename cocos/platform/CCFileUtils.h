@@ -476,7 +476,6 @@ public:
      *  @note This method is used internally.
      */
     virtual ValueMap getValueMapFromFile(const std::string& filename);
-    virtual void getValueMapFromFile(const std::string& filename, const std::function<void(const ValueMap&)>& callback);
 
 
     /** Converts the contents of a file to a ValueMap.
@@ -558,7 +557,6 @@ public:
     // Converts the contents of a file to a ValueVector.
     // This method is used internally.
     virtual ValueVector getValueVectorFromFile(const std::string& filename);
-    virtual void getValueVectorFromFile(const std::string& filename, const std::function<void(const ValueVector&)>& callback);
 
     /**
      *  Checks whether a file exists.
