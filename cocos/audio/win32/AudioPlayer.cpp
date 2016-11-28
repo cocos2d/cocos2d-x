@@ -102,9 +102,8 @@ bool AudioPlayer::play2d(AudioCache* cache)
         _streamingSource = true;
         alSourcei(_alSource, AL_LOOPING, AL_FALSE);
 
-        auto alError = alGetError();
         alGenBuffers(QUEUEBUFFER_NUM, _bufferIds);
-        alError = alGetError();
+        auto alError = alGetError();
         if (alError == AL_NO_ERROR) {
             for (int index = 0; index < QUEUEBUFFER_NUM; ++index) {
                 alBufferData(_bufferIds[index], _audioCache->_alBufferFormat, _audioCache->_queBuffers[index], _audioCache->_queBufferSize[index], _audioCache->_sampleRate);
