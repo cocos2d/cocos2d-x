@@ -235,10 +235,10 @@ bool Sprite::initWithSpriteFrame(SpriteFrame *spriteFrame)
         return false;
     }
 
-    bool bRet = initWithTexture(spriteFrame->getTexture(), spriteFrame->getRect(), spriteFrame->isRotated());
+    bool ret = initWithTexture(spriteFrame->getTexture(), spriteFrame->getRect(), spriteFrame->isRotated());
     setSpriteFrame(spriteFrame);
 
-    return bRet;
+    return ret;
 }
 
 bool Sprite::initWithPolygon(const cocos2d::PolygonInfo &info)

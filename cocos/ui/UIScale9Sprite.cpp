@@ -153,6 +153,16 @@ bool Scale9Sprite::initWithFile(const Rect& capInsets, const std::string& file)
     return ret;
 }
 
+bool Scale9Sprite::initWithFile(const std::string& file)
+{
+    return initWithFile(file, Rect::ZERO);
+}
+
+bool Scale9Sprite::initWithFile(const std::string& file, const Rect& rect)
+{
+    return initWithFile(file, rect, Rect::ZERO);
+}
+
 bool Scale9Sprite::initWithSpriteFrame(SpriteFrame* spriteFrame, const Rect& capInsets)
 {
     // calls super
@@ -167,6 +177,11 @@ bool Scale9Sprite::initWithSpriteFrameName(const std::string& spriteFrameName, c
     bool ret = Sprite::initWithSpriteFrameName(spriteFrameName);
     setupSlice9(getTexture(), capInsets);
     return ret;
+}
+
+bool Scale9Sprite::initWithSpriteFrameName(const std::string& spriteFrameName)
+{
+    return initWithSpriteFrameName(spriteFrameName, Rect::ZERO);
 }
 
 bool Scale9Sprite::init()
