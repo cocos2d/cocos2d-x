@@ -493,8 +493,6 @@ void Scale9Sprite::resetRender()
 
 void Scale9Sprite::setupSlice9(Texture2D* texture, const Rect& capInsets)
 {
-    setCapInsets(capInsets);
-
     if (texture && texture->isContain9PatchInfo()) {
         auto& parsedCapInset = texture->getSpriteFrameCapInset(getSpriteFrame());
 
@@ -513,6 +511,11 @@ void Scale9Sprite::setupSlice9(Texture2D* texture, const Rect& capInsets)
             _isPatch9 = true;
             setCapInsets(parsedCapInset);
         }
+    }
+
+    if (!_isPatch9)
+    {
+        setCapInsets(capInsets);
     }
 }
 
