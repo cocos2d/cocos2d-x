@@ -167,7 +167,7 @@ public:
      */
     virtual std::string getStringFromFile(const std::string& filename);
     
-    virtual void getStringFromFile(const std::string& path, const std::function<void(std::string)>& callback);
+    virtual void getStringFromFile(const std::string& path, const std::function<void(const std::string&)>& callback);
 
     /**
      *  Creates binary data from a file.
@@ -175,7 +175,7 @@ public:
      */
     virtual Data getDataFromFile(const std::string& filename);
     
-    virtual void getDataFromFile(const std::string& filename, const std::function<void(Data)>& callback);
+    virtual void getDataFromFile(const std::string& filename, const std::function<void(const Data&)>& callback);
 
     enum class Status
     {
@@ -509,7 +509,7 @@ public:
      * @param fullPath The full path to the file you want to save a string
      * @param callback The function called once the string has been written to a file
      */
-    virtual void writeStringToFile(std::string dataStr, const std::string& fullPath, const std::function<void(bool)>& callback);
+    virtual void writeStringToFile(const std::string& dataStr, const std::string& fullPath, const std::function<void(bool)>& callback);
     
     /**
      * write Data into a file
@@ -520,7 +520,7 @@ public:
      */
     virtual bool writeDataToFile(const Data& data, const std::string& fullPath);
     
-    virtual void writeDataToFile(Data data, const std::string& fullPath, const std::function<void(bool)>& callback);
+    virtual void writeDataToFile(const Data& data, const std::string& fullPath, const std::function<void(bool)>& callback);
 
     /**
     * write ValueMap into a plist file
@@ -531,7 +531,7 @@ public:
     */
     virtual bool writeValueMapToFile(const ValueMap& dict, const std::string& fullPath);
 
-    virtual void writeValueMapToFile(ValueMap map, const std::string& fullPath, const std::function<void(bool)>& callback);
+    virtual void writeValueMapToFile(const ValueMap& dict, const std::string& fullPath, const std::function<void(bool)>& callback);
     
     
     /**
@@ -543,7 +543,7 @@ public:
     */
     virtual bool writeValueVectorToFile(const ValueVector& vecData, const std::string& fullPath);
     
-    virtual void writeValueVectorToFile(ValueVector vecData, const std::string& fullPath, const std::function<void(bool)>& callback);
+    virtual void writeValueVectorToFile(const ValueVector& vecData, const std::string& fullPath, const std::function<void(bool)>& callback);
 
     /**
     * Windows fopen can't support UTF-8 filename
@@ -776,18 +776,41 @@ protected:
     virtual void valueMapCompact(ValueMap& valueMap);
     virtual void valueVectorCompact(ValueVector& valueVector);
     
-    template<typename T, typename R>
-    void performOperationOffthread(R&& action, T&& callback)
+    template<typename T>
+    void performOperationOffthread(const std::function<T(void)>& action, const std::function<void(T)>& callback)
     {
         auto lambda = [callback, action]() {
-            auto rval = action();
-            auto lambdaCall = std::bind([](const T& callbackFn, decltype(rval)& value)
-            {
-                callbackFn(std::move(value));
-            }, std::move(callback), std::move(rval));
-            Director::getInstance()->getScheduler()->performFunctionInCocosThread(std::move(lambdaCall));
+                auto rval = action();
+                Director::getInstance()->getScheduler()->performFunctionInCocosThread(std::bind(callback, rval));
         };
 
+        AsyncTaskPool::getInstance()->enqueue(AsyncTaskPool::TaskType::TASK_IO, [](void*){}, nullptr, std::move(lambda));
+    }
+    
+    template<typename ...ARGS>
+    void performOperationOffthreadForBool(ARGS&& ...args)
+    {
+        performOperationOffthread<bool>(std::forward<ARGS>(args)...);
+    }
+    
+    template<typename ...ARGS>
+    void performOperationOffthreadForLong(ARGS&& ...args)
+    {
+        performOperationOffthread<long>(std::forward<ARGS>(args)...);
+    }
+    
+    template<typename T, typename R>
+    void performOperationOffthread(const T& action, const std::function<void(const R&)>& callback)
+    {
+        // Use std::bind to not copying dataStr if dataStr is an rvalue
+        auto lambda = [action, callback]() {
+            auto rval = action();
+            auto fn = std::bind([] (const std::function<void (const R&)>& callbackFnc, decltype(rval)& returnVal) {
+                callbackFnc(returnVal);
+            }, std::forward<decltype(callback)>(callback), std::move(rval));
+            Director::getInstance()->getScheduler()->performFunctionInCocosThread(fn);
+        };
+        
         AsyncTaskPool::getInstance()->enqueue(AsyncTaskPool::TaskType::TASK_IO, [](void*){}, nullptr, std::move(lambda));
     }
 };
