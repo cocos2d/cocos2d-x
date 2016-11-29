@@ -234,4 +234,38 @@ public:
     virtual std::string subtitle() const override;
 };
 
+class TestWriteValueMapAsync : public FileUtilsDemo
+{
+public:
+    CREATE_FUNC(TestWriteValueMapAsync);
+    
+    virtual void onEnter() override;
+    virtual void onExit() override;
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
+class TestWriteValueVectorAsync : public FileUtilsDemo
+{
+public:
+    CREATE_FUNC(TestWriteValueVectorAsync);
+    
+    virtual void onEnter() override;
+    virtual void onExit() override;
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
+class TestUnicodePathAsync : public FileUtilsDemo
+{
+public:
+    CREATE_FUNC(TestUnicodePathAsync);
+    
+    virtual void onEnter() override;
+    virtual void onExit() override;
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
+
 #endif /* __FILEUTILSTEST_H__ */

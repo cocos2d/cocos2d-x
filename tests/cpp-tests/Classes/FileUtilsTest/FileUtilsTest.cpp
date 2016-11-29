@@ -23,6 +23,8 @@ FileUtilsTests::FileUtilsTests()
     ADD_TEST_CASE(TestFileFuncsAsync);
     ADD_TEST_CASE(TestWriteStringAsync);
     ADD_TEST_CASE(TestWriteDataAsync);
+    ADD_TEST_CASE(TestWriteValueMapAsync);
+    ADD_TEST_CASE(TestWriteValueVectorAsync);
 }
 
 // TestResolutionDirectories
@@ -1341,6 +1343,219 @@ std::string TestWriteDataAsync::title() const
 }
 
 std::string TestWriteDataAsync::subtitle() const
+{
+    return "";
+}
+
+void TestWriteValueMapAsync::onEnter()
+{
+    FileUtilsDemo::onEnter();
+
+    auto winSize = Director::getInstance()->getWinSize();
+
+    auto writeResult = Label::createWithTTF("show writeResult", "fonts/Thonburi.ttf", 18);
+    this->addChild(writeResult);
+    writeResult->setPosition(winSize.width / 2, winSize.height * 3 / 4);
+
+    auto readResult = Label::createWithTTF("show readResult", "fonts/Thonburi.ttf", 18);
+    this->addChild(readResult);
+    readResult->setPosition(winSize.width / 2, winSize.height / 3);
+
+    ValueMap valueMap;
+
+    ValueMap mapInValueMap;
+    mapInValueMap["string1"] = "string in dictInMap key 0";
+    mapInValueMap["string2"] = "string in dictInMap key 1";
+    mapInValueMap["none"].getType();
+
+    valueMap["data0"] = Value(mapInValueMap);
+
+    valueMap["data1"] = Value("string in array");
+
+    ValueVector arrayInMap;
+    arrayInMap.push_back(Value("string 0 in arrayInMap"));
+    arrayInMap.push_back(Value("string 1 in arrayInMap"));
+    valueMap["data2"] = arrayInMap;
+
+    //add boolean to the plist
+    auto booleanObject = Value(true);
+    valueMap["data3"] = booleanObject;
+
+    //add interger to the plist
+    auto intObject = Value(1024);
+    valueMap["data4"] = intObject;
+
+    //add float to the plist
+    auto floatObject = Value(1024.1024f);
+    valueMap["data5"] = floatObject;
+
+    //add double to the plist
+    auto doubleObject = Value(1024.123);
+    valueMap["data6"] = doubleObject;
+
+
+    // end with /
+    std::string writablePath = FileUtils::getInstance()->getWritablePath();
+    std::string fullPath = writablePath + "testWriteValueMap.plist";
+
+    FileUtils::getInstance()->writeValueMapToFile(valueMap, fullPath, [=](bool success) {
+        if (success)
+        {
+            writeResult->setString("Write Result : success");
+        }
+        else
+        {
+            writeResult->setString("Write Result : failure");
+        }
+        
+
+        FileUtils::getInstance()->getValueMapFromFile(fullPath, [=](ValueMap readValueMap) {
+            std::string readDataStr = "read data:\n";
+            // read value map data
+            ValueMap readMapInMap = readValueMap["data0"].asValueMap();
+            readDataStr += "  mapValue:[\"string1\"][" + readMapInMap["string1"].asString() + "]\n";
+            readDataStr += "  mapValue:[\"string2\"][" + readMapInMap["string2"].asString() + "]\n";
+
+            // read string data
+            readDataStr += "  stringValue:" + readValueMap["data1"].asString() + "\n";
+
+            // read value vector data
+            ValueVector readVectorInMap = readValueMap["data2"].asValueVector();
+            readDataStr += "  vectorValue:[1]" + readVectorInMap.at(0).asString() + "\n";
+            readDataStr += "  vectorValue:[2]" + readVectorInMap.at(1).asString() + "\n";
+
+            // read bool data
+            readDataStr += "  boolValue:" + StringUtils::format("%d", readValueMap["data3"].asBool()) + "\n";
+
+            // read int data
+            readDataStr += "  intValue:" + StringUtils::format("%d", readValueMap["data4"].asInt()) + "\n";
+
+            // read float data
+            readDataStr += "  floatValue:" + StringUtils::format("%f", readValueMap["data5"].asFloat()) + "\n";
+
+            // read double data
+            readDataStr += "  doubleValue:" + StringUtils::format("%f", readValueMap["data6"].asDouble()) + "\n";
+
+            readResult->setString(readDataStr);
+        });
+    });
+}
+void TestWriteValueMapAsync::onExit()
+{
+    FileUtilsDemo::onExit();
+}
+
+std::string TestWriteValueMapAsync::title() const
+{
+    return "FileUtilsAsync: TestWriteValueMap to files";
+}
+
+std::string TestWriteValueMapAsync::subtitle() const
+{
+    return "";
+}
+
+void TestWriteValueVectorAsync::onEnter()
+{
+    FileUtilsDemo::onEnter();
+
+    auto winSize = Director::getInstance()->getWinSize();
+
+    auto writeResult = Label::createWithTTF("show writeResult", "fonts/Thonburi.ttf", 18);
+    this->addChild(writeResult);
+    writeResult->setPosition(winSize.width / 2, winSize.height * 3 / 4);
+
+    auto readResult = Label::createWithTTF("show readResult", "fonts/Thonburi.ttf", 18);
+    this->addChild(readResult);
+    readResult->setPosition(winSize.width / 2, winSize.height / 3);
+
+    ValueVector array;
+
+    ValueMap mapInArray;
+    mapInArray["string1"] = "string in dictInArray key 0";
+    mapInArray["string2"] = "string in dictInArray key 1";
+    array.push_back(Value(mapInArray));
+
+    array.push_back(Value("string in array"));
+
+    ValueVector arrayInArray;
+    arrayInArray.push_back(Value("string 0 in arrayInArray"));
+    arrayInArray.push_back(Value("string 1 in arrayInArray"));
+    array.push_back(Value(arrayInArray));
+
+    //add boolean to the plist
+    auto booleanObject = Value(true);
+    array.push_back(booleanObject);
+
+    //add interger to the plist
+    auto intObject = Value(1024);
+    array.push_back(intObject);
+
+    //add float to the plist
+    auto floatObject = Value(1024.1024f);
+    array.push_back(floatObject);
+
+    //add double to the plist
+    auto doubleObject = Value(1024.123);
+    array.push_back(doubleObject);
+
+
+    // end with /
+    std::string writablePath = FileUtils::getInstance()->getWritablePath();
+    std::string fullPath = writablePath + "testWriteValueVector.plist";
+    FileUtils::getInstance()->writeValueVectorToFile(array, fullPath, [=](bool success) {
+        if (success)
+        {
+            writeResult->setString("Write Result : success");
+        }
+        else
+        {
+            writeResult->setString("Write Result : failure");
+        }
+        
+        FileUtils::getInstance()->getValueVectorFromFile(fullPath, [=](ValueVector readArray) {
+            std::string readDataStr = "read data:\n";
+            // read value map data
+            ValueMap readMapInArray = readArray.at(0).asValueMap();
+            readDataStr += "  mapValue:[\"string1\"][" + readMapInArray["string1"].asString() + "]\n";
+            readDataStr += "  mapValue:[\"string2\"][" + readMapInArray["string2"].asString() + "]\n";
+
+            // read string data
+            readDataStr += "  stringValue:" + readArray.at(1).asString() + "\n";
+
+            // read value vector data
+            ValueVector readVectorInArray = readArray.at(2).asValueVector();
+            readDataStr += "  vectorValue:[1]" + readVectorInArray.at(0).asString() + "\n";
+            readDataStr += "  vectorValue:[2]" + readVectorInArray.at(1).asString() + "\n";
+
+            // read bool data
+            readDataStr += "  boolValue:" + StringUtils::format("%d", readArray.at(3).asBool()) + "\n";
+
+            // read int data
+            readDataStr += "  intValue:" + StringUtils::format("%d", readArray.at(4).asInt()) + "\n";
+
+            // read float data
+            readDataStr += "  floatValue:" + StringUtils::format("%f", readArray.at(5).asFloat()) + "\n";
+
+            // read double data
+            readDataStr += "  doubleValue:" + StringUtils::format("%f", readArray.at(6).asDouble()) + "\n";
+
+            readResult->setString(readDataStr);
+        });
+    });
+}
+
+void TestWriteValueVectorAsync::onExit()
+{
+    FileUtilsDemo::onExit();
+}
+
+std::string TestWriteValueVectorAsync::title() const
+{
+    return "FileUtilsAsync: TestWriteValueVector to files";
+}
+
+std::string TestWriteValueVectorAsync::subtitle() const
 {
     return "";
 }
