@@ -245,7 +245,16 @@ bool Scale9Sprite::initWithBatchNode(SpriteBatchNode *batchnode, const Rect &rec
 bool Scale9Sprite::initWithFile(const std::string& filename, const Rect& rect, const Rect& capInsets)
 {
     // calls super
-    bool ret = Sprite::initWithFile(filename, rect);
+    bool ret = false;
+    if (!rect.equals(Rect::ZERO))
+    {
+        ret = Sprite::initWithFile(filename, rect);
+    }
+    else // if rect is zero, use the whole texture size.
+    {
+        ret = Sprite::initWithFile(filename);
+    }
+    
     setCapInsets(capInsets);
     return ret;
 }
