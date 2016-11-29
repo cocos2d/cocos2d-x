@@ -593,8 +593,6 @@ namespace ui {
 
         bool _isPatch9;
 
-        Rect _previousCenterRectNormalized;
-
         float _insetLeft;
         float _insetRight;
         float _insetTop;
