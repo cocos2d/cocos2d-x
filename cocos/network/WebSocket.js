@@ -44,8 +44,10 @@ var LibraryCocosWebSocket = {
             if (typeof event.data === "string")
             {
                 var sp = Runtime.stackSave();
-                var msg = allocate(intArrayFromString(event.data), 'i8', ALLOC_STACK);
-                Module['cocoswebsocket'].emit('message', thiz, [msg, event.data.length]);
+                var array = intArrayFromString(event.data);
+                var msg = allocate(array, 'i8', ALLOC_STACK);
+                
+                Module['cocoswebsocket'].emit('message', thiz, [msg, array.length]);
                 Runtime.stackRestore(sp);
             }
             else if (event.data instanceof ArrayBuffer)
@@ -53,6 +55,7 @@ var LibraryCocosWebSocket = {
                 var byteArray = new Uint8Array(event.data);
                 var buffer = _malloc(byteArray.length);
                 HEAPU8.set(byteArray, buffer);
+
                 Module['cocoswebsocket'].emit('message', thiz, [buffer, event.data.byteLength]);
                 _free(buffer);
             }
