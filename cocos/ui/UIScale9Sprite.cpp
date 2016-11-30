@@ -85,7 +85,6 @@ Scale9Sprite* Scale9Sprite::create(const std::string& fileaname)
     return create(Rect::ZERO, fileaname);
 }
 
-
 Scale9Sprite* Scale9Sprite::createWithSpriteFrame(SpriteFrame* spriteFrame, const Rect& capInsets)
 {
     Scale9Sprite* ret = new (std::nothrow) Scale9Sprite();
@@ -130,8 +129,7 @@ Scale9Sprite* Scale9Sprite::createWithSpriteFrameName(const std::string& spriteF
 }
 
 Scale9Sprite::Scale9Sprite()
-: _previousCenterRectNormalized(Rect(0,0,1,1))
-, _brightState(State::NORMAL)
+: _brightState(State::NORMAL)
 , _renderingType(RenderingType::SLICE)
 , _insetLeft(0)
 , _insetTop(0)
@@ -153,6 +151,22 @@ bool Scale9Sprite::initWithFile(const Rect& capInsets, const std::string& file)
     return ret;
 }
 
+bool Scale9Sprite::initWithFile(const std::string& filename)
+{
+    // calls super
+    bool ret = Sprite::initWithFile(filename);
+    setupSlice9(getTexture(), Rect::ZERO);
+    return ret;
+}
+
+bool Scale9Sprite::initWithFile(const std::string& filename, const Rect& rect)
+{
+    // calls super
+    bool ret = Sprite::initWithFile(filename, rect);
+    setupSlice9(getTexture(), Rect::ZERO);
+    return ret;
+}
+
 bool Scale9Sprite::initWithSpriteFrame(SpriteFrame* spriteFrame, const Rect& capInsets)
 {
     // calls super
@@ -166,6 +180,14 @@ bool Scale9Sprite::initWithSpriteFrameName(const std::string& spriteFrameName, c
     // calls super
     bool ret = Sprite::initWithSpriteFrameName(spriteFrameName);
     setupSlice9(getTexture(), capInsets);
+    return ret;
+}
+
+bool Scale9Sprite::initWithSpriteFrameName(const std::string& spriteFrameName)
+{
+    // calls super
+    bool ret = Sprite::initWithSpriteFrameName(spriteFrameName);
+    setupSlice9(getTexture(), Rect::ZERO);
     return ret;
 }
 
@@ -223,7 +245,16 @@ bool Scale9Sprite::initWithBatchNode(SpriteBatchNode *batchnode, const Rect &rec
 bool Scale9Sprite::initWithFile(const std::string& filename, const Rect& rect, const Rect& capInsets)
 {
     // calls super
-    bool ret = Sprite::initWithFile(filename, rect);
+    bool ret = false;
+    if (!rect.equals(Rect::ZERO))
+    {
+        ret = Sprite::initWithFile(filename, rect);
+    }
+    else // if rect is zero, use the whole texture size.
+    {
+        ret = Sprite::initWithFile(filename);
+    }
+    
     setCapInsets(capInsets);
     return ret;
 }
@@ -352,11 +383,14 @@ void Scale9Sprite::setInsetBottom(float insetBottom)
 
 void Scale9Sprite::updateCapInset()
 {
-    Rect capInsets(_insetLeft,
-                   _insetTop,
-                   _originalContentSize.width - _insetRight - _insetLeft,
-                   _originalContentSize.height - _insetBottom -_insetTop);
-    setCapInsets(capInsets);
+    if (_renderingType == RenderingType::SLICE)
+    {
+        Rect capInsets(_insetLeft,
+                       _insetTop,
+                       _originalContentSize.width - _insetRight - _insetLeft,
+                       _originalContentSize.height - _insetBottom -_insetTop);
+        setCapInsets(capInsets);
+    }
 }
 
 Size Scale9Sprite::getOriginalSize() const
@@ -440,10 +474,9 @@ void Scale9Sprite::setRenderingType(Scale9Sprite::RenderingType type)
     if (_renderingType != type) {
         _renderingType = type;
         if (_renderingType == RenderingType::SIMPLE) {
-            _previousCenterRectNormalized = getCenterRectNormalized();
             setCenterRectNormalized(Rect(0,0,1,1));
         } else {
-            setCenterRectNormalized(_previousCenterRectNormalized);
+            updateCapInset();
         }
     }
 }
@@ -460,8 +493,6 @@ void Scale9Sprite::resetRender()
 
 void Scale9Sprite::setupSlice9(Texture2D* texture, const Rect& capInsets)
 {
-    setCapInsets(capInsets);
-
     if (texture && texture->isContain9PatchInfo()) {
         auto& parsedCapInset = texture->getSpriteFrameCapInset(getSpriteFrame());
 
@@ -481,6 +512,11 @@ void Scale9Sprite::setupSlice9(Texture2D* texture, const Rect& capInsets)
             setCapInsets(parsedCapInset);
         }
     }
+
+    if (!_isPatch9)
+    {
+        setCapInsets(capInsets);
+    }
 }
 
 void Scale9Sprite::setCapInsets(const cocos2d::Rect &insetsCopy)
@@ -494,6 +530,11 @@ void Scale9Sprite::setCapInsets(const cocos2d::Rect &insetsCopy)
                       _originalContentSize.width / 3.0f,
                       _originalContentSize.height / 3.0f);
     }
+
+    _insetLeft = insets.origin.x;
+    _insetTop = insets.origin.y;
+    _insetRight = _originalContentSize.width - _insetLeft - insets.size.width;
+    _insetBottom = _originalContentSize.height - _insetTop - insets.size.height;
 
     // we have to convert from untrimmed to trimmed
     // Sprite::setCenterRect is using trimmed values (to be compatible with Cocos Creator)
@@ -518,8 +559,12 @@ void Scale9Sprite::setCapInsets(const cocos2d::Rect &insetsCopy)
                    y1,
                    x2 - x1,
                    y2 - y1);
-    
-    setCenterRect(insets);
+
+    // Only update center rect while in slice mode.
+    if (_renderingType == RenderingType::SLICE)
+    {
+        setCenterRect(insets);
+    }
 }
 
 Rect Scale9Sprite::getCapInsets() const
