@@ -257,9 +257,14 @@ void Scene::render(Renderer* renderer, const Mat4* eyeTransforms, const Mat4* ey
             director->pushProjectionMatrix(i);
             director->loadProjectionMatrix(physics3dDebugCamera->getViewProjectionMatrix(), i);
         }
+        
+        _physics3dDebugCamera->apply();
+        _physics3dDebugCamera->clearBackground();
 
         _physics3DWorld->debugDraw(renderer);
         renderer->render();
+        
+        _physics3dDebugCamera->restore();
 
         for (unsigned int i = 0; i < multiViewCount; ++i)
             director->popProjectionMatrix(i);
