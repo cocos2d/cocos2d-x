@@ -41,7 +41,7 @@ bool WebViewTest::init()
         _webView = cocos2d::experimental::ui::WebView::create();
         _webView->setPosition(winSize/2);
         _webView->setContentSize(winSize * 0.5);
-        _webView->loadURL("http://www.baidu.com");
+        _webView->loadURL("https://www.baidu.com");
         _webView->setScalesPageToFit(true);
         
         _webView->setOnShouldStartLoading(CC_CALLBACK_2(WebViewTest::onWebViewShouldStartLoading, this));
@@ -56,7 +56,7 @@ bool WebViewTest::init()
                                                      urlTextField->getContentSize().height/2 + 10));
         this->addChild(urlTextField);
         
-        Text *httpLabel = Text::create("http:// ", "Arial", 20);
+        Text *httpLabel = Text::create("https:// ", "Arial", 20);
         httpLabel->setTextColor(Color4B::GREEN);
         httpLabel->setAnchorPoint(Vec2(1.0,0.5));
         httpLabel->setPosition(urlTextField->getPosition() - Vec2(urlTextField->getContentSize().width/2,0));
@@ -71,7 +71,7 @@ bool WebViewTest::init()
         resetBtn->addClickEventListener([=](Ref*){
             if (urlTextField->getString().size() != 0)
             {
-                _webView->loadURL(std::string("http://") + urlTextField->getString());
+                _webView->loadURL(std::string("https://") + urlTextField->getString());
             }
         });
         this->addChild(resetBtn);
