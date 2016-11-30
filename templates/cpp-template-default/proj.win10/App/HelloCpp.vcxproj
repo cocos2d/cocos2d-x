@@ -125,7 +125,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <PackageCertificateKeyFile>HelloCpp_TemporaryKey.pfx</PackageCertificateKeyFile>
-    <PackageCertificateThumbprint>A65425A251E18D5D9AE2DC68E216D4AB8C0B5C18</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>0EF4E4C6521D76BFF4B15FBF03FDBBD95F9710F4</PackageCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>false</LinkIncremental>
