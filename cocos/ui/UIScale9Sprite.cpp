@@ -213,7 +213,6 @@ bool Scale9Sprite::init(Sprite* sprite, const Rect& origRect, bool rotated, cons
 {
     bool ret = false;
 
-    Rect actualCapInsets = capInsets;
     Rect rect(origRect);
 
     if (sprite) {
@@ -225,10 +224,7 @@ bool Scale9Sprite::init(Sprite* sprite, const Rect& origRect, bool rotated, cons
         auto spriteFrame = SpriteFrame::createWithTexture(texture, rect, rotated, offset, originalSize);
         ret = initWithSpriteFrame(spriteFrame);
 
-        if (!capInsets.equals(Rect::ZERO))
-            setupSlice9(texture, capInsets);
-        else
-            setCapInsets(actualCapInsets);
+        setupSlice9(texture, capInsets);
     } else {
         ret = initWithTexture(nullptr, rect, rotated);
         setupSlice9(nullptr, capInsets);
@@ -254,8 +250,8 @@ bool Scale9Sprite::initWithFile(const std::string& filename, const Rect& rect, c
     {
         ret = Sprite::initWithFile(filename);
     }
-    
-    setCapInsets(capInsets);
+
+    setupSlice9(getTexture(), capInsets);
     return ret;
 }
 
