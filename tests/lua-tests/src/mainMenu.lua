@@ -11,7 +11,6 @@ require "AssetsManagerTest/AssetsManagerTest"
 require "AssetsManagerExTest/AssetsManagerExTest"
 require "BillBoardTest/BillBoardTest"
 require "BugsTest/BugsTest"
--- require "ByteCodeEncryptTest/ByteCodeEncryptTest"
 require "Camera3DTest/Camera3DTest"
 require "ClickAndMoveTest/ClickAndMoveTest"
 require "CocosDenshionTest/CocosDenshionTest"
@@ -99,7 +98,6 @@ local _allTests = {
     { isSupported = false,  name = "Box2dTestBed"           , create_func=              Box2dTestBedMain  },
     { isSupported = true,  name = "BillBoardTest"           , create_func=              BillBoardTestMain},
     { isSupported = true,  name = "BugsTest"               , create_func=              BugsTestMain      },
-    { isSupported = luaByteCodeSupported,  name = "ByteCodeEncryptTest"     , create_func=       ByteCodeEncryptTestMain  },
     { isSupported = true,  name = "Camera3DTest"     ,        create_func=       Camera3DTestMain  },
     { isSupported = true,  name = "CaptureScreenTest"       , create_func   =         CaptureScreenTestMain  },
     { isSupported = false,  name = "ChipmunkAccelTouchTest" , create_func=    ChipmunkAccelTouchTestMain  },
