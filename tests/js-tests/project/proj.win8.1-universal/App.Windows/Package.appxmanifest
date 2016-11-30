@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest">
-  <Identity Name="a39cf818-af13-4d5f-9d18-3dbac1159b33" Publisher="CN=stamm" Version="1.0.0.6" />
+  <Identity Name="a39cf818-af13-4d5f-9d18-3dbac1159b33" Publisher="CN=dalestam" Version="1.0.0.6" />
   <Properties>
     <DisplayName>js-tests.Windows</DisplayName>
     <PublisherDisplayName>msopentech</PublisherDisplayName>

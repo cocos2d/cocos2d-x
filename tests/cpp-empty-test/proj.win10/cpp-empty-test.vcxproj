@@ -125,7 +125,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <PackageCertificateKeyFile>cpp-empty-test_TemporaryKey.pfx</PackageCertificateKeyFile>
-    <PackageCertificateThumbprint>EC3927E758F5E53DC59521EED57869F363F39357</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>ECDABF04479A40441B3CFDFA2845D40DF5F44007</PackageCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>false</LinkIncremental>
