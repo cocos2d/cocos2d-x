@@ -571,7 +571,7 @@ bool FileUtils::writeStringToFile(const std::string& dataStr, const std::string&
 
 void FileUtils::writeStringToFile(const std::string& dataStr, const std::string& fullPath, const std::function<void(bool)>& callback)
 {
-    performOperationOffthreadForBool([fullPath, dataStr]() -> bool {
+    performOperationOffthread([fullPath, dataStr]() -> bool {
             return FileUtils::getInstance()->writeStringToFile(dataStr, fullPath);
     }, callback);
 }
@@ -603,7 +603,7 @@ bool FileUtils::writeDataToFile(const Data& data, const std::string& fullPath)
 
 void FileUtils::writeDataToFile(const Data& data, const std::string& fullPath, const std::function<void(bool)>& callback)
 {
-    performOperationOffthreadForBool([fullPath, data]() -> bool {
+    performOperationOffthread([fullPath, data]() -> bool {
             return FileUtils::getInstance()->writeDataToFile(data, fullPath);
     }, callback);
 }
@@ -753,14 +753,14 @@ unsigned char* FileUtils::getFileDataFromZip(const std::string& zipFilePath, con
 void FileUtils::writeValueMapToFile(const ValueMap& dict, const std::string& fullPath, const std::function<void(bool)>& callback)
 {
     
-    performOperationOffthreadForBool([fullPath, dict]() -> bool {
+    performOperationOffthread([fullPath, dict]() -> bool {
             return FileUtils::getInstance()->writeValueMapToFile(dict, fullPath);
     },callback);
 }
 
 void FileUtils::writeValueVectorToFile(const ValueVector& vecData, const std::string& fullPath, const std::function<void(bool)>& callback)
 {
-    performOperationOffthreadForBool([fullPath, vecData] () -> bool {
+    performOperationOffthread([fullPath, vecData] () -> bool {
             return FileUtils::getInstance()->writeValueVectorToFile(vecData, fullPath);
     }, callback);
 }
@@ -1030,7 +1030,7 @@ bool FileUtils::isFileExist(const std::string& filename) const
 void FileUtils::isFileExist(const std::string& filename, const std::function<void(bool)>& callback)
 {
     auto fullPath = fullPathForFilename(filename);
-    performOperationOffthreadForBool([fullPath]() -> bool {
+    performOperationOffthread([fullPath]() -> bool {
         return FileUtils::getInstance()->isFileExist(fullPath);
     }, callback);
 }
@@ -1076,21 +1076,21 @@ bool FileUtils::isDirectoryExist(const std::string& dirPath) const
 void FileUtils::isDirectoryExist(const std::string& fullPath, const std::function<void(bool)>& callback)
 {
     CCASSERT(isAbsolutePath(fullPath), "Async isDirectoryExist only accepts absolute file paths");
-    performOperationOffthreadForBool([fullPath]() -> bool {
+    performOperationOffthread([fullPath]() -> bool {
         return FileUtils::getInstance()->isDirectoryExist(fullPath);
     }, callback);
 }
 
 void FileUtils::createDirectory(const std::string& dirPath, const std::function<void(bool)>& callback)
 {
-    performOperationOffthreadForBool([dirPath]() -> bool {
+    performOperationOffthread([dirPath]() -> bool {
         return FileUtils::getInstance()->createDirectory(dirPath);
     }, callback);
 }
 
 void FileUtils::removeDirectory(const std::string& dirPath, const std::function<void(bool)>& callback)
 {
-    performOperationOffthreadForBool([dirPath]() -> bool {
+    performOperationOffthread([dirPath]() -> bool {
         return FileUtils::getInstance()->removeDirectory(dirPath);
     }, callback);
 }
@@ -1098,14 +1098,14 @@ void FileUtils::removeDirectory(const std::string& dirPath, const std::function<
 void FileUtils::removeFile(const std::string &filepath, const std::function<void (bool)>& callback)
 {
     auto fullPath = fullPathForFilename(filepath);
-    performOperationOffthreadForBool([fullPath]() -> bool {
+    performOperationOffthread([fullPath]() -> bool {
         return FileUtils::getInstance()->removeFile(fullPath);
     }, callback);
 }
 
 void FileUtils::renameFile(const std::string &path, const std::string &oldname, const std::string &name, const std::function<void(bool)>& callback)
 {
-    performOperationOffthreadForBool([path, oldname, name]() -> bool {
+    performOperationOffthread([path, oldname, name]() -> bool {
         return FileUtils::getInstance()->renameFile(path, oldname, name);
     }, callback);
                                 
@@ -1113,7 +1113,7 @@ void FileUtils::renameFile(const std::string &path, const std::string &oldname, 
 
 void FileUtils::renameFile(const std::string &oldfullpath, const std::string &newfullpath, const std::function<void(bool)>& callback)
 {
-    performOperationOffthreadForBool([oldfullpath, newfullpath]() {
+    performOperationOffthread([oldfullpath, newfullpath]() {
         return FileUtils::getInstance()->renameFile(oldfullpath, newfullpath);
     }, callback);
 }
@@ -1121,7 +1121,7 @@ void FileUtils::renameFile(const std::string &oldfullpath, const std::string &ne
 void FileUtils::getFileSize(const std::string &filepath, const std::function<void(long)>& callback)
 {
     auto fullPath = fullPathForFilename(filepath);
-    performOperationOffthreadForLong([fullPath]() {
+    performOperationOffthread([fullPath]() {
         return FileUtils::getInstance()->getFileSize(fullPath);
     }, callback);
 }
