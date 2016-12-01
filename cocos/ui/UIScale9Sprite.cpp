@@ -439,6 +439,32 @@ Sprite* Scale9Sprite::getSprite()
     return this;
 }
 
+/**
+ * @brief Returns a copy of the Scale9Sprite
+ */
+void Scale9Sprite::cloneIn(Scale9Sprite* copy) const
+{
+    copy->initWithSpriteFrame(getSpriteFrame(), getCapInsets());
+
+    copy->setRenderingType(_renderingType);
+    copy->setScale9Enabled(isScale9Enabled());
+    copy->_isPatch9 = _isPatch9;
+    copy->_brightState = _brightState;
+
+    // these properties should be part of Sprite::clone() (or Node::clone())
+    // but cloning is not supported on those nodes
+    copy->setContentSize(getContentSize());
+    copy->setPosition(getPosition());
+    copy->setScale(getScaleX(), getScaleY());
+    copy->setRotation(getRotation());
+    copy->setRotationSkewX(getRotationSkewX());
+    copy->setRotationSkewY(getRotationSkewY());
+    copy->setColor(getColor());
+    copy->setOpacity(getOpacity());
+    copy->_originalContentSize = _originalContentSize;
+}
+
+
 // (0,0)  O = capInsets.origin
 // v0----------------------
 // |        |      |      |

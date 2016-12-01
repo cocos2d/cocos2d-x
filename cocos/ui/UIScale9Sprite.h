@@ -562,6 +562,11 @@ namespace ui {
          */
         Sprite* getSprite();
 
+        /**
+         * @brief Clones self in a copy of the Scale9Sprite
+         */
+        void cloneIn(Scale9Sprite* copy) const;
+
 
         /**
          * Set the slice sprite rendering type.

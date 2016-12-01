@@ -412,14 +412,16 @@ void LoadingBar::copySpecialProperties(Widget *widget)
     {
         _prevIgnoreSize = loadingBar->_prevIgnoreSize;
         setScale9Enabled(loadingBar->_scale9Enabled);
-        auto barSprite = loadingBar->_barRenderer->getSprite();
-        if(nullptr != barSprite)
-        {
-            loadTexture(barSprite->getSpriteFrame());
-        }
+
+        loadingBar->_barRenderer->cloneIn(_barRenderer);
+        setupTexture();
+
         setCapInsets(loadingBar->_capInsets);
         setPercent(loadingBar->_percent);
         setDirection(loadingBar->_direction);
+        _textureFile = loadingBar->_textureFile;
+        _totalLength = loadingBar->_totalLength;
+        _barRendererTextureSize = loadingBar->_barRendererTextureSize;
     }
 }
 
