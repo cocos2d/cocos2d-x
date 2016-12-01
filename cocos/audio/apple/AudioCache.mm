@@ -35,7 +35,7 @@
 #include "base/CCDirector.h"
 #include "base/CCScheduler.h"
 
-#include "AudioDecoder.h"
+#include "audio/apple/AudioDecoder.h"
 
 #define VERY_VERY_VERBOSE_LOGGING
 #ifdef VERY_VERY_VERBOSE_LOGGING
