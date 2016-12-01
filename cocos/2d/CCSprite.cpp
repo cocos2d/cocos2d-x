@@ -417,9 +417,7 @@ void Sprite::setTextureRect(const Rect& rect, bool rotated, const Size& untrimme
     _rectRotated = rotated;
 
     Node::setContentSize(untrimmedSize);
-
-    if (_originalContentSize.equals(Size::ZERO))
-        _originalContentSize = untrimmedSize;
+    _originalContentSize = untrimmedSize;
 
     setVertexRect(rect);
     updateStretchFactor();

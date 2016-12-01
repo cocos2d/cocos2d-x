@@ -44,6 +44,7 @@ _textureFile(""),
 _barRenderer(nullptr),
 _renderBarTexType(TextureResType::LOCAL),
 _barRendererTextureSize(Size::ZERO),
+_originalRect(Rect::ZERO),
 _scale9Enabled(false),
 _prevIgnoreSize(true),
 _capInsets(Rect::ZERO),
@@ -162,6 +163,7 @@ void LoadingBar::loadTexture(SpriteFrame* spriteframe)
 void LoadingBar::setupTexture()
 {
     _barRendererTextureSize = _barRenderer->getContentSize();
+    _originalRect = _barRenderer->getTextureRect();
 
     switch (_direction)
     {
@@ -173,15 +175,18 @@ void LoadingBar::setupTexture()
             break;
     }
     this->handleSpriteFlipX();
-    
+
     _barRenderer->setCapInsets(_capInsets);
+
     this->updateChildrenDisplayedRGBA();
 
     barRendererScaleChangedWithSize();
 
     updateContentSizeWithTextureSize(_barRendererTextureSize);
 
+
     this->updateProgressBar();
+
     _barRendererAdaptDirty = true;
 }
     
@@ -218,8 +223,9 @@ void LoadingBar::setScale9Enabled(bool enabled)
         return;
     }
     _scale9Enabled = enabled;
+
     _barRenderer->setScale9Enabled(_scale9Enabled);
-    
+
     if (_scale9Enabled)
     {
         bool ignoreBefore = _ignoreSize;
@@ -247,6 +253,12 @@ void LoadingBar::setCapInsets(const Rect &capInsets)
     {
         return;
     }
+
+    // textureRect should be restored in order to calculate the scale9 correctly
+    // https://github.com/cocos2d/cocos2d-x/issues/16930
+    const Rect currentRect = _barRenderer->getTextureRect();
+    _barRenderer->setTextureRect(_originalRect, _barRenderer->isTextureRectRotated(), _barRendererTextureSize);
+
     _barRenderer->setCapInsets(_capInsets);
 }
 
@@ -413,6 +425,7 @@ void LoadingBar::copySpecialProperties(Widget *widget)
         _prevIgnoreSize = loadingBar->_prevIgnoreSize;
         setScale9Enabled(loadingBar->_scale9Enabled);
 
+        // clone the inner sprite: https://github.com/cocos2d/cocos2d-x/issues/16930
         loadingBar->_barRenderer->cloneIn(_barRenderer);
         setupTexture();
 
