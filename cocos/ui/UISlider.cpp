@@ -729,16 +729,13 @@ void Slider::copySpecialProperties(Widget *widget)
     {
         _prevIgnoreSize = slider->_prevIgnoreSize;
         setScale9Enabled(slider->_scale9Enabled);
-        auto barSprite = slider->_barRenderer->getSprite();
-        if (nullptr != barSprite)
-        {
-            loadBarTexture(barSprite->getSpriteFrame());
-        }
-        auto progressSprite = slider->_progressBarRenderer->getSprite();
-        if (nullptr != progressSprite)
-        {
-            loadProgressBarTexture(progressSprite->getSpriteFrame());
-        }
+
+        // clone the inner sprite: https://github.com/cocos2d/cocos2d-x/issues/16928
+        slider->_barRenderer->cloneIn(_barRenderer);
+        setupBarTexture();
+        slider->_progressBarRenderer->cloneIn(_progressBarRenderer);
+        setupProgressBarTexture();
+
         loadSlidBallTextureNormal(slider->_slidBallNormalRenderer->getSpriteFrame());
         loadSlidBallTexturePressed(slider->_slidBallPressedRenderer->getSpriteFrame());
         loadSlidBallTextureDisabled(slider->_slidBallDisabledRenderer->getSpriteFrame());
