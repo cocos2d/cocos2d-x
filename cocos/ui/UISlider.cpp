@@ -43,7 +43,9 @@ Slider::Slider():
 _barRenderer(nullptr),
 _progressBarRenderer(nullptr),
 _barTextureSize(Size::ZERO),
+_originalBarRect(Rect::ZERO),
 _progressBarTextureSize(Size::ZERO),
+_originalProgressBarRect(Rect::ZERO),
 _slidBallNormalRenderer(nullptr),
 _slidBallPressedRenderer(nullptr),
 _slidBallDisabledRenderer(nullptr),
@@ -192,6 +194,7 @@ void Slider::setupBarTexture()
     _progressBarRendererDirty = true;
     updateContentSizeWithTextureSize(_barRenderer->getContentSize());
     _barTextureSize = _barRenderer->getContentSize();
+    _originalBarRect = _barRenderer->getTextureRect();
 }
 
 void Slider::loadProgressBarTexture(const std::string& fileName, TextureResType texType)
@@ -230,6 +233,7 @@ void Slider::setupProgressBarTexture()
     this->updateChildrenDisplayedRGBA();
     _progressBarRenderer->setAnchorPoint(Vec2(0.0f, 0.5f));
     _progressBarTextureSize = _progressBarRenderer->getContentSize();
+    _originalProgressBarRect = _progressBarRenderer->getTextureRect();
     _progressBarRendererDirty = true;
 }
 
@@ -287,6 +291,11 @@ void Slider::setCapInsetsBarRenderer(const Rect &capInsets)
     {
         return;
     }
+
+    // textureRect should be restored in order to calculate the scale9 correctly
+    // https://github.com/cocos2d/cocos2d-x/issues/16928
+    _barRenderer->setTextureRect(_originalBarRect, _barRenderer->isTextureRectRotated(), _barTextureSize);
+
     _barRenderer->setCapInsets(_capInsetsBarRenderer);
 }
     
@@ -303,6 +312,10 @@ void Slider::setCapInsetProgressBarRenderer(const Rect &capInsets)
     {
         return;
     }
+    // textureRect should be restored in order to calculate the scale9 correctly
+    // https://github.com/cocos2d/cocos2d-x/issues/16928
+    _barRenderer->setTextureRect(_originalProgressBarRect, _progressBarRenderer->isTextureRectRotated(), _progressBarTextureSize);
+
     _progressBarRenderer->setCapInsets(_capInsetsProgressBarRenderer);
 }
     

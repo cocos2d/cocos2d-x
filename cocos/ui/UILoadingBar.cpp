@@ -256,7 +256,6 @@ void LoadingBar::setCapInsets(const Rect &capInsets)
 
     // textureRect should be restored in order to calculate the scale9 correctly
     // https://github.com/cocos2d/cocos2d-x/issues/16930
-    const Rect currentRect = _barRenderer->getTextureRect();
     _barRenderer->setTextureRect(_originalRect, _barRenderer->isTextureRectRotated(), _barRendererTextureSize);
 
     _barRenderer->setCapInsets(_capInsets);
