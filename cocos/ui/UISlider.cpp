@@ -314,7 +314,7 @@ void Slider::setCapInsetProgressBarRenderer(const Rect &capInsets)
     }
     // textureRect should be restored in order to calculate the scale9 correctly
     // https://github.com/cocos2d/cocos2d-x/issues/16928
-    _barRenderer->setTextureRect(_originalProgressBarRect, _progressBarRenderer->isTextureRectRotated(), _progressBarTextureSize);
+    _progressBarRenderer->setTextureRect(_originalProgressBarRect, _progressBarRenderer->isTextureRectRotated(), _progressBarTextureSize);
 
     _progressBarRenderer->setCapInsets(_capInsetsProgressBarRenderer);
 }
