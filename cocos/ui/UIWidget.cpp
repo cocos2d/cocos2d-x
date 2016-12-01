@@ -384,7 +384,7 @@ void Widget::setSizePercent(const Vec2 &percent)
 
 void Widget::updateSizeAndPosition()
 {
-    Size pSize = _parent->getContentSize();
+    Size pSize = _parent ? _parent->getContentSize() : getContentSize();
 
     updateSizeAndPosition(pSize);
 }
