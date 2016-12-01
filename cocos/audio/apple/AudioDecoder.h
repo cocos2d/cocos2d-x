@@ -29,6 +29,9 @@
 
 namespace cocos2d { namespace experimental {
 
+/**
+ * @brief The class for decoding compressed audio file to PCM buffer.
+ */
 class AudioDecoder
 {
 public:
@@ -37,17 +40,57 @@ public:
     AudioDecoder();
     ~AudioDecoder();
 
+    /** 
+     * @brief Opens an audio file specified by a file path.
+     * @return true if succeed, otherwise false.
+     */
     bool open(const char* path);
+
+    /**
+     * @brief Checks whether decoder has opened file successfully.
+     * @return true if succeed, otherwise false.
+     */
     bool isOpened();
+
+    /**
+     * @brief Closes opened audio file.
+     * @note The method will also be automatically invoked in the destructor.
+     */
     void close();
 
+    /** 
+     * @brief Reads audio frames of PCM format.
+     * @param framesToRead The number of frames excepted to be read.
+     * @param pcmBuf The buffer to hold the frames to be read, its size should be >= framesToRead * _bytesPerFrame.
+     * @return The number of frames actually read, it's probably less than 'framesToRead'. Returns 0 means reach the end of file.
+     */
     uint32_t read(uint32_t framesToRead, char* pcmBuf);
-    bool seek(uint32_t frameIndex);
+
+    /**
+     * @brief Sets frame offest to be read.
+     * @param frameOffset The frame offest to be set.
+     * @return true if succeed, otherwise false
+     */
+    bool seek(uint32_t frameOffset);
+
+    /**
+     * @brief Tells the current frame offset.
+     * @return The current frame offset.
+     */
     uint32_t tell();
 
+    /** Gets total frames of current audio.*/
     uint32_t getTotalFrames();
+
+    /** Gets bytes per frame of current audio.*/
     uint32_t getBytesPerFrame();
+
+    /** Gets sample rate of current audio.*/
     uint32_t getSampleRate();
+
+    /** Gets the channel count of current audio.
+     * @note Currently we only support 1 or 2 channels.
+     */
     uint32_t getChannelCount();
 
 private:

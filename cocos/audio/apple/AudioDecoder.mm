@@ -149,15 +149,15 @@ namespace cocos2d { namespace experimental {
         return ret;
     }
 
-    bool AudioDecoder::seek(uint32_t frameIndex)
+    bool AudioDecoder::seek(uint32_t frameOffset)
     {
         bool ret = false;
         do
         {
             BREAK_IF_ERR_LOG(!isOpened(), "decoder isn't openned");
-            BREAK_IF_ERR_LOG(frameIndex == INVALID_FRAME_INDEX, "frameIndex is INVALID_FRAME_INDEX");
+            BREAK_IF_ERR_LOG(frameOffset == INVALID_FRAME_INDEX, "frameIndex is INVALID_FRAME_INDEX");
 
-            OSStatus status = ExtAudioFileSeek(_extRef, frameIndex);
+            OSStatus status = ExtAudioFileSeek(_extRef, frameOffset);
             BREAK_IF(status != noErr);
             ret = true;
         } while(false);
