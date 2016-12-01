@@ -152,11 +152,12 @@ void AudioCache::readDataTask(unsigned int selfId)
         if (!decoder.open(_fileFullPath.c_str()))
             break;
 
-        uint32_t totalFrames = decoder.getTotalFrames();
+        const uint32_t originalTotalFrames = decoder.getTotalFrames();
         const uint32_t bytesPerFrame = decoder.getBytesPerFrame();
         const uint32_t sampleRate = decoder.getSampleRate();
         const uint32_t channelCount = decoder.getChannelCount();
 
+        uint32_t totalFrames = originalTotalFrames;
         uint32_t dataSize = totalFrames * bytesPerFrame;
         uint32_t remainingFrames = totalFrames;
         uint32_t adjustFrames = 0;
@@ -190,11 +191,9 @@ void AudioCache::readDataTask(unsigned int selfId)
 
             if (adjustFrames > 0)
             {
+                ALOGV("Orignal total frames: %u, adjust frames: %u, current total frames: %u", totalFrames, adjustFrames, totalFrames + adjustFrames);
                 totalFrames += adjustFrames;
-                remainingFrames = totalFrames;
-                _totalFrames = totalFrames;
-
-                ALOGV("Total adjust frames: %u", adjustFrames);
+                _totalFrames = remainingFrames = totalFrames;
             }
 
             // Reset dataSize
@@ -220,33 +219,46 @@ void AudioCache::readDataTask(unsigned int selfId)
                 break;
             }
             
-            if (*_isDestroyed) break;
+            if (*_isDestroyed)
+                break;
             
             alBufferDataStaticProc(_alBufferId, _format, _pcmData, (ALsizei)dataSize, (ALsizei)sampleRate);
 
             do
             {
                 framesRead = decoder.read(std::min(framesToReadOnce, remainingFrames), _pcmData + _framesRead * bytesPerFrame);
-                if (framesRead == 0) break;
+                if (framesRead == 0)
+                    break;
                 _framesRead += framesRead;
                 remainingFrames -= framesRead;
             } while (_framesRead < framesToReadOnce);
             
-            if (*_isDestroyed) break;
+            if (*_isDestroyed)
+                break;
             
             _state = State::READY;
 
             invokingPlayCallbacks();
 
-            while (!*_isDestroyed && _framesRead < (totalFrames - adjustFrames))
+            uint32_t frames = 0;
+            while (!*_isDestroyed && _framesRead < originalTotalFrames)
             {
-                framesRead = decoder.read(std::min(framesToReadOnce, remainingFrames), _pcmData + _framesRead * bytesPerFrame);
-                if (framesRead == 0) break;
+                frames = std::min(framesToReadOnce, remainingFrames);
+                if (_framesRead + frames > originalTotalFrames)
+                {
+                    frames = originalTotalFrames - _framesRead;
+                }
+                framesRead = decoder.read(frames, _pcmData + _framesRead * bytesPerFrame);
+                if (framesRead == 0)
+                    break;
                 _framesRead += framesRead;
                 remainingFrames -= framesRead;
             }
 
-            ALOGV("pcm buffer was loaded successfully, total frames: %u, total read frames: %u, adjust frames: %u", totalFrames, _framesRead, adjustFrames);
+            CCASSERT(_framesRead == originalTotalFrames, "The read frame count isn't equal to orignal frame count!");
+            ALOGV("pcm buffer was loaded successfully, total frames: %u, total read frames: %u, adjust frames: %u, remainingFrames: %u", totalFrames, _framesRead, adjustFrames, remainingFrames);
+
+            _framesRead += adjustFrames;
         }
         else
         {
