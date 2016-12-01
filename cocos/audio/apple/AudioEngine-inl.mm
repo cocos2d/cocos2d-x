@@ -511,8 +511,8 @@ bool AudioEngineImpl::setCurrentTime(int audioID, float time)
             break;
         }
         else {
-            if (player->_audioCache->_bytesOfRead != player->_audioCache->_dataSize &&
-                (time * player->_audioCache->_sampleRate * player->_audioCache->_bytesPerFrame) > player->_audioCache->_bytesOfRead) {
+            if (player->_audioCache->_framesRead != player->_audioCache->_totalFrames &&
+                (time * player->_audioCache->_sampleRate) > player->_audioCache->_framesRead) {
                 ALOGE("%s: audio id = %d", __PRETTY_FUNCTION__,audioID);
                 break;
             }
