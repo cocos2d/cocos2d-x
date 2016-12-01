@@ -167,7 +167,7 @@ public:
      */
     virtual std::string getStringFromFile(const std::string& filename);
     
-    virtual void getStringFromFile(const std::string& path, const std::function<void(const std::string&)>& callback);
+    virtual void getStringFromFile(const std::string& path, std::function<void(std::string)> callback);
 
     /**
      *  Creates binary data from a file.
@@ -175,7 +175,7 @@ public:
      */
     virtual Data getDataFromFile(const std::string& filename);
     
-    virtual void getDataFromFile(const std::string& filename, const std::function<void(const Data&)>& callback);
+    virtual void getDataFromFile(const std::string& filename, std::function<void(Data)> callback);
 
     enum class Status
     {
@@ -509,7 +509,7 @@ public:
      * @param fullPath The full path to the file you want to save a string
      * @param callback The function called once the string has been written to a file
      */
-    virtual void writeStringToFile(const std::string& dataStr, const std::string& fullPath, const std::function<void(bool)>& callback);
+    virtual void writeStringToFile(std::string dataStr, const std::string& fullPath, std::function<void(bool)> callback);
     
     /**
      * write Data into a file
@@ -520,7 +520,7 @@ public:
      */
     virtual bool writeDataToFile(const Data& data, const std::string& fullPath);
     
-    virtual void writeDataToFile(const Data& data, const std::string& fullPath, const std::function<void(bool)>& callback);
+    virtual void writeDataToFile(Data data, const std::string& fullPath, std::function<void(bool)> callback);
 
     /**
     * write ValueMap into a plist file
@@ -531,7 +531,7 @@ public:
     */
     virtual bool writeValueMapToFile(const ValueMap& dict, const std::string& fullPath);
 
-    virtual void writeValueMapToFile(const ValueMap& dict, const std::string& fullPath, const std::function<void(bool)>& callback);
+    virtual void writeValueMapToFile(ValueMap dict, const std::string& fullPath, std::function<void(bool)> callback);
     
     
     /**
@@ -543,7 +543,7 @@ public:
     */
     virtual bool writeValueVectorToFile(const ValueVector& vecData, const std::string& fullPath);
     
-    virtual void writeValueVectorToFile(const ValueVector& vecData, const std::string& fullPath, const std::function<void(bool)>& callback);
+    virtual void writeValueVectorToFile(ValueVector vecData, const std::string& fullPath, std::function<void(bool)> callback);
 
     /**
     * Windows fopen can't support UTF-8 filename
@@ -567,7 +567,7 @@ public:
      */
     virtual bool isFileExist(const std::string& filename) const;
     
-    virtual void isFileExist(const std::string& filename, const std::function<void(bool)>& callback);
+    virtual void isFileExist(const std::string& filename, std::function<void(bool)> callback);
 
     /**
     *  Gets filename extension is a suffix (separated from the base filename by a dot) in lower case.
@@ -601,7 +601,7 @@ public:
     * @param dirPath The path of the directory, it must be an absolute path
     * @param callback that will accept a boolean, true if the file exists, false otherwise
     */
-    virtual void isDirectoryExist(const std::string& fullPath, const std::function<void(bool)>& callback);
+    virtual void isDirectoryExist(const std::string& fullPath, std::function<void(bool)> callback);
 
     /**
      *  Creates a directory.
@@ -610,7 +610,7 @@ public:
      *  @return True if the directory have been created successfully, false if not.
      */
     virtual bool createDirectory(const std::string& dirPath);
-    virtual void createDirectory(const std::string& dirPath, const std::function<void(bool)>& callback);
+    virtual void createDirectory(const std::string& dirPath, std::function<void(bool)> callback);
 
     /**
      *  Removes a directory.
@@ -619,7 +619,7 @@ public:
      *  @return True if the directory have been removed successfully, false if not.
      */
     virtual bool removeDirectory(const std::string& dirPath);
-    virtual void removeDirectory(const std::string& dirPath, const std::function<void(bool)>& callback);
+    virtual void removeDirectory(const std::string& dirPath, std::function<void(bool)> callback);
 
     /**
      *  Removes a file.
@@ -628,7 +628,7 @@ public:
      *  @return True if the file have been removed successfully, false if not.
      */
     virtual bool removeFile(const std::string &filepath);
-    virtual void removeFile(const std::string &filepath, const std::function<void(bool)>& callback);
+    virtual void removeFile(const std::string &filepath, std::function<void(bool)> callback);
 
     /**
      *  Renames a file under the given directory.
@@ -639,7 +639,7 @@ public:
      *  @return True if the file have been renamed successfully, false if not.
      */
     virtual bool renameFile(const std::string &path, const std::string &oldname, const std::string &name);
-    virtual void renameFile(const std::string &path, const std::string &oldname, const std::string &name, const std::function<void(bool)>& callback);
+    virtual void renameFile(const std::string &path, const std::string &oldname, const std::string &name, std::function<void(bool)> callback);
 
     /**
      *  Renames a file under the given directory.
@@ -649,7 +649,7 @@ public:
      *  @return True if the file have been renamed successfully, false if not.
      */
     virtual bool renameFile(const std::string &oldfullpath, const std::string &newfullpath);
-    virtual void renameFile(const std::string &oldfullpath, const std::string &newfullpath, const std::function<void(bool)>& callback);
+    virtual void renameFile(const std::string &oldfullpath, const std::string &newfullpath, std::function<void(bool)> callback);
     /**
      *  Retrieve the file size.
      *
@@ -658,7 +658,7 @@ public:
      *  @return The file size.
      */
     virtual long getFileSize(const std::string &filepath);
-    virtual void getFileSize(const std::string &filepath, const std::function<void(long)>& callback);
+    virtual void getFileSize(const std::string &filepath, std::function<void(long)> callback);
 
     /** Returns the full path cache. */
     const std::unordered_map<std::string, std::string>& getFullPathCache() const { return _fullPathCache; }
@@ -776,13 +776,27 @@ protected:
     virtual void valueMapCompact(ValueMap& valueMap);
     virtual void valueVectorCompact(ValueVector& valueVector);
 
-    template<typename T, typename R>
-    void performOperationOffthread(const T& action, const R& callback)
+    template<typename T, typename R, typename ...ARGS>
+    static void performOperationOffthread(T&& action, R&& callback, ARGS&& ...args)
     {
-        auto lambda = [action, callback]() {
-            Director::getInstance()->getScheduler()->performFunctionInCocosThread(std::bind(callback, action()));
+
+        // Visual Studio 2013 does not support using std::bind to forward template parameters into
+        // a lambda. To get around this, we will just copy these arguments via lambda capture
+#if defined(_MSC_VER) && _MSC_VER  < 1900 
+        auto lambda = [action, callback, args...]() 
+        {
+            Director::getInstance()->getScheduler()->performFunctionInCocosThread(std::bind(callback, action(args...)));
         };
+#else
+        // As cocos2d-x uses c++11, we will use std::bind to leverage move sematics to
+        // move our arguments into our lambda, to potentially avoid copying. 
+        auto lambda = std::bind([](const T& action, const R& callback, const ARGS& ...args)
+        {
+            Director::getInstance()->getScheduler()->performFunctionInCocosThread(std::bind(callback, action(args...)));
+        }, std::forward<T>(action), std::forward<R>(callback), std::forward<ARGS>(args)...);
         
+#endif
+
         AsyncTaskPool::getInstance()->enqueue(AsyncTaskPool::TaskType::TASK_IO, [](void*){}, nullptr, std::move(lambda));
     }
 };
