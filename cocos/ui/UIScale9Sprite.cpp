@@ -553,10 +553,21 @@ void Scale9Sprite::setCapInsets(const cocos2d::Rect &insetsCopy)
                       _originalContentSize.height / 3.0f);
     }
 
+    // emulate invalid insets. shouldn't be supported, but the original code supported it.
+    if (insets.origin.x > _originalContentSize.width)
+        insets.origin.x = 0;
+    if (insets.origin.y > _originalContentSize.height)
+        insets.origin.y = 0;
+    if (insets.size.width > _originalContentSize.width)
+        insets.size.width = 1;
+    if (insets.size.height > _originalContentSize.height)
+        insets.size.height = 1;
+
     _insetLeft = insets.origin.x;
     _insetTop = insets.origin.y;
     _insetRight = _originalContentSize.width - _insetLeft - insets.size.width;
     _insetBottom = _originalContentSize.height - _insetTop - insets.size.height;
+
 
     // we have to convert from untrimmed to trimmed
     // Sprite::setCenterRect is using trimmed values (to be compatible with Cocos Creator)
