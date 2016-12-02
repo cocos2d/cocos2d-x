@@ -884,7 +884,7 @@ void Button::copySpecialProperties(Widget *widget)
         _prevIgnoreSize = button->_prevIgnoreSize;
         setScale9Enabled(button->_scale9Enabled);
 
-        // clone the inner sprite: https://github.com/cocos2d/cocos2d-x/issues/16928
+        // clone the inner sprite: https://github.com/cocos2d/cocos2d-x/issues/16924
         button->_buttonNormalRenderer->copyTo(_buttonNormalRenderer);
         _normalFileName = button->_normalFileName;
         _normalTextureSize = button->_normalTextureSize;
