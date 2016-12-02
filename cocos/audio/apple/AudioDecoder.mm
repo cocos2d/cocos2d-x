@@ -164,7 +164,7 @@ namespace cocos2d { namespace experimental {
         return ret;
     }
 
-    uint32_t AudioDecoder::tell()
+    uint32_t AudioDecoder::tell() const
     {
         uint32_t ret = INVALID_FRAME_INDEX;
         do
@@ -179,27 +179,27 @@ namespace cocos2d { namespace experimental {
         return ret;
     }
 
-    uint32_t AudioDecoder::getTotalFrames()
+    uint32_t AudioDecoder::getTotalFrames() const
     {
         return _totalFrames;
     }
 
-    uint32_t AudioDecoder::getBytesPerFrame()
+    uint32_t AudioDecoder::getBytesPerFrame() const
     {
         return _bytesPerFrame;
     }
 
-    uint32_t AudioDecoder::getSampleRate()
+    uint32_t AudioDecoder::getSampleRate() const
     {
         return _sampleRate;
     }
 
-    uint32_t AudioDecoder::getChannelCount()
+    uint32_t AudioDecoder::getChannelCount() const
     {
         return _channelCount;
     }
 
-    bool AudioDecoder::isOpened()
+    bool AudioDecoder::isOpened() const
     {
         return _isOpened;
     }

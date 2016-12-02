@@ -50,7 +50,7 @@ public:
      * @brief Checks whether decoder has opened file successfully.
      * @return true if succeed, otherwise false.
      */
-    bool isOpened();
+    bool isOpened() const;
 
     /**
      * @brief Closes opened audio file.
@@ -77,21 +77,21 @@ public:
      * @brief Tells the current frame offset.
      * @return The current frame offset.
      */
-    uint32_t tell();
+    uint32_t tell() const;
 
     /** Gets total frames of current audio.*/
-    uint32_t getTotalFrames();
+    uint32_t getTotalFrames() const;
 
     /** Gets bytes per frame of current audio.*/
-    uint32_t getBytesPerFrame();
+    uint32_t getBytesPerFrame() const;
 
     /** Gets sample rate of current audio.*/
-    uint32_t getSampleRate();
+    uint32_t getSampleRate() const;
 
     /** Gets the channel count of current audio.
      * @note Currently we only support 1 or 2 channels.
      */
-    uint32_t getChannelCount();
+    uint32_t getChannelCount() const;
 
 private:
     bool _isOpened;
