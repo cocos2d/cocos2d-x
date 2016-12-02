@@ -29,6 +29,7 @@ THE SOFTWARE.
 #include <vector>
 #include <unordered_map>
 #include <type_traits>
+#include <atomic>
 
 #include "platform/CCPlatformMacros.h"
 #include "base/ccTypes.h"
@@ -110,6 +111,21 @@ public:
     virtual void* buffer() const override {
         return _buffer->getBytes();
     }
+};
+
+class SpinRWLock {
+public:
+    SpinRWLock();
+    void readLock();
+    void readUnLock();
+    void writeLock();
+    void writeUnlock();
+private:
+    struct State {
+        bool writeFlag;
+        unsigned int readCount;
+    };
+    std::atomic<State> _state;
 };
 
 /** Helper class to handle file operations. */
@@ -723,6 +739,11 @@ protected:
      *  This variable is used for improving the performance of file search.
      */
     mutable std::unordered_map<std::string, std::string> _fullPathCache;
+
+    /**
+     * Read-Write SpinLock to make _fullPathCache thread-safe
+     */
+    mutable SpinRWLock _cacheLock;
 
     /**
      * Writable path.
