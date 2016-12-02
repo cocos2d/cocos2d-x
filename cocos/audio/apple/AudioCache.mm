@@ -1,18 +1,18 @@
 /****************************************************************************
  Copyright (c) 2014-2016 Chukong Technologies Inc.
- 
+
  http://www.cocos2d-x.org
- 
+
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
- 
+
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
- 
+
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -55,15 +55,15 @@ typedef ALvoid	AL_APIENTRY	(*alBufferDataStaticProcPtr) (const ALint bid, ALenum
 static ALvoid  alBufferDataStaticProc(const ALint bid, ALenum format, ALvoid* data, ALsizei size, ALsizei freq)
 {
     static alBufferDataStaticProcPtr proc = nullptr;
-    
+
     if (proc == nullptr) {
         proc = (alBufferDataStaticProcPtr) alcGetProcAddress(nullptr, (const ALCchar*) "alBufferDataStatic");
     }
-    
+
     if (proc){
         proc(bid, format, data, size, freq);
     }
-	
+
     return;
 }
 using namespace cocos2d;
@@ -108,7 +108,7 @@ AudioCache::~AudioCache()
     //wait for the 'readDataTask' task to exit
     _readDataTaskMutex.lock();
     _readDataTaskMutex.unlock();
-    
+
     if (_pcmData)
     {
         if (_state == State::READY)
@@ -124,10 +124,10 @@ AudioCache::~AudioCache()
         {
             ALOGW("AudioCache (%p), id=%u, buffer isn't ready, state=%d", this, _id, _state);
         }
-        
+
         free(_pcmData);
     }
-    
+
     if (_queBufferFrames > 0)
     {
         for (int index = 0; index < QUEUEBUFFER_NUM; ++index)
@@ -142,7 +142,7 @@ void AudioCache::readDataTask(unsigned int selfId)
 {
     //Note: It's in sub thread
     ALOGVV("readDataTask, cache id=%u", selfId);
-    
+
     _readDataTaskMutex.lock();
     _state = State::LOADING;
 
@@ -166,7 +166,7 @@ void AudioCache::readDataTask(unsigned int selfId)
         _sampleRate = (ALsizei)sampleRate;
         _duration = 1.0f * totalFrames / sampleRate;
         _totalFrames = totalFrames;
-        
+
         if (dataSize <= PCMDATA_CACHEMAXSIZE)
         {
             uint32_t framesRead = 0;
@@ -218,10 +218,10 @@ void AudioCache::readDataTask(unsigned int selfId)
                 ALOGE("%s: attaching audio to buffer fail: %x", __PRETTY_FUNCTION__, alError);
                 break;
             }
-            
+
             if (*_isDestroyed)
                 break;
-            
+
             alBufferDataStaticProc(_alBufferId, _format, _pcmData, (ALsizei)dataSize, (ALsizei)sampleRate);
 
             do
@@ -232,10 +232,10 @@ void AudioCache::readDataTask(unsigned int selfId)
                 _framesRead += framesRead;
                 remainingFrames -= framesRead;
             } while (_framesRead < framesToReadOnce);
-            
+
             if (*_isDestroyed)
                 break;
-            
+
             _state = State::READY;
 
             invokingPlayCallbacks();
@@ -274,18 +274,18 @@ void AudioCache::readDataTask(unsigned int selfId)
 
                 decoder.read(_queBufferFrames, _queBuffers[index]);
             }
-            
+
             _state = State::READY;
         }
-        
+
     } while (false);
-    
+
     decoder.close();
-    
+
     //FIXME: Why to invoke play callback first? Should it be after 'load' callback?
     invokingPlayCallbacks();
     invokingLoadCallbacks();
-    
+
     _isLoadingFinished = true;
     if (_state != State::READY)
     {
@@ -297,7 +297,7 @@ void AudioCache::readDataTask(unsigned int selfId)
             _alBufferId = INVALID_AL_BUFFER_ID;
         }
     }
-    
+
     _readDataTaskMutex.unlock();
 }
 
@@ -310,14 +310,14 @@ void AudioCache::addPlayCallback(const std::function<void()>& callback)
         case State::LOADING:
             _playCallbacks.push_back(callback);
             break;
-            
+
         case State::READY:
         // If state is failure, we still need to invoke the callback
         // since the callback will set the 'AudioPlayer::_removeByAudioEngine' flag to true.
         case State::FAILED:
             callback();
             break;
-            
+
         default:
             ALOGE("Invalid state: %d", _state);
             break;
@@ -327,12 +327,12 @@ void AudioCache::addPlayCallback(const std::function<void()>& callback)
 void AudioCache::invokingPlayCallbacks()
 {
     std::lock_guard<std::mutex> lk(_playCallbackMutex);
-    
+
     for (auto&& cb : _playCallbacks)
     {
         cb();
     }
-    
+
     _playCallbacks.clear();
 }
 
@@ -344,14 +344,14 @@ void AudioCache::addLoadCallback(const std::function<void(bool)>& callback)
         case State::LOADING:
             _loadCallbacks.push_back(callback);
             break;
-            
+
         case State::READY:
             callback(true);
             break;
         case State::FAILED:
             callback(false);
             break;
-            
+
         default:
             ALOGE("Invalid state: %d", _state);
             break;
@@ -365,7 +365,7 @@ void AudioCache::invokingLoadCallbacks()
         ALOGV("AudioCache (%p) was destroyed, don't invoke preload callback ...", this);
         return;
     }
-    
+
     auto isDestroyed = _isDestroyed;
     auto scheduler = Director::getInstance()->getScheduler();
     scheduler->performFunctionInCocosThread([&, isDestroyed](){
@@ -374,7 +374,7 @@ void AudioCache::invokingLoadCallbacks()
             ALOGV("invokingLoadCallbacks perform in cocos thread, AudioCache (%p) was destroyed!", this);
             return;
         }
-        
+
         for (auto&& cb : _loadCallbacks)
         {
             cb(_state == State::READY);

@@ -40,7 +40,7 @@ public:
     AudioDecoder();
     ~AudioDecoder();
 
-    /** 
+    /**
      * @brief Opens an audio file specified by a file path.
      * @return true if succeed, otherwise false.
      */
@@ -58,7 +58,7 @@ public:
      */
     void close();
 
-    /** 
+    /**
      * @brief Reads audio frames of PCM format.
      * @param framesToRead The number of frames excepted to be read.
      * @param pcmBuf The buffer to hold the frames to be read, its size should be >= framesToRead * _bytesPerFrame.

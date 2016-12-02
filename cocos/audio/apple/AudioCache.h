@@ -45,7 +45,7 @@ class AudioPlayer;
 class AudioCache
 {
 public:
-    
+
     enum class State
     {
         INITIAL,
@@ -53,14 +53,14 @@ public:
         READY,
         FAILED
     };
-    
+
     AudioCache();
     ~AudioCache();
 
     void addPlayCallback(const std::function<void()>& callback);
 
     void addLoadCallback(const std::function<void(bool)>& callback);
-    
+
 protected:
     void setSkipReadDataTask(bool isSkip) { _isSkipReadDataTask = isSkip; };
     void readDataTask(unsigned int selfId);
@@ -68,7 +68,7 @@ protected:
     void invokingPlayCallbacks();
 
     void invokingLoadCallbacks();
-    
+
     //pcm data related stuff
     ALenum _format;
     ALsizei _sampleRate;
@@ -91,26 +91,25 @@ protected:
 
     std::mutex _playCallbackMutex;
     std::vector< std::function<void()> > _playCallbacks;
-    
+
     // loadCallbacks doesn't need mutex since it's invoked only in Cocos thread.
     std::vector< std::function<void(bool)> > _loadCallbacks;
-    
+
     std::mutex _readDataTaskMutex;
-    
+
     State _state;
-    
+
     std::shared_ptr<bool> _isDestroyed;
     std::string _fileFullPath;
     unsigned int _id;
     bool _isLoadingFinished;
     bool _isSkipReadDataTask;
-    
+
     friend class AudioEngineImpl;
     friend class AudioPlayer;
-} ;
+};
 
 }
 NS_CC_END
 
 #endif
-
