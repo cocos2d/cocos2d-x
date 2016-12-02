@@ -180,7 +180,7 @@ void SpriteDisplayData::copy(DisplayData *displayData)
 
     if (SpriteDisplayData *sdd = dynamic_cast<SpriteDisplayData*>(displayData))
     {
-        skinData = sdd->skinData;
+        sdd->skinData.copy(&skinData);
     }
 }
 
