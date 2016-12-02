@@ -442,7 +442,7 @@ Sprite* Scale9Sprite::getSprite()
 /**
  * @brief Returns a copy of the Scale9Sprite
  */
-void Scale9Sprite::cloneIn(Scale9Sprite* copy) const
+void Scale9Sprite::copyTo(Scale9Sprite* copy) const
 {
     copy->initWithSpriteFrame(getSpriteFrame(), getCapInsets());
 

@@ -425,7 +425,7 @@ void LoadingBar::copySpecialProperties(Widget *widget)
         setScale9Enabled(loadingBar->_scale9Enabled);
 
         // clone the inner sprite: https://github.com/cocos2d/cocos2d-x/issues/16930
-        loadingBar->_barRenderer->cloneIn(_barRenderer);
+        loadingBar->_barRenderer->copyTo(_barRenderer);
         setupTexture();
 
         setCapInsets(loadingBar->_capInsets);
