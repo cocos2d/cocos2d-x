@@ -16,7 +16,7 @@ local function KeypadMainLayer()
 
         local function onKeyReleased(keyCode, event)
             local label = event:getCurrentTarget()
-            label:setString("key: " .. keyCode .. " clicked")
+            label:setString("key: " .. keyCode .. " was clicked")
         end
 
         local listener = cc.EventListenerKeyboard:create()
