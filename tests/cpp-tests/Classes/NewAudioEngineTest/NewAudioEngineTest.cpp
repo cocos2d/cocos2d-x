@@ -44,6 +44,7 @@ AudioEngineTests::AudioEngineTests()
     ADD_TEST_CASE(AudioPauseResumeAfterPlay);
     ADD_TEST_CASE(AudioPreloadSameFileMultipleTimes);
     ADD_TEST_CASE(AudioPlayFileInWritablePath);
+    ADD_TEST_CASE(AudioIssue16938Test);
     
     //FIXME: Please keep AudioSwitchStateTest to the last position since this test case doesn't work well on each platforms.
     ADD_TEST_CASE(AudioSwitchStateTest);
@@ -851,6 +852,24 @@ std::string AudioPauseResumeAfterPlay::title() const
 std::string AudioPauseResumeAfterPlay::subtitle() const
 {
     return "Should not crash";
+}
+
+/////////////////////////////////////////////////////////////////////////
+void AudioIssue16938Test::onEnter()
+{
+    AudioEngineTestDemo::onEnter();
+
+    AudioEngine::play2d("audio/EntireFramesTest.mp3");
+}
+
+std::string AudioIssue16938Test::title() const
+{
+    return "Issue 16938 Test";
+}
+
+std::string AudioIssue16938Test::subtitle() const
+{
+    return "Should heard the entire audio frames";
 }
 
 /////////////////////////////////////////////////////////////////////////
