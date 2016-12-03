@@ -30,6 +30,11 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+/* FIXME:
+ Code could be simplified by using Sprite's setContentSize feature.
+ Instead of scaling the sprite, set call setContentSize both in scale9 and non-scale9 modes
+ */
+
 namespace ui {
     
 static const int BAR_RENDERER_Z = (-1);
@@ -138,10 +143,10 @@ void LoadingBar::loadTexture(const std::string& texture,TextureResType texType)
     switch (_renderBarTexType)
     {
         case TextureResType::LOCAL:
-            _barRenderer->initWithFile(texture);
+            _barRenderer->setTexture(texture);
             break;
         case TextureResType::PLIST:
-            _barRenderer->initWithSpriteFrameName(texture);
+            _barRenderer->setSpriteFrame(texture);
             break;
         default:
             break;
@@ -196,22 +201,14 @@ void LoadingBar::handleSpriteFlipX()
     {
         if (!_scale9Enabled)
         {
-            auto innerSprite = _barRenderer->getSprite();
-            if (nullptr != innerSprite)
-            {
-                innerSprite->setFlippedX(false);
-            }
+            _barRenderer->setFlippedX(false);
         }
     }
     else
     {
         if (!_scale9Enabled)
         {
-            auto innerSprite = _barRenderer->getSprite();
-            if (nullptr != innerSprite)
-            {
-                innerSprite->setFlippedX(true);
-            }
+            _barRenderer->setFlippedX(true);
         }
     }
 }
@@ -237,7 +234,8 @@ void LoadingBar::setScale9Enabled(bool enabled)
         ignoreContentAdaptWithSize(_prevIgnoreSize);
     }
     setCapInsets(_capInsets);
-    this->updateProgressBar();
+
+    updateProgressBar();
     _barRendererAdaptDirty = true;
 }
 
@@ -257,7 +255,6 @@ void LoadingBar::setCapInsets(const Rect &capInsets)
     // textureRect should be restored in order to calculate the scale9 correctly
     // https://github.com/cocos2d/cocos2d-x/issues/16930
     _barRenderer->setTextureRect(_originalRect, _barRenderer->isTextureRectRotated(), _barRendererTextureSize);
-
     _barRenderer->setCapInsets(_capInsets);
 }
 
@@ -298,14 +295,10 @@ void LoadingBar::updateProgressBar()
     }
     else
     {
-        Sprite* innerSprite = _barRenderer->getSprite();
-        if (nullptr != innerSprite)
-        {
-            float res = _percent / 100.0f;
-            Rect rect = innerSprite->getTextureRect();
-            rect.size.width = _barRendererTextureSize.width * res;
-            innerSprite->setTextureRect(rect, innerSprite->isTextureRectRotated(), rect.size);
-        }
+        float res = _percent / 100.0f;
+        Rect rect = _barRenderer->getTextureRect();
+        rect.size.width = _barRendererTextureSize.width * res;
+        _barRenderer->setTextureRect(rect, _barRenderer->isTextureRectRotated(), rect.size);
     }
 }
 

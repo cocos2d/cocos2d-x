@@ -31,6 +31,11 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+/* FIXME:
+ Code could be simplified by using Sprite's setContentSize feature.
+ Instead of scaling the sprite, set call setContentSize both in scale9 and non-scale9 modes
+ */
+
 namespace ui {
     
 static const int BASEBAR_RENDERER_Z = (-2);
@@ -38,7 +43,7 @@ static const int PROGRESSBAR_RENDERER_Z = (-2);
 static const int SLIDBALL_RENDERER_Z = (-1);
     
 IMPLEMENT_CLASS_GUI_INFO(Slider)
-    
+
 Slider::Slider():
 _barRenderer(nullptr),
 _progressBarRenderer(nullptr),
@@ -166,10 +171,10 @@ void Slider::loadBarTexture(const std::string& fileName, TextureResType texType)
         switch (_barTexType)
         {
         case TextureResType::LOCAL:
-            _barRenderer->initWithFile(fileName);
+            _barRenderer->setTexture(fileName);
             break;
         case TextureResType::PLIST:
-            _barRenderer->initWithSpriteFrameName(fileName);
+            _barRenderer->setSpriteFrame(fileName);
             break;
         default:
             break;
@@ -183,7 +188,7 @@ void Slider::loadBarTexture(const std::string& fileName, TextureResType texType)
 }
 void Slider::loadBarTexture(SpriteFrame* spriteframe)
 {
-    _barRenderer->initWithSpriteFrame(spriteframe);
+    _barRenderer->setSpriteFrame(spriteframe);
     this->setupBarTexture();
 }
 
@@ -210,10 +215,10 @@ void Slider::loadProgressBarTexture(const std::string& fileName, TextureResType 
         switch (_progressBarTexType)
         {
         case TextureResType::LOCAL:
-            _progressBarRenderer->initWithFile(fileName);
+            _progressBarRenderer->setTexture(fileName);
             break;
         case TextureResType::PLIST:
-            _progressBarRenderer->initWithSpriteFrameName(fileName);
+            _progressBarRenderer->setSpriteFrame(fileName);
             break;
         default:
             break;
@@ -224,7 +229,7 @@ void Slider::loadProgressBarTexture(const std::string& fileName, TextureResType 
 
 void Slider::loadProgressBarTexture(SpriteFrame* spriteframe)
 {
-    _progressBarRenderer->initWithSpriteFrame(spriteframe);
+    _progressBarRenderer->setSpriteFrame(spriteframe);
     this->setupProgressBarTexture();
 }
 
@@ -459,13 +464,9 @@ void Slider::setPercent(int percent)
     }
     else
     {
-        Sprite* spriteRenderer = _progressBarRenderer->getSprite();
-        
-        if (nullptr != spriteRenderer) {
-            Rect rect = spriteRenderer->getTextureRect();
-            rect.size.width = _progressBarTextureSize.width * res;
-            spriteRenderer->setTextureRect(rect, spriteRenderer->isTextureRectRotated(), rect.size);
-        }
+        Rect rect = _progressBarRenderer->getTextureRect();
+        rect.size.width = _progressBarTextureSize.width * res;
+        _progressBarRenderer->setTextureRect(rect, _progressBarRenderer->isTextureRectRotated(), rect.size);
     }
 }
     
