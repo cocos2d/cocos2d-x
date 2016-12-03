@@ -562,6 +562,11 @@ namespace ui {
          */
         Sprite* getSprite();
 
+        /**
+         * @brief copies self to copy
+         */
+        void copyTo(Scale9Sprite* copy) const;
+
 
         /**
          * Set the slice sprite rendering type.

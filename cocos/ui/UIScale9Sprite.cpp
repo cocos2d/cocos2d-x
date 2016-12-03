@@ -424,7 +424,7 @@ void Scale9Sprite::setScale9Enabled(bool enabled)
     RenderingType type = enabled ? RenderingType::SLICE : RenderingType::SIMPLE;
     setRenderingType(type);
 
-    // only enable strech en scale9 is enabled
+    // only enable strech when scale9 is enabled
     // for backward compatibiliy, since Sprite streches the texture no matter the rendering type
     setStrechEnabled(enabled);
 }
@@ -438,6 +438,32 @@ Sprite* Scale9Sprite::getSprite()
 {
     return this;
 }
+
+/**
+ * @brief Returns a copy of the Scale9Sprite
+ */
+void Scale9Sprite::copyTo(Scale9Sprite* copy) const
+{
+    copy->initWithSpriteFrame(getSpriteFrame(), getCapInsets());
+
+    copy->setRenderingType(_renderingType);
+    copy->setScale9Enabled(isScale9Enabled());
+    copy->_isPatch9 = _isPatch9;
+    copy->_brightState = _brightState;
+
+    // these properties should be part of Sprite::clone() (or Node::clone())
+    // but cloning is not supported on those nodes
+    copy->setContentSize(getContentSize());
+    copy->setPosition(getPosition());
+    copy->setScale(getScaleX(), getScaleY());
+    copy->setRotation(getRotation());
+    copy->setRotationSkewX(getRotationSkewX());
+    copy->setRotationSkewY(getRotationSkewY());
+    copy->setColor(getColor());
+    copy->setOpacity(getOpacity());
+    copy->_originalContentSize = _originalContentSize;
+}
+
 
 // (0,0)  O = capInsets.origin
 // v0----------------------
@@ -527,10 +553,21 @@ void Scale9Sprite::setCapInsets(const cocos2d::Rect &insetsCopy)
                       _originalContentSize.height / 3.0f);
     }
 
+    // emulate invalid insets. shouldn't be supported, but the original code supported it.
+    if (insets.origin.x > _originalContentSize.width)
+        insets.origin.x = 0;
+    if (insets.origin.y > _originalContentSize.height)
+        insets.origin.y = 0;
+    if (insets.size.width > _originalContentSize.width)
+        insets.size.width = 1;
+    if (insets.size.height > _originalContentSize.height)
+        insets.size.height = 1;
+
     _insetLeft = insets.origin.x;
     _insetTop = insets.origin.y;
     _insetRight = _originalContentSize.width - _insetLeft - insets.size.width;
     _insetBottom = _originalContentSize.height - _insetTop - insets.size.height;
+
 
     // we have to convert from untrimmed to trimmed
     // Sprite::setCenterRect is using trimmed values (to be compatible with Cocos Creator)
