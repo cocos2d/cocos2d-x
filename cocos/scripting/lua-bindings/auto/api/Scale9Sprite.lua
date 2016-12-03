@@ -116,6 +116,13 @@
 -- @return Scale9Sprite#Scale9Sprite self (return value: ccui.Scale9Sprite)
         
 --------------------------------
+-- brief copies self to copy
+-- @function [parent=#Scale9Sprite] copyTo 
+-- @param self
+-- @param #ccui.Scale9Sprite copy
+-- @return Scale9Sprite#Scale9Sprite self (return value: ccui.Scale9Sprite)
+        
+--------------------------------
 -- brief Change inner sprite's sprite frame.<br>
 -- param spriteFrame A sprite frame pointer.<br>
 -- param capInsets The values to use for the cap insets.
