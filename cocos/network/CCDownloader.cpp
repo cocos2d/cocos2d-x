@@ -25,13 +25,7 @@
 #include "network/CCDownloader.h"
 
 // include platform specific implement class
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-
-#include "network/CCDownloader-apple.h"
-#include "network/CCDownloader-curl.h"
-#define DownloaderImpl  DownloaderCURL
-
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 
 #include "network/CCDownloader-apple.h"
 #define DownloaderImpl  DownloaderApple
