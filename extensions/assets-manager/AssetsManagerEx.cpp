@@ -79,7 +79,7 @@ AssetsManagerEx::AssetsManagerEx(const std::string& manifestUrl, const std::stri
 //    _downloader->setConnectionTimeout(DEFAULT_CONNECTION_TIMEOUT);
     _downloader->onTaskError = std::bind(&AssetsManagerEx::onError, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4);
     _downloader->onTaskProgress = [this](const network::DownloadTask& task,
-                                         int64_t bytesReceived,
+                                         int64_t /*bytesReceived*/,
                                          int64_t totalBytesReceived,
                                          int64_t totalBytesExpected)
     {
@@ -174,7 +174,7 @@ void AssetsManagerEx::prepareLocalManifest()
     _localManifest->prependSearchPaths();
 }
 
-void AssetsManagerEx::loadLocalManifest(const std::string& manifestUrl)
+void AssetsManagerEx::loadLocalManifest(const std::string& /*manifestUrl*/)
 {
     Manifest *cachedManifest = nullptr;
     // Find the cached manifest file
@@ -907,7 +907,7 @@ void AssetsManagerEx::onError(const network::DownloadTask& task,
     }
 }
 
-void AssetsManagerEx::onProgress(double total, double downloaded, const std::string &url, const std::string &customId)
+void AssetsManagerEx::onProgress(double total, double downloaded, const std::string& /*url*/, const std::string &customId)
 {
     if (customId == VERSION_ID || customId == MANIFEST_ID)
     {
@@ -959,7 +959,7 @@ void AssetsManagerEx::onProgress(double total, double downloaded, const std::str
     }
 }
 
-void AssetsManagerEx::onSuccess(const std::string &srcUrl, const std::string &storagePath, const std::string &customId)
+void AssetsManagerEx::onSuccess(const std::string &/*srcUrl*/, const std::string &storagePath, const std::string &customId)
 {
     if (customId == VERSION_ID)
     {

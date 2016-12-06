@@ -99,7 +99,7 @@ std::string TextureCache::getDescription() const
 struct TextureCache::AsyncStruct
 {
 public:
-    AsyncStruct(const std::string& fn, std::function<void(Texture2D*)> f) : filename(fn), callback(f), pixelFormat(Texture2D::getDefaultAlphaPixelFormat()), loadSuccess(false) {}
+    AsyncStruct(const std::string& fn,const std::function<void(Texture2D*)>& f) : filename(fn), callback(f), pixelFormat(Texture2D::getDefaultAlphaPixelFormat()), loadSuccess(false) {}
 
     std::string filename;
     std::function<void(Texture2D*)> callback;
@@ -255,7 +255,7 @@ void TextureCache::loadImage()
     }
 }
 
-void TextureCache::addImageAsyncCallBack(float dt)
+void TextureCache::addImageAsyncCallBack(float /*dt*/)
 {
     Texture2D *texture = nullptr;
     AsyncStruct *asyncStruct = nullptr;

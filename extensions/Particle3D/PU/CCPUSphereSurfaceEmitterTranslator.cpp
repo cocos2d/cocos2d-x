@@ -70,7 +70,7 @@ bool PUSphereSurfaceEmitterTranslator::translateChildProperty( PUScriptCompiler*
     return false;
 }
 
-bool PUSphereSurfaceEmitterTranslator::translateChildObject( PUScriptCompiler* compiler, PUAbstractNode *node )
+bool PUSphereSurfaceEmitterTranslator::translateChildObject( PUScriptCompiler* /*compiler*/, PUAbstractNode* /*node*/ )
 {
     // No objects
     return false;

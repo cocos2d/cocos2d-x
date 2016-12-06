@@ -276,7 +276,7 @@ void EditBoxImplCommon::setContentSize(const Size& size)
     placeInactiveLabels();
 }
 
-void EditBoxImplCommon::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
+void EditBoxImplCommon::draw(Renderer* /*renderer*/, const Mat4& /*transform*/, uint32_t flags)
 {
     if(flags)
     {
@@ -307,7 +307,7 @@ void EditBoxImplCommon::closeKeyboard()
     this->nativeCloseKeyboard();
 }
 
-void EditBoxImplCommon::onEndEditing(const std::string& text)
+void EditBoxImplCommon::onEndEditing(const std::string& /*text*/)
 {
     this->setNativeVisible(false);
     

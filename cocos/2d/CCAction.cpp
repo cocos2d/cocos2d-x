@@ -73,15 +73,13 @@ bool Action::isDone() const
     return true;
 }
 
-void Action::step(float dt)
+void Action::step(float /*dt*/)
 {
-    CC_UNUSED_PARAM(dt);
     CCLOG("[Action step]. override me");
 }
 
-void Action::update(float time)
+void Action::update(float /*time*/)
 {
-    CC_UNUSED_PARAM(time);
     CCLOG("[Action update]. override me");
 }
 
@@ -283,10 +281,8 @@ bool Follow::initWithTarget(Node *followedNode, const Rect& rect /*= Rect::ZERO*
     return initWithTargetAndOffset(followedNode, 0.0, 0.0,rect);
     
 }
-void Follow::step(float dt)
+void Follow::step(float /*dt*/)
 {
-    CC_UNUSED_PARAM(dt);
-
     if(_boundarySet)
     {
         // whole map fits inside a single screen, no need to modify the position - unless map boundaries are increased

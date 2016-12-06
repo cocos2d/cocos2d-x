@@ -161,7 +161,7 @@ bool PUTextureAnimatorTranslator::translateChildProperty( PUScriptCompiler* comp
     return false;
 }
 
-bool PUTextureAnimatorTranslator::translateChildObject( PUScriptCompiler* compiler, PUAbstractNode *node )
+bool PUTextureAnimatorTranslator::translateChildObject( PUScriptCompiler* /*compiler*/, PUAbstractNode* /*node*/ )
 {
     // No objects
     return false;

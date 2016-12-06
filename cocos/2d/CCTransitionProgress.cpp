@@ -122,7 +122,7 @@ void TransitionProgress::setupTransition()
     _to = 0;
 }
 
-ProgressTimer* TransitionProgress::progressTimerNodeWithRenderTexture(RenderTexture* texture)
+ProgressTimer* TransitionProgress::progressTimerNodeWithRenderTexture(RenderTexture* /*texture*/)
 {
     CCASSERT(false, "override me - abstract class");
     return nullptr;

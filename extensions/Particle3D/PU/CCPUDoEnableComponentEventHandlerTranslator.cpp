@@ -85,7 +85,7 @@ bool PUDoEnableComponentEventHandlerTranslator::translateChildProperty( PUScript
     return false;
 }
 
-bool PUDoEnableComponentEventHandlerTranslator::translateChildObject( PUScriptCompiler* compiler, PUAbstractNode *node )
+bool PUDoEnableComponentEventHandlerTranslator::translateChildObject( PUScriptCompiler* /*compiler*/, PUAbstractNode* /*node*/ )
 {
     // No objects
     return false;

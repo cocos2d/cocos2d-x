@@ -28,6 +28,7 @@ THE SOFTWARE.
 #include "renderer/CCTextureCache.h"
 #include "2d/CCSpriteFrame.h"
 #include "base/CCDirector.h"
+#include "platform/CCFileUtils.h"
 
 NS_CC_BEGIN
 
@@ -54,19 +55,24 @@ SpriteFrame* SpriteFrame::createWithTexture(Texture2D *texture, const Rect& rect
 SpriteFrame* SpriteFrame::createWithTexture(Texture2D* texture, const Rect& rect, bool rotated, const Vec2& offset, const Size& originalSize)
 {
     SpriteFrame *spriteFrame = new (std::nothrow) SpriteFrame();
-    spriteFrame->initWithTexture(texture, rect, rotated, offset, originalSize);
-    spriteFrame->autorelease();
+    if (spriteFrame && spriteFrame->initWithTexture(texture, rect, rotated, offset, originalSize)) {
+        spriteFrame->autorelease();
+        return spriteFrame;
+    }
 
-    return spriteFrame;
+    delete spriteFrame;
+    return nullptr;
 }
 
 SpriteFrame* SpriteFrame::create(const std::string& filename, const Rect& rect, bool rotated, const Vec2& offset, const Size& originalSize)
 {
     SpriteFrame *spriteFrame = new (std::nothrow) SpriteFrame();
-    spriteFrame->initWithTextureFilename(filename, rect, rotated, offset, originalSize);
-    spriteFrame->autorelease();
-
-    return spriteFrame;
+    if (spriteFrame && spriteFrame->initWithTextureFilename(filename, rect, rotated, offset, originalSize)) {
+        spriteFrame->autorelease();
+        return spriteFrame;
+    }
+    delete spriteFrame;
+    return nullptr;
 }
 
 SpriteFrame::SpriteFrame()
@@ -111,19 +117,21 @@ bool SpriteFrame::initWithTexture(Texture2D* texture, const Rect& rect, bool rot
 
 bool SpriteFrame::initWithTextureFilename(const std::string& filename, const Rect& rect, bool rotated, const Vec2& offset, const Size& originalSize)
 {
-    _texture = nullptr;
-    _textureFilename = filename;
-    _rectInPixels = rect;
-    _rect = CC_RECT_PIXELS_TO_POINTS( rect );
-    _offsetInPixels = offset;
-    _offset = CC_POINT_PIXELS_TO_POINTS( _offsetInPixels );
-    _originalSizeInPixels = originalSize;
-    _originalSize = CC_SIZE_PIXELS_TO_POINTS( _originalSizeInPixels );
-    _rotated = rotated;
-    _anchorPoint = Vec2(NAN, NAN);
-    _centerRect = Rect(NAN, NAN, NAN, NAN);
-
-    return true;
+    if (FileUtils::getInstance()->isFileExist(filename)) {
+        _texture = nullptr;
+        _textureFilename = filename;
+        _rectInPixels = rect;
+        _rect = CC_RECT_PIXELS_TO_POINTS( rect );
+        _offsetInPixels = offset;
+        _offset = CC_POINT_PIXELS_TO_POINTS( _offsetInPixels );
+        _originalSizeInPixels = originalSize;
+        _originalSize = CC_SIZE_PIXELS_TO_POINTS( _originalSizeInPixels );
+        _rotated = rotated;
+        _anchorPoint = Vec2(NAN, NAN);
+        _centerRect = Rect(NAN, NAN, NAN, NAN);
+        return true;
+    }
+    return false;
 }
 
 SpriteFrame::~SpriteFrame()

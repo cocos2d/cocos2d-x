@@ -34,12 +34,12 @@ PUOnCollisionObserverTranslator::PUOnCollisionObserverTranslator()
 {
 }
 //-------------------------------------------------------------------------
-bool PUOnCollisionObserverTranslator::translateChildProperty( PUScriptCompiler* compiler, PUAbstractNode *node )
+bool PUOnCollisionObserverTranslator::translateChildProperty(PUScriptCompiler* /*compiler*/, PUAbstractNode* /*node*/)
 {
     return false;
 }
 
-bool PUOnCollisionObserverTranslator::translateChildObject( PUScriptCompiler* compiler, PUAbstractNode *node )
+bool PUOnCollisionObserverTranslator::translateChildObject(PUScriptCompiler* /*compiler*/, PUAbstractNode* /*node*/)
 {
     // No objects
     return false;

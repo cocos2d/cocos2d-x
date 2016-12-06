@@ -228,10 +228,23 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
+--  whether or not contentSize streches the sprite's texture 
+-- @function [parent=#Sprite] setStrechEnabled 
+-- @param self
+-- @param #bool enabled
+-- @return Sprite#Sprite self (return value: cc.Sprite)
+        
+--------------------------------
 -- Returns the rect of the Sprite in points.
 -- @function [parent=#Sprite] getTextureRect 
 -- @param self
 -- @return rect_table#rect_table ret (return value: rect_table)
+        
+--------------------------------
+--  returns whether or not contentSize streches the sprite's texture 
+-- @function [parent=#Sprite] isStrechEnabled 
+-- @param self
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- @overload self, string, rect_table         

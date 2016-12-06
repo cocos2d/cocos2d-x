@@ -70,7 +70,7 @@ bool PUSlaveEmitterTranslator::translateChildProperty( PUScriptCompiler* compile
     return false;
 }
 
-bool PUSlaveEmitterTranslator::translateChildObject( PUScriptCompiler* compiler, PUAbstractNode *node )
+bool PUSlaveEmitterTranslator::translateChildObject( PUScriptCompiler* /*compiler*/, PUAbstractNode* /*node*/ )
 {
     // No objects
     return false;

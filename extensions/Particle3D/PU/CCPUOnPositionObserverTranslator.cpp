@@ -137,7 +137,7 @@ bool PUOnPositionObserverTranslator::translateChildProperty( PUScriptCompiler* c
     return false;
 }
 
-bool PUOnPositionObserverTranslator::translateChildObject( PUScriptCompiler* compiler, PUAbstractNode *node )
+bool PUOnPositionObserverTranslator::translateChildObject( PUScriptCompiler* /*compiler*/, PUAbstractNode* /*node*/ )
 {
     // No objects
     return false;

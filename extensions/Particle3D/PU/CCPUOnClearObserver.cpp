@@ -35,13 +35,13 @@ void PUOnClearObserver::notifyStart (void)
     _continue = false;
 }
 //-----------------------------------------------------------------------
-bool PUOnClearObserver::observe (PUParticle3D* particle, float timeElapsed)
+bool PUOnClearObserver::observe (PUParticle3D* /*particle*/, float /*timeElapsed*/)
 {
     // This function always returns false, but is never called (but it must be implemented).
     return false;
 }
 //-----------------------------------------------------------------------
-void PUOnClearObserver::updateObserver(PUParticle3D* particle, float timeElapsed, bool firstParticle)
+void PUOnClearObserver::updateObserver(PUParticle3D* /*particle*/, float /*timeElapsed*/, bool firstParticle)
 {
     // Override the _processParticle() function, because we don't observe individual particles.
     if (firstParticle)

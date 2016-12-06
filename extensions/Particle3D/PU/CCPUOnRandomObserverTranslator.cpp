@@ -57,7 +57,7 @@ bool PUOnRandomObserverTranslator::translateChildProperty( PUScriptCompiler* com
     return false;
 }
 
-bool PUOnRandomObserverTranslator::translateChildObject( PUScriptCompiler* compiler, PUAbstractNode *node )
+bool PUOnRandomObserverTranslator::translateChildObject( PUScriptCompiler* /*compiler*/, PUAbstractNode* /*node*/ )
 {
     // No objects
     return false;

@@ -48,7 +48,7 @@ void PUOnCountObserver::notifyStart (void)
     _count = 1;
 }
 //-----------------------------------------------------------------------
-bool PUOnCountObserver::observe (PUParticle3D* particle, float timeElapsed)
+bool PUOnCountObserver::observe (PUParticle3D* particle, float /*timeElapsed*/)
 {
     if (!particle)
         return false;

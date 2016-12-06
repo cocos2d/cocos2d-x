@@ -61,7 +61,7 @@ EditBox::~EditBox(void)
 }
 
 
-void EditBox::touchDownAction(Ref *sender, TouchEventType controlEvent)
+void EditBox::touchDownAction(Ref* /*sender*/, TouchEventType controlEvent)
 {
     if (controlEvent == Widget::TouchEventType::ENDED) {
         _editBoxImpl->openKeyboard();
@@ -87,7 +87,7 @@ EditBox* EditBox::create(const Size& size,
 }
     
     
-EditBox* EditBox::create(const cocos2d::Size &size, cocos2d::ui::Scale9Sprite *normalSprite, ui::Scale9Sprite *pressedSprite, Scale9Sprite* disabledSprite)
+EditBox* EditBox::create(const cocos2d::Size &size, cocos2d::ui::Scale9Sprite *normalSprite, ui::Scale9Sprite* /*pressedSprite*/, Scale9Sprite* /*disabledSprite*/)
 {
     EditBox* pRet = new (std::nothrow) EditBox();
     
@@ -499,7 +499,7 @@ void EditBox::keyboardWillShow(IMEKeyboardNotificationInfo& info)
     }
 }
 
-void EditBox::keyboardDidShow(IMEKeyboardNotificationInfo& info)
+void EditBox::keyboardDidShow(IMEKeyboardNotificationInfo& /*info*/)
 {
 	
 }
@@ -513,7 +513,7 @@ void EditBox::keyboardWillHide(IMEKeyboardNotificationInfo& info)
     }
 }
 
-void EditBox::keyboardDidHide(IMEKeyboardNotificationInfo& info)
+void EditBox::keyboardDidHide(IMEKeyboardNotificationInfo& /*info*/)
 {
 	
 }

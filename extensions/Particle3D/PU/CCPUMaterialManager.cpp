@@ -112,7 +112,7 @@ void PUMaterialCache::addMaterial( PUMaterial *material )
 }
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-int iterPath(const char *fpath, const struct stat *sb, int typeflag)
+int iterPath(const char *fpath, const struct stat* /*sb*/, int typeflag)
 {
     if(typeflag == FTW_F)
     {

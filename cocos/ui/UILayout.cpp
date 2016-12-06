@@ -428,7 +428,7 @@ Layout::ClippingType Layout::getClippingType()const
     return _clippingType;
 }
     
-void Layout::setStencilClippingSize(const Size &size)
+void Layout::setStencilClippingSize(const Size& /*size*/)
 {
     if (_clippingEnabled && _clippingType == ClippingType::STENCIL)
     {

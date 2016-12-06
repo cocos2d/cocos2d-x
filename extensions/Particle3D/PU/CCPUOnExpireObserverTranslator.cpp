@@ -34,12 +34,12 @@ PUOnExpireObserverTranslator::PUOnExpireObserverTranslator()
 {
 }
 //-------------------------------------------------------------------------
-bool PUOnExpireObserverTranslator::translateChildProperty( PUScriptCompiler* compiler, PUAbstractNode *node )
+bool PUOnExpireObserverTranslator::translateChildProperty(PUScriptCompiler* /*compiler*/, PUAbstractNode* /*node*/)
 {
     return false;
 }
 
-bool PUOnExpireObserverTranslator::translateChildObject( PUScriptCompiler* compiler, PUAbstractNode *node )
+bool PUOnExpireObserverTranslator::translateChildObject(PUScriptCompiler* /*compiler*/, PUAbstractNode* /*node*/)
 {
     // No objects
     return false;

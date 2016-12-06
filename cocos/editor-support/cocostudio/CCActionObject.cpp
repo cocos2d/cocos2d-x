@@ -262,7 +262,7 @@ void ActionObject::updateToFrameByTime(float fTime)
 	}
 }
 
-void ActionObject::simulationActionUpdate(float dt)
+void ActionObject::simulationActionUpdate(float /*dt*/)
 {
 	bool isEnd = true;
     

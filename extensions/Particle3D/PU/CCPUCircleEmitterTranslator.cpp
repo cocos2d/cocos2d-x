@@ -172,7 +172,7 @@ bool PUCircleEmitterTranslator::translateChildProperty( PUScriptCompiler* compil
     return false;
 }
 
-bool PUCircleEmitterTranslator::translateChildObject( PUScriptCompiler* compiler, PUAbstractNode *node )
+bool PUCircleEmitterTranslator::translateChildObject( PUScriptCompiler* /*compiler*/, PUAbstractNode* /*node*/ )
 {
     // No objects
     return false;

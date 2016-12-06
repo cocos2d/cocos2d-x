@@ -122,7 +122,7 @@ bool CCPUBoxEmitterTranslator::translateChildProperty( PUScriptCompiler* compile
     return false;
 }
 
-bool CCPUBoxEmitterTranslator::translateChildObject( PUScriptCompiler* compiler, PUAbstractNode *node )
+bool CCPUBoxEmitterTranslator::translateChildObject( PUScriptCompiler* /*compiler*/, PUAbstractNode* /*node*/ )
 {
     // No objects
     return false;

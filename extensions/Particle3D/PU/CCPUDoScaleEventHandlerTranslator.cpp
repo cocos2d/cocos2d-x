@@ -78,7 +78,7 @@ bool PUDoScaleEventHandlerTranslator::translateChildProperty( PUScriptCompiler* 
     return false;
 }
 
-bool PUDoScaleEventHandlerTranslator::translateChildObject( PUScriptCompiler* compiler, PUAbstractNode *node )
+bool PUDoScaleEventHandlerTranslator::translateChildObject( PUScriptCompiler* /*compiler*/, PUAbstractNode* /*node*/ )
 {
     // No objects
     return false;

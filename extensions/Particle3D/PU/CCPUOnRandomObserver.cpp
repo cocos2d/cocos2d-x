@@ -47,12 +47,12 @@ void PUOnRandomObserver::preUpdateObserver(float deltaTime)
     handleObserve(0, deltaTime);
 }
 //-----------------------------------------------------------------------
-void PUOnRandomObserver::updateObserver(PUParticle3D *particle, float deltaTime, bool firstParticle)
+void PUOnRandomObserver::updateObserver(PUParticle3D* /*particle*/, float /*deltaTime*/, bool /*firstParticle*/)
 {
     // No need to determine per particle
 }
 //-----------------------------------------------------------------------
-bool PUOnRandomObserver::observe (PUParticle3D* particle, float timeElapsed)
+bool PUOnRandomObserver::observe (PUParticle3D* /*particle*/, float /*timeElapsed*/)
 {
     return (CCRANDOM_0_1() > _threshold);
 }

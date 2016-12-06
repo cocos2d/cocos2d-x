@@ -303,12 +303,12 @@ void PUObserver::updateObserver( PUParticle3D *particle, float deltaTime, bool f
     handleObserve(particle, deltaTime);
 }
 
-void PUObserver::postUpdateObserver( float deltaTime )
+void PUObserver::postUpdateObserver( float /*deltaTime*/ )
 {
 
 }
 
-void PUObserver::firstParticleUpdate( PUParticle3D *particle, float deltaTime )
+void PUObserver::firstParticleUpdate( PUParticle3D* /*particle*/, float /*deltaTime*/ )
 {
 
 }

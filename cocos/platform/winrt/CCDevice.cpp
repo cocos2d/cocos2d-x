@@ -204,9 +204,8 @@ Data Device::getTextureDataForText(const char * text, const FontDefinition& text
     return ret;
 }
 
-void Device::setKeepScreenOn(bool value)
+void Device::setKeepScreenOn(bool /*value*/)
 {
-    CC_UNUSED_PARAM(value);
 }
 
 void Device::vibrate(float duration)
@@ -219,8 +218,6 @@ void Device::vibrate(float duration)
 
     VibrationDevice^ testVibrationDevice = VibrationDevice::GetDefault();
     testVibrationDevice->Vibrate(timespan);
-#else
-    CC_UNUSED_PARAM(duration);
 #endif // (WINAPI_FAMILY == WINAPI_FAMILY_PHONE_APP)
 }
 

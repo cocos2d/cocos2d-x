@@ -183,7 +183,7 @@ inline bool BundleReader::read<char>(char *ptr)
 * specialization for std::string
 */
 template<>
-inline bool BundleReader::read<std::string>(std::string *ptr)
+inline bool BundleReader::read<std::string>(std::string* /*ptr*/)
 {
     CCLOG("can not read std::string, use readString() instead");
     return false;

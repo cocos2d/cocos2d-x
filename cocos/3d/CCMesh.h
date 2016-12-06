@@ -63,7 +63,7 @@ public:
     /**create mesh from positions, normals, and so on, single SubMesh*/
     static Mesh* create(const std::vector<float>& positions, const std::vector<float>& normals, const std::vector<float>& texs, const IndexArray& indices);
     /**create mesh with vertex attributes*/
-    CC_DEPRECATED_ATTRIBUTE static Mesh* create(const std::vector<float>& vertices, int perVertexSizeInFloat, const IndexArray& indices, int numIndex, const std::vector<MeshVertexAttrib>& attribs, int attribCount){ return create(vertices, perVertexSizeInFloat, indices, attribs); }
+    CC_DEPRECATED_ATTRIBUTE static Mesh* create(const std::vector<float>& vertices, int perVertexSizeInFloat, const IndexArray& indices, int /*numIndex*/, const std::vector<MeshVertexAttrib>& attribs, int /*attribCount*/){ return create(vertices, perVertexSizeInFloat, indices, attribs); }
     
     /**
      * @lua NA

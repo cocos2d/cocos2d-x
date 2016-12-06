@@ -37,7 +37,7 @@ void PULinearForceAffector::preUpdateAffector(float deltaTime)
 //-----------------------------------------------------------------------
 
 
-void PULinearForceAffector::updatePUAffector( PUParticle3D *particle, float deltaTime )
+void PULinearForceAffector::updatePUAffector( PUParticle3D *particle, float /*deltaTime*/ )
 {
     //for (auto iter : _particleSystem->getParticles())
     {

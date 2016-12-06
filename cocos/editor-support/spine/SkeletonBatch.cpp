@@ -58,7 +58,7 @@ namespace spine {
         _firstCommand = new Command();
         _command = _firstCommand;
 
-        Director::getInstance()->getEventDispatcher()->addCustomEventListener(EVENT_AFTER_DRAW_RESET_POSITION, [this](EventCustom* eventCustom){
+        Director::getInstance()->getEventDispatcher()->addCustomEventListener(EVENT_AFTER_DRAW_RESET_POSITION, [this](EventCustom* /*eventCustom*/){
             this->update(0);
         });;
     }
@@ -74,12 +74,12 @@ namespace spine {
         }
     }
 
-    void SkeletonBatch::update (float delta) {
+    void SkeletonBatch::update (float /*delta*/) {
         _command = _firstCommand;
     }
 
     void SkeletonBatch::addCommand (cocos2d::Renderer* renderer, float globalZOrder, GLuint textureID, GLProgramState* glProgramState,
-                                    BlendFunc blendFunc, const TrianglesCommand::Triangles& triangles, const Mat4& transform, uint32_t transformFlags
+                                    BlendFunc blendFunc, const TrianglesCommand::Triangles& triangles, const Mat4& transform, uint32_t /*transformFlags*/
                                     ) {
         if (_command->triangles->verts) {
             free(_command->triangles->verts);

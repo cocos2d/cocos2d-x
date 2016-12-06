@@ -142,7 +142,7 @@ bool PUBoxColliderTranslator::translateChildProperty( PUScriptCompiler* compiler
     return false;
 }
 
-bool PUBoxColliderTranslator::translateChildObject( PUScriptCompiler* compiler, PUAbstractNode *node )
+bool PUBoxColliderTranslator::translateChildObject( PUScriptCompiler* /*compiler*/, PUAbstractNode* /*node*/ )
 {
     // No objects
     return false;

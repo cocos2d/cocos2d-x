@@ -55,54 +55,76 @@ InputDelegate::~InputDelegate(void)
     dispatcher->removeEventListener(_accelerometerListener);
     Device::setAccelerometerEnabled(false);
 }
+    
+void InputDelegate::didAccelerate(cocos2d::Acceleration* /*accelerationValue*/)
+{}
 
-bool InputDelegate::onTouchBegan(Touch *pTouch, Event *pEvent)
+bool InputDelegate::ccTouchBegan(cocos2d::Touch* /*touch*/, cocos2d::Event* /*event*/)
 {
-    CC_UNUSED_PARAM(pTouch);
-    CC_UNUSED_PARAM(pEvent);
+    return false;
+}
+
+void InputDelegate::ccTouchMoved(cocos2d::Touch* /*touch*/, cocos2d::Event* /*event*/)
+{}
+
+void InputDelegate::ccTouchEnded(cocos2d::Touch* /*touch*/, cocos2d::Event* /*event*/)
+{}
+
+void InputDelegate::ccTouchCancelled(cocos2d::Touch* /*touch*/, cocos2d::Event* /*event*/)
+{}
+
+void InputDelegate::ccTouchesBegan(cocos2d::__Set* /*touches*/, cocos2d::Event* /*event*/)
+{}
+
+void InputDelegate::ccTouchesMoved(cocos2d::__Set* /*touches*/, cocos2d::Event* /*event*/)
+{}
+
+void InputDelegate::ccTouchesEnded(cocos2d::__Set* /*touches*/, cocos2d::Event* /*event*/)
+{}
+
+void InputDelegate::ccTouchesCancelled(cocos2d::__Set* /*touches*/, cocos2d::Event* /*event*/)
+{}
+
+void InputDelegate::onAcceleration(cocos2d::Acceleration* /*acc*/, cocos2d::Event* /*event*/)
+{}
+
+void InputDelegate::onKeyPressed(cocos2d::EventKeyboard::KeyCode /*keyCode*/, cocos2d::Event* /*event*/)
+{}
+
+void InputDelegate::onKeyReleased(cocos2d::EventKeyboard::KeyCode /*keyCode*/, cocos2d::Event* /*event*/)
+{}
+    
+bool InputDelegate::onTouchBegan(Touch* /*pTouch*/, Event* /*pEvent*/)
+{
     return true;
 }
 
-void InputDelegate::onTouchMoved(Touch *pTouch, Event *pEvent)
+void InputDelegate::onTouchMoved(Touch* /*pTouch*/, Event* /*pEvent*/)
 {
-    CC_UNUSED_PARAM(pTouch);
-    CC_UNUSED_PARAM(pEvent);
 }
     
-void InputDelegate::onTouchEnded(Touch *pTouch, Event *pEvent)
+void InputDelegate::onTouchEnded(Touch* /*pTouch*/, Event* /*pEvent*/)
 {
-    CC_UNUSED_PARAM(pTouch);
-    CC_UNUSED_PARAM(pEvent);
 }
 
-void InputDelegate::onTouchCancelled(Touch *pTouch, Event *pEvent)
+void InputDelegate::onTouchCancelled(Touch* /*pTouch*/, Event* /*pEvent*/)
 {
-    CC_UNUSED_PARAM(pTouch);
-    CC_UNUSED_PARAM(pEvent);
 }    
 
-void InputDelegate::onTouchesBegan(const std::vector<Touch*>& pTouches, Event *pEvent)
+void InputDelegate::onTouchesBegan(const std::vector<Touch*>& /*pTouches*/, Event* /*pEvent*/)
 {
-    CC_UNUSED_PARAM(pTouches);
-    CC_UNUSED_PARAM(pEvent);
 }
 
-void InputDelegate::onTouchesMoved(const std::vector<Touch*>& pTouches, Event *pEvent)
+void InputDelegate::onTouchesMoved(const std::vector<Touch*>& /*pTouches*/, Event* /*pEvent*/)
 {
-    CC_UNUSED_PARAM(pTouches);
-    CC_UNUSED_PARAM(pEvent);
 }
 
-void InputDelegate::onTouchesEnded(const std::vector<Touch*>& pTouches, Event *pEvent)
+void InputDelegate::onTouchesEnded(const std::vector<Touch*>& /*pTouches*/, Event* /*pEvent*/)
 {
-    CC_UNUSED_PARAM(pTouches);
-    CC_UNUSED_PARAM(pEvent);
 }
 
-void InputDelegate::onTouchesCancelled(const std::vector<Touch*>& pTouches, Event *pEvent)
+void InputDelegate::onTouchesCancelled(const std::vector<Touch*>& /*pTouches*/, Event* /*pEvent*/)
 {
-    CC_UNUSED_PARAM(pTouches);
-    CC_UNUSED_PARAM(pEvent);
 }
 
 bool InputDelegate::isTouchEnabled() const
