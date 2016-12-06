@@ -384,10 +384,10 @@ void SpriteFrameCache::addSpriteFramesWithFile(const std::string& plist, const s
 
 void SpriteFrameCache::addSpriteFramesWithFile(const std::string& plist)
 {
-    CCASSERT(plist.size()>0, "plist filename should not be nullptr");
+    CCASSERT(!plist.empty(), "plist filename should not be nullptr");
     
     std::string fullPath = FileUtils::getInstance()->fullPathForFilename(plist);
-    if (fullPath.size() == 0)
+    if (fullPath.empty())
     {
         // return if plist file doesn't exist
         CCLOG("cocos2d: SpriteFrameCache: can not find %s", plist.c_str());
@@ -396,7 +396,6 @@ void SpriteFrameCache::addSpriteFramesWithFile(const std::string& plist)
 
     if (_loadedFileNames->find(plist) == _loadedFileNames->end())
     {
-        
         ValueMap dict = FileUtils::getInstance()->getValueMapFromFile(fullPath);
 
         string texturePath("");
@@ -487,11 +486,12 @@ void SpriteFrameCache::removeUnusedSpriteFrames()
 void SpriteFrameCache::removeSpriteFrameByName(const std::string& name)
 {
     // explicit nil handling
-    if( !(name.size()>0) )
+    if (name.empty())
         return;
 
     // Is this an alias ?
-    std::string key = _spriteFramesAliases[name].asString();
+    bool foundAlias = _spriteFramesAliases.find(name) != _spriteFramesAliases.end();
+    std::string key = foundAlias ? _spriteFramesAliases[name].asString() : "";
 
     if (!key.empty())
     {
@@ -579,14 +579,21 @@ SpriteFrame* SpriteFrameCache::getSpriteFrameByName(const std::string& name)
     if (!frame)
     {
         // try alias dictionary
-        std::string key = _spriteFramesAliases[name].asString();
-        if (!key.empty())
+        if (_spriteFramesAliases.find(name) != _spriteFramesAliases.end())
         {
-            frame = _spriteFrames.at(key);
-            if (!frame)
+            std::string key = _spriteFramesAliases[name].asString();
+            if (!key.empty())
             {
-                CCLOG("cocos2d: SpriteFrameCache: Frame '%s' not found", name.c_str());
+                frame = _spriteFrames.at(key);
+                if (!frame)
+                {
+                    CCLOG("cocos2d: SpriteFrameCache: Frame aliase '%s' isn't found", key.c_str());
+                }
             }
+        }
+        else
+        {
+            CCLOG("cocos2d: SpriteFrameCache: Frame '%s' isn't found", name.c_str());
         }
     }
     return frame;
