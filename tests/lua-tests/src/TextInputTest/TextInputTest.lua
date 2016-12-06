@@ -21,6 +21,7 @@ function TextInput.create()
     layer:addChild(editPasswd)
     editPasswd:setPosition( cc.p(250,100) )
     editPasswd:setPlaceHolder("click to input password")
+    editPasswd:setInputMode(cc.EDITBOX_INPUT_MODE_SINGLELINE);
     return layer
 end
 
