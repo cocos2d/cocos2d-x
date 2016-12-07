@@ -350,7 +350,8 @@ __Array* __Array::clone() const
     Ref* obj = nullptr;
     Ref* tmpObj = nullptr;
     Clonable* clonable = nullptr;
-    CCARRAY_FOREACH(this, obj)
+    const __Array* self( this );
+    CCARRAY_FOREACH(self, obj)
     {
         clonable = dynamic_cast<Clonable*>(obj);
         if (clonable)
