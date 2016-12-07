@@ -1,3 +1,85 @@
+coocs2d-x-3.14 Dec 19 2016
+
+[NEW]           Add Spine binary file format support
+[NEW]           Action: add a method to get the number of actions running in a given node with specific tag
+[NEW]           Action: new actions: ResizeBy and ResizeTo
+[NEW]           Button: can set title label
+[NEW]           Can disable multi touch on Android
+[NEW]           EditBox: add horizontal text alignment
+[NEW]           Sprite: support scale9 feature
+[NEW]           Slider: add methods to get _slidBallNormalRenderer
+[NEW]           Desktop: add a method to toggle between fullscreen and windowed
+[NEW]           Desktop: add events for window resize, focus and unfocus
+[NEW]           Mac: supports game controller
+[NEW]           JSB: add perfromance.now()
+[NEW]           Lua: add cc.vec3 functions: add, sub and dot
+[NEW]           Lua: use luajit 2.1.0-beta2
+
+[REFINE]        Add NDEBUG for cpp template Xcode project
+[REFINE]        DrawNode: support float line width
+[REFINE]        EditBoxDelegate: add reason for edit end
+[REFINE]        Improve XML parse performance
+[REFINE]        Make batch capacity resizing more efficiently
+[REFINE]        PageView: support custom scrollToPage time
+[REFINE]        Lua: cc.Ray:intersects addtionally returns the distance
+[REFINE]        Mac: system font enhancement
+[REFINE]        Linux: build shared lib with -fPIC
+[REFINE]        Android: use SharedPreferences.apply() to store data
+
+[FIX]           AsstsManagerEx: project.manifest may be downloaded twice
+[FIX]           AudioEngine: can not play large ogg file
+[FIX]           ClippingNode: effect is wrong if threshold is set to a value not equal to 1 first then set to 1
+[FIX]           Compiling error if `USE_STD_UNORDERED_MAP == 0`
+[FIX]           ControlSwitch::create() may cause crash
+[FIX]           EditBox: fix single line and multiline text alighment, now single line will be center and multiline will be top align vertically by default
+[FIX]           EditBox: placeholder font not being set corretly for multiline text field on iOS
+[FIX]           EditBox: doesn't show text on Mac OS 10.12
+[FIX]           EditBox: multiline overflow bounds of box
+[FIX]           FastTilemap: wrong effect when content scale factor is not 1
+[FIX]           FontFreeType: crash in destructor
+[FIX]           ImageView: wrong effect of using loadtexture() to load a ETC1 texture with alpha support
+[FIX]           Label: wrong blending effect of outline
+[FIX]           Label: some labels may not been shown
+[FIX]           Label: may crash when label string is empty an the overflow is shrink
+[FIX]           Label: possible memory leak when font size is 0
+[FIX]           MenuItemSprite: MenuItemSprite::unselected() on a disabled item show wrong image
+[FIX]           Node: the effect of setRotation+setSkewX is wrong
+[FIX]           Physics3d: effect of debug draw is wrong
+[FIX]           Renderer: indices count may overflow when drawing batching triangle commands which causes unexpected effect
+[FIX]           RenderTexture: Sprite3D is not shown
+[FIX]           TileMap: hexagonal map fails on TMXTiledMap::getTileAt()
+[FIX]           TMXMapInfo: tileGid may overflow when using horizontal flip
+[FIX]           TriangleCommand: triangle commands can't do batching when the glprogram using custom shader with custom uniforms
+[FIX]           UI: label atlas and BMFont rendering issue with ETC1 texture format
+[FIX]           3D: small .mtl files are not loaded
+[FIX]           3D: Sprite3D::getMesh() may cause crash if it doesn't have any mesh
+[FIX]           3D: wrong Skybox fov
+[FIX]           3D: Sprite3D can't release its texture
+[FIX]           ScrollView: crash of scroll to top or left
+[FIX]           SoketIO: memory leak
+[FIX]           iOS: Vibrate effect can not work in not silent mode
+[FIX]           iOS: view size got with landscape orientation if run on iOS 7 and ealier
+[FIX]           iOS: iOS 9 OpengGL error
+[FIX]           iOS: if a scene includes 3d model with light and ListView may cause crash
+[FIX]           Android: cause compiling error with android-19 or lower
+[FIX]           Android: RapidJason crashes in release mode
+[FIX]           Android: may not pause background music after game enters background
+[FIX]           Android: adapt to Android pixel
+[FIX]           Android: MessageBox inverted parames
+[FIX]           Android: cause deadlock if preload the same file more than 3 times in preload callback
+[FIX]           Android: WebView: base url can not work
+[FIX]           Mac: AudioEngine: can not play effect/music entirely on iOS and Mac
+[FIX]           Mac: Downloader can not access https website
+[FIX]           Linux: FMOD issue
+[FIX]           Linux: Application::openURL can not work
+[FIX]           Desktop: crash upon exit when NotificationNode exists
+[FIX]           Spine: color bug
+[FIX]           Lua: result of radian2angle is wrong
+[FIX]           Lua: iskindof_ doesn't work correctly
+[FIX]           Lua: new lua project crashes compiling with VS2015 release mode
+[FIX]           JSB: `jsb.addRoot is not a function` error caused by cc.GLProgramState.setUniformCallback
+[FIX]           Console: doesn't support `--ap` parameter
+
 cocos2d-x-3.13.1 Sep 13 2016
 
 [FIX]           Label color broken
