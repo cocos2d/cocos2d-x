@@ -369,7 +369,7 @@ local function runCCControlTest()
 		local pDisplayValueLabel = cc.Label:createWithSystemFont("Move the slider thumb!\nThe lower slider is restricted." ,"Marker Felt", 32)
         pDisplayValueLabel:retain()
         pDisplayValueLabel:setAnchorPoint(cc.p(0.5, -1.0))
-        pDisplayValueLabel:setPosition(cc.p(screenSize.width / 1.7, screenSize.height / 2.0))
+        pDisplayValueLabel:setPosition(cc.p(screenSize.width / 2.0, screenSize.height / 2.0 - 24))
         pLayer:addChild(pDisplayValueLabel)
         
         local function valueChanged(pSender)
