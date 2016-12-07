@@ -607,19 +607,7 @@
     <ClInclude Include="..\..\cocos2d\cocos\network\CCDownloader-android.h">
       <Filter>cocos\network</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\cocos2d\cocos\network\CCDownloader-apple.h">
-      <Filter>cocos\network</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\cocos2d\cocos\network\CCDownloader-curl.h">
-      <Filter>cocos\network</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\cocos2d\cocos\network\CCIDownloaderImpl.h">
-      <Filter>cocos\network</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\cocos2d\cocos\network\HttpAsynConnection-apple.h">
-      <Filter>cocos\network</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\cocos2d\cocos\network\HttpClient.h">
       <Filter>cocos\network</Filter>
     </ClInclude>
     <ClInclude Include="..\..\cocos2d\cocos\network\HttpCookie.h">
@@ -629,9 +617,6 @@
       <Filter>cocos\network</Filter>
     </ClInclude>
     <ClInclude Include="..\..\cocos2d\cocos\network\HttpResponse.h">
-      <Filter>cocos\network</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\cocos2d\cocos\network\SocketIO.h">
       <Filter>cocos\network</Filter>
     </ClInclude>
     <ClInclude Include="..\..\cocos2d\cocos\network\WebSocket.h">
@@ -1122,33 +1107,6 @@
     </ClInclude>
     <ClInclude Include="..\..\cocos2d\external\recast\Recast\RecastAssert.h">
       <Filter>cocos\external\recast\Recast</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\cocos2d\external\curl\include\android\curl\curl.h">
-      <Filter>cocos\external\curl\include\android\curl</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\cocos2d\external\curl\include\android\curl\curlbuild.h">
-      <Filter>cocos\external\curl\include\android\curl</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\cocos2d\external\curl\include\android\curl\curlrules.h">
-      <Filter>cocos\external\curl\include\android\curl</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\cocos2d\external\curl\include\android\curl\curlver.h">
-      <Filter>cocos\external\curl\include\android\curl</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\cocos2d\external\curl\include\android\curl\easy.h">
-      <Filter>cocos\external\curl\include\android\curl</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\cocos2d\external\curl\include\android\curl\mprintf.h">
-      <Filter>cocos\external\curl\include\android\curl</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\cocos2d\external\curl\include\android\curl\multi.h">
-      <Filter>cocos\external\curl\include\android\curl</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\cocos2d\external\curl\include\android\curl\stdcheaders.h">
-      <Filter>cocos\external\curl\include\android\curl</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\cocos2d\external\curl\include\android\curl\typecheck-gcc.h">
-      <Filter>cocos\external\curl\include\android\curl</Filter>
     </ClInclude>
     <ClInclude Include="..\..\cocos2d\external\websockets\include\android\libwebsockets.h">
       <Filter>cocos\external\websockets\include\android</Filter>
@@ -2236,6 +2194,924 @@
     <ClInclude Include="jni\main.h">
       <Filter>jni</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\audio\android\AudioPlayerProvider.h">
+      <Filter>cocos\audio\android</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\audio\android\CCThreadPool.h">
+      <Filter>cocos\audio\android</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\audio\android\PcmAudioPlayer.h">
+      <Filter>cocos\audio\android</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\audio\android\PcmAudioService.h">
+      <Filter>cocos\audio\android</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\audio\android\PcmBufferProvider.h">
+      <Filter>cocos\audio\android</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\audio\android\PcmData.h">
+      <Filter>cocos\audio\android</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\audio\android\AudioMixer.h">
+      <Filter>cocos\audio\android</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\audio\android\AudioMixerController.h">
+      <Filter>cocos\audio\android</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\audio\android\AudioMixerOps.h">
+      <Filter>cocos\audio\android</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\audio\android\UrlAudioPlayer.h">
+      <Filter>cocos\audio\android</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\audio\android\AudioResampler.h">
+      <Filter>cocos\audio\android</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\audio\android\AudioResamplerCubic.h">
+      <Filter>cocos\audio\android</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\audio\android\AudioResamplerPublic.h">
+      <Filter>cocos\audio\android</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\audio\android\AssetFd.h">
+      <Filter>cocos\audio\android</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\audio\android\AudioDecoder.h">
+      <Filter>cocos\audio\android</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\audio\android\Track.h">
+      <Filter>cocos\audio\android</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\audio\android\audio_utils\include\audio_utils\format.h">
+      <Filter>cocos\audio\android\audio_utils\include\audio_utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\audio\android\audio_utils\include\audio_utils\minifloat.h">
+      <Filter>cocos\audio\android\audio_utils\include\audio_utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\audio\android\audio_utils\include\audio_utils\primitives.h">
+      <Filter>cocos\audio\android\audio_utils\include\audio_utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\audio\android\utils\Compat.h">
+      <Filter>cocos\audio\android\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\audio\android\utils\Errors.h">
+      <Filter>cocos\audio\android\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\audio\android\utils\Utils.h">
+      <Filter>cocos\audio\android\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\CocosStudioExport.h">
+      <Filter>cocos\cocostudio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\ActionTimeline\CCActionTimeline.h">
+      <Filter>cocos\cocostudio\TimelineAction</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\ActionTimeline\CCActionTimelineCache.h">
+      <Filter>cocos\cocostudio\TimelineAction</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\ActionTimeline\CCActionTimelineNode.h">
+      <Filter>cocos\cocostudio\TimelineAction</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\ActionTimeline\CCFrame.h">
+      <Filter>cocos\cocostudio\TimelineAction</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\ActionTimeline\CCTimeLine.h">
+      <Filter>cocos\cocostudio\TimelineAction</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\ActionTimeline\CCTimelineMacro.h">
+      <Filter>cocos\cocostudio\TimelineAction</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\ActionTimeline\CSLoader.h">
+      <Filter>cocos\cocostudio\TimelineAction</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\TriggerBase.h">
+      <Filter>cocos\cocostudio\TimelineAction\trigger</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\TriggerMng.h">
+      <Filter>cocos\cocostudio\TimelineAction\trigger</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\TriggerObj.h">
+      <Filter>cocos\cocostudio\TimelineAction\trigger</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\ActionTimeline\CCBoneNode.h">
+      <Filter>cocos\cocostudio\TimelineAction\Skeleton</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\ActionTimeline\CCSkeletonNode.h">
+      <Filter>cocos\cocostudio\TimelineAction\Skeleton</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\ActionTimeline\CCSkinNode.h">
+      <Filter>cocos\cocostudio\TimelineAction\Skeleton</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\CCSGUIReader.h">
+      <Filter>cocos\cocostudio\reader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\CCSSceneReader.h">
+      <Filter>cocos\cocostudio\reader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\WidgetReader\NodeReaderDefine.h">
+      <Filter>cocos\cocostudio\reader\WidgetReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\WidgetReader\NodeReaderProtocol.h">
+      <Filter>cocos\cocostudio\reader\WidgetReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\WidgetReader\WidgetReader.h">
+      <Filter>cocos\cocostudio\reader\WidgetReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\WidgetReader\WidgetReaderProtocol.h">
+      <Filter>cocos\cocostudio\reader\WidgetReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\WidgetReader\ButtonReader\ButtonReader.h">
+      <Filter>cocos\cocostudio\reader\WidgetReader\ButtonReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\WidgetReader\CheckBoxReader\CheckBoxReader.h">
+      <Filter>cocos\cocostudio\reader\WidgetReader\CheckBoxReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\WidgetReader\ImageViewReader\ImageViewReader.h">
+      <Filter>cocos\cocostudio\reader\WidgetReader\ImageViewReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\WidgetReader\LayoutReader\LayoutReader.h">
+      <Filter>cocos\cocostudio\reader\WidgetReader\LayoutReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\WidgetReader\ListViewReader\ListViewReader.h">
+      <Filter>cocos\cocostudio\reader\WidgetReader\ListViewReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\WidgetReader\LoadingBarReader\LoadingBarReader.h">
+      <Filter>cocos\cocostudio\reader\WidgetReader\LoadingBarReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\WidgetReader\PageViewReader\PageViewReader.h">
+      <Filter>cocos\cocostudio\reader\WidgetReader\PageViewReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\WidgetReader\ScrollViewReader\ScrollViewReader.h">
+      <Filter>cocos\cocostudio\reader\WidgetReader\ScrollViewReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\WidgetReader\SliderReader\SliderReader.h">
+      <Filter>cocos\cocostudio\reader\WidgetReader\SliderReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\WidgetReader\TextAtlasReader\TextAtlasReader.h">
+      <Filter>cocos\cocostudio\reader\WidgetReader\TextAtlasReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\WidgetReader\TextBMFontReader\TextBMFontReader.h">
+      <Filter>cocos\cocostudio\reader\WidgetReader\TextBMFontReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\WidgetReader\TextFieldReader\TextFieldReader.h">
+      <Filter>cocos\cocostudio\reader\WidgetReader\TextFieldReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\WidgetReader\TextReader\TextReader.h">
+      <Filter>cocos\cocostudio\reader\WidgetReader\TextReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\WidgetReader\Node3DReader\Node3DReader.h">
+      <Filter>cocos\cocostudio\reader\WidgetReader\Node3DReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\WidgetReader\UserCameraReader\UserCameraReader.h">
+      <Filter>cocos\cocostudio\reader\WidgetReader\UserCameraReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\WidgetReader\Particle3DReader\Particle3DReader.h">
+      <Filter>cocos\cocostudio\reader\WidgetReader\Particle3DReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\WidgetReader\Sprite3DReader\Sprite3DReader.h">
+      <Filter>cocos\cocostudio\reader\WidgetReader\Sprite3DReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\WidgetReader\ComAudioReader\ComAudioReader.h">
+      <Filter>cocos\cocostudio\reader\WidgetReader\ComAudioReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\WidgetReader\GameMapReader\GameMapReader.h">
+      <Filter>cocos\cocostudio\reader\WidgetReader\GameMapReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\WidgetReader\NodeReader\NodeReader.h">
+      <Filter>cocos\cocostudio\reader\WidgetReader\NodeReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\WidgetReader\ParticleReader\ParticleReader.h">
+      <Filter>cocos\cocostudio\reader\WidgetReader\ParticleReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\WidgetReader\ProjectNodeReader\ProjectNodeReader.h">
+      <Filter>cocos\cocostudio\reader\WidgetReader\ProjectNodeReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\WidgetReader\SingleNodeReader\SingleNodeReader.h">
+      <Filter>cocos\cocostudio\reader\WidgetReader\SingleNodeReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\WidgetReader\SpriteReader\SpriteReader.h">
+      <Filter>cocos\cocostudio\reader\WidgetReader\SpriteReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\WidgetReader\ArmatureNodeReader\ArmatureNodeReader.h">
+      <Filter>cocos\cocostudio\reader\WidgetReader\ArmatureNodeReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\WidgetReader\ArmatureNodeReader\CSArmatureNode_generated.h">
+      <Filter>cocos\cocostudio\reader\WidgetReader\ArmatureNodeReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\WidgetReader\SkeletonReader\BoneNodeReader.h">
+      <Filter>cocos\cocostudio\reader\WidgetReader\SkeletonReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\WidgetReader\SkeletonReader\CSBoneBinary_generated.h">
+      <Filter>cocos\cocostudio\reader\WidgetReader\SkeletonReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\WidgetReader\SkeletonReader\SkeletonNodeReader.h">
+      <Filter>cocos\cocostudio\reader\WidgetReader\SkeletonReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\WidgetReader\TabControlReader\CSTabControl_generated.h">
+      <Filter>cocos\cocostudio\reader\WidgetReader\TabControlReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\WidgetReader\TabControlReader\TabControlReader.h">
+      <Filter>cocos\cocostudio\reader\WidgetReader\TabControlReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\CocoLoader.h">
+      <Filter>cocos\cocostudio\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\CocoStudio.h">
+      <Filter>cocos\cocostudio\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\CSLanguageDataBinary_generated.h">
+      <Filter>cocos\cocostudio\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\CSParseBinary_generated.h">
+      <Filter>cocos\cocostudio\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\CSParse3DBinary_generated.h">
+      <Filter>cocos\cocostudio\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\DictionaryHelper.h">
+      <Filter>cocos\cocostudio\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\FlatBuffersSerialize.h">
+      <Filter>cocos\cocostudio\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\LocalizationManager.h">
+      <Filter>cocos\cocostudio\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\WidgetCallBackHandlerProtocol.h">
+      <Filter>cocos\cocostudio\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\external\json\document.h">
+      <Filter>cocos\cocostudio\json\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\external\json\filestream.h">
+      <Filter>cocos\cocostudio\json\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\external\json\prettywriter.h">
+      <Filter>cocos\cocostudio\json\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\external\json\rapidjson.h">
+      <Filter>cocos\cocostudio\json\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\external\json\reader.h">
+      <Filter>cocos\cocostudio\json\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\external\json\stringbuffer.h">
+      <Filter>cocos\cocostudio\json\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\external\json\writer.h">
+      <Filter>cocos\cocostudio\json\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\external\json\internal\pow10.h">
+      <Filter>cocos\cocostudio\json\rapidjson\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\external\json\internal\stack.h">
+      <Filter>cocos\cocostudio\json\rapidjson\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\external\json\internal\strfunc.h">
+      <Filter>cocos\cocostudio\json\rapidjson\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\external\flatbuffers\flatbuffers.h">
+      <Filter>cocos\cocostudio\json\flatbuffers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\external\flatbuffers\idl.h">
+      <Filter>cocos\cocostudio\json\flatbuffers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\external\flatbuffers\util.h">
+      <Filter>cocos\cocostudio\json\flatbuffers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\CCComAttribute.h">
+      <Filter>cocos\cocostudio\components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\CCComAudio.h">
+      <Filter>cocos\cocostudio\components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\CCComBase.h">
+      <Filter>cocos\cocostudio\components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\CCComController.h">
+      <Filter>cocos\cocostudio\components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\CCComRender.h">
+      <Filter>cocos\cocostudio\components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\CCInputDelegate.h">
+      <Filter>cocos\cocostudio\components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\CCComExtensionData.h">
+      <Filter>cocos\cocostudio\components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\CCArmature.h">
+      <Filter>cocos\cocostudio\armature</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\CCBone.h">
+      <Filter>cocos\cocostudio\armature</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\CCArmatureAnimation.h">
+      <Filter>cocos\cocostudio\armature\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\CCProcessBase.h">
+      <Filter>cocos\cocostudio\armature\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\CCTween.h">
+      <Filter>cocos\cocostudio\armature\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\CCDatas.h">
+      <Filter>cocos\cocostudio\armature\datas</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\CCBatchNode.h">
+      <Filter>cocos\cocostudio\armature\display</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\CCDecorativeDisplay.h">
+      <Filter>cocos\cocostudio\armature\display</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\CCDisplayFactory.h">
+      <Filter>cocos\cocostudio\armature\display</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\CCDisplayManager.h">
+      <Filter>cocos\cocostudio\armature\display</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\CCSkin.h">
+      <Filter>cocos\cocostudio\armature\display</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\CCColliderDetector.h">
+      <Filter>cocos\cocostudio\armature\physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\CCArmatureDataManager.h">
+      <Filter>cocos\cocostudio\armature\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\CCArmatureDefine.h">
+      <Filter>cocos\cocostudio\armature\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\CCDataReaderHelper.h">
+      <Filter>cocos\cocostudio\armature\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\CCSpriteFrameCacheHelper.h">
+      <Filter>cocos\cocostudio\armature\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\CCTransformHelp.h">
+      <Filter>cocos\cocostudio\armature\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\CCUtilMath.h">
+      <Filter>cocos\cocostudio\armature\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\CCActionFrame.h">
+      <Filter>cocos\cocostudio\action</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\CCActionFrameEasing.h">
+      <Filter>cocos\cocostudio\action</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\CCActionManagerEx.h">
+      <Filter>cocos\cocostudio\action</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\CCActionNode.h">
+      <Filter>cocos\cocostudio\action</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\CCActionObject.h">
+      <Filter>cocos\cocostudio\action</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\cocos-ext.h">
+      <Filter>cocos\extension</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\ExtensionExport.h">
+      <Filter>cocos\extension</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\ExtensionMacros.h">
+      <Filter>cocos\extension</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\assets-manager\AssetsManager.h">
+      <Filter>cocos\extension\AssetsManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\assets-manager\AssetsManagerEx.h">
+      <Filter>cocos\extension\AssetsManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\assets-manager\CCEventAssetsManagerEx.h">
+      <Filter>cocos\extension\AssetsManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\assets-manager\CCEventListenerAssetsManagerEx.h">
+      <Filter>cocos\extension\AssetsManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\assets-manager\Manifest.h">
+      <Filter>cocos\extension\AssetsManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\GUI\CCScrollView\CCScrollView.h">
+      <Filter>cocos\extension\GUI\CCScrollView</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\GUI\CCScrollView\CCTableView.h">
+      <Filter>cocos\extension\GUI\CCScrollView</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\GUI\CCScrollView\CCTableViewCell.h">
+      <Filter>cocos\extension\GUI\CCScrollView</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\GUI\CCControlExtension\CCControl.h">
+      <Filter>cocos\extension\GUI\CCControlExtensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\GUI\CCControlExtension\CCControlButton.h">
+      <Filter>cocos\extension\GUI\CCControlExtensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\GUI\CCControlExtension\CCControlColourPicker.h">
+      <Filter>cocos\extension\GUI\CCControlExtensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\GUI\CCControlExtension\CCControlExtensions.h">
+      <Filter>cocos\extension\GUI\CCControlExtensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\GUI\CCControlExtension\CCControlHuePicker.h">
+      <Filter>cocos\extension\GUI\CCControlExtensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\GUI\CCControlExtension\CCControlPotentiometer.h">
+      <Filter>cocos\extension\GUI\CCControlExtensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\GUI\CCControlExtension\CCControlSaturationBrightnessPicker.h">
+      <Filter>cocos\extension\GUI\CCControlExtensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\GUI\CCControlExtension\CCControlSlider.h">
+      <Filter>cocos\extension\GUI\CCControlExtensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\GUI\CCControlExtension\CCControlStepper.h">
+      <Filter>cocos\extension\GUI\CCControlExtensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\GUI\CCControlExtension\CCControlSwitch.h">
+      <Filter>cocos\extension\GUI\CCControlExtensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\GUI\CCControlExtension\CCControlUtils.h">
+      <Filter>cocos\extension\GUI\CCControlExtensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\GUI\CCControlExtension\CCInvocation.h">
+      <Filter>cocos\extension\GUI\CCControlExtensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\physics-nodes\CCPhysicsDebugNode.h">
+      <Filter>cocos\extension\physics_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\physics-nodes\CCPhysicsSprite.h">
+      <Filter>cocos\extension\physics_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\CCParticle3DAffector.h">
+      <Filter>cocos\extension\Particle3D</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\CCParticle3DEmitter.h">
+      <Filter>cocos\extension\Particle3D</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\CCParticle3DRender.h">
+      <Filter>cocos\extension\Particle3D</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\CCParticleSystem3D.h">
+      <Filter>cocos\extension\Particle3D</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUAffector.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUAffectorManager.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUAffectorTranslator.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUAlignAffector.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUAlignAffectorTranslator.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUBaseCollider.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUBaseColliderTranslator.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUBaseForceAffector.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUBaseForceAffectorTranslator.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUBeamRender.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUBehaviour.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUBehaviourManager.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUBehaviourTranslator.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUBillboardChain.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUBoxCollider.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUBoxColliderTranslator.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUBoxEmitter.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUBoxEmitterTranslator.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUCircleEmitter.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUCircleEmitterTranslator.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUCollisionAvoidanceAffector.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUCollisionAvoidanceAffectorTranslator.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUColorAffector.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUColorAffectorTranslator.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUDoAffectorEventHandler.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUDoAffectorEventHandlerTranslator.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUDoEnableComponentEventHandler.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUDoEnableComponentEventHandlerTranslator.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUDoExpireEventHandler.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUDoExpireEventHandlerTranslator.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUDoFreezeEventHandler.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUDoFreezeEventHandlerTranslator.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUDoPlacementParticleEventHandler.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUDoPlacementParticleEventHandlerTranslator.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUDoScaleEventHandler.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUDoScaleEventHandlerTranslator.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUDoStopSystemEventHandler.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUDoStopSystemEventHandlerTranslator.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUDynamicAttribute.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUDynamicAttributeTranslator.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUEmitter.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUEmitterManager.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUEmitterTranslator.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUEventHandler.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUEventHandlerManager.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUEventHandlerTranslator.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUFlockCenteringAffector.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUFlockCenteringAffectorTranslator.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUForceField.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUForceFieldAffector.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUForceFieldAffectorTranslator.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUGeometryRotator.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUGeometryRotatorTranslator.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUGravityAffector.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUGravityAffectorTranslator.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUInterParticleCollider.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUInterParticleColliderTranslator.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUJetAffector.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUJetAffectorTranslator.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPULineAffector.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPULineAffectorTranslator.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPULinearForceAffector.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPULinearForceAffectorTranslator.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPULineEmitter.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPULineEmitterTranslator.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUListener.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUMaterialManager.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUMaterialTranslator.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUMeshSurfaceEmitter.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUMeshSurfaceEmitterTranslator.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUNoise.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUObserver.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUObserverManager.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUObserverTranslator.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUOnClearObserver.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUOnClearObserverTranslator.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUOnCollisionObserver.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUOnCollisionObserverTranslator.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUOnCountObserver.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUOnCountObserverTranslator.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUOnEmissionObserver.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUOnEmissionObserverTranslator.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUOnEventFlagObserver.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUOnEventFlagObserverTranslator.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUOnExpireObserver.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUOnExpireObserverTranslator.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUOnPositionObserver.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUOnPositionObserverTranslator.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUOnQuotaObserver.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUOnQuotaObserverTranslator.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUOnRandomObserver.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUOnRandomObserverTranslator.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUOnTimeObserver.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUOnTimeObserverTranslator.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUOnVelocityObserver.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUOnVelocityObserverTranslator.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUParticleFollower.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUParticleFollowerTranslator.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUParticleSystem3D.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUParticleSystem3DTranslator.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUPathFollower.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUPathFollowerTranslator.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUPlane.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUPlaneCollider.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUPlaneColliderTranslator.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUPointEmitter.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUPointEmitterTranslator.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUPositionEmitter.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUPositionEmitterTranslator.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPURandomiser.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPURandomiserTranslator.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPURender.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPURendererTranslator.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPURibbonTrail.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPURibbonTrailRender.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUScaleAffector.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUScaleAffectorTranslator.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUScaleVelocityAffector.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUScaleVelocityAffectorTranslator.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUScriptCompiler.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUScriptLexer.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUScriptParser.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUScriptTranslator.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUSimpleSpline.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUSineForceAffector.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUSineForceAffectorTranslator.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUSlaveBehaviour.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUSlaveBehaviourTranslator.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUSlaveEmitter.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUSlaveEmitterTranslator.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUSphere.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUSphereCollider.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUSphereColliderTranslator.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUSphereSurfaceEmitter.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUSphereSurfaceEmitterTranslator.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUTechniqueTranslator.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUTextureAnimator.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUTextureAnimatorTranslator.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUTextureRotator.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUTextureRotatorTranslator.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUTranslateManager.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUUtil.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUVelocityMatchingAffector.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUVelocityMatchingAffectorTranslator.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUVertexEmitter.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUVortexAffector.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUVortexAffectorTranslator.h">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\WidgetReader\GameNode3DReader\GameNode3DReader.h">
+      <Filter>cocos\cocostudio\reader\WidgetReader\GameNode3DReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\ui\UITabControl.h">
+      <Filter>cocos\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2d\cocos\editor-support\cocostudio\WidgetReader\Light3DReader\Light3DReader.h">
+      <Filter>cocos\cocostudio\reader\WidgetReader\Light3DReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\AppDelegate.h">
+      <Filter>jni</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\HelloWorldScene.h">
+      <Filter>jni</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="jni">
@@ -2369,18 +3245,6 @@
     </Filter>
     <Filter Include="cocos\external\recast\Recast">
       <UniqueIdentifier>{cd0e5634-6b05-4976-8901-109e2fcb01b3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="cocos\external\curl">
-      <UniqueIdentifier>{278bed39-4a82-485a-96f5-9e430e88bea5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="cocos\external\curl\include">
-      <UniqueIdentifier>{c91413e2-83e9-4c8e-8c61-08b346f04088}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="cocos\external\curl\include\android">
-      <UniqueIdentifier>{cec25010-d58f-4333-ade7-05fd2ed933a1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="cocos\external\curl\include\android\curl">
-      <UniqueIdentifier>{0121230b-f7fd-4ce0-a4bd-94b1abed57e1}</UniqueIdentifier>
     </Filter>
     <Filter Include="cocos\external\websockets">
       <UniqueIdentifier>{42783aca-a498-40ea-99e7-6afb9d86fbfd}</UniqueIdentifier>
@@ -2538,15 +3402,186 @@
     <Filter Include="cocos\cpu-features">
       <UniqueIdentifier>{c7e30d86-661f-4e19-92c0-4cb4c77deeda}</UniqueIdentifier>
     </Filter>
+    <Filter Include="cocos\audio\android\audio_utils">
+      <UniqueIdentifier>{197170cd-72c8-4bfe-93e3-0cf3bc5bf117}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocos\audio\android\audio_utils\include">
+      <UniqueIdentifier>{191d7212-f26d-4740-a0cb-0b3d56f8fb00}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocos\audio\android\audio_utils\include\audio_utils">
+      <UniqueIdentifier>{2154bc82-2730-4d5a-bb7d-236c3d0489f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocos\audio\android\utils">
+      <UniqueIdentifier>{1500e5ab-c7c5-4f3c-b1da-36a319c603c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocos\cocostudio">
+      <UniqueIdentifier>{2eec5fe9-6fbe-42ca-b2c4-906229ca9ca3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocos\cocostudio\TimelineAction">
+      <UniqueIdentifier>{f8751f91-226b-4bed-849f-6c8443887497}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocos\cocostudio\TimelineAction\trigger">
+      <UniqueIdentifier>{a38e7ffc-c643-4a47-86cf-a0d06d8598dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocos\cocostudio\TimelineAction\Skeleton">
+      <UniqueIdentifier>{53fba49f-47bb-40f6-87c9-d4b086028187}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocos\cocostudio\reader">
+      <UniqueIdentifier>{3fba6b5a-cdf1-4106-83ce-8c05bf5679b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocos\cocostudio\reader\WidgetReader">
+      <UniqueIdentifier>{27f28c6e-64a0-4518-a6c5-9ae9fc7cf8fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocos\cocostudio\reader\WidgetReader\ButtonReader">
+      <UniqueIdentifier>{6b8090de-deef-4499-b372-84d10d5e103f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocos\cocostudio\reader\WidgetReader\CheckBoxReader">
+      <UniqueIdentifier>{5b816d35-3e6a-4ea5-b708-08670673defe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocos\cocostudio\reader\WidgetReader\ImageViewReader">
+      <UniqueIdentifier>{35e12a02-4669-427b-85b1-d86385f845a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocos\cocostudio\reader\WidgetReader\LayoutReader">
+      <UniqueIdentifier>{be6117bf-196c-41fc-8a7a-3fadf7fa5c1d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocos\cocostudio\reader\WidgetReader\ListViewReader">
+      <UniqueIdentifier>{378333d0-80d2-4b3a-9070-83cd80d09b10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocos\cocostudio\reader\WidgetReader\LoadingBarReader">
+      <UniqueIdentifier>{3b003c2d-8490-407a-be89-69a62dce8a7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocos\cocostudio\reader\WidgetReader\PageViewReader">
+      <UniqueIdentifier>{0cfc606a-e7c2-4ff3-8bcd-e4a679085b42}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocos\cocostudio\reader\WidgetReader\ScrollViewReader">
+      <UniqueIdentifier>{7610f1c1-964f-4887-9c8a-1d08d57f6458}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocos\cocostudio\reader\WidgetReader\SliderReader">
+      <UniqueIdentifier>{54a13b47-4a6b-49fa-9629-c603952d3980}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocos\cocostudio\reader\WidgetReader\TextAtlasReader">
+      <UniqueIdentifier>{b5d92689-5afc-4615-a812-a23ecb1c23cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocos\cocostudio\reader\WidgetReader\TextBMFontReader">
+      <UniqueIdentifier>{01c8c9b2-6425-4c5e-92bb-3d62ca3cc6d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocos\cocostudio\reader\WidgetReader\TextFieldReader">
+      <UniqueIdentifier>{6e5f1c12-a5b8-4ed9-ab7a-39779607f075}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocos\cocostudio\reader\WidgetReader\TextReader">
+      <UniqueIdentifier>{4958c413-a4bd-451e-9ab2-0a6f475336ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocos\cocostudio\reader\WidgetReader\Node3DReader">
+      <UniqueIdentifier>{da2ef741-e66c-4a6a-930a-35582b0122e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocos\cocostudio\reader\WidgetReader\UserCameraReader">
+      <UniqueIdentifier>{d9c3c9e3-14eb-4d5e-a4aa-2bcd1f9f2b21}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocos\cocostudio\reader\WidgetReader\Particle3DReader">
+      <UniqueIdentifier>{5ab0ae6b-fbc0-492f-9935-0f75da607bbc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocos\cocostudio\reader\WidgetReader\Sprite3DReader">
+      <UniqueIdentifier>{05f3b352-05f1-4210-baa0-4505a63196d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocos\cocostudio\reader\WidgetReader\ComAudioReader">
+      <UniqueIdentifier>{e3e51fe1-34e8-468a-b49f-6e2278dcf7a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocos\cocostudio\reader\WidgetReader\GameMapReader">
+      <UniqueIdentifier>{df42e3ff-b082-4b7e-8afc-0f8ea8cdfe14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocos\cocostudio\reader\WidgetReader\NodeReader">
+      <UniqueIdentifier>{9127c65d-689d-4209-b330-515121191929}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocos\cocostudio\reader\WidgetReader\ParticleReader">
+      <UniqueIdentifier>{46c8c000-e9aa-4c05-8ce0-40a6ad589454}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocos\cocostudio\reader\WidgetReader\ProjectNodeReader">
+      <UniqueIdentifier>{887365ca-c39c-49d3-97cf-ef50f6f9e3e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocos\cocostudio\reader\WidgetReader\SingleNodeReader">
+      <UniqueIdentifier>{8d888118-c80a-43da-b837-940a6d3b8815}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocos\cocostudio\reader\WidgetReader\SpriteReader">
+      <UniqueIdentifier>{20c8df91-a897-4cb4-9de1-f6d7d8b280aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocos\cocostudio\reader\WidgetReader\ArmatureNodeReader">
+      <UniqueIdentifier>{705d265f-34d9-49dd-8202-7bf1768cb9fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocos\cocostudio\reader\WidgetReader\SkeletonReader">
+      <UniqueIdentifier>{9352aadd-386a-4dad-8d2d-f6d395b838f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocos\cocostudio\reader\WidgetReader\TabControlReader">
+      <UniqueIdentifier>{19420bde-ebf6-4a91-8d4d-fd4646767fb6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocos\cocostudio\json">
+      <UniqueIdentifier>{5197e1a5-dc4f-4b8f-a9a4-4b27c930526f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocos\cocostudio\json\rapidjson">
+      <UniqueIdentifier>{5d078e5c-af90-4186-a478-0f0ab76d5c6d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocos\cocostudio\json\rapidjson\internal">
+      <UniqueIdentifier>{076b78ac-7e17-4b1e-9ec2-cf71461a9f2f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocos\cocostudio\json\flatbuffers">
+      <UniqueIdentifier>{0976c41f-a765-4958-901d-6d3ef942cf1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocos\cocostudio\components">
+      <UniqueIdentifier>{fce8cc26-26ed-40bf-b357-857ea94b0c1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocos\cocostudio\armature">
+      <UniqueIdentifier>{f284abb8-8633-4f01-9eb1-69ae3eee9cac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocos\cocostudio\armature\animation">
+      <UniqueIdentifier>{4aad839e-2e67-4620-bd38-fb71f217e5d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocos\cocostudio\armature\datas">
+      <UniqueIdentifier>{9742e119-05fc-4e62-ba84-86e7aff2cae7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocos\cocostudio\armature\display">
+      <UniqueIdentifier>{89305b3b-111f-4006-96aa-4ca9eac85a22}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocos\cocostudio\armature\physics">
+      <UniqueIdentifier>{6f4ec39b-a4a2-4866-ae41-ce2d65c33652}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocos\cocostudio\armature\utils">
+      <UniqueIdentifier>{26490078-d6d7-43d8-8765-9d6a902732bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocos\cocostudio\action">
+      <UniqueIdentifier>{97d83d27-5485-44e2-8c4a-308bb6302067}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocos\extension">
+      <UniqueIdentifier>{21317d7a-0c8b-4b30-8d72-80e7a7c157f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocos\extension\AssetsManager">
+      <UniqueIdentifier>{8d5d015a-eac0-4ae6-840c-3d4ce54d5263}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocos\extension\GUI">
+      <UniqueIdentifier>{8b395c6f-48e4-4eaa-8821-2b66f9597f79}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocos\extension\GUI\CCScrollView">
+      <UniqueIdentifier>{0259ca50-87a3-4d52-acae-fec6a9087dc4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocos\extension\GUI\CCControlExtensions">
+      <UniqueIdentifier>{9efa3584-e247-4498-a02a-0c219f1f350e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocos\extension\physics_nodes">
+      <UniqueIdentifier>{26d5c633-7c62-4551-a6f4-9c5d17191d76}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocos\extension\Particle3D">
+      <UniqueIdentifier>{f768fa14-f35f-4a04-950d-f8a3ee0ddd9f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocos\extension\Particle3D\ParticleUniverse">
+      <UniqueIdentifier>{555d77cf-df41-4168-8d9f-02397e45ae19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocos\cocostudio\reader\WidgetReader\GameNode3DReader">
+      <UniqueIdentifier>{6a86a802-4284-4278-a7e2-a53bc353ec34}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocos\cocostudio\reader\WidgetReader\Light3DReader">
+      <UniqueIdentifier>{671c31a9-cdc7-4c9b-81c8-a3e59c22bc68}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="jni\main.cpp">
-      <Filter>jni</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Classes\AppDelegate.cpp">
-      <Filter>jni</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Classes\HelloWorldScene.cpp">
       <Filter>jni</Filter>
     </ClCompile>
     <ClCompile Include="..\..\cocos2d\cocos\cocos2d.cpp">
@@ -3083,16 +4118,7 @@
     <ClCompile Include="..\..\cocos2d\cocos\network\CCDownloader-android.cpp">
       <Filter>cocos\network</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\cocos2d\cocos\network\CCDownloader-curl.cpp">
-      <Filter>cocos\network</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\cocos2d\cocos\network\HttpClient.cpp">
-      <Filter>cocos\network</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\cocos2d\cocos\network\HttpCookie.cpp">
-      <Filter>cocos\network</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\cocos2d\cocos\network\SocketIO.cpp">
       <Filter>cocos\network</Filter>
     </ClCompile>
     <ClCompile Include="..\..\cocos2d\cocos\network\WebSocket.cpp">
@@ -4153,6 +5179,852 @@
     </ClCompile>
     <ClCompile Include="$(VS_NdkRoot)\sources\android\cpufeatures\cpu-features.c">
       <Filter>cocos\cpu-features</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\audio\android\AudioPlayerProvider.cpp">
+      <Filter>cocos\audio\android</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\audio\android\CCThreadPool.cpp">
+      <Filter>cocos\audio\android</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\audio\android\PcmAudioPlayer.cpp">
+      <Filter>cocos\audio\android</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\audio\android\PcmAudioService.cpp">
+      <Filter>cocos\audio\android</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\audio\android\PcmBufferProvider.cpp">
+      <Filter>cocos\audio\android</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\audio\android\PcmData.cpp">
+      <Filter>cocos\audio\android</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\audio\android\AudioMixer.cpp">
+      <Filter>cocos\audio\android</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\audio\android\AudioMixerController.cpp">
+      <Filter>cocos\audio\android</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\audio\android\UrlAudioPlayer.cpp">
+      <Filter>cocos\audio\android</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\audio\android\AudioResampler.cpp">
+      <Filter>cocos\audio\android</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\audio\android\AudioResamplerCubic.cpp">
+      <Filter>cocos\audio\android</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\audio\android\AssetFd.cpp">
+      <Filter>cocos\audio\android</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\audio\android\AudioDecoder.cpp">
+      <Filter>cocos\audio\android</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\audio\android\Track.cpp">
+      <Filter>cocos\audio\android</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\audio\android\audio_utils\format.c">
+      <Filter>cocos\audio\android\audio_utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\audio\android\audio_utils\minifloat.cpp">
+      <Filter>cocos\audio\android\audio_utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\audio\android\audio_utils\primitives.c">
+      <Filter>cocos\audio\android\audio_utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\audio\android\utils\Utils.cpp">
+      <Filter>cocos\audio\android\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\ActionTimeline\CCActionTimeline.cpp">
+      <Filter>cocos\cocostudio\TimelineAction</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\ActionTimeline\CCActionTimelineCache.cpp">
+      <Filter>cocos\cocostudio\TimelineAction</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\ActionTimeline\CCActionTimelineNode.cpp">
+      <Filter>cocos\cocostudio\TimelineAction</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\ActionTimeline\CCFrame.cpp">
+      <Filter>cocos\cocostudio\TimelineAction</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\ActionTimeline\CCTimeLine.cpp">
+      <Filter>cocos\cocostudio\TimelineAction</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\ActionTimeline\CSLoader.cpp">
+      <Filter>cocos\cocostudio\TimelineAction</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\TriggerBase.cpp">
+      <Filter>cocos\cocostudio\TimelineAction\trigger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\TriggerMng.cpp">
+      <Filter>cocos\cocostudio\TimelineAction\trigger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\TriggerObj.cpp">
+      <Filter>cocos\cocostudio\TimelineAction\trigger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\ActionTimeline\CCBoneNode.cpp">
+      <Filter>cocos\cocostudio\TimelineAction\Skeleton</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\ActionTimeline\CCSkeletonNode.cpp">
+      <Filter>cocos\cocostudio\TimelineAction\Skeleton</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\ActionTimeline\CCSkinNode.cpp">
+      <Filter>cocos\cocostudio\TimelineAction\Skeleton</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\CCSGUIReader.cpp">
+      <Filter>cocos\cocostudio\reader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\CCSSceneReader.cpp">
+      <Filter>cocos\cocostudio\reader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\WidgetReader\NodeReaderDefine.cpp">
+      <Filter>cocos\cocostudio\reader\WidgetReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\WidgetReader\NodeReaderProtocol.cpp">
+      <Filter>cocos\cocostudio\reader\WidgetReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\WidgetReader\WidgetReader.cpp">
+      <Filter>cocos\cocostudio\reader\WidgetReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\WidgetReader\ButtonReader\ButtonReader.cpp">
+      <Filter>cocos\cocostudio\reader\WidgetReader\ButtonReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\WidgetReader\CheckBoxReader\CheckBoxReader.cpp">
+      <Filter>cocos\cocostudio\reader\WidgetReader\CheckBoxReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\WidgetReader\ImageViewReader\ImageViewReader.cpp">
+      <Filter>cocos\cocostudio\reader\WidgetReader\ImageViewReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\WidgetReader\LayoutReader\LayoutReader.cpp">
+      <Filter>cocos\cocostudio\reader\WidgetReader\LayoutReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\WidgetReader\ListViewReader\ListViewReader.cpp">
+      <Filter>cocos\cocostudio\reader\WidgetReader\ListViewReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\WidgetReader\LoadingBarReader\LoadingBarReader.cpp">
+      <Filter>cocos\cocostudio\reader\WidgetReader\LoadingBarReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\WidgetReader\PageViewReader\PageViewReader.cpp">
+      <Filter>cocos\cocostudio\reader\WidgetReader\PageViewReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\WidgetReader\ScrollViewReader\ScrollViewReader.cpp">
+      <Filter>cocos\cocostudio\reader\WidgetReader\ScrollViewReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\WidgetReader\SliderReader\SliderReader.cpp">
+      <Filter>cocos\cocostudio\reader\WidgetReader\SliderReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\WidgetReader\TextAtlasReader\TextAtlasReader.cpp">
+      <Filter>cocos\cocostudio\reader\WidgetReader\TextAtlasReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\WidgetReader\TextBMFontReader\TextBMFontReader.cpp">
+      <Filter>cocos\cocostudio\reader\WidgetReader\TextBMFontReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\WidgetReader\TextFieldReader\TextFieldReader.cpp">
+      <Filter>cocos\cocostudio\reader\WidgetReader\TextFieldReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\WidgetReader\TextReader\TextReader.cpp">
+      <Filter>cocos\cocostudio\reader\WidgetReader\TextReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\WidgetReader\Node3DReader\Node3DReader.cpp">
+      <Filter>cocos\cocostudio\reader\WidgetReader\Node3DReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\WidgetReader\UserCameraReader\UserCameraReader.cpp">
+      <Filter>cocos\cocostudio\reader\WidgetReader\UserCameraReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\WidgetReader\Particle3DReader\Particle3DReader.cpp">
+      <Filter>cocos\cocostudio\reader\WidgetReader\Particle3DReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\WidgetReader\Sprite3DReader\Sprite3DReader.cpp">
+      <Filter>cocos\cocostudio\reader\WidgetReader\Sprite3DReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\WidgetReader\ComAudioReader\ComAudioReader.cpp">
+      <Filter>cocos\cocostudio\reader\WidgetReader\ComAudioReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\WidgetReader\GameMapReader\GameMapReader.cpp">
+      <Filter>cocos\cocostudio\reader\WidgetReader\GameMapReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\WidgetReader\NodeReader\NodeReader.cpp">
+      <Filter>cocos\cocostudio\reader\WidgetReader\NodeReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\WidgetReader\ParticleReader\ParticleReader.cpp">
+      <Filter>cocos\cocostudio\reader\WidgetReader\ParticleReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\WidgetReader\ProjectNodeReader\ProjectNodeReader.cpp">
+      <Filter>cocos\cocostudio\reader\WidgetReader\ProjectNodeReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\WidgetReader\SingleNodeReader\SingleNodeReader.cpp">
+      <Filter>cocos\cocostudio\reader\WidgetReader\SingleNodeReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\WidgetReader\SpriteReader\SpriteReader.cpp">
+      <Filter>cocos\cocostudio\reader\WidgetReader\SpriteReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\WidgetReader\ArmatureNodeReader\ArmatureNodeReader.cpp">
+      <Filter>cocos\cocostudio\reader\WidgetReader\ArmatureNodeReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\WidgetReader\SkeletonReader\BoneNodeReader.cpp">
+      <Filter>cocos\cocostudio\reader\WidgetReader\SkeletonReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\WidgetReader\SkeletonReader\SkeletonNodeReader.cpp">
+      <Filter>cocos\cocostudio\reader\WidgetReader\SkeletonReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\WidgetReader\TabControlReader\TabControlReader.cpp">
+      <Filter>cocos\cocostudio\reader\WidgetReader\TabControlReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\CocoLoader.cpp">
+      <Filter>cocos\cocostudio\json</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\CocoStudio.cpp">
+      <Filter>cocos\cocostudio\json</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\DictionaryHelper.cpp">
+      <Filter>cocos\cocostudio\json</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\FlatBuffersSerialize.cpp">
+      <Filter>cocos\cocostudio\json</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\LocalizationManager.cpp">
+      <Filter>cocos\cocostudio\json</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\WidgetCallBackHandlerProtocol.cpp">
+      <Filter>cocos\cocostudio\json</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\external\flatbuffers\flatc.cpp">
+      <Filter>cocos\cocostudio\json\flatbuffers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\external\flatbuffers\idl_gen_cpp.cpp">
+      <Filter>cocos\cocostudio\json\flatbuffers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\external\flatbuffers\idl_gen_fbs.cpp">
+      <Filter>cocos\cocostudio\json\flatbuffers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\external\flatbuffers\idl_gen_general.cpp">
+      <Filter>cocos\cocostudio\json\flatbuffers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\external\flatbuffers\idl_gen_go.cpp">
+      <Filter>cocos\cocostudio\json\flatbuffers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\external\flatbuffers\idl_gen_text.cpp">
+      <Filter>cocos\cocostudio\json\flatbuffers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\external\flatbuffers\idl_parser.cpp">
+      <Filter>cocos\cocostudio\json\flatbuffers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\CCComAttribute.cpp">
+      <Filter>cocos\cocostudio\components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\CCComAudio.cpp">
+      <Filter>cocos\cocostudio\components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\CCComController.cpp">
+      <Filter>cocos\cocostudio\components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\CCComRender.cpp">
+      <Filter>cocos\cocostudio\components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\CCInputDelegate.cpp">
+      <Filter>cocos\cocostudio\components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\CCComExtensionData.cpp">
+      <Filter>cocos\cocostudio\components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\CCArmature.cpp">
+      <Filter>cocos\cocostudio\armature</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\CCBone.cpp">
+      <Filter>cocos\cocostudio\armature</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\CCArmatureAnimation.cpp">
+      <Filter>cocos\cocostudio\armature\animation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\CCProcessBase.cpp">
+      <Filter>cocos\cocostudio\armature\animation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\CCTween.cpp">
+      <Filter>cocos\cocostudio\armature\animation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\CCDatas.cpp">
+      <Filter>cocos\cocostudio\armature\datas</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\CCBatchNode.cpp">
+      <Filter>cocos\cocostudio\armature\display</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\CCDecorativeDisplay.cpp">
+      <Filter>cocos\cocostudio\armature\display</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\CCDisplayFactory.cpp">
+      <Filter>cocos\cocostudio\armature\display</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\CCDisplayManager.cpp">
+      <Filter>cocos\cocostudio\armature\display</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\CCSkin.cpp">
+      <Filter>cocos\cocostudio\armature\display</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\CCColliderDetector.cpp">
+      <Filter>cocos\cocostudio\armature\physics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\CCArmatureDataManager.cpp">
+      <Filter>cocos\cocostudio\armature\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\CCArmatureDefine.cpp">
+      <Filter>cocos\cocostudio\armature\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\CCDataReaderHelper.cpp">
+      <Filter>cocos\cocostudio\armature\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\CCSpriteFrameCacheHelper.cpp">
+      <Filter>cocos\cocostudio\armature\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\CCTransformHelp.cpp">
+      <Filter>cocos\cocostudio\armature\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\CCUtilMath.cpp">
+      <Filter>cocos\cocostudio\armature\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\CCActionFrame.cpp">
+      <Filter>cocos\cocostudio\action</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\CCActionFrameEasing.cpp">
+      <Filter>cocos\cocostudio\action</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\CCActionManagerEx.cpp">
+      <Filter>cocos\cocostudio\action</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\CCActionNode.cpp">
+      <Filter>cocos\cocostudio\action</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\CCActionObject.cpp">
+      <Filter>cocos\cocostudio\action</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\assets-manager\AssetsManager.cpp">
+      <Filter>cocos\extension\AssetsManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\assets-manager\AssetsManagerEx.cpp">
+      <Filter>cocos\extension\AssetsManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\assets-manager\CCEventAssetsManagerEx.cpp">
+      <Filter>cocos\extension\AssetsManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\assets-manager\CCEventListenerAssetsManagerEx.cpp">
+      <Filter>cocos\extension\AssetsManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\assets-manager\Manifest.cpp">
+      <Filter>cocos\extension\AssetsManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\GUI\CCScrollView\CCScrollView.cpp">
+      <Filter>cocos\extension\GUI\CCScrollView</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\GUI\CCScrollView\CCTableView.cpp">
+      <Filter>cocos\extension\GUI\CCScrollView</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\GUI\CCScrollView\CCTableViewCell.cpp">
+      <Filter>cocos\extension\GUI\CCScrollView</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\GUI\CCControlExtension\CCControl.cpp">
+      <Filter>cocos\extension\GUI\CCControlExtensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\GUI\CCControlExtension\CCControlButton.cpp">
+      <Filter>cocos\extension\GUI\CCControlExtensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\GUI\CCControlExtension\CCControlColourPicker.cpp">
+      <Filter>cocos\extension\GUI\CCControlExtensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\GUI\CCControlExtension\CCControlHuePicker.cpp">
+      <Filter>cocos\extension\GUI\CCControlExtensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\GUI\CCControlExtension\CCControlPotentiometer.cpp">
+      <Filter>cocos\extension\GUI\CCControlExtensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\GUI\CCControlExtension\CCControlSaturationBrightnessPicker.cpp">
+      <Filter>cocos\extension\GUI\CCControlExtensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\GUI\CCControlExtension\CCControlSlider.cpp">
+      <Filter>cocos\extension\GUI\CCControlExtensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\GUI\CCControlExtension\CCControlStepper.cpp">
+      <Filter>cocos\extension\GUI\CCControlExtensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\GUI\CCControlExtension\CCControlSwitch.cpp">
+      <Filter>cocos\extension\GUI\CCControlExtensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\GUI\CCControlExtension\CCControlUtils.cpp">
+      <Filter>cocos\extension\GUI\CCControlExtensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\GUI\CCControlExtension\CCInvocation.cpp">
+      <Filter>cocos\extension\GUI\CCControlExtensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\physics-nodes\CCPhysicsDebugNode.cpp">
+      <Filter>cocos\extension\physics_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\physics-nodes\CCPhysicsSprite.cpp">
+      <Filter>cocos\extension\physics_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\CCParticle3DAffector.cpp">
+      <Filter>cocos\extension\Particle3D</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\CCParticle3DEmitter.cpp">
+      <Filter>cocos\extension\Particle3D</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\CCParticle3DRender.cpp">
+      <Filter>cocos\extension\Particle3D</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\CCParticleSystem3D.cpp">
+      <Filter>cocos\extension\Particle3D</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUAffector.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUAffectorManager.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUAffectorTranslator.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUAlignAffector.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUAlignAffectorTranslator.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUBaseCollider.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUBaseColliderTranslator.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUBaseForceAffector.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUBaseForceAffectorTranslator.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUBeamRender.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUBehaviour.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUBehaviourManager.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUBehaviourTranslator.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUBillboardChain.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUBoxCollider.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUBoxColliderTranslator.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUBoxEmitter.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUBoxEmitterTranslator.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUCircleEmitter.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUCircleEmitterTranslator.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUCollisionAvoidanceAffector.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUCollisionAvoidanceAffectorTranslator.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUColorAffector.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUColorAffectorTranslator.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUDoAffectorEventHandler.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUDoAffectorEventHandlerTranslator.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUDoEnableComponentEventHandler.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUDoEnableComponentEventHandlerTranslator.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUDoExpireEventHandler.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUDoExpireEventHandlerTranslator.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUDoFreezeEventHandler.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUDoFreezeEventHandlerTranslator.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUDoPlacementParticleEventHandler.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUDoPlacementParticleEventHandlerTranslator.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUDoScaleEventHandler.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUDoScaleEventHandlerTranslator.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUDoStopSystemEventHandler.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUDoStopSystemEventHandlerTranslator.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUDynamicAttribute.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUDynamicAttributeTranslator.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUEmitter.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUEmitterManager.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUEmitterTranslator.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUEventHandler.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUEventHandlerManager.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUEventHandlerTranslator.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUFlockCenteringAffector.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUFlockCenteringAffectorTranslator.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUForceField.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUForceFieldAffector.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUForceFieldAffectorTranslator.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUGeometryRotator.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUGeometryRotatorTranslator.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUGravityAffector.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUGravityAffectorTranslator.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUInterParticleCollider.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUInterParticleColliderTranslator.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUJetAffector.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUJetAffectorTranslator.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPULineAffector.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPULineAffectorTranslator.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPULinearForceAffector.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPULinearForceAffectorTranslator.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPULineEmitter.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPULineEmitterTranslator.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUListener.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUMaterialManager.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUMaterialTranslator.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUMeshSurfaceEmitter.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUMeshSurfaceEmitterTranslator.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUNoise.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUObserver.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUObserverManager.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUObserverTranslator.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUOnClearObserver.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUOnClearObserverTranslator.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUOnCollisionObserver.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUOnCollisionObserverTranslator.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUOnCountObserver.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUOnCountObserverTranslator.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUOnEmissionObserver.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUOnEmissionObserverTranslator.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUOnEventFlagObserver.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUOnEventFlagObserverTranslator.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUOnExpireObserver.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUOnExpireObserverTranslator.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUOnPositionObserver.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUOnPositionObserverTranslator.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUOnQuotaObserver.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUOnQuotaObserverTranslator.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUOnRandomObserver.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUOnRandomObserverTranslator.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUOnTimeObserver.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUOnTimeObserverTranslator.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUOnVelocityObserver.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUOnVelocityObserverTranslator.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUParticleFollower.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUParticleFollowerTranslator.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUParticleSystem3D.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUParticleSystem3DTranslator.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUPathFollower.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUPathFollowerTranslator.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUPlane.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUPlaneCollider.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUPlaneColliderTranslator.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUPointEmitter.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUPointEmitterTranslator.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUPositionEmitter.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUPositionEmitterTranslator.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPURandomiser.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPURandomiserTranslator.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPURender.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPURendererTranslator.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPURibbonTrail.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPURibbonTrailRender.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUScaleAffector.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUScaleAffectorTranslator.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUScaleVelocityAffector.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUScaleVelocityAffectorTranslator.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUScriptCompiler.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUScriptLexer.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUScriptParser.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUScriptTranslator.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUSimpleSpline.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUSineForceAffector.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUSineForceAffectorTranslator.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUSlaveBehaviour.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUSlaveBehaviourTranslator.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUSlaveEmitter.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUSlaveEmitterTranslator.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUSphere.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUSphereCollider.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUSphereColliderTranslator.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUSphereSurfaceEmitter.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUSphereSurfaceEmitterTranslator.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUTechniqueTranslator.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUTextureAnimator.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUTextureAnimatorTranslator.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUTextureRotator.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUTextureRotatorTranslator.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUTranslateManager.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUUtil.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUVelocityMatchingAffector.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUVelocityMatchingAffectorTranslator.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUVertexEmitter.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUVortexAffector.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\extensions\Particle3D\PU\CCPUVortexAffectorTranslator.cpp">
+      <Filter>cocos\extension\Particle3D\ParticleUniverse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\WidgetReader\GameNode3DReader\GameNode3DReader.cpp">
+      <Filter>cocos\cocostudio\reader\WidgetReader\GameNode3DReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\ui\UITabControl.cpp">
+      <Filter>cocos\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2d\cocos\editor-support\cocostudio\WidgetReader\Light3DReader\Light3DReader.cpp">
+      <Filter>cocos\cocostudio\reader\WidgetReader\Light3DReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Classes\AppDelegate.cpp">
+      <Filter>jni</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Classes\HelloWorldScene.cpp">
+      <Filter>jni</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

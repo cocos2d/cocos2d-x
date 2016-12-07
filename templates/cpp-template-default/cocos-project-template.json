@@ -25,9 +25,7 @@
                "proj.win10/App/PROJECT_NAME.vcxproj.filters",
                "proj.win10/App/PROJECT_NAME_TemporaryKey.pfx",
 	       "proj.visualstudio/PROJECT_NAME.sln",
-	       "proj.visualstudio/Cocos2d/PROJECT_NAME.androidproj",
-	       "proj.visualstudio/Cocos2dcpp/PROJECT_NAME.vcxproj",
-	       "proj.visualstudio/Cocos2dcpp/PROJECT_NAME.vcxproj.filters",
+	       "proj.visualstudio/Cocos2d/PROJECT_NAME.Android.androidproj",
 	       "proj.tizen/shared/res/PROJECT_NAME.png"
             ]
          },
@@ -62,10 +60,8 @@
                "proj.win10/App/PROJECT_NAME.vcxproj",
                "proj.win10/App/PROJECT_NAME.vcxproj.filters",
                "proj.win10/App/Package.appxmanifest",
-	       "proj.visualstudio/PROJECT_NAME.sln",
-	       "proj.visualstudio/Cocos2d/PROJECT_NAME.androidproj",
-	       "proj.visualstudio/Cocos2dcpp/PROJECT_NAME.vcxproj",
-	       "proj.visualstudio/Cocos2dcpp/PROJECT_NAME.vcxproj.filters",
+               "proj.visualstudio/PROJECT_NAME.sln",
+               "proj.visualstudio/Cocos2d/PROJECT_NAME.Android.androidproj",
                "CMakeLists.txt",
                "proj.tizen/.project",
                "proj.tizen/tizen-manifest.xml"

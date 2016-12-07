@@ -85,7 +85,6 @@
     <Folder Include="res\drawable-xhdpi\" />
     <Folder Include="res\layout\" />
     <Folder Include="src\com\enhance\gameservice\" />
-    <Folder Include="src\org\cocos2dx\lib\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\..\cocos2d\cocos\platform\android\java\src\com\enhance\gameservice\IGameTuningService.aidl">
@@ -96,8 +95,9 @@
     <Content Include="assets\fonts\arial.ttf" />
     <Content Include="assets\fonts\Marker Felt.ttf" />
     <Content Include="assets\HelloWorld.png" />
-    <Content Include="libs\android-async-http-1.4.8.jar" />
+    <Content Include="libs\android-async-http-1.4.9.jar" />
     <Content Include="libs\com.android.vending.expansion.zipfile.jar" />
+    <Content Include="libs\httpclient-4.4.1.1.jar" />
     <Content Include="res\drawable-hdpi\icon.png" />
     <Content Include="res\drawable-ldpi\icon.png" />
     <Content Include="res\drawable-mdpi\icon.png" />
@@ -146,14 +146,17 @@
     <JavaCompile Include="..\..\cocos2d\cocos\platform\android\java\src\org\cocos2dx\lib\Cocos2dxMusic.java">
       <Link>src\org\cocos2dx\lib\Cocos2dxMusic.java</Link>
     </JavaCompile>
+    <JavaCompile Include="..\..\cocos2d\cocos\platform\android\java\src\org\cocos2dx\lib\Cocos2dxReflectionHelper.java">
+      <Link>src\org\cocos2dx\lib\Cocos2dxReflectionHelper.java</Link>
+    </JavaCompile>
     <JavaCompile Include="..\..\cocos2d\cocos\platform\android\java\src\org\cocos2dx\lib\Cocos2dxRenderer.java">
       <Link>src\org\cocos2dx\lib\Cocos2dxRenderer.java</Link>
     </JavaCompile>
     <JavaCompile Include="..\..\cocos2d\cocos\platform\android\java\src\org\cocos2dx\lib\Cocos2dxSound.java">
       <Link>src\org\cocos2dx\lib\Cocos2dxSound.java</Link>
     </JavaCompile>
-    <JavaCompile Include="..\..\cocos2d\cocos\platform\android\java\src\org\cocos2dx\lib\Cocos2dxTextInputWraper.java">
-      <Link>src\org\cocos2dx\lib\Cocos2dxTextInputWraper.java</Link>
+    <JavaCompile Include="..\..\cocos2d\cocos\platform\android\java\src\org\cocos2dx\lib\Cocos2dxTextInputWrapper.java">
+      <Link>src\org\cocos2dx\lib\Cocos2dxTextInputWrapper.java</Link>
     </JavaCompile>
     <JavaCompile Include="..\..\cocos2d\cocos\platform\android\java\src\org\cocos2dx\lib\Cocos2dxTypefaces.java">
       <Link>src\org\cocos2dx\lib\Cocos2dxTypefaces.java</Link>

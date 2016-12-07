@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros">
+    <EngineRoot>$(MSBuildThisFileDirectory)..\..\</EngineRoot>
+  </PropertyGroup>
+  <PropertyGroup />
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(EngineRoot);$(EngineRoot)external\curl\include\android;$(EngineRoot)external\bullet;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)external\clipper;$(EngineRoot)external\ConvertUTF;$(EngineRoot)external\curl\include\android\curl;$(EngineRoot)external\flatbuffers;$(EngineRoot)external\jpeg\include\android;$(EngineRoot)external\json;$(EngineRoot)external\png\include\android;$(EngineRoot)external\poly2tri;$(EngineRoot)external\recast\Recast;$(EngineRoot)external\sqlite3\include;$(EngineRoot)external\tiff\include\android;$(EngineRoot)external\unzip;$(EngineRoot)external\webp\include\android;$(EngineRoot)external\websockets\include\android;$(EngineRoot)external\tinyxml2;$(EngineRoot)external\freetype2\include\android\freetype2;$(EngineRoot)external\edtaa3func;$(EngineRoot)external\xxhash;$(EngineRoot)external\xxtea;$(EngineRoot)external;$(EngineRoot)cocos;$(EngineRoot)cocos\platform;$(EngineRoot)cocos\editor-support;$(EngineRoot)cocos\audio\android\audio_utils\include;$(EngineRoot)cocos\audio\android\audio_utils;$(EngineRoot)cocos\audio\android;$(EngineRoot)cocos\audio\include;$(EngineRoot)cocos\platform\android;$(EngineRoot)cocos\platform\android\jni;$(EngineRoot)extensions;$(EngineRoot)external\chipmunk\include\;$(Vs_NdkRoot)sources\android\cpufeatures\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <CLanguageStandard>gnu99</CLanguageStandard>
+      <CppLanguageStandard>gnu++11</CppLanguageStandard>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <BuildMacro Include="EngineRoot">
+      <Value>$(EngineRoot)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+  </ItemGroup>
+</Project>
