@@ -17,6 +17,16 @@
 -- @return Scheduler#Scheduler self (return value: cc.Scheduler)
         
 --------------------------------
+-- Remove all pending functions queued to be performed with Scheduler::performFunctionInCocosThread<br>
+-- Functions unscheduled in this manner will not be executed<br>
+-- This function is thread safe<br>
+-- since v3.14<br>
+-- js NA
+-- @function [parent=#Scheduler] removeAllFunctionsToBePerformedInCocosThread 
+-- @param self
+-- @return Scheduler#Scheduler self (return value: cc.Scheduler)
+        
+--------------------------------
 -- Gets the time scale of schedule callbacks.<br>
 -- see Scheduler::setTimeScale()
 -- @function [parent=#Scheduler] getTimeScale 

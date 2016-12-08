@@ -8335,6 +8335,22 @@ bool js_cocos2dx_Scheduler_performFunctionInCocosThread(JSContext *cx, uint32_t 
     JS_ReportError(cx, "js_cocos2dx_Scheduler_performFunctionInCocosThread : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
+bool js_cocos2dx_Scheduler_removeAllFunctionsToBePerformedInCocosThread(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Scheduler* cobj = (cocos2d::Scheduler *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Scheduler_removeAllFunctionsToBePerformedInCocosThread : Invalid Native Object");
+    if (argc == 0) {
+        cobj->removeAllFunctionsToBePerformedInCocosThread();
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_Scheduler_removeAllFunctionsToBePerformedInCocosThread : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
 bool js_cocos2dx_Scheduler_unscheduleAll(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -8408,6 +8424,7 @@ void js_register_cocos2dx_Scheduler(JSContext *cx, JS::HandleObject global) {
         JS_FN("update", js_cocos2dx_Scheduler_update, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("unscheduleScriptEntry", js_cocos2dx_Scheduler_unscheduleScriptEntry, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("performFunctionInCocosThread", js_cocos2dx_Scheduler_performFunctionInCocosThread, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("removeAllFunctionsToBePerformedInCocosThread", js_cocos2dx_Scheduler_removeAllFunctionsToBePerformedInCocosThread, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("unscheduleAll", js_cocos2dx_Scheduler_unscheduleAll, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getTimeScale", js_cocos2dx_Scheduler_getTimeScale, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END

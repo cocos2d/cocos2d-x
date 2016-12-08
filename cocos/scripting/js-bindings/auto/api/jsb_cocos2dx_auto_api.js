@@ -3445,6 +3445,14 @@ func
 },
 
 /**
+ * @method removeAllFunctionsToBePerformedInCocosThread
+ */
+removeAllFunctionsToBePerformedInCocosThread : function (
+)
+{
+},
+
+/**
  * @method unscheduleAll
  */
 unscheduleAll : function (
