@@ -30,6 +30,7 @@ THE SOFTWARE.
 #include "platform/CCImage.h"
 #include "platform/CCFileUtils.h"
 #include "jni/JniHelper.h"
+#include "ccMacros.h"
 
 #include <android/log.h>
 #include <string.h>
@@ -199,6 +200,13 @@ bool CCImage::initWithStringShadowStroke(
                                          float strokeB,
                                          float strokeSize)
 {
+    //
+    // LUMOSITY - Start
+    //
+    CCAssert( ( nWidth == 0 && nHeight == 0 ) || ( nHeight > 0 && nWidth > 0 ), "CCImage::initWithStringShadowStroke(...) - Dimensions Width or Height was set with one value being zero." );
+    //
+    // LUMOSITY - End 
+    //
 	 bool bRet = false;
 	    do
 	    {
