@@ -70,6 +70,7 @@ public:
     
     unsigned char* getGlyphBitmap(uint64_t theChar, long &outWidth, long &outHeight, Rect &outRect,int &xAdvance);
     
+    int getFontLineGap() const;
     int getFontAscender() const;
     const char* getFontFamily() const;
 

@@ -270,6 +270,11 @@ int  FontFreeType::getHorizontalKerningForChars(uint64_t firstChar, uint64_t sec
     return (static_cast<int>(kerning.x >> 6));
 }
 
+int FontFreeType::getFontLineGap() const
+{
+    return (static_cast<int>((_fontRef->size->metrics.height - _fontRef->size->metrics.ascender + _fontRef->size->metrics.descender)  >> 6));
+}
+
 int FontFreeType::getFontAscender() const
 {
     return (static_cast<int>(_fontRef->size->metrics.ascender >> 6));

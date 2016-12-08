@@ -49,6 +49,7 @@ FontAtlas::FontAtlas(Font &theFont)
 , _iconv(nullptr)
 , _currentPageData(nullptr)
 , _fontAscender(0)
+, _lineGap(0)
 , _rendererRecreatedListener(nullptr)
 , _antialiasEnabled(true)
 , _currLineHeight(0)
@@ -60,6 +61,7 @@ FontAtlas::FontAtlas(Font &theFont)
     {
         _lineHeight = _font->getFontMaxHeight();
         _fontAscender = _fontFreeType->getFontAscender();
+        _lineGap = _fontFreeType->getFontLineGap();
         auto texture = new (std::nothrow) Texture2D;
         _currentPage = 0;
         _currentPageOrigX = 0;
@@ -356,7 +358,7 @@ bool FontAtlas::prepareLetterDefinitions(const std::u32string& utf32Text)
             tempDef.width = tempRect.size.width + _letterPadding + _letterEdgeExtend;
             tempDef.height = tempRect.size.height + _letterPadding + _letterEdgeExtend;
             tempDef.offsetX = tempRect.origin.x + adjustForDistanceMap - adjustForExtend;
-            tempDef.offsetY = _fontAscender + tempRect.origin.y - adjustForDistanceMap - adjustForExtend;
+            tempDef.offsetY = _fontAscender + _lineGap/2 + tempRect.origin.y - adjustForDistanceMap - adjustForExtend;
 
             if (_currentPageOrigX + tempDef.width > CacheTextureWidth)
             {

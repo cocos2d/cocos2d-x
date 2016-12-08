@@ -141,6 +141,7 @@ protected:
     int _letterEdgeExtend;
 
     int _fontAscender;
+    int _lineGap;
     EventListenerCustom* _rendererRecreatedListener;
     bool _antialiasEnabled;
     int _currLineHeight;
