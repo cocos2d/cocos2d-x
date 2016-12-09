@@ -1081,7 +1081,6 @@ local function Issue1305_onEnterOrExit(tag)
 end
 
 local function ActionIssue1305()
-    print("ActionIssue1305 ...")
 	Issue1305_layer = cc.Layer:create()
 	initWithLayer(Issue1305_layer)
 
