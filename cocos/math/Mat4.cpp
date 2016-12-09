@@ -28,8 +28,11 @@
 NS_CC_MATH_BEGIN
 
 Mat4::Mat4()
+: m { 1.0f, 0.0f, 0.0f, 0.0f,
+      0.0f, 1.0f, 0.0f, 0.0f,
+      0.0f, 0.0f, 1.0f, 0.0f,
+      0.0f, 0.0f, 0.0f, 1.0f }
 {
-    *this = IDENTITY;
 }
 
 Mat4::Mat4(float m11, float m12, float m13, float m14, float m21, float m22, float m23, float m24,
