@@ -105,7 +105,7 @@ function AMTestScene1.create()
                 end
             end
             local listener = cc.EventListenerAssetsManagerEx:create(am,onUpdateEvent)
-            cc.Director:getInstance():getEventDispatcher():addEventListenerWithFixedPriority(listener, 1)
+            cc.Director:getInstance():getEventDispatcher():addEventListenerWithSceneGraphPriority(listener, layer)
             
             am:update()
         end
@@ -202,7 +202,7 @@ function AMTestScene2.create()
                 end
             end
             local listener = cc.EventListenerAssetsManagerEx:create(am,onUpdateEvent)
-            cc.Director:getInstance():getEventDispatcher():addEventListenerWithFixedPriority(listener, 1)
+            cc.Director:getInstance():getEventDispatcher():addEventListenerWithSceneGraphPriority(listener, layer)
             
             am:update()
         end
@@ -298,7 +298,7 @@ function AMTestScene3.create()
                 end
             end
             local listener = cc.EventListenerAssetsManagerEx:create(am,onUpdateEvent)
-            cc.Director:getInstance():getEventDispatcher():addEventListenerWithFixedPriority(listener, 1)
+            cc.Director:getInstance():getEventDispatcher():addEventListenerWithSceneGraphPriority(listener, layer)
             
             am:update()
         end
