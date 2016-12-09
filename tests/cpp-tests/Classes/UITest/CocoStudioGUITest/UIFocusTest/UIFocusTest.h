@@ -33,6 +33,7 @@ protected:
     cocos2d::Menu* _dpadMenu;
     cocos2d::ui::Widget* _firstFocusedWidget;
     cocos2d::EventListenerFocus* _eventListener;
+    cocos2d::ui::Button* _toggleButton;
 };
 
 class UIFocusTestHorizontal : public UIFocusTestBase
