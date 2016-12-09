@@ -427,6 +427,7 @@ bool js_cocos2dx_Scheduler_unscheduleAllWithMinPriority(JSContext *cx, uint32_t 
 bool js_cocos2dx_Scheduler_update(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Scheduler_unscheduleScriptEntry(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Scheduler_performFunctionInCocosThread(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Scheduler_removeAllFunctionsToBePerformedInCocosThread(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Scheduler_unscheduleAll(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Scheduler_getTimeScale(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Scheduler_Scheduler(JSContext *cx, uint32_t argc, jsval *vp);
