@@ -148,6 +148,18 @@ CC_DLL void trimUTF16Vector(std::vector<char16_t>& str);
 CC_DLL bool isUnicodeSpace(char16_t ch);
 
 /**
+ *  @brief Whether the character is a wrappable whitespace character.
+ *  @param ch    The unicode character.
+ *  @returns     Whether the character is a wrappable whitespace character.
+ *
+ *  @see http://en.wikipedia.org/wiki/Whitespace_character#Unicode
+ *  @note not all non-breaking spaces are non-wrappable, and not all non-wrappable
+ *  spaces are non-breaking spaces.
+ *
+ */
+CC_DLL bool isUnicodeWrappableSpace(char16_t ch);
+
+/**
  *  @brief Whether the character is a Chinese/Japanese/Korean character.
  *  @param ch    The unicode character.
  *  @returns     Whether the character is a Chinese character.

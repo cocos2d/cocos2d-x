@@ -80,7 +80,7 @@ int Label::getFirstCharLen(const std::u16string& /*utf16Text*/, int /*startIndex
 int Label::getFirstWordLen(const std::u16string& utf16Text, int startIndex, int textLen)
 {
     auto character = utf16Text[startIndex];
-    if (StringUtils::isCJKUnicode(character) || StringUtils::isUnicodeSpace(character) || character == (char16_t)TextFormatter::NewLine)
+    if (StringUtils::isCJKUnicode(character) || StringUtils::isUnicodeWrappableSpace(character) || character == (char16_t)TextFormatter::NewLine)
     {
         return 1;
     }
@@ -99,7 +99,7 @@ int Label::getFirstWordLen(const std::u16string& utf16Text, int startIndex, int 
 
         auto letterX = (nextLetterX + letterDef.offsetX * _bmfontScale) / contentScaleFactor;
         if (_maxLineWidth > 0.f && letterX + letterDef.width * _bmfontScale > _maxLineWidth
-            && !StringUtils::isUnicodeSpace(character))
+            && !StringUtils::isUnicodeWrappableSpace(character))
         {
             if(len >= 2) {
                 return len -1;
@@ -108,7 +108,7 @@ int Label::getFirstWordLen(const std::u16string& utf16Text, int startIndex, int 
 
         nextLetterX += letterDef.xAdvance * _bmfontScale + _additionalKerning;
 
-        if (character == (char16_t)TextFormatter::NewLine || StringUtils::isUnicodeSpace(character) || StringUtils::isCJKUnicode(character))
+        if (character == (char16_t)TextFormatter::NewLine || StringUtils::isUnicodeWrappableSpace(character) || StringUtils::isCJKUnicode(character))
         {
             break;
         }
@@ -195,7 +195,7 @@ bool Label::multilineTextWrap(const std::function<int(const std::u16string&, int
 
             auto letterX = (nextLetterX + letterDef.offsetX * _bmfontScale) / contentScaleFactor;
             if (_enableWrap && _maxLineWidth > 0.f && nextTokenX > 0.f && letterX + letterDef.width * _bmfontScale > _maxLineWidth
-                && !StringUtils::isUnicodeSpace(character) && nextChangeSize)
+                && !StringUtils::isUnicodeWrappableSpace(character) && nextChangeSize)
             {
                 _linesWidth.push_back(letterRight);
                 letterRight = 0.f;

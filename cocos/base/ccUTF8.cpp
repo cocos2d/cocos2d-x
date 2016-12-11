@@ -96,9 +96,32 @@ static void trimUTF16VectorFromIndex(std::vector<char16_t>& str, int index)
  * */
 bool isUnicodeSpace(char16_t ch)
 {
-    return  (ch >= 0x0009 && ch <= 0x000D) || ch == 0x0020 || ch == 0x0085 || ch == 0x00A0 || ch == 0x1680
-    || (ch >= 0x2000 && ch <= 0x200A) || ch == 0x2028 || ch == 0x2029 || ch == 0x202F
-    ||  ch == 0x205F || ch == 0x3000;
+    return (ch >= 0x0009 && ch <= 0x000D)   // Tabulation, Line Feed, Line Tabulation
+                                            // Form Feed, Carriage Return
+         || ch == 0x0020                    // Space
+         || ch == 0x0085                    // Next Line
+         || ch == 0x00A0                    // No Break Space
+         || ch == 0x1680                    // Ogham Space Mark
+         || (ch >= 0x2000 && ch <= 0x200A)  // EN Quad, EM Quad, EN Space, EM Space,
+                                            // Three-per-em Space, Four-per-em Space,
+                                            // Six-per-em Space, Figure Space,
+                                            // Punctuation Space, Thin Space,
+                                            // Hair Space
+         || ch == 0x2028                    // Line Separator
+         || ch == 0x2029                    // Paragraph Separator
+         || ch == 0x202F                    // Narrow no break Space
+         || ch == 0x205F                    // Medium Mathematical Space
+         || ch == 0x3000;                   // Ideographic Space
+}
+
+bool isUnicodeWrappableSpace(char16_t ch)
+{
+    return isUnicodeSpace(ch)
+            && ch != 0x00A0     // no-break Space
+            && ch != 0x2007     // Figure Space
+            && ch != 0x202F     // Narrow no-break Space
+            && ch != 0x2060     // Word Joiner
+            && ch != 0xFEFF;    // Zero Width non-breaking Space
 }
 
 bool isCJKUnicode(char16_t ch)
