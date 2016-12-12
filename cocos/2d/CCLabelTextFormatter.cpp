@@ -79,42 +79,43 @@ int Label::getFirstCharLen(const std::u16string& utf16Text, int startIndex, int 
 
 int Label::getFirstWordLen(const std::u16string& utf16Text, int startIndex, int textLen)
 {
-    auto character = utf16Text[startIndex];
-    if (StringUtils::isCJKUnicode(character) || StringUtils::isUnicodeSpace(character) || character == (char16_t)TextFormatter::NewLine)
-    {
-        return 1;
-    }
-
     int len = 1;
     FontLetterDefinition letterDef;
     auto nextLetterX = 0;
     auto contentScaleFactor = CC_CONTENT_SCALE_FACTOR();
-    for (int index = startIndex + 1; index < textLen; ++index)
+
+    for (int index = startIndex; index < textLen; ++index, ++len)
     {
-        character = utf16Text[index];
+        char16_t character = utf16Text[index];
+
+        if (character == (char16_t)TextFormatter::NewLine || StringUtils::isUnicodeSpace(character) || StringUtils::isCJKUnicode(character))
+        {
+            break;
+        }
+
         if (_fontAtlas->getLetterDefinitionForChar(character, letterDef) == false)
         {
             break;
         }
 
         auto letterX = (nextLetterX + letterDef.offsetX * _bmfontScale) / contentScaleFactor;
-        if (_maxLineWidth > 0.f && letterX + letterDef.width * _bmfontScale > _maxLineWidth
+        if (_maxLineWidth > 0.f
+            && letterX + letterDef.width * _bmfontScale > _maxLineWidth
             && !StringUtils::isUnicodeSpace(character))
         {
-            if(len >= 2) {
-                return len -1;
+            /*
+             * We are over the line limit. If we have more than one char, remove the
+             * last one. If we only have one char, take it anyway
+             */
+            if(len > 2)
+            {
+                --len;
+                break;
             }
         }
 
         nextLetterX += letterDef.xAdvance * _bmfontScale + _additionalKerning;
-
-        if (character == (char16_t)TextFormatter::NewLine || StringUtils::isUnicodeSpace(character) || StringUtils::isCJKUnicode(character))
-        {
-            break;
-        }
-        len++;
     }
-
     return len;
 }
 
