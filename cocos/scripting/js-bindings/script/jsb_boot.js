@@ -775,6 +775,8 @@ cc.formatStr = function(){
 
 // Define singleton objects
 cc.director = cc.Director.getInstance();
+cc.director._actionManager = cc.director.getActionManager();
+cc.director._scheduler = cc.director.getScheduler();
 cc.winSize = cc.director.getWinSize();
 
 cc.view = cc.director.getOpenGLView();
@@ -1548,7 +1550,7 @@ cc._initDebugSetting = function (mode) {
     cc.log = cc.warn = cc.error = cc.assert = function () {};
     if (mode > ccGame.DEBUG_MODE_NONE) {
         console.log = function () {
-            bakLog(cc.js.formatStr.apply(null, arguments));
+            bakLog(cc.formatStr.apply(null, arguments));
         };
         console.error = function () {
             bakLog("ERROR :  " + cc.formatStr.apply(cc, arguments));
