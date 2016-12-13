@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-const char* ccPositionTextureColorAlphaTest_frag = STRINGIFY(
+const char* ccPositionTextureColorAlphaTest_frag = R"(
 
 #ifdef GL_ES
 precision lowp float;
@@ -44,4 +44,4 @@ void main()
 
     gl_FragColor = texColor * v_fragmentColor;
 }
-);
+)";

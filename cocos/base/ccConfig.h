@@ -158,17 +158,10 @@ THE SOFTWARE.
  * Apple recommends its usage but they might consume a lot of memory, specially if you use many of them.
  * So for certain cases, where you might need hundreds of VAO objects, it might be a good idea to disable it.
  * To disable it set it to 0. Enabled by default.
+ * If a device doesn't support VAO though it claims to support should add execptions list here.
  */
 #ifndef CC_TEXTURE_ATLAS_USE_VAO
-    #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-        #define CC_TEXTURE_ATLAS_USE_VAO 1
-    #else
-        /* Some Windows display adapter driver cannot support VAO.
-         * Some android devices cannot support VAO very well, so we disable it by default for android platform.
-         * Blackberry also doesn't support this feature.
-         */
-		#define CC_TEXTURE_ATLAS_USE_VAO 0
-    #endif
+#define CC_TEXTURE_ATLAS_USE_VAO 1
 #endif
 
 

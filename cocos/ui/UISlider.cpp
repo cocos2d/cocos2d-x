@@ -456,7 +456,7 @@ void Slider::setPercent(int percent)
     }
 }
     
-bool Slider::hitTest(const cocos2d::Vec2 &pt, const Camera *camera, Vec3 *p) const
+bool Slider::hitTest(const cocos2d::Vec2 &pt, const Camera *camera, Vec3* /*p*/) const
 {
     Rect rect;
     rect.size = _slidBallNormalRenderer->getContentSize();
@@ -479,7 +479,7 @@ bool Slider::onTouchBegan(Touch *touch, Event *unusedEvent)
     return pass;
 }
 
-void Slider::onTouchMoved(Touch *touch, Event *unusedEvent)
+void Slider::onTouchMoved(Touch *touch, Event* /*unusedEvent*/)
 {
     _touchMovePosition = touch->getLocation();
     setPercent(getPercentWithBallPos(_touchMovePosition));

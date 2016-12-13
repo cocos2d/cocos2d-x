@@ -44,7 +44,7 @@ public:
 
     virtual void prepare(){};
     virtual void unPrepare(){};
-    virtual void updateRender(PUParticle3D *particle, float deltaTime, bool firstParticle){};
+    virtual void updateRender(PUParticle3D* particle, float deltaTime, bool firstParticle);
 
     const std::string& getRenderType(void) const {return _renderType;};
     void setRenderType(const std::string& observerType) {_renderType = observerType;};

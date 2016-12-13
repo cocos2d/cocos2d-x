@@ -143,10 +143,8 @@ void TransitionScene::finish()
     this->schedule(CC_SCHEDULE_SELECTOR(TransitionScene::setNewScene), 0);
 }
 
-void TransitionScene::setNewScene(float dt)
+void TransitionScene::setNewScene(float /*dt*/)
 {    
-    CC_UNUSED_PARAM(dt);
-
     this->unschedule(CC_SCHEDULE_SELECTOR(TransitionScene::setNewScene));
     
     // Before replacing, save the "send cleanup to scene"
@@ -1299,7 +1297,7 @@ TransitionCrossFade* TransitionCrossFade::create(float t, Scene* scene)
     return nullptr;
 }
 
-void TransitionCrossFade::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
+void TransitionCrossFade::draw(Renderer* /*renderer*/, const Mat4 &/*transform*/, uint32_t /*flags*/)
 {
     // override draw since both scenes (textures) are rendered in 1 scene
 }

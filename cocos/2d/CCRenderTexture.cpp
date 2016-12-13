@@ -91,7 +91,7 @@ RenderTexture::~RenderTexture()
     CC_SAFE_DELETE(_UITextureImage);
 }
 
-void RenderTexture::listenToBackground(EventCustom *event)
+void RenderTexture::listenToBackground(EventCustom* /*event*/)
 {
     // We have not found a way to dispatch the enter background message before the texture data are destroyed.
     // So we disable this pair of message handler at present.
@@ -121,7 +121,7 @@ void RenderTexture::listenToBackground(EventCustom *event)
 #endif
 }
 
-void RenderTexture::listenToForeground(EventCustom *event)
+void RenderTexture::listenToForeground(EventCustom* /*event*/)
 {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     // -- regenerate frame buffer object and attach the texture
@@ -686,6 +686,7 @@ void RenderTexture::onClear()
     GLfloat oldClearColor[4] = {0.0f};
     GLfloat oldDepthClearValue = 0.0f;
     GLint oldStencilClearValue = 0;
+    GLboolean oldDepthWrite = GL_FALSE;
 
     // backup and set
     if (_clearFlags & GL_COLOR_BUFFER_BIT)
@@ -698,6 +699,9 @@ void RenderTexture::onClear()
     {
         glGetFloatv(GL_DEPTH_CLEAR_VALUE, &oldDepthClearValue);
         glClearDepth(_clearDepth);
+
+        glGetBooleanv(GL_DEPTH_WRITEMASK, &oldDepthWrite);
+        glDepthMask(GL_TRUE);
     }
 
     if (_clearFlags & GL_STENCIL_BUFFER_BIT)
@@ -717,6 +721,7 @@ void RenderTexture::onClear()
     if (_clearFlags & GL_DEPTH_BUFFER_BIT)
     {
         glClearDepth(oldDepthClearValue);
+        glDepthMask(oldDepthWrite);
     }
     if (_clearFlags & GL_STENCIL_BUFFER_BIT)
     {

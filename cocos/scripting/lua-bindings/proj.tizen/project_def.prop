@@ -1,0 +1,214 @@
+
+# Project Name
+APPNAME = luacocos2d
+
+# Project Type
+type = staticLib
+
+# Project Profile
+profile = mobile-2.4
+
+# C.cpp \Sources
+USER_SRCS := ../manual/CCLuaBridge.cpp \
+             ../manual/CCLuaEngine.cpp \
+             ../manual/CCLuaStack.cpp \
+             ../manual/CCLuaValue.cpp \
+             ../manual/Cocos2dxLuaLoader.cpp \
+             ../manual/LuaBasicConversions.cpp \
+             ../manual/lua_module_register.cpp \
+             ../auto/lua_cocos2dx_auto.cpp \
+             ../auto/lua_cocos2dx_physics_auto.cpp \
+             ../auto/lua_cocos2dx_experimental_auto.cpp \
+             ../manual/cocos2d/lua_cocos2dx_deprecated.cpp \
+             ../manual/cocos2d/lua_cocos2dx_experimental_manual.cpp \
+             ../manual/cocos2d/lua_cocos2dx_manual.cpp \
+             ../manual/cocos2d/lua_cocos2dx_physics_manual.cpp \
+             ../manual/cocos2d/LuaOpengl.cpp \
+             ../manual/cocos2d/LuaScriptHandlerMgr.cpp \
+             ../manual/tolua_fix.cpp \
+             ../../../../external/lua/lua/lapi.c \
+             ../../../../external/lua/lua/ldo.c \
+             ../../../../external/lua/lua/llex.c \
+             ../../../../external/lua/lua/loslib.c \
+             ../../../../external/lua/lua/ltablib.c \
+             ../../../../external/lua/lua/print.c \
+             ../../../../external/lua/lua/lauxlib.c \
+             ../../../../external/lua/lua/ldump.c \
+             ../../../../external/lua/lua/lmathlib.c \
+             ../../../../external/lua/lua/lparser.c \
+             ../../../../external/lua/lua/ltm.c \
+             ../../../../external/lua/lua/lbaselib.c \
+             ../../../../external/lua/lua/lfunc.c \
+             ../../../../external/lua/lua/lmem.c \
+             ../../../../external/lua/lua/lstate.c \
+             ../../../../external/lua/lua/lua.c \
+             ../../../../external/lua/lua/lcode.c \
+             ../../../../external/lua/lua/lgc.c \
+             ../../../../external/lua/lua/loadlib.c \
+             ../../../../external/lua/lua/lstring.c \
+             ../../../../external/lua/lua/lundump.c \
+             ../../../../external/lua/lua/ldblib.c \
+             ../../../../external/lua/lua/linit.c \
+             ../../../../external/lua/lua/lobject.c \
+             ../../../../external/lua/lua/lstrlib.c \
+             ../../../../external/lua/lua/lvm.c \
+             ../../../../external/lua/lua/ldebug.c \
+             ../../../../external/lua/lua/liolib.c \
+             ../../../../external/lua/lua/lopcodes.c \
+             ../../../../external/lua/lua/ltable.c \
+             ../../../../external/lua/lua/lzio.c \
+             ../../../../external/lua/tolua/tolua_event.c \
+             ../../../../external/lua/tolua/tolua_is.c \
+             ../../../../external/lua/tolua/tolua_map.c \
+             ../../../../external/lua/tolua/tolua_push.c \
+             ../../../../external/lua/tolua/tolua_to.c \
+             ../../../../external/xxtea/xxtea.cpp \
+             ../auto/lua_cocos2dx_audioengine_auto.cpp \
+             ../manual/audioengine/lua_cocos2dx_audioengine_manual.cpp
+
+#Component
+USER_SRCS += ../manual/CCComponentLua.cpp
+
+#3d
+USER_SRCS += ../manual/3d/lua_cocos2dx_3d_manual.cpp \
+             ../auto/lua_cocos2dx_3d_auto.cpp
+
+#cocosdenshion
+USER_SRCS += ../manual/cocosdenshion/lua_cocos2dx_cocosdenshion_manual.cpp \
+             ../auto/lua_cocos2dx_cocosdenshion_auto.cpp
+
+#network
+USER_SRCS += ../manual/network/lua_cocos2dx_network_manual.cpp \
+             ../manual/network/lua_extensions.c \
+             ../manual/network/Lua_web_socket.cpp \
+             ../manual/network/lua_xml_http_request.cpp \
+             ../../../../external/lua/luasocket/auxiliar.c \
+             ../../../../external/lua/luasocket/buffer.c \
+             ../../../../external/lua/luasocket/except.c \
+             ../../../../external/lua/luasocket/inet.c \
+             ../../../../external/lua/luasocket/io.c \
+             ../../../../external/lua/luasocket/luasocket.c \
+             ../../../../external/lua/luasocket/luasocket_scripts.c \
+             ../../../../external/lua/luasocket/mime.c \
+             ../../../../external/lua/luasocket/options.c \
+             ../../../../external/lua/luasocket/select.c \
+             ../../../../external/lua/luasocket/serial.c \
+             ../../../../external/lua/luasocket/tcp.c \
+             ../../../../external/lua/luasocket/timeout.c \
+             ../../../../external/lua/luasocket/udp.c \
+             ../../../../external/lua/luasocket/unix.c \
+             ../../../../external/lua/luasocket/usocket.c
+
+#cocosbuilder
+USER_SRCS += ../manual/cocosbuilder/lua_cocos2dx_cocosbuilder_manual.cpp \
+             ../manual/cocosbuilder/CCBProxy.cpp \
+             ../auto/lua_cocos2dx_cocosbuilder_auto.cpp
+
+#cocostudio
+USER_SRCS += ../manual/cocostudio/lua_cocos2dx_coco_studio_manual.cpp \
+             ../manual/cocostudio/CustomGUIReader.cpp \
+             ../manual/cocostudio/lua_cocos2dx_csloader_manual.cpp \
+             ../auto/lua_cocos2dx_csloader_auto.cpp \
+             ../auto/lua_cocos2dx_studio_auto.cpp \
+             ../manual/cocostudio/lua-cocos-studio-conversions.cpp
+
+#spine
+USER_SRCS += ../manual/spine/lua_cocos2dx_spine_manual.cpp \
+             ../manual/spine/LuaSkeletonAnimation.cpp \
+             ../auto/lua_cocos2dx_spine_auto.cpp
+
+#ui
+USER_SRCS += ../manual/ui/lua_cocos2dx_experimental_webview_manual.cpp \
+             ../manual/ui/lua_cocos2dx_experimental_video_manual.cpp \
+             ../manual/ui/lua_cocos2dx_ui_manual.cpp \
+             ../auto/lua_cocos2dx_experimental_video_auto.cpp \
+             ../auto/lua_cocos2dx_ui_auto.cpp \
+             ../auto/lua_cocos2dx_experimental_webview_auto.cpp
+
+#extension
+USER_SRCS += ../manual/extension/lua_cocos2dx_extension_manual.cpp \
+             ../auto/lua_cocos2dx_extension_auto.cpp
+
+#physics3d
+USER_SRCS += ../manual/physics3d/lua_cocos2dx_physics3d_manual.cpp \
+             ../auto/lua_cocos2dx_physics3d_auto.cpp
+
+#navmesh
+USER_SRCS += ../manual/navmesh/lua_cocos2dx_navmesh_conversions.cpp \
+             ../manual/navmesh/lua_cocos2dx_navmesh_manual.cpp \
+             ../auto/lua_cocos2dx_navmesh_auto.cpp
+
+# EDC Sources
+USER_EDCS =  
+
+# PO Sources
+USER_POS = 
+
+# User Defines
+USER_DEFS = TIZEN HAVE_PTHREAD=1 USE_MINICL 
+USER_CPP_DEFS = TIZEN HAVE_PTHREAD=1 USE_MINICL 
+
+# User Undefines
+USER_UNDEFS = 
+USER_CPP_UNDEFS = 
+
+# User Libraries
+USER_LIBS = 
+
+# User Objects
+USER_OBJS = 
+
+# User Includes
+## C Compiler
+USER_C_INC_DIRS = 
+USER_INC_FILES = 
+
+## C++ Compiler
+USER_CPP_INC_DIRS = ../auto \
+                    ../manual \
+                    ../../../../ \
+                    ../../../../cocos \
+                    ../../../../cocos/editor-support \
+                    ../../../../cocos/platform \
+                    ../../../../extensions \
+                    ../../../../external \
+                    ../../../../external/Box2D \
+                    ../../../../external/ConvertUTF \
+                    ../../../../external/bullet \
+                    ../../../../external/chipmunk/include \
+                    ../../../../external/chipmunk/include/chipmunk \
+                    ../../../../external/edtaa3func \
+                    ../../../../external/jpeg/include/tizen \
+                    ../../../../external/json \
+                    ../../../../external/lua \
+                    ../../../../external/lua/lua \
+                    ../../../../external/lua/luajit/include \
+                    ../../../../external/lua/luasocket \
+                    ../../../../external/lua/tolua \
+                    ../../../../external/png/include/tizen \
+                    ../../../../external/tiff/include/tizen \
+                    ../../../../external/tinyxml2 \
+                    ../../../../external/unzip \
+                    ../../../../external/webp/include/tizen \
+                    ../../../../external/websockets/include/tizen \
+                    ../../../../external/xxhash \
+                    ../../../../external/xxtea
+
+USER_CPP_INC_FILES = 
+
+USER_INC_DIRS = $(USER_C_INC_DIRS) $(USER_CPP_INC_DIRS)
+
+# User Library Path
+USER_LIB_DIRS = 
+
+# EDC Resource Path
+USER_EDCS_IMAGE_DIRS = ${OUTPUT_DIR} 
+USER_EDCS_SOUND_DIRS = ${OUTPUT_DIR} 
+USER_EDCS_FONT_DIRS = ${OUTPUT_DIR} 
+
+# EDC Flags
+USER_EXT_EDC_KEYS = 
+
+# Resource Filter
+USER_RES_INCLUDE = 
+USER_RES_EXCLUDE = 

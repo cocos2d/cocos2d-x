@@ -23,7 +23,7 @@
  * THE SOFTWARE.
  */
 
-const char* ccLabel_vert = STRINGIFY(
+const char* ccLabel_vert = R"(
 
 attribute vec4 a_position;
 attribute vec2 a_texCoord;
@@ -43,4 +43,4 @@ void main()
     v_fragmentColor = a_color;
     v_texCoord = a_texCoord;
 }
-);
+)";

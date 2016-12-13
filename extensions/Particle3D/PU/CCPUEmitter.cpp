@@ -167,12 +167,12 @@ PUEmitter::~PUEmitter()
         delete _dynAngle;
 }
 
-void PUEmitter::updateEmitter(Particle3D *particle, float deltaTime)
+void PUEmitter::updateEmitter(Particle3D* /*particle*/, float /*deltaTime*/)
 {
     
 }
 
-void PUEmitter::emit(int count)
+void PUEmitter::emit(int /*count*/)
 {
     
 }
@@ -396,12 +396,12 @@ void PUEmitter::unPrepare()
     setForceEmission(_forceEmission);
 }
 
-void PUEmitter::preUpdateEmitter( float deltaTime )
+void PUEmitter::preUpdateEmitter( float /*deltaTime*/ )
 {
 
 }
 
-void PUEmitter::postUpdateEmitter( float deltaTime )
+void PUEmitter::postUpdateEmitter( float /*deltaTime*/ )
 {
     Vec3 currentPos = getDerivedPosition();
     _latestPositionDiff = currentPos - _latestPosition;

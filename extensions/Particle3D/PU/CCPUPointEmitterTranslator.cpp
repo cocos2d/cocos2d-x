@@ -34,13 +34,13 @@ PUPointEmitterTranslator::PUPointEmitterTranslator()
 {
 }
 //-------------------------------------------------------------------------
-bool PUPointEmitterTranslator::translateChildProperty( PUScriptCompiler* compiler, PUAbstractNode *node )
+bool PUPointEmitterTranslator::translateChildProperty( PUScriptCompiler* /*compiler*/, PUAbstractNode* /*node*/ )
 {
     // No Propertys
     return false;
 }
 
-bool PUPointEmitterTranslator::translateChildObject( PUScriptCompiler* compiler, PUAbstractNode *node )
+bool PUPointEmitterTranslator::translateChildObject( PUScriptCompiler* /*compiler*/, PUAbstractNode* /*node*/ )
 {
     // No objects
     return false;

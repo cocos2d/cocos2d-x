@@ -66,6 +66,16 @@
     self.font = ccui_font;
 }
 
+- (NSTextAlignment)ccui_alignment
+{
+  return self.textAlignment;
+}
+
+- (void)ccui_setTextHorizontalAlignment:(NSTextAlignment)ccui_alignment
+{
+  self.textAlignment = ccui_alignment;
+}
+
 - (BOOL)ccui_secureTextEntry
 {
     return self.secureTextEntry;

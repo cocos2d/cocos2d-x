@@ -65,7 +65,7 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual void tableCellHighlight(TableView* table, TableViewCell* cell){};
+    virtual void tableCellHighlight(TableView* table, TableViewCell* cell);
 
     /**
      * Delegate to respond a table cell release event
@@ -75,7 +75,7 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual void tableCellUnhighlight(TableView* table, TableViewCell* cell){};
+    virtual void tableCellUnhighlight(TableView* table, TableViewCell* cell);
 
     /**
      * Delegate called when the cell is about to be recycled. Immediately
@@ -87,7 +87,7 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual void tableCellWillRecycle(TableView* table, TableViewCell* cell){};
+    virtual void tableCellWillRecycle(TableView* table, TableViewCell* cell);
 
 };
 
@@ -110,18 +110,14 @@ public:
      * @param idx the index of a cell to get a size
      * @return size of a cell at given index
      */
-    virtual Size tableCellSizeForIndex(TableView *table, ssize_t idx) {
-        return cellSizeForTable(table);
-    };
+    virtual Size tableCellSizeForIndex(TableView* table, ssize_t idx);
     /**
      * cell height for a given table.
      *
      * @param table table to hold the instances of Class
      * @return cell size
      */
-    virtual Size cellSizeForTable(TableView *table) {
-        return Size::ZERO;
-    };
+    virtual Size cellSizeForTable(TableView* table);
     /**
      * a cell instance at a given index
      *

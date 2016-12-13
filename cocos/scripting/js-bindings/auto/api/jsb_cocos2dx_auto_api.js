@@ -1634,6 +1634,16 @@ str
 },
 
 /**
+ * @method update
+ * @param {float} arg0
+ */
+update : function (
+float 
+)
+{
+},
+
+/**
  * @method getDisplayedOpacity
  * @return {unsigned char}
  */
@@ -2041,13 +2051,15 @@ vec3
 },
 
 /**
- * @method update
- * @param {float} arg0
+ * @method getNumberOfRunningActionsByTag
+ * @param {int} arg0
+ * @return {int}
  */
-update : function (
-float 
+getNumberOfRunningActionsByTag : function (
+int 
 )
 {
+    return 0;
 },
 
 /**
@@ -2230,14 +2242,16 @@ setCameraOrderDirty : function (
 
 /**
  * @method render
- * @param {cc.Renderer} arg0
- * @param {mat4_object} arg1
- * @param {mat4_object} arg2
- */
-render : function (
-renderer, 
-mat4, 
-mat4 
+* @param {cc.Renderer|cc.Renderer} renderer
+* @param {mat4_object|mat4_object} mat4
+* @param {mat4_object|mat4_object} mat4
+* @param {unsigned int} int
+*/
+render : function(
+renderer,
+mat4,
+mat4,
+int 
 )
 {
 },
@@ -2688,11 +2702,41 @@ pause : function (
 },
 
 /**
+ * @method pushProjectionMatrix
+ * @param {unsigned int} arg0
+ */
+pushProjectionMatrix : function (
+int 
+)
+{
+},
+
+/**
+ * @method popProjectionMatrix
+ * @param {unsigned int} arg0
+ */
+popProjectionMatrix : function (
+int 
+)
+{
+},
+
+/**
  * @method setEventDispatcher
  * @param {cc.EventDispatcher} arg0
  */
 setEventDispatcher : function (
 eventdispatcher 
+)
+{
+},
+
+/**
+ * @method loadProjectionIdentityMatrix
+ * @param {unsigned int} arg0
+ */
+loadProjectionIdentityMatrix : function (
+int 
 )
 {
 },
@@ -2935,6 +2979,18 @@ init : function (
  */
 setScheduler : function (
 scheduler 
+)
+{
+},
+
+/**
+ * @method multiplyProjectionMatrix
+ * @param {mat4_object} arg0
+ * @param {unsigned int} arg1
+ */
+multiplyProjectionMatrix : function (
+mat4, 
+int 
 )
 {
 },
@@ -3210,6 +3266,28 @@ getVisibleSize : function (
 },
 
 /**
+ * @method loadProjectionMatrix
+ * @param {mat4_object} arg0
+ * @param {unsigned int} arg1
+ */
+loadProjectionMatrix : function (
+mat4, 
+int 
+)
+{
+},
+
+/**
+ * @method initProjectionMatrixStack
+ * @param {unsigned int} arg0
+ */
+initProjectionMatrixStack : function (
+int 
+)
+{
+},
+
+/**
  * @method getScheduler
  * @return {cc.Scheduler}
  */
@@ -3362,6 +3440,14 @@ int
  */
 performFunctionInCocosThread : function (
 func 
+)
+{
+},
+
+/**
+ * @method removeAllFunctionsToBePerformedInCocosThread
+ */
+removeAllFunctionsToBePerformedInCocosThread : function (
 )
 {
 },
@@ -4395,16 +4481,6 @@ vec2
 },
 
 /**
- * @method getCapInsets
- * @return {rect_object}
- */
-getCapInsets : function (
-)
-{
-    return cc.Rect;
-},
-
-/**
  * @method getOriginalSizeInPixels
  * @return {size_object}
  */
@@ -4425,6 +4501,16 @@ size
 },
 
 /**
+ * @method getCenterRect
+ * @return {rect_object}
+ */
+getCenterRect : function (
+)
+{
+    return cc.Rect;
+},
+
+/**
  * @method setRectInPixels
  * @param {rect_object} arg0
  */
@@ -4442,6 +4528,16 @@ getRect : function (
 )
 {
     return cc.Rect;
+},
+
+/**
+ * @method setCenterRectInPixels
+ * @param {rect_object} arg0
+ */
+setCenterRectInPixels : function (
+rect 
+)
+{
 },
 
 /**
@@ -4592,16 +4688,6 @@ getAnchorPoint : function (
 )
 {
     return cc.Vec2;
-},
-
-/**
- * @method setCapInsets
- * @param {rect_object} arg0
- */
-setCapInsets : function (
-rect 
-)
-{
 },
 
 /**
@@ -7079,6 +7165,18 @@ str
 )
 {
     return false;
+},
+
+/**
+ * @method getNewFilename
+ * @param {String} arg0
+ * @return {String}
+ */
+getNewFilename : function (
+str 
+)
+{
+    return ;
 },
 
 /**
@@ -10670,6 +10768,16 @@ action
 },
 
 /**
+ * @method pauseAllRunningActions
+ * @return {Array}
+ */
+pauseAllRunningActions : function (
+)
+{
+    return new Array();
+},
+
+/**
  * @method removeAllActionsByTag
  * @param {int} arg0
  * @param {cc.Node} arg1
@@ -10682,13 +10790,17 @@ node
 },
 
 /**
- * @method pauseAllRunningActions
- * @return {Array}
+ * @method getNumberOfRunningActionsInTargetByTag
+ * @param {cc.Node} arg0
+ * @param {int} arg1
+ * @return {unsigned long}
  */
-pauseAllRunningActions : function (
+getNumberOfRunningActionsInTargetByTag : function (
+node, 
+int 
 )
 {
-    return new Array();
+    return 0;
 },
 
 /**
@@ -11897,10 +12009,10 @@ color4f
 
 /**
  * @method setLineWidth
- * @param {int} arg0
+ * @param {float} arg0
  */
 setLineWidth : function (
-int 
+float 
 )
 {
 },
@@ -17202,16 +17314,6 @@ float
 },
 
 /**
- * @method getCapInsets
- * @return {rect_object}
- */
-getCapInsets : function (
-)
-{
-    return cc.Rect;
-},
-
-/**
  * @method getResourceType
  * @return {int}
  */
@@ -17222,19 +17324,15 @@ getResourceType : function (
 },
 
 /**
- * @method initWithTexture
-* @param {cc.Texture2D|cc.Texture2D|cc.Texture2D} texture2d
-* @param {rect_object|rect_object} rect
-* @param {bool} bool
-* @return {bool|bool|bool}
-*/
-initWithTexture : function(
-texture2d,
-rect,
-bool 
+ * @method setDisplayFrameWithAnimationName
+ * @param {String} arg0
+ * @param {int} arg1
+ */
+setDisplayFrameWithAnimationName : function (
+str, 
+int 
 )
 {
-    return false;
 },
 
 /**
@@ -17258,6 +17356,16 @@ getOffsetPosition : function (
 },
 
 /**
+ * @method getCenterRect
+ * @return {rect_object}
+ */
+getCenterRect : function (
+)
+{
+    return cc.Rect;
+},
+
+/**
  * @method removeAllChildrenWithCleanup
  * @param {bool} arg0
  */
@@ -17268,13 +17376,13 @@ bool
 },
 
 /**
- * @method isFlippedX
- * @return {bool}
+ * @method setCenterRectNormalized
+ * @param {rect_object} arg0
  */
-isFlippedX : function (
+setCenterRectNormalized : function (
+rect 
 )
 {
-    return false;
 },
 
 /**
@@ -17304,16 +17412,6 @@ str
 },
 
 /**
- * @method isFlippedY
- * @return {bool}
- */
-isFlippedY : function (
-)
-{
-    return false;
-},
-
-/**
  * @method isFrameDisplayed
  * @param {cc.SpriteFrame} arg0
  * @return {bool}
@@ -17333,16 +17431,6 @@ getAtlasIndex : function (
 )
 {
     return 0;
-},
-
-/**
- * @method getCapInsetsNormalized
- * @return {rect_object}
- */
-getCapInsetsNormalized : function (
-)
-{
-    return cc.Rect;
 },
 
 /**
@@ -17366,13 +17454,11 @@ getBlendFunc : function (
 },
 
 /**
- * @method setDisplayFrameWithAnimationName
- * @param {String} arg0
- * @param {int} arg1
+ * @method setCenterRect
+ * @param {rect_object} arg0
  */
-setDisplayFrameWithAnimationName : function (
-str, 
-int 
+setCenterRect : function (
+rect 
 )
 {
 },
@@ -17418,6 +17504,16 @@ isDirty : function (
 },
 
 /**
+ * @method getCenterRectNormalized
+ * @return {rect_object}
+ */
+getCenterRectNormalized : function (
+)
+{
+    return cc.Rect;
+},
+
+/**
  * @method setAtlasIndex
  * @param {int} arg0
  */
@@ -17425,6 +17521,22 @@ setAtlasIndex : function (
 int 
 )
 {
+},
+
+/**
+ * @method initWithTexture
+* @param {cc.Texture2D|cc.Texture2D|cc.Texture2D} texture2d
+* @param {rect_object|rect_object} rect
+* @param {bool} bool
+* @return {bool|bool|bool}
+*/
+initWithTexture : function(
+texture2d,
+rect,
+bool 
+)
+{
+    return false;
 },
 
 /**
@@ -17448,6 +17560,16 @@ isTextureRectRotated : function (
 },
 
 /**
+ * @method setStrechEnabled
+ * @param {bool} arg0
+ */
+setStrechEnabled : function (
+bool 
+)
+{
+},
+
+/**
  * @method getTextureRect
  * @return {rect_object}
  */
@@ -17455,6 +17577,16 @@ getTextureRect : function (
 )
 {
     return cc.Rect;
+},
+
+/**
+ * @method isStrechEnabled
+ * @return {bool}
+ */
+isStrechEnabled : function (
+)
+{
+    return false;
 },
 
 /**
@@ -17504,23 +17636,23 @@ spriteframe
 },
 
 /**
- * @method setCapInsets
- * @param {rect_object} arg0
+ * @method isFlippedX
+ * @return {bool}
  */
-setCapInsets : function (
-rect 
+isFlippedX : function (
 )
 {
+    return false;
 },
 
 /**
- * @method setCapInsetsNormalized
- * @param {rect_object} arg0
+ * @method isFlippedY
+ * @return {bool}
  */
-setCapInsetsNormalized : function (
-rect 
+isFlippedY : function (
 )
 {
+    return false;
 },
 
 /**
@@ -20634,14 +20766,16 @@ str
 
 /**
  * @method initWithByteArrays
-* @param {char|char} char
-* @param {char|char} char
+* @param {char|char|char} char
+* @param {char|char|char} char
+* @param {String|String} str
 * @param {String} str
-* @return {bool|bool}
+* @return {bool|bool|bool}
 */
 initWithByteArrays : function(
 char,
 char,
+str,
 str 
 )
 {
@@ -20662,12 +20796,14 @@ float
 
 /**
  * @method initWithFilenames
-* @param {String|String} str
+* @param {String|String|String} str
+* @param {String|String|String} str
 * @param {String|String} str
 * @param {String} str
-* @return {bool|bool}
+* @return {bool|bool|bool}
 */
 initWithFilenames : function(
+str,
 str,
 str,
 str 
@@ -20858,14 +20994,16 @@ int
 
 /**
  * @method createWithByteArrays
-* @param {char|char} char
-* @param {char|char} char
+* @param {char|char|char} char
+* @param {char|char|char} char
+* @param {String|String} str
 * @param {String} str
-* @return {cc.GLProgram|cc.GLProgram}
+* @return {cc.GLProgram|cc.GLProgram|cc.GLProgram}
 */
 createWithByteArrays : function(
 char,
 char,
+str,
 str 
 )
 {
@@ -20874,12 +21012,14 @@ str
 
 /**
  * @method createWithFilenames
-* @param {String|String} str
+* @param {String|String|String} str
+* @param {String|String|String} str
 * @param {String|String} str
 * @param {String} str
-* @return {cc.GLProgram|cc.GLProgram}
+* @return {cc.GLProgram|cc.GLProgram|cc.GLProgram}
 */
 createWithFilenames : function(
+str,
 str,
 str,
 str 

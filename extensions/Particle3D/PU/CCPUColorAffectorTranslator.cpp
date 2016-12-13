@@ -104,7 +104,7 @@ bool PUColorAffectorTranslator::translateChildProperty( PUScriptCompiler* compil
     return false;
 }
 
-bool PUColorAffectorTranslator::translateChildObject( PUScriptCompiler* compiler, PUAbstractNode *node )
+bool PUColorAffectorTranslator::translateChildObject( PUScriptCompiler* /*compiler*/, PUAbstractNode* /*node*/ )
 {
     // No objects
     return false;

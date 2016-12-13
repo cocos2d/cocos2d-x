@@ -137,10 +137,32 @@ public:
 
     virtual void execute();
 
-private:
+protected:
     Platform::Agile<Platform::Object^> m_sender;
     Platform::Agile<Platform::String^> m_text;
     Platform::Agile<Windows::Foundation::EventHandler<Platform::String^>^> m_handler;
+};
+
+ref class EndEventArgs sealed {
+public:
+    EndEventArgs(int action, Platform::String^ text) : m_text(text), m_action(action) {}
+    int GetAction() { return m_action; }
+    Platform::String^ GetText() { return m_text; }
+private:
+    int m_action;
+    Platform::String^ m_text;
+};
+
+class UIEditBoxEndEvent : public cocos2d::InputEvent
+{
+public:
+  UIEditBoxEndEvent(Platform::Object^ sender, Platform::String^ text, int action, Windows::Foundation::EventHandler<EndEventArgs^>^ handle);
+  virtual void execute();
+protected:
+  int m_action;
+  Platform::Agile<Platform::Object^> m_sender;
+  Platform::Agile<Platform::String^> m_text;
+  Platform::Agile<Windows::Foundation::EventHandler<EndEventArgs^>^> m_handler;
 };
 
 NS_CC_END

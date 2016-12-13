@@ -42,7 +42,7 @@ PUAffector::~PUAffector()
     _particleSystem = nullptr;
 }
 
-void PUAffector::updatePUAffector(PUParticle3D* particle, float delta)
+void PUAffector::updatePUAffector(PUParticle3D* /*particle*/, float /*delta*/)
 {
     
 }
@@ -139,12 +139,12 @@ void PUAffector::notifyResume()
 
 }
 
-void PUAffector::preUpdateAffector( float deltaTime )
+void PUAffector::preUpdateAffector( float /*deltaTime*/ )
 {
 
 }
 
-void PUAffector::postUpdateAffector( float deltaTime )
+void PUAffector::postUpdateAffector( float /*deltaTime*/ )
 {
 
 }
@@ -159,7 +159,7 @@ void PUAffector::unPrepare()
 
 }
 
-void PUAffector::initParticleForEmission( PUParticle3D* particle )
+void PUAffector::initParticleForEmission( PUParticle3D* /*particle*/ )
 {
 
 }
@@ -169,7 +169,7 @@ void PUAffector::notifyRescaled(const Vec3& scale)
     _affectorScale = scale;
 }
 
-void PUAffector::firstParticleUpdate( PUParticle3D *particle, float deltaTime )
+void PUAffector::firstParticleUpdate( PUParticle3D* /*particle*/, float /*deltaTime*/ )
 {
 
 }

@@ -96,7 +96,7 @@ bool PUParticleFollowerTranslator::translateChildProperty( PUScriptCompiler* com
     return false;
 }
 
-bool PUParticleFollowerTranslator::translateChildObject( PUScriptCompiler* compiler, PUAbstractNode *node )
+bool PUParticleFollowerTranslator::translateChildObject( PUScriptCompiler* /*compiler*/, PUAbstractNode* /*node*/ )
 {
     // No objects
     return false;

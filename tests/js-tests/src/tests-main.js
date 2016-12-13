@@ -548,6 +548,14 @@ var testNames = [
         }
     },
     {
+        title:"PerformanceNow Tests",
+        platforms: PLATFORM_ALL,
+        linksrc:"src/PerformanceNowTest/PerformanceNowTest.js",
+        testScene:function() {
+            return new PerformanceNowTestScene();
+        }
+    },
+    {
         title:"Physics3D Test",
         platforms: PLATFORM_JSB,
         linksrc:"src/Physics3DTest/Physics3DTest.js",

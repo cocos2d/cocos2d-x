@@ -75,7 +75,7 @@ public:
         _touchListener->release();
     }
 
-    void onTouchesEnded(const std::vector<Touch*>& touches, Event *event)
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event* /*event*/)
     {
         for (const auto& touch: touches)
         {
@@ -375,41 +375,41 @@ MyXMLVisitor::MyXMLVisitor(RichText* richText)
         return make_pair(attrValueMap, nullptr);
     });
     
-    MyXMLVisitor::setTagDescription("b", true, [](const ValueMap& tagAttrValueMap) {
+    MyXMLVisitor::setTagDescription("b", true, [](const ValueMap& /*tagAttrValueMap*/) {
         // no supported attributes
         ValueMap attrValueMap;
         attrValueMap[RichText::KEY_TEXT_BOLD] = true;
         return make_pair(attrValueMap, nullptr);
     });
     
-    MyXMLVisitor::setTagDescription("i", true, [](const ValueMap& tagAttrValueMap) {
+    MyXMLVisitor::setTagDescription("i", true, [](const ValueMap& /*tagAttrValueMap*/) {
         // no supported attributes
         ValueMap attrValueMap;
         attrValueMap[RichText::KEY_TEXT_ITALIC] = true;
         return make_pair(attrValueMap, nullptr);
     });
     
-    MyXMLVisitor::setTagDescription("del", true, [](const ValueMap& tagAttrValueMap) {
+    MyXMLVisitor::setTagDescription("del", true, [](const ValueMap& /*tagAttrValueMap*/) {
         // no supported attributes
         ValueMap attrValueMap;
         attrValueMap[RichText::KEY_TEXT_LINE] = RichText::VALUE_TEXT_LINE_DEL;
         return make_pair(attrValueMap, nullptr);
     });
     
-    MyXMLVisitor::setTagDescription("u", true, [](const ValueMap& tagAttrValueMap) {
+    MyXMLVisitor::setTagDescription("u", true, [](const ValueMap& /*tagAttrValueMap*/) {
         // no supported attributes
         ValueMap attrValueMap;
         attrValueMap[RichText::KEY_TEXT_LINE] = RichText::VALUE_TEXT_LINE_UNDER;
         return make_pair(attrValueMap, nullptr);
     });
     
-    MyXMLVisitor::setTagDescription("small", true, [](const ValueMap& tagAttrValueMap) {
+    MyXMLVisitor::setTagDescription("small", true, [](const ValueMap& /*tagAttrValueMap*/) {
         ValueMap attrValueMap;
         attrValueMap[RichText::KEY_FONT_SMALL] = true;
         return make_pair(attrValueMap, nullptr);
     });
     
-    MyXMLVisitor::setTagDescription("big", true, [](const ValueMap& tagAttrValueMap) {
+    MyXMLVisitor::setTagDescription("big", true, [](const ValueMap& /*tagAttrValueMap*/) {
         ValueMap attrValueMap;
         attrValueMap[RichText::KEY_FONT_BIG] = true;
         return make_pair(attrValueMap, nullptr);
@@ -451,7 +451,7 @@ MyXMLVisitor::MyXMLVisitor(RichText* richText)
         return make_pair(attrValueMap, nullptr);
     });
     
-    MyXMLVisitor::setTagDescription("br", false, [](const ValueMap& tagAttrValueMap)  {
+    MyXMLVisitor::setTagDescription("br", false, [](const ValueMap& /*tagAttrValueMap*/)  {
         RichElementNewLine* richElement = RichElementNewLine::create(0, Color3B::WHITE, 255);
         return make_pair(ValueMap(), richElement);
     });
@@ -619,7 +619,7 @@ std::tuple<bool, Color3B> MyXMLVisitor::getGlow() const
     return std::make_tuple(false, Color3B::WHITE);
 }
 
-void MyXMLVisitor::startElement(void *ctx, const char *elementName, const char **atts)
+void MyXMLVisitor::startElement(void* /*ctx*/, const char *elementName, const char **atts)
 {
     auto it = _tagTables.find(elementName);
     if (it != _tagTables.end()) {
@@ -743,7 +743,7 @@ void MyXMLVisitor::startElement(void *ctx, const char *elementName, const char *
     }
 }
 
-void MyXMLVisitor::endElement(void *ctx, const char *elementName)
+void MyXMLVisitor::endElement(void* /*ctx*/, const char *elementName)
 {
     auto it = _tagTables.find(elementName);
     if (it != _tagTables.end()) {
@@ -754,7 +754,7 @@ void MyXMLVisitor::endElement(void *ctx, const char *elementName)
     }
 }
 
-void MyXMLVisitor::textHandler(void *ctx, const char *str, size_t len)
+void MyXMLVisitor::textHandler(void* /*ctx*/, const char *str, size_t len)
 {
     std::string text(str, len);
     auto color = getColor();
@@ -1680,7 +1680,7 @@ void RichText::handleTextRenderer(const std::string& text, const std::string& fo
     }
 }
     
-void RichText::handleImageRenderer(const std::string& filePath, const Color3B &color, GLubyte opacity, int width, int height, const std::string& url)
+void RichText::handleImageRenderer(const std::string& filePath, const Color3B &/*color*/, GLubyte /*opacity*/, int width, int height, const std::string& url)
 {
     Sprite* imageRenderer = Sprite::create(filePath);
     if (imageRenderer)

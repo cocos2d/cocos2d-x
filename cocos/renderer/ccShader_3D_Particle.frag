@@ -1,5 +1,5 @@
 
-const char* cc3D_Particle_tex_frag = STRINGIFY(
+const char* cc3D_Particle_tex_frag = R"(
 
 #ifdef GL_ES
 varying mediump vec2 TextureCoordOut;
@@ -14,10 +14,10 @@ void main(void)
 {
     gl_FragColor = texture2D(CC_Texture0, TextureCoordOut) * ColorOut * u_color;
 }
-);
+)";
 
-const char* cc3D_Particle_color_frag = STRINGIFY(
-                                               
+const char* cc3D_Particle_color_frag = R"(
+
 #ifdef GL_ES
 varying mediump vec4 ColorOut;
 #else
@@ -29,4 +29,4 @@ void main(void)
 {
     gl_FragColor = ColorOut * u_color;
 }
-);
+)";

@@ -209,7 +209,7 @@ void PUScriptLexer::openLexer(const std::string &str,const std::string &source,P
         if(c == cr || (c == lf && lastc != cr))
             line++;
         
-        i++;
+        ++i;
     }
     
     // Check for valid exit states

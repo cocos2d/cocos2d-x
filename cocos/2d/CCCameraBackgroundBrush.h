@@ -102,7 +102,7 @@ public:
     /**
      * draw the background
      */
-    virtual void drawBackground(Camera* camera) {}
+    virtual void drawBackground(Camera* /*camera*/) {}
 
     virtual bool isValid() { return true; }
 

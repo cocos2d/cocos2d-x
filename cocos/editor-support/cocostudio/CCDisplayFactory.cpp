@@ -236,7 +236,7 @@ void DisplayFactory::createArmatureDisplay(Bone *bone, DecorativeDisplay *decoDi
 
     decoDisplay->setDisplay(armature);
 }
-void DisplayFactory::updateArmatureDisplay(Bone *bone, Node *display, float dt)
+void DisplayFactory::updateArmatureDisplay(Bone* /*bone*/, Node *display, float dt)
 {
     Armature *armature = (Armature *)display;
     if(armature)

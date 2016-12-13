@@ -34,12 +34,12 @@ PUDoFreezeEventHandlerTranslator::PUDoFreezeEventHandlerTranslator()
 {
 }
 //-------------------------------------------------------------------------
-bool PUDoFreezeEventHandlerTranslator::translateChildProperty( PUScriptCompiler* compiler, PUAbstractNode *node )
+bool PUDoFreezeEventHandlerTranslator::translateChildProperty( PUScriptCompiler* /*compiler*/, PUAbstractNode* /*node*/ )
 {
     return false;
 }
 
-bool PUDoFreezeEventHandlerTranslator::translateChildObject( PUScriptCompiler* compiler, PUAbstractNode *node )
+bool PUDoFreezeEventHandlerTranslator::translateChildObject( PUScriptCompiler* /*compiler*/, PUAbstractNode* /*node*/ )
 {
     // No objects
     return false;

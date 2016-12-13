@@ -1,5 +1,5 @@
 #include "Profile.h"
-#include "json/document.h"
+#include "json/document-wrapper.h"
 #include "json/prettywriter.h"
 #include "json/stringbuffer.h"
 #include "platform/CCFileUtils.h"

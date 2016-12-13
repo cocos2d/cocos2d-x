@@ -1,5 +1,5 @@
 
-const char* cc3D_PositionNormalTex_vert = STRINGIFY(
+const char* cc3D_PositionNormalTex_vert = R"(
 
 #ifdef USE_NORMAL_MAPPING
 #if (MAX_DIRECTIONAL_LIGHT_NUM > 0)
@@ -12,7 +12,7 @@ uniform vec3 u_PointLightSourcePosition[MAX_POINT_LIGHT_NUM];
 #if (MAX_SPOT_LIGHT_NUM > 0)
 uniform vec3 u_SpotLightSourcePosition[MAX_SPOT_LIGHT_NUM];
 #ifdef USE_NORMAL_MAPPING
-uniform vec3 u_SpotLightSourceDirection[MAX_SPOT_LIGHT_NUM]; 
+uniform vec3 u_SpotLightSourceDirection[MAX_SPOT_LIGHT_NUM];
 #endif
 #endif
 
@@ -101,7 +101,7 @@ void main(void)
             v_vertexToSpotLightDirection[i] = u_SpotLightSourcePosition[i] - ePosition.xyz;
         }
     #endif
-        
+
     #if ((MAX_DIRECTIONAL_LIGHT_NUM > 0) || (MAX_POINT_LIGHT_NUM > 0) || (MAX_SPOT_LIGHT_NUM > 0))
         v_normal = CC_NormalMatrix * a_normal;
     #endif
@@ -111,9 +111,9 @@ void main(void)
     TextureCoordOut.y = 1.0 - TextureCoordOut.y;
     gl_Position = CC_PMatrix * ePosition;
 }
-);
+)";
 
-const char* cc3D_SkinPositionNormalTex_vert = STRINGIFY(
+const char* cc3D_SkinPositionNormalTex_vert = R"(
 
 #ifdef USE_NORMAL_MAPPING
 #if (MAX_DIRECTIONAL_LIGHT_NUM > 0)
@@ -126,7 +126,7 @@ uniform vec3 u_PointLightSourcePosition[MAX_POINT_LIGHT_NUM];
 #if (MAX_SPOT_LIGHT_NUM > 0)
 uniform vec3 u_SpotLightSourcePosition[MAX_SPOT_LIGHT_NUM];
 #ifdef USE_NORMAL_MAPPING
-uniform vec3 u_SpotLightSourceDirection[MAX_SPOT_LIGHT_NUM]; 
+uniform vec3 u_SpotLightSourceDirection[MAX_SPOT_LIGHT_NUM];
 #endif
 #endif
 
@@ -179,8 +179,8 @@ void getPositionAndNormal(out vec4 position, out vec3 normal, out vec3 tangent, 
     vec4 matrixPalette1 = u_matrixPalette[matrixIndex] * blendWeight;
     vec4 matrixPalette2 = u_matrixPalette[matrixIndex + 1] * blendWeight;
     vec4 matrixPalette3 = u_matrixPalette[matrixIndex + 2] * blendWeight;
-    
-    
+
+
     blendWeight = a_blendWeight[1];
     if (blendWeight > 0.0)
     {
@@ -188,7 +188,7 @@ void getPositionAndNormal(out vec4 position, out vec3 normal, out vec3 tangent, 
         matrixPalette1 += u_matrixPalette[matrixIndex] * blendWeight;
         matrixPalette2 += u_matrixPalette[matrixIndex + 1] * blendWeight;
         matrixPalette3 += u_matrixPalette[matrixIndex + 2] * blendWeight;
-        
+
         blendWeight = a_blendWeight[2];
         if (blendWeight > 0.0)
         {
@@ -196,7 +196,7 @@ void getPositionAndNormal(out vec4 position, out vec3 normal, out vec3 tangent, 
             matrixPalette1 += u_matrixPalette[matrixIndex] * blendWeight;
             matrixPalette2 += u_matrixPalette[matrixIndex + 1] * blendWeight;
             matrixPalette3 += u_matrixPalette[matrixIndex + 2] * blendWeight;
-            
+
             blendWeight = a_blendWeight[3];
             if (blendWeight > 0.0)
             {
@@ -305,4 +305,4 @@ void main()
     gl_Position = CC_PMatrix * ePosition;
 }
 
-);
+)";

@@ -58,7 +58,7 @@ public:
      *
      * @return Return an autorelease object.
      */
-    static DrawNode* create(int defaultLineWidth = DEFAULT_LINE_WIDTH);
+    static DrawNode* create(GLfloat defaultLineWidth = DEFAULT_LINE_WIDTH);
     
     /** Draw a point.
      *
@@ -313,13 +313,13 @@ public:
     // Overrides
     virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
     
-    void setLineWidth(int lineWidth);
+    void setLineWidth(GLfloat lineWidth);
 
     // Get CocosStudio guide lines width.
-    float getLineWidth();
+    GLfloat getLineWidth();
 
 CC_CONSTRUCTOR_ACCESS:
-    DrawNode(int lineWidth = DEFAULT_LINE_WIDTH);
+    DrawNode(GLfloat lineWidth = DEFAULT_LINE_WIDTH);
     virtual ~DrawNode();
     virtual bool init() override;
 
@@ -358,9 +358,9 @@ protected:
     bool        _dirtyGLPoint;
     bool        _dirtyGLLine;
     
-    int         _lineWidth;
+    GLfloat         _lineWidth;
 
-    int  _defaultLineWidth;
+    GLfloat  _defaultLineWidth;
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(DrawNode);
 };

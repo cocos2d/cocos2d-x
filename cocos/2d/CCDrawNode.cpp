@@ -99,7 +99,7 @@ static inline Tex2F __t(const Vec2 &v)
 
 // implementation of DrawNode
 
-DrawNode::DrawNode(int lineWidth)
+DrawNode::DrawNode(GLfloat lineWidth)
 : _vao(0)
 , _vbo(0)
 , _vaoGLPoint(0)
@@ -150,7 +150,7 @@ DrawNode::~DrawNode()
     }
 }
 
-DrawNode* DrawNode::create(int defaultLineWidth)
+DrawNode* DrawNode::create(GLfloat defaultLineWidth)
 {
     DrawNode* ret = new (std::nothrow) DrawNode(defaultLineWidth);
     if (ret && ret->init())
@@ -319,7 +319,7 @@ void DrawNode::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
     }
 }
 
-void DrawNode::onDraw(const Mat4 &transform, uint32_t flags)
+void DrawNode::onDraw(const Mat4 &transform, uint32_t /*flags*/)
 {
     getGLProgramState()->apply(transform);
     
@@ -361,7 +361,7 @@ void DrawNode::onDraw(const Mat4 &transform, uint32_t flags)
     CHECK_GL_ERROR_DEBUG();
 }
 
-void DrawNode::onDrawGLLine(const Mat4 &transform, uint32_t flags)
+void DrawNode::onDrawGLLine(const Mat4 &transform, uint32_t /*flags*/)
 {
     auto glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_LENGTH_TEXTURE_COLOR);
     glProgram->use();
@@ -405,7 +405,7 @@ void DrawNode::onDrawGLLine(const Mat4 &transform, uint32_t flags)
     CHECK_GL_ERROR_DEBUG();
 }
 
-void DrawNode::onDrawGLPoint(const Mat4 &transform, uint32_t flags)
+void DrawNode::onDrawGLPoint(const Mat4 &transform, uint32_t /*flags*/)
 {
     auto glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_COLOR_TEXASPOINTSIZE);
     glProgram->use();
@@ -934,12 +934,12 @@ void DrawNode::setBlendFunc(const BlendFunc &blendFunc)
     _blendFunc = blendFunc;
 }
 
-void DrawNode::setLineWidth(int lineWidth)
+void DrawNode::setLineWidth(GLfloat lineWidth)
 {
     _lineWidth = lineWidth;
 }
 
-float DrawNode::getLineWidth()
+GLfloat DrawNode::getLineWidth()
 {
     return this->_lineWidth;
 }

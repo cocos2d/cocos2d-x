@@ -1,21 +1,21 @@
 /*
  * LICENSE ???
  */
-const char* ccLabelOutline_frag = STRINGIFY(
+const char* ccLabelOutline_frag = R"(
 #ifdef GL_ES
-precision lowp float; 
+precision lowp float;
 #endif
- 
-varying vec4 v_fragmentColor; 
+
+varying vec4 v_fragmentColor;
 varying vec2 v_texCoord;
 
 uniform vec4 u_effectColor;
 uniform vec4 u_textColor;
- 
+
 void main()
 {
     vec4 sample = texture2D(CC_Texture0, v_texCoord);
-    float fontAlpha = sample.a; // sample.a == 1 indicates text, a == 0 indicates outline 
+    float fontAlpha = sample.a; // sample.a == 1 indicates text, a == 0 indicates outline
     float outlineAlpha = sample.r; // sample.r always > 0
 
     if (u_effectColor.a > 0.0) // draw outline
@@ -40,4 +40,4 @@ void main()
         discard;
     }
 }
-);
+)";

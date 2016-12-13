@@ -118,13 +118,13 @@ Sprite* Sprite::createWithSpriteFrame(SpriteFrame *spriteFrame)
 Sprite* Sprite::createWithSpriteFrameName(const std::string& spriteFrameName)
 {
     SpriteFrame *frame = SpriteFrameCache::getInstance()->getSpriteFrameByName(spriteFrameName);
-    
+
 #if COCOS2D_DEBUG > 0
     char msg[256] = {0};
     sprintf(msg, "Invalid spriteFrameName: %s", spriteFrameName.c_str());
     CCASSERT(frame != nullptr, msg);
 #endif
-    
+
     return createWithSpriteFrame(frame);
 }
 
@@ -143,7 +143,7 @@ Sprite* Sprite::create()
 bool Sprite::init()
 {
     initWithTexture(nullptr, Rect::ZERO);
-    
+
     return true;
 }
 
@@ -196,7 +196,7 @@ bool Sprite::initWithFile(const std::string &filename, const Rect& rect)
     {
         return false;
     }
-    
+
     _fileName = filename;
     _fileType = 0;
 
@@ -219,7 +219,7 @@ bool Sprite::initWithSpriteFrameName(const std::string& spriteFrameName)
     {
         return false;
     }
-    
+
     _fileName = spriteFrameName;
     _fileType = 1;
 
@@ -234,8 +234,8 @@ bool Sprite::initWithSpriteFrame(SpriteFrame *spriteFrame)
     {
         return false;
     }
-    
-    bool bRet = initWithTexture(spriteFrame->getTexture(), spriteFrame->getRect());
+
+    bool bRet = initWithTexture(spriteFrame->getTexture(), spriteFrame->getRect(), spriteFrame->isRotated());
     setSpriteFrame(spriteFrame);
 
     return bRet;
@@ -244,7 +244,7 @@ bool Sprite::initWithSpriteFrame(SpriteFrame *spriteFrame)
 bool Sprite::initWithPolygon(const cocos2d::PolygonInfo &info)
 {
     bool ret = false;
-    
+
     Texture2D *texture = _director->getTextureCache()->addImage(info.getFilename());
     if(texture && initWithTexture(texture))
     {
@@ -252,7 +252,7 @@ bool Sprite::initWithPolygon(const cocos2d::PolygonInfo &info)
         Node::setContentSize(_polyInfo.getRect().size / _director->getContentScaleFactor());
         ret = true;
     }
-    
+
     return ret;
 }
 
@@ -263,25 +263,25 @@ bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect, bool rotated)
     if (Node::init())
     {
         _batchNode = nullptr;
-        
+
         _recursiveDirty = false;
         setDirty(false);
-        
+
         _opacityModifyRGB = true;
-        
+
         _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
-        
+
         _flippedX = _flippedY = false;
-        
+
         // default transform anchor: center
         setAnchorPoint(Vec2::ANCHOR_MIDDLE);
-        
+
         // zwoptex default values
         _offsetPosition.setZero();
 
         // clean the Quad
         memset(&_quad, 0, sizeof(_quad));
-        
+
         // Atlas: Color
         _quad.bl.colors = Color4B::WHITE;
         _quad.br.colors = Color4B::WHITE;
@@ -291,16 +291,16 @@ bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect, bool rotated)
         // update texture (calls updateBlendFunc)
         setTexture(texture);
         setTextureRect(rect, rotated, rect.size);
-        
+
         // by default use "Self Render".
         // if the sprite is added to a batchnode, then it will automatically switch to "batchnode Render"
         setBatchNode(nullptr);
         result = true;
     }
-    
+
     _recursiveDirty = true;
     setDirty(true);
-    
+
     return result;
 }
 
@@ -311,11 +311,12 @@ Sprite::Sprite(void)
 , _texture(nullptr)
 , _spriteFrame(nullptr)
 , _insideBounds(true)
-, _capInsetsNormalized(0,0,1,1)
+, _centerRectNormalized(0,0,1,1)
 , _numberOfSlices(1)
 , _quads(nullptr)
 , _strechFactor(Vec2::ONE)
 , _originalContentSize(Size::ZERO)
+, _strechEnabled(true)
 {
 #if CC_SPRITE_DEBUG_DRAW
     _debugDrawNode = DrawNode::create();
@@ -384,8 +385,7 @@ void Sprite::setTexture(Texture2D *texture)
         if (texture == nullptr)
         {
             Image* image = new (std::nothrow) Image();
-            bool isOK = image->initWithRawData(cc_2x2_white_image, sizeof(cc_2x2_white_image), 2, 2, 8);
-            CC_UNUSED_PARAM(isOK);
+            bool CC_UNUSED isOK = image->initWithRawData(cc_2x2_white_image, sizeof(cc_2x2_white_image), 2, 2, 8);
             CCASSERT(isOK, "The 2x2 empty texture was created unsuccessfully.");
 
             texture = _director->getTextureCache()->addImage(image, CC_2x2_WHITE_IMAGE_KEY);
@@ -426,84 +426,233 @@ void Sprite::setTextureRect(const Rect& rect, bool rotated, const Size& untrimme
 
 void Sprite::updatePoly()
 {
+    // There are 3 cases:
+    //
+    // A) a non 9-sliced, non streched
+    //    contentsize doesn't not affect the streching, since there is no streching
+    //    this was the original behavior, and we keep it for backwards compatibility reasons
+    //    When non-streching is enabled, we have to change the offset in order to "fill the empty" space at the
+    //    left-top of the texture
+    // B) non 9-sliced, streched
+    //    the texture is streched to the content size
+    // C) 9-sliced, streched
+    //    the sprite is 9-sliced and streched.
     if (_numberOfSlices == 1) {
         setTextureCoords(_rect, &_quad);
-        const Rect copyRect(0, 0, _rect.size.width * _strechFactor.x, _rect.size.height * _strechFactor.y);
-        setVertexCoords(copyRect, _rect.size, &_quad);
+        Rect copyRect;
+        if (_strechEnabled) {
+            // case B)
+            copyRect = Rect(0, 0, _rect.size.width * _strechFactor.x, _rect.size.height * _strechFactor.y);
+        } else {
+            // case A)
+            // modify origin to put the sprite in the correct offset
+            copyRect = Rect((_contentSize.width - _originalContentSize.width) / 2.0f,
+                            (_contentSize.height - _originalContentSize.height) / 2.0f,
+                            _rect.size.width,
+                            _rect.size.height);
+        }
+        setVertexCoords(copyRect, &_quad);
         _polyInfo.setQuad(&_quad);
     } else {
+        // case C)
+
         // in theory it can support 3 slices as well, but let's stick to 9 only
         CCASSERT(_numberOfSlices == 9, "Invalid number of slices");
 
+
+        // How the texture is split
+        //
+        //  u,v: are the texture coordinates
+        //  w,h: are the width and heights
+        //
+        //      w0    w1   w2
+        // v2 +----+------+--+
+        //    |    |      |  |
+        //    |    |      |  |
+        //    | 6  |   7  | 8|  h2
+        //    |    |      |  |
+        // v1 +----+------+--|
+        //    |    |      |  |
+        //    | 3  |   4  | 5|  h1
+        // v0 +----+------+--|
+        //    |    |      |  |
+        //    | 0  |   1  | 2|  h0
+        //    |    |      |  |
+        //    +----+------+--+
+        //    u0   u1    u2
+        //
+        //
+        //  and when the texture is rotated, it will get transformed.
+        //  not only the rects have a different position, but also u,v
+        //  points to the bottom-left and not top-right of the texture
+        //  so some swaping/origin/reordering needs to be done in order
+        //  to support rotated slice-9 correctly
+        //
+        //       w0    w1     w2
+        // v2 +------+----+--------+
+        //    |      |    |        |
+        //    |   0  |  3 |    6   | h2
+        // v1 +------+----+--------+
+        //    |      |    |        |
+        //    |   1  |  4 |    7   | h1
+        //    |      |    |        |
+        // v0 +------+----+--------+
+        //    |   2  |  5 |    8   | h0
+        //    +------+----+--------+
+        //    u0      u1     u2
+
+
         // center rect
-        const float x1 = _capInsetsNormalized.origin.x;
-        const float y1 = _capInsetsNormalized.origin.y;
-        const float x2 = _capInsetsNormalized.origin.x + _capInsetsNormalized.size.width;
-        const float y2 = _capInsetsNormalized.origin.y + _capInsetsNormalized.size.height;
+        float cx1 = _centerRectNormalized.origin.x;
+        float cy1 = _centerRectNormalized.origin.y;
+        float cx2 = _centerRectNormalized.origin.x + _centerRectNormalized.size.width;
+        float cy2 = _centerRectNormalized.origin.y + _centerRectNormalized.size.height;
 
         // "O"riginal rect
         const float oox = _rect.origin.x;
         const float ooy = _rect.origin.y;
-        const float osw = _rect.size.width;
-        const float osh = _rect.size.height;
+        float osw = _rect.size.width;
+        float osh = _rect.size.height;
 
+        if (_rectRotated) {
+            std::swap(cx1, cy1);
+            std::swap(cx2, cy2);
+
+            // when the texture is rotated, then the centerRect starts from the "bottom" (left)
+            // but when it is not rotated, it starts from the top, so invert it
+            cy2 = 1 - cy2;
+            cy1 = 1 - cy1;
+            std::swap(cy1, cy2);
+            std::swap(osw, osh);
+        }
+
+        //
         // textCoords Data: Y must be inverted.
-        const float u0 = oox + osw * 0;
-        const float u1 = oox + osw * x1;
-        const float u2 = oox + osw * x2;
-        const float v0 = ooy + osh - (osh * y1);
-        const float v1 = ooy + osh * (1-y2);
-        const float v2 = ooy + osh * 0;
+        //
+        const float w0 = osw * cx1;
+        const float w1 = osw * (cx2-cx1);
+        const float w2 = osw * (1-cx2);
+        const float h0 = osh * cy1;
+        const float h1 = osh * (cy2-cy1);
+        const float h2 = osh * (1-cy2);
 
-        const Rect texRects[9] = {
-            Rect(u0, v0,    osw * x1,      osh * y1),         // bottom-left
-            Rect(u1, v0,    osw * (x2-x1), osh * y1),         // bottom
-            Rect(u2, v0,    osw * (1-x2),  osh * y1),         // bottom-right
+        const float u0 = oox;
+        const float u1 = u0 + w0;
+        const float u2 = u1 + w1;
+        const float v2 = ooy;
+        const float v1 = v2 + h2;
+        const float v0 = v1 + h1;
 
-            Rect(u0, v1,    osw * x1,      osh * (y2-y1)),    // left
-            Rect(u1, v1,    osw * (x2-x1), osh * (y2-y1)),    // center
-            Rect(u2, v1,    osw * (1-x2),  osh * (y2-y1)),    // right
 
-            Rect(u0, v2,    osw * x1,      osh * (1-y2)),     // top-left
-            Rect(u1, v2,    osw * (x2-x1), osh * (1-y2)),     // top
-            Rect(u2, v2,    osw * (1-x2),  osh * (1-y2)),     // top-right
+        const Rect texRects_normal[9] = {
+            Rect(u0, v0,    w0, h0),   // bottom-left
+            Rect(u1, v0,    w1, h0),   // bottom
+            Rect(u2, v0,    w2, h0),   // bottom-right
+
+            Rect(u0, v1,    w0, h1),   // left
+            Rect(u1, v1,    w1, h1),   // center
+            Rect(u2, v1,    w2, h1),   // right
+
+            Rect(u0, v2,    w0, h2),   // top-left
+            Rect(u1, v2,    w1, h2),   // top
+            Rect(u2, v2,    w2, h2),   // top-right
         };
 
+        // swap width and height because setTextureCoords()
+        // will expects the hight and width to be swapped
+        const Rect texRects_rotated[9] = {
+            Rect(u0, v2,    h2, w0),        // top-left
+            Rect(u0, v1,    h1, w0),        // left
+            Rect(u0, v0,    h0, w0),        // bottom-left
+
+            Rect(u1, v2,    h2, w1),        // top
+            Rect(u1, v1,    h1, w1),        // center
+            Rect(u1, v0,    h0, w1),        // bottom
+
+            Rect(u2, v2,    h2, w2),        // top-right
+            Rect(u2, v1,    h1, w2),        // right
+            Rect(u2, v0,    h0, w2),        // bottom-right
+        };
+
+        const Rect* texRects = _rectRotated ? texRects_rotated : texRects_normal;
+
+        //
         // vertex Data.
-        const float x2_x1_strech = osw * (x2-x1) * _strechFactor.x;
-        const float y2_y1_strech = osh * (y2-y1) * _strechFactor.y;
+        //
+
+        // reset center rect since it is altered when when the texture
+        // is rotated
+        cx1 = _centerRectNormalized.origin.x;
+        cy1 = _centerRectNormalized.origin.y;
+        cx2 = _centerRectNormalized.origin.x + _centerRectNormalized.size.width;
+        cy2 = _centerRectNormalized.origin.y + _centerRectNormalized.size.height;
+        if (_rectRotated)
+            std::swap(osw, osh);
+
+        // sizes
+        float x0_s = osw * cx1;
+        float x1_s = osw * (cx2-cx1) * _strechFactor.x;
+        float x2_s = osw * (1-cx2);
+        float y0_s = osh * cy1;
+        float y1_s = osh * (cy2-cy1) * _strechFactor.y;
+        float y2_s = osh * (1-cy2);
+
+
+        // is it flipped?
+        // swap sizes to calculate offset correctly
+        if (_flippedX)
+            std::swap(x0_s, x2_s);
+        if (_flippedY)
+            std::swap(y0_s, y2_s);
+
+        // origins
+        float x0 = 0;
+        float x1 = x0 + x0_s;
+        float x2 = x1 + x1_s;
+        float y0 = 0;
+        float y1 = y0 + y0_s;
+        float y2 = y1 + y1_s;
+
+        // swap origin, but restore size to its original value
+        if (_flippedX) {
+            std::swap(x0, x2);
+            std::swap(x0_s, x2_s);
+        }
+        if (_flippedY) {
+            std::swap(y0, y2);
+            std::swap(y0_s, y2_s);
+        }
+
         const Rect verticesRects[9] = {
-            Rect(osw * 0,  osh * 0,                     osw * x1, osh * y1),                // bottom-left
-            Rect(osw * x1, osh * 0,                     x2_x1_strech, osh * y1),            // bottom
-            Rect(osw * x1 + x2_x1_strech, osh * 0,      osw * (1-x2),  osh * y1),           // bottom-right
+            Rect(x0, y0,  x0_s, y0_s),      // bottom-left
+            Rect(x1, y0,  x1_s, y0_s),      // bottom
+            Rect(x2, y0,  x2_s, y0_s),      // bottom-right
 
-            Rect(osw * 0, osh * y1,                     osw * x1, y2_y1_strech),            // left
-            Rect(osw * x1, osh * y1,                    x2_x1_strech, y2_y1_strech),        // center
-            Rect(osw * x1 + x2_x1_strech,  osh * y1,    osw * (1-x2), y2_y1_strech),        // right
+            Rect(x0, y1,  x0_s, y1_s),      // left
+            Rect(x1, y1,  x1_s, y1_s),      // center
+            Rect(x2, y1,  x2_s, y1_s),      // right
 
-            Rect(osw * 0, osh * y1 + y2_y1_strech,                  osw * x1, osh * (1-y2)),        // top-left
-            Rect(osw * x1, osh * y1 + y2_y1_strech,                 x2_x1_strech, osh * (1-y2)),    // top
-            Rect(osw * x1 + x2_x1_strech, osh * y1 + y2_y1_strech,  osw * (1-x2),  osh * (1-y2)),   // top-right
+            Rect(x0, y2,  x0_s, y2_s),      // top-left
+            Rect(x1, y2,  x1_s, y2_s),      // top
+            Rect(x2, y2,  x2_s, y2_s),      // top-right
         };
 
-        const int rotatedIdx[] = {6, 3, 0, 7, 4, 1, 8, 5, 2};
         for (int i=0; i<_numberOfSlices; ++i) {
-            const int texIdx = _rectRotated ? rotatedIdx[i] : i;
-            setTextureCoords(texRects[texIdx], &_quads[i]);
-            setVertexCoords(verticesRects[i], _rect.size, &_quads[i]);
+            setTextureCoords(texRects[i], &_quads[i]);
+            setVertexCoords(verticesRects[i], &_quads[i]);
         }
         _polyInfo.setQuads(_quads, _numberOfSlices);
     }
 }
 
-void Sprite::setCapInsetsNormalized(const cocos2d::Rect &rectTopLeft)
+void Sprite::setCenterRectNormalized(const cocos2d::Rect &rectTopLeft)
 {
     // FIMXE: Rect is has origin on top-left (like text coordinate).
     // but all the logic has been done using bottom-left as origin. So it is easier to invert Y
     // here, than in the rest of the places... but it is not as clean.
     Rect rect(rectTopLeft.origin.x, 1 - rectTopLeft.origin.y - rectTopLeft.size.height, rectTopLeft.size.width, rectTopLeft.size.height);
-    if (!_capInsetsNormalized.equals(rect)) {
-        _capInsetsNormalized = rect;
+    if (!_centerRectNormalized.equals(rect)) {
+        _centerRectNormalized = rect;
 
         // convert it to 1-slice
         if (rect.equals(Rect(0,0,1,1))) {
@@ -532,29 +681,33 @@ void Sprite::setCapInsetsNormalized(const cocos2d::Rect &rectTopLeft)
     }
 }
 
-void Sprite::setCapInsets(const cocos2d::Rect &rectInPoints)
+void Sprite::setCenterRect(const cocos2d::Rect &rectInPoints)
 {
     if (!_originalContentSize.equals(Size::ZERO))
     {
         Rect rect = rectInPoints;
+
         const float x = rect.origin.x / _rect.size.width;
         const float y = rect.origin.y / _rect.size.height;
         const float w = rect.size.width / _rect.size.width;
         const float h = rect.size.height / _rect.size.height;
-        setCapInsetsNormalized(Rect(x,y,w,h));
+        setCenterRectNormalized(Rect(x,y,w,h));
     }
 }
 
-Rect Sprite::getCapInsetsNormalized() const
+Rect Sprite::getCenterRectNormalized() const
 {
-    // FIXME: _capInsetsNormalized is in bottom-left coords, but should converted to top-left
-    Rect ret(_capInsetsNormalized.origin.x, 1 - _capInsetsNormalized.origin.y - _capInsetsNormalized.size.height, _capInsetsNormalized.size.width, _capInsetsNormalized.size.height);
+    // FIXME: _centerRectNormalized is in bottom-left coords, but should converted to top-left
+    Rect ret(_centerRectNormalized.origin.x,
+             1 - _centerRectNormalized.origin.y - _centerRectNormalized.size.height,
+             _centerRectNormalized.size.width,
+             _centerRectNormalized.size.height);
     return ret;
 }
 
-Rect Sprite::getCapInsets() const
+Rect Sprite::getCenterRect() const
 {
-    Rect rect = getCapInsetsNormalized();
+    Rect rect = getCenterRectNormalized();
     rect.origin.x *= _rect.size.width;
     rect.origin.y *= _rect.size.height;
     rect.size.width *= _rect.size.width;
@@ -581,37 +734,52 @@ void Sprite::setTextureCoords(const Rect& rectInPoints, V3F_C4B_T2F_Quad* outQua
         return;
     }
 
-    auto rectInPixels = CC_RECT_POINTS_TO_PIXELS(rectInPoints);
+    const auto rectInPixels = CC_RECT_POINTS_TO_PIXELS(rectInPoints);
 
-    float atlasWidth = (float)tex->getPixelsWide();
-    float atlasHeight = (float)tex->getPixelsHigh();
+    const float atlasWidth = (float)tex->getPixelsWide();
+    const float atlasHeight = (float)tex->getPixelsHigh();
 
-    float left, right, top, bottom;
+    float rw = rectInPixels.size.width;
+    float rh = rectInPixels.size.height;
+
+    // if the rect is rotated, it means that the frame is rotated 90 degrees (clockwise) and:
+    //  - rectInpoints: origin will be the bottom-left of the frame (and not the top-right)
+    //  - size: represents the unrotated texture size
+    //
+    // so what we have to do is:
+    //  - swap texture width and height
+    //  - take into account the origin
+    //  - flip X instead of Y when flipY is enabled
+    //  - flip Y instead of X when flipX is enabled
+
+    if (_rectRotated)
+        std::swap(rw, rh);
+
+#if CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
+    float left    = (2*rectInPixels.origin.x+1) / (2*atlasWidth);
+    float right   = left+(rw*2-2) / (2*atlasWidth);
+    float top     = (2*rectInPixels.origin.y+1) / (2*atlasHeight);
+    float bottom  = top+(rh*2-2) / (2*atlasHeight);
+#else
+    float left    = rectInPixels.origin.x / atlasWidth;
+    float right   = (rectInPixels.origin.x + rw) / atlasWidth;
+    float top     = rectInPixels.origin.y / atlasHeight;
+    float bottom  = (rectInPixels.origin.y + rh) / atlasHeight;
+#endif // CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
+
+
+    if ((_flippedX && !_rectRotated) || (_flippedY && _rectRotated))
+    {
+        std::swap(left, right);
+    }
+
+    if ((_flippedY && !_rectRotated) || (_flippedX && _rectRotated))
+    {
+        std::swap(top, bottom);
+    }
 
     if (_rectRotated)
     {
-#if CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
-        left    = (2*rectInPixels.origin.x+1) / (2*atlasWidth);
-        right   = left+(rectInPixels.size.height*2-2) / (2*atlasWidth);
-        top     = (2*rectInPixels.origin.y+1) / (2*atlasHeight);
-        bottom  = top+(rectInPixels.size.width*2-2) / (2*atlasHeight);
-#else
-        left    = rectInPixels.origin.x / atlasWidth;
-        right   = (rectInPixels.origin.x + rectInPixels.size.height) / atlasWidth;
-        top     = rectInPixels.origin.y / atlasHeight;
-        bottom  = (rectInPixels.origin.y + rectInPixels.size.width) / atlasHeight;
-#endif // CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
-
-        if (_flippedX)
-        {
-            std::swap(top, bottom);
-        }
-
-        if (_flippedY)
-        {
-            std::swap(left, right);
-        }
-
         outQuad->bl.texCoords.u = left;
         outQuad->bl.texCoords.v = top;
         outQuad->br.texCoords.u = left;
@@ -623,28 +791,6 @@ void Sprite::setTextureCoords(const Rect& rectInPoints, V3F_C4B_T2F_Quad* outQua
     }
     else
     {
-#if CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
-        left    = (2*rectInPixels.origin.x+1) / (2*atlasWidth);
-        right   = left + (rectInPixels.size.width*2-2) / (2*atlasWidth);
-        top     = (2*rectInPixels.origin.y+1) / (2*atlasHeight);
-        bottom  = top + (rectInPixels.size.height*2-2) / (2*atlasHeight);
-#else
-        left    = rectInPixels.origin.x / atlasWidth;
-        right   = (rectInPixels.origin.x + rectInPixels.size.width) / atlasWidth;
-        top     = rectInPixels.origin.y / atlasHeight;
-        bottom  = (rectInPixels.origin.y + rectInPixels.size.height) / atlasHeight;
-#endif // ! CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
-
-        if(_flippedX)
-        {
-            std::swap(left, right);
-        }
-
-        if(_flippedY)
-        {
-            std::swap(top, bottom);
-        }
-
         outQuad->bl.texCoords.u = left;
         outQuad->bl.texCoords.v = bottom;
         outQuad->br.texCoords.u = right;
@@ -656,10 +802,8 @@ void Sprite::setTextureCoords(const Rect& rectInPoints, V3F_C4B_T2F_Quad* outQua
     }
 }
 
-void Sprite::setVertexCoords(const Rect& rect, const Size& imageSize, V3F_C4B_T2F_Quad* outQuad)
+void Sprite::setVertexCoords(const Rect& rect, V3F_C4B_T2F_Quad* outQuad)
 {
-    // container size is the Size that contains the "unsliced" sprite
-
     float relativeOffsetX = _unflippedOffsetPositionFromCenter.x;
     float relativeOffsetY = _unflippedOffsetPositionFromCenter.y;
 
@@ -673,8 +817,15 @@ void Sprite::setVertexCoords(const Rect& rect, const Size& imageSize, V3F_C4B_T2
         relativeOffsetY = -relativeOffsetY;
     }
 
-    _offsetPosition.x = relativeOffsetX + (_originalContentSize.width - imageSize.width) / 2;
-    _offsetPosition.y = relativeOffsetY + (_originalContentSize.height - imageSize.height) / 2;
+    _offsetPosition.x = relativeOffsetX + (_originalContentSize.width - _rect.size.width) / 2;
+    _offsetPosition.y = relativeOffsetY + (_originalContentSize.height - _rect.size.height) / 2;
+
+    // FIXME: Streching should be applied to the "offset" as well
+    // but probably it should be calculated in the caller function. It will be tidier
+    if (_numberOfSlices == 1) {
+        _offsetPosition.x *= _strechFactor.x;
+        _offsetPosition.y *= _strechFactor.y;
+    }
 
     // rendering using batch node
     if (_batchNode)
@@ -746,7 +897,7 @@ void Sprite::updateTransform(void)
 
             float x2 = x1 + size.width;
             float y2 = y1 + size.height;
-            
+
             float x = _transformToBatch.m[12];
             float y = _transformToBatch.m[13];
 
@@ -802,7 +953,7 @@ void Sprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
     {
         return;
     }
-    
+
 #if CC_USE_CULLING
     // Don't calculate the culling if the transform was not updated
     auto visitingCamera = Camera::getVisitingCamera();
@@ -819,16 +970,16 @@ void Sprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
     if(_insideBounds)
 #endif
     {
-        _trianglesCommand.init(_globalZOrder, 
-            _texture, 
-            getGLProgramState(), 
-            _blendFunc, 
-            _polyInfo.triangles,
-            transform, 
-            flags);
+        _trianglesCommand.init(_globalZOrder,
+                               _texture,
+                               getGLProgramState(),
+                               _blendFunc,
+                               _polyInfo.triangles,
+                               transform,
+                               flags);
 
         renderer->addCommand(&_trianglesCommand);
-        
+
 #if CC_SPRITE_DEBUG_DRAW
         _debugDrawNode->clear();
         auto count = _polyInfo.triangles.indexCount/3;
@@ -840,11 +991,11 @@ void Sprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
             Vec3 from =verts[indices[i*3]].vertices;
             Vec3 to = verts[indices[i*3+1]].vertices;
             _debugDrawNode->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::WHITE);
-            
+
             from =verts[indices[i*3+1]].vertices;
             to = verts[indices[i*3+2]].vertices;
             _debugDrawNode->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::WHITE);
-            
+
             from =verts[indices[i*3+2]].vertices;
             to = verts[indices[i*3]].vertices;
             _debugDrawNode->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::WHITE);
@@ -862,7 +1013,7 @@ void Sprite::addChild(Node *child, int zOrder, int tag)
     {
         return;
     }
-    
+
     if (_batchNode)
     {
         Sprite* childSprite = dynamic_cast<Sprite*>(child);
@@ -887,7 +1038,7 @@ void Sprite::addChild(Node *child, int zOrder, const std::string &name)
     {
         return;
     }
-    
+
     if (_batchNode)
     {
         Sprite* childSprite = dynamic_cast<Sprite*>(child);
@@ -896,7 +1047,7 @@ void Sprite::addChild(Node *child, int zOrder, const std::string &name)
                  "childSprite's texture name should be equal to _textureAtlas's texture name.");
         //put it in descendants array of batch node
         _batchNode->appendChild(childSprite);
-        
+
         if (!_reorderChildDirty)
         {
             setReorderChildDirtyRecursively();
@@ -1021,7 +1172,7 @@ void Sprite::setPosition(float x, float y)
 void Sprite::setRotation(float rotation)
 {
     Node::setRotation(rotation);
-    
+
     SET_DIRTY_RECURSIVELY();
 }
 
@@ -1105,28 +1256,50 @@ void Sprite::setContentSize(const Size& size)
     updatePoly();
 }
 
+void Sprite::setStrechEnabled(bool enabled)
+{
+    if (_strechEnabled != enabled) {
+        _strechEnabled = enabled;
+
+        // disabled centerrect / number of slices if disabled
+        if (!enabled)
+            setCenterRectNormalized(Rect(0,0,1,1));
+
+        updateStretchFactor();
+        updatePoly();
+    }
+}
+
+bool Sprite::isStrechEnabled() const
+{
+    return _strechEnabled;
+}
+
 void Sprite::updateStretchFactor()
 {
     const Size size = getContentSize();
-    const float adjustedWidth = size.width - (_originalContentSize.width - _rect.size.width);
-    const float adjustedHeight = size.height - (_originalContentSize.height - _rect.size.height);
 
     if (_numberOfSlices == 1)
     {
-        const float x_factor = adjustedWidth / _rect.size.width;
-        const float y_factor = adjustedHeight / _rect.size.height;
-
+        // If strech is disabled, calculate the strech anyway
+        // since it is needed to calculate the offset
+        const float x_factor = size.width / _originalContentSize.width;
+        const float y_factor = size.height / _originalContentSize.height;
         _strechFactor = Vec2(x_factor, y_factor);
     }
     else
     {
-        const float x1 = _rect.size.width * _capInsetsNormalized.origin.x;
-        const float x2 = _rect.size.width * _capInsetsNormalized.size.width;
-        const float x3 = _rect.size.width * (1 - _capInsetsNormalized.origin.x - _capInsetsNormalized.size.width);
+        const float x1 = _rect.size.width * _centerRectNormalized.origin.x;
+        const float x2 = _rect.size.width * _centerRectNormalized.size.width;
+        const float x3 = _rect.size.width * (1 - _centerRectNormalized.origin.x - _centerRectNormalized.size.width);
 
-        const float y1 = _rect.size.height * _capInsetsNormalized.origin.y;
-        const float y2 = _rect.size.height * _capInsetsNormalized.size.height;
-        const float y3 = _rect.size.height * (1 - _capInsetsNormalized.origin.y - _capInsetsNormalized.size.height);
+        const float y1 = _rect.size.height * _centerRectNormalized.origin.y;
+        const float y2 = _rect.size.height * _centerRectNormalized.size.height;
+        const float y3 = _rect.size.height * (1 - _centerRectNormalized.origin.y - _centerRectNormalized.size.height);
+
+        // adjustedSize = the new _rect size
+        const float adjustedWidth = size.width - (_originalContentSize.width - _rect.size.width);
+        const float adjustedHeight = size.height - (_originalContentSize.height - _rect.size.height);
 
         const float x_factor = (adjustedWidth - x1 - x3) / x2;
         const float y_factor = (adjustedHeight - y1 - y3) / y2;
@@ -1140,12 +1313,11 @@ void Sprite::setFlippedX(bool flippedX)
     if (_flippedX != flippedX)
     {
         _flippedX = flippedX;
-        for (ssize_t i = 0; i < _polyInfo.triangles.vertCount; i++) {
-            auto& v = _polyInfo.triangles.verts[i].vertices;
-            v.x = _contentSize.width -v.x;
-        }
-        if (_textureAtlas) {
+
+        if (_batchNode) {
             setDirty(true);
+        } else {
+            updatePoly();
         }
     }
 }
@@ -1160,12 +1332,11 @@ void Sprite::setFlippedY(bool flippedY)
     if (_flippedY != flippedY)
     {
         _flippedY = flippedY;
-        for (ssize_t i = 0; i < _polyInfo.triangles.vertCount; i++) {
-            auto& v = _polyInfo.triangles.verts[i].vertices;
-            v.y = _contentSize.height -v.y;
-        }
-        if (_textureAtlas) {
+
+        if (_batchNode) {
             setDirty(true);
+        } else {
+            updatePoly();
         }
     }
 }
@@ -1182,7 +1353,7 @@ bool Sprite::isFlippedY(void) const
 void Sprite::updateColor(void)
 {
     Color4B color4( _displayedColor.r, _displayedColor.g, _displayedColor.b, _displayedOpacity );
-    
+
     // special opacity for premultiplied textures
     if (_opacityModifyRGB)
     {
@@ -1237,7 +1408,7 @@ void Sprite::setSpriteFrame(const std::string &spriteFrameName)
     {
         return;
     }
-    
+
     SpriteFrameCache *cache = SpriteFrameCache::getInstance();
     SpriteFrame *spriteFrame = cache->getSpriteFrameByName(spriteFrameName);
 
@@ -1268,7 +1439,7 @@ void Sprite::setSpriteFrame(SpriteFrame *spriteFrame)
     // update rect
     _rectRotated = spriteFrame->isRotated();
     setTextureRect(spriteFrame->getRect(), _rectRotated, spriteFrame->getOriginalSize());
-    
+
     if (spriteFrame->hasPolygonInfo())
     {
         _polyInfo = spriteFrame->getPolygonInfo();
@@ -1279,7 +1450,7 @@ void Sprite::setSpriteFrame(SpriteFrame *spriteFrame)
     }
     if (spriteFrame->hasCenterRect())
     {
-        setCapInsets(spriteFrame->getCapInsets());
+        setCenterRect(spriteFrame->getCenterRect());
     }
 }
 
@@ -1290,7 +1461,7 @@ void Sprite::setDisplayFrameWithAnimationName(const std::string& animationName, 
     {
         return;
     }
-    
+
     Animation *a = AnimationCache::getInstance()->getAnimation(animationName);
 
     CCASSERT(a, "CCSprite#setDisplayFrameWithAnimationName: Frame not found");

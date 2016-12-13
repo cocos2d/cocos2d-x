@@ -348,9 +348,8 @@ void Device::setKeepScreenOn(bool value)
 {
 }
 
-void Device::vibrate(float duration)
+void Device::vibrate(float /*duration*/)
 {
-    CC_UNUSED_PARAM(duration);
 }
 
 NS_CC_END

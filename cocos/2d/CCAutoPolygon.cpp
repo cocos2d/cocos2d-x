@@ -276,7 +276,6 @@ std::vector<cocos2d::Vec2> AutoPolygon::marchSquare(const Rect& rect, const Vec2
     int curx = startx;
     int cury = starty;
     unsigned int count = 0;
-    bool problem = false;
     std::vector<int> case9s;
     std::vector<int> case6s;
     int i;
@@ -366,7 +365,6 @@ std::vector<cocos2d::Vec2> AutoPolygon::marchSquare(const Rect& rect, const Vec2
                     stepx = 0;
                     stepy = 1;
                     case9s.erase(it);
-                    problem = true;
                 }
                 else
                 {
@@ -394,7 +392,6 @@ std::vector<cocos2d::Vec2> AutoPolygon::marchSquare(const Rect& rect, const Vec2
                     stepx = -1;
                     stepy = 0;
                     case6s.erase(it);
-                    problem = true;
                 }
                 else{
                     //not found, we go up, and add to case9s;
@@ -416,20 +413,14 @@ std::vector<cocos2d::Vec2> AutoPolygon::marchSquare(const Rect& rect, const Vec2
             _points.back().x = (float)(curx-rect.origin.x) / _scaleFactor;
             _points.back().y = (float)(rect.size.height - cury + rect.origin.y) / _scaleFactor;
         }
-        else if(problem)
+        else
         {
-            //TODO: we triangulation cannot work collinear points, so we need to modify same point a little
-            //TODO: maybe we can detect if we go into a hole and coming back the hole, we should extract those points and remove them
-            _points.push_back(Vec2((float)(curx- rect.origin.x) / _scaleFactor, (float)(rect.size.height - cury + rect.origin.y) / _scaleFactor));
-        }
-        else{
-            _points.push_back(Vec2((float)(curx-rect.origin.x) / _scaleFactor, (float)(rect.size.height - cury + rect.origin.y) / _scaleFactor));
+            _points.push_back(Vec2((float)(curx - rect.origin.x) / _scaleFactor, (float)(rect.size.height - cury + rect.origin.y) / _scaleFactor));
         }
 
         count++;
         prevx = stepx;
         prevy = stepy;
-        problem = false;
 
 #if defined(COCOS2D_DEBUG) && (COCOS2D_DEBUG > 0)
         const auto totalPixel = _width * _height;

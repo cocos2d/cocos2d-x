@@ -292,6 +292,9 @@
     <Filter Include="Classes\VRTests">
       <UniqueIdentifier>{f88d1ce5-36f2-4dca-8ad6-b55a1becbfe8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\WindowTest">
+      <UniqueIdentifier>{b7379517-97f9-4b73-a75c-0706211e4264}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -692,6 +695,9 @@
     <ClCompile Include="..\Classes\SpriteFrameCacheTest\SpriteFrameCacheTest.cpp" />
     <ClCompile Include="..\Classes\VRTest\VRTest.cpp">
       <Filter>Classes\VRTests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\WindowTest\WindowTest.cpp">
+      <Filter>Classes\WindowTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1287,6 +1293,9 @@
     <ClInclude Include="..\Classes\SpriteFrameCacheTest\SpriteFrameCacheTest.h" />
     <ClInclude Include="..\Classes\VRTest\VRTest.h">
       <Filter>Classes\VRTests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\WindowTest\WindowTest.h">
+      <Filter>Classes\WindowTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

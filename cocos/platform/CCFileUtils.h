@@ -627,6 +627,15 @@ public:
     /** Returns the full path cache. */
     const std::unordered_map<std::string, std::string>& getFullPathCache() const { return _fullPathCache; }
 
+    /**
+    *  Gets the new filename from the filename lookup dictionary.
+    *  It is possible to have a override names.
+    *  @param filename The original filename.
+    *  @return The new filename after searching in the filename lookup dictionary.
+    *          If the original filename wasn't in the dictionary, it will return the original filename.
+    */
+    virtual std::string getNewFilename(const std::string &filename) const;
+
 protected:
     /**
      *  The default constructor.
@@ -642,15 +651,6 @@ protected:
      *
      */
     virtual bool init();
-
-    /**
-     *  Gets the new filename from the filename lookup dictionary.
-     *  It is possible to have a override names.
-     *  @param filename The original filename.
-     *  @return The new filename after searching in the filename lookup dictionary.
-     *          If the original filename wasn't in the dictionary, it will return the original filename.
-     */
-    virtual std::string getNewFilename(const std::string &filename) const;
 
     /**
      *  Checks whether a file exists without considering search paths and resolution orders.

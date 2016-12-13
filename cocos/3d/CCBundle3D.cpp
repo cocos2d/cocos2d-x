@@ -30,7 +30,6 @@ THE SOFTWARE.
 #include "renderer/CCGLProgram.h"
 #include "3d/CCBundleReader.h"
 #include "base/CCData.h"
-#include "json/document.h"
 
 #define BUNDLE_TYPE_SCENE               1
 #define BUNDLE_TYPE_NODE                2
@@ -226,7 +225,7 @@ bool Bundle3D::loadObj(MeshDatas& meshdatas, MaterialDatas& materialdatas, NodeD
         char str[20];
         std::string dir = "";
         auto last = fullPath.rfind("/");
-        if (last != -1)
+        if (last != std::string::npos)
             dir = fullPath.substr(0, last + 1);
         for (auto& material : materials) {
             NMaterialData materialdata;
@@ -331,7 +330,7 @@ bool Bundle3D::loadObj(MeshDatas& meshdatas, MaterialDatas& materialdatas, NodeD
     return false;
 }
 
-bool Bundle3D::loadSkinData(const std::string& id, SkinData* skindata)
+bool Bundle3D::loadSkinData(const std::string& /*id*/, SkinData* skindata)
 {
     skindata->resetData();
 
@@ -1008,6 +1007,21 @@ bool Bundle3D::loadMaterialsBinary_0_2(MaterialDatas& materialdatas)
     }
     return true;
 }
+
+bool loadMeshDataJson(MeshData* /*meshdata*/){
+    return true;
+}
+
+bool loadMeshDataJson_0_1(MeshData* /*meshdata*/)
+{
+    return true;
+}
+
+bool loadMeshDataJson_0_2(MeshData* /*meshdata*/)
+{
+    return true;
+}
+
 bool  Bundle3D::loadMaterialsJson(MaterialDatas& materialdatas)
 {
     if (!_jsonReader.HasMember(MATERIALS))
@@ -1421,6 +1435,19 @@ bool Bundle3D::loadMaterialDataJson_0_2(MaterialDatas& materialdatas)
         materialData.textures.push_back(textureData);
     }
     materialdatas.materials.push_back(materialData);
+    return true;
+}
+
+bool loadMaterialDataJson(MaterialData* /*materialdata*/)
+{
+    return true;
+}
+
+bool loadMaterialDataJson_0_1(MaterialData* /*materialdata*/){
+    return true;
+}
+
+bool loadMaterialDataJson_0_2(MaterialData* /*materialdata*/){
     return true;
 }
 

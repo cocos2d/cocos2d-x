@@ -63,9 +63,9 @@ public class Cocos2dxEditBoxHelper {
         editBoxEditingChanged(index, text);
     }
 
-    private static native void editBoxEditingDidEnd(int index, String text);
-    public static void __editBoxEditingDidEnd(int index, String text){
-        editBoxEditingDidEnd(index, text);
+    private static native void editBoxEditingDidEnd(int index, String text, int action);
+    public static void __editBoxEditingDidEnd(int index, String text, int action) {
+        editBoxEditingDidEnd(index, text, action);
     }
 
 
@@ -163,6 +163,7 @@ public class Cocos2dxEditBoxHelper {
                             mCocos2dxActivity.runOnGLThread(new Runnable() {
                                 @Override
                                 public void run() {
+                                    editBox.endAction = Cocos2dxEditBox.kEndActionUnknown;
                                     Cocos2dxEditBoxHelper.__editBoxEditingDidBegin(index);
                                 }
                             });
@@ -178,7 +179,8 @@ public class Cocos2dxEditBoxHelper {
                             mCocos2dxActivity.runOnGLThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Cocos2dxEditBoxHelper.__editBoxEditingDidEnd(index, text);
+                                    int action = editBox.endAction;
+                                    Cocos2dxEditBoxHelper.__editBoxEditingDidEnd(index, text, action);
                                 }
                             });
                             mCocos2dxActivity.hideVirtualButton();
@@ -207,7 +209,11 @@ public class Cocos2dxEditBoxHelper {
                 editBox.setOnEditorActionListener(new TextView.OnEditorActionListener() {
                     @Override
                     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                        if (actionId == EditorInfo.IME_ACTION_DONE) {
+                        if (actionId == EditorInfo.IME_ACTION_NEXT) {
+                            editBox.endAction = Cocos2dxEditBox.kEndActionNext;
+                            Cocos2dxEditBoxHelper.closeKeyboardOnUiThread(index);
+                            return true;
+                        } else if (actionId == EditorInfo.IME_ACTION_DONE) {
                             Cocos2dxEditBoxHelper.closeKeyboardOnUiThread(index);
                         }
                         return false;
@@ -351,6 +357,18 @@ public class Cocos2dxEditBoxHelper {
                 Cocos2dxEditBox editBox = mEditBoxArray.get(index);
                 if (editBox != null) {
                     editBox.setReturnType(returnType);
+                }
+            }
+        });
+    }
+
+    public static void setTextHorizontalAlignment(final int index, final int alignment) {
+        mCocos2dxActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Cocos2dxEditBox editBox = mEditBoxArray.get(index);
+                if (editBox != null) {
+                    editBox.setTextHorizontalAlignment(alignment);
                 }
             }
         });

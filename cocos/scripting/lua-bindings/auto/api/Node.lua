@@ -739,6 +739,14 @@
 -- @return Node#Node self (return value: cc.Node)
         
 --------------------------------
+-- Update method will be called automatically every frame if "scheduleUpdate" is called, and the node is "live".<br>
+-- param delta In seconds.
+-- @function [parent=#Node] update 
+-- @param self
+-- @param #float delta
+-- @return Node#Node self (return value: cc.Node)
+        
+--------------------------------
 -- Return the node's display opacity.<br>
 -- The difference between opacity and displayedOpacity is:<br>
 -- The displayedOpacity is what's the final rendering opacity of node.<br>
@@ -1093,12 +1101,19 @@
 -- @return Node#Node self (return value: cc.Node)
         
 --------------------------------
--- Update method will be called automatically every frame if "scheduleUpdate" is called, and the node is "live".<br>
--- param delta In seconds.
--- @function [parent=#Node] update 
+-- Returns the numbers of actions that are running plus the ones that are<br>
+-- schedule to run (actions in actionsToAdd and actions arrays) with a<br>
+-- specific tag.<br>
+-- Composable actions are counted as 1 action. Example:<br>
+-- If you are running 1 Sequence of 7 actions, it will return 1.<br>
+-- If you are running 7 Sequences of 2 actions, it will return 7.<br>
+-- param  tag The tag that will be searched.<br>
+-- return The number of actions that are running plus the<br>
+-- ones that are schedule to run with specific tag.
+-- @function [parent=#Node] getNumberOfRunningActionsByTag 
 -- @param self
--- @param #float delta
--- @return Node#Node self (return value: cc.Node)
+-- @param #int tag
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- Sorts the children array once before drawing, instead of every time when a child is added or reordered.<br>

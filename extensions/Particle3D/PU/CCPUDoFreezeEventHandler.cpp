@@ -30,7 +30,7 @@
 NS_CC_BEGIN
 
 //-----------------------------------------------------------------------
-void PUDoFreezeEventHandler::handle (PUParticleSystem3D* particleSystem, PUParticle3D* particle, float timeElapsed)
+void PUDoFreezeEventHandler::handle (PUParticleSystem3D* /*particleSystem*/, PUParticle3D* particle, float /*timeElapsed*/)
 {
     if (!particle)
         return;
