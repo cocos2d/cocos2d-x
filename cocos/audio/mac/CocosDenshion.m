@@ -551,7 +551,7 @@ static BOOL _mixerRateSet = NO;
             
 #ifdef CD_USE_STATIC_BUFFERS
             alBufferDataStaticProc(_buffers[soundId].bufferId, format, soundData, size, freq);
-            _buffers[soundId].bufferData = data;//Save the pointer to the new data
+            _buffers[soundId].bufferData = soundData;//Save the pointer to the new data
 #else        
             alBufferData(_buffers[soundId].bufferId, format, soundData, size, freq);
 #endif
