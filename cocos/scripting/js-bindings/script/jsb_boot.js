@@ -1523,6 +1523,10 @@ var _initSys = function () {
         sys._application.openURL(url);
     };
 
+    sys.now = function () {
+        return Date.now();
+    };
+
     // JS to Native bridges
     if(window.JavascriptJavaBridge && cc.sys.os == cc.sys.OS_ANDROID){
         jsb.reflection = new JavascriptJavaBridge();
@@ -1540,30 +1544,33 @@ _initSys();
  */
 cc._initDebugSetting = function (mode) {
     var ccGame = cc.game;
-    var bakLog = cc._cocosplayerLog || cc.log || log;
-    cc.log = cc.warn = cc.error = cc.assert = function(){};
-    if(mode == ccGame.DEBUG_MODE_NONE){
-    }else{
-        cc.error = function(){
-            bakLog.call(this, "ERROR :  " + cc.formatStr.apply(cc, arguments));
+    var bakLog = cc._cocosplayerLog || console.log || log;
+    cc.log = cc.warn = cc.error = cc.assert = function () {};
+    if (mode > ccGame.DEBUG_MODE_NONE) {
+        console.log = function () {
+            bakLog(cc.js.formatStr.apply(null, arguments));
         };
-        cc.assert = function(cond, msg) {
+        console.error = function () {
+            bakLog("ERROR :  " + cc.formatStr.apply(cc, arguments));
+        };
+        console.warn = function () {
+            bakLog("WARN :  " + cc.formatStr.apply(cc, arguments));
+        };
+
+        cc.error = console.error;
+        cc.assert = function (cond, msg) {
             if (!cond && msg) {
                 var args = [];
                 for (var i = 1; i < arguments.length; i++)
                     args.push(arguments[i]);
-                bakLog("Assert: " + cc.formatStr.apply(cc, args));
+                console.log("Assert: " + cc.formatStr.apply(cc, args));
             }
         };
-        if(mode != ccGame.DEBUG_MODE_ERROR && mode != ccGame.DEBUG_MODE_ERROR_FOR_WEB_PAGE){
-            cc.warn = function(){
-                bakLog.call(this, "WARN :  " + cc.formatStr.apply(cc, arguments));
-            };
+        if (mode != ccGame.DEBUG_MODE_ERROR && mode != ccGame.DEBUG_MODE_ERROR_FOR_WEB_PAGE) {
+            cc.warn = console.warn;
         }
-        if(mode == ccGame.DEBUG_MODE_INFO || mode == ccGame.DEBUG_MODE_INFO_FOR_WEB_PAGE){
-            cc.log = function(){
-                bakLog.call(this, cc.formatStr.apply(cc, arguments));
-            };
+        if (mode == ccGame.DEBUG_MODE_INFO || mode == ccGame.DEBUG_MODE_INFO_FOR_WEB_PAGE) {
+            cc.log = console.log;
         }
     }
 };
