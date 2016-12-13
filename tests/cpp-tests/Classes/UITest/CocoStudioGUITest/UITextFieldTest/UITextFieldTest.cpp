@@ -320,8 +320,8 @@ void UITextFieldTest_LineWrap::textFieldEvent(Ref *pSender, TextField::EventType
         case TextField::EventType::DETACH_WITH_IME:
         {
             TextField* textField = dynamic_cast<TextField*>(pSender);
-            Size widgetSize = _widget->getContentSize();
-            textField->runAction(MoveTo::create(0.175f, Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f)));
+            Size screenSize = Director::getInstance()->getWinSize();
+            textField->runAction(MoveTo::create(0.175f, Vec2(screenSize.width / 2.0f, screenSize.height / 2.0f + textField->getContentSize().height / 2.0f)));
             textField->setTextHorizontalAlignment(TextHAlignment::CENTER);
             textField->setTextVerticalAlignment(TextVAlignment::CENTER);
             
