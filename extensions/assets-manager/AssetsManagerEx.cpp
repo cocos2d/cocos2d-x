@@ -627,7 +627,8 @@ void AssetsManagerEx::startUpdate()
                 // And the player contiune to update this file. It will skip the updated bytes and contiune to download
                 // the rest part. but this file half is ver0.2, half is ver0.3, this file will be damage.
                 // It must cause problem.
-                _fileUtils->removeFile(_storagePath + diff.asset.path + ".tmp");
+                if (_fileUtils->isFileExist(_storagePath + diff.asset.path + ".tmp"))
+                    _fileUtils->removeFile(_storagePath + diff.asset.path + ".tmp");
 
                 if (diff.type == Manifest::DiffType::DELETED)
                 {
