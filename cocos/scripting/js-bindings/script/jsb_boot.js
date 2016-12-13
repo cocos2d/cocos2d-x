@@ -1057,6 +1057,38 @@ var _initSys = function () {
     sys.LANGUAGE_POLISH = "pl";
 
     /**
+     * Turkish language code
+     * @constant
+     * @default
+     * @type {Number}
+     */
+    sys.LANGUAGE_TURKISH = "tr";
+
+    /**
+     * Ukrainian language code
+     * @constant
+     * @default
+     * @type {Number}
+     */
+    sys.LANGUAGE_UKRAINIAN = "uk";
+
+    /**
+     * Romanian language code
+     * @constant
+     * @default
+     * @type {Number}
+     */
+    sys.LANGUAGE_ROMANIAN = "ro";
+
+    /**
+     * Bulgarian language code
+     * @constant
+     * @default
+     * @type {Number}
+     */
+    sys.LANGUAGE_BULGARIAN = "bg";
+
+    /**
      * Unknown language code
      * @memberof cc.sys
      * @name LANGUAGE_UNKNOWN
@@ -1340,6 +1372,10 @@ var _initSys = function () {
             case 12: return sys.LANGUAGE_ARABIC;
             case 13: return sys.LANGUAGE_NORWEGIAN;
             case 14: return sys.LANGUAGE_POLISH;
+            case 15: return sys.LANGUAGE_TURKISH;
+            case 16: return sys.LANGUAGE_UKRAINIAN;
+            case 17: return sys.LANGUAGE_ROMANIAN;
+            case 18: return sys.LANGUAGE_BULGARIAN;
             default : return sys.LANGUAGE_ENGLISH;
         }
     })();
