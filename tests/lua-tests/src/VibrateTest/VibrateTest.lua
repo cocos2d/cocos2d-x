@@ -57,6 +57,8 @@ function VibrateTestMain()
     Helper.createFunctionTable = {
         VibrateControlTest.create
     }
+    Helper.index = 1
+    
     scene:addChild(VibrateControlTest.create())
     scene:addChild(CreateBackMenuItem())
     return scene

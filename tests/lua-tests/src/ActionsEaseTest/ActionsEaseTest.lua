@@ -460,6 +460,7 @@ function EaseActionsTest()
 		SpriteEaseBackInOut,
 		SpeedTest
     }
+    Helper.index = 1
 
 	scene:addChild(SpriteEase())
 	scene:addChild(CreateBackMenuItem())

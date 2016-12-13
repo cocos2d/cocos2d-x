@@ -1261,6 +1261,7 @@ function ActionsTest()
 		ActionIssue1288_2,  
 		ActionIssue1327
     }
+    Helper.index = 1
 
 	scene:addChild(ActionManual())
 	scene:addChild(CreateBackMenuItem())
