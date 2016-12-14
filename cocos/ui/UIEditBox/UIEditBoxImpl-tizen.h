@@ -64,6 +64,7 @@ public:
     virtual void setInputMode(EditBox::InputMode inputMode);
     virtual void setInputFlag(EditBox::InputFlag inputFlag);
     virtual void setMaxLength(int maxLength);
+    virtual void setTextHorizontalAlignment(cocos2d::TextHAlignment alignment) { };
     virtual int  getMaxLength();
     virtual void setReturnType(EditBox::KeyboardReturnType returnType);
     virtual bool isEditing();
