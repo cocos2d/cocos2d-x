@@ -321,7 +321,10 @@ namespace cocos2d { namespace network {
         }
     }
     _outer = nullptr;
-
+    
+    while(!_taskQueue.empty())
+        _taskQueue.pop();
+    
     [self.downloadSession invalidateAndCancel];
     [self release];
 }
