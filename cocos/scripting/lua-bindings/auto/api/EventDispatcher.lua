@@ -117,6 +117,15 @@
 -- @return EventDispatcher#EventDispatcher self (return value: cc.EventDispatcher)
         
 --------------------------------
+--  Query whether the specified event listener id has been added.<br>
+-- param listenerID The listenerID of the event listener id.<br>
+-- return True if dispatching events is exist
+-- @function [parent=#EventDispatcher] hasEventListener 
+-- @param self
+-- @param #std::basic_string<char> listenerID
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 --  Removes all listeners.
 -- @function [parent=#EventDispatcher] removeAllEventListeners 
 -- @param self
