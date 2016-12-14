@@ -207,7 +207,7 @@ void AudioCache::readDataTask(unsigned int selfId)
             BREAK_IF_ERR_LOG(!decoder.seek(0), "AudioDecoder::seek(0) failed!");
 
             _pcmData = (char*)malloc(dataSize);
-            memset(_pcmData, 0, dataSize);
+            memset(_pcmData, 0x00, dataSize);
 
             if (adjustFrames > 0)
             {
@@ -252,7 +252,10 @@ void AudioCache::readDataTask(unsigned int selfId)
                 remainingFrames -= framesRead;
             }
 
-            CCASSERT(_framesRead == originalTotalFrames, "The read frame count isn't equal to orignal frame count!");
+            if (_framesRead < originalTotalFrames)
+            {
+                memset(_pcmData + _framesRead * bytesPerFrame, 0x00, (totalFrames - _framesRead) * bytesPerFrame);
+            }
             ALOGV("pcm buffer was loaded successfully, total frames: %u, total read frames: %u, adjust frames: %u, remainingFrames: %u", totalFrames, _framesRead, adjustFrames, remainingFrames);
 
             _framesRead += adjustFrames;
