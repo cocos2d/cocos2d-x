@@ -131,7 +131,11 @@ static id s_sharedDirectorCaller;
 {
     if (isAppActive) {
         cocos2d::Director* director = cocos2d::Director::getInstance();
-        [EAGLContext setCurrentContext: [(CCEAGLView*)director->getOpenGLView()->getEAGLView() context]];
+        EAGLContext* cocos2dxContext = [(CCEAGLView*)director->getOpenGLView()->getEAGLView() context];
+        if (cocos2dxContext != [EAGLContext currentContext])
+            glFlush();
+        
+        [EAGLContext setCurrentContext: cocos2dxContext];
         director->mainLoop();
     }
 }

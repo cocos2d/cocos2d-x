@@ -144,7 +144,7 @@ std::string Application::getVersion()
 bool Application::openURL(const std::string &url)
 {
     std::string op = std::string("xdg-open ").append(url);
-    return system(op.c_str())!=-1;
+    return system(op.c_str()) == 0;
 }
 
 //////////////////////////////////////////////////////////////////////////
