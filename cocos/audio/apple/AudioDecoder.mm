@@ -93,6 +93,7 @@ namespace cocos2d { namespace experimental {
             propertySize = sizeof(totalFrames);
             ret = ExtAudioFileGetProperty(_extRef, kExtAudioFileProperty_FileLengthFrames, &propertySize, &totalFrames);
             BREAK_IF_ERR_LOG(status != noErr, "ExtAudioFileGetProperty(kExtAudioFileProperty_FileLengthFrames) FAILED, Error = %ld", (long)ret);
+            BREAK_IF_ERR_LOG(totalFrames <= 0, "Total frames is 0, it's an invalid audio file: %s", path);
             _totalFrames = static_cast<uint32_t>(totalFrames);
             _isOpened = true;
 
