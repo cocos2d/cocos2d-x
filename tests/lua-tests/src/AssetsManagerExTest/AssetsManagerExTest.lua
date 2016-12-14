@@ -328,6 +328,7 @@ function AssetsManagerExTestMain()
         AMTestScene2.create,
         AMTestScene3.create,
     }
+    Helper.index = 1
 
     scene:addChild(AMTestScene1.create())
     scene:addChild(CreateBackMenuItem())

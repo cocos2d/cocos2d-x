@@ -1449,6 +1449,8 @@ function Texture2dTestMain()
         TextureDrawAtPoint,
         TextureDrawInRect
     }
+    Helper.index = 1
+    
     scene:addChild(TextureMemoryAlloc())
     scene:addChild(CreateBackMenuItem())
     return scene

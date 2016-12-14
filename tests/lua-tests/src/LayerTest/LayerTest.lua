@@ -652,6 +652,8 @@ function LayerTestMain()
         LayerIgnoreAnchorPointScale,
         LayerExtendedBlendOpacityTest
     }
+    Helper.index = 1
+    
     scene:addChild(LayerTestCascadingOpacityA())
     scene:addChild(CreateBackMenuItem())
     return scene

@@ -1738,6 +1738,7 @@ function PhysicsTest()
       PhysicsTransformTest,
       PhysicsIssue9959
    }
+   Helper.index = 1
 
    scene:addChild(Helper.createFunctionTable[1]())
    scene:addChild(CreateBackMenuItem())

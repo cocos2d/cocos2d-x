@@ -31,6 +31,8 @@ function TextInputTestMain()
     Helper.createFunctionTable = {
         TextInput.create,
     }
+    Helper.index = 1
+    
     scene:addChild(TextInput.create())
     scene:addChild(CreateBackMenuItem())
     return scene

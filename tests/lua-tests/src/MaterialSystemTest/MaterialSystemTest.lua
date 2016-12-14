@@ -339,6 +339,7 @@ function MaterialSystemTest()
         Material_Sprite3DTest.create,
         Material_parsePerformance.create,
     }
+    Helper.index = 1
 
     scene:addChild(Material_2DEffects.create())
     scene:addChild(CreateBackMenuItem())
