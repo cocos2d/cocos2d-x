@@ -705,6 +705,7 @@ function Physics3DTest()
         Physics3DCollisionCallbackDemo.create,
         Physics3DTerrainDemo.create,
     }
+    Helper.index = 1
 
     scene:addChild(BasicPhysics3DDemo.create())
     scene:addChild(CreateBackMenuItem())

@@ -345,7 +345,8 @@ void ClippingNode::setAlphaThreshold(GLfloat alphaThreshold)
     if (alphaThreshold == 1 && alphaThreshold != _stencilStateManager->getAlphaThreshold())
     {
         // should reset program used by _stencil
-        setProgram(_stencil, _originStencilProgram);
+        if (_stencil)
+            setProgram(_stencil, _originStencilProgram);
     }
 #endif
     

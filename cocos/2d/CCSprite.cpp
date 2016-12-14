@@ -235,10 +235,10 @@ bool Sprite::initWithSpriteFrame(SpriteFrame *spriteFrame)
         return false;
     }
 
-    bool bRet = initWithTexture(spriteFrame->getTexture(), spriteFrame->getRect(), spriteFrame->isRotated());
+    bool ret = initWithTexture(spriteFrame->getTexture(), spriteFrame->getRect(), spriteFrame->isRotated());
     setSpriteFrame(spriteFrame);
 
-    return bRet;
+    return ret;
 }
 
 bool Sprite::initWithPolygon(const cocos2d::PolygonInfo &info)
@@ -596,6 +596,16 @@ void Sprite::updatePoly()
         float y0_s = osh * cy1;
         float y1_s = osh * (cy2-cy1) * _strechFactor.y;
         float y2_s = osh * (1-cy2);
+
+
+        // avoid negative size:
+        if (_contentSize.width < x0_s + x2_s) {
+            x2_s = x0_s = _contentSize.width / 2;
+        }
+
+        if  (_contentSize.height < y0_s + y2_s) {
+            y2_s = y0_s = _contentSize.height / 2;
+        }
 
 
         // is it flipped?
@@ -1279,13 +1289,14 @@ void Sprite::updateStretchFactor()
 {
     const Size size = getContentSize();
 
+    float x_factor, y_factor;
+
     if (_numberOfSlices == 1)
     {
         // If strech is disabled, calculate the strech anyway
         // since it is needed to calculate the offset
-        const float x_factor = size.width / _originalContentSize.width;
-        const float y_factor = size.height / _originalContentSize.height;
-        _strechFactor = Vec2(x_factor, y_factor);
+        x_factor = size.width / _originalContentSize.width;
+        y_factor = size.height / _originalContentSize.height;
     }
     else
     {
@@ -1301,11 +1312,14 @@ void Sprite::updateStretchFactor()
         const float adjustedWidth = size.width - (_originalContentSize.width - _rect.size.width);
         const float adjustedHeight = size.height - (_originalContentSize.height - _rect.size.height);
 
-        const float x_factor = (adjustedWidth - x1 - x3) / x2;
-        const float y_factor = (adjustedHeight - y1 - y3) / y2;
+        x_factor = (adjustedWidth - x1 - x3) / x2;
+        y_factor = (adjustedHeight - y1 - y3) / y2;
 
-        _strechFactor = Vec2(x_factor, y_factor);
     }
+
+    // sanity check:
+    _strechFactor = Vec2(std::max(0.0f, x_factor),
+                        std::max(0.0f, y_factor));
 }
 
 void Sprite::setFlippedX(bool flippedX)

@@ -79,12 +79,12 @@ var UIWebViewTest = UIMainLayer.extend({
             }},
             { name: "Scale", func: function(){
                 var scale = ((Math.random() * 0.5 + 0.2) * 100 | 0) / 100;
-                playState.setString("setScale(%f)!", scale);
+                playState.setString("setScale(" + scale + ")");
                 webView.setScale(scale);
             }},
             { name: "setAnchorPoint", func: function(){
-                var anpX = video.getAnchorPoint().x === 1 ? 0: video.getAnchorPoint().x+ 0.5;
-                var anpY = video.getAnchorPoint().y === 1 ? 0: video.getAnchorPoint().y+ 0.5;
+                var anpX = webView.getAnchorPoint().x === 1 ? 0: webView.getAnchorPoint().x+ 0.5;
+                var anpY = webView.getAnchorPoint().y === 1 ? 0: webView.getAnchorPoint().y+ 0.5;
                 webView.setAnchorPoint(anpX, anpY);
             }}
         ];

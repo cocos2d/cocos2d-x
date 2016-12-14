@@ -1,92 +1,34 @@
 local imageFileName = "Images/grossini.png"
 
-local function initDefaultSprite(filename, spp, layer)
-    layer:addChild(spp)
-    local s = cc.Director:getInstance():getWinSize()
-    local offset = cc.p(0.15 * s.width, 0)
-    spp:setPosition(s.width/2 + 0.15 * s.width, s.height/2)
+local SpritePolygonTestDemo = class("SpritePolygonTestDemo", function()
+    local layer = cc.Layer:create()
+    return layer
+end)
 
-
-    local sp = cc.Sprite:create(imageFileName)
-    layer:addChild(sp)
-    sp:setPosition(s.width/2 - 0.15 * s.width, s.height/2)
-
-    local debugForNormalSprite = cc.DrawNode:create()
-    sp:addChild(debugForNormalSprite)
-    
-    local touchListener = cc.EventListenerTouchOneByOne:create()
-    touchListener:registerScriptHandler(function (touch, event)
-        spp:showDebug(true)
-        debugForNormalSprite:setVisible(true)
-        return true
-    end,cc.Handler.EVENT_TOUCH_BEGAN)
-
-    touchListener:registerScriptHandler(function (touch, event)
-        local pos = touch:getDelta()
-        local newScale = cc.clampf(spp:getScale()+pos.x*0.01, 0.1, 2)
-        spp:setScale(newScale)
-        sp:setScale(newScale)
-    end,cc.Handler.EVENT_TOUCH_MOVED)
-
-    touchListener:registerScriptHandler(function (touch, event)
-        spp:showDebug(false)
-        debugForNormalSprite:setVisible(false)
-    end,cc.Handler.EVENT_TOUCH_ENDED)
-
-    local eventDispatcher = layer:getEventDispatcher()
-    eventDispatcher:addEventListenerWithSceneGraphPriority(touchListener, layer)
-
-
-    local positions = {}
-    local spSize = sp:getContentSize()
-    positions[1] = cc.p(0, spSize.height)
-    positions[2] = cc.p(spSize.width, spSize.height)
-    positions[3] = cc.p(spSize.width, 0)
-    positions[4] = cc.p(0,0)
-    debugForNormalSprite:drawPoints(positions, 4, 8, cc.c4f(0.0,1.0,1.0,1.0))
-    debugForNormalSprite:drawLine(positions[1], positions[2], cc.c4f(0.0,1.0,0.0,1.0))
-    debugForNormalSprite:drawLine(positions[2], positions[3], cc.c4f(0.0,1.0,0.0,1.0))
-    debugForNormalSprite:drawLine(positions[3], positions[4], cc.c4f(0.0,1.0,0.0,1.0))
-    debugForNormalSprite:drawLine(positions[4], positions[1], cc.c4f(0.0,1.0,0.0,1.0))
-    debugForNormalSprite:drawLine(positions[1], positions[3], cc.c4f(0.0,1.0,0.0,1.0))
-    debugForNormalSprite:setVisible(false)
-
-    local ttfConfig = {}
-    ttfConfig.fontFilePath = "fonts/arial.ttf"
-    ttfConfig.fontSize = 8
-    local temp = "Sprite:\nPixels drawn: ".. spSize.width*spSize.height
-    local spArea = cc.Label:createWithTTF(ttfConfig, temp)
-    sp:addChild(spArea)
-    spArea:setAnchorPoint(cc.p(0,1))
-    
-    temp = "SpritePolygon:\nPixels drawn: "
-    local vertCount = "\nverts:" .. spp:getVertCount() 
-    local sppArea = cc.Label:createWithTTF(ttfConfig, temp .. spp:getArea() .. vertCount)
-    spp:addChild(sppArea)
-    sppArea:setAnchorPoint(cc.p(0,1))
-
-    Helper.initWithLayer(layer)
-    Helper.titleLabel:setString(layer:title())
-    Helper.subtitleLabel:setString(layer:subtitle())
-
+function SpritePolygonTestDemo:registerNodeEvent()
     local function onNodeEvent(event)
         if "enter" == event then
-            layer:onEnter()
+            self:onEnter()
         elseif "exit" == event then
-            layer:onExit()
+            self:onExit()
         end
     end
 
-    layer:registerScriptHandler(onNodeEvent)
+    self:registerScriptHandler(onNodeEvent)
+end
+
+function SpritePolygonTestDemo:onEnter()
+    cc.Director:getInstance():setClearColor(cc.c4f(102.0/255, 184.0/255, 204.0/255, 255.0))
+end
+
+function SpritePolygonTestDemo:onExit()
+    cc.Director:getInstance():setClearColor(cc.c4f(0.0, 0.0, 0.0, 1.0))
 end
 
 ----------------------------------------
 ----SpritePolygonTest1
 ----------------------------------------
-local SpritePolygonTest1 = class("SpritePolygonTest1", function ()
-    local layer = cc.Layer:create()
-    return layer
-end)
+local SpritePolygonTest1 = class("SpritePolygonTest1", SpritePolygonTestDemo)
 
 function SpritePolygonTest1:make2Sprites()
     -- body
@@ -122,42 +64,12 @@ function SpritePolygonTest1:ctor()
     local sppArea = cc.Label:createWithTTF(ttfConfig, temp .. math.floor(info:getArea()) .. vertCount)
     spp:addChild(sppArea)
     sppArea:setAnchorPoint(cc.p(0, 1))
-    
-    local touchListener = cc.EventListenerTouchOneByOne:create()
-    touchListener:registerScriptHandler(function (touch, event)
-        sp:debugDraw(true)
-        spp:debugDraw(true)
-        return true
-    end,cc.Handler.EVENT_TOUCH_BEGAN)
-
-    touchListener:registerScriptHandler(function (touch, event)
-        local pos = touch:getDelta()
-        local newScale = cc.clampf(spp:getScale()+pos.x*0.01, 0.1, 2)
-        spp:setScale(newScale)
-        sp:setScale(newScale)
-    end,cc.Handler.EVENT_TOUCH_MOVED)
-
-    touchListener:registerScriptHandler(function (touch, event)
-        sp:debugDraw(false)
-        spp:debugDraw(false)
-    end,cc.Handler.EVENT_TOUCH_ENDED)
-
-    local eventDispatcher = self:getEventDispatcher()
-    eventDispatcher:addEventListenerWithSceneGraphPriority(touchListener, self)
 
     Helper.initWithLayer(self)
     Helper.titleLabel:setString(self:title())
     Helper.subtitleLabel:setString(self:subtitle())
 
-    local function onNodeEvent(event)
-        if "enter" == event then
-            self:onEnter()
-        elseif "exit" == event then
-            self:onExit()
-        end
-    end
-
-    self:registerScriptHandler(onNodeEvent)
+    self:registerNodeEvent()
 end
 
 function SpritePolygonTest1:title()
@@ -168,21 +80,10 @@ function SpritePolygonTest1:subtitle()
     return "Sprite:create(AutoPolygon:generatePolygon(filename))"
 end
 
-function SpritePolygonTest1:onEnter()
-    cc.Director:getInstance():setClearColor(cc.c4f(102.0/255, 184.0/255, 204.0/255, 255.0))
-end
-
-function SpritePolygonTest1:onExit()
-    cc.Director:getInstance():setClearColor(cc.c4f(0.0, 0.0, 0.0, 1.0))
-end
-
 ----------------------------------------
 ----SpritePolygonTest2
 ----------------------------------------
-local SpritePolygonTest2 = class("SpritePolygonTest2", function ()
-    local layer = cc.Layer:create()
-    return layer
-end)
+local SpritePolygonTest2 = class("SpritePolygonTest2", SpritePolygonTestDemo)
 
 function SpritePolygonTest2:make2Sprites()
     local s = cc.Director:getInstance():getWinSize()
@@ -220,41 +121,11 @@ end
 function SpritePolygonTest2:ctor()
     self:make2Sprites()
 
-    local touchListener = cc.EventListenerTouchOneByOne:create()
-    touchListener:registerScriptHandler(function (touch, event)
-        self.sp:debugDraw(true)
-        self.spp:debugDraw(true)
-        return true
-    end,cc.Handler.EVENT_TOUCH_BEGAN)
-
-    touchListener:registerScriptHandler(function (touch, event)
-        local pos = touch:getDelta()
-        local newScale = cc.clampf(self.spp:getScale()+pos.x*0.01, 0.1, 2)
-        self.spp:setScale(newScale)
-        self.sp:setScale(newScale)
-    end,cc.Handler.EVENT_TOUCH_MOVED)
-
-    touchListener:registerScriptHandler(function (touch, event)
-        self.sp:debugDraw(false)
-        self.spp:debugDraw(false)
-    end,cc.Handler.EVENT_TOUCH_ENDED)
-
-    local eventDispatcher = self:getEventDispatcher()
-    eventDispatcher:addEventListenerWithSceneGraphPriority(touchListener, self)
-
     Helper.initWithLayer(self)
     Helper.titleLabel:setString(self:title())
     Helper.subtitleLabel:setString(self:subtitle())
 
-    local function onNodeEvent(event)
-        if "enter" == event then
-            self:onEnter()
-        elseif "exit" == event then
-            self:onExit()
-        end
-    end
-
-    self:registerScriptHandler(onNodeEvent)
+    self:registerNodeEvent()
 
 end
 
@@ -266,21 +137,10 @@ function SpritePolygonTest2:subtitle()
     return "Sprite:create(AutoPolygon:generatePolygon(filename, rect))"
 end
 
-function SpritePolygonTest2:onEnter()
-    cc.Director:getInstance():setClearColor(cc.c4f(102.0/255, 184.0/255, 204.0/255, 255.0))
-end
-
-function SpritePolygonTest2:onExit()
-    cc.Director:getInstance():setClearColor(cc.c4f(0.0, 0.0, 0.0, 1.0))
-end
-
 ----------------------------------------
 ----SpritePolygonTest3
 ----------------------------------------
-local SpritePolygonTest3 = class("SpritePolygonTest3", function ()
-    local layer = cc.Layer:create()
-    return layer
-end)
+local SpritePolygonTest3 = class("SpritePolygonTest3", SpritePolygonTestDemo)
 
 function SpritePolygonTest3:makeSprite(filename, pos)
     local quadSize = cc.Sprite:create(filename):getContentSize()
@@ -303,7 +163,6 @@ function SpritePolygonTest3:makeSprites(list, count, y)
     for i = 1, count do
         local sp = self:makeSprite(list[i], cc.p(50 + offset * (i - 1), y))
         self:addChild(sp)
-        sp:debugDraw(true)
     end
 end
 
@@ -347,7 +206,6 @@ function SpritePolygonTest3:ctor()
                 local file = child:getName()
                 local info = cc.AutoPolygon:generatePolygon(file, cc.rect(0, 0, 0, 0), epsilon)
                 child:setPolygonInfo(info)
-                child:debugDraw(true)
                 self:updateLabel(child, info)
             end
 
@@ -370,15 +228,7 @@ function SpritePolygonTest3:ctor()
     local count = 4
     self:makeSprites(list, count, vsize.height / 2)
 
-    local function onNodeEvent(event)
-        if "enter" == event then
-            self:onEnter()
-        elseif "exit" == event then
-            self:onExit()
-        end
-    end
-
-    self:registerScriptHandler(onNodeEvent)
+    self:registerNodeEvent()
 
     Helper.initWithLayer(self)
     Helper.titleLabel:setString(self:title())
@@ -405,10 +255,7 @@ end
 ----------------------------------------
 ----SpritePolygonTest4
 ----------------------------------------
-local SpritePolygonTest4 = class("SpritePolygonTest4", function ()
-    local layer = cc.Layer:create()
-    return layer
-end)
+local SpritePolygonTest4 = class("SpritePolygonTest4", SpritePolygonTestDemo)
 
 function SpritePolygonTest4:ctor()
     self._ttfConfig = {}
@@ -441,7 +288,6 @@ function SpritePolygonTest4:ctor()
                 local file = child:getName()
                 local info = cc.AutoPolygon:generatePolygon(file, cc.rect(0, 0, 0, 0), epsilon)
                 child:setPolygonInfo(info)
-                child:debugDraw(true)
                 self:updateLabel(child, info)
             end
 
@@ -463,15 +309,7 @@ function SpritePolygonTest4:ctor()
     local count = 3
     self:makeSprites(list, count, vsize.height / 2)
 
-    local function onNodeEvent(event)
-        if "enter" == event then
-            self:onEnter()
-        elseif "exit" == event then
-            self:onExit()
-        end
-    end
-
-    self:registerScriptHandler(onNodeEvent)
+    self:registerNodeEvent()
 
     Helper.initWithLayer(self)
     Helper.titleLabel:setString(self:title())
@@ -516,7 +354,6 @@ function SpritePolygonTest4:makeSprites(list, count, y)
     for i = 1, count do
         local sp = self:makeSprite(list[i], cc.p(50 + offset * (i - 1), y))
         self:addChild(sp)
-        sp:debugDraw(true)
     end
 end
 
@@ -532,10 +369,7 @@ end
 ----------------------------------------
 ----SpritePolygonPerformance
 ----------------------------------------
-local SpritePolygonPerformance = class("SpritePolygonPerformance", function ()
-    local layer = cc.Layer:create()
-    return layer
-end)
+local SpritePolygonPerformance = class("SpritePolygonPerformance", SpritePolygonTestDemo)
 
 
 function SpritePolygonPerformance:ctor()
@@ -546,15 +380,7 @@ function SpritePolygonPerformance:ctor()
     self:init()
     self:initExtend()
 
-    local function onNodeEvent(event)
-        if "enter" == event then
-            self:onEnter()
-        elseif "exit" == event then
-            self:onExit()
-        end
-    end
-
-    self:registerScriptHandler(onNodeEvent)
+    self:registerNodeEvent()
 end
 
 function SpritePolygonPerformance:title()
@@ -741,6 +567,7 @@ function SpritePolygonTest()
         SpritePolygonPerformanceTestDynamic.create,
         SpritePerformanceTestDynamic.create,
     }
+    Helper.index = 1
 
     scene:addChild(SpritePolygonTest1.create())
     scene:addChild(CreateBackMenuItem())

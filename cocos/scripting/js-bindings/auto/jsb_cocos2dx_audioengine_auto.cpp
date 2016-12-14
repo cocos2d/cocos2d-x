@@ -31,7 +31,8 @@ bool js_cocos2dx_audioengine_AudioProfile_get_name(JSContext *cx, uint32_t argc,
     cocos2d::experimental::AudioProfile* cobj = (cocos2d::experimental::AudioProfile *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_audioengine_AudioProfile_get_name : Invalid Native Object");
 
-    jsval jsret = std_string_to_jsval(cx, cobj->name);
+    JS::RootedValue jsret(cx);
+    jsret = std_string_to_jsval(cx, cobj->name);
     args.rval().set(jsret);
     return true;
 }
@@ -58,7 +59,8 @@ bool js_cocos2dx_audioengine_AudioProfile_get_maxInstances(JSContext *cx, uint32
     cocos2d::experimental::AudioProfile* cobj = (cocos2d::experimental::AudioProfile *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_audioengine_AudioProfile_get_maxInstances : Invalid Native Object");
 
-    jsval jsret = uint32_to_jsval(cx, cobj->maxInstances);
+    JS::RootedValue jsret(cx);
+    jsret = uint32_to_jsval(cx, cobj->maxInstances);
     args.rval().set(jsret);
     return true;
 }
@@ -85,7 +87,8 @@ bool js_cocos2dx_audioengine_AudioProfile_get_minDelay(JSContext *cx, uint32_t a
     cocos2d::experimental::AudioProfile* cobj = (cocos2d::experimental::AudioProfile *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_audioengine_AudioProfile_get_minDelay : Invalid Native Object");
 
-    jsval jsret = DOUBLE_TO_JSVAL(cobj->minDelay);
+    JS::RootedValue jsret(cx);
+    jsret = DOUBLE_TO_JSVAL(cobj->minDelay);
     args.rval().set(jsret);
     return true;
 }
@@ -134,7 +137,11 @@ void js_cocos2d_experimental_AudioProfile_finalize(JSFreeOp *fop, JSObject *obj)
 
         if (nobj) {
             jsb_remove_proxy(nproxy, jsproxy);
-            delete nobj;
+            JS::RootedValue flagValue(cx);
+            JS_GetProperty(cx, jsobj, "__cppCreated", &flagValue);
+            if (flagValue.isNullOrUndefined()){
+                delete nobj;
+            }
         }
         else
             jsb_remove_proxy(nullptr, jsproxy);

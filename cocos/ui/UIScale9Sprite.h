@@ -252,6 +252,45 @@ namespace ui {
         virtual bool initWithSpriteFrameName(const std::string& spriteFrameName, const Rect& capInsets);
 
         //override function
+
+        /**
+         * Initializes a 9-slice sprite with a texture file and a delimitation zone. The
+         * texture will be broken down into a 3×3 grid of equal blocks.
+         * Once the sprite is created, you can then call its "setContentSize:" method
+         * to resize the sprite will all it's 9-slice goodness intract.
+         * It respects the anchorPoint too.
+         *
+         * @param file The name of the texture file.
+         * @param rect The rectangle that describes the sub-part of the texture that
+         * is the whole image. If the shape is the whole texture, set this to the
+         * texture's full rect.
+         * @return True if initializes success, false otherwise.
+         */
+        virtual bool initWithFile(const std::string& file, const Rect& rect) override;
+
+        /**
+         * Initializes a 9-slice sprite with a texture file. The whole texture will be
+         * broken down into a 3×3 grid of equal blocks.
+         * Once the sprite is created, you can then call its "setContentSize:" method
+         * to resize the sprite will all it's 9-slice goodness intract.
+         * It respects the anchorPoint too.
+         *
+         * @param file The name of the texture file.
+         * @return True if initializes success, false otherwise.
+         */
+        virtual bool initWithFile(const std::string& file) override;
+
+        /**
+         * Initializes a 9-slice sprite with an sprite frame name.
+         * Once the sprite is created, you can then call its "setContentSize:" method
+         * to resize the sprite will all it's 9-slice goodness intract.
+         * It respects the anchorPoint too.
+         *
+         * @param spriteFrameName The sprite frame name.
+         * @return True if initializes success, false otherwise.
+         */
+        virtual bool initWithSpriteFrameName(const std::string& spriteFrameName) override;
+
         virtual bool init() override;
 
         /**
@@ -523,6 +562,11 @@ namespace ui {
          */
         Sprite* getSprite();
 
+        /**
+         * @brief copies self to copy
+         */
+        void copyTo(Scale9Sprite* copy) const;
+
 
         /**
          * Set the slice sprite rendering type.
@@ -553,8 +597,6 @@ namespace ui {
         void setupSlice9(Texture2D* texture, const Rect& capInsets);
 
         bool _isPatch9;
-
-        Rect _previousCenterRectNormalized;
 
         float _insetLeft;
         float _insetRight;

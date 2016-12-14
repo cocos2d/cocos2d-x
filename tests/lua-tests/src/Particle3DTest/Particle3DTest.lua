@@ -657,6 +657,7 @@ function Particle3DTest()
         Particle3DWeaponTrailDemo.create,
         Particle3DWithSprite3DDemo.create,
     }
+    Helper.index = 1
 
     scene:addChild(Particle3DExplosionSystemDemo.create())
     scene:addChild(CreateBackMenuItem())

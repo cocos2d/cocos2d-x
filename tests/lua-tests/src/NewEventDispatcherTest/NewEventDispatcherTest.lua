@@ -340,6 +340,7 @@ function TouchableSpriteWithFixedPriority:onEnter()
         self:setColor(cc.c3b(255, 255, 255))
         if self._removeListenerOnTouchEnded then
             eventDispatcher:removeEventListener(self._listener)
+            self._listener = nil
         end
 
     end
@@ -360,8 +361,10 @@ function TouchableSpriteWithFixedPriority:onEnter()
 end
 
 function TouchableSpriteWithFixedPriority:onExit()
-    local eventDispatcher = self:getEventDispatcher()
-    eventDispatcher:removeEventListener(self._listener)
+    if self._listener ~= nil then
+        local eventDispatcher = self:getEventDispatcher()
+        eventDispatcher:removeEventListener(self._listener)
+    end
 end
 
 function TouchableSpriteWithFixedPriority:setPriority(fixedPriority)

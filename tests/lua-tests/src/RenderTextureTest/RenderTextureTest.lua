@@ -609,6 +609,8 @@ function RenderTextureTestMain()
         -- RenderTextureTargetNode,
         -- SpriteRenderTextureBug
     }
+    Helper.index = 1
+    
     scene:addChild(RenderTextureSave())
     scene:addChild(CreateBackMenuItem())
     return scene

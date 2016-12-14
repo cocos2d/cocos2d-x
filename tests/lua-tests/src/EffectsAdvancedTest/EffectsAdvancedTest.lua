@@ -257,6 +257,8 @@ function EffectAdvancedTestMain()
         Effect5,
         Issue631
     }
+    Helper.index = 1
+    
     scene:addChild(Effect3())
     scene:addChild(CreateBackMenuItem())
     return scene

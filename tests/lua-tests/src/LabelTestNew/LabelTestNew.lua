@@ -1734,6 +1734,8 @@ function LabelTestNew()
         LabelAlignmentTest.create,
         LabelIssue4428Test.create,
     }
+    Helper.index = 1
+    
     scene:addChild(LabelFNTColorAndOpacity.create())
     scene:addChild(CreateBackMenuItem())
     return scene

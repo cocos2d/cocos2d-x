@@ -119,6 +119,10 @@ public class Cocos2dxEditBox extends EditText {
     private static final int kTextHorizontalAlignmentCenter = 1;
     private static final int kTextHorizontalAlignmentRight = 2;
 
+    private static final int kTextVerticalAlignmentTop = 0;
+    private static final int kTextVerticalAlignmentCenter = 1;
+    private static final int getkTextVerticalAlignmentBottom = 2;
+
     private int mInputFlagConstraints; 
     private int mInputModeConstraints;
     private  int mMaxLength;
@@ -191,26 +195,50 @@ public class Cocos2dxEditBox extends EditText {
     }
 
     public void setTextHorizontalAlignment(int alignment) {
+        int gravity = this.getGravity();
         switch (alignment) {
             case kTextHorizontalAlignmentLeft:
-                this.setGravity(Gravity.LEFT);
+                gravity = gravity | Gravity.LEFT;
                 break;
             case kTextHorizontalAlignmentCenter:
-                this.setGravity(Gravity.CENTER);
+                gravity = gravity | Gravity.CENTER;
                 break;
             case kTextHorizontalAlignmentRight:
-                this.setGravity(Gravity.RIGHT);
+                gravity = gravity | Gravity.RIGHT;
                 break;
             default:
-                this.setGravity(Gravity.LEFT);
+                gravity = gravity | Gravity.LEFT;
                 break;
         }
+        this.setGravity(gravity);
+    }
+
+    public void setTextVerticalAlignment(int alignment) {
+        int gravity = this.getGravity();
+        switch (alignment) {
+            case kTextVerticalAlignmentTop:
+                gravity = gravity | Gravity.TOP;
+                break;
+            case kTextVerticalAlignmentCenter:
+                gravity = gravity | Gravity.CENTER_VERTICAL;
+                break;
+            case getkTextVerticalAlignmentBottom:
+                gravity = gravity | Gravity.BOTTOM;
+                break;
+            default:
+                gravity = gravity | Gravity.CENTER_VERTICAL;
+                break;
+        }
+
+        this.setGravity(gravity);
     }
 
     public  void setInputMode(int inputMode){
-
+        this.setTextHorizontalAlignment(kTextHorizontalAlignmentLeft);
+        this.setTextVerticalAlignment(kTextVerticalAlignmentCenter);
         switch (inputMode) {
             case kEditBoxInputModeAny:
+                this.setTextVerticalAlignment(kTextVerticalAlignmentTop);
                 this.mInputModeConstraints = InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_MULTI_LINE;
                 break;
             case kEditBoxInputModeEmailAddr:

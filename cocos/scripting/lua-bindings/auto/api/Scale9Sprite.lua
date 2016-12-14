@@ -116,6 +116,13 @@
 -- @return Scale9Sprite#Scale9Sprite self (return value: ccui.Scale9Sprite)
         
 --------------------------------
+-- brief copies self to copy
+-- @function [parent=#Scale9Sprite] copyTo 
+-- @param self
+-- @param #ccui.Scale9Sprite copy
+-- @return Scale9Sprite#Scale9Sprite self (return value: ccui.Scale9Sprite)
+        
+--------------------------------
 -- brief Change inner sprite's sprite frame.<br>
 -- param spriteFrame A sprite frame pointer.<br>
 -- param capInsets The values to use for the cap insets.
@@ -285,6 +292,27 @@
 -- @param #cc.SpriteFrame spriteFrame
 -- @param #rect_table capInsets
 -- @return Scale9Sprite#Scale9Sprite ret (return value: ccui.Scale9Sprite)
+
+--------------------------------
+-- Initializes a 9-slice sprite with an sprite frame name.<br>
+-- Once the sprite is created, you can then call its "setContentSize:" method<br>
+-- to resize the sprite will all it's 9-slice goodness intract.<br>
+-- It respects the anchorPoint too.<br>
+-- param spriteFrameName The sprite frame name.<br>
+-- return True if initializes success, false otherwise.
+-- @function [parent=#Scale9Sprite] initWithSpriteFrameName 
+-- @param self
+-- @param #string spriteFrameName
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- @overload self, string         
+-- @overload self, string, rect_table         
+-- @function [parent=#Scale9Sprite] initWithFile
+-- @param self
+-- @param #string file
+-- @param #rect_table rect
+-- @return bool#bool ret (return value: bool)
 
 --------------------------------
 -- 
