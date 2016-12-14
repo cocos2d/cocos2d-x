@@ -149,6 +149,24 @@ namespace cocos2d { namespace experimental {
         return ret;
     }
 
+    uint32_t AudioDecoder::readFixedFrames(uint32_t framesToRead, char* pcmBuf)
+    {
+        uint32_t framesRead = 0;
+        uint32_t framesReadOnce = 0;
+        do
+        {
+            framesReadOnce = read(framesToRead - framesRead, pcmBuf + framesRead * _bytesPerFrame);
+            framesRead += framesReadOnce;
+        } while (framesReadOnce != 0 && framesRead < framesToRead);
+
+        if (framesRead < framesToRead)
+        {
+            memset(pcmBuf + framesRead * _bytesPerFrame, 0x00, (framesToRead - framesRead) * _bytesPerFrame);
+        }
+
+        return framesRead;
+    }
+
     bool AudioDecoder::seek(uint32_t frameOffset)
     {
         bool ret = false;
