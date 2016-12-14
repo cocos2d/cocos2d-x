@@ -378,8 +378,8 @@ bool ScrollView::startBounceBackIfNeeded()
 Vec2 ScrollView::flattenVectorByDirection(const Vec2& vector)
 {
     Vec2 result = vector;
-    result.x = (_direction == Direction::VERTICAL ? 0 : result.x);
-    result.y = (_direction == Direction::HORIZONTAL ? 0 : result.y);
+    result.x = (_direction == Direction::VERTICAL || _direction == Direction::NONE ? 0 : result.x);
+    result.y = (_direction == Direction::HORIZONTAL || _direction == Direction::NONE ? 0 : result.y);
     return result;
 }
 
