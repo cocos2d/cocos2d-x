@@ -173,6 +173,7 @@ function MotionStreakTest()
         MotionStreakTest2,
         Issue1358
     }
+    Helper.index = 1
 
 	scene:addChild(MotionStreakTest1())
 	scene:addChild(CreateBackMenuItem())

@@ -119,7 +119,7 @@ private:
     void         initInactiveLabels(const Size& size);
     void         setInactiveText(const char* pText);
     void         refreshLabelAlignment();
-    void         placeInactiveLabels();
+    void         placeInactiveLabels(const Size& size);
     virtual void doAnimationWhenKeyboardMove(float duration, float distance)override {};
 
     Label* _label;

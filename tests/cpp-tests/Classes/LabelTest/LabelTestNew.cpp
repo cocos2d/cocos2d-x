@@ -3160,19 +3160,19 @@ void LabelLocalizationTest::onChangedRadioButtonSelect(RadioButton* radioButton,
             _localizationJson->initLanguageData("configs/en-US.lang.json");
             _label1->setString(_localizationJson->getLocalizationString("Text Label"));
             _localizationBin->initLanguageData("configs/ENGLISH.lang.csb");
-            _label2->setString(_localizationJson->getLocalizationString("Text Label"));
+            _label2->setString(_localizationBin->getLocalizationString("Text Label"));
             break;
         case 1:
             _localizationJson->initLanguageData("configs/zh-CN.lang.json");
             _label1->setString(_localizationJson->getLocalizationString("Text Label"));
             _localizationBin->initLanguageData("configs/CHINESE.lang.csb");
-            _label2->setString(_localizationJson->getLocalizationString("Text Label"));
+            _label2->setString(_localizationBin->getLocalizationString("Text Label"));
             break;
         case 2:
             _localizationJson->initLanguageData("configs/ja-JP.lang.json");
             _label1->setString(_localizationJson->getLocalizationString("Text Label"));
             _localizationBin->initLanguageData("configs/JAPANESE.lang.csb");
-            _label2->setString(_localizationJson->getLocalizationString("Text Label"));
+            _label2->setString(_localizationBin->getLocalizationString("Text Label"));
             break;
         default:
             break;

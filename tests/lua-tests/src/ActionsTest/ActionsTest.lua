@@ -1056,6 +1056,7 @@ end
 local function addSprite(dt)
 	local scheduler = cc.Director:getInstance():getScheduler()
 	scheduler:unscheduleScriptEntry(Issue1305_entry)
+    Issue1305_entry = nil
 
 	spriteTmp:setPosition(cc.p(250, 250))
     Issue1305_layer:addChild(spriteTmp)
@@ -1064,9 +1065,18 @@ end
 local function Issue1305_onEnterOrExit(tag)
 	local scheduler = cc.Director:getInstance():getScheduler()
 	if tag == "enter" then
+        spriteTmp = cc.Sprite:create("Images/grossini.png")
+        spriteTmp:runAction(cc.CallFunc:create(Issue1305_log))
+        spriteTmp:retain()
+
 		Issue1305_entry = scheduler:scheduleScriptFunc(addSprite, 2, false)
 	elseif tag == "exit" then
-		scheduler:unscheduleScriptEntry(Issue1305_entry)
+        if Issue1305_entry ~= nil then
+    		scheduler:unscheduleScriptEntry(Issue1305_entry)
+            Issue1305_entry = nil
+        end
+        spriteTmp:release()
+        spriteTmp = nil
 	end
 end
 
@@ -1075,9 +1085,6 @@ local function ActionIssue1305()
 	initWithLayer(Issue1305_layer)
 
 	centerSprites(0)
-
-    spriteTmp = cc.Sprite:create("Images/grossini.png")
-    spriteTmp:runAction(cc.CallFunc:create(Issue1305_log))
 
     Issue1305_layer:registerScriptHandler(Issue1305_onEnterOrExit)
 
@@ -1254,6 +1261,7 @@ function ActionsTest()
 		ActionIssue1288_2,  
 		ActionIssue1327
     }
+    Helper.index = 1
 
 	scene:addChild(ActionManual())
 	scene:addChild(CreateBackMenuItem())

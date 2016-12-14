@@ -30,6 +30,9 @@ bool js_EventListenerTouchOneByOne_create(JSContext *cx, uint32_t argc, jsval *v
 bool js_EventListenerTouchAllAtOnce_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_EventListenerKeyboard_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_EventListenerMouse_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_EventListenerAcceleration_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_EventListenerFocus_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_EventListenerCustom_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_EventDispatcher_addCustomEventListener(JSContext *cx, uint32_t argc, jsval *vp);
 
 #endif /* defined(__cocos2d_js_bindings__jsb_event_dispatcher__) */

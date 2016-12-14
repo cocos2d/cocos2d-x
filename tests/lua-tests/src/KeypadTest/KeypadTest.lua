@@ -16,11 +16,7 @@ local function KeypadMainLayer()
 
         local function onKeyReleased(keyCode, event)
             local label = event:getCurrentTarget()
-            if keyCode == cc.KeyCode.KEY_BACK then
-                label:setString("BACK clicked!")
-            elseif keyCode == cc.KeyCode.KEY_MENU  then
-                label:setString("MENU clicked!")
-            end
+            label:setString("key: " .. keyCode .. " was clicked")
         end
 
         local listener = cc.EventListenerKeyboard:create()

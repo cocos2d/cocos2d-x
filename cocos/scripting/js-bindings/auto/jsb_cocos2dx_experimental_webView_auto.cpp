@@ -32,7 +32,7 @@ bool js_cocos2dx_experimental_webView_WebView_canGoBack(JSContext *cx, uint32_t 
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_experimental_webView_WebView_canGoBack : Invalid Native Object");
     if (argc == 0) {
         bool ret = cobj->canGoBack();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -132,7 +132,7 @@ bool js_cocos2dx_experimental_webView_WebView_getOnDidFailLoading(JSContext *cx,
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_experimental_webView_WebView_getOnDidFailLoading : Invalid Native Object");
     if (argc == 0) {
         cocos2d::experimental::ui::WebView::ccWebViewCallback ret = cobj->getOnDidFailLoading();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         #pragma warning NO CONVERSION FROM NATIVE FOR std::function;
         args.rval().set(jsret);
         return true;
@@ -230,7 +230,7 @@ bool js_cocos2dx_experimental_webView_WebView_getOnJSCallback(JSContext *cx, uin
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_experimental_webView_WebView_getOnJSCallback : Invalid Native Object");
     if (argc == 0) {
         cocos2d::experimental::ui::WebView::ccWebViewCallback ret = cobj->getOnJSCallback();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         #pragma warning NO CONVERSION FROM NATIVE FOR std::function;
         args.rval().set(jsret);
         return true;
@@ -248,7 +248,7 @@ bool js_cocos2dx_experimental_webView_WebView_canGoForward(JSContext *cx, uint32
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_experimental_webView_WebView_canGoForward : Invalid Native Object");
     if (argc == 0) {
         bool ret = cobj->canGoForward();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -266,7 +266,7 @@ bool js_cocos2dx_experimental_webView_WebView_getOnShouldStartLoading(JSContext 
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_experimental_webView_WebView_getOnShouldStartLoading : Invalid Native Object");
     if (argc == 0) {
         std::function<bool (cocos2d::experimental::ui::WebView *, const std::basic_string<char> &)> ret = cobj->getOnShouldStartLoading();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         #pragma warning NO CONVERSION FROM NATIVE FOR std::function;
         args.rval().set(jsret);
         return true;
@@ -336,7 +336,7 @@ bool js_cocos2dx_experimental_webView_WebView_getOnDidFinishLoading(JSContext *c
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_experimental_webView_WebView_getOnDidFinishLoading : Invalid Native Object");
     if (argc == 0) {
         cocos2d::experimental::ui::WebView::ccWebViewCallback ret = cobj->getOnDidFinishLoading();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         #pragma warning NO CONVERSION FROM NATIVE FOR std::function;
         args.rval().set(jsret);
         return true;

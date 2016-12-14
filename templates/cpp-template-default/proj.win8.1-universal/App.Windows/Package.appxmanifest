@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest">
-  <Identity Name="72E03097-0A54-455B-97D7-45DF07333C1A" Publisher="CN=stamm" Version="1.0.0.0" />
+  <Identity Name="72E03097-0A54-455B-97D7-45DF07333C1A" Publisher="CN=dalestam" Version="1.0.0.0" />
   <Properties>
     <DisplayName>HelloCpp.Windows</DisplayName>
     <PublisherDisplayName>msopentech</PublisherDisplayName>

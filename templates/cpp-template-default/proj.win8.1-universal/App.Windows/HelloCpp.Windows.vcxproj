@@ -114,7 +114,7 @@
     <PackageCertificateKeyFile>HelloCpp.Windows_TemporaryKey.pfx</PackageCertificateKeyFile>
     <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
     <AppxBundlePlatforms>x86</AppxBundlePlatforms>
-    <PackageCertificateThumbprint>D1342F9E64B60E24773C7E212EA97270DF0B3470</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>304E946AD8EE8CA924E9E5493AE6ACD7BEF56DA1</PackageCertificateThumbprint>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <ClCompile>

@@ -249,8 +249,8 @@ protected:
     // Internal structure that has the information for the batches
     struct TriBatchToDraw {
         TrianglesCommand* cmd;  // needed for the Material
-        GLushort indicesToDraw;
-        GLushort offset;
+        GLsizei indicesToDraw;
+        GLsizei offset;
     };
     // capacity of the array of TriBatches
     int _triBatchesToDrawCapacity;

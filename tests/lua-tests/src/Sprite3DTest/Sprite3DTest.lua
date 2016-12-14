@@ -1369,6 +1369,7 @@ function Sprite3DTest()
         Sprite3DNormalMappingTest.create,
         Sprite3DMaterialTest.create,
     }
+    Helper.index = 1
 
     scene:addChild(Sprite3DBasicTest.create())
     scene:addChild(CreateBackMenuItem())

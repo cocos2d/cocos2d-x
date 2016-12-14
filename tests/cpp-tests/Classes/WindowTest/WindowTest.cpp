@@ -1,5 +1,6 @@
 #include "WindowTest.h"
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
 USING_NS_CC;
 
 WindowTests::WindowTests() {
@@ -52,3 +53,5 @@ void WindowTestFullscreen2::onEnter() {
 std::string WindowTestFullscreen2::subtitle() const {
     return "Fullscreen Monitor 2 (if present)";
 }
+
+#endif

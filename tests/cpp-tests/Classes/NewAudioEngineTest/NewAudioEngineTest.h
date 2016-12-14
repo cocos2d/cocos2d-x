@@ -212,6 +212,17 @@ public:
     virtual std::string subtitle() const override;
 };
 
+class AudioIssue16938Test : public AudioEngineTestDemo
+{
+public:
+    CREATE_FUNC(AudioIssue16938Test);
+
+    virtual void onEnter() override;
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
 class AudioPreloadSameFileMultipleTimes : public AudioEngineTestDemo
 {
 public:

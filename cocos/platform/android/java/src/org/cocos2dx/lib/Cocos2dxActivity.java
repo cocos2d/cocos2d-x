@@ -422,24 +422,29 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
             // use reflection to remove dependence of API level
 
             Class viewClass = View.class;
-            final int SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION = Cocos2dxReflectionHelper.<Integer>getConstantValue(viewClass, "SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION");
-            final int SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN = Cocos2dxReflectionHelper.<Integer>getConstantValue(viewClass, "SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN");
-            final int SYSTEM_UI_FLAG_HIDE_NAVIGATION = Cocos2dxReflectionHelper.<Integer>getConstantValue(viewClass, "SYSTEM_UI_FLAG_HIDE_NAVIGATION");
-            final int SYSTEM_UI_FLAG_FULLSCREEN = Cocos2dxReflectionHelper.<Integer>getConstantValue(viewClass, "SYSTEM_UI_FLAG_FULLSCREEN");
-            final int SYSTEM_UI_FLAG_IMMERSIVE_STICKY = Cocos2dxReflectionHelper.<Integer>getConstantValue(viewClass, "SYSTEM_UI_FLAG_IMMERSIVE_STICKY");
-            final int SYSTEM_UI_FLAG_LAYOUT_STABLE = Cocos2dxReflectionHelper.<Integer>getConstantValue(viewClass, "SYSTEM_UI_FLAG_LAYOUT_STABLE");
 
-            // getWindow().getDecorView().setSystemUiVisibility();
-            final Object[] parameters = new Object[]{SYSTEM_UI_FLAG_LAYOUT_STABLE
-                    | SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                    | SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                    | SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
-                    | SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
-                    | SYSTEM_UI_FLAG_IMMERSIVE_STICKY};
-            Cocos2dxReflectionHelper.<Void>invokeInstanceMethod(getWindow().getDecorView(),
-                    "setSystemUiVisibility",
-                    new Class[]{Integer.TYPE},
-                    parameters);
+            try {
+                final int SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION = Cocos2dxReflectionHelper.<Integer>getConstantValue(viewClass, "SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION");
+                final int SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN = Cocos2dxReflectionHelper.<Integer>getConstantValue(viewClass, "SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN");
+                final int SYSTEM_UI_FLAG_HIDE_NAVIGATION = Cocos2dxReflectionHelper.<Integer>getConstantValue(viewClass, "SYSTEM_UI_FLAG_HIDE_NAVIGATION");
+                final int SYSTEM_UI_FLAG_FULLSCREEN = Cocos2dxReflectionHelper.<Integer>getConstantValue(viewClass, "SYSTEM_UI_FLAG_FULLSCREEN");
+                final int SYSTEM_UI_FLAG_IMMERSIVE_STICKY = Cocos2dxReflectionHelper.<Integer>getConstantValue(viewClass, "SYSTEM_UI_FLAG_IMMERSIVE_STICKY");
+                final int SYSTEM_UI_FLAG_LAYOUT_STABLE = Cocos2dxReflectionHelper.<Integer>getConstantValue(viewClass, "SYSTEM_UI_FLAG_LAYOUT_STABLE");
+
+                // getWindow().getDecorView().setSystemUiVisibility();
+                final Object[] parameters = new Object[]{SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        | SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
+                        | SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
+                        | SYSTEM_UI_FLAG_IMMERSIVE_STICKY};
+                Cocos2dxReflectionHelper.<Void>invokeInstanceMethod(getWindow().getDecorView(),
+                        "setSystemUiVisibility",
+                        new Class[]{Integer.TYPE},
+                        parameters);
+            } catch (NullPointerException e) {
+                Log.e(TAG, "hideVirtualButton", e);
+            }
         }
     }
 
