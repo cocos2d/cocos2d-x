@@ -53,16 +53,12 @@ do { \
 #endif
 
 #define BREAK_IF(condition) \
-do {\
     if (!!(condition)) { \
-    break; \
-    } \
-} while(false)
+        break; \
+    }
 
 #define BREAK_IF_ERR_LOG(condition, fmt, ...) \
-do {\
     if (!!(condition)) { \
         ALOGE("(" QUOTEME(condition) ") failed, message: " fmt, ##__VA_ARGS__); \
         break; \
-    } \
-} while(false)
+    }
