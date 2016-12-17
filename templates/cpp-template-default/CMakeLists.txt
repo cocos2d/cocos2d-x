@@ -34,12 +34,6 @@ set(COCOS2D_ROOT ${CMAKE_SOURCE_DIR}/cocos2d)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${COCOS2D_ROOT}/cmake/Modules/")
 include(CocosBuildHelpers)
 
-# libcocos2d
-set(BUILD_CPP_EMPTY_TEST OFF CACHE BOOL "turn off build cpp-empty-test")
-set(BUILD_CPP_TESTS OFF CACHE BOOL "turn off build cpp-tests")
-set(BUILD_LUA_LIBS OFF CACHE BOOL "turn off build lua related targets")
-set(BUILD_JS_LIBS OFF CACHE BOOL "turn off build js related targets")
-add_subdirectory(${COCOS2D_ROOT})
 
 # Some macro definitions
 if(WINDOWS)
@@ -69,15 +63,18 @@ endif()
 # Compiler options
 if(MSVC)
   if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-      set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /NODEFAULTLIB:msvcrt /NODEFAULTLIB:libcmt")
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /NODEFAULTLIB:msvcrt /NODEFAULTLIB:libcmt")
   else()
-      set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /NODEFAULTLIB:libcmt")
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /NODEFAULTLIB:libcmt")
   endif()
   ADD_DEFINITIONS(-D_CRT_SECURE_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS
                   -wd4251 -wd4244 -wd4334 -wd4005 -wd4820 -wd4710
                   -wd4514 -wd4056 -wd4996 -wd4099)
 else()
-  set(CMAKE_C_FLAGS_DEBUG "-g -Wall -DCOCOS2D_DEBUG=1")
+  if(CMAKE_BUILD_TYPE MATCHES Debug)
+    ADD_DEFINITIONS(-DCOCOS2D_DEBUG=1)
+  endif()
+  set(CMAKE_C_FLAGS_DEBUG "-g -Wall")
   set(CMAKE_CXX_FLAGS_DEBUG ${CMAKE_C_FLAGS_DEBUG})
   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99")
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wno-deprecated-declarations -Wno-reorder")
@@ -85,7 +82,6 @@ else()
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
   endif()
 endif(MSVC)
-
 
 set(PLATFORM_SPECIFIC_SRC)
 set(PLATFORM_SPECIFIC_HEADERS)
@@ -139,6 +135,16 @@ set(GAME_HEADERS
   ${PLATFORM_SPECIFIC_HEADERS}
 )
 
+
+# Configure libcocos2d
+set(BUILD_CPP_EMPTY_TEST OFF CACHE BOOL "turn off build cpp-empty-test")
+set(BUILD_CPP_TESTS OFF CACHE BOOL "turn off build cpp-tests")
+set(BUILD_LUA_LIBS OFF CACHE BOOL "turn off build lua related targets")
+set(BUILD_JS_LIBS OFF CACHE BOOL "turn off build js related targets")
+add_subdirectory(${COCOS2D_ROOT})
+
+
+# MyGame
 if( ANDROID )
     add_library(${APP_NAME} SHARED ${GAME_SRC} ${GAME_HEADERS})
     IF(CMAKE_BUILD_TYPE MATCHES RELEASE)
