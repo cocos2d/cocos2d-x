@@ -631,14 +631,14 @@ void ScriptingCore::createGlobalContext() {
 
     // Removed from Spidermonkey 19.
     //JS_SetCStringsAreUTF8();
-    _rt = JS_NewRuntime(8L * 1024L * 1024L);
+    _rt = JS_NewRuntime(32L * 1024L * 1024L);
     JS_SetGCParameter(_rt, JSGC_MAX_BYTES, 0xffffffff);
 
     JS_SetTrustedPrincipals(_rt, &shellTrustedPrincipals);
     JS_SetSecurityCallbacks(_rt, &securityCallbacks);
     JS_SetNativeStackQuota(_rt, JSB_MAX_STACK_QUOTA);
 
-    _cx = JS_NewContext(_rt, 8192);
+    _cx = JS_NewContext(_rt, 32 * 1024);
 
     // Removed in Firefox v27
 //    JS_SetOptions(this->_cx, JSOPTION_TYPE_INFERENCE);
