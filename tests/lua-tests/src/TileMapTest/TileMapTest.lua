@@ -1236,6 +1236,8 @@ function TileMapTestMain()
         TMXBug987,
         TMXBug787
     }
+    Helper.index = 1
+    
     scene:addChild(TileMapTest())
     scene:addChild(CreateBackMenuItem())
     return scene

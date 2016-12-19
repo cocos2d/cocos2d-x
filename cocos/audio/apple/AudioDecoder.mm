@@ -93,6 +93,7 @@ namespace cocos2d { namespace experimental {
             propertySize = sizeof(totalFrames);
             ret = ExtAudioFileGetProperty(_extRef, kExtAudioFileProperty_FileLengthFrames, &propertySize, &totalFrames);
             BREAK_IF_ERR_LOG(status != noErr, "ExtAudioFileGetProperty(kExtAudioFileProperty_FileLengthFrames) FAILED, Error = %ld", (long)ret);
+            BREAK_IF_ERR_LOG(totalFrames <= 0, "Total frames is 0, it's an invalid audio file: %s", path);
             _totalFrames = static_cast<uint32_t>(totalFrames);
             _isOpened = true;
 
@@ -147,6 +148,24 @@ namespace cocos2d { namespace experimental {
         } while (false);
 
         return ret;
+    }
+
+    uint32_t AudioDecoder::readFixedFrames(uint32_t framesToRead, char* pcmBuf)
+    {
+        uint32_t framesRead = 0;
+        uint32_t framesReadOnce = 0;
+        do
+        {
+            framesReadOnce = read(framesToRead - framesRead, pcmBuf + framesRead * _bytesPerFrame);
+            framesRead += framesReadOnce;
+        } while (framesReadOnce != 0 && framesRead < framesToRead);
+
+        if (framesRead < framesToRead)
+        {
+            memset(pcmBuf + framesRead * _bytesPerFrame, 0x00, (framesToRead - framesRead) * _bytesPerFrame);
+        }
+
+        return framesRead;
     }
 
     bool AudioDecoder::seek(uint32_t frameOffset)

@@ -117,11 +117,12 @@ end
 
 function ZwoptexTestMain()
     cclog("ZwoptexTestMain")
-    Helper.index = 1
     local scene = cc.Scene:create()
     Helper.createFunctionTable = {
         ZwoptexGenericTest
     }
+    Helper.index = 1
+
     scene:addChild(ZwoptexGenericTest())
     scene:addChild(CreateBackMenuItem())
     return scene

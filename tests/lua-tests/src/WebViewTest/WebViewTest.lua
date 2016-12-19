@@ -121,6 +121,7 @@ function WebViewTestMain()
     {
         WebViewTest.create,
     }
+    Helper.index = 1
 
     local scene = cc.Scene:create()
     scene:addChild(WebViewTest.create())

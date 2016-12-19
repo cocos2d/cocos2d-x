@@ -567,6 +567,7 @@ function SpritePolygonTest()
         SpritePolygonPerformanceTestDynamic.create,
         SpritePerformanceTestDynamic.create,
     }
+    Helper.index = 1
 
     scene:addChild(SpritePolygonTest1.create())
     scene:addChild(CreateBackMenuItem())

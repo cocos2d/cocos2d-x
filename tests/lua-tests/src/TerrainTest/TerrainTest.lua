@@ -332,6 +332,7 @@ function TerrainTest()
         TerrainSimple.create,
         TerrainWalkThru.create,
     }
+    Helper.index = 1
 
     scene:addChild(TerrainSimple.create())
     scene:addChild(CreateBackMenuItem())

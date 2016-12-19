@@ -334,7 +334,11 @@ protected:
     bool _quadsDirty;
     std::vector<int> _tileToQuadIndex;
     std::vector<V3F_C4B_T2F_Quad> _totalQuads;
+#ifdef CC_FAST_TILEMAP_32_BIT_INDICES
+    std::vector<GLuint> _indices;
+#else
     std::vector<GLushort> _indices;
+#endif
     std::map<int/*vertexZ*/, int/*offset to _indices by quads*/> _indicesVertexZOffsets;
     std::unordered_map<int/*vertexZ*/, int/*number to quads*/> _indicesVertexZNumber;
     std::vector<PrimitiveCommand> _renderCommands;

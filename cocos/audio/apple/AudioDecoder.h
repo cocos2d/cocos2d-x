@@ -61,10 +61,22 @@ public:
     /**
      * @brief Reads audio frames of PCM format.
      * @param framesToRead The number of frames excepted to be read.
-     * @param pcmBuf The buffer to hold the frames to be read, its size should be >= framesToRead * _bytesPerFrame.
+     * @param pcmBuf The buffer to hold the frames to be read, its size should be >= |framesToRead| * _bytesPerFrame.
      * @return The number of frames actually read, it's probably less than 'framesToRead'. Returns 0 means reach the end of file.
      */
     uint32_t read(uint32_t framesToRead, char* pcmBuf);
+
+    /**
+     * @brief Reads fixed audio frames of PCM format.
+     * @param framesToRead The number of frames excepted to be read.
+     * @param pcmBuf The buffer to hold the frames to be read, its size should be >= |framesToRead| * _bytesPerFrame.
+     * @return The number of frames actually read, it's probably less than |framesToRead|. Returns 0 means reach the end of file.
+     * @note The different between |read| and |readFixedFrames| is |readFixedFrames| will do multiple reading operations if |framesToRead| frames
+     *       isn't filled entirely, while |read| just does reading operation once whatever |framesToRead| is or isn't filled entirely.
+     *       If current position reaches the end of frames, the return value may smaller than |framesToRead| and the remaining
+     *       buffer in |pcmBuf| will be set with silence data (0x00).
+     */
+    uint32_t readFixedFrames(uint32_t framesToRead, char* pcmBuf);
 
     /**
      * @brief Sets frame offest to be read.

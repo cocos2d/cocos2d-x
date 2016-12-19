@@ -1406,6 +1406,8 @@ function LabelTest()
         LabelTTFAlignment.create,
         LabelBMFontBounds.create
     }
+    Helper.index = 1
+    
     scene:addChild(LabelAtlasTest.create())
     scene:addChild(CreateBackMenuItem())
     return scene

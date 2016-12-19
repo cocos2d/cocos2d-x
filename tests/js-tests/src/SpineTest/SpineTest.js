@@ -94,7 +94,7 @@ var SpineTestLayerNormal = SpineTestLayer.extend({
         /////////////////////////////
         // Make Spine's Animated skeleton Node
         // You need 'json + atlas + image' resource files to make it.
-        var spineBoy = sp.SkeletonAnimation.create('spine/spineboy.json', 'spine/spineboy.atlas');
+        var spineBoy = sp.SkeletonAnimation.createWithJsonFile('spine/spineboy.json', 'spine/spineboy.atlas', 0.6);
         spineBoy.setPosition(cc.p(size.width / 2, size.height / 2 - 150));
         spineBoy.setMix('walk', 'jump', 0.2);
         spineBoy.setMix('jump', 'run', 0.2);
@@ -282,7 +282,7 @@ var SpineTestPerformanceLayer = SpineTestLayer.extend({
 
 SpineTestScene.testLayers = [
     SpineTestLayerNormal,
-    SpineTestLayerNormal // custom spine,diff code in sample
+    //SpineTestLayerNormal // custom spine,diff code in sample
     //SpineTestLayerFFD,        //it doesn't support mesh on Web.
     //SpineTestPerformanceLayer
 ];

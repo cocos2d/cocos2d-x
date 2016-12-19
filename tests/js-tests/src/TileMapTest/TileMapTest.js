@@ -1116,10 +1116,8 @@ var TMXIsoVertexZ = TMXFixBugLayer.extend({
         this._super();
     },
     repositionSprite:function (dt) {
-        // tile height is 64x32
-        // map size: 30x30
-        var layer = this.tamara.parent;
-        this.tamara.vertexZ = layer.vertexZ + cc.renderer.assignedZStep * (1 - this.tamara.y / layer.height);
+        var p = this.tamara.getPosition();
+        this.tamara.vertexZ = -(p.y + 32) / 16;
     },
     //
     // Automation

@@ -84,14 +84,10 @@ public:
             float y1 = _offsetPosition.y;
             float x2 = x1 + size.width;
             float y2 = y1 + size.height;
-            if (_flippedX)
-            {
-                std::swap(x1, x2);
-            }
-            if (_flippedY)
-            {
-                std::swap(y1, y2);
-            }
+
+            // issue #17022: don't flip, again, the letter since they are flipped in sprite's code
+            //if (_flippedX) std::swap(x1, x2);
+            //if (_flippedY) std::swap(y1, y2);
 
             float x = _transformToBatch.m[12];
             float y = _transformToBatch.m[13];
@@ -505,6 +501,10 @@ void Label::reset()
     _shadowEnabled = false;
     _shadowBlurRadius = 0.f;
 
+    _uniformEffectColor = -1;
+    _uniformEffectType = -1;
+    _uniformTextColor = -1;
+
     _useDistanceField = false;
     _useA8Shader = false;
     _clipEnabled = false;
@@ -559,6 +559,7 @@ void Label::updateShaderProgram()
     case cocos2d::LabelEffect::OUTLINE: 
         setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_LABEL_OUTLINE));
         _uniformEffectColor = glGetUniformLocation(getGLProgram()->getProgram(), "u_effectColor");
+        _uniformEffectType = glGetUniformLocation(getGLProgram()->getProgram(), "u_effectType");
         break;
     case cocos2d::LabelEffect::GLOW:
         if (_useDistanceField)
@@ -1471,12 +1472,18 @@ void Label::onDrawShadow(GLProgram* glProgram, const Color4F& shadowColor)
 {
     if (_currentLabelType == LabelType::TTF)
     {
-        glProgram->setUniformLocationWith4f(_uniformTextColor,
-            shadowColor.r, shadowColor.g, shadowColor.b, shadowColor.a);
-        if (_currLabelEffect == LabelEffect::OUTLINE || _currLabelEffect == LabelEffect::GLOW)
+        if (_currLabelEffect == LabelEffect::OUTLINE)
         {
-            glProgram->setUniformLocationWith4f(_uniformEffectColor,
-                shadowColor.r, shadowColor.g, shadowColor.b, shadowColor.a);
+            glProgram->setUniformLocationWith1i(_uniformEffectType, 2); // 2: shadow
+            glProgram->setUniformLocationWith4f(_uniformEffectColor, shadowColor.r, shadowColor.g, shadowColor.b, shadowColor.a);
+        }
+        else
+        {
+            glProgram->setUniformLocationWith4f(_uniformTextColor, shadowColor.r, shadowColor.g, shadowColor.b, shadowColor.a);
+            if (_currLabelEffect == LabelEffect::GLOW)
+            {
+                glProgram->setUniformLocationWith4f(_uniformEffectColor, shadowColor.r, shadowColor.g, shadowColor.b, shadowColor.a);
+            }
         }
 
         glProgram->setUniformsForBuiltins(_shadowTransform);
@@ -1535,9 +1542,8 @@ void Label::onDraw(const Mat4& transform, bool /*transformUpdated*/)
     {
         switch (_currLabelEffect) {
         case LabelEffect::OUTLINE:
-            //draw text with outline
-            glprogram->setUniformLocationWith4f(_uniformTextColor,
-                _textColorF.r, _textColorF.g, _textColorF.b, _textColorF.a);
+            // draw outline of text
+            glprogram->setUniformLocationWith1i(_uniformEffectType, 1); // 1: outline
             glprogram->setUniformLocationWith4f(_uniformEffectColor,
                 _effectColorF.r, _effectColorF.g, _effectColorF.b, _effectColorF.a);
             for (auto&& batchNode : _batchNodes)
@@ -1545,9 +1551,9 @@ void Label::onDraw(const Mat4& transform, bool /*transformUpdated*/)
                 batchNode->getTextureAtlas()->drawQuads();
             }
 
-            //draw text without outline
-            glprogram->setUniformLocationWith4f(_uniformEffectColor,
-                _effectColorF.r, _effectColorF.g, _effectColorF.b, 0.f);
+            // draw text without outline
+            glprogram->setUniformLocationWith1i(_uniformEffectType, 0); // 0: text
+            glprogram->setUniformLocationWith4f(_uniformTextColor, _textColorF.r, _textColorF.g, _textColorF.b, _textColorF.a);
             break;
         case LabelEffect::GLOW:
             glprogram->setUniformLocationWith4f(_uniformEffectColor,
