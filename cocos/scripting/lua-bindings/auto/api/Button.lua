@@ -18,6 +18,13 @@
 -- @return string#string ret (return value: string)
         
 --------------------------------
+--  replaces the current Label node with a new one 
+-- @function [parent=#Button] setTitleLabel 
+-- @param self
+-- @param #cc.Label label
+-- @return Button#Button self (return value: ccui.Button)
+        
+--------------------------------
 -- Change the font size of button's title<br>
 -- param size Title font size in float.
 -- @function [parent=#Button] setTitleFontSize 
@@ -248,6 +255,12 @@
 -- @function [parent=#Button] getPressedFile 
 -- @param self
 -- @return ResourceData#ResourceData ret (return value: cc.ResourceData)
+        
+--------------------------------
+--  returns the current Label being used 
+-- @function [parent=#Button] getTitleLabel 
+-- @param self
+-- @return Label#Label ret (return value: cc.Label)
         
 --------------------------------
 -- Query the font size of button title<br>

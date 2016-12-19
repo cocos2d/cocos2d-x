@@ -1684,6 +1684,15 @@ void PhysicsDemoBug5482::onExit()
 void PhysicsDemoBug5482::changeBodyCallback(Ref* /*sender*/)
 {
     Sprite* node = _bodyInA ? _nodeB : _nodeA;
+    if (_bodyInA)
+    {
+        _button->setString("Set Body To A");
+    }
+    else
+    {
+        _button->setString("Set Body To B");
+    }
+
     if (_body->getOwner())
     {
         _body->getOwner()->removeComponent(_body);

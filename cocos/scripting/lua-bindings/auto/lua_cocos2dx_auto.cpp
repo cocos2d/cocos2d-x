@@ -17467,6 +17467,53 @@ int lua_cocos2dx_Scheduler_setTimeScale(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_Scheduler_removeAllFunctionsToBePerformedInCocosThread(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Scheduler* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Scheduler",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Scheduler*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Scheduler_removeAllFunctionsToBePerformedInCocosThread'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Scheduler_removeAllFunctionsToBePerformedInCocosThread'", nullptr);
+            return 0;
+        }
+        cobj->removeAllFunctionsToBePerformedInCocosThread();
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Scheduler:removeAllFunctionsToBePerformedInCocosThread",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Scheduler_removeAllFunctionsToBePerformedInCocosThread'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_Scheduler_getTimeScale(lua_State* tolua_S)
 {
     int argc = 0;
@@ -17565,6 +17612,7 @@ int lua_register_cocos2dx_Scheduler(lua_State* tolua_S)
     tolua_beginmodule(tolua_S,"Scheduler");
         tolua_function(tolua_S,"new",lua_cocos2dx_Scheduler_constructor);
         tolua_function(tolua_S,"setTimeScale",lua_cocos2dx_Scheduler_setTimeScale);
+        tolua_function(tolua_S,"removeAllFunctionsToBePerformedInCocosThread",lua_cocos2dx_Scheduler_removeAllFunctionsToBePerformedInCocosThread);
         tolua_function(tolua_S,"getTimeScale",lua_cocos2dx_Scheduler_getTimeScale);
     tolua_endmodule(tolua_S);
     std::string typeName = typeid(cocos2d::Scheduler).name();
@@ -35435,6 +35483,56 @@ int lua_cocos2dx_EventDispatcher_dispatchEvent(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_EventDispatcher_hasEventListener(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::EventDispatcher* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.EventDispatcher",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::EventDispatcher*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_EventDispatcher_hasEventListener'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        cocos2d::EventListener::ListenerID arg0;
+
+        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "cc.EventDispatcher:hasEventListener");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EventDispatcher_hasEventListener'", nullptr);
+            return 0;
+        }
+        bool ret = cobj->hasEventListener(arg0);
+        tolua_pushboolean(tolua_S,(bool)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.EventDispatcher:hasEventListener",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_EventDispatcher_hasEventListener'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_EventDispatcher_removeAllEventListeners(lua_State* tolua_S)
 {
     int argc = 0;
@@ -35690,6 +35788,7 @@ int lua_register_cocos2dx_EventDispatcher(lua_State* tolua_S)
         tolua_function(tolua_S,"setPriority",lua_cocos2dx_EventDispatcher_setPriority);
         tolua_function(tolua_S,"addCustomEventListener",lua_cocos2dx_EventDispatcher_addCustomEventListener);
         tolua_function(tolua_S,"dispatchEvent",lua_cocos2dx_EventDispatcher_dispatchEvent);
+        tolua_function(tolua_S,"hasEventListener",lua_cocos2dx_EventDispatcher_hasEventListener);
         tolua_function(tolua_S,"removeAllEventListeners",lua_cocos2dx_EventDispatcher_removeAllEventListeners);
         tolua_function(tolua_S,"removeCustomEventListeners",lua_cocos2dx_EventDispatcher_removeCustomEventListeners);
         tolua_function(tolua_S,"isEnabled",lua_cocos2dx_EventDispatcher_isEnabled);
@@ -74865,6 +74964,56 @@ int lua_cocos2dx_Sprite_isTextureRectRotated(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_Sprite_setStrechEnabled(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Sprite* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Sprite",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Sprite*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Sprite_setStrechEnabled'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        bool arg0;
+
+        ok &= luaval_to_boolean(tolua_S, 2,&arg0, "cc.Sprite:setStrechEnabled");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Sprite_setStrechEnabled'", nullptr);
+            return 0;
+        }
+        cobj->setStrechEnabled(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Sprite:setStrechEnabled",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Sprite_setStrechEnabled'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_Sprite_getTextureRect(lua_State* tolua_S)
 {
     int argc = 0;
@@ -74908,6 +75057,53 @@ int lua_cocos2dx_Sprite_getTextureRect(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Sprite_getTextureRect'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_Sprite_isStrechEnabled(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Sprite* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Sprite",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Sprite*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Sprite_isStrechEnabled'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Sprite_isStrechEnabled'", nullptr);
+            return 0;
+        }
+        bool ret = cobj->isStrechEnabled();
+        tolua_pushboolean(tolua_S,(bool)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Sprite:isStrechEnabled",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Sprite_isStrechEnabled'.",&tolua_err);
 #endif
 
     return 0;
@@ -75482,7 +75678,9 @@ int lua_register_cocos2dx_Sprite(lua_State* tolua_S)
         tolua_function(tolua_S,"initWithTexture",lua_cocos2dx_Sprite_initWithTexture);
         tolua_function(tolua_S,"setDirty",lua_cocos2dx_Sprite_setDirty);
         tolua_function(tolua_S,"isTextureRectRotated",lua_cocos2dx_Sprite_isTextureRectRotated);
+        tolua_function(tolua_S,"setStrechEnabled",lua_cocos2dx_Sprite_setStrechEnabled);
         tolua_function(tolua_S,"getTextureRect",lua_cocos2dx_Sprite_getTextureRect);
+        tolua_function(tolua_S,"isStrechEnabled",lua_cocos2dx_Sprite_isStrechEnabled);
         tolua_function(tolua_S,"initWithFile",lua_cocos2dx_Sprite_initWithFile);
         tolua_function(tolua_S,"setBlendFunc",lua_cocos2dx_Sprite_setBlendFunc);
         tolua_function(tolua_S,"getTextureAtlas",lua_cocos2dx_Sprite_getTextureAtlas);

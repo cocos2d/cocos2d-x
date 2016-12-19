@@ -151,6 +151,8 @@ function ParallaxTestMain()
         Parallax1,
         Parallax2
     }
+    Helper.index = 1
+    
     scene:addChild(Parallax1())
     scene:addChild(CreateBackMenuItem())
     return scene

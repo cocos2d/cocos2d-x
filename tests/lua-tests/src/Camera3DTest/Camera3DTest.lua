@@ -264,6 +264,7 @@ function Camera3DTestDemo:onEnter()
             self._camera:setPosition3D(cameraPos)
         end
     end)
+    self._zoomout = menuItem1
 
     local label2 = cc.Label:createWithTTF(ttfConfig,"zoom in")
     local menuItem2 = cc.MenuItemLabel:create(label2)
@@ -275,6 +276,7 @@ function Camera3DTestDemo:onEnter()
             self._camera:setPosition3D(cameraPos)
         end
     end)
+    self._zoomin = menuItem2
 
     local label3 = cc.Label:createWithTTF(ttfConfig,"rotate+")
     local menuItem3 = cc.MenuItemLabel:create(label3)
@@ -327,6 +329,8 @@ function Camera3DTestDemo:onEnter()
         self._camera:lookAt(self._sprite3D:getPosition3D(), cc.vec3(0,1,0))
         self._incRot:setEnabled(false)
         self._decRot:setEnabled(false)
+        self._zoomin:setEnabled(true)
+        self._zoomout:setEnabled(true)
     end)
 
     local label7 = cc.Label:createWithTTF(ttfConfig,"first person")
@@ -346,6 +350,8 @@ function Camera3DTestDemo:onEnter()
         self._camera:lookAt(cc.vec3add(pos3D, cc.vec3mul(newFaceDir, 50)), cc.vec3(0,1,0))
         self._incRot:setEnabled(true)
         self._decRot:setEnabled(true)
+        self._zoomin:setEnabled(false)
+        self._zoomout:setEnabled(false)
     end)
 
     local menu = cc.Menu:create(menuItem1,menuItem2,menuItem3,menuItem4,menuItem5,menuItem6,menuItem7)

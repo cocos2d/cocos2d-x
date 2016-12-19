@@ -670,6 +670,7 @@ function Scene3DTestMain()
     {
         Scene3DTest.create,
     }
+    Helper.index = 1
 
     scene:addChild(Scene3DTest.create())
     local menu = CreateBackMenuItem()

@@ -141,6 +141,7 @@ function SpineTestMain()
         SpineTestLayerNormal.create,
         SpineTestLayerFFD.create,
     }
+    Helper.index = 1
 
     scene:addChild(SpineTestLayerNormal.create(), 0)
     scene:addChild(CreateBackMenuItem())

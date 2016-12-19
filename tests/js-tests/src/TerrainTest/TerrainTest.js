@@ -162,6 +162,12 @@ var TerrainSimple = TerrainTestDemo.extend({
             event:cc.EventListener.TOUCH_ALL_AT_ONCE,
             onTouchesMoved:this.onTouchesMoved.bind(this)
         }, this);
+
+        var rootps = jsb.PUParticleSystem3D.create("Particle3D/scripts/mp_torch.pu");
+        rootps.setCameraMask(2);
+        rootps.startParticleSystem();
+
+        this.addChild(rootps, 0, 0);
     },
 
     onTouchesMoved:function(touches, event){

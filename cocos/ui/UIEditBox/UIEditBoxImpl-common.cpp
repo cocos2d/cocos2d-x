@@ -86,25 +86,45 @@ void EditBoxImplCommon::initInactiveLabels(const Size& size)
     const char* pDefaultFontName = this->getNativeDefaultFontName();
 
     _label = Label::create();
-    _label->setAnchorPoint(Vec2(0, 0.5f));
-    _label->setColor(Color3B::WHITE);
+    _label->setAnchorPoint(Vec2(0,1));
+    _label->setOverflow(Label::Overflow::CLAMP);
     _label->setVisible(false);
     _editBox->addChild(_label, kLabelZOrder);
     
     _labelPlaceHolder = Label::create();
-    _labelPlaceHolder->setAnchorPoint(Vec2(0, 0.5f));
+    _labelPlaceHolder->setAnchorPoint(Vec2(0, 1.0f));
     _labelPlaceHolder->setColor(Color3B::GRAY);
+    _labelPlaceHolder->enableWrap(false);
     _editBox->addChild(_labelPlaceHolder, kLabelZOrder);
     
     setFont(pDefaultFontName, size.height*2/3);
     setPlaceholderFont(pDefaultFontName, size.height*2/3);
 }
 
-void EditBoxImplCommon::placeInactiveLabels()
+void EditBoxImplCommon::placeInactiveLabels(const Size& size)
 {
-    _label->setPosition(CC_EDIT_BOX_PADDING, _contentSize.height / 2.0f);
-    _labelPlaceHolder->setPosition(CC_EDIT_BOX_PADDING, _contentSize.height / 2.0f);
-    refreshLabelAlignment();
+    _label->setDimensions(size.width, size.height);
+    
+    auto placeholderSize = _labelPlaceHolder->getContentSize();
+    
+    if(_editBoxInputMode == EditBox::InputMode::ANY){
+        _label->setPosition(Vec2(CC_EDIT_BOX_PADDING, size.height - CC_EDIT_BOX_PADDING));
+        _label->setVerticalAlignment(TextVAlignment::TOP);
+        _label->enableWrap(true);
+        
+        _labelPlaceHolder->setPosition(Vec2(CC_EDIT_BOX_PADDING,
+                                            size.height - CC_EDIT_BOX_PADDING));
+        _labelPlaceHolder->setVerticalAlignment(TextVAlignment::TOP);
+    }
+    else {
+        _label->enableWrap(false);
+        _label->setPosition(Vec2(CC_EDIT_BOX_PADDING, size.height));
+        _label->setVerticalAlignment(TextVAlignment::CENTER);
+        
+        _labelPlaceHolder->setPosition(Vec2(CC_EDIT_BOX_PADDING,
+                                            (size.height + placeholderSize.height) / 2));
+        _labelPlaceHolder->setVerticalAlignment(TextVAlignment::CENTER);
+    }
 }
 
 void EditBoxImplCommon::setInactiveText(const char* pText)
@@ -176,6 +196,7 @@ void EditBoxImplCommon::setInputMode(EditBox::InputMode inputMode)
 {
     _editBoxInputMode = inputMode;
     this->setNativeInputMode(inputMode);
+    this->placeInactiveLabels(_editBox->getContentSize());
 }
 
 void EditBoxImplCommon::setMaxLength(int maxLength)
@@ -227,9 +248,6 @@ void EditBoxImplCommon::refreshInactiveText()
 
 void EditBoxImplCommon::refreshLabelAlignment()
 {
-    _label->setWidth(_contentSize.width);
-    _labelPlaceHolder->setWidth(_contentSize.width);
-
     _label->setHorizontalAlignment(_alignment);
     _labelPlaceHolder->setHorizontalAlignment(_alignment);
 }
@@ -273,7 +291,7 @@ void EditBoxImplCommon::setContentSize(const Size& size)
 {
     _contentSize = size;
     CCLOG("[Edit text] content size = (%f, %f)", size.width, size.height);
-    placeInactiveLabels();
+    placeInactiveLabels(size);
 }
 
 void EditBoxImplCommon::draw(Renderer* /*renderer*/, const Mat4& /*transform*/, uint32_t flags)

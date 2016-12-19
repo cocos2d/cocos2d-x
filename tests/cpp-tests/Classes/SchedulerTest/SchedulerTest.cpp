@@ -29,6 +29,7 @@ SchedulerTests::SchedulerTests()
     ADD_TEST_CASE(ScheduleCallbackTest);
     ADD_TEST_CASE(ScheduleUpdatePriority);
     ADD_TEST_CASE(SchedulerIssue10232);
+    ADD_TEST_CASE(SchedulerRemoveAllFunctionsToBePerformedInCocosThread)
 };
 
 //------------------------------------------------------------------
@@ -1146,4 +1147,49 @@ std::string SchedulerIssue10232::title() const
 std::string SchedulerIssue10232::subtitle() const
 {
     return "Should not crash";
+}
+
+void SchedulerRemoveAllFunctionsToBePerformedInCocosThread::onEnter()
+{
+    SchedulerTestLayer::onEnter();
+    
+    _sprite = Sprite::create("Images/grossinis_sister1.png");
+    _sprite->setPosition(VisibleRect::center());
+    this->addChild(_sprite);
+    this->scheduleUpdate();
+}
+
+void SchedulerRemoveAllFunctionsToBePerformedInCocosThread::onExit()
+{
+    SchedulerTestLayer::onExit();
+    this->unscheduleUpdate();
+}
+
+void SchedulerRemoveAllFunctionsToBePerformedInCocosThread::update(float dt) {
+    Director::getInstance()->getScheduler()->performFunctionInCocosThread([this] () {
+        _sprite->setVisible(false);
+    });
+    Director::getInstance()->getScheduler()->performFunctionInCocosThread([this] () {
+        _sprite->setVisible(false);
+    });
+    Director::getInstance()->getScheduler()->performFunctionInCocosThread([this] () {
+        _sprite->setVisible(false);
+    });
+    Director::getInstance()->getScheduler()->performFunctionInCocosThread([this] () {
+        _sprite->setVisible(false);
+    });
+    Director::getInstance()->getScheduler()->performFunctionInCocosThread([this] () {
+        _sprite->setVisible(false);
+    });
+    Director::getInstance()->getScheduler()->removeAllFunctionsToBePerformedInCocosThread();
+}
+
+std::string SchedulerRemoveAllFunctionsToBePerformedInCocosThread::title() const
+{
+    return "Removing pending main thread tasks";
+}
+
+std::string SchedulerRemoveAllFunctionsToBePerformedInCocosThread::subtitle() const
+{
+    return "Sprite should be visible";
 }

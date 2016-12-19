@@ -825,6 +825,12 @@ void Scheduler::performFunctionInCocosThread(const std::function<void ()> &funct
     _performMutex.unlock();
 }
 
+void Scheduler::removeAllFunctionsToBePerformedInCocosThread()
+{
+    std::unique_lock<std::mutex> lock(_performMutex);
+    _functionsToPerform.clear();
+}
+
 // main loop
 void Scheduler::update(float dt)
 {
