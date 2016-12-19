@@ -41,7 +41,7 @@
 #include <memory>
 #include <chrono>
 
-#define ENGINE_VERSION "Cocos2d-JS v3.13"
+#define ENGINE_VERSION "Cocos2d-JS v3.14"
 
 void js_log(const char *format, ...);
 
