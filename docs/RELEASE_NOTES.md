@@ -2,11 +2,13 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [Cocos2d-x 3.13.1 Release Notes](#cocos2d-x-3131-release-notes)
+- [Cocos2d-x 3.14 Release Notes](#cocos2d-x-314-release-notes)
 - [Misc Information](#misc-information)
-- [v3.13.1](#v3131)
-  - [Bug fixed](#bug-fixed)
-  - [Cocos command modification](#cocos-command-modification)
+- [v3.14](#v314)
+  - [New features](#new-features)
+  - [Features in detail](#features-in-detail)
+    - [Uses luajit 2.1.0-beta2 for all platforms](#uses-luajit-210-beta2-for-all-platforms)
+    - [Sprite supports slice9 feature](#sprite-supports-slice9-feature)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
