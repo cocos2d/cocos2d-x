@@ -7,7 +7,7 @@ coocs2d-x-3.14 Dec 22 2016
 [NEW]           Can disable multi touch on Android
 [NEW]           EditBox: add horizontal text alignment
 [NEW]           EventDispatcher: added `hasEvent()` to check if an event is added
-[NEW]           Sprite: support scale9 feature
+[NEW]           Sprite: support slice9 feature
 [NEW]           Slider: add methods to get _slidBallNormalRenderer
 [NEW]           Desktop: add a method to toggle between fullscreen and windowed
 [NEW]           Desktop: add events for window resize, focus and unfocus
