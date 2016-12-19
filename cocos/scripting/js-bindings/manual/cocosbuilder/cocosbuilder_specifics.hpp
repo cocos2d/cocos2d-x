@@ -30,7 +30,6 @@ class JSCCBAnimationWrapper: public JSCallbackWrapper
 {
 public:
     JSCCBAnimationWrapper(JS::HandleValue owner) : JSCallbackWrapper(owner) {}
-    virtual ~JSCCBAnimationWrapper() {}
     
     void animationCompleteCallback()
     {
