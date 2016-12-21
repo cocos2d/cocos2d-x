@@ -365,7 +365,7 @@ void GLView::handleTouchesMove(int num, intptr_t ids[], float xs[], float ys[], 
             continue;
         }
 
-        CCLOGINFO("Moving touches with id: %d, x=%f, y=%f, force=%f, maxFource=%f", id, x, y, force, maxForce);
+        CCLOGINFO("Moving touches with id: %d, x=%f, y=%f, force=%f, maxFource=%f", (int)id, x, y, force, maxForce);
         Touch* touch = g_touches[iter->second];
         if (touch)
         {
@@ -417,7 +417,7 @@ void GLView::handleTouchesOfEndOrCancel(EventTouch::EventCode eventCode, int num
         Touch* touch = g_touches[iter->second];
         if (touch)
         {
-            CCLOGINFO("Ending touches with id: %d, x=%f, y=%f", id, x, y);
+            CCLOGINFO("Ending touches with id: %d, x=%f, y=%f", (int)id, x, y);
             touch->setTouchInfo(iter->second, (x - _viewPortRect.origin.x) / _scaleX,
                                 (y - _viewPortRect.origin.y) / _scaleY);
 

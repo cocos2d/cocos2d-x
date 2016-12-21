@@ -179,7 +179,7 @@ bool js_EventListenerAcceleration_create(JSContext *cx, uint32_t argc, jsval *vp
                     largv[0] = ccacceleration_to_jsval(cx, *acc);
                     if (event) {
                         js_type_class_t *typeClassEvent = js_get_type_from_native<Event>(event);
-                        largv[1] = OBJECT_TO_JSVAL(jsb_get_or_create_weak_jsobject(cx, event, typeClassEvent, "cocos2d::EventAcceleration"));
+                        largv[1] = OBJECT_TO_JSVAL(jsb_get_or_create_weak_jsobject(cx, event, typeClassEvent));
                     } else {
                         largv[1] = JSVAL_NULL;
                     };
@@ -246,7 +246,7 @@ bool js_EventListenerCustom_create(JSContext *cx, uint32_t argc, jsval *vp)
                     jsval largv[1];
                     if (event) {
                         js_type_class_t *typeClassEvent = js_get_type_from_native<EventCustom>(event);
-                        largv[0] = OBJECT_TO_JSVAL(jsb_get_or_create_weak_jsobject(cx, event, typeClassEvent, "cocos2d::EventCustom"));
+                        largv[0] = OBJECT_TO_JSVAL(jsb_get_or_create_weak_jsobject(cx, event, typeClassEvent));
                     } else {
                         largv[0] = JSVAL_NULL;
                     };
@@ -298,7 +298,7 @@ bool js_EventDispatcher_addCustomEventListener(JSContext *cx, uint32_t argc, jsv
                     jsval largv[1];
                     if (event) {
                         js_type_class_t *typeClassEvent = js_get_type_from_native<EventCustom>(event);
-                        largv[0] = OBJECT_TO_JSVAL(jsb_get_or_create_weak_jsobject(cx, event, typeClassEvent, "cocos2d::EventCustom"));
+                        largv[0] = OBJECT_TO_JSVAL(jsb_get_or_create_weak_jsobject(cx, event, typeClassEvent));
                     } else {
                         largv[0] = JSVAL_NULL;
                     };
