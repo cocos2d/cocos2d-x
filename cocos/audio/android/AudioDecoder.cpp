@@ -34,7 +34,7 @@ THE SOFTWARE.
 namespace cocos2d { namespace experimental {
 
 /* Explicitly requesting SL_IID_ANDROIDSIMPLEBUFFERQUEUE and SL_IID_PREFETCHSTATUS
-* on the UrlAudioPlayer object for decoding, SL_IID_METADATAEXTRACTION for retrieving the
+* on the AudioPlayer object for decoding, SL_IID_METADATAEXTRACTION for retrieving the
 * format of the decoded audio */
 #define NUM_EXPLICIT_INTERFACES_FOR_PLAYER 3
 
@@ -477,7 +477,7 @@ bool AudioDecoder::decodeToPcm()
 
     ALOGV("Stopped decoding");
 
-    /* Destroy the UrlAudioPlayer object */
+    /* Destroy the AudioPlayer object */
     {
         std::lock_guard<std::mutex> lk(__SLPlayerMutex);
         SL_DESTROY_OBJ(_playObj);
