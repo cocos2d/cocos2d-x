@@ -54,6 +54,7 @@ namespace cocos2d { namespace experimental {
 
 //-----------------------------------------------------------------
 
+// __SLPlayerMutex is a workaround for https://github.com/cocos2d/cocos2d-x/issues/16849
 static std::mutex __SLPlayerMutex;
 
 static int toBufferSizeInBytes(int bufferSizeInFrames, int sampleSize, int channelCount)
