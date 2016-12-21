@@ -699,9 +699,8 @@ namespace ui {
         if (_scale9Image && _scale9Enabled) {
 #if CC_USE_CULLING
             // Don't do calculate the culling if the transform was not updated
-            auto visitingCamera = Camera::getVisitingCamera();
-            auto defaultCamera = Camera::getDefaultCamera();
-            if (visitingCamera == defaultCamera) {
+            auto visitingCamera = Director::getInstance()->getRunningScene()->getCamera();
+            if (true) {
                 _insideBounds = ((flags & FLAGS_TRANSFORM_DIRTY)|| visitingCamera->isViewProjectionUpdated()) ? renderer->checkVisibility(transform, _contentSize) : _insideBounds;
             }
             else

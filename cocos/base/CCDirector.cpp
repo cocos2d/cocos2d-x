@@ -182,18 +182,6 @@ bool Director::init(void)
     _renderer = new (std::nothrow) Renderer;
     RenderState::initialize();
 
-    /**
-     *
-     * @Director
-     *  @Ambient;
-     *
-     */
-    this->ambient.source1 = DirectionLight::create(Vec3(0, 0, 0), Color3B(0, 0, 0));
-    this->ambient.source2 = AmbientLight::create(Color3B(0, 0, 0));
-
-    this->ambient.source1->retain();
-    this->ambient.source2->retain();
-
     return true;
 }
 
@@ -1531,479 +1519,6 @@ void DisplayLinkDirector::setAnimationInterval(float interval)
 /**
  *
  * @Director
- * | @Ambient;
- *
- */
-void Director::setAmbientColor1(float r, float g, float b)
-{
-  this->ambient.source1->setColor(Color3B(r, g, b));
-}
-
-void Director::setAmbientColor2(float r, float g, float b)
-{
-  this->ambient.source2->setColor(Color3B(r, g, b));
-}
-
-void Director::setAmbientDirection(float x, float y, float z)
-{
-  this->ambient.source1->setDirection(Vec3(x, y, z));
-}
-
-void Director::setAmbient(bool state, Node* root)
-{
-  if(state)
-  {
-    if(!this->ambient.state)
-    {
-      root->addChild(this->ambient.source1);
-      root->addChild(this->ambient.source2);
-    }
-  }
-  else
-  {
-    if(this->ambient.state)
-    {
-    }
-  }
-
-  this->ambient.state = state;
-}
-
-Vec3 Director::getAmbientDirection()
-{
-  if(this->ambient.state)
-  {
-    return this->ambient.source1->getDirection();
-  }
-
-  return Vec3(0, 0, 0);
-}
-
-/**
- *
- * @Director
- * | @Shadows;
- *
- */
-void Director::setShadowCamera(Camera* camera)
-{
-  this->shadows.camera = camera;
-}
-
-void Director::setShadowElement(Node* element)
-{
-  this->shadows.element = element;
-}
-
-void Director::setShadowFactor(float factor)
-{
-  this->shadows.factor = factor;
-}
-
-static Material* m1;
-
-void Director::setShadow(bool state, Node* root)
-{
-  if(!Support::shadows()) return;
-
-  if(state)
-  {
-    if(!this->shadows.state)
-    {
-      auto width = this->getWinSizeInPixels().width / this->shadows.factor;
-      auto height = this->getWinSizeInPixels().height / this->shadows.factor;
-
-      /**
-       *
-       * @Director
-       * | @Shadows;
-       * | @Generate frame buffer object;
-       *
-       */
-      this->shadows.frame = FrameBuffer::create(1, width, height);
-      this->shadows.frame->attachRenderTarget(RenderTarget::create(width, height));
-      this->shadows.frame->attachDepthStencilTarget(RenderTargetDepthStencil::create(width, height));
-
-      this->shadows.camera->setFrameBufferObject(this->shadows.frame);
-
-      /**
-       *
-       * @Director
-       * | @Shadows;
-       * | @Generate shader programs for shadows and add them to the cache;
-       *
-       */
-      GLProgramCache::getInstance()->addGLProgram(
-        GLProgram::createWithFilenames("director.shadows.normal.vert", "director.shadows.normal.frag"),
-        "@director.shadows.normal"
-      );
-      GLProgramCache::getInstance()->addGLProgram(
-        GLProgram::createWithFilenames("director.shadows.active.vert", "director.shadows.active.frag"),
-        "@director.shadows.active"
-      );
-
-      m1 = Material::createWithGLStateProgram(
-        GLProgramState::getOrCreateWithGLProgram(
-          GLProgramCache::getInstance()->getGLProgram("@director.shadows.normal")
-        )
-      );
-
-      m1->retain();
-
-      /**
-       *
-       * @Director
-       * | @Shadows;
-       * | @Should add shadows frame buffer texture to the default 2D camera;
-       *
-       */
-      if(true)
-      {
-        this->shadows.texture = new Entity(this->shadows.frame->getRenderTarget()->getTexture(), root);
-        this->shadows.texture->setScaleX(1 * this->shadows.factor);
-        this->shadows.texture->setScaleY(-1 * this->shadows.factor);
-        this->shadows.texture->setPosition(width / 2, height / 2);
-        this->shadows.texture->setCameraMask(2);
-        this->shadows.texture->setGlobalZOrder(100);
-      }
-    }
-  }
-  else
-  {
-    if(this->shadows.state)
-    {
-    }
-  }
-
-  this->shadows.state = state;
-}
-
-bool Director::getShadowState()
-{
-  return this->shadows.state;
-}
-
-Node* Director::getShadowTexture()
-{
-  return this->shadows.texture;
-}
-
-void Director::updateShadowElementState1(Node *element)
-{
-  if(static_cast<Sprite3D*>(element)->enableShadow())
-  {
-    //static_cast<Sprite3D*>(element)->setMaterial(m1);
-    element->setGLProgram(
-      GLProgramCache::getInstance()->getGLProgram("@director.shadows.normal")
-    );
-  }
-
-  /**
-   *
-   *
-   *
-   */
-  for(auto el : element->getChildren())
-  {
-    //if(Camera::getVisitingCamera()->isVisibleInFrustum(&static_cast<Sprite3D*>(el)->getAABB()))
-    {
-      this->updateShadowElementState1(el);
-    }
-  }
-}
-
-static float matrix[16] = {
-  0.5f, 0.0f, 0.0f, 0.0f,
-  0.0f, 0.5f, 0.0f, 0.0f,
-  0.0f, 0.0f, 0.5f, 0.0f,
-  0.5f, 0.5f, 0.5f, 1.0f
-};
-
-Mat4 cameraViewportMatrix(matrix);
-Mat4 cameraViewMatrix;
-Mat4 cameraProjectionMatrix;
-Mat4 cameraTransformMatrix;
-
-void Director::updateShadowElementState2(Node *element, bool recursive)
-{
-  if(!recursive)
-  {
-    cameraViewMatrix = this->shadows.camera->getViewMatrix();
-    cameraProjectionMatrix = this->shadows.camera->getProjectionMatrix();
-    cameraTransformMatrix =  cameraViewportMatrix * cameraProjectionMatrix * cameraViewMatrix;
-  }
-
-  /**
-   *
-   *
-   *
-   */
-  if(static_cast<Sprite3D*>(element)->enableShadow())
-  {
-    element->setGLProgram(
-      GLProgramCache::getInstance()->getGLProgram("@director.shadows.active")
-    );
-
-    if(static_cast<Sprite3D*>(element)->enableLight())
-    {
-      element->getGLProgramState()->setUniformFloat("use", 1.0);
-    }
-
-    element->getGLProgramState()->setUniformFloat("sindex", static_cast<Sprite3D*>(element)->shadowIndex);
-    element->getGLProgramState()->setUniformMat4("modelTransformMatrix", element->getModelViewMatrix());
-    element->getGLProgramState()->setUniformMat4("cameraTransformMatrix", cameraTransformMatrix);
-    element->getGLProgramState()->setUniformTexture("transformTexture", this->shadows.frame->getRenderTarget()->getTexture());
-  }
-
-  /**
-   *
-   *
-   *
-   */
-  for(auto el : element->getChildren())
-  {
-    //if(Camera::getVisitingCamera()->isVisibleInFrustum(&static_cast<Sprite3D*>(el)->getAABB()))
-    {
-      this->updateShadowElementState2(el, true);
-    }
-  }
-}
-
-/**
- *
- * @Director
- * | @Capture;
- *
- */
-void Director::setCaptureCamera(Camera* camera)
-{
-  this->capture.camera = camera;
-}
-
-void Director::setCaptureElement(Sprite* element)
-{
-  this->capture.element = element;
-}
-
-void Director::setCaptureCount(int count)
-{
-  this->capture.count = count;
-}
-
-void Director::setCaptureTime(int time)
-{
-  this->capture.time = time;
-}
-
-void Director::setCaptureFactor(float factor)
-{
-  this->capture.factor = factor;
-}
-
-void Director::setCaptureScale(float scale)
-{
-  this->capture.scale = scale;
-}
-
-void Director::setCapturePosition(float x, float y)
-{
-  this->capture.x = x;
-  this->capture.y = y;
-
-  this->capture.element->setPosition(this->capture.x + this->capture.width / 2, this->capture.y + this->capture.height / 2);
-}
-
-void Director::setCaptureSize(float width, float height)
-{
-  this->capture.width = width;
-  this->capture.height = height;
-}
-
-void Director::setCapture(bool state, Node* root)
-{
-  if(!Support::capture()) return;
-
-  if(state)
-  {
-    if(!this->capture.state)
-    {
-      auto size = this->getWinSizeInPixels();
-
-      auto width = size.width * this->capture.factor;
-      auto height = size.height * this->capture.factor;
-
-      /**
-       *
-       * @Director
-       * | @Capture;
-       * | @Generate frame buffer object;
-       *
-       * @TODO: Add setting for the multisamples count;
-       *
-       */
-      if(Support::multiSampling())
-      {
-        this->capture.resolve_frame = FrameBuffer::create(1, width, height);
-        this->capture.resolve_frame->retain();
-        this->capture.resolve_frame->attachRenderTarget(RenderTarget::create(width, height));
-        this->capture.resolve_frame->applyFBO();
-
-        this->capture.frame = FrameBuffer::create(1, width, height);
-        this->capture.frame->retain();
-        this->capture.frame->attachRenderTarget(RenderTargetRenderBuffer::create(width, height, 4));
-        this->capture.frame->attachDepthStencilTarget(RenderTargetDepthStencil::create(width, height, 4));
-        this->capture.frame->applyFBO();
-
-        this->capture.camera->setFrameBufferObject(this->capture.frame);
-      }
-      else
-      {
-        this->capture.frame = FrameBuffer::create(1, width, height);
-        this->capture.frame->attachRenderTarget(RenderTarget::create(width, height));
-        this->capture.frame->attachDepthStencilTarget(RenderTargetDepthStencil::create(width, height));
-
-        this->capture.camera->setFrameBufferObject(this->capture.frame);
-      }
-
-      /**
-       *
-       * @Director
-       * | @Capture;
-       * | @Should create render textures based on user's configurations;
-       *
-       */
-      auto count = this->capture.count;
-      auto time = this->capture.time;
-
-      for(int i = 0; i < count * time; i++)
-      {
-        auto render = RenderTexture::create(this->capture.width, this->capture.height, Texture2D::PixelFormat::RGBA8888);
-        render->retain();
-
-        this->capture.textures.push_back(render);
-      }
-
-      /**
-       *
-       * @Director
-       * | @Capture;
-       * | @Should add capture frame buffer texture to the default 2D camera;
-       *
-       */
-      if(Support::multiSampling())
-      {
-        this->capture.texture = new Entity(this->capture.resolve_frame->getRenderTarget()->getTexture(), root, true);
-      }
-      else
-      {
-        this->capture.texture = new Entity(this->capture.frame->getRenderTarget()->getTexture(), root, true);
-      }
-      this->capture.texture->setScaleX(1 / this->capture.factor);
-      this->capture.texture->setScaleY(-1 / this->capture.factor);
-      this->capture.texture->setPosition(size.width / 2, size.height / 2);
-      this->capture.texture->setCameraMask(2);
-      this->capture.texture->setGlobalZOrder(-1);
-      this->capture.texture->getTexture()->setAntiAliasTexParameters();
-
-      /**
-       *
-       * @Director
-       * | @Capture;
-       *
-       */
-      this->capture.element->initWithTexture(this->capture.texture->getTexture());
-      this->capture.element->setScaleX(1 * 1.0 / this->capture.scale);
-      this->capture.element->setScaleY(-1 * 1.0 / this->capture.scale);
-      this->capture.element->setPosition(this->capture.x + this->capture.width / 2, this->capture.y + this->capture.height / 2);
-      this->capture.element->retain();
-    }
-  }
-  else
-  {
-    if(this->capture.state)
-    {
-    }
-  }
-
-  this->capture.state = state;
-}
-
-bool Director::getCaptureState()
-{
-  return this->capture.state;
-}
-
-bool Director::getCaptureAvailable()
-{
-  return this->capture.available;
-}
-
-int Director::getCaptureTexturesCount()
-{
-  return this->capture.textures.size();
-}
-
-float Director::getCaptureWidth()
-{
-  return this->capture.width;
-}
-
-float Director::getCaptureHeight()
-{
-  return this->capture.height;
-}
-
-float Director::getCaptureScale()
-{
-  return this->capture.scale;
-}
-
-RenderTexture* Director::getCaptureRenderTextures(int index)
-{
-  return this->capture.textures.at(index);
-}
-
-Texture2D* Director::getCaptureTextures(int index)
-{
-  return this->capture.textures.at(index)->getSprite()->getTexture();
-}
-
-Node* Director::getCaptureTexture()
-{
-  return this->capture.texture;
-}
-
-experimental::FrameBuffer* Director::getCaptureFrameBuffer()
-{
-  return this->capture.frame;
-}
-
-experimental::FrameBuffer* Director::getCaptureResolveFrameBuffer()
-{
-  return this->capture.resolve_frame;
-}
-
-void Director::updateCapture()
-{
-  this->capture.available = true;
-
-  auto render = this->capture.textures.at(this->capture.textures.size() - 1);
-  this->capture.textures.erase(this->capture.textures.begin() + this->capture.textures.size() - 1);
-  this->capture.textures.insert(this->capture.textures.begin(), render);
-
-  render = this->capture.textures.at(0);
-
-  render->beginWithClear(1, 1, 1, 1);
-  this->capture.element->setTexture(this->capture.texture->getTexture());
-  this->capture.element->Sprite::visit();
-  render->end();
-
-  this->capture.count = min<int>(this->capture.textures.size(), this->capture.count + 1);
-}
-
-/**
- *
- * @Director
  * | @Render;
  *
  */
@@ -2025,52 +1540,92 @@ void Director::onRenderFinish()
 
 void Director::onRenderStart(int index)
 {
-  if(this->_runningScene)
+  if(this->getRunningScene())
   {
-    this->_runningScene->onRenderStart(index, 1);
+    this->getRunningScene()->onRenderStart(index, 1);
   }
 
-  if(this->shadows.state)
+  if(this->getRunningScene()->getShadowState())
   {
-    if(index == this->shadows.camera->getIndex())
+    if(index == this->getRunningScene()->getShadowCamera()->getIndex())
     {
-      this->updateShadowElementState1(this->shadows.element);
+      this->getRunningScene()->updateShadowElementState1(this->getRunningScene()->getShadowElement());
     }
     else if(index == 1)
     {
-      this->updateShadowElementState2(this->shadows.element);
+      this->getRunningScene()->updateShadowElementState2(this->getRunningScene()->getShadowElement());
     }
   }
 
-  if(this->_runningScene)
+  if(this->getRunningScene())
   {
-    this->_runningScene->onRenderStart(index, 2);
+    this->getRunningScene()->onRenderStart(index, 2);
   }
 }
 
 void Director::onRenderFinish(int index)
 {
-  if(this->_runningScene)
+  if(this->getRunningScene())
   {
-    this->_runningScene->onRenderFinish(index);
+    this->getRunningScene()->onRenderFinish(index);
   }
 
   /**
    *
-   *
+   * @Scene
+   * | @Capture;
    *
    */
-  #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
-  if(this->getCaptureState() && this->capture.resolve_frame)
+  if(this->getRunningScene()->getCaptureState())
   {
-    if(this->capture.camera->index == index)
+    if(this->getRunningScene()->getCaptureResolveFrameBuffer())
     {
-      glBindFramebuffer(GL_READ_FRAMEBUFFER_APPLE, Director::getInstance()->getCaptureFrameBuffer()->getFBO());
-      glBindFramebuffer(GL_DRAW_FRAMEBUFFER_APPLE, Director::getInstance()->getCaptureResolveFrameBuffer()->getFBO());
-      glResolveMultisampleFramebufferAPPLE();
+      if(this->getRunningScene()->getCaptureCamera()->getIndex() == index)
+      {
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+        glBindFramebuffer(GL_READ_FRAMEBUFFER_APPLE, this->getRunningScene()->getCaptureFrameBuffer()->getFBO());
+        glBindFramebuffer(GL_DRAW_FRAMEBUFFER_APPLE, this->getRunningScene()->getCaptureResolveFrameBuffer()->getFBO());
+        glResolveMultisampleFramebufferAPPLE();
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_MAC
+        auto width = Director::getInstance()->getWinSizeInPixels().width;
+        auto height = Director::getInstance()->getWinSizeInPixels().height;
+
+        glBindFramebufferEXT(GL_READ_FRAMEBUFFER_EXT, this->getRunningScene()->getCaptureFrameBuffer()->getFBO());
+        glBindFramebufferEXT(GL_DRAW_FRAMEBUFFER_EXT, this->getRunningScene()->getCaptureResolveFrameBuffer()->getFBO());
+        glBlitFramebufferEXT(0, 0, width, height, 0, 0, width, height, GL_COLOR_BUFFER_BIT, GL_LINEAR);
+#endif
+      }
     }
   }
-  #endif
+
+  /**
+   *
+   * @Scene
+   * | @Shadow;
+   *
+   */
+  /*if(this->getRunningScene()->getShadowState())
+  {
+    if(this->getRunningScene()->getShadowResolveFrameBuffer())
+    {
+      if(this->getRunningScene()->getShadowCamera()->getIndex() == index)
+      {
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+        glBindFramebuffer(GL_READ_FRAMEBUFFER_APPLE, this->getRunningScene()->getShadowFrameBuffer()->getFBO());
+        glBindFramebuffer(GL_DRAW_FRAMEBUFFER_APPLE, this->getRunningScene()->getShadowResolveFrameBuffer()->getFBO());
+        glResolveMultisampleFramebufferAPPLE();
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_MAC
+        // @TODO: Add shadow factor;
+        auto width = Director::getInstance()->getWinSizeInPixels().width;
+        auto height = Director::getInstance()->getWinSizeInPixels().height;
+
+        glBindFramebufferEXT(GL_READ_FRAMEBUFFER_EXT, this->getRunningScene()->getShadowFrameBuffer()->getFBO());
+        glBindFramebufferEXT(GL_DRAW_FRAMEBUFFER_EXT, this->getRunningScene()->getShadowResolveFrameBuffer()->getFBO());
+        glBlitFramebufferEXT(0, 0, width, height, 0, 0, width, height, GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT, GL_NEAREST);
+#endif
+      }
+    }
+  }*/
 }
 
 NS_CC_END

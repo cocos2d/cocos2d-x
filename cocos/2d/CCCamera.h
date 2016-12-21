@@ -97,7 +97,7 @@ public:
     static Camera* createOrthographic(float zoomX, float zoomY, float nearPlane, float farPlane);
 
     /** create default camera, the camera type depends on Director::getProjection, the depth of the default camera is 0 */
-    static Camera* create();
+    static Camera* create(Node* parent = nullptr);
     
     /**
     * Gets the type of camera.
@@ -234,11 +234,6 @@ public:
     virtual void onExit() override;
 
     /**
-     * Get the visiting camera , the visiting camera shall be set on Scene::render
-     */
-    static const Camera* getVisitingCamera() { return _visitingCamera; }
-
-    /**
      * Get the default camera of the current running scene.
      */
     static Camera* getDefaultCamera();
@@ -327,19 +322,10 @@ protected:
 protected:
     static experimental::Viewport _defaultViewport;
 public:
-    static Camera* _visitingCamera;
     static const experimental::Viewport& getDefaultViewport() { return _defaultViewport; }
     static void setDefaultViewport(const experimental::Viewport& vp) { _defaultViewport = vp; }
 
     virtual Camera* deepCopy() override;
-
-    static Camera* cameraBackground;
-    static Camera* cameraElements;
-
-    static void setCameraBackground(Camera* camera);
-    static void setCameraElements(Camera* camera);
-    static Camera* getCameraBackground();
-    static Camera* getCameraElements();
 };
 
 NS_CC_END

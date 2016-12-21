@@ -30,6 +30,8 @@ THE SOFTWARE.
 
 #include <string>
 #include "2d/CCNode.h"
+#include "2d/CCLight.h"
+#include "2d/CCSprite.h"
 
 NS_CC_BEGIN
 
@@ -47,6 +49,13 @@ class Physics3DWorld;
 #if CC_USE_NAVMESH
 class NavMesh;
 #endif
+
+class RenderTexture;
+
+namespace experimental
+{
+  class FrameBuffer;
+}
 
 /**
  * @addtogroup _2d
@@ -93,12 +102,6 @@ public:
      */
     const std::vector<Camera*>& getCameras();
 
-    /** Get the default camera.
-     * @js NA
-     * @return The default camera of scene.
-     */
-    Camera* getDefaultCamera() const { return _defaultCamera; }
-
     /** Get lights.
      * @return The vector of lights.
      * @js NA
@@ -134,7 +137,6 @@ protected:
     friend class Renderer;
     
     std::vector<Camera*> _cameras; //weak ref to Camera
-    Camera*              _defaultCamera; //weak ref, default camera created by scene, _cameras[0], Caution that the default camera can not be added to _cameras before onEnter is called
     bool                 _cameraOrderDirty; // order is dirty, need sort
     EventListenerCustom*       _event;
 
@@ -210,7 +212,197 @@ public:
     void stepPhysicsAndNavigation(float deltaTime);
 #endif
 
-    public:
+
+  /**
+   * Tooflya Inc. Development
+   *
+   * @author Igor Mats from Tooflya Inc.
+   * @copyright (c) by Igor Mats
+   * http://www.tooflya.com/development/
+   *
+   * Permission is hereby granted, free of charge, to any person obtaining a copy
+   * of this software and associated documentation files (the "Software"), to deal
+   * in the Software without restriction, including without limitation the rights
+   * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+   * copies of the Software, and to permit persons to whom the Software is
+   * furnished to do so, subject to the following conditions:
+
+   * The above copyright notice and this permission notice shall be included in
+   * all copies or substantial portions of the Software.
+
+   * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+   * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+   * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+   * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+   * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+   * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+   * THE SOFTWARE.
+   *
+   */
+  protected:
+    Camera* camera;
+
+    /**
+     *
+     * @Scene
+     * | @Ambient;
+     *
+     */
+    struct Ambient {
+      bool state = false;
+
+      DirectionLight* source1;
+      AmbientLight* source2;
+    };
+
+    Ambient ambient;
+
+    /**
+     *
+     * @Scene
+     * | @Shadows;
+     *
+     */
+    struct Shadows {
+      bool state = false;
+
+      float factor;
+      float value;
+
+      experimental::FrameBuffer* frame = nullptr;
+      experimental::FrameBuffer* resolve_frame = nullptr;
+      Camera* camera;
+      Node* element;
+      Node* texture;
+    };
+
+    Shadows shadows;
+
+    /**
+     *
+     * @Scene
+     * | @Capture;
+     *
+     */
+    struct Capture {
+      bool state = false;
+      bool bind = false;
+
+      int count;
+      int time;
+      int frames;
+      float scale;
+      float factor;
+      float x;
+      float y;
+      float width;
+      float height;
+
+      experimental::FrameBuffer* frame = nullptr;
+      experimental::FrameBuffer* resolve_frame = nullptr;
+      Camera* camera;
+      Sprite* texture;
+      Sprite* element;
+
+      std::vector<RenderTexture*> textures;
+    };
+
+    Capture capture;
+
+    /**
+     *
+     *
+     *
+     */
+  public:
+    virtual Camera* setCamera(Camera* _camera) { this->camera = _camera; return this->camera; };
+    virtual Camera* getCamera() { return this->camera; };
+
+    /**
+     *
+     * @Scene
+     * | @Ambient;
+     *
+     */
+    virtual void setAmbientColor1(float r, float g, float b);
+    virtual void setAmbientColor2(float r, float g, float b);
+    virtual void setAmbientDirection(float x, float y, float z);
+    virtual void setAmbient(bool state);
+
+    virtual Vec3 getAmbientDirection();
+
+    /**
+     *
+     * @Scene
+     * | @Shadows;
+     *
+     */
+    virtual void setShadowCamera(Camera* camera);
+    virtual void setShadowElement(Node* element);
+    virtual void setShadowFactor(float factor);
+    virtual void setShadowValue(float value);
+    virtual void setShadow(bool state);
+
+    virtual void updateShadowElementState1(Node* element);
+    virtual void updateShadowElementState2(Node* element, bool recursive = false);
+
+    virtual bool getShadowState();
+    virtual Node* getShadowTexture();
+    virtual Node* getShadowElement();
+
+    virtual Camera* getShadowCamera();
+
+    virtual experimental::FrameBuffer* getShadowFrameBuffer();
+    virtual experimental::FrameBuffer* getShadowResolveFrameBuffer();
+
+    /**
+     *
+     * @Scene
+     * | @Capture;
+     *
+     */
+    virtual void setCaptureCamera(Camera* camera);
+    virtual void setCaptureElement(Sprite* element);
+    virtual void setCaptureCount(int count);
+    virtual void setCaptureTime(int time);
+    virtual void setCaptureFactor(float factor);
+    virtual void setCaptureScale(float scale);
+    virtual void setCapturePosition(float x, float y);
+    virtual void setCaptureSize(float width, float height);
+    virtual void setCaptureBind(bool state);
+    virtual void setCapture(bool state);
+
+    virtual void updateCapture();
+
+    virtual bool getCaptureState();
+    virtual bool getCaptureBind();
+
+    virtual int getCaptureTexturesCount();
+    virtual int getCaptureFrames();
+    virtual int getCaptureTime();
+
+    virtual float getCaptureWidth();
+    virtual float getCaptureHeight();
+
+    virtual float getCaptureScale();
+
+    virtual RenderTexture* getCaptureRenderTextures(int index);
+    virtual Texture2D* getCaptureTextures(int index);
+
+    virtual Node* getCaptureTexture();
+    virtual Node* getCaptureElement();
+
+    virtual Camera* getCaptureCamera();
+
+    virtual experimental::FrameBuffer* getCaptureFrameBuffer();
+    virtual experimental::FrameBuffer* getCaptureResolveFrameBuffer();
+
+    /**
+     *
+     * @Scene
+     * | @Render;
+     *
+     */
     virtual void onRenderStart();
     virtual void onRenderFinish();
     virtual void onRenderStart(int index, int step);

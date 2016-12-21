@@ -56,7 +56,6 @@ THE SOFTWARE.
 #include "base/CCUserDefault.h"
 #include "base/CCValue.h"
 #include "base/CCVector.h"
-#include "base/ZipUtils.h"
 #include "base/base64.h"
 #include "base/ccConfig.h"
 #include "base/ccMacros.h"

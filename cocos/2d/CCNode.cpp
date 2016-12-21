@@ -1233,7 +1233,7 @@ uint32_t Node::processParentFlags(const Mat4& parentTransform, uint32_t parentFl
 
 bool Node::isVisitableByVisitingCamera() const
 {
-  auto camera = Camera::getVisitingCamera();
+  auto camera = Director::getInstance()->getRunningScene()->getCamera();
   bool visibleByCamera = camera ? ((unsigned short)camera->getCameraFlag() & _cameraMask) != 0 : true;
   return visibleByCamera;
 }
@@ -1245,6 +1245,17 @@ void Node::visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t paren
   {
     return;
   }
+
+  /*if(Director::getInstance()->getRunningScene()->getShadowState())
+  {
+    if(Director::getInstance()->getRunningScene()->getCamera() && Director::getInstance()->getRunningScene()->getCamera()->getIndex() == Director::getInstance()->getRunningScene()->getShadowCamera()->getIndex())
+    {
+      if(!this->shadow)
+      {
+        return;
+      }
+    }
+  }*/
 
   uint32_t flags = processParentFlags(parentTransform, parentFlags);
 
@@ -2291,6 +2302,7 @@ bool Node::onTouchBegan(Touch* touch, Event* e)
 {
   if(!this->isVisible()) return false;
   if(!this->state->create) return false;
+  if(!this->state->active) return false;
 
   if(!this->touch->touched)
   {

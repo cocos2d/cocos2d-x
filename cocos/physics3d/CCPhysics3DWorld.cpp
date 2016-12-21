@@ -22,6 +22,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+#include "base/CCDirector.h"
+#include "base/CCScheduler.h"
+
 #include "physics3d/CCPhysics3D.h"
 #include "renderer/CCRenderer.h"
 
@@ -235,7 +238,7 @@ void Physics3DWorld::stepSimulate(float dt)
         {
             it->preSimulate();
         }
-        _btPhyiscsWorld->stepSimulation(1.0 / 60.0);
+        _btPhyiscsWorld->stepSimulation(dt, 3, 1.0 / (60.0 * (1.0 / Director::getInstance()->getScheduler()->getTimeScale())));
         //sync dynamic node after simulation
         for (auto it : _physicsComponents)
         {

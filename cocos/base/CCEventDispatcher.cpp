@@ -855,7 +855,8 @@ void EventDispatcher::dispatchTouchEventToListeners(EventListenerVector* listene
                     continue;
                 }
                 
-                Camera::_visitingCamera = camera;
+                scene->setCamera(camera);
+
                 auto cameraFlag = (unsigned short)camera->getCameraFlag();
                 for (auto& l : sceneListeners)
                 {
@@ -874,7 +875,8 @@ void EventDispatcher::dispatchTouchEventToListeners(EventListenerVector* listene
                     break;
                 }
             }
-            Camera::_visitingCamera = nullptr;
+
+            scene->setCamera(nullptr);
         }
     }
     

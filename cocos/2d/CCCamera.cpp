@@ -38,50 +38,19 @@
 
 NS_CC_BEGIN
 
-Camera* Camera::_visitingCamera = nullptr;
 experimental::Viewport Camera::_defaultViewport;
 
-
-Camera* Camera::cameraBackground = nullptr;
-Camera* Camera::cameraElements = nullptr;
-
-void Camera::setCameraBackground(Camera* camera)
-{
-  Camera::cameraBackground = camera;
-}
-
-void Camera::setCameraElements(Camera* camera)
-{
-  Camera::cameraElements = camera;
-}
-
-Camera* Camera::getCameraBackground()
-{
-  return Camera::cameraBackground;
-}
-
-Camera* Camera::getCameraElements()
-{
-  return Camera::cameraElements;
-}
-
-Camera* Camera::getDefaultCamera()
-{
-    auto scene = Director::getInstance()->getRunningScene();
-    if(scene)
-    {
-        return scene->getDefaultCamera();
-    }
-
-    return nullptr;
-}
-
-Camera* Camera::create()
+Camera* Camera::create(Node* parent)
 {
     Camera* camera = new (std::nothrow) Camera();
     camera->initDefault();
     camera->autorelease();
     camera->setDepth(0.f);
+
+    if(parent)
+    {
+      parent->addChild(camera);
+    }
     
     return camera;
 }

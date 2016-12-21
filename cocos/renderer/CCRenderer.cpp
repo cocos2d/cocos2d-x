@@ -876,7 +876,7 @@ bool Renderer::checkVisibility(const Mat4 &transform, const Size &size)
     
     //If draw to Rendertexture, return true directly.
     // only cull the default camera. The culling algorithm is valid for default camera.
-    if (!scene || (scene && scene->_defaultCamera != Camera::getVisitingCamera()))
+    if (!scene)
         return true;
 
     auto director = Director::getInstance();
@@ -887,7 +887,7 @@ bool Renderer::checkVisibility(const Mat4 &transform, const Size &size)
     float hSizeY = size.height/2;
     Vec3 v3p(hSizeX, hSizeY, 0);
     transform.transformPoint(&v3p);
-    Vec2 v2p = Camera::getVisitingCamera()->projectGL(v3p);
+    Vec2 v2p = scene->getCamera()->projectGL(v3p);
 
     // convert content size to world coordinates
     float wshw = std::max(fabsf(hSizeX * transform.m[0] + hSizeY * transform.m[4]), fabsf(hSizeX * transform.m[0] - hSizeY * transform.m[4]));

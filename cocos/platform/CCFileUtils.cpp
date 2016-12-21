@@ -37,7 +37,7 @@ THE SOFTWARE.
 #ifdef MINIZIP_FROM_SYSTEM
 #include <minizip/unzip.h>
 #else // from our embedded sources
-#include "unzip.h"
+//#include "unzip.h"
 #endif
 #include <sys/stat.h>
 
@@ -676,47 +676,7 @@ unsigned char* FileUtils::getFileData(const std::string& filename, const char* m
 
 unsigned char* FileUtils::getFileDataFromZip(const std::string& zipFilePath, const std::string& filename, ssize_t *size)
 {
-    unsigned char * buffer = nullptr;
-    unzFile file = nullptr;
-    *size = 0;
-
-    do
-    {
-        CC_BREAK_IF(zipFilePath.empty());
-
-        file = unzOpen(FileUtils::getInstance()->getSuitableFOpen(zipFilePath).c_str());
-        CC_BREAK_IF(!file);
-
-        // FIXME: Other platforms should use upstream minizip like mingw-w64
-#ifdef MINIZIP_FROM_SYSTEM
-        int ret = unzLocateFile(file, filename.c_str(), NULL);
-#else
-        int ret = unzLocateFile(file, filename.c_str(), 1);
-#endif
-        CC_BREAK_IF(UNZ_OK != ret);
-
-        char filePathA[260];
-        unz_file_info fileInfo;
-        ret = unzGetCurrentFileInfo(file, &fileInfo, filePathA, sizeof(filePathA), nullptr, 0, nullptr, 0);
-        CC_BREAK_IF(UNZ_OK != ret);
-
-        ret = unzOpenCurrentFile(file);
-        CC_BREAK_IF(UNZ_OK != ret);
-
-        buffer = (unsigned char*)malloc(fileInfo.uncompressed_size);
-        int CC_UNUSED readedSize = unzReadCurrentFile(file, buffer, static_cast<unsigned>(fileInfo.uncompressed_size));
-        CCASSERT(readedSize == 0 || readedSize == (int)fileInfo.uncompressed_size, "the file size is wrong");
-
-        *size = fileInfo.uncompressed_size;
-        unzCloseCurrentFile(file);
-    } while (0);
-
-    if (file)
-    {
-        unzClose(file);
-    }
-
-    return buffer;
+  return nullptr;
 }
 
 std::string FileUtils::getNewFilename(const std::string &filename) const

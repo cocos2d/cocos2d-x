@@ -280,8 +280,7 @@ public:
      * after calling this method will be 1.0f). If the vector
      * already has unit length or if the length of the vector
      * is zero, this method does nothing.
-     * 
-     * @return This vector, after the normalization occurs.
+     *
      */
     void normalize();
 

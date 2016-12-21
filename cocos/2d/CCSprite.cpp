@@ -650,7 +650,7 @@ void Sprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
         return;
     }
 
-  CC_2D_CULLING_FUNCTION
+  //CC_2D_CULLING_FUNCTION
   {
       _trianglesCommand.init(_globalZOrder,
           _texture->getName(),

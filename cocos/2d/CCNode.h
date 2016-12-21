@@ -2041,8 +2041,8 @@ private:
   public:
   int id;
 
-  bool shadow = true;
-  bool light = true;
+  bool shadow = false;
+  bool light = false;
 
   framework::Touch* touch;
   framework::State* state;

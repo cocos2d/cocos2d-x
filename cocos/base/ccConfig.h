@@ -407,21 +407,14 @@ THE SOFTWARE.
 #define CC_ENABLE_NEW_AUDIO_API 0
 #endif
 
-/** @def CC_USE_DEFAULT_CAMERA
- * Is using default camera for a 2D game.
- */
-#ifndef CC_USE_DEFAULT_CAMERA
-#define CC_USE_DEFAULT_CAMERA 0
-#endif
-
 /** @def CC_2D_CULLING_FUNCTION
- * Is using default camera for a 2D game.
+ * @TODO: Check is it default 2D camera;
  */
 #ifndef CC_2D_CULLING_FUNCTION
 #define CC_2D_CULLING_FUNCTION \
 auto position = AABB(Vec3::ZERO, Vec3(this->getContentSize().width, this->getContentSize().height, this->getPositionZ())); \
 position.transform(this->getNodeToWorldTransform()); \
-if(Camera::getCameraBackground()->isVisibleInFrustum(&position))
+if(Director::getInstance()->getRunningScene()->getCamera()->isVisibleInFrustum(&position))
 #endif
 
 #endif // __CCCONFIG_H__
