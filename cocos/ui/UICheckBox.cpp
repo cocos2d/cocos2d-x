@@ -96,17 +96,22 @@ CheckBox* CheckBox::create(const std::string& backGround,
     
 void CheckBox::onTouchEnded(Touch *touch, Event *unusedEvent)
 {
-    if (_isSelected)
+    bool highlight = _highlight;
+
+    AbstractCheckButton::onTouchEnded(touch, unusedEvent);
+
+    if (highlight)
     {
-        setSelected(false);
-        AbstractCheckButton::onTouchEnded(touch, unusedEvent);
-        dispatchSelectChangedEvent(false);
-    }
-    else
-    {
-        setSelected(true);
-        AbstractCheckButton::onTouchEnded(touch, unusedEvent);
-        dispatchSelectChangedEvent(true);
+        if (_isSelected)
+        {
+            setSelected(false);
+            dispatchSelectChangedEvent(false);
+        }
+        else
+        {
+            setSelected(true);
+            dispatchSelectChangedEvent(true);
+        }
     }
 }
     
