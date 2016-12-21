@@ -28,8 +28,6 @@
 
 using namespace spine;
 
-std::unordered_map<spTrackEntry*, jsval> _spTrackEntryMap;
-
 jsval speventdata_to_jsval(JSContext* cx, spEventData& v)
 {
     JS::RootedObject tmp(cx, JS_NewObject(cx, nullptr, JS::NullPtr(), JS::NullPtr()));
@@ -279,45 +277,68 @@ jsval spanimation_to_jsval(JSContext* cx, spAnimation& v)
     return JSVAL_NULL;
 }
 
+bool jsb_spine_TrackEntry_get_next(JSContext *cx, JS::HandleObject obj, JS::HandleId id, JS::MutableHandleValue vp)
+{
+    JS::RootedObject jsthis(cx, obj);
+    js_proxy_t *proxy = jsb_get_js_proxy(jsthis);
+    spTrackEntry* cobj = (spTrackEntry *)(proxy ? proxy->ptr : NULL);
+    if (cobj) {
+        JS::RootedValue jsret(cx, JS::NullValue());
+        if (cobj->next)
+        {
+            jsret = sptrackentry_to_jsval(cx, *cobj->next);
+        }
+        vp.set(jsret);
+        return true;
+    }
+    else {
+        CCLOGERROR("jsb_spine_TrackEntry_get_next : Invalid Native Object");
+        return false;
+    }
+}
+
+bool jsb_spine_TrackEntry_get_previous(JSContext *cx, JS::HandleObject obj, JS::HandleId id, JS::MutableHandleValue vp)
+{
+    JS::RootedObject jsthis(cx, obj);
+    js_proxy_t *proxy = jsb_get_js_proxy(jsthis);
+    spTrackEntry* cobj = (spTrackEntry *)(proxy ? proxy->ptr : NULL);
+    if (cobj) {
+        JS::RootedValue jsret(cx, JS::NullValue());
+        if (cobj->previous)
+        {
+            jsret = sptrackentry_to_jsval(cx, *cobj->previous);
+        }
+        vp.set(jsret);
+        return true;
+    }
+    else {
+        CCLOGERROR("jsb_spine_TrackEntry_get_previous : Invalid Native Object");
+        return false;
+    }
+}
+
 jsval sptrackentry_to_jsval(JSContext* cx, spTrackEntry& v)
 {
-    JS::RootedObject tmp(cx, JS_NewObject(cx, nullptr, JS::NullPtr(), JS::NullPtr()));
-    if (!tmp) return JSVAL_NULL;
-    
-    JS::RootedValue nextVal(cx);
-    if (v.next)
+    js_proxy_t *proxy = jsb_get_native_proxy(&v);
+    if (proxy)
     {
-        auto nextPtr = v.next;
-        auto entry = _spTrackEntryMap.find(nextPtr);
-        if (entry == _spTrackEntryMap.end())
-        {
-            _spTrackEntryMap.emplace(nextPtr, nextVal.get());
-            nextVal = sptrackentry_to_jsval(cx, *v.next);
-        }
-        else
-        {
-            nextVal.set(entry->second);
-        }
+        JS::RootedObject entry(cx, proxy->obj);
+        return OBJECT_TO_JSVAL(entry);
     }
-
-    JS::RootedValue previousVal(cx);
-    if (v.previous)
+    else
     {
-        auto previousPtr = v.previous;
-        auto entry = _spTrackEntryMap.find(previousPtr);
-        if (entry == _spTrackEntryMap.end())
-        {
-            _spTrackEntryMap.emplace(previousPtr, previousVal.get());
-            previousVal = sptrackentry_to_jsval(cx, *previousPtr);
-        }
-        else
-        {
-            previousVal.set(entry->second);
-        }
-    }
-
-    JS::RootedValue jsanimation(cx, spanimation_to_jsval(cx, *v.animation));
-    bool ok = JS_DefineProperty(cx, tmp, "delay", v.delay, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+        JS::RootedObject tmp(cx, JS_NewObject(cx, nullptr, JS::NullPtr(), JS::NullPtr()));
+        if (!tmp) return JSVAL_NULL;
+        
+        jsb_new_proxy(&v, tmp);
+        js_add_FinalizeHook(cx, tmp, false);
+        
+#if COCOS2D_DEBUG > 1
+        CCLOG("++++++WEAK_REF++++++ Cpp(spine::TrackEntry): %p - JS: %p", &v, tmp.get());
+#endif // COCOS2D_DEBUG
+        
+        JS::RootedValue jsanimation(cx, spanimation_to_jsval(cx, *v.animation));
+        bool ok = JS_DefineProperty(cx, tmp, "delay", v.delay, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
         JS_DefineProperty(cx, tmp, "time", v.time, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
         JS_DefineProperty(cx, tmp, "lastTime", v.lastTime, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
         JS_DefineProperty(cx, tmp, "endTime", v.endTime, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
@@ -325,15 +346,16 @@ jsval sptrackentry_to_jsval(JSContext* cx, spTrackEntry& v)
         JS_DefineProperty(cx, tmp, "mixTime", v.mixTime, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
         JS_DefineProperty(cx, tmp, "mixDuration", v.mixDuration, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
         JS_DefineProperty(cx, tmp, "animation", jsanimation, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
-        JS_DefineProperty(cx, tmp, "next", nextVal, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
-        JS_DefineProperty(cx, tmp, "previous", previousVal, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    
-    if (ok)
-    {
-        return OBJECT_TO_JSVAL(tmp);
+        JS_DefineProperty(cx, tmp, "next", JS::UndefinedHandleValue, JSPROP_ENUMERATE | JSPROP_PERMANENT, jsb_spine_TrackEntry_get_next) &&
+        JS_DefineProperty(cx, tmp, "previous", JS::UndefinedHandleValue, JSPROP_ENUMERATE | JSPROP_PERMANENT, jsb_spine_TrackEntry_get_previous);
+        
+        if (ok)
+        {
+            return OBJECT_TO_JSVAL(tmp);
+        }
+        
+        return JSVAL_NULL;
     }
-    
-    return JSVAL_NULL;
 }
 
 bool jsb_cocos2dx_spine_findBone(JSContext *cx, uint32_t argc, jsval *vp)
@@ -481,7 +503,6 @@ bool jsb_cocos2dx_spine_getCurrent(JSContext *cx, uint32_t argc, jsval *vp)
             if (ret)
             {
                 jsret = sptrackentry_to_jsval(cx, *ret);
-                _spTrackEntryMap.clear();
             }
         } while (0);
         
@@ -495,7 +516,6 @@ bool jsb_cocos2dx_spine_getCurrent(JSContext *cx, uint32_t argc, jsval *vp)
             if (ret)
             {
                 jsret = sptrackentry_to_jsval(cx, *ret);
-                _spTrackEntryMap.clear();
             }
         } while (0);
         
@@ -532,7 +552,6 @@ bool jsb_cocos2dx_spine_setAnimation(JSContext *cx, uint32_t argc, jsval *vp)
             if (ret)
             {
                 jsret = sptrackentry_to_jsval(cx, *ret);
-                _spTrackEntryMap.clear();
             }
         } while(0);
         
@@ -570,7 +589,6 @@ bool jsb_cocos2dx_spine_addAnimation(JSContext *cx, uint32_t argc, jsval *vp)
             if (ret)
             {
                 jsret = sptrackentry_to_jsval(cx, *ret);
-                _spTrackEntryMap.clear();
             }
         } while(0);
         
@@ -596,7 +614,6 @@ bool jsb_cocos2dx_spine_addAnimation(JSContext *cx, uint32_t argc, jsval *vp)
             if (ret)
             {
                 jsret = sptrackentry_to_jsval(cx, *ret);
-                _spTrackEntryMap.clear();
             }
         } while(0);
         
