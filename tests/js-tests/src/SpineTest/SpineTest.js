@@ -216,7 +216,7 @@ var SpineTestLayerFFD = SpineTestLayer.extend({
     ctor: function(){
         this._super(cc.color(0,0,0,255), cc.color(98,99,117,255));
 
-        var skeletonNode = sp.SkeletonAnimation.create("spine/goblins.json", "spine/goblins.atlas", 1.5);
+        var skeletonNode = sp.SkeletonAnimation.createWithJsonFile("spine/goblins.json", "spine/goblins.atlas", 1.5);
         skeletonNode.setAnimation(0, "walk", true);
         skeletonNode.setSkin("goblin");
 
@@ -260,7 +260,7 @@ var SpineTestPerformanceLayer = SpineTestLayer.extend({
             event: cc.EventListener.TOUCH_ONE_BY_ONE,
             onTouchBegan: function(touch, event){
                 var pos = self.convertToNodeSpace(touch.getLocation());
-                var skeletonNode = sp.SkeletonAnimation.create("spine/goblins.json", "spine/goblins.atlas", 1.5);
+                var skeletonNode = sp.SkeletonAnimation.createWithJsonFile("spine/goblins.json", "spine/goblins.atlas", 1.5);
                 skeletonNode.setAnimation(0, "walk", true);
                 skeletonNode.setSkin("goblin");
 
