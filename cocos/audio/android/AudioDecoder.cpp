@@ -54,6 +54,8 @@ namespace cocos2d { namespace experimental {
 
 //-----------------------------------------------------------------
 
+static std::mutex __SLPlayerMutex;
+
 static int toBufferSizeInBytes(int bufferSizeInFrames, int sampleSize, int channelCount)
 {
     return bufferSizeInFrames * sampleSize * channelCount;
@@ -115,7 +117,10 @@ AudioDecoder::AudioDecoder(SLEngineItf engineItf, const std::string &url, int bu
 AudioDecoder::~AudioDecoder()
 {
     ALOGV("~AudioDecoder() %p", this);
-    SL_DESTROY_OBJ(_playObj);
+    {
+        std::lock_guard<std::mutex> lk(__SLPlayerMutex);
+        SL_DESTROY_OBJ(_playObj);
+    }
     ALOGV("After destroying SL play object");
     if (_assetFd > 0)
     {
@@ -264,16 +269,19 @@ bool AudioDecoder::decodeToPcm()
     decDest.pLocator = (void *) &decBuffQueue;
     decDest.pFormat = (void *) &pcm;
 
-    /* Create the audio player */
-    result = (*_engineItf)->CreateAudioPlayer(_engineItf, &player, &decSource, &decDest,
-                                              NUM_EXPLICIT_INTERFACES_FOR_PLAYER, iidArray,
-                                              required);
-    SL_RETURN_VAL_IF_FAILED(result, false, "CreateAudioPlayer failed");
+    {
+        std::lock_guard<std::mutex> lk(__SLPlayerMutex);
+        /* Create the audio player */
+        result = (*_engineItf)->CreateAudioPlayer(_engineItf, &player, &decSource, &decDest,
+                                                  NUM_EXPLICIT_INTERFACES_FOR_PLAYER, iidArray,
+                                                  required);
+        SL_RETURN_VAL_IF_FAILED(result, false, "CreateAudioPlayer failed");
 
-    _playObj = player;
-    /* Realize the player in synchronous mode. */
-    result = (*player)->Realize(player, SL_BOOLEAN_FALSE);
-    SL_RETURN_VAL_IF_FAILED(result, false, "Realize failed");
+        _playObj = player;
+        /* Realize the player in synchronous mode. */
+        result = (*player)->Realize(player, SL_BOOLEAN_FALSE);
+        SL_RETURN_VAL_IF_FAILED(result, false, "Realize failed");
+    }
 
     /* Get the play interface which is implicit */
     result = (*player)->GetInterface(player, SL_IID_PLAY, (void *) &playItf);
@@ -469,7 +477,10 @@ bool AudioDecoder::decodeToPcm()
     ALOGV("Stopped decoding");
 
     /* Destroy the UrlAudioPlayer object */
-    SL_DESTROY_OBJ(_playObj);
+    {
+        std::lock_guard<std::mutex> lk(__SLPlayerMutex);
+        SL_DESTROY_OBJ(_playObj);
+    }
 
     ALOGV("After destroy player ...");
 
