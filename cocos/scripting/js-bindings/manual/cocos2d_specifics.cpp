@@ -600,6 +600,7 @@ void js_add_object_reference(JS::HandleValue owner, JS::HandleValue target)
     ScriptingCore *engine = ScriptingCore::getInstance();
     JSContext *cx = engine->getGlobalContext();
     JS::RootedObject global(cx, engine->getGlobalObject());
+    JSAutoCompartment(cx, global);
     JS::RootedObject jsbObj(cx);
     get_or_create_js_obj(cx, global, "jsb", &jsbObj);
     JS::RootedValue jsbVal(cx, OBJECT_TO_JSVAL(jsbObj));
@@ -624,10 +625,11 @@ void js_remove_object_reference(JS::HandleValue owner, JS::HandleValue target)
     }
     ScriptingCore *engine = ScriptingCore::getInstance();
     JSContext *cx = engine->getGlobalContext();
+    JS::RootedObject global(cx, engine->getGlobalObject());
+    JSAutoCompartment(cx, global);
     JS::RootedObject ownerObj(cx, owner.toObjectOrNull());
     JS::RootedObject targetObj(cx, target.toObjectOrNull());
-
-    JS::RootedObject global(cx, engine->getGlobalObject());
+    
     JS::RootedObject jsbObj(cx);
     get_or_create_js_obj(cx, global, "jsb", &jsbObj);
     JS::RootedValue jsbVal(cx, OBJECT_TO_JSVAL(jsbObj));
@@ -654,6 +656,7 @@ void js_add_object_root(JS::HandleValue target)
     ScriptingCore *engine = ScriptingCore::getInstance();
     JSContext *cx = engine->getGlobalContext();
     JS::RootedObject global(cx, engine->getGlobalObject());
+    JSAutoCompartment(cx, global);
     JS::RootedObject jsbObj(cx);
     get_or_create_js_obj(cx, global, "jsb", &jsbObj);
     JS::RootedValue jsbVal(cx, OBJECT_TO_JSVAL(jsbObj));
@@ -682,6 +685,8 @@ void js_remove_object_root(JS::HandleValue target)
     }
     ScriptingCore *engine = ScriptingCore::getInstance();
     JSContext *cx = engine->getGlobalContext();
+    JS::RootedObject global(cx, engine->getGlobalObject());
+    JSAutoCompartment(cx, global);
     JS::RootedObject targetObj(cx, target.toObjectOrNull());
     js_proxy_t *pTarget = jsb_get_js_proxy(targetObj);
     if (!pTarget)
@@ -689,7 +694,6 @@ void js_remove_object_root(JS::HandleValue target)
         return;
     }
 
-    JS::RootedObject global(cx, engine->getGlobalObject());
     JS::RootedObject jsbObj(cx);
     get_or_create_js_obj(cx, global, "jsb", &jsbObj);
     JS::RootedValue jsbVal(cx, OBJECT_TO_JSVAL(jsbObj));
@@ -1240,7 +1244,7 @@ void JSScheduleWrapper::dump()
     schedFunc_proxy_t *current_func, *tmp_func;
     int jsfuncTargetCount = 0;
     HASH_ITER(hh, _schedFunc_target_ht, current_func, tmp_func) {
-        auto targets = current->targets;
+        auto targets = current_func->targets;
         for (const auto& pObj : *targets)
         {
             CCLOG("js func ( %p ), native target[%d]=( %p )", current_func->jsfuncObj, jsfuncTargetCount, pObj);
@@ -1339,7 +1343,7 @@ bool js_CCNode_unschedule(JSContext *cx, uint32_t argc, jsval *vp)
 
         auto targetArray = JSScheduleWrapper::getTargetForSchedule(args.get(0));
         if (targetArray) {
-            CCLOGINFO("unschedule target number: %ld", static_cast<long>(targetArray->count()));
+            CCLOGINFO("unschedule target number: %ld", static_cast<long>(targetArray->size()));
 
             for (const auto& tmp : *targetArray)
             {
@@ -1718,7 +1722,7 @@ bool js_cocos2dx_CCNode_scheduleUpdate(JSContext *cx, uint32_t argc, jsval *vp)
 
         if (!bFound)
         {
-            tmpCobj = new (std::nothrow) JSScheduleWrapper(thisValue);
+            tmpCobj = new (std::nothrow) JSScheduleWrapper(JS::NullHandleValue);
             tmpCobj->autorelease();
             tmpCobj->setJSCallbackThis(thisValue);
             tmpCobj->setJSCallbackFunc(jsUpdateFunc);
