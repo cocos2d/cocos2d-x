@@ -817,11 +817,11 @@ void Scene::setCapture(bool state)
        * | @Should add shadow frame buffer texture to the default 2D camera;
        *
        */
-      /*if(Support::multiSampling())
+      if(Support::multiSampling())
       {
         this->capture.texture = new Entity(this->capture.resolve_frame->getRenderTarget()->getTexture(), this, true);
       }
-      else*/
+      else
       {
         this->capture.texture = new Entity(this->capture.frame->getRenderTarget()->getTexture(), this, true);
       }
