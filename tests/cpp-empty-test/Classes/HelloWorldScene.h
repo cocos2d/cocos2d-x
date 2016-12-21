@@ -3,7 +3,7 @@
 
 #include "cocos2d.h"
 
-class HelloWorld : public cocos2d::Layer
+class HelloWorld : public cocos2d::Scene
 {
 public:
     virtual bool init() override;
