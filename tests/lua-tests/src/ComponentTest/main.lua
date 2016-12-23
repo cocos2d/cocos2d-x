@@ -7,7 +7,7 @@ local function ComponentTestLayer()
     layer:addChild(bgLayer);
 
     -- create game scene
-    local sceneLuaComponent = cc.ComponentLua:create("src/ComponentTest/scene.lua");
+    local sceneLuaComponent = cc.ComponentLua:create("ComponentTest/scene.lua");
     sceneLuaComponent:setName("sceneLuaComponent");
     layer:addComponent(sceneLuaComponent);
 
@@ -17,7 +17,7 @@ local function ComponentTestLayer()
     local origin = cc.Director:getInstance():getVisibleOrigin();
     player:setPosition(origin.x + player:getContentSize().width/2,
                        origin.y + visibleSize.height/2);
-    local playerComponent = cc.ComponentLua:create("src/ComponentTest/player.lua");
+    local playerComponent = cc.ComponentLua:create("ComponentTest/player.lua");
     player:addComponent(playerComponent);
     layer:addChild(player);
 

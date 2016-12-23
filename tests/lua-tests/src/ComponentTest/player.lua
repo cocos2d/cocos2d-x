@@ -2,7 +2,7 @@
 local player = {
     generateProjectile = function (self, x, y)
         local projectile = cc.Sprite:create("components/Projectile.png", cc.rect(0, 0, 20, 20))
-        local scriptComponent = cc.ComponentLua:create("src/ComponentTest/projectile.lua")
+        local scriptComponent = cc.ComponentLua:create("ComponentTest/projectile.lua")
         projectile:addComponent(scriptComponent)
         self:getOwner():getParent():addChild(projectile)
 
