@@ -62,3 +62,9 @@ sprite->setCenterRectNormalized(Rect(x, y, width, heigh));
 ```
 
 More detail information please refer to the comments of `Sprite::setCenterNormalized()`.
+
+## Known issue
+
+lua project will crash on iOS simulator if using Xcode 8.2+. The issue is caused by luajit. We thought it is a but of Xcode because there is not problem if using Xcode 8.1 or lower version. 
+
+We can not fix it in v3.14, can track [the issue](https://github.com/cocos2d/cocos2d-x/issues/17043) for the progress of this issue.
