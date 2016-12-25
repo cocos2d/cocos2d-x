@@ -16,7 +16,7 @@
 NS_CC_BEGIN
 namespace spritebuilder {
     
-    ScrollListView* ScrollListView::create(NodeLoader *templateLoader, float mainScale, float additionalScale)
+ScrollListView* ScrollListView::create(NodeLoader *templateLoader, float mainScale, float additionalScale)
 {
     ScrollListView* widget = new (std::nothrow) ScrollListView(templateLoader, mainScale, additionalScale);
     if (widget && widget->init())

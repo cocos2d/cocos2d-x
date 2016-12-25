@@ -11,8 +11,8 @@ class CC_DLL ButtonLoader : public WidgetLoader {
 public:
     
     static ButtonLoader *create();
-    virtual Node *createNodeInstance(const Size &parentSize, float mainScale, float additionalScale, CCBXReaderOwner *owner, Node *rootNode, CCBXReaderOwner *rootOwner) override;
-    virtual void setSpecialProperties(Node* node, const Size &parentSize, float mainScale, float additionalScale, CCBXReaderOwner *owner, Node *rootNode, CCBXReaderOwner *rootOwner) override;
+    virtual Node *createNodeInstance(const Size &parentSize, float mainScale, float additionalScale, CCBXReaderOwner *owner, Node *rootNode, CCBXReaderOwner *rootOwner) const override;
+    virtual void setSpecialProperties(Node* node, const Size &parentSize, float mainScale, float additionalScale, CCBXReaderOwner *owner, Node *rootNode, CCBXReaderOwner *rootOwner) const override;
     
 CC_CONSTRUCTOR_ACCESS:
     ButtonLoader();
@@ -33,13 +33,13 @@ protected:
     virtual void onHandlePropTypeOffsets(const std::string &propertyName, bool isExtraProp, const Vec4 &value) override;
 
 private:
-    cocos2d::Vec4 _margins;
-    cocos2d::Vec4 _offset;
-    cocos2d::Color4B _outlineColor;
-    cocos2d::Color4B _shadowColor;
-    float _outlineWidth;
-    float _shadowBlurRadius;
-    cocos2d::Size _shadowOffset;
+    Vec4 _margins;
+    Vec4 _offset;
+    Color4B _outlineColor;
+    Color4B _shadowColor;
+    FloatScaleDescription _outlineWidth;
+    FloatScaleDescription _shadowBlurRadius;
+    PositionDescription _shadowOffset;
     float _zoomOnClick;
     
     Color3B _normalLabelColor;

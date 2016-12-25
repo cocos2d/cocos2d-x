@@ -23,47 +23,49 @@ ImageViewLoader *ImageViewLoader::create()
     return ret;
 }
 
-Node *ImageViewLoader::createNodeInstance(const Size &parentSize, float mainScale, float additionalScale, CCBXReaderOwner *owner, Node *rootNode, CCBXReaderOwner *rootOwner)
+Node *ImageViewLoader::createNodeInstance(const Size &parentSize, float mainScale, float additionalScale, CCBXReaderOwner *owner, Node *rootNode, CCBXReaderOwner *rootOwner) const
 {
-    Rect margin(_margins.x,_margins.y,1.0-_margins.z-_margins.x,1.0-_margins.w-_margins.y);
-    
     ui::ImageView *imageView = ui::ImageView::create();
-    imageView->ignoreContentAdaptWithSize(false);
     imageView->setAnchorPoint(Vec2(0.0f, 0.0f));
+    return imageView;
+}
+
+void ImageViewLoader::setSpecialProperties(Node* node, const Size &parentSize, float mainScale, float additionalScale, CCBXReaderOwner *owner, Node *rootNode, CCBXReaderOwner *rootOwner) const
+{
+    WidgetLoader::setSpecialProperties(node, parentSize, mainScale, additionalScale, owner, rootNode, rootOwner);
+    ui::ImageView *imageView = static_cast<ui::ImageView*>(node);
+
+    Rect margin(_margins.x,_margins.y,1.0-_margins.z-_margins.x,1.0-_margins.w-_margins.y);
+    imageView->ignoreContentAdaptWithSize(false);
     switch(_spriteFrame.type)
     {
         case SpriteFrameDescription::TextureResType::LOCAL:
-            {
-                Size size = _spriteFrame.spriteFrame->getOriginalSize();
-                Rect realMargins(margin.origin.x*size.width,margin.origin.y*size.height,margin.size.width*size.width,margin.size.height*size.height);
-                imageView->loadTexture(_spriteFrame.path, ui::Widget::TextureResType::LOCAL);
-                imageView->setScale9Enabled(_margins != Vec4::ZERO && _renderingType == (int)ui::Scale9Sprite::RenderingType::SLICE);
-                imageView->setTileEnabled(_renderingType == (int)ui::Scale9Sprite::RenderingType::TILED);
-                imageView->setCapInsets(realMargins);
-                imageView->ignoreContentAdaptWithSize(false);
-            }
+        {
+            Size size = _spriteFrame.spriteFrame->getOriginalSize();
+            Rect realMargins(margin.origin.x*size.width,margin.origin.y*size.height,margin.size.width*size.width,margin.size.height*size.height);
+            imageView->loadTexture(_spriteFrame.path, ui::Widget::TextureResType::LOCAL);
+            imageView->setScale9Enabled(_margins != Vec4::ZERO && _renderingType == (int)ui::Scale9Sprite::RenderingType::SLICE);
+            imageView->setTileEnabled(_renderingType == (int)ui::Scale9Sprite::RenderingType::TILED);
+            imageView->setCapInsets(realMargins);
+            imageView->ignoreContentAdaptWithSize(false);
+        }
             break;
         case SpriteFrameDescription::TextureResType::PLIST:
-            {
-                Size size = _spriteFrame.spriteFrame->getOriginalSize();
-                Rect realMargins(margin.origin.x*size.width,margin.origin.y*size.height,margin.size.width*size.width,margin.size.height*size.height);
-                imageView->loadTexture(_spriteFrame.path, ui::Widget::TextureResType::PLIST);
-                imageView->setScale9Enabled(_margins != Vec4::ZERO && _renderingType == (int)ui::Scale9Sprite::RenderingType::SLICE);
-                imageView->setTileEnabled(_renderingType == (int)ui::Scale9Sprite::RenderingType::TILED);
-                imageView->setCapInsets(realMargins);
-                imageView->ignoreContentAdaptWithSize(false);
-            }
+        {
+            Size size = _spriteFrame.spriteFrame->getOriginalSize();
+            Rect realMargins(margin.origin.x*size.width,margin.origin.y*size.height,margin.size.width*size.width,margin.size.height*size.height);
+            imageView->loadTexture(_spriteFrame.path, ui::Widget::TextureResType::PLIST);
+            imageView->setScale9Enabled(_margins != Vec4::ZERO && _renderingType == (int)ui::Scale9Sprite::RenderingType::SLICE);
+            imageView->setTileEnabled(_renderingType == (int)ui::Scale9Sprite::RenderingType::TILED);
+            imageView->setCapInsets(realMargins);
+            imageView->ignoreContentAdaptWithSize(false);
+        }
             break;
         default:
             break;
     };
     imageView->setImageScale(getAbsoluteScale(mainScale, additionalScale, _imageScale.scale, _imageScale.type) / CCBXReader::getResolutionScale());
     imageView->setBlendFunc(_blendFunc);
-    return imageView;
-}
-
-void ImageViewLoader::setSpecialProperties(Node* node, const Size &parentSize, float mainScale, float additionalScale, CCBXReaderOwner *owner, Node *rootNode, CCBXReaderOwner *rootOwner)
-{
 }
 
 ImageViewLoader::ImageViewLoader()

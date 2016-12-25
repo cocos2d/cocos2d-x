@@ -18,17 +18,17 @@ NodeGradientLoader *NodeGradientLoader::create()
     return ret;
 }
 
-Node *NodeGradientLoader::createNodeInstance(const Size &parentSize, float mainScale, float additionalScale, CCBXReaderOwner *owner, Node *rootNode, CCBXReaderOwner *rootOwner)
+Node *NodeGradientLoader::createNodeInstance(const Size &parentSize, float mainScale, float additionalScale, CCBXReaderOwner *owner, Node *rootNode, CCBXReaderOwner *rootOwner) const
 {
     LayerGradient *layer = LayerGradient::create();
     layer->setAnchorPoint(cocos2d::Vec2(0.0f, 0.0f));
-    layer->ignoreAnchorPointForPosition(false);
+    layer->setIgnoreAnchorPointForPosition(false);
     layer->setOpacity(255);
     layer->setColor(Color3B::WHITE);
     return layer;
 }
 
-void NodeGradientLoader::setSpecialProperties(Node* node, const Size &parentSize, float mainScale, float additionalScale, CCBXReaderOwner *owner, Node *rootNode, CCBXReaderOwner *rootOwner)
+void NodeGradientLoader::setSpecialProperties(Node* node, const Size &parentSize, float mainScale, float additionalScale, CCBXReaderOwner *owner, Node *rootNode, CCBXReaderOwner *rootOwner) const
 {
     NodeColorLoader::setSpecialProperties(node, parentSize, mainScale, additionalScale, owner, rootNode, rootOwner);
     LayerGradient *layerColor = static_cast<LayerGradient*>(node);

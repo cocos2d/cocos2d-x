@@ -36,34 +36,49 @@ LabelTTFLoader *LabelTTFLoader::create()
     return ret;
 }
 
-Node *LabelTTFLoader::createNodeInstance(const Size &parentSize, float mainScale, float additionalScale, CCBXReaderOwner *owner, Node *rootNode, CCBXReaderOwner *rootOwner)
+Node *LabelTTFLoader::createNodeInstance(const Size &parentSize, float mainScale, float additionalScale, CCBXReaderOwner *owner, Node *rootNode, CCBXReaderOwner *rootOwner) const
 {
-    Label *label = nullptr;
-    if (FileUtils::getInstance()->isFileExist(_font))
-        label = Label::createWithTTF(_label, _font, getAbsoluteScale(mainScale, additionalScale, _fontSize.scale, _fontSize.type), getAbsoluteSize(mainScale, additionalScale, _dimensions.size, _dimensions.widthUnits, _dimensions.heightUnits, parentSize), _textHAlignment, _textVAlignment);
-    else
-        label = Label::createWithSystemFont(_label, _font, getAbsoluteScale(mainScale, additionalScale, _fontSize.scale, _fontSize.type), getAbsoluteSize(mainScale, additionalScale, _dimensions.size, _dimensions.widthUnits, _dimensions.heightUnits, parentSize), _textHAlignment, _textVAlignment);
+    Label *label = Label::create();
     label->setAnchorPoint(cocos2d::Vec2(0,0));
     return label;
 }
 
-void LabelTTFLoader::setSpecialProperties(Node* node, const Size &parentSize, float mainScale, float additionalScale, CCBXReaderOwner *owner, Node *rootNode, CCBXReaderOwner *rootOwner)
+void LabelTTFLoader::setSpecialProperties(Node* node, const Size &parentSize, float mainScale, float additionalScale, CCBXReaderOwner *owner, Node *rootNode, CCBXReaderOwner *rootOwner) const
 {
-    Label *label = static_cast<Label*>(node);
-    //label->setBlendFunc(_blendFunc);
-    float outlineWidth = getAbsoluteScale(mainScale, additionalScale, _outlineWidth.scale, _outlineWidth.type);
-    float shadowBlurRadius = getAbsoluteScale(mainScale, additionalScale, _shadowBlurRadius.scale, _shadowBlurRadius.type);
-    Vec2 shadowOffset = getAbsolutePosition(mainScale, additionalScale, _shadowOffset.pos, _shadowOffset.referenceCorner, _shadowOffset.xUnits, _shadowOffset.yUnits, parentSize);
-    if (_outlineColor.a > 0 && outlineWidth > 0)
-        label->enableOutline(_outlineColor, outlineWidth);
-    if (_shadowColor.a > 0)
-        label->enableShadow(_shadowColor, Size(shadowOffset.x, shadowOffset.y), shadowBlurRadius);
-    if(_fontColor != Color4B::WHITE)
-        label->setTextColor(_fontColor);
-    
-    Label::Overflow overflow = static_cast<Label::Overflow>(_overflowLabel);
-    label->setOverflow((_adjustsFontSizeToFit && overflow == Label::Overflow::NONE) ? Label::Overflow::SHRINK : overflow);
-    label->setLineBreakWithoutSpace(!_wordWrapLabel);
+    Label *label = dynamic_cast<Label*>(node);
+    if(label)
+    {
+        Size dimensions = getAbsoluteSize(mainScale, additionalScale, _dimensions.size, _dimensions.widthUnits, _dimensions.heightUnits, parentSize);
+        float fontSize = getAbsoluteScale(mainScale, additionalScale, _fontSize.scale, _fontSize.type);
+        if (FileUtils::getInstance()->isFileExist(_font))
+        {
+            TTFConfig ttfConfig(_font, fontSize, GlyphCollection::DYNAMIC);
+            label->setTTFConfig(ttfConfig);
+
+        }
+        else
+        {
+            label->setSystemFontName(_font);
+            label->setSystemFontSize(fontSize);
+        }
+        
+        label->setDimensions(dimensions.width, dimensions.height);
+        label->setString(_label);
+        label->setBlendFunc(_blendFunc);
+        float outlineWidth = getAbsoluteScale(mainScale, additionalScale, _outlineWidth.scale, _outlineWidth.type);
+        float shadowBlurRadius = getAbsoluteScale(mainScale, additionalScale, _shadowBlurRadius.scale, _shadowBlurRadius.type);
+        Vec2 shadowOffset = getAbsolutePosition(mainScale, additionalScale, _shadowOffset.pos, _shadowOffset.referenceCorner, _shadowOffset.xUnits, _shadowOffset.yUnits, parentSize);
+        if (_outlineColor.a > 0 && outlineWidth > 0)
+            label->enableOutline(_outlineColor, outlineWidth);
+        if (_shadowColor.a > 0)
+            label->enableShadow(_shadowColor, Size(shadowOffset.x, shadowOffset.y), shadowBlurRadius);
+        if(_fontColor != Color4B::WHITE)
+            label->setTextColor(_fontColor);
+        
+        Label::Overflow overflow = static_cast<Label::Overflow>(_overflowLabel);
+        label->setOverflow((_adjustsFontSizeToFit && overflow == Label::Overflow::NONE) ? Label::Overflow::SHRINK : overflow);
+        label->setLineBreakWithoutSpace(!_wordWrapLabel);
+    }
 }
 
 LabelTTFLoader::LabelTTFLoader()

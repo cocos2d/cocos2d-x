@@ -17,21 +17,21 @@ WidgetLoader *WidgetLoader::create()
     return ret;
 }
     
-Node *WidgetLoader::createNodeInstance(const Size &parentSize, float mainScale, float additionalScale, CCBXReaderOwner *owner, Node *rootNode, CCBXReaderOwner *rootOwner)
+Node *WidgetLoader::createNodeInstance(const Size &parentSize, float mainScale, float additionalScale, CCBXReaderOwner *owner, Node *rootNode, CCBXReaderOwner *rootOwner) const
 {
     ui::Widget *widget = ui::Widget::create();
     widget->setAnchorPoint(Vec2(0.0f, 0.0f));
     return widget;
 }
     
-void WidgetLoader::setSpecialProperties(Node* node, const Size &parentSize, float mainScale, float additionalScale, CCBXReaderOwner *owner, Node *rootNode, CCBXReaderOwner *rootOwner)
+void WidgetLoader::setSpecialProperties(Node* node, const Size &parentSize, float mainScale, float additionalScale, CCBXReaderOwner *owner, Node *rootNode, CCBXReaderOwner *rootOwner) const
 {
     ui::Widget *widget = dynamic_cast<ui::Widget*>(node);
     widget->setEnabled(_enabled);
     widget->ignoreContentAdaptWithSize(false);
 }
     
-void WidgetLoader::setCallbacks(Node* node, CCBXReaderOwner *owner, Node *rootNode, CCBXReaderOwner *parentOwner)
+void WidgetLoader::setCallbacks(Node* node, CCBXReaderOwner *owner, Node *rootNode, CCBXReaderOwner *parentOwner) const
 {
     ccReaderClickCallback click;
     ccReaderTouchCallback touch;

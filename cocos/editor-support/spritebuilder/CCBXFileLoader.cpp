@@ -14,7 +14,7 @@ FileLoader *FileLoader::create()
     return ret;
 }
 
-Node *FileLoader::createNodeInstance(const Size &parentSize, float mainScale, float additionalScale, CCBXReaderOwner *owner, Node *rootNode, CCBXReaderOwner *rootOwner)
+Node *FileLoader::createNodeInstance(const Size &parentSize, float mainScale, float additionalScale, CCBXReaderOwner *owner, Node *rootNode, CCBXReaderOwner *rootOwner) const
 {
     if(!_file)
         return nullptr;
@@ -32,14 +32,13 @@ FileLoader::FileLoader()
     
 FileLoader::~FileLoader()
 {
-    CC_SAFE_RELEASE(_file);
 }
     
-void FileLoader::onHandlePropTypeCCBFile(const std::string &propertyName, bool isExtraProp, NodeLoader *value)
+void FileLoader::onHandlePropTypeCCBFile(const std::string &propertyName, bool isExtraProp, const std::pair<std::string, NodeLoader*> &value)
 {
     if(propertyName == PROPERTY_CCBFILE) {
-        _file = value;
-        CC_SAFE_RETAIN(_file);
+        _filePath = value.first;
+        _file = value.second;
     } else {
         NodeLoader::onHandlePropTypeCCBFile(propertyName, isExtraProp, value);
     }
@@ -54,7 +53,15 @@ void FileLoader::onHandlePropTypeAnimation(const std::string &propertyName, bool
     }
 }
     
-void FileLoader::onNodeLoaded(Node *node)
+class FileLoaderHackAcces : public NodeLoader
+{
+public:
+    void callOnNodeLoaded(Node *node) const {
+        NodeLoader::onNodeLoaded(node);
+    }
+};
+    
+void FileLoader::onNodeLoaded(Node *node) const
 {
     CCBAnimationManager *manager = CCBAnimationManager::fromNode(node);
     if(manager)
@@ -72,7 +79,7 @@ void FileLoader::onNodeLoaded(Node *node)
                 break;
         }
     }
-    _file->onNodeLoaded(node);
+    static_cast<FileLoaderHackAcces*>(_file.get())->callOnNodeLoaded(node);
     NodeLoader::onNodeLoaded(node);
 }
 

@@ -771,12 +771,12 @@ private:
         return ret;
     }
     
-    NodeLoader *parsePropTypeCCBFile(const NodeLoaderLibrary &library, NodeLoaderCache &cache)
+    std::pair<std::string, NodeLoader*> parsePropTypeCCBFile(const NodeLoaderLibrary &library, NodeLoaderCache &cache)
     {
         std::string ccbFileName = _rootPath + readCachedString();
         
         if(ccbFileName.empty())
-            return nullptr;
+            return std::pair<std::string, NodeLoader*>(ccbFileName, nullptr);
         
         /* Change path extension to .ccbi. */
         std::string ccbFileWithoutPathExtension = deletePathExtension(ccbFileName.c_str());
@@ -851,7 +851,7 @@ private:
                 }
             }
         }*/
-        return ret;
+        return std::pair<std::string, NodeLoader*>(ccbFileName, ret);
     }
     
     std::string parsePropTypeSoundFile()
@@ -1131,8 +1131,8 @@ private:
                 }
                 case PropertyType::CCB_FILE:
                 {
-                    NodeLoader * ccbNodeLoader = parsePropTypeCCBFile(library, cache);
-                    loader->onHandlePropTypeCCBFile(propertyName, isExtraProp, ccbNodeLoader);
+                    std::pair<std::string, NodeLoader*> loaderPair = parsePropTypeCCBFile(library, cache);
+                    loader->onHandlePropTypeCCBFile(propertyName, isExtraProp, loaderPair);
                     break;
                 }
                 case PropertyType::COLOR4:

@@ -24,42 +24,42 @@ LoadingBarLoader *LoadingBarLoader::create()
     return ret;
 }
 
-Node *LoadingBarLoader::createNodeInstance(const Size &parentSize, float mainScale, float additionalScale, CCBXReaderOwner *owner, Node *rootNode, CCBXReaderOwner *rootOwner)
+Node *LoadingBarLoader::createNodeInstance(const Size &parentSize, float mainScale, float additionalScale, CCBXReaderOwner *owner, Node *rootNode, CCBXReaderOwner *rootOwner) const
 {
-    Rect margin(_margins.x,_margins.y,1.0-_margins.z-_margins.x,1.0-_margins.w-_margins.y);
     ui::LoadingBar *loadingBar = ui::LoadingBar::create();
+    return loadingBar;
+}
+
+void LoadingBarLoader::setSpecialProperties(Node* node, const Size &parentSize, float mainScale, float additionalScale, CCBXReaderOwner *owner, Node *rootNode, CCBXReaderOwner *rootOwner) const
+{
+    WidgetLoader::setSpecialProperties(node, parentSize, mainScale, additionalScale, owner, rootNode, rootOwner);
+    ui::LoadingBar *loadingBar = static_cast<ui::LoadingBar*>(node);
+    Rect margin(_margins.x,_margins.y,1.0-_margins.z-_margins.x,1.0-_margins.w-_margins.y);
     loadingBar->setAnchorPoint(Vec2(0.0f, 0.0f));
     loadingBar->setScale9Enabled(true);
     switch(_spriteFrame.type)
     {
         case SpriteFrameDescription::TextureResType::LOCAL:
-            {
-                Size size = _spriteFrame.spriteFrame->getOriginalSize();
-                Rect realMargins(margin.origin.x*size.width,margin.origin.y*size.height,margin.size.width*size.width,margin.size.height*size.height);
-                loadingBar->loadTexture(_spriteFrame.path, ui::Widget::TextureResType::LOCAL);
-                loadingBar->setCapInsets(realMargins);
-            }
+        {
+            Size size = _spriteFrame.spriteFrame->getOriginalSize();
+            Rect realMargins(margin.origin.x*size.width,margin.origin.y*size.height,margin.size.width*size.width,margin.size.height*size.height);
+            loadingBar->loadTexture(_spriteFrame.path, ui::Widget::TextureResType::LOCAL);
+            loadingBar->setCapInsets(realMargins);
+        }
             break;
         case SpriteFrameDescription::TextureResType::PLIST:
-            {
-                Size size = _spriteFrame.spriteFrame->getOriginalSize();
-                Rect realMargins(margin.origin.x*size.width,margin.origin.y*size.height,margin.size.width*size.width,margin.size.height*size.height);
-                loadingBar->loadTexture(_spriteFrame.path, ui::Widget::TextureResType::PLIST);
-                loadingBar->setCapInsets(realMargins);
-            }
+        {
+            Size size = _spriteFrame.spriteFrame->getOriginalSize();
+            Rect realMargins(margin.origin.x*size.width,margin.origin.y*size.height,margin.size.width*size.width,margin.size.height*size.height);
+            loadingBar->loadTexture(_spriteFrame.path, ui::Widget::TextureResType::PLIST);
+            loadingBar->setCapInsets(realMargins);
+        }
             break;
         default:
             break;
     };
     loadingBar->setImageScale(getAbsoluteScale(mainScale, additionalScale, _imageScale.scale, _imageScale.type) / CCBXReader::getResolutionScale());
     loadingBar->setPercent(_percentage);
-    return loadingBar;
-}
-
-void LoadingBarLoader::setSpecialProperties(Node* node, const Size &parentSize, float mainScale, float additionalScale, CCBXReaderOwner *owner, Node *rootNode, CCBXReaderOwner *rootOwner)
-{
-    WidgetLoader::setSpecialProperties(node, parentSize, mainScale, additionalScale, owner, rootNode, rootOwner);
-    ui::LoadingBar *loadingBar = static_cast<ui::LoadingBar*>(node);
     loadingBar->setDirection(_direction);
 }
     

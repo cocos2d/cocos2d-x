@@ -13,17 +13,17 @@ NodeColorLoader *NodeColorLoader::create()
     return ret;
 }
 
-Node *NodeColorLoader::createNodeInstance(const Size &parentSize, float mainScale, float additionalScale, CCBXReaderOwner *owner, Node *rootNode, CCBXReaderOwner *rootOwner)
+Node *NodeColorLoader::createNodeInstance(const Size &parentSize, float mainScale, float additionalScale, CCBXReaderOwner *owner, Node *rootNode, CCBXReaderOwner *rootOwner) const
 {
     LayerColor *layer = LayerColor::create();
     layer->setAnchorPoint(cocos2d::Vec2(0.0f, 0.0f));
-    layer->ignoreAnchorPointForPosition(false);
+    layer->setIgnoreAnchorPointForPosition(false);
     layer->setOpacity(255);
     layer->setColor(Color3B::WHITE);
     return layer;
 }
 
-void NodeColorLoader::setSpecialProperties(Node* node, const Size &parentSize, float mainScale, float additionalScale, CCBXReaderOwner *owner, Node *rootNode, CCBXReaderOwner *rootOwner)
+void NodeColorLoader::setSpecialProperties(Node* node, const Size &parentSize, float mainScale, float additionalScale, CCBXReaderOwner *owner, Node *rootNode, CCBXReaderOwner *rootOwner) const
 {
     LayerColor *layerColor = static_cast<LayerColor*>(node);
     layerColor->setBlendFunc(_blendFunc);

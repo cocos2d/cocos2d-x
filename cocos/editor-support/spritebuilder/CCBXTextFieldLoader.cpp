@@ -27,10 +27,17 @@ TextFieldLoader *TextFieldLoader::create()
     return ret;
 }
 
-Node *TextFieldLoader::createNodeInstance(const Size &parentSize, float mainScale, float additionalScale, CCBXReaderOwner *owner, Node *rootNode, CCBXReaderOwner *rootOwner)
+Node *TextFieldLoader::createNodeInstance(const Size &parentSize, float mainScale, float additionalScale, CCBXReaderOwner *owner, Node *rootNode, CCBXReaderOwner *rootOwner) const
 {
     ui::TextField *textField = ui::TextField::create(_placeholder, _font, getAbsoluteScale(mainScale, additionalScale, _fontSize.scale, _fontSize.type));
     textField->setAnchorPoint(Vec2(0.0f, 0.0f));
+    return textField;
+}
+
+void TextFieldLoader::setSpecialProperties(Node* node, const Size &parentSize, float mainScale, float additionalScale, CCBXReaderOwner *owner, Node *rootNode, CCBXReaderOwner *rootOwner) const
+{
+    WidgetLoader::setSpecialProperties(node, parentSize, mainScale, additionalScale, owner, rootNode, rootOwner);
+    ui::TextField *textField = static_cast<ui::TextField*>(node);
     textField->setString(_label);
     textField->setTextVerticalAlignment(_textVAlignment);
     textField->setTextHorizontalAlignment(_textHAlignment);
@@ -42,12 +49,6 @@ Node *TextFieldLoader::createNodeInstance(const Size &parentSize, float mainScal
         textField->setMaxLength(_maxLength);
     }
     textField->setPasswordEnabled(_password);
-    return textField;
-}
-
-void TextFieldLoader::setSpecialProperties(Node* node, const Size &parentSize, float mainScale, float additionalScale, CCBXReaderOwner *owner, Node *rootNode, CCBXReaderOwner *rootOwner)
-{
-    WidgetLoader::setSpecialProperties(node, parentSize, mainScale, additionalScale, owner, rootNode, rootOwner);
 }
 
 TextFieldLoader::TextFieldLoader()

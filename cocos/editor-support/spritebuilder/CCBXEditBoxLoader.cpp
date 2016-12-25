@@ -39,7 +39,7 @@ EditBoxLoader *EditBoxLoader::create()
     return ret;
 }
 
-Node *EditBoxLoader::createNodeInstance(const Size &parentSize, float mainScale, float additionalScale, CCBXReaderOwner *owner, Node *rootNode, CCBXReaderOwner *rootOwner)
+Node *EditBoxLoader::createNodeInstance(const Size &parentSize, float mainScale, float additionalScale, CCBXReaderOwner *owner, Node *rootNode, CCBXReaderOwner *rootOwner) const
 {
     Size editBoxSize(200,100);
     Rect margin(_margins.x,_margins.y,1.0-_margins.z-_margins.x,1.0-_margins.w-_margins.y);
@@ -52,6 +52,13 @@ Node *EditBoxLoader::createNodeInstance(const Size &parentSize, float mainScale,
     ui::Scale9Sprite *normalSprite = ui::Scale9Sprite::createWithSpriteFrame(_normalSpriteFrame.spriteFrame, realMargins);
     
     ui::EditBox *editBox = ui::EditBox::create(editBoxSize, normalSprite);
+    return editBox;
+}
+
+void EditBoxLoader::setSpecialProperties(Node* node, const Size &parentSize, float mainScale, float additionalScale, CCBXReaderOwner *owner, Node *rootNode, CCBXReaderOwner *rootOwner) const
+{
+    WidgetLoader::setSpecialProperties(node, parentSize, mainScale, additionalScale, owner, rootNode, rootOwner);
+    ui::EditBox *editBox = static_cast<ui::EditBox*>(node);
     editBox->setAnchorPoint(Vec2(0.0f, 0.0f));
     editBox->setText(_label.c_str());
     editBox->setPlaceHolder(_placeholder.c_str());
@@ -64,12 +71,6 @@ Node *EditBoxLoader::createNodeInstance(const Size &parentSize, float mainScale,
     editBox->setInputMode(static_cast<ui::EditBox::InputMode>(_inputMode));
     editBox->setInputFlag(static_cast<ui::EditBox::InputFlag>(_inputFlag));
     editBox->setReturnType(static_cast<ui::EditBox::KeyboardReturnType>(_keyboardReturnType));
-    return editBox;
-}
-
-void EditBoxLoader::setSpecialProperties(Node* node, const Size &parentSize, float mainScale, float additionalScale, CCBXReaderOwner *owner, Node *rootNode, CCBXReaderOwner *rootOwner)
-{
-    WidgetLoader::setSpecialProperties(node, parentSize, mainScale, additionalScale, owner, rootNode, rootOwner);
 }
 
 EditBoxLoader::EditBoxLoader()

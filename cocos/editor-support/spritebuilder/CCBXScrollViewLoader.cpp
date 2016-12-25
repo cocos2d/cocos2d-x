@@ -27,7 +27,7 @@ ScrollViewLoader *ScrollViewLoader::create()
     return ret;
 }
 
-Node *ScrollViewLoader::createNodeInstance(const Size &parentSize, float mainScale, float additionalScale, CCBXReaderOwner *owner, Node *rootNode, CCBXReaderOwner *rootOwner)
+Node *ScrollViewLoader::createNodeInstance(const Size &parentSize, float mainScale, float additionalScale, CCBXReaderOwner *owner, Node *rootNode, CCBXReaderOwner *rootOwner) const
 {
     ui::ScrollView *scrollView = ui::ScrollView::create();
     scrollView->setAnchorPoint(Vec2(0.0f, 0.0f));
@@ -35,7 +35,7 @@ Node *ScrollViewLoader::createNodeInstance(const Size &parentSize, float mainSca
     return scrollView;
 }
 
-void ScrollViewLoader::setSpecialProperties(Node* node, const Size &parentSize, float mainScale, float additionalScale, CCBXReaderOwner *owner, Node *rootNode, CCBXReaderOwner *rootOwner)
+void ScrollViewLoader::setSpecialProperties(Node* node, const Size &parentSize, float mainScale, float additionalScale, CCBXReaderOwner *owner, Node *rootNode, CCBXReaderOwner *rootOwner) const
 {
     WidgetLoader::setSpecialProperties(node, parentSize, mainScale, additionalScale, owner, rootNode, rootOwner);
     ui::ScrollView *scrollView = static_cast<ui::ScrollView*>(node);
@@ -98,11 +98,11 @@ void ScrollViewLoader::onHandlePropTypeSize(const std::string &propertyName, boo
     WidgetLoader::onHandlePropTypeSize(propertyName, isExtraProp, value);
 }
 
-void ScrollViewLoader::onHandlePropTypeCCBFile(const std::string &propertyName, bool isExtraProp, NodeLoader *value)
+void ScrollViewLoader::onHandlePropTypeCCBFile(const std::string &propertyName, bool isExtraProp, const std::pair<std::string, NodeLoader*> &value)
 {
     if(propertyName == PROPERTY_CONTENTNODE) {
-        _file = value;
-        CC_SAFE_RETAIN(_file);
+        _filePath = value.first;
+        _file = value.second;
     } else {
         WidgetLoader::onHandlePropTypeCCBFile(propertyName, isExtraProp, value);
     }

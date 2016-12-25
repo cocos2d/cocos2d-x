@@ -32,12 +32,18 @@ SliderLoader *SliderLoader::create()
     ret->autorelease();
     return ret;
 }
-Node *SliderLoader::createNodeInstance(const Size &parentSize, float mainScale, float additionalScale, CCBXReaderOwner *owner, Node *rootNode, CCBXReaderOwner *rootOwner)
+Node *SliderLoader::createNodeInstance(const Size &parentSize, float mainScale, float additionalScale, CCBXReaderOwner *owner, Node *rootNode, CCBXReaderOwner *rootOwner) const
 {
-    Rect margin(_margins.x,_margins.y,1.0-_margins.z-_margins.x,1.0-_margins.w-_margins.y);
     ui::Slider *slider = ui::Slider::create();
     slider->setAnchorPoint(Vec2(0.0f, 0.0f));
-    slider->ignoreContentAdaptWithSize(false);
+    return slider;
+
+}
+void SliderLoader::setSpecialProperties(Node* node, const Size &parentSize, float mainScale, float additionalScale, CCBXReaderOwner *owner, Node *rootNode, CCBXReaderOwner *rootOwner) const
+{
+    WidgetLoader::setSpecialProperties(node, parentSize, mainScale, additionalScale, owner, rootNode, rootOwner);
+    ui::Slider *slider = static_cast<ui::Slider*>(node);
+    Rect margin(_margins.x,_margins.y,1.0-_margins.z-_margins.x,1.0-_margins.w-_margins.y);
     switch(_background.type)
     {
         case SpriteFrameDescription::TextureResType::LOCAL:
@@ -148,11 +154,6 @@ Node *SliderLoader::createNodeInstance(const Size &parentSize, float mainScale, 
     slider->setPercent(_percent);
     slider->setZoomScale(_zoomScale - 1.0f);
     slider->setImageScale(getAbsoluteScale(mainScale, additionalScale, _imageScale.scale, _imageScale.type) / CCBXReader::getResolutionScale());
-    return slider;
-
-}
-void SliderLoader::setSpecialProperties(Node* node, const Size &parentSize, float mainScale, float additionalScale, CCBXReaderOwner *owner, Node *rootNode, CCBXReaderOwner *rootOwner)
-{
     //WidgetLoader::setSpecialProperties(node, parentSize, mainScale, additionalScale);
     //ui::Slider *slider = dynamic_cast<ui::Slider*>(node);
 }

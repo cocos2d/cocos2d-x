@@ -83,72 +83,66 @@ ParticleSystemQuadLoader *ParticleSystemQuadLoader::create()
     return ret;
 }
     
-Node *ParticleSystemQuadLoader::createNodeInstance(const Size &parentSize, float mainScale, float additionalScale, CCBXReaderOwner *owner, Node *rootNode, CCBXReaderOwner *rootOwner)
+Node *ParticleSystemQuadLoader::createNodeInstance(const Size &parentSize, float mainScale, float additionalScale, CCBXReaderOwner *owner, Node *rootNode, CCBXReaderOwner *rootOwner) const
 {
     return BuilderParticleSystemQuad::createWithTotalParticles(_totalParticles);
 }
     
-void ParticleSystemQuadLoader::setSpecialProperties(Node* node, const Size &parentSize, float mainScale, float additionalScale, CCBXReaderOwner *owner, Node *rootNode, CCBXReaderOwner *rootOwner)
+void ParticleSystemQuadLoader::setSpecialProperties(Node* node, const Size &parentSize, float mainScale, float additionalScale, CCBXReaderOwner *owner, Node *rootNode, CCBXReaderOwner *rootOwner) const
 {
     BuilderParticleSystemQuad *particle = static_cast<BuilderParticleSystemQuad*>(node);
     
-    // additive
-    particle->setBlendAdditive(true);
+    particle->setPosVar(_posVar * CCBXReader::getResolutionScale());
     
-    if(particle)
+    particle->setEmissionRate(_emissionRate);
+    particle->setDuration(_duration);
+    particle->setLife(_life.x);
+    particle->setLifeVar(_life.y);
+    particle->setStartSize(_startSize.x * CCBXReader::getResolutionScale());
+    particle->setStartSizeVar(_startSize.y * CCBXReader::getResolutionScale());
+    particle->setEndSize(_endSize.x * CCBXReader::getResolutionScale());
+    particle->setEndSizeVar(_endSize.y * CCBXReader::getResolutionScale());
+    particle->setStartSpin(_startSpin.x);
+    particle->setStartSpinVar(_startSpin.y);
+    particle->setEndSpin(_endSpin.x);
+    particle->setEndSpinVar(_endSpin.y);
+    particle->setAngle(_angle.x);
+    particle->setAngleVar(_angle.y);
+    particle->setTexture(_texture);
+    particle->setBlendFunc(_blendFunc);
+    particle->setEmitterMode(_emitterMode);
+    particle->setPositionType(_positionType);
+    
+    switch(_emitterMode)
     {
-        particle->setPosVar(_posVar * CCBXReader::getResolutionScale());
-        
-        particle->setEmissionRate(_emissionRate);
-        particle->setDuration(_duration);
-        particle->setLife(_life.x);
-        particle->setLifeVar(_life.y);
-        particle->setStartSize(_startSize.x * CCBXReader::getResolutionScale());
-        particle->setStartSizeVar(_startSize.y * CCBXReader::getResolutionScale());
-        particle->setEndSize(_endSize.x * CCBXReader::getResolutionScale());
-        particle->setEndSizeVar(_endSize.y * CCBXReader::getResolutionScale());
-        particle->setStartSpin(_startSpin.x);
-        particle->setStartSpinVar(_startSpin.y);
-        particle->setEndSpin(_endSpin.x);
-        particle->setEndSpinVar(_endSpin.y);
-        particle->setAngle(_angle.x);
-        particle->setAngleVar(_angle.y);
-        particle->setTexture(_texture);
-        particle->setBlendFunc(_blendFunc);
-        particle->setEmitterMode(_emitterMode);
-        particle->setPositionType(_positionType);
-        
-        switch(_emitterMode)
-        {
-            case ParticleSystem::Mode::GRAVITY:
-                particle->setTangentialAccel(_tangentialAccel.x * CCBXReader::getResolutionScale());
-                particle->setTangentialAccelVar(_tangentialAccel.y * CCBXReader::getResolutionScale());
-                particle->setRadialAccel(_radialAccel.x * CCBXReader::getResolutionScale());
-                particle->setRadialAccelVar(_radialAccel.y * CCBXReader::getResolutionScale());
-                particle->setGravity(_gravity * CCBXReader::getResolutionScale());
-                particle->setSpeed(_speed.x * CCBXReader::getResolutionScale());
-                particle->setSpeedVar(_speed.y * CCBXReader::getResolutionScale());
-                break;
-            case ParticleSystem::Mode::RADIUS:
-                particle->setStartRadius(_startRadius.x * CCBXReader::getResolutionScale());
-                particle->setStartRadiusVar(_startRadius.y * CCBXReader::getResolutionScale());
-                particle->setEndRadius(_endRadius.x * CCBXReader::getResolutionScale());
-                particle->setEndRadiusVar(_endRadius.y * CCBXReader::getResolutionScale());
-                particle->setRotatePerSecond(_rotatePerSecond.x);
-                particle->setRotatePerSecondVar(_rotatePerSecond.y);
-                break;
-        }
-        particle->setStartColor(_startColor);
-        particle->setStartColorVar(_startColorVar);
-        particle->setEndColor(_endColor);
-        particle->setEndColorVar(_endColorVar);
+        case ParticleSystem::Mode::GRAVITY:
+            particle->setTangentialAccel(_tangentialAccel.x * CCBXReader::getResolutionScale());
+            particle->setTangentialAccelVar(_tangentialAccel.y * CCBXReader::getResolutionScale());
+            particle->setRadialAccel(_radialAccel.x * CCBXReader::getResolutionScale());
+            particle->setRadialAccelVar(_radialAccel.y * CCBXReader::getResolutionScale());
+            particle->setGravity(_gravity * CCBXReader::getResolutionScale());
+            particle->setSpeed(_speed.x * CCBXReader::getResolutionScale());
+            particle->setSpeedVar(_speed.y * CCBXReader::getResolutionScale());
+            break;
+        case ParticleSystem::Mode::RADIUS:
+            particle->setStartRadius(_startRadius.x * CCBXReader::getResolutionScale());
+            particle->setStartRadiusVar(_startRadius.y * CCBXReader::getResolutionScale());
+            particle->setEndRadius(_endRadius.x * CCBXReader::getResolutionScale());
+            particle->setEndRadiusVar(_endRadius.y * CCBXReader::getResolutionScale());
+            particle->setRotatePerSecond(_rotatePerSecond.x);
+            particle->setRotatePerSecondVar(_rotatePerSecond.y);
+            break;
     }
+    particle->setStartColor(_startColor);
+    particle->setStartColorVar(_startColorVar);
+    particle->setEndColor(_endColor);
+    particle->setEndColorVar(_endColorVar);
     particle->setResetOnVisible(_resetOnVisible);
-    }
+}
  
 ParticleSystemQuadLoader::ParticleSystemQuadLoader()
     :_texture(nullptr)
-    ,_blendFunc({GL_ONE, GL_ONE})
+    ,_blendFunc({GL_SRC_ALPHA, GL_ONE})
     ,_emitterMode(ParticleSystem::Mode::GRAVITY)
     ,_positionType(ParticleSystem::PositionType::FREE)
     ,_posVar(40.0f, 20.0f)
@@ -265,7 +259,6 @@ void ParticleSystemQuadLoader::onHandlePropTypeBlendFunc(const std::string &prop
 {
     if(propertyName == PROPERTY_BLENDFUNC) {
         _blendFunc = pBlendFunc;
-        //((ParticleSystemQuad *)pNode)->setBlendFunc(pBlendFunc);
     } else {
         NodeLoader::onHandlePropTypeBlendFunc(propertyName, isExtraProp, pBlendFunc);
     }
