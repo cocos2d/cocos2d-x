@@ -1,4 +1,4 @@
-coocs2d-x-3.14 Dec 19 2016
+coocs2d-x-3.14 Dec 22 2016
 
 [NEW]           Add Spine binary file format support
 [NEW]           Action: add a method to get the number of actions running in a given node with specific tag
@@ -7,7 +7,8 @@ coocs2d-x-3.14 Dec 19 2016
 [NEW]           Can disable multi touch on Android
 [NEW]           EventDispatcher: Add hasEventListener to check listener existance
 [NEW]           EditBox: add horizontal text alignment
-[NEW]           Sprite: support scale9 feature
+[NEW]           EventDispatcher: added `hasEvent()` to check if an event is added
+[NEW]           Sprite: support slice9 feature
 [NEW]           Slider: add methods to get _slidBallNormalRenderer
 [NEW]           Desktop: add a method to toggle between fullscreen and windowed
 [NEW]           Desktop: add events for window resize, focus and unfocus
@@ -42,9 +43,12 @@ coocs2d-x-3.14 Dec 19 2016
 
 [FIX]           AsstsManagerEx: project.manifest may be downloaded twice
 [FIX]           AudioEngine: can not play large ogg file
+[FIX]           AudioEngine: may have noise if playing mp3 files on iOS/Mac OS X
+[FIX]           AudioEngine: can not play effect/music entirely on iOS and Mac
 [FIX]           ClippingNode: effect is wrong if threshold is set to a value not equal to 1 first then set to 1
 [FIX]           Compiling error if `USE_STD_UNORDERED_MAP == 0`
 [FIX]           ControlSwitch::create() may cause crash
+[FIX]           Downloader: may crash if it is released before finishing downloading task
 [FIX]           EditBox: fix single line and multiline text alighment, now single line will be center and multiline will be top align vertically by default
 [FIX]           EditBox: placeholder font not being set corretly for multiline text field on iOS
 [FIX]           EditBox: doesn't show text on Mac OS 10.12
@@ -83,8 +87,9 @@ coocs2d-x-3.14 Dec 19 2016
 [FIX]           Android: MessageBox inverted parames
 [FIX]           Android: cause deadlock if preload the same file more than 3 times in preload callback
 [FIX]           Android: WebView: base url can not work
-[FIX]           Mac: AudioEngine: can not play effect/music entirely on iOS and Mac
+[FIX]           Android: may crash if `AudioEngineManager.getProperty(PROPERTY_OUTPUT_FRAMES_PER_BUFFER)` returns null
 [FIX]           Mac: Downloader can not access https website
+[FIX]           Win32: fix crash caused by `Helper::getSubStringOfUTF8String()` in debug mode
 [FIX]           Linux: FMOD issue
 [FIX]           Linux: Application::openURL can not work
 [FIX]           Desktop: crash upon exit when NotificationNode exists
@@ -93,6 +98,7 @@ coocs2d-x-3.14 Dec 19 2016
 [FIX]           Lua: result of radian2angle is wrong
 [FIX]           Lua: iskindof_ doesn't work correctly
 [FIX]           Lua: new lua project crashes compiling with VS2015 release mode
+[FIX]           Lua: ComponentLua doesn't support binary code
 [FIX]           JSB: `jsb.addRoot is not a function` error caused by cc.GLProgramState.setUniformCallback
 [FIX]           JSB: Fix spine TrackEntry conversion crash issue
 [FIX]           JSB: Fix CallbackWrapper and FunctionWrapper crash during deallocation in new memory model
