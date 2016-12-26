@@ -57,7 +57,7 @@ class FileLoaderHackAcces : public NodeLoader
 {
 public:
     void callOnNodeLoaded(Node *node) const {
-        NodeLoader::onNodeLoaded(node);
+        onNodeLoaded(node);
     }
 };
     
