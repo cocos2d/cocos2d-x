@@ -1116,8 +1116,13 @@ var TMXIsoVertexZ = TMXFixBugLayer.extend({
         this._super();
     },
     repositionSprite:function (dt) {
-        var p = this.tamara.getPosition();
-        this.tamara.vertexZ = -(p.y + 32) / 16;
+        if (cc.sys.isNative) {
+            this.tamara.vertexZ = -(this.tamara.y + 32) / 16;
+        }
+        else {
+            var layer = this.tamara.parent;
+            this.tamara.vertexZ = layer.vertexZ + cc.renderer.assignedZStep * Math.floor(30 - this.tamara.y / 32) / 30;
+        }
     },
     //
     // Automation
@@ -1185,10 +1190,15 @@ var TMXOrthoVertexZ = TMXFixBugLayer.extend({
         this._super();
     },
     repositionSprite:function (dt) {
-        // tile height is 101x81
-        // map size: 12x12
-        var layer = this.tamara.parent;
-        this.tamara.vertexZ = layer.vertexZ + cc.renderer.assignedZStep * Math.floor(12 - this.tamara.y / 81) / 12;
+        if (cc.sys.isNative) {
+            this.tamara.vertexZ = -(this.tamara.y + 81) / 81;
+        }
+        else {
+            // tile height is 101x81
+            // map size: 12x12
+            var layer = this.tamara.parent;
+            this.tamara.vertexZ = layer.vertexZ + cc.renderer.assignedZStep * Math.floor(12 - this.tamara.y / 81) / 12;
+        }
     },
     //
     // Automation

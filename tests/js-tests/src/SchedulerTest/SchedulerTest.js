@@ -505,7 +505,7 @@ var ScheduleUsingSchedulerTest = SchedulerTestLayer.extend({
     onExit: function() {
         // should unscheudle here if it is not unscheduled before exit
         this.unscheduleAll();
-        this._super.onExit();
+        this._super();
     },
     title:function () {
         return "Schedule / Unschedule using Scheduler";
