@@ -292,6 +292,8 @@ public:
     ResourceData getBallPressedFile();
     ResourceData getBallDisabledFile();
     ResourceData getBallMouseOverFile();
+    
+    Node *getSlidBarNode() const;
 
 CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
