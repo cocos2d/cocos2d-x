@@ -16,6 +16,7 @@ coocs2d-x-3.14 Dec 22 2016
 [NEW]           JSB: add cc.sys.now() and perfromance.now(), the last one is more accurate
 [NEW]           Lua: add cc.vec3 functions: add, sub and dot
 [NEW]           Lua: use luajit 2.1.0-beta2
+[NEW]           Web: Add cc.CONCURRENCY_HTTP_REQUEST_COUNT to control max concurrent task count for XMLHttpRequest
 
 [REFINE]        Add NDEBUG for cpp template Xcode project
 [REFINE]        DrawNode: support float line width
@@ -72,6 +73,7 @@ coocs2d-x-3.14 Dec 22 2016
 [FIX]           3D: Sprite3D::getMesh() may cause crash if it doesn't have any mesh
 [FIX]           3D: wrong Skybox fov
 [FIX]           3D: Sprite3D can't release its texture
+[FIX]           AssetsManagerEx: Fail to decompress when sub directory is not created
 [FIX]           ScrollView: crash of scroll to top or left
 [FIX]           SoketIO: memory leak
 [FIX]           iOS: Vibrate effect can not work in not silent mode
@@ -110,8 +112,12 @@ coocs2d-x-3.14 Dec 22 2016
 [FIX]           Web: Change bright style on 'setEnabled' call of ccui.Widget
 [FIX]           Web: Fix Editbox can't input in full screen mode
 [FIX]           Web: Fix texture issue on some Android devices by always set vertexAttribPointer  
-[FIX]           Web: Made xhr ontimeout callback work on all browsers
+[FIX]           Web: Make xhr ontimeout callback work on all browsers
 [FIX]           Web: Fix clear color not normalized issue
+[FIX]           Web: Fix clipping node rendering issue when alphaThreshold = 1
+[FIX]           Web: Fix nested scroll view rendering issue
+[FIX]           Web: Make orderDirty flag properly set for node
+[FIX]           Web: Fix ccui.Slider gray state not available issue
 
 cocos2d-x-3.13.1 Sep 13 2016
 
