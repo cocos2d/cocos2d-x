@@ -124,37 +124,37 @@ AudioCache::~AudioCache()
 
 void AudioCache::readDataTask(unsigned int selfId)
 {
-    //Note: It's in sub thread
-    ALOGVV("readDataTask, cache id=%u", selfId);
+	//Note: It's in sub thread
+	ALOGVV("readDataTask begin, cache id=%u", selfId);
 
-    _readDataTaskMutex.lock();
-    _state = State::LOADING;
+	_readDataTaskMutex.lock();
+	_state = State::LOADING;
 
 	AudioDecoder* decoder = AudioDecoderManager::createDecoder(_fileFullPath.c_str());
-    do
-    {
+	do
+	{
 		if (decoder == nullptr || !decoder->open(_fileFullPath.c_str()))
-            break;
+			break;
 
 		const uint32_t originalTotalFrames = decoder->getTotalFrames();
 		const uint32_t bytesPerFrame = decoder->getBytesPerFrame();
 		const uint32_t sampleRate = decoder->getSampleRate();
 		const uint32_t channelCount = decoder->getChannelCount();
 
-        uint32_t totalFrames = originalTotalFrames;
-        uint32_t dataSize = totalFrames * bytesPerFrame;
-        uint32_t remainingFrames = totalFrames;
-        uint32_t adjustFrames = 0;
+		uint32_t totalFrames = originalTotalFrames;
+		uint32_t dataSize = totalFrames * bytesPerFrame;
+		uint32_t remainingFrames = totalFrames;
+		uint32_t adjustFrames = 0;
 
-        _format = channelCount > 1 ? AL_FORMAT_STEREO16 : AL_FORMAT_MONO16;
-        _sampleRate = (ALsizei)sampleRate;
-        _duration = 1.0f * totalFrames / sampleRate;
-        _totalFrames = totalFrames;
+		_format = channelCount > 1 ? AL_FORMAT_STEREO16 : AL_FORMAT_MONO16;
+		_sampleRate = (ALsizei)sampleRate;
+		_duration = 1.0f * totalFrames / sampleRate;
+		_totalFrames = totalFrames;
 
-        if (dataSize <= PCMDATA_CACHEMAXSIZE)
-        {
-            uint32_t framesRead = 0;
-            const uint32_t framesToReadOnce = std::min(totalFrames, static_cast<uint32_t>(sampleRate * QUEUEBUFFER_TIME_STEP * QUEUEBUFFER_NUM));
+		if (dataSize <= PCMDATA_CACHEMAXSIZE)
+		{
+			uint32_t framesRead = 0;
+			const uint32_t framesToReadOnce = std::min(totalFrames, static_cast<uint32_t>(sampleRate * QUEUEBUFFER_TIME_STEP * QUEUEBUFFER_NUM));
 
 			std::vector<char> adjustFrameBuf;
 
@@ -191,103 +191,106 @@ void AudioCache::readDataTask(unsigned int selfId)
 			// Reset to frame 0
 			BREAK_IF_ERR_LOG(!decoder->seek(0), "AudioDecoder::seek(0) failed!");
 
-            _pcmData = (char*)malloc(dataSize);
-            memset(_pcmData, 0x00, dataSize);
+			_pcmData = (char*)malloc(dataSize);
+			memset(_pcmData, 0x00, dataSize);
 
-            if (adjustFrames > 0)
-            {
-                memcpy(_pcmData + (dataSize - adjustFrameBuf.size()), adjustFrameBuf.data(), adjustFrameBuf.size());
-            }
+			if (adjustFrames > 0)
+			{
+				memcpy(_pcmData + (dataSize - adjustFrameBuf.size()), adjustFrameBuf.data(), adjustFrameBuf.size());
+			}
 
-            alGenBuffers(1, &_alBufferId);
-            auto alError = alGetError();
-            if (alError != AL_NO_ERROR) {
-                ALOGE("%s: attaching audio to buffer fail: %x", __FUNCTION__, alError);
-                break;
-            }
+			alGenBuffers(1, &_alBufferId);
+			auto alError = alGetError();
+			if (alError != AL_NO_ERROR) {
+				ALOGE("%s: attaching audio to buffer fail: %x", __FUNCTION__, alError);
+				break;
+			}
 
-            if (*_isDestroyed)
-                break;
+			if (*_isDestroyed)
+				break;
 
 			framesRead = decoder->readFixedFrames(std::min(framesToReadOnce, remainingFrames), _pcmData + _framesRead * bytesPerFrame);
-            _framesRead += framesRead;
-            remainingFrames -= framesRead;
+			_framesRead += framesRead;
+			remainingFrames -= framesRead;
+
+			if (*_isDestroyed)
+				break;
+
+			uint32_t frames = 0;
+			while (!*_isDestroyed && _framesRead < originalTotalFrames)
+			{
+				frames = std::min(framesToReadOnce, remainingFrames);
+				if (_framesRead + frames > originalTotalFrames)
+				{
+					frames = originalTotalFrames - _framesRead;
+				}
+				framesRead = decoder->read(frames, _pcmData + _framesRead * bytesPerFrame);
+				if (framesRead == 0)
+					break;
+				_framesRead += framesRead;
+				remainingFrames -= framesRead;
+			}
 
             if (*_isDestroyed)
                 break;
 
-            _state = State::READY;
+			if (_framesRead < originalTotalFrames)
+			{
+				memset(_pcmData + _framesRead * bytesPerFrame, 0x00, (totalFrames - _framesRead) * bytesPerFrame);
+			}
+			ALOGV("pcm buffer was loaded successfully, total frames: %u, total read frames: %u, adjust frames: %u, remainingFrames: %u", totalFrames, _framesRead, adjustFrames, remainingFrames);
 
-            uint32_t frames = 0;
-            while (!*_isDestroyed && _framesRead < originalTotalFrames)
-            {
-                frames = std::min(framesToReadOnce, remainingFrames);
-                if (_framesRead + frames > originalTotalFrames)
-                {
-                    frames = originalTotalFrames - _framesRead;
-                }
-				framesRead = decoder->read(frames, _pcmData + _framesRead * bytesPerFrame);
-                if (framesRead == 0)
-                    break;
-                _framesRead += framesRead;
-                remainingFrames -= framesRead;
-            }
-
-            if (_framesRead < originalTotalFrames)
-            {
-                memset(_pcmData + _framesRead * bytesPerFrame, 0x00, (totalFrames - _framesRead) * bytesPerFrame);
-            }
-            ALOGV("pcm buffer was loaded successfully, total frames: %u, total read frames: %u, adjust frames: %u, remainingFrames: %u", totalFrames, _framesRead, adjustFrames, remainingFrames);
-
-            _framesRead += adjustFrames;
+			_framesRead += adjustFrames;
 
 			alBufferData(_alBufferId, _format, _pcmData, (ALsizei)dataSize, (ALsizei)sampleRate);
 
-			invokingPlayCallbacks();
-        }
-        else
-        {
-            _queBufferFrames = sampleRate * QUEUEBUFFER_TIME_STEP;
-            BREAK_IF_ERR_LOG(_queBufferFrames == 0, "_queBufferFrames == 0");
+            _state = State::READY;
+		}
+		else
+		{
+			_queBufferFrames = sampleRate * QUEUEBUFFER_TIME_STEP;
+			BREAK_IF_ERR_LOG(_queBufferFrames == 0, "_queBufferFrames == 0");
 
-            const uint32_t queBufferBytes = _queBufferFrames * bytesPerFrame;
+			const uint32_t queBufferBytes = _queBufferFrames * bytesPerFrame;
 
-            for (int index = 0; index < QUEUEBUFFER_NUM; ++index)
-            {
-                _queBuffers[index] = (char*)malloc(queBufferBytes);
-                _queBufferSize[index] = queBufferBytes;
+			for (int index = 0; index < QUEUEBUFFER_NUM; ++index)
+			{
+				_queBuffers[index] = (char*)malloc(queBufferBytes);
+				_queBufferSize[index] = queBufferBytes;
 
 				decoder->readFixedFrames(_queBufferFrames, _queBuffers[index]);
-            }
+			}
 
-            _state = State::READY;
-        }
+			_state = State::READY;
+		}
 
-    } while (false);
+	} while (false);
 
 	if (decoder != nullptr)
 	{
 		decoder->close();
 	}
+
 	AudioDecoderManager::destroyDecoder(decoder);
+
+	if (_state != State::READY)
+	{
+		_state = State::FAILED;
+		if (_alBufferId != INVALID_AL_BUFFER_ID && alIsBuffer(_alBufferId))
+		{
+			ALOGV("readDataTask failed, delete buffer: %u", _alBufferId);
+			alDeleteBuffers(1, &_alBufferId);
+			_alBufferId = INVALID_AL_BUFFER_ID;
+		}
+	}
 
     //FIXME: Why to invoke play callback first? Should it be after 'load' callback?
     invokingPlayCallbacks();
     invokingLoadCallbacks();
 
     _isLoadingFinished = true;
-    if (_state != State::READY)
-    {
-        _state = State::FAILED;
-        if (_alBufferId != INVALID_AL_BUFFER_ID && alIsBuffer(_alBufferId))
-        {
-            ALOGV("readDataTask failed, delete buffer: %u", _alBufferId);
-            alDeleteBuffers(1, &_alBufferId);
-            _alBufferId = INVALID_AL_BUFFER_ID;
-        }
-    }
-
     _readDataTaskMutex.unlock();
+	ALOGVV("readDataTask end, cache id=%u", selfId);
 }
 
 void AudioCache::addPlayCallback(const std::function<void()>& callback)

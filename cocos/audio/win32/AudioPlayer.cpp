@@ -143,7 +143,7 @@ void AudioPlayer::setCache(AudioCache* cache)
 bool AudioPlayer::play2d()
 {
     _play2dMutex.lock();
-    ALOGV("AudioPlayer::play2d, _alSource: %u", _alSource);
+    ALOGV("AudioPlayer::play2d, _alSource: %u, player id=%u", _alSource, _id);
 
     /*********************************************************************/
     /*       Note that it may be in sub thread or in main thread.       **/
@@ -219,6 +219,10 @@ bool AudioPlayer::play2d()
 
         ALint state;
         alGetSourcei(_alSource, AL_SOURCE_STATE, &state);
+		if (state != AL_PLAYING)
+		{
+			ALOGE("state isn't playing, %d, %s, cache id=%u, player id=%u", state, _audioCache->_fileFullPath.c_str(), _audioCache->_id, _id);
+		}
         assert(state == AL_PLAYING);
         _ready = true;
         ret = true;
