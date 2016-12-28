@@ -398,6 +398,10 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClCompile Include="..\3d\CCTerrain.cpp" />
     <ClCompile Include="..\audio\AudioEngine.cpp" />
     <ClCompile Include="..\audio\win32\AudioCache.cpp" />
+    <ClCompile Include="..\audio\win32\AudioDecoder.cpp" />
+    <ClCompile Include="..\audio\win32\AudioDecoderManager.cpp" />
+    <ClCompile Include="..\audio\win32\AudioDecoderMp3.cpp" />
+    <ClCompile Include="..\audio\win32\AudioDecoderOgg.cpp" />
     <ClCompile Include="..\audio\win32\AudioEngine-win32.cpp" />
     <ClCompile Include="..\audio\win32\AudioPlayer.cpp" />
     <ClCompile Include="..\audio\win32\MciPlayer.cpp" />
@@ -979,7 +983,12 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="..\audio\include\Export.h" />
     <ClInclude Include="..\audio\include\SimpleAudioEngine.h" />
     <ClInclude Include="..\audio\win32\AudioCache.h" />
+    <ClInclude Include="..\audio\win32\AudioDecoder.h" />
+    <ClInclude Include="..\audio\win32\AudioDecoderManager.h" />
+    <ClInclude Include="..\audio\win32\AudioDecoderMp3.h" />
+    <ClInclude Include="..\audio\win32\AudioDecoderOgg.h" />
     <ClInclude Include="..\audio\win32\AudioEngine-win32.h" />
+    <ClInclude Include="..\audio\win32\AudioMacros.h" />
     <ClInclude Include="..\audio\win32\AudioPlayer.h" />
     <ClInclude Include="..\audio\win32\MciPlayer.h" />
     <ClInclude Include="..\base\allocator\CCAllocatorBase.h" />

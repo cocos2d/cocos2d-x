@@ -1971,6 +1971,18 @@
     <ClCompile Include="..\vr\CCVRGenericRenderer.cpp">
       <Filter>vr</Filter>
     </ClCompile>
+    <ClCompile Include="..\audio\win32\AudioDecoder.cpp">
+      <Filter>audioengine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\audio\win32\AudioDecoderMp3.cpp">
+      <Filter>audioengine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\audio\win32\AudioDecoderOgg.cpp">
+      <Filter>audioengine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\audio\win32\AudioDecoderManager.cpp">
+      <Filter>audioengine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\physics\CCPhysicsBody.h">
@@ -3850,6 +3862,21 @@
     </ClInclude>
     <ClInclude Include="..\vr\CCVRGenericRenderer.h">
       <Filter>vr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\audio\win32\AudioDecoder.h">
+      <Filter>audioengine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\audio\win32\AudioMacros.h">
+      <Filter>audioengine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\audio\win32\AudioDecoderMp3.h">
+      <Filter>audioengine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\audio\win32\AudioDecoderOgg.h">
+      <Filter>audioengine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\audio\win32\AudioDecoderManager.h">
+      <Filter>audioengine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
