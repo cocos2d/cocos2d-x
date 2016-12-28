@@ -1217,12 +1217,11 @@ void Label::disableEffect(LabelEffect effect)
             setRotationSkewX(0);
             break;
         case cocos2d::LabelEffect::BOLD:
-            _boldEnabled = false;
-            _additionalKerning -= 1;
-            if (_additionalKerning <= 0) {
-                _additionalKerning = 0;
+            if (_boldEnabled) {
+                _boldEnabled = false;
+                _additionalKerning -= 1;
+                disableEffect(LabelEffect::SHADOW);
             }
-            disableEffect(LabelEffect::SHADOW);
             break;
         case cocos2d::LabelEffect::UNDERLINE:
             if (_underlineNode) {
