@@ -246,7 +246,7 @@ bool js_EventListenerCustom_create(JSContext *cx, uint32_t argc, jsval *vp)
                     jsval largv[1];
                     if (event) {
                         js_type_class_t *typeClassEvent = js_get_type_from_native<EventCustom>(event);
-                        largv[0] = OBJECT_TO_JSVAL(jsb_get_or_create_weak_jsobject(cx, event, typeClassEvent));
+                        largv[0] = OBJECT_TO_JSVAL(jsb_ref_get_or_create_jsobject(cx, event, typeClassEvent, "EventCustom"));
                     } else {
                         largv[0] = JSVAL_NULL;
                     };
@@ -255,7 +255,6 @@ bool js_EventListenerCustom_create(JSContext *cx, uint32_t argc, jsval *vp)
                     if (!succeed && JS_IsExceptionPending(cx)) {
                         JS_ReportPendingException(cx);
                     }
-                    removeJSObject(cx, event);
                 };
                 arg1 = lambda;
             }
@@ -298,7 +297,7 @@ bool js_EventDispatcher_addCustomEventListener(JSContext *cx, uint32_t argc, jsv
                     jsval largv[1];
                     if (event) {
                         js_type_class_t *typeClassEvent = js_get_type_from_native<EventCustom>(event);
-                        largv[0] = OBJECT_TO_JSVAL(jsb_get_or_create_weak_jsobject(cx, event, typeClassEvent));
+                        largv[0] = OBJECT_TO_JSVAL(jsb_ref_get_or_create_jsobject(cx, event, typeClassEvent, "EventCustom"));
                     } else {
                         largv[0] = JSVAL_NULL;
                     };
@@ -307,7 +306,6 @@ bool js_EventDispatcher_addCustomEventListener(JSContext *cx, uint32_t argc, jsv
                     if (!succeed && JS_IsExceptionPending(cx)) {
                         JS_ReportPendingException(cx);
                     }
-                    removeJSObject(cx, event);
                 };
                 arg1 = lambda;
             }
