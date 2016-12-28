@@ -372,7 +372,7 @@ Material* Mesh::getMaterial() const
     return _material;
 }
 
-void Mesh::draw(Renderer* renderer, float globalZOrder, const Mat4& transform, uint32_t flags, unsigned int lightMask, const Vec4& color, bool /*forceDepthWrite*/)
+void Mesh::draw(Renderer* renderer, float globalZOrder, const Mat4& transform, uint32_t flags, unsigned int lightMask, const Vec4& color, bool forceDepthWrite)
 {
     if (! isVisible())
         return;
@@ -393,9 +393,9 @@ void Mesh::draw(Renderer* renderer, float globalZOrder, const Mat4& transform, u
                       flags);
 
 
-//    if (isTransparent && !forceDepthWrite)
-//        _material->getStateBlock()->setDepthWrite(false);
-//    else
+   if (isTransparent && !forceDepthWrite)
+       _material->getStateBlock()->setDepthWrite(false);
+   else
         _material->getStateBlock()->setDepthWrite(true);
 
 

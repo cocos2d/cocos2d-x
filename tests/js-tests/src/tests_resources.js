@@ -6,7 +6,6 @@ var ccbjs = "";
 // so the respath will modify to res,
 if (!cc.sys.isNative)
 {
-    cc.game._loadConfig();
     if (cc.game.config[cc.game.CONFIG_KEY.engineDir] !== "frameworks/cocos2d-html5") {
         ccbjs = "../../js-tests/resjs/";
     }

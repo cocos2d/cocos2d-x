@@ -1513,7 +1513,7 @@ local function PhysicsDemoBug5482()
 
     -- wall
     local wall = cc.Node:create()
-    wall:setPhysicsBody(cc.PhysicsBody:createEdgeBox(cc.size(VisibleRect:getVisibleRect().width, 
+    wall:addComponent(cc.PhysicsBody:createEdgeBox(cc.size(VisibleRect:getVisibleRect().width, 
                                                              VisibleRect:getVisibleRect().height),
                                                      cc.PhysicsMaterial(0.1, 1.0, 0.0)))
     wall:setPosition(VisibleRect:center());
@@ -1521,33 +1521,39 @@ local function PhysicsDemoBug5482()
 
     local _nodeA = cc.Sprite:create("Images/YellowSquare.png")
     _nodeA:setPosition(cc.p(VisibleRect:center().x-150,100))
-    _nodeA:setPhysicsBody(nil)
     layer:addChild(_nodeA)
 
     local _nodeB = cc.Sprite:create("Images/YellowSquare.png")
     _nodeB:setPosition(cc.p(VisibleRect:center().x+150,100))
-    _nodeB:setPhysicsBody(nil)
     layer:addChild(_nodeB)
 
     local _body = cc.PhysicsBody:createBox(_nodeA:getContentSize())
     _body:setTag(DRAG_BODYS_TAG)
     _body:retain()
 
+    local _button = nil
     local function changeBodyCallback(sender)
     	local node = nil
     	if _bodyInA then
     		node = _nodeB
+        _button:setString("Set Body To A")
     		cclog("_nodeB")
     	else
     		node = _nodeA
+        _button:setString("Set Body To B")
     		cclog("_nodeA")
     	end
-    	node:setPhysicsBody(_body)
+      local owner = _body:getOwner()
+      if owner ~= nil then
+        owner:removeComponent(_body)
+      end
+
+    	node:addComponent(_body)
     	_bodyInA = not _bodyInA
    	end
     
     cc.MenuItemFont:setFontSize(18)
-    local _button = cc.MenuItemFont:create("Set Body To A");
+    _button = cc.MenuItemFont:create("Set Body To A");
     _button:registerScriptTapHandler(changeBodyCallback)
 
     local menu = cc.Menu:create(_button)
@@ -1732,6 +1738,7 @@ function PhysicsTest()
       PhysicsTransformTest,
       PhysicsIssue9959
    }
+   Helper.index = 1
 
    scene:addChild(Helper.createFunctionTable[1]())
    scene:addChild(CreateBackMenuItem())

@@ -192,12 +192,13 @@ public:
             return false;
         };
         
-        listener->onTouchEnded = [=](Touch* touch, Event* event){
+        listener->onTouchEnded = [this](Touch* touch, Event* event){
             this->setColor(Color3B::WHITE);
             
             if (_removeListenerOnTouchEnded)
             {
-                _eventDispatcher->removeEventListener(listener);
+                _eventDispatcher->removeEventListener(_listener);
+                _listener = nullptr;
             }
         };
         
@@ -215,7 +216,10 @@ public:
     
     void onExit() override
     {
-        _eventDispatcher->removeEventListener(_listener);
+        if (_listener != nullptr)
+        {
+            _eventDispatcher->removeEventListener(_listener);
+        }
         
         Sprite::onExit();
     }

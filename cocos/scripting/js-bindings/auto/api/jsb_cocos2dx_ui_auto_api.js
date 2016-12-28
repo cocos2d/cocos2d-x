@@ -6583,6 +6583,16 @@ size
 },
 
 /**
+ * @method copyTo
+ * @param {ccui.Scale9Sprite} arg0
+ */
+copyTo : function (
+scale9sprite 
+)
+{
+},
+
+/**
  * @method setSpriteFrame
  * @param {cc.SpriteFrame} arg0
  * @param {rect_object} arg1

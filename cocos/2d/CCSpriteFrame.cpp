@@ -144,8 +144,7 @@ SpriteFrame* SpriteFrame::clone() const
 {
 	// no copy constructor	
     SpriteFrame *copy = new (std::nothrow) SpriteFrame();
-    copy->initWithTextureFilename(_textureFilename, _rectInPixels, _rotated, _offsetInPixels, _originalSizeInPixels);
-    copy->setTexture(_texture);
+    copy->initWithTexture(_texture, _rectInPixels, _rotated, _offsetInPixels, _originalSizeInPixels);
     copy->setPolygonInfo(_polygonInfo);
     copy->autorelease();
     return copy;

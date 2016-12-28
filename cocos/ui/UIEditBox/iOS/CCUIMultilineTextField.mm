@@ -82,8 +82,13 @@ CGFloat const UI_PLACEHOLDER_TEXT_CHANGED_ANIMATION_DURATION = 0.25;
 - (UILabel *)placeHolderLabel
 {
     if (_placeHolderLabel == nil) {
-        
-        _placeHolderLabel = [[UILabel alloc] initWithFrame:CGRectMake(8,8,self.bounds.size.width - 16,0)];
+        auto glview = cocos2d::Director::getInstance()->getOpenGLView();
+        float padding = CC_EDIT_BOX_PADDING * glview->getScaleX() / glview->getContentScaleFactor();
+
+        _placeHolderLabel = [[UILabel alloc] initWithFrame:CGRectMake(padding,
+                                                                      padding,
+                                                                      self.bounds.size.width - padding * 2,
+                                                                      0)];
         _placeHolderLabel.lineBreakMode = NSLineBreakByWordWrapping;
         _placeHolderLabel.numberOfLines = 0;
         _placeHolderLabel.font = self.font;

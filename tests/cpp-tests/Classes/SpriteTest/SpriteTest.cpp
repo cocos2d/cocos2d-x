@@ -118,7 +118,6 @@ SpriteTests::SpriteTests()
     ADD_TEST_CASE(SpriteBatchNodeChildrenScale);
     ADD_TEST_CASE(SpriteNilTexture);
     ADD_TEST_CASE(SpriteSubclass);
-    ADD_TEST_CASE(SpriteDoubleResolution);
     ADD_TEST_CASE(SpriteBatchBug1217);
     ADD_TEST_CASE(AnimationCacheTest);
     ADD_TEST_CASE(AnimationCacheFile);
@@ -3557,130 +3556,6 @@ std::string SpriteSubclass::title() const
 std::string SpriteSubclass::subtitle() const
 {
     return "Testing initWithTexture:rect method";
-}
-
-
-class DoubleSprite : public Sprite
-{
-public:
-    DoubleSprite() {_HD = false;}
-    virtual bool initWithTexture(Texture2D* texture, const Rect& rect);
-    // Called everytime the vertex needs to be updated.
-    virtual void setContentSize(const Size& size);
-    // rect used only for the vertex. Called everytime the vertex needs to be updated.
-    virtual void setVertexRect(const Rect& rect);
-
-    static DoubleSprite* create(const std::string& filename);
-    bool _HD;
-};
-
-DoubleSprite* DoubleSprite::create(const std::string& filename)
-{
-    auto sprite = new (std::nothrow) DoubleSprite;
-    sprite->initWithFile(filename);
-    sprite->autorelease();
-    return sprite;
-}
-
-bool DoubleSprite::initWithTexture(Texture2D* texture, const Rect& rect)
-{
-    if( Sprite::initWithTexture(texture, rect)) 
-    {
-        return true;
-    }
-
-    return false;
-}
-
-// Called everytime the vertex needs to be updated.
-void DoubleSprite::setContentSize(const Size& size)
-{
-    auto s = size;
-    // If Retina Display and Texture is in HD then scale the vertex rect
-    if( CC_CONTENT_SCALE_FACTOR() == 2 && ! _HD ) {
-        s.width *= 2;
-        s.height *= 2;
-    }
-
-    Sprite::setContentSize(s);
-}
-
-// rect used only for the vertex. Called everytime the vertex needs to be updated.
-void DoubleSprite::setVertexRect(const Rect& rect)
-{
-    auto tmpRect = rect;
-    // If Retina Display and Texture is in HD then scale the vertex rect
-    if( CC_CONTENT_SCALE_FACTOR() == 2 && ! _HD ) {
-        tmpRect.size.width *= 2;
-        tmpRect.size.height *= 2;
-    }
-
-    Sprite::setVertexRect(tmpRect);
-}
-
-
-// SpriteDoubleResolution
-
-SpriteDoubleResolution::SpriteDoubleResolution()
-{
-    auto s = Director::getInstance()->getWinSize();
-
-    //
-    // LEFT: SD sprite
-    //
-    // there is no HD resolution file of grossini_dance_08.
-    auto spriteSD = DoubleSprite::create("Images/grossini_dance_08.png");
-    addChild(spriteSD);
-    spriteSD->setPosition(Vec2(s.width/4*1,s.height/2));
-
-    auto child1_left = DoubleSprite::create("Images/grossini_dance_08.png");
-    spriteSD->addChild(child1_left);
-    child1_left->setPosition(Vec2(-30,0));
-
-    auto child1_right = Sprite::create("Images/grossini.png");
-    spriteSD->addChild(child1_right);
-    child1_left->setPosition(Vec2( spriteSD->getContentSize().height, 0));
-
-
-
-    //
-    // RIGHT: HD sprite
-    //
-    // there is an HD version of grossini.png
-    auto spriteHD = Sprite::create("Images/grossini.png");
-    addChild(spriteHD);
-    spriteHD->setPosition(Vec2(s.width/4*3,s.height/2));
-
-    auto child2_left = DoubleSprite::create("Images/grossini_dance_08.png");
-    spriteHD->addChild(child2_left);
-    child2_left->setPosition(Vec2(-30,0));
-
-    auto child2_right = Sprite::create("Images/grossini.png");
-    spriteHD->addChild(child2_right);
-    child2_left->setPosition(Vec2( spriteHD->getContentSize().height, 0));
-
-
-
-    // Actions
-    auto scale = ScaleBy::create(2, 0.5);
-    auto scale_back = scale->reverse();
-    auto seq = Sequence::create(scale, scale_back, nullptr);
-
-    auto seq_copy = seq->clone();
-
-    spriteSD->runAction(seq);
-    spriteHD->runAction(seq_copy);
-
-}
-
-std::string SpriteDoubleResolution::title() const
-{
-    return "Sprite Double resolution";
-}
-
-std::string SpriteDoubleResolution::subtitle() const
-{
-    return "Retina Display. SD (left) should be equal to HD (right)";
 }
 
 //------------------------------------------------------------------

@@ -36,8 +36,8 @@ static const char* sURLList[] =
 {
     "http://www.cocos2d-x.org/attachments/802/cocos2dx_landscape.png",
     "http://www.cocos2d-x.org/docs/manual/framework/native/wiki/logo-resources-of-cocos2d-x/res/2dx_icon_512_rounded.png",
-    "http://www.cocos2d-x.org/attachments/1503/inexist.png",
-    "http://download.sdkbox.com/installer/v1/sdkbox-iap_v1.2.3.3.tar.gz",
+    "http://www.cocos2d-x.org/attachments/1503/no_exist.txt",  // try to download no exist file
+    "http://download.sdkbox.com/installer/v1/sdkbox-iap_v2.3.6.1.tar.gz",
 };
 const static int sListSize = (sizeof(sURLList)/sizeof(sURLList[0]));
 static const char* sNameList[sListSize] =

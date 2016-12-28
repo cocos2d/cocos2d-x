@@ -135,11 +135,12 @@ end
 
 
 function VideoPlayerTestMain()
-    Helper.index = 1
     local scene = cc.Scene:create()
     Helper.createFunctionTable = {
         VideoPlayerTest
     }
+    Helper.index = 1
+
     scene:addChild(VideoPlayerTest())
     scene:addChild(CreateBackMenuItem())
     return scene

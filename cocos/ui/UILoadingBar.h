@@ -199,6 +199,7 @@ protected:
     Scale9Sprite* _barRenderer;
     TextureResType _renderBarTexType;
     Size _barRendererTextureSize;
+    Rect _originalRect;
     bool _scale9Enabled;
     bool _prevIgnoreSize;
     Rect _capInsets;

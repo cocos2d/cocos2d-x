@@ -595,10 +595,18 @@ void Device::setKeepScreenOn(bool value)
  */
 void Device::vibrate(float duration)
 {
-    // See https://developer.apple.com/library/ios/documentation/AudioToolbox/Reference/SystemSoundServicesReference/index.html#//apple_ref/c/econst/kSystemSoundID_Vibrate
-
-    // automatically vibrates for approximately 0.4 seconds
-    AudioServicesPlayAlertSound(kSystemSoundID_Vibrate);
+    // See http://stackoverflow.com/questions/4724980/making-the-iphone-vibrate
+    // should vibrate no matter it is silient or not
+    if([[UIDevice currentDevice].model isEqualToString:@"iPhone"])
+    {
+        AudioServicesPlaySystemSound (1352); //works ALWAYS as of this post
+    }
+    else
+    {
+        // Not an iPhone, so doesn't have vibrate
+        // play the less annoying tick noise or one of your own
+        AudioServicesPlayAlertSound (kSystemSoundID_Vibrate);
+    }
 }
 
 NS_CC_END

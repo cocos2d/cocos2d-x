@@ -482,6 +482,7 @@ ScriptingCore::ScriptingCore()
 , _global(nullptr)
 , _debugGlobal(nullptr)
 , _callFromScript(false)
+, _finalizing(nullptr)
 {
     // set utf8 strings internally (we don't need utf16)
     // XXX: Removed in SpiderMonkey 19.0
@@ -2201,7 +2202,7 @@ js_proxy_t* jsb_new_proxy(void* nativeObj, JS::HandleObject jsHandle)
         // The current solution keep the game running with a warning because it may cause memory leak as the native object may have been retained.
         auto existJSProxy = _js_native_global_map.find(jsObj);
         if (existJSProxy != _js_native_global_map.end()) {
-#if COCOS2D_DEBUG
+#if COCOS2D_DEBUG > 1
             CCLOG("jsbindings: Failed to remove proxy for native object: %p, force removing it, but it may cause memory leak", existJSProxy->second->ptr);
 #endif
             jsb_remove_proxy(existJSProxy->second);

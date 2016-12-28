@@ -32,7 +32,7 @@ bool js_cocos2dx_ui_LayoutParameter_clone(JSContext *cx, uint32_t argc, jsval *v
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LayoutParameter_clone : Invalid Native Object");
     if (argc == 0) {
         cocos2d::ui::LayoutParameter* ret = cobj->clone();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         if (ret) {
             jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::ui::LayoutParameter>(cx, (cocos2d::ui::LayoutParameter*)ret));
         } else {
@@ -54,7 +54,7 @@ bool js_cocos2dx_ui_LayoutParameter_getLayoutType(JSContext *cx, uint32_t argc, 
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LayoutParameter_getLayoutType : Invalid Native Object");
     if (argc == 0) {
         int ret = (int)cobj->getLayoutType();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = int32_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -72,7 +72,7 @@ bool js_cocos2dx_ui_LayoutParameter_createCloneInstance(JSContext *cx, uint32_t 
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LayoutParameter_createCloneInstance : Invalid Native Object");
     if (argc == 0) {
         cocos2d::ui::LayoutParameter* ret = cobj->createCloneInstance();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         if (ret) {
             jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::ui::LayoutParameter>(cx, (cocos2d::ui::LayoutParameter*)ret));
         } else {
@@ -225,7 +225,7 @@ bool js_cocos2dx_ui_LinearLayoutParameter_getGravity(JSContext *cx, uint32_t arg
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LinearLayoutParameter_getGravity : Invalid Native Object");
     if (argc == 0) {
         int ret = (int)cobj->getGravity();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = int32_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -367,7 +367,7 @@ bool js_cocos2dx_ui_RelativeLayoutParameter_getRelativeName(JSContext *cx, uint3
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RelativeLayoutParameter_getRelativeName : Invalid Native Object");
     if (argc == 0) {
         const std::string& ret = cobj->getRelativeName();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = std_string_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -385,7 +385,7 @@ bool js_cocos2dx_ui_RelativeLayoutParameter_getRelativeToWidgetName(JSContext *c
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RelativeLayoutParameter_getRelativeToWidgetName : Invalid Native Object");
     if (argc == 0) {
         const std::string& ret = cobj->getRelativeToWidgetName();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = std_string_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -423,7 +423,7 @@ bool js_cocos2dx_ui_RelativeLayoutParameter_getAlign(JSContext *cx, uint32_t arg
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RelativeLayoutParameter_getAlign : Invalid Native Object");
     if (argc == 0) {
         int ret = (int)cobj->getAlign();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = int32_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -569,7 +569,7 @@ bool js_cocos2dx_ui_Widget_getCustomSize(JSContext *cx, uint32_t argc, jsval *vp
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Widget_getCustomSize : Invalid Native Object");
     if (argc == 0) {
         const cocos2d::Size& ret = cobj->getCustomSize();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = ccsize_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -587,7 +587,7 @@ bool js_cocos2dx_ui_Widget_getLeftBoundary(JSContext *cx, uint32_t argc, jsval *
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Widget_getLeftBoundary : Invalid Native Object");
     if (argc == 0) {
         double ret = cobj->getLeftBoundary();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = DOUBLE_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -645,7 +645,7 @@ bool js_cocos2dx_ui_Widget_getVirtualRenderer(JSContext *cx, uint32_t argc, jsva
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Widget_getVirtualRenderer : Invalid Native Object");
     if (argc == 0) {
         cocos2d::Node* ret = cobj->getVirtualRenderer();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         if (ret) {
             jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::Node>(cx, (cocos2d::Node*)ret));
         } else {
@@ -687,7 +687,7 @@ bool js_cocos2dx_ui_Widget_isUnifySizeEnabled(JSContext *cx, uint32_t argc, jsva
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Widget_isUnifySizeEnabled : Invalid Native Object");
     if (argc == 0) {
         bool ret = cobj->isUnifySizeEnabled();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -705,7 +705,7 @@ bool js_cocos2dx_ui_Widget_getSizePercent(JSContext *cx, uint32_t argc, jsval *v
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Widget_getSizePercent : Invalid Native Object");
     if (argc == 0) {
         const cocos2d::Vec2& ret = cobj->getSizePercent();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = vector2_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -763,7 +763,7 @@ bool js_cocos2dx_ui_Widget_getLayoutSize(JSContext *cx, uint32_t argc, jsval *vp
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Widget_getLayoutSize : Invalid Native Object");
     if (argc == 0) {
         const cocos2d::Size& ret = cobj->getLayoutSize();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = ccsize_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -821,7 +821,7 @@ bool js_cocos2dx_ui_Widget_isIgnoreContentAdaptWithSize(JSContext *cx, uint32_t 
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Widget_isIgnoreContentAdaptWithSize : Invalid Native Object");
     if (argc == 0) {
         bool ret = cobj->isIgnoreContentAdaptWithSize();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -839,7 +839,7 @@ bool js_cocos2dx_ui_Widget_getVirtualRendererSize(JSContext *cx, uint32_t argc, 
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Widget_getVirtualRendererSize : Invalid Native Object");
     if (argc == 0) {
         cocos2d::Size ret = cobj->getVirtualRendererSize();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = ccsize_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -857,7 +857,7 @@ bool js_cocos2dx_ui_Widget_isHighlighted(JSContext *cx, uint32_t argc, jsval *vp
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Widget_isHighlighted : Invalid Native Object");
     if (argc == 0) {
         bool ret = cobj->isHighlighted();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -875,7 +875,7 @@ bool js_cocos2dx_ui_Widget_getLayoutParameter(JSContext *cx, uint32_t argc, jsva
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Widget_getLayoutParameter : Invalid Native Object");
     if (argc == 0) {
         cocos2d::ui::LayoutParameter* ret = cobj->getLayoutParameter();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         if (ret) {
             jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::ui::LayoutParameter>(cx, (cocos2d::ui::LayoutParameter*)ret));
         } else {
@@ -944,7 +944,7 @@ bool js_cocos2dx_ui_Widget_getPositionType(JSContext *cx, uint32_t argc, jsval *
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Widget_getPositionType : Invalid Native Object");
     if (argc == 0) {
         int ret = (int)cobj->getPositionType();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = int32_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -962,7 +962,7 @@ bool js_cocos2dx_ui_Widget_getTopBoundary(JSContext *cx, uint32_t argc, jsval *v
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Widget_getTopBoundary : Invalid Native Object");
     if (argc == 0) {
         double ret = cobj->getTopBoundary();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = DOUBLE_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -1014,7 +1014,7 @@ bool js_cocos2dx_ui_Widget_findNextFocusedWidget(JSContext *cx, uint32_t argc, j
         } while (0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_Widget_findNextFocusedWidget : Error processing arguments");
         cocos2d::ui::Widget* ret = cobj->findNextFocusedWidget(arg0, arg1);
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         if (ret) {
             jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::ui::Widget>(cx, (cocos2d::ui::Widget*)ret));
         } else {
@@ -1036,7 +1036,7 @@ bool js_cocos2dx_ui_Widget_isEnabled(JSContext *cx, uint32_t argc, jsval *vp)
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Widget_isEnabled : Invalid Native Object");
     if (argc == 0) {
         bool ret = cobj->isEnabled();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -1054,7 +1054,7 @@ bool js_cocos2dx_ui_Widget_isFocused(JSContext *cx, uint32_t argc, jsval *vp)
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Widget_isFocused : Invalid Native Object");
     if (argc == 0) {
         bool ret = cobj->isFocused();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -1072,7 +1072,7 @@ bool js_cocos2dx_ui_Widget_getTouchBeganPosition(JSContext *cx, uint32_t argc, j
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Widget_getTouchBeganPosition : Invalid Native Object");
     if (argc == 0) {
         const cocos2d::Vec2& ret = cobj->getTouchBeganPosition();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = vector2_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -1090,7 +1090,7 @@ bool js_cocos2dx_ui_Widget_isTouchEnabled(JSContext *cx, uint32_t argc, jsval *v
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Widget_isTouchEnabled : Invalid Native Object");
     if (argc == 0) {
         bool ret = cobj->isTouchEnabled();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -1108,7 +1108,7 @@ bool js_cocos2dx_ui_Widget_getCallbackName(JSContext *cx, uint32_t argc, jsval *
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Widget_getCallbackName : Invalid Native Object");
     if (argc == 0) {
         const std::string& ret = cobj->getCallbackName();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = std_string_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -1126,7 +1126,7 @@ bool js_cocos2dx_ui_Widget_getActionTag(JSContext *cx, uint32_t argc, jsval *vp)
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Widget_getActionTag : Invalid Native Object");
     if (argc == 0) {
         int ret = cobj->getActionTag();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = int32_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -1144,7 +1144,7 @@ bool js_cocos2dx_ui_Widget_getWorldPosition(JSContext *cx, uint32_t argc, jsval 
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Widget_getWorldPosition : Invalid Native Object");
     if (argc == 0) {
         cocos2d::Vec2 ret = cobj->getWorldPosition();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = vector2_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -1162,7 +1162,7 @@ bool js_cocos2dx_ui_Widget_isFocusEnabled(JSContext *cx, uint32_t argc, jsval *v
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Widget_isFocusEnabled : Invalid Native Object");
     if (argc == 0) {
         bool ret = cobj->isFocusEnabled();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -1260,7 +1260,7 @@ bool js_cocos2dx_ui_Widget_init(JSContext *cx, uint32_t argc, jsval *vp)
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Widget_init : Invalid Native Object");
     if (argc == 0) {
         bool ret = cobj->init();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -1298,7 +1298,7 @@ bool js_cocos2dx_ui_Widget_getRightBoundary(JSContext *cx, uint32_t argc, jsval 
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Widget_getRightBoundary : Invalid Native Object");
     if (argc == 0) {
         double ret = cobj->getRightBoundary();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = DOUBLE_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -1364,7 +1364,7 @@ bool js_cocos2dx_ui_Widget_clone(JSContext *cx, uint32_t argc, jsval *vp)
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Widget_clone : Invalid Native Object");
     if (argc == 0) {
         cocos2d::ui::Widget* ret = cobj->clone();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         if (ret) {
             jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::ui::Widget>(cx, (cocos2d::ui::Widget*)ret));
         } else {
@@ -1406,7 +1406,7 @@ bool js_cocos2dx_ui_Widget_getBottomBoundary(JSContext *cx, uint32_t argc, jsval
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Widget_getBottomBoundary : Invalid Native Object");
     if (argc == 0) {
         double ret = cobj->getBottomBoundary();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = DOUBLE_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -1424,7 +1424,7 @@ bool js_cocos2dx_ui_Widget_isBright(JSContext *cx, uint32_t argc, jsval *vp)
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Widget_isBright : Invalid Native Object");
     if (argc == 0) {
         bool ret = cobj->isBright();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -1500,7 +1500,7 @@ bool js_cocos2dx_ui_Widget_isPropagateTouchEvents(JSContext *cx, uint32_t argc, 
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Widget_isPropagateTouchEvents : Invalid Native Object");
     if (argc == 0) {
         bool ret = cobj->isPropagateTouchEvents();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -1542,7 +1542,7 @@ bool js_cocos2dx_ui_Widget_hitTest(JSContext *cx, uint32_t argc, jsval *vp)
         } while (0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_Widget_hitTest : Error processing arguments");
         bool ret = cobj->hitTest(arg0, arg1, arg2);
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -1560,7 +1560,7 @@ bool js_cocos2dx_ui_Widget_isLayoutComponentEnabled(JSContext *cx, uint32_t argc
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Widget_isLayoutComponentEnabled : Invalid Native Object");
     if (argc == 0) {
         bool ret = cobj->isLayoutComponentEnabled();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -1665,7 +1665,7 @@ bool js_cocos2dx_ui_Widget_getTouchMovePosition(JSContext *cx, uint32_t argc, js
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Widget_getTouchMovePosition : Invalid Native Object");
     if (argc == 0) {
         const cocos2d::Vec2& ret = cobj->getTouchMovePosition();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = vector2_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -1683,7 +1683,7 @@ bool js_cocos2dx_ui_Widget_getSizeType(JSContext *cx, uint32_t argc, jsval *vp)
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Widget_getSizeType : Invalid Native Object");
     if (argc == 0) {
         int ret = (int)cobj->getSizeType();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = int32_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -1701,7 +1701,7 @@ bool js_cocos2dx_ui_Widget_getCallbackType(JSContext *cx, uint32_t argc, jsval *
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Widget_getCallbackType : Invalid Native Object");
     if (argc == 0) {
         const std::string& ret = cobj->getCallbackType();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = std_string_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -1766,7 +1766,7 @@ bool js_cocos2dx_ui_Widget_getTouchEndPosition(JSContext *cx, uint32_t argc, jsv
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Widget_getTouchEndPosition : Invalid Native Object");
     if (argc == 0) {
         const cocos2d::Vec2& ret = cobj->getTouchEndPosition();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = vector2_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -1784,7 +1784,7 @@ bool js_cocos2dx_ui_Widget_getPositionPercent(JSContext *cx, uint32_t argc, jsva
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Widget_getPositionPercent : Invalid Native Object");
     if (argc == 0) {
         const cocos2d::Vec2& ret = cobj->getPositionPercent();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = vector2_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -1888,7 +1888,7 @@ bool js_cocos2dx_ui_Widget_isFlippedX(JSContext *cx, uint32_t argc, jsval *vp)
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Widget_isFlippedX : Invalid Native Object");
     if (argc == 0) {
         bool ret = cobj->isFlippedX();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -1906,7 +1906,7 @@ bool js_cocos2dx_ui_Widget_isFlippedY(JSContext *cx, uint32_t argc, jsval *vp)
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Widget_isFlippedY : Invalid Native Object");
     if (argc == 0) {
         bool ret = cobj->isFlippedY();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -1928,7 +1928,7 @@ bool js_cocos2dx_ui_Widget_isClippingParentContainsPoint(JSContext *cx, uint32_t
         ok &= jsval_to_vector2(cx, args.get(0), &arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_Widget_isClippingParentContainsPoint : Error processing arguments");
         bool ret = cobj->isClippingParentContainsPoint(arg0);
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -2046,7 +2046,7 @@ bool js_cocos2dx_ui_Widget_isSwallowTouches(JSContext *cx, uint32_t argc, jsval 
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Widget_isSwallowTouches : Invalid Native Object");
     if (argc == 0) {
         bool ret = cobj->isSwallowTouches();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -2368,7 +2368,7 @@ bool js_cocos2dx_ui_Layout_getBackGroundColorVector(JSContext *cx, uint32_t argc
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Layout_getBackGroundColorVector : Invalid Native Object");
     if (argc == 0) {
         const cocos2d::Vec2& ret = cobj->getBackGroundColorVector();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = vector2_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -2386,7 +2386,7 @@ bool js_cocos2dx_ui_Layout_getClippingType(JSContext *cx, uint32_t argc, jsval *
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Layout_getClippingType : Invalid Native Object");
     if (argc == 0) {
         int ret = (int)cobj->getClippingType();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = int32_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -2404,7 +2404,7 @@ bool js_cocos2dx_ui_Layout_getRenderFile(JSContext *cx, uint32_t argc, jsval *vp
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Layout_getRenderFile : Invalid Native Object");
     if (argc == 0) {
         cocos2d::ResourceData ret = cobj->getRenderFile();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = resourcedata_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -2422,7 +2422,7 @@ bool js_cocos2dx_ui_Layout_isLoopFocus(JSContext *cx, uint32_t argc, jsval *vp)
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Layout_isLoopFocus : Invalid Native Object");
     if (argc == 0) {
         bool ret = cobj->isLoopFocus();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -2456,7 +2456,7 @@ bool js_cocos2dx_ui_Layout_getBackGroundColorOpacity(JSContext *cx, uint32_t arg
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Layout_getBackGroundColorOpacity : Invalid Native Object");
     if (argc == 0) {
         uint16_t ret = cobj->getBackGroundColorOpacity();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = uint32_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -2474,7 +2474,7 @@ bool js_cocos2dx_ui_Layout_isClippingEnabled(JSContext *cx, uint32_t argc, jsval
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Layout_isClippingEnabled : Invalid Native Object");
     if (argc == 0) {
         bool ret = cobj->isClippingEnabled();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -2597,7 +2597,7 @@ bool js_cocos2dx_ui_Layout_getBackGroundImageCapInsets(JSContext *cx, uint32_t a
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Layout_getBackGroundImageCapInsets : Invalid Native Object");
     if (argc == 0) {
         const cocos2d::Rect& ret = cobj->getBackGroundImageCapInsets();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = ccrect_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -2615,7 +2615,7 @@ bool js_cocos2dx_ui_Layout_getBackGroundColor(JSContext *cx, uint32_t argc, jsva
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Layout_getBackGroundColor : Invalid Native Object");
     if (argc == 0) {
         const cocos2d::Color3B& ret = cobj->getBackGroundColor();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = cccolor3b_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -2653,7 +2653,7 @@ bool js_cocos2dx_ui_Layout_getBackGroundImageColor(JSContext *cx, uint32_t argc,
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Layout_getBackGroundImageColor : Invalid Native Object");
     if (argc == 0) {
         const cocos2d::Color3B& ret = cobj->getBackGroundImageColor();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = cccolor3b_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -2671,7 +2671,7 @@ bool js_cocos2dx_ui_Layout_isBackGroundImageScale9Enabled(JSContext *cx, uint32_
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Layout_isBackGroundImageScale9Enabled : Invalid Native Object");
     if (argc == 0) {
         bool ret = cobj->isBackGroundImageScale9Enabled();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -2689,7 +2689,7 @@ bool js_cocos2dx_ui_Layout_getBackGroundColorType(JSContext *cx, uint32_t argc, 
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Layout_getBackGroundColorType : Invalid Native Object");
     if (argc == 0) {
         int ret = (int)cobj->getBackGroundColorType();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = int32_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -2707,7 +2707,7 @@ bool js_cocos2dx_ui_Layout_getBackGroundEndColor(JSContext *cx, uint32_t argc, j
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Layout_getBackGroundEndColor : Invalid Native Object");
     if (argc == 0) {
         const cocos2d::Color3B& ret = cobj->getBackGroundEndColor();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = cccolor3b_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -2745,7 +2745,7 @@ bool js_cocos2dx_ui_Layout_getBackGroundImageOpacity(JSContext *cx, uint32_t arg
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Layout_getBackGroundImageOpacity : Invalid Native Object");
     if (argc == 0) {
         uint16_t ret = cobj->getBackGroundImageOpacity();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = uint32_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -2763,7 +2763,7 @@ bool js_cocos2dx_ui_Layout_isPassFocusToChild(JSContext *cx, uint32_t argc, jsva
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Layout_isPassFocusToChild : Invalid Native Object");
     if (argc == 0) {
         bool ret = cobj->isPassFocusToChild();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -2801,7 +2801,7 @@ bool js_cocos2dx_ui_Layout_getBackGroundImageTextureSize(JSContext *cx, uint32_t
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Layout_getBackGroundImageTextureSize : Invalid Native Object");
     if (argc == 0) {
         const cocos2d::Size& ret = cobj->getBackGroundImageTextureSize();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = ccsize_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -2835,7 +2835,7 @@ bool js_cocos2dx_ui_Layout_getLayoutType(JSContext *cx, uint32_t argc, jsval *vp
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Layout_getLayoutType : Invalid Native Object");
     if (argc == 0) {
         int ret = (int)cobj->getLayoutType();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = int32_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -2873,7 +2873,7 @@ bool js_cocos2dx_ui_Layout_getBackGroundStartColor(JSContext *cx, uint32_t argc,
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Layout_getBackGroundStartColor : Invalid Native Object");
     if (argc == 0) {
         const cocos2d::Color3B& ret = cobj->getBackGroundStartColor();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = cccolor3b_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -3063,7 +3063,7 @@ bool js_cocos2dx_ui_Button_getNormalTextureSize(JSContext *cx, uint32_t argc, js
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Button_getNormalTextureSize : Invalid Native Object");
     if (argc == 0) {
         cocos2d::Size ret = cobj->getNormalTextureSize();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = ccsize_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -3081,7 +3081,7 @@ bool js_cocos2dx_ui_Button_getTitleText(JSContext *cx, uint32_t argc, jsval *vp)
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Button_getTitleText : Invalid Native Object");
     if (argc == 0) {
         std::string ret = cobj->getTitleText();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = std_string_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -3199,7 +3199,7 @@ bool js_cocos2dx_ui_Button_getTitleRenderer(JSContext *cx, uint32_t argc, jsval 
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Button_getTitleRenderer : Invalid Native Object");
     if (argc == 0) {
         cocos2d::Label* ret = cobj->getTitleRenderer();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         if (ret) {
             jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::Label>(cx, (cocos2d::Label*)ret));
         } else {
@@ -3221,7 +3221,7 @@ bool js_cocos2dx_ui_Button_getRendererClicked(JSContext *cx, uint32_t argc, jsva
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Button_getRendererClicked : Invalid Native Object");
     if (argc == 0) {
         cocos2d::ui::Scale9Sprite* ret = cobj->getRendererClicked();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         if (ret) {
             jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::ui::Scale9Sprite>(cx, (cocos2d::ui::Scale9Sprite*)ret));
         } else {
@@ -3243,7 +3243,7 @@ bool js_cocos2dx_ui_Button_getDisabledFile(JSContext *cx, uint32_t argc, jsval *
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Button_getDisabledFile : Invalid Native Object");
     if (argc == 0) {
         cocos2d::ResourceData ret = cobj->getDisabledFile();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = resourcedata_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -3261,7 +3261,7 @@ bool js_cocos2dx_ui_Button_getZoomScale(JSContext *cx, uint32_t argc, jsval *vp)
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Button_getZoomScale : Invalid Native Object");
     if (argc == 0) {
         double ret = cobj->getZoomScale();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = DOUBLE_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -3279,7 +3279,7 @@ bool js_cocos2dx_ui_Button_getCapInsetsDisabledRenderer(JSContext *cx, uint32_t 
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Button_getCapInsetsDisabledRenderer : Invalid Native Object");
     if (argc == 0) {
         const cocos2d::Rect& ret = cobj->getCapInsetsDisabledRenderer();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = ccrect_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -3317,7 +3317,7 @@ bool js_cocos2dx_ui_Button_getNormalFile(JSContext *cx, uint32_t argc, jsval *vp
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Button_getNormalFile : Invalid Native Object");
     if (argc == 0) {
         cocos2d::ResourceData ret = cobj->getNormalFile();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = resourcedata_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -3351,7 +3351,7 @@ bool js_cocos2dx_ui_Button_getRendererDisabled(JSContext *cx, uint32_t argc, jsv
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Button_getRendererDisabled : Invalid Native Object");
     if (argc == 0) {
         cocos2d::ui::Scale9Sprite* ret = cobj->getRendererDisabled();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         if (ret) {
             jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::ui::Scale9Sprite>(cx, (cocos2d::ui::Scale9Sprite*)ret));
         } else {
@@ -3447,7 +3447,7 @@ bool js_cocos2dx_ui_Button_init(JSContext *cx, uint32_t argc, jsval *vp)
         ok &= jsval_to_std_string(cx, args.get(0), &arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_Button_init : Error processing arguments");
         bool ret = cobj->init(arg0);
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -3459,7 +3459,7 @@ bool js_cocos2dx_ui_Button_init(JSContext *cx, uint32_t argc, jsval *vp)
         ok &= jsval_to_std_string(cx, args.get(1), &arg1);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_Button_init : Error processing arguments");
         bool ret = cobj->init(arg0, arg1);
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -3473,7 +3473,7 @@ bool js_cocos2dx_ui_Button_init(JSContext *cx, uint32_t argc, jsval *vp)
         ok &= jsval_to_std_string(cx, args.get(2), &arg2);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_Button_init : Error processing arguments");
         bool ret = cobj->init(arg0, arg1, arg2);
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -3489,7 +3489,7 @@ bool js_cocos2dx_ui_Button_init(JSContext *cx, uint32_t argc, jsval *vp)
         ok &= jsval_to_int32(cx, args.get(3), (int32_t *)&arg3);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_Button_init : Error processing arguments");
         bool ret = cobj->init(arg0, arg1, arg2, arg3);
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -3597,7 +3597,7 @@ bool js_cocos2dx_ui_Button_getCapInsetsNormalRenderer(JSContext *cx, uint32_t ar
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Button_getCapInsetsNormalRenderer : Invalid Native Object");
     if (argc == 0) {
         const cocos2d::Rect& ret = cobj->getCapInsetsNormalRenderer();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = ccrect_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -3654,7 +3654,7 @@ bool js_cocos2dx_ui_Button_getCapInsetsPressedRenderer(JSContext *cx, uint32_t a
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Button_getCapInsetsPressedRenderer : Invalid Native Object");
     if (argc == 0) {
         const cocos2d::Rect& ret = cobj->getCapInsetsPressedRenderer();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = ccrect_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -3720,7 +3720,7 @@ bool js_cocos2dx_ui_Button_isScale9Enabled(JSContext *cx, uint32_t argc, jsval *
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Button_isScale9Enabled : Invalid Native Object");
     if (argc == 0) {
         bool ret = cobj->isScale9Enabled();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -3788,7 +3788,7 @@ bool js_cocos2dx_ui_Button_getPressedFile(JSContext *cx, uint32_t argc, jsval *v
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Button_getPressedFile : Invalid Native Object");
     if (argc == 0) {
         cocos2d::ResourceData ret = cobj->getPressedFile();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = resourcedata_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -3806,7 +3806,7 @@ bool js_cocos2dx_ui_Button_getTitleLabel(JSContext *cx, uint32_t argc, jsval *vp
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Button_getTitleLabel : Invalid Native Object");
     if (argc == 0) {
         cocos2d::Label* ret = cobj->getTitleLabel();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         if (ret) {
             jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::Label>(cx, (cocos2d::Label*)ret));
         } else {
@@ -3828,7 +3828,7 @@ bool js_cocos2dx_ui_Button_getTitleFontSize(JSContext *cx, uint32_t argc, jsval 
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Button_getTitleFontSize : Invalid Native Object");
     if (argc == 0) {
         double ret = cobj->getTitleFontSize();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = DOUBLE_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -3846,7 +3846,7 @@ bool js_cocos2dx_ui_Button_getRendererNormal(JSContext *cx, uint32_t argc, jsval
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Button_getRendererNormal : Invalid Native Object");
     if (argc == 0) {
         cocos2d::ui::Scale9Sprite* ret = cobj->getRendererNormal();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         if (ret) {
             jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::ui::Scale9Sprite>(cx, (cocos2d::ui::Scale9Sprite*)ret));
         } else {
@@ -3868,7 +3868,7 @@ bool js_cocos2dx_ui_Button_getTitleFontName(JSContext *cx, uint32_t argc, jsval 
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Button_getTitleFontName : Invalid Native Object");
     if (argc == 0) {
         std::string ret = cobj->getTitleFontName();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = std_string_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -3886,7 +3886,7 @@ bool js_cocos2dx_ui_Button_getTitleColor(JSContext *cx, uint32_t argc, jsval *vp
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Button_getTitleColor : Invalid Native Object");
     if (argc == 0) {
         cocos2d::Color3B ret = cobj->getTitleColor();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = cccolor3b_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -4170,7 +4170,7 @@ bool js_cocos2dx_ui_AbstractCheckButton_getCrossDisabledFile(JSContext *cx, uint
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_AbstractCheckButton_getCrossDisabledFile : Invalid Native Object");
     if (argc == 0) {
         cocos2d::ResourceData ret = cobj->getCrossDisabledFile();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = resourcedata_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -4188,7 +4188,7 @@ bool js_cocos2dx_ui_AbstractCheckButton_getBackDisabledFile(JSContext *cx, uint3
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_AbstractCheckButton_getBackDisabledFile : Invalid Native Object");
     if (argc == 0) {
         cocos2d::ResourceData ret = cobj->getBackDisabledFile();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = resourcedata_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -4266,7 +4266,7 @@ bool js_cocos2dx_ui_AbstractCheckButton_getCrossNormalFile(JSContext *cx, uint32
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_AbstractCheckButton_getCrossNormalFile : Invalid Native Object");
     if (argc == 0) {
         cocos2d::ResourceData ret = cobj->getCrossNormalFile();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = resourcedata_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -4304,7 +4304,7 @@ bool js_cocos2dx_ui_AbstractCheckButton_getBackPressedFile(JSContext *cx, uint32
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_AbstractCheckButton_getBackPressedFile : Invalid Native Object");
     if (argc == 0) {
         cocos2d::ResourceData ret = cobj->getBackPressedFile();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = resourcedata_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -4322,7 +4322,7 @@ bool js_cocos2dx_ui_AbstractCheckButton_getRendererFrontCrossDisabled(JSContext 
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_AbstractCheckButton_getRendererFrontCrossDisabled : Invalid Native Object");
     if (argc == 0) {
         cocos2d::Sprite* ret = cobj->getRendererFrontCrossDisabled();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         if (ret) {
             jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::Sprite>(cx, (cocos2d::Sprite*)ret));
         } else {
@@ -4344,7 +4344,7 @@ bool js_cocos2dx_ui_AbstractCheckButton_getRendererBackground(JSContext *cx, uin
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_AbstractCheckButton_getRendererBackground : Invalid Native Object");
     if (argc == 0) {
         cocos2d::Sprite* ret = cobj->getRendererBackground();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         if (ret) {
             jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::Sprite>(cx, (cocos2d::Sprite*)ret));
         } else {
@@ -4396,7 +4396,7 @@ bool js_cocos2dx_ui_AbstractCheckButton_getRendererBackgroundDisabled(JSContext 
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_AbstractCheckButton_getRendererBackgroundDisabled : Invalid Native Object");
     if (argc == 0) {
         cocos2d::Sprite* ret = cobj->getRendererBackgroundDisabled();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         if (ret) {
             jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::Sprite>(cx, (cocos2d::Sprite*)ret));
         } else {
@@ -4418,7 +4418,7 @@ bool js_cocos2dx_ui_AbstractCheckButton_isSelected(JSContext *cx, uint32_t argc,
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_AbstractCheckButton_isSelected : Invalid Native Object");
     if (argc == 0) {
         bool ret = cobj->isSelected();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -4448,7 +4448,7 @@ bool js_cocos2dx_ui_AbstractCheckButton_init(JSContext *cx, uint32_t argc, jsval
         ok &= jsval_to_std_string(cx, args.get(4), &arg4);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_AbstractCheckButton_init : Error processing arguments");
         bool ret = cobj->init(arg0, arg1, arg2, arg3, arg4);
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -4468,7 +4468,7 @@ bool js_cocos2dx_ui_AbstractCheckButton_init(JSContext *cx, uint32_t argc, jsval
         ok &= jsval_to_int32(cx, args.get(5), (int32_t *)&arg5);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_AbstractCheckButton_init : Error processing arguments");
         bool ret = cobj->init(arg0, arg1, arg2, arg3, arg4, arg5);
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -4486,7 +4486,7 @@ bool js_cocos2dx_ui_AbstractCheckButton_getBackNormalFile(JSContext *cx, uint32_
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_AbstractCheckButton_getBackNormalFile : Invalid Native Object");
     if (argc == 0) {
         cocos2d::ResourceData ret = cobj->getBackNormalFile();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = resourcedata_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -4550,7 +4550,7 @@ bool js_cocos2dx_ui_AbstractCheckButton_getZoomScale(JSContext *cx, uint32_t arg
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_AbstractCheckButton_getZoomScale : Invalid Native Object");
     if (argc == 0) {
         double ret = cobj->getZoomScale();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = DOUBLE_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -4568,7 +4568,7 @@ bool js_cocos2dx_ui_AbstractCheckButton_getRendererFrontCross(JSContext *cx, uin
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_AbstractCheckButton_getRendererFrontCross : Invalid Native Object");
     if (argc == 0) {
         cocos2d::Sprite* ret = cobj->getRendererFrontCross();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         if (ret) {
             jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::Sprite>(cx, (cocos2d::Sprite*)ret));
         } else {
@@ -4590,7 +4590,7 @@ bool js_cocos2dx_ui_AbstractCheckButton_getRendererBackgroundSelected(JSContext 
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_AbstractCheckButton_getRendererBackgroundSelected : Invalid Native Object");
     if (argc == 0) {
         cocos2d::Sprite* ret = cobj->getRendererBackgroundSelected();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         if (ret) {
             jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::Sprite>(cx, (cocos2d::Sprite*)ret));
         } else {
@@ -5297,7 +5297,7 @@ bool js_cocos2dx_ui_RadioButtonGroup_isAllowedNoSelection(JSContext *cx, uint32_
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RadioButtonGroup_isAllowedNoSelection : Invalid Native Object");
     if (argc == 0) {
         bool ret = cobj->isAllowedNoSelection();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -5315,7 +5315,7 @@ bool js_cocos2dx_ui_RadioButtonGroup_getSelectedButtonIndex(JSContext *cx, uint3
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RadioButtonGroup_getSelectedButtonIndex : Invalid Native Object");
     if (argc == 0) {
         int ret = cobj->getSelectedButtonIndex();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = int32_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -5465,7 +5465,7 @@ bool js_cocos2dx_ui_RadioButtonGroup_getRadioButtonByIndex(JSContext *cx, uint32
         ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_RadioButtonGroup_getRadioButtonByIndex : Error processing arguments");
         cocos2d::ui::RadioButton* ret = cobj->getRadioButtonByIndex(arg0);
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         if (ret) {
             jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::ui::RadioButton>(cx, (cocos2d::ui::RadioButton*)ret));
         } else {
@@ -5487,7 +5487,7 @@ bool js_cocos2dx_ui_RadioButtonGroup_getNumberOfRadioButtons(JSContext *cx, uint
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RadioButtonGroup_getNumberOfRadioButtons : Invalid Native Object");
     if (argc == 0) {
         ssize_t ret = cobj->getNumberOfRadioButtons();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = ssize_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -5720,7 +5720,7 @@ bool js_cocos2dx_ui_ImageView_init(JSContext *cx, uint32_t argc, jsval *vp)
         ok &= jsval_to_std_string(cx, args.get(0), &arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_ImageView_init : Error processing arguments");
         bool ret = cobj->init(arg0);
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -5732,7 +5732,7 @@ bool js_cocos2dx_ui_ImageView_init(JSContext *cx, uint32_t argc, jsval *vp)
         ok &= jsval_to_int32(cx, args.get(1), (int32_t *)&arg1);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_ImageView_init : Error processing arguments");
         bool ret = cobj->init(arg0, arg1);
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -5810,7 +5810,7 @@ bool js_cocos2dx_ui_ImageView_getRenderFile(JSContext *cx, uint32_t argc, jsval 
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_ImageView_getRenderFile : Invalid Native Object");
     if (argc == 0) {
         cocos2d::ResourceData ret = cobj->getRenderFile();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = resourcedata_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -5828,7 +5828,7 @@ bool js_cocos2dx_ui_ImageView_getCapInsets(JSContext *cx, uint32_t argc, jsval *
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_ImageView_getCapInsets : Invalid Native Object");
     if (argc == 0) {
         const cocos2d::Rect& ret = cobj->getCapInsets();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = ccrect_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -5846,7 +5846,7 @@ bool js_cocos2dx_ui_ImageView_isScale9Enabled(JSContext *cx, uint32_t argc, jsva
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_ImageView_isScale9Enabled : Invalid Native Object");
     if (argc == 0) {
         bool ret = cobj->isScale9Enabled();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -6059,7 +6059,7 @@ bool js_cocos2dx_ui_Text_getFontSize(JSContext *cx, uint32_t argc, jsval *vp)
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Text_getFontSize : Invalid Native Object");
     if (argc == 0) {
         double ret = cobj->getFontSize();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = DOUBLE_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -6077,7 +6077,7 @@ bool js_cocos2dx_ui_Text_getString(JSContext *cx, uint32_t argc, jsval *vp)
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Text_getString : Invalid Native Object");
     if (argc == 0) {
         const std::string& ret = cobj->getString();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = std_string_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -6128,7 +6128,7 @@ bool js_cocos2dx_ui_Text_getLabelEffectType(JSContext *cx, uint32_t argc, jsval 
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Text_getLabelEffectType : Invalid Native Object");
     if (argc == 0) {
         int ret = (int)cobj->getLabelEffectType();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = int32_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -6146,7 +6146,7 @@ bool js_cocos2dx_ui_Text_getTextColor(JSContext *cx, uint32_t argc, jsval *vp)
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Text_getTextColor : Invalid Native Object");
     if (argc == 0) {
         const cocos2d::Color4B& ret = cobj->getTextColor();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = cccolor4b_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -6224,7 +6224,7 @@ bool js_cocos2dx_ui_Text_getShadowOffset(JSContext *cx, uint32_t argc, jsval *vp
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Text_getShadowOffset : Invalid Native Object");
     if (argc == 0) {
         cocos2d::Size ret = cobj->getShadowOffset();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = ccsize_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -6262,7 +6262,7 @@ bool js_cocos2dx_ui_Text_getOutlineSize(JSContext *cx, uint32_t argc, jsval *vp)
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Text_getOutlineSize : Invalid Native Object");
     if (argc == 0) {
         int ret = cobj->getOutlineSize();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = int32_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -6288,7 +6288,7 @@ bool js_cocos2dx_ui_Text_init(JSContext *cx, uint32_t argc, jsval *vp)
         ok &= JS::ToNumber( cx, args.get(2), &arg2) && !std::isnan(arg2);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_Text_init : Error processing arguments");
         bool ret = cobj->init(arg0, arg1, arg2);
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -6306,7 +6306,7 @@ bool js_cocos2dx_ui_Text_getShadowBlurRadius(JSContext *cx, uint32_t argc, jsval
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Text_getShadowBlurRadius : Invalid Native Object");
     if (argc == 0) {
         double ret = cobj->getShadowBlurRadius();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = DOUBLE_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -6324,7 +6324,7 @@ bool js_cocos2dx_ui_Text_isTouchScaleChangeEnabled(JSContext *cx, uint32_t argc,
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Text_isTouchScaleChangeEnabled : Invalid Native Object");
     if (argc == 0) {
         bool ret = cobj->isTouchScaleChangeEnabled();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -6342,7 +6342,7 @@ bool js_cocos2dx_ui_Text_getFontName(JSContext *cx, uint32_t argc, jsval *vp)
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Text_getFontName : Invalid Native Object");
     if (argc == 0) {
         const std::string& ret = cobj->getFontName();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = std_string_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -6380,7 +6380,7 @@ bool js_cocos2dx_ui_Text_getStringLength(JSContext *cx, uint32_t argc, jsval *vp
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Text_getStringLength : Invalid Native Object");
     if (argc == 0) {
         ssize_t ret = cobj->getStringLength();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = ssize_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -6398,7 +6398,7 @@ bool js_cocos2dx_ui_Text_getAutoRenderSize(JSContext *cx, uint32_t argc, jsval *
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Text_getAutoRenderSize : Invalid Native Object");
     if (argc == 0) {
         cocos2d::Size ret = cobj->getAutoRenderSize();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = ccsize_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -6446,7 +6446,7 @@ bool js_cocos2dx_ui_Text_getEffectColor(JSContext *cx, uint32_t argc, jsval *vp)
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Text_getEffectColor : Invalid Native Object");
     if (argc == 0) {
         cocos2d::Color4B ret = cobj->getEffectColor();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = cccolor4b_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -6464,7 +6464,7 @@ bool js_cocos2dx_ui_Text_getType(JSContext *cx, uint32_t argc, jsval *vp)
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Text_getType : Invalid Native Object");
     if (argc == 0) {
         int ret = (int)cobj->getType();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = int32_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -6482,7 +6482,7 @@ bool js_cocos2dx_ui_Text_getTextHorizontalAlignment(JSContext *cx, uint32_t argc
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Text_getTextHorizontalAlignment : Invalid Native Object");
     if (argc == 0) {
         int ret = (int)cobj->getTextHorizontalAlignment();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = int32_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -6500,7 +6500,7 @@ bool js_cocos2dx_ui_Text_isShadowEnabled(JSContext *cx, uint32_t argc, jsval *vp
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Text_isShadowEnabled : Invalid Native Object");
     if (argc == 0) {
         bool ret = cobj->isShadowEnabled();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -6538,7 +6538,7 @@ bool js_cocos2dx_ui_Text_getShadowColor(JSContext *cx, uint32_t argc, jsval *vp)
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Text_getShadowColor : Invalid Native Object");
     if (argc == 0) {
         cocos2d::Color4B ret = cobj->getShadowColor();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = cccolor4b_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -6596,7 +6596,7 @@ bool js_cocos2dx_ui_Text_getTextVerticalAlignment(JSContext *cx, uint32_t argc, 
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Text_getTextVerticalAlignment : Invalid Native Object");
     if (argc == 0) {
         int ret = (int)cobj->getTextVerticalAlignment();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = int32_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -6614,7 +6614,7 @@ bool js_cocos2dx_ui_Text_getTextAreaSize(JSContext *cx, uint32_t argc, jsval *vp
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Text_getTextAreaSize : Invalid Native Object");
     if (argc == 0) {
         const cocos2d::Size& ret = cobj->getTextAreaSize();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = ccsize_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -6810,7 +6810,7 @@ bool js_cocos2dx_ui_TextAtlas_getStringLength(JSContext *cx, uint32_t argc, jsva
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_TextAtlas_getStringLength : Invalid Native Object");
     if (argc == 0) {
         ssize_t ret = cobj->getStringLength();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = ssize_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -6828,7 +6828,7 @@ bool js_cocos2dx_ui_TextAtlas_getString(JSContext *cx, uint32_t argc, jsval *vp)
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_TextAtlas_getString : Invalid Native Object");
     if (argc == 0) {
         const std::string& ret = cobj->getString();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = std_string_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -6866,7 +6866,7 @@ bool js_cocos2dx_ui_TextAtlas_getRenderFile(JSContext *cx, uint32_t argc, jsval 
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_TextAtlas_getRenderFile : Invalid Native Object");
     if (argc == 0) {
         cocos2d::ResourceData ret = cobj->getRenderFile();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = resourcedata_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -7137,7 +7137,7 @@ bool js_cocos2dx_ui_LoadingBar_getRenderFile(JSContext *cx, uint32_t argc, jsval
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LoadingBar_getRenderFile : Invalid Native Object");
     if (argc == 0) {
         cocos2d::ResourceData ret = cobj->getRenderFile();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = resourcedata_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -7195,7 +7195,7 @@ bool js_cocos2dx_ui_LoadingBar_getDirection(JSContext *cx, uint32_t argc, jsval 
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LoadingBar_getDirection : Invalid Native Object");
     if (argc == 0) {
         int ret = (int)cobj->getDirection();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = int32_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -7213,7 +7213,7 @@ bool js_cocos2dx_ui_LoadingBar_getCapInsets(JSContext *cx, uint32_t argc, jsval 
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LoadingBar_getCapInsets : Invalid Native Object");
     if (argc == 0) {
         const cocos2d::Rect& ret = cobj->getCapInsets();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = ccrect_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -7231,7 +7231,7 @@ bool js_cocos2dx_ui_LoadingBar_isScale9Enabled(JSContext *cx, uint32_t argc, jsv
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LoadingBar_isScale9Enabled : Invalid Native Object");
     if (argc == 0) {
         bool ret = cobj->isScale9Enabled();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -7249,7 +7249,7 @@ bool js_cocos2dx_ui_LoadingBar_getPercent(JSContext *cx, uint32_t argc, jsval *v
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LoadingBar_getPercent : Invalid Native Object");
     if (argc == 0) {
         double ret = cobj->getPercent();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = DOUBLE_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -7545,7 +7545,7 @@ bool js_cocos2dx_ui_ScrollView_isInertiaScrollEnabled(JSContext *cx, uint32_t ar
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_ScrollView_isInertiaScrollEnabled : Invalid Native Object");
     if (argc == 0) {
         bool ret = cobj->isInertiaScrollEnabled();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -7585,7 +7585,7 @@ bool js_cocos2dx_ui_ScrollView_getDirection(JSContext *cx, uint32_t argc, jsval 
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_ScrollView_getDirection : Invalid Native Object");
     if (argc == 0) {
         int ret = (int)cobj->getDirection();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = int32_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -7645,7 +7645,7 @@ bool js_cocos2dx_ui_ScrollView_getInnerContainer(JSContext *cx, uint32_t argc, j
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_ScrollView_getInnerContainer : Invalid Native Object");
     if (argc == 0) {
         cocos2d::ui::Layout* ret = cobj->getInnerContainer();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         if (ret) {
             jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::ui::Layout>(cx, (cocos2d::ui::Layout*)ret));
         } else {
@@ -7805,7 +7805,7 @@ bool js_cocos2dx_ui_ScrollView_getInnerContainerPosition(JSContext *cx, uint32_t
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_ScrollView_getInnerContainerPosition : Invalid Native Object");
     if (argc == 0) {
         const cocos2d::Vec2& ret = cobj->getInnerContainerPosition();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = vector2_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -7823,7 +7823,7 @@ bool js_cocos2dx_ui_ScrollView_getInnerContainerSize(JSContext *cx, uint32_t arg
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_ScrollView_getInnerContainerSize : Invalid Native Object");
     if (argc == 0) {
         const cocos2d::Size& ret = cobj->getInnerContainerSize();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = ccsize_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -7841,7 +7841,7 @@ bool js_cocos2dx_ui_ScrollView_isBounceEnabled(JSContext *cx, uint32_t argc, jsv
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_ScrollView_isBounceEnabled : Invalid Native Object");
     if (argc == 0) {
         bool ret = cobj->isBounceEnabled();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -8006,7 +8006,7 @@ bool js_cocos2dx_ui_ScrollView_getScrollBarColor(JSContext *cx, uint32_t argc, j
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_ScrollView_getScrollBarColor : Invalid Native Object");
     if (argc == 0) {
         const cocos2d::Color3B& ret = cobj->getScrollBarColor();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = cccolor3b_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -8096,7 +8096,7 @@ bool js_cocos2dx_ui_ScrollView_getTouchTotalTimeThreshold(JSContext *cx, uint32_
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_ScrollView_getTouchTotalTimeThreshold : Invalid Native Object");
     if (argc == 0) {
         double ret = cobj->getTouchTotalTimeThreshold();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = DOUBLE_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -8114,7 +8114,7 @@ bool js_cocos2dx_ui_ScrollView_getScrollBarPositionFromCornerForHorizontal(JSCon
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_ScrollView_getScrollBarPositionFromCornerForHorizontal : Invalid Native Object");
     if (argc == 0) {
         cocos2d::Vec2 ret = cobj->getScrollBarPositionFromCornerForHorizontal();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = vector2_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -8246,7 +8246,7 @@ bool js_cocos2dx_ui_ScrollView_getScrollBarPositionFromCornerForVertical(JSConte
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_ScrollView_getScrollBarPositionFromCornerForVertical : Invalid Native Object");
     if (argc == 0) {
         cocos2d::Vec2 ret = cobj->getScrollBarPositionFromCornerForVertical();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = vector2_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -8288,7 +8288,7 @@ bool js_cocos2dx_ui_ScrollView_getScrollBarOpacity(JSContext *cx, uint32_t argc,
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_ScrollView_getScrollBarOpacity : Invalid Native Object");
     if (argc == 0) {
         uint16_t ret = cobj->getScrollBarOpacity();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = uint32_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -8368,7 +8368,7 @@ bool js_cocos2dx_ui_ScrollView_getScrollBarAutoHideTime(JSContext *cx, uint32_t 
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_ScrollView_getScrollBarAutoHideTime : Invalid Native Object");
     if (argc == 0) {
         double ret = cobj->getScrollBarAutoHideTime();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = DOUBLE_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -8424,7 +8424,7 @@ bool js_cocos2dx_ui_ScrollView_isScrollBarEnabled(JSContext *cx, uint32_t argc, 
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_ScrollView_isScrollBarEnabled : Invalid Native Object");
     if (argc == 0) {
         bool ret = cobj->isScrollBarEnabled();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -8442,7 +8442,7 @@ bool js_cocos2dx_ui_ScrollView_getScrollBarWidth(JSContext *cx, uint32_t argc, j
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_ScrollView_getScrollBarWidth : Invalid Native Object");
     if (argc == 0) {
         double ret = cobj->getScrollBarWidth();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = DOUBLE_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -8460,7 +8460,7 @@ bool js_cocos2dx_ui_ScrollView_isScrollBarAutoHideEnabled(JSContext *cx, uint32_
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_ScrollView_isScrollBarAutoHideEnabled : Invalid Native Object");
     if (argc == 0) {
         bool ret = cobj->isScrollBarAutoHideEnabled();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -8720,7 +8720,7 @@ bool js_cocos2dx_ui_ListView_getCenterItemInCurrentView(JSContext *cx, uint32_t 
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_ListView_getCenterItemInCurrentView : Invalid Native Object");
     if (argc == 0) {
         cocos2d::ui::Widget* ret = cobj->getCenterItemInCurrentView();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         if (ret) {
             jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::ui::Widget>(cx, (cocos2d::ui::Widget*)ret));
         } else {
@@ -8742,7 +8742,7 @@ bool js_cocos2dx_ui_ListView_getCurSelectedIndex(JSContext *cx, uint32_t argc, j
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_ListView_getCurSelectedIndex : Invalid Native Object");
     if (argc == 0) {
         ssize_t ret = cobj->getCurSelectedIndex();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = ssize_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -8760,7 +8760,7 @@ bool js_cocos2dx_ui_ListView_getScrollDuration(JSContext *cx, uint32_t argc, jsv
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_ListView_getScrollDuration : Invalid Native Object");
     if (argc == 0) {
         double ret = cobj->getScrollDuration();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = DOUBLE_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -8778,7 +8778,7 @@ bool js_cocos2dx_ui_ListView_getItemsMargin(JSContext *cx, uint32_t argc, jsval 
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_ListView_getItemsMargin : Invalid Native Object");
     if (argc == 0) {
         double ret = cobj->getItemsMargin();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = DOUBLE_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -8852,7 +8852,7 @@ bool js_cocos2dx_ui_ListView_getIndex(JSContext *cx, uint32_t argc, jsval *vp)
         } while (0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_ListView_getIndex : Error processing arguments");
         ssize_t ret = cobj->getIndex(arg0);
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = ssize_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -9021,7 +9021,7 @@ bool js_cocos2dx_ui_ListView_getTopmostItemInCurrentView(JSContext *cx, uint32_t
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_ListView_getTopmostItemInCurrentView : Invalid Native Object");
     if (argc == 0) {
         cocos2d::ui::Widget* ret = cobj->getTopmostItemInCurrentView();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         if (ret) {
             jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::ui::Widget>(cx, (cocos2d::ui::Widget*)ret));
         } else {
@@ -9059,7 +9059,7 @@ bool js_cocos2dx_ui_ListView_getBottommostItemInCurrentView(JSContext *cx, uint3
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_ListView_getBottommostItemInCurrentView : Invalid Native Object");
     if (argc == 0) {
         cocos2d::ui::Widget* ret = cobj->getBottommostItemInCurrentView();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         if (ret) {
             jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::ui::Widget>(cx, (cocos2d::ui::Widget*)ret));
         } else {
@@ -9081,7 +9081,7 @@ bool js_cocos2dx_ui_ListView_getItems(JSContext *cx, uint32_t argc, jsval *vp)
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_ListView_getItems : Invalid Native Object");
     if (argc == 0) {
         cocos2d::Vector<cocos2d::ui::Widget *>& ret = cobj->getItems();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = ccvector_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -9099,7 +9099,7 @@ bool js_cocos2dx_ui_ListView_getLeftmostItemInCurrentView(JSContext *cx, uint32_
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_ListView_getLeftmostItemInCurrentView : Invalid Native Object");
     if (argc == 0) {
         cocos2d::ui::Widget* ret = cobj->getLeftmostItemInCurrentView();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         if (ret) {
             jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::ui::Widget>(cx, (cocos2d::ui::Widget*)ret));
         } else {
@@ -9141,7 +9141,7 @@ bool js_cocos2dx_ui_ListView_getMagneticType(JSContext *cx, uint32_t argc, jsval
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_ListView_getMagneticType : Invalid Native Object");
     if (argc == 0) {
         int ret = (int)cobj->getMagneticType();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = int32_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -9163,7 +9163,7 @@ bool js_cocos2dx_ui_ListView_getItem(JSContext *cx, uint32_t argc, jsval *vp)
         ok &= jsval_to_ssize(cx, args.get(0), &arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_ListView_getItem : Error processing arguments");
         cocos2d::ui::Widget* ret = cobj->getItem(arg0);
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         if (ret) {
             jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::ui::Widget>(cx, (cocos2d::ui::Widget*)ret));
         } else {
@@ -9272,7 +9272,7 @@ bool js_cocos2dx_ui_ListView_getMagneticAllowedOutOfBoundary(JSContext *cx, uint
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_ListView_getMagneticAllowedOutOfBoundary : Invalid Native Object");
     if (argc == 0) {
         bool ret = cobj->getMagneticAllowedOutOfBoundary();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -9296,7 +9296,7 @@ bool js_cocos2dx_ui_ListView_getClosestItemToPosition(JSContext *cx, uint32_t ar
         ok &= jsval_to_vector2(cx, args.get(1), &arg1);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_ListView_getClosestItemToPosition : Error processing arguments");
         cocos2d::ui::Widget* ret = cobj->getClosestItemToPosition(arg0, arg1);
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         if (ret) {
             jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::ui::Widget>(cx, (cocos2d::ui::Widget*)ret));
         } else {
@@ -9318,7 +9318,7 @@ bool js_cocos2dx_ui_ListView_getRightmostItemInCurrentView(JSContext *cx, uint32
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_ListView_getRightmostItemInCurrentView : Invalid Native Object");
     if (argc == 0) {
         cocos2d::ui::Widget* ret = cobj->getRightmostItemInCurrentView();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         if (ret) {
             jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::ui::Widget>(cx, (cocos2d::ui::Widget*)ret));
         } else {
@@ -9366,7 +9366,7 @@ bool js_cocos2dx_ui_ListView_getClosestItemToPositionInCurrentView(JSContext *cx
         ok &= jsval_to_vector2(cx, args.get(1), &arg1);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_ListView_getClosestItemToPositionInCurrentView : Error processing arguments");
         cocos2d::ui::Widget* ret = cobj->getClosestItemToPositionInCurrentView(arg0, arg1);
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         if (ret) {
             jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::ui::Widget>(cx, (cocos2d::ui::Widget*)ret));
         } else {
@@ -9597,7 +9597,7 @@ bool js_cocos2dx_ui_Slider_getMaxPercent(JSContext *cx, uint32_t argc, jsval *vp
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Slider_getMaxPercent : Invalid Native Object");
     if (argc == 0) {
         int ret = cobj->getMaxPercent();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = int32_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -9675,7 +9675,7 @@ bool js_cocos2dx_ui_Slider_getBallNormalFile(JSContext *cx, uint32_t argc, jsval
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Slider_getBallNormalFile : Invalid Native Object");
     if (argc == 0) {
         cocos2d::ResourceData ret = cobj->getBallNormalFile();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = resourcedata_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -9693,7 +9693,7 @@ bool js_cocos2dx_ui_Slider_getSlidBallDisabledRenderer(JSContext *cx, uint32_t a
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Slider_getSlidBallDisabledRenderer : Invalid Native Object");
     if (argc == 0) {
         cocos2d::Sprite* ret = cobj->getSlidBallDisabledRenderer();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         if (ret) {
             jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::Sprite>(cx, (cocos2d::Sprite*)ret));
         } else {
@@ -9735,7 +9735,7 @@ bool js_cocos2dx_ui_Slider_getBallPressedFile(JSContext *cx, uint32_t argc, jsva
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Slider_getBallPressedFile : Invalid Native Object");
     if (argc == 0) {
         cocos2d::ResourceData ret = cobj->getBallPressedFile();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = resourcedata_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -9753,7 +9753,7 @@ bool js_cocos2dx_ui_Slider_getZoomScale(JSContext *cx, uint32_t argc, jsval *vp)
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Slider_getZoomScale : Invalid Native Object");
     if (argc == 0) {
         double ret = cobj->getZoomScale();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = DOUBLE_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -9847,7 +9847,7 @@ bool js_cocos2dx_ui_Slider_getSlidBallRenderer(JSContext *cx, uint32_t argc, jsv
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Slider_getSlidBallRenderer : Invalid Native Object");
     if (argc == 0) {
         cocos2d::Node* ret = cobj->getSlidBallRenderer();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         if (ret) {
             jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::Node>(cx, (cocos2d::Node*)ret));
         } else {
@@ -9966,7 +9966,7 @@ bool js_cocos2dx_ui_Slider_getProgressBarFile(JSContext *cx, uint32_t argc, jsva
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Slider_getProgressBarFile : Invalid Native Object");
     if (argc == 0) {
         cocos2d::ResourceData ret = cobj->getProgressBarFile();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = resourcedata_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -9984,7 +9984,7 @@ bool js_cocos2dx_ui_Slider_getCapInsetsBarRenderer(JSContext *cx, uint32_t argc,
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Slider_getCapInsetsBarRenderer : Invalid Native Object");
     if (argc == 0) {
         const cocos2d::Rect& ret = cobj->getCapInsetsBarRenderer();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = ccrect_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -10002,7 +10002,7 @@ bool js_cocos2dx_ui_Slider_getCapInsetsProgressBarRenderer(JSContext *cx, uint32
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Slider_getCapInsetsProgressBarRenderer : Invalid Native Object");
     if (argc == 0) {
         const cocos2d::Rect& ret = cobj->getCapInsetsProgressBarRenderer();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = ccrect_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -10020,7 +10020,7 @@ bool js_cocos2dx_ui_Slider_getSlidBallPressedRenderer(JSContext *cx, uint32_t ar
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Slider_getSlidBallPressedRenderer : Invalid Native Object");
     if (argc == 0) {
         cocos2d::Sprite* ret = cobj->getSlidBallPressedRenderer();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         if (ret) {
             jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::Sprite>(cx, (cocos2d::Sprite*)ret));
         } else {
@@ -10072,7 +10072,7 @@ bool js_cocos2dx_ui_Slider_getBackFile(JSContext *cx, uint32_t argc, jsval *vp)
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Slider_getBackFile : Invalid Native Object");
     if (argc == 0) {
         cocos2d::ResourceData ret = cobj->getBackFile();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = resourcedata_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -10090,7 +10090,7 @@ bool js_cocos2dx_ui_Slider_isScale9Enabled(JSContext *cx, uint32_t argc, jsval *
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Slider_isScale9Enabled : Invalid Native Object");
     if (argc == 0) {
         bool ret = cobj->isScale9Enabled();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -10108,7 +10108,7 @@ bool js_cocos2dx_ui_Slider_getBallDisabledFile(JSContext *cx, uint32_t argc, jsv
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Slider_getBallDisabledFile : Invalid Native Object");
     if (argc == 0) {
         cocos2d::ResourceData ret = cobj->getBallDisabledFile();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = resourcedata_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -10146,7 +10146,7 @@ bool js_cocos2dx_ui_Slider_getPercent(JSContext *cx, uint32_t argc, jsval *vp)
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Slider_getPercent : Invalid Native Object");
     if (argc == 0) {
         int ret = cobj->getPercent();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = int32_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -10214,7 +10214,7 @@ bool js_cocos2dx_ui_Slider_getSlidBallNormalRenderer(JSContext *cx, uint32_t arg
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Slider_getSlidBallNormalRenderer : Invalid Native Object");
     if (argc == 0) {
         cocos2d::Sprite* ret = cobj->getSlidBallNormalRenderer();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         if (ret) {
             jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::Sprite>(cx, (cocos2d::Sprite*)ret));
         } else {
@@ -10443,7 +10443,7 @@ bool js_cocos2dx_ui_UICCTextField_onTextFieldAttachWithIME(JSContext *cx, uint32
         } while (0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_UICCTextField_onTextFieldAttachWithIME : Error processing arguments");
         bool ret = cobj->onTextFieldAttachWithIME(arg0);
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -10501,7 +10501,7 @@ bool js_cocos2dx_ui_UICCTextField_getDeleteBackward(JSContext *cx, uint32_t argc
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_UICCTextField_getDeleteBackward : Invalid Native Object");
     if (argc == 0) {
         bool ret = cobj->getDeleteBackward();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -10519,7 +10519,7 @@ bool js_cocos2dx_ui_UICCTextField_getAttachWithIME(JSContext *cx, uint32_t argc,
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_UICCTextField_getAttachWithIME : Invalid Native Object");
     if (argc == 0) {
         bool ret = cobj->getAttachWithIME();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -10553,7 +10553,7 @@ bool js_cocos2dx_ui_UICCTextField_onTextFieldDeleteBackward(JSContext *cx, uint3
         ok &= jsval_to_ulong(cx, args.get(2), &arg2);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_UICCTextField_onTextFieldDeleteBackward : Error processing arguments");
         bool ret = cobj->onTextFieldDeleteBackward(arg0, arg1, arg2);
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -10571,7 +10571,7 @@ bool js_cocos2dx_ui_UICCTextField_getInsertText(JSContext *cx, uint32_t argc, js
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_UICCTextField_getInsertText : Invalid Native Object");
     if (argc == 0) {
         bool ret = cobj->getInsertText();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -10625,7 +10625,7 @@ bool js_cocos2dx_ui_UICCTextField_getDetachWithIME(JSContext *cx, uint32_t argc,
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_UICCTextField_getDetachWithIME : Invalid Native Object");
     if (argc == 0) {
         bool ret = cobj->getDetachWithIME();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -10643,7 +10643,7 @@ bool js_cocos2dx_ui_UICCTextField_getCharCount(JSContext *cx, uint32_t argc, jsv
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_UICCTextField_getCharCount : Invalid Native Object");
     if (argc == 0) {
         unsigned long ret = cobj->getCharCount();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = ulong_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -10717,7 +10717,7 @@ bool js_cocos2dx_ui_UICCTextField_isPasswordEnabled(JSContext *cx, uint32_t argc
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_UICCTextField_isPasswordEnabled : Invalid Native Object");
     if (argc == 0) {
         bool ret = cobj->isPasswordEnabled();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -10793,7 +10793,7 @@ bool js_cocos2dx_ui_UICCTextField_onTextFieldInsertText(JSContext *cx, uint32_t 
         ok &= jsval_to_ulong(cx, args.get(2), &arg2);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_UICCTextField_onTextFieldInsertText : Error processing arguments");
         bool ret = cobj->onTextFieldInsertText(arg0, arg1, arg2);
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -10823,7 +10823,7 @@ bool js_cocos2dx_ui_UICCTextField_onTextFieldDetachWithIME(JSContext *cx, uint32
         } while (0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_UICCTextField_onTextFieldDetachWithIME : Error processing arguments");
         bool ret = cobj->onTextFieldDetachWithIME(arg0);
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -10841,7 +10841,7 @@ bool js_cocos2dx_ui_UICCTextField_getMaxLength(JSContext *cx, uint32_t argc, jsv
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_UICCTextField_getMaxLength : Invalid Native Object");
     if (argc == 0) {
         int ret = cobj->getMaxLength();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = int32_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -10859,7 +10859,7 @@ bool js_cocos2dx_ui_UICCTextField_isMaxLengthEnabled(JSContext *cx, uint32_t arg
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_UICCTextField_isMaxLengthEnabled : Invalid Native Object");
     if (argc == 0) {
         bool ret = cobj->isMaxLengthEnabled();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -11088,7 +11088,7 @@ bool js_cocos2dx_ui_TextField_getFontSize(JSContext *cx, uint32_t argc, jsval *v
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_TextField_getFontSize : Invalid Native Object");
     if (argc == 0) {
         int ret = cobj->getFontSize();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = int32_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -11106,7 +11106,7 @@ bool js_cocos2dx_ui_TextField_getString(JSContext *cx, uint32_t argc, jsval *vp)
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_TextField_getString : Invalid Native Object");
     if (argc == 0) {
         const std::string& ret = cobj->getString();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = std_string_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -11144,7 +11144,7 @@ bool js_cocos2dx_ui_TextField_getDeleteBackward(JSContext *cx, uint32_t argc, js
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_TextField_getDeleteBackward : Invalid Native Object");
     if (argc == 0) {
         bool ret = cobj->getDeleteBackward();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -11162,7 +11162,7 @@ bool js_cocos2dx_ui_TextField_getTextColor(JSContext *cx, uint32_t argc, jsval *
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_TextField_getTextColor : Invalid Native Object");
     if (argc == 0) {
         const cocos2d::Color4B& ret = cobj->getTextColor();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = cccolor4b_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -11180,7 +11180,7 @@ bool js_cocos2dx_ui_TextField_getPlaceHolder(JSContext *cx, uint32_t argc, jsval
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_TextField_getPlaceHolder : Invalid Native Object");
     if (argc == 0) {
         const std::string& ret = cobj->getPlaceHolder();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = std_string_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -11198,7 +11198,7 @@ bool js_cocos2dx_ui_TextField_getAttachWithIME(JSContext *cx, uint32_t argc, jsv
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_TextField_getAttachWithIME : Invalid Native Object");
     if (argc == 0) {
         bool ret = cobj->getAttachWithIME();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -11236,7 +11236,7 @@ bool js_cocos2dx_ui_TextField_getInsertText(JSContext *cx, uint32_t argc, jsval 
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_TextField_getInsertText : Invalid Native Object");
     if (argc == 0) {
         bool ret = cobj->getInsertText();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -11294,7 +11294,7 @@ bool js_cocos2dx_ui_TextField_getDetachWithIME(JSContext *cx, uint32_t argc, jsv
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_TextField_getDetachWithIME : Invalid Native Object");
     if (argc == 0) {
         bool ret = cobj->getDetachWithIME();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -11395,7 +11395,7 @@ bool js_cocos2dx_ui_TextField_getFontName(JSContext *cx, uint32_t argc, jsval *v
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_TextField_getFontName : Invalid Native Object");
     if (argc == 0) {
         const std::string& ret = cobj->getFontName();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = std_string_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -11449,7 +11449,7 @@ bool js_cocos2dx_ui_TextField_getStringLength(JSContext *cx, uint32_t argc, jsva
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_TextField_getStringLength : Invalid Native Object");
     if (argc == 0) {
         int ret = cobj->getStringLength();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = int32_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -11467,7 +11467,7 @@ bool js_cocos2dx_ui_TextField_getAutoRenderSize(JSContext *cx, uint32_t argc, js
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_TextField_getAutoRenderSize : Invalid Native Object");
     if (argc == 0) {
         cocos2d::Size ret = cobj->getAutoRenderSize();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = ccsize_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -11505,7 +11505,7 @@ bool js_cocos2dx_ui_TextField_getPlaceHolderColor(JSContext *cx, uint32_t argc, 
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_TextField_getPlaceHolderColor : Invalid Native Object");
     if (argc == 0) {
         const cocos2d::Color4B& ret = cobj->getPlaceHolderColor();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = cccolor4b_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -11523,7 +11523,7 @@ bool js_cocos2dx_ui_TextField_getPasswordStyleText(JSContext *cx, uint32_t argc,
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_TextField_getPasswordStyleText : Invalid Native Object");
     if (argc == 0) {
         const char* ret = cobj->getPasswordStyleText();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = c_string_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -11561,7 +11561,7 @@ bool js_cocos2dx_ui_TextField_isPasswordEnabled(JSContext *cx, uint32_t argc, js
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_TextField_isPasswordEnabled : Invalid Native Object");
     if (argc == 0) {
         bool ret = cobj->isPasswordEnabled();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -11619,7 +11619,7 @@ bool js_cocos2dx_ui_TextField_getTextHorizontalAlignment(JSContext *cx, uint32_t
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_TextField_getTextHorizontalAlignment : Invalid Native Object");
     if (argc == 0) {
         int ret = (int)cobj->getTextHorizontalAlignment();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = int32_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -11803,7 +11803,7 @@ bool js_cocos2dx_ui_TextField_getMaxLength(JSContext *cx, uint32_t argc, jsval *
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_TextField_getMaxLength : Invalid Native Object");
     if (argc == 0) {
         int ret = cobj->getMaxLength();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = int32_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -11821,7 +11821,7 @@ bool js_cocos2dx_ui_TextField_isMaxLengthEnabled(JSContext *cx, uint32_t argc, j
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_TextField_isMaxLengthEnabled : Invalid Native Object");
     if (argc == 0) {
         bool ret = cobj->isMaxLengthEnabled();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -11859,7 +11859,7 @@ bool js_cocos2dx_ui_TextField_getTextVerticalAlignment(JSContext *cx, uint32_t a
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_TextField_getTextVerticalAlignment : Invalid Native Object");
     if (argc == 0) {
         int ret = (int)cobj->getTextVerticalAlignment();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = int32_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -11957,7 +11957,7 @@ bool js_cocos2dx_ui_TextField_getTouchSize(JSContext *cx, uint32_t argc, jsval *
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_TextField_getTouchSize : Invalid Native Object");
     if (argc == 0) {
         cocos2d::Size ret = cobj->getTouchSize();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = ccsize_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -12147,7 +12147,7 @@ bool js_cocos2dx_ui_TextBMFont_getStringLength(JSContext *cx, uint32_t argc, jsv
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_TextBMFont_getStringLength : Invalid Native Object");
     if (argc == 0) {
         ssize_t ret = cobj->getStringLength();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = ssize_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -12165,7 +12165,7 @@ bool js_cocos2dx_ui_TextBMFont_getString(JSContext *cx, uint32_t argc, jsval *vp
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_TextBMFont_getString : Invalid Native Object");
     if (argc == 0) {
         const std::string& ret = cobj->getString();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = std_string_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -12203,7 +12203,7 @@ bool js_cocos2dx_ui_TextBMFont_getRenderFile(JSContext *cx, uint32_t argc, jsval
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_TextBMFont_getRenderFile : Invalid Native Object");
     if (argc == 0) {
         cocos2d::ResourceData ret = cobj->getRenderFile();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = resourcedata_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -12580,7 +12580,7 @@ bool js_cocos2dx_ui_PageView_getIndicatorPosition(JSContext *cx, uint32_t argc, 
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_PageView_getIndicatorPosition : Invalid Native Object");
     if (argc == 0) {
         const cocos2d::Vec2& ret = cobj->getIndicatorPosition();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = vector2_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -12618,7 +12618,7 @@ bool js_cocos2dx_ui_PageView_getIndicatorIndexNodesColor(JSContext *cx, uint32_t
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_PageView_getIndicatorIndexNodesColor : Invalid Native Object");
     if (argc == 0) {
         const cocos2d::Color3B& ret = cobj->getIndicatorIndexNodesColor();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = cccolor3b_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -12636,7 +12636,7 @@ bool js_cocos2dx_ui_PageView_getIndicatorSelectedIndexColor(JSContext *cx, uint3
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_PageView_getIndicatorSelectedIndexColor : Invalid Native Object");
     if (argc == 0) {
         const cocos2d::Color3B& ret = cobj->getIndicatorSelectedIndexColor();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = cccolor3b_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -12654,7 +12654,7 @@ bool js_cocos2dx_ui_PageView_getIndicatorIndexNodesScale(JSContext *cx, uint32_t
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_PageView_getIndicatorIndexNodesScale : Invalid Native Object");
     if (argc == 0) {
         double ret = cobj->getIndicatorIndexNodesScale();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = DOUBLE_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -12810,7 +12810,7 @@ bool js_cocos2dx_ui_PageView_getIndicatorPositionAsAnchorPoint(JSContext *cx, ui
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_PageView_getIndicatorPositionAsAnchorPoint : Invalid Native Object");
     if (argc == 0) {
         const cocos2d::Vec2& ret = cobj->getIndicatorPositionAsAnchorPoint();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = vector2_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -12828,7 +12828,7 @@ bool js_cocos2dx_ui_PageView_getCurrentPageIndex(JSContext *cx, uint32_t argc, j
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_PageView_getCurrentPageIndex : Invalid Native Object");
     if (argc == 0) {
         ssize_t ret = cobj->getCurrentPageIndex();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = ssize_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -12904,7 +12904,7 @@ bool js_cocos2dx_ui_PageView_getIndicatorEnabled(JSContext *cx, uint32_t argc, j
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_PageView_getIndicatorEnabled : Invalid Native Object");
     if (argc == 0) {
         bool ret = cobj->getIndicatorEnabled();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -12942,7 +12942,7 @@ bool js_cocos2dx_ui_PageView_getIndicatorSpaceBetweenIndexNodes(JSContext *cx, u
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_PageView_getIndicatorSpaceBetweenIndexNodes : Invalid Native Object");
     if (argc == 0) {
         double ret = cobj->getIndicatorSpaceBetweenIndexNodes();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = DOUBLE_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -13381,7 +13381,7 @@ bool js_cocos2dx_ui_RichElement_equalType(JSContext *cx, uint32_t argc, jsval *v
         ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_RichElement_equalType : Error processing arguments");
         bool ret = cobj->equalType(arg0);
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -13407,7 +13407,7 @@ bool js_cocos2dx_ui_RichElement_init(JSContext *cx, uint32_t argc, jsval *vp)
         ok &= jsval_to_uint16(cx, args.get(2), &arg2);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_RichElement_init : Error processing arguments");
         bool ret = cobj->init(arg0, arg1, arg2);
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -13543,7 +13543,7 @@ bool js_cocos2dx_ui_RichElementText_init(JSContext *cx, uint32_t argc, jsval *vp
         ok &= jsval_to_std_string(cx, args.get(7), &arg7);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_RichElementText_init : Error processing arguments");
         bool ret = cobj->init(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7);
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -13569,7 +13569,7 @@ bool js_cocos2dx_ui_RichElementText_init(JSContext *cx, uint32_t argc, jsval *vp
         ok &= jsval_to_cccolor3b(cx, args.get(8), &arg8);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_RichElementText_init : Error processing arguments");
         bool ret = cobj->init(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -13597,7 +13597,7 @@ bool js_cocos2dx_ui_RichElementText_init(JSContext *cx, uint32_t argc, jsval *vp
         ok &= jsval_to_int32(cx, args.get(9), (int32_t *)&arg9);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_RichElementText_init : Error processing arguments");
         bool ret = cobj->init(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9);
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -13627,7 +13627,7 @@ bool js_cocos2dx_ui_RichElementText_init(JSContext *cx, uint32_t argc, jsval *vp
         ok &= jsval_to_cccolor3b(cx, args.get(10), &arg10);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_RichElementText_init : Error processing arguments");
         bool ret = cobj->init(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10);
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -13659,7 +13659,7 @@ bool js_cocos2dx_ui_RichElementText_init(JSContext *cx, uint32_t argc, jsval *vp
         ok &= jsval_to_ccsize(cx, args.get(11), &arg11);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_RichElementText_init : Error processing arguments");
         bool ret = cobj->init(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11);
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -13693,7 +13693,7 @@ bool js_cocos2dx_ui_RichElementText_init(JSContext *cx, uint32_t argc, jsval *vp
         ok &= jsval_to_int32(cx, args.get(12), (int32_t *)&arg12);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_RichElementText_init : Error processing arguments");
         bool ret = cobj->init(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12);
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -13729,7 +13729,7 @@ bool js_cocos2dx_ui_RichElementText_init(JSContext *cx, uint32_t argc, jsval *vp
         ok &= jsval_to_cccolor3b(cx, args.get(13), &arg13);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_RichElementText_init : Error processing arguments");
         bool ret = cobj->init(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13);
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -14130,7 +14130,7 @@ bool js_cocos2dx_ui_RichElementImage_init(JSContext *cx, uint32_t argc, jsval *v
         ok &= jsval_to_std_string(cx, args.get(3), &arg3);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_RichElementImage_init : Error processing arguments");
         bool ret = cobj->init(arg0, arg1, arg2, arg3);
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -14148,7 +14148,7 @@ bool js_cocos2dx_ui_RichElementImage_init(JSContext *cx, uint32_t argc, jsval *v
         ok &= jsval_to_std_string(cx, args.get(4), &arg4);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_RichElementImage_init : Error processing arguments");
         bool ret = cobj->init(arg0, arg1, arg2, arg3, arg4);
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -14355,7 +14355,7 @@ bool js_cocos2dx_ui_RichElementCustomNode_init(JSContext *cx, uint32_t argc, jsv
         } while (0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_RichElementCustomNode_init : Error processing arguments");
         bool ret = cobj->init(arg0, arg1, arg2, arg3);
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -14668,7 +14668,7 @@ bool js_cocos2dx_ui_RichText_getFontSize(JSContext *cx, uint32_t argc, jsval *vp
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RichText_getFontSize : Invalid Native Object");
     if (argc == 0) {
         double ret = cobj->getFontSize();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = DOUBLE_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -14734,7 +14734,7 @@ bool js_cocos2dx_ui_RichText_getAnchorFontColor(JSContext *cx, uint32_t argc, js
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RichText_getAnchorFontColor : Invalid Native Object");
     if (argc == 0) {
         std::string ret = cobj->getAnchorFontColor();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = std_string_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -14752,7 +14752,7 @@ bool js_cocos2dx_ui_RichText_getAnchorTextShadowBlurRadius(JSContext *cx, uint32
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RichText_getAnchorTextShadowBlurRadius : Invalid Native Object");
     if (argc == 0) {
         int ret = cobj->getAnchorTextShadowBlurRadius();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = int32_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -14826,7 +14826,7 @@ bool js_cocos2dx_ui_RichText_isAnchorTextItalicEnabled(JSContext *cx, uint32_t a
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RichText_isAnchorTextItalicEnabled : Invalid Native Object");
     if (argc == 0) {
         bool ret = cobj->isAnchorTextItalicEnabled();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -14934,7 +14934,7 @@ bool js_cocos2dx_ui_RichText_getAnchorTextOutlineColor3B(JSContext *cx, uint32_t
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RichText_getAnchorTextOutlineColor3B : Invalid Native Object");
     if (argc == 0) {
         cocos2d::Color3B ret = cobj->getAnchorTextOutlineColor3B();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = cccolor3b_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -14956,7 +14956,7 @@ bool js_cocos2dx_ui_RichText_stringWithColor4B(JSContext *cx, uint32_t argc, jsv
         ok &= jsval_to_cccolor4b(cx, args.get(0), &arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_RichText_stringWithColor4B : Error processing arguments");
         std::string ret = cobj->stringWithColor4B(arg0);
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = std_string_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -14980,7 +14980,7 @@ bool js_cocos2dx_ui_RichText_initWithXML(JSContext *cx, uint32_t argc, jsval *vp
         ok &= jsval_to_ccvaluemap(cx, args.get(1), &arg1);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_RichText_initWithXML : Error processing arguments");
         bool ret = cobj->initWithXML(arg0, arg1);
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -15016,7 +15016,7 @@ bool js_cocos2dx_ui_RichText_initWithXML(JSContext *cx, uint32_t argc, jsval *vp
 		;
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_RichText_initWithXML : Error processing arguments");
         bool ret = cobj->initWithXML(arg0, arg1, arg2);
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -15034,7 +15034,7 @@ bool js_cocos2dx_ui_RichText_getAnchorFontColor3B(JSContext *cx, uint32_t argc, 
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RichText_getAnchorFontColor3B : Invalid Native Object");
     if (argc == 0) {
         cocos2d::Color3B ret = cobj->getAnchorFontColor3B();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = cccolor3b_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -15068,7 +15068,7 @@ bool js_cocos2dx_ui_RichText_getAnchorTextGlowColor3B(JSContext *cx, uint32_t ar
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RichText_getAnchorTextGlowColor3B : Invalid Native Object");
     if (argc == 0) {
         cocos2d::Color3B ret = cobj->getAnchorTextGlowColor3B();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = cccolor3b_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -15106,7 +15106,7 @@ bool js_cocos2dx_ui_RichText_getFontFace(JSContext *cx, uint32_t argc, jsval *vp
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RichText_getFontFace : Invalid Native Object");
     if (argc == 0) {
         std::string ret = cobj->getFontFace();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = std_string_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -15144,7 +15144,7 @@ bool js_cocos2dx_ui_RichText_isAnchorTextGlowEnabled(JSContext *cx, uint32_t arg
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RichText_isAnchorTextGlowEnabled : Invalid Native Object");
     if (argc == 0) {
         bool ret = cobj->isAnchorTextGlowEnabled();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -15162,7 +15162,7 @@ bool js_cocos2dx_ui_RichText_getDefaults(JSContext *cx, uint32_t argc, jsval *vp
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RichText_getDefaults : Invalid Native Object");
     if (argc == 0) {
         cocos2d::ValueMap ret = cobj->getDefaults();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = ccvaluemap_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -15180,7 +15180,7 @@ bool js_cocos2dx_ui_RichText_isAnchorTextUnderlineEnabled(JSContext *cx, uint32_
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RichText_isAnchorTextUnderlineEnabled : Invalid Native Object");
     if (argc == 0) {
         bool ret = cobj->isAnchorTextUnderlineEnabled();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -15198,7 +15198,7 @@ bool js_cocos2dx_ui_RichText_getFontColor(JSContext *cx, uint32_t argc, jsval *v
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RichText_getFontColor : Invalid Native Object");
     if (argc == 0) {
         std::string ret = cobj->getFontColor();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = std_string_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -15216,7 +15216,7 @@ bool js_cocos2dx_ui_RichText_isAnchorTextShadowEnabled(JSContext *cx, uint32_t a
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RichText_isAnchorTextShadowEnabled : Invalid Native Object");
     if (argc == 0) {
         bool ret = cobj->isAnchorTextShadowEnabled();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -15234,7 +15234,7 @@ bool js_cocos2dx_ui_RichText_getAnchorTextOutlineSize(JSContext *cx, uint32_t ar
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RichText_getAnchorTextOutlineSize : Invalid Native Object");
     if (argc == 0) {
         int ret = cobj->getAnchorTextOutlineSize();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = int32_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -15272,7 +15272,7 @@ bool js_cocos2dx_ui_RichText_isAnchorTextDelEnabled(JSContext *cx, uint32_t argc
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RichText_isAnchorTextDelEnabled : Invalid Native Object");
     if (argc == 0) {
         bool ret = cobj->isAnchorTextDelEnabled();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -15414,7 +15414,7 @@ bool js_cocos2dx_ui_RichText_getAnchorTextShadowOffset(JSContext *cx, uint32_t a
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RichText_getAnchorTextShadowOffset : Invalid Native Object");
     if (argc == 0) {
         cocos2d::Size ret = cobj->getAnchorTextShadowOffset();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = ccsize_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -15432,7 +15432,7 @@ bool js_cocos2dx_ui_RichText_isAnchorTextBoldEnabled(JSContext *cx, uint32_t arg
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RichText_isAnchorTextBoldEnabled : Invalid Native Object");
     if (argc == 0) {
         bool ret = cobj->isAnchorTextBoldEnabled();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -15450,7 +15450,7 @@ bool js_cocos2dx_ui_RichText_getAnchorTextShadowColor3B(JSContext *cx, uint32_t 
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RichText_getAnchorTextShadowColor3B : Invalid Native Object");
     if (argc == 0) {
         cocos2d::Color3B ret = cobj->getAnchorTextShadowColor3B();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = cccolor3b_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -15472,7 +15472,7 @@ bool js_cocos2dx_ui_RichText_stringWithColor3B(JSContext *cx, uint32_t argc, jsv
         ok &= jsval_to_cccolor3b(cx, args.get(0), &arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_RichText_stringWithColor3B : Error processing arguments");
         std::string ret = cobj->stringWithColor3B(arg0);
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = std_string_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -15490,7 +15490,7 @@ bool js_cocos2dx_ui_RichText_isAnchorTextOutlineEnabled(JSContext *cx, uint32_t 
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RichText_isAnchorTextOutlineEnabled : Invalid Native Object");
     if (argc == 0) {
         bool ret = cobj->isAnchorTextOutlineEnabled();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -15508,7 +15508,7 @@ bool js_cocos2dx_ui_RichText_getFontColor3B(JSContext *cx, uint32_t argc, jsval 
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RichText_getFontColor3B : Invalid Native Object");
     if (argc == 0) {
         cocos2d::Color3B ret = cobj->getFontColor3B();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = cccolor3b_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -15526,7 +15526,7 @@ bool js_cocos2dx_ui_RichText_getWrapMode(JSContext *cx, uint32_t argc, jsval *vp
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RichText_getWrapMode : Invalid Native Object");
     if (argc == 0) {
         int ret = (int)cobj->getWrapMode();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = int32_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -15568,7 +15568,7 @@ bool js_cocos2dx_ui_RichText_color3BWithString(JSContext *cx, uint32_t argc, jsv
         ok &= jsval_to_std_string(cx, args.get(0), &arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_RichText_color3BWithString : Error processing arguments");
         cocos2d::Color3B ret = cobj->color3BWithString(arg0);
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = cccolor3b_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -15791,7 +15791,7 @@ bool js_cocos2dx_ui_HBox_initWithSize(JSContext *cx, uint32_t argc, jsval *vp)
         ok &= jsval_to_ccsize(cx, args.get(0), &arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_HBox_initWithSize : Error processing arguments");
         bool ret = cobj->initWithSize(arg0);
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -15935,7 +15935,7 @@ bool js_cocos2dx_ui_VBox_initWithSize(JSContext *cx, uint32_t argc, jsval *vp)
         ok &= jsval_to_ccsize(cx, args.get(0), &arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_VBox_initWithSize : Error processing arguments");
         bool ret = cobj->initWithSize(arg0);
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -16079,7 +16079,7 @@ bool js_cocos2dx_ui_RelativeBox_initWithSize(JSContext *cx, uint32_t argc, jsval
         ok &= jsval_to_ccsize(cx, args.get(0), &arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_RelativeBox_initWithSize : Error processing arguments");
         bool ret = cobj->initWithSize(arg0);
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -16301,7 +16301,7 @@ bool js_cocos2dx_ui_Scale9Sprite_resizableSpriteWithCapInsets(JSContext *cx, uin
         ok &= jsval_to_ccrect(cx, args.get(0), &arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_Scale9Sprite_resizableSpriteWithCapInsets : Error processing arguments");
         cocos2d::ui::Scale9Sprite* ret = cobj->resizableSpriteWithCapInsets(arg0);
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         if (ret) {
             jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::ui::Scale9Sprite>(cx, (cocos2d::ui::Scale9Sprite*)ret));
         } else {
@@ -16323,7 +16323,7 @@ bool js_cocos2dx_ui_Scale9Sprite_getCapInsets(JSContext *cx, uint32_t argc, jsva
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Scale9Sprite_getCapInsets : Invalid Native Object");
     if (argc == 0) {
         cocos2d::Rect ret = cobj->getCapInsets();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = ccrect_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -16387,7 +16387,7 @@ bool js_cocos2dx_ui_Scale9Sprite_initWithSpriteFrameName(JSContext *cx, uint32_t
         ok &= jsval_to_ccrect(cx, args.get(1), &arg1);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_Scale9Sprite_initWithSpriteFrameName : Error processing arguments");
         bool ret = cobj->initWithSpriteFrameName(arg0, arg1);
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -16405,7 +16405,7 @@ bool js_cocos2dx_ui_Scale9Sprite_getSprite(JSContext *cx, uint32_t argc, jsval *
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Scale9Sprite_getSprite : Invalid Native Object");
     if (argc == 0) {
         cocos2d::Sprite* ret = cobj->getSprite();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         if (ret) {
             jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::Sprite>(cx, (cocos2d::Sprite*)ret));
         } else {
@@ -16583,6 +16583,34 @@ bool js_cocos2dx_ui_Scale9Sprite_setPreferredSize(JSContext *cx, uint32_t argc, 
     JS_ReportError(cx, "js_cocos2dx_ui_Scale9Sprite_setPreferredSize : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
+bool js_cocos2dx_ui_Scale9Sprite_copyTo(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::Scale9Sprite* cobj = (cocos2d::ui::Scale9Sprite *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Scale9Sprite_copyTo : Invalid Native Object");
+    if (argc == 1) {
+        cocos2d::ui::Scale9Sprite* arg0 = nullptr;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JS::RootedObject tmpObj(cx, args.get(0).toObjectOrNull());
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (cocos2d::ui::Scale9Sprite*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_Scale9Sprite_copyTo : Error processing arguments");
+        cobj->copyTo(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_Scale9Sprite_copyTo : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
 bool js_cocos2dx_ui_Scale9Sprite_setSpriteFrame(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -16622,7 +16650,7 @@ bool js_cocos2dx_ui_Scale9Sprite_getState(JSContext *cx, uint32_t argc, jsval *v
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Scale9Sprite_getState : Invalid Native Object");
     if (argc == 0) {
         int ret = (int)cobj->getState();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = int32_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -16640,7 +16668,7 @@ bool js_cocos2dx_ui_Scale9Sprite_getInsetBottom(JSContext *cx, uint32_t argc, js
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Scale9Sprite_getInsetBottom : Invalid Native Object");
     if (argc == 0) {
         double ret = cobj->getInsetBottom();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = DOUBLE_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -16678,7 +16706,7 @@ bool js_cocos2dx_ui_Scale9Sprite_isScale9Enabled(JSContext *cx, uint32_t argc, j
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Scale9Sprite_isScale9Enabled : Invalid Native Object");
     if (argc == 0) {
         bool ret = cobj->isScale9Enabled();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -16712,7 +16740,7 @@ bool js_cocos2dx_ui_Scale9Sprite_getRenderingType(JSContext *cx, uint32_t argc, 
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Scale9Sprite_getRenderingType : Invalid Native Object");
     if (argc == 0) {
         int ret = (int)cobj->getRenderingType();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = int32_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -16730,7 +16758,7 @@ bool js_cocos2dx_ui_Scale9Sprite_getInsetRight(JSContext *cx, uint32_t argc, jsv
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Scale9Sprite_getInsetRight : Invalid Native Object");
     if (argc == 0) {
         double ret = cobj->getInsetRight();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = DOUBLE_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -16748,7 +16776,7 @@ bool js_cocos2dx_ui_Scale9Sprite_getOriginalSize(JSContext *cx, uint32_t argc, j
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Scale9Sprite_getOriginalSize : Invalid Native Object");
     if (argc == 0) {
         cocos2d::Size ret = cobj->getOriginalSize();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = ccsize_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -16815,7 +16843,7 @@ bool js_cocos2dx_ui_Scale9Sprite_getInsetTop(JSContext *cx, uint32_t argc, jsval
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Scale9Sprite_getInsetTop : Invalid Native Object");
     if (argc == 0) {
         double ret = cobj->getInsetTop();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = DOUBLE_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -16867,7 +16895,7 @@ bool js_cocos2dx_ui_Scale9Sprite_initWithSpriteFrame(JSContext *cx, uint32_t arg
         ok &= jsval_to_ccrect(cx, args.get(1), &arg1);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_Scale9Sprite_initWithSpriteFrame : Error processing arguments");
         bool ret = cobj->initWithSpriteFrame(arg0, arg1);
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -16885,7 +16913,7 @@ bool js_cocos2dx_ui_Scale9Sprite_getPreferredSize(JSContext *cx, uint32_t argc, 
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Scale9Sprite_getPreferredSize : Invalid Native Object");
     if (argc == 0) {
         cocos2d::Size ret = cobj->getPreferredSize();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = ccsize_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -16923,7 +16951,7 @@ bool js_cocos2dx_ui_Scale9Sprite_getInsetLeft(JSContext *cx, uint32_t argc, jsva
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Scale9Sprite_getInsetLeft : Invalid Native Object");
     if (argc == 0) {
         double ret = cobj->getInsetLeft();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = DOUBLE_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -17218,6 +17246,7 @@ void js_register_cocos2dx_ui_Scale9Sprite(JSContext *cx, JS::HandleObject global
         JS_FN("setRenderingType", js_cocos2dx_ui_Scale9Sprite_setRenderingType, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("init", js_cocos2dx_ui_Scale9Sprite_init, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setPreferredSize", js_cocos2dx_ui_Scale9Sprite_setPreferredSize, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("copyTo", js_cocos2dx_ui_Scale9Sprite_copyTo, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setSpriteFrame", js_cocos2dx_ui_Scale9Sprite_setSpriteFrame, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getState", js_cocos2dx_ui_Scale9Sprite_getState, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getInsetBottom", js_cocos2dx_ui_Scale9Sprite_getInsetBottom, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -17279,7 +17308,7 @@ bool js_cocos2dx_ui_EditBox_getText(JSContext *cx, uint32_t argc, jsval *vp)
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_EditBox_getText : Invalid Native Object");
     if (argc == 0) {
         const char* ret = cobj->getText();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = c_string_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -17337,7 +17366,7 @@ bool js_cocos2dx_ui_EditBox_getPlaceHolder(JSContext *cx, uint32_t argc, jsval *
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_EditBox_getPlaceHolder : Invalid Native Object");
     if (argc == 0) {
         const char* ret = cobj->getPlaceHolder();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = c_string_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -17662,7 +17691,7 @@ bool js_cocos2dx_ui_EditBox_getMaxLength(JSContext *cx, uint32_t argc, jsval *vp
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_EditBox_getMaxLength : Invalid Native Object");
     if (argc == 0) {
         int ret = cobj->getMaxLength();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = int32_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -18048,7 +18077,7 @@ bool js_cocos2dx_ui_LayoutComponent_getAnchorPosition(JSContext *cx, uint32_t ar
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LayoutComponent_getAnchorPosition : Invalid Native Object");
     if (argc == 0) {
         const cocos2d::Point& ret = cobj->getAnchorPosition();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = ccpoint_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -18126,7 +18155,7 @@ bool js_cocos2dx_ui_LayoutComponent_getRightMargin(JSContext *cx, uint32_t argc,
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LayoutComponent_getRightMargin : Invalid Native Object");
     if (argc == 0) {
         double ret = cobj->getRightMargin();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = DOUBLE_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -18144,7 +18173,7 @@ bool js_cocos2dx_ui_LayoutComponent_getSize(JSContext *cx, uint32_t argc, jsval 
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LayoutComponent_getSize : Invalid Native Object");
     if (argc == 0) {
         const cocos2d::Size& ret = cobj->getSize();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = ccsize_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -18198,7 +18227,7 @@ bool js_cocos2dx_ui_LayoutComponent_isPercentWidthEnabled(JSContext *cx, uint32_
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LayoutComponent_isPercentWidthEnabled : Invalid Native Object");
     if (argc == 0) {
         bool ret = cobj->isPercentWidthEnabled();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -18236,7 +18265,7 @@ bool js_cocos2dx_ui_LayoutComponent_getTopMargin(JSContext *cx, uint32_t argc, j
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LayoutComponent_getTopMargin : Invalid Native Object");
     if (argc == 0) {
         double ret = cobj->getTopMargin();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = DOUBLE_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -18274,7 +18303,7 @@ bool js_cocos2dx_ui_LayoutComponent_getPercentContentSize(JSContext *cx, uint32_
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LayoutComponent_getPercentContentSize : Invalid Native Object");
     if (argc == 0) {
         cocos2d::Vec2 ret = cobj->getPercentContentSize();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = vector2_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -18292,7 +18321,7 @@ bool js_cocos2dx_ui_LayoutComponent_getVerticalEdge(JSContext *cx, uint32_t argc
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LayoutComponent_getVerticalEdge : Invalid Native Object");
     if (argc == 0) {
         int ret = (int)cobj->getVerticalEdge();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = int32_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -18330,7 +18359,7 @@ bool js_cocos2dx_ui_LayoutComponent_isStretchWidthEnabled(JSContext *cx, uint32_
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LayoutComponent_isStretchWidthEnabled : Invalid Native Object");
     if (argc == 0) {
         bool ret = cobj->isStretchWidthEnabled();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -18368,7 +18397,7 @@ bool js_cocos2dx_ui_LayoutComponent_getSizeWidth(JSContext *cx, uint32_t argc, j
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LayoutComponent_getSizeWidth : Invalid Native Object");
     if (argc == 0) {
         double ret = cobj->getSizeWidth();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = DOUBLE_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -18406,7 +18435,7 @@ bool js_cocos2dx_ui_LayoutComponent_getSizeHeight(JSContext *cx, uint32_t argc, 
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LayoutComponent_getSizeHeight : Invalid Native Object");
     if (argc == 0) {
         double ret = cobj->getSizeHeight();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = DOUBLE_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -18424,7 +18453,7 @@ bool js_cocos2dx_ui_LayoutComponent_getPositionPercentY(JSContext *cx, uint32_t 
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LayoutComponent_getPositionPercentY : Invalid Native Object");
     if (argc == 0) {
         double ret = cobj->getPositionPercentY();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = DOUBLE_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -18442,7 +18471,7 @@ bool js_cocos2dx_ui_LayoutComponent_getPositionPercentX(JSContext *cx, uint32_t 
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LayoutComponent_getPositionPercentX : Invalid Native Object");
     if (argc == 0) {
         double ret = cobj->getPositionPercentX();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = DOUBLE_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -18480,7 +18509,7 @@ bool js_cocos2dx_ui_LayoutComponent_getPercentHeight(JSContext *cx, uint32_t arg
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LayoutComponent_getPercentHeight : Invalid Native Object");
     if (argc == 0) {
         double ret = cobj->getPercentHeight();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = DOUBLE_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -18498,7 +18527,7 @@ bool js_cocos2dx_ui_LayoutComponent_getUsingPercentContentSize(JSContext *cx, ui
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LayoutComponent_getUsingPercentContentSize : Invalid Native Object");
     if (argc == 0) {
         bool ret = cobj->getUsingPercentContentSize();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -18576,7 +18605,7 @@ bool js_cocos2dx_ui_LayoutComponent_isPositionPercentYEnabled(JSContext *cx, uin
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LayoutComponent_isPositionPercentYEnabled : Invalid Native Object");
     if (argc == 0) {
         bool ret = cobj->isPositionPercentYEnabled();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -18694,7 +18723,7 @@ bool js_cocos2dx_ui_LayoutComponent_getLeftMargin(JSContext *cx, uint32_t argc, 
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LayoutComponent_getLeftMargin : Invalid Native Object");
     if (argc == 0) {
         double ret = cobj->getLeftMargin();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = DOUBLE_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -18712,7 +18741,7 @@ bool js_cocos2dx_ui_LayoutComponent_getPosition(JSContext *cx, uint32_t argc, js
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LayoutComponent_getPosition : Invalid Native Object");
     if (argc == 0) {
         const cocos2d::Point& ret = cobj->getPosition();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = ccpoint_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -18750,7 +18779,7 @@ bool js_cocos2dx_ui_LayoutComponent_isPositionPercentXEnabled(JSContext *cx, uin
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LayoutComponent_isPositionPercentXEnabled : Invalid Native Object");
     if (argc == 0) {
         bool ret = cobj->isPositionPercentXEnabled();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -18768,7 +18797,7 @@ bool js_cocos2dx_ui_LayoutComponent_getBottomMargin(JSContext *cx, uint32_t argc
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LayoutComponent_getBottomMargin : Invalid Native Object");
     if (argc == 0) {
         double ret = cobj->getBottomMargin();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = DOUBLE_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -18826,7 +18855,7 @@ bool js_cocos2dx_ui_LayoutComponent_isPercentHeightEnabled(JSContext *cx, uint32
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LayoutComponent_isPercentHeightEnabled : Invalid Native Object");
     if (argc == 0) {
         bool ret = cobj->isPercentHeightEnabled();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -18844,7 +18873,7 @@ bool js_cocos2dx_ui_LayoutComponent_getPercentWidth(JSContext *cx, uint32_t argc
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LayoutComponent_getPercentWidth : Invalid Native Object");
     if (argc == 0) {
         double ret = cobj->getPercentWidth();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = DOUBLE_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -18862,7 +18891,7 @@ bool js_cocos2dx_ui_LayoutComponent_getHorizontalEdge(JSContext *cx, uint32_t ar
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LayoutComponent_getHorizontalEdge : Invalid Native Object");
     if (argc == 0) {
         int ret = (int)cobj->getHorizontalEdge();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = int32_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -18880,7 +18909,7 @@ bool js_cocos2dx_ui_LayoutComponent_isStretchHeightEnabled(JSContext *cx, uint32
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_LayoutComponent_isStretchHeightEnabled : Invalid Native Object");
     if (argc == 0) {
         bool ret = cobj->isStretchHeightEnabled();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -19117,7 +19146,7 @@ bool js_cocos2dx_ui_TabHeader_getIndexInTabControl(JSContext *cx, uint32_t argc,
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_TabHeader_getIndexInTabControl : Invalid Native Object");
     if (argc == 0) {
         int ret = cobj->getIndexInTabControl();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = int32_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -19135,7 +19164,7 @@ bool js_cocos2dx_ui_TabHeader_getTitleText(JSContext *cx, uint32_t argc, jsval *
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_TabHeader_getTitleText : Invalid Native Object");
     if (argc == 0) {
         std::string ret = cobj->getTitleText();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = std_string_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -19193,7 +19222,7 @@ bool js_cocos2dx_ui_TabHeader_getTitleFontSize(JSContext *cx, uint32_t argc, jsv
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_TabHeader_getTitleFontSize : Invalid Native Object");
     if (argc == 0) {
         double ret = cobj->getTitleFontSize();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = DOUBLE_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -19211,7 +19240,7 @@ bool js_cocos2dx_ui_TabHeader_getTitleFontName(JSContext *cx, uint32_t argc, jsv
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_TabHeader_getTitleFontName : Invalid Native Object");
     if (argc == 0) {
         std::string ret = cobj->getTitleFontName();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = std_string_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -19229,7 +19258,7 @@ bool js_cocos2dx_ui_TabHeader_getTitleColor(JSContext *cx, uint32_t argc, jsval 
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_TabHeader_getTitleColor : Invalid Native Object");
     if (argc == 0) {
         const cocos2d::Color4B& ret = cobj->getTitleColor();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = cccolor4b_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -19247,7 +19276,7 @@ bool js_cocos2dx_ui_TabHeader_getTitleRenderer(JSContext *cx, uint32_t argc, jsv
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_TabHeader_getTitleRenderer : Invalid Native Object");
     if (argc == 0) {
         cocos2d::Label* ret = cobj->getTitleRenderer();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         if (ret) {
             jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::Label>(cx, (cocos2d::Label*)ret));
         } else {
@@ -19546,7 +19575,7 @@ bool js_cocos2dx_ui_TabControl_getTabCount(JSContext *cx, uint32_t argc, jsval *
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_TabControl_getTabCount : Invalid Native Object");
     if (argc == 0) {
         unsigned long ret = cobj->getTabCount();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = ulong_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -19564,7 +19593,7 @@ bool js_cocos2dx_ui_TabControl_getHeaderDockPlace(JSContext *cx, uint32_t argc, 
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_TabControl_getHeaderDockPlace : Invalid Native Object");
     if (argc == 0) {
         int ret = (int)cobj->getHeaderDockPlace();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = int32_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -19582,7 +19611,7 @@ bool js_cocos2dx_ui_TabControl_getSelectedTabIndex(JSContext *cx, uint32_t argc,
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_TabControl_getSelectedTabIndex : Invalid Native Object");
     if (argc == 0) {
         int ret = cobj->getSelectedTabIndex();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = int32_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -19660,7 +19689,7 @@ bool js_cocos2dx_ui_TabControl_getHeaderWidth(JSContext *cx, uint32_t argc, jsva
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_TabControl_getHeaderWidth : Invalid Native Object");
     if (argc == 0) {
         double ret = cobj->getHeaderWidth();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = DOUBLE_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -19746,7 +19775,7 @@ bool js_cocos2dx_ui_TabControl_getTabHeader(JSContext *cx, uint32_t argc, jsval 
         ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_TabControl_getTabHeader : Error processing arguments");
         cocos2d::ui::TabHeader* ret = cobj->getTabHeader(arg0);
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         if (ret) {
             jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::ui::TabHeader>(cx, (cocos2d::ui::TabHeader*)ret));
         } else {
@@ -19768,7 +19797,7 @@ bool js_cocos2dx_ui_TabControl_isIgnoreHeadersTextureSize(JSContext *cx, uint32_
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_TabControl_isIgnoreHeadersTextureSize : Invalid Native Object");
     if (argc == 0) {
         bool ret = cobj->isIgnoreHeadersTextureSize();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -19881,7 +19910,7 @@ bool js_cocos2dx_ui_TabControl_indexOfTabHeader(JSContext *cx, uint32_t argc, js
         } while (0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_TabControl_indexOfTabHeader : Error processing arguments");
         int ret = cobj->indexOfTabHeader(arg0);
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = int32_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -19903,7 +19932,7 @@ bool js_cocos2dx_ui_TabControl_getTabContainer(JSContext *cx, uint32_t argc, jsv
         ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_TabControl_getTabContainer : Error processing arguments");
         cocos2d::ui::Layout* ret = cobj->getTabContainer(arg0);
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         if (ret) {
             jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::ui::Layout>(cx, (cocos2d::ui::Layout*)ret));
         } else {
@@ -19925,7 +19954,7 @@ bool js_cocos2dx_ui_TabControl_getHeaderSelectedZoom(JSContext *cx, uint32_t arg
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_TabControl_getHeaderSelectedZoom : Invalid Native Object");
     if (argc == 0) {
         double ret = cobj->getHeaderSelectedZoom();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = DOUBLE_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -19943,7 +19972,7 @@ bool js_cocos2dx_ui_TabControl_getHeaderHeight(JSContext *cx, uint32_t argc, jsv
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_TabControl_getHeaderHeight : Invalid Native Object");
     if (argc == 0) {
         int ret = cobj->getHeaderHeight();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = int32_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -20087,7 +20116,7 @@ bool js_cocos2dx_ui_ScrollViewBar_isAutoHideEnabled(JSContext *cx, uint32_t argc
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_ScrollViewBar_isAutoHideEnabled : Invalid Native Object");
     if (argc == 0) {
         bool ret = cobj->isAutoHideEnabled();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -20125,7 +20154,7 @@ bool js_cocos2dx_ui_ScrollViewBar_getWidth(JSContext *cx, uint32_t argc, jsval *
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_ScrollViewBar_getWidth : Invalid Native Object");
     if (argc == 0) {
         double ret = cobj->getWidth();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = DOUBLE_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
@@ -20143,7 +20172,7 @@ bool js_cocos2dx_ui_ScrollViewBar_getPositionFromCorner(JSContext *cx, uint32_t 
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_ScrollViewBar_getPositionFromCorner : Invalid Native Object");
     if (argc == 0) {
         cocos2d::Vec2 ret = cobj->getPositionFromCorner();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = vector2_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
@@ -20181,7 +20210,7 @@ bool js_cocos2dx_ui_ScrollViewBar_getAutoHideTime(JSContext *cx, uint32_t argc, 
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_ScrollViewBar_getAutoHideTime : Invalid Native Object");
     if (argc == 0) {
         double ret = cobj->getAutoHideTime();
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         jsret = DOUBLE_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;

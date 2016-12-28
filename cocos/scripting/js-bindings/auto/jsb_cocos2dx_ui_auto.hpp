@@ -856,6 +856,7 @@ bool js_cocos2dx_ui_Scale9Sprite_setInsetTop(JSContext *cx, uint32_t argc, jsval
 bool js_cocos2dx_ui_Scale9Sprite_setRenderingType(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Scale9Sprite_init(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Scale9Sprite_setPreferredSize(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_Scale9Sprite_copyTo(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Scale9Sprite_setSpriteFrame(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Scale9Sprite_getState(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Scale9Sprite_getInsetBottom(JSContext *cx, uint32_t argc, jsval *vp);

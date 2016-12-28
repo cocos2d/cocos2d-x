@@ -1150,6 +1150,7 @@ void Node::sortAllChildren()
     {
         sortNodes(_children);
         _reorderChildDirty = false;
+        _eventDispatcher->setDirtyForNode(this);
     }
 }
 

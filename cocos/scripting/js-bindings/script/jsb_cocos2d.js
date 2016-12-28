@@ -128,7 +128,8 @@ cc.MENU_STATE_TRACKING_TOUCH = 1;
 cc.MENU_HANDLER_PRIORITY = -128;
 cc.DEFAULT_PADDING = 5;
 
-cc.Scheduler.PRIORITY_SYSTEM    = -2147483648;
+cc.Scheduler.PRIORITY_SYSTEM = -2147483648;
+cc.Scheduler.PRIORITY_NON_SYSTEM = cc.Scheduler.PRIORITY_SYSTEM + 1;
 
 var _Class = cc.Texture2D;
 
@@ -228,8 +229,6 @@ cc.DISABLE_TAG = 8803;
 cc.stencilBits = -1;           //CCClippingNode.js
 
 cc.g_NumberOfDraws = 0;        //CCDirector.js
-
-cc.PRIORITY_NON_SYSTEM = cc.PRIORITY_SYSTEM + 1;          //CCScheduler.js
 
 cc.s_globalOrderOfArrival = 1;
 
@@ -1776,6 +1775,8 @@ cc.DrawNode = cc._DrawNode.extend({
     _drawColor: cc.color(255, 255, 255, 255),
     _lineWidth: 1,
 
+    release: function () {},
+
     setLineWidth: function (width) {
         this._lineWidth = width;
     },
@@ -2611,17 +2612,17 @@ _p.setNormalSpriteFrame = function(frame) {
     if (frame[0] == "#") 
         frame = cc.spriteFrameCache.getSpriteFrame(frame.substr(1));
     this._setNormalSpriteFrame(frame);
-}
+};
 _p.setSelectedSpriteFrame = function(frame) {
     if (frame[0] == "#") 
         frame = cc.spriteFrameCache.getSpriteFrame(frame.substr(1));
     this._setSelectedSpriteFrame(frame);
-}
+};
 _p.setDisabledSpriteFrame = function(frame) {
     if (frame[0] == "#") 
         frame = cc.spriteFrameCache.getSpriteFrame(frame.substr(1));
     this._setDisabledSpriteFrame(frame);
-}
+};
 
 cc.MenuItemToggle.prototype.selectedItem = cc.MenuItemToggle.prototype.getSelectedItem;
 
@@ -2661,7 +2662,7 @@ cc.LabelTTF.prototype._enableShadow = cc.LabelTTF.prototype.enableShadow;
 cc.LabelTTF.prototype.enableShadow = function (shadowColor, offset, blurRadius) {
     var opacity = 1;
     this._enableShadow(offset, opacity, blurRadius);
-}
+};
 
 cc.LabelTTF.prototype.setDrawMode = function () {};
 
@@ -2723,7 +2724,7 @@ _p.schedule = function (callback, target, interval, repeat, delay, paused, key) 
         key = target.__instanceId + "";
     }
     this._schedule(callback, target, interval, repeat, delay, paused, key);
-}
+};
 
 
 cc._NodeGrid = cc.NodeGrid;

@@ -21,7 +21,7 @@ function WebViewTest:init()
     self._webView = ccexp.WebView:create()
     self._webView:setPosition(winSize.width / 2, winSize.height / 2 - 40)
     self._webView:setContentSize(winSize.width / 2,  winSize.height / 2)
-    self._webView:loadURL("http://www.baidu.com")
+    self._webView:loadURL("https://www.baidu.com")
     self._webView:setScalesPageToFit(true)
 
     self._webView:setOnShouldStartLoading(function(sender, url)
@@ -42,7 +42,7 @@ function WebViewTest:init()
     urlTextField:setPosition(winSize.width/2 - 80, winSize.height/2 + self._webView:getContentSize().height/2 + urlTextField:getContentSize().height/2 + 10)
     self:addChild(urlTextField)
     
-    local httpLabel = ccui.Text:create("http:// ", "Arial", 20)
+    local httpLabel = ccui.Text:create("https:// ", "Arial", 20)
     httpLabel:setTextColor(cc.c4b(0, 255,   0, 255))
     httpLabel:setAnchorPoint(cc.p(1.0,0.5))
     local x,y = urlTextField:getPosition()
@@ -54,7 +54,7 @@ function WebViewTest:init()
     resetBtn:setPosition(winSize.width / 2 + 80 , winSize.height / 2 + self._webView:getContentSize().height / 2 + resetBtn:getContentSize().height / 2 + 10)
     resetBtn:addClickEventListener(function(sender)
         if urlTextField:getString() ~=  nil then
-            self._webView:loadURL("http://" .. urlTextField:getString())
+            self._webView:loadURL("https://" .. urlTextField:getString())
         end    
     end)
     self:addChild(resetBtn)
@@ -121,6 +121,7 @@ function WebViewTestMain()
     {
         WebViewTest.create,
     }
+    Helper.index = 1
 
     local scene = cc.Scene:create()
     scene:addChild(WebViewTest.create())

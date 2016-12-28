@@ -1147,6 +1147,8 @@ function FastTiledMapTestMain()
         TMXBug787,
      -- TMXGIDObjectsTestNew,
     }
+    Helper.index = 1
+    
     scene:addChild(TMXIsoZorder())
     scene:addChild(CreateBackMenuItem())
     return scene

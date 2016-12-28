@@ -83,14 +83,6 @@ getMaxS : function (
 },
 
 /**
- * @method releaseGLTexture
- */
-releaseGLTexture : function (
-)
-{
-},
-
-/**
  * @method hasPremultipliedAlpha
  * @return {bool}
  */
@@ -98,6 +90,16 @@ hasPremultipliedAlpha : function (
 )
 {
     return false;
+},
+
+/**
+ * @method getPixelsHigh
+ * @return {int}
+ */
+getPixelsHigh : function (
+)
+{
+    return 0;
 },
 
 /**
@@ -118,16 +120,6 @@ int
 )
 {
     return false;
-},
-
-/**
- * @method getPixelsHigh
- * @return {int}
- */
-getPixelsHigh : function (
-)
-{
-    return 0;
 },
 
 /**
@@ -280,6 +272,14 @@ getContentSizeInPixels : function (
 )
 {
     return cc.Size;
+},
+
+/**
+ * @method releaseGLTexture
+ */
+releaseGLTexture : function (
+)
+{
 },
 
 /**
@@ -3440,6 +3440,14 @@ int
  */
 performFunctionInCocosThread : function (
 func 
+)
+{
+},
+
+/**
+ * @method removeAllFunctionsToBePerformedInCocosThread
+ */
+removeAllFunctionsToBePerformedInCocosThread : function (
 )
 {
 },
@@ -7590,20 +7598,6 @@ node
 },
 
 /**
- * @method addCustomEventListener
- * @param {String} arg0
- * @param {function} arg1
- * @return {cc.EventListenerCustom}
- */
-addCustomEventListener : function (
-str, 
-func 
-)
-{
-    return cc.EventListenerCustom;
-},
-
-/**
  * @method addEventListenerWithFixedPriority
  * @param {cc.EventListener} arg0
  * @param {int} arg1
@@ -7659,6 +7653,18 @@ dispatchEvent : function (
 event 
 )
 {
+},
+
+/**
+ * @method hasEventListener
+ * @param {std::basic_string<char>} arg0
+ * @return {bool}
+ */
+hasEventListener : function (
+basic_string<char> 
+)
+{
+    return false;
 },
 
 /**
@@ -7752,18 +7758,6 @@ func
 },
 
 /**
- * @method create
- * @param {function} arg0
- * @return {cc.EventListenerAcceleration}
- */
-create : function (
-func 
-)
-{
-    return cc.EventListenerAcceleration;
-},
-
-/**
  * @method EventListenerAcceleration
  * @constructor
  */
@@ -7778,20 +7772,6 @@ EventListenerAcceleration : function (
  * @class EventListenerCustom
  */
 cc.EventListenerCustom = {
-
-/**
- * @method create
- * @param {String} arg0
- * @param {function} arg1
- * @return {cc.EventListenerCustom}
- */
-create : function (
-str, 
-func 
-)
-{
-    return cc.EventListenerCustom;
-},
 
 /**
  * @method EventListenerCustom

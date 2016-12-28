@@ -82,7 +82,8 @@ bool UIEditBoxTest::init()
         addChild(button);
 
         // middle
-        _editPassword = ui::EditBox::create(editBoxSize, "extensions/orange_edit.png");
+        _editPassword = ui::EditBox::create(Size(editBoxSize.width,
+                                                 editBoxSize.height + 20), "extensions/orange_edit.png");
         _editPassword->setPosition(Vec2(visibleOrigin.x+visibleSize.width/2-50, visibleOrigin.y+visibleSize.height/2));
         _editPassword->setFontColor(Color3B::GREEN);
         _editPassword->setPlaceHolder("Password:");

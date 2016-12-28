@@ -11,7 +11,6 @@ require "AssetsManagerTest/AssetsManagerTest"
 require "AssetsManagerExTest/AssetsManagerExTest"
 require "BillBoardTest/BillBoardTest"
 require "BugsTest/BugsTest"
--- require "ByteCodeEncryptTest/ByteCodeEncryptTest"
 require "Camera3DTest/Camera3DTest"
 require "ClickAndMoveTest/ClickAndMoveTest"
 require "CocosDenshionTest/CocosDenshionTest"
@@ -99,7 +98,6 @@ local _allTests = {
     { isSupported = false,  name = "Box2dTestBed"           , create_func=              Box2dTestBedMain  },
     { isSupported = true,  name = "BillBoardTest"           , create_func=              BillBoardTestMain},
     { isSupported = true,  name = "BugsTest"               , create_func=              BugsTestMain      },
-    { isSupported = luaByteCodeSupported,  name = "ByteCodeEncryptTest"     , create_func=       ByteCodeEncryptTestMain  },
     { isSupported = true,  name = "Camera3DTest"     ,        create_func=       Camera3DTestMain  },
     { isSupported = true,  name = "CaptureScreenTest"       , create_func   =         CaptureScreenTestMain  },
     { isSupported = false,  name = "ChipmunkAccelTouchTest" , create_func=    ChipmunkAccelTouchTestMain  },
@@ -211,13 +209,9 @@ function CreateTestMenu()
             testMenuItem:setEnabled(false)
         end
 
-        if obj.name == "VideoPlayerTest" then
-            if cc.PLATFORM_OS_IPHONE ~= targetPlatform and cc.PLATFORM_OS_ANDROID ~= targetPlatform then
-                testMenuItem:setEnabled(false)
-            end
-        end
-
-        if obj.name == "WebViewTest" then
+        if obj.name == "WebViewTest" 
+        or obj.name == "VibrateTest"
+        or obj.name == "VideoPlayerTest" then
             if cc.PLATFORM_OS_IPHONE ~= targetPlatform and cc.PLATFORM_OS_ANDROID ~= targetPlatform then
                 testMenuItem:setEnabled(false)
             end
