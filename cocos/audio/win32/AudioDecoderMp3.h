@@ -24,7 +24,7 @@
 
 #pragma once
 
-#include "AudioDecoder.h"
+#include "audio/win32/AudioDecoder.h"
 
 struct mpg123_handle_struct;
 

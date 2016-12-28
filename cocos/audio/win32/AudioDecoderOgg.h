@@ -24,7 +24,7 @@
 
 #pragma once
 
-#include "AudioDecoder.h"
+#include "audio/win32/AudioDecoder.h"
 
 #include "vorbis/vorbisfile.h"
 
