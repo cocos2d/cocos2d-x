@@ -1219,6 +1219,9 @@ void Label::disableEffect(LabelEffect effect)
         case cocos2d::LabelEffect::BOLD:
             _boldEnabled = false;
             _additionalKerning -= 1;
+            if (_additionalKerning <= 0) {
+                _additionalKerning = 0;
+            }
             disableEffect(LabelEffect::SHADOW);
             break;
         case cocos2d::LabelEffect::UNDERLINE:
