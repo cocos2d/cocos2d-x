@@ -113,7 +113,7 @@ protected:
     uint32_t _sampleRate;
     uint32_t _channelCount;
 
-	friend class AudioDecoderManager;
+    friend class AudioDecoderManager;
 };
 
 }} // namespace cocos2d { namespace experimental {

@@ -56,7 +56,7 @@ do { \
     } \
 } while (false)
 #else
-#define CHECK_AL_ERROR_DEBUG() 
+#define CHECK_AL_ERROR_DEBUG()
 #endif
 
 #define BREAK_IF(condition) \

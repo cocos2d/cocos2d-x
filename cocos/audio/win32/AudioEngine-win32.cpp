@@ -47,60 +47,60 @@
 // log, CCLOG aren't threadsafe, since we uses sub threads for parsing pcm data, threadsafe log output
 // is needed. Define the following macros (ALOGV, ALOGD, ALOGI, ALOGW, ALOGE) for threadsafe log output.
 
-//FIXME: Move _winLog, winLog to a separated file 
+//FIXME: Move _winLog, winLog to a separated file
 static void _winLog(const char *format, va_list args)
 {
-	static const int MAX_LOG_LENGTH = 16 * 1024;
-	int bufferSize = MAX_LOG_LENGTH;
-	char* buf = nullptr;
+    static const int MAX_LOG_LENGTH = 16 * 1024;
+    int bufferSize = MAX_LOG_LENGTH;
+    char* buf = nullptr;
 
-	do
-	{
-		buf = new (std::nothrow) char[bufferSize];
-		if (buf == nullptr)
-			return; // not enough memory
+    do
+    {
+        buf = new (std::nothrow) char[bufferSize];
+        if (buf == nullptr)
+            return; // not enough memory
 
-		int ret = vsnprintf(buf, bufferSize - 3, format, args);
-		if (ret < 0)
-		{
-			bufferSize *= 2;
+        int ret = vsnprintf(buf, bufferSize - 3, format, args);
+        if (ret < 0)
+        {
+            bufferSize *= 2;
 
-			delete[] buf;
-		}
-		else
-			break;
+            delete[] buf;
+        }
+        else
+            break;
 
-	} while (true);
+    } while (true);
 
-	strcat(buf, "\n");
+    strcat(buf, "\n");
 
-	int pos = 0;
-	int len = strlen(buf);
-	char tempBuf[MAX_LOG_LENGTH + 1] = { 0 };
-	WCHAR wszBuf[MAX_LOG_LENGTH + 1] = { 0 };
+    int pos = 0;
+    int len = strlen(buf);
+    char tempBuf[MAX_LOG_LENGTH + 1] = { 0 };
+    WCHAR wszBuf[MAX_LOG_LENGTH + 1] = { 0 };
 
-	do
-	{
-		std::copy(buf + pos, buf + pos + MAX_LOG_LENGTH, tempBuf);
+    do
+    {
+        std::copy(buf + pos, buf + pos + MAX_LOG_LENGTH, tempBuf);
 
-		tempBuf[MAX_LOG_LENGTH] = 0;
+        tempBuf[MAX_LOG_LENGTH] = 0;
 
-		MultiByteToWideChar(CP_UTF8, 0, tempBuf, -1, wszBuf, sizeof(wszBuf));
-		OutputDebugStringW(wszBuf);
+        MultiByteToWideChar(CP_UTF8, 0, tempBuf, -1, wszBuf, sizeof(wszBuf));
+        OutputDebugStringW(wszBuf);
 
-		pos += MAX_LOG_LENGTH;
+        pos += MAX_LOG_LENGTH;
 
-	} while (pos < len);
+    } while (pos < len);
 
-	delete[] buf;
+    delete[] buf;
 }
 
 void audioLog(const char * format, ...)
 {
-	va_list args;
-	va_start(args, format);
-	_winLog(format, args);
-	va_end(args);
+    va_list args;
+    va_start(args, format);
+    _winLog(format, args);
+    va_end(args);
 }
 
 using namespace cocos2d;
@@ -133,7 +133,7 @@ AudioEngineImpl::~AudioEngineImpl()
         s_ALDevice = nullptr;
     }
 
-	AudioDecoderManager::destroy();
+    AudioDecoderManager::destroy();
 }
 
 bool AudioEngineImpl::init()

@@ -219,10 +219,10 @@ bool AudioPlayer::play2d()
 
         ALint state;
         alGetSourcei(_alSource, AL_SOURCE_STATE, &state);
-		if (state != AL_PLAYING)
-		{
-			ALOGE("state isn't playing, %d, %s, cache id=%u, player id=%u", state, _audioCache->_fileFullPath.c_str(), _audioCache->_id, _id);
-		}
+        if (state != AL_PLAYING)
+        {
+            ALOGE("state isn't playing, %d, %s, cache id=%u, player id=%u", state, _audioCache->_fileFullPath.c_str(), _audioCache->_id, _id);
+        }
         assert(state == AL_PLAYING);
         _ready = true;
         ret = true;
@@ -240,7 +240,7 @@ bool AudioPlayer::play2d()
 void AudioPlayer::rotateBufferThread(int offsetFrame)
 {
     char* tmpBuffer = nullptr;
-	AudioDecoder* decoder = AudioDecoderManager::createDecoder(_audioCache->_fileFullPath.c_str());
+    AudioDecoder* decoder = AudioDecoderManager::createDecoder(_audioCache->_fileFullPath.c_str());
     do
     {
         BREAK_IF(decoder == nullptr || !decoder->open(_audioCache->_fileFullPath.c_str()));
@@ -311,11 +311,11 @@ void AudioPlayer::rotateBufferThread(int offsetFrame)
     } while(false);
 
     ALOGV("Exit rotate buffer thread ...");
-	if (decoder != nullptr)
-	{
-		decoder->close();
-	}
-	AudioDecoderManager::destroyDecoder(decoder);
+    if (decoder != nullptr)
+    {
+        decoder->close();
+    }
+    AudioDecoderManager::destroyDecoder(decoder);
     free(tmpBuffer);
     _isRotateThreadExited = true;
     ALOGV("%s exited.\n", __FUNCTION__);

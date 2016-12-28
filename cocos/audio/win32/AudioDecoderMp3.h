@@ -71,15 +71,15 @@ public:
 
 protected:
 
-	AudioDecoderMp3();
-	~AudioDecoderMp3();
+    AudioDecoderMp3();
+    ~AudioDecoderMp3();
 
-	static bool lazyInit();
-	static void destroy();
+    static bool lazyInit();
+    static void destroy();
 
-	struct mpg123_handle_struct* _mpg123handle;
+    struct mpg123_handle_struct* _mpg123handle;
 
-	friend class AudioDecoderManager;
+    friend class AudioDecoderManager;
 };
 
 }} // namespace cocos2d { namespace experimental {

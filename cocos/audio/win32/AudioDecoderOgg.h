@@ -70,12 +70,12 @@ public:
     virtual uint32_t tell() const override;
 
 protected:
-	AudioDecoderOgg();
-	~AudioDecoderOgg();
+    AudioDecoderOgg();
+    ~AudioDecoderOgg();
 
     OggVorbis_File _vf;
 
-	friend class AudioDecoderManager;
+    friend class AudioDecoderManager;
 };
 
 }} // namespace cocos2d { namespace experimental {

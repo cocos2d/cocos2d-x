@@ -36,13 +36,13 @@ namespace cocos2d { namespace experimental {
 
     AudioDecoderOgg::~AudioDecoderOgg()
     {
-		close();
+        close();
     }
 
     bool AudioDecoderOgg::open(const char* path)
     {
         std::string fullPath = FileUtils::getInstance()->fullPathForFilename(path);
-		if (0 == ov_fopen(fullPath.c_str(), &_vf))
+        if (0 == ov_fopen(fullPath.c_str(), &_vf))
         {
             // header
             vorbis_info* vi = ov_info(&_vf, -1);
