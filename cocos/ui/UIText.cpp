@@ -408,6 +408,46 @@ Sprite * Text::getLetter(int lettetIndex)
 {
     return _labelRenderer->getLetter(lettetIndex);
 }
+    
+bool Text::isGradientEnabled() const
+{
+    return _labelRenderer->isGradientEnabled();
+}
+    
+void Text::setGradientColor(const Color4B &leftTop, const Color4B &rightTop, const Color4B &leftBottom, const Color4B &rightBottom)
+{
+    _labelRenderer->setGradientColor(leftTop, rightTop, leftBottom, rightBottom);
+}
+    
+void Text::setHGradientColor(const Color4B &color1, const Color4B &color2)
+{
+    _labelRenderer->setHGradientColor(color1, color2);
+}
+    
+void Text::setVGradientColor(const Color4B &color1, const Color4B &color2)
+{
+    _labelRenderer->setVGradientColor(color1, color2);
+}
+    
+const Color4B &Text::getLeftTopColor() const
+{
+    return _labelRenderer->getLeftTopColor();
+}
+    
+const Color4B &Text::getRightTopColor() const
+{
+    return _labelRenderer->getRightTopColor();
+}
+    
+const Color4B &Text::getLeftBottomColor() const
+{
+    return _labelRenderer->getLeftBottomColor();
+}
+    
+const Color4B &Text::getRightBottomTopColor() const
+{
+    return _labelRenderer->getRightBottomTopColor();
+}
 
 Widget* Text::createCloneInstance()
 {

@@ -213,6 +213,10 @@ public:
     */
     static const char* SHADER_NAME_LABEL_NORMAL;
     static const char* SHADER_NAME_LABEL_OUTLINE;
+    
+    static const char* SHADER_NAME_GRADIENT_LABEL_NORMAL;
+    static const char* SHADER_NAME_GRADIENT_LABEL_OUTLINE;
+    
     static const char* SHADER_NAME_LABEL_DISTANCEFIELD_NORMAL;
     static const char* SHADER_NAME_LABEL_DISTANCEFIELD_GLOW;
 

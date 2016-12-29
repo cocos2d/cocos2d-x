@@ -55,6 +55,8 @@ enum {
     kShaderType_UIGrayScale,
     kShaderType_LabelNormal,
     kShaderType_LabelOutline,
+    kShaderType_GradientLabelNormal,
+    kShaderType_GradientLabelOutline,
     kShaderType_3DPosition,
     kShaderType_3DPositionTex,
     kShaderType_3DSkinPositionTex,
@@ -231,6 +233,14 @@ void GLProgramCache::loadDefaultGLPrograms()
     p = new (std::nothrow) GLProgram();
     loadDefaultGLProgram(p, kShaderType_LabelOutline);
     _programs.emplace(GLProgram::SHADER_NAME_LABEL_OUTLINE, p);
+    
+    p = new (std::nothrow) GLProgram();
+    loadDefaultGLProgram(p, kShaderType_GradientLabelNormal);
+    _programs.emplace( GLProgram::SHADER_NAME_GRADIENT_LABEL_NORMAL, p);
+    
+    p = new (std::nothrow) GLProgram();
+    loadDefaultGLProgram(p, kShaderType_GradientLabelOutline);
+    _programs.emplace( GLProgram::SHADER_NAME_GRADIENT_LABEL_OUTLINE, p);
 
     p = new (std::nothrow) GLProgram();
     loadDefaultGLProgram(p, kShaderType_3DPosition);
@@ -402,6 +412,14 @@ void GLProgramCache::reloadDefaultGLPrograms()
     p = getGLProgram(GLProgram::SHADER_NAME_LABEL_OUTLINE);
     p->reset();
     loadDefaultGLProgram(p, kShaderType_LabelOutline);
+    
+    p = getGLProgram(GLProgram::SHADER_NAME_GRADIENT_LABEL_NORMAL);
+    p->reset();
+    loadDefaultGLProgram(p, kShaderType_GradientLabelNormal);
+    
+    p = getGLProgram(GLProgram::SHADER_NAME_GRADIENT_LABEL_OUTLINE);
+    p->reset();
+    loadDefaultGLProgram(p, kShaderType_GradientLabelOutline);
 
     p = getGLProgram(GLProgram::SHADER_3D_POSITION);
     p->reset();
@@ -556,6 +574,12 @@ void GLProgramCache::loadDefaultGLProgram(GLProgram *p, int type)
             break;
         case kShaderType_LabelOutline:
             p->initWithByteArrays(ccLabel_vert, ccLabelOutline_frag);
+            break;
+        case kShaderType_GradientLabelNormal:
+            p->initWithByteArrays(ccGradientLabel_vert, ccLabelNormal_frag);
+            break;
+        case kShaderType_GradientLabelOutline:
+            p->initWithByteArrays(ccGradientLabel_vert, ccLabelOutline_frag);
             break;
         case kShaderType_3DPosition:
             p->initWithByteArrays(cc3D_PositionTex_vert, cc3D_Color_frag);
