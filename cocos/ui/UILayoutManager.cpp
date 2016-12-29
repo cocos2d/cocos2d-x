@@ -188,6 +188,7 @@ LinearHorizontalAutoLayoutManager* LinearHorizontalAutoLayoutManager::create()
 void LinearHorizontalAutoLayoutManager::doLayout(LayoutProtocol* layout)
 {
     Size layoutSize;
+    float layoutHeight = layout->getLayoutContentSize().height;
     Vector<Node*> container = layout->getLayoutElements();
     float spacing = layout->getSpacing();
     for (auto& subWidget : container)
@@ -198,6 +199,9 @@ void LinearHorizontalAutoLayoutManager::doLayout(LayoutProtocol* layout)
             layoutSize.height = std::max(layoutSize.height, subWidget->getContentSize().height);
         }
     }
+    if(layoutHeight > 0)
+        layoutSize.height = layoutHeight;
+    
     layoutSize.width -= spacing;
     layout->setLayoutContentSize(layoutSize);
     float leftBoundary = 0.0f;
@@ -268,6 +272,7 @@ LinearVerticalAutoLayoutManager* LinearVerticalAutoLayoutManager::create()
 void LinearVerticalAutoLayoutManager::doLayout(LayoutProtocol* layout)
 {
     Size layoutSize;
+    float layoutWidth = layout->getLayoutContentSize().width;
     Vector<Node*> container = layout->getLayoutElements();
     float spacing = layout->getSpacing();
     for (auto& subWidget : container)
@@ -278,6 +283,9 @@ void LinearVerticalAutoLayoutManager::doLayout(LayoutProtocol* layout)
             layoutSize.width = std::max(layoutSize.width, subWidget->getContentSize().width);
         }
     }
+    if(layoutWidth > 0)
+        layoutSize.width = layoutWidth;
+    
     layoutSize.height -= spacing;
     layout->setLayoutContentSize(layoutSize);
     float topBoundary = layoutSize.height;

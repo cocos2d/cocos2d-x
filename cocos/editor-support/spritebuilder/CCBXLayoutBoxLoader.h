@@ -24,6 +24,7 @@ protected:
     virtual void onHandlePropTypeFloatScale(const std::string &propertyName, bool isExtraProp, const FloatScaleDescription &value) override;
     virtual void onHandlePropTypeIntegerLabeled(const std::string &propertyName, bool isExtraProp, int value) override;
     virtual void onHandlePropTypeCheck(const std::string &propertyName, bool isExtraProp, bool value) override;
+    virtual void onHandlePropTypeSize(const std::string &propertyName, bool isExtraProp, const SizeDescription &value) override;
     
 private:
     enum LayoutBoxDirection
@@ -36,6 +37,7 @@ private:
     };
     LayoutBoxDirection _direction;
     FloatScaleDescription _spacing;
+    SizeDescription _dimensions;
     bool _clipping;
 };
 
