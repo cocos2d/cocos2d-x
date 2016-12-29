@@ -21,15 +21,16 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+
+#pragma once
+
 #include "platform/CCPlatformConfig.h"
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 
-#ifndef __AUDIO_PLAYER_H_
-#define __AUDIO_PLAYER_H_
-
 #include <string>
 #include <condition_variable>
+#include <mutex>
 #include <thread>
 #ifdef OPENAL_PLAIN_INCLUDES
 #include <al.h>
@@ -37,7 +38,6 @@
 #include <AL/al.h>
 #endif
 #include "platform/CCPlatformMacros.h"
-#include "audio/win32/AudioCache.h"
 
 NS_CC_BEGIN
 namespace experimental{
@@ -49,45 +49,50 @@ class CC_DLL AudioPlayer
 {
 public:
     AudioPlayer();
-    AudioPlayer(const AudioPlayer&);
     ~AudioPlayer();
-    
+
+    void destroy();
+
     //queue buffer related stuff
     bool setTime(float time);
     float getTime() { return _currTime;}
     bool setLoop(bool loop);
-    void notifyExitThread();
 
 protected:
+    void setCache(AudioCache* cache);
     void rotateBufferThread(int offsetFrame);
-    bool play2d(AudioCache* cache);
-	int readPcmData(char* buffer, int bufferSize, const std::function<int/*readBytes*/(char* /*buf*/, int /*bytesToRead*/)>& fileReader);
+    bool play2d();
 
     AudioCache* _audioCache;
-    
+
     float _volume;
     bool _loop;
     std::function<void (int, const std::string &)> _finishCallbak;
-    
+
+    bool _isDestroyed;
+    bool _removeByAudioEngine;
     bool _ready;
     ALuint _alSource;
-    
+
     //play by circular buffer
     float _currTime;
-    bool _timeDirty;
     bool _streamingSource;
-    ALuint _bufferIds[QUEUEBUFFER_NUM];
-    std::thread _rotateBufferThread;
-    std::mutex _sleepMutex;
+    ALuint _bufferIds[3];
+    std::thread* _rotateBufferThread;
     std::condition_variable _sleepCondition;
-    bool _exitThread;
-    bool _readForRemove;
-    
+    std::mutex _sleepMutex;
+    bool _timeDirty;
+    bool _isRotateThreadExited;
+
+    std::mutex _play2dMutex;
+
+    unsigned int _id;
+
     friend class AudioEngineImpl;
 };
 
 }
 NS_CC_END
-#endif // __AUDIO_PLAYER_H_
+
 #endif //CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 
