@@ -79,6 +79,7 @@ NS_CC_BEGIN
 #include "renderer/ccShader_UI_Gray.frag"
 #include "renderer/ccShader_UI_GrayAtlas.frag"
 //
+#include "renderer/ccShader_GradientLabel.vert"
 #include "renderer/ccShader_Label.vert"
 #include "renderer/ccShader_Label_df.frag"
 #include "renderer/ccShader_Label_df_glow.frag"
