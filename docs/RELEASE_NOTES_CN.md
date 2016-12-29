@@ -7,6 +7,8 @@
   - [特性详细介绍](#%E7%89%B9%E6%80%A7%E8%AF%A6%E7%BB%86%E4%BB%8B%E7%BB%8D)
     - [所有平台使用luajit 2.10-beta2](#%E6%89%80%E6%9C%89%E5%B9%B3%E5%8F%B0%E4%BD%BF%E7%94%A8luajit-210-beta2)
     - [Sprite支持九宫格特性](#sprite%E6%94%AF%E6%8C%81%E4%B9%9D%E5%AE%AB%E6%A0%BC%E7%89%B9%E6%80%A7)
+    - [支持Spine二进制格式](#%E6%94%AF%E6%8C%81spine%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%A0%BC%E5%BC%8F)
+    - [新增加动作类](#%E6%96%B0%E5%A2%9E%E5%8A%A0%E5%8A%A8%E4%BD%9C%E7%B1%BB)
   - [已知问题](#%E5%B7%B2%E7%9F%A5%E9%97%AE%E9%A2%98)
   - [其他](#%E5%85%B6%E4%BB%96)
 
@@ -56,6 +58,26 @@ sprite->setCenterRectNormalized(Rect(x, y, width, heigh));
 ```
 
 详细信息可以参考`Sprite::setCenterNormalized()`的注释。
+
+![sprite-slice](https://raw.githubusercontent.com/minggo/Pictures/master/sprite-slice.png)
+
+### 支持Spine二进制格式
+
+使用方式没有改变，只是文件格式变成了二进制格式。这样的好处就是解析效率更高，文件更小。具体的使用方法如下：
+
+```c++
+skeletonNode = SkeletonAnimation::createWithBinaryFile("spine/spineboy.skel", "spine/spineboy.atlas", 0.6f);
+
+...
+```
+
+![spine-binary](https://raw.githubusercontent.com/minggo/Pictures/master/spine-binary.png)
+
+### 新增加动作类
+
+新增加两个动作类：`ResizeBy`和`ResizeTo`。和`ScaleBy`、`ScaleTo`不同的是，`ResizeBy`和`ResizeTo`改变的是节点的content size的大小。这种动作对于支持九宫格特性的节点的缩放效果比`ScaleBy`和`ScaleTo`好，因为`ScaleBy`和`ScaleTo`是对节点做整体缩放。效果对比如下：
+
+![resize-action-effect](https://raw.githubusercontent.com/minggo/Pictures/master/resize-action-effect.png)
 
 ## 已知问题
 
