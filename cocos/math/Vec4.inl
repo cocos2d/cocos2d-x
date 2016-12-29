@@ -80,7 +80,7 @@ inline bool Vec4::operator<(const Vec4& v) const
     {
         if (y == v.y)
         {
-            if (z < v.z)
+            if (z == v.z)
             {
                 if (w < v.w)
                 {
