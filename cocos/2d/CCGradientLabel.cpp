@@ -172,14 +172,12 @@ GradientLabel::~GradientLabel()
 void GradientLabel::reset()
 {
     Label::reset();
-    
+    setGradientColor(Color4B::WHITE, Color4B::WHITE, Color4B::WHITE, Color4B::WHITE);
 }
 
 void GradientLabel::updateContent()
 {
     Label::updateContent();
-    
-    getGLProgram()->setUniformLocationWith2f(_textSize, _contentSize.width, _contentSize.height);
 }
 
 static Texture2D* _getTexture(GradientLabel* label)
@@ -209,7 +207,7 @@ void GradientLabel::updateShaderProgram()
         if (_useDistanceField)
             setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_LABEL_DISTANCEFIELD_NORMAL));
         else if (_useA8Shader)
-            setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_LABEL_NORMAL));
+            setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_GRADIENT_LABEL_NORMAL));
         else if (_shadowEnabled)
             setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR, _getTexture(this)));
         else
@@ -232,14 +230,11 @@ void GradientLabel::updateShaderProgram()
     }
     
     _uniformTextColor = glGetUniformLocation(getGLProgram()->getProgram(), "u_textColor");
-    
     _textSize = glGetUniformLocation(getGLProgram()->getProgram(), "textSize");
     _leftTopUniform = glGetUniformLocation(getGLProgram()->getProgram(), "leftTopColor");
     _rightTopUniform = glGetUniformLocation(getGLProgram()->getProgram(), "rightTopColor");
     _leftBottomUniform = glGetUniformLocation(getGLProgram()->getProgram(), "leftBottomColor");
     _rightBottomUniform = glGetUniformLocation(getGLProgram()->getProgram(), "rightBottomColor");
-    
-    updateUniformColors();
 }
 
 std::string GradientLabel::getDescription() const
@@ -258,7 +253,26 @@ void GradientLabel::setGradientColor(const Color4B &leftTop, const Color4B &righ
     _rightTopColor = rightTop;
     _leftBottomColor = leftBottom;
     _rightBottomColor = rightBottom;
-    updateUniformColors();
+    
+    _leftTopColorF = Color4F(static_cast<float>(_leftTopColor.r) / 255.0f,
+                             static_cast<float>(_leftTopColor.g) / 255.0f,
+                             static_cast<float>(_leftTopColor.b) / 255.0f,
+                             static_cast<float>(_leftTopColor.a) / 255.0f);
+    
+    _rightTopColorF = Color4F(static_cast<float>(_rightTopColor.r) / 255.0f,
+                              static_cast<float>(_rightTopColor.g) / 255.0f,
+                              static_cast<float>(_rightTopColor.b) / 255.0f,
+                              static_cast<float>(_rightTopColor.a) / 255.0f);
+    
+    _leftBottomColorF = Color4F(static_cast<float>(_leftBottomColor.r) / 255.0f,
+                                static_cast<float>(_leftBottomColor.g) / 255.0f,
+                                static_cast<float>(_leftBottomColor.b) / 255.0f,
+                                static_cast<float>(_leftBottomColor.a) / 255.0f);
+    
+    _rightBottomColorF = Color4F(static_cast<float>(_rightBottomColor.r) / 255.0f,
+                                 static_cast<float>(_rightBottomColor.g) / 255.0f,
+                                 static_cast<float>(_rightBottomColor.b) / 255.0f,
+                                 static_cast<float>(_rightBottomColor.a) / 255.0f);
 }
 
 void GradientLabel::setHGradientColor(const Color4B &color1, const Color4B &color2)
@@ -291,13 +305,79 @@ const Color4B &GradientLabel::getRightBottomTopColor() const
     return _rightBottomColor;
 }
 
-void GradientLabel::updateUniformColors()
+void GradientLabel::onDraw(const Mat4& transform, bool transformUpdated)
 {
-    getGLProgram()->setUniformLocationWith2f(_textSize, _contentSize.width, _contentSize.height);
-    getGLProgram()->setUniformLocationWith4f(_leftTopUniform, _leftTopColor.r / 255.0f, _leftTopColor.g / 255.0f, _leftTopColor.b / 255.0f, _leftTopColor.a / 255.0f);
-    getGLProgram()->setUniformLocationWith4f(_rightTopUniform, _rightTopColor.r / 255.0f, _rightTopColor.g / 255.0f, _rightTopColor.b / 255.0f, _rightTopColor.a / 255.0f);
-    getGLProgram()->setUniformLocationWith4f(_leftBottomUniform, _leftBottomColor.r / 255.0f, _leftBottomColor.g / 255.0f, _leftBottomColor.b / 255.0f, _leftBottomColor.a / 255.0f);
-    getGLProgram()->setUniformLocationWith4f(_rightBottomUniform, _rightBottomColor.r / 255.0f, _rightBottomColor.g / 255.0f, _rightBottomColor.b / 255.0f, _rightBottomColor.a / 255.0f);
+    auto glprogram = getGLProgram();
+    glprogram->use();
+    GL::blendFunc(_blendFunc.src, _blendFunc.dst);
+    
+    if (_shadowEnabled)
+    {
+        if (_boldEnabled)
+            onDrawShadow(glprogram, _textColorF);
+        else
+            onDrawShadow(glprogram, _shadowColor4F);
+    }
+    
+    glprogram->setUniformsForBuiltins(transform);
+    for (auto&& it : _letters)
+    {
+        it.second->updateTransform();
+    }
+    
+    if (_currentLabelType == LabelType::TTF)
+    {
+        switch (_currLabelEffect) {
+            case LabelEffect::OUTLINE:
+                //draw text with outline
+                glprogram->setUniformLocationWith4f(_uniformTextColor,
+                                                    _textColorF.r, _textColorF.g, _textColorF.b, _textColorF.a);
+                glprogram->setUniformLocationWith4f(_uniformEffectColor,
+                                                    _effectColorF.r, _effectColorF.g, _effectColorF.b, _effectColorF.a);
+
+                glprogram->setUniformLocationWith2f(_textSize, _contentSize.width, _contentSize.height);
+                glprogram->setUniformLocationWith4f(_leftTopUniform, _effectColorF.r, _effectColorF.g, _effectColorF.b, _effectColorF.a);
+                glprogram->setUniformLocationWith4f(_rightTopUniform, _effectColorF.r, _effectColorF.g, _effectColorF.b, _effectColorF.a);
+                glprogram->setUniformLocationWith4f(_leftBottomUniform, _effectColorF.r, _effectColorF.g, _effectColorF.b, _effectColorF.a);
+                glprogram->setUniformLocationWith4f(_rightBottomUniform, _effectColorF.r, _effectColorF.g, _effectColorF.b, _effectColorF.a);
+                
+                for (auto&& batchNode : _batchNodes)
+                {
+                    batchNode->getTextureAtlas()->drawQuads();
+                }
+                
+                //draw text without outline
+                glprogram->setUniformLocationWith4f(_uniformEffectColor,
+                                                    _effectColorF.r, _effectColorF.g, _effectColorF.b, 0.f);
+                glprogram->setUniformLocationWith2f(_textSize, _contentSize.width, _contentSize.height);
+                
+                glprogram->setUniformLocationWith4f(_leftTopUniform, _leftTopColorF.r, _leftTopColorF.g, _leftTopColorF.b, _leftTopColorF.a);
+                glprogram->setUniformLocationWith4f(_rightTopUniform, _rightTopColorF.r, _rightTopColorF.g, _rightTopColorF.b, _rightTopColorF.a);
+                glprogram->setUniformLocationWith4f(_leftBottomUniform, _leftBottomColorF.r, _leftBottomColorF.g, _leftBottomColorF.b, _leftBottomColorF.a);
+                glprogram->setUniformLocationWith4f(_rightBottomUniform, _rightBottomColorF.r, _rightBottomColorF.g, _rightBottomColorF.b, _rightBottomColorF.a);
+                break;
+            case LabelEffect::GLOW:
+                glprogram->setUniformLocationWith4f(_uniformEffectColor,
+                                                    _effectColorF.r, _effectColorF.g, _effectColorF.b, _effectColorF.a);
+            case LabelEffect::NORMAL:
+                glprogram->setUniformLocationWith4f(_uniformTextColor,
+                                                    _textColorF.r, _textColorF.g, _textColorF.b, _textColorF.a);
+                
+                glprogram->setUniformLocationWith2f(_textSize, _contentSize.width, _contentSize.height);
+                glprogram->setUniformLocationWith4f(_leftTopUniform, _leftTopColorF.r, _leftTopColorF.g, _leftTopColorF.b, _leftTopColorF.a);
+                glprogram->setUniformLocationWith4f(_rightTopUniform, _rightTopColorF.r, _rightTopColorF.g, _rightTopColorF.b, _rightTopColorF.a);
+                glprogram->setUniformLocationWith4f(_leftBottomUniform, _leftBottomColorF.r, _leftBottomColorF.g, _leftBottomColorF.b, _leftBottomColorF.a);
+                glprogram->setUniformLocationWith4f(_rightBottomUniform, _rightBottomColorF.r, _rightBottomColorF.g, _rightBottomColorF.b, _rightBottomColorF.a);
+                break;
+            default:
+                break;
+        }
+    }
+    
+    for (auto&& batchNode : _batchNodes)
+    {
+        batchNode->getTextureAtlas()->drawQuads();
+    }
 }
 
 NS_CC_END

@@ -12,20 +12,22 @@ varying vec2 v_texCoord;
 \n#endif\n
 
 uniform vec2 textSize;
+
 uniform vec4 leftTopColor;
 uniform vec4 rightTopColor;
 uniform vec4 leftBottomColor;
 uniform vec4 rightBottomColor;
+uniform vec4 u_textColor;
 
 void main()
 {
-   gl_Position = CC_MVPMatrix * a_position;
+    gl_Position = CC_MVPMatrix * a_position;
 
-   vec4 colorTextTop = vec4(mix(leftTopColor, rightTopColor, (textSize.y - a_position.y) / textSize.y));
-   vec4 colorTextBottom = vec4(mix(leftBottomColor, rightBottomColor, (textSize.y - a_position.y) / textSize.y));
-   vec4 colorText = vec4(mix(colorTextTop, colorTextBottom, a_position.x / textSize.x));
-   
-   v_fragmentColor = colorText;
-   v_texCoord = a_texCoord;
+    vec4 colorText12 = vec4(mix(leftTopColor, rightTopColor, (textSize.y - a_position.y) / textSize.y));
+    vec4 colorText34 = vec4(mix(leftBottomColor, rightBottomColor, (textSize.y - a_position.y) / textSize.y));
+    vec4 colorText = vec4(mix(colorText12, colorText34, a_position.x / textSize.x));
+
+    v_fragmentColor = colorText;
+    v_texCoord = a_texCoord;
 }
 );

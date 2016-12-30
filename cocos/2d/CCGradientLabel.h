@@ -202,8 +202,9 @@ public:
     const Color4B &getRightBottomTopColor() const;
 
     /** Update content immediately.*/
-    virtual void updateContent();
+    virtual void updateContent() override;
     
+    virtual void onDraw(const Mat4& transform, bool transformUpdated) override;
 CC_CONSTRUCTOR_ACCESS:
     /**
      * Constructor of GradientLabel.
@@ -222,9 +223,6 @@ CC_CONSTRUCTOR_ACCESS:
 protected:
     virtual void updateShaderProgram() override;
     
-    void initGradientColors();
-    void updateUniformColors();
-    
     void reset();
 
 private:
@@ -234,12 +232,18 @@ private:
     Color4B _leftBottomColor = Color4B::WHITE;
     Color4B _rightBottomColor = Color4B::WHITE;
     
+    Color4F _leftTopColorF;
+    Color4F _rightTopColorF;
+    
+    Color4F _leftBottomColorF;
+    Color4F _rightBottomColorF;
+    
     GLint _textSize = -1;
     GLint _leftTopUniform = -1;
     GLint _rightTopUniform = -1;
-    
     GLint _leftBottomUniform = -1;
     GLint _rightBottomUniform = -1;
+
     
     CC_DISALLOW_COPY_AND_ASSIGN(GradientLabel);
 };
