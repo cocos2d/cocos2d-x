@@ -462,6 +462,8 @@ void Scale9Sprite::copyTo(Scale9Sprite* copy) const
     copy->setColor(getColor());
     copy->setOpacity(getOpacity());
     copy->_originalContentSize = _originalContentSize;
+    copy->_strechFactor = _strechFactor;
+    copy->setStrechEnabled(isStrechEnabled());
 }
 
 
