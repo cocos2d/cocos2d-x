@@ -642,7 +642,7 @@ protected:
 
     void computeStringNumLines();
 
-    void onDraw(const Mat4& transform, bool transformUpdated);
+    virtual void onDraw(const Mat4& transform, bool transformUpdated);
     void onDrawShadow(GLProgram* glProgram, const Color4F& shadowColor);
     void drawSelf(bool visibleByCamera, Renderer* renderer, uint32_t flags);
 

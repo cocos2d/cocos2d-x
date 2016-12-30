@@ -81,6 +81,7 @@ extern CC_DLL const GLchar * ccLabelNormal_frag;
 extern CC_DLL const GLchar * ccLabelOutline_frag;
 
 extern CC_DLL const GLchar * ccLabel_vert;
+extern CC_DLL const GLchar * ccGradientLabel_vert;
 
 extern CC_DLL const GLchar * cc3D_PositionTex_vert;
 extern CC_DLL const GLchar * cc3D_SkinPositionTex_vert;

@@ -5847,6 +5847,12 @@
 		D0FD035E1A3B51AA00825BB5 /* CCAllocatorStrategyGlobalSmallBlock.h in Headers */ = {isa = PBXBuildFile; fileRef = D0FD03451A3B51AA00825BB5 /* CCAllocatorStrategyGlobalSmallBlock.h */; };
 		D0FD035F1A3B51AA00825BB5 /* CCAllocatorStrategyPool.h in Headers */ = {isa = PBXBuildFile; fileRef = D0FD03461A3B51AA00825BB5 /* CCAllocatorStrategyPool.h */; };
 		D0FD03601A3B51AA00825BB5 /* CCAllocatorStrategyPool.h in Headers */ = {isa = PBXBuildFile; fileRef = D0FD03461A3B51AA00825BB5 /* CCAllocatorStrategyPool.h */; };
+		D86D5ECF1E154FE300AC1C01 /* CCGradientLabel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D86D5ECD1E154FE300AC1C01 /* CCGradientLabel.cpp */; };
+		D86D5ED01E154FE300AC1C01 /* CCGradientLabel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D86D5ECD1E154FE300AC1C01 /* CCGradientLabel.cpp */; };
+		D86D5ED11E154FE300AC1C01 /* CCGradientLabel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D86D5ECD1E154FE300AC1C01 /* CCGradientLabel.cpp */; };
+		D86D5ED21E154FE300AC1C01 /* CCGradientLabel.h in Headers */ = {isa = PBXBuildFile; fileRef = D86D5ECE1E154FE300AC1C01 /* CCGradientLabel.h */; };
+		D86D5ED31E154FE300AC1C01 /* CCGradientLabel.h in Headers */ = {isa = PBXBuildFile; fileRef = D86D5ECE1E154FE300AC1C01 /* CCGradientLabel.h */; };
+		D86D5ED41E154FE300AC1C01 /* CCGradientLabel.h in Headers */ = {isa = PBXBuildFile; fileRef = D86D5ECE1E154FE300AC1C01 /* CCGradientLabel.h */; };
 		DA8C62A219E52C6400000516 /* ioapi_mem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA8C62A019E52C6400000516 /* ioapi_mem.cpp */; };
 		DA8C62A319E52C6400000516 /* ioapi_mem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA8C62A019E52C6400000516 /* ioapi_mem.cpp */; };
 		DA8C62A419E52C6400000516 /* ioapi_mem.h in Headers */ = {isa = PBXBuildFile; fileRef = DA8C62A119E52C6400000516 /* ioapi_mem.h */; };
@@ -7966,6 +7972,9 @@
 		D85F546E1D2BAAE200F49F75 /* CCGLViewImpl-emcc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CCGLViewImpl-emcc.h"; sourceTree = "<group>"; };
 		D85F546F1D2BAAE200F49F75 /* CCPlatformDefine-emcc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CCPlatformDefine-emcc.h"; sourceTree = "<group>"; };
 		D85F54701D2BAAE200F49F75 /* CCStdC-emcc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CCStdC-emcc.h"; sourceTree = "<group>"; };
+		D86D5ECD1E154FE300AC1C01 /* CCGradientLabel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCGradientLabel.cpp; sourceTree = "<group>"; };
+		D86D5ECE1E154FE300AC1C01 /* CCGradientLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCGradientLabel.h; sourceTree = "<group>"; };
+		D86D5EDB1E1567EE00AC1C01 /* ccShader_GradientLabel.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_GradientLabel.vert; sourceTree = "<group>"; };
 		DA8C62A019E52C6400000516 /* ioapi_mem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ioapi_mem.cpp; sourceTree = "<group>"; };
 		DA8C62A119E52C6400000516 /* ioapi_mem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ioapi_mem.h; sourceTree = "<group>"; };
 		DABC9FA719E7DFA900FA252C /* CCClippingRectangleNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCClippingRectangleNode.cpp; sourceTree = "<group>"; };
@@ -8434,6 +8443,8 @@
 		1A570181180BCB170088DEC7 /* label-nodes */ = {
 			isa = PBXGroup;
 			children = (
+				D86D5ECD1E154FE300AC1C01 /* CCGradientLabel.cpp */,
+				D86D5ECE1E154FE300AC1C01 /* CCGradientLabel.h */,
 				1A570182180BCB590088DEC7 /* CCFont.cpp */,
 				1A570183180BCB590088DEC7 /* CCFont.h */,
 				1A570184180BCB590088DEC7 /* CCFontAtlas.cpp */,
@@ -9987,6 +9998,7 @@
 		5034CA5D191D591900CE6051 /* shaders */ = {
 			isa = PBXGroup;
 			children = (
+				D86D5EDB1E1567EE00AC1C01 /* ccShader_GradientLabel.vert */,
 				B241A6E21AFB0BE700C5623C /* ccShader_CameraClear.frag */,
 				B241A6E31AFB0BE700C5623C /* ccShader_CameraClear.vert */,
 				B603F1B11AC8F1FD00A9579C /* ccShader_3D_Terrain.frag */,
@@ -11783,6 +11795,7 @@
 				B665E2841AA80A6500DDB1C5 /* CCPUDoStopSystemEventHandler.h in Headers */,
 				B6CAB52D1AF9AA1A00B9B856 /* btSerializer.h in Headers */,
 				C503066C1B60B583001E6D43 /* CCSkeletonNode.h in Headers */,
+				D86D5ED21E154FE300AC1C01 /* CCGradientLabel.h in Headers */,
 				B665E3E01AA80A6600DDB1C5 /* CCPUSimpleSpline.h in Headers */,
 				B6DD2FAD1B04825B00E47F5F /* DetourDebugDraw.h in Headers */,
 				B665E42C1AA80A6600DDB1C5 /* CCPUVelocityMatchingAffector.h in Headers */,
@@ -13105,6 +13118,7 @@
 				507B3E6F1C31BDD30067B53E /* btBroadphaseInterface.h in Headers */,
 				507B3E701C31BDD30067B53E /* ImageViewReader.h in Headers */,
 				507B3E711C31BDD30067B53E /* CCPUDoPlacementParticleEventHandlerTranslator.h in Headers */,
+				D86D5ED41E154FE300AC1C01 /* CCGradientLabel.h in Headers */,
 				507B3E721C31BDD30067B53E /* b2ChainShape.h in Headers */,
 				507B3E731C31BDD30067B53E /* CCPUMeshSurfaceEmitterTranslator.h in Headers */,
 				507B3E741C31BDD30067B53E /* CCMenuLoader.h in Headers */,
@@ -14600,6 +14614,7 @@
 				50ABBEA61925AB6F00A911A9 /* CCScriptSupport.h in Headers */,
 				B6CAB33C1AF9AA1A00B9B856 /* btTriangleShapeEx.h in Headers */,
 				46C02E0A18E91123004B7456 /* xxhash.h in Headers */,
+				D86D5ED31E154FE300AC1C01 /* CCGradientLabel.h in Headers */,
 				B6CAB39E1AF9AA1A00B9B856 /* btCharacterControllerInterface.h in Headers */,
 				5034CA4C191D591100CE6051 /* ccShader_Label_df_glow.frag in Headers */,
 				B6CAB2441AF9AA1A00B9B856 /* btConvexConcaveCollisionAlgorithm.h in Headers */,
@@ -14968,6 +14983,7 @@
 				A5FD79C01D2A63EA00E11101 /* WebSocket-emcc.cpp in Sources */,
 				B6CAB2F51AF9AA1A00B9B856 /* btTriangleBuffer.cpp in Sources */,
 				1A1645B0191B726C008C7C7F /* ConvertUTF.c in Sources */,
+				D86D5ECF1E154FE300AC1C01 /* CCGradientLabel.cpp in Sources */,
 				15AE1BE219AAE01E00C27E9E /* CCScrollView.cpp in Sources */,
 				50ABBD581925AB0000A911A9 /* Vec2.cpp in Sources */,
 				15AE18E119AAD35000C27E9E /* TriggerMng.cpp in Sources */,
@@ -16363,6 +16379,7 @@
 				507B3BBD1C31BDD30067B53E /* btContactConstraint.cpp in Sources */,
 				507B3BBE1C31BDD30067B53E /* UITextField+CCUITextInput.mm in Sources */,
 				5020A1FA1D49912500E80C72 /* SkeletonJson.c in Sources */,
+				D86D5ED11E154FE300AC1C01 /* CCGradientLabel.cpp in Sources */,
 				507B3BBF1C31BDD30067B53E /* CCPUCollisionAvoidanceAffector.cpp in Sources */,
 				507B3BC01C31BDD30067B53E /* btConvex2dConvex2dAlgorithm.cpp in Sources */,
 				507B3BC11C31BDD30067B53E /* CCPUSlaveBehaviour.cpp in Sources */,
@@ -17415,6 +17432,7 @@
 				15AE196319AAD35100C27E9E /* CCTransformHelp.cpp in Sources */,
 				B6CAB34C1AF9AA1A00B9B856 /* gim_contact.cpp in Sources */,
 				15AE19A819AAD39700C27E9E /* LayoutReader.cpp in Sources */,
+				D86D5ED01E154FE300AC1C01 /* CCGradientLabel.cpp in Sources */,
 				1A01C68B18F57BE800EFE3A6 /* CCDeprecated.cpp in Sources */,
 				A594709E1A7FD77B002DB024 /* CCScrollListView.cpp in Sources */,
 				15AE195719AAD35100C27E9E /* CCInputDelegate.cpp in Sources */,
