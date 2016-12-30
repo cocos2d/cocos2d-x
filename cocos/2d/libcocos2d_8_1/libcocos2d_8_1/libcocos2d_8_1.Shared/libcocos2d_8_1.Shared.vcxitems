@@ -613,6 +613,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\CCGrabber.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\CCGrid.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\CCLabel.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\CCGradientLabel.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\CCLabelAtlas.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\CCLabelBMFont.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\CCLabelTextFormatter.h" />
@@ -1220,6 +1221,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\CCGrabber.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\CCGrid.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\CCLabel.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\CCGradientLabel.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\CCLabelAtlas.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\CCLabelBMFont.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\CCLabelTextFormatter.cpp" />

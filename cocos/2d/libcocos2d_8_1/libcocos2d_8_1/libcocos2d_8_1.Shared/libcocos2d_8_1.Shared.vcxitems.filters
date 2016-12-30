@@ -886,6 +886,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\CCLabel.h">
       <Filter>2d</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\CCGradientLabel.h">
+      <Filter>2d</Filter>
+    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\CCLabelAtlas.h">
       <Filter>2d</Filter>
     </ClInclude>
@@ -2681,6 +2684,9 @@
       <Filter>2d</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\CCLabel.cpp">
+      <Filter>2d</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\CCGradientLabel.cpp">
       <Filter>2d</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\CCLabelAtlas.cpp">

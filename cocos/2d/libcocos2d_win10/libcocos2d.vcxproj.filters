@@ -381,6 +381,9 @@
     <ClCompile Include="..\CCLabel.cpp">
       <Filter>2d</Filter>
     </ClCompile>
+    <ClCompile Include="..\CCGradientLabel.cpp">
+      <Filter>2d</Filter>
+    </ClCompile>
     <ClCompile Include="..\CCLabelAtlas.cpp">
       <Filter>2d</Filter>
     </ClCompile>
@@ -2115,6 +2118,9 @@
       <Filter>2d</Filter>
     </ClInclude>
     <ClInclude Include="..\CCLabel.h">
+      <Filter>2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCGradientLabel.h">
       <Filter>2d</Filter>
     </ClInclude>
     <ClInclude Include="..\CCLabelAtlas.h">

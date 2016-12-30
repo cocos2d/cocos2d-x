@@ -204,7 +204,6 @@ public:
     /** Update content immediately.*/
     virtual void updateContent() override;
     
-    virtual void onDraw(const Mat4& transform, bool transformUpdated) override;
 CC_CONSTRUCTOR_ACCESS:
     /**
      * Constructor of GradientLabel.
@@ -221,9 +220,11 @@ CC_CONSTRUCTOR_ACCESS:
     virtual ~GradientLabel();
     
 protected:
+    virtual void onDraw(const Mat4& transform, bool transformUpdated) override;
+    
     virtual void updateShaderProgram() override;
     
-    void reset();
+    virtual void reset() override;
 
 private:
     Color4B _leftTopColor = Color4B::WHITE;

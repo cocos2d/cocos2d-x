@@ -679,7 +679,7 @@ protected:
     int getFirstCharLen(const std::u32string& utf32Text, int startIndex, int textLen);
     int getFirstWordLen(const std::u32string& utf32Text, int startIndex, int textLen);
 
-    void reset();
+    virtual void reset();
 
     FontDefinition _getFontDefinition() const;
 

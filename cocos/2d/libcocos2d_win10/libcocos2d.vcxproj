@@ -712,6 +712,7 @@
     <ClCompile Include="..\CCGrabber.cpp" />
     <ClCompile Include="..\CCGrid.cpp" />
     <ClCompile Include="..\CCLabel.cpp" />
+    <ClCompile Include="..\CCGradientLabel.cpp" />
     <ClCompile Include="..\CCLabelAtlas.cpp" />
     <ClCompile Include="..\CCLabelBMFont.cpp" />
     <ClCompile Include="..\CCLabelTextFormatter.cpp" />
@@ -1351,6 +1352,7 @@
     <ClInclude Include="..\CCGrabber.h" />
     <ClInclude Include="..\CCGrid.h" />
     <ClInclude Include="..\CCLabel.h" />
+    <ClInclude Include="..\CCGradientLabel.h" />
     <ClInclude Include="..\CCLabelAtlas.h" />
     <ClInclude Include="..\CCLabelBMFont.h" />
     <ClInclude Include="..\CCLabelTextFormatter.h" />

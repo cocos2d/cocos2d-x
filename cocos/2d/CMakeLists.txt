@@ -45,6 +45,7 @@ set(COCOS_2D_SRC
   2d/CCLabelAtlas.cpp
   2d/CCLabelBMFont.cpp
   2d/CCLabel.cpp
+  2d/CCGradientLabel.cpp
   2d/CCLabelTextFormatter.cpp
   2d/CCLabelTTF.cpp
   2d/CCLayer.cpp
