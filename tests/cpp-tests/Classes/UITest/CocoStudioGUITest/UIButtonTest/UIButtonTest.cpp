@@ -21,6 +21,7 @@ UIButtonTests::UIButtonTests()
     ADD_TEST_CASE(UIButtonDisableDefaultTest);
     ADD_TEST_CASE(UIButtonCloneTest);
     ADD_TEST_CASE(Issue12249);
+    ADD_TEST_CASE(IssueCopyTo);
 }
 
 // UIButtonTest
@@ -1189,3 +1190,65 @@ bool Issue12249::init()
     }
     return false;
 }
+
+
+// See here:
+// https://github.com/cocos2d/cocos2d-x/commit/2e0881e28415a5dbd35155925d686dd5466f8cb0#commitcomment-20327685
+IssueCopyTo::IssueCopyTo()
+: _displayValueLabel(nullptr)
+{
+}
+
+bool IssueCopyTo::init()
+{
+    if (UIScene::init())
+    {
+        Size widgetSize = _widget->getContentSize();
+
+        // Add a label in which the button events will be displayed
+        _displayValueLabel = Text::create("Test CopyTo", "fonts/Marker Felt.ttf",32);
+        _displayValueLabel->setAnchorPoint(Vec2(0.5f, -1.0f));
+        _displayValueLabel->setPosition(Vec2(widgetSize.width / 2.0f,
+                                             widgetSize.height / 2.0f));
+        _uiLayer->addChild(_displayValueLabel);
+
+        // Add the alert
+        Text* alert = Text::create("click area should be ok",
+                                   "fonts/Marker Felt.ttf",20);
+        alert->setColor(Color3B(159, 168, 176));
+
+        alert->setPosition(Vec2(widgetSize.width / 2.0f,
+                                widgetSize.height / 2.0f
+                                - alert->getContentSize().height * 2.0f));
+
+        _uiLayer->addChild(alert);
+
+        // Create the button + clone #1
+        Button* button = Button::create("cocosui/animationbuttonnormal.png");
+        button->setPosition(Vec2(widgetSize.width / 2.0f - 80, widgetSize.height / 2.0f + 40));
+        button->setPressedActionEnabled(true);
+        _uiLayer->addChild(button);
+
+        Button* clone1 = static_cast<Button*>(button->clone());
+        clone1->loadTextureNormal("cocosui/button.png");
+        clone1->setPosition(Vec2(widgetSize.width / 2.0f + 50, widgetSize.height / 2.0f + 40));
+        clone1->setPressedActionEnabled(true);
+        _uiLayer->addChild(clone1);
+
+        // Create the button + clone #2
+        Button* button2 = Button::create("cocosui/button.png");
+        button2->setPosition(Vec2(widgetSize.width / 2.0f - 80, widgetSize.height / 2.0f - 40));
+        button2->setPressedActionEnabled(true);
+        _uiLayer->addChild(button2);
+
+        Button* clone2 = static_cast<Button*>(button2->clone());
+        clone2->loadTextureNormal("cocosui/animationbuttonnormal.png");
+        clone2->setPosition(Vec2(widgetSize.width / 2.0f + 50, widgetSize.height / 2.0f - 40));
+        clone2->setPressedActionEnabled(true);
+        _uiLayer->addChild(clone2);
+
+        return true;
+    }
+    return false;
+}
+

@@ -262,4 +262,17 @@ protected:
     cocos2d::ui::Text* _displayValueLabel;
 };
 
+class IssueCopyTo : public UIScene
+{
+public:
+    CREATE_FUNC(IssueCopyTo);
+
+    IssueCopyTo();
+
+    virtual bool init() override;
+
+protected:
+    cocos2d::ui::Text* _displayValueLabel;
+};
+
 #endif /* defined(__TestCpp__UIButtonTest__) */
