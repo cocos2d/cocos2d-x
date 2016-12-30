@@ -175,11 +175,6 @@ void GradientLabel::reset()
     setGradientColor(Color4B::WHITE, Color4B::WHITE, Color4B::WHITE, Color4B::WHITE);
 }
 
-void GradientLabel::updateContent()
-{
-    Label::updateContent();
-}
-
 static Texture2D* _getTexture(GradientLabel* label)
 {
     struct _FontAtlasPub : public FontAtlas

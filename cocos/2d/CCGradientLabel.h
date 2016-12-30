@@ -201,9 +201,6 @@ public:
     */
     const Color4B &getRightBottomTopColor() const;
 
-    /** Update content immediately.*/
-    virtual void updateContent() override;
-    
 CC_CONSTRUCTOR_ACCESS:
     /**
      * Constructor of GradientLabel.
