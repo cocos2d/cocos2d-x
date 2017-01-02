@@ -1109,9 +1109,11 @@ var TMXIsoVertexZ = TMXFixBugLayer.extend({
     },
     onEnter:function () {
         this._super();
+        director.setProjection(cc.Director.PROJECTION_2D);
         director.setDepthTest(true);
     },
     onExit:function () {
+        director.setProjection(cc.Director.PROJECTION_DEFAULT);
         director.setDepthTest(false);
         this._super();
     },
@@ -1183,9 +1185,11 @@ var TMXOrthoVertexZ = TMXFixBugLayer.extend({
     },
     onEnter:function () {
         this._super();
+        director.setProjection(cc.Director.PROJECTION_2D);
         director.setDepthTest(true);
     },
     onExit:function () {
+        director.setProjection(cc.Director.PROJECTION_DEFAULT);
         director.setDepthTest(false);
         this._super();
     },
