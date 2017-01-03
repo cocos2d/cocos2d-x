@@ -1,15 +1,24 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 22
-    buildToolsVersion "22.0.1"
+    compileSdkVersion 23
+    buildToolsVersion "25.0.1"
 
     defaultConfig {
         applicationId "org.cocos2dx.cpp_tests"
         minSdkVersion 10
-        targetSdkVersion 22
+        targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+        externalNativeBuild {
+            cmake {
+                arguments "-DCMAKE_FIND_ROOT_PATH=", "-DANDROID_STL=c++_static", "-DANDROID_TOOLCHAIN=clang", "-DANDROID_ARM_NEON=TRUE", "-DBUILD_CPP_EMPTY_TEST=FALSE", "-DBUILD_LUA_LIBS=FALSE", "-DBUILD_JS_LIBS=FALSE"
+                cppFlags "-frtti -fexceptions"
+            }
+        }
+        ndk {
+            abiFilters "armeabi", "x86", "armeabi-v7a", "arm64-v8a"
+        }
 
     }
 
@@ -18,7 +27,7 @@ android {
         res.srcDir "res"
         jniLibs.srcDir "libs"
         manifest.srcFile "AndroidManifest.xml"
-        assets.srcDir "assets"
+        assets.srcDir "../../Resources"
     }
 
     signingConfigs {
@@ -40,6 +49,12 @@ android {
             if (project.hasProperty("RELEASE_STORE_FILE")) {
                 signingConfig signingConfigs.release
             }
+        }
+    }
+
+    externalNativeBuild {
+        cmake {
+            path "../../../../CMakeLists.txt"
         }
     }
 }

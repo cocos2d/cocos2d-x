@@ -25,6 +25,8 @@ elseif(LINUX)
 elseif(ANDROID)
   set(PLATFORM_SRC
           Classes/JNITest/JNITest.cpp
+          Classes/UITest/CocoStudioGUITest/UIVideoPlayerTest/UIVideoPlayerTest.cpp
+          Classes/UITest/CocoStudioGUITest/UIWebViewTest/UIWebViewTest.cpp
           proj.android/jni/main.cpp)
   set(RES_PREFIX "/Resources")
 else()
@@ -244,9 +246,7 @@ if(MACOSX OR APPLE)
       MACOSX_BUNDLE 1
       RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
       )
-ELSEIF(ANDROID)
-    set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${APP_NAME}")
-    set_target_properties(${APP_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${APP_BIN_DIR}")
+elseif(ANDROID)
 else()
     set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${APP_NAME}")
     set_target_properties(${APP_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${APP_BIN_DIR}")
