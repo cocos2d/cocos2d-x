@@ -410,7 +410,7 @@ public:
     /**
     * Return the outline effect size value.
     */
-    float getOutlineSize() const { _outlineSize; }
+    float getOutlineSize() const { return _outlineSize; }
 
     /**
     * Return current effect type.
