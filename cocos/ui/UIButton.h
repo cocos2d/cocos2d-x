@@ -327,7 +327,6 @@ protected:
     virtual void onPressStateChangedToPressed() override;
     virtual void onPressStateChangedToDisabled() override;
     virtual void onSizeChanged() override;
-    virtual void setGlobalZOrder(float globalZOrder) override;
 
     void loadTextureNormal(SpriteFrame* normalSpriteFrame);
     void setupNormalTexture(bool textureLoaded);
