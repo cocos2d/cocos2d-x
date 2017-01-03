@@ -12,7 +12,6 @@
 
 // encode / decode json
 #include "json/document.h"
-#include "json/filestream.h"
 #include "json/stringbuffer.h"
 #include "json/writer.h"
 #include "SimulatorExport.h"
