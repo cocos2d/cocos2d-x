@@ -75,7 +75,7 @@ bool UIListViewTest_Vertical::init()
         // set list view ex direction
         _listView->setDirection(ui::ScrollView::Direction::VERTICAL);
         _listView->setBounceEnabled(true);
-        // _listView->setBackGroundImage("cocosui/green_edit.png");
+        _listView->setBackGroundImage("cocosui/green_edit.png");
         _listView->setGlobalZOrder(200);
         _listView->setBackGroundImageScale9Enabled(true);
         _listView->setContentSize(Size(240, 130));
