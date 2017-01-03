@@ -871,6 +871,19 @@ std::string Button::getDescription() const
     return "Button";
 }
 
+void Button::setGlobalZOrder(float globalZOrder)
+{
+    Widget::setGlobalZOrder(globalZOrder);
+    if (_buttonNormalRenderer)
+        _buttonNormalRenderer->setGlobalZOrder(globalZOrder);
+    if (_buttonClickedRenderer)
+        _buttonClickedRenderer->setGlobalZOrder(globalZOrder);
+    if (_buttonDisabledRenderer)
+        _buttonDisabledRenderer->setGlobalZOrder(globalZOrder);
+    if (_titleRenderer)
+        _titleRenderer->setGlobalZOrder(globalZOrder);
+}
+
 Widget* Button::createCloneInstance()
 {
     return Button::create();

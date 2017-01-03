@@ -181,6 +181,7 @@ public:
     virtual void disableCascadeColor() override;
     virtual void disableCascadeOpacity()override;
     virtual void setCameraMask(unsigned short mask, bool applyChildren = true) override;
+    virtual void setGlobalZOrder(float globalZOrder) override;
 CC_CONSTRUCTOR_ACCESS:
     ProtectedNode();
     virtual ~ProtectedNode();

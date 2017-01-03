@@ -414,6 +414,8 @@ public:
      */
     virtual void onExit() override;
     
+    virtual void setGlobalZOrder(float globalZOrder) override;
+    
     /**
      * If a layout is loop focused which means that the focus movement will be inside the layout
      *@param loop  pass true to let the focus movement loop inside the layout
