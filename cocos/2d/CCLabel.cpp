@@ -1550,7 +1550,7 @@ void Label::onDraw(const Mat4& transform, bool /*transformUpdated*/)
             //draw text without outline
             glprogram->setUniformLocationWith4f(_uniformEffectColor,
                 _effectColorF.r, _effectColorF.g, _effectColorF.b, 0.f);
-            break;
+            return;
         case LabelEffect::GLOW:
             glprogram->setUniformLocationWith4f(_uniformEffectColor,
                 _effectColorF.r, _effectColorF.g, _effectColorF.b, _effectColorF.a);
