@@ -61,6 +61,7 @@ bool UIPageViewTest::init()
         pageView->setPosition((widgetSize - pageView->getContentSize()) / 2.0f);
         pageView->removeAllItems();
         pageView->setIndicatorEnabled(true);
+        pageView->setGlobalZOrder(200);
         
         int pageCount = 4;
         for (int i = 0; i < pageCount; ++i)

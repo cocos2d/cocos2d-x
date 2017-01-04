@@ -60,6 +60,7 @@ bool UIScrollViewTest_Vertical::init()
 		scrollView->setScrollBarWidth(4);
 		scrollView->setScrollBarPositionFromCorner(Vec2(2, 2));
 		scrollView->setScrollBarColor(Color3B::WHITE);
+        scrollView->setGlobalZOrder(200);
         _uiLayer->addChild(scrollView);
         
         ImageView* imageView = ImageView::create("cocosui/ccicon.png");
