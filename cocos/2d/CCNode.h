@@ -28,6 +28,7 @@
 
 #ifndef __CCNODE_H__
 #define __CCNODE_H__
+#ifdef __cplusplus
 
 #include <cstdint>
 #include "base/ccMacros.h"
@@ -2079,5 +2080,8 @@ private:
 /// @}
 
 NS_CC_END
+#endif
+
+
 
 #endif // __CCNODE_H__
