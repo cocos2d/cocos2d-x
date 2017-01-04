@@ -889,8 +889,8 @@ void Sprite::populateTriangle(int quadIndex, const V3F_C4B_T2F_Quad& quad)
     // convert Quad intro Triangle since it takes less memory
 
     // Triangles are ordered like the following:
-    // Numbers: Quad Index
-    // Letters: triangles' vertices
+    //   Numbers: Quad Index
+    //   Letters: triangles' vertices
     //
     //  M-----N-----O-----P
     //  |     |     |     |
@@ -908,19 +908,34 @@ void Sprite::populateTriangle(int quadIndex, const V3F_C4B_T2F_Quad& quad)
     //
     // So, if QuadIndex == 4, then it should update vertices J,K,F,G
 
-    const int index_bl = quadIndex * 4 / 3;
-    const int index_br = index_bl + 1;
-    const int index_tl = index_bl + 4;
-    const int index_tr = index_bl + 5;
+    // Optimization: I don't need to copy all the vertices all the time. just the 4 "quads" from the corners.
+    if (quadIndex == 0 || quadIndex == 2 || quadIndex == 6 || quadIndex == 8)
+    {
+        if (_flippedX) {
+            if (quadIndex % 3 == 0)
+                quadIndex += 2;
+            else
+                quadIndex -= 2;
+        }
 
-    // FIXME:
-    // I don't need to copy all the vertices all the time.
-    // I have to copy the left/bottom border all the time
-    // but the top and right borders are only needed on the top row, right-most column.
-    _trianglesVertex[index_tl] = quad.tl;
-    _trianglesVertex[index_tr] = quad.tr;
-    _trianglesVertex[index_bl] = quad.bl;
-    _trianglesVertex[index_br] = quad.br;
+        if (_flippedY) {
+            if (quadIndex <= 2)
+                quadIndex += 6;
+            else
+                quadIndex -= 6;
+        }
+
+        const int index_bl = quadIndex * 4 / 3;
+        const int index_br = index_bl + 1;
+        const int index_tl = index_bl + 4;
+        const int index_tr = index_bl + 5;
+        
+
+        _trianglesVertex[index_tr] = quad.tr;
+        _trianglesVertex[index_br] = quad.br;
+        _trianglesVertex[index_tl] = quad.tl;
+        _trianglesVertex[index_bl] = quad.bl;
+    }
 }
 
 
