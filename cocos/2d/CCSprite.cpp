@@ -649,7 +649,9 @@ void Sprite::updatePoly()
             Rect(x2, y2,  x2_s, y2_s),      // top-right
         };
 
-        V3F_C4B_T2F_Quad tmpQuad;
+        // needed in order to get color from "_quad"
+        V3F_C4B_T2F_Quad tmpQuad = _quad;
+
         for (int i=0; i<_numberOfSlices; ++i) {
             setTextureCoords(texRects[i], &tmpQuad);
             setVertexCoords(verticesRects[i], &tmpQuad);
@@ -694,14 +696,7 @@ void Sprite::setCenterRectNormalized(const cocos2d::Rect &rectTopLeft)
                 // 9 quads, each needs 6 vertices = 54
                 _trianglesIndex = (unsigned short*) malloc(sizeof(*_trianglesIndex) * 6 * 9);
 
-                for (int i=0; i<16; ++i) {
-                    _trianglesVertex[i].colors = Color4B::WHITE;
-                    _trianglesVertex[i].colors = Color4B::WHITE;
-                    _trianglesVertex[i].colors = Color4B::WHITE;
-                    _trianglesVertex[i].colors = Color4B::WHITE;
-                }
-
-                // CCW
+                // populate indices in CCW direction
                 for (int i=0; i<9; ++i) {
                     _trianglesIndex[i * 6 + 0] = (i * 4 / 3) + 4;
                     _trianglesIndex[i * 6 + 1] = (i * 4 / 3) + 0;
