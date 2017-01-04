@@ -627,7 +627,7 @@ CC_CONSTRUCTOR_ACCESS :
     
 protected:
 
-    void updateColor() override;
+    virtual void updateColor() override;
     virtual void setTextureCoords(const Rect& rect);
     virtual void setTextureCoords(const Rect& rect, V3F_C4B_T2F_Quad* outQuad);
     virtual void setVertexCoords(const Rect& rect, V3F_C4B_T2F_Quad* outQuad);

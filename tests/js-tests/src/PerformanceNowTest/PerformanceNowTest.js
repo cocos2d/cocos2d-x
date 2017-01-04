@@ -95,7 +95,7 @@ var MonotonicIncreaseTest = PerformanceNowBaseLayer.extend({
 
         var performanceValues = [];
         for (var i = 0; i < 20; ++i) {
-            performanceValues.push(performance.now());
+            performanceValues.push(performance.now().toFixed(3));
         }
 
         var monotonicIncrease = false;

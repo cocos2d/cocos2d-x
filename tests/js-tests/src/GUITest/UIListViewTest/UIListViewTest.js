@@ -504,12 +504,12 @@ var UIListViewTest_Magnetic = UIMainLayer.extend({
                 if(this._getListViewDirection() == ccui.ScrollView.DIR_HORIZONTAL)
                 {
                     var halfY = 110;
-                    pNode.drawSegment(cc.p(center.x, center.y - halfY), cc.p(center.x, center.y + halfY), 2, cc.color(0, 0, 0, 255));
+                    pNode.drawLine(cc.p(center.x, center.y - halfY), cc.p(center.x, center.y + halfY), cc.color(0, 0, 0, 255));
                 }
                 else
                 {
                     var halfX = 150;
-                    pNode.drawSegment(cc.p(center.x - halfX, center.y), cc.p(center.x + halfX, center.y), 2, cc.color(0, 0, 0, 255));
+                    pNode.drawLine(cc.p(center.x - halfX, center.y), cc.p(center.x + halfX, center.y), cc.color(0, 0, 0, 255));
                 }
                 pNode.setContentSize(this._listView.getContentSize());
                 this._mainNode.addChild(pNode);
@@ -579,27 +579,14 @@ var UIListViewTest_Magnetic = UIMainLayer.extend({
             this._mainNode.addChild(pButton);
 
 
-            var default_button = new ccui.Button();
-            default_button.setName("TextButton");
-            default_button.setTouchEnabled(true);
-            default_button.loadTextures("ccs-res/cocosui/backtotoppressed.png", "ccs-res/cocosui/backtotopnormal.png", "");
-
-            var default_item = new ccui.Layout();
-            default_item.setTouchEnabled(true);
-            default_item.setContentSize(default_button.getContentSize());
-            default_button.x = default_item.width / 2;
-            default_button.y = default_item.height / 2;
-            default_item.addChild(default_button);
-
-            // set model
-            this._listView.setItemModel(default_item);
-
             // Add list items
             for (var i = 0; i < 40; ++i)
             {
-                var item = default_item.clone();
-                item.getChildByName("TextButton").setTitleText("Button-" + i);
-                this._listView.pushBackCustomItem(item);
+                var button = new ccui.Button("ccs-res/cocosui/button.png", "ccs-res/cocosui/buttonHighlighted.png");
+                button.setTitleText("Button-" + i);
+                button.setContentSize(100, 70);
+                button.setScale9Enabled(true);
+                this._listView.pushBackCustomItem(button);
             }
 
             return true;

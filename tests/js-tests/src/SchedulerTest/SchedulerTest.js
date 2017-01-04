@@ -130,12 +130,12 @@ var SchedulerPauseResume = SchedulerTestLayer.extend({
 
     onTick1:function (dt) {
         //----start1----onTick1
-        cc.log("tick1");
+        cc.log("SchedulerPauseResume tick1");
         //----end1----
     },
     onTick2:function (dt) {
         //----start1----onTick2
-        cc.log("tick2");
+        cc.log("SchedulerPauseResume tick2");
         //----end1----
     },
     onPause:function (dt) {
@@ -169,22 +169,22 @@ var SchedulerUnscheduleAll = SchedulerTestLayer.extend({
 
     onTick1:function (dt) {
         //----start2----onTick1
-        cc.log("tick1");
+        cc.log("SchedulerUnscheduleAll tick1");
         //----end2----
     },
     onTick2:function (dt) {
         //----start2----onTick2
-        cc.log("tick2");
+        cc.log("SchedulerUnscheduleAll tick2");
         //----end2----
     },
     onTick3:function (dt) {
         //----start2----onTick3
-        cc.log("tick3");
+        cc.log("SchedulerUnscheduleAll tick3");
         //----end2----
     },
     onTick4:function (dt) {
         //----start2----onTick4
-        cc.log("tick4");
+        cc.log("SchedulerUnscheduleAll tick4");
         //----end2----
     },
     onUnscheduleAll:function (dt) {
@@ -218,22 +218,22 @@ var SchedulerUnscheduleAllHard = SchedulerTestLayer.extend({
 
     onTick1:function (dt) {
         //----start3----onTick1
-        cc.log("tick1");
+        cc.log("SchedulerUnscheduleAllHard tick1");
         //----end3----
     },
     onTick2:function (dt) {
         //----start3----onTick2
-        cc.log("tick2");
+        cc.log("SchedulerUnscheduleAllHard tick2");
         //----end3----
     },
     onTick3:function (dt) {
         //----start3----onTick3
-        cc.log("tick3");
+        cc.log("SchedulerUnscheduleAllHard tick3");
         //----end3----
     },
     onTick4:function (dt) {
         //----start3----onTick4
-        cc.log("tick4");
+        cc.log("SchedulerUnscheduleAllHard tick4");
         //----end3----
     },
     onUnscheduleAll:function (dt) {
@@ -265,22 +265,22 @@ var SchedulerSchedulesAndRemove = SchedulerTestLayer.extend({
 
     onTick1:function (dt) {
         //----start4----onTick1
-        cc.log("tick1");
+        cc.log("SchedulerSchedulesAndRemove tick1");
         //----end4----
     },
     onTick2:function (dt) {
         //----start4----onTick2
-        cc.log("tick2");
+        cc.log("SchedulerSchedulesAndRemove tick2");
         //----end4----
     },
     onTick3:function (dt) {
         //----start4----onTick3
-        cc.log("tick3");
+        cc.log("SchedulerSchedulesAndRemove tick3");
         //----end4----
     },
     onTick4:function (dt) {
         //----start4----onTick4
-        cc.log("tick4");
+        cc.log("SchedulerSchedulesAndRemove tick4");
         //----end4----
     },
     onScheduleAndUnschedule:function (dt) {
@@ -502,6 +502,11 @@ var ScheduleUsingSchedulerTest = SchedulerTestLayer.extend({
         scheduler.schedule(this.onSchedUpdate, this, interval, repeat, delay, paused);
         //----end9----
     },
+    onExit: function() {
+        // should unscheudle here if it is not unscheduled before exit
+        this.unscheduleAll();
+        this._super();
+    },
     title:function () {
         return "Schedule / Unschedule using Scheduler";
     },
@@ -521,12 +526,15 @@ var ScheduleUsingSchedulerTest = SchedulerTestLayer.extend({
 
         this._accum += dt;
         if( this._accum > 3 ) {
-            var scheduler = director.getScheduler();
-            scheduler.unscheduleUpdate(this);
-            scheduler.unscheduleAllCallbacksForTarget(this);
+            this.unscheduleAll();
         }
         cc.log("onSchedUpdate accum: " + this._accum);
         //----end9----
+    },
+    unscheduleAll: function() {
+        var scheduler = director.getScheduler();
+        scheduler.unscheduleUpdate(this);
+        scheduler.unscheduleAllCallbacksForTarget(this);
     }
 });
 

@@ -27,18 +27,25 @@
 #define QUEUEBUFFER_NUM (3)
 #define QUEUEBUFFER_TIME_STEP (0.1f)
 
+// log, CCLOG aren't threadsafe, since we uses sub threads for parsing pcm data, threadsafe log output
+// is needed. Define the following macros (ALOGV, ALOGD, ALOGI, ALOGW, ALOGE) for threadsafe log output.
+
+//FIXME:Move the definition of the following macros to a separated file.
+
+void audioLog(const char * format, ...);
+
 #define QUOTEME_(x) #x
 #define QUOTEME(x) QUOTEME_(x)
 
 #if defined(COCOS2D_DEBUG) && COCOS2D_DEBUG > 0
-#define ALOGV(fmt, ...) printf("V/" LOG_TAG " (" QUOTEME(__LINE__) "): " fmt "\n", ##__VA_ARGS__)
+#define ALOGV(fmt, ...) audioLog("V/" LOG_TAG " (" QUOTEME(__LINE__) "): " fmt "", ##__VA_ARGS__)
 #else
 #define ALOGV(fmt, ...) do {} while(false)
 #endif
-#define ALOGD(fmt, ...) printf("D/" LOG_TAG " (" QUOTEME(__LINE__) "): " fmt "\n", ##__VA_ARGS__)
-#define ALOGI(fmt, ...) printf("I/" LOG_TAG " (" QUOTEME(__LINE__) "): " fmt "\n", ##__VA_ARGS__)
-#define ALOGW(fmt, ...) printf("W/" LOG_TAG " (" QUOTEME(__LINE__) "): " fmt "\n", ##__VA_ARGS__)
-#define ALOGE(fmt, ...) printf("E/" LOG_TAG " (" QUOTEME(__LINE__) "): " fmt "\n", ##__VA_ARGS__)
+#define ALOGD(fmt, ...) audioLog("D/" LOG_TAG " (" QUOTEME(__LINE__) "): " fmt "", ##__VA_ARGS__)
+#define ALOGI(fmt, ...) audioLog("I/" LOG_TAG " (" QUOTEME(__LINE__) "): " fmt "", ##__VA_ARGS__)
+#define ALOGW(fmt, ...) audioLog("W/" LOG_TAG " (" QUOTEME(__LINE__) "): " fmt "", ##__VA_ARGS__)
+#define ALOGE(fmt, ...) audioLog("E/" LOG_TAG " (" QUOTEME(__LINE__) "): " fmt "", ##__VA_ARGS__)
 
 #if defined(COCOS2D_DEBUG) && COCOS2D_DEBUG > 0
 #define CHECK_AL_ERROR_DEBUG() \

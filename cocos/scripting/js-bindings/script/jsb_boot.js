@@ -737,35 +737,32 @@ cc.defineGetterSetter(cc.loader, "audioPath", function(){
 cc.formatStr = function(){
     var args = arguments;
     var l = args.length;
-    if(l < 1)
-        return "";
+    if (l < 1) return '';
+    var REGEXP_NUM_OR_STR = /(%d)|(%s)/;
 
+    var i = 1;
     var str = args[0];
-    var needToFormat = true;
-    if(typeof str === "object"){
-        needToFormat = false;
+    var hasSubstitution = typeof str === 'string' && REGEXP_NUM_OR_STR.test(str);
+    if (hasSubstitution) {
+        var REGEXP_STR = /%s/;
+        for (; i < l; ++i) {
+            var arg = args[i];
+            var regExpToTest = typeof arg === 'number' ? REGEXP_NUM_OR_STR : REGEXP_STR;
+            if (regExpToTest.test(str))
+                str = str.replace(regExpToTest, arg);
+            else
+                str += ' ' + arg;
+        }
     }
-    for(var i = 1; i < l; ++i){
-        var arg = args[i];
-        if(needToFormat){
-            while(true){
-                var result = null;
-                if(typeof arg === "number"){
-                    result = str.match(/(%d)|(%s)/);
-                    if(result){
-                        str = str.replace(/(%d)|(%s)/, arg);
-                        break;
-                    }
-                }
-                result = str.match(/%s/);
-                if(result)
-                    str = str.replace(/%s/, arg);
-                else
-                    str += "    " + arg;
-                break;
+    else {
+        if (l > 1) {
+            for (; i < l; ++i) {
+                str += ' ' + args[i];
             }
-        }else
-            str += "    " + arg;
+        }
+        else {
+            str = '' + str;
+        }
     }
     return str;
 };

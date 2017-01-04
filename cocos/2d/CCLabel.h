@@ -410,7 +410,7 @@ public:
     /**
     * Return the outline effect size value.
     */
-    int getOutlineSize() const { return _outlineSize; }
+    float getOutlineSize() const { return _outlineSize; }
 
     /**
     * Return current effect type.
@@ -738,8 +738,9 @@ protected:
     QuadCommand _quadCommand;
     CustomCommand _customCommand;
     Mat4  _shadowTransform;
-    GLuint _uniformEffectColor;
-    GLuint _uniformTextColor;
+    GLint _uniformEffectColor;
+    GLint _uniformEffectType; // 0: None, 1: Outline, 2: Shadow; Only used when outline is enabled.
+    GLint _uniformTextColor;
     bool _useDistanceField;
     bool _useA8Shader;
 

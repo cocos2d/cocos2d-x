@@ -424,7 +424,7 @@ public:
     /**
      * get the terrain's size
      */
-    Size getTerrainSize() const { return Size(_imageWidth, _imageHeight); }
+    Size getTerrainSize() const { return Size(static_cast<float>(_imageWidth), static_cast<float>(_imageHeight)); }
     
     /**
      * get the terrain's height data

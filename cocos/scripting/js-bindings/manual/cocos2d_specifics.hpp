@@ -79,8 +79,10 @@ extern schedFunc_proxy_t *_schedFunc_target_ht;
 extern schedTarget_proxy_t *_schedObj_target_ht;
 extern callfuncTarget_proxy_t *_callfuncTarget_native_ht;
 
-extern JSClass  *jsb_FinalizeHook_class;
-extern JSObject *jsb_FinalizeHook_prototype;
+extern JSClass  *jsb_RefFinalizeHook_class;
+extern JSObject *jsb_RefFinalizeHook_prototype;
+extern JSClass  *jsb_ObjFinalizeHook_class;
+extern JSObject *jsb_ObjFinalizeHook_prototype;
 
 /**
  * You don't need to manage the returned pointer. They live for the whole life of
@@ -142,7 +144,7 @@ JSObject* js_get_or_create_jsobject(JSContext *cx, typename std::enable_if<std::
  * In the finalize function, it mainly remove native/js proxys, release/delete the native object.
  * IMPORTANT: For Ref objects, please remember to retain the native object to correctly manage its reference count.
  */
-void js_add_FinalizeHook(JSContext *cx, JS::HandleObject target);
+void js_add_FinalizeHook(JSContext *cx, JS::HandleObject target, bool isRef=true);
 
 void js_add_object_reference(JS::HandleValue owner, JS::HandleValue target);
 void js_remove_object_reference(JS::HandleValue owner, JS::HandleValue target);
@@ -170,6 +172,7 @@ protected:
     JS::Heap<JS::Value> _jsCallback;
     JS::Heap<JS::Value> _jsThisObj;
     JS::Heap<JS::Value> _extraData;
+    bool _rooted;
 };
 
 

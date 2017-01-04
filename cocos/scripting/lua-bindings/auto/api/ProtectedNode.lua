@@ -107,6 +107,13 @@
 -- @return ProtectedNode#ProtectedNode self (return value: cc.ProtectedNode)
         
 --------------------------------
+-- 
+-- @function [parent=#ProtectedNode] setGlobalZOrder 
+-- @param self
+-- @param #float globalZOrder
+-- @return ProtectedNode#ProtectedNode self (return value: cc.ProtectedNode)
+        
+--------------------------------
 -- js NA
 -- @function [parent=#ProtectedNode] visit 
 -- @param self

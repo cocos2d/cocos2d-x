@@ -100,9 +100,8 @@ void ProtectedNode::addProtectedChild(Node *child, int zOrder, int tag)
     this->insertProtectedChild(child, zOrder);
     
     child->setTag(tag);
-    
+    child->setGlobalZOrder(_globalZOrder);
     child->setParent(this);
-
     child->updateOrderOfArrival();
     
     if( _running )
@@ -465,6 +464,13 @@ void ProtectedNode::setCameraMask(unsigned short mask, bool applyChildren)
         }
     }
     
+}
+
+void ProtectedNode::setGlobalZOrder(float globalZOrder)
+{
+    Node::setGlobalZOrder(globalZOrder);
+    for (auto &child : _protectedChildren)
+        child->setGlobalZOrder(globalZOrder);
 }
 
 NS_CC_END
