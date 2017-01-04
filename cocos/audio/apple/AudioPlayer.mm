@@ -278,12 +278,12 @@ void AudioPlayer::rotateBufferThread(int offsetFrame)
                         }
                     }
 
-                    framesRead = decoder.read(framesToRead, tmpBuffer);
+                    framesRead = decoder.readFixedFrames(framesToRead, tmpBuffer);
 
                     if (framesRead == 0) {
                         if (_loop) {
                             decoder.seek(0);
-                            framesRead = decoder.read(framesToRead, tmpBuffer);
+                            framesRead = decoder.readFixedFrames(framesToRead, tmpBuffer);
                         } else {
                             needToExitThread = true;
                             break;

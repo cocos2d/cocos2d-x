@@ -84,7 +84,6 @@ var ChipmunkBaseLayer = BaseTestLayer.extend( {
         BaseTestLayer.prototype.onEnter.call(this);
         //cc.base(this, 'onEnter');
 
-        cc.sys.dumpRoot();
         cc.sys.garbageCollect();
     },
 
@@ -802,10 +801,9 @@ var ChipmunkReleaseTest = ChipmunkBaseLayer.extend({
         // cc.base(this, 'onEnter');
 
         cc.log("OnEnter");
-        cc.sys.dumpRoot();
         cc.sys.garbageCollect();
 
-        this.space.addCollisionHandler( 10,11,
+        this.space.addCollisionHandler( 10, 11,
             this.collisionBegin.bind(this),
             this.collisionPre.bind(this),
             this.collisionPost.bind(this),
@@ -815,16 +813,11 @@ var ChipmunkReleaseTest = ChipmunkBaseLayer.extend({
     },
 
     onExit : function() {
-
         cc.log("OnExit");
 
         // not calling this on purpose
         // this.space.removeCollisionHandler( 10, 11 );
-
         this.space = null;
-
-        cc.sys.dumpRoot();
-        cc.sys.garbageCollect();
 
         // cc.base(this, 'onExit');
         ChipmunkBaseLayer.prototype.onExit.call(this);
@@ -1853,11 +1846,13 @@ var LogoSmash = (function(){
     };
 
     return ChipmunkBaseLayer.extend({
-        ctor:function(){
+        ctor: function () {
             this._super();
             this._title =  "LogoSmash";
             this._subtitle = "Chipmunk Demo";
-
+        },
+        onEnter: function() {
+            this._super();
             var space = this.space;
             space.setIterations(1);
 
