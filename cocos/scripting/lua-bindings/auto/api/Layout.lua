@@ -339,6 +339,13 @@
 -- @return Layout#Layout self (return value: ccui.Layout)
         
 --------------------------------
+-- 
+-- @function [parent=#Layout] setGlobalZOrder 
+-- @param self
+-- @param #float globalZOrder
+-- @return Layout#Layout self (return value: ccui.Layout)
+        
+--------------------------------
 -- Default constructor<br>
 -- js ctor<br>
 -- lua new
