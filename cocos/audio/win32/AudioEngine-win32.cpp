@@ -83,12 +83,11 @@ bool AudioEngineImpl::init()
         s_ALDevice = alcOpenDevice(NULL);
         
         if (s_ALDevice) {
-            auto alError = alGetError();
             s_ALContext = alcCreateContext(s_ALDevice, NULL);
             alcMakeContextCurrent(s_ALContext);
             
             alGenSources(MAX_AUDIOINSTANCES, _alSources);
-            alError = alGetError();
+            auto alError = alGetError();
             if(alError != AL_NO_ERROR){
                 ALOGE("%s:generating sources fail! error = %x\n", __FUNCTION__, alError);
                 break;

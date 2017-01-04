@@ -224,9 +224,8 @@ void AudioCache::readDataTask()
     if (_pcmDataSize <= PCMDATA_CACHEMAXSIZE)
     {
         _pcmData = malloc(_pcmDataSize);
-        auto alError = alGetError();
         alGenBuffers(1, &_alBufferId);
-        alError = alGetError();
+        auto alError = alGetError();
         if (alError != AL_NO_ERROR) {
             log("%s: attaching audio to buffer fail: %x\n", __FUNCTION__, alError);
             goto ExitThread;

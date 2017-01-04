@@ -401,7 +401,6 @@ bool AudioDecoder::decodeToPcm()
     SLMetadataInfo *keyInfo, *value;
     for (i = 0; i < itemCount; i++)
     {
-        keyInfo = nullptr;
         keySize = 0;
         value = nullptr;
         valueSize = 0;
