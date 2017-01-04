@@ -631,6 +631,7 @@ protected:
     virtual void setTextureCoords(const Rect& rect);
     virtual void setTextureCoords(const Rect& rect, V3F_C4B_T2F_Quad* outQuad);
     virtual void setVertexCoords(const Rect& rect, V3F_C4B_T2F_Quad* outQuad);
+    void populateTriangle(int quadIndex, const V3F_C4B_T2F_Quad& quad);
     virtual void updateBlendFunc();
     virtual void setReorderChildDirtyRecursively();
     virtual void setDirtyRecursively(bool value);
@@ -680,7 +681,8 @@ protected:
 
     // vertex coords, texture coords and color info
     V3F_C4B_T2F_Quad _quad;
-    V3F_C4B_T2F_Quad* _quads;
+    V3F_C4B_T2F* _trianglesVertex;
+    unsigned short* _trianglesIndex;
     PolygonInfo  _polyInfo;
 
     // opacity and RGB protocol
