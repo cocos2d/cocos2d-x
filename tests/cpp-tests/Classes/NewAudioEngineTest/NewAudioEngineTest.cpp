@@ -41,6 +41,7 @@ AudioEngineTests::AudioEngineTests()
     ADD_TEST_CASE(LargeAudioFileTest);
     ADD_TEST_CASE(AudioPerformanceTest);
     ADD_TEST_CASE(AudioSmallFileTest);
+    ADD_TEST_CASE(AudioSmallFile2Test);
     ADD_TEST_CASE(AudioPauseResumeAfterPlay);
     ADD_TEST_CASE(AudioPreloadSameFileMultipleTimes);
     ADD_TEST_CASE(AudioPlayFileInWritablePath);
@@ -826,6 +827,26 @@ std::string AudioSmallFileTest::title() const
 std::string AudioSmallFileTest::subtitle() const
 {
     return "Should not crash";
+}
+
+/////////////////////////////////////////////////////////////////////////
+void AudioSmallFile2Test::onEnter()
+{
+    AudioEngineTestDemo::onEnter();
+
+    schedule([](float dt){
+        AudioEngine::play2d("audio/SmallFile2.mp3");
+    }, 0.08f, "smallfile2");
+}
+
+std::string AudioSmallFile2Test::title() const
+{
+    return "Play small mp3 file 2";
+}
+
+std::string AudioSmallFile2Test::subtitle() const
+{
+    return "Should not crash and should not have rasp!";
 }
 
 /////////////////////////////////////////////////////////////////////////

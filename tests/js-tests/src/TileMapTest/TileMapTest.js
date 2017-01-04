@@ -1109,17 +1109,22 @@ var TMXIsoVertexZ = TMXFixBugLayer.extend({
     },
     onEnter:function () {
         this._super();
+        director.setProjection(cc.Director.PROJECTION_2D);
         director.setDepthTest(true);
     },
     onExit:function () {
+        director.setProjection(cc.Director.PROJECTION_DEFAULT);
         director.setDepthTest(false);
         this._super();
     },
     repositionSprite:function (dt) {
-        // tile height is 64x32
-        // map size: 30x30
-        var layer = this.tamara.parent;
-        this.tamara.vertexZ = layer.vertexZ + cc.renderer.assignedZStep * (1 - this.tamara.y / layer.height);
+        if (cc.sys.isNative) {
+            this.tamara.vertexZ = -(this.tamara.y + 32) / 16;
+        }
+        else {
+            var layer = this.tamara.parent;
+            this.tamara.vertexZ = layer.vertexZ + cc.renderer.assignedZStep * Math.floor(30 - this.tamara.y / 32) / 30;
+        }
     },
     //
     // Automation
@@ -1180,17 +1185,24 @@ var TMXOrthoVertexZ = TMXFixBugLayer.extend({
     },
     onEnter:function () {
         this._super();
+        director.setProjection(cc.Director.PROJECTION_2D);
         director.setDepthTest(true);
     },
     onExit:function () {
+        director.setProjection(cc.Director.PROJECTION_DEFAULT);
         director.setDepthTest(false);
         this._super();
     },
     repositionSprite:function (dt) {
-        // tile height is 101x81
-        // map size: 12x12
-        var layer = this.tamara.parent;
-        this.tamara.vertexZ = layer.vertexZ + cc.renderer.assignedZStep * Math.floor(12 - this.tamara.y / 81) / 12;
+        if (cc.sys.isNative) {
+            this.tamara.vertexZ = -(this.tamara.y + 81) / 81;
+        }
+        else {
+            // tile height is 101x81
+            // map size: 12x12
+            var layer = this.tamara.parent;
+            this.tamara.vertexZ = layer.vertexZ + cc.renderer.assignedZStep * Math.floor(12 - this.tamara.y / 81) / 12;
+        }
     },
     //
     // Automation

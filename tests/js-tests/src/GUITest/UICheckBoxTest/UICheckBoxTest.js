@@ -110,8 +110,9 @@ var UICheckBoxDefaultBehaviorTest = UIMainLayer.extend({
 
             var checkBoxDisabled2 = new ccui.CheckBox("ccs-res/cocosui/check_box_normal.png", "ccs-res/cocosui/check_box_active.png");
             checkBoxDisabled2.setPosition(cc.p(widgetSize.width / 2 + 70, widgetSize.height / 2));
+            checkBoxDisabled2.setEnabled(false);
+            checkBoxDisabled2.setBright(false);
             checkBoxDisabled2.setSelected(true);
-            checkBoxDisabled2.setBright(true);
             this._mainNode.addChild(checkBoxDisabled2);
             return true;
         }
