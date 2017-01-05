@@ -614,10 +614,11 @@ void AssetsManagerEx::startUpdate()
     // Check difference
     else
     {
-        // Temporary manifest not exists or out of date,
-        // it will be used to register the download states of each asset,
-        // in this case, it equals remote manifest.
+        // Remove all temp files
+        _tempManifest->cleanupDownloadingAssets();
         _tempManifest->release();
+        // Temporary manifest will be used to register the download states of each asset,
+        // in this case, it equals remote manifest.
         _tempManifest = _remoteManifest;
         
         std::unordered_map<std::string, Manifest::AssetDiff> diff_map = _localManifest->genDiff(_remoteManifest);

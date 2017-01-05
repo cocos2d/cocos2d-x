@@ -228,6 +228,20 @@ void Manifest::genResumeAssetsList(DownloadUnits *units) const
     }
 }
 
+void Manifest::cleanupDownloadingAssets() const
+{
+    for (auto it = _assets.begin(); it != _assets.end(); ++it)
+    {
+        Asset asset = it->second;
+        
+        if (asset.downloadState == DownloadState::DOWNLOADING)
+        {
+            std::string storagePath = _manifestRoot + asset.path;
+            _fileUtils->removeFile(storagePath);
+        }
+    }
+}
+
 std::vector<std::string> Manifest::getSearchPaths() const
 {
     std::vector<std::string> searchPaths;

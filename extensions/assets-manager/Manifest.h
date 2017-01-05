@@ -147,6 +147,10 @@ protected:
      */
     void genResumeAssetsList(DownloadUnits *units) const;
     
+    /** @brief Cleanup assets that is in downloading state for resuming
+     */
+    void cleanupDownloadingAssets() const;
+    
     /** @brief Prepend all search paths to the FileUtils.
      */
     void prependSearchPaths();
