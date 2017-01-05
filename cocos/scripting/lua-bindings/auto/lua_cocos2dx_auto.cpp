@@ -54212,7 +54212,7 @@ int lua_cocos2dx_Label_getOutlineSize(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Label_getOutlineSize'", nullptr);
             return 0;
         }
-        int ret = cobj->getOutlineSize();
+        double ret = cobj->getOutlineSize();
         tolua_pushnumber(tolua_S,(lua_Number)ret);
         return 1;
     }
