@@ -67,7 +67,10 @@ AssetsManagerEx::AssetsManagerEx(const std::string& manifestUrl, const std::stri
 , _percentByFile(0)
 , _totalToDownload(0)
 , _totalWaitToDownload(0)
+, _maxConcurrentTask(32)
+, _currConcurrentTask(0)
 , _versionCompareHandle(nullptr)
+, _verifyCallback(nullptr)
 , _inited(false)
 {
     // Init variables
@@ -858,16 +861,18 @@ void AssetsManagerEx::updateAssets(const DownloadUnits& assets)
     
     if (_updateState != State::UPDATING && _localManifest->isLoaded() && _remoteManifest->isLoaded())
     {
-        int size = (int)(assets.size());
-        if (size > 0)
+        _updateState = State::UPDATING;
+        _downloadUnits.clear();
+        _downloadedSize.clear();
+        _percent = _percentByFile = _sizeCollected = _totalSize = 0;
+        _totalWaitToDownload = _totalToDownload = (int)assets.size();
+        _totalEnabled = false;
+        if (_totalToDownload > 0)
         {
-            _updateState = State::UPDATING;
-            _downloadUnits.clear();
             _downloadUnits = assets;
-            _totalWaitToDownload = _totalToDownload = (int)_downloadUnits.size();
             this->batchDownload();
         }
-        else if (size == 0 && _totalWaitToDownload == 0)
+        else if (_totalToDownload == 0)
         {
             updateSucceed();
         }
@@ -885,6 +890,58 @@ void AssetsManagerEx::downloadFailedAssets()
     updateAssets(_failedUnits);
 }
 
+void AssetsManagerEx::fileError(const std::string& identifier, const std::string& errorStr, int errorCode, int errorCodeInternal)
+{
+    auto unitIt = _downloadUnits.find(identifier);
+    // Found unit and add it to failed units
+    if (unitIt != _downloadUnits.end())
+    {
+        _totalWaitToDownload--;
+        
+        DownloadUnit unit = unitIt->second;
+        _failedUnits.emplace(unit.customId, unit);
+    }
+    dispatchUpdateEvent(EventAssetsManagerEx::EventCode::ERROR_UPDATING, identifier, errorStr, errorCode, errorCodeInternal);
+    _tempManifest->setAssetDownloadState(identifier, Manifest::DownloadState::UNSTARTED);
+    
+    _currConcurrentTask = MAX(0, _currConcurrentTask-1);
+    queueDowload();
+}
+
+void AssetsManagerEx::fileSuccess(const std::string &customId, const std::string &storagePath, bool compressed)
+{
+    // Set download state to SUCCESSED
+    _tempManifest->setAssetDownloadState(customId, Manifest::DownloadState::SUCCESSED);
+    
+    // Add file to need decompress list
+    if (compressed) {
+        _compressedFiles.push_back(storagePath);
+    }
+    
+    auto unitIt = _failedUnits.find(customId);
+    // Found unit and delete it
+    if (unitIt != _failedUnits.end())
+    {
+        // Remove from failed units list
+        _failedUnits.erase(unitIt);
+    }
+    
+    unitIt = _downloadUnits.find(customId);
+    if (unitIt != _downloadUnits.end())
+    {
+        // Reduce count only when unit found in _downloadUnits
+        _totalWaitToDownload--;
+        
+        _percentByFile = 100 * (float)(_totalToDownload - _totalWaitToDownload) / _totalToDownload;
+        // Notify progression event
+        dispatchUpdateEvent(EventAssetsManagerEx::EventCode::UPDATE_PROGRESSION, "");
+    }
+    // Notify asset updated event
+    dispatchUpdateEvent(EventAssetsManagerEx::EventCode::ASSET_UPDATED, customId);
+    
+    _currConcurrentTask = MAX(0, _currConcurrentTask-1);
+    queueDowload();
+}
 
 void AssetsManagerEx::onError(const network::DownloadTask& task,
                               int errorCode,
@@ -904,21 +961,7 @@ void AssetsManagerEx::onError(const network::DownloadTask& task,
     }
     else
     {
-        auto unitIt = _downloadUnits.find(task.identifier);
-        // Found unit and add it to failed units
-        if (unitIt != _downloadUnits.end())
-        {
-            _totalWaitToDownload--;
-            
-            DownloadUnit unit = unitIt->second;
-            _failedUnits.emplace(unit.customId, unit);
-        }
-        dispatchUpdateEvent(EventAssetsManagerEx::EventCode::ERROR_UPDATING, task.identifier, errorStr, errorCode, errorCodeInternal);
-
-        if (_totalWaitToDownload <= 0)
-        {
-            this->onDownloadUnitsFinished();
-        }
+        fileError(task.identifier, errorStr, errorCode, errorCodeInternal);
     }
 }
 
@@ -992,43 +1035,26 @@ void AssetsManagerEx::onSuccess(const std::string &/*srcUrl*/, const std::string
     }
     else
     {
+        bool ok = true;
         auto &assets = _remoteManifest->getAssets();
         auto assetIt = assets.find(customId);
         if (assetIt != assets.end())
         {
-            // Set download state to SUCCESSED
-            _tempManifest->setAssetDownloadState(customId, Manifest::DownloadState::SUCCESSED);
-            
-            // Add file to need decompress list
-            if (assetIt->second.compressed) {
-                _compressedFiles.push_back(storagePath);
+            Manifest::Asset asset = assetIt->second;
+            if (_verifyCallback != nullptr)
+            {
+                ok = _verifyCallback(storagePath, asset);
             }
         }
         
-        auto unitIt = _downloadUnits.find(customId);
-        if (unitIt != _downloadUnits.end())
+        if (ok)
         {
-            // Reduce count only when unit found in _downloadUnits
-            _totalWaitToDownload--;
-            
-            _percentByFile = 100 * (float)(_totalToDownload - _totalWaitToDownload) / _totalToDownload;
-            // Notify progression event
-            dispatchUpdateEvent(EventAssetsManagerEx::EventCode::UPDATE_PROGRESSION, "");
+            bool compressed = assetIt != assets.end() ? assetIt->second.compressed : false;
+            fileSuccess(customId, storagePath, compressed);
         }
-        // Notify asset updated event
-        dispatchUpdateEvent(EventAssetsManagerEx::EventCode::ASSET_UPDATED, customId);
-        
-        unitIt = _failedUnits.find(customId);
-        // Found unit and delete it
-        if (unitIt != _failedUnits.end())
+        else
         {
-            // Remove from failed units list
-            _failedUnits.erase(unitIt);
-        }
-        
-        if (_totalWaitToDownload <= 0)
-        {
-            this->onDownloadUnitsFinished();
+            fileError(customId, "Asset file verification failed after downloaded");
         }
     }
 }
@@ -1041,9 +1067,42 @@ void AssetsManagerEx::destroyDownloadedVersion()
 
 void AssetsManagerEx::batchDownload()
 {
+    _queue.clear();
     for(auto iter : _downloadUnits)
     {
         DownloadUnit& unit = iter.second;
+        if (unit.size > 0)
+        {
+            _totalSize += unit.size;
+            _sizeCollected++;
+        }
+        
+        _queue.push_back(iter.first);
+    }
+    // All collected, enable total size
+    if (_sizeCollected == _totalToDownload)
+    {
+        _totalEnabled = true;
+    }
+    
+    queueDowload();
+}
+
+void AssetsManagerEx::queueDowload()
+{
+    if (_totalWaitToDownload == 0)
+    {
+        this->onDownloadUnitsFinished();
+        return;
+    }
+    
+    while (_currConcurrentTask < _maxConcurrentTask && _queue.size() > 0)
+    {
+        std::string key = _queue.back();
+        _queue.pop_back();
+        
+        _currConcurrentTask++;
+        DownloadUnit& unit = _downloadUnits[key];
         _downloader->createDownloadFileTask(unit.srcUrl, unit.storagePath, unit.customId);
     }
 }

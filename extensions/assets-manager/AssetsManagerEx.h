@@ -108,10 +108,23 @@ public:
      */
     const Manifest* getRemoteManifest() const;
     
+    /** @brief Function for retrieving the max concurrent task count
+     */
+    const int getMaxConcurrentTask() const {return _maxConcurrentTask;};
+    
+    /** @brief Function for setting the max concurrent task count
+     */
+    void setMaxConcurrentTask(const int max) {_maxConcurrentTask = max;};
+    
     /** @brief Set the handle function for comparing manifests versions
      * @param handle    The compare function
      */
     void setVersionCompareHandle(const std::function<bool(const std::string& versionA, const std::string& versionB)>& handle) {_versionCompareHandle = handle;};
+    
+    /** @brief Set the verification function for checking whether downloaded asset is correct, e.g. using md5 verification
+     * @param callback  The verify callback function
+     */
+    void setVerifyCallback(const std::function<bool(const std::string& path, Manifest::Asset asset)>& callback) {_verifyCallback = callback;};
     
 CC_CONSTRUCTOR_ACCESS:
     
@@ -157,6 +170,14 @@ protected:
     /** @brief Function for destroying the downloaded version file and manifest file
      */
     void destroyDownloadedVersion();
+    
+    /** @brief Download items in queue with max concurrency setting
+     */
+    void queueDowload();
+    
+    void fileError(const std::string& identifier, const std::string& errorStr, int errorCode = 0, int errorCodeInternal = 0);
+    
+    void fileSuccess(const std::string &customId, const std::string &storagePath, bool compressed);
     
     /** @brief  Call back function for error handling,
      the error will then be reported to user's listener registed in addUpdateEventListener
@@ -255,6 +276,15 @@ private:
     //! All failed units
     DownloadUnits _failedUnits;
     
+    //! Download queue
+    std::vector<std::string> _queue;
+    
+    //! Max concurrent task count for downloading
+    int _maxConcurrentTask;
+    
+    //! Current concurrent task count
+    int _currConcurrentTask;
+    
     //! All files to be decompressed
     std::vector<std::string> _compressedFiles;
     
@@ -283,6 +313,9 @@ private:
     
     //! Handle function to compare versions between different manifests
     std::function<bool(const std::string& versionA, const std::string& versionB)> _versionCompareHandle;
+    
+    //! Callback function to verify the downloaded assets
+    std::function<bool(const std::string& path, Manifest::Asset asset)> _verifyCallback;
     
     //! Marker for whether the assets manager is inited
     bool _inited;
