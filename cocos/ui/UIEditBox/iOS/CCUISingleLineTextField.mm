@@ -42,10 +42,18 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        _placeholderFont = self.font;
-        _placeholderTextColor = [UIColor lightGrayColor];
+        _placeholderFont = [self.font retain];
+        _placeholderTextColor = [[UIColor lightGrayColor] retain];
     }
     return self;
+}
+
+- (void)dealloc
+{
+    [_placeholderFont release];
+    [_placeholderTextColor release];
+
+    [super dealloc];
 }
 
 #pragma mark - Properties
