@@ -43,6 +43,7 @@ struct DownloadUnit
     std::string srcUrl;
     std::string storagePath;
     std::string customId;
+    float       size;
 };
 
 typedef std::unordered_map<std::string, DownloadUnit> DownloadUnits;
@@ -71,6 +72,7 @@ public:
         std::string md5;
         std::string path;
         bool compressed;
+        float size;
         DownloadState downloadState;
     };
     

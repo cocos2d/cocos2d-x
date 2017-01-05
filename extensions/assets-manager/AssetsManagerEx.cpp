@@ -138,7 +138,9 @@ void AssetsManagerEx::initManifests(const std::string& manifestUrl)
         {
             _tempManifest->parse(_tempManifestPath);
             if (!_tempManifest->isLoaded() && _fileUtils->isFileExist(_tempManifestPath))
+            {
                 _fileUtils->removeFile(_tempManifestPath);
+            }
         }
         else
         {
@@ -645,10 +647,11 @@ void AssetsManagerEx::startUpdate()
                     unit.customId = it->first;
                     unit.srcUrl = packageUrl + path;
                     unit.storagePath = _storagePath + path;
+                    unit.size = diff.asset.size;
                     _downloadUnits.emplace(unit.customId, unit);
                 }
             }
-            // Set other assets' downloadState to SUCCESSED
+            // Set other assets' downloadState to SUCCEED
             auto &assets = _remoteManifest->getAssets();
             for (auto it = assets.cbegin(); it != assets.cend(); ++it)
             {
@@ -680,7 +683,6 @@ void AssetsManagerEx::updateSucceed()
     _remoteManifest = nullptr;
     // 3. make local manifest take effect
     prepareLocalManifest();
-
 
     _updateState = State::UNZIPPING;
     // 4. decompress all compressed files
@@ -947,12 +949,16 @@ void AssetsManagerEx::onProgress(double total, double downloaded, const std::str
             _tempManifest->setAssetDownloadState(customId, Manifest::DownloadState::DOWNLOADING);
             // Register the download size information
             _downloadedSize.emplace(customId, downloaded);
-            _totalSize += total;
-            _sizeCollected++;
-            // All collected, enable total size
-            if (_sizeCollected == _totalToDownload)
+            // Check download unit size existance, if not exist collect size in total size
+            if (_downloadUnits[customId].size == 0)
             {
-                _totalEnabled = true;
+                _totalSize += total;
+                _sizeCollected++;
+                // All collected, enable total size
+                if (_sizeCollected == _totalToDownload)
+                {
+                    _totalEnabled = true;
+                }
             }
         }
         

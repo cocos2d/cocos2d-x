@@ -42,6 +42,7 @@
 #define KEY_MD5                 "md5"
 #define KEY_GROUP               "group"
 #define KEY_COMPRESSED          "compressed"
+#define KEY_SIZE                "size"
 #define KEY_COMPRESSED_FILE     "compressedFile"
 #define KEY_DOWNLOAD_STATE      "downloadState"
 
@@ -161,11 +162,15 @@ std::unordered_map<std::string, Manifest::AssetDiff> Manifest::genDiff(const Man
     std::unordered_map<std::string, AssetDiff> diff_map;
     const std::unordered_map<std::string, Asset> &bAssets = b->getAssets();
     
+    std::string key;
+    Asset valueA;
+    Asset valueB;
+    
     std::unordered_map<std::string, Asset>::const_iterator valueIt, it;
     for (it = _assets.begin(); it != _assets.end(); ++it)
     {
-        const auto &key = it->first;
-        const auto &valueA = it->second;
+        key = it->first;
+        valueA = it->second;
         
         // Deleted
         valueIt = bAssets.find(key);
@@ -178,7 +183,7 @@ std::unordered_map<std::string, Manifest::AssetDiff> Manifest::genDiff(const Man
         }
         
         // Modified
-        auto &valueB = valueIt->second;
+        valueB = valueIt->second;
         if (valueA.md5 != valueB.md5) {
             AssetDiff diff;
             diff.asset = valueB;
@@ -189,8 +194,8 @@ std::unordered_map<std::string, Manifest::AssetDiff> Manifest::genDiff(const Man
     
     for (it = bAssets.begin(); it != bAssets.end(); ++it)
     {
-        const auto &key = it->first;
-        const auto &valueB = it->second;
+        key = it->first;
+        valueB = it->second;
         
         // Added
         valueIt = _assets.find(key);
@@ -217,6 +222,7 @@ void Manifest::genResumeAssetsList(DownloadUnits *units) const
             unit.customId = it->first;
             unit.srcUrl = _packageUrl + asset.path;
             unit.storagePath = _manifestRoot + asset.path;
+            unit.size = asset.size;
             units->emplace(unit.customId, unit);
         }
     }
@@ -321,18 +327,16 @@ void Manifest::setAssetDownloadState(const std::string &key, const Manifest::Dow
                 rapidjson::Value &assets = _json[KEY_ASSETS];
                 if (assets.IsObject())
                 {
-                    for (rapidjson::Value::MemberIterator itr = assets.MemberBegin(); itr != assets.MemberEnd(); ++itr)
+                    if (assets.HasMember(key.c_str()))
                     {
-                        if (key.compare(itr->name.GetString()) == 0) {
-                            rapidjson::Value &entry = itr->value;
-                            if (entry.HasMember(KEY_DOWNLOAD_STATE) && entry[KEY_DOWNLOAD_STATE].IsInt())
-                            {
-                                entry[KEY_DOWNLOAD_STATE].SetInt((int) state);
-                            }
-                            else
-                            {
-                                entry.AddMember<int>(KEY_DOWNLOAD_STATE, (int)state, _json.GetAllocator());
-                            }
+                        rapidjson::Value &entry = assets[key.c_str()];
+                        if (entry.HasMember(KEY_DOWNLOAD_STATE) && entry[KEY_DOWNLOAD_STATE].IsInt())
+                        {
+                            entry[KEY_DOWNLOAD_STATE].SetInt((int) state);
+                        }
+                        else
+                        {
+                            entry.AddMember<int>(KEY_DOWNLOAD_STATE, (int)state, _json.GetAllocator());
                         }
                     }
                 }
@@ -385,6 +389,12 @@ Manifest::Asset Manifest::parseAsset(const std::string &path, const rapidjson::V
         asset.compressed = json[KEY_COMPRESSED].GetBool();
     }
     else asset.compressed = false;
+    
+    if ( json.HasMember(KEY_SIZE) && json[KEY_SIZE].IsFloat() )
+    {
+        asset.size = json[KEY_COMPRESSED].GetFloat();
+    }
+    else asset.size = 0;
     
     if ( json.HasMember(KEY_DOWNLOAD_STATE) && json[KEY_DOWNLOAD_STATE].IsInt() )
     {
