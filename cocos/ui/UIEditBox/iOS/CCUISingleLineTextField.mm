@@ -42,10 +42,8 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        _placeholderDefinition = [[NSMutableDictionary alloc]
-                                  initWithObjectsAndKeys:
-                                  self.font, NSFontAttributeName,
-                                  [UIColor lightGrayColor], NSForegroundColorAttributeName, nil];
+        _placeholderFont = self.font;
+        _placeholderTextColor = [UIColor lightGrayColor];
     }
     return self;
 }
@@ -54,34 +52,29 @@
 
 - (UIColor *)placeholderTextColor
 {
-    return [_placeholderDefinition objectForKey:NSForegroundColorAttributeName];
+    return _placeholderTextColor;
 }
 
 - (UIFont *)placeholderFont
 {
-    return [_placeholderDefinition objectForKey:NSFontAttributeName];
-}
-
--(void)setPlaceholderFont:(UIFont *)placeholderFont
-{
-    [_placeholderDefinition setObject:placeholderFont forKey:NSFontAttributeName];
-}
-
--(void)setPlaceholderTextColor:(UIColor *)placeholderTextColor
-{
-    [_placeholderDefinition setObject:placeholderTextColor forKey:NSForegroundColorAttributeName];
+    return _placeholderFont;
 }
 
 #pragma mark - Public methods
 
 - (void)drawPlaceholderInRect:(CGRect)rect {
-        // center vertically
-        CGSize textSize = [self.placeholder sizeWithAttributes:_placeholderDefinition];
-        CGFloat hdif = rect.size.height - textSize.height;
-        hdif = MAX(0, hdif);
-        rect.origin.y += ceil(hdif/2.0);
-        
-        [[self placeholder] drawInRect:rect withAttributes:_placeholderDefinition];
+	NSDictionary *attributes = @{
+		NSForegroundColorAttributeName:_placeholderTextColor,
+		NSFontAttributeName:_placeholderFont
+	};
+    
+    // center vertically
+    CGSize textSize = [self.placeholder sizeWithAttributes:attributes];
+    CGFloat hdif = rect.size.height - textSize.height;
+    hdif = MAX(0, hdif);
+    rect.origin.y += ceil(hdif/2.0);
+
+    [[self placeholder] drawInRect:rect withAttributes:attributes];
 }
 
 - (CGRect)textRectForBounds:(CGRect)bounds

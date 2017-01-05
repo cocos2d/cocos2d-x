@@ -29,11 +29,9 @@
 
 #pragma mark - UISingleLineTextField implementation
 
-@interface CCUISingleLineTextField : UITextField {
-    NSMutableDictionary *_placeholderDefinition;
-}
+@interface CCUISingleLineTextField : UITextField
 
-@property (nonatomic, retain, setter=setPlaceholderTextColor:) UIColor *placeholderTextColor;
-@property (nonatomic, retain, setter=setPlaceholderFont:) UIFont *placeholderFont;
+@property (nonatomic, retain) UIColor *placeholderTextColor;
+@property (nonatomic, retain) UIFont *placeholderFont;
 
 @end
