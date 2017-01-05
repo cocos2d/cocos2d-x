@@ -91,6 +91,7 @@
     // Migrate properties
     textInput.ccui_textColor = _textInput.ccui_textColor ?: [UIColor whiteColor];
     textInput.ccui_text = _textInput.ccui_text ?: @"";
+    textInput.ccui_placeholder = _textInput.ccui_placeholder ?: @"";
     textInput.ccui_placeholderFont = _textInput.ccui_placeholderFont ?: nil;
     textInput.ccui_placeholderTextColor = _textInput.ccui_placeholderTextColor ?: nil;
     textInput.ccui_font = _textInput.ccui_font ?: [UIFont systemFontOfSize:self.frameRect.size.height*2/3];
