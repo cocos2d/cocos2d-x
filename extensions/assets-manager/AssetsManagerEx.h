@@ -100,13 +100,18 @@ public:
      */
     const std::string& getStoragePath() const;
     
-    /** @brief Function for retrieve the local manifest object
+    /** @brief Function for retrieving the local manifest object
      */
     const Manifest* getLocalManifest() const;
     
-    /** @brief Function for retrieve the remote manifest object
+    /** @brief Function for retrieving the remote manifest object
      */
     const Manifest* getRemoteManifest() const;
+    
+    /** @brief Set the handle function for comparing manifests versions
+     * @param handle    The compare function
+     */
+    void setVersionCompareHandle(const std::function<bool(const std::string& versionA, const std::string& versionB)>& handle) {_versionCompareHandle = handle;};
     
 CC_CONSTRUCTOR_ACCESS:
     
@@ -275,6 +280,9 @@ private:
     int _totalToDownload;
     //! Total number of assets still waiting to be downloaded
     int _totalWaitToDownload;
+    
+    //! Handle function to compare versions between different manifests
+    std::function<bool(const std::string& versionA, const std::string& versionB)> _versionCompareHandle;
     
     //! Marker for whether the assets manager is inited
     bool _inited;

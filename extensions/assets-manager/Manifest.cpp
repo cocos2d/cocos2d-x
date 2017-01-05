@@ -157,6 +157,22 @@ bool Manifest::versionEquals(const Manifest *b) const
     return true;
 }
 
+bool Manifest::versionGreater(const Manifest *b, const std::function<bool(const std::string& versionA, const std::string& versionB)>& handle) const
+{
+    std::string localVersion = getVersion();
+    std::string bVersion = b->getVersion();
+    bool greater;
+    if (handle)
+    {
+        greater = handle(localVersion, bVersion);
+    }
+    else
+    {
+        greater = strcmp(localVersion.c_str(), bVersion.c_str()) >= 0;
+    }
+    return greater;
+}
+
 std::unordered_map<std::string, Manifest::AssetDiff> Manifest::genDiff(const Manifest *b) const
 {
     std::unordered_map<std::string, AssetDiff> diff_map;

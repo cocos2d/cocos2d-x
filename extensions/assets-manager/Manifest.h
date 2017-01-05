@@ -134,8 +134,16 @@ protected:
     
     /** @brief Check whether the version of this manifest equals to another.
      * @param b   The other manifest
+     * @return Equal or not
      */
     bool versionEquals(const Manifest *b) const;
+    
+    /** @brief Check whether the version of this manifest is greater than another.
+     * @param b         The other manifest
+     * @param [handle]  Customized comparasion handle function
+     * @return Greater or not
+     */
+    bool versionGreater(const Manifest *b, const std::function<bool(const std::string& versionA, const std::string& versionB)>& handle) const;
     
     /** @brief Generate difference between this Manifest and another.
      * @param b   The other manifest
