@@ -251,7 +251,7 @@ bool js_EventListenerCustom_create(JSContext *cx, uint32_t argc, jsval *vp)
                         largv[0] = JSVAL_NULL;
                     };
                     JS::RootedValue rval(cx);
-                    bool succeed = func->invoke(1, &largv[0], &rval);
+                    bool succeed = func->invoke(JS::HandleValueArray::fromMarkedLocation(1, largv), &rval);
                     if (!succeed && JS_IsExceptionPending(cx)) {
                         JS_ReportPendingException(cx);
                     }
@@ -302,7 +302,7 @@ bool js_EventDispatcher_addCustomEventListener(JSContext *cx, uint32_t argc, jsv
                         largv[0] = JSVAL_NULL;
                     };
                     JS::RootedValue rval(cx);
-                    bool succeed = func->invoke(1, &largv[0], &rval);
+                    bool succeed = func->invoke(JS::HandleValueArray::fromMarkedLocation(1, largv), &rval);
                     if (!succeed && JS_IsExceptionPending(cx)) {
                         JS_ReportPendingException(cx);
                     }
