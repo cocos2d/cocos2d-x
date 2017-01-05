@@ -313,7 +313,8 @@ Sprite::Sprite(void)
 , _insideBounds(true)
 , _centerRectNormalized(0,0,1,1)
 , _numberOfSlices(1)
-, _quads(nullptr)
+, _trianglesVertex(nullptr)
+, _trianglesIndex(nullptr)
 , _strechFactor(Vec2::ONE)
 , _originalContentSize(Size::ZERO)
 , _strechEnabled(true)
@@ -326,7 +327,8 @@ Sprite::Sprite(void)
 
 Sprite::~Sprite()
 {
-    CC_SAFE_FREE(_quads);
+    CC_SAFE_FREE(_trianglesVertex);
+    CC_SAFE_FREE(_trianglesIndex);
     CC_SAFE_RELEASE(_spriteFrame);
     CC_SAFE_RELEASE(_texture);
 }
@@ -438,7 +440,6 @@ void Sprite::updatePoly()
     // C) 9-sliced, streched
     //    the sprite is 9-sliced and streched.
     if (_numberOfSlices == 1) {
-        setTextureCoords(_rect, &_quad);
         Rect copyRect;
         if (_strechEnabled) {
             // case B)
@@ -451,12 +452,13 @@ void Sprite::updatePoly()
                             _rect.size.width,
                             _rect.size.height);
         }
+        setTextureCoords(_rect, &_quad);
         setVertexCoords(copyRect, &_quad);
         _polyInfo.setQuad(&_quad);
     } else {
         // case C)
 
-        // in theory it can support 3 slices as well, but let's stick to 9 only
+        // in theory it can support 3 or 6 slices as well, but let's stick to 9 only
         CCASSERT(_numberOfSlices == 9, "Invalid number of slices");
 
 
@@ -647,11 +649,23 @@ void Sprite::updatePoly()
             Rect(x2, y2,  x2_s, y2_s),      // top-right
         };
 
+        // needed in order to get color from "_quad"
+        V3F_C4B_T2F_Quad tmpQuad = _quad;
+
         for (int i=0; i<_numberOfSlices; ++i) {
-            setTextureCoords(texRects[i], &_quads[i]);
-            setVertexCoords(verticesRects[i], &_quads[i]);
+            setTextureCoords(texRects[i], &tmpQuad);
+            setVertexCoords(verticesRects[i], &tmpQuad);
+            populateTriangle(i, tmpQuad);
         }
-        _polyInfo.setQuads(_quads, _numberOfSlices);
+        TrianglesCommand::Triangles triangles;
+        triangles.verts = _trianglesVertex;
+        triangles.vertCount = 16;
+        triangles.indices = _trianglesIndex;
+        triangles.indexCount = 6 * 9;   // 9 quads, each needs 6 vertices
+
+        // probably we can update the _trianglesCommand directly
+        // to avoid memcpy'ing stuff
+        _polyInfo.setTriangles(triangles);
     }
 }
 
@@ -667,21 +681,29 @@ void Sprite::setCenterRectNormalized(const cocos2d::Rect &rectTopLeft)
         // convert it to 1-slice
         if (rect.equals(Rect(0,0,1,1))) {
             _numberOfSlices = 1;
-            free(_quads);
-            _quads = nullptr;
+            free(_trianglesVertex);
+            free(_trianglesIndex);
+            _trianglesVertex = nullptr;
+            _trianglesIndex = nullptr;
         }
         else
         {
             // convert it to 9-slice if it isn't already
             if (_numberOfSlices != 9) {
                 _numberOfSlices = 9;
-                _quads = (V3F_C4B_T2F_Quad*) malloc(sizeof(*_quads) * 9);
+                // 9 quads + 7 exterior points = 16
+                _trianglesVertex = (V3F_C4B_T2F*) malloc(sizeof(*_trianglesVertex) * (9 + 3 + 4));
+                // 9 quads, each needs 6 vertices = 54
+                _trianglesIndex = (unsigned short*) malloc(sizeof(*_trianglesIndex) * 6 * 9);
 
+                // populate indices in CCW direction
                 for (int i=0; i<9; ++i) {
-                    _quads[i].bl.colors = Color4B::WHITE;
-                    _quads[i].br.colors = Color4B::WHITE;
-                    _quads[i].tl.colors = Color4B::WHITE;
-                    _quads[i].tr.colors = Color4B::WHITE;
+                    _trianglesIndex[i * 6 + 0] = (i * 4 / 3) + 4;
+                    _trianglesIndex[i * 6 + 1] = (i * 4 / 3) + 0;
+                    _trianglesIndex[i * 6 + 2] = (i * 4 / 3) + 5;
+                    _trianglesIndex[i * 6 + 3] = (i * 4 / 3) + 1;
+                    _trianglesIndex[i * 6 + 4] = (i * 4 / 3) + 5;
+                    _trianglesIndex[i * 6 + 5] = (i * 4 / 3) + 0;
                 }
             }
         }
@@ -779,12 +801,12 @@ void Sprite::setTextureCoords(const Rect& rectInPoints, V3F_C4B_T2F_Quad* outQua
 #endif // CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
 
 
-    if ((_flippedX && !_rectRotated) || (_flippedY && _rectRotated))
+    if ((!_rectRotated && _flippedX) || (_rectRotated && _flippedY))
     {
         std::swap(left, right);
     }
 
-    if ((_flippedY && !_rectRotated) || (_flippedX && _rectRotated))
+    if ((!_rectRotated && _flippedY) || (_rectRotated && _flippedX))
     {
         std::swap(top, bottom);
     }
@@ -859,6 +881,61 @@ void Sprite::setVertexCoords(const Rect& rect, V3F_C4B_T2F_Quad* outQuad)
         outQuad->br.vertices.set(x2, y1, 0.0f);
         outQuad->tl.vertices.set(x1, y2, 0.0f);
         outQuad->tr.vertices.set(x2, y2, 0.0f);
+    }
+}
+
+void Sprite::populateTriangle(int quadIndex, const V3F_C4B_T2F_Quad& quad)
+{
+    CCASSERT(quadIndex < 9, "Invalid quadIndex");
+    // convert Quad intro Triangle since it takes less memory
+
+    // Triangles are ordered like the following:
+    //   Numbers: Quad Index
+    //   Letters: triangles' vertices
+    //
+    //  M-----N-----O-----P
+    //  |     |     |     |
+    //  |  6  |  7  |  8  |
+    //  |     |     |     |
+    //  I-----J-----K-----L
+    //  |     |     |     |
+    //  |  3  |  4  |  5  |
+    //  |     |     |     |
+    //  E-----F-----G-----H
+    //  |     |     |     |
+    //  |  0  |  1  |  2  |
+    //  |     |     |     |
+    //  A-----B-----C-----D
+    //
+    // So, if QuadIndex == 4, then it should update vertices J,K,F,G
+
+    // Optimization: I don't need to copy all the vertices all the time. just the 4 "quads" from the corners.
+    if (quadIndex == 0 || quadIndex == 2 || quadIndex == 6 || quadIndex == 8)
+    {
+        if (_flippedX) {
+            if (quadIndex % 3 == 0)
+                quadIndex += 2;
+            else
+                quadIndex -= 2;
+        }
+
+        if (_flippedY) {
+            if (quadIndex <= 2)
+                quadIndex += 6;
+            else
+                quadIndex -= 6;
+        }
+
+        const int index_bl = quadIndex * 4 / 3;
+        const int index_br = index_bl + 1;
+        const int index_tl = index_bl + 4;
+        const int index_tr = index_bl + 5;
+        
+
+        _trianglesVertex[index_tr] = quad.tr;
+        _trianglesVertex[index_br] = quad.br;
+        _trianglesVertex[index_tl] = quad.tl;
+        _trianglesVertex[index_bl] = quad.bl;
     }
 }
 
