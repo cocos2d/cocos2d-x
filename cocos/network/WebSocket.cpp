@@ -113,6 +113,7 @@ static std::mutex __instanceMutex;
 static struct lws_context* __wsContext = nullptr;
 static WsThreadHelper* __wsHelper = nullptr;
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 static std::string getFileNameForPath(const std::string& filePath)
 {
     std::string fileName = filePath;
@@ -123,6 +124,7 @@ static std::string getFileNameForPath(const std::string& filePath)
     }
     return fileName;
 }
+#endif
 
 static size_t getProtocolCount(struct lws_protocols* protocols)
 {
@@ -777,9 +779,9 @@ WsCache* WebSocket::getOrCreateVhost(struct lws_protocols* protocols)
         if (_SSLConnection != 0)
         {
             CCASSERT(!_caFilePath.empty(), "CA file path is empty!");
+            auto fileUtils = FileUtils::getInstance();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
             // if ca file is in the apk, try to extract it to writable path
-            auto fileUtils = FileUtils::getInstance();
             std::string writablePath = fileUtils->getWritablePath();
             std::string caFileName = getFileNameForPath(_caFilePath);
             std::string newCaFilePath = writablePath + caFileName;
@@ -834,7 +836,15 @@ WsCache* WebSocket::getOrCreateVhost(struct lws_protocols* protocols)
                 }
             }
 #else
-            info.ssl_ca_filepath = _caFilePath.c_str();
+            if (fileUtils->isFileExist(_caFilePath))
+            {
+                _caFilePath = fileUtils->fullPathForFilename(_caFilePath);
+                info.ssl_ca_filepath = _caFilePath.c_str();
+            }
+            else
+            {
+                CCASSERT(false, "CA file doesn't exist!");
+            }
 #endif
         }
 
