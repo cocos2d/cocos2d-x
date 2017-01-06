@@ -38,16 +38,6 @@
 
 #pragma mark - Init & Dealloc
 
-- (instancetype)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        _placeholderFont = [self.font retain];
-        _placeholderTextColor = [[UIColor lightGrayColor] retain];
-    }
-    return self;
-}
-
 - (void)dealloc
 {
     [_placeholderFont release];

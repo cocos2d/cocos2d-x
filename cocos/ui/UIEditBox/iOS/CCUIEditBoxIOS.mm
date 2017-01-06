@@ -93,8 +93,8 @@
     textInput.ccui_text = _textInput.ccui_text ?: @"";
     textInput.ccui_placeholder = _textInput.ccui_placeholder ?: @"";
     textInput.ccui_font = _textInput.ccui_font ?: [UIFont systemFontOfSize:self.frameRect.size.height*2/3];
-    textInput.ccui_placeholderFont = _textInput.ccui_placeholderFont;
-    textInput.ccui_placeholderTextColor = _textInput.ccui_placeholderTextColor;
+    textInput.ccui_placeholderFont = _textInput.ccui_placeholderFont ?: textInput.ccui_font;
+    textInput.ccui_placeholderTextColor = _textInput.ccui_placeholderTextColor ?: [UIColor lightGrayColor];
     
     [_textInput resignFirstResponder];
     [_textInput removeFromSuperview];
