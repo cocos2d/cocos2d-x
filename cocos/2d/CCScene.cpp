@@ -434,13 +434,6 @@ Vec3 Scene::getAmbientDirection()
 void Scene::setShadowCamera(Camera* camera)
 {
   this->shadows.camera = camera;
-
-  /**
-   *
-   *
-   *
-   */
-  this->enableShadow(true);
 }
 
 void Scene::setShadowElement(Node* element)
@@ -457,8 +450,6 @@ void Scene::setShadowValue(float value)
 {
   this->shadows.value = value;
 }
-
-static Material* m1;
 
 void Scene::setShadow(bool state)
 {
@@ -513,21 +504,16 @@ void Scene::setShadow(bool state)
        *
        */
       GLProgramCache::getInstance()->addGLProgram(
-        GLProgram::createWithFilenames("@shadows.normal.vert", "@shadows.normal.frag"),
-        "@shadows.normal"
-      );
-      GLProgramCache::getInstance()->addGLProgram(
-        GLProgram::createWithFilenames("@shadows.active.vert", "@shadows.active.frag"),
-        "@shadows.active"
+        GLProgram::createWithFilenames("@shadows.vert", "@shadows.frag"),
+        "@shadows"
       );
 
-      m1 = Material::createWithGLStateProgram(
-        GLProgramState::getOrCreateWithGLProgram(
-          GLProgramCache::getInstance()->getGLProgram("@shadows.normal")
-        )
-      );
-
-      m1->retain();
+      /**
+       *
+       *
+       *
+       */
+      this->enableShadow(true);
 
       /**
        *
@@ -536,7 +522,7 @@ void Scene::setShadow(bool state)
        * | @Should add shadows frame buffer texture to the default 2D camera;
        *
        */
-      if(false)
+      if(true)
       {
         if(this->shadows.resolve_frame)
         {
@@ -598,10 +584,8 @@ void Scene::updateShadowElementState1(Node *element)
 {
   if(element->enableShadow())
   {
-    //static_cast<Sprite3D*>(element)->setMaterial(m1);
-    element->setGLProgram(
-      GLProgramCache::getInstance()->getGLProgram("@shadows.normal")
-    );
+    element->getGLProgramState()->setUniformFloat("value1", 0.0f);
+    element->getGLProgramState()->setUniformFloat("value2", 0.0f);
   }
 
   /**
@@ -636,7 +620,7 @@ void Scene::updateShadowElementState2(Node *element, bool recursive)
   {
     cameraViewMatrix = this->shadows.camera->getViewMatrix();
     cameraProjectionMatrix = this->shadows.camera->getProjectionMatrix();
-    cameraTransformMatrix =  cameraViewportMatrix * cameraProjectionMatrix * cameraViewMatrix;
+    cameraTransformMatrix = cameraViewportMatrix * cameraProjectionMatrix * cameraViewMatrix;
   }
 
   /**
@@ -646,16 +630,13 @@ void Scene::updateShadowElementState2(Node *element, bool recursive)
    */
   if(element->enableShadow())
   {
-    element->setGLProgram(
-      GLProgramCache::getInstance()->getGLProgram("@shadows.active")
-    );
-
     if(element->enableLight())
     {
       element->getGLProgramState()->setUniformFloat("use", 1.0);
     }
 
-    element->getGLProgramState()->setUniformFloat("value", this->shadows.value);
+    element->getGLProgramState()->setUniformFloat("value1", this->shadows.value);
+    element->getGLProgramState()->setUniformFloat("value2", this->shadows.value);
     element->getGLProgramState()->setUniformFloat("sindex", static_cast<Sprite3D*>(element)->shadowIndex);
     element->getGLProgramState()->setUniformMat4("modelTransformMatrix", element->getModelViewMatrix());
     element->getGLProgramState()->setUniformMat4("cameraTransformMatrix", cameraTransformMatrix);
@@ -830,7 +811,6 @@ void Scene::setCapture(bool state)
       this->capture.texture->setScaleY(-1 / this->capture.factor);
       this->capture.texture->setPosition(size.width / 2, size.height / 2);
       this->capture.texture->setGlobalZOrder(-1);
-      this->capture.texture->getTexture()->setAntiAliasTexParameters();
 
       /**
        *

@@ -286,7 +286,6 @@ void MeshCommand::execute()
 
         // Draw
         glDrawElements(_primitive, (GLsizei)_indexCount, _indexFormat, 0);
-        
         CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, _indexCount);
     }
 

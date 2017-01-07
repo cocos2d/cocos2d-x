@@ -2093,7 +2093,7 @@ FadeTo* FadeOut::reverse() const
 // FadeTo
 //
 
-FadeTo* FadeTo::create(float duration, GLubyte opacity)
+FadeTo* FadeTo::create(float duration, float opacity)
 {
     FadeTo *fadeTo = new (std::nothrow) FadeTo();
     if (fadeTo && fadeTo->initWithDuration(duration, opacity))
@@ -2106,11 +2106,11 @@ FadeTo* FadeTo::create(float duration, GLubyte opacity)
     return nullptr;
 }
 
-bool FadeTo::initWithDuration(float duration, GLubyte opacity)
+bool FadeTo::initWithDuration(float duration, float opacity)
 {
     if (ActionInterval::initWithDuration(duration))
     {
-        _toOpacity = opacity;
+        _toOpacity = 255.0 * opacity;
         return true;
     }
 

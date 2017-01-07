@@ -625,12 +625,17 @@ const Vec2& Node::getAnchorPoint() const
 
 void Node::setAnchorPoint(const Vec2& point)
 {
-  if (! point.equals(_anchorPoint))
+  if(!point.equals(_anchorPoint))
   {
     _anchorPoint = point;
     _anchorPointInPoints.set(_contentSize.width * _anchorPoint.x, _contentSize.height * _anchorPoint.y);
     _transformUpdated = _transformDirty = _inverseDirty = true;
   }
+}
+
+void Node::setAnchorPoint(const float x, const float y)
+{
+  this->setAnchorPoint(Vec2(x, y));
 }
 
 /// contentSize getter
@@ -1996,6 +2001,11 @@ void Node::setOpacity(GLubyte opacity)
   _displayedOpacity = _realOpacity = opacity;
   
   updateCascadeOpacity();
+}
+
+void Node::setFade(float opacity)
+{
+  this->setOpacity(255.0 * opacity);
 }
 
 void Node::updateDisplayedOpacity(GLubyte parentOpacity)

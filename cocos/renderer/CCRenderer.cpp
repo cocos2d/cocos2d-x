@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -215,7 +215,7 @@ Renderer::Renderer()
     
     RenderQueue defaultRenderQueue;
     _renderGroups.push_back(defaultRenderQueue);
-    _queuedTriangleCommands.reserve(BATCH_TRIAGCOMMAND_RESEVER_SIZE);
+    _queuedTriangleCommands.reserve(BATCH_TRIAGCOMMAND_RESERVED_SIZE);
 
     // default clear color
     _clearColor = Color4F::BLACK;
@@ -309,7 +309,14 @@ void Renderer::setupVBOAndVAO()
 void Renderer::setupVBO()
 {
     glGenBuffers(2, &_buffersVBO[0]);
-    mapBuffers();
+    // Issue #15652
+    // Should not initialzie VBO with a large size (VBO_SIZE=65536),
+    // it may cause low FPS on some Android devices like LG G4 & Nexus 5X.
+    // It's probably because some implementations of OpenGLES driver will
+    // copy the whole memory of VBO which initialzied at the first time
+    // once glBufferData/glBufferSubData is invoked.
+    // For more discussion, please refer to https://github.com/cocos2d/cocos2d-x/issues/15652
+//    mapBuffers();
 }
 
 void Renderer::mapBuffers()
@@ -393,10 +400,12 @@ void Renderer::processRenderCommand(RenderCommand* command)
         flush2D();
         auto cmd = static_cast<MeshCommand*>(command);
         
-        if (cmd->isSkipBatching() || _lastBatchedMeshCommand == nullptr || _lastBatchedMeshCommand->getMaterialID() != cmd->getMaterialID())
+        if (cmd->isSkipBatching() || _lastBatchedMeshCommand == nullptr /*|| _lastBatchedMeshCommand->getMaterialID() != cmd->getMaterialID()*/)
         {
             flush3D();
-            
+
+            CCGL_DEBUG_INSERT_EVENT_MARKER("RENDERER_MESH_COMMAND");
+
             if(cmd->isSkipBatching())
             {
                 // XXX: execute() will call bind() and unbind()
@@ -420,24 +429,29 @@ void Renderer::processRenderCommand(RenderCommand* command)
     {
         flush();
         int renderQueueID = ((GroupCommand*) command)->getRenderQueueID();
+        CCGL_DEBUG_PUSH_GROUP_MARKER("RENDERER_GROUP_COMMAND");
         visitRenderQueue(_renderGroups[renderQueueID]);
+        CCGL_DEBUG_POP_GROUP_MARKER();
     }
     else if(RenderCommand::Type::CUSTOM_COMMAND == commandType)
     {
         flush();
         auto cmd = static_cast<CustomCommand*>(command);
+        CCGL_DEBUG_INSERT_EVENT_MARKER("RENDERER_CUSTOM_COMMAND");
         cmd->execute();
     }
     else if(RenderCommand::Type::BATCH_COMMAND == commandType)
     {
         flush();
         auto cmd = static_cast<BatchCommand*>(command);
+        CCGL_DEBUG_INSERT_EVENT_MARKER("RENDERER_BATCH_COMMAND");
         cmd->execute();
     }
     else if(RenderCommand::Type::PRIMITIVE_COMMAND == commandType)
     {
         flush();
         auto cmd = static_cast<PrimitiveCommand*>(command);
+        CCGL_DEBUG_INSERT_EVENT_MARKER("RENDERER_PRIMITIVE_COMMAND");
         cmd->execute();
     }
     else
@@ -477,9 +491,9 @@ void Renderer::visitRenderQueue(RenderQueue& queue)
         glDisable(GL_CULL_FACE);
         RenderState::StateBlock::_defaultState->setCullFace(false);
         
-        for (auto it = zNegQueue.cbegin(); it != zNegQueue.cend(); ++it)
+        for (const auto& zNegNext : zNegQueue)
         {
-            processRenderCommand(*it);
+            processRenderCommand(zNegNext);
         }
         flush();
     }
@@ -500,10 +514,9 @@ void Renderer::visitRenderQueue(RenderQueue& queue)
         RenderState::StateBlock::_defaultState->setBlend(false);
         RenderState::StateBlock::_defaultState->setCullFace(true);
 
-
-        for (auto it = opaqueQueue.cbegin(); it != opaqueQueue.cend(); ++it)
+        for (const auto& opaqueNext : opaqueQueue)
         {
-            processRenderCommand(*it);
+            processRenderCommand(opaqueNext);
         }
         flush();
     }
@@ -525,9 +538,9 @@ void Renderer::visitRenderQueue(RenderQueue& queue)
         RenderState::StateBlock::_defaultState->setCullFace(true);
 
 
-        for (auto it = transQueue.cbegin(); it != transQueue.cend(); ++it)
+        for (const auto& transNext : transQueue)
         {
-            processRenderCommand(*it);
+            processRenderCommand(transNext);
         }
         flush();
     }
@@ -561,9 +574,9 @@ void Renderer::visitRenderQueue(RenderQueue& queue)
         glDisable(GL_CULL_FACE);
         RenderState::StateBlock::_defaultState->setCullFace(false);
         
-        for (auto it = zZeroQueue.cbegin(); it != zZeroQueue.cend(); ++it)
+        for (const auto& zZeroNext : zZeroQueue)
         {
-            processRenderCommand(*it);
+            processRenderCommand(zZeroNext);
         }
         flush();
     }
@@ -597,9 +610,9 @@ void Renderer::visitRenderQueue(RenderQueue& queue)
         glDisable(GL_CULL_FACE);
         RenderState::StateBlock::_defaultState->setCullFace(false);
         
-        for (auto it = zPosQueue.cbegin(); it != zPosQueue.cend(); ++it)
+        for (const auto& zPosNext : zPosQueue)
         {
-            processRenderCommand(*it);
+            processRenderCommand(zPosNext);
         }
         flush();
     }
@@ -632,7 +645,7 @@ void Renderer::render()
 void Renderer::clean()
 {
     // Clear render group
-    for (size_t j = 0 ; j < _renderGroups.size(); j++)
+    for (size_t j = 0, size = _renderGroups.size() ; j < size; j++)
     {
         //commands are owned by nodes
         // for (const auto &cmd : _renderGroups[j])
@@ -711,6 +724,8 @@ void Renderer::drawBatchedTriangles()
     if(_queuedTriangleCommands.empty())
         return;
 
+    CCGL_DEBUG_INSERT_EVENT_MARKER("RENDERER_BATCH_TRIANGLES");
+
     _filledVertex = 0;
     _filledIndex = 0;
 
@@ -724,9 +739,8 @@ void Renderer::drawBatchedTriangles()
     int prevMaterialID = -1;
     bool firstCommand = true;
 
-    for(auto it = std::begin(_queuedTriangleCommands); it != std::end(_queuedTriangleCommands); ++it)
+    for(const auto& cmd : _queuedTriangleCommands)
     {
-        const auto& cmd = *it;
         auto currentMaterialID = cmd->getMaterialID();
         const bool batchable = !cmd->isSkipBatching();
 
@@ -767,7 +781,8 @@ void Renderer::drawBatchedTriangles()
     batchesTotal++;
 
     /************** 2: Copy vertices/indices to GL objects *************/
-    if (Configuration::getInstance()->supportsShareableVAO())
+    auto conf = Configuration::getInstance();
+    if (conf->supportsShareableVAO() && conf->supportsMapBuffer())
     {
         //Bind VAO
         GL::bindVAO(_buffersVAO);
@@ -887,7 +902,7 @@ bool Renderer::checkVisibility(const Mat4 &transform, const Size &size)
     float hSizeY = size.height/2;
     Vec3 v3p(hSizeX, hSizeY, 0);
     transform.transformPoint(&v3p);
-    Vec2 v2p = scene->getCamera()->projectGL(v3p);
+    Vec2 v2p = director->getRunningScene()->getCamera()->projectGL(v3p);
 
     // convert content size to world coordinates
     float wshw = std::max(fabsf(hSizeX * transform.m[0] + hSizeY * transform.m[4]), fabsf(hSizeX * transform.m[0] - hSizeY * transform.m[4]));

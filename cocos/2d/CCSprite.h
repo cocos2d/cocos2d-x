@@ -467,6 +467,7 @@ public:
     virtual void setScale(float scale) override;
     virtual void setPositionZ(float positionZ) override;
     virtual void setAnchorPoint(const Vec2& anchor) override;
+    virtual void setAnchorPoint(const float x, const float y) override;
     
     virtual void setIgnoreAnchorPointForPosition(bool value) override;
     

@@ -287,6 +287,8 @@ protected:
 
     virtual bool enableShadow() override;
     virtual bool enableLight() override;
+    
+    virtual void onEnter() override;
 };
 
 ///////////////////////////////////////////////////////

@@ -709,6 +709,17 @@ void Sprite3D::visit(cocos2d::Renderer *renderer, const cocos2d::Mat4 &parentTra
     {
         return;
     }
+
+    if(Director::getInstance()->getRunningScene()->getShadowState())
+    {
+      if(Director::getInstance()->getRunningScene()->getCamera() && Director::getInstance()->getRunningScene()->getCamera()->getIndex() == Director::getInstance()->getRunningScene()->getShadowCamera()->getIndex())
+      {
+        if(!this->enableShadow())
+        {
+          return;
+        }
+      }
+    }
     
     uint32_t flags = processParentFlags(parentTransform, parentFlags);
     flags |= FLAGS_RENDER_AS_3D;
@@ -779,7 +790,8 @@ void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
         }
         if (usingLight != _shaderUsingLight)
         {
-            genMaterial(usingLight);
+            //genMaterial(usingLight);
+            _shaderUsingLight = usingLight;
         }
     }
     
@@ -1035,6 +1047,19 @@ void Sprite3D::enableShadow(bool state, float shadowIndex)
    *
    */
   this->shadowIndex = shadowIndex;
+
+  /**
+   *
+   *
+   *
+   */
+  if(state)
+  {
+    if(GLProgramCache::getInstance()->getGLProgram("@shadows"))
+    {
+      this->setGLProgram(GLProgramCache::getInstance()->getGLProgram("@shadows"));
+    }
+  }
 }
 
 void Sprite3D::enableLight(bool state)
@@ -1055,6 +1080,11 @@ bool Sprite3D::enableShadow()
 bool Sprite3D::enableLight()
 {
   return Node::enableLight();
+}
+
+void Sprite3D::onEnter()
+{
+  Node::onEnter();
 }
 
 NS_CC_END

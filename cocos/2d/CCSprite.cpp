@@ -896,6 +896,12 @@ void Sprite::setAnchorPoint(const Vec2& anchor)
     SET_DIRTY_RECURSIVELY();
 }
 
+void Sprite::setAnchorPoint(const float x, const float y)
+{
+    Node::setAnchorPoint(x, y);
+    SET_DIRTY_RECURSIVELY();
+}
+
 void Sprite::setIgnoreAnchorPointForPosition(bool value)
 {
     CCASSERT(! _batchNode, "setIgnoreAnchorPointForPosition is invalid in Sprite");
