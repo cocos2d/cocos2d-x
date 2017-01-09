@@ -106,6 +106,7 @@ CCBXReader* CCBXReader::createFromData(const Data &data, const std::string &root
     
 void CCBXReader::calcScales(SceneScaleType scaleType, const Size &parentSize, const Size &designResolution, float designScale, float &mainScale, float &additionalScale)
 {
+    assert(scaleType != SceneScaleType::DEFAULT); // not possible to calc scales for default scaleType
     if(scaleType == SceneScaleType::NONE)
     {
         mainScale = 1.0f;
@@ -169,7 +170,7 @@ void CCBXReader::calcScales(SceneScaleType scaleType, const Size &parentSize, co
     
 void CCBXReader::calcScales(SceneScaleType scaleType, const Size &parentSize, float &mainScale, float &additionalScale) const
 {
-    CCBXReader::calcScales(scaleType, parentSize, _params->getDesignResolution(), _params->getDesignResolutionScale(), mainScale, additionalScale);
+    CCBXReader::calcScales(scaleType == SceneScaleType::DEFAULT?_params->getDefaultSceneScaleType():scaleType, parentSize, _params->getDesignResolution(), _params->getDesignResolutionScale(), mainScale, additionalScale);
 }
 
     

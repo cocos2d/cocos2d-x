@@ -6,6 +6,7 @@
 #include <vector>
 #include "base/CCRef.h"
 #include "math/CCGeometry.h"
+#include "SpriteBuilder.h"
 
 NS_CC_BEGIN
 
@@ -19,6 +20,7 @@ public:
     
     const cocos2d::Size &getDesignResolution() const { return _designResolution; }
     const float &getDesignResolutionScale() const { return _designResolutionscale; }
+    SceneScaleType getDefaultSceneScaleType() const { return _sceneScaleType; }
     
     void setLanguage(const std::string &language);
     const std::string &getLanguage() const;
@@ -37,6 +39,7 @@ private:
 private:
     cocos2d::Size _designResolution;
     float _designResolutionscale;
+    SceneScaleType _sceneScaleType;
     std::string _curentLanguage;
     std::map<std::string,std::map<std::string,std::string>> _languages;
 };

@@ -22,6 +22,7 @@ namespace spritebuilder {
     
 enum class SceneScaleType
 {
+    DEFAULT,
     NONE,
     CUSTOM,
     MINSIZE,

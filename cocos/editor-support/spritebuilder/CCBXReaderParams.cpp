@@ -58,6 +58,24 @@ bool CCBReaderParams::loadParams(const std::string &path)
     if(configDict.empty())
         return false;
     
+    _sceneScaleType = SceneScaleType::NONE;
+    
+    auto scaleTypeValue = configDict.find("CCSceneScaleType");
+    if (scaleTypeValue != configDict.end())
+    {
+        std::string scaleType = scaleTypeValue->second.asString();
+        if(scaleType == "CCSceneScaleCustom")
+            _sceneScaleType = SceneScaleType::CUSTOM;
+        else if(scaleType == "CCSceneScaleMinSize")
+            _sceneScaleType = SceneScaleType::MINSIZE;
+        else if(scaleType == "CCSceneScaleMaxSize")
+            _sceneScaleType = SceneScaleType::MAXSIZE;
+        else if(scaleType == "CCSceneScaleMinScale")
+            _sceneScaleType = SceneScaleType::MINSCALE;
+        else if(scaleType == "CCSceneScaleMaxScale")
+            _sceneScaleType = SceneScaleType::MAXSCALE;
+    }
+    
     auto scale = configDict.find("CCSetupDesignResourceScale");
     if (scale != configDict.end())
         _designResolutionscale = scale->second.asDouble();
