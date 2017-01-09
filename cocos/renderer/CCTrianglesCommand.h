@@ -67,11 +67,14 @@ public:
      @param triangles Rendered triangles for the command.
      @param mv ModelView matrix for the command.
      @param flags to indicate that the command is using 3D rendering or not.
+     @param subpixelRendering enable rendering the triangles on non integer coordinates.
      */
+    void init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, const Triangles& triangles,const Mat4& mv, uint32_t flags, bool subpixelRendering);
     void init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, const Triangles& triangles,const Mat4& mv, uint32_t flags);
     /**Deprecated function, the params is similar as the upper init function, with flags equals 0.*/
     CC_DEPRECATED_ATTRIBUTE void init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, const Triangles& triangles,const Mat4& mv);
     void init(float globalOrder, Texture2D* textureID, GLProgramState* glProgramState, BlendFunc blendType, const Triangles& triangles, const Mat4& mv, uint32_t flags);
+    void init(float globalOrder, Texture2D* textureID, GLProgramState* glProgramState, BlendFunc blendType, const Triangles& triangles,const Mat4& mv, uint32_t flags, bool subpixelRendering );
     /**Apply the texture, shaders, programs, blend functions to GPU pipeline.*/
     void useMaterial() const;
     /**Get the material id of command.*/
@@ -94,7 +97,8 @@ public:
     BlendFunc getBlendType() const { return _blendType; }
     /**Get the model view matrix.*/
     const Mat4& getModelView() const { return _mv; }
-    
+    /**Tells if the triangle can dbe rendered on non interger coordinates. */
+    bool isSubpixelRenderingEnabled() const;
 protected:
     /**Generate the material ID by textureID, glProgramState, and blend function.*/
     void generateMaterialID();
@@ -113,6 +117,9 @@ protected:
     Mat4 _mv;
 
     GLuint _alphaTextureID; // ANDROID ETC1 ALPHA supports.
+
+    /** Allows to render the triangle on non integer coordinates. */
+    bool _subpixelRendering;
 };
 
 NS_CC_END

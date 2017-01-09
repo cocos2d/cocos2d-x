@@ -704,10 +704,21 @@ void Renderer::fillVerticesAndIndices(const TrianglesCommand* cmd)
 
     // fill vertex, and convert them to world coordinates
     const Mat4& modelView = cmd->getModelView();
-    for(ssize_t i=0; i < cmd->getVertexCount(); ++i)
+    const ssize_t count = cmd->getVertexCount();
+    
+    for(ssize_t i=0; i < count; ++i)
     {
         modelView.transformPoint(&(_verts[i + _filledVertex].vertices));
     }
+
+    if ( !cmd->isSubpixelRenderingEnabled() )
+        for( ssize_t i=0; i != count; ++i )
+        {
+            V3F_C4B_T2F* const q( &_verts[ i + _filledVertex ] );
+            Vec3* const vec1( (Vec3*)&q->vertices );
+            vec1->x = ceil( vec1->x );
+            vec1->y = ceil( vec1->y );
+        }
 
     // fill index
     const unsigned short* indices = cmd->getIndices();

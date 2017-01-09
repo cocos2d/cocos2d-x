@@ -42,13 +42,14 @@ TrianglesCommand::TrianglesCommand()
     _type = RenderCommand::Type::TRIANGLES_COMMAND;
 }
 
-void TrianglesCommand::init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, const Triangles& triangles,const Mat4& mv, uint32_t flags)
+void TrianglesCommand::init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, const Triangles& triangles,const Mat4& mv, uint32_t flags, bool subpixelRendering)
 {
     CCASSERT(glProgramState, "Invalid GLProgramState");
     CCASSERT(glProgramState->getVertexAttribsFlags() == 0, "No custom attributes are supported in QuadCommand");
 
     RenderCommand::init(globalOrder, mv, flags);
 
+    _subpixelRendering = subpixelRendering;
     _triangles = triangles;
     if(_triangles.indexCount % 3 != 0)
     {
@@ -69,6 +70,11 @@ void TrianglesCommand::init(float globalOrder, GLuint textureID, GLProgramState*
     }
 }
 
+void TrianglesCommand::init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, const Triangles& triangles,const Mat4& mv, uint32_t flags)
+{
+    init(globalOrder, textureID, glProgramState, blendType, triangles, mv, flags, true);
+}
+
 void TrianglesCommand::init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, const Triangles& triangles,const Mat4& mv)
 {
     init(globalOrder, textureID, glProgramState, blendType, triangles, mv, 0);
@@ -76,7 +82,12 @@ void TrianglesCommand::init(float globalOrder, GLuint textureID, GLProgramState*
 
 void TrianglesCommand::init(float globalOrder, Texture2D* texture, GLProgramState* glProgramState, BlendFunc blendType, const Triangles& triangles, const Mat4& mv, uint32_t flags)
 {
-    init(globalOrder, texture->getName(), glProgramState, blendType, triangles, mv, flags);
+    init(globalOrder, texture, glProgramState, blendType, triangles, mv, flags, true);
+}
+
+void TrianglesCommand::init(float globalOrder, Texture2D* texture, GLProgramState* glProgramState, BlendFunc blendType, const Triangles& triangles, const Mat4& mv, uint32_t flags, bool subpixelRendering)
+{
+    init(globalOrder, texture->getName(), glProgramState, blendType, triangles, mv, flags, subpixelRendering);
     _alphaTextureID = texture->getAlphaTextureName();
 }
 
@@ -120,6 +131,11 @@ void TrianglesCommand::useMaterial() const
     GL::blendFunc(_blendType.src, _blendType.dst);
     
     _glProgramState->apply(_mv);
+}
+
+bool TrianglesCommand::isSubpixelRenderingEnabled() const
+{
+    return _subpixelRendering;
 }
 
 NS_CC_END

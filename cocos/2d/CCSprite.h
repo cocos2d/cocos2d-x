@@ -398,6 +398,15 @@ public:
 
 
     /**
+     * Sets whether the sprite can be rendered on non integer coordinates or
+     * not.
+     * 
+     * @param enabled true if the sprite can be rendered on non integer
+     *        coordinates, false otherwise.
+     */
+    void setSubpixelRendering(bool enabled);
+    
+    /**
      * Returns the flag which indicates whether the sprite is flipped horizontally or not.
      *
      * It only flips the texture of the sprite, and not the texture of the sprite's children.
@@ -716,6 +725,8 @@ protected:
 
     bool _insideBounds;                     /// whether or not the sprite was inside bounds the previous frame
 
+    bool _subpixelRendering;                /// whether or not the sprite can be rendered on non integer coordinates.
+    
     std::string _fileName;
     int _fileType;
 
