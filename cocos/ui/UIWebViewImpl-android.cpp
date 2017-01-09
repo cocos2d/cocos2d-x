@@ -183,7 +183,11 @@ namespace cocos2d {
             }
 
             void WebViewImpl::loadURL(const std::string &url) {
-                JniHelper::callStaticVoidMethod(className, "loadUrl", _viewTag, url);
+                this->loadURL(url, false);
+            }
+
+            void WebViewImpl::loadURL(const std::string &url, bool cleanCachedData) {
+                JniHelper::callStaticVoidMethod(className, "loadUrl", _viewTag, url, cleanCachedData);
             }
 
             void WebViewImpl::loadFile(const std::string &fileName) {
