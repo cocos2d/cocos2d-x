@@ -117,10 +117,10 @@ void Skybox::initBuffers()
 	//
 	// The vertex shader does not apply either the model/view matrix or the
 	// projection matrix, so the appropriate quad is one with unit coordinates
-	// in the x and y dimensions. Such a quad will exacly cover the screen.
+	// in the x and y dimensions. Such a quad will exactly cover the screen.
 	// To ensure that the skybox is rendered behind all other objects, z needs
 	// to be 1.0, but the vertex shader overwrites z to 1.0, so - for the sake
-	// of z-buffering - it is unimportant what we set it to for the verticies
+	// of z-buffering - it is unimportant what we set it to for the vertices
 	// of the quad.
 	//
 	// The quad vertex positions are also used in deriving a direction

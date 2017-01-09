@@ -431,15 +431,15 @@ void Sprite::updatePoly()
 {
     // There are 3 cases:
     //
-    // A) a non 9-sliced, non streched
-    //    contentsize doesn't not affect the streching, since there is no streching
+    // A) a non 9-sliced, non stretched
+    //    contentsize doesn't not affect the stretching, since there is no stretching
     //    this was the original behavior, and we keep it for backwards compatibility reasons
-    //    When non-streching is enabled, we have to change the offset in order to "fill the empty" space at the
+    //    When non-stretching is enabled, we have to change the offset in order to "fill the empty" space at the
     //    left-top of the texture
-    // B) non 9-sliced, streched
-    //    the texture is streched to the content size
-    // C) 9-sliced, streched
-    //    the sprite is 9-sliced and streched.
+    // B) non 9-sliced, stretched
+    //    the texture is stretched to the content size
+    // C) 9-sliced, stretched
+    //    the sprite is 9-sliced and stretched.
     if (_renderMode == RenderMode::QUAD || _renderMode == RenderMode::BATCHNODE) {
         Rect copyRect;
         if (_strechEnabled) {
@@ -1374,7 +1374,7 @@ void Sprite::updateStretchFactor()
 
     if (_renderMode == RenderMode::QUAD)
     {
-        // If strech is disabled, calculate the strech anyway
+        // If stretch is disabled, calculate the stretch anyway
         // since it is needed to calculate the offset
         const float x_factor = size.width / _originalContentSize.width;
         const float y_factor = size.height / _originalContentSize.height;

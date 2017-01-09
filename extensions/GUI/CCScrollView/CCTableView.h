@@ -202,6 +202,7 @@ public:
      */
     TableViewDataSource* getDataSource() { return _dataSource; }
     /**
+     * @code
      * when this function bound to js or lua,the input params are changed
      * in js:var setDataSource(var jsSource)
      * in lua:local setDataSource()

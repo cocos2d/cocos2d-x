@@ -468,10 +468,10 @@ public:
      */
     void setPolygonInfo(const PolygonInfo& info);
 
-    /** whether or not contentSize streches the sprite's texture */
+    /** whether or not contentSize stretches the sprite's texture */
     void setStrechEnabled(bool enabled);
 
-    /** returns whether or not contentSize streches the sprite's texture */
+    /** returns whether or not contentSize stretches the sprite's texture */
     bool isStrechEnabled() const;
 
     //
