@@ -4,6 +4,7 @@
   <PropertyGroup Label="APP_DLLS">
     <AngleBinPath Condition=" '$(AngleBinPath)' == '' ">$(EngineRoot)external\$(COCOS2D_PLATFORM)-specific\angle\prebuilt\$(Platform)\</AngleBinPath>
     <CurlBinPath Condition=" '$(CurlBinPath)' == '' ">$(EngineRoot)external\curl\prebuilt\$(COCOS2D_PLATFORM)\$(Platform)\</CurlBinPath>
+    <OpenSSLBinPath Condition=" '$(OpenSSLBinPath)' == '' ">$(EngineRoot)external\openssl\prebuilt\$(COCOS2D_PLATFORM)\$(Platform)\</OpenSSLBinPath>
     <ZLibBinPath Condition=" '$(ZLibBinPath)' == '' ">$(EngineRoot)external\$(COCOS2D_PLATFORM)-specific\zlib\prebuilt\$(Platform)\</ZLibBinPath>
     <WebsocketsBinPath Condition=" '$(WebsocketsBinPath)' == '' ">$(EngineRoot)external\websockets\prebuilt\$(COCOS2D_PLATFORM)\$(Platform)\</WebsocketsBinPath>
     <SQLiteBinPath Condition=" '$(SQLiteBinPath)' == '' ">$(EngineRoot)external\sqlite3\libraries\$(COCOS2D_PLATFORM)\$(Platform)\</SQLiteBinPath>
@@ -25,10 +26,10 @@
     <None Include="$(CurlBinPath)libcurl.dll">
       <DeploymentContent>true</DeploymentContent>
     </None>
-    <None Include="$(CurlBinPath)libeay32.dll">
+    <None Include="$(OpenSSLBinPath)libeay32.dll">
       <DeploymentContent>true</DeploymentContent>
     </None>
-    <None Include="$(CurlBinPath)ssleay32.dll">
+    <None Include="$(OpenSSLBinPath)ssleay32.dll">
       <DeploymentContent>true</DeploymentContent>
     </None>
     <None Include="$(OggBinPath)libogg.dll">
