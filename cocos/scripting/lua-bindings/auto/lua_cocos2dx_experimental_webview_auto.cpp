@@ -317,42 +317,51 @@ int lua_cocos2dx_experimental_webview_WebView_loadURL(lua_State* tolua_S)
     int argc = 0;
     cocos2d::experimental::ui::WebView* cobj = nullptr;
     bool ok  = true;
-
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
 #endif
 
-
 #if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"ccexp.WebView",0,&tolua_err)) goto tolua_lerror;
 #endif
-
     cobj = (cocos2d::experimental::ui::WebView*)tolua_tousertype(tolua_S,1,0);
-
 #if COCOS2D_DEBUG >= 1
-    if (!cobj) 
+    if (!cobj)
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_experimental_webview_WebView_loadURL'", nullptr);
         return 0;
     }
 #endif
-
     argc = lua_gettop(tolua_S)-1;
-    if (argc == 1) 
-    {
-        std::string arg0;
+    do{
+        if (argc == 2) {
+            std::string arg0;
+            ok &= luaval_to_std_string(tolua_S, 2,&arg0, "ccexp.WebView:loadURL");
 
-        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "ccexp.WebView:loadURL");
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_experimental_webview_WebView_loadURL'", nullptr);
-            return 0;
+            if (!ok) { break; }
+            bool arg1;
+            ok &= luaval_to_boolean(tolua_S, 3,&arg1, "ccexp.WebView:loadURL");
+
+            if (!ok) { break; }
+            cobj->loadURL(arg0, arg1);
+            lua_settop(tolua_S, 1);
+            return 1;
         }
-        cobj->loadURL(arg0);
-        lua_settop(tolua_S, 1);
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccexp.WebView:loadURL",argc, 1);
+    }while(0);
+    ok  = true;
+    do{
+        if (argc == 1) {
+            std::string arg0;
+            ok &= luaval_to_std_string(tolua_S, 2,&arg0, "ccexp.WebView:loadURL");
+
+            if (!ok) { break; }
+            cobj->loadURL(arg0);
+            lua_settop(tolua_S, 1);
+            return 1;
+        }
+    }while(0);
+    ok  = true;
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n",  "ccexp.WebView:loadURL",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
