@@ -58,11 +58,6 @@ macro (SetCompilerOptions)
 	    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
 	  endif()
 	endif(MSVC)
-	
-	if(CLANG AND ANDROID AND ANDROID_ARM_MODE STREQUAL thumb AND ANDROID_ABI STREQUAL armeabi)
-      string(REPLACE "-mthumb" "-marm" CMAKE_C_FLAGS ${CMAKE_C_FLAGS})
-      string(REPLACE "-mthumb" "-marm" CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS})
-    endif()
 
 	# Some macro definitions
 	if(WINDOWS)
@@ -86,7 +81,14 @@ macro (SetCompilerOptions)
 	  add_definitions(-DUSE_FILE32API)
 	  set(PLATFORM_FOLDER android)
 	  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fexceptions")
-	  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsigned-char -latomic")
+	  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsigned-char -fexceptions")
+	  set(CMAKE_CXX_CREATE_SHARED_LIBRARY "${CMAKE_CXX_CREATE_SHARED_LIBRARY} -latomic")
+	  
+	  if(CLANG AND ANDROID_ARM_MODE STREQUAL thumb AND ANDROID_ABI STREQUAL armeabi)
+        string(REPLACE "-mthumb" "-marm" CMAKE_C_FLAGS ${CMAKE_C_FLAGS})
+        string(REPLACE "-mthumb" "-marm" CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS})
+      endif()
+	  
 	elseif(EMSCRIPTEN)
 	  set(PLATFORM_FOLDER emcc)
 	  set(EMSCRIPTEN_FLAGS "-s NO_EXIT_RUNTIME=1 -s USE_ZLIB=1 -s USE_LIBPNG=1 -s USE_FREETYPE=1 -s FULL_ES2=1 -s PRECISE_F32=1")
