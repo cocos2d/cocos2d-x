@@ -541,8 +541,6 @@ WebSocket::WebSocket()
 WebSocket::~WebSocket()
 {
     LOGD("In the destructor of WebSocket (%p)\n", this);
-    CC_SAFE_DELETE(_wsHelper);
-    CC_SAFE_DELETE(_delegate);
 
     std::lock_guard<std::mutex> lk(__instanceMutex);
 

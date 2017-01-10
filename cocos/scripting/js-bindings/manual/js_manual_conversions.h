@@ -42,7 +42,6 @@
 #include "math/CCAffineTransform.h"
 #include "platform/CCPlatformMacros.h"
 #include "renderer/CCGLProgram.h"
-#include "extensions/assets-manager/Manifest.h"
 #include "scripting/js-bindings/manual/spidermonkey_specifics.h"
 #include "scripting/js-bindings/manual/js-BindingsExport.h"
 
@@ -50,6 +49,9 @@
 
 NS_CC_BEGIN
 struct CC_DLL ResourceData;
+namespace extension {
+    struct ManifestAsset;
+}
 NS_CC_END
 
 // just a simple utility to avoid mem leaking when using JSString
@@ -294,7 +296,7 @@ jsval quaternion_to_jsval(JSContext* cx, const cocos2d::Quaternion& q);
 jsval meshVertexAttrib_to_jsval(JSContext* cx, const cocos2d::MeshVertexAttrib& q);
 jsval uniform_to_jsval(JSContext* cx, const cocos2d::Uniform* uniform);
 jsval resourcedata_to_jsval(JSContext* cx, const cocos2d::ResourceData& v);
-jsval asset_to_jsval(JSContext* cx, const cocos2d::extension::Manifest::Asset& v);
+jsval asset_to_jsval(JSContext* cx, const cocos2d::extension::ManifestAsset& v);
 
 // forward declaration
 template <class T>

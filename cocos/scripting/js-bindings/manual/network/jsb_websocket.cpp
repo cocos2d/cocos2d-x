@@ -172,14 +172,13 @@ public:
             
             auto copy = &p->obj;
             JS::RemoveObjectRoot(cx, copy);
-#if not CC_ENABLE_GC_FOR_NATIVE_OBJECTS
             jsb_remove_proxy(p);
         }
+        
         // Delete WebSocket instance
         CC_SAFE_DELETE(ws);
-#else
-        }
-#endif
+        // Delete self at last while websocket was closed.
+        delete this;
     }
 
     virtual void onError(WebSocket* ws, const WebSocket::ErrorCode& error)
@@ -208,7 +207,7 @@ public:
         _JSDelegate.ref() = pJSDelegate;
     }
 private:
-    mozilla::Maybe<JS::RootedObject> _JSDelegate;
+    mozilla::Maybe<JS::PersistentRootedObject> _JSDelegate;
 };
 
 JSClass  *js_cocos2dx_websocket_class;
@@ -216,17 +215,6 @@ JSObject *js_cocos2dx_websocket_prototype;
 
 void js_cocos2dx_WebSocket_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOG("jsbindings: finalizing JS object %p (WebSocket)", obj);
-    
-#if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
-    js_proxy_t *p = jsb_get_js_proxy(obj);
-    if (p)
-    {
-        WebSocket *ws = (WebSocket *)(p->ptr);
-        jsb_remove_proxy(p);
-        // Delete WebSocket instance
-        CC_SAFE_DELETE(ws);
-    }
-#endif
 }
 
 bool js_cocos2dx_extension_WebSocket_send(JSContext *cx, uint32_t argc, jsval *vp)
@@ -319,6 +307,7 @@ bool js_cocos2dx_extension_WebSocket_constructor(JSContext *cx, uint32_t argc, j
 
         JS::RootedObject proto(cx, js_cocos2dx_websocket_prototype);
         JS::RootedObject obj(cx, JS_NewObject(cx, js_cocos2dx_websocket_class, proto, JS::NullPtr()));
+        //JS::RootedObject obj(cx, JS_NewObjectForConstructor(cx, js_cocos2dx_websocket_class, args));
 
         WebSocket* cobj = nullptr;
         if (argc >= 2)
@@ -390,10 +379,8 @@ bool js_cocos2dx_extension_WebSocket_constructor(JSContext *cx, uint32_t argc, j
 
         // link the native object with the javascript object
         js_proxy_t *p = jsb_new_proxy(cobj, obj);
-#if not CC_ENABLE_GC_FOR_NATIVE_OBJECTS
         JS::AddNamedObjectRoot(cx, &p->obj, "WebSocket");
-#endif
-        
+
         args.rval().set(OBJECT_TO_JSVAL(obj));
         return true;
     }

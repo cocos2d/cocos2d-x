@@ -235,7 +235,8 @@ cc.AUTOREPEAT_INCREASETIME_INCREMENT = 12;
 jsb.Manifest.DownloadState = {
     UNSTARTED: 0,
     DOWNLOADING: 1,
-    SUCCESSED: 2
+    SUCCESSED: 2,
+    UNMARKED: 3
 };
 
 jsb.EventAssetsManager.ERROR_NO_LOCAL_MANIFEST = 0;

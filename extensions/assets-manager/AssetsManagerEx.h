@@ -119,7 +119,7 @@ public:
     /** @brief Set the handle function for comparing manifests versions
      * @param handle    The compare function
      */
-    void setVersionCompareHandle(const std::function<bool(const std::string& versionA, const std::string& versionB)>& handle) {_versionCompareHandle = handle;};
+    void setVersionCompareHandle(const std::function<int(const std::string& versionA, const std::string& versionB)>& handle) {_versionCompareHandle = handle;};
     
     /** @brief Set the verification function for checking whether downloaded asset is correct, e.g. using md5 verification
      * @param callback  The verify callback function
@@ -157,7 +157,7 @@ protected:
     void startUpdate();
     void updateSucceed();
     bool decompress(const std::string &filename);
-    void decompressDownloadedZip();
+    void decompressDownloadedZip(const std::string &customId, const std::string &storagePath);
     
     /** @brief Update a list of assets under the current AssetsManagerEx context
      */
@@ -177,7 +177,7 @@ protected:
     
     void fileError(const std::string& identifier, const std::string& errorStr, int errorCode = 0, int errorCodeInternal = 0);
     
-    void fileSuccess(const std::string &customId, const std::string &storagePath, bool compressed);
+    void fileSuccess(const std::string &customId, const std::string &storagePath);
     
     /** @brief  Call back function for error handling,
      the error will then be reported to user's listener registed in addUpdateEventListener
@@ -236,11 +236,14 @@ private:
     //! The reference to the local assets
     const std::unordered_map<std::string, Manifest::Asset> *_assets;
     
-    //! The path to store downloaded resources.
+    //! The path to store successfully downloaded version.
     std::string _storagePath;
     
-    //! The local path of cached version file
-    std::string _cacheVersionPath;
+    //! The path to store downloading version.
+    std::string _tempStoragePath;
+    
+    //! The local path of cached temporary version file
+    std::string _tempVersionPath;
     
     //! The local path of cached manifest file
     std::string _cacheManifestPath;
@@ -285,9 +288,6 @@ private:
     //! Current concurrent task count
     int _currConcurrentTask;
     
-    //! All files to be decompressed
-    std::vector<std::string> _compressedFiles;
-    
     //! Download percent
     float _percent;
     
@@ -310,9 +310,11 @@ private:
     int _totalToDownload;
     //! Total number of assets still waiting to be downloaded
     int _totalWaitToDownload;
+    //! Next target percent for saving the manifest file
+    float _nextSavePoint;
     
     //! Handle function to compare versions between different manifests
-    std::function<bool(const std::string& versionA, const std::string& versionB)> _versionCompareHandle;
+    std::function<int(const std::string& versionA, const std::string& versionB)> _versionCompareHandle;
     
     //! Callback function to verify the downloaded assets
     std::function<bool(const std::string& path, Manifest::Asset asset)> _verifyCallback;

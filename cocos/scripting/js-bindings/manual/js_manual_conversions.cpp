@@ -32,6 +32,7 @@
 #include "deprecated/CCInteger.h"
 #include "deprecated/CCString.h"
 #include "editor-support/cocostudio/CocosStudioExtension.h"
+#include "extensions/assets-manager/Manifest.h"
 #include "math/TransformUtils.h"
 #include "scripting/js-bindings/manual/ScriptingCore.h"
 #include "scripting/js-bindings/manual/cocos2d_specifics.hpp"
@@ -2988,7 +2989,7 @@ jsval resourcedata_to_jsval(JSContext* cx, const ResourceData& v)
     return JSVAL_NULL;
 }
 
-jsval asset_to_jsval(JSContext* cx, const cocos2d::extension::Manifest::Asset& v)
+jsval asset_to_jsval(JSContext* cx, const cocos2d::extension::ManifestAsset& v)
 {
     JS::RootedObject tmp(cx, JS_NewObject(cx, NULL, JS::NullPtr(), JS::NullPtr()));
     if (!tmp) return JSVAL_NULL;
