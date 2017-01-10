@@ -80,7 +80,12 @@ namespace experimental{
 
         void WebView::loadURL(const std::string &url)
         {
-            _impl->loadURL(url);
+            this->loadURL(url, false);
+        }
+
+        void WebView::loadURL(const std::string& url, bool cleanCachedData)
+        {
+            _impl->loadURL(url, cleanCachedData);
         }
 
         void WebView::loadFile(const std::string &fileName)
