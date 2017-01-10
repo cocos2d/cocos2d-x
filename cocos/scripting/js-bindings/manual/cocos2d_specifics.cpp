@@ -716,7 +716,6 @@ void js_remove_object_root(JS::HandleValue target)
 }
 
 JSCallbackWrapper::JSCallbackWrapper()
-: _rooted(true)
 {
     JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
     _jsCallback = JS::NullValue();
@@ -730,7 +729,6 @@ JSCallbackWrapper::JSCallbackWrapper()
 }
 
 JSCallbackWrapper::JSCallbackWrapper(JS::HandleValue owner)
-: _rooted(false)
 {
     _owner = owner;
     _jsCallback = JS::NullValue();
@@ -740,9 +738,10 @@ JSCallbackWrapper::JSCallbackWrapper(JS::HandleValue owner)
 
 JSCallbackWrapper::~JSCallbackWrapper()
 {
-    JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
+    ScriptingCore* sc = ScriptingCore::getInstance();
+    JSContext* cx = sc->getGlobalContext();
     JS::RootedValue ownerVal(cx, _owner);
-    if (_rooted && !ownerVal.isNullOrUndefined())
+    if (!sc->getFinalizing() && !ownerVal.isNullOrUndefined())
     {
         JS::RootedValue target(cx, _jsCallback);
         if (!target.isNullOrUndefined())
