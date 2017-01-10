@@ -440,7 +440,7 @@ void Sprite::updatePoly()
     //    the texture is streched to the content size
     // C) 9-sliced, streched
     //    the sprite is 9-sliced and streched.
-    if (_renderMode == RenderMode::QUAD) {
+    if (_renderMode == RenderMode::QUAD || _renderMode == RenderMode::BATCHNODE) {
         Rect copyRect;
         if (_strechEnabled) {
             // case B)
