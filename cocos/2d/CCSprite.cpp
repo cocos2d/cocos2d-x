@@ -417,11 +417,6 @@ void Sprite::setTextureRect(const Rect& rect)
 
 void Sprite::setTextureRect(const Rect& rect, bool rotated, const Size& untrimmedSize)
 {
-    if(_renderMode == RenderMode::POLYGON)
-        CCLOGWARN("Converting a Polygon sprite to a Quad one");
-
-    _renderMode = RenderMode::QUAD;
-
     _rectRotated = rotated;
 
     Node::setContentSize(untrimmedSize);
@@ -461,7 +456,8 @@ void Sprite::updatePoly()
         setTextureCoords(_rect, &_quad);
         setVertexCoords(copyRect, &_quad);
         _polyInfo.setQuad(&_quad);
-    } else {
+
+    } else if (_renderMode == RenderMode::SLICE9) {
         // case C)
 
         // How the texture is split

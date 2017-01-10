@@ -1976,7 +1976,7 @@ void SpriteFramesFromFileContent::onEnter()
 	// Animation using Sprite BatchNode
 	//
 	Sprite * sprite = Sprite::createWithSpriteFrameName("grossini_dance_01.png");
-	sprite->setPosition( Vec2( s.width/2-80, s.height/2) );
+	sprite->setPosition( Vec2( s.width/2, s.height/2) );
 	addChild(sprite);
 
 	Vector<SpriteFrame*> animFrames(15);
