@@ -21,6 +21,7 @@ UIButtonTests::UIButtonTests()
     ADD_TEST_CASE(UIButtonDisableDefaultTest);
     ADD_TEST_CASE(UIButtonCloneTest);
     ADD_TEST_CASE(Issue12249);
+    ADD_TEST_CASE(Issue17116);
 }
 
 // UIButtonTest
@@ -1185,6 +1186,28 @@ bool Issue12249::init()
         button2->setPosition(Vec2(widgetSize.width / 2.0f + btnWidth, widgetSize.height / 2.0f));
         _uiLayer->addChild(button2);
         
+        return true;
+    }
+    return false;
+}
+
+// https://github.com/cocos2d/cocos2d-x/issues/17116
+Issue17116::Issue17116()
+{
+}
+
+bool Issue17116::init()
+{
+    if (UIScene::init())
+    {
+        auto visibleSize = Director::getInstance()->getVisibleSize();
+
+        SpriteFrameCache::getInstance()->addSpriteFramesWithFile("Images/issue_17116.plist");
+        auto button = ui::Button::create();
+        button->loadTextureNormal("buttons/play-big", ui::Widget::TextureResType::PLIST);
+        button->setPosition(Vec2(visibleSize.width/2, visibleSize.height/2));
+        button->setOpacity(100);
+        addChild(button);
         return true;
     }
     return false;

@@ -1474,6 +1474,11 @@ void Sprite::updateColor(void)
         _polyInfo.triangles.verts[i].colors = color4;
     }
 
+    // related to issue #17116
+    // when switching from Quad to Slice9, the color will be obtained from _quad
+    // so it is important to update _quad colors as well.
+    _quad.bl.colors = _quad.tl.colors = _quad.br.colors = _quad.tr.colors = color4;
+
     // renders using batch node
     if (_batchNode)
     {
