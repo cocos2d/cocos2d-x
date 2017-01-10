@@ -135,6 +135,7 @@ SpriteTests::SpriteTests()
     ADD_TEST_CASE(SpriteSlice9Test8);
     ADD_TEST_CASE(SpriteSlice9Test9);
     ADD_TEST_CASE(SpriteSlice9Test10);
+    ADD_TEST_CASE(Issue17119);
 };
 
 //------------------------------------------------------------------
@@ -1975,7 +1976,7 @@ void SpriteFramesFromFileContent::onEnter()
 	// Animation using Sprite BatchNode
 	//
 	Sprite * sprite = Sprite::createWithSpriteFrameName("grossini_dance_01.png");
-	sprite->setPosition( Vec2( s.width/2-80, s.height/2) );
+	sprite->setPosition( Vec2( s.width/2, s.height/2) );
 	addChild(sprite);
 
 	Vector<SpriteFrame*> animFrames(15);
@@ -5725,3 +5726,77 @@ SpriteSlice9Test10::SpriteSlice9Test10()
     s3->setContentSize(s3->getContentSize()*1.5);
     s3->setFlippedY(true);
 }
+
+//------------------------------------------------------------------
+//
+// Issue 17119
+//
+//------------------------------------------------------------------
+Issue17119::Issue17119()
+: _accum(0)
+{
+    Size s = Director::getInstance()->getVisibleSize();
+
+    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("Images/issue_17119.plist");
+    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("Images/blocks9ss.plist");
+
+
+    auto s1 = Sprite::createWithSpriteFrameName("firstPic.png");
+    addChild(s1);
+    s1->setPosition(s.width/2-s.width/3, s.height/2);
+    s1->setScale(0.25f);
+    auto p1 = Sprite::create("Images/r1.png");
+    p1->setScale(0.25f);
+    p1->setPosition(s1->getPosition());
+    addChild(p1, 10);
+
+    auto s2 = Sprite::createWithSpriteFrameName("blocks9r.png");
+    addChild(s2);
+    s2->setPosition(s.width/2, s.height/2);
+    s2->setCenterRectNormalized(Rect(1/3.f, 1/3.f, 1/3.f, 1/3.f));
+    s2->setContentSize(s2->getContentSize()*1.5);
+    auto p2 = Sprite::create("Images/r1.png");
+    p2->setScale(0.25f);
+    p2->setPosition(s2->getPosition());
+    addChild(p2, 10);
+
+    auto s3 = Sprite::create("Images/grossini.png");
+    addChild(s3);
+    s3->setPosition(s.width/2+s.width/3, s.height/2+s.height/3);
+    s3->setContentSize(s3->getContentSize()*1.5);
+    auto p3 = Sprite::create("Images/r1.png");
+    p3->setScale(0.25f);
+    p3->setPosition(s3->getPosition());
+    addChild(p3, 10);
+
+    auto s4 = Sprite::create("Images/grossini.png");
+    addChild(s4);
+    s4->setPosition(s.width/2+s.width/3, s.height/2-s.height/3);
+    s4->setContentSize(s2->getContentSize()*1.5);
+    s4->setStrechEnabled(false);
+    auto p4 = Sprite::create("Images/r1.png");
+    p4->setScale(0.25f);
+    p4->setPosition(s3->getPosition());
+    addChild(p4, 10);
+
+    _s1 = s1;
+    _s2 = s2;
+    _s3 = s3;
+    _s4 = s4;
+    scheduleUpdate();
+}
+
+void Issue17119::update(float dt)
+{
+    _accum += dt;
+    if (_accum > 0.5) {
+        _accum = 0;
+        auto flipped = _s1->isFlippedX();
+        _s1->setFlippedX(!flipped);
+        _s2->setFlippedX(!flipped);
+        _s3->setFlippedX(!flipped);
+        _s4->setFlippedX(!flipped);
+    }
+}
+
+
