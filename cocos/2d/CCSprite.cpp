@@ -249,6 +249,7 @@ bool Sprite::initWithPolygon(const cocos2d::PolygonInfo &info)
     if(texture && initWithTexture(texture))
     {
         _polyInfo = info;
+        _renderMode = RenderMode::POLYGON;
         Node::setContentSize(_polyInfo.getRect().size / _director->getContentScaleFactor());
         ret = true;
     }
@@ -312,7 +313,7 @@ Sprite::Sprite(void)
 , _spriteFrame(nullptr)
 , _insideBounds(true)
 , _centerRectNormalized(0,0,1,1)
-, _numberOfSlices(1)
+, _renderMode(Sprite::RenderMode::QUAD)
 , _trianglesVertex(nullptr)
 , _trianglesIndex(nullptr)
 , _strechFactor(Vec2::ONE)
@@ -416,6 +417,11 @@ void Sprite::setTextureRect(const Rect& rect)
 
 void Sprite::setTextureRect(const Rect& rect, bool rotated, const Size& untrimmedSize)
 {
+    if(_renderMode == RenderMode::POLYGON)
+        CCLOGWARN("Converting a Polygon sprite to a Quad one");
+
+    _renderMode = RenderMode::QUAD;
+
     _rectRotated = rotated;
 
     Node::setContentSize(untrimmedSize);
@@ -439,7 +445,7 @@ void Sprite::updatePoly()
     //    the texture is streched to the content size
     // C) 9-sliced, streched
     //    the sprite is 9-sliced and streched.
-    if (_numberOfSlices == 1) {
+    if (_renderMode == RenderMode::QUAD) {
         Rect copyRect;
         if (_strechEnabled) {
             // case B)
@@ -457,10 +463,6 @@ void Sprite::updatePoly()
         _polyInfo.setQuad(&_quad);
     } else {
         // case C)
-
-        // in theory it can support 3 or 6 slices as well, but let's stick to 9 only
-        CCASSERT(_numberOfSlices == 9, "Invalid number of slices");
-
 
         // How the texture is split
         //
@@ -652,7 +654,7 @@ void Sprite::updatePoly()
         // needed in order to get color from "_quad"
         V3F_C4B_T2F_Quad tmpQuad = _quad;
 
-        for (int i=0; i<_numberOfSlices; ++i) {
+        for (int i=0; i<9; ++i) {
             setTextureCoords(texRects[i], &tmpQuad);
             setVertexCoords(verticesRects[i], &tmpQuad);
             populateTriangle(i, tmpQuad);
@@ -671,6 +673,8 @@ void Sprite::updatePoly()
 
 void Sprite::setCenterRectNormalized(const cocos2d::Rect &rectTopLeft)
 {
+    CCASSERT(_renderMode != RenderMode::POLYGON, "centerRect can't be used in polygon sprites");
+
     // FIMXE: Rect is has origin on top-left (like text coordinate).
     // but all the logic has been done using bottom-left as origin. So it is easier to invert Y
     // here, than in the rest of the places... but it is not as clean.
@@ -678,9 +682,9 @@ void Sprite::setCenterRectNormalized(const cocos2d::Rect &rectTopLeft)
     if (!_centerRectNormalized.equals(rect)) {
         _centerRectNormalized = rect;
 
-        // convert it to 1-slice
+        // convert it to 1-slice when the centerRect is not present.
         if (rect.equals(Rect(0,0,1,1))) {
-            _numberOfSlices = 1;
+            _renderMode = RenderMode::QUAD;
             free(_trianglesVertex);
             free(_trianglesIndex);
             _trianglesVertex = nullptr;
@@ -689,8 +693,8 @@ void Sprite::setCenterRectNormalized(const cocos2d::Rect &rectTopLeft)
         else
         {
             // convert it to 9-slice if it isn't already
-            if (_numberOfSlices != 9) {
-                _numberOfSlices = 9;
+            if (_renderMode != RenderMode::SLICE9) {
+                _renderMode = RenderMode::SLICE9;
                 // 9 quads + 7 exterior points = 16
                 _trianglesVertex = (V3F_C4B_T2F*) malloc(sizeof(*_trianglesVertex) * (9 + 3 + 4));
                 // 9 quads, each needs 6 vertices = 54
@@ -716,6 +720,8 @@ void Sprite::setCenterRectNormalized(const cocos2d::Rect &rectTopLeft)
 
 void Sprite::setCenterRect(const cocos2d::Rect &rectInPoints)
 {
+    CCASSERT(_renderMode != RenderMode::POLYGON, "centerRect can't be used in polygon sprites");
+
     if (!_originalContentSize.equals(Size::ZERO))
     {
         Rect rect = rectInPoints;
@@ -855,7 +861,7 @@ void Sprite::setVertexCoords(const Rect& rect, V3F_C4B_T2F_Quad* outQuad)
 
     // FIXME: Streching should be applied to the "offset" as well
     // but probably it should be calculated in the caller function. It will be tidier
-    if (_numberOfSlices == 1) {
+    if (_renderMode == RenderMode::QUAD) {
         _offsetPosition.x *= _strechFactor.x;
         _offsetPosition.y *= _strechFactor.y;
     }
@@ -1367,16 +1373,17 @@ void Sprite::updateStretchFactor()
 {
     const Size size = getContentSize();
 
-    float x_factor, y_factor;
-
-    if (_numberOfSlices == 1)
+    if (_renderMode == RenderMode::QUAD)
     {
         // If strech is disabled, calculate the strech anyway
         // since it is needed to calculate the offset
-        x_factor = size.width / _originalContentSize.width;
-        y_factor = size.height / _originalContentSize.height;
+        const float x_factor = size.width / _originalContentSize.width;
+        const float y_factor = size.height / _originalContentSize.height;
+
+        _strechFactor = Vec2(std::max(0.0f, x_factor),
+                             std::max(0.0f, y_factor));
     }
-    else
+    else if (_renderMode == RenderMode::SLICE9)
     {
         const float x1 = _rect.size.width * _centerRectNormalized.origin.x;
         const float x2 = _rect.size.width * _centerRectNormalized.size.width;
@@ -1390,14 +1397,15 @@ void Sprite::updateStretchFactor()
         const float adjustedWidth = size.width - (_originalContentSize.width - _rect.size.width);
         const float adjustedHeight = size.height - (_originalContentSize.height - _rect.size.height);
 
-        x_factor = (adjustedWidth - x1 - x3) / x2;
-        y_factor = (adjustedHeight - y1 - y3) / y2;
+        const float x_factor = (adjustedWidth - x1 - x3) / x2;
+        const float y_factor = (adjustedHeight - y1 - y3) / y2;
 
+        _strechFactor = Vec2(std::max(0.0f, x_factor),
+                             std::max(0.0f, y_factor));
     }
 
-    // sanity check:
-    _strechFactor = Vec2(std::max(0.0f, x_factor),
-                        std::max(0.0f, y_factor));
+    // else:
+    // Do nothing if renderMode is Polygon
 }
 
 void Sprite::setFlippedX(bool flippedX)
@@ -1408,7 +1416,13 @@ void Sprite::setFlippedX(bool flippedX)
 
         if (_batchNode) {
             setDirty(true);
+        } else if (_renderMode == RenderMode::POLYGON) {
+            for (ssize_t i = 0; i < _polyInfo.triangles.vertCount; i++) {
+                auto& v = _polyInfo.triangles.verts[i].vertices;
+                v.x = _contentSize.width -v.x;
+            }
         } else {
+            // RenderMode:: Quad or Slice9
             updatePoly();
         }
     }
@@ -1427,7 +1441,13 @@ void Sprite::setFlippedY(bool flippedY)
 
         if (_batchNode) {
             setDirty(true);
+        } else if (_renderMode == RenderMode::POLYGON) {
+            for (ssize_t i = 0; i < _polyInfo.triangles.vertCount; i++) {
+                auto& v = _polyInfo.triangles.verts[i].vertices;
+                v.y = _contentSize.height -v.y;
+            }
         } else {
+            // RenderMode:: Quad or Slice9
             updatePoly();
         }
     }
@@ -1535,6 +1555,7 @@ void Sprite::setSpriteFrame(SpriteFrame *spriteFrame)
     if (spriteFrame->hasPolygonInfo())
     {
         _polyInfo = spriteFrame->getPolygonInfo();
+        _renderMode = RenderMode::POLYGON;
     }
     if (spriteFrame->hasAnchorPoint())
     {
@@ -1657,6 +1678,7 @@ const PolygonInfo& Sprite::getPolygonInfo() const
 void Sprite::setPolygonInfo(const PolygonInfo& info)
 {
     _polyInfo = info;
+    _renderMode = RenderMode::POLYGON;
 }
 
 NS_CC_END

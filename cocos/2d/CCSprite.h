@@ -85,6 +85,11 @@ struct transformValues_;
 class CC_DLL Sprite : public Node, public TextureProtocol
 {
 public:
+    enum class RenderMode {
+        QUAD,
+        POLYGON,
+        SLICE9
+    };
      /** Sprite invalid index on the SpriteBatchNode. */
     static const int INDEX_NOT_INITIALIZED = -1;
 
@@ -670,7 +675,7 @@ protected:
     bool _rectRotated;                      /// Whether the texture is rotated
 
     Rect _centerRectNormalized;             /// Rectangle to implement "slice 9"
-    int _numberOfSlices;                    /// how many sprite slices: 1 or 9
+    RenderMode _renderMode;                 /// how many sprite slices: 1 or 9
     Vec2 _strechFactor;                     /// strech factor to match the contentSize. for 1- and 9- slice sprites
     Size _originalContentSize;              /// original content size
 
