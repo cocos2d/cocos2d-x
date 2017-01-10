@@ -60,6 +60,7 @@ namespace cocos2d {
                 void loadHTMLString(const std::string &string, const std::string &baseURL);
 
                 void loadURL(const std::string &url);
+                void loadURL(const std::string &url, bool cleanCachedData);
 
                 void loadFile(const std::string &fileName);
 

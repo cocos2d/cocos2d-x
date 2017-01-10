@@ -89,11 +89,18 @@ public:
     void loadHTMLString(const std::string &string, const std::string &baseURL = "");
 
     /**
-     * Loads the given URL.
+     * Loads the given URL. It doesn't clean cached data.
      *
      * @param url Content URL.
      */
     void loadURL(const std::string &url);
+
+    /**
+     * Loads the given URL with cleaning cached data or not.
+     * @param url Content URL.
+     * @cleanCachedData Whether to clean cached data.
+     */
+    void loadURL(const std::string &url, bool cleanCachedData);
 
     /**
      * Loads the given fileName.
