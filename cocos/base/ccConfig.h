@@ -296,7 +296,7 @@ THE SOFTWARE.
 /** Support JPEG or not. If your application don't use jpeg format picture, you can undefine this macro to save package size.
  */
 #ifndef CC_USE_JPEG
-#define CC_USE_JPEG  1
+#define CC_USE_JPEG  0
 #endif // CC_USE_JPEG
 
 /** Support TIFF or not. If your application don't use TIFF format picture, you can undefine this macro to save package size.
@@ -404,7 +404,7 @@ THE SOFTWARE.
  * Specify audio API.
  */
 #ifndef CC_ENABLE_NEW_AUDIO_API
-#define CC_ENABLE_NEW_AUDIO_API 0
+#define CC_ENABLE_NEW_AUDIO_API 1
 #endif
 
 /** @def CC_2D_CULLING_FUNCTION

@@ -6,9 +6,7 @@ LOCAL_MODULE := cocos2dx_internal_static
 
 LOCAL_MODULE_FILENAME := libcocos2dxinternal
 
-ifeq ($(USE_ARM_MODE),1)
 LOCAL_ARM_MODE := arm
-endif
 
 ifeq ($(TARGET_ARCH_ABI),armeabi-v7a)
 MATHNEONFILE := math/MathUtil.cpp.neon
@@ -42,8 +40,6 @@ cocos2d.cpp \
 2d/CCComponentContainer.cpp \
 2d/CCDrawNode.cpp \
 2d/CCDrawingPrimitives.cpp \
-2d/CCFastTMXLayer.cpp \
-2d/CCFastTMXTiledMap.cpp \
 2d/CCFont.cpp \
 2d/CCFontAtlas.cpp \
 2d/CCFontAtlasCache.cpp \
@@ -246,15 +242,18 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/../external/clipper \
                     $(LOCAL_PATH)/../cocos/audio/include \
                     $(LOCAL_PATH)/../../cocos2d-tooflya-sdk \
+                    $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/ui \
                     $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/entities \
                     $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/audio \
                     $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/pools \
                     $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/screens \
                     $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/translate \
+                    $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/missions \
                     $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/support \
                     $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/platform \
                     $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/platform/include \
                     $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/platform/include/analytics \
+                    $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/platform/include/facebook \
                     $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/platform/include/batch \
                     $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/platform/include/heyzap \
                     $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/platform/include/internal \
@@ -264,7 +263,8 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/platform/include/screenshot \
                     $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/platform/include/services \
                     $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/platform/include/social \
-                    $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/platform/include/vote \
+                    $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/platform/include/support \
+                    $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/platform/include/ui \
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/platform \
@@ -283,15 +283,18 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/../external/clipper \
                     $(LOCAL_PATH)/../cocos/audio/include \
                     $(LOCAL_PATH)/../../cocos2d-tooflya-sdk \
+                    $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/ui \
                     $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/entities \
                     $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/audio \
                     $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/pools \
                     $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/screens \
                     $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/translate \
+                    $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/missions \
                     $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/support \
                     $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/platform \
                     $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/platform/include \
                     $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/platform/include/analytics \
+                    $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/platform/include/facebook \
                     $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/platform/include/batch \
                     $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/platform/include/heyzap \
                     $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/platform/include/internal \
@@ -301,7 +304,8 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/platform/include/screenshot \
                     $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/platform/include/services \
                     $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/platform/include/social \
-                    $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/platform/include/vote \
+                    $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/platform/include/support \
+                    $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/platform/include/ui \
 
 LOCAL_EXPORT_LDLIBS := -lGLESv2 \
                        -llog \
@@ -335,12 +339,14 @@ include $(CLEAR_VARS)
 LOCAL_MODULE := cocos2dx_static
 LOCAL_MODULE_FILENAME := libcocos2d
 
-LOCAL_STATIC_LIBRARIES := cocostudio_static
+#LOCAL_STATIC_LIBRARIES := cocostudio_static
 LOCAL_STATIC_LIBRARIES += cocosbuilder_static
 LOCAL_STATIC_LIBRARIES += cocos3d_static
 LOCAL_STATIC_LIBRARIES += spine_static
+LOCAL_STATIC_LIBRARIES += cocos_ui_static
 #LOCAL_STATIC_LIBRARIES += cocos_network_static
 LOCAL_STATIC_LIBRARIES += audioengine_static
+LOCAL_STATIC_LIBRARIES += cocosdenshion_static
 
 include $(BUILD_STATIC_LIBRARY)
 #==============================================================
@@ -355,7 +361,7 @@ $(call import-module,webp/prebuilt/android)
 $(call import-module,3d)
 $(call import-module,audio/android)
 $(call import-module,editor-support/cocosbuilder)
-$(call import-module,editor-support/cocostudio)
+#$(call import-module,editor-support/cocostudio)
 $(call import-module,editor-support/spine)
 #$(call import-module,network)
 $(call import-module,ui)
