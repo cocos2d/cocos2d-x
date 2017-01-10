@@ -248,8 +248,9 @@ void Scene::render(Renderer* renderer, const Mat4* eyeTransforms, const Mat4* ey
 #if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
     if (_physics3DWorld && _physics3DWorld->isDebugDrawEnabled())
     {
+        Camera *physics3dDebugCamera = _physics3dDebugCamera != nullptr ? _physics3dDebugCamera: defaultCamera;
+        
         for (unsigned int i = 0; i < multiViewCount; ++i) {
-            Camera *physics3dDebugCamera = _physics3dDebugCamera != nullptr ? _physics3dDebugCamera: defaultCamera;
             if (eyeProjections)
                 physics3dDebugCamera->setAdditionalProjection(eyeProjections[i] * physics3dDebugCamera->getProjectionMatrix().getInversed());
             if (eyeTransforms)
@@ -258,13 +259,13 @@ void Scene::render(Renderer* renderer, const Mat4* eyeTransforms, const Mat4* ey
             director->loadProjectionMatrix(physics3dDebugCamera->getViewProjectionMatrix(), i);
         }
         
-        _physics3dDebugCamera->apply();
-        _physics3dDebugCamera->clearBackground();
+        physics3dDebugCamera->apply();
+        physics3dDebugCamera->clearBackground();
 
         _physics3DWorld->debugDraw(renderer);
         renderer->render();
         
-        _physics3dDebugCamera->restore();
+        physics3dDebugCamera->restore();
 
         for (unsigned int i = 0; i < multiViewCount; ++i)
             director->popProjectionMatrix(i);
