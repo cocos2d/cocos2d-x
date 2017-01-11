@@ -920,8 +920,11 @@ protected:
     void updateContentSizeWithTextureSize(const Size& size);
     
     bool isAncestorsEnabled();
-    Widget* getAncensterWidget(Node* node);
+    Widget* getAncestorWidget(Node* node);
     bool isAncestorsVisible(Node* node);
+
+    /** @deprecated Use getAncestorWidget instead. */
+    CC_DEPRECATED_ATTRIBUTE Widget* getAncensterWidget(Node* node);
 
     void cleanupWidget();
     LayoutComponent* getOrCreateLayoutComponent();

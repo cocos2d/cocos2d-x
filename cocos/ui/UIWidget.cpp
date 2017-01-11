@@ -690,7 +690,7 @@ void Widget::updateChildrenDisplayedRGBA()
 }
 
 
-Widget* Widget::getAncensterWidget(Node* node)
+Widget* Widget::getAncestorWidget(Node* node)
 {
     if (nullptr == node)
     {
@@ -709,8 +709,13 @@ Widget* Widget::getAncensterWidget(Node* node)
     }
     else
     {
-        return this->getAncensterWidget(parent->getParent());
+        return this->getAncestorWidget(parent->getParent());
     }
+}
+
+Widget* Widget::getAncensterWidget(Node* node)
+{
+    return getAncestorWidget(node);
 }
 
 bool Widget::isAncestorsVisible(Node* node)
@@ -730,7 +735,7 @@ bool Widget::isAncestorsVisible(Node* node)
 
 bool Widget::isAncestorsEnabled()
 {
-    Widget* parentWidget = this->getAncensterWidget(this);
+    Widget* parentWidget = this->getAncestorWidget(this);
     if (parentWidget == nullptr)
     {
         return true;
