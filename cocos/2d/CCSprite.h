@@ -74,16 +74,16 @@ struct transformValues_;
  *
  *  Sprite has 4 types or rendering modes:
  *
- *  - `QUAD`: Renders the sprite using 2 triangles: uses small memory, but renders empty pixels (slow)
- *  - `POLYGON`: Renders the sprite using many triangles (depending on the setting). Uses more memory, but doesn't render so much empty pixels (faster)
- *  - `SLICE9`: Renders the sprite using 9 quads (18 triangles). Useful to to scale buttons an other rectangular sprites
- *  - `BATCHNODE`: Renders the sprite using an static batch, which has some limitations (see below):
+ *  - `QUAD`: Renders the sprite using 2 triangles (1 rectangle): uses small memory, but renders empty pixels (slow)
+ *  - `POLYGON`: Renders the sprite using many triangles (depending on the setting): Uses more memory, but doesn't render so much empty pixels (faster)
+ *  - `SLICE9`: Renders the sprite using 18 triangles (9 rectangles). Useful to to scale buttons an other rectangular sprites
+ *  - `QUAD_BATCHNODE`: Renders the sprite using 2 triangles (1 rectangle) with a static batch, which has some limitations (see below)
  *
  * By default, the sprite uses `QUAD` mode. But can be changed to `POLYGON` when calling `setPolygonInfo()`. To use `SLICE9` call `setCenterRect()` or
- * `serCenterRectNormalized()`. To use `BATCHNODE` parent the sprite to a `SpriteBatchNode` object.
+ * `serCenterRectNormalized()`. To use `QUAD_BATCHNODE` parent the sprite to a `SpriteBatchNode` object.
  *
  *
- *  `BATCHNODE` limitations:
+ *  `QUAD_BATCHNODE` is deprecated and should be avoid. It has the following limitations:
  *
  *  - The Alias/Antialias property belongs to `SpriteBatchNode`, so you can't individually set the aliased property.
  *  - The Blending function property belongs to `SpriteBatchNode`, so you can't individually set the blending function property.
@@ -99,7 +99,7 @@ public:
         QUAD,
         POLYGON,
         SLICE9,
-        BATCHNODE
+        QUAD_BATCHNODE
     };
      /** Sprite invalid index on the SpriteBatchNode. */
     static const int INDEX_NOT_INITIALIZED = -1;
@@ -686,7 +686,7 @@ protected:
     bool _rectRotated;                      /// Whether the texture is rotated
 
     Rect _centerRectNormalized;             /// Rectangle to implement "slice 9"
-    RenderMode _renderMode;                 /// how many sprite slices: 1 or 9
+    RenderMode _renderMode;                 /// render mode used by the Sprite: Quad, Slice9, Polygon or Quad_Batchnode
     Vec2 _strechFactor;                     /// strech factor to match the contentSize. for 1- and 9- slice sprites
     Size _originalContentSize;              /// original content size
 
