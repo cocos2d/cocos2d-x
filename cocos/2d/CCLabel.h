@@ -673,7 +673,7 @@ protected:
     void scaleFontSizeDown(float fontSize);
     bool setTTFConfigInternal(const TTFConfig& ttfConfig);
     void setBMFontSizeInternal(float fontSize);
-    bool isHorizontalClamped(float letterPositionX, int lineInex);
+    bool isHorizontalClamped(float letterPositionX, int lineIndex);
     void restoreFontSize();
     void updateLetterSpriteScale(Sprite* sprite);
     int getFirstCharLen(const std::u16string& utf16Text, int startIndex, int textLen);
