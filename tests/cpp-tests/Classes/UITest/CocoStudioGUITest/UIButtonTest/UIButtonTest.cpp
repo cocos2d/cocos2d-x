@@ -22,6 +22,7 @@ UIButtonTests::UIButtonTests()
     ADD_TEST_CASE(UIButtonCloneTest);
     ADD_TEST_CASE(Issue12249);
     ADD_TEST_CASE(Issue17116);
+    ADD_TEST_CASE(UIButtonWithPolygonInfo);
 }
 
 // UIButtonTest
@@ -1208,6 +1209,33 @@ bool Issue17116::init()
         button->setPosition(Vec2(visibleSize.width/2, visibleSize.height/2));
         button->setOpacity(100);
         addChild(button);
+        return true;
+    }
+    return false;
+}
+
+UIButtonWithPolygonInfo::UIButtonWithPolygonInfo()
+{
+}
+
+bool UIButtonWithPolygonInfo::init()
+{
+    if (UIScene::init())
+    {
+        auto visibleSize = Director::getInstance()->getVisibleSize();
+        
+        SpriteFrameCache::getInstance()->addSpriteFramesWithFile("Images/poly_test_textures.plist");
+        auto button = ui::Button::create();
+        button->loadTextureNormal("poly_test/wheel_disc_back.png", ui::Widget::TextureResType::PLIST);
+        button->setPosition(Vec2(visibleSize.width/2 - 100, visibleSize.height/2));
+        button->setScale(0.5);
+        button->setScale9Enabled(true);
+        addChild(button);
+        
+        auto buttonCopy = button->clone();
+        button->setPosition(Vec2(visibleSize.width/2 + 100, visibleSize.height/2));
+        addChild(buttonCopy);
+        
         return true;
     }
     return false;
