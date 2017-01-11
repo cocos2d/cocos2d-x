@@ -396,7 +396,7 @@ void Sprite::setTexture(Texture2D *texture)
         }
     }
 
-    if ((_renderMode != RenderMode::BATCHNODE) && (_texture != texture))
+    if ((_renderMode != RenderMode::QUAD_BATCHNODE) && (_texture != texture))
     {
         CC_SAFE_RETAIN(texture);
         CC_SAFE_RELEASE(_texture);
@@ -440,7 +440,7 @@ void Sprite::updatePoly()
     //    the texture is stretched to the content size
     // C) 9-sliced, stretched
     //    the sprite is 9-sliced and stretched.
-    if (_renderMode == RenderMode::QUAD || _renderMode == RenderMode::BATCHNODE) {
+    if (_renderMode == RenderMode::QUAD || _renderMode == RenderMode::QUAD_BATCHNODE) {
         Rect copyRect;
         if (_strechEnabled) {
             // case B)
@@ -763,7 +763,7 @@ void Sprite::setTextureCoords(const Rect& rectInPoints)
 
 void Sprite::setTextureCoords(const Rect& rectInPoints, V3F_C4B_T2F_Quad* outQuad)
 {
-    Texture2D *tex = (_renderMode == RenderMode::BATCHNODE) ? _textureAtlas->getTexture() : _texture;
+    Texture2D *tex = (_renderMode == RenderMode::QUAD_BATCHNODE) ? _textureAtlas->getTexture() : _texture;
     if (tex == nullptr)
     {
         return;
@@ -863,7 +863,7 @@ void Sprite::setVertexCoords(const Rect& rect, V3F_C4B_T2F_Quad* outQuad)
     }
 
     // rendering using batch node
-    if (_renderMode == RenderMode::BATCHNODE)
+    if (_renderMode == RenderMode::QUAD_BATCHNODE)
     {
         // update dirty_, don't update recursiveDirty_
         setDirty(true);
@@ -946,7 +946,7 @@ void Sprite::populateTriangle(int quadIndex, const V3F_C4B_T2F_Quad& quad)
 
 void Sprite::updateTransform(void)
 {
-    CCASSERT(_renderMode == RenderMode::BATCHNODE, "updateTransform is only valid when Sprite is being rendered using an SpriteBatchNode");
+    CCASSERT(_renderMode == RenderMode::QUAD_BATCHNODE, "updateTransform is only valid when Sprite is being rendered using an SpriteBatchNode");
 
     // recalculate matrix only if it is dirty
     if( isDirty() ) {
@@ -1104,7 +1104,7 @@ void Sprite::addChild(Node *child, int zOrder, int tag)
         return;
     }
 
-    if (_renderMode == RenderMode::BATCHNODE)
+    if (_renderMode == RenderMode::QUAD_BATCHNODE)
     {
         Sprite* childSprite = dynamic_cast<Sprite*>(child);
         CCASSERT( childSprite, "CCSprite only supports Sprites as children when using SpriteBatchNode");
@@ -1129,7 +1129,7 @@ void Sprite::addChild(Node *child, int zOrder, const std::string &name)
         return;
     }
 
-    if (_renderMode == RenderMode::BATCHNODE)
+    if (_renderMode == RenderMode::QUAD_BATCHNODE)
     {
         Sprite* childSprite = dynamic_cast<Sprite*>(child);
         CCASSERT( childSprite, "CCSprite only supports Sprites as children when using SpriteBatchNode");
@@ -1152,7 +1152,7 @@ void Sprite::reorderChild(Node *child, int zOrder)
     CCASSERT(child != nullptr, "child must be non null");
     CCASSERT(_children.contains(child), "child does not belong to this");
 
-    if ((_renderMode == RenderMode::BATCHNODE) && ! _reorderChildDirty)
+    if ((_renderMode == RenderMode::QUAD_BATCHNODE) && ! _reorderChildDirty)
     {
         setReorderChildDirtyRecursively();
         _batchNode->reorderBatch(true);
@@ -1163,7 +1163,7 @@ void Sprite::reorderChild(Node *child, int zOrder)
 
 void Sprite::removeChild(Node *child, bool cleanup)
 {
-    if (_renderMode == RenderMode::BATCHNODE)
+    if (_renderMode == RenderMode::QUAD_BATCHNODE)
     {
         _batchNode->removeSpriteFromAtlas((Sprite*)(child));
     }
@@ -1173,7 +1173,7 @@ void Sprite::removeChild(Node *child, bool cleanup)
 
 void Sprite::removeAllChildrenWithCleanup(bool cleanup)
 {
-    if (_renderMode == RenderMode::BATCHNODE)
+    if (_renderMode == RenderMode::QUAD_BATCHNODE)
     {
         for(const auto &child : _children) {
             Sprite* sprite = dynamic_cast<Sprite*>(child);
@@ -1193,7 +1193,7 @@ void Sprite::sortAllChildren()
     {
         sortNodes(_children);
 
-        if (_renderMode == RenderMode::BATCHNODE)
+        if (_renderMode == RenderMode::QUAD_BATCHNODE)
         {
             for(const auto &child : _children)
                 child->sortAllChildren();
@@ -1328,7 +1328,7 @@ void Sprite::setAnchorPoint(const Vec2& anchor)
 
 void Sprite::setIgnoreAnchorPointForPosition(bool value)
 {
-    CCASSERT(_renderMode != RenderMode::BATCHNODE, "setIgnoreAnchorPointForPosition is invalid in Sprite");
+    CCASSERT(_renderMode != RenderMode::QUAD_BATCHNODE, "setIgnoreAnchorPointForPosition is invalid in Sprite");
     Node::setIgnoreAnchorPointForPosition(value);
 }
 
@@ -1340,8 +1340,8 @@ void Sprite::setVisible(bool bVisible)
 
 void Sprite::setContentSize(const Size& size)
 {
-    if (_renderMode == RenderMode::BATCHNODE || _renderMode == RenderMode::POLYGON)
-        CCLOGWARN("Sprite::setContentSize() doesn't strech the sprite when using BATCHNODE or POLYGON render modes");
+    if (_renderMode == RenderMode::QUAD_BATCHNODE || _renderMode == RenderMode::POLYGON)
+        CCLOGWARN("Sprite::setContentSize() doesn't strech the sprite when using QUAD_BATCHNODE or POLYGON render modes");
 
     Node::setContentSize(size);
 
@@ -1413,7 +1413,7 @@ void Sprite::setFlippedX(bool flippedX)
     {
         _flippedX = flippedX;
 
-        if (_renderMode == RenderMode::BATCHNODE)
+        if (_renderMode == RenderMode::QUAD_BATCHNODE)
         {
             setDirty(true);
         }
@@ -1443,7 +1443,7 @@ void Sprite::setFlippedY(bool flippedY)
     {
         _flippedY = flippedY;
 
-        if (_renderMode == RenderMode::BATCHNODE)
+        if (_renderMode == RenderMode::QUAD_BATCHNODE)
         {
             setDirty(true);
         }
@@ -1493,7 +1493,7 @@ void Sprite::updateColor(void)
     _quad.bl.colors = _quad.tl.colors = _quad.br.colors = _quad.tr.colors = color4;
 
     // renders using batch node
-    if (_renderMode == RenderMode::BATCHNODE)
+    if (_renderMode == RenderMode::QUAD_BATCHNODE)
     {
         if (_atlasIndex != INDEX_NOT_INITIALIZED)
         {
@@ -1650,7 +1650,7 @@ void Sprite::setBatchNode(SpriteBatchNode *spriteBatchNode)
 
     } else {
         // using batch
-        _renderMode = RenderMode::BATCHNODE;
+        _renderMode = RenderMode::QUAD_BATCHNODE;
         _transformToBatch = Mat4::IDENTITY;
         setTextureAtlas(_batchNode->getTextureAtlas()); // weak ref
     }
@@ -1660,7 +1660,7 @@ void Sprite::setBatchNode(SpriteBatchNode *spriteBatchNode)
 
 void Sprite::updateBlendFunc(void)
 {
-    CCASSERT(_renderMode != RenderMode::BATCHNODE, "CCSprite: updateBlendFunc doesn't work when the sprite is rendered using a SpriteBatchNode");
+    CCASSERT(_renderMode != RenderMode::QUAD_BATCHNODE, "CCSprite: updateBlendFunc doesn't work when the sprite is rendered using a SpriteBatchNode");
 
     // it is possible to have an untextured sprite
     if (! _texture || ! _texture->hasPremultipliedAlpha())
@@ -1678,7 +1678,7 @@ void Sprite::updateBlendFunc(void)
 std::string Sprite::getDescription() const
 {
     int texture_id = -1;
-    if (_renderMode == RenderMode::BATCHNODE)
+    if (_renderMode == RenderMode::QUAD_BATCHNODE)
         texture_id = _batchNode->getTextureAtlas()->getTexture()->getName();
     else
         texture_id = _texture->getName();
