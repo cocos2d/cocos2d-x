@@ -2326,20 +2326,22 @@ bool js_cocos2dx_3d_Sprite3D_createAttachSprite3DNode(JSContext *cx, uint32_t ar
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     cocos2d::Sprite3D* cobj = (cocos2d::Sprite3D *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_Sprite3D_createAttachSprite3DNode : Invalid Native Object");
-    if (argc == 2) {
+    if (argc == 3) {
         cocos2d::NodeData* arg0 = nullptr;
         cocos2d::MaterialDatas arg1;
+        std::string arg2;
         #pragma warning NO CONVERSION TO NATIVE FOR NodeData*
 		ok = false;
         #pragma warning NO CONVERSION TO NATIVE FOR MaterialDatas
 		ok = false;
+        ok &= jsval_to_std_string(cx, args.get(2), &arg2);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_3d_Sprite3D_createAttachSprite3DNode : Error processing arguments");
-        cobj->createAttachSprite3DNode(arg0, arg1);
+        cobj->createAttachSprite3DNode(arg0, arg1, arg2);
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_cocos2dx_3d_Sprite3D_createAttachSprite3DNode : wrong number of arguments: %d, was expecting %d", argc, 2);
+    JS_ReportError(cx, "js_cocos2dx_3d_Sprite3D_createAttachSprite3DNode : wrong number of arguments: %d, was expecting %d", argc, 3);
     return false;
 }
 bool js_cocos2dx_3d_Sprite3D_loadFromFile(JSContext *cx, uint32_t argc, jsval *vp)
@@ -3153,7 +3155,7 @@ void js_register_cocos2dx_3d_Sprite3D(JSContext *cx, JS::HandleObject global) {
         JS_FN("setCullFaceEnabled", js_cocos2dx_3d_Sprite3D_setCullFaceEnabled, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setTexture", js_cocos2dx_3d_Sprite3D_setTexture, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getLightMask", js_cocos2dx_3d_Sprite3D_getLightMask, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("createAttachSprite3DNode", js_cocos2dx_3d_Sprite3D_createAttachSprite3DNode, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("createAttachSprite3DNode", js_cocos2dx_3d_Sprite3D_createAttachSprite3DNode, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("loadFromFile", js_cocos2dx_3d_Sprite3D_loadFromFile, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getMaterial", js_cocos2dx_3d_Sprite3D_getMaterial, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setCullFace", js_cocos2dx_3d_Sprite3D_setCullFace, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
