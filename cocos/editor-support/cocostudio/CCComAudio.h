@@ -116,7 +116,7 @@ public:
     virtual void start() override;
     // stop the effect sound which started with latest start()
     virtual void stop() override;
-    /// @} end of PlaybleProtocol
+    /// @} end of PlayableProtocol
 
 private:
     std::string _filePath;

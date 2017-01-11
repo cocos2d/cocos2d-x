@@ -234,7 +234,7 @@ public:
     */
     static void setDelegate(UserDefault *delegate);
 
-    /** @deprecated Use getInstace() instead.
+    /** @deprecated Use getInstance() instead.
      * @js NA
      * @lua NA
      */

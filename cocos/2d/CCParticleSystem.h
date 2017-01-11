@@ -767,7 +767,7 @@ public:
     /// @name implement Playable Protocol
     virtual void start() override;
     virtual void stop() override;
-    /// @} end of PlaybleProtocol
+    /// @} end of PlayableProtocol
     
 CC_CONSTRUCTOR_ACCESS:
     /**

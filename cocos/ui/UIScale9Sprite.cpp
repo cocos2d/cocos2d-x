@@ -424,8 +424,8 @@ void Scale9Sprite::setScale9Enabled(bool enabled)
     RenderingType type = enabled ? RenderingType::SLICE : RenderingType::SIMPLE;
     setRenderingType(type);
 
-    // only enable strech when scale9 is enabled
-    // for backward compatibiliy, since Sprite streches the texture no matter the rendering type
+    // only enable stretch when scale9 is enabled
+    // for backward compatibility, since Sprite stretches the texture no matter the rendering type
     setStrechEnabled(enabled);
 }
 

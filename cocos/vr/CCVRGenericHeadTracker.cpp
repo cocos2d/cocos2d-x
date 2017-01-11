@@ -25,7 +25,7 @@
 
 // IMPORTANT
 // For iOS/Mac, this file is treated as an "Objective-C++" file.
-// To change this behvior, use the File Inspector from Xcode
+// To change this behaviour, use the File Inspector from Xcode
 
 #include "vr/CCVRGenericHeadTracker.h"
 
