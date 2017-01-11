@@ -465,7 +465,10 @@ void SpriteFrameCache::loadSpriteFrameLookupDictionaryFromFile(const std::string
         ValueVector &spriteFrameFiles = dict["spriteFrameFiles"].asValueVector();
         for (auto iter = spriteFrameFiles.begin(); iter != spriteFrameFiles.end(); ++iter)
         {
-            this->registerSpriteFramesFile(iter->asString());
+            if(FileUtils::getInstance()->isFileExist(iter->asString()))
+               this->registerSpriteFramesFile(iter->asString());
+            else
+               CCLOG("cocos2d: ERROR: Plist file does not exist. Filename: %s", filename.c_str());
         }
     }
 }
