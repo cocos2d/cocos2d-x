@@ -228,7 +228,7 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
---  whether or not contentSize streches the sprite's texture 
+--  whether or not contentSize stretches the sprite's texture 
 -- @function [parent=#Sprite] setStrechEnabled 
 -- @param self
 -- @param #bool enabled
@@ -241,7 +241,7 @@
 -- @return rect_table#rect_table ret (return value: rect_table)
         
 --------------------------------
---  returns whether or not contentSize streches the sprite's texture 
+--  returns whether or not contentSize stretches the sprite's texture 
 -- @function [parent=#Sprite] isStrechEnabled 
 -- @param self
 -- @return bool#bool ret (return value: bool)
