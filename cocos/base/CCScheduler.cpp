@@ -472,6 +472,7 @@ void Scheduler::schedulePerFrame(const ccSchedulerFunc& callback, void *target, 
                 CCLOG("warning: you CANNOT change update priority in scheduled function");
                 hashElement->entry->markedForDeletion = false;
                 hashElement->entry->paused = paused;
+                hashElement->entry->callback = callback;
                 return;
             }
             else
@@ -484,6 +485,7 @@ void Scheduler::schedulePerFrame(const ccSchedulerFunc& callback, void *target, 
         {
             hashElement->entry->markedForDeletion = false;
             hashElement->entry->paused = paused;
+            hashElement->entry->callback = callback;
             return;
         }
     }
