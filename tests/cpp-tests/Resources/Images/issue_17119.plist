@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>frames</key>
+	<dict>
+		<key>firstPic.png</key>
+		<dict>
+			<key>aliases</key>
+			<array/>
+			<key>spriteOffset</key>
+			<string>{0,-58.5}</string>
+			<key>spriteSize</key>
+			<string>{512,395}</string>
+			<key>spriteSourceSize</key>
+			<string>{512,512}</string>
+			<key>textureRect</key>
+			<string>{{1,224},{512,395}}</string>
+			<key>textureRotated</key>
+			<false/>
+			<key>triangles</key>
+			<string>0 3 4 1 2 3 0 4 5 0 1 3 6 0 5</string>
+			<key>vertices</key>
+			<string>512 512 0 512 0 460 142 385 291 310 376 253 512 117</string>
+			<key>verticesUV</key>
+			<string>513 619 1 619 1 567 143 492 292 417 377 360 513 224</string>
+		</dict>
+		<key>secondPic.png</key>
+		<dict>
+			<key>aliases</key>
+			<array/>
+			<key>spriteOffset</key>
+			<string>{0,0}</string>
+			<key>spriteSize</key>
+			<string>{512,512}</string>
+			<key>spriteSourceSize</key>
+			<string>{512,512}</string>
+			<key>textureRect</key>
+			<string>{{1,1},{512,512}}</string>
+			<key>textureRotated</key>
+			<false/>
+			<key>triangles</key>
+			<string>2 3 4 2 4 5 1 2 5 1 5 6 0 1 6</string>
+			<key>vertices</key>
+			<string>512 54 321 171 172 320 99 512 0 512 0 0 512 0</string>
+			<key>verticesUV</key>
+			<string>513 55 322 172 173 321 100 513 1 513 1 1 513 1</string>
+		</dict>
+	</dict>
+	<key>metadata</key>
+	<dict>
+		<key>format</key>
+		<integer>3</integer>
+		<key>pixelFormat</key>
+		<string>RGBA8888</string>
+		<key>premultiplyAlpha</key>
+		<false/>
+		<key>realTextureFileName</key>
+		<string>issue_17119.png</string>
+		<key>size</key>
+		<string>{514,620}</string>
+		<key>smartupdate</key>
+		<string>$TexturePacker:SmartUpdate:4b00c1e9acb2f5b1804fe6d0b9da063c:8827ba6ff25dd56e8008db6ab418b2fa:96fb3d46aab20ec9eb9704de1ab972b6$</string>
+		<key>textureFileName</key>
+		<string>issue_17119.png</string>
+	</dict>
+</dict>
+</plist>
