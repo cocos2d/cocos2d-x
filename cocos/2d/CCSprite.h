@@ -685,7 +685,7 @@ protected:
     bool _rectRotated;                      /// Whether the texture is rotated
 
     Rect _centerRectNormalized;             /// Rectangle to implement "slice 9"
-    RenderMode _renderMode;                 /// how many sprite slices: 1 or 9
+    RenderMode _renderMode;                 /// render mode used by the Sprite: Quad, Slice9, Polygon or Quad_Batchnode
     Vec2 _strechFactor;                     /// strech factor to match the contentSize. for 1- and 9- slice sprites
     Size _originalContentSize;              /// original content size
 
