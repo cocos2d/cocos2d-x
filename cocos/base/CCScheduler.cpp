@@ -465,7 +465,7 @@ void Scheduler::schedulePerFrame(const ccSchedulerFunc& callback, void *target, 
     if (hashElement)
     {
         // check if priority has changed
-        if ((*hashElement->list)->priority != priority)
+        if (hashElement->entry->priority != priority)
         {
             if (_updateHashLocked)
             {
