@@ -46,6 +46,8 @@ install_glfw()
   clean_tmp_file
 }
 
+#try to remove glfw3
+sudo apt-get purge libglfw3 libglfw3-dev
 
 install_glfw
 
