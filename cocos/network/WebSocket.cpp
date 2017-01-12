@@ -51,14 +51,81 @@
 
 #define  LOG_TAG    "WebSocket.cpp"
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+// log, CCLOG aren't threadsafe, since we uses sub threads for parsing pcm data, threadsafe log output
+// is needed. Define the following macros (ALOGV, ALOGD, ALOGI, ALOGW, ALOGE) for threadsafe log output.
+
+//FIXME: Move _winLog, winLog to a separated file
+static void _winLog(const char *format, va_list args)
+{
+    static const int MAX_LOG_LENGTH = 16 * 1024;
+    int bufferSize = MAX_LOG_LENGTH;
+    char* buf = nullptr;
+
+    do
+    {
+        buf = new (std::nothrow) char[bufferSize];
+        if (buf == nullptr)
+            return; // not enough memory
+
+        int ret = vsnprintf(buf, bufferSize - 3, format, args);
+        if (ret < 0)
+        {
+            bufferSize *= 2;
+
+            delete[] buf;
+        }
+        else
+            break;
+
+    } while (true);
+
+    strcat(buf, "\n");
+
+    int pos = 0;
+    int len = strlen(buf);
+    char tempBuf[MAX_LOG_LENGTH + 1] = { 0 };
+    WCHAR wszBuf[MAX_LOG_LENGTH + 1] = { 0 };
+
+    do
+    {
+        std::copy(buf + pos, buf + pos + MAX_LOG_LENGTH, tempBuf);
+
+        tempBuf[MAX_LOG_LENGTH] = 0;
+
+        MultiByteToWideChar(CP_UTF8, 0, tempBuf, -1, wszBuf, sizeof(wszBuf));
+        OutputDebugStringW(wszBuf);
+
+        pos += MAX_LOG_LENGTH;
+
+    } while (pos < len);
+
+    delete[] buf;
+}
+
+static void wsLog(const char * format, ...)
+{
+    va_list args;
+    va_start(args, format);
+    _winLog(format, args);
+    va_end(args);
+}
+
+#else
+#define wsLog printf
+#endif
+
+#define QUOTEME_(x) #x
+#define QUOTEME(x) QUOTEME_(x)
+
 // Since CCLOG isn't thread safe, we uses LOGD for multi-thread logging.
 #if COCOS2D_DEBUG > 0
     #ifdef ANDROID
         #define LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG, LOG_TAG,__VA_ARGS__)
         #define LOGE(...)  __android_log_print(ANDROID_LOG_ERROR, LOG_TAG,__VA_ARGS__)
     #else
-        #define LOGD(...) printf(__VA_ARGS__)
-        #define LOGE(...) printf(__VA_ARGS__)
+        #define LOGD(fmt, ...) wsLog("D/" LOG_TAG " (" QUOTEME(__LINE__) "): " fmt "", ##__VA_ARGS__)
+        #define LOGE(fmt, ...) wsLog("E/" LOG_TAG " (" QUOTEME(__LINE__) "): " fmt "", ##__VA_ARGS__)
     #endif
 #else
     #define LOGD(...)
@@ -91,11 +158,7 @@ static void printWebSocketLog(int level, const char *line)
         break;
     }
 
-#ifdef ANDROID
-    __android_log_print(ANDROID_LOG_DEBUG, "libwebsockets", "%s%s", buf, line);
-#else
-    printf("%s%s\n", buf, line);
-#endif
+    LOGD("%s%s\n", buf, line);
 
 #endif // #if COCOS2D_DEBUG > 0
 }
@@ -173,7 +236,7 @@ struct WsCache
 };
 
 static struct lws_protocols __defaultProtocols[2];
-static std::vector<WsCache*> __wsProtocolVHostCache;
+static std::vector<struct WsCache*> __wsProtocolVHostCache;
 
 static lws_context_creation_info convertToContextCreationInfo(const struct lws_protocols* protocols)
 {
@@ -305,7 +368,7 @@ WsThreadHelper::~WsThreadHelper()
 bool WsThreadHelper::createWebSocketThread()
 {
     // Creates websocket thread
-    _subThreadInstance = new std::thread(&WsThreadHelper::wsThreadEntryFunc, this);
+    _subThreadInstance = new (std::nothrow) std::thread(&WsThreadHelper::wsThreadEntryFunc, this);
     return true;
 }
 
@@ -743,9 +806,9 @@ WebSocket::State WebSocket::getReadyState()
     return _readyState;
 }
 
-WsCache* WebSocket::getOrCreateVhost(struct lws_protocols* protocols)
+struct WsCache* WebSocket::getOrCreateVhost(struct lws_protocols* protocols)
 {
-    WsCache* ret = nullptr;
+    struct WsCache* ret = nullptr;
 
     for (auto& cache : __wsProtocolVHostCache)
     {
@@ -774,7 +837,7 @@ WsCache* WebSocket::getOrCreateVhost(struct lws_protocols* protocols)
     {
         struct lws_protocols* copied = deepCopyProtocols(protocols);
         lws_context_creation_info info = convertToContextCreationInfo(copied);
-        ret = new WsCache();
+        ret = new (std::nothrow) struct WsCache();
 
         if (_SSLConnection != 0)
         {
@@ -895,7 +958,7 @@ void WebSocket::onClientOpenConnectionRequest()
         _readyState = State::CONNECTING;
         _readyStateMutex.unlock();
 
-        WsCache* cache = nullptr;
+        struct WsCache* cache = nullptr;
 
         if (_protocols != nullptr)
         {

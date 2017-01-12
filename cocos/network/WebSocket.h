@@ -55,7 +55,7 @@ class EventListenerCustom;
 namespace network {
 
 class WsThreadHelper;
-class WsCache;
+struct WsCache;
 
 /**
  * WebSocket is wrapper of the libwebsockets-protocol, let the develop could call the websocket easily.
@@ -225,7 +225,7 @@ private:
     int onConnectionError();
     int onConnectionClosed();
 
-    WsCache* getOrCreateVhost(struct lws_protocols* protocols);
+    struct WsCache* getOrCreateVhost(struct lws_protocols* protocols);
 
 private:
 
