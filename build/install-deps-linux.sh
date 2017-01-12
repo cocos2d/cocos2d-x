@@ -12,8 +12,8 @@ fi
 sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y > /dev/null
 sudo apt-get update
 
-#try to remove glfw2
-sudo apt-get remove libglfw2
+#try to remove glfw3
+sudo apt-get purge libglfw3 libglfw3-dev
 
 DEPENDS='libx11-dev'
 DEPENDS+=' libxmu-dev'
