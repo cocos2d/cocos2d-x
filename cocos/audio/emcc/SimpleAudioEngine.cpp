@@ -73,8 +73,7 @@ void SimpleAudioEngine::preloadBackgroundMusic(const char* filePath)
 
 void SimpleAudioEngine::playBackgroundMusic(const char* filePath, bool loop)
 {
-    std::string fullPath = cocos2d::FileUtils::getInstance()->fullPathForFilename(filePath);
-    SimpleAudioEngine_playBackgroundMusic(fullPath.c_str(), loop);
+    SimpleAudioEngine_playBackgroundMusic(filePath, loop);
 }
 
 void SimpleAudioEngine::stopBackgroundMusic(bool releaseData)
