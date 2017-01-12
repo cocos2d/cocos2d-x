@@ -1048,6 +1048,7 @@ ParticleTests::ParticleTests()
     ADD_TEST_CASE(ParticleResetTotalParticles);
 
     ADD_TEST_CASE(ParticleIssue12310);
+    ADD_TEST_CASE(ParticleSpriteFrame);
 }
 
 ParticleDemo::~ParticleDemo(void)
@@ -2049,4 +2050,34 @@ void ParticleIssue12310::onEnter()
 std::string ParticleIssue12310::subtitle() const
 {
     return "You should see two Particle Emitters using different texture.";
+}
+
+//------------------------------------------------------------------
+//
+// ParticleSpriteFrame
+//
+//------------------------------------------------------------------
+void ParticleSpriteFrame::onEnter()
+{
+    ParticleDemo::onEnter();
+
+    _emitter = ParticleSmoke::create();
+    _emitter->retain();
+    _background->addChild(_emitter, 10);
+
+    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("Particles/SpriteFrame.plist");
+
+    _emitter->setDisplayFrame( SpriteFrameCache::getInstance()->getSpriteFrameByName("dot.png") );
+
+    setEmitterPosition();
+}
+
+std::string ParticleSpriteFrame::title() const
+{
+    return "Particle from SpriteFrame";
+}
+
+std::string ParticleSpriteFrame::subtitle() const
+{
+    return "Should not use entire texture atlas";
 }
