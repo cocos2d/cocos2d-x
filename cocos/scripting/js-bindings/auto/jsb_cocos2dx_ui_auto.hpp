@@ -346,6 +346,7 @@ bool js_cocos2dx_ui_Text_setFontSize(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Text_getShadowColor(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Text_setTextColor(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Text_enableGlow(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_Text_getLetter(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Text_getTextVerticalAlignment(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Text_getTextAreaSize(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Text_setTextHorizontalAlignment(JSContext *cx, uint32_t argc, jsval *vp);
