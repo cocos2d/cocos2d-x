@@ -44,12 +44,14 @@
 -- @return string#string ret (return value: string)
         
 --------------------------------
--- Gets string from a file.
--- @function [parent=#FileUtils] getStringFromFile 
+-- @overload self, string, function         
+-- @overload self, string         
+-- @function [parent=#FileUtils] getStringFromFile
 -- @param self
--- @param #string filename
--- @return string#string ret (return value: string)
-        
+-- @param #string path
+-- @param #function callback
+-- @return FileUtils#FileUtils self (return value: cc.FileUtils)
+
 --------------------------------
 -- Sets the filenameLookup dictionary.<br>
 -- param filenameLookupDict The dictionary for replacing filename.<br>
@@ -60,14 +62,14 @@
 -- @return FileUtils#FileUtils self (return value: cc.FileUtils)
         
 --------------------------------
--- Removes a file.<br>
--- param filepath The full path of the file, it must be an absolute path.<br>
--- return True if the file have been removed successfully, false if not.
--- @function [parent=#FileUtils] removeFile 
+-- @overload self, string, function         
+-- @overload self, string         
+-- @function [parent=#FileUtils] removeFile
 -- @param self
 -- @param #string filepath
--- @return bool#bool ret (return value: bool)
-        
+-- @param #function callback
+-- @return FileUtils#FileUtils self (return value: cc.FileUtils)
+
 --------------------------------
 -- Checks whether the path is an absolute path.<br>
 -- note On Android, if the parameter passed in is relative to "assets/", this method will treat it as an absolute path.<br>
@@ -80,14 +82,17 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- @overload self, string, string         
+-- @overload self, string, string, string, function         
 -- @overload self, string, string, string         
+-- @overload self, string, string         
+-- @overload self, string, string, function         
 -- @function [parent=#FileUtils] renameFile
 -- @param self
 -- @param #string path
 -- @param #string oldname
 -- @param #string name
--- @return bool#bool ret (return value: bool)
+-- @param #function callback
+-- @return FileUtils#FileUtils self (return value: cc.FileUtils)
 
 --------------------------------
 -- Loads the filenameLookup dictionary from the contents of a filename.<br>
@@ -179,15 +184,14 @@
 -- @return map_table#map_table ret (return value: map_table)
         
 --------------------------------
--- Retrieve the file size.<br>
--- note If a relative path was passed in, it will be inserted a default root path at the beginning.<br>
--- param filepath The path of the file, it could be a relative or absolute path.<br>
--- return The file size.
--- @function [parent=#FileUtils] getFileSize 
+-- @overload self, string, function         
+-- @overload self, string         
+-- @function [parent=#FileUtils] getFileSize
 -- @param self
 -- @param #string filepath
--- @return long#long ret (return value: long)
-        
+-- @param #function callback
+-- @return FileUtils#FileUtils self (return value: cc.FileUtils)
+
 --------------------------------
 --  Converts the contents of a file to a ValueMap.<br>
 -- This method is used internally.
@@ -198,14 +202,14 @@
 -- @return map_table#map_table ret (return value: map_table)
         
 --------------------------------
--- Removes a directory.<br>
--- param dirPath  The full path of the directory, it must be an absolute path.<br>
--- return True if the directory have been removed successfully, false if not.
--- @function [parent=#FileUtils] removeDirectory 
+-- @overload self, string, function         
+-- @overload self, string         
+-- @function [parent=#FileUtils] removeDirectory
 -- @param self
 -- @param #string dirPath
--- @return bool#bool ret (return value: bool)
-        
+-- @param #function callback
+-- @return FileUtils#FileUtils self (return value: cc.FileUtils)
+
 --------------------------------
 -- Sets the array of search paths.<br>
 -- You can use this array to modify the search path of the resources.<br>
@@ -227,16 +231,15 @@
 -- @return FileUtils#FileUtils self (return value: cc.FileUtils)
         
 --------------------------------
--- write a string into a file<br>
--- param dataStr the string want to save<br>
--- param fullPath The full path to the file you want to save a string<br>
--- return bool True if write success
--- @function [parent=#FileUtils] writeStringToFile 
+-- @overload self, string, string, function         
+-- @overload self, string, string         
+-- @function [parent=#FileUtils] writeStringToFile
 -- @param self
 -- @param #string dataStr
 -- @param #string fullPath
--- @return bool#bool ret (return value: bool)
-        
+-- @param #function callback
+-- @return FileUtils#FileUtils self (return value: cc.FileUtils)
+
 --------------------------------
 -- Sets the array that contains the search order of the resources.<br>
 -- param searchResolutionsOrder The source array that contains the search order of the resources.<br>
@@ -269,26 +272,24 @@
 -- @return FileUtils#FileUtils self (return value: cc.FileUtils)
         
 --------------------------------
--- write ValueVector into a plist file<br>
--- param vecData the ValueVector want to save<br>
--- param fullPath The full path to the file you want to save a string<br>
--- return bool
--- @function [parent=#FileUtils] writeValueVectorToFile 
+-- @overload self, array_table, string, function         
+-- @overload self, array_table, string         
+-- @function [parent=#FileUtils] writeValueVectorToFile
 -- @param self
 -- @param #array_table vecData
 -- @param #string fullPath
--- @return bool#bool ret (return value: bool)
-        
+-- @param #function callback
+-- @return FileUtils#FileUtils self (return value: cc.FileUtils)
+
 --------------------------------
--- Checks whether a file exists.<br>
--- note If a relative path was passed in, it will be inserted a default root path at the beginning.<br>
--- param filename The path of the file, it could be a relative or absolute path.<br>
--- return True if the file exists, false if not.
--- @function [parent=#FileUtils] isFileExist 
+-- @overload self, string, function         
+-- @overload self, string         
+-- @function [parent=#FileUtils] isFileExist
 -- @param self
 -- @param #string filename
--- @return bool#bool ret (return value: bool)
-        
+-- @param #function callback
+-- @return FileUtils#FileUtils self (return value: cc.FileUtils)
+
 --------------------------------
 -- Purges full path caches.
 -- @function [parent=#FileUtils] purgeCachedEntries 
@@ -319,16 +320,15 @@
 -- @return string#string ret (return value: string)
         
 --------------------------------
--- write ValueMap into a plist file<br>
--- param dict the ValueMap want to save<br>
--- param fullPath The full path to the file you want to save a string<br>
--- return bool
--- @function [parent=#FileUtils] writeValueMapToFile 
+-- @overload self, map_table, string, function         
+-- @overload self, map_table, string         
+-- @function [parent=#FileUtils] writeValueMapToFile
 -- @param self
 -- @param #map_table dict
 -- @param #string fullPath
--- @return bool#bool ret (return value: bool)
-        
+-- @param #function callback
+-- @return FileUtils#FileUtils self (return value: cc.FileUtils)
+
 --------------------------------
 -- Gets filename extension is a suffix (separated from the base filename by a dot) in lower case.<br>
 -- Examples of filename extensions are .png, .jpeg, .exe, .dmg and .txt.<br>
@@ -354,14 +354,14 @@
 -- @return FileUtils#FileUtils self (return value: cc.FileUtils)
         
 --------------------------------
--- Checks whether the path is a directory.<br>
--- param dirPath The path of the directory, it could be a relative or an absolute path.<br>
--- return True if the directory exists, false if not.
--- @function [parent=#FileUtils] isDirectoryExist 
+-- @overload self, string, function         
+-- @overload self, string         
+-- @function [parent=#FileUtils] isDirectoryExist
 -- @param self
--- @param #string dirPath
--- @return bool#bool ret (return value: bool)
-        
+-- @param #string fullPath
+-- @param #function callback
+-- @return FileUtils#FileUtils self (return value: cc.FileUtils)
+
 --------------------------------
 -- Set default resource root path.
 -- @function [parent=#FileUtils] setDefaultResourceRootPath 
@@ -379,14 +379,14 @@
 -- @return array_table#array_table ret (return value: array_table)
         
 --------------------------------
--- Creates a directory.<br>
--- param dirPath The path of the directory, it must be an absolute path.<br>
--- return True if the directory have been created successfully, false if not.
--- @function [parent=#FileUtils] createDirectory 
+-- @overload self, string, function         
+-- @overload self, string         
+-- @function [parent=#FileUtils] createDirectory
 -- @param self
 -- @param #string dirPath
--- @return bool#bool ret (return value: bool)
-        
+-- @param #function callback
+-- @return FileUtils#FileUtils self (return value: cc.FileUtils)
+
 --------------------------------
 -- Gets the writable path.<br>
 -- return  The path that can be write/read a file in
