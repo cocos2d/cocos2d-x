@@ -20,6 +20,7 @@ require "DrawPrimitivesTest/DrawPrimitivesTest"
 require "EffectsTest/EffectsTest"
 require "EffectsAdvancedTest/EffectsAdvancedTest"
 require "ExtensionTest/ExtensionTest"
+require "FileUtilsTest/FileUtilsTest"
 require "FontTest/FontTest"
 require "IntervalTest/IntervalTest"
 require "KeypadTest/KeypadTest"
@@ -111,6 +112,7 @@ local _allTests = {
     { isSupported = true,  name = "EffectAdvancedTest"     , create_func   =        EffectAdvancedTestMain  },
     { isSupported = true,  name = "ExtensionsTest"         , create_func=        ExtensionsTestMain      },
     { isSupported = true,  name = "FastTiledMapTest"       , create_func   =              FastTiledMapTestMain},
+    { isSupported = true,  name = "FileUtilsTest"          , create_func   =              FileUtilsTestMain},
     { isSupported = true,  name = "FontTest"               , create_func   =              FontTestMain      },
     { isSupported = true,  name = "IntervalTest"           , create_func   =              IntervalTestMain  },
     { isSupported = true,  name = "KeypadTest"             , create_func=                KeypadTestMain  }, 
