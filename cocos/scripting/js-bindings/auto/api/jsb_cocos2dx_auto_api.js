@@ -7061,26 +7061,28 @@ str
 
 /**
  * @method getStringFromFile
- * @param {String} arg0
- * @return {String}
- */
-getStringFromFile : function (
-str 
+* @param {String|String} str
+* @param {function} func
+* @return {String}
+*/
+getStringFromFile : function(
+str,
+func 
 )
 {
-    return ;
 },
 
 /**
  * @method removeFile
- * @param {String} arg0
- * @return {bool}
- */
-removeFile : function (
-str 
+* @param {String|String} str
+* @param {function} func
+* @return {bool}
+*/
+removeFile : function(
+str,
+func 
 )
 {
-    return false;
 },
 
 /**
@@ -7097,18 +7099,19 @@ str
 
 /**
  * @method renameFile
-* @param {String|String} str
-* @param {String|String} str
-* @param {String} str
+* @param {String|String|String|String} str
+* @param {String|String|String|String} str
+* @param {String|String|function} str
+* @param {function} func
 * @return {bool|bool}
 */
 renameFile : function(
 str,
 str,
-str 
+str,
+func 
 )
 {
-    return false;
 },
 
 /**
@@ -7193,14 +7196,15 @@ str
 
 /**
  * @method getFileSize
- * @param {String} arg0
- * @return {long}
- */
-getFileSize : function (
-str 
+* @param {String|String} str
+* @param {function} func
+* @return {long}
+*/
+getFileSize : function(
+str,
+func 
 )
 {
-    return 0;
 },
 
 /**
@@ -7219,14 +7223,15 @@ int
 
 /**
  * @method removeDirectory
- * @param {String} arg0
- * @return {bool}
- */
-removeDirectory : function (
-str 
+* @param {String|String} str
+* @param {function} func
+* @return {bool}
+*/
+removeDirectory : function(
+str,
+func 
 )
 {
-    return false;
 },
 
 /**
@@ -7241,16 +7246,17 @@ array
 
 /**
  * @method writeStringToFile
- * @param {String} arg0
- * @param {String} arg1
- * @return {bool}
- */
-writeStringToFile : function (
-str, 
-str 
+* @param {String|String} str
+* @param {String|String} str
+* @param {function} func
+* @return {bool}
+*/
+writeStringToFile : function(
+str,
+str,
+func 
 )
 {
-    return false;
 },
 
 /**
@@ -7289,28 +7295,30 @@ bool
 
 /**
  * @method writeValueVectorToFile
- * @param {Array} arg0
- * @param {String} arg1
- * @return {bool}
- */
-writeValueVectorToFile : function (
-array, 
-str 
+* @param {Array|Array} array
+* @param {String|String} str
+* @param {function} func
+* @return {bool}
+*/
+writeValueVectorToFile : function(
+array,
+str,
+func 
 )
 {
-    return false;
 },
 
 /**
  * @method isFileExist
- * @param {String} arg0
- * @return {bool}
- */
-isFileExist : function (
-str 
+* @param {String|String} str
+* @param {function} func
+* @return {bool}
+*/
+isFileExist : function(
+str,
+func 
 )
 {
-    return false;
 },
 
 /**
@@ -7349,16 +7357,17 @@ str
 
 /**
  * @method writeValueMapToFile
- * @param {map_object} arg0
- * @param {String} arg1
- * @return {bool}
- */
-writeValueMapToFile : function (
-map, 
-str 
+* @param {map_object|map_object} map
+* @param {String|String} str
+* @param {function} func
+* @return {bool}
+*/
+writeValueMapToFile : function(
+map,
+str,
+func 
 )
 {
-    return false;
 },
 
 /**
@@ -7395,14 +7404,15 @@ bool
 
 /**
  * @method isDirectoryExist
- * @param {String} arg0
- * @return {bool}
- */
-isDirectoryExist : function (
-str 
+* @param {String|String} str
+* @param {function} func
+* @return {bool}
+*/
+isDirectoryExist : function(
+str,
+func 
 )
 {
-    return false;
 },
 
 /**
@@ -7427,14 +7437,15 @@ getSearchResolutionsOrder : function (
 
 /**
  * @method createDirectory
- * @param {String} arg0
- * @return {bool}
- */
-createDirectory : function (
-str 
+* @param {String|String} str
+* @param {function} func
+* @return {bool}
+*/
+createDirectory : function(
+str,
+func 
 )
 {
-    return false;
 },
 
 /**
