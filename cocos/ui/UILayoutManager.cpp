@@ -187,8 +187,11 @@ LinearHorizontalAutoLayoutManager* LinearHorizontalAutoLayoutManager::create()
 
 void LinearHorizontalAutoLayoutManager::doLayout(LayoutProtocol* layout)
 {
+    if(_dimensions.width == -1 && _dimensions.height == -1)
+        _dimensions = layout->getLayoutContentSize();
+    
     Size layoutSize;
-    float layoutHeight = layout->getLayoutContentSize().height;
+    float layoutHeight = _dimensions.height;
     Vector<Node*> container = layout->getLayoutElements();
     float spacing = layout->getSpacing();
     for (auto& subWidget : container)
@@ -271,8 +274,11 @@ LinearVerticalAutoLayoutManager* LinearVerticalAutoLayoutManager::create()
 
 void LinearVerticalAutoLayoutManager::doLayout(LayoutProtocol* layout)
 {
+    if(_dimensions.width == -1 && _dimensions.height == -1)
+        _dimensions = layout->getLayoutContentSize();
+
     Size layoutSize;
-    float layoutWidth = layout->getLayoutContentSize().width;
+    float layoutWidth = _dimensions.width;
     Vector<Node*> container = layout->getLayoutElements();
     float spacing = layout->getSpacing();
     for (auto& subWidget : container)

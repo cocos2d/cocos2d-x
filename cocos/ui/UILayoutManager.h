@@ -28,6 +28,7 @@
 #include "base/CCRef.h"
 #include "base/CCVector.h"
 #include "ui/GUIExport.h"
+#include "math/CCGeometry.h"
 
 /**
  * @addtogroup ui
@@ -96,23 +97,25 @@ private:
 class CC_GUI_DLL LinearVerticalAutoLayoutManager : public LayoutManager
 {
 private:
-    LinearVerticalAutoLayoutManager(){};
+    LinearVerticalAutoLayoutManager():_dimensions(-1, -1){};
     virtual ~LinearVerticalAutoLayoutManager(){};
     static LinearVerticalAutoLayoutManager* create();
     virtual void doLayout(LayoutProtocol *layout) override;
     
     friend class Layout;
+    Size _dimensions;
 };
 
 class CC_GUI_DLL LinearHorizontalAutoLayoutManager : public LayoutManager
 {
 private:
-    LinearHorizontalAutoLayoutManager(){};
+    LinearHorizontalAutoLayoutManager():_dimensions(-1, -1){};
     virtual ~LinearHorizontalAutoLayoutManager(){};
     static LinearHorizontalAutoLayoutManager* create();
     virtual void doLayout(LayoutProtocol *layout) override;
     
     friend class Layout;
+    Size _dimensions;
 };
 
 /**
