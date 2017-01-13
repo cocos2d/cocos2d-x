@@ -672,7 +672,7 @@ void AssetsManagerEx::updateSucceed()
 {
     // Every thing is correctly downloaded, do the following
     // 1. rename temporary manifest to valid manifest
-    _fileUtils->renameFile(_storagePath, TEMP_MANIFEST_FILENAME, MANIFEST_FILENAME);
+    _fileUtils->renameFile(_storagePath, std::string(TEMP_MANIFEST_FILENAME), std::string(MANIFEST_FILENAME));
     // 2. swap the localManifest
     if (_localManifest != nullptr)
         _localManifest->release();
