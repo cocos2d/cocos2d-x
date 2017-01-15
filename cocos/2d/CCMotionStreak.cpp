@@ -51,6 +51,7 @@ MotionStreak::MotionStreak()
 , _vertices(nullptr)
 , _colorPointer(nullptr)
 , _texCoords(nullptr)
+, _followNode(nullptr)
 {
 }
 
