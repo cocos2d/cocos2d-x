@@ -901,7 +901,7 @@ void Scheduler::update(float dt)
     for (auto &e : _updateDeleteVector)
         CC_SAFE_DELETE(e);
 
-    _updateDeleteVector.clear;
+    _updateDeleteVector.clear();
 
     _updateHashLocked = false;
     _currentTarget = nullptr;
