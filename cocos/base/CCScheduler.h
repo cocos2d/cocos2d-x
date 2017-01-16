@@ -526,6 +526,7 @@ protected:
     struct _listEntry *_updates0List;            // list priority == 0
     struct _listEntry *_updatesPosList;        // list priority > 0
     struct _hashUpdateEntry *_hashForUpdates; // hash used to fetch quickly the list entries for pause,delete,etc
+    std::vector<struct _listEntry *> _updateDeleteVector; // the vector holds list entries that needs to be deleted after update
 
     // Used for "selectors with interval"
     struct _hashSelectorEntry *_hashForTimers;
