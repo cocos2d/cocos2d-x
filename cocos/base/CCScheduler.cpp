@@ -465,7 +465,7 @@ void Scheduler::schedulePerFrame(const ccSchedulerFunc& callback, void *target, 
     if (hashElement)
     {
         // change priority: should unschedule it first
-        if ((*hashElement->list)->priority != priority)
+        if (hashElement->entry->priority != priority)
         {
             unscheduleUpdate(target);
         }
@@ -899,7 +899,7 @@ void Scheduler::update(float dt)
  
     // delete all updates that are removed in update
     for (auto &e : _updateDeleteVector)
-        CC_SAFE_DELETE(e);
+        delete e;
 
     _updateDeleteVector.clear();
 
