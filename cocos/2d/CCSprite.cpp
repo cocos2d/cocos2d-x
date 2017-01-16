@@ -669,7 +669,10 @@ void Sprite::updatePoly()
 
 void Sprite::setCenterRectNormalized(const cocos2d::Rect &rectTopLeft)
 {
-    CCASSERT(_renderMode == RenderMode::QUAD || _renderMode == RenderMode::SLICE9, "centerRect can only be used with SLICE9 or QUAD render modes");
+    if (_renderMode != RenderMode::QUAD && _renderMode != RenderMode::SLICE9) {
+        CCLOGWARN("Warning: Sprite::setCenterRectNormalized() only works with QUAD and SLICE9 render modes");
+        return;
+    }
 
     // FIMXE: Rect is has origin on top-left (like text coordinate).
     // but all the logic has been done using bottom-left as origin. So it is easier to invert Y
@@ -716,7 +719,10 @@ void Sprite::setCenterRectNormalized(const cocos2d::Rect &rectTopLeft)
 
 void Sprite::setCenterRect(const cocos2d::Rect &rectInPoints)
 {
-    CCASSERT(_renderMode == RenderMode::QUAD || _renderMode == RenderMode::SLICE9, "centerRect can only be used with SLICE9 or QUAD render modes");
+    if (_renderMode != RenderMode::QUAD && _renderMode != RenderMode::SLICE9) {
+        CCLOGWARN("Warning: Sprite::setCenterRect() only works with QUAD and SLICE9 render modes");
+        return;
+    }
 
     if (!_originalContentSize.equals(Size::ZERO))
     {
