@@ -30,6 +30,7 @@ SchedulerTests::SchedulerTests()
     ADD_TEST_CASE(ScheduleUpdatePriority);
     ADD_TEST_CASE(SchedulerIssue10232);
     ADD_TEST_CASE(SchedulerRemoveAllFunctionsToBePerformedInCocosThread)
+    ADD_TEST_CASE(SchedulerIssue17149);
 };
 
 //------------------------------------------------------------------
@@ -1192,4 +1193,99 @@ std::string SchedulerRemoveAllFunctionsToBePerformedInCocosThread::title() const
 std::string SchedulerRemoveAllFunctionsToBePerformedInCocosThread::subtitle() const
 {
     return "Sprite should be visible";
+}
+
+//class SchedulerIssue17149: public SchedulerTestLayer
+//{
+//public:
+//    CREATE_FUNC(SchedulerIssue17149);
+//    
+//    virtual std::string title() const override;
+//    void onEnter() override;
+//    void update(float dt) override;
+//    
+//private:
+//    class ClassA
+//    {
+//    public:
+//        void update(float dt);
+//        
+//        int _member1;
+//        int _member2;
+//        int _member3;
+//    };
+//    
+//    class ClassB
+//    {
+//        void update(float dt);
+//        int _member1;
+//        int _member2;
+//        int _member3;
+//    };
+//};
+
+// SchedulerIssue17149: https://github.com/cocos2d/cocos2d-x/issues/17149
+
+SchedulerIssue17149::SchedulerIssue17149()
+{
+    _memoryPool = malloc(2018);
+}
+
+SchedulerIssue17149::~SchedulerIssue17149()
+{
+    free(_memoryPool);
+}
+
+std::string SchedulerIssue17149::title() const
+{
+    return "Issue #17149";
+}
+
+std::string SchedulerIssue17149::subtitle() const
+{
+    return "see console, result should be 'i'm ClassB: 456'";
+}
+
+void SchedulerIssue17149::onEnter()
+{
+    SchedulerTestLayer::onEnter();
+    scheduleUpdate();
+}
+
+void SchedulerIssue17149::update(float dt)
+{
+    auto classa = new (_memoryPool) ClassA();
+    CCLOG("Address one: %p", classa);
+    Director::getInstance()->getScheduler()->scheduleUpdate(classa, 1, false);
+    Director::getInstance()->getScheduler()->unscheduleUpdate(classa);
+    
+    auto classb = new (_memoryPool) ClassB();
+    CCLOG("Address one: %p", classb);
+    Director::getInstance()->getScheduler()->scheduleUpdate(classb, 1, false);
+    
+    unscheduleUpdate();
+}
+
+SchedulerIssue17149::ClassA::ClassA()
+: _member1(1)
+, _member2(2)
+, _member3(3)
+{}
+
+void SchedulerIssue17149::ClassA::update(float dt)
+{
+    CCLOG("i'm ClassA: %d%d%d", _member1, _member2, _member3);
+}
+
+SchedulerIssue17149::ClassB::ClassB()
+: _member1(4)
+, _member2(5)
+, _member3(6)
+{}
+
+void SchedulerIssue17149::ClassB::update(float dt)
+{
+    CCLOG("i'm ClassB: %d%d%d", _member1, _member2, _member3);
+    
+    Director::getInstance()->getScheduler()->unscheduleUpdate(this);
 }
