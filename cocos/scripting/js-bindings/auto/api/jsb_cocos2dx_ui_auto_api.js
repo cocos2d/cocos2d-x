@@ -2652,6 +2652,18 @@ color4b
 },
 
 /**
+ * @method getLetter
+ * @param {int} arg0
+ * @return {cc.Sprite}
+ */
+getLetter : function (
+int 
+)
+{
+    return cc.Sprite;
+},
+
+/**
  * @method getTextVerticalAlignment
  * @return {cc.TextVAlignment}
  */

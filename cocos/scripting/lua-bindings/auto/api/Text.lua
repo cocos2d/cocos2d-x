@@ -226,6 +226,14 @@
 -- @return Text#Text self (return value: ccui.Text)
         
 --------------------------------
+-- Provides a way to treat each character like a Sprite.<br>
+-- warning No support system font.
+-- @function [parent=#Text] getLetter 
+-- @param self
+-- @param #int lettetIndex
+-- @return Sprite#Sprite ret (return value: cc.Sprite)
+        
+--------------------------------
 --  Gets text vertical alignment.<br>
 -- return Vertical text alignment type
 -- @function [parent=#Text] getTextVerticalAlignment 
