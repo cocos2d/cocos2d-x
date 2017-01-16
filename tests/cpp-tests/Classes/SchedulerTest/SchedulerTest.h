@@ -341,4 +341,43 @@ private:
     cocos2d::Sprite *_sprite;
 };
 
+class SchedulerIssue17149: public SchedulerTestLayer
+{
+public:
+    CREATE_FUNC(SchedulerIssue17149);
+    SchedulerIssue17149();
+    ~SchedulerIssue17149();
+    
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    virtual void onEnter() override;
+    virtual void update(float dt) override;
+    
+private:
+    class ClassA
+    {
+    public:
+        ClassA();
+        
+        void update(float dt);
+        
+        int _member1;
+        int _member2;
+        int _member3;
+    };
+    
+    class ClassB
+    {
+    public:
+        ClassB();
+        void update(float dt);
+        
+        int _member1;
+        int _member2;
+        int _member3;
+    };
+    
+    void *_memoryPool;
+};
+
 #endif

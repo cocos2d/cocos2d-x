@@ -464,26 +464,15 @@ void Scheduler::schedulePerFrame(const ccSchedulerFunc& callback, void *target, 
     HASH_FIND_PTR(_hashForUpdates, &target, hashElement);
     if (hashElement)
     {
-        // check if priority has changed
-        if ((*hashElement->list)->priority != priority)
+        // change priority: should unschedule it first
+        if (hashElement->entry->priority != priority)
         {
-            if (_updateHashLocked)
-            {
-                CCLOG("warning: you CANNOT change update priority in scheduled function");
-                hashElement->entry->markedForDeletion = false;
-                hashElement->entry->paused = paused;
-                return;
-            }
-            else
-            {
-            	// will be added again outside if (hashElement).
-                unscheduleUpdate(target);
-            }
+            unscheduleUpdate(target);
         }
         else
         {
-            hashElement->entry->markedForDeletion = false;
-            hashElement->entry->paused = paused;
+            // don't add it again
+            CCLOG("warning: don't update it again");
             return;
         }
     }
@@ -549,7 +538,10 @@ void Scheduler::removeUpdateFromHash(struct _listEntry *entry)
     {
         // list entry
         DL_DELETE(*element->list, element->entry);
-        CC_SAFE_DELETE(element->entry);
+        if (!_updateHashLocked)
+            CC_SAFE_DELETE(element->entry);
+        else
+            _updateDeleteVector.push_back(element->entry);
 
         // hash entry
         HASH_DEL(_hashForUpdates, element);
@@ -567,16 +559,7 @@ void Scheduler::unscheduleUpdate(void *target)
     tHashUpdateEntry *element = nullptr;
     HASH_FIND_PTR(_hashForUpdates, &target, element);
     if (element)
-    {
-        if (_updateHashLocked)
-        {
-            element->entry->markedForDeletion = true;
-        }
-        else
-        {
-            this->removeUpdateFromHash(element->entry);
-        }
-    }
+        this->removeUpdateFromHash(element->entry);
 }
 
 void Scheduler::unscheduleAll(void)
@@ -913,34 +896,12 @@ void Scheduler::update(float dt)
             removeHashElement(_currentTarget);
         }
     }
+ 
+    // delete all updates that are removed in update
+    for (auto &e : _updateDeleteVector)
+        delete e;
 
-    // delete all updates that are marked for deletion
-    // updates with priority < 0
-    DL_FOREACH_SAFE(_updatesNegList, entry, tmp)
-    {
-        if (entry->markedForDeletion)
-        {
-            this->removeUpdateFromHash(entry);
-        }
-    }
-
-    // updates with priority == 0
-    DL_FOREACH_SAFE(_updates0List, entry, tmp)
-    {
-        if (entry->markedForDeletion)
-        {
-            this->removeUpdateFromHash(entry);
-        }
-    }
-
-    // updates with priority > 0
-    DL_FOREACH_SAFE(_updatesPosList, entry, tmp)
-    {
-        if (entry->markedForDeletion)
-        {
-            this->removeUpdateFromHash(entry);
-        }
-    }
+    _updateDeleteVector.clear();
 
     _updateHashLocked = false;
     _currentTarget = nullptr;
