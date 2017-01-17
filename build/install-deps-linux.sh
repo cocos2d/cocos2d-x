@@ -29,6 +29,7 @@ DEPENDS+=' libsqlite3-dev'
 DEPENDS+=' libglew-dev'
 DEPENDS+=' libssl-dev'
 DEPENDS+=' libgtk-3-dev'
+DEPENDS+=' binutils'
 
 MISSING=
 echo "Checking for missing packages ..."
@@ -53,6 +54,7 @@ sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.9 60
 
 echo "Cocos uses GCC Version: `gcc --version`"
 echo "Cocos uses G++ Version: `g++ --version`"
+echo "Cocos uses ld Version: `ld --version`"
 
 # install glfw
 ../tools/travis-scripts/install_glfw.sh
