@@ -181,6 +181,11 @@ void Device::vibrate(float duration)
     JniHelper::callStaticVoidMethod(helperClassName, "vibrate", duration);
 }
 
+std::string Device::getDeviceUID()
+{
+    return JniHelper::callStaticStringMethod(helperClassName, "getDeviceUID");
+}
+
 NS_CC_END
 
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID

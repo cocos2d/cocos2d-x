@@ -609,6 +609,11 @@ void Device::vibrate(float duration)
     }
 }
 
+std::string Device::getDeviceUID()
+{
+    return [[[[UIDevice currentDevice] identifierForVendor] UUIDString] UTF8String];
+}
+
 NS_CC_END
 
 #endif // CC_PLATFORM_IOS
