@@ -90,6 +90,8 @@ ActionsTests::ActionsTests()
     ADD_TEST_CASE(Issue1398);
     ADD_TEST_CASE(Issue2599)
     ADD_TEST_CASE(ActionFloatTest);
+    ADD_TEST_CASE(Issue14936_1);
+    ADD_TEST_CASE(Issue14936_2);
 }
 
 std::string ActionsDemo::title() const
@@ -2324,6 +2326,66 @@ void ActionFloatTest::onEnter()
     _tamara->runAction(actionFloat);
     _grossini->runAction(actionFloat1);
     _kathia->runAction(actionFloat2);
+}
+
+void Issue14936_1::onEnter() {
+    ActionsDemo::onEnter();
+    centerSprites(0);
+
+    auto origin = cocos2d::Director::getInstance()->getVisibleOrigin();
+    auto visibleSize = cocos2d::Director::getInstance()->getVisibleSize();
+
+    _count = 0;
+    auto counterLabel = Label::createWithTTF("0", "fonts/Marker Felt.ttf", 16.0f);
+    counterLabel->setPosition(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2);
+    addChild(counterLabel);
+
+    auto func = CallFunc::create([this, counterLabel]{
+        _count++;
+        std::ostringstream os;
+        os << _count;
+        counterLabel->setString(os.str());
+    });
+
+    runAction(Spawn::create(func, func, nullptr));
+}
+
+std::string Issue14936_1::subtitle() const {
+    return "Counter should be equal 2";
+}
+
+void Issue14936_2::onEnter() {
+    ActionsDemo::onEnter();
+    centerSprites(0);
+
+    auto origin = cocos2d::Director::getInstance()->getVisibleOrigin();
+    auto visibleSize = cocos2d::Director::getInstance()->getVisibleSize();
+
+    _count = 0;
+    auto counterLabel = Label::createWithTTF("0", "fonts/Marker Felt.ttf", 16.0f);
+    counterLabel->setPosition(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2);
+    addChild(counterLabel);
+
+    auto func = CallFunc::create([this, counterLabel] {
+        _count++;
+        std::ostringstream os;
+        os << _count;
+        counterLabel->setString(os.str());
+    });
+
+    runAction(Sequence::create(TargetedAction::create(this, func), DelayTime::create(0.2f), nullptr));
+}
+
+std::string Issue14936_2::subtitle() const {
+    return "Counter should be equal 1";
+}
+
+std::string Issue14936_2::title() const {
+    return "Issue 14936 - Sequence";
+}
+
+std::string Issue14936_1::title() const {
+    return "Issue 14936 - Action Interval";
 }
 
 std::string ActionFloatTest::subtitle() const
