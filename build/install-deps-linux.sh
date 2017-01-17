@@ -38,19 +38,21 @@ for i in $DEPENDS; do
     fi
 done
 
-
-if [ -f /usr/bin/g++ ];then
-sudo rm /usr/bin/g++
-echo "remove old g++"
-fi
-sudo ln -s /usr/bin/g++-4.9 /usr/bin/g++
-
 if [ -n "$MISSING" ]; then
     TXTCOLOR_DEFAULT="\033[0;m"
     TXTCOLOR_GREEN="\033[0;32m"
     echo -e $TXTCOLOR_GREEN"Missing packages: $MISSING.\nYou may be asked for your password for package installation."$TXTCOLOR_DEFAULT
     sudo apt-get --force-yes --yes install $MISSING > /dev/null
 fi
+
+sudo update-alternatives --remove-all gcc
+sudo update-alternatives --remove-all g++
+
+sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.9 60
+sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.9 60
+
+echo "Cocos uses GCC Version: `gcc --version`"
+echo "Cocos uses G++ Version: `g++ --version`"
 
 # install glfw
 ../tools/travis-scripts/install_glfw.sh
