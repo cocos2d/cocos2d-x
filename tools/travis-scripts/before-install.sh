@@ -34,6 +34,10 @@ function install_android_ndk()
 
 function install_linux_environment()
 {
+    git clone https://github.com/Linuxbrew/brew.git ~/.linuxbrew
+    export PATH="$HOME/.linuxbrew/bin:$PATH"
+    sudo rm -f /usr/bin/ld
+    sudo ln -s ~/.linuxbrew/bin/ld /usr/bin/ld
     bash $COCOS2DX_ROOT/build/install-deps-linux.sh
 }
 

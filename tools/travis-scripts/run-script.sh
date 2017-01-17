@@ -5,15 +5,18 @@ set -e
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 COCOS2DX_ROOT="$DIR"/../..
+CPU_CORES=4
 
 function build_linux()
 {
+    CPU_CORES=`grep -c ^processor /proc/cpuinfo`
     echo "Building tests ..."
     cd $COCOS2DX_ROOT/build
     mkdir -p linux-build
     cd linux-build
     cmake ../..
-    make -j2
+    echo "cpu cores: ${CPU_CORES}"
+    make -j${CPU_CORES}
 }
 
 function build_mac()

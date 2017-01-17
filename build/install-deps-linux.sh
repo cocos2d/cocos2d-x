@@ -20,6 +20,7 @@ DEPENDS+=' libxmu-dev'
 DEPENDS+=' libglu1-mesa-dev'
 DEPENDS+=' libgl2ps-dev'
 DEPENDS+=' libxi-dev'
+DEPENDS+=' gcc-4.9'
 DEPENDS+=' g++-4.9'
 DEPENDS+=' libzip-dev'
 DEPENDS+=' libpng12-dev'
@@ -55,7 +56,7 @@ sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.9 60
 echo "Cocos uses GCC Version: `gcc --version`"
 echo "Cocos uses G++ Version: `g++ --version`"
 echo "Cocos uses ld Version: `ld --version`"
-
+echo "Cocos uses /usr/bin/ld Version: `/usr/bin/ld --version`"
 # install glfw
 ../tools/travis-scripts/install_glfw.sh
 
