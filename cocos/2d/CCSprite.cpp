@@ -861,7 +861,7 @@ void Sprite::setVertexCoords(const Rect& rect, V3F_C4B_T2F_Quad* outQuad)
     _offsetPosition.x = relativeOffsetX + (_originalContentSize.width - _rect.size.width) / 2;
     _offsetPosition.y = relativeOffsetY + (_originalContentSize.height - _rect.size.height) / 2;
 
-    // FIXME: Streching should be applied to the "offset" as well
+    // FIXME: Stretching should be applied to the "offset" as well
     // but probably it should be calculated in the caller function. It will be tidier
     if (_renderMode == RenderMode::QUAD) {
         _offsetPosition.x *= _strechFactor.x;
@@ -1347,7 +1347,7 @@ void Sprite::setVisible(bool bVisible)
 void Sprite::setContentSize(const Size& size)
 {
     if (_renderMode == RenderMode::QUAD_BATCHNODE || _renderMode == RenderMode::POLYGON)
-        CCLOGWARN("Sprite::setContentSize() doesn't strech the sprite when using QUAD_BATCHNODE or POLYGON render modes");
+        CCLOGWARN("Sprite::setContentSize() doesn't stretch the sprite when using QUAD_BATCHNODE or POLYGON render modes");
 
     Node::setContentSize(size);
 

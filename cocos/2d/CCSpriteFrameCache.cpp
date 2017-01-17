@@ -587,7 +587,7 @@ SpriteFrame* SpriteFrameCache::getSpriteFrameByName(const std::string& name)
                 frame = _spriteFrames.at(key);
                 if (!frame)
                 {
-                    CCLOG("cocos2d: SpriteFrameCache: Frame aliase '%s' isn't found", key.c_str());
+                    CCLOG("cocos2d: SpriteFrameCache: Frame aliases '%s' isn't found", key.c_str());
                 }
             }
         }
