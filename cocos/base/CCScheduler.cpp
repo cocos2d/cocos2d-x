@@ -541,7 +541,10 @@ void Scheduler::removeUpdateFromHash(struct _listEntry *entry)
         if (!_updateHashLocked)
             CC_SAFE_DELETE(element->entry);
         else
+        {
+            element->entry->markedForDeletion = true;
             _updateDeleteVector.push_back(element->entry);
+        }
 
         // hash entry
         HASH_DEL(_hashForUpdates, element);

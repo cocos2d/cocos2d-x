@@ -31,6 +31,7 @@ SchedulerTests::SchedulerTests()
     ADD_TEST_CASE(SchedulerIssue10232);
     ADD_TEST_CASE(SchedulerRemoveAllFunctionsToBePerformedInCocosThread)
     ADD_TEST_CASE(SchedulerIssue17149);
+    ADD_TEST_CASE(SchedulerRemoveEntryWhileUpdate);
 };
 
 //------------------------------------------------------------------
@@ -1288,4 +1289,70 @@ void SchedulerIssue17149::ClassB::update(float dt)
     CCLOG("i'm ClassB: %d%d%d", _member1, _member2, _member3);
     
     Director::getInstance()->getScheduler()->unscheduleUpdate(this);
+}
+
+//------------------------------------------------------------------
+//
+// SchedulerRemoveEntryWhileUpdate
+//
+//------------------------------------------------------------------
+
+std::string SchedulerRemoveEntryWhileUpdate::title() const
+{
+    return "RemoveEntryWhileUpdate";
+}
+
+std::string SchedulerRemoveEntryWhileUpdate::subtitle() const
+{
+    return "see console, error message must not be shown.";
+}
+
+void SchedulerRemoveEntryWhileUpdate::onEnter()
+{
+    SchedulerTestLayer::onEnter();
+    for (auto i = 0; i < 500; ++i)
+    {
+        TestClass *nextObj = nullptr;
+        if (i != 0)
+        {
+            nextObj = _testvector[i - 1];
+        }
+        auto obj = new TestClass(i, nextObj, getScheduler());
+        _testvector.push_back(obj);
+        getScheduler()->scheduleUpdate(obj, 500 - i, false);
+    }
+}
+
+void SchedulerRemoveEntryWhileUpdate::onExit()
+{
+    for (auto obj: _testvector)
+    {
+        getScheduler()->unscheduleUpdate(obj);
+        delete obj;
+    }
+    _testvector.clear();
+    SchedulerTestLayer::onExit();
+}
+
+SchedulerRemoveEntryWhileUpdate::TestClass::TestClass(int index, TestClass *nextObj, cocos2d::Scheduler* scheduler)
+: _index(index)
+, _nextObj(nextObj)
+, _scheduler(scheduler)
+, _cleanedUp(false)
+{
+}
+
+void SchedulerRemoveEntryWhileUpdate::TestClass::update(float dt)
+{
+    if (_cleanedUp)
+    {
+        CCLOG("Error: cleaned object must not be called.");
+        return;
+    }
+    
+    if (_index % 50 == 1 && _nextObj != nullptr)
+    {
+        _scheduler->unscheduleUpdate(_nextObj);
+        _nextObj->_cleanedUp = true;
+    }
 }
