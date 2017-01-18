@@ -50,7 +50,6 @@ function install_linux_environment()
     cd ..
 
     # install new version binutils
-    sudo rm /usr/bin/ld
     BINUTILS_VERSION="2.27"
     BINUTILS_URL="http://ftp.gnu.org/gnu/binutils/binutils-${BINUTILS_VERSION}.tar.gz"
     echo "Download ${BINUTILS_URL}"
@@ -62,7 +61,7 @@ function install_linux_environment()
     sudo make install
     echo "ld Version: `ld --version`"
     echo "which ld: `which ld`"
-    
+    sudo rm /usr/bin/ld
     popd
     bash $COCOS2DX_ROOT/build/install-deps-linux.sh
 }
