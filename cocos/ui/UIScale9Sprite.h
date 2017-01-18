@@ -190,7 +190,7 @@ namespace ui {
          */
         static Scale9Sprite* createWithSpriteFrameName(const std::string& spriteFrameName, const Rect& capInsets);
 
-        // overriden methods that takes different parameters
+        // overridden methods that takes different parameters
         using Sprite::initWithFile;
         using Sprite::initWithSpriteFrame;
         using Sprite::initWithSpriteFrameName;

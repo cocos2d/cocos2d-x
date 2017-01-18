@@ -805,7 +805,7 @@ public:
 
 class Node;
 /**
- * ScriptEngineManager is a singleton which manager an object instance of ScriptEngineProtocl, such as LuaEngine.
+ * ScriptEngineManager is a singleton which manager an object instance of ScriptEngineProtocol, such as LuaEngine.
  *
  * @since v0.99.5-x-0.8.5
  * @js NA
