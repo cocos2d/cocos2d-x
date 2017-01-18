@@ -251,7 +251,8 @@ ScriptHandlerMgr::HandlerType ScriptHandlerMgr::addCustomHandler(void* object, i
     if (_mapObjectHandlers.end() != iter)
     {
         vecHandlers = iter->second;
-        handlerType = static_cast<HandlerType>((int)vecHandlers.back().first + 1);
+        if (!vecHandlers.empty())
+            handlerType = static_cast<HandlerType>((int)vecHandlers.back().first + 1);
     }
     assert(handlerType <= HandlerType::EVENT_CUSTOM_ENDED);
     
