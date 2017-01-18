@@ -10,13 +10,6 @@ matrix:
         - secure: M5lyDs0qai15mWHzJdkh0WPfVJJmVZu6SWtYULxatukGPXVwoQvmEtYAwAW+iz6aM+tXksQ/mk6nW5L8UFbHm+n6yrsa5bZU9sGXjilPE8p8bLFYDmIbPRazU+E6pBP3J2CDoAm0XnWkiYQ8feTxKTo6ysLnHAEjyaHTw0+Q1GM=
       sudo: required
       language: cpp
-      addons:
-        apt:
-          sources:
-            - george-edison55-precise-backports # cmake 3.2.3 / doxygen 1.8.3
-          packages:
-            - cmake
-            - cmake-data
     # android
     - os: linux
       env: BUILD_TARGET=android

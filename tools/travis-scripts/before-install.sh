@@ -7,8 +7,6 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 COCOS2DX_ROOT="$DIR"/../..
 HOST_NAME=""
 
-
-
 function install_android_ndk()
 {
     mkdir -p $HOME/bin
@@ -34,10 +32,34 @@ function install_android_ndk()
 
 function install_linux_environment()
 {
-    git clone https://github.com/Linuxbrew/brew.git ~/.linuxbrew
-    export PATH="$HOME/.linuxbrew/bin:$PATH"
-    sudo rm -f /usr/bin/ld
-    sudo ln -s ~/.linuxbrew/bin/ld /usr/bin/ld
+    mkdir -p $HOME/bin
+    pushd $HOME/bin
+
+    # install new version binutils
+    sudo rm /usr/bin/ld
+    BINUTILS_VERSION="2.27"
+    BINUTILS_URL="http://ftp.gnu.org/gnu/binutils/binutils-${BINUTILS_VERSION}.tar.gz"
+    curl -O ${BINUTILS_URL}
+    tar -zxvf "binutils-${BINUTILS_VERSION}.tar.gz"
+    cd "binutils-${BINUTILS_VERSION}"
+    ./configure
+    make -j2
+    sudo make install
+    echo "ld Version: `ld --version`"
+    echo "which ld: `which ld`"
+    cd ..
+
+    # install new version cmake
+    CMAKE_VERSION="3.7.2"
+    CMAKE_DOWNLOAD_URL="https://cmake.org/files/v3.7/cmake-${CMAKE_VERSION}.tar.gz"
+    curl -O ${CMAKE_DOWNLOAD_URL}
+    tar -zxvf "cmake-${CMAKE_VERSION}.tar.gz"
+    cd "cmake-${CMAKE_VERSION}"
+    ./configure
+    make -j2
+    sudo make install
+    echo "CMake Version: `cmake --version`"
+    popd
     bash $COCOS2DX_ROOT/build/install-deps-linux.sh
 }
 
