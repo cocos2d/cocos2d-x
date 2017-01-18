@@ -42,30 +42,11 @@ public:
     
     cocos2d::Vector<CCBSequence*>& getSequences();
     void setSequences(const cocos2d::Vector<CCBSequence*>& seq);
-
     
     int getAutoPlaySequenceId();
     void setAutoPlaySequenceId(int autoPlaySequenceId);
     
     cocos2d::Node* getRootNode() const;
-
-    void addDocumentCallbackNode(cocos2d::Node *node);
-    void addDocumentCallbackName(std::string name);
-    
-    void addDocumentOutletNode(cocos2d::Node *node);
-    void addDocumentOutletName(std::string name);
-
-    void setDocumentControllerName(const std::string &name);
-    
-    std::string getDocumentControllerName();
-    cocos2d::ValueVector& getDocumentCallbackNames();
-    cocos2d::Vector<cocos2d::Node*>& getDocumentCallbackNodes();
-    
-    cocos2d::ValueVector& getDocumentOutletNames();
-    cocos2d::Vector<cocos2d::Node*>& getDocumentOutletNodes();
-    std::string getLastCompletedSequenceName();
-    
-    cocos2d::ValueVector& getKeyframeCallbacks();
     
     const cocos2d::Size& getRootContainerSize();
     void setRootContainerSize(const cocos2d::Size &rootContainerSize);
@@ -133,15 +114,8 @@ private:
     
     CCBAnimationManagerDelegate *_delegate;
     std::pair<CCBSequence*, std::function<void(cocos2d::Node*, AnimationCompleteType)>>_runningSequence;
+    std::map<Node*, Vector<Action*>> _runningActions;
     
-    cocos2d::ValueVector _documentOutletNames;
-    cocos2d::Vector<cocos2d::Node*> _documentOutletNodes;
-    cocos2d::ValueVector _documentCallbackNames;
-    cocos2d::Vector<cocos2d::Node*> _documentCallbackNodes;
-    cocos2d::ValueVector _documentCallbackControlEvents;
-    cocos2d::ValueVector _keyframeCallbacks;
-    
-    std::string _documentControllerName;
     std::string _lastCompletedSequenceName;
     
     float _mainScale;

@@ -10,6 +10,7 @@
 #include "CCBXSequence.h"
 #include "CCBXAnimationManager.h"
 #include "physics/CCPhysicsBody.h"
+#include "base/CCDirector.h"
 
 NS_CC_BEGIN
 
@@ -231,6 +232,7 @@ bool NodeLoader::loadNode(Node *node, const Size &parentSize, float mainScale, f
         manager = new CCBAnimationManager(mainScale, additionalScale, node ,owner);
         manager->setSequences(_sequences);
         manager->setAutoPlaySequenceId(_autoPlaySequenceId);
+        manager->setRootContainerSize(parentSize);
         node->setUserObject(manager);
         manager->release();
     }

@@ -178,23 +178,6 @@ bool CCBAnimationManager::init()
 
 CCBAnimationManager::~CCBAnimationManager()
 {
-//     DictElement *pElement = nullptr;
-//     CCDICT_FOREACH(_nodeSequences, pElement)
-//     {
-//         Node *node = (Node*)pElement->getIntKey();
-//         node->release();
-//     }
-//     
-//     CCDICT_FOREACH(_baseValues, pElement)
-//     {
-//         Node *node = (Node*)pElement->getIntKey();
-//         node->release();
-//     }
-    if (_rootNode)
-    {
-        _rootNode->stopActionByTag(animationTag);
-    }
-    
     setDelegate(nullptr);
     
     for (auto iter = _objects.begin(); iter != _objects.end(); ++iter)
@@ -231,75 +214,9 @@ Node* CCBAnimationManager::getRootNode() const
     return _rootNode;
 }
 
-void CCBAnimationManager::setDocumentControllerName(const std::string &name)
-{
-    _documentControllerName = name;
-}
-
-
-std::string CCBAnimationManager::getDocumentControllerName()
-{
-    return _documentControllerName;
-}
-
-void CCBAnimationManager::addDocumentCallbackNode(Node *node)
-{
-    _documentCallbackNodes.pushBack(node);
-}
-
-void CCBAnimationManager::addDocumentCallbackName(std::string name)
-{
-    _documentCallbackNames.push_back(Value(name));
-}
-
-ValueVector& CCBAnimationManager::getDocumentCallbackNames()
-{
-    return _documentCallbackNames;
-}
-
-Vector<Node*>& CCBAnimationManager::getDocumentCallbackNodes()
-{
-    return _documentCallbackNodes;
-}
-
-void CCBAnimationManager::addDocumentOutletNode(Node *node)
-{
-    _documentOutletNodes.pushBack(node);
-}
-
-void CCBAnimationManager::addDocumentOutletName(std::string name)
-{
-    _documentOutletNames.push_back(Value(name));
-}
-
-ValueVector& CCBAnimationManager::getDocumentOutletNames()
-{
-    return _documentOutletNames;
-}
-
-Vector<Node*>& CCBAnimationManager::getDocumentOutletNodes()
-{
-    return _documentOutletNodes;
-}
-
-std::string CCBAnimationManager::getLastCompletedSequenceName()
-{
-    return _lastCompletedSequenceName;
-}
-
-ValueVector& CCBAnimationManager::getKeyframeCallbacks()
-{
-    return _keyframeCallbacks;
-}
-
-const Size& CCBAnimationManager::getRootContainerSize()
-{
-    return _rootContainerSize;
-}
-
 void CCBAnimationManager::setRootContainerSize(const Size &rootContainerSize)
 {
-    _rootContainerSize.setSize(rootContainerSize.width, rootContainerSize.height);
+    _rootContainerSize = rootContainerSize;
 }
 
 CCBAnimationManagerDelegate* CCBAnimationManager::getDelegate()
@@ -335,10 +252,8 @@ const Size& CCBAnimationManager::getContainerSize(Node *pNode)
     }
 }
 
-// refer to CCBReader::readNodeGraph() for data structure of pSeq
 void CCBAnimationManager::addNode(Node *pNode, const std::unordered_map<int, Map<std::string, CCBSequenceProperty*>>& seq)
 {
-    // pNode->retain();
     if(!seq.empty())
         _nodeSequences[pNode] = seq;
 }
@@ -445,8 +360,6 @@ void CCBAnimationManager::moveAnimationsFromNode(Node* fromNode, Node* toNode)
     {
         _baseValues[toNode] = baseValueIter->second;
         _baseValues.erase(baseValueIter);
-//         fromNode->release();
-//         toNode->retain();
     }
     
     auto objIter = _objects.find(fromNode);
@@ -463,8 +376,6 @@ void CCBAnimationManager::moveAnimationsFromNode(Node* fromNode, Node* toNode)
     {
         _nodeSequences[toNode] = seqsIter->second;
         _nodeSequences.erase(seqsIter);
-//         fromNode->release();
-//         toNode->retain();
     }
 }
 
@@ -593,6 +504,7 @@ void CCBAnimationManager::setAnimatedProperty(const std::string& propName, Node 
         ActionInterval *tweenAction = getAction(nullptr, kf1, propName, pNode);
         tweenAction->setTag(animationTag);
         pNode->runAction(tweenAction);
+        _runningActions[pNode].pushBack(tweenAction);
     }
     else 
     {
@@ -953,6 +865,7 @@ void CCBAnimationManager::runAction(Node *pNode, CCBSequenceProperty *pSeqProp, 
             auto seq = Sequence::create(actions);
             seq->setTag(animationTag);
             pNode->runAction(seq);
+            _runningActions[pNode].pushBack(seq);
         }
     }
 }
@@ -970,47 +883,22 @@ void CCBAnimationManager::runAnimationsForSequenceIdTweenDuration(int nSeqId, fl
             _runningSequence.second(_rootNode, AnimationCompleteType::STOPED);
     }
     
-    _rootNode->stopAllActionsByTag(animationTag);
+    for(const auto &pair:_runningActions)
+    {
+        for(const auto action:pair.second)
+            pair.first->stopAction(action);
+    }
+    _runningActions.clear();
     
     for (auto nodeSeqIter = _nodeSequences.begin(); nodeSeqIter != _nodeSequences.end(); ++nodeSeqIter)
     {
         Node *node = nodeSeqIter->first;
-        node->stopAllActionsByTag(animationTag);
         
         // Refer to CCBReader::readKeyframe() for the real type of value
         auto seqs = nodeSeqIter->second;
         auto seqNodeProps = seqs[nSeqId];
         
         std::set<std::string> seqNodePropNames;
-        
-        // Reset the nodes that may have been changed by other timelines
-        /*
-        auto& nodeBaseValues = _baseValues[node];
-        
-        if (!nodeBaseValues.empty())
-        {
-            for (auto iter = nodeBaseValues.begin(); iter != nodeBaseValues.end(); ++iter)
-            {
-                if (seqNodePropNames.find(iter->first) == seqNodePropNames.end())
-                {
-                    setAnimatedProperty(iter->first, node, iter->second, nullptr, fTweenDuration);
-                }
-            }
-        }
-        
-        auto& nodeObject = _objects[node];
-        
-        if (!nodeObject.empty())
-        {
-            for (auto iter = nodeObject.begin(); iter != nodeObject.end(); ++iter)
-            {
-                if (seqNodePropNames.find(iter->first) == seqNodePropNames.end())
-                {
-                    setAnimatedProperty(iter->first, node, Value(), iter->second, fTweenDuration);
-                }
-            }
-        }
-        */
         
         if (!seqNodeProps.empty())
         {
@@ -1032,6 +920,7 @@ void CCBAnimationManager::runAnimationsForSequenceIdTweenDuration(int nSeqId, fl
                                                                 CallFunc::create(std::bind(&CCBAnimationManager::sequenceCompleted, this, callback)));
     completeAction->setTag(animationTag);
     _rootNode->runAction(completeAction);
+    _runningActions[_rootNode].pushBack(completeAction);
     
     // Set the running scene
 
@@ -1040,6 +929,7 @@ void CCBAnimationManager::runAnimationsForSequenceIdTweenDuration(int nSeqId, fl
         if(action != nullptr) {
             action->setTag(animationTag);
             _rootNode->runAction(action);
+            _runningActions[_rootNode].pushBack(action);
         }
     } 
 
@@ -1048,6 +938,7 @@ void CCBAnimationManager::runAnimationsForSequenceIdTweenDuration(int nSeqId, fl
         if(action != nullptr) {
             action->setTag(animationTag);
             _rootNode->runAction(action);
+            _runningActions[_rootNode].pushBack(action);
         }
     }
 
@@ -1065,13 +956,12 @@ void CCBAnimationManager::stopAnimations(bool reset)
             _runningSequence.second(_rootNode, AnimationCompleteType::STOPED);
     }
     
-    _rootNode->stopAllActionsByTag(animationTag);
-    
-    for (auto nodeSeqIter = _nodeSequences.begin(); nodeSeqIter != _nodeSequences.end(); ++nodeSeqIter)
+    for(const auto &pair:_runningActions)
     {
-        Node *node = nodeSeqIter->first;
-        node->stopActionByTag(animationTag);
+        for(const auto action:pair.second)
+            pair.first->stopAction(action);
     }
+    _runningActions.clear();
     
     if(reset)
     {
