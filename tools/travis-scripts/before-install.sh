@@ -32,11 +32,10 @@ function install_android_ndk()
 
 function install_linux_environment()
 {
-    bash $COCOS2DX_ROOT/build/install-deps-linux.sh
-
     mkdir -p $HOME/bin
     pushd $HOME/bin
 
+    echo "GCC version: `gcc --version`"
     # install new version binutils
     sudo rm /usr/bin/ld
     BINUTILS_VERSION="2.27"
@@ -62,6 +61,7 @@ function install_linux_environment()
     sudo make install
     echo "CMake Version: `cmake --version`"
     popd
+    bash $COCOS2DX_ROOT/build/install-deps-linux.sh
 }
 
 function download_deps()
