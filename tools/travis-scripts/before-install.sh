@@ -43,9 +43,9 @@ function install_linux_environment()
     curl -O ${CMAKE_DOWNLOAD_URL}
     tar -zxf "cmake-${CMAKE_VERSION}.tar.gz"
     cd "cmake-${CMAKE_VERSION}"
-    ./configure
-    make -j2
-    sudo make install
+    ./configure > /dev/null
+    make -j2 > /dev/null
+    sudo make install > /dev/null
     echo "CMake Version: `cmake --version`"
     cd ..
 
@@ -56,9 +56,9 @@ function install_linux_environment()
     curl -O ${BINUTILS_URL}
     tar -zxf "binutils-${BINUTILS_VERSION}.tar.gz"
     cd "binutils-${BINUTILS_VERSION}"
-    ./configure
-    make -j2
-    sudo make install
+    ./configure > /dev/null
+    make -j2 > /dev/null
+    sudo make install > /dev/null
     echo "ld Version: `ld --version`"
     echo "which ld: `which ld`"
     sudo rm /usr/bin/ld
