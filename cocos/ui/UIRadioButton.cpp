@@ -55,7 +55,7 @@ RadioButton* RadioButton::create()
 }
 
 RadioButton* RadioButton::create(const std::string& backGround,
-                           const std::string& backGroundSeleted,
+                           const std::string& backGroundSelected,
                            const std::string& cross,
                            const std::string& backGroundDisabled,
                            const std::string& frontCrossDisabled,
@@ -63,7 +63,7 @@ RadioButton* RadioButton::create(const std::string& backGround,
 {
     RadioButton *pWidget = new (std::nothrow) RadioButton;
     if (pWidget && pWidget->init(backGround,
-                                 backGroundSeleted,
+                                 backGroundSelected,
                                  cross,
                                  backGroundDisabled,
                                  frontCrossDisabled,
