@@ -158,7 +158,7 @@ private:
      * Init pthread mutex, semaphore, and create new thread for http requests
      * @return bool
      */
-    bool lazyInitThreadSemphore();
+    bool lazyInitThreadSemaphore();
     void networkThread();
     void networkThreadAlone(HttpRequest* request, HttpResponse* response);
     /** Poll function called from main thread to dispatch callbacks when http requests finished **/

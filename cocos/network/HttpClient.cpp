@@ -416,7 +416,7 @@ HttpClient::~HttpClient()
 }
 
 //Lazy create semaphore & mutex & thread
-bool HttpClient::lazyInitThreadSemphore()
+bool HttpClient::lazyInitThreadSemaphore()
 {
     if (_isInited)
 	{
@@ -435,7 +435,7 @@ bool HttpClient::lazyInitThreadSemphore()
 //Add a get task to queue
 void HttpClient::send(HttpRequest* request)
 {    
-    if (false == lazyInitThreadSemphore()) 
+    if (false == lazyInitThreadSemaphore()) 
     {
         return;
     }
