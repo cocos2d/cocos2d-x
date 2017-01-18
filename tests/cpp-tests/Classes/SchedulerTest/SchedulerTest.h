@@ -380,4 +380,29 @@ private:
     void *_memoryPool;
 };
 
+class SchedulerRemoveEntryWhileUpdate: public SchedulerTestLayer
+{
+public:
+    CREATE_FUNC(SchedulerRemoveEntryWhileUpdate);
+    
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    virtual void onEnter() override;
+    virtual void onExit() override;
+    
+private:
+    class TestClass
+    {
+    public:
+        TestClass(int index, TestClass *nextObj, cocos2d::Scheduler* scheduler);
+        void update(float dt);
+    private:
+        TestClass *_nextObj;
+        int _index;
+        cocos2d::Scheduler *_scheduler;
+        bool _cleanedUp;
+    };
+    std::vector<TestClass *> _testvector;
+};
+
 #endif
