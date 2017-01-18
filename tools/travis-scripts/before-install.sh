@@ -32,6 +32,8 @@ function install_android_ndk()
 
 function install_linux_environment()
 {
+    bash $COCOS2DX_ROOT/build/install-deps-linux.sh
+
     mkdir -p $HOME/bin
     pushd $HOME/bin
 
@@ -40,7 +42,7 @@ function install_linux_environment()
     BINUTILS_VERSION="2.27"
     BINUTILS_URL="http://ftp.gnu.org/gnu/binutils/binutils-${BINUTILS_VERSION}.tar.gz"
     curl -O ${BINUTILS_URL}
-    tar -zxvf "binutils-${BINUTILS_VERSION}.tar.gz"
+    tar -zxf "binutils-${BINUTILS_VERSION}.tar.gz"
     cd "binutils-${BINUTILS_VERSION}"
     ./configure
     make -j2
@@ -53,14 +55,13 @@ function install_linux_environment()
     CMAKE_VERSION="3.7.2"
     CMAKE_DOWNLOAD_URL="https://cmake.org/files/v3.7/cmake-${CMAKE_VERSION}.tar.gz"
     curl -O ${CMAKE_DOWNLOAD_URL}
-    tar -zxvf "cmake-${CMAKE_VERSION}.tar.gz"
+    tar -zxf "cmake-${CMAKE_VERSION}.tar.gz"
     cd "cmake-${CMAKE_VERSION}"
     ./configure
     make -j2
     sudo make install
     echo "CMake Version: `cmake --version`"
     popd
-    bash $COCOS2DX_ROOT/build/install-deps-linux.sh
 }
 
 function download_deps()
