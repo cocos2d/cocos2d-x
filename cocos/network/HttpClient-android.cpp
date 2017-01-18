@@ -707,8 +707,11 @@ void HttpClient::processResponse(HttpResponse* response, char* responseMessage)
     free(contentInfo);
     
     char *messageInfo = urlConnection.getResponseMessage();
-    strcpy(responseMessage, messageInfo);
-    free(messageInfo);
+    if (messageInfo)
+    {
+        strcpy(responseMessage, messageInfo);
+        free(messageInfo);
+    }
 
     urlConnection.disconnect();
 
