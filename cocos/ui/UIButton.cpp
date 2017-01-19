@@ -312,11 +312,11 @@ void Button::loadTexturePressed(const std::string& selected,TextureResType texTy
 {
     _clickedFileName = selected;
     _pressedTexType = texType;
-    bool textureLoade = true;
+    bool textureLoaded = true;
     if (selected.empty())
     {
         _buttonClickedRenderer->resetRender();
-        textureLoade = false;
+        textureLoaded = false;
     }
     else
     {
@@ -332,7 +332,7 @@ void Button::loadTexturePressed(const std::string& selected,TextureResType texTy
             break;
         }
     }
-    this->setupPressedTexture(textureLoade);
+    this->setupPressedTexture(textureLoaded);
 }
 
 void Button::setupPressedTexture(bool textureLoaded)

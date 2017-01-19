@@ -531,7 +531,7 @@ void RenderTexture::onSaveToFile(const std::string& filename, bool isRGBA)
 }
 
 /* get buffer as Image */
-Image* RenderTexture::newImage(bool fliimage)
+Image* RenderTexture::newImage(bool flipImage)
 {
     CCASSERT(_pixelFormat == Texture2D::PixelFormat::RGBA8888, "only RGBA8888 can be saved as image");
 
@@ -581,7 +581,7 @@ Image* RenderTexture::newImage(bool fliimage)
         glReadPixels(0,0,savedBufferWidth, savedBufferHeight,GL_RGBA,GL_UNSIGNED_BYTE, tempData);
         glBindFramebuffer(GL_FRAMEBUFFER, _oldFBO);
 
-        if ( fliimage ) // -- flip is only required when saving image to file
+        if ( flipImage ) // -- flip is only required when saving image to file
         {
             // to get the actual texture data
             // #640 the image read from rendertexture is dirty

@@ -506,16 +506,16 @@ void DrawNode::drawRect(const Vec2 &origin, const Vec2 &destination, const Color
 
 void DrawNode::drawPoly(const Vec2 *poli, unsigned int numberOfPoints, bool closePolygon, const Color4F &color)
 {
-    unsigned int vertext_count;
+    unsigned int vertex_count;
     if(closePolygon)
     {
-        vertext_count = 2 * numberOfPoints;
-        ensureCapacityGLLine(vertext_count);
+        vertex_count = 2 * numberOfPoints;
+        ensureCapacityGLLine(vertex_count);
     }
     else
     {
-        vertext_count = 2 * (numberOfPoints - 1);
-        ensureCapacityGLLine(vertext_count);
+        vertex_count = 2 * (numberOfPoints - 1);
+        ensureCapacityGLLine(vertex_count);
     }
     
     V2F_C4B_T2F *point = (V2F_C4B_T2F*)(_bufferGLLine + _bufferCountGLLine);
@@ -538,7 +538,7 @@ void DrawNode::drawPoly(const Vec2 *poli, unsigned int numberOfPoints, bool clos
         *(point+1) = b;
     }
     
-    _bufferCountGLLine += vertext_count;
+    _bufferCountGLLine += vertex_count;
 }
 
 void DrawNode::drawCircle(const Vec2& center, float radius, float angle, unsigned int segments, bool drawLineToCenter, float scaleX, float scaleY, const Color4F &color)
