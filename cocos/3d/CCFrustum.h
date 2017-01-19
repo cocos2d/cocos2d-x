@@ -30,6 +30,7 @@
 #include "3d/CCAABB.h"
 #include "3d/CCOBB.h"
 #include "3d/CCPlane.h"
+#include "math/CCGeometry.h"
 
 NS_CC_BEGIN
 
@@ -64,6 +65,10 @@ public:
      * is obb out of frustum
      */
     bool isOutOfFrustum(const OBB& obb) const;
+    /**
+     * is rect out of frustum
+     */
+    bool isOutOfFrustum(const Rect& rect);
 
     /**
      * get & set z clip. if bclipZ == true use near and far plane
