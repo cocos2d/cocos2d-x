@@ -35,12 +35,12 @@
 #include <mutex>
 #include <memory>  // for std::shared_ptr
 #include <atomic>
+#include <condition_variable>
 
 #include "platform/CCPlatformMacros.h"
 #include "platform/CCStdC.h"
 
 struct lws;
-struct lws_context;
 struct lws_protocols;
 
 /**
@@ -55,6 +55,7 @@ class EventListenerCustom;
 namespace network {
 
 class WsThreadHelper;
+struct WsCache;
 
 /**
  * WebSocket is wrapper of the libwebsockets-protocol, let the develop could call the websocket easily.
@@ -160,18 +161,20 @@ public:
         virtual void onError(WebSocket* ws, const ErrorCode& error) = 0;
     };
 
-
     /**
-     *  @brief  The initialized method for websocket.
-     *          It needs to be invoked right after websocket instance is allocated.
-     *  @param  delegate The delegate which want to receive event from websocket.
-     *  @param  url      The URL of websocket server.
+     *  @brief The initialized method for websocket.
+     *         It needs to be invoked right after websocket instance is allocated.
+     *  @param delegate The delegate which want to receive event from websocket.
+     *  @param url The URL of websocket server.
+     *  @param protocols The websocket protocols that agree with websocket server
+     *  @param caFilePath The ca file path for wss connection
      *  @return true: Success, false: Failure.
      *  @lua NA
      */
     bool init(const Delegate& delegate,
               const std::string& url,
-              const std::vector<std::string>* protocols = nullptr);
+              const std::vector<std::string>* protocols = nullptr,
+              const std::string& caFilePath = "");
 
     /**
      *  @brief Sends string data to websocket server.
@@ -211,39 +214,56 @@ public:
     State getReadyState();
 
 private:
-    void onSubThreadStarted();
-    void onSubThreadLoop();
-    void onSubThreadEnded();
 
     // The following callback functions are invoked in websocket thread
-    int onSocketCallback(struct lws *wsi, int reason, void *user, void *in, ssize_t len);
+    void onClientOpenConnectionRequest();
+    int onSocketCallback(struct lws *wsi, int reason, void *in, ssize_t len);
 
-    void onClientWritable();
-    void onClientReceivedData(void* in, ssize_t len);
-    void onConnectionOpened();
-    void onConnectionError();
-    void onConnectionClosed();
+    int onClientWritable();
+    int onClientReceivedData(void* in, ssize_t len);
+    int onConnectionOpened();
+    int onConnectionError();
+    int onConnectionClosed();
+
+    struct WsCache* getOrCreateVhost(struct lws_protocols* protocols);
 
 private:
-    std::mutex   _readStateMutex;
+
+    std::mutex   _readyStateMutex;
     State        _readyState;
+
     std::string  _host;
     unsigned int _port;
     std::string  _path;
 
     std::vector<char> _receivedData;
 
-    friend class WsThreadHelper;
-    friend class WebSocketCallbackWrapper;
-    WsThreadHelper* _wsHelper;
+    struct lws* _wsInstance;
+    struct lws_protocols* _protocols;
+    std::string _protocolNames;
 
-    struct lws*         _wsInstance;
-    struct lws_context* _wsContext;
     std::shared_ptr<std::atomic<bool>> _isDestroyed;
     Delegate* _delegate;
     int _SSLConnection;
-    struct lws_protocols* _wsProtocols;
+
+    std::mutex _closeMutex;
+    std::condition_variable _closeCondition;
+
+    enum class CloseState
+    {
+        NONE,
+        SYNC_CLOSING,
+        SYNC_CLOSED,
+        ASYNC_CLOSING
+    };
+    CloseState _closeState;
+
+    std::string _caFilePath;
+
     EventListenerCustom* _resetDirectorListener;
+
+    friend class WsThreadHelper;
+    friend class WebSocketCallbackWrapper;
 };
 
 }

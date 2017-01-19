@@ -200,15 +200,16 @@ if(USE_BULLET)
     )
 endif()
 
-if(LINUX)
-    set(EXTENDED_TESTS_SRC
+set (EXTENDED_TESTS_SRC
+      Classes/ExtensionsTest/NetworkTest/HttpClientTest.cpp
+      Classes/ExtensionsTest/NetworkTest/SocketIOTest.cpp
+      Classes/ExtensionsTest/NetworkTest/WebSocketTest.cpp
     )
-else()
-    set(EXTENDED_TESTS_SRC
-        Classes/ExtensionsTest/NetworkTest/HttpClientTest.cpp
-        Classes/ExtensionsTest/NetworkTest/SocketIOTest.cpp
-        Classes/ExtensionsTest/NetworkTest/WebSocketTest.cpp
 
+if(LINUX)
+
+else()
+    list(APPEND EXTENDED_TESTS_SRC
         Classes/UITest/CocoStudioGUITest/UIEditBoxTest.cpp
     )
 endif()
