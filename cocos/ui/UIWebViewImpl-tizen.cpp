@@ -80,6 +80,10 @@ namespace cocos2d {
                 ewk_view_url_set(_ewkView, urlchar);
             }
 
+            void WebViewImpl::loadURL(const std::string &url, bool cleanCachedData) {
+                this->loadURL(url);
+            }
+
             void WebViewImpl::loadFile(const std::string &fileName) {
                 auto fileUtiles = FileUtils::getInstance();
                 auto fileFullPath = fileUtiles->fullPathForFilename(fileName);
