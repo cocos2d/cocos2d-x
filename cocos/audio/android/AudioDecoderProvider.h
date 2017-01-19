@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2016-2017 Chukong Technologies Inc.
+Copyright (c) 2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -25,39 +25,16 @@ THE SOFTWARE.
 #pragma once
 
 #include "audio/android/OpenSLHelper.h"
-#include "audio/android/PcmData.h"
-#include "base/CCData.h"
 
 namespace cocos2d { namespace experimental {
 
-class AudioDecoder
+class AudioDecoder;
+
+class AudioDecoderProvider
 {
 public:
-    AudioDecoder();
-    virtual ~AudioDecoder();
-
-    virtual bool init(const std::string &url, int sampleRate);
-
-    bool start();
-
-    inline PcmData getResult()
-    { return _result; };
-
-protected:
-    virtual bool decodeToPcm() = 0;
-    bool resample();
-    bool interleave();
-
-    static size_t fileRead(void* ptr, size_t size, size_t nmemb, void* datasource);
-    static int fileSeek(void* datasource, int64_t offset, int whence);
-    static int fileClose(void* datasource);
-    static long fileTell(void* datasource);
-
-    std::string _url;
-    PcmData _result;
-    int _sampleRate;
-    Data _fileData;
-    size_t _fileCurrPos;
+    static AudioDecoder* createAudioDecoder(SLEngineItf engineItf, const std::string &url, int bufferSizeInFrames, int sampleRate, const FdGetterCallback &fdGetterCallback);
+    static void destroyAudioDecoder(AudioDecoder** decoder);
 };
 
 }} // namespace cocos2d { namespace experimental {

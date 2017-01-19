@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2016-2017 Chukong Technologies Inc.
+Copyright (c) 2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -24,40 +24,23 @@ THE SOFTWARE.
 
 #pragma once
 
-#include "audio/android/OpenSLHelper.h"
-#include "audio/android/PcmData.h"
-#include "base/CCData.h"
+#include "audio/android/AudioDecoder.h"
 
 namespace cocos2d { namespace experimental {
 
-class AudioDecoder
+class AudioDecoderWav : public AudioDecoder
 {
-public:
-    AudioDecoder();
-    virtual ~AudioDecoder();
-
-    virtual bool init(const std::string &url, int sampleRate);
-
-    bool start();
-
-    inline PcmData getResult()
-    { return _result; };
-
 protected:
-    virtual bool decodeToPcm() = 0;
-    bool resample();
-    bool interleave();
+    AudioDecoderWav();
+    virtual ~AudioDecoderWav();
 
-    static size_t fileRead(void* ptr, size_t size, size_t nmemb, void* datasource);
-    static int fileSeek(void* datasource, int64_t offset, int whence);
-    static int fileClose(void* datasource);
-    static long fileTell(void* datasource);
+    virtual bool decodeToPcm() override;
 
-    std::string _url;
-    PcmData _result;
-    int _sampleRate;
-    Data _fileData;
-    size_t _fileCurrPos;
+    static void* onWavOpen(const char* path, void* user);
+    static int onWavSeek(void* datasource, long offset, int whence);
+    static int onWavClose(void* datasource);
+
+    friend class AudioDecoderProvider;
 };
 
 }} // namespace cocos2d { namespace experimental {

@@ -108,6 +108,7 @@ private:
     struct PreloadCallbackParam
     {
         PreloadCallback callback;
+        bool isPreloadInPlay2d;
     };
 
     std::unordered_map<std::string, std::vector<PreloadCallbackParam>> _preloadCallbackMap;
