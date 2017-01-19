@@ -1,4 +1,4 @@
-cocos2d-x-3.14.1 ??
+cocos2d-x-3.14.1 Jan.19 2017
 
 [FIX]           May crash if using `Scene::createWithPhysics()` to create a scene and physics3d camera is not set
 [FIX]           May have link error because of glfw conflict on Linux
