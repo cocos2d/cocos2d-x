@@ -54,7 +54,7 @@ CheckBox* CheckBox::create()
 }
     
 CheckBox* CheckBox::create(const std::string& backGround,
-                           const std::string& backGroundSeleted,
+                           const std::string& backGroundSelected,
                            const std::string& cross,
                            const std::string& backGroundDisabled,
                            const std::string& frontCrossDisabled,
@@ -62,7 +62,7 @@ CheckBox* CheckBox::create(const std::string& backGround,
 {
     CheckBox *pWidget = new (std::nothrow) CheckBox;
     if (pWidget && pWidget->init(backGround,
-                                 backGroundSeleted,
+                                 backGroundSelected,
                                  cross,
                                  backGroundDisabled,
                                  frontCrossDisabled,
