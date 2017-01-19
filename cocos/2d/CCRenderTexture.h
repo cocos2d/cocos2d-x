@@ -319,8 +319,8 @@ protected:
     Rect         _fullviewPort;
     
     GLuint       _FBO;
-    GLuint       _depthRenderBufffer;
-    GLuint       _stencilRenderBufffer;
+    GLuint       _depthRenderBuffer;
+    GLuint       _stencilRenderBuffer;
     GLint        _oldFBO;
     Texture2D* _texture;
     Texture2D* _textureCopy;    // a copy of _texture
