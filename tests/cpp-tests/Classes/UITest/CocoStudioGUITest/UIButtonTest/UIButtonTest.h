@@ -272,4 +272,14 @@ public:
     virtual bool init() override;
 };
 
+class UIButtonWithPolygonInfo: public UIScene
+{
+public:
+    CREATE_FUNC(UIButtonWithPolygonInfo);
+    
+    UIButtonWithPolygonInfo();
+    
+    virtual bool init() override;
+};
+
 #endif /* defined(__TestCpp__UIButtonTest__) */

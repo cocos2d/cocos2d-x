@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>frames</key>
+        <dict>
+            <key>poly_test/wheel_cashking_back.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,0}</string>
+                <key>spriteSize</key>
+                <string>{139,172}</string>
+                <key>spriteSourceSize</key>
+                <string>{139,172}</string>
+                <key>textureRect</key>
+                <string>{{337,274},{139,172}}</string>
+                <key>textureRotated</key>
+                <false/>
+                <key>triangles</key>
+                <string>1 2 3 0 1 3 4 5 13 8 10 11 8 9 10 6 8 11 6 7 8 6 11 12 5 6 12 5 12 13 4 13 14</string>
+                <key>vertices</key>
+                <string>59 172 54 172 54 170 59 170 8 2 23 33 52 50 94 18 111 46 139 55 139 66 101 140 0 128 0 0 6 0</string>
+                <key>verticesUV</key>
+                <string>396 446 391 446 391 444 396 444 345 276 360 307 389 324 431 292 448 320 476 329 476 340 438 414 337 402 337 274 343 274</string>
+            </dict>
+            <key>poly_test/wheel_disc_back.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,0}</string>
+                <key>spriteSize</key>
+                <string>{516,516}</string>
+                <key>spriteSourceSize</key>
+                <string>{516,516}</string>
+                <key>textureRect</key>
+                <string>{{2,2},{516,516}}</string>
+                <key>textureRotated</key>
+                <false/>
+                <key>triangles</key>
+                <string>45 20 21 24 18 19 25 17 18 15 27 28 15 28 14 30 11 12 11 30 31 9 33 34 9 34 8 5 37 38 37 5 6 39 3 4 1 41 42 1 2 41 40 41 2 40 3 39 40 2 3 38 39 4 5 38 4 36 37 6 36 6 7 35 36 7 8 35 7 8 34 35 33 9 10 32 33 10 31 32 10 11 31 10 30 12 13 29 30 13 14 29 13 14 28 29 27 15 16 26 27 16 17 25 26 17 26 16 24 25 18 23 24 19 20 22 23 20 23 19 45 22 20 44 45 21 43 44 21 0 42 43 42 0 1 0 43 21</string>
+                <key>vertices</key>
+                <string>367 17 446 70 493 141 516 205 516 299 504 350 471 414 402 482 334 508 299 516 202 516 124 486 76 450 40 402 6 342 0 288 0 219 15 156 48 102 92 48 190 0 300 0 179 34 145 49 78 103 45 152 25 207 20 279 33 338 48 372 102 439 151 472 206 492 278 497 344 481 371 469 438 415 471 366 491 311 496 239 483 180 457 128 403 70 337 34 310 26 238 21</string>
+                <key>verticesUV</key>
+                <string>369 19 448 72 495 143 518 207 518 301 506 352 473 416 404 484 336 510 301 518 204 518 126 488 78 452 42 404 8 344 2 290 2 221 17 158 50 104 94 50 192 2 302 2 181 36 147 51 80 105 47 154 27 209 22 281 35 340 50 374 104 441 153 474 208 494 280 499 346 483 373 471 440 417 473 368 493 313 498 241 485 182 459 130 405 72 339 36 312 28 240 23</string>
+            </dict>
+        </dict>
+        <key>metadata</key>
+        <dict>
+            <key>format</key>
+            <integer>3</integer>
+            <key>pixelFormat</key>
+            <string>RGBA8888</string>
+            <key>premultiplyAlpha</key>
+            <false/>
+            <key>realTextureFileName</key>
+            <string>poly_test_textures.png</string>
+            <key>size</key>
+            <string>{520,520}</string>
+            <key>smartupdate</key>
+            <string>$TexturePacker:SmartUpdate:f8aa6cbe42360feb09e365ac55ab7d9b:19b506ef3e2d9762dbbb26f40ec3b7b8:eb702ac6e0f58d03ce6fff6c2c2e7a23$</string>
+            <key>textureFileName</key>
+            <string>poly_test_textures.png</string>
+        </dict>
+    </dict>
+</plist>
