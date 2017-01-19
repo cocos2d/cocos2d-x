@@ -56,7 +56,7 @@ class Widget::FocusNavigationController
     }
     ~FocusNavigationController();
 protected:
-    void setFirstFocsuedWidget(Widget* widget);
+    void setFirstFocusedWidget(Widget* widget);
 
     void onKeypadKeyPressed(EventKeyboard::KeyCode, Event*);
 
@@ -112,7 +112,7 @@ void Widget::FocusNavigationController::enableFocusNavigation(bool flag)
         this->removeKeyboardEventListener();
 }
 
-void Widget::FocusNavigationController::setFirstFocsuedWidget(Widget* widget)
+void Widget::FocusNavigationController::setFirstFocusedWidget(Widget* widget)
 {
     _firstFocusedWidget = widget;
 }
@@ -1370,7 +1370,7 @@ void Widget::setFocused(bool focus)
     if (focus) {
         _focusedWidget = this;
         if (_focusNavigationController) {
-            _focusNavigationController->setFirstFocsuedWidget(this);
+            _focusNavigationController->setFirstFocusedWidget(this);
         }
     }
 
@@ -1497,7 +1497,7 @@ void Widget::enableDpadNavigation(bool enable)
             _focusNavigationController = new (std::nothrow) FocusNavigationController;
             if (_focusedWidget)
             {
-                _focusNavigationController->setFirstFocsuedWidget(_focusedWidget);
+                _focusNavigationController->setFirstFocusedWidget(_focusedWidget);
             }
         }
     }
