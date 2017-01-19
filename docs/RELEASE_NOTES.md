@@ -2,20 +2,20 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [Cocos2d-x 3.14.1rc0 Release Notes](#cocos2d-x-3141rc0-release-notes)
+- [Cocos2d-x 3.14.1 Release Notes](#cocos2d-x-3141-release-notes)
 - [Misc Information](#misc-information)
-- [v3.14.1rc0](#v3141rc0)
+- [v3.14.1](#v3141)
   - [Bug fixed](#bug-fixed)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-# Cocos2d-x 3.14.1rc0 Release Notes #
+# Cocos2d-x 3.14.1 Release Notes #
 
 # Misc Information
 
 * [Full Changelog](https://github.com/cocos2d/cocos2d-x/blob/v3/CHANGELOG)
 
-# v3.14.1rc0
+# v3.14.1
 
 ## Bug fixed
 
