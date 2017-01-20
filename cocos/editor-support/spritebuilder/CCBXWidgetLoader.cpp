@@ -27,7 +27,7 @@ Node *WidgetLoader::createNodeInstance(const Size &parentSize, float mainScale, 
 void WidgetLoader::setSpecialProperties(Node* node, const Size &parentSize, float mainScale, float additionalScale, CCBXReaderOwner *owner, Node *rootNode, CCBXReaderOwner *rootOwner) const
 {
     ui::Widget *widget = dynamic_cast<ui::Widget*>(node);
-    widget->setEnabled(_enabled);
+    widget->setTouchEnabled(_enabled);
     widget->ignoreContentAdaptWithSize(false);
 }
     
