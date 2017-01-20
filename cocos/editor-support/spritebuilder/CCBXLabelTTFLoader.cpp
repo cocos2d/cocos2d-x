@@ -50,11 +50,12 @@ void LabelTTFLoader::setSpecialProperties(Node* node, const Size &parentSize, fl
     {
         Size dimensions = getAbsoluteSize(mainScale, additionalScale, _dimensions.size, _dimensions.widthUnits, _dimensions.heightUnits, parentSize);
         float fontSize = getAbsoluteScale(mainScale, additionalScale, _fontSize.scale, _fontSize.type);
+        float outlineWidth = getAbsoluteScale(mainScale, additionalScale, _outlineWidth.scale, _outlineWidth.type);
         if (FileUtils::getInstance()->isFileExist(_font))
         {
             TTFConfig ttfConfig(_font, fontSize, GlyphCollection::DYNAMIC);
+            ttfConfig.outlineSize = outlineWidth;
             label->setTTFConfig(ttfConfig);
-
         }
         else
         {
@@ -65,7 +66,6 @@ void LabelTTFLoader::setSpecialProperties(Node* node, const Size &parentSize, fl
         label->setDimensions(dimensions.width, dimensions.height);
         label->setString(_label);
         label->setBlendFunc(_blendFunc);
-        float outlineWidth = getAbsoluteScale(mainScale, additionalScale, _outlineWidth.scale, _outlineWidth.type);
         float shadowBlurRadius = getAbsoluteScale(mainScale, additionalScale, _shadowBlurRadius.scale, _shadowBlurRadius.type);
         Vec2 shadowOffset = getAbsolutePosition(mainScale, additionalScale, _shadowOffset.pos, _shadowOffset.referenceCorner, _shadowOffset.xUnits, _shadowOffset.yUnits, parentSize);
         if (_outlineColor.a > 0 && outlineWidth > 0)
