@@ -46,8 +46,8 @@ RenderTexture::RenderTexture()
 , _fullRect(Rect::ZERO)
 , _fullviewPort(Rect::ZERO)
 , _FBO(0)
-, _depthRenderBufffer(0)
-, _stencilRenderBufffer(0)
+, _depthRenderBuffer(0)
+, _stencilRenderBuffer(0)
 , _oldFBO(0)
 , _texture(0)
 , _textureCopy(0)
@@ -78,14 +78,14 @@ RenderTexture::~RenderTexture()
     CC_SAFE_RELEASE(_textureCopy);
     
     glDeleteFramebuffers(1, &_FBO);
-    if (_depthRenderBufffer)
+    if (_depthRenderBuffer)
     {
-        glDeleteRenderbuffers(1, &_depthRenderBufffer);
+        glDeleteRenderbuffers(1, &_depthRenderBuffer);
     }
 
-    if (_stencilRenderBufffer)
+    if (_stencilRenderBuffer)
     {
-        glDeleteRenderbuffers(1, &_stencilRenderBufffer);
+        glDeleteRenderbuffers(1, &_stencilRenderBuffer);
     }
 
     CC_SAFE_DELETE(_UITextureImage);
@@ -265,23 +265,23 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat 
             if(Configuration::getInstance()->supportsOESPackedDepthStencil())
             {
                 //create and attach depth buffer
-                glGenRenderbuffers(1, &_depthRenderBufffer);
-                glBindRenderbuffer(GL_RENDERBUFFER, _depthRenderBufffer);
+                glGenRenderbuffers(1, &_depthRenderBuffer);
+                glBindRenderbuffer(GL_RENDERBUFFER, _depthRenderBuffer);
                 glRenderbufferStorage(GL_RENDERBUFFER, depthStencilFormat, (GLsizei)powW, (GLsizei)powH);
-                glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, _depthRenderBufffer);
+                glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, _depthRenderBuffer);
 
                 // if depth format is the one with stencil part, bind same render buffer as stencil attachment
                 if (depthStencilFormat == GL_DEPTH24_STENCIL8)
                 {
-                    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, _depthRenderBufffer);
+                    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, _depthRenderBuffer);
                 }
             }
             else
             {
 
-                glGenRenderbuffers(1, &_depthRenderBufffer);
-                glGenRenderbuffers(1, &_stencilRenderBufffer);
-                glBindRenderbuffer(GL_RENDERBUFFER, _depthRenderBufffer);
+                glGenRenderbuffers(1, &_depthRenderBuffer);
+                glGenRenderbuffers(1, &_stencilRenderBuffer);
+                glBindRenderbuffer(GL_RENDERBUFFER, _depthRenderBuffer);
                 
                 if(Configuration::getInstance()->supportsOESDepth24())
                 {
@@ -292,25 +292,25 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat 
                     glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT16, (GLsizei)powW, (GLsizei)powH);
                 }
                 
-                glBindRenderbuffer(GL_RENDERBUFFER, _stencilRenderBufffer);
+                glBindRenderbuffer(GL_RENDERBUFFER, _stencilRenderBuffer);
                 glRenderbufferStorage(GL_RENDERBUFFER, GL_STENCIL_INDEX8,  (GLsizei)powW, (GLsizei)powH);
                 
-                glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, _depthRenderBufffer);
+                glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, _depthRenderBuffer);
                 glFramebufferRenderbuffer(GL_FRAMEBUFFER,
-                                          GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, _stencilRenderBufffer);
+                                          GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, _stencilRenderBuffer);
             }
 #else
             
             //create and attach depth buffer
-            glGenRenderbuffers(1, &_depthRenderBufffer);
-            glBindRenderbuffer(GL_RENDERBUFFER, _depthRenderBufffer);
+            glGenRenderbuffers(1, &_depthRenderBuffer);
+            glBindRenderbuffer(GL_RENDERBUFFER, _depthRenderBuffer);
             glRenderbufferStorage(GL_RENDERBUFFER, depthStencilFormat, (GLsizei)powW, (GLsizei)powH);
-            glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, _depthRenderBufffer);
+            glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, _depthRenderBuffer);
             
             // if depth format is the one with stencil part, bind same render buffer as stencil attachment
             if (depthStencilFormat == GL_DEPTH24_STENCIL8)
             {
-                glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, _depthRenderBufffer);
+                glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, _depthRenderBuffer);
             }
 
 #endif
