@@ -1,3 +1,11 @@
+cocos2d-x-3.14.1 Jan.19 2017
+
+[FIX]           May crash if using `Scene::createWithPhysics()` to create a scene and physics3d camera is not set
+[FIX]           May have link error because of glfw conflict on Linux
+[FIX]           Sprite: created from sprite frame with polygon information can not work correctly
+[FIX]           Lua: link error with VS2015
+[FIX]           Lua: compiling error if using `cocos compile/run -p android --android-studio` on Android    
+
 coocs2d-x-3.14 Dec 22 2016
 
 [NEW]           Add Spine binary file format support
