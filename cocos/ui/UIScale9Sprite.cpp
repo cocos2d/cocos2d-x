@@ -431,7 +431,7 @@ void Scale9Sprite::setScale9Enabled(bool enabled)
 
     // only enable stretch when scale9 is enabled
     // for backward compatibility, since Sprite stretches the texture no matter the rendering type
-    setStrechEnabled(enabled);
+    setStretchEnabled(enabled);
 }
 
 bool Scale9Sprite::isScale9Enabled() const

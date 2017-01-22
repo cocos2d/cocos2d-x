@@ -316,9 +316,9 @@ Sprite::Sprite(void)
 , _renderMode(Sprite::RenderMode::QUAD)
 , _trianglesVertex(nullptr)
 , _trianglesIndex(nullptr)
-, _strechFactor(Vec2::ONE)
+, _stretchFactor(Vec2::ONE)
 , _originalContentSize(Size::ZERO)
-, _strechEnabled(true)
+, _stretchEnabled(true)
 {
 #if CC_SPRITE_DEBUG_DRAW
     _debugDrawNode = DrawNode::create();
@@ -442,9 +442,9 @@ void Sprite::updatePoly()
     //    the sprite is 9-sliced and stretched.
     if (_renderMode == RenderMode::QUAD || _renderMode == RenderMode::QUAD_BATCHNODE) {
         Rect copyRect;
-        if (_strechEnabled) {
+        if (_stretchEnabled) {
             // case B)
-            copyRect = Rect(0, 0, _rect.size.width * _strechFactor.x, _rect.size.height * _strechFactor.y);
+            copyRect = Rect(0, 0, _rect.size.width * _stretchFactor.x, _rect.size.height * _stretchFactor.y);
         } else {
             // case A)
             // modify origin to put the sprite in the correct offset
@@ -591,10 +591,10 @@ void Sprite::updatePoly()
 
         // sizes
         float x0_s = osw * cx1;
-        float x1_s = osw * (cx2-cx1) * _strechFactor.x;
+        float x1_s = osw * (cx2-cx1) * _stretchFactor.x;
         float x2_s = osw * (1-cx2);
         float y0_s = osh * cy1;
-        float y1_s = osh * (cy2-cy1) * _strechFactor.y;
+        float y1_s = osh * (cy2-cy1) * _stretchFactor.y;
         float y2_s = osh * (1-cy2);
 
 
@@ -864,8 +864,8 @@ void Sprite::setVertexCoords(const Rect& rect, V3F_C4B_T2F_Quad* outQuad)
     // FIXME: Stretching should be applied to the "offset" as well
     // but probably it should be calculated in the caller function. It will be tidier
     if (_renderMode == RenderMode::QUAD) {
-        _offsetPosition.x *= _strechFactor.x;
-        _offsetPosition.y *= _strechFactor.y;
+        _offsetPosition.x *= _stretchFactor.x;
+        _offsetPosition.y *= _stretchFactor.y;
     }
 
     // rendering using batch node
@@ -1355,10 +1355,10 @@ void Sprite::setContentSize(const Size& size)
     updatePoly();
 }
 
-void Sprite::setStrechEnabled(bool enabled)
+void Sprite::setStretchEnabled(bool enabled)
 {
-    if (_strechEnabled != enabled) {
-        _strechEnabled = enabled;
+    if (_stretchEnabled != enabled) {
+        _stretchEnabled = enabled;
 
         // disabled centerrect / number of slices if disabled
         if (!enabled)
@@ -1369,9 +1369,19 @@ void Sprite::setStrechEnabled(bool enabled)
     }
 }
 
+void Sprite::setStrechEnabled(bool enabled)
+{
+    setStretchEnabled(enabled);
+}
+
+bool Sprite::isStretchEnabled() const
+{
+    return _stretchEnabled;
+}
+
 bool Sprite::isStrechEnabled() const
 {
-    return _strechEnabled;
+    return isStretchEnabled();
 }
 
 void Sprite::updateStretchFactor()
@@ -1385,8 +1395,8 @@ void Sprite::updateStretchFactor()
         const float x_factor = size.width / _originalContentSize.width;
         const float y_factor = size.height / _originalContentSize.height;
 
-        _strechFactor = Vec2(std::max(0.0f, x_factor),
-                             std::max(0.0f, y_factor));
+        _stretchFactor = Vec2(std::max(0.0f, x_factor),
+                              std::max(0.0f, y_factor));
     }
     else if (_renderMode == RenderMode::SLICE9)
     {
@@ -1405,8 +1415,8 @@ void Sprite::updateStretchFactor()
         const float x_factor = (adjustedWidth - x1 - x3) / x2;
         const float y_factor = (adjustedHeight - y1 - y3) / y2;
 
-        _strechFactor = Vec2(std::max(0.0f, x_factor),
-                             std::max(0.0f, y_factor));
+        _stretchFactor = Vec2(std::max(0.0f, x_factor),
+                              std::max(0.0f, y_factor));
     }
 
     // else:

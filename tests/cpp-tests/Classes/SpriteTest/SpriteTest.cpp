@@ -5773,7 +5773,7 @@ Issue17119::Issue17119()
     addChild(s4);
     s4->setPosition(s.width/2+s.width/3, s.height/2-s.height/3);
     s4->setContentSize(s2->getContentSize()*1.5);
-    s4->setStrechEnabled(false);
+    s4->setStretchEnabled(false);
     auto p4 = Sprite::create("Images/r1.png");
     p4->setScale(0.25f);
     p4->setPosition(s3->getPosition());
