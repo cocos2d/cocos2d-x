@@ -51,6 +51,9 @@ from sys import stdout
 from distutils.errors import DistutilsError
 from distutils.dir_util import copy_tree, remove_tree
 
+def execute_command(cmd):
+    if os.system(cmd) != 0:
+        raise Exception('Command ( %s ) failed!' % cmd)
 
 class UnrecognizedFormat:
     def __init__(self, prompt):
@@ -239,6 +242,10 @@ class CocosZipInstaller(object):
             data = json.load(data_file)
         return data
 
+    def clean_external_folder(self):
+        print('==> Cleaning cocos2d-x/external folder ...')
+        execute_command('git clean -fdx external')
+
     def run(self, workpath, folder_for_extracting, remove_downloaded, force_update, download_only):
         if not force_update and not self.need_to_update():
             print("==> Not need to update!")
@@ -251,9 +258,12 @@ class CocosZipInstaller(object):
 
         if not download_only:
             self.unpack_zipfile(self._workpath)
-            print("==> Copying files...")
+
             if not os.path.exists(folder_for_extracting):
                 os.mkdir(folder_for_extracting)
+
+            self.clean_external_folder()
+            print("==> Copying files...")
             distutils.dir_util.copy_tree(self._extracted_folder_name, folder_for_extracting)
             if self._move_dirs is not None:
                 for srcDir in self._move_dirs.keys():
