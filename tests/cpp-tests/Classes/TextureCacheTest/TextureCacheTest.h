@@ -25,4 +25,16 @@ private:
     int _numberOfLoadedSprites;
 };
 
+class TextureCacheUnbindTest : public TestCase
+{
+public:
+    CREATE_FUNC(TextureCacheUnbindTest);
+
+    TextureCacheUnbindTest();
+
+private:
+    void textureLoadedA(cocos2d::Texture2D* texture);
+    void textureLoadedB(cocos2d::Texture2D* texture);
+};
+
 #endif // _TEXTURECACHE_TEST_H_
