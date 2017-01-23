@@ -78,6 +78,7 @@ void LabelTTFLoader::setSpecialProperties(Node* node, const Size &parentSize, fl
         Label::Overflow overflow = static_cast<Label::Overflow>(_overflowLabel);
         label->setOverflow((_adjustsFontSizeToFit && overflow == Label::Overflow::NONE) ? Label::Overflow::SHRINK : overflow);
         label->setLineBreakWithoutSpace(!_wordWrapLabel);
+        label->setAlignment(_textHAlignment, _textVAlignment);
     }
 }
 
