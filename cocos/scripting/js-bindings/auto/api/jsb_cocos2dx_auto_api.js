@@ -17369,6 +17369,16 @@ rect
 },
 
 /**
+ * @method isStretchEnabled
+ * @return {bool}
+ */
+isStretchEnabled : function (
+)
+{
+    return false;
+},
+
+/**
  * @method setTextureRect
 * @param {rect_object|rect_object} rect
 * @param {bool} bool
@@ -17392,6 +17402,16 @@ str
 )
 {
     return false;
+},
+
+/**
+ * @method setStretchEnabled
+ * @param {bool} arg0
+ */
+setStretchEnabled : function (
+bool 
+)
+{
 },
 
 /**
@@ -17543,16 +17563,6 @@ isTextureRectRotated : function (
 },
 
 /**
- * @method setStrechEnabled
- * @param {bool} arg0
- */
-setStrechEnabled : function (
-bool 
-)
-{
-},
-
-/**
  * @method getTextureRect
  * @return {rect_object}
  */
@@ -17560,16 +17570,6 @@ getTextureRect : function (
 )
 {
     return cc.Rect;
-},
-
-/**
- * @method isStrechEnabled
- * @return {bool}
- */
-isStrechEnabled : function (
-)
-{
-    return false;
 },
 
 /**
