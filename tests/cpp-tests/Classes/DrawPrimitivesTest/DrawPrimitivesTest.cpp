@@ -286,7 +286,7 @@ DrawNodeTest::DrawNodeTest()
     
     draw->drawSegment(Vec2(10,s.height/2), Vec2(s.width/2, s.height/2), 40, Color4F(1, 0, 1, 0.5));
 
-	// Draw triangle
+    // Draw triangle
     draw->drawTriangle(Vec2(10, 10), Vec2(70, 30), Vec2(100, 140), Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 0.5));
     
     for (int i = 0; i < 100; i++) {
@@ -298,6 +298,9 @@ DrawNodeTest::DrawNodeTest()
     draw1->setLineWidth(4);
     draw1->drawLine(Vec2(0, s.height), Vec2(s.width, s.height - 20), Color4F::YELLOW);
     draw1->drawLine(Vec2(0, 0), Vec2(s.width, s.height - 20), Color4F::YELLOW);
+
+    draw->runAction(RepeatForever::create(Sequence::create(FadeIn::create(1.2),FadeOut::create(1.2), NULL)));
+    draw1->runAction(RepeatForever::create(Sequence::create(FadeIn::create(1.2),FadeOut::create(1.2), NULL)));
 }
 
 string DrawNodeTest::title() const
