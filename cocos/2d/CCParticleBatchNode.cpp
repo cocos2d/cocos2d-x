@@ -271,9 +271,9 @@ void ParticleBatchNode::reorderChild(Node * aChild, int zOrder)
 
             // Find new AtlasIndex
             int newAtlasIndex = 0;
-            for(int i=0, size = _children.size(); i < size; ++i)
+            for (const auto& iter : _children)
             {
-                ParticleSystem* node = static_cast<ParticleSystem*>(_children.at(i));
+                auto node = static_cast<ParticleSystem*>(iter);
                 if( node == child )
                 {
                     newAtlasIndex = child->getAtlasIndex();
