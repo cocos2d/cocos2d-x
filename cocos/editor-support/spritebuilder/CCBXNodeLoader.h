@@ -248,7 +248,9 @@ public:
     
     virtual cocos2d::Node *createNodeInstance(const cocos2d::Size &parentSize, float mainScale, float additionalScale, cocos2d::spritebuilder::CCBXReaderOwner *owner, cocos2d::Node *rootNode, cocos2d::spritebuilder::CCBXReaderOwner *parentOwner) const override
     {
-        return CustomNode::create();
+        CustomNode *node = CustomNode::create();
+        node->setAnchorPoint(Vec2(0.0f,0.0f));
+        return node;
     }
 };
     
@@ -264,7 +266,9 @@ public:
     
     virtual cocos2d::Node *createNodeInstance(const cocos2d::Size &parentSize, float mainScale, float additionalScale, cocos2d::spritebuilder::CCBXReaderOwner *owner, cocos2d::Node *rootNode, cocos2d::spritebuilder::CCBXReaderOwner *parentOwner) const override
     {
-        return CustomNode::create();
+        CustomNode *node = CustomNode::create();
+        node->setAnchorPoint(Vec2(0.0f,0.0f));
+        return node;
     }
     
     virtual void onNodeLoaded(Node *node) const override
