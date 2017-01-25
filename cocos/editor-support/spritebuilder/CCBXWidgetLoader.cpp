@@ -173,7 +173,7 @@ void WidgetLoader::setCallbacks(Node* node, CCBXReaderOwner *owner, Node *rootNo
     }
 }
     
-WidgetLoader::WidgetLoader():_enabled(true)
+WidgetLoader::WidgetLoader():_enabled(false)
 {
     
 }
