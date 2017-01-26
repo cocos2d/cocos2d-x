@@ -85,7 +85,9 @@ ParticleSystemQuadLoader *ParticleSystemQuadLoader::create()
     
 Node *ParticleSystemQuadLoader::createNodeInstance(const Size &parentSize, float mainScale, float additionalScale, CCBXReaderOwner *owner, Node *rootNode, CCBXReaderOwner *rootOwner) const
 {
-    return BuilderParticleSystemQuad::createWithTotalParticles(_totalParticles);
+    BuilderParticleSystemQuad *builderParticleSystemQuad =  BuilderParticleSystemQuad::createWithTotalParticles(_totalParticles);
+    builderParticleSystemQuad->setAnchorPoint(Vec2(0.0f, 0.0f));
+    return builderParticleSystemQuad;
 }
     
 void ParticleSystemQuadLoader::setSpecialProperties(Node* node, const Size &parentSize, float mainScale, float additionalScale, CCBXReaderOwner *owner, Node *rootNode, CCBXReaderOwner *rootOwner) const

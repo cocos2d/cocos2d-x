@@ -52,6 +52,7 @@ Node *EditBoxLoader::createNodeInstance(const Size &parentSize, float mainScale,
     ui::Scale9Sprite *normalSprite = ui::Scale9Sprite::createWithSpriteFrame(_normalSpriteFrame.spriteFrame, realMargins);
     
     ui::EditBox *editBox = ui::EditBox::create(editBoxSize, normalSprite);
+    editBox->setAnchorPoint(Vec2(0.0f, 0.0f));
     return editBox;
 }
 
@@ -59,7 +60,6 @@ void EditBoxLoader::setSpecialProperties(Node* node, const Size &parentSize, flo
 {
     WidgetLoader::setSpecialProperties(node, parentSize, mainScale, additionalScale, owner, rootNode, rootOwner);
     ui::EditBox *editBox = static_cast<ui::EditBox*>(node);
-    editBox->setAnchorPoint(Vec2(0.0f, 0.0f));
     editBox->setText(_label.c_str());
     editBox->setPlaceHolder(_placeholder.c_str());
     editBox->setMaxLength(_maxLength==0?INT_MAX:_maxLength);
