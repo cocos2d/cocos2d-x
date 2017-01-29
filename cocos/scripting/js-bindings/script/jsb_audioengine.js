@@ -26,7 +26,7 @@ if (!jsb || !jsb.AudioEngine) return;
 
 jsb.AudioEngine.AudioState = {
     ERROR: -1,
-    INITIALZING: 0,
+    INITIALIZING: 0,
     PLAYING: 1,
     PAUSED: 2
 };
