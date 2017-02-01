@@ -28,6 +28,8 @@ public:
     void add(const std::string &path, NodeLoader* loader);
     void clear();
     
+    ~NodeLoaderCache();
+    
 CC_CONSTRUCTOR_ACCESS:
     NodeLoaderCache() {};
     

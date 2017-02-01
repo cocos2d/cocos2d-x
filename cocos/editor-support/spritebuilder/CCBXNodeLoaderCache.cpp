@@ -44,6 +44,11 @@ void NodeLoaderCache::clear()
     _loaders.clear();
 }
     
+NodeLoaderCache::~NodeLoaderCache()
+{
+    clear();
+}
+    
 }
 
 NS_CC_END
