@@ -199,12 +199,12 @@ bool Sprite3D::loadFromCache(const std::string& path)
         _skeleton = Skeleton3D::create(spritedata->nodedatas->skeleton);
         CC_SAFE_RETAIN(_skeleton);
 
-        auto size = spritedata->nodedatas->nodes.size();
+        const bool singleSprite = (spritedata->nodedatas->nodes.size() == 1);
         for(const auto& it : spritedata->nodedatas->nodes)
         {
             if(it)
             {
-                createNode(it, this, *(spritedata->materialdatas), size == 1);
+                createNode(it, this, *(spritedata->materialdatas), singleSprite);
             }
         }
         
