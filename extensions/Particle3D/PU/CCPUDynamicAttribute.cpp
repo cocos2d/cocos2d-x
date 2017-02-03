@@ -170,9 +170,9 @@ PUDynamicAttributeCurved::PUDynamicAttributeCurved (PUInterpolationType interpol
 }
 //-----------------------------------------------------------------------
 PUDynamicAttributeCurved::PUDynamicAttributeCurved (const PUDynamicAttributeCurved& dynamicAttributeCurved) :
-    _interpolationType(dynamicAttributeCurved._interpolationType),
+    _range(dynamicAttributeCurved._range),
     _spline(dynamicAttributeCurved._spline),
-    _range(dynamicAttributeCurved._range)
+    _interpolationType(dynamicAttributeCurved._interpolationType)
 {
     _type = PUDynamicAttribute::DAT_CURVED;
 

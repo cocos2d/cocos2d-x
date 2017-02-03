@@ -134,9 +134,9 @@ SimulatorWin *SimulatorWin::getInstance()
 }
 
 SimulatorWin::SimulatorWin()
-    : _app(nullptr)
-    , _hwnd(NULL)
+    : _hwnd(NULL)
     , _hwndConsole(NULL)
+    , _app(nullptr)
     , _writeDebugLogFile(nullptr)
 {
 }

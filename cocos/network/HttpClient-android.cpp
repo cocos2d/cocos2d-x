@@ -85,8 +85,8 @@ class HttpURLConnection
 {
 public:
     HttpURLConnection(HttpClient* httpClient)
-    :_httpURLConnection(nullptr)
-    ,_client(httpClient)
+    :_client(httpClient)
+    ,_httpURLConnection(nullptr)
     ,_requestmethod("")
     ,_responseCookies("")
     ,_cookieFileName("")
