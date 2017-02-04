@@ -281,11 +281,11 @@ public:
             hasColor = true;
         }
         Attributes()
-        : bold(false)
+        : fontSize(-1)
+        , hasColor(false)
+        , bold(false)
         , italics(false)
         , line(StyleLine::NONE)
-        , hasColor(false)
-        , fontSize(-1)
         , effect(StyleEffect::NONE)
         {
         }
@@ -354,8 +354,8 @@ private:
 MyXMLVisitor::TagTables MyXMLVisitor::_tagTables;
 
 MyXMLVisitor::MyXMLVisitor(RichText* richText)
-: _richText(richText)
-, _fontElements(20)
+:  _fontElements(20)
+, _richText(richText)
 {
     MyXMLVisitor::setTagDescription("font", true, [](const ValueMap& tagAttrValueMap) {
         // supported attributes:
