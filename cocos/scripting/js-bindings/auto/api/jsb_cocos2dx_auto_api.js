@@ -21589,12 +21589,14 @@ removeAllTextures : function (
 
 /**
  * @method addImageAsync
- * @param {String} arg0
- * @param {function} arg1
- */
-addImageAsync : function (
-str, 
-func 
+* @param {String|String} str
+* @param {function|function} func
+* @param {String} str
+*/
+addImageAsync : function(
+str,
+func,
+str 
 )
 {
 },
