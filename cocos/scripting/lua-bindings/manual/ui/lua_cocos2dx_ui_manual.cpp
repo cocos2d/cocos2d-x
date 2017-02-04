@@ -1174,7 +1174,7 @@ static void extendEventListenerFocusEvent(lua_State* L)
     lua_pop(L, 1);
 }
 
-int register_ui_moudle(lua_State* L)
+int register_ui_module(lua_State* L)
 {
     lua_getglobal(L, "_G");
     if (lua_istable(L,-1))//stack:...,_G,

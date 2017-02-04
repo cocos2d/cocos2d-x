@@ -92,7 +92,7 @@ require "cocos.network.DeprecatedNetworkClass"
 require "cocos.network.DeprecatedNetworkEnum"
 require "cocos.network.DeprecatedNetworkFunc"
 
--- register_ui_moudle
+-- register_ui_module
 if nil ~= ccui then
     require "cocos.ui.DeprecatedUIEnum"
     require "cocos.ui.DeprecatedUIFunc"
