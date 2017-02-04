@@ -59561,50 +59561,99 @@ bool js_cocos2dx_TextureCache_removeAllTextures(JSContext *cx, uint32_t argc, js
 }
 bool js_cocos2dx_TextureCache_addImageAsync(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::TextureCache* cobj = (cocos2d::TextureCache *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_TextureCache_addImageAsync : Invalid Native Object");
-    if (argc == 2) {
-        std::string arg0;
-        std::function<void (cocos2d::Texture2D *)> arg1;
-        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
-        do {
-		    if(JS_TypeOfValue(cx, args.get(1)) == JSTYPE_FUNCTION)
-		    {
-		        JS::RootedObject jstarget(cx, args.thisv().toObjectOrNull());
-		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, jstarget, args.get(1), args.thisv()));
-		        auto lambda = [=](cocos2d::Texture2D* larg0) -> void {
-		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-		            jsval largv[1];
-		            if (larg0) {
-		            largv[0] = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::Texture2D>(cx, (cocos2d::Texture2D*)larg0));
-		        } else {
-		            largv[0] = JSVAL_NULL;
-		        };
-		            JS::RootedValue rval(cx);
-		            bool succeed = func->invoke(1, &largv[0], &rval);
-		            if (!succeed && JS_IsExceptionPending(cx)) {
-		                JS_ReportPendingException(cx);
-		            }
-		        };
-		        arg1 = lambda;
-		    }
-		    else
-		    {
-		        arg1 = nullptr;
-		    }
-		} while(0)
-		;
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_TextureCache_addImageAsync : Error processing arguments");
-        cobj->addImageAsync(arg0, arg1);
-        args.rval().setUndefined();
-        return true;
-    }
+    cocos2d::TextureCache* cobj = nullptr;
 
-    JS_ReportError(cx, "js_cocos2dx_TextureCache_addImageAsync : wrong number of arguments: %d, was expecting %d", argc, 2);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx);
+    obj.set(args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cobj = (cocos2d::TextureCache *)(proxy ? proxy->ptr : nullptr);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_TextureCache_addImageAsync : Invalid Native Object");
+    do {
+        if (argc == 3) {
+            std::string arg0;
+            ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+            if (!ok) { ok = true; break; }
+            std::function<void (cocos2d::Texture2D *)> arg1;
+            do {
+			    if(JS_TypeOfValue(cx, args.get(1)) == JSTYPE_FUNCTION)
+			    {
+			        JS::RootedObject jstarget(cx, args.thisv().toObjectOrNull());
+			        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, jstarget, args.get(1), args.thisv()));
+			        auto lambda = [=](cocos2d::Texture2D* larg0) -> void {
+			            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+			            jsval largv[1];
+			            if (larg0) {
+			            largv[0] = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::Texture2D>(cx, (cocos2d::Texture2D*)larg0));
+			        } else {
+			            largv[0] = JSVAL_NULL;
+			        };
+			            JS::RootedValue rval(cx);
+			            bool succeed = func->invoke(1, &largv[0], &rval);
+			            if (!succeed && JS_IsExceptionPending(cx)) {
+			                JS_ReportPendingException(cx);
+			            }
+			        };
+			        arg1 = lambda;
+			    }
+			    else
+			    {
+			        arg1 = nullptr;
+			    }
+			} while(0)
+			;
+            if (!ok) { ok = true; break; }
+            std::string arg2;
+            ok &= jsval_to_std_string(cx, args.get(2), &arg2);
+            if (!ok) { ok = true; break; }
+            cobj->addImageAsync(arg0, arg1, arg2);
+            args.rval().setUndefined();
+            return true;
+        }
+    } while(0);
+
+    do {
+        if (argc == 2) {
+            std::string arg0;
+            ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+            if (!ok) { ok = true; break; }
+            std::function<void (cocos2d::Texture2D *)> arg1;
+            do {
+			    if(JS_TypeOfValue(cx, args.get(1)) == JSTYPE_FUNCTION)
+			    {
+			        JS::RootedObject jstarget(cx, args.thisv().toObjectOrNull());
+			        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, jstarget, args.get(1), args.thisv()));
+			        auto lambda = [=](cocos2d::Texture2D* larg0) -> void {
+			            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+			            jsval largv[1];
+			            if (larg0) {
+			            largv[0] = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::Texture2D>(cx, (cocos2d::Texture2D*)larg0));
+			        } else {
+			            largv[0] = JSVAL_NULL;
+			        };
+			            JS::RootedValue rval(cx);
+			            bool succeed = func->invoke(1, &largv[0], &rval);
+			            if (!succeed && JS_IsExceptionPending(cx)) {
+			                JS_ReportPendingException(cx);
+			            }
+			        };
+			        arg1 = lambda;
+			    }
+			    else
+			    {
+			        arg1 = nullptr;
+			    }
+			} while(0)
+			;
+            if (!ok) { ok = true; break; }
+            cobj->addImageAsync(arg0, arg1);
+            args.rval().setUndefined();
+            return true;
+        }
+    } while(0);
+
+    JS_ReportError(cx, "js_cocos2dx_TextureCache_addImageAsync : wrong number of arguments");
     return false;
 }
 bool js_cocos2dx_TextureCache_getDescription(JSContext *cx, uint32_t argc, jsval *vp)
