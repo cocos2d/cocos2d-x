@@ -463,9 +463,9 @@ void SIOClientImpl::handshakeResponse(HttpClient* /*sender*/, HttpResponse *resp
     std::stringstream s;
     s.str("");
 
-    for (unsigned int i = 0, size = buffer->size(); i < size; ++i)
+    for (const auto& iter : *buffer)
     {
-        s << (*buffer)[i];
+        s << iter;
     }
 
     CCLOGINFO("SIOClientImpl::handshake() dump data: %s", s.str().c_str());
