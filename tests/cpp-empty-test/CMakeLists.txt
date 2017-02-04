@@ -99,7 +99,7 @@ elseif(MACOSX OR APPLE)
       MACOSX_BUNDLE 1
       RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
       )
-
+elseif(ANDROID)
 else()
 
   set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${APP_NAME}")

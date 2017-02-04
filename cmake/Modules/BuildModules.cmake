@@ -108,7 +108,7 @@ macro (BuildModules)
 	# dists have packages from zlib, thats very old for us.
 	# moreover our embedded version modified to quick provide
 	# functionality needed by cocos.
-	if(USE_PREBUILT_LIBS OR NOT MINGW)
+	if(USE_PREBUILT_LIBS OR NOT MINGW OR USE_SOURCES_EXTERNAL)
 	  #TODO: hack! should be in external/unzip/CMakeLists.txt
 	  include_directories(${ZLIB_INCLUDE_DIRS})
 	  add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/external/unzip)
