@@ -85,8 +85,8 @@ class HttpURLConnection
 {
 public:
     HttpURLConnection(HttpClient* httpClient)
-    :_httpURLConnection(nullptr)
-    ,_client(httpClient)
+    :_client(httpClient)
+    ,_httpURLConnection(nullptr)
     ,_requestmethod("")
     ,_responseCookies("")
     ,_cookieFileName("")
@@ -874,12 +874,12 @@ void HttpClient::setSSLVerification(const std::string& caFile)
 }
 
 HttpClient::HttpClient()
-: _timeoutForConnect(30)
+: _isInited(false)
+, _timeoutForConnect(30)
 , _timeoutForRead(60)
-, _isInited(false)
 , _threadCount(0)
-, _requestSentinel(new HttpRequest())
 , _cookie(nullptr)
+, _requestSentinel(new HttpRequest())
 {
     CCLOG("In the constructor of HttpClient!");
     increaseThreadCount();

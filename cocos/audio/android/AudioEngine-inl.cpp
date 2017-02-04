@@ -107,14 +107,14 @@ static int fdGetter(const std::string& url, off_t* start, off_t* length)
 
 //====================================================
 AudioEngineImpl::AudioEngineImpl()
-    : _audioIDIndex(0)
-    , _engineObject(nullptr)
+    : _engineObject(nullptr)
     , _engineEngine(nullptr)
     , _outputMixObject(nullptr)
-    , _lazyInitLoop(true)
     , _audioPlayerProvider(nullptr)
     , _onPauseListener(nullptr)
     , _onResumeListener(nullptr)
+    , _audioIDIndex(0)
+    , _lazyInitLoop(true)
 {
     __callerThreadUtils.setCallerThreadId(std::this_thread::get_id());
 }

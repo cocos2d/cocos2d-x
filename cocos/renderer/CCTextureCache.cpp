@@ -733,13 +733,13 @@ bool VolatileTextureMgr::_isReloading = false;
 
 VolatileTexture::VolatileTexture(Texture2D *t)
 : _texture(t)
+, _uiImage(nullptr)
 , _cashedImageType(kInvalid)
 , _textureData(nullptr)
 , _pixelFormat(Texture2D::PixelFormat::RGBA8888)
 , _fileName("")
-, _text("")
-, _uiImage(nullptr)
 , _hasMipmaps(false)
+, _text("")
 {
     _texParams.minFilter = GL_LINEAR;
     _texParams.magFilter = GL_LINEAR;

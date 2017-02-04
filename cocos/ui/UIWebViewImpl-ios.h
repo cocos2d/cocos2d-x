@@ -26,6 +26,7 @@
 #define __COCOS2D_UI_WEBVIEWIMPL_IOS_H_
 /// @cond DO_NOT_SHOW
 
+#include <stdint.h>
 #include <iosfwd>
 
 @class UIWebViewWrapper;

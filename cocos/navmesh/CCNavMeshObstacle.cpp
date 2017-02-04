@@ -53,9 +53,9 @@ const std::string& NavMeshObstacle::getNavMeshObstacleComponentName()
 NavMeshObstacle::NavMeshObstacle()
 : _radius(0.0f)
 , _height(0.0f)
-, _tileCache(nullptr)
-, _obstacleID(-1)
 , _syncFlag(NODE_AND_NODE)
+, _obstacleID(-1)
+, _tileCache(nullptr)
 {
 
 }

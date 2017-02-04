@@ -419,8 +419,8 @@ std::string Material::getName() const
 
 Material::Material()
 : _name("")
-, _target(nullptr)
 , _currentTechnique(nullptr)
+, _target(nullptr)
 {
 }
 

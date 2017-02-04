@@ -34,10 +34,10 @@
 NS_CC_BEGIN
 
 NavMeshDebugDraw::NavMeshDebugDraw()
-: _primitiveType(GL_POINTS)
-, _dirtyBuffer(true)
-, _currentPrimitive(nullptr)
+: _currentPrimitive(nullptr)
+, _primitiveType(GL_POINTS)
 , _currentDepthMask(true)
+, _dirtyBuffer(true)
 {
     _stateBlock = RenderState::StateBlock::create();
     _stateBlock->setCullFace(true);

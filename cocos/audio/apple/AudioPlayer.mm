@@ -128,7 +128,7 @@ void AudioPlayer::destroy()
     ALOGVV("Before alSourceStop");
     alSourceStop(_alSource); CHECK_AL_ERROR_DEBUG();
     ALOGVV("Before alSourcei");
-    alSourcei(_alSource, AL_BUFFER, NULL); CHECK_AL_ERROR_DEBUG();
+    alSourcei(_alSource, AL_BUFFER, 0); CHECK_AL_ERROR_DEBUG();
 
     _removeByAudioEngine = true;
 
