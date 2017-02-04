@@ -95,7 +95,7 @@ public:
     enum class AudioState
     {
         ERROR  = -1,
-        INITIALZING,
+        INITIALIZING,
         PLAYING,
         PAUSED
     };
@@ -326,7 +326,7 @@ protected:
         AudioInfo()
             : profileHelper(nullptr)
             , duration(TIME_UNKNOWN)
-            , state(AudioState::INITIALZING)
+            , state(AudioState::INITIALIZING)
         {
 
         }
