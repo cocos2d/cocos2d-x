@@ -136,6 +136,12 @@
 -- @return TextureCache#TextureCache self (return value: cc.TextureCache)
         
 --------------------------------
+-- 
+-- @function [parent=#TextureCache] getETC1AlphaFileSuffix 
+-- @param self
+-- @return string#string ret (return value: string)
+        
+--------------------------------
 -- js ctor
 -- @function [parent=#TextureCache] TextureCache 
 -- @param self
