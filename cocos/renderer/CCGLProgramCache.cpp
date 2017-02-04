@@ -449,6 +449,24 @@ void GLProgramCache::reloadDefaultGLPrograms()
     p = getGLProgram(GLProgram::SHADER_CAMERA_CLEAR);
     p->reset();
     loadDefaultGLProgram(p, kShaderType_CameraClear);
+
+    // ETC1 ALPHA supports.
+    p = getGLProgram(GLProgram::SHADER_NAME_ETC1AS_POSITION_TEXTURE_COLOR);
+    p->reset();
+    loadDefaultGLProgram(p, kShaderType_ETC1ASPositionTextureColor);
+
+    p = getGLProgram(GLProgram::SHADER_NAME_ETC1AS_POSITION_TEXTURE_COLOR_NO_MVP);
+    p->reset();
+    loadDefaultGLProgram(p, kShaderType_ETC1ASPositionTextureColor_noMVP);
+
+    // ETC1 Gray supports.
+    p = getGLProgram(GLProgram::SHADER_NAME_ETC1AS_POSITION_TEXTURE_GRAY);
+    p->reset();
+    loadDefaultGLProgram(p, kShaderType_ETC1ASPositionTextureGray);
+
+    p = getGLProgram(GLProgram::SHADER_NAME_ETC1AS_POSITION_TEXTURE_GRAY_NO_MVP);
+    p->reset();
+    loadDefaultGLProgram(p, kShaderType_ETC1ASPositionTextureGray_noMVP);
 }
 
 void GLProgramCache::reloadDefaultGLProgramsRelativeToLights()

@@ -1502,4 +1502,9 @@ void Texture2D::setAlphaTexture(Texture2D* alphaTexture)
         this->_hasPremultipliedAlpha = true; // PremultipliedAlpha should be true.
     }
 }
+
+Texture2D* Texture2D::getAlphaTexture() const
+{
+    return _alphaTexture;
+}
 NS_CC_END

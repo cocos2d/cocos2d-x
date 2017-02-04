@@ -411,6 +411,7 @@ public:
     std::string getPath()const { return _filePath; }
 
     void setAlphaTexture(Texture2D* alphaTexture);
+    Texture2D* getAlphaTexture() const;
 
     GLuint getAlphaTextureName() const;
 public:

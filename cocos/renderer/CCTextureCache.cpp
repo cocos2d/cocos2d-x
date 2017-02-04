@@ -56,6 +56,11 @@ void TextureCache::setETC1AlphaFileSuffix(const std::string& suffix)
     s_etc1AlphaFileSuffix = suffix;
 }
 
+std::string TextureCache::getETC1AlphaFileSuffix()
+{
+    return s_etc1AlphaFileSuffix;
+}
+
 TextureCache * TextureCache::getInstance()
 {
     return Director::getInstance()->getTextureCache();
@@ -883,19 +888,11 @@ void VolatileTextureMgr::reloadAllTextures()
         {
         case VolatileTexture::kImageFile:
         {
-            Image* image = new (std::nothrow) Image();
+            reloadTexture(vt->_texture, vt->_fileName, vt->_pixelFormat);
 
-            Data data = FileUtils::getInstance()->getDataFromFile(vt->_fileName);
-
-            if (image && image->initWithImageData(data.getBytes(), data.getSize()))
-            {
-                Texture2D::PixelFormat oldPixelFormat = Texture2D::getDefaultAlphaPixelFormat();
-                Texture2D::setDefaultAlphaPixelFormat(vt->_pixelFormat);
-                vt->_texture->initWithImage(image);
-                Texture2D::setDefaultAlphaPixelFormat(oldPixelFormat);
-            }
-
-            CC_SAFE_RELEASE(image);
+            // etc1 support check whether alpha texture exists & load it
+            auto alphaFile = vt->_fileName + TextureCache::getETC1AlphaFileSuffix();
+            reloadTexture(vt->_texture->getAlphaTexture(), alphaFile, vt->_pixelFormat);
         }
         break;
         case VolatileTexture::kImageData:
@@ -928,6 +925,20 @@ void VolatileTextureMgr::reloadAllTextures()
     }
 
     _isReloading = false;
+}
+
+void VolatileTextureMgr::reloadTexture(Texture2D* texture, const std::string& filename, Texture2D::PixelFormat pixelFormat)
+{
+    if (!texture)
+        return;
+
+    Image* image = new (std::nothrow) Image();
+    Data data = FileUtils::getInstance()->getDataFromFile(filename);
+
+    if (image && image->initWithImageData(data.getBytes(), data.getSize()))
+        texture->initWithImage(image, pixelFormat);
+
+    CC_SAFE_RELEASE(image);
 }
 
 #endif // CC_ENABLE_CACHE_TEXTURE_DATA

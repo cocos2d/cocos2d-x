@@ -84,6 +84,7 @@ public:
 
     // ETC1 ALPHA supports.
     static void setETC1AlphaFileSuffix(const std::string& suffix);
+    static std::string getETC1AlphaFileSuffix();
 
 public:
     /**
@@ -306,6 +307,7 @@ private:
     // find VolatileTexture by Texture2D*
     // if not found, create a new one
     static VolatileTexture* findVolotileTexture(Texture2D *tt);
+    static void reloadTexture(Texture2D* texture, const std::string& filename, Texture2D::PixelFormat pixelFormat);
 };
 
 #endif
