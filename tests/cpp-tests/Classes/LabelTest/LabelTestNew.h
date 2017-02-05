@@ -237,6 +237,15 @@ private:
     
 };
 
+class LabelTTFEmoji : public AtlasDemoNew
+{
+public:
+    CREATE_FUNC(LabelTTFEmoji);
+    
+    LabelTTFEmoji();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
 
 class LabelTTFCJKWrappingTest : public AtlasDemoNew
 {

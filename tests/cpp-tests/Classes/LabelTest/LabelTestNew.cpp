@@ -55,6 +55,7 @@ NewLabelTests::NewLabelTests()
     ADD_TEST_CASE(LabelTTFCJKWrappingTest);
     ADD_TEST_CASE(LabelTTFColor);
     ADD_TEST_CASE(LabelTTFDynamicAlignment);
+    ADD_TEST_CASE(LabelTTFEmoji);
     ADD_TEST_CASE(LabelAlignmentTest);
     ADD_TEST_CASE(LabelTTFUnicodeNew);
     ADD_TEST_CASE(LabelTTFDistanceField);
@@ -1021,6 +1022,33 @@ std::string LabelTTFUnicodeNew::subtitle() const
 {
     return "Uses the new Label with TTF. Testing unicode";
 }
+
+//
+// LabelTTFEmoji emoji test
+//
+LabelTTFEmoji::LabelTTFEmoji()
+{
+    std::string emojiString = FileUtils::getInstance()->getStringFromFile("fonts/emoji.txt");
+    auto winSize = Director::getInstance()->getWinSize();
+    
+    auto label = Label::createWithTTF(emojiString, "fonts/NotoEmoji-Regular.ttf", 23);
+    label->setPosition(winSize.width / 2, winSize.height / 2);
+    label->setDimensions(winSize.width, winSize.height);
+    label->setVerticalAlignment(cocos2d::TextVAlignment::CENTER);
+    label->setHorizontalAlignment(cocos2d::TextHAlignment::CENTER);
+    addChild(label);
+}
+
+std::string LabelTTFEmoji::title() const
+{
+    return "New Label + Emoji";
+}
+
+std::string LabelTTFEmoji::subtitle() const
+{
+    return "Uses the new Label with TTF. Testing Emoji";
+}
+
 
 LabelTTFFontsTestNew::LabelTTFFontsTestNew()
 {
