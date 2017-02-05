@@ -571,8 +571,8 @@ bool FileUtils::writeStringToFile(const std::string& dataStr, const std::string&
 
 void FileUtils::writeStringToFile(std::string dataStr, const std::string& fullPath, std::function<void(bool)> callback)
 {
-    performOperationOffthread([fullPath](const std::string& dataStr) -> bool {
-            return FileUtils::getInstance()->writeStringToFile(dataStr, fullPath);
+    performOperationOffthread([fullPath](const std::string& dataStrIn) -> bool {
+        return FileUtils::getInstance()->writeStringToFile(dataStrIn, fullPath);
     }, std::move(callback),std::move(dataStr));
 }
 
@@ -603,8 +603,8 @@ bool FileUtils::writeDataToFile(const Data& data, const std::string& fullPath)
 
 void FileUtils::writeDataToFile(Data data, const std::string& fullPath, std::function<void(bool)> callback)
 {
-    performOperationOffthread([fullPath](const Data& data) -> bool {
-            return FileUtils::getInstance()->writeDataToFile(data, fullPath);
+    performOperationOffthread([fullPath](const Data& dataIn) -> bool {
+        return FileUtils::getInstance()->writeDataToFile(dataIn, fullPath);
     }, std::move(callback), std::move(data));
 }
 
@@ -753,15 +753,15 @@ unsigned char* FileUtils::getFileDataFromZip(const std::string& zipFilePath, con
 void FileUtils::writeValueMapToFile(ValueMap dict, const std::string& fullPath, std::function<void(bool)> callback)
 {
     
-    performOperationOffthread([fullPath](const ValueMap& dict) -> bool {
-            return FileUtils::getInstance()->writeValueMapToFile(dict, fullPath);
+    performOperationOffthread([fullPath](const ValueMap& dictIn) -> bool {
+        return FileUtils::getInstance()->writeValueMapToFile(dictIn, fullPath);
     }, std::move(callback), std::move(dict));
 }
 
 void FileUtils::writeValueVectorToFile(ValueVector vecData, const std::string& fullPath, std::function<void(bool)> callback)
 {
-    performOperationOffthread([fullPath] (const ValueVector& vecData) -> bool {
-            return FileUtils::getInstance()->writeValueVectorToFile(vecData, fullPath);
+    performOperationOffthread([fullPath] (const ValueVector& vecDataIn) -> bool {
+        return FileUtils::getInstance()->writeValueVectorToFile(vecDataIn, fullPath);
     }, std::move(callback), std::move(vecData));
 }
 
