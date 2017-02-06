@@ -149,6 +149,12 @@
 -- @return Texture2D#Texture2D self (return value: cc.Texture2D)
         
 --------------------------------
+-- 
+-- @function [parent=#Texture2D] getAlphaTexture 
+-- @param self
+-- @return Texture2D#Texture2D ret (return value: cc.Texture2D)
+        
+--------------------------------
 -- Get texture name, dimensions and coordinates message by a string.<br>
 -- js NA<br>
 -- lua NA
