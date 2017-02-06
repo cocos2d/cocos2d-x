@@ -354,31 +354,35 @@ unsigned char* FontFreeType::getGlyphBitmap(unsigned short theChar, long &outWid
             outRect.origin.x = blendImageMinX;
             outRect.origin.y = -blendImageMaxY + _outlineSize;
 
-            long index, index2;
-            auto blendImage = new (std::nothrow) unsigned char[blendWidth * blendHeight * 2];
-            memset(blendImage, 0, blendWidth * blendHeight * 2);
-
-            auto px = outlineMinX - blendImageMinX;
-            auto py = blendImageMaxY - outlineMaxY;
-            for (int x = 0; x < outlineWidth; ++x)
+            unsigned char *blendImage = nullptr;
+            if (blendWidth > 0 && blendHeight > 0)
             {
-                for (int y = 0; y < outlineHeight; ++y)
+                long index, index2;
+                blendImage = new (std::nothrow) unsigned char[blendWidth * blendHeight * 2];
+                memset(blendImage, 0, blendWidth * blendHeight * 2);
+
+                auto px = outlineMinX - blendImageMinX;
+                auto py = blendImageMaxY - outlineMaxY;
+                for (int x = 0; x < outlineWidth; ++x)
                 {
-                    index = px + x + ((py + y) * blendWidth);
-                    index2 = x + (y * outlineWidth);
-                    blendImage[2 * index] = outlineBitmap[index2];
+                    for (int y = 0; y < outlineHeight; ++y)
+                    {
+                        index = px + x + ((py + y) * blendWidth);
+                        index2 = x + (y * outlineWidth);
+                        blendImage[2 * index] = outlineBitmap[index2];
+                    }
                 }
-            }
 
-            px = glyphMinX - blendImageMinX;
-            py = blendImageMaxY - glyphMaxY;
-            for (int x = 0; x < outWidth; ++x)
-            {
-                for (int y = 0; y < outHeight; ++y)
+                px = glyphMinX - blendImageMinX;
+                py = blendImageMaxY - glyphMaxY;
+                for (int x = 0; x < outWidth; ++x)
                 {
-                    index = px + x + ((y + py) * blendWidth);
-                    index2 = x + (y * outWidth);
-                    blendImage[2 * index + 1] = copyBitmap[index2];
+                    for (int y = 0; y < outHeight; ++y)
+                    {
+                        index = px + x + ((y + py) * blendWidth);
+                        index2 = x + (y * outWidth);
+                        blendImage[2 * index + 1] = copyBitmap[index2];
+                    }
                 }
             }
 
