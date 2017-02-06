@@ -563,6 +563,8 @@ protected:
     bool compileShader(GLuint * shader, GLenum type, const GLchar* source);
     void clearShader();
 
+    void clearHashUniforms();
+
     /**OpenGL handle for program.*/
     GLuint            _program;
     /**OpenGL handle for vertex shader.*/
