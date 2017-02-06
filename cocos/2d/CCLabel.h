@@ -677,6 +677,19 @@ protected:
     void restoreFontSize();
     void updateLetterSpriteScale(Sprite* sprite);
     int getFirstCharLen(const std::u16string& utf16Text, int startIndex, int textLen);
+
+    /**
+     * @brief Get the number of letters of the first word that fit in one line.
+     * @param utf16Text     The text look into
+     * @param startIndex    Where to start looking in the text
+     * @param textLen       The length of the text
+     * @return The number of letters that fit into one line
+     * @note
+     *  If the label's width is narrower that the width of a single character,
+     *  this function returns 1.
+     *  If the first character is a space, this function returns 1
+     *  Invalid UTF8 letters are considered to break a work like spaces
+     */
     int getFirstWordLen(const std::u16string& utf16Text, int startIndex, int textLen);
 
     void reset();
