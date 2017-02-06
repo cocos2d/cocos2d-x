@@ -366,7 +366,7 @@ public:
     */
     
     /** @{
-     Create or Initializes the GLProgram with a vertex and fragment with bytes array, with shader headers defination(eg. #version ... or #extension ...), with compileTimeDefines(eg. #define ...).
+     Create or Initializes the GLProgram with a vertex and fragment with bytes array, with shader headers definition(eg. #version ... or #extension ...), with compileTimeDefines(eg. #define ...).
      * @js initWithString.
      * @lua initWithString.
      */
@@ -391,7 +391,7 @@ public:
     */
 
     /** @{
-     Create or Initializes the GLProgram with a vertex and fragment with contents of filenames, with shader headers defination(eg. #version ... or #extension ...), with compileTimeDefines(eg. #define ...).
+     Create or Initializes the GLProgram with a vertex and fragment with contents of filenames, with shader headers definition(eg. #version ... or #extension ...), with compileTimeDefines(eg. #define ...).
      * @js init
      * @lua init
      */
