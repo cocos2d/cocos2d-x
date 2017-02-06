@@ -245,6 +245,16 @@ generateMipmap : function (
 },
 
 /**
+ * @method getAlphaTexture
+ * @return {cc.Texture2D}
+ */
+getAlphaTexture : function (
+)
+{
+    return cc.Texture2D;
+},
+
+/**
  * @method getDescription
  * @return {String}
  */
@@ -21715,6 +21725,16 @@ setETC1AlphaFileSuffix : function (
 str 
 )
 {
+},
+
+/**
+ * @method getETC1AlphaFileSuffix
+ * @return {String}
+ */
+getETC1AlphaFileSuffix : function (
+)
+{
+    return ;
 },
 
 /**
