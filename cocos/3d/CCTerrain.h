@@ -508,7 +508,7 @@ protected:
     Mat4 _terrainModelMatrix;
     GLuint _normalLocation;
     GLuint _positionLocation;
-    GLuint _texcordLocation;
+    GLuint _texcoordLocation;
     float _maxHeight;
     float _minHeight;
     CrackFixedType _crackFixedType;

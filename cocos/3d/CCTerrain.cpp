@@ -149,7 +149,7 @@ void Terrain::onDraw(const Mat4 &transform, uint32_t /*flags*/)
 
     _stateBlock->bind();
 
-    GL::enableVertexAttribs(1<<_positionLocation | 1 << _texcordLocation | 1<<_normalLocation);
+    GL::enableVertexAttribs(1<<_positionLocation | 1 << _texcoordLocation | 1<<_normalLocation);
     glProgram->setUniformsForBuiltins(transform);
     _glProgramState->applyUniforms();
     glUniform3f(_lightDirLocation,_lightDir.x,_lightDir.y,_lightDir.z);
@@ -815,7 +815,7 @@ void Terrain::cacheUniformAttribLocation()
 {
 
     _positionLocation = glGetAttribLocation(this->getGLProgram()->getProgram(),"a_position");
-    _texcordLocation = glGetAttribLocation(this->getGLProgram()->getProgram(),"a_texCoord");
+    _texcoordLocation = glGetAttribLocation(this->getGLProgram()->getProgram(),"a_texCoord");
     _normalLocation = glGetAttribLocation(this->getGLProgram()->getProgram(),"a_normal");
     _alphaMapLocation = -1;
     for(int i =0;i<4;++i)
