@@ -123,7 +123,7 @@ public:
 
     /**
      * Translate XML export from Dragon Bone flash tool to datas, and save them.
-     * When you add a new xml, the data already saved will be keeped.
+     * When you add a new xml, the data already saved will be kept.
      *
      * @param xmlPath The cache of the xml
      */
