@@ -269,7 +269,13 @@ private:
     // NOTE: We can ensure T is derived from cocos2d::Ref at compile time here.
     static_assert(std::is_base_of<Ref, typename std::remove_const<T>::type>::value, "T must be derived from Ref");
 };
-    
+
+template <class T> inline
+RefPtr<T> makeRef(T *ptr)
+{
+    return RefPtr<T>(ptr);
+}
+
 template<class T> inline
 bool operator<(const RefPtr<T>& r, std::nullptr_t)
 {
