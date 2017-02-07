@@ -60,6 +60,7 @@ public:
     static GLViewImpl* create(const std::string& viewName, bool resizable);
     static GLViewImpl* createWithRect(const std::string& viewName, Rect size, float frameZoomFactor = 1.0f, bool resizable = false);
     static GLViewImpl* createWithFullScreen(const std::string& viewName);
+	static GLViewImpl* createWithFullScreen(const std::string& viewName, bool maxSize)
     static GLViewImpl* createWithFullScreen(const std::string& viewName, const GLFWvidmode &videoMode, GLFWmonitor *monitor);
 
     /*
@@ -126,6 +127,7 @@ protected:
 
     bool initWithRect(const std::string& viewName, Rect rect, float frameZoomFactor, bool resizable);
     bool initWithFullScreen(const std::string& viewName);
+	bool initWithFullScreen(const std::string& viewName, bool maxSize);
     bool initWithFullscreen(const std::string& viewname, const GLFWvidmode &videoMode, GLFWmonitor *monitor);
 
     bool initGlew();

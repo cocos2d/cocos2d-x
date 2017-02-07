@@ -348,6 +348,17 @@ GLViewImpl* GLViewImpl::createWithFullScreen(const std::string& viewName)
     return nullptr;
 }
 
+GLViewImpl* GLViewImpl::createWithFullScreen(const std::string& viewName, bool maxSize)
+{
+	auto ret = new (std::nothrow) GLViewImpl();
+	if(ret && ret->initWithFullScreen(viewName, maxSize)) {
+		ret->autorelease();
+		return ret;
+	}
+	CC_SAFE_DELETE(ret);
+	return nullptr;
+}
+
 GLViewImpl* GLViewImpl::createWithFullScreen(const std::string& viewName, const GLFWvidmode &videoMode, GLFWmonitor *monitor)
 {
     auto ret = new (std::nothrow) GLViewImpl();
@@ -460,6 +471,24 @@ bool GLViewImpl::initWithFullScreen(const std::string& viewName)
 
     const GLFWvidmode* videoMode = glfwGetVideoMode(_monitor);
     return initWithRect(viewName, Rect(0, 0, videoMode->width, videoMode->height), 1.0f, false);
+}
+
+bool GLViewImpl::initWithFullScreen(const std::string& viewName, bool maxSize)
+{
+	if (!maxSize)
+		return initWithFullScreen(viewName);
+	
+	//Get the monitor
+	_monitor = glfwGetPrimaryMonitor();
+	if (nullptr == _monitor)
+		return false;
+	
+	//Get all the possible video modes
+	int count;
+	const GLFWvidmode* modes = glfwGetVideoModes(_monitor, &count);
+	GLFWvidmode videoMode = *(modes + count - 1);//Select the last mode since they are in ascending order of refresh rate and then screen size
+	
+	return initWithRect(viewName, Rect(0, 0, videoMode.width, videoMode.height), 1.0f, false);
 }
 
 bool GLViewImpl::initWithFullscreen(const std::string &viewname, const GLFWvidmode &videoMode, GLFWmonitor *monitor)
