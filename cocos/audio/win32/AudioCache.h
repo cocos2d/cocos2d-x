@@ -32,7 +32,11 @@
 #include <mutex>
 #include <vector>
 #include <memory>
+#ifdef OPENAL_PLAIN_INCLUDES
+#include <al.h>
+#else
 #include <AL/al.h>
+#endif
 #include "platform/CCPlatformMacros.h"
 #include "audio/apple/AudioMacros.h"
 
