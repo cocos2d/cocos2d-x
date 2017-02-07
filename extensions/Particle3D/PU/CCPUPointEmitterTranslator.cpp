@@ -36,7 +36,7 @@ PUPointEmitterTranslator::PUPointEmitterTranslator()
 //-------------------------------------------------------------------------
 bool PUPointEmitterTranslator::translateChildProperty( PUScriptCompiler* /*compiler*/, PUAbstractNode* /*node*/ )
 {
-    // No Propertys
+    // No properties
     return false;
 }
 

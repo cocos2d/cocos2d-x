@@ -820,7 +820,7 @@ bool Label::alignText()
         {
             return true;
         }
-        // optimize for one-texture-only sceneario
+        // optimize for one-texture-only scenario
         // if multiple textures, then we should count how many chars
         // are per texture
         if (_batchNodes.size()==1)

@@ -511,7 +511,7 @@ public:
     JSObject* getGlobalObject() { return _global->get(); }
     
     /**@~english
-     * Checks whether a C++ function is overrided in js prototype chain
+     * Checks whether a C++ function is overridden in js prototype chain
      * @param obj @~english The js object
      * @param name @~english The function name
      * @param native @~english The native function
