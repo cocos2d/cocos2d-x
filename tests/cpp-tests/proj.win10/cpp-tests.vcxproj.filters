@@ -1454,14 +1454,15 @@
     <None Include="cpp-tests_TemporaryKey.pfx" />
     <None Include="$(AngleBinPath)libEGL.dll" />
     <None Include="$(AngleBinPath)libGLESv2.dll" />
-    <None Include="$(ZLibBinPath)zlib.dll" />
     <None Include="$(SQLiteBinPath)sqlite3.dll" />
-    <None Include="$(OggBinPath)libogg.dll" />
-    <None Include="$(OggBinPath)libvorbis.dll" />
-    <None Include="$(OggBinPath)libvorbisfile.dll" />
     <None Include="$(CurlBinPath)libcurl.dll" />
-    <None Include="$(CurlBinPath)libeay32.dll" />
-    <None Include="$(CurlBinPath)ssleay32.dll" />
+    <None Include="$(ZLibBinPath)zlib1.dll" />
+    <None Include="$(OpenSSLBinPath)libeay32.dll" />
+    <None Include="$(OpenSSLBinPath)ssleay32.dll" />
+    <None Include="$(OggBinPath)ogg.dll" />
+    <None Include="$(OggBinPath)vorbis.dll" />
+    <None Include="$(OggBinPath)vorbisfile.dll" />
+    <None Include="$(WebsocketsBinPath)websockets.dll" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="..\..\..\cocos\platform\win8.1-universal\OpenGLESPage.xaml" />
