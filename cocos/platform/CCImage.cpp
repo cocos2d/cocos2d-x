@@ -910,9 +910,8 @@ bool Image::encodeWithWIC(const std::string& filePath, bool isToRGB, GUID contai
         std::swap(pSaveData[ind - 2], pSaveData[ind]);
     }
 
-    bool bRet = false;
     WICImageLoader img;
-    bRet = img.encodeImageData(filePath, pSaveData, saveLen, targetFormat, _width, _height, containerFormat);
+    bool bRet = img.encodeImageData(filePath, pSaveData, saveLen, targetFormat, _width, _height, containerFormat);
 
     delete[] pSaveData;
     return bRet;

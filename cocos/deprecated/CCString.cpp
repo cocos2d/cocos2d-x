@@ -82,13 +82,12 @@ bool __String::initWithFormatAndValist(const char* format, va_list ap)
 
 bool __String::initWithFormat(const char* format, ...)
 {
-    bool bRet = false;
     _string.clear();
 
     va_list ap;
     va_start(ap, format);
 
-    bRet = initWithFormatAndValist(format, ap);
+    bool bRet = initWithFormatAndValist(format, ap);
 
     va_end(ap);
 
