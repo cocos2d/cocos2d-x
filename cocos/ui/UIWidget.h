@@ -1024,6 +1024,9 @@ protected:
     
     std::string _callbackType;
     std::string _callbackName;
+    
+    Widget* getMouseOverWidget() const { return _mouseOverWidget; }
+    
 private:
     friend class ::cocos2d::Director;
     class FocusNavigationController;
