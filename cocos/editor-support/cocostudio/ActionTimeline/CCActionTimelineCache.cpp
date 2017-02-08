@@ -964,12 +964,10 @@ ActionTimeline* ActionTimelineCache::createActionWithFlatBuffersForSimulator(con
     fbs->_isSimulator = true;
     auto builder = fbs->createFlatBuffersWithXMLFileForSimulator(fileName);
     
-    ActionTimeline* action = ActionTimeline::create();
-    
     auto csparsebinary = GetCSParseBinary(builder->GetBufferPointer());
     auto nodeAction = csparsebinary->action();
     
-    action = ActionTimeline::create();
+    auto action = ActionTimeline::create();
     
     int duration = nodeAction->duration();
     action->setDuration(duration);

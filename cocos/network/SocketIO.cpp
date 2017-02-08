@@ -493,7 +493,6 @@ void SIOClientImpl::handshakeResponse(HttpClient* /*sender*/, HttpResponse *resp
         temp = temp.erase(0, b + 1);
 
         // chomp past the upgrades
-        a = temp.find(":");
         b = temp.find(",");
 
         temp = temp.erase(0, b + 1);
