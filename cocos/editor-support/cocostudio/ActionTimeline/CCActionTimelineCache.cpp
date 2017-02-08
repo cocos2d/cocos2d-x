@@ -969,8 +969,6 @@ ActionTimeline* ActionTimelineCache::createActionWithFlatBuffersForSimulator(con
     auto csparsebinary = GetCSParseBinary(builder->GetBufferPointer());
     auto nodeAction = csparsebinary->action();
     
-    action = ActionTimeline::create();
-    
     int duration = nodeAction->duration();
     action->setDuration(duration);
     
