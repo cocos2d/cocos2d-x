@@ -329,8 +329,7 @@ GLProgramState* GLProgramState::getOrCreateWithGLProgramName(const std::string& 
 
 GLProgramState* GLProgramState::create(GLProgram *glprogram)
 {
-    GLProgramState* ret = nullptr;
-    ret = new (std::nothrow) GLProgramState();
+    GLProgramState* ret = new (std::nothrow) GLProgramState();
     if(ret && ret->init(glprogram))
     {
         ret->autorelease();
