@@ -372,14 +372,14 @@ Sprite3D* Sprite3D::createSprite3DNode(NodeData* nodedata,ModelData* modeldata,c
             mesh->setSkin(skin);
         }
         
-        if (modeldata->matrialId == "" && materialdatas.materials.size())
+        if (modeldata->materialId == "" && materialdatas.materials.size())
         {
             const NTextureData* textureData = materialdatas.materials[0].getTextureData(NTextureData::Usage::Diffuse);
             mesh->setTexture(textureData->filename);
         }
         else
         {
-            const NMaterialData*  materialData=materialdatas.getMaterialData(modeldata->matrialId);
+            const NMaterialData* materialData = materialdatas.getMaterialData(modeldata->materialId);
             if(materialData)
             {
                 const NTextureData* textureData = materialData->getTextureData(NTextureData::Usage::Diffuse);
@@ -536,14 +536,14 @@ void Sprite3D::createNode(NodeData* nodedata, Node* root, const MaterialDatas& m
                     }
                     mesh->_visibleChanged = std::bind(&Sprite3D::onAABBDirty, this);
 
-                    if (it->matrialId == "" && materialdatas.materials.size())
+                    if (it->materialId == "" && materialdatas.materials.size())
                     {
                         const NTextureData* textureData = materialdatas.materials[0].getTextureData(NTextureData::Usage::Diffuse);
                         mesh->setTexture(textureData->filename);
                     }
                     else
                     {
-                        const NMaterialData*  materialData=materialdatas.getMaterialData(it->matrialId);
+                        const NMaterialData* materialData = materialdatas.getMaterialData(it->materialId);
                         if(materialData)
                         {
                             const NTextureData* textureData = materialData->getTextureData(NTextureData::Usage::Diffuse);

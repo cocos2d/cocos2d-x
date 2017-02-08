@@ -59,7 +59,7 @@ struct MeshVertexAttrib
 struct ModelData
 {
     std::string subMeshId;
-    std::string matrialId;
+    std::string materialId;
     std::vector<std::string> bones;
     std::vector<Mat4>        invBindPose;
     
