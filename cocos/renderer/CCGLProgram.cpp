@@ -588,6 +588,9 @@ void GLProgram::updateUniforms()
         setUniformLocationWith1i(_builtInUniforms[UNIFORM_SAMPLER2], 2);
     if(_builtInUniforms[UNIFORM_SAMPLER3] != -1)
         setUniformLocationWith1i(_builtInUniforms[UNIFORM_SAMPLER3], 3);
+
+    // clear any glErrors created by any not found uniforms
+    glGetError();
 }
 
 bool GLProgram::link()
