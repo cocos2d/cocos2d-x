@@ -57,7 +57,7 @@
 -- Initializes a 9-slice sprite with an sprite frame name and with the specified<br>
 -- cap insets.<br>
 -- Once the sprite is created, you can then call its "setContentSize:" method<br>
--- to resize the sprite will all it's 9-slice goodness intract.<br>
+-- to resize the sprite will all it's 9-slice goodness interact.<br>
 -- It respects the anchorPoint too.<br>
 -- param spriteFrameName The sprite frame name.<br>
 -- param capInsets The values to use for the cap insets.<br>
@@ -222,7 +222,7 @@
 -- Initializes a 9-slice sprite with an sprite frame and with the specified<br>
 -- cap insets.<br>
 -- Once the sprite is created, you can then call its "setContentSize:" method<br>
--- to resize the sprite will all it's 9-slice goodness intract.<br>
+-- to resize the sprite will all it's 9-slice goodness interact.<br>
 -- It respects the anchorPoint too.<br>
 -- param spriteFrame The sprite frame object.<br>
 -- param capInsets The values to use for the cap insets.<br>
@@ -296,7 +296,7 @@
 --------------------------------
 -- Initializes a 9-slice sprite with an sprite frame name.<br>
 -- Once the sprite is created, you can then call its "setContentSize:" method<br>
--- to resize the sprite will all it's 9-slice goodness intract.<br>
+-- to resize the sprite will all it's 9-slice goodness interact.<br>
 -- It respects the anchorPoint too.<br>
 -- param spriteFrameName The sprite frame name.<br>
 -- return True if initializes success, false otherwise.
