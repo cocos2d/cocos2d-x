@@ -31,9 +31,8 @@ function SpineTestLayerNormal:init()
   end, sp.EventType.ANIMATION_END)
     
   skeletonNode:registerSpineEventHandler(function (event)
-      print(string.format("[spine] %d complete: %d", 
-                              event.trackIndex, 
-                              event.loopCount))
+      print(string.format("[spine] %d complete:", 
+                              event.trackIndex))
   end, sp.EventType.ANIMATION_COMPLETE)
 
   skeletonNode:registerSpineEventHandler(function (event)
