@@ -117,7 +117,7 @@ void WebSocketTest::startTestCallback(Ref* sender)
     }
 
 
-    if (!_wsiSendBinary->init(*this, "ws://192.168.2.1:9001"))
+    if (!_wsiSendBinary->init(*this, "ws://echo.websocket.org"))
     {
         CC_SAFE_DELETE(_wsiSendBinary);
     }

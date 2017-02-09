@@ -1296,8 +1296,6 @@ int WebSocket::onConnectionClosed()
     _readyStateMutex.lock();
     if (_readyState == State::CLOSING)
     {
-        _readyStateMutex.unlock();
-
         if (_closeState == CloseState::SYNC_CLOSING)
         {
             LOGD("onConnectionClosed, WebSocket (%p) is closing by client synchronously.\n", this);
@@ -1311,6 +1309,8 @@ int WebSocket::onConnectionClosed()
                 }
                 std::this_thread::sleep_for(std::chrono::milliseconds(1));
             }
+
+            _readyStateMutex.unlock();
             return 0;
         }
         else
