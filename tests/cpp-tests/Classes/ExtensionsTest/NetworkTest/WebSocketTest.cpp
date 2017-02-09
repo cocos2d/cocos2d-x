@@ -95,7 +95,7 @@ void WebSocketTest::startTestCallback(Ref* sender)
     _wsiSendBinary = new network::WebSocket();
     _wsiError = new network::WebSocket();
 
-    if (!_wsiSendText->init(*this, "ws://echo.websocket.org"))
+    if (!_wsiSendText->init(*this, "wss://echo.websocket.org", nullptr, "cacert.pem"))
     {
         CC_SAFE_DELETE(_wsiSendText);
     }
