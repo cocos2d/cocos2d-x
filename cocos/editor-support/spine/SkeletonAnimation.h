@@ -1,32 +1,31 @@
 /******************************************************************************
- * Spine Runtimes Software License
- * Version 2.3
- * 
- * Copyright (c) 2013-2015, Esoteric Software
+ * Spine Runtimes Software License v2.5
+ *
+ * Copyright (c) 2013-2016, Esoteric Software
  * All rights reserved.
- * 
- * You are granted a perpetual, non-exclusive, non-sublicensable and
- * non-transferable license to use, install, execute and perform the Spine
- * Runtimes Software (the "Software") and derivative works solely for personal
- * or internal use. Without the written permission of Esoteric Software (see
- * Section 2 of the Spine Software License Agreement), you may not (a) modify,
- * translate, adapt or otherwise create derivative works, improvements of the
- * Software or develop new applications using the Software or (b) remove,
- * delete, alter or obscure any trademarks or any copyright, trademark, patent
+ *
+ * You are granted a perpetual, non-exclusive, non-sublicensable, and
+ * non-transferable license to use, install, execute, and perform the Spine
+ * Runtimes software and derivative works solely for personal or internal
+ * use. Without the written permission of Esoteric Software (see Section 2 of
+ * the Spine Software License Agreement), you may not (a) modify, translate,
+ * adapt, or develop new applications using the Spine Runtimes or otherwise
+ * create derivative works or improvements of the Spine Runtimes or (b) remove,
+ * delete, alter, or obscure any trademarks or any copyright, trademark, patent,
  * or other intellectual property or proprietary rights notices on or in the
  * Software, including any copy thereof. Redistributions in binary or source
  * form must include this license and terms.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY ESOTERIC SOFTWARE "AS IS" AND ANY EXPRESS OR
  * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
  * EVENT SHALL ESOTERIC SOFTWARE BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
  * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
- * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
- * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
- * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES, BUSINESS INTERRUPTION, OR LOSS OF
+ * USE, DATA, OR PROFITS) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
+ * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
 #ifndef SPINE_SKELETONANIMATION_H_
@@ -38,10 +37,12 @@
 
 namespace spine {
 
-typedef std::function<void(int trackIndex)> StartListener;
-typedef std::function<void(int trackIndex)> EndListener;
-typedef std::function<void(int trackIndex, int loopCount)> CompleteListener;
-typedef std::function<void(int trackIndex, spEvent* event)> EventListener;
+typedef std::function<void(spTrackEntry* entry)> StartListener;
+typedef std::function<void(spTrackEntry* entry)> InterruptListener;
+typedef std::function<void(spTrackEntry* entry)> EndListener;
+typedef std::function<void(spTrackEntry* entry)> DisposeListener;
+typedef std::function<void(spTrackEntry* entry)> CompleteListener;
+typedef std::function<void(spTrackEntry* entry, spEvent* event)> EventListener;
 
 /** Draws an animated skeleton, providing an AnimationState for applying one or more animations and queuing animations to be
   * played later. */
@@ -78,17 +79,21 @@ public:
 	void clearTrack (int trackIndex = 0);
 
 	void setStartListener (const StartListener& listener);
+    void setInterruptListener (const InterruptListener& listener);
 	void setEndListener (const EndListener& listener);
+    void setDisposeListener (const DisposeListener& listener);
 	void setCompleteListener (const CompleteListener& listener);
 	void setEventListener (const EventListener& listener);
 
 	void setTrackStartListener (spTrackEntry* entry, const StartListener& listener);
+    void setTrackInterruptListener (spTrackEntry* entry, const InterruptListener& listener);
 	void setTrackEndListener (spTrackEntry* entry, const EndListener& listener);
+    void setTrackDisposeListener (spTrackEntry* entry, const DisposeListener& listener);
 	void setTrackCompleteListener (spTrackEntry* entry, const CompleteListener& listener);
 	void setTrackEventListener (spTrackEntry* entry, const EventListener& listener);
 
-	virtual void onAnimationStateEvent (int trackIndex, spEventType type, spEvent* event, int loopCount);
-	virtual void onTrackEntryEvent (int trackIndex, spEventType type, spEvent* event, int loopCount);
+	virtual void onAnimationStateEvent (spTrackEntry* entry, spEventType type, spEvent* event);
+	virtual void onTrackEntryEvent (spTrackEntry* entry, spEventType type, spEvent* event);
 
 	spAnimationState* getState() const;
 
@@ -103,7 +108,9 @@ protected:
 	bool _ownsAnimationStateData;
 
 	StartListener _startListener;
+    InterruptListener _interruptListener;
 	EndListener _endListener;
+    DisposeListener _disposeListener;
 	CompleteListener _completeListener;
 	EventListener _eventListener;
 
