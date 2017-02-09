@@ -764,7 +764,7 @@ void WebSocket::close()
             return;
         }
 
-        _readyState = State::CLOSED;
+        _readyState = State::CLOSING;
         _readyStateMutex.unlock();
     }
 
@@ -791,13 +791,13 @@ void WebSocket::closeAsync()
 
     LOGD("closeAsync: WebSocket (%p) is closing...\n", this);
     std::lock_guard<std::mutex> lk(_readyStateMutex);
-    if (_readyState == State::CLOSED)
+    if (_readyState == State::CLOSED || _readyState == State::CLOSING)
     {
         LOGD("closeAsync: WebSocket (%p) was closed, no need to close it again!\n", this);
         return;
     }
 
-    _readyState = State::CLOSED;
+    _readyState = State::CLOSING;
 }
 
 WebSocket::State WebSocket::getReadyState()
@@ -1003,7 +1003,7 @@ int WebSocket::onClientWritable()
 //    LOGD("onClientWritable ... \n");
     {
         std::lock_guard<std::mutex> readMutex(_readyStateMutex);
-        if (_readyState == State::CLOSED)
+        if (_readyState == State::CLOSING)
         {
             LOGD("Closing websocket (%p) connection.\n", this);
             return -1;
@@ -1294,22 +1294,33 @@ int WebSocket::onConnectionClosed()
     LOGD("WebSocket (%p) onConnectionClosed ...\n", this);
 
     _readyStateMutex.lock();
-    if (_readyState == State::CLOSED)
+    if (_readyState == State::CLOSING)
     {
-        LOGD("onConnectionClosed: WebSocket (%p) was closed, no need to close it again!\n", this);
         _readyStateMutex.unlock();
 
-        for(;;)
+        if (_closeState == CloseState::SYNC_CLOSING)
         {
-            std::lock_guard<std::mutex> lk(_closeMutex);
-            _closeCondition.notify_one();
-            if (_closeState != CloseState::SYNC_CLOSING)
+            LOGD("onConnectionClosed, WebSocket (%p) is closing by client synchronously.\n", this);
+            for(;;)
             {
-                break;
+                std::lock_guard<std::mutex> lk(_closeMutex);
+                _closeCondition.notify_one();
+                if (_closeState == CloseState::SYNC_CLOSED)
+                {
+                    break;
+                }
+                std::this_thread::sleep_for(std::chrono::milliseconds(1));
             }
-            std::this_thread::sleep_for(std::chrono::milliseconds(1));
+            return 0;
         }
-        return 0;
+        else
+        {
+            LOGD("onConnectionClosed, WebSocket (%p) is closing by client asynchronously.\n", this);
+        }
+    }
+    else
+    {
+        LOGD("onConnectionClosed, WebSocket (%p) is closing by server.\n", this);
     }
 
     _readyState = State::CLOSED;

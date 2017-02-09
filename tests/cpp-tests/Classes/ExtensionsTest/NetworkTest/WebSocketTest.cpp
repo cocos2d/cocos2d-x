@@ -76,14 +76,26 @@ WebSocketTest::WebSocketTest()
 
 WebSocketTest::~WebSocketTest()
 {
+
+}
+
+void WebSocketTest::onExit()
+{
     if (_wsiSendText)
-        _wsiSendText->close();
-    
+    {
+        _wsiSendText->closeAsync();
+    }
+
     if (_wsiSendBinary)
-        _wsiSendBinary->close();
-    
+    {
+        _wsiSendBinary->closeAsync();
+    }
+
     if (_wsiError)
-        _wsiError->close();
+    {
+        _wsiError->closeAsync();
+    }
+    Node::onExit();
 }
 
 void WebSocketTest::startTestCallback(Ref* sender)
@@ -99,15 +111,28 @@ void WebSocketTest::startTestCallback(Ref* sender)
     {
         CC_SAFE_DELETE(_wsiSendText);
     }
+    else
+    {
+        retain(); // Retain self to avoid WebSocketTest instance be deleted immediately.
+    }
 
-    if (!_wsiSendBinary->init(*this, "ws://echo.websocket.org"))
+
+    if (!_wsiSendBinary->init(*this, "ws://192.168.2.1:9001"))
     {
         CC_SAFE_DELETE(_wsiSendBinary);
+    }
+    else
+    {
+        retain(); // Retain self to avoid WebSocketTest instance be deleted immediately.
     }
 
     if (!_wsiError->init(*this, "ws://invalid.url.com"))
     {
         CC_SAFE_DELETE(_wsiError);
+    }
+    else
+    {
+        retain(); // Retain self to avoid WebSocketTest instance be deleted immediately.
     }
 }
 
@@ -168,30 +193,44 @@ void WebSocketTest::onMessage(network::WebSocket* ws, const network::WebSocket::
 
 void WebSocketTest::onClose(network::WebSocket* ws)
 {
-    log("websocket instance (%p) closed.", ws);
+    log("onClose: websocket instance (%p) closed.", ws);
     if (ws == _wsiSendText)
     {
         _wsiSendText = nullptr;
+        _sendTextStatus->setString("Send Text WS was closed");
     }
     else if (ws == _wsiSendBinary)
     {
         _wsiSendBinary = nullptr;
+        _sendBinaryStatus->setString("Send Binary WS was closed");
     }
     else if (ws == _wsiError)
     {
         _wsiError = nullptr;
+        _errorStatus->setString("Test invalid URL WS was closed");
     }
     // Delete websocket instance.
     CC_SAFE_DELETE(ws);
+    log("WebSocketTest ref: %u", _referenceCount);
+    release();
 }
 
 void WebSocketTest::onError(network::WebSocket* ws, const network::WebSocket::ErrorCode& error)
 {
     log("Error was fired, error code: %d", static_cast<int>(error));
-    if (ws == _wsiError)
+    char buf[100] = {0};
+    sprintf(buf, "An error was fired, code: %d", static_cast<int>(error));
+
+    if (ws == _wsiSendText)
     {
-        char buf[100] = {0};
-        sprintf(buf, "an error was fired, code: %d", static_cast<int>(error));
+        _sendTextStatus->setString(buf);
+    }
+    else if (ws == _wsiSendBinary)
+    {
+        _sendBinaryStatus->setString(buf);
+    }
+    else if (ws == _wsiError)
+    {
         _errorStatus->setString(buf);
     }
 }
