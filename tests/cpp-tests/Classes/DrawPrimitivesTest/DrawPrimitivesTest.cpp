@@ -69,7 +69,7 @@ void DrawPrimitivesTest::onDraw(const Mat4 &transform, uint32_t flags)
     CHECK_GL_ERROR_DEBUG();
     
     // TIP:
-    // If you are going to use always thde same color or width, you don't
+    // If you are going to use always the same color or width, you don't
     // need to call it before every draw
     //
     // Remember: OpenGL is a state-machine.
@@ -404,7 +404,7 @@ Issue11942Test::Issue11942Test()
 
 string Issue11942Test::title() const
 {
-    return "Gihub Issue #11942";
+    return "GitHub Issue #11942";
 }
 
 string Issue11942Test::subtitle() const

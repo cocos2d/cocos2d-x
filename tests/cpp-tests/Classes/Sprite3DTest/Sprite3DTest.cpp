@@ -1430,7 +1430,7 @@ Sprite3DWithOBBPerformanceTest::Sprite3DWithOBBPerformanceTest()
 }
 std::string Sprite3DWithOBBPerformanceTest::title() const
 {
-    return "OBB Collison Performance Test";
+    return "OBB Collision Performance Test";
 }
 std::string Sprite3DWithOBBPerformanceTest::subtitle() const
 {

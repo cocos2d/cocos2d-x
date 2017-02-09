@@ -76,7 +76,7 @@ void CurlTest::onTouchesEnded(const std::vector<Touch*>& touches, Event  *event)
 		//code from http://curl.haxx.se/libcurl/c/getinmemory.html
         /* we pass our 'chunk' struct to the callback function */
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, (void *)&chunk);
-		//If we don't provide a write function for curl, it will recieve error code 23 on windows.
+		//If we don't provide a write function for curl, it will receive error code 23 on windows.
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteMemoryCallback);
 
         res = curl_easy_perform(curl);

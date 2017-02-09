@@ -26,7 +26,7 @@ TextureCacheTest::TextureCacheTest()
     this->addChild(_labelLoading);
     this->addChild(_labelPercent);
 
-    // load textrues
+    // load textures
     Director::getInstance()->getTextureCache()->addImageAsync("Images/HelloWorld.png", CC_CALLBACK_1(TextureCacheTest::loadingCallBack, this));
     Director::getInstance()->getTextureCache()->addImageAsync("Images/grossini.png", CC_CALLBACK_1(TextureCacheTest::loadingCallBack, this));
     Director::getInstance()->getTextureCache()->addImageAsync("Images/grossini_dance_01.png", CC_CALLBACK_1(TextureCacheTest::loadingCallBack, this));
