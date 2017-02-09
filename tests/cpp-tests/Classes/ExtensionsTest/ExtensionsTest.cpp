@@ -4,9 +4,7 @@
 #include "NotificationCenterTest/NotificationCenterTest.h"
 #include "ControlExtensionTest/CCControlSceneManager.h"
 #include "CocosBuilderTest/CocosBuilderTest.h"
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_EMSCRIPTEN) && (CC_TARGET_PLATFORM != CC_PLATFORM_NACL)
 #include "NetworkTest/HttpClientTest.h"
-#endif
 #include "TableViewTest/TableViewTestScene.h"
 
 #include "NetworkTest/WebSocketTest.h"
@@ -18,9 +16,7 @@ ExtensionsTests::ExtensionsTests()
     addTest("NotificationCenterTest", [](){ return new (std::nothrow) NotificationCenterTests; });
     addTest("CCControlButtonTest", [](){ return new (std::nothrow) ControlTests; });
     addTest("CocosBuilderTest", [](){ return new (std::nothrow) CocosBuilderTests; });
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_EMSCRIPTEN) && (CC_TARGET_PLATFORM != CC_PLATFORM_NACL)
     addTest("HttpClientTest", [](){ return new (std::nothrow) HttpClientTests; });
-#endif
     addTest("WebSocketTest", [](){ return new (std::nothrow) WebSocketTests; });
     addTest("SocketIOTest", [](){ return new (std::nothrow) SocketIOTests; });
     addTest("TableViewTest", [](){ return new (std::nothrow) TableViewTests; });
