@@ -22,9 +22,11 @@
 
 sp.ANIMATION_EVENT_TYPE = {
 	START: 0,
-	END: 1,
-	COMPLETE: 2,
-	EVENT: 3
+    INTERRUPT: 1,
+	END: 2,
+	COMPLETE: 3,
+    DISPOSE: 4,
+	EVENT: 5
 };
 
 // Temporary solution before upgrade the Spine API
