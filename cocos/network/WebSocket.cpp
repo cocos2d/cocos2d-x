@@ -264,7 +264,7 @@ static lws_context_creation_info convertToContextCreationInfo(const struct lws_p
 
     info.gid = -1;
     info.uid = -1;
-    info.options = LWS_SERVER_OPTION_EXPLICIT_VHOSTS | LWS_SERVER_OPTION_DO_SSL_GLOBAL_INIT;
+    info.options = LWS_SERVER_OPTION_EXPLICIT_VHOSTS | LWS_SERVER_OPTION_DO_SSL_GLOBAL_INIT | LWS_SERVER_OPTION_PEER_CERT_NOT_REQUIRED;
     info.user = nullptr;
 
     return info;
@@ -639,7 +639,7 @@ bool WebSocket::init(const Delegate& delegate,
     if (!strcmp(prot, "http") || !strcmp(prot, "ws"))
         _SSLConnection = 0;
     if (!strcmp(prot, "https") || !strcmp(prot, "wss"))
-        _SSLConnection = LCCSCF_USE_SSL;
+        _SSLConnection = LCCSCF_USE_SSL | LCCSCF_ALLOW_SELFSIGNED;
 
     if (protocols != nullptr && !protocols->empty())
     {
@@ -808,8 +808,15 @@ WebSocket::State WebSocket::getReadyState()
 
 struct WsCache* WebSocket::getOrCreateVhost(struct lws_protocols* protocols)
 {
-    struct WsCache* ret = nullptr;
+    auto fileUtils = FileUtils::getInstance();
+    bool isCAFileExist = fileUtils->isFileExist(_caFilePath);
+    if (isCAFileExist)
+    {
+        _caFilePath = fileUtils->fullPathForFilename(_caFilePath);
+    }
 
+    struct WsCache* ret = nullptr;
+    bool foundCache = true;
     for (auto& cache : __wsProtocolVHostCache)
     {
         size_t protocolCountInCache = getProtocolCount(cache->keyProtocols);
@@ -819,15 +826,21 @@ struct WsCache* WebSocket::getOrCreateVhost(struct lws_protocols* protocols)
             for (size_t i = 0; i < protocolCount; ++i)
             {
                 if (cache->keyProtocols[i].name != nullptr && protocols[i].name != nullptr
-                    && 0 == strcmp(cache->keyProtocols[i].name, protocols[i].name))
+                    && 0 == strcmp(cache->keyProtocols[i].name, protocols[i].name)
+                    && cache->ca == _caFilePath)
                 {
-                    ret = cache;
+                }
+                else
+                {
+                    foundCache = false;
                     break;
                 }
             }
 
-            if (ret != nullptr)
+            if (foundCache)
             {
+                LOGD("Found vhost cache!");
+                ret = cache;
                 break;
             }
         }
@@ -841,74 +854,71 @@ struct WsCache* WebSocket::getOrCreateVhost(struct lws_protocols* protocols)
 
         if (_SSLConnection != 0)
         {
-            CCASSERT(!_caFilePath.empty(), "CA file path is empty!");
-            auto fileUtils = FileUtils::getInstance();
+            if (isCAFileExist)
+            {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-            // if ca file is in the apk, try to extract it to writable path
-            std::string writablePath = fileUtils->getWritablePath();
-            std::string caFileName = getFileNameForPath(_caFilePath);
-            std::string newCaFilePath = writablePath + caFileName;
+                // if ca file is in the apk, try to extract it to writable path
+                std::string writablePath = fileUtils->getWritablePath();
+                std::string caFileName = getFileNameForPath(_caFilePath);
+                std::string newCaFilePath = writablePath + caFileName;
 
-            if (fileUtils->isFileExist(newCaFilePath))
-            {
-                LOGD("CA file (%s) in writable path exists!", newCaFilePath.c_str());
-                _caFilePath = newCaFilePath;
-                info.ssl_ca_filepath = _caFilePath.c_str();
-            }
-            else
-            {
-                if (fileUtils->isFileExist(_caFilePath))
+                if (fileUtils->isFileExist(newCaFilePath))
                 {
-                    std::string fullPath = fileUtils->fullPathForFilename(_caFilePath);
-                    LOGD("Found CA file: %s", fullPath.c_str());
-                    if (fullPath[0] != '/')
+                    LOGD("CA file (%s) in writable path exists!", newCaFilePath.c_str());
+                    _caFilePath = newCaFilePath;
+                    info.ssl_ca_filepath = _caFilePath.c_str();
+                }
+                else
+                {
+                    if (fileUtils->isFileExist(_caFilePath))
                     {
-                        LOGD("CA file is in APK");
-                        auto caData = fileUtils->getDataFromFile(fullPath);
-                        if (!caData.isNull())
+                        std::string fullPath = fileUtils->fullPathForFilename(_caFilePath);
+                        LOGD("Found CA file: %s", fullPath.c_str());
+                        if (fullPath[0] != '/')
                         {
-                            FILE* fp = fopen(newCaFilePath.c_str(), "wb");
-                            if (fp != nullptr)
+                            LOGD("CA file is in APK");
+                            auto caData = fileUtils->getDataFromFile(fullPath);
+                            if (!caData.isNull())
                             {
-                                LOGD("New CA file path: %s", newCaFilePath.c_str());
-                                fwrite(caData.getBytes(), caData.getSize(), 1, fp);
-                                fclose(fp);
-                                _caFilePath = newCaFilePath;
-                                info.ssl_ca_filepath = _caFilePath.c_str();
+                                FILE* fp = fopen(newCaFilePath.c_str(), "wb");
+                                if (fp != nullptr)
+                                {
+                                    LOGD("New CA file path: %s", newCaFilePath.c_str());
+                                    fwrite(caData.getBytes(), caData.getSize(), 1, fp);
+                                    fclose(fp);
+                                    _caFilePath = newCaFilePath;
+                                    info.ssl_ca_filepath = _caFilePath.c_str();
+                                }
+                                else
+                                {
+                                    CCASSERT(false, "Open new CA file failed");
+                                }
                             }
                             else
                             {
-                                CCASSERT(false, "Open new CA file failed");
+                                CCASSERT(false, "CA file is empty!");
                             }
                         }
                         else
                         {
-                            CCASSERT(false, "CA file is empty!");
+                            LOGD("CA file isn't in APK!");
+                            _caFilePath = fullPath;
+                            info.ssl_ca_filepath = _caFilePath.c_str();
                         }
                     }
                     else
                     {
-                        LOGD("CA file isn't in APK!");
-                        _caFilePath = fullPath;
-                        info.ssl_ca_filepath = _caFilePath.c_str();
+                        CCASSERT(false, "CA file doesn't exist!");
                     }
                 }
-                else
-                {
-                    CCASSERT(false, "CA file doesn't exist!");
-                }
-            }
 #else
-            if (fileUtils->isFileExist(_caFilePath))
-            {
-                _caFilePath = fileUtils->fullPathForFilename(_caFilePath);
                 info.ssl_ca_filepath = _caFilePath.c_str();
+#endif
             }
             else
             {
-                CCASSERT(false, "CA file doesn't exist!");
+                LOGD("WARNING: CA Root file isn't set. SSL connection will not peer server certificate");
             }
-#endif
         }
 
         lws_vhost* vhost = lws_create_vhost(__wsContext, &info);
@@ -916,6 +926,7 @@ struct WsCache* WebSocket::getOrCreateVhost(struct lws_protocols* protocols)
         {
             ret->keyProtocols = copied;
             ret->valueVHost = vhost;
+            ret->ca = _caFilePath;
             __wsProtocolVHostCache.push_back(ret);
         }
         else
@@ -1313,9 +1324,13 @@ int WebSocket::onConnectionClosed()
             _readyStateMutex.unlock();
             return 0;
         }
-        else
+        else if (_closeState == CloseState::ASYNC_CLOSING)
         {
             LOGD("onConnectionClosed, WebSocket (%p) is closing by client asynchronously.\n", this);
+        }
+        else
+        {
+            LOGD("onConnectionClosed, WebSocket (%p) is closing by server.\n", this);
         }
     }
     else
