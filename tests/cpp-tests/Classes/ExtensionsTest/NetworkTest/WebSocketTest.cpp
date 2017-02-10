@@ -107,32 +107,35 @@ void WebSocketTest::startTestCallback(Ref* sender)
     _wsiSendBinary = new network::WebSocket();
     _wsiError = new network::WebSocket();
 
-    if (!_wsiSendText->init(*this, "wss://echo.websocket.org", nullptr, "cacert.pem"))
+    std::vector<std::string> protocols;
+    protocols.push_back("myprotocol_1");
+    protocols.push_back("myprotocol_2");
+    if (!_wsiSendText->init(*this, "wss://echo.websocket.org", &protocols, "cacert.pem"))
     {
         CC_SAFE_DELETE(_wsiSendText);
     }
     else
     {
-        retain(); // Retain self to avoid WebSocketTest instance be deleted immediately.
+        retain(); // Retain self to avoid WebSocketTest instance be deleted immediately, it will be released in WebSocketTest::onClose.
     }
 
-
-    if (!_wsiSendBinary->init(*this, "ws://echo.websocket.org"))
+    protocols.pop_back();
+    if (!_wsiSendBinary->init(*this, "wss://echo.websocket.org", &protocols))
     {
         CC_SAFE_DELETE(_wsiSendBinary);
     }
     else
     {
-        retain(); // Retain self to avoid WebSocketTest instance be deleted immediately.
+        retain(); // Retain self to avoid WebSocketTest instance be deleted immediately, it will be released in WebSocketTest::onClose.
     }
 
-    if (!_wsiError->init(*this, "ws://invalid.url.com"))
+    if (!_wsiError->init(*this, "ws://invalid.urlxxxxxxxx.com"))
     {
         CC_SAFE_DELETE(_wsiError);
     }
     else
     {
-        retain(); // Retain self to avoid WebSocketTest instance be deleted immediately.
+        retain(); // Retain self to avoid WebSocketTest instance be deleted immediately, it will be released in WebSocketTest::onClose.
     }
 }
 

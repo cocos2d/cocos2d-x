@@ -42,7 +42,7 @@
 
 struct lws;
 struct lws_protocols;
-
+struct lws_vhost;
 /**
  * @addtogroup network
  * @{
@@ -55,7 +55,6 @@ class EventListenerCustom;
 namespace network {
 
 class WsThreadHelper;
-struct WsCache;
 
 /**
  * WebSocket is wrapper of the libwebsockets-protocol, let the develop could call the websocket easily.
@@ -225,7 +224,7 @@ private:
     int onConnectionError();
     int onConnectionClosed();
 
-    struct WsCache* getOrCreateVhost(struct lws_protocols* protocols);
+    struct lws_vhost* createVhost(struct lws_protocols* protocols);
 
 private:
 
