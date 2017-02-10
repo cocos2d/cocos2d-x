@@ -786,6 +786,7 @@ void Sprite3DEffectTest::addNewSpriteWithCoords(Vec2 p)
     material->setTechnique("outline_noneskinned");
     sprite->setMaterial(material);
     sprite->setScale(6.f);
+    Director::getInstance()->getTextureCache()->removeUnusedTextures();
     
     //add to scene
     addChild( sprite );
