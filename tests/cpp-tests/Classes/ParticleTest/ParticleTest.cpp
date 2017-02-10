@@ -195,7 +195,7 @@ void DemoBigFlower::onEnter()
     _emitter->setRadialAccel(-120);
     _emitter->setRadialAccelVar(0);
 
-    // tagential
+    // tangential
     _emitter->setTangentialAccel(30);
     _emitter->setTangentialAccelVar(0);
 
@@ -279,7 +279,7 @@ void DemoRotFlower::onEnter()
     _emitter->setRadialAccel(-120);
     _emitter->setRadialAccelVar(0);
 
-    // tagential
+    // tangential
     _emitter->setTangentialAccel(30);
     _emitter->setTangentialAccelVar(0);
 
@@ -533,7 +533,7 @@ void DemoModernArt::onEnter()
     _emitter->setRadialAccel(70);
     _emitter->setRadialAccelVar(10);
 
-    // tagential
+    // tangential
     _emitter->setTangentialAccel(80);
     _emitter->setTangentialAccelVar(0);
 

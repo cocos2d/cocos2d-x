@@ -490,7 +490,7 @@ void TextWritePlist::onEnter()
     auto booleanObject = __Bool::create(true);
     dictInDict->setObject(booleanObject, "bool");
 
-    //add interger to the plist
+    //add integer to the plist
     auto intObject = __Integer::create(1024);
     dictInDict->setObject(intObject, "integer");
 
@@ -816,7 +816,7 @@ void TestWriteValueMap::onEnter()
     auto booleanObject = Value(true);
     valueMap["data3"] = booleanObject;
 
-    //add interger to the plist
+    //add integer to the plist
     auto intObject = Value(1024);
     valueMap["data4"] = intObject;
 
@@ -919,7 +919,7 @@ void TestWriteValueVector::onEnter()
     auto booleanObject = Value(true);
     array.push_back(booleanObject);
 
-    //add interger to the plist
+    //add integer to the plist
     auto intObject = Value(1024);
     array.push_back(intObject);
 

@@ -17,7 +17,7 @@ RenderTextureTests::RenderTextureTests()
 };
 
 /**
-* Impelmentation of RenderTextureSave
+* Implementation of RenderTextureSave
 */
 RenderTextureSave::RenderTextureSave()
 {
@@ -136,7 +136,7 @@ void RenderTextureSave::onTouchesMoved(const std::vector<Touch*>& touches, Event
 }
 
 /**
- * Impelmentation of RenderTextureIssue937
+ * Implementation of RenderTextureIssue937
  */
 
 RenderTextureIssue937::RenderTextureIssue937()
@@ -201,7 +201,7 @@ std::string RenderTextureIssue937::subtitle() const
 }
 
 /**
-* Impelmentation of RenderTextureZbuffer
+* Implementation of RenderTextureZbuffer
 */
 
 RenderTextureZbuffer::RenderTextureZbuffer()
