@@ -112,6 +112,8 @@ public:
     }
 };
 
+class ArchiveController;
+
 /** Helper class to handle file operations. */
 class CC_DLL FileUtils
 {
@@ -637,6 +639,22 @@ public:
 
     /** Returns the full path cache. */
     const std::unordered_map<std::string, std::string>& getFullPathCache() const { return _fullPathCache; }
+    
+    /**
+     * Adds archive file
+     */
+    bool addArchive(const std::string& fileName, const std::string& id);
+       
+    /**
+     * Adds archive data
+     */
+    bool addArchive(void *data, uint32_t size, const std::string &id);
+    
+    /**
+     * Removes archive file
+     */
+    bool removeArchive(const std::string& fileName);
+
 
 protected:
     /**
@@ -744,6 +762,8 @@ protected:
      * Cache path.
      */
     std::string _cachePath;
+    
+    ArchiveController *_archiveContoller;
 
     /**
      *  The singleton pointer of FileUtils.
