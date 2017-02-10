@@ -632,7 +632,12 @@ private:
         uint32_t realSize;
     };
     
+#ifdef _MSC_VER
+#pragma pack(push,1)
     struct ArchiveItemHeader
+#else
+    struct __attribute__((packed)) ArchiveItemHeader
+#endif
     {
         uint32_t nameOffset;  // file name offset
         uint32_t size;        // file size
@@ -640,7 +645,16 @@ private:
         uint32_t realSize;    // 0 - no compression else zlib compression
     };
     
+#ifdef _MSC_VER
+#pragma pack(pop)
+#endif
+
+#ifdef _MSC_VER
+#pragma pack(push,1)
     struct ArchiveHeader
+#else
+    struct __attribute__((packed)) ArchiveHeader
+#endif
     {
         uint8_t mark[4];         // mark "cxar"
         uint32_t checksum;       // control sum by crc32
@@ -648,6 +662,10 @@ private:
         uint32_t count;          // files count
         uint32_t fileNamesSize;  // file names block size
     };
+    
+#ifdef _MSC_VER
+#pragma pack(pop)
+#endif
     
     std::map<std::string, ArchiveItem> _files;
     const std::string _id;
