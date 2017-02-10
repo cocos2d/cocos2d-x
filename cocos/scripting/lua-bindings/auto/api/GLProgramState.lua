@@ -166,14 +166,12 @@
 -- @return GLProgram#GLProgram ret (return value: cc.GLProgram)
         
 --------------------------------
--- @overload self, string, unsigned int         
--- @overload self, string, cc.Texture2D         
 -- @overload self, int, cc.Texture2D         
--- @overload self, int, unsigned int         
+-- @overload self, string, cc.Texture2D         
 -- @function [parent=#GLProgramState] setUniformTexture
 -- @param self
--- @param #int uniformLocation
--- @param #unsigned int textureId
+-- @param #string uniformName
+-- @param #cc.Texture2D texture
 -- @return GLProgramState#GLProgramState self (return value: cc.GLProgramState)
 
 --------------------------------
