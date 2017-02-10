@@ -78,7 +78,6 @@ private:
         , m_methodSig(methodSig)
         , m_returnType(TypeVoid)
         , m_argumentsCount(0)
-        , m_retjstring(NULL)
         , m_env(NULL)
         , m_classID(NULL)
         , m_methodID(NULL)
@@ -132,7 +131,6 @@ private:
         ValueType   m_returnType;
 
         ReturnValue m_ret;
-        jstring     m_retjstring;
 
         JNIEnv     *m_env;
         jclass      m_classID;
