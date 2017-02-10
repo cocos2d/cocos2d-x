@@ -168,9 +168,19 @@ int executeSpineEvent(LuaSkeletonAnimation* skeletonAnimation, int handler, spEv
                 eventTypeName = "start";
             }
             break;
+        case spEventType::SP_ANIMATION_INTERRUPT:
+            {
+                eventTypeName = "interrupt";
+            }
+                break;
         case spEventType::SP_ANIMATION_END:
             {
                 eventTypeName = "end";
+            }
+            break;
+        case spEventType::SP_ANIMATION_DISPOSE:
+            {
+                eventTypeName = "dispose";
             }
             break;
         case spEventType::SP_ANIMATION_COMPLETE:
@@ -192,6 +202,7 @@ int executeSpineEvent(LuaSkeletonAnimation* skeletonAnimation, int handler, spEv
     spineEvent.insert(spineEvent.end(), LuaValueDict::value_type("type", LuaValue::stringValue(eventTypeName)));
     spineEvent.insert(spineEvent.end(), LuaValueDict::value_type("trackIndex", LuaValue::intValue(entry->trackIndex)));
     spineEvent.insert(spineEvent.end(), LuaValueDict::value_type("animation", LuaValue::stringValue(animationName)));
+    spineEvent.insert(spineEvent.end(), LuaValueDict::value_type("loopCount", LuaValue::intValue(std::floor(entry->trackTime / entry->animationEnd))));
     
     if (nullptr != event)
     {
@@ -236,6 +247,14 @@ int tolua_Cocos2d_CCSkeletonAnimation_registerSpineEventHandler00(lua_State* tol
                         ScriptHandlerMgr::getInstance()->addObjectHandler((void*)self, handler, ScriptHandlerMgr::HandlerType::EVENT_SPINE_ANIMATION_START);
                     }
                     break;
+                case spEventType::SP_ANIMATION_INTERRUPT:
+                    {
+                        self->setInterruptListener([=](spTrackEntry* entry){
+                            executeSpineEvent(self, handler, eventType, entry);
+                        });
+                        ScriptHandlerMgr::getInstance()->addObjectHandler((void*)self, handler, ScriptHandlerMgr::HandlerType::EVENT_SPINE_ANIMATION_INTERRUPT);
+                    }
+                    break;
                 case spEventType::SP_ANIMATION_END:
                     {
                         self->setEndListener([=](spTrackEntry* entry){
@@ -243,6 +262,14 @@ int tolua_Cocos2d_CCSkeletonAnimation_registerSpineEventHandler00(lua_State* tol
                         });
                         ScriptHandlerMgr::getInstance()->addObjectHandler((void*)self, handler, ScriptHandlerMgr::HandlerType::EVENT_SPINE_ANIMATION_END);
                     }
+                    break;
+                case spEventType::SP_ANIMATION_DISPOSE:
+                {
+                    self->setDisposeListener([=](spTrackEntry* entry){
+                        executeSpineEvent(self, handler, eventType, entry);
+                    });
+                    ScriptHandlerMgr::getInstance()->addObjectHandler((void*)self, handler, ScriptHandlerMgr::HandlerType::EVENT_SPINE_ANIMATION_DISPOSE);
+                }
                     break;
                 case spEventType::SP_ANIMATION_COMPLETE:
                     {
@@ -294,8 +321,14 @@ int tolua_Cocos2d_CCSkeletonAnimation_unregisterSpineEventHandler00(lua_State* t
                 case spEventType::SP_ANIMATION_START:
                     handlerType = ScriptHandlerMgr::HandlerType::EVENT_SPINE_ANIMATION_START;
                     break;
+                case spEventType::SP_ANIMATION_INTERRUPT:
+                    handlerType = ScriptHandlerMgr::HandlerType::EVENT_SPINE_ANIMATION_INTERRUPT;
+                    break;
                 case spEventType::SP_ANIMATION_END:
                     handlerType = ScriptHandlerMgr::HandlerType::EVENT_SPINE_ANIMATION_END;
+                    break;
+                case spEventType::SP_ANIMATION_DISPOSE:
+                    handlerType = ScriptHandlerMgr::HandlerType::EVENT_SPINE_ANIMATION_DISPOSE;
                     break;
                 case spEventType::SP_ANIMATION_COMPLETE:
                     handlerType = ScriptHandlerMgr::HandlerType::EVENT_SPINE_ANIMATION_COMPLETE;

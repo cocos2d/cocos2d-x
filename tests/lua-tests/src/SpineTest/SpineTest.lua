@@ -31,8 +31,9 @@ function SpineTestLayerNormal:init()
   end, sp.EventType.ANIMATION_END)
     
   skeletonNode:registerSpineEventHandler(function (event)
-      print(string.format("[spine] %d complete:", 
-                              event.trackIndex))
+      print(string.format("[spine] %d complete: %d", 
+                              event.trackIndex,
+                              event.loopCount))
   end, sp.EventType.ANIMATION_COMPLETE)
 
   skeletonNode:registerSpineEventHandler(function (event)
@@ -97,7 +98,7 @@ function SpineTestLayerFFD:ctor()
 end
 
 function SpineTestLayerFFD:init()
-  skeletonNode = sp.SkeletonAnimation:create("spine/goblins.json", "spine/goblins.atlas", 1.5)
+  skeletonNode = sp.SkeletonAnimation:create("spine/goblins_mesh.json", "spine/goblins.atlas", 1.5)
   skeletonNode:setAnimation(0, "walk", true)
   skeletonNode:setSkin("goblin")
     
