@@ -2308,7 +2308,7 @@ void ActionFloatTest::onEnter()
 
     auto s = Director::getInstance()->getWinSize();
 
-    // create float action with duration and from to value, using lambda function we can easly animate any property of the Node.
+    // create float action with duration and from to value, using lambda function we can easily animate any property of the Node.
     auto actionFloat = ActionFloat::create(2.f, 0, 3, [this](float value) {
         _tamara->setScale(value);
     });

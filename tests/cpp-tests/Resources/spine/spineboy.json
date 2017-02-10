@@ -1,5 +1,12 @@
 {
-"skeleton": { "hash": "rPoYyBLFG6F0CGZ5wsUEBKDJU9U", "spine": "3.4.00", "width": 470.9, "height": 731.49, "images": "./images/" },
+"skeleton": {
+	"hash": "H7+xXqKKrnDC1fiM9L7F+WiY4ro",
+	"spine": "3.5.03-beta",
+	"width": 470.9,
+	"height": 731.49,
+	"fps": 30,
+	"images": "./images/"
+},
 "bones": [
 	{ "name": "hip", "y": 247.47 },
 	{ "name": "torso", "parent": "hip", "length": 127.55, "rotation": 103.82, "x": -1.61, "y": 4.9, "color": "e0da19ff" },
@@ -89,7 +96,7 @@
 			"head": {
 				"type": "boundingbox",
 				"vertexCount": 6,
-				"vertices": [ -19.14, -70.3, 40.8, -118.07, 257.77, -115.61, 285.16, 57.18, 120.77, 164.95, -5.06, 76.94 ]
+				"vertices": [ -19.13999, -70.3, 40.79999, -118.06999, 257.77, -115.61, 285.16, 57.18, 120.76999, 164.95, -5.05999, 76.94 ]
 			}
 		},
 		"mouth": {
@@ -230,7 +237,7 @@
 					{ "time": 0.4, "angle": -292.35 },
 					{ "time": 0.4333, "angle": -315.84 },
 					{ "time": 0.5, "angle": -347.94 },
-					{ "time": 0.7, "angle": -347.33, "curve": "stepped" },
+					{ "time": 0.6999, "angle": -347.33, "curve": "stepped" },
 					{ "time": 2.2333, "angle": -347.33 },
 					{ "time": 2.7, "angle": -290.68 },
 					{ "time": 2.7666, "angle": -285.1 },
@@ -271,7 +278,7 @@
 					{ "time": 0.4, "angle": -18.92 },
 					{ "time": 0.4333, "angle": -18.28 },
 					{ "time": 0.5, "angle": 60.61 },
-					{ "time": 0.7, "angle": -18.87, "curve": "stepped" },
+					{ "time": 0.6999, "angle": -18.87, "curve": "stepped" },
 					{ "time": 2.2333, "angle": -18.87 },
 					{ "time": 2.7, "angle": -1.95, "curve": "stepped" },
 					{ "time": 4.6666, "angle": -1.95 },
@@ -289,7 +296,7 @@
 				"rotate": [
 					{ "time": 0, "angle": -2.33 },
 					{ "time": 0.2666, "angle": 26.34 },
-					{ "time": 0.7, "angle": -6.07, "curve": "stepped" },
+					{ "time": 0.6999, "angle": -6.07, "curve": "stepped" },
 					{ "time": 2.2333, "angle": -6.07 },
 					{ "time": 2.7, "angle": 5.72, "curve": "stepped" },
 					{ "time": 4.6666, "angle": 5.72 },
@@ -2054,7 +2061,7 @@
 					{ "time": 0.4, "angle": -28.62 },
 					{ "time": 0.5, "angle": -19.3 },
 					{ "time": 0.6, "angle": -3.08 },
-					{ "time": 0.7, "angle": 29.51 },
+					{ "time": 0.6999, "angle": 29.51 },
 					{ "time": 0.8, "angle": 15.79 }
 				],
 				"translate": [
@@ -2078,7 +2085,7 @@
 					{ "time": 0.3, "angle": 15.98 },
 					{ "time": 0.4, "angle": 5.94 },
 					{ "time": 0.5, "angle": -26.76 },
-					{ "time": 0.7, "angle": -55.44 },
+					{ "time": 0.6999, "angle": -55.44 },
 					{ "time": 0.8, "angle": 5.12 }
 				],
 				"translate": [
@@ -2099,14 +2106,14 @@
 					{ "time": 0.4, "angle": 8.69 },
 					{ "time": 0.5, "angle": 12.16 },
 					{ "time": 0.6, "angle": -24.62 },
-					{ "time": 0.7, "angle": -27.26 },
+					{ "time": 0.6999, "angle": -27.26 },
 					{ "time": 0.8, "angle": -34.38 }
 				],
 				"translate": [
 					{ "time": 0, "x": 0, "y": 0 },
 					{ "time": 0.4, "x": 4.08, "y": -9.53 },
 					{ "time": 0.5, "x": 0, "y": 0 },
-					{ "time": 0.7, "x": -21.14, "y": -9.6 },
+					{ "time": 0.6999, "x": -21.14, "y": -9.6 },
 					{ "time": 0.8, "x": 0, "y": 0 }
 				],
 				"scale": [
@@ -2123,7 +2130,7 @@
 					{ "time": 0.4, "angle": 15.95 },
 					{ "time": 0.5, "angle": -9 },
 					{ "time": 0.6, "angle": 26.06 },
-					{ "time": 0.7, "angle": 21.85 },
+					{ "time": 0.6999, "angle": 21.85 },
 					{ "time": 0.8, "angle": 14.26 }
 				],
 				"translate": [
@@ -2146,7 +2153,7 @@
 					{ "time": 0.4, "angle": 13.45 },
 					{ "time": 0.5, "angle": -3.57 },
 					{ "time": 0.6, "angle": -0.97 },
-					{ "time": 0.7, "angle": 2.97 },
+					{ "time": 0.6999, "angle": 2.97 },
 					{ "time": 0.8, "angle": 10.13 }
 				],
 				"translate": [
@@ -2290,7 +2297,7 @@
 						"curve": [ 0.287, 0.37, 0.718, 0.76 ]
 					},
 					{
-						"time": 0.7,
+						"time": 0.6999,
 						"x": -23.93,
 						"y": 10.34,
 						"curve": [ 0.615, 0, 0.75, 1 ]
@@ -2327,7 +2334,7 @@
 					{ "time": 0.4, "angle": 10.22 },
 					{ "time": 0.5, "angle": 11.44 },
 					{ "time": 0.6, "angle": -0.33 },
-					{ "time": 0.7, "angle": 0.15 },
+					{ "time": 0.6999, "angle": 0.15 },
 					{ "time": 0.8, "angle": 12.49 }
 				],
 				"translate": [

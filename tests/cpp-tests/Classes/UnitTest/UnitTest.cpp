@@ -92,8 +92,8 @@ void TemplateVectorTest::onEnter()
     for (ssize_t i = 0; i < size; ++i)
     {
         CCASSERT(vec2.at(i) == vec.at(i), "The element at the same index in vec2 and vec2 should be equal.");
-        CCASSERT(vec.at(i)->getReferenceCount() == 3, "The reference cound of element in vec is 3. ");
-        CCASSERT(vec2.at(i)->getReferenceCount() == 3, "The reference cound of element in vec2 is 3. ");
+        CCASSERT(vec.at(i)->getReferenceCount() == 3, "The reference count of element in vec is 3. ");
+        CCASSERT(vec2.at(i)->getReferenceCount() == 3, "The reference count of element in vec2 is 3. ");
     }
 
     // Test copy assignment operator
@@ -104,9 +104,9 @@ void TemplateVectorTest::onEnter()
     for (ssize_t i = 0; i < size; ++i)
     {
         CCASSERT(vec3.at(i) == vec2.at(i), "The element at the same index in vec3 and vec2 should be equal.");
-        CCASSERT(vec3.at(i)->getReferenceCount() == 4, "The reference cound of element in vec3 is 4. ");
-        CCASSERT(vec2.at(i)->getReferenceCount() == 4, "The reference cound of element in vec2 is 4. ");
-        CCASSERT(vec.at(i)->getReferenceCount() == 4, "The reference cound of element in vec is 4. ");
+        CCASSERT(vec3.at(i)->getReferenceCount() == 4, "The reference count of element in vec3 is 4. ");
+        CCASSERT(vec2.at(i)->getReferenceCount() == 4, "The reference count of element in vec2 is 4. ");
+        CCASSERT(vec.at(i)->getReferenceCount() == 4, "The reference count of element in vec is 4. ");
     }
 
     // Test move constructor
@@ -196,7 +196,7 @@ void TemplateVectorTest::onEnter()
     CCASSERT(vec6.at(2)->getTag() == 1011, "vec6's third element's tag is 1011.");
     CCASSERT(vec6.at(3)->getTag() == 1012, "vec6's fouth element's tag is 1012.");
     vec6.erase(3);
-    CCASSERT(vec6.at(3)->getTag() == 1013, "vec6's 4th elemetn's tag is 1013.");
+    CCASSERT(vec6.at(3)->getTag() == 1013, "vec6's 4th element's tag is 1013.");
     vec6.eraseObject(vec6.at(2));
     CCASSERT(vec6.at(2)->getTag() == 1013, "vec6's 3rd element's tag is 1013.");
     vec6.clear();

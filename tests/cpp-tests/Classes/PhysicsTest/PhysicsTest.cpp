@@ -1764,7 +1764,7 @@ std::string PhysicsFixedUpdate::title() const
 
 std::string PhysicsFixedUpdate::subtitle() const
 {
-    return "The secend ball should not run across the wall";
+    return "The second ball should not run across the wall";
 }
 
 bool PhysicsTransformTest::onTouchBegan(Touch *touch, Event* /*event*/)

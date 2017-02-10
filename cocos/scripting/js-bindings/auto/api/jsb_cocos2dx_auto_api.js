@@ -4323,12 +4323,12 @@ getGLProgram : function (
 
 /**
  * @method setUniformTexture
-* @param {String|String|int|int} str
-* @param {unsigned int|cc.Texture2D|cc.Texture2D|unsigned int} int
+* @param {int|String} int
+* @param {cc.Texture2D|cc.Texture2D} texture2d
 */
 setUniformTexture : function(
-int,
-int 
+str,
+texture2d 
 )
 {
 },

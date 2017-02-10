@@ -322,15 +322,15 @@ float Terrain::getHeight(float x, float z, Vec3 * normal) const
 
     //top-left
     Vec2 tl(-1*_terrainData._mapScale*_imageWidth/2,-1*_terrainData._mapScale*_imageHeight/2);
-    auto result  = getNodeToWorldTransform()*Vec4(tl.x,0.0f,tl.y,1.0f);
-    tl.set(result.x, result.z);
+    auto mulResult = getNodeToWorldTransform() * Vec4(tl.x, 0.0f, tl.y, 1.0f);
+    tl.set(mulResult.x, mulResult.z);
 
     Vec2 to_tl = pos - tl;
 
     //real size
     Vec2 size(_imageWidth*_terrainData._mapScale,_imageHeight*_terrainData._mapScale);
-    result = getNodeToWorldTransform()*Vec4(size.x,0.0f,size.y,0.0f);
-    size.set(result.x, result.z);
+    mulResult = getNodeToWorldTransform() * Vec4(size.x, 0.0f, size.y, 0.0f);
+    size.set(mulResult.x, mulResult.z);
 
     float width_ratio = to_tl.x/size.x;
     float height_ratio = to_tl.y/size.y;

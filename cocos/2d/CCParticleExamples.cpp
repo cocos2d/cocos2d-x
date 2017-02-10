@@ -41,14 +41,13 @@ static Texture2D* getDefaultTexture()
     Image* image = nullptr;
     do 
     {
-        bool ret = false;
         const std::string key = "/__firePngData";
         texture = Director::getInstance()->getTextureCache()->getTextureForKey(key);
         CC_BREAK_IF(texture != nullptr);
 
         image = new (std::nothrow) Image();
         CC_BREAK_IF(nullptr == image);
-        ret = image->initWithImageData(__firePngData, sizeof(__firePngData));
+        bool ret = image->initWithImageData(__firePngData, sizeof(__firePngData));
         CC_BREAK_IF(!ret);
 
         texture = Director::getInstance()->getTextureCache()->addImage(image, key);

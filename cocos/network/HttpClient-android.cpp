@@ -578,10 +578,8 @@ private:
         {
             return nullptr;
         }
-        char *ret = nullptr;
         std::string strValue = cocos2d::StringUtils::getStringUTFCharsJNI(env, jstr);
-        ret = strdup(strValue.c_str());
-        return ret;
+        return strdup(strValue.c_str());
     }
 
     int getCStrFromJByteArray(jbyteArray jba, JNIEnv* env, char** ppData)
@@ -592,10 +590,8 @@ private:
             return 0;
         }
 
-        char* str = nullptr;
-
-        int len  = env->GetArrayLength(jba);
-        str = (char*)malloc(sizeof(char)*len);
+        int len = env->GetArrayLength(jba);
+        char* str = (char*)malloc(sizeof(char)*len);
         env->GetByteArrayRegion(jba, 0, len, (jbyte*)str);
 
         *ppData = str;
