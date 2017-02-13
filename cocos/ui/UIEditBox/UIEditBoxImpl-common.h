@@ -123,9 +123,7 @@ private:
 
     Label* _label;
     Label* _labelPlaceHolder;
-    std::string _text;
-    
-    int   _maxLength;
+
     Size _contentSize;
 };
 

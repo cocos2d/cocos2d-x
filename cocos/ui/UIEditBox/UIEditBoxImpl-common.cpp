@@ -48,7 +48,6 @@ EditBoxImplCommon::EditBoxImplCommon(EditBox* pEditText)
 : EditBoxImpl(pEditText)
 , _label(nullptr)
 , _labelPlaceHolder(nullptr)
-, _maxLength(-1)
 {
 }
 
@@ -193,13 +192,12 @@ void EditBoxImplCommon::setInputMode(EditBox::InputMode inputMode)
 
 void EditBoxImplCommon::setMaxLength(int maxLength)
 {
-    _maxLength = maxLength;
     this->setNativeMaxLength(maxLength);
 }
 
 int EditBoxImplCommon::getMaxLength()
 {
-    return _maxLength;
+    return _editBox->_maxLength;
 }
 
 void EditBoxImplCommon::setTextHorizontalAlignment(cocos2d::TextHAlignment alignment)
@@ -219,11 +217,11 @@ void EditBoxImplCommon::setReturnType(EditBox::KeyboardReturnType returnType)
     
 void EditBoxImplCommon::refreshInactiveText()
 {
-    setInactiveText(_text.c_str());
+    setInactiveText(_editBox->_text.c_str());
 
     refreshLabelAlignment();
 
-    if(_text.size() == 0)
+    if (_editBox->_text.empty())
     {
         _label->setVisible(false);
         _labelPlaceHolder->setVisible(true);
@@ -245,13 +243,12 @@ void EditBoxImplCommon::refreshLabelAlignment()
 void EditBoxImplCommon::setText(const char* text)
 {
     this->setNativeText(text);
-    _text = text;
     refreshInactiveText();
 }
 
 const char*  EditBoxImplCommon::getText(void)
 {
-    return _text.c_str();
+    return _editBox->_text.c_str();
 }
 
 void EditBoxImplCommon::setPlaceHolder(const char* pText)
@@ -344,7 +341,7 @@ void EditBoxImplCommon::editBoxEditingDidBegin()
   void EditBoxImplCommon::editBoxEditingDidEnd(const std::string& text, EditBoxDelegate::EditBoxEndAction action)
 {
     // LOGD("textFieldShouldEndEditing...");
-    _text = text;
+    _editBox->_text = text;
     
     cocos2d::ui::EditBoxDelegate *pDelegate = _editBox->getDelegate();
     if (pDelegate != nullptr)
@@ -369,7 +366,7 @@ void EditBoxImplCommon::editBoxEditingDidBegin()
     
     if (_editBox != nullptr)
     {
-        this->onEndEditing(_text);
+        this->onEndEditing(text);
     }
 }
 
@@ -377,7 +374,7 @@ void EditBoxImplCommon::editBoxEditingChanged(const std::string& text)
 {
     // LOGD("editBoxTextChanged...");
     cocos2d::ui::EditBoxDelegate *pDelegate = _editBox->getDelegate();
-    _text = text;
+    _editBox->_text = text;
     if (pDelegate != nullptr)
     {
         pDelegate->editBoxTextChanged(_editBox, text);

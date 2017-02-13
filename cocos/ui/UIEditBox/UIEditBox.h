@@ -41,6 +41,7 @@ namespace ui {
         
     class EditBox;
     class EditBoxImpl;
+    class EditBoxImplCommon;
         
     /**
      *@brief Editbox delegate class.
@@ -579,6 +580,7 @@ namespace ui {
 #if CC_ENABLE_SCRIPT_BINDING
         int   _scriptEditBoxHandler;
 #endif
+        friend class EditBoxImplCommon;
     };
 }
 
