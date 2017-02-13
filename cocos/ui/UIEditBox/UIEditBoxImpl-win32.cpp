@@ -827,6 +827,11 @@ void EditBoxImplWin::setPlaceHolder(const char* pText)
     }
 }
 
+const char* EditBoxImplWin::getPlaceHolder(void)
+{
+    return _placeHolder.c_str();
+}
+
 void EditBoxImplWin::setPosition(const Vec2& pos)
 {
     //_label->setPosition(pos);

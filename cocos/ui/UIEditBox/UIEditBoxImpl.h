@@ -61,7 +61,7 @@ namespace cocos2d {
             virtual void setText(const char* pText) = 0;
             virtual const char* getText(void) = 0;
             virtual void setPlaceHolder(const char* pText) = 0;
-            virtual const char* getPlaceHolder(void) { return ""; }  // TODO: =0;
+            virtual const char* getPlaceHolder(void) = 0;
 
             virtual const char* getFontName() { return ""; }
             virtual int getFontSize() { return -1; }

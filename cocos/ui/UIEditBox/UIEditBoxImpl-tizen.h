@@ -72,6 +72,7 @@ public:
     virtual void setText(const char* pText);
     virtual const char* getText(void);
     virtual void setPlaceHolder(const char* pText);
+    virtual const char* getPlaceHolder(void);
     virtual void setPosition(const Vec2& pos);
     virtual void setVisible(bool visible);
     virtual void setContentSize(const Size& size);

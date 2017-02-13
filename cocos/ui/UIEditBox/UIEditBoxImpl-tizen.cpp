@@ -224,6 +224,11 @@ void EditBoxImplTizen::setPlaceHolder(const char* pText)
     }
 }
 
+const char* EditBoxImplTizen::getPlaceHolder(void)
+{
+    return _placeHolder.c_str();
+}
+
 void EditBoxImplTizen::setPosition(const Vec2& pos)
 { // don't need to be implemented on tizen platform.
 
