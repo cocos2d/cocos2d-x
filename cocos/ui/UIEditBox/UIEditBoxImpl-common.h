@@ -123,16 +123,7 @@ private:
 
     Label* _label;
     Label* _labelPlaceHolder;
-    EditBox::InputMode    _editBoxInputMode;
-    EditBox::InputFlag    _editBoxInputFlag;
-    EditBox::KeyboardReturnType  _keyboardReturnType;
-    cocos2d::TextHAlignment _alignment;
-
     std::string _text;
-    std::string _placeHolder;
-    
-    Color4B _colText;
-    Color4B _colPlaceHolder;
     
     int   _maxLength;
     Size _contentSize;
