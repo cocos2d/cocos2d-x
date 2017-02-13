@@ -114,7 +114,7 @@ namespace
     const int LOGO_WIDTH = 188;
     const int LOGO_HEIGHT = 35;
     const int LOGO_RAW_LENGTH = 24;
-    const char LOGO_IMAGE[] =
+    const int LOGO_IMAGE[] =
     {
         15, -16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, -64, 15, 63, -32, -2, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 31, -64, 15, 127, -125, -1, -128, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
