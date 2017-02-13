@@ -1312,6 +1312,24 @@
     <ClCompile Include="..\..\external\flatbuffers\idl_parser.cpp">
       <Filter>cocostudio\json\flatbuffers</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\external\flatbuffers\flathash.cpp">
+      <Filter>cocostudio\json\flatbuffers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\flatbuffers\idl_gen_js.cpp">
+      <Filter>cocostudio\json\flatbuffers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\flatbuffers\idl_gen_php.cpp">
+      <Filter>cocostudio\json\flatbuffers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\flatbuffers\idl_gen_python.cpp">
+      <Filter>cocostudio\json\flatbuffers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\flatbuffers\reflection.cpp">
+      <Filter>cocostudio\json\flatbuffers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\flatbuffers\util.cpp">
+      <Filter>cocostudio\json\flatbuffers</Filter>
+    </ClCompile>
     <ClCompile Include="..\editor-support\cocostudio\FlatBuffersSerialize.cpp">
       <Filter>cocostudio\json</Filter>
     </ClCompile>
@@ -3145,6 +3163,21 @@
       <Filter>cocostudio\json\flatbuffers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\external\flatbuffers\util.h">
+      <Filter>cocostudio\json\flatbuffers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\flatbuffers\grpc.h">
+      <Filter>cocostudio\json\flatbuffers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\flatbuffers\hash.h">
+      <Filter>cocostudio\json\flatbuffers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\flatbuffers\code_generated.h">
+      <Filter>cocostudio\json\flatbuffers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\flatbuffers\refelction.h">
+      <Filter>cocostudio\json\flatbuffers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\flatbuffers\refelction_generated.h">
       <Filter>cocostudio\json\flatbuffers</Filter>
     </ClInclude>
     <ClInclude Include="..\editor-support\cocostudio\CSParseBinary_generated.h">
