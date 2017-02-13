@@ -5,7 +5,7 @@
 
 #include "flatbuffers/flatbuffers.h"
 
-#include "CSParseBinary_generated.h"
+#include "editor-support/cocostudio/CSParseBinary_generated.h"
 
 namespace flatbuffers {
 
