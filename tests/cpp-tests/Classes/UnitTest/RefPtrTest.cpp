@@ -56,7 +56,7 @@ void RefPtrTest::onEnter()
         CC_ASSERT(strcmp("World", ref1->getCString()) == 0);
         CC_ASSERT(2 == ref1->getReferenceCount());
         
-        // Assigment back to nullptr
+        // Assignment back to nullptr
         __String * world = ref1;
         CC_ASSERT(2 == world->getReferenceCount());
         

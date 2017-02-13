@@ -404,7 +404,7 @@ void Material_parsePerformance::onEnter()
     
     addChild(slider);
     
-    auto label = Label::createWithSystemFont("Max parsing count is 10000, which may crash because of high memory comsumption.", "Helvetica", 10);
+    auto label = Label::createWithSystemFont("Max parsing count is 10000, which may crash because of high memory consumption.", "Helvetica", 10);
     label->setPosition(Vec2(screenSize.width / 2.0f, screenSize.height / 2.0f - 20));
     addChild(label);
     label = Label::createWithSystemFont("Slide to test parsing performance", "Helvetica", 10);

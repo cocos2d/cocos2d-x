@@ -290,22 +290,22 @@ bool js_cocos2dx_extension_WebSocket_constructor(JSContext *cx, uint32_t argc, j
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 
-    if (argc == 1 || argc == 2)
+    if (argc == 1 || argc == 2 || argc == 3)
     {
         std::string url;
 
         do {
             bool ok = jsval_to_std_string(cx, args.get(0), &url);
-            JSB_PRECONDITION2( ok, cx, false, "Error processing arguments");
+            JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
         } while (0);
 
         JS::RootedObject proto(cx, js_cocos2dx_websocket_prototype);
         JS::RootedObject obj(cx, JS_NewObject(cx, js_cocos2dx_websocket_class, proto, JS::NullPtr()));
-        //JS::RootedObject obj(cx, JS_NewObjectForConstructor(cx, js_cocos2dx_websocket_class, args));
 
         WebSocket* cobj = nullptr;
-        if (argc == 2)
+        if (argc >= 2)
         {
+            std::string caFilePath;
             std::vector<std::string> protocols;
 
             if (args.get(1).isString())
@@ -313,7 +313,7 @@ bool js_cocos2dx_extension_WebSocket_constructor(JSContext *cx, uint32_t argc, j
                 std::string protocol;
                 do {
                     bool ok = jsval_to_std_string(cx, args.get(1), &protocol);
-                    JSB_PRECONDITION2( ok, cx, false, "Error processing arguments");
+                    JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
                 } while (0);
                 protocols.push_back(protocol);
             }
@@ -321,29 +321,37 @@ bool js_cocos2dx_extension_WebSocket_constructor(JSContext *cx, uint32_t argc, j
             {
                 bool ok = true;
                 JS::RootedObject arg2(cx, args.get(1).toObjectOrNull());
-                JSB_PRECONDITION(JS_IsArrayObject( cx, arg2 ),  "Object must be an array");
+                JSB_PRECONDITION(JS_IsArrayObject(cx, arg2), "Object must be an array");
 
                 uint32_t len = 0;
                 JS_GetArrayLength(cx, arg2, &len);
 
-                for( uint32_t i=0; i< len;i++ )
+                for (uint32_t i = 0; i< len; i++)
                 {
                     JS::RootedValue valarg(cx);
                     JS_GetElement(cx, arg2, i, &valarg);
                     std::string protocol;
                     do {
                         ok = jsval_to_std_string(cx, valarg, &protocol);
-                        JSB_PRECONDITION2( ok, cx, false, "Error processing arguments");
+                        JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
                     } while (0);
 
                     protocols.push_back(protocol);
                 }
             }
-            
+
+            if (argc > 2)
+            {
+                do {
+                    bool ok = jsval_to_std_string(cx, args.get(2), &caFilePath);
+                    JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
+                } while (0);
+            }
+
             cobj = new (std::nothrow) WebSocket();
             JSB_WebSocketDelegate* delegate = new (std::nothrow) JSB_WebSocketDelegate();
             delegate->setJSDelegate(obj);
-            cobj->init(*delegate, url, &protocols);
+            cobj->init(*delegate, url, &protocols, caFilePath);
         }
         else
         {

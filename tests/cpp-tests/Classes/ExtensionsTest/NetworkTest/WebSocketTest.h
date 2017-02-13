@@ -24,6 +24,8 @@ public:
 
     WebSocketTest();
     virtual ~WebSocketTest();
+
+    virtual void onExit() override;
     
     virtual void onOpen(cocos2d::network::WebSocket* ws)override;
     virtual void onMessage(cocos2d::network::WebSocket* ws, const cocos2d::network::WebSocket::Data& data)override;

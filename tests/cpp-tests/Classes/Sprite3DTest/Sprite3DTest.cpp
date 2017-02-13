@@ -786,6 +786,7 @@ void Sprite3DEffectTest::addNewSpriteWithCoords(Vec2 p)
     material->setTechnique("outline_noneskinned");
     sprite->setMaterial(material);
     sprite->setScale(6.f);
+    Director::getInstance()->getTextureCache()->removeUnusedTextures();
     
     //add to scene
     addChild( sprite );
@@ -1430,7 +1431,7 @@ Sprite3DWithOBBPerformanceTest::Sprite3DWithOBBPerformanceTest()
 }
 std::string Sprite3DWithOBBPerformanceTest::title() const
 {
-    return "OBB Collison Performance Test";
+    return "OBB Collision Performance Test";
 }
 std::string Sprite3DWithOBBPerformanceTest::subtitle() const
 {

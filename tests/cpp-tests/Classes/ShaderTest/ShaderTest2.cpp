@@ -107,7 +107,7 @@ public:
             _trianglesCommand.init(_globalZOrder, _texture->getName(), getGLProgramState(), _blendFunc, _polyInfo.triangles, transform, flags);
             renderer->addCommand(&_trianglesCommand);
 
-            // postive effects: oder >= 0
+            // positive effects: order >= 0
             for(auto it = std::begin(_effects)+idx; it != std::end(_effects); ++it) {
                 QuadCommand &q = std::get<2>(*it);
                 q.init(_globalZOrder, _texture->getName(), std::get<1>(*it)->getGLProgramState(), _blendFunc, &_quad, 1, transform, flags);

@@ -410,7 +410,7 @@ std::string VBOFullTest::title() const
 
 std::string VBOFullTest::subtitle() const
 {
-    return "VBO full Test, everthing should render normally";
+    return "VBO full Test, everything should render normally";
 }
 
 CaptureScreenTest::CaptureScreenTest()

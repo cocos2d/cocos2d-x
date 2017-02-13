@@ -175,7 +175,7 @@ bool FontFreeType::createFontObject(const std::string &fontName, float fontSize)
     
     // store the face globally
     _fontRef = face;
-    _lineHeight = static_cast<int>(_fontRef->size->metrics.height >> 6);
+    _lineHeight = static_cast<int>((_fontRef->size->metrics.ascender - _fontRef->size->metrics.descender) >> 6);
     
     // done and good
     return true;
