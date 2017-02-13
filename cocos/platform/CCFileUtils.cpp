@@ -551,7 +551,7 @@ public:
         if(it == _files.end())
             return FileUtils::Status::NotExists;
         buffer->resize(it->second.size);
-        if(readData(it->second.size, it->second.offset, buffer->buffer()))
+        if(readData(it->second.offset, it->second.size, buffer->buffer()))
             return FileUtils::Status::OK;
         else
             return FileUtils::Status::ReadFailed;
@@ -600,14 +600,15 @@ protected:
             size = sizeof(char) * header.fileNamesSize;
             fileNames = new char[header.fileNamesSize];
             CC_BREAK_IF(!readData(offset, size, fileNames));
+            offset += size;
             
             for (unsigned long i = 0 ; i< header.count; i++)
             {
                 Archive::ArchiveItem item;
-                std::string arcFileKey = fileNames+headers[i].nameOffset;
+                std::string arcFileKey = fileNames + headers[i].nameOffset;
                 item.size = headers[i].size;
                 item.realSize = headers[i].realSize;
-                item.offset = headers[i].offset;
+                item.offset = offset + headers[i].offset;
                 _files.emplace(arcFileKey, item);
             }
             
@@ -632,40 +633,24 @@ private:
         uint32_t realSize;
     };
     
-#ifdef _MSC_VER
-#pragma pack(push,1)
+    CC_PACK(
     struct ArchiveItemHeader
-#else
-    struct __attribute__((packed)) ArchiveItemHeader
-#endif
     {
         uint32_t nameOffset;  // file name offset
         uint32_t size;        // file size
         uint32_t offset;      // file offset in archive
         uint32_t realSize;    // 0 - no compression else zlib compression
-    };
-    
-#ifdef _MSC_VER
-#pragma pack(pop)
-#endif
+    });
 
-#ifdef _MSC_VER
-#pragma pack(push,1)
+    CC_PACK(
     struct ArchiveHeader
-#else
-    struct __attribute__((packed)) ArchiveHeader
-#endif
     {
         uint8_t mark[4];         // mark "cxar"
         uint32_t checksum;       // control sum by crc32
         uint32_t version;        // archive version
         uint32_t count;          // files count
         uint32_t fileNamesSize;  // file names block size
-    };
-    
-#ifdef _MSC_VER
-#pragma pack(pop)
-#endif
+    });
     
     std::map<std::string, ArchiveItem> _files;
     const std::string _id;
@@ -1571,16 +1556,19 @@ long FileUtils::getFileSize(const std::string &filepath)
 
 bool FileUtils::addArchive(const std::string& fileName, const std::string& id)
 {
+    _fullPathCache.clear();
     return _archiveContoller->addArchive(fileName, id);
 }
 
 bool FileUtils::addArchive(void *data, uint32_t size, const std::string &id)
 {
+    _fullPathCache.clear();
     return _archiveContoller->addArchive(data, size, id);
 }
 
 bool FileUtils::removeArchive(const std::string& fileName)
 {
+    _fullPathCache.clear();
     return _archiveContoller->removeArchive(fileName);
 }
 

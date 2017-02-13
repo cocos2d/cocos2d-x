@@ -326,16 +326,27 @@ public: virtual void set##funName(varType var)   \
 #define CC_UNUSED
 #endif
 
+/** @def CC_PACK
+ * exmaple: 
+ *    PACK(struct myStruct{ int a; int b; });
+ *    typedef PACK(struct { int a; int b; }) myStruct;
+ */
+#if defined(_MSC_VER)
+#define CC_PACK( __Declaration__ ) __pragma( pack(push, 1) ) __Declaration__ __pragma( pack(pop) )
+#else
+#define CC_PACK( __Declaration__ ) __Declaration__ __attribute__((__packed__))
+#endif
+
 /** @def CC_REQUIRES_NULL_TERMINATION
- * 
+ *
  */
 #if !defined(CC_REQUIRES_NULL_TERMINATION)
     #if defined(__APPLE_CC__) && (__APPLE_CC__ >= 5549)
-        #define CC_REQUIRES_NULL_TERMINATION __attribute__((sentinel(0,1)))
+    #define CC_REQUIRES_NULL_TERMINATION __attribute__((sentinel(0,1)))
     #elif defined(__GNUC__)
-        #define CC_REQUIRES_NULL_TERMINATION __attribute__((sentinel))
+    #define CC_REQUIRES_NULL_TERMINATION __attribute__((sentinel))
     #else
-        #define CC_REQUIRES_NULL_TERMINATION
+    #define CC_REQUIRES_NULL_TERMINATION
     #endif
 #endif
 
