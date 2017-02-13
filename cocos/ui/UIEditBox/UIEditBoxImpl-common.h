@@ -28,7 +28,6 @@
 #define __UIEditBoxIMPLICOMMON_H__
 
 #include "platform/CCPlatformConfig.h"
-#include "ui/UIEditBox/UIEditBoxImpl-common.h"
 #include "ui/UIEditBox/UIEditBoxImpl.h"
 
 NS_CC_BEGIN
@@ -66,7 +65,7 @@ public:
 
     virtual void setMaxLength(int maxLength) override;
     virtual int  getMaxLength() override;
-    virtual void setTextHorizontalAlignment(cocos2d::TextHAlignment alignment) override;
+    virtual void setTextHorizontalAlignment(TextHAlignment alignment) override;
 
     virtual const char* getText(void) override;
     virtual void refreshInactiveText();
@@ -104,7 +103,7 @@ public:
     virtual void setNativeInputMode(EditBox::InputMode inputMode) = 0;
     virtual void setNativeInputFlag(EditBox::InputFlag inputFlag) = 0;
     virtual void setNativeReturnType(EditBox::KeyboardReturnType returnType) = 0;
-    virtual void setNativeTextHorizontalAlignment(cocos2d::TextHAlignment alignment) = 0;
+    virtual void setNativeTextHorizontalAlignment(TextHAlignment alignment) = 0;
     virtual void setNativeText(const char* pText) = 0;
     virtual void setNativePlaceHolder(const char* pText) = 0;
     virtual void setNativeVisible(bool visible) = 0;
