@@ -905,4 +905,15 @@ public:
     virtual std::string subtitle() const override;
 };
 
+class LabelIssueLineGap : public AtlasDemoNew
+{
+public:
+    CREATE_FUNC(LabelIssueLineGap);
+    
+    LabelIssueLineGap();
+    
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
 #endif
