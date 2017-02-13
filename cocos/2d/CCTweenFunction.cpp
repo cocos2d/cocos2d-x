@@ -302,17 +302,13 @@ float expoEaseOut(float time)
 }
 float expoEaseInOut(float time)
 {
-    time /= 0.5f;
-    if (time < 1)
-    {
-        time = 0.5f * powf(2, 10 * (time - 1));
-    }
-    else
-    {
-        time = 0.5f * (-powf(2, -10 * (time - 1)) + 2);
-    }
+    if(time == 0 || time == 1) 
+        return time;
+    
+    if (time < 0.5f)
+        return 0.5f * powf(2, 10 * (time * 2 - 1));
 
-    return time;
+    return 0.5f * (-powf(2, -10 * (time * 2 - 1)) + 2);
 }
 
 
