@@ -35,8 +35,8 @@ static const float CHECK_EDITBOX_POSITION_INTERVAL = 0.1f;
 EditBox::EditBox(void)
 : _editBoxImpl(nullptr)
 , _delegate(nullptr)
-, _editBoxInputMode(EditBox::InputMode::SINGLE_LINE)
-, _editBoxInputFlag(EditBox::InputFlag::LOWERCASE_ALL_CHARACTERS)
+, _inputMode(InputMode::SINGLE_LINE)
+, _inputFlag(InputFlag::LOWERCASE_ALL_CHARACTERS)
 , _keyboardReturnType(KeyboardReturnType::DEFAULT)
 , _backgroundSprite(nullptr)
 , _fontSize(-1)
@@ -45,7 +45,7 @@ EditBox::EditBox(void)
 , _colPlaceHolder(Color3B::GRAY)
 , _maxLength(0)
 , _adjustHeight(0.0f)
-, _alignment(cocos2d::TextHAlignment::LEFT)
+, _alignment(TextHAlignment::LEFT)
 #if CC_ENABLE_SCRIPT_BINDING
 , _scriptEditBoxHandler(0)
 #endif
@@ -190,7 +190,7 @@ void EditBox::setText(const char* pText)
     }
 }
 
-const char* EditBox::getText(void)
+const char* EditBox::getText(void) const
 {
     if (_editBoxImpl != nullptr)
     {
@@ -226,6 +226,11 @@ void EditBox::setFontName(const char* pFontName)
     }
 }
 
+const char* EditBox::getFontName() const
+{
+    return _fontName.c_str();
+}
+
 void EditBox::setFontSize(int fontSize)
 {
     _fontSize = fontSize;
@@ -233,6 +238,11 @@ void EditBox::setFontSize(int fontSize)
     {
         _editBoxImpl->setFont(_fontName.c_str(), _fontSize);
     }
+}
+
+int EditBox::getFontSize() const
+{
+    return _fontSize;
 }
 
 void EditBox::setFontColor(const Color3B& color)
@@ -247,6 +257,11 @@ void EditBox::setFontColor(const Color4B& color)
     {
         _editBoxImpl->setFontColor(color);
     }
+}
+
+const Color4B& EditBox::getFontColor() const
+{
+    return _colText;
 }
 
 void EditBox::setPlaceholderFont(const char* pFontName, int fontSize)
@@ -273,6 +288,11 @@ void EditBox::setPlaceholderFontName(const char* pFontName)
     }
 }
 
+const char* EditBox::getPlaceholderFontName() const
+{
+    return _placeholderFontName.c_str();
+}
+
 void EditBox::setPlaceholderFontSize(int fontSize)
 {
     _placeholderFontSize = fontSize;
@@ -280,6 +300,11 @@ void EditBox::setPlaceholderFontSize(int fontSize)
     {
         _editBoxImpl->setPlaceholderFont(_placeholderFontName.c_str(), fontSize);
     }
+}
+
+int EditBox::getPlaceholderFontSize() const
+{
+    return _placeholderFontSize;
 }
 
 void EditBox::setPlaceholderFontColor(const Color3B& color)
@@ -296,6 +321,11 @@ void EditBox::setPlaceholderFontColor(const Color4B& color)
     }
 }
 
+const Color4B& EditBox::getPlaceholderFontColor() const
+{
+    return _colPlaceHolder;
+}
+
 void EditBox::setPlaceHolder(const char* pText)
 {
     if (pText != nullptr)
@@ -308,18 +338,23 @@ void EditBox::setPlaceHolder(const char* pText)
     }
 }
 
-const char* EditBox::getPlaceHolder(void)
+const char* EditBox::getPlaceHolder(void) const
 {
     return _placeHolder.c_str();
 }
 
 void EditBox::setInputMode(EditBox::InputMode inputMode)
 {
-    _editBoxInputMode = inputMode;
+    _inputMode = inputMode;
     if (_editBoxImpl != nullptr)
     {
         _editBoxImpl->setInputMode(inputMode);
     }
+}
+
+EditBox::InputMode EditBox::getInputMode() const
+{
+    return _inputMode;
 }
 
 void EditBox::setMaxLength(int maxLength)
@@ -331,7 +366,6 @@ void EditBox::setMaxLength(int maxLength)
     }
 }
 
-
 int EditBox::getMaxLength()
 {
     return _maxLength;
@@ -339,27 +373,44 @@ int EditBox::getMaxLength()
 
 void EditBox::setInputFlag(EditBox::InputFlag inputFlag)
 {
-    _editBoxInputFlag = inputFlag;
+    _inputFlag = inputFlag;
     if (_editBoxImpl != nullptr)
     {
         _editBoxImpl->setInputFlag(inputFlag);
     }
 }
 
+EditBox::InputFlag EditBox::getInputFlag() const
+{
+    return _inputFlag;
+}
+
 void EditBox::setReturnType(EditBox::KeyboardReturnType returnType)
 {
+    _keyboardReturnType = returnType;
     if (_editBoxImpl != nullptr)
     {
         _editBoxImpl->setReturnType(returnType);
     }
 }
 
-  void EditBox::setTextHorizontalAlignment(cocos2d::TextHAlignment alignment)
+EditBox::KeyboardReturnType EditBox::getReturnType() const
 {
+    return _keyboardReturnType;
+}
+
+void EditBox::setTextHorizontalAlignment(TextHAlignment alignment)
+{
+    _alignment = alignment;
     if (_editBoxImpl != nullptr)
     {
         _editBoxImpl->setTextHorizontalAlignment(alignment);
     }
+}
+
+TextHAlignment EditBox::getTextHorizontalAlignment() const
+{
+    return _alignment;
 }
 
 /* override function */
