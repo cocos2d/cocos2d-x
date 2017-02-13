@@ -112,6 +112,7 @@ NewLabelTests::NewLabelTests()
     ADD_TEST_CASE(LabelIssue16293);
     ADD_TEST_CASE(LabelIssue16471);
     ADD_TEST_CASE(LabelIssue16717);
+    ADD_TEST_CASE(LabelIssueLineGap);
 };
 
 LabelFNTColorAndOpacity::LabelFNTColorAndOpacity()
@@ -3368,4 +3369,32 @@ std::string LabelIssue16717::subtitle() const
 {
     return "";
 }
+
+//
+// LabelIssueLineGap
+//
+LabelIssueLineGap::LabelIssueLineGap()
+{
+    
+    auto size = Director::getInstance()->getWinSize();
+    
+    auto label1 = Label::createWithTTF("test \ntest", "fonts/FingerpopGap.ttf", 30);
+    label1->setPosition(Vec2(size.width / 3, size.height / 2));
+    addChild(label1);
+    
+    auto label2 = Label::createWithSystemFont("test \ntest", "fonts/FingerpopGap.ttf", 30);
+    label2->setPosition(Vec2(size.width / 3 * 1.8 , size.height / 2));
+    addChild(label2);
+}
+
+std::string LabelIssueLineGap::title() const
+{
+    return "Label line gap issue";
+}
+
+std::string LabelIssueLineGap::subtitle() const
+{
+    return "two label must have exactly the same position and distance between lines";
+}
+
 

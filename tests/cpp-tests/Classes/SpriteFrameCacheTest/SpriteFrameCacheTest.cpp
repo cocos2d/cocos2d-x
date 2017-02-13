@@ -61,7 +61,7 @@ SpriteFrameCachePixelFormatTest::SpriteFrameCachePixelFormatTest()
         loadSpriteFrames("Images/sprite_frames_test/test_PVRTC2_NOALPHA.plist", Texture2D::PixelFormat::PVRTC2);
     }
     
-    // test loading atlases wihtout PixelFormat specified
+    // test loading atlases without PixelFormat specified
     Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGB5A1);
     loadSpriteFrames("Images/sprite_frames_test/test_NoFormat.plist", Texture2D::PixelFormat::RGB5A1);
     
