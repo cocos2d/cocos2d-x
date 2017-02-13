@@ -31,7 +31,7 @@ NS_CC_BEGIN
 EventMouse::EventMouse(MouseEventType mouseEventCode)
 : Event(Type::MOUSE)
 , _mouseEventType(mouseEventCode)
-, _mouseButton(-1)
+, _mouseButton(MouseButton::BUTTON_UNSET)
 , _x(0.0f)
 , _y(0.0f)
 , _scrollX(0.0f)
@@ -81,4 +81,11 @@ Vec2 EventMouse::getDelta() const
 {     
     return getLocation() - getPreviousLocation();
 }
+
+std::ostream& operator<<(std::ostream& out, const EventMouse::MouseButton& button)
+{
+  out << static_cast<int>(button);
+  return out;
+}
+
 NS_CC_END
