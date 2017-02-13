@@ -553,26 +553,9 @@ namespace ui {
         void updatePosition(float dt);
         EditBoxImpl*      _editBoxImpl;
         EditBoxDelegate*  _delegate;
-            
-        InputMode    _editBoxInputMode;
-        InputFlag    _editBoxInputFlag;
-        EditBox::KeyboardReturnType  _keyboardReturnType;
-        cocos2d::TextHAlignment _alignment;
 
         Scale9Sprite *_backgroundSprite;
-        std::string _text;
-        std::string _placeHolder;
-            
-        std::string _fontName;
-        std::string _placeholderFontName;
-            
-        int _fontSize;
-        int _placeholderFontSize;
-            
-        Color4B _colText;
-        Color4B _colPlaceHolder;
-            
-        int   _maxLength;
+
         float _adjustHeight;
 #if CC_ENABLE_SCRIPT_BINDING
         int   _scriptEditBoxHandler;
