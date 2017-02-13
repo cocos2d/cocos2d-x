@@ -54,13 +54,28 @@ namespace cocos2d {
             virtual void setInputFlag(EditBox::InputFlag inputFlag) = 0;
             virtual void setMaxLength(int maxLength) = 0;
             virtual int  getMaxLength() = 0;
-            virtual void setTextHorizontalAlignment(cocos2d::TextHAlignment alignment) = 0;
+            virtual void setTextHorizontalAlignment(TextHAlignment alignment) = 0;
             virtual void setReturnType(EditBox::KeyboardReturnType returnType) = 0;
             virtual bool isEditing() = 0;
             
             virtual void setText(const char* pText) = 0;
             virtual const char* getText(void) = 0;
             virtual void setPlaceHolder(const char* pText) = 0;
+            virtual const char* getPlaceHolder(void) { return ""; }  // TODO: =0;
+
+            virtual const char* getFontName() { return ""; }
+            virtual int getFontSize() { return -1; }
+            virtual const Color4B& getFontColor() { return Color4B::WHITE; }
+
+            virtual const char* getPlaceholderFontName() { return ""; }
+            virtual int getPlaceholderFontSize() { return -1; }
+            virtual const Color4B& getPlaceholderFontColor() { return Color4B::GRAY; }
+
+            virtual EditBox::InputMode getInputMode() { return EditBox::InputMode::SINGLE_LINE; }
+            virtual EditBox::InputFlag getInputFlag() { return EditBox::InputFlag::LOWERCASE_ALL_CHARACTERS; }
+            virtual EditBox::KeyboardReturnType getReturnType() { return EditBox::KeyboardReturnType::DEFAULT; }
+            virtual TextHAlignment getTextHorizontalAlignment() { return TextHAlignment::LEFT; }
+
             virtual void doAnimationWhenKeyboardMove(float duration, float distance) = 0;
             
             virtual void openKeyboard() = 0;
@@ -90,6 +105,7 @@ namespace cocos2d {
             void setDelegate(EditBoxDelegate* pDelegate) { _delegate = pDelegate; };
             EditBoxDelegate* getDelegate() { return _delegate; };
             EditBox* getEditBox() { return _editBox; };
+
         protected:
             EditBoxDelegate* _delegate;
             EditBox* _editBox;
