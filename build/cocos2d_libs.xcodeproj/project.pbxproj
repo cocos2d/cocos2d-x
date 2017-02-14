@@ -1383,6 +1383,17 @@
 		46270FA51E1CC6A200AAA098 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46270FA31E1CC6A100AAA098 /* libssl.a */; };
 		46270FA81E1CC84500AAA098 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46270FA61E1CC84500AAA098 /* libcrypto.a */; };
 		46270FA91E1CC84500AAA098 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46270FA71E1CC84500AAA098 /* libssl.a */; };
+		463AE7371E4DA31C00926B3A /* code_generators.h in Headers */ = {isa = PBXBuildFile; fileRef = 463AE72B1E4DA31C00926B3A /* code_generators.h */; };
+		463AE7381E4DA31C00926B3A /* flathash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 463AE72C1E4DA31C00926B3A /* flathash.cpp */; };
+		463AE7391E4DA31C00926B3A /* grpc.h in Headers */ = {isa = PBXBuildFile; fileRef = 463AE72D1E4DA31C00926B3A /* grpc.h */; };
+		463AE73A1E4DA31C00926B3A /* hash.h in Headers */ = {isa = PBXBuildFile; fileRef = 463AE72E1E4DA31C00926B3A /* hash.h */; };
+		463AE73C1E4DA31C00926B3A /* idl_gen_js.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 463AE7301E4DA31C00926B3A /* idl_gen_js.cpp */; };
+		463AE73D1E4DA31C00926B3A /* idl_gen_php.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 463AE7311E4DA31C00926B3A /* idl_gen_php.cpp */; };
+		463AE73E1E4DA31C00926B3A /* idl_gen_python.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 463AE7321E4DA31C00926B3A /* idl_gen_python.cpp */; };
+		463AE73F1E4DA31C00926B3A /* reflection_generated.h in Headers */ = {isa = PBXBuildFile; fileRef = 463AE7331E4DA31C00926B3A /* reflection_generated.h */; };
+		463AE7401E4DA31C00926B3A /* reflection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 463AE7341E4DA31C00926B3A /* reflection.cpp */; };
+		463AE7411E4DA31C00926B3A /* reflection.h in Headers */ = {isa = PBXBuildFile; fileRef = 463AE7351E4DA31C00926B3A /* reflection.h */; };
+		463AE7421E4DA31C00926B3A /* util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 463AE7361E4DA31C00926B3A /* util.cpp */; };
 		464AD6E5197EBB1400E502D8 /* pvr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 464AD6E3197EBB1400E502D8 /* pvr.cpp */; };
 		464AD6E6197EBB1400E502D8 /* pvr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 464AD6E3197EBB1400E502D8 /* pvr.cpp */; };
 		464AD6E7197EBB1400E502D8 /* pvr.h in Headers */ = {isa = PBXBuildFile; fileRef = 464AD6E4197EBB1400E502D8 /* pvr.h */; };
@@ -6259,8 +6270,6 @@
 		37936A3C1869B76800E974DD /* reader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = reader.h; sourceTree = "<group>"; };
 		37936A3D1869B76800E974DD /* stringbuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stringbuffer.h; sourceTree = "<group>"; };
 		37936A3E1869B76800E974DD /* writer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = writer.h; sourceTree = "<group>"; };
-		382383E21A258FA7002C4610 /* Android.mk */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Android.mk; sourceTree = "<group>"; };
-		382383E31A258FA7002C4610 /* CMakeLists.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		382383E41A258FA7002C4610 /* flatbuffers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = flatbuffers.h; sourceTree = "<group>"; };
 		382383E51A258FA7002C4610 /* flatc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = flatc.cpp; sourceTree = "<group>"; };
 		382383E61A258FA7002C4610 /* idl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = idl.h; sourceTree = "<group>"; };
@@ -6326,6 +6335,17 @@
 		46270FA31E1CC6A100AAA098 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = ../external/openssl/prebuilt/mac/libssl.a; sourceTree = "<group>"; };
 		46270FA61E1CC84500AAA098 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = ../external/openssl/prebuilt/ios/libcrypto.a; sourceTree = "<group>"; };
 		46270FA71E1CC84500AAA098 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = ../external/openssl/prebuilt/ios/libssl.a; sourceTree = "<group>"; };
+		463AE72B1E4DA31C00926B3A /* code_generators.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = code_generators.h; sourceTree = "<group>"; };
+		463AE72C1E4DA31C00926B3A /* flathash.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = flathash.cpp; sourceTree = "<group>"; };
+		463AE72D1E4DA31C00926B3A /* grpc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = grpc.h; sourceTree = "<group>"; };
+		463AE72E1E4DA31C00926B3A /* hash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hash.h; sourceTree = "<group>"; };
+		463AE7301E4DA31C00926B3A /* idl_gen_js.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = idl_gen_js.cpp; sourceTree = "<group>"; };
+		463AE7311E4DA31C00926B3A /* idl_gen_php.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = idl_gen_php.cpp; sourceTree = "<group>"; };
+		463AE7321E4DA31C00926B3A /* idl_gen_python.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = idl_gen_python.cpp; sourceTree = "<group>"; };
+		463AE7331E4DA31C00926B3A /* reflection_generated.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = reflection_generated.h; sourceTree = "<group>"; };
+		463AE7341E4DA31C00926B3A /* reflection.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = reflection.cpp; sourceTree = "<group>"; };
+		463AE7351E4DA31C00926B3A /* reflection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = reflection.h; sourceTree = "<group>"; };
+		463AE7361E4DA31C00926B3A /* util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = util.cpp; sourceTree = "<group>"; };
 		464AD6E3197EBB1400E502D8 /* pvr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = pvr.cpp; path = ../base/pvr.cpp; sourceTree = "<group>"; };
 		464AD6E4197EBB1400E502D8 /* pvr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pvr.h; path = ../base/pvr.h; sourceTree = "<group>"; };
 		46A15FCC1807A544005B8026 /* AUTHORS */ = {isa = PBXFileReference; lastKnownFileType = text; name = AUTHORS; path = ../AUTHORS; sourceTree = "<group>"; };
@@ -9258,8 +9278,17 @@
 		382383E11A258FA7002C4610 /* flatbuffers */ = {
 			isa = PBXGroup;
 			children = (
-				382383E21A258FA7002C4610 /* Android.mk */,
-				382383E31A258FA7002C4610 /* CMakeLists.txt */,
+				463AE72B1E4DA31C00926B3A /* code_generators.h */,
+				463AE72C1E4DA31C00926B3A /* flathash.cpp */,
+				463AE72D1E4DA31C00926B3A /* grpc.h */,
+				463AE72E1E4DA31C00926B3A /* hash.h */,
+				463AE7301E4DA31C00926B3A /* idl_gen_js.cpp */,
+				463AE7311E4DA31C00926B3A /* idl_gen_php.cpp */,
+				463AE7321E4DA31C00926B3A /* idl_gen_python.cpp */,
+				463AE7331E4DA31C00926B3A /* reflection_generated.h */,
+				463AE7341E4DA31C00926B3A /* reflection.cpp */,
+				463AE7351E4DA31C00926B3A /* reflection.h */,
+				463AE7361E4DA31C00926B3A /* util.cpp */,
 				382383E41A258FA7002C4610 /* flatbuffers.h */,
 				382383E51A258FA7002C4610 /* flatc.cpp */,
 				382383E61A258FA7002C4610 /* idl.h */,
@@ -11462,6 +11491,7 @@
 				15AE1A7719AAD40300C27E9E /* b2EdgeAndPolygonContact.h in Headers */,
 				B6DD2FD11B04825B00E47F5F /* DetourNode.h in Headers */,
 				15AE18F719AAD35000C27E9E /* CCBatchNode.h in Headers */,
+				463AE7411E4DA31C00926B3A /* reflection.h in Headers */,
 				15AE181419AAD2F700C27E9E /* CCAnimationCurve.h in Headers */,
 				5020A22E1D49912500E80C72 /* VertexAttachment.h in Headers */,
 				50ABBE631925AB6F00A911A9 /* CCEventListenerAcceleration.h in Headers */,
@@ -11556,6 +11586,7 @@
 				15AE182A19AAD2F700C27E9E /* CCMeshSkin.h in Headers */,
 				B276EF5F1988D1D500CD400F /* CCVertexIndexData.h in Headers */,
 				5020A1DD1D49912500E80C72 /* Skeleton.h in Headers */,
+				463AE7391E4DA31C00926B3A /* grpc.h in Headers */,
 				50864CA31C7BC1B000B3BAB1 /* cpBody.h in Headers */,
 				1A57007F180BC5A10088DEC7 /* CCActionInterval.h in Headers */,
 				298C75D71C0465D1006BAE63 /* CCStencilStateManager.hpp in Headers */,
@@ -11860,6 +11891,7 @@
 				B665E3981AA80A6500DDB1C5 /* CCPUPointEmitter.h in Headers */,
 				15AE19A719AAD39600C27E9E /* TextReader.h in Headers */,
 				B6CAB27F1AF9AA1A00B9B856 /* btBox2dShape.h in Headers */,
+				463AE73F1E4DA31C00926B3A /* reflection_generated.h in Headers */,
 				1A570227180BCC1A0088DEC7 /* CCParticleExamples.h in Headers */,
 				1A57022B180BCC1A0088DEC7 /* CCParticleSystem.h in Headers */,
 				15AE190E19AAD35000C27E9E /* CCDisplayManager.h in Headers */,
@@ -11877,6 +11909,7 @@
 				29DA08F71C63351600F4052B /* UIEditBoxImpl-winrt.h in Headers */,
 				B665E4241AA80A6600DDB1C5 /* CCPUTranslateManager.h in Headers */,
 				15AE1C1219AAE2C600C27E9E /* CCPhysicsDebugNode.h in Headers */,
+				463AE73A1E4DA31C00926B3A /* hash.h in Headers */,
 				B665E3381AA80A6500DDB1C5 /* CCPUOnEmissionObserverTranslator.h in Headers */,
 				50ABBE951925AB6F00A911A9 /* CCProfiling.h in Headers */,
 				B665E2301AA80A6500DDB1C5 /* CCPUBoxColliderTranslator.h in Headers */,
@@ -12235,6 +12268,7 @@
 				5020A2071D49912500E80C72 /* Skin.h in Headers */,
 				B665E3DC1AA80A6600DDB1C5 /* CCPUScriptTranslator.h in Headers */,
 				B6CAB49B1AF9AA1A00B9B856 /* HeapManager.h in Headers */,
+				463AE7371E4DA31C00926B3A /* code_generators.h in Headers */,
 				15AE183619AAD2F700C27E9E /* CCObjLoader.h in Headers */,
 				15AE1BE719AAE01E00C27E9E /* CCTableViewCell.h in Headers */,
 				15AE1A8919AAD40300C27E9E /* b2PrismaticJoint.h in Headers */,
@@ -14996,6 +15030,7 @@
 				B6CAB4B71AF9AA1A00B9B856 /* SpuFakeDma.cpp in Sources */,
 				B665E3361AA80A6500DDB1C5 /* CCPUOnEmissionObserverTranslator.cpp in Sources */,
 				15B3708819EE414C00ABE682 /* Manifest.cpp in Sources */,
+				463AE7421E4DA31C00926B3A /* util.cpp in Sources */,
 				C5F516121C8216660013B695 /* UITabControl.cpp in Sources */,
 				B665E27E1AA80A6500DDB1C5 /* CCPUDoScaleEventHandlerTranslator.cpp in Sources */,
 				B63990CC1A490AFE00B07923 /* CCAsyncTaskPool.cpp in Sources */,
@@ -15025,6 +15060,7 @@
 				15AE1BC919AAE01E00C27E9E /* CCControl.cpp in Sources */,
 				C50306751B60B5B2001E6D43 /* BoneNodeReader.cpp in Sources */,
 				B6CAB3BF1AF9AA1A00B9B856 /* btHinge2Constraint.cpp in Sources */,
+				463AE73E1E4DA31C00926B3A /* idl_gen_python.cpp in Sources */,
 				5070031B1B69735200E83DDD /* HttpClient-android.cpp in Sources */,
 				B6CAB1F51AF9AA1A00B9B856 /* btDbvt.cpp in Sources */,
 				B665E2D61AA80A6500DDB1C5 /* CCPUJetAffector.cpp in Sources */,
@@ -15076,6 +15112,7 @@
 				B6CAB4DF1AF9AA1A00B9B856 /* SpuSampleTask.cpp in Sources */,
 				50F965511CD0360000ADE813 /* CCVRGenericRenderer.cpp in Sources */,
 				B60C5BD419AC68B10056FBDE /* CCBillBoard.cpp in Sources */,
+				463AE7401E4DA31C00926B3A /* reflection.cpp in Sources */,
 				15AE199619AAD39600C27E9E /* ListViewReader.cpp in Sources */,
 				B6CAB52B1AF9AA1A00B9B856 /* btSerializer.cpp in Sources */,
 				50ABC0191926664800A911A9 /* CCSAXParser.cpp in Sources */,
@@ -15160,6 +15197,7 @@
 				15AE18EA19AAD35000C27E9E /* CCActionNode.cpp in Sources */,
 				B6CAB2391AF9AA1A00B9B856 /* btCompoundCompoundCollisionAlgorithm.cpp in Sources */,
 				2962D6001C61DF1A004821A3 /* CCUIMultilineTextField.m in Sources */,
+				463AE73C1E4DA31C00926B3A /* idl_gen_js.cpp in Sources */,
 				15AE1A7819AAD40300C27E9E /* b2PolygonAndCircleContact.cpp in Sources */,
 				15AE1A3419AAD3D500C27E9E /* b2EdgeShape.cpp in Sources */,
 				B6CAB1F91AF9AA1A00B9B856 /* btDbvtBroadphase.cpp in Sources */,
@@ -15167,6 +15205,7 @@
 				B6CAB21B1AF9AA1A00B9B856 /* btBoxBoxCollisionAlgorithm.cpp in Sources */,
 				B665E2AE1AA80A6500DDB1C5 /* CCPUFlockCenteringAffectorTranslator.cpp in Sources */,
 				15AE1BA319AADFDF00C27E9E /* UILayoutManager.cpp in Sources */,
+				463AE7381E4DA31C00926B3A /* flathash.cpp in Sources */,
 				B230ED7119B417AE00364AA8 /* CCTrianglesCommand.cpp in Sources */,
 				B6CAB3991AF9AA1A00B9B856 /* btVoronoiSimplexSolver.cpp in Sources */,
 				1A5702F2180BCE750088DEC7 /* CCTMXObjectGroup.cpp in Sources */,
@@ -15264,6 +15303,7 @@
 				29394CF619B01DBA00D2DE1A /* UIWebViewImpl-ios.mm in Sources */,
 				B6CAB3FF1AF9AA1A00B9B856 /* btMultiBodyConstraintSolver.cpp in Sources */,
 				382383FC1A258FA7002C4610 /* idl_gen_text.cpp in Sources */,
+				463AE73D1E4DA31C00926B3A /* idl_gen_php.cpp in Sources */,
 				50ABBE831925AB6F00A911A9 /* ccFPSImages.c in Sources */,
 				B6CAB4CD1AF9AA1A00B9B856 /* SpuContactResult.cpp in Sources */,
 				15AE1B7019AADA9900C27E9E /* CocosGUI.cpp in Sources */,

@@ -273,6 +273,7 @@ namespace cocostudio
                                               builder->CreateString(fontName),
                                               fontSize,
                                               builder->CreateString(text),
+                                              isLocalized,
                                               builder->CreateString(placeHolder),
                                               passwordEnabled,
                                               builder->CreateString(passwordStyleText),
@@ -280,8 +281,7 @@ namespace cocostudio
                                               maxLength,
                                               areaWidth,
                                               areaHeight,
-                                              isCustomSize,
-                                              isLocalized);
+                                              isCustomSize);
         
         return *(Offset<Table>*)(&options);
     }

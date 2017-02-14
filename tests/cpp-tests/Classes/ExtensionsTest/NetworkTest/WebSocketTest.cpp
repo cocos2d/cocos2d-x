@@ -68,7 +68,7 @@ WebSocketTest::WebSocketTest()
     
     auto startTestLabel = Label::createWithTTF("Start Test WebSocket", "fonts/arial.ttf", 16);
     auto startTestItem = MenuItemLabel::create(startTestLabel, CC_CALLBACK_1(WebSocketTest::startTestCallback, this));
-    startTestItem->setPosition(Vec2(VisibleRect::center().x, VisibleRect::bottom().y + 150));
+    startTestItem->setPosition(Vec2(VisibleRect::center().x - 150, VisibleRect::bottom().y + 150));
     _startTestMenu = Menu::create(startTestItem, nullptr);
     _startTestMenu->setPosition(Vec2::ZERO);
     this->addChild(_startTestMenu, 1);
