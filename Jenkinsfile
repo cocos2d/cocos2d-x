@@ -5,16 +5,32 @@ properties properties: [[$class       : 'GithubProjectProperty',
                          autoRebuild    : false,
                          rebuildDisabled: false],
                         pipelineTriggers([])]
-                        
-stage('draft') {
-    parallel linux: {
-        node('linux') {
-            echo 'Linux build here soon'
-        }
-    },
-    windows: {
-        node('windows') {
-            echo 'Windows build here soon'
-        }
+
+pipeline {
+  agent none
+  
+  stages {
+  
+    stage("Build") {
+      
+      steps {
+        parallel (
+          
+          "windows" : {
+            
+            node('windows') {
+              bat "print from windows"    
+            }
+          },
+          
+          "linux" : {
+            
+            node('linux') {
+              sh "echo from linux"    
+            }
+          }
+        }                
+      )
     }
+  }    
 }
