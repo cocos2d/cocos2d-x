@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2011      Laschweinski
 Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2015 	IsCool Entertainment
 
 http://www.cocos2d-x.org
 
@@ -38,6 +39,7 @@ THE SOFTWARE.
 #include <string>
 #include <sstream>
 #include <fontconfig/fontconfig.h>
+#include "platform/CCStroke.h"
 
 #include "ft2build.h"
 #include FT_FREETYPE_H
@@ -426,6 +428,8 @@ public:
 
         int iCurYCursor = computeLineStartY(face, eAlignMask, txtHeight, iMaxLineHeight);
 
+        const Color3B fillColor( textDefinition._fontFillColor );
+        
         int lineCount = textLines.size();
         for (int line = 0; line < lineCount; line++) {
             int iCurXCursor = computeLineStart(face, eAlignMask, line);
@@ -442,7 +446,7 @@ public:
                 int yoffset = iCurYCursor - (face->glyph->metrics.horiBearingY >> 6);
                 int xoffset = iCurXCursor + glyph.paintPosition;
 
-                for (int y = 0; y < bitmap.rows; ++y) {
+                for (unsigned int y = 0; y < bitmap.rows; ++y) {
                     int iY = yoffset + y;
                     if (iY>=iMaxLineHeight) {
                         //exceed the height truncate
@@ -452,15 +456,20 @@ public:
 
                     int bitmap_y = y * bitmap.width;
 
-                    for (int x = 0; x < bitmap.width; ++x) {
-                        unsigned char cTemp = bitmap.buffer[bitmap_y + x];
+                    for (unsigned int x = 0; x < bitmap.width; ++x) {
+                        unsigned int cTemp = bitmap.buffer[bitmap_y + x];
                         if (cTemp == 0) {
                             continue;
                         }
 
                         int iX = xoffset + x;
-                        //FIXME:wrong text color
-                        int iTemp = cTemp << 24 | cTemp << 16 | cTemp << 8 | cTemp;
+
+                        int iTemp =
+                            ( cTemp << 24 )
+                            | ( fillColor.b * cTemp / 255 ) << 16
+                            | ( fillColor.g * cTemp / 255 ) << 8
+                            | ( fillColor.r * cTemp / 255  );
+
                         *(int*) &_data[(iY + iX) * 4 + 0] = iTemp;
                     }
                 }
@@ -502,6 +511,7 @@ Data Device::getTextureDataForText(const char * text, const FontDefinition& text
         width = dc.iMaxLineWidth;
         height = dc.iMaxLineHeight;
         dc.reset();
+        drawStroke( dc._data, width, height, textDefinition._stroke );
         ret.fastSet(dc._data,width * height * 4);
         hasPremultipliedAlpha = true;
     } while (0);

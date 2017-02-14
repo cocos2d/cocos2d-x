@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0AE22ECF1C4AE8D80099B83F /* CCStroke.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0AE22ECD1C4AE8D80099B83F /* CCStroke.cpp */; };
+		0AE22ED01C4AE8D80099B83F /* CCStroke.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0AE22ECD1C4AE8D80099B83F /* CCStroke.cpp */; };
+		0AE22ED11C4AE8D80099B83F /* CCStroke.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0AE22ECD1C4AE8D80099B83F /* CCStroke.cpp */; };
+		0AE22ED21C4AE8D80099B83F /* CCStroke.h in Headers */ = {isa = PBXBuildFile; fileRef = 0AE22ECE1C4AE8D80099B83F /* CCStroke.h */; };
+		0AE22ED31C4AE8D80099B83F /* CCStroke.h in Headers */ = {isa = PBXBuildFile; fileRef = 0AE22ECE1C4AE8D80099B83F /* CCStroke.h */; };
+		0AE22ED41C4AE8D80099B83F /* CCStroke.h in Headers */ = {isa = PBXBuildFile; fileRef = 0AE22ECE1C4AE8D80099B83F /* CCStroke.h */; };
 		0C261F281BE7528900707478 /* Light3DReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0C261F261BE7528900707478 /* Light3DReader.cpp */; };
 		0C261F291BE7528900707478 /* Light3DReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0C261F261BE7528900707478 /* Light3DReader.cpp */; };
 		0C261F2A1BE7528900707478 /* Light3DReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 0C261F271BE7528900707478 /* Light3DReader.h */; };
@@ -5771,6 +5777,8 @@
 		06CAAABF186AD63B0012A414 /* TriggerMng.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriggerMng.h; sourceTree = "<group>"; };
 		06CAAAC0186AD63B0012A414 /* TriggerObj.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TriggerObj.cpp; sourceTree = "<group>"; };
 		06CAAAC1186AD63B0012A414 /* TriggerObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriggerObj.h; sourceTree = "<group>"; };
+		0AE22ECD1C4AE8D80099B83F /* CCStroke.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCStroke.cpp; sourceTree = "<group>"; };
+		0AE22ECE1C4AE8D80099B83F /* CCStroke.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCStroke.h; sourceTree = "<group>"; };
 		0C261F261BE7528900707478 /* Light3DReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Light3DReader.cpp; sourceTree = "<group>"; };
 		0C261F271BE7528900707478 /* Light3DReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Light3DReader.h; sourceTree = "<group>"; };
 		1551A33F158F2AB200E66CFE /* libcocos2d Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2d Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -9991,6 +9999,8 @@
 				50ABBF281926664700A911A9 /* CCImage.h */,
 				50ABBF291926664700A911A9 /* CCSAXParser.cpp */,
 				50ABBF2A1926664700A911A9 /* CCSAXParser.h */,
+				0AE22ECD1C4AE8D80099B83F /* CCStroke.cpp */,
+				0AE22ECE1C4AE8D80099B83F /* CCStroke.h */,
 				50ABBF2B1926664700A911A9 /* CCThread.cpp */,
 				50ABBF2C1926664700A911A9 /* CCThread.h */,
 			);
@@ -12424,6 +12434,7 @@
 				B6DD2FEB1B04825B00E47F5F /* DetourProximityGrid.h in Headers */,
 				5020A1EF1D49912500E80C72 /* SkeletonBounds.h in Headers */,
 				B6DD2FC51B04825B00E47F5F /* DetourNavMesh.h in Headers */,
+				0AE22ED21C4AE8D80099B83F /* CCStroke.h in Headers */,
 				50ABC0171926664800A911A9 /* CCImage.h in Headers */,
 				B6DD2FCD1B04825B00E47F5F /* DetourNavMeshQuery.h in Headers */,
 				50ABBDA91925AB4100A911A9 /* CCRenderCommand.h in Headers */,
@@ -12842,6 +12853,7 @@
 				507B3E8B1C31BDD30067B53E /* UIEditBoxImpl-android.h in Headers */,
 				507B3E8C1C31BDD30067B53E /* PlatformDefinitions.h in Headers */,
 				507B3E8D1C31BDD30067B53E /* CCPUJetAffectorTranslator.h in Headers */,
+				0AE22ED41C4AE8D80099B83F /* CCStroke.h in Headers */,
 				507B3E8E1C31BDD30067B53E /* GUIDefine.h in Headers */,
 				507B3E8F1C31BDD30067B53E /* CCDownloader.h in Headers */,
 				5020A1CD1D49912500E80C72 /* PathConstraint.h in Headers */,
@@ -13901,6 +13913,7 @@
 				5020A2021D49912500E80C72 /* SkeletonRenderer.h in Headers */,
 				B6CAB49E1AF9AA1A00B9B856 /* PlatformDefinitions.h in Headers */,
 				B665E2DD1AA80A6500DDB1C5 /* CCPUJetAffectorTranslator.h in Headers */,
+				0AE22ED31C4AE8D80099B83F /* CCStroke.h in Headers */,
 				15AE1B9419AADA9A00C27E9E /* GUIDefine.h in Headers */,
 				50693C611B6BF2AE005C5820 /* CCDownloader.h in Headers */,
 				B6CAB3E41AF9AA1A00B9B856 /* btUniversalConstraint.h in Headers */,
@@ -15405,6 +15418,7 @@
 				B6CAB4BF1AF9AA1A00B9B856 /* SpuLibspe2Support.cpp in Sources */,
 				B665E21E1AA80A6500DDB1C5 /* CCPUBehaviourManager.cpp in Sources */,
 				15AE18E319AAD35000C27E9E /* TriggerObj.cpp in Sources */,
+				0AE22ECF1C4AE8D80099B83F /* CCStroke.cpp in Sources */,
 				15AE1BA119AADFDF00C27E9E /* UILayoutParameter.cpp in Sources */,
 				50ABC0211926664800A911A9 /* CCGLViewImpl-desktop.cpp in Sources */,
 				5033419C1D9DC7B400770EC7 /* SkeletonBinary.c in Sources */,
@@ -15563,6 +15577,7 @@
 				507B39F51C31BDD30067B53E /* b2WorldCallbacks.cpp in Sources */,
 				507B39F61C31BDD30067B53E /* btQuantizedBvh.cpp in Sources */,
 				507B39F71C31BDD30067B53E /* btSimpleDynamicsWorld.cpp in Sources */,
+				0AE22ED11C4AE8D80099B83F /* CCStroke.cpp in Sources */,
 				507B39F81C31BDD30067B53E /* CCMenuItemImageLoader.cpp in Sources */,
 				507B39F91C31BDD30067B53E /* fastlz.c in Sources */,
 				507B39FA1C31BDD30067B53E /* CCSAXParser.cpp in Sources */,
@@ -16418,6 +16433,7 @@
 				15AE1AAC19AAD40300C27E9E /* b2WorldCallbacks.cpp in Sources */,
 				B6CAB20C1AF9AA1A00B9B856 /* btQuantizedBvh.cpp in Sources */,
 				B6CAB3F21AF9AA1A00B9B856 /* btSimpleDynamicsWorld.cpp in Sources */,
+				0AE22ED01C4AE8D80099B83F /* CCStroke.cpp in Sources */,
 				15AE18C719AAD33D00C27E9E /* CCMenuItemImageLoader.cpp in Sources */,
 				B6DD2FF61B04825B00E47F5F /* fastlz.c in Sources */,
 				50ABC01A1926664800A911A9 /* CCSAXParser.cpp in Sources */,

@@ -529,6 +529,17 @@ public:
     virtual std::string subtitle() const override;
 };
 
+class LabelSystemFontShadowAndOutline : public AtlasDemoNew
+{
+public:
+    CREATE_FUNC(LabelSystemFontShadowAndOutline);
+
+    LabelSystemFontShadowAndOutline();
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
 class LabelIssue10773Test : public AtlasDemoNew
 {
 public:

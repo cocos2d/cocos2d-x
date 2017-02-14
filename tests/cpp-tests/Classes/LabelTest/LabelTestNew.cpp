@@ -71,6 +71,7 @@ NewLabelTests::NewLabelTests()
     ADD_TEST_CASE(LabelCharMapColorTest);
 
     ADD_TEST_CASE(LabelSystemFontColor);
+    ADD_TEST_CASE(LabelSystemFontShadowAndOutline);
     ADD_TEST_CASE(LabelTTFOldNew);
     ADD_TEST_CASE(LabelFontNameTest);
 
@@ -1852,6 +1853,73 @@ std::string LabelSystemFontColor::title() const
 std::string LabelSystemFontColor::subtitle() const
 {
     return "Testing text color of system font";
+}
+
+LabelSystemFontShadowAndOutline::LabelSystemFontShadowAndOutline()
+{
+    auto size = Director::getInstance()->getWinSize();
+
+    {
+      auto label =
+        Label::createWithSystemFont("Outline", "fonts/arial.ttf", 20);
+      label->setPosition(Vec2(size.width / 2, size.height * 0.3f));
+      label->setTextColor(Color4B::RED);
+      label->enableOutline(Color4B::BLUE, 1);
+      addChild(label);
+    }
+
+    {
+      auto label =
+        Label::createWithSystemFont("Blue Shadow", "fonts/arial.ttf", 20);
+      label->setPosition(Vec2(size.width / 2, size.height * 0.4f));
+      label->setTextColor(Color4B::GREEN);
+      label->enableShadow(Color4B::BLUE, Size(5, -3));
+      addChild(label);
+    }
+
+    {
+      auto label =
+        Label::createWithSystemFont
+        ("Outline and Shadow", "fonts/arial.ttf", 20);
+      label->setPosition(Vec2(size.width / 2, size.height * 0.5f));
+      label->setTextColor(Color4B::BLUE);
+      label->enableOutline(Color4B::YELLOW, 5);
+      label->enableShadow(Color4B::GREEN, Size(-3, 10));
+      addChild(label);
+    }
+
+    {
+      auto label =
+        Label::createWithSystemFont
+        ("Transparent stroke and shadow", "fonts/arial.ttf", 20);
+      label->setPosition(Vec2(size.width / 2, size.height * 0.6f));
+      label->setTextColor(Color4B::YELLOW);
+      label->enableOutline(Color4B( 255, 128, 0, 128 ), 3);
+      label->enableShadow(Color4B( 120, 60, 10, 80 ), Size(3, -5));
+      addChild(label);
+    }
+
+    {
+      auto label =
+        Label::createWithSystemFont
+        ("With emojis too \xF0\x9F\x98\x83, yep \xF0\x9F\x99\x8C",
+         "fonts/arial.ttf", 20);
+      label->setPosition(Vec2(size.width / 2, size.height * 0.7f));
+      label->setTextColor(Color4B::YELLOW);
+      label->enableOutline(Color4B( 0, 128, 255, 255 ), 1);
+      label->enableShadow(Color4B( 10, 90, 180, 255 ), Size(3, -5));
+      addChild(label);
+    }
+}
+
+std::string LabelSystemFontShadowAndOutline::title() const
+{
+    return "New Label + system font + outline and shadow";
+}
+
+std::string LabelSystemFontShadowAndOutline::subtitle() const
+{
+    return "Testing text outline and shadow of system font";
 }
 
 LabelIssue10773Test::LabelIssue10773Test()

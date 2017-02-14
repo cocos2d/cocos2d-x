@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (c) 2013      Zynga Inc.
  Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2015 	 IsCool Entertainment
 
  http://www.cocos2d-x.org
 
@@ -667,6 +668,9 @@ protected:
 
     void createSpriteForSystemFont(const FontDefinition& fontDef);
     void createShadowSpriteForSystemFont(const FontDefinition& fontDef);
+
+    Texture2D* getOrCreateTextTexture( const FontDefinition& font ) const;
+    void adjustSize();
 
     virtual void updateShaderProgram();
     void updateBMFontScale();
