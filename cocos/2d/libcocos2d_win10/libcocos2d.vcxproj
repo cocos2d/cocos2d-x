@@ -235,6 +235,11 @@
     <ClCompile Include="..\..\..\external\flatbuffers\idl_gen_go.cpp" />
     <ClCompile Include="..\..\..\external\flatbuffers\idl_gen_text.cpp" />
     <ClCompile Include="..\..\..\external\flatbuffers\idl_parser.cpp" />
+    <ClCompile Include="..\..\..\external\flatbuffers\idl_gen_js.cpp" />
+    <ClCompile Include="..\..\..\external\flatbuffers\idl_gen_php.cpp" />
+    <ClCompile Include="..\..\..\external\flatbuffers\idl_gen_python.cpp" />
+    <ClCompile Include="..\..\..\external\flatbuffers\reflection.cpp" />
+    <ClCompile Include="..\..\..\external\flatbuffers\util.cpp" />
     <ClCompile Include="..\..\..\external\poly2tri\common\shapes.cc" />
     <ClCompile Include="..\..\..\external\poly2tri\sweep\advancing_front.cc" />
     <ClCompile Include="..\..\..\external\poly2tri\sweep\cdt.cc" />
@@ -931,6 +936,10 @@
     <ClInclude Include="..\..\..\external\flatbuffers\flatbuffers.h" />
     <ClInclude Include="..\..\..\external\flatbuffers\idl.h" />
     <ClInclude Include="..\..\..\external\flatbuffers\util.h" />
+    <ClInclude Include="..\..\..\external\flatbuffers\code_generated.h" />
+    <ClInclude Include="..\..\..\external\flatbuffers\hash.h" />
+    <ClInclude Include="..\..\..\external\flatbuffers\reflection.h" />
+    <ClInclude Include="..\..\..\external\flatbuffers\reflection_generated.h" />
     <ClInclude Include="..\..\..\external\poly2tri\common\shapes.h" />
     <ClInclude Include="..\..\..\external\poly2tri\common\utils.h" />
     <ClInclude Include="..\..\..\external\poly2tri\poly2tri.h" />
