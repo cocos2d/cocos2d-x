@@ -63,18 +63,18 @@ namespace cocos2d {
             virtual void setPlaceHolder(const char* pText) = 0;
             virtual const char* getPlaceHolder(void) = 0;
 
-            virtual const char* getFontName() { return ""; }
-            virtual int getFontSize() { return -1; }
-            virtual const Color4B& getFontColor() { return Color4B::WHITE; }
+            virtual const char* getFontName() = 0;
+            virtual int getFontSize() = 0;
+            virtual const Color4B& getFontColor() = 0;
 
-            virtual const char* getPlaceholderFontName() { return ""; }
-            virtual int getPlaceholderFontSize() { return -1; }
-            virtual const Color4B& getPlaceholderFontColor() { return Color4B::GRAY; }
+            virtual const char* getPlaceholderFontName() = 0;
+            virtual int getPlaceholderFontSize() = 0;
+            virtual const Color4B& getPlaceholderFontColor() = 0;
 
-            virtual EditBox::InputMode getInputMode() { return EditBox::InputMode::SINGLE_LINE; }
-            virtual EditBox::InputFlag getInputFlag() { return EditBox::InputFlag::LOWERCASE_ALL_CHARACTERS; }
-            virtual EditBox::KeyboardReturnType getReturnType() { return EditBox::KeyboardReturnType::DEFAULT; }
-            virtual TextHAlignment getTextHorizontalAlignment() { return TextHAlignment::LEFT; }
+            virtual EditBox::InputMode getInputMode() = 0;
+            virtual EditBox::InputFlag getInputFlag() = 0;
+            virtual EditBox::KeyboardReturnType getReturnType() = 0;
+            virtual TextHAlignment getTextHorizontalAlignment() = 0;
 
             virtual void doAnimationWhenKeyboardMove(float duration, float distance) = 0;
             
