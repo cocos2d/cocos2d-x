@@ -283,7 +283,9 @@ bool luaval_to_std_string(lua_State* L, int lo, std::string* outValue, const cha
 
     if (ok)
     {
-        *outValue = tolua_tocppstring(L,lo,NULL);
+        size_t size;
+        auto rawString = lua_tolstring(L,lo,&size);
+        *outValue = std::string(rawString, size);
     }
 
     return ok;
