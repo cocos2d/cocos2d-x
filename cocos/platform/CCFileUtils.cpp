@@ -691,40 +691,36 @@ private:
     FILE *_file = nullptr;
 };
 
+template <class T>
 class MemoryArchive: public Archive
 {
 public:
+    static_assert(sizeof(T)==1, "MemoryArchive base must be 1 char exactly");
     MemoryArchive(const void *data, uint32_t size, const std::string &id):Archive(id)
     {
-        _data = (uint8_t*)malloc(size);
-        if(_data)
-        {
-            memcpy(_data, data, size);
-            _size = size;
-            init();
-        }
+        _data.resize(size);
+        memcpy(&_data.front(), data, size);
+        init();
     }
-    ~MemoryArchive()
+    
+    MemoryArchive(std::vector<T> &&data, const std::string &id):Archive(id)
     {
-        if(_data)
-            free(_data);
+        _data = std::move(data);
+        init();
     }
+    
 private:
     
     virtual bool readData(uint32_t offset, uint32_t size, void* buffer) override
     {
-        if(!_data)
+        if(offset + size > _data.size())
             return false;
         
-        if(offset + size > _size)
-            return false;
-        
-        memcpy(buffer, _data + offset, size);
+        memcpy(buffer, &_data.front() + offset, size);
         return true;
     }
     
-    uint8_t *_data = nullptr;
-    uint32_t _size = 0;
+    std::vector<T> _data;
 };
 
 
@@ -746,12 +742,42 @@ public:
         return true;
     }
     
-    bool addArchive(void *data, uint32_t size, const std::string &id)
+    bool addArchive(const void *data, uint32_t size, const std::string &id)
     {
         if(findArchive(id) != _archives.end())
             return false;
         
-        MemoryArchive *archive = new MemoryArchive(data, size, id);
+        MemoryArchive<uint8_t> *archive = new MemoryArchive<uint8_t>(data, size, id);
+        if(!archive->isInitialized())
+        {
+            delete archive;
+            return false;
+        }
+        _archives.emplace_back(id, archive);
+        return true;
+    }
+    
+    bool addArchive(std::vector<char> &&data, const std::string &id)
+    {
+        if(findArchive(id) != _archives.end())
+            return false;
+        
+        MemoryArchive<char> *archive = new MemoryArchive<char>(std::move(data), id);
+        if(!archive->isInitialized())
+        {
+            delete archive;
+            return false;
+        }
+        _archives.emplace_back(id, archive);
+        return true;
+    }
+
+    bool addArchive(std::vector<unsigned char> &&data, const std::string &id)
+    {
+        if(findArchive(id) != _archives.end())
+            return false;
+        
+        MemoryArchive<unsigned char> *archive = new MemoryArchive<unsigned char>(std::move(data), id);
         if(!archive->isInitialized())
         {
             delete archive;
@@ -1560,10 +1586,22 @@ bool FileUtils::addArchive(const std::string& fileName, const std::string& id)
     return _archiveContoller->addArchive(fileName, id);
 }
 
-bool FileUtils::addArchive(void *data, uint32_t size, const std::string &id)
+bool FileUtils::addArchive(const void *data, uint32_t size, const std::string &id)
 {
     _fullPathCache.clear();
     return _archiveContoller->addArchive(data, size, id);
+}
+
+bool FileUtils::addArchive(std::vector<char> &&data, const std::string &id)
+{
+    _fullPathCache.clear();
+    return _archiveContoller->addArchive(std::move(data), id);
+}
+
+bool FileUtils::addArchive(std::vector<unsigned char> &&data, const std::string &id)
+{
+    _fullPathCache.clear();
+    return _archiveContoller->addArchive(std::move(data), id);
 }
 
 bool FileUtils::removeArchive(const std::string& fileName)

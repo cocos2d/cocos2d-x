@@ -648,7 +648,19 @@ public:
     /**
      * Adds archive data
      */
-    bool addArchive(void *data, uint32_t size, const std::string &id);
+    bool addArchive(const void *data, uint32_t size, const std::string &id);
+    
+    /**
+     * Adds archive data
+     */
+    
+    bool addArchive(std::vector<char> &&data, const std::string &id);
+    
+    /**
+     * Adds archive data
+     */
+    bool addArchive(std::vector<unsigned char> &&data, const std::string &id);
+    
     
     /**
      * Removes archive file
