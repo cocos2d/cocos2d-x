@@ -7,29 +7,30 @@ properties properties: [[$class       : 'GithubProjectProperty',
                         pipelineTriggers([])]
 
 pipeline {
-  agent none
-  
-  stages {
-  
-    stage("Build") {
-      
-      steps {
-        parallel (
-          
-          "windows" : {
-            
-            node('windows') {
-              bat "print from windows"    
+    agent none
+
+    stages {
+
+        stage("Build") {
+
+            steps {
+                parallel(
+
+                    "windows": {
+
+                        node('windows') {
+                            bat "print from windows"
+                        }
+                    },
+
+                    "linux": {
+
+                        node('linux') {
+                            sh "echo from linux"
+                        }
+                    }
+                )
             }
-          },
-          
-          "linux" : {
-            
-            node('linux') {
-              sh "echo from linux"    
-            }
-          }                
-      )
+        }
     }
-  }    
 }
