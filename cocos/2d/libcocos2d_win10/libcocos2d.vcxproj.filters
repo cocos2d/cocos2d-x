@@ -831,9 +831,6 @@
     <ClCompile Include="..\..\..\external\flatbuffers\idl_parser.cpp">
       <Filter>cocostudio\json\flatbuffers</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\external\flatbuffers\flathash.cpp">
-      <Filter>cocostudio\json\flatbuffers</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\external\flatbuffers\idl_gen_js.cpp">
       <Filter>cocostudio\json\flatbuffers</Filter>
     </ClCompile>

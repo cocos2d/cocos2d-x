@@ -359,8 +359,6 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\openssl\prebuilt\win32\*.*" "$(OutDir)"
     <ClCompile Include="..\..\external\ConvertUTF\ConvertUTF.c" />
     <ClCompile Include="..\..\external\ConvertUTF\ConvertUTFWrapper.cpp" />
     <ClCompile Include="..\..\external\edtaa3func\edtaa3func.cpp" />
-    <ClCompile Include="..\..\external\flatbuffers\flatc.cpp" />
-    <ClCompile Include="..\..\external\flatbuffers\flathash.cpp" />
     <ClCompile Include="..\..\external\flatbuffers\idl_gen_cpp.cpp" />
     <ClCompile Include="..\..\external\flatbuffers\idl_gen_fbs.cpp" />
     <ClCompile Include="..\..\external\flatbuffers\idl_gen_general.cpp" />

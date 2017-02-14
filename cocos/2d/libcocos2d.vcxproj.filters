@@ -1291,9 +1291,6 @@
     <ClCompile Include="CCLight.cpp">
       <Filter>2d</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\external\flatbuffers\flatc.cpp">
-      <Filter>cocostudio\json\flatbuffers</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\external\flatbuffers\idl_gen_cpp.cpp">
       <Filter>cocostudio\json\flatbuffers</Filter>
     </ClCompile>
@@ -1310,9 +1307,6 @@
       <Filter>cocostudio\json\flatbuffers</Filter>
     </ClCompile>
     <ClCompile Include="..\..\external\flatbuffers\idl_parser.cpp">
-      <Filter>cocostudio\json\flatbuffers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\external\flatbuffers\flathash.cpp">
       <Filter>cocostudio\json\flatbuffers</Filter>
     </ClCompile>
     <ClCompile Include="..\..\external\flatbuffers\idl_gen_js.cpp">
@@ -3165,19 +3159,7 @@
     <ClInclude Include="..\..\external\flatbuffers\util.h">
       <Filter>cocostudio\json\flatbuffers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\external\flatbuffers\grpc.h">
-      <Filter>cocostudio\json\flatbuffers</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\external\flatbuffers\hash.h">
-      <Filter>cocostudio\json\flatbuffers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\external\flatbuffers\code_generated.h">
-      <Filter>cocostudio\json\flatbuffers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\external\flatbuffers\refelction.h">
-      <Filter>cocostudio\json\flatbuffers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\external\flatbuffers\refelction_generated.h">
       <Filter>cocostudio\json\flatbuffers</Filter>
     </ClInclude>
     <ClInclude Include="..\editor-support\cocostudio\CSParseBinary_generated.h">
@@ -3911,6 +3893,10 @@
     <ClInclude Include="..\audio\win32\AudioDecoderManager.h">
       <Filter>audioengine</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\external\flatbuffers\gprc.h" />
+    <ClInclude Include="..\..\external\flatbuffers\code_generators.h" />
+    <ClInclude Include="..\..\external\flatbuffers\reflection.h" />
+    <ClInclude Include="..\..\external\flatbuffers\reflection_generated.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\math\Mat4.inl">
