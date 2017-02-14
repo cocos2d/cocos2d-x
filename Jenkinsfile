@@ -28,8 +28,7 @@ pipeline {
             node('linux') {
               sh "echo from linux"    
             }
-          }
-        }                
+          }                
       )
     }
   }    
