@@ -21,6 +21,7 @@ def addNullTerminatedString(array, string):
 def packFolder(source, dest, prefix):
     print "pack folder:", source
     print "output:", dest
+    print "prefix:", prefix
     
     fileList = getFileInFolder(source)
     fileNamesData = bytearray()
@@ -79,6 +80,6 @@ if __name__ == "__main__":
     else:
         listPackets = getImmediateSubdirectories(destPath)
         for packet in listPackets:
-            packFolder(os.path.join(destPath, packet), os.path.join(destPath, packet + ".bin"), args.prefix)
+            packFolder(os.path.join(destPath, packet), os.path.join(destPath, packet + ".bin"), prefix)
 
 
