@@ -340,7 +340,7 @@ int lua_cocos2dx_cocosbuilder_CCBAnimationManager_getLastCompletedSequenceName(l
             return 0;
         }
         std::string ret = cobj->getLastCompletedSequenceName();
-        tolua_pushcppstring(tolua_S,ret);
+        lua_pushlstring(tolua_S,ret.c_str(),ret.length());
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.CCBAnimationManager:getLastCompletedSequenceName",argc, 0);
@@ -1766,7 +1766,7 @@ int lua_cocos2dx_cocosbuilder_CCBAnimationManager_getDocumentControllerName(lua_
             return 0;
         }
         std::string ret = cobj->getDocumentControllerName();
-        tolua_pushcppstring(tolua_S,ret);
+        lua_pushlstring(tolua_S,ret.c_str(),ret.length());
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.CCBAnimationManager:getDocumentControllerName",argc, 0);
@@ -2250,7 +2250,7 @@ int lua_cocos2dx_cocosbuilder_CCBReader_getCCBRootPath(lua_State* tolua_S)
             return 0;
         }
         const std::string& ret = cobj->getCCBRootPath();
-        tolua_pushcppstring(tolua_S,ret);
+        lua_pushlstring(tolua_S,ret.c_str(),ret.length());
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.CCBReader:getCCBRootPath",argc, 0);
@@ -2391,7 +2391,7 @@ int lua_cocos2dx_cocosbuilder_CCBReader_readUTF8(lua_State* tolua_S)
             return 0;
         }
         std::string ret = cobj->readUTF8();
-        tolua_pushcppstring(tolua_S,ret);
+        lua_pushlstring(tolua_S,ret.c_str(),ret.length());
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.CCBReader:readUTF8",argc, 0);

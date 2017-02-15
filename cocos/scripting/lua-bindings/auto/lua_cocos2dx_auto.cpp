@@ -1586,7 +1586,7 @@ int lua_cocos2dx_Texture2D_getPath(lua_State* tolua_S)
             return 0;
         }
         std::string ret = cobj->getPath();
-        tolua_pushcppstring(tolua_S,ret);
+        lua_pushlstring(tolua_S,ret.c_str(),ret.length());
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Texture2D:getPath",argc, 0);
@@ -1918,7 +1918,7 @@ int lua_cocos2dx_Texture2D_getDescription(lua_State* tolua_S)
             return 0;
         }
         std::string ret = cobj->getDescription();
-        tolua_pushcppstring(tolua_S,ret);
+        lua_pushlstring(tolua_S,ret.c_str(),ret.length());
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Texture2D:getDescription",argc, 0);
@@ -3984,7 +3984,7 @@ int lua_cocos2dx_Component_getName(lua_State* tolua_S)
             return 0;
         }
         const std::string& ret = cobj->getName();
-        tolua_pushcppstring(tolua_S,ret);
+        lua_pushlstring(tolua_S,ret.c_str(),ret.length());
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Component:getName",argc, 0);
@@ -4346,7 +4346,7 @@ int lua_cocos2dx_Node_getDescription(lua_State* tolua_S)
             return 0;
         }
         std::string ret = cobj->getDescription();
-        tolua_pushcppstring(tolua_S,ret);
+        lua_pushlstring(tolua_S,ret.c_str(),ret.length());
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Node:getDescription",argc, 0);
@@ -6409,7 +6409,7 @@ int lua_cocos2dx_Node_getName(lua_State* tolua_S)
             return 0;
         }
         const std::string& ret = cobj->getName();
-        tolua_pushcppstring(tolua_S,ret);
+        lua_pushlstring(tolua_S,ret.c_str(),ret.length());
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Node:getName",argc, 0);
@@ -12221,7 +12221,7 @@ int lua_cocos2dx_GLView_getViewName(lua_State* tolua_S)
             return 0;
         }
         const std::string& ret = cobj->getViewName();
-        tolua_pushcppstring(tolua_S,ret);
+        lua_pushlstring(tolua_S,ret.c_str(),ret.length());
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.GLView:getViewName",argc, 0);
@@ -19967,7 +19967,7 @@ int lua_cocos2dx_Image_getFilePath(lua_State* tolua_S)
             return 0;
         }
         std::string ret = cobj->getFilePath();
-        tolua_pushcppstring(tolua_S,ret);
+        lua_pushlstring(tolua_S,ret.c_str(),ret.length());
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Image:getFilePath",argc, 0);
@@ -21885,7 +21885,7 @@ int lua_cocos2dx_PolygonInfo_getFilename(lua_State* tolua_S)
             return 0;
         }
         const std::string& ret = cobj->getFilename();
-        tolua_pushcppstring(tolua_S,ret);
+        lua_pushlstring(tolua_S,ret.c_str(),ret.length());
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PolygonInfo:getFilename",argc, 0);
@@ -32161,7 +32161,7 @@ int lua_cocos2dx_UserDefault_getStringForKey(lua_State* tolua_S)
 
             if (!ok) { break; }
             std::string ret = cobj->getStringForKey(arg0, arg1);
-            tolua_pushcppstring(tolua_S,ret);
+            lua_pushlstring(tolua_S,ret.c_str(),ret.length());
             return 1;
         }
     }while(0);
@@ -32173,7 +32173,7 @@ int lua_cocos2dx_UserDefault_getStringForKey(lua_State* tolua_S)
 
             if (!ok) { break; }
             std::string ret = cobj->getStringForKey(arg0);
-            tolua_pushcppstring(tolua_S,ret);
+            lua_pushlstring(tolua_S,ret.c_str(),ret.length());
             return 1;
         }
     }while(0);
@@ -32516,7 +32516,7 @@ int lua_cocos2dx_UserDefault_getXMLFilePath(lua_State* tolua_S)
             return 0;
         }
         const std::string& ret = cocos2d::UserDefault::getXMLFilePath();
-        tolua_pushcppstring(tolua_S,ret);
+        lua_pushlstring(tolua_S,ret.c_str(),ret.length());
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "cc.UserDefault:getXMLFilePath",argc, 0);
@@ -32632,7 +32632,7 @@ int lua_cocos2dx_FileUtils_fullPathForFilename(lua_State* tolua_S)
             return 0;
         }
         std::string ret = cobj->fullPathForFilename(arg0);
-        tolua_pushcppstring(tolua_S,ret);
+        lua_pushlstring(tolua_S,ret.c_str(),ret.length());
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.FileUtils:fullPathForFilename",argc, 1);
@@ -32693,7 +32693,7 @@ int lua_cocos2dx_FileUtils_getStringFromFile(lua_State* tolua_S)
 
             if (!ok) { break; }
             std::string ret = cobj->getStringFromFile(arg0);
-            tolua_pushcppstring(tolua_S,ret);
+            lua_pushlstring(tolua_S,ret.c_str(),ret.length());
             return 1;
         }
     }while(0);
@@ -33274,7 +33274,7 @@ int lua_cocos2dx_FileUtils_getNewFilename(lua_State* tolua_S)
             return 0;
         }
         std::string ret = cobj->getNewFilename(arg0);
-        tolua_pushcppstring(tolua_S,ret);
+        lua_pushlstring(tolua_S,ret.c_str(),ret.length());
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.FileUtils:getNewFilename",argc, 1);
@@ -34042,7 +34042,7 @@ int lua_cocos2dx_FileUtils_fullPathFromRelativeFile(lua_State* tolua_S)
             return 0;
         }
         std::string ret = cobj->fullPathFromRelativeFile(arg0, arg1);
-        tolua_pushcppstring(tolua_S,ret);
+        lua_pushlstring(tolua_S,ret.c_str(),ret.length());
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.FileUtils:fullPathFromRelativeFile",argc, 2);
@@ -34092,7 +34092,7 @@ int lua_cocos2dx_FileUtils_getSuitableFOpen(lua_State* tolua_S)
             return 0;
         }
         std::string ret = cobj->getSuitableFOpen(arg0);
-        tolua_pushcppstring(tolua_S,ret);
+        lua_pushlstring(tolua_S,ret.c_str(),ret.length());
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.FileUtils:getSuitableFOpen",argc, 1);
@@ -34213,7 +34213,7 @@ int lua_cocos2dx_FileUtils_getFileExtension(lua_State* tolua_S)
             return 0;
         }
         std::string ret = cobj->getFileExtension(arg0);
-        tolua_pushcppstring(tolua_S,ret);
+        lua_pushlstring(tolua_S,ret.c_str(),ret.length());
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.FileUtils:getFileExtension",argc, 1);
@@ -34583,7 +34583,7 @@ int lua_cocos2dx_FileUtils_getWritablePath(lua_State* tolua_S)
             return 0;
         }
         std::string ret = cobj->getWritablePath();
-        tolua_pushcppstring(tolua_S,ret);
+        lua_pushlstring(tolua_S,ret.c_str(),ret.length());
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.FileUtils:getWritablePath",argc, 0);
@@ -34773,7 +34773,7 @@ int lua_cocos2dx_EventCustom_getEventName(lua_State* tolua_S)
             return 0;
         }
         const std::string& ret = cobj->getEventName();
-        tolua_pushcppstring(tolua_S,ret);
+        lua_pushlstring(tolua_S,ret.c_str(),ret.length());
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.EventCustom:getEventName",argc, 0);
@@ -53558,7 +53558,7 @@ int lua_cocos2dx_Label_getString(lua_State* tolua_S)
             return 0;
         }
         const std::string& ret = cobj->getString();
-        tolua_pushcppstring(tolua_S,ret);
+        lua_pushlstring(tolua_S,ret.c_str(),ret.length());
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Label:getString",argc, 0);
@@ -55589,7 +55589,7 @@ int lua_cocos2dx_Label_getSystemFontName(lua_State* tolua_S)
             return 0;
         }
         const std::string& ret = cobj->getSystemFontName();
-        tolua_pushcppstring(tolua_S,ret);
+        lua_pushlstring(tolua_S,ret.c_str(),ret.length());
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Label:getSystemFontName",argc, 0);
@@ -56459,7 +56459,7 @@ int lua_cocos2dx_Label_getBMFontFilePath(lua_State* tolua_S)
             return 0;
         }
         const std::string& ret = cobj->getBMFontFilePath();
-        tolua_pushcppstring(tolua_S,ret);
+        lua_pushlstring(tolua_S,ret.c_str(),ret.length());
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Label:getBMFontFilePath",argc, 0);
@@ -57407,7 +57407,7 @@ int lua_cocos2dx_LabelAtlas_getString(lua_State* tolua_S)
             return 0;
         }
         const std::string& ret = cobj->getString();
-        tolua_pushcppstring(tolua_S,ret);
+        lua_pushlstring(tolua_S,ret.c_str(),ret.length());
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.LabelAtlas:getString",argc, 0);
@@ -59615,7 +59615,7 @@ int lua_cocos2dx_MenuItemLabel_getString(lua_State* tolua_S)
             return 0;
         }
         std::string ret = cobj->getString();
-        tolua_pushcppstring(tolua_S,ret);
+        lua_pushlstring(tolua_S,ret.c_str(),ret.length());
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.MenuItemLabel:getString",argc, 0);
@@ -60104,7 +60104,7 @@ int lua_cocos2dx_MenuItemFont_getFontNameObj(lua_State* tolua_S)
             return 0;
         }
         const std::string& ret = cobj->getFontNameObj();
-        tolua_pushcppstring(tolua_S,ret);
+        lua_pushlstring(tolua_S,ret.c_str(),ret.length());
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.MenuItemFont:getFontNameObj",argc, 0);
@@ -60414,7 +60414,7 @@ int lua_cocos2dx_MenuItemFont_getFontName(lua_State* tolua_S)
             return 0;
         }
         const std::string& ret = cocos2d::MenuItemFont::getFontName();
-        tolua_pushcppstring(tolua_S,ret);
+        lua_pushlstring(tolua_S,ret.c_str(),ret.length());
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "cc.MenuItemFont:getFontName",argc, 0);
@@ -66969,7 +66969,7 @@ int lua_cocos2dx_ParticleSystem_getResourceFile(lua_State* tolua_S)
             return 0;
         }
         const std::string& ret = cobj->getResourceFile();
-        tolua_pushcppstring(tolua_S,ret);
+        lua_pushlstring(tolua_S,ret.c_str(),ret.length());
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ParticleSystem:getResourceFile",argc, 0);
@@ -74941,7 +74941,7 @@ int lua_cocos2dx_Sprite_getResourceName(lua_State* tolua_S)
             return 0;
         }
         const std::string& ret = cobj->getResourceName();
-        tolua_pushcppstring(tolua_S,ret);
+        lua_pushlstring(tolua_S,ret.c_str(),ret.length());
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Sprite:getResourceName",argc, 0);
@@ -88250,7 +88250,7 @@ int lua_cocos2dx_GLProgram_getFragmentShaderLog(lua_State* tolua_S)
             return 0;
         }
         std::string ret = cobj->getFragmentShaderLog();
-        tolua_pushcppstring(tolua_S,ret);
+        lua_pushlstring(tolua_S,ret.c_str(),ret.length());
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.GLProgram:getFragmentShaderLog",argc, 0);
@@ -88526,7 +88526,7 @@ int lua_cocos2dx_GLProgram_getVertexShaderLog(lua_State* tolua_S)
             return 0;
         }
         std::string ret = cobj->getVertexShaderLog();
-        tolua_pushcppstring(tolua_S,ret);
+        lua_pushlstring(tolua_S,ret.c_str(),ret.length());
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.GLProgram:getVertexShaderLog",argc, 0);
@@ -89723,7 +89723,7 @@ int lua_cocos2dx_RenderState_getName(lua_State* tolua_S)
             return 0;
         }
         std::string ret = cobj->getName();
-        tolua_pushcppstring(tolua_S,ret);
+        lua_pushlstring(tolua_S,ret.c_str(),ret.length());
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.RenderState:getName",argc, 0);
@@ -90565,7 +90565,7 @@ int lua_cocos2dx_Technique_getName(lua_State* tolua_S)
             return 0;
         }
         std::string ret = cobj->getName();
-        tolua_pushcppstring(tolua_S,ret);
+        lua_pushlstring(tolua_S,ret.c_str(),ret.length());
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Technique:getName",argc, 0);
@@ -90957,7 +90957,7 @@ int lua_cocos2dx_Material_getName(lua_State* tolua_S)
             return 0;
         }
         std::string ret = cobj->getName();
-        tolua_pushcppstring(tolua_S,ret);
+        lua_pushlstring(tolua_S,ret.c_str(),ret.length());
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Material:getName",argc, 0);
@@ -91582,7 +91582,7 @@ int lua_cocos2dx_TextureCache_getDescription(lua_State* tolua_S)
             return 0;
         }
         std::string ret = cobj->getDescription();
-        tolua_pushcppstring(tolua_S,ret);
+        lua_pushlstring(tolua_S,ret.c_str(),ret.length());
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.TextureCache:getDescription",argc, 0);
@@ -91629,7 +91629,7 @@ int lua_cocos2dx_TextureCache_getCachedTextureInfo(lua_State* tolua_S)
             return 0;
         }
         std::string ret = cobj->getCachedTextureInfo();
-        tolua_pushcppstring(tolua_S,ret);
+        lua_pushlstring(tolua_S,ret.c_str(),ret.length());
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.TextureCache:getCachedTextureInfo",argc, 0);
@@ -91838,7 +91838,7 @@ int lua_cocos2dx_TextureCache_getTextureFilePath(lua_State* tolua_S)
             return 0;
         }
         std::string ret = cobj->getTextureFilePath(arg0);
-        tolua_pushcppstring(tolua_S,ret);
+        lua_pushlstring(tolua_S,ret.c_str(),ret.length());
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.TextureCache:getTextureFilePath",argc, 1);
@@ -92107,7 +92107,7 @@ int lua_cocos2dx_TextureCache_getETC1AlphaFileSuffix(lua_State* tolua_S)
             return 0;
         }
         std::string ret = cocos2d::TextureCache::getETC1AlphaFileSuffix();
-        tolua_pushcppstring(tolua_S,ret);
+        lua_pushlstring(tolua_S,ret.c_str(),ret.length());
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "cc.TextureCache:getETC1AlphaFileSuffix",argc, 0);
@@ -92618,7 +92618,7 @@ int lua_cocos2dx_Application_getVersion(lua_State* tolua_S)
             return 0;
         }
         std::string ret = cobj->getVersion();
-        tolua_pushcppstring(tolua_S,ret);
+        lua_pushlstring(tolua_S,ret.c_str(),ret.length());
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Application:getVersion",argc, 0);
@@ -95950,7 +95950,7 @@ int lua_cocos2dx_TMXObjectGroup_getGroupName(lua_State* tolua_S)
             return 0;
         }
         const std::string& ret = cobj->getGroupName();
-        tolua_pushcppstring(tolua_S,ret);
+        lua_pushlstring(tolua_S,ret.c_str(),ret.length());
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.TMXObjectGroup:getGroupName",argc, 0);
@@ -97548,7 +97548,7 @@ int lua_cocos2dx_TMXMapInfo_getExternalTilesetFileName(lua_State* tolua_S)
             return 0;
         }
         const std::string& ret = cobj->getExternalTilesetFileName();
-        tolua_pushcppstring(tolua_S,ret);
+        lua_pushlstring(tolua_S,ret.c_str(),ret.length());
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.TMXMapInfo:getExternalTilesetFileName",argc, 0);
@@ -97642,7 +97642,7 @@ int lua_cocos2dx_TMXMapInfo_getTMXFileName(lua_State* tolua_S)
             return 0;
         }
         const std::string& ret = cobj->getTMXFileName();
-        tolua_pushcppstring(tolua_S,ret);
+        lua_pushlstring(tolua_S,ret.c_str(),ret.length());
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.TMXMapInfo:getTMXFileName",argc, 0);
@@ -97939,7 +97939,7 @@ int lua_cocos2dx_TMXMapInfo_getCurrentString(lua_State* tolua_S)
             return 0;
         }
         const std::string& ret = cobj->getCurrentString();
-        tolua_pushcppstring(tolua_S,ret);
+        lua_pushlstring(tolua_S,ret.c_str(),ret.length());
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.TMXMapInfo:getCurrentString",argc, 0);
@@ -99257,7 +99257,7 @@ int lua_cocos2dx_TMXLayer_getLayerName(lua_State* tolua_S)
             return 0;
         }
         const std::string& ret = cobj->getLayerName();
-        tolua_pushcppstring(tolua_S,ret);
+        lua_pushlstring(tolua_S,ret.c_str(),ret.length());
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.TMXLayer:getLayerName",argc, 0);
@@ -99910,7 +99910,7 @@ int lua_cocos2dx_TMXTiledMap_getResourceFile(lua_State* tolua_S)
             return 0;
         }
         const std::string& ret = cobj->getResourceFile();
-        tolua_pushcppstring(tolua_S,ret);
+        lua_pushlstring(tolua_S,ret.c_str(),ret.length());
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.TMXTiledMap:getResourceFile",argc, 0);
