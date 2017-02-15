@@ -22,6 +22,8 @@ elseif(EMSCRIPTEN)
   set(COCOS_NETWORK_SRC
     network/HttpClient-emcc.cpp
     network/WebSocket-emcc.cpp
+    network/CCDownloader.cpp
+    network/CCDownloader-emcc.cpp
   )
 else()
   set(COCOS_NETWORK_SRC

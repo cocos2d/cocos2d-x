@@ -7043,6 +7043,8 @@
 		A52F9A681D38F42600749478 /* ccShader_PositionTextureColorAtlas_noMVP.vert */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = ccShader_PositionTextureColorAtlas_noMVP.vert; sourceTree = "<group>"; };
 		A52F9A691D38F42600749478 /* ccShader_PositionTextureColorAtlas.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = ccShader_PositionTextureColorAtlas.frag; sourceTree = "<group>"; };
 		A52F9A6A1D38F42600749478 /* ccShader_PositionTextureColorAtlas.vert */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = ccShader_PositionTextureColorAtlas.vert; sourceTree = "<group>"; };
+		A584FE7C1E5442C10057732F /* CCDownloader-emcc.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = "CCDownloader-emcc.cpp"; sourceTree = "<group>"; };
+		A584FE7D1E5442C10057732F /* CCDownloader-emcc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CCDownloader-emcc.h"; sourceTree = "<group>"; };
 		A59003511A4433D500AF12A4 /* CCBXScissorsNodeLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCBXScissorsNodeLoader.cpp; path = spritebuilder/CCBXScissorsNodeLoader.cpp; sourceTree = "<group>"; };
 		A59003521A4433D500AF12A4 /* CCBXScissorsNodeLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCBXScissorsNodeLoader.h; path = spritebuilder/CCBXScissorsNodeLoader.h; sourceTree = "<group>"; };
 		A59470341A7F9DC2002DB024 /* CCBXScrollListViewLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCBXScrollListViewLoader.cpp; path = spritebuilder/CCBXScrollListViewLoader.cpp; sourceTree = "<group>"; };
@@ -10077,6 +10079,8 @@
 				A0534A691B87306E006B03E5 /* CCIDownloaderImpl.h */,
 				A0534A631B872FFD006B03E5 /* CCDownloader-apple.h */,
 				A0534A641B872FFD006B03E5 /* CCDownloader-apple.mm */,
+				A584FE7C1E5442C10057732F /* CCDownloader-emcc.cpp */,
+				A584FE7D1E5442C10057732F /* CCDownloader-emcc.h */,
 				50693C5C1B6BF2AE005C5820 /* CCDownloader.cpp */,
 				50693C5D1B6BF2AE005C5820 /* CCDownloader.h */,
 			);
