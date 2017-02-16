@@ -615,7 +615,7 @@ int lua_cocos2dx_ui_RelativeLayoutParameter_getRelativeName(lua_State* tolua_S)
             return 0;
         }
         const std::string& ret = cobj->getRelativeName();
-        tolua_pushcppstring(tolua_S,ret);
+        lua_pushlstring(tolua_S,ret.c_str(),ret.length());
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.RelativeLayoutParameter:getRelativeName",argc, 0);
@@ -662,7 +662,7 @@ int lua_cocos2dx_ui_RelativeLayoutParameter_getRelativeToWidgetName(lua_State* t
             return 0;
         }
         const std::string& ret = cobj->getRelativeToWidgetName();
-        tolua_pushcppstring(tolua_S,ret);
+        lua_pushlstring(tolua_S,ret.c_str(),ret.length());
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.RelativeLayoutParameter:getRelativeToWidgetName",argc, 0);
@@ -2209,7 +2209,7 @@ int lua_cocos2dx_ui_Widget_getCallbackName(lua_State* tolua_S)
             return 0;
         }
         const std::string& ret = cobj->getCallbackName();
-        tolua_pushcppstring(tolua_S,ret);
+        lua_pushlstring(tolua_S,ret.c_str(),ret.length());
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.Widget:getCallbackName",argc, 0);
@@ -3483,7 +3483,7 @@ int lua_cocos2dx_ui_Widget_getCallbackType(lua_State* tolua_S)
             return 0;
         }
         const std::string& ret = cobj->getCallbackType();
-        tolua_pushcppstring(tolua_S,ret);
+        lua_pushlstring(tolua_S,ret.c_str(),ret.length());
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.Widget:getCallbackType",argc, 0);
@@ -6180,7 +6180,7 @@ int lua_cocos2dx_ui_Button_getTitleText(lua_State* tolua_S)
             return 0;
         }
         std::string ret = cobj->getTitleText();
-        tolua_pushcppstring(tolua_S,ret);
+        lua_pushlstring(tolua_S,ret.c_str(),ret.length());
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.Button:getTitleText",argc, 0);
@@ -7992,7 +7992,7 @@ int lua_cocos2dx_ui_Button_getTitleFontName(lua_State* tolua_S)
             return 0;
         }
         std::string ret = cobj->getTitleFontName();
-        tolua_pushcppstring(tolua_S,ret);
+        lua_pushlstring(tolua_S,ret.c_str(),ret.length());
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.Button:getTitleFontName",argc, 0);
@@ -11564,7 +11564,7 @@ int lua_cocos2dx_ui_Text_getString(lua_State* tolua_S)
             return 0;
         }
         const std::string& ret = cobj->getString();
-        tolua_pushcppstring(tolua_S,ret);
+        lua_pushlstring(tolua_S,ret.c_str(),ret.length());
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.Text:getString",argc, 0);
@@ -12200,7 +12200,7 @@ int lua_cocos2dx_ui_Text_getFontName(lua_State* tolua_S)
             return 0;
         }
         const std::string& ret = cobj->getFontName();
-        tolua_pushcppstring(tolua_S,ret);
+        lua_pushlstring(tolua_S,ret.c_str(),ret.length());
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.Text:getFontName",argc, 0);
@@ -13260,7 +13260,7 @@ int lua_cocos2dx_ui_TextAtlas_getString(lua_State* tolua_S)
             return 0;
         }
         const std::string& ret = cobj->getString();
-        tolua_pushcppstring(tolua_S,ret);
+        lua_pushlstring(tolua_S,ret.c_str(),ret.length());
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.TextAtlas:getString",argc, 0);
@@ -20874,7 +20874,7 @@ int lua_cocos2dx_ui_TextField_getString(lua_State* tolua_S)
             return 0;
         }
         const std::string& ret = cobj->getString();
-        tolua_pushcppstring(tolua_S,ret);
+        lua_pushlstring(tolua_S,ret.c_str(),ret.length());
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.TextField:getString",argc, 0);
@@ -21065,7 +21065,7 @@ int lua_cocos2dx_ui_TextField_getPlaceHolder(lua_State* tolua_S)
             return 0;
         }
         const std::string& ret = cobj->getPlaceHolder();
-        tolua_pushcppstring(tolua_S,ret);
+        lua_pushlstring(tolua_S,ret.c_str(),ret.length());
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.TextField:getPlaceHolder",argc, 0);
@@ -21554,7 +21554,7 @@ int lua_cocos2dx_ui_TextField_getFontName(lua_State* tolua_S)
             return 0;
         }
         const std::string& ret = cobj->getFontName();
-        tolua_pushcppstring(tolua_S,ret);
+        lua_pushlstring(tolua_S,ret.c_str(),ret.length());
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.TextField:getFontName",argc, 0);
@@ -23212,7 +23212,7 @@ int lua_cocos2dx_ui_TextBMFont_getString(lua_State* tolua_S)
             return 0;
         }
         const std::string& ret = cobj->getString();
-        tolua_pushcppstring(tolua_S,ret);
+        lua_pushlstring(tolua_S,ret.c_str(),ret.length());
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.TextBMFont:getString",argc, 0);
@@ -25063,7 +25063,7 @@ int lua_cocos2dx_ui_Helper_getSubStringOfUTF8String(lua_State* tolua_S)
             return 0;
         }
         std::string ret = cocos2d::ui::Helper::getSubStringOfUTF8String(arg0, arg1, arg2);
-        tolua_pushcppstring(tolua_S,ret);
+        lua_pushlstring(tolua_S,ret.c_str(),ret.length());
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "ccui.Helper:getSubStringOfUTF8String",argc, 3);
@@ -27221,7 +27221,7 @@ int lua_cocos2dx_ui_RichText_getAnchorFontColor(lua_State* tolua_S)
             return 0;
         }
         std::string ret = cobj->getAnchorFontColor();
-        tolua_pushcppstring(tolua_S,ret);
+        lua_pushlstring(tolua_S,ret.c_str(),ret.length());
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.RichText:getAnchorFontColor",argc, 0);
@@ -27739,7 +27739,7 @@ int lua_cocos2dx_ui_RichText_stringWithColor4B(lua_State* tolua_S)
             return 0;
         }
         std::string ret = cobj->stringWithColor4B(arg0);
-        tolua_pushcppstring(tolua_S,ret);
+        lua_pushlstring(tolua_S,ret.c_str(),ret.length());
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.RichText:stringWithColor4B",argc, 1);
@@ -28054,7 +28054,7 @@ int lua_cocos2dx_ui_RichText_getFontFace(lua_State* tolua_S)
             return 0;
         }
         std::string ret = cobj->getFontFace();
-        tolua_pushcppstring(tolua_S,ret);
+        lua_pushlstring(tolua_S,ret.c_str(),ret.length());
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.RichText:getFontFace",argc, 0);
@@ -28292,7 +28292,7 @@ int lua_cocos2dx_ui_RichText_getFontColor(lua_State* tolua_S)
             return 0;
         }
         std::string ret = cobj->getFontColor();
-        tolua_pushcppstring(tolua_S,ret);
+        lua_pushlstring(tolua_S,ret.c_str(),ret.length());
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.RichText:getFontColor",argc, 0);
@@ -28929,7 +28929,7 @@ int lua_cocos2dx_ui_RichText_stringWithColor3B(lua_State* tolua_S)
             return 0;
         }
         std::string ret = cobj->stringWithColor3B(arg0);
-        tolua_pushcppstring(tolua_S,ret);
+        lua_pushlstring(tolua_S,ret.c_str(),ret.length());
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.RichText:stringWithColor3B",argc, 1);
@@ -35889,7 +35889,7 @@ int lua_cocos2dx_ui_TabHeader_getTitleText(lua_State* tolua_S)
             return 0;
         }
         std::string ret = cobj->getTitleText();
-        tolua_pushcppstring(tolua_S,ret);
+        lua_pushlstring(tolua_S,ret.c_str(),ret.length());
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.TabHeader:getTitleText",argc, 0);
@@ -36083,7 +36083,7 @@ int lua_cocos2dx_ui_TabHeader_getTitleFontName(lua_State* tolua_S)
             return 0;
         }
         std::string ret = cobj->getTitleFontName();
-        tolua_pushcppstring(tolua_S,ret);
+        lua_pushlstring(tolua_S,ret.c_str(),ret.length());
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.TabHeader:getTitleFontName",argc, 0);
