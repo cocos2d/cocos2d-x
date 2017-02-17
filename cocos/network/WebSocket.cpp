@@ -119,17 +119,22 @@ static void wsLog(const char * format, ...)
 #define QUOTEME(x) QUOTEME_(x)
 
 // Since CCLOG isn't thread safe, we uses LOGD for multi-thread logging.
-#if COCOS2D_DEBUG > 0
-    #ifdef ANDROID
+#ifdef ANDROID
+    #if COCOS2D_DEBUG > 0
         #define LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG, LOG_TAG,__VA_ARGS__)
-        #define LOGE(...)  __android_log_print(ANDROID_LOG_ERROR, LOG_TAG,__VA_ARGS__)
     #else
-        #define LOGD(fmt, ...) wsLog("D/" LOG_TAG " (" QUOTEME(__LINE__) "): " fmt "", ##__VA_ARGS__)
-        #define LOGE(fmt, ...) wsLog("E/" LOG_TAG " (" QUOTEME(__LINE__) "): " fmt "", ##__VA_ARGS__)
+        #define LOGD(...)
     #endif
+
+    #define LOGE(...)  __android_log_print(ANDROID_LOG_ERROR, LOG_TAG,__VA_ARGS__)
 #else
-    #define LOGD(...)
-    #define LOGE(...)
+    #if COCOS2D_DEBUG > 0
+        #define LOGD(fmt, ...) wsLog("D/" LOG_TAG " (" QUOTEME(__LINE__) "): " fmt "", ##__VA_ARGS__)
+    #else
+        #define LOGD(fmt, ...)
+    #endif
+
+    #define LOGE(fmt, ...) wsLog("E/" LOG_TAG " (" QUOTEME(__LINE__) "): " fmt "", ##__VA_ARGS__)
 #endif
 
 static void printWebSocketLog(int level, const char *line)

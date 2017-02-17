@@ -212,8 +212,15 @@ public:
      */
     State getReadyState();
 
-    inline const std::string& getUrl() { return _url; }
-    inline const std::string& getProtocol() { return _selectedProtocol; }
+    /**
+     *  @brief Gets the URL of websocket connection.
+     */
+    inline const std::string& getUrl() const { return _url; }
+
+    /**
+     *  @brief Gets the protocol selected by websocket server.
+     */
+    inline const std::string& getProtocol() const { return _selectedProtocol; }
 
 private:
 
