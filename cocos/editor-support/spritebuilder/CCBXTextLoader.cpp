@@ -72,7 +72,7 @@ void TextLoader::setSpecialProperties(Node* node, const Size &parentSize, float 
 TextLoader::TextLoader()
     :_blendFunc(BlendFunc::ALPHA_PREMULTIPLIED)
     ,_outlineColor(0,0,0,0)
-    ,_shadowColor(0,0,0,127)
+    ,_shadowColor(0,0,0,0)
 	,_outlineWidth(FloatScaleDescription{0, 0.0f})
 	,_shadowBlurRadius(FloatScaleDescription{0, 0.0f})
 	,_shadowOffset(PositionDescription{PositionReferenceCorner::BOTTOMLEFT, PositionUnit::POINTS, PositionUnit::POINTS, Vec2(0, 0)})
