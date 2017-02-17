@@ -891,7 +891,7 @@ void WebSocket::onClientOpenConnectionRequest()
         connectInfo.path = _path.c_str();
         connectInfo.host = _host.c_str();
         connectInfo.origin = _host.c_str();
-        connectInfo.protocol = _protocolNames.c_str();
+        connectInfo.protocol = _protocolNames.empty() ? nullptr : _protocolNames.c_str();
         connectInfo.ietf_version_or_minus_one = -1;
         connectInfo.userdata = this;
         connectInfo.client_exts = exts;
