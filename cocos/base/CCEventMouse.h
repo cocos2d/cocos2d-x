@@ -26,8 +26,6 @@
 #ifndef __cocos2d_libs__CCMouseEvent__
 #define __cocos2d_libs__CCMouseEvent__
 
-#include <ostream>
-
 #include "base/CCEvent.h"
 #include "math/CCGeometry.h"
 
@@ -195,8 +193,6 @@ private:
 
     friend class EventListenerMouse;
 };
-
-std::ostream& operator<<(std::ostream& out, const EventMouse::MouseButton& button);
 
 NS_CC_END
 

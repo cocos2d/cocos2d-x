@@ -36582,7 +36582,7 @@ int lua_cocos2dx_EventMouse_getMouseButton(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EventMouse_getMouseButton'", nullptr);
             return 0;
         }
-        int ret = static_cast<int>(cobj->getMouseButton());
+        int ret = cobj->getMouseButton();
         tolua_pushnumber(tolua_S,(lua_Number)ret);
         return 1;
     }
@@ -36873,7 +36873,7 @@ int lua_cocos2dx_EventMouse_setMouseButton(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EventMouse_setMouseButton'", nullptr);
             return 0;
         }
-        cobj->setMouseButton(static_cast<cocos2d::EventMouse::MouseButton>(arg0));
+        cobj->setMouseButton(arg0);
         lua_settop(tolua_S, 1);
         return 1;
     }

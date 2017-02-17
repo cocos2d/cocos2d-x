@@ -81,11 +81,4 @@ Vec2 EventMouse::getDelta() const
 {     
     return getLocation() - getPreviousLocation();
 }
-
-std::ostream& operator<<(std::ostream& out, const EventMouse::MouseButton& button)
-{
-  out << static_cast<int>(button);
-  return out;
-}
-
 NS_CC_END
