@@ -119,7 +119,7 @@ void WebSocketTest::startTestCallback(Ref* sender)
         retain(); // Retain self to avoid WebSocketTest instance be deleted immediately, it will be released in WebSocketTest::onClose.
     }
 
-    protocols.pop_back();
+    protocols.erase(protocols.begin());
     if (!_wsiSendBinary->init(*this, "wss://echo.websocket.org", &protocols))
     {
         CC_SAFE_DELETE(_wsiSendBinary);
@@ -142,14 +142,17 @@ void WebSocketTest::startTestCallback(Ref* sender)
 // Delegate methods
 void WebSocketTest::onOpen(network::WebSocket* ws)
 {
-    log("Websocket (%p) opened", ws);
+    char status[256] = {0};
+    sprintf(status, "Opened, url: %s, protocol: %s", ws->getUrl().c_str(), ws->getProtocol().c_str());
+
+    log("Websocket (%p) was opened, url: %s, protocol: %s", ws, ws->getUrl().c_str(), ws->getProtocol().c_str());
     if (ws == _wsiSendText)
     {
-        _sendTextStatus->setString("Send Text WS was opened.");
+        _sendTextStatus->setString(status);
     }
     else if (ws == _wsiSendBinary)
     {
-        _sendBinaryStatus->setString("Send Binary WS was opened.");
+        _sendBinaryStatus->setString(status);
     }
     else if (ws == _wsiError)
     {

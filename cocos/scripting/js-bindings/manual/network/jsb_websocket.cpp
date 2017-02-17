@@ -85,6 +85,12 @@ public:
         JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
 
         JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
+
+        // Set the protocol which server selects.
+        JS::RootedValue jsprotocol(cx, std_string_to_jsval(cx, ws->getProtocol()));
+        JS::RootedObject wsObj(cx, p->obj);
+        JS_SetProperty(cx, wsObj, "protocol", jsprotocol);
+
         JS::RootedObject jsobj(cx, JS_NewObject(cx, NULL, JS::NullPtr(), JS::NullPtr()));
         JS::RootedValue vp(cx);
         vp = c_string_to_jsval(cx, "open");
@@ -361,11 +367,14 @@ bool js_cocos2dx_extension_WebSocket_constructor(JSContext *cx, uint32_t argc, j
             cobj->init(*delegate, url);
         }
 
+        JS_DefineProperty(cx, obj, "url", args.get(0), JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_READONLY);
+
+        // The websocket draft uses lowercase 'url', so 'URL' need to be deprecated.
         JS_DefineProperty(cx, obj, "URL", args.get(0), JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_READONLY);
 
-        //protocol not support yet (always return "")
+        // Initialize protocol property with an empty string, it will be assigned in onOpen delegate.
         JS::RootedValue jsprotocol(cx, c_string_to_jsval(cx, ""));
-        JS_DefineProperty(cx, obj, "protocol", jsprotocol, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_READONLY);
+        JS_DefineProperty(cx, obj, "protocol", jsprotocol, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 
         // link the native object with the javascript object
         js_proxy_t *p = jsb_new_proxy(cobj, obj);
