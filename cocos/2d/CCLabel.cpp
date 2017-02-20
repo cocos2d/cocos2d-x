@@ -1537,20 +1537,20 @@ void Label::onDraw(const Mat4& transform, bool transformUpdated)
     {
         if (_boldEnabled) {
             if (isGradientEnabled()) {
-                glprogram->setUniformLocationWith4f(_leftTopUniform, _textColorF.r, _textColorF.g, _textColorF.b, _textColorF.a);
-                glprogram->setUniformLocationWith4f(_rightTopUniform, _textColorF.r, _textColorF.g, _textColorF.b, _textColorF.a);
-                glprogram->setUniformLocationWith4f(_leftBottomUniform, _textColorF.r, _textColorF.g, _textColorF.b, _textColorF.a);
-                glprogram->setUniformLocationWith4f(_rightBottomUniform, _textColorF.r, _textColorF.g, _textColorF.b, _textColorF.a);
+                glprogram->setUniformLocationWith4f(_leftTopUniform, _textColorF.r, _textColorF.g, _textColorF.b, 1.0f);
+                glprogram->setUniformLocationWith4f(_rightTopUniform, _textColorF.r, _textColorF.g, _textColorF.b, 1.0f);
+                glprogram->setUniformLocationWith4f(_leftBottomUniform, _textColorF.r, _textColorF.g, _textColorF.b, 1.0f);
+                glprogram->setUniformLocationWith4f(_rightBottomUniform, _textColorF.r, _textColorF.g, _textColorF.b, 1.0f);
             }
             
             onDrawShadow(glprogram, _textColorF);
         }
         else {
             if (isGradientEnabled()) {
-                glprogram->setUniformLocationWith4f(_leftTopUniform, _shadowColor4F.r, _shadowColor4F.g, _shadowColor4F.b, _shadowColor4F.a);
-                glprogram->setUniformLocationWith4f(_rightTopUniform, _shadowColor4F.r, _shadowColor4F.g, _shadowColor4F.b, _shadowColor4F.a);
-                glprogram->setUniformLocationWith4f(_leftBottomUniform, _shadowColor4F.r, _shadowColor4F.g, _shadowColor4F.b, _shadowColor4F.a);
-                glprogram->setUniformLocationWith4f(_rightBottomUniform, _shadowColor4F.r, _shadowColor4F.g, _shadowColor4F.b, _shadowColor4F.a);
+                glprogram->setUniformLocationWith4f(_leftTopUniform, _shadowColor4F.r, _shadowColor4F.g, _shadowColor4F.b, 1.0f);
+                glprogram->setUniformLocationWith4f(_rightTopUniform, _shadowColor4F.r, _shadowColor4F.g, _shadowColor4F.b, 1.0f);
+                glprogram->setUniformLocationWith4f(_leftBottomUniform, _shadowColor4F.r, _shadowColor4F.g, _shadowColor4F.b, 1.0f);
+                glprogram->setUniformLocationWith4f(_rightBottomUniform, _shadowColor4F.r, _shadowColor4F.g, _shadowColor4F.b, 1.0f);
             }
             
             onDrawShadow(glprogram, _shadowColor4F);
@@ -1568,18 +1568,23 @@ void Label::onDraw(const Mat4& transform, bool transformUpdated)
         switch (_currLabelEffect) {
         case LabelEffect::OUTLINE:
             //draw text with outline
-            glprogram->setUniformLocationWith4f(_uniformTextColor,
-                _textColorF.r, _textColorF.g, _textColorF.b, _textColorF.a);
             glprogram->setUniformLocationWith4f(_uniformEffectColor,
                 _effectColorF.r, _effectColorF.g, _effectColorF.b, _effectColorF.a);
                 
-                if (isGradientEnabled()) {
-                    glprogram->setUniformLocationWith2f(_textSize, _contentSize.width, _contentSize.height);
-                    glprogram->setUniformLocationWith4f(_leftTopUniform, _effectColorF.r, _effectColorF.g, _effectColorF.b, _effectColorF.a);
-                    glprogram->setUniformLocationWith4f(_rightTopUniform, _effectColorF.r, _effectColorF.g, _effectColorF.b, _effectColorF.a);
-                    glprogram->setUniformLocationWith4f(_leftBottomUniform, _effectColorF.r, _effectColorF.g, _effectColorF.b, _effectColorF.a);
-                    glprogram->setUniformLocationWith4f(_rightBottomUniform, _effectColorF.r, _effectColorF.g, _effectColorF.b, _effectColorF.a);
-                }
+            if (isGradientEnabled()) {
+                glprogram->setUniformLocationWith4f(_uniformTextColor,
+                                                    _textColorF.r, _textColorF.g, _textColorF.b, _textColorF.a);
+                glprogram->setUniformLocationWith2f(_textSize, _contentSize.width, _contentSize.height);
+                glprogram->setUniformLocationWith4f(_leftTopUniform, _effectColorF.r, _effectColorF.g, _effectColorF.b, 1.0f);
+                glprogram->setUniformLocationWith4f(_rightTopUniform, _effectColorF.r, _effectColorF.g, _effectColorF.b, 1.0f);
+                glprogram->setUniformLocationWith4f(_leftBottomUniform, _effectColorF.r, _effectColorF.g, _effectColorF.b, 1.0f);
+                glprogram->setUniformLocationWith4f(_rightBottomUniform, _effectColorF.r, _effectColorF.g, _effectColorF.b, 1.0f);
+            }
+            else
+            {
+                glprogram->setUniformLocationWith4f(_uniformTextColor,
+                                                    _textColorF.r * _leftTopColorF.r, _textColorF.g * _leftTopColorF.g, _textColorF.b * _leftTopColorF.b, _textColorF.a * _leftTopColorF.a);
+            }
             for (auto&& batchNode : _batchNodes)
             {
                 batchNode->getTextureAtlas()->drawQuads();
@@ -1588,29 +1593,34 @@ void Label::onDraw(const Mat4& transform, bool transformUpdated)
             //draw text without outline
             glprogram->setUniformLocationWith4f(_uniformEffectColor,
                 _effectColorF.r, _effectColorF.g, _effectColorF.b, 0.f);
-                if (isGradientEnabled()) {
-                    glprogram->setUniformLocationWith2f(_textSize, _contentSize.width, _contentSize.height);
-                    
-                    glprogram->setUniformLocationWith4f(_leftTopUniform, _leftTopColorF.r, _leftTopColorF.g, _leftTopColorF.b, _leftTopColorF.a);
-                    glprogram->setUniformLocationWith4f(_rightTopUniform, _rightTopColorF.r, _rightTopColorF.g, _rightTopColorF.b, _rightTopColorF.a);
-                    glprogram->setUniformLocationWith4f(_leftBottomUniform, _leftBottomColorF.r, _leftBottomColorF.g, _leftBottomColorF.b, _leftBottomColorF.a);
-                    glprogram->setUniformLocationWith4f(_rightBottomUniform, _rightBottomColorF.r, _rightBottomColorF.g, _rightBottomColorF.b, _rightBottomColorF.a);
-                }
+            if (isGradientEnabled()) {
+                glprogram->setUniformLocationWith2f(_textSize, _contentSize.width, _contentSize.height);
+                
+                glprogram->setUniformLocationWith4f(_leftTopUniform, _leftTopColorF.r, _leftTopColorF.g, _leftTopColorF.b, _leftTopColorF.a);
+                glprogram->setUniformLocationWith4f(_rightTopUniform, _rightTopColorF.r, _rightTopColorF.g, _rightTopColorF.b, _rightTopColorF.a);
+                glprogram->setUniformLocationWith4f(_leftBottomUniform, _leftBottomColorF.r, _leftBottomColorF.g, _leftBottomColorF.b, _leftBottomColorF.a);
+                glprogram->setUniformLocationWith4f(_rightBottomUniform, _rightBottomColorF.r, _rightBottomColorF.g, _rightBottomColorF.b, _rightBottomColorF.a);
+            }
             break;
         case LabelEffect::GLOW:
                     glprogram->setUniformLocationWith4f(_uniformEffectColor,
                                                         _effectColorF.r, _effectColorF.g, _effectColorF.b, _effectColorF.a);
             
         case LabelEffect::NORMAL:
-            glprogram->setUniformLocationWith4f(_uniformTextColor,
-                _textColorF.r, _textColorF.g, _textColorF.b, _textColorF.a);
-                if (isGradientEnabled()) {
-                    glprogram->setUniformLocationWith2f(_textSize, _contentSize.width, _contentSize.height);
-                    glprogram->setUniformLocationWith4f(_leftTopUniform, _leftTopColorF.r, _leftTopColorF.g, _leftTopColorF.b, _leftTopColorF.a);
-                    glprogram->setUniformLocationWith4f(_rightTopUniform, _rightTopColorF.r, _rightTopColorF.g, _rightTopColorF.b, _rightTopColorF.a);
-                    glprogram->setUniformLocationWith4f(_leftBottomUniform, _leftBottomColorF.r, _leftBottomColorF.g, _leftBottomColorF.b, _leftBottomColorF.a);
-                    glprogram->setUniformLocationWith4f(_rightBottomUniform, _rightBottomColorF.r, _rightBottomColorF.g, _rightBottomColorF.b, _rightBottomColorF.a);
-                }
+            if (isGradientEnabled()) {
+                glprogram->setUniformLocationWith4f(_uniformTextColor,
+                                                    _textColorF.r, _textColorF.g, _textColorF.b, _textColorF.a);
+                glprogram->setUniformLocationWith2f(_textSize, _contentSize.width, _contentSize.height);
+                glprogram->setUniformLocationWith4f(_leftTopUniform, _leftTopColorF.r, _leftTopColorF.g, _leftTopColorF.b, _leftTopColorF.a);
+                glprogram->setUniformLocationWith4f(_rightTopUniform, _rightTopColorF.r, _rightTopColorF.g, _rightTopColorF.b, _rightTopColorF.a);
+                glprogram->setUniformLocationWith4f(_leftBottomUniform, _leftBottomColorF.r, _leftBottomColorF.g, _leftBottomColorF.b, _leftBottomColorF.a);
+                glprogram->setUniformLocationWith4f(_rightBottomUniform, _rightBottomColorF.r, _rightBottomColorF.g, _rightBottomColorF.b, _rightBottomColorF.a);
+            }
+            else
+            {
+                glprogram->setUniformLocationWith4f(_uniformTextColor,
+                                                    _textColorF.r * _leftTopColorF.r, _textColorF.g * _leftTopColorF.g, _textColorF.b * _leftTopColorF.b, _textColorF.a * _leftTopColorF.a);
+            }
             break;
         default:
             break;
