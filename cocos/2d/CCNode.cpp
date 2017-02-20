@@ -1645,7 +1645,7 @@ void Node::update(float fDelta)
     {
         _componentContainer->visit(fDelta);
     }
-    this->release();
+	this->release();
 }
 
 // MARK: coordinates
