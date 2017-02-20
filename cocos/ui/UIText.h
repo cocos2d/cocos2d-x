@@ -335,6 +335,68 @@ public:
     
     void setOverflow(int value);
     int getOverflow() const;
+    
+    /**
+     Return whether the gradient effect is enabled
+     */
+    bool isGradientEnabled() const;
+    
+    /**
+     * Set colors for horizontal and vertical gradients
+     *
+     * @param leftTop start left top color
+     * @param rightTop end right top color
+     * @param leftBottom start left bottom color
+     * @param rightBottom end right bottom color
+     *
+     */
+    void setGradientColor(const Color4B &leftTop, const Color4B &rightTop, const Color4B &leftBottom, const Color4B &rightBottom);
+    
+    /**
+     * Set colors for horizontal gradients
+     *
+     * @param color1 start color
+     * @param color2 end color
+     *
+     */
+    void setHGradientColor(const Color4B &color1, const Color4B &color2);
+    
+    /**
+     * Set colors for vertical gradients
+     *
+     * @param color1 start color
+     * @param color2 end color
+     *
+     */
+    void setVGradientColor(const Color4B &color1, const Color4B &color2);
+    
+    /**
+     * Return the user define left top color.
+     *
+     * @return Color4B for left top point.
+     */
+    const Color4B &getLeftTopColor() const;
+    
+    /**
+     * Return the user define right top color.
+     *
+     * @return Color4B for right top point.
+     */
+    const Color4B &getRightTopColor() const;
+    
+    /**
+     * Return the user define left bottom color.
+     *
+     * @return Color4B for left bottom point.
+     */
+    const Color4B &getLeftBottomColor() const;
+    
+    /**
+     * Return the user define right bottom color.
+     *
+     * @return Color4B for right bottom point.
+     */
+    const Color4B &getRightBottomTopColor() const;
 
 CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;

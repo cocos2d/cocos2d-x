@@ -523,6 +523,8 @@ void Label::reset()
     }
     _strikethroughEnabled = false;
     setRotationSkewX(0);        // reverse italics
+    
+    setGradientColor(Color4B::WHITE, Color4B::WHITE, Color4B::WHITE, Color4B::WHITE);
 }
 
 //  ETC1 ALPHA supports, for LabelType::BMFONT & LabelType::CHARMAP
@@ -552,15 +554,25 @@ void Label::updateShaderProgram()
         if (_useDistanceField)
             setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_LABEL_DISTANCEFIELD_NORMAL));
         else if (_useA8Shader)
-            setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_LABEL_NORMAL));
+            if (isGradientEnabled()) {
+                setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_GRADIENT_LABEL_NORMAL));
+            }
+            else {
+                setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_LABEL_NORMAL));
+            }
         else if (_shadowEnabled)
             setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR, _getTexture(this)));
         else
             setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP, _getTexture(this)));
 
         break;
-    case cocos2d::LabelEffect::OUTLINE: 
-        setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_LABEL_OUTLINE));
+    case cocos2d::LabelEffect::OUTLINE:
+            if (isGradientEnabled()) {
+                setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_GRADIENT_LABEL_OUTLINE));
+            }
+            else {
+                setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_LABEL_OUTLINE));
+            }
         _uniformEffectColor = glGetUniformLocation(getGLProgram()->getProgram(), "u_effectColor");
         break;
     case cocos2d::LabelEffect::GLOW:
@@ -575,6 +587,13 @@ void Label::updateShaderProgram()
     }
     
     _uniformTextColor = glGetUniformLocation(getGLProgram()->getProgram(), "u_textColor");
+    if (isGradientEnabled()) {
+        _textSize = glGetUniformLocation(getGLProgram()->getProgram(), "textSize");
+        _leftTopUniform = glGetUniformLocation(getGLProgram()->getProgram(), "leftTopColor");
+        _rightTopUniform = glGetUniformLocation(getGLProgram()->getProgram(), "rightTopColor");
+        _leftBottomUniform = glGetUniformLocation(getGLProgram()->getProgram(), "leftBottomColor");
+        _rightBottomUniform = glGetUniformLocation(getGLProgram()->getProgram(), "rightBottomColor");
+    }
 }
 
 void Label::setFontAtlas(FontAtlas* atlas,bool distanceFieldEnabled /* = false */, bool useA8Shader /* = false */)
@@ -1089,6 +1108,7 @@ void Label::enableOutline(const Color4B& outlineColor,float outlineSize /* = -1 
 
 void Label::enableShadow(const Color4B& shadowColor /* = Color4B::BLACK */,const Size &offset /* = Size(2 ,-2)*/, int blurRadius /* = 0 */)
 {
+    //TODO: improve performance for shadow
     _shadowEnabled = true;
     _shadowDirty = true;
 
@@ -1515,10 +1535,26 @@ void Label::onDraw(const Mat4& transform, bool transformUpdated)
 
     if (_shadowEnabled)
     {
-        if (_boldEnabled)
+        if (_boldEnabled) {
+            if (isGradientEnabled()) {
+                glprogram->setUniformLocationWith4f(_leftTopUniform, _textColorF.r, _textColorF.g, _textColorF.b, _textColorF.a);
+                glprogram->setUniformLocationWith4f(_rightTopUniform, _textColorF.r, _textColorF.g, _textColorF.b, _textColorF.a);
+                glprogram->setUniformLocationWith4f(_leftBottomUniform, _textColorF.r, _textColorF.g, _textColorF.b, _textColorF.a);
+                glprogram->setUniformLocationWith4f(_rightBottomUniform, _textColorF.r, _textColorF.g, _textColorF.b, _textColorF.a);
+            }
+            
             onDrawShadow(glprogram, _textColorF);
-        else
+        }
+        else {
+            if (isGradientEnabled()) {
+                glprogram->setUniformLocationWith4f(_leftTopUniform, _shadowColor4F.r, _shadowColor4F.g, _shadowColor4F.b, _shadowColor4F.a);
+                glprogram->setUniformLocationWith4f(_rightTopUniform, _shadowColor4F.r, _shadowColor4F.g, _shadowColor4F.b, _shadowColor4F.a);
+                glprogram->setUniformLocationWith4f(_leftBottomUniform, _shadowColor4F.r, _shadowColor4F.g, _shadowColor4F.b, _shadowColor4F.a);
+                glprogram->setUniformLocationWith4f(_rightBottomUniform, _shadowColor4F.r, _shadowColor4F.g, _shadowColor4F.b, _shadowColor4F.a);
+            }
+            
             onDrawShadow(glprogram, _shadowColor4F);
+        }
     }
 
     glprogram->setUniformsForBuiltins(transform);
@@ -1536,6 +1572,14 @@ void Label::onDraw(const Mat4& transform, bool transformUpdated)
                 _textColorF.r, _textColorF.g, _textColorF.b, _textColorF.a);
             glprogram->setUniformLocationWith4f(_uniformEffectColor,
                 _effectColorF.r, _effectColorF.g, _effectColorF.b, _effectColorF.a);
+                
+                if (isGradientEnabled()) {
+                    glprogram->setUniformLocationWith2f(_textSize, _contentSize.width, _contentSize.height);
+                    glprogram->setUniformLocationWith4f(_leftTopUniform, _effectColorF.r, _effectColorF.g, _effectColorF.b, _effectColorF.a);
+                    glprogram->setUniformLocationWith4f(_rightTopUniform, _effectColorF.r, _effectColorF.g, _effectColorF.b, _effectColorF.a);
+                    glprogram->setUniformLocationWith4f(_leftBottomUniform, _effectColorF.r, _effectColorF.g, _effectColorF.b, _effectColorF.a);
+                    glprogram->setUniformLocationWith4f(_rightBottomUniform, _effectColorF.r, _effectColorF.g, _effectColorF.b, _effectColorF.a);
+                }
             for (auto&& batchNode : _batchNodes)
             {
                 batchNode->getTextureAtlas()->drawQuads();
@@ -1544,13 +1588,29 @@ void Label::onDraw(const Mat4& transform, bool transformUpdated)
             //draw text without outline
             glprogram->setUniformLocationWith4f(_uniformEffectColor,
                 _effectColorF.r, _effectColorF.g, _effectColorF.b, 0.f);
+                if (isGradientEnabled()) {
+                    glprogram->setUniformLocationWith2f(_textSize, _contentSize.width, _contentSize.height);
+                    
+                    glprogram->setUniformLocationWith4f(_leftTopUniform, _leftTopColorF.r, _leftTopColorF.g, _leftTopColorF.b, _leftTopColorF.a);
+                    glprogram->setUniformLocationWith4f(_rightTopUniform, _rightTopColorF.r, _rightTopColorF.g, _rightTopColorF.b, _rightTopColorF.a);
+                    glprogram->setUniformLocationWith4f(_leftBottomUniform, _leftBottomColorF.r, _leftBottomColorF.g, _leftBottomColorF.b, _leftBottomColorF.a);
+                    glprogram->setUniformLocationWith4f(_rightBottomUniform, _rightBottomColorF.r, _rightBottomColorF.g, _rightBottomColorF.b, _rightBottomColorF.a);
+                }
             break;
         case LabelEffect::GLOW:
-            glprogram->setUniformLocationWith4f(_uniformEffectColor,
-                _effectColorF.r, _effectColorF.g, _effectColorF.b, _effectColorF.a);
+                    glprogram->setUniformLocationWith4f(_uniformEffectColor,
+                                                        _effectColorF.r, _effectColorF.g, _effectColorF.b, _effectColorF.a);
+            
         case LabelEffect::NORMAL:
             glprogram->setUniformLocationWith4f(_uniformTextColor,
                 _textColorF.r, _textColorF.g, _textColorF.b, _textColorF.a);
+                if (isGradientEnabled()) {
+                    glprogram->setUniformLocationWith2f(_textSize, _contentSize.width, _contentSize.height);
+                    glprogram->setUniformLocationWith4f(_leftTopUniform, _leftTopColorF.r, _leftTopColorF.g, _leftTopColorF.b, _leftTopColorF.a);
+                    glprogram->setUniformLocationWith4f(_rightTopUniform, _rightTopColorF.r, _rightTopColorF.g, _rightTopColorF.b, _rightTopColorF.a);
+                    glprogram->setUniformLocationWith4f(_leftBottomUniform, _leftBottomColorF.r, _leftBottomColorF.g, _leftBottomColorF.b, _leftBottomColorF.a);
+                    glprogram->setUniformLocationWith4f(_rightBottomUniform, _rightBottomColorF.r, _rightBottomColorF.g, _rightBottomColorF.b, _rightBottomColorF.a);
+                }
             break;
         default:
             break;
@@ -2001,6 +2061,68 @@ std::string Label::getDescription() const
     ret += _utf8Text;
 
     return ret;
+}
+
+void Label::setGradientColor(const Color4B &leftTop, const Color4B &rightTop, const Color4B &leftBottom, const Color4B &rightBottom)
+{
+    _leftTopColor = leftTop;
+    _rightTopColor = rightTop;
+    _leftBottomColor = leftBottom;
+    _rightBottomColor = rightBottom;
+    
+    _leftTopColorF = Color4F(static_cast<float>(_leftTopColor.r) / 255.0f,
+                             static_cast<float>(_leftTopColor.g) / 255.0f,
+                             static_cast<float>(_leftTopColor.b) / 255.0f,
+                             static_cast<float>(_leftTopColor.a) / 255.0f);
+    
+    _rightTopColorF = Color4F(static_cast<float>(_rightTopColor.r) / 255.0f,
+                              static_cast<float>(_rightTopColor.g) / 255.0f,
+                              static_cast<float>(_rightTopColor.b) / 255.0f,
+                              static_cast<float>(_rightTopColor.a) / 255.0f);
+    
+    _leftBottomColorF = Color4F(static_cast<float>(_leftBottomColor.r) / 255.0f,
+                                static_cast<float>(_leftBottomColor.g) / 255.0f,
+                                static_cast<float>(_leftBottomColor.b) / 255.0f,
+                                static_cast<float>(_leftBottomColor.a) / 255.0f);
+    
+    _rightBottomColorF = Color4F(static_cast<float>(_rightBottomColor.r) / 255.0f,
+                                 static_cast<float>(_rightBottomColor.g) / 255.0f,
+                                 static_cast<float>(_rightBottomColor.b) / 255.0f,
+                                 static_cast<float>(_rightBottomColor.a) / 255.0f);
+    
+    _isGradientEnabled = !((_leftTopColor == _rightTopColor) && (_leftTopColor == _leftBottomColor) && (_leftTopColor == _rightBottomColor));
+    
+    updateShaderProgram();
+}
+
+void Label::setHGradientColor(const Color4B &color1, const Color4B &color2)
+{
+    setGradientColor(color1, color2, color1, color2);
+}
+
+void Label::setVGradientColor(const Color4B &color1, const Color4B &color2)
+{
+    setGradientColor(color1, color2, color1, color2);
+}
+
+const Color4B &Label::getLeftTopColor() const
+{
+    return _leftTopColor;
+}
+
+const Color4B &Label::getRightTopColor() const
+{
+    return _rightTopColor;
+}
+
+const Color4B &Label::getLeftBottomColor() const
+{
+    return _leftBottomColor;
+}
+
+const Color4B &Label::getRightBottomTopColor() const
+{
+    return _rightBottomColor;
 }
 
 const Size& Label::getContentSize() const
