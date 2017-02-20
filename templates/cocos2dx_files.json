@@ -1090,7 +1090,6 @@
         "cocos/platform/android/libcocos2dx-with-controller/AndroidManifest.xml", 
         "cocos/platform/android/libcocos2dx-with-controller/build.gradle", 
         "cocos/platform/android/libcocos2dx-with-controller/proguard-rules.pro", 
-        "cocos/platform/android/libcocos2dx/.gitignore", 
         "cocos/platform/android/libcocos2dx/AndroidManifest.xml", 
         "cocos/platform/android/libcocos2dx/build.gradle", 
         "cocos/platform/android/libcocos2dx/proguard-rules.pro", 
