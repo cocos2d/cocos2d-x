@@ -47,6 +47,10 @@ private:
     bool _adjustsFontSizeToFit;
     int _overflowLabel;
     bool _wordWrapLabel;
+    
+    Color4B _gradientColor1;
+    Color4B _gradientColor2;
+    int _gradientType;
 };
 
 }

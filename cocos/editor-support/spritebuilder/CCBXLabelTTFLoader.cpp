@@ -29,6 +29,15 @@ static const std::string PROPERTY_ADJUSTS_FONT_SIZE_TO_FIT("adjustsFontSizeToFit
 static const std::string PROPERTY_OVERFLOW("overflowType");
 static const std::string PROPERTY_WORDWRAP("wordWrap");
     
+static const std::string PROPERTY_GRADIENTCOLOR1("gradientColor1");
+static const std::string PROPERTY_GRADIENTCOLOR2("gradientColor2");
+static const std::string PROPERTY_GRADIENTTYPE("gradientType");
+    
+enum class GradientType {
+    kHorizontal = 0,
+    kVertical = 1
+};
+    
 LabelTTFLoader *LabelTTFLoader::create()
 {
     LabelTTFLoader *ret = new LabelTTFLoader();
@@ -79,6 +88,12 @@ void LabelTTFLoader::setSpecialProperties(Node* node, const Size &parentSize, fl
         label->setOverflow((_adjustsFontSizeToFit && overflow == Label::Overflow::NONE) ? Label::Overflow::SHRINK : overflow);
         label->setLineBreakWithoutSpace(!_wordWrapLabel);
         label->setAlignment(_textHAlignment, _textVAlignment);
+        if (static_cast<int>(GradientType::kHorizontal) == _gradientType) {
+            label->setHGradientColor(_gradientColor1, _gradientColor2);
+        }
+        else if (static_cast<int>(GradientType::kVertical) == _gradientType) {
+            label->setVGradientColor(_gradientColor1, _gradientColor2);
+        }
     }
 }
 
@@ -96,6 +111,9 @@ LabelTTFLoader::LabelTTFLoader()
     ,_adjustsFontSizeToFit(false)
     ,_overflowLabel(static_cast<int>(cocos2d::Label::Overflow::NONE))
     ,_wordWrapLabel(true)
+    ,_gradientColor1(Color4B::WHITE)
+    ,_gradientColor2(Color4B::WHITE)
+    ,_gradientType(static_cast<int>(GradientType::kHorizontal))
 {
     
 }
@@ -122,6 +140,10 @@ void LabelTTFLoader::onHandlePropTypeColor4(const std::string &propertyName, boo
         _outlineColor = value;
     } else if(propertyName == PROPERTY_SHADOWCOLOR){
         _shadowColor = value;
+    } else if(propertyName == PROPERTY_GRADIENTCOLOR1){
+        _gradientColor1 = value;
+    } else if(propertyName == PROPERTY_GRADIENTCOLOR2){
+        _gradientColor2 = value;
     } else {
         NodeLoader::onHandlePropTypeColor4(propertyName, isExtraProp, value);
     }
@@ -177,7 +199,9 @@ void LabelTTFLoader::onHandlePropTypeIntegerLabeled(const std::string &propertyN
         _overflowLabel = value;
     }else if (propertyName == PROPERTY_WORDWRAP) {
         _wordWrapLabel = static_cast<bool>(value);
-    } else {
+    }else if (propertyName == PROPERTY_GRADIENTTYPE) {
+        _gradientType = value;
+    }else {
         NodeLoader::onHandlePropTypeIntegerLabeled(propertyName, isExtraProp, value);
     }
 }

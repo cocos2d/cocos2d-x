@@ -20,6 +20,7 @@ CC_CONSTRUCTOR_ACCESS:
     ~LabelTTFLoader();
 
 protected:
+        
     virtual void onHandlePropTypeColor4(const std::string &propertyName, bool isExtraProp, const Color4B &value) override;
     virtual void onHandlePropTypeBlendFunc(const std::string &propertyName, bool isExtraProp, const BlendFunc &value) override;
     virtual void onHandlePropTypeFontTTF(const std::string &propertyName, bool isExtraProp, const std::string &value) override;
@@ -47,6 +48,10 @@ private:
     int _overflowLabel;
     bool _wordWrapLabel;
     bool _adjustsFontSizeToFit;
+    
+    Color4B _gradientColor1;
+    Color4B _gradientColor2;
+    int _gradientType;
 };
 
 }
