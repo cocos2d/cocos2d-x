@@ -119,17 +119,22 @@ static void wsLog(const char * format, ...)
 #define QUOTEME(x) QUOTEME_(x)
 
 // Since CCLOG isn't thread safe, we uses LOGD for multi-thread logging.
-#if COCOS2D_DEBUG > 0
-    #ifdef ANDROID
+#ifdef ANDROID
+    #if COCOS2D_DEBUG > 0
         #define LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG, LOG_TAG,__VA_ARGS__)
-        #define LOGE(...)  __android_log_print(ANDROID_LOG_ERROR, LOG_TAG,__VA_ARGS__)
     #else
-        #define LOGD(fmt, ...) wsLog("D/" LOG_TAG " (" QUOTEME(__LINE__) "): " fmt "", ##__VA_ARGS__)
-        #define LOGE(fmt, ...) wsLog("E/" LOG_TAG " (" QUOTEME(__LINE__) "): " fmt "", ##__VA_ARGS__)
+        #define LOGD(...)
     #endif
+
+    #define LOGE(...)  __android_log_print(ANDROID_LOG_ERROR, LOG_TAG,__VA_ARGS__)
 #else
-    #define LOGD(...)
-    #define LOGE(...)
+    #if COCOS2D_DEBUG > 0
+        #define LOGD(fmt, ...) wsLog("D/" LOG_TAG " (" QUOTEME(__LINE__) "): " fmt "", ##__VA_ARGS__)
+    #else
+        #define LOGD(fmt, ...)
+    #endif
+
+    #define LOGE(fmt, ...) wsLog("E/" LOG_TAG " (" QUOTEME(__LINE__) "): " fmt "", ##__VA_ARGS__)
 #endif
 
 static void printWebSocketLog(int level, const char *line)
@@ -509,12 +514,10 @@ void WebSocket::closeAllConnections()
 
 WebSocket::WebSocket()
 : _readyState(State::CONNECTING)
-, _port(80)
 , _wsInstance(nullptr)
-, _protocols(nullptr)
+, _lwsProtocols(nullptr)
 , _isDestroyed(std::make_shared<std::atomic<bool>>(false))
 , _delegate(nullptr)
-, _SSLConnection(0)
 , _closeState(CloseState::NONE)
 {
     // reserve data buffer to avoid allocate memory frequently
@@ -575,57 +578,43 @@ bool WebSocket::init(const Delegate& delegate,
                      const std::string& caFilePath/* = ""*/)
 {
     _delegate = const_cast<Delegate*>(&delegate);
+    _url = url;
     _caFilePath = caFilePath;
 
-    const char* prot = nullptr;
-    const char* address = nullptr;
-    const char* path = nullptr;
-    int port = -1;
-
-    if (lws_parse_uri((char*)url.c_str(), &prot, &address, &port, &path))
-    {
+    // make sure url start with 'ws://' or 'wss://'
+    if (_url.size() < 6)
         return false;
-    }
 
-    _host = address;
-    _port = port;
-    _path = path;
-
-    if (!strcmp(prot, "http") || !strcmp(prot, "ws"))
-        _SSLConnection = 0;
-    if (!strcmp(prot, "https") || !strcmp(prot, "wss"))
-        _SSLConnection = LCCSCF_USE_SSL;
+    CCASSERT(0 == strncmp(_url.c_str(), "ws://", 5) || 0 == strncmp(_url.c_str(), "wss://", 6), "Invalid URL");
 
     if (protocols != nullptr && !protocols->empty())
     {
         size_t size = protocols->size();
-        _protocols = (struct lws_protocols*)malloc((size + 1) * sizeof(struct lws_protocols));
-        memset(_protocols, 0, (size + 1) * sizeof(struct lws_protocols));
+        _lwsProtocols = (struct lws_protocols*)malloc((size + 1) * sizeof(struct lws_protocols));
+        memset(_lwsProtocols, 0, (size + 1) * sizeof(struct lws_protocols));
 
         static uint32_t __wsId = 0;
 
         for (size_t i = 0; i < size; ++i)
         {
-            _protocols[i].callback = WebSocketCallbackWrapper::onSocketCallback;
+            _lwsProtocols[i].callback = WebSocketCallbackWrapper::onSocketCallback;
             size_t nameLen = protocols->at(i).length();
             char* name = (char*)malloc(nameLen + 1);
             name[nameLen] = '\0';
             strcpy(name, protocols->at(i).c_str());
-            _protocols[i].name = name;
-            _protocols[i].id = ++__wsId;
-            _protocols[i].rx_buffer_size = WS_RX_BUFFER_SIZE;
-            _protocols[i].per_session_data_size = 0;
-            _protocols[i].user = nullptr;
+            _lwsProtocols[i].name = name;
+            _lwsProtocols[i].id = ++__wsId;
+            _lwsProtocols[i].rx_buffer_size = WS_RX_BUFFER_SIZE;
+            _lwsProtocols[i].per_session_data_size = 0;
+            _lwsProtocols[i].user = nullptr;
 
-            _protocolNames += name;
+            _clientSupportedProtocols += name;
             if (i < (size - 1))
             {
-                _protocolNames += ",";
+                _clientSupportedProtocols += ",";
             }
         }
     }
-
-    LOGD("[WebSocket::init] _host: %s, _port: %d, _path: %s\n", _host.c_str(), _port, _path.c_str());
 
     // WebSocket thread needs to be invoked at the end of this method.
     if (__wsHelper == nullptr)
@@ -761,7 +750,7 @@ WebSocket::State WebSocket::getReadyState()
     return _readyState;
 }
 
-struct lws_vhost* WebSocket::createVhost(struct lws_protocols* protocols)
+struct lws_vhost* WebSocket::createVhost(struct lws_protocols* protocols, int& sslConnection)
 {
     auto fileUtils = FileUtils::getInstance();
     bool isCAFileExist = fileUtils->isFileExist(_caFilePath);
@@ -772,7 +761,7 @@ struct lws_vhost* WebSocket::createVhost(struct lws_protocols* protocols)
 
     lws_context_creation_info info = convertToContextCreationInfo(protocols, isCAFileExist);
 
-    if (_SSLConnection != 0)
+    if (sslConnection != 0)
     {
         if (isCAFileExist)
         {
@@ -838,7 +827,7 @@ struct lws_vhost* WebSocket::createVhost(struct lws_protocols* protocols)
         else
         {
             LOGD("WARNING: CA Root file isn't set. SSL connection will not peer server certificate\n");
-            _SSLConnection = _SSLConnection | LCCSCF_ALLOW_SELFSIGNED | LCCSCF_SKIP_SERVER_CERT_HOSTNAME_CHECK;
+            sslConnection = sslConnection | LCCSCF_ALLOW_SELFSIGNED | LCCSCF_SKIP_SERVER_CERT_HOSTNAME_CHECK;
         }
     }
 
@@ -872,26 +861,46 @@ void WebSocket::onClientOpenConnectionRequest()
         _readyState = State::CONNECTING;
         _readyStateMutex.unlock();
 
-        struct lws_vhost* vhost = nullptr;
-        if (_protocols != nullptr)
+        const char* prot = nullptr;
+        const char* address = nullptr;
+        const char* path = nullptr;
+        int port = -1;
+
+        // lws_parse_uri will modify its first parameter, but _url is the member variable that we don't want it to be changed.
+        // Therefore, use a temporary url variable here.
+        std::string tmpUrl = _url;
+        if (lws_parse_uri((char*)tmpUrl.c_str(), &prot, &address, &port, &path))
         {
-            vhost = createVhost(_protocols);
+            LOGE("lws_parse_uri failed: %s", _url.c_str());
+            return;
+        }
+
+        LOGD("protocol: %s, host: %s, port: %d, path: %s\n", prot, address, port, path);
+
+        int sslConnection = 0;
+        if (0 == strcmp(prot, "wss"))
+            sslConnection = LCCSCF_USE_SSL;
+
+        struct lws_vhost* vhost = nullptr;
+        if (_lwsProtocols != nullptr)
+        {
+            vhost = createVhost(_lwsProtocols, sslConnection);
         }
         else
         {
-            vhost = createVhost(__defaultProtocols);
+            vhost = createVhost(__defaultProtocols, sslConnection);
         }
 
         struct lws_client_connect_info connectInfo;
         memset(&connectInfo, 0, sizeof(connectInfo));
         connectInfo.context = __wsContext;
-        connectInfo.address = _host.c_str();
-        connectInfo.port = _port;
-        connectInfo.ssl_connection = _SSLConnection;
-        connectInfo.path = _path.c_str();
-        connectInfo.host = _host.c_str();
-        connectInfo.origin = _host.c_str();
-        connectInfo.protocol = _protocolNames.empty() ? nullptr : _protocolNames.c_str();
+        connectInfo.address = address;
+        connectInfo.port = port;
+        connectInfo.ssl_connection = sslConnection;
+        connectInfo.path = path;
+        connectInfo.host = address;
+        connectInfo.origin = address;
+        connectInfo.protocol = _clientSupportedProtocols.empty() ? nullptr : _clientSupportedProtocols.c_str();
         connectInfo.ietf_version_or_minus_one = -1;
         connectInfo.userdata = this;
         connectInfo.client_exts = exts;
@@ -1144,7 +1153,9 @@ int WebSocket::onClientReceivedData(void* in, ssize_t len)
 
 int WebSocket::onConnectionOpened()
 {
-    LOGD("onConnectionOpened...: %p\n", this);
+    const lws_protocols* lwsSelectedProtocol = lws_get_protocol(_wsInstance);
+    _selectedProtocol = lwsSelectedProtocol->name;
+    LOGD("onConnectionOpened...: %p, client protocols: %s, server selected protocol: %s\n", this, _clientSupportedProtocols.c_str(), _selectedProtocol.c_str());
     /*
      * start the ball rolling,
      * LWS_CALLBACK_CLIENT_WRITEABLE will come next service
