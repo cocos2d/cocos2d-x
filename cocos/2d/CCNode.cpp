@@ -1630,14 +1630,15 @@ void Node::pauseSchedulerAndActions()
 // override me
 void Node::update(float fDelta)
 {
-    this->retain();
 #if CC_ENABLE_SCRIPT_BINDING
     if (0 != _updateScriptHandler)
     {
         //only lua use
+        this->retain();
         SchedulerScriptData data(_updateScriptHandler,fDelta);
         ScriptEvent event(kScheduleEvent,&data);
         ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
+        this->release();
     }
 #endif
     
@@ -1645,7 +1646,6 @@ void Node::update(float fDelta)
     {
         _componentContainer->visit(fDelta);
     }
-    this->release();
 }
 
 // MARK: coordinates
