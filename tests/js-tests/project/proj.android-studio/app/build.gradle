@@ -11,14 +11,27 @@ android {
         versionCode 1
         versionName "1.0"
 
+        externalNativeBuild {
+            ndkBuild {
+                targets 'js_tests'
+                arguments 'NDK_MODULE_PATH=../../../../..:../../../../../cocos:../../../../../external'
+                arguments '-j' + Runtime.runtime.availableProcessors()
+                abiFilters 'armeabi'
+            }
+        }
+
     }
 
     sourceSets.main {
         java.srcDir "src"
         res.srcDir "res"
-        jniLibs.srcDir "libs"
         manifest.srcFile "AndroidManifest.xml"
-        assets.srcDir "assets"
+    }
+
+     externalNativeBuild {
+        ndkBuild {
+            path "jni/Android.mk"
+        }
     }
 
     signingConfigs {
@@ -33,6 +46,8 @@ android {
         }
     }
 
+
+
     buildTypes {
         release {
             minifyEnabled false
@@ -42,6 +57,44 @@ android {
             }
         }
     }
+}
+
+android.applicationVariants.all { variant ->
+    def copyAssets = task("${variant.dirName}copyAssets", type: Copy) {
+
+        // delete previous files first
+        delete "${buildDir}/intermediates/assets/${variant.dirName}"
+
+        copy {
+           from "${buildDir}/../../../../res"
+           into "${buildDir}/intermediates/assets/${variant.dirName}/res"
+        }
+
+        copy {
+            from "${buildDir}/../../../../src"
+            into "${buildDir}/intermediates/assets/${variant.dirName}/src"
+        }
+
+        copy {
+            from("${buildDir}/../../../../../cpp-tests/Resources") {
+                exclude "**/*.gz"
+            }
+            into "${buildDir}/intermediates/assets/${variant.dirName}/res"
+        }
+
+        copy {
+            from "${buildDir}/../../../../../../cocos/scripting/js-bindings/script"
+            into  "${buildDir}/intermediates/assets/${variant.dirName}/script"
+        }
+
+        copy {
+            from "${buildDir}/../../../../main.js"
+            from "${buildDir}/../../../../project.json"
+            into "${buildDir}/intermediates/assets/${variant.dirName}"
+        }
+    }
+
+    variant.mergeAssets.finalizedBy copyAssets
 }
 
 dependencies {

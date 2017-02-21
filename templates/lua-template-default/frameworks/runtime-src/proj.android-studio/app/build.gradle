@@ -5,11 +5,20 @@ android {
     buildToolsVersion "22.0.1"
 
     defaultConfig {
-        applicationId "org.cocos2dx.hellolua"
+        applicationId "org.cocos2dx.MyLuaGame"
         minSdkVersion 10
         targetSdkVersion 22
         versionCode 1
         versionName "1.0"
+
+        externalNativeBuild {
+            ndkBuild {
+                targets 'cocos2dlua'
+                arguments 'NDK_MODULE_PATH=../../../cocos2d-x:../../../cocos2d-x/cocos:../../../cocos2d-x/external'
+                arguments '-j' + Runtime.runtime.availableProcessors()
+                abiFilters 'armeabi'
+            }
+        }
     }
 
     sourceSets.main {
@@ -18,6 +27,12 @@ android {
         jniLibs.srcDir "libs"
         manifest.srcFile "AndroidManifest.xml"
         assets.srcDir "assets"
+    }
+
+    externalNativeBuild {
+        ndkBuild {
+            path "jni/Android.mk"
+        }
     }
 
     signingConfigs {
@@ -41,6 +56,31 @@ android {
             }
         }
     }
+}
+
+android.applicationVariants.all { variant ->
+    def copyAssets = task("${variant.dirName}copyAssets", type: Copy) {
+
+        // delete previous files first
+        delete "${buildDir}/intermediates/assets/${variant.dirName}"
+
+        copy {
+           from "${buildDir}/../../../../../res"
+           into "${buildDir}/intermediates/assets/${variant.dirName}/res"
+        }
+
+        copy {
+            from "${buildDir}/../../../../../src"
+            into "${buildDir}/intermediates/assets/${variant.dirName}/src"
+        }
+
+        // copy {
+        //     from "${buildDir}/../../../../cocos2d-x/cocos/scripting/lua-bindings/script"
+        //     into  "${buildDir}/intermediates/assets/${variant.dirName}/src/cocos"
+        // }
+    }
+
+    variant.mergeAssets.finalizedBy copyAssets
 }
 
 dependencies {
