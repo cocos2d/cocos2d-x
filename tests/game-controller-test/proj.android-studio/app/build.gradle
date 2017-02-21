@@ -10,14 +10,30 @@ android {
         targetSdkVersion 22
         versionCode 1
         versionName "1.0"
+
+         externalNativeBuild {
+            ndkBuild {
+                targets 'game_controller_test'
+                arguments 'NDK_MODULE_PATH=../../../..:../../../../cocos:../../../../external'
+                arguments '-j' + Runtime.runtime.availableProcessors()
+                abiFilters 'armeabi'
+            }
+        }
     }
+
+   
 
     sourceSets.main {
         java.srcDir "src"
         res.srcDir "res"
-        jniLibs.srcDir "libs"
         manifest.srcFile "AndroidManifest.xml"
-        assets.srcDir "assets"
+        assets.srcDir "../../Resources"
+    }
+
+    externalNativeBuild {
+        ndkBuild {
+            path "jni/Android.mk"
+        }
     }
 
     signingConfigs {

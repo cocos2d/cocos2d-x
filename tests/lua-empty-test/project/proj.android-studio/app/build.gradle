@@ -11,14 +11,26 @@ android {
         versionCode 1
         versionName "1.0"
 
+        externalNativeBuild {
+            ndkBuild {
+                targets 'lua_empty_test'
+                arguments 'NDK_MODULE_PATH=../../../../..:../../../../../cocos:../../../../../external'
+                arguments '-j' + Runtime.runtime.availableProcessors()
+                abiFilters 'armeabi'
+            }
+        }
     }
 
     sourceSets.main {
         java.srcDir "src"
         res.srcDir "res"
-        jniLibs.srcDir "libs"
         manifest.srcFile "AndroidManifest.xml"
-        assets.srcDir "assets"
+    }
+
+    externalNativeBuild {
+        ndkBuild {
+            path "jni/Android.mk"
+        }
     }
 
     signingConfigs {
@@ -42,6 +54,31 @@ android {
             }
         }
     }
+}
+
+android.applicationVariants.all { variant ->
+    def copyAssets = task("${variant.dirName}copyAssets", type: Copy) {
+
+        // delete previous files first
+        delete "${buildDir}/intermediates/assets/${variant.dirName}"
+
+        copy {
+           from "${buildDir}/../../../../res"
+           into "${buildDir}/intermediates/assets/${variant.dirName}/res"
+        }
+
+        copy {
+            from "${buildDir}/../../../../src"
+            into "${buildDir}/intermediates/assets/${variant.dirName}/src"
+        }
+
+        copy {
+            from "${buildDir}/../../../../../../cocos/scripting/lua-bindings/script"
+            into  "${buildDir}/intermediates/assets/${variant.dirName}/src/cocos"
+        }
+    }
+
+    variant.mergeAssets.finalizedBy copyAssets
 }
 
 dependencies {
