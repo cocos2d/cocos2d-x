@@ -46,7 +46,7 @@ SpineTestScene.backSpineTestLayer = function() {
     spineSceneIdx--;
     var layers = SpineTestScene.testLayers;
     if(spineSceneIdx < 0)
-        spineSceneIdx = layers.length;
+        spineSceneIdx = layers.length - 1;
     return new layers[spineSceneIdx](spineSceneIdx);
 };
 
@@ -283,12 +283,11 @@ var SpineTestPerformanceLayer = SpineTestLayer.extend({
 SpineTestScene.testLayers = [
     SpineTestLayerNormal,
     //SpineTestLayerNormal // custom spine,diff code in sample
-    //SpineTestLayerFFD,        //it doesn't support mesh on Web.
-    //SpineTestPerformanceLayer
+    //SpineTestLayerFFD,        //it doesn't support mesh on Canvas.
+    //SpineTestPerformanceLayer //it doesn't support mesh on Canvas.
 ];
 
-if(cc.sys.isNative){
+if(cc.sys.isNative || cc._renderType === cc.game.RENDER_TYPE_WEBGL){
     SpineTestScene.testLayers.push(SpineTestLayerFFD);
     SpineTestScene.testLayers.push(SpineTestPerformanceLayer);
 }
-
