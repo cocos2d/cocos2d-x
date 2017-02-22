@@ -100,7 +100,7 @@ TextLoader::TextLoader()
     ,_wordWrapLabel(true)
     ,_gradientColor1(Color4B::WHITE)
     ,_gradientColor2(Color4B::WHITE)
-    ,_gradientType(static_cast<int>(GradientType::kHorizontal))
+    ,_gradientType(static_cast<int>(GradientType::kVertical))
 {
     
 }
