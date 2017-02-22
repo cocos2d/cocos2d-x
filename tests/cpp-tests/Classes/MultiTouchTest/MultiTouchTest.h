@@ -1,14 +1,14 @@
-#ifndef __MUTITOUCHTEST_H__
-#define __MUTITOUCHTEST_H__
+#ifndef __MULTITOUCHTEST_H__
+#define __MULTITOUCHTEST_H__
 
 #include "../BaseTest.h"
 
-DEFINE_TEST_SUITE(MutiTouchTests);
+DEFINE_TEST_SUITE(MultiTouchTests);
 
-class MutiTouchTest : public TestCase
+class MultiTouchTest : public TestCase
 {
 public:
-    CREATE_FUNC(MutiTouchTest);
+    CREATE_FUNC(MultiTouchTest);
 
     virtual bool init() override;
 
@@ -18,4 +18,4 @@ public:
     void onTouchesCancelled(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event  *event);
 };
 
-#endif /* __MUTITOUCHTEST_H__ */
+#endif /* __MULTITOUCHTEST_H__ */

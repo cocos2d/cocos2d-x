@@ -296,7 +296,7 @@ xcopy "$(OutDir)..\*.dll" "$(OutDir)" /D /Y</Command>
     <ClCompile Include="..\Classes\Box2DTestBed\GLES-Render.cpp" />
     <ClCompile Include="..\Classes\Box2DTestBed\Test.cpp" />
     <ClCompile Include="..\Classes\Box2DTestBed\TestEntries.cpp" />
-    <ClCompile Include="..\Classes\MutiTouchTest\MutiTouchTest.cpp" />
+    <ClCompile Include="..\Classes\MultiTouchTest\MultiTouchTest.cpp" />
     <ClCompile Include="..\Classes\SpriteFrameCacheTest\SpriteFrameCacheTest.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -512,7 +512,7 @@ xcopy "$(OutDir)..\*.dll" "$(OutDir)" /D /Y</Command>
     <ClInclude Include="..\Classes\Box2DTestBed\Tests\VaryingRestitution.h" />
     <ClInclude Include="..\Classes\Box2DTestBed\Tests\VerticalStack.h" />
     <ClInclude Include="..\Classes\Box2DTestBed\Tests\Web.h" />
-    <ClInclude Include="..\Classes\MutiTouchTest\MutiTouchTest.h" />
+    <ClInclude Include="..\Classes\MultiTouchTest\MultiTouchTest.h" />
     <ClInclude Include="..\Classes\SpriteFrameCacheTest\SpriteFrameCacheTest.h" />
   </ItemGroup>
   <ItemGroup>

@@ -101,7 +101,7 @@
     <Filter Include="Classes\MotionStreakTest">
       <UniqueIdentifier>{618404c5-9e20-4c6b-ba9c-11699ba3c45c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Classes\MutiTouchTest">
+    <Filter Include="Classes\MultiTouchTest">
       <UniqueIdentifier>{a6a92123-dd2f-4c1e-9780-a8183491b3d2}</UniqueIdentifier>
     </Filter>
     <Filter Include="Classes\NewAudioEngineTest">
@@ -578,8 +578,8 @@
     <ClCompile Include="..\Classes\MotionStreakTest\MotionStreakTest.cpp">
       <Filter>Classes\MotionStreakTest</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\MutiTouchTest\MutiTouchTest.cpp">
-      <Filter>Classes\MutiTouchTest</Filter>
+    <ClCompile Include="..\Classes\MultiTouchTest\MultiTouchTest.cpp">
+      <Filter>Classes\MultiTouchTest</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\NewEventDispatcherTest\NewEventDispatcherTest.cpp">
       <Filter>Classes\NewEventDispatcherTest</Filter>
@@ -1216,8 +1216,8 @@
     <ClInclude Include="..\Classes\MotionStreakTest\MotionStreakTest.h">
       <Filter>Classes\MotionStreakTest</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\MutiTouchTest\MutiTouchTest.h">
-      <Filter>Classes\MutiTouchTest</Filter>
+    <ClInclude Include="..\Classes\MultiTouchTest\MultiTouchTest.h">
+      <Filter>Classes\MultiTouchTest</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\NewEventDispatcherTest\NewEventDispatcherTest.h">
       <Filter>Classes\NewEventDispatcherTest</Filter>

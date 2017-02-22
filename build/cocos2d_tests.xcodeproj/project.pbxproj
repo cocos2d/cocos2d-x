@@ -421,8 +421,8 @@
 		1AC35C1618CECF0C00F37B72 /* MenuTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35AAA18CECF0C00F37B72 /* MenuTest.cpp */; };
 		1AC35C1718CECF0C00F37B72 /* MotionStreakTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35AAD18CECF0C00F37B72 /* MotionStreakTest.cpp */; };
 		1AC35C1818CECF0C00F37B72 /* MotionStreakTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35AAD18CECF0C00F37B72 /* MotionStreakTest.cpp */; };
-		1AC35C1918CECF0C00F37B72 /* MutiTouchTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35AB018CECF0C00F37B72 /* MutiTouchTest.cpp */; };
-		1AC35C1A18CECF0C00F37B72 /* MutiTouchTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35AB018CECF0C00F37B72 /* MutiTouchTest.cpp */; };
+		1AC35C1918CECF0C00F37B72 /* MultiTouchTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35AB018CECF0C00F37B72 /* MultiTouchTest.cpp */; };
+		1AC35C1A18CECF0C00F37B72 /* MultiTouchTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35AB018CECF0C00F37B72 /* MultiTouchTest.cpp */; };
 		1AC35C1B18CECF0C00F37B72 /* NewEventDispatcherTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35AB318CECF0C00F37B72 /* NewEventDispatcherTest.cpp */; };
 		1AC35C1C18CECF0C00F37B72 /* NewEventDispatcherTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35AB318CECF0C00F37B72 /* NewEventDispatcherTest.cpp */; };
 		1AC35C1D18CECF0C00F37B72 /* NewRendererTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35AB618CECF0C00F37B72 /* NewRendererTest.cpp */; };
@@ -881,7 +881,7 @@
 		507B414F1C31BEA60067B53E /* CCControlColourPickerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35A6618CECF0B00F37B72 /* CCControlColourPickerTest.cpp */; };
 		507B41501C31BEA60067B53E /* UITextAtlasTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29080D75191B595E0066F8DF /* UITextAtlasTest.cpp */; };
 		507B41511C31BEA60067B53E /* ActionsEaseTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC3592C18CECF0A00F37B72 /* ActionsEaseTest.cpp */; };
-		507B41521C31BEA60067B53E /* MutiTouchTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35AB018CECF0C00F37B72 /* MutiTouchTest.cpp */; };
+		507B41521C31BEA60067B53E /* MultiTouchTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35AB018CECF0C00F37B72 /* MultiTouchTest.cpp */; };
 		507B41551C31BEA60067B53E /* testsAppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35C7218CECF1400F37B72 /* testsAppDelegate.mm */; };
 		507B41571C31BEA60067B53E /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC3593418CECF0A00F37B72 /* AppDelegate.cpp */; };
 		507B41581C31BEA60067B53E /* Bug-1159.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC3597718CECF0B00F37B72 /* Bug-1159.cpp */; };
@@ -2194,8 +2194,8 @@
 		1AC35AAB18CECF0C00F37B72 /* MenuTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuTest.h; sourceTree = "<group>"; };
 		1AC35AAD18CECF0C00F37B72 /* MotionStreakTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MotionStreakTest.cpp; sourceTree = "<group>"; };
 		1AC35AAE18CECF0C00F37B72 /* MotionStreakTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MotionStreakTest.h; sourceTree = "<group>"; };
-		1AC35AB018CECF0C00F37B72 /* MutiTouchTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = MutiTouchTest.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
-		1AC35AB118CECF0C00F37B72 /* MutiTouchTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MutiTouchTest.h; sourceTree = "<group>"; };
+		1AC35AB018CECF0C00F37B72 /* MultiTouchTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = MultiTouchTest.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
+		1AC35AB118CECF0C00F37B72 /* MultiTouchTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiTouchTest.h; sourceTree = "<group>"; };
 		1AC35AB318CECF0C00F37B72 /* NewEventDispatcherTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NewEventDispatcherTest.cpp; sourceTree = "<group>"; };
 		1AC35AB418CECF0C00F37B72 /* NewEventDispatcherTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewEventDispatcherTest.h; sourceTree = "<group>"; };
 		1AC35AB618CECF0C00F37B72 /* NewRendererTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NewRendererTest.cpp; sourceTree = "<group>"; };
@@ -3496,7 +3496,7 @@
 				1AC35AA618CECF0C00F37B72 /* LayerTest */,
 				1AC35AA918CECF0C00F37B72 /* MenuTest */,
 				1AC35AAC18CECF0C00F37B72 /* MotionStreakTest */,
-				1AC35AAF18CECF0C00F37B72 /* MutiTouchTest */,
+				1AC35AAF18CECF0C00F37B72 /* MultiTouchTest */,
 				1AC35AB218CECF0C00F37B72 /* NewEventDispatcherTest */,
 				1AC35AB518CECF0C00F37B72 /* NewRendererTest */,
 				1AC35AB818CECF0C00F37B72 /* NodeTest */,
@@ -4120,13 +4120,13 @@
 			path = MotionStreakTest;
 			sourceTree = "<group>";
 		};
-		1AC35AAF18CECF0C00F37B72 /* MutiTouchTest */ = {
+		1AC35AAF18CECF0C00F37B72 /* MultiTouchTest */ = {
 			isa = PBXGroup;
 			children = (
-				1AC35AB018CECF0C00F37B72 /* MutiTouchTest.cpp */,
-				1AC35AB118CECF0C00F37B72 /* MutiTouchTest.h */,
+				1AC35AB018CECF0C00F37B72 /* MultiTouchTest.cpp */,
+				1AC35AB118CECF0C00F37B72 /* MultiTouchTest.h */,
 			);
-			path = MutiTouchTest;
+			path = MultiTouchTest;
 			sourceTree = "<group>";
 		};
 		1AC35AB218CECF0C00F37B72 /* NewEventDispatcherTest */ = {
@@ -6927,7 +6927,7 @@
 				1AC35BE318CECF0C00F37B72 /* CCControlColourPickerTest.cpp in Sources */,
 				29080DB1191B595E0066F8DF /* UILayoutTest.cpp in Sources */,
 				1AC35B2318CECF0C00F37B72 /* ActionsEaseTest.cpp in Sources */,
-				1AC35C1918CECF0C00F37B72 /* MutiTouchTest.cpp in Sources */,
+				1AC35C1918CECF0C00F37B72 /* MultiTouchTest.cpp in Sources */,
 				29080DBD191B595E0066F8DF /* UIPageViewTest.cpp in Sources */,
 				1AC35B2918CECF0C00F37B72 /* AppDelegate.cpp in Sources */,
 				1AC35B3718CECF0C00F37B72 /* Bug-1159.cpp in Sources */,
@@ -7100,7 +7100,7 @@
 				507B414F1C31BEA60067B53E /* CCControlColourPickerTest.cpp in Sources */,
 				507B41501C31BEA60067B53E /* UITextAtlasTest.cpp in Sources */,
 				507B41511C31BEA60067B53E /* ActionsEaseTest.cpp in Sources */,
-				507B41521C31BEA60067B53E /* MutiTouchTest.cpp in Sources */,
+				507B41521C31BEA60067B53E /* MultiTouchTest.cpp in Sources */,
 				507B41551C31BEA60067B53E /* testsAppDelegate.mm in Sources */,
 				507B41571C31BEA60067B53E /* AppDelegate.cpp in Sources */,
 				507B41581C31BEA60067B53E /* Bug-1159.cpp in Sources */,
@@ -7329,7 +7329,7 @@
 				1AC35BE418CECF0C00F37B72 /* CCControlColourPickerTest.cpp in Sources */,
 				29080DD4191B595E0066F8DF /* UITextAtlasTest.cpp in Sources */,
 				1AC35B2418CECF0C00F37B72 /* ActionsEaseTest.cpp in Sources */,
-				1AC35C1A18CECF0C00F37B72 /* MutiTouchTest.cpp in Sources */,
+				1AC35C1A18CECF0C00F37B72 /* MultiTouchTest.cpp in Sources */,
 				1AC35C8718CECF1400F37B72 /* testsAppDelegate.mm in Sources */,
 				1AC35B2A18CECF0C00F37B72 /* AppDelegate.cpp in Sources */,
 				1AC35B3818CECF0C00F37B72 /* Bug-1159.cpp in Sources */,
