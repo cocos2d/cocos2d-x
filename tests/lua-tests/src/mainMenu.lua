@@ -124,7 +124,7 @@ local _allTests = {
     { isSupported = true,  name = "MaterialSystemTest"     , create_func   =        MaterialSystemTest },
     { isSupported = true,  name = "MenuTest"               , create_func   =                  MenuTestMain  }, 
     { isSupported = true,  name = "MotionStreakTest"       , create_func   =          MotionStreakTest      },
-    { isSupported = false,  name = "MutiTouchTest"          , create_func=          MutiTouchTestMain     },
+    { isSupported = false, name = "MultiTouchTest"         , create_func   =          MultiTouchTestMain    },
     { isSupported = true,  name = "NavMeshTest"            , create_func   =       NavMeshTest },
     { isSupported = true,  name = "NewEventDispatcherTest"  , create_func   =       NewEventDispatcherTest },
     { isSupported = true,  name = "NodeTest"               , create_func   =                  CocosNodeTest },

@@ -381,7 +381,7 @@
     <ClInclude Include="..\Classes\MaterialSystemTest\MaterialSystemTest.h" />
     <ClInclude Include="..\Classes\MenuTest\MenuTest.h" />
     <ClInclude Include="..\Classes\MotionStreakTest\MotionStreakTest.h" />
-    <ClInclude Include="..\Classes\MutiTouchTest\MutiTouchTest.h" />
+    <ClInclude Include="..\Classes\MultiTouchTest\MultiTouchTest.h" />
     <ClInclude Include="..\Classes\NavMeshTest\NavMeshTest.h" />
     <ClInclude Include="..\Classes\NewAudioEngineTest\NewAudioEngineTest.h" />
     <ClInclude Include="..\Classes\NewEventDispatcherTest\NewEventDispatcherTest.h" />
@@ -562,7 +562,7 @@
     <ClCompile Include="..\Classes\MaterialSystemTest\MaterialSystemTest.cpp" />
     <ClCompile Include="..\Classes\MenuTest\MenuTest.cpp" />
     <ClCompile Include="..\Classes\MotionStreakTest\MotionStreakTest.cpp" />
-    <ClCompile Include="..\Classes\MutiTouchTest\MutiTouchTest.cpp" />
+    <ClCompile Include="..\Classes\MultiTouchTest\MultiTouchTest.cpp" />
     <ClCompile Include="..\Classes\NavMeshTest\NavMeshTest.cpp" />
     <ClCompile Include="..\Classes\NewAudioEngineTest\NewAudioEngineTest.cpp" />
     <ClCompile Include="..\Classes\NewEventDispatcherTest\NewEventDispatcherTest.cpp" />
