@@ -21,7 +21,7 @@ UIListViewTests::UIListViewTests()
 
 UIListViewTest_Vertical::UIListViewTest_Vertical()
 : _displayValueLabel(nullptr),
-_spawnCount(5), //swpanCount should > listview.width / tempalteWidth + 2
+_spawnCount(5), //spawnCount should > listview.width / templateWidth + 2
 _totalCount(50),
 _bufferZone(45), //bufferZone should be larger than List item width
 _updateTimer(0),
@@ -217,7 +217,7 @@ void UIListViewTest_Vertical::update(float dt)
             if (itemPos < -_bufferZone && item->getPosition().y + _reuseItemOffset < totalHeight) {
                 int itemID = item->getTag() - (int)items.size();
                 item->setPositionY(item->getPositionY() + _reuseItemOffset);
-                CCLOG("itemPos = %f, itemID = %d, tempateID = %d", itemPos, itemID, i);
+                CCLOG("itemPos = %f, itemID = %d, templateID = %d", itemPos, itemID, i);
                 this->updateItem(itemID, i);
             }
         }
@@ -278,7 +278,7 @@ void UIListViewTest_Vertical::selectedItemEventScrollView(Ref* pSender, ui::Scro
 
 UIListViewTest_Horizontal::UIListViewTest_Horizontal()
 : _displayValueLabel(nullptr),
-_spawnCount(4), //swpanCount should > listview.width / tempalteWidth + 2
+_spawnCount(4), //spawnCount should > listview.width / templateWidth + 2
 _totalCount(50),
 _bufferZone(140), //bufferZone should be larger than List item width
 _updateTimer(0),
@@ -432,7 +432,7 @@ void UIListViewTest_Horizontal::update(float dt)
             if (itemPos < -_bufferZone && item->getPosition().x + _reuseItemOffset < totalWidth) {
                 int itemID = item->getTag() + (int)items.size();
                 item->setPositionX(item->getPositionX() + _reuseItemOffset);
-                CCLOG("itemPos = %f, itemID = %d, tempateID = %d", itemPos, itemID, i);
+                CCLOG("itemPos = %f, itemID = %d, templateID = %d", itemPos, itemID, i);
                 this->updateItem(itemID, i);
             }
         }

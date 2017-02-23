@@ -210,7 +210,7 @@ var UIRichTextXMLColor = UIMainLayer.extend({
 
             // RichText
             var richText = new ccui.RichText();
-            richText.initWithXML("Defaul color.<font color='#ff0000'>red.<font color='#00ff00'>green</font>red again.</font>default again");
+            richText.initWithXML("Default color.<font color='#ff0000'>red.<font color='#00ff00'>green</font>red again.</font>default again");
 
             richText.ignoreContentAdaptWithSize(false);
             richText.width = 120;

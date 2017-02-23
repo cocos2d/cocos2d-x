@@ -79,7 +79,7 @@ var UICheckBoxDefaultBehaviorTest = UIMainLayer.extend({
             this._bottomDisplayLabel.setString("");
 
             // Add the alert
-            var alert = new ccui.Text("Only left two can be cliked!","Marker Felt",20 );
+            var alert = new ccui.Text("Only left two can be clicked!", "Marker Felt", 20);
             alert.setColor(cc.color(159, 168, 176));
             alert.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 - alert.getContentSize().height * 1.75));
             this._mainNode.addChild(alert);
