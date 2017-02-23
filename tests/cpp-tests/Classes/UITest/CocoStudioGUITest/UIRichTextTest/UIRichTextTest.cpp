@@ -355,7 +355,7 @@ bool UIRichTextXMLColor::init()
 
 
         // RichText
-        _richText = RichText::createWithXML("Defaul color.<font color='#ff0000'>red.<font color='#00ff00'>green</font>red again.</font>default again");
+        _richText = RichText::createWithXML("Default color.<font color='#ff0000'>red.<font color='#00ff00'>green</font>red again.</font>default again");
         _richText->ignoreContentAdaptWithSize(false);
         _richText->setContentSize(Size(100, 100));
 

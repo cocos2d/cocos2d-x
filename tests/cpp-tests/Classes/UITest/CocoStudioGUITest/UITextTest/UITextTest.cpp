@@ -228,7 +228,7 @@ bool UITextTest_IgnoreConentSize::init()
     {
         Size widgetSize = _widget->getContentSize();
 
-        Text* leftText = Text::create("ignore conent",
+        Text* leftText = Text::create("ignore content",
                                    "fonts/Marker Felt.ttf",10);
         leftText->setPosition(Vec2(widgetSize.width / 2.0f - 50,
                                 widgetSize.height / 2.0f));
@@ -240,7 +240,7 @@ bool UITextTest_IgnoreConentSize::init()
         _uiLayer->addChild(leftText);
 
 
-        Text* rightText = Text::create("ignore conent",
+        Text* rightText = Text::create("ignore content",
                                       "fonts/Marker Felt.ttf",10);
         rightText->setPosition(Vec2(widgetSize.width / 2.0f + 50,
                                    widgetSize.height / 2.0f));
@@ -274,7 +274,7 @@ bool UITextTest_Clone::init()
     {
         Size widgetSize = _widget->getContentSize();
 
-        Text* singleText = Text::create("ignore conent",
+        Text* singleText = Text::create("ignore content",
             "fonts/Marker Felt.ttf", 30);
         singleText->setPosition(Vec2(widgetSize.width / 2.0f - 80,
             widgetSize.height / 2.0f));

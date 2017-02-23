@@ -358,7 +358,7 @@ bool UIPageViewTouchPropagationTest::init()
         
         auto eventListener = EventListenerTouchOneByOne::create();
         eventListener->onTouchBegan = [](Touch* touch, Event* event) -> bool{
-            CCLOG("layout recieves touches");
+            CCLOG("layout receives touches");
             return true;
         };
         _eventDispatcher->addEventListenerWithSceneGraphPriority(eventListener, this);
@@ -985,7 +985,7 @@ bool UIPageViewIndicatorTest::init()
         Size widgetSize = _widget->getContentSize();
         
         // Add a label in which the dragpanel events will be displayed
-        _displayValueLabel = Text::create("PageView indidcator custom texture\nscale : 0.5, index color: RED", "fonts/Marker Felt.ttf", 16);
+        _displayValueLabel = Text::create("PageView indicator custom texture\nscale : 0.5, index color: RED", "fonts/Marker Felt.ttf", 16);
         _displayValueLabel->setAnchorPoint(Vec2(0.5f, -1.0f));
         _displayValueLabel->setPosition(Vec2(widgetSize.width / 2.0f,
                                              widgetSize.height / 2.0f +

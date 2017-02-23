@@ -146,7 +146,7 @@ var UITextTest_IgnoreConentSize = UIMainLayer.extend({
 
             this._bottomDisplayLabel.setString("");
 
-            var leftText = new ccui.Text("ignore conent", "Marker Felt",10);
+            var leftText = new ccui.Text("ignore content", "Marker Felt", 10);
             leftText.setPosition(cc.p(widgetSize.width / 2 - 50,
                 widgetSize.height / 2));
             leftText.ignoreContentAdaptWithSize(false);
@@ -156,7 +156,7 @@ var UITextTest_IgnoreConentSize = UIMainLayer.extend({
             leftText.setTouchEnabled(true);
             this._mainNode.addChild(leftText);
 
-            var rightText = new ccui.Text("ignore conent", "Marker Felt",10);
+            var rightText = new ccui.Text("ignore content", "Marker Felt", 10);
             rightText.setPosition(cc.p(widgetSize.width / 2 + 50,
                 widgetSize.height / 2));
             rightText.setString("Text line with break\nText line with break\nText line with break\nText line with break\n");
