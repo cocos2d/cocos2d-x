@@ -28,7 +28,7 @@ RenderTextureSave::RenderTextureSave()
     _target->retain();
     _target->setPosition(Vec2(s.width / 2, s.height / 2));
 
-    // note that the render texture is a Node, and contains a sprite of its texture for convience,
+    // note that the render texture is a Node, and contains a sprite of its texture for convenience,
     // so we can just parent it to the scene like any other Node
     this->addChild(_target, -1);
     

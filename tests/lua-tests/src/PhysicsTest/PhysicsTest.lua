@@ -28,7 +28,7 @@ local function initWithLayer(layer, callback)
 
    layer.toggleDebug = function(self) toggleDebugCallback(nil) end
    cc.MenuItemFont:setFontSize(18)
-   local item = cc.MenuItemFont:create("Toogle debug")
+   local item = cc.MenuItemFont:create("Toggle debug")
    item:registerScriptTapHandler(toggleDebugCallback)
    local menu = cc.Menu:create(item)
    layer:addChild(menu)
@@ -626,7 +626,7 @@ local function PhysicsDemoRayCast()
 
        local mode = 0
        cc.MenuItemFont:setFontSize(18)
-       local item = cc.MenuItemFont:create("Toogle debugChange Mode(any)")
+       local item = cc.MenuItemFont:create("Toggle debugChange Mode(any)")
        local function changeModeCallback(sender)
 	         mode = (mode + 1) % 3
 	  
@@ -1609,7 +1609,7 @@ local function PhysicsFixedUpdate()
 
   initWithLayer(layer, onEnter)
   Helper.titleLabel:setString("Fixed Update Test")
-  Helper.subtitleLabel:setString("The secend ball should not run across the wall")
+  Helper.subtitleLabel:setString("The second ball should not run across the wall")
   return layer
 end
 

@@ -56,7 +56,7 @@ public:
 	**/
 	void closedSocketAction(cocos2d::network::SIOClient* client);
 	
-	// test action handlers for main Test Client that connects to defaul namespace "" or "/"
+	// test action handlers for main Test Client that connects to default namespace "" or "/"
 	void onMenuSIOClientClicked(cocos2d::Ref *sender);
 	void onMenuTestMessageClicked(cocos2d::Ref *sender);
 	void onMenuTestEventClicked(cocos2d::Ref *sender);
