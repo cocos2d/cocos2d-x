@@ -503,7 +503,7 @@ var ScheduleUsingSchedulerTest = SchedulerTestLayer.extend({
         //----end9----
     },
     onExit: function() {
-        // should unscheudle here if it is not unscheduled before exit
+        // should unschedule here if it is not unscheduled before exit
         this.unscheduleAll();
         this._super();
     },

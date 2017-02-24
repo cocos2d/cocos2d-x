@@ -516,7 +516,7 @@ var DemoBigFlower = ParticleDemo.extend({
         this._emitter.radialAccel = -120;
         this._emitter.radialAccelVar = 0;
 
-        // tagential
+        // tangential
         this._emitter.tangentialAccel = 30;
         this._emitter.tangentialAccelVar = 0;
 

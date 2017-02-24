@@ -1577,7 +1577,7 @@ var TMXGIDObjectsTest = TileDemo.extend({
         this.addChild(map, 0, TAG_TILE_MAP);
 
         this.log("ContentSize:" + map.width + "," + map.height);
-        this.log("---. Iterating over all the group objets");
+        this.log("---. Iterating over all the group objects");
 
         var group = map.getObjectGroup("Object Layer 1");
         var array = group.getObjects();

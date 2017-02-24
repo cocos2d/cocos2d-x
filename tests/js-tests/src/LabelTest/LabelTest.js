@@ -1011,7 +1011,7 @@ var BMFontGlyphDesignerTest = AtlasDemo.extend({
         return "Testing Glyph Designer";
     },
     subtitle:function () {
-        return "You should see a font with shawdows and outline";
+        return "You should see a font with shadows and outline";
     },
 
     //

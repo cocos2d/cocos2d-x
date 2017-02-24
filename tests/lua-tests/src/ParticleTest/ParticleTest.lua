@@ -654,7 +654,7 @@ local function DemoBigFlower()
     emitter:setRadialAccel(-120)
     emitter:setRadialAccelVar(0)
 
-    -- tagential
+    -- tangential
     emitter:setTangentialAccel(30)
     emitter:setTangentialAccelVar(0)
 
@@ -725,7 +725,7 @@ local function DemoRotFlower()
     emitter:setRadialAccel(-120)
     emitter:setRadialAccelVar(0)
 
-    -- tagential
+    -- tangential
     emitter:setTangentialAccel(30)
     emitter:setTangentialAccelVar(0)
 
@@ -791,7 +791,7 @@ local function DemoModernArt()
     emitter:setRadialAccel(70)
     emitter:setRadialAccelVar(10)
 
-    -- tagential
+    -- tangential
     emitter:setTangentialAccel(80)
     emitter:setTangentialAccelVar(0)
 
