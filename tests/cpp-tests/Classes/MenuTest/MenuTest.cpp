@@ -331,7 +331,7 @@ MenuLayer3::MenuLayer3()
 
     auto label = Label::createWithBMFont("fonts/bitmapFontTest3.fnt", "Enable AtlasItem");
     auto item1 = MenuItemLabel::create(label, [&](Ref *sender) {
-		//CCLOG("Label clicked. Toogling AtlasSprite");
+		//CCLOG("Label clicked. Toggling AtlasSprite");
 		_disabledItem->setEnabled( ! _disabledItem->isEnabled() );
 		_disabledItem->stopAllActions();
 	});

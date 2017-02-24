@@ -822,7 +822,7 @@ void RawStencilBufferTest6::setup()
     RawStencilBufferTestAlphaTest::setup();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     auto winPoint = Vec2(Director::getInstance()->getWinSize());
-    //by default, glReadPixels will pack data with 4 bytes allignment
+    //by default, glReadPixels will pack data with 4 bytes alignment
     unsigned char bits[4] = {0,0,0,0};
     glStencilMask(~0);
     glClearStencil(0);

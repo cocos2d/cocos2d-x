@@ -1310,7 +1310,7 @@ std::string BMFontUnicode::title() const
 
 std::string BMFontUnicode::subtitle() const
 {
-    return "You should see 4 differnt labels:\nIn Spanish, Chinese, Russian and Korean";
+    return "You should see 4 different labels:\nIn Spanish, Chinese, Russian and Korean";
 }
 
 // BMFontInit
