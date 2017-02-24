@@ -320,7 +320,7 @@ var Sprite3DWithSkinTest = Sprite3DTestDemo.extend({
             if(rand2 < 0.33)
                 speed = animate.getSpeed() + Math.random();
             else if(rand2 < 0.66)            
-                spped = animate.getSpeed() - 0.5 * Math.random();
+                speed = animate.getSpeed() - 0.5 * Math.random();
 
             animate.setSpeed(inverse ? -speed : speed);
             sprite.runAction(new cc.RepeatForever(animate));
@@ -1153,7 +1153,7 @@ var Sprite3DWithSkinOutlineTest = Sprite3DTestDemo.extend({
             if(rand2 < 0.33)
                 speed = animate.getSpeed() + Math.random();
             else if(rand2 < 0.66)            
-                spped = animate.getSpeed() - 0.5 * Math.random();
+                speed = animate.getSpeed() - 0.5 * Math.random();
 
             animate.setSpeed(inverse ? -speed : speed);
             sprite.runAction(new cc.RepeatForever(animate));
