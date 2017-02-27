@@ -64,12 +64,16 @@ var LibrarySimpleAudioEngine = {
         return false;
     },
 
-    SimpleAudioEngine_stopBackgroundMusic: function()
+    SimpleAudioEngine_stopBackgroundMusic: function(releaseData)
     {
         if (Module.CocosDensionState.curBackgroundMusic)
         {
             Module.CocosDensionState.curBackgroundMusic.stop();
             Module.CocosDensionState.curBackgroundMusic = null;
+        }
+        if (releaseData)
+        {
+            delete Module.CocosDensionState.musicMap[filename];
         }
     },
 
@@ -234,6 +238,20 @@ var LibrarySimpleAudioEngine = {
             Module.CocosDensionState.effectMap[filename] = sound;
             Module.CocosDensionState.effectMapNum[filename] = Module.CocosDensionState.numEffectCount;
             Module.CocosDensionState.numEffectCount++;
+        }
+    },
+    
+    SimpleAudioEngine_unloadEffect: function(filenameP)
+    {
+        var filename = Pointer_stringify(filenameP);
+        if( Module.CocosDensionState.formats.length > 0)
+            filename = filename.substr(0, filename.lastIndexOf('.'));
+            
+        var value = Module.CocosDensionState.effectMap[filename];
+        if(value != undefined)
+        {
+            delete Module.CocosDensionState.effectMap[filename];
+            delete Module.CocosDensionState.effectMapNum[filename];
         }
     },
 
