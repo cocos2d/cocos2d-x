@@ -147,21 +147,23 @@ IAudioPlayer *AudioPlayerProvider::getAudioPlayer(const std::string &audioFilePa
                 auto pcmData = std::make_shared<PcmData>();
                 auto isSucceed = std::make_shared<bool>(false);
                 auto isReturnFromCache = std::make_shared<bool>(false);
+                auto isPreloadFinished = std::make_shared<bool>(false);
 
                 std::thread::id threadId = std::this_thread::get_id();
 
                 void* infoPtr = &info;
                 std::string url = info.url;
-                preloadEffect(info, [infoPtr, url, threadId, pcmData, isSucceed, isReturnFromCache](bool succeed, PcmData data){
+                preloadEffect(info, [infoPtr, url, threadId, pcmData, isSucceed, isReturnFromCache, isPreloadFinished](bool succeed, PcmData data){
                     // If the callback is in the same thread as caller's, it means that we found it
                     // in the cache
                     *isReturnFromCache = std::this_thread::get_id() == threadId;
                     *pcmData = data;
                     *isSucceed = succeed;
+                    *isPreloadFinished = true;
                     ALOGV("FileInfo (%p), Set isSucceed flag: %d, path: %s", infoPtr, succeed, url.c_str());
                 }, true);
 
-                if (!*isReturnFromCache)
+                if (!*isReturnFromCache && !*isPreloadFinished)
                 {
                     std::unique_lock<std::mutex> lk(_preloadWaitMutex);
                     // Wait for 2 seconds for the decoding in sub thread finishes.
