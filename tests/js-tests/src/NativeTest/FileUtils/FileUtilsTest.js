@@ -211,7 +211,7 @@ var TestWriteValueMap = fileUtilsBase.extend({
         var booleanObject = true;
         valueMap["data3"] = booleanObject;
 
-        //add interger to the plist
+        //add integer to the plist
         var intObject = 1024;
         valueMap["data4"] = intObject;
 
@@ -305,7 +305,7 @@ var TestWriteValueVector = fileUtilsBase.extend({
         var booleanObject = true;
         array[array.length] = booleanObject;
 
-        //add interger to the plist
+        //add integer to the plist
         var intObject = 1024;
         array[array.length] = intObject;
 

@@ -1795,7 +1795,7 @@ var SpriteFrameAliasNameTest = SpriteTestDemo.extend({
         // Animation using Sprite batch
         //
         // A cc.SpriteBatchNode can reference one and only one texture (one .png file)
-        // Sprites that are contained in that texture can be instantiatied as cc.Sprites and then added to the cc.SpriteBatchNode
+        // Sprites that are contained in that texture can be instantiated as cc.Sprites and then added to the cc.SpriteBatchNode
         // All cc.Sprites added to a cc.SpriteBatchNode are drawn in one OpenGL ES draw call
         // If the cc.Sprites are not added to a cc.SpriteBatchNode then an OpenGL ES draw call will be needed for each one, which is less efficient
         //

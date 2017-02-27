@@ -787,7 +787,7 @@ local function TextureAlias()
     sprite:setPosition(cc.p( s.width/3.0, s.height/2.0))
     ret:addChild(sprite)
 
-    -- this is the default filterting
+    -- this is the default filtering
     sprite:getTexture():setAntiAliasTexParameters()
 
     --
@@ -1134,7 +1134,7 @@ end
 --------------------------------------------------------------------
 local function TextureCache1()
     local ret = createTestLayer("TextureCache: remove",
-                    "4 images should appear: alias, antialias, alias, antilias")
+                    "4 images should appear: alias, antialias, alias, antialias")
     local s = cc.Director:getInstance():getWinSize()
 
     local sprite = nil
@@ -1180,7 +1180,7 @@ local function TextureDrawAtPoint()
 
     local function draw(transform, transformUpdated)
         local director = cc.Director:getInstance()
-        assert(nil ~= director, "Director is null when seting matrix stack")
+        assert(nil ~= director, "Director is null when setting matrix stack")
         director:pushMatrix(cc.MATRIX_STACK_TYPE.MODELVIEW)
         director:loadMatrix(cc.MATRIX_STACK_TYPE.MODELVIEW, transform)
 
@@ -1225,7 +1225,7 @@ local function TextureDrawInRect()
                                 "draws 2 textures using drawInRect")
     local function draw(transform, transformUpdated)
         local director = cc.Director:getInstance()
-        assert(nullptr ~= director, "Director is null when seting matrix stack")
+        assert(nullptr ~= director, "Director is null when setting matrix stack")
         director:pushMatrix(cc.MATRIX_STACK_TYPE.MODELVIEW)
         director:loadMatrix(cc.MATRIX_STACK_TYPE.MODELVIEW, transform)
 

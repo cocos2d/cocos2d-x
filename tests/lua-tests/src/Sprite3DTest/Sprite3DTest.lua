@@ -905,7 +905,7 @@ end
 function Sprite3DWithOBBPerfromanceTest.create()
     local layer = Sprite3DWithOBBPerfromanceTest.new()
     Helper.initWithLayer(layer)
-    Helper.titleLabel:setString("OBB Collison Perfromance Test")
+    Helper.titleLabel:setString("OBB Collision Perfromance Test")
     return layer
 end
 

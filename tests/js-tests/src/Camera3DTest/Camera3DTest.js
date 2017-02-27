@@ -716,7 +716,7 @@ var CameraCullingDemo = Camera3DTestDemo.extend({
         this.addChild(layer3D, 0);
         this._layer3D = layer3D;
 
-        // swich camera
+        // switch camera
         cc.MenuItemFont.setFontName("Arial");
         cc.MenuItemFont.setFontSize(20);
 
@@ -1110,7 +1110,7 @@ var FogTestDemo = Camera3DTestDemo.extend({
             onTouchesMoved:this.onTouchesMoved.bind(this)
         }, this);
 
-        // swich fog type
+        // switch fog type
         var label1 = new cc.LabelTTF("Linear", "Arial", 20);
         var item1 = new cc.MenuItemLabel(label1, this.switchTypeCallback, this);
         item1.setUserData(0);

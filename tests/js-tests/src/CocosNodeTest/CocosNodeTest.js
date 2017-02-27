@@ -702,7 +702,7 @@ var SchedulerTest1 = TestNodeDemo.extend({
 
         layer.schedule(this.doSomething);
         //UXLOG("retain count after schedule is %d", layer->retainCount());
-        // 3 : (object-c viersion), but win32 version is still 2, because CCTimer class don't save target.
+        // 3 : (objective-c version), but win32 version is still 2, because CCTimer class don't save target.
 
         layer.unschedule(this.doSomething);
         //UXLOG("retain count after unschedule is %d", layer->retainCount());

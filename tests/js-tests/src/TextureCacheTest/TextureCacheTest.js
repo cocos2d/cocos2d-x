@@ -146,7 +146,7 @@ var TextureCacheTest = TextureCacheTestBase.extend({
         this.addChild(this._labelPercent);
 
         var texCache = cc.textureCache;
-        // load textrues
+        // load textures
         texCache.addImageAsync("Images/HelloWorld.png", this.loadingCallBack, this);
         texCache.addImageAsync("Images/grossini.png", this.loadingCallBack, this);
         texCache.addImageAsync("Images/grossini_dance_01.png", this.loadingCallBack, this);

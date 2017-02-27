@@ -132,7 +132,7 @@ var RenderTextureSave = RenderTextureBaseLayer.extend({
 
     saveCB:function (sender) {
         if(!cc.sys.isNative){
-            cc.log("RenderTexture's saveToFile doesn't suppport on HTML5");
+            cc.log("RenderTexture's saveToFile doesn't support on HTML5");
             return;
         }
         var namePNG = "image-" + this._counter + ".png";

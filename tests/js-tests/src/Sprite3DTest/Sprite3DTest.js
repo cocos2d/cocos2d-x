@@ -606,7 +606,7 @@ var Sprite3DReskinTest = (function(){
 })();
 
 var Sprite3DWithOBBPerformanceTest = Sprite3DTestDemo.extend({
-    _title:"OBB Collison Performance Test",
+    _title:"OBB Collision Performance Test",
     _subtitle:"",
     _drawOBB:null,
     _drawDebug:null,
