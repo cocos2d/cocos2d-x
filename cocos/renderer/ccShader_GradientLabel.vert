@@ -17,7 +17,6 @@ uniform vec4 leftTopColor;
 uniform vec4 rightTopColor;
 uniform vec4 leftBottomColor;
 uniform vec4 rightBottomColor;
-uniform vec4 u_textColor;
 
 void main()
 {
