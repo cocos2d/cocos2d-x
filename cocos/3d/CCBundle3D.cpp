@@ -2124,8 +2124,8 @@ void Bundle3D::getModelRelativePath(const std::string& path)
     }
     else
     {
-        if(!path.empty() && path[0]=='/')
-            startPos = 1;
+//        if(!path.empty() && path[0]=='/')
+//            startPos = 1;
     }
     ssize_t index = path.find_last_of('/');
     _modelPath = path.substr(startPos, index + 1 - startPos);
