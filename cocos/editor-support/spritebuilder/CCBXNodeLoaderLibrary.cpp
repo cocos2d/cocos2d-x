@@ -28,7 +28,7 @@
 #include "CCBXScissorsNodeLoader.h"
 #include "CCBXScrollListViewLoader.h"
 #include "CCBXEditBoxLoader.h"
-#include "CCBXSclorllBarLoader.h"
+#include "CCBXScrollBarLoader.h"
 
 NS_CC_BEGIN
 namespace spritebuilder {

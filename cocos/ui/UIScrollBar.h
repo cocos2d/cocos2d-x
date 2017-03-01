@@ -216,6 +216,11 @@ public:
      * @return percent Percent value from 1 to 100.
      */
     float getPercent()const;
+    
+    /**
+     * @js NA
+     */
+    virtual void visit(cocos2d::Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;
 
     
     CC_DEPRECATED_ATTRIBUTE void addEventListenerSlider(Ref* target,SEL_ScrollBarPercentChangedEvent selector);
@@ -309,6 +314,11 @@ protected:
     virtual Widget* createCloneInstance() override;
     virtual void copySpecialProperties(Widget* model) override;
     virtual void adaptRenderers() override;
+    
+    void doLayout();
+    void recalcSizeScrollBar();
+    void recalcSizeBarBackground();
+    
 protected:
     Scale9Sprite*  _barRenderer;
     Size _barTextureSize;
@@ -371,6 +381,9 @@ protected:
     
     Size _windowSize;
     Size _sizeOfContent;
+    Size _sizeForBar;
+    
+    bool _doLayoutDirty = false;
 };
 
 }

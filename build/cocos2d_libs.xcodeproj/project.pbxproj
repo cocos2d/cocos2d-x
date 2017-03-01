@@ -5823,12 +5823,12 @@
 		C5F516221C822E060013B695 /* TabControlReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C5F516161C8216C60013B695 /* TabControlReader.cpp */; };
 		C5F516231C822E190013B695 /* UITabControl.h in Headers */ = {isa = PBXBuildFile; fileRef = C5F516111C8216660013B695 /* UITabControl.h */; };
 		C5F516251C822E470013B695 /* TabControlReader.h in Headers */ = {isa = PBXBuildFile; fileRef = C5F516171C8216C60013B695 /* TabControlReader.h */; };
-		CEEBF2281E5B2FD6004BADFB /* CCBXSclorllBarLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEEBF2261E5B2FD6004BADFB /* CCBXSclorllBarLoader.cpp */; };
-		CEEBF2291E5B2FD6004BADFB /* CCBXSclorllBarLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEEBF2261E5B2FD6004BADFB /* CCBXSclorllBarLoader.cpp */; };
-		CEEBF22A1E5B2FD6004BADFB /* CCBXSclorllBarLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEEBF2261E5B2FD6004BADFB /* CCBXSclorllBarLoader.cpp */; };
-		CEEBF22B1E5B2FD6004BADFB /* CCBXSclorllBarLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = CEEBF2271E5B2FD6004BADFB /* CCBXSclorllBarLoader.h */; };
-		CEEBF22C1E5B2FD6004BADFB /* CCBXSclorllBarLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = CEEBF2271E5B2FD6004BADFB /* CCBXSclorllBarLoader.h */; };
-		CEEBF22D1E5B2FD6004BADFB /* CCBXSclorllBarLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = CEEBF2271E5B2FD6004BADFB /* CCBXSclorllBarLoader.h */; };
+		CEEBF2281E5B2FD6004BADFB /* CCBXScrollBarLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEEBF2261E5B2FD6004BADFB /* CCBXScrollBarLoader.cpp */; };
+		CEEBF2291E5B2FD6004BADFB /* CCBXScrollBarLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEEBF2261E5B2FD6004BADFB /* CCBXScrollBarLoader.cpp */; };
+		CEEBF22A1E5B2FD6004BADFB /* CCBXScrollBarLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEEBF2261E5B2FD6004BADFB /* CCBXScrollBarLoader.cpp */; };
+		CEEBF22B1E5B2FD6004BADFB /* CCBXScrollBarLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = CEEBF2271E5B2FD6004BADFB /* CCBXScrollBarLoader.h */; };
+		CEEBF22C1E5B2FD6004BADFB /* CCBXScrollBarLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = CEEBF2271E5B2FD6004BADFB /* CCBXScrollBarLoader.h */; };
+		CEEBF22D1E5B2FD6004BADFB /* CCBXScrollBarLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = CEEBF2271E5B2FD6004BADFB /* CCBXScrollBarLoader.h */; };
 		CEEBF2301E5B30A3004BADFB /* UIScrollBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEEBF22E1E5B30A3004BADFB /* UIScrollBar.cpp */; };
 		CEEBF2311E5B30A3004BADFB /* UIScrollBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEEBF22E1E5B30A3004BADFB /* UIScrollBar.cpp */; };
 		CEEBF2321E5B30A3004BADFB /* UIScrollBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEEBF22E1E5B30A3004BADFB /* UIScrollBar.cpp */; };
@@ -7957,8 +7957,8 @@
 		C5F516151C8216C60013B695 /* CSTabControl_generated.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CSTabControl_generated.h; path = TabControlReader/CSTabControl_generated.h; sourceTree = "<group>"; };
 		C5F516161C8216C60013B695 /* TabControlReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TabControlReader.cpp; path = TabControlReader/TabControlReader.cpp; sourceTree = "<group>"; };
 		C5F516171C8216C60013B695 /* TabControlReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TabControlReader.h; path = TabControlReader/TabControlReader.h; sourceTree = "<group>"; };
-		CEEBF2261E5B2FD6004BADFB /* CCBXSclorllBarLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCBXSclorllBarLoader.cpp; path = spritebuilder/CCBXSclorllBarLoader.cpp; sourceTree = "<group>"; };
-		CEEBF2271E5B2FD6004BADFB /* CCBXSclorllBarLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCBXSclorllBarLoader.h; path = spritebuilder/CCBXSclorllBarLoader.h; sourceTree = "<group>"; };
+		CEEBF2261E5B2FD6004BADFB /* CCBXScrollBarLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCBXScrollBarLoader.cpp; path = spritebuilder/CCBXScrollBarLoader.cpp; sourceTree = "<group>"; };
+		CEEBF2271E5B2FD6004BADFB /* CCBXScrollBarLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCBXScrollBarLoader.h; path = spritebuilder/CCBXScrollBarLoader.h; sourceTree = "<group>"; };
 		CEEBF22E1E5B30A3004BADFB /* UIScrollBar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIScrollBar.cpp; sourceTree = "<group>"; };
 		CEEBF22F1E5B30A3004BADFB /* UIScrollBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIScrollBar.h; sourceTree = "<group>"; };
 		D0FD033B1A3B51AA00825BB5 /* CCAllocatorBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAllocatorBase.h; sourceTree = "<group>"; };
@@ -10464,8 +10464,8 @@
 		A5B57CAB1A3B916A00CCBDB4 /* spritebuilder */ = {
 			isa = PBXGroup;
 			children = (
-				CEEBF2261E5B2FD6004BADFB /* CCBXSclorllBarLoader.cpp */,
-				CEEBF2271E5B2FD6004BADFB /* CCBXSclorllBarLoader.h */,
+				CEEBF2261E5B2FD6004BADFB /* CCBXScrollBarLoader.cpp */,
+				CEEBF2271E5B2FD6004BADFB /* CCBXScrollBarLoader.h */,
 				A5B57CAC1A3B919900CCBDB4 /* CCBXAnimationManager.cpp */,
 				A5B57CAD1A3B919900CCBDB4 /* CCBXAnimationManager.h */,
 				A5B57CAE1A3B919900CCBDB4 /* CCBXButtonLoader.cpp */,
@@ -12579,7 +12579,7 @@
 				B665E2281AA80A6500DDB1C5 /* CCPUBillboardChain.h in Headers */,
 				5020A1B91D49912500E80C72 /* Json.h in Headers */,
 				B6DD2FD31B04825B00E47F5F /* DetourStatus.h in Headers */,
-				CEEBF22B1E5B2FD6004BADFB /* CCBXSclorllBarLoader.h in Headers */,
+				CEEBF22B1E5B2FD6004BADFB /* CCBXScrollBarLoader.h in Headers */,
 				15AE18A919AAD33D00C27E9E /* CCSpriteLoader.h in Headers */,
 				50693C601B6BF2AE005C5820 /* CCDownloader.h in Headers */,
 				B677B0D31B18492D006762CB /* CCNavMeshDebugDraw.h in Headers */,
@@ -13635,7 +13635,7 @@
 				507B40511C31BDD30067B53E /* Node3DReader.h in Headers */,
 				507B40521C31BDD30067B53E /* CCEventDispatcher.h in Headers */,
 				5020A1F71D49912500E80C72 /* SkeletonData.h in Headers */,
-				CEEBF22D1E5B2FD6004BADFB /* CCBXSclorllBarLoader.h in Headers */,
+				CEEBF22D1E5B2FD6004BADFB /* CCBXScrollBarLoader.h in Headers */,
 				507B40531C31BDD30067B53E /* CCTweenFunction.h in Headers */,
 				507B40541C31BDD30067B53E /* TriggerBase.h in Headers */,
 				507B40551C31BDD30067B53E /* btConvex2dConvex2dAlgorithm.h in Headers */,
@@ -14773,7 +14773,7 @@
 				B6CAB40A1AF9AA1A00B9B856 /* btMultiBodyJointLimitConstraint.h in Headers */,
 				15AE194819AAD35100C27E9E /* CCComAudio.h in Headers */,
 				1A01C69118F57BE800EFE3A6 /* CCDictionary.h in Headers */,
-				CEEBF22C1E5B2FD6004BADFB /* CCBXSclorllBarLoader.h in Headers */,
+				CEEBF22C1E5B2FD6004BADFB /* CCBXScrollBarLoader.h in Headers */,
 				B665E3211AA80A6500DDB1C5 /* CCPUOnClearObserverTranslator.h in Headers */,
 				5034CA36191D591100CE6051 /* ccShader_PositionTexture.frag in Headers */,
 				B24AA98C195A675C007B4522 /* CCFastTMXTiledMap.h in Headers */,
@@ -15844,7 +15844,7 @@
 				15AE1BB719AADFEF00C27E9E /* WebSocket.cpp in Sources */,
 				B6CAB21F1AF9AA1A00B9B856 /* btBoxBoxDetector.cpp in Sources */,
 				5020A20A1D49912500E80C72 /* Slot.c in Sources */,
-				CEEBF2281E5B2FD6004BADFB /* CCBXSclorllBarLoader.cpp in Sources */,
+				CEEBF2281E5B2FD6004BADFB /* CCBXScrollBarLoader.cpp in Sources */,
 				B665E20A1AA80A6500DDB1C5 /* CCPUBaseColliderTranslator.cpp in Sources */,
 				B665E3E61AA80A6600DDB1C5 /* CCPUSineForceAffectorTranslator.cpp in Sources */,
 				A5FD79BE1D2A63DC00E11101 /* HttpClient-emcc.cpp in Sources */,
@@ -16041,7 +16041,7 @@
 				503D4F6D1CE2BDBE0054A2D1 /* CCVRDistortion.cpp in Sources */,
 				507B3A581C31BDD30067B53E /* CCStencilStateManager.cpp in Sources */,
 				507B3A591C31BDD30067B53E /* CCComRender.cpp in Sources */,
-				CEEBF22A1E5B2FD6004BADFB /* CCBXSclorllBarLoader.cpp in Sources */,
+				CEEBF22A1E5B2FD6004BADFB /* CCBXScrollBarLoader.cpp in Sources */,
 				507B3A5A1C31BDD30067B53E /* SpriteReader.cpp in Sources */,
 				507B3A5B1C31BDD30067B53E /* btCollisionWorld.cpp in Sources */,
 				507B3A5C1C31BDD30067B53E /* b2MouseJoint.cpp in Sources */,
@@ -16757,7 +16757,7 @@
 				15AE18D019AAD33D00C27E9E /* CCNodeLoaderLibrary.cpp in Sources */,
 				15AE192C19AAD35100C27E9E /* CCActionFrame.cpp in Sources */,
 				B6CAB2461AF9AA1A00B9B856 /* btConvexConvexAlgorithm.cpp in Sources */,
-				CEEBF2291E5B2FD6004BADFB /* CCBXSclorllBarLoader.cpp in Sources */,
+				CEEBF2291E5B2FD6004BADFB /* CCBXScrollBarLoader.cpp in Sources */,
 				5020A1BD1D49912500E80C72 /* MeshAttachment.c in Sources */,
 				1A01C69918F57BE800EFE3A6 /* CCSet.cpp in Sources */,
 				1A01C69D18F57BE800EFE3A6 /* CCString.cpp in Sources */,

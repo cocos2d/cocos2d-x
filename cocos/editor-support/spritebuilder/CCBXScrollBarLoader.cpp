@@ -1,4 +1,4 @@
-#include "CCBXSclorllBarLoader.h"
+#include "CCBXScrollBarLoader.h"
 #include "ui/UIScrollBar.h"
 
 NS_CC_BEGIN

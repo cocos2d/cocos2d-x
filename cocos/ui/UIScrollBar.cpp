@@ -35,16 +35,13 @@ NS_CC_BEGIN
 namespace ui {
     
 static const int BASEBAR_RENDERER_Z = (-2);
-//static const int PROGRESSBAR_RENDERER_Z = (-2);
 static const int SLIDBALL_RENDERER_Z = (-1);
     
 IMPLEMENT_CLASS_GUI_INFO(ScrollBar)
     
 ScrollBar::ScrollBar():
 _barRenderer(nullptr),
-//_progressBarRenderer(nullptr),
 _barTextureSize(Size::ZERO),
-//_progressBarTextureSize(Size::ZERO),
 _slidBallNormalRenderer(nullptr),
 _slidBallPressedRenderer(nullptr),
 _slidBallDisabledRenderer(nullptr),
@@ -61,20 +58,16 @@ _isSliderBallPressedTextureLoaded(false),
 _isSliderBallDisabledTexturedLoaded(false),
 _isSliderBallMouseOverTexturedLoaded(false),
 _capInsetsBarRenderer(Rect::ZERO),
-//_capInsetsProgressBarRenderer(Rect::ZERO),
 _sliderEventListener(nullptr),
 _sliderEventSelector(nullptr),
 _eventCallback(nullptr),
 _barTexType(TextureResType::LOCAL),
-//_progressBarTexType(TextureResType::LOCAL),
 _ballNTexType(TextureResType::LOCAL),
 _ballPTexType(TextureResType::LOCAL),
 _ballDTexType(TextureResType::LOCAL),
 _ballMTexType(TextureResType::LOCAL),
 _barRendererAdaptDirty(true),
-//_progressBarRendererDirty(true),
 _textureFile(""),
-//_progressBarTextureFile(""),
 _slidBallNormalTextureFile(""),
 _slidBallPressedTextureFile(""),
 _slidBallDisabledTextureFile(""),
@@ -130,14 +123,8 @@ bool ScrollBar::init()
 void ScrollBar::initRenderer()
 {
     _barRenderer = Scale9Sprite::create();
-    //_progressBarRenderer = Scale9Sprite::create();
     _barRenderer->setScale9Enabled(false);
-    //_progressBarRenderer->setScale9Enabled(false);
-    
-    //_progressBarRenderer->setAnchorPoint(Vec2(0.0f, 0.5f));
-    
     addProtectedChild(_barRenderer, BASEBAR_RENDERER_Z, -1);
-    //addProtectedChild(_progressBarRenderer, PROGRESSBAR_RENDERER_Z, -1);
     
     _slidBallNormalRenderer = Scale9Sprite::create();
     _slidBallPressedRenderer = Scale9Sprite::create();
@@ -158,6 +145,17 @@ void ScrollBar::initRenderer()
     _slidBallRenderer->setCascadeOpacityEnabled(true);
     
     addProtectedChild(_slidBallRenderer, SLIDBALL_RENDERER_Z, -1);
+}
+
+void ScrollBar::visit(cocos2d::Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
+{
+    Widget::visit(renderer, parentTransform, parentFlags);
+    
+    if (_doLayoutDirty)
+    {
+        _doLayoutDirty = false;
+        doLayout();
+    }
 }
 
 void ScrollBar::loadBarTexture(const std::string& fileName, TextureResType texType)
@@ -198,7 +196,6 @@ void ScrollBar::setupBarTexture()
 {
     this->updateChildrenDisplayedRGBA();
     _barRendererAdaptDirty = true;
-    //_progressBarRendererDirty = true;
     updateContentSizeWithTextureSize(_barRenderer->getContentSize());
     _barTextureSize = _barRenderer->getContentSize();
 }
@@ -212,7 +209,6 @@ void ScrollBar::setScale9Enabled(bool able)
     
     _scale9Enabled = able;
     _barRenderer->setScale9Enabled(_scale9Enabled);
-    //_progressBarRenderer->setScale9Enabled(_scale9Enabled);
     
     if (_scale9Enabled)
     {
@@ -225,9 +221,7 @@ void ScrollBar::setScale9Enabled(bool able)
         ignoreContentAdaptWithSize(_prevIgnoreSize);
     }
     setCapInsetsBarRenderer(_capInsetsBarRenderer);
-    //setCapInsetProgressBarRenderer(_capInsetsProgressBarRenderer);
     _barRendererAdaptDirty = true;
-    //_progressBarRendererDirty = true;
 }
     
 bool ScrollBar::isScale9Enabled()const
@@ -247,7 +241,6 @@ void ScrollBar::ignoreContentAdaptWithSize(bool ignore)
 void ScrollBar::setCapInsets(const Rect &capInsets)
 {
     setCapInsetsBarRenderer(capInsets);
-    //setCapInsetProgressBarRenderer(capInsets);
 }
 
 void ScrollBar::setCapInsetsBarRenderer(const Rect &capInsets)
@@ -428,29 +421,19 @@ void ScrollBar::setPercent(float percent)
     _percent = std::min(std::max(percent, 0.f), 100.f);
     
     Vec2 sliderPos;
-    
-    if (_barType == BarType::kHorizontal) {
-        //calculate xPos
-        auto ballRenderer = _slidBallNormalRenderer;//_slidBallRenderer;
-        const float minPosX = ballRenderer->getContentSize().width * ballRenderer->getAnchorPoint().x * ballRenderer->getScaleX();
-        
-        const float barLen = _contentSize.width;
-        const float maxPosX = barLen - ballRenderer->getContentSize().width * (1 - ballRenderer->getAnchorPoint().x) * ballRenderer->getScaleX();
-        
+    const float barLen = (_barType == BarType::kHorizontal) ? _contentSize.width : _contentSize.height;
+    auto ballRenderer = _slidBallNormalRenderer;
+    const float minPosX = ballRenderer->getContentSize().width * ballRenderer->getAnchorPoint().x * ballRenderer->getScaleX();
+    const float maxPosX = barLen - ballRenderer->getContentSize().width * (1 - ballRenderer->getAnchorPoint().x) * ballRenderer->getScaleX();
+
+    if (_barType == BarType::kHorizontal)
+    {
         sliderPos.x = std::min(std::max(barLen * _percent / 100.f, minPosX), maxPosX);
-        
         sliderPos.y = _contentSize.height/2.f-ballRenderer->getContentSize().height*(0.5f + ballRenderer->getAnchorPoint().y) + ballRenderer->getContentSize().height;
     }
-    else {
-        //calculate yPos
-        auto ballRenderer = _slidBallNormalRenderer;//_slidBallRenderer;
-        const float minPosY = ballRenderer->getContentSize().height * ballRenderer->getAnchorPoint().y * ballRenderer->getScaleY();
-        
-        const float barLen = _contentSize.height;
-        const float maxPosY = barLen - ballRenderer->getContentSize().height * (1 - ballRenderer->getAnchorPoint().y) * ballRenderer->getScaleY();
-        
-        sliderPos.y = std::min(std::max(barLen * _percent / 100.f, minPosY), maxPosY);
-        
+    else
+    {
+        sliderPos.y = std::min(std::max(barLen * _percent / 100.f, minPosX), maxPosX);
         sliderPos.x = _contentSize.width/2.f-ballRenderer->getContentSize().width*(0.5f + ballRenderer->getAnchorPoint().x) + ballRenderer->getContentSize().width;
     }
     
@@ -459,29 +442,24 @@ void ScrollBar::setPercent(float percent)
     
 void ScrollBar::setBallPosition(const cocos2d::Vec2 & pos)
 {
-    auto posToSet = pos;
-    if (BarType::kHorizontal == _barType) {
-        auto ballRenderer = _slidBallNormalRenderer;//_slidBallRenderer;
-        const float minPosX = ballRenderer->getContentSize().width * ballRenderer->getAnchorPoint().x * ballRenderer->getScaleX();
-        
-        const float barLen = _contentSize.width;
-        const float maxPosX = barLen - ballRenderer->getContentSize().width * (1 - ballRenderer->getAnchorPoint().x) * ballRenderer->getScaleX();
-        
+    auto posToSet       = pos;
+    const float barLen  = (BarType::kHorizontal == _barType) ? _contentSize.width : _contentSize.height;
+    auto ballRenderer   = _slidBallNormalRenderer;
+    const float minPosX = ballRenderer->getContentSize().width * ballRenderer->getAnchorPoint().x * ballRenderer->getScaleX();
+    const float maxPosX = barLen - ballRenderer->getContentSize().width * (1 - ballRenderer->getAnchorPoint().x) * ballRenderer->getScaleX();
+
+    if (BarType::kHorizontal == _barType)
+    {
         posToSet.x = std::min(std::max(pos.x, minPosX), maxPosX);
         posToSet.y = _slidBallRenderer->getPosition().y;
     }
-    else {
-        auto ballRenderer = _slidBallNormalRenderer;//_slidBallRenderer;
-        const float minPosY = ballRenderer->getContentSize().height * ballRenderer->getAnchorPoint().y * ballRenderer->getScaleY();
-        
-        const float barLen = _contentSize.height;
-        const float maxPosY = barLen - ballRenderer->getContentSize().height * (1 - ballRenderer->getAnchorPoint().y) * ballRenderer->getScaleY();
-        
-        posToSet.y = std::min(std::max(pos.y, minPosY), maxPosY);
+    else
+    {
+        posToSet.y = std::min(std::max(pos.y, minPosX), maxPosX);
         posToSet.x = _slidBallRenderer->getPosition().x;
     }
-    _slidBallRenderer->setPosition(posToSet);
     
+    _slidBallRenderer->setPosition(posToSet);
     _percent = calcPercentByBallPos(pos);
 }
     
@@ -502,6 +480,7 @@ float ScrollBar::getImageScale() const
 void ScrollBar::setBarType(const BarType barType)
 {
     _barType = barType;
+    _doLayoutDirty = true;
 }
     
 bool ScrollBar::hitTest(const cocos2d::Vec2 &pt, const Camera *camera, Vec3 *p) const
@@ -521,9 +500,6 @@ bool ScrollBar::onTouchBegan(Touch *touch, Event *unusedEvent)
     bool pass = Widget::onTouchBegan(touch, unusedEvent);
     if (_hitted)
     {
-        //setPercent(getPercentWithBallPos(_touchBeganPosition));
-        //percentChangedEvent(EventType::ON_SLIDEBALL_DOWN);
-        
         bool isBallTouched = false;
         Vec3 p;
         Rect sliderBarRect;
@@ -556,7 +532,6 @@ bool ScrollBar::onTouchBegan(Touch *touch, Event *unusedEvent)
 void ScrollBar::onTouchMoved(Touch *touch, Event *unusedEvent)
 {
     _touchMovePosition = touch->getLocation();
-    //setPercent(getPercentWithBallPos(_touchMovePosition));
     
     Vec3 p;
     Widget::hitTest(_touchMovePosition, _hittedByCamera, &p);
@@ -639,47 +614,7 @@ Node* ScrollBar::getVirtualRenderer()
 
 void ScrollBar::barRendererScaleChangedWithSize()
 {
-    if (_barType == BarType::kHorizontal) {
-        _barLength = _contentSize.width;
-    }
-    else {
-        _barLength = _contentSize.height;
-    }
-    
-    if (_unifySize)
-    {
-        _barRenderer->setPreferredSize(_contentSize);
-    }
-    else if (_ignoreSize)
-    {
-        
-        _barRenderer->setScale(1.0f);
-    }
-    else
-    {
-        if (_scale9Enabled)
-        {
-            _barRenderer->setPreferredSize(_contentSize / _imageScale);
-            _barRenderer->setScale(_imageScale);
-        }
-        else
-        {
-            Size btextureSize = _barTextureSize;
-            if (btextureSize.width <= 0.0f || btextureSize.height <= 0.0f)
-            {
-                _barRenderer->setScale(1.0f);
-            }
-            else
-            {
-                float bscaleX = _contentSize.width / btextureSize.width;
-                float bscaleY = _contentSize.height / btextureSize.height;
-                _barRenderer->setScaleX(bscaleX);
-                _barRenderer->setScaleY(bscaleY);
-            }
-        }
-    }
-    _barRenderer->setPosition(_contentSize.width / 2.0f, _contentSize.height / 2.0f);
-    setPercent(_percent);
+    _doLayoutDirty = true;
 }
 
 void ScrollBar::onPressStateChangedToNormal()
@@ -758,10 +693,9 @@ float ScrollBar::getZoomScale()const
     return _zoomScale;
 }
 
-
 std::string ScrollBar::getDescription() const
 {
-    return "Slider";
+    return "ScrollBar";
 }
 
 Widget* ScrollBar::createCloneInstance()
@@ -885,25 +819,8 @@ void ScrollBar::setSizeOfContent(const cocos2d::Size & sizeOfContent)
     
 void ScrollBar::setContentSizeForBar(float w, float h)
 {
-    if (_slidBallNormalRenderer) {
-        _slidBallNormalRenderer->setContentSize(Size(w/_imageScale, h/_imageScale));
-        _slidBallNormalRenderer->setScale(_imageScale);
-    }
-    
-    if (_slidBallPressedRenderer) {
-        _slidBallPressedRenderer->setContentSize(Size( w/_imageScale, h/_imageScale));
-        _slidBallPressedRenderer->setScale(_imageScale);
-    }
-    
-    if (_slidBallDisabledRenderer) {
-        _slidBallDisabledRenderer->setContentSize(Size(w/_imageScale, h/_imageScale));
-        _slidBallDisabledRenderer->setScale(_imageScale);
-    }
-    
-    if (_slidBallMouseOverRenderer) {
-        _slidBallMouseOverRenderer->setContentSize(Size(w/_imageScale, h/_imageScale));
-        _slidBallMouseOverRenderer->setScale(_imageScale);
-    }
+    _sizeForBar = Size(w, h);
+    _doLayoutDirty = true;
 }
 
 float ScrollBar::calcPercentByBallPos(const cocos2d::Vec2 & pos) const
@@ -913,14 +830,14 @@ float ScrollBar::calcPercentByBallPos(const cocos2d::Vec2 & pos) const
     float maxVal = 0;
     float barLen = 0;
     if (BarType::kHorizontal == _barType) {
-        auto ballRenderer = _slidBallNormalRenderer;//_slidBallRenderer;
+        auto ballRenderer = _slidBallNormalRenderer;
         minVal = ballRenderer->getContentSize().width * ballRenderer->getAnchorPoint().x * ballRenderer->getScaleX();
         barLen = _contentSize.width;
         maxVal = barLen - ballRenderer->getContentSize().width * (1 - ballRenderer->getAnchorPoint().x) * ballRenderer->getScaleX();
         posVal = pos.x;
     }
     else {
-        auto ballRenderer = _slidBallNormalRenderer;//_slidBallRenderer;
+        auto ballRenderer = _slidBallNormalRenderer;
         minVal = ballRenderer->getContentSize().height * ballRenderer->getAnchorPoint().y * ballRenderer->getScaleY();
         barLen = _contentSize.height;
         maxVal = barLen - ballRenderer->getContentSize().height * (1 - ballRenderer->getAnchorPoint().y) * ballRenderer->getScaleY();
@@ -929,10 +846,160 @@ float ScrollBar::calcPercentByBallPos(const cocos2d::Vec2 & pos) const
     
     posVal = std::min(std::max(posVal, minVal), maxVal);
     
-    
     const float percent = (maxVal - minVal != 0)?(posVal-minVal)/(maxVal - minVal)*100:0;
     
     return percent;
+}
+    
+void ScrollBar::doLayout()
+{
+    if (_barType == BarType::kVertical)
+    {
+        _slidBallRenderer->setRotation(90.0f);
+        _barRenderer->setRotation(90.0f);
+    }
+
+    recalcSizeScrollBar();
+    recalcSizeBarBackground();
+}
+    
+void ScrollBar::recalcSizeScrollBar()
+{
+    Size horizontalSize = Size(_sizeForBar.width / _imageScale, _sizeForBar.height / _imageScale);
+    
+    if (getBarType() == ScrollBar::BarType::kVertical)
+    {
+        Size verticalSize = Size(horizontalSize.height, horizontalSize.width);
+        
+        if (verticalSize.width < _barTextureSize.width)
+            verticalSize.width = _barTextureSize.width;
+        
+        if (_slidBallNormalRenderer) {
+            _slidBallNormalRenderer->setContentSize(verticalSize);
+            _slidBallNormalRenderer->setScale(_imageScale);
+        }
+        
+        if (_slidBallPressedRenderer) {
+            _slidBallPressedRenderer->setContentSize(verticalSize);
+            _slidBallPressedRenderer->setScale(_imageScale);
+        }
+        
+        if (_slidBallDisabledRenderer) {
+            _slidBallDisabledRenderer->setContentSize(verticalSize);
+            _slidBallDisabledRenderer->setScale(_imageScale);
+        }
+        
+        if (_slidBallMouseOverRenderer) {
+            _slidBallMouseOverRenderer->setContentSize(verticalSize);
+            _slidBallMouseOverRenderer->setScale(_imageScale);
+        }
+    }
+    else
+    {
+        if (horizontalSize.width < _barTextureSize.width)
+            horizontalSize.width = _barTextureSize.width;
+        
+        if (_slidBallNormalRenderer) {
+            _slidBallNormalRenderer->setContentSize(horizontalSize);
+            _slidBallNormalRenderer->setScale(_imageScale);
+        }
+        
+        if (_slidBallPressedRenderer) {
+            _slidBallPressedRenderer->setContentSize(horizontalSize);
+            _slidBallPressedRenderer->setScale(_imageScale);
+        }
+        
+        if (_slidBallDisabledRenderer) {
+            _slidBallDisabledRenderer->setContentSize(horizontalSize);
+            _slidBallDisabledRenderer->setScale(_imageScale);
+        }
+        
+        if (_slidBallMouseOverRenderer) {
+            _slidBallMouseOverRenderer->setContentSize(horizontalSize);
+            _slidBallMouseOverRenderer->setScale(_imageScale);
+        }
+    }
+}
+    
+void ScrollBar::recalcSizeBarBackground()
+{
+    if (_barType == BarType::kHorizontal)
+    {
+        _barLength = _contentSize.width;
+        
+        if (_unifySize)
+        {
+            _barRenderer->setPreferredSize(_contentSize);
+        }
+        else if (_ignoreSize)
+        {
+            
+            _barRenderer->setScale(1.0f);
+        }
+        else
+        {
+            if (_scale9Enabled)
+            {
+                _barRenderer->setPreferredSize(_contentSize / _imageScale);
+                _barRenderer->setScale(_imageScale);
+            }
+            else
+            {
+                Size btextureSize = _barTextureSize;
+                if (btextureSize.width <= 0.0f || btextureSize.height <= 0.0f)
+                {
+                    _barRenderer->setScale(1.0f);
+                }
+                else
+                {
+                    float bscaleX = _contentSize.width / btextureSize.width;
+                    float bscaleY = _contentSize.height / btextureSize.height;
+                    _barRenderer->setScaleX(bscaleX);
+                    _barRenderer->setScaleY(bscaleY);
+                }
+            }
+        }
+    }
+    else
+    {
+        _barLength = _contentSize.height;
+        
+        if (_unifySize)
+        {
+            _barRenderer->setPreferredSize(Size(_contentSize.height, _contentSize.width));
+        }
+        else if (_ignoreSize)
+        {
+            
+            _barRenderer->setScale(1.0f);
+        }
+        else
+        {
+            if (_scale9Enabled)
+            {
+                _barRenderer->setPreferredSize(Size(_contentSize.height / _imageScale, _contentSize.width / _imageScale));
+                _barRenderer->setScale(_imageScale);
+            }
+            else
+            {
+                Size btextureSize = _barTextureSize;
+                if (btextureSize.width <= 0.0f || btextureSize.height <= 0.0f)
+                {
+                    _barRenderer->setScale(1.0f);
+                }
+                else
+                {
+                    float bscaleX = _contentSize.width / btextureSize.width;
+                    float bscaleY = _contentSize.height / btextureSize.height;
+                    _barRenderer->setScaleX(bscaleY);
+                    _barRenderer->setScaleY(bscaleX);
+                }
+            }
+        }
+    }
+    
+    _barRenderer->setPosition(_contentSize.width / 2.0f, _contentSize.height / 2.0f);
+    setPercent(_percent);
 }
     
 }
