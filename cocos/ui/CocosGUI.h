@@ -59,6 +59,7 @@ THE SOFTWARE.
 #include "ui/UILayoutComponent.h"
 #include "ui/UITabControl.h"
 #include "editor-support/cocostudio/CocosStudioExtension.h"
+#include "ui/UIScrollBar.h"
 
 /**
  * @addtogroup ui
