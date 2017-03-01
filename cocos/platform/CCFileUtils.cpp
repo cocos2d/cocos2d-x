@@ -1148,6 +1148,37 @@ std::string FileUtils::fullPathForFilename(const std::string &filename) const
     return "";
 }
 
+std::string FileUtils::shortPathForFilename(const std::string &filename) const
+{
+    if (!isAbsolutePath(filename))
+    {
+        return filename;
+    }
+    
+    std::string fullModelPath;
+    size_t startPos = 0;
+    if(!_defaultResRootPath.empty())
+    {
+        size_t defaultResRootPathPos = filename.find(_defaultResRootPath);
+        if(defaultResRootPathPos == 0)
+        {
+            startPos = _defaultResRootPath.size() + 1;
+        }
+        else
+        {
+            if(!filename.empty() && filename[0]=='/')
+                startPos = 1;
+        }
+    }
+    else
+    {
+        if(!filename.empty() && filename[0]=='/')
+            startPos = 1;
+    }
+    ssize_t index = filename.find_last_of('/');
+    return filename.substr(startPos, index + 1 - startPos);
+}
+
 std::string FileUtils::fullPathFromRelativeFile(const std::string &filename, const std::string &relativeFile)
 {
     return relativeFile.substr(0, relativeFile.rfind('/')+1) + getNewFilename(filename);

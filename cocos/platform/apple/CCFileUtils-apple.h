@@ -57,6 +57,7 @@ public:
     virtual bool writeToFile(const ValueMap& dict, const std::string& fullPath) override;
 
     virtual ValueVector getValueVectorFromFile(const std::string& filename) override;
+    virtual std::string shortPathForFilename(const std::string &filename) const override;
 #if CC_FILEUTILS_APPLE_ENABLE_OBJC
     void setBundle(NSBundle* bundle);
 #endif
@@ -67,6 +68,7 @@ private:
     virtual bool removeDirectory(const std::string& dirPath) override;
     virtual void valueMapCompact(ValueMap& valueMap) override;
     virtual void valueVectorCompact(ValueVector& valueVector) override;
+    
 
     struct IMPL;
     std::unique_ptr<IMPL> pimpl_;

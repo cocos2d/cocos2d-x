@@ -319,6 +319,10 @@ public:
      @since v2.1
      */
     virtual std::string fullPathForFilename(const std::string &filename) const;
+    
+    /** Returns the fullpath for a given filename.
+     */
+    virtual std::string shortPathForFilename(const std::string &filename) const;
 
     /**
      * Loads the filenameLookup dictionary from the contents of a filename.
@@ -666,8 +670,6 @@ public:
      * Removes archive file
      */
     bool removeArchive(const std::string& fileName);
-    
-    const std::string& getDefaultResRootPath() const { return _defaultResRootPath; }
 
 
 protected:

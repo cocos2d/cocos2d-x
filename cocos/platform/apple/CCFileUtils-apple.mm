@@ -373,6 +373,33 @@ std::string FileUtilsApple::getFullPathForDirectoryAndFilename(const std::string
     return "";
 }
 
+std::string FileUtilsApple::shortPathForFilename(const std::string &filename) const
+{
+    if (!isAbsolutePath(filename))
+    {
+        return filename;
+    }
+    
+    NSString *resourcePath = [pimpl_->getBundle() resourcePath];
+    
+    std::string defaultResRootPath = [resourcePath UTF8String];
+    
+    std::string fullModelPath;
+    size_t startPos = 0;
+    size_t defaultResRootPathPos = filename.find(defaultResRootPath);
+    if(defaultResRootPathPos == 0)
+    {
+        startPos = defaultResRootPath.size() + 1;
+    }
+    else
+    {
+        if(!filename.empty() && filename[0]=='/')
+            startPos = 1;
+    }
+    ssize_t index = filename.find_last_of('/');
+    return filename.substr(startPos, index + 1 - startPos);
+}
+
 ValueMap FileUtilsApple::getValueMapFromFile(const std::string& filename)
 {
     auto d(FileUtils::getInstance()->getDataFromFile(filename));
