@@ -1162,7 +1162,7 @@ std::string FileUtils::shortPathForFilename(const std::string &filename) const
         size_t defaultResRootPathPos = filename.find(_defaultResRootPath);
         if(defaultResRootPathPos == 0)
         {
-            startPos = _defaultResRootPath.size() + 1;
+            startPos = _defaultResRootPath.size();
         }
         else
         {
