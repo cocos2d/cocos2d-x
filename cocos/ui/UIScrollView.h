@@ -40,6 +40,7 @@ class EventFocusListener;
 namespace ui {
 
 class ScrollViewBar;
+class ScrollBar;
 
 /**
  *Scrollview scroll event type.
@@ -344,6 +345,10 @@ public:
      * @param callback A callback function with type of `ccScrollViewCallback`.
      */
     virtual void addEventListener(const ccScrollViewCallback& callback);
+    
+    void addScrollBarEventListener(cocos2d::ui::ScrollBar *target, const ccScrollViewCallback &callback);
+    void removeScrollBarEventListener(cocos2d::ui::ScrollBar *target);
+    
 
     //override functions
     virtual void addChild(Node* child)override;
@@ -694,6 +699,8 @@ protected:
 #pragma warning (pop)
 #endif
     ccScrollViewCallback _eventCallback;
+    
+    std::map<cocos2d::ui::ScrollBar*, ccScrollViewCallback> _scrollBarEventCallback;
 };
 
 }

@@ -27,6 +27,7 @@ THE SOFTWARE.
 
 #include "ui/UIWidget.h"
 #include "ui/GUIExport.h"
+#include "ui/UIScrollView.h"
 
 NS_CC_BEGIN
 
@@ -105,6 +106,13 @@ public:
     static ScrollBar* create(const std::string& barTextureName,
                           const std::string& normalBallTextureName,
                           TextureResType resType = TextureResType::LOCAL);
+    
+    
+    /** set scroll view for scroll bar
+     *
+     * @param scrollView scroll view
+     */
+    void setScrollView(ui::ScrollView *scrollView);
     
     /**
      * Load texture for slider bar.
@@ -318,6 +326,9 @@ protected:
     void doLayout();
     void recalcSizeScrollBar();
     void recalcSizeBarBackground();
+    void updateBarPosition();
+    void updateByWheelMouse(float scrollX, float scrollY);
+    void updatePercent(float percent);
     
 protected:
     Scale9Sprite*  _barRenderer;
@@ -329,6 +340,8 @@ protected:
     Scale9Sprite* _slidBallMouseOverRenderer;
     Node* _slidBallRenderer;
     Rect _ballsCapInsets;
+    ui::ScrollView *_dataScrollView = nullptr;
+    cocos2d::EventListenerMouse *_mouseListener = nullptr;
     
     float _barLength;
     float _percent;
@@ -384,6 +397,8 @@ protected:
     Size _sizeForBar;
     
     bool _doLayoutDirty = false;
+    bool _doCalcBarSize = false;
+    bool _doCalcBackgroundSize = false;
 };
 
 }
