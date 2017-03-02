@@ -36582,7 +36582,7 @@ int lua_cocos2dx_EventMouse_getMouseButton(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EventMouse_getMouseButton'", nullptr);
             return 0;
         }
-        int ret = cobj->getMouseButton();
+        int ret = (int)cobj->getMouseButton();
         tolua_pushnumber(tolua_S,(lua_Number)ret);
         return 1;
     }
@@ -36865,7 +36865,7 @@ int lua_cocos2dx_EventMouse_setMouseButton(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        int arg0;
+        cocos2d::EventMouse::MouseButton arg0;
 
         ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "cc.EventMouse:setMouseButton");
         if(!ok)
