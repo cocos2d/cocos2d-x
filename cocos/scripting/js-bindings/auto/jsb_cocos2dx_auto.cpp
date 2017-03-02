@@ -21312,7 +21312,7 @@ bool js_cocos2dx_EventMouse_getMouseButton(JSContext *cx, uint32_t argc, jsval *
     cocos2d::EventMouse* cobj = (cocos2d::EventMouse *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_EventMouse_getMouseButton : Invalid Native Object");
     if (argc == 0) {
-        int ret = cobj->getMouseButton();
+        int ret = (int)cobj->getMouseButton();
         JS::RootedValue jsret(cx);
         jsret = int32_to_jsval(cx, ret);
         args.rval().set(jsret);
@@ -21349,7 +21349,7 @@ bool js_cocos2dx_EventMouse_setMouseButton(JSContext *cx, uint32_t argc, jsval *
     cocos2d::EventMouse* cobj = (cocos2d::EventMouse *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_EventMouse_setMouseButton : Invalid Native Object");
     if (argc == 1) {
-        int arg0 = 0;
+        cocos2d::EventMouse::MouseButton arg0;
         ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_EventMouse_setMouseButton : Error processing arguments");
         cobj->setMouseButton(arg0);
