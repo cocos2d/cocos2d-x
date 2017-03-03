@@ -443,6 +443,11 @@ public:
     virtual void setSearchPaths(const std::vector<std::string>& searchPaths);
 
     /**
+     * Get default resource root path.
+     */
+    const std::string& getDefaultResourceRootPath() const;
+
+    /**
      * Set default resource root path.
      */
     void setDefaultResourceRootPath(const std::string& path);
@@ -872,6 +877,11 @@ protected:
      * The lower index of the element in this vector, the higher priority for this search path.
      */
     std::vector<std::string> _searchPathArray;
+
+    /**
+     * The search paths which was set by 'setSearchPaths' / 'addSearchPath'.
+     */
+    std::vector<std::string> _originalSearchPaths;
 
     /**
      *  The default root path of resources.

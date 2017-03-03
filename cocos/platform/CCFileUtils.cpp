@@ -860,9 +860,11 @@ std::string FileUtils::fullPathFromRelativeFile(const std::string &filename, con
 void FileUtils::setSearchResolutionsOrder(const std::vector<std::string>& searchResolutionsOrder)
 {
     bool existDefault = false;
+    std::vector<std::string> searchResolutionOrderCopied = searchResolutionsOrder;
+
     _fullPathCache.clear();
     _searchResolutionsOrderArray.clear();
-    for(const auto& iter : searchResolutionsOrder)
+    for(const auto& iter : searchResolutionOrderCopied)
     {
         std::string resolutionDirectory = iter;
         if (!existDefault && resolutionDirectory == "")
@@ -904,7 +906,7 @@ const std::vector<std::string>& FileUtils::getSearchResolutionsOrder() const
 
 const std::vector<std::string>& FileUtils::getSearchPaths() const
 {
-    return _searchPathArray;
+    return _originalSearchPaths;
 }
 
 void FileUtils::setWritablePath(const std::string& writablePath)
@@ -912,36 +914,54 @@ void FileUtils::setWritablePath(const std::string& writablePath)
     _writablePath = writablePath;
 }
 
+const std::string& FileUtils::getDefaultResourceRootPath() const
+{
+    return _defaultResRootPath;
+}
+
 void FileUtils::setDefaultResourceRootPath(const std::string& path)
 {
-    _defaultResRootPath = path;
+    if (_defaultResRootPath != path)
+    {
+        _fullPathCache.clear();
+        _defaultResRootPath = path;
+        if (!_defaultResRootPath.empty() && _defaultResRootPath[_defaultResRootPath.length()-1] != '/')
+        {
+            _defaultResRootPath += '/';
+        }
+
+        // Updates search paths
+        setSearchPaths(_originalSearchPaths);
+    }
 }
 
 void FileUtils::setSearchPaths(const std::vector<std::string>& searchPaths)
 {
     bool existDefaultRootPath = false;
+    _originalSearchPaths = searchPaths;
 
     _fullPathCache.clear();
     _searchPathArray.clear();
-    for (const auto& iter : searchPaths)
+
+    for (const auto& path : _originalSearchPaths)
     {
         std::string prefix;
-        std::string path;
+        std::string fullPath;
 
-        if (!isAbsolutePath(iter))
+        if (!isAbsolutePath(path))
         { // Not an absolute path
             prefix = _defaultResRootPath;
         }
-        path = prefix + (iter);
+        fullPath = prefix + path;
         if (!path.empty() && path[path.length()-1] != '/')
         {
-            path += "/";
+            fullPath += "/";
         }
         if (!existDefaultRootPath && path == _defaultResRootPath)
         {
             existDefaultRootPath = true;
         }
-        _searchPathArray.push_back(path);
+        _searchPathArray.push_back(fullPath);
     }
 
     if (!existDefaultRootPath)
@@ -962,10 +982,21 @@ void FileUtils::addSearchPath(const std::string &searchpath,const bool front)
     {
         path += "/";
     }
+
     if (front) {
+        _originalSearchPaths.insert(_originalSearchPaths.begin(), searchpath);
         _searchPathArray.insert(_searchPathArray.begin(), path);
     } else {
-        _searchPathArray.push_back(path);
+        _originalSearchPaths.push_back(searchpath);
+
+        if (!_searchPathArray.empty() && _searchPathArray[_searchPathArray.size()-1] == _defaultResRootPath)
+        {
+            _searchPathArray.insert(_searchPathArray.begin() + _searchPathArray.size() -1, path);
+        }
+        else
+        {
+            _searchPathArray.push_back(path);
+        }
     }
 }
 
