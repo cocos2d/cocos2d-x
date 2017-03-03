@@ -182,6 +182,7 @@ public:
     //
     virtual Sequence* clone() const override;
     virtual Sequence* reverse() const override;
+    virtual bool isDone() const override;
     virtual void startWithTarget(Node *target) override;
     virtual void stop(void) override;
     /**

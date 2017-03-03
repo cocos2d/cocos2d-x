@@ -422,6 +422,11 @@ Sequence* Sequence::reverse() const
         return nullptr;
 }
 
+bool Sequence::isDone() const
+{
+  return (_last == 1) && _actions[1]->isDone();
+}
+
 //
 // Repeat
 //
