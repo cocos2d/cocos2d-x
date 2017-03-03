@@ -692,6 +692,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClCompile Include="..\ui\UIRelativeBox.cpp" />
     <ClCompile Include="..\ui\UIRichText.cpp" />
     <ClCompile Include="..\ui\UIScale9Sprite.cpp" />
+    <ClCompile Include="..\ui\UIScrollBar.cpp" />
     <ClCompile Include="..\ui\UIScrollView.cpp" />
     <ClCompile Include="..\ui\UIScrollViewBar.cpp" />
     <ClCompile Include="..\ui\UISlider.cpp" />
@@ -1354,6 +1355,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="..\ui\UIRelativeBox.h" />
     <ClInclude Include="..\ui\UIRichText.h" />
     <ClInclude Include="..\ui\UIScale9Sprite.h" />
+    <ClInclude Include="..\ui\UIScrollBar.h" />
     <ClInclude Include="..\ui\UIScrollView.h" />
     <ClInclude Include="..\ui\UISlider.h" />
     <ClInclude Include="..\ui\UITabControl.h" />

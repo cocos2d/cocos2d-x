@@ -1980,6 +1980,7 @@
     <ClCompile Include="..\vr\CCVRGenericRenderer.cpp">
       <Filter>vr</Filter>
     </ClCompile>
+    <ClCompile Include="..\ui\UIScrollBar.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\editor-support\spritebuilder\CCBXScrollListViewLoader.cpp">
@@ -3961,6 +3962,7 @@
     <ClInclude Include="..\editor-support\spritebuilder\CCBXNodeLoaderCache.h">
       <Filter>spritebuilder\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\ui\UIScrollBar.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\editor-support\spritebuilder\CCBXScrollListViewLoader.h">
