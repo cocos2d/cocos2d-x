@@ -235,11 +235,11 @@ void ScrollView::setInnerContainerPosition(const Vec2 &position)
         _eventCallback(this, EventType::CONTAINER_MOVED);
     }
     
-    if (_scrollBarEventCallback.empty())
+    if (!_scrollBarEventCallback.empty())
     {
         for (auto it : _scrollBarEventCallback)
          {
-             it.second(this, EventType::CONTAINER_MOVED);
+             it.second(it.first, this, EventType::CONTAINER_MOVED);
          }
     }
     if (_ccEventCallback)
@@ -1124,6 +1124,13 @@ void ScrollView::dispatchEvent(ScrollviewEventType scrollEventType, EventType ev
     {
         _eventCallback(this, eventType);
     }
+    
+    if (!_scrollBarEventCallback.empty())
+    {
+        for (auto it : _scrollBarEventCallback)
+            it.second(it.first, this, eventType);
+    }
+    
     if (_ccEventCallback)
     {
         _ccEventCallback(this, static_cast<int>(eventType));
@@ -1142,7 +1149,7 @@ void ScrollView::addEventListener(const ccScrollViewCallback& callback)
     _eventCallback = callback;
 }
     
-void ScrollView::addScrollBarEventListener(cocos2d::ui::ScrollBar *target, const ccScrollViewCallback &callback)
+void ScrollView::addScrollBarEventListener(cocos2d::ui::ScrollBar *target, const ccScrollBarViewCallback &callback)
 {
     auto it = _scrollBarEventCallback.find(target);
     if (it == _scrollBarEventCallback.end())

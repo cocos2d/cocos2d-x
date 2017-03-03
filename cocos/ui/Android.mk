@@ -19,6 +19,7 @@ UIPageView.cpp \
 UIPageViewIndicator.cpp \
 UIScrollView.cpp \
 UIScrollViewBar.cpp \
+UIScrollBar.cpp \
 UIButton.cpp \
 UIAbstractCheckButton.cpp \
 UICheckBox.cpp \

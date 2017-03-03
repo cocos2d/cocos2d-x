@@ -110,6 +110,7 @@ public:
      * A callback which would be called when a ScrollView is scrolling.
      */
     typedef std::function<void(Ref*, EventType)> ccScrollViewCallback;
+    typedef std::function<void(ui::ScrollBar*, Ref*, EventType)> ccScrollBarViewCallback;
 
     /**
      * Default constructor
@@ -346,7 +347,7 @@ public:
      */
     virtual void addEventListener(const ccScrollViewCallback& callback);
     
-    void addScrollBarEventListener(cocos2d::ui::ScrollBar *target, const ccScrollViewCallback &callback);
+    void addScrollBarEventListener(cocos2d::ui::ScrollBar *target, const ccScrollBarViewCallback &callback);
     void removeScrollBarEventListener(cocos2d::ui::ScrollBar *target);
     
 
@@ -700,7 +701,7 @@ protected:
 #endif
     ccScrollViewCallback _eventCallback;
     
-    std::map<cocos2d::ui::ScrollBar*, ccScrollViewCallback> _scrollBarEventCallback;
+    std::map<cocos2d::ui::ScrollBar*, ccScrollBarViewCallback> _scrollBarEventCallback;
 };
 
 }

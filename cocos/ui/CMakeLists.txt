@@ -58,6 +58,7 @@ set(COCOS_UI_SRC
   ui/UIScale9Sprite.cpp
   ui/UIScrollView.cpp
   ui/UIScrollViewBar.cpp
+  ui/UIScrollBar.cpp
   ui/UISlider.cpp
   ui/UIText.cpp
   ui/UITextAtlas.cpp

@@ -27,6 +27,7 @@ CCBXScale9SpriteLoader.cpp \
 CCBXScissorsNodeLoader.cpp \
 CCBXScrollListViewLoader.cpp \
 CCBXScrollViewLoader.cpp \
+CCBXScrollBarLoader.cpp \
 CCBXSequence.cpp \
 CCBXSequenceProperty.cpp \
 CCBXSliderLoader.cpp \

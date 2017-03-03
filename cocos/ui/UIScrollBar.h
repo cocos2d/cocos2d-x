@@ -326,7 +326,7 @@ protected:
     void doLayout();
     void recalcSizeScrollBar();
     void recalcSizeBarBackground();
-    void updateBarPosition();
+    void updateBarPosition(bool isSetPercent = false);
     void updateByWheelMouse(float scrollX, float scrollY);
     void updatePercent(float percent);
     

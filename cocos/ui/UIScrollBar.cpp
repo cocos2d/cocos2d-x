@@ -81,6 +81,11 @@ _imageScale(1.0f)
 
 ScrollBar::~ScrollBar()
 {
+    if (_dataScrollView)
+    {
+        _dataScrollView->removeScrollBarEventListener(this);
+    }
+    
     _sliderEventListener = nullptr;
     _sliderEventSelector = nullptr;
     
@@ -570,9 +575,9 @@ void ScrollBar::setScrollView(cocos2d::ui::ScrollView *scrollView)
         setSizeOfContent({_dataScrollView->getInnerContainer()->getContentSize().height, _dataScrollView->getInnerContainer()->getContentSize().width});
     }
 
-    _dataScrollView->addEventListener([this](cocos2d::Ref* target, cocos2d::ui::ScrollView::EventType type)
+    _dataScrollView->addScrollBarEventListener(this, [this](cocos2d::ui::ScrollBar *scrollBar, cocos2d::Ref* target, cocos2d::ui::ScrollView::EventType type)
     {
-        if (target == _dataScrollView)
+        if (scrollBar == this)
         {
             updateBarPosition();
         }
@@ -584,22 +589,49 @@ void ScrollBar::setScrollView(cocos2d::ui::ScrollView *scrollView)
         cocos2d::EventMouse *mouseEvent = dynamic_cast<cocos2d::EventMouse *>(e);
         if (mouseEvent)
         {
-            this->updateByWheelMouse(mouseEvent->getScrollX(), mouseEvent->getScrollY());
+            this->updateByWheelMouse(mouseEvent->getScrollX(), -mouseEvent->getScrollY());
         }
     };
     cocos2d::Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(_mouseListener, this);
+    
+    updateBarPosition(true);
 }
     
-void ScrollBar::updateBarPosition()
+void ScrollBar::updateBarPosition(bool isSetPercent)
 {
     if (!_slidBallPressedRenderer->isVisible())
     {
-        
-        float minY = _dataScrollView->getContentSize().height - _dataScrollView->getInnerContainerSize().height;
-        float h = -minY;
-        float percent = (h - (_dataScrollView->getInnerContainerPosition().y - minY)) * 100.0f / h;
+        if (BarType::kVertical == _barType)
+        {
+            float minY = _dataScrollView->getContentSize().height - _dataScrollView->getInnerContainerSize().height;
+            float h = -minY;
+            float percent = (h - (_dataScrollView->getInnerContainerPosition().y - minY)) * 100.0f / h;
+            
+            if (isSetPercent)
+            {
+                setPercent(percent);
+            }
+            else
+            {
+                updatePercent(percent);
+            }
+        }
+        else
+        {
+            float minX = _dataScrollView->getContentSize().width - _dataScrollView->getInnerContainerSize().width;
+            float w = -minX;
+            float percent = (w - (_dataScrollView->getInnerContainerPosition().x - minX)) * 100.0f / w;
+            
+            if (isSetPercent)
+            {
+                setPercent(percent);
+            }
+            else
+            {
+                updatePercent(percent);
+            }
+        }
 
-        updatePercent(percent);
     }
 }
     
@@ -697,9 +729,9 @@ void ScrollBar::updateByWheelMouse(float scrollX, float scrollY)
     if (!isVisible())
         return ;
     
-    if (_barType == BarType::kVertical)
+    const cocos2d::Size& bbox = _dataScrollView->getContentSize();
+    if (_barType == BarType::kVertical && fabs(scrollY) > MATH_EPSILON)
     {
-        const cocos2d::Size& bbox = _dataScrollView->getContentSize();
         bool canScrolling = bbox.height < _dataScrollView->getInnerContainerSize().height;
         
         if (canScrolling)
@@ -711,12 +743,53 @@ void ScrollBar::updateByWheelMouse(float scrollX, float scrollY)
             if (0 <= newPrecent && newPrecent <= 100.0f)
             {
                 updatePercent(newPrecent);
-                _dataScrollView->jumpToPercentVertical(getPercent());
+                _dataScrollView->jumpToPercentVertical(100.0f - getPercent());
+            }
+            else
+            {
+                if (newPrecent < 0)
+                {
+                    updatePercent(0);
+                    _dataScrollView->jumpToPercentVertical(100.0f - getPercent());
+                }
+                else if (newPrecent > 100)
+                {
+                    updatePercent(100);
+                    _dataScrollView->jumpToPercentVertical(100.0f - getPercent());
+                }
             }
         }
     }
-    else
+    else if (_barType == BarType::kHorizontal && fabs(scrollX) > MATH_EPSILON)
     {
+        bool canScrolling = bbox.width < _dataScrollView->getInnerContainerSize().width;
+        
+        if (canScrolling)
+        {
+            bool isGreatZero = (scrollX > 0.0f);
+            float addPercent = (isGreatZero ? ceilf(scrollX) : floorf(scrollX));
+            float newPrecent = _percent + addPercent;
+            
+            if (0 <= newPrecent && newPrecent <= 100.0f)
+            {
+                updatePercent(newPrecent);
+                _dataScrollView->jumpToPercentHorizontal(getPercent());
+            }
+            else
+            {
+                if (newPrecent < 0)
+                {
+                    updatePercent(0);
+                    _dataScrollView->jumpToPercentHorizontal(getPercent());
+                }
+                else if (newPrecent > 100)
+                {
+                    updatePercent(100);
+                    _dataScrollView->jumpToPercentHorizontal(getPercent());
+                }
+            }
+        }
+
     }
 }
 
