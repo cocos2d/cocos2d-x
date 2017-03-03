@@ -32,6 +32,7 @@
     <ClInclude Include="..\UIRichText.h" />
     <ClInclude Include="..\UIScale9Sprite.h" />
     <ClInclude Include="..\UIScrollView.h" />
+    <ClInclude Include="..\UIScrollBar.h" />
     <ClInclude Include="..\UISlider.h" />
     <ClInclude Include="..\UIText.h" />
     <ClInclude Include="..\UITextAtlas.h" />
@@ -66,6 +67,7 @@
     <ClCompile Include="..\UIScale9Sprite.cpp" />
     <ClCompile Include="..\UIScrollView.cpp" />
     <ClCompile Include="..\UIScrollViewBar.cpp" />
+    <ClCompile Include="..\UIScrollBar.cpp" />
     <ClCompile Include="..\UISlider.cpp" />
     <ClCompile Include="..\UIText.cpp" />
     <ClCompile Include="..\UITextAtlas.cpp" />

@@ -26,6 +26,7 @@ set(COCOS_SB_SRC
   editor-support/spritebuilder/CCBXScissorsNodeLoader.cpp
   editor-support/spritebuilder/CCBXScrollListViewLoader.cpp
   editor-support/spritebuilder/CCBXScrollViewLoader.cpp
+  editor-support/spritebuilder/CCBXScrollBarLoader.cpp
   editor-support/spritebuilder/CCBXSequence.cpp
   editor-support/spritebuilder/CCBXSequenceProperty.cpp
   editor-support/spritebuilder/CCBXSliderLoader.cpp

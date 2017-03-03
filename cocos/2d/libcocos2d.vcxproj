@@ -586,6 +586,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClCompile Include="..\editor-support\spritebuilder\CCBXScissorsNodeLoader.cpp" />
     <ClCompile Include="..\editor-support\spritebuilder\CCBXScrollListViewLoader.cpp" />
     <ClCompile Include="..\editor-support\spritebuilder\CCBXScrollViewLoader.cpp" />
+    <ClCompile Include="..\editor-support\spritebuilder\CCBXScrollBarLoader.cpp" />
     <ClCompile Include="..\editor-support\spritebuilder\CCBXSequence.cpp" />
     <ClCompile Include="..\editor-support\spritebuilder\CCBXSequenceProperty.cpp" />
     <ClCompile Include="..\editor-support\spritebuilder\CCBXSliderLoader.cpp" />
@@ -1233,6 +1234,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="..\editor-support\spritebuilder\CCBXScissorsNodeLoader.h" />
     <ClInclude Include="..\editor-support\spritebuilder\CCBXScrollListViewLoader.h" />
     <ClInclude Include="..\editor-support\spritebuilder\CCBXScrollViewLoader.h" />
+    <ClInclude Include="..\editor-support\spritebuilder\CCBXScrollBarLoader.h" />
     <ClInclude Include="..\editor-support\spritebuilder\CCBXSequence.h" />
     <ClInclude Include="..\editor-support\spritebuilder\CCBXSequenceProperty.h" />
     <ClInclude Include="..\editor-support\spritebuilder\CCBXSliderLoader.h" />
