@@ -997,8 +997,6 @@ bool Label::setTTFConfigInternal(const TTFConfig& ttfConfig)
 
     if (_fontConfig.italics)
         this->enableItalics();
-    if (_fontConfig.bold)
-        this->enableBold();
     if (_fontConfig.underline)
         this->enableUnderline();
     if (_fontConfig.strikethrough)
@@ -1153,6 +1151,15 @@ void Label::enableBold()
         // add one to kerning
         setAdditionalKerning(_additionalKerning+1);
         _boldEnabled = true;
+    }
+}
+
+void cocos2d::Label::setBold(bool bold /*= true*/)
+{
+    if (_currentLabelType == LabelType::TTF && _fontConfig.bold != bold)
+    {
+        _fontConfig.bold = bold;
+        setTTFConfig(_fontConfig);
     }
 }
 
