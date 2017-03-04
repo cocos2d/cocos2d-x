@@ -615,7 +615,7 @@ public:
     virtual void* buffer() const override {
         return nullptr;
     }
-    virtual ssize_t GetLength(){
+    virtual ssize_t GetLength() override{
         return 0;
     }
 };
