@@ -130,6 +130,13 @@ public:
      */
     Action* getActionByTag(int tag, const Node *target) const;
 
+    /** Gets an actions list on a target.
+     *
+     *
+     *
+     */
+    Action** getActions(const Node *target);
+
     /** Returns the numbers of actions that are running in a certain target. 
      * Composable actions are counted as 1 action. Example:
      * - If you are running 1 Sequence of 7 actions, it will return 1.

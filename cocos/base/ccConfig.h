@@ -141,7 +141,7 @@ THE SOFTWARE.
  * To enable set it to 1. Enabled by default.
  */
 #ifndef CC_NODE_RENDER_SUBPIXEL
-#define CC_NODE_RENDER_SUBPIXEL 0
+#define CC_NODE_RENDER_SUBPIXEL 1
 #endif
 
 /** @def CC_SPRITEBATCHNODE_RENDER_SUBPIXEL
@@ -150,7 +150,7 @@ THE SOFTWARE.
  * To enable set it to 1. Enabled by default.
  */
 #ifndef CC_SPRITEBATCHNODE_RENDER_SUBPIXEL
-#define CC_SPRITEBATCHNODE_RENDER_SUBPIXEL 0
+#define CC_SPRITEBATCHNODE_RENDER_SUBPIXEL 1
 #endif
 
 /** @def CC_TEXTURE_ATLAS_USE_VAO
@@ -161,13 +161,13 @@ THE SOFTWARE.
  */
 #ifndef CC_TEXTURE_ATLAS_USE_VAO
     #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-        #define CC_TEXTURE_ATLAS_USE_VAO 0
+        #define CC_TEXTURE_ATLAS_USE_VAO 1
     #else
         /* Some Windows display adapter driver cannot support VAO.
          * Some android devices cannot support VAO very well, so we disable it by default for android platform.
          * Blackberry also doesn't support this feature.
          */
-		#define CC_TEXTURE_ATLAS_USE_VAO 0
+		#define CC_TEXTURE_ATLAS_USE_VAO 1
     #endif
 #endif
 
@@ -266,14 +266,14 @@ THE SOFTWARE.
 /** Use 3d physics integration API. */
 #ifndef CC_USE_3D_PHYSICS
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-#define CC_USE_3D_PHYSICS 1
+#define CC_USE_3D_PHYSICS 0
 #endif
 #endif
 
 #if (CC_USE_3D_PHYSICS)
 /** Use bullet physics engine. */
 #ifndef CC_ENABLE_BULLET_INTEGRATION
-#define CC_ENABLE_BULLET_INTEGRATION 1
+#define CC_ENABLE_BULLET_INTEGRATION 0
 #endif
 #endif
 

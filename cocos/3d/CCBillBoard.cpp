@@ -103,7 +103,7 @@ void BillBoard::visit(Renderer *renderer, const Mat4& parentTransform, uint32_t 
         return;
     }
 
-    if(Director::getInstance()->getRunningScene()->getShadowState())
+    /*if(Director::getInstance()->getRunningScene()->getShadowState())
     {
       if(Director::getInstance()->getRunningScene()->getCamera() && Director::getInstance()->getRunningScene()->getCamera()->getIndex() == Director::getInstance()->getRunningScene()->getShadowCamera()->getIndex())
       {
@@ -112,7 +112,7 @@ void BillBoard::visit(Renderer *renderer, const Mat4& parentTransform, uint32_t 
           return;
         }
       }
-    }
+    }*/
 
     bool visibleByCamera = isVisitableByVisitingCamera();
     

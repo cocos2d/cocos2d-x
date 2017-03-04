@@ -181,7 +181,7 @@ float MotionStreak3D::getPositionX() const
 
 Vec3 MotionStreak3D::getPosition3D() const
 {
-    return Vec3(_positionR.x, _positionR.y, getPositionZ());
+    return Vec3(_positionR.x, _positionR.y, _positionR.z);
 }
 
 void MotionStreak3D::setPositionX(float x)

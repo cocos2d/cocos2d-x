@@ -1200,6 +1200,13 @@ public:
      */
     virtual Rect getBoundingBox() const;
 
+    /**
+     * Returns an AABB (axis-aligned bounding-box) in its parent's coordinate system.
+     *
+     * @return An AABB (axis-aligned bounding-box) in its parent's coordinate system
+     */
+    virtual Rect getBoundingBoxToWorld() const;
+
     /** @deprecated Use getBoundingBox instead */
     CC_DEPRECATED_ATTRIBUTE inline virtual Rect boundingBox() const { return getBoundingBox(); }
 
@@ -2060,6 +2067,7 @@ private:
 
   public:
   int id;
+  int data = 0;
 
   bool shadow = false;
   bool light = false;
@@ -2102,6 +2110,9 @@ private:
 
   virtual void onEnterShow();
   virtual void onExitHide();
+
+  virtual int setData(int data);
+  virtual int getData();
 
   virtual void enableShadow(bool state, float shadowIndex = 0.0);
   virtual void enableLight(bool state);

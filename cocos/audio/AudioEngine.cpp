@@ -301,6 +301,38 @@ void AudioEngine::pauseAll()
     }
 }
 
+void AudioEngine::repeat(int audioID)
+{
+    auto it = _audioIDInfoMap.find(audioID);
+    if (it != _audioIDInfoMap.end()){
+        _audioEngineImpl->setLoop(audioID, true);
+    }
+}
+
+void AudioEngine::volume(int audioID, float volume)
+{
+    auto it = _audioIDInfoMap.find(audioID);
+    if (it != _audioIDInfoMap.end()){
+        _audioEngineImpl->setVolume(audioID, volume);
+    }
+}
+
+void AudioEngine::pitch(int audioID, float pitch)
+{
+    auto it = _audioIDInfoMap.find(audioID);
+    if (it != _audioIDInfoMap.end()){
+        _audioEngineImpl->setPitch(audioID, pitch);
+    }
+}
+
+void AudioEngine::speed(int audioID, float speed)
+{
+    auto it = _audioIDInfoMap.find(audioID);
+    if (it != _audioIDInfoMap.end()){
+        _audioEngineImpl->setPitch(audioID, speed);
+    }
+}
+
 void AudioEngine::resume(int audioID)
 {
     auto it = _audioIDInfoMap.find(audioID);

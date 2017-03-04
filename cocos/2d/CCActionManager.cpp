@@ -384,6 +384,19 @@ Action* ActionManager::getActionByTag(int tag, const Node *target) const
     return nullptr;
 }
 
+Action** ActionManager::getActions(const Node *target)
+{
+    tHashElement *element = nullptr;
+    HASH_FIND_PTR(_targets, &target, element);
+
+    if (element)
+    {
+        return (Action**) element->actions->arr;
+    }
+
+    return nullptr;
+}
+
 // FIXME: Passing "const O *" instead of "const O&" because HASH_FIND_IT requires the address of a pointer
 // and, it is not possible to get the address of a reference
 ssize_t ActionManager::getNumberOfRunningActionsInTarget(const Node *target) const

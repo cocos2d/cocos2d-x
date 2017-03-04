@@ -798,6 +798,12 @@ Rect Node::getBoundingBox() const
   return RectApplyAffineTransform(rect, getNodeToParentAffineTransform());
 }
 
+Rect Node::getBoundingBoxToWorld() const
+{
+  Rect rect(0, 0, _contentSize.width, _contentSize.height);
+  return RectApplyAffineTransform(rect, getNodeToWorldAffineTransform());
+}
+
 // MARK: Children logic
 
 // lazy allocs
@@ -1251,7 +1257,7 @@ void Node::visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t paren
     return;
   }
 
-  /*if(Director::getInstance()->getRunningScene()->getShadowState())
+  if(Director::getInstance()->getRunningScene()->getShadowState())
   {
     if(Director::getInstance()->getRunningScene()->getCamera() && Director::getInstance()->getRunningScene()->getCamera()->getIndex() == Director::getInstance()->getRunningScene()->getShadowCamera()->getIndex())
     {
@@ -1260,7 +1266,7 @@ void Node::visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t paren
         return;
       }
     }
-  }*/
+  }
 
   uint32_t flags = processParentFlags(parentTransform, parentFlags);
 
@@ -2554,6 +2560,23 @@ void Node::onExitHide()
   {
     this->unscheduleUpdate();
   }
+}
+
+int Node::setData(int data)
+{
+  this->data = data;
+
+  /**
+   *
+   *
+   *
+   */
+  return this->data;
+}
+
+int Node::getData()
+{
+  return this->data;
 }
 
 bool Node::bind(bool bind, bool swallowed)

@@ -1007,6 +1007,16 @@ bool Sprite::isOpacityModifyRGB(void) const
     return _opacityModifyRGB;
 }
 
+void Sprite::visit()
+{
+  Node::visit();
+}
+
+void Sprite::visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t parentFlags)
+{
+  Node::visit(renderer, parentTransform, parentFlags);
+}
+
 // MARK: Frames
 
 void Sprite::setSpriteFrame(const std::string &spriteFrameName)

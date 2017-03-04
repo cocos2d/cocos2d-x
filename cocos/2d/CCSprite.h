@@ -483,6 +483,16 @@ public:
     int getResourceType() const { return _fileType; }
     const std::string& getResourceName() const { return _fileName; }
 
+    /**
+     * Visits this node's children and draw them recursively.
+     *
+     * @param renderer A given renderer.
+     * @param parentTransform A transform matrix.
+     * @param parentFlags Renderer flag.
+     */
+    virtual void visit(Renderer *renderer, const Mat4& parentTransform, uint32_t parentFlags) override;
+    virtual void visit() override;
+
 CC_CONSTRUCTOR_ACCESS :
 	/**
      * @js ctor
