@@ -553,7 +553,7 @@ void ListView::selectedItemEvent(TouchEventType event, Widget *sender, Touch* pT
                 Widget* parent = sender;
                 while (parent)
                 {
-                    if (parent && (parent->getParent() == _innerContainer))
+                    if (parent->getParent() == _innerContainer)
                     {
                         _curSelectedIndex = getIndex(parent);
                         break;
