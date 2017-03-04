@@ -282,7 +282,7 @@ LayoutComponent* Widget::getOrCreateLayoutComponent()
     if (nullptr == layoutComponent)
     {
         LayoutComponent *component = LayoutComponent::create();
-        this->addComponent(component);
+        this->addComponentNoUpdate(component);
         layoutComponent = component;
     }
 

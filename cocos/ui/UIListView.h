@@ -43,7 +43,8 @@ namespace ui{
 typedef enum
 {
     LISTVIEW_ONSELECTEDITEM_START,
-    LISTVIEW_ONSELECTEDITEM_END
+    LISTVIEW_ONSELECTEDITEM_END,
+	LISTVIEW_ONSELECTEDITEM_CHANGEITEM
 }ListViewEventType;
 
 /**
@@ -83,7 +84,8 @@ public:
     enum class EventType
     {
         ON_SELECTED_ITEM_START,
-        ON_SELECTED_ITEM_END
+        ON_SELECTED_ITEM_END,
+		ON_SELECTED_ITEM_CHANGE
     };
     
     /**
@@ -105,7 +107,7 @@ public:
     /**
      * ListView item click callback.
      */
-    typedef std::function<void(Ref*, EventType)> ccListViewCallback;
+    typedef std::function<void(Ref*, EventType, Touch*)> ccListViewCallback;
     
     /**
      * Default constructor
@@ -420,7 +422,7 @@ protected:
     virtual Widget* createCloneInstance() override;
     virtual void copySpecialProperties(Widget* model) override;
     virtual void copyClonedWidgetChildren(Widget* model) override;
-    void selectedItemEvent(TouchEventType event);
+    void selectedItemEvent(TouchEventType event, Widget *sender, Touch* pTouch);
     virtual void interceptTouchEvent(Widget::TouchEventType event,Widget* sender,Touch* touch) override;
     
     virtual Vec2 getHowMuchOutOfBoundary(const Vec2& addition = Vec2::ZERO) override;

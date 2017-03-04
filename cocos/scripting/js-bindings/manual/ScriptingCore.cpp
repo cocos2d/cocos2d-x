@@ -1361,6 +1361,14 @@ int ScriptingCore::handleNodeEvent(void* data)
             ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "cleanup", 1, &dataVal, &retval);
         }
     }
+	else if (action == kNodeOnDestroy) {
+        cleanupSchedulesAndActions(p);
+
+        if (isFunctionOverridedInJS(jstarget, "destroy", js_cocos2dx_Node_destroy))
+        {
+            ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "destroy", 1, &dataVal, &retval);
+        }
+    }
 
     return ret;
 }

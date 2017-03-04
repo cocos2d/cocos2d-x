@@ -43,6 +43,18 @@
 
 NS_CC_EXT_BEGIN
 
+//! All files to be decompressed
+struct CompressedFilesInfoAsserts
+{
+	std::string m_strFileName;
+	int			m_nCompressIndex;
+	CompressedFilesInfoAsserts()
+	{
+		m_nCompressIndex = 0;
+	}
+};
+
+
 /**
  * @brief   This class is used to auto update resources, such as pictures or scripts.
  */
@@ -251,7 +263,7 @@ private:
     DownloadUnits _failedUnits;
     
     //! All files to be decompressed
-    std::vector<std::string> _compressedFiles;
+    std::vector<CompressedFilesInfoAsserts> _compressedFiles;
     
     //! Download percent
     float _percent;

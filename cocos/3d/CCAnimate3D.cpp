@@ -81,7 +81,8 @@ bool Animate3D::init(Animation3D* animation, float fromTime, float duration)
     float fullDuration = animation->getDuration();
     if (duration > fullDuration - fromTime)
         duration = fullDuration - fromTime;
-    
+    if (duration < 0.0f)
+		duration = 0.0f;
     _start = fromTime / fullDuration;
     _last = duration / fullDuration;
     setDuration(duration);

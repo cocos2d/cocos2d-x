@@ -52,8 +52,105 @@ namespace experimental {
 const int TMXLayer::FAST_TMX_ORIENTATION_ORTHO = 0;
 const int TMXLayer::FAST_TMX_ORIENTATION_HEX = 1;
 const int TMXLayer::FAST_TMX_ORIENTATION_ISO = 2;
+const int TMXLayer::FAST_TMX_ORIENTATION_Staggered = 3;
 
 // FastTMXLayer - init & alloc & dealloc
+TMXLayer* TMXLayer::createByTexture2D(Texture2D* pTexture2D, TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo)
+{
+	TMXLayer *ret = new (std::nothrow) TMXLayer();
+	if (ret->initWithTexture2D(pTexture2D, layerInfo, mapInfo))
+	{
+		ret->autorelease();
+		return ret;
+	}
+	CC_SAFE_DELETE(ret);
+	return nullptr;
+}
+
+bool TMXLayer::initWithTexture2D(Texture2D* pTexture2D, TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo)
+{
+	_texture = pTexture2D;
+	_texture->retain();
+
+	// layerInfo
+	_layerName = layerInfo->_name;
+	_layerSize = layerInfo->_layerSize;
+	_tiles = layerInfo->_tiles;
+	_quadsDirty = true;
+	setOpacity(layerInfo->_opacity);
+	setProperties(layerInfo->getProperties());
+
+	//calc max
+	TMXTilesetInfo* pSet = NULL;
+	float fMax = 0.0f;
+	std::map<int, bool> mapGID;
+	for (int y = 0; y < _layerSize.height; y++)
+	{
+		for (int x = 0; x < _layerSize.width; x++)
+		{
+			int pos = static_cast<int>(x + _layerSize.width * y);
+			int gid = _tiles[pos];
+
+			if (gid != 0)
+			{
+				if (mapGID.find(gid) == mapGID.end())
+				{
+					TMXTilesetInfo* pTileSet = mapInfo->tilesetForGid(static_cast<int>(gid & kTMXFlippedMask));
+					if (pTileSet)
+					{
+						Size tileSize = CC_SIZE_PIXELS_TO_POINTS(pTileSet->_tileSize);
+						float tileSizeMax = std::max(tileSize.width, tileSize.height);
+						if (pSet)
+						{
+							if (fMax < tileSizeMax)
+							{
+								pSet = pTileSet;
+								fMax = tileSizeMax;
+							}
+						}
+						else
+						{
+							pSet = pTileSet;
+							fMax = tileSizeMax;
+						}
+						if (m_mapMultiTileSet.find(gid) == m_mapMultiTileSet.end())
+						{
+							m_mapMultiTileSet[gid] = pTileSet;
+							pTileSet->retain();
+						}
+					}
+					mapGID[gid] = true;
+				}	
+			}
+		}
+	}
+	CCASSERT(pSet != NULL, "查找不到set");
+	// tilesetInfo
+	_tileSet = pSet;
+	CC_SAFE_RETAIN(_tileSet);
+	m_bMultiTileSet = true;
+
+	// mapInfo
+	_mapTileSize = mapInfo->getTileSize();
+	_layerOrientation = mapInfo->getOrientation();
+
+	// offset (after layer orientation is set);
+	Vec2 offset = this->calculateLayerOffset(layerInfo->_offset);
+	this->setPosition(CC_POINT_PIXELS_TO_POINTS(offset));
+
+	this->setContentSize(CC_SIZE_PIXELS_TO_POINTS(Size(_layerSize.width * _mapTileSize.width, _layerSize.height * _mapTileSize.height)));
+
+	this->tileToNodeTransform();
+
+	// shader, and other stuff
+	setGLProgram(GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
+
+	_useAutomaticVertexZ = false;
+	_vertexZvalue = 0;
+
+	return true;
+}
+
 TMXLayer * TMXLayer::create(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo)
 {
     TMXLayer *ret = new (std::nothrow) TMXLayer();
@@ -122,7 +219,8 @@ TMXLayer::TMXLayer()
 , _dirty(true)
 , _vertexBuffer(nullptr)
 , _vData(nullptr)
-, _indexBuffer(nullptr)
+, _indexBuffer(nullptr),
+, m_bMultiTileSet(false)
 {
 }
 
@@ -134,7 +232,11 @@ TMXLayer::~TMXLayer()
     CC_SAFE_RELEASE(_vData);
     CC_SAFE_RELEASE(_vertexBuffer);
     CC_SAFE_RELEASE(_indexBuffer);
-    
+    for (std::map<int, TMXTilesetInfo*>::iterator iter = m_mapMultiTileSet.begin(); iter != m_mapMultiTileSet.end(); iter++)
+	{
+		CC_SAFE_RELEASE(iter->second);
+	}
+	m_mapMultiTileSet.clear();
 }
 
 void TMXLayer::draw(Renderer *renderer, const Mat4& transform, uint32_t flags)
@@ -202,8 +304,21 @@ void TMXLayer::updateTiles(const Rect& culledRect)
     Size mapTileSize = CC_SIZE_PIXELS_TO_POINTS(_mapTileSize);
     Size tileSize = CC_SIZE_PIXELS_TO_POINTS(_tileSet->_tileSize);
     Mat4 nodeToTileTransform = _tileToNodeTransform.getInversed();
-    //transform to tile
-    visibleTiles = RectApplyTransform(visibleTiles, nodeToTileTransform);
+	if (_layerOrientation == FAST_TMX_ORIENTATION_Staggered){
+		Vec2 vLeftTop, vRightBottom;
+		GetTilePosByPosition(Vec2(culledRect.getMinX(), culledRect.getMaxY()), vLeftTop);
+		GetTilePosByPosition(Vec2(culledRect.getMaxX(), culledRect.getMinY()), vRightBottom);
+		// after will deal with < 0
+		vLeftTop.y -= 2;
+		vRightBottom.y += 1;
+		vLeftTop.x -= 1;
+		vRightBottom.x += 1;
+		visibleTiles.setRect(vLeftTop.x, vLeftTop.y, vRightBottom.x - vLeftTop.x, vRightBottom.y - vLeftTop.y);
+	}
+	else{
+		//transform to tile
+		visibleTiles = RectApplyTransform(visibleTiles, nodeToTileTransform);
+	}
     // tile coordinate is upside-down, so we need to make the tile coordinate use top-left for the start point.
     visibleTiles.origin.y += 1;
     
@@ -236,6 +351,14 @@ void TMXLayer::updateTiles(const Rect& culledRect)
         tilesOverX = ceil(overTileRect.origin.x + overTileRect.size.width) - floor(overTileRect.origin.x);
         tilesOverY = ceil(overTileRect.origin.y + overTileRect.size.height) - floor(overTileRect.origin.y);
     }
+	else if (_layerOrientation == FAST_TMX_ORIENTATION_Staggered)
+	{
+		tilesOverX = ceil(tileSizeMax / mapTileSize.width) - 1;
+		tilesOverY = ceil(tileSizeMax / mapTileSize.height) - 1;
+
+		if (tilesOverX < 0) tilesOverX = 0;
+		if (tilesOverY < 0) tilesOverY = 0;
+	}
     else
     {
         //do nothing, do not support
@@ -253,7 +376,8 @@ void TMXLayer::updateTiles(const Rect& culledRect)
     int yEnd = std::min(_layerSize.height,visibleTiles.origin.y + visibleTiles.size.height + tilesOverY);
     int xBegin = std::max(0.f,visibleTiles.origin.x - tilesOverX);
     int xEnd = std::min(_layerSize.width,visibleTiles.origin.x + visibleTiles.size.width + tilesOverX);
-    
+    _screenGridRect.setRect(xBegin, yBegin, xEnd - xBegin, yEnd - yBegin);
+	
     for (int y =  yBegin; y < yEnd; ++y)
     {
         for (int x = xBegin; x < xEnd; ++x)
@@ -328,7 +452,17 @@ void TMXLayer::updateIndexBuffer()
 void TMXLayer::setupTiles()
 {    
     // Optimization: quick hack that sets the image size on the tileset
-    _tileSet->_imageSize = _texture->getContentSizeInPixels();
+    if (m_bMultiTileSet)
+	{
+		for (std::map<int, TMXTilesetInfo*>::iterator iter = m_mapMultiTileSet.begin(); iter != m_mapMultiTileSet.end(); iter++)
+		{
+			iter->second->_imageSize = _texture->getContentSizeInPixels();
+		}
+	}
+	else
+	{
+		_tileSet->_imageSize = _texture->getContentSizeInPixels();
+	}
 
     // By default all the tiles are aliased
     // pros: easier to render
@@ -351,6 +485,7 @@ void TMXLayer::setupTiles()
             // tiles could be bigger than the grid, add additional rows if needed
             _screenGridSize.height += _tileSet->_tileSize.height / _mapTileSize.height;
             break;
+		case FAST_TMX_ORIENTATION_Staggered:
         case FAST_TMX_ORIENTATION_ISO:
             _screenGridSize.width = ceil(screenSize.width / _mapTileSize.width) + 2;
             _screenGridSize.height = ceil(screenSize.height / (_mapTileSize.height/2)) + 4;
@@ -408,6 +543,8 @@ Mat4 TMXLayer::tileToNodeTransform()
             );
             return _tileToNodeTransform;
         }
+		//staggered not support
+		case FAST_TMX_ORIENTATION_Staggered:
         default:
         {
             _tileToNodeTransform = Mat4::IDENTITY;
@@ -461,13 +598,16 @@ void TMXLayer::updateTotalQuads()
                 int tileGID = _tiles[tileIndex];
                 
                 if(tileGID == 0) continue;
-                
+                if (m_bMultiTileSet)
+				{
+					getTileAt(Vec2(x, y));
+					continue;
+				}
                 _tileToQuadIndex[tileIndex] = quadIndex;
                 
                 auto& quad = _totalQuads[quadIndex];
                 
-                Vec3 nodePos(float(x), float(y), 0);
-                _tileToNodeTransform.transformPoint(&nodePos);
+                Vec2 nodePos = getPositionAt(Vec2(x, y));
                 
                 float left, right, top, bottom, z;
                 
@@ -592,9 +732,18 @@ Sprite* TMXLayer::getTileAt(const Vec2& tileCoordinate)
         else
         {
             // tile not created yet. create it
-            Rect rect = _tileSet->getRectForGID(gid);
-            rect = CC_RECT_PIXELS_TO_POINTS(rect);
-            tile = Sprite::createWithTexture(_texture, rect);
+			TMXTilesetInfo* pTileSet = _tileSet;
+			if (m_bMultiTileSet)
+			{
+				pTileSet = m_mapMultiTileSet[gid];
+				tile = Sprite::createWithSpriteFrameName(pTileSet->_originSourceImage.c_str());
+			}
+			else
+			{
+				Rect rect = pTileSet->getRectForGID(gid);
+				rect = CC_RECT_PIXELS_TO_POINTS(rect);
+				tile = Sprite::createWithTexture(_texture, rect);
+			}
             
             Vec2 p = this->getPositionAt(tileCoordinate);
             tile->setAnchorPoint(Vec2::ZERO);
@@ -640,6 +789,16 @@ int TMXLayer::getTileGIDAt(const Vec2& tileCoordinate, TMXTileFlags* flags/* = n
 
 Vec2 TMXLayer::getPositionAt(const Vec2& pos)
 {
+	if (_layerOrientation == FAST_TMX_ORIENTATION_Staggered)
+	{
+		float diffX = 0;
+		if ((int)pos.y % 2 == 1)
+		{
+			diffX = _mapTileSize.width / 2;
+		}
+		return Vec2(pos.x * _mapTileSize.width + diffX,
+			(_layerSize.height - pos.y - 1) * _mapTileSize.height / 2);
+	}
     return PointApplyTransform(pos, _tileToNodeTransform);
 }
 
@@ -651,6 +810,7 @@ int TMXLayer::getVertexZForPos(const Vec2& pos)
     {
         switch (_layerOrientation)
         {
+			case FAST_TMX_ORIENTATION_Staggered:
             case FAST_TMX_ORIENTATION_ISO:
                 maxVal = static_cast<int>(_layerSize.width + _layerSize.height);
                 ret = static_cast<int>(-(maxVal - (pos.x + pos.y)));
@@ -763,6 +923,7 @@ Vec2 TMXLayer::calculateLayerOffset(const Vec2& pos)
     case FAST_TMX_ORIENTATION_ORTHO:
         ret.set( pos.x * _mapTileSize.width, -pos.y *_mapTileSize.height);
         break;
+	case FAST_TMX_ORIENTATION_Staggered:
     case FAST_TMX_ORIENTATION_ISO:
         ret.set((_mapTileSize.width /2) * (pos.x - pos.y),
                   (_mapTileSize.height /2 ) * (-pos.x - pos.y));
@@ -785,8 +946,10 @@ void TMXLayer::setTileGID(int gid, const Vec2& tileCoordinate, TMXTileFlags flag
 {
     CCASSERT(tileCoordinate.x < _layerSize.width && tileCoordinate.y < _layerSize.height && tileCoordinate.x >=0 && tileCoordinate.y >=0, "TMXLayer: invalid position");
     CCASSERT(_tiles, "TMXLayer: the tiles map has been released");
-    CCASSERT(gid == 0 || gid >= _tileSet->_firstGid, "TMXLayer: invalid gid" );
-    
+    if (!m_bMultiTileSet)
+	{
+		CCASSERT(gid == 0 || gid >= _tileSet->_firstGid, "TMXLayer: invalid gid");
+	}
     TMXTileFlags currentFlags;
     int currentGID = getTileGIDAt(tileCoordinate, &currentFlags);
     
@@ -813,17 +976,23 @@ void TMXLayer::setTileGID(int gid, const Vec2& tileCoordinate, TMXTileFlags flag
         if (it != _spriteContainer.end())
         {
             Sprite *sprite = it->second.first;
-            Rect rect = _tileSet->getRectForGID(gid);
-            rect = CC_RECT_PIXELS_TO_POINTS(rect);
-            
-            sprite->setTextureRect(rect, false, rect.size);
-            this->reorderChild(sprite, z);
-            if (flags)
-            {
-                setupTileSprite(sprite, sprite->getPosition(), gidAndFlags);
-            }
-            
-            it->second.second = gidAndFlags;
+			if (!m_bMultiTileSet)
+			{
+				Rect rect = _tileSet->getRectForGID(gid);
+				rect = CC_RECT_PIXELS_TO_POINTS(rect);
+
+				sprite->setTextureRect(rect, false, rect.size);
+			}
+			else
+			{
+				sprite->setSpriteFrame(m_mapMultiTileSet[gid]->_originSourceImage.c_str());
+			}
+			this->reorderChild(sprite, z);
+			if (flags)
+			{
+				setupTileSprite(sprite, sprite->getPosition(), gidAndFlags);
+			}
+			it->second.second = gidAndFlags;
         }
         else
         {
@@ -891,6 +1060,145 @@ void TMXLayer::setupTileSprite(Sprite* sprite, const Vec2& pos, uint32_t gid)
 std::string TMXLayer::getDescription() const
 {
     return StringUtils::format("<FastTMXLayer | tag = %d, size = %d,%d>", _tag, (int)_mapTileSize.width, (int)_mapTileSize.height);
+}
+
+
+int getPosOfLine(float ax, float ay, float bx, float by, float cx, float cy){
+	//计算斜率
+	float slope = (by - ay) / (bx - ax);
+	//计算截距
+	float yIntercept = ay - ax * slope;
+	//计算cx对应的线上的解
+	float cSolution = cx * slope + yIntercept;
+	//通过判断解与cy的关系，判断在线上还是线下
+	if (cy < cSolution){
+		return -1;
+	}
+	else if (cy > cSolution){
+		return 1;
+	}
+	else{
+		return 0;
+	}
+}
+
+int TMXLayer::CalcTilePosAtRect(const cocos2d::Vec2& pos, cocos2d::Vec2& posRet, bool bEven){
+	//pos应该转换为相对地图的坐标
+	auto mapPos = pos;
+	//将其转换为左上角坐标系
+	if (bEven){
+		mapPos.y = (_layerSize.height + 1)  * _mapTileSize.height / 2 - mapPos.y;
+	}
+	else{
+		mapPos.y = (_layerSize.height + 2)  * _mapTileSize.height / 2 - mapPos.y;
+	}
+
+	//取到小矩形的位置
+	int sx = int(mapPos.x * 2 / _mapTileSize.width);
+	int sy = int(mapPos.y * 2 / _mapTileSize.height);
+
+	int nPosLine = 0;
+	int sxMod = sx % 2;
+	int syMod = sy % 2;
+	if (sxMod == 0 && syMod == 0){
+		//如果线斜率是大于0
+		//取线上的两个点
+		float ax = sx * _mapTileSize.width / 2;
+		float ay = (sy + 1) * _mapTileSize.height / 2;
+		float bx = (sx + 1) * _mapTileSize.width / 2;
+		float by = sy * _mapTileSize.height / 2;
+		nPosLine = getPosOfLine(ax, ay, bx, by, mapPos.x, mapPos.y);
+		if (nPosLine < 0){
+			//短 上部
+			posRet.x = int(mapPos.x / _mapTileSize.width) - 1;
+			if (posRet.x < 0)
+				posRet.y = int(mapPos.y / _mapTileSize.height) * 2;
+			else
+				posRet.y = int(mapPos.y / _mapTileSize.height) * 2 - 1;
+		}
+		else{
+			posRet.x = int(mapPos.x / _mapTileSize.width);
+			posRet.y = int(mapPos.y / _mapTileSize.height) * 2;
+		}
+
+	}
+	else if (sxMod == 1 && syMod == 0){
+		//线斜率小于0
+		float ax = sx * _mapTileSize.width / 2;
+		float ay = sy * _mapTileSize.height / 2;
+		float bx = (sx + 1) * _mapTileSize.width / 2;
+		float by = (sy + 1) * _mapTileSize.height / 2;
+		posRet.x = int(mapPos.x / _mapTileSize.width);
+
+		nPosLine = getPosOfLine(ax, ay, bx, by, mapPos.x, mapPos.y);
+		if (nPosLine < 0){
+			//短 上部
+			posRet.y = int(mapPos.y / _mapTileSize.height) * 2 - 1;
+		}
+		else{
+			posRet.y = int(mapPos.y / _mapTileSize.height) * 2;
+		}
+	}
+	else if (sxMod == 0 && syMod == 1){
+		//线斜率小于0
+		float ax = sx * _mapTileSize.width / 2;
+		float ay = sy * _mapTileSize.height / 2;
+		float bx = (sx + 1) * _mapTileSize.width / 2;
+		float by = (sy + 1) * _mapTileSize.height / 2;
+
+		nPosLine = getPosOfLine(ax, ay, bx, by, mapPos.x, mapPos.y);
+		if (nPosLine < 0){
+			//短 上部
+			posRet.x = int(mapPos.x / _mapTileSize.width);
+			posRet.y = int(mapPos.y / _mapTileSize.height) * 2;
+		}
+		else{
+			posRet.x = int(mapPos.x / _mapTileSize.width) - 1;
+			if (posRet.x < 0)
+				posRet.y = int(mapPos.y / _mapTileSize.height) * 2;
+			else
+				posRet.y = int(mapPos.y / _mapTileSize.height) * 2 + 1;
+		}
+	}
+	else{
+		//如果线斜率是大于0
+		//取线上的两个点
+		float ax = sx * _mapTileSize.width / 2;
+		float ay = (sy + 1) * _mapTileSize.height / 2;
+		float bx = (sx + 1) * _mapTileSize.width / 2;
+		float by = sy * _mapTileSize.height / 2;
+		posRet.x = int(mapPos.x / _mapTileSize.width);
+		nPosLine = getPosOfLine(ax, ay, bx, by, mapPos.x, mapPos.y);
+		if (nPosLine < 0){
+			//在线上面
+			posRet.y = int(mapPos.y / _mapTileSize.height) * 2;
+		}
+		else{
+			posRet.y = int(mapPos.y / _mapTileSize.height) * 2 + 1;
+		}
+	}
+	return nPosLine;
+}
+int TMXLayer::GetTilePosByPosition(const Vec2 &pos, Vec2& posRet){
+	Vec2 calcPos = pos;
+	bool bEven = ((int)_layerSize.height) % 2;
+	if (!bEven){
+		calcPos.y += _mapTileSize.height / 2;
+	}
+	int nRet = CalcTilePosAtRect(calcPos, posRet, bEven);
+	if (!bEven){
+		posRet.y -= 1;
+	}
+
+	if (posRet.y < 0)
+		posRet.y = 0;
+	else if (posRet.y >= _layerSize.height)
+		posRet.y = _layerSize.height - 1;
+	if (posRet.x < 0)
+		posRet.x = 0;
+	else if (posRet.x >= _layerSize.width)
+		posRet.x = _layerSize.width - 1;
+	return nRet;
 }
 
 } //end of namespace experimental

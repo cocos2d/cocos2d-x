@@ -297,6 +297,10 @@ public:
     void setTMXFileName(const std::string& fileName){ _TMXFileName = fileName; }
     const std::string& getExternalTilesetFileName() const { return _externalTilesetFilename; }
 
+	/**
+	find the tmxtilesetinfo by gid
+	*/
+	TMXTilesetInfo * tilesetForGid(int nGID);
 protected:
     void internalInit(const std::string& tmxFileName, const std::string& resourcePath);
 

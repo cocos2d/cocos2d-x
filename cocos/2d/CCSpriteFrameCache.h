@@ -94,6 +94,11 @@ public:
      */
     static SpriteFrameCache* getInstance();
 
+	/**
+	create by user self spriteframecache
+	*/
+	static void setDelegate(SpriteFrameCache* pCache);
+	
     /** @deprecated Use getInstance() instead
      @js NA
 	*/
