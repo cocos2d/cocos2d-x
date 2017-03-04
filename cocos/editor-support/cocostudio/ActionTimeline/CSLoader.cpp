@@ -233,8 +233,8 @@ CSLoader::CSLoader()
 
 void CSLoader::setDelegate(CSLoader* pNew)
 {
-	swap(_sharedCSLoader, pNew);
-	CC_SAFE_DELETE(pNew);
+    std::swap(_sharedCSLoader, pNew);
+    CC_SAFE_DELETE(pNew);
 }
 
 void CSLoader::purge()
@@ -1025,7 +1025,7 @@ Node* CSLoader::nodeWithFlatBuffers(const flatbuffers::NodeTree *nodetree, const
             cocostudio::timeline::ActionTimeline* action = nullptr;
             if (filePath != "" && FileUtils::getInstance()->isFileExist(filePath))
             {
-                Data buf = getDataBufferFromFile(fullPath);
+				Data buf = getDataBufferFromFile(filePath);
                 node = createNode(buf, callback);
                 action = createTimeline(buf, filePath);
             }
@@ -1472,7 +1472,7 @@ Node* CSLoader::nodeWithFlatBuffersForSimulator(const flatbuffers::NodeTree *nod
 
 cocos2d::Data CSLoader::getDataBufferFromFile(const std::string &fullPath)
 {
-	CC_ASSERT(FileUtils::getInstance()->isFileExist(fullPath));
+    CC_ASSERT(FileUtils::getInstance()->isFileExist(fullPath));
     return FileUtils::getInstance()->getDataFromFile(fullPath);
 }
 

@@ -82,10 +82,10 @@ extern "C"
             {
                 prefix = prefix.substr(2);
             }
-			else if (prefix[0] == '.' && prefix[1] == '\\')
-			{
-				prefix = prefix.substr(2);
-			}
+            else if (prefix[0] == '.' && prefix[1] == '\\')
+            {
+                prefix = prefix.substr(2);
+            }
 
             pos = prefix.find("?.lua");
             chunkName = prefix.substr(0, pos) + filename + BYTECODE_FILE_EXT;

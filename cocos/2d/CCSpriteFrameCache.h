@@ -94,19 +94,19 @@ public:
      */
     static SpriteFrameCache* getInstance();
 
-	/**
-	create by user self spriteframecache
-	*/
-	static void setDelegate(SpriteFrameCache* pCache);
-	
+    /**
+    create by user self spriteframecache
+    */
+    static void setDelegate(SpriteFrameCache* pCache);
+
     /** @deprecated Use getInstance() instead
-     @js NA
-	*/
+    @js NA
+    */
     CC_DEPRECATED_ATTRIBUTE static SpriteFrameCache* sharedSpriteFrameCache() { return SpriteFrameCache::getInstance(); }
 
     /** Destroys the cache. It releases all the Sprite Frames and the retained instance.
-	 * @js NA
-     */
+    * @js NA
+    */
     static void destroyInstance();
 
     /** @deprecated Use destroyInstance() instead

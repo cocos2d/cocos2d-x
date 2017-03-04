@@ -51,7 +51,7 @@ const std::string AssetsManagerEx::MANIFEST_ID = "@manifest";
 
 bool SortCompressFileIndexAssert(const CompressedFilesInfoAsserts& a, const CompressedFilesInfoAsserts& b)
 {
-	return a.m_nCompressIndex < b.m_nCompressIndex;
+    return a.m_nCompressIndex < b.m_nCompressIndex;
 }
 // Implementation of AssetsManagerEx
 
@@ -419,8 +419,8 @@ bool AssetsManagerEx::decompress(const std::string &zip)
 
 void AssetsManagerEx::decompressDownloadedZip()
 {
-	//need sort first
-	std::sort(_compressedFiles.begin(), _compressedFiles.end(), SortCompressFileIndexAssert);
+    //need sort first
+    std::sort(_compressedFiles.begin(), _compressedFiles.end(), SortCompressFileIndexAssert);
 
     // Decompress all compressed files
     for (auto it = _compressedFiles.begin(); it != _compressedFiles.end(); ++it) {
@@ -722,17 +722,15 @@ void AssetsManagerEx::updateSucceed()
     };
     AsyncTaskPool::getInstance()->enqueue(AsyncTaskPool::TaskType::TASK_OTHER, mainThread, (void*)asyncData, [this, asyncData]() {
         //sort first
-		std::sort(asyncData->compressedFiles.begin(), asyncData->compressedFiles.end(), SortCompressFileIndexAssert);
-
-		// Decompress all compressed files
-		for (auto& zipFileInfo : asyncData->compressedFiles) {
-			if (!decompress(zipFileInfo.m_strFileName))
-			{
-				asyncData->errorCompressedFile = zipFileInfo.m_strFileName;
-				break;
-			}
-			_fileUtils->removeFile(zipFileInfo.m_strFileName);
-		}
+        std::sort(asyncData->compressedFiles.begin(), asyncData->compressedFiles.end(), SortCompressFileIndexAssert);
+        // Decompress all compressed files
+        for (auto& zipFileInfo : asyncData->compressedFiles) {
+            if (!decompress(zipFileInfo.m_strFileName)){
+                asyncData->errorCompressedFile = zipFileInfo.m_strFileName;
+                break;
+            }
+            _fileUtils->removeFile(zipFileInfo.m_strFileName);
+        }
     });
 }
 
@@ -1002,10 +1000,10 @@ void AssetsManagerEx::onSuccess(const std::string &/*srcUrl*/, const std::string
             
             // Add file to need decompress list
             if (assetIt->second.compressed) {
-				CompressedFilesInfoAsserts comressFiles;
-				comressFiles.m_strFileName = storagePath;
-				comressFiles.m_nCompressIndex = assetIt->second.m_nCompressIndex;
-				_compressedFiles.push_back(comressFiles);
+                CompressedFilesInfoAsserts comressFiles;
+                comressFiles.m_strFileName = storagePath;
+                comressFiles.m_nCompressIndex = assetIt->second.m_nCompressIndex;
+                _compressedFiles.push_back(comressFiles);
             }
         }
         

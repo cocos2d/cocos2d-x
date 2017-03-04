@@ -62,10 +62,10 @@ SpriteFrameCache* SpriteFrameCache::getInstance()
 
 void SpriteFrameCache::setDelegate(SpriteFrameCache* pCache)
 {
-	swap(_sharedSpriteFrameCache, pCache);
-	if (pCache){
-		CC_SAFE_RELEASE_NULL(pCache);
-	}
+    swap(_sharedSpriteFrameCache, pCache);
+    if (pCache){
+        CC_SAFE_RELEASE_NULL(pCache);
+    }
 }
 
 void SpriteFrameCache::destroyInstance()

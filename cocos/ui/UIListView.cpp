@@ -546,33 +546,32 @@ void ListView::selectedItemEvent(TouchEventType event, Widget *sender, Touch* pT
             {
                 _ccEventCallback(this, static_cast<int>(EventType::ON_SELECTED_ITEM_END));
             }
-			//end calc
-			if (event == TouchEventType::ENDED)
-			{
-				//only ended will know last choose one，begin just highlight
-				Widget* parent = sender;
-
-				while (parent)
-				{
-					if (parent && (parent->getParent() == _innerContainer))
-					{
-						_curSelectedIndex = getIndex(parent);
-						break;
-					}
-					parent = dynamic_cast<Widget*>(parent->getParent());
-				}
-			}
-			if (_listViewEventListener && _listViewEventSelector)
-			{
-				(_listViewEventListener->*_listViewEventSelector)(this, LISTVIEW_ONSELECTEDITEM_CHANGEITEM);
-			}
-			if (_eventCallback) {
-				_eventCallback(this, EventType::ON_SELECTED_ITEM_CHANGE, pTouch);
-			}
-			if (_ccEventCallback)
-			{
-				_ccEventCallback(this, static_cast<int>(EventType::ON_SELECTED_ITEM_CHANGE));
-			}
+            //end calc
+            if (event == TouchEventType::ENDED)
+            {
+                //only ended will know last choose one，begin just highlight
+                Widget* parent = sender;
+                while (parent)
+                {
+                    if (parent && (parent->getParent() == _innerContainer))
+                    {
+                        _curSelectedIndex = getIndex(parent);
+                        break;
+                    }
+                    parent = dynamic_cast<Widget*>(parent->getParent());
+                }
+            }
+            if (_listViewEventListener && _listViewEventSelector)
+            {
+                (_listViewEventListener->*_listViewEventSelector)(this, LISTVIEW_ONSELECTEDITEM_CHANGEITEM);
+            }
+            if (_eventCallback) {
+                _eventCallback(this, EventType::ON_SELECTED_ITEM_CHANGE, pTouch);
+            }
+            if (_ccEventCallback)
+            {
+                _ccEventCallback(this, static_cast<int>(EventType::ON_SELECTED_ITEM_CHANGE));
+            }
         }
         break;
     }
@@ -624,10 +623,7 @@ static Widget* findClosestItem(const Vec2& targetPosition, const Vector<Widget*>
     ssize_t midIndex = (firstIndex + lastIndex) / 2;
     Vec2 itemPosition = calculateItemPositionWithAnchor(items.at(midIndex), itemAnchorPoint);
 	//listitem is find the item
-    float distanceFromMid = itemPosition.y - targetPosition.y;
-	if(_direction == Direction::HORIZONTAL){
-		distanceFromMid = itemPosition.x - targetPosition.x
-	}
+    float distanceFromMid = (itemPosition - targetPosition).length();
     if (distanceFromFirst <= distanceFromLast)
     {
         // Left half
@@ -650,17 +646,11 @@ Widget* ListView::getClosestItemToPosition(const Vec2& targetPosition, const Vec
     // Find the closest item through binary search
     ssize_t firstIndex = 0;
     Vec2 firstPosition = calculateItemPositionWithAnchor(_items.at(firstIndex), itemAnchorPoint);
-    float distanceFromFirst = firstPosition.y - targetPosition.y;
-	if(_direction == Direction::HORIZONTAL){
-		distanceFromMid = itemPosition.x - targetPosition.x
-	}
+    float distanceFromFirst = (firstPosition - targetPosition).length();
     
     ssize_t lastIndex = _items.size() - 1;
     Vec2 lastPosition = calculateItemPositionWithAnchor(_items.at(lastIndex), itemAnchorPoint);
-    float distanceFromLast = lastPosition.y - targetPosition.y;
-	if(_direction == Direction::HORIZONTAL){
-		distanceFromMid = itemPosition.x - targetPosition.x
-	}
+    float distanceFromLast = (lastPosition - targetPosition).length();
     
     return findClosestItem(targetPosition, _items, itemAnchorPoint, firstIndex, distanceFromFirst, lastIndex, distanceFromLast);
 }
@@ -841,7 +831,7 @@ void ListView::setCurSelectedIndex(int itemIndex)
         return;
     }
     _curSelectedIndex = itemIndex;
-    this->selectedItemEvent(cocos2d::ui::Widget::TouchEventType::ENDED, nullptr);
+	this->selectedItemEvent(cocos2d::ui::Widget::TouchEventType::ENDED, item, nullptr);
 }
 
 void ListView::onSizeChanged()

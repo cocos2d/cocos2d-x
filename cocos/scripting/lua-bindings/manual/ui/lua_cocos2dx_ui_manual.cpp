@@ -650,7 +650,7 @@ static int lua_cocos2dx_ListView_addEventListener(lua_State* L)
 #endif
         LUA_FUNCTION handler = (  toluafix_ref_function(L,2,0));
         
-        auto listViewCallback = [=](cocos2d::Ref* ref,ListView::EventType eventType){
+        auto listViewCallback = [=](cocos2d::Ref* ref,ListView::EventType eventType,Touch* pTouch){
             handleUIEvent(handler, ref, (int)eventType);
         };
         self->addEventListener((ui::ListView::ccListViewCallback)listViewCallback);

@@ -46,14 +46,13 @@ NS_CC_EXT_BEGIN
 //! All files to be decompressed
 struct CompressedFilesInfoAsserts
 {
-	std::string m_strFileName;
-	int			m_nCompressIndex;
-	CompressedFilesInfoAsserts()
-	{
-		m_nCompressIndex = 0;
-	}
+    std::string     m_strFileName;
+    int             m_nCompressIndex;
+    CompressedFilesInfoAsserts()
+    {
+        m_nCompressIndex = 0;
+    }
 };
-
 
 /**
  * @brief   This class is used to auto update resources, such as pictures or scripts.

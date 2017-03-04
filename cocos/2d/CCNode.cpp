@@ -150,7 +150,7 @@ Node::~Node()
     CCLOGINFO( "deallocing Node: %p - tag: %i", this, _tag );
     
 #if CC_ENABLE_SCRIPT_BINDING
-	if (_scriptType == kScriptTypeJavascript)
+    if (_scriptType == kScriptTypeJavascript)
     {
         if (ScriptEngineManager::sendNodeEventToJS(this, kNodeOnDestroy))
             return;
@@ -180,7 +180,7 @@ Node::~Node()
     removeAllComponents();
     
     CC_SAFE_DELETE(_componentContainer);
-	CC_SAFE_DELETE(_componentContainerNoUpdate);
+    CC_SAFE_DELETE(_componentContainerNoUpdate);
     
     stopAllActions();
     unscheduleAllCallbacks();
@@ -270,23 +270,23 @@ void Node::setLocalZOrder(int z)
     {
         _parent->reorderChildNotify();
     }
-	child->updateOrderOfArrival();
-	_setLocalZOrder(z);
+    updateOrderOfArrival();
+    _setLocalZOrder(z);
 
     _eventDispatcher->setDirtyForNode(this);
 }
 
 void Node::setZLocalOrderOfArrive(std::int64_t nZOrderArrived)
 {
-	if(_localZOrderAndArrival == nZOrderArrived)
-		return;
-	_localZOrderAndArrival = nZOrderArrived;
-	_localZOrder = z;
-	if (_parent)
-	{
-		_parent->reorderChildNotify();
-	}
-	_eventDispatcher->setDirtyForNode(this);
+    if (_localZOrderAndArrival == nZOrderArrived)
+        return;
+    _localZOrderAndArrival = nZOrderArrived;
+    _localZOrder = _localZOrderAndArrival >> 32;
+    if (_parent)
+    {
+        _parent->reorderChildNotify();
+    }
+    _eventDispatcher->setDirtyForNode(this);
 }
 
 /// zOrder setter : private method
@@ -1184,7 +1184,7 @@ void Node::reorderChild(Node *child, int zOrder)
 }
 void Node::reorderChildNotify()
 {
-	_reorderChildDirty = true;
+    _reorderChildDirty = true;
 }
 
 void Node::sortAllChildren()
@@ -1334,10 +1334,10 @@ void Node::onEnter()
     {
         _componentContainer->onEnter();
     }
-	if (_componentContainerNoUpdate && !_componentContainerNoUpdate->isEmpty())
-	{
-		_componentContainerNoUpdate->onEnter();
-	}
+    if (_componentContainerNoUpdate && !_componentContainerNoUpdate->isEmpty())
+    {
+        _componentContainerNoUpdate->onEnter();
+    }
     
     _isTransitionFinished = false;
     
@@ -1422,10 +1422,10 @@ void Node::onExit()
     {
         _componentContainer->onExit();
     }
-	if (_componentContainerNoUpdate && !_componentContainerNoUpdate->isEmpty())
-	{
-		_componentContainerNoUpdate->onExit();
-	}
+    if (_componentContainerNoUpdate && !_componentContainerNoUpdate->isEmpty())
+    {
+        _componentContainerNoUpdate->onExit();
+    }
     
     this->pause();
     
@@ -1960,12 +1960,12 @@ void Node::updateTransform()
 
 Component* Node::getComponent(const std::string& name)
 {
-	Component* pRet = nullptr;
+    Component* pRet = nullptr;
     if (_componentContainer)
-		pRet = _componentContainer->get(name);
-	if (nullptr == pRet && _componentContainerNoUpdate)
-		pRet = _componentContainerNoUpdate->get(name);
-	return pRet;
+        pRet = _componentContainer->get(name);
+    if (nullptr == pRet && _componentContainerNoUpdate)
+        pRet = _componentContainerNoUpdate->get(name);
+    return pRet;
 }
 
 bool Node::addComponent(Component *component)
@@ -1982,41 +1982,41 @@ bool Node::addComponent(Component *component)
 
 bool Node::addComponentNoUpdate(Component *component)
 {
-	// lazy alloc
-	if (!_componentContainerNoUpdate)
-		_componentContainerNoUpdate = new (std::nothrow) ComponentContainer(this);
+    // lazy alloc
+    if (!_componentContainerNoUpdate)
+        _componentContainerNoUpdate = new (std::nothrow) ComponentContainer(this);
 
-	return _componentContainerNoUpdate->add(component);
+    return _componentContainerNoUpdate->add(component);
 }
 
 bool Node::removeComponent(const std::string& name)
 {
-	bool bRet = false;
+    bool bRet = false;
     if (_componentContainer)
-		bRet = _componentContainer->remove(name);
-	if (!bRet && _componentContainerNoUpdate)
-		bRet = _componentContainerNoUpdate->remove(name);
-	return bRet;
+        bRet = _componentContainer->remove(name);
+    if (!bRet && _componentContainerNoUpdate)
+        bRet = _componentContainerNoUpdate->remove(name);
+    return bRet;
 }
 
 bool Node::removeComponent(Component *component)
 {
-	bool bRet = false;
+    bool bRet = false;
     if (_componentContainer)
     {
-		bRet = _componentContainer->remove(component);
+        bRet = _componentContainer->remove(component);
     }
-	if (!bRet && _componentContainerNoUpdate)
-		bRet = _componentContainerNoUpdate->remove(component);
-	return bRet;
+    if (!bRet && _componentContainerNoUpdate)
+        bRet = _componentContainerNoUpdate->remove(component);
+    return bRet;
 }
 
 void Node::removeAllComponents()
 {
     if (_componentContainer)
         _componentContainer->removeAll();
-	if (_componentContainerNoUpdate)
-		_componentContainerNoUpdate->removeAll();
+    if (_componentContainerNoUpdate)
+        _componentContainerNoUpdate->removeAll();
 }
 
 // MARK: Opacity and Color
@@ -2241,9 +2241,9 @@ void Node::setCameraMask(unsigned short mask, bool applyChildren)
     }
 }
 
-std::int64_t getZLocalOrderOfArrive()
+std::int64_t Node::getZLocalOrderOfArrive()
 {
-	return _localZOrderAndArrival;
+    return _localZOrderAndArrival;
 }
 
 // MARK: Deprecated

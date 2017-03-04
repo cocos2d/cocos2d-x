@@ -30,7 +30,7 @@
 #include "cocos-ext.h"
 #include "scripting/lua-bindings/manual/CCLuaEngine.h"
 #include "scripting/lua-bindings/manual/cocos2d/LuaScriptHandlerMgr.h"
-
+#include "2d/CCFastTMXTiledMap.h"
 USING_NS_CC;
 USING_NS_CC_EXT;
 
@@ -1140,6 +1140,74 @@ static void extendParticlePool(lua_State* tolua_S)
     lua_pop(tolua_S, 1);
 }
 
+
+int lua_cocos2dx_TMXTiledMap_createPList(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S, 1, "ccexp.TMXTiledMap", 0, &tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (argc == 2)
+    {
+        std::string arg0;
+        ok &= luaval_to_std_string(tolua_S, 2, &arg0, "ccexp.TMXTiledMap:createPList");
+        if (!ok)
+        {
+            tolua_error(tolua_S, "invalid arguments in function 'lua_cocos2dx_TMXTiledMap_createPList'", nullptr);
+            return 0;
+        }
+#if COCOS2D_DEBUG >= 1
+        if (!toluafix_isfunction(tolua_S, 3, "LUA_FUNCTION", 0, &tolua_err))
+        {
+            goto tolua_lerror;
+        }
+#endif
+        LUA_FUNCTION handler = (toluafix_ref_function(tolua_S, 3, 0));
+        cocos2d::experimental::TMXTiledMap* ret = cocos2d::experimental::TMXTiledMap::createPlist(arg0, [=](std::string& strFileName, std::string& strKeyName, Texture2D*& bLocal)->bool{
+            LuaStack* stack = LuaEngine::getInstance()->getLuaStack();
+            stack->pushString(strFileName.c_str());
+            stack->pushString(strKeyName.c_str());
+            int nRet = stack->executeFunction(handler, 2, 1, [&bLocal](lua_State* L, int nNumber)->void{
+                bLocal = static_cast<Texture2D*>(tolua_tousertype(L, -1, nullptr));
+            });
+            stack->clean();
+            return bLocal != nullptr;
+        });
+        object_to_luaval<cocos2d::experimental::TMXTiledMap>(tolua_S, "ccexp.TMXTiledMap", (cocos2d::experimental::TMXTiledMap*)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "ccexp.TMXTiledMap:createPList", argc, 1);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S, "#ferror in function 'lua_cocos2dx_TMXTiledMap_createPList'.", &tolua_err);
+#endif
+    return 0;
+}
+
+
+
+static void extendTMXTiledMap(lua_State* tolua_S)
+{
+    lua_pushstring(tolua_S, "ccexp.TMXTiledMap");
+    lua_rawget(tolua_S, LUA_REGISTRYINDEX);
+    if (lua_istable(tolua_S, -1))
+    {
+        tolua_function(tolua_S, "createPlist", lua_cocos2dx_TMXTiledMap_createPList);
+    }
+    lua_pop(tolua_S, 1);
+}
+
+
 int register_all_cocos2dx_extension_manual(lua_State* tolua_S)
 {
     extendControl(tolua_S);
@@ -1150,6 +1218,7 @@ int register_all_cocos2dx_extension_manual(lua_State* tolua_S)
     extendEventListenerAssetsManagerEx(tolua_S);
     extendParticleSystem3D(tolua_S);
     extendParticlePool(tolua_S);
+    extendTMXTiledMap(tolua_S);
     return 0;
 }
 

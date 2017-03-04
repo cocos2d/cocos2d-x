@@ -120,8 +120,6 @@ public:
      * @return A Rect in screen coordinates.
      */
     static Rect convertBoundingBoxToScreen(Node* node);
-	
-	static float m_fDefault_zoomScale = 0.1f
 };
 }
 

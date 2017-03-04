@@ -506,18 +506,18 @@ void TMXMapInfo::startElement(void* /*ctx*/, const char *name, const char **atts
         // Y
         int y = attributeDict["y"].asInt();
         
-		//alter by Owen.Cai stragger height error
-		float fTotalHeight = 0.0f;
-		if (tmxMapInfo->getOrientation() == TMXOrientationStaggered)
-		{
-			fTotalHeight = _mapSize.height * _tileSize.height / 2;
-		}
-		else
-		{
-			fTotalHeight = _mapSize.height * _tileSize.height;
-		}
-		Vec2 p(x + objectGroup->getPositionOffset().x, fTotalHeight - y - objectGroup->getPositionOffset().y - attributeDict["height"].asInt());
-		
+        //alter by Owen.Cai stragger height error
+        float fTotalHeight = 0.0f;
+        if (tmxMapInfo->getOrientation() == TMXOrientationStaggered)
+        {
+            fTotalHeight = _mapSize.height * _tileSize.height / 2;
+        }
+        else
+        {
+            fTotalHeight = _mapSize.height * _tileSize.height;
+        }
+        Vec2 p(x + objectGroup->getPositionOffset().x, fTotalHeight - y - objectGroup->getPositionOffset().y - attributeDict["height"].asInt());
+
         p = CC_POINT_PIXELS_TO_POINTS(p);
         dict["x"] = Value(p.x);
         dict["y"] = Value(p.y);
@@ -810,18 +810,18 @@ void TMXMapInfo::textHandler(void* /*ctx*/, const char *ch, size_t len)
 
 TMXTilesetInfo * TMXMapInfo::tilesetForGid(int nGID)
 {
-	if (!_tilesets.empty())
-	{
-		for (auto iter = _tilesets.crbegin(); iter != _tilesets.crend(); ++iter)
-		{
-			TMXTilesetInfo* tileset = dynamic_cast<TMXTilesetInfo*>(*iter);
-			if (tileset->_firstGid == nGID)
-			{
-				return tileset;
-			}
-		}
-	}
-	return nullptr;
+    if (!_tilesets.empty())
+    {
+        for (auto iter = _tilesets.crbegin(); iter != _tilesets.crend(); ++iter)
+        {
+            TMXTilesetInfo* tileset = dynamic_cast<TMXTilesetInfo*>(*iter);
+            if (tileset->_firstGid == nGID)
+            {
+                return tileset;
+            }
+        }
+    }
+    return nullptr;
 }
 
 NS_CC_END

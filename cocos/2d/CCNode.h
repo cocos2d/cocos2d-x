@@ -74,7 +74,7 @@ enum {
     kNodeOnEnterTransitionDidFinish,
     kNodeOnExitTransitionDidStart,
     kNodeOnCleanup,
-	kNodeOnDestroy
+    kNodeOnDestroy
 };
 
 class EventListener;
@@ -142,16 +142,16 @@ public:
 
     /// @{
     /// @name Setters & Getters for Graphic Properties
-	
-	/*
-	 setZLocalOrderOfArrive totally control the render order, it use for sometime node should cover the friendnode and sometime under the friendnode
-	*/
-	void setZLocalOrderOfArrive(std::int64_t nZOrderArrived);
-	/*
-	 getZLocalOrderOfArrive get the local real render order if same it will render with add child order like setLocalZOrder
-	*/
-	std::int64_t getZLocalOrderOfArrive();
-	
+
+    /*
+    setZLocalOrderOfArrive totally control the render order, it use for sometime node should cover the friendnode and sometime under the friendnode
+    */
+    void setZLocalOrderOfArrive(std::int64_t nZOrderArrived);
+    /*
+    getZLocalOrderOfArrive get the local real render order if same it will render with add child order like setLocalZOrder
+    */
+    std::int64_t getZLocalOrderOfArrive();
+
     /**
      LocalZOrder is the 'key' used to sort the node relative to its siblings.
 
@@ -169,7 +169,6 @@ public:
      */
     virtual void setLocalZOrder(int localZOrder);
 
-	
     CC_DEPRECATED_ATTRIBUTE virtual void setZOrder(int localZOrder) { setLocalZOrder(localZOrder); }
     
     /* 
@@ -934,7 +933,7 @@ public:
      * @param localZOrder Z order for drawing priority. Please refer to setLocalZOrder(int).
      */
     virtual void reorderChild(Node * child, int localZOrder);
-	void reorderChildNotify();
+    void reorderChildNotify();
 
     /**
      * Sorts the children array once before drawing, instead of every time when a child is added or reordered.
@@ -1704,14 +1703,14 @@ public:
      * @return True if added success.
      */
     virtual bool addComponent(Component *component);
-	
-	/**
-     * Adds no update component it is useful for cocos studio create node performance, when 20000 node create it use much time to ipdate the component but do nothing 
-     * not all component need update
-     * @param component A given component.
-     * @return True if added success.
-     */
-	virtual bool addComponentNoUpdate(Component *component);
+
+    /**
+    * Adds no update component it is useful for cocos studio create node performance, when 20000 node create it use much time to ipdate the component but do nothing
+    * not all component need update
+    * @param component A given component.
+    * @return True if added success.
+    */
+    virtual bool addComponentNoUpdate(Component *component);
 
     /**
      * Removes a component by its name.
@@ -1991,7 +1990,7 @@ protected:
 #endif
     
     ComponentContainer *	_componentContainer;        ///< Dictionary of components
-	ComponentContainer *	_componentContainerNoUpdate;
+    ComponentContainer *	_componentContainerNoUpdate;
     
     // opacity controls
     GLubyte     _displayedOpacity;

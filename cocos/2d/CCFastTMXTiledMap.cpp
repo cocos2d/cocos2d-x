@@ -32,26 +32,26 @@ NS_CC_BEGIN
 namespace experimental {
 
 // implementation FastTMXTiledMap
-
 TMXTiledMap * TMXTiledMap::createPlist(const std::string& tmxFile, const std::function<bool(std::string&, std::string&, Texture2D*& bLocal)>& func)
 {
-	TMXTiledMap *ret = new (std::nothrow) TMXTiledMap();
-	if (ret->initWithTMXFile(tmxFile, func))
-	{
-		ret->autorelease();
-		return ret;
-	}
-	CC_SAFE_DELETE(ret);
-	return nullptr;
+    TMXTiledMap *ret = new (std::nothrow) TMXTiledMap();
+    if (ret->initWithTMXFile(tmxFile, func))
+    {
+        ret->autorelease();
+        return ret;
+    }
+    CC_SAFE_DELETE(ret);
+    return nullptr;
 }
+
 
 TMXTiledMap * TMXTiledMap::create(const std::string& tmxFile)
 {
     TMXTiledMap *ret = new (std::nothrow) TMXTiledMap();
-	if (ret->initWithTMXFile(tmxFile, [](std::string& strName, std::string& strKey, Texture2D*& bLocal) -> bool
-	{
-		return false;
-	}))
+    if (ret->initWithTMXFile(tmxFile, [](std::string& strName, std::string& strKey, Texture2D*& bLocal) -> bool
+    {
+        return false;
+    }))
     {
         ret->autorelease();
         return ret;
@@ -78,12 +78,14 @@ bool TMXTiledMap::initWithTMXFile(const std::string& tmxFile, const std::functio
     
     setContentSize(Size::ZERO);
 
+	m_tmxFileName = tmxFile;
     TMXMapInfo *mapInfo = TMXMapInfo::create(tmxFile);
 
     if (! mapInfo)
     {
         return false;
     }
+
     CCASSERT( !mapInfo->getTilesets().empty(), "FastTMXTiledMap: Map not found. Please check the filename.");
     buildWithMapInfo(mapInfo, func);
 
@@ -98,9 +100,9 @@ bool TMXTiledMap::initWithXML(const std::string& tmxString, const std::string& r
 
     CCASSERT( !mapInfo->getTilesets().empty(), "FastTMXTiledMap: Map not found. Please check the filename.");
     buildWithMapInfo(mapInfo, [](std::string& strName, std::string& strKey, Texture2D*& bLocal) -> bool
-	{
-		return false;
-	});
+    {
+        return false;
+    });
 
     return true;
 }
@@ -121,22 +123,22 @@ TMXLayer * TMXTiledMap::parseLayer(TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo,
     TMXTilesetInfo *tileset = tilesetForLayer(layerInfo, mapInfo);
     if (tileset == nullptr)
         return nullptr;
-    
-	Texture2D* pTexture = NULL;
-	bool bPList = func(m_tmxFileName, tileset->_name, pTexture);
-	if (bPList)
-	{
-		CCASSERT(pTexture != NULL, "Texture must be not null!");
-	}
-	TMXLayer *layer = NULL;
-	if (pTexture)
-	{
-		layer = TMXLayer::createByTexture2D(pTexture, layerInfo, mapInfo);
-	}
-	else
-	{
-		layer = TMXLayer::create(tileset, layerInfo, mapInfo);
-	}
+
+    Texture2D* pTexture = NULL;
+    bool bPList = func(m_tmxFileName, tileset->_name, pTexture);
+    if (bPList)
+    {
+        CCASSERT(pTexture != NULL, "Texture must be not null!");
+    }
+    TMXLayer *layer = NULL;
+    if (pTexture)
+    {
+        layer = TMXLayer::createByTexture2D(pTexture, layerInfo, mapInfo);
+    }
+    else
+    {
+        layer = TMXLayer::create(tileset, layerInfo, mapInfo);
+    }
 
     // tell the layerinfo to release the ownership of the tiles map.
     layerInfo->_ownTiles = false;

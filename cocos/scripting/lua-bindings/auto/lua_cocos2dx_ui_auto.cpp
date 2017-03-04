@@ -17860,7 +17860,7 @@ int lua_cocos2dx_ui_ListView_addEventListener(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        std::function<void (cocos2d::Ref *, cocos2d::ui::ListView::EventType)> arg0;
+        std::function<void (cocos2d::Ref *, cocos2d::ui::ListView::EventType, Touch* pTouch)> arg0;
 
         do {
 			// Lambda binding for lua is not supported.
