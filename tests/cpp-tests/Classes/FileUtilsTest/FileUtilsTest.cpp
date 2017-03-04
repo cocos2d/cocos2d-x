@@ -615,6 +615,9 @@ public:
     virtual void* buffer() const override {
         return nullptr;
     }
+    virtual ssize_t GetLength(){
+        return 0;
+    }
 };
 NS_CC_END
 
