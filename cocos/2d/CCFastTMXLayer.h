@@ -279,7 +279,7 @@ public:
     const Rect& GetSceneGridRect(){ return _screenGridRect; }
 protected:
     //calc Staggered pos
-    int TMXLayer::GetTilePosByPosition(const Vec2 &pos, Vec2& posRet);
+    int GetTilePosByPosition(const Vec2 &pos, Vec2& posRet);
     int CalcTilePosAtRect(const cocos2d::Vec2& pos, cocos2d::Vec2& posRet, bool bEvenHeight);
 
     bool initWithTexture2D(Texture2D* pTexture2D, TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo);
