@@ -1036,14 +1036,14 @@ local function PhysicsDemoSlice()
     
         local center = cc.PhysicsShape:getPolygonCenter(points)
         local node = cc.Node:create()
-        local polyon = cc.PhysicsBody:createPolygon(points, 
-                                                    cc.PHYSICSBODY_MATERIAL_DEFAULT, 
-                                                    cc.p(-center.x, -center.y))
+        local polygon = cc.PhysicsBody:createPolygon(points, 
+                                                     cc.PHYSICSBODY_MATERIAL_DEFAULT, 
+                                                     cc.p(-center.x, -center.y))
         node:setPosition(center)
-        node:setPhysicsBody(polyon)
-        polyon:setVelocity(body:getVelocityAtWorldPoint(center))
-        polyon:setAngularVelocity(body:getAngularVelocity())
-        polyon.tag = sliceTag
+        node:setPhysicsBody(polygon)
+        polygon:setVelocity(body:getVelocityAtWorldPoint(center))
+        polygon:setAngularVelocity(body:getAngularVelocity())
+        polygon.tag = sliceTag
         layer:addChild(node)
       end
 

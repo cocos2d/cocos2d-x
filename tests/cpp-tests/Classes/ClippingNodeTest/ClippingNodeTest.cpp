@@ -343,10 +343,10 @@ void HoleDemo::setup()
     
     _outerClipper = ClippingNode::create();
     _outerClipper->retain();
-    AffineTransform tranform = AffineTransform::IDENTITY;
-    tranform = AffineTransformScale(tranform, target->getScale(), target->getScale());
+    AffineTransform transform = AffineTransform::IDENTITY;
+    transform = AffineTransformScale(transform, target->getScale(), target->getScale());
 
-    _outerClipper->setContentSize( SizeApplyAffineTransform(target->getContentSize(), tranform));
+    _outerClipper->setContentSize(SizeApplyAffineTransform(target->getContentSize(), transform));
     _outerClipper->setAnchorPoint( Vec2(0.5, 0.5) );
     _outerClipper->setPosition(Vec2(this->getContentSize()) * 0.5f);
     _outerClipper->runAction(RepeatForever::create(RotateBy::create(1, 45)));
