@@ -83,9 +83,12 @@ void AudioEngineInterruptionListenerCallback(void* user_data, UInt32 interruptio
     // only enable it on iOS. Disable it on tvOS
     // AudioSessionInitialize removed from tvOS
 #if !defined(CC_TARGET_OS_TVOS)
-      else {
+      //else {
+        UInt32 category = kAudioSessionCategory_AmbientSound;
+
         AudioSessionInitialize(NULL, NULL, AudioEngineInterruptionListenerCallback, self);
-      }
+        AudioSessionSetProperty(kAudioSessionProperty_AudioCategory, sizeof(category), &category);
+      //}
 #endif
     }
     return self;

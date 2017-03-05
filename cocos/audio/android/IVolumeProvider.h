@@ -1,6 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -22,15 +21,24 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#ifndef __CCDANDROIDUTILS_H__
-#define __CCDANDROIDUTILS_H__
+#pragma once
 
-#include <string>
+#include "audio/android/audio_utils/include/audio_utils/minifloat.h"
 
-namespace CocosDenshion {
-    namespace android {
-        std::string getFullPathWithoutAssetsPrefix(const char* pszFilename);
-    }
-}
+namespace cocos2d { namespace experimental {
 
-#endif //__CCDANDROIDUTILS_H__
+class IVolumeProvider
+{
+public:
+    // The provider implementation is responsible for validating that the return value is in range.
+    virtual gain_minifloat_packed_t getVolumeLR() = 0;
+
+protected:
+    IVolumeProvider()
+    { }
+
+    virtual ~IVolumeProvider()
+    { }
+};
+
+}} // namespace cocos2d { namespace experimental {

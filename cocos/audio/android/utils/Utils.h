@@ -1,6 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -22,15 +21,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#ifndef __CCDANDROIDUTILS_H__
-#define __CCDANDROIDUTILS_H__
 
 #include <string>
 
-namespace CocosDenshion {
-    namespace android {
-        std::string getFullPathWithoutAssetsPrefix(const char* pszFilename);
-    }
-}
-
-#endif //__CCDANDROIDUTILS_H__
+namespace cocos2d { namespace experimental {
+	extern int getSDKVersion();
+}}

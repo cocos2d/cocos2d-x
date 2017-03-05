@@ -1,6 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -22,15 +21,31 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#ifndef __CCDANDROIDUTILS_H__
-#define __CCDANDROIDUTILS_H__
 
-#include <string>
+#pragma once
 
-namespace CocosDenshion {
-    namespace android {
-        std::string getFullPathWithoutAssetsPrefix(const char* pszFilename);
-    }
-}
+#include "audio/android/AudioBufferProvider.h"
 
-#endif //__CCDANDROIDUTILS_H__
+#include <stddef.h>
+#include <stdio.h>
+
+namespace cocos2d { namespace experimental {
+
+class PcmBufferProvider : public AudioBufferProvider
+{
+public:
+    PcmBufferProvider();
+    bool init(const void *addr, size_t frames, size_t frameSize);
+    virtual status_t getNextBuffer(Buffer *buffer, int64_t pts = kInvalidPTS) override ;
+    virtual void releaseBuffer(Buffer *buffer) override ;
+    void reset();
+
+protected:
+    const void *_addr;      // base address
+    size_t _numFrames; // total frames
+    size_t _frameSize; // size of each frame in bytes
+    size_t _nextFrame; // index of next frame to provide
+    size_t _unrel;     // number of frames not yet released
+};
+
+}} // namespace cocos2d { namespace experimental {

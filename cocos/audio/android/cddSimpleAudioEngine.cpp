@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -29,7 +29,7 @@ THE SOFTWARE.
 
 namespace CocosDenshion {
 
-    static SimpleAudioEngine *s_pEngine = 0;
+    static SimpleAudioEngine *s_pEngine = nullptr;
 
     SimpleAudioEngine* SimpleAudioEngine::getInstance() {
         if (! s_pEngine) {
@@ -42,7 +42,7 @@ namespace CocosDenshion {
     void SimpleAudioEngine::end() {
         if (s_pEngine) {
             delete s_pEngine;
-            s_pEngine = NULL;
+            s_pEngine = nullptr;
         }
     }
 
@@ -62,9 +62,7 @@ namespace CocosDenshion {
     bool SimpleAudioEngine::willPlayBackgroundMusic() { return false; }
     bool SimpleAudioEngine::isBackgroundMusicPlaying() { return false; }
     float SimpleAudioEngine::getBackgroundMusicVolume() { return 0.0f; }
-    float SimpleAudioEngine::getBackgroundMusicSpeed() { return 0.0f; }
     void SimpleAudioEngine::setBackgroundMusicVolume(float volume) { }
-    void SimpleAudioEngine::setBackgroundMusicSpeed(float speed) { }
     float SimpleAudioEngine::getEffectsVolume() { return 0.0f; }
     void SimpleAudioEngine::setEffectsVolume(float volume) { }
     unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath,
@@ -81,5 +79,4 @@ namespace CocosDenshion {
     void SimpleAudioEngine::stopAllEffects() { }
     void SimpleAudioEngine::preloadEffect(const char* pszFilePath) { }
     void SimpleAudioEngine::unloadEffect(const char* pszFilePath) { }
-    void SimpleAudioEngine::setEffectVolume(int a, float b) {};
 }
