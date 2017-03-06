@@ -1201,12 +1201,12 @@ void PhysicsDemoSlice::clipPoly(PhysicsShapePolygon* shape, Vec2 normal, float d
     
     Vec2 center = PhysicsShape::getPolygonCenter(points, pointsCount);
     Node* node = Node::create();
-    PhysicsBody* polyon = PhysicsBody::createPolygon(points, pointsCount, PHYSICSBODY_MATERIAL_DEFAULT, -center);
+    PhysicsBody* polygon = PhysicsBody::createPolygon(points, pointsCount, PHYSICSBODY_MATERIAL_DEFAULT, -center);
     node->setPosition(center);
-    node->addComponent(polyon);
-    polyon->setVelocity(body->getVelocityAtWorldPoint(center));
-    polyon->setAngularVelocity(body->getAngularVelocity());
-    polyon->setTag(_sliceTag);
+    node->addComponent(polygon);
+    polygon->setVelocity(body->getVelocityAtWorldPoint(center));
+    polygon->setAngularVelocity(body->getAngularVelocity());
+    polygon->setTag(_sliceTag);
     addChild(node);
     
     delete[] points;

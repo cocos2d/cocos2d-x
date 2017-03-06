@@ -365,11 +365,11 @@ var Camera3DTest = (function(){
             layer3D.setCameraMask(2);
         },
 
-        addNewSpriteWithCoords:function(postion, file, playAnimation, scale, bindCamera){
+        addNewSpriteWithCoords:function(position, file, playAnimation, scale, bindCamera){
             var sprite = new jsb.Sprite3D(file);
             this._layer3D.addChild(sprite);
             var globalZOrder = sprite.getGlobalZOrder();
-            sprite.setPosition3D(postion);
+            sprite.setPosition3D(position);
             sprite.setGlobalZOrder(globalZOrder);
             if(playAnimation){
                 var animation = new jsb.Animation3D(file, "Take 001");
