@@ -7125,6 +7125,16 @@ func
 },
 
 /**
+ * @method getDefaultResourceRootPath
+ * @return {String}
+ */
+getDefaultResourceRootPath : function (
+)
+{
+    return ;
+},
+
+/**
  * @method loadFilenameLookupDictionaryFromFile
  * @param {String} arg0
  */
@@ -7178,6 +7188,16 @@ str
 )
 {
     return false;
+},
+
+/**
+ * @method getOriginalSearchPaths
+ * @return {Array}
+ */
+getOriginalSearchPaths : function (
+)
+{
+    return new Array();
 },
 
 /**
