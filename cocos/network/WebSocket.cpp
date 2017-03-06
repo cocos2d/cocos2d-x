@@ -630,7 +630,7 @@ bool WebSocket::init(const Delegate& delegate,
 
     // fixed https://github.com/cocos2d/cocos2d-x/issues/17433
     // createWebSocketThread has to be after message WS_MSG_TO_SUBTHREAD_CREATE_CONNECTION was sent.
-    // And websocket thread should be only create once.
+    // And websocket thread should only be created once.
     if (!isWebSocketThreadCreated)
     {
         __wsHelper->createWebSocketThread();
