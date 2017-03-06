@@ -859,12 +859,16 @@ std::string FileUtils::fullPathFromRelativeFile(const std::string &filename, con
 
 void FileUtils::setSearchResolutionsOrder(const std::vector<std::string>& searchResolutionsOrder)
 {
+    if (_searchResolutionsOrderArray == searchResolutionsOrder)
+    {
+        return;
+    }
+
     bool existDefault = false;
-    std::vector<std::string> searchResolutionOrderCopied = searchResolutionsOrder;
 
     _fullPathCache.clear();
     _searchResolutionsOrderArray.clear();
-    for(const auto& iter : searchResolutionOrderCopied)
+    for(const auto& iter : searchResolutionsOrder)
     {
         std::string resolutionDirectory = iter;
         if (!existDefault && resolutionDirectory == "")
