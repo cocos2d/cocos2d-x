@@ -443,6 +443,11 @@ public:
     virtual void setSearchPaths(const std::vector<std::string>& searchPaths);
 
     /**
+     * Get default resource root path.
+     */
+    const std::string& getDefaultResourceRootPath() const;
+
+    /**
      * Set default resource root path.
      */
     void setDefaultResourceRootPath(const std::string& path);
@@ -457,11 +462,20 @@ public:
     /**
      *  Gets the array of search paths.
      *
-     *  @return The array of search paths.
+     *  @return The array of search paths which may contain the prefix of default resource root path. 
+     *  @note In best practise, getter function should return the value of setter function passes in.
+     *        But since we should not break the compatibility, we keep using the old logic. 
+     *        Therefore, If you want to get the original search paths, please call 'getOriginalSearchPaths()' instead.
      *  @see fullPathForFilename(const char*).
      *  @lua NA
      */
     virtual const std::vector<std::string>& getSearchPaths() const;
+
+    /**
+     *  Gets the original search path array set by 'setSearchPaths' or 'addSearchPath'.
+     *  @return The array of the original search paths
+     */
+    virtual const std::vector<std::string>& getOriginalSearchPaths() const;
 
     /**
      *  Gets the writable path.
@@ -872,6 +886,11 @@ protected:
      * The lower index of the element in this vector, the higher priority for this search path.
      */
     std::vector<std::string> _searchPathArray;
+
+    /**
+     * The search paths which was set by 'setSearchPaths' / 'addSearchPath'.
+     */
+    std::vector<std::string> _originalSearchPaths;
 
     /**
      *  The default root path of resources.

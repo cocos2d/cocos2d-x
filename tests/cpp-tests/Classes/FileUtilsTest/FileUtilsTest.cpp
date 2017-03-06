@@ -136,6 +136,25 @@ void TestSearchPath::onEnter()
             fclose(fp);
         }
     }
+
+    // Save old resource root path
+    std::string oldDefaultRootPath = sharedFileUtils->getDefaultResourceRootPath();
+    sharedFileUtils->setDefaultResourceRootPath("extensions");
+    auto sp1 = Sprite::create("orange_edit.png");
+    sp1->setPosition(VisibleRect::center());
+    addChild(sp1);
+
+    // Recover resource root path
+    sharedFileUtils->setDefaultResourceRootPath(oldDefaultRootPath);
+
+    auto oldSearchPaths = sharedFileUtils->getSearchPaths();
+    sharedFileUtils->addSearchPath("Images");
+    auto sp2 = Sprite::create("btn-about-normal.png");
+    sp2->setPosition(VisibleRect::center() + Vec2(0, -50));
+    addChild(sp2);
+
+    // Recover old search paths
+    sharedFileUtils->setSearchPaths(oldSearchPaths);
 }
 
 void TestSearchPath::onExit()
@@ -155,7 +174,7 @@ std::string TestSearchPath::title() const
 
 std::string TestSearchPath::subtitle() const
 {
-    return "See the console";
+    return "See the console, can see a orange box and a 'about' picture";
 }
 
 // TestFilenameLookup
