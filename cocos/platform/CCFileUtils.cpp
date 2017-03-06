@@ -910,6 +910,11 @@ const std::vector<std::string>& FileUtils::getSearchResolutionsOrder() const
 
 const std::vector<std::string>& FileUtils::getSearchPaths() const
 {
+    return _searchPathArray;
+}
+
+const std::vector<std::string>& FileUtils::getOriginalSearchPaths() const
+{
     return _originalSearchPaths;
 }
 
