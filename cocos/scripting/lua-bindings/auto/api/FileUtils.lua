@@ -95,6 +95,12 @@
 -- @return FileUtils#FileUtils self (return value: cc.FileUtils)
 
 --------------------------------
+-- Get default resource root path.
+-- @function [parent=#FileUtils] getDefaultResourceRootPath 
+-- @param self
+-- @return string#string ret (return value: string)
+        
+--------------------------------
 -- Loads the filenameLookup dictionary from the contents of a filename.<br>
 -- note The plist file name should follow the format below:<br>
 -- code<br>
@@ -144,7 +150,10 @@
         
 --------------------------------
 -- Gets the array of search paths.<br>
--- return The array of search paths.<br>
+-- return The array of search paths which may contain the prefix of default resource root path. <br>
+-- note In best practise, getter function should return the value of setter function passes in.<br>
+-- But since we should not break the compatibility, we keep using the old logic. <br>
+-- Therefore, If you want to get the original search paths, please call 'getOriginalSearchPaths()' instead.<br>
 -- see fullPathForFilename(const char*).<br>
 -- lua NA
 -- @function [parent=#FileUtils] getSearchPaths 
@@ -161,6 +170,13 @@
 -- @param #map_table dict
 -- @param #string fullPath
 -- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- Gets the original search path array set by 'setSearchPaths' or 'addSearchPath'.<br>
+-- return The array of the original search paths
+-- @function [parent=#FileUtils] getOriginalSearchPaths 
+-- @param self
+-- @return array_table#array_table ret (return value: array_table)
         
 --------------------------------
 -- Gets the new filename from the filename lookup dictionary.<br>
