@@ -620,13 +620,18 @@ bool WebSocket::init(const Delegate& delegate,
     if (__wsHelper == nullptr)
     {
         __wsHelper = new (std::nothrow) WsThreadHelper();
-        __wsHelper->createWebSocketThread();
+        // https://github.com/cocos2d/cocos2d-x/issues/17433
+        // lws_service(__wsContext, 2); 
+        // this function called must be after ws->onClientOpenConnectionRequest  or crash
+        // __wsHelper->createWebSocketThread();
     }
 
     WsMessage* msg = new (std::nothrow) WsMessage();
     msg->what = WS_MSG_TO_SUBTHREAD_CREATE_CONNECTION;
     msg->user = this;
     __wsHelper->sendMessageToWebSocketThread(msg);
+
+    __wsHelper->createWebSocketThread();
 
     return true;
 }
