@@ -99,6 +99,11 @@ class TMXLayer;
 class CC_DLL TMXTiledMap : public Node
 {
 public:
+    /**
+    create tmx with the resource callback always plist
+    */
+    static TMXTiledMap* createPlist(const std::string& tmxFile, const std::function<bool(std::string&, std::string&, Texture2D*& bLocal)>& func);
+
     /** Creates a TMX Tiled Map with a TMX file.
      *
      * @return An autorelease object.
@@ -204,6 +209,7 @@ public:
 
     virtual std::string getDescription() const override;
 
+	std::string& getTMXFileName(){ return m_tmxFileName; }
 protected:
     /**
      * @js ctor
@@ -216,14 +222,14 @@ protected:
     virtual ~TMXTiledMap();
 
     /** initializes a TMX Tiled Map with a TMX file */
-    bool initWithTMXFile(const std::string& tmxFile);
+    bool initWithTMXFile(const std::string& tmxFile, const std::function<bool(std::string&, std::string&, Texture2D*& bLocal)>& func);
 
     /** initializes a TMX Tiled Map with a TMX formatted XML string and a path to TMX resources */
     bool initWithXML(const std::string& tmxString, const std::string& resourcePath);
     
-    TMXLayer * parseLayer(TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo);
+    TMXLayer * parseLayer(TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo, const std::function<bool(std::string&, std::string&, Texture2D*&)>& func);
     TMXTilesetInfo * tilesetForLayer(TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo);
-    void buildWithMapInfo(TMXMapInfo* mapInfo);
+    void buildWithMapInfo(TMXMapInfo* mapInfo, const std::function<bool(std::string&, std::string&, Texture2D*& bLocal)>& func);
 
     /** the map's size property measured in tiles */
     Size _mapSize;
@@ -239,6 +245,8 @@ protected:
     //! tile properties
     ValueMapIntKey _tileProperties;
 
+	//! store the file name
+	std::string m_tmxFileName;
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(TMXTiledMap);
 

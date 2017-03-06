@@ -8985,13 +8985,13 @@ bool js_cocos2dx_ui_ListView_addEventListener(JSContext *cx, uint32_t argc, jsva
     cocos2d::ui::ListView* cobj = (cocos2d::ui::ListView *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_ListView_addEventListener : Invalid Native Object");
     if (argc == 1) {
-        std::function<void (cocos2d::Ref *, cocos2d::ui::ListView::EventType)> arg0;
+        std::function<void (cocos2d::Ref *, cocos2d::ui::ListView::EventType, cocos2d::Touch* pTouch)> arg0;
         do {
 		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
 		    {
 		        JS::RootedObject jstarget(cx, args.thisv().toObjectOrNull());
 		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, jstarget, args.get(0), args.thisv()));
-		        auto lambda = [=](cocos2d::Ref* larg0, cocos2d::ui::ListView::EventType larg1) -> void {
+		        auto lambda = [=](cocos2d::Ref* larg0, cocos2d::ui::ListView::EventType larg1, cocos2d::Touch* pTouch) -> void {
 		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
 		            jsval largv[2];
 		            if (larg0) {

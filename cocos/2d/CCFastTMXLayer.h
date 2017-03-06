@@ -79,6 +79,11 @@ namespace experimental{
 class CC_DLL TMXLayer : public Node
 {
 public:
+    /**
+    create layer with texture2d
+    */
+    static TMXLayer * createByTexture2D(Texture2D* pTexture2D, TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo);
+
     /** Creates a FastTMXLayer with an tileset info, a layer info and a map info.
      *
      * @param tilesetInfo An tileset info.
@@ -270,8 +275,14 @@ public:
     virtual void draw(Renderer *renderer, const Mat4& transform, uint32_t flags) override;
     void removeChild(Node* child, bool cleanup = true) override;
 
+    //get real draw area
+    const Rect& GetSceneGridRect(){ return _screenGridRect; }
 protected:
+    //calc Staggered pos
+    int GetTilePosByPosition(const Vec2 &pos, Vec2& posRet);
+    int CalcTilePosAtRect(const cocos2d::Vec2& pos, cocos2d::Vec2& posRet, bool bEvenHeight);
 
+    bool initWithTexture2D(Texture2D* pTexture2D, TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo);
     bool initWithTilesetInfo(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo);
     void updateTiles(const Rect& culledRect);
     Vec2 calculateLayerOffset(const Vec2& offset);
@@ -309,6 +320,11 @@ protected:
     uint32_t* _tiles;
     /** Tileset information for the layer */
     TMXTilesetInfo* _tileSet;
+    /*is multi tileset*/
+    bool			m_bMultiTileSet;
+    /*map to the multi tileset*/
+    std::map<int, TMXTilesetInfo*> m_mapMultiTileSet;
+
     /** Layer orientation, which is the same as the map orientation */
     int _layerOrientation;
     /** properties from the layer. They can be added using Tiled */
@@ -352,11 +368,16 @@ protected:
     
     Map<int , Primitive*> _primitives;
     
+    int _staggerIndex;
 public:
     /** Possible orientations of the TMX map */
     static const int FAST_TMX_ORIENTATION_ORTHO;
     static const int FAST_TMX_ORIENTATION_HEX;
     static const int FAST_TMX_ORIENTATION_ISO;
+    static const int FAST_TMX_ORIENTATION_Staggered;
+
+    static const int FAST_TMX_TMXStaggerIndex_Odd;
+    static const int FAST_TMX_TMXStaggerIndex_Even;
 };
 
 // end of tilemap_parallax_nodes group

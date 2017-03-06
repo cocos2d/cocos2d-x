@@ -814,7 +814,7 @@ namespace cocostudio
         {
             node->removeComponent(ComExtensionData::COMPONENT_NAME);
         }
-        node->addComponent(extensionData);
+        node->addComponentNoUpdate(extensionData);
         
         bool touchEnabled = options->touchEnabled() != 0;
         widget->setTouchEnabled(touchEnabled);
