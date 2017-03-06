@@ -26,6 +26,7 @@ THE SOFTWARE.
 #include "2d/CCFontFreeType.h"
 #include FT_BBOX_H
 #include FT_BITMAP_H
+#include FT_OUTLINE_H
 #include "edtaa3func.h"
 #include "2d/CCFontAtlas.h"
 #include "base/CCDirector.h"
