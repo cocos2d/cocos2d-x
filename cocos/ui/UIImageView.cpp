@@ -365,6 +365,26 @@ const BlendFunc& ImageView::getBlendFunc() const
 {
     return _imageRenderer->getBlendFunc();
 }
+    
+void ImageView::setFlippedX(bool flippedX)
+{
+    _imageRenderer->setFlippedX(flippedX);
+}
+
+bool ImageView::isFlippedX()const
+{
+    return _imageRenderer->isFlippedX();
+}
+    
+void ImageView::setFlippedY(bool flippedY)
+{
+    _imageRenderer->setFlippedY(flippedY);
+}
+    
+bool ImageView::isFlippedY()const
+{
+    return _imageRenderer->isFlippedY();
+}
 
 }
 

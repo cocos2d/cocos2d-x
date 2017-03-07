@@ -167,6 +167,44 @@ public:
     virtual std::string getDescription() const override;
     virtual Size getVirtualRendererSize() const override;
     virtual Node* getVirtualRenderer() override;
+    
+    /**
+     * Sets whether the widget should be flipped horizontally or not.
+     *
+     * @param flippedX true if the widget should be flipped horizontally, false otherwise.
+     */
+    virtual void setFlippedX(bool flippedX);
+    
+    /**
+     * Returns the flag which indicates whether the widget is flipped horizontally or not.
+     *
+     * It only flips the texture of the widget, and not the texture of the widget's children.
+     * Also, flipping the texture doesn't alter the anchorPoint.
+     * If you want to flip the anchorPoint too, and/or to flip the children too use:
+     * widget->setScaleX(sprite->getScaleX() * -1);
+     *
+     * @return true if the widget is flipped horizontally, false otherwise.
+     */
+    virtual bool isFlippedX()const;
+    
+    /**
+     * Sets whether the widget should be flipped vertically or not.
+     *
+     * @param flippedY true if the widget should be flipped vertically, false otherwise.
+     */
+    virtual void setFlippedY(bool flippedY);
+    
+    /**
+     * Return the flag which indicates whether the widget is flipped vertically or not.
+     *
+     * It only flips the texture of the widget, and not the texture of the widget's children.
+     * Also, flipping the texture doesn't alter the anchorPoint.
+     * If you want to flip the anchorPoint too, and/or to flip the children too use:
+     * widget->setScaleY(widget->getScaleY() * -1);
+     *
+     * @return true if the widget is flipped vertically, false otherwise.
+     */
+    virtual bool isFlippedY()const;
 
     ResourceData getRenderFile();
 
