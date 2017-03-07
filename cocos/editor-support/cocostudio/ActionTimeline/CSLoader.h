@@ -72,6 +72,7 @@ class CC_STUDIO_DLL CSLoader
 public:
     static CSLoader* getInstance();
     static void destroyInstance();
+    static void setDelegate(CSLoader* pNew);
     
     CSLoader();
     /** @deprecated Use method destroyInstance() instead */
@@ -120,7 +121,7 @@ public:
     cocos2d::Node* nodeWithFlatBuffersForSimulator(const flatbuffers::NodeTree* nodetree);
 
 protected:
-
+    virtual cocos2d::Data getDataBufferFromFile(const std::string &fileName);
     cocos2d::Node* createNodeWithFlatBuffersFile(const std::string& filename, const ccNodeLoadCallback& callback);
     cocos2d::Node* nodeWithFlatBuffersFile(const std::string& fileName, const ccNodeLoadCallback& callback);
     cocos2d::Node* nodeWithFlatBuffers(const flatbuffers::NodeTree* nodetree, const ccNodeLoadCallback& callback);
