@@ -441,6 +441,102 @@ tolua_lerror:
     return 0;
 }
 
+
+static int lua_cocos2dx_ActionTimeline_setLastFrameCallFunc(lua_State* L)
+{
+    if (nullptr == L)
+        return 0;
+
+    int argc = 0;
+    cocostudio::timeline::ActionTimeline* self = nullptr;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (!tolua_isusertype(L, 1, "ccs.ActionTimeline", 0, &tolua_err)) goto tolua_lerror;
+#endif
+
+    self = static_cast<cocostudio::timeline::ActionTimeline*>(tolua_tousertype(L, 1, 0));
+
+#if COCOS2D_DEBUG >= 1
+    if (nullptr == self) {
+        tolua_error(L, "invalid 'self' in function 'lua_cocos2dx_ActionTimeline_setLastFrameCallFunc'\n", NULL);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(L) - 1;
+    if (1 == argc)
+    {
+#if COCOS2D_DEBUG >= 1
+        if (!toluafix_isfunction(L, 2, "LUA_FUNCTION", 0, &tolua_err))
+        {
+            goto tolua_lerror;
+        }
+#endif
+        LUA_FUNCTION handler = (toluafix_ref_function(L, 2, 0));
+        self->setLastFrameCallFunc([=](){
+            LuaEngine::getInstance()->getLuaStack()->executeFunctionByHandler(handler, 0);
+        });
+
+        return 0;
+    }
+    luaL_error(L, "'setLastFrameCallFunc' function of ActionTimeline has wrong number of arguments: %d, was expecting %d\n", argc, 1);
+
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(L, "#ferror in function 'setLastFrameCallFunc'.", &tolua_err);
+#endif
+    return 0;
+}
+
+
+static int lua_cocos2dx_ActionTimeline_setLastFrameCallFunc(lua_State* L)
+{
+    if (nullptr == L)
+        return 0;
+
+    int argc = 0;
+    cocostudio::timeline::ActionTimeline* self = nullptr;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (!tolua_isusertype(L, 1, "ccs.ActionTimeline", 0, &tolua_err)) goto tolua_lerror;
+#endif
+
+    self = static_cast<cocostudio::timeline::ActionTimeline*>(tolua_tousertype(L, 1, 0));
+
+#if COCOS2D_DEBUG >= 1
+    if (nullptr == self) {
+        tolua_error(L, "invalid 'self' in function 'lua_cocos2dx_ActionTimeline_setLastFrameCallFunc'\n", NULL);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(L) - 1;
+    if (1 == argc)
+    {
+#if COCOS2D_DEBUG >= 1
+        if (!toluafix_isfunction(L, 2, "LUA_FUNCTION", 0, &tolua_err))
+        {
+            goto tolua_lerror;
+        }
+#endif
+        LUA_FUNCTION handler = (toluafix_ref_function(L, 2, 0));
+        self->setLastFrameCallFunc([=](){
+            LuaEngine::getInstance()->getLuaStack()->executeFunctionByHandler(handler, 0);
+        });
+
+        return 0;
+    }
+    luaL_error(L, "'setLastFrameCallFunc' function of ActionTimeline has wrong number of arguments: %d, was expecting %d\n", argc, 1);
+
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(L, "#ferror in function 'setLastFrameCallFunc'.", &tolua_err);
+#endif
+    return 0;
+}
+
 static void extendActionTimelineCache(lua_State* L)
 {
     lua_pushstring(L, "ccs.ActionTimelineCache");
