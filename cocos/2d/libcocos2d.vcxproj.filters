@@ -1958,9 +1958,6 @@
     <ClCompile Include="..\renderer\CCTextureCube.cpp">
       <Filter>renderer</Filter>
     </ClCompile>
-    <ClCompile Include="..\network\CCDownloader-curl.cpp">
-      <Filter>network</Filter>
-    </ClCompile>
     <ClCompile Include="..\editor-support\cocostudio\WidgetReader\Light3DReader\Light3DReader.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\WidgetReader\TabControlReader\TabControlReader.cpp">
       <Filter>cocostudio\reader\WidgetReader\TabControlReader</Filter>
@@ -1994,6 +1991,12 @@
     </ClCompile>
     <ClCompile Include="..\audio\win32\AudioDecoderManager.cpp">
       <Filter>audioengine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\network\CCDownloader-curl.cpp">
+      <Filter>network\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\network\Uri.cpp">
+      <Filter>network\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -3897,6 +3900,9 @@
     <ClInclude Include="..\..\external\flatbuffers\code_generators.h" />
     <ClInclude Include="..\..\external\flatbuffers\reflection.h" />
     <ClInclude Include="..\..\external\flatbuffers\reflection_generated.h" />
+    <ClInclude Include="..\network\Uri.h">
+      <Filter>network\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\math\Mat4.inl">

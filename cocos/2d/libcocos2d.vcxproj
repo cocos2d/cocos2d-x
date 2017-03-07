@@ -592,6 +592,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\openssl\prebuilt\win32\*.*" "$(OutDir)"
     <ClCompile Include="..\network\CCDownloader.cpp" />
     <ClCompile Include="..\network\HttpClient.cpp" />
     <ClCompile Include="..\network\SocketIO.cpp" />
+    <ClCompile Include="..\network\Uri.cpp" />
     <ClCompile Include="..\network\WebSocket.cpp" />
     <ClCompile Include="..\physics3d\CCPhysics3D.cpp" />
     <ClCompile Include="..\physics3d\CCPhysics3DComponent.cpp" />
@@ -1224,6 +1225,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\openssl\prebuilt\win32\*.*" "$(OutDir)"
     <ClInclude Include="..\network\HttpRequest.h" />
     <ClInclude Include="..\network\HttpResponse.h" />
     <ClInclude Include="..\network\SocketIO.h" />
+    <ClInclude Include="..\network\Uri.h" />
     <ClInclude Include="..\network\WebSocket.h" />
     <ClInclude Include="..\physics3d\CCPhysics3D.h" />
     <ClInclude Include="..\physics3d\CCPhysics3DComponent.h" />
