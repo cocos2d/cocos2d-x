@@ -616,14 +616,11 @@ bool WebSocket::init(const Delegate& delegate,
         }
     }
 
-    // WebSocket thread needs to be invoked at the end of this method.
+    bool isWebSocketThreadCreated = true;
     if (__wsHelper == nullptr)
     {
         __wsHelper = new (std::nothrow) WsThreadHelper();
-        // https://github.com/cocos2d/cocos2d-x/issues/17433
-        // lws_service(__wsContext, 2); 
-        // this function called must be after ws->onClientOpenConnectionRequest  or crash
-        // __wsHelper->createWebSocketThread();
+        isWebSocketThreadCreated = false;
     }
 
     WsMessage* msg = new (std::nothrow) WsMessage();
@@ -631,7 +628,13 @@ bool WebSocket::init(const Delegate& delegate,
     msg->user = this;
     __wsHelper->sendMessageToWebSocketThread(msg);
 
-    __wsHelper->createWebSocketThread();
+    // fixed https://github.com/cocos2d/cocos2d-x/issues/17433
+    // createWebSocketThread has to be after message WS_MSG_TO_SUBTHREAD_CREATE_CONNECTION was sent.
+    // And websocket thread should only be created once.
+    if (!isWebSocketThreadCreated)
+    {
+        __wsHelper->createWebSocketThread();
+    }
 
     return true;
 }
