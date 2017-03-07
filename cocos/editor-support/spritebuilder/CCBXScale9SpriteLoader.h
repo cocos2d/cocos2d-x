@@ -23,6 +23,7 @@ protected:
     virtual void onHandlePropTypeFloat(const std::string &propertyName, bool isExtraProp, float value) override;
     virtual void onHandlePropTypeOffsets(const std::string &propertyName, bool isExtraProp, const Vec4 &value) override;
     virtual void onHandlePropTypeIntegerLabeled(const std::string &propertyName, bool isExtraProp, int value) override;
+    virtual void onHandlePropTypeFlip(const std::string &propertyName, bool isExtraProp, const std::pair<bool,bool> &value) override;
     
 private:
     Vec4 _margins;
@@ -30,6 +31,7 @@ private:
     SpriteFrameDescription _spriteFrame;
     BlendFunc _blendFunc;
     int _renderingType;
+    std::pair<bool,bool> _flipped;
 };
 
 }

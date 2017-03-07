@@ -14,6 +14,7 @@ static const std::string PROPERTY_MARGIN_RIGHT("marginRight");
 static const std::string PROPERTY_MARGIN_BOTTOM("marginBottom");
     
 static const std::string PROPERTY_RENDERING_TYPE("renderingType");
+static const std::string PROPERTY_FLIP("flip");
 
 Scale9SpriteLoader *Scale9SpriteLoader::create()
 {
@@ -49,11 +50,14 @@ void Scale9SpriteLoader::setSpecialProperties(Node* node, const Size &parentSize
             break;
     }
     sprite->setBlendFunc(_blendFunc);
+    sprite->setFlippedX(_flipped.first);
+    sprite->setFlippedY(_flipped.second);
 }
 
 Scale9SpriteLoader::Scale9SpriteLoader()
     :_blendFunc(BlendFunc::ALPHA_PREMULTIPLIED)
     ,_renderingType(1)
+    ,_flipped(false, false)
 {
     
 }
@@ -110,6 +114,15 @@ void Scale9SpriteLoader::onHandlePropTypeIntegerLabeled(const std::string &prope
         NodeLoader::onHandlePropTypeFloat(propertyName, isExtraProp, value);
     }
 
+}
+    
+void Scale9SpriteLoader::onHandlePropTypeFlip(const std::string &propertyName, bool isExtraProp, const std::pair<bool,bool> &value)
+{
+    if(propertyName == PROPERTY_FLIP) {
+        _flipped = value;
+    } else {
+        NodeLoader::onHandlePropTypeFlip(propertyName, isExtraProp, value);
+    }
 }
     
 }
