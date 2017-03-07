@@ -949,6 +949,8 @@
         "cocos/network/HttpResponse.h", 
         "cocos/network/SocketIO.cpp", 
         "cocos/network/SocketIO.h", 
+        "cocos/network/Uri.cpp", 
+        "cocos/network/Uri.h", 
         "cocos/network/WebSocket.cpp", 
         "cocos/network/WebSocket.h", 
         "cocos/physics/CCPhysicsBody.cpp", 
