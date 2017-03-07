@@ -68,7 +68,7 @@ namespace ui {
         if (layout && layout->init())
         {
             layout->autorelease();
-            node->addComponent(layout);
+            node->addComponentNoUpdate(layout);
             return layout;
         }
         CC_SAFE_DELETE(layout);
