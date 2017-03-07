@@ -193,7 +193,7 @@ public class Cocos2dxHelper {
     // else it returns the absolute path to the APK.
     public static String getAssetsPath()
     {
-        if (Cocos2dxHelper.sAssetsPath == "") {
+        if (Cocos2dxHelper.sAssetsPath.equals("")) {
             int versionCode = 1;
             try {
                 versionCode = Cocos2dxHelper.sActivity.getPackageManager().getPackageInfo(Cocos2dxHelper.sPackageName, 0).versionCode;
