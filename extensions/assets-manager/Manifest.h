@@ -72,11 +72,9 @@ public:
         std::string path;
         bool compressed;
         DownloadState downloadState;
-        int m_nCompressIndex;
-        Asset()
-        {
-            compressed = false;
-            m_nCompressIndex = 0;
+        int _nCompressIndex;
+        Asset() : compressed(false), 
+            _nCompressIndex(0){
         }
     };
     

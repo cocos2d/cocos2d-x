@@ -51,7 +51,7 @@ const std::string AssetsManagerEx::MANIFEST_ID = "@manifest";
 namespace {
     bool SortCompressFileIndexAssert(const CompressedFilesInfoAsserts& a, const CompressedFilesInfoAsserts& b)
     {
-        return a.m_nCompressIndex < b.m_nCompressIndex;
+        return a._nCompressIndex < b._nCompressIndex;
     }
 }
 // Implementation of AssetsManagerEx
@@ -1003,7 +1003,7 @@ void AssetsManagerEx::onSuccess(const std::string &/*srcUrl*/, const std::string
             if (assetIt->second.compressed) {
                 CompressedFilesInfoAsserts comressFiles;
                 comressFiles._fileName = storagePath;
-                comressFiles.m_nCompressIndex = assetIt->second.m_nCompressIndex;
+                comressFiles._nCompressIndex = assetIt->second._nCompressIndex;
                 _compressedFiles.push_back(comressFiles);
             }
         }

@@ -387,7 +387,7 @@ Manifest::Asset Manifest::parseAsset(const std::string &path, const rapidjson::V
         //compress index
         if (json.HasMember(KEY_COMPRESSED_INDEX) && json[KEY_COMPRESSED_INDEX].IsInt())
         {
-            asset.m_nCompressIndex = json[KEY_COMPRESSED_INDEX].GetInt();
+            asset._nCompressIndex = json[KEY_COMPRESSED_INDEX].GetInt();
         }
     }
     else asset.compressed = false;

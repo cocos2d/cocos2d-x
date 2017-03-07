@@ -47,9 +47,8 @@ NS_CC_EXT_BEGIN
 struct CompressedFilesInfoAsserts
 {
     std::string     _fileName;
-    int             m_nCompressIndex;
-    CompressedFilesInfoAsserts() : m_nCompressIndex(0)
-    {
+    int             _nCompressIndex;
+    CompressedFilesInfoAsserts() : _nCompressIndex(0){
     }
 };
 
