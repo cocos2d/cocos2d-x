@@ -950,9 +950,9 @@ Node* CSLoader::nodeWithFlatBuffersFile(const std::string &fileName, const ccNod
 {
     std::string fullPath = FileUtils::getInstance()->fullPathForFilename(fileName);
     
-	CC_ASSERT(FileUtils::getInstance()->isFileExist(fullPath));
+    CC_ASSERT(FileUtils::getInstance()->isFileExist(fullPath));
 
-	Data buf = FileUtils::getInstance()->getDataFromFile(fullPath);
+    Data buf = FileUtils::getInstance()->getDataFromFile(fullPath);
 
     if (buf.isNull())
     {
@@ -1020,7 +1020,7 @@ Node* CSLoader::nodeWithFlatBuffers(const flatbuffers::NodeTree *nodetree, const
             cocostudio::timeline::ActionTimeline* action = nullptr;
             if (filePath != "" && FileUtils::getInstance()->isFileExist(filePath))
             {
-				Data buf = FileUtils::getInstance()->getDataFromFile(filePath);
+                Data buf = FileUtils::getInstance()->getDataFromFile(filePath);
                 node = createNode(buf, callback);
                 action = createTimeline(buf, filePath);
             }
