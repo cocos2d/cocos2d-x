@@ -15,6 +15,7 @@ static const std::string PROPERTY_MARGIN_RIGHT("marginRight");
 static const std::string PROPERTY_MARGIN_BOTTOM("marginBottom");
 static const std::string PROPERTY_IMAGE_SCALE("imageScale");
 static const std::string PROPERTY_RENDERING_TYPE("renderingType");
+static const std::string PROPERTY_FLIP("flip");
 
 ImageViewLoader *ImageViewLoader::create()
 {
@@ -66,12 +67,15 @@ void ImageViewLoader::setSpecialProperties(Node* node, const Size &parentSize, f
     };
     imageView->setImageScale(getAbsoluteScale(mainScale, additionalScale, _imageScale.scale, _imageScale.type) / CCBXReader::getResolutionScale());
     imageView->setBlendFunc(_blendFunc);
+    imageView->setFlippedX(_flipped.first);
+    imageView->setFlippedY(_flipped.second);
 }
 
 ImageViewLoader::ImageViewLoader()
     :_imageScale{0,1.f}
     ,_blendFunc(BlendFunc::ALPHA_PREMULTIPLIED)
     ,_renderingType(1)
+    ,_flipped(false, false)
 {
     
 }
@@ -136,7 +140,15 @@ void ImageViewLoader::onHandlePropTypeIntegerLabeled(const std::string &property
     } else {
         NodeLoader::onHandlePropTypeFloat(propertyName, isExtraProp, value);
     }
+}
     
+void ImageViewLoader::onHandlePropTypeFlip(const std::string &propertyName, bool isExtraProp, const std::pair<bool,bool> &value)
+{
+    if(propertyName == PROPERTY_FLIP) {
+        _flipped = value;
+    } else {
+        NodeLoader::onHandlePropTypeFlip(propertyName, isExtraProp, value);
+    }
 }
 
 }
