@@ -868,10 +868,10 @@ void WebSocket::onClientOpenConnectionRequest()
         _readyStateMutex.unlock();
 
         Uri uri = Uri::parse(_url);
-        LOGD("scheme: %s, host: %s, port: %d, path: %s\n", uri.scheme.c_str(), uri.host.c_str(), static_cast<int>(uri.port), uri.path.c_str());
+        LOGD("scheme: %s, host: %s, port: %d, path: %s\n", uri.getScheme().c_str(), uri.getHost().c_str(), static_cast<int>(uri.getPort()), uri.getPath().c_str());
 
         int sslConnection = 0;
-        if (uri.secure)
+        if (uri.isSecure())
             sslConnection = LCCSCF_USE_SSL;
 
         struct lws_vhost* vhost = nullptr;
@@ -887,12 +887,12 @@ void WebSocket::onClientOpenConnectionRequest()
         struct lws_client_connect_info connectInfo;
         memset(&connectInfo, 0, sizeof(connectInfo));
         connectInfo.context = __wsContext;
-        connectInfo.address = uri.host.c_str();
-        connectInfo.port = uri.port;
+        connectInfo.address = uri.getHost().c_str();
+        connectInfo.port = uri.getPort();
         connectInfo.ssl_connection = sslConnection;
-        connectInfo.path = uri.path.c_str();
-        connectInfo.host = uri.host.c_str();
-        connectInfo.origin = uri.host.c_str();
+        connectInfo.path = uri.getPath().c_str();
+        connectInfo.host = uri.getHost().c_str();
+        connectInfo.origin = uri.getHost().c_str();
         connectInfo.protocol = _clientSupportedProtocols.empty() ? nullptr : _clientSupportedProtocols.c_str();
         connectInfo.ietf_version_or_minus_one = -1;
         connectInfo.userdata = this;
