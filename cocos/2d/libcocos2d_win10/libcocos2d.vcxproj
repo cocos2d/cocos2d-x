@@ -573,6 +573,7 @@
     <ClCompile Include="..\..\network\HttpConnection-winrt.cpp" />
     <ClCompile Include="..\..\network\HttpCookie.cpp" />
     <ClCompile Include="..\..\network\SocketIO.cpp" />
+    <ClCompile Include="..\..\network\Uri.cpp" />
     <ClCompile Include="..\..\network\WebSocket.cpp" />
     <ClCompile Include="..\..\physics3d\CCPhysics3D.cpp" />
     <ClCompile Include="..\..\physics3d\CCPhysics3DComponent.cpp" />
@@ -1212,6 +1213,7 @@
     <ClInclude Include="..\..\network\HttpRequest.h" />
     <ClInclude Include="..\..\network\HttpResponse.h" />
     <ClInclude Include="..\..\network\SocketIO.h" />
+    <ClInclude Include="..\..\network\Uri.h" />
     <ClInclude Include="..\..\network\WebSocket.h" />
     <ClInclude Include="..\..\physics3d\CCPhysics3D.h" />
     <ClInclude Include="..\..\physics3d\CCPhysics3DComponent.h" />
