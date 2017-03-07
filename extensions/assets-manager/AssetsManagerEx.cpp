@@ -425,7 +425,7 @@ void AssetsManagerEx::decompressDownloadedZip()
 
     // Decompress all compressed files
     for (auto it = _compressedFiles.begin(); it != _compressedFiles.end(); ++it) {
-        std::string zipfile = it->m_strFileName;
+        std::string zipfile = it->_fileName;
         if (!decompress(zipfile))
         {
             dispatchUpdateEvent(EventAssetsManagerEx::EventCode::ERROR_DECOMPRESS, "", "Unable to decompress file " + zipfile);
@@ -726,11 +726,11 @@ void AssetsManagerEx::updateSucceed()
         std::sort(asyncData->compressedFiles.begin(), asyncData->compressedFiles.end(), SortCompressFileIndexAssert);
         // Decompress all compressed files
         for (auto& zipFileInfo : asyncData->compressedFiles) {
-            if (!decompress(zipFileInfo.m_strFileName)){
-                asyncData->errorCompressedFile = zipFileInfo.m_strFileName;
+            if (!decompress(zipFileInfo._fileName)){
+                asyncData->errorCompressedFile = zipFileInfo._fileName;
                 break;
             }
-            _fileUtils->removeFile(zipFileInfo.m_strFileName);
+            _fileUtils->removeFile(zipFileInfo._fileName);
         }
     });
 }
@@ -1002,7 +1002,7 @@ void AssetsManagerEx::onSuccess(const std::string &/*srcUrl*/, const std::string
             // Add file to need decompress list
             if (assetIt->second.compressed) {
                 CompressedFilesInfoAsserts comressFiles;
-                comressFiles.m_strFileName = storagePath;
+                comressFiles._fileName = storagePath;
                 comressFiles.m_nCompressIndex = assetIt->second.m_nCompressIndex;
                 _compressedFiles.push_back(comressFiles);
             }

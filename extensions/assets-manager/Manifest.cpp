@@ -398,7 +398,6 @@ Manifest::Asset Manifest::parseAsset(const std::string &path, const rapidjson::V
     }
     else asset.downloadState = DownloadState::UNSTARTED;
     
-
     return asset;
 }
 

@@ -46,11 +46,10 @@ NS_CC_EXT_BEGIN
 //! All files to be decompressed
 struct CompressedFilesInfoAsserts
 {
-    std::string     m_strFileName;
+    std::string     _fileName;
     int             m_nCompressIndex;
-    CompressedFilesInfoAsserts()
+    CompressedFilesInfoAsserts() : m_nCompressIndex(0)
     {
-        m_nCompressIndex = 0;
     }
 };
 
