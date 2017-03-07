@@ -448,6 +448,8 @@ static void extendActionTimelineCache(lua_State* L)
     if (lua_istable(L,-1))
     {
         tolua_function(L, "getInstance", lua_cocos2dx_studio_ActionTimelineCache_getInstance);
+        tolua_function(L, "setLastFrameCallFunc", lua_cocos2dx_ActionTimeline_setLastFrameCallFunc);
+        tolua_function(L, "setAnimationEndCallFunc", lua_cocos2dx_ActionTimeline_setAnimationEndCallFunc);
     }
     lua_pop(L, 1);
 }
