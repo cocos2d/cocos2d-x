@@ -56,6 +56,8 @@ public:
     void setInterval(float interval) { _interval = interval; }
     
     void setupTimerWithInterval(float seconds, unsigned int repeat, float delay);
+    void setAborted() { _aborted = true; }
+    bool isAborted() const { return _aborted; }
     
     virtual void trigger(float dt) = 0;
     virtual void cancel() = 0;
@@ -73,6 +75,7 @@ protected:
     unsigned int _repeat; //0 = once, 1 is 2 x executed
     float _delay;
     float _interval;
+    bool _aborted;
 };
 
 
