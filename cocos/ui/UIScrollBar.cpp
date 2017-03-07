@@ -81,16 +81,17 @@ _imageScale(1.0f)
 
 ScrollBar::~ScrollBar()
 {
-    if (_dataScrollView)
-    {
-        _dataScrollView->removeScrollBarEventListener(this);
-    }
-    
     _sliderEventListener = nullptr;
     _sliderEventSelector = nullptr;
     
     cocos2d::Director::getInstance()->getEventDispatcher()->removeEventListener(_mouseListener);
     _mouseListener = nullptr;
+    
+    if (_dataScrollView)
+    {
+        _dataScrollView->removeScrollBarEventListener(this);
+        _dataScrollView = nullptr;
+    }
 }
 
 ScrollBar* ScrollBar::create()
@@ -561,40 +562,52 @@ void ScrollBar::barRendererScaleChangedWithSize()
     
 void ScrollBar::setScrollView(cocos2d::ui::ScrollView *scrollView)
 {
-    _dataScrollView = scrollView;
-    assert(_dataScrollView);
-    
-    if (_barType == BarType::kVertical)
+    if (!scrollView)
     {
-        setWindowSize({_dataScrollView->getContentSize().width, _dataScrollView->getContentSize().height});
-        setSizeOfContent({_dataScrollView->getInnerContainer()->getContentSize().width, _dataScrollView->getInnerContainer()->getContentSize().height});
+        if (_dataScrollView)
+        {
+            _dataScrollView->removeScrollBarEventListener(this);
+            _dataScrollView = nullptr;
+        }
     }
     else
     {
-        setWindowSize({_dataScrollView->getContentSize().height, _dataScrollView->getContentSize().width});
-        setSizeOfContent({_dataScrollView->getInnerContainer()->getContentSize().height, _dataScrollView->getInnerContainer()->getContentSize().width});
+        if (_dataScrollView != scrollView)
+        {
+            _dataScrollView = scrollView;
+            _dataScrollView->addScrollBarEventListener(this, [this](cocos2d::ui::ScrollBar *scrollBar, cocos2d::Ref* target, cocos2d::ui::ScrollView::EventType type)
+            {
+                if (scrollBar == this)
+                {
+                    updateBarPosition();
+                }
+            });
+
+            _mouseListener = cocos2d::EventListenerMouse::create();
+            _mouseListener->onMouseScroll = [this](cocos2d::Event *e)
+            {
+                cocos2d::EventMouse *mouseEvent = dynamic_cast<cocos2d::EventMouse *>(e);
+                if (mouseEvent)
+                {
+                    this->updateByWheelMouse(mouseEvent->getScrollX(), -mouseEvent->getScrollY());
+                }
+            };
+            cocos2d::Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(_mouseListener, this);
+        }
+        
+        if (_barType == BarType::kVertical)
+        {
+            setWindowSize({_dataScrollView->getContentSize().width, _dataScrollView->getContentSize().height});
+            setSizeOfContent({_dataScrollView->getInnerContainer()->getContentSize().width, _dataScrollView->getInnerContainer()->getContentSize().height});
+        }
+        else
+        {
+            setWindowSize({_dataScrollView->getContentSize().height, _dataScrollView->getContentSize().width});
+            setSizeOfContent({_dataScrollView->getInnerContainer()->getContentSize().height, _dataScrollView->getInnerContainer()->getContentSize().width});
+        }
+        
+        updateBarPosition(true);
     }
-
-    _dataScrollView->addScrollBarEventListener(this, [this](cocos2d::ui::ScrollBar *scrollBar, cocos2d::Ref* target, cocos2d::ui::ScrollView::EventType type)
-    {
-        if (scrollBar == this)
-        {
-            updateBarPosition();
-        }
-    });
-
-    _mouseListener = cocos2d::EventListenerMouse::create();
-    _mouseListener->onMouseScroll = [this](cocos2d::Event *e)
-    {
-        cocos2d::EventMouse *mouseEvent = dynamic_cast<cocos2d::EventMouse *>(e);
-        if (mouseEvent)
-        {
-            this->updateByWheelMouse(mouseEvent->getScrollX(), -mouseEvent->getScrollY());
-        }
-    };
-    cocos2d::Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(_mouseListener, this);
-    
-    updateBarPosition(true);
 }
     
 void ScrollBar::updateBarPosition(bool isSetPercent)
@@ -605,30 +618,36 @@ void ScrollBar::updateBarPosition(bool isSetPercent)
         {
             float minY = _dataScrollView->getContentSize().height - _dataScrollView->getInnerContainerSize().height;
             float h = -minY;
-            float percent = (h - (_dataScrollView->getInnerContainerPosition().y - minY)) * 100.0f / h;
-            
-            if (isSetPercent)
+            if (h > 0)
             {
-                setPercent(percent);
-            }
-            else
-            {
-                updatePercent(percent);
+                float percent = (h - (_dataScrollView->getInnerContainerPosition().y - minY)) * 100.0f / h;
+                
+                if (isSetPercent)
+                {
+                    setPercent(percent);
+                }
+                else
+                {
+                    updatePercent(percent);
+                }
             }
         }
         else
         {
             float minX = _dataScrollView->getContentSize().width - _dataScrollView->getInnerContainerSize().width;
             float w = -minX;
-            float percent = (w - (_dataScrollView->getInnerContainerPosition().x - minX)) * 100.0f / w;
-            
-            if (isSetPercent)
+            if (w > 0)
             {
-                setPercent(percent);
-            }
-            else
-            {
-                updatePercent(percent);
+                float percent = (w - (_dataScrollView->getInnerContainerPosition().x - minX)) * 100.0f / w;
+                
+                if (isSetPercent)
+                {
+                    setPercent(percent);
+                }
+                else
+                {
+                    updatePercent(percent);
+                }
             }
         }
 

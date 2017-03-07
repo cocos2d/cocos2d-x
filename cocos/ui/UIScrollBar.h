@@ -28,6 +28,7 @@ THE SOFTWARE.
 #include "ui/UIWidget.h"
 #include "ui/GUIExport.h"
 #include "ui/UIScrollView.h"
+#include "base/CCRefPtr.h"
 
 NS_CC_BEGIN
 
@@ -340,7 +341,7 @@ protected:
     Scale9Sprite* _slidBallMouseOverRenderer;
     Node* _slidBallRenderer;
     Rect _ballsCapInsets;
-    ui::ScrollView *_dataScrollView = nullptr;
+    cocos2d::RefPtr<ui::ScrollView> _dataScrollView;
     cocos2d::EventListenerMouse *_mouseListener = nullptr;
     
     float _barLength;

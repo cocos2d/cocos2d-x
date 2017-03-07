@@ -88,6 +88,7 @@ ScrollView::~ScrollView()
     _horizontalScrollBar = nullptr;
     _scrollViewEventListener = nullptr;
     _scrollViewEventSelector = nullptr;
+    _scrollBarEventCallback.clear();
 }
 
 ScrollView* ScrollView::create()
@@ -1164,7 +1165,10 @@ void ScrollView::addScrollBarEventListener(cocos2d::ui::ScrollBar *target, const
 
 void ScrollView::removeScrollBarEventListener(cocos2d::ui::ScrollBar *target)
 {
-    _scrollBarEventCallback.erase(target);
+    if (_scrollBarEventCallback.find(target) != _scrollBarEventCallback.end())
+    {
+        _scrollBarEventCallback.erase(target);
+    }
 }
 
 void ScrollView::setDirection(Direction dir)
