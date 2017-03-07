@@ -351,6 +351,7 @@ void spAnimationState_apply (spAnimationState* self, spSkeleton* skeleton) {
 			}
 		}
 		_spAnimationState_queueEvents(self, current, animationTime);
+		internal->eventsCount = 0;
 		current->nextAnimationLast = animationTime;
 		current->nextTrackLast = current->trackTime;
 	}
@@ -414,7 +415,8 @@ float _spAnimationState_applyMixingFrom (spAnimationState* self, spTrackEntry* e
 		}
 	}
 
-	_spAnimationState_queueEvents(self, from, animationTime);
+	if (entry->mixDuration > 0) _spAnimationState_queueEvents(self, from, animationTime);
+	internal->eventsCount = 0;
 	from->nextAnimationLast = animationTime;
 	from->nextTrackLast = from->trackTime;
 
@@ -528,7 +530,6 @@ void _spAnimationState_queueEvents (spAnimationState* self, spTrackEntry* entry,
 		if (event->time < animationStart) continue; /* Discard events outside animation start/end. */
 		_spEventQueue_event(internal->queue, entry, event);
 	}
-	internal->eventsCount = 0;
 }
 
 void spAnimationState_clearTracks (spAnimationState* self) {
@@ -582,7 +583,7 @@ void _spAnimationState_setCurrent (spAnimationState* self, int index, spTrackEnt
 		from->timelinesRotationCount = 0;
 
 		/* If not completely mixed in, set mixAlpha so mixing out happens from current mix to zero. */
-		if (from->mixingFrom) current->mixAlpha *= MIN(from->mixTime / from->mixDuration, 1);
+		if (from->mixingFrom && from->mixDuration > 0) current->mixAlpha *= MIN(from->mixTime / from->mixDuration, 1);
 	}
 
 	_spEventQueue_start(internal->queue, current);
@@ -715,7 +716,7 @@ spTrackEntry* _spAnimationState_trackEntry (spAnimationState* self, int trackInd
 	entry->trackTime = 0;
 	entry->trackLast = -1;
 	entry->nextTrackLast = -1;
-	entry->trackEnd = loop ? (float)INT_MAX : entry->animationEnd;
+	entry->trackEnd = (float)INT_MAX;
 	entry->timeScale = 1;
 
 	entry->alpha = 1;

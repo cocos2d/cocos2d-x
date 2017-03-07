@@ -66,11 +66,11 @@ typedef struct {
 } Str;
 
 static void trim (Str* str) {
-	while (isspace(*str->begin) && str->begin < str->end)
+	while (isspace((unsigned char)*str->begin) && str->begin < str->end)
 		(str->begin)++;
 	if (str->begin == str->end) return;
 	str->end--;
-	while (isspace(*str->end) && str->end >= str->begin)
+	while (isspace((unsigned char)*str->end) && str->end >= str->begin)
 		str->end--;
 	str->end++;
 }
