@@ -48,10 +48,11 @@ NS_CC_EXT_BEGIN
 
 const std::string AssetsManagerEx::VERSION_ID = "@version";
 const std::string AssetsManagerEx::MANIFEST_ID = "@manifest";
-
-bool SortCompressFileIndexAssert(const CompressedFilesInfoAsserts& a, const CompressedFilesInfoAsserts& b)
-{
-    return a.m_nCompressIndex < b.m_nCompressIndex;
+namespace {
+    bool SortCompressFileIndexAssert(const CompressedFilesInfoAsserts& a, const CompressedFilesInfoAsserts& b)
+    {
+        return a.m_nCompressIndex < b.m_nCompressIndex;
+    }
 }
 // Implementation of AssetsManagerEx
 
