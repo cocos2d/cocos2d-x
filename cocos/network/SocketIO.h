@@ -157,6 +157,15 @@ public:
 
     /**
      *  Static client creation method, similar to socketio.connect(uri) in JS.
+     *  @param  uri      the URI of the socket.io server.
+     *  @param  delegate the delegate which want to receive events from the socket.io client.
+     *  @param caFilePath The ca file path for wss connection
+     *  @return SIOClient* an initialized SIOClient if connected successfully, otherwise nullptr.
+     */
+    static SIOClient* connect(const std::string& uri, SocketIO::SIODelegate& delegate, const std::string& caFilePath);
+
+    /**
+     *  Static client creation method, similar to socketio.connect(uri) in JS.
      *  @param  delegate the delegate which want to receive events from the socket.io client.
      *  @param  uri      the URI of the socket.io server.
      *  @return SIOClient* an initialized SIOClient if connected successfully, otherwise nullptr.
