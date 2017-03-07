@@ -906,6 +906,12 @@
 		1A1645B1191B726C008C7C7F /* ConvertUTF.c in Sources */ = {isa = PBXBuildFile; fileRef = 1A1645AE191B726C008C7C7F /* ConvertUTF.c */; };
 		1A1645B2191B726C008C7C7F /* ConvertUTFWrapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A1645AF191B726C008C7C7F /* ConvertUTFWrapper.cpp */; };
 		1A1645B3191B726C008C7C7F /* ConvertUTFWrapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A1645AF191B726C008C7C7F /* ConvertUTFWrapper.cpp */; };
+		1A2B22B01E6E54D6001D5EC9 /* Uri.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A2B22AF1E6E54D6001D5EC9 /* Uri.h */; };
+		1A2B22B21E6E54EC001D5EC9 /* Uri.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B22B11E6E54EC001D5EC9 /* Uri.cpp */; };
+		1A2B22B31E6E54EC001D5EC9 /* Uri.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B22B11E6E54EC001D5EC9 /* Uri.cpp */; };
+		1A2B22B41E6E54EC001D5EC9 /* Uri.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B22B11E6E54EC001D5EC9 /* Uri.cpp */; };
+		1A2B22B51E6E5828001D5EC9 /* Uri.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A2B22AF1E6E54D6001D5EC9 /* Uri.h */; };
+		1A2B22B61E6E5829001D5EC9 /* Uri.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A2B22AF1E6E54D6001D5EC9 /* Uri.h */; };
 		1A41ABC21DF00CEC00B5584C /* AudioDecoder.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A41ABC11DF00CEC00B5584C /* AudioDecoder.mm */; };
 		1A41ABC31DF00CEC00B5584C /* AudioDecoder.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A41ABC11DF00CEC00B5584C /* AudioDecoder.mm */; };
 		1A41ABC41DF00CEC00B5584C /* AudioDecoder.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A41ABC11DF00CEC00B5584C /* AudioDecoder.mm */; };
@@ -5873,6 +5879,8 @@
 		1A087AE71860400400196EF5 /* edtaa3func.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = edtaa3func.h; sourceTree = "<group>"; };
 		1A1645AE191B726C008C7C7F /* ConvertUTF.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ConvertUTF.c; sourceTree = "<group>"; };
 		1A1645AF191B726C008C7C7F /* ConvertUTFWrapper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConvertUTFWrapper.cpp; sourceTree = "<group>"; };
+		1A2B22AF1E6E54D6001D5EC9 /* Uri.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Uri.h; sourceTree = "<group>"; };
+		1A2B22B11E6E54EC001D5EC9 /* Uri.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Uri.cpp; sourceTree = "<group>"; };
 		1A41ABC11DF00CEC00B5584C /* AudioDecoder.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AudioDecoder.mm; sourceTree = "<group>"; };
 		1A41ABC51DF00D1500B5584C /* AudioDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioDecoder.h; sourceTree = "<group>"; };
 		1A570047180BC5A10088DEC7 /* CCAction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCAction.cpp; sourceTree = "<group>"; };
@@ -8786,10 +8794,12 @@
 		1AAF5360180E3374000584C8 /* network */ = {
 			isa = PBXGroup;
 			children = (
+				1A2B22B11E6E54EC001D5EC9 /* Uri.cpp */,
+				1A2B22AF1E6E54D6001D5EC9 /* Uri.h */,
+				50693C621B6BF2BC005C5820 /* Downloader */,
 				507003251B69820100E83DDD /* HttpClient */,
 				507003261B69820B00E83DDD /* SocketIO */,
 				507003271B69821300E83DDD /* WebSocket */,
-				50693C621B6BF2BC005C5820 /* Downloader */,
 			);
 			name = network;
 			path = ../cocos/network;
@@ -11776,6 +11786,7 @@
 				50ABBED91925AB6F00A911A9 /* ZipUtils.h in Headers */,
 				50643BDB19BFAF4400EF68ED /* CCStdC.h in Headers */,
 				1A5701C3180BCB5A0088DEC7 /* CCLabelBMFont.h in Headers */,
+				1A2B22B01E6E54D6001D5EC9 /* Uri.h in Headers */,
 				B6CAB33F1AF9AA1A00B9B856 /* gim_basic_geometry_operations.h in Headers */,
 				B6CAAFFC1AF9A9E100B9B856 /* CCPhysics3DWorld.h in Headers */,
 				50ABBE5F1925AB6F00A911A9 /* CCEventListener.h in Headers */,
@@ -13465,6 +13476,7 @@
 				50864CEC1C7BC90A00B3BAB1 /* cpCompat62.h in Headers */,
 				507B40BD1C31BDD30067B53E /* CCBReader.h in Headers */,
 				507B40BE1C31BDD30067B53E /* CCNodeLoaderListener.h in Headers */,
+				1A2B22B61E6E5829001D5EC9 /* Uri.h in Headers */,
 				507B40BF1C31BDD30067B53E /* SimpleAudioEngine.h in Headers */,
 				507B40C01C31BDD30067B53E /* CCPUOnQuotaObserver.h in Headers */,
 				507B40C11C31BDD30067B53E /* CCNavMeshAgent.h in Headers */,
@@ -14551,6 +14563,7 @@
 				15AE19AD19AAD39700C27E9E /* LoadingBarReader.h in Headers */,
 				15FB209E1AE7C57D00C31518 /* sweep_context.h in Headers */,
 				50ABBE5C1925AB6F00A911A9 /* CCEventKeyboard.h in Headers */,
+				1A2B22B51E6E5828001D5EC9 /* Uri.h in Headers */,
 				B665E2191AA80A6500DDB1C5 /* CCPUBeamRender.h in Headers */,
 				B6CAB3F41AF9AA1A00B9B856 /* btSimpleDynamicsWorld.h in Headers */,
 				5E9F612D1A3FFE3D0038DE01 /* CCPlane.h in Headers */,
@@ -15179,6 +15192,7 @@
 				B665E2421AA80A6500DDB1C5 /* CCPUCollisionAvoidanceAffector.cpp in Sources */,
 				15AE1AD819AAD41000C27E9E /* b2Rope.cpp in Sources */,
 				B6D38B8A1AC3AFAC00043997 /* CCSkybox.cpp in Sources */,
+				1A2B22B21E6E54EC001D5EC9 /* Uri.cpp in Sources */,
 				B665E3521AA80A6500DDB1C5 /* CCPUOnQuotaObserver.cpp in Sources */,
 				15AE1A7C19AAD40300C27E9E /* b2MotorJoint.cpp in Sources */,
 				15AE1A2619AAD3D500C27E9E /* b2CollideEdge.cpp in Sources */,
@@ -16299,6 +16313,7 @@
 				507B3CA71C31BDD30067B53E /* CCLabelTTFLoader.cpp in Sources */,
 				507B3CA81C31BDD30067B53E /* btBox2dShape.cpp in Sources */,
 				507B3CA91C31BDD30067B53E /* CocosGUI.cpp in Sources */,
+				1A2B22B41E6E54EC001D5EC9 /* Uri.cpp in Sources */,
 				507B3CAA1C31BDD30067B53E /* CCPUForceFieldAffectorTranslator.cpp in Sources */,
 				507B3CAB1C31BDD30067B53E /* CCAABB.cpp in Sources */,
 				507B3CAC1C31BDD30067B53E /* b2Island.cpp in Sources */,
@@ -16526,6 +16541,7 @@
 				15AE1ADA19AAD41000C27E9E /* b2Rope.cpp in Sources */,
 				B6CAB2D61AF9AA1A00B9B856 /* btOptimizedBvh.cpp in Sources */,
 				52B47A301A5349A3004E4C60 /* HttpClient-apple.mm in Sources */,
+				1A2B22B31E6E54EC001D5EC9 /* Uri.cpp in Sources */,
 				B665E2131AA80A6500DDB1C5 /* CCPUBaseForceAffectorTranslator.cpp in Sources */,
 				382384081A25900F002C4610 /* FlatBuffersSerialize.cpp in Sources */,
 				B68779011A8CA82E00643ABF /* CCParticle3DRender.cpp in Sources */,

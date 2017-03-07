@@ -27,8 +27,7 @@
 
  ****************************************************************************/
 
-#ifndef __CC_WEBSOCKET_H__
-#define __CC_WEBSOCKET_H__
+#pragma once
 
 #include <string>
 #include <vector>
@@ -273,11 +272,10 @@ private:
     friend class WebSocketCallbackWrapper;
 };
 
-}
+} // namespace network {
 
 NS_CC_END
 
 // end group
 /// @}
 
-#endif /* defined(__CC_JSB_WEBSOCKET_H__) */

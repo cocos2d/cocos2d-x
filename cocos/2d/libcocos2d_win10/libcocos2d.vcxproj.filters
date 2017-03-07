@@ -1539,6 +1539,9 @@
     <ClCompile Include="..\..\network\SocketIO.cpp">
       <Filter>network</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\network\Uri.cpp">
+      <Filter>network</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\network\WebSocket.cpp">
       <Filter>network</Filter>
     </ClCompile>
@@ -3411,6 +3414,9 @@
       <Filter>network</Filter>
     </ClInclude>
     <ClInclude Include="..\..\network\SocketIO.h">
+      <Filter>network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\network\Uri.h">
       <Filter>network</Filter>
     </ClInclude>
     <ClInclude Include="..\..\network\WebSocket.h">

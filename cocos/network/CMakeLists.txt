@@ -26,6 +26,7 @@ set(COCOS_NETWORK_SRC
     network/WebSocket.cpp
     network/CCDownloader.cpp
     network/CCDownloader-curl.cpp
+    network/Uri.cpp
 )
 
 
