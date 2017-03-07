@@ -489,51 +489,61 @@ tolua_lerror:
     return 0;
 }
 
-
-static int lua_cocos2dx_ActionTimeline_setLastFrameCallFunc(lua_State* L)
+int lua_cocos2dx_ActionTimeline_setAnimationEndCallFunc(lua_State* tolua_S)
 {
-    if (nullptr == L)
-        return 0;
-
     int argc = 0;
-    cocostudio::timeline::ActionTimeline* self = nullptr;
+    cocostudio::timeline::ActionTimeline* cobj = nullptr;
+    bool ok = true;
 
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-    if (!tolua_isusertype(L, 1, "ccs.ActionTimeline", 0, &tolua_err)) goto tolua_lerror;
 #endif
 
-    self = static_cast<cocostudio::timeline::ActionTimeline*>(tolua_tousertype(L, 1, 0));
 
 #if COCOS2D_DEBUG >= 1
-    if (nullptr == self) {
-        tolua_error(L, "invalid 'self' in function 'lua_cocos2dx_ActionTimeline_setLastFrameCallFunc'\n", NULL);
+    if (!tolua_isusertype(tolua_S, 1, "ccs.ActionTimeline", 0, &tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocostudio::timeline::ActionTimeline*)tolua_tousertype(tolua_S, 1, 0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj)
+    {
+        tolua_error(tolua_S, "invalid 'cobj' in function 'lua_cocos2dx_ActionTimeline_setAnimationEndCallFunc'", nullptr);
         return 0;
     }
 #endif
 
-    argc = lua_gettop(L) - 1;
-    if (1 == argc)
+    argc = lua_gettop(tolua_S) - 1;
+    if (argc == 2)
     {
+        std::string arg0;
+        std::function<void()> arg1;
+
+        ok &= luaval_to_std_string(tolua_S, 2, &arg0, "ccs.ActionTimeline:setAnimationEndCallFunc");
+
 #if COCOS2D_DEBUG >= 1
-        if (!toluafix_isfunction(L, 2, "LUA_FUNCTION", 0, &tolua_err))
+        if (!toluafix_isfunction(tolua_S, 3, "LUA_FUNCTION", 0, &tolua_err))
         {
             goto tolua_lerror;
         }
 #endif
-        LUA_FUNCTION handler = (toluafix_ref_function(L, 2, 0));
-        self->setLastFrameCallFunc([=](){
+        LUA_FUNCTION handler = (toluafix_ref_function(tolua_S, 3, 0));
+
+        cobj->setAnimationEndCallFunc(arg0, [=](){
             LuaEngine::getInstance()->getLuaStack()->executeFunctionByHandler(handler, 0);
         });
-
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
-    luaL_error(L, "'setLastFrameCallFunc' function of ActionTimeline has wrong number of arguments: %d, was expecting %d\n", argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccs.ActionTimeline:setAnimationEndCallFunc", argc, 2);
+    return 0;
 
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
-    tolua_error(L, "#ferror in function 'setLastFrameCallFunc'.", &tolua_err);
+    tolua_error(tolua_S, "#ferror in function 'lua_cocos2dx_ActionTimeline_setAnimationEndCallFunc'.", &tolua_err);
 #endif
+
     return 0;
 }
 
