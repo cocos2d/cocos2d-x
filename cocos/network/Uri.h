@@ -25,12 +25,12 @@
 #include <vector>
 #include <stdint.h>
 
-NS_CC_BEGIN
-
 /**
   * @addtogroup network
   * @{
   */
+
+NS_CC_BEGIN
 
 namespace network {
 
