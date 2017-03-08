@@ -364,9 +364,9 @@ public:
     void enableBold();
 
     /**
-     * triggle bold, use freetype to support bold only for ttf
+     * set bold effect, use freetype to support bold only for ttf
      */
-    void setBold(bool bold = true);
+    void setBold(bool bold);
 
     /**
      * Enable underline

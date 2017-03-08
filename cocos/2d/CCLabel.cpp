@@ -1154,7 +1154,7 @@ void Label::enableBold()
     }
 }
 
-void cocos2d::Label::setBold(bool bold /*= true*/)
+void cocos2d::Label::setBold(bool bold)
 {
     if (_currentLabelType == LabelType::TTF && _fontConfig.bold != bold)
     {
