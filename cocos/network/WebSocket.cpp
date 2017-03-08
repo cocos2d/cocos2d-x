@@ -33,7 +33,6 @@
 #include "base/CCScheduler.h"
 #include "base/CCEventDispatcher.h"
 #include "base/CCEventListenerCustom.h"
-#include "base/ccUTF8.h"
 #include "platform/CCFileUtils.h"
 
 #include <thread>
