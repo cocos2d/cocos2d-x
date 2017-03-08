@@ -23,6 +23,7 @@
 
 #include <string>
 #include <vector>
+#include <stdint.h>
 
 NS_CC_BEGIN
 
