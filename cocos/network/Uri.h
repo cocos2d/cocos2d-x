@@ -27,6 +27,11 @@
 
 NS_CC_BEGIN
 
+/**
+  * @addtogroup network
+  * @{
+  */
+
 namespace network {
 
 /**
@@ -175,3 +180,5 @@ private:
 
 NS_CC_END
 
+// end group
+/// @}
