@@ -526,6 +526,10 @@ void ScrollBar::addEventListener(const ccSliderCallback& callback)
 
 float ScrollBar::getPercent()const
 {
+    if (BarType::kVertical == _barType)
+    {
+        return 100.0f - _percent;
+    }
     return _percent;
 }
 
@@ -762,19 +766,19 @@ void ScrollBar::updateByWheelMouse(float scrollX, float scrollY)
             if (0 <= newPrecent && newPrecent <= 100.0f)
             {
                 updatePercent(newPrecent);
-                _dataScrollView->jumpToPercentVertical(100.0f - getPercent());
+                _dataScrollView->jumpToPercentVertical(getPercent());
             }
             else
             {
                 if (newPrecent < 0)
                 {
                     updatePercent(0);
-                    _dataScrollView->jumpToPercentVertical(100.0f - getPercent());
+                    _dataScrollView->jumpToPercentVertical(getPercent());
                 }
                 else if (newPrecent > 100)
                 {
                     updatePercent(100);
-                    _dataScrollView->jumpToPercentVertical(100.0f - getPercent());
+                    _dataScrollView->jumpToPercentVertical(getPercent());
                 }
             }
         }
