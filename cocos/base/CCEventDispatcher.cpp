@@ -973,7 +973,30 @@ void EventDispatcher::dispatchTouchEvent(EventTouch* event)
     //
     if (oneByOneListeners)
     {
-        auto mutableTouchesIter = mutableTouches.begin();
+        if (event->getEventCode() == EventTouch::EventCode::BEGAN)
+        {
+            auto fixedPriorityListeners = oneByOneListeners->getFixedPriorityListeners();
+            auto sceneGraphPriorityListeners = oneByOneListeners->getSceneGraphPriorityListeners();
+            if (fixedPriorityListeners != nullptr)
+            {
+                for (auto lIter = fixedPriorityListeners->begin(); lIter != fixedPriorityListeners->end(); lIter++)
+                {
+                    EventListenerTouchOneByOne* listener = static_cast<EventListenerTouchOneByOne*>(*lIter);
+                    listener->_claimedTouches.clear();
+                }
+            }
+
+            if (sceneGraphPriorityListeners != nullptr)
+            {
+                for (auto lIter = sceneGraphPriorityListeners->begin(); lIter != sceneGraphPriorityListeners->end(); lIter++)
+                {
+                    EventListenerTouchOneByOne* listener = static_cast<EventListenerTouchOneByOne*>(*lIter);
+                    listener->_claimedTouches.clear();
+                }
+            }
+        }
+		
+      	auto mutableTouchesIter = mutableTouches.begin();
         
         for (auto& touches : originalTouches)
         {
