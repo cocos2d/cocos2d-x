@@ -348,7 +348,6 @@ class SIOClientImpl :
 private:
     int _heartbeat, _timeout;
     std::string _sid;
-    std::string _hostAndPort;
     Uri _uri;
     std::string _caFilePath;
     bool _connected;
@@ -400,7 +399,6 @@ SIOClientImpl::SIOClientImpl(const Uri& uri, const std::string& caFilePath) :
     _connected(false),
     _ws(nullptr)
 {
-    _hostAndPort = _uri.getHost() + ":" + StringUtils::toString(_uri.getPort());
 }
 
 SIOClientImpl::~SIOClientImpl()
@@ -422,7 +420,7 @@ void SIOClientImpl::handshake()
     else
         pre << "http://";
 
-    pre << _hostAndPort << "/socket.io/1/?EIO=2&transport=polling&b64=true";
+    pre << _uri.getAuthority() << "/socket.io/1/?EIO=2&transport=polling&b64=true";
 
     HttpRequest* request = new (std::nothrow) HttpRequest();
     request->setUrl(pre.str());
@@ -580,10 +578,10 @@ void SIOClientImpl::openSocket()
     switch (_version)
     {
         case SocketIOPacket::SocketIOVersion::V09x:
-            s << _hostAndPort << "/socket.io/1/websocket/" << _sid;
+            s << _uri.getAuthority() << "/socket.io/1/websocket/" << _sid;
             break;
         case SocketIOPacket::SocketIOVersion::V10x:
-            s << _hostAndPort << "/socket.io/1/websocket/?EIO=2&transport=websocket&sid=" << _sid;
+            s << _uri.getAuthority() << "/socket.io/1/websocket/?EIO=2&transport=websocket&sid=" << _sid;
             break;
     }
 
@@ -626,7 +624,7 @@ void SIOClientImpl::disconnect()
 
     _connected = false;
 
-    SocketIO::getInstance()->removeSocket(_hostAndPort);
+    SocketIO::getInstance()->removeSocket(_uri.getAuthority());
 
     // Close websocket connection should be at last.
     _ws->close();
@@ -737,7 +735,7 @@ void SIOClientImpl::onOpen(WebSocket* /*ws*/)
 {
     _connected = true;
 
-    SocketIO::getInstance()->addSocket(_hostAndPort, this);
+    SocketIO::getInstance()->addSocket(_uri.getAuthority(), this);
 
     if (_version == SocketIOPacket::SocketIOVersion::V10x)
     {
@@ -999,7 +997,7 @@ void SIOClientImpl::onClose(WebSocket* /*ws*/)
         if (Director::getInstance())
             Director::getInstance()->getScheduler()->unscheduleAllForTarget(this);
         
-        SocketIO::getInstance()->removeSocket(_hostAndPort);
+        SocketIO::getInstance()->removeSocket(_uri.getAuthority());
     }
 
     this->release();
@@ -1011,10 +1009,8 @@ void SIOClientImpl::onError(WebSocket* /*ws*/, const WebSocket::ErrorCode& error
 }
 
 //begin SIOClient methods
-SIOClient::SIOClient(const std::string& host, int port, const std::string& path, SIOClientImpl* impl, SocketIO::SIODelegate& delegate)
-    : _port(port)
-    , _host(host)
-    , _path(path)
+SIOClient::SIOClient(const std::string& path, SIOClientImpl* impl, SocketIO::SIODelegate& delegate)
+    : _path(path)
     , _connected(false)
     , _socket(impl)
     , _delegate(&delegate)
@@ -1153,35 +1149,36 @@ SIOClient* SocketIO::connect(const std::string& uri, SocketIO::SIODelegate& dele
 {
     Uri uriObj = Uri::parse(uri);
 
-    std::stringstream s;
-    s << uriObj.getHost() << ":" << uriObj.getPort();
-
-    SIOClientImpl *socket = SocketIO::getInstance()->getSocket(s.str());
+    SIOClientImpl *socket = SocketIO::getInstance()->getSocket(uriObj.getAuthority());
     SIOClient *c = nullptr;
+
+    std::string path = uriObj.getPath();
+    if (path == "")
+        path = "/";
 
     if (socket == nullptr)
     {
         //create a new socket, new client, connect
         socket = SIOClientImpl::create(uriObj, caFilePath);
 
-        c = new (std::nothrow) SIOClient(uriObj.getHost(), static_cast<int>(uriObj.getPort()), uriObj.getPath(), socket, delegate);
+        c = new (std::nothrow) SIOClient(path, socket, delegate);
 
-        socket->addClient(uriObj.getPath(), c);
+        socket->addClient(path, c);
 
         socket->connect();
     }
     else
     {
         //check if already connected to endpoint, handle
-        c = socket->getClient(uriObj.getPath());
+        c = socket->getClient(path);
 
         if(c == nullptr)
         {
-            c = new (std::nothrow) SIOClient(uriObj.getHost(), static_cast<int>(uriObj.getPort()), uriObj.getPath(), socket, delegate);
+            c = new (std::nothrow) SIOClient(path, socket, delegate);
 
-            socket->addClient(uriObj.getPath(), c);
+            socket->addClient(path, c);
 
-            socket->connectToEndpoint(uriObj.getPath());
+            socket->connectToEndpoint(path);
         }
         else
         {
@@ -1190,9 +1187,9 @@ SIOClient* SocketIO::connect(const std::string& uri, SocketIO::SIODelegate& dele
 
             CCLOG("SocketIO: recreate a new socket, new client, connect");
             SIOClientImpl* newSocket = SIOClientImpl::create(uriObj, caFilePath);
-            SIOClient *newC = new (std::nothrow) SIOClient(uriObj.getHost(), static_cast<int>(uriObj.getPort()), uriObj.getPath(), newSocket, delegate);
+            SIOClient *newC = new (std::nothrow) SIOClient(path, newSocket, delegate);
 
-            newSocket->addClient(uriObj.getPath(), newC);
+            newSocket->addClient(path, newC);
             newSocket->connect();
 
             return newC;

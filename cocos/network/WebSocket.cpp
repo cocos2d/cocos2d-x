@@ -868,7 +868,7 @@ void WebSocket::onClientOpenConnectionRequest()
         _readyStateMutex.unlock();
 
         Uri uri = Uri::parse(_url);
-        LOGD("scheme: %s, host: %s, port: %d, path: %s\n", uri.getScheme().c_str(), uri.getHost().c_str(), static_cast<int>(uri.getPort()), uri.getPath().c_str());
+        LOGD("scheme: %s, host: %s, port: %d, path: %s\n", uri.getScheme().c_str(), uri.getHostName().c_str(), static_cast<int>(uri.getPort()), uri.getPathEtc().c_str());
 
         int sslConnection = 0;
         if (uri.isSecure())
@@ -884,15 +884,25 @@ void WebSocket::onClientOpenConnectionRequest()
             vhost = createVhost(__defaultProtocols, sslConnection);
         }
 
+        int port = static_cast<int>(uri.getPort());
+        if (port == 0)
+            port = uri.isSecure() ? 443 : 80;
+
+        const std::string& hostName = uri.getHostName();
+        std::string path = uri.getPathEtc();
+        const std::string& authority = uri.getAuthority();
+        if (path.empty())
+            path = "/";
+
         struct lws_client_connect_info connectInfo;
         memset(&connectInfo, 0, sizeof(connectInfo));
         connectInfo.context = __wsContext;
-        connectInfo.address = uri.getHost().c_str();
-        connectInfo.port = uri.getPort();
+        connectInfo.address = hostName.c_str();
+        connectInfo.port = port;
         connectInfo.ssl_connection = sslConnection;
-        connectInfo.path = uri.getPath().c_str();
-        connectInfo.host = uri.getHost().c_str();
-        connectInfo.origin = uri.getHost().c_str();
+        connectInfo.path = path.c_str();
+        connectInfo.host = hostName.c_str();
+        connectInfo.origin = authority.c_str();
         connectInfo.protocol = _clientSupportedProtocols.empty() ? nullptr : _clientSupportedProtocols.c_str();
         connectInfo.ietf_version_or_minus_one = -1;
         connectInfo.userdata = this;
