@@ -67,6 +67,16 @@ CGFloat const UI_PLACEHOLDER_TEXT_CHANGED_ANIMATION_DURATION = 0.25;
     return self.placeHolderLabel.text;
 }
 
+- (NSString *)ccui_placeholder
+{
+    return self.placeholder;
+}
+
+- (void)ccui_setPlaceholder:(NSString *)ccui_placeholder
+{
+    self.placeholder = ccui_placeholder;
+}
+
 - (void)setPlaceholder:(NSString *)placeholder
 {
     self.placeHolderLabel.text = placeholder;
@@ -100,6 +110,26 @@ CGFloat const UI_PLACEHOLDER_TEXT_CHANGED_ANIMATION_DURATION = 0.25;
     }
     
     return _placeHolderLabel;
+}
+
+- (UIColor *)ccui_placeholderTextColor
+{
+    return self.placeHolderLabel.textColor;
+}
+
+- (void)ccui_setPlaceholderTextColor:(UIColor *)ccui_placeholderTextColor
+{
+    self.placeHolderLabel.textColor = ccui_placeholderTextColor;
+}
+
+- (UIFont *)ccui_placeholderFont
+{
+    return self.placeHolderLabel.font;
+}
+
+- (void)ccui_setPlaceholderFont:(UIFont *)ccui_placeholderFont
+{
+    self.placeHolderLabel.font = ccui_placeholderFont;
 }
 
 #pragma mark - Public methods
