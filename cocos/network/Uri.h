@@ -106,7 +106,7 @@ public:
      */
     const std::string& getHostName() const { return _hostName; }
 
-    /** Gets the port number of this URI. */
+    /** Gets the port number of the URI. */
     uint16_t getPort() const { return _port; }
 
     /** Gets the path part of the URI. */
@@ -153,7 +153,7 @@ public:
     */
     const std::vector<std::pair<std::string, std::string>>& getQueryParams();
 
-    /** Clears all parts of the this URI. */
+    /** Clears all parts of the URI. */
     void clear();
 
 private:
