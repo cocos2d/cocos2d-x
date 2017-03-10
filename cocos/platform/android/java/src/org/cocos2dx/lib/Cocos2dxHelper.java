@@ -628,7 +628,11 @@ public class Cocos2dxHelper {
     }
 
     public static int setLowPowerMode(boolean enable) {
-    	return -1;
+        return -1;
+    }
+
+    public static int getSDKVersion() {
+        return 1;
     }
     //Enhance API modification end     
 }

@@ -227,6 +227,22 @@ void UrlAudioPlayer::setVolume(float volume)
     SL_RETURN_IF_FAILED(r, "UrlAudioPlayer::setVolume %d failed", dbVolume);
 }
 
+void UrlAudioPlayer::setPitch(float pitch)
+{
+    _pitch = pitch;
+    /*SLresult r = (*_pitchItf)->SetPitch(_pitchItf, pitch);
+    SL_RETURN_IF_FAILED(r, "UrlAudioPlayer::setPitch %d failed", pitch);*/
+    SLresult r = (*_speedItf)->SetRate(_speedItf, 1500);
+    SL_RETURN_IF_FAILED(r, "UrlAudioPlayer::setPitch %d failed", 1500);
+}
+
+void UrlAudioPlayer::setSpeed(float speed)
+{
+    _speed = speed;
+    SLresult r = (*_speedItf)->SetRate(_speedItf, speed);
+    SL_RETURN_IF_FAILED(r, "UrlAudioPlayer::setPitch %d failed", speed);
+}
+
 float UrlAudioPlayer::getDuration() const
 {
     if (_duration > 0)
@@ -342,6 +358,28 @@ bool UrlAudioPlayer::prepare(const std::string &url, SLuint32 locatorType, std::
     // get the volume interface
     result = (*_playObj)->GetInterface(_playObj, SL_IID_VOLUME, &_volumeItf);
     SL_RETURN_VAL_IF_FAILED(result, false, "GetInterface SL_IID_VOLUME failed");
+
+    // get the pitch interface
+    /*result = (*_playObj)->GetInterface(_playObj, SL_IID_PITCH, &_pitchItf);
+    SL_RETURN_VAL_IF_FAILED(result, false, "GetInterface SL_IID_PITCH failed");*/
+
+
+
+
+result = (*_playObj)->GetInterface(_playObj,
+        SL_IID_DYNAMICINTERFACEMANAGEMENT,
+        (void*) &dynamicInterfaceManagementItf);
+    SL_RETURN_VAL_IF_FAILED(result, false, "GetInterface SL_IID_DYNAMICINTERFACEMANAGEMENT failed");
+
+// add playback rate itf
+result = (*dynamicInterfaceManagementItf)->AddInterface(
+        dynamicInterfaceManagementItf, SL_IID_PLAYBACKRATE,
+        SL_BOOLEAN_FALSE);
+    SL_RETURN_VAL_IF_FAILED(result, false, "AddInterface dynamicInterfaceManagementItf failed");
+
+    // get the speed interface
+    result = (*_playObj)->GetInterface(_playObj, SL_IID_PLAYBACKRATE, &_speedItf);
+    SL_RETURN_VAL_IF_FAILED(result, false, "GetInterface SL_IID_PLAYBACKRATE failed");
 
     result = (*_playItf)->RegisterCallback(_playItf,
                                            SLUrlAudioPlayerCallbackProxy::playEventCallback, this);

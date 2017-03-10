@@ -299,28 +299,22 @@ void AudioEngineImpl::setVolume(int audioID,float volume)
 
 void AudioEngineImpl::setPitch(int audioID,float pitch)
 {
-    /*auto& player = _audioPlayers[audioID];
-    int dbVolume = 2000 * log10(volume);
-    if(dbVolume < SL_MILLIBEL_MIN){
-        dbVolume = SL_MILLIBEL_MIN;
+    auto iter = _audioPlayers.find(audioID);
+    if (iter != _audioPlayers.end())
+    {
+        auto player = iter->second;
+        player->setPitch(pitch);
     }
-    auto result = (*player._fdPlayerVolume)->SetVolumeLevel(player._fdPlayerVolume, dbVolume);
-    if(SL_RESULT_SUCCESS != result){
-        log("%s error:%lu", __func__, result);
-    }*/
 }
 
 void AudioEngineImpl::setSpeed(int audioID,float speed)
 {
-    /*auto& player = _audioPlayers[audioID];
-    int dbVolume = 2000 * log10(volume);
-    if(dbVolume < SL_MILLIBEL_MIN){
-        dbVolume = SL_MILLIBEL_MIN;
+    auto iter = _audioPlayers.find(audioID);
+    if (iter != _audioPlayers.end())
+    {
+        auto player = iter->second;
+        player->setSpeed(speed);
     }
-    auto result = (*player._fdPlayerVolume)->SetVolumeLevel(player._fdPlayerVolume, dbVolume);
-    if(SL_RESULT_SUCCESS != result){
-        log("%s error:%lu", __func__, result);
-    }*/
 }
 
 void AudioEngineImpl::setLoop(int audioID, bool loop)

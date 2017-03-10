@@ -65,6 +65,8 @@ public:
     virtual void rewind() = 0;
 
     virtual void setVolume(float volume) = 0;
+    virtual inline void setPitch(float pitch) {};
+    virtual inline void setSpeed(float speed) {};
 
     virtual float getVolume() const = 0;
 

@@ -131,6 +131,7 @@ bool PcmAudioService::init(AudioMixerController* controller, int numChannels, in
     const SLInterfaceID ids[] = {
             SL_IID_PLAY,
             SL_IID_VOLUME,
+            SL_IID_PITCH,
             SL_IID_ANDROIDSIMPLEBUFFERQUEUE,
     };
 

@@ -65,6 +65,8 @@ public:
     virtual void rewind() override;
 
     virtual void setVolume(float volume) override;
+    virtual void setPitch(float pitch) override;
+    virtual void setSpeed(float speed) override;
 
     virtual float getVolume() const override;
 
@@ -111,8 +113,13 @@ private:
     SLPlayItf _playItf;
     SLSeekItf _seekItf;
     SLVolumeItf _volumeItf;
+    SLPitchItf _pitchItf;
+    SLPlaybackRateItf _speedItf;
+    SLDynamicInterfaceManagementItf dynamicInterfaceManagementItf;
 
     float _volume;
+    float _pitch;
+    float _speed;
     float _duration;
     bool _isLoop;
     State _state;
