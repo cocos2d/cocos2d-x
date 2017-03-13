@@ -5,7 +5,6 @@ local itemTagBasic = 1000
 local LuaBridgeTestsName =
 {
     "LuaJavaBridge",
-    "LuaObjectCBridge",
 }
 
 local s = cc.Director:getInstance():getWinSize()
@@ -16,11 +15,6 @@ local function LuaBridgeLayer()
     menu:setPosition(cc.p(0, 0))
     cc.MenuItemFont:setFontName("Arial")
     cc.MenuItemFont:setFontSize(24)
-
-    local supportObjectCBridge  = false
-    if (cc.PLATFORM_OS_IPHONE == targetPlatform) or (cc.PLATFORM_OS_IPAD == targetPlatform) or (cc.PLATFORM_OS_MAC == targetPlatform)  then
-        supportObjectCBridge = true
-    end
 
     local supportJavaBridge = false
     if (cc.PLATFORM_OS_ANDROID == targetPlatform) then
@@ -86,46 +80,9 @@ local function LuaBridgeLayer()
         return newScene
     end
 
-    local function newLuaObjectCBridge()
-        local newScene = cc.Scene:create()
-        local titleLabel = cc.Label:createWithTTF("", s_arialPath, 28)
-        newScene:addChild(titleLabel, 1)
-        titleLabel:setAnchorPoint(cc.p(0.5, 0.5))
-        titleLabel:setPosition(s.width / 2, s.height - 50)
-        titleLabel:setString("LuaObjectCBridge Test")
-
-        subtitleLabel = cc.Label:createWithTTF("", s_thonburiPath, 16)
-        newScene:addChild(subtitleLabel, 1)
-        subtitleLabel:setAnchorPoint(cc.p(0.5, 0.5))
-        subtitleLabel:setPosition(s.width / 2, s.height - 80)
-        subtitleLabel:setString("See the console.")
-        if (cc.PLATFORM_OS_IPHONE == targetPlatform) or (cc.PLATFORM_OS_IPAD == targetPlatform) or (cc.PLATFORM_OS_MAC == targetPlatform) then
-            local args = { num1 = 2 , num2 = 3 }
-            local luaoc = require "cocos.cocos2d.luaoc"
-            local className = "LuaObjectCBridgeTest"
-            local ok,ret  = luaoc.callStaticMethod(className,"addTwoNumbers",args)
-            if not ok then
-                Director:getInstance():resume()
-            else
-                print("The ret is:", ret)
-            end
-
-            local function callback(param)
-                if "success" == param then
-                    print("object c call back success")
-                end
-            end
-            luaoc.callStaticMethod(className,"registerScriptHandler", {scriptHandler = callback } )
-            luaoc.callStaticMethod(className,"callbackScriptHandler")
-        end
-        return newScene
-    end
-
     local function newLuaBridgeScene(idx)
         if 1 == idx then
             return newLuaJavaBridge()
-        elseif 2 == idx then
-            return newLuaObjectCBridge()
         end
     end
 
@@ -144,8 +101,7 @@ local function LuaBridgeLayer()
         item:registerScriptTapHandler(menuCallback)
         item:setPosition(s.width / 2, s.height - i * LINE_SPACE)
         menu:addChild(item, itemTagBasic + i)
-        if ((i == 1) and (false == supportJavaBridge))
-        or ((i == 2) and (false == supportObjectCBridge)) then
+        if ((i == 1) and (false == supportJavaBridge)) then
             item:setEnabled(false)
         end
     end

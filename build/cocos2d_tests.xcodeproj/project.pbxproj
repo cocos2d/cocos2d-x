@@ -596,13 +596,11 @@
 		1AC35DA018CEE5D100F37B72 /* Icon-57.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35D8F18CEE5D100F37B72 /* Icon-57.png */; };
 		1AC35DA118CEE5D100F37B72 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35D9018CEE5D100F37B72 /* Icon-72.png */; };
 		1AC35DA218CEE5D100F37B72 /* Icon-76.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35D9118CEE5D100F37B72 /* Icon-76.png */; };
-		1AC35DA418CEE5D100F37B72 /* LuaObjectCBridgeTest.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35D9418CEE5D100F37B72 /* LuaObjectCBridgeTest.mm */; };
 		1AC35DA518CEE5D100F37B72 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35D9518CEE5D100F37B72 /* main.m */; };
 		1AC35DA618CEE5D100F37B72 /* RootViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35D9718CEE5D100F37B72 /* RootViewController.mm */; };
 		1AC35DB118CEE5DA00F37B72 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35DA818CEE5DA00F37B72 /* InfoPlist.strings */; };
 		1AC35DB218CEE5DA00F37B72 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35DAA18CEE5DA00F37B72 /* MainMenu.xib */; };
 		1AC35DB318CEE5DA00F37B72 /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35DAC18CEE5DA00F37B72 /* Icon.icns */; };
-		1AC35DB518CEE5DA00F37B72 /* LuaObjectCBridgeTest.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35DAF18CEE5DA00F37B72 /* LuaObjectCBridgeTest.mm */; };
 		1AC35DB618CEE5DA00F37B72 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35DB018CEE5DA00F37B72 /* main.cpp */; };
 		1AC35DB718CEE65100F37B72 /* animations in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CA918CED84500F37B72 /* animations */; };
 		1AC35DB918CEE65100F37B72 /* ccb in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CAE18CED84500F37B72 /* ccb */; };
@@ -1060,7 +1058,6 @@
 		507B42BA1C31EC6A0067B53E /* libjscocos2d tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 507B42B41C31E6080067B53E /* libjscocos2d tvOS.a */; };
 		507B43681C31FB670067B53E /* lua_test_bindings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 150F918619DA409E00B89F57 /* lua_test_bindings.cpp */; };
 		507B43691C31FB670067B53E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35D9518CEE5D100F37B72 /* main.m */; };
-		507B436A1C31FB670067B53E /* LuaObjectCBridgeTest.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35D9418CEE5D100F37B72 /* LuaObjectCBridgeTest.mm */; };
 		507B436B1C31FB670067B53E /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35D8718CEE5D100F37B72 /* AppController.mm */; };
 		507B436C1C31FB670067B53E /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35D7D18CEE5B100F37B72 /* AppDelegate.cpp */; };
 		507B436D1C31FB670067B53E /* RootViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35D9718CEE5D100F37B72 /* RootViewController.mm */; };
@@ -2355,8 +2352,6 @@
 		1AC35D9018CEE5D100F37B72 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
 		1AC35D9118CEE5D100F37B72 /* Icon-76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-76.png"; sourceTree = "<group>"; };
 		1AC35D9218CEE5D100F37B72 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		1AC35D9318CEE5D100F37B72 /* LuaObjectCBridgeTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LuaObjectCBridgeTest.h; sourceTree = "<group>"; };
-		1AC35D9418CEE5D100F37B72 /* LuaObjectCBridgeTest.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LuaObjectCBridgeTest.mm; sourceTree = "<group>"; };
 		1AC35D9518CEE5D100F37B72 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		1AC35D9618CEE5D100F37B72 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
 		1AC35D9718CEE5D100F37B72 /* RootViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RootViewController.mm; sourceTree = "<group>"; };
@@ -2364,8 +2359,6 @@
 		1AC35DAB18CEE5DA00F37B72 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		1AC35DAC18CEE5DA00F37B72 /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Icon.icns; sourceTree = "<group>"; };
 		1AC35DAD18CEE5DA00F37B72 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		1AC35DAE18CEE5DA00F37B72 /* LuaObjectCBridgeTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LuaObjectCBridgeTest.h; sourceTree = "<group>"; };
-		1AC35DAF18CEE5DA00F37B72 /* LuaObjectCBridgeTest.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LuaObjectCBridgeTest.mm; sourceTree = "<group>"; };
 		1AC35DB018CEE5DA00F37B72 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		1ACF6A511E4C52660033C137 /* cacert.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = cacert.pem; path = "../tests/cpp-tests/Resources/cacert.pem"; sourceTree = "<group>"; };
 		1D6058910D05DD3D006BFB54 /* cpp-tests Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "cpp-tests Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -4598,8 +4591,6 @@
 				1AC35D9018CEE5D100F37B72 /* Icon-72.png */,
 				1AC35D9118CEE5D100F37B72 /* Icon-76.png */,
 				1AC35D9218CEE5D100F37B72 /* Info.plist */,
-				1AC35D9318CEE5D100F37B72 /* LuaObjectCBridgeTest.h */,
-				1AC35D9418CEE5D100F37B72 /* LuaObjectCBridgeTest.mm */,
 				1AC35D9518CEE5D100F37B72 /* main.m */,
 				1AC35D9618CEE5D100F37B72 /* RootViewController.h */,
 				1AC35D9718CEE5D100F37B72 /* RootViewController.mm */,
@@ -4615,8 +4606,6 @@
 				1AC35DAA18CEE5DA00F37B72 /* MainMenu.xib */,
 				1AC35DAC18CEE5DA00F37B72 /* Icon.icns */,
 				1AC35DAD18CEE5DA00F37B72 /* Info.plist */,
-				1AC35DAE18CEE5DA00F37B72 /* LuaObjectCBridgeTest.h */,
-				1AC35DAF18CEE5DA00F37B72 /* LuaObjectCBridgeTest.mm */,
 				1AC35DB018CEE5DA00F37B72 /* main.cpp */,
 			);
 			name = mac;
@@ -6885,7 +6874,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				1AC35D8118CEE5B100F37B72 /* AppDelegate.cpp in Sources */,
-				1AC35DB518CEE5DA00F37B72 /* LuaObjectCBridgeTest.mm in Sources */,
 				150F918819DA409E00B89F57 /* lua_test_bindings.cpp in Sources */,
 				1AC35DB618CEE5DA00F37B72 /* main.cpp in Sources */,
 				1AC35D8318CEE5B100F37B72 /* lua_assetsmanager_test_sample.cpp in Sources */,
@@ -6898,7 +6886,6 @@
 			files = (
 				150F918919DA409F00B89F57 /* lua_test_bindings.cpp in Sources */,
 				1AC35DA518CEE5D100F37B72 /* main.m in Sources */,
-				1AC35DA418CEE5D100F37B72 /* LuaObjectCBridgeTest.mm in Sources */,
 				1AC35D9818CEE5D100F37B72 /* AppController.mm in Sources */,
 				1AC35D8218CEE5B100F37B72 /* AppDelegate.cpp in Sources */,
 				1AC35DA618CEE5D100F37B72 /* RootViewController.mm in Sources */,
@@ -7251,7 +7238,6 @@
 			files = (
 				507B43681C31FB670067B53E /* lua_test_bindings.cpp in Sources */,
 				507B43691C31FB670067B53E /* main.m in Sources */,
-				507B436A1C31FB670067B53E /* LuaObjectCBridgeTest.mm in Sources */,
 				507B436B1C31FB670067B53E /* AppController.mm in Sources */,
 				507B436C1C31FB670067B53E /* AppDelegate.cpp in Sources */,
 				507B436D1C31FB670067B53E /* RootViewController.mm in Sources */,
@@ -8279,6 +8265,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -8308,6 +8295,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
