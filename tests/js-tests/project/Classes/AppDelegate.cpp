@@ -33,8 +33,6 @@
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #include "scripting/js-bindings/manual/platform/android/CCJavascriptJavaBridge.h"
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-#include "scripting/js-bindings/manual/platform/ios/JavaScriptObjCBridge.h"
 #endif
 
 #include "js_Effect3D_bindings.h"
@@ -133,8 +131,6 @@ bool AppDelegate::applicationDidFinishLaunching()
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     sc->addRegisterCallback(JavascriptJavaBridge::_js_register);
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-    sc->addRegisterCallback(JavaScriptObjCBridge::_js_register);
 #endif
 
     sc->addRegisterCallback(register_DrawNode3D_bindings);
