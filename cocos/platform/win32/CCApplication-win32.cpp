@@ -66,7 +66,9 @@ int Application::run()
     // Main message loop:
     LARGE_INTEGER nLast;
     LARGE_INTEGER nNow;
-
+    LARGE_INTEGER nFreq;
+    
+    QueryPerformanceFrequency(&nFreq);
     QueryPerformanceCounter(&nLast);
 
     initGLContextAttrs();
@@ -95,7 +97,7 @@ int Application::run()
         }
         else
         {
-            Sleep(1);
+            Sleep((int)(((double)_animationInterval.QuadPart/(double)nFreq.QuadPart)*1000));
         }
     }
 
