@@ -1709,8 +1709,6 @@ bool Terrain::Triangle::getIntersectPoint(const Ray& ray, Vec3& intersectPoint) 
 
     float fInvDet = 1.0f / det;
     t *= fInvDet;
-    u *= fInvDet;
-    v *= fInvDet;
 
     intersectPoint = ray._origin + ray._direction * t;
     return true;

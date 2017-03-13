@@ -36,12 +36,14 @@
 
 #import <GameController/GameController.h>
 
-@interface GCControllerConnectionEventHandler : NSObject
-
 typedef void (^GCControllerConnectionBlock)(GCController* controller);
-@property (copy) GCControllerConnectionBlock _connectionBlock;
-
 typedef void (^GCControllerDisconnectionBlock)(GCController* controller);
+
+@interface GCControllerConnectionEventHandler : NSObject
+{
+}
+
+@property (copy) GCControllerConnectionBlock _connectionBlock;
 @property (copy) GCControllerDisconnectionBlock _disconnectionBlock;
 
 +(GCControllerConnectionEventHandler*) getInstance;
@@ -73,14 +75,18 @@ static GCControllerConnectionEventHandler* __instance = nil;
 -(void) observerConnection: (GCControllerConnectionBlock) connectBlock disconnection: (GCControllerDisconnectionBlock) disconnectBlock {
     self._connectionBlock = connectBlock;
     self._disconnectionBlock = disconnectBlock;
-    
+
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onControllerConnected:) name:GCControllerDidConnectNotification object:nil];
-    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onControllerDisconnected:) name:GCControllerDidDisconnectNotification object:nil];
 }
 
 -(void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+
+    // Have to reset 'copy' property to nil value to avoid memory leak.
+    self._connectionBlock = nil;
+    self._disconnectionBlock = nil;
+
     [super dealloc];
 }
 
