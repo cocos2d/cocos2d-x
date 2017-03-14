@@ -99,22 +99,26 @@
 @end
 
 @interface CCUIPasswordTextField()
-@property (nonatomic, retain) NSMutableDictionary *placeholderAttributes;
+{
+
+}
 
 @end
 
 @implementation CCUIPasswordTextField
-{
-}
+
 -(id) initWithFrame:(NSRect)frameRect
 {
-    if ([super initWithFrame:frameRect]) {
-     
+    if (self = [super initWithFrame:frameRect]) {
         [self setLineBreakMode:NSLineBreakByTruncatingTail];
-
     }
     
     return self;
+}
+
+-(void)dealloc
+{
+    [super dealloc];
 }
 
 +(void)load

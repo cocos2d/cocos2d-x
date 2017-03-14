@@ -452,7 +452,7 @@ ssize_t SpriteBatchNode::highestAtlasIndexInChild(Sprite *sprite)
 {
     auto& children = sprite->getChildren();
 
-    if (children.size() == 0)
+    if (children.empty())
     {
         return sprite->getAtlasIndex();
     }
