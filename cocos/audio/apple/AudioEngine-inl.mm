@@ -79,8 +79,9 @@ void AudioEngineInterruptionListenerCallback(void* user_data, UInt32 interruptio
     if (self = [super init])
     {
       if ([[[UIDevice currentDevice] systemVersion] intValue] > 5) {
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleInterruption:) name:AVAudioSessionInterruptionNotification object:[AVAudioSession sharedInstance]];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleInterruption:) name:UIApplicationDidBecomeActiveNotification object:nil];
+          [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleInterruption:) name:AVAudioSessionInterruptionNotification object:[AVAudioSession sharedInstance]];
+          [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleInterruption:) name:UIApplicationDidBecomeActiveNotification object:nil];
+          [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleInterruption:) name:UIApplicationWillResignActiveNotification object:nil];
       }
     // only enable it on iOS. Disable it on tvOS
     // AudioSessionInitialize removed from tvOS
@@ -95,37 +96,83 @@ void AudioEngineInterruptionListenerCallback(void* user_data, UInt32 interruptio
 
 -(void)handleInterruption:(NSNotification*)notification
 {
+    static bool isAudioSessionInterrupted = false;
     static bool resumeOnBecomingActive = false;
+    static bool pauseOnResignActive = false;
 
-    if ([notification.name isEqualToString:AVAudioSessionInterruptionNotification]) {
+    if ([notification.name isEqualToString:AVAudioSessionInterruptionNotification])
+    {
         NSInteger reason = [[[notification userInfo] objectForKey:AVAudioSessionInterruptionTypeKey] integerValue];
-        if (reason == AVAudioSessionInterruptionTypeBegan) {
-            alcMakeContextCurrent(NULL);
+        if (reason == AVAudioSessionInterruptionTypeBegan)
+        {
+            isAudioSessionInterrupted = true;
+
+            if ([UIApplication sharedApplication].applicationState != UIApplicationStateActive)
+            {
+                ALOGD("AVAudioSessionInterruptionTypeBegan, application != UIApplicationStateActive, alcMakeContextCurrent(nullptr)");
+                alcMakeContextCurrent(nullptr);
+            }
+            else
+            {
+                ALOGD("AVAudioSessionInterruptionTypeBegan, application == UIApplicationStateActive, pauseOnResignActive = true");
+                pauseOnResignActive = true;
+            }
         }
 
-        if (reason == AVAudioSessionInterruptionTypeEnded) {
-            if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
+        if (reason == AVAudioSessionInterruptionTypeEnded)
+        {
+            isAudioSessionInterrupted = false;
+
+            if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive)
+            {
+                ALOGD("AVAudioSessionInterruptionTypeEnded, application == UIApplicationStateActive, alcMakeContextCurrent(s_ALContext)");
                 NSError *error = nil;
                 [[AVAudioSession sharedInstance] setActive:YES error:&error];
                 alcMakeContextCurrent(s_ALContext);
-            } else {
+                if (Director::getInstance()->isPaused())
+                {
+                    ALOGD("AVAudioSessionInterruptionTypeEnded, director was paused, try to resume it.");
+                    Director::getInstance()->resume();
+                }
+            }
+            else
+            {
+                ALOGD("AVAudioSessionInterruptionTypeEnded, application != UIApplicationStateActive, resumeOnBecomingActive = true");
                 resumeOnBecomingActive = true;
             }
         }
     }
-
-    if ([notification.name isEqualToString:UIApplicationDidBecomeActiveNotification] && resumeOnBecomingActive) {
-        resumeOnBecomingActive = false;
-        NSError *error = nil;
-        BOOL success = [[AVAudioSession sharedInstance]
-                        setCategory: AVAudioSessionCategoryAmbient
-                        error: &error];
-        if (!success) {
-            ALOGE("Fail to set audio session.");
-            return;
+    else if ([notification.name isEqualToString:UIApplicationWillResignActiveNotification])
+    {
+        ALOGD("UIApplicationWillResignActiveNotification");
+        if (pauseOnResignActive)
+        {
+            pauseOnResignActive = false;
+            ALOGD("UIApplicationWillResignActiveNotification, alcMakeContextCurrent(nullptr)");
+            alcMakeContextCurrent(nullptr);
         }
-        [[AVAudioSession sharedInstance] setActive:YES error:&error];
-        alcMakeContextCurrent(s_ALContext);
+    }
+    else if ([notification.name isEqualToString:UIApplicationDidBecomeActiveNotification])
+    {
+        ALOGD("UIApplicationDidBecomeActiveNotification");
+        if (resumeOnBecomingActive)
+        {
+            resumeOnBecomingActive = false;
+            ALOGD("UIApplicationDidBecomeActiveNotification, alcMakeContextCurrent(s_ALContext)");
+            NSError *error = nil;
+            BOOL success = [[AVAudioSession sharedInstance] setCategory: AVAudioSessionCategoryAmbient error: &error];
+            if (!success) {
+                ALOGE("Fail to set audio session.");
+                return;
+            }
+            [[AVAudioSession sharedInstance] setActive:YES error:&error];
+            alcMakeContextCurrent(s_ALContext);
+        }
+        else if (isAudioSessionInterrupted)
+        {
+            ALOGD("Audio session is still interrupted, pause director!");
+            Director::getInstance()->pause();
+        }
     }
 }
 
@@ -133,6 +180,7 @@ void AudioEngineInterruptionListenerCallback(void* user_data, UInt32 interruptio
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:AVAudioSessionInterruptionNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillResignActiveNotification object:nil];
 
     [super dealloc];
 }
