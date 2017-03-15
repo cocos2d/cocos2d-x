@@ -945,7 +945,8 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\openssl\prebuilt\win32\*.*" "$(OutDir)"
     <ClInclude Include="..\..\external\flatbuffers\reflection.h" />
     <ClInclude Include="..\..\external\flatbuffers\reflection_generated.h" />
     <ClInclude Include="..\..\external\json\document.h" />
-    <ClInclude Include="..\..\external\json\filestream.h" />
+    <ClInclude Include="..\..\external\json\filereadstream.h" />
+    <ClInclude Include="..\..\external\json\filewritestream.h" />
     <ClInclude Include="..\..\external\json\internal\pow10.h" />
     <ClInclude Include="..\..\external\json\internal\stack.h" />
     <ClInclude Include="..\..\external\json\internal\strfunc.h" />
@@ -1044,7 +1045,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\openssl\prebuilt\win32\*.*" "$(OutDir)"
     <ClInclude Include="..\base\ccMacros.h" />
     <ClInclude Include="..\base\CCMap.h" />
     <ClInclude Include="..\base\CCNinePatchImageParser.h" />
-    <ClInclude Include="..\base\CCStencilStateManager.h" />
+    <ClInclude Include="..\base\CCStencilStateManager.hpp" />
     <ClInclude Include="..\base\CCNS.h" />
     <ClInclude Include="..\base\CCProfiling.h" />
     <ClInclude Include="..\base\CCProperties.h" />

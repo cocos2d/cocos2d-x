@@ -2844,7 +2844,10 @@
     <ClInclude Include="..\..\external\json\document.h">
       <Filter>cocostudio\json\rapidjson</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\external\json\filestream.h">
+    <ClInclude Include="..\..\external\json\filereadstream.h">
+      <Filter>cocostudio\json\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\json\filewritestream.h">
       <Filter>cocostudio\json\rapidjson</Filter>
     </ClInclude>
     <ClInclude Include="..\..\external\json\prettywriter.h">
