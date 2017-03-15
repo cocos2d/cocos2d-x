@@ -17,7 +17,7 @@ android {
                     // skip the NDK Build step if PROP_NDK_MODE is none
                     targets 'cpp_empty_test'
                     arguments 'NDK_TOOLCHAIN_VERSION=4.9'
-                    arguments 'APP_PLATFORM='+PROP_TARGET_SDK_VERSION
+                    arguments 'APP_PLATFORM=android-'+PROP_TARGET_SDK_VERSION
                     arguments 'NDK_MODULE_PATH=../../../..:../../../../cocos:../../../../external'
                     arguments '-j' + Runtime.runtime.availableProcessors()
                     abiFilters.addAll(PROP_APP_ABI.split(':').collect{it as String})

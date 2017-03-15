@@ -125,7 +125,19 @@ AudioCache::~AudioCache()
             ALOGW("AudioCache (%p), id=%u, buffer isn't ready, state=%d", this, _id, _state);
         }
 
-        free(_pcmData);
+        // fixed #17494: CrashIfClientProvidedBogusAudioBufferList
+        // We're using 'alBufferDataStaticProc' for speeding up
+        // the performance of playing audio without preload, but we need to manage the memory by ourself carefully.
+        // It's probably that '_pcmData' is freed before OpenAL finishes the audio render task,
+        // then 'CrashIfClientProvidedBogusAudioBufferList' may be triggered.
+        // 'cpp-tests/NewAudioEngineTest/AudioSwitchStateTest' can reproduce this issue without the following fix.
+        // The workaround is delaying 200ms to free pcm data.
+        char* data = _pcmData;
+        NSTimer* timer = [NSTimer timerWithTimeInterval:0.2 repeats:NO block:^(NSTimer* t) {
+            free(data);
+        }];
+
+        [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSDefaultRunLoopMode];
     }
 
     if (_queBufferFrames > 0)

@@ -246,12 +246,12 @@ bool js_EventListenerCustom_create(JSContext *cx, uint32_t argc, jsval *vp)
                     jsval largv[1];
                     if (event) {
                         js_type_class_t *typeClassEvent = js_get_type_from_native<EventCustom>(event);
-                        largv[0] = OBJECT_TO_JSVAL(jsb_get_or_create_weak_jsobject(cx, event, typeClassEvent));
+                        largv[0] = OBJECT_TO_JSVAL(jsb_get_or_create_weak_jsobject(cx, event, typeClassEvent, "EventCustom"));
                     } else {
                         largv[0] = JSVAL_NULL;
                     };
                     JS::RootedValue rval(cx);
-                    bool succeed = func->invoke(1, &largv[0], &rval);
+                    bool succeed = func->invoke(JS::HandleValueArray::fromMarkedLocation(1, largv), &rval);
                     if (!succeed && JS_IsExceptionPending(cx)) {
                         JS_ReportPendingException(cx);
                     }
@@ -303,7 +303,7 @@ bool js_EventDispatcher_addCustomEventListener(JSContext *cx, uint32_t argc, jsv
                         largv[0] = JSVAL_NULL;
                     };
                     JS::RootedValue rval(cx);
-                    bool succeed = func->invoke(1, &largv[0], &rval);
+                    bool succeed = func->invoke(JS::HandleValueArray::fromMarkedLocation(1, largv), &rval);
                     if (!succeed && JS_IsExceptionPending(cx)) {
                         JS_ReportPendingException(cx);
                     }

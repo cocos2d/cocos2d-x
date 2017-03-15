@@ -212,6 +212,17 @@ public:
     virtual std::string subtitle() const override;
 };
 
+class AudioSmallFile3Test : public AudioEngineTestDemo
+{
+public:
+    CREATE_FUNC(AudioSmallFile3Test);
+
+    virtual void onEnter() override;
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
 class AudioPauseResumeAfterPlay : public AudioEngineTestDemo
 {
 public:

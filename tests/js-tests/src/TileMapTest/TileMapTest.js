@@ -1493,7 +1493,7 @@ var TMXBug987 = TileDemo.extend({
             node = childs[i];
             if (!node) break;
             if ("opengl" in cc.sys.capabilities)
-                node.texture.setAntiAliasTexParameters();
+                node.texture.setAliasTexParameters();
         }
 
         map.anchorX = 0;

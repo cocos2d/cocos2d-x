@@ -32,6 +32,7 @@
 #include "deprecated/CCInteger.h"
 #include "deprecated/CCString.h"
 #include "editor-support/cocostudio/CocosStudioExtension.h"
+#include "extensions/assets-manager/Manifest.h"
 #include "math/TransformUtils.h"
 #include "scripting/js-bindings/manual/ScriptingCore.h"
 #include "scripting/js-bindings/manual/cocos2d_specifics.hpp"
@@ -107,7 +108,6 @@ const char* JSStringWrapper::get()
 // JSFunctionWrapper
 JSFunctionWrapper::JSFunctionWrapper(JSContext* cx, JS::HandleObject jsthis, JS::HandleValue fval)
 : _cx(cx)
-, _rooted(false)
 {
     _jsthis = jsthis;
     _fval = fval;
@@ -129,12 +129,10 @@ JSFunctionWrapper::JSFunctionWrapper(JSContext* cx, JS::HandleObject jsthis, JS:
         {
             js_add_object_reference(valRoot, funcVal);
         }
-        _rooted = true;
     }
 }
 JSFunctionWrapper::JSFunctionWrapper(JSContext* cx, JS::HandleObject jsthis, JS::HandleValue fval, JS::HandleValue owner)
 : _cx(cx)
-, _rooted(false)
 {
     _jsthis = jsthis;
     _fval = fval;
@@ -157,7 +155,7 @@ JSFunctionWrapper::~JSFunctionWrapper()
 {
     JS::RootedValue ownerVal(_cx, _owner);
 
-    if (_rooted && !ownerVal.isNullOrUndefined())
+    if (!ScriptingCore::getInstance()->getFinalizing() && !ownerVal.isNullOrUndefined())
     {
         JS::RootedValue thisVal(_cx, OBJECT_TO_JSVAL(_jsthis));
         if (!thisVal.isNullOrUndefined())
@@ -179,6 +177,15 @@ bool JSFunctionWrapper::invoke(unsigned int argc, jsval *argv, JS::MutableHandle
     JS::RootedObject thisObj(_cx, _jsthis);
     JS::RootedValue fval(_cx, _fval);
     return JS_CallFunctionValue(_cx, thisObj, fval, JS::HandleValueArray::fromMarkedLocation(argc, argv), rval);
+}
+
+bool JSFunctionWrapper::invoke(JS::HandleValueArray args, JS::MutableHandleValue rval)
+{
+    JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+    
+    JS::RootedObject thisObj(_cx, _jsthis);
+    JS::RootedValue fval(_cx, _fval);
+    return JS_CallFunctionValue(_cx, thisObj, fval, args, rval);
 }
 
 static Color3B getColorFromJSObject(JSContext *cx, JS::HandleObject colorObject)
@@ -2976,6 +2983,21 @@ jsval resourcedata_to_jsval(JSContext* cx, const ResourceData& v)
     bool ok = JS_DefineProperty(cx, tmp, "type", v.type, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
         JS_DefineProperty(cx, tmp, "file", JS::RootedValue(cx, std_string_to_jsval(cx, v.file)), JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
         JS_DefineProperty(cx, tmp, "plist", JS::RootedValue(cx, std_string_to_jsval(cx, v.plist)), JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    if (ok) {
+        return OBJECT_TO_JSVAL(tmp);
+    }
+    return JSVAL_NULL;
+}
+
+jsval asset_to_jsval(JSContext* cx, const cocos2d::extension::ManifestAsset& v)
+{
+    JS::RootedObject tmp(cx, JS_NewObject(cx, NULL, JS::NullPtr(), JS::NullPtr()));
+    if (!tmp) return JSVAL_NULL;
+    bool ok = JS_DefineProperty(cx, tmp, "md5", JS::RootedValue(cx, std_string_to_jsval(cx, v.md5)), JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+    JS_DefineProperty(cx, tmp, "path", JS::RootedValue(cx, std_string_to_jsval(cx, v.path)), JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+    JS_DefineProperty(cx, tmp, "compressed", v.compressed, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+    JS_DefineProperty(cx, tmp, "size", v.size, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+    JS_DefineProperty(cx, tmp, "downloadState", (int)v.downloadState, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     if (ok) {
         return OBJECT_TO_JSVAL(tmp);
     }
