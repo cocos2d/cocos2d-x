@@ -44,6 +44,7 @@
 #define KEY_COMPRESSED          "compressed"
 #define KEY_COMPRESSED_FILE     "compressedFile"
 #define KEY_DOWNLOAD_STATE      "downloadState"
+#define KEY_COMPRESSED_INDEX    "compressedindex"
 
 NS_CC_EXT_BEGIN
 
@@ -383,6 +384,11 @@ Manifest::Asset Manifest::parseAsset(const std::string &path, const rapidjson::V
     if ( json.HasMember(KEY_COMPRESSED) && json[KEY_COMPRESSED].IsBool() )
     {
         asset.compressed = json[KEY_COMPRESSED].GetBool();
+        //compress index
+        if (json.HasMember(KEY_COMPRESSED_INDEX) && json[KEY_COMPRESSED_INDEX].IsInt())
+        {
+            asset._nCompressIndex = json[KEY_COMPRESSED_INDEX].GetInt();
+        }
     }
     else asset.compressed = false;
     

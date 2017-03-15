@@ -72,6 +72,10 @@ public:
         std::string path;
         bool compressed;
         DownloadState downloadState;
+        int _nCompressIndex;
+        Asset() : compressed(false), 
+            _nCompressIndex(0){
+        }
     };
     
     //! Object indicate the difference between two Assets

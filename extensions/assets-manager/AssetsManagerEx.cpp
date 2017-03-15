@@ -48,7 +48,12 @@ NS_CC_EXT_BEGIN
 
 const std::string AssetsManagerEx::VERSION_ID = "@version";
 const std::string AssetsManagerEx::MANIFEST_ID = "@manifest";
-
+namespace {
+    bool SortCompressFileIndexAssert(const CompressedFilesInfoAsserts& a, const CompressedFilesInfoAsserts& b)
+    {
+        return a._nCompressIndex < b._nCompressIndex;
+    }
+}
 // Implementation of AssetsManagerEx
 
 AssetsManagerEx::AssetsManagerEx(const std::string& manifestUrl, const std::string& storagePath)
@@ -415,9 +420,12 @@ bool AssetsManagerEx::decompress(const std::string &zip)
 
 void AssetsManagerEx::decompressDownloadedZip()
 {
+    //need sort first
+    std::sort(_compressedFiles.begin(), _compressedFiles.end(), SortCompressFileIndexAssert);
+
     // Decompress all compressed files
     for (auto it = _compressedFiles.begin(); it != _compressedFiles.end(); ++it) {
-        std::string zipfile = *it;
+        std::string zipfile = it->_fileName;
         if (!decompress(zipfile))
         {
             dispatchUpdateEvent(EventAssetsManagerEx::EventCode::ERROR_DECOMPRESS, "", "Unable to decompress file " + zipfile);
@@ -688,7 +696,7 @@ void AssetsManagerEx::updateSucceed()
 
     struct AsyncData
     {
-        std::vector<std::string> compressedFiles;
+        std::vector<CompressedFilesInfoAsserts> compressedFiles;
         std::string errorCompressedFile;
     };
 
@@ -714,14 +722,15 @@ void AssetsManagerEx::updateSucceed()
         delete asyncDataInner;
     };
     AsyncTaskPool::getInstance()->enqueue(AsyncTaskPool::TaskType::TASK_OTHER, mainThread, (void*)asyncData, [this, asyncData]() {
+        //sort first
+        std::sort(asyncData->compressedFiles.begin(), asyncData->compressedFiles.end(), SortCompressFileIndexAssert);
         // Decompress all compressed files
-        for (auto& zipFile : asyncData->compressedFiles) {
-            if (!decompress(zipFile))
-            {
-                asyncData->errorCompressedFile = zipFile;
+        for (auto& zipFileInfo : asyncData->compressedFiles) {
+            if (!decompress(zipFileInfo._fileName)){
+                asyncData->errorCompressedFile = zipFileInfo._fileName;
                 break;
             }
-            _fileUtils->removeFile(zipFile);
+            _fileUtils->removeFile(zipFileInfo._fileName);
         }
     });
 }
@@ -992,7 +1001,10 @@ void AssetsManagerEx::onSuccess(const std::string &/*srcUrl*/, const std::string
             
             // Add file to need decompress list
             if (assetIt->second.compressed) {
-                _compressedFiles.push_back(storagePath);
+                CompressedFilesInfoAsserts comressFiles;
+                comressFiles._fileName = storagePath;
+                comressFiles._nCompressIndex = assetIt->second._nCompressIndex;
+                _compressedFiles.push_back(comressFiles);
             }
         }
         
