@@ -6051,6 +6051,14 @@ void register_cocos2dx_js_core(JSContext* cx, JS::HandleObject global)
     get_or_create_js_obj(cx, global, "cc", &ccObj);
     get_or_create_js_obj(cx, global, "jsb", &jsbObj);
 
+#if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+    JS::RootedValue trueVal(cx, JSVAL_TRUE);
+    JS_SetProperty(cx, jsbObj, "ENABLE_GC_FOR_NATIVE_OBJECTS", trueVal);
+#else
+    JS::RootedValue falseVal(cx, JSVAL_FALSE);
+    JS_SetProperty(cx, jsbObj, "ENABLE_GC_FOR_NATIVE_OBJECTS", falseVal);
+#endif
+
     // Memory management related
     jsb_register_RefFinalizeHook(cx, jsbObj);
     jsb_register_ObjFinalizeHook(cx, jsbObj);
