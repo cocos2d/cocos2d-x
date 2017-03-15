@@ -684,12 +684,12 @@ public:
     virtual bool isDirectoryExist(const std::string& dirPath) const;
 
     /**
-    *  Checks whether the absoulate path is a directory, async off of the main cocos thread.
-    *
-    * @param dirPath The path of the directory, it must be an absolute path
-    * @param callback that will accept a boolean, true if the file exists, false otherwise. 
-    * Callback will happen on the main cocos thread.
-    */
+     *  Checks whether the absoulate path is a directory, async off of the main cocos thread.
+     *
+     * @param dirPath The path of the directory, it must be an absolute path
+     * @param callback that will accept a boolean, true if the file exists, false otherwise. 
+     * Callback will happen on the main cocos thread.
+     */
     virtual void isDirectoryExist(const std::string& fullPath, std::function<void(bool)> callback);
 
     /**
@@ -801,6 +801,22 @@ public:
      * argument, the file size.
      */
     virtual void getFileSize(const std::string &filepath, std::function<void(long)> callback);
+
+    /**
+     *  List all files in a directory.
+     *
+     *  @param dirPath The path of the directory, it could be a relative or an absolute path.
+     *  @return File paths in a string vector
+     */
+    virtual std::vector<std::string> listFiles(const std::string& dirPath) const;
+    
+    /**
+     *  List all files recursively in a directory.
+     *
+     *  @param dirPath The path of the directory, it could be a relative or an absolute path.
+     *  @return File paths in a string vector
+     */
+    virtual void listFilesRecursively(const std::string& dirPath, std::vector<std::string> *files) const;
 
     /** Returns the full path cache. */
     const std::unordered_map<std::string, std::string>& getFullPathCache() const { return _fullPathCache; }

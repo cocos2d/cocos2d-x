@@ -716,7 +716,6 @@ void js_remove_object_root(JS::HandleValue target)
 }
 
 JSCallbackWrapper::JSCallbackWrapper()
-: _rooted(true)
 {
     JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
     _jsCallback = JS::NullValue();
@@ -730,7 +729,6 @@ JSCallbackWrapper::JSCallbackWrapper()
 }
 
 JSCallbackWrapper::JSCallbackWrapper(JS::HandleValue owner)
-: _rooted(false)
 {
     _owner = owner;
     _jsCallback = JS::NullValue();
@@ -740,9 +738,10 @@ JSCallbackWrapper::JSCallbackWrapper(JS::HandleValue owner)
 
 JSCallbackWrapper::~JSCallbackWrapper()
 {
-    JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
+    ScriptingCore* sc = ScriptingCore::getInstance();
+    JSContext* cx = sc->getGlobalContext();
     JS::RootedValue ownerVal(cx, _owner);
-    if (_rooted && !ownerVal.isNullOrUndefined())
+    if (!sc->getFinalizing() && !ownerVal.isNullOrUndefined())
     {
         JS::RootedValue target(cx, _jsCallback);
         if (!target.isNullOrUndefined())
@@ -763,55 +762,55 @@ JSCallbackWrapper::~JSCallbackWrapper()
 }
 
 void JSCallbackWrapper::setJSCallbackFunc(JS::HandleValue func) {
-    JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
-    JS::RootedValue ownerVal(cx, _owner);
-    if (!ownerVal.isNullOrUndefined())
-    {
-        JS::RootedValue target(cx, _jsCallback);
-        if (!target.isNullOrUndefined())
-        {
-            js_remove_object_reference(ownerVal, target);
-        }
-        js_add_object_reference(ownerVal, func);
-    }
     if (!func.isNullOrUndefined())
     {
+        JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
+        JS::RootedValue ownerVal(cx, _owner);
+        if (!ownerVal.isNullOrUndefined())
+        {
+            JS::RootedValue target(cx, _jsCallback);
+            if (!target.isNullOrUndefined())
+            {
+                js_remove_object_reference(ownerVal, target);
+            }
+            js_add_object_reference(ownerVal, func);
+        }
         _jsCallback = func;
     }
 }
 
 void JSCallbackWrapper::setJSCallbackThis(JS::HandleValue thisObj) {
-    JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
-    JS::RootedValue ownerVal(cx, _owner);
-    if (!ownerVal.isNullOrUndefined())
-    {
-        JS::RootedValue target(cx, _jsThisObj);
-        if (!target.isNullOrUndefined())
-        {
-            js_remove_object_reference(ownerVal, target);
-        }
-        js_add_object_reference(ownerVal, thisObj);
-    }
     if (!thisObj.isNullOrUndefined())
     {
+        JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
+        JS::RootedValue ownerVal(cx, _owner);
+        if (!ownerVal.isNullOrUndefined())
+        {
+            JS::RootedValue target(cx, _jsThisObj);
+            if (!target.isNullOrUndefined())
+            {
+                js_remove_object_reference(ownerVal, target);
+            }
+            js_add_object_reference(ownerVal, thisObj);
+        }
         _jsThisObj = thisObj;
     }
 }
 
 void JSCallbackWrapper::setJSExtraData(JS::HandleValue data) {
-    JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
-    JS::RootedValue ownerVal(cx, _owner);
-    if (!ownerVal.isNullOrUndefined())
-    {
-        JS::RootedValue target(cx, _extraData);
-        if (!target.isNullOrUndefined())
-        {
-            js_remove_object_reference(ownerVal, target);
-        }
-        js_add_object_reference(ownerVal, data);
-    }
     if (!data.isNullOrUndefined())
     {
+        JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
+        JS::RootedValue ownerVal(cx, _owner);
+        if (!ownerVal.isNullOrUndefined())
+        {
+            JS::RootedValue target(cx, _extraData);
+            if (!target.isNullOrUndefined())
+            {
+                js_remove_object_reference(ownerVal, target);
+            }
+            js_add_object_reference(ownerVal, data);
+        }
         _extraData = data;
     }
 }
@@ -1285,8 +1284,13 @@ void JSScheduleWrapper::scheduleFunc(float dt)
 void JSScheduleWrapper::update(float dt)
 {
     jsval data = DOUBLE_TO_JSVAL(dt);
+    
+    JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
+    
+    JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
 
-    ScriptingCore::getInstance()->executeFunctionWithOwner(getJSCallbackThis(), "update", 1, &data);
+    JS::RootedValue targetVal(cx, getJSCallbackThis());
+    ScriptingCore::getInstance()->executeFunctionWithOwner(targetVal, "update", 1, &data);
 }
 
 Ref* JSScheduleWrapper::getTarget()
@@ -5299,8 +5303,9 @@ void get_or_create_js_obj(const std::string &name, JS::MutableHandleObject jsObj
     {
         subProp = name.substr(start);
         get_or_create_js_obj(cx, obj, subProp, &prop);
-        jsObj.set(obj);
+        obj.set(prop);
     }
+    jsObj.set(obj);
 }
 
 #if CC_ENABLE_BULLET_INTEGRATION && CC_USE_3D_PHYSICS
