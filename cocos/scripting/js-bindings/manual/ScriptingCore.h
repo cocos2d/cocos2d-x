@@ -177,7 +177,7 @@ public:
      @param functionName String object holding the name of the function, in the global script environment, that is to be executed.
      @return The integer value returned from the script function.
      */
-    virtual int executeGlobalFunction(const char* functionName) override { return 0; }
+    virtual int executeGlobalFunction(const char* functionName) override;
 
     virtual int sendEvent(cocos2d::ScriptEvent* message) override;
     

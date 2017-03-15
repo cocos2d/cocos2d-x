@@ -1698,6 +1698,15 @@ int ScriptingCore::executeCustomTouchEvent(EventTouch::EventCode eventType,
     return 1;
 }
 
+int ScriptingCore::executeGlobalFunction(const char* functionName)
+{
+    JSAutoCompartment ac(_cx, _global->get());
+    
+    std::string evalStr = functionName;
+    JS::RootedValue globalVal(_cx, OBJECT_TO_JSVAL(_global->get()));
+    return executeFunctionWithOwner(globalVal, functionName, 0, NULL);
+}
+
 int ScriptingCore::sendEvent(ScriptEvent* evt)
 {
     if (NULL == evt)
