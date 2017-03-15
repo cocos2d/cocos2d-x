@@ -620,7 +620,8 @@ void ScriptingCore::createGlobalContext() {
     }
 
     _rt = JS_NewRuntime(32L * 1024L * 1024L);
-    JS_SetGCParameter(_rt, JSGC_MAX_BYTES, 0xffffffff);
+    JS_SetGCParameter(_rt, JSGCParamKey::JSGC_MAX_BYTES, 0xffffffff);
+    JS_SetGCParameter(_rt, JSGCParamKey::JSGC_MODE, JSGC_MODE_COMPARTMENT);
 
     JS_SetTrustedPrincipals(_rt, &shellTrustedPrincipals);
     JS_SetSecurityCallbacks(_rt, &securityCallbacks);
