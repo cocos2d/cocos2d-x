@@ -57,7 +57,13 @@ bool AudioDecoderMp3::decodeToPcm()
     int numChannels = 0;
     int sampleRate = 0;
     int numFrames = 0;
-    decodeMP3(&callbacks, this, *_result.pcmBuffer, &numChannels, &sampleRate, &numFrames);
+    
+    if (EXIT_SUCCESS != decodeMP3(&callbacks, this, *_result.pcmBuffer, &numChannels, &sampleRate, &numFrames)
+        && numChannels > 0 && sampleRate > 0 && numFrames > 0)
+    {
+        ALOGE("Decode MP3 (%s) failed, channels: %d, rate: %d, frames: %d", _url.c_str(), numChannels, sampleRate, numFrames);
+        return false;
+    }
 
     _result.numChannels = numChannels;
     _result.sampleRate = sampleRate;
