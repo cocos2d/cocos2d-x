@@ -1,6 +1,7 @@
 #include "scripting/js-bindings/auto/jsb_cocos2dx_network_auto.hpp"
 #include "scripting/js-bindings/manual/cocos2d_specifics.hpp"
 #include "network/CCDownloader.h"
+#include "scripting/js-bindings/manual/network/js_network_manual.h"
 
 template<class T>
 static bool dummy_constructor(JSContext *cx, uint32_t argc, jsval *vp)
