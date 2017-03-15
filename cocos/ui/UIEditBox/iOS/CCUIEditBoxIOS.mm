@@ -366,7 +366,7 @@
     CCEAGLView *eaglview = (CCEAGLView *) view->getEAGLView();
     
     if ([eaglview isKeyboardShown]) {
-        [self performSelector:@selector(animationSelector) withObject:nil afterDelay:0.0f];
+        [self animationSelector];
     }
     
     getEditBoxImplIOS()->editBoxEditingDidBegin();
@@ -447,7 +447,7 @@
     CCEAGLView *eaglview = (CCEAGLView *)view->getEAGLView();
     
     if ([eaglview isKeyboardShown]) {
-        [self performSelector:@selector(animationSelector) withObject:nil afterDelay:0.0f];
+        [self animationSelector];
     }
     
     getEditBoxImplIOS()->editBoxEditingDidBegin();

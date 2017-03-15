@@ -36,10 +36,6 @@ extern "C" {
 
 #include "scripting/lua-bindings/manual/Cocos2dxLuaLoader.h"
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-#include "scripting/lua-bindings/manual/platform/ios/CCLuaObjcBridge.h"
-#endif
-
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #include "scripting/lua-bindings/manual/platform/android/CCLuaJavaBridge.h"
 #endif
@@ -155,10 +151,6 @@ bool LuaStack::init(void)
 #if CC_USE_PHYSICS
     register_all_cocos2dx_physics(_state);
     register_all_cocos2dx_physics_manual(_state);
-#endif
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-    LuaObjcBridge::luaopen_luaoc(_state);
 #endif
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)

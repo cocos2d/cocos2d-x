@@ -581,7 +581,7 @@ var testNames = [
     },
     {
         title:"Reflection Test",
-        platforms: PLATFROM_ANDROID | PLATFROM_APPLE,
+        platforms: PLATFROM_ANDROID,
         linksrc:"src/ReflectionTest/ReflectionTest.js",
         testScene:function () {
             return new ReflectionTestScene();

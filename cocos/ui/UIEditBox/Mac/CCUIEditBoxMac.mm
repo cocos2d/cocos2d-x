@@ -93,10 +93,12 @@
     
     _textInput = [textInput retain];
     
-    [_textInput performSelector:@selector(setTextColor:) withObject:_textInput.ccui_textColor];
+    [_textInput ccui_setTextColor:_textInput.ccui_textColor];
+    //@todo: NSView doesn't have `backgroundColor` property, is it a bug here?
     [_textInput performSelector:@selector(setBackgroundColor:) withObject:[NSColor clearColor]];
  
     if (![_textInput isKindOfClass:[NSTextView class]]) {
+        //@todo: NSTextView doesn't have `bordered property`, but here?
         [_textInput performSelector:@selector(setBordered:) withObject:nil];
     }
     _textInput.hidden = NO;

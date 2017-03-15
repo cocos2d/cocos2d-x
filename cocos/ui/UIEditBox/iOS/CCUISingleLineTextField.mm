@@ -38,6 +38,9 @@
 
 #pragma mark - Init & Dealloc
 
+@synthesize placeholderTextColor=_placeholderTextColor;
+@synthesize placeholderFont=_placeholderFont;
+
 - (void)dealloc
 {
     [_placeholderFont release];
@@ -48,14 +51,25 @@
 
 #pragma mark - Properties
 
-- (UIColor *)placeholderTextColor
+
+- (UIColor *)ccui_placeholderTextColor
 {
-    return _placeholderTextColor;
+    return self.placeholderTextColor;
 }
 
-- (UIFont *)placeholderFont
+- (void)ccui_setPlaceholderTextColor:(UIColor *)ccui_placeholderTextColor
 {
-    return _placeholderFont;
+    self.placeholderTextColor = ccui_placeholderTextColor;
+}
+
+- (UIFont *)ccui_placeholderFont
+{
+    return self.placeholderFont;
+}
+
+- (void)ccui_setPlaceholderFont:(UIFont *)ccui_placeholderFont
+{
+    self.placeholderFont = ccui_placeholderFont;
 }
 
 #pragma mark - Public methods

@@ -148,10 +148,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
         self.keyboardShowNotification = nil;
         self.autocorrectionType = UITextAutocorrectionTypeNo;
         
-        if ([self respondsToSelector:@selector(setContentScaleFactor:)])
-        {
-            self.contentScaleFactor = [[UIScreen mainScreen] scale];
-        }
+        self.contentScaleFactor = [[UIScreen mainScreen] scale];
     }
     
     return self;
@@ -272,7 +269,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
     //cocos2d::Director::getInstance()->reshapeProjection(size);
 
     // Avoid flicker. Issue #350
-    //[director performSelectorOnMainThread:@selector(drawScene) withObject:nil waitUntilDone:YES];
     if ([NSThread isMainThread])
     {
         cocos2d::Director::getInstance()->drawScene();

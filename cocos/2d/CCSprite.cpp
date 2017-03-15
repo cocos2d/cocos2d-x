@@ -1030,14 +1030,6 @@ void Sprite::updateTransform(void)
         setDirty(false);
     }
 
-    // MARMALADE CHANGED
-    // recursively iterate over children
-/*    if( _hasChildren )
-    {
-        // MARMALADE: CHANGED TO USE Node*
-        // NOTE THAT WE HAVE ALSO DEFINED virtual Node::updateTransform()
-        arrayMakeObjectsPerformSelector(_children, updateTransform, Sprite*);
-    }*/
     Node::updateTransform();
 }
 

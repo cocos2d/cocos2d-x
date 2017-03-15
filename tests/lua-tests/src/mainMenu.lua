@@ -219,6 +219,13 @@ function CreateTestMenu()
             end
         end
 
+        -- disable itmes that only supported on Android
+        if obj.name == "LuaBridgeTest" then
+            if cc.PLATFORM_OS_ANDROID ~= targetPlatform then
+                testMenuItem:setEnabled(false)
+            end
+        end
+
         if obj.name == "Physics3DTest" and nil == cc.Physics3DComponent then
             testMenuItem:setEnabled(false) 
         end
