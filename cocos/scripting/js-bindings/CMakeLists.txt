@@ -85,7 +85,6 @@ include_directories(
   ${cocos_root}/external/spidermonkey/include/${PLATFORM_FOLDER}
   ${cocos_root}/cocos
   ${cocos_root}/cocos/editor-support
-  ${cocos_root}/cocos/scripting/js-bindings
   ${cocos_root}/extensions
   ${cocos_root}/external
   ${CHIPMUNK_INCLUDE_DIRS}
