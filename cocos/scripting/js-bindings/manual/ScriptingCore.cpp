@@ -2370,6 +2370,7 @@ JSObject* jsb_get_or_create_weak_jsobject(JSContext *cx, void *native, js_type_c
 #if ! CC_ENABLE_GC_FOR_NATIVE_OBJECTS
     JS::AddNamedObjectRoot(cx, &proxy->obj, debug);
 #else
+    js_add_FinalizeHook(cx, jsObj, false);
 #if COCOS2D_DEBUG > 1
     if (debug != nullptr)
     {

@@ -722,7 +722,7 @@ bool js_cocos2dx_extension_EventListenerAssetsManagerEx_init(JSContext *cx, uint
             if(JS_TypeOfValue(cx, args.get(1)) == JSTYPE_FUNCTION)
             {
                 JS::RootedObject jstarget(cx, args.thisv().toObjectOrNull());
-                std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, jstarget, args.get(1)));
+                std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, jstarget, args.get(1), args.thisv()));
                 auto lambda = [=](cocos2d::extension::EventAssetsManagerEx* larg0) -> void {
                     JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
                     jsval largv[1];
@@ -766,6 +766,7 @@ bool js_cocos2dx_extension_EventListenerAssetsManagerEx_create(JSContext *cx, ui
     if (argc == 2) {
         cocos2d::extension::AssetsManagerEx* arg0 = nullptr;
         std::function<void (cocos2d::extension::EventAssetsManagerEx *)> arg1;
+        JSFunctionWrapper *wrapper = nullptr;
         do {
             if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
@@ -780,6 +781,7 @@ bool js_cocos2dx_extension_EventListenerAssetsManagerEx_create(JSContext *cx, ui
             {
                 JS::RootedObject jstarget(cx, args.thisv().toObjectOrNull());
                 std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, jstarget, args.get(1)));
+                wrapper = func.get();
                 auto lambda = [=](cocos2d::extension::EventAssetsManagerEx* larg0) -> void {
                     JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
                     jsval largv[1];
@@ -811,6 +813,10 @@ bool js_cocos2dx_extension_EventListenerAssetsManagerEx_create(JSContext *cx, ui
         if (ret) {
             JS::RootedObject jsobj(cx, js_get_or_create_jsobject<cocos2d::extension::EventListenerAssetsManagerEx>(cx, ret));
             jsret = OBJECT_TO_JSVAL(jsobj);
+            if (wrapper)
+            {
+                wrapper->setOwner(cx, jsret);
+            }
         } else {
             jsret = JS::NullValue();
         }
