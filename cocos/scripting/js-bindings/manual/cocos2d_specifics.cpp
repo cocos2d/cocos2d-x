@@ -381,13 +381,13 @@ bool js_cocos2dx_CCSequence_create(JSContext *cx, uint32_t argc, jsval *vp)
             }
         }
         auto ret = new (std::nothrow) cocos2d::Sequence;
+        js_type_class_t *typeClass = js_get_type_from_native<cocos2d::Sequence>(ret);
+        // link the native object with the javascript object
+        JS::RootedObject jsobj(cx, jsb_ref_create_jsobject(cx, ret, typeClass, "cocos2d::Sequence"));
+        
         auto ok = ret->init(array);
-
         if (ok)
         {
-            js_type_class_t *typeClass = js_get_type_from_native<cocos2d::Sequence>(ret);
-            // link the native object with the javascript object
-            JS::RootedObject jsobj(cx, jsb_ref_create_jsobject(cx, ret, typeClass, "cocos2d::Sequence"));
             args.rval().set(OBJECT_TO_JSVAL(jsobj));
             return true;
         }
@@ -419,12 +419,13 @@ bool js_cocos2dx_CCSpawn_create(JSContext *cx, uint32_t argc, jsval *vp)
             }
         }
         auto ret = new (std::nothrow) cocos2d::Spawn;
+        js_type_class_t *typeClass = js_get_type_from_native<cocos2d::Spawn>(ret);
+        // link the native object with the javascript object
+        JS::RootedObject jsobj(cx, jsb_ref_create_jsobject(cx, ret, typeClass, "cocos2d::Spawn"));
+
         auto ok = ret->init(array);
         if (ok)
         {
-            js_type_class_t *typeClass = js_get_type_from_native<cocos2d::Spawn>(ret);
-            // link the native object with the javascript object
-            JS::RootedObject jsobj(cx, jsb_ref_create_jsobject(cx, ret, typeClass, "cocos2d::Spawn"));
             args.rval().set(OBJECT_TO_JSVAL(jsobj));
             return true;
         }
