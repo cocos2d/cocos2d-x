@@ -1054,7 +1054,7 @@ void register_all_cocos2dx_extension_manual(JSContext* cx, JS::HandleObject glob
 
     JS_DefineFunction(cx, jsbObj, "loadRemoteImg", js_load_remote_image, 2, JSPROP_READONLY | JSPROP_PERMANENT);
 
-	JS::RootedObject performance(cx);
-	get_or_create_js_obj(cx, global, "performance", &performance);
-	JS_DefineFunction(cx, performance, "now", js_performance_now, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS::RootedObject performance(cx);
+    get_or_create_js_obj(cx, global, "performance", &performance);
+    JS_DefineFunction(cx, performance, "now", js_performance_now, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 }
