@@ -3797,7 +3797,7 @@
     <ClInclude Include="..\base\CCNinePatchImageParser.h">
       <Filter>base</Filter>
     </ClInclude>
-    <ClInclude Include="..\base\CCStencilStateManager.h">
+    <ClInclude Include="..\base\CCStencilStateManager.hpp">
       <Filter>base</Filter>
     </ClInclude>
     <ClInclude Include="..\base\CCNinePatchImageParser.h" />
