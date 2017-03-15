@@ -27,6 +27,7 @@
 * full Android Studio supports: include editing, compiling and debugging c++ codes
 * use [tremolo](http://wss.co.uk/pinknoise/tremolo/) to decode audio files on Android: high performance and more adaptable to different Android devices
 * WebSockets and SocketIO supports SSL
+* AssetsManagerEx is more stable
 * update Spine runtime to v3.5.35
 * update flatbuffer to v1.5
 * remove support for Windows 8.1 store and phone
@@ -58,3 +59,7 @@ MS guys maintain Windows 8.1. They think there is not need to support it, so the
 Most PC are 64-bit, so we decide to remove linux 32-bit support. By remove 32-bit linux support, cocos2d-x zip file is more less, and we can have more resource on more important things.
 
 If you need linux 32-bit support, you can build the 3rd party libraries through [cocos2d-x-3rd-party-libs-src repo](https://github.com/cocos2d/cocos2d-x-3rd-party-libs-src) by yourself.
+
+## misc
+
+[Android SDK Tools 25.3.0+](http://tools.android.com/recent/androidsdktoolsrevision2530feb2017) remove ant scripts and `android` tool, this leads to that cant not use cocos command to generate apk files. Currently, cocos command will do nothing if using SDK Tools 25.3.0+. We may remove eclipse project support in future as Google focus on Android Studio.
