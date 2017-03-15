@@ -188,7 +188,6 @@ bool js_EventListenerAcceleration_create(JSContext *cx, uint32_t argc, jsval *vp
                     if (!succeed && JS_IsExceptionPending(cx)) {
                         JS_ReportPendingException(cx);
                     }
-                    removeJSObject(cx, event);
                 };
                 arg0 = lambda;
             }
@@ -255,7 +254,6 @@ bool js_EventListenerCustom_create(JSContext *cx, uint32_t argc, jsval *vp)
                     if (!succeed && JS_IsExceptionPending(cx)) {
                         JS_ReportPendingException(cx);
                     }
-                    removeJSObject(cx, event);
                 };
                 arg1 = lambda;
             }
@@ -307,7 +305,6 @@ bool js_EventDispatcher_addCustomEventListener(JSContext *cx, uint32_t argc, jsv
                     if (!succeed && JS_IsExceptionPending(cx)) {
                         JS_ReportPendingException(cx);
                     }
-                    removeJSObject(cx, event);
                 };
                 arg1 = lambda;
             }

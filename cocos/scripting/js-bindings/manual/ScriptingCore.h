@@ -532,6 +532,10 @@ public:
      * This function is only called when compiled with CC_ENABLE_GC_FOR_NATIVE_OBJECTS=1
      */
     virtual void unrootObject(cocos2d::Ref* ref) override;
+    
+    /** Remove proxy for a native object
+     */
+    virtual void removeObjectProxy(cocos2d::Ref* obj) override;
 
     /**
      * Calls the Garbage Collector

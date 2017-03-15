@@ -739,7 +739,6 @@ bool js_cocos2dx_extension_EventListenerAssetsManagerEx_init(JSContext *cx, uint
                     if (!succeed && JS_IsExceptionPending(cx)) {
                         JS_ReportPendingException(cx);
                     }
-                    removeJSObject(cx, larg0);
                 };
                 arg1 = lambda;
             }
@@ -797,7 +796,6 @@ bool js_cocos2dx_extension_EventListenerAssetsManagerEx_create(JSContext *cx, ui
                     if (!succeed && JS_IsExceptionPending(cx)) {
                         JS_ReportPendingException(cx);
                     }
-                    removeJSObject(cx, larg0);
                 };
                 arg1 = lambda;
             }
@@ -809,12 +807,12 @@ bool js_cocos2dx_extension_EventListenerAssetsManagerEx_create(JSContext *cx, ui
             ;
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_extension_EventListenerAssetsManagerEx_create : Error processing arguments");
         cocos2d::extension::EventListenerAssetsManagerEx* ret = cocos2d::extension::EventListenerAssetsManagerEx::create(arg0, arg1);
-        jsval jsret = JSVAL_NULL;
+        JS::RootedValue jsret(cx);
         if (ret) {
             JS::RootedObject jsobj(cx, js_get_or_create_jsobject<cocos2d::extension::EventListenerAssetsManagerEx>(cx, ret));
             jsret = OBJECT_TO_JSVAL(jsobj);
         } else {
-            jsret = JSVAL_NULL;
+            jsret = JS::NullValue();
         }
         args.rval().set(jsret);
         return true;
@@ -1054,7 +1052,7 @@ void register_all_cocos2dx_extension_manual(JSContext* cx, JS::HandleObject glob
 
     JS_DefineFunction(cx, jsbObj, "loadRemoteImg", js_load_remote_image, 2, JSPROP_READONLY | JSPROP_PERMANENT);
 
-	JS::RootedObject performance(cx);
-	get_or_create_js_obj(cx, global, "performance", &performance);
-	JS_DefineFunction(cx, performance, "now", js_performance_now, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS::RootedObject performance(cx);
+    get_or_create_js_obj(cx, global, "performance", &performance);
+    JS_DefineFunction(cx, performance, "now", js_performance_now, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 }
