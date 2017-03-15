@@ -136,8 +136,10 @@ void AssetsManagerEx::initManifests(const std::string& manifestUrl)
         _tempManifest = new (std::nothrow) Manifest();
         if (_tempManifest)
         {
-            _tempManifest->parse(_tempManifestPath);
-            if (!_tempManifest->isLoaded() && _fileUtils->isFileExist(_tempManifestPath))
+            // if load succeed, when it come to startUpdate(), it may execute the condition:
+            // "if (_tempManifest->isLoaded() && _tempManifest->versionEquals(_remoteManifest))"
+            // and download all the resource which we don't need to.
+            if (_fileUtils->isFileExist(_tempManifestPath))
                 _fileUtils->removeFile(_tempManifestPath);
         }
         else
