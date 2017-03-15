@@ -4046,6 +4046,10 @@
 		52B47A301A5349A3004E4C60 /* HttpClient-apple.mm in Sources */ = {isa = PBXBuildFile; fileRef = 52B47A2B1A5349A3004E4C60 /* HttpClient-apple.mm */; };
 		52B47A311A5349A3004E4C60 /* HttpCookie.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 52B47A2C1A5349A3004E4C60 /* HttpCookie.cpp */; };
 		52B47A321A5349A3004E4C60 /* HttpCookie.h in Headers */ = {isa = PBXBuildFile; fileRef = 52B47A2D1A5349A3004E4C60 /* HttpCookie.h */; };
+		53E23A171E78B082009DD732 /* CCDevice-apple.h in Headers */ = {isa = PBXBuildFile; fileRef = 294D7D931D0E67B4002CE7B7 /* CCDevice-apple.h */; };
+		53E23A181E78B085009DD732 /* CCDevice-apple.mm in Sources */ = {isa = PBXBuildFile; fileRef = 294D7D921D0E67B4002CE7B7 /* CCDevice-apple.mm */; };
+		53E23A1D1E78B91E009DD732 /* util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 463AE7361E4DA31C00926B3A /* util.cpp */; };
+		53E23A1E1E78B91F009DD732 /* util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 463AE7361E4DA31C00926B3A /* util.cpp */; };
 		5E9F61261A3FFE3D0038DE01 /* CCFrustum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E9F61221A3FFE3D0038DE01 /* CCFrustum.cpp */; };
 		5E9F61271A3FFE3D0038DE01 /* CCFrustum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E9F61221A3FFE3D0038DE01 /* CCFrustum.cpp */; };
 		5E9F61281A3FFE3D0038DE01 /* CCFrustum.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E9F61231A3FFE3D0038DE01 /* CCFrustum.h */; };
@@ -12537,6 +12541,7 @@
 				507B3D411C31BDD30067B53E /* CCEventMouse.h in Headers */,
 				507B3D431C31BDD30067B53E /* CCPhysicsJoint.h in Headers */,
 				507B3D441C31BDD30067B53E /* CCPUScriptParser.h in Headers */,
+				53E23A171E78B082009DD732 /* CCDevice-apple.h in Headers */,
 				507B3D451C31BDD30067B53E /* CCPUVortexAffectorTranslator.h in Headers */,
 				507B3D461C31BDD30067B53E /* poly2tri.h in Headers */,
 				507B3D481C31BDD30067B53E /* CCPhysicsBody.h in Headers */,
@@ -16043,6 +16048,7 @@
 				507B3B9E1C31BDD30067B53E /* UIWebViewImpl-ios.mm in Sources */,
 				507B3B9F1C31BDD30067B53E /* CCPUGeometryRotatorTranslator.cpp in Sources */,
 				507B3BA11C31BDD30067B53E /* b2GearJoint.cpp in Sources */,
+				53E23A1E1E78B91F009DD732 /* util.cpp in Sources */,
 				507B3BA21C31BDD30067B53E /* btGImpactQuantizedBvh.cpp in Sources */,
 				507B3BA31C31BDD30067B53E /* CCFastTMXLayer.cpp in Sources */,
 				507B3BA41C31BDD30067B53E /* CCParticleSystemQuad.cpp in Sources */,
@@ -16315,6 +16321,7 @@
 				507B3CA91C31BDD30067B53E /* CocosGUI.cpp in Sources */,
 				1A2B22B41E6E54EC001D5EC9 /* Uri.cpp in Sources */,
 				507B3CAA1C31BDD30067B53E /* CCPUForceFieldAffectorTranslator.cpp in Sources */,
+				53E23A181E78B085009DD732 /* CCDevice-apple.mm in Sources */,
 				507B3CAB1C31BDD30067B53E /* CCAABB.cpp in Sources */,
 				507B3CAC1C31BDD30067B53E /* b2Island.cpp in Sources */,
 				507B3CAD1C31BDD30067B53E /* CCPUCircleEmitterTranslator.cpp in Sources */,
@@ -16903,6 +16910,7 @@
 				5020A1511D49912500E80C72 /* Animation.c in Sources */,
 				15AE1AC619AAD40300C27E9E /* b2GearJoint.cpp in Sources */,
 				B6CAB3301AF9AA1A00B9B856 /* btGImpactQuantizedBvh.cpp in Sources */,
+				53E23A1D1E78B91E009DD732 /* util.cpp in Sources */,
 				B24AA986195A675C007B4522 /* CCFastTMXLayer.cpp in Sources */,
 				1A57022E180BCC1A0088DEC7 /* CCParticleSystemQuad.cpp in Sources */,
 				50ABBD901925AB4100A911A9 /* CCGLProgramCache.cpp in Sources */,
@@ -17467,10 +17475,12 @@
 					"\"$(SRCROOT)/../external/curl/prebuilt/ios\"",
 					"\"$(SRCROOT)/../external/websockets/prebuilt/ios\"",
 					"\"$(SRCROOT)/../external/chipmunk/prebuilt/ios\"",
+					"\"$(SRCROOT)/../external/openssl/prebuilt/ios\"",
 				);
 				OTHER_LDFLAGS = "-llibsql3";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = appletvos9.1;
+				SDKROOT = appletvos;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/freetype2/include/ios $(SRCROOT)/../external/curl/include/ios $(SRCROOT)/../external/webp/include/ios $(SRCROOT)/../external/tiff/include/ios $(SRCROOT)/../external/jpeg/include/ios $(SRCROOT)/../external/png/include/ios $(SRCROOT)/../external/websockets/include/ios $(SRCROOT)/../external/freetype2/include/ios/freetype2 $(SRCROOT)/../external/openssl/include/ios";
 			};
 			name = Debug;
@@ -17499,10 +17509,12 @@
 					"\"$(SRCROOT)/../external/curl/prebuilt/ios\"",
 					"\"$(SRCROOT)/../external/websockets/prebuilt/ios\"",
 					"\"$(SRCROOT)/../external/chipmunk/prebuilt/ios\"",
+					"\"$(SRCROOT)/../external/openssl/prebuilt/ios\"",
 				);
 				OTHER_LDFLAGS = "-llibsql3";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = appletvos9.1;
+				SDKROOT = appletvos;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/freetype2/include/ios $(SRCROOT)/../external/curl/include/ios $(SRCROOT)/../external/webp/include/ios $(SRCROOT)/../external/tiff/include/ios $(SRCROOT)/../external/jpeg/include/ios $(SRCROOT)/../external/png/include/ios $(SRCROOT)/../external/websockets/include/ios $(SRCROOT)/../external/freetype2/include/ios/freetype2 $(SRCROOT)/../external/openssl/include/ios";
 			};
 			name = Release;
