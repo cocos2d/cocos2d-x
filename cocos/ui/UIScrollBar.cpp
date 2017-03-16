@@ -680,17 +680,18 @@ void ScrollBar::updatePercent(float percent)
     
     if (_barType == BarType::kHorizontal)
     {
-        sliderPos.x = std::min(std::max(barLen * _percent / 100.f, minPosX), maxPosX);
+        float value = minPosX + ((maxPosX - minPosX) * _percent / 100.f);
+        sliderPos.x = std::min(std::max(value, minPosX), maxPosX);
         sliderPos.y = _contentSize.height/2.f-ballRenderer->getContentSize().height*(0.5f + ballRenderer->getAnchorPoint().y) + ballRenderer->getContentSize().height;
     }
     else
     {
-        sliderPos.y = std::min(std::max(barLen * _percent / 100.f, minPosX), maxPosX);
+        float value = minPosX + ((maxPosX - minPosX) * _percent / 100.f);
+        sliderPos.y = std::min(std::max(value, minPosX), maxPosX);
         sliderPos.x = _contentSize.width/2.f-ballRenderer->getContentSize().width*(0.5f + ballRenderer->getAnchorPoint().x) + ballRenderer->getContentSize().width;
     }
     
     _slidBallRenderer->setPosition(sliderPos);
-    
 }
 
 void ScrollBar::setBallPosition(const cocos2d::Vec2 & pos)
@@ -736,7 +737,7 @@ void ScrollBar::percentChangedEvent(EventType event)
     {
         if (_barType == BarType::kVertical)
         {
-            _dataScrollView->jumpToPercentVertical(100.0f - getPercent());
+            _dataScrollView->jumpToPercentVertical(getPercent());
         }
         else
         {
@@ -1089,6 +1090,8 @@ void ScrollBar::recalcSizeScrollBar()
             _slidBallMouseOverRenderer->setContentSize(verticalSize);
             _slidBallMouseOverRenderer->setScale(_imageScale);
         }
+        
+        updateBarPosition();
     }
     else
     {
@@ -1114,6 +1117,8 @@ void ScrollBar::recalcSizeScrollBar()
             _slidBallMouseOverRenderer->setContentSize(horizontalSize);
             _slidBallMouseOverRenderer->setScale(_imageScale);
         }
+        
+        updateBarPosition();
     }
 }
     
