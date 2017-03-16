@@ -169,7 +169,7 @@ namespace utils
      *  @param filename The file to calculate md5 hash.
      *  @return The md5 hash for the file
      */
-    CC_DLL std::string getMD5Hash(const std::string &filename);
+    CC_DLL std::string getFileMD5Hash(const std::string &filename);
 }
 
 NS_CC_END

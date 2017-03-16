@@ -409,7 +409,7 @@ Node* findChild(Node* levelRoot, int tag)
     return nullptr;
 }
 
-std::string getMD5Hash(const std::string &filename)
+std::string getFileMD5Hash(const std::string &filename)
 {
     unsigned char digest[MD5_DIGEST_LENGTH];
     Data d;
