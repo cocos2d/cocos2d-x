@@ -324,7 +324,7 @@ public class Cocos2dxDownloader {
                     if (!parent.isDirectory() && !parent.mkdirs()) break;
 
                     File finalFile = new File(path);
-                    if (tempFile.isDirectory()) break;
+                    if (finalFile.isDirectory()) break;
 
                     task.handler = new FileTaskHandler(downloader, id, tempFile, finalFile);
                     Header[] headers = null;
