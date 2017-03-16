@@ -135,6 +135,14 @@ void Ref::release()
         }
 #endif
 
+#if CC_ENABLE_SCRIPT_BINDING
+        ScriptEngineProtocol* pEngine = ScriptEngineManager::getInstance()->getScriptEngine();
+        if (pEngine != nullptr && pEngine->getScriptType() == kScriptTypeJavascript)
+        {
+            pEngine->removeObjectProxy(this);
+        }
+#endif // CC_ENABLE_SCRIPT_BINDING
+
 #if CC_REF_LEAK_DETECTION
         untrackRef(this);
 #endif
