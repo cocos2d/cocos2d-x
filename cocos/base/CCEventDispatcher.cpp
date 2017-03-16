@@ -979,23 +979,23 @@ void EventDispatcher::dispatchTouchEvent(EventTouch* event)
             auto sceneGraphPriorityListeners = oneByOneListeners->getSceneGraphPriorityListeners();
             if (fixedPriorityListeners != nullptr)
             {
-                for (auto lIter = fixedPriorityListeners->begin(); lIter != fixedPriorityListeners->end(); lIter++)
+                for (auto l : (*fixedPriorityListeners))
                 {
-                    EventListenerTouchOneByOne* listener = static_cast<EventListenerTouchOneByOne*>(*lIter);
+                    EventListenerTouchOneByOne* listener = static_cast<EventListenerTouchOneByOne*>(l);
                     listener->_claimedTouches.clear();
                 }
             }
 
             if (sceneGraphPriorityListeners != nullptr)
             {
-                for (auto lIter = sceneGraphPriorityListeners->begin(); lIter != sceneGraphPriorityListeners->end(); lIter++)
+                for (auto l : (*sceneGraphPriorityListeners))
                 {
-                    EventListenerTouchOneByOne* listener = static_cast<EventListenerTouchOneByOne*>(*lIter);
+                    EventListenerTouchOneByOne* listener = static_cast<EventListenerTouchOneByOne*>(l);
                     listener->_claimedTouches.clear();
                 }
             }
         }
-		
+
       	auto mutableTouchesIter = mutableTouches.begin();
         
         for (auto& touches : originalTouches)
@@ -1027,7 +1027,7 @@ void EventDispatcher::dispatchTouchEvent(EventTouch* event)
                         }
                     }
                 }
-                else if (listener->_claimedTouches.size() > 0
+                else if (!listener->_claimedTouches.empty()
                          && ((removedIter = std::find(listener->_claimedTouches.begin(), listener->_claimedTouches.end(), touches)) != listener->_claimedTouches.end()))
                 {
                     isClaimed = true;
@@ -1104,7 +1104,7 @@ void EventDispatcher::dispatchTouchEvent(EventTouch* event)
     //
     // process standard handlers 2nd
     //
-    if (allAtOnceListeners && mutableTouches.size() > 0)
+    if (allAtOnceListeners && !mutableTouches.empty())
     {
         
         auto onTouchesEvent = [&](EventListener* l) -> bool{
