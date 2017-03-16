@@ -2,7 +2,7 @@
 Copyright (c) 2011      Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -449,6 +449,24 @@ void GLProgramCache::reloadDefaultGLPrograms()
     p = getGLProgram(GLProgram::SHADER_CAMERA_CLEAR);
     p->reset();
     loadDefaultGLProgram(p, kShaderType_CameraClear);
+
+    // ETC1 ALPHA supports.
+    p = getGLProgram(GLProgram::SHADER_NAME_ETC1AS_POSITION_TEXTURE_COLOR);
+    p->reset();
+    loadDefaultGLProgram(p, kShaderType_ETC1ASPositionTextureColor);
+
+    p = getGLProgram(GLProgram::SHADER_NAME_ETC1AS_POSITION_TEXTURE_COLOR_NO_MVP);
+    p->reset();
+    loadDefaultGLProgram(p, kShaderType_ETC1ASPositionTextureColor_noMVP);
+
+    // ETC1 Gray supports.
+    p = getGLProgram(GLProgram::SHADER_NAME_ETC1AS_POSITION_TEXTURE_GRAY);
+    p->reset();
+    loadDefaultGLProgram(p, kShaderType_ETC1ASPositionTextureGray);
+
+    p = getGLProgram(GLProgram::SHADER_NAME_ETC1AS_POSITION_TEXTURE_GRAY_NO_MVP);
+    p->reset();
+    loadDefaultGLProgram(p, kShaderType_ETC1ASPositionTextureGray_noMVP);
 }
 
 void GLProgramCache::reloadDefaultGLProgramsRelativeToLights()

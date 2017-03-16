@@ -831,6 +831,21 @@
     <ClCompile Include="..\..\..\external\flatbuffers\idl_parser.cpp">
       <Filter>cocostudio\json\flatbuffers</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\external\flatbuffers\idl_gen_js.cpp">
+      <Filter>cocostudio\json\flatbuffers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\flatbuffers\idl_gen_php.cpp">
+      <Filter>cocostudio\json\flatbuffers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\flatbuffers\idl_gen_python.cpp">
+      <Filter>cocostudio\json\flatbuffers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\flatbuffers\reflection.cpp">
+      <Filter>cocostudio\json\flatbuffers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\flatbuffers\util.cpp">
+      <Filter>cocostudio\json\flatbuffers</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\editor-support\cocostudio\TriggerBase.cpp">
       <Filter>cocostudio\trigger</Filter>
     </ClCompile>
@@ -1522,6 +1537,9 @@
       <Filter>network</Filter>
     </ClCompile>
     <ClCompile Include="..\..\network\SocketIO.cpp">
+      <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\network\Uri.cpp">
       <Filter>network</Filter>
     </ClCompile>
     <ClCompile Include="..\..\network\WebSocket.cpp">
@@ -2642,6 +2660,21 @@
     <ClInclude Include="..\..\..\external\flatbuffers\util.h">
       <Filter>cocostudio\json\flatbuffers</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\external\flatbuffers\code_generated.h">
+      <Filter>cocostudio\json\flatbuffers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\flatbuffers\hash.h">
+      <Filter>cocostudio\json\flatbuffers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\flatbuffers\gprc.h">
+      <Filter>cocostudio\json\flatbuffers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\flatbuffers\reflection.h">
+      <Filter>cocostudio\json\flatbuffers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\flatbuffers\reflection_generated.h">
+      <Filter>cocostudio\json\flatbuffers</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\editor-support\cocostudio\TriggerBase.h">
       <Filter>cocostudio\trigger</Filter>
     </ClInclude>
@@ -3381,6 +3414,9 @@
       <Filter>network</Filter>
     </ClInclude>
     <ClInclude Include="..\..\network\SocketIO.h">
+      <Filter>network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\network\Uri.h">
       <Filter>network</Filter>
     </ClInclude>
     <ClInclude Include="..\..\network\WebSocket.h">

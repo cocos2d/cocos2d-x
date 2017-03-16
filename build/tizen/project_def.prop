@@ -332,6 +332,7 @@ USER_SRCS = ../../cocos/2d/CCAction.cpp \
             ../../cocos/network/HttpClient.cpp \
             ../../cocos/network/HttpCookie.cpp \
             ../../cocos/network/SocketIO.cpp \
+            ../../cocos/network/Uri.cpp \
             ../../cocos/network/WebSocket.cpp \
             ../../cocos/physics/CCPhysicsBody.cpp \
             ../../cocos/physics/CCPhysicsContact.cpp \

@@ -1,32 +1,31 @@
 /******************************************************************************
- * Spine Runtimes Software License
- * Version 2.3
- * 
- * Copyright (c) 2013-2015, Esoteric Software
+ * Spine Runtimes Software License v2.5
+ *
+ * Copyright (c) 2013-2016, Esoteric Software
  * All rights reserved.
- * 
- * You are granted a perpetual, non-exclusive, non-sublicensable and
- * non-transferable license to use, install, execute and perform the Spine
- * Runtimes Software (the "Software") and derivative works solely for personal
- * or internal use. Without the written permission of Esoteric Software (see
- * Section 2 of the Spine Software License Agreement), you may not (a) modify,
- * translate, adapt or otherwise create derivative works, improvements of the
- * Software or develop new applications using the Software or (b) remove,
- * delete, alter or obscure any trademarks or any copyright, trademark, patent
+ *
+ * You are granted a perpetual, non-exclusive, non-sublicensable, and
+ * non-transferable license to use, install, execute, and perform the Spine
+ * Runtimes software and derivative works solely for personal or internal
+ * use. Without the written permission of Esoteric Software (see Section 2 of
+ * the Spine Software License Agreement), you may not (a) modify, translate,
+ * adapt, or develop new applications using the Spine Runtimes or otherwise
+ * create derivative works or improvements of the Spine Runtimes or (b) remove,
+ * delete, alter, or obscure any trademarks or any copyright, trademark, patent,
  * or other intellectual property or proprietary rights notices on or in the
  * Software, including any copy thereof. Redistributions in binary or source
  * form must include this license and terms.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY ESOTERIC SOFTWARE "AS IS" AND ANY EXPRESS OR
  * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
  * EVENT SHALL ESOTERIC SOFTWARE BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
  * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
- * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
- * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
- * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES, BUSINESS INTERRUPTION, OR LOSS OF
+ * USE, DATA, OR PROFITS) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
+ * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
 #include <spine/SkeletonAnimation.h>
@@ -41,20 +40,24 @@ using std::vector;
 
 namespace spine {
 
-void animationCallback (spAnimationState* state, int trackIndex, spEventType type, spEvent* event, int loopCount) {
-	((SkeletonAnimation*)state->rendererObject)->onAnimationStateEvent(trackIndex, type, event, loopCount);
-}
-
-void trackEntryCallback (spAnimationState* state, int trackIndex, spEventType type, spEvent* event, int loopCount) {
-	((SkeletonAnimation*)state->rendererObject)->onTrackEntryEvent(trackIndex, type, event, loopCount);
-}
-
 typedef struct _TrackEntryListeners {
-	StartListener startListener;
-	EndListener endListener;
-	CompleteListener completeListener;
-	EventListener eventListener;
+    StartListener startListener;
+    InterruptListener interruptListener;
+    EndListener endListener;
+    DisposeListener disposeListener;
+    CompleteListener completeListener;
+    EventListener eventListener;
 } _TrackEntryListeners;
+    
+void animationCallback (spAnimationState* state, spEventType type, spTrackEntry* entry, spEvent* event) {
+	((SkeletonAnimation*)state->rendererObject)->onAnimationStateEvent(entry, type, event);
+}
+
+void trackEntryCallback (spAnimationState* state, spEventType type, spTrackEntry* entry, spEvent* event) {
+	((SkeletonAnimation*)state->rendererObject)->onTrackEntryEvent(entry, type, event);
+    if (type == SP_ANIMATION_DISPOSE)
+        if (entry->rendererObject) delete (spine::_TrackEntryListeners*)entry->rendererObject;
+}
 
 static _TrackEntryListeners* getListeners (spTrackEntry* entry) {
 	if (!entry->rendererObject) {
@@ -63,12 +66,7 @@ static _TrackEntryListeners* getListeners (spTrackEntry* entry) {
 	}
 	return (_TrackEntryListeners*)entry->rendererObject;
 }
-
-void disposeTrackEntry (spTrackEntry* entry) {
-	if (entry->rendererObject) delete (spine::_TrackEntryListeners*)entry->rendererObject;
-	_spTrackEntry_dispose(entry);
-}
-
+    
 //
 
 SkeletonAnimation* SkeletonAnimation::createWithData (spSkeletonData* skeletonData, bool ownsSkeletonData) {
@@ -118,7 +116,6 @@ void SkeletonAnimation::initialize () {
 	_state->listener = animationCallback;
 
 	_spAnimationState* stateInternal = (_spAnimationState*)_state;
-	stateInternal->disposeTrackEntry = disposeTrackEntry;
 }
 
 SkeletonAnimation::SkeletonAnimation ()
@@ -189,39 +186,50 @@ void SkeletonAnimation::clearTrack (int trackIndex) {
 	spAnimationState_clearTrack(_state, trackIndex);
 }
 
-void SkeletonAnimation::onAnimationStateEvent (int trackIndex, spEventType type, spEvent* event, int loopCount) {
+void SkeletonAnimation::onAnimationStateEvent (spTrackEntry* entry, spEventType type, spEvent* event) {
 	switch (type) {
 	case SP_ANIMATION_START:
-		if (_startListener) _startListener(trackIndex);
+		if (_startListener) _startListener(entry);
 		break;
+    case SP_ANIMATION_INTERRUPT:
+        if (_interruptListener) _interruptListener(entry);
+        break;
 	case SP_ANIMATION_END:
-		if (_endListener) _endListener(trackIndex);
+		if (_endListener) _endListener(entry);
 		break;
+    case SP_ANIMATION_DISPOSE:
+        if (_disposeListener) _disposeListener(entry);
+        break;
 	case SP_ANIMATION_COMPLETE:
-		if (_completeListener) _completeListener(trackIndex, loopCount);
+		if (_completeListener) _completeListener(entry);
 		break;
 	case SP_ANIMATION_EVENT:
-		if (_eventListener) _eventListener(trackIndex, event);
+		if (_eventListener) _eventListener(entry, event);
 		break;
 	}
 }
 
-void SkeletonAnimation::onTrackEntryEvent (int trackIndex, spEventType type, spEvent* event, int loopCount) {
-	spTrackEntry* entry = spAnimationState_getCurrent(_state, trackIndex);
+void SkeletonAnimation::onTrackEntryEvent (spTrackEntry* entry, spEventType type, spEvent* event) {
 	if (!entry->rendererObject) return;
 	_TrackEntryListeners* listeners = (_TrackEntryListeners*)entry->rendererObject;
 	switch (type) {
 	case SP_ANIMATION_START:
-		if (listeners->startListener) listeners->startListener(trackIndex);
+		if (listeners->startListener) listeners->startListener(entry);
 		break;
+    case SP_ANIMATION_INTERRUPT:
+        if (listeners->interruptListener) listeners->interruptListener(entry);
+        break;
 	case SP_ANIMATION_END:
-		if (listeners->endListener) listeners->endListener(trackIndex);
+		if (listeners->endListener) listeners->endListener(entry);
 		break;
+    case SP_ANIMATION_DISPOSE:
+        if (listeners->disposeListener) listeners->disposeListener(entry);
+        break;
 	case SP_ANIMATION_COMPLETE:
-		if (listeners->completeListener) listeners->completeListener(trackIndex, loopCount);
+		if (listeners->completeListener) listeners->completeListener(entry);
 		break;
 	case SP_ANIMATION_EVENT:
-		if (listeners->eventListener) listeners->eventListener(trackIndex, event);
+		if (listeners->eventListener) listeners->eventListener(entry, event);
 		break;
 	}
 }
@@ -229,9 +237,17 @@ void SkeletonAnimation::onTrackEntryEvent (int trackIndex, spEventType type, spE
 void SkeletonAnimation::setStartListener (const StartListener& listener) {
 	_startListener = listener;
 }
-
+    
+void SkeletonAnimation::setInterruptListener (const InterruptListener& listener) {
+    _interruptListener = listener;
+}
+    
 void SkeletonAnimation::setEndListener (const EndListener& listener) {
 	_endListener = listener;
+}
+    
+void SkeletonAnimation::setDisposeListener (const DisposeListener& listener) {
+    _disposeListener = listener;
 }
 
 void SkeletonAnimation::setCompleteListener (const CompleteListener& listener) {
@@ -245,9 +261,17 @@ void SkeletonAnimation::setEventListener (const EventListener& listener) {
 void SkeletonAnimation::setTrackStartListener (spTrackEntry* entry, const StartListener& listener) {
 	getListeners(entry)->startListener = listener;
 }
+    
+void SkeletonAnimation::setTrackInterruptListener (spTrackEntry* entry, const InterruptListener& listener) {
+    getListeners(entry)->interruptListener = listener;
+}
 
 void SkeletonAnimation::setTrackEndListener (spTrackEntry* entry, const EndListener& listener) {
 	getListeners(entry)->endListener = listener;
+}
+    
+void SkeletonAnimation::setTrackDisposeListener (spTrackEntry* entry, const DisposeListener& listener) {
+    getListeners(entry)->disposeListener = listener;
 }
 
 void SkeletonAnimation::setTrackCompleteListener (spTrackEntry* entry, const CompleteListener& listener) {

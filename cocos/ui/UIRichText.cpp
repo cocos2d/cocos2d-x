@@ -281,11 +281,11 @@ public:
             hasColor = true;
         }
         Attributes()
-        : bold(false)
+        : fontSize(-1)
+        , hasColor(false)
+        , bold(false)
         , italics(false)
         , line(StyleLine::NONE)
-        , hasColor(false)
-        , fontSize(-1)
         , effect(StyleEffect::NONE)
         {
         }
@@ -354,8 +354,8 @@ private:
 MyXMLVisitor::TagTables MyXMLVisitor::_tagTables;
 
 MyXMLVisitor::MyXMLVisitor(RichText* richText)
-: _richText(richText)
-, _fontElements(20)
+:  _fontElements(20)
+, _richText(richText)
 {
     MyXMLVisitor::setTagDescription("font", true, [](const ValueMap& tagAttrValueMap) {
         // supported attributes:
@@ -1733,13 +1733,12 @@ void RichText::formarRenderers()
             Vector<Node*>* row = element;
             float nextPosX = 0.0f;
             float maxY = 0.0f;
-            for (ssize_t j=0, size = row->size(); j<size; j++)
+            for (auto& iter : *row)
             {
-                Node* l = row->at(j);
-                l->setAnchorPoint(Vec2::ZERO);
-                l->setPosition(nextPosX, nextPosY);
-                this->addProtectedChild(l, 1);
-                Size iSize = l->getContentSize();
+                iter->setAnchorPoint(Vec2::ZERO);
+                iter->setPosition(nextPosX, nextPosY);
+                this->addProtectedChild(iter, 1);
+                Size iSize = iter->getContentSize();
                 newContentSizeWidth += iSize.width;
                 nextPosX += iSize.width;
                 maxY = MAX(maxY, iSize.height);
@@ -1757,10 +1756,9 @@ void RichText::formarRenderers()
         {
             Vector<Node*>* row = (_elementRenders[i]);
             float maxHeight = 0.0f;
-            for (ssize_t j=0, size = row->size(); j<size; j++)
+            for (auto& iter : *row)
             {
-                Node* l = row->at(j);
-                maxHeight = MAX(l->getContentSize().height, maxHeight);
+                maxHeight = MAX(iter->getContentSize().height, maxHeight);
             }
             maxHeights[i] = maxHeight;
             newContentSizeHeight += maxHeights[i];
@@ -1773,25 +1771,22 @@ void RichText::formarRenderers()
             float nextPosX = 0.0f;
             nextPosY -= (maxHeights[i] + _defaults.at(KEY_VERTICAL_SPACE).asFloat());
             
-            for (ssize_t j=0, size = row->size(); j<size; j++)
+            for (auto& iter : *row)
             {
-                Node* l = row->at(j);
-                l->setAnchorPoint(Vec2::ZERO);
-                l->setPosition(nextPosX, nextPosY);
-                this->addProtectedChild(l, 1);
-                nextPosX += l->getContentSize().width;
+                iter->setAnchorPoint(Vec2::ZERO);
+                iter->setPosition(nextPosX, nextPosY);
+                this->addProtectedChild(iter, 1);
+                nextPosX += iter->getContentSize().width;
             }
         }
         delete [] maxHeights;
     }
     
-    size_t length = _elementRenders.size();
-    for (size_t i = 0; i<length; i++)
-	{
-        Vector<Node*>* l = _elementRenders[i];
-        l->clear();
-        delete l;
-	}    
+    for (auto& iter : _elementRenders)
+    {
+        iter->clear();
+        delete iter;
+    }
     _elementRenders.clear();
     
     if (_ignoreSize)

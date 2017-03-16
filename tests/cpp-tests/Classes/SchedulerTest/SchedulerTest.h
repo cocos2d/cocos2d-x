@@ -405,4 +405,21 @@ private:
     std::vector<TestClass *> _testvector;
 };
 
+class SchedulerRemoveSelectorDuringCall: public SchedulerTestLayer
+{
+public:
+    CREATE_FUNC(SchedulerRemoveSelectorDuringCall);
+    
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    virtual void onEnter() override;
+    virtual void onExit() override;
+    
+private:
+    void callback( float );
+
+private:
+    bool _scheduled;
+};
+
 #endif

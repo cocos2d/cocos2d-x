@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -930,9 +930,8 @@ void WidgetPropertiesReader0250::setPropsForLabelAtlasFromJsonDictionary(Widget*
     if (sv && cmf && iw && ih && scm && (strcmp(DICTOOL->getStringValue_json(options, "charMapFile"), "") != 0))
     {
         std::string tp_c = m_strFilePath;
-        const char* cmf_tp = nullptr;
         const char* cmft = DICTOOL->getStringValue_json(options, "charMapFile");
-        cmf_tp = tp_c.append(cmft).c_str();
+        const char* cmf_tp = tp_c.append(cmft).c_str();
         
         labelAtlas->setProperty(DICTOOL->getStringValue_json(options, "stringValue"),cmf_tp,DICTOOL->getIntValue_json(options, "itemWidth"),DICTOOL->getIntValue_json(options,"itemHeight"),DICTOOL->getStringValue_json(options, "startCharMap"));
         labelAtlas->setProperty(DICTOOL->getStringValue_json(options, "stringValue"),cmf_tp,DICTOOL->getIntValue_json(options, "itemWidth") / CC_CONTENT_SCALE_FACTOR() ,DICTOOL->getIntValue_json(options,"itemHeight") / CC_CONTENT_SCALE_FACTOR(), DICTOOL->getStringValue_json(options, "startCharMap"));
@@ -1184,9 +1183,8 @@ void WidgetPropertiesReader0250::setPropsForLabelBMFontFromJsonDictionary(Widget
     cocos2d::ui::TextBMFont* labelBMFont = static_cast<cocos2d::ui::TextBMFont*>(widget);
     
     std::string tp_c = m_strFilePath;
-    const char* cmf_tp = nullptr;
     const char* cmft = DICTOOL->getStringValue_json(options, "fileName");
-    cmf_tp = tp_c.append(cmft).c_str();
+    const char* cmf_tp = tp_c.append(cmft).c_str();
     
     labelBMFont->setFntFile(cmf_tp);
     
@@ -1278,8 +1276,8 @@ Widget* WidgetPropertiesReader0300::createWidget(const rapidjson::Value& data, c
 {
     
     stExpCocoNode *tpChildArray = cocoNode->GetChildArray(cocoLoader);
-    float fileDesignWidth;
-    float fileDesignHeight;
+    float fileDesignWidth = 0.0f;
+    float fileDesignHeight = 0.0f;
     
     Widget* widget =  nullptr;
 

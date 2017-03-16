@@ -32,6 +32,7 @@ SchedulerTests::SchedulerTests()
     ADD_TEST_CASE(SchedulerRemoveAllFunctionsToBePerformedInCocosThread)
     ADD_TEST_CASE(SchedulerIssue17149);
     ADD_TEST_CASE(SchedulerRemoveEntryWhileUpdate);
+    ADD_TEST_CASE(SchedulerRemoveSelectorDuringCall);
 };
 
 //------------------------------------------------------------------
@@ -902,7 +903,7 @@ void TwoSchedulers::onEnter()
 
     defaultScheduler->scheduleUpdate(sched1, 0, false);
 
-    // Create a new ActionManager, and link it to the new scheudler
+    // Create a new ActionManager, and link it to the new scheduler
     actionManager1 = new (std::nothrow) ActionManager();
     sched1->scheduleUpdate(actionManager1, 0, false);
 
@@ -928,7 +929,7 @@ void TwoSchedulers::onEnter()
     sched2 = new (std::nothrow) Scheduler();
     defaultScheduler->scheduleUpdate(sched2, 0, false);
 
-    // Create a new ActionManager, and link it to the new scheudler
+    // Create a new ActionManager, and link it to the new scheduler
     actionManager2 = new (std::nothrow) ActionManager();
     sched2->scheduleUpdate(actionManager2, 0, false);
 
@@ -1355,4 +1356,61 @@ void SchedulerRemoveEntryWhileUpdate::TestClass::update(float dt)
         _scheduler->unscheduleUpdate(_nextObj);
         _nextObj->_cleanedUp = true;
     }
+}
+
+//------------------------------------------------------------------
+//
+// SchedulerRemoveSelectorDuringCall
+//
+//------------------------------------------------------------------
+
+std::string SchedulerRemoveSelectorDuringCall::title() const
+{
+    return "RemoveSelectorDuringCall";
+}
+
+std::string SchedulerRemoveSelectorDuringCall::subtitle() const
+{
+    return "see console, error message must not be shown.";
+}
+
+void SchedulerRemoveSelectorDuringCall::onEnter()
+{
+    SchedulerTestLayer::onEnter();
+
+    Scheduler* const scheduler( Director::getInstance()->getScheduler() );
+    
+    scheduler->setTimeScale( 10 );
+    scheduler->schedule
+      (SEL_SCHEDULE(&SchedulerRemoveSelectorDuringCall::callback), this,
+       0.01f, CC_REPEAT_FOREVER, 0.0f, !isRunning());
+
+    _scheduled = true;
+}
+
+void SchedulerRemoveSelectorDuringCall::onExit()
+{
+    Scheduler* const scheduler( Director::getInstance()->getScheduler() );
+
+    scheduler->setTimeScale( 1 );
+    scheduler->unschedule
+      (SEL_SCHEDULE(&SchedulerRemoveSelectorDuringCall::callback), this);
+
+    _scheduled = false;
+    SchedulerTestLayer::onExit();
+}
+
+void SchedulerRemoveSelectorDuringCall::callback( float )
+{
+    if ( !_scheduled )
+    {
+        cocos2d::log("Error: unscheduled callback must not be called.");
+        return;
+    }
+    
+    _scheduled = false;
+
+    Scheduler* const scheduler( Director::getInstance()->getScheduler() );
+    scheduler->unschedule
+      (SEL_SCHEDULE(&SchedulerRemoveSelectorDuringCall::callback), this);
 }

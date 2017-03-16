@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2016 Chukong Technologies Inc.
+ Copyright (c) 2016-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -24,6 +24,8 @@
 
 #include "audio/apple/AudioDecoder.h"
 #include "audio/apple/AudioMacros.h"
+
+#import <Foundation/Foundation.h>
 
 #define LOG_TAG "AudioDecoder"
 

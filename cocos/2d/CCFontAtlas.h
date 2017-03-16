@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2013      Zynga Inc.
- Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -73,10 +73,10 @@ public:
      */
     virtual ~FontAtlas();
     
-    void addLetterDefinition(char16_t utf16Char, const FontLetterDefinition &letterDefinition);
-    bool getLetterDefinitionForChar(char16_t utf16Char, FontLetterDefinition &letterDefinition);
+    void addLetterDefinition(char32_t utf32Char, const FontLetterDefinition &letterDefinition);
+    bool getLetterDefinitionForChar(char32_t utf32Char, FontLetterDefinition &letterDefinition);
     
-    bool prepareLetterDefinitions(const std::u16string& utf16String);
+    bool prepareLetterDefinitions(const std::u32string& utf16String);
 
     const std::unordered_map<ssize_t, Texture2D*>& getTextures() const { return _atlasTextures; }
     void  addTexture(Texture2D *texture, int slot);
@@ -113,9 +113,9 @@ protected:
     
     void releaseTextures();
 
-    void findNewCharacters(const std::u16string& u16Text, std::unordered_map<unsigned short, unsigned short>& charCodeMap);
+    void findNewCharacters(const std::u32string& u32Text, std::unordered_map<unsigned int, unsigned int>& charCodeMap);
 
-    void conversionU16TOGB2312(const std::u16string& u16Text, std::unordered_map<unsigned short, unsigned short>& charCodeMap);
+    void conversionU32TOGB2312(const std::u32string& u32Text, std::unordered_map<unsigned int, unsigned int>& charCodeMap);
 
     /**
      * Scale each font letter by scaleFactor.
@@ -125,7 +125,7 @@ protected:
     void scaleFontLetterDefinition(float scaleFactor);
 
     std::unordered_map<ssize_t, Texture2D*> _atlasTextures;
-    std::unordered_map<char16_t, FontLetterDefinition> _letterDefinitions;
+    std::unordered_map<char32_t, FontLetterDefinition> _letterDefinitions;
     float _lineHeight;
     Font* _font;
     FontFreeType* _fontFreeType;

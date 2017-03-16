@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010      cocos2d-x.org
-Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -27,6 +27,7 @@ THE SOFTWARE.
 
 #include <cmath>
 #include <stdlib.h>
+#include <openssl/md5.h>
 
 #include "base/CCDirector.h"
 #include "base/CCAsyncTaskPool.h"
@@ -406,6 +407,21 @@ Node* findChild(Node* levelRoot, int tag)
     }
 
     return nullptr;
+}
+
+std::string getFileMD5Hash(const std::string &filename)
+{
+    unsigned char digest[MD5_DIGEST_LENGTH];
+    Data d;
+    FileUtils::getInstance()->getContents(filename, &d);
+
+    MD5(d.getBytes(), d.getSize(), (unsigned char*)&digest);
+
+    std::string mdString;
+    mdString.reserve(32);
+    for(int i = 0; i < 16; i++)
+        sprintf(&mdString[i*2], "%02x", (unsigned int)digest[i]);
+    return mdString;
 }
 
 }

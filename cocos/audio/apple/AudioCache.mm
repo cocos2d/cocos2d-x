@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014-2016 Chukong Technologies Inc.
+ Copyright (c) 2014-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -66,14 +66,57 @@ static ALvoid  alBufferDataStaticProc(const ALint bid, ALenum format, ALvoid* da
 
     return;
 }
+
+@interface NSTimerWrapper : NSObject
+{
+    std::function<void()> _timeoutCallback;
+}
+
+@end
+
+@implementation NSTimerWrapper
+
+-(id) initWithTimeInterval:(double) seconds callback:(const std::function<void()>&) cb
+{
+    if (self = [super init])
+    {
+        _timeoutCallback = cb;
+        NSTimer* timer = [NSTimer timerWithTimeInterval:seconds target: self selector:@selector(onTimeoutCallback:) userInfo:nil repeats:NO];
+        [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSDefaultRunLoopMode];
+    }
+
+    return self;
+}
+
+-(void) onTimeoutCallback: (NSTimer*) timer
+{
+    if (_timeoutCallback != nullptr)
+    {
+        _timeoutCallback();
+        _timeoutCallback = nullptr;
+    }
+}
+
+-(void) dealloc
+{
+    [super dealloc];
+}
+
+@end
+
+static void setTimeout(double seconds, const std::function<void()>& cb)
+{
+    [[[NSTimerWrapper alloc] initWithTimeInterval:seconds callback:cb] autorelease];
+}
+
 using namespace cocos2d;
 using namespace cocos2d::experimental;
 
 AudioCache::AudioCache()
-: _totalFrames(0)
-, _framesRead(0)
-, _format(-1)
+: _format(-1)
 , _duration(0.0f)
+, _totalFrames(0)
+, _framesRead(0)
 , _alBufferId(INVALID_AL_BUFFER_ID)
 , _pcmData(nullptr)
 , _queBufferFrames(0)
@@ -125,7 +168,17 @@ AudioCache::~AudioCache()
             ALOGW("AudioCache (%p), id=%u, buffer isn't ready, state=%d", this, _id, _state);
         }
 
-        free(_pcmData);
+        // fixed #17494: CrashIfClientProvidedBogusAudioBufferList
+        // We're using 'alBufferDataStaticProc' for speeding up
+        // the performance of playing audio without preload, but we need to manage the memory by ourself carefully.
+        // It's probably that '_pcmData' is freed before OpenAL finishes the audio render task,
+        // then 'CrashIfClientProvidedBogusAudioBufferList' may be triggered.
+        // 'cpp-tests/NewAudioEngineTest/AudioSwitchStateTest' can reproduce this issue without the following fix.
+        // The workaround is delaying 200ms to free pcm data.
+        char* data = _pcmData;
+        setTimeout(0.2, [data](){
+            free(data);
+        });
     }
 
     if (_queBufferFrames > 0)

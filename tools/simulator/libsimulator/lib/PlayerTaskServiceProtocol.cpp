@@ -59,8 +59,8 @@ PlayerTask::PlayerTask(const std::string &name,
                        : _name(name)
                        , _executePath(executePath)
                        , _commandLineArguments(commandLineArguments)
-                       , _state(STATE_IDLE)
                        , _lifetime(0)
+                       , _state(STATE_IDLE)
                        , _resultCode(0)
 {
 }

@@ -1425,7 +1425,7 @@ int lua_cocos2dx_navmesh_NavMeshAgent_getNavMeshAgentComponentName(lua_State* to
             return 0;
         }
         const std::string& ret = cocos2d::NavMeshAgent::getNavMeshAgentComponentName();
-        tolua_pushcppstring(tolua_S,ret);
+        lua_pushlstring(tolua_S,ret.c_str(),ret.length());
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "cc.NavMeshAgent:getNavMeshAgentComponentName",argc, 0);
@@ -1959,7 +1959,7 @@ int lua_cocos2dx_navmesh_NavMeshObstacle_getNavMeshObstacleComponentName(lua_Sta
             return 0;
         }
         const std::string& ret = cocos2d::NavMeshObstacle::getNavMeshObstacleComponentName();
-        tolua_pushcppstring(tolua_S,ret);
+        lua_pushlstring(tolua_S,ret.c_str(),ret.length());
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "cc.NavMeshObstacle:getNavMeshObstacleComponentName",argc, 0);

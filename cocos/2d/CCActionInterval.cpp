@@ -2,7 +2,7 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
  
 http://www.cocos2d-x.org
 
@@ -420,6 +420,11 @@ Sequence* Sequence::reverse() const
         return Sequence::createWithTwoActions(_actions[1]->reverse(), _actions[0]->reverse());
     else
         return nullptr;
+}
+
+bool Sequence::isDone() const
+{
+  return (_last == 1) && _actions[1]->isDone();
 }
 
 //

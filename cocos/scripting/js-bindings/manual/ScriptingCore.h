@@ -1,7 +1,7 @@
 /*
  * Created by Rolando Abarca on 3/14/12.
  * Copyright (c) 2012 Zynga Inc. All rights reserved.
- * Copyright (c) 2013-2016 Chukong Technologies Inc.
+ * Copyright (c) 2013-2017 Chukong Technologies Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -177,7 +177,7 @@ public:
      @param functionName String object holding the name of the function, in the global script environment, that is to be executed.
      @return The integer value returned from the script function.
      */
-    virtual int executeGlobalFunction(const char* functionName) override { return 0; }
+    virtual int executeGlobalFunction(const char* functionName) override;
 
     virtual int sendEvent(cocos2d::ScriptEvent* message) override;
     
@@ -354,10 +354,10 @@ public:
      */
     void cleanAllScript();
 
-	/**@~english
-	* Gets the time that the ScriptingCore was initalized
-	*/
-	std::chrono::steady_clock::time_point getEngineStartTime() const;
+    /**@~english
+     * Gets the time that the ScriptingCore was initalized
+     */
+    std::chrono::steady_clock::time_point getEngineStartTime() const;
     
     /**@~english
      * Initialize everything, including the js context, js global object etc.
@@ -511,7 +511,7 @@ public:
     JSObject* getGlobalObject() { return _global->get(); }
     
     /**@~english
-     * Checks whether a C++ function is overrided in js prototype chain
+     * Checks whether a C++ function is overridden in js prototype chain
      * @param obj @~english The js object
      * @param name @~english The function name
      * @param native @~english The native function
@@ -532,6 +532,10 @@ public:
      * This function is only called when compiled with CC_ENABLE_GC_FOR_NATIVE_OBJECTS=1
      */
     virtual void unrootObject(cocos2d::Ref* ref) override;
+    
+    /** Remove proxy for a native object
+     */
+    virtual void removeObjectProxy(cocos2d::Ref* obj) override;
 
     /**
      * Calls the Garbage Collector
@@ -632,6 +636,11 @@ void jsb_ref_autoreleased_init(JSContext* cx, JS::Heap<JSObject*> *obj, cocos2d:
  * Useful for the EaseActions and others
  */
 void jsb_ref_rebind(JSContext* cx, JS::HandleObject jsobj, js_proxy_t *js2native_proxy, cocos2d::Ref* oldRef, cocos2d::Ref* newRef, const char* debug);
+
+/**
+ * Generic initialization function for non Ref classes
+ */
+void jsb_non_ref_init(JSContext* cx, JS::Heap<JSObject*> *obj, void* native, const char* debug);
 
 /**
  * Creates a new JSObject of a certain type (typeClass) and creates a proxy associated with and the Ref

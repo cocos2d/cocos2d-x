@@ -2,7 +2,7 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2013 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -468,16 +468,16 @@ void Director::resetMatrixStack()
     initMatrixStack();
 }
 
-void Director::initProjectionMatrixStack(unsigned int stackCount)
+void Director::initProjectionMatrixStack(size_t stackCount)
 {
     _projectionMatrixStackList.clear();
     std::stack<Mat4> projectionMatrixStack;
     projectionMatrixStack.push(Mat4::IDENTITY);
-    for (unsigned int i = 0; i < stackCount; ++i)
+    for (size_t i = 0; i < stackCount; ++i)
         _projectionMatrixStackList.push_back(projectionMatrixStack);
 }
 
-unsigned int Director::getProjectionMatrixStackSize()
+size_t Director::getProjectionMatrixStackSize()
 {
     return _projectionMatrixStackList.size();
 }
@@ -502,7 +502,7 @@ void Director::popMatrix(MATRIX_STACK_TYPE type)
     }
 }
 
-void Director::popProjectionMatrix(unsigned int index)
+void Director::popProjectionMatrix(size_t index)
 {
     _projectionMatrixStackList[index].pop();
 }
@@ -527,7 +527,7 @@ void Director::loadIdentityMatrix(MATRIX_STACK_TYPE type)
     }
 }
 
-void Director::loadProjectionIdentityMatrix(unsigned int index)
+void Director::loadProjectionIdentityMatrix(size_t index)
 {
     _projectionMatrixStackList[index].top() = Mat4::IDENTITY;
 }
@@ -552,7 +552,7 @@ void Director::loadMatrix(MATRIX_STACK_TYPE type, const Mat4& mat)
     }
 }
 
-void Director::loadProjectionMatrix(const Mat4& mat, unsigned int index)
+void Director::loadProjectionMatrix(const Mat4& mat, size_t index)
 {
     _projectionMatrixStackList[index].top() = mat;
 }
@@ -577,7 +577,7 @@ void Director::multiplyMatrix(MATRIX_STACK_TYPE type, const Mat4& mat)
     }
 }
 
-void Director::multiplyProjectionMatrix(const Mat4& mat, unsigned int index)
+void Director::multiplyProjectionMatrix(const Mat4& mat, size_t index)
 {
     _projectionMatrixStackList[index].top() *= mat;
 }
@@ -602,7 +602,7 @@ void Director::pushMatrix(MATRIX_STACK_TYPE type)
     }
 }
 
-void Director::pushProjectionMatrix(unsigned int index)
+void Director::pushProjectionMatrix(size_t index)
 {
     _projectionMatrixStackList[index].push(_projectionMatrixStackList[index].top());
 }
@@ -626,7 +626,7 @@ const Mat4& Director::getMatrix(MATRIX_STACK_TYPE type) const
     return  _modelViewMatrixStack.top();
 }
 
-const Mat4& Director::getProjectionMatrix(unsigned int index) const
+const Mat4& Director::getProjectionMatrix(size_t index) const
 {
     return _projectionMatrixStackList[index].top();
 }

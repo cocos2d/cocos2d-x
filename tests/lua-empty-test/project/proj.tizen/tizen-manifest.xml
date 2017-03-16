@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<manifest xmlns="http://tizen.org/ns/packages" api-version="2.4" package="org.tizen.lua-empty-test" version="1.0.0">
+<manifest xmlns="http://tizen.org/ns/packages" api-version="2.3" package="org.cocos2d-x.lua-empty-test" version="1.0.0">
     <profile name="mobile"/>
-    <ui-application appid="org.tizen.lua-empty-test" exec="lua-empty-test" multiple="false" nodisplay="false" taskmanage="true" type="capp">
+    <ui-application appid="org.cocos2d-x.lua-empty-test" exec="lua-empty-test" multiple="false" nodisplay="false" taskmanage="true" type="capp">
         <label>lua-empty-test</label>
         <icon>lua-empty-test.png</icon>
     </ui-application>

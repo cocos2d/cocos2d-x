@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2014-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -89,9 +89,9 @@ Bone3D* MeshSkin::getBoneByName(const std::string& id) const
 
 int MeshSkin::getBoneIndex(Bone3D* bone) const
 {
-    for (int i = 0, size = _skinBones.size(); i < size; ++i) {
+    for (ssize_t i = 0, size = _skinBones.size(); i < size; ++i) {
         if (_skinBones.at(i) == bone)
-            return i;
+            return static_cast<int>(i);
     }
 
     return -1;

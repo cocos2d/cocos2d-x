@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -123,7 +123,7 @@ public:
 
     /**
      * Translate XML export from Dragon Bone flash tool to datas, and save them.
-     * When you add a new xml, the data already saved will be keeped.
+     * When you add a new xml, the data already saved will be kept.
      *
      * @param xmlPath The cache of the xml
      */

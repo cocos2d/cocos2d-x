@@ -2,7 +2,7 @@
 -- Test #3 by David Deaco (ddeaco)
 
 --/**
---    * Impelmentation of RenderTextureSave
+--    * Implementation of RenderTextureSave
 --*/
 local function RenderTextureSave()
     local ret = createTestLayer("Touch the screen",
@@ -53,7 +53,7 @@ local function RenderTextureSave()
     target:retain()
     target:setPosition(cc.p(s.width / 2, s.height / 2))
 
-    -- note that the render texture is a cc.Node, and contains a sprite of its texture for convience,
+    -- note that the render texture is a cc.Node, and contains a sprite of its texture for convenience,
     -- so we can just parent it to the scene like any other cc.Node
     ret:addChild(target, -1)
 
@@ -117,7 +117,7 @@ end
 
 
 --/**
---    * Impelmentation of RenderTextureIssue937
+--    * Implementation of RenderTextureIssue937
 --*/
 
 -- local function RenderTextureIssue937()
@@ -195,7 +195,7 @@ end
 -- end
 
 -- --/**
--- --    * Impelmentation of RenderTextureZbuffer
+-- --    * Implementation of RenderTextureZbuffer
 -- --*/
 
 -- local function RenderTextureZbuffer()

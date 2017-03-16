@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014-2016 Chukong Technologies Inc.
+ Copyright (c) 2014-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -143,12 +143,12 @@ bool AudioEngineImpl::init()
         s_ALDevice = alcOpenDevice(nullptr);
 
         if (s_ALDevice) {
-            auto alError = alGetError();
+            alGetError();
             s_ALContext = alcCreateContext(s_ALDevice, nullptr);
             alcMakeContextCurrent(s_ALContext);
 
             alGenSources(MAX_AUDIOINSTANCES, _alSources);
-            alError = alGetError();
+            auto alError = alGetError();
             if(alError != AL_NO_ERROR)
             {
                 ALOGE("%s:generating sources failed! error = %x\n", __FUNCTION__, alError);

@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2015 Chukong Technologies Inc.
+Copyright (c) 2015-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -149,7 +149,7 @@ void Terrain::onDraw(const Mat4 &transform, uint32_t /*flags*/)
 
     _stateBlock->bind();
 
-    GL::enableVertexAttribs(1<<_positionLocation | 1 << _texcordLocation | 1<<_normalLocation);
+    GL::enableVertexAttribs(1<<_positionLocation | 1 << _texcoordLocation | 1<<_normalLocation);
     glProgram->setUniformsForBuiltins(transform);
     _glProgramState->applyUniforms();
     glUniform3f(_lightDirLocation,_lightDir.x,_lightDir.y,_lightDir.z);
@@ -322,15 +322,15 @@ float Terrain::getHeight(float x, float z, Vec3 * normal) const
 
     //top-left
     Vec2 tl(-1*_terrainData._mapScale*_imageWidth/2,-1*_terrainData._mapScale*_imageHeight/2);
-    auto result  = getNodeToWorldTransform()*Vec4(tl.x,0.0f,tl.y,1.0f);
-    tl.set(result.x, result.z);
+    auto mulResult = getNodeToWorldTransform() * Vec4(tl.x, 0.0f, tl.y, 1.0f);
+    tl.set(mulResult.x, mulResult.z);
 
     Vec2 to_tl = pos - tl;
 
     //real size
     Vec2 size(_imageWidth*_terrainData._mapScale,_imageHeight*_terrainData._mapScale);
-    result = getNodeToWorldTransform()*Vec4(size.x,0.0f,size.y,0.0f);
-    size.set(result.x, result.z);
+    mulResult = getNodeToWorldTransform() * Vec4(size.x, 0.0f, size.y, 0.0f);
+    size.set(mulResult.x, mulResult.z);
 
     float width_ratio = to_tl.x/size.x;
     float height_ratio = to_tl.y/size.y;
@@ -815,7 +815,7 @@ void Terrain::cacheUniformAttribLocation()
 {
 
     _positionLocation = glGetAttribLocation(this->getGLProgram()->getProgram(),"a_position");
-    _texcordLocation = glGetAttribLocation(this->getGLProgram()->getProgram(),"a_texCoord");
+    _texcoordLocation = glGetAttribLocation(this->getGLProgram()->getProgram(),"a_texCoord");
     _normalLocation = glGetAttribLocation(this->getGLProgram()->getProgram(),"a_normal");
     _alphaMapLocation = -1;
     for(int i =0;i<4;++i)
@@ -1709,8 +1709,6 @@ bool Terrain::Triangle::getIntersectPoint(const Ray& ray, Vec3& intersectPoint) 
 
     float fInvDet = 1.0f / det;
     t *= fInvDet;
-    u *= fInvDet;
-    v *= fInvDet;
 
     intersectPoint = ray._origin + ray._direction * t;
     return true;

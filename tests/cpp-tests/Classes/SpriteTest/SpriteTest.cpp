@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2012 cocos2d-x.org
- Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -944,7 +944,7 @@ SpriteZVertex::SpriteZVertex()
     // If you are going to use it is better to use a 3D projection
     //
     // WARNING:
-    // The developer is resposible for ordering its sprites according to its Z if the sprite has
+    // The developer is responsible for ordering its sprites according to its Z if the sprite has
     // transparent parts.
     //
 
@@ -1034,7 +1034,7 @@ SpriteBatchNodeZVertex::SpriteBatchNodeZVertex()
     // If you are going to use it is better to use a 3D projection
     //
     // WARNING:
-    // The developer is resposible for ordering its sprites according to its Z if the sprite has
+    // The developer is responsible for ordering its sprites according to its Z if the sprite has
     // transparent parts.
     //
 
@@ -1898,7 +1898,7 @@ void SpriteFrameAliasNameTest::onEnter()
     // Animation using Sprite batch
     //
     // A SpriteBatchNode can reference one and only one texture (one .png file)
-    // Sprites that are contained in that texture can be instantiatied as Sprites and then added to the SpriteBatchNode
+    // Sprites that are contained in that texture can be instantiated as Sprites and then added to the SpriteBatchNode
     // All Sprites added to a SpriteBatchNode are drawn in one OpenGL ES draw call
     // If the Sprites are not added to a SpriteBatchNode then an OpenGL ES draw call will be needed for each one, which is less efficient
     //
@@ -5773,7 +5773,7 @@ Issue17119::Issue17119()
     addChild(s4);
     s4->setPosition(s.width/2+s.width/3, s.height/2-s.height/3);
     s4->setContentSize(s2->getContentSize()*1.5);
-    s4->setStrechEnabled(false);
+    s4->setStretchEnabled(false);
     auto p4 = Sprite::create("Images/r1.png");
     p4->setScale(0.25f);
     p4->setPosition(s3->getPosition());

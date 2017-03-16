@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2013 cocos2d-x.org
-Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -443,6 +443,11 @@ public:
     virtual void setSearchPaths(const std::vector<std::string>& searchPaths);
 
     /**
+     * Get default resource root path.
+     */
+    const std::string& getDefaultResourceRootPath() const;
+
+    /**
      * Set default resource root path.
      */
     void setDefaultResourceRootPath(const std::string& path);
@@ -457,11 +462,20 @@ public:
     /**
      *  Gets the array of search paths.
      *
-     *  @return The array of search paths.
+     *  @return The array of search paths which may contain the prefix of default resource root path. 
+     *  @note In best practise, getter function should return the value of setter function passes in.
+     *        But since we should not break the compatibility, we keep using the old logic. 
+     *        Therefore, If you want to get the original search paths, please call 'getOriginalSearchPaths()' instead.
      *  @see fullPathForFilename(const char*).
      *  @lua NA
      */
     virtual const std::vector<std::string>& getSearchPaths() const;
+
+    /**
+     *  Gets the original search path array set by 'setSearchPaths' or 'addSearchPath'.
+     *  @return The array of the original search paths
+     */
+    virtual const std::vector<std::string>& getOriginalSearchPaths() const;
 
     /**
      *  Gets the writable path.
@@ -670,12 +684,12 @@ public:
     virtual bool isDirectoryExist(const std::string& dirPath) const;
 
     /**
-    *  Checks whether the absoulate path is a directory, async off of the main cocos thread.
-    *
-    * @param dirPath The path of the directory, it must be an absolute path
-    * @param callback that will accept a boolean, true if the file exists, false otherwise. 
-    * Callback will happen on the main cocos thread.
-    */
+     *  Checks whether the absoulate path is a directory, async off of the main cocos thread.
+     *
+     * @param dirPath The path of the directory, it must be an absolute path
+     * @param callback that will accept a boolean, true if the file exists, false otherwise. 
+     * Callback will happen on the main cocos thread.
+     */
     virtual void isDirectoryExist(const std::string& fullPath, std::function<void(bool)> callback);
 
     /**
@@ -788,16 +802,32 @@ public:
      */
     virtual void getFileSize(const std::string &filepath, std::function<void(long)> callback);
 
+    /**
+     *  List all files in a directory.
+     *
+     *  @param dirPath The path of the directory, it could be a relative or an absolute path.
+     *  @return File paths in a string vector
+     */
+    virtual std::vector<std::string> listFiles(const std::string& dirPath) const;
+    
+    /**
+     *  List all files recursively in a directory.
+     *
+     *  @param dirPath The path of the directory, it could be a relative or an absolute path.
+     *  @return File paths in a string vector
+     */
+    virtual void listFilesRecursively(const std::string& dirPath, std::vector<std::string> *files) const;
+
     /** Returns the full path cache. */
     const std::unordered_map<std::string, std::string>& getFullPathCache() const { return _fullPathCache; }
 
     /**
-    *  Gets the new filename from the filename lookup dictionary.
-    *  It is possible to have a override names.
-    *  @param filename The original filename.
-    *  @return The new filename after searching in the filename lookup dictionary.
-    *          If the original filename wasn't in the dictionary, it will return the original filename.
-    */
+     *  Gets the new filename from the filename lookup dictionary.
+     *  It is possible to have a override names.
+     *  @param filename The original filename.
+     *  @return The new filename after searching in the filename lookup dictionary.
+     *          If the original filename wasn't in the dictionary, it will return the original filename.
+     */
     virtual std::string getNewFilename(const std::string &filename) const;
 
 protected:
@@ -874,6 +904,11 @@ protected:
     std::vector<std::string> _searchPathArray;
 
     /**
+     * The search paths which was set by 'setSearchPaths' / 'addSearchPath'.
+     */
+    std::vector<std::string> _originalSearchPaths;
+
+    /**
      *  The default root path of resources.
      *  If the default root path of resources needs to be changed, do it in the `init` method of FileUtils's subclass.
      *  For instance:
@@ -918,9 +953,9 @@ protected:
 #else
         // As cocos2d-x uses c++11, we will use std::bind to leverage move sematics to
         // move our arguments into our lambda, to potentially avoid copying. 
-        auto lambda = std::bind([](const T& action, const R& callback, const ARGS& ...args)
+        auto lambda = std::bind([](const T& actionIn, const R& callbackIn, const ARGS& ...argsIn)
         {
-            Director::getInstance()->getScheduler()->performFunctionInCocosThread(std::bind(callback, action(args...)));
+            Director::getInstance()->getScheduler()->performFunctionInCocosThread(std::bind(callbackIn, actionIn(argsIn...)));
         }, std::forward<T>(action), std::forward<R>(callback), std::forward<ARGS>(args)...);
         
 #endif

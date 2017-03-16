@@ -751,9 +751,9 @@ function SpriteAccelerationEventTest:onEnter()
         target:setPosition(cc.p(ptNowX , ptNowY))
     end
 
-    local listerner  = cc.EventListenerAcceleration:create(accelerometerListener)
+    local listener = cc.EventListenerAcceleration:create(accelerometerListener)
 
-    self:getEventDispatcher():addEventListenerWithSceneGraphPriority(listerner,sprite)
+    self:getEventDispatcher():addEventListenerWithSceneGraphPriority(listener, sprite)
 end
 
 function SpriteAccelerationEventTest:onExit()

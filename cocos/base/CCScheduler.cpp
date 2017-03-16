@@ -2,7 +2,7 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -63,7 +63,6 @@ typedef struct _hashSelectorEntry
     void                *target;
     int                 timerIndex;
     Timer               *currentTimer;
-    bool                currentTimerSalvaged;
     bool                paused;
     UT_hash_handle      hh;
 } tHashTimerEntry;
@@ -79,7 +78,9 @@ Timer::Timer()
 , _repeat(0)
 , _delay(0.0f)
 , _interval(0.0f)
+, _aborted(false)
 {
+
 }
 
 void Timer::setupTimerWithInterval(float seconds, unsigned int repeat, float delay)
@@ -125,7 +126,7 @@ void Timer::update(float dt)
     
     // if _interval == 0, should trigger once every frame
     float interval = (_interval > 0) ? _interval : _elapsed;
-    while (_elapsed >= interval)
+    while ((_elapsed >= interval) && !_aborted)
     {
         trigger(interval);
         _elapsed -= interval;
@@ -349,10 +350,10 @@ void Scheduler::unschedule(const std::string &key, void *target)
 
             if (timer && key == timer->getKey())
             {
-                if (timer == element->currentTimer && (! element->currentTimerSalvaged))
+                if (timer == element->currentTimer && (! timer->isAborted()))
                 {
-                    element->currentTimer->retain();
-                    element->currentTimerSalvaged = true;
+                    timer->retain();
+                    timer->setAborted();
                 }
 
                 ccArrayRemoveObjectAtIndex(element->timers, i, true);
@@ -632,10 +633,10 @@ void Scheduler::unscheduleAllForTarget(void *target)
     if (element)
     {
         if (ccArrayContainsObject(element->timers, element->currentTimer)
-            && (! element->currentTimerSalvaged))
+            && (! element->currentTimer->isAborted()))
         {
             element->currentTimer->retain();
-            element->currentTimerSalvaged = true;
+            element->currentTimer->setAborted();
         }
         ccArrayRemoveAllObjects(element->timers);
 
@@ -873,11 +874,13 @@ void Scheduler::update(float dt)
             for (elt->timerIndex = 0; elt->timerIndex < elt->timers->num; ++(elt->timerIndex))
             {
                 elt->currentTimer = (Timer*)(elt->timers->arr[elt->timerIndex]);
-                elt->currentTimerSalvaged = false;
+                CCASSERT
+                  ( !elt->currentTimer->isAborted(),
+                    "An aborted timer should not be updated" );
 
                 elt->currentTimer->update(dt);
 
-                if (elt->currentTimerSalvaged)
+                if (elt->currentTimer->isAborted())
                 {
                     // The currentTimer told the remove itself. To prevent the timer from
                     // accidentally deallocating itself before finishing its step, we retained
@@ -1046,9 +1049,6 @@ void Scheduler::unschedule(SEL_SCHEDULE selector, Ref *target)
         return;
     }
     
-    //CCASSERT(target);
-    //CCASSERT(selector);
-    
     tHashTimerEntry *element = nullptr;
     HASH_FIND_PTR(_hashForTimers, &target, element);
     
@@ -1060,10 +1060,10 @@ void Scheduler::unschedule(SEL_SCHEDULE selector, Ref *target)
             
             if (timer && selector == timer->getSelector())
             {
-                if (timer == element->currentTimer && (! element->currentTimerSalvaged))
+                if (timer == element->currentTimer && (! timer->isAborted()))
                 {
-                    element->currentTimer->retain();
-                    element->currentTimerSalvaged = true;
+                    timer->retain();
+                    timer->setAborted();
                 }
                 
                 ccArrayRemoveObjectAtIndex(element->timers, i, true);

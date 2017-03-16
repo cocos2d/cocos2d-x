@@ -555,7 +555,7 @@ local function LayerIgnoreAnchorPointRot()
         pLayer:ignoreAnchorPointForPosition(not ignore)
     end
 
-    local item = cc.MenuItemFont:create("Toogle ignore anchor point")
+    local item = cc.MenuItemFont:create("Toggle ignore anchor point")
     item:registerScriptTapHandler(onToggle)
 
     local menu = cc.Menu:create(item)
@@ -596,7 +596,7 @@ local function LayerIgnoreAnchorPointScale()
         return ret
     end
 
-    local item = cc.MenuItemFont:create("Toogle ignore anchor point")
+    local item = cc.MenuItemFont:create("Toggle ignore anchor point")
     item:registerScriptTapHandler(onToggle)
 
     local menu = cc.Menu:create(item)

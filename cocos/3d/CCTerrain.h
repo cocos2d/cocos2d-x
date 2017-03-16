@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2015 Chukong Technologies Inc.
+Copyright (c) 2015-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -508,7 +508,7 @@ protected:
     Mat4 _terrainModelMatrix;
     GLuint _normalLocation;
     GLuint _positionLocation;
-    GLuint _texcordLocation;
+    GLuint _texcoordLocation;
     float _maxHeight;
     float _minHeight;
     CrackFixedType _crackFixedType;

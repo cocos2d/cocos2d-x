@@ -19,7 +19,7 @@ static bool jsb_cocos2dx_experimental_ui_VideoPlayer_addEventListener(JSContext 
     JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
 
     if(argc == 1){
-        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, obj, args.get(0)));
+        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, obj, args.get(0), args.thisv()));
         cobj->addEventListener([=](Ref* widget, experimental::ui::VideoPlayer::EventType type)->void{
             jsval arg[2];
             JS::RootedObject jsobj(cx, js_get_or_create_jsobject<Ref>(cx, widget));

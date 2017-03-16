@@ -2,14 +2,28 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 22
-    buildToolsVersion "22.0.1"
+    buildToolsVersion "25.0.0"
 
     defaultConfig {
         applicationId "org.cocos2dx.hellojavascript"
         minSdkVersion 10
-        targetSdkVersion 22
+        targetSdkVersion PROP_TARGET_SDK_VERSION
         versionCode 1
         versionName "1.0"
+
+        externalNativeBuild {
+            ndkBuild {
+                if (!project.hasProperty("PROP_NDK_MODE") || PROP_NDK_MODE.compareTo('none') != 0) {
+                    // skip the NDK Build step if PROP_NDK_MODE is none
+                    targets 'cocos2djs'
+                    arguments 'NDK_TOOLCHAIN_VERSION=4.9'
+                    arguments 'APP_PLATFORM=android-'+PROP_TARGET_SDK_VERSION
+                    arguments 'NDK_MODULE_PATH=../../../cocos2d-x:../../../cocos2d-x/cocos:../../../cocos2d-x/external'
+                    arguments '-j' + Runtime.runtime.availableProcessors()
+                    abiFilters.addAll(PROP_APP_ABI.split(':').collect{it as String})
+                }
+            }
+        }
     }
 
     sourceSets.main {
@@ -17,7 +31,15 @@ android {
         res.srcDir "res"
         jniLibs.srcDir "libs"
         manifest.srcFile "AndroidManifest.xml"
-        assets.srcDir "assets"
+    }
+
+    externalNativeBuild {
+        ndkBuild {
+            if (!project.hasProperty("PROP_NDK_MODE") || PROP_NDK_MODE.compareTo('none') != 0) {
+                // skip the NDK Build step if PROP_NDK_MODE is none
+                path "jni/Android.mk"
+            }
+        }
     }
 
     signingConfigs {
@@ -39,6 +61,79 @@ android {
             if (project.hasProperty("RELEASE_STORE_FILE")) {
                 signingConfig signingConfigs.release
             }
+
+            if (project.hasProperty('PROP_NDK_MODE') && PROP_NDK_MODE.compareTo('debug') == 0) {
+                externalNativeBuild {
+                    ndkBuild {
+                        arguments 'NDK_DEBUG=1'
+                    }
+                }
+            }
+        }
+
+        debug {
+            if (project.hasProperty('PROP_NDK_MODE') && PROP_NDK_MODE.compareTo('release') == 0) {
+                externalNativeBuild {
+                    ndkBuild {
+                        arguments 'NDK_DEBUG=0'
+                    }
+                }
+            }
+        }
+    }
+}
+
+// a method used to invoke the cocos jscompile command
+def compileJS(srcDir, dstDir) {
+    def compileArgs = ['jscompile', '-s', srcDir, '-d', dstDir]
+
+    println 'running command : ' + 'cocos ' + compileArgs.join(' ')
+    exec {
+        executable 'cocos'
+        args compileArgs
+    }
+
+    // remove the js files in dstDir
+    delete fileTree(dstDir) {
+        include '**/*.js'
+    }
+}
+
+android.applicationVariants.all { variant ->
+    // delete previous files first
+    delete "${buildDir}/intermediates/assets/${variant.dirName}"
+
+    variant.mergeAssets.doLast {
+        copy {
+           from "${buildDir}/../../../../../res"
+           into "${buildDir}/intermediates/assets/${variant.dirName}/res"
+        }
+
+        copy {
+            from "${buildDir}/../../../../../src"
+            into "${buildDir}/intermediates/assets/${variant.dirName}/src"
+        }
+
+        copy {
+            from "${buildDir}/../../../../cocos2d-x/cocos/scripting/js-bindings/script"
+            into  "${buildDir}/intermediates/assets/${variant.dirName}/script"
+        }
+
+        copy {
+            from "${buildDir}/../../../../../main.js"
+            from "${buildDir}/../../../../../project.json"
+            into "${buildDir}/intermediates/assets/${variant.dirName}"
+        }
+
+        // compile the scripts if necessary
+        def compileScript = (variant.name.compareTo('release') == 0)
+        if (project.hasProperty('PROP_COMPILE_SCRIPT')) {
+            compileScript = (PROP_COMPILE_SCRIPT.compareTo('1') == 0)
+        }
+
+        if (compileScript) {
+            compileJS("${buildDir}/intermediates/assets/${variant.dirName}",
+                      "${buildDir}/intermediates/assets/${variant.dirName}")
         }
     }
 }
@@ -47,23 +142,3 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':libcocos2dx')
 }
-
-
-task cleanAssets(type: Delete) {
-    delete 'assets'
-}
-task copyAssets(type: Copy) {
-    from('../../../cocos2d-x/cocos/scripting/js-bindings/') {
-        include 'script/**'
-    }
-    from('../../../../') {
-        include 'res/**'
-        include 'src/**'
-        include 'main.js'
-        include 'project.json'
-    }
-    into 'assets'
-}
-
-clean.dependsOn cleanAssets
-preBuild.dependsOn copyAssets

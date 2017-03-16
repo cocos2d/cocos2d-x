@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2012 cocos2d-x.org
- Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -618,6 +618,21 @@ public:
     virtual std::string title() const override;
 private:
     int _count;
+};
+
+class SequenceWithFinalInstant : public ActionsDemo
+{
+public:
+    CREATE_FUNC(SequenceWithFinalInstant);
+
+    virtual std::string subtitle() const override;
+    virtual void onEnter() override;
+    virtual void onExit() override;
+
+private:
+    cocos2d::ActionManager* _manager;
+    cocos2d::Node* _target;
+
 };
 
 #endif

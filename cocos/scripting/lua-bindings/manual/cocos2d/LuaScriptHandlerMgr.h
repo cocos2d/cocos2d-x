@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -211,7 +211,9 @@ public:
         EVENT_CONTROLLER_AXIS,
         
         EVENT_SPINE_ANIMATION_START,
+        EVENT_SPINE_ANIMATION_INTERRUPT,
         EVENT_SPINE_ANIMATION_END,
+        EVENT_SPINE_ANIMATION_DISPOSE,
         EVENT_SPINE_ANIMATION_COMPLETE,
         EVENT_SPINE_ANIMATION_EVENT,
         

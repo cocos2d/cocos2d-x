@@ -3,7 +3,7 @@ Copyright 2011 Jeff Lamarche
 Copyright 2012 Goffredo Marocchi
 Copyright 2012 Ricardo Quesada
 Copyright 2012 cocos2d-x.org
-Copyright 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -234,11 +234,8 @@ GLProgram::~GLProgram()
         GL::deleteProgram(_program);
     }
 
-    for (auto e : _hashForUniforms)
-    {
-        free(e.second.first);
-    }
-    _hashForUniforms.clear();
+    
+    clearHashUniforms();
 }
 
 bool GLProgram::initWithByteArrays(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray)
@@ -293,7 +290,7 @@ bool GLProgram::initWithByteArrays(const GLchar* vShaderByteArray, const GLchar*
         glAttachShader(_program, _fragShader);
     }
 
-    _hashForUniforms.clear();
+    clearHashUniforms();
 
     CHECK_GL_ERROR_DEBUG();
 
@@ -591,6 +588,9 @@ void GLProgram::updateUniforms()
         setUniformLocationWith1i(_builtInUniforms[UNIFORM_SAMPLER2], 2);
     if(_builtInUniforms[UNIFORM_SAMPLER3] != -1)
         setUniformLocationWith1i(_builtInUniforms[UNIFORM_SAMPLER3], 3);
+
+    // clear any glErrors created by any not found uniforms
+    glGetError();
 }
 
 bool GLProgram::link()
@@ -928,9 +928,8 @@ void GLProgram::setUniformsForBuiltins(const Mat4 &matrixMV)
     if (_flags.usesMultiViewP)
     {
         Mat4 mats[4];
-        unsigned int stackSize = _director->getProjectionMatrixStackSize() <= 4?
-                                 _director->getProjectionMatrixStackSize(): 4;
-        for (unsigned int i = 0; i < stackSize; ++i) {
+        const auto stackSize = std::min<size_t>(_director->getProjectionMatrixStackSize(), 4);
+        for (size_t i = 0; i < stackSize; ++i) {
             mats[i] = _director->getProjectionMatrix(i);
         }
         setUniformLocationWithMatrix4fv(_builtInUniforms[UNIFORM_MULTIVIEW_P_MATRIX], mats[0].m, 4);
@@ -948,9 +947,8 @@ void GLProgram::setUniformsForBuiltins(const Mat4 &matrixMV)
     if (_flags.usesMultiViewMVP)
     {
         Mat4 mats[4];
-        unsigned int stackSize = _director->getProjectionMatrixStackSize() <= 4?
-                                 _director->getProjectionMatrixStackSize(): 4;
-        for (unsigned int i = 0; i < stackSize; ++i) {
+        const auto stackSize = std::min<size_t>(_director->getProjectionMatrixStackSize(), 4);
+        for (size_t i = 0; i < stackSize; ++i) {
             mats[i] = _director->getProjectionMatrix(i) * matrixMV;
         }
         setUniformLocationWithMatrix4fv(_builtInUniforms[UNIFORM_MULTIVIEW_MVP_MATRIX], mats[0].m, 4);
@@ -994,12 +992,7 @@ void GLProgram::reset()
     //GL::deleteProgram(_program);
     _program = 0;
 
-    for (auto e: _hashForUniforms)
-    {
-        free(e.second.first);
-    }
-
-    _hashForUniforms.clear();
+    clearHashUniforms();
 }
 
 inline void GLProgram::clearShader()
@@ -1015,6 +1008,16 @@ inline void GLProgram::clearShader()
     }
 
     _vertShader = _fragShader = 0;
+}
+
+inline void GLProgram::clearHashUniforms()
+{
+    for (auto e: _hashForUniforms)
+    {
+        free(e.second.first);
+    }
+
+    _hashForUniforms.clear();
 }
 
 NS_CC_END

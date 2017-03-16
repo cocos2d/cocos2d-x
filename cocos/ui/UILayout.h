@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -634,7 +634,7 @@ protected:
     bool _clippingRectDirty;
     
     //clipping
-    StencilStateManager *_stencileStateManager;
+    StencilStateManager *_stencilStateManager;
 
     GroupCommand _groupCommand;
     CustomCommand _beforeVisitCmdStencil;

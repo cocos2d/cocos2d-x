@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014-2016 Chukong Technologies Inc.
+ Copyright (c) 2014-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -95,7 +95,7 @@ public:
     enum class AudioState
     {
         ERROR  = -1,
-        INITIALZING,
+        INITIALIZING,
         PLAYING,
         PAUSED
     };
@@ -326,7 +326,7 @@ protected:
         AudioInfo()
             : profileHelper(nullptr)
             , duration(TIME_UNKNOWN)
-            , state(AudioState::INITIALZING)
+            , state(AudioState::INITIALIZING)
         {
 
         }

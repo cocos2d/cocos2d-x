@@ -1,7 +1,7 @@
 /****************************************************************************
  Copyright (c) 2008-2010 Ricardo Quesada
  Copyright (c) 2011-2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -320,7 +320,7 @@ var Sprite3DWithSkinTest = Sprite3DTestDemo.extend({
             if(rand2 < 0.33)
                 speed = animate.getSpeed() + Math.random();
             else if(rand2 < 0.66)            
-                spped = animate.getSpeed() - 0.5 * Math.random();
+                speed = animate.getSpeed() - 0.5 * Math.random();
 
             animate.setSpeed(inverse ? -speed : speed);
             sprite.runAction(new cc.RepeatForever(animate));
@@ -606,7 +606,7 @@ var Sprite3DReskinTest = (function(){
 })();
 
 var Sprite3DWithOBBPerformanceTest = Sprite3DTestDemo.extend({
-    _title:"OBB Collison Performance Test",
+    _title:"OBB Collision Performance Test",
     _subtitle:"",
     _drawOBB:null,
     _drawDebug:null,
@@ -1153,7 +1153,7 @@ var Sprite3DWithSkinOutlineTest = Sprite3DTestDemo.extend({
             if(rand2 < 0.33)
                 speed = animate.getSpeed() + Math.random();
             else if(rand2 < 0.66)            
-                spped = animate.getSpeed() - 0.5 * Math.random();
+                speed = animate.getSpeed() - 0.5 * Math.random();
 
             animate.setSpeed(inverse ? -speed : speed);
             sprite.runAction(new cc.RepeatForever(animate));

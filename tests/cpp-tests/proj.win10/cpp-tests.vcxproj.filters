@@ -101,7 +101,7 @@
     <Filter Include="Classes\MotionStreakTest">
       <UniqueIdentifier>{618404c5-9e20-4c6b-ba9c-11699ba3c45c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Classes\MutiTouchTest">
+    <Filter Include="Classes\MultiTouchTest">
       <UniqueIdentifier>{a6a92123-dd2f-4c1e-9780-a8183491b3d2}</UniqueIdentifier>
     </Filter>
     <Filter Include="Classes\NewAudioEngineTest">
@@ -578,8 +578,8 @@
     <ClCompile Include="..\Classes\MotionStreakTest\MotionStreakTest.cpp">
       <Filter>Classes\MotionStreakTest</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\MutiTouchTest\MutiTouchTest.cpp">
-      <Filter>Classes\MutiTouchTest</Filter>
+    <ClCompile Include="..\Classes\MultiTouchTest\MultiTouchTest.cpp">
+      <Filter>Classes\MultiTouchTest</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\NewEventDispatcherTest\NewEventDispatcherTest.cpp">
       <Filter>Classes\NewEventDispatcherTest</Filter>
@@ -1216,8 +1216,8 @@
     <ClInclude Include="..\Classes\MotionStreakTest\MotionStreakTest.h">
       <Filter>Classes\MotionStreakTest</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\MutiTouchTest\MutiTouchTest.h">
-      <Filter>Classes\MutiTouchTest</Filter>
+    <ClInclude Include="..\Classes\MultiTouchTest\MultiTouchTest.h">
+      <Filter>Classes\MultiTouchTest</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\NewEventDispatcherTest\NewEventDispatcherTest.h">
       <Filter>Classes\NewEventDispatcherTest</Filter>
@@ -1454,14 +1454,15 @@
     <None Include="cpp-tests_TemporaryKey.pfx" />
     <None Include="$(AngleBinPath)libEGL.dll" />
     <None Include="$(AngleBinPath)libGLESv2.dll" />
-    <None Include="$(ZLibBinPath)zlib.dll" />
     <None Include="$(SQLiteBinPath)sqlite3.dll" />
-    <None Include="$(OggBinPath)libogg.dll" />
-    <None Include="$(OggBinPath)libvorbis.dll" />
-    <None Include="$(OggBinPath)libvorbisfile.dll" />
     <None Include="$(CurlBinPath)libcurl.dll" />
-    <None Include="$(CurlBinPath)libeay32.dll" />
-    <None Include="$(CurlBinPath)ssleay32.dll" />
+    <None Include="$(ZLibBinPath)zlib1.dll" />
+    <None Include="$(OpenSSLBinPath)libeay32.dll" />
+    <None Include="$(OpenSSLBinPath)ssleay32.dll" />
+    <None Include="$(OggBinPath)ogg.dll" />
+    <None Include="$(OggBinPath)vorbis.dll" />
+    <None Include="$(OggBinPath)vorbisfile.dll" />
+    <None Include="$(WebsocketsBinPath)websockets.dll" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="..\..\..\cocos\platform\win8.1-universal\OpenGLESPage.xaml" />

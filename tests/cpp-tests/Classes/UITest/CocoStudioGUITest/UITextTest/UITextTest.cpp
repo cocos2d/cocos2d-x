@@ -10,7 +10,7 @@ UITextTests::UITextTests()
     ADD_TEST_CASE(UITextTest_LineWrap);
     ADD_TEST_CASE(UILabelTest_Effect);
     ADD_TEST_CASE(UITextTest_TTF);
-    ADD_TEST_CASE(UITextTest_IgnoreConentSize);
+    ADD_TEST_CASE(UITextTest_IgnoreContentSize);
     ADD_TEST_CASE(UITextTest_Clone);
     ADD_TEST_CASE(Issue16073Test);
 }
@@ -220,15 +220,15 @@ bool UITextTest_TTF::init()
     return false;
 }
 
-// UITextTest_IgnoreConentSize
+// UITextTest_IgnoreContentSize
 
-bool UITextTest_IgnoreConentSize::init()
+bool UITextTest_IgnoreContentSize::init()
 {
     if (UIScene::init())
     {
         Size widgetSize = _widget->getContentSize();
 
-        Text* leftText = Text::create("ignore conent",
+        Text* leftText = Text::create("ignore content",
                                    "fonts/Marker Felt.ttf",10);
         leftText->setPosition(Vec2(widgetSize.width / 2.0f - 50,
                                 widgetSize.height / 2.0f));
@@ -240,7 +240,7 @@ bool UITextTest_IgnoreConentSize::init()
         _uiLayer->addChild(leftText);
 
 
-        Text* rightText = Text::create("ignore conent",
+        Text* rightText = Text::create("ignore content",
                                       "fonts/Marker Felt.ttf",10);
         rightText->setPosition(Vec2(widgetSize.width / 2.0f + 50,
                                    widgetSize.height / 2.0f));
@@ -266,7 +266,7 @@ bool UITextTest_IgnoreConentSize::init()
     return false;
 }
 
-// UITextTest_IgnoreConentSize
+// UITextTest_IgnoreContentSize
 
 bool UITextTest_Clone::init()
 {
@@ -274,7 +274,7 @@ bool UITextTest_Clone::init()
     {
         Size widgetSize = _widget->getContentSize();
 
-        Text* singleText = Text::create("ignore conent",
+        Text* singleText = Text::create("ignore content",
             "fonts/Marker Felt.ttf", 30);
         singleText->setPosition(Vec2(widgetSize.width / 2.0f - 80,
             widgetSize.height / 2.0f));

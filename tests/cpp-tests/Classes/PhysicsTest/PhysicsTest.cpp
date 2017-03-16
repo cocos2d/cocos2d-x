@@ -114,7 +114,7 @@ namespace
     const int LOGO_WIDTH = 188;
     const int LOGO_HEIGHT = 35;
     const int LOGO_RAW_LENGTH = 24;
-    const char LOGO_IMAGE[] =
+    const int LOGO_IMAGE[] =
     {
         15, -16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, -64, 15, 63, -32, -2, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 31, -64, 15, 127, -125, -1, -128, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -1201,12 +1201,12 @@ void PhysicsDemoSlice::clipPoly(PhysicsShapePolygon* shape, Vec2 normal, float d
     
     Vec2 center = PhysicsShape::getPolygonCenter(points, pointsCount);
     Node* node = Node::create();
-    PhysicsBody* polyon = PhysicsBody::createPolygon(points, pointsCount, PHYSICSBODY_MATERIAL_DEFAULT, -center);
+    PhysicsBody* polygon = PhysicsBody::createPolygon(points, pointsCount, PHYSICSBODY_MATERIAL_DEFAULT, -center);
     node->setPosition(center);
-    node->addComponent(polyon);
-    polyon->setVelocity(body->getVelocityAtWorldPoint(center));
-    polyon->setAngularVelocity(body->getAngularVelocity());
-    polyon->setTag(_sliceTag);
+    node->addComponent(polygon);
+    polygon->setVelocity(body->getVelocityAtWorldPoint(center));
+    polygon->setAngularVelocity(body->getAngularVelocity());
+    polygon->setTag(_sliceTag);
     addChild(node);
     
     delete[] points;
@@ -1764,7 +1764,7 @@ std::string PhysicsFixedUpdate::title() const
 
 std::string PhysicsFixedUpdate::subtitle() const
 {
-    return "The secend ball should not run across the wall";
+    return "The second ball should not run across the wall";
 }
 
 bool PhysicsTransformTest::onTouchBegan(Touch *touch, Event* /*event*/)

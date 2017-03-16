@@ -28,6 +28,12 @@
         
 --------------------------------
 -- 
+-- @function [parent=#Sequence] reverse 
+-- @param self
+-- @return Sequence#Sequence ret (return value: cc.Sequence)
+        
+--------------------------------
+-- 
 -- @function [parent=#Sequence] clone 
 -- @param self
 -- @return Sequence#Sequence ret (return value: cc.Sequence)
@@ -39,17 +45,17 @@
 -- @return Sequence#Sequence self (return value: cc.Sequence)
         
 --------------------------------
--- 
--- @function [parent=#Sequence] reverse 
--- @param self
--- @return Sequence#Sequence ret (return value: cc.Sequence)
-        
---------------------------------
 -- param t In seconds.
 -- @function [parent=#Sequence] update 
 -- @param self
 -- @param #float t
 -- @return Sequence#Sequence self (return value: cc.Sequence)
+        
+--------------------------------
+-- 
+-- @function [parent=#Sequence] isDone 
+-- @param self
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- 

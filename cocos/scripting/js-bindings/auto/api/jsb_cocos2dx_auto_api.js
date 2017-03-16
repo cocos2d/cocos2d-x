@@ -245,6 +245,16 @@ generateMipmap : function (
 },
 
 /**
+ * @method getAlphaTexture
+ * @return {cc.Texture2D}
+ */
+getAlphaTexture : function (
+)
+{
+    return cc.Texture2D;
+},
+
+/**
  * @method getDescription
  * @return {String}
  */
@@ -2703,20 +2713,20 @@ pause : function (
 
 /**
  * @method pushProjectionMatrix
- * @param {unsigned int} arg0
+ * @param {unsigned long} arg0
  */
 pushProjectionMatrix : function (
-int 
+long 
 )
 {
 },
 
 /**
  * @method popProjectionMatrix
- * @param {unsigned int} arg0
+ * @param {unsigned long} arg0
  */
 popProjectionMatrix : function (
-int 
+long 
 )
 {
 },
@@ -2733,10 +2743,10 @@ eventdispatcher
 
 /**
  * @method loadProjectionIdentityMatrix
- * @param {unsigned int} arg0
+ * @param {unsigned long} arg0
  */
 loadProjectionIdentityMatrix : function (
-int 
+long 
 )
 {
 },
@@ -2986,11 +2996,11 @@ scheduler
 /**
  * @method multiplyProjectionMatrix
  * @param {mat4_object} arg0
- * @param {unsigned int} arg1
+ * @param {unsigned long} arg1
  */
 multiplyProjectionMatrix : function (
 mat4, 
-int 
+long 
 )
 {
 },
@@ -3268,21 +3278,21 @@ getVisibleSize : function (
 /**
  * @method loadProjectionMatrix
  * @param {mat4_object} arg0
- * @param {unsigned int} arg1
+ * @param {unsigned long} arg1
  */
 loadProjectionMatrix : function (
 mat4, 
-int 
+long 
 )
 {
 },
 
 /**
  * @method initProjectionMatrixStack
- * @param {unsigned int} arg0
+ * @param {unsigned long} arg0
  */
 initProjectionMatrixStack : function (
-int 
+long 
 )
 {
 },
@@ -4313,12 +4323,12 @@ getGLProgram : function (
 
 /**
  * @method setUniformTexture
-* @param {String|String|int|int} str
-* @param {unsigned int|cc.Texture2D|cc.Texture2D|unsigned int} int
+* @param {int|String} int
+* @param {cc.Texture2D|cc.Texture2D} texture2d
 */
 setUniformTexture : function(
-int,
-int 
+str,
+texture2d 
 )
 {
 },
@@ -7115,6 +7125,16 @@ func
 },
 
 /**
+ * @method getDefaultResourceRootPath
+ * @return {String}
+ */
+getDefaultResourceRootPath : function (
+)
+{
+    return ;
+},
+
+/**
  * @method loadFilenameLookupDictionaryFromFile
  * @param {String} arg0
  */
@@ -7171,6 +7191,16 @@ str
 },
 
 /**
+ * @method getOriginalSearchPaths
+ * @return {Array}
+ */
+getOriginalSearchPaths : function (
+)
+{
+    return new Array();
+},
+
+/**
  * @method getNewFilename
  * @param {String} arg0
  * @return {String}
@@ -7180,6 +7210,18 @@ str
 )
 {
     return ;
+},
+
+/**
+ * @method listFiles
+ * @param {String} arg0
+ * @return {Array}
+ */
+listFiles : function (
+str 
+)
+{
+    return new Array();
 },
 
 /**
@@ -7444,6 +7486,18 @@ getSearchResolutionsOrder : function (
 createDirectory : function(
 str,
 func 
+)
+{
+},
+
+/**
+ * @method listFilesRecursively
+ * @param {String} arg0
+ * @param {Array} arg1
+ */
+listFilesRecursively : function (
+str, 
+array 
 )
 {
 },
@@ -7854,7 +7908,7 @@ cc.EventMouse = {
 
 /**
  * @method getMouseButton
- * @return {int}
+ * @return {cc.EventMouse::MouseButton}
  */
 getMouseButton : function (
 )
@@ -7874,10 +7928,10 @@ getLocation : function (
 
 /**
  * @method setMouseButton
- * @param {int} arg0
+ * @param {cc.EventMouse::MouseButton} arg0
  */
 setMouseButton : function (
-int 
+mousebutton 
 )
 {
 },
@@ -17369,6 +17423,16 @@ rect
 },
 
 /**
+ * @method isStretchEnabled
+ * @return {bool}
+ */
+isStretchEnabled : function (
+)
+{
+    return false;
+},
+
+/**
  * @method setTextureRect
 * @param {rect_object|rect_object} rect
 * @param {bool} bool
@@ -17392,6 +17456,16 @@ str
 )
 {
     return false;
+},
+
+/**
+ * @method setStretchEnabled
+ * @param {bool} arg0
+ */
+setStretchEnabled : function (
+bool 
+)
+{
 },
 
 /**
@@ -17543,16 +17617,6 @@ isTextureRectRotated : function (
 },
 
 /**
- * @method setStrechEnabled
- * @param {bool} arg0
- */
-setStrechEnabled : function (
-bool 
-)
-{
-},
-
-/**
  * @method getTextureRect
  * @return {rect_object}
  */
@@ -17560,16 +17624,6 @@ getTextureRect : function (
 )
 {
     return cc.Rect;
-},
-
-/**
- * @method isStrechEnabled
- * @return {bool}
- */
-isStrechEnabled : function (
-)
-{
-    return false;
 },
 
 /**
@@ -21589,12 +21643,14 @@ removeAllTextures : function (
 
 /**
  * @method addImageAsync
- * @param {String} arg0
- * @param {function} arg1
- */
-addImageAsync : function (
-str, 
-func 
+* @param {String|String} str
+* @param {function|function} func
+* @param {String} str
+*/
+addImageAsync : function(
+str,
+func,
+str 
 )
 {
 },
@@ -21713,6 +21769,16 @@ setETC1AlphaFileSuffix : function (
 str 
 )
 {
+},
+
+/**
+ * @method getETC1AlphaFileSuffix
+ * @return {String}
+ */
+getETC1AlphaFileSuffix : function (
+)
+{
+    return ;
 },
 
 /**

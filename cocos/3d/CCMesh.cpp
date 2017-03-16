@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2014-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -125,13 +125,12 @@ Mesh::Mesh()
 : _skin(nullptr)
 , _visible(true)
 , _isTransparent(false)
+, _force2DQueue(false)
 , _meshIndexData(nullptr)
-, _material(nullptr)
 , _glProgramState(nullptr)
 , _blend(BlendFunc::ALPHA_NON_PREMULTIPLIED)
-, _visibleChanged(nullptr)
 , _blendDirty(true)
-, _force2DQueue(false)
+, _material(nullptr)
 , _texFile("")
 {
     

@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2012 cocos2d-x.org
- Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -92,6 +92,7 @@ ActionsTests::ActionsTests()
     ADD_TEST_CASE(ActionFloatTest);
     ADD_TEST_CASE(Issue14936_1);
     ADD_TEST_CASE(Issue14936_2);
+    ADD_TEST_CASE(SequenceWithFinalInstant);
 }
 
 std::string ActionsDemo::title() const
@@ -2308,7 +2309,7 @@ void ActionFloatTest::onEnter()
 
     auto s = Director::getInstance()->getWinSize();
 
-    // create float action with duration and from to value, using lambda function we can easly animate any property of the Node.
+    // create float action with duration and from to value, using lambda function we can easily animate any property of the Node.
     auto actionFloat = ActionFloat::create(2.f, 0, 3, [this](float value) {
         _tamara->setScale(value);
     });
@@ -2394,3 +2395,59 @@ std::string ActionFloatTest::subtitle() const
 }
 
 
+
+//------------------------------------------------------------------
+//
+// SequenceWithFinalInstant
+//
+//------------------------------------------------------------------
+void SequenceWithFinalInstant::onEnter()
+{
+    ActionsDemo::onEnter();
+
+    _manager = new cocos2d::ActionManager();
+    _manager->autorelease();
+    _manager->retain();
+    
+    _target = cocos2d::Node::create();
+    _target->setActionManager( _manager );
+    _target->retain();
+    _target->onEnter();
+
+    bool called( false );
+    const auto f
+      ( [ &called ]() -> void
+        {
+          cocos2d::log("Callback called.");
+          called = true;
+        } );
+    
+    const auto action =
+      cocos2d::Sequence::create
+      (cocos2d::DelayTime::create(0.05),
+       cocos2d::CallFunc::create(f),
+       nullptr);
+
+    _target->runAction(action);
+    _manager->update(0);
+    _manager->update(0.05 - FLT_EPSILON);
+
+    if ( action->isDone() && !called )
+      cocos2d::log
+        ("Action says it is done but is not."
+         " called=%d, elapsed=%f, duration=%f",
+         (int)called, action->getElapsed(), action->getDuration());
+    else
+      cocos2d::log("Everything went fine.");
+}
+
+void SequenceWithFinalInstant::onExit()
+{
+  _target->release();
+  _manager->release();
+}
+
+std::string SequenceWithFinalInstant::subtitle() const
+{
+    return "Instant action should be run. See console.";
+}

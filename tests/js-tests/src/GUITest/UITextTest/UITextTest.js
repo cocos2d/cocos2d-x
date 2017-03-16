@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2011-2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -138,7 +138,7 @@ var UITextTest_TTF = UIMainLayer.extend({
 });
 
 //2015-01-14
-var UITextTest_IgnoreConentSize = UIMainLayer.extend({
+var UITextTest_IgnoreContentSize = UIMainLayer.extend({
 
     init: function(){
         if(this._super()){
@@ -146,7 +146,7 @@ var UITextTest_IgnoreConentSize = UIMainLayer.extend({
 
             this._bottomDisplayLabel.setString("");
 
-            var leftText = new ccui.Text("ignore conent", "Marker Felt",10);
+            var leftText = new ccui.Text("ignore content", "Marker Felt", 10);
             leftText.setPosition(cc.p(widgetSize.width / 2 - 50,
                 widgetSize.height / 2));
             leftText.ignoreContentAdaptWithSize(false);
@@ -156,7 +156,7 @@ var UITextTest_IgnoreConentSize = UIMainLayer.extend({
             leftText.setTouchEnabled(true);
             this._mainNode.addChild(leftText);
 
-            var rightText = new ccui.Text("ignore conent", "Marker Felt",10);
+            var rightText = new ccui.Text("ignore content", "Marker Felt", 10);
             rightText.setPosition(cc.p(widgetSize.width / 2 + 50,
                 widgetSize.height / 2));
             rightText.setString("Text line with break\nText line with break\nText line with break\nText line with break\n");

@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014-2016 Chukong Technologies Inc.
+ Copyright (c) 2014-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -32,7 +32,11 @@
 #include <mutex>
 #include <vector>
 #include <memory>
+#ifdef OPENAL_PLAIN_INCLUDES
+#include <al.h>
+#else
 #include <AL/al.h>
+#endif
 #include "platform/CCPlatformMacros.h"
 #include "audio/apple/AudioMacros.h"
 

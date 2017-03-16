@@ -135,8 +135,7 @@
 - (void)openKeyboard
 {
     [self.window.contentView addSubview:self.textInput];
-    //FIXME: it will cause a few OpenGL error once, should be fix when glfw version upgraded.
-    self.window.contentView.wantsLayer = YES;
+
     if (![self.textInput isKindOfClass:[NSTextView class]]) {
         [self.textInput becomeFirstResponder];
     }else {
@@ -298,6 +297,7 @@
 {
     self.textInput.ccui_placeholderFont = font;
 }
+
 - (void)setText:(NSString *)text
 {
     self.textInput.ccui_text = text;

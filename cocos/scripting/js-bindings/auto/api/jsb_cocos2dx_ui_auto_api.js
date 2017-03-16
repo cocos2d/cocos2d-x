@@ -6845,6 +6845,16 @@ Scale9Sprite : function (
 ccui.EditBox = {
 
 /**
+ * @method getFontSize
+ * @return {int}
+ */
+getFontSize : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method getText
  * @return {char}
  */
@@ -6865,6 +6875,26 @@ int
 },
 
 /**
+ * @method getInputMode
+ * @return {ccui.EditBox::InputMode}
+ */
+getInputMode : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getPlaceholderFontName
+ * @return {char}
+ */
+getPlaceholderFontName : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method setPlaceholderFontName
  * @param {char} arg0
  */
@@ -6872,6 +6902,16 @@ setPlaceholderFontName : function (
 char 
 )
 {
+},
+
+/**
+ * @method getPlaceholderFontSize
+ * @return {int}
+ */
+getPlaceholderFontSize : function (
+)
+{
+    return 0;
 },
 
 /**
@@ -6935,6 +6975,16 @@ color3b
 },
 
 /**
+ * @method getReturnType
+ * @return {ccui.EditBox::KeyboardReturnType}
+ */
+getReturnType : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method setFontColor
 * @param {color4b_object|color3b_object} color4b
 */
@@ -6942,6 +6992,46 @@ setFontColor : function(
 color3b 
 )
 {
+},
+
+/**
+ * @method getFontName
+ * @return {char}
+ */
+getFontName : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getFontColor
+ * @return {color4b_object}
+ */
+getFontColor : function (
+)
+{
+    return cc.Color4B;
+},
+
+/**
+ * @method getInputFlag
+ * @return {ccui.EditBox::InputFlag}
+ */
+getInputFlag : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getTextHorizontalAlignment
+ * @return {cc.TextHAlignment}
+ */
+getTextHorizontalAlignment : function (
+)
+{
+    return 0;
 },
 
 /**
@@ -7010,6 +7100,16 @@ getMaxLength : function (
 )
 {
     return 0;
+},
+
+/**
+ * @method getPlaceholderFontColor
+ * @return {color4b_object}
+ */
+getPlaceholderFontColor : function (
+)
+{
+    return cc.Color4B;
 },
 
 /**

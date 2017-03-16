@@ -235,6 +235,11 @@
     <ClCompile Include="..\..\..\external\flatbuffers\idl_gen_go.cpp" />
     <ClCompile Include="..\..\..\external\flatbuffers\idl_gen_text.cpp" />
     <ClCompile Include="..\..\..\external\flatbuffers\idl_parser.cpp" />
+    <ClCompile Include="..\..\..\external\flatbuffers\idl_gen_js.cpp" />
+    <ClCompile Include="..\..\..\external\flatbuffers\idl_gen_php.cpp" />
+    <ClCompile Include="..\..\..\external\flatbuffers\idl_gen_python.cpp" />
+    <ClCompile Include="..\..\..\external\flatbuffers\reflection.cpp" />
+    <ClCompile Include="..\..\..\external\flatbuffers\util.cpp" />
     <ClCompile Include="..\..\..\external\poly2tri\common\shapes.cc" />
     <ClCompile Include="..\..\..\external\poly2tri\sweep\advancing_front.cc" />
     <ClCompile Include="..\..\..\external\poly2tri\sweep\cdt.cc" />
@@ -568,6 +573,7 @@
     <ClCompile Include="..\..\network\HttpConnection-winrt.cpp" />
     <ClCompile Include="..\..\network\HttpCookie.cpp" />
     <ClCompile Include="..\..\network\SocketIO.cpp" />
+    <ClCompile Include="..\..\network\Uri.cpp" />
     <ClCompile Include="..\..\network\WebSocket.cpp" />
     <ClCompile Include="..\..\physics3d\CCPhysics3D.cpp" />
     <ClCompile Include="..\..\physics3d\CCPhysics3DComponent.cpp" />
@@ -931,6 +937,10 @@
     <ClInclude Include="..\..\..\external\flatbuffers\flatbuffers.h" />
     <ClInclude Include="..\..\..\external\flatbuffers\idl.h" />
     <ClInclude Include="..\..\..\external\flatbuffers\util.h" />
+    <ClInclude Include="..\..\..\external\flatbuffers\code_generated.h" />
+    <ClInclude Include="..\..\..\external\flatbuffers\hash.h" />
+    <ClInclude Include="..\..\..\external\flatbuffers\reflection.h" />
+    <ClInclude Include="..\..\..\external\flatbuffers\reflection_generated.h" />
     <ClInclude Include="..\..\..\external\poly2tri\common\shapes.h" />
     <ClInclude Include="..\..\..\external\poly2tri\common\utils.h" />
     <ClInclude Include="..\..\..\external\poly2tri\poly2tri.h" />
@@ -1203,6 +1213,7 @@
     <ClInclude Include="..\..\network\HttpRequest.h" />
     <ClInclude Include="..\..\network\HttpResponse.h" />
     <ClInclude Include="..\..\network\SocketIO.h" />
+    <ClInclude Include="..\..\network\Uri.h" />
     <ClInclude Include="..\..\network\WebSocket.h" />
     <ClInclude Include="..\..\physics3d\CCPhysics3D.h" />
     <ClInclude Include="..\..\physics3d\CCPhysics3DComponent.h" />
@@ -1542,34 +1553,34 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <GenerateManifest>false</GenerateManifest>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
-    <TargetName>libcocos2d_v3.14_Windows_10.0</TargetName>
+    <TargetName>libcocos2d_v3.15_Windows_10.0</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <GenerateManifest>false</GenerateManifest>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
-    <TargetName>libcocos2d_v3.14_Windows_10.0</TargetName>
+    <TargetName>libcocos2d_v3.15_Windows_10.0</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <GenerateManifest>false</GenerateManifest>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
     <LinkIncremental>false</LinkIncremental>
-    <TargetName>libcocos2d_v3.14_Windows_10.0</TargetName>
+    <TargetName>libcocos2d_v3.15_Windows_10.0</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <GenerateManifest>false</GenerateManifest>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
     <LinkIncremental>false</LinkIncremental>
-    <TargetName>libcocos2d_v3.14_Windows_10.0</TargetName>
+    <TargetName>libcocos2d_v3.15_Windows_10.0</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <GenerateManifest>false</GenerateManifest>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
-    <TargetName>libcocos2d_v3.14_Windows_10.0</TargetName>
+    <TargetName>libcocos2d_v3.15_Windows_10.0</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <GenerateManifest>false</GenerateManifest>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
-    <TargetName>libcocos2d_v3.14_Windows_10.0</TargetName>
+    <TargetName>libcocos2d_v3.15_Windows_10.0</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

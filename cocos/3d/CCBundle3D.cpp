@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2014 Chukong Technologies Inc.
+Copyright (c) 2014-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -316,7 +316,7 @@ bool Bundle3D::loadObj(MeshDatas& meshdatas, MaterialDatas& materialdatas, NodeD
                 meshdata->subMeshIds.push_back(str);
                 
                 auto modelnode = new (std::nothrow) ModelData();
-                modelnode->matrialId = submesh.first == -1 ? "" : materials[submesh.first].name;
+                modelnode->materialId = submesh.first == -1 ? "" : materials[submesh.first].name;
                 modelnode->subMeshId = str;
                 node->modelNodeDatas.push_back(modelnode);
             }
@@ -817,7 +817,7 @@ bool Bundle3D::loadNodes(NodeDatas& nodedatas)
         {
             auto node= new (std::nothrow) NodeData();
             auto modelnode = new (std::nothrow) ModelData();
-            modelnode->matrialId = "";
+            modelnode->materialId = "";
             modelnode->subMeshId = "";
             node->modelNodeDatas.push_back(modelnode);
             nodedatas.nodes.push_back(node);
@@ -855,7 +855,7 @@ bool Bundle3D::loadNodes(NodeDatas& nodedatas)
         nodedatas.skeleton.push_back(nodeDatas[skinData.rootBoneIndex]);
         auto node= new (std::nothrow) NodeData();
         auto modelnode = new (std::nothrow) ModelData();
-        modelnode->matrialId = "";
+        modelnode->materialId = "";
         modelnode->subMeshId = "";
         modelnode->bones = skinData.skinBoneNames;
         modelnode->invBindPose = skinData.inverseBindPoseMatrices;
@@ -1727,9 +1727,9 @@ NodeData* Bundle3D::parseNodesRecursivelyJson(const rapidjson::Value& jvalue, bo
             auto modelnodedata = new (std::nothrow) ModelData();
             const rapidjson::Value& part = parts[i];
             modelnodedata->subMeshId = part[MESHPARTID].GetString();
-            modelnodedata->matrialId = part[MATERIALID].GetString();
+            modelnodedata->materialId = part[MATERIALID].GetString();
 
-            if (modelnodedata->subMeshId == "" || modelnodedata->matrialId == "")
+            if (modelnodedata->subMeshId == "" || modelnodedata->materialId == "")
             {
                 CCLOG("warning: Node %s part is missing meshPartId or materialId", nodedata->id.c_str());
                 CC_SAFE_DELETE(modelnodedata);
@@ -1871,9 +1871,9 @@ NodeData* Bundle3D::parseNodesRecursivelyBinary(bool& skeleton, bool singleSprit
         {
             auto modelnodedata  = new (std::nothrow) ModelData();
             modelnodedata->subMeshId = _binaryReader.readString();
-            modelnodedata->matrialId = _binaryReader.readString();
+            modelnodedata->materialId = _binaryReader.readString();
 
-            if (modelnodedata->subMeshId == "" || modelnodedata->matrialId == "")
+            if (modelnodedata->subMeshId == "" || modelnodedata->materialId == "")
             {
                 std::string err = "Node " + nodedata->id + " part is missing meshPartId or materialId";
                 CCLOG("Node %s part is missing meshPartId or materialId", nodedata->id.c_str());

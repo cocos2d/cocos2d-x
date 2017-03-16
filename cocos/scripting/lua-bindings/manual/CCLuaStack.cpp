@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2011-2012 cocos2d-x.org
- Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -811,9 +811,9 @@ int LuaStack::luaLoadChunksFromZIP(lua_State *L)
                         }
                     }
                     // replace path separator '/' '\' to '.'
-                    for (int i=0; i<filename.size(); i++) {
-                        if (filename[i] == '/' || filename[i] == '\\') {
-                            filename[i] = '.';
+                    for (auto & character : filename) {
+                        if (character == '/' || character == '\\') {
+                            character = '.';
                         }
                     }
                     CCLOG("[luaLoadChunksFromZIP] add %s to preload", filename.c_str());

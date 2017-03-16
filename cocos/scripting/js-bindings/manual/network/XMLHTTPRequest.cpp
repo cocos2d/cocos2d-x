@@ -2,7 +2,7 @@
  * Created by Rolando Abarca 2012.
  * Copyright (c) 2012 Rolando Abarca. All rights reserved.
  * Copyright (c) 2013 Zynga Inc. All rights reserved.
- * Copyright (c) 2013-2016 Chukong Technologies Inc.
+ * Copyright (c) 2013-2017 Chukong Technologies Inc.
  *
  * Heavy based on: https://github.com/funkaster/FakeWebGL/blob/master/FakeWebGL/WebGL/XMLHTTPRequest.cpp
  *
@@ -200,33 +200,53 @@ void MinXmlHttpRequest::handle_requestResponse(cocos2d::network::HttpClient *sen
         return;
     }
 
-    if (0 != strlen(response->getHttpRequest()->getTag()))
+    std::string tag = response->getHttpRequest()->getTag();
+    if (!tag.empty())
     {
-        CCLOG("%s completed", response->getHttpRequest()->getTag());
+        CCLOG("%s completed", tag.c_str());
     }
 
     long statusCode = response->getResponseCode();
     char statusString[64] = {0};
-    sprintf(statusString, "HTTP Status Code: %ld, tag = %s", statusCode, response->getHttpRequest()->getTag());
+    sprintf(statusString, "HTTP Status Code: %ld, tag = %s", statusCode, tag.c_str());
 
     if (!response->isSucceed())
     {
-        CCLOG("Response failed, error buffer: %s", response->getErrorBuffer());
+        std::string errorBuffer = response->getErrorBuffer();
+        CCLOG("Response failed, error buffer: %s", errorBuffer.c_str());
         if (statusCode == 0 || statusCode == -1)
         {
             _errorFlag = true;
             _status = 0;
             _statusText.clear();
+            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
             JS::RootedObject callback(_cx);
             if (_onerrorCallback)
             {
+                JS::RootedObject errorObj(_cx, JS_NewObject(_cx, NULL, JS::NullPtr(), JS::NullPtr()));
+                // event type
+                JS::RootedValue value(_cx, std_string_to_jsval(_cx, "error"));
+                JS_SetProperty(_cx, errorObj, "type", value);
+                // status
+                value.set(long_to_jsval(_cx, statusCode));
+                JS_SetProperty(_cx, errorObj, "status", value);
+                // tag
+                value.set(std_string_to_jsval(_cx, tag));
+                JS_SetProperty(_cx, errorObj, "tag", value);
+                // errorBuffer
+                value.set(std_string_to_jsval(_cx, errorBuffer));
+                JS_SetProperty(_cx, errorObj, "errorBuffer", value);
+
+                JS::RootedValue arg(_cx, OBJECT_TO_JSVAL(errorObj));
+                JS::HandleValueArray args(arg);
+
                 callback.set(_onerrorCallback);
-                _notify(callback);
+                _notify(callback, args);
             }
             if (_onloadendCallback)
             {
                 callback.set(_onloadendCallback);
-                _notify(callback);
+                _notify(callback, JS::HandleValueArray::empty());
             }
             return;
         }
@@ -259,17 +279,17 @@ void MinXmlHttpRequest::handle_requestResponse(cocos2d::network::HttpClient *sen
     if (_onreadystateCallback)
     {
         callback.set(_onreadystateCallback);
-        _notify(callback);
+        _notify(callback, JS::HandleValueArray::empty());
     }
     if (_onloadCallback)
     {
         callback.set(_onloadCallback);
-        _notify(callback);
+        _notify(callback, JS::HandleValueArray::empty());
     }
     if (_onloadendCallback)
     {
         callback.set(_onloadendCallback);
-        _notify(callback);
+        _notify(callback, JS::HandleValueArray::empty());
     }
 }
 /**
@@ -400,6 +420,7 @@ JS_BINDED_CONSTRUCTOR_IMPL(MinXmlHttpRequest)
     js_proxy_t *p = jsb_new_proxy(req, obj);
 
 #if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+    CC_UNUSED_PARAM(p);
     js_add_FinalizeHook(cx, obj, true);
     // don't retain it, already retained
 #if COCOS2D_DEBUG > 1
@@ -835,8 +856,8 @@ JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, send)
                 return false;
             }
         }
-        else if(args.get(0).isNullOrUndefined()){
-        }
+        else if (args.get(0).isNullOrUndefined())
+        {}
         else
         {
             return false;
@@ -848,7 +869,7 @@ JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, send)
     if (_onloadstartCallback)
     {
         JS::RootedObject callback(cx, _onloadstartCallback);
-        _notify(callback);
+        _notify(callback, JS::HandleValueArray::empty());
     }
 
     //begin schedule for timeout
@@ -868,7 +889,7 @@ void MinXmlHttpRequest::update(float dt)
         if (_ontimeoutCallback)
         {
             JS::RootedObject callback(_cx, _ontimeoutCallback);
-            _notify(callback);
+            _notify(callback, JS::HandleValueArray::empty());
         }
         _elapsedTime = 0;
         _readyState = UNSENT;
@@ -894,7 +915,7 @@ JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, abort)
     if (_onabortCallback)
     {
         JS::RootedObject callback(cx, _onabortCallback);
-        _notify(callback);
+        _notify(callback, JS::HandleValueArray::empty());
     }
 
     return true;
@@ -1020,7 +1041,7 @@ static void basic_object_finalize(JSFreeOp *freeOp, JSObject *obj)
    CCLOG("basic_object_finalize %p ...", obj);
 }
 
-void MinXmlHttpRequest::_notify(JS::HandleObject callback)
+void MinXmlHttpRequest::_notify(JS::HandleObject callback, JS::HandleValueArray args)
 {
     js_proxy_t * p;
     void* ptr = (void*)this;
@@ -1035,7 +1056,7 @@ void MinXmlHttpRequest::_notify(JS::HandleObject callback)
             //JS_IsExceptionPending(cx) && JS_ReportPendingException(cx);
             JS::RootedValue callbackVal(_cx, OBJECT_TO_JSVAL(callback));
             JS::RootedValue out(_cx);
-            JS_CallFunctionValue(_cx, JS::NullPtr(), callbackVal, JS::HandleValueArray::empty(), &out);
+            JS_CallFunctionValue(_cx, JS::NullPtr(), callbackVal, args, &out);
         }
 
     }

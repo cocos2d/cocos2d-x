@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2013      Zynga Inc.
- Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -72,27 +72,31 @@ void Label::computeAlignmentOffset()
     }
 }
 
-int Label::getFirstCharLen(const std::u16string& /*utf16Text*/, int /*startIndex*/, int /*textLen*/)
+int Label::getFirstCharLen(const std::u32string& /*utf32Text*/, int /*startIndex*/, int /*textLen*/)
 {
     return 1;
 }
 
-int Label::getFirstWordLen(const std::u16string& utf16Text, int startIndex, int textLen)
+int Label::getFirstWordLen(const std::u32string& utf32Text, int startIndex, int textLen)
 {
-    auto character = utf16Text[startIndex];
-    if (StringUtils::isCJKUnicode(character) || StringUtils::isUnicodeSpace(character) || character == (char16_t)TextFormatter::NewLine)
+    auto character = utf32Text[startIndex];
+    if (StringUtils::isCJKUnicode(character) || StringUtils::isUnicodeSpace(character) || character == (char32_t)TextFormatter::NewLine)
     {
         return 1;
     }
 
     int len = 1;
     FontLetterDefinition letterDef;
-    auto nextLetterX = 0;
+    if(!_fontAtlas->getLetterDefinitionForChar(character, letterDef)) {
+        return len;
+    }
+    auto nextLetterX = letterDef.xAdvance * _bmfontScale + _additionalKerning;
+
     auto contentScaleFactor = CC_CONTENT_SCALE_FACTOR();
     for (int index = startIndex + 1; index < textLen; ++index)
     {
-        character = utf16Text[index];
-        if (_fontAtlas->getLetterDefinitionForChar(character, letterDef) == false)
+        character = utf32Text[index];
+        if (!_fontAtlas->getLetterDefinitionForChar(character, letterDef))
         {
             break;
         }
@@ -101,14 +105,14 @@ int Label::getFirstWordLen(const std::u16string& utf16Text, int startIndex, int 
         if (_maxLineWidth > 0.f && letterX + letterDef.width * _bmfontScale > _maxLineWidth
             && !StringUtils::isUnicodeSpace(character))
         {
-            if(len >= 2) {
-                return len -1;
-            }
+            return len;
         }
 
         nextLetterX += letterDef.xAdvance * _bmfontScale + _additionalKerning;
 
-        if (character == (char16_t)TextFormatter::NewLine || StringUtils::isUnicodeSpace(character) || StringUtils::isCJKUnicode(character))
+        if (character == (char16_t)TextFormatter::NewLine
+            || StringUtils::isUnicodeSpace(character)
+            || StringUtils::isCJKUnicode(character))
         {
             break;
         }
@@ -130,7 +134,7 @@ void Label::updateBMFontScale()
     }
 }
 
-bool Label::multilineTextWrap(const std::function<int(const std::u16string&, int, int)>& nextTokenLen)
+bool Label::multilineTextWrap(const std::function<int(const std::u32string&, int, int)>& nextTokenLen)
 {
     int textLen = getStringLength();
     int lineIndex = 0;
@@ -151,8 +155,8 @@ bool Label::multilineTextWrap(const std::function<int(const std::u16string&, int
 
     for (int index = 0; index < textLen; )
     {
-        auto character = _utf16Text[index];
-        if (character == (char16_t)TextFormatter::NewLine)
+        auto character = _utf32Text[index];
+        if (character == (char32_t)TextFormatter::NewLine)
         {
             _linesWidth.push_back(letterRight);
             letterRight = 0.f;
@@ -164,7 +168,7 @@ bool Label::multilineTextWrap(const std::function<int(const std::u16string&, int
             continue;
         }
 
-        auto tokenLen = nextTokenLen(_utf16Text, index, textLen);
+        auto tokenLen = nextTokenLen(_utf32Text, index, textLen);
         float tokenHighestY = highestY;
         float tokenLowestY = lowestY;
         float tokenRight = letterRight;
@@ -173,7 +177,7 @@ bool Label::multilineTextWrap(const std::function<int(const std::u16string&, int
         for (int tmp = 0; tmp < tokenLen;++tmp)
         {
             int letterIndex = index + tmp;
-            character = _utf16Text[letterIndex];
+            character = _utf32Text[letterIndex];
             if (character == (char16_t)TextFormatter::CarriageReturn)
             {
                 recordPlaceholderInfo(letterIndex, character);
@@ -186,7 +190,7 @@ bool Label::multilineTextWrap(const std::function<int(const std::u16string&, int
                 recordPlaceholderInfo(letterIndex, character);
                 continue;
             }
-            if (_fontAtlas->getLetterDefinitionForChar(character, letterDef) == false)
+            if (!_fontAtlas->getLetterDefinitionForChar(character, letterDef))
             {
                 recordPlaceholderInfo(letterIndex, character);
                 CCLOG("LabelTextFormatter error:can't find letter definition in font file for letter: %c", character);
@@ -297,7 +301,7 @@ bool Label::isHorizontalClamp()
     {
         if (_lettersInfo[ctr].valid)
         {
-            auto& letterDef = _fontAtlas->_letterDefinitions[_lettersInfo[ctr].utf16Char];
+            auto& letterDef = _fontAtlas->_letterDefinitions[_lettersInfo[ctr].utf32Char];
 
             auto px = _lettersInfo[ctr].positionX + letterDef.width/2 * _bmfontScale;
             auto lineIndex = _lettersInfo[ctr].lineIndex;
@@ -366,7 +370,7 @@ void Label::shrinkLabelToContentSize(const std::function<bool(void)>& lambda)
     }
 }
 
-void Label::recordLetterInfo(const cocos2d::Vec2& point, char16_t utf16Char, int letterIndex, int lineIndex)
+void Label::recordLetterInfo(const cocos2d::Vec2& point, char32_t utf32Char, int letterIndex, int lineIndex)
 {
     if (static_cast<std::size_t>(letterIndex) >= _lettersInfo.size())
     {
@@ -374,20 +378,20 @@ void Label::recordLetterInfo(const cocos2d::Vec2& point, char16_t utf16Char, int
         _lettersInfo.push_back(tmpInfo);
     }
     _lettersInfo[letterIndex].lineIndex = lineIndex;
-    _lettersInfo[letterIndex].utf16Char = utf16Char;
-    _lettersInfo[letterIndex].valid = _fontAtlas->_letterDefinitions[utf16Char].validDefinition;
+    _lettersInfo[letterIndex].utf32Char = utf32Char;
+    _lettersInfo[letterIndex].valid = _fontAtlas->_letterDefinitions[utf32Char].validDefinition;
     _lettersInfo[letterIndex].positionX = point.x;
     _lettersInfo[letterIndex].positionY = point.y;
 }
 
-void Label::recordPlaceholderInfo(int letterIndex, char16_t utf16Char)
+void Label::recordPlaceholderInfo(int letterIndex, char32_t utf32Char)
 {
     if (static_cast<std::size_t>(letterIndex) >= _lettersInfo.size())
     {
         LetterInfo tmpInfo;
         _lettersInfo.push_back(tmpInfo);
     }
-    _lettersInfo[letterIndex].utf16Char = utf16Char;
+    _lettersInfo[letterIndex].utf32Char = utf32Char;
     _lettersInfo[letterIndex].valid = false;
 }
 

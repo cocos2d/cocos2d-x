@@ -1,7 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010      Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -334,7 +334,8 @@ const Value& Configuration::getValue(const std::string& key, const Value& defaul
     auto iter = _valueDict.find(key);
     if (iter != _valueDict.cend())
         return _valueDict.at(key);
-	return defaultValue;
+
+    return defaultValue;
 }
 
 void Configuration::setValue(const std::string& key, const Value& value)

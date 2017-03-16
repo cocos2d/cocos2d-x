@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2014      PlayFirst Inc.
- Copyright (c) 2014-2016 Chukong Technologies Inc.
+ Copyright (c) 2014-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -269,7 +269,13 @@ private:
     // NOTE: We can ensure T is derived from cocos2d::Ref at compile time here.
     static_assert(std::is_base_of<Ref, typename std::remove_const<T>::type>::value, "T must be derived from Ref");
 };
-    
+
+template <class T> inline
+RefPtr<T> makeRef(T *ptr)
+{
+    return RefPtr<T>(ptr);
+}
+
 template<class T> inline
 bool operator<(const RefPtr<T>& r, std::nullptr_t)
 {

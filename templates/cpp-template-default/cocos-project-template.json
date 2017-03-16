@@ -12,14 +12,6 @@
                "proj.win32/PROJECT_NAME.vcxproj.user",
                "proj.win32/PROJECT_NAME.sln",
                "proj.ios_mac/PROJECT_NAME.xcodeproj",
-               "proj.win8.1-universal/PROJECT_NAME.sln",
-               "proj.win8.1-universal/App.Shared/PROJECT_NAME.Shared.vcxitems",
-               "proj.win8.1-universal/App.Shared/PROJECT_NAME.Shared.vcxitems.filters",
-               "proj.win8.1-universal/App.Windows/PROJECT_NAME.Windows_TemporaryKey.pfx",
-               "proj.win8.1-universal/App.Windows/PROJECT_NAME.Windows.vcxproj",
-               "proj.win8.1-universal/App.Windows/PROJECT_NAME.Windows.vcxproj.filters",
-               "proj.win8.1-universal/App.WindowsPhone/PROJECT_NAME.WindowsPhone.vcxproj",
-               "proj.win8.1-universal/App.WindowsPhone/PROJECT_NAME.WindowsPhone.vcxproj.filters",
                "proj.win10/PROJECT_NAME.sln",
                "proj.win10/App/PROJECT_NAME.vcxproj",
                "proj.win10/App/PROJECT_NAME.vcxproj.filters",
@@ -36,14 +28,6 @@
                "proj.win32/PROJECT_NAME.vcxproj.user",
                "proj.win32/PROJECT_NAME.sln",
                "proj.win32/main.cpp",
-               "proj.win8.1-universal/PROJECT_NAME.sln",
-               "proj.win8.1-universal/App.Shared/PROJECT_NAME.Shared.vcxitems",
-               "proj.win8.1-universal/App.Windows/PROJECT_NAME.Windows.vcxproj",
-               "proj.win8.1-universal/App.Windows/PROJECT_NAME.Windows.vcxproj.filters",
-               "proj.win8.1-universal/App.Windows/Package.appxmanifest",
-               "proj.win8.1-universal/App.WindowsPhone/PROJECT_NAME.WindowsPhone.vcxproj",
-               "proj.win8.1-universal/App.WindowsPhone/PROJECT_NAME.WindowsPhone.vcxproj.filters",
-               "proj.win8.1-universal/App.WindowsPhone/Package.appxmanifest",
                "proj.android/.project",
                "proj.android/.cproject",
                "proj.android/AndroidManifest.xml",
@@ -114,16 +98,6 @@
             },
             {
                "file_path": "proj.win10/App/Package.appxmanifest",
-               "pattern": "Rotation Preference=\\\"landscape",
-               "replace_string": "Rotation Preference=\"portrait"
-            },
-            {
-               "file_path": "proj.win8.1-universal/App.Windows/Package.appxmanifest",
-               "pattern": "Rotation Preference=\\\"landscape",
-               "replace_string": "Rotation Preference=\"portrait"
-            },
-            {
-               "file_path": "proj.win8.1-universal/App.WindowsPhone/Package.appxmanifest",
                "pattern": "Rotation Preference=\\\"landscape",
                "replace_string": "Rotation Preference=\"portrait"
             }

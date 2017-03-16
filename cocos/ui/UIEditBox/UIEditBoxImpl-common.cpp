@@ -51,6 +51,8 @@ EditBoxImplCommon::EditBoxImplCommon(EditBox* pEditText)
 , _editBoxInputMode(EditBox::InputMode::SINGLE_LINE)
 , _editBoxInputFlag(EditBox::InputFlag::INITIAL_CAPS_ALL_CHARACTERS)
 , _keyboardReturnType(EditBox::KeyboardReturnType::DEFAULT)
+, _fontSize(-1)
+, _placeholderFontSize(-1)
 , _colText(Color3B::WHITE)
 , _colPlaceHolder(Color3B::GRAY)
 , _maxLength(-1)
@@ -152,13 +154,14 @@ void EditBoxImplCommon::setInactiveText(const char* pText)
     
 void EditBoxImplCommon::setFont(const char* pFontName, int fontSize)
 {
+    _fontName = pFontName;
+    _fontSize = fontSize;
     this->setNativeFont(pFontName, fontSize * _label->getNodeToWorldAffineTransform().a);
-
-    if(strlen(pFontName) > 0)
+    if (!_fontName.empty())
     {
         _label->setSystemFontName(pFontName);
     }
-    if(fontSize > 0)
+    if (fontSize > 0)
     {
         _label->setSystemFontSize(fontSize);
     }
@@ -166,20 +169,21 @@ void EditBoxImplCommon::setFont(const char* pFontName, int fontSize)
 
 void EditBoxImplCommon::setFontColor(const Color4B& color)
 {
+    _colText = color;
     this->setNativeFontColor(color);
-    
     _label->setTextColor(color);
 }
 
 void EditBoxImplCommon::setPlaceholderFont(const char* pFontName, int fontSize)
 {
+    _placeholderFontName = pFontName;
+    _placeholderFontSize = fontSize;
     this->setNativePlaceholderFont(pFontName, fontSize * _labelPlaceHolder->getNodeToWorldAffineTransform().a);
-    
-    if( strlen(pFontName) > 0)
+    if (!_placeholderFontName.empty())
     {
         _labelPlaceHolder->setSystemFontName(pFontName);
     }
-    if(fontSize > 0)
+    if (fontSize > 0)
     {
         _labelPlaceHolder->setSystemFontSize(fontSize);
     }
@@ -187,8 +191,8 @@ void EditBoxImplCommon::setPlaceholderFont(const char* pFontName, int fontSize)
     
 void EditBoxImplCommon::setPlaceholderFontColor(const Color4B &color)
 {
+    _colPlaceHolder = color;
     this->setNativePlaceholderFontColor(color);
-    
     _labelPlaceHolder->setTextColor(color);
 }
 
@@ -203,11 +207,6 @@ void EditBoxImplCommon::setMaxLength(int maxLength)
 {
     _maxLength = maxLength;
     this->setNativeMaxLength(maxLength);
-}
-
-int EditBoxImplCommon::getMaxLength()
-{
-    return _maxLength;
 }
 
 void EditBoxImplCommon::setTextHorizontalAlignment(cocos2d::TextHAlignment alignment)
@@ -259,11 +258,6 @@ void EditBoxImplCommon::setText(const char* text)
     refreshInactiveText();
 }
 
-const char*  EditBoxImplCommon::getText(void)
-{
-    return _text.c_str();
-}
-
 void EditBoxImplCommon::setPlaceHolder(const char* pText)
 {
     if (pText != NULL)
@@ -274,7 +268,6 @@ void EditBoxImplCommon::setPlaceHolder(const char* pText)
         this->setNativePlaceHolder(pText);
     }
 }
-
 
 void EditBoxImplCommon::setVisible(bool visible)
 {
@@ -352,7 +345,7 @@ void EditBoxImplCommon::editBoxEditingDidBegin()
 #endif
 }
 
-  void EditBoxImplCommon::editBoxEditingDidEnd(const std::string& text, EditBoxDelegate::EditBoxEndAction action)
+void EditBoxImplCommon::editBoxEditingDidEnd(const std::string& text, EditBoxDelegate::EditBoxEndAction action)
 {
     // LOGD("textFieldShouldEndEditing...");
     _text = text;

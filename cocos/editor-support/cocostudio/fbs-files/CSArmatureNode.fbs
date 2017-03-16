@@ -1,11 +1,8 @@
-// CSParseBinary IDL file
+// ArmatureNode IDL file
+
+include "CSParseBinary.fbs";
 
 namespace flatbuffers;
-
-table WidgetOptions
-{
-    
-}
 
 table CSArmatureNodeOption
 {

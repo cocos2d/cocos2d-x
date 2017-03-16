@@ -1,7 +1,7 @@
 /****************************************************************************
  Copyright (c) 2008-2010 Ricardo Quesada
  Copyright (c) 2011-2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -1493,7 +1493,7 @@ var TMXBug987 = TileDemo.extend({
             node = childs[i];
             if (!node) break;
             if ("opengl" in cc.sys.capabilities)
-                node.texture.setAntiAliasTexParameters();
+                node.texture.setAliasTexParameters();
         }
 
         map.anchorX = 0;
@@ -1577,7 +1577,7 @@ var TMXGIDObjectsTest = TileDemo.extend({
         this.addChild(map, 0, TAG_TILE_MAP);
 
         this.log("ContentSize:" + map.width + "," + map.height);
-        this.log("---. Iterating over all the group objets");
+        this.log("---. Iterating over all the group objects");
 
         var group = map.getObjectGroup("Object Layer 1");
         var array = group.getObjects();

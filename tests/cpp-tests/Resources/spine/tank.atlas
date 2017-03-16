@@ -1,0 +1,125 @@
+
+tank.png
+size: 1024,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+antenna
+  rotate: true
+  xy: 650, 346
+  size: 11, 152
+  orig: 11, 152
+  offset: 0, 0
+  index: -1
+cannon
+  rotate: false
+  xy: 2, 49
+  size: 466, 29
+  orig: 466, 29
+  offset: 0, 0
+  index: -1
+cannonConnector
+  rotate: true
+  xy: 843, 231
+  size: 56, 68
+  orig: 56, 68
+  offset: 0, 0
+  index: -1
+guntower
+  rotate: false
+  xy: 650, 359
+  size: 365, 145
+  orig: 365, 145
+  offset: 0, 0
+  index: -1
+machinegun
+  rotate: false
+  xy: 2, 18
+  size: 166, 29
+  orig: 166, 29
+  offset: 0, 0
+  index: -1
+machinegun-mount
+  rotate: true
+  xy: 647, 193
+  size: 36, 48
+  orig: 36, 48
+  offset: 0, 0
+  index: -1
+rock
+  rotate: false
+  xy: 470, 50
+  size: 126, 28
+  orig: 126, 28
+  offset: 0, 0
+  index: -1
+tankBottom
+  rotate: false
+  xy: 2, 193
+  size: 643, 138
+  orig: 643, 138
+  offset: 0, 0
+  index: -1
+tankBottom-shadow
+  rotate: false
+  xy: 2, 333
+  size: 646, 171
+  orig: 646, 171
+  offset: 0, 0
+  index: -1
+tankTop
+  rotate: false
+  xy: 2, 80
+  size: 704, 111
+  orig: 704, 111
+  offset: 0, 0
+  index: -1
+tread
+  rotate: false
+  xy: 647, 231
+  size: 48, 15
+  orig: 48, 15
+  offset: 0, 0
+  index: -1
+tread-inside
+  rotate: false
+  xy: 2, 2
+  size: 13, 14
+  orig: 13, 14
+  offset: 0, 0
+  index: -1
+wheel-big
+  rotate: false
+  xy: 650, 248
+  size: 96, 96
+  orig: 96, 96
+  offset: 0, 0
+  index: -1
+wheel-big-overlay
+  rotate: false
+  xy: 748, 251
+  size: 93, 93
+  orig: 93, 93
+  offset: 0, 0
+  index: -1
+wheel-mid
+  rotate: false
+  xy: 843, 289
+  size: 68, 68
+  orig: 68, 68
+  offset: 0, 0
+  index: -1
+wheel-mid-overlay
+  rotate: false
+  xy: 913, 289
+  size: 68, 68
+  orig: 68, 68
+  offset: 0, 0
+  index: -1
+wheel-small
+  rotate: false
+  xy: 913, 251
+  size: 36, 36
+  orig: 36, 36
+  offset: 0, 0
+  index: -1
