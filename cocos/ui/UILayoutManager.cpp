@@ -46,7 +46,35 @@ void LinearHorizontalLayoutManager::doLayout(LayoutProtocol* layout)
 {
     Size layoutSize = layout->getLayoutContentSize();
     Vector<Node*> container = layout->getLayoutElements();
-    float leftBoundary = 0.0f;
+
+    float leftBoundary;
+    if (layout->getAlignment() == Layout::Alignment::LEFT) {
+        leftBoundary = 0.0f;
+    }
+    else
+    {
+        float usedWidth = 0.0f;
+        for (auto& subWidget : container) {
+            Widget* child = dynamic_cast<Widget*>(subWidget);
+            if (child)
+            {
+                LinearLayoutParameter* layoutParameter = dynamic_cast<LinearLayoutParameter*>(child->getLayoutParameter());
+                if (layoutParameter)
+                {
+                    Size cs = child->getContentSize();
+                    Margin mg = layoutParameter->getMargin();
+                    usedWidth += cs.width + mg.left + mg.right;
+                }
+            }
+        }
+
+        if (layout->getAlignment() == Layout::Alignment::CENTER) {
+            leftBoundary = (layoutSize.width - usedWidth) / 2;
+        } else {
+            leftBoundary = layoutSize.width - usedWidth;
+        }
+    }
+
     for (auto& subWidget : container)
     {
         Widget* child = dynamic_cast<Widget*>(subWidget);
@@ -102,7 +130,34 @@ void LinearVerticalLayoutManager::doLayout(LayoutProtocol* layout)
 {
     Size layoutSize = layout->getLayoutContentSize();
     Vector<Node*> container = layout->getLayoutElements();
-    float topBoundary = layoutSize.height;
+
+    float topBoundary;
+    if (layout->getAlignment() == Layout::Alignment::TOP) {
+        topBoundary = layoutSize.height;
+    }
+    else
+    {
+        float usedHeight = 0.0f;
+        for (auto& subWidget : container) {
+            Widget* child = dynamic_cast<Widget*>(subWidget);
+            if (child)
+            {
+                LinearLayoutParameter* layoutParameter = dynamic_cast<LinearLayoutParameter*>(child->getLayoutParameter());
+                if (layoutParameter)
+                {
+                    Size cs = child->getContentSize();
+                    Margin mg = layoutParameter->getMargin();
+                    usedHeight += cs.height + mg.top + mg.bottom;
+                }
+            }
+        }
+
+        if (layout->getAlignment() == Layout::Alignment::CENTER) {
+            topBoundary = (layoutSize.height - usedHeight) / 2 + usedHeight;
+        } else {
+            topBoundary = usedHeight;
+        }
+    }
     
     for (auto& subWidget : container)
     {

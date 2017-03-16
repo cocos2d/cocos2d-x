@@ -52,6 +52,7 @@ public:
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
         addTest("JNIHelper", []() { return new JNITests(); });
 #endif
+        addTest("Layout alignment", [](){return new LayoutAlignmentTests(); });
         addTest("Material System", [](){return new MaterialSystemTest(); });
         addTest("Navigation Mesh", [](){return new NavMeshTests(); });
         addTest("Node: BillBoard Test", [](){  return new BillBoardTests(); });

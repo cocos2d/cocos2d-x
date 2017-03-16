@@ -98,6 +98,8 @@ set(TESTS_SRC
   Classes/LabelTest/LabelTest.cpp
   Classes/LabelTest/LabelTestNew.cpp
   Classes/LayerTest/LayerTest.cpp
+  Classes/LayoutAlignmentTest/LayoutAlignmentTest.h
+  Classes/LayoutAlignmentTest/LayoutAlignmentTest.cpp
   Classes/LightTest/LightTest.cpp
   Classes/MaterialSystemTest/MaterialSystemTest
   Classes/MenuTest/MenuTest.cpp

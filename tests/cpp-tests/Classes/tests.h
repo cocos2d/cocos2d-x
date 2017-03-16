@@ -52,6 +52,7 @@
 #include "LabelTest/LabelTest.h"
 #include "LabelTest/LabelTestNew.h"
 #include "LayerTest/LayerTest.h"
+#include "LayoutAlignmentTest/LayoutAlignmentTest.h"
 #include "LightTest/LightTest.h"
 #include "MaterialSystemTest/MaterialSystemTest.h"
 #include "MenuTest/MenuTest.h"
