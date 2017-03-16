@@ -856,6 +856,8 @@ JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, send)
                 return false;
             }
         }
+        else if (args.get(0).isNullOrUndefined())
+        {}
         else
         {
             return false;
