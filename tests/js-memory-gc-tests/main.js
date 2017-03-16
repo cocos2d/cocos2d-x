@@ -49,7 +49,7 @@
     "noCache"       : false,
     // "noCache" set whether your resources will be loaded with a timestamp suffix in the url.
     // In this way, your resources will be force updated even if the browser holds a cache of it.
-    // It's very useful for mobile browser debuging.
+    // It's very useful for mobile browser debugging.
 
     "id"            : "gameCanvas",
     // "gameCanvas" sets the id of your canvas element on the web page, it's useful only on web.
