@@ -66,6 +66,49 @@ static ALvoid  alBufferDataStaticProc(const ALint bid, ALenum format, ALvoid* da
 
     return;
 }
+
+@interface NSTimerWrapper : NSObject
+{
+    std::function<void()> _timeoutCallback;
+}
+
+@end
+
+@implementation NSTimerWrapper
+
+-(id) initWithTimeInterval:(double) seconds callback:(const std::function<void()>&) cb
+{
+    if (self = [super init])
+    {
+        _timeoutCallback = cb;
+        NSTimer* timer = [NSTimer timerWithTimeInterval:seconds target: self selector:@selector(onTimeoutCallback:) userInfo:nil repeats:NO];
+        [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSDefaultRunLoopMode];
+    }
+
+    return self;
+}
+
+-(void) onTimeoutCallback: (NSTimer*) timer
+{
+    if (_timeoutCallback != nullptr)
+    {
+        _timeoutCallback();
+        _timeoutCallback = nullptr;
+    }
+}
+
+-(void) dealloc
+{
+    [super dealloc];
+}
+
+@end
+
+static void setTimeout(double seconds, const std::function<void()>& cb)
+{
+    [[[NSTimerWrapper alloc] initWithTimeInterval:seconds callback:cb] autorelease];
+}
+
 using namespace cocos2d;
 using namespace cocos2d::experimental;
 
@@ -133,11 +176,9 @@ AudioCache::~AudioCache()
         // 'cpp-tests/NewAudioEngineTest/AudioSwitchStateTest' can reproduce this issue without the following fix.
         // The workaround is delaying 200ms to free pcm data.
         char* data = _pcmData;
-        NSTimer* timer = [NSTimer timerWithTimeInterval:0.2 repeats:NO block:^(NSTimer* t) {
+        setTimeout(0.2, [data](){
             free(data);
-        }];
-
-        [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSDefaultRunLoopMode];
+        });
     }
 
     if (_queBufferFrames > 0)
