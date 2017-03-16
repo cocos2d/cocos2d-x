@@ -91,7 +91,10 @@ static ALvoid  alBufferDataStaticProc(const ALint bid, ALenum format, ALvoid* da
 -(void) onTimeoutCallback: (NSTimer*) timer
 {
     if (_timeoutCallback != nullptr)
+    {
         _timeoutCallback();
+        _timeoutCallback = nullptr;
+    }
 }
 
 -(void) dealloc
