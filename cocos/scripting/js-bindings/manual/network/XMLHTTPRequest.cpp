@@ -223,24 +223,25 @@ void MinXmlHttpRequest::handle_requestResponse(cocos2d::network::HttpClient *sen
             JS::RootedObject callback(_cx);
             if (_onerrorCallback)
             {
-                JS::RootedObject progressEvent(_cx, JS_NewObject(_cx, NULL, JS::NullPtr(), JS::NullPtr()));
+                JS::RootedObject errorObj(_cx, JS_NewObject(_cx, NULL, JS::NullPtr(), JS::NullPtr()));
                 // event type
                 JS::RootedValue value(_cx, std_string_to_jsval(_cx, "error"));
-                JS_SetProperty(_cx, progressEvent, "type", value);
+                JS_SetProperty(_cx, errorObj, "type", value);
                 // status
                 value.set(long_to_jsval(_cx, statusCode));
-                JS_SetProperty(_cx, progressEvent, "status", value);
+                JS_SetProperty(_cx, errorObj, "status", value);
                 // tag
                 value.set(std_string_to_jsval(_cx, tag));
-                JS_SetProperty(_cx, progressEvent, "tag", value);
+                JS_SetProperty(_cx, errorObj, "tag", value);
                 // errorBuffer
                 value.set(std_string_to_jsval(_cx, errorBuffer));
-                JS_SetProperty(_cx, progressEvent, "errorBuffer", value);
+                JS_SetProperty(_cx, errorObj, "errorBuffer", value);
 
-                jsval arg = JS::RootedValue(_cx, OBJECT_TO_JSVAL(progressEvent));
+                JS::RootedValue arg(_cx, OBJECT_TO_JSVAL(errorObj));
+                JS::HandleValueArray args(arg);
 
                 callback.set(_onerrorCallback);
-                _notify(callback, JS::HandleValueArray::fromMarkedLocation(1, &arg));
+                _notify(callback, args);
             }
             if (_onloadendCallback)
             {
@@ -1038,7 +1039,7 @@ static void basic_object_finalize(JSFreeOp *freeOp, JSObject *obj)
    CCLOG("basic_object_finalize %p ...", obj);
 }
 
-void MinXmlHttpRequest::_notify(JS::HandleObject callback, JS::HandleValueArray progressEvent)
+void MinXmlHttpRequest::_notify(JS::HandleObject callback, JS::HandleValueArray args)
 {
     js_proxy_t * p;
     void* ptr = (void*)this;
@@ -1053,7 +1054,7 @@ void MinXmlHttpRequest::_notify(JS::HandleObject callback, JS::HandleValueArray 
             //JS_IsExceptionPending(cx) && JS_ReportPendingException(cx);
             JS::RootedValue callbackVal(_cx, OBJECT_TO_JSVAL(callback));
             JS::RootedValue out(_cx);
-            JS_CallFunctionValue(_cx, JS::NullPtr(), callbackVal, progressEvent, &out);
+            JS_CallFunctionValue(_cx, JS::NullPtr(), callbackVal, args, &out);
         }
 
     }
