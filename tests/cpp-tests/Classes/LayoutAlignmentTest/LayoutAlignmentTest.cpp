@@ -3,7 +3,6 @@
 #include <ui/UIVBox.h>
 #include <ui/UIHBox.h>
 #include <ui/UIText.h>
-//#include <cocos/
 
 USING_NS_CC;
 using namespace cocos2d::ui;
