@@ -18,7 +18,7 @@ static bool jsb_cocos2dx_experimental_webView_setOnShouldStartLoading(JSContext 
     JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
 
     if(argc == 1){
-        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, obj, args.get(0)));
+        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, obj, args.get(0), args.thisv()));
         cobj->setOnShouldStartLoading([=](experimental::ui::WebView *sender, const std::string &url)->bool{
             JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
             jsval arg[2];
@@ -49,7 +49,7 @@ static bool jsb_cocos2dx_experimental_webView_setOnDidFinishLoading(JSContext *c
     JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
 
     if(argc == 1){
-        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, obj, args.get(0)));
+        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, obj, args.get(0), args.thisv()));
         cobj->setOnDidFinishLoading([=](experimental::ui::WebView *sender, const std::string &url)->void{
             JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
             jsval arg[2];
@@ -79,7 +79,7 @@ static bool jsb_cocos2dx_experimental_webView_setOnDidFailLoading(JSContext *cx,
     JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
 
     if(argc == 1){
-        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, obj, args.get(0)));
+        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, obj, args.get(0), args.thisv()));
         cobj->setOnDidFailLoading([=](experimental::ui::WebView *sender, const std::string &url)->void{
             JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
             jsval arg[2];
@@ -109,7 +109,7 @@ static bool jsb_cocos2dx_experimental_webView_setOnJSCallback(JSContext *cx, uin
     JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
 
     if(argc == 1){
-        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, obj, args.get(0)));
+        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, obj, args.get(0), args.thisv()));
         cobj->setOnJSCallback([=](experimental::ui::WebView *sender, const std::string &url)->void{
             JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
             jsval arg[2];

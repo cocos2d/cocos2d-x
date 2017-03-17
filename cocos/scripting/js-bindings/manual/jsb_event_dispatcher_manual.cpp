@@ -168,11 +168,13 @@ bool js_EventListenerAcceleration_create(JSContext *cx, uint32_t argc, jsval *vp
     bool ok = true;
     if (argc == 1) {
         std::function<void (Acceleration *, Event *)> arg0;
+        JSFunctionWrapper *wrapper = nullptr;
         do {
             if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
             {
                 JS::RootedObject jstarget(cx, args.thisv().toObjectOrNull());
-                std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, jstarget, args.get(0), args.thisv()));
+                std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, jstarget, args.get(0)));
+                wrapper = func.get();
                 auto lambda = [=](Acceleration* acc, Event* event) -> void {
                     JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
                     jsval largv[2];
@@ -188,7 +190,6 @@ bool js_EventListenerAcceleration_create(JSContext *cx, uint32_t argc, jsval *vp
                     if (!succeed && JS_IsExceptionPending(cx)) {
                         JS_ReportPendingException(cx);
                     }
-                    removeJSObject(cx, event);
                 };
                 arg0 = lambda;
             }
@@ -201,6 +202,10 @@ bool js_EventListenerAcceleration_create(JSContext *cx, uint32_t argc, jsval *vp
         
         auto ret = EventListenerAcceleration::create(arg0);
         JS::RootedValue jsret(cx, OBJECT_TO_JSVAL(js_get_or_create_jsobject<EventListenerAcceleration>(cx, ret)));
+        if (wrapper)
+        {
+            wrapper->setOwner(cx, jsret);
+        }
         args.rval().set(jsret);
         return true;
     }
@@ -235,18 +240,20 @@ bool js_EventListenerCustom_create(JSContext *cx, uint32_t argc, jsval *vp)
     if (argc == 2) {
         std::string arg0;
         std::function<void (cocos2d::EventCustom *)> arg1;
+        JSFunctionWrapper *wrapper = nullptr;
         ok &= jsval_to_std_string(cx, args.get(0), &arg0);
         do {
             if(JS_TypeOfValue(cx, args.get(1)) == JSTYPE_FUNCTION)
             {
                 JS::RootedObject jstarget(cx, args.thisv().toObjectOrNull());
-                std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, jstarget, args.get(1), args.thisv()));
+                std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, jstarget, args.get(1)));
+                wrapper = func.get();
                 auto lambda = [=](EventCustom* event) -> void {
                     JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
                     jsval largv[1];
                     if (event) {
                         js_type_class_t *typeClassEvent = js_get_type_from_native<EventCustom>(event);
-                        largv[0] = OBJECT_TO_JSVAL(jsb_get_or_create_weak_jsobject(cx, event, typeClassEvent, "EventCustom"));
+                        largv[0] = OBJECT_TO_JSVAL(jsb_get_or_create_weak_jsobject(cx, event, typeClassEvent));
                     } else {
                         largv[0] = JSVAL_NULL;
                     };
@@ -255,7 +262,6 @@ bool js_EventListenerCustom_create(JSContext *cx, uint32_t argc, jsval *vp)
                     if (!succeed && JS_IsExceptionPending(cx)) {
                         JS_ReportPendingException(cx);
                     }
-                    removeJSObject(cx, event);
                 };
                 arg1 = lambda;
             }
@@ -269,6 +275,10 @@ bool js_EventListenerCustom_create(JSContext *cx, uint32_t argc, jsval *vp)
 
         auto ret = EventListenerCustom::create(arg0, arg1);
         JS::RootedValue jsret(cx, OBJECT_TO_JSVAL(js_get_or_create_jsobject<EventListenerCustom>(cx, ret)));
+        if (wrapper)
+        {
+            wrapper->setOwner(cx, jsret);
+        }
         args.rval().set(jsret);
         return true;
     }
@@ -307,7 +317,6 @@ bool js_EventDispatcher_addCustomEventListener(JSContext *cx, uint32_t argc, jsv
                     if (!succeed && JS_IsExceptionPending(cx)) {
                         JS_ReportPendingException(cx);
                     }
-                    removeJSObject(cx, event);
                 };
                 arg1 = lambda;
             }

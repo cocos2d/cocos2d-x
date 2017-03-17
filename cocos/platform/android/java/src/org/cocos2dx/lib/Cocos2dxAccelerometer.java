@@ -86,7 +86,7 @@ public class Cocos2dxAccelerometer implements SensorEventListener {
             this.mSensorManager.registerListener(this, this.mAccelerometer, SensorManager.SENSOR_DELAY_GAME);
         } else {
             //convert seconds to microseconds
-            this.mSensorManager.registerListener(this, this.mAccelerometer, (int)(interval*100000));
+            this.mSensorManager.registerListener(this, this.mAccelerometer, (int)(interval*1000000));
         }
     }
 

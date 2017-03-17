@@ -2844,7 +2844,10 @@
     <ClInclude Include="..\..\external\json\document.h">
       <Filter>cocostudio\json\rapidjson</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\external\json\filestream.h">
+    <ClInclude Include="..\..\external\json\filereadstream.h">
+      <Filter>cocostudio\json\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\json\filewritestream.h">
       <Filter>cocostudio\json\rapidjson</Filter>
     </ClInclude>
     <ClInclude Include="..\..\external\json\prettywriter.h">
@@ -3830,9 +3833,6 @@
       <Filter>cocostudio\components</Filter>
     </ClInclude>
     <ClInclude Include="..\network\CCDownloader.h">
-      <Filter>network\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\network\CCDownloaderImpl.h">
       <Filter>network\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\network\CCIDownloaderImpl.h">
