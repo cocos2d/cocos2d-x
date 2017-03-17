@@ -8,6 +8,7 @@
 
 #include "base/CCEventDispatcher.h"
 #include "base/CCEventListenerKeyboard.h"
+#include "base/CCEventListenerCustom.h"
 
 #include <emscripten/emscripten.h>
 
@@ -44,10 +45,24 @@ EditBoxImplEmcc::EditBoxImplEmcc(EditBox* pEditText)
 : EditBoxImpl(pEditText)
 , _anchorPoint(Vec2(0.5f, 0.5f))
 {
+    
+    _beforeDraw = Director::getInstance()->getEventDispatcher()->addCustomEventListener(Director::EVENT_BEFORE_DRAW, [this](EventCustom *event) {
+        _drawedLastFrame = _drawedThisFrame;
+        _drawedThisFrame = false;
+    });
+    
+    _afterDraw = Director::getInstance()->getEventDispatcher()->addCustomEventListener(Director::EVENT_AFTER_DRAW, [this](EventCustom *event) {
+        if(_drawedThisFrame != _drawedLastFrame)
+        {
+            UIEditBox_setVisible(_id, _drawedThisFrame);
+        }
+    });
 }
 
 EditBoxImplEmcc::~EditBoxImplEmcc()
 {
+    Director::getInstance()->getEventDispatcher()->removeEventListener(_beforeDraw);
+    Director::getInstance()->getEventDispatcher()->removeEventListener(_afterDraw);
 }
     
 bool EditBoxImplEmcc::initWithSize(const Size& size)
@@ -197,6 +212,7 @@ void EditBoxImplEmcc::setAnchorPoint(const Vec2& anchorPoint)
     
 void EditBoxImplEmcc::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
+    _drawedThisFrame = true;
     if (_isDirty)
     {
         _isDirty = false;

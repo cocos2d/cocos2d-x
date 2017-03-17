@@ -80,10 +80,15 @@ private:
     Color4B _color;
     Color4B _placeholderColor;
     
+    EventListener* _beforeDraw;
+    EventListener* _afterDraw;
+    
     int _fontSize = 0;
     int _id = 0;
     bool _isDirty = true;
     bool _isCreate  = false;
+    bool _drawedLastFrame = true;
+    bool _drawedThisFrame = true;
 };
 
 
