@@ -229,4 +229,4 @@ void GLViewImpl::setIMEKeyboardState(bool open)
 
 NS_CC_END
 
-#endif // CC_PLATFOR_IOS
+#endif // CC_PLATFORM_IOS
