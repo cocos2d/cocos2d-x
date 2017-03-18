@@ -182,8 +182,8 @@ Build Requirements
 * or Windows 7+, VS 2013+
 * Python 2.7.5
 * NDK r11+ is required to build Android games
+* Android Studio 2.3+ bo build Android games
 * Tizen SDK 2.3+ is required to build Tizen games
-* Windows Phone/Store 8.1 VS 2013 Update 4+ or VS 2015
 * Windows Phone/Store 10.0 VS 2015
 * JRE or JDK 1.6+ is required for web publishing
 
@@ -192,7 +192,6 @@ Runtime Requirements
   * iOS 7.0+ for iPhone / iPad games
   * Android 2.3.3+ for Android games
   * Tizen 2.3+ or 2.4+ for Tizen games
-  * Windows 8.1 or Windows 10.0 for Windows Phone/Store 8.1 games
   * Windows 10.0 for Windows Phone/Store 10.0  games
   * OS X v10.9+ for Mac games
   * Windows 7+ for Win games

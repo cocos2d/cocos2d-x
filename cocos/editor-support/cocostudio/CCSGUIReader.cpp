@@ -1276,8 +1276,8 @@ Widget* WidgetPropertiesReader0300::createWidget(const rapidjson::Value& data, c
 {
     
     stExpCocoNode *tpChildArray = cocoNode->GetChildArray(cocoLoader);
-    float fileDesignWidth;
-    float fileDesignHeight;
+    float fileDesignWidth = 0.0f;
+    float fileDesignHeight = 0.0f;
     
     Widget* widget =  nullptr;
 

@@ -190,6 +190,15 @@
 -- @return string#string ret (return value: string)
         
 --------------------------------
+-- List all files in a directory.<br>
+-- param dirPath The path of the directory, it could be a relative or an absolute path.<br>
+-- return File paths in a string vector
+-- @function [parent=#FileUtils] listFiles 
+-- @param self
+-- @param #string dirPath
+-- @return array_table#array_table ret (return value: array_table)
+        
+--------------------------------
 -- Converts the contents of a file to a ValueMap.<br>
 -- param filename The filename of the file to gets content.<br>
 -- return ValueMap of the file contents.<br>
@@ -403,6 +412,16 @@
 -- @param #function callback
 -- @return FileUtils#FileUtils self (return value: cc.FileUtils)
 
+--------------------------------
+-- List all files recursively in a directory.<br>
+-- param dirPath The path of the directory, it could be a relative or an absolute path.<br>
+-- return File paths in a string vector
+-- @function [parent=#FileUtils] listFilesRecursively 
+-- @param self
+-- @param #string dirPath
+-- @param #array_table files
+-- @return FileUtils#FileUtils self (return value: cc.FileUtils)
+        
 --------------------------------
 -- Gets the writable path.<br>
 -- return  The path that can be write/read a file in

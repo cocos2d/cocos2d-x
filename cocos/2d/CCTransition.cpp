@@ -91,6 +91,9 @@ bool TransitionScene::initWithDuration(float t, Scene *scene)
         if (_outScene == nullptr)
         {
             _outScene = Scene::create();
+            // just change its state is running that can run actoins later
+            // issue: https://github.com/cocos2d/cocos2d-x/issues/17442
+            _outScene->onEnter();
         }
         _outScene->retain();
 

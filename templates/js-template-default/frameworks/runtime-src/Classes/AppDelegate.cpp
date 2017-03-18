@@ -6,6 +6,7 @@
 #include "scripting/js-bindings/auto/jsb_cocos2dx_auto.hpp"
 #include "scripting/js-bindings/auto/jsb_cocos2dx_builder_auto.hpp"
 #include "scripting/js-bindings/auto/jsb_cocos2dx_extension_auto.hpp"
+#include "scripting/js-bindings/auto/jsb_cocos2dx_network_auto.hpp"
 #include "scripting/js-bindings/auto/jsb_cocos2dx_navmesh_auto.hpp"
 #include "scripting/js-bindings/auto/jsb_cocos2dx_physics3d_auto.hpp"
 #include "scripting/js-bindings/auto/jsb_cocos2dx_spine_auto.hpp"
@@ -115,6 +116,8 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->addRegisterCallback(register_jsb_websocket);
     // socket io can be commented out to reduce the package
     sc->addRegisterCallback(register_jsb_socketio);
+    // Downloader
+    sc->addRegisterCallback(register_all_cocos2dx_network);
 
     // 3d can be commented out to reduce the package
     sc->addRegisterCallback(register_all_cocos2dx_3d);
