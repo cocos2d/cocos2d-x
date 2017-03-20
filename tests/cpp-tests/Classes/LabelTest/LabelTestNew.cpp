@@ -2859,7 +2859,7 @@ std::string LabelIssue13846Test::title() const
 
 std::string LabelIssue13846Test::subtitle() const
 {
-    return "Test hide label's letter,the label should display ‘12 45’ as expected";
+    return "Test hide label's letter,the label should display '12 45' as expected";
 }
 
 //
