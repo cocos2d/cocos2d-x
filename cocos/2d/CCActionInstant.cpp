@@ -40,9 +40,15 @@ NS_CC_BEGIN
 //
 // InstantAction
 //
+void ActionInstant::startWithTarget(Node *target)
+{
+    FiniteTimeAction::startWithTarget(target);
+    _done = false;
+}
+
 bool ActionInstant::isDone() const
 {
-    return true;
+    return _done;
 }
 
 void ActionInstant::step(float /*dt*/)
@@ -56,6 +62,7 @@ void ActionInstant::step(float /*dt*/)
     }
 #endif
     update(updateDt);
+    _done = true;
 }
 
 void ActionInstant::update(float /*time*/)
