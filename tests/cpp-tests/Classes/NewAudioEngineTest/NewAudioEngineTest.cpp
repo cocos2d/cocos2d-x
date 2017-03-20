@@ -952,7 +952,7 @@ void AudioPlayFileInWritablePath::onEnter()
     std::string musicFile = "background.mp3";
     std::string saveFilePath = writablePath + "background_in_writable_dir.mp3";
     
-    _oldSearchPaths = fileUtils->getSearchPaths();
+    _oldSearchPaths = fileUtils->getOriginalSearchPaths();
     fileUtils->addSearchPath(writablePath, true);
 
     if (!fileUtils->isFileExist(saveFilePath))
