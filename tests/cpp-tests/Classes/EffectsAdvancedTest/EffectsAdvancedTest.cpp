@@ -151,8 +151,14 @@ public:
     {
         Lens3DTarget* pRet = new (std::nothrow) Lens3DTarget();
         pRet->_lens3D = pAction;
+        pRet->_lens3D->retain();
         pRet->autorelease();
         return pRet;
+    }
+    
+    ~Lens3DTarget()
+    {
+        _lens3D->release();
     }
 private:
 
