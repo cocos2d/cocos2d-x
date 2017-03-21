@@ -54,8 +54,8 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     virtual void update(float dt) override;
-    void addNewBillBoradWithCoords(cocos2d::Vec3 p);
-    void addNewAniBillBoradWithCoords(cocos2d::Vec3 p);
+    void addNewBillBoardWithCoords(cocos2d::Vec3 p);
+    void addNewAniBillBoardWithCoords(cocos2d::Vec3 p);
     void rotateCameraCallback(cocos2d::Ref* sender,float value);
     void onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
     
@@ -64,7 +64,7 @@ public:
     
 protected:
     cocos2d::Camera*           _camera;
-    cocos2d::Layer*            _layerBillBorad;
+    cocos2d::Layer*            _layerBillBoard;
 
     std::vector<cocos2d::BillBoard*> _billboards;
 };
