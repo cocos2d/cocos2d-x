@@ -2337,6 +2337,7 @@ void Issue14936_1::onEnter() {
     auto visibleSize = cocos2d::Director::getInstance()->getVisibleSize();
 
     _count = 0;
+
     auto counterLabel = Label::createWithTTF("0", "fonts/Marker Felt.ttf", 16.0f);
     counterLabel->setPosition(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2);
     addChild(counterLabel);
@@ -2438,7 +2439,17 @@ void SequenceWithFinalInstant::onEnter()
          " called=%d, elapsed=%f, duration=%f",
          (int)called, action->getElapsed(), action->getDuration());
     else
-      cocos2d::log("Everything went fine.");
+      cocos2d::log("First step: everything went fine.");
+    
+    _manager->update(FLT_EPSILON);
+
+    if ( action->isDone() && called )
+      cocos2d::log("Second step: everything went fine.");
+    else
+      cocos2d::log
+        ("Action says it is done but is not."
+         " called=%d, elapsed=%f, duration=%f",
+         (int)called, action->getElapsed(), action->getDuration());
 }
 
 void SequenceWithFinalInstant::onExit()

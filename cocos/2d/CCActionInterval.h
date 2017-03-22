@@ -114,8 +114,9 @@ CC_CONSTRUCTOR_ACCESS:
 
 protected:
     float _elapsed;
-    bool   _firstTick;
-
+    bool _firstTick;
+    bool _done;
+    
 protected:
     bool sendUpdateEventToScript(float dt, Action *actionObject);
 };
@@ -182,7 +183,6 @@ public:
     //
     virtual Sequence* clone() const override;
     virtual Sequence* reverse() const override;
-    virtual bool isDone() const override;
     virtual void startWithTarget(Node *target) override;
     virtual void stop(void) override;
     /**
