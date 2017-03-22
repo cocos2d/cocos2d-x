@@ -113,18 +113,7 @@ static int lua_cocos2dx_addSearchPath(lua_State* L)
 #endif
         std::string pathToSave = tolua_tostring(L, 1, "");
         bool before           = tolua_toboolean(L, 2, 0);
-        std::vector<std::string> searchPaths = FileUtils::getInstance()->getSearchPaths();
-        if (before)
-        {
-            searchPaths.insert(searchPaths.begin(), pathToSave);
-        }
-        else
-        {
-            searchPaths.push_back(pathToSave);
-        }
-        
-        FileUtils::getInstance()->setSearchPaths(searchPaths);
-        
+        FileUtils::getInstance()->addSearchPath(pathToSave, before);
         return 0;
     }
     CCLOG("'addSearchPath' function wrong number of arguments: %d, was expecting %d\n", argc, 2);
