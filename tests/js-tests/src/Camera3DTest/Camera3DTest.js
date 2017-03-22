@@ -1103,7 +1103,6 @@ var FogTestDemo = Camera3DTestDemo.extend({
 
     ctor:function(){
         this._super();
-        cc.director.setClearColor(cc.color(128, 128, 128));
 
         cc.eventManager.addListener({
             event:cc.EventListener.TOUCH_ALL_AT_ONCE,
@@ -1189,6 +1188,11 @@ var FogTestDemo = Camera3DTestDemo.extend({
         this._camera.lookAt(cc.math.vec3(0, 0, 0), cc.math.vec3(0, 1, 0));
         layer3D.addChild(this._camera);
         layer3D.setCameraMask(2);
+    },
+
+    onEnter: function() {
+        this._super();
+        cc.director.setClearColor(cc.color(128, 128, 128));
     },
 
     onExit:function(){
