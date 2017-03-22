@@ -243,7 +243,7 @@ std::string FlatBuffersSerialize::serializeFlatBuffersWithXMLFile(const std::str
         _builder = new (std::nothrow) FlatBufferBuilder();
         
         Offset<NodeTree> nodeTree;
-        Offset<NodeAction> aciton;
+        Offset<NodeAction> action;
         std::vector<Offset<flatbuffers::AnimationInfo>> animationInfos;
         
         const tinyxml2::XMLElement* child = element->FirstChildElement();
@@ -255,7 +255,7 @@ std::string FlatBuffersSerialize::serializeFlatBuffersWithXMLFile(const std::str
             if (name == "Animation") // action
             {
                 const tinyxml2::XMLElement* animation = child;
-                aciton = createNodeAction(animation);
+                action = createNodeAction(animation);
             }
             else if (name == "ObjectData") // nodeTree
             {
@@ -296,7 +296,7 @@ std::string FlatBuffersSerialize::serializeFlatBuffersWithXMLFile(const std::str
                                                  _builder->CreateVector(_textures),
                                                  _builder->CreateVector(_texturePngs),
                                                  nodeTree,
-                                                 aciton,
+                                                 action,
                                                  _builder->CreateVector(animationInfos));
         _builder->Finish(csparsebinary);
         
@@ -1351,7 +1351,7 @@ FlatBufferBuilder* FlatBuffersSerialize::createFlatBuffersWithXMLFileForSimulato
         _builder = new (std::nothrow) FlatBufferBuilder();
 
         Offset<NodeTree> nodeTree;
-        Offset<NodeAction> aciton;
+        Offset<NodeAction> action;
         std::vector<Offset<flatbuffers::AnimationInfo> > animationInfos;
         
         const tinyxml2::XMLElement* child = element->FirstChildElement();
@@ -1363,7 +1363,7 @@ FlatBufferBuilder* FlatBuffersSerialize::createFlatBuffersWithXMLFileForSimulato
             if (name == "Animation") // action
             {
                 const tinyxml2::XMLElement* animation = child;
-                aciton = createNodeAction(animation);
+                action = createNodeAction(animation);
             }
             else if (name == "ObjectData") // nodeTree
             {
@@ -1402,7 +1402,7 @@ FlatBufferBuilder* FlatBuffersSerialize::createFlatBuffersWithXMLFileForSimulato
                                                  _builder->CreateVector(_textures),
                                                  _builder->CreateVector(_texturePngs),
                                                  nodeTree,
-                                                 aciton,
+                                                 action,
                                                  _builder->CreateVector(animationInfos));
         _builder->Finish(csparsebinary);
         
