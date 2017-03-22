@@ -22,18 +22,16 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "platform/CCPlatformConfig.h"
+#pragma once
 
-#ifndef __AUDIO_ENGINE_H_
-#define __AUDIO_ENGINE_H_
+#include "platform/CCPlatformConfig.h"
+#include "platform/CCPlatformMacros.h"
+#include "audio/include/Export.h"
 
 #include <functional>
 #include <list>
 #include <string>
 #include <unordered_map>
-
-#include "platform/CCPlatformMacros.h"
-#include "audio/include/Export.h"
 
 #ifdef ERROR
 #undef ERROR
@@ -45,7 +43,7 @@
  */
 
 NS_CC_BEGIN
-    namespace experimental{
+namespace experimental {
 
 /**
  * @class AudioProfile
@@ -353,10 +351,8 @@ protected:
     friend class AudioEngineImpl;
 };
 
-}
+} // namespace experimental {
 NS_CC_END
 
 // end group
 /// @}
-
-#endif // __AUDIO_ENGINE_H_
