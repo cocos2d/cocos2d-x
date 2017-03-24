@@ -538,7 +538,7 @@ void Button::onPressStateChangedToPressed()
     else
     {
         _buttonNormalRenderer->setVisible(true);
-        _buttonClickedRenderer->setVisible(true);
+        _buttonClickedRenderer->setVisible(false);
         _buttonDisabledRenderer->setVisible(false);
 
         _buttonNormalRenderer->stopAllActions();
