@@ -179,4 +179,41 @@ public:
     }
 };
 
+
+// Test for setting padding
+class UIListViewTest_Padding : public UIScene
+{
+protected:
+    virtual bool init() override;
+    virtual cocos2d::ui::ScrollView::Direction getListViewDirection() const = 0;
+
+    void sliderEvent(cocos2d::Ref *pSender, cocos2d::ui::Slider::EventType type);
+
+    cocos2d::ui::ListView* _listView;
+    cocos2d::ui::Text* _titleLabel;
+    cocos2d::ui::Text* _indexLabels[5];
+    cocos2d::ui::Text* _paddingLabels[4];
+
+};
+
+class UIListViewTest_PaddingVertical : public UIListViewTest_Padding
+{
+public:
+    CREATE_FUNC(UIListViewTest_PaddingVertical);
+    virtual cocos2d::ui::ScrollView::Direction getListViewDirection() const
+    {
+        return cocos2d::ui::ScrollView::Direction::VERTICAL;
+    }
+};
+
+class UIListViewTest_PaddingHorizontal : public UIListViewTest_Padding
+{
+public:
+    CREATE_FUNC(UIListViewTest_PaddingHorizontal);
+    virtual cocos2d::ui::ScrollView::Direction getListViewDirection() const
+    {
+        return cocos2d::ui::ScrollView::Direction::HORIZONTAL;
+    }
+};
+
 #endif /* defined(__TestCpp__UIListViewTest__) */
