@@ -1999,7 +1999,9 @@ void ParticleResetTotalParticles::onEnter()
                                     {
                                         p->setTotalParticles(p->getTotalParticles() + 10 );
                                     });
+    add->setFontSizeObj(20);
     add->setPosition(Vec2(0, 25));
+    
     auto remove = MenuItemFont::create("remove 10 particles",
                                        [p](Ref*)->void
                                        {
@@ -2008,6 +2010,7 @@ void ParticleResetTotalParticles::onEnter()
                                            p->setTotalParticles(count);
                                        });
     remove->setPosition(Vec2(0, -25));
+    remove->setFontSizeObj(20);
     
     auto menu = Menu::create(add, remove, nullptr);
     menu->setPosition(Vec2(VisibleRect::center()));
