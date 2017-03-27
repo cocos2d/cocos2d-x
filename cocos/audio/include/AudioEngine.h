@@ -321,13 +321,13 @@ protected:
         float duration;
         AudioState state;
 
-        AudioInfo()
-            : profileHelper(nullptr)
-            , duration(TIME_UNKNOWN)
-            , state(AudioState::INITIALIZING)
-        {
-
-        }
+        AudioInfo();
+        ~AudioInfo();
+    private:
+        AudioInfo(const AudioInfo& info);
+        AudioInfo(AudioInfo&& info);
+        AudioInfo& operator=(const AudioInfo& info);
+        AudioInfo& operator=(AudioInfo&& info);
     };
 
     //audioID,audioAttribute
