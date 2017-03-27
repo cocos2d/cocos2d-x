@@ -229,6 +229,7 @@ GLViewImpl::GLViewImpl()
 
 GLViewImpl::~GLViewImpl()
 {
+    emscripten_SDL_SetEventHandler(nullptr, 0);
 }
 
 bool GLViewImpl::initWithRect(const std::string& viewName, Rect rect, float frameZoomFactor)
@@ -490,6 +491,9 @@ bool GLViewImpl::isFullscreen()
 
 int GLViewImpl::EventHandler(void *userdata, SDL_Event *event)
 {
+    if (!userdata)
+        return 0;
+    
     GLViewImpl *thiz = static_cast<GLViewImpl*>(userdata);
     
     switch(event->type)
