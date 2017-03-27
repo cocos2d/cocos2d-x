@@ -113,6 +113,7 @@ Node::Node()
 #if CC_USE_PHYSICS
 , _physicsBody(nullptr)
 #endif
+, _anchorPoint(0, 0)
 {
     // set default scheduler and actionManager
     _director = Director::getInstance();
