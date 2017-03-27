@@ -47,6 +47,7 @@ AudioEngineTests::AudioEngineTests()
     ADD_TEST_CASE(AudioPreloadSameFileMultipleTimes);
     ADD_TEST_CASE(AudioPlayFileInWritablePath);
     ADD_TEST_CASE(AudioIssue16938Test);
+    ADD_TEST_CASE(AudioPlayInFinishedCB);
     
     //FIXME: Please keep AudioSwitchStateTest to the last position since this test case doesn't work well on each platforms.
     ADD_TEST_CASE(AudioSwitchStateTest);
@@ -985,3 +986,58 @@ std::string AudioPlayFileInWritablePath::subtitle() const
 {
     return "Could play audio";
 }
+
+//
+void AudioPlayInFinishedCB::onEnter()
+{
+    AudioEngineTestDemo::onEnter();
+
+    auto item = MenuItemFont::create("Play 3 files one by one", [this](Ref* sender){
+        playMusic("background.mp3");
+        playMusic("background.mp3");
+        playMusic("background.mp3");
+    });
+
+    item->setPosition(VisibleRect::center());
+
+    auto menu = Menu::create(item, nullptr);
+    menu->setPosition(Vec2::ANCHOR_BOTTOM_LEFT);
+    addChild(menu);
+}
+
+void AudioPlayInFinishedCB::onExit()
+{
+    AudioEngineTestDemo::onExit();
+}
+
+std::string AudioPlayInFinishedCB::title() const
+{
+    return "Click menu item to play 3 audio files";
+}
+
+std::string AudioPlayInFinishedCB::subtitle() const
+{
+    return "After played over, click again, should also hear 3 audios";
+}
+
+void AudioPlayInFinishedCB::doPlay(const std::string& filename)
+{
+    int playID = AudioEngine::play2d(filename, false, 1);
+    AudioEngine::setFinishCallback(playID, [this](int finishID, const std::string& file){
+        _playList.pop_front();
+        log("finish music %s",file.c_str());
+        if (!_playList.empty()) {
+            const std::string& name = _playList.front();
+            doPlay(name);
+        }
+    });
+}
+
+void AudioPlayInFinishedCB::playMusic(const std::string& filename)
+{
+    _playList.push_back(filename);
+    if (_playList.size() == 1) {
+        doPlay(filename);
+    }
+}
+
