@@ -106,15 +106,16 @@ var MonotonicIncreaseTest = PerformanceNowBaseLayer.extend({
         var label = new cc.LabelTTF("Result that values are montonically increasing : " + monotonicIncrease);
         label.attr({
             x: cc.winSize.width/2,
-            y: cc.winSize.height/2
+            y: cc.winSize.height/2 + 50
         });
         this.addChild(label);
 
         var values = new cc.LabelTTF("Result Values : " + JSON.stringify(performanceValues));
         values.attr({
             x: cc.winSize.width/2,
-            y: (cc.winSize.height/2) - 40
-        });        
+            y: (cc.winSize.height/2) - 50
+        });
+        values.setDimensions(cc.winSize.width/2, 100);
         this.addChild(values);
 
     },
