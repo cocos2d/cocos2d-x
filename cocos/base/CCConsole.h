@@ -181,7 +181,7 @@ public:
      */
     void setBindAddress(const std::string &address);
 
-	/** Checks whether the server for console is bound with ipv6 address */
+    /** Checks whether the server for console is bound with ipv6 address */
     bool isIpv6Server() const;
 
 protected:
