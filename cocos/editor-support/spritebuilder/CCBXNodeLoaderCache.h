@@ -10,7 +10,7 @@
 #define __cocos2d_libs__CCBXNodeLoaderCache__
 
 #include "base/CCRef.h"
-#include "base/CCmap.h"
+#include "base/CCMap.h"
 #include <functional>
 #include <map>
 #include <string>
