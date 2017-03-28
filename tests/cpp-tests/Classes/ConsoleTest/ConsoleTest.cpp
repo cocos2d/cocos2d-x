@@ -152,12 +152,12 @@ void ConsoleUploadFile::uploadFile()
     WSAStartup(MAKEWORD(2, 2),&wsaData);
 #endif
 
-	std::string nodeName;
-	if (Director::getInstance()->getConsole()->isIpv6Server())
-		nodeName = "::1";
+    std::string nodeName;
+    if (Director::getInstance()->getConsole()->isIpv6Server())
+        nodeName = "::1";
 	else
-		nodeName = "localhost";
-	
+        nodeName = "localhost";
+
     s = getaddrinfo(nodeName.c_str(), "5678", &hints, &result);
     if (s != 0) 
     {
