@@ -480,16 +480,16 @@ bool Console::listenOnTCP(int port)
     listen(listenfd, 50);
 
     if (res->ai_family == AF_INET) {
-		_isIpv6Server = false;
-		char buf[INET_ADDRSTRLEN] = {0};
+        _isIpv6Server = false;
+        char buf[INET_ADDRSTRLEN] = {0};
         struct sockaddr_in *sin = (struct sockaddr_in*) res->ai_addr;
         if( inet_ntop(res->ai_family, &sin->sin_addr, buf, sizeof(buf)) != nullptr )
             cocos2d::log("Console: IPV4 server is listening on %s:%d", buf, ntohs(sin->sin_port));
         else
             perror("inet_ntop");
     } else if (res->ai_family == AF_INET6) {
-		_isIpv6Server = true;
-		char buf[INET6_ADDRSTRLEN] = {0};
+        _isIpv6Server = true;
+        char buf[INET6_ADDRSTRLEN] = {0};
         struct sockaddr_in6 *sin = (struct sockaddr_in6*) res->ai_addr;
         if( inet_ntop(res->ai_family, &sin->sin6_addr, buf, sizeof(buf)) != nullptr )
             cocos2d::log("Console: IPV6 server is listening on [%s]:%d", buf, ntohs(sin->sin6_port));
@@ -607,7 +607,7 @@ void Console::setBindAddress(const std::string &address)
 
 bool Console::isIpv6Server() const
 {
-	return _isIpv6Server;
+    return _isIpv6Server;
 }
 
 //
@@ -640,7 +640,7 @@ void Console::loop()
         {
             /* error */
             if(errno != EINTR)
-				cocos2d::log("Abnormal error in select()\n");
+                cocos2d::log("Abnormal error in select()\n");
             continue;
         }
         else if( nready == 0 )
@@ -865,8 +865,8 @@ bool Console::parseCommand(int fd)
 void Console::addClient()
 {
     struct sockaddr_in6 ipv6Addr;
-	struct sockaddr_in ipv4Addr;
-	struct sockaddr* addr = _isIpv6Server ? (struct sockaddr*)&ipv6Addr : (struct sockaddr*)&ipv4Addr;
+    struct sockaddr_in ipv4Addr;
+    struct sockaddr* addr = _isIpv6Server ? (struct sockaddr*)&ipv6Addr : (struct sockaddr*)&ipv4Addr;
     socklen_t addrLen = _isIpv6Server ? sizeof(ipv6Addr) : sizeof(ipv4Addr);
     
     /* new client */
