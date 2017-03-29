@@ -142,7 +142,7 @@ void ConsoleUploadFile::uploadFile()
     /* Obtain address(es) matching host/port */
 
     memset(&hints, 0, sizeof(struct addrinfo));
-    hints.ai_family = AF_INET;    /* Allow IPv4 or IPv6 */
+    hints.ai_family = AF_UNSPEC;    /* Allow IPv4 or IPv6 */
     hints.ai_socktype = SOCK_STREAM; /* stream socket */
     hints.ai_flags = 0;
     hints.ai_protocol = 0;          /* Any protocol */
@@ -152,7 +152,13 @@ void ConsoleUploadFile::uploadFile()
     WSAStartup(MAKEWORD(2, 2),&wsaData);
 #endif
 
-    s = getaddrinfo("localhost", "5678", &hints, &result);
+    std::string nodeName;
+    if (Director::getInstance()->getConsole()->isIpv6Server())
+        nodeName = "::1";
+	else
+        nodeName = "localhost";
+
+    s = getaddrinfo(nodeName.c_str(), "5678", &hints, &result);
     if (s != 0) 
     {
        CCLOG("ConsoleUploadFile: getaddrinfo error");
