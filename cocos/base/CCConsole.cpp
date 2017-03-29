@@ -1346,23 +1346,24 @@ static char invalid_filename_char[] = {':', '/', '\\', '?', '%', '*', '<', '>', 
 void Console::commandUpload(int fd)
 {
     ssize_t n, rc;
-    char buf[512], c;
+    char buf[512] = {0};
+    char c = 0;
     char *ptr = buf;
     //read file name
     for( n = 0; n < sizeof(buf) - 1; n++ )
     {
-        if( (rc = recv(fd, &c, 1, 0)) ==1 ) 
+        if( (rc = recv(fd, &c, 1, 0)) == 1 )
         {
             for(char x : invalid_filename_char)
             {
-                if(c == x)
+                if (c == x)
                 {
                     const char err[] = "upload: invalid file name!\n";
                     Console::Utility::sendToConsole(fd, err, strlen(err));
                     return;
                 }
             }
-            if(c == ' ') 
+            if (c == ' ')
             {
                 break;
             }
@@ -1393,8 +1394,8 @@ void Console::commandUpload(int fd)
         Console::Utility::sendToConsole(fd, err, strlen(err));
         return;
     }
-    
-    while (true) 
+
+    while (true)
     {
         char data[4];
         for(int i = 0; i < 4; i++)
@@ -1410,9 +1411,9 @@ void Console::commandUpload(int fd)
         unsigned char *decode;
         unsigned char *in = (unsigned char *)data;
         int dt = base64Decode(in, 4, &decode);
-        for(int i = 0; i < dt; i++)
+        if (dt > 0)
         {
-            fwrite(decode+i, 1, 1, fp);
+            fwrite(decode, dt, 1, fp);
         }
         free(decode);
     }
