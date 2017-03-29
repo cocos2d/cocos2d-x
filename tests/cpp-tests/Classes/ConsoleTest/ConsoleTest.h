@@ -72,10 +72,10 @@ protected:
     virtual ~ConsoleUploadFile();
 
     void uploadFile();
-    std::string _src_file_path;
-    std::string _target_file_name;
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(ConsoleUploadFile);
+
+    std::string _targetFileName;
 };
 
 #endif // _CONSOLE_TEST_H_
