@@ -73,21 +73,17 @@ android {
                 signingConfig signingConfigs.release
             }
 
-            if (project.hasProperty('PROP_NDK_MODE') && PROP_NDK_MODE.compareTo('debug') == 0) {
-                externalNativeBuild {
-                    ndkBuild {
-                        arguments 'NDK_DEBUG=1'
-                    }
+            externalNativeBuild {
+                ndkBuild {
+                    arguments 'NDK_DEBUG=0'
                 }
             }
         }
 
         debug {
-            if (project.hasProperty('PROP_NDK_MODE') && PROP_NDK_MODE.compareTo('release') == 0) {
-                externalNativeBuild {
-                    ndkBuild {
-                        arguments 'NDK_DEBUG=0'
-                    }
+            externalNativeBuild {
+                ndkBuild {
+                    arguments 'NDK_DEBUG=1'
                 }
             }
         }

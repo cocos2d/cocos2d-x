@@ -91,7 +91,7 @@ android {
 
 def getCocosCommandPath() {
     if (Os.isFamily(Os.FAMILY_WINDOWS)) {
-        return 'cocos'
+        return 'cocos.bat'
     }
     else {
         // on unix like system, can not get environments variables easily

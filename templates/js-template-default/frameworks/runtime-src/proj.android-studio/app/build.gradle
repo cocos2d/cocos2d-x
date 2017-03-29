@@ -74,26 +74,41 @@ android {
                 signingConfig signingConfigs.release
             }
 
-            if (project.hasProperty('PROP_NDK_MODE') && PROP_NDK_MODE.compareTo('debug') == 0) {
-                externalNativeBuild {
-                    ndkBuild {
-                        arguments 'NDK_DEBUG=1'
-                    }
+            externalNativeBuild {
+                ndkBuild {
+                    arguments 'NDK_DEBUG=0'
                 }
             }
         }
 
         debug {
-            if (project.hasProperty('PROP_NDK_MODE') && PROP_NDK_MODE.compareTo('release') == 0) {
-                externalNativeBuild {
-                    ndkBuild {
-                        arguments 'NDK_DEBUG=0'
-                    }
+            externalNativeBuild {
+                ndkBuild {
+                    arguments 'NDK_DEBUG=1'
                 }
             }
         }
     }
 }
+
+def getCocosCommandPath() {
+    if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+        return 'cocos.bat'
+    }
+    else {
+        // on unix like system, can not get environments variables easily
+        // so run a shell script to get environment variable sets by cocos2d-x setup.py
+        new ByteArrayOutputStream().withStream { os ->
+            def result = exec {
+                executable = project.file('get_environment.sh')
+                standardOutput = os
+            }
+            ext.console_path = os.toString().trim()
+        }
+        return new File(console_path + '/cocos').absolutePath;
+    }
+}
+
 
 // a method used to invoke the cocos jscompile command
 def compileJS(srcDir, dstDir) {
@@ -101,7 +116,8 @@ def compileJS(srcDir, dstDir) {
 
     println 'running command : ' + 'cocos ' + compileArgs.join(' ')
     exec {
-        executable 'cocos'
+        // if you meet problem, just replace `getCocosCommandPath()` to the path of cocos command
+        executable getCocosCommandPath()
         args compileArgs
     }
 
