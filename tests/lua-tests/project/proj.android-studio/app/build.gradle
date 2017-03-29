@@ -74,7 +74,9 @@ android {
                     arguments 'NDK_DEBUG=0'
                 }
             }
-            signingConfig signingConfigs.release
+            if (project.hasProperty("RELEASE_STORE_FILE")) {
+                signingConfig signingConfigs.release
+            }
         }
         debug {
             externalNativeBuild {
