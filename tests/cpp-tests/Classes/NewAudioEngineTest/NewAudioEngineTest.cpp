@@ -1041,3 +1041,30 @@ void AudioPlayInFinishedCB::playMusic(const std::string& filename)
     }
 }
 
+//
+void AudioUncacheInFinishedCB::onEnter()
+{
+    AudioEngineTestDemo::onEnter();
+
+    int id = AudioEngine::play2d("background.mp3");
+    AudioEngine::setFinishCallback(id, [](int i, const std::string& str){
+        AudioEngine::uncacheAll();
+    });
+}
+
+void AudioUncacheInFinishedCB::onExit()
+{
+    AudioEngineTestDemo::onExit();
+}
+
+std::string AudioUncacheInFinishedCB::title() const
+{
+    return "UncacheAll in finshed callback";
+}
+
+std::string AudioUncacheInFinishedCB::subtitle() const
+{
+    return "Should not crash";
+}
+
+
