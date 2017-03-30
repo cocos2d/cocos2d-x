@@ -262,12 +262,6 @@ void EditBoxImplEmcc::createFromJS()
     UIEditBox_setPlaceholderColor(_id, _placeholderColor.r, _placeholderColor.g, _placeholderColor.b);
     UIEditBox_setOnEnterCalback(_id, static_cast<void*>(this), &EditBoxImplEmcc::onEnterCallback);
     
-    if (!_text.empty())
-        UIEditBox_setText(_id, _text.c_str());
-    
-    if (!_placeholderText.empty())
-        UIEditBox_setPlaceholder(_id, _placeholderText.c_str());
-    
     switch (_inputFlag)
     {
         case EditBox::InputFlag::PASSWORD:
@@ -290,6 +284,12 @@ void EditBoxImplEmcc::createFromJS()
     }
     
     adjustTextFieldPositionAndSize();
+
+    if (!_placeholderText.empty())
+        UIEditBox_setPlaceholder(_id, _placeholderText.c_str());
+
+    if (!_text.empty())
+        UIEditBox_setText(_id, _text.c_str());
 }
 
 void EditBoxImplEmcc::adjustTextFieldPositionAndSize()
