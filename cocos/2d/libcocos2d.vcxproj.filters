@@ -289,6 +289,9 @@
     <Filter Include="vr">
       <UniqueIdentifier>{5cbd879f-02ae-4f28-af33-2c4f980dd6f0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="external\md5">
+      <UniqueIdentifier>{d3d38486-e13f-47b4-96b0-51a7c78e6d69}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\physics\CCPhysicsBody.cpp">
@@ -2001,6 +2004,9 @@
     </ClCompile>
     <ClCompile Include="..\3d\CCPlane.cpp">
       <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\md5\md5.c">
+      <Filter>external\md5</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -3910,6 +3916,9 @@
     </ClInclude>
     <ClInclude Include="..\3d\CCPlane.h">
       <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\md5\md5.h">
+      <Filter>external\md5</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
