@@ -993,12 +993,6 @@
 		1A40D1511E8E56C7002E363A /* memorystream.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A40D0FC1E8E56C6002E363A /* memorystream.h */; };
 		1A40D1521E8E56C7002E363A /* memorystream.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A40D0FC1E8E56C6002E363A /* memorystream.h */; };
 		1A40D1531E8E56C7002E363A /* memorystream.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A40D0FC1E8E56C6002E363A /* memorystream.h */; };
-		1A40D1541E8E56C7002E363A /* inttypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A40D0FE1E8E56C6002E363A /* inttypes.h */; };
-		1A40D1551E8E56C7002E363A /* inttypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A40D0FE1E8E56C6002E363A /* inttypes.h */; };
-		1A40D1561E8E56C7002E363A /* inttypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A40D0FE1E8E56C6002E363A /* inttypes.h */; };
-		1A40D1571E8E56C7002E363A /* stdint.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A40D0FF1E8E56C6002E363A /* stdint.h */; };
-		1A40D1581E8E56C7002E363A /* stdint.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A40D0FF1E8E56C6002E363A /* stdint.h */; };
-		1A40D1591E8E56C7002E363A /* stdint.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A40D0FF1E8E56C6002E363A /* stdint.h */; };
 		1A40D15A1E8E56C7002E363A /* ostreamwrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A40D1001E8E56C6002E363A /* ostreamwrapper.h */; };
 		1A40D15B1E8E56C7002E363A /* ostreamwrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A40D1001E8E56C6002E363A /* ostreamwrapper.h */; };
 		1A40D15C1E8E56C7002E363A /* ostreamwrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A40D1001E8E56C6002E363A /* ostreamwrapper.h */; };
@@ -6029,8 +6023,6 @@
 		1A40D0FA1E8E56C6002E363A /* istreamwrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = istreamwrapper.h; sourceTree = "<group>"; };
 		1A40D0FB1E8E56C6002E363A /* memorybuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = memorybuffer.h; sourceTree = "<group>"; };
 		1A40D0FC1E8E56C6002E363A /* memorystream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = memorystream.h; sourceTree = "<group>"; };
-		1A40D0FE1E8E56C6002E363A /* inttypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = inttypes.h; sourceTree = "<group>"; };
-		1A40D0FF1E8E56C6002E363A /* stdint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stdint.h; sourceTree = "<group>"; };
 		1A40D1001E8E56C6002E363A /* ostreamwrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ostreamwrapper.h; sourceTree = "<group>"; };
 		1A40D1011E8E56C6002E363A /* pointer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pointer.h; sourceTree = "<group>"; };
 		1A40D1021E8E56C6002E363A /* prettywriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = prettywriter.h; sourceTree = "<group>"; };
@@ -8277,15 +8269,6 @@
 			path = internal;
 			sourceTree = "<group>";
 		};
-		1A40D0FD1E8E56C6002E363A /* msinttypes */ = {
-			isa = PBXGroup;
-			children = (
-				1A40D0FE1E8E56C6002E363A /* inttypes.h */,
-				1A40D0FF1E8E56C6002E363A /* stdint.h */,
-			);
-			path = msinttypes;
-			sourceTree = "<group>";
-		};
 		1A570046180BC59A0088DEC7 /* actions */ = {
 			isa = PBXGroup;
 			children = (
@@ -9279,7 +9262,6 @@
 				1A40D0FA1E8E56C6002E363A /* istreamwrapper.h */,
 				1A40D0FB1E8E56C6002E363A /* memorybuffer.h */,
 				1A40D0FC1E8E56C6002E363A /* memorystream.h */,
-				1A40D0FD1E8E56C6002E363A /* msinttypes */,
 				1A40D1001E8E56C6002E363A /* ostreamwrapper.h */,
 				1A40D1011E8E56C6002E363A /* pointer.h */,
 				1A40D1021E8E56C6002E363A /* prettywriter.h */,
@@ -11864,7 +11846,6 @@
 				382384151A259092002C4610 /* NodeReaderProtocol.h in Headers */,
 				B665E2DC1AA80A6500DDB1C5 /* CCPUJetAffectorTranslator.h in Headers */,
 				382384111A259092002C4610 /* NodeReaderDefine.h in Headers */,
-				1A40D1571E8E56C7002E363A /* stdint.h in Headers */,
 				50ABBD8D1925AB4100A911A9 /* CCGLProgram.h in Headers */,
 				5020A1A71D49912500E80C72 /* extension.h in Headers */,
 				50ABBEA11925AB6F00A911A9 /* CCScheduler.h in Headers */,
@@ -12678,7 +12659,6 @@
 				50F965571CD0360000ADE813 /* CCVRProtocol.h in Headers */,
 				50ABBEC71925AB6F00A911A9 /* etc1.h in Headers */,
 				B6CAB27B1AF9AA1A00B9B856 /* SphereTriangleDetector.h in Headers */,
-				1A40D1541E8E56C7002E363A /* inttypes.h in Headers */,
 				B665E2FC1AA80A6500DDB1C5 /* CCPUMaterialManager.h in Headers */,
 				15AE1BC619AAE00000C27E9E /* AssetsManager.h in Headers */,
 				50ABBEA91925AB6F00A911A9 /* CCTouch.h in Headers */,
@@ -12833,7 +12813,6 @@
 				507B3D681C31BDD30067B53E /* SingleNodeReader.h in Headers */,
 				1A40D15F1E8E56C7002E363A /* pointer.h in Headers */,
 				507B3D691C31BDD30067B53E /* CCPUDoPlacementParticleEventHandler.h in Headers */,
-				1A40D1591E8E56C7002E363A /* stdint.h in Headers */,
 				507B3D6A1C31BDD30067B53E /* gim_memory.h in Headers */,
 				507B3D6B1C31BDD30067B53E /* btGpu3DGridBroadphaseSharedDefs.h in Headers */,
 				50F965561CD0360000ADE813 /* CCVRGenericRenderer.h in Headers */,
@@ -12969,7 +12948,6 @@
 				507B3DDF1C31BDD30067B53E /* CCActionManager.h in Headers */,
 				50864C931C7BC1B000B3BAB1 /* chipmunk_private.h in Headers */,
 				507B3DE01C31BDD30067B53E /* CCPUObserverManager.h in Headers */,
-				1A40D1561E8E56C7002E363A /* inttypes.h in Headers */,
 				507B3DE11C31BDD30067B53E /* CCLayerLoader.h in Headers */,
 				507B3DE21C31BDD30067B53E /* PpuAddressSpace.h in Headers */,
 				507B3DE31C31BDD30067B53E /* btMultiSapBroadphase.h in Headers */,
@@ -13930,7 +13908,6 @@
 				50ABC0041926664800A911A9 /* CCLock-apple.h in Headers */,
 				1A40D15E1E8E56C7002E363A /* pointer.h in Headers */,
 				382384401A259140002C4610 /* SingleNodeReader.h in Headers */,
-				1A40D1581E8E56C7002E363A /* stdint.h in Headers */,
 				B665E2751AA80A6500DDB1C5 /* CCPUDoPlacementParticleEventHandler.h in Headers */,
 				B6CAB35C1AF9AA1A00B9B856 /* gim_memory.h in Headers */,
 				B6CAB43A1AF9AA1A00B9B856 /* btGpu3DGridBroadphaseSharedDefs.h in Headers */,
@@ -14066,7 +14043,6 @@
 				15AE192D19AAD35100C27E9E /* CCActionFrame.h in Headers */,
 				15AE192F19AAD35100C27E9E /* CCActionFrameEasing.h in Headers */,
 				1A570084180BC5A10088DEC7 /* CCActionManager.h in Headers */,
-				1A40D1551E8E56C7002E363A /* inttypes.h in Headers */,
 				50864C921C7BC1B000B3BAB1 /* chipmunk_private.h in Headers */,
 				B665E3151AA80A6500DDB1C5 /* CCPUObserverManager.h in Headers */,
 				15AE18C619AAD33D00C27E9E /* CCLayerLoader.h in Headers */,
