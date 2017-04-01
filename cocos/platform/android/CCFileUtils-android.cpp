@@ -251,6 +251,32 @@ bool FileUtilsAndroid::isAbsolutePath(const std::string& strPath) const
     return false;
 }
 
+long FileUtilsAndroid::getFileSize(const std::string& filepath)
+{
+    long size = FileUtils::getFileSize(filepath);
+    if (size != -1) {
+        return size;
+    }
+    
+    if (FileUtilsAndroid::assetmanager)
+    {
+        string relativePath = filepath;
+        if (filepath.find(_defaultResRootPath) == 0)
+        {
+            relativePath = filepath.substr(_defaultResRootPath.size());
+        }
+        
+        AAsset* asset = AAssetManager_open(FileUtilsAndroid::assetmanager, relativePath.data(), AASSET_MODE_UNKNOWN);
+        if (asset)
+        {
+            size = AAsset_getLength(asset);
+            AAsset_close(asset);
+        }
+    }
+    
+    return size;
+}
+
 FileUtils::Status FileUtilsAndroid::getContents(const std::string& filename, ResizableBuffer* buffer)
 {
     static const std::string apkprefix("assets/");
