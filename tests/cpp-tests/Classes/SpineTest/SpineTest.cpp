@@ -103,6 +103,7 @@ bool BatchingExample::init () {
                                        RandomHelper::random_int(xMin, xMax),
                                        RandomHelper::random_int(yMin, yMax)
                                        ));
+        skeletonNode->setScale(0.8);
         addChild(skeletonNode);
     }
     
@@ -137,6 +138,7 @@ bool GoblinsExample::init () {
     skeletonNode->setSkin("goblin");
     
     skeletonNode->setPosition(Vec2(_contentSize.width / 2, 20));
+    skeletonNode->setScale(0.6);
     addChild(skeletonNode);
     return true;
 }
@@ -170,6 +172,7 @@ bool RaptorExample::init () {
     skeletonNode->addAnimation(1, "gungrab", false, 2);
     
     skeletonNode->setPosition(Vec2(_contentSize.width / 2, 20));
+    skeletonNode->setScale(0.6);
     addChild(skeletonNode);
     return true;
 }
@@ -232,6 +235,7 @@ bool SpineboyExample::init () {
     // skeletonNode->runAction(RepeatForever::create(Sequence::create(FadeOut::create(1), FadeIn::create(1), DelayTime::create(5), NULL)));
     
     skeletonNode->setPosition(Vec2(_contentSize.width / 2, 20));
+    skeletonNode->setScale(0.8);
     addChild(skeletonNode);
     
     scheduleUpdate();
@@ -270,6 +274,7 @@ bool TankExample::init () {
     skeletonNode->setAnimation(0, "drive", true);
     
     skeletonNode->setPosition(Vec2(_contentSize.width / 2 + 400, 20));
+    skeletonNode->setScale(0.8);
     addChild(skeletonNode);
     
     return true;

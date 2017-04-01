@@ -26,7 +26,7 @@
 
 // CCConfig.js
 //
-cc.ENGINE_VERSION = "Cocos2d-JS v3.14";
+cc.ENGINE_VERSION = "Cocos2d-JS v3.15";
 
 cc.FIX_ARTIFACTS_BY_STRECHING_TEXEL = 0;
 cc.DIRECTOR_STATS_POSITION = {x: 0, y: 0};
@@ -2566,13 +2566,21 @@ cc.Layer.prototype.isBaked = function() {return false;};
 //
 cc.RenderTexture.prototype._beginWithClear = cc.RenderTexture.prototype.beginWithClear;
 cc.RenderTexture.prototype.beginWithClear = function(r, g, b, a, depthValue, stencilValue) {
-    arguments[0] /= 255;
-    arguments[1] /= 255;
-    arguments[2] /= 255;
-    arguments[3] /= 255;
-    this._beginWithClear.apply(this, arguments);
+    r /= 255;
+    g /= 255;
+    b /= 255;
+    a /= 255;
+    this._beginWithClear(r, g, b, a, depthValue, stencilValue);
 };
 
+cc.RenderTexture.prototype._clear = cc.RenderTexture.prototype.clear;
+cc.RenderTexture.prototype.clear = function(r, g, b, a) {
+    r /= 255;
+    g /= 255;
+    b /= 255;
+    a /= 255;
+    this._clear(r, g, b, a);
+};
 
 //
 // Texture2D setTexParameters

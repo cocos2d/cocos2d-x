@@ -52,18 +52,18 @@ void SchedulerAutoremove::onEnter()
 void SchedulerAutoremove::autoremove(float dt)
 {
     accum += dt;
-    CCLOG("Time: %f", accum);
+    CCLOG("autoremove scheduler: Time: %f", accum);
 
     if( accum > 3 )
     {
         unschedule(CC_SCHEDULE_SELECTOR(SchedulerAutoremove::autoremove));
-        CCLOG("scheduler removed");
+        CCLOG("autoremove scheduler: scheduler removed");
     }
 }
 
 void SchedulerAutoremove::tick(float /*dt*/)
 {
-    CCLOG("This scheduler should not be removed");
+    CCLOG("tick scheduler: This scheduler should not be removed");
 }
 
 std::string SchedulerAutoremove::title() const
