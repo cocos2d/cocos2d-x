@@ -1,3 +1,5 @@
+import org.apache.tools.ant.taskdefs.condition.Os
+
 apply plugin: 'com.android.application'
 
 android {
@@ -18,7 +20,17 @@ android {
                     targets 'lua_tests'
                     arguments 'NDK_TOOLCHAIN_VERSION=4.9'
                     arguments 'APP_PLATFORM=android-'+PROP_TARGET_SDK_VERSION
-                    arguments 'NDK_MODULE_PATH=../../../../..:../../../../../cocos:../../../../../external'
+                    
+                    def module_paths = [project.file("../../../../.."),
+                                        project.file("../../../../../cocos"),
+                                        project.file("../../../../../external")]
+                    if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+                        arguments 'NDK_MODULE_PATH=' + module_paths.join(";")
+                    }
+                    else {
+                        arguments 'NDK_MODULE_PATH=' + module_paths.join(':')
+                    }
+
                     arguments '-j' + Runtime.runtime.availableProcessors()
                     abiFilters.addAll(PROP_APP_ABI.split(':').collect{it as String})
                 }
@@ -42,8 +54,8 @@ android {
     }
 
     signingConfigs {
-
-       release {
+        release {
+            // this is needed for cocos command
             if (project.hasProperty("RELEASE_STORE_FILE")) {
                 storeFile file(RELEASE_STORE_FILE)
                 storePassword RELEASE_STORE_PASSWORD
@@ -57,33 +69,47 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            externalNativeBuild {
+                ndkBuild {
+                    arguments 'NDK_DEBUG=0'
+                }
+            }
             if (project.hasProperty("RELEASE_STORE_FILE")) {
                 signingConfig signingConfigs.release
             }
-
-            if (project.hasProperty('PROP_NDK_MODE') && PROP_NDK_MODE.compareTo('debug') == 0) {
-                externalNativeBuild {
-                    ndkBuild {
-                        arguments 'NDK_DEBUG=1'
-                    }
-                }
-            }
         }
-
         debug {
-            if (project.hasProperty('PROP_NDK_MODE') && PROP_NDK_MODE.compareTo('release') == 0) {
-                externalNativeBuild {
-                    ndkBuild {
-                        arguments 'NDK_DEBUG=0'
-                    }
+            externalNativeBuild {
+                ndkBuild {
+                    arguments 'NDK_DEBUG=1'
                 }
             }
         }
     }
 }
 
+
+def getCocosCommandPath() {
+    if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+        return 'cocos.bat'
+    }
+    else {
+        // on unix like system, can not get environments variables easily
+        // so run a shell script to get environment variable sets by cocos2d-x setup.py
+        new ByteArrayOutputStream().withStream { os ->
+            def result = exec {
+                executable = project.file('get_environment.sh')
+                standardOutput = os
+            }
+            ext.console_path = os.toString().trim()
+        }
+        return new File(console_path + '/cocos').absolutePath;
+    }
+}
+
 // a method used to invoke the cocos luacompile command
 def compileLua(srcDir, dstDir, doCompile, is64bit, doEncrypt) {
+
     def compileArgs = ['luacompile', '-s', srcDir, '-d', dstDir]
     if (!doCompile) {
         compileArgs << '--disable-compile'
@@ -100,10 +126,11 @@ def compileLua(srcDir, dstDir, doCompile, is64bit, doEncrypt) {
         compileArgs << project.property('PROP_LUA_ENCRYPT_SIGN')
     }
 
-    // commandLine compileArgs
+    // compile lua bytecode
     println 'running command : ' + 'cocos ' + compileArgs.join(' ')
     exec {
-        executable 'cocos'
+        // if you meet problem, just replace `getCocosCommandPath()` to the path of cocos command
+        executable getCocosCommandPath()
         args compileArgs
     }
 
@@ -122,12 +149,17 @@ android.applicationVariants.all { variant ->
            from "${buildDir}/../../../../res"
            into "${buildDir}/intermediates/assets/${variant.dirName}/res"
         }
+        copy {
+            from("${buildDir}/../../../../../cpp-tests/Resources") {
+                exclude "**/*.gz"
+            }
+            into "${buildDir}/intermediates/assets/${variant.dirName}/res"
+        }
 
         copy {
             from "${buildDir}/../../../../src"
             into "${buildDir}/intermediates/assets/${variant.dirName}/src"
         }
-
         copy {
             from "${buildDir}/../../../../../../cocos/scripting/lua-bindings/script"
             into  "${buildDir}/intermediates/assets/${variant.dirName}/src/cocos"
@@ -208,6 +240,6 @@ android.applicationVariants.all { variant ->
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     compile project(':libcocos2dx')
 }

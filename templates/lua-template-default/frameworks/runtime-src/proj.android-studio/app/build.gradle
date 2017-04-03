@@ -1,3 +1,5 @@
+import org.apache.tools.ant.taskdefs.condition.Os
+
 apply plugin: 'com.android.application'
 
 android {
@@ -18,7 +20,17 @@ android {
                     targets 'cocos2dlua'
                     arguments 'NDK_TOOLCHAIN_VERSION=4.9'
                     arguments 'APP_PLATFORM=android-'+PROP_TARGET_SDK_VERSION
-                    arguments 'NDK_MODULE_PATH=../../../cocos2d-x:../../../cocos2d-x/cocos:../../../cocos2d-x/external'
+
+                    def module_paths = [project.file("../../../cocos2d-x"),
+                                        project.file("../../../cocos2d-x/cocos"),
+                                        project.file("../../../cocos2d-x/external")]
+                    if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+                        arguments 'NDK_MODULE_PATH=' + module_paths.join(";")
+                    }
+                    else {
+                        arguments 'NDK_MODULE_PATH=' + module_paths.join(':')
+                    }
+
                     arguments '-j' + Runtime.runtime.availableProcessors()
                     abiFilters.addAll(PROP_APP_ABI.split(':').collect{it as String})
                 }
@@ -62,24 +74,38 @@ android {
                 signingConfig signingConfigs.release
             }
 
-            if (project.hasProperty('PROP_NDK_MODE') && PROP_NDK_MODE.compareTo('debug') == 0) {
-                externalNativeBuild {
-                    ndkBuild {
-                        arguments 'NDK_DEBUG=1'
-                    }
+            externalNativeBuild {
+                ndkBuild {
+                    arguments 'NDK_DEBUG=0'
                 }
             }
         }
 
         debug {
-            if (project.hasProperty('PROP_NDK_MODE') && PROP_NDK_MODE.compareTo('release') == 0) {
-                externalNativeBuild {
-                    ndkBuild {
-                        arguments 'NDK_DEBUG=0'
-                    }
+            externalNativeBuild {
+                ndkBuild {
+                    arguments 'NDK_DEBUG=1'
                 }
             }
         }
+    }
+}
+
+def getCocosCommandPath() {
+    if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+        return 'cocos.bat'
+    }
+    else {
+        // on unix like system, can not get environments variables easily
+        // so run a shell script to get environment variable sets by cocos2d-x setup.py
+        new ByteArrayOutputStream().withStream { os ->
+            def result = exec {
+                executable = project.file('get_environment.sh')
+                standardOutput = os
+            }
+            ext.console_path = os.toString().trim()
+        }
+        return new File(console_path + '/cocos').absolutePath;
     }
 }
 
@@ -104,7 +130,8 @@ def compileLua(srcDir, dstDir, doCompile, is64bit, doEncrypt) {
     // commandLine compileArgs
     println 'running command : ' + 'cocos ' + compileArgs.join(' ')
     exec {
-        executable 'cocos'
+        // if you meet problem, just replace `getCocosCommandPath()` to the path of cocos command
+        executable getCocosCommandPath()
         args compileArgs
     }
 

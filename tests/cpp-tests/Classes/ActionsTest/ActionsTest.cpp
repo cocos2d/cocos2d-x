@@ -92,7 +92,6 @@ ActionsTests::ActionsTests()
     ADD_TEST_CASE(ActionFloatTest);
     ADD_TEST_CASE(Issue14936_1);
     ADD_TEST_CASE(Issue14936_2);
-    ADD_TEST_CASE(SequenceWithFinalInstant);
 }
 
 std::string ActionsDemo::title() const
@@ -2396,6 +2395,7 @@ std::string ActionFloatTest::subtitle() const
 }
 
 
+<<<<<<< HEAD
 
 //------------------------------------------------------------------
 //
@@ -2462,3 +2462,5 @@ std::string SequenceWithFinalInstant::subtitle() const
 {
     return "Instant action should be run. See console.";
 }
+=======
+>>>>>>> 1f57542d687a8c1f207e175c092bb0555df06cbc

@@ -78,10 +78,11 @@ local function setEmitterPosition()
 end
 
 local function update(dt)
-	if emitter ~= nil then
-		local str = "" .. emitter:getParticleCount()
---  	labelAtlas:setString("" .. str)
-    end
+    -- emitter may be released, for example it invokes emitter:setAutoRemoveOnFinish(true)
+-- 	if emitter ~= nil then
+-- 		local str = "" .. emitter:getParticleCount()
+-- --  	labelAtlas:setString("" .. str)
+--     end
 end
 
 local function baseLayer_onEnterOrExit(tag)

@@ -71,24 +71,8 @@ set(TESTS_SRC
   Classes/EffectsAdvancedTest/EffectsAdvancedTest.cpp
   Classes/EffectsTest/EffectsTest.cpp
   Classes/ExtensionsTest/AssetsManagerExTest/AssetsManagerExTest.cpp
-  Classes/ExtensionsTest/CocosBuilderTest/AnimationsTest/AnimationsTestLayer.cpp
-  Classes/ExtensionsTest/CocosBuilderTest/ButtonTest/ButtonTestLayer.cpp
-  Classes/ExtensionsTest/CocosBuilderTest/CocosBuilderTest.cpp
-  Classes/ExtensionsTest/CocosBuilderTest/HelloCocosBuilder/HelloCocosBuilderLayer.cpp
-  Classes/ExtensionsTest/CocosBuilderTest/MenuTest/MenuTestLayer.cpp
-  Classes/ExtensionsTest/CocosBuilderTest/TestHeader/TestHeaderLayer.cpp
-  Classes/ExtensionsTest/CocosBuilderTest/TimelineCallbackTest/TimelineCallbackTestLayer.cpp
-  Classes/ExtensionsTest/ControlExtensionTest/CCControlButtonTest/CCControlButtonTest.cpp
-  Classes/ExtensionsTest/ControlExtensionTest/CCControlColourPicker/CCControlColourPickerTest.cpp
-  Classes/ExtensionsTest/ControlExtensionTest/CCControlPotentiometerTest/CCControlPotentiometerTest.cpp
-  Classes/ExtensionsTest/ControlExtensionTest/CCControlScene.cpp
-  Classes/ExtensionsTest/ControlExtensionTest/CCControlSceneManager.cpp
-  Classes/ExtensionsTest/ControlExtensionTest/CCControlSliderTest/CCControlSliderTest.cpp
-  Classes/ExtensionsTest/ControlExtensionTest/CCControlStepperTest/CCControlStepperTest.cpp
-  Classes/ExtensionsTest/ControlExtensionTest/CCControlSwitchTest/CCControlSwitchTest.cpp
   Classes/ExtensionsTest/ExtensionsTest.cpp
   Classes/ExtensionsTest/NetworkTest/HttpClientTest.cpp
-  Classes/ExtensionsTest/NotificationCenterTest/NotificationCenterTest.cpp
   Classes/ExtensionsTest/TableViewTest/CustomTableViewCell.cpp
   Classes/ExtensionsTest/TableViewTest/TableViewTestScene.cpp
   Classes/FileUtilsTest/FileUtilsTest.cpp
@@ -168,7 +152,6 @@ set(TESTS_SRC
   Classes/ZwoptexTest/ZwoptexTest.cpp
   Classes/SpriteFrameCacheTest/SpriteFrameCacheTest.cpp
   Classes/controller.cpp
-  Classes/testBasic.cpp
   Classes/VRTest/VRTest.cpp
   Classes/VRTest/VRTest.h
   ${PLATFORM_SRC}
