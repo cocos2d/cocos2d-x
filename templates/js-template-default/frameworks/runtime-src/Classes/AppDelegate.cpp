@@ -1,6 +1,5 @@
 #include "AppDelegate.h"
 
-#include "audio/include/SimpleAudioEngine.h"
 #include "scripting/js-bindings/auto/jsb_cocos2dx_3d_auto.hpp"
 #include "scripting/js-bindings/auto/jsb_cocos2dx_3d_extension_auto.hpp"
 #include "scripting/js-bindings/auto/jsb_cocos2dx_auto.hpp"
@@ -44,8 +43,22 @@
 #include "cocos/scripting/js-bindings/manual/platform/ios/JavaScriptObjCBridge.h"
 #endif
 
-USING_NS_CC;
+// #define USE_AUDIO_ENGINE 1
+// #define USE_SIMPLE_AUDIO_ENGINE 1
+
+#if USE_AUDIO_ENGINE && USE_SIMPLE_AUDIO_ENGINE
+#error "Don't use AudioEngine and SimpleAudioEngine at the same time. Please just select one in your game!"
+#endif
+
+#if USE_AUDIO_ENGINE
+#include "audio/include/AudioEngine.h"
+using namespace cocos2d::experimental;
+#elif USE_SIMPLE_AUDIO_ENGINE
+#include "audio/include/SimpleAudioEngine.h"
 using namespace CocosDenshion;
+#endif
+
+USING_NS_CC;
 
 AppDelegate::AppDelegate()
 {
@@ -53,6 +66,11 @@ AppDelegate::AppDelegate()
 
 AppDelegate::~AppDelegate()
 {
+#if USE_AUDIO_ENGINE
+    AudioEngine::end();
+#elif USE_SIMPLE_AUDIO_ENGINE
+    SimpleAudioEngine::end();
+#endif
     ScriptEngineManager::destroyInstance();
 }
 
@@ -171,8 +189,13 @@ void AppDelegate::applicationDidEnterBackground()
     auto director = Director::getInstance();
     director->stopAnimation();
     director->getEventDispatcher()->dispatchCustomEvent("game_on_hide");
+
+#if USE_AUDIO_ENGINE
+    AudioEngine::pauseAll();
+#elif USE_SIMPLE_AUDIO_ENGINE
     SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
     SimpleAudioEngine::getInstance()->pauseAllEffects();
+#endif
 }
 
 // this function will be called when the app is active again
@@ -181,6 +204,11 @@ void AppDelegate::applicationWillEnterForeground()
     auto director = Director::getInstance();
     director->startAnimation();
     director->getEventDispatcher()->dispatchCustomEvent("game_on_show");
+
+#if USE_AUDIO_ENGINE
+    AudioEngine::resumeAll();
+#elif USE_SIMPLE_AUDIO_ENGINE
     SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
     SimpleAudioEngine::getInstance()->resumeAllEffects();
+#endif
 }

@@ -386,6 +386,7 @@ Console::Console()
 : _listenfd(-1)
 , _running(false)
 , _endThread(false)
+, _isIpv6Server(false)
 , _sendDebugStrings(false)
 , _bindAddress("")
 {
@@ -479,21 +480,22 @@ bool Console::listenOnTCP(int port)
     listen(listenfd, 50);
 
     if (res->ai_family == AF_INET) {
-        char buf[INET_ADDRSTRLEN] = "";
+        _isIpv6Server = false;
+        char buf[INET_ADDRSTRLEN] = {0};
         struct sockaddr_in *sin = (struct sockaddr_in*) res->ai_addr;
         if( inet_ntop(res->ai_family, &sin->sin_addr, buf, sizeof(buf)) != nullptr )
-            cocos2d::log("Console: listening on  %s : %d", buf, ntohs(sin->sin_port));
+            cocos2d::log("Console: IPV4 server is listening on %s:%d", buf, ntohs(sin->sin_port));
         else
             perror("inet_ntop");
     } else if (res->ai_family == AF_INET6) {
-        char buf[INET6_ADDRSTRLEN] = "";
+        _isIpv6Server = true;
+        char buf[INET6_ADDRSTRLEN] = {0};
         struct sockaddr_in6 *sin = (struct sockaddr_in6*) res->ai_addr;
         if( inet_ntop(res->ai_family, &sin->sin6_addr, buf, sizeof(buf)) != nullptr )
-            cocos2d::log("Console: listening on  %s : %d", buf, ntohs(sin->sin6_port));
+            cocos2d::log("Console: IPV6 server is listening on [%s]:%d", buf, ntohs(sin->sin6_port));
         else
             perror("inet_ntop");
     }
-
 
     freeaddrinfo(ressave);
     return listenOnFileDescriptor(listenfd);
@@ -603,6 +605,11 @@ void Console::setBindAddress(const std::string &address)
     _bindAddress = address;
 }
 
+bool Console::isIpv6Server() const
+{
+    return _isIpv6Server;
+}
+
 //
 // Main Loop
 //
@@ -633,7 +640,7 @@ void Console::loop()
         {
             /* error */
             if(errno != EINTR)
-                log("Abnormal error in select()\n");
+                cocos2d::log("Abnormal error in select()\n");
             continue;
         }
         else if( nready == 0 )
@@ -857,12 +864,13 @@ bool Console::parseCommand(int fd)
 
 void Console::addClient()
 {
-    struct sockaddr client;
-    socklen_t client_len;
+    struct sockaddr_in6 ipv6Addr;
+    struct sockaddr_in ipv4Addr;
+    struct sockaddr* addr = _isIpv6Server ? (struct sockaddr*)&ipv6Addr : (struct sockaddr*)&ipv4Addr;
+    socklen_t addrLen = _isIpv6Server ? sizeof(ipv6Addr) : sizeof(ipv4Addr);
     
     /* new client */
-    client_len = sizeof( client );
-    int fd = accept(_listenfd, (struct sockaddr *)&client, &client_len );
+    int fd = accept(_listenfd, addr, &addrLen);
     
     // add fd to list of FD
     if( fd != -1 ) {
@@ -1338,23 +1346,24 @@ static char invalid_filename_char[] = {':', '/', '\\', '?', '%', '*', '<', '>', 
 void Console::commandUpload(int fd)
 {
     ssize_t n, rc;
-    char buf[512], c;
+    char buf[512] = {0};
+    char c = 0;
     char *ptr = buf;
     //read file name
     for( n = 0; n < sizeof(buf) - 1; n++ )
     {
-        if( (rc = recv(fd, &c, 1, 0)) ==1 ) 
+        if( (rc = recv(fd, &c, 1, 0)) == 1 )
         {
             for(char x : invalid_filename_char)
             {
-                if(c == x)
+                if (c == x)
                 {
                     const char err[] = "upload: invalid file name!\n";
                     Console::Utility::sendToConsole(fd, err, strlen(err));
                     return;
                 }
             }
-            if(c == ' ') 
+            if (c == ' ')
             {
                 break;
             }
@@ -1385,8 +1394,8 @@ void Console::commandUpload(int fd)
         Console::Utility::sendToConsole(fd, err, strlen(err));
         return;
     }
-    
-    while (true) 
+
+    while (true)
     {
         char data[4];
         for(int i = 0; i < 4; i++)
@@ -1402,9 +1411,9 @@ void Console::commandUpload(int fd)
         unsigned char *decode;
         unsigned char *in = (unsigned char *)data;
         int dt = base64Decode(in, 4, &decode);
-        for(int i = 0; i < dt; i++)
+        if (dt > 0)
         {
-            fwrite(decode+i, 1, 1, fp);
+            fwrite(decode, dt, 1, fp);
         }
         free(decode);
     }

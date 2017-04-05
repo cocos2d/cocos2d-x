@@ -19,7 +19,7 @@ function WebViewTest:init()
 
     local winSize = cc.Director:getInstance():getVisibleSize()
     self._webView = ccexp.WebView:create()
-    self._webView:setPosition(winSize.width / 2, winSize.height / 2 - 40)
+    self._webView:setPosition(winSize.width / 2, winSize.height / 2)
     self._webView:setContentSize(winSize.width / 2,  winSize.height / 2)
     self._webView:loadURL("https://www.baidu.com")
     self._webView:setScalesPageToFit(true)

@@ -92,7 +92,6 @@ ActionsTests::ActionsTests()
     ADD_TEST_CASE(ActionFloatTest);
     ADD_TEST_CASE(Issue14936_1);
     ADD_TEST_CASE(Issue14936_2);
-    ADD_TEST_CASE(SequenceWithFinalInstant);
 }
 
 std::string ActionsDemo::title() const

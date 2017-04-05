@@ -35,7 +35,7 @@ void TestResolutionDirectories::onEnter()
     std::string ret;
 
     sharedFileUtils->purgeCachedEntries();
-    _defaultSearchPathArray = sharedFileUtils->getSearchPaths();
+    _defaultSearchPathArray = sharedFileUtils->getOriginalSearchPaths();
     std::vector<std::string> searchPaths = _defaultSearchPathArray;
     searchPaths.insert(searchPaths.begin(),   "Misc");
     sharedFileUtils->setSearchPaths(searchPaths);
@@ -89,7 +89,7 @@ void TestSearchPath::onEnter()
     std::string ret;
 
     sharedFileUtils->purgeCachedEntries();
-    _defaultSearchPathArray = sharedFileUtils->getSearchPaths();
+    _defaultSearchPathArray = sharedFileUtils->getOriginalSearchPaths();
     std::vector<std::string> searchPaths = _defaultSearchPathArray;
     std::string writablePath = sharedFileUtils->getWritablePath();
     std::string fileName = writablePath+"external.txt";
@@ -139,7 +139,7 @@ void TestSearchPath::onEnter()
 
     // Save old resource root path
     std::string oldDefaultRootPath = sharedFileUtils->getDefaultResourceRootPath();
-    sharedFileUtils->setDefaultResourceRootPath("extensions");
+    sharedFileUtils->setDefaultResourceRootPath(oldDefaultRootPath + "extensions");
     auto sp1 = Sprite::create("orange_edit.png");
     sp1->setPosition(VisibleRect::center());
     addChild(sp1);
@@ -147,7 +147,7 @@ void TestSearchPath::onEnter()
     // Recover resource root path
     sharedFileUtils->setDefaultResourceRootPath(oldDefaultRootPath);
 
-    auto oldSearchPaths = sharedFileUtils->getSearchPaths();
+    auto oldSearchPaths = sharedFileUtils->getOriginalSearchPaths();
     sharedFileUtils->addSearchPath("Images");
     auto sp2 = Sprite::create("btn-about-normal.png");
     sp2->setPosition(VisibleRect::center() + Vec2(0, -50));

@@ -374,6 +374,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\openssl\prebuilt\win32\*.*" "$(OutDir)"
     <ClCompile Include="..\..\external\flatbuffers\idl_parser.cpp" />
     <ClCompile Include="..\..\external\flatbuffers\reflection.cpp" />
     <ClCompile Include="..\..\external\flatbuffers\util.cpp" />
+    <ClCompile Include="..\..\external\md5\md5.c" />
     <ClCompile Include="..\..\external\poly2tri\common\shapes.cc" />
     <ClCompile Include="..\..\external\poly2tri\sweep\advancing_front.cc" />
     <ClCompile Include="..\..\external\poly2tri\sweep\cdt.cc" />
@@ -959,6 +960,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\openssl\prebuilt\win32\*.*" "$(OutDir)"
     <ClInclude Include="..\..\external\json\reader.h" />
     <ClInclude Include="..\..\external\json\stringbuffer.h" />
     <ClInclude Include="..\..\external\json\writer.h" />
+    <ClInclude Include="..\..\external\md5\md5.h" />
     <ClInclude Include="..\..\external\poly2tri\common\shapes.h" />
     <ClInclude Include="..\..\external\poly2tri\common\utils.h" />
     <ClInclude Include="..\..\external\poly2tri\poly2tri.h" />
