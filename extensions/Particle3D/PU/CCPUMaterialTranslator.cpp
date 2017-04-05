@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2015-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -226,7 +226,7 @@ void PUMaterialPassTranslator::translate( PUScriptCompiler* compiler, PUAbstract
                 PUAbstractNodeList::const_iterator end = prop->values.end();
                 unsigned int n = 0;
                 Vec4 color;
-                float shininess;
+                float shininess = 0.0f;
                 while(it != end)
                 {
                     float v = 0;

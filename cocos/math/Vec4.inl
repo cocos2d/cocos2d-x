@@ -23,7 +23,7 @@
 
 NS_CC_MATH_BEGIN
 
-inline const Vec4 Vec4::operator+(const Vec4& v) const
+inline Vec4 Vec4::operator+(const Vec4& v) const
 {
     Vec4 result(*this);
     result.add(v);
@@ -36,7 +36,7 @@ inline Vec4& Vec4::operator+=(const Vec4& v)
     return *this;
 }
 
-inline const Vec4 Vec4::operator-(const Vec4& v) const
+inline Vec4 Vec4::operator-(const Vec4& v) const
 {
     Vec4 result(*this);
     result.subtract(v);
@@ -49,14 +49,14 @@ inline Vec4& Vec4::operator-=(const Vec4& v)
     return *this;
 }
 
-inline const Vec4 Vec4::operator-() const
+inline Vec4 Vec4::operator-() const
 {
     Vec4 result(*this);
     result.negate();
     return result;
 }
 
-inline const Vec4 Vec4::operator*(float s) const
+inline Vec4 Vec4::operator*(float s) const
 {
     Vec4 result(*this);
     result.scale(s);
@@ -69,7 +69,7 @@ inline Vec4& Vec4::operator*=(float s)
     return *this;
 }
 
-inline const Vec4 Vec4::operator/(const float s) const
+inline Vec4 Vec4::operator/(const float s) const
 {
     return Vec4(this->x / s, this->y / s, this->z / s, this->w / s);
 }
@@ -80,7 +80,7 @@ inline bool Vec4::operator<(const Vec4& v) const
     {
         if (y == v.y)
         {
-            if (z < v.z)
+            if (z == v.z)
             {
                 if (w < v.w)
                 {
@@ -104,7 +104,7 @@ inline bool Vec4::operator!=(const Vec4& v) const
     return x!=v.x || y!=v.y || z!=v.z || w!=v.w;
 }
 
-inline const Vec4 operator*(float x, const Vec4& v)
+inline Vec4 operator*(float x, const Vec4& v)
 {
     Vec4 result(v);
     result.scale(x);

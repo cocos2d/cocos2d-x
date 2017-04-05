@@ -22,12 +22,16 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "GameMapReader.h"
+#include "editor-support/cocostudio/WidgetReader/GameMapReader/GameMapReader.h"
 
+#include "2d/CCLabel.h"
 #include "2d/CCTMXXMLParser.h"
+#include "2d/CCTMXTiledMap.h"
+#include "platform/CCFileUtils.h"
+#include "deprecated/CCString.h"
 
-#include "cocostudio/CSParseBinary_generated.h"
-#include "cocostudio/WidgetReader/NodeReader/NodeReader.h"
+#include "editor-support/cocostudio/CSParseBinary_generated.h"
+#include "editor-support/cocostudio/WidgetReader/NodeReader/NodeReader.h"
 
 #include "tinyxml2.h"
 #include "flatbuffers/flatbuffers.h"
@@ -55,13 +59,13 @@ namespace cocostudio
     {
         if (!_instanceTMXTiledMapReader)
         {
-            _instanceTMXTiledMapReader = new GameMapReader();
+            _instanceTMXTiledMapReader = new (std::nothrow) GameMapReader();
         }
         
         return _instanceTMXTiledMapReader;
     }
     
-    void GameMapReader::purge()
+    void GameMapReader::destroyInstance()
     {
         CC_SAFE_DELETE(_instanceTMXTiledMapReader);
     }
@@ -235,16 +239,16 @@ namespace cocostudio
             tmx = TMXTiledMap::create(path);
             if (tmx)
             {
+                //prevent that editor's data does not match in size and resources
+                Size fileSize = tmx->getContentSize();
                 setPropsWithFlatBuffers(tmx, (Table*)gameMapOptions);
+                tmx->setContentSize(fileSize);
             }
         }
         else
         {
             Node* node = Node::create();
             setPropsWithFlatBuffers(node, (Table*)gameMapOptions);
-            auto label = Label::create();
-            label->setString(__String::createWithFormat("%s missed", errorFilePath.c_str())->getCString());
-            node->addChild(label);
             return node;
         }
         

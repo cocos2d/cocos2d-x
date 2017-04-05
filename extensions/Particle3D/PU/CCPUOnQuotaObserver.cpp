@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2015-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -29,12 +29,12 @@
 NS_CC_BEGIN
 
 //-----------------------------------------------------------------------
-bool PUOnQuotaObserver::observe (PUParticle3D* particle, float timeElapsed)
+bool PUOnQuotaObserver::observe (PUParticle3D* /*particle*/, float /*timeElapsed*/)
 {
     return _result;
 }
 //-----------------------------------------------------------------------
-void PUOnQuotaObserver::postUpdateObserver(float deltaTime)
+void PUOnQuotaObserver::postUpdateObserver(float /*deltaTime*/)
 {
     _result = false;
     unsigned int quota = 0;
@@ -63,7 +63,7 @@ void PUOnQuotaObserver::postUpdateObserver(float deltaTime)
         }
 
         //_result = particleTechnique->getNumberOfEmittedParticles(_particleTypeToObserve) >= quota;
-        _result = static_cast<PUParticleSystem3D *>(_particleSystem)->getAliveParticleCount() >= quota;
+        _result = static_cast<PUParticleSystem3D *>(_particleSystem)->getAliveParticleCount() >= (int)quota;
     }
     else
     {
@@ -77,7 +77,7 @@ void PUOnQuotaObserver::postUpdateObserver(float deltaTime)
             + static_cast<PUParticleSystem3D *>(_particleSystem)->getEmittedEmitterQuota()
             + static_cast<PUParticleSystem3D *>(_particleSystem)->getEmittedSystemQuota();
         //_result = particleTechnique->getNumberOfEmittedParticles() >= quota;
-        _result = static_cast<PUParticleSystem3D *>(_particleSystem)->getAliveParticleCount() >= quota;
+        _result = static_cast<PUParticleSystem3D *>(_particleSystem)->getAliveParticleCount() >= (int)quota;
     }
 }
 

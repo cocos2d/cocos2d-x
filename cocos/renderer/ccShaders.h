@@ -1,7 +1,7 @@
 /****************************************************************************
 Copyright (c) 2011      Zynga Inc.
 Copyright (c) 2012 		cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -23,18 +23,20 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
+
 #ifndef __CCSHADER_H__
 #define __CCSHADER_H__
+/// @cond DO_NOT_SHOW
 
 #include "platform/CCGL.h"
 #include "platform/CCPlatformMacros.h"
 
-NS_CC_BEGIN
-
 /**
- * @addtogroup shaders
+ * @addtogroup renderer
  * @{
  */
+
+NS_CC_BEGIN
 
 extern CC_DLL const GLchar * ccPosition_uColor_frag;
 extern CC_DLL const GLchar * ccPosition_uColor_vert;
@@ -64,6 +66,8 @@ extern CC_DLL const GLchar * ccPositionTexture_uColor_vert;
 extern CC_DLL const GLchar * ccPositionColorLengthTexture_frag;
 extern CC_DLL const GLchar * ccPositionColorLengthTexture_vert;
 
+extern CC_DLL const GLchar * ccPositionTexture_GrayScale_frag;
+
 extern CC_DLL const GLchar * ccLabelDistanceFieldNormal_frag;
 extern CC_DLL const GLchar * ccLabelDistanceFieldGlow_frag;
 extern CC_DLL const GLchar * ccLabelNormal_frag;
@@ -82,9 +86,19 @@ extern CC_DLL const GLchar * cc3D_ColorNormal_frag;
 extern CC_DLL const GLchar * cc3D_Particle_vert;
 extern CC_DLL const GLchar * cc3D_Particle_tex_frag;
 extern CC_DLL const GLchar * cc3D_Particle_color_frag;
-// end of shaders group
-/// @}
-
+extern CC_DLL const GLchar * cc3D_Skybox_vert;
+extern CC_DLL const GLchar * cc3D_Skybox_frag;
+extern CC_DLL const GLchar * cc3D_Terrain_vert;
+extern CC_DLL const GLchar * cc3D_Terrain_frag;
+extern CC_DLL const GLchar * ccCameraClearVert;
+extern CC_DLL const GLchar * ccCameraClearFrag;
+// ETC1 ALPHA supports.
+extern CC_DLL const GLchar* ccETC1ASPositionTextureColor_frag;
+extern CC_DLL const char* ccETC1ASPositionTextureGray_frag;
 NS_CC_END
-
+/**
+ end of support group
+ @}
+ */
+/// @endcond
 #endif /* __CCSHADER_H__ */

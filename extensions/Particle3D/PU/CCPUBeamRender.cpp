@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2015-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -141,7 +141,7 @@ void PUBeamRender::particleEmitted( PUParticleSystem3D* particleSystem, PUPartic
     }
 }
 
-void PUBeamRender::particleExpired( PUParticleSystem3D* particleSystem, PUParticle3D* particle )
+void PUBeamRender::particleExpired( PUParticleSystem3D* /*particleSystem*/, PUParticle3D* particle )
 {
     if (particle->visualData)
     {
@@ -272,8 +272,8 @@ void PUBeamRender::prepare()
         for (size_t numDev = 0; numDev < _numberOfSegments; ++numDev)
         {
             // Initialise the positions
-            visualData->half[numDev] = Vec3::ZERO;
-            visualData->destinationHalf[numDev] = Vec3::ZERO;
+            visualData->half[numDev].setZero();
+            visualData->destinationHalf[numDev].setZero();
         }
         _allVisualData.push_back(visualData); // Managed by this renderer
         _visualData.push_back(visualData); // Used to assign to a particle
@@ -285,7 +285,7 @@ void PUBeamRender::unPrepare()
     destroyAll();
 }
 
-void PUBeamRender::updateRender( PUParticle3D *particle, float deltaTime, bool firstParticle )
+void PUBeamRender::updateRender( PUParticle3D *particle, float deltaTime, bool /*firstParticle*/ )
 {
     if (!particle->visualData)
         return;
@@ -357,10 +357,9 @@ PUBeamRender* PUBeamRender::clone()
     return br;
 }
 
-void PUBeamRender::copyAttributesTo( PURender *render )
+void PUBeamRender::copyAttributesTo(PUBeamRender *beamRender)
 {
-    PURender::copyAttributesTo(render);
-    PUBeamRender *beamRender = static_cast<PUBeamRender*>(render);
+    PURender::copyAttributesTo(beamRender);
     beamRender->setUseVertexColours(_useVertexColours);
     beamRender->setMaxChainElements(_maxChainElements);
     beamRender->setUpdateInterval(_updateInterval);

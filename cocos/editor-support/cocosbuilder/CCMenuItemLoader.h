@@ -4,7 +4,7 @@
 #include "base/CCRef.h"
 #include "2d/CCMenuItem.h"
 
-#include "CCLayerLoader.h"
+#include "editor-support/cocosbuilder/CCLayerLoader.h"
 
 namespace cocosbuilder {
 

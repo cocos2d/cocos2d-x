@@ -1,6 +1,6 @@
 /****************************************************************************
- Copyright (c) 2013 Chris Hannon http://www.channon.us
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2015 Chris Hannon http://www.channon.us
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -59,10 +59,16 @@ in the onClose method the pointer should be set to NULL or used to connect to a 
 #ifndef __CC_SOCKETIO_H__
 #define __CC_SOCKETIO_H__
 
+#include <string>
+#include <unordered_map>
 #include "platform/CCPlatformMacros.h"
 #include "base/CCMap.h"
 
-#include <string>
+
+/**
+ * @addtogroup network
+ * @{
+ */
 
 NS_CC_BEGIN
 
@@ -98,34 +104,34 @@ public:
         /** Destructor of SIODelegate. */
         virtual ~SIODelegate() {}
         /**
-         * Pure virtual callback function, this function should be overrided by the subclass.
-         * 
-         * This function would be called when the related SIOClient object recevie messages that mean it have connected to endpoint sucessfully.
+         * This is kept for backwards compatibility, connect is now fired as a socket.io event "connect"
+         *
+         * This function would be called when the related SIOClient object receive messages that mean it have connected to endpoint successfully.
          *
          * @param client the connected SIOClient object.
          */
-        virtual void onConnect(SIOClient* client) = 0;
+        virtual void onConnect(SIOClient* client) { CCLOG("SIODelegate onConnect fired"); };
         /**
-         * Pure virtual callback function, this function should be overrided by the subclass.
+         * This is kept for backwards compatibility, message is now fired as a socket.io event "message"
          *
-         * This function would be called wwhen the related SIOClient object recevie message or json message.
+         * This function would be called when the related SIOClient object receive message or json message.
          *
          * @param client the connected SIOClient object.
          * @param data the message,it could be json message
          */
-        virtual void onMessage(SIOClient* client, const std::string& data) = 0;
+        virtual void onMessage(SIOClient* client, const std::string& data) { CCLOG("SIODelegate onMessage fired with data: %s", data.c_str()); };
         /**
-         * Pure virtual callback function, this function should be overrided by the subclass.
+         * Pure virtual callback function, this function should be overridden by the subclass.
          *
-         * This function would be called when the related SIOClient object disconnect or recevie disconnect signal.
+         * This function would be called when the related SIOClient object disconnect or receive disconnect signal.
          *
          * @param client the connected SIOClient object.
          */
         virtual void onClose(SIOClient* client) = 0;
         /**
-         * Pure virtual callback function, this function should be overrided by the subclass.
+         * Pure virtual callback function, this function should be overridden by the subclass.
          *
-         * This function would be called wwhen the related SIOClient object recevie error signal or didn't connect the endpoint but do some network operation,eg.,send and emit,etc.
+         * This function would be called when the related SIOClient object receive error signal or didn't connect the endpoint but do some network operation, eg.,send and emit,etc.
          *
          * @param client the connected SIOClient object.
          * @param data the error message
@@ -151,6 +157,15 @@ public:
 
     /**
      *  Static client creation method, similar to socketio.connect(uri) in JS.
+     *  @param  uri      the URI of the socket.io server.
+     *  @param  delegate the delegate which want to receive events from the socket.io client.
+     *  @param caFilePath The ca file path for wss connection
+     *  @return SIOClient* an initialized SIOClient if connected successfully, otherwise nullptr.
+     */
+    static SIOClient* connect(const std::string& uri, SocketIO::SIODelegate& delegate, const std::string& caFilePath);
+
+    /**
+     *  Static client creation method, similar to socketio.connect(uri) in JS.
      *  @param  delegate the delegate which want to receive events from the socket.io client.
      *  @param  uri      the URI of the socket.io server.
      *  @return SIOClient* an initialized SIOClient if connected successfully, otherwise nullptr.
@@ -160,7 +175,7 @@ public:
 private:
 
     SocketIO();
-    virtual ~SocketIO(void);
+    virtual ~SocketIO();
 
     static SocketIO *_inst;
 
@@ -189,8 +204,9 @@ class CC_DLL SIOClient
     : public cocos2d::Ref
 {
 private:
-    int _port;
-    std::string _host, _path, _tag;
+    friend class SocketIO; // Only SocketIO class could contruct a SIOClient instance.
+
+    std::string _path, _tag;
     bool _connected;
     SIOClientImpl* _socket;
 
@@ -202,13 +218,12 @@ private:
 
     void onOpen();
     void onConnect();
-    void receivedDisconnect();
+    void socketClosed();
 
     friend class SIOClientImpl;
 
-public:
     /**
-     * Construtor of SIOClient class.
+     * Constructor of SIOClient class.
      *
      * @param host the string that represent the host address.
      * @param port the int value represent the port number.
@@ -216,12 +231,13 @@ public:
      * @param impl the SIOClientImpl object.
      * @param delegate the SIODelegate object.
      */
-    SIOClient(const std::string& host, int port, const std::string& path, SIOClientImpl* impl, SocketIO::SIODelegate& delegate);
+    SIOClient(const std::string& path, SIOClientImpl* impl, SocketIO::SIODelegate& delegate);
     /**
-     * Destructior of SIOClient class.
+     * Destructor of SIOClient class.
      */
-    virtual ~SIOClient(void);
+    virtual ~SIOClient();
 
+public:
     /**
      * Get the delegate for the client
      * @return the delegate object for the client
@@ -237,38 +253,36 @@ public:
      *
      * @param s message.
      */
-    void send(std::string s);
+    void send(const std::string& s);
     /**
      *  Emit the eventname and the args to the endpoint that _path point to.
      * @param eventname
      * @param args
      */
-    void emit(std::string eventname, std::string args);
+    void emit(const std::string& eventname, const std::string& args);
     /**
      * Used to register a socket.io event callback.
      * Event argument should be passed using CC_CALLBACK2(&Base::function, this).
-     * @param eventName.
+     * @param eventName the name of event.
      * @param e the callback function.
      */
     void on(const std::string& eventName, SIOEvent e);
-    
+
     /**
      * Set tag of SIOClient.
      * The tag is used to distinguish the various SIOClient objects.
      * @param tag string object.
      */
-    inline void setTag(const char* tag)
-    {
-        _tag = tag;
-    };
+    void setTag(const char* tag);
+
     /**
      * Get tag of SIOClient.
      * @return const char* the pointer point to the _tag.
      */
-    inline const char* getTag()
+    const char* getTag()
     {
         return _tag.c_str();
-    };
+    }
 
 };
 
@@ -276,4 +290,8 @@ public:
 
 NS_CC_END
 
+// end group
+/// @}
+
 #endif /* defined(__CC_JSB_SOCKETIO_H__) */
+

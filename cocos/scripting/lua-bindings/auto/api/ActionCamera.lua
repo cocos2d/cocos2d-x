@@ -66,7 +66,8 @@
 -- @return ActionCamera#ActionCamera ret (return value: cc.ActionCamera)
         
 --------------------------------
--- js ctor
+-- js ctor<br>
+-- lua new
 -- @function [parent=#ActionCamera] ActionCamera 
 -- @param self
 -- @return ActionCamera#ActionCamera self (return value: cc.ActionCamera)

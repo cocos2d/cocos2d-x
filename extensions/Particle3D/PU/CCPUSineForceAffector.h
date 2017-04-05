@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2015-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -46,12 +46,12 @@ public:
 
     /** 
     */
-    const float getFrequencyMin(void) const;
+    float getFrequencyMin() const;
     void setFrequencyMin(const float frequencyMin);
 
     /** 
     */
-    const float getFrequencyMax(void) const;
+    float getFrequencyMax() const;
     void setFrequencyMax(const float frequencyMax);
 
     virtual void copyAttributesTo (PUAffector* affector) override;

@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2014-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCPlane.h"
+#include "3d/CCPlane.h"
 
 NS_CC_BEGIN
 

@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  Copyright (c) 2014 cocos2d-x.org
  
  http://www.cocos2d-x.org
@@ -25,12 +25,12 @@
 #ifndef __TestCpp__WidgetReader__
 #define __TestCpp__WidgetReader__
 
-#include "WidgetReaderProtocol.h"
-#include "cocostudio/CCSGUIReader.h"
+#include "editor-support/cocostudio/WidgetReader/WidgetReaderProtocol.h"
+#include "editor-support/cocostudio/CCSGUIReader.h"
 #include "ui/GUIDefine.h"
-#include "cocostudio/CocosStudioExport.h"
-#include "cocostudio/WidgetReader/NodeReaderProtocol.h"
-#include "cocostudio/WidgetReader/NodeReaderDefine.h"
+#include "editor-support/cocostudio/CocosStudioExport.h"
+#include "editor-support/cocostudio/WidgetReader/NodeReaderProtocol.h"
+#include "editor-support/cocostudio/WidgetReader/NodeReaderDefine.h"
 
 namespace cocostudio
 {
@@ -46,7 +46,9 @@ namespace cocostudio
         virtual ~WidgetReader();
         
         static WidgetReader* getInstance();
-        static void purge();
+        /** @deprecated Use method destroyInstance() instead */
+        CC_DEPRECATED_ATTRIBUTE static void purge();
+        static void destroyInstance();
         
         virtual void setPropsFromJsonDictionary(cocos2d::ui::Widget* widget,
                                                 const rapidjson::Value& options);

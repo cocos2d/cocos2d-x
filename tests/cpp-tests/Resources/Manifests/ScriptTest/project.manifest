@@ -1,0 +1,13 @@
+{
+    "packageUrl" : "http://cocos2d-x.org/assets/cpp-tests-resources/assets_manager/ScriptTest/",
+    "remoteManifestUrl" : "http://cocos2d-x.org/assets/cpp-tests-resources/assets_manager/ScriptTest/project_dev.manifest",
+    "remoteVersionUrl" : "http://cocos2d-x.org/assets/cpp-tests-resources/assets_manager/ScriptTest/version_dev.manifest",
+    "version" : "1.0.0",
+    "engineVersion" : "3.0",
+
+    "assets" : {
+    },
+    
+    "searchPaths" : [
+    ]
+}

@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2015-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -147,24 +147,24 @@ struct CC_DLL PUParticle3D : public Particle3D
 
         /** Sets the event flags.
     */
-    inline void setEventFlags(unsigned int flags) {eventFlags = flags;}
+    void setEventFlags(unsigned int flags) { eventFlags = flags; }
 
     /** As setEventFlags, except the flags passed as parameters are appended to the
         existing flags on this object.
     */
-    inline void addEventFlags(unsigned int flags) {eventFlags |= flags;}
+    void addEventFlags(unsigned int flags) { eventFlags |= flags; }
             
     /** The flags passed as parameters are removed from the existing flags.
     */
-    inline void removeEventFlags(unsigned int flags) {eventFlags &= ~flags;}
+    void removeEventFlags(unsigned int flags) { eventFlags &= ~flags; }
         
     /** Return the event flags.
     */
-    inline unsigned int getEventFlags() const {return eventFlags;}
+    unsigned int getEventFlags() const { return eventFlags; }
 
     /** Determines whether it has certain flags set.
     */
-    inline bool hasEventFlags(unsigned int flags) const {return (eventFlags & flags) != 0;}
+    bool hasEventFlags(unsigned int flags) const { return (eventFlags & flags) != 0; }
 
     unsigned int eventFlags;
 
@@ -268,24 +268,24 @@ public:
      */
     void rotationOffset(Vec3& pos);
 
-    inline float getTimeElapsedSinceStart(void) const {return _timeElapsedSinceStart;};
+    float getTimeElapsedSinceStart() const { return _timeElapsedSinceStart; }
 
     /**
      * default particle width
      */
-    const float getDefaultWidth(void) const;
+    float getDefaultWidth() const;
     void setDefaultWidth(const float width);
 
     /** 
      * default particle height
      */
-    const float getDefaultHeight(void) const;
+    float getDefaultHeight() const;
     void setDefaultHeight(const float height);
 
     /** 
      * default particle depth
      */
-    const float getDefaultDepth(void) const;
+    float getDefaultDepth() const;
     void setDefaultDepth(const float depth);
 
     Vec3 getDerivedPosition();
@@ -303,10 +303,10 @@ public:
     void setMaxVelocity(float maxVelocity);
 
     void setMaterialName(const std::string &name) { _matName = name; };
-    const std::string getMaterialName() const { return _matName; };
+    const std::string& getMaterialName() const { return _matName; };
 
     /** Forces emission of particles.
-     * @remarks The number of requested particles are the exact number that are emitted. No down-scalling is applied.
+     * @remarks The number of requested particles are the exact number that are emitted. No down-scaling is applied.
      */
     void forceEmission(PUEmitter* emitter, unsigned requested);
 
@@ -351,11 +351,16 @@ public:
     void calulateRotationOffset(void);
 
     virtual PUParticleSystem3D* clone();
-    virtual void copyAttributesTo (PUParticleSystem3D* system);
+    virtual void copyAttributesTo(PUParticleSystem3D* system);
+
+    bool initSystem(const std::string &filePath);
 
 CC_CONSTRUCTOR_ACCESS:
     PUParticleSystem3D();
     virtual ~PUParticleSystem3D();
+
+    bool initWithFilePath(const std::string &filePath);
+    bool initWithFilePathAndMaterialPath (const std::string &filePath, const std::string &materialPath);
 
 protected:
 
@@ -368,7 +373,7 @@ protected:
     void executeEmitParticles(PUEmitter* emitter, unsigned requested, float elapsedTime);
     void emitParticles(ParticlePool &pool, PUEmitter* emitter, unsigned requested, float elapsedTime);
     void processParticle(ParticlePool &pool, bool &firstActiveParticle, bool &firstParticle, float elapsedTime);
-    void processMotion(PUParticle3D* particle, float timeElapsed, bool firstParticle);
+    void processMotion(PUParticle3D* particle, float timeElapsed, const Vec3 &scl, bool firstParticle);
     void notifyRescaled(const Vec3 &scl);
     void initParticleForEmission(PUParticle3D* particle);
     void initParticleForExpiration(PUParticle3D* particle, float timeElapsed);
@@ -376,7 +381,6 @@ protected:
     
     inline bool isExpired(PUParticle3D* particle, float timeElapsed);
 
-    bool initSystem(const std::string &filePath);
     static void convertToUnixStylePath(std::string &path);
 
 protected:

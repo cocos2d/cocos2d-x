@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -21,15 +21,15 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#include "lua_cocos2dx_extension_manual.h"
-#include "lua_cocos2dx_extension_auto.hpp"
-#include "cocos2d.h"
-#include "tolua_fix.h"
-#include "LuaBasicConversions.h"
-#include "CCLuaValue.h"
+#include "scripting/lua-bindings/manual/extension/lua_cocos2dx_extension_manual.h"
+#include "scripting/lua-bindings/auto/lua_cocos2dx_extension_auto.hpp"
+
+#include "scripting/lua-bindings/manual/tolua_fix.h"
+#include "scripting/lua-bindings/manual/LuaBasicConversions.h"
+#include "scripting/lua-bindings/manual/CCLuaValue.h"
 #include "cocos-ext.h"
-#include "CCLuaEngine.h"
-#include "LuaScriptHandlerMgr.h"
+#include "scripting/lua-bindings/manual/CCLuaEngine.h"
+#include "scripting/lua-bindings/manual/cocos2d/LuaScriptHandlerMgr.h"
 
 USING_NS_CC;
 USING_NS_CC_EXT;
@@ -602,7 +602,7 @@ static int lua_cocos2dx_TableView_setDelegate(lua_State* L)
         __Dictionary* userDict = static_cast<__Dictionary*>(self->getUserObject());
         if (nullptr == userDict)
         {
-            userDict = new __Dictionary();
+            userDict = new (std::nothrow) __Dictionary();
             if (NULL == userDict)
                 return 0;
             
@@ -647,9 +647,9 @@ public:
                 LuaEngine::getInstance()->handleEvent(ScriptHandlerMgr::HandlerType::TABLECELL_SIZE_FOR_INDEX, (void*)&data,2,[&](lua_State* L,int numReturn){
                     CCASSERT(numReturn == 2, "tableCellSizeForIndex return count error");
                     ValueVector vec;
-                    width  = (float)tolua_tonumber(L, -1, 0);
+                    height  = (float)tolua_tonumber(L, -1, 0);
                     lua_pop(L, 1);
-                    height = (float)tolua_tonumber(L, -1, 0);
+                    width = (float)tolua_tonumber(L, -1, 0);
                     lua_pop(L, 1);
                 });
                 
@@ -739,7 +739,7 @@ static int lua_cocos2dx_TableView_setDataSource(lua_State* L)
         __Dictionary* userDict = static_cast<__Dictionary*>(self->getUserObject());
         if (nullptr == userDict)
         {
-            userDict = new __Dictionary();
+            userDict = new (std::nothrow) __Dictionary();
             if (NULL == userDict)
                 return 0;
             
@@ -807,7 +807,7 @@ static int lua_cocos2dx_TableView_create(lua_State* L)
         
         ret->reloadData();
         
-        __Dictionary* userDict = new __Dictionary();
+        __Dictionary* userDict = new (std::nothrow) __Dictionary();
         userDict->setObject(dataSource, KEY_TABLEVIEW_DATA_SOURCE);
         ret->setUserObject(userDict);
         userDict->release();

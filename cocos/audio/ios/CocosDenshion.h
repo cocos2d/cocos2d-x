@@ -71,7 +71,7 @@ Requirements:
 #import <OpenAL/alc.h>
 #import <AudioToolbox/AudioToolbox.h>
 #import <Foundation/Foundation.h>
-#import "CDConfig.h"
+#import "audio/ios/CDConfig.h"
 
 
 #if !defined(CD_DEBUG) || CD_DEBUG == 0
@@ -88,7 +88,7 @@ Requirements:
 #endif // CD_DEBUG
 
 
-#import "CDOpenALSupport.h"
+#import "audio/ios/CDOpenALSupport.h"
 
 //Tested source limit on 2.2.1 and 3.1.2 with up to 128 sources and appears to work. Older OS versions e.g 2.2 may support only 32
 #define CD_SOURCE_LIMIT 32 //Total number of sources we will ever want, may actually get less

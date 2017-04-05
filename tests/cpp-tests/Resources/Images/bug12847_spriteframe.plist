@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>frames</key>
+	<dict>
+		<key>bug12847_sprite2.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{2,2},{250,30}}</string>
+			<key>offset</key>
+			<string>{0,0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0,0},{250,30}}</string>
+			<key>sourceSize</key>
+			<string>{250,30}</string>
+		</dict>
+	</dict>
+	<key>metadata</key>
+	<dict>
+		<key>format</key>
+		<integer>2</integer>
+		<key>realTextureFileName</key>
+		<string>bug12847_spriteframe.png</string>
+		<key>size</key>
+		<string>{254,34}</string>
+		<key>smartupdate</key>
+		<string>$TexturePacker:SmartUpdate:9e0d74b54a225e0f5a8a7e0510916a4a:c598d69ef1379b3bf0a57a6a5203b0b9:fad2136b944bf4ebf0cddf5575aec720$</string>
+		<key>textureFileName</key>
+		<string>bug12847_spriteframe.png</string>
+	</dict>
+</dict>
+</plist>

@@ -1,14 +1,17 @@
 
 
-#include "LayoutReader.h"
+#include "editor-support/cocostudio/WidgetReader/LayoutReader/LayoutReader.h"
 
 #include "ui/UILayout.h"
-#include "cocostudio/CocoLoader.h"
+#include "editor-support/cocostudio/CocoLoader.h"
 #include "ui/UIScrollView.h"
 #include "ui/UIPageView.h"
 #include "ui/UIListView.h"
-#include "cocostudio/CSParseBinary_generated.h"
-#include "cocostudio/FlatBuffersSerialize.h"
+#include "editor-support/cocostudio/CSParseBinary_generated.h"
+#include "editor-support/cocostudio/FlatBuffersSerialize.h"
+#include "base/CCDirector.h"
+#include "platform/CCFileUtils.h"
+#include "2d/CCSpriteFrameCache.h"
 
 #include "tinyxml2.h"
 #include "flatbuffers/flatbuffers.h"
@@ -62,6 +65,11 @@ namespace cocostudio
             instanceLayoutReader = new (std::nothrow) LayoutReader();
         }
         return instanceLayoutReader;
+    }
+    
+    void LayoutReader::destroyInstance()
+    {
+        CC_SAFE_DELETE(instanceLayoutReader);
     }
     
     void LayoutReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *cocoLoader, stExpCocoNode *cocoNode)
@@ -132,7 +140,7 @@ namespace cocostudio
                 
                 stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray(cocoLoader);
                 if (backGroundChildren) {
-                    std::string resType = backGroundChildren[2].GetValue(cocoLoader);;
+                    std::string resType = backGroundChildren[2].GetValue(cocoLoader);
                     
                     Widget::TextureResType imageFileNameType = (Widget::TextureResType)valueToInt(resType);
                     
@@ -185,12 +193,21 @@ namespace cocostudio
         
         /* adapt screen gui */
         float w = 0, h = 0;
-        bool adaptScrenn = DICTOOL->getBooleanValue_json(options, P_AdaptScreen);
-        if (adaptScrenn)
+        bool adaptScrennExsit = DICTOOL->checkObjectExist_json(options, P_AdaptScreen);
+        if (adaptScrennExsit)
         {
-            Size screenSize = CCDirector::getInstance()->getWinSize();
-            w = screenSize.width;
-            h = screenSize.height;
+            bool adaptScrenn = DICTOOL->getBooleanValue_json(options, P_AdaptScreen);
+            if (adaptScrenn)
+            {
+                Size screenSize = Director::getInstance()->getWinSize();
+                w = screenSize.width;
+                h = screenSize.height;
+            }
+            else
+            {
+                w = DICTOOL->getFloatValue_json(options, P_Width);
+                h = DICTOOL->getFloatValue_json(options, P_Height);
+            }
         }
         else
         {
@@ -295,7 +312,11 @@ namespace cocostudio
             panel->setBackGroundImageCapInsets(Rect(cx, cy, cw, ch));
         }
         
-        panel->setLayoutType((Layout::Type)DICTOOL->getIntValue_json(options, P_LayoutType));
+        bool layoutTypeExsit = DICTOOL->checkObjectExist_json(options, P_LayoutType);
+        if (layoutTypeExsit)
+        {
+            panel->setLayoutType((Layout::Type)DICTOOL->getIntValue_json(options, P_LayoutType));
+        }
         
         int bgimgcr = DICTOOL->getIntValue_json(options, P_ColorR,255);
         int bgimgcg = DICTOOL->getIntValue_json(options, P_ColorG,255);
@@ -656,12 +677,6 @@ namespace cocostudio
             if (fileExist)
             {
                 panel->setBackGroundImage(imageFileName, (Widget::TextureResType)imageFileNameType);
-            }
-            else
-            {
-                auto label = Label::create();
-                label->setString(__String::createWithFormat("%s missed", errorFilePath.c_str())->getCString());
-                panel->addChild(label);
             }
         }
         

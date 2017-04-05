@@ -2,7 +2,7 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -34,6 +34,8 @@ Use any of these editors to generate BMFonts:
 #ifndef __CCBITMAP_FONT_ATLAS_H__
 #define __CCBITMAP_FONT_ATLAS_H__
 
+/// @cond DO_NOT_SHOW
+
 #include "2d/CCLabel.h"
 #if CC_LABELBMFONT_DEBUG_DRAW
 #include "renderer/CCCustomCommand.h"
@@ -41,8 +43,6 @@ Use any of these editors to generate BMFonts:
 #endif
 
 NS_CC_BEGIN
-
-/// @cond
 
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
@@ -157,8 +157,7 @@ private:
 #pragma warning (pop)
 #endif
 
-/// @endcond
-
 NS_CC_END
 
+/// @endcond
 #endif //__CCBITMAP_FONT_ATLAS_H__

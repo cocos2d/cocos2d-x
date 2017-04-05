@@ -22,7 +22,7 @@
 --------------------------------
 -- Initializes the action with a duration and an array of points.<br>
 -- param duration In seconds.<br>
--- param point An PointArray.<br>
+-- param points An PointArray.<br>
 -- param tension Goodness of fit.
 -- @function [parent=#CardinalSplineTo] initWithDuration 
 -- @param self

@@ -59,6 +59,8 @@ SCROLLVIEW_EVENT_BOUNCE_TOP            = ccui.ScrollviewEventType.bounceTop
 SCROLLVIEW_EVENT_BOUNCE_BOTTOM         = ccui.ScrollviewEventType.bounceBottom
 SCROLLVIEW_EVENT_BOUNCE_LEFT           = ccui.ScrollviewEventType.bounceLeft
 SCROLLVIEW_EVENT_BOUNCE_RIGHT          = ccui.ScrollviewEventType.bounceRight
+SCROLLVIEW_EVENT_CONTAINER_MOVED       = ccui.ScrollviewEventType.containerMoved
+SCROLLVIEW_EVENT_AUTOSCROLL_ENDED      = ccui.ScrollviewEventType.autoscrollEnded
 
 PAGEVIEW_EVENT_TURNING                 = ccui.PageViewEventType.turning
 

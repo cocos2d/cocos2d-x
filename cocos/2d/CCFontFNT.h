@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2013      Zynga Inc.
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -26,13 +26,13 @@
 #ifndef _CCFontFNT_h_
 #define _CCFontFNT_h_
 
-#include "CCFont.h"
+/// @cond DO_NOT_SHOW
+
+#include "2d/CCFont.h"
 
 NS_CC_BEGIN
 
 class BMFontConfiguration;
-
-/// @cond FontFNT
 
 class CC_DLL FontFNT : public Font
 {
@@ -44,9 +44,13 @@ public:
     Removes from memory the cached configurations and the atlas name dictionary.
     */
     static void purgeCachedData();
-    virtual int* getHorizontalKerningForTextUTF16(const std::u16string& text, int &outNumLetters) const override;
+    virtual int* getHorizontalKerningForTextUTF32(const std::u32string& text, int &outNumLetters) const override;
     virtual FontAtlas *createFontAtlas() override;
-    
+    void setFontSize(float fontSize);
+    int getOriginalFontSize()const;
+
+    static void reloadBMFontResource(const std::string& fntFilePath);
+
 protected:
     
     FontFNT(BMFontConfiguration *theContfig, const Vec2& imageOffset = Vec2::ZERO);
@@ -58,11 +62,12 @@ protected:
     
 private:
     
-    int  getHorizontalKerningForChars(unsigned short firstChar, unsigned short secondChar) const;
+    int  getHorizontalKerningForChars(char32_t firstChar, char32_t secondChar) const;
     
     BMFontConfiguration * _configuration;
     Vec2                   _imageOffset;
-    
+    //User defined font size
+    float  _fontSize;
 };
 
 /// @endcond

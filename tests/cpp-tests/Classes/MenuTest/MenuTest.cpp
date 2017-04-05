@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -26,6 +26,8 @@
 #include "MenuTest.h"
 #include "../testResource.h"
 
+USING_NS_CC;
+
 enum {
     kTagMenu = 1,
     kTagMenu0 = 0,                       
@@ -43,6 +45,10 @@ enum {
 #define MID_CALLBACK3    1008
 #define MID_BACKCALLBACK 1009
 
+MenuTests::MenuTests()
+{
+    ADD_TEST_CASE(MenuTest);
+}
 //------------------------------------------------------------------
 //
 // MenuLayerMainMenu
@@ -74,7 +80,7 @@ MenuLayerMainMenu::MenuLayerMainMenu()
     auto item3 = MenuItemLabel::create(labelAtlas, CC_CALLBACK_1(MenuLayerMainMenu::menuCallbackDisabled, this) );
     item3->setDisabledColor( Color3B(32,32,64) );
     item3->setColor( Color3B(200,200,255) );
-    
+    CCLOG("test MenuItem Label getString: %s", item3->getString().c_str());
     // Font Item
     auto item4 = MenuItemFont::create("I toggle enable items", [&](Ref *sender) {
 		_disabledItem->setEnabled(! _disabledItem->isEnabled() );
@@ -325,7 +331,7 @@ MenuLayer3::MenuLayer3()
 
     auto label = Label::createWithBMFont("fonts/bitmapFontTest3.fnt", "Enable AtlasItem");
     auto item1 = MenuItemLabel::create(label, [&](Ref *sender) {
-		//CCLOG("Label clicked. Toogling AtlasSprite");
+		//CCLOG("Label clicked. Toggling AtlasSprite");
 		_disabledItem->setEnabled( ! _disabledItem->isEnabled() );
 		_disabledItem->stopAllActions();
 	});
@@ -561,26 +567,31 @@ void RemoveMenuItemWhenMove::onTouchMoved(Touch  *touch, Event  *event)
     }
 }
 
-void MenuTestScene::runThisTest()
+bool MenuTest::init()
 {
-    MenuItemFont::setFontSize(20);
-    
-    auto layer1 = new (std::nothrow) MenuLayerMainMenu();
-    auto layer2 = new (std::nothrow) MenuLayer2();
-    auto layer3 = new (std::nothrow) MenuLayer3();
-    auto layer4 = new (std::nothrow) MenuLayer4();
-    auto layer5 = new (std::nothrow) BugsTest();
-    auto layer6 = new (std::nothrow) RemoveMenuItemWhenMove();
+    if (TestCase::init())
+    {
+        MenuItemFont::setFontSize(20);
 
-    auto layer = LayerMultiplex::create(layer1, layer2, layer3, layer4, layer5, layer6, nullptr);
-    addChild(layer, 0); 
+        auto layer1 = new (std::nothrow) MenuLayerMainMenu();
+        auto layer2 = new (std::nothrow) MenuLayer2();
+        auto layer3 = new (std::nothrow) MenuLayer3();
+        auto layer4 = new (std::nothrow) MenuLayer4();
+        auto layer5 = new (std::nothrow) BugsTest();
+        auto layer6 = new (std::nothrow) RemoveMenuItemWhenMove();
 
-    layer1->release();
-    layer2->release();
-    layer3->release();
-    layer4->release();
-    layer5->release();
-    layer6->release();
+        auto layer = LayerMultiplex::create(layer1, layer2, layer3, layer4, layer5, layer6, nullptr);
+        addChild(layer, 0);
 
-    Director::getInstance()->replaceScene(this);
+        layer1->release();
+        layer2->release();
+        layer3->release();
+        layer4->release();
+        layer5->release();
+        layer6->release();
+
+        return true;
+    }
+
+    return false;
 }

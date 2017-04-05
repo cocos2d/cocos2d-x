@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2014-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -23,9 +23,9 @@
  ****************************************************************************/
 #include "platform/CCPlatformConfig.h"
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN)
 
-#include "UIWebViewImpl-android.h"
-#include "UIWebView-inl.h"
+#include "ui/UIWebViewImpl-android.h"
+#include "ui/UIWebView-inl.h"
 
 #endif

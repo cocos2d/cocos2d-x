@@ -23,25 +23,33 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __INPUT_EVENT__
-#define __INPUT_EVENT__
+#ifndef __WINRT_INPUT_EVENT__
+#define __WINRT_INPUT_EVENT__
 
-#include "cocos2d.h"
-#include "InputEventTypes.h"
+#include "platform/CCPlatformMacros.h"
+#include "platform/winrt/InputEventTypes.h"
+#include "base/ccTypes.h"
 #include <agile.h>
 
 NS_CC_BEGIN
 
-public delegate void Cocos2dEventDelegate(Cocos2dEvent event, Platform::String^ text);
-public delegate void Cocos2dMessageBoxDelegate(Platform::String^  title, Platform::String^ text);
-public delegate void Cocos2dEditBoxDelegate(Platform::String^ strPlaceHolder, Platform::String^ strText, int maxLength, int inputMode, int inputFlag, Windows::Foundation::EventHandler<Platform::String^>^ receiveHandler);
-public delegate void Cocos2dOpenURLDelegate(Platform::String^ url);
 
 enum PointerEventType
 {
     PointerPressed,
     PointerMoved,
     PointerReleased,
+    MousePressed,
+    MouseMoved,
+    MouseReleased,
+    MouseWheelChanged,
+};
+enum MouseButton
+{
+    Left = 0,
+    Right = 1,
+    Middle = 2,
+    None
 };
 
 class CC_DLL InputEvent
@@ -88,6 +96,24 @@ private:
     Platform::Agile<Platform::String> m_text;
 };
 
+enum WinRTKeyboardEventType
+{
+	KeyPressed,
+	KeyReleased,
+};
+
+class CC_DLL WinRTKeyboardEvent : public InputEvent
+{
+public:
+	WinRTKeyboardEvent(WinRTKeyboardEventType type, Windows::UI::Core::KeyEventArgs^ args);
+	virtual void execute();
+
+private:
+	WinRTKeyboardEventType m_type;
+	Platform::Agile<Windows::UI::Core::KeyEventArgs> m_key;
+};
+
+
 class CC_DLL BackButtonEvent : public InputEvent
 {
 public:
@@ -111,13 +137,35 @@ public:
 
     virtual void execute();
 
-private:
+protected:
     Platform::Agile<Platform::Object^> m_sender;
     Platform::Agile<Platform::String^> m_text;
     Platform::Agile<Windows::Foundation::EventHandler<Platform::String^>^> m_handler;
 };
 
+ref class EndEventArgs sealed {
+public:
+    EndEventArgs(int action, Platform::String^ text) : m_text(text), m_action(action) {}
+    int GetAction() { return m_action; }
+    Platform::String^ GetText() { return m_text; }
+private:
+    int m_action;
+    Platform::String^ m_text;
+};
+
+class UIEditBoxEndEvent : public cocos2d::InputEvent
+{
+public:
+  UIEditBoxEndEvent(Platform::Object^ sender, Platform::String^ text, int action, Windows::Foundation::EventHandler<EndEventArgs^>^ handle);
+  virtual void execute();
+protected:
+  int m_action;
+  Platform::Agile<Platform::Object^> m_sender;
+  Platform::Agile<Platform::String^> m_text;
+  Platform::Agile<Windows::Foundation::EventHandler<EndEventArgs^>^> m_handler;
+};
+
 NS_CC_END
 
-#endif // #ifndef __INPUT_EVENT__
+#endif // #ifndef __WINRT_INPUT_EVENT__
 

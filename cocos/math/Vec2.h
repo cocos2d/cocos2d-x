@@ -1,5 +1,6 @@
 /**
  Copyright 2013 BlackBerry Inc.
+ Copyright (c) 2014-2017 Chukong Technologies
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -23,8 +24,13 @@
 
 #include <algorithm>
 #include <functional>
-#include <math.h>
+#include <cmath>
 #include "math/CCMathBase.h"
+
+/**
+ * @addtogroup base
+ * @{
+ */
 
 NS_CC_MATH_BEGIN
 
@@ -103,14 +109,14 @@ public:
      *
      * @return true if this vector contains all zeros, false otherwise.
      */
-    bool isZero() const;
+    inline bool isZero() const;
 
     /**
      * Indicates whether this vector contains all ones.
      *
      * @return true if this vector contains all ones, false otherwise.
      */
-    bool isOne() const;
+    inline bool isOne() const;
 
     /**
      * Returns the angle (in radians) between the specified vectors.
@@ -127,7 +133,7 @@ public:
      *
      * @param v The vector to add.
      */
-    void add(const Vec2& v);
+    inline void add(const Vec2& v);
 
     /**
      * Adds the specified vectors and stores the result in dst.
@@ -181,7 +187,7 @@ public:
      * 
      * @see distance
      */
-    float distanceSquared(const Vec2& v) const;
+    inline float distanceSquared(const Vec2& v) const;
 
     /**
      * Returns the dot product of this vector and the specified vector.
@@ -190,7 +196,7 @@ public:
      * 
      * @return The dot product.
      */
-    float dot(const Vec2& v) const;
+    inline float dot(const Vec2& v) const;
 
     /**
      * Returns the dot product between the specified vectors.
@@ -223,12 +229,12 @@ public:
      * 
      * @see length
      */
-    float lengthSquared() const;
+    inline float lengthSquared() const;
 
     /**
      * Negates this vector.
      */
-    void negate();
+    inline void negate();
 
     /**
      * Normalizes this vector.
@@ -244,13 +250,7 @@ public:
     void normalize();
 
     /**
-     * Normalizes this vector and stores the result in dst.
-     *
-     * If the vector already has unit length or if the length
-     * of the vector is zero, this method simply copies the
-     * current vector into dst.
-     *
-     * @param dst The destination vector.
+     Get the normalized vector.
      */
     Vec2 getNormalized() const;
 
@@ -259,14 +259,14 @@ public:
      *
      * @param scalar The scalar value.
      */
-    void scale(float scalar);
+    inline void scale(float scalar);
 
     /**
      * Scales each element of this vector by the matching component of scale.
      *
      * @param scale The vector to scale by.
      */
-    void scale(const Vec2& scale);
+    inline void scale(const Vec2& scale);
 
     /**
      * Rotates this vector by angle (specified in radians) around the given point.
@@ -282,7 +282,7 @@ public:
      * @param xx The new x coordinate.
      * @param yy The new y coordinate.
      */
-    void set(float xx, float yy);
+    inline void set(float xx, float yy);
 
     /**
      * Sets the elements of this vector from the values in the specified array.
@@ -296,7 +296,7 @@ public:
      *
      * @param v The vector to copy.
      */
-    void set(const Vec2& v);
+    inline void set(const Vec2& v);
 
     /**
      * Sets this vector to the directional vector between the specified points.
@@ -304,7 +304,12 @@ public:
      * @param p1 The first point.
      * @param p2 The second point.
      */
-    void set(const Vec2& p1, const Vec2& p2);
+    inline void set(const Vec2& p1, const Vec2& p2);
+
+    /**
+    * Sets the elements of this vector to zero.
+    */
+    inline void setZero();
 
     /**
      * Subtracts this vector and the specified vector as (this - v)
@@ -312,7 +317,7 @@ public:
      *
      * @param v The vector to subtract.
      */
-    void subtract(const Vec2& v);
+    inline void subtract(const Vec2& v);
 
     /**
      * Subtracts the specified vectors and stores the result in dst.
@@ -335,7 +340,7 @@ public:
      * @param elapsedTime elapsed time between calls.
      * @param responseTime response time (in the same units as elapsedTime).
      */
-    void smooth(const Vec2& target, float elapsedTime, float responseTime);
+    inline void smooth(const Vec2& target, float elapsedTime, float responseTime);
 
     /**
      * Calculates the sum of this vector with the given vector.
@@ -345,7 +350,7 @@ public:
      * @param v The vector to add.
      * @return The vector sum.
      */
-    inline const Vec2 operator+(const Vec2& v) const;
+    inline Vec2 operator+(const Vec2& v) const;
 
     /**
      * Adds the given vector to this vector.
@@ -363,7 +368,7 @@ public:
      * @param v The vector to add.
      * @return The vector sum.
      */
-    inline const Vec2 operator-(const Vec2& v) const;
+    inline Vec2 operator-(const Vec2& v) const;
 
     /**
      * Subtracts the given vector from this vector.
@@ -380,7 +385,7 @@ public:
      * 
      * @return The negation of this vector.
      */
-    inline const Vec2 operator-() const;
+    inline Vec2 operator-() const;
 
     /**
      * Calculates the scalar product of this vector with the given value.
@@ -390,7 +395,7 @@ public:
      * @param s The value to scale by.
      * @return The scaled vector.
      */
-    inline const Vec2 operator*(float s) const;
+    inline Vec2 operator*(float s) const;
 
     /**
      * Scales this vector by the given value.
@@ -408,7 +413,7 @@ public:
      * @param s the constant to divide this vector with
      * @return a smaller vector
      */
-    inline const Vec2 operator/(float s) const;
+    inline Vec2 operator/(float s) const;
 
     /**
      * Determines if this vector is less than the given vector.
@@ -452,7 +457,7 @@ public:
      * @js NA
      * @lua NA
      */
-    void setPoint(float xx, float yy);
+    inline void setPoint(float xx, float yy);
     /**
      * @js NA
      */
@@ -473,7 +478,7 @@ public:
      */
     inline float getLength() const {
         return sqrtf(x*x + y*y);
-    };
+    }
 
     /** Calculates the square length of a Vec2 (not calling sqrt() )
      @return float
@@ -483,7 +488,7 @@ public:
      */
     inline float getLengthSq() const {
         return dot(*this); //x*x + y*y;
-    };
+    }
 
     /** Calculates the square distance between two points (not calling sqrt() )
      @return float
@@ -493,7 +498,7 @@ public:
      */
     inline float getDistanceSq(const Vec2& other) const {
         return (*this - other).getLengthSq();
-    };
+    }
 
     /** Calculates the distance between two points
      @return float
@@ -503,7 +508,7 @@ public:
      */
     inline float getDistance(const Vec2& other) const {
         return (*this - other).getLength();
-    };
+    }
 
     /** @returns the angle in radians between this vector and the x axis
      @since v2.1.4
@@ -512,7 +517,7 @@ public:
      */
     inline float getAngle() const {
         return atan2f(y, x);
-    };
+    }
 
     /** @returns the angle in radians between two vector directions
      @since v2.1.4
@@ -529,7 +534,7 @@ public:
      */
     inline float cross(const Vec2& other) const {
         return x*other.y - y*other.x;
-    };
+    }
 
     /** Calculates perpendicular of v, rotated 90 degrees counter-clockwise -- cross(v, perp(v)) >= 0
      @return Vec2
@@ -539,7 +544,7 @@ public:
      */
     inline Vec2 getPerp() const {
         return Vec2(-y, x);
-    };
+    }
     
     /** Calculates midpoint between two points.
      @return Vec2
@@ -563,7 +568,7 @@ public:
     }
     
     /** Run a math operation function on each point component
-     * absf, fllorf, ceilf, roundf
+     * absf, floorf, ceilf, roundf
      * any function that has the signature: float func(float);
      * For example: let's try to take the floor of x,y
      * p.compOp(floorf);
@@ -584,7 +589,7 @@ public:
      */
     inline Vec2 getRPerp() const {
         return Vec2(y, -x);
-    };
+    }
 
     /** Calculates the projection of this over other.
      @return Vec2
@@ -594,7 +599,7 @@ public:
      */
     inline Vec2 project(const Vec2& other) const {
         return other * (dot(other)/other.dot(other));
-    };
+    }
 
     /** Complex multiplication of two points ("rotates" two points).
      @return Vec2 vector with an angle of this.getAngle() + other.getAngle(),
@@ -605,7 +610,7 @@ public:
      */
     inline Vec2 rotate(const Vec2& other) const {
         return Vec2(x*other.x - y*other.y, x*other.y + y*other.x);
-    };
+    }
 
     /** Unrotates two points.
      @return Vec2 vector with an angle of this.getAngle() - other.getAngle(),
@@ -616,7 +621,7 @@ public:
      */
     inline Vec2 unrotate(const Vec2& other) const {
         return Vec2(x*other.x + y*other.y, y*other.x - x*other.y);
-    };
+    }
 
     /** Linear Interpolation between two points a and b
      @returns
@@ -629,7 +634,7 @@ public:
      */
     inline Vec2 lerp(const Vec2& other, float alpha) const {
         return *this * (1.f - alpha) + other * alpha;
-    };
+    }
 
     /** Rotates a point counter clockwise by the angle around a pivot
      @param pivot is the pivot, naturally
@@ -657,7 +662,7 @@ public:
      @param D   the endpoint for the second line L2 = (C - D)
      @param S   the range for a hitpoint in L1 (p = A + S*(B - A))
      @param T   the range for a hitpoint in L2 (p = C + T*(D - C))
-     @returns   whether these two lines interects.
+     @return    whether these two lines intersects.
 
      Note that to truly test intersection for segments we have to make
      sure that S & T lie within [0..1] and for rays, make sure S & T > 0
@@ -750,12 +755,17 @@ public:
  * @param v The vector to scale.
  * @return The scaled vector.
  */
-inline const Vec2 operator*(float x, const Vec2& v);
+inline Vec2 operator*(float x, const Vec2& v);
 
 typedef Vec2 Point;
 
 NS_CC_MATH_END
 
-#include "Vec2.inl"
+/**
+ end of base group
+ @}
+ */
+
+#include "math/Vec2.inl"
 
 #endif // MATH_VEC2_H

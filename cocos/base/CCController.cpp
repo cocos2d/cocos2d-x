@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2014 cocos2d-x.org
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2014-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -25,7 +25,7 @@
 
 #include "base/CCController.h"
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 
 #include "base/CCEventDispatcher.h"
 #include "base/CCEventController.h"
@@ -112,4 +112,4 @@ void Controller::onAxisEvent(int axisCode, float value, bool isAnalog)
 
 NS_CC_END
 
-#endif // #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#endif // (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)

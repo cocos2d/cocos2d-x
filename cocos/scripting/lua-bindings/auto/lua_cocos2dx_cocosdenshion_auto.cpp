@@ -1,9 +1,7 @@
-#include "lua_cocos2dx_cocosdenshion_auto.hpp"
-#include "SimpleAudioEngine.h"
-#include "tolua_fix.h"
-#include "LuaBasicConversions.h"
-
-
+#include "scripting/lua-bindings/auto/lua_cocos2dx_cocosdenshion_auto.hpp"
+#include "audio/include/SimpleAudioEngine.h"
+#include "scripting/lua-bindings/manual/tolua_fix.h"
+#include "scripting/lua-bindings/manual/LuaBasicConversions.h"
 
 int lua_cocos2dx_cocosdenshion_SimpleAudioEngine_preloadBackgroundMusic(lua_State* tolua_S)
 {

@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -22,11 +22,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "cocostudio/CCDisplayManager.h"
-#include "cocostudio/CCBone.h"
-#include "cocostudio/CCArmature.h"
-#include "cocostudio/CCUtilMath.h"
-#include "cocostudio/CCSkin.h"
+#include "editor-support/cocostudio/CCDisplayManager.h"
+#include "editor-support/cocostudio/CCBone.h"
+#include "editor-support/cocostudio/CCArmature.h"
+#include "editor-support/cocostudio/CCUtilMath.h"
+#include "editor-support/cocostudio/CCSkin.h"
 
 #include "2d/CCParticleSystemQuad.h"
 
@@ -246,7 +246,7 @@ void DisplayManager::changeDisplayWithIndex(int index, bool force)
     setCurrentDecorativeDisplay(decoDisplay);
 }
 
-void CCDisplayManager::changeDisplayWithName(const std::string& name, bool force)
+void DisplayManager::changeDisplayWithName(const std::string& name, bool force)
 {
     for (int i = 0; i<_decoDisplayList.size(); i++)
     {
@@ -380,13 +380,15 @@ bool DisplayManager::containPoint(Vec2 &point)
          *
          */
 
-        Vec2 outPoint = Vec2(0, 0);
+        Vec2 outPoint;
 
         Sprite *sprite = (Sprite *)_currentDecoDisplay->getDisplay();
-        sprite = (Sprite *)sprite->getChildByTag(0);
+        Sprite *child = (Sprite *)sprite->getChildByTag(0);
+        if(nullptr != child)
+            sprite = child;
 
-        ret = CC_SPRITE_CONTAIN_POINT_WITH_RETURN(sprite, point, outPoint);
-
+        if (nullptr != sprite)
+            ret = CC_SPRITE_CONTAIN_POINT_WITH_RETURN(sprite, point, outPoint);
     }
     break;
 
@@ -398,7 +400,7 @@ bool DisplayManager::containPoint(Vec2 &point)
 
 bool DisplayManager::containPoint(float x, float y)
 {
-    Vec2 p = Vec2(x, y);
+    Vec2 p(x, y);
     return containPoint(p);
 }
 

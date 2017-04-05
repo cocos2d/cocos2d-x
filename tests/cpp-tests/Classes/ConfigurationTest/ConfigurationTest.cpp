@@ -3,94 +3,20 @@
 #include "../testResource.h"
 #include "cocos2d.h"
 
-static std::function<Layer*()> createFunctions[] = {
-    CL(ConfigurationLoadConfig),
-	CL(ConfigurationQuery),
-	CL(ConfigurationInvalid),
-	CL(ConfigurationDefault),
-	CL(ConfigurationSet)
-};
+USING_NS_CC;
 
-static int sceneIdx=-1;
-#define MAX_LAYER (sizeof(createFunctions) / sizeof(createFunctions[0]))
-
-static Layer* nextAction()
+ConfigurationTests::ConfigurationTests()
 {
-    sceneIdx++;
-    sceneIdx = sceneIdx % MAX_LAYER;
-    
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
+    ADD_TEST_CASE(ConfigurationLoadConfig);
+    ADD_TEST_CASE(ConfigurationQuery);
+    ADD_TEST_CASE(ConfigurationInvalid);
+    ADD_TEST_CASE(ConfigurationDefault);
+    ADD_TEST_CASE(ConfigurationSet);
 }
-
-static Layer* backAction()
-{
-    sceneIdx--;
-    int total = MAX_LAYER;
-    if( sceneIdx < 0 )
-        sceneIdx += total;
-    
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
-}
-
-static Layer* restartAction()
-{
-    auto layer = (createFunctions[sceneIdx])();    
-    return layer;
-}
-
-void ConfigurationTestScene::runThisTest()
-{
-    sceneIdx = -1;
-    addChild(nextAction());
-
-    Director::getInstance()->replaceScene(this);
-}
-
 
 std::string ConfigurationBase::title() const
 {
     return "Configuration Test";
-}
-
-std::string ConfigurationBase::subtitle() const
-{
-    return "";
-}
-
-void ConfigurationBase::onEnter()
-{
-    BaseTest::onEnter();
-}
-
-void ConfigurationBase::onExit()
-{
-    BaseTest::onExit();
-}
-
-void ConfigurationBase::restartCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) ConfigurationTestScene();
-    s->addChild( restartAction() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void ConfigurationBase::nextCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) ConfigurationTestScene();
-    s->addChild( nextAction() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void ConfigurationBase::backCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) ConfigurationTestScene();
-    s->addChild( backAction() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
 }
 
 //------------------------------------------------------------------

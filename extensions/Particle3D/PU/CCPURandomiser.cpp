@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2015-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -114,7 +114,7 @@ void PURandomiser::preUpdateAffector(float deltaTime)
     }
 }
 //-----------------------------------------------------------------------
-void PURandomiser::updatePUAffector( PUParticle3D *particle, float deltaTime )
+void PURandomiser::updatePUAffector( PUParticle3D *particle, float /*deltaTime*/ )
 {
     //for (auto iter : _particleSystem->getParticles())
     {
@@ -124,7 +124,7 @@ void PURandomiser::updatePUAffector( PUParticle3D *particle, float deltaTime )
             if (_randomDirection)
             {
                 // Random direction: Change the direction after each update
-                particle->direction += Vec3(CCRANDOM_MINUS1_1() * _maxDeviationX,
+                particle->direction.add(CCRANDOM_MINUS1_1() * _maxDeviationX,
                     CCRANDOM_MINUS1_1() * _maxDeviationY,
                     CCRANDOM_MINUS1_1() * _maxDeviationZ);
             }
@@ -135,7 +135,7 @@ void PURandomiser::updatePUAffector( PUParticle3D *particle, float deltaTime )
                     return;
 
                 // Random position: Add the position deviation after each update
-                particle->position += Vec3(CCRANDOM_MINUS1_1() * _maxDeviationX * _affectorScale.x,
+                particle->position.add(CCRANDOM_MINUS1_1() * _maxDeviationX * _affectorScale.x,
                     CCRANDOM_MINUS1_1() * _maxDeviationY * _affectorScale.y,
                     CCRANDOM_MINUS1_1() * _maxDeviationZ * _affectorScale.z);
             }
@@ -144,7 +144,7 @@ void PURandomiser::updatePUAffector( PUParticle3D *particle, float deltaTime )
 }
 
 //-----------------------------------------------------------------------
-void PURandomiser::postUpdateAffector(float deltaTime)
+void PURandomiser::postUpdateAffector(float /*deltaTime*/)
 {
     _update = false;
 }

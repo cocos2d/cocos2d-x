@@ -5,9 +5,10 @@ LOCAL_MODULE    := cocos_extension_static
 
 LOCAL_MODULE_FILENAME := libextension
 
+LOCAL_ARM_MODE := arm
+
 LOCAL_SRC_FILES := \
 assets-manager/AssetsManager.cpp \
-assets-manager/Downloader.cpp \
 assets-manager/Manifest.cpp \
 assets-manager/AssetsManagerEx.cpp \
 assets-manager/CCEventAssetsManagerEx.cpp \
@@ -178,11 +179,12 @@ Particle3D/PU/CCPUBehaviour.cpp \
 Particle3D/PU/CCPUBehaviourManager.cpp \
 Particle3D/PU/CCPUBehaviourTranslator.cpp \
 Particle3D/PU/CCPUSlaveBehaviour.cpp \
-Particle3D/PU/CCPUSlaveBehaviourTranslator.cpp \
+Particle3D/PU/CCPUSlaveBehaviourTranslator.cpp
 
 LOCAL_STATIC_LIBRARIES := cocos2dx_internal_static
-LOCAL_STATIC_LIBRARIES += cocos_curl_static
 LOCAL_STATIC_LIBRARIES += box2d_static
+LOCAL_STATIC_LIBRARIES += bullet_static
+LOCAL_STATIC_LIBRARIES += cocos_network_static
 
 LOCAL_CXXFLAGS += -fexceptions
 

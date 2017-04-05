@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -29,6 +29,11 @@
 #include "base/CCRef.h"
 #include "platform/CCGL.h"
 
+/**
+ * @addtogroup renderer
+ * @{
+ */
+
 NS_CC_BEGIN
 
 class EventListenerCustom;
@@ -53,7 +58,7 @@ public:
     /**Get the number of vertices.*/
     int getVertexNumber() const;
     /**
-    Update all or part of vertice data, if the range specified exceeds the vertex buffer, it will be clipped.
+    Update all or part of vertices data, if the range specified exceeds the vertex buffer, it will be clipped.
     @param verts The pointer of the vertex data.
     @param count The number of vertices to update.
     @param begin The first vertex to update.
@@ -253,4 +258,8 @@ public:
 
 NS_CC_END
 
+/**
+ end of support group
+ @}
+ */
 #endif /* __CC_VERTEX_INDEX_BUFFER_H__*/

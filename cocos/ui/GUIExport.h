@@ -24,6 +24,8 @@
             #define NULL    ((void *)0)
         #endif
     #endif
+#elif defined(_SHARED_)
+    #define CC_GUI_DLL     __attribute__((visibility("default")))
 #else
     #define CC_GUI_DLL
 #endif

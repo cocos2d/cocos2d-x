@@ -22,7 +22,7 @@
         
 --------------------------------
 -- Gets the scale action scaleY.<br>
--- return the the scale action scaleY.
+-- return the scale action scaleY.
 -- @function [parent=#ActionScaleFrame] getScaleY 
 -- @param self
 -- @return float#float ret (return value: float)
@@ -36,7 +36,7 @@
         
 --------------------------------
 -- Gets the ActionInterval of ActionFrame.<br>
--- parame duration   the duration time of ActionFrame<br>
+-- param duration   the duration time of ActionFrame<br>
 -- return ActionInterval
 -- @function [parent=#ActionScaleFrame] getAction 
 -- @param self

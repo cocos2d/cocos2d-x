@@ -1,9 +1,5 @@
-
-#ifndef CC_ALLOCATOR_MUTEX_H
-#define CC_ALLOCATOR_MUTEX_H
-
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2014-2017 Chukong Technologies Inc.
  Author: Justin Graham (https://github.com/mannewalis)
  
  http://www.cocos2d-x.org
@@ -27,9 +23,13 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+#ifndef CC_ALLOCATOR_MUTEX_H
+#define CC_ALLOCATOR_MUTEX_H
+/// @cond DO_NOT_SHOW
+
 #include "platform/CCPlatformMacros.h"
 
-#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
+#if CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
 #include "pthread.h"
 #define MUTEX pthread_mutex_t
 #define MUTEX_INIT(m) \
@@ -41,7 +41,7 @@
     pthread_mutex_lock(&m);
 #define MUTEX_UNLOCK(m) \
     pthread_mutex_unlock(&m);
-#elif CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
 #include "windows.h"
 #define MUTEX HANDLE
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
@@ -49,7 +49,7 @@
     m = CreateMutex(0, FALSE, 0)
 #define MUTEX_LOCK(m) \
     WaitForSingleObject(m, INFINITE)
-#elif CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
 #define MUTEX_INIT(m) \
 	m = CreateMutexEx(NULL,FALSE,0,NULL);
 #define MUTEX_LOCK(m) \
@@ -121,4 +121,5 @@ struct lockless_semantics
 NS_CC_ALLOCATOR_END
 NS_CC_END
 
+/// @endcond
 #endif//CC_ALLOCATOR_MUTEX_H

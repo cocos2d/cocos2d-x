@@ -2,7 +2,6 @@
 #include "PlayerMenuServiceMac.h"
 #include "PlayerUtils.h"
 
-#include "CCLuaEngine.h"
 #include "cocos2d.h"
 #include "AppEvent.h"
 

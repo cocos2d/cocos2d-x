@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2010-2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -161,6 +161,18 @@ void ScriptEngineManager::destroyInstance()
         delete s_pSharedScriptEngineManager;
         s_pSharedScriptEngineManager = nullptr;
     }
+}
+
+bool ScriptEngineManager::sendActionEventToJS(Action* actionObject, int eventType, void* param)
+{
+    auto scriptEngine = getInstance()->getScriptEngine();
+    
+    ActionObjectScriptData data(actionObject,(int*)&eventType, param);
+    ScriptEvent scriptEvent(kScriptActionEvent,(void*)&data);
+    if (scriptEngine->sendEvent(&scriptEvent))
+        return true;
+    
+    return false;
 }
 
 bool ScriptEngineManager::sendNodeEventToJS(Node* node, int action)

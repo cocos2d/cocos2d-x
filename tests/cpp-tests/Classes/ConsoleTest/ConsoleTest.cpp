@@ -26,7 +26,7 @@
 #include "../testResource.h"
 #include <stdio.h>
 #include <stdlib.h>
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -36,10 +36,7 @@
 #include <WS2tcpip.h>
 #endif
 
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
-#include "CCWinRTUtils.h"
-#include <sstream>
-#endif
+USING_NS_CC;
 
 //------------------------------------------------------------------
 //
@@ -47,42 +44,11 @@
 //
 //------------------------------------------------------------------
 
-static int sceneIdx = -1;
-
-static std::function<Layer*()> createFunctions[] =
+ConsoleTests::ConsoleTests()
 {
-    CL(ConsoleCustomCommand),
-    CL(ConsoleUploadFile),
-};
-
-#define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
-
-Layer* nextConsoleTest()
-{
-    sceneIdx++;
-    sceneIdx = sceneIdx % MAX_LAYER;
-
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
+    ADD_TEST_CASE(ConsoleCustomCommand);
+    ADD_TEST_CASE(ConsoleUploadFile);
 }
-
-Layer* backConsoleTest()
-{
-    sceneIdx--;
-    int total = MAX_LAYER;
-    if( sceneIdx < 0 )
-        sceneIdx += total;
-
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
-}
-
-Layer* restartConsoleTest()
-{
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
-} 
-
 
 BaseTestConsole::BaseTestConsole()
 {
@@ -95,44 +61,6 @@ BaseTestConsole::~BaseTestConsole(void)
 std::string BaseTestConsole::title() const
 {
     return "No title";
-}
-
-void BaseTestConsole::onEnter()
-{
-    BaseTest::onEnter();
-}
-
-void BaseTestConsole::restartCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) ConsoleTestScene();
-    s->addChild(restartConsoleTest());
-
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void BaseTestConsole::nextCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) ConsoleTestScene();
-    s->addChild( nextConsoleTest() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void BaseTestConsole::backCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) ConsoleTestScene();
-    s->addChild( backConsoleTest() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
-} 
-
-void ConsoleTestScene::runThisTest()
-{
-    auto layer = nextConsoleTest();
-    addChild(layer);
-
-    Director::getInstance()->replaceScene(this);
 }
 
 //------------------------------------------------------------------
@@ -153,24 +81,6 @@ ConsoleCustomCommand::ConsoleCustomCommand()
         }},
     };
     _console->addCommand(commands[0]);
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-
-    std::stringstream ss;
-    ss << "WP8 Device IP Addresses:" << std::endl;
-    ss << getDeviceIPAddresses();
-
-    auto origin = Director::getInstance()->getVisibleOrigin();
-    auto visibleSize = Director::getInstance()->getVisibleSize();
-    auto label = LabelTTF::create(ss.str(), "Arial", 12);
-
-    // position the label on the center of the screen
-    label->setPosition(origin.x + visibleSize.width/2,
-                            origin.y + visibleSize.height/2 + (label->getContentSize().height/2));
-    
-    // add the label as a child to this layer
-    this->addChild(label, 1);
-#endif
 }
 
 ConsoleCustomCommand::~ConsoleCustomCommand()
@@ -189,11 +99,7 @@ std::string ConsoleCustomCommand::title() const
 
 std::string ConsoleCustomCommand::subtitle() const
 {
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
-    return "telnet [ip address] 5678";
-#else
     return "telnet localhost 5678";
-#endif
 }
 
 
@@ -205,13 +111,12 @@ std::string ConsoleCustomCommand::subtitle() const
 
 ConsoleUploadFile::ConsoleUploadFile()
 {
-    srand ((unsigned)time(nullptr));
-    int _id = rand()%100000;
+    std::srand ((unsigned)time(nullptr));
+    int id = rand()%100000;
     char buf[32];
-    sprintf(buf, "%d", _id);
-    _target_file_name = std::string("grossini") + buf;
+    sprintf(buf, "%d", id);
+    _targetFileName = std::string("grossini") + buf + ".png";
 
-    _src_file_path = FileUtils::getInstance()->fullPathForFilename(s_pathGrossini);
     std::thread t = std::thread( &ConsoleUploadFile::uploadFile, this);
     t.detach();
 }
@@ -229,6 +134,14 @@ ConsoleUploadFile::~ConsoleUploadFile()
 
 void ConsoleUploadFile::uploadFile()
 {
+    Data srcFileData = FileUtils::getInstance()->getDataFromFile(s_pathGrossini);
+    if (srcFileData.isNull())
+    {
+        CCLOGERROR("ConsoleUploadFile: could not open file %s", s_pathGrossini);
+    }
+
+    std::string targetFileName = _targetFileName;
+
     struct addrinfo hints;
     struct addrinfo *result, *rp;
     int sfd, s;
@@ -236,20 +149,26 @@ void ConsoleUploadFile::uploadFile()
     /* Obtain address(es) matching host/port */
 
     memset(&hints, 0, sizeof(struct addrinfo));
-    hints.ai_family = AF_INET;    /* Allow IPv4 or IPv6 */
+    hints.ai_family = AF_UNSPEC;    /* Allow IPv4 or IPv6 */
     hints.ai_socktype = SOCK_STREAM; /* stream socket */
     hints.ai_flags = 0;
     hints.ai_protocol = 0;          /* Any protocol */
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     WSADATA wsaData;
     WSAStartup(MAKEWORD(2, 2),&wsaData);
 #endif
 
-    s = getaddrinfo("localhost", "5678", &hints, &result);
+    std::string nodeName;
+    if (Director::getInstance()->getConsole()->isIpv6Server())
+        nodeName = "::1";
+    else
+        nodeName = "localhost";
+
+    s = getaddrinfo(nodeName.c_str(), "5678", &hints, &result);
     if (s != 0) 
     {
-       CCLOG("ConsoleUploadFile: getaddrinfo error");
+        CCLOG("ConsoleUploadFile: getaddrinfo error");
         return;
     }
 
@@ -267,7 +186,7 @@ void ConsoleUploadFile::uploadFile()
         if (connect(sfd, rp->ai_addr, rp->ai_addrlen) != -1)
             break;                  /* Success */
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
         closesocket(sfd);
 #else
         close(sfd);
@@ -281,38 +200,45 @@ void ConsoleUploadFile::uploadFile()
 
     freeaddrinfo(result);           /* No longer needed */
 
-    
-    FILE* fp = fopen(_src_file_path.c_str(), "rb");
-    if(!fp)
-    {
-        CCLOG("ConsoleUploadFile: could not open file %s", _src_file_path.c_str());
-        return;
-    }
-    
     std::string tmp = "upload";
 
     tmp += " ";
-    tmp += _target_file_name;
+    tmp += targetFileName;
     tmp += " ";
-    char cmd[512];
+    char cmd[512] = {0};
 
     strcpy(cmd, tmp.c_str());
     send(sfd,cmd,strlen(cmd),0);
+
+    size_t offset = 0;
+    auto readBuffer = [&offset](char* buf, size_t bytes, const Data& data) -> ssize_t {
+        if (offset >= data.getSize())
+            return 0;
+        ssize_t actualReadBytes = (offset + bytes) > data.getSize() ? (data.getSize() - offset) : bytes;
+        if (actualReadBytes > 0)
+        {
+            memcpy(buf, data.getBytes() + offset, actualReadBytes);
+            offset += actualReadBytes;
+        }
+        return actualReadBytes;
+    };
+
     while(true)
     {
         char buffer[3], *out;
         unsigned char *in;
         in = (unsigned char *)buffer;
         // copy the file into the buffer:
-        size_t ret = fread(buffer, 1, 3, fp);
+        ssize_t ret = readBuffer(buffer, 3, srcFileData);
         if (ret > 0)
         {
-            base64Encode(in, (unsigned int)ret, &out);
-            send(sfd, out, 4, 0);
+            int len = base64Encode(in, (unsigned int)ret, &out);
+            send(sfd, out, len, 0);
             free(out);
             if(ret < 3)
             {
                 //eof
+                log("Reach the end, total send: %d bytes", (int)offset);
                 break;
             }
         }
@@ -324,16 +250,16 @@ void ConsoleUploadFile::uploadFile()
     }
     char l = '\n';
     send(sfd, &l, 1, 0);
-    // terminate
-    fclose (fp);
-   
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-        closesocket(sfd);
-        WSACleanup();
+
+    // Sleep 1s to wait server to receive all data.
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    closesocket(sfd);
+    WSACleanup();
 #else
-        close(sfd);
+    close(sfd);
 #endif
-    return;
 }
 
 std::string ConsoleUploadFile::title() const
@@ -347,6 +273,6 @@ std::string ConsoleUploadFile::subtitle() const
     
     std::string writablePath = sharedFileUtils->getWritablePath();
 
-    return "file uploaded to:" + writablePath + _target_file_name;
+    return "file uploaded to:" + writablePath + _targetFileName;
 }
 

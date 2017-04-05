@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -26,28 +26,16 @@
 #ifndef _ActionsTest_H_
 #define _ActionsTest_H_
 
-#include "../testBasic.h"
 #include "../BaseTest.h"
-////----#include "cocos2d.h"
 
-USING_NS_CC;
+DEFINE_TEST_SUITE(ActionsTests);
 
-
-// the class inherit from TestScene
-// every Scene each test used must inherit from TestScene,
-// make sure the test have the menu item for back to main menu
-class ActionsTestScene : public TestScene
-{
-public:
-    virtual void runThisTest();
-};
-
-class ActionsDemo : public BaseTest
+class ActionsDemo : public TestCase
 {
 protected:
-    Sprite*    _grossini;
-    Sprite*    _tamara;
-    Sprite*    _kathia;
+    cocos2d::Sprite*    _grossini;
+    cocos2d::Sprite*    _tamara;
+    cocos2d::Sprite*    _kathia;
 public:
     virtual void onEnter() override;
     virtual void onExit() override;
@@ -55,20 +43,6 @@ public:
     void centerSprites(unsigned int numberOfSprites);
     void alignSpritesLeft(unsigned int numberOfSprites);
     virtual std::string title() const override;
-    virtual std::string subtitle() const override;
-
-    void restartCallback(Ref* sender) override;
-    void nextCallback(Ref* sender) override;
-    void backCallback(Ref* sender) override;
-};
-
-class ActionManual : public ActionsDemo
-{
-public:
-    CREATE_FUNC(ActionManual);
-
-    virtual void onEnter() override;
-    virtual std::string subtitle() const override;
 };
 
 class ActionMove : public ActionsDemo
@@ -208,7 +182,7 @@ public:
     virtual std::string subtitle() const override;
     
 private:
-    EventListenerCustom* _frameDisplayedListener;
+    cocos2d::EventListenerCustom* _frameDisplayedListener;
 };
 
 class ActionSequence : public ActionsDemo
@@ -233,10 +207,28 @@ public:
     void callback3(Node* sender, long data);
 };
 
+class ActionSequence3 : public ActionsDemo
+{
+public:
+    CREATE_FUNC(ActionSequence3);
+
+    virtual void onEnter() override;
+    virtual std::string subtitle() const override;
+};
+
 class ActionSpawn : public ActionsDemo
 {
 public:
     CREATE_FUNC(ActionSpawn);
+
+    virtual void onEnter() override;
+    virtual std::string subtitle() const override;
+};
+
+class ActionSpawn2 : public ActionsDemo
+{
+public:
+    CREATE_FUNC(ActionSpawn2);
 
     virtual void onEnter() override;
     virtual std::string subtitle() const override;
@@ -326,15 +318,6 @@ public:
     virtual std::string subtitle() const override;
 };
 
-class ActionRotateJerk : public ActionsDemo
-{
-public:
-    CREATE_FUNC(ActionRotateJerk);
-
-    virtual void onEnter() override;
-    virtual std::string subtitle() const override;
-};
-
 class ActionCallFuncN : public ActionsDemo
 {
 public:
@@ -357,17 +340,6 @@ public:
     void doRemoveFromParentAndCleanup(Node* sender, bool cleanup);
 };
 
-class ActionCallFuncO : public ActionsDemo
-{
-public:
-    CREATE_FUNC(ActionCallFuncO);
-
-    virtual void onEnter() override;
-    virtual std::string title() const override;
-    virtual std::string subtitle() const override;
-    void callback(Node* object, bool cleanup);
-};
-
 class ActionCallFunction : public ActionsDemo
 {
 public:
@@ -387,6 +359,16 @@ class ActionFollow : public ActionsDemo
 public:
     CREATE_FUNC(ActionFollow);
 
+    virtual void onEnter() override;
+    virtual std::string subtitle() const override;
+};
+
+class ActionFollowWithOffset : public ActionsDemo
+{
+    
+public:
+    CREATE_FUNC(ActionFollowWithOffset);
+    
     virtual void onEnter() override;
     virtual std::string subtitle() const override;
 };
@@ -419,9 +401,9 @@ public:
     virtual void onEnter() override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual void addNewSpriteWithCoords(Vec2 p);
-    virtual void runActionsInSprite(Sprite* sprite);
-    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event) override;
+    virtual void addNewSpriteWithCoords(cocos2d::Vec2 p);
+    virtual void runActionsInSprite(cocos2d::Sprite* sprite);
+    void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
 };
 
 class ActionMoveStacked : public ActionStacked
@@ -430,7 +412,7 @@ public:
     CREATE_FUNC(ActionMoveStacked);
 
     virtual std::string title() const override;
-    virtual void runActionsInSprite(Sprite* sprite) override;
+    virtual void runActionsInSprite(cocos2d::Sprite* sprite) override;
 };
 
 class ActionMoveJumpStacked : public ActionStacked
@@ -439,7 +421,7 @@ public:
     CREATE_FUNC(ActionMoveJumpStacked);
 
     virtual std::string title() const override;
-    virtual void runActionsInSprite(Sprite* sprite) override;
+    virtual void runActionsInSprite(cocos2d::Sprite* sprite) override;
 };
 
 class ActionMoveBezierStacked : public ActionStacked
@@ -448,7 +430,7 @@ public:
     CREATE_FUNC(ActionMoveBezierStacked);
 
     virtual std::string title() const override;
-    virtual void runActionsInSprite(Sprite* sprite) override;
+    virtual void runActionsInSprite(cocos2d::Sprite* sprite) override;
 };
 
 class ActionCatmullRomStacked : public ActionsDemo
@@ -484,7 +466,7 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 private:
-    Sprite* _spriteTmp;
+    cocos2d::Sprite* _spriteTmp;
 };
 
 class Issue1305_2 : public ActionsDemo
@@ -529,7 +511,7 @@ public:
     virtual void onEnter() override;
     virtual std::string subtitle() const override;
     virtual std::string title() const override;
-    void logSprRotation(Sprite* sender);
+    void logSprRotation(cocos2d::Sprite* sender);
 };
 
 class Issue1398 : public ActionsDemo
@@ -593,7 +575,64 @@ public:
     virtual std::string subtitle() const override;
     virtual std::string title() const override;    
 private:
-    Vector<Node*> _pausedTargets;
+    cocos2d::Vector<Node*> _pausedTargets;
+};
+
+class ActionResize : public ActionsDemo 
+{
+public:
+    CREATE_FUNC(ActionResize);
+
+    virtual void onEnter() override;
+    virtual std::string subtitle() const override;
+};
+
+class ActionFloatTest : public ActionsDemo
+{
+public:
+    CREATE_FUNC(ActionFloatTest);
+
+    virtual void onEnter() override;
+    virtual std::string subtitle() const override;
+};
+
+class Issue14936_1 : public ActionsDemo
+{
+public:
+    CREATE_FUNC(Issue14936_1);
+
+    virtual void onEnter() override;
+    virtual std::string subtitle() const override;
+    virtual std::string title() const override;
+private:
+    int _count;
+};
+
+class Issue14936_2 : public ActionsDemo
+{
+public:
+    CREATE_FUNC(Issue14936_2);
+
+    virtual void onEnter() override;
+    virtual std::string subtitle() const override;
+    virtual std::string title() const override;
+private:
+    int _count;
+};
+
+class SequenceWithFinalInstant : public ActionsDemo
+{
+public:
+    CREATE_FUNC(SequenceWithFinalInstant);
+    
+    virtual std::string subtitle() const override;
+    virtual void onEnter() override;
+    virtual void onExit() override;
+    
+private:
+    cocos2d::ActionManager* _manager;
+    cocos2d::Node* _target;
+    
 };
 
 #endif

@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2014-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -28,9 +28,13 @@
 #include "2d/CCSprite.h"
 
 NS_CC_BEGIN
+/**
+ * @addtogroup _3d
+ * @{
+ */
 
 /**
- * Inherit from Sprite, achieve BillBoard.
+ * @brief Inherit from Sprite, achieve BillBoard.
  */
 class CC_DLL BillBoard : public Sprite
 {
@@ -41,7 +45,7 @@ public:
         VIEW_POINT_ORIENTED, // orient to the camera
         VIEW_PLANE_ORIENTED // orient to the XOY plane of camera
     };
-    /// @{
+
     /// @name Creators
 
     /**
@@ -92,7 +96,11 @@ public:
     /** update billboard's transform and turn it towards camera */
     virtual void visit(Renderer *renderer, const Mat4& parentTransform, uint32_t parentFlags) override;
     
-    /** draw BillBoard object */
+    /** 
+     * draw BillBoard object.
+     *
+     * @lua NA
+     */
     virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
 
 
@@ -102,7 +110,13 @@ CC_CONSTRUCTOR_ACCESS:
 
 protected:
 
-    bool calculateBillbaordTransform();
+    /**
+     * calculate a model matrix which keep original translate & scaling but always face to the camera
+     */
+    bool calculateBillboardTransform();
+
+    /** @deprecated Use calculateBillboardTransform instead. */
+    CC_DEPRECATED_ATTRIBUTE bool calculateBillbaordTransform();
     
     Mat4 _camWorldMat;
     Mat4 _mvTransform;
@@ -115,7 +129,8 @@ private:
 
 };
 
-
+// end of 3d group
+/// @}
 
 NS_CC_END
 

@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -28,27 +28,51 @@
 #include <string>
 #include "base/CCEvent.h"
 
+/**
+ * @addtogroup base
+ * @{
+ */
+
 NS_CC_BEGIN
 
+/** @class EventCustom
+ * @brief Custom event.
+ */
 class CC_DLL EventCustom : public Event
 {
 public:
-    /** Constructor */
+    /** Constructor.
+     *
+     * @param eventName A given name of the custom event.
+     * @js ctor
+     */
     EventCustom(const std::string& eventName);
     
-    /** Sets user data */
-    inline void setUserData(void* data) { _userData = data; };
+    /** Sets user data.
+     *
+     * @param data The user data pointer, it's a void*.
+     */
+    void setUserData(void* data) { _userData = data; }
     
-    /** Gets user data */
-    inline void* getUserData() const { return _userData; };
+    /** Gets user data.
+     *
+     * @return The user data pointer, it's a void*.
+     */
+    void* getUserData() const { return _userData; }
     
-    /** Gets event name */
-    inline const std::string& getEventName() const { return _eventName; };
+    /** Gets event name.
+     *
+     * @return The name of the event.
+     */
+    const std::string& getEventName() const { return _eventName; }
 protected:
     void* _userData;       ///< User data
     std::string _eventName;
 };
 
 NS_CC_END
+
+// end of base group
+/// @}
 
 #endif /* defined(__cocos2d_libs__CCCustomEvent__) */

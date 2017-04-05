@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -29,15 +29,15 @@ THE SOFTWARE.
 #include "platform/CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 
-#define	glClearDepth				glClearDepthf
-#define glDeleteVertexArrays		glDeleteVertexArraysOES
-#define glGenVertexArrays			glGenVertexArraysOES
-#define glBindVertexArray			glBindVertexArrayOES
-#define glMapBuffer					glMapBufferOES
-#define glUnmapBuffer				glUnmapBufferOES
+#define glClearDepth                glClearDepthf
+#define glDeleteVertexArrays        glDeleteVertexArraysOES
+#define glGenVertexArrays           glGenVertexArraysOES
+#define glBindVertexArray           glBindVertexArrayOES
+#define glMapBuffer                 glMapBufferOES
+#define glUnmapBuffer               glUnmapBufferOES
 
-#define GL_DEPTH24_STENCIL8			GL_DEPTH24_STENCIL8_OES
-#define GL_WRITE_ONLY				GL_WRITE_ONLY_OES
+#define GL_DEPTH24_STENCIL8         GL_DEPTH24_STENCIL8_OES
+#define GL_WRITE_ONLY               GL_WRITE_ONLY_OES
 
 #include <OpenGLES/ES2/gl.h>
 #include <OpenGLES/ES2/glext.h>

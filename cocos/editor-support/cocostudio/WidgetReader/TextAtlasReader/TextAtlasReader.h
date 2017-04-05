@@ -25,8 +25,8 @@
 #ifndef __TestCpp__TextAtlasReader__
 #define __TestCpp__TextAtlasReader__
 
-#include "cocostudio/WidgetReader/WidgetReader.h"
-#include "cocostudio/CocosStudioExport.h"
+#include "editor-support/cocostudio/WidgetReader/WidgetReader.h"
+#include "editor-support/cocostudio/CocosStudioExport.h"
 
 namespace cocostudio
 {
@@ -39,6 +39,9 @@ namespace cocostudio
         virtual ~TextAtlasReader();
         
         static TextAtlasReader* getInstance();
+        /** @deprecated Use method destroyInstance() instead */
+        CC_DEPRECATED_ATTRIBUTE static void purge();
+        static void destroyInstance();
         
         virtual void setPropsFromJsonDictionary(cocos2d::ui::Widget* widget, const rapidjson::Value& options);
         virtual void setPropsFromBinary(cocos2d::ui::Widget* widget, CocoLoader* cocoLoader,  stExpCocoNode*	pCocoNode) ;

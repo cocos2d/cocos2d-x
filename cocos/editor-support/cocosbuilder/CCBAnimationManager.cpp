@@ -1,9 +1,9 @@
-#include "CCBAnimationManager.h"
+#include "editor-support/cocosbuilder/CCBAnimationManager.h"
 
-#include "CCBReader.h"
-#include "CCNode+CCBRelativePositioning.h"
+#include "editor-support/cocosbuilder/CCBReader.h"
+#include "editor-support/cocosbuilder/CCNode+CCBRelativePositioning.h"
 #include "audio/include/SimpleAudioEngine.h"
-#include "CCBSelectorResolver.h"
+#include "editor-support/cocosbuilder/CCBSelectorResolver.h"
 
 #include <string>
 #include <sstream>
@@ -663,7 +663,7 @@ Sequence*  CCBAnimationManager::actionForCallbackChannel(CCBSequenceProperty* ch
             
             if(target != nullptr)
             {
-                if(selectorName.length() > 0)
+                if(!selectorName.empty())
                 {
                     SEL_CallFuncN selCallFunc = 0;
                     
@@ -724,7 +724,7 @@ Sequence*  CCBAnimationManager::actionForSoundChannel(CCBSequenceProperty* chann
         auto& keyVal = keyframe->getValue().asValueVector();
         std::string soundFile = keyVal[0].asString();
     
-        float pitch, pan, gain;
+        float pitch = 0.0f, pan = 0.0f, gain = 0.0f;
         ss << keyVal[1].asString();
         ss >> pitch;
         ss.flush();
@@ -999,7 +999,7 @@ CCBSetSpriteFrame* CCBSetSpriteFrame::reverse() const
 	return this->clone();
 }
 
-void CCBSetSpriteFrame::update(float time)
+void CCBSetSpriteFrame::update(float /*time*/)
 {
     static_cast<Sprite*>(_target)->setSpriteFrame(_spriteFrame);
 }
@@ -1050,7 +1050,7 @@ CCBSoundEffect* CCBSoundEffect::reverse() const
 	return this->clone();
 }
 
-void CCBSoundEffect::update(float time)
+void CCBSoundEffect::update(float /*time*/)
 {
     CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(_soundFile.c_str());
 }

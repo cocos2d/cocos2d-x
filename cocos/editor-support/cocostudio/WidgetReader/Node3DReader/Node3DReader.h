@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  Copyright (c) 2014 cocos2d-x.org
  
  http://www.cocos2d-x.org
@@ -25,10 +25,10 @@
 #ifndef __cocos2d_libs__Node3DReader__
 #define __cocos2d_libs__Node3DReader__
 
-#include "cocos2d.h"
-#include "cocostudio/CocosStudioExport.h"
-#include "cocostudio/WidgetReader/NodeReaderProtocol.h"
-#include "cocostudio/WidgetReader/NodeReaderDefine.h"
+#include "math/Vec3.h"
+#include "editor-support/cocostudio/CocosStudioExport.h"
+#include "editor-support/cocostudio/WidgetReader/NodeReaderProtocol.h"
+#include "editor-support/cocostudio/WidgetReader/NodeReaderDefine.h"
 
 namespace tinyxml2
 {
@@ -46,7 +46,9 @@ namespace cocostudio
         ~Node3DReader();
         
         static Node3DReader* getInstance();
-        static void purge();
+        /** @deprecated Use method destroyInstance() instead */
+        CC_DEPRECATED_ATTRIBUTE static void purge();
+        static void destroyInstance();
         
         flatbuffers::Offset<flatbuffers::Table> createOptionsWithFlatBuffers(const tinyxml2::XMLElement* objectData,
                                                                              flatbuffers::FlatBufferBuilder* builder);
@@ -54,7 +56,8 @@ namespace cocostudio
         cocos2d::Node* createNodeWithFlatBuffers(const flatbuffers::Table* node3DOptions);
         
     protected:
-        
+        flatbuffers::Offset<flatbuffers::Table> createOptionsWithFlatBuffersForNode(const tinyxml2::XMLElement* objectData,
+                                                                                    flatbuffers::FlatBufferBuilder* builder);
         cocos2d::Vec3 getVec3Attribute(const tinyxml2::XMLAttribute* attribute) const;
     };
 }

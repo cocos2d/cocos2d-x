@@ -28,6 +28,23 @@
 
 NS_CC_EXT_BEGIN
 
+void TableViewDelegate::tableCellHighlight(TableView* /*table*/, TableViewCell* /*cell*/)
+{}
+
+void TableViewDelegate::tableCellUnhighlight(TableView* /*table*/, TableViewCell* /*cell*/)
+{}
+
+void TableViewDelegate::tableCellWillRecycle(TableView* /*table*/, TableViewCell* /*cell*/)
+{}
+
+Size TableViewDataSource::tableCellSizeForIndex(TableView* table, ssize_t /*idx*/) {
+    return cellSizeForTable(table);
+}
+
+Size TableViewDataSource::cellSizeForTable(TableView* /*table*/) {
+    return Size::ZERO;
+}
+
 TableView* TableView::create()
 {
     return TableView::create(nullptr, Size::ZERO);
@@ -55,7 +72,7 @@ bool TableView::initWithViewSize(Size size, Node* container/* = nullptr*/)
     if (ScrollView::initWithViewSize(size,container))
     {
         CC_SAFE_DELETE(_indices);
-        _indices        = new std::set<ssize_t>();
+        _indices        = new (std::nothrow) std::set<ssize_t>();
         _vordering      = VerticalFillOrder::BOTTOM_UP;
         this->setDirection(Direction::VERTICAL);
 
@@ -320,10 +337,10 @@ Vec2 TableView::__offsetFromIndex(ssize_t index)
     switch (this->getDirection())
     {
         case Direction::HORIZONTAL:
-            offset = Vec2(_vCellsPositions[index], 0.0f);
+            offset.set(_vCellsPositions[index], 0.0f);
             break;
         default:
-            offset = Vec2(0.0f, _vCellsPositions[index]);
+            offset.set(0.0f, _vCellsPositions[index]);
             break;
     }
 
@@ -409,7 +426,7 @@ void TableView::_moveCellOutOfSight(TableViewCell *cell)
     
     if (cell->getParent() == this->getContainer())
     {
-        this->getContainer()->removeChild(cell, true);;
+        this->getContainer()->removeChild(cell, true);
     }
 }
 
@@ -448,7 +465,7 @@ void TableView::_updateCellPositions()
 
 }
 
-void TableView::scrollViewDidScroll(ScrollView* view)
+void TableView::scrollViewDidScroll(ScrollView* /*view*/)
 {
     long countOfItems = _dataSource->numberOfCellsInTableView(this);
     if (0 == countOfItems)
@@ -464,10 +481,6 @@ void TableView::scrollViewDidScroll(ScrollView* view)
         });
     }
     
-    if(_tableViewDelegate != nullptr) {
-        _tableViewDelegate->scrollViewDidScroll(this);
-    }
-
     ssize_t startIdx = 0, endIdx = 0, idx = 0, maxIdx = 0;
     Vec2 offset = this->getContentOffset() * -1;
     maxIdx = MAX(countOfItems-1, 0);
@@ -564,6 +577,10 @@ void TableView::scrollViewDidScroll(ScrollView* view)
             continue;
         }
         this->updateCellAtIndex(i);
+    }
+
+    if(_tableViewDelegate != nullptr) {
+        _tableViewDelegate->scrollViewDidScroll(this);
     }
 }
 

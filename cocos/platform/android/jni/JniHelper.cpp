@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -22,10 +22,12 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#include "JniHelper.h"
+#include "platform/android/jni/JniHelper.h"
 #include <android/log.h>
 #include <string.h>
 #include <pthread.h>
+
+#include "base/ccUTF8.h"
 
 #define  LOG_TAG    "JniHelper"
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
@@ -65,6 +67,10 @@ namespace cocos2d {
     JavaVM* JniHelper::_psJavaVM = nullptr;
     jmethodID JniHelper::loadclassMethod_methodID = nullptr;
     jobject JniHelper::classloader = nullptr;
+    std::function<void()> JniHelper::classloaderCallback = nullptr;
+    
+    jobject JniHelper::_activity = nullptr;
+    std::unordered_map<JNIEnv*, std::vector<jobject>> JniHelper::localRefs;
 
     JavaVM* JniHelper::getJavaVM() {
         pthread_t thisthread = pthread_self();
@@ -119,6 +125,10 @@ namespace cocos2d {
             _env = JniHelper::cacheEnv(_psJavaVM);
         return _env;
     }
+    
+    jobject JniHelper::getActivity() {
+        return _activity;
+    }
 
     bool JniHelper::setClassLoaderFrom(jobject activityinstance) {
         JniMethodInfo _getclassloaderMethod;
@@ -146,6 +156,10 @@ namespace cocos2d {
 
         JniHelper::classloader = cocos2d::JniHelper::getEnv()->NewGlobalRef(_c);
         JniHelper::loadclassMethod_methodID = _m.methodID;
+        JniHelper::_activity = cocos2d::JniHelper::getEnv()->NewGlobalRef(activityinstance);
+        if (JniHelper::classloaderCallback != nullptr){
+            JniHelper::classloaderCallback();
+        }
 
         return true;
     }
@@ -265,14 +279,37 @@ namespace cocos2d {
         
         JNIEnv *env = JniHelper::getEnv();
         if (!env) {
-            return nullptr;
+            return "";
         }
 
-        const char* chars = env->GetStringUTFChars(jstr, nullptr);
-        std::string ret(chars);
-        env->ReleaseStringUTFChars(jstr, chars);
+        std::string strValue = cocos2d::StringUtils::getStringUTFCharsJNI(env, jstr);
 
+        return strValue;
+    }
+
+    jstring JniHelper::convert(cocos2d::JniMethodInfo& t, const char* x) {
+        jstring ret = cocos2d::StringUtils::newStringUTFJNI(t.env, x ? x : "");
+        localRefs[t.env].push_back(ret);
         return ret;
+    }
+
+    jstring JniHelper::convert(cocos2d::JniMethodInfo& t, const std::string& x) {
+        return convert(t, x.c_str());
+    }
+
+    void JniHelper::deleteLocalRefs(JNIEnv* env) {
+        if (!env) {
+            return;
+        }
+
+        for (const auto& ref : localRefs[env]) {
+            env->DeleteLocalRef(ref);
+        }
+        localRefs[env].clear();
+    }
+
+    void JniHelper::reportError(const std::string& className, const std::string& methodName, const std::string& signature) {
+        LOGE("Failed to find static java method. Class name: %s, method name: %s, signature: %s ",  className.c_str(), methodName.c_str(), signature.c_str());
     }
 
 } //namespace cocos2d

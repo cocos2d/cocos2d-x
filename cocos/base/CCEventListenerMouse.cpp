@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -82,19 +82,19 @@ bool EventListenerMouse::init()
         {
             case EventMouse::MouseEventType::MOUSE_DOWN:
                 if(onMouseDown != nullptr)
-                    onMouseDown(event);
+                    onMouseDown(mouseEvent);
                 break;
             case EventMouse::MouseEventType::MOUSE_UP:
                 if(onMouseUp != nullptr)
-                    onMouseUp(event);
+                    onMouseUp(mouseEvent);
                 break;
             case EventMouse::MouseEventType::MOUSE_MOVE:
                 if(onMouseMove != nullptr)
-                    onMouseMove(event);
+                    onMouseMove(mouseEvent);
                 break;
             case EventMouse::MouseEventType::MOUSE_SCROLL:
                 if(onMouseScroll != nullptr)
-                    onMouseScroll(event);
+                    onMouseScroll(mouseEvent);
                 break;
             default:
                 break;

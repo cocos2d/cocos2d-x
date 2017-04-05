@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2015-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -45,7 +45,7 @@ public:
 
     /** Returns the width of the box
     */
-    const float getWidth() const;
+    float getWidth() const;
 
     /** Sets the width of the box
     */
@@ -53,7 +53,7 @@ public:
 
     /** Returns the height of the box
     */
-    const float getHeight() const;
+    float getHeight() const;
 
     /** Sets the height of the box
     */
@@ -61,7 +61,7 @@ public:
 
     /** Returns the depth of the box
     */
-    const float getDepth() const;
+    float getDepth() const;
 
     /** Sets the depth of the box
     */

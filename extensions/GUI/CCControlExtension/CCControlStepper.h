@@ -54,6 +54,7 @@ public:
     static ControlStepper* create(Sprite *minusSprite, Sprite *plusSprite);
     /**
      * @js ctor
+     * @lua new
      */
     ControlStepper();
     /**

@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2015-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -62,9 +62,9 @@ NS_CC_BEGIN
 //	/** Defines the speed of generating spawnpoints. In each Particle Technique update
 //		'mIterations' vertices are traversed.
 //	@remarks
-//		Setting this attribute to a higher value is needed if the emssion rate of the emitter
+//		Setting this attribute to a higher value is needed if the emission rate of the emitter
 //		is high. On slower computers, emitting the particles may exceed generating the 
-//		spawnpoints (because this is not done at once, but per Particle Tehcnique update).
+//		spawnpoints (because this is not done at once, but per Particle Technique update).
 //	*/
 //	unsigned short mIterations;
 //

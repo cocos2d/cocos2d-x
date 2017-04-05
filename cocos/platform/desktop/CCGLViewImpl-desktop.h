@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -57,7 +57,8 @@ class CC_DLL GLViewImpl : public GLView
 {
 public:
     static GLViewImpl* create(const std::string& viewName);
-    static GLViewImpl* createWithRect(const std::string& viewName, Rect size, float frameZoomFactor = 1.0f);
+    static GLViewImpl* create(const std::string& viewName, bool resizable);
+    static GLViewImpl* createWithRect(const std::string& viewName, Rect size, float frameZoomFactor = 1.0f, bool resizable = false);
     static GLViewImpl* createWithFullScreen(const std::string& viewName);
     static GLViewImpl* createWithFullScreen(const std::string& viewName, const GLFWvidmode &videoMode, GLFWmonitor *monitor);
 
@@ -72,11 +73,19 @@ public:
 
     virtual void setViewPortInPoints(float x , float y , float w , float h) override;
     virtual void setScissorInPoints(float x , float y , float w , float h) override;
-
+    virtual Rect getScissorRect() const override;
 
     bool windowShouldClose() override;
     void pollEvents() override;
     GLFWwindow* getWindow() const { return _mainWindow; }
+
+    bool isFullscreen() const;
+    void setFullscreen();
+    void setFullscreen(int monitorIndex);
+    void setFullscreen(const GLFWvidmode &videoMode, GLFWmonitor *monitor);
+    void setWindowed(int width, int height);
+    int getMonitorCount() const;
+    Size getMonitorSize() const;
 
     /* override functions */
     virtual bool isOpenGLReady() override;
@@ -108,14 +117,14 @@ public:
 #endif /* (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) */
     
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-    id getCocoaWindow() { return glfwGetCocoaWindow(_mainWindow); }
+    id getCocoaWindow() override { return glfwGetCocoaWindow(_mainWindow); }
 #endif // #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 
 protected:
-    GLViewImpl();
+    GLViewImpl(bool initglfw = true);
     virtual ~GLViewImpl();
 
-    bool initWithRect(const std::string& viewName, Rect rect, float frameZoomFactor);
+    bool initWithRect(const std::string& viewName, Rect rect, float frameZoomFactor, bool resizable);
     bool initWithFullScreen(const std::string& viewName);
     bool initWithFullscreen(const std::string& viewname, const GLFWvidmode &videoMode, GLFWmonitor *monitor);
 
@@ -134,6 +143,7 @@ protected:
     void onGLFWframebuffersize(GLFWwindow* window, int w, int h);
     void onGLFWWindowSizeFunCallback(GLFWwindow *window, int width, int height);
     void onGLFWWindowIconifyCallback(GLFWwindow* window, int iconified);
+    void onGLFWWindowFocusCallback(GLFWwindow* window, int focused);
 
     bool _captured;
     bool _supportTouch;
@@ -146,10 +156,18 @@ protected:
     GLFWwindow* _mainWindow;
     GLFWmonitor* _monitor;
 
+    std::string _glfwError;
+
     float _mouseX;
     float _mouseY;
 
     friend class GLFWEventHandler;
+    
+public:
+    // View will trigger an event when window is resized, gains or loses focus
+    static const std::string EVENT_WINDOW_RESIZED;
+    static const std::string EVENT_WINDOW_FOCUSED;
+    static const std::string EVENT_WINDOW_UNFOCUSED;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(GLViewImpl);

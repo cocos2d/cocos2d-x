@@ -1,7 +1,7 @@
 /****************************************************************************
  Copyright (c) 2010-2012 cocos2d-x.org
  Copyright (c) 2011 ForzeField Studios S.L
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
  
@@ -28,12 +28,12 @@
 
 #include "base/ccTypes.h"
 
-NS_CC_BEGIN
-
 /**
- * @addtogroup data_structures
+ * @addtogroup base
  * @{
  */
+
+NS_CC_BEGIN
 
 /** @file CCVertex.h */
 
@@ -46,10 +46,11 @@ bool CC_DLL ccVertexLineIntersect(float Ax, float Ay,
                              float Cx, float Cy,
                              float Dx, float Dy, float *T);
 
-// end of data_structures group
-/// @}
-
 NS_CC_END
+
+
+// end of base group
+/// @}
 
 #endif /* __CCVERTEX_H__ */
 

@@ -3,7 +3,7 @@ Copyright (c) 2009-2010 Ricardo Quesada
 Copyright (c) 2009      Matt Oswald
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -29,12 +29,11 @@ THE SOFTWARE.
 #include "2d/CCSpriteBatchNode.h"
 #include "2d/CCSprite.h"
 #include "base/CCDirector.h"
+#include "base/CCProfiling.h"
+#include "base/ccUTF8.h"
 #include "renderer/CCTextureCache.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCQuadCommand.h"
-
-#include "deprecated/CCString.h" // For StringUtils::format
-
 
 NS_CC_BEGIN
 
@@ -45,10 +44,14 @@ NS_CC_BEGIN
 SpriteBatchNode* SpriteBatchNode::createWithTexture(Texture2D* tex, ssize_t capacity/* = DEFAULT_CAPACITY*/)
 {
     SpriteBatchNode *batchNode = new (std::nothrow) SpriteBatchNode();
-    batchNode->initWithTexture(tex, capacity);
-    batchNode->autorelease();
-
-    return batchNode;
+    if(batchNode && batchNode->initWithTexture(tex, capacity))
+    {
+        batchNode->autorelease();
+        return batchNode;
+    }
+    
+    delete batchNode;
+    return nullptr;
 }
 
 /*
@@ -58,10 +61,14 @@ SpriteBatchNode* SpriteBatchNode::createWithTexture(Texture2D* tex, ssize_t capa
 SpriteBatchNode* SpriteBatchNode::create(const std::string& fileImage, ssize_t capacity/* = DEFAULT_CAPACITY*/)
 {
     SpriteBatchNode *batchNode = new (std::nothrow) SpriteBatchNode();
-    batchNode->initWithFile(fileImage, capacity);
-    batchNode->autorelease();
-
-    return batchNode;
+    if(batchNode && batchNode->initWithFile(fileImage, capacity))
+    {
+        batchNode->autorelease();
+        return batchNode;
+    }
+    
+    delete batchNode;
+    return nullptr;
 }
 
 /*
@@ -69,6 +76,11 @@ SpriteBatchNode* SpriteBatchNode::create(const std::string& fileImage, ssize_t c
 */
 bool SpriteBatchNode::initWithTexture(Texture2D *tex, ssize_t capacity/* = DEFAULT_CAPACITY*/)
 {
+    if(tex == nullptr)
+    {
+        return false;
+    }
+    
     CCASSERT(capacity>=0, "Capacity must be >= 0");
     
     _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
@@ -78,7 +90,7 @@ bool SpriteBatchNode::initWithTexture(Texture2D *tex, ssize_t capacity/* = DEFAU
     }
     _textureAtlas = new (std::nothrow) TextureAtlas();
 
-    if (capacity == 0)
+    if (capacity <= 0)
     {
         capacity = DEFAULT_CAPACITY;
     }
@@ -91,7 +103,7 @@ bool SpriteBatchNode::initWithTexture(Texture2D *tex, ssize_t capacity/* = DEFAU
 
     _descendants.reserve(capacity);
     
-    setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
+    setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR, tex));
     return true;
 }
 
@@ -134,7 +146,7 @@ void SpriteBatchNode::visit(Renderer *renderer, const Mat4 &parentTransform, uin
     // The alternative is to have a void Sprite#visit, but
     // although this is less maintainable, is faster
     //
-    if (! _visible || !isVisitableByVisitingCamera())
+    if (! _visible)
     {
         return;
     }
@@ -143,21 +155,23 @@ void SpriteBatchNode::visit(Renderer *renderer, const Mat4 &parentTransform, uin
 
     uint32_t flags = processParentFlags(parentTransform, parentFlags);
 
-    // IMPORTANT:
-    // To ease the migration to v3.0, we still support the Mat4 stack,
-    // but it is deprecated and your code should not rely on it
-    Director* director = Director::getInstance();
-    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
-
-    draw(renderer, _modelViewTransform, flags);
-
-    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    // FIX ME: Why need to set _orderOfArrival to 0??
-    // Please refer to https://github.com/cocos2d/cocos2d-x/pull/6920
-//    setOrderOfArrival(0);
-
-    CC_PROFILER_STOP_CATEGORY(kProfilerCategoryBatchSprite, "CCSpriteBatchNode - visit");
+    if (isVisitableByVisitingCamera())
+    {
+        // IMPORTANT:
+        // To ease the migration to v3.0, we still support the Mat4 stack,
+        // but it is deprecated and your code should not rely on it
+        _director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+        _director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
+        
+        draw(renderer, _modelViewTransform, flags);
+        
+        _director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+        // FIX ME: Why need to set _orderOfArrival to 0??
+        // Please refer to https://github.com/cocos2d/cocos2d-x/pull/6920
+        //    setOrderOfArrival(0);
+        
+        CC_PROFILER_STOP_CATEGORY(kProfilerCategoryBatchSprite, "CCSpriteBatchNode - visit");
+    }
 }
 
 void SpriteBatchNode::addChild(Node *child, int zOrder, int tag)
@@ -237,7 +251,7 @@ void SpriteBatchNode::removeAllChildrenWithCleanup(bool doCleanup)
     Node::removeAllChildrenWithCleanup(doCleanup);
 
     _descendants.clear();
-    _textureAtlas->removeAllQuads();
+    if (_textureAtlas) {_textureAtlas->removeAllQuads();}
 }
 
 //override sortAllChildren
@@ -245,7 +259,7 @@ void SpriteBatchNode::sortAllChildren()
 {
     if (_reorderChildDirty)
     {
-        std::sort(std::begin(_children), std::end(_children), nodeComparisonLess);
+        sortNodes(_children);
 
         //sorted now check all children
         if (!_children.empty())
@@ -280,7 +294,6 @@ void SpriteBatchNode::updateAtlasIndex(Sprite* sprite, ssize_t* curIndex)
     {
         oldIndex = sprite->getAtlasIndex();
         sprite->setAtlasIndex(*curIndex);
-        sprite->setOrderOfArrival(0);
         if (oldIndex != *curIndex){
             swap(oldIndex, *curIndex);
         }
@@ -295,7 +308,6 @@ void SpriteBatchNode::updateAtlasIndex(Sprite* sprite, ssize_t* curIndex)
             //all children are in front of the parent
             oldIndex = sprite->getAtlasIndex();
             sprite->setAtlasIndex(*curIndex);
-            sprite->setOrderOfArrival(0);
             if (oldIndex != *curIndex)
             {
                 swap(oldIndex, *curIndex);
@@ -311,7 +323,6 @@ void SpriteBatchNode::updateAtlasIndex(Sprite* sprite, ssize_t* curIndex)
             {
                 oldIndex = sprite->getAtlasIndex();
                 sprite->setAtlasIndex(*curIndex);
-                sprite->setOrderOfArrival(0);
                 if (oldIndex != *curIndex) {
                     this->swap(oldIndex, *curIndex);
                 }
@@ -326,7 +337,6 @@ void SpriteBatchNode::updateAtlasIndex(Sprite* sprite, ssize_t* curIndex)
         {//all children have a zOrder < 0)
             oldIndex = sprite->getAtlasIndex();
             sprite->setAtlasIndex(*curIndex);
-            sprite->setOrderOfArrival(0);
             if (oldIndex != *curIndex) {
                 swap(oldIndex, *curIndex);
             }
@@ -368,13 +378,6 @@ void SpriteBatchNode::draw(Renderer *renderer, const Mat4 &transform, uint32_t f
 
     for (const auto &child : _children)
     {
-#if CC_USE_PHYSICS
-        auto physicsBody = child->getPhysicsBody();
-        if (physicsBody)
-        {
-            child->updateTransformFromPhysics(transform, flags);
-        }
-#endif
         child->updateTransform();
     }
 
@@ -394,6 +397,19 @@ void SpriteBatchNode::increaseAtlasCapacity()
         static_cast<int>(quantity));
 
     if (! _textureAtlas->resizeCapacity(quantity))
+    {
+        // serious problems
+        CCLOGWARN("cocos2d: WARNING: Not enough memory to resize the atlas");
+        CCASSERT(false, "Not enough memory to resize the atlas");
+    }
+}
+
+void SpriteBatchNode::reserveCapacity(ssize_t newCapacity)
+{
+    if (newCapacity <= _textureAtlas->getCapacity())
+        return;
+
+    if (! _textureAtlas->resizeCapacity(newCapacity))
     {
         // serious problems
         CCLOGWARN("cocos2d: WARNING: Not enough memory to resize the atlas");
@@ -436,7 +452,7 @@ ssize_t SpriteBatchNode::highestAtlasIndexInChild(Sprite *sprite)
 {
     auto& children = sprite->getChildren();
 
-    if (children.size() == 0)
+    if (children.empty())
     {
         return sprite->getAtlasIndex();
     }
@@ -541,6 +557,18 @@ void SpriteBatchNode::appendChild(Sprite* sprite)
     // add children recursively
     auto& children = sprite->getChildren();
     for(const auto &child: children) {
+#if CC_SPRITE_DEBUG_DRAW
+        // when using CC_SPRITE_DEBUG_DRAW, a DrawNode is appended to sprites. remove it since only Sprites can be used
+        // as children in SpriteBatchNode
+        // Github issue #14730
+        if (dynamic_cast<DrawNode*>(child)) {
+            // to avoid calling Sprite::removeChild()
+            sprite->Node::removeChild(child, true);
+        }
+        else
+#else
+        CCASSERT(dynamic_cast<Sprite*>(child) != nullptr, "You can only add Sprites (or subclass of Sprite) to SpriteBatchNode");
+#endif
         appendChild(static_cast<Sprite*>(child));
     }
 }
@@ -559,7 +587,7 @@ void SpriteBatchNode::removeSpriteFromAtlas(Sprite *sprite)
         auto next = std::next(it);
 
         Sprite *spr = nullptr;
-        for(; next != _descendants.end(); ++next) {
+        for(auto nextEnd = _descendants.end(); next != nextEnd; ++next) {
             spr = *next;
             spr->setAtlasIndex( spr->getAtlasIndex() - 1 );
         }
@@ -676,7 +704,7 @@ SpriteBatchNode * SpriteBatchNode::addSpriteWithoutQuad(Sprite*child, int z, int
 
     // FIXME:: optimize with a binary search
     auto it = _descendants.begin();
-    for (; it != _descendants.end(); ++it)
+    for (auto itEnd = _descendants.end(); it != itEnd; ++it)
     {
         if((*it)->getAtlasIndex() >= z)
             break;

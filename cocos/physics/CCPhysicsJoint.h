@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -42,6 +42,8 @@ class PhysicsWorld;
 /**
  * @addtogroup physics
  * @{
+ * @addtogroup physics_2d
+ * @{
  */
 
 /**
@@ -55,36 +57,36 @@ protected:
 
 public:
     /**Get physics body a connected to this joint.*/
-    inline PhysicsBody* getBodyA() const { return _bodyA; }
+    PhysicsBody* getBodyA() const { return _bodyA; }
     
     /**Get physics body b connected to this joint.*/
-    inline PhysicsBody* getBodyB() const { return _bodyB; }
+    PhysicsBody* getBodyB() const { return _bodyB; }
 
     /**Get the physics world.*/
-    inline PhysicsWorld* getWorld() const { return _world; }
+    PhysicsWorld* getWorld() const { return _world; }
     
     /**
      * Get this joint's tag.
      *
-     * @return An interger number.
+     * @return An integer number.
      */
-    inline int getTag() const { return _tag; }
+    int getTag() const { return _tag; }
     
     /**
      * Set this joint's tag.
      *
-     * @param tag An interger number that identifies a PhysicsJoint.
+     * @param tag An integer number that identifies a PhysicsJoint.
      */
-    inline void setTag(int tag) { _tag = tag; }
+    void setTag(int tag) { _tag = tag; }
     
     /** Determines if the joint is enable. */
-    inline bool isEnabled() const { return _enable; }
+    bool isEnabled() const { return _enable; }
 
     /** Enable/Disable the joint. */
     void setEnable(bool enable);
     
-    /** Determines if the collsion is enable. */
-    inline bool isCollisionEnabled() const { return _collisionEnable; }
+    /** Determines if the collision is enable. */
+    bool isCollisionEnabled() const { return _collisionEnable; }
     
     /** Enable/disable the collision between two bodies. */
     void setCollisionEnable(bool enable);
@@ -113,7 +115,7 @@ protected:
 
     bool _enable;
     bool _collisionEnable;
-    bool _destoryMark;
+    bool _destroyMark;
     int _tag;
     float _maxForce;
 
@@ -471,7 +473,7 @@ public:
      @param a A is the body to connect.
      @param b B is the body to connect.
      @param phase Phase is the initial offset to use when deciding where the ratchet angles are.
-     @param ratchet Ratchet is the distance between “clicks”.
+     @param ratchet Ratchet is the distance between "clicks".
      @return A object pointer.
      */
     static PhysicsJointRatchet* construct(PhysicsBody* a, PhysicsBody* b, float phase, float ratchet);
@@ -488,10 +490,10 @@ public:
     /** Set the initial offset.*/
     void setPhase(float phase);
     
-    /** Get the distance between “clicks”.*/
+    /** Get the distance between "clicks".*/
     float getRatchet() const;
 
-    /** Set the distance between “clicks”.*/
+    /** Set the distance between "clicks".*/
     void setRatchet(float ratchet);
     virtual bool createConstraints() override;
 
@@ -567,6 +569,8 @@ protected:
 };
 
 /** @} */
+/** @} */
+
 
 NS_CC_END
 

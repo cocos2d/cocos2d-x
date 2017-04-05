@@ -1,0 +1,159 @@
+system explosionSystem
+{
+    category                                    Explosion
+    technique 
+    {
+        material                                ParticleUniverse/ExplosionFire
+        default_particle_width                  0.3
+        default_particle_height                 0.3
+        renderer                                Billboard
+        {
+        }
+        emitter                                 SphereSurface BurstEmitter
+        {
+            emission_rate                       20
+            time_to_live                        2
+            velocity                            3
+            direction                           0 0 0
+            auto_direction                      true
+            radius                              0.15
+        }
+        affector                                Colour 
+        {
+            time_colour                         0    1 1 0.95 1
+            time_colour                         0.5  0.18 0.05 0.01 1
+            time_colour                         1    0 0 0 1
+        }
+        affector                                Scale 
+        {
+            xyz_scale                           6
+        }
+        observer                                OnTime 
+        {
+            handler                             DoEnableComponent 
+            {
+                enable_component                emitter_component BurstEmitter false
+            }
+            since_start_system                  true
+            on_time                             greater_than 0.7
+        }
+    }
+    technique 
+    {
+        emitted_technique_quota                 6
+        material                                BaseWhite
+        renderer                                Billboard
+        {
+        }
+        emitter                                 Point NucleusEmitter
+        {
+            emission_rate                       6
+            angle                               80
+            time_to_live                        10
+            velocity                            9
+            enabled                             false
+            emits                               technique_particle NucleusTechnique
+            force_emission                      true
+        }
+        affector                                LinearForce 
+        {
+            force_vector                        0 -3 0
+        }
+        observer                                OnTime 
+        {
+            handler                             DoEnableComponent 
+            {
+                enable_component                emitter_component NucleusEmitter true
+            }
+            since_start_system                  true
+            on_time                             greater_than 0.3
+        }
+    }
+    technique NucleusTechnique
+    {
+        material                                ParticleUniverse/Nucleus
+        default_particle_width                  0.45
+        default_particle_height                 0.45
+        renderer                                Billboard
+        {
+        }
+        emitter                                 Point 
+        {
+            emission_rate                       100
+            angle                               360
+            velocity                            0.06
+            direction                           0 -1 0
+        }
+        affector                                Colour 
+        {
+            time_colour                         0    0.5 0.4 0.2 1
+            time_colour                         0.1  0.5 0.2 0.05 1
+            time_colour                         0.2  0.1 0.1 0.1 1
+            time_colour                         1    0 0 0 1
+        }
+        affector                                TextureRotator 
+        {
+            use_own_rotation                    true
+            rotation                            dyn_random
+            {
+                min                             1
+                max                             90
+            }
+            rotation_speed                      dyn_random
+            {
+                min                             0.1
+                max                             1
+            }
+        }
+        affector                                Scale 
+        {
+            xyz_scale                           -0.15
+        }
+    }
+    technique 
+    {
+        material                                ParticleUniverse/Debris
+        renderer                                Billboard
+        {
+            billboard_type                      oriented_self
+        }
+        emitter                                 Point DebrisEmitter
+        {
+            emission_rate                       100
+            angle                               360
+            time_to_live                        5
+            velocity                            dyn_random
+            {
+                min                             3
+                max                             6
+            }
+            particle_width                      0.09
+            particle_height                     dyn_random
+            {
+                min                             0.06
+                max                             0.6
+            }
+            enabled                             false
+            direction                           0 -1 0
+            force_emission                      true
+        }
+        affector                                Colour 
+        {
+            time_colour                         0    1 1 1 1
+            time_colour                         1    0 0 0 1
+        }
+        affector                                LinearForce 
+        {
+            force_vector                        0 -3 0
+        }
+        observer                                OnTime 
+        {
+            handler                             DoEnableComponent 
+            {
+                enable_component                emitter_component DebrisEmitter true
+            }
+            since_start_system                  true
+            on_time                             greater_than 0.3
+        }
+    }
+}

@@ -629,7 +629,7 @@ local function TMXOrthoObjectsTest()
     local drawNode = cc.DrawNode:create()
     map:addChild(drawNode, 10)
 
-    --------cclog("---: Iterating over all the group objets")
+    --------cclog("---: Iterating over all the group objects")
     local  group   = map:getObjectGroup("Object Group 1")
     local  objects = group:getObjects()
 
@@ -1236,6 +1236,8 @@ function TileMapTestMain()
         TMXBug987,
         TMXBug787
     }
+    Helper.index = 1
+    
     scene:addChild(TileMapTest())
     scene:addChild(CreateBackMenuItem())
     return scene

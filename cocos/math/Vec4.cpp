@@ -19,6 +19,8 @@
  */
 
 #include "math/Vec4.h"
+
+#include <cmath>
 #include "math/MathUtil.h"
 #include "base/ccMacros.h"
 
@@ -84,7 +86,7 @@ float Vec4::angle(const Vec4& v1, const Vec4& v2)
     float dy = v1.w * v2.y - v1.y * v2.w - v1.z * v2.x + v1.x * v2.z;
     float dz = v1.w * v2.z - v1.z * v2.w - v1.x * v2.y + v1.y * v2.x;
 
-    return atan2f(sqrt(dx * dx + dy * dy + dz * dz) + MATH_FLOAT_SMALL, dot(v1, v2));
+    return std::atan2(std::sqrt(dx * dx + dy * dy + dz * dz) + MATH_FLOAT_SMALL, dot(v1, v2));
 }
 
 void Vec4::add(const Vec4& v)
@@ -175,7 +177,7 @@ float Vec4::distance(const Vec4& v) const
     float dz = v.z - z;
     float dw = v.w - w;
 
-    return sqrt(dx * dx + dy * dy + dz * dz + dw * dw);
+    return std::sqrt(dx * dx + dy * dy + dz * dz + dw * dw);
 }
 
 float Vec4::distanceSquared(const Vec4& v) const
@@ -200,7 +202,7 @@ float Vec4::dot(const Vec4& v1, const Vec4& v2)
 
 float Vec4::length() const
 {
-    return sqrt(x * x + y * y + z * z + w * w);
+    return std::sqrt(x * x + y * y + z * z + w * w);
 }
 
 
@@ -224,7 +226,7 @@ void Vec4::normalize()
     if (n == 1.0f)
         return;
     
-    n = sqrt(n);
+    n = std::sqrt(n);
     // Too close to zero.
     if (n < MATH_TOLERANCE)
         return;

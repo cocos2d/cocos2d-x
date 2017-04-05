@@ -18,7 +18,7 @@ Original file from GamePlay3D: http://gameplay3d.org
 This file was modified to fit the cocos2d-x project
 */
 
-#include "MathUtil.h"
+#include "math/MathUtil.h"
 #include "base/ccMacros.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
@@ -59,18 +59,18 @@ This file was modified to fit the cocos2d-x project
 #endif
 
 #ifdef INCLUDE_NEON32
-#include "MathUtilNeon.inl"
+#include "math/MathUtilNeon.inl"
 #endif
 
 #ifdef INCLUDE_NEON64
-#include "MathUtilNeon64.inl"
+#include "math/MathUtilNeon64.inl"
 #endif
 
 #ifdef INCLUDE_SSE
-#include "MathUtilSSE.inl"
+#include "math/MathUtilSSE.inl"
 #endif
 
-#include "MathUtil.inl"
+#include "math/MathUtil.inl"
 
 NS_CC_MATH_BEGIN
 
@@ -93,6 +93,11 @@ void MathUtil::smooth(float* x, float target, float elapsedTime, float riseTime,
         float delta = target - *x;
         *x += delta * elapsedTime / (elapsedTime + (delta > 0 ? riseTime : fallTime));
     }
+}
+
+float MathUtil::lerp(float from, float to, float alpha)
+{
+    return from * (1.0f - alpha) + to * alpha;
 }
 
 bool MathUtil::isNeon32Enabled()

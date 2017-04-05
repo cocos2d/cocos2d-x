@@ -1,6 +1,6 @@
 
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2014-2017 Chukong Technologies Inc.
  Author: Justin Graham (https://github.com/mannewalis)
  
  http://www.cocos2d-x.org
@@ -28,6 +28,8 @@
 #include <new>
 #include <exception>
 
+#include <assert.h>
+
 USING_NS_CC_ALLOCATOR;
 
 #if CC_ENABLE_ALLOCATOR
@@ -43,21 +45,27 @@ namespace
 void* operator new[] (std::size_t size)
 {
     void* ptr = global.allocate(size);
-#if CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID
-    if (nullptr == ptr)
-        throw std::bad_alloc();
-#endif
-    return ptr;    
+    assert(ptr && "No memory");
+
+    // disabling exceptions since cocos2d-x doesn't use them
+//#if CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID
+//    if (nullptr == ptr)
+//        throw std::bad_alloc();
+//#endif
+    return ptr;
 }
 
 // @brief overrides global operator new
 void* operator new(std::size_t size)
 {
     void* ptr = global.allocate(size);
-#if CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID
-    if (nullptr == ptr)
-        throw std::bad_alloc();
-#endif
+    assert(ptr && "No memory");
+
+    // disabling exceptions since cocos2d-x doesn't use them
+//#if CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID
+//    if (nullptr == ptr)
+//        throw std::bad_alloc();
+//#endif
     return ptr;
 }
 

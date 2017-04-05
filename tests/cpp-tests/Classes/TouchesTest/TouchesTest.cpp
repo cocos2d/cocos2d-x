@@ -3,6 +3,8 @@
 #include "Paddle.h"
 #include "../testResource.h"
 
+USING_NS_CC;
+
 enum tagPlayer 
 {
     kHighPlayer,
@@ -17,17 +19,26 @@ enum
     kSpriteTag
 };
 
-
+TouchesTests::TouchesTests()
+{
+    ADD_TEST_CASE(PongScene);
+    ADD_TEST_CASE(ForceTouchTest);
+}
 //------------------------------------------------------------------
 //
 // PongScene
 //
 //------------------------------------------------------------------
-PongScene::PongScene()
+bool PongScene::init()
 {
-    auto pongLayer = new (std::nothrow) PongLayer();//PongLayer::create();
-    addChild(pongLayer);
-    pongLayer->release();
+    if (TestCase::init())
+    {
+        auto pongLayer = PongLayer::create();
+        addChild(pongLayer);
+
+        return true;
+    }
+    return false;
 }
 
 //------------------------------------------------------------------
@@ -100,9 +111,57 @@ void PongLayer::doStep(float delta)
         resetAndScoreBallForPlayer( kLowPlayer );
     else if (_ball->getPosition().y < VisibleRect::bottom().y-_ball->radius())
         resetAndScoreBallForPlayer( kHighPlayer );
-} 
+}
 
-void PongScene::runThisTest()
+const char * _Info_Formatter = "Current force value : %0.02f, maximum possible force : %0.02f";
+char formatBuffer[256] = {0, };
+
+ForceTouchTest::ForceTouchTest()
 {
-    Director::getInstance()->replaceScene(this);
+    auto s = Director::getInstance()->getWinSize();
+
+    _infoLabel = Label::createWithTTF(TTFConfig("fonts/arial.ttf"), "Current force value : 0.00, maximum possible force : 0.00");
+    _infoLabel->setPosition(s.width / 2, s.height / 2);
+    addChild(_infoLabel);
+
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesBegan = CC_CALLBACK_2(ForceTouchTest::onTouchesBegan, this);
+    listener->onTouchesMoved = CC_CALLBACK_2(ForceTouchTest::onTouchesMoved, this);
+    listener->onTouchesEnded = CC_CALLBACK_2(ForceTouchTest::onTouchesEnded, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+}
+
+ForceTouchTest::~ForceTouchTest()
+{
+}
+
+std::string ForceTouchTest::title() const
+{
+    return std::string("3D Touch Test");
+}
+
+std::string ForceTouchTest::subtitle() const
+{
+    return std::string("Touch with force to see info label changes\nOnly work on iPhone6s / iPhone6s Plus");
+}
+    
+void ForceTouchTest::onTouchesBegan(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event)
+{
+}
+
+void ForceTouchTest::onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event)
+{
+    for(auto& t : touches)
+    {
+        float currentForce = t->getCurrentForce();
+        float maxForce = t->getMaxForce();
+        sprintf(formatBuffer, _Info_Formatter, currentForce, maxForce);
+        _infoLabel->setString(std::string(formatBuffer));
+    }
+}
+
+void ForceTouchTest::onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event)
+{
+    sprintf(formatBuffer, _Info_Formatter, 0.0f, 0.0f);
+    _infoLabel->setString(std::string(formatBuffer));
 }

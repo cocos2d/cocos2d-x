@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -26,6 +26,11 @@
 #define _CC_BATCHCOMMAND_H_
 
 #include "renderer/CCRenderCommand.h"
+
+/**
+ * @addtogroup renderer
+ * @{
+ */
 
 NS_CC_BEGIN
 
@@ -73,4 +78,8 @@ protected:
 };
 NS_CC_END
 
+/**
+ end of support group
+ @}
+ */
 #endif //_CC_BATCHCOMMAND_H_

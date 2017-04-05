@@ -9,18 +9,11 @@
 
 #include "Bug-1159.h"
 
-Scene* Bug1159Layer::scene()
-{
-    auto scene = Scene::create();
-    auto layer = Bug1159Layer::create();
-    scene->addChild(layer);
-
-    return scene;
-}
+USING_NS_CC;
 
 bool Bug1159Layer::init()
 {
-    if (BugsTestBaseLayer::init())
+    if (BugsTestBase::init())
     {
         auto s = Director::getInstance()->getWinSize();
 
@@ -29,7 +22,7 @@ bool Bug1159Layer::init()
 
         auto sprite_a = LayerColor::create(Color4B(255, 0, 0, 255), 700, 700);
         sprite_a->setAnchorPoint(Vec2(0.5f, 0.5f));
-        sprite_a->ignoreAnchorPointForPosition(false);
+        sprite_a->setIgnoreAnchorPointForPosition(false);
         sprite_a->setPosition(0.0f, s.height/2);
         addChild(sprite_a);
 
@@ -40,7 +33,7 @@ bool Bug1159Layer::init()
 
         auto sprite_b = LayerColor::create(Color4B(0, 0, 255, 255), 400, 400);
         sprite_b->setAnchorPoint(Vec2(0.5f, 0.5f));
-        sprite_b->ignoreAnchorPointForPosition(false);
+        sprite_b->setIgnoreAnchorPointForPosition(false);
         sprite_b->setPosition(s.width/2, s.height/2);
         addChild(sprite_b);
 
@@ -57,10 +50,10 @@ bool Bug1159Layer::init()
 
 void Bug1159Layer::callBack(Ref* sender)
 {
-    Director::getInstance()->replaceScene(TransitionPageTurn::create(1.0f, Bug1159Layer::scene(), false));
+    Director::getInstance()->replaceScene(TransitionPageTurn::create(1.0f, Bug1159Layer::create(), false));
 }
 
 void Bug1159Layer::onExit()
 {
-    BugsTestBaseLayer::onExit();
+    BugsTestBase::onExit();
 }

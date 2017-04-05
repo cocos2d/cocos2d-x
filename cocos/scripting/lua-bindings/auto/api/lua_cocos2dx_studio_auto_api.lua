@@ -252,6 +252,16 @@
 
 
 --------------------------------------------------------
+-- the ccs BlendFuncFrame
+-- @field [parent=#ccs] BlendFuncFrame#BlendFuncFrame BlendFuncFrame preloaded module
+
+
+--------------------------------------------------------
+-- the ccs PlayableFrame
+-- @field [parent=#ccs] PlayableFrame#PlayableFrame PlayableFrame preloaded module
+
+
+--------------------------------------------------------
 -- the ccs Timeline
 -- @field [parent=#ccs] Timeline#Timeline Timeline preloaded module
 
@@ -269,6 +279,21 @@
 --------------------------------------------------------
 -- the ccs ActionTimelineNode
 -- @field [parent=#ccs] ActionTimelineNode#ActionTimelineNode ActionTimelineNode preloaded module
+
+
+--------------------------------------------------------
+-- the ccs BoneNode
+-- @field [parent=#ccs] BoneNode#BoneNode BoneNode preloaded module
+
+
+--------------------------------------------------------
+-- the ccs SkeletonNode
+-- @field [parent=#ccs] SkeletonNode#SkeletonNode SkeletonNode preloaded module
+
+
+--------------------------------------------------------
+-- the ccs ComExtensionData
+-- @field [parent=#ccs] ComExtensionData#ComExtensionData ComExtensionData preloaded module
 
 
 return nil

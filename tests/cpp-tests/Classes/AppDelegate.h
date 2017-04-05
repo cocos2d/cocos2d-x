@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2013      cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -27,11 +27,12 @@
 #define  _APP_DELEGATE_H_
 
 #include "cocos2d.h"
-#include "BaseTest.h"
+
+class TestController;
 /**
 @brief    The cocos2d Application.
 
-The reason for implement as private inheritance is to hide some interface call by Director.
+Private inheritance here hides part of interface from Director.
 */
 class  AppDelegate : private cocos2d::Application
 {
@@ -42,28 +43,26 @@ public:
     virtual void initGLContextAttrs();
 
     /**
-    @brief    Implement Director and Scene init code here.
+    @brief    Implement Director and cocos2d::Scene* init code here.
     @return true    Initialize success, app continue.
     @return false   Initialize failed, app terminate.
     */
     virtual bool applicationDidFinishLaunching();
 
     /**
-    @brief  The function be called when the application enter background
+    @brief  Called when the application moves to the background
     @param  the pointer of the application
     */
     virtual void applicationDidEnterBackground();
 
     /**
-    @brief  The function be called when the application enter foreground
+    @brief  Called when the application reenters the foreground
     @param  the pointer of the application
     */
     virtual void applicationWillEnterForeground();
 
-    BaseTest* getCurrentTest();
-    void setCurrentTest(BaseTest* curTest);
 private:
-    BaseTest* _curTest;
+    TestController* _testController;
 };
 
 #endif // _APP_DELEGATE_H_

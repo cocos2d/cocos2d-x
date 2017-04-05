@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2010-2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -68,6 +68,18 @@ Vec2 Touch::getStartLocation() const
 Vec2 Touch::getDelta() const
 {     
     return getLocation() - getPreviousLocation();
+}
+
+// Returns the current touch force for 3d touch.
+float Touch::getCurrentForce() const
+{
+    return _curForce;
+}
+
+// Returns the maximum touch force for 3d touch.
+float Touch::getMaxForce() const
+{
+    return _maxForce;
 }
 
 NS_CC_END

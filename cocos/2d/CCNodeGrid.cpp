@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -42,15 +42,35 @@ NodeGrid* NodeGrid::create()
     return ret;
 }
 
+NodeGrid* NodeGrid::create(const cocos2d::Rect &rect)
+{
+    NodeGrid* ret = NodeGrid::create();
+    if (ret) {
+        ret->setGridRect(rect);
+    }
+    return ret;
+}
+
 NodeGrid::NodeGrid()
 : _gridTarget(nullptr)
 , _nodeGrid(nullptr)
+, _gridRect(Rect::ZERO)
 {
 
 }
 
 void NodeGrid::setTarget(Node* target)
 {
+#if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+    auto sEngine = ScriptEngineManager::getInstance()->getScriptEngine();
+    if (sEngine)
+    {
+        if (_gridTarget)
+            sEngine->releaseScriptObject(this, _gridTarget);
+        if (target)
+            sEngine->retainScriptObject(this, target);
+    }
+#endif // CC_ENABLE_GC_FOR_NATIVE_OBJECTS
     CC_SAFE_RELEASE(_gridTarget);
     CC_SAFE_RETAIN(target);
     _gridTarget = target;
@@ -99,7 +119,7 @@ void NodeGrid::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t p
     // To ease the migration to v3.0, we still support the Mat4 stack,
     // but it is deprecated and your code should not rely on it
     Director* director = Director::getInstance();
-    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
+    CCASSERT(nullptr != director, "Director is null when setting matrix stack");
     
     director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
@@ -128,7 +148,7 @@ void NodeGrid::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t p
     {
         sortAllChildren();
         // draw children zOrder < 0
-        for( ; i < _children.size(); i++ )
+        for(auto size = _children.size(); i < size; ++i)
         {
             auto node = _children.at(i);
 
@@ -141,7 +161,7 @@ void NodeGrid::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t p
         if (visibleByCamera)
             this->draw(renderer, _modelViewTransform, dirty);
 
-        for(auto it=_children.cbegin()+i; it != _children.cend(); ++it) {
+        for(auto it=_children.cbegin()+i, itCend = _children.cend(); it != itCend; ++it) {
             (*it)->visit(renderer, _modelViewTransform, dirty);
         }
     }

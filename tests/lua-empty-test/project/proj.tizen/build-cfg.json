@@ -1,0 +1,24 @@
+{
+    "copy_resources": [
+        {
+            "from": "../../src",
+            "to": "src",
+            "exclude": [
+                ".gitignore",
+                ".Ds_Store"
+            ]
+        },
+        {
+            "from": "../../res",
+            "to": "res"
+        },
+        {
+            "from": "../../../../cocos/scripting/lua-bindings/script/",
+            "to": "src/cocos"
+        }
+    ],
+    "depend_projs": [
+        "../../../../build/tizen",
+        "../../../../cocos/scripting/lua-bindings/proj.tizen"
+    ]
+}

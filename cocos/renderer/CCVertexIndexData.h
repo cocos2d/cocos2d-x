@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -28,12 +28,17 @@
 #include "base/CCRef.h"
 #include <map>
 
+/**
+ * @addtogroup renderer
+ * @{
+ */
+
 NS_CC_BEGIN
 
 class VertexBuffer;
 /**
 VertexStreamAttribute is used to specify the vertex attribute for drawing, which is correspondent to
-glVertexAttribPointer(GLuint indx, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const GLvoid* ptr).
+glVertexAttribPointer(GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const GLvoid* ptr).
 
  _semantic  ->  index
  _size      ->  size
@@ -70,7 +75,7 @@ struct CC_DLL VertexStreamAttribute
      @param semantic The semantic (Position, Texcoord, Color etc) of attribute.
      @param type The type of attribute, could be GL_FLOAT, GL_UNSIGNED_BYTE etc.
      @param size Describe how many elements of type in the attribute.
-     @param normalize If true, the data will be normalized by deviding 255.
+     @param normalize If true, the data will be normalized by dividing 255.
      */
     VertexStreamAttribute(int offset, int semantic, int type, int size, bool normalize)
     : _normalize(normalize),_offset(offset),_semantic(semantic),_type(type),_size(size)
@@ -175,5 +180,8 @@ protected:
 };
 
 NS_CC_END
-
+/**
+ end of support group
+ @}
+ */
 #endif //__CC_VERTEX_INDEX_DATA_H__

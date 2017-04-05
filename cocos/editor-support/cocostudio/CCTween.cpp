@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -23,12 +23,12 @@ THE SOFTWARE.
 ****************************************************************************/
 
 
-#include "cocostudio/CCTween.h"
-#include "cocostudio/CCArmatureAnimation.h"
-#include "cocostudio/CCBone.h"
-#include "cocostudio/CCArmature.h"
-#include "cocostudio/CCUtilMath.h"
-#include "cocostudio/CCTransformHelp.h"
+#include "editor-support/cocostudio/CCTween.h"
+#include "editor-support/cocostudio/CCArmatureAnimation.h"
+#include "editor-support/cocostudio/CCBone.h"
+#include "editor-support/cocostudio/CCArmature.h"
+#include "editor-support/cocostudio/CCUtilMath.h"
+#include "editor-support/cocostudio/CCTransformHelp.h"
 
 
 namespace cocostudio {
@@ -345,9 +345,9 @@ void Tween::arriveKeyFrame(FrameData *keyFrameData)
         Armature *childAramture = _bone->getChildArmature();
         if(childAramture)
         {
-            if(keyFrameData->strMovement.length() != 0)
+            if(!keyFrameData->strMovement.empty())
             {
-                childAramture->getAnimation()->play(keyFrameData->strMovement.c_str());
+                childAramture->getAnimation()->play(keyFrameData->strMovement);
             }
         }
     }
@@ -450,9 +450,9 @@ float Tween::updateFrameData(float currentPercent)
             to = frames.at(_toIndex);
 
             //! Guaranteed to trigger frame event
-            if(from->strEvent.length() != 0 && !_animation->isIgnoreFrameEvent())
+            if(!from->strEvent.empty() && !_animation->isIgnoreFrameEvent())
             {
-                _animation->frameEvent(_bone, from->strEvent.c_str(), from->frameID, playedTime);
+                _animation->frameEvent(_bone, from->strEvent, from->frameID, playedTime);
             }
 
             if (playedTime == from->frameID || (_passLastFrame && _fromIndex == length-1))

@@ -41,12 +41,12 @@ Requirements:
  - Frameworks: OpenAL, AudioToolbox, AVFoundation
  
 @par CDAudioManager
-CDAudioManager is basically a thin wrapper around an AVAudioPlayer object used for playing
+CDAudioManager is basically a thin wrapper around an CCAudioPlayer object used for playing
 background music and a CDSoundEngine object used for playing sound effects. It manages the
 audio session for you deals with audio session interruption. It is fairly low level and it
 is expected you have some understanding of the underlying technologies. For example, for 
 many use cases regarding background music it is expected you will work directly with the
-backgroundMusic AVAudioPlayer which is exposed as a property.
+backgroundMusic CCAudioPlayer which is exposed as a property.
  
 Requirements:
   - Firmware: OS 2.2 or greater 
@@ -71,7 +71,7 @@ Requirements:
 #import <OpenAL/alc.h>
 #import <AudioToolbox/AudioToolbox.h>
 #import <Foundation/Foundation.h>
-#import "CDConfig.h"
+#import "audio/mac/CDConfig.h"
 
 
 #if !defined(CD_DEBUG) || CD_DEBUG == 0
@@ -88,7 +88,7 @@ Requirements:
 #endif // CD_DEBUG
 
 
-#import "CDOpenALSupport.h"
+#import "audio/mac/CDOpenALSupport.h"
 
 //Tested source limit on 2.2.1 and 3.1.2 with up to 128 sources and appears to work. Older OS versions e.g 2.2 may support only 32
 #define CD_SOURCE_LIMIT 32 //Total number of sources we will ever want, may actually get less

@@ -23,7 +23,7 @@ public class GameControllerUtils {
         
         try {
 
-            FileInputStream is = new FileInputStream(file);;
+            FileInputStream is = new FileInputStream(file);
 
             int size = is.available();
             byte[] buffer = new byte[size];

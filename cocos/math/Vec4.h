@@ -1,6 +1,7 @@
 /**
  Copyright 2013 BlackBerry Inc.
-
+ Copyright (c) 2014-2017 Chukong Technologies
+ 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
  You may obtain a copy of the License at
@@ -26,6 +27,11 @@
 #endif
 
 #include "math/CCMathBase.h"
+
+/**
+ * @addtogroup base
+ * @{
+ */
 
 NS_CC_MATH_BEGIN
 
@@ -268,13 +274,7 @@ public:
     void normalize();
 
     /**
-     * Normalizes this vector and stores the result in dst.
-     *
-     * If the vector already has unit length or if the length
-     * of the vector is zero, this method simply copies the
-     * current vector into dst.
-     *
-     * @param dst The destination vector.
+     * Get the normalized vector.
      */
     Vec4 getNormalized() const;
 
@@ -343,7 +343,7 @@ public:
      * @param v The vector to add.
      * @return The vector sum.
      */
-    inline const Vec4 operator+(const Vec4& v) const;
+    inline Vec4 operator+(const Vec4& v) const;
 
     /**
      * Adds the given vector to this vector.
@@ -361,7 +361,7 @@ public:
      * @param v The vector to add.
      * @return The vector sum.
      */
-    inline const Vec4 operator-(const Vec4& v) const;
+    inline Vec4 operator-(const Vec4& v) const;
 
     /**
      * Subtracts the given vector from this vector.
@@ -378,7 +378,7 @@ public:
      * 
      * @return The negation of this vector.
      */
-    inline const Vec4 operator-() const;
+    inline Vec4 operator-() const;
 
     /**
      * Calculates the scalar product of this vector with the given value.
@@ -388,7 +388,7 @@ public:
      * @param s The value to scale by.
      * @return The scaled vector.
      */
-    inline const Vec4 operator*(float s) const;
+    inline Vec4 operator*(float s) const;
 
     /**
      * Scales this vector by the given value.
@@ -406,7 +406,7 @@ public:
      * @param s the constant to divide this vector with
      * @return a smaller vector
      */
-    inline const Vec4 operator/(float s) const;
+    inline Vec4 operator/(float s) const;
 
     /**
      * Determines if this vector is less than the given vector.
@@ -456,10 +456,13 @@ public:
  * @param v The vector to scale.
  * @return The scaled vector.
  */
-inline const Vec4 operator*(float x, const Vec4& v);
+inline Vec4 operator*(float x, const Vec4& v);
 
 NS_CC_MATH_END
-
+/**
+ end of base group
+ @}
+ */
 #include "math/Vec4.inl"
 
 #endif // MATH_VEC4_H

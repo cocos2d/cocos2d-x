@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -25,14 +25,13 @@ THE SOFTWARE.
 #ifndef __CCDATAREADERHELPER_H__
 #define __CCDATAREADERHELPER_H__
 
-#include "cocostudio/CCArmatureDefine.h"
-#include "cocostudio/CCDatas.h"
-#include "cocostudio/CCArmature.h"
-#include "cocostudio/DictionaryHelper.h"
-#include "cocostudio/CocosStudioExport.h"
+#include "editor-support/cocostudio/CCArmatureDefine.h"
+#include "editor-support/cocostudio/CCDatas.h"
+#include "editor-support/cocostudio/CCArmature.h"
+#include "editor-support/cocostudio/DictionaryHelper.h"
+#include "editor-support/cocostudio/CocosStudioExport.h"
 
-#include "json/document.h"
-#include "DictionaryHelper.h"
+#include "json/document-wrapper.h"
 
 #include <string>
 #include <queue>
@@ -56,44 +55,44 @@ class CC_STUDIO_DLL DataReaderHelper : cocos2d::Ref
 {
 protected:
 
-	enum ConfigType
-	{
-		DragonBone_XML,
-		CocoStudio_JSON,
+    enum ConfigType
+    {
+        DragonBone_XML,
+        CocoStudio_JSON,
         CocoStudio_Binary
-	};
+    };
 
-	typedef struct _AsyncStruct
-	{
-		std::string    filename;
-		std::string    fileContent;
-		ConfigType     configType;
-		std::string    baseFilePath;
-		cocos2d::Ref       *target;
-		cocos2d::SEL_SCHEDULE   selector;
-		bool           autoLoadSpriteFile;
+    typedef struct _AsyncStruct
+    {
+        std::string    filename;
+        std::string    fileContent;
+        ConfigType     configType;
+        std::string    baseFilePath;
+        cocos2d::Ref       *target;
+        cocos2d::SEL_SCHEDULE   selector;
+        bool           autoLoadSpriteFile;
 
         std::string    imagePath;
         std::string    plistPath;
-	} AsyncStruct;
+    } AsyncStruct;
 
-	typedef struct _DataInfo
-	{
-		AsyncStruct *asyncStruct;
-		std::queue<std::string>      configFileQueue;
+    typedef struct _DataInfo
+    {
+        AsyncStruct *asyncStruct;
+        std::queue<std::string>      configFileQueue;
         float contentScale;
         std::string    filename;
         std::string    baseFilePath;
         float flashToolVersion;
         float cocoStudioVersion;
-	} DataInfo;
+    } DataInfo;
 
 public:
 
-	/** @deprecated Use getInstance() instead */
-	CC_DEPRECATED_ATTRIBUTE static DataReaderHelper *sharedDataReaderHelper() { return DataReaderHelper::getInstance(); }
+    /** @deprecated Use getInstance() instead */
+    CC_DEPRECATED_ATTRIBUTE static DataReaderHelper *sharedDataReaderHelper() { return DataReaderHelper::getInstance(); }
 
-	static DataReaderHelper *getInstance();
+    static DataReaderHelper *getInstance();
 
     /**
      * Scale the position data, used for multiresolution adapter
@@ -104,10 +103,10 @@ public:
 
     static void purge();
 public:
-	/**
+    /**
      * @js ctor
      */
-	DataReaderHelper();
+    DataReaderHelper();
     /**
      * @js NA
      * @lua NA
@@ -124,7 +123,7 @@ public:
 
     /**
      * Translate XML export from Dragon Bone flash tool to datas, and save them.
-     * When you add a new xml, the data already saved will be keeped.
+     * When you add a new xml, the data already saved will be kept.
      *
      * @param xmlPath The cache of the xml
      */
@@ -179,48 +178,48 @@ public:
     
 // for binary decode
 public:
-	static void addDataFromBinaryCache(const char *fileContent, DataInfo *dataInfo = nullptr);
-	static ArmatureData *decodeArmature(CocoLoader *cocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo);
-	static BoneData *decodeBone(CocoLoader *cocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo);
-	static DisplayData *decodeBoneDisplay(CocoLoader *cocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo);
-	static AnimationData *decodeAnimation(CocoLoader *cocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo);
-	static MovementData *decodeMovement(CocoLoader *cocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo);
+    static void addDataFromBinaryCache(const char *fileContent, DataInfo *dataInfo = nullptr);
+    static ArmatureData *decodeArmature(CocoLoader *cocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo);
+    static BoneData *decodeBone(CocoLoader *cocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo);
+    static DisplayData *decodeBoneDisplay(CocoLoader *cocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo);
+    static AnimationData *decodeAnimation(CocoLoader *cocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo);
+    static MovementData *decodeMovement(CocoLoader *cocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo);
     
-	static MovementBoneData *decodeMovementBone(CocoLoader *cocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo);
-	static FrameData *decodeFrame(CocoLoader *cocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo);
+    static MovementBoneData *decodeMovementBone(CocoLoader *cocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo);
+    static FrameData *decodeFrame(CocoLoader *cocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo);
     
-	static TextureData *decodeTexture(CocoLoader *cocoLoader, stExpCocoNode *pCocoNode);
-	static ContourData *decodeContour(CocoLoader *cocoLoader, stExpCocoNode *pCocoNode);
+    static TextureData *decodeTexture(CocoLoader *cocoLoader, stExpCocoNode *pCocoNode);
+    static ContourData *decodeContour(CocoLoader *cocoLoader, stExpCocoNode *pCocoNode);
     
-	static void decodeNode(BaseData *node, CocoLoader *cocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo);
+    static void decodeNode(BaseData *node, CocoLoader *cocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo);
     
 protected:
-	void loadData();
+    void loadData();
 
 
 
 
-	std::condition_variable		_sleepCondition;
+    std::condition_variable        _sleepCondition;
 
-	std::thread     *_loadingThread;
+    std::thread     *_loadingThread;
 
-	std::mutex      _sleepMutex;
+    std::mutex      _sleepMutex;
 
-	std::mutex      _asyncStructQueueMutex;
-	std::mutex      _dataInfoMutex;
+    std::mutex      _asyncStructQueueMutex;
+    std::mutex      _dataInfoMutex;
 
-	std::mutex      _addDataMutex;
+    std::mutex      _addDataMutex;
 
     std::mutex      _getFileMutex;
 
-	  
-	unsigned long _asyncRefCount;
-	unsigned long _asyncRefTotalCount;
+      
+    unsigned long _asyncRefCount;
+    unsigned long _asyncRefTotalCount;
 
-	bool need_quit;
+    bool need_quit;
 
-	std::queue<AsyncStruct *> *_asyncStructQueue;
-	std::queue<DataInfo *>   *_dataQueue;
+    std::queue<AsyncStruct *> *_asyncStructQueue;
+    std::queue<DataInfo *>   *_dataQueue;
 
     static std::vector<std::string> _configFileList;
 

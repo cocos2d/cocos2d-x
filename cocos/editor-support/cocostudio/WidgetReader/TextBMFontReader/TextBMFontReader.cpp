@@ -1,11 +1,13 @@
 
 
-#include "TextBMFontReader.h"
+#include "editor-support/cocostudio/WidgetReader/TextBMFontReader/TextBMFontReader.h"
 
 #include "2d/CCFontAtlasCache.h"
 #include "ui/UITextBMFont.h"
-#include "cocostudio/CocoLoader.h"
-#include "cocostudio/CSParseBinary_generated.h"
+#include "platform/CCFileUtils.h"
+#include "editor-support/cocostudio/CocoLoader.h"
+#include "editor-support/cocostudio/CSParseBinary_generated.h"
+#include "editor-support/cocostudio/LocalizationManager.h"
 
 #include "tinyxml2.h"
 #include "flatbuffers/flatbuffers.h"
@@ -42,6 +44,11 @@ namespace cocostudio
         return instanceTextBMFontReader;
     }
     
+    void TextBMFontReader::destroyInstance()
+    {
+        CC_SAFE_DELETE(instanceTextBMFontReader);
+    }
+    
     void TextBMFontReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *cocoLoader, stExpCocoNode *cocoNode)
     {
         this->beginSetBasicProperties(widget);
@@ -61,7 +68,7 @@ namespace cocostudio
             
             else if(key == P_FileNameData){
                 stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray(cocoLoader);
-                std::string resType = backGroundChildren[2].GetValue(cocoLoader);;
+                std::string resType = backGroundChildren[2].GetValue(cocoLoader);
                 
                 Widget::TextureResType imageFileNameType = (Widget::TextureResType)valueToInt(resType);
                 
@@ -119,6 +126,7 @@ namespace cocostudio
         auto widgetOptions = *(Offset<WidgetOptions>*)(&temp);
         
         std::string text = "Fnt Text Label";
+        bool isLocalized = false;
         
         std::string path = "";
         std::string plistFlie = "";
@@ -134,6 +142,10 @@ namespace cocostudio
             if (name == "LabelText")
             {
                 text = value;
+            }
+            else if (name == "IsLocalized")
+            {
+                isLocalized = (value == "True") ? true : false;
             }
             
             attribute = attribute->Next();
@@ -180,7 +192,8 @@ namespace cocostudio
                                                                   builder->CreateString(path),
                                                                   builder->CreateString(plistFlie),
                                                                   resourceType),
-                                               builder->CreateString(text));
+                                               builder->CreateString(text),
+                                               isLocalized);
         
         return *(Offset<Table>*)(&options);
     }
@@ -213,11 +226,6 @@ namespace cocostudio
                         fileExist = false;
                     }
                 }
-                else
-                {
-                    errorContent = "missed";
-                    fileExist = false;
-                }
                 break;
             }
                 
@@ -228,16 +236,18 @@ namespace cocostudio
         {
             labelBMFont->setFntFile(path);
         }
-        else
-        {
-            errorFilePath = path;
-            auto label = Label::create();
-            label->setString(__String::createWithFormat("%s %s", errorFilePath.c_str(), errorContent.c_str())->getCString());
-            labelBMFont->addChild(label);
-        }
         
         std::string text = options->text()->c_str();
-        labelBMFont->setString(text);
+        bool isLocalized = options->isLocalized() != 0;
+        if (isLocalized)
+        {
+            ILocalizationManager* lm = LocalizationHelper::getCurrentManager();
+            labelBMFont->setString(lm->getLocalizationString(text));
+        }
+        else
+        {
+            labelBMFont->setString(text);
+        }
         
         auto widgetReader = WidgetReader::getInstance();
         widgetReader->setPropsWithFlatBuffers(node, (Table*)options->widgetOptions());

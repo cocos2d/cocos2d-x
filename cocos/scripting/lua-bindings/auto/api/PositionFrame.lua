@@ -51,13 +51,6 @@
         
 --------------------------------
 -- 
--- @function [parent=#PositionFrame] apply 
--- @param self
--- @param #float percent
--- @return PositionFrame#PositionFrame self (return value: ccs.PositionFrame)
-        
---------------------------------
--- 
 -- @function [parent=#PositionFrame] clone 
 -- @param self
 -- @return Frame#Frame ret (return value: ccs.Frame)

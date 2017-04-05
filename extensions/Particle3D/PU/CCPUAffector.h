@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2015-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -119,7 +119,7 @@ protected:
         /** Although the scale is on a Particle System level, the affector can also be scaled.
     */
     Vec3 _affectorScale;
-        /** Because the public attribute ´position?is sometimes used for both localspace and worldspace
+        /** Because the public attribute position is sometimes used for both localspace and worldspace
         position, the mDerivedPosition attribute is introduced.
     */
     Vec3 _derivedPosition;

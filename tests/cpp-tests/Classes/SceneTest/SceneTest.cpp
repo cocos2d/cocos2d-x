@@ -1,6 +1,13 @@
 #include "SceneTest.h"
 #include "../testResource.h"
 
+USING_NS_CC;
+
+SceneTests::SceneTests()
+{
+    ADD_TEST_CASE(SceneTestScene);
+}
+
 //------------------------------------------------------------------
 //
 // SceneTestLayer1
@@ -62,30 +69,21 @@ SceneTestLayer1::~SceneTestLayer1()
 
 void SceneTestLayer1::onPushScene(Ref* sender)
 {
-    auto scene = new (std::nothrow) SceneTestScene();
-    auto layer = new (std::nothrow) SceneTestLayer2();
-    scene->addChild( layer, 0 );
+    auto scene = SceneTestScene::create(2);
     Director::getInstance()->pushScene( scene );
-    scene->release();
-    layer->release();
 }
 
 void SceneTestLayer1::onPushSceneTran(Ref* sender)
 {
-    auto scene = new (std::nothrow) SceneTestScene();
-    auto layer = new (std::nothrow) SceneTestLayer2();
-    scene->addChild( layer, 0 );
-
+    auto scene = SceneTestScene::create(2);
     Director::getInstance()->pushScene( TransitionSlideInT::create(1, scene) );
-    scene->release();
-    layer->release();
 }
 
 
 void SceneTestLayer1::onQuit(Ref* sender)
 {
     //getCocosApp()->exit();
-    //CCDirector::getInstance()->poscene();
+    //Director::getInstance()->popScene();
 
     //// HA HA... no more terminate on sdk v3.0
     //// http://developer.apple.com/iphone/library/qa/qa2008/qa1561.html
@@ -137,21 +135,14 @@ void SceneTestLayer2::onGoBack(Ref* sender)
 
 void SceneTestLayer2::onReplaceScene(Ref* sender)
 {
-    auto scene = new (std::nothrow) SceneTestScene();
-    auto layer = SceneTestLayer3::create();
-    scene->addChild( layer, 0 );
+    auto scene = SceneTestScene::create(3);
     Director::getInstance()->replaceScene( scene );
-    scene->release();
 }
-
 
 void SceneTestLayer2::onReplaceSceneTran(Ref* sender)
 {
-    auto scene = new (std::nothrow) SceneTestScene();
-    auto layer = SceneTestLayer3::create();
-    scene->addChild( layer, 0 );
+    auto scene = SceneTestScene::create(3);
     Director::getInstance()->replaceScene( TransitionFlipX::create(2, scene) );
-    scene->release();
 }
 
 //------------------------------------------------------------------
@@ -172,7 +163,7 @@ bool SceneTestLayer3::init()
         auto s = Director::getInstance()->getWinSize();
 
         auto item0 = MenuItemFont::create("Touch to pushScene (self)", CC_CALLBACK_1(SceneTestLayer3::item0Clicked, this));
-        auto item1 = MenuItemFont::create("Touch to poscene", CC_CALLBACK_1(SceneTestLayer3::item1Clicked, this));
+        auto item1 = MenuItemFont::create("Touch to popScene", CC_CALLBACK_1(SceneTestLayer3::item1Clicked, this));
         auto item2 = MenuItemFont::create("Touch to popToRootScene", CC_CALLBACK_1(SceneTestLayer3::item2Clicked, this));
         auto item3 = MenuItemFont::create("Touch to popToSceneStackLevel(2)", CC_CALLBACK_1(SceneTestLayer3::item3Clicked, this));
 
@@ -221,11 +212,32 @@ void SceneTestLayer3::item3Clicked(Ref* sender)
     Director::getInstance()->popToSceneStackLevel(2);
 }
 
-void SceneTestScene::runThisTest()
+SceneTestScene* SceneTestScene::create(int testIndex /* = 1 */)
 {
-    auto layer = new (std::nothrow) SceneTestLayer1();
-    addChild(layer);
-    layer->release();
+    auto scene = new (std::nothrow) SceneTestScene;
+    if (scene && scene->init())
+    {
+        scene->autorelease();
+        switch (testIndex)
+        {
+        case 1:
+            scene->addChild(SceneTestLayer1::create());
+            break;
+        case 2:
+            scene->addChild(SceneTestLayer2::create());
+            break;
+        case 3:
+            scene->addChild(SceneTestLayer3::create());
+            break;
+        default:
+            break;
+        }
+    }
+    else
+    {
+        delete scene;
+        scene = nullptr;
+    }
 
-    Director::getInstance()->replaceScene(this);
+    return scene;
 }

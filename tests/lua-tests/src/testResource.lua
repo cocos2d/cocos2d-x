@@ -45,3 +45,5 @@ s_markerFeltFontPath   = "fonts/Marker Felt.ttf"
 s_arialPath            = "fonts/arial.ttf"
 s_thonburiPath         = "fonts/Thonburi.ttf"
 s_tahomaPath           = "fonts/tahoma.ttf"
+
+s_s9s_ui_plist         = "Images/ui.plist"

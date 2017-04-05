@@ -1,9 +1,8 @@
-
-#include "json/document.h"
-#include "json/filestream.h"
+#include "ConfigParser.h"
+#include "json/filereadstream.h"
 #include "json/stringbuffer.h"
 #include "json/writer.h"
-#include "ConfigParser.h"
+#include "FileServer.h"
 
 // ConfigParser
 ConfigParser *ConfigParser::s_sharedConfigParserInstance = NULL;
@@ -26,6 +25,13 @@ void ConfigParser::readConfig(const string &filepath)
 {
     string fullPathFile = filepath;
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    // add writable path to search path temporarily for reading config file
+    vector<std::string> searchPathArray = FileUtils::getInstance()->getSearchPaths();
+    searchPathArray.insert(searchPathArray.begin(), FileServer::getShareInstance()->getWritePath());
+    FileUtils::getInstance()->setSearchPaths(searchPathArray);
+#endif
+    
     // read config file
     if (fullPathFile.empty())
     {
@@ -33,11 +39,17 @@ void ConfigParser::readConfig(const string &filepath)
     }
     string fileContent = FileUtils::getInstance()->getStringFromFile(fullPathFile);
   
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    // revert search path
+    searchPathArray.erase(searchPathArray.begin());
+    FileUtils::getInstance()->setSearchPaths(searchPathArray);
+#endif
+
     if(fileContent.empty())
         return;
     
     if (_docRootjson.Parse<0>(fileContent.c_str()).HasParseError()) {
-        cocos2d::log("read json file %s failed because of %s", fullPathFile.c_str(), _docRootjson.GetParseError());
+        cocos2d::log("read json file %s failed because of %d", fullPathFile.c_str(), _docRootjson.GetParseError());
         return;
     }
     
@@ -72,15 +84,15 @@ void ConfigParser::readConfig(const string &filepath)
             }
             if (objectInitView.HasMember("consolePort"))
             {
-                _consolePort = objectInitView["consolePort"].GetUint();
-                if(_consolePort <= 0)
-                    _consolePort = kProjectConfigConsolePort;
+                setConsolePort(objectInitView["consolePort"].GetUint());
+            }
+            if (objectInitView.HasMember("debugPort"))
+            {
+                setDebugPort(objectInitView["debugPort"].GetUint());
             }
             if (objectInitView.HasMember("uploadPort"))
             {
-                _uploadPort = objectInitView["uploadPort"].GetUint();
-                if(_uploadPort <= 0)
-                    _uploadPort = kProjectConfigUploadPort;
+                setUploadPort(objectInitView["uploadPort"].GetUint());
             }
             if (objectInitView.HasMember("isWindowTop") && objectInitView["isWindowTop"].IsBool())
             {
@@ -110,8 +122,9 @@ _isLandscape(true),
 _isWindowTop(false),
 _consolePort(kProjectConfigConsolePort),
 _uploadPort(kProjectConfigUploadPort),
+_debugPort(kProjectConfigDebugger),
 _viewName("simulator"),
-_entryfile("src/main.lua"),
+_entryfile(""),
 _initViewSize(ProjectConfig::DEFAULT_HEIGHT, ProjectConfig::DEFAULT_WIDTH),
 _bindAddress("")
 {
@@ -148,11 +161,24 @@ bool ConfigParser::isWindowTop()
 }
 void ConfigParser::setConsolePort(int port)
 {
-    _consolePort = port;
+    if (port > 0)
+    {
+        _consolePort = port;
+    }
 }
 void ConfigParser::setUploadPort(int port)
 {
-    _uploadPort = port;
+    if (port > 0)
+    {
+        _uploadPort = port;
+    }
+}
+void ConfigParser::setDebugPort(int port)
+{
+    if (port > 0)
+    {
+        _debugPort = port;
+    }
 }
 int ConfigParser::getConsolePort()
 {
@@ -161,6 +187,10 @@ int ConfigParser::getConsolePort()
 int ConfigParser::getUploadPort()
 {
     return _uploadPort;
+}
+int ConfigParser::getDebugPort()
+{
+    return _debugPort;
 }
 int ConfigParser::getScreenSizeCount(void)
 {

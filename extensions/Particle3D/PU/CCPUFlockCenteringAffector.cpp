@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2015-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -30,8 +30,6 @@ NS_CC_BEGIN
 //-----------------------------------------------------------------------
 PUFlockCenteringAffector::PUFlockCenteringAffector() 
 : PUAffector(),
-  _sum(Vec3::ZERO),
-  _average(Vec3::ZERO),
   _count(0.0f)
 {
 }
@@ -51,7 +49,7 @@ void PUFlockCenteringAffector::updatePUAffector( PUParticle3D *particle, float d
     }
 }
 
-void PUFlockCenteringAffector::preUpdateAffector( float deltaTime )
+void PUFlockCenteringAffector::preUpdateAffector( float /*deltaTime*/ )
 {
     if (_count != 0)
     {
@@ -62,7 +60,7 @@ void PUFlockCenteringAffector::preUpdateAffector( float deltaTime )
     {
         _average = getDerivedPosition(); // Set to position of the affector
     }
-    _sum = Vec3::ZERO;
+    _sum.setZero();
     _count = 0;
 }
 

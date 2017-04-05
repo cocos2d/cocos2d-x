@@ -11,17 +11,17 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 
 public class GameControllerOuya implements GameControllerDelegate{
-	
-	private SparseIntArray mKeyMap;
     
-	private SparseArray<String> mGameController = new SparseArray<String>();
-	
-	public GameControllerOuya(){
-    	mKeyMap = new SparseIntArray(20);
-		mKeyMap.put(OuyaController.BUTTON_A, GameControllerDelegate.BUTTON_B);
-		mKeyMap.put(OuyaController.BUTTON_O, GameControllerDelegate.BUTTON_A);
-		mKeyMap.put(OuyaController.BUTTON_U, GameControllerDelegate.BUTTON_X);
-		mKeyMap.put(OuyaController.BUTTON_Y, GameControllerDelegate.BUTTON_Y);
+    private SparseIntArray mKeyMap;
+    
+    private SparseArray<String> mGameController = new SparseArray<String>();
+    
+    public GameControllerOuya(){
+        mKeyMap = new SparseIntArray(20);
+        mKeyMap.put(OuyaController.BUTTON_A, GameControllerDelegate.BUTTON_B);
+        mKeyMap.put(OuyaController.BUTTON_O, GameControllerDelegate.BUTTON_A);
+        mKeyMap.put(OuyaController.BUTTON_U, GameControllerDelegate.BUTTON_X);
+        mKeyMap.put(OuyaController.BUTTON_Y, GameControllerDelegate.BUTTON_Y);
         mKeyMap.put(OuyaController.BUTTON_DPAD_DOWN, GameControllerDelegate.BUTTON_DPAD_DOWN);
         mKeyMap.put(OuyaController.BUTTON_DPAD_LEFT, GameControllerDelegate.BUTTON_DPAD_LEFT);
         mKeyMap.put(OuyaController.BUTTON_DPAD_RIGHT, GameControllerDelegate.BUTTON_DPAD_RIGHT);
@@ -34,150 +34,142 @@ public class GameControllerOuya implements GameControllerDelegate{
     }
     
     public void onCreate(Context context) {
-    	OuyaController.init(context);
-    	/*GameControllerAdapter.addRunnableToFrameStartList(new Runnable() {
-
-			@Override
-			public void run() {
-				OuyaController.startOfFrame();
-			}
-    		
-    	});*/
+        OuyaController.init(context);
     }
     
     private float mOldLeftThumbstickX = 0.0f;
-	private float mOldLeftThumbstickY = 0.0f;
-	private float mOldRightThumbstickX = 0.0f;
-	private float mOldRightThumbstickY = 0.0f;
-	
+    private float mOldLeftThumbstickY = 0.0f;
+    private float mOldRightThumbstickX = 0.0f;
+    private float mOldRightThumbstickY = 0.0f;
+    
     private float mOldLeftTrigger = 0.0f;
-	private float mOldRightTrigger = 0.0f;
-	
+    private float mOldRightTrigger = 0.0f;
+    
     public boolean dispatchGenericMotionEvent(MotionEvent event) {
         boolean handled = OuyaController.onGenericMotionEvent(event);
         
         if (handled && mControllerEventListener != null)
         {
-        	int deviceId = event.getDeviceId();
-        	String deviceName = event.getDevice().getName();
-        	OuyaController c = OuyaController.getControllerByDeviceId(deviceId);
-        	if (mGameController.get(deviceId) == null) {
-				GameControllerHelper.gatherControllers(mGameController);
-				mGameController.append(deviceId, deviceName);
-			}
-        	
-        	float newLeftTrigger = c.getAxisValue(OuyaController.AXIS_L2);
-        	if (Float.compare(newLeftTrigger, mOldLeftTrigger) != 0) {
-        		mControllerEventListener.onAxisEvent(deviceName, deviceId, GameControllerDelegate.BUTTON_LEFT_TRIGGER, newLeftTrigger, true);
-				mOldLeftTrigger = newLeftTrigger;
-			}
-        	
-        	float newRightTrigger = c.getAxisValue(OuyaController.AXIS_R2);
-        	if (Float.compare(newRightTrigger, mOldRightTrigger) != 0) {
-        		mControllerEventListener.onAxisEvent(deviceName, deviceId, GameControllerDelegate.BUTTON_RIGHT_TRIGGER, newRightTrigger, true);
-				mOldRightTrigger = newRightTrigger;
-			}
-        	
-        	float newLeftThumbstickX = c.getAxisValue(OuyaController.AXIS_LS_X);
-        	if (Float.compare(newLeftThumbstickX, mOldLeftThumbstickX) != 0) {
-				if (Float.compare(newLeftThumbstickX, 0.0f) == 0) {
-					mControllerEventListener.onAxisEvent(deviceName, deviceId, GameControllerDelegate.THUMBSTICK_LEFT_X, 0.0f, true);
-				}else {
-					mControllerEventListener.onAxisEvent(deviceName, deviceId, GameControllerDelegate.THUMBSTICK_LEFT_X, newLeftThumbstickX, true);
-				}
-				mOldLeftThumbstickX = newLeftThumbstickX;
-			}
-        	
-        	float newLeftThumbstickY = c.getAxisValue(OuyaController.AXIS_LS_Y);
-        	if (Float.compare(newLeftThumbstickY, mOldLeftThumbstickY) != 0) {
-				if (Float.compare(newLeftThumbstickY, 0.0f) == 0) {
-					mControllerEventListener.onAxisEvent(deviceName, deviceId, GameControllerDelegate.THUMBSTICK_LEFT_Y, 0.0f, true);
-				}else {
-					mControllerEventListener.onAxisEvent(deviceName, deviceId, GameControllerDelegate.THUMBSTICK_LEFT_Y, newLeftThumbstickY, true);
-				}
-				mOldLeftThumbstickY = newLeftThumbstickY;
-			}
-        	
-        	float newRightThumbstickX = c.getAxisValue(OuyaController.AXIS_RS_X);
-        	if (Float.compare(newRightThumbstickX, mOldRightThumbstickX) != 0) {
-				if (Float.compare(newRightThumbstickX, 0.0f) == 0) {
-					mControllerEventListener.onAxisEvent(deviceName, deviceId, GameControllerDelegate.THUMBSTICK_RIGHT_X, 0.0f, true);
-				}else {
-					mControllerEventListener.onAxisEvent(deviceName, deviceId, GameControllerDelegate.THUMBSTICK_RIGHT_X, newRightThumbstickX, true);
-				}
-				mOldRightThumbstickX = newRightThumbstickX;
-			}
-        	
-        	float newRightThumbstickY = c.getAxisValue(OuyaController.AXIS_RS_Y);
-        	if (Float.compare(newRightThumbstickY, mOldRightThumbstickY) != 0) {
-				if (Float.compare(newRightThumbstickY, 0.0f) == 0) {
-					mControllerEventListener.onAxisEvent(deviceName, deviceId, GameControllerDelegate.THUMBSTICK_RIGHT_Y, 0.0f, true);
-				}else {
-					mControllerEventListener.onAxisEvent(deviceName, deviceId, GameControllerDelegate.THUMBSTICK_RIGHT_Y, newRightThumbstickY, true);
-				}
-				mOldRightThumbstickY = newRightThumbstickY;
-			}
+            int deviceId = event.getDeviceId();
+            String deviceName = event.getDevice().getName();
+            OuyaController c = OuyaController.getControllerByDeviceId(deviceId);
+            if (mGameController.get(deviceId) == null) {
+                GameControllerHelper.gatherControllers(mGameController);
+                mGameController.append(deviceId, deviceName);
+            }
+            
+            float newLeftTrigger = c.getAxisValue(OuyaController.AXIS_L2);
+            if (Float.compare(newLeftTrigger, mOldLeftTrigger) != 0) {
+                mControllerEventListener.onAxisEvent(deviceName, deviceId, GameControllerDelegate.BUTTON_LEFT_TRIGGER, newLeftTrigger, true);
+                mOldLeftTrigger = newLeftTrigger;
+            }
+            
+            float newRightTrigger = c.getAxisValue(OuyaController.AXIS_R2);
+            if (Float.compare(newRightTrigger, mOldRightTrigger) != 0) {
+                mControllerEventListener.onAxisEvent(deviceName, deviceId, GameControllerDelegate.BUTTON_RIGHT_TRIGGER, newRightTrigger, true);
+                mOldRightTrigger = newRightTrigger;
+            }
+            
+            float newLeftThumbstickX = c.getAxisValue(OuyaController.AXIS_LS_X);
+            if (Float.compare(newLeftThumbstickX, mOldLeftThumbstickX) != 0) {
+                if (Float.compare(newLeftThumbstickX, 0.0f) == 0) {
+                    mControllerEventListener.onAxisEvent(deviceName, deviceId, GameControllerDelegate.THUMBSTICK_LEFT_X, 0.0f, true);
+                }else {
+                    mControllerEventListener.onAxisEvent(deviceName, deviceId, GameControllerDelegate.THUMBSTICK_LEFT_X, newLeftThumbstickX, true);
+                }
+                mOldLeftThumbstickX = newLeftThumbstickX;
+            }
+            
+            float newLeftThumbstickY = c.getAxisValue(OuyaController.AXIS_LS_Y);
+            if (Float.compare(newLeftThumbstickY, mOldLeftThumbstickY) != 0) {
+                if (Float.compare(newLeftThumbstickY, 0.0f) == 0) {
+                    mControllerEventListener.onAxisEvent(deviceName, deviceId, GameControllerDelegate.THUMBSTICK_LEFT_Y, 0.0f, true);
+                }else {
+                    mControllerEventListener.onAxisEvent(deviceName, deviceId, GameControllerDelegate.THUMBSTICK_LEFT_Y, newLeftThumbstickY, true);
+                }
+                mOldLeftThumbstickY = newLeftThumbstickY;
+            }
+            
+            float newRightThumbstickX = c.getAxisValue(OuyaController.AXIS_RS_X);
+            if (Float.compare(newRightThumbstickX, mOldRightThumbstickX) != 0) {
+                if (Float.compare(newRightThumbstickX, 0.0f) == 0) {
+                    mControllerEventListener.onAxisEvent(deviceName, deviceId, GameControllerDelegate.THUMBSTICK_RIGHT_X, 0.0f, true);
+                }else {
+                    mControllerEventListener.onAxisEvent(deviceName, deviceId, GameControllerDelegate.THUMBSTICK_RIGHT_X, newRightThumbstickX, true);
+                }
+                mOldRightThumbstickX = newRightThumbstickX;
+            }
+            
+            float newRightThumbstickY = c.getAxisValue(OuyaController.AXIS_RS_Y);
+            if (Float.compare(newRightThumbstickY, mOldRightThumbstickY) != 0) {
+                if (Float.compare(newRightThumbstickY, 0.0f) == 0) {
+                    mControllerEventListener.onAxisEvent(deviceName, deviceId, GameControllerDelegate.THUMBSTICK_RIGHT_Y, 0.0f, true);
+                }else {
+                    mControllerEventListener.onAxisEvent(deviceName, deviceId, GameControllerDelegate.THUMBSTICK_RIGHT_Y, newRightThumbstickY, true);
+                }
+                mOldRightThumbstickY = newRightThumbstickY;
+            }
         }
         
         return handled;
     }
     
     public boolean dispatchKeyEvent(KeyEvent event) {
-    	boolean handled = false;
-    	
-    	int action = event.getAction();
-    	int keyCode = event.getKeyCode();
-    	
-    	if (action == KeyEvent.ACTION_DOWN) {
-    		handled = OuyaController.onKeyDown(keyCode, event);
-		}
-    	else if (action == KeyEvent.ACTION_UP) {
-    		handled = OuyaController.onKeyUp(keyCode, event);
-		}
-    	
-    	if (handled && mControllerEventListener != null) {
-    		boolean isAnalog = false;
-    		
-    		if (keyCode == KeyEvent.KEYCODE_BUTTON_THUMBL || keyCode == KeyEvent.KEYCODE_BUTTON_THUMBR){
-    			isAnalog = true;
-    		}
-    		
-    		int deviceId = event.getDeviceId();
-    		String deviceName = event.getDevice().getName();
-    		
-    		if (mGameController.get(deviceId) == null) {
-				GameControllerHelper.gatherControllers(mGameController);
-				mGameController.append(deviceId, deviceName);
-			}
-    		if (action == KeyEvent.ACTION_DOWN) {
-    			mControllerEventListener.onButtonEvent(deviceName, deviceId, mKeyMap.get(keyCode), true, 1.0f, isAnalog);
-			}else {
-				mControllerEventListener.onButtonEvent(deviceName, deviceId, mKeyMap.get(keyCode), false, 0.0f, isAnalog);
-			}
-		}
-    	
-    	return handled;
+        boolean handled = false;
+        
+        int action = event.getAction();
+        int keyCode = event.getKeyCode();
+        
+        if (action == KeyEvent.ACTION_DOWN) {
+            handled = OuyaController.onKeyDown(keyCode, event);
+        }
+        else if (action == KeyEvent.ACTION_UP) {
+            handled = OuyaController.onKeyUp(keyCode, event);
+        }
+        
+        if (handled && mControllerEventListener != null) {
+            boolean isAnalog = false;
+            
+            if (keyCode == KeyEvent.KEYCODE_BUTTON_THUMBL || keyCode == KeyEvent.KEYCODE_BUTTON_THUMBR){
+                isAnalog = true;
+            }
+            
+            int deviceId = event.getDeviceId();
+            String deviceName = event.getDevice().getName();
+            
+            if (mGameController.get(deviceId) == null) {
+                GameControllerHelper.gatherControllers(mGameController);
+                mGameController.append(deviceId, deviceName);
+            }
+            if (action == KeyEvent.ACTION_DOWN) {
+                mControllerEventListener.onButtonEvent(deviceName, deviceId, mKeyMap.get(keyCode), true, 1.0f, isAnalog);
+            }else {
+                mControllerEventListener.onButtonEvent(deviceName, deviceId, mKeyMap.get(keyCode), false, 0.0f, isAnalog);
+            }
+        }
+        
+        return handled;
     }
     
-	public void onPause() {
+    public void onPause() {
         // show the mouse cursor
         OuyaController.showCursor(true);
-	}
-	
-	public void onResume() {
+    }
+    
+    public void onResume() {
         // hide the mouse cursor
         OuyaController.showCursor(false);
-	}
-	
-	public void onDestroy() {
-		
-	}
+    }
+    
+    public void onDestroy() {
+        
+    }
 
-	private ControllerEventListener mControllerEventListener;
-	
-	@Override
-	public void setControllerEventListener(ControllerEventListener listener) {
-		mControllerEventListener = listener;
-	}
-	
+    private ControllerEventListener mControllerEventListener;
+    
+    @Override
+    public void setControllerEventListener(ControllerEventListener listener) {
+        mControllerEventListener = listener;
+    }
+    
 }

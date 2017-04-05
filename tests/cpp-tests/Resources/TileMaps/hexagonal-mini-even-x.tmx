@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="hexagonal" renderorder="right-down" width="20" height="20" tilewidth="14" tileheight="12" hexsidelength="6" staggeraxis="x" staggerindex="even" nextobjectid="2">
+ <tileset firstgid="1" name="hex mini" tilewidth="18" tileheight="18" tilecount="20" columns="5">
+  <tileoffset x="0" y="1"/>
+  <image source="hexmini.png" width="106" height="72"/>
+ </tileset>
+ <layer name="Ground" width="20" height="20">
+  <data encoding="base64" compression="zlib">
+   eJyl1FEKhDAMBNBSt6jVaL3/Za2QwDAkVdiPQda2zyTonimlU1N6Ws+lkZ6l56AUXcPY2qlniv5uL5Z5BdyDvFXXMoX3Rp44axl6nqFejj3LLK6xgmf3Zg06Qs+O+qiaDOZOVgXPs7jfCme8Hkce1+fNlGdlM3myDTzc580fz1htW2Baj15/R/J72wLvcVZN5HnzGnmVPJ5hNH+0dt33j4ex91TARUs+WjNZz/fewKvJfy+/1naR+dX7OfdEnUYefyOeZZ7Vht/b5HjefxJbO1iTE7YWuEpg5hfPzi8D782x3Mg7DV4=
+  </data>
+ </layer>
+</map>

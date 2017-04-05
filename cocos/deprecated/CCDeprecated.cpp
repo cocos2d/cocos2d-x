@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2013      cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -22,8 +22,16 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+#include "deprecated/CCDeprecated.h"
 
-#include "cocos2d.h"
+#include "platform/CCPlatformMacros.h"
+#include "math/Vec2.h"
+#include "math/CCGeometry.h"
+#include "base/ccTypes.h"
+#include "renderer/CCGLProgram.h"
+#include "2d/CCDrawingPrimitives.h"
+#include "base/CCDirector.h"
+
 
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
@@ -34,7 +42,7 @@
 
 NS_CC_BEGIN
 
-const Vec2 CCPointZero = Vec2::ZERO;
+const Vec2 CCPointZero;
 
 /* The "zero" size -- equivalent to Size(0, 0). */
 const Size CCSizeZero = Size::ZERO;
@@ -578,19 +586,19 @@ Vec4* kmVec4Transform(Vec4* pOut, const Vec4* pV, const Mat4* pM)
     return pOut;
 }
 
-const Vec3 KM_VEC3_NEG_Z = Vec3(0, 0, -1);
-const Vec3 KM_VEC3_POS_Z = Vec3(0, 0, 1);
-const Vec3 KM_VEC3_POS_Y = Vec3(0, 1, 0);
-const Vec3 KM_VEC3_NEG_Y = Vec3(0, -1, 0);
-const Vec3 KM_VEC3_NEG_X = Vec3(-1, 0, 0);
-const Vec3 KM_VEC3_POS_X = Vec3(1, 0, 0);
-const Vec3 KM_VEC3_ZERO = Vec3(0, 0, 0);
+const Vec3 KM_VEC3_NEG_Z(0, 0, -1);
+const Vec3 KM_VEC3_POS_Z(0, 0, 1);
+const Vec3 KM_VEC3_POS_Y(0, 1, 0);
+const Vec3 KM_VEC3_NEG_Y(0, -1, 0);
+const Vec3 KM_VEC3_NEG_X(-1, 0, 0);
+const Vec3 KM_VEC3_POS_X(1, 0, 0);
+const Vec3 KM_VEC3_ZERO(0, 0, 0);
 
-const Vec2 KM_VEC2_POS_Y = Vec2(0, 1);
-const Vec2 KM_VEC2_NEG_Y = Vec2(0, -1);
-const Vec2 KM_VEC2_NEG_X = Vec2(-1, 0);
-const Vec2 KM_VEC2_POS_X = Vec2(1, 0);
-const Vec2 KM_VEC2_ZERO = Vec2(0, 0);
+const Vec2 KM_VEC2_POS_Y(0, 1);
+const Vec2 KM_VEC2_NEG_Y(0, -1);
+const Vec2 KM_VEC2_NEG_X(-1, 0);
+const Vec2 KM_VEC2_POS_X(1, 0);
+const Vec2 KM_VEC2_ZERO(0, 0);
 
 NS_CC_END
 

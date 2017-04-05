@@ -11,12 +11,13 @@
         
 --------------------------------
 -- Sets the current playback position of an audio instance.<br>
--- param audioID An audioID returned by the play2d function.<br>
+-- param audioID   An audioID returned by the play2d function.<br>
+-- param sec       The offset in seconds from the start to seek to.<br>
 -- return 
 -- @function [parent=#AudioEngine] setCurrentTime 
 -- @param self
 -- @param #int audioID
--- @param #float time
+-- @param #float sec
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
@@ -56,13 +57,6 @@
 -- @function [parent=#AudioEngine] pause 
 -- @param self
 -- @param #int audioID
--- @return experimental::AudioEngine#experimental::AudioEngine self (return value: cc.experimental::AudioEngine)
-        
---------------------------------
--- Release objects relating to AudioEngine.<br>
--- warning It must be called before the application exit.
--- @function [parent=#AudioEngine] end 
--- @param self
 -- @return experimental::AudioEngine#experimental::AudioEngine self (return value: cc.experimental::AudioEngine)
         
 --------------------------------
@@ -121,6 +115,15 @@
 -- @return experimental::AudioEngine#experimental::AudioEngine self (return value: cc.experimental::AudioEngine)
         
 --------------------------------
+-- @overload self, string, function         
+-- @overload self, string         
+-- @function [parent=#AudioEngine] preload
+-- @param self
+-- @param #string filePath
+-- @param #function callback
+-- @return experimental::AudioEngine#experimental::AudioEngine self (return value: cc.experimental::AudioEngine)
+
+--------------------------------
 -- Play 2d sound.<br>
 -- param filePath The path of an audio file.<br>
 -- param loop Whether audio instance loop or not.<br>
@@ -159,6 +162,14 @@
 -- @function [parent=#AudioEngine] stop 
 -- @param self
 -- @param #int audioID
+-- @return experimental::AudioEngine#experimental::AudioEngine self (return value: cc.experimental::AudioEngine)
+        
+--------------------------------
+-- Release objects relating to AudioEngine.<br>
+-- warning It must be called before the application exit.<br>
+-- lua endToLua
+-- @function [parent=#AudioEngine] end 
+-- @param self
 -- @return experimental::AudioEngine#experimental::AudioEngine self (return value: cc.experimental::AudioEngine)
         
 --------------------------------

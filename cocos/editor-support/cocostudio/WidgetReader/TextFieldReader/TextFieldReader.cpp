@@ -1,10 +1,12 @@
 
 
-#include "TextFieldReader.h"
+#include "editor-support/cocostudio/WidgetReader/TextFieldReader/TextFieldReader.h"
 
 #include "ui/UITextField.h"
-#include "cocostudio/CocoLoader.h"
-#include "cocostudio/CSParseBinary_generated.h"
+#include "platform/CCFileUtils.h"
+#include "editor-support/cocostudio/CocoLoader.h"
+#include "editor-support/cocostudio/CSParseBinary_generated.h"
+#include "editor-support/cocostudio/LocalizationManager.h"
 
 #include "tinyxml2.h"
 #include "flatbuffers/flatbuffers.h"
@@ -47,6 +49,11 @@ namespace cocostudio
             instanceTextFieldReader = new (std::nothrow) TextFieldReader();
         }
         return instanceTextFieldReader;
+    }
+    
+    void TextFieldReader::destroyInstance()
+    {
+        CC_SAFE_DELETE(instanceTextFieldReader);
     }
     
     void TextFieldReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *cocoLoader, stExpCocoNode* cocoNode)
@@ -159,6 +166,7 @@ namespace cocostudio
         std::string fontName = "";
         int fontSize = 20;
         std::string text = "";
+        bool isLocalized = false;
         std::string placeHolder = "Text Field";
         bool passwordEnabled = false;
         std::string passwordStyleText = "*";
@@ -183,6 +191,10 @@ namespace cocostudio
             else if (name == "LabelText")
             {
                 text = value;
+            }
+            else if (name == "IsLocalized")
+            {
+                isLocalized = (value == "True") ? true : false;
             }
             else if (name == "FontSize")
             {
@@ -261,6 +273,7 @@ namespace cocostudio
                                               builder->CreateString(fontName),
                                               fontSize,
                                               builder->CreateString(text),
+                                              isLocalized,
                                               builder->CreateString(placeHolder),
                                               passwordEnabled,
                                               builder->CreateString(passwordStyleText),
@@ -268,8 +281,7 @@ namespace cocostudio
                                               maxLength,
                                               areaWidth,
                                               areaHeight,
-                                              isCustomSize
-                                              );
+                                              isCustomSize);
         
         return *(Offset<Table>*)(&options);
     }
@@ -283,7 +295,20 @@ namespace cocostudio
         textField->setPlaceHolder(placeholder);
         
         std::string text = options->text()->c_str();
-        textField->setString(text);
+        bool isLocalized = options->isLocalized() != 0;
+        if (isLocalized)
+        {
+            ILocalizationManager* lm = LocalizationHelper::getCurrentManager();
+            std::string localizedTxt = lm->getLocalizationString(text);
+            std::string::size_type newlineIndex = localizedTxt.find("\n");
+            if (newlineIndex != std::string::npos)
+                localizedTxt = localizedTxt.substr(0, newlineIndex);
+            textField->setString(localizedTxt);
+        }
+        else
+        {
+            textField->setString(text);
+        }
         
         int fontSize = options->fontSize();
         textField->setFontSize(fontSize);
@@ -326,12 +351,6 @@ namespace cocostudio
             if (fileExist)
             {
                 textField->setFontName(path);
-            }
-            else
-            {
-                auto label = Label::create();
-                label->setString(__String::createWithFormat("%s missed", errorFilePath.c_str())->getCString());
-                textField->addChild(label);
             }
         }
         

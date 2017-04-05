@@ -35,13 +35,26 @@
         
 --------------------------------
 -- 
+-- @function [parent=#Timer] isAborted 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
 -- @function [parent=#Timer] trigger 
 -- @param self
+-- @param #float dt
 -- @return Timer#Timer self (return value: cc.Timer)
         
 --------------------------------
 -- 
 -- @function [parent=#Timer] cancel 
+-- @param self
+-- @return Timer#Timer self (return value: cc.Timer)
+        
+--------------------------------
+-- 
+-- @function [parent=#Timer] setAborted 
 -- @param self
 -- @return Timer#Timer self (return value: cc.Timer)
         

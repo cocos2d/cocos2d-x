@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -22,12 +22,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "cocostudio/CCArmature.h"
-#include "cocostudio/CCArmatureDataManager.h"
-#include "cocostudio/CCArmatureDefine.h"
-#include "cocostudio/CCDataReaderHelper.h"
-#include "cocostudio/CCDatas.h"
-#include "cocostudio/CCSkin.h"
+#include "editor-support/cocostudio/CCArmature.h"
+#include "editor-support/cocostudio/CCArmatureDataManager.h"
+#include "editor-support/cocostudio/CCArmatureDefine.h"
+#include "editor-support/cocostudio/CCDataReaderHelper.h"
+#include "editor-support/cocostudio/CCDatas.h"
+#include "editor-support/cocostudio/CCSkin.h"
 
 #include "renderer/CCRenderer.h"
 #include "renderer/CCGroupCommand.h"
@@ -38,7 +38,7 @@ THE SOFTWARE.
 #if ENABLE_PHYSICS_BOX2D_DETECT
 #include "Box2D/Box2D.h"
 #elif ENABLE_PHYSICS_CHIPMUNK_DETECT
-#include "chipmunk.h"
+#include "chipmunk/chipmunk.h"
 #endif
 
 using namespace cocos2d;
@@ -137,21 +137,21 @@ bool Armature::init(const std::string& name)
 
 
             ArmatureData *armatureData = armatureDataManager->getArmatureData(name);
-            CCASSERT(armatureData, "");
+            CCASSERT(armatureData, "armatureData doesn't exists!");
 
             _armatureData = armatureData;
 
             for (auto& element : armatureData->boneDataDic)
             {
-                Bone *bone = createBone(element.first.c_str());
+                Bone *bone = createBone(element.first);
 
                 //! init bone's  Tween to 1st movement's 1st frame
                 do
                 {
-                    MovementData *movData = animationData->getMovement(animationData->movementNames.at(0).c_str());
+                    MovementData *movData = animationData->getMovement(animationData->movementNames.at(0));
                     CC_BREAK_IF(!movData);
 
-                    MovementBoneData *movBoneData = movData->getMovementBoneData(bone->getName().c_str());
+                    MovementBoneData *movBoneData = movData->getMovementBoneData(bone->getName());
                     CC_BREAK_IF(!movBoneData || movBoneData->frameList.size() <= 0);
 
                     FrameData *frameData = movBoneData->getFrameData(0);
@@ -175,8 +175,8 @@ bool Armature::init(const std::string& name)
             AnimationData *animationData = AnimationData::create();
             animationData->name = _name;
 
-            armatureDataManager->addArmatureData(_name.c_str(), _armatureData);
-            armatureDataManager->addAnimationData(_name.c_str(), animationData);
+            armatureDataManager->addArmatureData(_name, _armatureData);
+            armatureDataManager->addAnimationData(_name, animationData);
 
             _animation->setAnimationData(animationData);
 
@@ -212,11 +212,11 @@ Bone *Armature::createBone(const std::string& boneName)
 
     Bone *bone = nullptr;
 
-    if( parentName.length() != 0 )
+    if( !parentName.empty())
     {
-        createBone(parentName.c_str());
+        createBone(parentName);
         bone = Bone::create(boneName);
-        addBone(bone, parentName.c_str());
+        addBone(bone, parentName);
     }
     else
     {
@@ -329,7 +329,7 @@ void Armature::updateOffsetPoint()
     // Set contentsize and Calculate anchor point.
     Rect rect = getBoundingBox();
     setContentSize(rect.size);
-    _offsetPoint = Vec2(-rect.origin.x,  -rect.origin.y);
+    _offsetPoint.set(-rect.origin.x, -rect.origin.y);
     if (rect.size.width != 0 && rect.size.height != 0)
     {
         setAnchorPoint(Vec2(_offsetPoint.x / rect.size.width, _offsetPoint.y / rect.size.height));
@@ -341,8 +341,8 @@ void Armature::setAnchorPoint(const Vec2& point)
     if( ! point.equals(_anchorPoint))
     {
         _anchorPoint = point;
-        _anchorPointInPoints = Vec2(_contentSize.width * _anchorPoint.x - _offsetPoint.x, _contentSize.height * _anchorPoint.y - _offsetPoint.y);
-        _realAnchorPointInPoints = Vec2(_contentSize.width * _anchorPoint.x, _contentSize.height * _anchorPoint.y);
+        _anchorPointInPoints.set(_contentSize.width * _anchorPoint.x - _offsetPoint.x, _contentSize.height * _anchorPoint.y - _offsetPoint.y);
+        _realAnchorPointInPoints.set(_contentSize.width * _anchorPoint.x, _contentSize.height * _anchorPoint.y);
         _transformDirty = _inverseDirty = true;
     }
 }
@@ -464,6 +464,14 @@ void Armature::onEnter()
 
 void Armature::onExit()
 {
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnExit))
+            return;
+    }
+#endif
+    
     Node::onExit();
     unscheduleUpdate();
 }
@@ -472,30 +480,33 @@ void Armature::onExit()
 void Armature::visit(cocos2d::Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
 {
     // quick return if not visible. children won't be drawn.
-    if (!_visible || !isVisitableByVisitingCamera())
+    if (!_visible)
     {
         return;
     }
 
     uint32_t flags = processParentFlags(parentTransform, parentFlags);
 
-    // IMPORTANT:
-    // To ease the migration to v3.0, we still support the Mat4 stack,
-    // but it is deprecated and your code should not rely on it
-    Director* director = Director::getInstance();
-    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
-    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
-
-
-    sortAllChildren();
-    draw(renderer, _modelViewTransform, flags);
-
-    // FIX ME: Why need to set _orderOfArrival to 0??
-    // Please refer to https://github.com/cocos2d/cocos2d-x/pull/6920
-    // setOrderOfArrival(0);
-
-    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    if (isVisitableByVisitingCamera())
+    {
+        // IMPORTANT:
+        // To ease the migration to v3.0, we still support the Mat4 stack,
+        // but it is deprecated and your code should not rely on it
+        Director* director = Director::getInstance();
+        CCASSERT(nullptr != director, "Director is null when setting matrix stack");
+        director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+        director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
+        
+        
+        sortAllChildren();
+        draw(renderer, _modelViewTransform, flags);
+        
+        // FIX ME: Why need to set _orderOfArrival to 0??
+        // Please refer to https://github.com/cocos2d/cocos2d-x/pull/6920
+        // setOrderOfArrival(0);
+        
+        director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    }
 }
 
 Rect Armature::getBoundingBox() const

@@ -39,4 +39,18 @@
 -- @param #void r
 -- @return bool#bool ret (return value: bool)
         
+--------------------------------
+-- js NA<br>
+-- lua NA
+-- @function [parent=#ComRender] onRemove 
+-- @param self
+-- @return ComRender#ComRender self (return value: ccs.ComRender)
+        
+--------------------------------
+-- js NA<br>
+-- lua NA
+-- @function [parent=#ComRender] onAdd 
+-- @param self
+-- @return ComRender#ComRender self (return value: ccs.ComRender)
+        
 return nil

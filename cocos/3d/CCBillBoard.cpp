@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2014-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -44,54 +44,54 @@ BillBoard::~BillBoard()
 
 BillBoard* BillBoard::createWithTexture(Texture2D *texture, Mode mode)
 {
-    BillBoard *billborad = new (std::nothrow) BillBoard();
-    if (billborad && billborad->initWithTexture(texture))
+    BillBoard *billboard = new (std::nothrow) BillBoard();
+    if (billboard && billboard->initWithTexture(texture))
     {
-        billborad->_mode = mode;
-        billborad->autorelease();
-        return billborad;
+        billboard->_mode = mode;
+        billboard->autorelease();
+        return billboard;
     }
-    CC_SAFE_DELETE(billborad);
+    CC_SAFE_DELETE(billboard);
     return nullptr;
 }
 
 
 BillBoard* BillBoard::create(const std::string& filename, Mode mode)
 {
-    BillBoard *billborad = new (std::nothrow) BillBoard();
-    if (billborad && billborad->initWithFile(filename))
+    BillBoard *billboard = new (std::nothrow) BillBoard();
+    if (billboard && billboard->initWithFile(filename))
     {
-        billborad->_mode = mode;
-        billborad->autorelease();
-        return billborad;
+        billboard->_mode = mode;
+        billboard->autorelease();
+        return billboard;
     }
-    CC_SAFE_DELETE(billborad);
+    CC_SAFE_DELETE(billboard);
     return nullptr;
 }
 
 BillBoard* BillBoard::create(const std::string& filename, const Rect& rect, Mode mode)
 {
-    BillBoard *billborad = new (std::nothrow) BillBoard();
-    if (billborad && billborad->initWithFile(filename, rect))
+    BillBoard *billboard = new (std::nothrow) BillBoard();
+    if (billboard && billboard->initWithFile(filename, rect))
     {
-        billborad->_mode = mode;
-        billborad->autorelease();
-        return billborad;
+        billboard->_mode = mode;
+        billboard->autorelease();
+        return billboard;
     }
-    CC_SAFE_DELETE(billborad);
+    CC_SAFE_DELETE(billboard);
     return nullptr;
 }
 
 BillBoard* BillBoard::create(Mode mode)
 {
-    BillBoard *billborad = new (std::nothrow) BillBoard();
-    if (billborad && billborad->init())
+    BillBoard *billboard = new (std::nothrow) BillBoard();
+    if (billboard && billboard->init())
     {
-        billborad->_mode = mode;
-        billborad->autorelease();
-        return billborad;
+        billboard->_mode = mode;
+        billboard->autorelease();
+        return billboard;
     }
-    CC_SAFE_DELETE(billborad);
+    CC_SAFE_DELETE(billboard);
     return nullptr;
 }
 
@@ -103,8 +103,6 @@ void BillBoard::visit(Renderer *renderer, const Mat4& parentTransform, uint32_t 
         return;
     }
     bool visibleByCamera = isVisitableByVisitingCamera();
-    if (!visibleByCamera && _children.empty())
-        return;
     
     uint32_t flags = processParentFlags(parentTransform, parentFlags);
     
@@ -112,7 +110,7 @@ void BillBoard::visit(Renderer *renderer, const Mat4& parentTransform, uint32_t 
     flags |= FLAGS_RENDER_AS_3D;
     
     //Update Billboard transform
-    bool dirty = calculateBillbaordTransform();
+    bool dirty = calculateBillboardTransform();
     if(dirty)
     {
         flags |= FLAGS_TRANSFORM_DIRTY;
@@ -122,15 +120,13 @@ void BillBoard::visit(Renderer *renderer, const Mat4& parentTransform, uint32_t 
     director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
     
-    
-    
     int i = 0;
     
     if(!_children.empty())
     {
         sortAllChildren();
         // draw children zOrder < 0
-        for( ; i < _children.size(); i++ )
+        for(auto size = _children.size(); i < size; ++i)
         {
             auto node = _children.at(i);
             
@@ -142,8 +138,8 @@ void BillBoard::visit(Renderer *renderer, const Mat4& parentTransform, uint32_t 
         // self draw
         if (visibleByCamera)
             this->draw(renderer, _modelViewTransform, flags);
-        
-        for(auto it=_children.cbegin()+i; it != _children.cend(); ++it)
+
+        for(auto it=_children.cbegin()+i, itCend = _children.cend(); it != itCend; ++it)
             (*it)->visit(renderer, _modelViewTransform, flags);
     }
     else if (visibleByCamera)
@@ -154,7 +150,7 @@ void BillBoard::visit(Renderer *renderer, const Mat4& parentTransform, uint32_t 
     director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 }
 
-bool BillBoard::calculateBillbaordTransform()
+bool BillBoard::calculateBillboardTransform()
 {
     //Get camera world position
     auto camera = Camera::getVisitingCamera();
@@ -173,7 +169,7 @@ bool BillBoard::calculateBillbaordTransform()
         switch (_mode)
         {
             case Mode::VIEW_POINT_ORIENTED:
-                camDir = Vec3(localToWorld.m[12] - camWorldMat.m[12], localToWorld.m[13] - camWorldMat.m[13], localToWorld.m[14] - camWorldMat.m[14]);
+                camDir.set(localToWorld.m[12] - camWorldMat.m[12], localToWorld.m[13] - camWorldMat.m[13], localToWorld.m[14] - camWorldMat.m[14]);
                 break;
             case Mode::VIEW_PLANE_ORIENTED:
                 camWorldMat.transformVector(Vec3(0.0f, 0.0f, -1.0f), &camDir);
@@ -196,7 +192,7 @@ bool BillBoard::calculateBillbaordTransform()
         Mat4 rotationMatrix;
         rotationMatrix.setIdentity();
 
-        Vec3 upAxis = Vec3(rotationMatrix.m[4],rotationMatrix.m[5],rotationMatrix.m[6]);
+        Vec3 upAxis(rotationMatrix.m[4],rotationMatrix.m[5],rotationMatrix.m[6]);
         Vec3 x, y;
         camWorldMat.transformVector(upAxis, &y);
         Vec3::cross(camDir, y, &x);
@@ -226,14 +222,19 @@ bool BillBoard::calculateBillbaordTransform()
     return false;
 }
 
-void BillBoard::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
+bool BillBoard::calculateBillbaordTransform()
+{
+    return calculateBillboardTransform();
+}
+
+void BillBoard::draw(Renderer *renderer, const Mat4 &/*transform*/, uint32_t flags)
 {
     //FIXME: frustum culling here
     flags |= Node::FLAGS_RENDER_AS_3D;
-    _quadCommand.init(0, _texture->getName(), getGLProgramState(), _blendFunc, &_quad, 1, _modelViewTransform, flags);
-    _quadCommand.setTransparent(true);
-    _quadCommand.set3D(true);
-    renderer->addCommand(&_quadCommand);
+    _trianglesCommand.init(0, _texture->getName(), getGLProgramState(), _blendFunc, _polyInfo.triangles, _modelViewTransform, flags);
+    _trianglesCommand.setTransparent(true);
+    _trianglesCommand.set3D(true);
+    renderer->addCommand(&_trianglesCommand);
 }
 
 void BillBoard::setMode( Mode mode )

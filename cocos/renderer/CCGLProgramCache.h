@@ -2,7 +2,7 @@
 Copyright (c) 2011      Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -33,14 +33,14 @@ THE SOFTWARE.
 
 #include "base/CCRef.h"
 
+/**
+ * @addtogroup renderer
+ * @{
+ */
+
 NS_CC_BEGIN
 
 class GLProgram;
-
-/**
- * @addtogroup shaders
- * @{
- */
 
 /** GLProgramCache
  Singleton that stores manages GLProgram objects (shaders)
@@ -90,6 +90,9 @@ public:
     /** adds a GLProgram to the cache for a given name */
     void addGLProgram(GLProgram* program, const std::string &key);
     CC_DEPRECATED_ATTRIBUTE void addProgram(GLProgram* program, const std::string &key) { addGLProgram(program, key); }
+    
+    /** reload default programs these are relative to light */
+    void reloadDefaultGLProgramsRelativeToLights();
 
 private:
     /**
@@ -109,9 +112,8 @@ private:
     std::unordered_map<std::string, GLProgram*> _programs;
 };
 
+NS_CC_END
 // end of shaders group
 /// @}
-
-NS_CC_END
 
 #endif /* __CCGLPROGRAMCACHE_H__ */

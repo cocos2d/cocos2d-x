@@ -30,9 +30,12 @@ THE SOFTWARE.
 #include "platform/CCPlatformConfig.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 
+#ifndef WIN32_LEAN_AND_MEAN
+#define WIN32_LEAN_AND_MEAN
+#endif
+#include <Windows.h>
 #include "platform/CCPlatformMacros.h"
 
-#include <Windows.h>
 
 NS_CC_BEGIN
 

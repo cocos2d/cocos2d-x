@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -21,18 +21,18 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#include "lua_cocos2dx_coco_studio_manual.hpp"
-#include "lua_cocos2dx_studio_auto.hpp"
-#include "lua_cocos2dx_csloader_auto.hpp"
-#include "lua_cocos2dx_csloader_manual.hpp"
-#include "cocos2d.h"
-#include "tolua_fix.h"
-#include "LuaBasicConversions.h"
-#include "LuaScriptHandlerMgr.h"
-#include "CCLuaValue.h"
-#include "CocoStudio.h"
-#include "CCLuaEngine.h"
-#include "CustomGUIReader.h"
+#include "scripting/lua-bindings/manual/cocostudio/lua_cocos2dx_coco_studio_manual.hpp"
+#include "scripting/lua-bindings/auto/lua_cocos2dx_studio_auto.hpp"
+#include "scripting/lua-bindings/auto/lua_cocos2dx_csloader_auto.hpp"
+#include "scripting/lua-bindings/manual/cocostudio/lua_cocos2dx_csloader_manual.hpp"
+
+#include "scripting/lua-bindings/manual/tolua_fix.h"
+#include "scripting/lua-bindings/manual/LuaBasicConversions.h"
+#include "scripting/lua-bindings/manual/cocos2d/LuaScriptHandlerMgr.h"
+#include "scripting/lua-bindings/manual/CCLuaValue.h"
+#include "editor-support/cocostudio/CocoStudio.h"
+#include "scripting/lua-bindings/manual/CCLuaEngine.h"
+#include "scripting/lua-bindings/manual/cocostudio/CustomGUIReader.h"
 
 using namespace cocostudio;
 

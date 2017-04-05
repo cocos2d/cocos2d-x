@@ -1,5 +1,6 @@
-#include "MciPlayer.h"
+#include "audio/win32/MciPlayer.h"
 #include <tchar.h>
+#include "platform/CCFileUtils.h"
 
 #define WIN_CLASS_NAME        "CocosDenshionCallbackWnd"
 #define BREAK_IF(cond)      if (cond) break;
@@ -26,7 +27,7 @@ MciPlayer::MciPlayer()
         WNDCLASS  wc;        // Windows Class Structure
 
         // Redraw On Size, And Own DC For Window.
-        wc.style          = 0;  
+        wc.style          = 0;
         wc.lpfnWndProc    = _SoundPlayProc;                    // WndProc Handles Messages
         wc.cbClsExtra     = 0;                              // No Extra Window Data
         wc.cbWndExtra     = 0;                                // No Extra Window Data
@@ -71,7 +72,7 @@ MciPlayer::~MciPlayer()
 void MciPlayer::Open(const char* pFileName, UINT uId)
 {
 //     WCHAR * pBuf = NULL;
-    do 
+    do
     {
         BREAK_IF(! pFileName || ! _wnd);
         int nLen = (int)strlen(pFileName);
@@ -79,23 +80,21 @@ void MciPlayer::Open(const char* pFileName, UINT uId)
 //         pBuf = new WCHAR[nLen + 1];
 //         BREAK_IF(! pBuf);
 //         MultiByteToWideChar(CP_ACP, 0, pFileName, nLen + 1, pBuf, nLen + 1);
-        
-        std::string strFile(pFileName);
-        int nPos = strFile.rfind(".") + 1;
-        strExt = strFile.substr(nPos, strFile.length() - nPos);
+
+        strExt = cocos2d::FileUtils::getInstance()->getFileExtension(pFileName);
 
         Close();
 
         MCI_OPEN_PARMS mciOpen = {0};
         MCIERROR mciError;
         mciOpen.lpstrDeviceType = (LPCTSTR)MCI_ALL_DEVICE_ID;
-		WCHAR* fileNameWideChar = new WCHAR[nLen + 1];
-		BREAK_IF(! fileNameWideChar);
-		MultiByteToWideChar(CP_ACP, 0, pFileName, nLen + 1, fileNameWideChar, nLen + 1);
+        WCHAR* fileNameWideChar = new WCHAR[nLen + 1];
+        BREAK_IF(! fileNameWideChar);
+        MultiByteToWideChar(CP_ACP, 0, pFileName, nLen + 1, fileNameWideChar, nLen + 1);
         mciOpen.lpstrElementName = fileNameWideChar;
 
         mciError = mciSendCommand(0,MCI_OPEN, MCI_OPEN_ELEMENT, reinterpret_cast<DWORD_PTR>(&mciOpen));
-		CC_SAFE_DELETE_ARRAY(mciOpen.lpstrElementName);
+        CC_SAFE_DELETE_ARRAY(mciOpen.lpstrElementName);
         BREAK_IF(mciError);
 
         _dev = mciOpen.wDeviceID;
@@ -137,24 +136,26 @@ void MciPlayer::Close()
 void MciPlayer::Pause()
 {
     _SendGenericCommand(MCI_PAUSE);
+    _playing = false;
 }
 
 void MciPlayer::Resume()
 {
-    if (strExt == "mid" || strExt == "MID")
+    if (strExt == ".mid")
     {
-        // midi not supprt MCI_RESUME, should get the position and use MCI_FROM
+        // midi not support MCI_RESUME, should get the position and use MCI_FROM
         MCI_STATUS_PARMS mciStatusParms;
-        MCI_PLAY_PARMS   mciPlayParms;  
-        mciStatusParms.dwItem = MCI_STATUS_POSITION;   
-        _SendGenericCommand(MCI_STATUS, MCI_STATUS_ITEM, reinterpret_cast<DWORD_PTR>(&mciStatusParms)); // MCI_STATUS   
-        mciPlayParms.dwFrom = mciStatusParms.dwReturn;  // get position  
+        MCI_PLAY_PARMS   mciPlayParms;
+        mciStatusParms.dwItem = MCI_STATUS_POSITION;
+        _SendGenericCommand(MCI_STATUS, MCI_STATUS_ITEM, reinterpret_cast<DWORD_PTR>(&mciStatusParms)); // MCI_STATUS
+        mciPlayParms.dwFrom = mciStatusParms.dwReturn;  // get position
         _SendGenericCommand(MCI_PLAY, MCI_FROM, reinterpret_cast<DWORD_PTR>(&mciPlayParms)); // MCI_FROM
-    } 
+    }
     else
     {
         _SendGenericCommand(MCI_RESUME);
-    }   
+        _playing = true;
+    }
 }
 
 void MciPlayer::Stop()
@@ -207,7 +208,7 @@ void MciPlayer::_SendGenericCommand( int nCommand, DWORD_PTR param1 /*= 0*/, DWO
 LRESULT WINAPI _SoundPlayProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam)
 {
     MciPlayer * pPlayer = NULL;
-    if (MM_MCINOTIFY == Msg 
+    if (MM_MCINOTIFY == Msg
         && MCI_NOTIFY_SUCCESSFUL == wParam
         &&(pPlayer = (MciPlayer *)GetWindowLongPtr(hWnd, GWLP_USERDATA)))
     {

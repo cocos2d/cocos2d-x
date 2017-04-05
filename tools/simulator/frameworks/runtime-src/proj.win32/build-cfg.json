@@ -1,0 +1,22 @@
+{
+    "copy_resources": [
+        {
+            "from": "../../../src",
+            "to": "src"
+        },
+        {
+            "from": "../../../res",
+            "to": "res"
+        },
+        {
+            "from": "../../../config.json",
+            "to": ""
+        },
+        {
+            "from": "../Classes/ide-support/lang",
+            "to": ""
+        }
+    ],
+    "must_copy_resources": [
+    ]
+}

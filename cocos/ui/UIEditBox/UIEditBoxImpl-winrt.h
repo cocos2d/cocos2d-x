@@ -21,126 +21,138 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
+
 #ifndef __UIEditBoxIMPLWINRT_H__
 #define __UIEditBoxIMPLWINRT_H__
 
 #include "platform/CCPlatformConfig.h"
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#include "ui/UIEditBox/UIEditBoxImpl-common.h"
 
-#include "UIEditBoxImpl.h"
+using namespace Windows::UI::Xaml;
+using namespace Windows::UI::Xaml::Controls;
+using namespace Windows::UI::Xaml::Input;
 
 NS_CC_BEGIN
 
 namespace ui {
-    class EditBox;
-  
-    ref class EditBoxWinRT sealed
-    {
-    public:
-        EditBoxWinRT();
-        virtual ~EditBoxWinRT();
-    internal:
 
-        EditBoxWinRT(Platform::String^ strPlaceHolder, Platform::String^ strText, int maxLength, EditBox::InputMode inputMode, EditBox::InputFlag inputFlag, Windows::Foundation::EventHandler<Platform::String^>^ receiveHandler);
-        void OpenXamlEditBox(Platform::String^ strText);
+  ref class EditBoxWinRT sealed
+  {
+  public:
+    EditBoxWinRT(Windows::Foundation::EventHandler<Platform::String^>^ beginHandler,
+      Windows::Foundation::EventHandler<Platform::String^>^ changeHandler,
+      Windows::Foundation::EventHandler<cocos2d::EndEventArgs^>^ endHandler);
 
-    private:
-        Windows::UI::Xaml::Controls::Control^ CreateTextBox(int maxLength);
-        Windows::UI::Xaml::Controls::Control^ CreatePasswordBox(int maxLength);
-        void SetInputScope(Windows::UI::Xaml::Controls::TextBox^ box, EditBox::InputMode inputMode);
+    void closeKeyboard();
+    bool isEditing();
+    void openKeyboard();
+    void setFontColor(Windows::UI::Color color);
+    void setFontFamily(Platform::String^ fontFamily);
+    void setFontSize(int fontSize);
+    void setInputFlag(int inputFlags);
+    void setInputMode(int inputMode);
+    void setTextHorizontalAlignment(int alignment);
+    void setMaxLength(int maxLength);
+    void setPosition(Windows::Foundation::Rect rect);
+    void setSize(Windows::Foundation::Size size);
+    void setText(Platform::String^ text);
+    void setVisible(bool visible);
 
-        void EditBoxWinRT::SetupTextBox();
-        void EditBoxWinRT::SetupPasswordBox();
-        void EditBoxWinRT::RemoveTextBox();
-        void RemoveControls();
-        void QueueText();
+  private:
 
-        void Done(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
-        void Cancel(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
-        void Closed(Platform::Object^ sender, Platform::Object^ e);
-        void HideKeyboard(Windows::UI::ViewManagement::InputPane^ inputPane, Windows::UI::ViewManagement::InputPaneVisibilityEventArgs^ args);
-        void HideFlyout();
+    void EditBoxWinRT::onPasswordChanged(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ args);
+    void EditBoxWinRT::onTextChanged(Platform::Object ^sender, Windows::UI::Xaml::Controls::TextChangedEventArgs ^e);
+    void EditBoxWinRT::onKeyDown(Platform::Object^ sender, Windows::UI::Xaml::Input::KeyRoutedEventArgs^ args);
+    void EditBoxWinRT::onGotFocus(Platform::Object ^sender, Windows::UI::Xaml::RoutedEventArgs ^args);
+    void EditBoxWinRT::onLostFocus(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs ^args);
 
-        Platform::Agile<Windows::UI::Core::CoreDispatcher> m_dispatcher;
-        Platform::Agile<Windows::UI::Xaml::Controls::Panel> m_panel;
-        Windows::Foundation::EventHandler<Platform::String^>^ m_receiveHandler;
+    Windows::UI::Xaml::Controls::Control^ createPasswordBox();
+    Windows::UI::Xaml::Controls::Control^ createTextBox();
+    void removeTextBox();
+    void setInputScope(TextBox^ textBox);
+    void _setTextHorizontalAlignment(TextBox^ textBox);
 
-        Windows::UI::Xaml::Controls::TextBox^ m_textBox;
-        Windows::UI::Xaml::Controls::PasswordBox^ m_passwordBox;
-        Windows::UI::Xaml::Controls::Flyout^ m_flyout;
-        Windows::UI::Xaml::Controls::Button^ m_doneButton;
-        Windows::UI::Xaml::Controls::Button^ m_cancelButton;
+    // Properties
+    Windows::Foundation::Rect _rect;
+    Windows::Foundation::Size _size;
+    Windows::UI::Color _color;
+    Platform::String^ _initialText;
+    int _fontSize;
+    Platform::String^ _fontFamily;
+    int _alignment;
+    int _inputMode;
+    int _inputFlag;
+    bool _password;
+    bool _isEditing;
+    bool _visible;
+    bool _multiline;
+    int _maxLength;
 
-        Windows::Foundation::EventRegistrationToken m_doneToken;
-        Windows::Foundation::EventRegistrationToken m_cancelToken;
-        Windows::Foundation::EventRegistrationToken m_closedToken;
-        Windows::Foundation::EventRegistrationToken m_hideKeyboardToken;
+    // The actual edit box, however, could be a TextBox, PasswordBox, or a SearchBox (not yet implemented)
+    Windows::UI::Xaml::Controls::Control^ _textBox = nullptr;
 
-        Concurrency::critical_section m_criticalSection;
+    Platform::Agile<Windows::UI::Core::CoreDispatcher> m_dispatcher = nullptr;
+    Platform::Agile<Windows::UI::Xaml::Controls::Panel> m_panel = nullptr;
+    Concurrency::critical_section _critical_section;
 
-        Platform::String^ m_strText;
-        Platform::String^ m_strPlaceholder;
-        EditBox::InputMode m_inputMode;
-        EditBox::InputFlag m_inputFlag;
-        int m_maxLength;
-    };
+    Windows::Foundation::EventHandler<Platform::String^>^ _beginHandler = nullptr;
+    Windows::Foundation::EventHandler<Platform::String^>^ _changeHandler = nullptr;
+    Windows::Foundation::EventHandler<EndEventArgs^>^ _endHandler = nullptr;
 
-    class CC_GUI_DLL UIEditBoxImplWinrt : public EditBoxImpl
-    {
-    public:
-        UIEditBoxImplWinrt(EditBox* pEditText);
-        virtual ~UIEditBoxImplWinrt();
-        
-        virtual bool initWithSize(const Size& size);
-        virtual void setFont(const char* pFontName, int fontSize);
-        virtual void setFontColor(const Color4B& color);
-        virtual void setPlaceholderFont(const char* pFontName, int fontSize);
-        virtual void setPlaceholderFontColor(const Color4B& color);
-        virtual void setInputMode(EditBox::InputMode inputMode);
-        virtual void setInputFlag(EditBox::InputFlag inputFlag);
-        virtual void setMaxLength(int maxLength);
-        virtual int  getMaxLength();
-        virtual void setReturnType(EditBox::KeyboardReturnType returnType);
-        virtual bool isEditing();
-        
-        virtual void setText(const char* pText);
-        virtual const char* getText(void);
-        virtual void setPlaceHolder(const char* pText);
-        virtual void setPosition(const Vec2& pos);
-        virtual void setVisible(bool visible);
-        virtual void setContentSize(const Size& size);
-        virtual void setAnchorPoint(const Vec2& anchorPoint);
-        virtual void visit(void);
-        virtual void doAnimationWhenKeyboardMove(float duration, float distance);
-        virtual void openKeyboard();
-        virtual void closeKeyboard();
-        virtual void onEnter(void);
-    private:
-        Platform::String^ stringToPlatformString(std::string strSrc);
-        std::string PlatformStringTostring(Platform::String^ strSrc);
-    private:
-        
-        EditBoxWinRT^ m_editBoxWinrt;
+    Windows::Foundation::EventRegistrationToken _unfocusToken;
+    Windows::Foundation::EventRegistrationToken _changeToken;
+    Windows::Foundation::EventRegistrationToken _focusToken;
+    Windows::Foundation::EventRegistrationToken _keydownToken;
+  };
 
-        Label* m_pLabel;
-        Label* m_pLabelPlaceHolder;
-        EditBox::InputMode    m_eEditBoxInputMode;
-        EditBox::InputFlag    m_eEditBoxInputFlag;
-        (EditBox::KeyboardReturnType  m_eKeyboardReturnType;
-         
-         std::string m_strText;
-         std::string m_strPlaceHolder;
-         
-         Color4B m_colText;
-         Color4B m_colPlaceHolder;
-         
-         int   m_nMaxLength;
-         Size m_EditSize;
-    };
-}
+  class CC_GUI_DLL UIEditBoxImplWinrt : public EditBoxImplCommon
+  {
+  public:
+    /**
+    * @js NA
+    */
+    UIEditBoxImplWinrt(EditBox* pEditText);
+
+    /**
+    * @js NA
+    * @lua NA
+    */
+    virtual ~UIEditBoxImplWinrt() { };
+
+    virtual bool isEditing() override { return _system_control->isEditing(); }
+    virtual void createNativeControl(const Rect& frame) override {  }
+    virtual void setNativeFont(const char* pFontName, int fontSize) override;
+    virtual void setNativeFontColor(const Color4B& color) override;
+    virtual void setNativePlaceholderFont(const char* pFontName, int fontSize) override { CCLOG("Warning! You can't change WinRT placeholder font"); }
+    virtual void setNativePlaceholderFontColor(const Color4B& color) override { CCLOG("Warning! You can't change WinRT placeholder font color"); }
+    virtual void setNativeInputMode(EditBox::InputMode inputMode) override;
+    virtual void setNativeInputFlag(EditBox::InputFlag inputFlag) override;
+    virtual void setNativeReturnType(EditBox::KeyboardReturnType returnType) override { CCLOG("Warning! You can't change WinRT return type"); }
+    virtual void setNativeTextHorizontalAlignment(cocos2d::TextHAlignment alignment);
+    virtual void setNativeText(const char* pText) override;
+    virtual void setNativePlaceHolder(const char* pText) override { CCLOG("Warning! You can't change WinRT placeholder text"); }
+    virtual void setNativeVisible(bool visible) override;
+    virtual void updateNativeFrame(const Rect& rect) override; // TODO
+    virtual const char* getNativeDefaultFontName() override { return "Segoe UI"; }
+    virtual void nativeOpenKeyboard();
+    virtual void nativeCloseKeyboard() override;
+    virtual void setNativeMaxLength(int maxLength) override;
+
+  private:
+    cocos2d::Vec2 convertDesignCoordToXamlCoord(const cocos2d::Vec2& designCoord);
+    virtual void doAnimationWhenKeyboardMove(float duration, float distance) override { CCLOG("Warning! doAnimationWhenKeyboardMove not supported on WinRT"); }
+
+    EditBoxWinRT^ _system_control;
+    int _fontSize;
+  };
+
+} // namespace ui
 
 NS_CC_END
 
-#endif //CC_PLATFORM_WINRT
+#endif // CC_PLATFORM_WINRT
 
-#endif
+#endif // #ifdef __UIEditBoxIMPLWINRT_H__
+
+

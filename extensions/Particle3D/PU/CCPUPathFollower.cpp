@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2015-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -63,7 +63,7 @@ void PUPathFollower::updatePUAffector( PUParticle3D *particle, float deltaTime )
             float timeFractionPlusDelta = (timeLeft + deltaTime ) / particle->totalTimeToLive;
             timeFractionPlusDelta = timeFractionPlusDelta < 1.0f ? timeFractionPlusDelta : 1.0f;
             Vec3 inter = _spline.interpolate(timeFractionPlusDelta) - _spline.interpolate(timeFraction);
-            particle->position += Vec3(_affectorScale.x * inter.x, _affectorScale.y * inter.y, _affectorScale.z * inter.z);
+            particle->position.add(_affectorScale.x * inter.x, _affectorScale.y * inter.y, _affectorScale.z * inter.z);
         }
     }
 }

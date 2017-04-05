@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -21,12 +21,12 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#include "CCPhysicsContact.h"
+#include "physics/CCPhysicsContact.h"
 #if CC_USE_PHYSICS
-#include "chipmunk.h"
+#include "chipmunk/chipmunk.h"
 
-#include "CCPhysicsBody.h"
-#include "CCPhysicsHelper.h"
+#include "physics/CCPhysicsBody.h"
+#include "physics/CCPhysicsHelper.h"
 #include "base/CCEventCustom.h"
 
 NS_CC_BEGIN
@@ -96,10 +96,10 @@ void PhysicsContact::generateContactData()
     _contactData->count = cpArbiterGetCount(arb);
     for (int i=0; i<_contactData->count && i<PhysicsContactData::POINT_MAX; ++i)
     {
-        _contactData->points[i] = PhysicsHelper::cpv2point(cpArbiterGetPoint(arb, i));
+        _contactData->points[i] = PhysicsHelper::cpv2point(cpArbiterGetPointA(arb, i));
     }
     
-    _contactData->normal = _contactData->count > 0 ? PhysicsHelper::cpv2point(cpArbiterGetNormal(arb, 0)) : Vec2::ZERO;
+    _contactData->normal = _contactData->count > 0 ? PhysicsHelper::cpv2point(cpArbiterGetNormal(arb)) : Vec2::ZERO;
 }
 
 // PhysicsContactPreSolve implementation
@@ -114,32 +114,32 @@ PhysicsContactPreSolve::~PhysicsContactPreSolve()
 
 float PhysicsContactPreSolve::getRestitution() const
 {
-    return static_cast<cpArbiter*>(_contactInfo)->e;
+    return cpArbiterGetRestitution(static_cast<cpArbiter*>(_contactInfo));
 }
 
 float PhysicsContactPreSolve::getFriction() const
 {
-    return static_cast<cpArbiter*>(_contactInfo)->u;
+    return cpArbiterGetFriction(static_cast<cpArbiter*>(_contactInfo));
 }
 
 Vec2 PhysicsContactPreSolve::getSurfaceVelocity() const
 {
-    return PhysicsHelper::cpv2point(static_cast<cpArbiter*>(_contactInfo)->surface_vr);
+    return PhysicsHelper::cpv2point(cpArbiterGetSurfaceVelocity(static_cast<cpArbiter*>(_contactInfo)));
 }
 
 void PhysicsContactPreSolve::setRestitution(float restitution)
 {
-    static_cast<cpArbiter*>(_contactInfo)->e = restitution;
+    cpArbiterSetRestitution(static_cast<cpArbiter*>(_contactInfo), restitution);
 }
 
 void PhysicsContactPreSolve::setFriction(float friction)
 {
-    static_cast<cpArbiter*>(_contactInfo)->u = friction;
+    cpArbiterSetFriction(static_cast<cpArbiter*>(_contactInfo), friction);
 }
 
-void PhysicsContactPreSolve::setSurfaceVelocity(const Vect& velocity)
+void PhysicsContactPreSolve::setSurfaceVelocity(const Vec2& velocity)
 {
-    static_cast<cpArbiter*>(_contactInfo)->surface_vr = PhysicsHelper::point2cpv(velocity);
+    cpArbiterSetSurfaceVelocity(static_cast<cpArbiter*>(_contactInfo), PhysicsHelper::point2cpv(velocity));
 }
 
 void PhysicsContactPreSolve::ignore()
@@ -161,24 +161,24 @@ PhysicsContactPostSolve::~PhysicsContactPostSolve()
 
 float PhysicsContactPostSolve::getRestitution() const
 {
-    return static_cast<cpArbiter*>(_contactInfo)->e;
+    return cpArbiterGetRestitution(static_cast<cpArbiter*>(_contactInfo));
 }
 
 float PhysicsContactPostSolve::getFriction() const
 {
-    return static_cast<cpArbiter*>(_contactInfo)->u;
+    return cpArbiterGetFriction(static_cast<cpArbiter*>(_contactInfo));
 }
 
 Vec2 PhysicsContactPostSolve::getSurfaceVelocity() const
 {
-    return PhysicsHelper::cpv2point(static_cast<cpArbiter*>(_contactInfo)->surface_vr);
+    return PhysicsHelper::cpv2point(cpArbiterGetSurfaceVelocity(static_cast<cpArbiter*>(_contactInfo)));
 }
 
 EventListenerPhysicsContact::EventListenerPhysicsContact()
 : onContactBegin(nullptr)
 , onContactPreSolve(nullptr)
 , onContactPostSolve(nullptr)
-, onContactSeperate(nullptr)
+, onContactSeparate(nullptr)
 {
 }
 
@@ -243,12 +243,12 @@ void EventListenerPhysicsContact::onEvent(EventCustom* event)
             }
             break;
         }
-        case PhysicsContact::EventCode::SEPERATE:
+        case PhysicsContact::EventCode::SEPARATE:
         {
-            if (onContactSeperate != nullptr
+            if (onContactSeparate != nullptr
                 && hitTest(contact->getShapeA(), contact->getShapeB()))
             {
-                onContactSeperate(*contact);
+                onContactSeparate(*contact);
             }
             break;
         }
@@ -276,17 +276,15 @@ EventListenerPhysicsContact* EventListenerPhysicsContact::create()
     return nullptr;
 }
 
-bool EventListenerPhysicsContact::hitTest(PhysicsShape* shapeA, PhysicsShape* shapeB)
+bool EventListenerPhysicsContact::hitTest(PhysicsShape* /*shapeA*/, PhysicsShape* /*shapeB*/)
 {
-    CC_UNUSED_PARAM(shapeA);
-    CC_UNUSED_PARAM(shapeB);
     return true;
 }
 
 bool EventListenerPhysicsContact::checkAvailable()
 {
     if (onContactBegin == nullptr && onContactPreSolve == nullptr
-        && onContactPostSolve == nullptr && onContactSeperate == nullptr)
+        && onContactPostSolve == nullptr && onContactSeparate == nullptr)
     {
         CCASSERT(false, "Invalid PhysicsContactListener.");
         return false;
@@ -304,7 +302,7 @@ EventListenerPhysicsContact* EventListenerPhysicsContact::clone()
         obj->onContactBegin = onContactBegin;
         obj->onContactPreSolve = onContactPreSolve;
         obj->onContactPostSolve = onContactPostSolve;
-        obj->onContactSeperate = onContactSeperate;
+        obj->onContactSeparate = onContactSeparate;
         
         return obj;
     }
@@ -362,7 +360,7 @@ EventListenerPhysicsContactWithBodies* EventListenerPhysicsContactWithBodies::cl
         obj->onContactBegin = onContactBegin;
         obj->onContactPreSolve = onContactPreSolve;
         obj->onContactPostSolve = onContactPostSolve;
-        obj->onContactSeperate = onContactSeperate;
+        obj->onContactSeparate = onContactSeparate;
         
         return obj;
     }
@@ -417,7 +415,7 @@ EventListenerPhysicsContactWithShapes* EventListenerPhysicsContactWithShapes::cl
         obj->onContactBegin = onContactBegin;
         obj->onContactPreSolve = onContactPreSolve;
         obj->onContactPostSolve = onContactPostSolve;
-        obj->onContactSeperate = onContactSeperate;
+        obj->onContactSeparate = onContactSeparate;
         
         return obj;
     }
@@ -469,7 +467,7 @@ EventListenerPhysicsContactWithGroup* EventListenerPhysicsContactWithGroup::clon
         obj->onContactBegin = onContactBegin;
         obj->onContactPreSolve = onContactPreSolve;
         obj->onContactPostSolve = onContactPostSolve;
-        obj->onContactSeperate = onContactSeperate;
+        obj->onContactSeparate = onContactSeparate;
         
         return obj;
     }

@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -26,117 +26,82 @@
 #include "ActionsTest.h"
 #include "../testResource.h"
 #include "cocos2d.h"
+#include "ui/CocosGUI.h"
 
 #include "renderer/CCRenderer.h"
 #include "renderer/CCCustomCommand.h"
 #include "renderer/CCGroupCommand.h"
 
-static std::function<Layer*()> createFunctions[] = {
+USING_NS_CC;
+using namespace cocos2d::ui;
 
-    CL(ActionManual),
-    CL(ActionMove),
-    CL(ActionMove3D),
-    CL(ActionRotate),
-    CL(ActionRotateBy3D),
-    CL(ActionScale),
-    CL(ActionSkew),
-    CL(ActionRotationalSkew),
-    CL(ActionRotationalSkewVSStandardSkew),
-    CL(ActionSkewRotateScale),
-    CL(ActionJump),
-    CL(ActionCardinalSpline),
-    CL(ActionCatmullRom),
-    CL(ActionBezier),
-    CL(ActionBlink),
-    CL(ActionFade),
-    CL(ActionTint),
-    CL(ActionAnimate),
-    CL(ActionSequence),
-    CL(ActionSequence2),
-	CL(ActionRemoveSelf),
-    CL(ActionSpawn),
-    CL(ActionReverse),
-    CL(ActionDelayTime),
-    CL(ActionRepeat),
-    CL(ActionRepeatForever),
-    CL(ActionRotateToRepeat),
-    CL(ActionRotateJerk),
-    CL(ActionCallFunction),
-    CL(ActionCallFuncN),
-    CL(ActionCallFuncND),
-    CL(ActionCallFuncO),
-    CL(ActionReverseSequence),
-    CL(ActionReverseSequence2),
-    CL(ActionOrbit),
-    CL(ActionFollow),
-    CL(ActionTargeted),
-    CL(ActionTargetedReverse),
-    CL(ActionMoveStacked),
-    CL(ActionMoveJumpStacked),
-    CL(ActionMoveBezierStacked),
-    CL(ActionCardinalSplineStacked),
-    CL(ActionCatmullRomStacked),
-    CL(PauseResumeActions),
-    CL(Issue1305),
-    CL(Issue1305_2),
-    CL(Issue1288),
-    CL(Issue1288_2),
-    CL(Issue1327),
-    CL(Issue1398),
-    CL(Issue2599)
-};
-
-static int sceneIdx=-1;
-#define MAX_LAYER (sizeof(createFunctions) / sizeof(createFunctions[0]))
-
-static Layer* nextAction()
+ActionsTests::ActionsTests()
 {
-    sceneIdx++;
-    sceneIdx = sceneIdx % MAX_LAYER;
-    
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
+    ADD_TEST_CASE(ActionMove);
+    ADD_TEST_CASE(ActionMove3D);
+    ADD_TEST_CASE(ActionRotate);
+    ADD_TEST_CASE(ActionRotateBy3D);
+    ADD_TEST_CASE(ActionScale);
+    ADD_TEST_CASE(ActionSkew);
+    ADD_TEST_CASE(ActionRotationalSkew);
+    ADD_TEST_CASE(ActionRotationalSkewVSStandardSkew);
+    ADD_TEST_CASE(ActionSkewRotateScale);
+    ADD_TEST_CASE(ActionJump);
+    ADD_TEST_CASE(ActionCardinalSpline);
+    ADD_TEST_CASE(ActionCatmullRom);
+    ADD_TEST_CASE(ActionBezier);
+    ADD_TEST_CASE(ActionBlink);
+    ADD_TEST_CASE(ActionFade);
+    ADD_TEST_CASE(ActionTint);
+    ADD_TEST_CASE(ActionAnimate);
+    ADD_TEST_CASE(ActionSequence);
+    ADD_TEST_CASE(ActionSequence2);
+    ADD_TEST_CASE(ActionSequence3);
+    ADD_TEST_CASE(ActionRemoveSelf);
+    ADD_TEST_CASE(ActionSpawn);
+    ADD_TEST_CASE(ActionSpawn2);
+    ADD_TEST_CASE(ActionReverse);
+    ADD_TEST_CASE(ActionDelayTime);
+    ADD_TEST_CASE(ActionRepeat);
+    ADD_TEST_CASE(ActionRepeatForever);
+    ADD_TEST_CASE(ActionRotateToRepeat);
+    ADD_TEST_CASE(ActionCallFunction);
+    ADD_TEST_CASE(ActionCallFuncN);
+    ADD_TEST_CASE(ActionCallFuncND);
+    ADD_TEST_CASE(ActionReverseSequence);
+    ADD_TEST_CASE(ActionReverseSequence2);
+    ADD_TEST_CASE(ActionOrbit);
+    ADD_TEST_CASE(ActionFollow);
+    ADD_TEST_CASE(ActionFollowWithOffset);
+    ADD_TEST_CASE(ActionTargeted);
+    ADD_TEST_CASE(ActionTargetedReverse);
+    ADD_TEST_CASE(ActionMoveStacked);
+    ADD_TEST_CASE(ActionMoveJumpStacked);
+    ADD_TEST_CASE(ActionMoveBezierStacked);
+    ADD_TEST_CASE(ActionCardinalSplineStacked);
+    ADD_TEST_CASE(ActionCatmullRomStacked);
+    ADD_TEST_CASE(PauseResumeActions);
+    ADD_TEST_CASE(ActionResize);
+    ADD_TEST_CASE(Issue1305);
+    ADD_TEST_CASE(Issue1305_2);
+    ADD_TEST_CASE(Issue1288);
+    ADD_TEST_CASE(Issue1288_2);
+    ADD_TEST_CASE(Issue1327);
+    ADD_TEST_CASE(Issue1398);
+    ADD_TEST_CASE(Issue2599)
+    ADD_TEST_CASE(ActionFloatTest);
+    ADD_TEST_CASE(Issue14936_1);
+    ADD_TEST_CASE(Issue14936_2);
 }
-
-static Layer* backAction()
-{
-    sceneIdx--;
-    int total = MAX_LAYER;
-    if( sceneIdx < 0 )
-        sceneIdx += total;
-    
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
-}
-
-static Layer* restartAction()
-{
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
-}
-
-void ActionsTestScene::runThisTest()
-{
-    sceneIdx = -1;
-    addChild(nextAction());
-
-    Director::getInstance()->replaceScene(this);
-}
-
 
 std::string ActionsDemo::title() const
 {
     return "ActionsTest";
 }
 
-std::string ActionsDemo::subtitle() const
-{
-    return "";
-}
-
 void ActionsDemo::onEnter()
 {
-    BaseTest::onEnter();
+    TestCase::onEnter();
 
     // Or you can create an sprite using a filename. only PNG is supported now. Probably TIFF too
     _grossini = Sprite::create(s_pathGrossini);
@@ -163,31 +128,7 @@ void ActionsDemo::onExit()
     _tamara->release();
     _kathia->release();
 
-    BaseTest::onExit();
-}
-
-void ActionsDemo::restartCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) ActionsTestScene();
-    s->addChild( restartAction() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void ActionsDemo::nextCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) ActionsTestScene();
-    s->addChild( nextAction() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void ActionsDemo::backCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) ActionsTestScene();
-    s->addChild( backAction() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
+    TestCase::onExit();
 }
 
 void ActionsDemo::centerSprites(unsigned int numberOfSprites)
@@ -242,35 +183,6 @@ void ActionsDemo::alignSpritesLeft(unsigned int numberOfSprites)
         _tamara->setPosition(60, 2*s.height/3);
         _kathia->setPosition(60, s.height/3);
     }
-}
-
-//------------------------------------------------------------------
-//
-// ActionManual
-//
-//------------------------------------------------------------------
-void ActionManual::onEnter()
-{
-    ActionsDemo::onEnter();
-
-    auto s = Director::getInstance()->getWinSize();
-
-    _tamara->setScaleX( 2.5f);
-    _tamara->setScaleY( -1.0f);
-    _tamara->setPosition(100,70);
-    _tamara->setOpacity( 128);
-
-    _grossini->setRotation( 120);
-    _grossini->setPosition(s.width/2, s.height/2);
-    _grossini->setColor( Color3B( 255,0,0));
-
-    _kathia->setPosition(s.width-100, s.height/2);
-    _kathia->setColor( Color3B::BLUE);
-}
-
-std::string ActionManual::subtitle() const
-{
-    return "Manual Transformation";
 }
 
 //------------------------------------------------------------------
@@ -426,7 +338,7 @@ void ActionRotationalSkewVSStandardSkew::onEnter()
     auto box = LayerColor::create(Color4B(255,255,0,255));
     box->setAnchorPoint(Vec2(0.5,0.5));
     box->setContentSize( boxSize );
-    box->ignoreAnchorPointForPosition(false);
+    box->setIgnoreAnchorPointForPosition(false);
     box->setPosition(s.width/2, s.height - 100 - box->getContentSize().height/2);
     this->addChild(box);
 
@@ -442,7 +354,7 @@ void ActionRotationalSkewVSStandardSkew::onEnter()
     box = LayerColor::create(Color4B(255,255,0,255));
     box->setAnchorPoint(Vec2(0.5,0.5));
     box->setContentSize(boxSize);
-    box->ignoreAnchorPointForPosition(false);
+    box->setIgnoreAnchorPointForPosition(false);
     box->setPosition(s.width/2, s.height - 250 - box->getContentSize().height/2);
     this->addChild(box);
 
@@ -874,6 +786,37 @@ std::string ActionSequence2::subtitle() const
 
 //------------------------------------------------------------------
 //
+//    ActionSequence3
+//
+//------------------------------------------------------------------
+void ActionSequence3::onEnter()
+{
+    ActionsDemo::onEnter();
+
+    alignSpritesLeft(1);
+
+    // Uses Array API
+    auto action1 = MoveBy::create(2, Vec2(240,0));
+    auto action2 = RotateBy::create(2, 540);
+    auto action3 = action1->reverse();
+    auto action4 = action2->reverse();
+
+    Vector<FiniteTimeAction*> array;
+    array.pushBack(action1);
+    array.pushBack(action2);
+    array.pushBack(action3);
+    array.pushBack(action4);
+    auto action = Sequence::create(array);
+    _grossini->runAction(action);
+}
+
+std::string ActionSequence3::subtitle() const
+{
+    return "Sequence: Using Array API";
+}
+
+//------------------------------------------------------------------
+//
 // ActionCallFuncN
 //
 //------------------------------------------------------------------
@@ -939,40 +882,6 @@ std::string ActionCallFuncND::subtitle() const
 void ActionCallFuncND::doRemoveFromParentAndCleanup(Node* sender, bool cleanup)
 {
     _grossini->removeFromParentAndCleanup(cleanup);
-}
-
-//------------------------------------------------------------------
-//
-// ActionCallFuncO
-// CallFuncO is no longer needed. It can simulated with std::bind()
-//
-//------------------------------------------------------------------
-void ActionCallFuncO::onEnter()
-{
-    ActionsDemo::onEnter();
-
-    centerSprites(1);
-
-    auto action = Sequence::create(
-        MoveBy::create(2.0f, Vec2(200,0)),
-        CallFunc::create( CC_CALLBACK_0(ActionCallFuncO::callback, this, _grossini, true)),
-        nullptr);
-    _grossini->runAction(action);
-}
-
-std::string ActionCallFuncO::title() const
-{
-    return "CallFuncO + autoremove";
-}
-
-std::string ActionCallFuncO::subtitle() const
-{
-    return "simulates CallFuncO with std::bind()";
-}
-
-void ActionCallFuncO::callback(Node* node, bool cleanup)
-{
-    node->removeFromParentAndCleanup(cleanup);
 }
 
 //------------------------------------------------------------------
@@ -1077,6 +986,33 @@ std::string ActionSpawn::subtitle() const
     return "Spawn: Jump + Rotate";
 }
 
+//------------------------------------------------------------------
+//
+// ActionSpawn2
+//
+//------------------------------------------------------------------
+
+void ActionSpawn2::onEnter()
+{
+    ActionsDemo::onEnter();
+
+    alignSpritesLeft(1);
+
+    auto action1 = JumpBy::create(2, Vec2(300,0), 50, 4);
+    auto action2 = RotateBy::create( 2,  720);
+
+    Vector<FiniteTimeAction*> array;
+    array.pushBack(action1);
+    array.pushBack(action2);
+
+    auto action = Spawn::create(array);
+    _grossini->runAction(action);
+}
+
+std::string ActionSpawn2::subtitle() const
+{
+    return "Spawn: using the Array API";
+}
 
 //------------------------------------------------------------------
 //
@@ -1134,35 +1070,6 @@ void ActionRotateToRepeat::onEnter()
 std::string ActionRotateToRepeat ::subtitle() const
 {
     return "Repeat/RepeatForever + RotateTo";
-}
-
-
-//------------------------------------------------------------------
-//
-// ActionRotateJerk
-//
-//------------------------------------------------------------------
-void ActionRotateJerk::onEnter()
-{
-    ActionsDemo::onEnter();
-
-    centerSprites(2);
-
-	auto seq = Sequence::create(
-        RotateTo::create(0.5f, -20),
-        RotateTo::create(0.5f, 20),
-        nullptr);
-
-	auto rep1 = Repeat::create(seq, 10);
-	auto rep2 = RepeatForever::create( seq->clone() );
-
-    _tamara->runAction(rep1);
-    _kathia->runAction(rep2);
-}
-
-std::string ActionRotateJerk::subtitle() const
-{
-    return "RepeatForever / Repeat + Rotate";
 }
 
 //------------------------------------------------------------------
@@ -1394,6 +1301,47 @@ std::string ActionFollow::subtitle() const
 {
     return "Follow action";
 }
+
+//------------------------------------------------------------------
+//
+// ActionFollowWithOffset
+//
+//------------------------------------------------------------------
+void ActionFollowWithOffset::onEnter()
+{
+    ActionsDemo::onEnter();
+    
+    centerSprites(1);
+    auto s = Director::getInstance()->getWinSize();
+    
+    DrawNode* drawNode = DrawNode::create();
+    float x = s.width*2 - 100;
+    float y = s.height;
+    
+    Vec2 vertices[] = { Vec2(5,5), Vec2(x-5,5), Vec2(x-5,y-5), Vec2(5,y-5) };
+    drawNode->drawPoly(vertices, 4, true,  Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 1));
+    
+    this->addChild(drawNode);
+    
+    _grossini->setPosition(-200, s.height / 2);
+    auto move = MoveBy::create(2, Vec2(s.width * 3, 1));
+    auto move_back = move->reverse();
+    auto seq = Sequence::create(move, move_back, nullptr);
+    auto rep = RepeatForever::create(seq);
+    
+    _grossini->runAction(rep);
+    
+    //sample offset values set
+    float verticalOffset = -900;
+    float horizontalOffset = 200;
+    this->runAction(Follow::createWithOffset(_grossini, horizontalOffset,verticalOffset,Rect(0, 0, s.width * 2 - 100, s.height)));
+}
+
+std::string ActionFollowWithOffset::subtitle() const
+{
+    return "Follow action with horizontal and vertical offset";
+}
+
 
 void ActionTargeted::onEnter()
 {
@@ -2260,6 +2208,69 @@ std::string PauseResumeActions::subtitle() const
 
 //------------------------------------------------------------------
 //
+//    ActionResize
+//    Works on all nodes where setContentSize is effective. 
+//    But it's mostly useful for nodes where 9-slice is enabled
+//
+//------------------------------------------------------------------
+void ActionResize::onEnter() 
+{
+    ActionsDemo::onEnter();
+
+    _grossini->setVisible(false);
+    _tamara->setVisible(false);
+    _kathia->setVisible(false);
+
+    Size widgetSize = getContentSize();
+
+    Text* alert = Text::create("ImageView Content ResizeTo ResizeBy action. \nTop: ResizeTo/ResizeBy on a 9-slice ImageView  \nBottom: ScaleTo/ScaleBy on a 9-slice ImageView (for comparison)", "fonts/Marker Felt.ttf", 14);
+    alert->setColor(Color3B(159, 168, 176));
+    alert->setPosition(Vec2(widgetSize.width / 2.0f,
+                            widgetSize.height / 2.0f - alert->getContentSize().height * 1.125f));
+
+    addChild(alert);
+
+    // Create the imageview
+    Vec2 offset(0.0f, 50.0f);
+    ImageView* imageViewResize = ImageView::create("cocosui/buttonHighlighted.png");
+    imageViewResize->setScale9Enabled(true);
+    imageViewResize->setContentSize(Size(50, 40));
+    imageViewResize->setPosition(Vec2((widgetSize.width / 2.0f) + offset.x,
+                                (widgetSize.height / 2.0f) + offset.y));
+
+    auto resizeDown = cocos2d::ResizeTo::create(2.8f, Size(50, 40));
+    auto resizeUp = cocos2d::ResizeTo::create(2.8f, Size(300, 40));
+
+    auto resizeByDown = cocos2d::ResizeBy::create(1.8f, Size(0, -30));
+    auto resizeByUp = cocos2d::ResizeBy::create(1.8f, Size(0, 30));
+    addChild(imageViewResize);
+    auto rep = RepeatForever::create(Sequence::create(resizeUp, resizeDown, resizeByDown, resizeByUp, nullptr));
+    imageViewResize->runAction(rep);
+
+    // Create another imageview that scale to see the difference
+    ImageView* imageViewScale = ImageView::create("cocosui/buttonHighlighted.png");
+    imageViewScale->setScale9Enabled(true);
+    imageViewScale->setContentSize(Size(50, 40));
+    imageViewScale->setPosition(Vec2(widgetSize.width / 2.0f,
+                                 widgetSize.height / 2.0f));
+
+    auto scaleDownScale = cocos2d::ScaleTo::create(2.8f, 1.0f);
+    auto scaleUpScale = cocos2d::ScaleTo::create(2.8f, 6.0f, 1.0f);
+
+    auto scaleByDownScale = cocos2d::ScaleBy::create(1.8f, 1.0f, 0.25f);
+    auto scaleByUpScale = cocos2d::ScaleBy::create(1.8f, 1.0f, 4.0f);
+    addChild(imageViewScale);
+    auto rep2 = RepeatForever::create(Sequence::create(scaleUpScale, scaleDownScale, scaleByDownScale, scaleByUpScale, nullptr));
+    imageViewScale->runAction(rep2);
+}
+
+std::string ActionResize::subtitle() const 
+{
+    return "ResizeTo / ResizeBy";
+}
+
+//------------------------------------------------------------------
+//
 //    ActionRemoveSelf
 //
 //------------------------------------------------------------------
@@ -2282,4 +2293,171 @@ void ActionRemoveSelf::onEnter()
 std::string ActionRemoveSelf::subtitle() const
 {
 	return "Sequence: Move + Rotate + Scale + RemoveSelf";
+}
+
+//------------------------------------------------------------------
+//
+//    ActionFloat
+//
+//------------------------------------------------------------------
+void ActionFloatTest::onEnter()
+{
+    ActionsDemo::onEnter();
+
+    centerSprites(3);
+
+    auto s = Director::getInstance()->getWinSize();
+
+    // create float action with duration and from to value, using lambda function we can easily animate any property of the Node.
+    auto actionFloat = ActionFloat::create(2.f, 0, 3, [this](float value) {
+        _tamara->setScale(value);
+    });
+
+    float grossiniY = _grossini->getPositionY();
+
+    auto actionFloat1 = ActionFloat::create(3.f, grossiniY, grossiniY + 50, [this](float value) {
+        _grossini->setPositionY(value);
+    });
+
+    auto actionFloat2 = ActionFloat::create(3.f, 3, 1, [this] (float value) {
+        _kathia->setScale(value);
+    });
+
+    _tamara->runAction(actionFloat);
+    _grossini->runAction(actionFloat1);
+    _kathia->runAction(actionFloat2);
+}
+
+void Issue14936_1::onEnter() {
+    ActionsDemo::onEnter();
+    centerSprites(0);
+
+    auto origin = cocos2d::Director::getInstance()->getVisibleOrigin();
+    auto visibleSize = cocos2d::Director::getInstance()->getVisibleSize();
+
+    _count = 0;
+
+    auto counterLabel = Label::createWithTTF("0", "fonts/Marker Felt.ttf", 16.0f);
+    counterLabel->setPosition(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2);
+    addChild(counterLabel);
+
+    auto func = CallFunc::create([this, counterLabel]{
+        _count++;
+        std::ostringstream os;
+        os << _count;
+        counterLabel->setString(os.str());
+    });
+
+    runAction(Spawn::create(func, func, nullptr));
+}
+
+std::string Issue14936_1::subtitle() const {
+    return "Counter should be equal 2";
+}
+
+void Issue14936_2::onEnter() {
+    ActionsDemo::onEnter();
+    centerSprites(0);
+
+    auto origin = cocos2d::Director::getInstance()->getVisibleOrigin();
+    auto visibleSize = cocos2d::Director::getInstance()->getVisibleSize();
+
+    _count = 0;
+    auto counterLabel = Label::createWithTTF("0", "fonts/Marker Felt.ttf", 16.0f);
+    counterLabel->setPosition(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2);
+    addChild(counterLabel);
+
+    auto func = CallFunc::create([this, counterLabel] {
+        _count++;
+        std::ostringstream os;
+        os << _count;
+        counterLabel->setString(os.str());
+    });
+
+    runAction(Sequence::create(TargetedAction::create(this, func), DelayTime::create(0.2f), nullptr));
+}
+
+std::string Issue14936_2::subtitle() const {
+    return "Counter should be equal 1";
+}
+
+std::string Issue14936_2::title() const {
+    return "Issue 14936 - Sequence";
+}
+
+std::string Issue14936_1::title() const {
+    return "Issue 14936 - Action Interval";
+}
+
+std::string ActionFloatTest::subtitle() const
+{
+    return "ActionFloat";
+}
+
+
+
+//------------------------------------------------------------------
+//
+// SequenceWithFinalInstant
+//
+//------------------------------------------------------------------
+void SequenceWithFinalInstant::onEnter()
+{
+    ActionsDemo::onEnter();
+
+    _manager = new cocos2d::ActionManager();
+    _manager->autorelease();
+    _manager->retain();
+    
+    _target = cocos2d::Node::create();
+    _target->setActionManager( _manager );
+    _target->retain();
+    _target->onEnter();
+
+    bool called( false );
+    const auto f
+      ( [ &called ]() -> void
+        {
+          cocos2d::log("Callback called.");
+          called = true;
+        } );
+    
+    const auto action =
+      cocos2d::Sequence::create
+      (cocos2d::DelayTime::create(0.05),
+       cocos2d::CallFunc::create(f),
+       nullptr);
+
+    _target->runAction(action);
+    _manager->update(0);
+    _manager->update(0.05 - FLT_EPSILON);
+
+    if ( action->isDone() && !called )
+      cocos2d::log
+        ("Action says it is done but is not."
+         " called=%d, elapsed=%f, duration=%f",
+         (int)called, action->getElapsed(), action->getDuration());
+    else
+      cocos2d::log("First step: everything went fine.");
+    
+    _manager->update(FLT_EPSILON);
+
+    if ( action->isDone() && called )
+      cocos2d::log("Second step: everything went fine.");
+    else
+      cocos2d::log
+        ("Action says it is done but is not."
+         " called=%d, elapsed=%f, duration=%f",
+         (int)called, action->getElapsed(), action->getDuration());
+}
+
+void SequenceWithFinalInstant::onExit()
+{
+  _target->release();
+  _manager->release();
+}
+
+std::string SequenceWithFinalInstant::subtitle() const
+{
+    return "Instant action should be run. See console.";
 }

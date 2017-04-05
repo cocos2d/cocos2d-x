@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2015-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -38,7 +38,6 @@ const float PULineEmitter::DEFAULT_MAX_DEVIATION = 0.0f;
 PULineEmitter::PULineEmitter(void) : 
     PUEmitter(),
     _end(DEFAULT_END),
-    _perpendicular(Vec3::ZERO),
     _maxDeviation(DEFAULT_MAX_DEVIATION),
     _minIncrement(DEFAULT_MIN_INCREMENT),
     _maxIncrement(DEFAULT_MAX_INCREMENT),
@@ -46,7 +45,6 @@ PULineEmitter::PULineEmitter(void) :
     _length(0.0f),
     _incrementsLeft(true),
     _first(true),
-    _scaledEnd(Vec3::ZERO),
     _scaledMaxDeviation(0.0f),
     _scaledMinIncrement(0.0f),
     _scaledMaxIncrement(0.0f),
@@ -68,7 +66,7 @@ void PULineEmitter::notifyRescaled(const Vec3& scale)
     // Scale the internal attributes and use them, otherwise this results in too many calculations per particle
     PUEmitter::notifyRescaled(scale);
     float scaleLength = scale.length();
-    _scaledEnd = Vec3(_end.x * scale.x, _end.y * scale.y, _end.z * scale.z);
+    _scaledEnd.set(_end.x * scale.x, _end.y * scale.y, _end.z * scale.z);
     _scaledMaxDeviation = _maxDeviation * scaleLength;
     _scaledMinIncrement = _minIncrement * scaleLength;
     _scaledMaxIncrement = (_maxIncrement - _minIncrement) * scaleLength;
@@ -108,7 +106,7 @@ const Vec3& PULineEmitter::getEnd(void) const
 void PULineEmitter::setEnd(const Vec3& end)
 {
     _end = end;
-    _scaledEnd = Vec3(_end.x * _emitterScale.x, _end.y * _emitterScale.y, _end.z * _emitterScale.z);
+    _scaledEnd.set(_end.x * _emitterScale.x, _end.y * _emitterScale.y, _end.z * _emitterScale.z);
     _length = _end.length();
 }
 //-----------------------------------------------------------------------

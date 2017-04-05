@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2015-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -47,12 +47,12 @@ void PUOnRandomObserver::preUpdateObserver(float deltaTime)
     handleObserve(0, deltaTime);
 }
 //-----------------------------------------------------------------------
-void PUOnRandomObserver::updateObserver(PUParticle3D *particle, float deltaTime, bool firstParticle)
+void PUOnRandomObserver::updateObserver(PUParticle3D* /*particle*/, float /*deltaTime*/, bool /*firstParticle*/)
 {
     // No need to determine per particle
 }
 //-----------------------------------------------------------------------
-bool PUOnRandomObserver::observe (PUParticle3D* particle, float timeElapsed)
+bool PUOnRandomObserver::observe (PUParticle3D* /*particle*/, float /*timeElapsed*/)
 {
     return (CCRANDOM_0_1() > _threshold);
 }

@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2015-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -27,7 +27,7 @@
 
 NS_CC_BEGIN
 
-const Vec3 PUForceFieldCalculationFactory::DEFAULT_WORLDSIZE = Vec3(500.0f, 500.0f, 500.0f);
+const Vec3 PUForceFieldCalculationFactory::DEFAULT_WORLDSIZE(500.0f, 500.0f, 500.0f);
 
 //-----------------------------------------------------------------------
 unsigned short PUForceFieldCalculationFactory::getOctaves(void) const
@@ -105,7 +105,7 @@ void PUForceFieldCalculationFactory::setWorldSize(const Vec3& worldSize)
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-void PURealTimeForceFieldCalculationFactory::generate(unsigned int forceFieldSize, 
+void PURealTimeForceFieldCalculationFactory::generate(unsigned int /*forceFieldSize*/,
                                                     unsigned short octaves, 
                                                     double frequency, 
                                                     double amplitude, 
@@ -159,7 +159,6 @@ PUForceField::PUForceField(void) :
     _worldSize(PUForceFieldCalculationFactory::DEFAULT_WORLDSIZE),
     _forceFieldSize(64),
     _forceFieldCalculationFactory(0),
-    _forceFieldPositionBase(Vec3::ZERO),
     _forceFieldType(FF_REALTIME_CALC)
 {
 }
@@ -260,7 +259,7 @@ PUForceFieldCalculationFactory* PUForceField::createForceFieldCalculationFactory
     }
 }
 //-----------------------------------------------------------------------
-const PUForceField::ForceFieldType PUForceField::getForceFieldType(void) const
+PUForceField::ForceFieldType PUForceField::getForceFieldType() const
 {
     return _forceFieldType;
 }

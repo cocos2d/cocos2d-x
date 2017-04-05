@@ -1,6 +1,6 @@
 --[[
 
-Copyright (c) 2011-2014 chukong-inc.com
+Copyright (c) 2014-2017 Chukong Technologies Inc.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -43,7 +43,7 @@ function Layer:onTouch(callback, isMultiTouches, swallowTouches)
             event.x = args[1]
             event.y = args[2]
         end
-        callback(event)
+        return callback( event )
     end, isMultiTouches, 0, swallowTouches)
     self:setTouchEnabled(true)
     return self

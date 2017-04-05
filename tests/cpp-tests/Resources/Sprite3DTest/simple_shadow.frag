@@ -5,7 +5,8 @@ varying mediump vec4 v_position;
 varying vec2 v_texture_coord;
 varying vec4 v_position;
 #endif
-uniform sampler2D u_shadowTexture;
+uniform sampler2D u_sampler0;
+uniform sampler2D u_sampler1;
 uniform vec3 u_target_pos;
 uniform vec4 u_color;
 void main(void)
@@ -18,5 +19,5 @@ void main(void)
 	coord.x = dot(v_position.xyz - u_target_pos, UVector) + 0.5;
 	coord.y = dot(v_position.xyz - u_target_pos, VVector) + 0.5;
 
-	gl_FragColor = u_color*texture2D(CC_Texture0,v_texture_coord)*texture2D(u_shadowTexture,coord);
+	gl_FragColor = u_color*texture2D(u_sampler0,v_texture_coord)*texture2D(u_sampler1,coord);
 }

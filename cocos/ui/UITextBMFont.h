@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -28,16 +28,20 @@ THE SOFTWARE.
 #include "ui/UIWidget.h"
 #include "ui/GUIExport.h"
 
+/**
+ * @addtogroup ui
+ * @{
+ */
 NS_CC_BEGIN
 
 class Label;
+struct CC_DLL ResourceData;
 
 namespace ui {
     
 /**
-*   @js NA
-*   @lua NA
-*/    
+ * A widget for displaying BMFont label.
+ */    
 class CC_GUI_DLL TextBMFont : public Widget
 {
     
@@ -46,11 +50,15 @@ class CC_GUI_DLL TextBMFont : public Widget
 public:
     /**
      * Default constructor
+     * @js ctor
+     * @lua new
      */
     TextBMFont();
     
     /**
      * Default destructor
+     * @js NA
+     * @lua NA
      */
     virtual ~TextBMFont();
     
@@ -87,6 +95,13 @@ public:
      * Returns the "class name" of widget.
      */
     virtual std::string getDescription() const override;
+
+    ResourceData getRenderFile();
+
+    /**
+    * reset TextBMFont inner label
+    */
+    void resetRender();
 protected:
     virtual void initRenderer() override;
     virtual void onSizeChanged() override;
@@ -97,7 +112,6 @@ protected:
     virtual void adaptRenderers() override;
 protected:
     Label* _labelBMFontRenderer;
-    bool _fntFileHasInit;
     std::string _fntFileName;
     std::string _stringValue;
     bool _labelBMFontRendererAdaptDirty;
@@ -105,5 +119,7 @@ protected:
     
 }
 NS_CC_END
+// end of ui group
+/// @}
 
 #endif /* defined(__LabelBMFont__) */

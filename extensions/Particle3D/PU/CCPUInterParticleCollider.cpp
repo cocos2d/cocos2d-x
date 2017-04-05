@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2015-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -78,7 +78,7 @@ void PUParticle3DInterParticleCollider::unPrepare()
     //particleTechnique->setSpatialHashingUsed(false);
 }
 //-----------------------------------------------------------------------
-bool PUParticle3DInterParticleCollider::validateAndExecuteSphereCollision (PUParticle3D* particle1, PUParticle3D* particle2, float timeElapsed)
+bool PUParticle3DInterParticleCollider::validateAndExecuteSphereCollision (PUParticle3D* particle1, PUParticle3D* particle2, float /*timeElapsed*/)
 {
     PUParticle3D* vp1 = static_cast<PUParticle3D*>(particle1);
     PUParticle3D* vp2 = static_cast<PUParticle3D*>(particle2);
@@ -108,8 +108,8 @@ bool PUParticle3DInterParticleCollider::validateAndExecuteSphereCollision (PUPar
                 // The new velocity is based on the angle between original direction and new direction.
                 // Note, that this usually means that the velocity decreases.
 
-                float velocity1 = Vec3(abs(vp1->direction.x), abs(vp1->direction.y), abs(vp1->direction.z)).dot(n);
-                float velocity2 = Vec3(abs(vp2->direction.x), abs(vp2->direction.y), abs(vp2->direction.z)).dot(n);
+                float velocity1 = Vec3(std::abs(vp1->direction.x), std::abs(vp1->direction.y), std::abs(vp1->direction.z)).dot(n);
+                float velocity2 = Vec3(std::abs(vp2->direction.x), std::abs(vp2->direction.y), std::abs(vp2->direction.z)).dot(n);
                 vp1->direction = velocity1 * vp2->mass * n;
                 vp2->direction = velocity2 * vp1->mass * -n;
             }
@@ -126,7 +126,7 @@ bool PUParticle3DInterParticleCollider::validateAndExecuteSphereCollision (PUPar
 }
 //-----------------------------------------------------------------------
 
-void PUParticle3DInterParticleCollider::updatePUAffector( PUParticle3D *particle, float deltaTime )
+void PUParticle3DInterParticleCollider::updatePUAffector( PUParticle3D* /*particle*/, float /*deltaTime*/ )
 {
     //CCASSERT(0, "nonsupport yet");
     //for (auto iter : _particleSystem->getParticles())

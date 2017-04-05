@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2013      Zynga Inc.
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -26,12 +26,13 @@
 #ifndef _CCFontCharMap_h_
 #define _CCFontCharMap_h_
 
+/// @cond DO_NOT_SHOW
+
 #include "2d/CCFont.h"
 
 NS_CC_BEGIN
 
-/// @cond
-
+class Texture2D;
 class FontCharMap : public Font
 {  
 public:
@@ -39,7 +40,7 @@ public:
     static FontCharMap * create(Texture2D* texture, int itemWidth, int itemHeight, int startCharMap);
     static FontCharMap * create(const std::string& plistFile);
     
-    virtual int* getHorizontalKerningForTextUTF16(const std::u16string& text, int &outNumLetters) const override;
+    virtual int* getHorizontalKerningForTextUTF32(const std::u32string& text, int &outNumLetters) const override;
     virtual FontAtlas *createFontAtlas() override;
     
 protected:    

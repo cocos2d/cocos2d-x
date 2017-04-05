@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -29,131 +29,121 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-ComponentContainer::ComponentContainer(Node *node)
-: _components(nullptr)
-, _owner(node)
+ComponentContainer::ComponentContainer(Node* node)
+: _owner(node)
 {
 }
 
-ComponentContainer::~ComponentContainer(void)
-{
-    CC_SAFE_DELETE(_components);
+ComponentContainer::~ComponentContainer()
+{  
 }
 
 Component* ComponentContainer::get(const std::string& name) const
 {
     Component* ret = nullptr;
-    do {
-        CC_BREAK_IF(nullptr == _components);
-        ret = _components->at(name);
-        
-    } while (0);
+
+    auto it = _componentMap.find(name);
+    if (it != _componentMap.end())
+    {
+        ret = it->second;
+    }
+
     return ret;
 }
 
 bool ComponentContainer::add(Component *com)
 {
     bool ret = false;
-    CCASSERT(com != nullptr, "Argument must be non-nil");
+    CCASSERT(com != nullptr, "Component must be non-nil");
     CCASSERT(com->getOwner() == nullptr, "Component already added. It can't be added again");
     do
     {
-        if (_components == nullptr)
+        auto componentName = com->getName();
+
+        if (_componentMap.find(componentName) != _componentMap.end())
         {
-            _components = new (std::nothrow) Map<std::string, Component*>();
+            CCASSERT(false, "ComponentContainer already have this kind of component");
+            break;
         }
-        Component *component = _components->at(com->getName());
-        
-        CCASSERT(component == nullptr, "Component already added. It can't be added again");
-        CC_BREAK_IF(component);
+        _componentMap[componentName] = com;
+        com->retain();
         com->setOwner(_owner);
-        _components->insert(com->getName(), com);
-        com->onEnter();
+        com->onAdd();
+
         ret = true;
     } while(0);
     return ret;
 }
 
-bool ComponentContainer::remove(const std::string& name)
+bool ComponentContainer::remove(const std::string& componentName)
 {
     bool ret = false;
     do 
     {        
-        CC_BREAK_IF(!_components);
-        
-        auto iter = _components->find(name);
-        CC_BREAK_IF(iter == _components->end());
-        
-        auto com = iter->second;
-        com->onExit();
-        com->setOwner(nullptr);
-        
-        _components->erase(iter);
+        auto iter = _componentMap.find(componentName);
+        CC_BREAK_IF(iter == _componentMap.end());
+
+        auto component = iter->second;
+        _componentMap.erase(componentName);
+
+        component->onRemove();
+        component->setOwner(nullptr);
+        component->release();
+
         ret = true;
     } while(0);
+
     return ret;
  }
 
 bool ComponentContainer::remove(Component *com)
 {
-    bool ret = false;
-    do
-    {
-        CC_BREAK_IF(!_components);
-        
-        for (auto iter = _components->begin(); iter != _components->end(); ++iter)
-        {
-            if (iter->second == com)
-            {
-                com->onExit();
-                com->setOwner(nullptr);
-                _components->erase(iter);
-                break;
-            }
-        }
-        ret = true;
-    } while(0);
-    return ret;
+    return remove(com->getName());
 }
 
 void ComponentContainer::removeAll()
 {
-    if (_components != nullptr)
+    if (!_componentMap.empty())
     {
-        for (auto iter = _components->begin(); iter != _components->end(); ++iter)
+        for (auto& iter : _componentMap)
         {
-            iter->second->onExit();
-            iter->second->setOwner(nullptr);
+            iter.second->onRemove();
+            iter.second->setOwner(nullptr);
+            iter.second->release();
         }
         
-        _components->clear();
-        CC_SAFE_DELETE(_components);
-        
+        _componentMap.clear();
         _owner->unscheduleUpdate();
     }
 }
 
-void ComponentContainer::alloc(void)
-{
-    _components = new (std::nothrow) Map<std::string, Component*>();
-}
-
 void ComponentContainer::visit(float delta)
 {
-    if (_components != nullptr)
+    if (!_componentMap.empty())
     {
         CC_SAFE_RETAIN(_owner);
-        for (auto iter = _components->begin(); iter != _components->end(); ++iter)
+        for (auto& iter : _componentMap)
         {
-            iter->second->update(delta);
+            iter.second->update(delta);
         }
         CC_SAFE_RELEASE(_owner);
     }
 }
 
-bool ComponentContainer::isEmpty() const
+void ComponentContainer::onEnter()
 {
-    return (_components == nullptr || _components->empty());
+    for (auto& iter : _componentMap)
+    {
+        iter.second->onEnter();
+    }
+}
+
+void ComponentContainer::onExit()
+{
+    for (auto& iter : _componentMap)
+    {
+        iter.second->onExit();
+    }
 }
 
 NS_CC_END

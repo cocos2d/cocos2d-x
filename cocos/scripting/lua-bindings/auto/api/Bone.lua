@@ -43,7 +43,7 @@
         
 --------------------------------
 -- Add a child to this bone, and it will let this child call setParent(Bone *parent) function to set self to it's parent<br>
--- param 	child  the child you want to add
+-- param     child  the child you want to add
 -- @function [parent=#Bone] addChildBone 
 -- @param self
 -- @param #ccs.Bone child
@@ -102,16 +102,16 @@
 -- @return Bone#Bone self (return value: ccs.Bone)
         
 --------------------------------
--- @overload self, string         
--- @overload self         
--- @function [parent=#Bone] init
+-- Initializes a Bone with the specified name<br>
+-- param name Bone's name.
+-- @function [parent=#Bone] init 
 -- @param self
 -- @param #string name
 -- @return bool#bool ret (return value: bool)
-
+        
 --------------------------------
 -- Set parent bone.<br>
--- If parent is NUll, then also remove this bone from armature.<br>
+-- If parent is null, then also remove this bone from armature.<br>
 -- It will not set the Armature, if you want to add the bone to a Armature, you should use Armature::addBone(Bone *bone, const char* parentName).<br>
 -- param parent  the parent bone.<br>
 -- nullptr : remove this bone from armature
@@ -193,7 +193,7 @@
         
 --------------------------------
 -- Removes a child Bone<br>
--- param 	bone   the bone you want to remove
+-- param     bone   the bone you want to remove
 -- @function [parent=#Bone] removeChildBone 
 -- @param self
 -- @param #ccs.Bone bone
@@ -241,10 +241,9 @@
 
 --------------------------------
 -- 
--- @function [parent=#Bone] updateDisplayedColor 
+-- @function [parent=#Bone] getNodeToWorldTransform 
 -- @param self
--- @param #color3b_table parentColor
--- @return Bone#Bone self (return value: ccs.Bone)
+-- @return mat4_table#mat4_table ret (return value: mat4_table)
         
 --------------------------------
 -- 
@@ -252,12 +251,6 @@
 -- @param self
 -- @param #int zOrder
 -- @return Bone#Bone self (return value: ccs.Bone)
-        
---------------------------------
--- 
--- @function [parent=#Bone] getNodeToWorldTransform 
--- @param self
--- @return mat4_table#mat4_table ret (return value: mat4_table)
         
 --------------------------------
 -- 
@@ -271,6 +264,19 @@
 -- @function [parent=#Bone] updateDisplayedOpacity 
 -- @param self
 -- @param #unsigned char parentOpacity
+-- @return Bone#Bone self (return value: ccs.Bone)
+        
+--------------------------------
+-- Initializes an empty Bone with nothing init.
+-- @function [parent=#Bone] init 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
+-- @function [parent=#Bone] updateDisplayedColor 
+-- @param self
+-- @param #color3b_table parentColor
 -- @return Bone#Bone self (return value: ccs.Bone)
         
 --------------------------------

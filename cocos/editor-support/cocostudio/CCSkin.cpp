@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -27,9 +27,9 @@ THE SOFTWARE.
 #include "base/CCDirector.h"
 #include "renderer/CCRenderer.h"
 
-#include "cocostudio/CCSkin.h"
-#include "cocostudio/CCTransformHelp.h"
-#include "cocostudio/CCArmature.h"
+#include "editor-support/cocostudio/CCSkin.h"
+#include "editor-support/cocostudio/CCTransformHelp.h"
+#include "editor-support/cocostudio/CCArmature.h"
 
 
 using namespace cocos2d;
@@ -41,8 +41,6 @@ namespace cocostudio {
 #else
 #define RENDER_IN_SUBPIXEL(__ARGS__) (ceil(__ARGS__))
 #endif
-
-#define SET_VERTEX3F(_v_, _x_, _y_, _z_) (_v_).x = (_x_); (_v_).y = (_y_); (_v_).z = (_z_);
 
 Skin *Skin::create()
 {
@@ -101,7 +99,7 @@ bool Skin::initWithSpriteFrameName(const std::string& spriteFrameName)
     }
     else
     {
-        CCLOG("Cann't find CCSpriteFrame with %s. Please check your .plist file", spriteFrameName.c_str());
+        CCLOG("Can't find CCSpriteFrame with %s. Please check your .plist file", spriteFrameName.c_str());
         ret = false;
     }
 
@@ -152,7 +150,10 @@ void Skin::updateTransform()
     // If it is not visible, or one of its ancestors is not visible, then do nothing:
     if( !_visible)
     {
-        _quad.br.vertices = _quad.tl.vertices = _quad.tr.vertices = _quad.bl.vertices = Vec3(0, 0, 0);
+        _quad.br.vertices.setZero();
+        _quad.tl.vertices.setZero();
+        _quad.tr.vertices.setZero();
+        _quad.bl.vertices.setZero();
     }
     else
     {
@@ -169,6 +170,15 @@ void Skin::updateTransform()
         float x2 = x1 + size.width;
         float y2 = y1 + size.height;
 
+        if (_flippedX)
+        {
+            std::swap(x1, x2);
+        }
+        if (_flippedY)
+        {
+            std::swap(y1, y2);
+        }
+        
         float x = transform.m[12];
         float y = transform.m[13];
 
@@ -188,10 +198,10 @@ void Skin::updateTransform()
         float dx = x1 * cr - y2 * sr2 + x;
         float dy = x1 * sr + y2 * cr2 + y;
 
-        SET_VERTEX3F( _quad.bl.vertices, RENDER_IN_SUBPIXEL(ax), RENDER_IN_SUBPIXEL(ay), _positionZ );
-        SET_VERTEX3F( _quad.br.vertices, RENDER_IN_SUBPIXEL(bx), RENDER_IN_SUBPIXEL(by), _positionZ );
-        SET_VERTEX3F( _quad.tl.vertices, RENDER_IN_SUBPIXEL(dx), RENDER_IN_SUBPIXEL(dy), _positionZ );
-        SET_VERTEX3F( _quad.tr.vertices, RENDER_IN_SUBPIXEL(cx), RENDER_IN_SUBPIXEL(cy), _positionZ );
+        _quad.bl.vertices.set(RENDER_IN_SUBPIXEL(ax), RENDER_IN_SUBPIXEL(ay), _positionZ);
+        _quad.br.vertices.set(RENDER_IN_SUBPIXEL(bx), RENDER_IN_SUBPIXEL(by), _positionZ);
+        _quad.tl.vertices.set(RENDER_IN_SUBPIXEL(dx), RENDER_IN_SUBPIXEL(dy), _positionZ);
+        _quad.tr.vertices.set(RENDER_IN_SUBPIXEL(cx), RENDER_IN_SUBPIXEL(cy), _positionZ);
     }
 
     // MARMALADE CHANGE: ADDED CHECK FOR nullptr, TO PERMIT SPRITES WITH NO BATCH NODE / TEXTURE ATLAS
@@ -219,12 +229,20 @@ Mat4 Skin::getNodeToWorldTransformAR() const
     return TransformConcat( _bone->getArmature()->getNodeToWorldTransform(),displayTransform);
 }
 
-void Skin::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
+void Skin::draw(Renderer *renderer, const Mat4 &/*transform*/, uint32_t flags)
 {
     auto mv = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 
-    //TODO: implement z order
-    _quadCommand.init(_globalZOrder, _texture->getName(), getGLProgramState(), _blendFunc, &_quad, 1, mv, flags);
+    // TODO: implement z order
+    _quadCommand.init(_globalZOrder, 
+        _texture, 
+        getGLProgramState(), 
+        _blendFunc, 
+        &_quad, 
+        1,
+        mv, 
+        flags);
+
     renderer->addCommand(&_quadCommand);
 }
 

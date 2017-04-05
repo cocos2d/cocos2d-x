@@ -1,0 +1,193 @@
+system lightningBolt
+{
+    technique 
+    {
+        visual_particle_quota                   100
+        material                                PUMediaPack/Smoke_01
+        renderer                                Billboard
+        {
+        }
+        emitter                                 Point 
+        {
+            emission_rate                       40
+            angle                               360
+            time_to_live                        dyn_random
+            {
+                min                             1
+                max                             3
+            }
+            velocity                            3
+            duration                            4
+            all_particle_dimensions             dyn_random
+            {
+                min                             0.3
+                max                             0.6
+            }
+            colour                              0.46 0.06 0.82 1
+        }
+        affector                                Scale 
+        {
+            xyz_scale                           6
+        }
+        affector                                Colour 
+        {
+            time_colour                         0    1 1 1 1
+            time_colour                         1    0 0 0 0
+            colour_operation                    multiply
+        }
+        observer                                OnClear 
+        {
+            handler                             DoStopSystem 
+            {
+            }
+        }
+    }
+    technique Lightning_1
+    {
+        visual_particle_quota                   20
+        material                                PUMediaPack/Lightning_01
+        renderer                                Billboard
+        {
+            billboard_type                      oriented_self
+            billboard_origin                    top_center
+        }
+        emitter                                 Point 
+        {
+            emission_rate                       20
+            angle                               360
+            time_to_live                        dyn_random
+            {
+                min                             0.05
+                max                             0.15
+            }
+            velocity                            1e-005
+            duration                            2.5
+            repeat_delay                        2.5
+            all_particle_dimensions             dyn_random
+            {
+                min                             7.68
+                max                             15.36
+            }
+            enabled                             false
+            colour                              0.46 0.06 0.82 1
+        }
+        affector                                Colour 
+        {
+            time_colour                         0    1 1 1 1
+            time_colour                         0.5  1 1 1 1
+            time_colour                         1    0 0 0 0
+            colour_operation                    multiply
+        }
+    }
+    technique Lightning_2
+    {
+        visual_particle_quota                   5
+        material                                PUMediaPack/Lightning_02
+        renderer                                Billboard
+        {
+            billboard_type                      oriented_self
+            billboard_origin                    top_center
+        }
+        emitter                                 Point 
+        {
+            emission_rate                       20
+            angle                               360
+            time_to_live                        dyn_random
+            {
+                min                             0.05
+                max                             0.15
+            }
+            velocity                            1e-005
+            duration                            2.5
+            repeat_delay                        2.5
+            all_particle_dimensions             dyn_random
+            {
+                min                             7.68
+                max                             15.36
+            }
+            enabled                             false
+            colour                              0.46 0.06 0.82 1
+        }
+        affector                                Colour 
+        {
+            time_colour                         0    1 1 1 1
+            time_colour                         0.5  1 1 1 1
+            time_colour                         1    0 0 0 0
+            colour_operation                    multiply
+        }
+    }
+    technique Lightning_3
+    {
+        visual_particle_quota                   5
+        material                                PUMediaPack/Lightning_03
+        renderer                                Billboard
+        {
+            billboard_type                      oriented_self
+            billboard_origin                    top_center
+        }
+        emitter                                 Point 
+        {
+            emission_rate                       20
+            angle                               360
+            time_to_live                        dyn_random
+            {
+                min                             0.05
+                max                             0.15
+            }
+            velocity                            1e-005
+            duration                            2.5
+            repeat_delay                        2.5
+            all_particle_dimensions             dyn_random
+            {
+                min                             7.68
+                max                             15.36
+            }
+            enabled                             false
+            colour                              0.46 0.06 0.82 1
+        }
+        affector                                Colour 
+        {
+            time_colour                         0    1 1 1 1
+            time_colour                         0.5  1 1 1 1
+            time_colour                         1    0 0 0 0
+            colour_operation                    multiply
+        }
+    }
+    technique Lightning_4
+    {
+        visual_particle_quota                   5
+        material                                PUMediaPack/Lightning_04
+        renderer                                Billboard
+        {
+            billboard_type                      oriented_self
+            billboard_origin                    top_center
+        }
+        emitter                                 Point 
+        {
+            emission_rate                       20
+            angle                               360
+            time_to_live                        dyn_random
+            {
+                min                             0.05
+                max                             0.15
+            }
+            velocity                            1e-005
+            duration                            2.5
+            repeat_delay                        2.5
+            all_particle_dimensions             dyn_random
+            {
+                min                             7.68
+                max                             15.36
+            }
+            enabled                             false
+            colour                              0.46 0.06 0.82 1
+        }
+        affector                                Colour 
+        {
+            time_colour                         0    1 1 1 1
+            time_colour                         0.5  1 1 1 1
+            time_colour                         1    0 0 0 0
+            colour_operation                    multiply
+        }
+    }
+}

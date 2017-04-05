@@ -5,6 +5,8 @@
 
 #include "Bug-1174.h"
 
+USING_NS_CC;
+
 int check_for_error( Vec2 p1, Vec2 p2, Vec2 p3, Vec2 p4, float s, float t );
 
 int check_for_error( Vec2 p1, Vec2 p2, Vec2 p3, Vec2 p4, float s, float t )
@@ -32,10 +34,10 @@ int check_for_error( Vec2 p1, Vec2 p2, Vec2 p3, Vec2 p4, float s, float t )
 
 bool Bug1174Layer::init()
 {
-    if (BugsTestBaseLayer::init())
+    if (BugsTestBase::init())
     {
 //         // seed
-//         srand(0);
+//         std::srand(0);
 
         Vec2 A,B,C,D,p1,p2,p3,p4;
         float s,t;

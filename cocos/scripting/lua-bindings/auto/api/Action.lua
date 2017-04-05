@@ -57,11 +57,18 @@
 -- @return Action#Action self (return value: cc.Action)
         
 --------------------------------
---  Return certain target..<br>
+--  Return certain target.<br>
 -- return A certain target.
 -- @function [parent=#Action] getTarget 
 -- @param self
 -- @return Node#Node ret (return value: cc.Node)
+        
+--------------------------------
+--  Returns a flag field that is used to group the actions easily.<br>
+-- return A tag.
+-- @function [parent=#Action] getFlags 
+-- @param self
+-- @return unsigned int#unsigned int ret (return value: unsigned int)
         
 --------------------------------
 --  Called every frame with it's delta time, dt in seconds. DON'T override unless you know what you are doing. <br>
@@ -77,6 +84,14 @@
 -- @function [parent=#Action] setTag 
 -- @param self
 -- @param #int tag
+-- @return Action#Action self (return value: cc.Action)
+        
+--------------------------------
+--  Changes the flag field that is used to group the actions easily.<br>
+-- param flags Used to group the actions easily.
+-- @function [parent=#Action] setFlags 
+-- @param self
+-- @param #unsigned int flags
 -- @return Action#Action self (return value: cc.Action)
         
 --------------------------------
@@ -102,8 +117,8 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
---  Returns a new action that performs the exactly the reverse action. <br>
--- return A new action that performs the exactly the reverse action.<br>
+--  Returns a new action that performs the exact reverse of the action. <br>
+-- return A new action that performs the exact reverse of the action.<br>
 -- js NA
 -- @function [parent=#Action] reverse 
 -- @param self

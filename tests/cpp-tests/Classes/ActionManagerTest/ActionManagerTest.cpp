@@ -2,6 +2,8 @@
 #include "../testResource.h"
 #include "cocos2d.h"
 
+USING_NS_CC;
+
 enum 
 {
     kTagNode,
@@ -9,60 +11,17 @@ enum
     kTagSequence,
 }; 
 
-Layer* nextActionManagerAction();
-Layer* backActionManagerAction();
-Layer* restartActionManagerAction();
-
-static int sceneIdx = -1; 
-
-#define MAX_LAYER    6
-
-Layer* createActionManagerLayer(int nIndex)
+ActionManagerTests::ActionManagerTests()
 {
-    switch(nIndex)
-    {
-        case 0: return new CrashTest();
-        case 1: return new LogicTest();
-        case 2: return new PauseTest();
-        case 3: return new StopActionTest();
-        case 4: return new StopAllActionsTest();
-        case 5: return new ResumeTest();
-    }
-
-    return nullptr;
+    ADD_TEST_CASE(CrashTest);
+    ADD_TEST_CASE(LogicTest);
+    ADD_TEST_CASE(PauseTest);
+    ADD_TEST_CASE(StopActionTest);
+    ADD_TEST_CASE(StopAllActionsTest);
+    ADD_TEST_CASE(StopActionsByFlagsTest);
+    ADD_TEST_CASE(ResumeTest);
+    ADD_TEST_CASE(Issue14050Test);
 }
-
-Layer* nextActionManagerAction()
-{
-    sceneIdx++;
-    sceneIdx = sceneIdx % MAX_LAYER;
-
-    auto layer = createActionManagerLayer(sceneIdx);
-    layer->autorelease();
-
-    return layer;
-}
-
-Layer* backActionManagerAction()
-{
-    sceneIdx--;
-    int total = MAX_LAYER;
-    if( sceneIdx < 0 )
-        sceneIdx += total;    
-    
-    auto layer = createActionManagerLayer(sceneIdx);
-    layer->autorelease();
-
-    return layer;
-}
-
-Layer* restartActionManagerAction()
-{
-    auto layer = createActionManagerLayer(sceneIdx);
-    layer->autorelease();
-
-    return layer;
-} 
 
 //------------------------------------------------------------------
 //
@@ -86,30 +45,6 @@ std::string ActionManagerTest::subtitle() const
 {
     return "No title";
 }
-void ActionManagerTest::restartCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) ActionManagerTestScene();
-    s->addChild(restartActionManagerAction()); 
-
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void ActionManagerTest::nextCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) ActionManagerTestScene();
-    s->addChild( nextActionManagerAction() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void ActionManagerTest::backCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) ActionManagerTestScene();
-    s->addChild( backActionManagerAction() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
-} 
 
 //------------------------------------------------------------------
 //
@@ -123,7 +58,7 @@ void CrashTest::onEnter()
 
     auto child = Sprite::create(s_pathGrossini);
     child->setPosition( VisibleRect::center() );
-    addChild(child, 1);
+    addChild(child, 1, kTagGrossini);
 
     //Sum of all action's duration is 1.5 second.
     child->runAction(RotateBy::create(1.5f, 90));
@@ -134,7 +69,7 @@ void CrashTest::onEnter()
                     );
     
     //After 1.5 second, self will be removed.
-    runAction( Sequence::create(
+    child->runAction(Sequence::create(
                                     DelayTime::create(1.4f),
                                     CallFunc::create( CC_CALLBACK_0(CrashTest::removeThis,this)),
                                     nullptr)
@@ -143,9 +78,10 @@ void CrashTest::onEnter()
 
 void CrashTest::removeThis()
 {
-    _parent->removeChild(this, true);
+    auto child = getChildByTag(kTagGrossini);
+    child->removeChild(child, true);
     
-    nextCallback(this);
+    getTestSuite()->enterNextTest();
 }
 
 std::string CrashTest::subtitle() const
@@ -360,13 +296,85 @@ void ResumeTest::resumeGrossini(float time)
 
 //------------------------------------------------------------------
 //
-// ActionManagerTestScene
+// StopActionsByFlagsTest
 //
 //------------------------------------------------------------------
-void ActionManagerTestScene::runThisTest()
+void StopActionsByFlagsTest::onEnter()
 {
-    auto layer = nextActionManagerAction();
-    addChild(layer);
+    ActionManagerTest::onEnter();
 
-    Director::getInstance()->replaceScene(this);
+    auto l = Label::createWithTTF("Should stop scale & move after 4 seconds but keep rotate", "fonts/Thonburi.ttf", 16.0f);
+    addChild(l);
+    l->setPosition( Vec2(VisibleRect::center().x, VisibleRect::top().y - 75) );
+
+    auto pMove1 = MoveBy::create(2, Vec2(200, 0));
+    auto pMove2 = MoveBy::create(2, Vec2(-200, 0));
+    auto pSequenceMove = Sequence::createWithTwoActions(pMove1, pMove2);
+    auto pRepeatMove = RepeatForever::create(pSequenceMove);
+    pRepeatMove->setFlags(kMoveFlag | kRepeatForeverFlag);
+
+    auto pScale1 = ScaleBy::create(2, 1.5f);
+    auto pScale2 = ScaleBy::create(2, 1.0f/1.5f);
+    auto pSequenceScale = Sequence::createWithTwoActions(pScale1, pScale2);
+    auto pRepeatScale = RepeatForever::create(pSequenceScale);
+    pRepeatScale->setFlags(kScaleFlag | kRepeatForeverFlag);
+
+    auto pRotate = RotateBy::create(2, 360);
+    auto pRepeatRotate = RepeatForever::create(pRotate);
+    pRepeatRotate->setFlags(kRotateFlag | kRepeatForeverFlag);
+
+    auto pChild = Sprite::create(s_pathGrossini);
+    pChild->setPosition( VisibleRect::center() );
+
+    addChild(pChild, 1, kTagGrossini);
+    pChild->runAction(pRepeatMove);
+    pChild->runAction(pRepeatScale);
+    pChild->runAction(pRepeatRotate);
+    this->scheduleOnce((SEL_SCHEDULE)&StopActionsByFlagsTest::stopAction, 4);
+}
+
+void StopActionsByFlagsTest::stopAction(float time)
+{
+    auto sprite = getChildByTag(kTagGrossini);
+    sprite->stopActionsByFlags(kMoveFlag | kScaleFlag);
+}
+
+std::string StopActionsByFlagsTest::subtitle() const
+{
+    return "Stop All Actions By Flags Test";
+}
+
+//------------------------------------------------------------------
+//
+// Issue14050Test
+//
+//------------------------------------------------------------------
+class SpriteIssue14050: public Sprite
+{
+public:
+    SpriteIssue14050()
+    {
+        log("SpriteIssue14050::constructor");
+    }
+    virtual ~SpriteIssue14050()
+    {
+        log("SpriteIssue14050::destructor");
+    }
+};
+
+void Issue14050Test::onEnter()
+{
+    ActionManagerTest::onEnter();
+
+    auto sprite = new (std::nothrow) SpriteIssue14050;
+    sprite->initWithFile("Images/grossini.png");
+    sprite->autorelease();
+
+    auto move = MoveBy::create(2, Vec2(100, 100));
+    sprite->runAction(move);
+}
+
+std::string Issue14050Test::subtitle() const
+{
+    return "Issue14050. Sprite should not leak.";
 }

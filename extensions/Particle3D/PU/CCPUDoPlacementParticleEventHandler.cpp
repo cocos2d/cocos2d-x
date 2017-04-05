@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2015-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -37,10 +37,11 @@ PUDoPlacementParticleEventHandler::PUDoPlacementParticleEventHandler(void) :
     PUEventHandler(),
     PUListener(),
     _numberOfParticles(DEFAULT_NUMBER_OF_PARTICLES),
+    _system(0),
+    _emitter(0),
     _found(false),
     _alwaysUsePosition(true),
-    _emitter(0),
-    _system(0),
+    _baseParticle(0),
     _inheritPosition(true),
     _inheritDirection(false),
     _inheritOrientation(false),
@@ -50,8 +51,7 @@ PUDoPlacementParticleEventHandler::PUDoPlacementParticleEventHandler(void) :
     _inheritColour(false),
     _inheritParticleWidth(false),
     _inheritParticleHeight(false),
-    _inheritParticleDepth(false),
-    _baseParticle(0)
+    _inheritParticleDepth(false)
 {
 }
 //-----------------------------------------------------------------------
@@ -61,7 +61,7 @@ PUDoPlacementParticleEventHandler::~PUDoPlacementParticleEventHandler(void)
     // still exist.
 }
 //-----------------------------------------------------------------------
-void PUDoPlacementParticleEventHandler::handle (PUParticleSystem3D* particleSystem, PUParticle3D* particle, float timeElapsed)
+void PUDoPlacementParticleEventHandler::handle (PUParticleSystem3D* particleSystem, PUParticle3D* particle, float /*timeElapsed*/)
 {
     if (!particle)
         return;
@@ -118,7 +118,7 @@ void PUDoPlacementParticleEventHandler::handle (PUParticleSystem3D* particleSyst
     _baseParticle = 0;
 }
 //-----------------------------------------------------------------------
-void PUDoPlacementParticleEventHandler::particleEmitted(PUParticleSystem3D* particleSystem, PUParticle3D* particle)
+void PUDoPlacementParticleEventHandler::particleEmitted(PUParticleSystem3D* /*particleSystem*/, PUParticle3D* particle)
 {
     if (!_baseParticle)
         return;
@@ -221,6 +221,10 @@ void PUDoPlacementParticleEventHandler::particleEmitted(PUParticleSystem3D* part
         }
     }
 }
+
+void PUDoPlacementParticleEventHandler::particleExpired(PUParticleSystem3D* /*particleSystem*/, PUParticle3D* /*particle*/)
+{}
+
 //-----------------------------------------------------------------------
 void PUDoPlacementParticleEventHandler::setForceEmitterName(const std::string& forceEmitterName)
 {

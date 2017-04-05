@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2015-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -37,15 +37,14 @@ const double PUForceFieldAffector::DEFAULT_FREQUENCY = 1.0f;
 const double PUForceFieldAffector::DEFAULT_AMPLITUDE = 1.0f;
 const double PUForceFieldAffector::DEFAULT_PERSISTENCE = 3.0f;
 const unsigned int PUForceFieldAffector::DEFAULT_FORCEFIELDSIZE = 64;
-const Vec3 PUForceFieldAffector::DEFAULT_WORLDSIZE = Vec3(500.0f, 500.0f, 500.0f);
-const Vec3 PUForceFieldAffector::DEFAULT_MOVEMENT = Vec3(500.0f, 0.0f, 0.0f);
+const Vec3 PUForceFieldAffector::DEFAULT_WORLDSIZE(500.0f, 500.0f, 500.0f);
+const Vec3 PUForceFieldAffector::DEFAULT_MOVEMENT(500.0f, 0.0f, 0.0f);
 const float PUForceFieldAffector::DEFAULT_MOVEMENT_FREQUENCY = 5.0f;
 
 //-----------------------------------------------------------------------
 PUForceFieldAffector::PUForceFieldAffector() :
     _forceFieldType(PUForceField::FF_REALTIME_CALC),
     _delta(DEFAULT_DELTA),
-    _force(Vec3::ZERO),
     _scaleForce(DEFAULT_FORCE),
     _octaves(DEFAULT_OCTAVES),
     _frequency(DEFAULT_FREQUENCY),
@@ -61,8 +60,6 @@ PUForceFieldAffector::PUForceFieldAffector() :
     _movementSet(false),
     _movementFrequency(DEFAULT_MOVEMENT_FREQUENCY),
     _movementFrequencyCount(0.0f),
-    _displacement(Vec3::ZERO),
-    _basePosition(Vec3::ZERO),
     _suppressGeneration(false)
 {
 };
@@ -71,7 +68,7 @@ PUForceFieldAffector::~PUForceFieldAffector()
 {
 };
 //-----------------------------------------------------------------------
-const PUForceField::ForceFieldType PUForceFieldAffector::getForceFieldType(void) const
+PUForceField::ForceFieldType PUForceFieldAffector::getForceFieldType() const
 {
     return _forceFieldType;
 }

@@ -33,6 +33,10 @@
 #include <set>
 #include <vector>
 
+/**
+ * @addtogroup ui
+ * @{
+ */
 NS_CC_EXT_BEGIN
 
 class TableView;
@@ -61,7 +65,7 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual void tableCellHighlight(TableView* table, TableViewCell* cell){};
+    virtual void tableCellHighlight(TableView* table, TableViewCell* cell);
 
     /**
      * Delegate to respond a table cell release event
@@ -71,7 +75,7 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual void tableCellUnhighlight(TableView* table, TableViewCell* cell){};
+    virtual void tableCellUnhighlight(TableView* table, TableViewCell* cell);
 
     /**
      * Delegate called when the cell is about to be recycled. Immediately
@@ -83,7 +87,7 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual void tableCellWillRecycle(TableView* table, TableViewCell* cell){};
+    virtual void tableCellWillRecycle(TableView* table, TableViewCell* cell);
 
 };
 
@@ -106,18 +110,14 @@ public:
      * @param idx the index of a cell to get a size
      * @return size of a cell at given index
      */
-    virtual Size tableCellSizeForIndex(TableView *table, ssize_t idx) {
-        return cellSizeForTable(table);
-    };
+    virtual Size tableCellSizeForIndex(TableView* table, ssize_t idx);
     /**
      * cell height for a given table.
      *
      * @param table table to hold the instances of Class
      * @return cell size
      */
-    virtual Size cellSizeForTable(TableView *table) {
-        return Size::ZERO;
-    };
+    virtual Size cellSizeForTable(TableView* table);
     /**
      * a cell instance at a given index
      *
@@ -150,11 +150,11 @@ public:
         BOTTOM_UP
     };
     
-    /** Empty contructor of TableView */
+    /** Empty constructor of TableView */
     static TableView* create();
     
     /**
-     * An intialized table view object
+     * An initialized table view object
      *
      * @param dataSource data source
      * @param size view size
@@ -184,6 +184,7 @@ public:
     static TableView* create(TableViewDataSource* dataSource, Size size, Node *container);
     /**
      * @js ctor
+     * @lua new
      */
     TableView();
     /**
@@ -201,6 +202,7 @@ public:
      */
     TableViewDataSource* getDataSource() { return _dataSource; }
     /**
+     * @code
      * when this function bound to js or lua,the input params are changed
      * in js:var setDataSource(var jsSource)
      * in lua:local setDataSource()
@@ -328,7 +330,8 @@ public:
 
 };
 
-
 NS_CC_EXT_END
+// end of ui group
+/// @}
 
 #endif /* __CCTABLEVIEW_H__ */

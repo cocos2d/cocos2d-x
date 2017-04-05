@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2010-2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -28,10 +28,9 @@
 
 #import <UIKit/UIKit.h>
 
-#include "CCEAGLView-ios.h"
-#include "CCDirectorCaller-ios.h"
-#include "CCGLViewImpl-ios.h"
-#include "CCSet.h"
+#include "platform/ios/CCEAGLView-ios.h"
+#include "platform/ios/CCDirectorCaller-ios.h"
+#include "platform/ios/CCGLViewImpl-ios.h"
 #include "base/CCTouch.h"
 
 NS_CC_BEGIN
@@ -46,7 +45,7 @@ GLViewImpl* GLViewImpl::createWithEAGLView(void *eaglview)
         ret->autorelease();
         return ret;
     }
-
+    CC_SAFE_DELETE(ret);
     return nullptr;
 }
 
@@ -57,18 +56,18 @@ GLViewImpl* GLViewImpl::create(const std::string& viewName)
         ret->autorelease();
         return ret;
     }
-
+    CC_SAFE_DELETE(ret);
     return nullptr;
 }
 
-GLViewImpl* GLViewImpl::createWithRect(const std::string& viewName, Rect rect, float frameZoomFactor)
+GLViewImpl* GLViewImpl::createWithRect(const std::string& viewName, const Rect& rect, float frameZoomFactor)
 {
     auto ret = new (std::nothrow) GLViewImpl;
     if(ret && ret->initWithRect(viewName, rect, frameZoomFactor)) {
         ret->autorelease();
         return ret;
     }
-
+    CC_SAFE_DELETE(ret);
     return nullptr;
 }
 
@@ -79,7 +78,7 @@ GLViewImpl* GLViewImpl::createWithFullScreen(const std::string& viewName)
         ret->autorelease();
         return ret;
     }
-
+    CC_SAFE_DELETE(ret);
     return nullptr;
 }
 
@@ -88,10 +87,23 @@ void GLViewImpl::convertAttrs()
     if(_glContextAttrs.redBits==8 && _glContextAttrs.greenBits==8 && _glContextAttrs.blueBits==8 && _glContextAttrs.alphaBits==8)
     {
         _pixelFormat = kEAGLColorFormatRGBA8;
+    } else if (_glContextAttrs.redBits==5 && _glContextAttrs.greenBits==6 && _glContextAttrs.blueBits==5 && _glContextAttrs.alphaBits==0)
+    {
+        _pixelFormat = kEAGLColorFormatRGB565;
+    } else
+    {
+        CCASSERT(0, "Unsupported render buffer pixel format. Using default");
     }
+
     if(_glContextAttrs.depthBits==24 && _glContextAttrs.stencilBits==8)
     {
         _depthFormat = GL_DEPTH24_STENCIL8_OES;
+    } else if (_glContextAttrs.depthBits==0 && _glContextAttrs.stencilBits==0)
+    {
+        _depthFormat = 0;
+    } else
+    {
+        CCASSERT(0, "Unsupported format for depth and stencil buffers. Using default");
     }
 }
 
@@ -117,7 +129,7 @@ bool GLViewImpl::initWithEAGLView(void *eaglview)
     return true;
 }
 
-bool GLViewImpl::initWithRect(const std::string& viewName, Rect rect, float frameZoomFactor)
+bool GLViewImpl::initWithRect(const std::string& viewName, const Rect& rect, float frameZoomFactor)
 {
     CGRect r = CGRectMake(rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
     convertAttrs();
@@ -129,7 +141,10 @@ bool GLViewImpl::initWithRect(const std::string& viewName, Rect rect, float fram
                                      multiSampling: NO
                                    numberOfSamples: 0];
 
+    // Not available on tvOS
+#if !defined(CC_TARGET_OS_TVOS)
     [eaglview setMultipleTouchEnabled:YES];
+#endif
 
     _screenSize.width = _designResolutionSize.width = [eaglview getWidth];
     _screenSize.height = _designResolutionSize.height = [eaglview getHeight];
@@ -214,5 +229,4 @@ void GLViewImpl::setIMEKeyboardState(bool open)
 
 NS_CC_END
 
-#endif // CC_PLATFOR_IOS
-
+#endif // CC_PLATFORM_IOS

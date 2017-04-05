@@ -34,6 +34,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${COCOS2D_ROOT}/cmake/Modules/")
 include(CocosBuildHelpers)
 
 option(DEBUG_MODE "Debug or release?" ON)
+option(USE_BULLET "Use bullet for physics3d library" ON)
 
 if(DEBUG_MODE)
   set(CMAKE_BUILD_TYPE DEBUG)
@@ -41,10 +42,17 @@ else(DEBUG_MODE)
   set(CMAKE_BUILD_TYPE RELEASE)
 endif(DEBUG_MODE)
 
+if(USE_BULLET)
+  add_definitions(-DCC_ENABLE_BULLET_INTEGRATION=1)
+  add_definitions(-DCC_USE_PHYSICS=1)
+endif(USE_BULLET)
+
 
 # libcocos2d
+set(BUILD_CPP_EMPTY_TEST OFF CACHE BOOL "turn off build cpp-empty-test")
 set(BUILD_CPP_TESTS OFF CACHE BOOL "turn off build cpp-tests")
 set(BUILD_LUA_TESTS OFF CACHE BOOL "turn off build lua-tests")
+set(BUILD_JS_LIBS OFF CACHE BOOL "turn off build js related targets")
 add_subdirectory(${COCOS2D_ROOT})
 
 
@@ -81,8 +89,8 @@ if(MSVC)
 else()
   set(CMAKE_C_FLAGS_DEBUG "-g -Wall -DCOCOS2D_DEBUG=1")
   set(CMAKE_CXX_FLAGS_DEBUG ${CMAKE_C_FLAGS_DEBUG})
-  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fno-exceptions -std=c99")
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-exceptions -std=c++11 -Wno-deprecated-declarations -Wno-reorder")
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wno-deprecated-declarations -Wno-reorder")
   if(CLANG)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
   endif()
@@ -128,5 +136,7 @@ pre_build(${APP_NAME}
   COMMAND ${CMAKE_COMMAND} -E copy_directory ${COCOS2D_ROOT}/cocos/scripting/lua-bindings/script/extension ${APP_BIN_DIR}/Resources
   COMMAND ${CMAKE_COMMAND} -E copy_directory ${COCOS2D_ROOT}/cocos/scripting/lua-bindings/script/network ${APP_BIN_DIR}/Resources
   COMMAND ${CMAKE_COMMAND} -E copy_directory ${COCOS2D_ROOT}/cocos/scripting/lua-bindings/script/ui ${APP_BIN_DIR}/Resources
+  COMMAND ${CMAKE_COMMAND} -E copy_directory ${COCOS2D_ROOT}/cocos/scripting/lua-bindings/script/3d ${APP_BIN_DIR}/Resources
+  COMMAND ${CMAKE_COMMAND} -E copy_directory ${COCOS2D_ROOT}/cocos/scripting/lua-bindings/script/physics3d ${APP_BIN_DIR}/Resources
   )
   

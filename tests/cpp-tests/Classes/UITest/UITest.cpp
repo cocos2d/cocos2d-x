@@ -1,8 +1,12 @@
 #include "UITest.h"
-#include "CocoStudioGUITest/CocoStudioGUITest.h"
+#include "CocoStudioGUITest/CocosGUIScene.h"
 
-void UITestScene::runThisTest()
+
+UITests::UITests()
 {
-    CocoStudioGUITestScene* pScene = new (std::nothrow) CocoStudioGUITestScene();
-    pScene->runThisTest();
+    addTest("GUI Dynamic Create Test", [](){ return new (std::nothrow) GUIDynamicCreateTests; });
+}
+
+UITests::~UITests()
+{
 }

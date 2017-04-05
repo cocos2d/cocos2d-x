@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -30,27 +30,11 @@ THE SOFTWARE.
 typedef void (*EditTextCallback)(const char* text, void* ctx);
 
 extern const char * getApkPath();
-extern void showDialogJNI(const char * message, const char * title);
-extern void showEditTextDialogJNI(const char* title, const char* content, int inputMode, int inputFlag, int returnType, int maxLength, EditTextCallback callback, void* ctx);
-extern void terminateProcessJNI();
-extern std::string getCurrentLanguageJNI();
 extern std::string getPackageNameJNI();
-extern std::string getFileDirectoryJNI();
-extern void enableAccelerometerJni();
-extern void disableAccelerometerJni();
-extern void setAccelerometerIntervalJni(float interval);
-extern void setKeepScreenOnJni(bool value);
-extern bool openURLJNI(const char* url);
-// functions for UserDefault
-extern bool getBoolForKeyJNI(const char* key, bool defaultValue);
-extern int getIntegerForKeyJNI(const char* key, int defaultValue);
-extern float getFloatForKeyJNI(const char* key, float defaultValue);
-extern double getDoubleForKeyJNI(const char* key, double defaultValue);
-extern std::string getStringForKeyJNI(const char* key, const char* defaultValue);
-extern void setBoolForKeyJNI(const char* key, bool value);
-extern void setIntegerForKeyJNI(const char* key, int value);
-extern void setFloatForKeyJNI(const char* key, float value);
-extern void setDoubleForKeyJNI(const char* key, double value);
-extern void setStringForKeyJNI(const char* key, const char* value);
+extern int getObbAssetFileDescriptorJNI(const char* path, long* startOffset, long* size);
+extern void conversionEncodingJNI(const char* src, int byteSize, const char* fromCharset, char* dst, const char* newCharset);
+
+extern int getDeviceSampleRate();
+extern int getDeviceAudioBufferSizeInFrames();
 
 #endif /* __Java_org_cocos2dx_lib_Cocos2dxHelper_H__ */

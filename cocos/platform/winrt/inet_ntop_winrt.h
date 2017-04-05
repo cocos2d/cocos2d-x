@@ -26,9 +26,9 @@
 
  ***************************************************************************/
 
-
+#if _MSC_VER < 1900
 char *inet_ntop(int af, const void *addr, char *buf, size_t size);
-
+#endif
 
 #endif /* HEADER_CURL_INET_NTOP_H */
 

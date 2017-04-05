@@ -1,16 +1,16 @@
 /*!
 @cond GEN_WRITE_BOOK
 
-@mainpage cocos2d-x
+@mainpage cocos
 
 @image html img-cocos.jpg
 
-@section sec1 About cocos2d-x
-Cocos is a free and professional game development toolkit, that enables game developers to quickly create game content, and takes that tedious work and simplifies it with straightforward GUI editors.
-
-Cocos includes: Cocos Studio, Cocos IDE, and Cocos Shop. Developers can focus on their specific roles and enjoy better streamlined workflow.
-
-This enables game studios to collaborate with ease, and focus on what each does best in order to achieve better quality and faster turnaround time. This saves time and money.
+@section sec1 About cocos
+ Cocos is a complete game development toolkit that enables game developers to quickly build games all the way from prototyping to full fledged game.
+ 
+ Cocos combines the best ingredients from the Cocos2d community. It includes an all purpose game editor, a coding IDE, and even a marketplace for the community to find and share 3rd-party extensions and tools. All for the purpose of making game development process a breeze.
+ 
+ Cocos is maintained and copyrighted by Chukong Technologies.
 
 @endcond
 */

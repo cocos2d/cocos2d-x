@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2014 Chukong Technologies Inc.
+Copyright (c) 2014-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -24,16 +24,16 @@ THE SOFTWARE.
 
 package org.cocos2dx.lib;
 
-import java.lang.ref.WeakReference;
-
-import org.cocos2dx.lib.Cocos2dxVideoView.OnVideoEventListener;
-
 import android.graphics.Rect;
 import android.os.Handler;
 import android.os.Message;
 import android.util.SparseArray;
 import android.view.View;
 import android.widget.FrameLayout;
+
+import org.cocos2dx.lib.Cocos2dxVideoView.OnVideoEventListener;
+
+import java.lang.ref.WeakReference;
 
 public class Cocos2dxVideoHelper {
 

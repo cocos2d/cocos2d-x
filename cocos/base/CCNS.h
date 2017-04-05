@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies
+Copyright (c) 2013-2017 Chukong Technologies
 
 http://www.cocos2d-x.org
 
@@ -31,13 +31,13 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 /**
- * @addtogroup data_structures
+ * @addtogroup base
  * @{
  */
 
 /**
  * @brief Returns a Core Graphics rectangle structure corresponding to the data in a given string.
- * @param pszContent   A string object whose contents are of the form "{{x,y},{w, h}}",
+ * @param str       A string object whose contents are of the form "{{x,y},{w, h}}",
  *                  where x is the x coordinate, y is the y coordinate, w is the width, and h is the height.
  *                  These components can represent integer or float values.
  *                  An example of a valid string is "{{3,2},{4,5}}".
@@ -49,7 +49,7 @@ Rect CC_DLL RectFromString(const std::string& str);
 
 /**
  * @brief Returns a Core Graphics point structure corresponding to the data in a given string.
- * @param pszContent   A string object whose contents are of the form "{x,y}",
+ * @param str   A string object whose contents are of the form "{x,y}",
  *                  where x is the x coordinate and y is the y coordinate.
  *                  The x and y values can represent integer or float values.
  *                  An example of a valid string is "{3.0,2.5}".
@@ -61,7 +61,7 @@ Vec2 CC_DLL PointFromString(const std::string& str);
 
 /**
  * @brief Returns a Core Graphics size structure corresponding to the data in a given string.
- * @param pszContent   A string object whose contents are of the form "{w, h}",
+ * @param str       A string object whose contents are of the form "{w, h}",
  *                  where w is the width and h is the height.
  *                  The w and h values can be integer or float values.
  *                  An example of a valid string is "{3.0,2.5}".

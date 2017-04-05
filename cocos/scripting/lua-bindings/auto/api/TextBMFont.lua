@@ -5,20 +5,19 @@
 -- @parent_module ccui
 
 --------------------------------
---  init a bitmap font atlas with an initial string and the FNT file 
--- @function [parent=#TextBMFont] setFntFile 
--- @param self
--- @param #string fileName
--- @return TextBMFont#TextBMFont self (return value: ccui.TextBMFont)
-        
---------------------------------
 -- Gets the string length of the label.<br>
 -- Note: This length will be larger than the raw string length,<br>
 -- if you want to get the raw string length, you should call this->getString().size() instead<br>
 -- return  string length.
 -- @function [parent=#TextBMFont] getStringLength 
 -- @param self
--- @return long#long ret (return value: long)
+-- @return int#int ret (return value: int)
+        
+--------------------------------
+-- 
+-- @function [parent=#TextBMFont] getString 
+-- @param self
+-- @return string#string ret (return value: string)
         
 --------------------------------
 -- 
@@ -29,9 +28,22 @@
         
 --------------------------------
 -- 
--- @function [parent=#TextBMFont] getString 
+-- @function [parent=#TextBMFont] getRenderFile 
 -- @param self
--- @return string#string ret (return value: string)
+-- @return ResourceData#ResourceData ret (return value: cc.ResourceData)
+        
+--------------------------------
+--  init a bitmap font atlas with an initial string and the FNT file 
+-- @function [parent=#TextBMFont] setFntFile 
+-- @param self
+-- @param #string fileName
+-- @return TextBMFont#TextBMFont self (return value: ccui.TextBMFont)
+        
+--------------------------------
+-- reset TextBMFont inner label
+-- @function [parent=#TextBMFont] resetRender 
+-- @param self
+-- @return TextBMFont#TextBMFont self (return value: ccui.TextBMFont)
         
 --------------------------------
 -- @overload self, string, string         
@@ -67,7 +79,9 @@
 -- @return size_table#size_table ret (return value: size_table)
         
 --------------------------------
--- Default constructor
+-- Default constructor<br>
+-- js ctor<br>
+-- lua new
 -- @function [parent=#TextBMFont] TextBMFont 
 -- @param self
 -- @return TextBMFont#TextBMFont self (return value: ccui.TextBMFont)

@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2015-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -45,22 +45,22 @@ public:
 
     /** 
     */
-    const float getRadius(void) const;
+    float getRadius() const;
     void setRadius(const float radius);
 
     /** 
     */
-    const float getCircleAngle(void) const;
+    float getCircleAngle() const;
     void setCircleAngle(const float circleAngle);
 
     /** 
     */
-    const float getStep(void) const;
+    float getStep() const;
     void setStep(const float step);
 
     /** 
     */
-    const bool isRandom(void) const;
+    bool isRandom() const;
     void setRandom(const bool random);
 
     /* 

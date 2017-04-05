@@ -6,6 +6,11 @@ USING_NS_CC;
 USING_NS_CC_EXT;
 using namespace cocos2d::network;
 
+HttpClientTests::HttpClientTests()
+{
+    ADD_TEST_CASE(HttpClientTest);
+}
+
 HttpClientTest::HttpClientTest() 
 : _labelStatusCode(nullptr)
 {
@@ -16,10 +21,6 @@ HttpClientTest::HttpClientTest()
 
     const int LEFT = winSize.width / 4;
     const int RIGHT = winSize.width / 4 * 3;
-    
-    auto label = Label::createWithTTF("Http Request Test", "fonts/arial.ttf", 28);
-    label->setPosition(winSize.width / 2, winSize.height - MARGIN);
-    addChild(label, 0);
     
     auto menuRequest = Menu::create();
     menuRequest->setPosition(Vec2::ZERO);
@@ -89,13 +90,6 @@ HttpClientTest::HttpClientTest()
     _labelStatusCode = Label::createWithTTF("HTTP Status Code", "fonts/arial.ttf", 18);
     _labelStatusCode->setPosition(winSize.width / 2,  winSize.height - MARGIN - 6 * SPACE);
     addChild(_labelStatusCode);
-    
-    // Back Menu
-    auto itemBack = MenuItemFont::create("Back", CC_CALLBACK_1(HttpClientTest::toExtensionsMainLayer, this));
-    itemBack->setPosition(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25);
-    auto menuBack = Menu::create(itemBack, nullptr);
-    menuBack->setPosition(Vec2::ZERO);
-    addChild(menuBack);
 }
 
 HttpClientTest::~HttpClientTest()
@@ -379,21 +373,4 @@ void HttpClientTest::onHttpRequestCompleted(HttpClient *sender, HttpResponse *re
     {
         log("request ref count not 2, is %d", response->getHttpRequest()->getReferenceCount());
     }
-}
-
-void HttpClientTest::toExtensionsMainLayer(cocos2d::Ref *sender)
-{
-    auto scene = new (std::nothrow) ExtensionsTestScene();
-    scene->runThisTest();
-    scene->release();
-}
-
-void runHttpClientTest()
-{
-    auto scene = Scene::create();
-    HttpClientTest *layer = new (std::nothrow) HttpClientTest();
-    scene->addChild(layer);
-    
-    Director::getInstance()->replaceScene(scene);
-    layer->release();
 }

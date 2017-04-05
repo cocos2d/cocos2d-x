@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -28,14 +28,19 @@ THE SOFTWARE.
 #include "ui/UIWidget.h"
 #include "ui/GUIExport.h"
 
+/**
+ * @addtogroup ui
+ * @{
+ */
 NS_CC_BEGIN
+
+struct CC_DLL ResourceData;
 
 namespace ui {
     class Scale9Sprite;
 /**
-*   @js NA
-*   @lua NA
-*/
+ * @brief A widget to display images.
+ */
 class CC_GUI_DLL ImageView : public Widget
 {
     
@@ -44,25 +49,29 @@ class CC_GUI_DLL ImageView : public Widget
 public:
     /**
      * Default constructor
+     * @js ctor
+     * @lua new
      */
     ImageView();
 
     /**
      * Default destructor
+     * @js NA
+     * @lua NA
      */
     virtual ~ImageView();
 
     /**
-     * Allocates and initializes.
+     * Create a empty ImageView.
      */
     static ImageView* create();
     
     /**
-     * create a  imageview 
+     * Create a  imageview  with a image name.
      *
      * @param imageFileName   file name of texture.
-     *
-     * @param texType    @see TextureResType
+     * @param texType    @see `Widget::TextureResType`
+     * @return A ImageView instance.
      */
     static ImageView* create(const std::string& imageFileName, TextureResType texType = TextureResType::LOCAL);
     
@@ -71,8 +80,7 @@ public:
      * Load texture for imageview.
      *
      * @param fileName   file name of texture.
-     *
-     * @param texType    @see TextureResType
+     * @param texType    @see `Widget::TextureResType`
      */
     void loadTexture(const std::string& fileName,TextureResType texType = TextureResType::LOCAL);
 
@@ -83,34 +91,43 @@ public:
     void setTextureRect(const Rect& rect);
 
     /**
-     * Sets if imageview is using scale9 renderer.
+     * Enable scale9 renderer.
      *
-     * @param able true that using scale9 renderer, false otherwise.
+     * @param enabled Set to true will use scale9 renderer, false otherwise.
      */
-    void setScale9Enabled(bool able);
+    void setScale9Enabled(bool enabled);
 
+    /**
+     * Query whether button is using scale9 renderer or not.
+     *@return whether button use scale9 renderer or not.
+     */
     bool isScale9Enabled()const;
 
     /**
-     * Sets capinsets for imageview, if imageview is using scale9 renderer.
+     * Sets capInsets for imageview.
+     * The capInsets affects the ImageView's renderer only if `setScale9Enabled(true)` is called.
      *
      * @param capInsets    capinsets for imageview
      */
     void setCapInsets(const Rect &capInsets);
 
+    /**
+     * Get ImageView's capInsets size.
+     * @return Query capInsets size in Rect
+     * @see `setCapInsets(const Rect&)`
+     */
     const Rect& getCapInsets()const;
 
-    //override "ignoreContentAdaptWithSize" method of widget.
+    //override methods.
     virtual void ignoreContentAdaptWithSize(bool ignore) override;
-
-    /**
-     * Returns the "class name" of widget.
-     */
     virtual std::string getDescription() const override;
-
     virtual Size getVirtualRendererSize() const override;
     virtual Node* getVirtualRenderer() override;
-    
+
+    ResourceData getRenderFile();
+
+    virtual void setGLProgram(GLProgram* glProgram) override;
+    virtual void setGLProgramState(cocos2d::GLProgramState* glProgramState) override;
 CC_CONSTRUCTOR_ACCESS:
     //initializes state of widget.
     virtual bool init() override;
@@ -121,6 +138,8 @@ protected:
     virtual void onSizeChanged() override;
     
     virtual void adaptRenderers() override;
+    void loadTexture(SpriteFrame* spriteframe);
+    void setupTexture();
     
     void imageTextureScaleChangedWithSize();
     virtual Widget* createCloneInstance() override;
@@ -130,14 +149,16 @@ protected:
     bool _prevIgnoreSize;
     Rect _capInsets;
     Scale9Sprite* _imageRenderer;
-    std::string _textureFile;
     TextureResType _imageTexType;
     Size _imageTextureSize;
     bool _imageRendererAdaptDirty;
+    std::string _textureFile;
 };
 
 }
 
 NS_CC_END
+// end of ui group
+/// @}
 
 #endif /* defined(__CocoGUI__ImageView__) */

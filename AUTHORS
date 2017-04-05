@@ -1,20 +1,55 @@
 cocos2d-x authors & contributors
 
-(ordered by the join in time)
+(ordered by join time)
 
 Core Developers:
     Ricardo Quesada
     XiaoMing Zhang (Minggo)
     JianHua Chen (James)
     Zhe Wang (Walzer)
+    Hao Wu (Wu-Hao)
     Qingkui Hu (samuele3hu)
     Huabing Xu (dabingnn)
-    Bo Yu (boyu0)
-    Wenhai Lin(Dhilan007)
-    Guanghui Qu(andyque）
+    Wenhai Lin (WenhaiLin)
+    Guanghui Qu (zilongshanren）
+    Wensheng Yang (yangws)
+    Yulei Liao (dualface)
+    Huabin Ling (pandamicro)
+    Long Jiang (jianglong0156)
+    Sijie Fu (fusijie)
 
+Framework & Tools Developers:
+    Bin Zhang (natural-law)
+    LunHao Guo
 
+Web Developers:
+    Sijie Wang (VisualSJ)
+    Menghe Zhang (ZhangMenghe)
+
+3D Developers:
+    Xiao Yang (super626)
+    Yintao Hou (masterhou)
+
+Editor Support Developers:
+    Cheng Zhang (chengstory)
+    Feng Xiao (xiaofeng11)
+
+Windows Platforms Developers (Collaborators from Microsoft):
+    Dale Stammen (stammen)
+    Anniruddh (anniruddh)
+
+Community Evangelism / Programmers Guide Author:
+    Jason Slack-Moehrle (slackmoehrle)
+    
 Developers:
+    halx99(Guo Xiaodong)
+        Add ETC1 builtin alpha support.
+        Add findChild for cocos2d::utils.
+        Add script with utf-8 bom support for luabindings.
+        Add captureNode for cocos2d::utils.
+        fix AudioEngine bug for iOS, UTF8 filePath.
+        
+        
     Rolando Abarca
         Javascript Binding and testjs
         
@@ -33,6 +68,7 @@ Developers:
         
     frranck 
         adding norwegian language
+        Added "a unsupport image format!" log when creating a sprite in CCImage.cpp.
     
     varlucian
         fix the bug that OnEnterTransitionDidFinish was called twice when a node is added in onEnter.
@@ -69,11 +105,17 @@ Developers:
     silverscania
         Pass correct parameter to glPixelStorei when creating a texture
 
+    stari4ek
+        Fix VideoPlayer on Android ignore search paths
+        Label: Improve rendering of letter's inner shapes when outline is used
+        platform: Fixed issue that depth/stencil buffers attributes are ignored on iOS
+
     FlagellumDei
         Center the window correctly on windows
 
     ggggamer
         fixed memory leak of preloadEffect on windows
+        Some small performance improvements
 
     CodeSnooker
         Added Method to create a CCMenuItemToggle from a CCArray with a target selector
@@ -109,6 +151,7 @@ Developers:
         Added Dutch Language support.
         Added clang support for Windows.
         Cmake update and remove old scripts from build folder
+        Fixed building with system prebuilt libs on Linux
 
     mchinen
         fix emulator issue for OpenGL ES 2.0 on Android
@@ -131,6 +174,7 @@ Developers:
         fix an error that OpenSLEngine can't load resources from SD card
         add CCRemoveSelf action
         Fixing a bug that CCLabelTTF setString crash on android.
+        Fixed a bug in Scheduler which may case Force Close.
 
     billy1380
         make CCLens3d support concave effect.
@@ -292,6 +336,10 @@ Developers:
 
     James Chen(dumganhar)
         author of Bada port
+        Fixed wrong callback setting for webview:setOnDidFailLoading in Lua.
+        Fixed life control for XMLHttpRequest.
+        Remove weak reference in ActionNode.
+        Bug fix for shouldStartLoading method, should return value from JS
 
     Erawppa
         implement CCNotificationCenter
@@ -369,10 +417,26 @@ Developers:
     giginet
         Fix CCRepeat#create is recieved bad argument on Lua binding.
         Added a feature that CCSSceneReader can load name properties as node names.
+        Added Rect::intersectsCircle().
 
     neokim
         Adds 'setFont' and 'setAnchorPoint' to CCEditBox.
         Workaround for some problems due to UITextField of CCEditBoxImplIOS is attached as a view above OpenGL view.
+        Enhance ScrollView with easing out scrolling.
+        Add scroll bar feature into ui::ScrollView.
+        Add RadioButton and RaidoButtonGroup widgets.
+        Add a setter for line width in DrawNode.
+        UI: Added a setter for line width in DrawNode
+        UI: Added ScrollViewBar for displaying a scroll bar at the side of ScrollView
+        UI: Added RadioButton widget
+        UI: Refined scroll event dispatching for ScrollView
+        platform: Fixed Android app occasionally freeze issue caused by Cocos2dxRenderer.nativeOnResume() is not called when the activity is resumed
+        Fixed an issue that list view's Magnetic::CENTER is not working well when non-bounceable.
+        Added APIs to scroll to specific item in list.
+        Added APIs to get an item in specific position like center, leftmost, rightmost, topmost and bottommost.
+        Added a feature for magnetic scrolling.
+        Merge logics of Scroll View for scroll by inertia and auto scroll into one.
+        Change PageView to derive from ListView.
 
     Sam Clegg (sbc100)
         Author of Native Client port.
@@ -540,6 +604,7 @@ Developers:
         
     hawkwood (Justin Hawkwood)
         Fixing a bug that EditBox doesn't show any text if it's initialized with text.
+        Fixed a memory leak in new Audio.
         
     wtyqm (zhang peng)
         Fixing a bug that ccbRootPath wasn't passed to sub ccb nodes.
@@ -554,6 +619,7 @@ Developers:
         Fixing a bug that the submenu of ExtensionTest in TestCpp can't scroll.
         Implements a socket.io client extension and adds a test case.
         Implements 'SIODelegate::fireEventToScript' method to integrate JSB event handling with the original native code.
+        Update socket.io network extension to correctly detect and manage connection to socket.io server versions 0.9.x-1.x
         
     pktangyue
         Fixing a bug that CCScale9Sprite::setInsetLeft/XXX can't work for rotated sprite frame.
@@ -664,6 +730,7 @@ Developers:
         Added operator == != for Value
         Replace dynamic_cast to std::is_base_of in object_to_luaval
         Added support normalize path on android
+        FileUtils: Remove old path while adding existing search path
         
     superrad
         Clear NoSuchMethodError Exception when JniHelper fails to find methodID
@@ -705,6 +772,7 @@ Developers:
         
     dmurtagh
         Fixed a bug that UserDefault::getDoubleForKey() doesn't pass default value to Java.
+        Fixed a compile error when CC_SPRITE_DEBUG_DRAW is on
         
     seobyeongky
         Updates spine runtime.
@@ -729,7 +797,7 @@ Developers:
         Fix lua project template crash on iOS5.1 device
         Fix layout constant syntax error in lua-binding
         
-    andyque
+    zilongshanren
         Fixed a bug that missing to check self assignment of Vector<T>, Map<K,V>, Value and String.
         Fixed a bug that move assignment operator doesn't clear previous content bug.
         Fixed the compile error of Map's getRandomObject.
@@ -803,22 +871,26 @@ Developers:
         Fixed a bug that Node::removeAllChildrenWithCleanup() does not remove PhysicsBody.
         
     newnon
-        Adds getCurrentLanguageCode() which returns iso 639-1 language code
-        Adds support for get response when Activity's onActivityResult is triggered
-        Improve Android projects
-        Android jni error clear & more readable log
-        Add support of software PVRTC v1 decompression
-        Fixed a bug that ttf font have not effect on Mac OS X
-        Fixed a bug that before touchMove Touch::_prevPoint contains junk
-        Added Device::setKeepScreenOn()
-        Fixed Label performance problem
-        Added Node::stopAllActionsByTag && ActionManager::removeAllActionsByTag
-        Added getAllTouches() in GLViewProtocol
-        Precompiled headers improvements
-        Added Application::openUrl for all supported platforms ecept WP8 and WinRT
-        Scale9Sprite capInsets set fix
-        Clang static analyzer crash fix
-        
+        Adds getCurrentLanguageCode() which returns iso 639-1 language code.
+        Adds support for get response when Activity's onActivityResult is triggered.
+        Improve Android projects.
+        Android jni error clear & more readable log.
+        Add support of software PVRTC v1 decompression.
+        Fixed a bug that ttf font have not effect on Mac OS X.
+        Fixed a bug that before touchMove Touch::_prevPoint contains junk.
+        Added Device::setKeepScreenOn().
+        Fixed Label performance problem.
+        Added Node::stopAllActionsByTag && ActionManager::removeAllActionsByTag.
+        Added getAllTouches() in GLViewProtocol.
+        Precompiled headers improvements.
+        Added Application::openUrl for all supported platforms ecept WP8 and WinRT.
+        Scale9Sprite capInsets set fix.
+        Clang static analyzer crash fix.
+        Fix include in cocos network module.
+        Slider misprint fix.
+        Fix web socket crash.
+        Scale9Sprite cropped sprite frames support.
+
     youknowone
         Adds iOS-like elastic bounceback support for cocos2d::extension::ScrollView
         
@@ -831,6 +903,7 @@ Developers:
         
     flashjay
         Remove deprecated code in lua tests & template
+        luaLoadChunksFromZip should just remove .lua or .luac extension
         
     zukkun
         Fixed incorrect function invocation in PhysicsBody::setAngularVelocityLimit
@@ -893,6 +966,7 @@ Developers:
         
     NatWeiss
         Fix compilation error using arch i386
+        Fixed debug-config crash if a FrameBuffer has no RenderTargetDepthStencil.
         
     favorcode
         Correct some doxygen comment
@@ -905,6 +979,7 @@ Developers:
         
     ntotani
         fix building error in lua-binding in release mode
+        Fixed WebView lua-bind method name.
         
     kezhuw
         AutoReleasePool manager improvement
@@ -939,6 +1014,7 @@ Developers:
         
     billtt
         Fixed a bug that Node::setScale(float) may not work properly
+        network: Fixed a problem where WebSocket messages may pile up
         
     Teivaz
         Custom uniform search optimization
@@ -981,6 +1057,7 @@ Developers:
         
     takaken1994
         Added function for setting min/max scale for ScrollView
+        studio: Removed "using namespace cocos2d" from CCFrame.h
         
     maltium 
         Added 3D rotation support to RotateTo action
@@ -1024,7 +1101,8 @@ Developers:
         Fixed memory leak of TextureCache::reloadTexture()
         
     wohaaitinciu
-        WebView support on windows
+        WebView support on windows.
+        Fix a fatal bug in EditBox implement for platform win32.
         
     guykogus
         Implemented Application::openUrl for WP8 and WinRT
@@ -1046,6 +1124,7 @@ Developers:
         
     TimothyZhang
         Fixed a potential memory leak in GLProgram::setGLProgram()
+        Add jsb.fileUtils.writeDataToFile().
         
     ahlwong
         Fix Label Kerning on Single Characters
@@ -1054,7 +1133,12 @@ Developers:
         Add greater than operator to Vec2
         
     liamcindy
-        update ui button size changed logic
+        Update ui button size changed logic.
+        Added support for Cocos Studio Light3D.
+        Fix scrollview render errorl.
+        Update for text effect clone.
+        Update controlButton size calculate with new Scale9Sprite logic.
+        Update pageview to support adjust child size.
         
     vovkasm
         Fix warnings for Xcode6.1
@@ -1077,6 +1161,7 @@ Developers:
         
     kompjoefriek
         Fix compiling warnings
+        Device: Added vibrate support to enable vibration for a duration.
         
     tmr111116
         fix random int overflow
@@ -1089,6 +1174,123 @@ Developers:
         
     loadrunner
         Added romanian languange support
+        Added sensor property for PhysicsShape
+        Added line spacing/leading feature to Label.
+        Changed label font size type to float.
+        Removed scale factor for label shadow.
+        Fixed a TMXLayer bug: When using float values (for example the actual position of the character) to get the current tile, the wrong tile is sometimes/usually returned.
+        
+    Almax27
+        RenderQueue command buffer optimize.
+        Removed ScrollView::_innerContainer pointer copy.
+        
+    IgorMats
+        Added MotionStreak::getStroke/setStroke
+        
+    matsuokah
+        Fixed the bug that JNI illegal start byte error causes crashing error on Android 5.0
+        
+    babcca
+        Fixed crashing when playing streamed MP4 file on iOS
+        
+    milos1290
+        Added Lerp for Vec3
+        Added ActionFloat
+        
+    perminovVS
+        Optimize Vec3 and Vec2
+        Added `UserDefault::setDelegate()`
+        FileUtils: Added FileUtils::getSuitableFOpen() for convert utf8 to locale, for specific platform
+        platform: Correct all usage of unicode version winapi in FileUtils for win32
+        FileUtils: Added FileUtils::getFileExtension for getting file's extension name
+        utils: Made utils::captureScreen saving file in another thread to improve the performance
+        Added check for glfwCreateWindow.
+        Refined AssetsManagerEx unzipping by using async.
+        Fixed a bug in FileUtilsWin32::removeDirectory when the file begins with ".".
+        Corrected the keyboard codes for Desktop and WinRT.
+        Added some support for mouse on WinRT.
+        Correct the convertion between unicode and utf8 on WinRT.
+        
+    qiutaoleo
+        Added a feature to check case characters for filename on windows
+        
+    HueyPark
+        Fixed memory leak in HttpClient on iOS
+        
+    Dimon4eg
+        Fixed crash on AssetsManager
+        Fixed memory leak of WebView on iOS
+        Fixed crahed that if url contains illegal characters on Android
+        log: Fixed crash on Windows if passing string more than 16kb to cocos2d::log
+        Fixed a crash bug when csb file is broken.
+        Fixed a crash bug in LoadingBar.
+        Fixed a crash bug in destructor of FontFreeType.
+        UI: Set focus to Widget when touched.
+        
+    tankorsmash
+        Fixed the bug that ProgressTimer::setSprite() doesn't take effect
+
+    namezero111111
+        ui: TextField add `getTextColor`, `getTextHorizontalAlignment` and `getTextVerticalAlignment` API
+        Physics: Fixed circle shape debug draw incorrect issue
+
+    shinhirota
+        JS: Fixed issue of iOS/JS reflection `callStaticMethod` with bool arg
+
+    oscr
+        Fix two issues with download-deps.py
+        Capitalize default option in download-deps.py
+        platform: Added debug flag -Wextra to linux CMakeFile
+
+    iris-wy
+        platform: Fixed warning "Service Intent must be explicit" on Android
+
+    alexpeak
+        Label: Fixed rendering LabelTTF characters as black boxes on Android by ensuring atlases are purged before resetting
+
+    ywxzm
+        Lua: Fixed onTouch begin don't return value
+
+    xpol
+        Sprite: Fixed some warnings and a related bug in CCSprite.
+        Fixes boring deprecated warning.
+
+    marzapower
+        UI: Fixed inertial scrolling for CCScrollView
+
+    MAUSMAUSgames
+        Action: Permitted setting bitwise flags to action
+
+    RUKD
+        ParticleSystem: performance improvement
+
+    m-yukio
+        UI: RichText support new line element.
+
+    Fraggle
+        Fix PMA Handling issue.
+
+    nhuanvd
+        Fix cannot add view to mFrameLayout when extends Cocos2dxActivity.
+
+    1scaR1
+        Add Scale9Sprite fade actions with cascade opacity enabled in js-test.
+
+    FrancoisDupayrat
+        Fix edit box setPlaceholderFontName and scale font size issue.
+
+    cesarpachon
+        AudioEngine on Linux replace the original SimpleAudioEngine with a new version of FMOD, now AudioEngine support all platforms!
+
+    cezheng
+        Fix Downloader bug for iOS & Android.
+
+    pandemosth
+        Fix crash when removing a remotely downloaded image from texture cache in js-binding.
+
+    GuoLunHao
+        Add quiet option for Cocos Toolkit.
+        
 
 Retired Core Developers:
     WenSheng Yang
@@ -1096,11 +1298,87 @@ Retired Core Developers:
         Designer of CCApplication/CCEGLView/platform structure.
         He's working together with 2dx core team but leading FishingJoy game
 
-    Bin Zhang
-        core-team member but put himself in FishingJoy game since 2012.
-
     RongHong Huang (flyingpaper)
         Author of cocos2d-xna and spent all his time on wp7.
+
+    Bo Yu (boyu0)
+
+    anxi
+        Added UIEditBox support on linux platform.
+
+    avail
+        Fixed minor typo in README.
+
+    cpascal
+        Fixed a crash bug of AudioPlayer in Win32.
+
+    geron-cn
+        Removed redundant interface in CCSkeletonNode.
+        Fixed a bug that a same frame index is inserted after animation speed is scaled. 
+        Fixed crash when recall a cached timeline after scene exited.
+        Added ActionTimeline::setAnimationEndCallBack and ActionTimeline::addFrameEndCallFunc.
+        
+    igorzel
+        Fixed a crash bug caused by integer overflow in Device::getTextureDataForText on iOS.
+
+    KAIO2
+        Fixed typos and syntax errors.
+        
+    kammy
+        Moved initialization of image to an appropriate location, because it always called twice in SpriteFrameCache::addSpriteFramesWithFile()
+
+    lijinlong
+        Fixed a bug of luabinding enumerateChildren.
+
+    linguofeng
+        Added UPDATE_FAILED and ERROR_DECOMPRESS in Lua.
+        
+
+    lsybblll
+        Fixed a bug in CCPhysics3DComponent.cpp that oldBool is set with a wrong value.
+
+    mogemimi
+        Fixed various compiler warnings on Xcode 7.
+        Fixed some minor typos in lua bindings.
+        Fixed a minor typo and renamed INTIAL_CAPS_ALL_CHARACTERS to INITIAL_CAPS_ALL_CHARACTERS in UIEditBox.
+        Fixed some minor typos.
+        Fixed Wformat-security warning on Xcode.
+        Added missing override keyword.
+        Fix memory leak when initWithImage() failed.
+        Fix deprecation warning in SkeletonRenderer.
+        Fix typos in documentation and comments.
+
+    njh0602
+        Clean up the code of setRect() function.
+        Fixed syntax error in comment.
+        Add virtual keyword for some render related function.
+
+    noshbar
+        Changed the size of startFlag to 13.
+        Added checks to see if temp1 and temp2 are non-null before dereferencing them.
+        "Changed some delete operations to be deletions of arrays where applicable.
+        Changed some "free" operations to "delete" where memory was allocated with "new".
+
+    pabitrapadhy
+        Fixed spelling and grammar mistakes.
+
+    seivan
+        Fixed a bug that cocos2d::Map may cause Dangling Pointers when inserting Ref Object which already exist in the Map.
+        EventListenerMouse will dispatch EventMouse events.
+
+    songchengjiang
+        Fixed a bug of nomalize_point which caused particle rendering error.
+        Fixed a bug that lua Scene3DTest "back" button did not work.
+
+    TheCodez
+        Added missing getChildByTag<>() API.
+        Fixed a bug that RefPtr test wasn't executed even in debug build.
+        Added Application::getVersion() to get the app version.
+
+    thuydx55
+        Fixed a bug of loading pluginx lib when compile Android with --compile-script flag.
+
+    
 
 Cocos2d-x can not grow so fast without the active community.
 Thanks to all developers who report & trace bugs, discuss the engine usage in forum & QQ groups!

@@ -1,5 +1,5 @@
-#include "CustomGUIReader.h"
-#include "CCLuaEngine.h"
+#include "scripting/lua-bindings/manual/cocostudio/CustomGUIReader.h"
+#include "scripting/lua-bindings/manual/CCLuaEngine.h"
 #include "json/writer.h"
 #include "json/stringbuffer.h"
 
@@ -10,7 +10,7 @@ namespace cocostudio
 
     CustomGUIReader* CustomGUIReader::create(std::string &className, int createFunc, int setPropsFunc)
     {
-        auto reader = new CustomGUIReader();
+        auto reader = new (std::nothrow) CustomGUIReader();
         reader->init(className, createFunc, setPropsFunc);
         return reader;
     }
@@ -76,9 +76,9 @@ namespace cocostudio
             customOptions.Accept(writer);
 
             auto stack = LuaEngine::getInstance()->getLuaStack();
-            stack->pushString(classType.c_str(), classType.size());
+            stack->pushString(classType.c_str(), static_cast<int>(classType.size()));
             stack->pushObject(widget, "cc.Ref");
-            stack->pushString(buffer.GetString(), buffer.Size());
+            stack->pushString(buffer.GetString(), static_cast<int>(buffer.GetSize()));
             stack->executeFunctionByHandler(_setPropsFunc, 3);
         }
 	}

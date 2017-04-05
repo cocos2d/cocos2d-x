@@ -23,13 +23,13 @@
  */
 
 /**
- A set of proxy classes to allow iOS audio code to run on MacOS X. AVAudioPlayer is implemented using NSSound.
+ A set of proxy classes to allow iOS audio code to run on MacOS X. CCAudioPlayer is implemented using NSSound.
  AVAudioSession is a "do nothing" class as it isn't really relevant on MacOS X.
  
  Limitations:
- AVAudioPlayer numberOfLoops not correctly supported.  Looping is either on or off, can not specify a specific number of loops.
- AVAudioPlayer panning not supported.
- AVAudioPlayer metering not supported.
+ CCAudioPlayer numberOfLoops not correctly supported.  Looping is either on or off, can not specify a specific number of loops.
+ CCAudioPlayer panning not supported.
+ CCAudioPlayer metering not supported.
  AVAudioSession nothing is supported, not applicable to MacOS X.
  */
 
@@ -60,7 +60,7 @@ extern OSStatus AudioSessionGetProperty(UInt32 inID, UInt32 *ioDataSize, void *o
 @protocol AVAudioPlayerDelegate;
 
 /* This class is available with iPhone 2.2 or later */
-@interface AVAudioPlayer : NSObject <NSSoundDelegate> {
+@interface CCAudioPlayer : NSObject <NSSoundDelegate> {
 	
 	// properties
 	id<AVAudioPlayerDelegate> delegate;
@@ -137,24 +137,24 @@ extern OSStatus AudioSessionGetProperty(UInt32 inID, UInt32 *ioDataSize, void *o
 
 @end
 
-/* A protocol for delegates of AVAudioPlayer */
+/* A protocol for delegates of CCAudioPlayer */
 @protocol AVAudioPlayerDelegate <NSObject>
 @optional 
 /* audioPlayerDidFinishPlaying:successfully: is called when a sound has finished playing. This method is NOT called if the player is stopped due to an interruption. */
-- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag;
+- (void)audioPlayerDidFinishPlaying:(CCAudioPlayer *)player successfully:(BOOL)flag;
 
 /* if an error occurs while decoding it will be reported to the delegate. */
-- (void)audioPlayerDecodeErrorDidOccur:(AVAudioPlayer *)player error:(NSError *)error;
+- (void)audioPlayerDecodeErrorDidOccur:(CCAudioPlayer *)player error:(NSError *)error;
 
 /* audioPlayerBeginInterruption: is called when the audio session has been interrupted while the player was playing. The player will have been paused. */
-- (void)audioPlayerBeginInterruption:(AVAudioPlayer *)player;
+- (void)audioPlayerBeginInterruption:(CCAudioPlayer *)player;
 
 /* audioPlayerEndInterruption:withFlags: is called when the audio session interruption has ended and this player had been interrupted while playing. */
 /* Currently the only flag is AVAudioSessionInterruptionFlags_ShouldResume. */
-- (void)audioPlayerEndInterruption:(AVAudioPlayer *)player withFlags:(NSUInteger)flags;
+- (void)audioPlayerEndInterruption:(CCAudioPlayer *)player withFlags:(NSUInteger)flags;
 
 /* audioPlayerEndInterruption: is called when the preferred method, audioPlayerEndInterruption:withFlags:, is not implemented. */
-- (void)audioPlayerEndInterruption:(AVAudioPlayer *)player;
+- (void)audioPlayerEndInterruption:(CCAudioPlayer *)player;
 @end
 
 

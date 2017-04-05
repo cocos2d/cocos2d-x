@@ -30,4 +30,10 @@
 -- @param self
 -- @return StopGrid#StopGrid ret (return value: cc.StopGrid)
         
+--------------------------------
+-- 
+-- @function [parent=#StopGrid] StopGrid 
+-- @param self
+-- @return StopGrid#StopGrid self (return value: cc.StopGrid)
+        
 return nil

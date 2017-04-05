@@ -1,5 +1,8 @@
 include_directories(
-  ../external/ConvertUTF, .
+  ../external/ConvertUTF
+  ../external/poly2tri
+  ../external/poly2tri/common
+  ../external/poly2tri/sweep
 )
 
 set(COCOS_2D_SRC
@@ -21,6 +24,7 @@ set(COCOS_2D_SRC
   2d/CCAnimation.cpp
   2d/CCAtlasNode.cpp
   2d/CCCamera.cpp
+  2d/CCCameraBackgroundBrush.cpp
   2d/CCClippingNode.cpp
   2d/CCClippingRectangleNode.cpp
   2d/CCComponentContainer.cpp
@@ -63,6 +67,8 @@ set(COCOS_2D_SRC
   2d/CCSprite.cpp
   2d/CCSpriteFrameCache.cpp
   2d/CCSpriteFrame.cpp
+  2d/CCAutoPolygon.cpp
+  ../external/clipper/clipper.cpp
   2d/CCTextFieldTTF.cpp
   2d/CCTileMapAtlas.cpp
   2d/CCTMXLayer.cpp

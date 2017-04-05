@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -30,6 +30,11 @@
 
 #include "platform/CCPlatformMacros.h"
 #include "base/ccTypes.h"
+
+/**
+ * @addtogroup renderer
+ * @{
+ */
 
 NS_CC_BEGIN
 
@@ -70,33 +75,33 @@ public:
     void init(float globalZOrder, const Mat4& modelViewTransform, uint32_t flags);
     
     /** Get global Z order. */
-    inline float getGlobalOrder() const { return _globalOrder; }
+    float getGlobalOrder() const { return _globalOrder; }
 
     /** Returns the Command type. */
-    inline Type getType() const { return _type; }
+    Type getType() const { return _type; }
     
-    /** Retruns whether is transparent. */
-    inline bool isTransparent() const { return _isTransparent; }
+    /** Returns whether is transparent. */
+    bool isTransparent() const { return _isTransparent; }
     
     /** Set transparent flag. */
-    inline void setTransparent(bool isTransparent) { _isTransparent = isTransparent; }
+    void setTransparent(bool isTransparent) { _isTransparent = isTransparent; }
     /**
-     Get skip batching status, if a rendering is skip batching, it will be forced to be rendering seperately.
+     Get skip batching status, if a rendering is skip batching, it will be forced to be rendering separately.
      */
-    inline bool isSkipBatching() const { return _skipBatching; }
+    bool isSkipBatching() const { return _skipBatching; }
     /**Set skip batching.*/
-    inline void setSkipBatching(bool value) { _skipBatching = value; }
+    void setSkipBatching(bool value) { _skipBatching = value; }
     /**Whether the command should be rendered at 3D mode.*/
-    inline bool is3D() const { return _is3D; }
+    bool is3D() const { return _is3D; }
     /**Set the command rendered in 3D mode or not.*/
-    inline void set3D(bool value) { _is3D = value; }
+    void set3D(bool value) { _is3D = value; }
     /**Get the depth by current model view matrix.*/
-    inline float getDepth() const { return _depth; }
+    float getDepth() const { return _depth; }
     
 protected:
     /**Constructor.*/
     RenderCommand();
-    /**Desctructor.*/
+    /**Destructor.*/
     virtual ~RenderCommand();
     //used for debug but it is not implemented.
     void printID();
@@ -112,7 +117,7 @@ protected:
     
     /**
      QuadCommand and TrianglesCommand could be auto batched if there material ID is the same, however, if
-     a command is skip batching, it would be forced to draw in a seperate function call, and break the batch.
+     a command is skip batching, it would be forced to draw in a separate function call, and break the batch.
      */
     bool _skipBatching;
     
@@ -124,5 +129,8 @@ protected:
 };
 
 NS_CC_END
-
+/**
+ end of support group
+ @}
+ */
 #endif //__CCRENDERCOMMAND_H_

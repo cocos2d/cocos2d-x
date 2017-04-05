@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2015-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -72,7 +72,6 @@ _dynParticleAllDimensionsSet(false),
 _dynParticleWidthSet(false),
 _dynParticleHeightSet(false),
 _dynParticleDepthSet(false),
-_upVector(Vec3::ZERO),
 _remainder(0),
 _durationRemain(0),
 _dynDurationSet(false),
@@ -168,12 +167,12 @@ PUEmitter::~PUEmitter()
         delete _dynAngle;
 }
 
-void PUEmitter::updateEmitter(Particle3D *particle, float deltaTime)
+void PUEmitter::updateEmitter(Particle3D* /*particle*/, float /*deltaTime*/)
 {
     
 }
 
-void PUEmitter::emit(int count)
+void PUEmitter::emit(int /*count*/)
 {
     
 }
@@ -335,7 +334,6 @@ bool PUEmitter::isEnabled( void ) const
 
 void PUEmitter::notifyStart()
 {
-    _latestPosition = getDerivedPosition(); // V1.3.1
     _forceEmission = _originalForceEmission;
     _forceEmissionExecuted = _originalForceEmissionExecuted;
     _remainder = 0;
@@ -389,6 +387,8 @@ void PUEmitter::prepare()
             }
         }
     }
+
+    _latestPosition = getDerivedPosition(); // V1.3.1
 }
 
 void PUEmitter::unPrepare()
@@ -396,12 +396,12 @@ void PUEmitter::unPrepare()
     setForceEmission(_forceEmission);
 }
 
-void PUEmitter::preUpdateEmitter( float deltaTime )
+void PUEmitter::preUpdateEmitter( float /*deltaTime*/ )
 {
 
 }
 
-void PUEmitter::postUpdateEmitter( float deltaTime )
+void PUEmitter::postUpdateEmitter( float /*deltaTime*/ )
 {
     Vec3 currentPos = getDerivedPosition();
     _latestPositionDiff = currentPos - _latestPosition;
@@ -889,6 +889,10 @@ void PUEmitter::copyAttributesTo( PUEmitter* emitter )
     emitter->setEmitterType(_emitterType);
     emitter->setEmitsName(_emitsName);
     emitter->setEmitsType(_emitsType);
+    emitter->_position = _position;
+    emitter->_isEnabled = _isEnabled;
+    emitter->_originEnabled = _originEnabled;
+    emitter->_originEnabledSet = _originEnabledSet;
     emitter->_particleDirection = _particleDirection;
     emitter->_originalParticleDirection = _originalParticleDirection;
     emitter->_particleOrientation = _particleOrientation;

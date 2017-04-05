@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -27,13 +27,12 @@
 #include <algorithm>
 #include <climits>
 
-#include "chipmunk.h"
-#include "CCPhysicsBody.h"
-#include "CCPhysicsShape.h"
-#include "CCPhysicsContact.h"
-#include "CCPhysicsJoint.h"
-#include "CCPhysicsContact.h"
-#include "CCPhysicsHelper.h"
+#include "chipmunk/chipmunk_private.h"
+#include "physics/CCPhysicsBody.h"
+#include "physics/CCPhysicsShape.h"
+#include "physics/CCPhysicsContact.h"
+#include "physics/CCPhysicsJoint.h"
+#include "physics/CCPhysicsHelper.h"
 
 #include "2d/CCDrawNode.h"
 #include "2d/CCScene.h"
@@ -42,9 +41,8 @@
 #include "base/CCEventCustom.h"
 
 NS_CC_BEGIN
-const float PHYSICS_INFINITY = INFINITY;
+const float PHYSICS_INFINITY = FLT_MAX;
 extern const char* PHYSICSCONTACT_EVENT_NAME;
-extern std::unordered_map<cpShape*, PhysicsShape*> s_physicsShapeMap;
 
 const int PhysicsWorld::DEBUGDRAW_NONE = 0x00;
 const int PhysicsWorld::DEBUGDRAW_SHAPE = 0x01;
@@ -81,14 +79,14 @@ namespace
 class PhysicsWorldCallback
 {
 public:
-    static int collisionBeginCallbackFunc(cpArbiter *arb, struct cpSpace *space, PhysicsWorld *world);
-    static int collisionPreSolveCallbackFunc(cpArbiter *arb, cpSpace *space, PhysicsWorld *world);
+    static cpBool collisionBeginCallbackFunc(cpArbiter *arb, struct cpSpace *space, PhysicsWorld *world);
+    static cpBool collisionPreSolveCallbackFunc(cpArbiter *arb, cpSpace *space, PhysicsWorld *world);
     static void collisionPostSolveCallbackFunc(cpArbiter *arb, cpSpace *space, PhysicsWorld *world);
     static void collisionSeparateCallbackFunc(cpArbiter *arb, cpSpace *space, PhysicsWorld *world);
-    static void rayCastCallbackFunc(cpShape *shape, cpFloat t, cpVect n, RayCastCallbackInfo *info);
+    static void rayCastCallbackFunc(cpShape *shape, cpVect point, cpVect normal, cpFloat alpha, RayCastCallbackInfo *info);
     static void queryRectCallbackFunc(cpShape *shape, RectQueryCallbackInfo *info);
-    static void queryPointFunc(cpShape *shape, cpFloat distance, cpVect point, PointQueryCallbackInfo *info);
-    static void getShapesAtPointFunc(cpShape *shape, cpFloat distance, cpVect point, Vector<PhysicsShape*>* arr);
+    static void queryPointFunc(cpShape *shape, cpVect point, cpFloat distance, cpVect gradient, PointQueryCallbackInfo *info);
+    static void getShapesAtPointFunc(cpShape *shape, cpVect point, cpFloat distance, cpVect gradient, Vector<PhysicsShape*>* arr);
     
 public:
     static bool continues;
@@ -96,58 +94,58 @@ public:
 
 bool PhysicsWorldCallback::continues = true;
 
-int PhysicsWorldCallback::collisionBeginCallbackFunc(cpArbiter *arb, struct cpSpace *space, PhysicsWorld *world)
+cpBool PhysicsWorldCallback::collisionBeginCallbackFunc(cpArbiter *arb, struct cpSpace* /*space*/, PhysicsWorld *world)
 {
     CP_ARBITER_GET_SHAPES(arb, a, b);
     
-    auto ita = s_physicsShapeMap.find(a);
-    auto itb = s_physicsShapeMap.find(b);
-    CC_ASSERT(ita != s_physicsShapeMap.end() && itb != s_physicsShapeMap.end());
+    PhysicsShape *shapeA = static_cast<PhysicsShape*>(cpShapeGetUserData(a));
+    PhysicsShape *shapeB = static_cast<PhysicsShape*>(cpShapeGetUserData(b));
+    CC_ASSERT(shapeA != nullptr && shapeB != nullptr);
     
-    auto contact = PhysicsContact::construct(ita->second, itb->second);
-    arb->data = contact;
+    auto contact = PhysicsContact::construct(shapeA, shapeB);
+    cpArbiterSetUserData(arb, contact);
     contact->_contactInfo = arb;
     
     return world->collisionBeginCallback(*contact);
 }
 
-int PhysicsWorldCallback::collisionPreSolveCallbackFunc(cpArbiter *arb, cpSpace *space, PhysicsWorld *world)
+cpBool PhysicsWorldCallback::collisionPreSolveCallbackFunc(cpArbiter *arb, cpSpace* /*space*/, PhysicsWorld *world)
 {
-    return world->collisionPreSolveCallback(*static_cast<PhysicsContact*>(arb->data));
+    return world->collisionPreSolveCallback(*static_cast<PhysicsContact*>(cpArbiterGetUserData(arb)));
 }
 
-void PhysicsWorldCallback::collisionPostSolveCallbackFunc(cpArbiter *arb, cpSpace *space, PhysicsWorld *world)
+void PhysicsWorldCallback::collisionPostSolveCallbackFunc(cpArbiter *arb, cpSpace* /*space*/, PhysicsWorld *world)
 {
-    world->collisionPostSolveCallback(*static_cast<PhysicsContact*>(arb->data));
+    world->collisionPostSolveCallback(*static_cast<PhysicsContact*>(cpArbiterGetUserData(arb)));
 }
 
-void PhysicsWorldCallback::collisionSeparateCallbackFunc(cpArbiter *arb, cpSpace *space, PhysicsWorld *world)
+void PhysicsWorldCallback::collisionSeparateCallbackFunc(cpArbiter *arb, cpSpace* /*space*/, PhysicsWorld *world)
 {
-    PhysicsContact* contact = static_cast<PhysicsContact*>(arb->data);
+    PhysicsContact* contact = static_cast<PhysicsContact*>(cpArbiterGetUserData(arb));
     
     world->collisionSeparateCallback(*contact);
     
     delete contact;
 }
 
-void PhysicsWorldCallback::rayCastCallbackFunc(cpShape *shape, cpFloat t, cpVect n, RayCastCallbackInfo *info)
+void PhysicsWorldCallback::rayCastCallbackFunc(cpShape *shape, cpVect point, cpVect normal, cpFloat alpha, RayCastCallbackInfo *info)
 {
     if (!PhysicsWorldCallback::continues)
     {
         return;
     }
     
-    auto it = s_physicsShapeMap.find(shape);
-    CC_ASSERT(it != s_physicsShapeMap.end());
+    PhysicsShape *physicsShape = static_cast<PhysicsShape*>(cpShapeGetUserData(shape));
+    CC_ASSERT(physicsShape != nullptr);
     
     PhysicsRayCastInfo callbackInfo =
     {
-        it->second,
+        physicsShape,
         info->p1,
         info->p2,
-        Vec2(info->p1.x+(info->p2.x-info->p1.x)*t, info->p1.y+(info->p2.y-info->p1.y)*t),
-        Vec2(n.x, n.y),
-        (float)t,
+        PhysicsHelper::cpv2point(point),
+        PhysicsHelper::cpv2point(normal),
+        static_cast<float>(alpha),
     };
     
     PhysicsWorldCallback::continues = info->func(*info->world, callbackInfo, info->data);
@@ -155,79 +153,149 @@ void PhysicsWorldCallback::rayCastCallbackFunc(cpShape *shape, cpFloat t, cpVect
 
 void PhysicsWorldCallback::queryRectCallbackFunc(cpShape *shape, RectQueryCallbackInfo *info)
 {
-    auto it = s_physicsShapeMap.find(shape);
-    
-    CC_ASSERT(it != s_physicsShapeMap.end());
+    PhysicsShape *physicsShape = static_cast<PhysicsShape*>(cpShapeGetUserData(shape));
+    CC_ASSERT(physicsShape != nullptr);
     
     if (!PhysicsWorldCallback::continues)
     {
         return;
     }
     
-    PhysicsWorldCallback::continues = info->func(*info->world, *it->second, info->data);
+    PhysicsWorldCallback::continues = info->func(*info->world, *physicsShape, info->data);
 }
 
-void PhysicsWorldCallback::getShapesAtPointFunc(cpShape *shape, cpFloat distance, cpVect point, Vector<PhysicsShape*>* arr)
+void PhysicsWorldCallback::getShapesAtPointFunc(cpShape *shape, cpVect /*point*/, cpFloat /*distance*/, cpVect /*gradient*/, Vector<PhysicsShape*>* arr)
 {
-    auto it = s_physicsShapeMap.find(shape);
-    
-    CC_ASSERT(it != s_physicsShapeMap.end());
-    
-    arr->pushBack(it->second);
+    PhysicsShape *physicsShape = static_cast<PhysicsShape*>(cpShapeGetUserData(shape));
+    CC_ASSERT(physicsShape != nullptr);
+    arr->pushBack(physicsShape);
 }
 
-void PhysicsWorldCallback::queryPointFunc(cpShape *shape, cpFloat distance, cpVect point, PointQueryCallbackInfo *info)
+void PhysicsWorldCallback::queryPointFunc(cpShape *shape, cpVect /*point*/, cpFloat /*distance*/, cpVect /*gradient*/, PointQueryCallbackInfo *info)
 {
-    auto it = s_physicsShapeMap.find(shape);
-    
-    CC_ASSERT(it != s_physicsShapeMap.end());
-    
-    PhysicsWorldCallback::continues = info->func(*info->world, *it->second, info->data);
+    PhysicsShape *physicsShape = static_cast<PhysicsShape*>(cpShapeGetUserData(shape));
+    CC_ASSERT(physicsShape != nullptr);
+    PhysicsWorldCallback::continues = info->func(*info->world, *physicsShape, info->data);
 }
+
+static inline cpSpaceDebugColor RGBAColor(float r, float g, float b, float a){
+    cpSpaceDebugColor color = {r, g, b, a};
+    return color;
+}
+
+static inline cpSpaceDebugColor LAColor(float l, float a){
+    cpSpaceDebugColor color = {l, l, l, a};
+    return color;
+}
+
+static void DrawCircle(cpVect p, cpFloat /*a*/, cpFloat r, cpSpaceDebugColor outline, cpSpaceDebugColor fill, cpDataPointer data)
+{
+    const Color4F fillColor(fill.r, fill.g, fill.b, fill.a);
+    const Color4F outlineColor(outline.r, outline.g, outline.b, outline.a);
+    DrawNode* drawNode = static_cast<DrawNode*>(data);
+    float radius = PhysicsHelper::cpfloat2float(r);
+    Vec2 centre = PhysicsHelper::cpv2point(p);
+    
+    static const int CIRCLE_SEG_NUM = 12;
+    Vec2 seg[CIRCLE_SEG_NUM] = {};
+    
+    for (int i = 0; i < CIRCLE_SEG_NUM; ++i)
+    {
+        float angle = (float)i * M_PI / (float)CIRCLE_SEG_NUM * 2.0f;
+        Vec2 d(radius * cosf(angle), radius * sinf(angle));
+        seg[i] = centre + d;
+    }
+    drawNode->drawPolygon(seg, CIRCLE_SEG_NUM, fillColor, 1, outlineColor);
+}
+
+static void DrawFatSegment(cpVect a, cpVect b, cpFloat r, cpSpaceDebugColor outline, cpSpaceDebugColor /*fill*/, cpDataPointer data)
+{
+    const Color4F outlineColor(outline.r, outline.g, outline.b, outline.a);
+    DrawNode* drawNode = static_cast<DrawNode*>(data);
+    drawNode->drawSegment(PhysicsHelper::cpv2point(a),
+                          PhysicsHelper::cpv2point(b),
+                          PhysicsHelper::cpfloat2float(r==0 ? 1 : r), outlineColor);
+}
+
+static void DrawSegment(cpVect a, cpVect b, cpSpaceDebugColor color, cpDataPointer data)
+{
+    DrawFatSegment(a, b, 0.0, color, color, data);
+}
+
+static void DrawPolygon(int count, const cpVect *verts, cpFloat /*r*/, cpSpaceDebugColor outline, cpSpaceDebugColor fill, cpDataPointer data)
+{
+    const Color4F fillColor(fill.r, fill.g, fill.b, fill.a);
+    const Color4F outlineColor(outline.r, outline.g, outline.b, outline.a);
+    DrawNode* drawNode = static_cast<DrawNode*>(data);
+    int num = count;
+    Vec2* seg = new (std::nothrow) Vec2[num];
+    for(int i=0;i<num;++i)
+        seg[i] = PhysicsHelper::cpv2point(verts[i]);
+    
+    drawNode->drawPolygon(seg, num, fillColor, 1.0f, outlineColor);
+    
+    delete[] seg;
+}
+
+static void DrawDot(cpFloat /*size*/, cpVect pos, cpSpaceDebugColor color, cpDataPointer data)
+{
+    const Color4F dotColor(color.r, color.g, color.b, color.a);
+    DrawNode* drawNode = static_cast<DrawNode*>(data);
+    drawNode->drawDot(PhysicsHelper::cpv2point(pos), 2, dotColor);
+}
+
+static cpSpaceDebugColor ColorForShape(cpShape *shape, cpDataPointer /*data*/)
+{
+    if(cpShapeGetSensor(shape)){
+        return LAColor(1.0f, 0.3f);
+    } else {
+        cpBody *body = cpShapeGetBody(shape);
+        
+        if(cpBodyIsSleeping(body)){
+            return LAColor(0.2f, 0.3f);
+        } else if(body->sleeping.idleTime > shape->space->sleepTimeThreshold) {
+            return LAColor(0.66f, 0.3f);
+        } else {
+            
+            GLfloat intensity = (cpBodyGetType(body) == CP_BODY_TYPE_STATIC ? 0.15f : 0.75f);
+            return RGBAColor(intensity, 0.0f, 0.0f, 0.3f);
+        }
+    }
+}
+
 
 void PhysicsWorld::debugDraw()
 {
     if (_debugDraw == nullptr)
     {
-        _debugDraw = new (std::nothrow) PhysicsDebugDraw(*this);
+        _debugDraw = DrawNode::create();
+        _debugDraw->retain();
+        Director::getInstance()->getRunningScene()->addChild(_debugDraw);
     }
     
-    if (_debugDraw && !_bodies.empty())
+    cpSpaceDebugDrawOptions drawOptions = {
+        DrawCircle,
+        DrawSegment,
+        DrawFatSegment,
+        DrawPolygon,
+        DrawDot,
+        
+        (cpSpaceDebugDrawFlags)(_debugDrawMask),
+        
+        {1.0f, 0.0f, 0.0f, 1.0f},
+        ColorForShape,
+        {0.0f, 0.75f, 0.0f, 1.0f},
+        {0.0f, 0.0f, 1.0f, 1.0f},
+        _debugDraw,
+    };
+    if (_debugDraw)
     {
-        if (_debugDraw->begin())
-        {
-            if (_debugDrawMask & DEBUGDRAW_SHAPE)
-            {
-                for (Ref* obj : _bodies)
-                {
-                    PhysicsBody* body = dynamic_cast<PhysicsBody*>(obj);
-                    
-                    if (!body->isEnabled())
-                    {
-                        continue;
-                    }
-                    
-                    for (auto& shape : body->getShapes())
-                    {
-                        _debugDraw->drawShape(*dynamic_cast<PhysicsShape*>(shape));
-                    }
-                }
-            }
-            
-            if (_debugDrawMask & DEBUGDRAW_JOINT)
-            {
-                for (auto joint : _joints)
-                {
-                    _debugDraw->drawJoint(*joint);
-                }
-            }
-            
-            _debugDraw->end();
-        }
+        _debugDraw->clear();
+        cpSpaceDebugDraw(_cpSpace, &drawOptions);
     }
 }
 
-int PhysicsWorld::collisionBeginCallback(PhysicsContact& contact)
+bool PhysicsWorld::collisionBeginCallback(PhysicsContact& contact)
 {
     bool ret = true;
     
@@ -281,13 +349,13 @@ int PhysicsWorld::collisionBeginCallback(PhysicsContact& contact)
     {
         contact.setEventCode(PhysicsContact::EventCode::BEGIN);
         contact.setWorld(this);
-        _scene->getEventDispatcher()->dispatchEvent(&contact);
+        _eventDispatcher->dispatchEvent(&contact);
     }
     
     return ret ? contact.resetResult() : false;
 }
 
-int PhysicsWorld::collisionPreSolveCallback(PhysicsContact& contact)
+bool PhysicsWorld::collisionPreSolveCallback(PhysicsContact& contact)
 {
     if (!contact.isNotificationEnabled())
     {
@@ -296,7 +364,7 @@ int PhysicsWorld::collisionPreSolveCallback(PhysicsContact& contact)
     
     contact.setEventCode(PhysicsContact::EventCode::PRESOLVE);
     contact.setWorld(this);
-    _scene->getEventDispatcher()->dispatchEvent(&contact);
+    _eventDispatcher->dispatchEvent(&contact);
     
     return contact.resetResult();
 }
@@ -310,7 +378,7 @@ void PhysicsWorld::collisionPostSolveCallback(PhysicsContact& contact)
     
     contact.setEventCode(PhysicsContact::EventCode::POSTSOLVE);
     contact.setWorld(this);
-    _scene->getEventDispatcher()->dispatchEvent(&contact);
+    _eventDispatcher->dispatchEvent(&contact);
 }
 
 void PhysicsWorld::collisionSeparateCallback(PhysicsContact& contact)
@@ -320,9 +388,9 @@ void PhysicsWorld::collisionSeparateCallback(PhysicsContact& contact)
         return;
     }
     
-    contact.setEventCode(PhysicsContact::EventCode::SEPERATE);
+    contact.setEventCode(PhysicsContact::EventCode::SEPARATE);
     contact.setWorld(this);
-    _scene->getEventDispatcher()->dispatchEvent(&contact);
+    _eventDispatcher->dispatchEvent(&contact);
 }
 
 void PhysicsWorld::rayCast(PhysicsRayCastCallbackFunc func, const Vec2& point1, const Vec2& point2, void* data)
@@ -333,7 +401,6 @@ void PhysicsWorld::rayCast(PhysicsRayCastCallbackFunc func, const Vec2& point1, 
     {
         if (!_delayAddBodies.empty() || !_delayRemoveBodies.empty())
         {
-            _scene->updatePhysicsBodyTransform(_scene->getNodeToParentTransform(), 0, 1.0f, 1.0f);
             updateBodies();
         }
         RayCastCallbackInfo info = { this, func, point1, point2, data };
@@ -342,8 +409,8 @@ void PhysicsWorld::rayCast(PhysicsRayCastCallbackFunc func, const Vec2& point1, 
         cpSpaceSegmentQuery(_cpSpace,
                             PhysicsHelper::point2cpv(point1),
                             PhysicsHelper::point2cpv(point2),
-                            CP_ALL_LAYERS,
-                            CP_NO_GROUP,
+                            0.0f,
+                            CP_SHAPE_FILTER_ALL,
                             (cpSpaceSegmentQueryFunc)PhysicsWorldCallback::rayCastCallbackFunc,
                             &info);
     }
@@ -357,7 +424,6 @@ void PhysicsWorld::queryRect(PhysicsQueryRectCallbackFunc func, const Rect& rect
     {
         if (!_delayAddBodies.empty() || !_delayRemoveBodies.empty())
         {
-            _scene->updatePhysicsBodyTransform(_scene->getNodeToParentTransform(), 0, 1.0f, 1.0f);
             updateBodies();
         }
         RectQueryCallbackInfo info = {this, func, data};
@@ -365,8 +431,7 @@ void PhysicsWorld::queryRect(PhysicsQueryRectCallbackFunc func, const Rect& rect
         PhysicsWorldCallback::continues = true;
         cpSpaceBBQuery(_cpSpace,
                        PhysicsHelper::rect2cpbb(rect),
-                       CP_ALL_LAYERS,
-                       CP_NO_GROUP,
+                       CP_SHAPE_FILTER_ALL,
                        (cpSpaceBBQueryFunc)PhysicsWorldCallback::queryRectCallbackFunc,
                        &info);
     }
@@ -380,18 +445,16 @@ void PhysicsWorld::queryPoint(PhysicsQueryPointCallbackFunc func, const Vec2& po
     {
         if (!_delayAddBodies.empty() || !_delayRemoveBodies.empty())
         {
-            _scene->updatePhysicsBodyTransform(_scene->getNodeToParentTransform(), 0, 1.0f, 1.0f);
             updateBodies();
         }
         PointQueryCallbackInfo info = {this, func, data};
         
         PhysicsWorldCallback::continues = true;
-        cpSpaceNearestPointQuery(_cpSpace,
+        cpSpacePointQuery(_cpSpace,
                                  PhysicsHelper::point2cpv(point),
                                  0,
-                                 CP_ALL_LAYERS,
-                                 CP_NO_GROUP,
-                                 (cpSpaceNearestPointQueryFunc)PhysicsWorldCallback::queryPointFunc,
+                                 CP_SHAPE_FILTER_ALL,
+                                 (cpSpacePointQueryFunc)PhysicsWorldCallback::queryPointFunc,
                                  &info);
     }
 }
@@ -399,12 +462,11 @@ void PhysicsWorld::queryPoint(PhysicsQueryPointCallbackFunc func, const Vec2& po
 Vector<PhysicsShape*> PhysicsWorld::getShapes(const Vec2& point) const
 {
     Vector<PhysicsShape*> arr;
-    cpSpaceNearestPointQuery(_cpSpace,
+    cpSpacePointQuery(_cpSpace,
                              PhysicsHelper::point2cpv(point),
                              0,
-                             CP_ALL_LAYERS,
-                             CP_NO_GROUP,
-                             (cpSpaceNearestPointQueryFunc)PhysicsWorldCallback::getShapesAtPointFunc,
+                             CP_SHAPE_FILTER_ALL,
+                             (cpSpacePointQueryFunc)PhysicsWorldCallback::getShapesAtPointFunc,
                              &arr);
     
     return arr;
@@ -412,45 +474,34 @@ Vector<PhysicsShape*> PhysicsWorld::getShapes(const Vec2& point) const
 
 PhysicsShape* PhysicsWorld::getShape(const Vec2& point) const
 {
-    cpShape* shape = cpSpaceNearestPointQueryNearest(_cpSpace,
+    cpShape* shape = cpSpacePointQueryNearest(_cpSpace,
                                     PhysicsHelper::point2cpv(point),
                                     0,
-                                    CP_ALL_LAYERS,
-                                    CP_NO_GROUP,
+                                    CP_SHAPE_FILTER_ALL,
                                     nullptr);
-    
-    return shape == nullptr ? nullptr : s_physicsShapeMap.find(shape)->second;
+    return shape == nullptr ? nullptr : static_cast<PhysicsShape*>(cpShapeGetUserData(shape));
 }
 
-PhysicsWorld* PhysicsWorld::construct(Scene& scene)
-{
-    PhysicsWorld * world = new (std::nothrow) PhysicsWorld();
-    if(world && world->init(scene))
-    {
-        return world;
-    }
-    
-    CC_SAFE_DELETE(world);
-    return nullptr;
-}
-
-bool PhysicsWorld::init(Scene& scene)
+bool PhysicsWorld::init()
 {
     do
     {
-        _cpSpace = cpSpaceNew();
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+		_cpSpace = cpSpaceNew();
+#else
+        _cpSpace = cpHastySpaceNew();
+        cpHastySpaceSetThreads(_cpSpace, 0);
+#endif
         CC_BREAK_IF(_cpSpace == nullptr);
-        
-        _scene = &scene;
         
         cpSpaceSetGravity(_cpSpace, PhysicsHelper::point2cpv(_gravity));
         
-        cpSpaceSetDefaultCollisionHandler(_cpSpace,
-                                          (cpCollisionBeginFunc)PhysicsWorldCallback::collisionBeginCallbackFunc,
-                                          (cpCollisionPreSolveFunc)PhysicsWorldCallback::collisionPreSolveCallbackFunc,
-                                          (cpCollisionPostSolveFunc)PhysicsWorldCallback::collisionPostSolveCallbackFunc,
-                                          (cpCollisionSeparateFunc)PhysicsWorldCallback::collisionSeparateCallbackFunc,
-                                          this);
+        cpCollisionHandler *handler = cpSpaceAddDefaultCollisionHandler(_cpSpace);
+        handler->userData = this;
+        handler->beginFunc = (cpCollisionBeginFunc)PhysicsWorldCallback::collisionBeginCallbackFunc;
+        handler->preSolveFunc = (cpCollisionPreSolveFunc)PhysicsWorldCallback::collisionPreSolveCallbackFunc;
+        handler->postSolveFunc = (cpCollisionPostSolveFunc)PhysicsWorldCallback::collisionPostSolveCallbackFunc;
+        handler->separateFunc = (cpCollisionSeparateFunc)PhysicsWorldCallback::collisionSeparateCallbackFunc;
         
         return true;
     } while (false);
@@ -482,7 +533,7 @@ void PhysicsWorld::doAddBody(PhysicsBody* body)
     if (body->isEnabled())
     {
         // add body to space
-        if (body->isDynamic() && !cpSpaceContainsBody(_cpSpace, body->_cpBody))
+        if (!cpSpaceContainsBody(_cpSpace, body->_cpBody))
         {
             cpSpaceAddBody(_cpSpace, body->_cpBody);
         }
@@ -549,11 +600,11 @@ void PhysicsWorld::removeBody(PhysicsBody* body)
 {
     if (body->getWorld() != this)
     {
-        CCLOG("Physics Warnning: this body doesn't belong to this world");
+        CCLOG("Physics Warning: this body doesn't belong to this world");
         return;
     }
     
-    // destory the body's joints
+    // destroy the body's joints
     auto removeCopy = body->_joints;
     for (auto joint : removeCopy)
     {
@@ -565,7 +616,6 @@ void PhysicsWorld::removeBody(PhysicsBody* body)
     _bodies.eraseObject(body);
     body->_world = nullptr;
 }
-
 
 void PhysicsWorld::removeBodyOrDelay(PhysicsBody* body)
 {
@@ -593,20 +643,24 @@ void PhysicsWorld::removeJoint(PhysicsJoint* joint, bool destroy)
     {
         if (joint->getWorld() != this && destroy)
         {
-            CCLOG("physics warnning: the joint is not in this world, it won't be destoried utill the body it conntect is destoried");
+            CCLOG("physics warning: the joint is not in this world, it won't be destroyed until the body it connects is destroyed");
             return;
         }
 
-        joint->_destoryMark = destroy;
+        joint->_destroyMark = destroy;
+
+        bool removedFromDelayAdd = false;
+        auto it = std::find(_delayAddJoints.begin(), _delayAddJoints.end(), joint);
+        if (it != _delayAddJoints.end())
+        {
+            _delayAddJoints.erase(it);
+            removedFromDelayAdd = true;
+        }
+
         if (cpSpaceIsLocked(_cpSpace))
         {
-            auto it = std::find(_delayAddJoints.begin(), _delayAddJoints.end(), joint);
-            if (it != _delayAddJoints.end())
-            {
-                _delayAddJoints.erase(it);
+            if (removedFromDelayAdd)
                 return;
-            }
-
             if (std::find(_delayRemoveJoints.rbegin(), _delayRemoveJoints.rend(), joint) == _delayRemoveJoints.rend())
             {
                 _delayRemoveJoints.push_back(joint);
@@ -665,11 +719,9 @@ void PhysicsWorld::addJoint(PhysicsJoint* joint)
 {
     if (joint)
     {
-        if (joint->getWorld() && joint->getWorld() != this)
-        {
-            joint->removeFormWorld();
-        }
+        CCASSERT(joint->getWorld() == nullptr, "Can not add joint already add to other world!");
 
+        joint->_world = this;
         auto it = std::find(_delayRemoveJoints.begin(), _delayRemoveJoints.end(), joint);
         if (it != _delayRemoveJoints.end())
         {
@@ -708,7 +760,7 @@ void PhysicsWorld::doRemoveBody(PhysicsBody* body)
 {
     CCASSERT(body != nullptr, "the body can not be nullptr");
     
-    // remove shaps
+    // remove shapes
     for (auto& shape : body->getShapes())
     {
         removeShape(shape);
@@ -740,7 +792,7 @@ void PhysicsWorld::doRemoveJoint(PhysicsJoint* joint)
         joint->getBodyB()->removeJoint(joint);
     }
 
-    if (joint->_destoryMark)
+    if (joint->_destroyMark)
     {
         delete joint;
     }
@@ -761,7 +813,8 @@ void PhysicsWorld::setDebugDrawMask(int mask)
 {
     if (mask == DEBUGDRAW_NONE)
     {
-        CC_SAFE_DELETE(_debugDraw);
+        _debugDraw->removeFromParent();
+        CC_SAFE_RELEASE_NULL(_debugDraw);
     }
     
     _debugDrawMask = mask;
@@ -785,7 +838,7 @@ PhysicsBody* PhysicsWorld::getBody(int tag) const
     return nullptr;
 }
 
-void PhysicsWorld::setGravity(const Vect& gravity)
+void PhysicsWorld::setGravity(const Vec2& gravity)
 {
     _gravity = gravity;
     cpSpaceSetGravity(_cpSpace, PhysicsHelper::point2cpv(gravity));
@@ -817,51 +870,73 @@ void PhysicsWorld::step(float delta)
 
 void PhysicsWorld::update(float delta, bool userCall/* = false*/)
 {
-    if (delta < FLT_EPSILON)
+    if(!_delayAddBodies.empty())
     {
-        return;
-    }
-
-    if(_updateBodyTransform || !_delayAddBodies.empty())
-    {
-        _scene->updatePhysicsBodyTransform(_scene->getNodeToParentTransform(), 0, 1.0f, 1.0f);
         updateBodies();
-        _updateBodyTransform = false;
     }
     else if (!_delayRemoveBodies.empty())
     {
         updateBodies();
     }
+    
+    auto sceneToWorldTransform = _scene->getNodeToParentTransform();
+    beforeSimulation(_scene, sceneToWorldTransform, 1.f, 1.f, 0.f);
 
     if (!_delayAddJoints.empty() || !_delayRemoveJoints.empty())
     {
         updateJoints();
     }
     
+    if (delta < FLT_EPSILON)
+    {
+        return;
+    }
+    
     if (userCall)
     {
-        cpSpaceStep(_cpSpace, delta);
-        for (auto& body : _bodies)
-        {
-            body->update(delta);
-        }
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+		cpSpaceStep(_cpSpace, delta);
+#else
+		cpHastySpaceStep(_cpSpace, delta);
+#endif
     }
     else
     {
         _updateTime += delta;
-        if (++_updateRateCount >= _updateRate)
+        if(_fixedRate)
         {
-            const float dt = _updateTime * _speed / _substeps;
-            for (int i = 0; i < _substeps; ++i)
+            const float step = 1.0f / _fixedRate;
+            const float dt = step * _speed;
+            while(_updateTime>step)
             {
-                cpSpaceStep(_cpSpace, dt);
-                for (auto& body : _bodies)
+                _updateTime-=step;
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+				cpSpaceStep(_cpSpace, dt);
+#else
+				cpHastySpaceStep(_cpSpace, dt);
+#endif
+			}
+        }
+        else
+        {
+            if (++_updateRateCount >= _updateRate)
+            {
+                const float dt = _updateTime * _speed / _substeps;
+                for (int i = 0; i < _substeps; ++i)
                 {
-                    body->update(dt);
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+					cpSpaceStep(_cpSpace, dt);
+#else
+					cpHastySpaceStep(_cpSpace, dt);
+#endif 
+					for (auto& body : _bodies)
+                    {
+                        body->update(dt);
+                    }
                 }
+                _updateRateCount = 0;
+                _updateTime = 0.0f;
             }
-            _updateRateCount = 0;
-            _updateTime = 0.0f;
         }
     }
     
@@ -869,6 +944,24 @@ void PhysicsWorld::update(float delta, bool userCall/* = false*/)
     {
         debugDraw();
     }
+
+    // Update physics position, should loop as the same sequence as node tree.
+    // PhysicsWorld::afterSimulation() will depend on the sequence.
+    afterSimulation(_scene, sceneToWorldTransform, 0.f);
+}
+
+PhysicsWorld* PhysicsWorld::construct(Scene* scene)
+{
+    PhysicsWorld * world = new (std::nothrow) PhysicsWorld();
+    if (world && world->init())
+    {
+        world->_scene = scene;
+        world->_eventDispatcher = scene->getEventDispatcher();
+        return world;
+    }
+
+    CC_SAFE_DELETE(world);
+    return nullptr;
 }
 
 PhysicsWorld::PhysicsWorld()
@@ -878,12 +971,14 @@ PhysicsWorld::PhysicsWorld()
 , _updateRateCount(0)
 , _updateTime(0.0f)
 , _substeps(1)
+, _fixedRate(0)
 , _cpSpace(nullptr)
+, _updateBodyTransform(false)
 , _scene(nullptr)
 , _autoStep(true)
 , _debugDraw(nullptr)
-, _updateBodyTransform(false)
 , _debugDrawMask(DEBUGDRAW_NONE)
+, _eventDispatcher(nullptr)
 {
     
 }
@@ -894,165 +989,46 @@ PhysicsWorld::~PhysicsWorld()
     removeAllBodies();
     if (_cpSpace)
     {
-        cpSpaceFree(_cpSpace);
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+		cpSpaceFree(_cpSpace);
+#else
+		cpHastySpaceFree(_cpSpace);
+#endif 
     }
-    CC_SAFE_DELETE(_debugDraw);
+    CC_SAFE_RELEASE_NULL(_debugDraw);
 }
 
-PhysicsDebugDraw::PhysicsDebugDraw(PhysicsWorld& world)
-: _drawNode(nullptr)
-, _world(world)
+void PhysicsWorld::beforeSimulation(Node *node, const Mat4& parentToWorldTransform, float nodeParentScaleX, float nodeParentScaleY, float parentRotation)
 {
-    _drawNode = DrawNode::create();
-    _world.getScene().addChild(_drawNode);
-}
+    auto scaleX = nodeParentScaleX * node->getScaleX();
+    auto scaleY = nodeParentScaleY * node->getScaleY();
+    auto rotation = parentRotation + node->getRotation();
 
-PhysicsDebugDraw::~PhysicsDebugDraw()
-{
-    _drawNode->removeFromParent();
-    _drawNode = nullptr;
-}
+    auto nodeToWorldTransform = parentToWorldTransform * node->getNodeToParentTransform();
 
-bool PhysicsDebugDraw::begin()
-{
-    _drawNode->clear();
-    return true;
-}
-
-void PhysicsDebugDraw::end()
-{
-}
-
-void PhysicsDebugDraw::drawShape(PhysicsShape& shape)
-{
-    const Color4F fillColor(1.0f, 0.0f, 0.0f, 0.3f);
-    const Color4F outlineColor(1.0f, 0.0f, 0.0f, 1.0f);
-    
-    for (auto it = shape._cpShapes.begin(); it != shape._cpShapes.end(); ++it)
+    auto physicsBody = node->getPhysicsBody();
+    if (physicsBody)
     {
-        cpShape *subShape = *it;
-        
-        switch ((*it)->klass_private->type)
-        {
-            case CP_CIRCLE_SHAPE:
-            {
-                float radius = PhysicsHelper::cpfloat2float(cpCircleShapeGetRadius(subShape));
-                Vec2 centre = PhysicsHelper::cpv2point(cpBodyGetPos(cpShapeGetBody(subShape)))
-                + PhysicsHelper::cpv2point(cpCircleShapeGetOffset(subShape));
-                
-                static const int CIRCLE_SEG_NUM = 12;
-                Vec2 seg[CIRCLE_SEG_NUM] = {};
-                
-                for (int i = 0; i < CIRCLE_SEG_NUM; ++i)
-                {
-                    float angle = (float)i * M_PI / (float)CIRCLE_SEG_NUM * 2.0f;
-                    Vec2 d(radius * cosf(angle), radius * sinf(angle));
-                    seg[i] = centre + d;
-                }
-                _drawNode->drawPolygon(seg, CIRCLE_SEG_NUM, fillColor, 1, outlineColor);
-                break;
-            }
-            case CP_SEGMENT_SHAPE:
-            {
-                cpSegmentShape *seg = (cpSegmentShape *)subShape;
-                _drawNode->drawSegment(PhysicsHelper::cpv2point(seg->ta),
-                                      PhysicsHelper::cpv2point(seg->tb),
-                                      PhysicsHelper::cpfloat2float(seg->r==0 ? 1 : seg->r), outlineColor);
-                break;
-            }
-            case CP_POLY_SHAPE:
-            {
-                cpPolyShape* poly = (cpPolyShape*)subShape;
-                int num = poly->numVerts;
-                Vec2* seg = new (std::nothrow) Vec2[num];
-                
-                PhysicsHelper::cpvs2points(poly->tVerts, seg, num);
-                
-                _drawNode->drawPolygon(seg, num, fillColor, 1.0f, outlineColor);
-                
-                delete[] seg;
-                break;
-            }
-            default:
-                break;
-        }
+        physicsBody->beforeSimulation(parentToWorldTransform, nodeToWorldTransform, scaleX, scaleY, rotation);
     }
+
+    for (auto child : node->getChildren())
+        beforeSimulation(child, nodeToWorldTransform, scaleX, scaleY, rotation);
 }
 
-void PhysicsDebugDraw::drawJoint(PhysicsJoint& joint)
+void PhysicsWorld::afterSimulation(Node *node, const Mat4& parentToWorldTransform, float parentRotation)
 {
-    const Color4F lineColor(0.0f, 0.0f, 1.0f, 1.0f);
-    const Color4F jointPointColor(0.0f, 1.0f, 0.0f, 1.0f);
-    
-    for (auto it = joint._cpConstraints.begin(); it != joint._cpConstraints.end(); ++it)
+    auto nodeToWorldTransform = parentToWorldTransform * node->getNodeToParentTransform();
+    auto nodeRotation = parentRotation + node->getRotation();
+
+    auto physicsBody = node->getPhysicsBody();
+    if (physicsBody)
     {
-        cpConstraint *constraint = *it;
-        
-        
-        cpBody *body_a = constraint->a;
-        cpBody *body_b = constraint->b;
-        
-        const cpConstraintClass *klass = constraint->klass_private;
-        if(klass == cpPinJointGetClass())
-        {
-            cpPinJoint *subJoint = (cpPinJoint *)constraint;
-            
-            cpVect a = cpvadd(body_a->p, cpvrotate(subJoint->anchr1, body_a->rot));
-            cpVect b = cpvadd(body_b->p, cpvrotate(subJoint->anchr2, body_b->rot));
-            
-            _drawNode->drawSegment(PhysicsHelper::cpv2point(a), PhysicsHelper::cpv2point(b), 1, lineColor);
-            _drawNode->drawDot(PhysicsHelper::cpv2point(a), 2, jointPointColor);
-            _drawNode->drawDot(PhysicsHelper::cpv2point(b), 2, jointPointColor);
-        }
-        else if(klass == cpSlideJointGetClass())
-        {
-            cpSlideJoint *subJoint = (cpSlideJoint *)constraint;
-            
-            cpVect a = cpvadd(body_a->p, cpvrotate(subJoint->anchr1, body_a->rot));
-            cpVect b = cpvadd(body_b->p, cpvrotate(subJoint->anchr2, body_b->rot));
-            
-            _drawNode->drawSegment(PhysicsHelper::cpv2point(a), PhysicsHelper::cpv2point(b), 1, lineColor);
-            _drawNode->drawDot(PhysicsHelper::cpv2point(a), 2, jointPointColor);
-            _drawNode->drawDot(PhysicsHelper::cpv2point(b), 2, jointPointColor);
-        }
-        else if(klass == cpPivotJointGetClass())
-        {
-            cpPivotJoint *subJoint = (cpPivotJoint *)constraint;
-            
-            cpVect a = cpvadd(body_a->p, cpvrotate(subJoint->anchr1, body_a->rot));
-            cpVect b = cpvadd(body_b->p, cpvrotate(subJoint->anchr2, body_b->rot));
-            
-            _drawNode->drawDot(PhysicsHelper::cpv2point(a), 2, jointPointColor);
-            _drawNode->drawDot(PhysicsHelper::cpv2point(b), 2, jointPointColor);
-        }
-        else if(klass == cpGrooveJointGetClass())
-        {
-            cpGrooveJoint *subJoint = (cpGrooveJoint *)constraint;
-            
-            cpVect a = cpvadd(body_a->p, cpvrotate(subJoint->grv_a, body_a->rot));
-            cpVect b = cpvadd(body_a->p, cpvrotate(subJoint->grv_b, body_a->rot));
-            cpVect c = cpvadd(body_b->p, cpvrotate(subJoint->anchr2, body_b->rot));
-            
-            _drawNode->drawSegment(PhysicsHelper::cpv2point(a), PhysicsHelper::cpv2point(b), 1, lineColor);
-            _drawNode->drawDot(PhysicsHelper::cpv2point(c), 2, jointPointColor);
-        }
-        else if(klass == cpDampedSpringGetClass())
-        {
-            cpDampedSpring *subJoint = (cpDampedSpring *)constraint;
-            
-            cpVect a = cpvadd(body_a->p, cpvrotate(subJoint->anchr1, body_a->rot));
-            cpVect b = cpvadd(body_b->p, cpvrotate(subJoint->anchr2, body_b->rot));
-            
-            _drawNode->drawSegment(PhysicsHelper::cpv2point(a), PhysicsHelper::cpv2point(b), 1, lineColor);
-            _drawNode->drawDot(PhysicsHelper::cpv2point(a), 2, jointPointColor);
-            _drawNode->drawDot(PhysicsHelper::cpv2point(b), 2, jointPointColor);
-        }
+        physicsBody->afterSimulation(parentToWorldTransform, parentRotation);
     }
-}
 
-void PhysicsDebugDraw::drawContact()
-{
-    
+    for (auto child : node->getChildren())
+        afterSimulation(child, nodeToWorldTransform, nodeRotation);
 }
 
 NS_CC_END

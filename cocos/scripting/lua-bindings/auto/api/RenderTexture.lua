@@ -5,7 +5,10 @@
 -- @parent_module cc
 
 --------------------------------
--- Used for grab part of screen to a texture.rtBegin: the position of renderTexture on the fullRectfullRect: the total size of screenfullViewport: the total viewportSize
+-- Used for grab part of screen to a texture. <br>
+-- param rtBegin The position of renderTexture on the fullRect.<br>
+-- param fullRect The total size of screen.<br>
+-- param fullViewport The total viewportSize.
 -- @function [parent=#RenderTexture] setVirtualViewport 
 -- @param self
 -- @param #vec2_table rtBegin
@@ -14,73 +17,77 @@
 -- @return RenderTexture#RenderTexture self (return value: cc.RenderTexture)
         
 --------------------------------
---  clears the texture with a specified stencil value 
+--  Clears the texture with a specified stencil value.<br>
+-- param stencilValue A specified stencil value.
 -- @function [parent=#RenderTexture] clearStencil 
 -- @param self
 -- @param #int stencilValue
 -- @return RenderTexture#RenderTexture self (return value: cc.RenderTexture)
         
 --------------------------------
---  Value for clearDepth. Valid only when "autoDraw" is true. 
+--  Value for clearDepth. Valid only when "autoDraw" is true. <br>
+-- return Value for clearDepth.
 -- @function [parent=#RenderTexture] getClearDepth 
 -- @param self
 -- @return float#float ret (return value: float)
         
 --------------------------------
---  Value for clear Stencil. Valid only when "autoDraw" is true 
+--  Value for clear Stencil. Valid only when "autoDraw" is true.<br>
+-- return Value for clear Stencil.
 -- @function [parent=#RenderTexture] getClearStencil 
 -- @param self
 -- @return int#int ret (return value: int)
         
 --------------------------------
---  ends grabbing
--- @function [parent=#RenderTexture] end 
--- @param self
--- @return RenderTexture#RenderTexture self (return value: cc.RenderTexture)
-        
---------------------------------
--- 
+--  Set Value for clear Stencil.<br>
+-- param clearStencil Value for clear Stencil.
 -- @function [parent=#RenderTexture] setClearStencil 
 -- @param self
 -- @param #int clearStencil
 -- @return RenderTexture#RenderTexture self (return value: cc.RenderTexture)
         
 --------------------------------
---  Sets the Sprite being used. 
+--  Sets the Sprite being used. <br>
+-- param sprite A Sprite.
 -- @function [parent=#RenderTexture] setSprite 
 -- @param self
 -- @param #cc.Sprite sprite
 -- @return RenderTexture#RenderTexture self (return value: cc.RenderTexture)
         
 --------------------------------
---  Gets the Sprite being used. 
+--  Gets the Sprite being used. <br>
+-- return A Sprite.
 -- @function [parent=#RenderTexture] getSprite 
 -- @param self
 -- @return Sprite#Sprite ret (return value: cc.Sprite)
         
 --------------------------------
---  When enabled, it will render its children into the texture automatically. Disabled by default for compatiblity reasons.<br>
--- Will be enabled in the future.
+--  When enabled, it will render its children into the texture automatically. Disabled by default for compatibility reasons.<br>
+-- Will be enabled in the future.<br>
+-- return Return the autoDraw value.
 -- @function [parent=#RenderTexture] isAutoDraw 
 -- @param self
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- 
+--  Flag: Use stack matrix computed from scene hierarchy or generate new modelView and projection matrix.<br>
+-- param keepMatrix Whether or not use stack matrix computed from scene hierarchy or generate new modelView and projection matrix.<br>
+-- js NA
 -- @function [parent=#RenderTexture] setKeepMatrix 
 -- @param self
 -- @param #bool keepMatrix
 -- @return RenderTexture#RenderTexture self (return value: cc.RenderTexture)
         
 --------------------------------
--- 
+--  Set flags.<br>
+-- param clearFlags Valid flags: GL_COLOR_BUFFER_BIT, GL_DEPTH_BUFFER_BIT, GL_STENCIL_BUFFER_BIT.
 -- @function [parent=#RenderTexture] setClearFlags 
 -- @param self
 -- @param #unsigned int clearFlags
 -- @return RenderTexture#RenderTexture self (return value: cc.RenderTexture)
         
 --------------------------------
---  starts grabbing 
+--  Starts grabbing. 
 -- @function [parent=#RenderTexture] begin 
 -- @param self
 -- @return RenderTexture#RenderTexture self (return value: cc.RenderTexture)
@@ -97,22 +104,25 @@
 -- @return bool#bool ret (return value: bool)
 
 --------------------------------
--- 
+--  Set a valve to control whether or not render its children into the texture automatically. <br>
+-- param isAutoDraw Whether or not render its children into the texture automatically.
 -- @function [parent=#RenderTexture] setAutoDraw 
 -- @param self
 -- @param #bool isAutoDraw
 -- @return RenderTexture#RenderTexture self (return value: cc.RenderTexture)
         
 --------------------------------
--- 
+--  Set color value. <br>
+-- param clearColor Color value.
 -- @function [parent=#RenderTexture] setClearColor 
 -- @param self
 -- @param #color4f_table clearColor
 -- @return RenderTexture#RenderTexture self (return value: cc.RenderTexture)
         
 --------------------------------
---  end is key word of lua, use other name to export to lua. 
--- @function [parent=#RenderTexture] endToLua 
+--  Ends grabbing.<br>
+-- lua endToLua
+-- @function [parent=#RenderTexture] end 
 -- @param self
 -- @return RenderTexture#RenderTexture self (return value: cc.RenderTexture)
         
@@ -131,20 +141,26 @@
 -- @return RenderTexture#RenderTexture self (return value: cc.RenderTexture)
 
 --------------------------------
---  clears the texture with a specified depth value 
+--  Clears the texture with a specified depth value. <br>
+-- param depthValue A specified depth value.
 -- @function [parent=#RenderTexture] clearDepth 
 -- @param self
 -- @param #float depthValue
 -- @return RenderTexture#RenderTexture self (return value: cc.RenderTexture)
         
 --------------------------------
---  Clear color value. Valid only when "autoDraw" is true. 
+--  Clear color value. Valid only when "autoDraw" is true. <br>
+-- return Color value.
 -- @function [parent=#RenderTexture] getClearColor 
 -- @param self
 -- @return color4f_table#color4f_table ret (return value: color4f_table)
         
 --------------------------------
---  clears the texture with a color 
+--  Clears the texture with a color. <br>
+-- param r Red.<br>
+-- param g Green.<br>
+-- param b Blue.<br>
+-- param a Alpha.
 -- @function [parent=#RenderTexture] clear 
 -- @param self
 -- @param #float r
@@ -154,7 +170,8 @@
 -- @return RenderTexture#RenderTexture self (return value: cc.RenderTexture)
         
 --------------------------------
---  Valid flags: GL_COLOR_BUFFER_BIT, GL_DEPTH_BUFFER_BIT, GL_STENCIL_BUFFER_BIT. They can be OR'ed. Valid when "autoDraw" is true. 
+--  Valid flags: GL_COLOR_BUFFER_BIT, GL_DEPTH_BUFFER_BIT, GL_STENCIL_BUFFER_BIT. They can be OR'ed. Valid when "autoDraw" is true. <br>
+-- return Clear flags.
 -- @function [parent=#RenderTexture] getClearFlags 
 -- @param self
 -- @return unsigned int#unsigned int ret (return value: unsigned int)
@@ -166,7 +183,8 @@
 -- @return Image#Image ret (return value: cc.Image)
         
 --------------------------------
--- 
+--  Set Value for clearDepth.<br>
+-- param clearDepth Value for clearDepth.
 -- @function [parent=#RenderTexture] setClearDepth 
 -- @param self
 -- @param #float clearDepth
@@ -214,7 +232,10 @@
 -- @return RenderTexture#RenderTexture self (return value: cc.RenderTexture)
         
 --------------------------------
--- 
+--  FIXME: should be protected.<br>
+-- but due to a bug in PowerVR + Android,<br>
+-- the constructor is public again.<br>
+-- js ctor
 -- @function [parent=#RenderTexture] RenderTexture 
 -- @param self
 -- @return RenderTexture#RenderTexture self (return value: cc.RenderTexture)

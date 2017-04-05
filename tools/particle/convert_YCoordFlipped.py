@@ -31,7 +31,7 @@ def writeFlippedConvertFlag(plistDict):
 
 #process file
 def processConvertFile(filename):
-    #print a line to seperate files
+    #print a line to separate files
     print ('')
     if(not os.path.isfile(filename)):
         print(filename + ' dose not exist!')

@@ -9,7 +9,7 @@
 -- param idx index to find a cell
 -- @function [parent=#TableView] updateCellAtIndex 
 -- @param self
--- @param #long idx
+-- @param #int idx
 -- @return TableView#TableView self (return value: cc.TableView)
         
 --------------------------------
@@ -43,7 +43,7 @@
 -- param idx index to find a cell
 -- @function [parent=#TableView] removeCellAtIndex 
 -- @param self
--- @param #long idx
+-- @param #int idx
 -- @return TableView#TableView self (return value: cc.TableView)
         
 --------------------------------
@@ -72,7 +72,7 @@
 -- param idx location to insert
 -- @function [parent=#TableView] insertCellAtIndex 
 -- @param self
--- @param #long idx
+-- @param #int idx
 -- @return TableView#TableView self (return value: cc.TableView)
         
 --------------------------------
@@ -81,7 +81,7 @@
 -- return a cell at a given index
 -- @function [parent=#TableView] cellAtIndex 
 -- @param self
--- @param #long idx
+-- @param #int idx
 -- @return TableViewCell#TableViewCell ret (return value: cc.TableViewCell)
         
 --------------------------------
@@ -124,7 +124,8 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- js ctor
+-- js ctor<br>
+-- lua new
 -- @function [parent=#TableView] TableView 
 -- @param self
 -- @return TableView#TableView self (return value: cc.TableView)

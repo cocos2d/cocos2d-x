@@ -1,10 +1,15 @@
-
 #include "TextureCacheTest.h"
 
 // enable log
 #define COCOS2D_DEBUG 1
 
 USING_NS_CC;
+
+TextureCacheTests::TextureCacheTests()
+{
+    ADD_TEST_CASE(TextureCacheTest);
+    ADD_TEST_CASE(TextureCacheUnbindTest);
+}
 
 TextureCacheTest::TextureCacheTest()
 : _numberOfSprites(20)
@@ -21,7 +26,7 @@ TextureCacheTest::TextureCacheTest()
     this->addChild(_labelLoading);
     this->addChild(_labelPercent);
 
-    // load textrues
+    // load textures
     Director::getInstance()->getTextureCache()->addImageAsync("Images/HelloWorld.png", CC_CALLBACK_1(TextureCacheTest::loadingCallBack, this));
     Director::getInstance()->getTextureCache()->addImageAsync("Images/grossini.png", CC_CALLBACK_1(TextureCacheTest::loadingCallBack, this));
     Director::getInstance()->getTextureCache()->addImageAsync("Images/grossini_dance_01.png", CC_CALLBACK_1(TextureCacheTest::loadingCallBack, this));
@@ -127,12 +132,51 @@ void TextureCacheTest::addSprite()
     this->addChild(s15);
 }
 
-
-void TextureCacheTestScene::runThisTest()
+TextureCacheUnbindTest::TextureCacheUnbindTest()
 {
-    auto layer = new (std::nothrow) TextureCacheTest();
-    addChild(layer);
+    auto size = Director::getInstance()->getWinSize();
 
-    Director::getInstance()->replaceScene(this);
-    layer->release();
+    Label* nothing =
+      Label::createWithTTF
+      ("There should be\nnothing below", "fonts/arial.ttf", 15);
+    nothing->setPosition(Vec2(size.width / 4, 5 * size.height / 6));
+    this->addChild(nothing);
+    
+    Label* something =
+      Label::createWithTTF
+      ("There should be\na white square below", "fonts/arial.ttf", 15);
+    something->setPosition(Vec2(3 * size.width / 4, 5 * size.height / 6));
+    this->addChild(something);
+
+    auto cache = Director::getInstance()->getTextureCache();
+    
+    cache->removeTextureForKey("Images/texture2048x2048.png");
+
+    cache->addImageAsync
+      ("Images/texture2048x2048.png",
+       CC_CALLBACK_1(TextureCacheUnbindTest::textureLoadedA, this),
+       "A");
+    cache->addImageAsync
+      ("Images/texture2048x2048.png",
+       CC_CALLBACK_1(TextureCacheUnbindTest::textureLoadedB, this),
+       "B");
+    cache->unbindImageAsync("A");
+}
+
+void TextureCacheUnbindTest::textureLoadedA(Texture2D* texture)
+{
+  auto size = Director::getInstance()->getWinSize();
+  auto s = Sprite::create("Images/texture2048x2048.png");
+  s->setScale(0.15);
+  s->setPosition(size.width / 4, size.height / 2);
+  this->addChild(s);
+}
+
+void TextureCacheUnbindTest::textureLoadedB(Texture2D* texture)
+{
+  auto size = Director::getInstance()->getWinSize();
+  auto s = Sprite::create("Images/texture2048x2048.png");
+  s->setScale(0.15);
+  s->setPosition(3 * size.width / 4, size.height / 2);
+  this->addChild(s);
 }

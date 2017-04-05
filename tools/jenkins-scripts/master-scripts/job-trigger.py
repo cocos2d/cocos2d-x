@@ -1,4 +1,4 @@
-#Github pull reqest builder for Jenkins 
+#Github pull reqest builder for Jenkins
 
 import json
 import re
@@ -9,33 +9,34 @@ import traceback
 from jenkinsapi.jenkins import Jenkins
 
 access_token = os.environ['GITHUB_ACCESS_TOKEN']
-Headers = {"Authorization":"token " + access_token} 
+Headers = {"Authorization": "token " + access_token}
 
 http_proxy = ''
-if(os.environ.has_key('HTTP_PROXY')):
+if('HTTP_PROXY' in os.environ):
     http_proxy = os.environ['HTTP_PROXY']
-proxyDict = {'http':http_proxy,'https':http_proxy}
+proxyDict = {'http': http_proxy, 'https': http_proxy}
 
 def check_queue_build(action, pr_num, statuses_url):
     username = os.environ['JENKINS_ADMIN']
     password = os.environ['JENKINS_ADMIN_PW']
     jenkins_url = os.environ['JENKINS_URL']
-    J = Jenkins(jenkins_url,username,password)
+    J = Jenkins(jenkins_url, username, password)
     queues = J.get_queue()
-    for key,queue in queues.iteritems():
-      q_payload_str = queue.get_parameters()['payload'].decode('utf-8','ignore')
-      q_payload = json.loads(q_payload_str)
-      q_pr_num = q_payload['number']
-      q_statuses_url = q_payload['statuses_url']
-      if(q_pr_num == pr_num):
-        if(action == 'closed') or (q_statuses_url != statuses_url):
-          queues.delete_item(queue)
-          target_url = os.environ['JOB_PULL_REQUEST_BUILD_URL']
-          data = {"state":"error", "target_url":target_url}
-          try:
-              requests.post(statuses_url, data=json.dumps(data), headers=Headers, proxies = proxyDict)
-          except:
-              traceback.print_exc()
+    for key, queue in queues.iteritems():
+        q_payload_str = queue.get_parameters()['payload'].decode('utf-8', 'ignore')
+        q_payload = json.loads(q_payload_str)
+        q_pr_num = q_payload['number']
+        q_statuses_url = q_payload['statuses_url']
+        if(q_pr_num == pr_num):
+            if(action == 'closed') or (q_statuses_url != statuses_url):
+                queues.delete_item(queue)
+                target_url = os.environ['JOB_PULL_REQUEST_BUILD_URL']
+                data = {"state": "error", "target_url": target_url}
+                try:
+                    requests.post(statuses_url, data=json.dumps(data),
+                                  headers=Headers, proxies=proxyDict)
+                except:
+                    traceback.print_exc()
 
 def main():
     #get payload from os env
@@ -46,18 +47,18 @@ def main():
     #get pull number
     pr_num = payload['number']
     print 'pr_num:' + str(pr_num)
-    payload_forword = {"number":pr_num}
-    
+    payload_forword = {"number": pr_num}
+
     #build for pull request action 'open' and 'synchronize', skip 'close'
     action = payload['action']
     print 'action: ' + action
     payload_forword['action'] = action
-    
+
     pr = payload['pull_request']
     url = pr['html_url']
     print "url:" + url
     payload_forword['html_url'] = url
-    
+
     #get statuses url
     statuses_url = pr['statuses_url']
     payload_forword['statuses_url'] = statuses_url
@@ -69,18 +70,20 @@ def main():
     #set commit status to pending
     target_url = os.environ['JOB_PULL_REQUEST_BUILD_URL']
 
-    try:    
+    try:
         check_queue_build(action, pr_num, statuses_url)
     except:
         print 'Can not find build in queue'
-    
-    if(action == 'closed' or action == 'labeled' or action == 'assigned' or action == 'unlabeled'):
-        print 'pull request #' + str(pr_num) + ' is '+action+', no build triggered'
+
+    if(action == 'closed' or action == 'labeled' or action == 'unassigned'
+       or action == 'assigned' or action == 'unlabeled'
+       or branch == 'v2' or branch == 'v3-doc'):
+        print 'pull request #' + str(pr_num) + ' is ' + action + ', no build triggered'
         return(0)
-  
-    r = requests.get(pr['url']+"/commits", headers=Headers, proxies = proxyDict)
+
+    r = requests.get(pr['url'] + "/commits", headers=Headers, proxies=proxyDict)
     commits = r.json()
-    last_commit = commits[len(commits)-1]
+    last_commit = commits[len(commits) - 1]
     message = last_commit['commit']['message']
 
     pattern = re.compile("\[ci(\s+)skip\]", re.I)
@@ -91,27 +94,29 @@ def main():
     if result_commit_title is not None or result_pr_title is not None:
         print 'skip build for pull request #' + str(pr_num)
         return(0)
-    
-    data = {"state":"pending", "target_url":target_url, "context":"Jenkins CI", "description":"Waiting available build machine..."}
-  
+
+    data = {"state": "pending", "target_url": target_url,
+            "context": "Jenkins CI",
+            "description": "Waiting available build machine..."}
 
     try:
-        requests.post(statuses_url, data=json.dumps(data), headers=Headers, proxies = proxyDict)
+        requests.post(statuses_url, data=json.dumps(data),
+                      headers=Headers, proxies=proxyDict)
     except:
         traceback.print_exc()
 
     job_trigger_url = os.environ['JOB_TRIGGER_URL']
     #send trigger and payload
-    post_data = {'payload':""}
-    post_data['payload']= json.dumps(payload_forword)
-    requests.post(job_trigger_url, data=post_data, proxies = proxyDict)
+    post_data = {'payload': ""}
+    post_data['payload'] = json.dumps(payload_forword)
+    requests.post(job_trigger_url, data=post_data, proxies=proxyDict)
 
     return(0)
 
 # -------------- main --------------
 if __name__ == '__main__':
     sys_ret = 0
-    try:    
+    try:
         sys_ret = main()
     except:
         traceback.print_exc()

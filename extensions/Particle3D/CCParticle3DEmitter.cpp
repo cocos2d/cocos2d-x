@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2015-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -38,12 +38,12 @@ Particle3DEmitter::~Particle3DEmitter()
     _particleSystem = nullptr;
 }
 
-void Particle3DEmitter::updateEmitter(Particle3D* particle, float deltaTime)
+void Particle3DEmitter::updateEmitter(Particle3D* /*particle*/, float /*deltaTime*/)
 {
     
 }
 
-void Particle3DEmitter::emit(int count)
+void Particle3DEmitter::emit(int /*count*/)
 {
     
 }

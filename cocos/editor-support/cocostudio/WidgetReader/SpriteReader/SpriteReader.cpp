@@ -22,11 +22,16 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "SpriteReader.h"
+#include "editor-support/cocostudio/WidgetReader/SpriteReader/SpriteReader.h"
 
-#include "cocostudio/CSParseBinary_generated.h"
-#include "cocostudio/FlatBuffersSerialize.h"
-#include "cocostudio/WidgetReader/NodeReader/NodeReader.h"
+#include "2d/CCSprite.h"
+#include "2d/CCSpriteFrameCache.h"
+#include "platform/CCFileUtils.h"
+
+#include "editor-support/cocostudio/CSParseBinary_generated.h"
+#include "editor-support/cocostudio/FlatBuffersSerialize.h"
+#include "editor-support/cocostudio/WidgetReader/NodeReader/NodeReader.h"
+
 
 #include "tinyxml2.h"
 #include "flatbuffers/flatbuffers.h"
@@ -54,13 +59,18 @@ namespace cocostudio
     {
         if (!_instanceSpriteReader)
         {
-            _instanceSpriteReader = new SpriteReader();
+            _instanceSpriteReader = new (std::nothrow) SpriteReader();
         }
         
         return _instanceSpriteReader;
     }
     
     void SpriteReader::purge()
+    {
+        CC_SAFE_DELETE(_instanceSpriteReader);
+    }
+    
+    void SpriteReader::destroyInstance()
     {
         CC_SAFE_DELETE(_instanceSpriteReader);
     }
@@ -74,6 +84,8 @@ namespace cocostudio
         std::string path = "";
         std::string plistFile = "";
         int resourceType = 0;
+        
+        cocos2d::BlendFunc blendFunc = cocos2d::BlendFunc::ALPHA_PREMULTIPLIED;
         
         // FileData
         const tinyxml2::XMLElement* child = objectData->FirstChildElement();
@@ -116,17 +128,40 @@ namespace cocostudio
                     fbs->_textures.push_back(builder->CreateString(texture));                    
                 }
             }
+            else if (name == "BlendFunc")
+            {
+                const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
+                
+                while (attribute)
+                {
+                    name = attribute->Name();
+                    std::string value = attribute->Value();
+                    
+                    if (name == "Src")
+                    {
+                        blendFunc.src = atoi(value.c_str());
+                    }
+                    else if (name == "Dst")
+                    {
+                        blendFunc.dst = atoi(value.c_str());
+                    }
+                    
+                    attribute = attribute->Next();
+                }
+            }
             
             child = child->NextSiblingElement();
         }
+        
+        flatbuffers::BlendFunc f_blendFunc(blendFunc.src, blendFunc.dst);
 
         auto options = CreateSpriteOptions(*builder,
                                            nodeOptions,
                                            CreateResourceData(*builder,
                                                               builder->CreateString(path),
                                                               builder->CreateString(plistFile),
-                                                              resourceType)
-                                           );
+                                                              resourceType),
+                                           &f_blendFunc);
         
         return *(Offset<Table>*)(&options);
     }
@@ -137,13 +172,14 @@ namespace cocostudio
         Sprite *sprite = static_cast<Sprite*>(node);
         auto options = (SpriteOptions*)spriteOptions;
         
+        auto nodeReader = NodeReader::getInstance();
+        nodeReader->setPropsWithFlatBuffers(node, (Table*)(options->nodeOptions()));
         
         auto fileNameData = options->fileNameData();
         
         int resourceType = fileNameData->resourceType();
         std::string path = fileNameData->path()->c_str();
         
-        bool fileExist = false;
         std::string errorFilePath = "";
         
         switch (resourceType)
@@ -153,12 +189,10 @@ namespace cocostudio
                 if (FileUtils::getInstance()->isFileExist(path))
                 {
                     sprite->setTexture(path);
-                    fileExist = true;
                 }
                 else
                 {
                     errorFilePath = path;
-                    fileExist = false;
                 }
                 break;
             }
@@ -170,7 +204,6 @@ namespace cocostudio
                 if (spriteFrame)
                 {
                     sprite->setSpriteFrame(spriteFrame);
-                    fileExist = true;
                 }
                 else
                 {
@@ -188,7 +221,6 @@ namespace cocostudio
                     {
                         errorFilePath = plist;
                     }
-                    fileExist = false;
                 }
                 break;
             }
@@ -196,17 +228,15 @@ namespace cocostudio
             default:
                 break;
         }
-        if (!fileExist)
+        
+        auto f_blendFunc = options->blendFunc();
+        if (f_blendFunc)
         {
-            auto label = Label::create();
-            label->setString(__String::createWithFormat("%s missed", errorFilePath.c_str())->getCString());
-            sprite->addChild(label);
+            cocos2d::BlendFunc blendFunc = cocos2d::BlendFunc::ALPHA_PREMULTIPLIED;
+            blendFunc.src = f_blendFunc->src();
+            blendFunc.dst = f_blendFunc->dst();
+            sprite->setBlendFunc(blendFunc);
         }
-        
-        
-        auto nodeReader = NodeReader::getInstance();
-        nodeReader->setPropsWithFlatBuffers(node, (Table*)(options->nodeOptions()));
-        
         
         auto nodeOptions = options->nodeOptions();
         

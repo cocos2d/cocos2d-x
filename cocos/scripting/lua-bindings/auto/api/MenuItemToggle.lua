@@ -12,26 +12,33 @@
 -- @return MenuItemToggle#MenuItemToggle self (return value: cc.MenuItemToggle)
         
 --------------------------------
---  Gets the index of the selected item 
+--  Initializes a menu item with a item. 
+-- @function [parent=#MenuItemToggle] initWithItem 
+-- @param self
+-- @param #cc.MenuItem item
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+--  Gets the index of the selected item. 
 -- @function [parent=#MenuItemToggle] getSelectedIndex 
 -- @param self
 -- @return unsigned int#unsigned int ret (return value: unsigned int)
         
 --------------------------------
---  add more menu item 
+--  Add more menu item. 
 -- @function [parent=#MenuItemToggle] addSubItem 
 -- @param self
 -- @param #cc.MenuItem item
 -- @return MenuItemToggle#MenuItemToggle self (return value: cc.MenuItemToggle)
         
 --------------------------------
---  return the selected item 
+--  Return the selected item. 
 -- @function [parent=#MenuItemToggle] getSelectedItem 
 -- @param self
 -- @return MenuItem#MenuItem ret (return value: cc.MenuItem)
         
 --------------------------------
---  Sets the index of the selected item 
+--  Sets the index of the selected item. 
 -- @function [parent=#MenuItemToggle] setSelectedIndex 
 -- @param self
 -- @param #unsigned int index
@@ -42,6 +49,12 @@
 -- @function [parent=#MenuItemToggle] setEnabled 
 -- @param self
 -- @param #bool var
+-- @return MenuItemToggle#MenuItemToggle self (return value: cc.MenuItemToggle)
+        
+--------------------------------
+-- 
+-- @function [parent=#MenuItemToggle] cleanup 
+-- @param self
 -- @return MenuItemToggle#MenuItemToggle self (return value: cc.MenuItemToggle)
         
 --------------------------------
@@ -59,6 +72,12 @@
 --------------------------------
 -- 
 -- @function [parent=#MenuItemToggle] selected 
+-- @param self
+-- @return MenuItemToggle#MenuItemToggle self (return value: cc.MenuItemToggle)
+        
+--------------------------------
+-- js ctor
+-- @function [parent=#MenuItemToggle] MenuItemToggle 
 -- @param self
 -- @return MenuItemToggle#MenuItemToggle self (return value: cc.MenuItemToggle)
         

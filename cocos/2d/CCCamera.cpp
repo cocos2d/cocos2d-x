@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2014-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -20,29 +20,30 @@
  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
+
+ Code based GamePlay3D's Camera: http://gameplay3d.org
+
  ****************************************************************************/
 #include "2d/CCCamera.h"
+#include "2d/CCCameraBackgroundBrush.h"
 #include "base/CCDirector.h"
 #include "platform/CCGLView.h"
 #include "2d/CCScene.h"
+#include "renderer/CCRenderer.h"
+#include "renderer/CCQuadCommand.h"
+#include "renderer/CCGLProgramCache.h"
+#include "renderer/ccGLStateCache.h"
+#include "renderer/CCFrameBuffer.h"
+#include "renderer/CCRenderState.h"
 
 NS_CC_BEGIN
 
 Camera* Camera::_visitingCamera = nullptr;
+experimental::Viewport Camera::_defaultViewport;
 
+// start static methods
 
-Camera* Camera::getDefaultCamera()
-{
-    auto scene = Director::getInstance()->getRunningScene();
-    if(scene)
-    {
-        return scene->getDefaultCamera();
-    }
-
-    return nullptr;
-}
-
-    Camera* Camera::create()
+Camera* Camera::create()
 {
     Camera* camera = new (std::nothrow) Camera();
     camera->initDefault();
@@ -78,19 +79,51 @@ Camera* Camera::createOrthographic(float zoomX, float zoomY, float nearPlane, fl
     return nullptr;
 }
 
+Camera* Camera::getDefaultCamera()
+{
+    auto scene = Director::getInstance()->getRunningScene();
+    if(scene)
+    {
+        return scene->getDefaultCamera();
+    }
+
+    return nullptr;
+}
+
+const experimental::Viewport& Camera::getDefaultViewport()
+{
+    return _defaultViewport;
+}
+void Camera::setDefaultViewport(const experimental::Viewport& vp)
+{
+    _defaultViewport = vp;
+}
+
+const Camera* Camera::getVisitingCamera()
+{
+    return _visitingCamera;
+}
+
+// end static methods
+
 Camera::Camera()
 : _scene(nullptr)
 , _viewProjectionDirty(true)
 , _cameraFlag(1)
 , _frustumDirty(true)
+, _viewProjectionUpdated(false)
 , _depth(-1)
+, _fbo(nullptr)
 {
     _frustum.setClipZ(true);
+    _clearBrush = CameraBackgroundBrush::createDepthBrush(1.f);
+    _clearBrush->retain();
 }
 
 Camera::~Camera()
 {
-    
+    CC_SAFE_RELEASE_NULL(_fbo);
+    CC_SAFE_RELEASE(_clearBrush);
 }
 
 const Mat4& Camera::getProjectionMatrix() const
@@ -142,12 +175,8 @@ void Camera::lookAt(const Vec3& lookAtPos, const Vec3& up)
     
     Quaternion  quaternion;
     Quaternion::createFromRotationMatrix(rotation,&quaternion);
-
-    float rotx = atan2f(2 * (quaternion.w * quaternion.x + quaternion.y * quaternion.z), 1 - 2 * (quaternion.x * quaternion.x + quaternion.y * quaternion.y));
-    float roty = asin(clampf(2 * (quaternion.w * quaternion.y - quaternion.z * quaternion.x) , -1.0f , 1.0f));
-    float rotz = -atan2(2 * (quaternion.w * quaternion.z + quaternion.x * quaternion.y) , 1 - 2 * (quaternion.y * quaternion.y + quaternion.z * quaternion.z));
-    
-    setRotation3D(Vec3(CC_RADIANS_TO_DEGREES(rotx),CC_RADIANS_TO_DEGREES(roty),CC_RADIANS_TO_DEGREES(rotz)));
+    quaternion.normalize();
+    setRotationQuat(quaternion);
 }
 
 const Mat4& Camera::getViewProjectionMatrix() const
@@ -205,14 +234,6 @@ bool Camera::initPerspective(float fieldOfView, float aspectRatio, float nearPla
     _nearPlane = nearPlane;
     _farPlane = farPlane;
     Mat4::createPerspective(_fieldOfView, _aspectRatio, _nearPlane, _farPlane, &_projection);
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
-    //if needed, we need to add a rotation for Landscape orientations on Windows Phone 8 since it is always in Portrait Mode
-    GLView* view = Director::getInstance()->getOpenGLView();
-    if(view != nullptr)
-    {
-        setAdditionalProjection(view->getOrientationMatrix());
-    }
-#endif
     _viewProjectionDirty = true;
     _frustumDirty = true;
     
@@ -226,14 +247,6 @@ bool Camera::initOrthographic(float zoomX, float zoomY, float nearPlane, float f
     _nearPlane = nearPlane;
     _farPlane = farPlane;
     Mat4::createOrthographicOffCenter(0, _zoom[0], 0, _zoom[1], _nearPlane, _farPlane, &_projection);
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
-    //if needed, we need to add a rotation for Landscape orientations on Windows Phone 8 since it is always in Portrait Mode
-    GLView* view = Director::getInstance()->getOpenGLView();
-    if(view != nullptr)
-    {
-        setAdditionalProjection(view->getOrientationMatrix());
-    }
-#endif
     _viewProjectionDirty = true;
     _frustumDirty = true;
     
@@ -248,7 +261,7 @@ Vec2 Camera::project(const Vec3& src) const
     Vec4 clipPos;
     getViewProjectionMatrix().transformVector(Vec4(src.x, src.y, src.z, 1.0f), &clipPos);
     
-    CCASSERT(clipPos.w != 0.0f, "");
+    CCASSERT(clipPos.w != 0.0f, "clipPos.w can't be 0.0f!");
     float ndcX = clipPos.x / clipPos.w;
     float ndcY = clipPos.y / clipPos.w;
     
@@ -257,11 +270,42 @@ Vec2 Camera::project(const Vec3& src) const
     return screenPos;
 }
 
+Vec2 Camera::projectGL(const Vec3& src) const
+{
+    Vec2 screenPos;
+    
+    auto viewport = Director::getInstance()->getWinSize();
+    Vec4 clipPos;
+    getViewProjectionMatrix().transformVector(Vec4(src.x, src.y, src.z, 1.0f), &clipPos);
+    
+    CCASSERT(clipPos.w != 0.0f, "clipPos.w can't be 0.0f!");
+    float ndcX = clipPos.x / clipPos.w;
+    float ndcY = clipPos.y / clipPos.w;
+    
+    screenPos.x = (ndcX + 1.0f) * 0.5f * viewport.width;
+    screenPos.y = (ndcY + 1.0f) * 0.5f * viewport.height;
+    return screenPos;
+}
+
 Vec3 Camera::unproject(const Vec3& src) const
 {
-    auto viewport = Director::getInstance()->getWinSize();
+    Vec3 dst;
+    unproject(Director::getInstance()->getWinSize(), &src, &dst);
+    return dst;
+}
 
-    Vec4 screen(src.x / viewport.width, ((viewport.height - src.y)) / viewport.height, src.z, 1.0f);
+Vec3 Camera::unprojectGL(const Vec3& src) const
+{
+    Vec3 dst;
+    unprojectGL(Director::getInstance()->getWinSize(), &src, &dst);
+    return dst;
+}
+
+void Camera::unproject(const Size& viewport, const Vec3* src, Vec3* dst) const
+{
+    CCASSERT(src && dst, "vec3 can not be null");
+    
+    Vec4 screen(src->x / viewport.width, ((viewport.height - src->y)) / viewport.height, src->z, 1.0f);
     screen.x = screen.x * 2.0f - 1.0f;
     screen.y = screen.y * 2.0f - 1.0f;
     screen.z = screen.z * 2.0f - 1.0f;
@@ -274,14 +318,14 @@ Vec3 Camera::unproject(const Vec3& src) const
         screen.z /= screen.w;
     }
     
-    return Vec3(screen.x, screen.y, screen.z);
+    dst->set(screen.x, screen.y, screen.z);
 }
 
-void Camera::unproject(const Size& viewport, const Vec3* src, Vec3* dst) const
+void Camera::unprojectGL(const Size& viewport, const Vec3* src, Vec3* dst) const
 {
     CCASSERT(src && dst, "vec3 can not be null");
     
-    Vec4 screen(src->x / viewport.width, ((viewport.height - src->y)) / viewport.height, src->z, 1.0f);
+    Vec4 screen(src->x / viewport.width, src->y / viewport.height, src->z, 1.0f);
     screen.x = screen.x * 2.0f - 1.0f;
     screen.y = screen.y * 2.0f - 1.0f;
     screen.z = screen.z * 2.0f - 1.0f;
@@ -315,7 +359,7 @@ float Camera::getDepthInView(const Mat4& transform) const
     return depth;
 }
 
-void Camera::setDepth(int depth)
+void Camera::setDepth(int8_t depth)
 {
     if (_depth != depth)
     {
@@ -375,6 +419,124 @@ void Camera::setScene(Scene* scene)
             }
         }
     }
+}
+
+void Camera::clearBackground()
+{
+    if (_clearBrush)
+    {
+        _clearBrush->drawBackground(this);
+    }
+}
+
+void Camera::setFrameBufferObject(experimental::FrameBuffer *fbo)
+{
+    CC_SAFE_RETAIN(fbo);
+    CC_SAFE_RELEASE_NULL(_fbo);
+    _fbo = fbo;
+    if(_scene)
+    {
+        _scene->setCameraOrderDirty();
+    }
+}
+
+void Camera::apply()
+{
+    _viewProjectionUpdated = _transformUpdated;
+    applyFrameBufferObject();
+    applyViewport();
+}
+
+void Camera::applyFrameBufferObject()
+{
+    if(nullptr == _fbo)
+    {
+        // inherit from context if it doesn't have a FBO
+        // don't call apply the default one
+//        experimental::FrameBuffer::applyDefaultFBO();
+    }
+    else
+    {
+        _fbo->applyFBO();
+    }
+}
+
+void Camera::applyViewport()
+{
+    glGetIntegerv(GL_VIEWPORT, _oldViewport);
+
+    if(nullptr == _fbo)
+    {
+        glViewport(getDefaultViewport()._left, getDefaultViewport()._bottom, getDefaultViewport()._width, getDefaultViewport()._height);
+    }
+    else
+    {
+        glViewport(_viewport._left * _fbo->getWidth(), _viewport._bottom * _fbo->getHeight(),
+                   _viewport._width * _fbo->getWidth(), _viewport._height * _fbo->getHeight());
+    }
+}
+
+void Camera::setViewport(const experimental::Viewport& vp)
+{
+    _viewport = vp;
+}
+
+void Camera::restore()
+{
+    restoreFrameBufferObject();
+    restoreViewport();
+}
+
+void Camera::restoreFrameBufferObject()
+{
+    if(nullptr == _fbo)
+    {
+        // it was inherited from context if it doesn't have a FBO
+        // don't call restore the default one... just keep using the previous one
+//        experimental::FrameBuffer::applyDefaultFBO();
+    }
+    else
+    {
+        _fbo->restoreFBO();
+    }
+}
+
+void Camera::restoreViewport()
+{
+    glViewport(_oldViewport[0], _oldViewport[1], _oldViewport[2], _oldViewport[3]);
+}
+
+int Camera::getRenderOrder() const
+{
+    int result(0);
+    if(_fbo)
+    {
+        result = _fbo->getFID()<<8;
+    }
+    else
+    {
+        result = 127 <<8;
+    }
+    result += _depth;
+    return result;
+}
+
+void Camera::visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t parentFlags)
+{
+    _viewProjectionUpdated = _transformUpdated;
+    return Node::visit(renderer, parentTransform, parentFlags);
+}
+
+void Camera::setBackgroundBrush(CameraBackgroundBrush* clearBrush)
+{
+    CC_SAFE_RETAIN(clearBrush);
+    CC_SAFE_RELEASE(_clearBrush);
+    _clearBrush = clearBrush;
+}
+
+bool Camera::isBrushValid()
+{
+    return _clearBrush != nullptr && _clearBrush->isValid();
 }
 
 NS_CC_END

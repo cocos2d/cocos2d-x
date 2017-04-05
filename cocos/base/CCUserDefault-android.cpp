@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include "base/base64.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-#include "platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
+#include "platform/android/jni/JniHelper.h"
 
 // root name of xml
 #define USERDEFAULT_ROOT_NAME    "userDefaultRoot"
@@ -43,8 +43,9 @@ THE SOFTWARE.
 #include "tinyxml2.h"
 #endif
 
-using namespace std;
+static const std::string helperClassName = "org/cocos2dx/lib/Cocos2dxHelper";
 
+using namespace std;
 NS_CC_BEGIN
 
 /**
@@ -60,25 +61,25 @@ static tinyxml2::XMLElement* getXMLNodeForKey(const char* pKey, tinyxml2::XMLDoc
 {
     tinyxml2::XMLElement* curNode = nullptr;
     tinyxml2::XMLElement* rootNode = nullptr;
-    
+
     if (! UserDefault::isXMLFileExist())
     {
         return nullptr;
     }
-    
+
     // check the key value
     if (! pKey)
     {
         return nullptr;
     }
-    
+
     do
     {
-        tinyxml2::XMLDocument* xmlDoc = new tinyxml2::XMLDocument();
+        tinyxml2::XMLDocument* xmlDoc = new (std::nothrow) tinyxml2::XMLDocument();
         *doc = xmlDoc;
         ssize_t size;
-        
-        std::string xmlBuffer = FileUtils::getInstance()->getStringFromFile(UserDefault::getInstance()->getXMLFilePath().c_str());
+
+        std::string xmlBuffer = FileUtils::getInstance()->getStringFromFile(UserDefault::getInstance()->getXMLFilePath());
 
         if (xmlBuffer.empty())
         {
@@ -100,10 +101,10 @@ static tinyxml2::XMLElement* getXMLNodeForKey(const char* pKey, tinyxml2::XMLDoc
         {
             // There is not xml node, delete xml file.
             remove(UserDefault::getInstance()->getXMLFilePath().c_str());
-            
+
             return nullptr;
         }
-        
+
         while (nullptr != curNode)
         {
             const char* nodeName = curNode->Value();
@@ -112,11 +113,11 @@ static tinyxml2::XMLElement* getXMLNodeForKey(const char* pKey, tinyxml2::XMLDoc
                 // delete the node
                 break;
             }
-            
+
             curNode = curNode->NextSiblingElement();
         }
     } while (0);
-    
+
     return curNode;
 }
 
@@ -173,14 +174,14 @@ bool UserDefault::getBoolForKey(const char* pKey, bool defaultValue)
         {
             const char* value = (const char*)node->FirstChild()->Value();
             bool ret = (! strcmp(value, "true"));
-            
+
             // set value in NSUserDefaults
             setBoolForKey(pKey, ret);
             flush();
-            
+
             // delete xmle node
             deleteNode(doc, node);
-            
+
             return ret;
         }
         else
@@ -191,7 +192,7 @@ bool UserDefault::getBoolForKey(const char* pKey, bool defaultValue)
     }
 #endif
 
-    return getBoolForKeyJNI(pKey, defaultValue);
+    return JniHelper::callStaticBooleanMethod(helperClassName, "getBoolForKey", pKey, defaultValue);
 }
 
 int UserDefault::getIntegerForKey(const char* pKey)
@@ -209,14 +210,14 @@ int UserDefault::getIntegerForKey(const char* pKey, int defaultValue)
         if (node->FirstChild())
         {
             int ret = atoi((const char*)node->FirstChild()->Value());
-            
+
             // set value in NSUserDefaults
             setIntegerForKey(pKey, ret);
             flush();
-            
+
             // delete xmle node
             deleteNode(doc, node);
-            
+
             return ret;
         }
         else
@@ -226,8 +227,8 @@ int UserDefault::getIntegerForKey(const char* pKey, int defaultValue)
         }
     }
 #endif
-    
-	return getIntegerForKeyJNI(pKey, defaultValue);
+
+	return JniHelper::callStaticIntMethod(helperClassName, "getIntegerForKey", pKey, defaultValue);
 }
 
 float UserDefault::getFloatForKey(const char* pKey)
@@ -245,14 +246,14 @@ float UserDefault::getFloatForKey(const char* pKey, float defaultValue)
         if (node->FirstChild())
         {
             float ret = utils::atof((const char*)node->FirstChild()->Value());
-            
+
             // set value in NSUserDefaults
             setFloatForKey(pKey, ret);
             flush();
-            
+
             // delete xmle node
             deleteNode(doc, node);
-            
+
             return ret;
         }
         else
@@ -263,7 +264,7 @@ float UserDefault::getFloatForKey(const char* pKey, float defaultValue)
     }
 #endif
 
-    return getFloatForKeyJNI(pKey, defaultValue);
+    return JniHelper::callStaticFloatMethod(helperClassName, "getFloatForKey", pKey, defaultValue);
 }
 
 double  UserDefault::getDoubleForKey(const char* pKey)
@@ -281,14 +282,14 @@ double UserDefault::getDoubleForKey(const char* pKey, double defaultValue)
         if (node->FirstChild())
         {
             double ret = utils::atof((const char*)node->FirstChild()->Value());
-            
+
             // set value in NSUserDefaults
             setDoubleForKey(pKey, ret);
             flush();
-            
+
             // delete xmle node
             deleteNode(doc, node);
-            
+
             return ret;
         }
         else
@@ -299,7 +300,7 @@ double UserDefault::getDoubleForKey(const char* pKey, double defaultValue)
     }
 #endif
 
-	return getDoubleForKeyJNI(pKey, defaultValue);
+	return JniHelper::callStaticDoubleMethod(helperClassName, "getDoubleForKey", pKey, defaultValue);
 }
 
 std::string UserDefault::getStringForKey(const char* pKey)
@@ -317,14 +318,14 @@ string UserDefault::getStringForKey(const char* pKey, const std::string & defaul
         if (node->FirstChild())
         {
             string ret = (const char*)node->FirstChild()->Value();
-            
+
             // set value in NSUserDefaults
             setStringForKey(pKey, ret);
             flush();
-            
+
             // delete xmle node
             deleteNode(doc, node);
-            
+
             return ret;
         }
         else
@@ -335,7 +336,7 @@ string UserDefault::getStringForKey(const char* pKey, const std::string & defaul
     }
 #endif
 
-    return getStringForKeyJNI(pKey, defaultValue.c_str());
+    return JniHelper::callStaticStringMethod(helperClassName, "getStringForKey", pKey, defaultValue);
 }
 
 Data UserDefault::getDataForKey(const char* pKey)
@@ -353,22 +354,22 @@ Data UserDefault::getDataForKey(const char* pKey, const Data& defaultValue)
         if (node->FirstChild())
         {
             const char * encodedData = node->FirstChild()->Value();
-            
+
             unsigned char * decodedData;
             int decodedDataLen = base64Decode((unsigned char*)encodedData, (unsigned int)strlen(encodedData), &decodedData);
-            
+
             if (decodedData) {
                 Data ret;
                 ret.fastSet(decodedData, decodedDataLen);
-                
+
                 // set value in NSUserDefaults
                 setDataForKey(pKey, ret);
-                
+
                 flush();
-                
+
                 // delete xmle node
                 deleteNode(doc, node);
-                
+
                 return ret;
             }
         }
@@ -379,22 +380,22 @@ Data UserDefault::getDataForKey(const char* pKey, const Data& defaultValue)
         }
     }
 #endif
-    
+
     char * encodedDefaultData = NULL;
     unsigned int encodedDefaultDataLen = !defaultValue.isNull() ? base64Encode(defaultValue.getBytes(), defaultValue.getSize(), &encodedDefaultData) : 0;
-    
-    string encodedStr = getStringForKeyJNI(pKey, encodedDefaultData);
+
+    string encodedStr = JniHelper::callStaticStringMethod(helperClassName, "getStringForKey", pKey, (const char*)encodedDefaultData);
 
     if (encodedDefaultData)
         free(encodedDefaultData);
 
     CCLOG("ENCODED STRING: --%s--%d", encodedStr.c_str(), encodedStr.length());
-      
+
     unsigned char * decodedData = NULL;
     int decodedDataLen = base64Decode((unsigned char*)encodedStr.c_str(), (unsigned int)encodedStr.length(), &decodedData);
 
     CCLOG("DECODED DATA: %s %d", decodedData, decodedDataLen);
-    
+
     if (decodedData && decodedDataLen) {
         Data ret;
         ret.fastSet(decodedData, decodedDataLen);
@@ -411,7 +412,7 @@ void UserDefault::setBoolForKey(const char* pKey, bool value)
     deleteNodeByKey(pKey);
 #endif
 
-    return setBoolForKeyJNI(pKey, value);
+    JniHelper::callStaticVoidMethod(helperClassName, "setBoolForKey", pKey, value);
 }
 
 void UserDefault::setIntegerForKey(const char* pKey, int value)
@@ -420,7 +421,7 @@ void UserDefault::setIntegerForKey(const char* pKey, int value)
     deleteNodeByKey(pKey);
 #endif
 
-    return setIntegerForKeyJNI(pKey, value);
+    JniHelper::callStaticVoidMethod(helperClassName, "setIntegerForKey", pKey, value);
 }
 
 void UserDefault::setFloatForKey(const char* pKey, float value)
@@ -429,7 +430,7 @@ void UserDefault::setFloatForKey(const char* pKey, float value)
     deleteNodeByKey(pKey);
 #endif
 
-    return setFloatForKeyJNI(pKey, value);
+    JniHelper::callStaticVoidMethod(helperClassName, "setFloatForKey", pKey, value);
 }
 
 void UserDefault::setDoubleForKey(const char* pKey, double value)
@@ -438,16 +439,16 @@ void UserDefault::setDoubleForKey(const char* pKey, double value)
     deleteNodeByKey(pKey);
 #endif
 
-    return setDoubleForKeyJNI(pKey, value);
+    JniHelper::callStaticVoidMethod(helperClassName, "setDoubleForKey", pKey, value);
 }
 
-void UserDefault::setStringForKey(const char* pKey, const std::string & value)
+void UserDefault::setStringForKey(const char* pKey, const std::string& value)
 {
 #ifdef KEEP_COMPATABILITY
     deleteNodeByKey(pKey);
 #endif
 
-    return setStringForKeyJNI(pKey, value.c_str());
+    JniHelper::callStaticVoidMethod(helperClassName, "setStringForKey", pKey, value);
 }
 
 void UserDefault::setDataForKey(const char* pKey, const Data& value)
@@ -455,15 +456,15 @@ void UserDefault::setDataForKey(const char* pKey, const Data& value)
 #ifdef KEEP_COMPATABILITY
     deleteNodeByKey(pKey);
 #endif
-    
+
     CCLOG("SET DATA FOR KEY: --%s--%d", value.getBytes(), (int)(value.getSize()));
     char * encodedData = nullptr;
     unsigned int encodedDataLen = base64Encode(value.getBytes(), value.getSize(), &encodedData);
 
     CCLOG("SET DATA ENCODED: --%s", encodedData);
-    
-    setStringForKeyJNI(pKey, encodedData);
-    
+
+    JniHelper::callStaticVoidMethod(helperClassName, "setStringForKey", pKey, (const char*)encodedData);
+
     if (encodedData)
         free(encodedData);
 }
@@ -476,12 +477,11 @@ UserDefault* UserDefault::sharedUserDefault()
 
 UserDefault* UserDefault::getInstance()
 {
-#ifdef KEEP_COMPATABILITY
-    initXMLFilePath();
-#endif
-    
     if (! _userDefault)
     {
+#ifdef KEEP_COMPATABILITY
+        initXMLFilePath();
+#endif
         _userDefault = new (std::nothrow) UserDefault();
     }
 
@@ -490,16 +490,7 @@ UserDefault* UserDefault::getInstance()
 
 bool UserDefault::isXMLFileExist()
 {
-    FILE *fp = fopen(_filePath.c_str(), "r");
-    bool bRet = false;
-    
-    if (fp)
-    {
-        bRet = true;
-        fclose(fp);
-    }
-    
-    return bRet;
+    return FileUtils::getInstance()->isFileExist(_filePath);
 }
 
 void UserDefault::initXMLFilePath()
@@ -508,7 +499,8 @@ void UserDefault::initXMLFilePath()
     if (! _isFilePathInitialized)
     {
         // UserDefault.xml is stored in /data/data/<package-path>/ before v2.1.2
-        _filePath += "/data/data/" + getPackageNameJNI() + "/" + XML_FILE_NAME;
+        std::string packageName = JniHelper::callStaticStringMethod(helperClassName, "getCocos2dxPackageName");
+        _filePath += "/data/data/" + packageName + "/" + XML_FILE_NAME;
         _isFilePathInitialized = true;
     }
 #endif
@@ -529,6 +521,18 @@ void UserDefault::flush()
 {
 }
 
+void UserDefault::deleteValueForKey(const char* key)
+{
+    // check the params
+    if (!key)
+    {
+        CCLOG("the key is invalid");
+    }
+
+    JniHelper::callStaticVoidMethod(helperClassName, "deleteValueForKey", key);
+
+    flush();
+}
 NS_CC_END
 
 #endif // (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)

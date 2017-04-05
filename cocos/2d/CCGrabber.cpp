@@ -1,7 +1,7 @@
 /****************************************************************************
 Copyright (c) 2009      On-Core
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (C) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
  
 http://www.cocos2d-x.org
 
@@ -23,7 +23,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#include "CCGrabber.h"
+#include "2d/CCGrabber.h"
 #include "base/ccMacros.h"
 #include "renderer/CCTexture2D.h"
 
@@ -59,10 +59,8 @@ void Grabber::grab(Texture2D *texture)
     glBindFramebuffer(GL_FRAMEBUFFER, _oldFBO);
 }
 
-void Grabber::beforeRender(Texture2D *texture)
+void Grabber::beforeRender(Texture2D* /*texture*/)
 {
-    CC_UNUSED_PARAM(texture);
-
     glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_oldFBO);
     glBindFramebuffer(GL_FRAMEBUFFER, _FBO);
     
@@ -81,10 +79,8 @@ void Grabber::beforeRender(Texture2D *texture)
 //  glColorMask(true, true, true, false);    // #631
 }
 
-void Grabber::afterRender(cocos2d::Texture2D *texture)
+void Grabber::afterRender(cocos2d::Texture2D* /*texture*/)
 {
-    CC_UNUSED_PARAM(texture);
-
     glBindFramebuffer(GL_FRAMEBUFFER, _oldFBO);
 //  glColorMask(true, true, true, true);    // #631
     

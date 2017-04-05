@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -35,6 +35,8 @@ extern "C" {
 #endif
 
 #include "network/WebSocket.h"
+
+///@cond
 class LuaWebSocket: public cocos2d::network::WebSocket,public cocos2d::network::WebSocket::Delegate
 {
 public:
@@ -55,6 +57,7 @@ public:
 
 TOLUA_API int tolua_web_socket_open(lua_State* tolua_S);
 TOLUA_API int register_web_socket_manual(lua_State* tolua_S);
+///@endcond
 
 #endif //(CC_TARGET_PLATFORM == CC_PLATFORM_IOS ...
 

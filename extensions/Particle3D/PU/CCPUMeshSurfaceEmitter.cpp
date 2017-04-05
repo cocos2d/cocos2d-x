@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2015-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -111,30 +111,24 @@ const PUTriangle::PositionAndNormal PUTriangle::getRandomEdgePositionAndNormal (
     float mult = CCRANDOM_0_1();
     float randomVal = CCRANDOM_0_1() * 3.0f;
     PositionAndNormal pAndN;
-    pAndN.position = Vec3::ZERO;
-    pAndN.normal = Vec3::ZERO;
+    pAndN.position.setZero();
+    pAndN.normal.setZero();
     if (randomVal < 1)
     {
-        pAndN.position = Vec3(	v2.x + mult*(v1.x - v2.x),
-                                        v2.y + mult*(v1.y - v2.y),
-                                        v2.z + mult*(v1.z - v2.z));
+        pAndN.position.set(v2.x + mult*(v1.x - v2.x), v2.y + mult*(v1.y - v2.y), v2.z + mult*(v1.z - v2.z));
         pAndN.normal = en1;
     }
     else
     {
         if (randomVal < 2)
         {
-            pAndN.position = Vec3(	v3.x + mult*(v2.x - v3.x),
-                                            v3.y + mult*(v2.y - v3.y),
-                                            v3.z + mult*(v2.z - v3.z));
+            pAndN.position.set(v3.x + mult*(v2.x - v3.x), v3.y + mult*(v2.y - v3.y), v3.z + mult*(v2.z - v3.z));
             pAndN.normal = en2;
         }
         else
         {
     
-            pAndN.position = Vec3(	v1.x + mult*(v3.x - v1.x),
-                                            v1.y + mult*(v3.y - v1.y),
-                                            v1.z + mult*(v3.z - v1.z));
+            pAndN.position.set(v1.x + mult*(v3.x - v1.x), v1.y + mult*(v3.y - v1.y),  v1.z + mult*(v3.z - v1.z));
             pAndN.normal = en3;
         }
     }
@@ -146,8 +140,8 @@ const PUTriangle::PositionAndNormal PUTriangle::getRandomVertexAndNormal (void)
 {
     float randomVal = CCRANDOM_0_1() * 3.0f;
     PositionAndNormal pAndN;
-    pAndN.position = Vec3::ZERO;
-    pAndN.normal = Vec3::ZERO;
+    pAndN.position.setZero();
+    pAndN.normal.setZero();
 
     if (randomVal < 1)
     {
@@ -173,10 +167,10 @@ const PUTriangle::PositionAndNormal PUTriangle::getRandomVertexAndNormal (void)
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-MeshInfo::MeshInfo (const std::string& meshName, 
+MeshInfo::MeshInfo (const std::string& /*meshName*/,
     MeshSurfaceDistribution distribution,
-    const Quaternion& orientation,
-    const Vec3& scale) : 
+    const Quaternion& /*orientation*/,
+    const Vec3& /*scale*/) :
     mDistribution(distribution)
 {
     //Ogre::MeshPtr mesh = Ogre::MeshManager::getSingleton().load(meshName, Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
@@ -209,7 +203,7 @@ inline float MeshInfo::getGaussianRandom (float high, float cutoff)
     } while (w >= 1.0f);
     
     w = sqrt((-2.0f * ::log(w)) / w);
-    y1 = abs(x1 * w);
+    y1 = std::abs(x1 * w);
     y1 = y1 > cutoff ? cutoff : y1;
     y1 *= high / cutoff;
     return y1;
@@ -222,7 +216,7 @@ const PUTriangle& MeshInfo::getTriangle (size_t triangleIndex)
 }
 
 //-----------------------------------------------------------------------
-const size_t MeshInfo::getRandomTriangleIndex (void)
+size_t MeshInfo::getRandomTriangleIndex()
 {
     size_t index;
     if (mDistribution == MSD_HOMOGENEOUS || mDistribution == MSD_HETEROGENEOUS_1)
@@ -240,8 +234,8 @@ const PUTriangle::PositionAndNormal MeshInfo::getRandomPositionAndNormal (const 
 {
     PUTriangle triangle = getTriangle(triangleIndex);
     PUTriangle::PositionAndNormal pAndN;
-    pAndN.position = Vec3::ZERO;
-    pAndN.normal = Vec3::ZERO;
+    pAndN.position.setZero();
+    pAndN.normal.setZero();
     if (mDistribution == MSD_HOMOGENEOUS || mDistribution == MSD_HETEROGENEOUS_1 || mDistribution == MSD_HETEROGENEOUS_2)
     {
         pAndN.position = triangle.getRandomTrianglePosition();
@@ -448,8 +442,8 @@ void PUMeshSurfaceEmitter::unPrepare()
 void PUMeshSurfaceEmitter::initParticlePosition(PUParticle3D* particle)
 {
     PUTriangle::PositionAndNormal pAndN;
-    pAndN.position = Vec3::ZERO;
-    pAndN.normal = Vec3::ZERO;
+    pAndN.position.setZero();
+    pAndN.normal.setZero();
     _directionSet = false;
 
     if (_meshInfo && _meshInfo->getTriangleCount())
@@ -544,7 +538,7 @@ void PUMeshSurfaceEmitter::setMeshName(const std::string& meshName, bool doBuild
     }
 }
 //-----------------------------------------------------------------------
-const MeshInfo::MeshSurfaceDistribution PUMeshSurfaceEmitter::getDistribution (void) const
+MeshInfo::MeshSurfaceDistribution PUMeshSurfaceEmitter::getDistribution() const
 {
     return _distribution;
 }

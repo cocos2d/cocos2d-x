@@ -2,7 +2,7 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -36,7 +36,7 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 /**
- * @addtogroup layer
+ * @addtogroup _2d
  * @{
  */
 
@@ -69,22 +69,22 @@ public:
     static Layer *create();
 
     // Deprecated touch callbacks.
-    CC_DEPRECATED_ATTRIBUTE virtual bool ccTouchBegan(Touch *pTouch, Event *pEvent) final {CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent); return false;};
-    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchMoved(Touch *pTouch, Event *pEvent) final {CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent);}
-    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchEnded(Touch *pTouch, Event *pEvent) final {CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent);}
-    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchCancelled(Touch *pTouch, Event *pEvent) final {CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent);}
+    CC_DEPRECATED_ATTRIBUTE virtual bool ccTouchBegan(Touch *pTouch, Event *pEvent) final;
+    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchMoved(Touch *pTouch, Event *pEvent) final;
+    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchEnded(Touch *pTouch, Event *pEvent) final;
+    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchCancelled(Touch *pTouch, Event *pEvent) final;
     
-    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchesBegan(__Set *pTouches, Event *pEvent) final {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
-    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchesMoved(__Set *pTouches, Event *pEvent) final {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
-    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchesEnded(__Set *pTouches, Event *pEvent) final {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
-    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchesCancelled(__Set *pTouches, Event *pEvent) final {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
+    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchesBegan(__Set *pTouches, Event *pEvent) final;
+    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchesMoved(__Set *pTouches, Event *pEvent) final;
+    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchesEnded(__Set *pTouches, Event *pEvent) final;
+    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchesCancelled(__Set *pTouches, Event *pEvent) final;
     
     /* Callback function should not be deprecated, it will generate lots of warnings.
        Since 'setTouchEnabled' was deprecated, it will make warnings if developer overrides onTouchXXX and invokes setTouchEnabled(true) instead of using EventDispatcher::addEventListenerWithXXX.
     */
     /** Callback function for touch began.
      *
-     * @param touch Touch infomation.
+     * @param touch Touch information.
      * @param unused_event Event information.
      * @return if return false, onTouchMoved, onTouchEnded, onTouchCancelled will never called.
      * @js NA
@@ -92,21 +92,21 @@ public:
     virtual bool onTouchBegan(Touch *touch, Event *unused_event);
     /** Callback function for touch moved.
     *
-    * @param touch Touch infomation.
+    * @param touch Touch information.
     * @param unused_event Event information.
     * @js NA
     */
     virtual void onTouchMoved(Touch *touch, Event *unused_event);
     /** Callback function for touch ended.
     *
-    * @param touch Touch infomation.
+    * @param touch Touch information.
     * @param unused_event Event information.
     * @js NA
     */
     virtual void onTouchEnded(Touch *touch, Event *unused_event);
     /** Callback function for touch cancelled.
     *
-    * @param touch Touch infomation.
+    * @param touch Touch information.
     * @param unused_event Event information.
     * @js NA
     */
@@ -144,12 +144,12 @@ public:
       @deprecated Please override onAcceleration 
       @js NA
      */
-    CC_DEPRECATED_ATTRIBUTE virtual void didAccelerate(Acceleration* accelerationValue) final {};
+    CC_DEPRECATED_ATTRIBUTE virtual void didAccelerate(Acceleration* /*accelerationValue*/) final {};
 
 	/* Callback function should not be deprecated, it will generate lots of warnings.
 	Since 'setAccelerometerEnabled' was deprecated, it will make warnings if developer overrides onAcceleration and invokes setAccelerometerEnabled(true) instead of using EventDispatcher::addEventListenerWithXXX.
     */
-    /** Callback funtion for acceleration.
+    /** Callback function for acceleration.
      * @param acc Acceleration information.
      * @param unused_event Event information.
      * @js NA
@@ -210,13 +210,13 @@ public:
       Please use onKeyPressed instead. 
       @js NA
      */
-    CC_DEPRECATED_ATTRIBUTE virtual void keyPressed(int keyCode) final {};
+    CC_DEPRECATED_ATTRIBUTE virtual void keyPressed(int /*keyCode*/) final {};
     
     /** 
       Please use onKeyReleased instead. 
       @js NA
      */
-    CC_DEPRECATED_ATTRIBUTE virtual void keyReleased(int keyCode) final {};
+    CC_DEPRECATED_ATTRIBUTE virtual void keyReleased(int /*keyCode*/) final {};
 
 	/* Callback function should not be deprecated, it will generate lots of warnings.
 	Since 'setKeyboardEnabled' was deprecated, it will make warnings if developer overrides onKeyXXX and invokes setKeyboardEnabled(true) instead of using EventDispatcher::addEventListenerWithXXX.
@@ -297,19 +297,19 @@ public:
     //
     virtual GLubyte getOpacity() const override { return Layer::getOpacity(); }
     virtual GLubyte getDisplayedOpacity() const override { return Layer::getDisplayedOpacity(); }
-    virtual void setOpacity(GLubyte opacity) override { return Layer::setOpacity(opacity); }
-    virtual void updateDisplayedOpacity(GLubyte parentOpacity) override { return Layer::updateDisplayedOpacity(parentOpacity); }
+    virtual void setOpacity(GLubyte opacity) override { Layer::setOpacity(opacity); }
+    virtual void updateDisplayedOpacity(GLubyte parentOpacity) override { Layer::updateDisplayedOpacity(parentOpacity); }
     virtual bool isCascadeOpacityEnabled() const override { return Layer::isCascadeOpacityEnabled(); }
-    virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled) override { return Layer::setCascadeOpacityEnabled(cascadeOpacityEnabled); }
+    virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled) override { Layer::setCascadeOpacityEnabled(cascadeOpacityEnabled); }
 
     virtual const Color3B& getColor() const override { return Layer::getColor(); }
     virtual const Color3B& getDisplayedColor() const override { return Layer::getDisplayedColor(); }
-    virtual void setColor(const Color3B& color) override { return Layer::setColor(color); }
-    virtual void updateDisplayedColor(const Color3B& parentColor) override { return Layer::updateDisplayedColor(parentColor); }
+    virtual void setColor(const Color3B& color) override { Layer::setColor(color); }
+    virtual void updateDisplayedColor(const Color3B& parentColor) override { Layer::updateDisplayedColor(parentColor); }
     virtual bool isCascadeColorEnabled() const override { return Layer::isCascadeOpacityEnabled(); }
-    virtual void setCascadeColorEnabled(bool cascadeColorEnabled) override { return Layer::setCascadeColorEnabled(cascadeColorEnabled); }
+    virtual void setCascadeColorEnabled(bool cascadeColorEnabled) override { Layer::setCascadeColorEnabled(cascadeColorEnabled); }
 
-    virtual void setOpacityModifyRGB(bool bValue) override { return Layer::setOpacityModifyRGB(bValue); }
+    virtual void setOpacityModifyRGB(bool bValue) override { Layer::setOpacityModifyRGB(bValue); }
     virtual bool isOpacityModifyRGB() const override { return Layer::isOpacityModifyRGB(); }
 
 CC_CONSTRUCTOR_ACCESS:
@@ -596,8 +596,8 @@ public:
      * In lua:local create(...)
      * @endcode
      */
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-    // WP8 in VS2012 does not support nullptr in variable args lists and variadic templates are also not supported
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    // VS2013 does not support nullptr in variable args lists and variadic templates are also not supported
     typedef Layer* M;
     static LayerMultiplex* create(M m1, std::nullptr_t listEnd) { return createVariadic(m1, NULL); }
     static LayerMultiplex* create(M m1, M m2, std::nullptr_t listEnd) { return createVariadic(m1, m2, NULL); }
@@ -681,7 +681,7 @@ private:
 };
 
 
-// end of layer group
+// end of _2d group
 /// @}
 
 NS_CC_END

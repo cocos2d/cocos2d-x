@@ -56,7 +56,7 @@
         
 --------------------------------
 -- Set this joint's tag.<br>
--- param tag An interger number that identifies a PhysicsJoint.
+-- param tag An integer number that identifies a PhysicsJoint.
 -- @function [parent=#PhysicsJoint] setTag 
 -- @param self
 -- @param #int tag
@@ -69,14 +69,14 @@
 -- @return PhysicsJoint#PhysicsJoint self (return value: cc.PhysicsJoint)
         
 --------------------------------
---  Determines if the collsion is enable. 
+--  Determines if the collision is enable. 
 -- @function [parent=#PhysicsJoint] isCollisionEnabled 
 -- @param self
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- Get this joint's tag.<br>
--- return An interger number.
+-- return An integer number.
 -- @function [parent=#PhysicsJoint] getTag 
 -- @param self
 -- @return int#int ret (return value: int)

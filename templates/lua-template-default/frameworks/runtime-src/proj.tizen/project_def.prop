@@ -1,0 +1,93 @@
+
+# Project Name
+APPNAME = hellolua
+
+# Project Type
+type = app
+
+# Project Profile
+profile = mobile-2.4
+
+# C/CPP Sources
+USER_SRCS = src/main.cpp \
+            ../Classes/AppDelegate.cpp
+
+# EDC Sources
+USER_EDCS =  
+
+# PO Sources
+USER_POS = 
+
+# User Defines
+USER_DEFS = 
+USER_CPP_DEFS = TIZEN COCOS2D_DEBUG=1 
+
+# User Undefines
+USER_UNDEFS = 
+USER_CPP_UNDEFS = 
+
+# User Libraries
+USER_LIBS = luacocos2d cocos2dx websockets chipmunk png jpeg tiff webp
+
+# User Objects
+USER_OBJS = 
+
+# User Includes
+## C Compiler
+USER_C_INC_DIRS = 
+USER_INC_FILES = 
+
+## C++ Compiler
+USER_CPP_INC_DIRS = ../Classes \
+                    ../../cocos2d-x/cocos \
+                    ../../cocos2d-x/cocos/editor-support \
+                    ../../cocos2d-x/cocos/platform \
+                    ../../cocos2d-x/extensions \
+                    ../../cocos2d-x/external \
+                    ../../cocos2d-x/external/Box2D \
+                    ../../cocos2d-x/external/ConvertUTF \
+                    ../../cocos2d-x/external/bullet \
+                    ../../cocos2d-x/external/chipmunk/include/ \
+                    ../../cocos2d-x/external/chipmunk/include/chipmunk \
+                    ../../cocos2d-x/external/edtaa3func \
+                    ../../cocos2d-x/external/jpeg/include/tizen \
+                    ../../cocos2d-x/external/json \
+                    ../../cocos2d-x/external/lua \
+                    ../../cocos2d-x/external/lua/lua \
+                    ../../cocos2d-x/external/lua/luajit/include \
+                    ../../cocos2d-x/external/lua/luasocket \
+                    ../../cocos2d-x/external/lua/tolua \
+                    ../../cocos2d-x/external/png/include/tizen \
+                    ../../cocos2d-x/external/tiff/include/tizen \
+                    ../../cocos2d-x/external/tinyxml2 \
+                    ../../cocos2d-x/external/unzip \
+                    ../../cocos2d-x/external/webp/include/tizen \
+                    ../../cocos2d-x/external/websockets/include/tizen \
+                    ../../cocos2d-x/external/xxhash \
+                    ../../cocos2d-x/external/xxtea
+
+USER_CPP_INC_FILES = 
+
+USER_INC_DIRS = $(USER_C_INC_DIRS) $(USER_CPP_INC_DIRS)
+
+# User Library Path
+USER_LIB_DIRS = ${PROJ_PATH}/../../cocos2d-x/build/tizen/${BUILD_CONFIG}/${BUILD_ARCH} \
+                ${PROJ_PATH}/../../cocos2d-x/cocos/scripting/lua-bindings/proj.tizen/${BUILD_CONFIG}/${BUILD_ARCH} \
+                ${PROJ_PATH}/../../cocos2d-x/external/chipmunk/prebuilt/tizen/${BUILD_ARCH} \
+                ${PROJ_PATH}/../../cocos2d-x/external/jpeg/prebuilt/tizen/${BUILD_ARCH} \
+                ${PROJ_PATH}/../../cocos2d-x/external/png/prebuilt/tizen/${BUILD_ARCH} \
+                ${PROJ_PATH}/../../cocos2d-x/external/tiff/prebuilt/tizen/${BUILD_ARCH} \
+                ${PROJ_PATH}/../../cocos2d-x/external/webp/prebuilt/tizen/${BUILD_ARCH} \
+                ${PROJ_PATH}/../../cocos2d-x/external/websockets/prebuilt/tizen/${BUILD_ARCH}
+
+# EDC Resource Path
+USER_EDCS_IMAGE_DIRS = ${OUTPUT_DIR} 
+USER_EDCS_SOUND_DIRS = ${OUTPUT_DIR} 
+USER_EDCS_FONT_DIRS = ${OUTPUT_DIR} 
+
+# EDC Flags
+USER_EXT_EDC_KEYS = 
+
+# Resource Filter
+USER_RES_INCLUDE = 
+USER_RES_EXCLUDE = 

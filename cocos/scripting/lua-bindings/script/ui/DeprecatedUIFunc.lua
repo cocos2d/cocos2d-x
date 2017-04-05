@@ -162,6 +162,56 @@ function UIPageViewDeprecated.addEventListenerPageView(self,handler)
     return self:addEventListener(handler)
 end
 ccui.PageView.addEventListenerPageView = UIPageViewDeprecated.addEventListenerPageView
+
+function UIPageViewDeprecated.addWidgetToPage(self, widget, pageIdx)
+    deprecatedTip("ccui.PageView:addWidgetToPage","ccui.PageView:insertPage")
+    return self:insertPage(widget, pageIdx)
+end
+ccui.PageView.addWidgetToPage = UIPageViewDeprecated.addWidgetToPage
+
+function UIPageViewDeprecated.getCurPageIndex(self)
+    deprecatedTip("ccui.PageView:getCurPageIndex","ccui.PageView:getCurrentPageIndex")
+    return self:getCurrentPageIndex()
+end
+ccui.PageView.getCurPageIndex = UIPageViewDeprecated.getCurPageIndex
+
+function UIPageViewDeprecated.setCurPageIndex(self, index)
+    deprecatedTip("ccui.PageView:setCurPageIndex","ccui.PageView:setCurrentPageIndex")
+    return self:setCurrentPageIndex(index)
+end
+ccui.PageView.setCurPageIndex = UIPageViewDeprecated.setCurPageIndex
+
+function UIPageViewDeprecated.getPages(self)
+    deprecatedTip("ccui.PageView:getPages","ccui.PageView:getItems")
+    return self:getItems()
+end
+ccui.PageView.getPages = UIPageViewDeprecated.getPages
+
+function UIPageViewDeprecated.getPage(self, index)
+    deprecatedTip("ccui.PageView:getPage","ccui.PageView:getItem")
+    return self:getItem(index)
+end
+ccui.PageView.getPage = UIPageViewDeprecated.getPage
+
+function UIPageViewDeprecated.setCustomScrollThreshold(self)
+    print("Since v3.9, this method has no effect.")
+end
+ccui.PageView.setCustomScrollThreshold = UIPageViewDeprecated.setCustomScrollThreshold
+
+function UIPageViewDeprecated.getCustomScrollThreshold(self)
+    print("Since v3.9, this method has no effect.")
+end
+ccui.PageView.getCustomScrollThreshold = UIPageViewDeprecated.getCustomScrollThreshold
+
+function UIPageViewDeprecated.isUsingCustomScrollThreshold(self)
+    print("Since v3.9, this method has no effect.")
+end
+ccui.PageView.isUsingCustomScrollThreshold = UIPageViewDeprecated.isUsingCustomScrollThreshold
+
+function UIPageViewDeprecated.setUsingCustomScrollThreshold(self)
+    print("Since v3.9, this method has no effect.")
+end
+ccui.PageView.setUsingCustomScrollThreshold = UIPageViewDeprecated.setUsingCustomScrollThreshold
 --functions of ccui.PageView will be deprecated end
 
 --functions of ccui.ScrollView will be deprecated begin
@@ -180,4 +230,16 @@ function UIListViewDeprecated.addEventListenerListView(self,handler)
     return self:addEventListener(handler)
 end
 ccui.ListView.addEventListenerListView = UIListViewDeprecated.addEventListenerListView
+
+function UIListViewDeprecated.requestRefreshView(self)
+    deprecatedTip("ccui.ListView:requestRefreshView","ccui.ListView:forceDoLayout")
+    return self:forceDoLayout()
+end
+ccui.ListView.requestRefreshView = UIListViewDeprecated.requestRefreshView
+
+function UIListViewDeprecated.refreshView(self)
+    deprecatedTip("ccui.ListView:refreshView","ccui.ListView:refreshView")
+    return self:forceDoLayout()
+end
+ccui.ListView.refreshView = UIListViewDeprecated.refreshView
 --functions of ccui.ListView will be deprecated end

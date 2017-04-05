@@ -23,14 +23,6 @@
 -- @return BlendFunc#BlendFunc ret (return value: cc.BlendFunc)
         
 --------------------------------
---  Change height in Points.<br>
--- param h The height of layer.
--- @function [parent=#LayerColor] changeHeight 
--- @param self
--- @param #float h
--- @return LayerColor#LayerColor self (return value: cc.LayerColor)
-        
---------------------------------
 -- code<br>
 -- When this function bound into js or lua,the parameter will be changed<br>
 -- In js: var setBlendFunc(var src, var dst)<br>
@@ -47,6 +39,24 @@
 -- @function [parent=#LayerColor] changeWidth 
 -- @param self
 -- @param #float w
+-- @return LayerColor#LayerColor self (return value: cc.LayerColor)
+        
+--------------------------------
+-- @overload self, color4b_table         
+-- @overload self, color4b_table, float, float         
+-- @function [parent=#LayerColor] initWithColor
+-- @param self
+-- @param #color4b_table color
+-- @param #float width
+-- @param #float height
+-- @return bool#bool ret (return value: bool)
+
+--------------------------------
+--  Change height in Points.<br>
+-- param h The height of layer.
+-- @function [parent=#LayerColor] changeHeight 
+-- @param self
+-- @param #float h
 -- @return LayerColor#LayerColor self (return value: cc.LayerColor)
         
 --------------------------------
@@ -71,6 +81,12 @@
         
 --------------------------------
 -- 
+-- @function [parent=#LayerColor] init 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
 -- @function [parent=#LayerColor] getDescription 
 -- @param self
 -- @return string#string ret (return value: string)
@@ -80,6 +96,12 @@
 -- @function [parent=#LayerColor] setContentSize 
 -- @param self
 -- @param #size_table var
+-- @return LayerColor#LayerColor self (return value: cc.LayerColor)
+        
+--------------------------------
+-- 
+-- @function [parent=#LayerColor] LayerColor 
+-- @param self
 -- @return LayerColor#LayerColor self (return value: cc.LayerColor)
         
 return nil

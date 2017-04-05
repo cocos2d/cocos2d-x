@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -56,7 +56,7 @@ public class Cocos2dxLocalStorage {
         return false;
     }
     
-    public static void destory() {
+    public static void destroy() {
         if (mDatabase != null) {
             mDatabase.close();
         }
@@ -89,13 +89,22 @@ public class Cocos2dxLocalStorage {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return ret == null ? "" : ret;
+        return ret;
     }
     
     public static void removeItem(String key) {
         try {
             String sql = "delete from "+TABLE_NAME+" where key=?";
             mDatabase.execSQL(sql, new Object[] {key});
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public static void clear() {
+        try {
+            String sql = "delete from "+TABLE_NAME;
+            mDatabase.execSQL(sql);
         } catch (Exception e) {
             e.printStackTrace();
         }

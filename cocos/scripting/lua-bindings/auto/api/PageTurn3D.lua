@@ -8,7 +8,7 @@
 -- brief Create an action with duration, grid size.<br>
 -- param duration Specify the duration of the PageTurn3D action. It's a value in seconds.<br>
 -- param gridSize Specify the size of the grid.<br>
--- return If the creation sucess, return a pointer of PageTurn3D action; otherwise, return nil.
+-- return If the creation success, return a pointer of PageTurn3D action; otherwise, return nil.
 -- @function [parent=#PageTurn3D] create 
 -- @param self
 -- @param #float duration

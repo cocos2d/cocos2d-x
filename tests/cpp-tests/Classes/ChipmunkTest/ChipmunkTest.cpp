@@ -4,8 +4,12 @@
 // http://www.cocos2d-x.org
 //
 
+#include "chipmunk/chipmunk.h"
+
 #include "ChipmunkTest.h"
 
+USING_NS_CC;
+USING_NS_CC_EXT;
 
 enum {
     kTagParentNode = 1,
@@ -17,17 +21,17 @@ enum {
 
 // callback to remove Shapes from the Space
 
-ChipmunkTestLayer::ChipmunkTestLayer()
+ChipmunkTest::ChipmunkTest()
 {
 #if CC_ENABLE_CHIPMUNK_INTEGRATION      
     // enable events
 
     auto touchListener = EventListenerTouchAllAtOnce::create();
-    touchListener->onTouchesEnded = CC_CALLBACK_2(ChipmunkTestLayer::onTouchesEnded, this);
+    touchListener->onTouchesEnded = CC_CALLBACK_2(ChipmunkTest::onTouchesEnded, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
     
     Device::setAccelerometerEnabled(true);
-    auto accListener = EventListenerAcceleration::create(CC_CALLBACK_2(ChipmunkTestLayer::onAcceleration, this));
+    auto accListener = EventListenerAcceleration::create(CC_CALLBACK_2(ChipmunkTest::onAcceleration, this));
     _eventDispatcher->addEventListenerWithSceneGraphPriority(accListener, this);
     
     // title
@@ -56,7 +60,7 @@ ChipmunkTestLayer::ChipmunkTestLayer()
 
     // menu for debug layer
     MenuItemFont::setFontSize(18);
-    auto item = MenuItemFont::create("Toggle debug", CC_CALLBACK_1(ChipmunkTestLayer::toggleDebugCallback, this));
+    auto item = MenuItemFont::create("Toggle debug", CC_CALLBACK_1(ChipmunkTest::toggleDebugCallback, this));
 
     auto menu = Menu::create(item, nullptr);
     this->addChild(menu);
@@ -76,14 +80,14 @@ ChipmunkTestLayer::ChipmunkTestLayer()
     
 }
 
-void ChipmunkTestLayer::toggleDebugCallback(Ref* sender)
+void ChipmunkTest::toggleDebugCallback(Ref* sender)
 {
 #if CC_ENABLE_CHIPMUNK_INTEGRATION
     _debugLayer->setVisible(! _debugLayer->isVisible());
 #endif
 }
 
-ChipmunkTestLayer::~ChipmunkTestLayer()
+ChipmunkTest::~ChipmunkTest()
 {
 #if CC_ENABLE_CHIPMUNK_INTEGRATION
     // manually Free rogue shapes
@@ -91,50 +95,60 @@ ChipmunkTestLayer::~ChipmunkTestLayer()
         cpShapeFree( _walls[i] );
     }
 
-    cpSpaceFree( _space );
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+	cpSpaceFree(_space);
+#else
+	cpHastySpaceFree(_space);
+#endif
 
     Device::setAccelerometerEnabled(false);
 #endif
 }
 
-void ChipmunkTestLayer::initPhysics()
+void ChipmunkTest::initPhysics()
 {
 #if CC_ENABLE_CHIPMUNK_INTEGRATION    
     // init chipmunk
     //cpInitChipmunk();
 
-    _space = cpSpaceNew();
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+	_space = cpSpaceNew();
+#else
+	_space = cpHastySpaceNew();
+	cpHastySpaceSetThreads(_space, 0);
+#endif
 
-    _space->gravity = cpv(0, -100);
+    cpSpaceSetGravity(_space, cpv(0, -100));
 
     //
     // rogue shapes
     // We have to free them manually
     //
     // bottom
-    _walls[0] = cpSegmentShapeNew( _space->staticBody,
+    _walls[0] = cpSegmentShapeNew( cpSpaceGetStaticBody(_space),
         cpv(VisibleRect::leftBottom().x,VisibleRect::leftBottom().y),
         cpv(VisibleRect::rightBottom().x, VisibleRect::rightBottom().y), 0.0f);
 
     // top
-    _walls[1] = cpSegmentShapeNew( _space->staticBody, 
+    _walls[1] = cpSegmentShapeNew( cpSpaceGetStaticBody(_space),
         cpv(VisibleRect::leftTop().x, VisibleRect::leftTop().y),
         cpv(VisibleRect::rightTop().x, VisibleRect::rightTop().y), 0.0f);
 
     // left
-    _walls[2] = cpSegmentShapeNew( _space->staticBody,
+    _walls[2] = cpSegmentShapeNew( cpSpaceGetStaticBody(_space),
         cpv(VisibleRect::leftBottom().x,VisibleRect::leftBottom().y),
         cpv(VisibleRect::leftTop().x,VisibleRect::leftTop().y), 0.0f);
 
     // right
-    _walls[3] = cpSegmentShapeNew( _space->staticBody, 
+    _walls[3] = cpSegmentShapeNew( cpSpaceGetStaticBody(_space), 
         cpv(VisibleRect::rightBottom().x, VisibleRect::rightBottom().y),
         cpv(VisibleRect::rightTop().x, VisibleRect::rightTop().y), 0.0f);
 
     for( int i=0;i<4;i++) {
-        _walls[i]->e = 1.0f;
-        _walls[i]->u = 1.0f;
-        cpSpaceAddStaticShape(_space, _walls[i] );
+        
+        cpShapeSetElasticity(_walls[i], 1.0f);
+        cpShapeSetFriction(_walls[i], 1.0f);
+        cpSpaceAddShape(_space, _walls[i]);
     }
 
     // Physics debug layer
@@ -143,20 +157,25 @@ void ChipmunkTestLayer::initPhysics()
 #endif
 }
 
-void ChipmunkTestLayer::update(float delta)
+void ChipmunkTest::update(float delta)
 {
     // Should use a fixed size step based on the animation interval.
     int steps = 2;
     float dt = Director::getInstance()->getAnimationInterval()/(float)steps;
 
     for(int i=0; i<steps; i++){
-        cpSpaceStep(_space, dt);
+
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+		cpSpaceStep(_space, dt);
+#else
+		cpHastySpaceStep(_space, dt);
+#endif
     }
 }
 
-void ChipmunkTestLayer::createResetButton()
+void ChipmunkTest::createResetButton()
 {
-    auto reset = MenuItemImage::create("Images/r1.png", "Images/r2.png", CC_CALLBACK_1(ChipmunkTestLayer::reset, this));
+    auto reset = MenuItemImage::create("Images/r1.png", "Images/r2.png", CC_CALLBACK_1(ChipmunkTest::reset, this));
 
     auto menu = Menu::create(reset, nullptr);
 
@@ -164,17 +183,12 @@ void ChipmunkTestLayer::createResetButton()
     this->addChild(menu, -1);
 }
 
-void ChipmunkTestLayer::reset(Ref* sender)
+void ChipmunkTest::reset(Ref* sender)
 {
-    auto s = new (std::nothrow) ChipmunkAccelTouchTestScene();
-    auto child = new (std::nothrow) ChipmunkTestLayer();
-    s->addChild(child);
-    child->release();
-    Director::getInstance()->replaceScene(s);
-    s->release();
+    getTestSuite()->restartCurrTest();
 }
 
-void ChipmunkTestLayer::addNewSpriteAtPosition(cocos2d::Vec2 pos)
+void ChipmunkTest::addNewSpriteAtPosition(cocos2d::Vec2 pos)
 {
 #if CC_ENABLE_CHIPMUNK_INTEGRATION    
     int posx, posy;
@@ -196,13 +210,14 @@ void ChipmunkTestLayer::addNewSpriteAtPosition(cocos2d::Vec2 pos)
         cpv( 24,-54),
     };
 
-    cpBody *body = cpBodyNew(1.0f, cpMomentForPoly(1.0f, num, verts, cpvzero));
+    cpBody *body = cpBodyNew(1.0f, cpMomentForPoly(1.0f, num, verts, cpvzero, 0.0f));
 
-    body->p = cpv(pos.x, pos.y);
+    cpBodySetPosition(body, cpv(pos.x, pos.y));
     cpSpaceAddBody(_space, body);
 
-    cpShape* shape = cpPolyShapeNew(body, num, verts, cpvzero);
-    shape->e = 0.5f; shape->u = 0.5f;
+    cpShape* shape = cpPolyShapeNew(body, num, verts, cpTransformIdentity, 0.0f);
+    cpShapeSetElasticity(shape, 0.5f);
+    cpShapeSetFriction(shape, 0.5f);
     cpSpaceAddShape(_space, shape);
 
     auto sprite = PhysicsSprite::createWithTexture(_spriteTexture, cocos2d::Rect(posx, posy, 85, 121));
@@ -213,12 +228,12 @@ void ChipmunkTestLayer::addNewSpriteAtPosition(cocos2d::Vec2 pos)
 #endif
 }
 
-void ChipmunkTestLayer::onEnter()
+void ChipmunkTest::onEnter()
 {
-    Layer::onEnter();
+    TestCase::onEnter();
 }
 
-void ChipmunkTestLayer::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
+void ChipmunkTest::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
 {
     //Add a new body/atlas sprite at the touched location
 
@@ -230,7 +245,7 @@ void ChipmunkTestLayer::onTouchesEnded(const std::vector<Touch*>& touches, Event
     }
 }
 
-void ChipmunkTestLayer::onAcceleration(Acceleration* acc, Event* event)
+void ChipmunkTest::onAcceleration(Acceleration* acc, Event* event)
 {
     static float prevX=0, prevY=0;
 
@@ -244,15 +259,11 @@ void ChipmunkTestLayer::onAcceleration(Acceleration* acc, Event* event)
 
     auto v = cocos2d::Vec2( accelX, accelY);
     v = v * 200;
-    _space->gravity = cpv(v.x, v.y);
+    cpSpaceSetGravity(_space, cpv(v.x, v.y));
 }
 
-void ChipmunkAccelTouchTestScene::runThisTest()
+ChipmunkTests::ChipmunkTests()
 {
-    auto layer = new (std::nothrow) ChipmunkTestLayer();
-    addChild(layer);
-    layer->release();
-
-    Director::getInstance()->replaceScene(this);
+    ADD_TEST_CASE(ChipmunkTest);
 }
 

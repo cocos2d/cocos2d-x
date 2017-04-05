@@ -5,7 +5,14 @@
 -- @parent_module cc
 
 --------------------------------
---  Return the Reverse direction. <br>
+--  Initializes a progress timer with the sprite as the shape the timer goes through 
+-- @function [parent=#ProgressTimer] initWithSprite 
+-- @param self
+-- @param #cc.Sprite sp
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+--  Return the Reverse direction.<br>
 -- return If the direction is Anti-clockwise,it will return true.
 -- @function [parent=#ProgressTimer] isReverseDirection 
 -- @param self
@@ -54,7 +61,7 @@
 --------------------------------
 -- Midpoint is used to modify the progress start position.<br>
 -- If you're using radials type then the midpoint changes the center point.<br>
--- If you're using bar type the the midpoint changes the bar growth.<br>
+-- If you're using bar type then the midpoint changes the bar growth.<br>
 -- it expands from the center but clamps to the sprites edge so:<br>
 -- you want a left to right then set the midpoint all the way to Vec2(0,y).<br>
 -- you want a right to left then set the midpoint all the way to Vec2(1,y).<br>
@@ -74,13 +81,13 @@
 -- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
--- @overload self, bool         
--- @overload self, bool         
--- @function [parent=#ProgressTimer] setReverseDirection
+--  Set the Reverse direction.<br>
+-- param value If value is false it will clockwise,if is true it will Anti-clockwise.
+-- @function [parent=#ProgressTimer] setReverseDirection 
 -- @param self
--- @param #bool reverse
+-- @param #bool value
 -- @return ProgressTimer#ProgressTimer self (return value: cc.ProgressTimer)
-
+        
 --------------------------------
 --  Returns the Midpoint. <br>
 -- return A Vec2.
@@ -154,5 +161,11 @@
 -- @function [parent=#ProgressTimer] getOpacity 
 -- @param self
 -- @return unsigned char#unsigned char ret (return value: unsigned char)
+        
+--------------------------------
+-- js ctor
+-- @function [parent=#ProgressTimer] ProgressTimer 
+-- @param self
+-- @return ProgressTimer#ProgressTimer self (return value: cc.ProgressTimer)
         
 return nil

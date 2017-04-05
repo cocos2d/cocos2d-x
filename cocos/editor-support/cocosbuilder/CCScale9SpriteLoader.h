@@ -1,8 +1,8 @@
 #ifndef _CCB_CCSCALE9SPRITELOADER_H_
 #define _CCB_CCSCALE9SPRITELOADER_H_
 
-#include "CCNodeLoader.h"
-#include "CCScale9SpriteLoader.h"
+#include "editor-support/cocosbuilder/CCNodeLoader.h"
+#include "editor-support/cocosbuilder/CCScale9SpriteLoader.h"
 #include "ui/UIScale9Sprite.h"
 
 namespace cocosbuilder {
@@ -28,13 +28,7 @@ protected:
      * @js NA
      * @lua NA
      */
-    virtual cocos2d::ui::Scale9Sprite * createNode(cocos2d::Node * pParent, cocosbuilder::CCBReader * ccbReader) {
-        cocos2d::ui::Scale9Sprite* pNode = cocos2d::ui::Scale9Sprite::create();
-        
-        pNode->setAnchorPoint(cocos2d::Vec2::ZERO);
-        
-        return pNode;
-    };
+    virtual cocos2d::ui::Scale9Sprite* createNode(cocos2d::Node* pParent, cocosbuilder::CCBReader* ccbReader);
     /**
      * @js NA
      * @lua NA

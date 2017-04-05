@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2013      Zynga Inc.
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
 
@@ -36,14 +36,14 @@ FontCharMap * FontCharMap::create(const std::string& plistFile)
     std::string pathStr = FileUtils::getInstance()->fullPathForFilename(plistFile);
     std::string relPathStr = pathStr.substr(0, pathStr.find_last_of("/"))+"/";
 
-    ValueMap dict = FileUtils::getInstance()->getValueMapFromFile(pathStr.c_str());
+    ValueMap dict = FileUtils::getInstance()->getValueMapFromFile(pathStr);
 
     CCASSERT(dict["version"].asInt() == 1, "Unsupported version. Upgrade cocos2d version");
 
     std::string textureFilename = relPathStr + dict["textureFilename"].asString();
 
-    unsigned int width = dict["itemWidth"].asInt() / CC_CONTENT_SCALE_FACTOR();
-    unsigned int height = dict["itemHeight"].asInt() / CC_CONTENT_SCALE_FACTOR();
+    unsigned int width = dict["itemWidth"].asInt();
+    unsigned int height = dict["itemHeight"].asInt();
     unsigned int startChar = dict["firstChar"].asInt();
 
     Texture2D *tempTexture = Director::getInstance()->getTextureCache()->addImage(textureFilename);
@@ -98,23 +98,9 @@ FontCharMap::~FontCharMap()
 
 }
 
-int * FontCharMap::getHorizontalKerningForTextUTF16(const std::u16string& text, int &outNumLetters) const
+int* FontCharMap::getHorizontalKerningForTextUTF32(const std::u32string& /*text*/, int & /*outNumLetters*/) const
 {
-    outNumLetters = static_cast<int>(text.length());
-    
-    if (!outNumLetters)
-        return 0;
-    
-    int *sizes = new int[outNumLetters];
-    if (!sizes)
-        return 0;
-    
-    for (int c = 0; c < outNumLetters; ++c)
-    {
-        sizes[c] = 0;
-    }
-    
-    return sizes;
+    return nullptr;
 }
 
 FontAtlas * FontCharMap::createFontAtlas()
@@ -123,33 +109,32 @@ FontAtlas * FontCharMap::createFontAtlas()
     if (!tempAtlas)
         return nullptr;
     
-    Size s = _texture->getContentSize();
-
+    Size s = _texture->getContentSizeInPixels();
     int itemsPerColumn = (int)(s.height / _itemHeight);
     int itemsPerRow = (int)(s.width / _itemWidth);
 
-    tempAtlas->setCommonLineHeight(_itemHeight);
-    
+    tempAtlas->setLineHeight(_itemHeight);
+
+    auto contentScaleFactor = CC_CONTENT_SCALE_FACTOR();
+
     FontLetterDefinition tempDefinition;
     tempDefinition.textureID = 0;
     tempDefinition.offsetX  = 0.0f;
     tempDefinition.offsetY  = 0.0f;
     tempDefinition.validDefinition = true;
-    tempDefinition.width    = _itemWidth;
-    tempDefinition.height   = _itemHeight;
-    tempDefinition.xAdvance = _itemWidth * CC_CONTENT_SCALE_FACTOR();
+    tempDefinition.width = _itemWidth / contentScaleFactor;
+    tempDefinition.height = _itemHeight / contentScaleFactor;
+    tempDefinition.xAdvance = _itemWidth;
 
     int charId = _mapStartChar;
     for (int row = 0; row < itemsPerColumn; ++row)
     {
         for (int col = 0; col < itemsPerRow; ++col)
         {
-            tempDefinition.letteCharUTF16 = charId;
+            tempDefinition.U = _itemWidth * col / contentScaleFactor;
+            tempDefinition.V = _itemHeight * row / contentScaleFactor;
 
-            tempDefinition.U        = _itemWidth * col;
-            tempDefinition.V        = _itemHeight * row;           
-
-            tempAtlas->addLetterDefinition(tempDefinition);
+            tempAtlas->addLetterDefinition(charId, tempDefinition);
             charId++;
         }
     }

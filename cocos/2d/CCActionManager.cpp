@@ -3,7 +3,7 @@ Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2009      Valentin Milea
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-CopyRight (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
  
 http://www.cocos2d-x.org
 
@@ -90,7 +90,7 @@ void ActionManager::actionAllocWithHashElement(tHashElement *element)
 
 void ActionManager::removeActionAtIndex(ssize_t index, tHashElement *element)
 {
-    Action *action = (Action*)element->actions->arr[index];
+    Action *action = static_cast<Action*>(element->actions->arr[index]);
 
     if (action == element->currentAction && (! element->currentActionSalvaged))
     {
@@ -159,7 +159,8 @@ Vector<Node*> ActionManager::pauseAllRunningActions()
 
 void ActionManager::resumeTargets(const Vector<Node*>& targetsToResume)
 {
-    for(const auto &node : targetsToResume) {
+    for(const auto &node : targetsToResume)
+    {
         this->resumeTarget(node);
     }
 }
@@ -168,8 +169,10 @@ void ActionManager::resumeTargets(const Vector<Node*>& targetsToResume)
 
 void ActionManager::addAction(Action *action, Node *target, bool paused)
 {
-    CCASSERT(action != nullptr, "");
-    CCASSERT(target != nullptr, "");
+    CCASSERT(action != nullptr, "action can't be nullptr!");
+    CCASSERT(target != nullptr, "target can't be nullptr!");
+    if(action == nullptr || target == nullptr)
+        return;
 
     tHashElement *element = nullptr;
     // we should convert it to Ref*, because we save it as Ref*
@@ -186,7 +189,7 @@ void ActionManager::addAction(Action *action, Node *target, bool paused)
 
      actionAllocWithHashElement(element);
  
-     CCASSERT(! ccArrayContainsObject(element->actions, action), "");
+     CCASSERT(! ccArrayContainsObject(element->actions, action), "action already be added!");
      ccArrayAppendObject(element->actions, action);
  
      action->startWithTarget(target);
@@ -232,10 +235,6 @@ void ActionManager::removeAllActionsFromTarget(Node *target)
             deleteHashElement(element);
         }
     }
-    else
-    {
-//        CCLOG("cocos2d: removeAllActionsFromTarget: Target not found");
-    }
 }
 
 void ActionManager::removeAction(Action *action)
@@ -257,16 +256,16 @@ void ActionManager::removeAction(Action *action)
             removeActionAtIndex(i, element);
         }
     }
-    else
-    {
-        CCLOG("cocos2d: removeAction: Target not found");
-    }
 }
 
 void ActionManager::removeActionByTag(int tag, Node *target)
 {
-    CCASSERT(tag != Action::INVALID_TAG, "");
-    CCASSERT(target != nullptr, "");
+    CCASSERT(tag != Action::INVALID_TAG, "Invalid tag value!");
+    CCASSERT(target != nullptr, "target can't be nullptr!");
+    if (target == nullptr)
+    {
+        return;
+    }
 
     tHashElement *element = nullptr;
     HASH_FIND_PTR(_targets, &target, element);
@@ -276,7 +275,7 @@ void ActionManager::removeActionByTag(int tag, Node *target)
         auto limit = element->actions->num;
         for (int i = 0; i < limit; ++i)
         {
-            Action *action = (Action*)element->actions->arr[i];
+            Action *action = static_cast<Action*>(element->actions->arr[i]);
 
             if (action->getTag() == (int)tag && action->getOriginalTarget() == target)
             {
@@ -289,8 +288,12 @@ void ActionManager::removeActionByTag(int tag, Node *target)
 
 void ActionManager::removeAllActionsByTag(int tag, Node *target)
 {
-    CCASSERT(tag != Action::INVALID_TAG, "");
-    CCASSERT(target != nullptr, "");
+    CCASSERT(tag != Action::INVALID_TAG, "Invalid tag value!");
+    CCASSERT(target != nullptr, "target can't be nullptr!");
+    if (target == nullptr)
+    {
+        return;
+    }
     
     tHashElement *element = nullptr;
     HASH_FIND_PTR(_targets, &target, element);
@@ -300,9 +303,44 @@ void ActionManager::removeAllActionsByTag(int tag, Node *target)
         auto limit = element->actions->num;
         for (int i = 0; i < limit;)
         {
-            Action *action = (Action*)element->actions->arr[i];
-            
+            Action *action = static_cast<Action*>(element->actions->arr[i]);
+
             if (action->getTag() == (int)tag && action->getOriginalTarget() == target)
+            {
+                removeActionAtIndex(i, element);
+                --limit;
+            }
+            else
+            {
+                ++i;
+            }
+        }
+    }
+}
+
+void ActionManager::removeActionsByFlags(unsigned int flags, Node *target)
+{
+    if (flags == 0)
+    {
+        return;
+    }
+    CCASSERT(target != nullptr, "target can't be nullptr!");
+    if (target == nullptr)
+    {
+        return;
+    }
+
+    tHashElement *element = nullptr;
+    HASH_FIND_PTR(_targets, &target, element);
+
+    if (element)
+    {
+        auto limit = element->actions->num;
+        for (int i = 0; i < limit;)
+        {
+            Action *action = static_cast<Action*>(element->actions->arr[i]);
+
+            if ((action->getFlags() & flags) != 0 && action->getOriginalTarget() == target)
             {
                 removeActionAtIndex(i, element);
                 --limit;
@@ -317,11 +355,11 @@ void ActionManager::removeAllActionsByTag(int tag, Node *target)
 
 // get
 
-// FIXME: Passing "const O *" instead of "const O&" because HASH_FIND_IT requries the address of a pointer
+// FIXME: Passing "const O *" instead of "const O&" because HASH_FIND_IT requires the address of a pointer
 // and, it is not possible to get the address of a reference
 Action* ActionManager::getActionByTag(int tag, const Node *target) const
 {
-    CCASSERT(tag != Action::INVALID_TAG, "");
+    CCASSERT(tag != Action::INVALID_TAG, "Invalid tag value!");
 
     tHashElement *element = nullptr;
     HASH_FIND_PTR(_targets, &target, element);
@@ -333,7 +371,7 @@ Action* ActionManager::getActionByTag(int tag, const Node *target) const
             auto limit = element->actions->num;
             for (int i = 0; i < limit; ++i)
             {
-                Action *action = (Action*)element->actions->arr[i];
+                Action *action = static_cast<Action*>(element->actions->arr[i]);
 
                 if (action->getTag() == (int)tag)
                 {
@@ -341,17 +379,12 @@ Action* ActionManager::getActionByTag(int tag, const Node *target) const
                 }
             }
         }
-        //CCLOG("cocos2d : getActionByTag(tag = %d): Action not found", tag);
-    }
-    else
-    {
-        // CCLOG("cocos2d : getActionByTag: Target not found");
     }
 
     return nullptr;
 }
 
-// FIXME: Passing "const O *" instead of "const O&" because HASH_FIND_IT requries the address of a pointer
+// FIXME: Passing "const O *" instead of "const O&" because HASH_FIND_IT requires the address of a pointer
 // and, it is not possible to get the address of a reference
 ssize_t ActionManager::getNumberOfRunningActionsInTarget(const Node *target) const
 {
@@ -364,6 +397,32 @@ ssize_t ActionManager::getNumberOfRunningActionsInTarget(const Node *target) con
 
     return 0;
 }
+
+// FIXME: Passing "const O *" instead of "const O&" because HASH_FIND_IT requires the address of a pointer
+// and, it is not possible to get the address of a reference
+size_t ActionManager::getNumberOfRunningActionsInTargetByTag(const Node *target,
+                                                             int tag)
+{
+    CCASSERT(tag != Action::INVALID_TAG, "Invalid tag value!");
+
+    tHashElement *element = nullptr;
+    HASH_FIND_PTR(_targets, &target, element);
+
+    if(!element || !element->actions)
+        return 0;
+
+    int count = 0;
+    auto limit = element->actions->num;
+    for(int i = 0; i < limit; ++i)
+    {
+        auto action = static_cast<Action*>(element->actions->arr[i]);
+        if(action->getTag() == tag)
+            ++count;
+    }
+
+    return count;
+}
+
 
 // main loop
 void ActionManager::update(float dt)
@@ -379,7 +438,7 @@ void ActionManager::update(float dt)
             for (_currentTarget->actionIndex = 0; _currentTarget->actionIndex < _currentTarget->actions->num;
                 _currentTarget->actionIndex++)
             {
-                _currentTarget->currentAction = (Action*)_currentTarget->actions->arr[_currentTarget->actionIndex];
+                _currentTarget->currentAction = static_cast<Action*>(_currentTarget->actions->arr[_currentTarget->actionIndex]);
                 if (_currentTarget->currentAction == nullptr)
                 {
                     continue;
@@ -416,6 +475,11 @@ void ActionManager::update(float dt)
 
         // only delete currentTarget if no actions were scheduled during the cycle (issue #481)
         if (_currentTargetSalvaged && _currentTarget->actions->num == 0)
+        {
+            deleteHashElement(_currentTarget);
+        }
+        //if some node reference 'target', it's reference count >= 2 (issues #14050)
+        else if (_currentTarget->target->getReferenceCount() == 1)
         {
             deleteHashElement(_currentTarget);
         }

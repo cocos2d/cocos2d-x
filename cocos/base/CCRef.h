@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies
+Copyright (c) 2013-2017 Chukong Technologies
 
 http://www.cocos2d-x.org
 
@@ -31,12 +31,12 @@ THE SOFTWARE.
 
 #define CC_REF_LEAK_DETECTION 0
 
-NS_CC_BEGIN
-
 /**
- * @addtogroup base_nodes
+ * @addtogroup base
  * @{
  */
+NS_CC_BEGIN
+
 
 class Ref;
 
@@ -69,7 +69,7 @@ public:
 };
 
 /**
- * Ref is used for reference count manangement. If a class inherits from Ref,
+ * Ref is used for reference count management. If a class inherits from Ref,
  * then it is easy to be shared in different places.
  * @js NA
  */
@@ -91,7 +91,7 @@ public:
      *
      * This decrements the Ref's reference count.
      *
-     * If the reference count reaches 0 after the descrement, this Ref is
+     * If the reference count reaches 0 after the decrement, this Ref is
      * destructed.
      *
      * @see retain, autorelease
@@ -102,10 +102,10 @@ public:
     /**
      * Releases the ownership sometime soon automatically.
      *
-     * This descrements the Ref's reference count at the end of current
+     * This decrements the Ref's reference count at the end of current
      * autorelease pool block.
      *
-     * If the reference count reaches 0 after the descrement, this Ref is
+     * If the reference count reaches 0 after the decrement, this Ref is
      * destructed.
      *
      * @returns The Ref itself.
@@ -156,6 +156,11 @@ public:
     int                 _luaID;
     /// scriptObject, support for swift
     void* _scriptObject;
+
+    /**
+     When true, it means that the object was already rooted.
+     */
+    bool _rooted;
 #endif
 
     // Memory leak diagnostic data (only included when CC_REF_LEAK_DETECTION is defined and its value isn't zero)
@@ -190,9 +195,9 @@ typedef void (Ref::*SEL_SCHEDULE)(float);
 #define schedule_selector(_SELECTOR) CC_SCHEDULE_SELECTOR(_SELECTOR)
 
 
-// end of base_nodes group
-/// @}
 
 NS_CC_END
+// end of base group
+/** @} */
 
 #endif // __BASE_CCREF_H__

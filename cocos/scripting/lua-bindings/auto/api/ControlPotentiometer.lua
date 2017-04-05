@@ -41,7 +41,7 @@
 -- @return float#float ret (return value: float)
         
 --------------------------------
---  Factorize the event dispath into these methods. 
+--  Factorize the event dispatch into these methods. 
 -- @function [parent=#ControlPotentiometer] potentiometerBegan 
 -- @param self
 -- @param #vec2_table location
@@ -180,7 +180,8 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- js ctor
+-- js ctor<br>
+-- lua new
 -- @function [parent=#ControlPotentiometer] ControlPotentiometer 
 -- @param self
 -- @return ControlPotentiometer#ControlPotentiometer self (return value: cc.ControlPotentiometer)

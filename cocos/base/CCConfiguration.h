@@ -1,7 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010      Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -32,16 +32,20 @@ THE SOFTWARE.
 #include "base/CCRef.h"
 #include "base/CCValue.h"
 #include "platform/CCGL.h"
-
-NS_CC_BEGIN
+#include "3d/CCAnimate3D.h"
 
 /**
- * @addtogroup global
+ * @addtogroup base
  * @{
  */
+NS_CC_BEGIN
+
+class EventCustom;
+
 /** @class Configuration
  * @brief Configuration contains some openGL variables
  * @since v0.99.0
+ * @js NA
  */
 class CC_DLL Configuration : public Ref
 {
@@ -141,6 +145,31 @@ public:
      * @since v2.0.0
      */
 	bool supportsShareableVAO() const;
+
+    /** Whether or not OES_depth24 is supported.
+     *
+     * @return Is true if supports OES_depth24.
+     * @since v2.0.0
+     */
+    bool supportsOESDepth24() const;
+    
+    /** Whether or not OES_Packed_depth_stencil is supported.
+     *
+     * @return Is true if supports OES_Packed_depth_stencil.
+     * @since v2.0.0
+     */
+    bool supportsOESPackedDepthStencil() const;
+
+    /** Whether or not glMapBuffer() is supported.
+     *
+     * On Desktop it returns `true`.
+     * On Mobile it checks for the extension `GL_OES_mapbuffer`
+     *
+     * @return Whether or not `glMapBuffer()` is supported.
+     * @since v3.13
+     */
+    bool supportsMapBuffer() const;
+
     
     /** Max support directional light in shader, for Sprite3D.
      *
@@ -163,6 +192,9 @@ public:
      */
     int getMaxSupportSpotLightInShader() const;
 
+    /** get 3d animate quality*/
+    Animate3DQuality getAnimate3DQuality() const;
+    
     /** Returns whether or not an OpenGL is supported. 
      *
      * @param searchName A given search name.
@@ -206,6 +238,8 @@ public:
      * @param filename Config file name.
      */
 	void loadConfigFile(const std::string& filename);
+    
+    static const char* CONFIG_FILE_LOADED;
 
 private:
     Configuration(void);
@@ -223,19 +257,26 @@ protected:
     bool            _supportsBGRA8888;
     bool            _supportsDiscardFramebuffer;
     bool            _supportsShareableVAO;
+    bool            _supportsOESMapBuffer;
+    bool            _supportsOESDepth24;
+    bool            _supportsOESPackedDepthStencil;
+    
     GLint           _maxSamplesAllowed;
     GLint           _maxTextureUnits;
     char *          _glExtensions;
     int             _maxDirLightInShader; //max support directional light in shader
     int             _maxPointLightInShader; // max support point light in shader
     int             _maxSpotLightInShader; // max support spot light in shader
+    Animate3DQuality  _animate3DQuality; // animate 3d quality
 	
 	ValueMap        _valueDict;
+    
+    EventCustom*    _loadedEvent;
 };
 
-// end of global group
-/// @}
 
 NS_CC_END
+// end of base group
+/// @}
 
 #endif // __CCCONFIGURATION_H__

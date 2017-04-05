@@ -2,7 +2,7 @@
  Copyright (c) 2010      Ricardo Quesada
  Copyright (c) 2010-2012 cocos2d-x.org
  Corpyight (c) 2011      Zynga Inc.
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -32,9 +32,9 @@
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 
-#import "CCES2Renderer-ios.h"
+#import "platform/ios/CCES2Renderer-ios.h"
 #import "platform/CCPlatformMacros.h"
-#import "OpenGL_Internal-ios.h"
+#import "platform/ios/OpenGL_Internal-ios.h"
 
 #if !defined(COCOS2D_DEBUG) || COCOS2D_DEBUG == 0
 #define NSLog(...)       do {} while (0)
@@ -51,13 +51,20 @@
 // Create an OpenGL ES 2.0 context
 - (id) initWithDepthFormat:(unsigned int)depthFormat withPixelFormat:(unsigned int)pixelFormat withSharegroup:(EAGLSharegroup*)sharegroup withMultiSampling:(BOOL) multiSampling withNumberOfSamples:(unsigned int) requestedSamples
 {
-    self = [super init];
-    if (self)
+    if (self = [super init])
     {
-        if( ! sharegroup )
-            context_ = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
+        if (! sharegroup)
+        {
+            context_ = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES3];
+            if (! context_)
+                context_ = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
+        }
         else
-            context_ = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2 sharegroup:sharegroup];
+        {
+            context_ = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES3 sharegroup:sharegroup];
+            if (!context_)
+                context_ = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2 sharegroup:sharegroup];
+        }
 
         if (!context_ || ![EAGLContext setCurrentContext:context_] )
         {
@@ -162,8 +169,8 @@
         glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depthBuffer_);
         
         if (depthFormat_ == GL_DEPTH24_STENCIL8_OES) {
-			glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, depthBuffer_);
-		}
+            glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, depthBuffer_);
+        }
 
         // bind color buffer
         glBindRenderbuffer(GL_RENDERBUFFER, colorRenderbuffer_);        
@@ -256,4 +263,3 @@
 @end
 
 #endif // CC_PLATFORM_IOS
-

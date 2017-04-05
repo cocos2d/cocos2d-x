@@ -2,7 +2,7 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
  
 http://www.cocos2d-x.org
 
@@ -41,14 +41,13 @@ static Texture2D* getDefaultTexture()
     Image* image = nullptr;
     do 
     {
-        bool ret = false;
         const std::string key = "/__firePngData";
         texture = Director::getInstance()->getTextureCache()->getTextureForKey(key);
         CC_BREAK_IF(texture != nullptr);
 
         image = new (std::nothrow) Image();
         CC_BREAK_IF(nullptr == image);
-        ret = image->initWithImageData(__firePngData, sizeof(__firePngData));
+        bool ret = image->initWithImageData(__firePngData, sizeof(__firePngData));
         CC_BREAK_IF(!ret);
 
         texture = Director::getInstance()->getTextureCache()->addImage(image, key);
@@ -98,7 +97,7 @@ bool ParticleFire::initWithTotalParticles(int numberOfParticles)
         this->_emitterMode = Mode::GRAVITY;
 
         // Gravity Mode: gravity
-        this->modeA.gravity = Vec2(0,0);
+        this->modeA.gravity.setZero();
 
         // Gravity Mode: radial acceleration
         this->modeA.radialAccel = 0;
@@ -114,8 +113,8 @@ bool ParticleFire::initWithTotalParticles(int numberOfParticles)
 
         // emitter position
         Size winSize = Director::getInstance()->getWinSize();
-        this->setPosition(winSize.width/2, 60);
-        this->_posVar = Vec2(40, 20);
+        this->setPosition(winSize.width/2.0f, 60.0f);
+        this->_posVar.set(40.0f, 20.0f);
 
         // life of particles
         _life = 3;
@@ -203,27 +202,27 @@ bool ParticleFireworks::initWithTotalParticles(int numberOfParticles)
         this->_emitterMode = Mode::GRAVITY;
 
         // Gravity Mode: gravity
-        this->modeA.gravity = Vec2(0,-90);
+        this->modeA.gravity.set(0.0f, -90.0f);
 
         // Gravity Mode:  radial
-        this->modeA.radialAccel = 0;
-        this->modeA.radialAccelVar = 0;
+        this->modeA.radialAccel = 0.0f;
+        this->modeA.radialAccelVar = 0.0f;
 
         //  Gravity Mode: speed of particles
-        this->modeA.speed = 180;
-        this->modeA.speedVar = 50;
+        this->modeA.speed = 180.0f;
+        this->modeA.speedVar = 50.0f;
 
         // emitter position
         Size winSize = Director::getInstance()->getWinSize();
         this->setPosition(winSize.width/2, winSize.height/2);
 
         // angle
-        this->_angle= 90;
-        this->_angleVar = 20;
+        this->_angle= 90.0f;
+        this->_angleVar = 20.0f;
 
         // life of particles
         this->_life = 3.5f;
-        this->_lifeVar = 1;
+        this->_lifeVar = 1.0f;
 
         // emits per frame
         this->_emissionRate = _totalParticles/_life;

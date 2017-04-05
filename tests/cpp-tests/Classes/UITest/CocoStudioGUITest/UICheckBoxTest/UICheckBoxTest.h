@@ -27,29 +27,50 @@
 
 #include "../UIScene.h"
 
+DEFINE_TEST_SUITE(UICheckBoxTests);
+
 class UICheckBoxTest : public UIScene
 {
 public:
+    CREATE_FUNC(UICheckBoxTest);
+
     UICheckBoxTest();
     ~UICheckBoxTest();
-    bool init();
-    void selectedEvent(Ref* pSender,CheckBox::EventType type);
+
+    virtual bool init() override;
+    void selectedEvent(cocos2d::Ref* sender,cocos2d::ui::CheckBox::EventType type);
     
+    void printWidgetResources(cocos2d::Ref* sender);
 protected:
-    UI_SCENE_CREATE_FUNC(UICheckBoxTest)
-    Text* _displayValueLabel;
+    cocos2d::ui::Text* _displayValueLabel;
+    cocos2d::ui::CheckBox* _checkBox;
 };
 
 class UICheckBoxDefaultBehaviorTest : public UIScene
 {
 public:
+    CREATE_FUNC(UICheckBoxDefaultBehaviorTest);
+
     UICheckBoxDefaultBehaviorTest();
     ~UICheckBoxDefaultBehaviorTest();
-    bool init();
+
+    virtual bool init() override;
     
 protected:
-    UI_SCENE_CREATE_FUNC(UICheckBoxDefaultBehaviorTest)
-    Text* _displayValueLabel;
+    cocos2d::ui::Text* _displayValueLabel;
 };
 
+class UICheckBoxCopyTest : public UIScene
+{
+public:
+    CREATE_FUNC(UICheckBoxCopyTest);
+
+    UICheckBoxCopyTest();
+    ~UICheckBoxCopyTest();
+
+    virtual bool init() override;
+
+protected:
+    cocos2d::ui::Text* _displayValueLabel;
+};
 #endif /* defined(__TestCpp__UICheckBoxTest__) */

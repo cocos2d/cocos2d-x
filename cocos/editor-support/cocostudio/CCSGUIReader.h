@@ -1,5 +1,5 @@
-/****************************************************************************
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+﻿/****************************************************************************
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -26,10 +26,11 @@ THE SOFTWARE.
 #define __CCSGUIREADER_H__
 
 #include "ui/UILayout.h"
-#include "cocostudio/DictionaryHelper.h"
-#include "WidgetReader/WidgetReaderProtocol.h"
+#include "editor-support/cocostudio/DictionaryHelper.h"
+#include "editor-support/cocostudio/WidgetReader/WidgetReaderProtocol.h"
 #include "base/ObjectFactory.h"
-#include "cocostudio/CocosStudioExport.h"
+#include "base/CCValue.h"
+#include "editor-support/cocostudio/CocosStudioExport.h"
 
 namespace protocolbuffers
 {
@@ -73,7 +74,7 @@ public:
     /**
      *  @js NA
      */
-    const cocos2d::Size getFileDesignSize(const char* fileName) const;
+    cocos2d::Size getFileDesignSize(const char* fileName) const;
     
     void setFilePath(const std::string& strFilePath) { m_strFilePath = strFilePath; }
     const std::string& getFilePath() const { return m_strFilePath; }
@@ -154,16 +155,16 @@ public:
     
     //added for binary parsing
     virtual cocos2d::ui::Widget* createWidgetFromBinary(CocoLoader* cocoLoader,
-                                                        stExpCocoNode*	pCocoNode,
-                                                        const char* fileName)override{return nullptr;}
+                                                        stExpCocoNode* pCocoNode,
+                                                        const char* fileName) override;
     
     virtual cocos2d::ui::Widget* widgetFromBinary(CocoLoader* cocoLoader,
-                                                  stExpCocoNode*	pCocoNode) override {return nullptr;}
+                                                  stExpCocoNode* pCocoNode) override;
     
     virtual void setPropsForAllWidgetFromBinary(WidgetReaderProtocol* reader,
                                                 cocos2d::ui::Widget* widget,
                                                 CocoLoader* cocoLoader,
-                                                stExpCocoNode*	pCocoNode) override {}
+                                                stExpCocoNode* pCocoNode) override;
 
     virtual void setPropsForWidgetFromJsonDictionary(cocos2d::ui::Widget* widget,const rapidjson::Value& options);
     
@@ -216,10 +217,8 @@ public:
     virtual void setPropsForAllCustomWidgetFromBinary(const std::string& classType,
                                                       cocos2d::ui::Widget* widget,
                                                       CocoLoader* cocoLoader,
-                                                      stExpCocoNode*	pCocoNode) {
-        //TODO: custom property
-    }
-    
+                                                      stExpCocoNode* pCocoNode);
+
     virtual cocos2d::ui::Widget* widgetFromJsonDictionary(const rapidjson::Value& dic) override;
     
     virtual void setPropsForAllWidgetFromJsonDictionary(WidgetReaderProtocol* reader,

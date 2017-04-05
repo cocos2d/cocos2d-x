@@ -9,6 +9,8 @@
 #include "../testResource.h"
 #include "renderer/CCRenderer.h"
 
+USING_NS_CC;
+
 enum {
 	kTagTitleLabel = 1,
 	kTagSubtitleLabel = 2,
@@ -17,56 +19,25 @@ enum {
 	kTagContentNode = 102,
 };
 
-static std::function<Layer*()> createFunctions[] = {
-    CL(ScrollViewDemo),
-    CL(HoleDemo),
-    CL(ShapeTest),
-    CL(ShapeInvertedTest),
-    CL(SpriteTest),
-    CL(SpriteNoAlphaTest),
-    CL(SpriteInvertedTest),
-    CL(NestedTest),
-    CL(RawStencilBufferTest),
-    CL(RawStencilBufferTest2),
-    CL(RawStencilBufferTest3),
-    CL(RawStencilBufferTest4),
-    CL(RawStencilBufferTest5),
-    CL(RawStencilBufferTest6),
-    CL(ClippingToRenderTextureTest),
-    CL(ClippingRectangleNodeTest),
-};
-
-static int sceneIdx=-1;
-#define MAX_LAYER (sizeof(createFunctions) / sizeof(createFunctions[0]))
-
-static Layer* nextAction()
+ClippingNodeTests::ClippingNodeTests()
 {
-    sceneIdx++;
-    sceneIdx = sceneIdx % MAX_LAYER;
-
-    auto layer = (createFunctions[sceneIdx])();
-
-    return layer;
+    ADD_TEST_CASE(ScrollViewDemo);
+    ADD_TEST_CASE(HoleDemo);
+    ADD_TEST_CASE(ShapeTest);
+    ADD_TEST_CASE(ShapeInvertedTest);
+    ADD_TEST_CASE(SpriteTest);
+    ADD_TEST_CASE(SpriteNoAlphaTest);
+    ADD_TEST_CASE(SpriteInvertedTest);
+    ADD_TEST_CASE(NestedTest);
+    ADD_TEST_CASE(RawStencilBufferTest);
+    ADD_TEST_CASE(RawStencilBufferTest2);
+    ADD_TEST_CASE(RawStencilBufferTest3);
+    ADD_TEST_CASE(RawStencilBufferTest4);
+    ADD_TEST_CASE(RawStencilBufferTest5);
+    ADD_TEST_CASE(RawStencilBufferTest6);
+    ADD_TEST_CASE(ClippingToRenderTextureTest);
+    ADD_TEST_CASE(ClippingRectangleNodeTest);
 }
-
-static Layer* backAction()
-{
-    sceneIdx--;
-    int total = MAX_LAYER;
-    if( sceneIdx < 0 )
-        sceneIdx += total;    
-
-    auto layer = (createFunctions[sceneIdx])();
-
-    return layer;
-}
-
-static Layer* restartAction()
-{
-    auto layer = (createFunctions[sceneIdx])();
-
-    return layer;
-} 
 
 //// Demo examples start here
 
@@ -74,7 +45,7 @@ static Layer* restartAction()
 
 bool BaseClippingNodeTest::init()
 {
-	if (BaseTest::init()) {
+	if (TestCase::init()) {
         
         auto background = Sprite::create(s_back3);
         background->setAnchorPoint( Vec2::ZERO );
@@ -95,35 +66,6 @@ BaseClippingNodeTest::~BaseClippingNodeTest()
 std::string BaseClippingNodeTest::title() const
 {
 	return "Clipping Demo";
-}
-
-std::string BaseClippingNodeTest::subtitle() const
-{
-	return "";
-}
-
-void BaseClippingNodeTest::restartCallback(Ref* sender)
-{
-	Scene *s = new (std::nothrow) ClippingNodeTestScene();
-	s->addChild(restartAction());
-	Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void BaseClippingNodeTest::nextCallback(Ref* sender)
-{
-	Scene *s = new (std::nothrow) ClippingNodeTestScene();
-	s->addChild(nextAction());
-	Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void BaseClippingNodeTest::backCallback(Ref* sender)
-{
-	Scene *s = new (std::nothrow) ClippingNodeTestScene();
-	s->addChild(backAction());
-	Director::getInstance()->replaceScene(s);
-    s->release();
 }
 
 void BaseClippingNodeTest::setup()
@@ -401,10 +343,10 @@ void HoleDemo::setup()
     
     _outerClipper = ClippingNode::create();
     _outerClipper->retain();
-    AffineTransform tranform = AffineTransform::IDENTITY;
-    tranform = AffineTransformScale(tranform, target->getScale(), target->getScale());
+    AffineTransform transform = AffineTransform::IDENTITY;
+    transform = AffineTransformScale(transform, target->getScale(), target->getScale());
 
-    _outerClipper->setContentSize( SizeApplyAffineTransform(target->getContentSize(), tranform));
+    _outerClipper->setContentSize(SizeApplyAffineTransform(target->getContentSize(), transform));
     _outerClipper->setAnchorPoint( Vec2(0.5, 0.5) );
     _outerClipper->setPosition(Vec2(this->getContentSize()) * 0.5f);
     _outerClipper->runAction(RepeatForever::create(RotateBy::create(1, 45)));
@@ -639,7 +581,7 @@ void RawStencilBufferTest::draw(Renderer *renderer, const Mat4 &transform, uint3
         ++iter;
         
         Director* director = Director::getInstance();
-        CCASSERT(nullptr != director, "Director is null when seting matrix stack");
+        CCASSERT(nullptr != director, "Director is null when setting matrix stack");
         director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
         
         _modelViewTransform = this->transform(transform);
@@ -880,14 +822,14 @@ void RawStencilBufferTest6::setup()
     RawStencilBufferTestAlphaTest::setup();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     auto winPoint = Vec2(Director::getInstance()->getWinSize());
-    //by default, glReadPixels will pack data with 4 bytes allignment
+    //by default, glReadPixels will pack data with 4 bytes alignment
     unsigned char bits[4] = {0,0,0,0};
     glStencilMask(~0);
     glClearStencil(0);
     glClear(GL_STENCIL_BUFFER_BIT);
     glFlush();
     glReadPixels(0, 0, 1, 1, GL_STENCIL_INDEX, GL_UNSIGNED_BYTE, &bits);
-    auto clearToZeroLabel = Label::createWithTTF(String::createWithFormat("00=%02x", bits[0])->getCString(), "fonts/arial.ttf", 20);
+    auto clearToZeroLabel = Label::createWithTTF(StringUtils::format("00=%02x", bits[0]), "fonts/arial.ttf", 20);
     clearToZeroLabel->setPosition((winPoint.x / 3) * 1, winPoint.y - 10);
     this->addChild(clearToZeroLabel);
     glStencilMask(0x0F);
@@ -895,7 +837,7 @@ void RawStencilBufferTest6::setup()
     glClear(GL_STENCIL_BUFFER_BIT);
     glFlush();
     glReadPixels(0, 0, 1, 1, GL_STENCIL_INDEX, GL_UNSIGNED_BYTE, &bits);
-    auto clearToMaskLabel = Label::createWithTTF(String::createWithFormat("0a=%02x", bits[0])->getCString(), "fonts/arial.ttf", 20);
+    auto clearToMaskLabel = Label::createWithTTF(StringUtils::format("0a=%02x", bits[0]), "fonts/arial.ttf", 20);
     clearToMaskLabel->setPosition((winPoint.x / 3) * 2, winPoint.y - 10);
     this->addChild(clearToMaskLabel);
 #endif
@@ -1127,14 +1069,4 @@ void ClippingRectangleNodeTest::setup()
     content->setAnchorPoint(  Vec2(0.5, 0.5) );
     content->setPosition(this->getContentSize().width / 2, this->getContentSize().height / 2);
     clipper->addChild(content);
-}
-
-
-// main entry point
-
-void ClippingNodeTestScene::runThisTest()
-{
-    auto layer = nextAction();
-    addChild(layer);
-    Director::getInstance()->replaceScene(this);
 }

@@ -5,6 +5,13 @@
 -- @parent_module cc
 
 --------------------------------
+-- 
+-- @function [parent=#SpriteFrameCache] reloadTexture 
+-- @param self
+-- @param #string plist
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 --  Adds multiple Sprite Frames from a plist file content. The texture will be associated with the created sprite frames. <br>
 -- js NA<br>
 -- lua addSpriteFrames<br>
@@ -17,16 +24,6 @@
 -- @return SpriteFrameCache#SpriteFrameCache self (return value: cc.SpriteFrameCache)
         
 --------------------------------
--- @overload self, string, string         
--- @overload self, string         
--- @overload self, string, cc.Texture2D         
--- @function [parent=#SpriteFrameCache] addSpriteFramesWithFile
--- @param self
--- @param #string plist
--- @param #cc.Texture2D texture
--- @return SpriteFrameCache#SpriteFrameCache self (return value: cc.SpriteFrameCache)
-
---------------------------------
 --  Adds an sprite frame with a given name.<br>
 -- If the name already exists, then the contents of the old name will be replaced with the new one.<br>
 -- param frame A certain sprite frame.<br>
@@ -38,14 +35,15 @@
 -- @return SpriteFrameCache#SpriteFrameCache self (return value: cc.SpriteFrameCache)
         
 --------------------------------
---  Removes unused sprite frames.<br>
--- Sprite Frames that have a retain count of 1 will be deleted.<br>
--- It is convenient to call this method after when starting a new Scene.<br>
--- js NA
--- @function [parent=#SpriteFrameCache] removeUnusedSpriteFrames 
+-- @overload self, string, string         
+-- @overload self, string         
+-- @overload self, string, cc.Texture2D         
+-- @function [parent=#SpriteFrameCache] addSpriteFramesWithFile
 -- @param self
+-- @param #string plist
+-- @param #cc.Texture2D texture
 -- @return SpriteFrameCache#SpriteFrameCache self (return value: cc.SpriteFrameCache)
-        
+
 --------------------------------
 --  Returns an Sprite Frame that was previously added.<br>
 -- If the name is not found it will return nil.<br>
@@ -88,13 +86,12 @@
 -- @return SpriteFrameCache#SpriteFrameCache self (return value: cc.SpriteFrameCache)
         
 --------------------------------
---  Removes all Sprite Frames associated with the specified textures.<br>
--- It is convenient to call this method when a specific texture needs to be removed.<br>
--- since v0.995.<br>
--- param texture The texture that needs to removed.
--- @function [parent=#SpriteFrameCache] removeSpriteFramesFromTexture 
+--  Removes unused sprite frames.<br>
+-- Sprite Frames that have a retain count of 1 will be deleted.<br>
+-- It is convenient to call this method after when starting a new Scene.<br>
+-- js NA
+-- @function [parent=#SpriteFrameCache] removeUnusedSpriteFrames 
 -- @param self
--- @param #cc.Texture2D texture
 -- @return SpriteFrameCache#SpriteFrameCache self (return value: cc.SpriteFrameCache)
         
 --------------------------------
@@ -114,6 +111,27 @@
 -- @function [parent=#SpriteFrameCache] removeSpriteFrameByName 
 -- @param self
 -- @param #string name
+-- @return SpriteFrameCache#SpriteFrameCache self (return value: cc.SpriteFrameCache)
+        
+--------------------------------
+--  Check if multiple Sprite Frames from a plist file have been loaded.<br>
+-- js NA<br>
+-- lua NA<br>
+-- param plist Plist file name.<br>
+-- return True if the file is loaded.
+-- @function [parent=#SpriteFrameCache] isSpriteFramesWithFileLoaded 
+-- @param self
+-- @param #string plist
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+--  Removes all Sprite Frames associated with the specified textures.<br>
+-- It is convenient to call this method when a specific texture needs to be removed.<br>
+-- since v0.995.<br>
+-- param texture The texture that needs to removed.
+-- @function [parent=#SpriteFrameCache] removeSpriteFramesFromTexture 
+-- @param self
+-- @param #cc.Texture2D texture
 -- @return SpriteFrameCache#SpriteFrameCache self (return value: cc.SpriteFrameCache)
         
 --------------------------------

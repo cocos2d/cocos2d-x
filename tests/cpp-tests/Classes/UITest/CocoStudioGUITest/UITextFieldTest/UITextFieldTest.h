@@ -27,81 +27,95 @@
 
 #include "../UIScene.h"
 
+DEFINE_TEST_SUITE(UITextFieldTests);
+
 class UITextFieldTest : public UIScene
 {
 public:
+    CREATE_FUNC(UITextFieldTest);
+
     UITextFieldTest();
     ~UITextFieldTest();
-    bool init();
-    void textFieldEvent(Ref* pSender, ui::TextField::EventType type);
+    virtual bool init() override;
+    void textFieldEvent(cocos2d::Ref* sender, cocos2d::ui::TextField::EventType type);
     
 protected:
-    UI_SCENE_CREATE_FUNC(UITextFieldTest)
-    Text* _displayValueLabel;
+    
+    cocos2d::ui::Text* _displayValueLabel;
 };
 
 class UITextFieldTest_MaxLength : public UIScene
 {
 public:
+    CREATE_FUNC(UITextFieldTest_MaxLength);
+
     UITextFieldTest_MaxLength();
     ~UITextFieldTest_MaxLength();
-    bool init();
-    void textFieldEvent(Ref* pSender, TextField::EventType type);
+    virtual bool init() override;
+    void textFieldEvent(cocos2d::Ref* sender, cocos2d::ui::TextField::EventType type);
     
 protected:
-    UI_SCENE_CREATE_FUNC(UITextFieldTest_MaxLength)
-    Text* _displayValueLabel;
+    
+    cocos2d::ui::Text* _displayValueLabel;
 };
 
 class UITextFieldTest_Password : public UIScene
 {
 public:
+    CREATE_FUNC(UITextFieldTest_Password);
+
     UITextFieldTest_Password();
     ~UITextFieldTest_Password();
-    bool init();
-    void textFieldEvent(Ref* pSender, TextField::EventType type);
+    virtual bool init() override;
+    void textFieldEvent(cocos2d::Ref* sender, cocos2d::ui::TextField::EventType type);
     
 protected:
-    UI_SCENE_CREATE_FUNC(UITextFieldTest_Password)
-    Text* _displayValueLabel;
+    
+    cocos2d::ui::Text* _displayValueLabel;
 };
 
 class UITextFieldTest_LineWrap : public UIScene
 {
 public:
+    CREATE_FUNC(UITextFieldTest_LineWrap);
+
     UITextFieldTest_LineWrap();
     ~UITextFieldTest_LineWrap();
-    bool init();
-    void textFieldEvent(Ref* pSender, TextField::EventType type);
+    virtual bool init() override;
+    void textFieldEvent(cocos2d::Ref* sender, cocos2d::ui::TextField::EventType type);
     
 protected:
-    UI_SCENE_CREATE_FUNC(UITextFieldTest_LineWrap)
-    Text* _displayValueLabel;
+    
+    cocos2d::ui::Text* _displayValueLabel;
 };
 
 class UITextFieldTest_TrueTypeFont : public UIScene
 {
 public:
+    CREATE_FUNC(UITextFieldTest_TrueTypeFont);
+
     UITextFieldTest_TrueTypeFont();
     ~UITextFieldTest_TrueTypeFont();
-    bool init();
-    void textFieldEvent(Ref* pSender, TextField::EventType type);
+    virtual bool init() override;
+    void textFieldEvent(cocos2d::Ref* sender, cocos2d::ui::TextField::EventType type);
     
 protected:
-    UI_SCENE_CREATE_FUNC(UITextFieldTest_TrueTypeFont)
-    Text* _displayValueLabel;
+    
+    cocos2d::ui::Text* _displayValueLabel;
 };
 
 class UITextFieldTest_PlaceHolderColor : public UIScene
 {
 public:
+    CREATE_FUNC(UITextFieldTest_PlaceHolderColor);
+
     UITextFieldTest_PlaceHolderColor();
     ~UITextFieldTest_PlaceHolderColor();
-    bool init();
-    void textFieldEvent(Ref* pSender, TextField::EventType type);
+    virtual bool init() override;
+    void textFieldEvent(cocos2d::Ref* sender, cocos2d::ui::TextField::EventType type);
     
 protected:
-    UI_SCENE_CREATE_FUNC(UITextFieldTest_PlaceHolderColor)
-    Text* _displayValueLabel;
+    
+    cocos2d::ui::Text* _displayValueLabel;
 };
 #endif /* defined(__TestCpp__UITextFieldTest__) */

@@ -3,15 +3,21 @@
 
 
 #include "cocos2d.h"
-#include "../testBasic.h"
+#include "../BaseTest.h"
 
-class TextureCacheTest : public Layer
+DEFINE_TEST_SUITE(TextureCacheTests);
+
+class TextureCacheTest : public TestCase
 {
 public:
+    CREATE_FUNC(TextureCacheTest);
+
     TextureCacheTest();
+
     void addSprite();
     void loadingCallBack(cocos2d::Texture2D *texture);
 
+    virtual float getDuration() const override { return 3.5f; }
 private:
     cocos2d::Label *_labelLoading;
     cocos2d::Label *_labelPercent;
@@ -19,10 +25,16 @@ private:
     int _numberOfLoadedSprites;
 };
 
-class TextureCacheTestScene : public TestScene
+class TextureCacheUnbindTest : public TestCase
 {
 public:
-    virtual void runThisTest();
+    CREATE_FUNC(TextureCacheUnbindTest);
+
+    TextureCacheUnbindTest();
+
+private:
+    void textureLoadedA(cocos2d::Texture2D* texture);
+    void textureLoadedB(cocos2d::Texture2D* texture);
 };
 
 #endif // _TEXTURECACHE_TEST_H_

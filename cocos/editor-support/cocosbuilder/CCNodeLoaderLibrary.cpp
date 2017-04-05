@@ -1,19 +1,19 @@
-#include "CCNodeLoaderLibrary.h"
+#include "editor-support/cocosbuilder/CCNodeLoaderLibrary.h"
 
-#include "CCLayerLoader.h"
-#include "CCLayerColorLoader.h"
-#include "CCLayerGradientLoader.h"
-#include "CCLabelBMFontLoader.h"
-#include "CCLabelTTFLoader.h"
-#include "CCSpriteLoader.h"
-#include "CCScale9SpriteLoader.h"
-#include "CCBFileLoader.h"
-#include "CCMenuLoader.h"
-#include "CCMenuItemLoader.h"
-#include "CCMenuItemImageLoader.h"
-#include "CCControlButtonLoader.h"
-#include "CCParticleSystemQuadLoader.h"
-#include "CCScrollViewLoader.h"
+#include "editor-support/cocosbuilder/CCLayerLoader.h"
+#include "editor-support/cocosbuilder/CCLayerColorLoader.h"
+#include "editor-support/cocosbuilder/CCLayerGradientLoader.h"
+#include "editor-support/cocosbuilder/CCLabelBMFontLoader.h"
+#include "editor-support/cocosbuilder/CCLabelTTFLoader.h"
+#include "editor-support/cocosbuilder/CCSpriteLoader.h"
+#include "editor-support/cocosbuilder/CCScale9SpriteLoader.h"
+#include "editor-support/cocosbuilder/CCBFileLoader.h"
+#include "editor-support/cocosbuilder/CCMenuLoader.h"
+#include "editor-support/cocosbuilder/CCMenuItemLoader.h"
+#include "editor-support/cocosbuilder/CCMenuItemImageLoader.h"
+#include "editor-support/cocosbuilder/CCControlButtonLoader.h"
+#include "editor-support/cocosbuilder/CCParticleSystemQuadLoader.h"
+#include "editor-support/cocosbuilder/CCScrollViewLoader.h"
 
 using namespace cocos2d;
 
@@ -70,8 +70,8 @@ NodeLoader * NodeLoaderLibrary::getNodeLoader(const char* pClassName) {
 
 void NodeLoaderLibrary::purge(bool pReleaseNodeLoaders) {
     if(pReleaseNodeLoaders) {
-        for(NodeLoaderMap::iterator it = this->_nodeLoaders.begin(); it != this->_nodeLoaders.end(); it++) {
-            it->second->release();
+        for(auto& it : this->_nodeLoaders) {
+            it.second->release();
         }
     }
     this->_nodeLoaders.clear();

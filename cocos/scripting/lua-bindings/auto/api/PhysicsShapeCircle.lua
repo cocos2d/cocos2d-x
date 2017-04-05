@@ -15,7 +15,7 @@
 -- Creates a PhysicsShapeCircle with specified value.<br>
 -- param   radius A float number, it is the circle's radius.<br>
 -- param   material A PhysicsMaterial object, the default value is PHYSICSSHAPE_MATERIAL_DEFAULT.<br>
--- param   offset A Vec2 object, it is the offset from the body’s center of gravity in body local coordinates.<br>
+-- param   offset A Vec2 object, it is the offset from the body's center of gravity in body local coordinates.<br>
 -- return  An autoreleased PhysicsShapeCircle object pointer.
 -- @function [parent=#PhysicsShapeCircle] create 
 -- @param self
@@ -37,7 +37,7 @@
 -- Calculate the moment of a circle with specified value.<br>
 -- param mass A float number<br>
 -- param radius A float number<br>
--- param offset A Vec2 object, it is the offset from the body’s center of gravity in body local coordinates.<br>
+-- param offset A Vec2 object, it is the offset from the body's center of gravity in body local coordinates.<br>
 -- return A float number
 -- @function [parent=#PhysicsShapeCircle] calculateMoment 
 -- @param self

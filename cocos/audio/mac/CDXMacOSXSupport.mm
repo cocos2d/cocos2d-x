@@ -26,9 +26,9 @@
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 
-#import "CDXMacOSXSupport.h"
-#import "SimpleAudioEngine.h"
-#import "CocosDenshion.h"
+#import "audio/mac/CDXMacOSXSupport.h"
+#import "audio/include/SimpleAudioEngine.h"
+#import "audio/mac/CocosDenshion.h"
 
 NSString * const AVAudioSessionCategoryAmbient = @"AVAudioSessionCategoryAmbient";
 NSString *const AVAudioSessionCategorySoloAmbient = @"AVAudioSessionCategorySoloAmbient";
@@ -42,7 +42,7 @@ OSStatus AudioSessionGetProperty(UInt32 inID, UInt32 *ioDataSize, void *outData)
 	return 0;
 }    
 
-@implementation AVAudioPlayer
+@implementation CCAudioPlayer
 
 @synthesize delegate, numberOfChannels, pan, deviceCurrentTime, url, data;
 

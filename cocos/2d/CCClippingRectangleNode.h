@@ -35,8 +35,15 @@
 NS_CC_BEGIN
 
 /**
+ * @addtogroup _2d
+ * @{
+ */
+
+/**
 @brief Clipping Rectangle Node.
 @details A node that clipped with specified rectangle.
+ The region of ClippingRectangleNode doesn't support any transform except scale.
+@js NA
 */
 class CC_DLL ClippingRectangleNode : public Node
 {    
@@ -62,7 +69,7 @@ public:
     }
     /**
     @brief Set the clipping rectangle.
-    @param Specify the clipping rectangle.
+    @param clippingRegion Specify the clipping rectangle.
     */
     void setClippingRegion(const Rect& clippingRegion);
     
@@ -70,13 +77,13 @@ public:
     @brief Get whether the clipping is enabled or not.
     @return Whether the clipping is enabled or not. Default is true.
     */
-    const bool isClippingEnabled() const {
+    bool isClippingEnabled() const {
         return _clippingEnabled;
     }
 
     /**
     @brief Enable/Disable the clipping.
-    @param Pass true to enable clipping. Pass false to disable clipping.
+    @param enabled Pass true to enable clipping. Pass false to disable clipping.
     */
     void setClippingEnabled(bool enabled) {
         _clippingEnabled = enabled;
@@ -100,6 +107,9 @@ protected:
     CustomCommand _beforeVisitCmdScissor;
     CustomCommand _afterVisitCmdScissor;
 };
+
+// end of _2d group
+/// @}
 
 NS_CC_END
 

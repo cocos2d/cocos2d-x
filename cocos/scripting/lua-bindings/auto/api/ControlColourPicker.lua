@@ -33,12 +33,6 @@
         
 --------------------------------
 -- 
--- @function [parent=#ControlColourPicker] init 
--- @param self
--- @return bool#bool ret (return value: bool)
-        
---------------------------------
--- 
 -- @function [parent=#ControlColourPicker] setcolourPicker 
 -- @param self
 -- @param #cc.ControlSaturationBrightnessPicker var
@@ -80,13 +74,20 @@
         
 --------------------------------
 -- 
+-- @function [parent=#ControlColourPicker] init 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
 -- @function [parent=#ControlColourPicker] setColor 
 -- @param self
 -- @param #color3b_table colorValue
 -- @return ControlColourPicker#ControlColourPicker self (return value: cc.ControlColourPicker)
         
 --------------------------------
--- js ctor
+-- js ctor<br>
+-- lua new
 -- @function [parent=#ControlColourPicker] ControlColourPicker 
 -- @param self
 -- @return ControlColourPicker#ControlColourPicker self (return value: cc.ControlColourPicker)

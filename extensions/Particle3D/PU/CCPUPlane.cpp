@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2015-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -29,7 +29,8 @@ NS_CC_BEGIN
 //-----------------------------------------------------------------------
 PUPlane::PUPlane ()
 {
-	normal = Vec3::ZERO;
+    // Vec3 default constructor zero
+	//normal = Vec3::ZERO;
 	d = 0.0;
 }
 //-----------------------------------------------------------------------

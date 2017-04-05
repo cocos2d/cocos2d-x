@@ -1,9 +1,25 @@
 
 --------------------------------
 -- @module ActionTimeline
--- @extend Action
+-- @extend Action,PlayableProtocol
 -- @parent_module ccs
 
+--------------------------------
+-- 
+-- @function [parent=#ActionTimeline] clearFrameEndCallFuncs 
+-- @param self
+-- @return ActionTimeline#ActionTimeline self (return value: ccs.ActionTimeline)
+        
+--------------------------------
+-- add a frame end call back to animation's end frame<br>
+-- param animationName  @addFrameEndCallFunc, make the animationName as funcKey<br>
+-- param func the callback function
+-- @function [parent=#ActionTimeline] setAnimationEndCallFunc 
+-- @param self
+-- @param #string animationName
+-- @param #function func
+-- @return ActionTimeline#ActionTimeline self (return value: ccs.ActionTimeline)
+        
 --------------------------------
 --  add Timeline to ActionTimeline 
 -- @function [parent=#ActionTimeline] addTimeline 
@@ -26,6 +42,12 @@
 --------------------------------
 --  Pause the animation. 
 -- @function [parent=#ActionTimeline] pause 
+-- @param self
+-- @return ActionTimeline#ActionTimeline self (return value: ccs.ActionTimeline)
+        
+--------------------------------
+-- / @{/ @name implement Playable Protocol
+-- @function [parent=#ActionTimeline] start 
 -- @param self
 -- @return ActionTimeline#ActionTimeline self (return value: ccs.ActionTimeline)
         
@@ -83,6 +105,18 @@
 -- @return ActionTimeline#ActionTimeline self (return value: ccs.ActionTimeline)
         
 --------------------------------
+--  add a callback function after played frameIndex<br>
+-- param frameIndex the frame index call back after<br>
+-- param funcKey for identity the callback function<br>
+-- param func the callback function
+-- @function [parent=#ActionTimeline] addFrameEndCallFunc 
+-- @param self
+-- @param #int frameIndex
+-- @param #string funcKey
+-- @param #function func
+-- @return ActionTimeline#ActionTimeline self (return value: ccs.ActionTimeline)
+        
+--------------------------------
 -- 
 -- @function [parent=#ActionTimeline] removeAnimationInfo 
 -- @param self
@@ -121,6 +155,13 @@
 -- @function [parent=#ActionTimeline] isPlaying 
 -- @param self
 -- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
+-- @function [parent=#ActionTimeline] removeFrameEndCallFuncs 
+-- @param self
+-- @param #int frameIndex
+-- @return ActionTimeline#ActionTimeline self (return value: ccs.ActionTimeline)
         
 --------------------------------
 -- @overload self, int, bool         
@@ -179,16 +220,17 @@
         
 --------------------------------
 -- 
--- @function [parent=#ActionTimeline] create 
+-- @function [parent=#ActionTimeline] removeFrameEndCallFunc 
 -- @param self
--- @return ActionTimeline#ActionTimeline ret (return value: ccs.ActionTimeline)
+-- @param #int frameIndex
+-- @param #string funcKey
+-- @return ActionTimeline#ActionTimeline self (return value: ccs.ActionTimeline)
         
 --------------------------------
 -- 
--- @function [parent=#ActionTimeline] step 
+-- @function [parent=#ActionTimeline] create 
 -- @param self
--- @param #float delta
--- @return ActionTimeline#ActionTimeline self (return value: ccs.ActionTimeline)
+-- @return ActionTimeline#ActionTimeline ret (return value: ccs.ActionTimeline)
         
 --------------------------------
 -- 
@@ -198,17 +240,30 @@
 -- @return ActionTimeline#ActionTimeline self (return value: ccs.ActionTimeline)
         
 --------------------------------
+--  Returns a reverse of ActionTimeline. <br>
+-- Not implement yet.
+-- @function [parent=#ActionTimeline] reverse 
+-- @param self
+-- @return ActionTimeline#ActionTimeline ret (return value: ccs.ActionTimeline)
+        
+--------------------------------
 --  Returns a clone of ActionTimeline 
 -- @function [parent=#ActionTimeline] clone 
 -- @param self
 -- @return ActionTimeline#ActionTimeline ret (return value: ccs.ActionTimeline)
         
 --------------------------------
---  Returns a reverse of ActionTimeline. <br>
--- Not implement yet.
--- @function [parent=#ActionTimeline] reverse 
+-- 
+-- @function [parent=#ActionTimeline] stop 
 -- @param self
--- @return ActionTimeline#ActionTimeline ret (return value: ccs.ActionTimeline)
+-- @return ActionTimeline#ActionTimeline self (return value: ccs.ActionTimeline)
+        
+--------------------------------
+-- 
+-- @function [parent=#ActionTimeline] step 
+-- @param self
+-- @param #float delta
+-- @return ActionTimeline#ActionTimeline self (return value: ccs.ActionTimeline)
         
 --------------------------------
 -- 

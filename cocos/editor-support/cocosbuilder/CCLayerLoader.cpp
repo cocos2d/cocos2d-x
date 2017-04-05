@@ -1,4 +1,4 @@
-#include "CCLayerLoader.h"
+#include "editor-support/cocosbuilder/CCLayerLoader.h"
 
 
 using namespace cocos2d;

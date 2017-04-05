@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2015-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -38,6 +38,8 @@ PUParticleSystem3DTranslator::~PUParticleSystem3DTranslator()
 
 void PUParticleSystem3DTranslator::translate(PUScriptCompiler* compiler, PUAbstractNode *node)
 {
+    if (typeid(*node) != typeid(PUObjectAbstractNode))
+        return;
 
         PUObjectAbstractNode* obj = reinterpret_cast<PUObjectAbstractNode*>(node);
         if(obj->name.empty())

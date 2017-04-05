@@ -1,0 +1,24 @@
+{
+    "win32_cfg": {
+        "project_path": "../../build",
+        "sln_file": "cocos2d-win32.sln",
+        "project_name": "performance-tests",
+        "build_cfg_path": "proj.win32"
+    },
+    "ios_cfg": {
+        "project_path": "../../build",
+        "project_file": "cocos2d_tests.xcodeproj",
+        "target_name": "performance-tests iOS"
+    }, 
+    "project_type": "cpp", 
+    "mac_cfg": {
+        "project_path": "../../build",
+        "project_file": "cocos2d_tests.xcodeproj",
+        "target_name": "performance-tests Mac"
+    },
+    "android_cfg": {
+        "project_path": "proj.android",
+        "studio_proj_path" : "proj.android-studio"
+    },
+    "engine_dir": "../../"
+}

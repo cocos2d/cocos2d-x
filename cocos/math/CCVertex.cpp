@@ -1,7 +1,7 @@
 /****************************************************************************
  Copyright (c) 2010-2012 cocos2d-x.org
  Copyright (c) 2011 ForzeField Studios S.L
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
  
@@ -69,8 +69,8 @@ void ccVertexLineToPolygon(Vec2 *points, float stroke, Vec2 *vertices, unsigned 
         }
         perpVector = perpVector * stroke;
 
-        vertices[idx] = Vec2(p1.x+perpVector.x, p1.y+perpVector.y);
-        vertices[idx+1] = Vec2(p1.x-perpVector.x, p1.y-perpVector.y);
+        vertices[idx].set(p1.x + perpVector.x, p1.y + perpVector.y);
+        vertices[idx + 1].set(p1.x - perpVector.x, p1.y - perpVector.y);
 
     }
 

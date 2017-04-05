@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -23,6 +23,7 @@
  ****************************************************************************/
 
 #include "base/CCEventListener.h"
+#include "base/CCConsole.h"
 
 NS_CC_BEGIN
 

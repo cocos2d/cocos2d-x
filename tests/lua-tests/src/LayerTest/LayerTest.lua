@@ -555,7 +555,7 @@ local function LayerIgnoreAnchorPointRot()
         pLayer:ignoreAnchorPointForPosition(not ignore)
     end
 
-    local item = cc.MenuItemFont:create("Toogle ignore anchor point")
+    local item = cc.MenuItemFont:create("Toggle ignore anchor point")
     item:registerScriptTapHandler(onToggle)
 
     local menu = cc.Menu:create(item)
@@ -596,7 +596,7 @@ local function LayerIgnoreAnchorPointScale()
         return ret
     end
 
-    local item = cc.MenuItemFont:create("Toogle ignore anchor point")
+    local item = cc.MenuItemFont:create("Toggle ignore anchor point")
     item:registerScriptTapHandler(onToggle)
 
     local menu = cc.Menu:create(item)
@@ -634,7 +634,6 @@ end
 function LayerTestMain()
     cclog("LayerTestMain")
     Helper.index = 1
-    cc.Director:getInstance():setDepthTest(true)
     local scene = cc.Scene:create()
 
     Helper.createFunctionTable = {
@@ -653,6 +652,8 @@ function LayerTestMain()
         LayerIgnoreAnchorPointScale,
         LayerExtendedBlendOpacityTest
     }
+    Helper.index = 1
+    
     scene:addChild(LayerTestCascadingOpacityA())
     scene:addChild(CreateBackMenuItem())
     return scene

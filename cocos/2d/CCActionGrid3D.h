@@ -1,7 +1,7 @@
 /****************************************************************************
 Copyright (c) 2009      On-Core
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -50,7 +50,7 @@ public:
     @param gridSize Specify the size of the grid.
     @param waves Specify the waves count of the Waves3D action.
     @param amplitude Specify the amplitude of the Waves3D action.
-    @return If the creation sucess, return a pointer of Waves3D action; otherwise, return nil.
+    @return If the creation success, return a pointer of Waves3D action; otherwise, return nil.
     */
     static Waves3D* create(float duration, const Size& gridSize, unsigned int waves, float amplitude);
 
@@ -58,26 +58,26 @@ public:
     @brief Get the amplitude of the effect.
     @return Return the amplitude of the effect.
     */
-    inline float getAmplitude() const { return _amplitude; }
+    float getAmplitude() const { return _amplitude; }
     /**
     @brief Set the amplitude to the effect.
     @param amplitude The value of amplitude will be set.
     */
-    inline void setAmplitude(float amplitude) { _amplitude = amplitude; }
+    void setAmplitude(float amplitude) { _amplitude = amplitude; }
 
     /**
     @brief Get the amplitude rate of the effect.
     @return Return the amplitude rate of the effect.
     */
-    inline float getAmplitudeRate() const { return _amplitudeRate; }
+    float getAmplitudeRate() const { return _amplitudeRate; }
     /**
-    @brief Set the ampliture rate of the effect.
+    @brief Set the amplitude rate of the effect.
     @param amplitudeRate The value of amplitude rate will be set.
     */
-    inline void setAmplitudeRate(float amplitudeRate) { _amplitudeRate = amplitudeRate; }
+    void setAmplitudeRate(float amplitudeRate) { _amplitudeRate = amplitudeRate; }
 
-	// Overrides
-	virtual Waves3D* clone() const override;
+    // Overrides
+    virtual Waves3D* clone() const override;
     virtual void update(float time) override;
     
 CC_CONSTRUCTOR_ACCESS:
@@ -113,12 +113,12 @@ public:
     /**
     @brief Create the action with duration.
     @param duration Specify the duration of the FilpX3D action. It's a value in seconds.
-    @return If the creation sucess, return a pointer of FilpX3D action; otherwise, return nil.
+    @return If the creation success, return a pointer of FilpX3D action; otherwise, return nil.
     */
     static FlipX3D* create(float duration);
 
     // Override
-	virtual FlipX3D* clone() const override;
+    virtual FlipX3D* clone() const override;
     virtual void update(float time) override;
     
 CC_CONSTRUCTOR_ACCESS:
@@ -154,13 +154,13 @@ public:
     /**
     @brief Create the action with duration.
     @param duration Specify the duration of the FlipY3D action. It's a value in seconds.
-    @return If the creation sucess, return a pointer of FlipY3D action; otherwise, return nil.
+    @return If the creation success, return a pointer of FlipY3D action; otherwise, return nil.
     */
     static FlipY3D* create(float duration);
 
     // Overrides
     virtual void update(float time) override;
-	virtual FlipY3D* clone() const override;
+    virtual FlipY3D* clone() const override;
 
 CC_CONSTRUCTOR_ACCESS:
     FlipY3D() {}
@@ -185,7 +185,7 @@ public:
     @param gridSize Specify the size of the grid.
     @param position Specify the center position of the lens.
     @param radius Specify the radius of the lens.
-    @return If the creation sucess, return a pointer of Lens3D action; otherwise, return nil.
+    @return If the creation success, return a pointer of Lens3D action; otherwise, return nil.
     */
     static Lens3D* create(float duration, const Size& gridSize, const Vec2& position, float radius);
 
@@ -193,34 +193,34 @@ public:
     @brief Get the value of lens effect. Default value is 0.7.
     @return The value of lens effect.
     */
-    inline float getLensEffect() const { return _lensEffect; }
+    float getLensEffect() const { return _lensEffect; }
 
     /**
     @brief Set the value of lens effect.
     @param lensEffect The value of lens effect will be set.
     */
-    inline void setLensEffect(float lensEffect) { _lensEffect = lensEffect; }
+    void setLensEffect(float lensEffect) { _lensEffect = lensEffect; }
 
     /**
     @brief Set whether lens is concave.
     @param concave Whether lens is concave.
     */
-    inline void setConcave(bool concave) { _concave = concave; }
+    void setConcave(bool concave) { _concave = concave; }
 
     /**
     @brief Get the center position of lens effect.
     @return The center position of lens effect.
     */
-    inline const Vec2& getPosition() const { return _position; }
+    const Vec2& getPosition() const { return _position; }
 
     /**
     @brief Set the center position of lens effect.
-    @param The center position will be set.
+    @param position The center position will be set.
     */
     void setPosition(const Vec2& position);
 
     // Overrides
-	virtual Lens3D* clone() const override;
+    virtual Lens3D* clone() const override;
     virtual void update(float time) override;
     
 CC_CONSTRUCTOR_ACCESS:
@@ -270,7 +270,7 @@ public:
     @param radius Specify the radius of the ripple effect.
     @param waves Specify the waves count of the ripple effect.
     @param amplitude Specify the amplitude of the ripple effect.
-    @return If the creation sucess, return a pointer of Ripple3D action; otherwise, return nil.
+    @return If the creation success, return a pointer of Ripple3D action; otherwise, return nil.
     */
     static Ripple3D* create(float duration, const Size& gridSize, const Vec2& position, float radius, unsigned int waves, float amplitude);
 
@@ -278,7 +278,7 @@ public:
     @brief Get the center position of ripple effect.
     @return The center position of ripple effect.
     */
-    inline const Vec2& getPosition() const { return _position; }
+    const Vec2& getPosition() const { return _position; }
     /**
     @brief Set the center position of ripple effect.
     @param position The center position of ripple effect will be set.
@@ -289,26 +289,26 @@ public:
     @brief Get the amplitude of ripple effect.
     @return The amplitude of ripple effect.
     */
-    inline float getAmplitude() const { return _amplitude; }
+    float getAmplitude() const { return _amplitude; }
     /**
     @brief Set the amplitude of ripple effect.
     @param fAmplitude The amplitude of ripple effect.
     */
-    inline void setAmplitude(float fAmplitude) { _amplitude = fAmplitude; }
+    void setAmplitude(float fAmplitude) { _amplitude = fAmplitude; }
 
     /**
     @brief Get the amplitude rate of ripple effect.
     @return The amplitude rate of ripple effect.
     */
-    inline float getAmplitudeRate() const { return _amplitudeRate; }
+    float getAmplitudeRate() const { return _amplitudeRate; }
     /**
     @brief Set the amplitude rate of ripple effect.
     @param fAmplitudeRate The amplitude rate of ripple effect.
     */
-    inline void setAmplitudeRate(float fAmplitudeRate) { _amplitudeRate = fAmplitudeRate; }
+    void setAmplitudeRate(float fAmplitudeRate) { _amplitudeRate = fAmplitudeRate; }
 
     // Override
-	virtual Ripple3D* clone() const override;
+    virtual Ripple3D* clone() const override;
     virtual void update(float time) override;
 
 CC_CONSTRUCTOR_ACCESS:
@@ -350,16 +350,16 @@ class CC_DLL Shaky3D : public Grid3DAction
 public:
     /** 
     @brief Create the action with a range, shake Z vertices, a grid and duration.
-    @param duration Specify the duration of the Shaky3D action. It's a value in seconds.
+    @param initWithDuration Specify the duration of the Shaky3D action. It's a value in seconds.
     @param gridSize Specify the size of the grid.
     @param range Specify the range of the shaky effect.
     @param shakeZ Specify whether shake on the z axis.
-    @return If the creation sucess, return a pointer of Shaky3D action; otherwise, return nil.
+    @return If the creation success, return a pointer of Shaky3D action; otherwise, return nil.
     */
     static Shaky3D* create(float initWithDuration, const Size& gridSize, int range, bool shakeZ);
 
     // Overrides
-	virtual Shaky3D* clone() const override;
+    virtual Shaky3D* clone() const override;
     virtual void update(float time) override;
     
 CC_CONSTRUCTOR_ACCESS:
@@ -372,7 +372,7 @@ CC_CONSTRUCTOR_ACCESS:
     @param gridSize Specify the size of the grid.
     @param range Specify the range of the shaky effect.
     @param shakeZ Specify whether shake on the z axis.
-    @return If the Initialization sucess, return true; otherwise, return false.
+    @return If the Initialization success, return true; otherwise, return false.
     */
     bool initWithDuration(float duration, const Size& gridSize, int range, bool shakeZ);
 
@@ -399,7 +399,7 @@ public:
     @param gridSize Specify the size of the grid.
     @param waves Specify the waves count of the Liquid action.
     @param amplitude Specify the amplitude of the Liquid action.
-    @return If the creation sucess, return a pointer of Liquid action; otherwise, return nil.
+    @return If the creation success, return a pointer of Liquid action; otherwise, return nil.
     */
     static Liquid* create(float duration, const Size& gridSize, unsigned int waves, float amplitude);
 
@@ -407,26 +407,26 @@ public:
     @brief Get the amplitude of the effect.
     @return Return the amplitude of the effect.
     */
-    inline float getAmplitude() const { return _amplitude; }
+    float getAmplitude() const { return _amplitude; }
     /**
     @brief Set the amplitude to the effect.
     @param amplitude The value of amplitude will be set.
     */
-    inline void setAmplitude(float amplitude) { _amplitude = amplitude; }
+    void setAmplitude(float amplitude) { _amplitude = amplitude; }
 
     /**
     @brief Get the amplitude rate of the effect.
     @return Return the amplitude rate of the effect.
     */
-    inline float getAmplitudeRate() const { return _amplitudeRate; }
+    float getAmplitudeRate() const { return _amplitudeRate; }
     /**
-    @brief Set the ampliture rate of the effect.
+    @brief Set the amplitude rate of the effect.
     @param amplitudeRate The value of amplitude rate will be set.
     */
-    inline void setAmplitudeRate(float amplitudeRate) { _amplitudeRate = amplitudeRate; }
+    void setAmplitudeRate(float amplitudeRate) { _amplitudeRate = amplitudeRate; }
 
     // Overrides
-	virtual Liquid* clone() const override;
+    virtual Liquid* clone() const override;
     virtual void update(float time) override;
     
 CC_CONSTRUCTOR_ACCESS:
@@ -439,7 +439,7 @@ CC_CONSTRUCTOR_ACCESS:
     @param gridSize Specify the size of the grid.
     @param waves Specify the waves count of the Liquid action.
     @param amplitude Specify the amplitude of the Liquid action.
-    @return If the initialization sucess, return true; otherwise, return false.
+    @return If the initialization success, return true; otherwise, return false.
     */
     bool initWithDuration(float duration, const Size& gridSize, unsigned int waves, float amplitude);
 
@@ -470,7 +470,7 @@ public:
     @param amplitude Specify the amplitude of the Waves action.
     @param horizontal Specify whether waves on horizontal.
     @param vertical Specify whether waves on vertical.
-    @return If the creation sucess, return a pointer of Waves action; otherwise, return nil.
+    @return If the creation success, return a pointer of Waves action; otherwise, return nil.
     */
     static Waves* create(float duration, const Size& gridSize, unsigned int waves, float amplitude, bool horizontal, bool vertical);
 
@@ -478,26 +478,26 @@ public:
     @brief Get the amplitude of the effect.
     @return Return the amplitude of the effect.
     */
-    inline float getAmplitude() const { return _amplitude; }
+    float getAmplitude() const { return _amplitude; }
     /**
     @brief Set the amplitude to the effect.
     @param amplitude The value of amplitude will be set.
     */
-    inline void setAmplitude(float amplitude) { _amplitude = amplitude; }
+    void setAmplitude(float amplitude) { _amplitude = amplitude; }
 
     /**
     @brief Get the amplitude rate of the effect.
     @return Return the amplitude rate of the effect.
     */
-    inline float getAmplitudeRate() const { return _amplitudeRate; }
+    float getAmplitudeRate() const { return _amplitudeRate; }
     /**
-    @brief Set the ampliture rate of the effect.
+    @brief Set the amplitude rate of the effect.
     @param amplitudeRate The value of amplitude rate will be set.
     */
-    inline void setAmplitudeRate(float amplitudeRate) { _amplitudeRate = amplitudeRate; }
+    void setAmplitudeRate(float amplitudeRate) { _amplitudeRate = amplitudeRate; }
 
     // Overrides
-	virtual Waves* clone() const override;
+    virtual Waves* clone() const override;
     virtual void update(float time) override;
     
 CC_CONSTRUCTOR_ACCESS:
@@ -512,7 +512,7 @@ CC_CONSTRUCTOR_ACCESS:
     @param amplitude Specify the amplitude of the Waves action.
     @param horizontal Specify whether waves on horizontal.
     @param vertical Specify whether waves on vertical.
-    @return If the initialization sucess, return true; otherwise, return false.
+    @return If the initialization success, return true; otherwise, return false.
     */
     bool initWithDuration(float duration, const Size& gridSize, unsigned int waves, float amplitude, bool horizontal, bool vertical);
 
@@ -543,15 +543,15 @@ public:
     @param position Specify the center position of the twirl action.
     @param twirls Specify the twirls count of the Twirl action.
     @param amplitude Specify the amplitude of the Twirl action.
-    @return If the creation sucess, return a pointer of Twirl action; otherwise, return nil.
+    @return If the creation success, return a pointer of Twirl action; otherwise, return nil.
     */
-    static Twirl* create(float duration, const Size& gridSize, Vec2 position, unsigned int twirls, float amplitude);
+    static Twirl* create(float duration, const Size& gridSize, const Vec2& position, unsigned int twirls, float amplitude);
 
     /**
     @brief Get the center position of twirl action.
     @return The center position of twirl action.
     */
-    inline const Vec2& getPosition() const { return _position; }
+    const Vec2& getPosition() const { return _position; }
     /**
     @brief Set the center position of twirl action.
     @param position The center position of twirl action will be set.
@@ -562,27 +562,27 @@ public:
     @brief Get the amplitude of the effect.
     @return Return the amplitude of the effect.
     */
-    inline float getAmplitude() const { return _amplitude; }
+    float getAmplitude() const { return _amplitude; }
     /**
     @brief Set the amplitude to the effect.
     @param amplitude The value of amplitude will be set.
     */
-    inline void setAmplitude(float amplitude) { _amplitude = amplitude; }
+    void setAmplitude(float amplitude) { _amplitude = amplitude; }
 
     /**
     @brief Get the amplitude rate of the effect.
     @return Return the amplitude rate of the effect.
     */
-    inline float getAmplitudeRate() const { return _amplitudeRate; }
+    float getAmplitudeRate() const { return _amplitudeRate; }
     /**
-    @brief Set the ampliture rate of the effect.
+    @brief Set the amplitude rate of the effect.
     @param amplitudeRate The value of amplitude rate will be set.
     */
-    inline void setAmplitudeRate(float amplitudeRate) { _amplitudeRate = amplitudeRate; }
+    void setAmplitudeRate(float amplitudeRate) { _amplitudeRate = amplitudeRate; }
 
 
     // Overrides
-	virtual Twirl* clone() const override;
+    virtual Twirl* clone() const override;
     virtual void update(float time) override;
     
 CC_CONSTRUCTOR_ACCESS:
@@ -596,9 +596,9 @@ CC_CONSTRUCTOR_ACCESS:
     @param position Specify the center position of the twirl action.
     @param twirls Specify the twirls count of the Twirl action.
     @param amplitude Specify the amplitude of the Twirl action.
-    @return If the initialization sucess, return true; otherwise, return false.
+    @return If the initialization success, return true; otherwise, return false.
     */
-    bool initWithDuration(float duration, const Size& gridSize, Vec2 position, unsigned int twirls, float amplitude);
+    bool initWithDuration(float duration, const Size& gridSize, const Vec2& position, unsigned int twirls, float amplitude);
 
 protected:
     /* twirl center */

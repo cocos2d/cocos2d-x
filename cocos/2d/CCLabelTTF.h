@@ -1,7 +1,7 @@
 /****************************************************************************
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
  
 http://www.cocos2d-x.org
 
@@ -23,8 +23,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
+
 #ifndef __CCLABELTTF_H__
 #define __CCLABELTTF_H__
+
+/// @cond DO_NOT_SHOW
 
 #include "2d/CCNode.h"
 
@@ -42,13 +45,9 @@ NS_CC_BEGIN
 class Label;
 
 /**
- * @addtogroup GUI
- * @{
- * @addtogroup label
+ * @addtogroup _2d
  * @{
  */
-
-
 
 /** @brief LabelTTF is a subclass of TextureNode that knows how to render text labels
  *
@@ -86,7 +85,7 @@ public:
                              TextVAlignment vAlignment = TextVAlignment::TOP);
     
     
-    /** Create a lable with string and a font definition*/
+    /** Create a label with string and a font definition*/
     static LabelTTF * createWithFontDefinition(const std::string& string, FontDefinition &textDefinition);
     
     /** initializes the LabelTTF with a font name, alignment, dimension and font size */
@@ -101,7 +100,7 @@ public:
     void setTextDefinition(const FontDefinition& theDefinition);
     
     /** get the text definition used by this label */
-    const FontDefinition& getTextDefinition() const;
+    const FontDefinition& getTextDefinition();
     
     
     
@@ -164,11 +163,11 @@ public:
 protected:
     Label*    _renderLabel;
     bool _contentDirty;
+    FontDefinition _fontDef;
 };
 
 
-// end of GUI group
-/// @}
+// end of group
 /// @}
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
 #pragma GCC diagnostic warning "-Wdeprecated-declarations"
@@ -176,9 +175,8 @@ protected:
 #pragma warning (pop)
 #endif
 
-/// @endcond
-
 NS_CC_END
 
+/// @endcond
 #endif //__CCLABEL_H__
 

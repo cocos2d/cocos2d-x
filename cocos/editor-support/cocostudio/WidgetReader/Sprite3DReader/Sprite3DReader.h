@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  Copyright (c) 2014 cocos2d-x.org
  
  http://www.cocos2d-x.org
@@ -25,10 +25,10 @@
 #ifndef __cocos2d_libs__Sprite3DReader__
 #define __cocos2d_libs__Sprite3DReader__
 
-#include "cocos2d.h"
-#include "cocostudio/CocosStudioExport.h"
-#include "cocostudio/WidgetReader/NodeReaderProtocol.h"
-#include "cocostudio/WidgetReader/NodeReaderDefine.h"
+#include "math/Vec2.h"
+#include "editor-support/cocostudio/CocosStudioExport.h"
+#include "editor-support/cocostudio/WidgetReader/NodeReaderProtocol.h"
+#include "editor-support/cocostudio/WidgetReader/NodeReaderDefine.h"
 
 namespace tinyxml2
 {
@@ -46,7 +46,9 @@ namespace cocostudio
         ~Sprite3DReader();
         
         static Sprite3DReader* getInstance();
-        static void purge();
+        /** @deprecated Use method destroyInstance() instead */
+        CC_DEPRECATED_ATTRIBUTE static void purge();
+        static void destroyInstance();
         
         flatbuffers::Offset<flatbuffers::Table> createOptionsWithFlatBuffers(const tinyxml2::XMLElement* objectData,
                                                                              flatbuffers::FlatBufferBuilder* builder);

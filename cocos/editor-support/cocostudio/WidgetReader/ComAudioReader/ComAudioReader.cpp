@@ -22,11 +22,11 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "ComAudioReader.h"
+#include "editor-support/cocostudio/WidgetReader/ComAudioReader/ComAudioReader.h"
 
-#include "cocostudio/CCComAudio.h"
-#include "cocostudio/CSParseBinary_generated.h"
-#include "cocostudio/WidgetReader/NodeReader/NodeReader.h"
+#include "editor-support/cocostudio/CCComAudio.h"
+#include "editor-support/cocostudio/CSParseBinary_generated.h"
+#include "editor-support/cocostudio/WidgetReader/NodeReader/NodeReader.h"
 
 #include "tinyxml2.h"
 #include "flatbuffers/flatbuffers.h"
@@ -59,6 +59,11 @@ namespace cocostudio
     }
     
     void ComAudioReader::purge()
+    {
+        CC_SAFE_DELETE(_instanceComAudioReader);
+    }
+    
+    void ComAudioReader::destroyInstance()
     {
         CC_SAFE_DELETE(_instanceComAudioReader);
     }
@@ -189,4 +194,8 @@ namespace cocostudio
         return component;
     }
     
+    Node* ComAudioReader::createNodeWithFlatBuffers(const flatbuffers::Table* /*nodeOptions*/)
+    {
+        return nullptr;
+    }
 }

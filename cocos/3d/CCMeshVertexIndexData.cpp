@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2014-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -56,7 +56,6 @@ MeshIndexData* MeshIndexData::create(const std::string& id, MeshVertexData* vert
     meshindex->_indexBuffer = indexbuffer;
     meshindex->_vertexData = vertexData;
     indexbuffer->retain();
-    vertexData->retain();
     meshindex->_aabb = aabb;
     
     meshindex->autorelease();
@@ -78,7 +77,6 @@ MeshIndexData::MeshIndexData()
 MeshIndexData::~MeshIndexData()
 {
     CC_SAFE_RELEASE(_indexBuffer);
-    CC_SAFE_RELEASE(_vertexData);
 }
 
 MeshVertexData* MeshVertexData::create(const MeshData& meshdata)
@@ -104,7 +102,7 @@ MeshVertexData* MeshVertexData::create(const MeshData& meshdata)
     }
     
     bool needCalcAABB = (meshdata.subMeshAABB.size() != meshdata.subMeshIndices.size());
-    for (size_t i = 0; i < meshdata.subMeshIndices.size(); i++) {
+    for (size_t i = 0, size = meshdata.subMeshIndices.size(); i < size; ++i) {
 
         auto& index = meshdata.subMeshIndices[i];
         auto indexBuffer = IndexBuffer::create(IndexBuffer::IndexType::INDEX_TYPE_SHORT_16, (int)(index.size()));

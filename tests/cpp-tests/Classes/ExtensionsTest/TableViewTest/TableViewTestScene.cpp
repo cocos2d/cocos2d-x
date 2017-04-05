@@ -5,18 +5,15 @@
 USING_NS_CC;
 USING_NS_CC_EXT;
 
-void runTableViewTest()
+TableViewTests::TableViewTests()
 {
-	Scene *scene = Scene::create();
-	TableViewTestLayer *layer = TableViewTestLayer::create();
-	scene->addChild(layer);
-	Director::getInstance()->replaceScene(scene);
+    ADD_TEST_CASE(TableViewTest);
 }
 
 // on "init" you need to initialize your instance
-bool TableViewTestLayer::init()
+bool TableViewTest::init()
 {
-    if ( !Layer::init() )
+    if ( !TestCase::init() )
     {
         return false;
     }
@@ -30,6 +27,13 @@ bool TableViewTestLayer::init()
     this->addChild(tableView);
     tableView->reloadData();
 
+    auto testNode = Node::create();
+    testNode->setName("testNode");
+    tableView->addChild(testNode);
+    tableView->removeChild(testNode, true);
+    CCAssert(nullptr == tableView->getChildByName("testNode"), "The added child has been removed!");
+
+
 	tableView = TableView::create(this, Size(60, 250));
 	tableView->setDirection(ScrollView::Direction::VERTICAL);
 	tableView->setPosition(Vec2(winSize.width-150,winSize.height/2-120));
@@ -38,29 +42,15 @@ bool TableViewTestLayer::init()
 	this->addChild(tableView);
 	tableView->reloadData();
 
-	// Back Menu
-	MenuItemFont *itemBack = MenuItemFont::create("Back", CC_CALLBACK_1(TableViewTestLayer::toExtensionsMainLayer, this));
-	itemBack->setPosition(Vec2(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
-	Menu *menuBack = Menu::create(itemBack, nullptr);
-	menuBack->setPosition(Vec2::ZERO);
-	addChild(menuBack);
-
     return true;
 }
 
-void TableViewTestLayer::toExtensionsMainLayer(cocos2d::Ref *sender)
+void TableViewTest::tableCellTouched(TableView* table, TableViewCell* cell)
 {
-	ExtensionsTestScene *scene = new (std::nothrow) ExtensionsTestScene();
-	scene->runThisTest();
-	scene->release();
+    CCLOG("cell touched at index: %ld", static_cast<long>(cell->getIdx()));
 }
 
-void TableViewTestLayer::tableCellTouched(TableView* table, TableViewCell* cell)
-{
-    CCLOG("cell touched at index: %ld", cell->getIdx());
-}
-
-Size TableViewTestLayer::tableCellSizeForIndex(TableView *table, ssize_t idx)
+Size TableViewTest::tableCellSizeForIndex(TableView *table, ssize_t idx)
 {
     if (idx == 2) {
         return Size(100, 100);
@@ -68,9 +58,9 @@ Size TableViewTestLayer::tableCellSizeForIndex(TableView *table, ssize_t idx)
     return Size(60, 60);
 }
 
-TableViewCell* TableViewTestLayer::tableCellAtIndex(TableView *table, ssize_t idx)
+TableViewCell* TableViewTest::tableCellAtIndex(TableView *table, ssize_t idx)
 {
-    auto string = String::createWithFormat("%ld", idx);
+    auto string = StringUtils::format("%ld", static_cast<long>(idx));
     TableViewCell *cell = table->dequeueCell();
     if (!cell) {
         cell = new (std::nothrow) CustomTableViewCell();
@@ -80,7 +70,7 @@ TableViewCell* TableViewTestLayer::tableCellAtIndex(TableView *table, ssize_t id
         sprite->setPosition(Vec2(0, 0));
         cell->addChild(sprite);
 
-        auto label = Label::createWithSystemFont(string->getCString(), "Helvetica", 20.0);
+        auto label = Label::createWithSystemFont(string, "Helvetica", 20.0);
         label->setPosition(Vec2::ZERO);
 		label->setAnchorPoint(Vec2::ZERO);
         label->setTag(123);
@@ -89,14 +79,14 @@ TableViewCell* TableViewTestLayer::tableCellAtIndex(TableView *table, ssize_t id
     else
     {
         auto label = (Label*)cell->getChildByTag(123);
-        label->setString(string->getCString());
+        label->setString(string);
     }
 
 
     return cell;
 }
 
-ssize_t TableViewTestLayer::numberOfCellsInTableView(TableView *table)
+ssize_t TableViewTest::numberOfCellsInTableView(TableView *table)
 {
     return 20;
 }

@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -49,12 +49,6 @@ THE SOFTWARE.
 #ifndef MAX
 #define MAX(x,y) (((x) < (y)) ? (y) : (x))
 #endif  // MAX
-
-// some function linux do not have
-#define tanf tan
-#define sqrtf sqrt
-#define cosf cos
-#define sinf sin
 
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
 

@@ -4,23 +4,29 @@
 -- @parent_module cc
 
 --------------------------------
--- stop tasks<br>
--- param type task type you want to stop
+-- Stop tasks.<br>
+-- param type Task type you want to stop.
 -- @function [parent=#AsyncTaskPool] stopTasks 
 -- @param self
 -- @param #int type
 -- @return AsyncTaskPool#AsyncTaskPool self (return value: cc.AsyncTaskPool)
         
 --------------------------------
--- destroy instance
--- @function [parent=#AsyncTaskPool] destoryInstance 
+-- Destroys the async task pool.
+-- @function [parent=#AsyncTaskPool] destroyInstance 
 -- @param self
 -- @return AsyncTaskPool#AsyncTaskPool self (return value: cc.AsyncTaskPool)
         
 --------------------------------
--- get instance
+-- Returns the shared instance of the async task pool.
 -- @function [parent=#AsyncTaskPool] getInstance 
 -- @param self
 -- @return AsyncTaskPool#AsyncTaskPool ret (return value: cc.AsyncTaskPool)
+        
+--------------------------------
+-- 
+-- @function [parent=#AsyncTaskPool] AsyncTaskPool 
+-- @param self
+-- @return AsyncTaskPool#AsyncTaskPool self (return value: cc.AsyncTaskPool)
         
 return nil

@@ -1,0 +1,28 @@
+system weaponTrail
+{
+    technique 
+    {
+        visual_particle_quota                   1
+        material                                weaponTrail
+        renderer                                Billboard
+        {
+            texture_coords_rows                 6
+            texture_coords_columns              6
+            billboard_rotation_type             vertex
+        }
+        emitter                                 Point Emitter32
+        {
+            angle                               0
+            time_to_live                        0.27
+            velocity                            0.001
+            colour                              1 0 0 0.501961
+            force_emission                      true
+        }
+        affector                                TextureAnimator Affector47
+        {
+            time_step                           0.03
+            end_texture_coords_range            8
+            texture_start_random                false
+        }
+    }
+}

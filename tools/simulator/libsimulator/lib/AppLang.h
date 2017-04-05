@@ -9,10 +9,11 @@
 #include "cocos2d.h"
 #include <map>
 
-#include "json/document.h"
+#include "json/document-wrapper.h"
 #include "DeviceEx.h"
+#include "SimulatorExport.h"
 
-class AppLang
+class CC_LIBSIM_DLL AppLang
 {
 public:
     static AppLang* getInstance();

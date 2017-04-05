@@ -9,26 +9,14 @@
 // Import the interfaces
 #include"Bug-914.h"
 
-Scene* Bug914Layer::scene()
-{
-    // 'scene' is an autorelease object.
-    auto scene = Scene::create();
-    // 'layer' is an autorelease object.
-    auto layer = Bug914Layer::create();
-
-    // add layer as a child to scene
-    scene->addChild(layer);
-
-    // return the scene
-    return scene;
-}
+USING_NS_CC;
 
 // on "init" you need to initialize your instance
 bool Bug914Layer::init()
 {
     // always call "super" init
     // Apple recommends to re-assign "self" with the "super" return value
-    if (BugsTestBaseLayer::init())
+    if (BugsTestBase::init())
     {
         auto listener = EventListenerTouchAllAtOnce::create();
         listener->onTouchesBegan = CC_CALLBACK_2(Bug914Layer::onTouchesBegan, this);
@@ -44,7 +32,7 @@ bool Bug914Layer::init()
             layer->setContentSize(Size(i*100, i*100));
             layer->setPosition(size.width/2, size.height/2);
             layer->setAnchorPoint(Vec2(0.5f, 0.5f));
-            layer->ignoreAnchorPointForPosition(false);
+            layer->setIgnoreAnchorPointForPosition(false);
             addChild(layer, -1-i);
         }
 
@@ -79,5 +67,5 @@ void Bug914Layer::onTouchesBegan(const std::vector<Touch*>& touches, Event * eve
 
 void Bug914Layer::restart(Ref* sender)
 {
-    Director::getInstance()->replaceScene(Bug914Layer::scene());
+    Director::getInstance()->replaceScene(Bug914Layer::create());
 }

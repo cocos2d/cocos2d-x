@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2013      Zynga Inc.
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -26,12 +26,14 @@
 #ifndef _FontFreetype_h_
 #define _FontFreetype_h_
 
-#include "CCFont.h"
+/// @cond DO_NOT_SHOW
+
+#include "2d/CCFont.h"
 
 #include <string>
 #include <ft2build.h>
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 #define generic GenericFromFreeTypeLibrary
 #define internal InternalFromFreeTypeLibrary
 #endif
@@ -39,57 +41,75 @@
 #include FT_FREETYPE_H
 #include FT_STROKER_H
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 #undef generic
 #undef internal
 #endif
 
 NS_CC_BEGIN
 
-/// @cond 
-
 class CC_DLL FontFreeType : public Font
 {
 public:
     static const int DistanceMapSpread;
 
-    static FontFreeType * create(const std::string &fontName, int fontSize, GlyphCollection glyphs, const char *customGlyphs,bool distanceFieldEnabled = false,int outline = 0);
+    static FontFreeType* create(const std::string &fontName, float fontSize, GlyphCollection glyphs,
+        const char *customGlyphs,bool distanceFieldEnabled = false, float outline = 0);
 
     static void shutdownFreeType();
 
-    bool     isDistanceFieldEnabled() const { return _distanceFieldEnabled;}
-    float    getOutlineSize() const { return _outlineSize; }
-    void     renderCharAt(unsigned char *dest,int posX, int posY, unsigned char* bitmap,long bitmapWidth,long bitmapHeight); 
+    bool isDistanceFieldEnabled() const { return _distanceFieldEnabled;}
 
-    virtual FontAtlas   * createFontAtlas() override;
-    virtual int         * getHorizontalKerningForTextUTF16(const std::u16string& text, int &outNumLetters) const override;
-    
-    unsigned char       * getGlyphBitmap(unsigned short theChar, long &outWidth, long &outHeight, Rect &outRect,int &xAdvance);
-    
-    virtual int           getFontMaxHeight() const override;  
-    virtual int           getFontAscender() const;
+    float getOutlineSize() const { return _outlineSize; }
 
-protected:
+    void renderCharAt(unsigned char *dest,int posX, int posY, unsigned char* bitmap,long bitmapWidth,long bitmapHeight); 
+
+    FT_Encoding getEncoding() const { return _encoding; }
+
+    int* getHorizontalKerningForTextUTF32(const std::u32string& text, int &outNumLetters) const override;
     
-    FontFreeType(bool distanceFieldEnabled = false,int outline = 0);
-    virtual ~FontFreeType();
-    bool   createFontObject(const std::string &fontName, int fontSize);
+    unsigned char* getGlyphBitmap(uint64_t theChar, long &outWidth, long &outHeight, Rect &outRect,int &xAdvance);
     
+    int getFontAscender() const;
+    const char* getFontFamily() const;
+
+    virtual FontAtlas* createFontAtlas() override;
+    virtual int getFontMaxHeight() const override { return _lineHeight; }
+
+    static void releaseFont(const std::string &fontName);
+
 private:
+    static const char* _glyphASCII;
+    static const char* _glyphNEHE;
+    static FT_Library _FTlibrary;
+    static bool _FTInitialized;
+
+    FontFreeType(bool distanceFieldEnabled = false, float outline = 0);
+    virtual ~FontFreeType();
+
+    bool createFontObject(const std::string &fontName, float fontSize);
 
     bool initFreeType();
     FT_Library getFTLibrary();
     
-    int  getHorizontalKerningForChars(unsigned short firstChar, unsigned short secondChar) const;
-    unsigned char       * getGlyphBitmapWithOutline(unsigned short theChar, FT_BBox &bbox);
+    int getHorizontalKerningForChars(uint64_t firstChar, uint64_t secondChar) const;
+    unsigned char* getGlyphBitmapWithOutline(uint64_t code, FT_BBox &bbox);
+
+    void setGlyphCollection(GlyphCollection glyphs, const char* customGlyphs = nullptr);
+    const char* getGlyphCollection() const;
     
-    static FT_Library _FTlibrary;
-    static bool       _FTInitialized;
-    FT_Face           _fontRef;
-    FT_Stroker        _stroker;
-    std::string       _fontName;
-    bool              _distanceFieldEnabled;
-    float             _outlineSize;
+    FT_Face _fontRef;
+    FT_Stroker _stroker;
+    FT_Encoding _encoding;
+
+    std::string _fontName;
+    bool _distanceFieldEnabled;
+    float _outlineSize;
+    int _lineHeight;
+    FontAtlas* _fontAtlas;
+
+    GlyphCollection _usedGlyphs;
+    std::string _customGlyphs;
 };
 
 /// @endcond

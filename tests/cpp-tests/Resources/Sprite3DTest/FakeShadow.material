@@ -1,0 +1,33 @@
+// A "Material" file can contain one or more materials
+material FakeShadow
+{
+    technique normal
+    {
+        pass 0
+        {
+            shader
+            {
+                vertexShader = Sprite3DTest/simple_shadow.vert
+                fragmentShader = Sprite3DTest/simple_shadow.frag
+                // sampler:
+                //   responsible for setting the texture and its parameters
+                //   the Id of the sampler is the uniform name
+                sampler u_sampler0
+                {
+                    path = Sprite3DTest/plane.png
+                    wrapS = REPEAT
+                    wrapT = REPEAT
+                }
+
+                sampler u_sampler1
+                {
+                    path = Sprite3DTest/shadowCircle.png
+                    wrapS = CLAMP_TO_EDGE
+                    wrapT = CLAMP_TO_EDGE
+                    minFilter = LINEAR
+                    magFilter = LINEAR
+                }
+            }
+        }
+    }
+}

@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010      cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -25,13 +25,22 @@ THE SOFTWARE.
 
 #include "base/ccUtils.h"
 
+#include <cmath>
 #include <stdlib.h>
+#include "md5/md5.h"
 
 #include "base/CCDirector.h"
+#include "base/CCAsyncTaskPool.h"
+#include "base/CCEventDispatcher.h"
+#include "base/base64.h"
 #include "renderer/CCCustomCommand.h"
 #include "renderer/CCRenderer.h"
+#include "renderer/CCTextureCache.h"
+
 #include "platform/CCImage.h"
 #include "platform/CCFileUtils.h"
+#include "2d/CCSprite.h"
+#include "2d/CCRenderTexture.h"
 
 NS_CC_BEGIN
 
@@ -49,22 +58,39 @@ int ccNextPOT(int x)
 namespace utils
 {
 /**
- * Capture screen implementation, don't use it directly.
- */
+* Capture screen implementation, don't use it directly.
+*/
 void onCaptureScreen(const std::function<void(bool, const std::string&)>& afterCaptured, const std::string& filename)
 {
+    static bool startedCapture = false;
+
+    if (startedCapture)
+    {
+        CCLOG("Screen capture is already working");
+        if (afterCaptured)
+        {
+            afterCaptured(false, filename);
+        }
+        return;
+    }
+    else
+    {
+        startedCapture = true;
+    }
+
+
     auto glView = Director::getInstance()->getOpenGLView();
     auto frameSize = glView->getFrameSize();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
     frameSize = frameSize * glView->getFrameZoomFactor() * glView->getRetinaFactor();
 #endif
-    
+
     int width = static_cast<int>(frameSize.width);
     int height = static_cast<int>(frameSize.height);
-    
+
     bool succeed = false;
     std::string outputFile = "";
-    
+
     do
     {
         std::shared_ptr<GLubyte> buffer(new GLubyte[width * height * 4], [](GLubyte* p){ CC_SAFE_DELETE_ARRAY(p); });
@@ -72,53 +98,22 @@ void onCaptureScreen(const std::function<void(bool, const std::string&)>& afterC
         {
             break;
         }
-        
-        glPixelStorei(GL_PACK_ALIGNMENT, 1);
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-        // The frame buffer is always created with portrait orientation on WP8. 
-        // So if the current device orientation is landscape, we need to rotate the frame buffer.  
-        auto renderTargetSize = glView->getRenerTargetSize();
-        CCASSERT(width * height == static_cast<int>(renderTargetSize.width * renderTargetSize.height), "The frame size is not matched");
-        glReadPixels(0, 0, (int)renderTargetSize.width, (int)renderTargetSize.height, GL_RGBA, GL_UNSIGNED_BYTE, buffer.get());
-#else
+        glPixelStorei(GL_PACK_ALIGNMENT, 1);
         glReadPixels(0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, buffer.get());
-#endif
-        
+
         std::shared_ptr<GLubyte> flippedBuffer(new GLubyte[width * height * 4], [](GLubyte* p) { CC_SAFE_DELETE_ARRAY(p); });
         if (!flippedBuffer)
         {
             break;
         }
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-        if (width == static_cast<int>(renderTargetSize.width))
-        {
-            // The current device orientation is portrait.
-            for (int row = 0; row < height; ++row)
-            {
-                memcpy(flippedBuffer.get() + (height - row - 1) * width * 4, buffer.get() + row * width * 4, width * 4);
-            }
-        }
-        else
-        {
-            // The current device orientation is landscape.
-            for (int row = 0; row < width; ++row)
-            {
-                for (int col = 0; col < height; ++col)
-                {
-                    *(int*)(flippedBuffer.get() + (height - col - 1) * width * 4 + row * 4) = *(int*)(buffer.get() + row * height * 4 + col * 4);
-                }
-            }     
-        }
-#else
         for (int row = 0; row < height; ++row)
         {
             memcpy(flippedBuffer.get() + (height - row - 1) * width * 4, buffer.get() + row * width * 4, width * 4);
         }
-#endif
 
-        std::shared_ptr<Image> image(new Image);
+        Image* image = new (std::nothrow) Image;
         if (image)
         {
             image->initWithRawData(flippedBuffer.get(), width * height * 4, width, height, 8);
@@ -131,26 +126,102 @@ void onCaptureScreen(const std::function<void(bool, const std::string&)>& afterC
                 CCASSERT(filename.find("/") == std::string::npos, "The existence of a relative path is not guaranteed!");
                 outputFile = FileUtils::getInstance()->getWritablePath() + filename;
             }
-            succeed = image->saveToFile(outputFile);
+
+            // Save image in AsyncTaskPool::TaskType::TASK_IO thread, and call afterCaptured in mainThread
+            static bool succeedSaveToFile = false;
+            std::function<void(void*)> mainThread = [afterCaptured, outputFile](void* /*param*/)
+            {
+                if (afterCaptured)
+                {
+                    afterCaptured(succeedSaveToFile, outputFile);
+                }
+                startedCapture = false;
+            };
+
+            AsyncTaskPool::getInstance()->enqueue(AsyncTaskPool::TaskType::TASK_IO, mainThread, nullptr, [image, outputFile]()
+            {
+                succeedSaveToFile = image->saveToFile(outputFile);
+                delete image;
+            });
         }
-    }while(0);
-    
-    if (afterCaptured)
-    {
-        afterCaptured(succeed, outputFile);
-    }
+        else
+        {
+            CCLOG("Malloc Image memory failed!");
+            if (afterCaptured)
+            {
+                afterCaptured(succeed, outputFile);
+            }
+            startedCapture = false;
+        }
+    } while (0);
 }
+
 /*
  * Capture screen interface
  */
+static EventListenerCustom* s_captureScreenListener;
+static CustomCommand s_captureScreenCommand;
 void captureScreen(const std::function<void(bool, const std::string&)>& afterCaptured, const std::string& filename)
 {
-    static CustomCommand captureScreenCommand;
-    captureScreenCommand.init(std::numeric_limits<float>::max());
-    captureScreenCommand.func = std::bind(onCaptureScreen, afterCaptured, filename);
-    Director::getInstance()->getRenderer()->addCommand(&captureScreenCommand);
+    if (s_captureScreenListener)
+    {
+        CCLOG("Warning: CaptureScreen has been called already, don't call more than once in one frame.");
+        return;
+    }
+    s_captureScreenCommand.init(std::numeric_limits<float>::max());
+    s_captureScreenCommand.func = std::bind(onCaptureScreen, afterCaptured, filename);
+    s_captureScreenListener = Director::getInstance()->getEventDispatcher()->addCustomEventListener(Director::EVENT_AFTER_DRAW, [](EventCustom* /*event*/) {
+        auto director = Director::getInstance();
+        director->getEventDispatcher()->removeEventListener((EventListener*)(s_captureScreenListener));
+        s_captureScreenListener = nullptr;
+        director->getRenderer()->addCommand(&s_captureScreenCommand);
+        director->getRenderer()->render();
+    });
 }
-    
+
+Image* captureNode(Node* startNode, float scale)
+{ // The best snapshot API, support Scene and any Node
+    auto& size = startNode->getContentSize();
+
+    Director::getInstance()->setNextDeltaTimeZero(true);
+
+    RenderTexture* finalRtx = nullptr;
+
+    auto rtx = RenderTexture::create(size.width, size.height, Texture2D::PixelFormat::RGBA8888, GL_DEPTH24_STENCIL8);
+    // rtx->setKeepMatrix(true);
+    Point savedPos = startNode->getPosition();
+    Point anchor;
+    if (!startNode->isIgnoreAnchorPointForPosition()) {
+        anchor = startNode->getAnchorPoint();
+    }
+    startNode->setPosition(Point(size.width * anchor.x, size.height * anchor.y));
+    rtx->begin(); 
+    startNode->visit();
+    rtx->end();
+    startNode->setPosition(savedPos);
+
+    if (std::abs(scale - 1.0f) < 1e-6f/* no scale */)
+        finalRtx = rtx;
+    else {
+        /* scale */
+        auto finalRect = Rect(0, 0, size.width, size.height);
+        Sprite *sprite = Sprite::createWithTexture(rtx->getSprite()->getTexture(), finalRect);
+        sprite->setAnchorPoint(Point(0, 0));
+        sprite->setFlippedY(true);
+
+        finalRtx = RenderTexture::create(size.width * scale, size.height * scale, Texture2D::PixelFormat::RGBA8888, GL_DEPTH24_STENCIL8);
+
+        sprite->setScale(scale); // or use finalRtx->setKeepMatrix(true);
+        finalRtx->begin(); 
+        sprite->visit();
+        finalRtx->end();
+    }
+
+    Director::getInstance()->getRenderer()->render();
+
+    return finalRtx->newImage();
+}
+
 std::vector<Node*> findChildren(const Node &node, const std::string &name)
 {
     std::vector<Node*> vec;
@@ -192,12 +263,19 @@ double gettime()
     return (double)tv.tv_sec + (double)tv.tv_usec/1000000;
 }
 
+long long getTimeInMilliseconds()
+{
+    struct timeval tv;
+    gettimeofday (&tv, nullptr);
+    return (long long)tv.tv_sec * 1000 + tv.tv_usec / 1000;
+}
+
 Rect getCascadeBoundingBox(Node *node)
 {
     Rect cbb;
     Size contentSize = node->getContentSize();
     
-    // check all childrens bounding box, get maximize box
+    // check all children bounding box, get maximize box
     Node* child = nullptr;
     bool merge = false;
     for(auto object : node->getChildren())
@@ -235,7 +313,123 @@ Rect getCascadeBoundingBox(Node *node)
     
     return cbb;
 }
+
+Sprite* createSpriteFromBase64Cached(const char* base64String, const char* key)
+{
+    Texture2D* texture = Director::getInstance()->getTextureCache()->getTextureForKey(key);
+
+    if (texture == nullptr)
+    {
+        unsigned char* decoded;
+        int length = base64Decode((const unsigned char*)base64String, (unsigned int)strlen(base64String), &decoded);
+
+        Image *image = new (std::nothrow) Image();
+        bool imageResult = image->initWithImageData(decoded, length);
+        CCASSERT(imageResult, "Failed to create image from base64!");
+        free(decoded);
+
+        if (!imageResult) {
+            CC_SAFE_RELEASE_NULL(image);
+            return nullptr;
+        }
+
+        texture = Director::getInstance()->getTextureCache()->addImage(image, key);
+        image->release();
+    }
+
+    Sprite* sprite = Sprite::createWithTexture(texture);
     
+    return sprite;
+}
+
+Sprite* createSpriteFromBase64(const char* base64String)
+{
+    unsigned char* decoded;
+    int length = base64Decode((const unsigned char*)base64String, (unsigned int)strlen(base64String), &decoded);
+
+    Image *image = new (std::nothrow) Image();
+    bool imageResult = image->initWithImageData(decoded, length);
+    CCASSERT(imageResult, "Failed to create image from base64!");
+    free(decoded);
+
+    if (!imageResult) {
+        CC_SAFE_RELEASE_NULL(image);
+        return nullptr;
+    }
+
+    Texture2D *texture = new (std::nothrow) Texture2D();
+    texture->initWithImage(image);
+    texture->setAliasTexParameters();
+    image->release();
+
+    Sprite* sprite = Sprite::createWithTexture(texture);
+    texture->release();
+
+    return sprite;
+}
+
+Node* findChild(Node* levelRoot, const std::string& name)
+{
+    if (levelRoot == nullptr || name.empty())
+        return nullptr;
+
+    // Find this node
+    auto target = levelRoot->getChildByName(name);
+    if (target != nullptr)
+        return target;
+
+    // Find recursively
+    for (auto& child : levelRoot->getChildren())
+    {
+        target = findChild(child, name);
+        if (target != nullptr)
+            return target;
+    }
+    return nullptr;
+}
+
+Node* findChild(Node* levelRoot, int tag)
+{
+    if (levelRoot == nullptr || tag == Node::INVALID_TAG)
+        return nullptr;
+
+    // Find this node
+    auto target = levelRoot->getChildByTag(tag);
+    if (target != nullptr)
+        return target;
+
+    // Find recursively
+    for (auto& child : levelRoot->getChildren())
+    {
+        target = findChild(child, tag);
+        if (target != nullptr)
+            return target;
+    }
+
+    return nullptr;
+}
+
+std::string getFileMD5Hash(const std::string &filename)
+{
+    static const unsigned int MD5_DIGEST_LENGTH = 16;
+
+    Data d;
+    FileUtils::getInstance()->getContents(filename, &d);
+
+    md5_state_t state;
+    md5_byte_t digest[MD5_DIGEST_LENGTH];
+    char hexOutput[(MD5_DIGEST_LENGTH << 1) + 1] = {0};
+
+    md5_init(&state);
+    md5_append(&state, (const md5_byte_t *)d.getBytes(), (int)d.getSize());
+    md5_finish(&state, digest);
+
+    for (int di = 0; di < 16; ++di)
+        sprintf(hexOutput + di * 2, "%02x", digest[di]);
+
+    return hexOutput;
+}
+
 }
 
 NS_CC_END
