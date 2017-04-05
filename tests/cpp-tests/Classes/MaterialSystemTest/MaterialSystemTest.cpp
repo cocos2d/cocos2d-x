@@ -533,7 +533,7 @@ void Material_renderState::onEnter()
     sprite->runAction(repeat);
 
     // SPINE
-    auto skeletonNode = spine::SkeletonAnimation::createWithJsonFile("spine/goblins.json", "spine/goblins.atlas", 1.5f);
+    auto skeletonNode = spine::SkeletonAnimation::createWithJsonFile("spine/goblins_mesh.json", "spine/goblins.atlas", 1.5f);
     skeletonNode->setAnimation(0, "walk", true);
     skeletonNode->setSkin("goblin");
 
