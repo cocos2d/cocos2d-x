@@ -123,6 +123,7 @@ cc.game.onStart = function(){
     else
     {
         cc.view.enableRetina(true);
+        cc.view.setOrientation(cc.ORIENTATION_LANDSCAPE);
         cc.view.setDesignResolutionSize(800, 450, cc.ResolutionPolicy.SHOW_ALL);
         cc.view.resizeWithBrowserSize(true);
         // js-test use cpptest resource in debug mode , and in the release mode, console will copy the resource into the res dir

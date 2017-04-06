@@ -233,13 +233,23 @@
     <ClCompile Include="..\..\..\external\flatbuffers\idl_gen_fbs.cpp" />
     <ClCompile Include="..\..\..\external\flatbuffers\idl_gen_general.cpp" />
     <ClCompile Include="..\..\..\external\flatbuffers\idl_gen_go.cpp" />
-    <ClCompile Include="..\..\..\external\flatbuffers\idl_gen_text.cpp" />
-    <ClCompile Include="..\..\..\external\flatbuffers\idl_parser.cpp" />
     <ClCompile Include="..\..\..\external\flatbuffers\idl_gen_js.cpp" />
     <ClCompile Include="..\..\..\external\flatbuffers\idl_gen_php.cpp" />
     <ClCompile Include="..\..\..\external\flatbuffers\idl_gen_python.cpp" />
+    <ClCompile Include="..\..\..\external\flatbuffers\idl_gen_text.cpp" />
+    <ClCompile Include="..\..\..\external\flatbuffers\idl_parser.cpp" />
     <ClCompile Include="..\..\..\external\flatbuffers\reflection.cpp" />
     <ClCompile Include="..\..\..\external\flatbuffers\util.cpp" />
+    <ClCompile Include="..\..\..\external\md5\md5.c">
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsWinRT>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </ForcedIncludeFiles>
+    </ClCompile>
     <ClCompile Include="..\..\..\external\poly2tri\common\shapes.cc" />
     <ClCompile Include="..\..\..\external\poly2tri\sweep\advancing_front.cc" />
     <ClCompile Include="..\..\..\external\poly2tri\sweep\cdt.cc" />
@@ -934,13 +944,51 @@
     <ClInclude Include="..\..\..\external\clipper\clipper.hpp" />
     <ClInclude Include="..\..\..\external\ConvertUTF\ConvertUTF.h" />
     <ClInclude Include="..\..\..\external\edtaa3func\edtaa3func.h" />
+    <ClInclude Include="..\..\..\external\flatbuffers\code_generators.h" />
     <ClInclude Include="..\..\..\external\flatbuffers\flatbuffers.h" />
-    <ClInclude Include="..\..\..\external\flatbuffers\idl.h" />
-    <ClInclude Include="..\..\..\external\flatbuffers\util.h" />
-    <ClInclude Include="..\..\..\external\flatbuffers\code_generated.h" />
+    <ClInclude Include="..\..\..\external\flatbuffers\grpc.h" />
     <ClInclude Include="..\..\..\external\flatbuffers\hash.h" />
+    <ClInclude Include="..\..\..\external\flatbuffers\idl.h" />
     <ClInclude Include="..\..\..\external\flatbuffers\reflection.h" />
     <ClInclude Include="..\..\..\external\flatbuffers\reflection_generated.h" />
+    <ClInclude Include="..\..\..\external\flatbuffers\util.h" />
+    <ClInclude Include="..\..\..\external\json\allocators.h" />
+    <ClInclude Include="..\..\..\external\json\document-wrapper.h" />
+    <ClInclude Include="..\..\..\external\json\document.h" />
+    <ClInclude Include="..\..\..\external\json\encodedstream.h" />
+    <ClInclude Include="..\..\..\external\json\encodings.h" />
+    <ClInclude Include="..\..\..\external\json\error\en.h" />
+    <ClInclude Include="..\..\..\external\json\error\error.h" />
+    <ClInclude Include="..\..\..\external\json\filereadstream.h" />
+    <ClInclude Include="..\..\..\external\json\filewritestream.h" />
+    <ClInclude Include="..\..\..\external\json\fwd.h" />
+    <ClInclude Include="..\..\..\external\json\internal\biginteger.h" />
+    <ClInclude Include="..\..\..\external\json\internal\diyfp.h" />
+    <ClInclude Include="..\..\..\external\json\internal\dtoa.h" />
+    <ClInclude Include="..\..\..\external\json\internal\ieee754.h" />
+    <ClInclude Include="..\..\..\external\json\internal\itoa.h" />
+    <ClInclude Include="..\..\..\external\json\internal\meta.h" />
+    <ClInclude Include="..\..\..\external\json\internal\pow10.h" />
+    <ClInclude Include="..\..\..\external\json\internal\regex.h" />
+    <ClInclude Include="..\..\..\external\json\internal\stack.h" />
+    <ClInclude Include="..\..\..\external\json\internal\strfunc.h" />
+    <ClInclude Include="..\..\..\external\json\internal\strtod.h" />
+    <ClInclude Include="..\..\..\external\json\internal\swap.h" />
+    <ClInclude Include="..\..\..\external\json\istreamwrapper.h" />
+    <ClInclude Include="..\..\..\external\json\memorybuffer.h" />
+    <ClInclude Include="..\..\..\external\json\memorystream.h" />
+    <ClInclude Include="..\..\..\external\json\msinttypes\inttypes.h" />
+    <ClInclude Include="..\..\..\external\json\msinttypes\stdint.h" />
+    <ClInclude Include="..\..\..\external\json\ostreamwrapper.h" />
+    <ClInclude Include="..\..\..\external\json\pointer.h" />
+    <ClInclude Include="..\..\..\external\json\prettywriter.h" />
+    <ClInclude Include="..\..\..\external\json\rapidjson.h" />
+    <ClInclude Include="..\..\..\external\json\reader.h" />
+    <ClInclude Include="..\..\..\external\json\schema.h" />
+    <ClInclude Include="..\..\..\external\json\stream.h" />
+    <ClInclude Include="..\..\..\external\json\stringbuffer.h" />
+    <ClInclude Include="..\..\..\external\json\writer.h" />
+    <ClInclude Include="..\..\..\external\md5\md5.h" />
     <ClInclude Include="..\..\..\external\poly2tri\common\shapes.h" />
     <ClInclude Include="..\..\..\external\poly2tri\common\utils.h" />
     <ClInclude Include="..\..\..\external\poly2tri\poly2tri.h" />

@@ -449,7 +449,7 @@ void RenderTextureTestDepthStencil::draw(Renderer *renderer, const Mat4 &transfo
     _spriteDS->visit();
     
     _renderCmds[2].init(_globalZOrder, transform, flags);
-    _renderCmds[2].func = CC_CALLBACK_0(RenderTextureTestDepthStencil::onBeforDraw, this);
+    _renderCmds[2].func = CC_CALLBACK_0(RenderTextureTestDepthStencil::onBeforeDraw, this);
     renderer->addCommand(&_renderCmds[2]);
 
     _spriteDraw->visit();
@@ -484,7 +484,7 @@ void RenderTextureTestDepthStencil::onBeforeStencil()
 //    RenderState::StateBlock::_defaultState->setStencilOperation(RenderState::STENCIL_OP_REPLACE, RenderState::STENCIL_OP_REPLACE, RenderState::STENCIL_OP_REPLACE);
 }
 
-void RenderTextureTestDepthStencil::onBeforDraw()
+void RenderTextureTestDepthStencil::onBeforeDraw()
 {
     glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
 

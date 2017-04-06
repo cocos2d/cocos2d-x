@@ -271,4 +271,35 @@ private:
     std::vector<std::string> _oldSearchPaths;
 };
 
+class AudioPlayInFinishedCB : public AudioEngineTestDemo
+{
+public:
+    CREATE_FUNC(AudioPlayInFinishedCB);
+
+    virtual void onEnter() override;
+    virtual void onExit() override;
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+
+private:
+    void doPlay(const std::string& filename);
+    void playMusic(const std::string& filename);
+    std::list<std::string> _playList;
+};
+
+class AudioUncacheInFinishedCB : public AudioEngineTestDemo
+{
+public:
+    CREATE_FUNC(AudioUncacheInFinishedCB);
+
+    virtual void onEnter() override;
+    virtual void onExit() override;
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+
+private:
+};
+
 #endif /* defined(__NEWAUDIOENGINE_TEST_H_) */

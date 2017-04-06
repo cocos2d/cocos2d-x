@@ -113,6 +113,7 @@ Node::Node()
 #if CC_USE_PHYSICS
 , _physicsBody(nullptr)
 #endif
+, _anchorPoint(0, 0)
 {
     // set default scheduler and actionManager
     _director = Director::getInstance();
@@ -1802,6 +1803,7 @@ void Node::setAdditionalTransform(const Mat4* additionalTransform)
 {
     if (additionalTransform == nullptr)
     {
+        if(_additionalTransform)  _transform = _additionalTransform[1];
         delete[] _additionalTransform;
         _additionalTransform = nullptr;
     }

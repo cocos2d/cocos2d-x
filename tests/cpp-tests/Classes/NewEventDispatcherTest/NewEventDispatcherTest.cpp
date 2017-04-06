@@ -1112,7 +1112,7 @@ Issue4129::Issue4129()
         
         auto label = Label::createWithSystemFont("Yeah, this issue was fixed.", "", 20);
         label->setAnchorPoint(Vec2(0, 0.5f));
-        label->setPosition(Vec2(VisibleRect::left()));
+        label->setPosition(Vec2(VisibleRect::left() + Vec2(0, 30)));
         this->addChild(label);
         
         // After test, remove it.

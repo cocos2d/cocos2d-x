@@ -710,6 +710,53 @@ int lua_cocos2dx_Console_delSubCommand(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_Console_isIpv6Server(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Console* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Console",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Console*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Console_isIpv6Server'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Console_isIpv6Server'", nullptr);
+            return 0;
+        }
+        bool ret = cobj->isIpv6Server();
+        tolua_pushboolean(tolua_S,(bool)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Console:isIpv6Server",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Console_isIpv6Server'.",&tolua_err);
+#endif
+
+    return 0;
+}
 static int lua_cocos2dx_Console_finalize(lua_State* tolua_S)
 {
     printf("luabindings: finalizing LUA object (Console)");
@@ -732,6 +779,7 @@ int lua_register_cocos2dx_Console(lua_State* tolua_S)
         tolua_function(tolua_S,"listenOnFileDescriptor",lua_cocos2dx_Console_listenOnFileDescriptor);
         tolua_function(tolua_S,"setBindAddress",lua_cocos2dx_Console_setBindAddress);
         tolua_function(tolua_S,"delSubCommand",lua_cocos2dx_Console_delSubCommand);
+        tolua_function(tolua_S,"isIpv6Server",lua_cocos2dx_Console_isIpv6Server);
     tolua_endmodule(tolua_S);
     std::string typeName = typeid(cocos2d::Console).name();
     g_luaType[typeName] = "cc.Console";

@@ -67,6 +67,21 @@ AudioEngineImpl* AudioEngine::_audioEngineImpl = nullptr;
 
 AudioEngine::AudioEngineThreadPool* AudioEngine::s_threadPool = nullptr;
 
+AudioEngine::AudioInfo::AudioInfo()
+: filePath(nullptr)
+, profileHelper(nullptr)
+, volume(1.0f)
+, loop(false)
+, duration(TIME_UNKNOWN)
+, state(AudioState::INITIALIZING)
+{
+
+}
+
+AudioEngine::AudioInfo::~AudioInfo()
+{
+}
+
 class AudioEngine::AudioEngineThreadPool
 {
 public:

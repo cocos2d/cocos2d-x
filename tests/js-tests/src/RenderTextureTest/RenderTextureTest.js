@@ -147,7 +147,7 @@ var RenderTextureSave = RenderTextureBaseLayer.extend({
     },
 
     clearCB:function (sender) {
-        this._target.clear(Math.random(), Math.random(), Math.random(), 1);
+        this._target.clear(Math.random() * 255, Math.random() * 255, Math.random() * 255, 255);
     },
 
     drawInLocation:function (location) {

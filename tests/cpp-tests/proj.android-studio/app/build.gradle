@@ -1,3 +1,5 @@
+import org.apache.tools.ant.taskdefs.condition.Os
+
 apply plugin: 'com.android.application'
 
 android {
@@ -18,7 +20,17 @@ android {
                     targets 'cpp_tests'
                     arguments 'NDK_TOOLCHAIN_VERSION=4.9'
                     arguments 'APP_PLATFORM=android-'+PROP_TARGET_SDK_VERSION
-                    arguments 'NDK_MODULE_PATH=../../../..:../../../../cocos:../../../../external'
+
+                    def module_paths = [project.file("../../../.."),
+                                        project.file("../../../../cocos"),
+                                        project.file("../../../../external")]
+                    if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+                        arguments 'NDK_MODULE_PATH=' + module_paths.join(";")
+                    }
+                    else {
+                        arguments 'NDK_MODULE_PATH=' + module_paths.join(':')
+                    }
+
                     arguments '-j' + Runtime.runtime.availableProcessors()
                     abiFilters.addAll(PROP_APP_ABI.split(':').collect{it as String})
                 }
@@ -61,21 +73,17 @@ android {
                 signingConfig signingConfigs.release
             }
 
-            if (project.hasProperty('PROP_NDK_MODE') && PROP_NDK_MODE.compareTo('debug') == 0) {
-                externalNativeBuild {
-                    ndkBuild {
-                        arguments 'NDK_DEBUG=1'
-                    }
+            externalNativeBuild {
+                ndkBuild {
+                    arguments 'NDK_DEBUG=0'
                 }
             }
         }
 
         debug {
-            if (project.hasProperty('PROP_NDK_MODE') && PROP_NDK_MODE.compareTo('release') == 0) {
-                externalNativeBuild {
-                    ndkBuild {
-                        arguments 'NDK_DEBUG=0'
-                    }
+            externalNativeBuild {
+                ndkBuild {
+                    arguments 'NDK_DEBUG=1'
                 }
             }
         }
