@@ -136,6 +136,9 @@ SpriteTests::SpriteTests()
     ADD_TEST_CASE(SpriteSlice9Test9);
     ADD_TEST_CASE(SpriteSlice9Test10);
     ADD_TEST_CASE(Issue17119);
+    ADD_TEST_CASE(SpriteTileTest1);
+    ADD_TEST_CASE(SpriteTileTest2);
+    ADD_TEST_CASE(SpriteTileTest3);
 };
 
 //------------------------------------------------------------------
@@ -5799,4 +5802,148 @@ void Issue17119::update(float dt)
     }
 }
 
+//------------------------------------------------------------------
+//
+// Tile Test #1
+//
+//------------------------------------------------------------------
+SpriteTileTest1::SpriteTileTest1()
+{
+    Size s = Director::getInstance()->getVisibleSize();
+    
+    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("Images/blocks9ss.plist");
+    
+    
+    auto s1 = Sprite::createWithSpriteFrameName("blocks9.png");
+    addChild(s1);
+    s1->setPosition(s.width/2 - s.width/4, s.height/2);
+    s1->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+    s1->setTiled(true);
+    s1->setContentSize(s1->getContentSize()*1.5);
+    
+    auto s2 = Sprite::createWithSpriteFrameName("blocks9r.png");
+    addChild(s2);
+    s2->setPosition(s.width/2 + s.width/4, s.height/2);
+    s2->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+    s2->setTiled(true);
+    s2->setContentSize(s2->getContentSize()*1.5);
+}
+
+//------------------------------------------------------------------
+//
+// Tile Test #2
+//
+//------------------------------------------------------------------
+SpriteTileTest2::SpriteTileTest2()
+{
+    Size s = Director::getInstance()->getVisibleSize();
+    
+    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("Images/blocks9ss.plist");
+    
+    
+    auto s1 = Sprite::createWithSpriteFrameName("blocks9.png");
+    addChild(s1);
+    s1->setPosition(s.width/2-s.width/3, s.height/2);
+    s1->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+    s1->setTiled(true);
+    s1->setContentSize(s1->getContentSize()*1.5);
+    
+    auto s2 = Sprite::createWithSpriteFrameName("blocks9c.png");
+    addChild(s2);
+    s2->setPosition(s.width/2-s.width/3, s.height/2);
+    s2->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+    s2->setTiled(true);
+    s2->setContentSize(s2->getContentSize()*1.5);
+    
+    auto s3 = Sprite::createWithSpriteFrameName("blocks9.png");
+    addChild(s3);
+    s3->setPosition(s.width/2, s.height/2);
+    s3->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+    s3->setTiled(true);
+    s3->setContentSize(s3->getContentSize()*1.5);
+    s3->setFlippedX(true);
+    
+    auto s4 = Sprite::createWithSpriteFrameName("blocks9c.png");
+    addChild(s4);
+    s4->setPosition(s.width/2, s.height/2);
+    s4->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+    s4->setTiled(true);
+    s4->setContentSize(s4->getContentSize()*1.5);
+    s4->setFlippedX(true);
+    
+    auto s5 = Sprite::createWithSpriteFrameName("blocks9.png");
+    addChild(s5);
+    s5->setPosition(s.width/2+s.width/3, s.height/2);
+    s5->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+    s5->setTiled(true);
+    s5->setContentSize(s5->getContentSize()*1.5);
+    s5->setFlippedY(true);
+    
+    auto s6 = Sprite::createWithSpriteFrameName("blocks9c.png");
+    addChild(s6);
+    s6->setPosition(s.width/2+s.width/3, s.height/2);
+    s6->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+    s6->setTiled(true);
+    s6->setContentSize(s6->getContentSize()*1.5);
+    s6->setFlippedY(true);
+}
+
+//------------------------------------------------------------------
+//
+// Tile Test #3
+//
+//------------------------------------------------------------------
+SpriteTileTest3::SpriteTileTest3()
+{
+    Size s = Director::getInstance()->getVisibleSize();
+    
+    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("Images/blocks9ss.plist");
+    
+    
+    auto s1 = Sprite::createWithSpriteFrameName("blocks9r.png");
+    addChild(s1);
+    s1->setPosition(s.width/2-s.width/3, s.height/2);
+    s1->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+    s1->setTiled(true);
+    s1->setContentSize(s1->getContentSize()*1.5);
+    
+    auto s2 = Sprite::createWithSpriteFrameName("blocks9cr.png");
+    addChild(s2);
+    s2->setPosition(s.width/2-s.width/3, s.height/2);
+    s2->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+    s2->setTiled(true);
+    s2->setContentSize(s2->getContentSize()*1.5);
+    
+    auto s3 = Sprite::createWithSpriteFrameName("blocks9r.png");
+    addChild(s3);
+    s3->setPosition(s.width/2, s.height/2);
+    s3->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+    s3->setTiled(true);
+    s3->setContentSize(s3->getContentSize()*1.5);
+    s3->setFlippedX(true);
+    
+    auto s4 = Sprite::createWithSpriteFrameName("blocks9cr.png");
+    addChild(s4);
+    s4->setPosition(s.width/2, s.height/2);
+    s4->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+    s4->setTiled(true);
+    s4->setContentSize(s4->getContentSize()*1.5);
+    s4->setFlippedX(true);
+    
+    auto s5 = Sprite::createWithSpriteFrameName("blocks9r.png");
+    addChild(s5);
+    s5->setPosition(s.width/2+s.width/3, s.height/2);
+    s5->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+    s5->setTiled(true);
+    s5->setContentSize(s5->getContentSize()*1.5);
+    s5->setFlippedY(true);
+    
+    auto s6 = Sprite::createWithSpriteFrameName("blocks9cr.png");
+    addChild(s6);
+    s6->setPosition(s.width/2+s.width/3, s.height/2);
+    s6->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+    s6->setTiled(true);
+    s6->setContentSize(s6->getContentSize()*1.5);
+    s6->setFlippedY(true);
+}
 
