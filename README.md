@@ -17,7 +17,7 @@ It works on iOS, Android, Tizen, Windows Phone and Store Apps, OS X, Windows, Li
 
 **Cocos2d-x Framework Architecture**:
 
-![](docs/framework_architecture.jpg "")
+![](docs/framework_architecture.png "")
 
 cocos2d-x is:
 
