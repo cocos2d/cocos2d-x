@@ -30,6 +30,7 @@ THE SOFTWARE.
 #include "base/CCDirector.h"
 #include "base/ccUTF8.h"
 #include "platform/CCFileUtils.h"
+#include <limits>
 
 NS_CC_BEGIN
 
@@ -501,19 +502,29 @@ unsigned char * makeDistanceMap( unsigned char *img, long width, long height)
             inside[i] = 0.0;
 
     // The bipolar distance field is now outside-inside
-    double dist;
     /* Single channel 8-bit output (bad precision and range, but simple) */    
     unsigned char *out = (unsigned char *) malloc( pixelAmount * sizeof(unsigned char) );
-    for( i=0; i < pixelAmount; i++)
+    double vmin = std::numeric_limits<double>::max();
+    for( i=0; i< pixelAmount; i++)
     {
-        dist = outside[i] - inside[i];
-        dist = 128.0 - dist*16;
-        if( dist < 0 ) dist = 0;
-        if( dist > 255 ) dist = 255;
-        out[i] = (unsigned char) dist;
+        outside[i] -= inside[i];
+        vmin = fmin(outside[i], vmin);
     }
+    vmin = fabs(vmin);
+    
+    for( i=0; i< pixelAmount; i++)
+    {
+        double v = outside[i];
+        if ( v < -vmin )
+            outside[i] = -vmin;
+        else if( v > +vmin )
+            outside[i] = vmin;
+        out[i] = (unsigned char)(255*(1-(outside[i]+vmin)/(2*vmin)));
+    }
+    
     /* Dual channel 16-bit output (more complicated, but good precision and range) */
-    /*unsigned char *out = (unsigned char *) malloc( pixelAmount * 3 * sizeof(unsigned char) ); 
+    /*double dist;
+     unsigned char *out = (unsigned char *) malloc( pixelAmount * 3 * sizeof(unsigned char) );
     for( i=0; i< pixelAmount; i++)
     {
         dist = outside[i] - inside[i];
