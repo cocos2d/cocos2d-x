@@ -477,7 +477,7 @@ unsigned char * makeDistanceMap( unsigned char *img, long width, long height)
     {
         for (j = 0; j < height; ++j)
         {
-            data[j * outWidth + FontFreeType::DistanceMapSpread + i] = img[j * width + i] / 255.0;
+            data[(j + FontFreeType::DistanceMapSpread) * outWidth + FontFreeType::DistanceMapSpread + i] = img[j * width + i] / 255.0;
         }
     }
 
