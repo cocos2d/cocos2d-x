@@ -48,6 +48,7 @@ AudioEngineTests::AudioEngineTests()
     ADD_TEST_CASE(AudioPlayFileInWritablePath);
     ADD_TEST_CASE(AudioIssue16938Test);
     ADD_TEST_CASE(AudioPlayInFinishedCB);
+    ADD_TEST_CASE(AudioUncacheInFinishedCB);
     
     //FIXME: Please keep AudioSwitchStateTest to the last position since this test case doesn't work well on each platforms.
     ADD_TEST_CASE(AudioSwitchStateTest);
