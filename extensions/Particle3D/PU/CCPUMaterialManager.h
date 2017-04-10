@@ -62,6 +62,7 @@ public:
     ~PUMaterialCache();
 
     static PUMaterialCache* Instance();
+    static void destroyInstance();
 
     bool loadMaterials(const std::string &file);
     bool loadMaterialsFromSearchPaths(const std::string &fileFolder);
@@ -72,6 +73,7 @@ protected:
 
     typedef std::vector<PUMaterial *> MaterialVector;
     MaterialVector _materialMap;
+    static PUMaterialCache* s_instance;
 };
 
 NS_CC_END

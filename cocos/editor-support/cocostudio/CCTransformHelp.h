@@ -41,6 +41,8 @@ class CC_STUDIO_DLL TransformHelp
 public:
     TransformHelp();
 
+    static void release();
+
     static void transformFromParent(BaseData &node, const BaseData &parentNode);
     static void transformToParent(BaseData &node, const BaseData &parentNode);
 

@@ -487,6 +487,17 @@ void GLViewImpl::end()
 {
     if(_mainWindow)
     {
+        glfwSetMouseButtonCallback(_mainWindow, 0);
+        glfwSetCursorPosCallback(_mainWindow, 0);
+        glfwSetScrollCallback(_mainWindow, 0);
+        glfwSetCharCallback(_mainWindow, 0);
+        glfwSetKeyCallback(_mainWindow, 0);
+        glfwSetWindowPosCallback(_mainWindow, 0);
+        glfwSetFramebufferSizeCallback(_mainWindow, 0);
+        glfwSetWindowSizeCallback(_mainWindow, 0);
+        glfwSetWindowIconifyCallback(_mainWindow, 0);
+        glfwSetWindowFocusCallback(_mainWindow, 0);
+
         glfwSetWindowShouldClose(_mainWindow,1);
         _mainWindow = nullptr;
     }

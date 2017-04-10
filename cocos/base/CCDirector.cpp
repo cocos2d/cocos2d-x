@@ -62,6 +62,12 @@ THE SOFTWARE.
 #include "base/CCAsyncTaskPool.h"
 #include "platform/CCApplication.h"
 
+#include "cocostudio/CCTransformHelp.h"
+#include "base/ObjectFactory.h"
+#include "3d/CCSprite3DMaterial.h"
+#include "3d/CCSprite3D.h"
+#include "extensions/Particle3D/PU/CCPUMaterialManager.h"
+
 #if CC_ENABLE_SCRIPT_BINDING
 #include "base/CCScriptSupport.h"
 #endif
@@ -214,6 +220,13 @@ Director::~Director(void)
     CC_SAFE_RELEASE(_eventDispatcher);
     
     Configuration::destroyInstance();
+
+    Sprite3DMaterial::releaseBuiltInMaterial();
+
+    cocostudio::TransformHelp::release();
+
+    ObjectFactory::destroyInstance();
+
 
     s_SharedDirector = nullptr;
 }
@@ -1092,13 +1105,17 @@ void Director::reset()
 #elif _MSC_VER >= 1400 //vs 2005 or higher
 #pragma warning (pop)
 #endif
+
     AnimationCache::destroyInstance();
+    Animation3DCache::destroyInstance();
     SpriteFrameCache::destroyInstance();
+    Sprite3DCache::destroyInstance();
+    PUMaterialCache::destroyInstance();
     GLProgramCache::destroyInstance();
     GLProgramStateCache::destroyInstance();
     FileUtils::destroyInstance();
     AsyncTaskPool::destroyInstance();
-    
+
     // cocos2d-x specific data structures
     UserDefault::destroyInstance();
     

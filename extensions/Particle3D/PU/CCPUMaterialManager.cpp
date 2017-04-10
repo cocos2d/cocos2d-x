@@ -44,6 +44,8 @@
 NS_CC_BEGIN
 
 
+PUMaterialCache* PUMaterialCache::s_instance = nullptr;
+
 PUMaterial::PUMaterial()
 : isEnabledLight(true)
 , ambientColor(Vec4::ONE)
@@ -74,8 +76,14 @@ PUMaterialCache::~PUMaterialCache()
 
 PUMaterialCache* PUMaterialCache::Instance()
 {
-    static PUMaterialCache pmm;
-    return &pmm;
+    if (s_instance == nullptr)
+        s_instance = new PUMaterialCache;
+    return s_instance;
+}
+
+void PUMaterialCache::destroyInstance()
+{
+    CC_SAFE_DELETE(s_instance);
 }
 
 PUMaterial* PUMaterialCache::getMaterial( const std::string &name )
