@@ -321,7 +321,7 @@ class PremultipliedAlphaTest : public ParticleDemo
 public:
     CREATE_FUNC(PremultipliedAlphaTest);
     virtual void onEnter() override;
-    void readdPaticle(float delta);
+    void readdParticle(float delta);
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 };

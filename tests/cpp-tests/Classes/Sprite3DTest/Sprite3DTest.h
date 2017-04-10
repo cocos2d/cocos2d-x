@@ -92,7 +92,7 @@ protected:
     void cylinderUpdate(float dt);
     
     float _cylinder_texture_offset;
-    float _shining_duraion;
+    float _shining_duration;
     cocos2d::GLProgramState * _state;
     
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)

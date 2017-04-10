@@ -89,17 +89,10 @@ bool ActionInterval::initWithDuration(float d)
 {
     _duration = d;
 
-    // prevent division by 0
-    // This comparison could be in step:, but it might decrease the performance
-    // by 3% in heavy based action games.
-    if (_duration <= FLT_EPSILON)
-    {
-        _duration = FLT_EPSILON;
-    }
-
     _elapsed = 0;
     _firstTick = true;
-
+    _done = false;
+    
     return true;
 }
 
@@ -117,8 +110,7 @@ bool ActionInterval::sendUpdateEventToScript(float dt, Action *actionObject)
 
 bool ActionInterval::isDone() const
 {
-    // fix #14936 _duration is not 0, but _elapsed is 0.
-    return (_elapsed + FLT_EPSILON) >= _duration;
+    return _done;
 }
 
 void ActionInterval::step(float dt)
@@ -141,6 +133,8 @@ void ActionInterval::step(float dt)
     if (sendUpdateEventToScript(updateDt, this)) return;
     
     this->update(updateDt);
+
+    _done = _elapsed >= _duration;
 }
 
 void ActionInterval::setAmplitudeRate(float /*amp*/)
@@ -162,6 +156,7 @@ void ActionInterval::startWithTarget(Node *target)
     FiniteTimeAction::startWithTarget(target);
     _elapsed = 0.0f;
     _firstTick = true;
+    _done = false;
 }
 
 //
