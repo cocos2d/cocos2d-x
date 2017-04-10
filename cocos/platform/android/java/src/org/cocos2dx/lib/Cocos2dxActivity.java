@@ -405,7 +405,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
             EGLContext context = egl.eglCreateContext(
                 display, eglConfig, EGL10.EGL_NO_CONTEXT, attributes);
 
-            if (context == null) {
+            if (context == null || EGL10.EGL_NO_CONTEXT == context) {
                 attributes = new int[] {EGL_CONTEXT_CLIENT_VERSION, 2, EGL10.EGL_NONE };
                 context = egl.eglCreateContext(
                     display, eglConfig, EGL10.EGL_NO_CONTEXT, attributes);
