@@ -1060,6 +1060,8 @@ void ParticleDemo::onEnter(void)
 {
     TestCase::onEnter();
 
+    MenuItemFont::setFontSize(32);
+
 	_color = LayerColor::create( Color4B(127,127,127,255) );
 	this->addChild(_color);
 
