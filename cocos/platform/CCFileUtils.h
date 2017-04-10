@@ -807,6 +807,8 @@ public:
      *
      *  @param dirPath The path of the directory, it could be a relative or an absolute path.
      *  @return File paths in a string vector
+     *  @js NA
+     *  @lua NA
      */
     virtual std::vector<std::string> listFiles(const std::string& dirPath) const;
 
@@ -830,7 +832,10 @@ public:
     *  List all files recursively in a directory, async off the main cocos thread.
     *
     *  @param dirPath The path of the directory, it could be a relative or an absolute path.
-    *  @param callback The callback to be called once the list operation is complete. Will be called on the main cocos thread.
+    *  @param callback The callback to be called once the list operation is complete. 
+    *          Will be called on the main cocos thread.
+    *  @js NA
+    *  @lua NA
     */
     virtual void listFilesRecursively(const std::string& dirPath, std::function<void(std::vector<std::string>)> callback) const;
 
