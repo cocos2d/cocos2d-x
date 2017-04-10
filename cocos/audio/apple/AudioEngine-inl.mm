@@ -192,12 +192,18 @@ static id s_AudioEngineSessionHandler = nullptr;
 AudioEngineImpl::AudioEngineImpl()
 : _lazyInitLoop(true)
 , _currentAudioID(0)
+, _scheduler(nullptr)
 {
 
 }
 
 AudioEngineImpl::~AudioEngineImpl()
 {
+    if (_scheduler != nullptr)
+    {
+        _scheduler->unschedule(CC_SCHEDULE_SELECTOR(AudioEngineImpl::update), this);
+    }
+
     if (s_ALContext) {
         alDeleteSources(MAX_AUDIOINSTANCES, _alSources);
 
