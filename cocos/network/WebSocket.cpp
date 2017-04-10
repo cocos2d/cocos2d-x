@@ -362,6 +362,7 @@ void WsThreadHelper::onSubThreadLoop()
                 if (msg->what == WS_MSG_TO_SUBTHREAD_CREATE_CONNECTION)
                 {
                     ws->onClientOpenConnectionRequest();
+                    delete *iter;
                     iter = __wsHelper->_subThreadWsMessageQueue->erase(iter);
                 }
                 else
@@ -509,6 +510,7 @@ void WebSocket::closeAllConnections()
 
         std::lock_guard<std::mutex> lk(__instanceMutex);
         __websocketInstances->clear();
+        delete __websocketInstances;
         __websocketInstances = nullptr;
     }
 }
