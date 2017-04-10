@@ -207,6 +207,12 @@ std::string AudioEngineTestDemo::title() const
     return "New Audio Engine Test";
 }
 
+void AudioEngineTestDemo::onBackCallback(cocos2d::Ref* sender)
+{
+    AudioEngine::end();
+    TestCase::onBackCallback(sender);
+}
+
 // AudioControlTest
 bool AudioControlTest::init()
 {
