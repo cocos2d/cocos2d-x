@@ -60,7 +60,7 @@ UrlAudioPlayer::UrlAudioPlayer(SLEngineItf engineItf, SLObjectItf outputMixObjec
         : _engineItf(engineItf), _outputMixObj(outputMixObject),
           _callerThreadUtils(callerThreadUtils), _id(-1), _assetFd(nullptr),
           _playObj(nullptr), _playItf(nullptr), _seekItf(nullptr), _volumeItf(nullptr),
-          _volume(0.0f), _duration(0.0f), _isLoop(false), _isFocusLost(false), _state(State::INVALID),
+          _volume(0.0f), _duration(0.0f), _isLoop(false), _isAudioFocus(true), _state(State::INVALID),
           _playEventCallback(nullptr), _isDestroyed(std::make_shared<bool>(false))
 {
     std::call_once(__onceFlag, [](){
@@ -229,7 +229,7 @@ void UrlAudioPlayer::setVolumeToSLPlayer(float volume)
 void UrlAudioPlayer::setVolume(float volume)
 {
     _volume = volume;
-    if (!_isFocusLost)
+    if (_isAudioFocus)
     {
         setVolumeToSLPlayer(_volume);
     }
@@ -240,10 +240,10 @@ float UrlAudioPlayer::getVolume() const
     return _volume;
 }
 
-void UrlAudioPlayer::setFocusLost(bool isFocusLost)
+void UrlAudioPlayer::setAudioFocus(bool isFocus)
 {
-    _isFocusLost = isFocusLost;
-    float volume = _isFocusLost ? 0.0f : _volume;
+    _isAudioFocus = isFocus;
+    float volume = _isAudioFocus ? _volume : 0.0f;
     setVolumeToSLPlayer(volume);
 }
 

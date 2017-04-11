@@ -233,11 +233,11 @@ void AudioEngineImpl::onEnterForeground(EventCustom* event)
     _urlAudioPlayersNeedResume.clear();
 }
 
-void AudioEngineImpl::setAudioFocusLostForAllPlayers(bool isFocusLost)
+void AudioEngineImpl::setAudioFocusForAllPlayers(bool isFocus)
 {
     for (const auto& e : _audioPlayers)
     {
-        e.second->setFocusLost(isFocusLost);
+        e.second->setAudioFocus(isFocus);
     }
 }
 
@@ -290,7 +290,7 @@ int AudioEngineImpl::play2d(const std::string &filePath ,bool loop ,float volume
 
             player->setLoop(loop);
             player->setVolume(volume);
-            player->setFocusLost(__currentAudioFocus != AUDIOFOCUS_GAIN);
+            player->setAudioFocus(__currentAudioFocus == AUDIOFOCUS_GAIN);
             player->play();
         } 
         else
@@ -475,11 +475,11 @@ void cocos_audioengine_focus_change(int focusChange)
 
     if (__currentAudioFocus == AUDIOFOCUS_GAIN)
     {
-        __impl->setAudioFocusLostForAllPlayers(false);
+        __impl->setAudioFocusForAllPlayers(true);
     }
     else
     {
-        __impl->setAudioFocusLostForAllPlayers(true);
+        __impl->setAudioFocusForAllPlayers(false);
     }
 }
 

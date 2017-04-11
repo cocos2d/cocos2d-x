@@ -72,7 +72,7 @@ public:
     void uncacheAll();
     void preload(const std::string& filePath, const std::function<void(bool)>& callback);
 
-    void setAudioFocusLostForAllPlayers(bool isFocusLost);
+    void setAudioFocusForAllPlayers(bool isFocus);
 private:
 
     void onEnterBackground(EventCustom* event);
