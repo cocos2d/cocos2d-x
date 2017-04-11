@@ -134,8 +134,6 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 
         // Audio configuration
         this.setVolumeControlStream(AudioManager.STREAM_MUSIC);
-
-        Cocos2dxAudioFocusManager.registerAudioFocusListener(this);
     }
 
     //native method,call GLViewImpl::getGLContextAttrs() to get the OpenGL ES context attributions
@@ -153,6 +151,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
     protected void onResume() {
     	Log.d(TAG, "onResume()");
         super.onResume();
+        Cocos2dxAudioFocusManager.registerAudioFocusListener(this);
         this.hideVirtualButton();
        	resumeIfHasFocus();
     }
@@ -178,6 +177,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
     protected void onPause() {
     	Log.d(TAG, "onPause()");
         super.onPause();
+        Cocos2dxAudioFocusManager.unregisterAudioFocusListener(this);
         Cocos2dxHelper.onPause();
         mGLSurfaceView.onPause();
     }

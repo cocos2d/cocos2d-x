@@ -117,6 +117,14 @@ class Cocos2dxAudioFocusManager {
         } else {
             Log.e(TAG, "abandonAudioFocus failed!");
         }
+
+        Cocos2dxHelper.runOnGLThread(new Runnable() {
+            @Override
+            public void run() {
+                Cocos2dxHelper.setAudioFocus(true);
+                nativeOnAudioFocusChange(AUDIOFOCUS_GAIN);
+            }
+        });
     }
 
     private static native void nativeOnAudioFocusChange(int focusChange);
