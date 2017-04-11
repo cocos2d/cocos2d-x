@@ -54,7 +54,7 @@
 using namespace cocos2d;
 using namespace cocos2d::experimental;
 
-// Audio focus values synchronized with which in cocos/platform/android/javaactivity-android.cpp
+// Audio focus values synchronized with which in cocos/platform/android/java/src/org/cocos2dx/lib/Cocos2dxActivity.java
 static const int AUDIOFOCUS_GAIN = 0;
 static const int AUDIOFOCUS_LOST = 1;
 static const int AUDIOFOCUS_LOST_TRANSIENT = 2;
