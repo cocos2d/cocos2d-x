@@ -41,6 +41,7 @@ Track::Track(const PcmData &pcmData)
         , _isVolumeDirty(true)
         , _isLoop(false)
         , _isInitialized(false)
+        , _isFocusLost(false)
 {
     init(_pcmData.pcmBuffer->data(), _pcmData.numFrames, _pcmData.bitsPerSample / 8 * _pcmData.numChannels);
 }
@@ -52,7 +53,8 @@ Track::~Track()
 
 gain_minifloat_packed_t Track::getVolumeLR()
 {
-    gain_minifloat_t v = gain_from_float(_volume);
+    float volume = isFocusLost() ? 0.0f : _volume;
+    gain_minifloat_t v = gain_from_float(volume);
     return gain_minifloat_pack(v, v);
 }
 
@@ -81,6 +83,17 @@ void Track::setVolume(float volume)
 float Track::getVolume() const
 {
     return _volume;
+}
+
+void Track::setFocusLost(bool isFocusLost)
+{
+    _isFocusLost = isFocusLost;
+    setVolumeDirty(true);
+}
+
+bool Track::isFocusLost() const
+{
+    return _isFocusLost;
 }
 
 void Track::setState(State state)

@@ -51,6 +51,7 @@ public class Cocos2dxMusic {
     private boolean mPaused; // whether music is paused state.
     private boolean mIsLoop = false;
     private boolean mManualPaused = false; // whether music is paused manually before the program is switched to the background.
+    private boolean mAudioFocusLost = false;
     private String mCurrentPath;
 
     // ===========================================================
@@ -226,7 +227,7 @@ public class Cocos2dxMusic {
         }
 
         this.mLeftVolume = this.mRightVolume = volume;
-        if (this.mBackgroundMediaPlayer != null) {
+        if (this.mBackgroundMediaPlayer != null && !mAudioFocusLost) {
             this.mBackgroundMediaPlayer.setVolume(this.mLeftVolume, this.mRightVolume);
         }
     }
@@ -296,6 +297,16 @@ public class Cocos2dxMusic {
         }
 
         return mediaPlayer;
+    }
+
+    void setAudioFocusLost(boolean isFocusLost) {
+        mAudioFocusLost = isFocusLost;
+
+        if (mBackgroundMediaPlayer != null) {
+            float lVolume = mAudioFocusLost ? 0.0f : mLeftVolume;
+            float rVolume = mAudioFocusLost ? 0.0f : mRightVolume;
+            mBackgroundMediaPlayer.setVolume(lVolume, rVolume);
+        }
     }
 
     // ===========================================================

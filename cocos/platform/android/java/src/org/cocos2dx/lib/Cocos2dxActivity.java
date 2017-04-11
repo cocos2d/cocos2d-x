@@ -33,16 +33,13 @@ import android.media.AudioManager;
 import android.opengl.GLSurfaceView;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager.OnActivityResultListener;
-import android.util.AttributeSet;
 import android.util.Log;
-import android.view.ViewGroup;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.FrameLayout;
 
 import org.cocos2dx.lib.Cocos2dxHelper.Cocos2dxHelperListener;
 
@@ -57,6 +54,12 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
     // ===========================================================
 
     private final static String TAG = Cocos2dxActivity.class.getSimpleName();
+
+    // Audio focus values synchronized with which in cocos/platform/android/javaactivity-android.cpp
+    private final static int AUDIOFOCUS_GAIN = 0;
+    private final static int AUDIOFOCUS_LOST = 1;
+    private final static int AUDIOFOCUS_LOST_TRANSIENT = 2;
+    private final static int AUDIOFOCUS_LOST_TRANSIENT_CAN_DUCK = 3;
 
     // ===========================================================
     // Fields
@@ -75,6 +78,66 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
         return  mGLSurfaceView;
     }
     
+
+    private AudioManager.OnAudioFocusChangeListener mAfChangeListener =
+            new AudioManager.OnAudioFocusChangeListener() {
+                public void onAudioFocusChange(int focusChange) {
+
+                    Log.d(TAG, "onAudioFocusChange: " + focusChange + ", thread: " + Thread.currentThread().getName());
+
+                    if (mGLSurfaceView == null) {
+                        Log.e(TAG, "mGLSurfaceView is null");
+                        return;
+                    }
+
+                    if (focusChange == AudioManager.AUDIOFOCUS_LOSS) {
+                        // Permanent loss of audio focus
+                        // Pause playback immediately
+                        Log.d(TAG, "Pause music by AUDIOFOCUS_LOSS");
+                        mGLSurfaceView.queueEvent(new Runnable() {
+                            @Override
+                            public void run() {
+                                nativeOnAudioFocusChange(AUDIOFOCUS_LOST);
+                                Cocos2dxHelper.setAudioFocusLost(true);
+                            }
+                        });
+
+                    } else if (focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT) {
+                        // Pause playback
+                        Log.d(TAG, "Pause music by AUDIOFOCUS_LOSS_TRANSILENT");
+                        mGLSurfaceView.queueEvent(new Runnable() {
+                            @Override
+                            public void run() {
+                                nativeOnAudioFocusChange(AUDIOFOCUS_LOST_TRANSIENT);
+                                Cocos2dxHelper.setAudioFocusLost(true);
+                            }
+                        });
+                    } else if (focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK) {
+                        // Lower the volume, keep playing
+                        Log.d(TAG, "Lower the volume, keep playing by AUDIOFOCUS_LOSS_TRANSILENT_CAN_DUCK");
+                        mGLSurfaceView.queueEvent(new Runnable() {
+                            @Override
+                            public void run() {
+                                nativeOnAudioFocusChange(AUDIOFOCUS_LOST_TRANSIENT_CAN_DUCK);
+                                Cocos2dxHelper.setAudioFocusLost(true);
+                            }
+                        });
+                    } else if (focusChange == AudioManager.AUDIOFOCUS_GAIN) {
+                        // Your app has been granted audio focus again
+                        // Raise volume to normal, restart playback if necessary
+                        Log.d(TAG, "Resume music by AUDIOFOCUS_GAIN");
+                        mGLSurfaceView.queueEvent(new Runnable() {
+                            @Override
+                            public void run() {
+                                nativeOnAudioFocusChange(AUDIOFOCUS_GAIN);
+                                Cocos2dxHelper.setAudioFocusLost(false);
+                            }
+                        });
+                    }
+                }
+            };
+
+
     public static Context getContext() {
         return sContext;
     }
@@ -135,12 +198,28 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
         Window window = this.getWindow();
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
+        // Audio configuration
         this.setVolumeControlStream(AudioManager.STREAM_MUSIC);
+
+        AudioManager am = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+
+        // Request audio focus for playback
+        int result = am.requestAudioFocus(mAfChangeListener,
+                // Use the music stream.
+                AudioManager.STREAM_MUSIC,
+                // Request permanent focus.
+                AudioManager.AUDIOFOCUS_GAIN);
+
+        if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+            Log.d(TAG, "AudioManager.AUDIOFOCUS_REQUEST_GRANTED");
+        }
     }
 
     //native method,call GLViewImpl::getGLContextAttrs() to get the OpenGL ES context attributions
     private static native int[] getGLContextAttrs();
-    
+
+    private static native void nativeOnAudioFocusChange(int focusChange);
+
     // ===========================================================
     // Getter & Setter
     // ===========================================================

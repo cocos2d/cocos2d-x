@@ -62,6 +62,9 @@ public:
     void setVolume(float volume);
     float getVolume() const;
 
+    void setFocusLost(bool isFocusLost);
+    bool isFocusLost() const;
+
     bool setPosition(float pos);
     float getPosition() const;
 
@@ -96,6 +99,7 @@ private:
     std::mutex _volumeDirtyMutex;
     bool _isLoop;
     bool _isInitialized;
+    bool _isFocusLost;
 
     friend class AudioMixerController;
 };

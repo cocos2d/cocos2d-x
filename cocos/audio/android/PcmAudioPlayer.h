@@ -62,6 +62,8 @@ public:
 
     virtual float getVolume() const override;
 
+    virtual void setFocusLost(bool isFocusLost) override;
+
     virtual void setLoop(bool isLoop) override;
 
     virtual bool isLoop() const override;

@@ -110,6 +110,11 @@ float PcmAudioPlayer::getVolume() const
     return _track->getVolume();
 }
 
+void PcmAudioPlayer::setFocusLost(bool isFocusLost)
+{
+    _track->setFocusLost(isFocusLost);
+}
+
 void PcmAudioPlayer::setLoop(bool isLoop)
 {
     _track->setLoop(isLoop);

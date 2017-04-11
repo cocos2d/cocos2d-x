@@ -60,7 +60,7 @@ UrlAudioPlayer::UrlAudioPlayer(SLEngineItf engineItf, SLObjectItf outputMixObjec
         : _engineItf(engineItf), _outputMixObj(outputMixObject),
           _callerThreadUtils(callerThreadUtils), _id(-1), _assetFd(nullptr),
           _playObj(nullptr), _playItf(nullptr), _seekItf(nullptr), _volumeItf(nullptr),
-          _volume(0.0f), _duration(0.0f), _isLoop(false), _state(State::INVALID),
+          _volume(0.0f), _duration(0.0f), _isLoop(false), _isFocusLost(false), _state(State::INVALID),
           _playEventCallback(nullptr), _isDestroyed(std::make_shared<bool>(false))
 {
     std::call_once(__onceFlag, [](){
@@ -215,16 +215,36 @@ void UrlAudioPlayer::play()
     }
 }
 
-void UrlAudioPlayer::setVolume(float volume)
+void UrlAudioPlayer::setVolumeToSLPlayer(float volume)
 {
-    _volume = volume;
     int dbVolume = 2000 * log10(volume);
     if (dbVolume < SL_MILLIBEL_MIN)
     {
         dbVolume = SL_MILLIBEL_MIN;
     }
     SLresult r = (*_volumeItf)->SetVolumeLevel(_volumeItf, dbVolume);
-    SL_RETURN_IF_FAILED(r, "UrlAudioPlayer::setVolume %d failed", dbVolume);
+    SL_RETURN_IF_FAILED(r, "UrlAudioPlayer::setVolumeToSLPlayer %d failed", dbVolume);
+}
+
+void UrlAudioPlayer::setVolume(float volume)
+{
+    _volume = volume;
+    if (!_isFocusLost)
+    {
+        setVolumeToSLPlayer(_volume);
+    }
+}
+
+float UrlAudioPlayer::getVolume() const
+{
+    return _volume;
+}
+
+void UrlAudioPlayer::setFocusLost(bool isFocusLost)
+{
+    _isFocusLost = isFocusLost;
+    float volume = _isFocusLost ? 0.0f : _volume;
+    setVolumeToSLPlayer(volume);
 }
 
 float UrlAudioPlayer::getDuration() const
@@ -360,11 +380,6 @@ bool UrlAudioPlayer::prepare(const std::string &url, SLuint32 locatorType, std::
 void UrlAudioPlayer::rewind()
 {
 // Not supported currently. since cocos audio engine will new -> prepare -> play again.
-}
-
-float UrlAudioPlayer::getVolume() const
-{
-    return _volume;
 }
 
 void UrlAudioPlayer::setLoop(bool isLoop)
