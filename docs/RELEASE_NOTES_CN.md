@@ -2,9 +2,14 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [v3.14.1](#v3141)
-  - [修复的问题](#%E4%BF%AE%E5%A4%8D%E7%9A%84%E9%97%AE%E9%A2%98)
-  - [其他](#%E5%85%B6%E4%BB%96)
+- [v3.15](#v315)
+  - [新特性](#%E6%96%B0%E7%89%B9%E6%80%A7)
+  - [新特性详细介绍](#%E6%96%B0%E7%89%B9%E6%80%A7%E8%AF%A6%E7%BB%86%E4%BB%8B%E7%BB%8D)
+    - [全面支持Android Studio](#%E5%85%A8%E9%9D%A2%E6%94%AF%E6%8C%81android-studio)
+    - [音频模块在Android平台的改进](#%E9%9F%B3%E9%A2%91%E6%A8%A1%E5%9D%97%E5%9C%A8android%E5%B9%B3%E5%8F%B0%E7%9A%84%E6%94%B9%E8%BF%9B)
+    - [去除Windows 8.1的支持](#%E5%8E%BB%E9%99%A4windows-81%E7%9A%84%E6%94%AF%E6%8C%81)
+    - [去除32位linux支持](#%E5%8E%BB%E9%99%A432%E4%BD%8Dlinux%E6%94%AF%E6%8C%81)
+    - [其他](#%E5%85%B6%E4%BB%96)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
