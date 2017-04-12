@@ -197,7 +197,7 @@ public class Cocos2dxHelper {
 
             String pathToOBB = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/obb/" + Cocos2dxHelper.sPackageName;
 
-			// Listing all files inside the folder (pathToOBB) where OBB files are expected to be found.
+	    	// Listing all files inside the folder (pathToOBB) where OBB files are expected to be found.
             String[] fileNames = new File(pathToOBB).list(new FilenameFilter() { // Using filter to pick up only main OBB file name.
                 public boolean accept(File dir, String name) {
                     return name.startsWith("main.") && name.endsWith(".obb");  // It's possible to filter only by extension here to get path to patch OBB file also.
@@ -205,7 +205,7 @@ public class Cocos2dxHelper {
             });
 
             String fullPathToOBB = "";
-            if (fileNames.length > 0)  // If there is at least 1 element inside the array with OBB file names, then we may think fileNames[0] will have desired main OBB file name.
+            if (fileNames != null && fileNames.length > 0)  // If there is at least 1 element inside the array with OBB file names, then we may think fileNames[0] will have desired main OBB file name.
                 fullPathToOBB = pathToOBB + "/" + fileNames[0];  // Composing full file name for main OBB file.
 
             File obbFile = new File(fullPathToOBB);
