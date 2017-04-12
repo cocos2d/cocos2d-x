@@ -113,7 +113,7 @@ public class Cocos2dxEditBoxHelper {
                 editBox.setVerticalScrollBarEnabled(true);
                 editBox.setMaxLines(Integer.MAX_VALUE);
                 editBox.setMovementMethod(new ScrollingMovementMethod());
-                
+
                 Resources r = mCocos2dxActivity.getResources();
                 float density =  r.getDisplayMetrics().density;
                 int paddingBottom = (int)(height * 0.33f / density);
@@ -124,7 +124,6 @@ public class Cocos2dxEditBoxHelper {
                 paddingLeft = convertToSP(paddingLeft);
 
                 editBox.setPadding(paddingLeft,paddingTop, 0, paddingBottom);
-
 
                 FrameLayout.LayoutParams lParams = new FrameLayout.LayoutParams(
                         FrameLayout.LayoutParams.WRAP_CONTENT,
@@ -415,7 +414,18 @@ public class Cocos2dxEditBoxHelper {
             public void run() {
                 Cocos2dxEditBox editBox = mEditBoxArray.get(index);
                 if (editBox != null) {
+                    Resources r = mCocos2dxActivity.getResources();
+                    float density =  r.getDisplayMetrics().density;
+                    int paddingBottom = (int)(maxHeight * 0.33f / density);
+                    paddingBottom = convertToSP(paddingBottom  - 5 * editBox.getOpenGLViewScaleX() / density);
+                    paddingBottom = paddingBottom / 2;
+                    int paddingTop = paddingBottom;
+                    int paddingLeft = (int)(5 * editBox.getOpenGLViewScaleX() / density);
+                    paddingLeft = convertToSP(paddingLeft);
+
                     editBox.setEditBoxViewRect(left, top, maxWidth, maxHeight);
+                    editBox.setPadding(paddingLeft,paddingTop, 0, paddingBottom);
+
                 }
             }
         });
