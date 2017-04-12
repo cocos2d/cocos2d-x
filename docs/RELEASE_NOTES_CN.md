@@ -8,16 +8,52 @@
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-# v3.14.1
+# v3.15
 
-## 修复的问题
+## 新特性
 
-* 如果创建物理场景但是没有设置3d物理的摄像机，那么程序会崩溃
-* 由于glfw版本冲突，在linux平台可能会有链接错误
-* 通过带有多边形信息的sprite frame创建的Sprite效果不对
-* VS2015编译Lua工程时有链接错误
-* 通过`cocos compile/run -p android --android-studio`命令编译Android工程时会有编译错误
+* 全面支持__Android Studio__，包括编译、代码编辑和调试C++代码：[使用文档](https://github.com/chukong/cocos-docs/blob/v3-unified-documentation/installation/Android-Studio.md)
+* 音频模块在Android平台使用[tremolo](http://wss.co.uk/pinknoise/tremolo/)解码器解码音频文件，使得音频模块效率更高，兼容更多的Android设备
+* __WebSockets__和__SocketIO__支持__SSL__
+* AssetsManagerEx更加稳定
+* 更新__Spine runtime__到v3.5.35
+* 更新__flatbuffer__到v1.5
+* 升级__OpenSSL__到v1.1.0
+* 去除__Windows 8.1__的支持
+* 去除32位linux的支持
 
-## 其他
 
-通过查看[3.14.1版本信息](https://github.com/cocos2d/cocos2d-x/milestone/36?closed=1)了解所有的问题或者代码改动。
+## 新特性详细介绍
+
+### 全面支持Android Studio
+
+从__3.15__版本开始，可以使用Android Studio 2.3+ 编辑、编译和调试C++代码。只需要通过Android Studio打开__proj.android-studio__文件夹（比如__tests/cpp-empty-test/proj.android-studio__），然后点击__run__按钮就可以在Android设备或者模拟器运行、调试了。
+
+详细的使用方法请参考[这篇文档](https://github.com/chukong/cocos-docs/blob/v3-unified-documentation/installation/Android-Studio.md)。
+
+### 音频模块在Android平台的改进
+
+3.15版本之前，音频模块使用__OpenSL ES__解码、播放音频文件，但是很多的Android设备厂商会修改这部分代码，导致音频模块在不同的Android设备上有兼容性问题。[该帖子](http://discuss.cocos2d-x.org/t/android-audio-decoding-issues-discussion/34610)就列出了许多音频模块的问题。
+
+为了解决兼容性问题，我们引入了第三方的解码库[tremolo](http://wss.co.uk/pinknoise/tremolo/)。该解码库也是Android源码使用的解码库。使用该解码库除了能解决Android设备的兼容性问题，同时还带来了不少性能提升：
+
+![audio performance](https://raw.githubusercontent.com/minggo/Pictures/master/AudioDecodingPerfTest.png)
+
+引入该解码库会使最终的APK包增大100K左右，和带来的好处相比还是值得的。
+
+### 去除Windows 8.1的支持
+
+Windows 8.1的支持一直是微软的开发者在维护。因为市场占有率原因，他们觉得没必要继续支持Windows 8.1了。
+
+### 去除32位linux支持
+
+目前大部分的PC都是64位了，所以我们觉得去除对32位linux的支持。去除这个支持意味着第三方库去掉了对应的32位版本，这样可以减小发行包的大小，也减少引擎维护的工作。开发者如果想支持32位版本的话，可以使用[这个仓库](https://github.com/cocos2d/cocos2d-x-3rd-party-libs-src)自己编译32位版本的第三方库。
+
+### 其他
+
+[Android SDK Tools 25.3.0+](http://tools.android.com/recent/androidsdktoolsrevision2530feb2017)去除了__ant脚本__和__android命令__，使得cocos命令无法打包Android的Eclipse工程（proj.android）。为了不至于在最后胜出APK时才报错，现在cocos命令检查到这个版本后直接返回错误。有两个方法可以解决这个问题：
+
+* 从旧版本的Android SDK拷贝tools文件夹过来替换对应的目录
+* 使用Android Studio工程编译打包
+
+从Android工具删除ant脚本和android的行为来看，谷歌是不希望大家继续使用Eclipse工程，所以建议大家还是使用Android Studio来编译打包吧。旧版本引擎虽然不支持Android Studio调试C++代码功能，但是编译打包还是没问题的。
