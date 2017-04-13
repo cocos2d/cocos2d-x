@@ -17,14 +17,14 @@
 
 ## 新特性
 
-* 全面支持__Android Studio__，包括编译、代码编辑和调试C++代码：[使用文档](https://github.com/chukong/cocos-docs/blob/v3-unified-documentation/installation/Android-Studio.md)
-* 音频模块在Android平台使用[tremolo](http://wss.co.uk/pinknoise/tremolo/)和__MP3 Decoder Library__解码音频文件，使得音频模块效率更高，兼容更多的Android设备
-* __WebSockets__和__SocketIO__支持__SSL__
+* 全面支持 __Android Studio__，包括编译、代码编辑和调试C++代码：[使用文档](https://github.com/chukong/cocos-docs/blob/v3-unified-documentation/installation/Android-Studio.md)
+* 音频模块在Android平台使用[tremolo](http://wss.co.uk/pinknoise/tremolo/)和 __MP3 Decoder Library__解码音频文件，使得音频模块效率更高，兼容更多的Android设备
+* __WebSockets__和 __SocketIO__支持 __SSL__
 * AssetsManagerEx更加稳定
-* 更新__Spine runtime__到v3.5.35
-* 更新__flatbuffer__到v1.5
-* 升级__OpenSSL__到v1.1.0
-* 去除__Windows 8.1__的支持
+* 更新 __Spine runtime__到v3.5.35
+* 更新 __flatbuffer__到v1.5
+* 升级 __OpenSSL__到v1.1.0
+* 去除 __Windows 8.1__的支持
 * 去除32位linux的支持
 
 
@@ -32,15 +32,15 @@
 
 ### 全面支持Android Studio
 
-从__3.15__版本开始，可以使用Android Studio 2.3+ 编辑、编译和调试C++代码。只需要通过Android Studio打开__proj.android-studio__文件夹（比如__tests/cpp-empty-test/proj.android-studio__），然后点击__run__按钮就可以在Android设备或者模拟器运行、调试了。
+从 __3.15__版本开始，可以使用Android Studio 2.3+ 编辑、编译和调试C++代码。只需要通过Android Studio打开 __proj.android-studio__文件夹（比如 __tests/cpp-empty-test/proj.android-studio__），然后点击 __run__按钮就可以在Android设备或者模拟器运行、调试了。
 
 详细的使用方法请参考[这篇文档](https://github.com/chukong/cocos-docs/blob/v3-unified-documentation/installation/Android-Studio.md)。
 
 ### 音频模块在Android平台的改进
 
-3.15版本之前，音频模块使用__OpenSL ES__解码、播放音频文件，但是很多的Android设备厂商会修改这部分代码，导致音频模块在不同的Android设备上有兼容性问题。[该帖子](http://discuss.cocos2d-x.org/t/android-audio-decoding-issues-discussion/34610)就列出了许多音频模块的问题。
+3.15版本之前，音频模块使用 __OpenSL ES__解码、播放音频文件，但是很多的Android设备厂商会修改这部分代码，导致音频模块在不同的Android设备上有兼容性问题。[该帖子](http://discuss.cocos2d-x.org/t/android-audio-decoding-issues-discussion/34610)就列出了许多音频模块的问题。
 
-为了解决兼容性问题，我们引入了第三方的解码库[tremolo](http://wss.co.uk/pinknoise/tremolo/)和__MP3 Decoder Library__。该解码库也是Android源码使用的解码库。使用该解码库除了能解决Android设备的兼容性问题，同时还带来了不少性能提升：
+为了解决兼容性问题，我们引入了第三方的解码库[tremolo](http://wss.co.uk/pinknoise/tremolo/)和 __MP3 Decoder Library__。该解码库也是Android源码使用的解码库。使用该解码库除了能解决Android设备的兼容性问题，同时还带来了不少性能提升：
 
 ![audio performance](https://raw.githubusercontent.com/minggo/Pictures/master/AudioDecodingPerfTest.png)
 
@@ -56,7 +56,7 @@ Windows 8.1的支持一直是微软的开发者在维护。因为市场占有率
 
 ### 其他
 
-[Android SDK Tools 25.3.0+](http://tools.android.com/recent/androidsdktoolsrevision2530feb2017)去除了__ant脚本__和__android命令__，使得cocos命令无法打包Android的Eclipse工程（proj.android）。为了不至于在最后胜出APK时才报错，现在cocos命令检查到这个版本后直接返回错误。有两个方法可以解决这个问题：
+[Android SDK Tools 25.3.0+](http://tools.android.com/recent/androidsdktoolsrevision2530feb2017)去除了 __ant脚本__和 __android命令__，使得cocos命令无法打包Android的Eclipse工程（proj.android）。为了不至于在最后胜出APK时才报错，现在cocos命令检查到这个版本后直接返回错误。有两个方法可以解决这个问题：
 
 * 从旧版本的Android SDK拷贝tools文件夹过来替换对应的目录
 * 使用Android Studio工程编译打包
