@@ -1054,6 +1054,7 @@
         "cocos/platform/android/java/src/com/enhance/gameservice/IGameTuningService.aidl", 
         "cocos/platform/android/java/src/org/cocos2dx/lib/Cocos2dxAccelerometer.java", 
         "cocos/platform/android/java/src/org/cocos2dx/lib/Cocos2dxActivity.java", 
+        "cocos/platform/android/java/src/org/cocos2dx/lib/Cocos2dxAudioFocusManager.java", 
         "cocos/platform/android/java/src/org/cocos2dx/lib/Cocos2dxBitmap.java", 
         "cocos/platform/android/java/src/org/cocos2dx/lib/Cocos2dxDownloader.java", 
         "cocos/platform/android/java/src/org/cocos2dx/lib/Cocos2dxEditBox.java", 
