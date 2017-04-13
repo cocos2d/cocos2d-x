@@ -18,7 +18,7 @@
 ## 新特性
 
 * 全面支持 __Android Studio__，包括编译、代码编辑和调试C++代码：[使用文档](https://github.com/chukong/cocos-docs/blob/v3-unified-documentation/installation/Android-Studio.md)
-* 音频模块在Android平台使用[tremolo](http://wss.co.uk/pinknoise/tremolo/)和 __MP3 Decoder Library__解码音频文件，使得音频模块效率更高，兼容更多的Android设备
+* 音频模块在Android平台使用[tremolo](http://wss.co.uk/pinknoise/tremolo/)和 __MP3 Decoder Library__ 解码音频文件，使得音频模块效率更高，兼容更多的Android设备
 * __WebSockets__和 __SocketIO__支持 __SSL__
 * AssetsManagerEx更加稳定
 * 更新 __Spine runtime__到v3.5.35
