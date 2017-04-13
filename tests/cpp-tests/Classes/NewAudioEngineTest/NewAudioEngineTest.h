@@ -41,6 +41,9 @@ public:
     
     virtual std::string title() const override;
     virtual void onExit() override;
+
+    virtual void onBackCallback(cocos2d::Ref* sender) override;
+
 protected:
     std::shared_ptr<bool> _isDestroyed;
 };
