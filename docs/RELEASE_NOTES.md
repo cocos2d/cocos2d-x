@@ -25,7 +25,7 @@
 ## Highlights
 
 * full __Android Studio__ supports: include editing, compiling and debugging c++ codes: [doc](https://github.com/chukong/cocos-docs/blob/v3-unified-documentation/installation/Android-Studio.md)
-* audio engine uses [tremolo](http://wss.co.uk/pinknoise/tremolo/) to decode audio files on Android: high performance and more adaptable to different Android devices
+* audio engine uses [tremolo](http://wss.co.uk/pinknoise/tremolo/) and __MP3 Decoder Library__ to decode audio files on Android: high performance and more adaptable to different Android devices
 * __WebSockets__ and __SocketIO__ supports SSL
 * AssetsManagerEx is more stable
 * update __Spine runtime__ to v3.5.35
@@ -46,7 +46,7 @@ Please refer to [this doc](https://github.com/chukong/cocos-docs/blob/v3-unified
 
 Before v3.15, new Audio engine uses OpenSL ES to decode and play audio files. But many Android device manufacturers modify OpenSL ES decoding codes which cause issues. [This thread](http://discuss.cocos2d-x.org/t/android-audio-decoding-issues-discussion/34610) lists many issues caused by it.
 
-In order to fix these issues, we decide to use a 3rd party audio decoding library [tremolo](http://wss.co.uk/pinknoise/tremolo/), which is used by Android have good performance and stability. What's exciting is what, after using `tremolo`, the audio engine's performance is highly improved too.
+In order to fix these issues, we decide to use 3rd party audio decoding libraries [tremolo](http://wss.co.uk/pinknoise/tremolo/) and __MP3 Decoder Library__, which are used by Android have good performance and stability. What's exciting is what, after using `tremolo`, the audio engine's performance is highly improved too.
 
 ![audio performance](https://raw.githubusercontent.com/minggo/Pictures/master/AudioDecodingPerfTest.png)  
 
