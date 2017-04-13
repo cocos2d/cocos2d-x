@@ -47,7 +47,6 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
-import android.hardware.SensorManager;
 
 import com.android.vending.expansion.zipfile.APKExpansionSupport;
 import com.android.vending.expansion.zipfile.ZipResourceFile;
@@ -436,6 +435,11 @@ public class Cocos2dxHelper {
 
     public static void stopAllEffects() {
         Cocos2dxHelper.sCocos2dSound.stopAllEffects();
+    }
+
+    static void setAudioFocus(boolean isAudioFocus) {
+        sCocos2dMusic.setAudioFocus(isAudioFocus);
+        sCocos2dSound.setAudioFocus(isAudioFocus);
     }
 
     public static void end() {
