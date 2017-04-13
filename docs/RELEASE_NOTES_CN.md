@@ -18,7 +18,7 @@
 ## 新特性
 
 * 全面支持__Android Studio__，包括编译、代码编辑和调试C++代码：[使用文档](https://github.com/chukong/cocos-docs/blob/v3-unified-documentation/installation/Android-Studio.md)
-* 音频模块在Android平台使用[tremolo](http://wss.co.uk/pinknoise/tremolo/)解码器解码音频文件，使得音频模块效率更高，兼容更多的Android设备
+* 音频模块在Android平台使用[tremolo](http://wss.co.uk/pinknoise/tremolo/)和__MP3 Decoder Library__解码音频文件，使得音频模块效率更高，兼容更多的Android设备
 * __WebSockets__和__SocketIO__支持__SSL__
 * AssetsManagerEx更加稳定
 * 更新__Spine runtime__到v3.5.35
@@ -40,7 +40,7 @@
 
 3.15版本之前，音频模块使用__OpenSL ES__解码、播放音频文件，但是很多的Android设备厂商会修改这部分代码，导致音频模块在不同的Android设备上有兼容性问题。[该帖子](http://discuss.cocos2d-x.org/t/android-audio-decoding-issues-discussion/34610)就列出了许多音频模块的问题。
 
-为了解决兼容性问题，我们引入了第三方的解码库[tremolo](http://wss.co.uk/pinknoise/tremolo/)。该解码库也是Android源码使用的解码库。使用该解码库除了能解决Android设备的兼容性问题，同时还带来了不少性能提升：
+为了解决兼容性问题，我们引入了第三方的解码库[tremolo](http://wss.co.uk/pinknoise/tremolo/)和__MP3 Decoder Library__。该解码库也是Android源码使用的解码库。使用该解码库除了能解决Android设备的兼容性问题，同时还带来了不少性能提升：
 
 ![audio performance](https://raw.githubusercontent.com/minggo/Pictures/master/AudioDecodingPerfTest.png)
 
