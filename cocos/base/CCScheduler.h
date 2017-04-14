@@ -58,6 +58,7 @@ public:
     void setupTimerWithInterval(float seconds, unsigned int repeat, float delay);
     void setAborted() { _aborted = true; }
     bool isAborted() const { return _aborted; }
+    bool isExhausted() const;
     
     virtual void trigger(float dt) = 0;
     virtual void cancel() = 0;

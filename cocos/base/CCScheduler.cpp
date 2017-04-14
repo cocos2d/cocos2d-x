@@ -112,12 +112,12 @@ void Timer::update(float dt)
         {
             return;
         }
+        _timesExecuted += 1; // important to increment before call trigger
         trigger(_delay);
         _elapsed = _elapsed - _delay;
-        _timesExecuted += 1;
         _useDelay = false;
         // after delay, the rest time should compare with interval
-        if (!_runForever && _timesExecuted > _repeat)
+        if (isExhausted())
         {    //unschedule timer
             cancel();
             return;
@@ -128,11 +128,11 @@ void Timer::update(float dt)
     float interval = (_interval > 0) ? _interval : _elapsed;
     while ((_elapsed >= interval) && !_aborted)
     {
+        _timesExecuted += 1; // important to increment before call trigger
         trigger(interval);
         _elapsed -= interval;
-        _timesExecuted += 1;
 
-        if (!_runForever && _timesExecuted > _repeat)
+        if (isExhausted())
         {
             cancel();
             break;
@@ -143,6 +143,11 @@ void Timer::update(float dt)
             break;
         }
     }
+}
+
+bool Timer::isExhausted() const
+{
+    return !_runForever && _timesExecuted > _repeat;
 }
 
 // TimerTargetSelector
@@ -312,12 +317,12 @@ void Scheduler::schedule(const ccSchedulerFunc& callback, void *target, float in
         {
             TimerTargetCallback *timer = dynamic_cast<TimerTargetCallback*>(element->timers->arr[i]);
 
-            if (timer && key == timer->getKey())
+            if (timer && !timer->isExhausted() && key == timer->getKey())
             {
                 CCLOG("CCScheduler#scheduleSelector. Selector already scheduled. Updating interval from: %.4f to %.4f", timer->getInterval(), interval);
                 timer->setInterval(interval);
                 return;
-            }        
+            }
         }
         ccArrayEnsureExtraCapacity(element->timers, 1);
     }
@@ -985,7 +990,7 @@ void Scheduler::schedule(SEL_SCHEDULE selector, Ref *target, float interval, uns
         {
             TimerTargetSelector *timer = dynamic_cast<TimerTargetSelector*>(element->timers->arr[i]);
             
-            if (timer && selector == timer->getSelector())
+            if (timer && !timer->isExhausted() && selector == timer->getSelector())
             {
                 CCLOG("CCScheduler#scheduleSelector. Selector already scheduled. Updating interval from: %.4f to %.4f", timer->getInterval(), interval);
                 timer->setInterval(interval);
