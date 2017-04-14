@@ -192,12 +192,13 @@ public:
             return false;
         };
         
-        listener->onTouchEnded = [=](Touch* touch, Event* event){
+        listener->onTouchEnded = [this](Touch* touch, Event* event){
             this->setColor(Color3B::WHITE);
             
             if (_removeListenerOnTouchEnded)
             {
-                _eventDispatcher->removeEventListener(listener);
+                _eventDispatcher->removeEventListener(_listener);
+                _listener = nullptr;
             }
         };
         
@@ -215,7 +216,10 @@ public:
     
     void onExit() override
     {
-        _eventDispatcher->removeEventListener(_listener);
+        if (_listener != nullptr)
+        {
+            _eventDispatcher->removeEventListener(_listener);
+        }
         
         Sprite::onExit();
     }
@@ -953,9 +957,8 @@ StopPropagationTest::StopPropagationTest()
     };
     
     auto keyboardEventListener = EventListenerKeyboard::create();
-    keyboardEventListener->onKeyPressed = [](EventKeyboard::KeyCode key, Event* event){
+    keyboardEventListener->onKeyPressed = [](EventKeyboard::KeyCode /*key*/, Event* event){
         auto target = static_cast<Sprite*>(event->getCurrentTarget());
-        CC_UNUSED_PARAM(target);
         CCASSERT(target->getTag() == TAG_BLUE_SPRITE || target->getTag() == TAG_BLUE_SPRITE2, "Yellow blocks shouldn't response event.");
         // Stop propagation, so yellow blocks will not be able to receive event.
         event->stopPropagation();
@@ -1109,7 +1112,7 @@ Issue4129::Issue4129()
         
         auto label = Label::createWithSystemFont("Yeah, this issue was fixed.", "", 20);
         label->setAnchorPoint(Vec2(0, 0.5f));
-        label->setPosition(Vec2(VisibleRect::left()));
+        label->setPosition(Vec2(VisibleRect::left() + Vec2(0, 30)));
         this->addChild(label);
         
         // After test, remove it.

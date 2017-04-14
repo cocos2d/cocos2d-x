@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2015-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -111,7 +111,7 @@ namespace ui {
          * get the TabHeader text
          *@return he TabHeader text
          */
-        const std::string getTitleText() const;
+        std::string getTitleText() const;
         
         /**
          * Change the color of he TabHeader text
@@ -147,7 +147,7 @@ namespace ui {
          * get the font name of TabHeader text
          *@return font name in std::string
          */
-        const std::string getTitleFontName() const;
+        std::string getTitleFontName() const;
         
         /**
          * get the index this header in the TabControl

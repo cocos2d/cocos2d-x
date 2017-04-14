@@ -592,7 +592,7 @@ void ControlButton::needsLayout()
 
 
 
-bool ControlButton::onTouchBegan(Touch *pTouch, Event *pEvent)
+bool ControlButton::onTouchBegan(Touch *pTouch, Event* /*pEvent*/)
 {
     if (!isTouchInside(pTouch) || !isEnabled() || !isVisible() || !hasVisibleParents() )
     {
@@ -613,7 +613,7 @@ bool ControlButton::onTouchBegan(Touch *pTouch, Event *pEvent)
     return true;
 }
 
-void ControlButton::onTouchMoved(Touch *pTouch, Event *pEvent)
+void ControlButton::onTouchMoved(Touch *pTouch, Event* /*pEvent*/)
 {    
     if (!isEnabled() || !isPushed() || isSelected())
     {
@@ -645,7 +645,7 @@ void ControlButton::onTouchMoved(Touch *pTouch, Event *pEvent)
         sendActionsForControlEvents(Control::EventType::DRAG_OUTSIDE);        
     }
 }
-void ControlButton::onTouchEnded(Touch *pTouch, Event *pEvent)
+void ControlButton::onTouchEnded(Touch *pTouch, Event* /*pEvent*/)
 {
     _isPushed = false;
     setHighlighted(false);
@@ -721,7 +721,7 @@ void ControlButton::updateDisplayedColor(const Color3B& parentColor)
     }
 }
 
-void ControlButton::onTouchCancelled(Touch *pTouch, Event *pEvent)
+void ControlButton::onTouchCancelled(Touch* /*pTouch*/, Event* /*pEvent*/)
 {
     _isPushed = false;
     setHighlighted(false);

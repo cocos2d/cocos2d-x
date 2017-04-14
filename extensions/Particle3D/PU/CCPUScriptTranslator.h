@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2015-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -1221,14 +1221,14 @@ public:
     
     /** @See ScriptTranslator
      */
-    virtual void translate(PUScriptCompiler* compiler, PUAbstractNode *node)
+    virtual void translate(PUScriptCompiler* /*compiler*/, PUAbstractNode* /*node*/)
     {
         // No own implementation
     }
     
     /** Only parses a certain child property
      */
-    virtual bool translateChildProperty(PUScriptCompiler* compiler, PUAbstractNode *node)
+    virtual bool translateChildProperty(PUScriptCompiler* /*compiler*/, PUAbstractNode* /*node*/)
     {
         // No own implementation
         return false;
@@ -1236,7 +1236,7 @@ public:
     
     /** Only parses a certain child objec
      */
-    virtual bool translateChildObject(PUScriptCompiler* compiler, PUAbstractNode *node)
+    virtual bool translateChildObject(PUScriptCompiler* /*compiler*/, PUAbstractNode* /*node*/)
     {
         // No own implementation
         return false;

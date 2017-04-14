@@ -1,7 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010      Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -150,7 +150,11 @@ void Configuration::gatherGPUInfo()
     _supportsDiscardFramebuffer = checkForGLExtension("GL_EXT_discard_framebuffer");
 	_valueDict["gl.supports_discard_framebuffer"] = Value(_supportsDiscardFramebuffer);
 
+#ifdef CC_PLATFORM_PC
     _supportsShareableVAO = checkForGLExtension("vertex_array_object");
+#else
+    _supportsShareableVAO = checkForGLExtension("GL_OES_vertex_array_object");
+#endif
     _valueDict["gl.supports_vertex_array_object"] = Value(_supportsShareableVAO);
 
     _supportsOESMapBuffer = checkForGLExtension("GL_OES_mapbuffer");
@@ -330,7 +334,8 @@ const Value& Configuration::getValue(const std::string& key, const Value& defaul
     auto iter = _valueDict.find(key);
     if (iter != _valueDict.cend())
         return _valueDict.at(key);
-	return defaultValue;
+
+    return defaultValue;
 }
 
 void Configuration::setValue(const std::string& key, const Value& value)
@@ -384,12 +389,12 @@ void Configuration::loadConfigFile(const std::string& filename)
 	// Add all keys in the existing dictionary
     
 	const auto& dataMap = dataIter->second.asValueMap();
-    for (auto dataMapIter = dataMap.cbegin(); dataMapIter != dataMap.cend(); ++dataMapIter)
+    for (const auto& dataMapIter : dataMap)
     {
-        if (_valueDict.find(dataMapIter->first) == _valueDict.cend())
-            _valueDict[dataMapIter->first] = dataMapIter->second;
+        if (_valueDict.find(dataMapIter.first) == _valueDict.cend())
+            _valueDict[dataMapIter.first] = dataMapIter.second;
         else
-            CCLOG("Key already present. Ignoring '%s'",dataMapIter->first.c_str());
+            CCLOG("Key already present. Ignoring '%s'",dataMapIter.first.c_str());
     }
     
     //light info

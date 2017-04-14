@@ -23,9 +23,9 @@ using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
 
 OpenGLES::OpenGLES() :
-    mEglConfig(nullptr),
     mEglDisplay(EGL_NO_DISPLAY),
-    mEglContext(EGL_NO_CONTEXT)
+    mEglContext(EGL_NO_CONTEXT),
+    mEglConfig(nullptr)
 {
     Initialize();
 }

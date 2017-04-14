@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -336,7 +336,7 @@ void Console::Command::delSubCommand(const std::string& subCmdName)
     }
 }
 
-void Console::Command::commandHelp(int fd, const std::string& args)
+void Console::Command::commandHelp(int fd, const std::string& /*args*/)
 {
     if (! help.empty()) {
         Console::Utility::mydprintf(fd, "%s\n", help.c_str());
@@ -386,6 +386,7 @@ Console::Console()
 : _listenfd(-1)
 , _running(false)
 , _endThread(false)
+, _isIpv6Server(false)
 , _sendDebugStrings(false)
 , _bindAddress("")
 {
@@ -479,21 +480,22 @@ bool Console::listenOnTCP(int port)
     listen(listenfd, 50);
 
     if (res->ai_family == AF_INET) {
-        char buf[INET_ADDRSTRLEN] = "";
+        _isIpv6Server = false;
+        char buf[INET_ADDRSTRLEN] = {0};
         struct sockaddr_in *sin = (struct sockaddr_in*) res->ai_addr;
         if( inet_ntop(res->ai_family, &sin->sin_addr, buf, sizeof(buf)) != nullptr )
-            cocos2d::log("Console: listening on  %s : %d", buf, ntohs(sin->sin_port));
+            cocos2d::log("Console: IPV4 server is listening on %s:%d", buf, ntohs(sin->sin_port));
         else
             perror("inet_ntop");
     } else if (res->ai_family == AF_INET6) {
-        char buf[INET6_ADDRSTRLEN] = "";
+        _isIpv6Server = true;
+        char buf[INET6_ADDRSTRLEN] = {0};
         struct sockaddr_in6 *sin = (struct sockaddr_in6*) res->ai_addr;
         if( inet_ntop(res->ai_family, &sin->sin6_addr, buf, sizeof(buf)) != nullptr )
-            cocos2d::log("Console: listening on  %s : %d", buf, ntohs(sin->sin6_port));
+            cocos2d::log("Console: IPV6 server is listening on [%s]:%d", buf, ntohs(sin->sin6_port));
         else
             perror("inet_ntop");
     }
-
 
     freeaddrinfo(ressave);
     return listenOnFileDescriptor(listenfd);
@@ -603,6 +605,11 @@ void Console::setBindAddress(const std::string &address)
     _bindAddress = address;
 }
 
+bool Console::isIpv6Server() const
+{
+    return _isIpv6Server;
+}
+
 //
 // Main Loop
 //
@@ -633,7 +640,7 @@ void Console::loop()
         {
             /* error */
             if(errno != EINTR)
-                log("Abnormal error in select()\n");
+                cocos2d::log("Abnormal error in select()\n");
             continue;
         }
         else if( nready == 0 )
@@ -857,12 +864,13 @@ bool Console::parseCommand(int fd)
 
 void Console::addClient()
 {
-    struct sockaddr client;
-    socklen_t client_len;
+    struct sockaddr_in6 ipv6Addr;
+    struct sockaddr_in ipv4Addr;
+    struct sockaddr* addr = _isIpv6Server ? (struct sockaddr*)&ipv6Addr : (struct sockaddr*)&ipv4Addr;
+    socklen_t addrLen = _isIpv6Server ? sizeof(ipv6Addr) : sizeof(ipv4Addr);
     
     /* new client */
-    client_len = sizeof( client );
-    int fd = accept(_listenfd, (struct sockaddr *)&client, &client_len );
+    int fd = accept(_listenfd, addr, &addrLen);
     
     // add fd to list of FD
     if( fd != -1 ) {
@@ -1002,7 +1010,7 @@ void Console::createCommandVersion()
 // commands
 //
 
-void Console::commandAllocator(int fd, const std::string& args)
+void Console::commandAllocator(int fd, const std::string& /*args*/)
 {
 #if CC_ENABLE_ALLOCATOR_DIAGNOSTICS
     auto info = allocator::AllocatorDiagnostics::instance()->diagnostics();
@@ -1012,7 +1020,7 @@ void Console::commandAllocator(int fd, const std::string& args)
 #endif
 }
 
-void Console::commandConfig(int fd, const std::string& args)
+void Console::commandConfig(int fd, const std::string& /*args*/)
 {
     Scheduler *sched = Director::getInstance()->getScheduler();
     sched->performFunctionInCocosThread( [=](){
@@ -1021,17 +1029,17 @@ void Console::commandConfig(int fd, const std::string& args)
     });
 }
 
-void Console::commandDebugMsg(int fd, const std::string& args)
+void Console::commandDebugMsg(int fd, const std::string& /*args*/)
 {
     Console::Utility::mydprintf(fd, "Debug message is: %s\n", _sendDebugStrings ? "on" : "off");
 }
 
-void Console::commandDebugMsgSubCommandOnOff(int fd, const std::string& args)
+void Console::commandDebugMsgSubCommandOnOff(int /*fd*/, const std::string& args)
 {
     _sendDebugStrings = (args.compare("on") == 0);
 }
 
-void Console::commandDirectorSubCommandPause(int fd, const std::string& args)
+void Console::commandDirectorSubCommandPause(int /*fd*/, const std::string& /*args*/)
 {
     auto director = Director::getInstance();
     Scheduler *sched = director->getScheduler();
@@ -1040,13 +1048,13 @@ void Console::commandDirectorSubCommandPause(int fd, const std::string& args)
     });
 }
 
-void Console::commandDirectorSubCommandResume(int fd, const std::string& args)
+void Console::commandDirectorSubCommandResume(int /*fd*/, const std::string& /*args*/)
 {
     auto director = Director::getInstance();
     director->resume();
 }
 
-void Console::commandDirectorSubCommandStop(int fd, const std::string& args)
+void Console::commandDirectorSubCommandStop(int /*fd*/, const std::string& /*args*/)
 {
     auto director = Director::getInstance();
     Scheduler *sched = director->getScheduler();
@@ -1055,19 +1063,19 @@ void Console::commandDirectorSubCommandStop(int fd, const std::string& args)
     });
 }
 
-void Console::commandDirectorSubCommandStart(int fd, const std::string& args)
+void Console::commandDirectorSubCommandStart(int /*fd*/, const std::string& /*args*/)
 {
     auto director = Director::getInstance();
     director->startAnimation();
 }
 
-void Console::commandDirectorSubCommandEnd(int fd, const std::string& args)
+void Console::commandDirectorSubCommandEnd(int /*fd*/, const std::string& /*args*/)
 {
     auto director = Director::getInstance();
     director->end();
 }
 
-void Console::commandExit(int fd, const std::string& args)
+void Console::commandExit(int fd, const std::string& /*args*/)
 {
     FD_CLR(fd, &_read_set);
     _fds.erase(std::remove(_fds.begin(), _fds.end(), fd), _fds.end());
@@ -1078,23 +1086,23 @@ void Console::commandExit(int fd, const std::string& args)
 #endif
 }
 
-void Console::commandFileUtils(int fd, const std::string& args)
+void Console::commandFileUtils(int fd, const std::string& /*args*/)
 {
     Scheduler *sched = Director::getInstance()->getScheduler();
     sched->performFunctionInCocosThread( std::bind(&Console::printFileUtils, this, fd) );
 }
 
-void Console::commandFileUtilsSubCommandFlush(int fd, const std::string& args)
+void Console::commandFileUtilsSubCommandFlush(int /*fd*/, const std::string& /*args*/)
 {
     FileUtils::getInstance()->purgeCachedEntries();
 }
 
-void Console::commandFps(int fd, const std::string& args)
+void Console::commandFps(int fd, const std::string& /*args*/)
 {
     Console::Utility::mydprintf(fd, "FPS is: %s\n", Director::getInstance()->isDisplayStats() ? "on" : "off");
 }
 
-void Console::commandFpsSubCommandOnOff(int fd, const std::string& args)
+void Console::commandFpsSubCommandOnOff(int /*fd*/, const std::string& args)
 {
     bool state = (args.compare("on") == 0);
     Director *dir = Director::getInstance();
@@ -1102,12 +1110,12 @@ void Console::commandFpsSubCommandOnOff(int fd, const std::string& args)
     sched->performFunctionInCocosThread( std::bind(&Director::setDisplayStats, dir, state));
 }
 
-void Console::commandHelp(int fd, const std::string& args)
+void Console::commandHelp(int fd, const std::string& /*args*/)
 {
     sendHelp(fd, _commands, "\nAvailable commands:\n");
 }
 
-void Console::commandProjection(int fd, const std::string& args)
+void Console::commandProjection(int fd, const std::string& /*args*/)
 {
     auto director = Director::getInstance();
     char buf[20];
@@ -1130,7 +1138,7 @@ void Console::commandProjection(int fd, const std::string& args)
     Console::Utility::mydprintf(fd, "Current projection: %s\n", buf);
 }
 
-void Console::commandProjectionSubCommand2d(int fd, const std::string& args)
+void Console::commandProjectionSubCommand2d(int /*fd*/, const std::string& /*args*/)
 {
     auto director = Director::getInstance();
     Scheduler *sched = director->getScheduler();
@@ -1139,7 +1147,7 @@ void Console::commandProjectionSubCommand2d(int fd, const std::string& args)
     } );
 }
 
-void Console::commandProjectionSubCommand3d(int fd, const std::string& args)
+void Console::commandProjectionSubCommand3d(int /*fd*/, const std::string& /*args*/)
 {
     auto director = Director::getInstance();
     Scheduler *sched = director->getScheduler();
@@ -1148,7 +1156,7 @@ void Console::commandProjectionSubCommand3d(int fd, const std::string& args)
     } );
 }
 
-void Console::commandResolution(int fd, const std::string& args)
+void Console::commandResolution(int /*fd*/, const std::string& args)
 {
     int width, height, policy;
     
@@ -1161,7 +1169,7 @@ void Console::commandResolution(int fd, const std::string& args)
     } );
 }
 
-void Console::commandResolutionSubCommandEmpty(int fd, const std::string& args)
+void Console::commandResolutionSubCommandEmpty(int fd, const std::string& /*args*/)
 {
     auto director = Director::getInstance();
     Size points = director->getWinSize();
@@ -1188,13 +1196,13 @@ void Console::commandResolutionSubCommandEmpty(int fd, const std::string& args)
               );
 }
 
-void Console::commandSceneGraph(int fd, const std::string& args)
+void Console::commandSceneGraph(int fd, const std::string& /*args*/)
 {
     Scheduler *sched = Director::getInstance()->getScheduler();
     sched->performFunctionInCocosThread( std::bind(&Console::printSceneGraphBoot, this, fd) );
 }
 
-void Console::commandTextures(int fd, const std::string& args)
+void Console::commandTextures(int fd, const std::string& /*args*/)
 {
     Scheduler *sched = Director::getInstance()->getScheduler();
     sched->performFunctionInCocosThread( [=](){
@@ -1203,7 +1211,7 @@ void Console::commandTextures(int fd, const std::string& args)
     });
 }
 
-void Console::commandTexturesSubCommandFlush(int fd, const std::string& args)
+void Console::commandTexturesSubCommandFlush(int /*fd*/, const std::string& /*args*/)
 {
     Scheduler *sched = Director::getInstance()->getScheduler();
     sched->performFunctionInCocosThread( [](){
@@ -1338,23 +1346,24 @@ static char invalid_filename_char[] = {':', '/', '\\', '?', '%', '*', '<', '>', 
 void Console::commandUpload(int fd)
 {
     ssize_t n, rc;
-    char buf[512], c;
+    char buf[512] = {0};
+    char c = 0;
     char *ptr = buf;
     //read file name
     for( n = 0; n < sizeof(buf) - 1; n++ )
     {
-        if( (rc = recv(fd, &c, 1, 0)) ==1 ) 
+        if( (rc = recv(fd, &c, 1, 0)) == 1 )
         {
             for(char x : invalid_filename_char)
             {
-                if(c == x)
+                if (c == x)
                 {
                     const char err[] = "upload: invalid file name!\n";
                     Console::Utility::sendToConsole(fd, err, strlen(err));
                     return;
                 }
             }
-            if(c == ' ') 
+            if (c == ' ')
             {
                 break;
             }
@@ -1385,8 +1394,8 @@ void Console::commandUpload(int fd)
         Console::Utility::sendToConsole(fd, err, strlen(err));
         return;
     }
-    
-    while (true) 
+
+    while (true)
     {
         char data[4];
         for(int i = 0; i < 4; i++)
@@ -1402,16 +1411,16 @@ void Console::commandUpload(int fd)
         unsigned char *decode;
         unsigned char *in = (unsigned char *)data;
         int dt = base64Decode(in, 4, &decode);
-        for(int i = 0; i < dt; i++)
+        if (dt > 0)
         {
-            fwrite(decode+i, 1, 1, fp);
+            fwrite(decode, dt, 1, fp);
         }
         free(decode);
     }
     fclose(fp);
 }
 
-void Console::commandVersion(int fd, const std::string& args)
+void Console::commandVersion(int fd, const std::string& /*args*/)
 {
     Console::Utility::mydprintf(fd, "%s\n", cocos2dVersion());
 }
@@ -1471,9 +1480,9 @@ void Console::printFileUtils(int fd)
 void Console::sendHelp(int fd, const std::map<std::string, Command>& commands, const char* msg)
 {
     Console::Utility::sendToConsole(fd, msg, strlen(msg));
-    for(auto it=commands.begin();it!=commands.end();++it)
+    for(auto& it : commands)
     {
-        auto command = it->second;
+        auto command = it.second;
         if (command.help.empty()) continue;
         
         Console::Utility::mydprintf(fd, "\t%s", command.name.c_str());

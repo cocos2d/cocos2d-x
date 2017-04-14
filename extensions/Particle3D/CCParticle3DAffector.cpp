@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2015-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -39,7 +39,7 @@ Particle3DAffector::~Particle3DAffector()
     _particleSystem = nullptr;
 }
 
-void Particle3DAffector::updateAffector(Particle3D* particle, float deltaTime)
+void Particle3DAffector::updateAffector(Particle3D* /*particle*/, float /*deltaTime*/)
 {
     
 }

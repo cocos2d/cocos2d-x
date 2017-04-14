@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2016 Chukong Technologies Inc.
+ Copyright (c) 2016-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -59,10 +59,8 @@ VRGenericRenderer::~VRGenericRenderer()
     CC_SAFE_DELETE(_rightDistortionMesh);
 }
 
-void VRGenericRenderer::setup(GLView* glview)
+void VRGenericRenderer::setup(GLView* /*glview*/)
 {
-//    CC_UNUSED(glview);
-
     // set origin to 0,0 in case origin is not 0,0
     auto vp = Camera::getDefaultViewport();
 
@@ -134,8 +132,8 @@ void VRGenericRenderer::render(Scene* scene, Renderer* renderer)
     glGetIntegerv(GL_VIEWPORT, origViewport);
     glViewport(0, 0, _texSize.width, _texSize.height);
 
-    renderDistortionMesh(_leftDistortionMesh, texture->getName());
-    renderDistortionMesh(_rightDistortionMesh, texture->getName());
+    renderDistortionMesh(_leftDistortionMesh, texture);
+    renderDistortionMesh(_rightDistortionMesh, texture);
 
 
     glViewport(origViewport[0], origViewport[1], origViewport[2], origViewport[3]);
@@ -146,14 +144,14 @@ void VRGenericRenderer::render(Scene* scene, Renderer* renderer)
     CHECK_GL_ERROR_DEBUG();
 }
 
-void VRGenericRenderer::renderDistortionMesh(DistortionMesh *mesh, GLint textureID)
+void VRGenericRenderer::renderDistortionMesh(DistortionMesh *mesh, Texture2D* texture)
 {
     glBindBuffer(GL_ARRAY_BUFFER, mesh->_arrayBufferID);
 
     _glProgramState->setVertexAttribPointer("a_position", 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void *)(0 * sizeof(float)));
     _glProgramState->setVertexAttribPointer("a_textureCoord", 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void *)(2 * sizeof(float)));
     _glProgramState->setVertexAttribPointer("a_vignette", 1, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void *)(4 * sizeof(float)));
-    _glProgramState->setUniformTexture("u_textureSampler", textureID);
+    _glProgramState->setUniformTexture("u_textureSampler", texture);
 
     _glProgramState->apply(Mat4::IDENTITY);
 

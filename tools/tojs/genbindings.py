@@ -153,6 +153,7 @@ def main():
         cmd_args = {'cocos2dx.ini': ('cocos2d-x', 'jsb_cocos2dx_auto'),
                     'cocos2dx_audioengine.ini': ('cocos2dx_audioengine', 'jsb_cocos2dx_audioengine_auto'),
                     'cocos2dx_extension.ini': ('cocos2dx_extension', 'jsb_cocos2dx_extension_auto'),
+                    'cocos2dx_network.ini': ('cocos2dx_network', 'jsb_cocos2dx_network_auto'),
                     'cocos2dx_builder.ini': ('cocos2dx_builder', 'jsb_cocos2dx_builder_auto'),
                     'cocos2dx_ui.ini': ('cocos2dx_ui', 'jsb_cocos2dx_ui_auto'),
                     'cocos2dx_studio.ini': ('cocos2dx_studio', 'jsb_cocos2dx_studio_auto'),

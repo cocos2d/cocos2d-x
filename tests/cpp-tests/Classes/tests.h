@@ -21,6 +21,9 @@
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #include "JNITest/JNITest.h"
 #endif
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
+#include "WindowTest/WindowTest.h"
+#endif
 
 // sort them alphabetically. thanks
 #include "ActionManagerTest/ActionManagerTest.h"
@@ -53,7 +56,7 @@
 #include "MaterialSystemTest/MaterialSystemTest.h"
 #include "MenuTest/MenuTest.h"
 #include "MotionStreakTest/MotionStreakTest.h"
-#include "MutiTouchTest/MutiTouchTest.h"
+#include "MultiTouchTest/MultiTouchTest.h"
 #include "NavMeshTest/NavMeshTest.h"
 #include "NewEventDispatcherTest/NewEventDispatcherTest.h"
 #include "NewRendererTest/NewRendererTest.h"

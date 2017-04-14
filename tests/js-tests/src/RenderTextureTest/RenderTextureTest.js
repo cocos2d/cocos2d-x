@@ -1,7 +1,7 @@
 /****************************************************************************
  Copyright (c) 2008-2010 Ricardo Quesada
  Copyright (c) 2011-2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -132,7 +132,7 @@ var RenderTextureSave = RenderTextureBaseLayer.extend({
 
     saveCB:function (sender) {
         if(!cc.sys.isNative){
-            cc.log("RenderTexture's saveToFile doesn't suppport on HTML5");
+            cc.log("RenderTexture's saveToFile doesn't support on HTML5");
             return;
         }
         var namePNG = "image-" + this._counter + ".png";
@@ -147,7 +147,7 @@ var RenderTextureSave = RenderTextureBaseLayer.extend({
     },
 
     clearCB:function (sender) {
-        this._target.clear(Math.random(), Math.random(), Math.random(), 1);
+        this._target.clear(Math.random() * 255, Math.random() * 255, Math.random() * 255, 255);
     },
 
     drawInLocation:function (location) {

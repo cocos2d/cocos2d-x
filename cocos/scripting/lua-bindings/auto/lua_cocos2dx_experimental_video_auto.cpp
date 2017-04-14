@@ -38,7 +38,7 @@ int lua_cocos2dx_experimental_video_VideoPlayer_getFileName(lua_State* tolua_S)
             return 0;
         }
         const std::string& ret = cobj->getFileName();
-        tolua_pushcppstring(tolua_S,ret);
+        lua_pushlstring(tolua_S,ret.c_str(),ret.length());
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccexp.VideoPlayer:getFileName",argc, 0);
@@ -85,7 +85,7 @@ int lua_cocos2dx_experimental_video_VideoPlayer_getURL(lua_State* tolua_S)
             return 0;
         }
         const std::string& ret = cobj->getURL();
-        tolua_pushcppstring(tolua_S,ret);
+        lua_pushlstring(tolua_S,ret.c_str(),ret.length());
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccexp.VideoPlayer:getURL",argc, 0);

@@ -93,7 +93,7 @@
 -- 
 -- @function [parent=#Menu] setOpacityModifyRGB 
 -- @param self
--- @param #bool bValue
+-- @param #bool value
 -- @return Menu#Menu self (return value: cc.Menu)
         
 --------------------------------

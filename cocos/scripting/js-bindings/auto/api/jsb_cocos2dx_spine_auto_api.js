@@ -73,9 +73,37 @@ bool
 },
 
 /**
+ * @method initWithJsonFile
+* @param {String|String} str
+* @param {String|spAtlas} str
+* @param {float|float} float
+*/
+initWithJsonFile : function(
+str,
+spatlas,
+float 
+)
+{
+},
+
+/**
  * @method setSlotsToSetupPose
  */
 setSlotsToSetupPose : function (
+)
+{
+},
+
+/**
+ * @method initWithBinaryFile
+* @param {String|String} str
+* @param {String|spAtlas} str
+* @param {float|float} float
+*/
+initWithBinaryFile : function(
+str,
+spatlas,
+float 
 )
 {
 },
@@ -142,20 +170,6 @@ getTimeScale : function (
 )
 {
     return 0;
-},
-
-/**
- * @method initWithFile
-* @param {String|String} str
-* @param {String|spAtlas} str
-* @param {float|float} float
-*/
-initWithFile : function(
-str,
-spatlas,
-float 
-)
-{
 },
 
 /**
@@ -305,27 +319,47 @@ func
 },
 
 /**
- * @method setEndListener
+ * @method onTrackEntryEvent
+ * @param {spTrackEntry} arg0
+ * @param {spEventType} arg1
+ * @param {spEvent} arg2
+ */
+onTrackEntryEvent : function (
+sptrackentry, 
+speventtype, 
+spevent 
+)
+{
+},
+
+/**
+ * @method setDisposeListener
  * @param {function} arg0
  */
-setEndListener : function (
+setDisposeListener : function (
 func 
 )
 {
 },
 
 /**
- * @method onAnimationStateEvent
- * @param {int} arg0
- * @param {spEventType} arg1
- * @param {spEvent} arg2
- * @param {int} arg3
+ * @method setTrackInterruptListener
+ * @param {spTrackEntry} arg0
+ * @param {function} arg1
  */
-onAnimationStateEvent : function (
-int, 
-speventtype, 
-spevent, 
-int 
+setTrackInterruptListener : function (
+sptrackentry, 
+func 
+)
+{
+},
+
+/**
+ * @method setEndListener
+ * @param {function} arg0
+ */
+setEndListener : function (
+func 
 )
 {
 },
@@ -341,11 +375,13 @@ getState : function (
 },
 
 /**
- * @method update
- * @param {float} arg0
+ * @method setTrackDisposeListener
+ * @param {spTrackEntry} arg0
+ * @param {function} arg1
  */
-update : function (
-float 
+setTrackDisposeListener : function (
+sptrackentry, 
+func 
 )
 {
 },
@@ -379,25 +415,25 @@ clearTrack : function (
 },
 
 /**
- * @method initialize
+ * @method setInterruptListener
+ * @param {function} arg0
  */
-initialize : function (
+setInterruptListener : function (
+func 
 )
 {
 },
 
 /**
- * @method onTrackEntryEvent
- * @param {int} arg0
+ * @method onAnimationStateEvent
+ * @param {spTrackEntry} arg0
  * @param {spEventType} arg1
  * @param {spEvent} arg2
- * @param {int} arg3
  */
-onTrackEntryEvent : function (
-int, 
+onAnimationStateEvent : function (
+sptrackentry, 
 speventtype, 
-spevent, 
-int 
+spevent 
 )
 {
 },
@@ -433,15 +469,41 @@ func
 },
 
 /**
- * @method createWithFile
+ * @method createWithBinaryFile
 * @param {String|String} str
-* @param {spAtlas|String} spatlas
+* @param {String|spAtlas} str
 * @param {float|float} float
-* @return {sp.SkeletonAnimation|sp.SkeletonAnimation|sp.SkeletonAnimation}
+* @return {sp.SkeletonAnimation|sp.SkeletonAnimation}
 */
-createWithFile : function(
+createWithBinaryFile : function(
 str,
+spatlas,
+float 
+)
+{
+    return sp.SkeletonAnimation;
+},
+
+/**
+ * @method create
+ * @return {sp.SkeletonAnimation}
+ */
+create : function (
+)
+{
+    return sp.SkeletonAnimation;
+},
+
+/**
+ * @method createWithJsonFile
+* @param {String|String} str
+* @param {String|spAtlas} str
+* @param {float|float} float
+* @return {sp.SkeletonAnimation|sp.SkeletonAnimation}
+*/
+createWithJsonFile : function(
 str,
+spatlas,
 float 
 )
 {
@@ -451,14 +513,8 @@ float
 /**
  * @method SkeletonAnimation
  * @constructor
-* @param {spSkeletonData|String|String} spskeletondata
-* @param {bool|spAtlas|String} bool
-* @param {float|float} float
-*/
-SkeletonAnimation : function(
-str,
-str,
-float 
+ */
+SkeletonAnimation : function (
 )
 {
 },

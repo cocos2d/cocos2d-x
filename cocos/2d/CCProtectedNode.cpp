@@ -3,7 +3,7 @@
  Copyright (c) 2009      Valentin Milea
  Copyright (c) 2010-2012 cocos2d-x.org
  Copyright (c) 2011      Zynga Inc.
- Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -100,9 +100,8 @@ void ProtectedNode::addProtectedChild(Node *child, int zOrder, int tag)
     this->insertProtectedChild(child, zOrder);
     
     child->setTag(tag);
-    
+    child->setGlobalZOrder(_globalZOrder);
     child->setParent(this);
-
     child->updateOrderOfArrival();
     
     if( _running )
@@ -294,7 +293,7 @@ void ProtectedNode::visit(Renderer* renderer, const Mat4 &parentTransform, uint3
     //
     // draw children and protectedChildren zOrder < 0
     //
-    for( ; i < _children.size(); i++ )
+    for(auto size = _children.size(); i < size; ++i)
     {
         auto node = _children.at(i);
         
@@ -303,8 +302,8 @@ void ProtectedNode::visit(Renderer* renderer, const Mat4 &parentTransform, uint3
         else
             break;
     }
-    
-    for( ; j < _protectedChildren.size(); j++ )
+
+    for(auto size = _protectedChildren.size(); j < size; ++j)
     {
         auto node = _protectedChildren.at(j);
         
@@ -323,10 +322,10 @@ void ProtectedNode::visit(Renderer* renderer, const Mat4 &parentTransform, uint3
     //
     // draw children and protectedChildren zOrder >= 0
     //
-    for(auto it=_protectedChildren.cbegin()+j; it != _protectedChildren.cend(); ++it)
+    for(auto it=_protectedChildren.cbegin()+j, itCend = _protectedChildren.cend(); it != itCend; ++it)
         (*it)->visit(renderer, _modelViewTransform, flags);
-    
-    for(auto it=_children.cbegin()+i; it != _children.cend(); ++it)
+
+    for(auto it=_children.cbegin()+i, itCend = _children.cend(); it != itCend; ++it)
         (*it)->visit(renderer, _modelViewTransform, flags);
     
     // FIX ME: Why need to set _orderOfArrival to 0??
@@ -465,6 +464,13 @@ void ProtectedNode::setCameraMask(unsigned short mask, bool applyChildren)
         }
     }
     
+}
+
+void ProtectedNode::setGlobalZOrder(float globalZOrder)
+{
+    Node::setGlobalZOrder(globalZOrder);
+    for (auto &child : _protectedChildren)
+        child->setGlobalZOrder(globalZOrder);
 }
 
 NS_CC_END

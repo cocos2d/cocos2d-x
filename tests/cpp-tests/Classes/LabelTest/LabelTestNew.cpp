@@ -55,6 +55,7 @@ NewLabelTests::NewLabelTests()
     ADD_TEST_CASE(LabelTTFCJKWrappingTest);
     ADD_TEST_CASE(LabelTTFColor);
     ADD_TEST_CASE(LabelTTFDynamicAlignment);
+    ADD_TEST_CASE(LabelTTFEmoji);
     ADD_TEST_CASE(LabelAlignmentTest);
     ADD_TEST_CASE(LabelTTFUnicodeNew);
     ADD_TEST_CASE(LabelTTFDistanceField);
@@ -110,6 +111,8 @@ NewLabelTests::NewLabelTests()
     ADD_TEST_CASE(LabelIssue15214);
     ADD_TEST_CASE(LabelIssue16293);
     ADD_TEST_CASE(LabelIssue16471);
+    ADD_TEST_CASE(LabelIssue16717);
+    ADD_TEST_CASE(LabelIssueLineGap);
 };
 
 LabelFNTColorAndOpacity::LabelFNTColorAndOpacity()
@@ -1021,6 +1024,33 @@ std::string LabelTTFUnicodeNew::subtitle() const
     return "Uses the new Label with TTF. Testing unicode";
 }
 
+//
+// LabelTTFEmoji emoji test
+//
+LabelTTFEmoji::LabelTTFEmoji()
+{
+    std::string emojiString = FileUtils::getInstance()->getStringFromFile("fonts/emoji.txt");
+    auto winSize = Director::getInstance()->getWinSize();
+    
+    auto label = Label::createWithTTF(emojiString, "fonts/NotoEmoji-Regular.ttf", 23);
+    label->setPosition(winSize.width / 2, winSize.height / 2);
+    label->setDimensions(winSize.width, winSize.height);
+    label->setVerticalAlignment(cocos2d::TextVAlignment::CENTER);
+    label->setHorizontalAlignment(cocos2d::TextHAlignment::CENTER);
+    addChild(label);
+}
+
+std::string LabelTTFEmoji::title() const
+{
+    return "New Label + Emoji";
+}
+
+std::string LabelTTFEmoji::subtitle() const
+{
+    return "Uses the new Label with TTF. Testing Emoji";
+}
+
+
 LabelTTFFontsTestNew::LabelTTFFontsTestNew()
 {
     const char *ttfpaths[] = {
@@ -1076,10 +1106,40 @@ LabelTTFDistanceField::LabelTTFDistanceField()
         nullptr);
     label1->runAction(RepeatForever::create(action));
 
+    // Draw the label border
+    auto& labelContentSize = label1->getContentSize();
+    auto borderDraw = DrawNode::create();
+    label1->addChild(borderDraw);
+    borderDraw->clear();
+    borderDraw->setLineWidth(1);
+    Vec2 vertices[4] =
+    {
+        Vec2::ZERO,
+        Vec2(labelContentSize.width, 0),
+        Vec2(labelContentSize.width, labelContentSize.height),
+        Vec2(0, labelContentSize.height)
+    };
+    borderDraw->drawPoly(vertices, 4, true, Color4F::RED);
+
     auto label2 = Label::createWithTTF(ttfConfig,"Distance Field",TextHAlignment::CENTER,size.width);
     label2->setPosition( Vec2(size.width/2, size.height * 0.3f) );
     label2->setTextColor( Color4B::RED );
     addChild(label2);
+    
+    // Draw the label border
+    auto& labelContentSize2 = label2->getContentSize();
+    auto borderDraw2 = DrawNode::create();
+    label2->addChild(borderDraw2);
+    borderDraw2->clear();
+    borderDraw2->setLineWidth(1);
+    Vec2 vertices2[4] =
+    {
+        Vec2::ZERO,
+        Vec2(labelContentSize2.width, 0),
+        Vec2(labelContentSize2.width, labelContentSize2.height),
+        Vec2(0, labelContentSize2.height)
+    };
+    borderDraw2->drawPoly(vertices2, 4, true, Color4F::GREEN);
 }
 
 std::string LabelTTFDistanceField::title() const
@@ -1141,31 +1201,17 @@ std::string LabelOutlineAndGlowTest::subtitle() const
 
 LabelShadowTest::LabelShadowTest()
 {
+
+}
+
+void LabelShadowTest::onEnter()
+{
+    AtlasDemoNew::onEnter();
+
     auto size = Director::getInstance()->getWinSize();
 
     auto bg = LayerColor::create(Color4B(200,191,231,255));
     this->addChild(bg);
-
-    TTFConfig ttfConfig("fonts/arial.ttf", 40, GlyphCollection::DYNAMIC,nullptr,true);
-
-    shadowLabelTTF = Label::createWithTTF(ttfConfig,"TTF:Shadow");
-    shadowLabelTTF->setPosition( Vec2(size.width/2, size.height*0.65f) );
-    shadowLabelTTF->setTextColor( Color4B::RED );
-    shadowLabelTTF->enableShadow(Color4B::BLACK);
-    addChild(shadowLabelTTF);
-
-    shadowLabelOutline = Label::createWithTTF(ttfConfig,"TTF:Shadow");
-    shadowLabelOutline->setPosition( Vec2(size.width/2, size.height*0.5f) );
-    shadowLabelOutline->setTextColor( Color4B::RED );
-    shadowLabelOutline->enableOutline(Color4B::YELLOW,1);
-    shadowLabelOutline->enableShadow(Color4B::GREEN);
-    addChild(shadowLabelOutline);
-
-    shadowLabelBMFont = Label::createWithBMFont("fonts/bitmapFontTest.fnt", "BMFont:Shadow");
-    shadowLabelBMFont->setPosition( Vec2(size.width/2, size.height*0.35f) );
-    shadowLabelBMFont->setColor( Color3B::RED );
-    shadowLabelBMFont->enableShadow(Color4B::GREEN);
-    addChild(shadowLabelBMFont);
 
     auto slider = ui::Slider::create();
     slider->setTag(1);
@@ -1176,7 +1222,7 @@ LabelShadowTest::LabelShadowTest()
     slider->setPosition(Vec2(size.width / 2.0f, size.height * 0.15f + slider->getContentSize().height * 2.0f));
     slider->setPercent(52);
     slider->addEventListener(CC_CALLBACK_2(LabelShadowTest::sliderEvent, this));
-    addChild(slider);
+    addChild(slider, 999);
 
     auto slider2 = ui::Slider::create();
     slider2->setTag(2);
@@ -1188,7 +1234,39 @@ LabelShadowTest::LabelShadowTest()
     slider2->setRotation(90);
     slider2->setPercent(52);
     slider2->addEventListener(CC_CALLBACK_2(LabelShadowTest::sliderEvent, this));
-    addChild(slider2);
+    addChild(slider2, 999);
+
+    float subtitleY = _subtitleLabel->getPosition().y;
+    float horizontalSliderY = slider->getPosition().y;
+    float step = (subtitleY - horizontalSliderY) / 4;
+
+    TTFConfig ttfConfig("fonts/arial.ttf", 40, GlyphCollection::DYNAMIC,nullptr,true);
+
+    shadowLabelTTF = Label::createWithTTF(ttfConfig,"TTF:Shadow");
+    shadowLabelTTF->setPosition( Vec2(size.width/2, horizontalSliderY + step * (0.5f + 3)) );
+    shadowLabelTTF->setTextColor( Color4B::RED );
+    shadowLabelTTF->enableShadow(Color4B::BLACK);
+    addChild(shadowLabelTTF);
+
+    shadowLabelOutline = Label::createWithTTF(ttfConfig,"TTF:Shadow");
+    shadowLabelOutline->setPosition( Vec2(size.width/2, horizontalSliderY + step * (0.5f + 2)) );
+    shadowLabelOutline->setTextColor( Color4B::RED );
+    shadowLabelOutline->enableOutline(Color4B::YELLOW,1);
+    shadowLabelOutline->enableShadow(Color4B::GREEN);
+    addChild(shadowLabelOutline);
+
+    shadowLabelGrow = Label::createWithTTF(ttfConfig,"TTF:Shadow");
+    shadowLabelGrow->setPosition( Vec2(size.width/2, horizontalSliderY + step * (0.5f + 1)) );
+    shadowLabelGrow->setTextColor( Color4B::RED );
+    shadowLabelGrow->enableGlow(Color4B::YELLOW);
+    shadowLabelGrow->enableShadow(Color4B::BLUE);
+    addChild(shadowLabelGrow);
+
+    shadowLabelBMFont = Label::createWithBMFont("fonts/bitmapFontTest.fnt", "BMFont:Shadow");
+    shadowLabelBMFont->setPosition( Vec2(size.width/2, horizontalSliderY + step * (0.5f + 0)));
+    shadowLabelBMFont->setColor( Color3B::RED );
+    shadowLabelBMFont->enableShadow(Color4B::GREEN);
+    addChild(shadowLabelBMFont);
 }
 
 void LabelShadowTest::sliderEvent(Ref *pSender, ui::Slider::EventType type)
@@ -1202,6 +1280,7 @@ void LabelShadowTest::sliderEvent(Ref *pSender, ui::Slider::EventType type)
         shadowLabelTTF->enableShadow(Color4B::BLACK,offset);
         shadowLabelBMFont->enableShadow(Color4B::GREEN,offset);
         shadowLabelOutline->enableShadow(Color4B::GREEN,offset);
+        shadowLabelGrow->enableShadow(Color4B::BLUE,offset);
     }
 }
 
@@ -2780,7 +2859,7 @@ std::string LabelIssue13846Test::title() const
 
 std::string LabelIssue13846Test::subtitle() const
 {
-    return "Test hide label's letter,the label should display ‘12 45’ as expected";
+    return "Test hide label's letter,the label should display '12 45' as expected";
 }
 
 //
@@ -3130,19 +3209,19 @@ void LabelLocalizationTest::onChangedRadioButtonSelect(RadioButton* radioButton,
             _localizationJson->initLanguageData("configs/en-US.lang.json");
             _label1->setString(_localizationJson->getLocalizationString("Text Label"));
             _localizationBin->initLanguageData("configs/ENGLISH.lang.csb");
-            _label2->setString(_localizationJson->getLocalizationString("Text Label"));
+            _label2->setString(_localizationBin->getLocalizationString("Text Label"));
             break;
         case 1:
             _localizationJson->initLanguageData("configs/zh-CN.lang.json");
             _label1->setString(_localizationJson->getLocalizationString("Text Label"));
             _localizationBin->initLanguageData("configs/CHINESE.lang.csb");
-            _label2->setString(_localizationJson->getLocalizationString("Text Label"));
+            _label2->setString(_localizationBin->getLocalizationString("Text Label"));
             break;
         case 2:
             _localizationJson->initLanguageData("configs/ja-JP.lang.json");
             _label1->setString(_localizationJson->getLocalizationString("Text Label"));
             _localizationBin->initLanguageData("configs/JAPANESE.lang.csb");
-            _label2->setString(_localizationJson->getLocalizationString("Text Label"));
+            _label2->setString(_localizationBin->getLocalizationString("Text Label"));
             break;
         default:
             break;
@@ -3254,4 +3333,68 @@ std::string LabelIssue16471::subtitle() const
 {
     return "Label should be yellow";
 }
+
+//
+// LabelIssue16717
+//
+LabelIssue16717::LabelIssue16717()
+{
+    auto bg = Sprite::create("cocosui/Hello.png");
+    bg->setPosition(VisibleRect::center());
+    addChild(bg);
+
+    {
+        auto label = Label::createWithTTF("Hello World", "fonts/arial.ttf", 70);
+        label->setPosition(VisibleRect::center() + Vec2(0, 40));
+        label->enableOutline(Color4B(0, 255, 0, 100), 10); // Set 100 alpha for outline
+        label->setTextColor(Color4B(0, 0, 255, 100)); // Also set 100 alpha for text
+        addChild(label);
+    }
+
+    {
+        auto label = Label::createWithTTF("Hello World", "fonts/arial.ttf", 70);
+        label->setPosition(VisibleRect::center() + Vec2(0, -40));
+        label->enableOutline(Color4B(0, 255, 0, 100), 10); // Set 100 alpha for outline
+        label->setTextColor(Color4B(0, 255, 0, 100)); // Also set 100 alpha for text
+        addChild(label);
+    }
+}
+
+std::string LabelIssue16717::title() const
+{
+    return "Github Issue 16717";
+}
+
+std::string LabelIssue16717::subtitle() const
+{
+    return "";
+}
+
+//
+// LabelIssueLineGap
+//
+LabelIssueLineGap::LabelIssueLineGap()
+{
+    
+    auto size = Director::getInstance()->getWinSize();
+    
+    auto label1 = Label::createWithTTF("test \ntest", "fonts/FingerpopGap.ttf", 30);
+    label1->setPosition(Vec2(size.width / 3, size.height / 2));
+    addChild(label1);
+    
+    auto label2 = Label::createWithSystemFont("test \ntest", "fonts/FingerpopGap.ttf", 30);
+    label2->setPosition(Vec2(size.width / 3 * 1.8 , size.height / 2));
+    addChild(label2);
+}
+
+std::string LabelIssueLineGap::title() const
+{
+    return "Label line gap issue";
+}
+
+std::string LabelIssueLineGap::subtitle() const
+{
+    return "two label must have exactly the same position and distance between lines";
+}
+
 

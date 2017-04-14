@@ -1,0 +1,95 @@
+// CSParse3DBinary IDL file
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// !! When adding new pairs to the maps below,         !!
+// !! please add to the last position of the map.      !!
+// !! It will ensure the reader's version compatible.  !!
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+include "CSParseBinary.fbs";
+
+namespace flatbuffers;
+
+table Node3DOption
+{
+    nodeOptions:WidgetOptions;
+    position3D:Vector3;
+    rotation3D:Vector3;
+    scale3D:Vector3;
+    cameramask:int;
+}
+
+root_type Node3DOption;
+
+table Sprite3DOptions
+{
+    node3DOption:Node3DOption;
+    fileData:ResourceData;
+    runAction:bool = false;
+	isFlipped:bool;
+	lightFlag:int;
+}
+
+table Particle3DOptions
+{
+    node3DOption:Node3DOption;
+    fileData:ResourceData;
+}
+
+table UserCameraOptions
+{
+    node3DOption:Node3DOption;
+    fov:float = 60;
+    nearClip:float = 1;
+    farClip:float = 1000;
+    cameraFlag:int;
+	skyBoxEnabled:bool;
+	leftFileData:ResourceData;
+	rightFileData:ResourceData;
+	upFileData:ResourceData;
+	downFileData:ResourceData;
+	forwardFileData:ResourceData;
+	backFileData:ResourceData;
+}
+
+table GameNode3DOption
+{
+	name:string;
+	skyBoxMask:int;
+	skyBoxEnabled:bool;
+	leftFileData:ResourceData;
+	rightFileData:ResourceData;
+	upFileData:ResourceData;
+	downFileData:ResourceData;
+	forwardFileData:ResourceData;
+	backFileData:ResourceData;
+	frameEvent:string;
+	customProperty:string;
+	useDefaultLight:bool;
+}
+
+table Light3DOption
+{
+	node3DOption:Node3DOption;
+	enabled:bool;
+	type:int;
+	flag:int;
+	intensity:float;
+	range:float;
+	outerAngle:float;	
+}
+
+struct Vector2
+{
+    x:float;
+    y:float;
+}
+
+struct Vector3
+{
+    x:float;
+    y:float;
+    z:float;
+}
+
+
+

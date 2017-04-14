@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2015-2016 Chukong Technologies Inc.
+ Copyright (c) 2015-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -624,7 +624,8 @@ namespace cocos2d { namespace network {
                 }
 
                 // process tasks in _requestList
-                while (0 == countOfMaxProcessingTasks || coTaskMap.size() < countOfMaxProcessingTasks)
+                auto size = coTaskMap.size();
+                while (0 == countOfMaxProcessingTasks || size < countOfMaxProcessingTasks)
                 {
                     // get task wrapper from request queue
                     TaskWrapper wrapper;

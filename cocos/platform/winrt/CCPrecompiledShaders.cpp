@@ -207,9 +207,9 @@ void CCPrecompiledShaders::savePrecompiledPrograms(Windows::Storage::StorageFold
         dataWriter->WriteString(L"#define PRECOMPILED_SHADERS\n\n");
 
 
-        for (auto iter = m_programs.begin(); iter != m_programs.end(); ++iter) 
+        for (auto& iter : m_programs)
         {
-            CompiledProgram* p = (CompiledProgram*)iter->second;
+            CompiledProgram* p = (CompiledProgram*)iter.second;
             Platform::String^ keyName = PlatformStringFromString(p->key);
             Platform::String^ programName = SHADER_NAME_PREFIX + keyName;
 

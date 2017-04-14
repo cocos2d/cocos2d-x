@@ -78,10 +78,11 @@ local function setEmitterPosition()
 end
 
 local function update(dt)
-	if emitter ~= nil then
-		local str = "" .. emitter:getParticleCount()
---  	labelAtlas:setString("" .. str)
-    end
+    -- emitter may be released, for example it invokes emitter:setAutoRemoveOnFinish(true)
+-- 	if emitter ~= nil then
+-- 		local str = "" .. emitter:getParticleCount()
+-- --  	labelAtlas:setString("" .. str)
+--     end
 end
 
 local function baseLayer_onEnterOrExit(tag)
@@ -654,7 +655,7 @@ local function DemoBigFlower()
     emitter:setRadialAccel(-120)
     emitter:setRadialAccelVar(0)
 
-    -- tagential
+    -- tangential
     emitter:setTangentialAccel(30)
     emitter:setTangentialAccelVar(0)
 
@@ -725,7 +726,7 @@ local function DemoRotFlower()
     emitter:setRadialAccel(-120)
     emitter:setRadialAccelVar(0)
 
-    -- tagential
+    -- tangential
     emitter:setTangentialAccel(30)
     emitter:setTangentialAccelVar(0)
 
@@ -791,7 +792,7 @@ local function DemoModernArt()
     emitter:setRadialAccel(70)
     emitter:setRadialAccelVar(10)
 
-    -- tagential
+    -- tangential
     emitter:setTangentialAccel(80)
     emitter:setTangentialAccelVar(0)
 

@@ -85,12 +85,12 @@ local function WebSocketTestLayer()
     toMainMenu:setPosition(cc.p(0, 0))
     layer:addChild(toMainMenu,10)
 
-    wsSendText   = cc.WebSocket:create("ws://echo.websocket.org")
-    wsSendBinary = cc.WebSocket:create("ws://echo.websocket.org")
-    wsError      = cc.WebSocket:create("ws://invalid.url.com")
+    wsSendText   = cc.WebSocket:create("wss://echo.websocket.org", {"myprotocol_1", "myprotocol_2"}, "cacert.pem")
+    wsSendBinary = cc.WebSocket:create("ws://echo.websocket.org", {"hello"}, "cacert.pem")
+    wsError      = cc.WebSocket:create("ws://invalid.url.com", {"invalid_protocol"})
 
     local function wsSendTextOpen(strData)
-        sendTextStatus:setString("Send Text WS was opened.")
+        sendTextStatus:setString("Send Text WS was opened, url:" .. wsSendText.url .. ", protocol: " .. wsSendText.protocol)
     end
 
     local function wsSendTextMessage(strData)
@@ -107,10 +107,11 @@ local function WebSocketTestLayer()
 
     local function wsSendTextError(strData)
         print("sendText Error was fired")
+        sendTextStatus:setString("sendText Error was fired")
     end
 
     local function wsSendBinaryOpen(strData)
-        sendBinaryStatus:setString("Send Binary WS was opened.")
+        sendBinaryStatus:setString("Send Binary WS was opened, url:" .. wsSendBinary.url .. ", protocol: " .. wsSendBinary.protocol)
     end
 
     local function wsSendBinaryMessage(paramTable)
@@ -137,6 +138,7 @@ local function WebSocketTestLayer()
 
     local function wsSendBinaryError(strData)
         print("sendBinary Error was fired")
+        sendBinaryStatus:setString("sendBinary Error was fired")
     end
 
     local function wsErrorOpen(strData)

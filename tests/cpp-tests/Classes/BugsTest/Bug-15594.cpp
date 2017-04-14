@@ -24,8 +24,8 @@ bool Bug15594Layer::init()
 
         auto animation = Animation3D::create("Images/bugs/bug15594.c3t");
         auto animate = Animate3D::create(animation);
-        auto repeate = RepeatForever::create(animate);
-        sprite3d->runAction(repeate);
+        auto repeat = RepeatForever::create(animate);
+        sprite3d->runAction(repeat);
         return true;
     }
 

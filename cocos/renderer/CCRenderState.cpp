@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2015-2017 Chukong Technologies Inc.
  Copyright (c) 2014 GamePlay3D team
 
  http://www.cocos2d-x.org
@@ -39,10 +39,10 @@ RenderState::StateBlock* RenderState::StateBlock::_defaultState = nullptr;
 
 
 RenderState::RenderState()
-: _texture(nullptr)
-, _hash(0)
+: _hash(0)
 , _hashDirty(true)
 , _parent(nullptr)
+, _texture(nullptr)
 {
     _state = StateBlock::create();
     CC_SAFE_RETAIN(_state);

@@ -4,11 +4,41 @@
 -- @parent_module cc
 
 --------------------------------
+-- 
+-- @function [parent=#PolygonInfo] getFilename 
+-- @param self
+-- @return string#string ret (return value: string)
+        
+--------------------------------
 -- get sum of all triangle area size<br>
 -- return sum of all triangle area size
 -- @function [parent=#PolygonInfo] getArea 
 -- @param self
 -- @return float#float ret (return value: float)
+        
+--------------------------------
+-- 
+-- @function [parent=#PolygonInfo] getRect 
+-- @param self
+-- @return rect_table#rect_table ret (return value: rect_table)
+        
+--------------------------------
+-- 
+-- @function [parent=#PolygonInfo] setFilename 
+-- @param self
+-- @param #string filename
+-- @return PolygonInfo#PolygonInfo self (return value: cc.PolygonInfo)
+        
+--------------------------------
+-- set the data to be a pointer to a number of Quads<br>
+-- the member verts will not be released when this PolygonInfo destructs<br>
+-- as the verts memory are managed by other objects<br>
+-- param quad  a pointer to the V3F_C4B_T2F_Quad quads
+-- @function [parent=#PolygonInfo] setQuads 
+-- @param self
+-- @param #cc.V3F_C4B_T2F_Quad quads
+-- @param #int numberOfQuads
+-- @return PolygonInfo#PolygonInfo self (return value: cc.PolygonInfo)
         
 --------------------------------
 -- get vertex count<br>
@@ -42,6 +72,13 @@
 -- @function [parent=#PolygonInfo] setTriangles 
 -- @param self
 -- @param #cc.TrianglesCommand::Triangles triangles
+-- @return PolygonInfo#PolygonInfo self (return value: cc.PolygonInfo)
+        
+--------------------------------
+-- 
+-- @function [parent=#PolygonInfo] setRect 
+-- @param self
+-- @param #rect_table rect
 -- @return PolygonInfo#PolygonInfo self (return value: cc.PolygonInfo)
         
 --------------------------------

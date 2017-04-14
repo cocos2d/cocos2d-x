@@ -1,18 +1,17 @@
 /******************************************************************************
- * Spine Runtimes Software License
- * Version 2.3
+ * Spine Runtimes Software License v2.5
  *
- * Copyright (c) 2013-2015, Esoteric Software
+ * Copyright (c) 2013-2016, Esoteric Software
  * All rights reserved.
  *
- * You are granted a perpetual, non-exclusive, non-sublicensable and
- * non-transferable license to use, install, execute and perform the Spine
- * Runtimes Software (the "Software") and derivative works solely for personal
- * or internal use. Without the written permission of Esoteric Software (see
- * Section 2 of the Spine Software License Agreement), you may not (a) modify,
- * translate, adapt or otherwise create derivative works, improvements of the
- * Software or develop new applications using the Software or (b) remove,
- * delete, alter or obscure any trademarks or any copyright, trademark, patent
+ * You are granted a perpetual, non-exclusive, non-sublicensable, and
+ * non-transferable license to use, install, execute, and perform the Spine
+ * Runtimes software and derivative works solely for personal or internal
+ * use. Without the written permission of Esoteric Software (see Section 2 of
+ * the Spine Software License Agreement), you may not (a) modify, translate,
+ * adapt, or develop new applications using the Spine Runtimes or otherwise
+ * create derivative works or improvements of the Spine Runtimes or (b) remove,
+ * delete, alter, or obscure any trademarks or any copyright, trademark, patent,
  * or other intellectual property or proprietary rights notices on or in the
  * Software, including any copy thereof. Redistributions in binary or source
  * form must include this license and terms.
@@ -22,11 +21,11 @@
  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
  * EVENT SHALL ESOTERIC SOFTWARE BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
  * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
- * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
- * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
- * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES, BUSINESS INTERRUPTION, OR LOSS OF
+ * USE, DATA, OR PROFITS) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
+ * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
 #include <spine/PathConstraint.h>
@@ -78,8 +77,7 @@ void spPathConstraint_apply (spPathConstraint* self) {
 	float length, x, y, dx, dy, s;
 	float* spaces, *lengths, *positions;
 	float spacing;
-	spSkeleton* skeleton;
-	float skeletonX, skeletonY, boneX, boneY, offsetRotation;
+	float boneX, boneY, offsetRotation;
 	int/*bool*/tip;
 	float rotateMix = self->rotateMix, translateMix = self->translateMix;
 	int/*bool*/ translate = translateMix > 0, rotate = rotateMix > 0;
@@ -91,6 +89,7 @@ void spPathConstraint_apply (spPathConstraint* self) {
 	int tangents = rotateMode == SP_ROTATE_MODE_TANGENT, scale = rotateMode == SP_ROTATE_MODE_CHAIN_SCALE;
 	int boneCount = self->bonesCount, spacesCount = tangents ? boneCount : boneCount + 1;
 	spBone** bones = self->bones;
+	spBone* pa;
 
 	if (!translate && !rotate) return;
 	if ((attachment == 0) || (attachment->super.super.type != SP_ATTACHMENT_PATH)) return;
@@ -127,15 +126,20 @@ void spPathConstraint_apply (spPathConstraint* self) {
 	}
 
 	positions = spPathConstraint_computeWorldPositions(self, attachment, spacesCount, tangents,
-											 data->positionMode == SP_POSITION_MODE_PERCENT, spacingMode == SP_SPACING_MODE_PERCENT);
-	skeleton = self->target->bone->skeleton;
-	skeletonX = skeleton->x, skeletonY = skeleton->y;
+		data->positionMode == SP_POSITION_MODE_PERCENT, spacingMode == SP_SPACING_MODE_PERCENT);
 	boneX = positions[0], boneY = positions[1], offsetRotation = self->data->offsetRotation;
-	tip = rotateMode == SP_ROTATE_MODE_CHAIN_SCALE && offsetRotation == 0;
+	tip = 0;
+	if (offsetRotation == 0)
+		tip = rotateMode == SP_ROTATE_MODE_CHAIN;
+	else {
+		tip = 0;
+		pa = self->target->bone;
+		offsetRotation *= pa->a * pa->d - pa->b * pa->c > 0 ? DEG_RAD : -DEG_RAD;
+	}
 	for (i = 0, p = 3; i < boneCount; i++, p += 3) {
 		spBone* bone = bones[i];
-		CONST_CAST(float, bone->worldX) += (boneX - skeletonX - bone->worldX) * translateMix;
-		CONST_CAST(float, bone->worldY) += (boneY - skeletonY - bone->worldY) * translateMix;
+		CONST_CAST(float, bone->worldX) += (boneX - bone->worldX) * translateMix;
+		CONST_CAST(float, bone->worldY) += (boneY - bone->worldY) * translateMix;
 		x = positions[p], y = positions[p + 1], dx = x - boneX, dy = y - boneY;
 		if (scale) {
 			length = lengths[i];
@@ -162,7 +166,8 @@ void spPathConstraint_apply (spPathConstraint* self) {
 				length = bone->data->length;
 				boneX += (length * (cosine * a - sine * c) - dx) * rotateMix;
 				boneY += (length * (sine * a + cosine * c) - dy) * rotateMix;
-			}
+			} else
+				r += offsetRotation;
 			if (r > PI)
 				r -= PI2;
 			else if (r < -PI)
@@ -175,6 +180,7 @@ void spPathConstraint_apply (spPathConstraint* self) {
 			CONST_CAST(float, bone->c) = sine * a + cosine * c;
 			CONST_CAST(float, bone->d) = sine * b + cosine * d;
 		}
+		CONST_CAST(int, bone->appliedValid) = -1;
 	}
 }
 
@@ -193,7 +199,7 @@ static void _addAfterPosition (float p, float* temp, int i, float* out, int o) {
 }
 
 static void _addCurvePosition (float p, float x1, float y1, float cx1, float cy1, float cx2, float cy2, float x2, float y2,
-							   float* out, int o, int/*bool*/tangents) {
+		float* out, int o, int/*bool*/tangents) {
 	float tt, ttt, u, uu, uuu;
 	float ut, ut3, uut3, utt3;
 	float x, y;
@@ -284,7 +290,7 @@ float* spPathConstraint_computeWorldPositions(spPathConstraint* self, spPathAtta
 					spPathAttachment_computeWorldVertices1(path, target, curve * 6 + 2, 8, world, 0);
 			}
 			_addCurvePosition(p, world[0], world[1], world[2], world[3], world[4], world[5], world[6], world[7], out, o,
-							 tangents || (i > 0 && space == 0));
+				tangents || (i > 0 && space == 0));
 		}
 		return out;
 	}

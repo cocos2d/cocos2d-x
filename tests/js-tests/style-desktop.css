@@ -1,0 +1,31 @@
+body {
+  cursor: default;
+  padding: 0;
+  border: 0;
+  margin: 0;
+
+  text-align: center;
+  background-color: white;
+  font-family: Helvetica, Verdana, Arial, sans-serif;
+}
+
+body, canvas, div {
+  outline: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  -khtml-user-select: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+#Cocos2dGameContainer {
+  position: absolute;
+  margin: 0;
+  overflow: hidden;
+  left: 0px;
+  top: 0px;
+}
+
+canvas {
+  background-color: rgba(0, 0, 0, 0);
+}

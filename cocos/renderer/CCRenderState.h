@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2015-2017 Chukong Technologies Inc.
  Copyright (c) 2014 GamePlay3D team
  
  http://www.cocos2d-x.org

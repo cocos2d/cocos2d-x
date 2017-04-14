@@ -1,5 +1,5 @@
 ﻿/****************************************************************************
-Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -116,7 +116,7 @@ public:
     virtual void start() override;
     // stop the effect sound which started with latest start()
     virtual void stop() override;
-    /// @} end of PlaybleProtocol
+    /// @} end of PlayableProtocol
 
 private:
     std::string _filePath;

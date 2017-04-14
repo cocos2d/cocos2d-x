@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2014-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -110,7 +110,7 @@ void BillBoard::visit(Renderer *renderer, const Mat4& parentTransform, uint32_t 
     flags |= FLAGS_RENDER_AS_3D;
     
     //Update Billboard transform
-    bool dirty = calculateBillbaordTransform();
+    bool dirty = calculateBillboardTransform();
     if(dirty)
     {
         flags |= FLAGS_TRANSFORM_DIRTY;
@@ -126,7 +126,7 @@ void BillBoard::visit(Renderer *renderer, const Mat4& parentTransform, uint32_t 
     {
         sortAllChildren();
         // draw children zOrder < 0
-        for( ; i < _children.size(); i++ )
+        for(auto size = _children.size(); i < size; ++i)
         {
             auto node = _children.at(i);
             
@@ -138,8 +138,8 @@ void BillBoard::visit(Renderer *renderer, const Mat4& parentTransform, uint32_t 
         // self draw
         if (visibleByCamera)
             this->draw(renderer, _modelViewTransform, flags);
-        
-        for(auto it=_children.cbegin()+i; it != _children.cend(); ++it)
+
+        for(auto it=_children.cbegin()+i, itCend = _children.cend(); it != itCend; ++it)
             (*it)->visit(renderer, _modelViewTransform, flags);
     }
     else if (visibleByCamera)
@@ -150,7 +150,7 @@ void BillBoard::visit(Renderer *renderer, const Mat4& parentTransform, uint32_t 
     director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 }
 
-bool BillBoard::calculateBillbaordTransform()
+bool BillBoard::calculateBillboardTransform()
 {
     //Get camera world position
     auto camera = Camera::getVisitingCamera();
@@ -222,7 +222,12 @@ bool BillBoard::calculateBillbaordTransform()
     return false;
 }
 
-void BillBoard::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
+bool BillBoard::calculateBillbaordTransform()
+{
+    return calculateBillboardTransform();
+}
+
+void BillBoard::draw(Renderer *renderer, const Mat4 &/*transform*/, uint32_t flags)
 {
     //FIXME: frustum culling here
     flags |= Node::FLAGS_RENDER_AS_3D;

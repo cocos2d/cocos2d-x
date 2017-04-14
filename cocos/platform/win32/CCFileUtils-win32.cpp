@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -350,7 +350,7 @@ bool FileUtilsWin32::createDirectory(const std::string& dirPath)
     if ((GetFileAttributes(path.c_str())) == INVALID_FILE_ATTRIBUTES)
     {
         subpath = L"";
-        for (unsigned int i = 0; i < dirs.size(); ++i)
+        for (unsigned int i = 0, size = dirs.size(); i < size; ++i)
         {
             subpath += dirs[i];
 

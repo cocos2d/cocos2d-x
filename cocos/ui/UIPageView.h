@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -202,7 +202,7 @@ public:
      * Gets current displayed page index.
      * @return current page index.
      */
-    ssize_t getCurrentPageIndex() const { return _currentPageIndex; }
+    ssize_t getCurrentPageIndex();
 
     /**
      * Jump to a page with a given index without scrolling.

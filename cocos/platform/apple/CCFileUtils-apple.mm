@@ -1,7 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -98,8 +98,8 @@ static id convertCCValueToNSObject(const cocos2d::Value &value)
         case Value::Type::MAP: {
             NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
             const ValueMap &map = value.asValueMap();
-            for (auto iter = map.begin(); iter != map.end(); ++iter) {
-                addCCValueToNSDictionary(iter->first, iter->second, dictionary);
+            for (auto& iter : map) {
+                addCCValueToNSDictionary(iter.first, iter.second, dictionary);
             }
             return dictionary;
         }
@@ -369,9 +369,9 @@ bool FileUtils::writeValueMapToFile(const ValueMap& dict, const std::string& ful
     //CCLOG("iOS||Mac Dictionary %d write to file %s", dict->_ID, fullPath.c_str());
     NSMutableDictionary *nsDict = [NSMutableDictionary dictionary];
 
-    for (auto iter = dict.begin(); iter != dict.end(); ++iter)
+    for (auto& iter : dict)
     {
-        addCCValueToNSDictionary(iter->first, iter->second, nsDict);
+        addCCValueToNSDictionary(iter.first, iter.second, nsDict);
     }
 
     NSString *file = [NSString stringWithUTF8String:fullPath.c_str()];
@@ -401,7 +401,7 @@ void FileUtilsApple::valueMapCompact(ValueMap& valueMap)
             default:
                 break;
         }
-        itr++;
+        ++itr;
     }
 }
 
@@ -427,7 +427,7 @@ void FileUtilsApple::valueVectorCompact(ValueVector& valueVector)
             default:
                 break;
         }
-        itr++;
+        ++itr;
     }
 }
 

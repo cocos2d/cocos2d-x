@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2012 cocos2d-x.org
- Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -1302,7 +1302,7 @@ void TextureAlias::onEnter()
     sprite->setPosition(Vec2( s.width/3.0f, s.height/2.0f));
     addChild(sprite);
     
-    // this is the default filterting
+    // this is the default filtering
     sprite->getTexture()->setAntiAliasTexParameters();
     
     //
@@ -1749,7 +1749,7 @@ std::string TextureCache1::title() const
 
 std::string TextureCache1::subtitle() const
 {
-    return "4 images should appear: alias, antialias, alias, antilias";
+    return "4 images should appear: alias, antialias, alias, antialias";
 }
 
 // TextureDrawAtPoint
@@ -1793,7 +1793,7 @@ void TextureDrawAtPoint::draw(Renderer *renderer, const Mat4 &transform, uint32_
 void TextureDrawAtPoint::onDraw(const Mat4 &transform, uint32_t flags)
 {
     Director* director = Director::getInstance();
-    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
+    CCASSERT(nullptr != director, "Director is null when setting matrix stack");
     director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, transform);
 
@@ -1835,7 +1835,7 @@ void TextureDrawInRect::draw(Renderer *renderer, const Mat4 &transform, uint32_t
 void TextureDrawInRect::onDraw(const Mat4 &transform, uint32_t flags)
 {
     Director* director = Director::getInstance();
-    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
+    CCASSERT(nullptr != director, "Director is null when setting matrix stack");
     director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, transform);
     
@@ -2167,7 +2167,7 @@ std::string TextureATITCInterpolated::title() const
 }
 std::string TextureATITCInterpolated::subtitle() const
 {
-    return "ATITC RGBA Interpolated Alpha comrpessed texture test";
+    return "ATITC RGBA Interpolated Alpha compressed texture test";
 }
 
 static void addImageToDemo(TextureDemo& demo, float x, float y, const char* path, Texture2D::PixelFormat format)

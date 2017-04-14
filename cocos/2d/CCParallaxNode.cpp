@@ -2,7 +2,7 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -85,19 +85,13 @@ ParallaxNode * ParallaxNode::create()
     return ret;
 }
 
-void ParallaxNode::addChild(Node * child, int zOrder, int tag)
+void ParallaxNode::addChild(Node* /*child*/, int /*zOrder*/, int /*tag*/)
 {
-    CC_UNUSED_PARAM(zOrder);
-    CC_UNUSED_PARAM(child);
-    CC_UNUSED_PARAM(tag);
     CCASSERT(0,"ParallaxNode: use addChild:z:parallaxRatio:positionOffset instead");
 }
 
-void ParallaxNode::addChild(Node * child, int zOrder, const std::string &name)
+void ParallaxNode::addChild(Node* /*child*/, int /*zOrder*/, const std::string& /*name*/)
 {
-    CC_UNUSED_PARAM(zOrder);
-    CC_UNUSED_PARAM(child);
-    CC_UNUSED_PARAM(name);
     CCASSERT(0,"ParallaxNode: use addChild:z:parallaxRatio:positionOffset instead");
 }
 

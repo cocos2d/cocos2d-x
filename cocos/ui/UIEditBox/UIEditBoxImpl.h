@@ -54,12 +54,28 @@ namespace cocos2d {
             virtual void setInputFlag(EditBox::InputFlag inputFlag) = 0;
             virtual void setMaxLength(int maxLength) = 0;
             virtual int  getMaxLength() = 0;
+            virtual void setTextHorizontalAlignment(TextHAlignment alignment) = 0;
             virtual void setReturnType(EditBox::KeyboardReturnType returnType) = 0;
             virtual bool isEditing() = 0;
             
             virtual void setText(const char* pText) = 0;
             virtual const char* getText(void) = 0;
             virtual void setPlaceHolder(const char* pText) = 0;
+            virtual const char* getPlaceHolder(void) = 0;
+
+            virtual const char* getFontName() = 0;
+            virtual int getFontSize() = 0;
+            virtual const Color4B& getFontColor() = 0;
+
+            virtual const char* getPlaceholderFontName() = 0;
+            virtual int getPlaceholderFontSize() = 0;
+            virtual const Color4B& getPlaceholderFontColor() = 0;
+
+            virtual EditBox::InputMode getInputMode() = 0;
+            virtual EditBox::InputFlag getInputFlag() = 0;
+            virtual EditBox::KeyboardReturnType getReturnType() = 0;
+            virtual TextHAlignment getTextHorizontalAlignment() = 0;
+
             virtual void doAnimationWhenKeyboardMove(float duration, float distance) = 0;
             
             virtual void openKeyboard() = 0;
@@ -89,6 +105,7 @@ namespace cocos2d {
             void setDelegate(EditBoxDelegate* pDelegate) { _delegate = pDelegate; };
             EditBoxDelegate* getDelegate() { return _delegate; };
             EditBox* getEditBox() { return _editBox; };
+
         protected:
             EditBoxDelegate* _delegate;
             EditBox* _editBox;

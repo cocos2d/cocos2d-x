@@ -52,6 +52,17 @@ namespace ui {
     class CC_GUI_DLL EditBoxDelegate
     {
     public:
+
+        /**
+         * Reason for ending edit (for platforms where it is known)
+         */
+        enum class EditBoxEndAction {
+            UNKNOWN,
+            TAB_TO_NEXT,
+            TAB_TO_PREVIOUS,
+            RETURN
+        };
+
         virtual ~EditBoxDelegate() {};
             
         /**
@@ -64,8 +75,9 @@ namespace ui {
         /**
          * This method is called when an edit box loses focus after keyboard is hidden.
          * @param editBox The edit box object that generated the event.
+         * @deprecated Use editBoxEditingDidEndWithAction() instead to receive reason for end
          */
-        virtual void editBoxEditingDidEnd(EditBox* editBox) {};
+        CC_DEPRECATED_ATTRIBUTE virtual void editBoxEditingDidEnd(EditBox* editBox) {};
             
         /**
          * This method is called when the edit box text was changed.
@@ -79,7 +91,13 @@ namespace ui {
          * @param editBox The edit box object that generated the event.
          */
         virtual void editBoxReturn(EditBox* editBox) = 0;
-            
+
+        /**
+         * This method is called when an edit box loses focus after keyboard is hidden.
+         * @param editBox The edit box object that generated the event.
+         * @param type The reason why editing ended.
+         */
+        virtual void editBoxEditingDidEndWithAction(EditBox* editBox, EditBoxEndAction action) {};
     };
         
     /**
@@ -104,7 +122,8 @@ namespace ui {
             DONE,
             SEND,
             SEARCH,
-            GO
+            GO,
+            NEXT
         };
             
         /**
@@ -310,7 +329,7 @@ namespace ui {
          * Get the text entered in the edit box.
          * @return The text entered in the edit box.
          */
-        const char* getText(void);
+        const char* getText(void) const;
             
         /**
          * Set the font. Only system font is allowed.
@@ -324,38 +343,67 @@ namespace ui {
          * @param pFontName The font name.
          */
         void setFontName(const char* pFontName);
-            
+
+        /**
+         * Get the font name.
+         * @return The font name.
+         */
+        const char* getFontName() const;
+
         /**
          * Set the font size.
          * @param fontSize The font size.
          */
         void setFontSize(int fontSize);
-            
+
+        /**
+         * Get the font size.
+         * @return The font size.
+         */
+        int getFontSize() const;
+
         /**
          * Set the font color of the widget's text.
          */
         void setFontColor(const Color3B& color);
         void setFontColor(const Color4B& color);
-            
+
+        /**
+         * Get the font color of the widget's text.
+         */
+        const Color4B& getFontColor() const;
+
         /**
          * Set the placeholder's font. Only system font is allowed.
          * @param pFontName The font name.
          * @param fontSize The font size.
          */
         void setPlaceholderFont(const char* pFontName, int fontSize);
-            
+
         /**
          * Set the placeholder's font name. only system font is allowed.
          * @param pFontName The font name.
          */
         void setPlaceholderFontName(const char* pFontName);
-            
+
+        /**
+         * Get the placeholder's font name. only system font is allowed.
+         * @return The font name.
+         */
+        const char* getPlaceholderFontName() const;
+
         /**
          * Set the placeholder's font size.
          * @param fontSize The font size.
          */
         void setPlaceholderFontSize(int fontSize);
-            
+
+        /**
+         * Get the placeholder's font size.
+         * @return The font size.
+         */
+        int getPlaceholderFontSize() const;
+
         /**
          * Set the font color of the placeholder text when the edit box is empty.
          */
@@ -365,26 +413,37 @@ namespace ui {
          * Set the font color of the placeholder text when the edit box is empty.
          */
         void setPlaceholderFontColor(const Color4B& color);
-            
+
+        /**
+         * Get the font color of the placeholder text when the edit box is empty.
+         */
+        const Color4B& getPlaceholderFontColor() const;
+
         /**
          * Set a text in the edit box that acts as a placeholder when an
          * edit box is empty.
          * @param pText The given text.
          */
         void setPlaceHolder(const char* pText);
-            
+
         /**
          * Get a text in the edit box that acts as a placeholder when an
          * edit box is empty.
          */
-        const char* getPlaceHolder(void);
-            
+        const char* getPlaceHolder(void) const;
+
         /**
          * Set the input mode of the edit box.
          * @param inputMode One of the EditBox::InputMode constants.
          */
         void setInputMode(InputMode inputMode);
-            
+
+        /**
+         * Get the input mode of the edit box.
+         * @return One of the EditBox::InputMode constants.
+         */
+        InputMode getInputMode() const;
+
         /**
          * Sets the maximum input length of the edit box.
          * Setting this value enables multiline input mode by default.
@@ -393,7 +452,7 @@ namespace ui {
          * @param maxLength The maximum length.
          */
         void setMaxLength(int maxLength);
-            
+
         /**
          * Gets the maximum input length of the edit box.
          *
@@ -406,13 +465,35 @@ namespace ui {
          * @param inputFlag One of the EditBox::InputFlag constants.
          */
         void setInputFlag(InputFlag inputFlag);
-            
+
+        /**
+         * Get the input flags that are to be applied to the edit box.
+         * @return One of the EditBox::InputFlag constants.
+         */
+        InputFlag getInputFlag() const;
+
         /**
          * Set the return type that are to be applied to the edit box.
          * @param returnType One of the EditBox::KeyboardReturnType constants.
          */
-        void setReturnType(EditBox::KeyboardReturnType returnType);
-            
+        void setReturnType(KeyboardReturnType returnType);
+
+        /**
+         * Get the return type that are to be applied to the edit box.
+         * @return One of the EditBox::KeyboardReturnType constants.
+         */
+        KeyboardReturnType getReturnType() const;
+
+        /**
+         * Set the text horizontal alignment.
+         */
+        void setTextHorizontalAlignment(TextHAlignment alignment);
+
+        /**
+         * Get the text horizontal alignment.
+         */
+        TextHAlignment getTextHorizontalAlignment() const;
+
         /* override functions */
         virtual void setPosition(const Vec2& pos) override;
         virtual void setVisible(bool visible) override;
@@ -472,25 +553,9 @@ namespace ui {
         void updatePosition(float dt);
         EditBoxImpl*      _editBoxImpl;
         EditBoxDelegate*  _delegate;
-            
-        InputMode    _editBoxInputMode;
-        InputFlag    _editBoxInputFlag;
-        EditBox::KeyboardReturnType  _keyboardReturnType;
-            
+
         Scale9Sprite *_backgroundSprite;
-        std::string _text;
-        std::string _placeHolder;
-            
-        std::string _fontName;
-        std::string _placeholderFontName;
-            
-        int _fontSize;
-        int _placeholderFontSize;
-            
-        Color4B _colText;
-        Color4B _colPlaceHolder;
-            
-        int   _maxLength;
+
         float _adjustHeight;
 #if CC_ENABLE_SCRIPT_BINDING
         int   _scriptEditBoxHandler;

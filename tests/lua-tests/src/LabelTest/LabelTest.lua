@@ -321,7 +321,6 @@ function Atlas4.create()
 
     local lastChar = label2:getChildByTag(3)
     lastChar:runAction(rot_4ever:clone())
-    scheduler:scheduleScriptFunc(Atlas4.step, 0.1, false)
 
     Helper.titleLabel:setString("LabelBMFont")
     Helper.subtitleLabel:setString( "Using fonts as cc.Sprite objects. Some characters should rotate.")
@@ -683,7 +682,7 @@ function LabelGlyphDesigner.create()
     layer:addChild(label1)
     label1:setPosition(cc.p(s.width/2, s.height/2))
     Helper.titleLabel:setString("Testing Glyph Designer")
-    Helper.subtitleLabel:setString("You should see a font with shawdows and outline")
+    Helper.subtitleLabel:setString("You should see a font with shadows and outline")
 
     return layer
 end
@@ -1220,7 +1219,7 @@ function BMFontUnicode.create()
     local layer = cc.Layer:create()
     Helper.initWithLayer(layer)
     Helper.titleLabel:setString("LabelBMFont with Unicode support")
-    Helper.subtitleLabel:setString("You should see 3 differnt labels: In Spanish, Chinese and Korean")
+    Helper.subtitleLabel:setString("You should see 3 different labels: In Spanish, Chinese and Korean")
 
     local s = cc.Director:getInstance():getWinSize()
     
@@ -1407,6 +1406,8 @@ function LabelTest()
         LabelTTFAlignment.create,
         LabelBMFontBounds.create
     }
+    Helper.index = 1
+    
     scene:addChild(LabelAtlasTest.create())
     scene:addChild(CreateBackMenuItem())
     return scene

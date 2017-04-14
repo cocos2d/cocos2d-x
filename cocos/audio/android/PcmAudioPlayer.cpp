@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2016 Chukong Technologies Inc.
+Copyright (c) 2016-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -108,6 +108,11 @@ void PcmAudioPlayer::setVolume(float volume)
 float PcmAudioPlayer::getVolume() const
 {
     return _track->getVolume();
+}
+
+void PcmAudioPlayer::setAudioFocus(bool isFocus)
+{
+    _track->setAudioFocus(isFocus);
 }
 
 void PcmAudioPlayer::setLoop(bool isLoop)

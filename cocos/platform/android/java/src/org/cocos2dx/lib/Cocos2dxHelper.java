@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -47,7 +47,6 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
-import android.hardware.SensorManager;
 
 import com.android.vending.expansion.zipfile.APKExpansionSupport;
 import com.android.vending.expansion.zipfile.ZipResourceFile;
@@ -136,9 +135,12 @@ public class Cocos2dxHelper {
                 parameters = new Object[]{Cocos2dxReflectionHelper.<String>getConstantValue(audioManagerClass, "PROPERTY_OUTPUT_FRAMES_PER_BUFFER")};
                 final String strBufferSizeInFrames = Cocos2dxReflectionHelper.<String>invokeInstanceMethod(am, "getProperty", new Class[]{String.class}, parameters);
 
-                sampleRate = Integer.parseInt(strSampleRate);
-                bufferSizeInFrames = Integer.parseInt(strBufferSizeInFrames);
-
+                try {
+                    sampleRate = Integer.parseInt(strSampleRate);
+                    bufferSizeInFrames = Integer.parseInt(strBufferSizeInFrames);
+                } catch (NumberFormatException e) {
+                    Log.e(TAG, "parseInt failed", e);
+                }
                 Log.d(TAG, "sampleRate: " + sampleRate + ", framesPerBuffer: " + bufferSizeInFrames);
             } else {
                 Log.d(TAG, "android version is lower than 17");
@@ -433,6 +435,11 @@ public class Cocos2dxHelper {
 
     public static void stopAllEffects() {
         Cocos2dxHelper.sCocos2dSound.stopAllEffects();
+    }
+
+    static void setAudioFocus(boolean isAudioFocus) {
+        sCocos2dMusic.setAudioFocus(isAudioFocus);
+        sCocos2dSound.setAudioFocus(isAudioFocus);
     }
 
     public static void end() {

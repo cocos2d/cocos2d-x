@@ -251,7 +251,7 @@ bool CCFileUtilsWinRT::createDirectory(const std::string& path)
     if (!(GetFileAttributesEx(StringUtf8ToWideChar(path).c_str(), GetFileExInfoStandard, &wfad)))
     {
         subpath = "";
-        for (unsigned int i = 0; i < dirs.size(); ++i)
+        for (unsigned int i = 0, size = dirs.size(); i < size; ++i)
         {
             subpath += dirs[i];
             if (i > 0 && !isDirectoryExist(subpath))

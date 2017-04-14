@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -262,6 +262,13 @@ public:
      * @param vAlignment see TextVAlignment.
      */
     void setTitleAlignment(TextHAlignment hAlignment, TextVAlignment vAlignment);
+
+    /** replaces the current Label node with a new one */
+    void setTitleLabel(Label* label);
+
+    /** returns the current Label being used */
+    Label* getTitleLabel() const;
+
 
     /** @brief When user pressed the button, the button will zoom to a scale.
      * The final scale of the button  equals (button original scale + _zoomScale)

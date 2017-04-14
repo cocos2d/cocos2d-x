@@ -25,13 +25,7 @@
 #include "network/CCDownloader.h"
 
 // include platform specific implement class
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-
-#include "network/CCDownloader-apple.h"
-#include "network/CCDownloader-curl.h"
-#define DownloaderImpl  DownloaderCURL
-
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 
 #include "network/CCDownloader-apple.h"
 #define DownloaderImpl  DownloaderApple
@@ -81,7 +75,7 @@ namespace cocos2d { namespace network {
                                        int64_t bytesReceived,
                                        int64_t totalBytesReceived,
                                        int64_t totalBytesExpected,
-                                       std::function<int64_t(void *buffer, int64_t len)>& transferDataToBuffer)
+                                       std::function<int64_t(void *buffer, int64_t len)>& /*transferDataToBuffer*/)
         {
             if (onTaskProgress)
             {

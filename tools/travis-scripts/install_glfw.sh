@@ -40,12 +40,14 @@ install_glfw()
   mkdir $GLFW_INSTALL
   cd $GLFW_INSTALL
   wget --passive -c -p -O $GLFW_ZIP $GLFW_SOURCE
-  unzip ${GLFW_ZIP}
+  unzip ${GLFW_ZIP} > /dev/null
   make_and_install
   cd ..
   clean_tmp_file
 }
 
+#try to remove glfw3
+sudo apt-get purge libglfw3 libglfw3-dev
 
 install_glfw
 

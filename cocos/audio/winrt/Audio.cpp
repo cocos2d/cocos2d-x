@@ -141,13 +141,12 @@ void Audio::ReleaseResources()
         m_soundEffectMasteringVoice = nullptr;
     }
 
-    EffectList::iterator EffectIter = m_soundEffects.begin();
-    for (; EffectIter != m_soundEffects.end(); EffectIter++)
+    for (auto& EffectIter : m_soundEffects)
 	{
-        if (EffectIter->second.m_soundEffectSourceVoice != nullptr) 
+        if (EffectIter.second.m_soundEffectSourceVoice != nullptr)
         {
-            EffectIter->second.m_soundEffectSourceVoice->DestroyVoice();
-            EffectIter->second.m_soundEffectSourceVoice = nullptr;
+            EffectIter.second.m_soundEffectSourceVoice->DestroyVoice();
+            EffectIter.second.m_soundEffectSourceVoice = nullptr;
         }
 	}
     m_soundEffects.clear();
@@ -272,11 +271,10 @@ void Audio::SetSoundEffectVolume(float volume)
         return;
     }
 
-    EffectList::iterator iter;
-	for (iter = m_soundEffects.begin(); iter != m_soundEffects.end(); iter++)
+	for (auto& iter : m_soundEffects)
 	{
-        if (iter->first != m_backgroundID)
-            iter->second.m_soundEffectSourceVoice->SetVolume(m_soundEffctVolume);
+        if (iter.first != m_backgroundID)
+            iter.second.m_soundEffectSourceVoice->SetVolume(m_soundEffctVolume);
 	}
 }
 
@@ -414,11 +412,10 @@ void Audio::PauseAllSoundEffects()
         return;
     }
 
-    EffectList::iterator iter;
-	for (iter = m_soundEffects.begin(); iter != m_soundEffects.end(); iter++)
+	for (auto& iter : m_soundEffects)
 	{
-        if (iter->first != m_backgroundID)
-            PauseSoundEffect(iter->first);
+        if (iter.first != m_backgroundID)
+            PauseSoundEffect(iter.first);
 	}
 }
 
@@ -428,11 +425,10 @@ void Audio::ResumeAllSoundEffects()
         return;
     }
 
-    EffectList::iterator iter;
-	for (iter = m_soundEffects.begin(); iter != m_soundEffects.end(); iter++)
+	for (auto& iter : m_soundEffects)
 	{
-        if (iter->first != m_backgroundID)
-            ResumeSoundEffect(iter->first);
+        if (iter.first != m_backgroundID)
+            ResumeSoundEffect(iter.first);
 	}
 }
 

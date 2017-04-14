@@ -1,7 +1,7 @@
 /****************************************************************************
 Copyright (c) 2011      ForzeField Studios S.L.
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -232,7 +232,7 @@ const BlendFunc& MotionStreak::getBlendFunc(void) const
     return _blendFunc;
 }
 
-void MotionStreak::setOpacity(GLubyte opacity)
+void MotionStreak::setOpacity(GLubyte /*opacity*/)
 {
     CCASSERT(false, "Set opacity no supported");
 }
@@ -243,9 +243,8 @@ GLubyte MotionStreak::getOpacity(void) const
     return 0;
 }
 
-void MotionStreak::setOpacityModifyRGB(bool bValue)
+void MotionStreak::setOpacityModifyRGB(bool /*bValue*/)
 {
-    CC_UNUSED_PARAM(bValue);
 }
 
 bool MotionStreak::isOpacityModifyRGB(void) const
@@ -378,7 +377,7 @@ void MotionStreak::reset()
     _nuPoints = 0;
 }
 
-void MotionStreak::onDraw(const Mat4 &transform, uint32_t flags)
+void MotionStreak::onDraw(const Mat4 &transform, uint32_t /*flags*/)
 {  
     getGLProgram()->use();
     getGLProgram()->setUniformsForBuiltins(transform);

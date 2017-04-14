@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2014-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -35,6 +35,7 @@
 #include "base/CCDirector.h"
 #include "base/CCScheduler.h"
 #include "platform/CCFileUtils.h"
+#include "platform/tizen/CCApplication-tizen.h"
 
 #include <queue>
 
@@ -96,6 +97,11 @@ using namespace cocos2d::experimental;
 
 static void sessionInterruptedCallback(sound_session_interrupted_code_e code, void *user_data)
 {
+	Application* app = Application::getInstance();
+	if(app && app->isPaused())
+	{
+		return;
+	}
 	if(code == SOUND_SESSION_INTERRUPTED_COMPLETED)
 	{
 		AudioEngine::resumeAll();

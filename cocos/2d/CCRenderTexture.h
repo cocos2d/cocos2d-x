@@ -1,7 +1,7 @@
 /****************************************************************************
 Copyright (c) 2009      Jason Booth
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -319,8 +319,8 @@ protected:
     Rect         _fullviewPort;
     
     GLuint       _FBO;
-    GLuint       _depthRenderBufffer;
-    GLuint       _stencilRenderBufffer;
+    GLuint       _depthRenderBuffer;
+    GLuint       _stencilRenderBuffer;
     GLint        _oldFBO;
     Texture2D* _texture;
     Texture2D* _textureCopy;    // a copy of _texture

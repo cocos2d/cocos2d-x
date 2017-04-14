@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2015-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -395,7 +395,7 @@ public:
     }
 
     ///this method is mainly for expert/internal use only.
-    virtual void removeOverlappingObjectInternal(btBroadphaseProxy* otherProxy, btDispatcher* dispatcher, btBroadphaseProxy* thisProxy = nullptr) override
+    virtual void removeOverlappingObjectInternal(btBroadphaseProxy* otherProxy, btDispatcher* /*dispatcher*/, btBroadphaseProxy* thisProxy = nullptr) override
     {
         btCollisionObject* otherObject = (btCollisionObject*)otherProxy->m_clientObject;
         btAssert(otherObject);

@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013-2015 Chukong Technologies
+ Copyright (c) 2013-2017 Chukong Technologies
  
  http://www.cocos2d-x.org
  
@@ -192,9 +192,9 @@ public:
         {
             keys.reserve(_data.size());
             
-            for (auto iter = _data.cbegin(); iter != _data.cend(); ++iter)
+            for (const auto& iter : _data)
             {
-                keys.push_back(iter->first);
+                keys.push_back(iter.first);
             }
         }
         return keys;
@@ -209,11 +209,11 @@ public:
         {
             keys.reserve(_data.size() / 10);
             
-            for (auto iter = _data.cbegin(); iter != _data.cend(); ++iter)
+            for (const auto& iter : _data)
             {
-                if (iter->second == object)
+                if (iter.second == object)
                 {
-                    keys.push_back(iter->first);
+                    keys.push_back(iter.first);
                 }
             }
         }
@@ -276,7 +276,7 @@ public:
         CCASSERT(object != nullptr, "Object is nullptr!");
         object->retain();
         erase(key);
-        _data.insert(std::make_pair(key, object));
+        _data.emplace(key, object);
     }
     
     /** 
@@ -330,9 +330,9 @@ public:
      */
     void clear()
     {
-        for (auto iter = _data.cbegin(); iter != _data.cend(); ++iter)
+        for (const auto& iter : _data)
         {
-            iter->second->release();
+            iter.second->release();
         }
         
         _data.clear();
@@ -407,9 +407,9 @@ protected:
     /** Retains all the objects in the map */
     void addRefForAllObjects()
     {
-        for (auto iter = _data.begin(); iter != _data.end(); ++iter)
+        for (auto& iter : _data)
         {
-            iter->second->retain();
+            iter.second->retain();
         }
     }
     

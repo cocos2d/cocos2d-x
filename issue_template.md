@@ -4,7 +4,7 @@
    - NDK version:
    - Xcode version:
    - VS version:
-   - brower type and version:
+   - browser type and version:
 
 Steps to Reproduce:
 

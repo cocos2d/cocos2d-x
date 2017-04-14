@@ -2,7 +2,7 @@
 Copyright (c) 2009-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -91,6 +91,9 @@ bool TransitionScene::initWithDuration(float t, Scene *scene)
         if (_outScene == nullptr)
         {
             _outScene = Scene::create();
+            // just change its state is running that can run actoins later
+            // issue: https://github.com/cocos2d/cocos2d-x/issues/17442
+            _outScene->onEnter();
         }
         _outScene->retain();
 
@@ -143,10 +146,8 @@ void TransitionScene::finish()
     this->schedule(CC_SCHEDULE_SELECTOR(TransitionScene::setNewScene), 0);
 }
 
-void TransitionScene::setNewScene(float dt)
+void TransitionScene::setNewScene(float /*dt*/)
 {    
-    CC_UNUSED_PARAM(dt);
-
     this->unschedule(CC_SCHEDULE_SELECTOR(TransitionScene::setNewScene));
     
     // Before replacing, save the "send cleanup to scene"
@@ -1299,7 +1300,7 @@ TransitionCrossFade* TransitionCrossFade::create(float t, Scene* scene)
     return nullptr;
 }
 
-void TransitionCrossFade::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
+void TransitionCrossFade::draw(Renderer* /*renderer*/, const Mat4 &/*transform*/, uint32_t /*flags*/)
 {
     // override draw since both scenes (textures) are rendered in 1 scene
 }

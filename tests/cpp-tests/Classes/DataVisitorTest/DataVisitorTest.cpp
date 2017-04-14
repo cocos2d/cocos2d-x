@@ -58,26 +58,26 @@ void PrettyPrinterDemo::onEnter()
     }
     
     // Test code
-    PrettyPrinter vistor;
+    PrettyPrinter visitor;
     
     // print dictionary
     auto dict = __Dictionary::createWithContentsOfFile("animations/animations.plist");
-    dict->acceptVisitor(vistor);
-    log("%s", vistor.getResult().c_str());
+    dict->acceptVisitor(visitor);
+    log("%s", visitor.getResult().c_str());
     log("-------------------------------");
     
     __Set myset;
     for (int i = 0; i < 30; ++i) {
         myset.addObject(__String::createWithFormat("str: %d", i));
     }
-    vistor.clear();
-    myset.acceptVisitor(vistor);
-    log("%s", vistor.getResult().c_str());
+    visitor.clear();
+    myset.acceptVisitor(visitor);
+    log("%s", visitor.getResult().c_str());
     log("-------------------------------");
     
-    vistor.clear();
+    visitor.clear();
     addSprite();
 //    dict = Director::getInstance()->getTextureCache()->snapshotTextures();
-//    dict->acceptVisitor(vistor);
-//    log("%s", vistor.getResult().c_str());
+//    dict->acceptVisitor(visitor);
+//    log("%s", visitor.getResult().c_str());
 }

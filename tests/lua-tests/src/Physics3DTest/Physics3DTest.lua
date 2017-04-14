@@ -43,8 +43,8 @@ end
 function Physics3DTestDemo:shootBox(des)
     local rbDes = {}
     local cameraPosition = self._camera:getPosition3D()
-    local linearVec = cc.vec3normalize(cc.vec3(des.x - cameraPosition.x, des.y - cameraPosition.y, des.z - cameraPosition.z))
-    linearVec = cc.vec3(linearVec.x * 100, linearVec.y * 100, linearVec.z * 100)
+    local linearVec = cc.vec3normalize(cc.vec3sub(des, cameraPosition))
+    linearVec = cc.vec3mul(linearVec, 100)
 
     rbDes.originalTransform = cc.mat4.translate(cc.mat4.createIdentity(), self._camera:getPosition3D())
     rbDes.mass = 1.0
@@ -119,9 +119,9 @@ function Physics3DTestDemo:onEnter()
                     nearP = self._camera:unproject(nearP)
                     farP  = self._camera:unproject(farP)
     
-                    local dir = cc.vec3(farP.x - nearP.x, farP.y - nearP.y, farP.z - nearP.z)
+                    local dir = cc.vec3sub(farP, nearP)
                     local cameraPosition = self._camera:getPosition3D()
-                    self:shootBox(cc.vec3(cameraPosition.x + dir.x * 10, cameraPosition.y + dir.y * 10, cameraPosition.z + dir.z * 10))
+                    self:shootBox(cc.vec3add(cameraPosition, cc.vec3mul(dir, 10)))
                 end
             end, cc.Handler.EVENT_TOUCHES_ENDED)
 
@@ -267,8 +267,8 @@ function Physics3DConstraintDemo:extend()
             local size = cc.Director:getInstance():getWinSize()
             nearP = self._camera:unproject(size, nearP, nearP)
             farP  = self._camera:unproject(size, farP, farP)
-            local dir = cc.vec3normalize(cc.vec3(farP.x - nearP.x, farP.y - nearP.y, farP.z - nearP.z))
-            self._constraint:setPivotPointInB(cc.vec3(nearP.x + dir.x * self._pickingDistance, nearP.y + dir.y * self._pickingDistance, nearP.z + dir.z * self._pickingDistance))
+            local dir = cc.vec3normalize(cc.vec3sub(farP, nearP))
+            self._constraint:setPivotPointInB(cc.vec3add(nearP, cc.vec3mul(dir, self._pickingDistance)))
             return
         end
 
@@ -305,9 +305,9 @@ function Physics3DConstraintDemo:extend()
             nearP = self._camera:unproject(nearP)
             farP  = self._camera:unproject(farP)
 
-            local dir = cc.vec3(farP.x - nearP.x, farP.y - nearP.y, farP.z - nearP.z)
+            local dir = cc.vec3sub(farP, nearP)
             local cameraPosition = self._camera:getPosition3D()
-            self:shootBox(cc.vec3(cameraPosition.x + dir.x * 10, cameraPosition.y + dir.y * 10, cameraPosition.z + dir.z * 10))
+            self:shootBox(cc.vec3add(cameraPosition, cc.vec3mul(dir, 10)))
         end
     end, cc.Handler.EVENT_TOUCHES_ENDED)
 
@@ -705,6 +705,7 @@ function Physics3DTest()
         Physics3DCollisionCallbackDemo.create,
         Physics3DTerrainDemo.create,
     }
+    Helper.index = 1
 
     scene:addChild(BasicPhysics3DDemo.create())
     scene:addChild(CreateBackMenuItem())

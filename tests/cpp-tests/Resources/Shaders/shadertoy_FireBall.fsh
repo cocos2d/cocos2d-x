@@ -3,8 +3,6 @@ uniform vec2 center;
 uniform vec2 resolution;
 
 vec2   iCenter = center;
-vec2   iResolution = resolution;           // viewport resolution (in pixels)
-float  iGlobalTime = CC_Time[1];           // shader playback time (in seconds)
 //uniform float     iChannelTime[4];       // channel playback time (in seconds)
 //uniform vec3      iChannelResolution[4]; // channel resolution (in pixels)
 vec4      iMouse = vec4(0,0,0,0);                // mouse pixel coords. xy: current (if MLB down),
@@ -36,6 +34,9 @@ float snoise(vec3 uv, float res)
 
 void main(void)
 {
+    vec2   iResolution = resolution;           // viewport resolution (in pixels)
+    float  iGlobalTime = CC_Time[1];           // shader playback time (in seconds)
+
 	//vec2 p = -.5 + gl_FragCoord.xy / iResolution.xy;
     
     vec2 p = (gl_FragCoord.xy - center.xy) / iResolution.xy;

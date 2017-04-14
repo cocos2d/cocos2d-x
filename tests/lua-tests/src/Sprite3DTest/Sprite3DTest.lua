@@ -184,9 +184,9 @@ function Sprite3DWithSkinTest.addNewSpriteWithCoords(parent,x,y)
         end
         animate:setTag(110)
         animate:setQuality(Sprite3DWithSkinTest._animateQuality)
-        local repeate = cc.RepeatForever:create(animate)
-        repeate:setTag(110)
-        sprite:runAction(repeate)
+        local repeatAction = cc.RepeatForever:create(animate)
+        repeatAction:setTag(110)
+        sprite:runAction(repeatAction)
     end
 end
 
@@ -905,7 +905,7 @@ end
 function Sprite3DWithOBBPerfromanceTest.create()
     local layer = Sprite3DWithOBBPerfromanceTest.new()
     Helper.initWithLayer(layer)
-    Helper.titleLabel:setString("OBB Collison Perfromance Test")
+    Helper.titleLabel:setString("OBB Collision Perfromance Test")
     return layer
 end
 
@@ -1179,7 +1179,6 @@ function Sprite3DCubeMapTest:addNewSpriteWithCoords(pos)
 
     self._skyBox:setTexture(self._textureCube)
     self:addChild(self._skyBox)
-    self._skyBox:setScale(700)
 
     self:addChild(camera)
     self:setCameraMask(2)
@@ -1370,6 +1369,7 @@ function Sprite3DTest()
         Sprite3DNormalMappingTest.create,
         Sprite3DMaterialTest.create,
     }
+    Helper.index = 1
 
     scene:addChild(Sprite3DBasicTest.create())
     scene:addChild(CreateBackMenuItem())

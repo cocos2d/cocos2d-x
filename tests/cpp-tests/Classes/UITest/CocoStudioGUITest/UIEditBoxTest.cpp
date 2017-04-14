@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -82,7 +82,8 @@ bool UIEditBoxTest::init()
         addChild(button);
 
         // middle
-        _editPassword = ui::EditBox::create(editBoxSize, "extensions/orange_edit.png");
+        _editPassword = ui::EditBox::create(Size(editBoxSize.width,
+                                                 editBoxSize.height + 20), "extensions/orange_edit.png");
         _editPassword->setPosition(Vec2(visibleOrigin.x+visibleSize.width/2-50, visibleOrigin.y+visibleSize.height/2));
         _editPassword->setFontColor(Color3B::GREEN);
         _editPassword->setPlaceHolder("Password:");
@@ -141,6 +142,11 @@ void UIEditBoxTest::editBoxEditingDidBegin(cocos2d::ui::EditBox* editBox)
 void UIEditBoxTest::editBoxEditingDidEnd(cocos2d::ui::EditBox* editBox)
 {
     log("editBox %p DidEnd !", editBox);
+}
+
+void UIEditBoxTest::editBoxEditingDidEndWithAction(cocos2d::ui::EditBox* editBox, cocos2d::ui::EditBoxDelegate::EditBoxEndAction action)
+{
+    log("editBox %p DidEnd with action %d!", editBox, action);
 }
 
 void UIEditBoxTest::editBoxTextChanged(cocos2d::ui::EditBox* editBox, const std::string& text)

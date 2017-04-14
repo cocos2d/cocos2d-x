@@ -60,7 +60,7 @@ std::string computeHashForFile(const std::string& filePath);
 // srcFilePath - source file.
 // cacheFilePath - cache file path to be used to save cache.
 // return true if file already exists
-bool createMappedCacheFile(/*In*/ const std::string& srcFilePath, /*Out*/ std::string& cacheFilePath, /*Optional*/ std::string ext = "");
+bool createMappedCacheFile(/*In*/ const std::string& srcFilePath, /*Out*/ std::string& cacheFilePath, /*Optional*/ const std::string& ext = "");
 void destroyMappedCacheFile(const std::string& key);
 
 NS_CC_END

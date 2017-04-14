@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013-2014 Chukong Technologies
+ Copyright (c) 2013-2017 Chukong Technologies
 
  http://www.cocos2d-x.org
 
@@ -808,10 +808,10 @@ static std::string visitMap(const T& v, int depth)
 
     ret << getTabs(depth) << "{\n";
 
-    for (auto iter = v.begin(); iter != v.end(); ++iter)
+    for (auto& iter : v)
     {
-        ret << getTabs(depth + 1) << iter->first << ": ";
-        ret << visit(iter->second, depth + 1);
+        ret << getTabs(depth + 1) << iter.first << ": ";
+        ret << visit(iter.second, depth + 1);
     }
 
     ret << getTabs(depth) << "}\n";

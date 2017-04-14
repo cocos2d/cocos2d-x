@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -54,7 +54,7 @@ CheckBox* CheckBox::create()
 }
     
 CheckBox* CheckBox::create(const std::string& backGround,
-                           const std::string& backGroundSeleted,
+                           const std::string& backGroundSelected,
                            const std::string& cross,
                            const std::string& backGroundDisabled,
                            const std::string& frontCrossDisabled,
@@ -62,7 +62,7 @@ CheckBox* CheckBox::create(const std::string& backGround,
 {
     CheckBox *pWidget = new (std::nothrow) CheckBox;
     if (pWidget && pWidget->init(backGround,
-                                 backGroundSeleted,
+                                 backGroundSelected,
                                  cross,
                                  backGroundDisabled,
                                  frontCrossDisabled,
@@ -96,17 +96,22 @@ CheckBox* CheckBox::create(const std::string& backGround,
     
 void CheckBox::onTouchEnded(Touch *touch, Event *unusedEvent)
 {
-    if (_isSelected)
+    bool highlight = _highlight;
+
+    AbstractCheckButton::onTouchEnded(touch, unusedEvent);
+
+    if (highlight)
     {
-        setSelected(false);
-        AbstractCheckButton::onTouchEnded(touch, unusedEvent);
-        dispatchSelectChangedEvent(false);
-    }
-    else
-    {
-        setSelected(true);
-        AbstractCheckButton::onTouchEnded(touch, unusedEvent);
-        dispatchSelectChangedEvent(true);
+        if (_isSelected)
+        {
+            setSelected(false);
+            dispatchSelectChangedEvent(false);
+        }
+        else
+        {
+            setSelected(true);
+            dispatchSelectChangedEvent(true);
+        }
     }
 }
     

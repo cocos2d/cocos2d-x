@@ -1,7 +1,7 @@
 /****************************************************************************
  Copyright (c) 2008-2010 Ricardo Quesada
  Copyright (c) 2011-2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -98,26 +98,23 @@ var LoaderCycleLayer = BaseTestLayer.extend({
 
     ctor: function(){
         BaseTestLayer.prototype.ctor.call(this);
-        var index = 0;
 
         var winSize = cc.director.getWinSize();
 
         var resultTTF = new cc.LabelTTF("result: unknown");
         resultTTF.x = winSize.width / 2;
         resultTTF.y = winSize.height / 2;
+        this.addChild(resultTTF);
 
-        var t = this,
-            cb = function(num){
-                resultTTF.setString("result: " + num + " file load failed");
-                if(num === 1)
-                    resultTTF.setColor(cc.color.GREEN);
-                else
-                    resultTTF.setColor(cc.color.RED);
-                if (!resultTTF.parent)
-                    t.addChild(resultTTF);
-                if(index < 4)
-                    t.test(cb);
-            };
+        var cb = function(num){
+            if(num === 1) {
+                resultTTF.setColor(cc.color.GREEN);
+                resultTTF.setString("result: success");
+            } else {
+                resultTTF.setColor(cc.color.RED);
+                resultTTF.setString("result: failed");
+            }
+        };
         this.createInfo();
         this.regLoad();
         this.test(cb);
@@ -136,7 +133,7 @@ var LoaderCycleLayer = BaseTestLayer.extend({
         });
         cc.loader.register(["_test2"], {
             load: function(realUrl, url, res, cb){
-                cb && cb({});
+                cb && cb({}, null);
                 return null;
             }
         });

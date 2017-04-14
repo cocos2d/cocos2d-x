@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2013      cocos2d-x.org
- Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -42,12 +42,6 @@
 
 // Implement loadView to create a view hierarchy programmatically, without using a nib.
 - (void)loadView {
-    cocos2d::Application *app = cocos2d::Application::getInstance();
-    
-    // Initialize the GLView attributes
-    app->initGLContextAttrs();
-    cocos2d::GLViewImpl::convertAttrs();
-    
     // Initialize the CCEAGLView
     CCEAGLView *eaglView = [CCEAGLView viewWithFrame: [UIScreen mainScreen].bounds
                                          pixelFormat: (__bridge NSString *)cocos2d::GLViewImpl::_pixelFormat
@@ -62,14 +56,6 @@
     
     // Set EAGLView as view of RootViewController
     self.view = eaglView;
-    
-    cocos2d::GLView *glview = cocos2d::GLViewImpl::createWithEAGLView((__bridge void *)self.view);
-    
-    //set the GLView as OpenGLView of the Director
-    cocos2d::Director::getInstance()->setOpenGLView(glview);
-    
-    //run the cocos2d-x game scene
-    app->run();
 }
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.

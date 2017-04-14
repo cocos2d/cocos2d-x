@@ -1,120 +1,100 @@
-#!/usr/bin/python
+#!/usr/bin/env python
+
 # android-build.py
 # Build android
 
 import sys
 import os, os.path
-from optparse import OptionParser
 
 CPP_SAMPLES = ['cpp-empty-test', 'cpp-tests', 'game-controller-test']
 LUA_SAMPLES = ['lua-empty-test', 'lua-tests', 'lua-game-controller-test']
 JS_SAMPLES = ['js-tests']
 ALL_SAMPLES = CPP_SAMPLES + LUA_SAMPLES + JS_SAMPLES
 
-def caculate_built_samples(args):
-    ''' Compute the sampels to be built
-    'cpp' for short of all cpp tests
-    'lua' for short of all lua tests
+
+def calculate_build_targets(args):
+    ''' Calculate build targets from list of targets passed on command line.
+    'all' for all tests
+    'cpp' for all c++ tests
+    'lua' for all lua tests
+    'js' for all javascript tests
     '''
 
-    if 'all' in args:
-        return ALL_SAMPLES
-
     targets = []
-    if 'cpp' in args:
-        targets += CPP_SAMPLES
-        args.remove('cpp')
-    if 'lua' in args:
-        targets += LUA_SAMPLES
-        args.remove('lua')
-    if 'js' in args:
-        targets += JS_SAMPLES
-        args.remove('js')
+    for arg in args:
+        if arg == 'all':
+            targets += ALL_SAMPLES
+        elif arg == 'cpp':
+            targets += CPP_SAMPLES
+        elif arg == 'lua':
+            targets += LUA_SAMPLES
+        elif arg == 'js':
+            targets += JS_SAMPLES
+        else:
+            targets.append(arg)
 
-    targets += args
-
-    # remove duplicate elements, for example
-    # python android-build.py cpp hellocpp
+    # remove duplicates
     targets = set(targets)
-    return list(targets)
+    return targets
 
-def do_build(app_android_root, build_mode, app_abi):
+
+def do_build(app_android_root, build_mode, app_abi, platform):
 
     command = 'cocos compile -p android -s %s --ndk-mode %s --app-abi %s' % (app_android_root, build_mode, app_abi)
+    if platform:
+        command += ' --ap %s' % platform
     print command
 
     if os.system(command) != 0:
-        raise Exception("Build dynamic library for project [ " + app_android_root + " ] fails!")
+        raise Exception('Build dynamic library for project [ %s ] failed!' % app_android_root)
 
-def build_samples(target, build_mode, app_abi):
 
-    if build_mode is None:
-        build_mode = 'debug'
-    elif build_mode != 'release':
-        build_mode = 'debug'
+def build_targets(targets, build_mode, app_abi, api_level):
 
-    if app_abi is None:
-        app_abi = 'armeabi-v7a'
+    if api_level:
+        platform = 'android-%s' % api_level
+    else:
+        platform = None
 
-    build_targets = caculate_built_samples(target)
+    build_targets = calculate_build_targets(targets)
 
     app_android_root = ''
 
-    target_proj_path_map = {
-        "cpp-empty-test": "tests/cpp-empty-test",
-        "game-controller-test": "tests/game-controller-test",
-        "cpp-tests": "tests/cpp-tests",
-        "lua-empty-test": "tests/lua-empty-test",
-        "lua-tests": "tests/lua-tests",
-        "lua-game-controller-test": "tests/lua-game-controller-test",
-        "js-tests": "tests/js-tests"
-    }
-
-    cocos_root = os.path.join(os.path.dirname(os.path.realpath(__file__)), "..")
+    cocos_root = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..')
 
     for target in build_targets:
-        if target in target_proj_path_map:
-            app_android_root = os.path.join(cocos_root, target_proj_path_map[target])
-        else:
-            print 'unknown target: %s' % target
-            continue
+        app_android_root = os.path.join(cocos_root, 'tests', target)
+        do_build(app_android_root, build_mode, app_abi, platform)
 
-        do_build(app_android_root, build_mode, app_abi)
 
-# -------------- main --------------
-if __name__ == '__main__':
+def main():
+    from argparse import ArgumentParser, RawTextHelpFormatter
 
-    #parse the params
-    usage = """
-    This script is mainy used for building tests built-in with cocos2d-x.
+    description = '''
+    This script is mainly used for building tests built-in with cocos2d-x.
 
-    Usage: %prog [options] [cpp-empty-test|cpp-tests|lua-empty-test|lua-tests|js-tests|cpp|lua|all]
+    If you are new to cocos2d-x, we recommend you to start with cpp-empty-test or lua-empty-test.'''
 
-    If you are new to cocos2d-x, I recommend you start with cpp-empty-test, lua-empty-test.
+    parser = ArgumentParser(description=description, formatter_class=RawTextHelpFormatter)
+    parser.add_argument('-n', '--ndk', dest='app_abi', default='armeabi-v7a',
+                        help='specifies Android ABI')
+    parser.add_argument('-p', '--platform', dest='api_level',
+                        help='specifies Android API Level')
+    parser.add_argument('-b', '--build', dest='build_mode', metavar='BUILD_MODE', default='debug', choices=['debug', 'release'],
+                        help='the build mode for java project, debug (default) or release. ' +
+                        'To get more information, please refer to ' +
+                        'http://developer.android.com/tools/building/building-cmdline.html')
+    parser.add_argument('targets', nargs='+', metavar='targets',
+                        help='targets to build. A target is one of [cpp-empty-test|cpp-tests|lua-empty-test|lua-tests|js-tests|cpp|lua|js|all]',
+                        choices=['cpp-empty-test', 'cpp-tests', 'lua-empty-test', 'lua-tests', 'js-tests', 'cpp', 'lua', 'js', 'all'])
+    args = parser.parse_args()
 
-    You can combine these targets like this:
-
-    python android-build.py cpp-empty-test lua-empty-test
-
-    """
-
-    parser = OptionParser(usage=usage)
-    parser.add_option("-n", "--ndk", dest="app_abi",
-                      help='It is not used anymore, because cocos console does not support it.')
-    parser.add_option("-p", "--platform", dest="android_platform",
-                      help='This parameter is not used any more, just keep compatible.')
-    parser.add_option("-b", "--build", dest="build_mode",
-                      help='The build mode for java project,debug[default] or release. \
-                      Get more information, \
-                      please refer to http://developer.android.com/tools/building/building-cmdline.html')
-    (opts, args) = parser.parse_args()
-
-    if len(args) == 0:
-        parser.print_help()
+    try:
+        build_targets(args.targets, args.build_mode, args.app_abi, args.api_level)
+    except Exception as e:
+        print e
         sys.exit(1)
-    else:
-        try:
-            build_samples(args, opts.build_mode, opts.app_abi)
-        except Exception as e:
-            print e
-            sys.exit(1)
+
+
+if __name__ == '__main__':
+    main()

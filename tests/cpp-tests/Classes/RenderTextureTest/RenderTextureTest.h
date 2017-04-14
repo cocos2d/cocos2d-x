@@ -77,7 +77,7 @@ private:
     cocos2d::CustomCommand _renderCmds[4];
     void onBeforeClear();
     void onBeforeStencil();
-    void onBeforDraw();
+    void onBeforeDraw();
     void onAfterDraw();
     
 private:
@@ -153,6 +153,25 @@ public:
 private:
     cocos2d::RenderTexture* _rend;
     cocos2d::Sprite* _spriteDraw;
+};
+
+class RenderTextureWithSprite3DIssue16894 : public RenderTextureTest
+{
+public:
+    CREATE_FUNC(RenderTextureWithSprite3DIssue16894);
+    RenderTextureWithSprite3DIssue16894();
+    virtual ~RenderTextureWithSprite3DIssue16894();
+
+    virtual void visit(cocos2d::Renderer *renderer, const cocos2d::Mat4& parentTransform, uint32_t parentFlags) override;
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+
+private:
+    cocos2d::Sprite3D* _ship[3];
+
+    cocos2d::RenderTexture* _renderTexDefault;
+    cocos2d::RenderTexture* _renderTexWithBuffer;
 };
 
 #endif

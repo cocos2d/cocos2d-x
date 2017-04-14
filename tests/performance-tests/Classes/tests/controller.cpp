@@ -430,7 +430,7 @@ static int s_fatal_signals[] = {
     SIGSEGV,
     SIGTRAP,
     SIGTERM,
-    SIGKILL,
+    SIGKILL
 };
 #endif
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Chukong Technologies Inc.
+ * Copyright (c) 2014-2017 Chukong Technologies Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -154,11 +154,21 @@ cc.defineGetterSetter(_proto, "insetRight", _proto.getInsetRight, _proto.setInse
 cc.defineGetterSetter(_proto, "insetBottom", _proto.getInsetBottom, _proto.setInsetBottom);
 
 _proto = cc.EditBox.prototype;
-cc.defineGetterSetter(_proto, "font", null, _proto._setFont);
-cc.defineGetterSetter(_proto, "fontName", null, _proto.setFontName);
-cc.defineGetterSetter(_proto, "fontSize", null, _proto.setFontSize);
-cc.defineGetterSetter(_proto, "string", _proto.getString, _proto.setString);
-cc.defineGetterSetter(_proto, "maxLength", _proto.getMaxLength, _proto.setMaxLength);
+cc.defineGetterSetter(_proto, 'font', null, _p.setFont);
+cc.defineGetterSetter(_proto, 'fontName', null, _p.setFontName);
+cc.defineGetterSetter(_proto, 'fontSize', null, _p.setFontSize);
+cc.defineGetterSetter(_proto, 'fontColor', null, _p.setFontColor);
+cc.defineGetterSetter(_proto, 'string', _p.getString, _p.setString);
+cc.defineGetterSetter(_proto, 'maxLength', _p.getMaxLength, _p.setMaxLength);
+cc.defineGetterSetter(_proto, 'placeholder', _p.getPlaceHolder, _p.setPlaceHolder);
+cc.defineGetterSetter(_proto, 'placeholderFont', null, _p.setPlaceholderFont);
+cc.defineGetterSetter(_proto, 'placeholderFontName', null, _p.setPlaceholderFontName);
+cc.defineGetterSetter(_proto, 'placeholderFontSize', null, _p.setPlaceholderFontSize);
+cc.defineGetterSetter(_proto, 'placeholderFontColor', null, _p.setPlaceholderFontColor);
+cc.defineGetterSetter(_proto, 'inputFlag', null, _p.setInputFlag);
+cc.defineGetterSetter(_proto, 'delegate', null, _p.setDelegate);
+cc.defineGetterSetter(_proto, 'inputMode', null, _p.setInputMode);
+cc.defineGetterSetter(_proto, 'returnType', null, _p.setReturnType);
 
 _proto = ccui.ImageView.prototype;
 cc.defineGetterSetter(_proto, "anchorX", _proto._getAnchorX, _proto._setAnchorX);

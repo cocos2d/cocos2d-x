@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -274,7 +274,7 @@ void EventDispatcher::visitTarget(Node* node, bool isRootNode)
             globalZOrders.push_back(e.first);
         }
         
-        std::sort(globalZOrders.begin(), globalZOrders.end(), [](const float a, const float b){
+        std::stable_sort(globalZOrders.begin(), globalZOrders.end(), [](const float a, const float b){
             return a < b;
         });
         
@@ -413,7 +413,7 @@ void EventDispatcher::associateNodeAndEventListener(Node* node, EventListener* l
     else
     {
         listeners = new (std::nothrow) std::vector<EventListener*>();
-        _nodeListenersMap.insert(std::make_pair(node, listeners));
+        _nodeListenersMap.emplace(node, listeners);
     }
     
     listeners->push_back(listener);
@@ -469,7 +469,7 @@ void EventDispatcher::forceAddEventListener(EventListener* listener)
     {
         
         listeners = new (std::nothrow) EventListenerVector();
-        _listenerMap.insert(std::make_pair(listenerID, listeners));
+        _listenerMap.emplace(listenerID, listeners);
     }
     else
     {
@@ -717,9 +717,9 @@ void EventDispatcher::setPriority(EventListener* listener, int fixedPriority)
     if (listener == nullptr)
         return;
     
-    for (auto iter = _listenerMap.begin(); iter != _listenerMap.end(); ++iter)
+    for (auto& iter : _listenerMap)
     {
-        auto fixedPriorityListeners = iter->second->getFixedPriorityListeners();
+        auto fixedPriorityListeners = iter.second->getFixedPriorityListeners();
         if (fixedPriorityListeners)
         {
             auto found = std::find(fixedPriorityListeners->begin(), fixedPriorityListeners->end(), listener);
@@ -846,7 +846,7 @@ void EventDispatcher::dispatchTouchEventToListeners(EventListenerVector* listene
             // get a copy of cameras, prevent it's been modified in listener callback
             // if camera's depth is greater, process it earlier
             auto cameras = scene->getCameras();
-            for (auto rit = cameras.rbegin(); rit != cameras.rend(); ++rit)
+            for (auto rit = cameras.rbegin(), ritRend = cameras.rend(); rit != ritRend; ++rit)
             {
                 Camera* camera = *rit;
                 if (camera->isVisible() == false)
@@ -945,6 +945,10 @@ void EventDispatcher::dispatchCustomEvent(const std::string &eventName, void *op
     dispatchEvent(&ev);
 }
 
+bool EventDispatcher::hasEventListener(const EventListener::ListenerID& listenerID) const
+{
+    return getListeners(listenerID) != nullptr;
+}
 
 void EventDispatcher::dispatchTouchEvent(EventTouch* event)
 {
@@ -970,9 +974,8 @@ void EventDispatcher::dispatchTouchEvent(EventTouch* event)
     if (oneByOneListeners)
     {
         auto mutableTouchesIter = mutableTouches.begin();
-        auto touchesIter = originalTouches.begin();
         
-        for (; touchesIter != originalTouches.end(); ++touchesIter)
+        for (auto& touches : originalTouches)
         {
             bool isSwallowed = false;
 
@@ -994,15 +997,15 @@ void EventDispatcher::dispatchTouchEvent(EventTouch* event)
                 {
                     if (listener->onTouchBegan)
                     {
-                        isClaimed = listener->onTouchBegan(*touchesIter, event);
+                        isClaimed = listener->onTouchBegan(touches, event);
                         if (isClaimed && listener->_isRegistered)
                         {
-                            listener->_claimedTouches.push_back(*touchesIter);
+                            listener->_claimedTouches.push_back(touches);
                         }
                     }
                 }
                 else if (listener->_claimedTouches.size() > 0
-                         && ((removedIter = std::find(listener->_claimedTouches.begin(), listener->_claimedTouches.end(), *touchesIter)) != listener->_claimedTouches.end()))
+                         && ((removedIter = std::find(listener->_claimedTouches.begin(), listener->_claimedTouches.end(), touches)) != listener->_claimedTouches.end()))
                 {
                     isClaimed = true;
                     
@@ -1011,13 +1014,13 @@ void EventDispatcher::dispatchTouchEvent(EventTouch* event)
                         case EventTouch::EventCode::MOVED:
                             if (listener->onTouchMoved)
                             {
-                                listener->onTouchMoved(*touchesIter, event);
+                                listener->onTouchMoved(touches, event);
                             }
                             break;
                         case EventTouch::EventCode::ENDED:
                             if (listener->onTouchEnded)
                             {
-                                listener->onTouchEnded(*touchesIter, event);
+                                listener->onTouchEnded(touches, event);
                             }
                             if (listener->_isRegistered)
                             {
@@ -1027,7 +1030,7 @@ void EventDispatcher::dispatchTouchEvent(EventTouch* event)
                         case EventTouch::EventCode::CANCELLED:
                             if (listener->onTouchCancelled)
                             {
-                                listener->onTouchCancelled(*touchesIter, event);
+                                listener->onTouchCancelled(touches, event);
                             }
                             if (listener->_isRegistered)
                             {
@@ -1047,8 +1050,8 @@ void EventDispatcher::dispatchTouchEvent(EventTouch* event)
                     return true;
                 }
                 
-                CCASSERT((*touchesIter)->getID() == (*mutableTouchesIter)->getID(),
-                         "touchesIter ID should be equal to mutableTouchesIter's ID.");
+                CCASSERT(touches->getID() == (*mutableTouchesIter)->getID(),
+                         "touches ID should be equal to mutableTouchesIter's ID.");
                 
                 if (isClaimed && listener->_isRegistered && listener->_needSwallow)
                 {
@@ -1325,7 +1328,7 @@ void EventDispatcher::sortEventListenersOfSceneGraphPriority(const EventListener
     visitTarget(rootNode, true);
     
     // After sort: priority < 0, > 0
-    std::sort(sceneGraphListeners->begin(), sceneGraphListeners->end(), [this](const EventListener* l1, const EventListener* l2) {
+    std::stable_sort(sceneGraphListeners->begin(), sceneGraphListeners->end(), [this](const EventListener* l1, const EventListener* l2) {
         return _nodePriorityMap[l1->getAssociatedNode()] > _nodePriorityMap[l2->getAssociatedNode()];
     });
     
@@ -1350,7 +1353,7 @@ void EventDispatcher::sortEventListenersOfFixedPriority(const EventListener::Lis
         return;
     
     // After sort: priority < 0, > 0
-    std::sort(fixedListeners->begin(), fixedListeners->end(), [](const EventListener* l1, const EventListener* l2) {
+    std::stable_sort(fixedListeners->begin(), fixedListeners->end(), [](const EventListener* l1, const EventListener* l2) {
         return l1->getFixedPriority() < l2->getFixedPriority();
     });
     
@@ -1375,7 +1378,7 @@ void EventDispatcher::sortEventListenersOfFixedPriority(const EventListener::Lis
     
 }
 
-EventDispatcher::EventListenerVector* EventDispatcher::getListeners(const EventListener::ListenerID& listenerID)
+EventDispatcher::EventListenerVector* EventDispatcher::getListeners(const EventListener::ListenerID& listenerID) const
 {
     auto iter = _listenerMap.find(listenerID);
     if (iter != _listenerMap.end())
@@ -1544,7 +1547,7 @@ void EventDispatcher::setDirty(const EventListener::ListenerID& listenerID, Dirt
     auto iter = _priorityDirtyFlagMap.find(listenerID);
     if (iter == _priorityDirtyFlagMap.end())
     {
-        _priorityDirtyFlagMap.insert(std::make_pair(listenerID, flag));
+        _priorityDirtyFlagMap.emplace(listenerID, flag);
     }
     else
     {

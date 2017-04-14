@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Chukong Technologies Inc.
+ * Copyright (c) 2014-2017 Chukong Technologies Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -38,7 +38,7 @@ ccui.Widget.prototype._ctor
     = ccui.ScrollView.prototype._ctor
     = function(){
         this.init();
-    }
+    };
 
 ccui.Button.prototype._ctor = function (normalImage, selectedImage, disableImage, texType) {
     if(texType !== undefined)
@@ -80,7 +80,7 @@ ccui.ImageView.prototype._ctor = function(imageFileName, texType){
     }
     else
         ccui.Widget.prototype.init.call(this);
-}
+};
 
 ccui.LoadingBar.prototype._ctor = function(textureName, percentage){
     ccui.Widget.prototype.init.call(this);

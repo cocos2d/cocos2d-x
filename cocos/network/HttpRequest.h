@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2010-2012 cocos2d-x.org
- Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -324,9 +324,9 @@ public:
      * @param headers The string vector of custom-defined headers.
      */
     void setHeaders(const std::vector<std::string>& headers)
-       {
-           _headers = headers;
-       }
+    {
+        _headers = headers;
+    }
 
     /**
      * Get custom headers.
@@ -364,7 +364,7 @@ protected:
     SEL_HttpResponse            _pSelector;      /// callback function, e.g. MyLayer::onHttpResponse(HttpClient *sender, HttpResponse * response)
     ccHttpRequestCallback       _pCallback;      /// C++11 style callbacks
     void*                       _pUserData;      /// You can add your customed data here
-    std::vector<std::string>    _headers;              /// custom http headers
+    std::vector<std::string>    _headers;        /// custom http headers
 };
 
 }

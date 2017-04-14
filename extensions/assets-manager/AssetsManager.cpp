@@ -65,10 +65,10 @@ AssetsManager::AssetsManager(const char* packageUrl/* =nullptr */, const char* v
 {
     checkStoragePath();
     // convert downloader error code to AssetsManager::ErrorCode
-    _downloader->onTaskError = [this](const DownloadTask& task,
+    _downloader->onTaskError = [this](const DownloadTask& /*task*/,
                                       int errorCode,
-                                      int errorCodeInternal,
-                                      const std::string& errorStr)
+                                      int /*errorCodeInternal*/,
+                                      const std::string& /*errorStr*/)
     {
         _isDownloading = false;
         
@@ -82,7 +82,7 @@ AssetsManager::AssetsManager(const char* packageUrl/* =nullptr */, const char* v
     
     // progress callback
     _downloader->onTaskProgress = [this](const DownloadTask& task,
-                                         int64_t bytesReceived,
+                                         int64_t /*bytesReceived*/,
                                          int64_t totalBytesReceived,
                                          int64_t totalBytesExpected)
     {
@@ -103,7 +103,7 @@ AssetsManager::AssetsManager(const char* packageUrl/* =nullptr */, const char* v
     };
     
     // get version from version file when get data success
-    _downloader->onDataTaskSuccess = [this](const DownloadTask& task,
+    _downloader->onDataTaskSuccess = [this](const DownloadTask& /*task*/,
                                             std::vector<unsigned char>& data)
     {
         // store version info to member _version
@@ -150,7 +150,7 @@ AssetsManager::AssetsManager(const char* packageUrl/* =nullptr */, const char* v
     };
     
     // after download package, do uncompress operation
-    _downloader->onFileTaskSuccess = [this](const DownloadTask& task)
+    _downloader->onFileTaskSuccess = [this](const DownloadTask& /*task*/)
     {
         downloadAndUncompress();
     };
@@ -490,7 +490,7 @@ AssetsManager* AssetsManager::create(const char* packageUrl, const char* version
     class DelegateProtocolImpl : public AssetsManagerDelegateProtocol 
     {
     public :
-        DelegateProtocolImpl(ErrorCallback aErrorCallback, ProgressCallback aProgressCallback, SuccessCallback aSuccessCallback)
+        DelegateProtocolImpl(ErrorCallback& aErrorCallback, ProgressCallback& aProgressCallback, SuccessCallback& aSuccessCallback)
         : errorCallback(aErrorCallback), progressCallback(aProgressCallback), successCallback(aSuccessCallback)
         {}
 

@@ -1,6 +1,6 @@
 /**
  Copyright 2013 BlackBerry Inc.
- Copyright (c) 2014-2015 Chukong Technologies
+ Copyright (c) 2014-2017 Chukong Technologies
  
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -359,7 +359,7 @@ public:
      * @param q The quaternion to multiply.
      * @return The quaternion product.
      */
-    inline const Quaternion operator*(const Quaternion& q) const;
+    inline Quaternion operator*(const Quaternion& q) const;
 
     /**
      * Calculates the quaternion product of this quaternion with the given vec3.

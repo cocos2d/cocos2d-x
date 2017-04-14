@@ -818,7 +818,7 @@ std::string LabelGlyphDesigner::title() const
 
 std::string LabelGlyphDesigner::subtitle() const
 {
-    return "You should see a font with shawdows and outline";
+    return "You should see a font with shadows and outline";
 }
 
 //------------------------------------------------------------------
@@ -1310,7 +1310,7 @@ std::string BMFontUnicode::title() const
 
 std::string BMFontUnicode::subtitle() const
 {
-    return "You should see 4 differnt labels:\nIn Spanish, Chinese, Russian and Korean";
+    return "You should see 4 different labels:\nIn Spanish, Chinese, Russian and Korean";
 }
 
 // BMFontInit
@@ -1334,7 +1334,7 @@ std::string BMFontInit::title() const
 
 std::string BMFontInit::subtitle() const
 {
-    return "Testing LabelBMFont::create() wihtout params";
+    return "Testing LabelBMFont::create() without params";
 }
 
 // TTFFontInit
@@ -1359,7 +1359,7 @@ std::string TTFFontInit::title() const
 
 std::string TTFFontInit::subtitle() const
 {
-    return "Testing LabelTTF::create() wihtout params";
+    return "Testing LabelTTF::create() without params";
 }
 
 TTFFontShadowAndStroke::TTFFontShadowAndStroke()

@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2014 cocos2d-x.org
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2014-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -36,12 +36,14 @@
 
 #import <GameController/GameController.h>
 
-@interface GCControllerConnectionEventHandler : NSObject
-
 typedef void (^GCControllerConnectionBlock)(GCController* controller);
-@property (copy) GCControllerConnectionBlock _connectionBlock;
-
 typedef void (^GCControllerDisconnectionBlock)(GCController* controller);
+
+@interface GCControllerConnectionEventHandler : NSObject
+{
+}
+
+@property (copy) GCControllerConnectionBlock _connectionBlock;
 @property (copy) GCControllerDisconnectionBlock _disconnectionBlock;
 
 +(GCControllerConnectionEventHandler*) getInstance;
@@ -73,14 +75,18 @@ static GCControllerConnectionEventHandler* __instance = nil;
 -(void) observerConnection: (GCControllerConnectionBlock) connectBlock disconnection: (GCControllerDisconnectionBlock) disconnectBlock {
     self._connectionBlock = connectBlock;
     self._disconnectionBlock = disconnectBlock;
-    
+
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onControllerConnected:) name:GCControllerDidConnectNotification object:nil];
-    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onControllerDisconnected:) name:GCControllerDidDisconnectNotification object:nil];
 }
 
 -(void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+
+    // Have to reset 'copy' property to nil value to avoid memory leak.
+    self._connectionBlock = nil;
+    self._disconnectionBlock = nil;
+
     [super dealloc];
 }
 
@@ -248,7 +254,7 @@ void Controller::registerListeners()
             }
         };
     }
-    else
+    else if (_impl->_gcController.gamepad != nil)
     {
         _impl->_gcController.gamepad.dpad.up.valueChangedHandler = ^(GCControllerButtonInput *button, float value, BOOL pressed){
             onButtonEvent(Key::BUTTON_DPAD_UP, pressed, value, button.isAnalog);
@@ -294,6 +300,38 @@ void Controller::registerListeners()
             }
         };
     }
+#if defined(CC_TARGET_OS_TVOS)
+    else if (_impl->_gcController.microGamepad != nil)
+    {
+        _impl->_gcController.microGamepad.dpad.up.valueChangedHandler = ^(GCControllerButtonInput *button, float value, BOOL pressed){
+            onButtonEvent(Key::BUTTON_DPAD_UP, pressed, value, button.isAnalog);
+        };
+        
+        _impl->_gcController.microGamepad.dpad.down.valueChangedHandler = ^(GCControllerButtonInput *button, float value, BOOL pressed){
+            onButtonEvent(Key::BUTTON_DPAD_DOWN, pressed, value, button.isAnalog);
+        };
+        
+        _impl->_gcController.microGamepad.dpad.left.valueChangedHandler = ^(GCControllerButtonInput *button, float value, BOOL pressed){
+            onButtonEvent(Key::BUTTON_DPAD_LEFT, pressed, value, button.isAnalog);
+        };
+        
+        _impl->_gcController.microGamepad.dpad.right.valueChangedHandler = ^(GCControllerButtonInput *button, float value, BOOL pressed){
+            onButtonEvent(Key::BUTTON_DPAD_RIGHT, pressed, value, button.isAnalog);
+        };
+        
+        _impl->_gcController.microGamepad.valueChangedHandler = ^(GCMicroGamepad *gamepad, GCControllerElement *element){
+            
+            if (element == gamepad.buttonA)
+            {
+                onButtonEvent(Key::BUTTON_A, gamepad.buttonA.isPressed, gamepad.buttonA.value, gamepad.buttonA.isAnalog);
+            }
+            else if (element == gamepad.buttonX)
+            {
+                onButtonEvent(Key::BUTTON_X, gamepad.buttonX.isPressed, gamepad.buttonX.value, gamepad.buttonX.isAnalog);
+            }
+        };
+    }
+#endif
     
     _impl->_gcController.controllerPausedHandler = ^(GCController* gcCon){
         

@@ -1,7 +1,7 @@
 /****************************************************************************
  Copyright (c) 2012      greathqy
  Copyright (c) 2012      cocos2d-x.org
- Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -158,7 +158,7 @@ private:
      * Init pthread mutex, semaphore, and create new thread for http requests
      * @return bool
      */
-    bool lazyInitThreadSemphore();
+    bool lazyInitThreadSemaphore();
     void networkThread();
     void networkThreadAlone(HttpRequest* request, HttpResponse* response);
     /** Poll function called from main thread to dispatch callbacks when http requests finished **/

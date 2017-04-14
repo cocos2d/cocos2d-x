@@ -1,7 +1,7 @@
 /****************************************************************************
 Copyright (c) 2009      On-Core
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2016 Chukong Technologies Inc. 
+Copyright (c) 2013-2017 Chukong Technologies Inc. 
  
 http://www.cocos2d-x.org
 
@@ -231,7 +231,7 @@ void GridBase::beforeDraw(void)
     _grabber->beforeRender(_texture);
 }
 
-void GridBase::afterDraw(cocos2d::Node *target)
+void GridBase::afterDraw(cocos2d::Node * /*target*/)
 {
     _grabber->afterRender(_texture);
 

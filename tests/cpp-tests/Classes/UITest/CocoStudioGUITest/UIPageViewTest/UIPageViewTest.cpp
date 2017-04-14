@@ -61,6 +61,7 @@ bool UIPageViewTest::init()
         pageView->setPosition((widgetSize - pageView->getContentSize()) / 2.0f);
         pageView->removeAllItems();
         pageView->setIndicatorEnabled(true);
+        pageView->setGlobalZOrder(200);
         
         int pageCount = 4;
         for (int i = 0; i < pageCount; ++i)
@@ -357,7 +358,7 @@ bool UIPageViewTouchPropagationTest::init()
         
         auto eventListener = EventListenerTouchOneByOne::create();
         eventListener->onTouchBegan = [](Touch* touch, Event* event) -> bool{
-            CCLOG("layout recieves touches");
+            CCLOG("layout receives touches");
             return true;
         };
         _eventDispatcher->addEventListenerWithSceneGraphPriority(eventListener, this);
@@ -503,7 +504,7 @@ bool UIPageViewDynamicAddAndRemoveTest::init()
         
         //add buttons
         auto button = Button::create();
-        button->setNormalizedPosition(Vec2(0.12f,0.7f));
+        button->setPositionNormalized(Vec2(0.12f,0.7f));
         button->setTitleText("Add A Page");
         button->setZoomScale(0.3f);
         button->setPressedActionEnabled(true);
@@ -537,7 +538,7 @@ bool UIPageViewDynamicAddAndRemoveTest::init()
         _uiLayer->addChild(button);
         
         auto button2 = Button::create();
-        button2->setNormalizedPosition(Vec2(0.12f,0.5f));
+        button2->setPositionNormalized(Vec2(0.12f,0.5f));
         button2->setTitleText("Remove A Page");
         button2->setZoomScale(0.3f);
         button2->setPressedActionEnabled(true);
@@ -559,7 +560,7 @@ bool UIPageViewDynamicAddAndRemoveTest::init()
         _uiLayer->addChild(button2);
         
         auto button3 = Button::create();
-        button3->setNormalizedPosition(Vec2(0.12f,0.3f));
+        button3->setPositionNormalized(Vec2(0.12f,0.3f));
         button3->setTitleText("Remove All Pages");
         button3->setZoomScale(0.3f);
         button3->setPressedActionEnabled(true);
@@ -575,7 +576,7 @@ bool UIPageViewDynamicAddAndRemoveTest::init()
 
         auto button4 = (ui::Button*)button3->clone();
         button4->setTitleText("Scroll to Page4");
-        button4->setNormalizedPosition(Vec2(0.85f, 0.5f));
+        button4->setPositionNormalized(Vec2(0.85f, 0.5f));
         button4->addClickEventListener([=](Ref* sender){
             pageView->scrollToItem(3);
             CCLOG("current page index = %zd", pageView->getCurrentPageIndex());
@@ -676,7 +677,7 @@ bool UIPageViewJumpToPageTest::init()
 
         //add buttons to jump to specific page
         auto button1 = ui::Button::create();
-        button1->setNormalizedPosition(Vec2(0.1f, 0.75f));
+        button1->setPositionNormalized(Vec2(0.1f, 0.75f));
         button1->setTitleText("Jump to Page1");
         CCLOG("button1 content Size = %f, %f", button1->getContentSize().width,
               button1->getContentSize().height);
@@ -687,7 +688,7 @@ bool UIPageViewJumpToPageTest::init()
 
         auto button2 = static_cast<ui::Button*>(button1->clone());
         button2->setTitleText("Jump to Page2");
-        button2->setNormalizedPosition(Vec2(0.1f, 0.65f));
+        button2->setPositionNormalized(Vec2(0.1f, 0.65f));
         CCLOG("button2 content Size = %f, %f", button2->getContentSize().width,
               button2->getContentSize().height);
         button2->addClickEventListener([=](Ref*){
@@ -697,7 +698,7 @@ bool UIPageViewJumpToPageTest::init()
 
         auto button3 = static_cast<ui::Button*>(button2->clone());
         button3->setTitleText("Jump to Page3");
-        button3->setNormalizedPosition(Vec2(0.9f, 0.75f));
+        button3->setPositionNormalized(Vec2(0.9f, 0.75f));
         button3->addClickEventListener([=](Ref*){
             pageView->setCurrentPageIndex(2);
         });
@@ -705,7 +706,7 @@ bool UIPageViewJumpToPageTest::init()
 
         auto button4 = static_cast<ui::Button*>(button2->clone());
         button4->setTitleText("Jump to Page4");
-        button4->setNormalizedPosition(Vec2(0.9f, 0.65f));
+        button4->setPositionNormalized(Vec2(0.9f, 0.65f));
         button4->addClickEventListener([=](Ref*){
             pageView->setCurrentPageIndex(3);
         });
@@ -984,7 +985,7 @@ bool UIPageViewIndicatorTest::init()
         Size widgetSize = _widget->getContentSize();
         
         // Add a label in which the dragpanel events will be displayed
-        _displayValueLabel = Text::create("PageView indidcator custom texture\nscale : 0.5, index color: RED", "fonts/Marker Felt.ttf", 16);
+        _displayValueLabel = Text::create("PageView indicator custom texture\nscale : 0.5, index color: RED", "fonts/Marker Felt.ttf", 16);
         _displayValueLabel->setAnchorPoint(Vec2(0.5f, -1.0f));
         _displayValueLabel->setPosition(Vec2(widgetSize.width / 2.0f,
                                              widgetSize.height / 2.0f +

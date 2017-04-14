@@ -27,7 +27,7 @@ MciPlayer::MciPlayer()
         WNDCLASS  wc;        // Windows Class Structure
 
         // Redraw On Size, And Own DC For Window.
-        wc.style          = 0;  
+        wc.style          = 0;
         wc.lpfnWndProc    = _SoundPlayProc;                    // WndProc Handles Messages
         wc.cbClsExtra     = 0;                              // No Extra Window Data
         wc.cbWndExtra     = 0;                                // No Extra Window Data
@@ -72,7 +72,7 @@ MciPlayer::~MciPlayer()
 void MciPlayer::Open(const char* pFileName, UINT uId)
 {
 //     WCHAR * pBuf = NULL;
-    do 
+    do
     {
         BREAK_IF(! pFileName || ! _wnd);
         int nLen = (int)strlen(pFileName);
@@ -145,17 +145,17 @@ void MciPlayer::Resume()
     {
         // midi not support MCI_RESUME, should get the position and use MCI_FROM
         MCI_STATUS_PARMS mciStatusParms;
-        MCI_PLAY_PARMS   mciPlayParms;  
-        mciStatusParms.dwItem = MCI_STATUS_POSITION;   
-        _SendGenericCommand(MCI_STATUS, MCI_STATUS_ITEM, reinterpret_cast<DWORD_PTR>(&mciStatusParms)); // MCI_STATUS   
-        mciPlayParms.dwFrom = mciStatusParms.dwReturn;  // get position  
+        MCI_PLAY_PARMS   mciPlayParms;
+        mciStatusParms.dwItem = MCI_STATUS_POSITION;
+        _SendGenericCommand(MCI_STATUS, MCI_STATUS_ITEM, reinterpret_cast<DWORD_PTR>(&mciStatusParms)); // MCI_STATUS
+        mciPlayParms.dwFrom = mciStatusParms.dwReturn;  // get position
         _SendGenericCommand(MCI_PLAY, MCI_FROM, reinterpret_cast<DWORD_PTR>(&mciPlayParms)); // MCI_FROM
-    } 
+    }
     else
     {
         _SendGenericCommand(MCI_RESUME);
         _playing = true;
-    }   
+    }
 }
 
 void MciPlayer::Stop()
@@ -208,7 +208,7 @@ void MciPlayer::_SendGenericCommand( int nCommand, DWORD_PTR param1 /*= 0*/, DWO
 LRESULT WINAPI _SoundPlayProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam)
 {
     MciPlayer * pPlayer = NULL;
-    if (MM_MCINOTIFY == Msg 
+    if (MM_MCINOTIFY == Msg
         && MCI_NOTIFY_SUCCESSFUL == wParam
         &&(pPlayer = (MciPlayer *)GetWindowLongPtr(hWnd, GWLP_USERDATA)))
     {

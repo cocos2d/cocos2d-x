@@ -52,11 +52,12 @@ namespace cocos2d {
 
     EditBoxWinRT::EditBoxWinRT(Windows::Foundation::EventHandler<Platform::String^>^ beginHandler,
       Windows::Foundation::EventHandler<Platform::String^>^ changeHandler,
-      Windows::Foundation::EventHandler<Platform::String^>^ endHandler) :
+      Windows::Foundation::EventHandler<cocos2d::EndEventArgs^>^ endHandler) :
       _beginHandler(beginHandler),
       _changeHandler(changeHandler),
       _endHandler(endHandler),
       _color(Windows::UI::Colors::White),
+      _alignment(),
       _initialText(L""),
       _fontFamily(L"Segoe UI"),
       _fontSize(12),
@@ -87,10 +88,10 @@ namespace cocos2d {
       passwordBox->Width = _size.Width;
       passwordBox->Height = _size.Height;
       passwordBox->Foreground = ref new Media::SolidColorBrush(_color);
-      passwordBox->Password = _initialText;
       passwordBox->FontSize = _fontSize;
       passwordBox->FontFamily = ref new Media::FontFamily(_fontFamily);
       passwordBox->MaxLength = _maxLength;
+      passwordBox->Password = _initialText;
       _changeToken = passwordBox->PasswordChanged += ref new Windows::UI::Xaml::RoutedEventHandler(this, &cocos2d::ui::EditBoxWinRT::onPasswordChanged);
       return passwordBox;
     }
@@ -103,13 +104,14 @@ namespace cocos2d {
       textBox->Width = _size.Width;
       textBox->Height = _size.Height;
       textBox->Foreground = ref new Media::SolidColorBrush(_color);
-      textBox->Text = _initialText;
       textBox->FontSize = _fontSize;
       textBox->FontFamily = ref new Media::FontFamily(_fontFamily);
       textBox->MaxLength = _maxLength;
       textBox->AcceptsReturn = _multiline;
       textBox->TextWrapping = _multiline ? TextWrapping::Wrap : TextWrapping::NoWrap;
+      textBox->Text = _initialText;
       setInputScope(textBox);
+      _setTextHorizontalAlignment(textBox);
       _changeToken = textBox->TextChanged += ref new Windows::UI::Xaml::Controls::TextChangedEventHandler(this, &cocos2d::ui::EditBoxWinRT::onTextChanged);
       return textBox;
     }
@@ -135,7 +137,10 @@ namespace cocos2d {
     void EditBoxWinRT::onKeyDown(Platform::Object^ sender, Windows::UI::Xaml::Input::KeyRoutedEventArgs^ args)
     {
       if (args->Key == Windows::System::VirtualKey::Enter && !_multiline) {
-        onLostFocus(nullptr, nullptr);
+        onLostFocus(nullptr, args);
+      }
+      else if (args->Key == Windows::System::VirtualKey::Tab) {
+        onLostFocus(nullptr, args);
       }
     }
 
@@ -149,6 +154,17 @@ namespace cocos2d {
 
     void EditBoxWinRT::onLostFocus(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs ^args)
     {
+      EditBoxDelegate::EditBoxEndAction action = EditBoxDelegate::EditBoxEndAction::UNKNOWN;
+      Windows::UI::Xaml::Input::KeyRoutedEventArgs^ keyArgs = dynamic_cast<Windows::UI::Xaml::Input::KeyRoutedEventArgs^>(args);
+      if (keyArgs) {
+        if (keyArgs->Key == Windows::System::VirtualKey::Enter && !_multiline) {
+          action = EditBoxDelegate::EditBoxEndAction::RETURN;
+        }
+        else if (keyArgs->Key == Windows::System::VirtualKey::Tab) {
+          action = EditBoxDelegate::EditBoxEndAction::TAB_TO_NEXT;
+        }
+      }
+
       _isEditing = false;
       Concurrency::critical_section::scoped_lock lock(_critical_section);
       Platform::String^ text = L"";
@@ -160,7 +176,8 @@ namespace cocos2d {
         text = static_cast<TextBox^>(_textBox)->Text;
         static_cast<TextBox^>(_textBox)->TextChanged -= _changeToken;
       }
-      std::shared_ptr<cocos2d::InputEvent> inputEvent(new UIEditBoxEvent(this, text, _endHandler));
+
+      std::shared_ptr<cocos2d::InputEvent> inputEvent(new UIEditBoxEndEvent(this, text, static_cast<int>(action), _endHandler));
       cocos2d::GLViewImpl::sharedOpenGLView()->QueueEvent(inputEvent);
 
       _textBox->LostFocus -= _unfocusToken;
@@ -238,7 +255,6 @@ namespace cocos2d {
       _password = false;
       switch ((EditBox::InputFlag)inputFlags) {
       case EditBox::InputFlag::PASSWORD:
-      case EditBox::InputFlag::SENSITIVE:
         _password = true;
         break;
       default:
@@ -247,11 +263,32 @@ namespace cocos2d {
     }
 
     void EditBoxWinRT::setInputMode(int inputMode) {
+      _multiline = (EditBox::InputMode)inputMode == EditBox::InputMode::ANY;
       _inputMode = inputMode;
+    }
+
+    void EditBoxWinRT::setTextHorizontalAlignment(int alignment) {
+      _alignment = alignment;
     }
 
     void EditBoxWinRT::setMaxLength(int maxLength) {
       _maxLength = maxLength;
+    }
+
+    void EditBoxWinRT::_setTextHorizontalAlignment(TextBox^ textBox)
+    {
+      switch (_alignment) {
+        default:
+        case 0:
+          textBox->TextAlignment = TextAlignment::Left;
+          break;
+        case 1:
+          textBox->TextAlignment = TextAlignment::Center;
+          break;
+        case 2:
+          textBox->TextAlignment = TextAlignment::Right;
+          break;
+      }
     }
 
     void EditBoxWinRT::setInputScope(TextBox^ textBox)
@@ -334,9 +371,10 @@ namespace cocos2d {
         auto text = PlatformStringToString(arg);
         this->editBoxEditingChanged(text);
       });
-      auto endHandler = ref new Windows::Foundation::EventHandler<Platform::String^>([this](Platform::Object^ sender, Platform::String^ arg) {
-        auto text = PlatformStringToString(arg);
-        this->editBoxEditingDidEnd(text);
+      auto endHandler = ref new Windows::Foundation::EventHandler<cocos2d::EndEventArgs^>([this](Platform::Object^ sender, cocos2d::EndEventArgs^ arg) {
+        auto text = PlatformStringToString(arg->GetText());
+        auto action = arg->GetAction();
+        this->editBoxEditingDidEnd(text, static_cast<cocos2d::ui::EditBoxDelegate::EditBoxEndAction>(action));
         this->onEndEditing(text);
       });
       _system_control = ref new EditBoxWinRT(beginHandler, changeHandler, endHandler);
@@ -352,10 +390,10 @@ namespace cocos2d {
       _system_control->setFontSize(_fontSize * cocos2d::Director::getInstance()->getOpenGLView()->getScaleY() /** scale.y*/);
 
       // fontFamily
-      auto font = cocos2d::FontFreeType::create(pFontName, fontSize /* TODO: Not sure if supposed to be scaled or unscaled */, cocos2d::GlyphCollection::DYNAMIC, nullptr);
+      auto font = cocos2d::FontFreeType::create(pFontName, fontSize, cocos2d::GlyphCollection::DYNAMIC, nullptr);
       if (font != nullptr) {
         std::string fontName = "ms-appx:///Assets/Resources/" + std::string(pFontName) +'#' + font->getFontFamily();
-        _system_control->setFontFamily(PlatformStringFromString(pFontName));
+        _system_control->setFontFamily(PlatformStringFromString(fontName));
       }
     }
 
@@ -373,6 +411,11 @@ namespace cocos2d {
     void UIEditBoxImplWinrt::setNativeInputFlag(EditBox::InputFlag inputFlag)
     {
       _system_control->setInputFlag((int)inputFlag);
+    }
+
+    void UIEditBoxImplWinrt::setNativeTextHorizontalAlignment(cocos2d::TextHAlignment alignment)
+    {
+      _system_control->setTextHorizontalAlignment((int)alignment);
     }
 
     void UIEditBoxImplWinrt::setNativeText(const char* pText)

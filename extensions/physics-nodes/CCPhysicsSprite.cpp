@@ -241,6 +241,7 @@ void PhysicsSprite::setB2Body(b2Body *pBody)
 #if CC_ENABLE_BOX2D_INTEGRATION
     _pB2Body = pBody;
 #else
+    CC_UNUSED_PARAM(pBody);
     CCASSERT(false, "Can't call box2d methods when Box2d is disabled");
 #endif
 }
@@ -260,6 +261,7 @@ void PhysicsSprite::setPTMRatio(float fRatio)
 #if CC_ENABLE_BOX2D_INTEGRATION
      _PTMRatio = fRatio;
 #else
+    CC_UNUSED_PARAM(fRatio);
     CCASSERT(false, "Can't call box2d methods when Box2d is disabled");
 #endif
 }
@@ -438,7 +440,7 @@ void PhysicsSprite::onExit()
     Node::onExit();
 }
 
-void PhysicsSprite::afterUpdate(EventCustom *event)
+void PhysicsSprite::afterUpdate(EventCustom* /*event*/)
 {
     syncPhysicsTransform();
     

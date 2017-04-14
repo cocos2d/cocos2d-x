@@ -56,7 +56,7 @@ CCFreeTypeFont::~CCFreeTypeFont()
 
 void CCFreeTypeFont::reset()
 {
-    for(auto line:m_lines)
+    for(auto& line : m_lines)
     {
         line->glyphs.clear();
         delete line;
@@ -194,10 +194,10 @@ unsigned char* CCFreeTypeFont::getBitmap(Device::TextAlign eAlignMask, int &widt
     }
     memset(pBuffer, 0, size);
 
-    for (auto line = m_lines.begin() ; line != m_lines.end(); ++line)
+    for (auto& line : m_lines)
     {
-        FT_Vector pen = getPenForAlignment(*line, eAlignMask, lineNumber, totalLines);
-        drawText(*line, pBuffer, &pen);
+        FT_Vector pen = getPenForAlignment(line, eAlignMask, lineNumber, totalLines);
+        drawText(line, pBuffer, &pen);
         lineNumber++;
     }
     width = m_width;
@@ -277,14 +277,14 @@ void  CCFreeTypeFont::drawText(FTLineInfo* pInfo, unsigned char* pBuffer, FT_Vec
 {
 
     auto glyphs = pInfo->glyphs;
-    for (auto glyph = glyphs.begin() ; glyph != glyphs.end(); ++glyph)
+    for (auto& glyph : glyphs)
     {
-        FT_Glyph image = glyph->image;
+        FT_Glyph image = glyph.image;
         FT_Error error = FT_Glyph_To_Bitmap(&image, FT_RENDER_MODE_NORMAL, 0, 1);
         if (!error)
         {
             FT_BitmapGlyph  bit = (FT_BitmapGlyph)image;
-            draw_bitmap(pBuffer, &bit->bitmap, pen->x + glyph->pos.x + bit->left,pen->y - bit->top);
+            draw_bitmap(pBuffer, &bit->bitmap, pen->x + glyph.pos.x + bit->left,pen->y - bit->top);
             FT_Done_Glyph(image);
         }
     }
@@ -434,22 +434,22 @@ void CCFreeTypeFont::initWords(const char* text)
         lines.push_back(line);
     }
 
-    for (auto it = lines.begin() ; it != lines.end(); ++it)
+    for (auto& line : lines)
     {
         std::size_t prev = 0, pos;
-        while ((pos = it->find_first_of(" ';", prev)) != std::string::npos)
+        while ((pos = line.find_first_of(" ';", prev)) != std::string::npos)
         {
             if (pos > prev)
-                words.push_back(it->substr(prev, pos-prev));
+                words.push_back(line.substr(prev, pos-prev));
             prev = pos+1;
         }
-        if (prev < it->length())
-            words.push_back(it->substr(prev, std::string::npos));
+        if (prev < line.length())
+            words.push_back(line.substr(prev, std::string::npos));
     }
 
-    for (auto it = words.begin() ; it != words.end(); ++it)
+    for (auto& word : words)
     {
-        std::string foo(*it);
+        std::string foo(word);
     }
 }
 
@@ -460,12 +460,11 @@ FT_Error CCFreeTypeFont::initWordGlyphs(std::vector<TGlyph>& glyphs, const std::
 	FT_UInt			previous = 0;
 	FT_Error		error = 0;
 	PGlyph			glyph;
-    unsigned int    numGlyphs = 0;
-    wchar_t *       pwszBuffer = nullptr;
+	unsigned int    numGlyphs = 0;
 
 	int num_chars = static_cast<int>(text.size());
 	int nBufLen  = num_chars + 1;
-	pwszBuffer = new wchar_t[nBufLen];
+	wchar_t * pwszBuffer = new wchar_t[nBufLen];
     if(!pwszBuffer)
     {
         return -1;
@@ -541,14 +540,14 @@ void  CCFreeTypeFont::compute_bbox(std::vector<TGlyph>& glyphs, FT_BBox  *abbox)
 
     /* for each glyph image, compute its bounding box, */
     /* translate it, and grow the string bbox          */
-    for (auto glyph = glyphs.begin() ; glyph != glyphs.end(); ++glyph)
+    for (auto& glyph : glyphs)
     {
-        FT_Glyph_Get_CBox(glyph->image, ft_glyph_bbox_pixels, &glyph_bbox);
+        FT_Glyph_Get_CBox(glyph.image, ft_glyph_bbox_pixels, &glyph_bbox);
 
-        glyph_bbox.xMin += glyph->pos.x;
-        glyph_bbox.xMax += glyph->pos.x;
-        glyph_bbox.yMin += glyph->pos.y;
-        glyph_bbox.yMax += glyph->pos.y;
+        glyph_bbox.xMin += glyph.pos.x;
+        glyph_bbox.xMax += glyph.pos.x;
+        glyph_bbox.yMin += glyph.pos.y;
+        glyph_bbox.yMax += glyph.pos.y;
 
         if (glyph_bbox.xMin < bbox.xMin)
             bbox.xMin = glyph_bbox.xMin;
@@ -583,7 +582,7 @@ unsigned char* CCFreeTypeFont::loadFont(const char *pFontName, ssize_t *size)
 	std::string lowerCase(pFontName);
 	std::string path(pFontName);
 
-    for (unsigned int i = 0; i < lowerCase.length(); ++i)
+    for (unsigned int i = 0, length = lowerCase.length(); i < length; ++i)
     {
         lowerCase[i] = tolower(lowerCase[i]);
     }
@@ -636,7 +635,7 @@ unsigned char* CCFreeTypeFont::loadSystemFont(const char *pFontName, ssize_t *si
     UINT32 fontFileReferenceKeySize;
     void *fragmentContext = nullptr;
 
-    for (unsigned int i = 0; i < aName.length(); ++i)
+    for (unsigned int i = 0, length = aName.length(); i < length; ++i)
     {
         aName[i] = tolower(aName[i]);
     }

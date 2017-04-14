@@ -802,4 +802,134 @@ protected:
     cocos2d::Vec3 rotation;
 };
 
+class SpriteSlice9Test1 : public SpriteTestDemo
+{
+public:
+    CREATE_FUNC(SpriteSlice9Test1);
+    SpriteSlice9Test1();
+    virtual std::string title() const override { return "Slice 9 Test #1"; };
+    virtual std::string subtitle() const override { return "Testing Sprite::create()"; };
+};
+
+class SpriteSlice9Test2 : public SpriteTestDemo
+{
+public:
+    CREATE_FUNC(SpriteSlice9Test2);
+    SpriteSlice9Test2();
+    virtual std::string title() const override { return "Slice 9 Test #2"; };
+    virtual std::string subtitle() const override { return "Testing Sprite::createWithSpriteFrameName()"; }
+};
+
+class SpriteSlice9Test3 : public SpriteTestDemo
+{
+public:
+    CREATE_FUNC(SpriteSlice9Test3);
+    SpriteSlice9Test3();
+    virtual std::string title() const override { return "Slice 9 Test #3"; };
+    virtual std::string subtitle() const override { return "Testing scaling a button"; }
+};
+
+class SpriteSlice9Test4 : public SpriteTestDemo
+{
+public:
+    CREATE_FUNC(SpriteSlice9Test4);
+    SpriteSlice9Test4();
+    virtual std::string title() const override { return "Slice 9 Test #4"; };
+    virtual std::string subtitle() const override { return "Testing scaling a button"; }
+};
+
+class SpriteSlice9Test5 : public SpriteTestDemo
+{
+public:
+    CREATE_FUNC(SpriteSlice9Test5);
+    SpriteSlice9Test5();
+    virtual std::string title() const override { return "Slice 9 Test #5"; };
+    virtual std::string subtitle() const override { return "Changing setCenterRect in runtime"; }
+
+    virtual void update(float dt) override;
+
+private:
+    cocos2d::Sprite* _sprites[3];
+    float _elapsed;
+};
+
+class SpriteSlice9Test6 : public SpriteTestDemo
+{
+public:
+    CREATE_FUNC(SpriteSlice9Test6);
+    SpriteSlice9Test6();
+    virtual std::string title() const override { return "Slice 9 Test #6"; };
+    virtual std::string subtitle() const override { return "Changing setCenterRect in runtime #2"; }
+
+    virtual void update(float dt) override;
+
+private:
+    cocos2d::Sprite* _sprites[3];
+    float _elapsed;
+};
+
+class SpriteSlice9Test7 : public SpriteTestDemo
+{
+public:
+    CREATE_FUNC(SpriteSlice9Test7);
+    SpriteSlice9Test7();
+    virtual std::string title() const override { return "Slice 9 Test #7"; };
+    virtual std::string subtitle() const override { return "Offset"; }
+};
+
+class SpriteSlice9Test8 : public SpriteTestDemo
+{
+public:
+    CREATE_FUNC(SpriteSlice9Test8);
+    SpriteSlice9Test8();
+    virtual std::string title() const override { return "Slice 9 Test #8"; };
+    virtual std::string subtitle() const override { return "Flipped sprites"; }
+};
+
+class SpriteSlice9Test9 : public SpriteTestDemo
+{
+public:
+    CREATE_FUNC(SpriteSlice9Test9);
+    SpriteSlice9Test9();
+    virtual std::string title() const override { return "Slice 9 Test #9"; };
+    virtual std::string subtitle() const override { return "Flipped sprites #2"; }
+};
+
+
+class SpriteSlice9Test10 : public SpriteTestDemo
+{
+public:
+    CREATE_FUNC(SpriteSlice9Test10);
+    SpriteSlice9Test10();
+    virtual std::string title() const override { return "Slice 10 Test #9"; };
+    virtual std::string subtitle() const override { return "Rotated Sprites"; }
+};
+
+
+class SpriteGetSpriteFrameTest : public SpriteTestDemo
+{
+public:
+    CREATE_FUNC(SpriteGetSpriteFrameTest);
+    SpriteGetSpriteFrameTest();
+    virtual std::string title() const override { return "Sprite::getSpriteFrame(*)"; };
+    virtual std::string subtitle() const override { return "setting after getting should be the same"; }
+};
+
+class Issue17119 : public SpriteTestDemo
+{
+public:
+    CREATE_FUNC(Issue17119);
+    Issue17119();
+    virtual std::string title() const override { return "Issue 17119"; };
+    virtual std::string subtitle() const override { return "flipping should work ok"; }
+
+    virtual void update(float dt) override;
+protected:
+    float _accum;
+    cocos2d::Sprite* _s1;
+    cocos2d::Sprite* _s2;
+    cocos2d::Sprite* _s3;
+    cocos2d::Sprite* _s4;
+};
+
 #endif

@@ -1,7 +1,7 @@
 /****************************************************************************
  Copyright (c) 2008-2010 Ricardo Quesada
  Copyright (c) 2011-2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
  Copyright (c) 2013      Surith Thekkiam
 
  http://www.cocos2d-x.org
@@ -608,6 +608,45 @@ var S9SpriteOpacityWithFadeActionsTest = S9SpriteTestDemo.extend({
     }
 });
 
+
+var S9SpriteRenderingTypeToggleTest = S9SpriteTestDemo.extend({
+    _title:"Test Toggle Scale9Sprite RenderingType",
+
+    ctor:function() {
+        this._super();
+
+
+        var blocks = new ccui.Scale9Sprite('blocks9.png');
+        blocks.x = winSize.width / 2;
+        blocks.y = winSize.height / 2 + 50;
+
+        blocks.width = blocks.width * 2;
+
+
+        var button = this._button = new ccui.Button();
+        button.setTouchEnabled(true);
+        button.x = winSize.width / 2.0;
+        button.y = winSize.height / 2.0 - 50;
+        button.setTitleText("Toggle SIMPLE");
+        button.addTouchEventListener(function (sender, type) {
+            if(type === ccui.Widget.TOUCH_ENDED) {
+                if(blocks.getRenderingType() === ccui.Scale9Sprite.RenderingType.SLICED) {
+                    blocks.setRenderingType(ccui.Scale9Sprite.RenderingType.SIMPLE);
+                    button.setTitleText("Toggle SLICED");
+                } else {
+                    blocks.setRenderingType(ccui.Scale9Sprite.RenderingType.SLICED);
+                    button.setTitleText("Toggle SIMPLE");
+                }
+            }
+        } , this);
+
+        this.addChild(button);
+
+
+        this.addChild(blocks);
+    }
+});
+
 var S9SpriteTestScene = TestScene.extend({
     runThisTest:function (num) {
         sceneIdx = (num || num == 0) ? (num - 1) : -1;
@@ -617,7 +656,6 @@ var S9SpriteTestScene = TestScene.extend({
         director.runScene(this);
     }
 });
-
 //
 // Flow control
 //
@@ -637,7 +675,8 @@ var arrayOfS9SpriteTest = [
     S9_TexturePacker,
     S9SpriteActionTest,
     S9SpriteColorOpacityTest,
-    S9SpriteOpacityWithFadeActionsTest
+    S9SpriteOpacityWithFadeActionsTest,
+    S9SpriteRenderingTypeToggleTest
 ];
 
 var nextS9SpriteTest = function () {

@@ -13,7 +13,7 @@
 
 """****************************************************************************
 Copyright (c) 2014 cocos2d-x.org
-Copyright (c) 2014 Chukong Technologies Inc.
+Copyright (c) 2014-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -50,6 +50,22 @@ from time import time
 from sys import stdout
 from distutils.errors import DistutilsError
 from distutils.dir_util import copy_tree, remove_tree
+
+
+def delete_folder_except(folder_path, excepts):
+    """
+    Delete a folder excepts some files/subfolders, `excepts` doesn't recursively which means it can not include
+    `subfoler/file1`. `excepts` is an array.
+    """
+    for file in os.listdir(folder_path):
+        if (file in excepts):
+            continue
+
+        full_path = os.path.join(folder_path, file)
+        if os.path.isdir(full_path):
+            shutil.rmtree(full_path)
+        else:
+            os.remove(full_path)
 
 
 class UnrecognizedFormat:
@@ -239,6 +255,11 @@ class CocosZipInstaller(object):
             data = json.load(data_file)
         return data
 
+    def clean_external_folder(self, external_folder):
+        print('==> Cleaning cocos2d-x/external folder ...')
+        # remove external except 'config.json'
+        delete_folder_except(external_folder, ['config.json'])
+
     def run(self, workpath, folder_for_extracting, remove_downloaded, force_update, download_only):
         if not force_update and not self.need_to_update():
             print("==> Not need to update!")
@@ -251,9 +272,12 @@ class CocosZipInstaller(object):
 
         if not download_only:
             self.unpack_zipfile(self._workpath)
-            print("==> Copying files...")
+
             if not os.path.exists(folder_for_extracting):
                 os.mkdir(folder_for_extracting)
+
+            self.clean_external_folder(folder_for_extracting)
+            print("==> Copying files...")
             distutils.dir_util.copy_tree(self._extracted_folder_name, folder_for_extracting)
             if self._move_dirs is not None:
                 for srcDir in self._move_dirs.keys():

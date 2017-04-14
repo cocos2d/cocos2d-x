@@ -81,7 +81,7 @@ function Camera3DTestDemo:SwitchViewCallback(sender, value)
 
     if self._cameraType == CameraType.FreeCamera then
         local pos3D = self._sprite3D:getPosition3D()
-        self._camera:setPosition3D(cc.vec3(0 + pos3D.x, 130 + pos3D.y, 130 + pos3D.z))
+        self._camera:setPosition3D(cc.vec3add(cc.vec3(0, 130, 130), pos3D))
         self._camera:lookAt(self._sprite3D:getPosition3D(), cc.vec3(0,1,0))
         self._incRot:setEnabled(true)
         self._decRot:setEnabled(true)
@@ -94,7 +94,7 @@ function Camera3DTestDemo:SwitchViewCallback(sender, value)
         newFaceDir.z = -transform[11]
         newFaceDir = cc.vec3normalize(newFaceDir)
         local pos3D = self._sprite3D:getPosition3D()
-        self._camera:lookAt(cc.vec3(pos3D.x + newFaceDir.x * 50, pos3D.y + newFaceDir.y * 50, pos3D.z + newFaceDir.z * 50), cc.vec3(0, 1, 0))
+        self._camera:lookAt(cc.vec3add(pos3D, cc.vec3mul(newFaceDir, 50)), cc.vec3(0, 1, 0))
         self._incRot:setEnabled(true)
         self._decRot:setEnabled(true)
     elseif self._cameraType == CameraType.ThirdCamera then
@@ -226,7 +226,7 @@ function Camera3DTestDemo:onEnter()
 
                 nearP = self._camera:unproject(nearP)
                 farP  = self._camera:unproject(farP)
-                local dir = cc.vec3(farP.x - nearP.x, farP.y - nearP.y, farP.z - nearP.z)
+                local dir = cc.vec3sub(farP, nearP)
                 local dist=0.0
                 local ndd = dir.x * 0 + dir.y * 1 + dir.z * 0
                 if ndd == 0 then
@@ -235,7 +235,7 @@ function Camera3DTestDemo:onEnter()
 
                 local ndo = nearP.x * 0 + nearP.y * 1 + nearP.z * 0
                 dist= (0 - ndo) / ndd
-                local p =   cc.vec3(nearP.x + dist * dir.x, nearP.y + dist * dir.y, nearP.z + dist * dir.z)
+                local p =   cc.vec3add(nearP, cc.vec3mul(dir, dist))
                 self._targetPos = p
             end
         end
@@ -264,6 +264,7 @@ function Camera3DTestDemo:onEnter()
             self._camera:setPosition3D(cameraPos)
         end
     end)
+    self._zoomout = menuItem1
 
     local label2 = cc.Label:createWithTTF(ttfConfig,"zoom in")
     local menuItem2 = cc.MenuItemLabel:create(label2)
@@ -275,6 +276,7 @@ function Camera3DTestDemo:onEnter()
             self._camera:setPosition3D(cameraPos)
         end
     end)
+    self._zoomin = menuItem2
 
     local label3 = cc.Label:createWithTTF(ttfConfig,"rotate+")
     local menuItem3 = cc.MenuItemLabel:create(label3)
@@ -327,6 +329,8 @@ function Camera3DTestDemo:onEnter()
         self._camera:lookAt(self._sprite3D:getPosition3D(), cc.vec3(0,1,0))
         self._incRot:setEnabled(false)
         self._decRot:setEnabled(false)
+        self._zoomin:setEnabled(true)
+        self._zoomout:setEnabled(true)
     end)
 
     local label7 = cc.Label:createWithTTF(ttfConfig,"first person")
@@ -343,9 +347,11 @@ function Camera3DTestDemo:onEnter()
         local pos3D = self._sprite3D:getPosition3D()
         self._camera:setPosition3D(cc.vec3(pos3D.x, pos3D.y + 35, pos3D.z))
         pos3D = self._sprite3D:getPosition3D()
-        self._camera:lookAt(cc.vec3(pos3D.x + newFaceDir.x * 50, pos3D.y + newFaceDir.y * 50 , pos3D.z + newFaceDir.z * 50), cc.vec3(0,1,0))
+        self._camera:lookAt(cc.vec3add(pos3D, cc.vec3mul(newFaceDir, 50)), cc.vec3(0,1,0))
         self._incRot:setEnabled(true)
         self._decRot:setEnabled(true)
+        self._zoomin:setEnabled(false)
+        self._zoomout:setEnabled(false)
     end)
 
     local menu = cc.Menu:create(menuItem1,menuItem2,menuItem3,menuItem4,menuItem5,menuItem6,menuItem7)
@@ -883,15 +889,16 @@ function CameraArcBallDemo:calculateArcBall(axis, angle, p1x, p1y, p2x, p2y)
     local lv = mat4_transformVector(rotation_matrix, 0.0, 0.0, -1.0, 0.0)
     --start point screen transform to 3d
     local projectZ1 = self:projectToSphere(self._radius, p1x, p1y)
-    local p1 = cc.vec3(sv.x * p1x + uv.x * p1y - lv.x * projectZ1, sv.y * p1x + uv.y * p1y - lv.y * projectZ1 , sv.z * p1x + uv.z * p1y - lv.z * projectZ1)
+    local p1 = cc.vec3sub(cc.vec3add(cc.vec3mul(sv, p1x), cc.vec3mul(uv, p1y)), cc.vec3mul(lv, projectZ1))
     --end point screen transform to 3d
     local projectZ2 = self:projectToSphere(self._radius, p2x, p2y)
-    local p2 = cc.vec3(sv.x * p2x + uv.x * p2y - lv.x * projectZ2, sv.y * p2x + uv.y * p2y - lv.y * projectZ2 , sv.z * p2x + uv.z * p2y - lv.z * projectZ2)
+    local p2 = cc.vec3sub(cc.vec3add(cc.vec3mul(sv, p2x), cc.vec3mul(uv, p2y)), cc.vec3mul(lv, projectZ2))
     --calculate rotation axis
     axis = vec3_cross(p2, p1, axis)
     axis = cc.vec3normalize(axis)
 
-    local t = math.sqrt((p2.x - p1.x) * (p2.x - p1.x) + (p2.y - p1.y) * (p2.y - p1.y) + (p2.z - p1.z) * (p2.z - p1.z)) / (2.0 * self._radius)
+    local pdiff = cc.vec3sub(p2, p1)
+    local t = math.sqrt(cc.vec3dot(pdiff, pdiff)) / (2.0 * self._radius)
     --clamp -1 to 1
     if t > 1.0 then
         t = 1.0

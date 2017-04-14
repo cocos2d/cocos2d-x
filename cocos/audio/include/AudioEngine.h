@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014-2016 Chukong Technologies Inc.
+ Copyright (c) 2014-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -22,18 +22,16 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "platform/CCPlatformConfig.h"
+#pragma once
 
-#ifndef __AUDIO_ENGINE_H_
-#define __AUDIO_ENGINE_H_
+#include "platform/CCPlatformConfig.h"
+#include "platform/CCPlatformMacros.h"
+#include "audio/include/Export.h"
 
 #include <functional>
 #include <list>
 #include <string>
 #include <unordered_map>
-
-#include "platform/CCPlatformMacros.h"
-#include "audio/include/Export.h"
 
 #ifdef ERROR
 #undef ERROR
@@ -45,7 +43,7 @@
  */
 
 NS_CC_BEGIN
-    namespace experimental{
+namespace experimental {
 
 /**
  * @class AudioProfile
@@ -95,7 +93,7 @@ public:
     enum class AudioState
     {
         ERROR  = -1,
-        INITIALZING,
+        INITIALIZING,
         PLAYING,
         PAUSED
     };
@@ -323,13 +321,13 @@ protected:
         float duration;
         AudioState state;
 
-        AudioInfo()
-            : profileHelper(nullptr)
-            , duration(TIME_UNKNOWN)
-            , state(AudioState::INITIALZING)
-        {
-
-        }
+        AudioInfo();
+        ~AudioInfo();
+    private:
+        AudioInfo(const AudioInfo& info);
+        AudioInfo(AudioInfo&& info);
+        AudioInfo& operator=(const AudioInfo& info);
+        AudioInfo& operator=(AudioInfo&& info);
     };
 
     //audioID,audioAttribute
@@ -353,10 +351,8 @@ protected:
     friend class AudioEngineImpl;
 };
 
-}
+} // namespace experimental {
 NS_CC_END
 
 // end group
 /// @}
-
-#endif // __AUDIO_ENGINE_H_
