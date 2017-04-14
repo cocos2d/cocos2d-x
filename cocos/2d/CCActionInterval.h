@@ -865,6 +865,8 @@ typedef struct _ccBezierConfig {
     Vec2 controlPoint_1;
     //! Bezier control point 2
     Vec2 controlPoint_2;
+    //! Bezier control point 3
+    Vec2 controlPoint_3;
 } ccBezierConfig;
 
 /** @class BezierBy

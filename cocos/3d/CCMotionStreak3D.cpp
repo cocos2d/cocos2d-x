@@ -322,7 +322,7 @@ void MotionStreak3D::update(float delta)
     bool appendNewPoint = true;
     if(_nuPoints >= _maxPoints)
     {
-        appendNewPoint = false;
+        //appendNewPoint = false;
     }
 
     else if(_nuPoints>0)
@@ -331,7 +331,7 @@ void MotionStreak3D::update(float delta)
         bool a2 = (_nuPoints == 1) ? false : ((_pointVertexes[_nuPoints-2] - _positionR).lengthSquared() < (_minSeg * 2.0f));
         if(a1 || a2)
         {
-            appendNewPoint = false;
+            //appendNewPoint = false;
         }
     }
 

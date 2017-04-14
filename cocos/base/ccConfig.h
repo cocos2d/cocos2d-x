@@ -141,7 +141,7 @@ THE SOFTWARE.
  * To enable set it to 1. Enabled by default.
  */
 #ifndef CC_NODE_RENDER_SUBPIXEL
-#define CC_NODE_RENDER_SUBPIXEL 1
+#define CC_NODE_RENDER_SUBPIXEL 0
 #endif
 
 /** @def CC_SPRITEBATCHNODE_RENDER_SUBPIXEL
@@ -150,7 +150,7 @@ THE SOFTWARE.
  * To enable set it to 1. Enabled by default.
  */
 #ifndef CC_SPRITEBATCHNODE_RENDER_SUBPIXEL
-#define CC_SPRITEBATCHNODE_RENDER_SUBPIXEL 1
+#define CC_SPRITEBATCHNODE_RENDER_SUBPIXEL 0
 #endif
 
 /** @def CC_TEXTURE_ATLAS_USE_VAO
@@ -398,13 +398,6 @@ THE SOFTWARE.
  */
 #ifndef CC_FILEUTILS_APPLE_ENABLE_OBJC
 #define CC_FILEUTILS_APPLE_ENABLE_OBJC  1
-#endif
-
-/** @def CC_ENABLE_NEW_AUDIO_API
- * Specify audio API.
- */
-#ifndef CC_ENABLE_NEW_AUDIO_API
-#define CC_ENABLE_NEW_AUDIO_API 1
 #endif
 
 /** @def CC_2D_CULLING_FUNCTION

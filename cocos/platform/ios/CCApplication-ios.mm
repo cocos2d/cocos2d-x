@@ -104,6 +104,8 @@ LanguageType Application::getCurrentLanguage()
     NSDictionary* temp = [NSLocale componentsFromLocaleIdentifier:currentLanguage];
     NSString * languageCode = [temp objectForKey:NSLocaleLanguageCode];
 
+    if ([currentLanguage isEqualToString:@"pt-BR"]) return LanguageType::BRAZIL;
+
     if ([languageCode isEqualToString:@"zh"]) return LanguageType::CHINESE;
     if ([languageCode isEqualToString:@"en"]) return LanguageType::ENGLISH;
     if ([languageCode isEqualToString:@"fr"]) return LanguageType::FRENCH;

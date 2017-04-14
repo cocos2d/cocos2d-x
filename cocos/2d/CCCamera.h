@@ -107,7 +107,7 @@ public:
     Camera::Type getType() const { return _type; }
 
     /**get & set Camera flag*/
-    CameraFlag getCameraFlag() const { return (CameraFlag)_cameraFlag; }
+    int getCameraFlag() const { return _cameraFlag; }
     void setCameraFlag(CameraFlag flag) { _cameraFlag = (unsigned short)flag; }
     void setCameraFlag(int flag) { _cameraFlag = (unsigned short)flag; }
 
@@ -309,7 +309,7 @@ protected:
     float _farPlane;
     mutable bool  _viewProjectionDirty;
     bool _viewProjectionUpdated; //Whether or not the viewprojection matrix was updated since the last frame.
-    unsigned short _cameraFlag; // camera flag
+    int _cameraFlag; // camera flag
     mutable Frustum _frustum;   // camera frustum
     mutable bool _frustumDirty;
     int8_t  _depth;                 //camera depth, the depth of camera with CameraFlag::DEFAULT flag is 0 by default, a camera with larger depth is drawn on top of camera with smaller depth

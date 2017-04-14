@@ -1654,14 +1654,14 @@ void BezierBy::update(float time)
 {
     if (_target)
     {
-        float xa = 0;
-        float xb = _config.controlPoint_1.x;
-        float xc = _config.controlPoint_2.x;
+        float xa =  _config.controlPoint_1.x;
+        float xb = _config.controlPoint_2.x;
+        float xc = _config.controlPoint_3.x;
         float xd = _config.endPosition.x;
 
-        float ya = 0;
-        float yb = _config.controlPoint_1.y;
-        float yc = _config.controlPoint_2.y;
+        float ya =  _config.controlPoint_1.y;
+        float yb = _config.controlPoint_2.y;
+        float yc = _config.controlPoint_3.y;
         float yd = _config.endPosition.y;
 
         float x = bezierat(xa, xb, xc, xd, time);
@@ -1687,8 +1687,9 @@ BezierBy* BezierBy::reverse() const
     ccBezierConfig r;
 
     r.endPosition = -_config.endPosition;
-    r.controlPoint_1 = _config.controlPoint_2 + (-_config.endPosition);
-    r.controlPoint_2 = _config.controlPoint_1 + (-_config.endPosition);
+    r.controlPoint_1 = _config.controlPoint_3 + (-_config.endPosition);
+    r.controlPoint_2 = _config.controlPoint_2 + (-_config.endPosition);
+    r.controlPoint_3 = _config.controlPoint_1 + (-_config.endPosition);
 
     BezierBy *action = BezierBy::create(_duration, r);
     return action;
@@ -1733,6 +1734,7 @@ void BezierTo::startWithTarget(Node *target)
     BezierBy::startWithTarget(target);
     _config.controlPoint_1 = _toConfig.controlPoint_1 - _startPosition;
     _config.controlPoint_2 = _toConfig.controlPoint_2 - _startPosition;
+    _config.controlPoint_3 = _toConfig.controlPoint_3 - _startPosition;
     _config.endPosition = _toConfig.endPosition - _startPosition;
 }
 

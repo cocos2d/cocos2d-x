@@ -722,6 +722,17 @@ void Scene::setCaptureBind(bool state)
   if(state)
   {
     this->capture.frames = 0;
+
+    /**
+     *
+     *
+     *
+     */
+    Ad::pauseExpensiveWork();
+  }
+  else
+  {
+    Ad::resumeExpensiveWork();
   }
 }
 
@@ -733,7 +744,7 @@ void Scene::setCapture(bool state)
   {
     if(!this->capture.state)
     {
-      auto size = Director::getInstance()->getWinSizeInPixels();
+      auto size = Director::getInstance()->getWinSize();
 
       auto width = size.width * this->capture.factor;
       auto height = size.height * this->capture.factor;
@@ -820,6 +831,13 @@ void Scene::setCapture(bool state)
        */
       this->capture.element->initWithTexture(this->capture.texture->getTexture());
       this->capture.element->retain();
+
+      /**
+       *
+       *
+       *
+       */
+      this->capture.frames = 0;
     }
   }
   else

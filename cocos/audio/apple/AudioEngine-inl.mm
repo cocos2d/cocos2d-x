@@ -475,6 +475,15 @@ void AudioEngineImpl::setFinishCallback(int audioID, const std::function<void (i
     _audioPlayers[audioID]->_finishCallbak = callback;
 }
 
+bool AudioEngineImpl::isOtherAudioPlaying()
+{
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+  return [[AVAudioSession sharedInstance] isOtherAudioPlaying];
+#endif
+
+  return false;
+}
+
 void AudioEngineImpl::update(float dt)
 {
     ALint sourceState;

@@ -60,6 +60,7 @@ public:
     float getCurrentTime(int audioID);
     bool setCurrentTime(int audioID, float time);
     void setFinishCallback(int audioID, const std::function<void (int, const std::string &)> &callback);
+    bool isOtherAudioPlaying();
     
     void uncache(const std::string& filePath);
     void uncacheAll();

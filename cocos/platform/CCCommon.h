@@ -63,6 +63,7 @@ enum class LanguageType
     JAPANESE,
     HUNGARIAN,
     PORTUGUESE,
+    BRAZIL,
     ARABIC,
     NORWEGIAN,
     POLISH,

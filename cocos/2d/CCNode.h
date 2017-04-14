@@ -1856,9 +1856,10 @@ public:
      */
     virtual void setCameraMask(unsigned short mask, bool applyChildren = true);
 
-CC_CONSTRUCTOR_ACCESS:
+public:
     // Nodes should be created using create();
     Node();
+    Node(Node* parent, bool autocreate = false);
     virtual ~Node();
 
     virtual bool init();

@@ -1354,12 +1354,8 @@
 		781B06D71BD3678E0072FB24 /* Purchase.mm in Sources */ = {isa = PBXBuildFile; fileRef = 781B06D51BD3678E0072FB24 /* Purchase.mm */; };
 		781B06DE1BD37FA80072FB24 /* Batch.h in Headers */ = {isa = PBXBuildFile; fileRef = 781B06DB1BD37FA80072FB24 /* Batch.h */; };
 		781B06DF1BD37FA80072FB24 /* Batch.h in Headers */ = {isa = PBXBuildFile; fileRef = 781B06DB1BD37FA80072FB24 /* Batch.h */; };
-		781B06E01BD37FA80072FB24 /* Heyzap.h in Headers */ = {isa = PBXBuildFile; fileRef = 781B06DD1BD37FA80072FB24 /* Heyzap.h */; };
-		781B06E11BD37FA80072FB24 /* Heyzap.h in Headers */ = {isa = PBXBuildFile; fileRef = 781B06DD1BD37FA80072FB24 /* Heyzap.h */; };
 		781B06E31BD37FBE0072FB24 /* Batch.mm in Sources */ = {isa = PBXBuildFile; fileRef = 781B06E21BD37FBE0072FB24 /* Batch.mm */; };
 		781B06E41BD37FBE0072FB24 /* Batch.mm in Sources */ = {isa = PBXBuildFile; fileRef = 781B06E21BD37FBE0072FB24 /* Batch.mm */; };
-		781B06E61BD37FC80072FB24 /* Heyzap.mm in Sources */ = {isa = PBXBuildFile; fileRef = 781B06E51BD37FC80072FB24 /* Heyzap.mm */; };
-		781B06E71BD37FC80072FB24 /* Heyzap.mm in Sources */ = {isa = PBXBuildFile; fileRef = 781B06E51BD37FC80072FB24 /* Heyzap.mm */; };
 		7823C8961CD4E25400703A34 /* CameraEntity3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7823C8941CD4E25400703A34 /* CameraEntity3D.cpp */; };
 		7823C8971CD4E25400703A34 /* CameraEntity3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7823C8941CD4E25400703A34 /* CameraEntity3D.cpp */; };
 		7823C8981CD4E25400703A34 /* CameraEntity3D.h in Headers */ = {isa = PBXBuildFile; fileRef = 7823C8951CD4E25400703A34 /* CameraEntity3D.h */; };
@@ -1389,8 +1385,15 @@
 		785C58841BD53CE200B71D89 /* BatchEntity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 785C58811BD53CE200B71D89 /* BatchEntity.cpp */; };
 		785C58851BD53CE200B71D89 /* BatchEntity.h in Headers */ = {isa = PBXBuildFile; fileRef = 785C58821BD53CE200B71D89 /* BatchEntity.h */; };
 		785C58861BD53CE200B71D89 /* BatchEntity.h in Headers */ = {isa = PBXBuildFile; fileRef = 785C58821BD53CE200B71D89 /* BatchEntity.h */; };
-		78741BE01D3D22B700D7A423 /* Facebook.h in Headers */ = {isa = PBXBuildFile; fileRef = 78741BDF1D3D22B700D7A423 /* Facebook.h */; };
-		78741BE21D3D22C700D7A423 /* Facebook.mm in Sources */ = {isa = PBXBuildFile; fileRef = 78741BE11D3D22C700D7A423 /* Facebook.mm */; };
+		786F64C21E9E43B20033B69E /* Entity3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78FEA7221BDE104E00D253A3 /* Entity3D.cpp */; };
+		786F64C31E9E43B30033B69E /* Entity3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78FEA7221BDE104E00D253A3 /* Entity3D.cpp */; };
+		786F64C41E9E43B30033B69E /* Entity3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78FEA7221BDE104E00D253A3 /* Entity3D.cpp */; };
+		789304FF1E7EDA98007A16B7 /* Ad.mm in Sources */ = {isa = PBXBuildFile; fileRef = 789304FE1E7EDA98007A16B7 /* Ad.mm */; };
+		789305001E7EDA98007A16B7 /* Ad.mm in Sources */ = {isa = PBXBuildFile; fileRef = 789304FE1E7EDA98007A16B7 /* Ad.mm */; };
+		789305011E7EDA98007A16B7 /* Ad.mm in Sources */ = {isa = PBXBuildFile; fileRef = 789304FE1E7EDA98007A16B7 /* Ad.mm */; };
+		789305031E7EDAA1007A16B7 /* Ad.h in Headers */ = {isa = PBXBuildFile; fileRef = 789305021E7EDAA1007A16B7 /* Ad.h */; };
+		789305041E7EDAA1007A16B7 /* Ad.h in Headers */ = {isa = PBXBuildFile; fileRef = 789305021E7EDAA1007A16B7 /* Ad.h */; };
+		789305051E7EDAA1007A16B7 /* Ad.h in Headers */ = {isa = PBXBuildFile; fileRef = 789305021E7EDAA1007A16B7 /* Ad.h */; };
 		78938EA41BCC7E94009CB065 /* TranslateTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 78938EA31BCC7E94009CB065 /* TranslateTypes.h */; };
 		78938EA51BCC7E94009CB065 /* TranslateTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 78938EA31BCC7E94009CB065 /* TranslateTypes.h */; };
 		7894BFBF1BC9168700363FC9 /* AppDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 7894BFA11BC9168700363FC9 /* AppDelegate.h */; };
@@ -1643,7 +1646,6 @@
 		78C354021CEE7F6500F10068 /* CCOBB.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15AE17F919AAD2F700C27E9E /* CCOBB.cpp */; };
 		78C354031CEE7F6500F10068 /* btConvexHull.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6CAB1B71AF9AA1A00B9B856 /* btConvexHull.cpp */; };
 		78C354051CEE7F6500F10068 /* BackgroundScroll.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7894FA3E1BF0A50300A69ED6 /* BackgroundScroll.cpp */; };
-		78C354061CEE7F6500F10068 /* Heyzap.mm in Sources */ = {isa = PBXBuildFile; fileRef = 781B06E51BD37FC80072FB24 /* Heyzap.mm */; };
 		78C354071CEE7F6500F10068 /* CCControlStepper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A168441807AF4E005B8026 /* CCControlStepper.cpp */; };
 		78C354081CEE7F6500F10068 /* b2CollideCircle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A168B81807AF9C005B8026 /* b2CollideCircle.cpp */; };
 		78C354091CEE7F6500F10068 /* CCPass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 501216921AC47393009A4BEA /* CCPass.cpp */; };
@@ -1826,7 +1828,6 @@
 		78C354C91CEE7F6500F10068 /* CCLabelTTF.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A570199180BCB590088DEC7 /* CCLabelTTF.cpp */; };
 		78C354CA1CEE7F6500F10068 /* CCNinePatchImageParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 291901421B05895600F8B4BA /* CCNinePatchImageParser.cpp */; };
 		78C354CB1CEE7F6500F10068 /* CCPUPointEmitterTranslator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B665E1A01AA80A6500DDB1C5 /* CCPUPointEmitterTranslator.cpp */; };
-		78C354CC1CEE7F6500F10068 /* Entity3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78FEA7221BDE104E00D253A3 /* Entity3D.cpp */; };
 		78C354CD1CEE7F6500F10068 /* CCPUTextureAnimatorTranslator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B665E1DE1AA80A6500DDB1C5 /* CCPUTextureAnimatorTranslator.cpp */; };
 		78C354CE1CEE7F6500F10068 /* cdt.cc in Sources */ = {isa = PBXBuildFile; fileRef = 15FB20811AE7C57D00C31518 /* cdt.cc */; };
 		78C354CF1CEE7F6500F10068 /* CCPUOnPositionObserver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B665E1781AA80A6500DDB1C5 /* CCPUOnPositionObserver.cpp */; };
@@ -2423,7 +2424,6 @@
 		78C357631CEE7F6500F10068 /* CCPUPointEmitter.h in Headers */ = {isa = PBXBuildFile; fileRef = B665E19F1AA80A6500DDB1C5 /* CCPUPointEmitter.h */; };
 		78C357651CEE7F6500F10068 /* CCFileUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ABBF241926664700A911A9 /* CCFileUtils.h */; };
 		78C357661CEE7F6500F10068 /* cl_gl.h in Headers */ = {isa = PBXBuildFile; fileRef = B6CAB1D81AF9AA1A00B9B856 /* cl_gl.h */; };
-		78C357671CEE7F6500F10068 /* Heyzap.h in Headers */ = {isa = PBXBuildFile; fileRef = 781B06DD1BD37FA80072FB24 /* Heyzap.h */; };
 		78C357681CEE7F6500F10068 /* CCPUEmitterTranslator.h in Headers */ = {isa = PBXBuildFile; fileRef = B665E1211AA80A6500DDB1C5 /* CCPUEmitterTranslator.h */; };
 		78C357691CEE7F6500F10068 /* UIScrollView.h in Headers */ = {isa = PBXBuildFile; fileRef = 2905FA0818CF08D000240AA3 /* UIScrollView.h */; };
 		78C3576A1CEE7F6500F10068 /* ccShader_PositionTexture.vert in Headers */ = {isa = PBXBuildFile; fileRef = 5034CA02191D591000CE6051 /* ccShader_PositionTexture.vert */; };
@@ -3083,10 +3083,6 @@
 		78E5CC141BCA78BC00CB036E /* Translate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78E5CC111BCA78BC00CB036E /* Translate.cpp */; };
 		78E5CC151BCA78BC00CB036E /* Translate.h in Headers */ = {isa = PBXBuildFile; fileRef = 78E5CC121BCA78BC00CB036E /* Translate.h */; };
 		78E5CC161BCA78BC00CB036E /* Translate.h in Headers */ = {isa = PBXBuildFile; fileRef = 78E5CC121BCA78BC00CB036E /* Translate.h */; };
-		78E6B7E21D43A6B000533E9E /* Facebook.h in Headers */ = {isa = PBXBuildFile; fileRef = 78741BDF1D3D22B700D7A423 /* Facebook.h */; };
-		78E6B7E31D43A6B100533E9E /* Facebook.h in Headers */ = {isa = PBXBuildFile; fileRef = 78741BDF1D3D22B700D7A423 /* Facebook.h */; };
-		78E6B7E41D43A6B300533E9E /* Facebook.mm in Sources */ = {isa = PBXBuildFile; fileRef = 78741BE11D3D22C700D7A423 /* Facebook.mm */; };
-		78E6B7E51D43A6B300533E9E /* Facebook.mm in Sources */ = {isa = PBXBuildFile; fileRef = 78741BE11D3D22C700D7A423 /* Facebook.mm */; };
 		78F458AD1CE71E6000A70B02 /* UIPageViewIndicator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78F458AB1CE71E6000A70B02 /* UIPageViewIndicator.cpp */; };
 		78F458AE1CE71E6000A70B02 /* UIPageViewIndicator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78F458AB1CE71E6000A70B02 /* UIPageViewIndicator.cpp */; };
 		78F458AF1CE71E6000A70B02 /* UIPageViewIndicator.h in Headers */ = {isa = PBXBuildFile; fileRef = 78F458AC1CE71E6000A70B02 /* UIPageViewIndicator.h */; };
@@ -3329,8 +3325,6 @@
 		78F935E51E6B237200775FB3 /* VertexAttachment.h in Headers */ = {isa = PBXBuildFile; fileRef = 78F934FD1E6B237000775FB3 /* VertexAttachment.h */; };
 		78F935E61E6B237200775FB3 /* VertexAttachment.h in Headers */ = {isa = PBXBuildFile; fileRef = 78F934FD1E6B237000775FB3 /* VertexAttachment.h */; };
 		78F935E71E6B237200775FB3 /* VertexAttachment.h in Headers */ = {isa = PBXBuildFile; fileRef = 78F934FD1E6B237000775FB3 /* VertexAttachment.h */; };
-		78FEA7241BDE104E00D253A3 /* Entity3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78FEA7221BDE104E00D253A3 /* Entity3D.cpp */; };
-		78FEA7251BDE104E00D253A3 /* Entity3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78FEA7221BDE104E00D253A3 /* Entity3D.cpp */; };
 		78FEA7261BDE104E00D253A3 /* Entity3D.h in Headers */ = {isa = PBXBuildFile; fileRef = 78FEA7231BDE104E00D253A3 /* Entity3D.h */; };
 		78FEA7271BDE104E00D253A3 /* Entity3D.h in Headers */ = {isa = PBXBuildFile; fileRef = 78FEA7231BDE104E00D253A3 /* Entity3D.h */; };
 		826294331AAF001C00CB7CF7 /* HttpAsynConnection-apple.m in Sources */ = {isa = PBXBuildFile; fileRef = 52B47A2A1A5349A3004E4C60 /* HttpAsynConnection-apple.m */; };
@@ -5734,9 +5728,7 @@
 		781B06D21BD3677C0072FB24 /* Purchase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Purchase.h; sourceTree = "<group>"; };
 		781B06D51BD3678E0072FB24 /* Purchase.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = Purchase.mm; path = ../../apple/purchase/Purchase.mm; sourceTree = "<group>"; };
 		781B06DB1BD37FA80072FB24 /* Batch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Batch.h; sourceTree = "<group>"; };
-		781B06DD1BD37FA80072FB24 /* Heyzap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Heyzap.h; sourceTree = "<group>"; };
 		781B06E21BD37FBE0072FB24 /* Batch.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = Batch.mm; path = ../../apple/batch/Batch.mm; sourceTree = "<group>"; };
-		781B06E51BD37FC80072FB24 /* Heyzap.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = Heyzap.mm; path = ../../apple/heyzap/Heyzap.mm; sourceTree = "<group>"; };
 		7823C8941CD4E25400703A34 /* CameraEntity3D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CameraEntity3D.cpp; path = ../entities/CameraEntity3D.cpp; sourceTree = "<group>"; };
 		7823C8951CD4E25400703A34 /* CameraEntity3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CameraEntity3D.h; path = ../entities/CameraEntity3D.h; sourceTree = "<group>"; };
 		78357A0D1CA6D9B100F86325 /* RotateGlobalBy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RotateGlobalBy.cpp; sourceTree = "<group>"; };
@@ -5747,8 +5739,8 @@
 		785C58721BD506F200B71D89 /* Motion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Motion.h; path = ../entities/Motion.h; sourceTree = "<group>"; };
 		785C58811BD53CE200B71D89 /* BatchEntity.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BatchEntity.cpp; path = ../entities/BatchEntity.cpp; sourceTree = "<group>"; };
 		785C58821BD53CE200B71D89 /* BatchEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BatchEntity.h; path = ../entities/BatchEntity.h; sourceTree = "<group>"; };
-		78741BDF1D3D22B700D7A423 /* Facebook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Facebook.h; sourceTree = "<group>"; };
-		78741BE11D3D22C700D7A423 /* Facebook.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = Facebook.mm; path = ../../apple/facebook/Facebook.mm; sourceTree = "<group>"; };
+		789304FE1E7EDA98007A16B7 /* Ad.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Ad.mm; sourceTree = "<group>"; };
+		789305021E7EDAA1007A16B7 /* Ad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Ad.h; path = ../../include/ad/Ad.h; sourceTree = "<group>"; };
 		78938EA31BCC7E94009CB065 /* TranslateTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TranslateTypes.h; sourceTree = "<group>"; };
 		7894BFA11BC9168700363FC9 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = "../../cocos2d-tooflya-sdk/AppDelegate.h"; sourceTree = "<group>"; };
 		7894BFA21BC9168700363FC9 /* Macros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Macros.h; path = "../../cocos2d-tooflya-sdk/Macros.h"; sourceTree = "<group>"; };
@@ -8551,24 +8543,14 @@
 			path = include/batch;
 			sourceTree = "<group>";
 		};
-		781B06DC1BD37FA80072FB24 /* heyzap */ = {
+		789304FD1E7EDA98007A16B7 /* ad */ = {
 			isa = PBXGroup;
 			children = (
-				781B06E51BD37FC80072FB24 /* Heyzap.mm */,
-				781B06DD1BD37FA80072FB24 /* Heyzap.h */,
+				789304FE1E7EDA98007A16B7 /* Ad.mm */,
+				789305021E7EDAA1007A16B7 /* Ad.h */,
 			);
-			name = heyzap;
-			path = include/heyzap;
-			sourceTree = "<group>";
-		};
-		78741BDE1D3D22B700D7A423 /* facebook */ = {
-			isa = PBXGroup;
-			children = (
-				78741BE11D3D22C700D7A423 /* Facebook.mm */,
-				78741BDF1D3D22B700D7A423 /* Facebook.h */,
-			);
-			name = facebook;
-			path = include/facebook;
+			name = ad;
+			path = apple/ad;
 			sourceTree = "<group>";
 		};
 		7894BF9F1BC90B2F00363FC9 /* extend */ = {
@@ -8738,10 +8720,9 @@
 			isa = PBXGroup;
 			children = (
 				781B066F1BD269210072FB24 /* Platform.h */,
+				789304FD1E7EDA98007A16B7 /* ad */,
 				781B06701BD269210072FB24 /* analytics */,
-				78741BDE1D3D22B700D7A423 /* facebook */,
 				781B06DA1BD37FA80072FB24 /* batch */,
-				781B06DC1BD37FA80072FB24 /* heyzap */,
 				781B06721BD269210072FB24 /* internal */,
 				781B06971BD2B0490072FB24 /* media */,
 				781B06D11BD3677C0072FB24 /* purchase */,
@@ -10010,7 +9991,6 @@
 				B603F1AA1AC8EA0900A9579C /* CCTerrain.h in Headers */,
 				15AE1BD319AAE01E00C27E9E /* CCControlPotentiometer.h in Headers */,
 				15AE1B6E19AADA9900C27E9E /* UIHelper.h in Headers */,
-				781B06E01BD37FA80072FB24 /* Heyzap.h in Headers */,
 				B230ED7319B417AE00364AA8 /* CCTrianglesCommand.h in Headers */,
 				B6DD2FB11B04825B00E47F5F /* RecastDebugDraw.h in Headers */,
 				B6CAB2F71AF9AA1A00B9B856 /* btTriangleBuffer.h in Headers */,
@@ -10667,6 +10647,7 @@
 				781B06941BD2AB740072FB24 /* Services.h in Headers */,
 				B6CAB1E51AF9AA1A00B9B856 /* Bullet-C-Api.h in Headers */,
 				781B06A01BD2B2E60072FB24 /* Social.h in Headers */,
+				789305041E7EDAA1007A16B7 /* Ad.h in Headers */,
 				B6CAB4111AF9AA1A00B9B856 /* btMultiBodyLinkCollider.h in Headers */,
 				78D3C83D1E62F70300D71E5F /* Motion3D.h in Headers */,
 				B665E36C1AA80A6500DDB1C5 /* CCPUOnVelocityObserver.h in Headers */,
@@ -10683,7 +10664,6 @@
 				15AE1A3719AAD3D500C27E9E /* b2PolygonShape.h in Headers */,
 				B665E2BC1AA80A6500DDB1C5 /* CCPUForceFieldAffectorTranslator.h in Headers */,
 				15AE1B5419AADA9900C27E9E /* UIRichText.h in Headers */,
-				78E6B7E21D43A6B000533E9E /* Facebook.h in Headers */,
 				B665E31C1AA80A6500DDB1C5 /* CCPUOnClearObserver.h in Headers */,
 				50ABBE3B1925AB6F00A911A9 /* CCData.h in Headers */,
 				B665E3A41AA80A6500DDB1C5 /* CCPUPositionEmitterTranslator.h in Headers */,
@@ -10793,6 +10773,7 @@
 				78C3567D1CEE7F6500F10068 /* btTriangleShape.h in Headers */,
 				78C3567E1CEE7F6500F10068 /* btMatrixX.h in Headers */,
 				78C3567F1CEE7F6500F10068 /* CCCamera.h in Headers */,
+				789305051E7EDAA1007A16B7 /* Ad.h in Headers */,
 				78C356811CEE7F6500F10068 /* b2GearJoint.h in Headers */,
 				78C356821CEE7F6500F10068 /* CCPULinearForceAffectorTranslator.h in Headers */,
 				78C356831CEE7F6500F10068 /* btOverlappingPairCallback.h in Headers */,
@@ -10983,7 +10964,6 @@
 				78C357431CEE7F6500F10068 /* CCActionProgressTimer.h in Headers */,
 				78C357441CEE7F6500F10068 /* btMultiBodyConstraint.h in Headers */,
 				78C357461CEE7F6500F10068 /* CCPUBehaviour.h in Headers */,
-				78E6B7E31D43A6B100533E9E /* Facebook.h in Headers */,
 				78C357471CEE7F6500F10068 /* CCActionTiledGrid.h in Headers */,
 				78C357481CEE7F6500F10068 /* CCPUEventHandlerTranslator.h in Headers */,
 				78C357491CEE7F6500F10068 /* btDantzigSolver.h in Headers */,
@@ -11011,7 +10991,6 @@
 				78C357631CEE7F6500F10068 /* CCPUPointEmitter.h in Headers */,
 				78C357651CEE7F6500F10068 /* CCFileUtils.h in Headers */,
 				78C357661CEE7F6500F10068 /* cl_gl.h in Headers */,
-				78C357671CEE7F6500F10068 /* Heyzap.h in Headers */,
 				78C357681CEE7F6500F10068 /* CCPUEmitterTranslator.h in Headers */,
 				78C357691CEE7F6500F10068 /* UIScrollView.h in Headers */,
 				78C3576A1CEE7F6500F10068 /* ccShader_PositionTexture.vert in Headers */,
@@ -11706,6 +11685,7 @@
 				B6CAB3101AF9AA1A00B9B856 /* btTriangleShape.h in Headers */,
 				B6CAB5141AF9AA1A00B9B856 /* btMatrixX.h in Headers */,
 				3EACC9A319F5014D00EB3C5E /* CCCamera.h in Headers */,
+				789305031E7EDAA1007A16B7 /* Ad.h in Headers */,
 				15AE1AC719AAD40300C27E9E /* b2GearJoint.h in Headers */,
 				B665E2ED1AA80A6500DDB1C5 /* CCPULinearForceAffectorTranslator.h in Headers */,
 				B6CAB20A1AF9AA1A00B9B856 /* btOverlappingPairCallback.h in Headers */,
@@ -11896,7 +11876,6 @@
 				1A57008C180BC5A10088DEC7 /* CCActionProgressTimer.h in Headers */,
 				B6CAB3FE1AF9AA1A00B9B856 /* btMultiBodyConstraint.h in Headers */,
 				B665E21D1AA80A6500DDB1C5 /* CCPUBehaviour.h in Headers */,
-				78741BE01D3D22B700D7A423 /* Facebook.h in Headers */,
 				1A570090180BC5A10088DEC7 /* CCActionTiledGrid.h in Headers */,
 				B665E2A91AA80A6500DDB1C5 /* CCPUEventHandlerTranslator.h in Headers */,
 				B6CAB41E1AF9AA1A00B9B856 /* btDantzigSolver.h in Headers */,
@@ -11924,7 +11903,6 @@
 				B665E3991AA80A6500DDB1C5 /* CCPUPointEmitter.h in Headers */,
 				50ABC0101926664800A911A9 /* CCFileUtils.h in Headers */,
 				B6CAB53C1AF9AA1A00B9B856 /* cl_gl.h in Headers */,
-				781B06E11BD37FA80072FB24 /* Heyzap.h in Headers */,
 				B665E29D1AA80A6500DDB1C5 /* CCPUEmitterTranslator.h in Headers */,
 				15AE1B7B19AADA9A00C27E9E /* UIScrollView.h in Headers */,
 				5034CA30191D591100CE6051 /* ccShader_PositionTexture.vert in Headers */,
@@ -12713,7 +12691,6 @@
 				15AE1BDA19AAE01E00C27E9E /* CCControlSwitch.cpp in Sources */,
 				B6CAB3B71AF9AA1A00B9B856 /* btGeneric6DofConstraint.cpp in Sources */,
 				46A170EA1807CECA005B8026 /* CCPhysicsJoint.cpp in Sources */,
-				78E6B7E41D43A6B300533E9E /* Facebook.mm in Sources */,
 				15AE1B4D19AADA9900C27E9E /* UIListView.cpp in Sources */,
 				B665E24A1AA80A6500DDB1C5 /* CCPUColorAffector.cpp in Sources */,
 				78F458B31CE71EFC00A70B02 /* CCStencilStateManager.cpp in Sources */,
@@ -12759,6 +12736,7 @@
 				15AE1B9B19AADFDF00C27E9E /* UIRelativeBox.cpp in Sources */,
 				B665E3E21AA80A6600DDB1C5 /* CCPUSineForceAffector.cpp in Sources */,
 				50ABBD501925AB0000A911A9 /* Quaternion.cpp in Sources */,
+				789305001E7EDA98007A16B7 /* Ad.mm in Sources */,
 				78F9353B1E6B237100775FB3 /* BoundingBoxAttachment.c in Sources */,
 				B6CAB2751AF9AA1A00B9B856 /* btUnionFind.cpp in Sources */,
 				B665E36E1AA80A6500DDB1C5 /* CCPUOnVelocityObserverTranslator.cpp in Sources */,
@@ -12839,7 +12817,6 @@
 				1A570079180BC5A10088DEC7 /* CCActionInstant.cpp in Sources */,
 				15AE1A7019AAD40300C27E9E /* b2Contact.cpp in Sources */,
 				15AE184419AAD2F700C27E9E /* CCSprite3DMaterial.cpp in Sources */,
-				78FEA7241BDE104E00D253A3 /* Entity3D.cpp in Sources */,
 				50ABBE591925AB6F00A911A9 /* CCEventKeyboard.cpp in Sources */,
 				B665E2FA1AA80A6500DDB1C5 /* CCPUMaterialManager.cpp in Sources */,
 				B6DD2FAF1B04825B00E47F5F /* RecastDebugDraw.cpp in Sources */,
@@ -13015,6 +12992,7 @@
 				B63990CC1A490AFE00B07923 /* CCAsyncTaskPool.cpp in Sources */,
 				B665E29A1AA80A6500DDB1C5 /* CCPUEmitterTranslator.cpp in Sources */,
 				1A5701EA180BCB8C0088DEC7 /* CCTransitionPageTurn.cpp in Sources */,
+				786F64C31E9E43B30033B69E /* Entity3D.cpp in Sources */,
 				15AE186B19AAD31D00C27E9E /* SimpleAudioEngine.mm in Sources */,
 				B665E2CE1AA80A6500DDB1C5 /* CCPUInterParticleCollider.cpp in Sources */,
 				50ABBDAD1925AB4100A911A9 /* CCRenderer.cpp in Sources */,
@@ -13049,7 +13027,6 @@
 				1A570214180BCBF40088DEC7 /* CCRenderTexture.cpp in Sources */,
 				B665E3FE1AA80A6600DDB1C5 /* CCPUSphereCollider.cpp in Sources */,
 				B6CAB3591AF9AA1A00B9B856 /* gim_memory.cpp in Sources */,
-				781B06E61BD37FC80072FB24 /* Heyzap.mm in Sources */,
 				A045F6DC1BA816A1005076C7 /* CCCameraBackgroundBrush.cpp in Sources */,
 				B665E25A1AA80A6500DDB1C5 /* CCPUDoEnableComponentEventHandler.cpp in Sources */,
 				78F935171E6B237100775FB3 /* AtlasAttachmentLoader.c in Sources */,
@@ -13498,6 +13475,7 @@
 				78C3539A1CEE7F6500F10068 /* DetourTileCacheBuilder.cpp in Sources */,
 				78C3539B1CEE7F6500F10068 /* CCApplication-ios.mm in Sources */,
 				78C3539C1CEE7F6500F10068 /* b2WorldCallbacks.cpp in Sources */,
+				789305011E7EDA98007A16B7 /* Ad.mm in Sources */,
 				78C3539D1CEE7F6500F10068 /* btQuantizedBvh.cpp in Sources */,
 				78C3539E1CEE7F6500F10068 /* btSimpleDynamicsWorld.cpp in Sources */,
 				78C3539F1CEE7F6500F10068 /* fastlz.c in Sources */,
@@ -13597,7 +13575,6 @@
 				78C354021CEE7F6500F10068 /* CCOBB.cpp in Sources */,
 				78C354031CEE7F6500F10068 /* btConvexHull.cpp in Sources */,
 				78C354051CEE7F6500F10068 /* BackgroundScroll.cpp in Sources */,
-				78C354061CEE7F6500F10068 /* Heyzap.mm in Sources */,
 				78C354071CEE7F6500F10068 /* CCControlStepper.cpp in Sources */,
 				78C354081CEE7F6500F10068 /* b2CollideCircle.cpp in Sources */,
 				78C354091CEE7F6500F10068 /* CCPass.cpp in Sources */,
@@ -13784,7 +13761,6 @@
 				78C354BF1CEE7F6500F10068 /* btConvexHullShape.cpp in Sources */,
 				78F935421E6B237100775FB3 /* Cocos2dAttachmentLoader.cpp in Sources */,
 				78C354C01CEE7F6500F10068 /* b2Fixture.cpp in Sources */,
-				78E6B7E51D43A6B300533E9E /* Facebook.mm in Sources */,
 				78C354C21CEE7F6500F10068 /* btEmptyShape.cpp in Sources */,
 				78F935061E6B237100775FB3 /* AnimationState.c in Sources */,
 				78C354C31CEE7F6500F10068 /* UILayoutParameter.cpp in Sources */,
@@ -13795,7 +13771,6 @@
 				78C354C91CEE7F6500F10068 /* CCLabelTTF.cpp in Sources */,
 				78C354CA1CEE7F6500F10068 /* CCNinePatchImageParser.cpp in Sources */,
 				78C354CB1CEE7F6500F10068 /* CCPUPointEmitterTranslator.cpp in Sources */,
-				78C354CC1CEE7F6500F10068 /* Entity3D.cpp in Sources */,
 				78C354CD1CEE7F6500F10068 /* CCPUTextureAnimatorTranslator.cpp in Sources */,
 				78C354CE1CEE7F6500F10068 /* cdt.cc in Sources */,
 				78C354CF1CEE7F6500F10068 /* CCPUOnPositionObserver.cpp in Sources */,
@@ -13965,6 +13940,7 @@
 				78C355821CEE7F6500F10068 /* btStaticPlaneShape.cpp in Sources */,
 				78C355831CEE7F6500F10068 /* CCTextureAtlas.cpp in Sources */,
 				78C355851CEE7F6500F10068 /* CCPUSphereSurfaceEmitterTranslator.cpp in Sources */,
+				786F64C41E9E43B30033B69E /* Entity3D.cpp in Sources */,
 				78C355871CEE7F6500F10068 /* CCPUAlignAffector.cpp in Sources */,
 				78C355881CEE7F6500F10068 /* b2TimeOfImpact.cpp in Sources */,
 				78C355891CEE7F6500F10068 /* btConvexCast.cpp in Sources */,
@@ -14328,6 +14304,7 @@
 				15AE1BF119AAE01E00C27E9E /* CCControlPotentiometer.cpp in Sources */,
 				7894BFC61BC9168700363FC9 /* AnimatedEntity.cpp in Sources */,
 				382383FF1A258FA7002C4610 /* idl_parser.cpp in Sources */,
+				786F64C21E9E43B20033B69E /* Entity3D.cpp in Sources */,
 				B665E28F1AA80A6500DDB1C5 /* CCPUDynamicAttributeTranslator.cpp in Sources */,
 				B665E31B1AA80A6500DDB1C5 /* CCPUOnClearObserver.cpp in Sources */,
 				B6CAB2421AF9AA1A00B9B856 /* btConvexConcaveCollisionAlgorithm.cpp in Sources */,
@@ -14352,7 +14329,6 @@
 				15AE183119AAD2F700C27E9E /* CCOBB.cpp in Sources */,
 				B6CAB4FC1AF9AA1A00B9B856 /* btConvexHull.cpp in Sources */,
 				7894FA451BF0A50300A69ED6 /* BackgroundScroll.cpp in Sources */,
-				781B06E71BD37FC80072FB24 /* Heyzap.mm in Sources */,
 				15AE1BF719AAE01E00C27E9E /* CCControlStepper.cpp in Sources */,
 				15AE1A3C19AAD3D500C27E9E /* b2CollideCircle.cpp in Sources */,
 				501216951AC47393009A4BEA /* CCPass.cpp in Sources */,
@@ -14431,6 +14407,7 @@
 				15AE1AB819AAD40300C27E9E /* b2EdgeAndCircleContact.cpp in Sources */,
 				1A57008A180BC5A10088DEC7 /* CCActionProgressTimer.cpp in Sources */,
 				78F935401E6B237100775FB3 /* Cocos2dAttachmentLoader.cpp in Sources */,
+				789304FF1E7EDA98007A16B7 /* Ad.mm in Sources */,
 				B6CAB5001AF9AA1A00B9B856 /* btConvexHullComputer.cpp in Sources */,
 				B665E3EF1AA80A6600DDB1C5 /* CCPUSlaveBehaviourTranslator.cpp in Sources */,
 				B6CAB4C01AF9AA1A00B9B856 /* SpuLibspe2Support.cpp in Sources */,
@@ -14477,7 +14454,6 @@
 				B6CAB3F81AF9AA1A00B9B856 /* btMultiBody.cpp in Sources */,
 				503DD8E21926736A00CD74DD /* CCCommon-ios.mm in Sources */,
 				B677B0D61B18492D006762CB /* CCNavMeshObstacle.cpp in Sources */,
-				78741BE21D3D22C700D7A423 /* Facebook.mm in Sources */,
 				B6CAB2561AF9AA1A00B9B856 /* btGhostObject.cpp in Sources */,
 				15AE1A9419AAD40300C27E9E /* b2BlockAllocator.cpp in Sources */,
 				15AE1A4D19AAD3D500C27E9E /* b2PolygonShape.cpp in Sources */,
@@ -14549,7 +14525,6 @@
 				1A5701CC180BCB5A0088DEC7 /* CCLabelTTF.cpp in Sources */,
 				291901461B05895600F8B4BA /* CCNinePatchImageParser.cpp in Sources */,
 				B665E39B1AA80A6500DDB1C5 /* CCPUPointEmitterTranslator.cpp in Sources */,
-				78FEA7251BDE104E00D253A3 /* Entity3D.cpp in Sources */,
 				B665E4171AA80A6600DDB1C5 /* CCPUTextureAnimatorTranslator.cpp in Sources */,
 				15FB20941AE7C57D00C31518 /* cdt.cc in Sources */,
 				B665E34B1AA80A6500DDB1C5 /* CCPUOnPositionObserver.cpp in Sources */,
@@ -15213,6 +15188,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = NO;
+				ENABLE_BITCODE = NO;
 				EXECUTABLE_PREFIX = "";
 				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
@@ -15236,6 +15212,7 @@
 					"$(SRCROOT)/../external/websockets/prebuilt/ios",
 					"$(SRCROOT)/../external/chipmunk/prebuilt/ios",
 				);
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-llibsql3",
@@ -15257,6 +15234,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = NO;
+				ENABLE_BITCODE = NO;
 				EXECUTABLE_PREFIX = "";
 				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;

@@ -226,6 +226,9 @@ public:
     /** Stop all audio instances. */
     static void stopAll();
 
+    /**  */
+    static bool isOtherAudioPlaying();
+
     /**
      * Sets the current playback position of an audio instance.
      *

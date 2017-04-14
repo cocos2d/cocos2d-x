@@ -1586,6 +1586,9 @@ void Director::onRenderFinish(int index)
         glBindFramebuffer(GL_READ_FRAMEBUFFER_APPLE, this->getRunningScene()->getCaptureFrameBuffer()->getFBO());
         glBindFramebuffer(GL_DRAW_FRAMEBUFFER_APPLE, this->getRunningScene()->getCaptureResolveFrameBuffer()->getFBO());
         glResolveMultisampleFramebufferAPPLE();
+
+        GLenum attachments[] = {GL_COLOR_ATTACHMENT0, GL_DEPTH_ATTACHMENT};
+        glDiscardFramebufferEXT(GL_READ_FRAMEBUFFER_APPLE, 2,  attachments);
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_MAC
         auto width = Director::getInstance()->getWinSizeInPixels().width;
         auto height = Director::getInstance()->getWinSizeInPixels().height;

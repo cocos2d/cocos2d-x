@@ -342,6 +342,11 @@ void AudioEngine::resume(int audioID)
     }
 }
 
+bool AudioEngine::isOtherAudioPlaying()
+{
+  return _audioEngineImpl->isOtherAudioPlaying();
+}
+
 void AudioEngine::resumeAll()
 {
     auto itEnd = _audioIDInfoMap.end();

@@ -1068,7 +1068,7 @@ void Sprite3D::enableLight(bool state)
 
   if(!this->light)
   {
-    //this->setLightMask(0);
+    this->setLightMask(0);
   }
 }
 

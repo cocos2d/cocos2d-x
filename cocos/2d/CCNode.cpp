@@ -68,6 +68,23 @@ bool nodeComparisonLess(Node* n1, Node* n2)
 int Node::s_globalOrderOfArrival = 1;
 
 // MARK: Constructor, Destructor, Init
+Node::Node(Node* parent, bool autocreate)
+: Node()
+{
+  if(parent)
+  {
+    parent->addChild(this);
+  }
+
+  if(autocreate)
+  {
+    this->_create();
+  }
+  else
+  {
+    this->_destroy();
+  }
+}
 
 Node::Node()
 : _rotationX(0.0f)
@@ -1245,7 +1262,7 @@ uint32_t Node::processParentFlags(const Mat4& parentTransform, uint32_t parentFl
 bool Node::isVisitableByVisitingCamera() const
 {
   auto camera = Director::getInstance()->getRunningScene()->getCamera();
-  bool visibleByCamera = camera ? ((unsigned short)camera->getCameraFlag() & _cameraMask) != 0 : true;
+  bool visibleByCamera = camera ? (camera->getCameraFlag() == _cameraMask) : true;
   return visibleByCamera;
 }
 
