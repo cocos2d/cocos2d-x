@@ -1,0 +1,93 @@
+
+# Project Name
+APPNAME = lua-empty-test
+
+# Project Type
+type = app
+
+# Project Profile
+profile = mobile-2.4
+
+# C/CPP Sources
+USER_SRCS = src/main.cpp \
+            ../Classes/AppDelegate.cpp
+
+# EDC Sources
+USER_EDCS =  
+
+# PO Sources
+USER_POS = 
+
+# User Defines
+USER_DEFS = 
+USER_CPP_DEFS = TIZEN CC_ENABLE_BULLET_INTEGRATION CC_USE_3D_PHYSICS COCOS2D_DEBUG=1 
+
+# User Undefines
+USER_UNDEFS = 
+USER_CPP_UNDEFS = 
+
+# User Libraries
+USER_LIBS = luacocos2d cocos2dx websockets chipmunk png jpeg tiff webp
+
+# User Objects
+USER_OBJS = 
+
+# User Includes
+## C Compiler
+USER_C_INC_DIRS = 
+USER_INC_FILES = 
+
+## C++ Compiler
+USER_CPP_INC_DIRS = ../Classes \
+                    ../../../../cocos \
+                    ../../../../cocos/editor-support \
+                    ../../../../cocos/platform \
+                    ../../../../extensions \
+                    ../../../../external \
+                    ../../../../external/Box2D \
+                    ../../../../external/ConvertUTF \
+                    ../../../../external/bullet \
+                    ../../../../external/chipmunk/include/ \
+                    ../../../../external/chipmunk/include/chipmunk \
+                    ../../../../external/edtaa3func \
+                    ../../../../external/jpeg/include/tizen \
+                    ../../../../external/json \
+                    ../../../../external/lua \
+                    ../../../../external/lua/lua \
+                    ../../../../external/lua/luajit/include \
+                    ../../../../external/lua/luasocket \
+                    ../../../../external/lua/tolua \
+                    ../../../../external/png/include/tizen \
+                    ../../../../external/tiff/include/tizen \
+                    ../../../../external/tinyxml2 \
+                    ../../../../external/unzip \
+                    ../../../../external/webp/include/tizen \
+                    ../../../../external/websockets/include/tizen \
+                    ../../../../external/xxhash \
+                    ../../../../external/xxtea
+
+USER_CPP_INC_FILES = 
+
+USER_INC_DIRS = $(USER_C_INC_DIRS) $(USER_CPP_INC_DIRS)
+
+# User Library Path
+USER_LIB_DIRS = ${PROJ_PATH}/../../../../build/tizen/${BUILD_CONFIG}/${BUILD_ARCH} \
+                ${PROJ_PATH}/../../../../cocos/scripting/lua-bindings/proj.tizen/${BUILD_CONFIG}/${BUILD_ARCH} \
+                ${PROJ_PATH}/../../../../external/chipmunk/prebuilt/tizen/${BUILD_ARCH} \
+                ${PROJ_PATH}/../../../../external/jpeg/prebuilt/tizen/${BUILD_ARCH} \
+                ${PROJ_PATH}/../../../../external/png/prebuilt/tizen/${BUILD_ARCH} \
+                ${PROJ_PATH}/../../../../external/tiff/prebuilt/tizen/${BUILD_ARCH} \
+                ${PROJ_PATH}/../../../../external/webp/prebuilt/tizen/${BUILD_ARCH} \
+                ${PROJ_PATH}/../../../../external/websockets/prebuilt/tizen/${BUILD_ARCH}
+
+# EDC Resource Path
+USER_EDCS_IMAGE_DIRS = ${OUTPUT_DIR} 
+USER_EDCS_SOUND_DIRS = ${OUTPUT_DIR} 
+USER_EDCS_FONT_DIRS = ${OUTPUT_DIR} 
+
+# EDC Flags
+USER_EXT_EDC_KEYS = 
+
+# Resource Filter
+USER_RES_INCLUDE = 
+USER_RES_EXCLUDE = 

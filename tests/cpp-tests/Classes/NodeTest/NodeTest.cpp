@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2012 cocos2d-x.org
- Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -409,7 +409,7 @@ SchedulerTest1::SchedulerTest1()
     //CCLOG("retain count after addChild is %d", layer->getReferenceCount());      // 2
     
     layer->schedule(CC_CALLBACK_1(SchedulerTest1::doSomething, this), "do_something_key");
-    //CCLOG("retain count after schedule is %d", layer->getReferenceCount());      // 3 : (object-c viersion), but win32 version is still 2, because Timer class don't save target.
+    //CCLOG("retain count after schedule is %d", layer->getReferenceCount());      // 3 : (objective-c version), but win32 version is still 2, because Timer class don't save target.
     
     layer->unschedule("do_something_key");
     //CCLOG("retain count after unschedule is %d", layer->getReferenceCount());        // STILL 3!  (win32 is '2')
@@ -1004,7 +1004,7 @@ void MySprite::onDraw(const Mat4 &transform, uint32_t flags)
     int diff = offsetof( V3F_C4B_T2F, vertices);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
 
-    // texCoods
+    // texCoords
     diff = offsetof( V3F_C4B_T2F, texCoords);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
 

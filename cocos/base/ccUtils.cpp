@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010      cocos2d-x.org
-Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -27,6 +27,7 @@ THE SOFTWARE.
 
 #include <cmath>
 #include <stdlib.h>
+#include "md5/md5.h"
 
 #include "base/CCDirector.h"
 #include "base/CCAsyncTaskPool.h"
@@ -128,7 +129,7 @@ void onCaptureScreen(const std::function<void(bool, const std::string&)>& afterC
 
             // Save image in AsyncTaskPool::TaskType::TASK_IO thread, and call afterCaptured in mainThread
             static bool succeedSaveToFile = false;
-            std::function<void(void*)> mainThread = [afterCaptured, outputFile](void* param)
+            std::function<void(void*)> mainThread = [afterCaptured, outputFile](void* /*param*/)
             {
                 if (afterCaptured)
                 {
@@ -169,7 +170,7 @@ void captureScreen(const std::function<void(bool, const std::string&)>& afterCap
     }
     s_captureScreenCommand.init(std::numeric_limits<float>::max());
     s_captureScreenCommand.func = std::bind(onCaptureScreen, afterCaptured, filename);
-    s_captureScreenListener = Director::getInstance()->getEventDispatcher()->addCustomEventListener(Director::EVENT_AFTER_DRAW, [](EventCustom *event) {
+    s_captureScreenListener = Director::getInstance()->getEventDispatcher()->addCustomEventListener(Director::EVENT_AFTER_DRAW, [](EventCustom* /*event*/) {
         auto director = Director::getInstance();
         director->getEventDispatcher()->removeEventListener((EventListener*)(s_captureScreenListener));
         s_captureScreenListener = nullptr;
@@ -406,6 +407,27 @@ Node* findChild(Node* levelRoot, int tag)
     }
 
     return nullptr;
+}
+
+std::string getFileMD5Hash(const std::string &filename)
+{
+    static const unsigned int MD5_DIGEST_LENGTH = 16;
+
+    Data d;
+    FileUtils::getInstance()->getContents(filename, &d);
+
+    md5_state_t state;
+    md5_byte_t digest[MD5_DIGEST_LENGTH];
+    char hexOutput[(MD5_DIGEST_LENGTH << 1) + 1] = {0};
+
+    md5_init(&state);
+    md5_append(&state, (const md5_byte_t *)d.getBytes(), (int)d.getSize());
+    md5_finish(&state, digest);
+
+    for (int di = 0; di < 16; ++di)
+        sprintf(hexOutput + di * 2, "%02x", digest[di]);
+
+    return hexOutput;
 }
 
 }

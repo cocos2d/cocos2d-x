@@ -2,7 +2,7 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -78,7 +78,7 @@ NS_CC_BEGIN
 //
 
 
-inline void nomalize_point(float x, float y, particle_point* out)
+inline void normalize_point(float x, float y, particle_point* out)
 {
     float n = x * x + y * y;
     // Already normalized.
@@ -904,7 +904,7 @@ void ParticleSystem::update(float dt)
                 // radial acceleration
                 if (_particleData.posx[i] || _particleData.posy[i])
                 {
-                    nomalize_point(_particleData.posx[i], _particleData.posy[i], &radial);
+                    normalize_point(_particleData.posx[i], _particleData.posy[i], &radial);
                 }
                 tangential = radial;
                 radial.x *= _particleData.modeA.radialAccel[i];

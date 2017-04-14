@@ -310,7 +310,7 @@ local function MenuLayer3()
     end
 
     local function menuCallback2(sender)
-        cclog("Label clicked. Toogling AtlasSprite")
+        cclog("Label clicked. Toggling AtlasSprite")
         m_disabledItem:setEnabled( not m_disabledItem:isEnabled() )
         m_disabledItem:stopAllActions()
     end

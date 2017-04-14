@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -722,7 +722,7 @@ void GLViewImpl::onGLFWError(int errorID, const char* errorDesc)
     CCLOGERROR("%s", _glfwError.c_str());
 }
 
-void GLViewImpl::onGLFWMouseCallBack(GLFWwindow* window, int button, int action, int modify)
+void GLViewImpl::onGLFWMouseCallBack(GLFWwindow* /*window*/, int button, int action, int /*modify*/)
 {
     if(GLFW_MOUSE_BUTTON_LEFT == button)
     {
@@ -754,14 +754,14 @@ void GLViewImpl::onGLFWMouseCallBack(GLFWwindow* window, int button, int action,
     {
         EventMouse event(EventMouse::MouseEventType::MOUSE_DOWN);
         event.setCursorPosition(cursorX, cursorY);
-        event.setMouseButton(button);
+        event.setMouseButton(static_cast<cocos2d::EventMouse::MouseButton>(button));
         Director::getInstance()->getEventDispatcher()->dispatchEvent(&event);
     }
     else if(GLFW_RELEASE == action)
     {
         EventMouse event(EventMouse::MouseEventType::MOUSE_UP);
         event.setCursorPosition(cursorX, cursorY);
-        event.setMouseButton(button);
+        event.setMouseButton(static_cast<cocos2d::EventMouse::MouseButton>(button));
         Director::getInstance()->getEventDispatcher()->dispatchEvent(&event);
     }
 }
@@ -797,21 +797,21 @@ void GLViewImpl::onGLFWMouseMoveCallBack(GLFWwindow* window, double x, double y)
     // Set current button
     if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS)
     {
-        event.setMouseButton(GLFW_MOUSE_BUTTON_LEFT);
+        event.setMouseButton(static_cast<cocos2d::EventMouse::MouseButton>(GLFW_MOUSE_BUTTON_LEFT));
     }
     else if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS)
     {
-        event.setMouseButton(GLFW_MOUSE_BUTTON_RIGHT);
+        event.setMouseButton(static_cast<cocos2d::EventMouse::MouseButton>(GLFW_MOUSE_BUTTON_RIGHT));
     }
     else if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_MIDDLE) == GLFW_PRESS)
     {
-        event.setMouseButton(GLFW_MOUSE_BUTTON_MIDDLE);
+        event.setMouseButton(static_cast<cocos2d::EventMouse::MouseButton>(GLFW_MOUSE_BUTTON_MIDDLE));
     }
     event.setCursorPosition(cursorX, cursorY);
     Director::getInstance()->getEventDispatcher()->dispatchEvent(&event);
 }
 
-void GLViewImpl::onGLFWMouseScrollCallback(GLFWwindow* window, double x, double y)
+void GLViewImpl::onGLFWMouseScrollCallback(GLFWwindow* /*window*/, double x, double y)
 {
     EventMouse event(EventMouse::MouseEventType::MOUSE_SCROLL);
     //Because OpenGL and cocos2d-x uses different Y axis, we need to convert the coordinate here
@@ -822,7 +822,7 @@ void GLViewImpl::onGLFWMouseScrollCallback(GLFWwindow* window, double x, double 
     Director::getInstance()->getEventDispatcher()->dispatchEvent(&event);
 }
 
-void GLViewImpl::onGLFWKeyCallback(GLFWwindow *window, int key, int scancode, int action, int mods)
+void GLViewImpl::onGLFWKeyCallback(GLFWwindow* /*window*/, int key, int /*scancode*/, int action, int /*mods*/)
 {
     if (GLFW_REPEAT != action)
     {
@@ -854,7 +854,7 @@ void GLViewImpl::onGLFWKeyCallback(GLFWwindow *window, int key, int scancode, in
     }
 }
 
-void GLViewImpl::onGLFWCharCallback(GLFWwindow *window, unsigned int character)
+void GLViewImpl::onGLFWCharCallback(GLFWwindow* /*window*/, unsigned int character)
 {
     char16_t wcharString[2] = { (char16_t) character, 0 };
     std::string utf8String;
@@ -879,7 +879,7 @@ void GLViewImpl::onGLFWCharCallback(GLFWwindow *window, unsigned int character)
     }
 }
 
-void GLViewImpl::onGLFWWindowPosCallback(GLFWwindow *windows, int x, int y)
+void GLViewImpl::onGLFWWindowPosCallback(GLFWwindow* /*window*/, int /*x*/, int /*y*/)
 {
     Director::getInstance()->setViewport();
 }
@@ -913,7 +913,7 @@ void GLViewImpl::onGLFWframebuffersize(GLFWwindow* window, int w, int h)
     }
 }
 
-void GLViewImpl::onGLFWWindowSizeFunCallback(GLFWwindow *window, int width, int height)
+void GLViewImpl::onGLFWWindowSizeFunCallback(GLFWwindow* /*window*/, int width, int height)
 {
     if (width && height && _resolutionPolicy != ResolutionPolicy::UNKNOWN)
     {
@@ -929,7 +929,7 @@ void GLViewImpl::onGLFWWindowSizeFunCallback(GLFWwindow *window, int width, int 
     }
 }
 
-void GLViewImpl::onGLFWWindowIconifyCallback(GLFWwindow* window, int iconified)
+void GLViewImpl::onGLFWWindowIconifyCallback(GLFWwindow* /*window*/, int iconified)
 {
     if (iconified == GL_TRUE)
     {
@@ -941,7 +941,7 @@ void GLViewImpl::onGLFWWindowIconifyCallback(GLFWwindow* window, int iconified)
     }
 }
 
-void GLViewImpl::onGLFWWindowFocusCallback(GLFWwindow* window, int focused)
+void GLViewImpl::onGLFWWindowFocusCallback(GLFWwindow* /*window*/, int focused)
 {
     if (focused == GL_TRUE)
     {

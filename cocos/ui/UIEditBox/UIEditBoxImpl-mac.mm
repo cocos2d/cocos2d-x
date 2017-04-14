@@ -166,6 +166,11 @@ void EditBoxImplMac::setNativeReturnType(EditBox::KeyboardReturnType returnType)
     [_sysEdit setReturnType:returnType];
 }
 
+void EditBoxImplMac::setNativeTextHorizontalAlignment(cocos2d::TextHAlignment alignment)
+{
+    [_sysEdit setTextHorizontalAlignment:alignment];
+}
+
 bool EditBoxImplMac::isEditing()
 {
     return [_sysEdit isEditState] ? true : false;

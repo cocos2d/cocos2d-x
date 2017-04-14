@@ -2,7 +2,7 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -161,7 +161,7 @@ std::string Scene::getDescription() const
     return StringUtils::format("<Scene | tag = %d>", _tag);
 }
 
-void Scene::onProjectionChanged(EventCustom* event)
+void Scene::onProjectionChanged(EventCustom* /*event*/)
 {
     if (_defaultCamera)
     {
@@ -248,8 +248,9 @@ void Scene::render(Renderer* renderer, const Mat4* eyeTransforms, const Mat4* ey
 #if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
     if (_physics3DWorld && _physics3DWorld->isDebugDrawEnabled())
     {
+        Camera *physics3dDebugCamera = _physics3dDebugCamera != nullptr ? _physics3dDebugCamera: defaultCamera;
+        
         for (unsigned int i = 0; i < multiViewCount; ++i) {
-            Camera *physics3dDebugCamera = _physics3dDebugCamera != nullptr ? _physics3dDebugCamera: defaultCamera;
             if (eyeProjections)
                 physics3dDebugCamera->setAdditionalProjection(eyeProjections[i] * physics3dDebugCamera->getProjectionMatrix().getInversed());
             if (eyeTransforms)
@@ -257,9 +258,14 @@ void Scene::render(Renderer* renderer, const Mat4* eyeTransforms, const Mat4* ey
             director->pushProjectionMatrix(i);
             director->loadProjectionMatrix(physics3dDebugCamera->getViewProjectionMatrix(), i);
         }
+        
+        physics3dDebugCamera->apply();
+        physics3dDebugCamera->clearBackground();
 
         _physics3DWorld->debugDraw(renderer);
         renderer->render();
+        
+        physics3dDebugCamera->restore();
 
         for (unsigned int i = 0; i < multiViewCount; ++i)
             director->popProjectionMatrix(i);

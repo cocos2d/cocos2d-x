@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2015-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -140,8 +140,8 @@ RenderTarget::~RenderTarget()
 }
 
 RenderTargetRenderBuffer::RenderTargetRenderBuffer()
-: _colorBuffer(0)
-, _format(GL_RGBA4)
+: _format(GL_RGBA4)
+, _colorBuffer(0)
 #if CC_ENABLE_CACHE_TEXTURE_DATA
 , _reBuildRenderBufferListener(nullptr)
 #endif
@@ -382,14 +382,14 @@ bool FrameBuffer::init(uint8_t fid, unsigned int width, unsigned int height)
 }
 
 FrameBuffer::FrameBuffer()
-: _clearColor(Color4F(0, 0, 0, 1))
+: _fbo(0)
+, _previousFBO(0)
+, _fboBindingDirty(true)
+, _clearColor(Color4F(0, 0, 0, 1))
 , _clearDepth(1.0)
 , _clearStencil(0)
-, _fbo(0)
-, _previousFBO(0)
 , _rt(nullptr)
 , _rtDepthStencil(nullptr)
-, _fboBindingDirty(true)
 , _isDefault(false)
 #if CC_ENABLE_CACHE_TEXTURE_DATA
 , _dirtyFBOListener(nullptr)

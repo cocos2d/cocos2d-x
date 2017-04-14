@@ -649,7 +649,7 @@ void LayerIgnoreAnchorPointRot::onEnter()
     auto lsize = l->getContentSize();
     child->setPosition(Vec2(lsize.width/2, lsize.height/2));
 
-    auto item = MenuItemFont::create("Toogle ignore anchor point", CC_CALLBACK_1(LayerIgnoreAnchorPointRot::onToggle, this));
+    auto item = MenuItemFont::create("Toggle ignore anchor point", CC_CALLBACK_1(LayerIgnoreAnchorPointRot::onToggle, this));
 
     auto menu = Menu::create(item, nullptr);
     this->addChild(menu);
@@ -700,7 +700,7 @@ void LayerIgnoreAnchorPointScale::onEnter()
     auto lsize = l->getContentSize();
     child->setPosition(Vec2(lsize.width/2, lsize.height/2));
 
-    auto item = MenuItemFont::create("Toogle ignore anchor point", CC_CALLBACK_1(LayerIgnoreAnchorPointScale::onToggle, this));
+    auto item = MenuItemFont::create("Toggle ignore anchor point", CC_CALLBACK_1(LayerIgnoreAnchorPointScale::onToggle, this));
 
     auto menu = Menu::create(item, nullptr);
     this->addChild(menu);
@@ -793,7 +793,7 @@ void LayerBug3162A::step(float dt)
 
 std::string LayerBug3162A::title() const
 {
-    return "Bug 3162 red layer cascade opacity eable/disable";
+    return "Bug 3162 red layer cascade opacity enable/disable";
 }
 
 std::string LayerBug3162A::subtitle() const
@@ -839,7 +839,7 @@ void LayerBug3162B::step(float dt)
 
 std::string LayerBug3162B::title() const
 {
-    return "Bug 3162 bottom layer cascade color eable/disable";
+    return "Bug 3162 bottom layer cascade color enable/disable";
 }
 
 std::string LayerBug3162B::subtitle() const

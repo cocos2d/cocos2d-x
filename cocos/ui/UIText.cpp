@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -402,6 +402,11 @@ Color4B Text::getEffectColor() const
 {
     Color4F effect = _labelRenderer->getEffectColor();
     return Color4B(effect.r * 255, effect.g * 255, effect.b * 255, effect.a * 255);
+}
+
+Sprite * Text::getLetter(int lettetIndex)
+{
+    return _labelRenderer->getLetter(lettetIndex);
 }
 
 Widget* Text::createCloneInstance()

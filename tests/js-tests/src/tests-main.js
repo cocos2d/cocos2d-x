@@ -1,7 +1,7 @@
 /****************************************************************************
  Copyright (c) 2008-2010 Ricardo Quesada
  Copyright (c) 2011-2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -545,6 +545,14 @@ var testNames = [
         linksrc:"src/PathTest/PathTest.js",
         testScene:function () {
             return new PathTestScene();
+        }
+    },
+    {
+        title:"PerformanceNow Tests",
+        platforms: PLATFORM_ALL,
+        linksrc:"src/PerformanceNowTest/PerformanceNowTest.js",
+        testScene:function() {
+            return new PerformanceNowTestScene();
         }
     },
     {

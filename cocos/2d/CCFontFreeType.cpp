@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2013      Zynga Inc.
-Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
  
 http://www.cocos2d-x.org
 
@@ -49,7 +49,7 @@ typedef struct _DataRef
 
 static std::unordered_map<std::string, DataRef> s_cacheFontData;
 
-FontFreeType * FontFreeType::create(const std::string &fontName, float fontSize, GlyphCollection glyphs, const char *customGlyphs,bool distanceFieldEnabled /* = false */,int outline /* = 0 */)
+FontFreeType * FontFreeType::create(const std::string &fontName, float fontSize, GlyphCollection glyphs, const char *customGlyphs,bool distanceFieldEnabled /* = false */,float outline /* = 0 */)
 {
     FontFreeType *tempFont =  new (std::nothrow) FontFreeType(distanceFieldEnabled,outline);
 
@@ -96,7 +96,7 @@ FT_Library FontFreeType::getFTLibrary()
     return _FTlibrary;
 }
 
-FontFreeType::FontFreeType(bool distanceFieldEnabled /* = false */,int outline /* = 0 */)
+FontFreeType::FontFreeType(bool distanceFieldEnabled /* = false */, float outline /* = 0 */)
 : _fontRef(nullptr)
 , _stroker(nullptr)
 , _distanceFieldEnabled(distanceFieldEnabled)
@@ -106,7 +106,7 @@ FontFreeType::FontFreeType(bool distanceFieldEnabled /* = false */,int outline /
 , _encoding(FT_ENCODING_UNICODE)
 , _usedGlyphs(GlyphCollection::ASCII)
 {
-    if (outline > 0)
+    if (outline > 0.0f)
     {
         _outlineSize = outline * CC_CONTENT_SCALE_FACTOR();
         FT_Stroker_New(FontFreeType::getFTLibrary(), &_stroker);
@@ -175,7 +175,7 @@ bool FontFreeType::createFontObject(const std::string &fontName, float fontSize)
     
     // store the face globally
     _fontRef = face;
-    _lineHeight = static_cast<int>(_fontRef->size->metrics.height >> 6);
+    _lineHeight = static_cast<int>((_fontRef->size->metrics.ascender - _fontRef->size->metrics.descender) >> 6);
     
     // done and good
     return true;
@@ -213,10 +213,10 @@ FontAtlas * FontFreeType::createFontAtlas()
         _fontAtlas = new (std::nothrow) FontAtlas(*this);
         if (_fontAtlas && _usedGlyphs != GlyphCollection::DYNAMIC)
         {
-            std::u16string utf16;
-            if (StringUtils::UTF8ToUTF16(getGlyphCollection(), utf16))
+            std::u32string utf32;
+            if (StringUtils::UTF8ToUTF32(getGlyphCollection(), utf32))
             {
-                _fontAtlas->prepareLetterDefinitions(utf16);
+                _fontAtlas->prepareLetterDefinitions(utf32);
             }
         }
         this->autorelease();
@@ -225,7 +225,7 @@ FontAtlas * FontFreeType::createFontAtlas()
     return _fontAtlas;
 }
 
-int * FontFreeType::getHorizontalKerningForTextUTF16(const std::u16string& text, int &outNumLetters) const
+int * FontFreeType::getHorizontalKerningForTextUTF32(const std::u32string& text, int &outNumLetters) const
 {
     if (!_fontRef)
         return nullptr;
@@ -252,7 +252,7 @@ int * FontFreeType::getHorizontalKerningForTextUTF16(const std::u16string& text,
     return sizes;
 }
 
-int  FontFreeType::getHorizontalKerningForChars(unsigned short firstChar, unsigned short secondChar) const
+int  FontFreeType::getHorizontalKerningForChars(uint64_t firstChar, uint64_t secondChar) const
 {
     // get the ID to the char we need
     int glyphIndex1 = FT_Get_Char_Index(_fontRef, firstChar);
@@ -287,7 +287,7 @@ const char* FontFreeType::getFontFamily() const
     return _fontRef->family_name;
 }
 
-unsigned char* FontFreeType::getGlyphBitmap(unsigned short theChar, long &outWidth, long &outHeight, Rect &outRect,int &xAdvance)
+unsigned char* FontFreeType::getGlyphBitmap(uint64_t theChar, long &outWidth, long &outHeight, Rect &outRect,int &xAdvance)
 {
     bool invalidChar = true;
     unsigned char* ret = nullptr;
@@ -354,31 +354,35 @@ unsigned char* FontFreeType::getGlyphBitmap(unsigned short theChar, long &outWid
             outRect.origin.x = blendImageMinX;
             outRect.origin.y = -blendImageMaxY + _outlineSize;
 
-            long index, index2;
-            auto blendImage = new (std::nothrow) unsigned char[blendWidth * blendHeight * 2];
-            memset(blendImage, 0, blendWidth * blendHeight * 2);
-
-            auto px = outlineMinX - blendImageMinX;
-            auto py = blendImageMaxY - outlineMaxY;
-            for (int x = 0; x < outlineWidth; ++x)
+            unsigned char *blendImage = nullptr;
+            if (blendWidth > 0 && blendHeight > 0)
             {
-                for (int y = 0; y < outlineHeight; ++y)
+                long index, index2;
+                blendImage = new (std::nothrow) unsigned char[blendWidth * blendHeight * 2];
+                memset(blendImage, 0, blendWidth * blendHeight * 2);
+
+                auto px = outlineMinX - blendImageMinX;
+                auto py = blendImageMaxY - outlineMaxY;
+                for (int x = 0; x < outlineWidth; ++x)
                 {
-                    index = px + x + ((py + y) * blendWidth);
-                    index2 = x + (y * outlineWidth);
-                    blendImage[2 * index] = outlineBitmap[index2];
+                    for (int y = 0; y < outlineHeight; ++y)
+                    {
+                        index = px + x + ((py + y) * blendWidth);
+                        index2 = x + (y * outlineWidth);
+                        blendImage[2 * index] = outlineBitmap[index2];
+                    }
                 }
-            }
 
-            px = glyphMinX - blendImageMinX;
-            py = blendImageMaxY - glyphMaxY;
-            for (int x = 0; x < outWidth; ++x)
-            {
-                for (int y = 0; y < outHeight; ++y)
+                px = glyphMinX - blendImageMinX;
+                py = blendImageMaxY - glyphMaxY;
+                for (int x = 0; x < outWidth; ++x)
                 {
-                    index = px + x + ((y + py) * blendWidth);
-                    index2 = x + (y * outWidth);
-                    blendImage[2 * index + 1] = copyBitmap[index2];
+                    for (int y = 0; y < outHeight; ++y)
+                    {
+                        index = px + x + ((y + py) * blendWidth);
+                        index2 = x + (y * outWidth);
+                        blendImage[2 * index + 1] = copyBitmap[index2];
+                    }
                 }
             }
 
@@ -409,7 +413,7 @@ unsigned char* FontFreeType::getGlyphBitmap(unsigned short theChar, long &outWid
     }
 }
 
-unsigned char * FontFreeType::getGlyphBitmapWithOutline(unsigned short theChar, FT_BBox &bbox)
+unsigned char * FontFreeType::getGlyphBitmapWithOutline(uint64_t theChar, FT_BBox &bbox)
 {   
     unsigned char* ret = nullptr;
     if (FT_Load_Char(_fontRef, theChar, FT_LOAD_NO_BITMAP) == 0)

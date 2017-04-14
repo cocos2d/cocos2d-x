@@ -34,7 +34,7 @@
 #include "network/CCDownloader.h"
 #include "platform/CCFileUtils.h"
 
-#include "json/document.h"
+#include "json/document-wrapper.h"
 
 NS_CC_EXT_BEGIN
 
@@ -43,6 +43,15 @@ struct DownloadUnit
     std::string srcUrl;
     std::string storagePath;
     std::string customId;
+    float       size;
+};
+
+struct ManifestAsset {
+    std::string md5;
+    std::string path;
+    bool compressed;
+    float size;
+    int downloadState;
 };
 
 typedef std::unordered_map<std::string, DownloadUnit> DownloadUnits;
@@ -60,19 +69,15 @@ public:
         MODIFIED
     };
     
-    enum class DownloadState {
+    enum DownloadState {
         UNSTARTED,
         DOWNLOADING,
-        SUCCESSED
+        SUCCESSED,
+        UNMARKED
     };
     
     //! Asset object
-    struct Asset {
-        std::string md5;
-        std::string path;
-        bool compressed;
-        DownloadState downloadState;
-    };
+    typedef ManifestAsset Asset;
     
     //! Object indicate the difference between two Assets
     struct AssetDiff {
@@ -132,8 +137,16 @@ protected:
     
     /** @brief Check whether the version of this manifest equals to another.
      * @param b   The other manifest
+     * @return Equal or not
      */
     bool versionEquals(const Manifest *b) const;
+    
+    /** @brief Check whether the version of this manifest is greater than another.
+     * @param b         The other manifest
+     * @param [handle]  Customized comparasion handle function
+     * @return Greater or not
+     */
+    bool versionGreater(const Manifest *b, const std::function<int(const std::string& versionA, const std::string& versionB)>& handle) const;
     
     /** @brief Generate difference between this Manifest and another.
      * @param b   The other manifest
@@ -183,6 +196,8 @@ protected:
      * @param state The current download state of the asset
      */
     void setAssetDownloadState(const std::string &key, const DownloadState &state);
+    
+    void setManifestRoot(const std::string &root) {_manifestRoot = root;};
     
 private:
     

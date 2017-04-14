@@ -3,7 +3,7 @@ Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2009      Valentin Milea
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -113,6 +113,7 @@ Node::Node()
 #if CC_USE_PHYSICS
 , _physicsBody(nullptr)
 #endif
+, _anchorPoint(0, 0)
 {
     // set default scheduler and actionManager
     _director = Director::getInstance();
@@ -940,6 +941,21 @@ void Node::addChild(Node* child, int localZOrder, const std::string &name)
 
 void Node::addChildHelper(Node* child, int localZOrder, int tag, const std::string &name, bool setTag)
 {
+    auto assertNotSelfChild
+        ( [ this, child ]() -> bool
+          {
+              for ( Node* parent( getParent() ); parent != nullptr;
+                    parent = parent->getParent() )
+                  if ( parent == child )
+                      return false;
+              
+              return true;
+          } );
+    (void)assertNotSelfChild;
+    
+    CCASSERT( assertNotSelfChild(),
+              "A node cannot be the child of his own children" );
+    
     if (_children.empty())
     {
         this->childrenAlloc();
@@ -1150,6 +1166,7 @@ void Node::sortAllChildren()
     {
         sortNodes(_children);
         _reorderChildDirty = false;
+        _eventDispatcher->setDirtyForNode(this);
     }
 }
 
@@ -1161,7 +1178,7 @@ void Node::draw()
     draw(renderer, _modelViewTransform, true);
 }
 
-void Node::draw(Renderer* renderer, const Mat4 &transform, uint32_t flags)
+void Node::draw(Renderer* /*renderer*/, const Mat4 & /*transform*/, uint32_t /*flags*/)
 {
 }
 
@@ -1462,6 +1479,12 @@ ssize_t Node::getNumberOfRunningActions() const
     return _actionManager->getNumberOfRunningActionsInTarget(this);
 }
 
+ssize_t Node::getNumberOfRunningActionsByTag(int tag) const
+{
+    return _actionManager->getNumberOfRunningActionsInTargetByTag(this, tag);
+}
+
+
 // MARK: Callbacks
 
 void Node::setScheduler(Scheduler* scheduler)
@@ -1734,6 +1757,7 @@ const Mat4& Node::getNodeToParentTransform() const
             // FIXME:: Although this is faster than multiplying a vec4 * mat4
             _transform.m[12] += _transform.m[0] * -_anchorPointInPoints.x + _transform.m[4] * -_anchorPointInPoints.y;
             _transform.m[13] += _transform.m[1] * -_anchorPointInPoints.x + _transform.m[5] * -_anchorPointInPoints.y;
+            _transform.m[14] += _transform.m[2] * -_anchorPointInPoints.x + _transform.m[6] * -_anchorPointInPoints.y;
         }
     }
 
@@ -1779,6 +1803,7 @@ void Node::setAdditionalTransform(const Mat4* additionalTransform)
 {
     if (additionalTransform == nullptr)
     {
+        if(_additionalTransform)  _transform = _additionalTransform[1];
         delete[] _additionalTransform;
         _additionalTransform = nullptr;
     }
@@ -2020,6 +2045,14 @@ void Node::disableCascadeOpacity()
     {
         child->updateDisplayedOpacity(255);
     }
+}
+
+void Node::setOpacityModifyRGB(bool /*value*/)
+{}
+
+bool Node::isOpacityModifyRGB() const
+{
+    return false;
 }
 
 const Color3B& Node::getColor(void) const

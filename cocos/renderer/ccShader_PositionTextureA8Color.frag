@@ -23,7 +23,7 @@
  * THE SOFTWARE.
  */
 
-const char* ccPositionTextureA8Color_frag = STRINGIFY(
+const char* ccPositionTextureA8Color_frag = R"(
 
 #ifdef GL_ES
 precision lowp float;
@@ -38,4 +38,4 @@ void main()
         v_fragmentColor.a * texture2D(CC_Texture0, v_texCoord).a // A from texture & uniform
     );
 }
-);
+)";

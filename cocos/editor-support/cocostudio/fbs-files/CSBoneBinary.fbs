@@ -1,0 +1,20 @@
+// BoneBinary IDL file
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// !! When adding new pairs to the maps below,         !!
+// !! please add to the last position of the map.      !!
+// !! It will ensure the reader's version compatible.  !!
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+include "CSParseBinary.fbs";
+
+namespace flatbuffers;
+
+table BoneOptions
+{
+    nodeOptions:WidgetOptions;
+
+    length:float;
+	blendFunc:BlendFunc;
+}
+
+root_type BoneOptions;

@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -414,6 +414,8 @@ public:
      */
     virtual void onExit() override;
     
+    virtual void setGlobalZOrder(float globalZOrder) override;
+    
     /**
      * If a layout is loop focused which means that the focus movement will be inside the layout
      *@param loop  pass true to let the focus movement loop inside the layout
@@ -632,7 +634,7 @@ protected:
     bool _clippingRectDirty;
     
     //clipping
-    StencilStateManager *_stencileStateManager;
+    StencilStateManager *_stencilStateManager;
 
     GroupCommand _groupCommand;
     CustomCommand _beforeVisitCmdStencil;

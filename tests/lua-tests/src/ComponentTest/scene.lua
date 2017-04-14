@@ -24,7 +24,7 @@ local scene = {
     addNewEnemy = function(self)
         local owner = self:getOwner()
         local enemy = cc.Sprite:create("components/Target.png")
-        local enemyLuaComponent = cc.ComponentLua:create("src/ComponentTest/enemy.lua")
+        local enemyLuaComponent = cc.ComponentLua:create("ComponentTest/enemy.lua")
         enemy:addComponent(enemyLuaComponent)
         owner:addChild(enemy)
         table.insert(self.enemies, enemy)

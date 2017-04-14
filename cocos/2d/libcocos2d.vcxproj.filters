@@ -289,6 +289,9 @@
     <Filter Include="vr">
       <UniqueIdentifier>{5cbd879f-02ae-4f28-af33-2c4f980dd6f0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="external\md5">
+      <UniqueIdentifier>{d3d38486-e13f-47b4-96b0-51a7c78e6d69}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\physics\CCPhysicsBody.cpp">
@@ -1291,9 +1294,6 @@
     <ClCompile Include="CCLight.cpp">
       <Filter>2d</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\external\flatbuffers\flatc.cpp">
-      <Filter>cocostudio\json\flatbuffers</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\external\flatbuffers\idl_gen_cpp.cpp">
       <Filter>cocostudio\json\flatbuffers</Filter>
     </ClCompile>
@@ -1310,6 +1310,21 @@
       <Filter>cocostudio\json\flatbuffers</Filter>
     </ClCompile>
     <ClCompile Include="..\..\external\flatbuffers\idl_parser.cpp">
+      <Filter>cocostudio\json\flatbuffers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\flatbuffers\idl_gen_js.cpp">
+      <Filter>cocostudio\json\flatbuffers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\flatbuffers\idl_gen_php.cpp">
+      <Filter>cocostudio\json\flatbuffers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\flatbuffers\idl_gen_python.cpp">
+      <Filter>cocostudio\json\flatbuffers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\flatbuffers\reflection.cpp">
+      <Filter>cocostudio\json\flatbuffers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\flatbuffers\util.cpp">
       <Filter>cocostudio\json\flatbuffers</Filter>
     </ClCompile>
     <ClCompile Include="..\editor-support\cocostudio\FlatBuffersSerialize.cpp">
@@ -1363,8 +1378,6 @@
     <ClCompile Include="..\editor-support\cocostudio\WidgetReader\ArmatureNodeReader\ArmatureNodeReader.cpp">
       <Filter>cocostudio\reader\WidgetReader\ArmatureNodeReader</Filter>
     </ClCompile>
-    <ClCompile Include="..\3d\CCFrustum.cpp" />
-    <ClCompile Include="..\3d\CCPlane.cpp" />
     <ClCompile Include="..\3d\CCAABB.cpp">
       <Filter>3d</Filter>
     </ClCompile>
@@ -1946,9 +1959,6 @@
     <ClCompile Include="..\renderer\CCTextureCube.cpp">
       <Filter>renderer</Filter>
     </ClCompile>
-    <ClCompile Include="..\network\CCDownloader-curl.cpp">
-      <Filter>network</Filter>
-    </ClCompile>
     <ClCompile Include="..\editor-support\cocostudio\WidgetReader\Light3DReader\Light3DReader.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\WidgetReader\TabControlReader\TabControlReader.cpp">
       <Filter>cocostudio\reader\WidgetReader\TabControlReader</Filter>
@@ -1970,6 +1980,33 @@
     </ClCompile>
     <ClCompile Include="..\vr\CCVRGenericRenderer.cpp">
       <Filter>vr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\audio\win32\AudioDecoder.cpp">
+      <Filter>audioengine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\audio\win32\AudioDecoderMp3.cpp">
+      <Filter>audioengine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\audio\win32\AudioDecoderOgg.cpp">
+      <Filter>audioengine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\audio\win32\AudioDecoderManager.cpp">
+      <Filter>audioengine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\network\CCDownloader-curl.cpp">
+      <Filter>network\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\network\Uri.cpp">
+      <Filter>network\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3d\CCFrustum.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3d\CCPlane.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\md5\md5.c">
+      <Filter>external\md5</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2817,7 +2854,10 @@
     <ClInclude Include="..\..\external\json\document.h">
       <Filter>cocostudio\json\rapidjson</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\external\json\filestream.h">
+    <ClInclude Include="..\..\external\json\filereadstream.h">
+      <Filter>cocostudio\json\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\json\filewritestream.h">
       <Filter>cocostudio\json\rapidjson</Filter>
     </ClInclude>
     <ClInclude Include="..\..\external\json\prettywriter.h">
@@ -3135,6 +3175,9 @@
     <ClInclude Include="..\..\external\flatbuffers\util.h">
       <Filter>cocostudio\json\flatbuffers</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\external\flatbuffers\hash.h">
+      <Filter>cocostudio\json\flatbuffers</Filter>
+    </ClInclude>
     <ClInclude Include="..\editor-support\cocostudio\CSParseBinary_generated.h">
       <Filter>cocostudio\json</Filter>
     </ClInclude>
@@ -3213,8 +3256,6 @@
     <ClInclude Include="..\editor-support\cocostudio\WidgetReader\ArmatureNodeReader\CSArmatureNode_generated.h">
       <Filter>cocostudio\reader\WidgetReader\ArmatureNodeReader</Filter>
     </ClInclude>
-    <ClInclude Include="..\3d\CCFrustum.h" />
-    <ClInclude Include="..\3d\CCPlane.h" />
     <ClInclude Include="..\physics\CCPhysicsHelper.h">
       <Filter>physics</Filter>
     </ClInclude>
@@ -3802,9 +3843,6 @@
     <ClInclude Include="..\network\CCDownloader.h">
       <Filter>network\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\network\CCDownloaderImpl.h">
-      <Filter>network\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\network\CCIDownloaderImpl.h">
       <Filter>network\Header Files</Filter>
     </ClInclude>
@@ -3850,6 +3888,37 @@
     </ClInclude>
     <ClInclude Include="..\vr\CCVRGenericRenderer.h">
       <Filter>vr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\audio\win32\AudioDecoder.h">
+      <Filter>audioengine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\audio\win32\AudioMacros.h">
+      <Filter>audioengine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\audio\win32\AudioDecoderMp3.h">
+      <Filter>audioengine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\audio\win32\AudioDecoderOgg.h">
+      <Filter>audioengine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\audio\win32\AudioDecoderManager.h">
+      <Filter>audioengine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\flatbuffers\gprc.h" />
+    <ClInclude Include="..\..\external\flatbuffers\code_generators.h" />
+    <ClInclude Include="..\..\external\flatbuffers\reflection.h" />
+    <ClInclude Include="..\..\external\flatbuffers\reflection_generated.h" />
+    <ClInclude Include="..\network\Uri.h">
+      <Filter>network\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3d\CCFrustum.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3d\CCPlane.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\md5\md5.h">
+      <Filter>external\md5</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

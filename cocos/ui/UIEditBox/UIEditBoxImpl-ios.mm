@@ -114,12 +114,18 @@ void EditBoxImplIOS::setNativeFontColor(const Color4B& color)
 
 void EditBoxImplIOS::setNativePlaceholderFont(const char* pFontName, int fontSize)
 {
-    //TODO::
+    UIFont* textFont = constructFont(pFontName, fontSize);
+    if (textFont != nil) {
+        [_systemControl setPlaceholderFont:textFont];
+    }
 }
 
 void EditBoxImplIOS::setNativePlaceholderFontColor(const Color4B& color)
 {
-    //TODO::
+    [_systemControl setPlaceholderTextColor:[UIColor colorWithRed:color.r / 255.0f
+                                                         green:color.g / 255.0f
+                                                          blue:color.b / 255.0f
+                                                         alpha:color.a / 255.f]];
 }
 
 void EditBoxImplIOS::setNativeInputMode(EditBox::InputMode inputMode)
@@ -151,6 +157,11 @@ const char* EditBoxImplIOS::getText(void)
 void EditBoxImplIOS::setNativeReturnType(EditBox::KeyboardReturnType returnType)
 {
     [_systemControl setReturnType:returnType];
+}
+
+void EditBoxImplIOS::setNativeTextHorizontalAlignment(cocos2d::TextHAlignment alignment)
+{
+    [_systemControl setTextHorizontalAlignment:alignment];
 }
 
 void EditBoxImplIOS::setNativeText(const char* pText)

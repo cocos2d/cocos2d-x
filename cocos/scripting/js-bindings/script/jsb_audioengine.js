@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Chukong Technologies Inc.
+ * Copyright (c) 2015-2017 Chukong Technologies Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,7 +26,7 @@ if (!jsb || !jsb.AudioEngine) return;
 
 jsb.AudioEngine.AudioState = {
     ERROR: -1,
-    INITIALZING: 0,
+    INITIALIZING: 0,
     PLAYING: 1,
     PAUSED: 2
 };

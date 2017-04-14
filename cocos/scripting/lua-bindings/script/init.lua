@@ -1,6 +1,6 @@
 --[[
 
-Copyright (c) 2011-2015 chukong-incc.com
+Copyright (c) 2014-2017 Chukong Technologies Inc.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -92,7 +92,7 @@ require "cocos.network.DeprecatedNetworkClass"
 require "cocos.network.DeprecatedNetworkEnum"
 require "cocos.network.DeprecatedNetworkFunc"
 
--- register_ui_moudle
+-- register_ui_module
 if nil ~= ccui then
     require "cocos.ui.DeprecatedUIEnum"
     require "cocos.ui.DeprecatedUIFunc"

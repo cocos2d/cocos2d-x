@@ -2,63 +2,64 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [Cocos2d-x 3.13.1 Release Notes](#cocos2d-x-3131-release-notes)
+- [Cocos2d-x 3.15 Release Notes](#cocos2d-x-315-release-notes)
 - [Misc Information](#misc-information)
-- [v3.13.1](#v3131)
-  - [Bug fixed](#bug-fixed)
-  - [Cocos command modification](#cocos-command-modification)
+- [v3.15](#v315)
+  - [Highlights](#highlights)
+  - [Feature in detail](#feature-in-detail)
+    - [Full Android Studio supports](#full-android-studio-supports)
+    - [Audio engine improve on Android](#audio-engine-improve-on-android)
+    - [Remove support for Windows 8.1 store and phone](#remove-support-for-windows-81-store-and-phone)
+    - [Remove linux 32-bit support](#remove-linux-32-bit-support)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-# Cocos2d-x 3.13.1 Release Notes #
+# Cocos2d-x 3.15 Release Notes #
 
 # Misc Information
 
 * [Full Changelog](https://github.com/cocos2d/cocos2d-x/blob/v3/CHANGELOG)
 
-# v3.13.1
+# v3.15
 
-## Bug fixed
+## Highlights
 
-* Label color broken
-* application will crash in debug mode if don't specify a design resolution
-* may crash if coming from background by clicking application icon on Android
-* AudioEngine can not play audio if the audio lies outside APK on Android
-* AudioEngine::stop() will trigger `finish` callback on Android
-* application will crash if using SimpleAudioEngine or new AudioEngine to play audio on Android 2.3.x
-* object.setString() has not effect if passing a number on JSB
+* full Android Studio supports: include editing, compiling and debugging c++ codes
+* use [tremolo](http://wss.co.uk/pinknoise/tremolo/) to decode audio files on Android: high performance and more adaptable to different Android devices
+* WebSockets and SocketIO supports SSL
+* AssetsManagerEx is more stable
+* update Spine runtime to v3.5.35
+* update flatbuffer to v1.5
+* remove support for Windows 8.1 store and phone
+* update OpenSSL to v1.1.0
+* remove linux 32-bit support
 
-## Cocos command modifications
+## Feature in detail
 
-Prior to `v3.13` the __cocos__ command would find an Android API level __>=__ a specified
-Android API level inorder to build source codes on Android. For example, if the contents of
-__APP_ROOT/proj.android/project.properties__ is:
+### Full Android Studio supports
 
-```
-target=android-13 // the default android api level
-android.library.reference.1=../../../cocos/platform/android/java
-```
+Since v3.15, can use Android Studio 2.3+ to edit, compile and debug c++ codes. What you need to do is just use Android Studio to open `proj.android-studio`(such as `tests/cpp-empty-test/proj.android-studio`), then click run menu button to run on Android devices or simulators.
 
-then the __cocos__ command will find __android-13__ in `ANDROID_SDK_ROOT/platforms`. If __android-13__
-is not found then it will try to find __android-14__. If __android-14__ is not found, then it will find
-__android-15__ and so on until it finds one.
+![android-studio-support.png](todo)
 
-This algorithm has a problem. If you only download __Android 21__, then your application will be built with
-__Android 21__ even though the default API level is 13. If your application runs on a device with a lower Android OS,
-such as Android 4.0, then your application may crash. Building with a higher API level does not ensure that your
-application will run on devices with a lower Android OS.
+### Audio engine improve on Android
 
-Starting in `v3.13.1`, the __cocos__ command will stop if it can not find a specific API level. The default
-is __android-13__. If you want to build with a higher level Android SDK, you should explicitely specify it.
-Example:
+Before v3.15, new Audio engine uses OpenSL ES to decode and play audio files. But many Android device manufacturers modify OpenSL ES decoding codes which cause issues. [This thread](http://discuss.cocos2d-x.org/t/android-audio-decoding-issues-discussion/34610) lists many issues caused by it.
 
-```sh
-cocos compile -p android --ap android-19
-```
+In order to fix these issues, we decide to use a 3rd party audio decoding library. [tremolo](http://wss.co.uk/pinknoise/tremolo/) which is used by Android have good performance and stability. We finally choose to use it. What's exciting is what, after using `tremolo`, the audio engine's performance is highly improved too.
 
-Keep in mind that, after running this command, the contents of `APP_ROOT/proj.android/project.properties` will
-be changed, __android-19__ will now be the default API level.
+![audio performance](https://raw.githubusercontent.com/minggo/Pictures/master/AudioDecodingPerfTest.png)  
 
-There is a map between Android API level and Android OS version that you can [refer to](https://developer.android.com/guide/topics/manifest/uses-sdk-element.html) for detailed information.
+### Remove support for Windows 8.1 store and phone
 
-There is also more detailed information in our [GitHub repo](https://github.com/cocos2d/cocos2d-x/milestone/33) about this issue.
+MS guys maintain Windows 8.1. They think there is not need to support it, so they remove the support.
+
+### Remove linux 32-bit support
+
+Most PC are 64-bit, so we decide to remove linux 32-bit support. By remove 32-bit linux support, cocos2d-x zip file is more less, and we can have more resource on more important things.
+
+If you need linux 32-bit support, you can build the 3rd party libraries through [cocos2d-x-3rd-party-libs-src repo](https://github.com/cocos2d/cocos2d-x-3rd-party-libs-src) by yourself.
+
+## misc
+
+[Android SDK Tools 25.3.0+](http://tools.android.com/recent/androidsdktoolsrevision2530feb2017) remove ant scripts and `android` tool, this leads to that cant not use cocos command to generate apk files. Currently, cocos command will do nothing if using SDK Tools 25.3.0+. We may remove eclipse project support in future as Google focus on Android Studio.

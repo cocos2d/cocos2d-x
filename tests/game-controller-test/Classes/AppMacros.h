@@ -11,7 +11,7 @@
      We check current device frame size to decide which resource need to be selected.
      So if you want to test this situation which said in title '[Situation 1]',
      you should change ios simulator to different device(e.g. iphone, iphone-retina3.5, iphone-retina4.0, ipad, ipad-retina),
-     or change the window size in "proj.XXX/main.cpp" by "CCEGLView::setFrameSize" if you are using win32 or linux plaform
+     or change the window size in "proj.XXX/main.cpp" by "CCEGLView::setFrameSize" if you are using win32 or linux platform
      and modify "proj.mac/AppController.mm" by changing the window rectangle.
 
    [Situation 2] Using one resource to match different design resolutions.

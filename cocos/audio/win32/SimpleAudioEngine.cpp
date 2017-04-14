@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -82,7 +82,7 @@ void SimpleAudioEngine::end()
     {
         delete iter.second;
         iter.second = nullptr;
-    }   
+    }
     sharedList().clear();
     return;
 }
@@ -171,7 +171,7 @@ void SimpleAudioEngine::stopEffect(unsigned int nSoundId)
 void SimpleAudioEngine::preloadEffect(const char* pszFilePath)
 {
     int nRet = 0;
-    do 
+    do
     {
         BREAK_IF(! pszFilePath);
 
@@ -248,7 +248,7 @@ void SimpleAudioEngine::unloadEffect(const char* pszFilePath)
         delete p->second;
         p->second = nullptr;
         sharedList().erase(nID);
-    }    
+    }
 }
 
 //////////////////////////////////////////////////////////////////////////

@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2011-2012 cocos2d-x.org
- Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -259,18 +259,19 @@ int LuaStack::executeScriptFile(const char* filename)
     }
 
     FileUtils *utils = FileUtils::getInstance();
+
     //
-    // 1. check .lua suffix
-    // 2. check .luac suffix
+    // 1. check .luac suffix
+    // 2. check .lua suffix
     //
-    std::string tmpfilename = buf + NOT_BYTECODE_FILE_EXT;
+    std::string tmpfilename = buf + BYTECODE_FILE_EXT;
     if (utils->isFileExist(tmpfilename))
     {
         buf = tmpfilename;
     }
     else
     {
-        tmpfilename = buf + BYTECODE_FILE_EXT;
+        tmpfilename = buf + NOT_BYTECODE_FILE_EXT;
         if (utils->isFileExist(tmpfilename))
         {
             buf = tmpfilename;
@@ -811,9 +812,9 @@ int LuaStack::luaLoadChunksFromZIP(lua_State *L)
                         }
                     }
                     // replace path separator '/' '\' to '.'
-                    for (int i=0; i<filename.size(); i++) {
-                        if (filename[i] == '/' || filename[i] == '\\') {
-                            filename[i] = '.';
+                    for (auto & character : filename) {
+                        if (character == '/' || character == '\\') {
+                            character = '.';
                         }
                     }
                     CCLOG("[luaLoadChunksFromZIP] add %s to preload", filename.c_str());

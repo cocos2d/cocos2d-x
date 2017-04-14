@@ -127,9 +127,8 @@ SAXParser::~SAXParser(void)
 {
 }
 
-bool SAXParser::init(const char *encoding)
+bool SAXParser::init(const char* /*encoding*/)
 {
-    CC_UNUSED_PARAM(encoding);
     // nothing to do
     return true;
 }

@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2016 Chukong Technologies Inc.
+Copyright (c) 2016-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -108,6 +108,7 @@ private:
     struct PreloadCallbackParam
     {
         PreloadCallback callback;
+        bool isPreloadInPlay2d;
     };
 
     std::unordered_map<std::string, std::vector<PreloadCallbackParam>> _preloadCallbackMap;

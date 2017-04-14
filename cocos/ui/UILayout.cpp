@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -37,7 +37,7 @@ THE SOFTWARE.
 #include "2d/CCLayer.h"
 #include "2d/CCSprite.h"
 #include "base/CCEventFocus.h"
-#include "base/CCStencilStateManager.hpp"
+#include "base/CCStencilStateManager.h"
 #include "editor-support/cocostudio/CocosStudioExtension.h"
 
 
@@ -74,7 +74,7 @@ _clippingStencil(nullptr),
 _clippingRect(Rect::ZERO),
 _clippingParent(nullptr),
 _clippingRectDirty(true),
-_stencileStateManager(new StencilStateManager()),
+_stencilStateManager(new StencilStateManager()),
 _doLayoutDirty(true),
 _isInterceptTouch(false),
 _loopFocus(false),
@@ -87,7 +87,7 @@ _isFocusPassing(false)
 Layout::~Layout()
 {
     CC_SAFE_RELEASE(_clippingStencil);
-    CC_SAFE_DELETE(_stencileStateManager);
+    CC_SAFE_DELETE(_stencilStateManager);
 }
     
 void Layout::onEnter()
@@ -124,6 +124,18 @@ void Layout::onExit()
     {
         _clippingStencil->onExit();
     }
+}
+    
+void Layout::setGlobalZOrder(float globalZOrder)
+{
+    // _protectedChildren's global z order is set in ProtectedNode::setGlobalZOrder()
+
+    Widget::setGlobalZOrder(globalZOrder);
+    if (_clippingStencil)
+        _clippingStencil->setGlobalZOrder(globalZOrder);
+    
+    for (auto &child : _children)
+        child->setGlobalZOrder(globalZOrder);
 }
 
 Layout* Layout::create()
@@ -166,6 +178,7 @@ void Layout::addChild(Node *child, int zOrder, int tag)
     if (dynamic_cast<Widget*>(child)) {
         supplyTheLayoutParameterLackToChild(static_cast<Widget*>(child));
     }
+    child->setGlobalZOrder(_globalZOrder);
     Widget::addChild(child, zOrder, tag);
     _doLayoutDirty = true;
 }
@@ -175,6 +188,7 @@ void Layout::addChild(Node* child, int zOrder, const std::string &name)
     if (dynamic_cast<Widget*>(child)) {
         supplyTheLayoutParameterLackToChild(static_cast<Widget*>(child));
     }
+    child->setGlobalZOrder(_globalZOrder);
     Widget::addChild(child, zOrder, name);
     _doLayoutDirty = true;
 }
@@ -254,13 +268,13 @@ void Layout::stencilClippingVisit(Renderer *renderer, const Mat4& parentTransfor
     renderer->pushGroup(_groupCommand.getRenderQueueID());
     
     _beforeVisitCmdStencil.init(_globalZOrder);
-    _beforeVisitCmdStencil.func = CC_CALLBACK_0(StencilStateManager::onBeforeVisit, _stencileStateManager);
+    _beforeVisitCmdStencil.func = CC_CALLBACK_0(StencilStateManager::onBeforeVisit, _stencilStateManager);
     renderer->addCommand(&_beforeVisitCmdStencil);
     
     _clippingStencil->visit(renderer, _modelViewTransform, flags);
     
     _afterDrawStencilCmd.init(_globalZOrder);
-    _afterDrawStencilCmd.func = CC_CALLBACK_0(StencilStateManager::onAfterDrawStencil, _stencileStateManager);
+    _afterDrawStencilCmd.func = CC_CALLBACK_0(StencilStateManager::onAfterDrawStencil, _stencilStateManager);
     renderer->addCommand(&_afterDrawStencilCmd);
     
     int i = 0;      // used by _children
@@ -308,7 +322,7 @@ void Layout::stencilClippingVisit(Renderer *renderer, const Mat4& parentTransfor
 
     
     _afterVisitCmdStencil.init(_globalZOrder);
-    _afterVisitCmdStencil.func = CC_CALLBACK_0(StencilStateManager::onAfterVisit, _stencileStateManager);
+    _afterVisitCmdStencil.func = CC_CALLBACK_0(StencilStateManager::onAfterVisit, _stencilStateManager);
     renderer->addCommand(&_afterVisitCmdStencil);
     
     renderer->popGroup();
@@ -389,6 +403,7 @@ void Layout::setClippingEnabled(bool able)
             if (able)
             {
                 _clippingStencil = DrawNode::create();
+                _clippingStencil->setGlobalZOrder(_globalZOrder);
                 if (_running)
                 {
                     _clippingStencil->onEnter();
@@ -428,7 +443,7 @@ Layout::ClippingType Layout::getClippingType()const
     return _clippingType;
 }
     
-void Layout::setStencilClippingSize(const Size &size)
+void Layout::setStencilClippingSize(const Size& /*size*/)
 {
     if (_clippingEnabled && _clippingType == ClippingType::STENCIL)
     {

@@ -1,7 +1,7 @@
 #/****************************************************************************
 # Copyright (c) 2013 cocos2d-x.org
 # Copyright (c) 2014 martell malone
-# Copyright (c) 2015 Chukong Technologies Inc.
+# Copyright (c) 2015-2017 Chukong Technologies Inc.
 #
 # http://www.cocos2d-x.org
 #
@@ -146,7 +146,7 @@ else()
   message( FATAL_ERROR "Unsupported platform, CMake will exit" )
 endif()
 
-foreach(pkg ZLIB MINIZIP JPEG PNG TIFF TinyXML2 FREETYPE WEBSOCKETS CURL FLATBUFFERS XXHASH)
+foreach(pkg ZLIB MINIZIP JPEG PNG TIFF TinyXML2 FREETYPE WEBSOCKETS CURL OPENSSL FLATBUFFERS XXHASH)
   cocos_use_pkg(cocos2dInternal ${pkg})
 endforeach()
 
@@ -184,6 +184,8 @@ ADD_LIBRARY(cocos2d cc_dummy.c)
 if(ANDROID)
   target_link_libraries(cocos2d -Wl,-whole-archive cocos2dxandroid_static -Wl,-no-whole-archive)
   target_link_libraries(cocos2d cocos2dInternal cpufeatures)
+elseif(LINUX)
+  target_link_libraries(cocos2d cocos2dInternal dl)
 else()
   target_link_libraries(cocos2d cocos2dInternal)
 endif()

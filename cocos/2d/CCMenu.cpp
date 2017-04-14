@@ -1,7 +1,7 @@
 /****************************************************************************
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -250,7 +250,7 @@ void Menu::removeChild(Node* child, bool cleanup)
 
 //Menu - Events
 
-bool Menu::onTouchBegan(Touch* touch, Event* event)
+bool Menu::onTouchBegan(Touch* touch, Event* /*event*/)
 {
     auto camera = Camera::getVisitingCamera();
     if (_state != Menu::State::WAITING || ! _visible || !_enabled || !camera)
@@ -279,7 +279,7 @@ bool Menu::onTouchBegan(Touch* touch, Event* event)
     return false;
 }
 
-void Menu::onTouchEnded(Touch* touch, Event* event)
+void Menu::onTouchEnded(Touch* /*touch*/, Event* /*event*/)
 {
     CCASSERT(_state == Menu::State::TRACKING_TOUCH, "[Menu ccTouchEnded] -- invalid state");
     this->retain();
@@ -293,7 +293,7 @@ void Menu::onTouchEnded(Touch* touch, Event* event)
     this->release();
 }
 
-void Menu::onTouchCancelled(Touch* touch, Event* event)
+void Menu::onTouchCancelled(Touch* /*touch*/, Event* /*event*/)
 {
     CCASSERT(_state == Menu::State::TRACKING_TOUCH, "[Menu ccTouchCancelled] -- invalid state");
     this->retain();
@@ -305,7 +305,7 @@ void Menu::onTouchCancelled(Touch* touch, Event* event)
     this->release();
 }
 
-void Menu::onTouchMoved(Touch* touch, Event* event)
+void Menu::onTouchMoved(Touch* touch, Event* /*event*/)
 {
     CCASSERT(_state == Menu::State::TRACKING_TOUCH, "[Menu ccTouchMoved] -- invalid state");
     MenuItem *currentItem = this->getItemForTouch(touch, _selectedWithCamera);
@@ -417,7 +417,7 @@ void Menu::alignItemsInColumnsWithArray(const ValueVector& rows)
     // check if too many rows/columns for available menu items
     CCASSERT(! columnsOccupied, "columnsOccupied should be 0.");
 
-    Size winSize = Director::getInstance()->getWinSize();
+    Size winSize = getContentSize();
 
     row = 0;
     rowHeight = 0;
@@ -519,7 +519,7 @@ void Menu::alignItemsInRowsWithArray(const ValueVector& columns)
     // check if too many rows/columns for available menu items.
     CCASSERT(! rowsOccupied, "rowsOccupied should be 0.");
 
-    Size winSize = Director::getInstance()->getWinSize();
+    Size winSize = getContentSize();
 
     column = 0;
     columnWidth = 0;
@@ -573,6 +573,14 @@ MenuItem* Menu::getItemForTouch(Touch *touch, const Camera *camera)
         }
     }
     return nullptr;
+}
+
+void Menu::setOpacityModifyRGB(bool /*value*/)
+{}
+
+bool Menu::isOpacityModifyRGB() const
+{
+    return false;
 }
 
 std::string Menu::getDescription() const

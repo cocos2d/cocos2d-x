@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2012 cocos2d-x.org
- Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -236,7 +236,7 @@ Sprite3DUVAnimationTest::Sprite3DUVAnimationTest()
 {
     //the offset use to translating texture
     _cylinder_texture_offset = 0;
-    _shining_duraion = 0;
+    _shining_duration = 0;
     Size visibleSize = Director::getInstance()->getVisibleSize();
 
     //use custom camera
@@ -299,18 +299,18 @@ void Sprite3DUVAnimationTest::cylinderUpdate(float dt)
     _cylinder_texture_offset = (_cylinder_texture_offset >1) ? 0 : _cylinder_texture_offset;
     if(fade_in)
     {
-        _shining_duraion += 0.5*dt;
-        if(_shining_duraion>1) fade_in = false;
+        _shining_duration += 0.5 * dt;
+        if (_shining_duration > 1) fade_in = false;
     }
     else
     {
-        _shining_duraion -= 0.5*dt;
-        if(_shining_duraion<0) fade_in = true;
+        _shining_duration -= 0.5 * dt;
+        if (_shining_duration < 0) fade_in = true;
     }
 
     //pass the result to shader
     _state->setUniformFloat("offset",_cylinder_texture_offset);
-    _state->setUniformFloat("duration",_shining_duraion);
+    _state->setUniformFloat("duration", _shining_duration);
 }
 
 //------------------------------------------------------------------
@@ -786,6 +786,7 @@ void Sprite3DEffectTest::addNewSpriteWithCoords(Vec2 p)
     material->setTechnique("outline_noneskinned");
     sprite->setMaterial(material);
     sprite->setScale(6.f);
+    Director::getInstance()->getTextureCache()->removeUnusedTextures();
     
     //add to scene
     addChild( sprite );
@@ -895,7 +896,7 @@ Sprite3DWithSkinTest::Sprite3DWithSkinTest()
     listener->onTouchesEnded = CC_CALLBACK_2(Sprite3DWithSkinTest::onTouchesEnded, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     
-    // swich animation quality. In fact, you can set the sprite3d out of frustum to Animate3DQuality::QUALITY_NONE, it can save a lot of cpu time
+    // switch animation quality. In fact, you can set the sprite3d out of frustum to Animate3DQuality::QUALITY_NONE, it can save a lot of cpu time
     MenuItemFont::setFontName("fonts/arial.ttf");
     MenuItemFont::setFontSize(15);
     _animateQuality = (int)Animate3DQuality::QUALITY_LOW;
@@ -949,9 +950,9 @@ void Sprite3DWithSkinTest::addNewSpriteWithCoords(Vec2 p)
         animate->setSpeed(inverse ? -speed : speed);
         animate->setTag(110);
         animate->setQuality((Animate3DQuality)_animateQuality);
-        auto repeate = RepeatForever::create(animate);
-        repeate->setTag(110);
-        sprite->runAction(repeate);
+        auto repeat = RepeatForever::create(animate);
+        repeat->setTag(110);
+        sprite->runAction(repeat);
     }
 }
 
@@ -1430,7 +1431,7 @@ Sprite3DWithOBBPerformanceTest::Sprite3DWithOBBPerformanceTest()
 }
 std::string Sprite3DWithOBBPerformanceTest::title() const
 {
-    return "OBB Collison Performance Test";
+    return "OBB Collision Performance Test";
 }
 std::string Sprite3DWithOBBPerformanceTest::subtitle() const
 {

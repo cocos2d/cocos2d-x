@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -575,12 +575,12 @@ void PhysicsBody::addMoment(float moment)
 
 void PhysicsBody::setVelocity(const Vec2& velocity)
 {
-    if (!_dynamic)
+    if (cpBodyGetType(_cpBody) == CP_BODY_TYPE_STATIC)
     {
-        CCLOG("physics warning: your can't set velocity for a static body.");
+        CCLOG("physics warning: you can't set velocity for a static body.");
         return;
     }
-    
+
     cpBodySetVelocity(_cpBody, PhysicsHelper::point2cpv(velocity));
 }
 
@@ -601,12 +601,12 @@ Vec2 PhysicsBody::getVelocityAtWorldPoint(const Vec2& point)
 
 void PhysicsBody::setAngularVelocity(float velocity)
 {
-    if (!_dynamic)
+    if (cpBodyGetType(_cpBody) == CP_BODY_TYPE_STATIC)
     {
-        CCLOG("physics warning: your can't set angular velocity for a static body.");
+        CCLOG("physics warning: you can't set angular velocity for a static body.");
         return;
     }
-    
+
     cpBodySetAngularVelocity(_cpBody, velocity);
 }
 

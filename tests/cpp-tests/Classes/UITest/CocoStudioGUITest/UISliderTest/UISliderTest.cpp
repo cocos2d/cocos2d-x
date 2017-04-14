@@ -79,7 +79,7 @@ void UISliderTest::sliderEvent(Ref *pSender, Slider::EventType type)
         _displayValueLabel->setString(StringUtils::format("Percent %f", 10000.0 * percent / maxPercent));
     }
 }
-void UISliderTest::printWidgetResources(cocos2d::Ref* sender)
+void UISliderTest::printWidgetResources(cocos2d::Ref* /*sender*/)
 {
     cocos2d::ResourceData textureFile = _slider->getBackFile();
     CCLOG("textureFile  Name : %s, Type: %d", textureFile.file.c_str(), textureFile.type);
@@ -191,7 +191,7 @@ bool UISliderTest_Scale9_State_Change::init()
         slider->setCapInsets(Rect(0, 0, 0, 0));
         slider->setContentSize(Size(200.0f, 60));
         slider->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f/* + slider->getSize().height * 3.0f*/));
-        slider->addTouchEventListener([=](Ref* sender, Widget::TouchEventType type){
+        slider->addTouchEventListener([=](Ref* /*sender*/, Widget::TouchEventType type){
             if (type == Widget::TouchEventType::ENDED) {
                 if (slider->isScale9Enabled())
                 {
@@ -355,7 +355,7 @@ bool UISliderNewEventCallbackTest::init()
         _uiLayer->addChild(_displayValueLabel);
 
         // Add the alert
-        Text* alert = Text::create("See console ouput for Slider Down and Up event.","fonts/Marker Felt.ttf",20);
+        Text* alert = Text::create("See console output for Slider Down and Up event.", "fonts/Marker Felt.ttf", 20);
         alert->setColor(Color3B(159, 168, 176));
         alert->setPosition(Vec2(widgetSize.width / 2.0f,
                                 widgetSize.height / 2.0f - alert->getContentSize().height * 3.75f));
@@ -372,7 +372,6 @@ bool UISliderNewEventCallbackTest::init()
         slider->addEventListener([=](Ref* widget,Slider::EventType type)
         {
             Slider* slider = (Slider*)widget;
-            CC_UNUSED_PARAM(slider);
             if(type == Slider::EventType::ON_SLIDEBALL_DOWN)
             {
                 CCLOG("slider button pressed!");

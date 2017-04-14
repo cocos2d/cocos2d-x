@@ -146,6 +146,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
         originalRect_ = self.frame;
         self.keyboardShowNotification = nil;
+        self.autocorrectionType = UITextAutocorrectionTypeNo;
         
         if ([self respondsToSelector:@selector(setContentScaleFactor:)])
         {
@@ -180,6 +181,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 - (void)didMoveToWindow
 {
+#if !defined(CC_TARGET_OS_TVOS)
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(onUIKeyboardNotification:)
                                                  name:UIKeyboardWillShowNotification object:nil];
@@ -194,6 +196,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(onUIKeyboardNotification:)
                                                  name:UIKeyboardDidHideNotification object:nil];
+#endif
 }
 
 -(int) getWidth
@@ -556,6 +559,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 @synthesize markedTextStyle;
 // @synthesize selectedTextRange;       // must implement
 @synthesize tokenizer;
+@synthesize autocorrectionType;
 
 /* Text may have a selection, either zero-length (a caret) or ranged.  Editing operations are
  * always performed on the text from this selection.  nil corresponds to no selection. */
@@ -731,6 +735,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 #pragma mark - UIKeyboard notification
 
+#if !defined(CC_TARGET_OS_TVOS)
 - (void)onUIKeyboardNotification:(NSNotification *)notif
 {
     NSString * type = notif.name;
@@ -746,12 +751,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
     
     CGSize viewSize = self.frame.size;
 
-#if defined(CC_TARGET_OS_TVOS)
-    // statusBarOrientation not defined on tvOS, and also, orientation makes
-    // no sense on tvOS
-    begin.origin.y = viewSize.height - begin.origin.y - begin.size.height;
-    end.origin.y = viewSize.height - end.origin.y - end.size.height;
-#else
     CGFloat tmp;
     switch (getFixedOrientation([[UIApplication sharedApplication] statusBarOrientation]))
     {
@@ -794,20 +793,16 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
         default:
             break;
     }
-#endif
 
     auto glview = cocos2d::Director::getInstance()->getOpenGLView();
     float scaleX = glview->getScaleX();
     float scaleY = glview->getScaleY();
-    
-    
     
     // Convert to pixel coordinate
     begin = CGRectApplyAffineTransform(begin, CGAffineTransformScale(CGAffineTransformIdentity, self.contentScaleFactor, self.contentScaleFactor));
     end = CGRectApplyAffineTransform(end, CGAffineTransformScale(CGAffineTransformIdentity, self.contentScaleFactor, self.contentScaleFactor));
     
     float offestY = glview->getViewPortRect().origin.y;
-    CCLOG("offestY = %f", offestY);
     if (offestY < 0.0f)
     {
         begin.origin.y += offestY;
@@ -843,12 +838,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
         dispatcher->dispatchKeyboardDidShow(notiInfo);
         caretRect_ = end;
 
-#if defined(CC_TARGET_OS_TVOS)
-        // smallSystemFontSize not available on TVOS
-        int fontSize = 12;
-#else
         int fontSize = [UIFont smallSystemFontSize];
-#endif
         caretRect_.origin.y = viewSize.height - (caretRect_.origin.y + caretRect_.size.height + fontSize);
         caretRect_.size.height = 0;
         isKeyboardShown_ = YES;
@@ -864,6 +854,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
         isKeyboardShown_ = NO;
     }
 }
+#endif
 
 #if !defined(CC_TARGET_OS_TVOS)
 UIInterfaceOrientation getFixedOrientation(UIInterfaceOrientation statusBarOrientation)

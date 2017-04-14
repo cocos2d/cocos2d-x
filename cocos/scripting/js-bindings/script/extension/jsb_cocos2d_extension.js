@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2014 Chukong Technologies Inc.
+ * Copyright (c) 2013-2017 Chukong Technologies Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,6 +29,14 @@
  */
 jsb.AssetsManager = cc.AssetsManager;
 delete cc.AssetsManager;
+/**
+ * @type {Object}
+ * @name jsb.Manifest
+ * please refer to this document to know how to use it: http://www.cocos2d-x.org/docs/manual/framework/html5/v3/assets-manager/en
+ * Only available in JSB
+ */
+jsb.Manifest = cc.Manifest;
+delete cc.Manifest;
 /**
  * @type {Object}
  * @name jsb.EventListenerAssetsManager
@@ -224,6 +232,12 @@ cc.CONTROL_STEPPER_LABELFONT = "CourierNewPSMT";
 cc.AUTOREPEAT_DELTATIME = 0.15;
 cc.AUTOREPEAT_INCREASETIME_INCREMENT = 12;
 
+jsb.Manifest.DownloadState = {
+    UNSTARTED: 0,
+    DOWNLOADING: 1,
+    SUCCESSED: 2,
+    UNMARKED: 3
+};
 
 jsb.EventAssetsManager.ERROR_NO_LOCAL_MANIFEST = 0;
 jsb.EventAssetsManager.ERROR_DOWNLOAD_MANIFEST = 1;

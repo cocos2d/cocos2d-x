@@ -1,7 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010      ForzeField Studios S.L. http://forzefield.com
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -350,7 +350,8 @@ __Array* __Array::clone() const
     Ref* obj = nullptr;
     Ref* tmpObj = nullptr;
     Clonable* clonable = nullptr;
-    CCARRAY_FOREACH(this, obj)
+    const __Array* self( this );
+    CCARRAY_FOREACH(self, obj)
     {
         clonable = dynamic_cast<Clonable*>(obj);
         if (clonable)

@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -229,7 +229,7 @@ Mat4 Skin::getNodeToWorldTransformAR() const
     return TransformConcat( _bone->getArmature()->getNodeToWorldTransform(),displayTransform);
 }
 
-void Skin::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
+void Skin::draw(Renderer *renderer, const Mat4 &/*transform*/, uint32_t flags)
 {
     auto mv = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 

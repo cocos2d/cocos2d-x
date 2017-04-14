@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2011      Laschweinski
-Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -509,14 +509,12 @@ Data Device::getTextureDataForText(const char * text, const FontDefinition& text
     return ret;
 }
 
-void Device::setKeepScreenOn(bool value)
+void Device::setKeepScreenOn(bool /*value*/)
 {
-    CC_UNUSED_PARAM(value);
 }
 
-void Device::vibrate(float duration)
+void Device::vibrate(float /*duration*/)
 {
-    CC_UNUSED_PARAM(duration);
 }
 
 NS_CC_END

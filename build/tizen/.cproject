@@ -136,6 +136,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/external/png/include/tizen}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/external/webp/include/tizen}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/external/tiff/include/tizen}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/external/openssl/include/tizen}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/external/json}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/external/tinyxml2}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/external/xxhash}&quot;"/>
@@ -315,7 +316,7 @@
 					<sourceEntries>
 						<entry excluding="network/CCDownloader-android.cpp|network/HttpClient-android.cpp" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="cocos"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="extensions"/>
-						<entry excluding="bullet/BulletMultiThreaded/GpuSoftBodySolvers" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="external"/>
+						<entry excluding="openssl/prebuilt/win10|openssl/include/win10|bullet/BulletMultiThreaded/GpuSoftBodySolvers" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="external"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -627,7 +628,7 @@
 					<sourceEntries>
 						<entry excluding="network/CCDownloader-android.cpp|network/HttpClient-android.cpp" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="cocos"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="extensions"/>
-						<entry excluding="bullet/BulletMultiThreaded/GpuSoftBodySolvers" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="external"/>
+						<entry excluding="openssl/prebuilt/win10|openssl/include/win10|bullet/BulletMultiThreaded/GpuSoftBodySolvers" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="external"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -942,7 +943,7 @@
 					<sourceEntries>
 						<entry excluding="network/CCDownloader-android.cpp|network/HttpClient-android.cpp" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="cocos"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="extensions"/>
-						<entry excluding="bullet/BulletMultiThreaded/GpuSoftBodySolvers" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="external"/>
+						<entry excluding="openssl/prebuilt/win10|openssl/include/win10|bullet/BulletMultiThreaded/GpuSoftBodySolvers" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="external"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>

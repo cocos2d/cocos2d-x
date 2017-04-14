@@ -1,32 +1,31 @@
 /******************************************************************************
- * Spine Runtimes Software License
- * Version 2.3
- * 
- * Copyright (c) 2013-2015, Esoteric Software
+ * Spine Runtimes Software License v2.5
+ *
+ * Copyright (c) 2013-2016, Esoteric Software
  * All rights reserved.
- * 
- * You are granted a perpetual, non-exclusive, non-sublicensable and
- * non-transferable license to use, install, execute and perform the Spine
- * Runtimes Software (the "Software") and derivative works solely for personal
- * or internal use. Without the written permission of Esoteric Software (see
- * Section 2 of the Spine Software License Agreement), you may not (a) modify,
- * translate, adapt or otherwise create derivative works, improvements of the
- * Software or develop new applications using the Software or (b) remove,
- * delete, alter or obscure any trademarks or any copyright, trademark, patent
+ *
+ * You are granted a perpetual, non-exclusive, non-sublicensable, and
+ * non-transferable license to use, install, execute, and perform the Spine
+ * Runtimes software and derivative works solely for personal or internal
+ * use. Without the written permission of Esoteric Software (see Section 2 of
+ * the Spine Software License Agreement), you may not (a) modify, translate,
+ * adapt, or develop new applications using the Spine Runtimes or otherwise
+ * create derivative works or improvements of the Spine Runtimes or (b) remove,
+ * delete, alter, or obscure any trademarks or any copyright, trademark, patent,
  * or other intellectual property or proprietary rights notices on or in the
  * Software, including any copy thereof. Redistributions in binary or source
  * form must include this license and terms.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY ESOTERIC SOFTWARE "AS IS" AND ANY EXPRESS OR
  * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
  * EVENT SHALL ESOTERIC SOFTWARE BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
  * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
- * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
- * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
- * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES, BUSINESS INTERRUPTION, OR LOSS OF
+ * USE, DATA, OR PROFITS) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
+ * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
 #include <spine/SkeletonJson.h>
@@ -354,7 +353,7 @@ static spAnimation* _spSkeletonJson_readAnimation (spSkeletonJson* self, Json* r
 				timeline->pathConstraintIndex = constraintIndex;
 				for (valueMap = timelineMap->child, frameIndex = 0; valueMap; valueMap = valueMap->next, ++frameIndex) {
 					spPathConstraintMixTimeline_setFrame(timeline, frameIndex, Json_getFloat(valueMap, "time", 0),
-														 Json_getFloat(valueMap, "rotateMix", 1), Json_getFloat(valueMap, "translateMix", 1));
+						Json_getFloat(valueMap, "rotateMix", 1), Json_getFloat(valueMap, "translateMix", 1));
 					readCurve(valueMap, SUPER(timeline), frameIndex);
 				}
 				animation->timelines[animation->timelinesCount++] = SUPER_CAST(spTimeline, timeline);
@@ -577,14 +576,14 @@ spSkeletonData* spSkeletonJson_readSkeletonData (spSkeletonJson* self, const cha
 	oldLocale = strdup(setlocale(LC_NUMERIC, NULL));
 	setlocale(LC_NUMERIC, "C");
 #endif
-    
+
 	root = Json_create(json);
-    
+
 #ifndef __ANDROID__
 	setlocale(LC_NUMERIC, oldLocale);
 	free(oldLocale);
 #endif
-    
+
 	if (!root) {
 		_spSkeletonJson_setError(self, 0, "Invalid skeleton JSON: ", Json_getError());
 		return 0;
@@ -595,7 +594,7 @@ spSkeletonData* spSkeletonJson_readSkeletonData (spSkeletonJson* self, const cha
 	skeleton = Json_getItem(root, "skeleton");
 	if (skeleton) {
 		MALLOC_STR(skeletonData->hash, Json_getString(skeleton, "hash", 0));
-		MALLOC_STR(skeletonData->version,  Json_getString(skeleton, "spine", 0));
+		MALLOC_STR(skeletonData->version, Json_getString(skeleton, "spine", 0));
 		skeletonData->width = Json_getFloat(skeleton, "width", 0);
 		skeletonData->height = Json_getFloat(skeleton, "height", 0);
 	}
@@ -605,6 +604,7 @@ spSkeletonData* spSkeletonJson_readSkeletonData (spSkeletonJson* self, const cha
 	skeletonData->bones = MALLOC(spBoneData*, bones->size);
 	for (boneMap = bones->child, i = 0; boneMap; boneMap = boneMap->next, ++i) {
 		spBoneData* data;
+		const char* transformMode;
 
 		spBoneData* parent = 0;
 		const char* parentName = Json_getString(boneMap, "parent", 0);
@@ -626,8 +626,18 @@ spSkeletonData* spSkeletonJson_readSkeletonData (spSkeletonJson* self, const cha
 		data->scaleY = Json_getFloat(boneMap, "scaleY", 1);
 		data->shearX = Json_getFloat(boneMap, "shearX", 0);
 		data->shearY = Json_getFloat(boneMap, "shearY", 0);
-		data->inheritRotation = Json_getInt(boneMap, "inheritRotation", 1);
-		data->inheritScale = Json_getInt(boneMap, "inheritScale", 1);
+		transformMode = Json_getString(boneMap, "transform", "normal");
+		data->transformMode = SP_TRANSFORMMODE_NORMAL;
+		if (strcmp(transformMode, "normal") == 0)
+			data->transformMode = SP_TRANSFORMMODE_NORMAL;
+		if (strcmp(transformMode, "onlyTranslation") == 0)
+			data->transformMode = SP_TRANSFORMMODE_ONLYTRANSLATION;
+		if (strcmp(transformMode, "noRotationOrReflection") == 0)
+			data->transformMode = SP_TRANSFORMMODE_NOROTATIONORREFLECTION;
+		if (strcmp(transformMode, "noScale") == 0)
+			data->transformMode = SP_TRANSFORMMODE_NOSCALE;
+		if (strcmp(transformMode, "noScaleOrReflection") == 0)
+			data->transformMode = SP_TRANSFORMMODE_NOSCALEORREFLECTION;
 
 		skeletonData->bones[i] = data;
 		skeletonData->bonesCount++;
@@ -689,6 +699,7 @@ spSkeletonData* spSkeletonJson_readSkeletonData (spSkeletonJson* self, const cha
 			const char* targetName;
 
 			spIkConstraintData* data = spIkConstraintData_create(Json_getString(constraintMap, "name", 0));
+			data->order = Json_getInt(constraintMap, "order", 0);
 
 			boneMap = Json_getItem(constraintMap, "bones");
 			data->bonesCount = boneMap->size;
@@ -727,6 +738,7 @@ spSkeletonData* spSkeletonJson_readSkeletonData (spSkeletonJson* self, const cha
 			const char* name;
 
 			spTransformConstraintData* data = spTransformConstraintData_create(Json_getString(constraintMap, "name", 0));
+			data->order = Json_getInt(constraintMap, "order", 0);
 
 			boneMap = Json_getItem(constraintMap, "bones");
 			data->bonesCount = boneMap->size;
@@ -775,6 +787,7 @@ spSkeletonData* spSkeletonJson_readSkeletonData (spSkeletonJson* self, const cha
 			const char* item;
 
 			spPathConstraintData* data = spPathConstraintData_create(Json_getString(constraintMap, "name", 0));
+			data->order = Json_getInt(constraintMap, "order", 0);
 
 			boneMap = Json_getItem(constraintMap, "bones");
 			data->bonesCount = boneMap->size;

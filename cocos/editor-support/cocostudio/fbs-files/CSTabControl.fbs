@@ -1,0 +1,40 @@
+// TabControl IDL file
+
+include "CSParseBinary.fbs";
+
+namespace flatbuffers;
+
+table TabControlOption
+{
+    nodeOptions:WidgetOptions;
+    headerPlace:int;
+    headerWidth:int;
+    headerHeight:int;
+    selectedTabZoom:float;
+    selectedTabIndex:int;
+    ignoreHeaderTextureSize:ubyte;
+    tabItems:[TabItemOption];
+}
+
+table TabHeaderOption
+{
+ 	nodeOptions:WidgetOptions;
+	fontRes:ResourceData;
+	fontSize:int;
+	titleText:string;
+	textColor:Color;
+	normalBackFile:ResourceData;
+	pressBackFile:ResourceData;
+	disableBackFile:ResourceData;
+	crossNormalFile:ResourceData;
+	crossDisableFile:ResourceData;
+}
+
+table TabItemOption
+{
+	header:TabHeaderOption;
+	container:NodeTree;
+}
+
+
+root_type TabControlOption;

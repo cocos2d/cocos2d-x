@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -56,7 +56,7 @@ typedef struct PhysicsRayCastInfo
 {
     PhysicsShape* shape;
     Vec2 start;
-    Vec2 end;              //< in lua, it's name is "ended"
+    Vec2 end;              ///< in lua, it's name is "ended"
     Vec2 contact;
     Vec2 normal;
 

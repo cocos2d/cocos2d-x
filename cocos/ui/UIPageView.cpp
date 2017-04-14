@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -85,8 +85,8 @@ void PageView::doLayout()
     ListView::doLayout();
     if(_indicator != nullptr)
     {
-        ssize_t index = getIndex(getCenterItemInCurrentView());
-        _indicator->indicate(index);
+        _currentPageIndex = getIndex(getCenterItemInCurrentView());
+        _indicator->indicate(_currentPageIndex);
     }
     _innerContainerDoLayoutDirty = false;
 }
@@ -110,7 +110,7 @@ void PageView::setDirection(PageView::Direction direction)
     }
 }
 
-void PageView::addWidgetToPage(Widget *widget, ssize_t pageIdx, bool forceCreate)
+void PageView::addWidgetToPage(Widget *widget, ssize_t pageIdx, bool /*forceCreate*/)
 {
     insertCustomItem(widget, pageIdx);
 }
@@ -145,6 +145,15 @@ void PageView::setCurPageIndex( ssize_t index )
     setCurrentPageIndex(index);
 }
 
+ssize_t PageView::getCurrentPageIndex()
+{
+    //The _currentPageIndex is lazy calculated
+    if (_innerContainerDoLayoutDirty) {
+        _currentPageIndex = getIndex(getCenterItemInCurrentView());
+    }
+    return _currentPageIndex;
+}
+
 void PageView::setCurrentPageIndex(ssize_t index)
 {
     jumpToItem(index, Vec2::ANCHOR_MIDDLE, Vec2::ANCHOR_MIDDLE);
@@ -162,15 +171,21 @@ void PageView::scrollToPage(ssize_t idx, float time)
 
 void PageView::scrollToItem(ssize_t itemIndex)
 {
+    if (_innerContainerDoLayoutDirty) {
+        this->forceDoLayout();
+    }
     ListView::scrollToItem(itemIndex, Vec2::ANCHOR_MIDDLE, Vec2::ANCHOR_MIDDLE);
 }
 
 void PageView::scrollToItem(ssize_t itemIndex, float time)
 {
+    if (_innerContainerDoLayoutDirty) {
+        this->forceDoLayout();
+    }
     ListView::scrollToItem(itemIndex, Vec2::ANCHOR_MIDDLE, Vec2::ANCHOR_MIDDLE, time >= 0 ? time : _scrollTime);
 }
 
-void PageView::setCustomScrollThreshold(float threshold)
+void PageView::setCustomScrollThreshold(float /*threshold*/)
 {
     CCLOG("PageView::setCustomScrollThreshold() has no effect!");
 }
@@ -180,7 +195,7 @@ float PageView::getCustomScrollThreshold()const
     return 0;
 }
 
-void PageView::setUsingCustomScrollThreshold(bool flag)
+void PageView::setUsingCustomScrollThreshold(bool /*flag*/)
 {
     CCLOG("PageView::setUsingCustomScrollThreshold() has no effect!");
 }
@@ -298,7 +313,7 @@ void PageView::addEventListenerPageView(Ref *target, SEL_PageViewEvent selector)
     _pageViewEventListener = target;
     _pageViewEventSelector = selector;
 
-    ccScrollViewCallback scrollViewCallback = [=](Ref* ref, ScrollView::EventType type) -> void{
+    ccScrollViewCallback scrollViewCallback = [=](Ref* /*ref*/, ScrollView::EventType type) -> void{
         if (type == ScrollView::EventType::AUTOSCROLL_ENDED && _previousPageIndex != _currentPageIndex) {
             pageTurningEvent();
         }
@@ -328,7 +343,7 @@ void PageView::pageTurningEvent()
 void PageView::addEventListener(const ccPageViewCallback& callback)
 {
     _eventCallback = callback;
-    ccScrollViewCallback scrollViewCallback = [=](Ref* ref, ScrollView::EventType type) -> void{
+    ccScrollViewCallback scrollViewCallback = [=](Ref* /*ref*/, ScrollView::EventType type) -> void{
         if (type == ScrollView::EventType::AUTOSCROLL_ENDED && _previousPageIndex != _currentPageIndex) {
             pageTurningEvent();
         }

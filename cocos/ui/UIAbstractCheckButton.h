@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -171,7 +171,7 @@ public:
 CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
     virtual bool init(const std::string& backGround,
-                      const std::string& backGroundSeleted,
+                      const std::string& backGroundSelected,
                       const std::string& cross,
                       const std::string& backGroundDisabled,
                       const std::string& frontCrossDisabled,

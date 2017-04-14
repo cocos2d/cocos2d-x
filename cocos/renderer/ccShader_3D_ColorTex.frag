@@ -1,5 +1,5 @@
 
-const char* cc3D_ColorTex_frag = STRINGIFY(
+const char* cc3D_ColorTex_frag = R"(
 
 #ifdef GL_ES
 varying mediump vec2 TextureCoordOut;
@@ -12,4 +12,4 @@ void main(void)
 {
     gl_FragColor = texture2D(CC_Texture0, TextureCoordOut) * u_color;
 }
-);
+)";

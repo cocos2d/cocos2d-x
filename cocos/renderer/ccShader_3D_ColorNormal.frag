@@ -1,5 +1,5 @@
 
-const char* cc3D_ColorNormal_frag = STRINGIFY(
+const char* cc3D_ColorNormal_frag = R"(
 
 #if (MAX_DIRECTIONAL_LIGHT_NUM > 0)
 uniform vec3 u_DirLightSourceColor[MAX_DIRECTIONAL_LIGHT_NUM];
@@ -11,7 +11,7 @@ uniform float u_PointLightSourceRangeInverse[MAX_POINT_LIGHT_NUM];
 #endif
 #if (MAX_SPOT_LIGHT_NUM > 0)
 uniform vec3 u_SpotLightSourceColor[MAX_SPOT_LIGHT_NUM];
-uniform vec3 u_SpotLightSourceDirection[MAX_SPOT_LIGHT_NUM]; 
+uniform vec3 u_SpotLightSourceDirection[MAX_SPOT_LIGHT_NUM];
 uniform float u_SpotLightSourceInnerAngleCos[MAX_SPOT_LIGHT_NUM];
 uniform float u_SpotLightSourceOuterAngleCos[MAX_SPOT_LIGHT_NUM];
 uniform float u_SpotLightSourceRangeInverse[MAX_SPOT_LIGHT_NUM];
@@ -51,7 +51,7 @@ vec3 computeLighting(vec3 normalVector, vec3 lightDirection, vec3 lightColor, fl
 {
     float diffuse = max(dot(normalVector, lightDirection), 0.0);
     vec3 diffuseColor = lightColor  * diffuse * attenuation;
-    
+
     return diffuseColor;
 }
 
@@ -110,4 +110,4 @@ void main(void)
 #endif
 
 }
-);
+)";

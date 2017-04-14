@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2015-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -167,10 +167,10 @@ const PUTriangle::PositionAndNormal PUTriangle::getRandomVertexAndNormal (void)
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-MeshInfo::MeshInfo (const std::string& meshName, 
+MeshInfo::MeshInfo (const std::string& /*meshName*/,
     MeshSurfaceDistribution distribution,
-    const Quaternion& orientation,
-    const Vec3& scale) : 
+    const Quaternion& /*orientation*/,
+    const Vec3& /*scale*/) :
     mDistribution(distribution)
 {
     //Ogre::MeshPtr mesh = Ogre::MeshManager::getSingleton().load(meshName, Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);

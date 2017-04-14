@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2015-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -40,9 +40,9 @@ NavMeshAgentParam::NavMeshAgentParam()
 , maxSpeed(3.5f)
 , collisionQueryRange(radius * 12.0f)
 , pathOptimizationRange(radius * 30.0f)
+, separationWeight(2.0f)
 , updateFlags(DT_CROWD_ANTICIPATE_TURNS | DT_CROWD_OPTIMIZE_VIS | DT_CROWD_OPTIMIZE_TOPO | DT_CROWD_OBSTACLE_AVOIDANCE)
 , obstacleAvoidanceType(3)
-, separationWeight(2.0f)
 , queryFilterType(0)
 {
 
@@ -67,17 +67,17 @@ const std::string& NavMeshAgent::getNavMeshAgentComponentName()
 }
 
 cocos2d::NavMeshAgent::NavMeshAgent()
-    : _agentID(-1)
+    : _syncFlag(NODE_AND_NODE)
+    , _rotRefAxes(Vec3::UNIT_Z)
+    , _state(DT_CROWDAGENT_STATE_WALKING)
     , _needAutoOrientation(true)
-    , _crowd(nullptr)
+    , _agentID(-1)
     , _needUpdateAgent(true)
     , _needMove(false)
-    , _navMeshQuery(nullptr)
-    , _rotRefAxes(Vec3::UNIT_Z)
     , _totalTimeAfterMove(0.0f)
     , _userData(nullptr)
-    , _state(DT_CROWDAGENT_STATE_WALKING)
-    , _syncFlag(NODE_AND_NODE)
+    , _crowd(nullptr)
+    , _navMeshQuery(nullptr)
 {
 
 }
@@ -327,7 +327,7 @@ void NavMeshAgent::preUpdate(float delta)
     }
 }
 
-void NavMeshAgent::postUpdate(float delta)
+void NavMeshAgent::postUpdate(float /*delta*/)
 {
     if ((_syncFlag & AGENT_TO_NODE) != 0)
         syncToNode();

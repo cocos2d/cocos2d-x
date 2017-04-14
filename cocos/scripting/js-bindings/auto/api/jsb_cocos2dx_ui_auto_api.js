@@ -1349,6 +1349,16 @@ getTitleText : function (
 },
 
 /**
+ * @method setTitleLabel
+ * @param {cc.Label} arg0
+ */
+setTitleLabel : function (
+label 
+)
+{
+},
+
+/**
  * @method setTitleFontSize
  * @param {float} arg0
  */
@@ -1652,6 +1662,16 @@ getPressedFile : function (
 )
 {
     return cc.ResourceData;
+},
+
+/**
+ * @method getTitleLabel
+ * @return {cc.Label}
+ */
+getTitleLabel : function (
+)
+{
+    return cc.Label;
 },
 
 /**
@@ -2629,6 +2649,18 @@ enableGlow : function (
 color4b 
 )
 {
+},
+
+/**
+ * @method getLetter
+ * @param {int} arg0
+ * @return {cc.Sprite}
+ */
+getLetter : function (
+int 
+)
+{
+    return cc.Sprite;
 },
 
 /**
@@ -6423,14 +6455,6 @@ RelativeBox : function (
 ccui.Scale9Sprite = {
 
 /**
- * @method disableCascadeColor
- */
-disableCascadeColor : function (
-)
-{
-},
-
-/**
  * @method updateWithSprite
 * @param {cc.Sprite|cc.Sprite} sprite
 * @param {rect_object|rect_object} rect
@@ -6453,46 +6477,6 @@ rect
 },
 
 /**
- * @method isFlippedX
- * @return {bool}
- */
-isFlippedX : function (
-)
-{
-    return false;
-},
-
-/**
- * @method setScale9Enabled
- * @param {bool} arg0
- */
-setScale9Enabled : function (
-bool 
-)
-{
-},
-
-/**
- * @method setFlippedY
- * @param {bool} arg0
- */
-setFlippedY : function (
-bool 
-)
-{
-},
-
-/**
- * @method setFlippedX
- * @param {bool} arg0
- */
-setFlippedX : function (
-bool 
-)
-{
-},
-
-/**
  * @method resizableSpriteWithCapInsets
  * @param {rect_object} arg0
  * @return {ccui.Scale9Sprite}
@@ -6505,21 +6489,13 @@ rect
 },
 
 /**
- * @method disableCascadeOpacity
+ * @method getCapInsets
+ * @return {rect_object}
  */
-disableCascadeOpacity : function (
+getCapInsets : function (
 )
 {
-},
-
-/**
- * @method getState
- * @return {ccui.Scale9Sprite::State}
- */
-getState : function (
-)
-{
-    return 0;
+    return cc.Rect;
 },
 
 /**
@@ -6544,12 +6520,12 @@ float
 
 /**
  * @method initWithSpriteFrameName
-* @param {String|String} str
-* @param {rect_object} rect
-* @return {bool|bool}
-*/
-initWithSpriteFrameName : function(
-str,
+ * @param {String} arg0
+ * @param {rect_object} arg1
+ * @return {bool}
+ */
+initWithSpriteFrameName : function (
+str, 
 rect 
 )
 {
@@ -6619,6 +6595,16 @@ size
 },
 
 /**
+ * @method copyTo
+ * @param {ccui.Scale9Sprite} arg0
+ */
+copyTo : function (
+scale9sprite 
+)
+{
+},
+
+/**
  * @method setSpriteFrame
  * @param {cc.SpriteFrame} arg0
  * @param {rect_object} arg1
@@ -6631,13 +6617,13 @@ rect
 },
 
 /**
- * @method getBlendFunc
- * @return {cc.BlendFunc}
+ * @method getState
+ * @return {ccui.Scale9Sprite::State}
  */
-getBlendFunc : function (
+getState : function (
 )
 {
-    return cc.BlendFunc;
+    return 0;
 },
 
 /**
@@ -6651,13 +6637,13 @@ getInsetBottom : function (
 },
 
 /**
- * @method getCapInsets
- * @return {rect_object}
+ * @method setScale9Enabled
+ * @param {bool} arg0
  */
-getCapInsets : function (
+setScale9Enabled : function (
+bool 
 )
 {
-    return cc.Rect;
 },
 
 /**
@@ -6710,10 +6696,10 @@ getOriginalSize : function (
 
 /**
  * @method initWithFile
-* @param {String|String|rect_object|String} str
-* @param {rect_object|rect_object|String} rect
+* @param {rect_object|String} rect
+* @param {String|rect_object} str
 * @param {rect_object} rect
-* @return {bool|bool|bool|bool}
+* @return {bool|bool}
 */
 initWithFile : function(
 str,
@@ -6722,16 +6708,6 @@ rect
 )
 {
     return false;
-},
-
-/**
- * @method setBlendFunc
- * @param {cc.BlendFunc} arg0
- */
-setBlendFunc : function (
-blendfunc 
-)
-{
 },
 
 /**
@@ -6756,12 +6732,12 @@ float
 
 /**
  * @method initWithSpriteFrame
-* @param {cc.SpriteFrame|cc.SpriteFrame} spriteframe
-* @param {rect_object} rect
-* @return {bool|bool}
-*/
-initWithSpriteFrame : function(
-spriteframe,
+ * @param {cc.SpriteFrame} arg0
+ * @param {rect_object} arg1
+ * @return {bool}
+ */
+initWithSpriteFrame : function (
+spriteframe, 
 rect 
 )
 {
@@ -6786,16 +6762,6 @@ setCapInsets : function (
 rect 
 )
 {
-},
-
-/**
- * @method isFlippedY
- * @return {bool}
- */
-isFlippedY : function (
-)
-{
-    return false;
 },
 
 /**
@@ -6879,6 +6845,16 @@ Scale9Sprite : function (
 ccui.EditBox = {
 
 /**
+ * @method getFontSize
+ * @return {int}
+ */
+getFontSize : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method getText
  * @return {char}
  */
@@ -6899,6 +6875,26 @@ int
 },
 
 /**
+ * @method getInputMode
+ * @return {ccui.EditBox::InputMode}
+ */
+getInputMode : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getPlaceholderFontName
+ * @return {char}
+ */
+getPlaceholderFontName : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method setPlaceholderFontName
  * @param {char} arg0
  */
@@ -6906,6 +6902,16 @@ setPlaceholderFontName : function (
 char 
 )
 {
+},
+
+/**
+ * @method getPlaceholderFontSize
+ * @return {int}
+ */
+getPlaceholderFontSize : function (
+)
+{
+    return 0;
 },
 
 /**
@@ -6969,6 +6975,16 @@ color3b
 },
 
 /**
+ * @method getReturnType
+ * @return {ccui.EditBox::KeyboardReturnType}
+ */
+getReturnType : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method setFontColor
 * @param {color4b_object|color3b_object} color4b
 */
@@ -6976,6 +6992,46 @@ setFontColor : function(
 color3b 
 )
 {
+},
+
+/**
+ * @method getFontName
+ * @return {char}
+ */
+getFontName : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getFontColor
+ * @return {color4b_object}
+ */
+getFontColor : function (
+)
+{
+    return cc.Color4B;
+},
+
+/**
+ * @method getInputFlag
+ * @return {ccui.EditBox::InputFlag}
+ */
+getInputFlag : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getTextHorizontalAlignment
+ * @return {cc.TextHAlignment}
+ */
+getTextHorizontalAlignment : function (
+)
+{
+    return 0;
 },
 
 /**
@@ -7047,6 +7103,16 @@ getMaxLength : function (
 },
 
 /**
+ * @method getPlaceholderFontColor
+ * @return {color4b_object}
+ */
+getPlaceholderFontColor : function (
+)
+{
+    return cc.Color4B;
+},
+
+/**
  * @method setMaxLength
  * @param {int} arg0
  */
@@ -7064,6 +7130,16 @@ int
 setFont : function (
 char, 
 int 
+)
+{
+},
+
+/**
+ * @method setTextHorizontalAlignment
+ * @param {cc.TextHAlignment} arg0
+ */
+setTextHorizontalAlignment : function (
+texthalignment 
 )
 {
 },

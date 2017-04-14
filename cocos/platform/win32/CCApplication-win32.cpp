@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -63,6 +63,18 @@ int Application::run()
 {
     PVRFrameEnableControlWindow(false);
 
+    ///////////////////////////////////////////////////////////////////////////
+    /////////////// changing timer resolution
+    ///////////////////////////////////////////////////////////////////////////
+    UINT TARGET_RESOLUTION = 1; // 1 millisecond target resolution
+    TIMECAPS tc;
+    UINT wTimerRes = 0;
+    if (TIMERR_NOERROR == timeGetDevCaps(&tc, sizeof(TIMECAPS)))
+    {
+        wTimerRes = std::min(std::max(tc.wPeriodMin, TARGET_RESOLUTION), tc.wPeriodMax);
+        timeBeginPeriod(wTimerRes);
+    }
+
     // Main message loop:
     LARGE_INTEGER nLast;
     LARGE_INTEGER nNow;
@@ -83,19 +95,32 @@ int Application::run()
     // Retain glview to avoid glview being released in the while loop
     glview->retain();
 
+    LONGLONG interval = 0LL;
+    LONG waitMS = 0L;
+
+    LARGE_INTEGER freq;
+    QueryPerformanceFrequency(&freq);
+
     while(!glview->windowShouldClose())
     {
         QueryPerformanceCounter(&nNow);
-        if (nNow.QuadPart - nLast.QuadPart > _animationInterval.QuadPart)
+        interval = nNow.QuadPart - nLast.QuadPart;
+        if (interval >= _animationInterval.QuadPart)
         {
-            nLast.QuadPart = nNow.QuadPart - (nNow.QuadPart % _animationInterval.QuadPart);
-            
+            nLast.QuadPart = nNow.QuadPart;
             director->mainLoop();
             glview->pollEvents();
         }
         else
         {
-            Sleep(1);
+            // The precision of timer on Windows is set to highest (1ms) by 'timeBeginPeriod' from above code,
+            // but it's still not precise enough. For example, if the precision of timer is 1ms,
+            // Sleep(3) may make a sleep of 2ms or 4ms. Therefore, we subtract 1ms here to make Sleep time shorter.
+            // If 'waitMS' is equal or less than 1ms, don't sleep and run into next loop to
+            // boost CPU to next frame accurately.
+            waitMS = (_animationInterval.QuadPart - interval) * 1000LL / freq.QuadPart - 1L;
+            if (waitMS > 1L)
+                Sleep(waitMS);
         }
     }
 
@@ -107,14 +132,22 @@ int Application::run()
         director = nullptr;
     }
     glview->release();
+
+    ///////////////////////////////////////////////////////////////////////////
+    /////////////// restoring timer resolution
+    ///////////////////////////////////////////////////////////////////////////
+    if (wTimerRes != 0)
+    {
+        timeEndPeriod(wTimerRes);
+    }
     return 0;
 }
 
 void Application::setAnimationInterval(float interval)
 {
-    LARGE_INTEGER nFreq;
-    QueryPerformanceFrequency(&nFreq);
-    _animationInterval.QuadPart = (LONGLONG)(interval * nFreq.QuadPart);
+    LARGE_INTEGER freq;
+    QueryPerformanceFrequency(&freq);
+    _animationInterval.QuadPart = (LONGLONG)(interval * freq.QuadPart);
 }
 
 //////////////////////////////////////////////////////////////////////////

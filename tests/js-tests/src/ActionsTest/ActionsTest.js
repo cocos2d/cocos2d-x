@@ -1,7 +1,7 @@
 /****************************************************************************
  Copyright (c) 2008-2010 Ricardo Quesada
  Copyright (c) 2011-2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -2316,6 +2316,7 @@ var Issue1305 = ActionsDemo.extend({
         this.centerSprites(0);
 
         this._spriteTmp = new cc.Sprite(s_pathGrossini);
+        this._spriteTmp.retain();
         /* c++ can't support block, so we use CCCallFuncN instead.
          [spriteTmp_ runAction:[CCCallBlockN actionWithBlock:^(CCNode* node) {
          NSLog(@"This message SHALL ONLY appear when the sprite is added to the scene, NOT BEFORE");
@@ -2336,6 +2337,7 @@ var Issue1305 = ActionsDemo.extend({
         this._spriteTmp.x = 250;
 		this._spriteTmp.y = 250;
         this.addChild(this._spriteTmp);
+        this._spriteTmp.release();
     },
     title:function () {
         return "Issue 1305";

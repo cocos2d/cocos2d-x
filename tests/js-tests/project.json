@@ -152,6 +152,8 @@
         "src/NativeTest/NativeTest.js",
         "src/NativeTest/FileUtils/FileUtilsTest.js",
         "src/NativeTest/JSBExtendTest.js",
-        "src/NativeTest/AudioEngineTest.js"
+        "src/NativeTest/AudioEngineTest.js",
+
+        "src/PerformanceNowTest/PerformanceNowTest.js"
     ]
 }

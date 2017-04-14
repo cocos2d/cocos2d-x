@@ -101,6 +101,12 @@
 -- @return Sprite#Sprite self (return value: cc.Sprite)
         
 --------------------------------
+--  returns whether or not contentSize stretches the sprite's texture 
+-- @function [parent=#Sprite] isStretchEnabled 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 -- @overload self, rect_table, bool, size_table         
 -- @overload self, rect_table         
 -- @function [parent=#Sprite] setTextureRect
@@ -120,6 +126,13 @@
 -- @param self
 -- @param #string spriteFrameName
 -- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+--  whether or not contentSize stretches the sprite's texture 
+-- @function [parent=#Sprite] setStretchEnabled 
+-- @param self
+-- @param #bool enabled
+-- @return Sprite#Sprite self (return value: cc.Sprite)
         
 --------------------------------
 -- Returns whether or not a SpriteFrame is being displayed.

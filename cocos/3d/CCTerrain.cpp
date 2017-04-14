@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2015 Chukong Technologies Inc.
+Copyright (c) 2015-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -126,7 +126,7 @@ void Terrain::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, 
     renderer->addCommand(&_customCommand);
 }
 
-void Terrain::onDraw(const Mat4 &transform, uint32_t flags)
+void Terrain::onDraw(const Mat4 &transform, uint32_t /*flags*/)
 {
     auto modelMatrix = getNodeToWorldTransform();
     if(memcmp(&modelMatrix,&_terrainModelMatrix,sizeof(Mat4))!=0)
@@ -149,7 +149,7 @@ void Terrain::onDraw(const Mat4 &transform, uint32_t flags)
 
     _stateBlock->bind();
 
-    GL::enableVertexAttribs(1<<_positionLocation | 1 << _texcordLocation | 1<<_normalLocation);
+    GL::enableVertexAttribs(1<<_positionLocation | 1 << _texcoordLocation | 1<<_normalLocation);
     glProgram->setUniformsForBuiltins(transform);
     _glProgramState->applyUniforms();
     glUniform3f(_lightDirLocation,_lightDir.x,_lightDir.y,_lightDir.z);
@@ -322,15 +322,15 @@ float Terrain::getHeight(float x, float z, Vec3 * normal) const
 
     //top-left
     Vec2 tl(-1*_terrainData._mapScale*_imageWidth/2,-1*_terrainData._mapScale*_imageHeight/2);
-    auto result  = getNodeToWorldTransform()*Vec4(tl.x,0.0f,tl.y,1.0f);
-    tl.set(result.x, result.z);
+    auto mulResult = getNodeToWorldTransform() * Vec4(tl.x, 0.0f, tl.y, 1.0f);
+    tl.set(mulResult.x, mulResult.z);
 
     Vec2 to_tl = pos - tl;
 
     //real size
     Vec2 size(_imageWidth*_terrainData._mapScale,_imageHeight*_terrainData._mapScale);
-    result = getNodeToWorldTransform()*Vec4(size.x,0.0f,size.y,0.0f);
-    size.set(result.x, result.z);
+    mulResult = getNodeToWorldTransform() * Vec4(size.x, 0.0f, size.y, 0.0f);
+    size.set(mulResult.x, mulResult.z);
 
     float width_ratio = to_tl.x/size.x;
     float height_ratio = to_tl.y/size.y;
@@ -436,7 +436,7 @@ void Terrain::calculateNormal()
             _indices.push_back (nLocIndex + _imageWidth+1);
         }
     }
-    for (unsigned int i = 0, size = _indices.size(); i < size; i += 3) {
+    for (size_t i = 0, size = _indices.size(); i < size; i += 3) {
         unsigned int Index0 = _indices[i];
         unsigned int Index1 = _indices[i + 1];
         unsigned int Index2 = _indices[i + 2];
@@ -450,8 +450,8 @@ void Terrain::calculateNormal()
         _vertices[Index2]._normal += Normal;
     }
 
-    for (unsigned int i = 0, size = _vertices.size(); i < size; ++i) {
-        _vertices[i]._normal.normalize();
+    for (auto &vertex : _vertices) {
+        vertex._normal.normalize();
     }
     //global indices no need at all
     _indices.clear();
@@ -572,7 +572,7 @@ bool Terrain::getIntersectionPoint(const Ray & ray_, Vec3 & intersectionPoint) c
                 {
                     if (closeList.find(chunk) == closeList.end())
                     {
-                        if (chunk->getInsterctPointWithRay(ray, tmpIntersectionPoint))
+                        if (chunk->getIntersectPointWithRay(ray, tmpIntersectionPoint))
                         {
                             float dist = (ray._origin - tmpIntersectionPoint).length();
                             if (intersectionDist > dist)
@@ -815,7 +815,7 @@ void Terrain::cacheUniformAttribLocation()
 {
 
     _positionLocation = glGetAttribLocation(this->getGLProgram()->getProgram(),"a_position");
-    _texcordLocation = glGetAttribLocation(this->getGLProgram()->getProgram(),"a_texCoord");
+    _texcoordLocation = glGetAttribLocation(this->getGLProgram()->getProgram(),"a_texCoord");
     _normalLocation = glGetAttribLocation(this->getGLProgram()->getProgram(),"a_normal");
     _alphaMapLocation = -1;
     for(int i =0;i<4;++i)
@@ -979,7 +979,7 @@ void Terrain::Chunk::bindAndDraw()
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, _chunkIndices._size);
 }
 
-void Terrain::Chunk::generate(int imgWidth, int imageHei, int m, int n, const unsigned char * data)
+void Terrain::Chunk::generate(int imgWidth, int imageHei, int m, int n, const unsigned char * /*data*/)
 {
     _posY = m;
     _posX = n;
@@ -1324,7 +1324,7 @@ void Terrain::Chunk::calculateSlope()
     _slope = (highest.y - lowest.y)/dist;
 }
 
-bool Terrain::Chunk::getInsterctPointWithRay(const Ray& ray, Vec3 &interscetPoint)
+bool Terrain::Chunk::getIntersectPointWithRay(const Ray& ray, Vec3& intersectPoint)
 {
     if (!ray.intersects(_aabb))
         return false;
@@ -1334,12 +1334,12 @@ bool Terrain::Chunk::getInsterctPointWithRay(const Ray& ray, Vec3 &interscetPoin
     for (auto triangle : _trianglesList)
     {
         Vec3 p;
-        if (triangle.getInsterctPoint(ray, p))
+        if (triangle.getIntersectPoint(ray, p))
         {
             float dist = ray._origin.distance(p);
             if (dist<minDist)
             {
-            interscetPoint = p;
+            intersectPoint = p;
             minDist = dist;
             }
             isFind =true;
@@ -1347,6 +1347,11 @@ bool Terrain::Chunk::getInsterctPointWithRay(const Ray& ray, Vec3 &interscetPoin
     }
 
     return isFind;
+}
+
+bool Terrain::Chunk::getInsterctPointWithRay(const Ray& ray, Vec3& intersectPoint)
+{
+    return getIntersectPointWithRay(ray, intersectPoint);
 }
 
 void Terrain::Chunk::updateVerticesForLOD()
@@ -1652,7 +1657,7 @@ void Terrain::Triangle::transform(const cocos2d::Mat4& matrix)
 }
 
 //Please refer to 3D Math Primer for Graphics and Game Development
-bool Terrain::Triangle::getInsterctPoint(const Ray &ray, Vec3& interScetPoint)const
+bool Terrain::Triangle::getIntersectPoint(const Ray& ray, Vec3& intersectPoint) const
 {
     // E1
     Vec3 E1 = _p2 - _p1;
@@ -1704,11 +1709,14 @@ bool Terrain::Triangle::getInsterctPoint(const Ray &ray, Vec3& interScetPoint)co
 
     float fInvDet = 1.0f / det;
     t *= fInvDet;
-    u *= fInvDet;
-    v *= fInvDet;
 
-    interScetPoint = ray._origin + ray._direction * t;
+    intersectPoint = ray._origin + ray._direction * t;
     return true;
+}
+
+bool Terrain::Triangle::getInsterctPoint(const Ray& ray, Vec3& intersectPoint) const
+{
+    return getIntersectPoint(ray, intersectPoint);
 }
 
 NS_CC_END

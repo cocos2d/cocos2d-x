@@ -23,7 +23,7 @@
  * THE SOFTWARE.
  */
 
-const char* ccPosition_uColor_vert = STRINGIFY(
+const char* ccPosition_uColor_vert = R"(
 
 attribute vec4 a_position;
 uniform vec4 u_color;
@@ -41,4 +41,4 @@ void main()
     gl_PointSize = u_pointSize;
     v_fragmentColor = u_color;
 }
-);
+)";

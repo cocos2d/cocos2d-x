@@ -1,7 +1,7 @@
 /****************************************************************************
  Copyright (c) 2008-2010 Ricardo Quesada
  Copyright (c) 2011-2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -23,34 +23,6 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-
-//some utils functions
-function ensureLeftAligned (label) {
-    label.anchorX = 0;
-    label.anchorY = 1;
-    label.textAlign = cc.TEXT_ALIGNMENT_LEFT;
-}
-
-function streamXHREventsToLabel ( xhr, label, textbox, method ) {
-    // Simple events
-    ['loadstart', 'abort', 'error', 'load', 'loadend', 'timeout'].forEach(function (eventname) {
-        xhr["on" + eventname] = function () {
-            label.string += "\nEvent : " + eventname;
-        };
-    });
-
-    // Special event
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4 && (xhr.status >= 200 && xhr.status <= 207)) {
-            var httpStatus = xhr.statusText;
-            var response = xhr.responseText.substring(0, 100) + "...";
-            textbox.string = method + " Response (100 chars):\n";
-            textbox.string += response;
-            label.string += "\nStatus: Got " + method + " response! " + httpStatus;
-        }
-    };
-}
-
 
 var XHRTestScene = TestScene.extend({
     ctor:function () {
@@ -83,33 +55,56 @@ var XHRTestLayer = cc.Layer.extend({
         this.sendPostForms();
     },
 
+    ensureLeftAligned: function(label) {
+        label.anchorX = 0;
+        label.anchorY = 1;
+        label.textAlign = cc.TEXT_ALIGNMENT_LEFT;
+    },
+
+    streamXHREventsToLabel: function( xhr, label, textbox, method, title ) {
+        // Simple events
+        ['loadstart', 'abort', 'error', 'load', 'loadend', 'timeout'].forEach(function (eventname) {
+            xhr["on" + eventname] = function () {
+                label.string += "\nEvent : " + eventname;
+            };
+        });
+
+        // Special event
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && (xhr.status >= 200 && xhr.status <= 207)) {
+                var httpStatus = xhr.statusText;
+                var response = xhr.responseText.substring(0, 100) + "...";
+                cc.log("title:" + title + ", response:\n" + xhr.responseText);
+                textbox.string = method + " Response (100 chars):\n";
+                textbox.string += response;
+                label.string += "\nStatus: Got " + method + " response! " + httpStatus;
+            }
+        };
+    },
+
     sendGetRequest: function() {
         var statusGetLabel = new cc.LabelTTF("Status:", "Thonburi", 12);
         this.addChild(statusGetLabel, 1);
 
         statusGetLabel.x = 10;
         statusGetLabel.y = winSize.height - 100;
-        ensureLeftAligned(statusGetLabel);
+        this.ensureLeftAligned(statusGetLabel);
         statusGetLabel.setString("Status: Send Get Request to httpbin.org");
 
         var responseLabel = new cc.LabelTTF("", "Thonburi", 16);
         this.addChild(responseLabel, 1);
 
-        ensureLeftAligned(responseLabel);
+        this.ensureLeftAligned(responseLabel);
         responseLabel.x = 10;
         responseLabel.y = winSize.height / 2;
 
         var xhr = cc.loader.getXMLHttpRequest();
-        streamXHREventsToLabel(xhr, statusGetLabel, responseLabel, "GET");
+        this.streamXHREventsToLabel(xhr, statusGetLabel, responseLabel, "GET", "sendGetRequest");
         // 5 seconds for timeout
         xhr.timeout = 5000;
 
         //set arguments with <URL>?xxx=xxx&yyy=yyy
-        if(cc.sys.isNative){
-            xhr.open("GET", "http://geek.csdn.net/news/detail/33683", true);
-        }else{
-            xhr.open("GET", "http://httpbin.org/get?show_env=1", true);
-        }
+        xhr.open("GET", "http://httpbin.org/gzip", true);
         xhr.setRequestHeader("Accept-Encoding","gzip,deflate");
 
         xhr.send();
@@ -121,18 +116,18 @@ var XHRTestLayer = cc.Layer.extend({
 
         statusPostLabel.x = winSize.width / 10 * 3;
         statusPostLabel.y = winSize.height - 100;
-        ensureLeftAligned(statusPostLabel);
+        this.ensureLeftAligned(statusPostLabel);
         statusPostLabel.setString("Status: Send Post Request to httpbin.org with plain text");
 
 
         var responseLabel = new cc.LabelTTF("", "Thonburi", 16);
         this.addChild(responseLabel, 1);
-        ensureLeftAligned(responseLabel);
+        this.ensureLeftAligned(responseLabel);
         responseLabel.x = winSize.width / 10 * 3;
         responseLabel.y = winSize.height / 2;
 
         var xhr = cc.loader.getXMLHttpRequest();
-        streamXHREventsToLabel(xhr, statusPostLabel, responseLabel, "POST");
+        this.streamXHREventsToLabel(xhr, statusPostLabel, responseLabel, "POST", "sendPostPlainText");
 
         xhr.open("POST", "http://httpbin.org/post");
 
@@ -147,18 +142,18 @@ var XHRTestLayer = cc.Layer.extend({
 
         statusPostLabel.x = winSize.width / 10 * 7;
         statusPostLabel.y = winSize.height - 100;
-        ensureLeftAligned(statusPostLabel);
+        this.ensureLeftAligned(statusPostLabel);
         statusPostLabel.setString("Status: Send Post Request to httpbin.org width form data");
 
         var responseLabel = new cc.LabelTTF("", "Thonburi", 16);
         this.addChild(responseLabel, 1);
 
-        ensureLeftAligned(responseLabel);
+        this.ensureLeftAligned(responseLabel);
         responseLabel.x = winSize.width / 10 * 7;
         responseLabel.y = winSize.height / 2;
 
         var xhr = cc.loader.getXMLHttpRequest();
-        streamXHREventsToLabel(xhr, statusPostLabel, responseLabel, "POST");
+        this.streamXHREventsToLabel(xhr, statusPostLabel, responseLabel, "POST", "sendPostForms");
 
         xhr.open("POST", "http://httpbin.org/post");
         //set Content-Type "application/x-www-form-urlencoded" to post form data

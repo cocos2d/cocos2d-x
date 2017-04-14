@@ -1,6 +1,12 @@
 set(APP_NAME cpp-tests)
 
 # Use same method as in cocos library
+if(LINUX)
+  foreach(_pkg FONTCONFIG GTK3)
+    cocos_find_package(${_pkg} ${_pkg} REQUIRED)
+  endforeach()
+endif()
+cocos_find_package(FREETYPE FREETYPE REQUIRED)
 cocos_find_package(CURL CURL REQUIRED)
 
 if(WIN32)
@@ -65,24 +71,8 @@ set(TESTS_SRC
   Classes/EffectsAdvancedTest/EffectsAdvancedTest.cpp
   Classes/EffectsTest/EffectsTest.cpp
   Classes/ExtensionsTest/AssetsManagerExTest/AssetsManagerExTest.cpp
-  Classes/ExtensionsTest/CocosBuilderTest/AnimationsTest/AnimationsTestLayer.cpp
-  Classes/ExtensionsTest/CocosBuilderTest/ButtonTest/ButtonTestLayer.cpp
-  Classes/ExtensionsTest/CocosBuilderTest/CocosBuilderTest.cpp
-  Classes/ExtensionsTest/CocosBuilderTest/HelloCocosBuilder/HelloCocosBuilderLayer.cpp
-  Classes/ExtensionsTest/CocosBuilderTest/MenuTest/MenuTestLayer.cpp
-  Classes/ExtensionsTest/CocosBuilderTest/TestHeader/TestHeaderLayer.cpp
-  Classes/ExtensionsTest/CocosBuilderTest/TimelineCallbackTest/TimelineCallbackTestLayer.cpp
-  Classes/ExtensionsTest/ControlExtensionTest/CCControlButtonTest/CCControlButtonTest.cpp
-  Classes/ExtensionsTest/ControlExtensionTest/CCControlColourPicker/CCControlColourPickerTest.cpp
-  Classes/ExtensionsTest/ControlExtensionTest/CCControlPotentiometerTest/CCControlPotentiometerTest.cpp
-  Classes/ExtensionsTest/ControlExtensionTest/CCControlScene.cpp
-  Classes/ExtensionsTest/ControlExtensionTest/CCControlSceneManager.cpp
-  Classes/ExtensionsTest/ControlExtensionTest/CCControlSliderTest/CCControlSliderTest.cpp
-  Classes/ExtensionsTest/ControlExtensionTest/CCControlStepperTest/CCControlStepperTest.cpp
-  Classes/ExtensionsTest/ControlExtensionTest/CCControlSwitchTest/CCControlSwitchTest.cpp
   Classes/ExtensionsTest/ExtensionsTest.cpp
   Classes/ExtensionsTest/NetworkTest/HttpClientTest.cpp
-  Classes/ExtensionsTest/NotificationCenterTest/NotificationCenterTest.cpp
   Classes/ExtensionsTest/TableViewTest/CustomTableViewCell.cpp
   Classes/ExtensionsTest/TableViewTest/TableViewTestScene.cpp
   Classes/FileUtilsTest/FileUtilsTest.cpp
@@ -96,7 +86,7 @@ set(TESTS_SRC
   Classes/MaterialSystemTest/MaterialSystemTest
   Classes/MenuTest/MenuTest.cpp
   Classes/MotionStreakTest/MotionStreakTest.cpp
-  Classes/MutiTouchTest/MutiTouchTest.cpp
+  Classes/MultiTouchTest/MultiTouchTest.cpp
   Classes/NewAudioEngineTest/NewAudioEngineTest.cpp
   Classes/NewEventDispatcherTest/NewEventDispatcherTest.cpp
   Classes/NewRendererTest/NewRendererTest.cpp
@@ -162,7 +152,6 @@ set(TESTS_SRC
   Classes/ZwoptexTest/ZwoptexTest.cpp
   Classes/SpriteFrameCacheTest/SpriteFrameCacheTest.cpp
   Classes/controller.cpp
-  Classes/testBasic.cpp
   Classes/VRTest/VRTest.cpp
   Classes/VRTest/VRTest.h
   ${PLATFORM_SRC}
@@ -194,15 +183,16 @@ if(USE_BULLET)
     )
 endif()
 
-if(LINUX)
-    set(EXTENDED_TESTS_SRC
+set (EXTENDED_TESTS_SRC
+      Classes/ExtensionsTest/NetworkTest/HttpClientTest.cpp
+      Classes/ExtensionsTest/NetworkTest/SocketIOTest.cpp
+      Classes/ExtensionsTest/NetworkTest/WebSocketTest.cpp
     )
-else()
-    set(EXTENDED_TESTS_SRC
-        Classes/ExtensionsTest/NetworkTest/HttpClientTest.cpp
-        Classes/ExtensionsTest/NetworkTest/SocketIOTest.cpp
-        Classes/ExtensionsTest/NetworkTest/WebSocketTest.cpp
 
+if(LINUX)
+
+else()
+    list(APPEND EXTENDED_TESTS_SRC
         Classes/UITest/CocoStudioGUITest/UIEditBoxTest.cpp
     )
 endif()
@@ -224,7 +214,14 @@ endif()
 
 target_link_libraries(${APP_NAME} cocos2d)
 
-cocos_use_pkg(${APP_NAME} CURL)
+if(LINUX)
+  foreach(_pkg FONTCONFIG GTK3)
+    cocos_use_pkg(${APP_NAME} ${_pkg})
+  endforeach()
+endif()
+foreach(pkg FREETYPE CURL)
+  cocos_use_pkg(${APP_NAME} ${pkg})
+endforeach()
 
 if(MACOSX OR APPLE)
   set_target_properties(${APP_NAME} PROPERTIES

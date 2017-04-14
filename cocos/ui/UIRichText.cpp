@@ -75,7 +75,7 @@ public:
         _touchListener->release();
     }
 
-    void onTouchesEnded(const std::vector<Touch*>& touches, Event *event)
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event* /*event*/)
     {
         for (const auto& touch: touches)
         {
@@ -281,11 +281,11 @@ public:
             hasColor = true;
         }
         Attributes()
-        : bold(false)
+        : fontSize(-1)
+        , hasColor(false)
+        , bold(false)
         , italics(false)
         , line(StyleLine::NONE)
-        , hasColor(false)
-        , fontSize(-1)
         , effect(StyleEffect::NONE)
         {
         }
@@ -354,8 +354,8 @@ private:
 MyXMLVisitor::TagTables MyXMLVisitor::_tagTables;
 
 MyXMLVisitor::MyXMLVisitor(RichText* richText)
-: _richText(richText)
-, _fontElements(20)
+:  _fontElements(20)
+, _richText(richText)
 {
     MyXMLVisitor::setTagDescription("font", true, [](const ValueMap& tagAttrValueMap) {
         // supported attributes:
@@ -375,41 +375,41 @@ MyXMLVisitor::MyXMLVisitor(RichText* richText)
         return make_pair(attrValueMap, nullptr);
     });
     
-    MyXMLVisitor::setTagDescription("b", true, [](const ValueMap& tagAttrValueMap) {
+    MyXMLVisitor::setTagDescription("b", true, [](const ValueMap& /*tagAttrValueMap*/) {
         // no supported attributes
         ValueMap attrValueMap;
         attrValueMap[RichText::KEY_TEXT_BOLD] = true;
         return make_pair(attrValueMap, nullptr);
     });
     
-    MyXMLVisitor::setTagDescription("i", true, [](const ValueMap& tagAttrValueMap) {
+    MyXMLVisitor::setTagDescription("i", true, [](const ValueMap& /*tagAttrValueMap*/) {
         // no supported attributes
         ValueMap attrValueMap;
         attrValueMap[RichText::KEY_TEXT_ITALIC] = true;
         return make_pair(attrValueMap, nullptr);
     });
     
-    MyXMLVisitor::setTagDescription("del", true, [](const ValueMap& tagAttrValueMap) {
+    MyXMLVisitor::setTagDescription("del", true, [](const ValueMap& /*tagAttrValueMap*/) {
         // no supported attributes
         ValueMap attrValueMap;
         attrValueMap[RichText::KEY_TEXT_LINE] = RichText::VALUE_TEXT_LINE_DEL;
         return make_pair(attrValueMap, nullptr);
     });
     
-    MyXMLVisitor::setTagDescription("u", true, [](const ValueMap& tagAttrValueMap) {
+    MyXMLVisitor::setTagDescription("u", true, [](const ValueMap& /*tagAttrValueMap*/) {
         // no supported attributes
         ValueMap attrValueMap;
         attrValueMap[RichText::KEY_TEXT_LINE] = RichText::VALUE_TEXT_LINE_UNDER;
         return make_pair(attrValueMap, nullptr);
     });
     
-    MyXMLVisitor::setTagDescription("small", true, [](const ValueMap& tagAttrValueMap) {
+    MyXMLVisitor::setTagDescription("small", true, [](const ValueMap& /*tagAttrValueMap*/) {
         ValueMap attrValueMap;
         attrValueMap[RichText::KEY_FONT_SMALL] = true;
         return make_pair(attrValueMap, nullptr);
     });
     
-    MyXMLVisitor::setTagDescription("big", true, [](const ValueMap& tagAttrValueMap) {
+    MyXMLVisitor::setTagDescription("big", true, [](const ValueMap& /*tagAttrValueMap*/) {
         ValueMap attrValueMap;
         attrValueMap[RichText::KEY_FONT_BIG] = true;
         return make_pair(attrValueMap, nullptr);
@@ -451,7 +451,7 @@ MyXMLVisitor::MyXMLVisitor(RichText* richText)
         return make_pair(attrValueMap, nullptr);
     });
     
-    MyXMLVisitor::setTagDescription("br", false, [](const ValueMap& tagAttrValueMap)  {
+    MyXMLVisitor::setTagDescription("br", false, [](const ValueMap& /*tagAttrValueMap*/)  {
         RichElementNewLine* richElement = RichElementNewLine::create(0, Color3B::WHITE, 255);
         return make_pair(ValueMap(), richElement);
     });
@@ -619,7 +619,7 @@ std::tuple<bool, Color3B> MyXMLVisitor::getGlow() const
     return std::make_tuple(false, Color3B::WHITE);
 }
 
-void MyXMLVisitor::startElement(void *ctx, const char *elementName, const char **atts)
+void MyXMLVisitor::startElement(void* /*ctx*/, const char *elementName, const char **atts)
 {
     auto it = _tagTables.find(elementName);
     if (it != _tagTables.end()) {
@@ -743,7 +743,7 @@ void MyXMLVisitor::startElement(void *ctx, const char *elementName, const char *
     }
 }
 
-void MyXMLVisitor::endElement(void *ctx, const char *elementName)
+void MyXMLVisitor::endElement(void* /*ctx*/, const char *elementName)
 {
     auto it = _tagTables.find(elementName);
     if (it != _tagTables.end()) {
@@ -754,7 +754,7 @@ void MyXMLVisitor::endElement(void *ctx, const char *elementName)
     }
 }
 
-void MyXMLVisitor::textHandler(void *ctx, const char *str, size_t len)
+void MyXMLVisitor::textHandler(void* /*ctx*/, const char *str, size_t len)
 {
     std::string text(str, len);
     auto color = getColor();
@@ -1680,7 +1680,7 @@ void RichText::handleTextRenderer(const std::string& text, const std::string& fo
     }
 }
     
-void RichText::handleImageRenderer(const std::string& filePath, const Color3B &color, GLubyte opacity, int width, int height, const std::string& url)
+void RichText::handleImageRenderer(const std::string& filePath, const Color3B &/*color*/, GLubyte /*opacity*/, int width, int height, const std::string& url)
 {
     Sprite* imageRenderer = Sprite::create(filePath);
     if (imageRenderer)
@@ -1733,13 +1733,12 @@ void RichText::formarRenderers()
             Vector<Node*>* row = element;
             float nextPosX = 0.0f;
             float maxY = 0.0f;
-            for (ssize_t j=0, size = row->size(); j<size; j++)
+            for (auto& iter : *row)
             {
-                Node* l = row->at(j);
-                l->setAnchorPoint(Vec2::ZERO);
-                l->setPosition(nextPosX, nextPosY);
-                this->addProtectedChild(l, 1);
-                Size iSize = l->getContentSize();
+                iter->setAnchorPoint(Vec2::ZERO);
+                iter->setPosition(nextPosX, nextPosY);
+                this->addProtectedChild(iter, 1);
+                Size iSize = iter->getContentSize();
                 newContentSizeWidth += iSize.width;
                 nextPosX += iSize.width;
                 maxY = MAX(maxY, iSize.height);
@@ -1757,10 +1756,9 @@ void RichText::formarRenderers()
         {
             Vector<Node*>* row = (_elementRenders[i]);
             float maxHeight = 0.0f;
-            for (ssize_t j=0, size = row->size(); j<size; j++)
+            for (auto& iter : *row)
             {
-                Node* l = row->at(j);
-                maxHeight = MAX(l->getContentSize().height, maxHeight);
+                maxHeight = MAX(iter->getContentSize().height, maxHeight);
             }
             maxHeights[i] = maxHeight;
             newContentSizeHeight += maxHeights[i];
@@ -1773,25 +1771,22 @@ void RichText::formarRenderers()
             float nextPosX = 0.0f;
             nextPosY -= (maxHeights[i] + _defaults.at(KEY_VERTICAL_SPACE).asFloat());
             
-            for (ssize_t j=0, size = row->size(); j<size; j++)
+            for (auto& iter : *row)
             {
-                Node* l = row->at(j);
-                l->setAnchorPoint(Vec2::ZERO);
-                l->setPosition(nextPosX, nextPosY);
-                this->addProtectedChild(l, 1);
-                nextPosX += l->getContentSize().width;
+                iter->setAnchorPoint(Vec2::ZERO);
+                iter->setPosition(nextPosX, nextPosY);
+                this->addProtectedChild(iter, 1);
+                nextPosX += iter->getContentSize().width;
             }
         }
         delete [] maxHeights;
     }
     
-    size_t length = _elementRenders.size();
-    for (size_t i = 0; i<length; i++)
-	{
-        Vector<Node*>* l = _elementRenders[i];
-        l->clear();
-        delete l;
-	}    
+    for (auto& iter : _elementRenders)
+    {
+        iter->clear();
+        delete iter;
+    }
     _elementRenders.clear();
     
     if (_ignoreSize)

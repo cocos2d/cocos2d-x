@@ -7,8 +7,6 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 COCOS2DX_ROOT="$DIR"/../..
 HOST_NAME=""
 
-
-
 function install_android_ndk()
 {
     mkdir -p $HOME/bin
@@ -34,6 +32,37 @@ function install_android_ndk()
 
 function install_linux_environment()
 {
+    mkdir -p $HOME/bin
+    pushd $HOME/bin
+
+    echo "GCC version: `gcc --version`"
+    # install new version cmake
+    CMAKE_VERSION="3.7.2"
+    CMAKE_DOWNLOAD_URL="https://cmake.org/files/v3.7/cmake-${CMAKE_VERSION}.tar.gz"
+    echo "Download ${CMAKE_DOWNLOAD_URL}"
+    curl -O ${CMAKE_DOWNLOAD_URL}
+    tar -zxf "cmake-${CMAKE_VERSION}.tar.gz"
+    cd "cmake-${CMAKE_VERSION}"
+    ./configure > /dev/null
+    make -j2 > /dev/null
+    sudo make install > /dev/null
+    echo "CMake Version: `cmake --version`"
+    cd ..
+
+    # install new version binutils
+    BINUTILS_VERSION="2.27"
+    BINUTILS_URL="http://ftp.gnu.org/gnu/binutils/binutils-${BINUTILS_VERSION}.tar.gz"
+    echo "Download ${BINUTILS_URL}"
+    curl -O ${BINUTILS_URL}
+    tar -zxf "binutils-${BINUTILS_VERSION}.tar.gz"
+    cd "binutils-${BINUTILS_VERSION}"
+    ./configure > /dev/null
+    make -j2 > /dev/null
+    sudo make install > /dev/null
+    echo "ld Version: `ld --version`"
+    echo "which ld: `which ld`"
+    sudo rm /usr/bin/ld
+    popd
     bash $COCOS2DX_ROOT/build/install-deps-linux.sh
 }
 

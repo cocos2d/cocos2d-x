@@ -3,7 +3,7 @@
  Copyright (c) 2009      Valentin Milea
  Copyright (c) 2010-2012 cocos2d-x.org
  Copyright (c) 2011      Zynga Inc.
- Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -514,7 +514,7 @@ public:
      * It's like a pin in the node where it is "attached" to its parent.
      * The anchorPoint is normalized, like a percentage. (0,0) means the bottom-left corner and (1,1) means the top-right corner.
      * But you can use values higher than (1,1) and lower than (0,0) too.
-     * The default anchorPoint is (0.5,0.5), so it starts in the center of the node.
+     * The default anchorPoint is (0,0), so it starts in the lower left corner of the node.
      * @note If node has a physics body, the anchor must be in the middle, you can't change this to other value.
      *
      * @param anchorPoint   The anchor point of node.
@@ -688,7 +688,7 @@ public:
     /** @deprecated No longer needed
     * @lua NA
     */
-    CC_DEPRECATED_ATTRIBUTE void setGLServerState(int serverState) { /* ignore */ };
+    CC_DEPRECATED_ATTRIBUTE void setGLServerState(int /*serverState*/) {}
     /** @deprecated No longer needed
     * @lua NA
     */
@@ -1058,7 +1058,7 @@ public:
      * Since v2.0, each rendering node must set its shader program.
      * It should be set in initialize phase.
      @code
-     node->setGLrProgram(GLProgramCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
+     node->setGLProgram(GLProgramCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
      @endcode
      *
      * @param glprogram The shader program.
@@ -1284,6 +1284,23 @@ public:
      * @return The number of actions that are running plus the ones that are schedule to run.
      */
     ssize_t getNumberOfRunningActions() const;
+
+    /**
+     * Returns the numbers of actions that are running plus the ones that are
+     * schedule to run (actions in actionsToAdd and actions arrays) with a
+     * specific tag.
+     *
+     * Composable actions are counted as 1 action. Example:
+     *    If you are running 1 Sequence of 7 actions, it will return 1.
+     *    If you are running 7 Sequences of 2 actions, it will return 7.
+     *
+     * @param  tag The tag that will be searched.
+     *
+     * @return The number of actions that are running plus the
+     *         ones that are schedule to run with specific tag.
+     */
+    ssize_t getNumberOfRunningActionsByTag(int tag) const;
+
 
     /** @deprecated Use getNumberOfRunningActions() instead */
     CC_DEPRECATED_ATTRIBUTE ssize_t numberOfRunningActions() const { return getNumberOfRunningActions(); };
@@ -1773,12 +1790,12 @@ public:
      *  If you want the opacity affect the color property, then set to true.
      * @param value A boolean value.
      */
-    virtual void setOpacityModifyRGB(bool value) {CC_UNUSED_PARAM(value);}
+    virtual void setOpacityModifyRGB(bool value);
     /**
      * If node opacity will modify the RGB color value, then you should override this method and return true.
      * @return A boolean value, true indicates that opacity will modify color; false otherwise.
      */
-    virtual bool isOpacityModifyRGB() const { return false; };
+    virtual bool isOpacityModifyRGB() const;
 
     /**
      * Set the callback of event onEnter.

@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -40,6 +40,7 @@ extern "C"
 #ifndef __ENABLE_COMPATIBILITY_WITH_UNIX_2003__
 #define __ENABLE_COMPATIBILITY_WITH_UNIX_2003__
 #include <stdio.h>
+#include <dirent.h>
     FILE *fopen$UNIX2003( const char *filename, const char *mode )
     {
         return fopen(filename, mode);
@@ -48,9 +49,30 @@ extern "C"
     {
         return fwrite(a, b, c, d);
     }
+    int fputs$UNIX2003(const char *res1, FILE *res2){
+        return fputs(res1,res2);
+    }
     char *strerror$UNIX2003( int errnum )
     {
         return strerror(errnum);
+    }
+    DIR * opendir$INODE64$UNIX2003( char * dirName )
+    {
+        return opendir( dirName );
+    }
+    DIR * opendir$INODE64( char * dirName )
+    {
+        return opendir( dirName );
+    }
+
+    int closedir$UNIX2003(DIR * dir)
+    {
+        return closedir(dir);
+    }
+
+    struct dirent * readdir$INODE64( DIR * dir )
+    {
+        return readdir( dir );
     }
 #endif
 #endif
@@ -607,13 +629,13 @@ bool Image::isPng(const unsigned char * data, ssize_t dataLen)
 }
 
 
-bool Image::isEtc(const unsigned char * data, ssize_t dataLen)
+bool Image::isEtc(const unsigned char * data, ssize_t /*dataLen*/)
 {
     return etc1_pkm_is_valid((etc1_byte*)data) ? true : false;
 }
 
 
-bool Image::isS3TC(const unsigned char * data, ssize_t dataLen)
+bool Image::isS3TC(const unsigned char * data, ssize_t /*dataLen*/)
 {
 
     S3TCTexHeader *header = (S3TCTexHeader *)data;
@@ -625,7 +647,7 @@ bool Image::isS3TC(const unsigned char * data, ssize_t dataLen)
     return true;
 }
 
-bool Image::isATITC(const unsigned char *data, ssize_t dataLen)
+bool Image::isATITC(const unsigned char *data, ssize_t /*dataLen*/)
 {
     ATITCTexHeader *header = (ATITCTexHeader *)data;
     
@@ -888,9 +910,8 @@ bool Image::encodeWithWIC(const std::string& filePath, bool isToRGB, GUID contai
         std::swap(pSaveData[ind - 2], pSaveData[ind]);
     }
 
-    bool bRet = false;
     WICImageLoader img;
-    bRet = img.encodeImageData(filePath, pSaveData, saveLen, targetFormat, _width, _height, containerFormat);
+    bool bRet = img.encodeImageData(filePath, pSaveData, saveLen, targetFormat, _width, _height, containerFormat);
 
     delete[] pSaveData;
     return bRet;
@@ -1076,7 +1097,6 @@ bool Image::initWithPngData(const unsigned char * data, ssize_t dataLen)
         }
         // update info
         png_read_update_info(png_ptr, info_ptr);
-        bit_depth = png_get_bit_depth(png_ptr, info_ptr);
         color_type = png_get_color_type(png_ptr, info_ptr);
 
         switch (color_type)
@@ -1190,11 +1210,8 @@ namespace
         return p;
     }
     
-    static tmsize_t tiffWriteProc(thandle_t fd, void* buf, tmsize_t size)
+    static tmsize_t tiffWriteProc(thandle_t /*fd*/, void* /*buf*/, tmsize_t /*size*/)
     {
-        CC_UNUSED_PARAM(fd);
-        CC_UNUSED_PARAM(buf);
-        CC_UNUSED_PARAM(size);
         return 0;
     }
     
@@ -1236,25 +1253,18 @@ namespace
         return imageSrc->size;
     }
     
-    static int tiffCloseProc(thandle_t fd)
+    static int tiffCloseProc(thandle_t /*fd*/)
     {
-        CC_UNUSED_PARAM(fd);
         return 0;
     }
     
-    static int tiffMapProc(thandle_t fd, void** base, toff_t* size)
+    static int tiffMapProc(thandle_t /*fd*/, void** /*base*/, toff_t* /*size*/)
     {
-        CC_UNUSED_PARAM(fd);
-        CC_UNUSED_PARAM(base);
-        CC_UNUSED_PARAM(size);
         return 0;
     }
     
-    static void tiffUnmapProc(thandle_t fd, void* base, toff_t size)
+    static void tiffUnmapProc(thandle_t /*fd*/, void* /*base*/, toff_t /*size*/)
     {
-        CC_UNUSED_PARAM(fd);
-        CC_UNUSED_PARAM(base);
-        CC_UNUSED_PARAM(size);
     }
 }
 #endif // CC_USE_TIFF
@@ -1329,7 +1339,7 @@ bool Image::initWithTiffData(const unsigned char * data, ssize_t dataLen)
 
 namespace
 {
-    bool testFormatForPvr2TCSupport(PVR2TexturePixelFormat format)
+    bool testFormatForPvr2TCSupport(PVR2TexturePixelFormat /*format*/)
     {
         return true;
     }
@@ -1722,6 +1732,8 @@ bool Image::initWithETCData(const unsigned char * data, ssize_t dataLen)
         _data = static_cast<unsigned char*>(malloc(_dataLen * sizeof(unsigned char)));
         memcpy(_data, static_cast<const unsigned char*>(data) + ETC_PKM_HEADER_SIZE, _dataLen);
         return true;
+#else
+        CC_UNUSED_PARAM(dataLen);
 #endif
     }
     else
@@ -2144,7 +2156,7 @@ bool Image::initWithWebpData(const unsigned char * data, ssize_t dataLen)
 }
 
 
-bool Image::initWithRawData(const unsigned char * data, ssize_t dataLen, int width, int height, int bitsPerComponent, bool preMulti)
+bool Image::initWithRawData(const unsigned char * data, ssize_t /*dataLen*/, int width, int height, int /*bitsPerComponent*/, bool preMulti)
 {
     bool ret = false;
     do 

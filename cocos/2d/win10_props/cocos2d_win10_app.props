@@ -4,10 +4,12 @@
   <PropertyGroup Label="APP_DLLS">
     <AngleBinPath Condition=" '$(AngleBinPath)' == '' ">$(EngineRoot)external\$(COCOS2D_PLATFORM)-specific\angle\prebuilt\$(Platform)\</AngleBinPath>
     <CurlBinPath Condition=" '$(CurlBinPath)' == '' ">$(EngineRoot)external\curl\prebuilt\$(COCOS2D_PLATFORM)\$(Platform)\</CurlBinPath>
+    <OpenSSLBinPath Condition=" '$(OpenSSLBinPath)' == '' ">$(EngineRoot)external\openssl\prebuilt\$(COCOS2D_PLATFORM)\$(Platform)\</OpenSSLBinPath>
     <ZLibBinPath Condition=" '$(ZLibBinPath)' == '' ">$(EngineRoot)external\$(COCOS2D_PLATFORM)-specific\zlib\prebuilt\$(Platform)\</ZLibBinPath>
     <WebsocketsBinPath Condition=" '$(WebsocketsBinPath)' == '' ">$(EngineRoot)external\websockets\prebuilt\$(COCOS2D_PLATFORM)\$(Platform)\</WebsocketsBinPath>
     <SQLiteBinPath Condition=" '$(SQLiteBinPath)' == '' ">$(EngineRoot)external\sqlite3\libraries\$(COCOS2D_PLATFORM)\$(Platform)\</SQLiteBinPath>
     <OggBinPath Condition=" '$(OggBinPath)' == '' ">$(EngineRoot)external\$(COCOS2D_PLATFORM)-specific\OggDecoder\prebuilt\$(Platform)\</OggBinPath>
+    <WebsocketsBinPath Condition=" '$(WebsocketsBinPath)' == '' ">$(EngineRoot)external\websockets\prebuilt\$(Platform)\</WebsocketsBinPath>
   </PropertyGroup>
   <ItemGroup Label="ANGLE">
     <None Include="$(AngleBinPath)libEGL.dll">
@@ -16,7 +18,7 @@
     <None Include="$(AngleBinPath)libGLESv2.dll">
       <DeploymentContent>true</DeploymentContent>
     </None>
-    <None Include="$(ZLibBinPath)zlib.dll">
+    <None Include="$(ZLibBinPath)zlib1.dll">
       <DeploymentContent>true</DeploymentContent>
     </None>
     <None Include="$(SQLiteBinPath)sqlite3.dll">
@@ -25,19 +27,22 @@
     <None Include="$(CurlBinPath)libcurl.dll">
       <DeploymentContent>true</DeploymentContent>
     </None>
-    <None Include="$(CurlBinPath)libeay32.dll">
+    <None Include="$(OpenSSLBinPath)libeay32.dll">
       <DeploymentContent>true</DeploymentContent>
     </None>
-    <None Include="$(CurlBinPath)ssleay32.dll">
+    <None Include="$(OpenSSLBinPath)ssleay32.dll">
       <DeploymentContent>true</DeploymentContent>
     </None>
-    <None Include="$(OggBinPath)libogg.dll">
+    <None Include="$(OggBinPath)ogg.dll">
       <DeploymentContent>true</DeploymentContent>
     </None>
-    <None Include="$(OggBinPath)libvorbis.dll">
+    <None Include="$(OggBinPath)vorbis.dll">
       <DeploymentContent>true</DeploymentContent>
     </None>
-    <None Include="$(OggBinPath)libvorbisfile.dll">
+    <None Include="$(OggBinPath)vorbisfile.dll">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="$(WebsocketsBinPath)websockets.dll">
       <DeploymentContent>true</DeploymentContent>
     </None>
   </ItemGroup>

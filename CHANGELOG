@@ -1,3 +1,132 @@
+cocos2d-x-3.14.1 Jan.19 2017
+
+[FIX]           May crash if using `Scene::createWithPhysics()` to create a scene and physics3d camera is not set
+[FIX]           May have link error because of glfw conflict on Linux
+[FIX]           Sprite: created from sprite frame with polygon information can not work correctly
+[FIX]           Lua: link error with VS2015
+[FIX]           Lua: compiling error if using `cocos compile/run -p android --android-studio` on Android    
+
+coocs2d-x-3.14 Dec 22 2016
+
+[NEW]           Add Spine binary file format support
+[NEW]           Action: add a method to get the number of actions running in a given node with specific tag
+[NEW]           Action: new actions: ResizeBy and ResizeTo
+[NEW]           Button: can set title label
+[NEW]           Can disable multi touch on Android
+[NEW]           EventDispatcher: Add hasEventListener to check listener existance
+[NEW]           EditBox: add horizontal text alignment
+[NEW]           EventDispatcher: added `hasEvent()` to check if an event is added
+[NEW]           Sprite: support slice9 feature
+[NEW]           Slider: add methods to get _slidBallNormalRenderer
+[NEW]           Desktop: add a method to toggle between fullscreen and windowed
+[NEW]           Desktop: add events for window resize, focus and unfocus
+[NEW]           Mac: supports game controller
+[NEW]           JSB: add cc.sys.now() and perfromance.now(), the last one is more accurate
+[NEW]           Lua: add cc.vec3 functions: add, sub and dot
+[NEW]           Lua: use luajit 2.1.0-beta2
+[NEW]           Web: Add cc.CONCURRENCY_HTTP_REQUEST_COUNT to control max concurrent task count for XMLHttpRequest
+
+[REFINE]        Add NDEBUG for cpp template Xcode project
+[REFINE]        DrawNode: support float line width
+[REFINE]        EditBoxDelegate: add reason for edit end
+[REFINE]        Improve XML parse performance
+[REFINE]        Make batch capacity resizing more efficiently
+[REFINE]        PageView: support custom scrollToPage time
+[REFINE]        Lua: cc.Ray:intersects addtionally returns the distance
+[REFINE]        Mac: system font enhancement
+[REFINE]        Linux: build shared lib with -fPIC
+[REFINE]        Android: use SharedPreferences.apply() to store data
+[REFINE]        JSB: Increase default JS heap to 32 mb
+[REFINE]        JSB: Support more system languages
+[REFINE]        JSB: Direct log/error for better understantding problems
+[REFINE]        JSB: Separate FinalizeHook for ref objects and non ref objects
+[REFINE]        Web: Improve overall node construction performance
+[REFINE]        Web: Improve overall loading process performance
+[REFINE]        Web: Reduce overall memory usage
+[REFINE]        Web: Made cc.LabelBMFont and cc.LabelAtlas support texture packing and auto batching
+[REFINE]        Web: Reimplement a much faster ccui.Scale9Sprite
+[REFINE]        Web: Reimplement a much faster cc.DrawNode WebGL renderer
+[REFINE]        Web: Use stack to avoid recursive call in transform, onEnter, onExit etc, reduce call stack depth
+
+
+[FIX]           AsstsManagerEx: project.manifest may be downloaded twice
+[FIX]           AudioEngine: can not play large ogg file
+[FIX]           AudioEngine: may have noise if playing mp3 files on iOS/Mac OS X
+[FIX]           AudioEngine: can not play effect/music entirely on iOS and Mac
+[FIX]           ClippingNode: effect is wrong if threshold is set to a value not equal to 1 first then set to 1
+[FIX]           Compiling error if `USE_STD_UNORDERED_MAP == 0`
+[FIX]           ControlSwitch::create() may cause crash
+[FIX]           Downloader: may crash if it is released before finishing downloading task
+[FIX]           EditBox: fix single line and multiline text alighment, now single line will be center and multiline will be top align vertically by default
+[FIX]           EditBox: placeholder font not being set corretly for multiline text field on iOS
+[FIX]           EditBox: doesn't show text on Mac OS 10.12
+[FIX]           EditBox: multiline overflow bounds of box
+[FIX]           FastTilemap: wrong effect when content scale factor is not 1
+[FIX]           FontFreeType: crash in destructor
+[FIX]           ImageView: wrong effect of using loadtexture() to load a ETC1 texture with alpha support
+[FIX]           Label: wrong blending effect of outline
+[FIX]           Label: some labels may not been shown
+[FIX]           Label: may crash when label string is empty an the overflow is shrink
+[FIX]           Label: possible memory leak when font size is 0
+[FIX]           MenuItemSprite: MenuItemSprite::unselected() on a disabled item show wrong image
+[FIX]           Node: the effect of setRotation+setSkewX is wrong
+[FIX]           Physics3d: effect of debug draw is wrong
+[FIX]           Renderer: indices count may overflow when drawing batching triangle commands which causes unexpected effect
+[FIX]           RenderTexture: Sprite3D is not shown
+[FIX]           TileMap: hexagonal map fails on TMXTiledMap::getTileAt()
+[FIX]           TMXMapInfo: tileGid may overflow when using horizontal flip
+[FIX]           TriangleCommand: triangle commands can't do batching when the glprogram using custom shader with custom uniforms
+[FIX]           UI: label atlas and BMFont rendering issue with ETC1 texture format
+[FIX]           3D: small .mtl files are not loaded
+[FIX]           3D: Sprite3D::getMesh() may cause crash if it doesn't have any mesh
+[FIX]           3D: wrong Skybox fov
+[FIX]           3D: Sprite3D can't release its texture
+[FIX]           AssetsManagerEx: Fail to decompress when sub directory is not created
+[FIX]           ScrollView: crash of scroll to top or left
+[FIX]           SoketIO: memory leak
+[FIX]           iOS: Vibrate effect can not work in not silent mode
+[FIX]           iOS: view size got with landscape orientation if run on iOS 7 and ealier
+[FIX]           iOS: iOS 9 OpengGL error
+[FIX]           iOS: if a scene includes 3d model with light and ListView may cause crash
+[FIX]           Android: cause compiling error with android-19 or lower
+[FIX]           Android: RapidJason crashes in release mode
+[FIX]           Android: may not pause background music after game enters background
+[FIX]           Android: adapt to Android pixel
+[FIX]           Android: MessageBox inverted parames
+[FIX]           Android: cause deadlock if preload the same file more than 3 times in preload callback
+[FIX]           Android: WebView: base url can not work
+[FIX]           Android: may crash if `AudioEngineManager.getProperty(PROPERTY_OUTPUT_FRAMES_PER_BUFFER)` returns null
+[FIX]           Mac: Downloader can not access https website
+[FIX]           Win32: fix crash caused by `Helper::getSubStringOfUTF8String()` in debug mode
+[FIX]           Linux: FMOD issue
+[FIX]           Linux: Application::openURL can not work
+[FIX]           Desktop: crash upon exit when NotificationNode exists
+[FIX]           Spine: color bug
+[FIX]           Console: doesn't support `--ap` parameter
+[FIX]           Lua: result of radian2angle is wrong
+[FIX]           Lua: iskindof_ doesn't work correctly
+[FIX]           Lua: new lua project crashes compiling with VS2015 release mode
+[FIX]           Lua: ComponentLua doesn't support binary code
+[FIX]           JSB: `jsb.addRoot is not a function` error caused by cc.GLProgramState.setUniformCallback
+[FIX]           JSB: Fix spine TrackEntry conversion crash issue
+[FIX]           JSB: Fix CallbackWrapper and FunctionWrapper crash during deallocation in new memory model
+[FIX]           JSB: Fix event object memory issue by manually bind EventDispatcher::addCustomEventListener
+[FIX]           JSB: Fix chipmunk crash issues when using setDefaultCollisionHandler
+[FIX]           JSB: Fix compilation issues when COCOS_DEBUG = 2
+[FIX]           JSB: Unify function name of Texture2D::releaseTexture
+[FIX]           Web: Fix spine blend function inconsistency between web and jsb
+[FIX]           Web: Fix particle system load from plist generated by x-studio365
+[FIX]           Web: Fix doEnumerateRecursive(node, name, callback) always return undefined issue
+[FIX]           Web: Change bright style on 'setEnabled' call of ccui.Widget
+[FIX]           Web: Fix Editbox can't input in full screen mode
+[FIX]           Web: Fix texture issue on some Android devices by always set vertexAttribPointer  
+[FIX]           Web: Make xhr ontimeout callback work on all browsers
+[FIX]           Web: Fix clear color not normalized issue
+[FIX]           Web: Fix clipping node rendering issue when alphaThreshold = 1
+[FIX]           Web: Fix nested scroll view rendering issue
+[FIX]           Web: Make orderDirty flag properly set for node
+[FIX]           Web: Fix ccui.Slider gray state not available issue
+
 cocos2d-x-3.13.1 Sep 13 2016
 
 [FIX]           Label color broken

@@ -1,6 +1,6 @@
 --[[
 
-Copyright (c) 2011-2014 chukong-inc.com
+Copyright (c) 2014-2017 Chukong Technologies Inc.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -338,9 +338,8 @@ function math.angle2radian(angle)
     return angle * pi_div_180
 end
 
-local pi_mul_180 = math.pi * 180
 function math.radian2angle(radian)
-    return radian / pi_mul_180
+    return radian * 180 / math.pi
 end
 
 function io.exists(path)

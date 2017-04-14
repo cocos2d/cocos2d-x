@@ -30,7 +30,7 @@ if screenSize.height > 320 then
     cc.Director:getInstance():setContentScaleFactor(resourceSize.height/designSize.height)
 end
 
-glView:setDesignResolutionSize(designSize.width, designSize.height, cc.ResolutionPolicy.FIXED_HEIGHT)
+glView:setDesignResolutionSize(designSize.width, designSize.height, cc.ResolutionPolicy.NO_BORDER)
 
 local fileUtils = cc.FileUtils:getInstance()
 local function addSearchPath(resPrefix, height)

@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -3681,6 +3681,56 @@ tolua_lerror:
 #endif
 }
 
+static int tolua_cocos2dx_FileUtils_getDataFromFile(lua_State* tolua_S)
+{
+    if (nullptr == tolua_S)
+        return 0;
+
+    int argc = 0;
+    FileUtils* self = nullptr;
+    bool ok = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (!tolua_isusertype(tolua_S,1,"cc.FileUtils",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    self = static_cast<FileUtils *>(tolua_tousertype(tolua_S,1,0));
+
+#if COCOS2D_DEBUG >= 1
+    if (nullptr == self)
+    {
+        tolua_error(tolua_S,"invalid 'self' in function 'tolua_cocos2dx_FileUtils_getDataFromFile'\n", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (1 == argc)
+    {
+        const char* arg0;
+        std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp, "cc.FileUtils:getDataFromFile"); arg0 = arg0_tmp.c_str();
+        if (ok)
+        {
+            auto data = FileUtils::getInstance()->getDataFromFile(arg0);
+            if (!data.isNull())
+                lua_pushlstring(tolua_S, reinterpret_cast<const char*>(data.getBytes()), static_cast<size_t>(data.getSize()));
+
+            return 1;
+        }
+    }
+
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n", "cc.FileUtils:getDataFromFile", argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'tolua_cocos2dx_FileUtils_getDataFromFile'.",&tolua_err);
+    return 0;
+#endif
+}
+
 static int tolua_cocos2dx_UserDefault_getInstance(lua_State* tolua_S)
 {
     if (nullptr == tolua_S)
@@ -5307,6 +5357,10 @@ static void extendFileUtils(lua_State* tolua_S)
     {
         lua_pushstring(tolua_S,"getStringFromFile");
         lua_pushcfunction(tolua_S,tolua_cocos2dx_FileUtils_getStringFromFile );
+        lua_rawset(tolua_S,-3);
+
+        lua_pushstring(tolua_S,"getDataFromFile");
+        lua_pushcfunction(tolua_S,tolua_cocos2dx_FileUtils_getDataFromFile );
         lua_rawset(tolua_S,-3);
     }
     lua_pop(tolua_S, 1);
@@ -7958,7 +8012,6 @@ int register_all_cocos2dx_manual(lua_State* tolua_S)
     extendCamera(tolua_S);
     extendProperties(tolua_S);
     extendAutoPolygon(tolua_S);
-    extendPolygonInfo(tolua_S);
     extendPolygonInfo(tolua_S);
     return 0;
 }

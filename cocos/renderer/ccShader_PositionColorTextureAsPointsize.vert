@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2015 Chukong Technologies Inc.
+ * Copyright (c) 2013-2017 Chukong Technologies Inc.
  *
  * http://www.cocos2d-x.org
  *
@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-const char* ccPositionColorTextureAsPointsize_vert = STRINGIFY(
+const char* ccPositionColorTextureAsPointsize_vert = R"(
 
 attribute vec4 a_position;
 attribute vec4 a_color;
@@ -34,11 +34,12 @@ varying lowp vec4 v_fragmentColor;
 #else
 varying vec4 v_fragmentColor;
 #endif
+uniform float u_alpha;
 
 void main()
 {
     gl_Position = CC_MVPMatrix * a_position;
     gl_PointSize = a_texCoord.x;
-    v_fragmentColor = a_color;
+    v_fragmentColor = vec4(a_color.rgb * a_color.a * u_alpha, a_color.a * u_alpha);
 }
-);
+)";

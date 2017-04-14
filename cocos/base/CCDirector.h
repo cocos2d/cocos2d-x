@@ -2,7 +2,7 @@
  Copyright (c) 2008-2010 Ricardo Quesada
  Copyright (c) 2010-2013 cocos2d-x.org
  Copyright (c) 2011      Zynga Inc.
- Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -462,7 +462,7 @@ public:
      * @param index The index of projection matrix stack.
      * @js NA
      */
-    void pushProjectionMatrix(unsigned int index);
+    void pushProjectionMatrix(size_t index);
 
     /** Pops the top matrix of the specified type of matrix stack.
      * @js NA
@@ -473,7 +473,7 @@ public:
      * @param index The index of projection matrix stack.
      * @js NA
      */
-    void popProjectionMatrix(unsigned int index);
+    void popProjectionMatrix(size_t index);
 
     /** Adds an identity matrix to the top of specified type of matrix stack.
      * @js NA
@@ -484,7 +484,7 @@ public:
      * @param index The index of projection matrix stack.
      * @js NA
      */
-    void loadProjectionIdentityMatrix(unsigned int index);
+    void loadProjectionIdentityMatrix(size_t index);
 
     /**
      * Adds a matrix to the top of specified type of matrix stack.
@@ -502,7 +502,7 @@ public:
      * @param index The index of projection matrix stack.
      * @js NA
      */
-    void loadProjectionMatrix(const Mat4& mat, unsigned int index);
+    void loadProjectionMatrix(const Mat4& mat, size_t index);
 
     /**
      * Multiplies a matrix to the top of specified type of matrix stack.
@@ -520,7 +520,7 @@ public:
      * @param index The index of projection matrix stack.
      * @js NA
      */
-    void multiplyProjectionMatrix(const Mat4& mat, unsigned int index);
+    void multiplyProjectionMatrix(const Mat4& mat, size_t index);
 
     /**
      * Gets the top matrix of specified type of matrix stack.
@@ -533,7 +533,7 @@ public:
      * @param index The index of projection matrix stack.
      * @js NA
      */
-    const Mat4& getProjectionMatrix(unsigned int index) const;
+    const Mat4& getProjectionMatrix(size_t index) const;
 
     /**
      * Clear all types of matrix stack, and add identity matrix to these matrix stacks.
@@ -546,13 +546,13 @@ public:
      * @param stackCount The size of projection matrix stack.
      * @js NA
      */
-    void initProjectionMatrixStack(unsigned int stackCount);
+    void initProjectionMatrixStack(size_t stackCount);
 
     /**
      * Get the size of projection matrix stack.
      * @js NA
      */
-    unsigned int getProjectionMatrixStackSize();
+    size_t getProjectionMatrixStackSize();
 
     /**
      * returns the cocos2d thread id.

@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2014-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -78,6 +78,10 @@ namespace cocos2d {
 
                 const char* urlchar = url.c_str();
                 ewk_view_url_set(_ewkView, urlchar);
+            }
+
+            void WebViewImpl::loadURL(const std::string &url, bool cleanCachedData) {
+                this->loadURL(url);
             }
 
             void WebViewImpl::loadFile(const std::string &fileName) {

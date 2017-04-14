@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 #include "cocos2d.h"
-#include "json/document.h"
+#include "json/document-wrapper.h"
 #include "ProjectConfig/SimulatorConfig.h"
 #include "ProjectConfig/ProjectConfig.h"
 #include "SimulatorExport.h"

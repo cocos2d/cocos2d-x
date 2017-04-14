@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014-2016 Chukong Technologies Inc.
+ Copyright (c) 2014-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -72,6 +72,7 @@ public:
     void uncacheAll();
     void preload(const std::string& filePath, const std::function<void(bool)>& callback);
 
+    void setAudioFocusForAllPlayers(bool isFocus);
 private:
 
     void onEnterBackground(EventCustom* event);

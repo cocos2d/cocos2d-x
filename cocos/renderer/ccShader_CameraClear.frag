@@ -1,5 +1,5 @@
 
-const char* ccCameraClearFrag = STRINGIFY(
+const char* ccCameraClearFrag = R"(
 
 #ifdef GL_ES
 varying mediump vec2 v_texCoord;
@@ -12,4 +12,4 @@ void main()
 {
     gl_FragColor = vec4(v_color, 1.0);
 }
-);
+)";

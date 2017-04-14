@@ -38,5 +38,8 @@
         "sln_file": "cocos2d-win8.1-universal.sln",
         "project_name": "cpp-tests.Windows"
     },
+    "tizen_cfg" : {
+        "project_path": "proj.tizen"
+    },
     "engine_dir": "../../"
 }

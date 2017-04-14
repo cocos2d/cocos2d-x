@@ -39,15 +39,18 @@
 @property (nonatomic, assign) cocos2d::ui::EditBox::InputFlag dataInputMode;
 @property (nonatomic, assign) cocos2d::ui::EditBox::KeyboardReturnType keyboardReturnType;
 @property (nonatomic, readonly, getter = isEditState) BOOL editState;
+@property (nonatomic, readwrite) BOOL returnPressed;
 
 - (instancetype)initWithFrame:(CGRect)frameRect editBox:(void *)editBox;
 - (void)doAnimationWhenKeyboardMoveWithDuration:(float)duration distance:(float)distance;
 
 - (NSString *)getDefaultFontName;
+- (cocos2d::ui::EditBoxDelegate::EditBoxEndAction)getEndAction;
 
 - (void)setInputMode:(cocos2d::ui::EditBox::InputMode)inputMode;
 - (void)setInputFlag:(cocos2d::ui::EditBox::InputFlag)flag;
 - (void)setReturnType:(cocos2d::ui::EditBox::KeyboardReturnType)returnType;
+- (void)setTextHorizontalAlignment:(cocos2d::TextHAlignment)alignment;
 
 - (void)setPlaceHolder:(NSString *)text;
 - (void)setVisible:(BOOL)visible;

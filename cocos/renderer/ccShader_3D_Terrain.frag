@@ -1,5 +1,5 @@
 
-const char* cc3D_Terrain_frag = STRINGIFY(
+const char* cc3D_Terrain_frag = R"(
 #ifdef GL_ES
 precision mediump float;
 #endif
@@ -45,4 +45,4 @@ if(u_has_alpha<=0)
     gl_FragColor = vec4(color.rgb*lightColor.rgb*lightFactor, 1.0);
 }
 }
-);
+)";

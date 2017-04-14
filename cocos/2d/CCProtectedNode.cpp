@@ -3,7 +3,7 @@
  Copyright (c) 2009      Valentin Milea
  Copyright (c) 2010-2012 cocos2d-x.org
  Copyright (c) 2011      Zynga Inc.
- Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -100,9 +100,8 @@ void ProtectedNode::addProtectedChild(Node *child, int zOrder, int tag)
     this->insertProtectedChild(child, zOrder);
     
     child->setTag(tag);
-    
+    child->setGlobalZOrder(_globalZOrder);
     child->setParent(this);
-
     child->updateOrderOfArrival();
     
     if( _running )
@@ -465,6 +464,13 @@ void ProtectedNode::setCameraMask(unsigned short mask, bool applyChildren)
         }
     }
     
+}
+
+void ProtectedNode::setGlobalZOrder(float globalZOrder)
+{
+    Node::setGlobalZOrder(globalZOrder);
+    for (auto &child : _protectedChildren)
+        child->setGlobalZOrder(globalZOrder);
 }
 
 NS_CC_END

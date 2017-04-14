@@ -46,6 +46,7 @@ set(COCOS_CS_SRC
   editor-support/cocostudio/FlatBuffersSerialize.cpp
   editor-support/cocostudio/CCComExtensionData.cpp
   editor-support/cocostudio/CocoStudio.cpp
+  editor-support/cocostudio/WidgetCallBackHandlerProtocol.cpp
   editor-support/cocostudio/WidgetReader/NodeReader/NodeReader.cpp
   editor-support/cocostudio/WidgetReader/SingleNodeReader/SingleNodeReader.cpp
   editor-support/cocostudio/WidgetReader/SpriteReader/SpriteReader.cpp
