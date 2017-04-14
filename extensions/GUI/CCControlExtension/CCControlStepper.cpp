@@ -230,7 +230,7 @@ void ControlStepper::stopAutorepeat()
     this->unschedule(CC_SCHEDULE_SELECTOR(ControlStepper::update));
 }
 
-void ControlStepper::update(float dt)
+void ControlStepper::update(float /*dt*/)
 {
     _autorepeatCount++;
     
@@ -274,7 +274,7 @@ void ControlStepper::updateLayoutUsingTouchLocation(Vec2 location)
 }
 
 
-bool ControlStepper::onTouchBegan(Touch *pTouch, Event *pEvent)
+bool ControlStepper::onTouchBegan(Touch *pTouch, Event* /*pEvent*/)
 {
     if (!isTouchInside(pTouch) || !isEnabled() || !isVisible())
     {
@@ -294,7 +294,7 @@ bool ControlStepper::onTouchBegan(Touch *pTouch, Event *pEvent)
     return true;
 }
 
-void ControlStepper::onTouchMoved(Touch *pTouch, Event *pEvent)
+void ControlStepper::onTouchMoved(Touch *pTouch, Event* /*pEvent*/)
 {
     if (this->isTouchInside(pTouch))
     {
@@ -327,7 +327,7 @@ void ControlStepper::onTouchMoved(Touch *pTouch, Event *pEvent)
     }
 }
 
-void ControlStepper::onTouchEnded(Touch *pTouch, Event *pEvent)
+void ControlStepper::onTouchEnded(Touch *pTouch, Event* /*pEvent*/)
 {
     _minusSprite->setColor(Color3B::WHITE);
     _plusSprite->setColor(Color3B::WHITE);

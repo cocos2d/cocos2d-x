@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2014 Chukong Technologies Inc.
+ * Copyright (c) 2013-2017 Chukong Technologies Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -42,10 +42,38 @@ typedef struct js_proxy {
     JSObject* _jsobj;
 } js_proxy_t;
 
+
+class ScriptingRootHolder
+{
+public:
+    ScriptingRootHolder(JS::PersistentRootedObject* ptr)
+    {
+        set(ptr);
+    }
+    
+    void set(JS::PersistentRootedObject* k)
+    {
+        p = k;
+    }
+    
+    JSObject* ref()
+    {
+        return *p;
+    }
+    
+    JS::PersistentRootedObject* ptr()
+    {
+        return p;
+    }
+    
+private:
+    JS::PersistentRootedObject* p;
+};
+
 typedef struct js_type_class {
     JSClass *jsclass;
-    mozilla::Maybe<JS::PersistentRootedObject> proto;
-    mozilla::Maybe<JS::PersistentRootedObject> parentProto;
+    ScriptingRootHolder proto;
+    ScriptingRootHolder parentProto;
 } js_type_class_t;
 
 extern std::unordered_map<std::string, js_type_class_t*> _js_global_type_map;

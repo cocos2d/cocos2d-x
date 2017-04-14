@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2014-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -25,7 +25,7 @@
 #include "CCEventListenerAssetsManagerEx.h"
 #include "CCEventAssetsManagerEx.h"
 #include "AssetsManagerEx.h"
-#include "deprecated/CCString.h"
+#include "base/ccUTF8.h"
 
 NS_CC_EXT_BEGIN
 

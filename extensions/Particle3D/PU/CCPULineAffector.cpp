@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2015-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -116,14 +116,14 @@ void PULineAffector::preUpdateAffector(float deltaTime)
 }
 //-----------------------------------------------------------------------
 
-void PULineAffector::updatePUAffector( PUParticle3D *particle, float deltaTime )
+void PULineAffector::updatePUAffector( PUParticle3D *particle, float /*deltaTime*/ )
 {
     //_first = true;
     //for (auto iter : _particleSystem->getParticles())
     {
         //PUParticle3D *particle = iter;
         (static_cast<PUParticleSystem3D *>(_particleSystem))->rotationOffset(particle->originalPosition); // Always update
-        if (_update && CCRANDOM_0_1() > 0.5 && !_first)
+        if (_update && CCRANDOM_0_1() > 0.5f && !_first)
         {
             // Generate a random vector perpendicular on the line
             Vec3 perpendicular;
@@ -147,12 +147,12 @@ void PULineAffector::updatePUAffector( PUParticle3D *particle, float deltaTime )
 }
 
 //-----------------------------------------------------------------------
-void PULineAffector::postUpdateAffector(float deltaTime)
+void PULineAffector::postUpdateAffector(float /*deltaTime*/)
 {
     _update = false;
 }
 
-void PULineAffector::firstParticleUpdate( PUParticle3D *particle, float deltaTime )
+void PULineAffector::firstParticleUpdate( PUParticle3D* /*particle*/, float /*deltaTime*/ )
 {
     _first = true;
 }

@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -120,7 +120,7 @@ Ref* ObjectFactory::createObject(const std::string &name)
 
 void ObjectFactory::registerType(const TInfo &t)
 {
-    _typeMap.insert(std::make_pair(t._class, t));
+    _typeMap.emplace(t._class, t);
 }
 
 NS_CC_END

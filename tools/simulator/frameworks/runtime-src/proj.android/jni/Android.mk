@@ -6,6 +6,7 @@ LOCAL_MODULE := core_shared
 
 LOCAL_MODULE_FILENAME := libcore
 
+<<<<<<< HEAD
 LOCAL_SRC_FILES := application.cpp \
                    ../../../../../../../cocos2d-tooflya-sdk/AppDelegate.cpp \
                    ../../../../../../../cocos2d-tooflya-sdk/actions/Shake.cpp \
@@ -75,6 +76,12 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../../../../../cocos2d/cocos/audio/inclu
                     $(LOCAL_PATH)/../../../../../../../cocos2d-tooflya-sdk/platform/include/social \
                     $(LOCAL_PATH)/../../../../../../../cocos2d-tooflya-sdk/platform/include/support \
                     $(LOCAL_PATH)/../../../../../../../cocos2d-tooflya-sdk/platform/include/ui \
+=======
+LOCAL_ARM_MODE := arm
+
+FILE_LIST := hellolua/main.cpp
+FILE_LIST += $(wildcard $(LOCAL_PATH)/../../Classes/*.cpp)
+>>>>>>> cocos2d/v3
 
 LOCAL_STATIC_LIBRARIES := cocos2dx_static
 

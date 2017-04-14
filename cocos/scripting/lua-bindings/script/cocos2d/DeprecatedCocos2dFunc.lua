@@ -291,7 +291,7 @@ CCLabelAtlas.create = CCLabelAtlasDeprecated.create
 
 
 ---------------------------
---global functions wil be deprecated, begin
+--global functions will be deprecated, begin
 local function CCRectMake(x,y,width,height)
     deprecatedTip("CCRectMake(x,y,width,height)","cc.rect(x,y,width,height) in lua")
     return cc.rect(x,y,width,height)
@@ -345,7 +345,7 @@ local function ccc4FEqual(a,b)
     return a:equals(b)
 end
 _G.ccc4FEqual = ccc4FEqual
---global functions wil be deprecated, end
+--global functions will be deprecated, end
 
 
 --functions of _G will be deprecated begin
@@ -990,6 +990,13 @@ function NodeDeprecated.getVertexZ(self)
     return self:getPositionZ()
 end
 cc.Node.getVertexZ = NodeDeprecated.getVertexZ
+
+function NodeDeprecated.ignoreAnchorPointForPosition(self,ignore)
+    deprecatedTip("cc.Node:ignoreAnchorPointForPosition", "cc.Node:setIgnoreAnchorPointForPosition")
+    return self:setIgnoreAnchorPointForPosition(ignore)
+end
+
+cc.Node.ignoreAnchorPointForPosition = NodeDeprecated.ignoreAnchorPointForPosition
 --functions of cc.Node will be deprecated end
 
 --functions of cc.GLProgram will be deprecated begin

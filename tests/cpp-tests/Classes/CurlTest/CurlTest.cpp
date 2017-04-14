@@ -1,5 +1,5 @@
 #include "platform/CCPlatformConfig.h"
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_IOS) && (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_MAC) && (CC_TARGET_PLATFORM != CC_PLATFORM_IOS) && (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID)
 #include "CurlTest.h"
 #include "stdio.h"
 #include "stdlib.h"
@@ -76,7 +76,7 @@ void CurlTest::onTouchesEnded(const std::vector<Touch*>& touches, Event  *event)
 		//code from http://curl.haxx.se/libcurl/c/getinmemory.html
         /* we pass our 'chunk' struct to the callback function */
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, (void *)&chunk);
-		//If we don't provide a write function for curl, it will recieve error code 23 on windows.
+		//If we don't provide a write function for curl, it will receive error code 23 on windows.
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteMemoryCallback);
 
         res = curl_easy_perform(curl);

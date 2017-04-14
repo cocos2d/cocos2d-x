@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -110,7 +110,7 @@ bool UIScale9SpriteTest::init()
         sp1->setColor(Color3B::GREEN);
         this->addChild(sp1);
         sp1->runAction((FiniteTimeAction*)action2);
-        
+
         cocos2d::ui::Scale9Sprite *sp2 = ui::Scale9Sprite::create("cocosui/animationbuttonnormal.png");
         sp2->setPosition(350, 160);
         sp2->setPreferredSize(sp1->getContentSize() * 1.2f);
@@ -120,7 +120,7 @@ bool UIScale9SpriteTest::init()
         this->addChild(sp2);
         auto action3 = action->clone();
         sp2->runAction((FiniteTimeAction*)action3);
-               
+
         return true;
     }
     return false;
@@ -177,7 +177,7 @@ bool UIScale9SpriteHierarchialTest::init()
         sp2->setColor(Color3B::GREEN);
         sp2->setFlippedX(true);
         sp2->setContentSize(Size(100,100));
-        
+
         sp1->addChild(sp2);
         
         return true;
@@ -661,15 +661,15 @@ bool UIS9FrameNameSpriteSheetRotatedSetCapInsetLater::init()
         auto winSize = Director::getInstance()->getWinSize();
         float x = winSize.width / 2;
         float y = 0 + (winSize.height / 2);
-        
+
         auto blocks_scaled_with_insets = ui::Scale9Sprite::createWithSpriteFrameName("blocks9r.png");
-        
+
         blocks_scaled_with_insets->setInsetLeft(32);
         blocks_scaled_with_insets->setInsetRight(32);
-        
+
         blocks_scaled_with_insets->setPreferredSize(Size(32*5.5f, 32*4));
         blocks_scaled_with_insets->setPosition(Vec2(x, y));
-        
+
         this->addChild(blocks_scaled_with_insets);
         return true;
     }
@@ -815,7 +815,7 @@ bool UIS9Flip::init()
                 flipYLabel->setString("sprite is flipped!");
             }
             else{
-                flipYLabel->setString("sprpite is not flipped!");
+                flipYLabel->setString("sprite is not flipped!");
             }
         });
         this->addChild(toggleFlipYButton);
@@ -852,7 +852,7 @@ bool UIS9Flip::init()
                 flipYLabel->setString("sprite is flipped!");
             }
             else{
-                flipYLabel->setString("sprpite is not flipped!");
+                flipYLabel->setString("sprite is not flipped!");
             }
             
         });
@@ -944,14 +944,14 @@ bool UIS9NinePatchTest::init()
         playerSprite->setPosition(x, y);
         playerSprite->setContentSize(preferedSize);
         auto capInsets = playerSprite->getCapInsets();
-        CCLOG("player sprite capInset = %f, %f %f, %f", capInsets.origin.x,
+        CCLOG("player sprite capInset = %g, %g %g, %g", capInsets.origin.x,
               capInsets.origin.y, capInsets.size.width, capInsets.size.height);
         this->addChild(playerSprite);
 
         auto animationBtnSprite = ui::Scale9Sprite::createWithSpriteFrameName("animationbuttonpressed.png");
         animationBtnSprite->setPosition(x-100, y-100);
         capInsets = animationBtnSprite->getCapInsets();
-        CCLOG("animationBtnSprite capInset = %f, %f %f, %f", capInsets.origin.x,
+        CCLOG("animationBtnSprite capInset = %g, %g %g, %g", capInsets.origin.x,
               capInsets.origin.y, capInsets.size.width, capInsets.size.height);
         this->addChild(animationBtnSprite);
         
@@ -960,7 +960,7 @@ bool UIS9NinePatchTest::init()
         monsterSprite->setPosition(x+100, y-100);
         capInsets = monsterSprite->getCapInsets();
         monsterSprite->setContentSize(preferedSize);
-        CCLOG("monsterSprite capInset = %f, %f %f, %f", capInsets.origin.x,
+        CCLOG("monsterSprite capInset = %g, %g %g, %g", capInsets.origin.x,
               capInsets.origin.y, capInsets.size.width, capInsets.size.height);
         this->addChild(monsterSprite);
 
@@ -991,7 +991,7 @@ bool UIS9BatchTest::init()
         auto addSpriteButton = ui::Button::create("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png");
         addSpriteButton->setPosition(Vec2(winSize.width/2 - 50,winSize.height - 100));
         addSpriteButton->setTitleText("Add Normal Sprite");
-        srand((unsigned)time(nullptr));
+        std::srand((unsigned)time(nullptr));
         addSpriteButton->addClickEventListener([=](Ref*){
             auto spriteFrameName = spriteFrameNameArray[rand()%2];
             auto sprite = Sprite::createWithSpriteFrameName(spriteFrameName);

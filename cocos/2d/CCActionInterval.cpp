@@ -2,7 +2,7 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
  
 http://www.cocos2d-x.org
 
@@ -73,14 +73,12 @@ ExtraAction* ExtraAction::reverse() const
     return ExtraAction::create();
 }
 
-void ExtraAction::update(float time)
+void ExtraAction::update(float /*time*/)
 {
-    CC_UNUSED_PARAM(time);
 }
 
-void ExtraAction::step(float dt)
+void ExtraAction::step(float /*dt*/)
 {
-    CC_UNUSED_PARAM(dt);
 }
 
 //
@@ -91,17 +89,10 @@ bool ActionInterval::initWithDuration(float d)
 {
     _duration = d;
 
-    // prevent division by 0
-    // This comparison could be in step:, but it might decrease the performance
-    // by 3% in heavy based action games.
-    if (_duration <= FLT_EPSILON)
-    {
-        _duration = FLT_EPSILON;
-    }
-
     _elapsed = 0;
     _firstTick = true;
-
+    _done = false;
+    
     return true;
 }
 
@@ -119,7 +110,7 @@ bool ActionInterval::sendUpdateEventToScript(float dt, Action *actionObject)
 
 bool ActionInterval::isDone() const
 {
-    return _elapsed >= _duration;
+    return _done;
 }
 
 void ActionInterval::step(float dt)
@@ -142,11 +133,12 @@ void ActionInterval::step(float dt)
     if (sendUpdateEventToScript(updateDt, this)) return;
     
     this->update(updateDt);
+
+    _done = _elapsed >= _duration;
 }
 
-void ActionInterval::setAmplitudeRate(float amp)
+void ActionInterval::setAmplitudeRate(float /*amp*/)
 {
-    CC_UNUSED_PARAM(amp);
     // Abstract class needs implementation
     CCASSERT(0, "Subclass should implement this method!");
 }
@@ -164,6 +156,7 @@ void ActionInterval::startWithTarget(Node *target)
     FiniteTimeAction::startWithTarget(target);
     _elapsed = 0.0f;
     _firstTick = true;
+    _done = false;
 }
 
 //
@@ -329,7 +322,8 @@ void Sequence::startWithTarget(Node *target)
         return;
     }
     if (_duration > FLT_EPSILON)
-        _split = _actions[0]->getDuration() / _duration;
+        // fix #14936 - FLT_EPSILON (instant action) / very fast duration (0.001) leads to worng split, that leads to call instant action few times
+        _split = _actions[0]->getDuration() > FLT_EPSILON ? _actions[0]->getDuration() / _duration : 0;
     
     ActionInterval::startWithTarget(target);
     _last = -1;
@@ -508,7 +502,7 @@ void Repeat::update(float dt)
         }
 
         // fix for issue #1288, incorrect end value of repeat
-        if(fabs(dt - 1.0f) < FLT_EPSILON && _total < _times)
+        if (std::abs(dt - 1.0f) < FLT_EPSILON && _total < _times)
         {
             if (!(sendUpdateEventToScript(1.0f, _innerAction)))
                 _innerAction->update(1.0f);
@@ -1460,6 +1454,129 @@ SkewBy* SkewBy::reverse() const
     return SkewBy::create(_duration, -_skewX, -_skewY);
 }
 
+ResizeTo* ResizeTo::create(float duration, const cocos2d::Size& final_size)
+{
+    ResizeTo *ret = new (std::nothrow) ResizeTo();
+    
+    if (ret)
+    {
+        if (ret->initWithDuration(duration, final_size))
+        {
+            ret->autorelease();
+        } 
+        else
+        {
+            delete ret;
+            ret = nullptr;
+        }
+    }
+    
+    return ret;
+}
+
+ResizeTo* ResizeTo::clone(void) const
+{
+    // no copy constructor
+    ResizeTo* a = new (std::nothrow) ResizeTo();
+    a->initWithDuration(_duration, _finalSize);
+    a->autorelease();
+
+    return a;
+}
+
+void ResizeTo::startWithTarget(cocos2d::Node* target)
+{
+    ActionInterval::startWithTarget(target);
+    _initialSize = target->getContentSize();
+    _sizeDelta = _finalSize - _initialSize;
+}
+
+void ResizeTo::update(float time)
+{
+    if (_target)
+    {
+        auto new_size = _initialSize + (_sizeDelta * time);
+        _target->setContentSize(new_size);
+    }
+}
+
+bool ResizeTo::initWithDuration(float duration, const cocos2d::Size& final_size)
+{
+    if (cocos2d::ActionInterval::initWithDuration(duration))
+    {
+        _finalSize = final_size;
+        return true;
+    }
+
+    return false;
+}
+
+//
+// ResizeBy
+//
+
+ResizeBy* ResizeBy::create(float duration, const cocos2d::Size& deltaSize)
+{
+    ResizeBy *ret = new (std::nothrow) ResizeBy();
+    
+    if (ret)
+    {
+        if (ret->initWithDuration(duration, deltaSize))
+        {
+            ret->autorelease();
+        } 
+        else
+        {
+              delete ret;
+              ret = nullptr;
+        }
+    }
+    
+    return ret;
+}
+
+ResizeBy* ResizeBy::clone() const
+{
+    // no copy constructor
+    auto a = new (std::nothrow) ResizeBy();
+    a->initWithDuration(_duration, _sizeDelta);
+    a->autorelease();
+    return a;
+}
+
+void ResizeBy::startWithTarget(Node *target)
+{
+    ActionInterval::startWithTarget(target);
+    _previousSize = _startSize = target->getContentSize();
+}
+
+ResizeBy* ResizeBy::reverse() const
+{
+    cocos2d::Size newSize(-_sizeDelta.width, -_sizeDelta.height);
+    return ResizeBy::create(_duration, newSize);
+}
+
+void ResizeBy::update(float t)
+{
+    if (_target)
+    {
+        _target->setContentSize(_startSize + (_sizeDelta * t));
+    }
+}
+
+bool ResizeBy::initWithDuration(float duration, const cocos2d::Size& deltaSize)
+{
+    bool ret = false;
+    
+    if (ActionInterval::initWithDuration(duration))
+    {
+        _sizeDelta = deltaSize;
+        ret = true;
+    }
+    
+    return ret;
+}
+
 //
 // JumpBy
 //
@@ -1960,7 +2077,7 @@ bool Blink::initWithDuration(float duration, int blinks)
 
 void Blink::stop()
 {
-    if(NULL != _target)
+    if (nullptr != _target)
         _target->setVisible(_originalState);
     ActionInterval::stop();
 }
@@ -2299,9 +2416,8 @@ DelayTime* DelayTime::clone() const
     return DelayTime::create(_duration);
 }
 
-void DelayTime::update(float time)
+void DelayTime::update(float /*time*/)
 {
-    CC_UNUSED_PARAM(time);
     return;
 }
 
@@ -2503,7 +2619,9 @@ void Animate::stop()
 {
     if (_animation->getRestoreOriginalFrame() && _target)
     {
+        auto blend = static_cast<Sprite*>(_target)->getBlendFunc();
         static_cast<Sprite*>(_target)->setSpriteFrame(_origFrame);
+        static_cast<Sprite*>(_target)->setBlendFunc(blend);
     }
 
     ActionInterval::stop();
@@ -2538,10 +2656,12 @@ void Animate::update(float t)
 
         if( splitTime <= t )
         {
+            auto blend = static_cast<Sprite*>(_target)->getBlendFunc();
             _currFrameIndex = i;
             AnimationFrame* frame = frames.at(_currFrameIndex);
             frameToDisplay = frame->getSpriteFrame();
             static_cast<Sprite*>(_target)->setSpriteFrame(frameToDisplay);
+            static_cast<Sprite*>(_target)->setBlendFunc(blend);
 
             const ValueMap& dict = frame->getUserInfo();
             if ( !dict.empty() )
@@ -2570,7 +2690,7 @@ Animate* Animate::reverse() const
    
     if (!oldArray.empty())
     {
-        for (auto iter = oldArray.crbegin(); iter != oldArray.crend(); ++iter)
+        for (auto iter = oldArray.crbegin(), iterCrend = oldArray.crend(); iter != iterCrend; ++iter)
         {
             AnimationFrame* animFrame = *iter;
             if (!animFrame)

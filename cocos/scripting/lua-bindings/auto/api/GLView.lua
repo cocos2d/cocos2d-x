@@ -25,7 +25,7 @@
 --  Only works on ios platform. Set Content Scale of the Factor. 
 -- @function [parent=#GLView] setContentScaleFactor 
 -- @param self
--- @param #float scaleFactor
+-- @param #float 
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
@@ -41,6 +41,12 @@
 -- @param self
 -- @param #bool open
 -- @return GLView#GLView self (return value: cc.GLView)
+        
+--------------------------------
+-- 
+-- @function [parent=#GLView] getVR 
+-- @param self
+-- @return VRIRenderer#VRIRenderer ret (return value: cc.VRIRenderer)
         
 --------------------------------
 -- Set Scissor rectangle with points.<br>
@@ -74,14 +80,16 @@
 -- param isVisible Hide or Show the mouse cursor if there is one.
 -- @function [parent=#GLView] setCursorVisible 
 -- @param self
--- @param #bool isVisible
+-- @param #bool 
 -- @return GLView#GLView self (return value: cc.GLView)
         
 --------------------------------
---  Force destroying EGL view, subclass must implement this method. 
--- @function [parent=#GLView] end 
+-- Get the frame size of EGL view.<br>
+-- In general, it returns the screen size since the EGL view is a fullscreen view.<br>
+-- return The frame size of EGL view.
+-- @function [parent=#GLView] getFrameSize 
 -- @param self
--- @return GLView#GLView self (return value: cc.GLView)
+-- @return size_table#size_table ret (return value: size_table)
         
 --------------------------------
 -- Get scale factor of the vertical direction.<br>
@@ -105,20 +113,12 @@
 -- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
--- Get the frame size of EGL view.<br>
--- In general, it returns the screen size since the EGL view is a fullscreen view.<br>
--- return The frame size of EGL view.
--- @function [parent=#GLView] getFrameSize 
--- @param self
--- @return size_table#size_table ret (return value: size_table)
-        
---------------------------------
 --  Set zoom factor for frame. This methods are for<br>
 -- debugging big resolution (e.g.new ipad) app on desktop.<br>
 -- param zoomFactor The zoom factor for frame.
 -- @function [parent=#GLView] setFrameZoomFactor 
 -- @param self
--- @param #float zoomFactor
+-- @param #float 
 -- @return GLView#GLView self (return value: cc.GLView)
         
 --------------------------------
@@ -174,11 +174,35 @@
 -- @return int#int ret (return value: int)
         
 --------------------------------
+--  Force destroying EGL view, subclass must implement this method. <br>
+-- lua endToLua
+-- @function [parent=#GLView] end 
+-- @param self
+-- @return GLView#GLView self (return value: cc.GLView)
+        
+--------------------------------
 --  Returns whether or not the view is in Retina Display mode.<br>
 -- return Returns whether or not the view is in Retina Display mode.
 -- @function [parent=#GLView] isRetinaDisplay 
 -- @param self
 -- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- Renders a Scene with a Renderer<br>
+-- This method is called directly by the Director
+-- @function [parent=#GLView] renderScene 
+-- @param self
+-- @param #cc.Scene scene
+-- @param #cc.Renderer renderer
+-- @return GLView#GLView self (return value: cc.GLView)
+        
+--------------------------------
+-- Sets a VR renderer. <br>
+-- if `vrrenderer` is `nullptr` VR will be disabled
+-- @function [parent=#GLView] setVR 
+-- @param self
+-- @param #cc.VRIRenderer vrrenderer
+-- @return GLView#GLView self (return value: cc.GLView)
         
 --------------------------------
 -- Set opengl view port rectangle with points.<br>

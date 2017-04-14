@@ -17,14 +17,16 @@
 -- @return Scene#Scene self (return value: cc.Scene)
         
 --------------------------------
---  Render the scene.<br>
--- param renderer The renderer use to render the scene.<br>
--- js NA
--- @function [parent=#Scene] render 
+-- @overload self, cc.Renderer, mat4_table, mat4_table, unsigned int         
+-- @overload self, cc.Renderer, mat4_table, mat4_table         
+-- @function [parent=#Scene] render
 -- @param self
 -- @param #cc.Renderer renderer
+-- @param #mat4_table eyeTransforms
+-- @param #mat4_table eyeProjections
+-- @param #unsigned int multiViewCount
 -- @return Scene#Scene self (return value: cc.Scene)
-        
+
 --------------------------------
 -- 
 -- @function [parent=#Scene] stepPhysicsAndNavigation 

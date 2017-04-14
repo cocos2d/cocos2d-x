@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -177,6 +177,14 @@ public:
      */
     void dispatchCustomEvent(const std::string &eventName, void *optionalUserData = nullptr);
 
+    /** Query whether the specified event listener id has been added.
+     *
+     * @param listenerID The listenerID of the event listener id.
+     *
+     * @return True if dispatching events is exist
+     */
+    bool hasEventListener(const EventListener::ListenerID& listenerID) const;
+
     /////////////////////////////////////////////
     
     /** Constructor of EventDispatcher.
@@ -218,10 +226,10 @@ protected:
         void clearFixedListeners();
         void clear();
         
-        inline std::vector<EventListener*>* getFixedPriorityListeners() const { return _fixedListeners; };
-        inline std::vector<EventListener*>* getSceneGraphPriorityListeners() const { return _sceneGraphListeners; };
-        inline ssize_t getGt0Index() const { return _gt0Index; };
-        inline void setGt0Index(ssize_t index) { _gt0Index = index; };
+        std::vector<EventListener*>* getFixedPriorityListeners() const { return _fixedListeners; }
+        std::vector<EventListener*>* getSceneGraphPriorityListeners() const { return _sceneGraphListeners; }
+        ssize_t getGt0Index() const { return _gt0Index; }
+        void setGt0Index(ssize_t index) { _gt0Index = index; }
     private:
         std::vector<EventListener*>* _fixedListeners;
         std::vector<EventListener*>* _sceneGraphListeners;
@@ -241,7 +249,7 @@ protected:
     void forceAddEventListener(EventListener* listener);
     
     /** Gets event the listener list for the event listener type. */
-    EventListenerVector* getListeners(const EventListener::ListenerID& listenerID);
+    EventListenerVector* getListeners(const EventListener::ListenerID& listenerID) const;
     
     /** Update dirty flag */
     void updateDirtyFlagForSceneGraph();

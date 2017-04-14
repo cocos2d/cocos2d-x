@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2010-2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -31,7 +31,6 @@
 #include "platform/ios/CCEAGLView-ios.h"
 #include "platform/ios/CCDirectorCaller-ios.h"
 #include "platform/ios/CCGLViewImpl-ios.h"
-#include "deprecated/CCSet.h"
 #include "base/CCTouch.h"
 
 NS_CC_BEGIN
@@ -61,7 +60,7 @@ GLViewImpl* GLViewImpl::create(const std::string& viewName)
     return nullptr;
 }
 
-GLViewImpl* GLViewImpl::createWithRect(const std::string& viewName, Rect rect, float frameZoomFactor)
+GLViewImpl* GLViewImpl::createWithRect(const std::string& viewName, const Rect& rect, float frameZoomFactor)
 {
     auto ret = new (std::nothrow) GLViewImpl;
     if(ret && ret->initWithRect(viewName, rect, frameZoomFactor)) {
@@ -130,7 +129,7 @@ bool GLViewImpl::initWithEAGLView(void *eaglview)
     return true;
 }
 
-bool GLViewImpl::initWithRect(const std::string& viewName, Rect rect, float frameZoomFactor)
+bool GLViewImpl::initWithRect(const std::string& viewName, const Rect& rect, float frameZoomFactor)
 {
     CGRect r = CGRectMake(rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
     convertAttrs();
@@ -230,4 +229,4 @@ void GLViewImpl::setIMEKeyboardState(bool open)
 
 NS_CC_END
 
-#endif // CC_PLATFOR_IOS
+#endif // CC_PLATFORM_IOS

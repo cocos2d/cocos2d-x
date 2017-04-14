@@ -1,5 +1,9 @@
 /****************************************************************************
+<<<<<<< HEAD
 Copyright (c) 2016 Chukong Technologies Inc.
+=======
+Copyright (c) 2016-2017 Chukong Technologies Inc.
+>>>>>>> cocos2d/v3
 
 http://www.cocos2d-x.org
 
@@ -60,7 +64,11 @@ UrlAudioPlayer::UrlAudioPlayer(SLEngineItf engineItf, SLObjectItf outputMixObjec
         : _engineItf(engineItf), _outputMixObj(outputMixObject),
           _callerThreadUtils(callerThreadUtils), _id(-1), _assetFd(nullptr),
           _playObj(nullptr), _playItf(nullptr), _seekItf(nullptr), _volumeItf(nullptr),
+<<<<<<< HEAD
           _volume(0.0f), _duration(0.0f), _isLoop(false), _state(State::INVALID),
+=======
+          _volume(0.0f), _duration(0.0f), _isLoop(false), _isAudioFocus(true), _state(State::INVALID),
+>>>>>>> cocos2d/v3
           _playEventCallback(nullptr), _isDestroyed(std::make_shared<bool>(false))
 {
     std::call_once(__onceFlag, [](){
@@ -215,15 +223,21 @@ void UrlAudioPlayer::play()
     }
 }
 
+<<<<<<< HEAD
 void UrlAudioPlayer::setVolume(float volume)
 {
     _volume = volume;
+=======
+void UrlAudioPlayer::setVolumeToSLPlayer(float volume)
+{
+>>>>>>> cocos2d/v3
     int dbVolume = 2000 * log10(volume);
     if (dbVolume < SL_MILLIBEL_MIN)
     {
         dbVolume = SL_MILLIBEL_MIN;
     }
     SLresult r = (*_volumeItf)->SetVolumeLevel(_volumeItf, dbVolume);
+<<<<<<< HEAD
     SL_RETURN_IF_FAILED(r, "UrlAudioPlayer::setVolume %d failed", dbVolume);
 }
 
@@ -241,6 +255,30 @@ void UrlAudioPlayer::setSpeed(float speed)
     _speed = speed;
     SLresult r = (*_speedItf)->SetRate(_speedItf, speed);
     SL_RETURN_IF_FAILED(r, "UrlAudioPlayer::setPitch %d failed", speed);
+=======
+    SL_RETURN_IF_FAILED(r, "UrlAudioPlayer::setVolumeToSLPlayer %d failed", dbVolume);
+}
+
+void UrlAudioPlayer::setVolume(float volume)
+{
+    _volume = volume;
+    if (_isAudioFocus)
+    {
+        setVolumeToSLPlayer(_volume);
+    }
+}
+
+float UrlAudioPlayer::getVolume() const
+{
+    return _volume;
+}
+
+void UrlAudioPlayer::setAudioFocus(bool isFocus)
+{
+    _isAudioFocus = isFocus;
+    float volume = _isAudioFocus ? _volume : 0.0f;
+    setVolumeToSLPlayer(volume);
+>>>>>>> cocos2d/v3
 }
 
 float UrlAudioPlayer::getDuration() const
@@ -359,6 +397,7 @@ bool UrlAudioPlayer::prepare(const std::string &url, SLuint32 locatorType, std::
     result = (*_playObj)->GetInterface(_playObj, SL_IID_VOLUME, &_volumeItf);
     SL_RETURN_VAL_IF_FAILED(result, false, "GetInterface SL_IID_VOLUME failed");
 
+<<<<<<< HEAD
     // get the pitch interface
     /*result = (*_playObj)->GetInterface(_playObj, SL_IID_PITCH, &_pitchItf);
     SL_RETURN_VAL_IF_FAILED(result, false, "GetInterface SL_IID_PITCH failed");*/
@@ -381,6 +420,8 @@ result = (*dynamicInterfaceManagementItf)->AddInterface(
     result = (*_playObj)->GetInterface(_playObj, SL_IID_PLAYBACKRATE, &_speedItf);
     SL_RETURN_VAL_IF_FAILED(result, false, "GetInterface SL_IID_PLAYBACKRATE failed");
 
+=======
+>>>>>>> cocos2d/v3
     result = (*_playItf)->RegisterCallback(_playItf,
                                            SLUrlAudioPlayerCallbackProxy::playEventCallback, this);
     SL_RETURN_VAL_IF_FAILED(result, false, "RegisterCallback failed");
@@ -400,11 +441,14 @@ void UrlAudioPlayer::rewind()
 // Not supported currently. since cocos audio engine will new -> prepare -> play again.
 }
 
+<<<<<<< HEAD
 float UrlAudioPlayer::getVolume() const
 {
     return _volume;
 }
 
+=======
+>>>>>>> cocos2d/v3
 void UrlAudioPlayer::setLoop(bool isLoop)
 {
     _isLoop = isLoop;

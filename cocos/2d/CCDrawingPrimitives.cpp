@@ -2,7 +2,7 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2013 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -134,27 +134,8 @@ void drawPoints( const Vec2 *points, unsigned int numberOfPoints )
     s_shader->setUniformLocationWith4fv(s_colorLocation, (GLfloat*) &s_color.r, 1);
     s_shader->setUniformLocationWith1f(s_pointSizeLocation, s_pointSize);
 
-    // FIXME: Mac OpenGL error. arrays can't go out of scope before draw is executed
-    Vec2* newPoints = new (std::nothrow) Vec2[numberOfPoints];
-
-    // iPhone and 32-bit machines optimization
-    if( sizeof(Vec2) == sizeof(Vec2) )
-    {
-        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, points);
-    }
-    else
-    {
-        // Mac on 64-bit
-        for( unsigned int i=0; i<numberOfPoints;i++) {
-            newPoints[i].x = points[i].x;
-            newPoints[i].y = points[i].y;
-        }
-        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, newPoints);
-    }
-
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, points);
     glDrawArrays(GL_POINTS, 0, (GLsizei) numberOfPoints);
-
-    CC_SAFE_DELETE_ARRAY(newPoints);
 
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, numberOfPoints);
 }
@@ -210,34 +191,12 @@ void drawPoly(const Vec2 *poli, unsigned int numberOfPoints, bool closePolygon)
 
     GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION );
 
-    // iPhone and 32-bit machines optimization
-    if( sizeof(Vec2) == sizeof(Vec2) )
-    {
-        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, poli);
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, poli);
 
-        if( closePolygon )
-            glDrawArrays(GL_LINE_LOOP, 0, (GLsizei) numberOfPoints);
-        else
-            glDrawArrays(GL_LINE_STRIP, 0, (GLsizei) numberOfPoints);
-    }
+    if( closePolygon )
+        glDrawArrays(GL_LINE_LOOP, 0, (GLsizei) numberOfPoints);
     else
-    {
-        // Mac on 64-bit
-        // FIXME: Mac OpenGL error. arrays can't go out of scope before draw is executed
-        Vec2* newPoli = new (std::nothrow) Vec2[numberOfPoints];
-        for( unsigned int i=0; i<numberOfPoints;i++) {
-            newPoli[i].x = poli[i].x;
-            newPoli[i].y = poli[i].y;
-        }
-        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, newPoli);
-
-        if( closePolygon )
-            glDrawArrays(GL_LINE_LOOP, 0, (GLsizei) numberOfPoints);
-        else
-            glDrawArrays(GL_LINE_STRIP, 0, (GLsizei) numberOfPoints);
-
-        CC_SAFE_DELETE_ARRAY(newPoli);
-    }
+        glDrawArrays(GL_LINE_STRIP, 0, (GLsizei) numberOfPoints);
 
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, numberOfPoints);
 }
@@ -252,27 +211,9 @@ void drawSolidPoly(const Vec2 *poli, unsigned int numberOfPoints, Color4F color)
 
     GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION );
 
-    // FIXME: Mac OpenGL error. arrays can't go out of scope before draw is executed
-    Vec2* newPoli = new (std::nothrow) Vec2[numberOfPoints];
-
-    // iPhone and 32-bit machines optimization
-    if (sizeof(Vec2) == sizeof(Vec2))
-    {
-        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, poli);
-    }
-    else
-    {
-        // Mac on 64-bit
-        for(unsigned int i = 0; i < numberOfPoints; i++)
-        {
-            newPoli[i].set(poli[i].x, poli[i].y);
-        }
-        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, newPoli);
-    }
-
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, poli);
     glDrawArrays(GL_TRIANGLE_FAN, 0, (GLsizei) numberOfPoints);
 
-    CC_SAFE_DELETE_ARRAY(newPoli);
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, numberOfPoints);
 }
 

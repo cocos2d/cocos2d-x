@@ -1,7 +1,7 @@
 /****************************************************************************
  Copyright (c) 2008-2010 Ricardo Quesada
  Copyright (c) 2011-2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -101,45 +101,9 @@ var arrayOfTransitionsTest = [
     }}
 ];
 
-if ('opengl' in cc.sys.capabilities) {
+if (cc._renderType !== cc.game.RENDER_TYPE_CANVAS) {
     arrayOfTransitionsTest = arrayOfTransitionsTest.concat(
         [
-            {title: "FlipXLeftOver", transitionFunc: function (t, s) {
-                return FlipXLeftOver(t, s);
-            }},
-            {title: "FlipXRightOver", transitionFunc: function (t, s) {
-                return FlipXRightOver(t, s);
-            }},
-            {title: "FlipYUpOver", transitionFunc: function (t, s) {
-                return FlipYUpOver(t, s);
-            }},
-            {title: "FlipYDownOver", transitionFunc: function (t, s) {
-                return FlipYDownOver(t, s);
-            }},
-            {title: "FlipAngularLeftOver", transitionFunc: function (t, s) {
-                return FlipAngularLeftOver(t, s);
-            }},
-            {title: "FlipAngularRightOver", transitionFunc: function (t, s) {
-                return FlipAngularRightOver(t, s);
-            }},
-            {title: "ZoomFlipXLeftOver", transitionFunc: function (t, s) {
-                return ZoomFlipXLeftOver(t, s);
-            }},
-            {title: "ZoomFlipXRightOver", transitionFunc: function (t, s) {
-                return ZoomFlipXRightOver(t, s);
-            }},
-            {title: "ZoomFlipYUpOver", transitionFunc: function (t, s) {
-                return ZoomFlipYUpOver(t, s);
-            }},
-            {title: "ZoomFlipYDownOver", transitionFunc: function (t, s) {
-                return ZoomFlipYDownOver(t, s);
-            }},
-            {title: "ZoomFlipAngularLeftOver", transitionFunc: function (t, s) {
-                return ZoomFlipAngularLeftOver(t, s);
-            }},
-            {title: "ZoomFlipAngularRightOver", transitionFunc: function (t, s) {
-                return ZoomFlipAngularRightOver(t, s);
-            }},
             {title: "PageTransitionForward", transitionFunc: function (t, s) {
                 return PageTransitionForward(t, s);
             }},

@@ -36,8 +36,6 @@
 #include "scripting/js-bindings/manual/platform/ios/JavaScriptObjCBridge.h"
 #endif
 
-#include "js_Effect3D_bindings.h"
-
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #include "scripting/js-bindings/auto/jsb_cocos2dx_experimental_webView_auto.hpp"
 #include "scripting/js-bindings/manual/experimental/jsb_cocos2dx_experimental_webView_manual.h"
@@ -164,7 +162,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     return true;
 }
 
-// This function will be called when the app is inactive. When comes a phone call,it's be invoked too
+// This function will be called when the app is inactive. Note, when receiving a phone call it is invoked.
 void AppDelegate::applicationDidEnterBackground()
 {
     auto director = Director::getInstance();

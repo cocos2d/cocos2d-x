@@ -233,6 +233,16 @@ char
 },
 
 /**
+ * @method getStudioVersionNumber
+ * @return {int}
+ */
+getStudioVersionNumber : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method initWithBinary
  * @param {char} arg0
  * @param {cc.Ref} arg1
@@ -405,7 +415,7 @@ str
 
 /**
  * @method getMovementCount
- * @return {long}
+ * @return {int}
  */
 getMovementCount : function (
 )
@@ -1776,7 +1786,7 @@ bool
 
 /**
  * @method getMovementCount
- * @return {long}
+ * @return {int}
  */
 getMovementCount : function (
 )

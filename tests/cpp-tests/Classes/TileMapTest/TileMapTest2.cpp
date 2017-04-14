@@ -1323,7 +1323,7 @@ TMXGIDObjectsTestNew::TMXGIDObjectsTestNew()
     Size CC_UNUSED s = map->getContentSize();
     CCLOG("Contentsize: %f, %f", s.width, s.height);
 
-    CCLOG("----> Iterating over all the group objets");
+    CCLOG("----> Iterating over all the group objects");
     
     auto drawNode = DrawNode::create();
     Color4F color(1.0, 1.0, 1.0, 1.0);

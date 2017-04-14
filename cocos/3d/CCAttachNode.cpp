@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2014-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -74,7 +74,7 @@ const Mat4& AttachNode::getNodeToParentTransform() const
     return _transformToParent;
 }
 
-void AttachNode::visit(Renderer *renderer, const Mat4& parentTransform, uint32_t parentFlags)
+void AttachNode::visit(Renderer *renderer, const Mat4& parentTransform, uint32_t /*parentFlags*/)
 {
     Node::visit(renderer, parentTransform, Node::FLAGS_DIRTY_MASK);
 }

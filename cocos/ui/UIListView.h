@@ -1,26 +1,26 @@
 /****************************************************************************
- Copyright (c) 2013-2014 Chukong Technologies Inc.
- 
- http://www.cocos2d-x.org
- 
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
- 
- The above copyright notice and this permission notice shall be included in
- all copies or substantial portions of the Software.
- 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- THE SOFTWARE.
- ****************************************************************************/
+Copyright (c) 2013-2017 Chukong Technologies Inc.
+
+http://www.cocos2d-x.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+****************************************************************************/
 
 
 #ifndef __UILISTVIEW_H__
@@ -36,45 +36,45 @@
 NS_CC_BEGIN
 
 namespace ui{
-  
-  /**
-   * ListView click item event type.
-   */
-  typedef enum
-  {
+    
+/**
+ * ListView click item event type.
+ */
+typedef enum
+{
     LISTVIEW_ONSELECTEDITEM_START,
     LISTVIEW_ONSELECTEDITEM_END
-  }ListViewEventType;
-  
-  /**
-   * A callback which would be called when a ListView item is clicked.
-   *@deprecated Use `ccListViewCallback` instead.
-   */
-  typedef void (Ref::*SEL_ListViewEvent)(Ref*,ListViewEventType);
+}ListViewEventType;
+
+/**
+ * A callback which would be called when a ListView item is clicked.
+ *@deprecated Use `ccListViewCallback` instead.
+ */
+typedef void (Ref::*SEL_ListViewEvent)(Ref*,ListViewEventType);
 #define listvieweventselector(_SELECTOR) (SEL_ListViewEvent)(&_SELECTOR)
-  
-  /**
-   *@brief ListView is a view group that displays a list of scrollable items.
-   *The list items are inserted to the list by using `addChild` or  `insertDefaultItem`.
-   * @warning The list item in ListView doesn't support cell reuse at the moment, if you have a large amount of data need to be displayed, use  `TableView` instead.
-   * ListView is a subclass of  `ScrollView`, so it shares many features of ScrollView.
-   */
-  class CC_GUI_DLL ListView : public ScrollView
-  {
-    
+
+/**
+ *@brief ListView is a view group that displays a list of scrollable items.
+ *The list items are inserted to the list by using `addChild` or  `insertDefaultItem`.
+ * @warning The list item in ListView doesn't support cell reuse at the moment, if you have a large amount of data need to be displayed, use  `TableView` instead.
+ * ListView is a subclass of  `ScrollView`, so it shares many features of ScrollView.
+ */
+class CC_GUI_DLL ListView : public ScrollView
+{
+ 
     DECLARE_CLASS_GUI_INFO
-  public:
+public:
     /**
      * Gravity for docking elements in ListView.
      */
     enum class Gravity
     {
-      LEFT,
-      RIGHT,
-      CENTER_HORIZONTAL,
-      TOP,
-      BOTTOM,
-      CENTER_VERTICAL
+        LEFT,
+        RIGHT,
+        CENTER_HORIZONTAL,
+        TOP,
+        BOTTOM,
+        CENTER_VERTICAL
     };
     
     /**
@@ -82,8 +82,8 @@ namespace ui{
      */
     enum class EventType
     {
-      ON_SELECTED_ITEM_START,
-      ON_SELECTED_ITEM_END
+        ON_SELECTED_ITEM_START,
+        ON_SELECTED_ITEM_END
     };
     
     /**
@@ -93,13 +93,13 @@ namespace ui{
      */
     enum class MagneticType
     {
-      NONE,
-      CENTER,
-      BOTH_END,
-      LEFT,
-      RIGHT,
-      TOP,
-      BOTTOM,
+        NONE,
+        CENTER,
+        BOTH_END,
+        LEFT,
+        RIGHT,
+        TOP,
+        BOTTOM,
     };
     
     /**
@@ -176,7 +176,7 @@ namespace ui{
     /**
      * @brief Remove all items in current ListView.
      *
-     *
+     
      */
     void removeAllItems();
     
@@ -232,7 +232,7 @@ namespace ui{
     /**
      * Set the margin between each item in ListView.
      *
-     * @param margin
+     * @param margin A margin in float.
      */
     void setItemsMargin(float margin);
     
@@ -244,6 +244,21 @@ namespace ui{
      */
     float getItemsMargin()const;
     
+    /**
+     * Set the time in seconds to scroll between items.
+     * Subsequent calls of function 'scrollToItem', will take 'time' seconds for scrolling.
+     * @param time The seconds needed to scroll between two items. 'time' must be >= 0
+     * @see scrollToItem(ssize_t, const Vec2&, const Vec2&)
+     */
+    void  setScrollDuration(float time);
+    
+     /**
+     * Get the time in seconds to scroll between items.
+     * @return The time in seconds to scroll between items
+     * @see setScrollDuration(float)
+     */
+    float getScrollDuration() const;
+    
     //override methods
     virtual void doLayout() override;
     virtual void requestDoLayout() override;
@@ -253,7 +268,7 @@ namespace ui{
     virtual void addChild(Node* child, int zOrder, const std::string &name) override;
     virtual void removeAllChildren() override;
     virtual void removeAllChildrenWithCleanup(bool cleanup) override;
-    virtual void removeChild(Node* child, bool cleaup = true) override;
+    virtual void removeChild(Node* child, bool cleanup = true) override;
 
     /**
      * @brief Query the closest item to a specific position in inner container.
@@ -303,7 +318,7 @@ namespace ui{
      * @return An item instance.
      */
     Widget* getBottommostItemInCurrentView() const;
-    
+
     /**
      * Override functions
      */
@@ -318,7 +333,7 @@ namespace ui{
     virtual void jumpToPercentVertical(float percent) override;
     virtual void jumpToPercentHorizontal(float percent) override;
     virtual void jumpToPercentBothDirection(const Vec2& percent) override;
-    
+
     /**
      * @brief Jump to specific item
      * @param itemIndex Specifies the item's index
@@ -345,20 +360,26 @@ namespace ui{
     ssize_t getCurSelectedIndex() const;
     
     /**
+     * @brief Set current selected widget's index and call TouchEventType::ENDED event.
+     * @param itemIndex A index of a selected item.
+     */
+     void setCurSelectedIndex(int itemIndex);
+    
+    /**
      * Add an event click callback to ListView, then one item of Listview is clicked, the callback will be called.
      *@deprecated Use  `addEventListener` instead.
      *@param target A pointer of `Ref*` type.
      *@param selector A member function pointer with type of `SEL_ListViewEvent`.
      */
     CC_DEPRECATED_ATTRIBUTE void addEventListenerListView(Ref* target, SEL_ListViewEvent selector);
-    
+
     /**
      * Add an event click callback to ListView, then one item of Listview is clicked, the callback will be called.
      *@param callback A callback function with type of `ccListViewCallback`.
      */
     void addEventListener(const ccListViewCallback& callback);
     using ScrollView::addEventListener;
-    
+
     /**
      * Changes scroll direction of scrollview.
      *
@@ -375,19 +396,21 @@ namespace ui{
      * @deprecated Use method requestDoLayout() instead
      */
     CC_DEPRECATED_ATTRIBUTE void requestRefreshView();
-    
+
     /**
      * @brief Refresh content view of ListView.
      * @deprecated Use method forceDoLayout() instead
      */
     CC_DEPRECATED_ATTRIBUTE void refreshView();
-    
-  CC_CONSTRUCTOR_ACCESS:
+
+CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
     
-  protected:
+protected:
     virtual void handleReleaseLogic(Touch *touch) override;
+
     virtual void onItemListChanged();
+
     virtual void remedyLayoutParameter(Widget* item);
     void updateInnerContainerSize();
     void remedyVerticalLayoutParameter(LinearLayoutParameter* layoutParameter, ssize_t itemIndex);
@@ -403,12 +426,11 @@ namespace ui{
     virtual Vec2 getHowMuchOutOfBoundary(const Vec2& addition = Vec2::ZERO) override;
     
     virtual void startAttenuatingAutoScroll(const Vec2& deltaMove, const Vec2& initialVelocity) override;
-
-    Vec2 calculateItemDestination(const Vec2& positionRatioInView, Widget* item, const Vec2& itemAnchorPoint);
-    public:
     
     void startMagneticScroll();
-  protected:
+    Vec2 calculateItemDestination(const Vec2& positionRatioInView, Widget* item, const Vec2& itemAnchorPoint);
+    
+protected:
     Widget* _model;
     
     Vector<Widget*> _items;
@@ -420,8 +442,10 @@ namespace ui{
     
     float _itemsMargin;
     
-    ssize_t _curSelectedIndex;
+    float _scrollTime;
     
+    ssize_t _curSelectedIndex;
+
     bool _innerContainerDoLayoutDirty;
     
     Ref*       _listViewEventListener;
@@ -438,8 +462,8 @@ namespace ui{
 #pragma warning (pop)
 #endif
     ccListViewCallback _eventCallback;
-  };
-  
+};
+
 }
 NS_CC_END
 // end of ui group

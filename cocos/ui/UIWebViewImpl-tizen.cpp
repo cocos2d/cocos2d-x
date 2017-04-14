@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2014-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -80,6 +80,10 @@ namespace cocos2d {
                 ewk_view_url_set(_ewkView, urlchar);
             }
 
+            void WebViewImpl::loadURL(const std::string &url, bool cleanCachedData) {
+                this->loadURL(url);
+            }
+
             void WebViewImpl::loadFile(const std::string &fileName) {
                 auto fileUtiles = FileUtils::getInstance();
                 auto fileFullPath = fileUtiles->fullPathForFilename(fileName);
@@ -154,6 +158,10 @@ namespace cocos2d {
                 {
                     evas_object_hide(_ewkView);
                 }
+            }
+
+            void WebViewImpl::setBounces(bool bounces) {
+                // empty function as this was mainly a fix for iOS
             }
         } // namespace ui
     } // namespace experimental

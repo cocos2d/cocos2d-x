@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2015 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -29,6 +29,10 @@ THE SOFTWARE.
 #include "base/CCDirector.h"
 #include "base/CCEventDispatcher.h"
 #include "2d/CCCamera.h"
+#include "2d/CCScene.h"
+#include "renderer/CCRenderer.h"
+#include "vr/CCVRProtocol.h"
+#include "vr/CCVRGenericRenderer.h"
 
 NS_CC_BEGIN
 
@@ -103,6 +107,9 @@ GLView::GLView()
 : _scaleX(1.0f)
 , _scaleY(1.0f)
 , _resolutionPolicy(ResolutionPolicy::UNKNOWN)
+, _vrImpl(nullptr)
+, _designResolutionSize(0,0)
+, _screenSize(0,0)
 {
 }
 
@@ -153,12 +160,19 @@ void GLView::updateDesignResolutionSize()
         float viewPortH = _designResolutionSize.height * _scaleY;
         
         _viewPortRect.setRect((_screenSize.width - viewPortW) / 2, (_screenSize.height - viewPortH) / 2, viewPortW, viewPortH);
-        
+
+
         // reset director's member variables to fit visible rect
         auto director = Director::getInstance();
         director->_winSizeInPoints = getDesignResolutionSize();
         director->_isStatusLabelUpdated = true;
-        director->setGLDefaultValues();
+        director->setProjection(director->getProjection());
+
+        // Github issue #16139
+        // A default viewport is needed in order to display the FPS,
+        // since the FPS are rendered in the Director, and there is no viewport there.
+        // Everything, including the FPS should renderer in the Scene.
+        glViewport(0, 0, _screenSize.width, _screenSize.height);
     }
 }
 
@@ -189,7 +203,12 @@ const Size& GLView::getFrameSize() const
 
 void GLView::setFrameSize(float width, float height)
 {
-    _designResolutionSize = _screenSize = Size(width, height);
+    _screenSize = Size(width, height);
+
+    // Github issue #16003 and #16485
+    // only update the designResolution if it wasn't previously set
+    if (_designResolutionSize.equals(Size::ZERO))
+        _designResolutionSize = _screenSize;
 }
 
 Rect GLView::getVisibleRect() const
@@ -301,7 +320,7 @@ void GLView::handleTouchesBegin(int num, intptr_t ids[], float xs[], float ys[])
             
             CCLOGINFO("x = %f y = %f", touch->getLocationInView().x, touch->getLocationInView().y);
             
-            g_touchIdReorderMap.insert(std::make_pair(id, unusedIndex));
+            g_touchIdReorderMap.emplace(id, unusedIndex);
             touchEvent._touches.push_back(touch);
         }
     }
@@ -346,7 +365,7 @@ void GLView::handleTouchesMove(int num, intptr_t ids[], float xs[], float ys[], 
             continue;
         }
 
-        CCLOGINFO("Moving touches with id: %d, x=%f, y=%f, force=%f, maxFource=%f", id, x, y, force, maxForce);
+        CCLOGINFO("Moving touches with id: %d, x=%f, y=%f, force=%f, maxFource=%f", (int)id, x, y, force, maxForce);
         Touch* touch = g_touches[iter->second];
         if (touch)
         {
@@ -398,7 +417,7 @@ void GLView::handleTouchesOfEndOrCancel(EventTouch::EventCode eventCode, int num
         Touch* touch = g_touches[iter->second];
         if (touch)
         {
-            CCLOGINFO("Ending touches with id: %d, x=%f, y=%f", id, x, y);
+            CCLOGINFO("Ending touches with id: %d, x=%f, y=%f", (int)id, x, y);
             touch->setTouchInfo(iter->second, (x - _viewPortRect.origin.x) / _scaleX,
                                 (y - _viewPortRect.origin.y) / _scaleY);
 
@@ -462,6 +481,42 @@ float GLView::getScaleX() const
 float GLView::getScaleY() const
 {
     return _scaleY;
+}
+
+void GLView::renderScene(Scene* scene, Renderer* renderer)
+{
+    CCASSERT(scene, "Invalid Scene");
+    CCASSERT(renderer, "Invalid Renderer");
+
+    if (_vrImpl)
+    {
+        _vrImpl->render(scene, renderer);
+    }
+    else
+    {
+        scene->render(renderer, Mat4::IDENTITY, nullptr);
+    }
+}
+
+VRIRenderer* GLView::getVR() const
+{
+    return _vrImpl;
+}
+
+void GLView::setVR(VRIRenderer* vrRenderer)
+{
+    if (_vrImpl != vrRenderer)
+    {
+        if (_vrImpl) {
+            _vrImpl->cleanup();
+            delete _vrImpl;
+        }
+
+        if (vrRenderer)
+            vrRenderer->setup(this);
+
+        _vrImpl = vrRenderer;
+    }
 }
 
 NS_CC_END

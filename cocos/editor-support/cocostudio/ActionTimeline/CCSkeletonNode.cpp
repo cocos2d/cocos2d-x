@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2015 Chukong Technologies Inc.
+Copyright (c) 2015-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -96,7 +96,7 @@ cocos2d::Rect SkeletonNode::getBoundingBox() const
         }
     }
     boundingBox.setRect(minx, miny, maxx - minx, maxy - miny);
-    return RectApplyAffineTransform(boundingBox, this->getNodeToParentAffineTransform());;
+    return RectApplyAffineTransform(boundingBox, this->getNodeToParentAffineTransform());
 }
 
 SkeletonNode::SkeletonNode()
@@ -263,7 +263,7 @@ void SkeletonNode::batchDrawAllSubBones(const cocos2d::Mat4 &transform)
 }
 
 
-void SkeletonNode::onDraw(const cocos2d::Mat4 &transform, uint32_t flags)
+void SkeletonNode::onDraw(const cocos2d::Mat4 &transform, uint32_t /*flags*/)
 {
     getGLProgram()->use();
     getGLProgram()->setUniformsForBuiltins(transform);
@@ -318,7 +318,7 @@ const cocos2d::Map<std::string, BoneNode*>& SkeletonNode::getAllSubBonesMap() co
 
 void SkeletonNode::addSkinGroup(std::string groupName, std::map<std::string, std::string> boneSkinNameMap)
 {
-    _skinGroupMap.insert(std::make_pair(groupName, boneSkinNameMap));
+    _skinGroupMap.emplace(groupName, boneSkinNameMap);
 }
 
 void SkeletonNode::checkSubBonesDirty()
@@ -363,7 +363,7 @@ void SkeletonNode::updateOrderedAllbones()
 
 void SkeletonNode::sortOrderedAllBones()
 {
-    std::sort(_subOrderedAllBones.begin(), _subOrderedAllBones.end(), cocos2d::nodeComparisonLess);
+    sortNodes(this->_subOrderedAllBones);
 }
 
 NS_TIMELINE_END

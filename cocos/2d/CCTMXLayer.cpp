@@ -2,7 +2,7 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -29,9 +29,9 @@ THE SOFTWARE.
 #include "2d/CCTMXTiledMap.h"
 #include "2d/CCSprite.h"
 #include "base/CCDirector.h"
+#include "base/ccUTF8.h"
 #include "renderer/CCTextureCache.h"
 #include "renderer/CCGLProgram.h"
-#include "deprecated/CCString.h" // For StringUtils::format
 
 NS_CC_BEGIN
 
@@ -82,6 +82,9 @@ bool TMXLayer::initWithTilesetInfo(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *la
         // mapInfo
         _mapTileSize = mapInfo->getTileSize();
         _layerOrientation = mapInfo->getOrientation();
+        _staggerAxis = mapInfo->getStaggerAxis();
+        _staggerIndex = mapInfo->getStaggerIndex();
+        _hexSideLength = mapInfo->getHexSideLength();
 
         // offset (after layer orientation is set);
         Vec2 offset = this->calculateLayerOffset(layerInfo->_offset);
@@ -89,7 +92,21 @@ bool TMXLayer::initWithTilesetInfo(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *la
 
         _atlasIndexArray = ccCArrayNew(totalNumberOfTiles);
 
-        this->setContentSize(CC_SIZE_PIXELS_TO_POINTS(Size(_layerSize.width * _mapTileSize.width, _layerSize.height * _mapTileSize.height)));
+        float width = 0;
+        float height = 0;
+        if (_layerOrientation == TMXOrientationHex) {
+            if (_staggerAxis == TMXStaggerAxis_X) {
+                height = _mapTileSize.height * (_layerSize.height + 0.5);
+                width = (_mapTileSize.width + _hexSideLength) * ((int)(_layerSize.width / 2)) + _mapTileSize.width * ((int)_layerSize.width % 2);
+            } else {
+                width = _mapTileSize.width * (_layerSize.width + 0.5);
+                height = (_mapTileSize.height + _hexSideLength) * ((int)(_layerSize.height / 2)) + _mapTileSize.height * ((int)_layerSize.height % 2);
+            }
+        } else {
+            width = _layerSize.width * _mapTileSize.width;
+            height = _layerSize.height * _mapTileSize.height;
+        }
+        this->setContentSize(CC_SIZE_PIXELS_TO_POINTS(Size(width, height)));
 
         _useAutomaticVertexZ = false;
         _vertexZvalue = 0;
@@ -112,6 +129,9 @@ TMXLayer::TMXLayer()
 ,_tiles(nullptr)
 ,_tileSet(nullptr)
 ,_layerOrientation(TMXOrientationOrtho)
+,_staggerAxis(TMXStaggerAxis_Y)
+,_staggerIndex(TMXStaggerIndex_Even)
+,_hexSideLength(0)
 {}
 
 TMXLayer::~TMXLayer()
@@ -125,14 +145,14 @@ TMXLayer::~TMXLayer()
         _atlasIndexArray = nullptr;
     }
 
-    CC_SAFE_DELETE_ARRAY(_tiles);
+    CC_SAFE_FREE(_tiles);
 }
 
 void TMXLayer::releaseMap()
 {
     if (_tiles)
     {
-        delete [] _tiles;
+        free(_tiles);
         _tiles = nullptr;
     }
 
@@ -165,7 +185,26 @@ void TMXLayer::setupTiles()
     {
         for (int x=0; x < _layerSize.width; x++)
         {
-            int pos = static_cast<int>(x + _layerSize.width * y);
+            int newX = x;
+            // fix correct render ordering in Hexagonal maps when stagger axis == x
+            if (_staggerAxis == TMXStaggerAxis_X && _layerOrientation == TMXOrientationHex)
+            {
+                if (_staggerIndex == TMXStaggerIndex_Odd)
+                {
+                    if (x >= _layerSize.width/2)
+                        newX = (x - std::ceil(_layerSize.width/2)) * 2 + 1;
+                    else
+                        newX = x * 2;
+                } else {
+                    // TMXStaggerIndex_Even
+                    if (x >= static_cast<int>(_layerSize.width/2))
+                        newX = (x - static_cast<int>(_layerSize.width/2)) * 2;
+                    else
+                        newX = x * 2 + 1;
+                }
+            }
+
+            int pos = static_cast<int>(newX + _layerSize.width * y);
             int gid = _tiles[ pos ];
 
             // gid are stored in little endian.
@@ -177,7 +216,7 @@ void TMXLayer::setupTiles()
             // FIXME:: gid == 0 --> empty tile
             if (gid != 0) 
             {
-                this->appendTileForGID(gid, Vec2(x, y));
+                this->appendTileForGID(gid, Vec2(newX, y));
             }
         }
     }
@@ -224,7 +263,7 @@ void TMXLayer::parseInternalProperties()
     }
 }
 
-void TMXLayer::setupTileSprite(Sprite* sprite, Vec2 pos, int gid)
+void TMXLayer::setupTileSprite(Sprite* sprite, const Vec2& pos, uint32_t gid)
 {
     sprite->setPosition(getPositionAt(pos));
     sprite->setPositionZ((float)getVertexZForPos(pos));
@@ -245,7 +284,7 @@ void TMXLayer::setupTileSprite(Sprite* sprite, Vec2 pos, int gid)
         sprite->setPosition(getPositionAt(pos).x + sprite->getContentSize().height/2,
            getPositionAt(pos).y + sprite->getContentSize().width/2 );
 
-        int flag = gid & (kTMXTileHorizontalFlag | kTMXTileVerticalFlag );
+        auto flag = gid & (kTMXTileHorizontalFlag | kTMXTileVerticalFlag );
 
         // handle the 4 diagonally flipped states.
         if (flag == kTMXTileHorizontalFlag)
@@ -281,7 +320,7 @@ void TMXLayer::setupTileSprite(Sprite* sprite, Vec2 pos, int gid)
     }
 }
 
-Sprite* TMXLayer::reusedTileWithRect(Rect rect)
+Sprite* TMXLayer::reusedTileWithRect(const Rect& rect)
 {
     if (! _reusedTile) 
     {
@@ -420,6 +459,35 @@ Sprite * TMXLayer::updateTileForGID(uint32_t gid, const Vec2& pos)
     return tile;
 }
 
+intptr_t TMXLayer::getZForPos(const Vec2& pos) const
+{
+    intptr_t z = -1;
+    // fix correct render ordering in Hexagonal maps when stagger axis == x
+    if (_staggerAxis == TMXStaggerAxis_X && _layerOrientation == TMXOrientationHex)
+    {
+        if (_staggerIndex == TMXStaggerIndex_Odd)
+        {
+            if (((int)pos.x % 2) == 0)
+                z = pos.x / 2 + pos.y * _layerSize.width;
+            else
+                z = pos.x / 2 + std::ceil(_layerSize.width / 2) + pos.y * _layerSize.width;
+        } else {
+            // TMXStaggerIndex_Even
+            if (((int)pos.x % 2) == 1)
+                z = pos.x / 2 + pos.y * _layerSize.width;
+            else
+                z = pos.x / 2 + std::floor(_layerSize.width / 2) + pos.y * _layerSize.width;
+        }
+    }
+    else
+    {
+        z = (pos.x + pos.y * _layerSize.width);
+    }
+
+    CCASSERT(z != -1, "Invalid Z");
+    return z;
+}
+
 // used only when parsing the map. useless after the map was parsed
 // since lot's of assumptions are no longer true
 Sprite * TMXLayer::appendTileForGID(uint32_t gid, const Vec2& pos)
@@ -428,9 +496,14 @@ Sprite * TMXLayer::appendTileForGID(uint32_t gid, const Vec2& pos)
     {
         Rect rect = _tileSet->getRectForGID(gid);
         rect = CC_RECT_PIXELS_TO_POINTS(rect);
-        
-        intptr_t z = (intptr_t)(pos.x + pos.y * _layerSize.width);
-        
+
+        // Z could be just an integer that gets incremented each time it is called.
+        // but that wouldn't work on layers with empty tiles.
+        // and it is IMPORTANT that Z returns an unique and bigger number than the previous one.
+        // since _atlasIndexArray must be ordered because `bsearch` is used to find the GID for
+        // a given Z. (github issue #16512)
+        intptr_t z = getZForPos(pos);
+
         Sprite *tile = reusedTileWithRect(rect);
         
         setupTileSprite(tile ,pos ,gid);
@@ -445,7 +518,11 @@ Sprite * TMXLayer::appendTileForGID(uint32_t gid, const Vec2& pos)
         
         // append should be after addQuadFromSprite since it modifies the quantity values
         ccCArrayInsertValueAtIndex(_atlasIndexArray, (void*)z, indexForZ);
-        
+
+        // Validation for issue #16512
+        CCASSERT(_atlasIndexArray->num == 1 ||
+                 _atlasIndexArray->arr[_atlasIndexArray->num-1] > _atlasIndexArray->arr[_atlasIndexArray->num-2], "Invalid z for _atlasIndexArray");
+
         return tile;
     }
     
@@ -455,7 +532,9 @@ Sprite * TMXLayer::appendTileForGID(uint32_t gid, const Vec2& pos)
 // TMXLayer - atlasIndex and Z
 static inline int compareInts(const void * a, const void * b)
 {
-    return ((*(int*)a) - (*(int*)b));
+    const int ia = *(int*)a;
+    const int ib = *(int*)b;
+    return (ia-ib);
 }
 
 ssize_t TMXLayer::atlasIndexForExistantZ(int z)
@@ -539,11 +618,8 @@ void TMXLayer::setTileGID(uint32_t gid, const Vec2& pos, TMXTileFlags flags)
     }
 }
 
-void TMXLayer::addChild(Node * child, int zOrder, int tag)
+void TMXLayer::addChild(Node* /*child*/, int /*zOrder*/, int /*tag*/)
 {
-    CC_UNUSED_PARAM(child);
-    CC_UNUSED_PARAM(zOrder);
-    CC_UNUSED_PARAM(tag);
     CCASSERT(0, "addChild: is not supported on TMXLayer. Instead use setTileGID:at:/tileAt:");
 }
 
@@ -610,19 +686,30 @@ void TMXLayer::removeTileAt(const Vec2& pos)
 Vec2 TMXLayer::calculateLayerOffset(const Vec2& pos)
 {
     Vec2 ret;
-    switch (_layerOrientation) 
+    switch (_layerOrientation)
     {
-    case TMXOrientationOrtho:
-        ret.set( pos.x * _mapTileSize.width, -pos.y *_mapTileSize.height);
-        break;
-    case TMXOrientationIso:
-        ret.set((_mapTileSize.width /2) * (pos.x - pos.y),
+        case TMXOrientationOrtho:
+            ret.set( pos.x * _mapTileSize.width, -pos.y *_mapTileSize.height);
+            break;
+        case TMXOrientationIso:
+            ret.set((_mapTileSize.width /2) * (pos.x - pos.y),
                   (_mapTileSize.height /2 ) * (-pos.x - pos.y));
-        break;
-    case TMXOrientationHex:
-        CCASSERT(pos.isZero(), "offset for hexagonal map not implemented yet");
-        break;
-    case TMXOrientationStaggered:
+            break;
+        case TMXOrientationHex:
+        {
+            if(_staggerAxis == TMXStaggerAxis_Y)
+            {
+                int diffX = (_staggerIndex == TMXStaggerIndex_Even) ? _mapTileSize.width/2 : 0;
+                ret.set(pos.x * _mapTileSize.width + diffX, -pos.y * (_mapTileSize.height - (_mapTileSize.width - _hexSideLength) / 2));
+            }
+            else if(_staggerAxis == TMXStaggerAxis_X)
+            {
+                int diffY = (_staggerIndex == TMXStaggerIndex_Odd) ? _mapTileSize.height/2 : 0;
+                ret.set(pos.x * (_mapTileSize.width - (_mapTileSize.width - _hexSideLength) / 2), -pos.y * _mapTileSize.height + diffY);
+            }
+            break;
+        }
+        case TMXOrientationStaggered:
         {
             float diffX = 0;
             if ((int)std::abs(pos.y) % 2 == 1)
@@ -673,15 +760,37 @@ Vec2 TMXLayer::getPositionForIsoAt(const Vec2& pos)
 
 Vec2 TMXLayer::getPositionForHexAt(const Vec2& pos)
 {
-    float diffY = 0;
-    if ((int)pos.x % 2 == 1)
-    {
-        diffY = -_mapTileSize.height/2 ;
-    }
+    Vec2 xy;
+    Vec2 offset = _tileSet->_tileOffset;
 
-    Vec2 xy(
-        pos.x * _mapTileSize.width*3/4,
-                            (_layerSize.height - pos.y - 1) * _mapTileSize.height + diffY);
+    int odd_even = (_staggerIndex == TMXStaggerIndex_Odd) ? 1 : -1;
+    switch (_staggerAxis)
+    {
+        case TMXStaggerAxis_Y:
+        {
+            float diffX = 0;
+            if ((int)pos.y % 2 == 1)
+            {
+                diffX = _mapTileSize.width/2 * odd_even;
+            }
+            xy = Vec2(pos.x * _mapTileSize.width+diffX+offset.x,
+                      (_layerSize.height - pos.y - 1) * (_mapTileSize.height-(_mapTileSize.height-_hexSideLength)/2)-offset.y);
+            break;
+        }
+            
+        case TMXStaggerAxis_X:
+        {
+            float diffY = 0;
+            if ((int)pos.x % 2 == 1)
+            {
+                diffY = _mapTileSize.height/2 * -odd_even;
+            }
+            
+            xy = Vec2(pos.x * (_mapTileSize.width-(_mapTileSize.width-_hexSideLength)/2)+offset.x,
+                      (_layerSize.height - pos.y - 1) * _mapTileSize.height + diffY-offset.y);
+            break;
+        }
+    }
     return xy;
 }
 
@@ -715,7 +824,7 @@ int TMXLayer::getVertexZForPos(const Vec2& pos)
             ret = static_cast<int>(-(_layerSize.height-pos.y));
             break;
         case TMXOrientationHex:
-            CCASSERT(0, "TMX Hexa zOrder not supported");
+            ret = static_cast<int>(-(_layerSize.height-pos.y));
             break;
         default:
             CCASSERT(0, "TMX invalid value");

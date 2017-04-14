@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -68,28 +68,28 @@ public:
      *
      * @return The event type.
      */
-	inline Type getType() const { return _type; };
+    Type getType() const { return _type; }
     
     /** Stops propagation for current event.
      */
-    inline void stopPropagation() { _isStopped = true; };
+    void stopPropagation() { _isStopped = true; }
     
     /** Checks whether the event has been stopped.
      *
      * @return True if the event has been stopped.
      */
-    inline bool isStopped() const { return _isStopped; };
+    bool isStopped() const { return _isStopped; }
     
     /** Gets current target of the event.
      * @return The target with which the event associates.
      * @note It's only available when the event listener is associated with node.
      *        It returns 0 when the listener is associated with fixed priority.
      */
-    inline Node* getCurrentTarget() { return _currentTarget; };
+    Node* getCurrentTarget() { return _currentTarget; }
     
 protected:
     /** Sets current target */
-    inline void setCurrentTarget(Node* target) { _currentTarget = target; };
+    void setCurrentTarget(Node* target) { _currentTarget = target; }
     
 	Type _type;     ///< Event type
     

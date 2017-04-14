@@ -1,7 +1,7 @@
 /*
  * Created by Rohan Kuruvilla
  * Copyright (c) 2012 Zynga Inc.
- * Copyright (c) 2013-2014 Chukong Technologies Inc.
+ * Copyright (c) 2013-2017 Chukong Technologies Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -49,6 +49,9 @@
 
 NS_CC_BEGIN
 struct CC_DLL ResourceData;
+namespace extension {
+    struct ManifestAsset;
+}
 NS_CC_END
 
 // just a simple utility to avoid mem leaking when using JSString
@@ -79,13 +82,16 @@ public:
     JSFunctionWrapper(JSContext* cx, JS::HandleObject jsthis, JS::HandleValue fval, JS::HandleValue owner);
     ~JSFunctionWrapper();
 
+    void setOwner(JSContext* cx, JS::HandleValue owner);
     bool invoke(unsigned int argc, jsval *argv, JS::MutableHandleValue rval);
+    bool invoke(JS::HandleValueArray args, JS::MutableHandleValue rval);
 private:
     JSContext *_cx;
     JS::Heap<JSObject*> _jsthis;
     JS::Heap<JS::Value> _fval;
     JS::Heap<JS::Value> _owner;
-private:
+    void* _cppOwner;
+
     CC_DISALLOW_COPY_AND_ASSIGN(JSFunctionWrapper);
 };
 
@@ -132,14 +138,14 @@ bool jsval_to_ray(JSContext *cx, JS::HandleValue vp, cocos2d::Ray* ret);
 bool jsval_to_resourcedata(JSContext *cx, JS::HandleValue v, cocos2d::ResourceData* ret);
 
 // forward declaration
-CC_JS_DLL js_proxy_t* jsb_get_js_proxy(JSObject* jsObj);
+CC_JS_DLL js_proxy_t* jsb_get_js_proxy(JS::HandleObject jsObj);
 
 template <class T>
 bool jsvals_variadic_to_ccvector( JSContext *cx, /*jsval *vp, int argc,*/const JS::CallArgs& args, cocos2d::Vector<T>* ret)
 {
     bool ok = true;
 
-    for (int i = 0; i < args.length(); i++)
+    for (unsigned i = 0; i < args.length(); i++)
     {
         js_proxy_t* p;
         JS::RootedObject obj(cx, args.get(i).toObjectOrNull());
@@ -292,7 +298,7 @@ jsval quaternion_to_jsval(JSContext* cx, const cocos2d::Quaternion& q);
 jsval meshVertexAttrib_to_jsval(JSContext* cx, const cocos2d::MeshVertexAttrib& q);
 jsval uniform_to_jsval(JSContext* cx, const cocos2d::Uniform* uniform);
 jsval resourcedata_to_jsval(JSContext* cx, const cocos2d::ResourceData& v);
-
+jsval asset_to_jsval(JSContext* cx, const cocos2d::extension::ManifestAsset& v);
 
 // forward declaration
 template <class T>

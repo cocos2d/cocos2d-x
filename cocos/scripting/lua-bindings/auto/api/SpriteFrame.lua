@@ -51,6 +51,14 @@
 -- @return SpriteFrame#SpriteFrame self (return value: cc.SpriteFrame)
         
 --------------------------------
+--  Get center rect of the frame.<br>
+-- Useful to create 9-slice sprites<br>
+-- return The center rect of the sprite frame in points
+-- @function [parent=#SpriteFrame] getCenterRect 
+-- @param self
+-- @return rect_table#rect_table ret (return value: rect_table)
+        
+--------------------------------
 --  Set rect of the sprite frame.<br>
 -- param rectInPixels The rect of the sprite frame, in pixels.
 -- @function [parent=#SpriteFrame] setRectInPixels 
@@ -64,6 +72,20 @@
 -- @function [parent=#SpriteFrame] getRect 
 -- @param self
 -- @return rect_table#rect_table ret (return value: rect_table)
+        
+--------------------------------
+-- setCenterRect<br>
+-- Useful to implement "9 sliced" sprites.<br>
+-- The sprite will be sliced into a 3 x 3 grid. The four corners of this grid are applied without<br>
+-- performing any scaling. The upper- and lower-middle parts are scaled horizontally, and the left- and right-middle parts are scaled vertically.<br>
+-- The center is scaled in both directions.<br>
+-- Important: The scaling is based the Sprite's trimmed size.<br>
+-- Limitations: Does not work when the sprite is part of `SpriteBatchNode`.<br>
+-- param centerRect the Rect in points
+-- @function [parent=#SpriteFrame] setCenterRectInPixels 
+-- @param self
+-- @param #rect_table centerRect
+-- @return SpriteFrame#SpriteFrame self (return value: cc.SpriteFrame)
         
 --------------------------------
 --  Set offset of the frame.<br>
@@ -129,6 +151,13 @@
 -- Is the sprite frame rotated or not.<br>
 -- return Is rotated if true.
 -- @function [parent=#SpriteFrame] isRotated 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+--  hasCenterRect<br>
+-- return Whether or not it has a centerRect
+-- @function [parent=#SpriteFrame] hasCenterRect 
 -- @param self
 -- @return bool#bool ret (return value: bool)
         

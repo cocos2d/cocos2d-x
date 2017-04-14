@@ -1,5 +1,5 @@
 #/****************************************************************************
-# Copyright (c) 2015 Chukong Technologies Inc.
+# Copyright (c) 2015-2017 Chukong Technologies Inc.
 
 # http://www.cocos2d-x.org
 #
@@ -22,7 +22,7 @@
 # THE SOFTWARE.
 # ****************************************************************************/
 
-set(APP_NAME cpp_empty_test)
+set(APP_NAME cpp-empty-test)
 
 if(ANDROID)
   set(PLATFORM_SRC proj.android/jni/main.cpp)

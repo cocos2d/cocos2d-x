@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -71,6 +71,13 @@ var ReflectionTestLayer = BaseTestLayer.extend({
         }, this);
         var menu = new cc.Menu(menuItem, menuItem2, menuItem3);
         menu.alignItemsVerticallyWithPadding(4);
+
+        // add this test code to check if crash because of local reference table overflow
+        if(cc.sys.os == cc.sys.OS_ANDROID)
+        {
+            for (var i = 0; i < 1000; ++i)
+                jsb.reflection.callStaticMethod("org/cocos2dx/js_tests/AppActivity", "getUtfStr", "()Ljava/lang/String;");
+        }
         
         this.addChild(menu);
     }

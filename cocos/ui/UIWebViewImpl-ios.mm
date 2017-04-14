@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2014-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -72,6 +72,8 @@ static std::string getFixedBaseUrl(const std::string& baseUrl)
 
 - (void)setVisible:(bool)visible;
 
+- (void)setBounces:(bool)bounces;
+
 - (void)setFrameWithX:(float)x y:(float)y width:(float)width height:(float)height;
 
 - (void)setJavascriptInterfaceScheme:(const std::string &)scheme;
@@ -80,7 +82,7 @@ static std::string getFixedBaseUrl(const std::string& baseUrl)
 
 - (void)loadHTMLString:(const std::string &)string baseURL:(const std::string &)baseURL;
 
-- (void)loadUrl:(const std::string &)urlString;
+- (void)loadUrl:(const std::string &)urlString cleanCachedData:(BOOL) needCleanCachedData;
 
 - (void)loadFile:(const std::string &)filePath;
 
@@ -146,6 +148,10 @@ static std::string getFixedBaseUrl(const std::string& baseUrl)
     self.uiWebView.hidden = !visible;
 }
 
+- (void)setBounces:(bool)bounces {
+  self.uiWebView.scrollView.bounces = bounces;
+}
+
 - (void)setFrameWithX:(float)x y:(float)y width:(float)width height:(float)height {
     if (!self.uiWebView) {[self setupWebView];}
     CGRect newFrame = CGRectMake(x, y, width, height);
@@ -170,12 +176,20 @@ static std::string getFixedBaseUrl(const std::string& baseUrl)
     [self.uiWebView loadHTMLString:@(string.c_str()) baseURL:[NSURL URLWithString:@(getFixedBaseUrl(baseURL).c_str())]];
 }
 
-- (void)loadUrl:(const std::string &)urlString {
+- (void)loadUrl:(const std::string &)urlString cleanCachedData:(BOOL) needCleanCachedData {
     if (!self.uiWebView) {[self setupWebView];}
     NSURL *url = [NSURL URLWithString:@(urlString.c_str())];
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+
+    NSURLRequest *request = nil;
+    if (needCleanCachedData)
+        request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:60];
+    else
+        request = [NSURLRequest requestWithURL:url];
+
     [self.uiWebView loadRequest:request];
 }
+
+
 
 - (void)loadFile:(const std::string &)filePath {
     if (!self.uiWebView) {[self setupWebView];}
@@ -306,7 +320,11 @@ void WebViewImpl::loadHTMLString(const std::string &string, const std::string &b
 }
 
 void WebViewImpl::loadURL(const std::string &url) {
-    [_uiWebViewWrapper loadUrl:url];
+    this->loadURL(url, false);
+}
+
+void WebViewImpl::loadURL(const std::string &url, bool cleanCachedData) {
+    [_uiWebViewWrapper loadUrl:url cleanCachedData:cleanCachedData];
 }
 
 void WebViewImpl::loadFile(const std::string &fileName) {
@@ -342,6 +360,10 @@ void WebViewImpl::evaluateJS(const std::string &js) {
     [_uiWebViewWrapper evaluateJS:js];
 }
 
+void WebViewImpl::setBounces(bool bounces) {
+    [_uiWebViewWrapper setBounces:bounces];
+}
+
 void WebViewImpl::setScalesPageToFit(const bool scalesPageToFit) {
     [_uiWebViewWrapper setScalesPageToFit:scalesPageToFit];
 }
@@ -349,13 +371,13 @@ void WebViewImpl::setScalesPageToFit(const bool scalesPageToFit) {
 void WebViewImpl::draw(cocos2d::Renderer *renderer, cocos2d::Mat4 const &transform, uint32_t flags) {
     if (flags & cocos2d::Node::FLAGS_TRANSFORM_DIRTY) {
         
-        auto direcrot = cocos2d::Director::getInstance();
-        auto glView = direcrot->getOpenGLView();
+        auto director = cocos2d::Director::getInstance();
+        auto glView = director->getOpenGLView();
         auto frameSize = glView->getFrameSize();
         
         auto scaleFactor = [static_cast<CCEAGLView *>(glView->getEAGLView()) contentScaleFactor];
 
-        auto winSize = direcrot->getWinSize();
+        auto winSize = director->getWinSize();
 
         auto leftBottom = this->_webView->convertToWorldSpace(cocos2d::Vec2::ZERO);
         auto rightTop = this->_webView->convertToWorldSpace(cocos2d::Vec2(this->_webView->getContentSize().width, this->_webView->getContentSize().height));

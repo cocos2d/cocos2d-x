@@ -37,7 +37,7 @@ bool Bug1174Layer::init()
     if (BugsTestBase::init())
     {
 //         // seed
-//         srand(0);
+//         std::srand(0);
 
         Vec2 A,B,C,D,p1,p2,p3,p4;
         float s,t;

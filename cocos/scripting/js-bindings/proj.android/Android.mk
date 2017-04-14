@@ -6,9 +6,7 @@ LOCAL_MODULE := cocos2d_js_android_static
 
 LOCAL_MODULE_FILENAME := libjscocos2dandroid
 
-ifeq ($(COCOS_SIMULATOR_BUILD),1)
 LOCAL_ARM_MODE := arm
-endif
 
 LOCAL_SRC_FILES := ../manual/platform/android/CCJavascriptJavaBridge.cpp
 
@@ -35,6 +33,8 @@ LOCAL_MODULE := cocos2d_js_static
 
 LOCAL_MODULE_FILENAME := libjscocos2d
 
+LOCAL_ARM_MODE := arm
+
 LOCAL_SRC_FILES := ../auto/jsb_cocos2dx_3d_auto.cpp \
                    ../auto/jsb_cocos2dx_extension_auto.cpp \
                    ../auto/jsb_cocos2dx_3d_extension_auto.cpp \
@@ -47,10 +47,11 @@ LOCAL_SRC_FILES := ../auto/jsb_cocos2dx_3d_auto.cpp \
                    ../auto/jsb_cocos2dx_studio_auto.cpp \
                    ../auto/jsb_cocos2dx_builder_auto.cpp \
                    ../auto/jsb_cocos2dx_ui_auto.cpp \
+                   ../auto/jsb_cocos2dx_network_auto.cpp \
                    ../auto/jsb_cocos2dx_physics3d_auto.cpp \
                    ../auto/js_bindings_chipmunk_auto_classes.cpp \
                    ../auto/js_bindings_chipmunk_functions.cpp \
-                   ../manual/ScriptingCore.cpp \ \
+                   ../manual/ScriptingCore.cpp \
                    ../manual/cocos2d_specifics.cpp \
                    ../manual/js_manual_conversions.cpp \
                    ../manual/js_bindings_core.cpp \
@@ -75,6 +76,7 @@ LOCAL_SRC_FILES := ../auto/jsb_cocos2dx_3d_auto.cpp \
                    ../manual/network/jsb_socketio.cpp \
                    ../manual/network/jsb_websocket.cpp \
                    ../manual/network/XMLHTTPRequest.cpp \
+                   ../manual/network/js_network_manual.cpp \
                    ../manual/spine/jsb_cocos2dx_spine_manual.cpp \
                    ../manual/ui/jsb_cocos2dx_ui_manual.cpp \
                    ../manual/navmesh/jsb_cocos2dx_navmesh_conversions.cpp \

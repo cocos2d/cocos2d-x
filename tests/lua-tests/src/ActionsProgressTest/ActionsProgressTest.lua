@@ -290,6 +290,7 @@ function ProgressActionsTest()
         SpriteProgressBarTintAndFade,
         SpriteProgressWithSpriteFrame
     }
+    Helper.index = 1
 
 	scene:addChild(SpriteProgressToRadial())
 	scene:addChild(CreateBackMenuItem())

@@ -1,7 +1,7 @@
 /****************************************************************************
  Copyright (c) 2008-2010 Ricardo Quesada
  Copyright (c) 2011-2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
  Copyright (c) 2008-2009 Jason Booth
 
  http://www.cocos2d-x.org
@@ -133,7 +133,7 @@ var MotionStreakTest1 = MotionStreakTest.extend({
         // create the streak object and add it to the scene
         this._streak = new cc.MotionStreak(2, 3, 32, cc.color.GREEN, s_streak);
         this.addChild(this._streak);
-        // schedule an update on each frame so we can syncronize the streak with the target
+        // schedule an update on each frame so we can synchronize the streak with the target
         this.schedule(this.onUpdate);
 
         var a1 = cc.rotateBy(2, 360);

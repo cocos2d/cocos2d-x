@@ -1,5 +1,9 @@
 /****************************************************************************
+<<<<<<< HEAD
  Copyright (c) 2014-2016 Chukong Technologies Inc.
+=======
+ Copyright (c) 2014-2017 Chukong Technologies Inc.
+>>>>>>> cocos2d/v3
 
  http://www.cocos2d-x.org
 
@@ -74,6 +78,10 @@ public:
     void uncacheAll();
     void preload(const std::string& filePath, const std::function<void(bool)>& callback);
 
+<<<<<<< HEAD
+=======
+    void setAudioFocusForAllPlayers(bool isFocus);
+>>>>>>> cocos2d/v3
 private:
 
     void onEnterBackground(EventCustom* event);

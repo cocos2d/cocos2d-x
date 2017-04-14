@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -69,6 +69,7 @@ Sprite3DTests::Sprite3DTests()
     ADD_TEST_CASE(MotionStreak3DTest);
     ADD_TEST_CASE(Sprite3DPropertyTest);
     ADD_TEST_CASE(Sprite3DNormalMappingTest);
+    ADD_TEST_CASE(Issue16155Test);
 };
 
 //------------------------------------------------------------------
@@ -96,7 +97,7 @@ Sprite3DForceDepthTest::Sprite3DForceDepthTest()
 {
     auto orc = cocos2d::Sprite3D::create("Sprite3DTest/orc.c3b");
     orc->setScale(5);
-    orc->setNormalizedPosition(Vec2(.5f,.3f));
+    orc->setPositionNormalized(Vec2(.5f,.3f));
     orc->setPositionZ(40);
     orc->setRotation3D(Vec3(0,180,0));
     orc->setGlobalZOrder(-1);
@@ -106,7 +107,7 @@ Sprite3DForceDepthTest::Sprite3DForceDepthTest()
     auto ship = Sprite3D::create("Sprite3DTest/boss1.obj");
     ship->setScale(5);
     ship->setTexture("Sprite3DTest/boss.png");
-    ship->setNormalizedPosition(Vec2(.5,.5));
+    ship->setPositionNormalized(Vec2(.5,.5));
     ship->setRotation3D(Vec3(90,0,0));
     ship->setForceDepthWrite(true);
     
@@ -131,7 +132,7 @@ std::string Sprite3DForceDepthTest::subtitle() const
 Sprite3DEmptyTest::Sprite3DEmptyTest()
 {
     auto s = Sprite3D::create();
-    s->setNormalizedPosition(Vec2(.5,.5));
+    s->setPositionNormalized(Vec2(.5,.5));
     auto l = Label::create();
     l->setString("Test");
     s->addChild(l);
@@ -235,7 +236,7 @@ Sprite3DUVAnimationTest::Sprite3DUVAnimationTest()
 {
     //the offset use to translating texture
     _cylinder_texture_offset = 0;
-    _shining_duraion = 0;
+    _shining_duration = 0;
     Size visibleSize = Director::getInstance()->getVisibleSize();
 
     //use custom camera
@@ -298,18 +299,18 @@ void Sprite3DUVAnimationTest::cylinderUpdate(float dt)
     _cylinder_texture_offset = (_cylinder_texture_offset >1) ? 0 : _cylinder_texture_offset;
     if(fade_in)
     {
-        _shining_duraion += 0.5*dt;
-        if(_shining_duraion>1) fade_in = false;
+        _shining_duration += 0.5 * dt;
+        if (_shining_duration > 1) fade_in = false;
     }
     else
     {
-        _shining_duraion -= 0.5*dt;
-        if(_shining_duraion<0) fade_in = true;
+        _shining_duration -= 0.5 * dt;
+        if (_shining_duration < 0) fade_in = true;
     }
 
     //pass the result to shader
     _state->setUniformFloat("offset",_cylinder_texture_offset);
-    _state->setUniformFloat("duration",_shining_duraion);
+    _state->setUniformFloat("duration", _shining_duration);
 }
 
 //------------------------------------------------------------------
@@ -785,6 +786,7 @@ void Sprite3DEffectTest::addNewSpriteWithCoords(Vec2 p)
     material->setTechnique("outline_noneskinned");
     sprite->setMaterial(material);
     sprite->setScale(6.f);
+    Director::getInstance()->getTextureCache()->removeUnusedTextures();
     
     //add to scene
     addChild( sprite );
@@ -894,7 +896,7 @@ Sprite3DWithSkinTest::Sprite3DWithSkinTest()
     listener->onTouchesEnded = CC_CALLBACK_2(Sprite3DWithSkinTest::onTouchesEnded, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     
-    // swich animation quality. In fact, you can set the sprite3d out of frustum to Animate3DQuality::QUALITY_NONE, it can save a lot of cpu time
+    // switch animation quality. In fact, you can set the sprite3d out of frustum to Animate3DQuality::QUALITY_NONE, it can save a lot of cpu time
     MenuItemFont::setFontName("fonts/arial.ttf");
     MenuItemFont::setFontSize(15);
     _animateQuality = (int)Animate3DQuality::QUALITY_LOW;
@@ -948,9 +950,9 @@ void Sprite3DWithSkinTest::addNewSpriteWithCoords(Vec2 p)
         animate->setSpeed(inverse ? -speed : speed);
         animate->setTag(110);
         animate->setQuality((Animate3DQuality)_animateQuality);
-        auto repeate = RepeatForever::create(animate);
-        repeate->setTag(110);
-        sprite->runAction(repeate);
+        auto repeat = RepeatForever::create(animate);
+        repeat->setTag(110);
+        sprite->runAction(repeat);
     }
 }
 
@@ -1429,7 +1431,7 @@ Sprite3DWithOBBPerformanceTest::Sprite3DWithOBBPerformanceTest()
 }
 std::string Sprite3DWithOBBPerformanceTest::title() const
 {
-    return "OBB Collison Performance Test";
+    return "OBB Collision Performance Test";
 }
 std::string Sprite3DWithOBBPerformanceTest::subtitle() const
 {
@@ -2588,6 +2590,9 @@ std::string Sprite3DNormalMappingTest::subtitle() const
     return "";
 }
 
+//
+//
+//
 Sprite3DPropertyTest::Sprite3DPropertyTest()
 {
     auto s = Director::getInstance()->getWinSize();
@@ -2688,4 +2693,29 @@ void Sprite3DPropertyTest::refreshSpriteRender()
         }
         mesh->setTexture(cacheTex, cocos2d::NTextureData::Usage::Diffuse, false);
     }
+}
+
+//
+// Issue16155Test
+//
+Issue16155Test::Issue16155Test()
+{
+    auto s = Director::getInstance()->getWinSize();
+
+    auto sprite = Sprite3D::create("Sprite3DTest/orc.c3b");
+
+    int rcBefore = sprite->getMeshByIndex(0)->getTexture()->getReferenceCount();
+    addChild(sprite);
+    removeChild(sprite);
+
+    cocos2d::log("Issue 16155: Ref count:%d. Run this test again. RC should be the same", rcBefore);
+}
+
+std::string Issue16155Test::title() const
+{
+    return "Issue16155 Test";
+}
+std::string Issue16155Test::subtitle() const
+{
+    return "Should not leak texture. See console";
 }

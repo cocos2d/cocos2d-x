@@ -29,6 +29,10 @@ SchedulerTests::SchedulerTests()
     ADD_TEST_CASE(ScheduleCallbackTest);
     ADD_TEST_CASE(ScheduleUpdatePriority);
     ADD_TEST_CASE(SchedulerIssue10232);
+    ADD_TEST_CASE(SchedulerRemoveAllFunctionsToBePerformedInCocosThread)
+    ADD_TEST_CASE(SchedulerIssue17149);
+    ADD_TEST_CASE(SchedulerRemoveEntryWhileUpdate);
+    ADD_TEST_CASE(SchedulerRemoveSelectorDuringCall);
 };
 
 //------------------------------------------------------------------
@@ -48,18 +52,18 @@ void SchedulerAutoremove::onEnter()
 void SchedulerAutoremove::autoremove(float dt)
 {
     accum += dt;
-    CCLOG("Time: %f", accum);
+    CCLOG("autoremove scheduler: Time: %f", accum);
 
     if( accum > 3 )
     {
         unschedule(CC_SCHEDULE_SELECTOR(SchedulerAutoremove::autoremove));
-        CCLOG("scheduler removed");
+        CCLOG("autoremove scheduler: scheduler removed");
     }
 }
 
-void SchedulerAutoremove::tick(float dt)
+void SchedulerAutoremove::tick(float /*dt*/)
 {
-    CCLOG("This scheduler should not be removed");
+    CCLOG("tick scheduler: This scheduler should not be removed");
 }
 
 std::string SchedulerAutoremove::title() const
@@ -85,17 +89,17 @@ void SchedulerPauseResume::onEnter()
     schedule(CC_SCHEDULE_SELECTOR(SchedulerPauseResume::pause), 3.0f);
 }
 
-void SchedulerPauseResume::tick1(float dt)
+void SchedulerPauseResume::tick1(float /*dt*/)
 {
     CCLOG("tick1");
 }
 
-void SchedulerPauseResume::tick2(float dt)
+void SchedulerPauseResume::tick2(float /*dt*/)
 {
     CCLOG("tick2");
 }
 
-void SchedulerPauseResume::pause(float dt)
+void SchedulerPauseResume::pause(float /*dt*/)
 {
     CCLOG("paused, tick1 and tick2 should called six times");
     Director::getInstance()->getScheduler()->pauseTarget(this);
@@ -142,7 +146,7 @@ void SchedulerPauseResumeAll::onEnter()
     scheduleOnce(CC_SCHEDULE_SELECTOR(SchedulerPauseResumeAll::pause), 3.0f);
 }
 
-void SchedulerPauseResumeAll::update(float delta)
+void SchedulerPauseResumeAll::update(float /*delta*/)
 {
     // do nothing
 }
@@ -156,17 +160,17 @@ void SchedulerPauseResumeAll::onExit()
     SchedulerTestLayer::onExit();
 }
 
-void SchedulerPauseResumeAll::tick1(float dt)
+void SchedulerPauseResumeAll::tick1(float /*dt*/)
 {
     log("tick1");
 }
 
-void SchedulerPauseResumeAll::tick2(float dt)
+void SchedulerPauseResumeAll::tick2(float /*dt*/)
 {
     log("tick2");
 }
 
-void SchedulerPauseResumeAll::pause(float dt)
+void SchedulerPauseResumeAll::pause(float /*dt*/)
 {
     log("Pausing, tick1 should be called six times and tick2 three times");
     auto scheduler = Director::getInstance()->getScheduler();
@@ -182,7 +186,7 @@ void SchedulerPauseResumeAll::pause(float dt)
                                      }, 2.0f, "test resume");
 }
 
-void SchedulerPauseResumeAll::resume(float dt)
+void SchedulerPauseResumeAll::resume(float /*dt*/)
 {
     log("Resuming");
     auto director = Director::getInstance();
@@ -242,17 +246,17 @@ void SchedulerPauseResumeAllUser::onExit()
     SchedulerTestLayer::onExit();
 }
 
-void SchedulerPauseResumeAllUser::tick1(float dt)
+void SchedulerPauseResumeAllUser::tick1(float /*dt*/)
 {
     log("tick1");
 }
 
-void SchedulerPauseResumeAllUser::tick2(float dt)
+void SchedulerPauseResumeAllUser::tick2(float /*dt*/)
 {
     log("tick2");
 }
 
-void SchedulerPauseResumeAllUser::pause(float dt)
+void SchedulerPauseResumeAllUser::pause(float /*dt*/)
 {
     log("Pausing, tick1 and tick2 should be called three times");
     auto director = Director::getInstance();
@@ -264,7 +268,7 @@ void SchedulerPauseResumeAllUser::pause(float dt)
                                      }, 2.0f, "test resume");
 }
 
-void SchedulerPauseResumeAllUser::resume(float dt)
+void SchedulerPauseResumeAllUser::resume(float /*dt*/)
 {
     log("Resuming");
     getScheduler()->resumeTargets(_pausedTargets);
@@ -298,27 +302,27 @@ void SchedulerUnscheduleAll::onEnter()
     schedule(CC_SCHEDULE_SELECTOR(SchedulerUnscheduleAll::unscheduleAll), 4);
 }
 
-void SchedulerUnscheduleAll::tick1(float dt)
+void SchedulerUnscheduleAll::tick1(float /*dt*/)
 {
     CCLOG("tick1");
 }
 
-void SchedulerUnscheduleAll::tick2(float dt)
+void SchedulerUnscheduleAll::tick2(float /*dt*/)
 {
     CCLOG("tick2");
 }
 
-void SchedulerUnscheduleAll::tick3(float dt)
+void SchedulerUnscheduleAll::tick3(float /*dt*/)
 {
     CCLOG("tick3");
 }
 
-void SchedulerUnscheduleAll::tick4(float dt)
+void SchedulerUnscheduleAll::tick4(float /*dt*/)
 {
     CCLOG("tick4");
 }
 
-void SchedulerUnscheduleAll::unscheduleAll(float dt)
+void SchedulerUnscheduleAll::unscheduleAll(float /*dt*/)
 {
     unscheduleAllCallbacks();
 }
@@ -369,27 +373,27 @@ void SchedulerUnscheduleAllHard::onExit()
     SchedulerTestLayer::onExit();
 }
 
-void SchedulerUnscheduleAllHard::tick1(float dt)
+void SchedulerUnscheduleAllHard::tick1(float /*dt*/)
 {
     CCLOG("tick1");
 }
 
-void SchedulerUnscheduleAllHard::tick2(float dt)
+void SchedulerUnscheduleAllHard::tick2(float /*dt*/)
 {
     CCLOG("tick2");
 }
 
-void SchedulerUnscheduleAllHard::tick3(float dt)
+void SchedulerUnscheduleAllHard::tick3(float /*dt*/)
 {
     CCLOG("tick3");
 }
 
-void SchedulerUnscheduleAllHard::tick4(float dt)
+void SchedulerUnscheduleAllHard::tick4(float /*dt*/)
 {
     CCLOG("tick4");
 }
 
-void SchedulerUnscheduleAllHard::unscheduleAll(float dt)
+void SchedulerUnscheduleAllHard::unscheduleAll(float /*dt*/)
 {
     Director::getInstance()->getScheduler()->unscheduleAll();
     _actionManagerActive = false;
@@ -428,27 +432,27 @@ void SchedulerUnscheduleAllUserLevel::onEnter()
     schedule(CC_SCHEDULE_SELECTOR(SchedulerUnscheduleAllUserLevel::unscheduleAll), 4);
 }
 
-void SchedulerUnscheduleAllUserLevel::tick1(float dt)
+void SchedulerUnscheduleAllUserLevel::tick1(float /*dt*/)
 {
     CCLOG("tick1");
 }
 
-void SchedulerUnscheduleAllUserLevel::tick2(float dt)
+void SchedulerUnscheduleAllUserLevel::tick2(float /*dt*/)
 {
     CCLOG("tick2");
 }
 
-void SchedulerUnscheduleAllUserLevel::tick3(float dt)
+void SchedulerUnscheduleAllUserLevel::tick3(float /*dt*/)
 {
     CCLOG("tick3");
 }
 
-void SchedulerUnscheduleAllUserLevel::tick4(float dt)
+void SchedulerUnscheduleAllUserLevel::tick4(float /*dt*/)
 {
     CCLOG("tick4");
 }
 
-void SchedulerUnscheduleAllUserLevel::unscheduleAll(float dt)
+void SchedulerUnscheduleAllUserLevel::unscheduleAll(float /*dt*/)
 {
     Director::getInstance()->getScheduler()->unscheduleAllWithMinPriority(Scheduler::PRIORITY_NON_SYSTEM_MIN);
 }
@@ -477,22 +481,22 @@ void SchedulerSchedulesAndRemove::onEnter()
     schedule(CC_SCHEDULE_SELECTOR(SchedulerSchedulesAndRemove::scheduleAndUnschedule), 4.0f);
 }
 
-void SchedulerSchedulesAndRemove::tick1(float dt)
+void SchedulerSchedulesAndRemove::tick1(float /*dt*/)
 {
     CCLOG("tick1");
 }
 
-void SchedulerSchedulesAndRemove::tick2(float dt)
+void SchedulerSchedulesAndRemove::tick2(float /*dt*/)
 {
     CCLOG("tick2");
 }
 
-void SchedulerSchedulesAndRemove::tick3(float dt)
+void SchedulerSchedulesAndRemove::tick3(float /*dt*/)
 {
     CCLOG("tick3");
 }
 
-void SchedulerSchedulesAndRemove::tick4(float dt)
+void SchedulerSchedulesAndRemove::tick4(float /*dt*/)
 {
     CCLOG("tick4");
 }
@@ -507,7 +511,7 @@ std::string SchedulerSchedulesAndRemove::subtitle() const
     return "Will unschedule and schedule selectors in 4s. See console";
 }
 
-void SchedulerSchedulesAndRemove::scheduleAndUnschedule(float dt)
+void SchedulerSchedulesAndRemove::scheduleAndUnschedule(float /*dt*/)
 {
     unschedule(CC_SCHEDULE_SELECTOR(SchedulerSchedulesAndRemove::tick1));
     unschedule(CC_SCHEDULE_SELECTOR(SchedulerSchedulesAndRemove::tick2));
@@ -532,9 +536,8 @@ TestNode::~TestNode()
 {
 }
 
-void TestNode::update(float dt)
+void TestNode::update(float /*dt*/)
 {
-    CC_UNUSED_PARAM(dt);
     log("%s", _string.c_str());
 }
 
@@ -580,7 +583,7 @@ void SchedulerUpdate::onEnter()
     schedule(CC_SCHEDULE_SELECTOR(SchedulerUpdate::removeUpdates), 4.0f);
 }
 
-void SchedulerUpdate::removeUpdates(float dt)
+void SchedulerUpdate::removeUpdates(float /*dt*/)
 {
     auto& children = getChildren();
 
@@ -631,7 +634,7 @@ void SchedulerUpdateAndCustom::tick(float dt)
     CCLOG("custom selector called:%f",dt);
 }
 
-void SchedulerUpdateAndCustom::stopSelectors(float dt)
+void SchedulerUpdateAndCustom::stopSelectors(float /*dt*/)
 {
     log("SchedulerUpdateAndCustom::stopSelectors");
     unscheduleAllCallbacks();
@@ -664,14 +667,14 @@ void SchedulerUpdateFromCustom::update(float dt)
     CCLOG("update called:%f", dt);
 }
 
-void SchedulerUpdateFromCustom::schedUpdate(float dt)
+void SchedulerUpdateFromCustom::schedUpdate(float /*dt*/)
 {
     unschedule(CC_SCHEDULE_SELECTOR(SchedulerUpdateFromCustom::schedUpdate));
     scheduleUpdate();
     schedule(CC_SCHEDULE_SELECTOR(SchedulerUpdateFromCustom::stopUpdate), 2.0f);
 }
 
-void SchedulerUpdateFromCustom::stopUpdate(float dt)
+void SchedulerUpdateFromCustom::stopUpdate(float /*dt*/)
 {
     unscheduleUpdate();
     unschedule(CC_SCHEDULE_SELECTOR(SchedulerUpdateFromCustom::stopUpdate));
@@ -763,7 +766,7 @@ ControlSlider* SchedulerTimeScale::sliderCtl()
     return slider;
 }
 
-void SchedulerTimeScale::sliderAction(Ref* sender, Control::EventType controlEvent)
+void SchedulerTimeScale::sliderAction(Ref* sender, Control::EventType /*controlEvent*/)
 {
     ControlSlider* pSliderCtl = static_cast<ControlSlider*>(sender);
     float scale;
@@ -855,7 +858,7 @@ ControlSlider *TwoSchedulers::sliderCtl()
     return slider;
 }
 
-void TwoSchedulers::sliderAction(Ref* sender, Control::EventType controlEvent)
+void TwoSchedulers::sliderAction(Ref* sender, Control::EventType /*controlEvent*/)
 {
     float scale;
 
@@ -900,7 +903,7 @@ void TwoSchedulers::onEnter()
 
     defaultScheduler->scheduleUpdate(sched1, 0, false);
 
-    // Create a new ActionManager, and link it to the new scheudler
+    // Create a new ActionManager, and link it to the new scheduler
     actionManager1 = new (std::nothrow) ActionManager();
     sched1->scheduleUpdate(actionManager1, 0, false);
 
@@ -923,10 +926,10 @@ void TwoSchedulers::onEnter()
     //
 
     // Create a new scheduler, and link it to the main scheduler
-    sched2 = new (std::nothrow) Scheduler();;
+    sched2 = new (std::nothrow) Scheduler();
     defaultScheduler->scheduleUpdate(sched2, 0, false);
 
-    // Create a new ActionManager, and link it to the new scheudler
+    // Create a new ActionManager, and link it to the new scheduler
     actionManager2 = new (std::nothrow) ActionManager();
     sched2->scheduleUpdate(actionManager2, 0, false);
 
@@ -990,7 +993,7 @@ public:
 		this->unscheduleAllCallbacks();
 	}
 
-	void update(float dt) {
+	void update(float /*dt*/) {
 	}
 };
 
@@ -1007,7 +1010,7 @@ void SchedulerIssue2268::onEnter()
 	this->scheduleOnce(SEL_SCHEDULE(&SchedulerIssue2268::update), 0.25f);
 }
 
-void SchedulerIssue2268::update(float dt)
+void SchedulerIssue2268::update(float /*dt*/)
 {
 	if ( testNode != nullptr ) {
 		// do something with testNode
@@ -1094,7 +1097,7 @@ std::string ScheduleUpdatePriority::subtitle() const
     return "click to change update priority with random value";
 }
 
-bool ScheduleUpdatePriority::onTouchBegan(Touch* touch, Event* event)
+bool ScheduleUpdatePriority::onTouchBegan(Touch* /*touch*/, Event* /*event*/)
 {
     int priority = static_cast<int>(CCRANDOM_0_1() * 11) - 5;  // -5 ~ 5
     CCLOG("change update priority to %d", priority);
@@ -1119,7 +1122,7 @@ void ScheduleUpdatePriority::onExit()
     unscheduleUpdate();
 }
 
-void ScheduleUpdatePriority::update(float dt)
+void ScheduleUpdatePriority::update(float /*dt*/)
 {
 }
 
@@ -1129,12 +1132,12 @@ void SchedulerIssue10232::onEnter()
 
     this->scheduleOnce(SEL_SCHEDULE(&SchedulerIssue2268::update), 0.25f);
 
-    this->scheduleOnce([](float dt){
+    this->scheduleOnce([](float /*dt*/){
         log("SchedulerIssue10232:Schedules a lambda function");
     }, 0.25f,"SchedulerIssue10232");
 }
 
-void SchedulerIssue10232::update(float dt)
+void SchedulerIssue10232::update(float /*dt*/)
 {
     log("SchedulerIssue10232:Schedules a selector");
 }
@@ -1147,4 +1150,267 @@ std::string SchedulerIssue10232::title() const
 std::string SchedulerIssue10232::subtitle() const
 {
     return "Should not crash";
+}
+
+void SchedulerRemoveAllFunctionsToBePerformedInCocosThread::onEnter()
+{
+    SchedulerTestLayer::onEnter();
+    
+    _sprite = Sprite::create("Images/grossinis_sister1.png");
+    _sprite->setPosition(VisibleRect::center());
+    this->addChild(_sprite);
+    this->scheduleUpdate();
+}
+
+void SchedulerRemoveAllFunctionsToBePerformedInCocosThread::onExit()
+{
+    SchedulerTestLayer::onExit();
+    this->unscheduleUpdate();
+}
+
+void SchedulerRemoveAllFunctionsToBePerformedInCocosThread::update(float dt) {
+    Director::getInstance()->getScheduler()->performFunctionInCocosThread([this] () {
+        _sprite->setVisible(false);
+    });
+    Director::getInstance()->getScheduler()->performFunctionInCocosThread([this] () {
+        _sprite->setVisible(false);
+    });
+    Director::getInstance()->getScheduler()->performFunctionInCocosThread([this] () {
+        _sprite->setVisible(false);
+    });
+    Director::getInstance()->getScheduler()->performFunctionInCocosThread([this] () {
+        _sprite->setVisible(false);
+    });
+    Director::getInstance()->getScheduler()->performFunctionInCocosThread([this] () {
+        _sprite->setVisible(false);
+    });
+    Director::getInstance()->getScheduler()->removeAllFunctionsToBePerformedInCocosThread();
+}
+
+std::string SchedulerRemoveAllFunctionsToBePerformedInCocosThread::title() const
+{
+    return "Removing pending main thread tasks";
+}
+
+std::string SchedulerRemoveAllFunctionsToBePerformedInCocosThread::subtitle() const
+{
+    return "Sprite should be visible";
+}
+
+//class SchedulerIssue17149: public SchedulerTestLayer
+//{
+//public:
+//    CREATE_FUNC(SchedulerIssue17149);
+//    
+//    virtual std::string title() const override;
+//    void onEnter() override;
+//    void update(float dt) override;
+//    
+//private:
+//    class ClassA
+//    {
+//    public:
+//        void update(float dt);
+//        
+//        int _member1;
+//        int _member2;
+//        int _member3;
+//    };
+//    
+//    class ClassB
+//    {
+//        void update(float dt);
+//        int _member1;
+//        int _member2;
+//        int _member3;
+//    };
+//};
+
+// SchedulerIssue17149: https://github.com/cocos2d/cocos2d-x/issues/17149
+
+SchedulerIssue17149::SchedulerIssue17149()
+{
+    _memoryPool = malloc(2018);
+}
+
+SchedulerIssue17149::~SchedulerIssue17149()
+{
+    free(_memoryPool);
+}
+
+std::string SchedulerIssue17149::title() const
+{
+    return "Issue #17149";
+}
+
+std::string SchedulerIssue17149::subtitle() const
+{
+    return "see console, result should be 'i'm ClassB: 456'";
+}
+
+void SchedulerIssue17149::onEnter()
+{
+    SchedulerTestLayer::onEnter();
+    scheduleUpdate();
+}
+
+void SchedulerIssue17149::update(float dt)
+{
+    auto classa = new (_memoryPool) ClassA();
+    CCLOG("Address one: %p", classa);
+    Director::getInstance()->getScheduler()->scheduleUpdate(classa, 1, false);
+    Director::getInstance()->getScheduler()->unscheduleUpdate(classa);
+    
+    auto classb = new (_memoryPool) ClassB();
+    CCLOG("Address one: %p", classb);
+    Director::getInstance()->getScheduler()->scheduleUpdate(classb, 1, false);
+    
+    unscheduleUpdate();
+}
+
+SchedulerIssue17149::ClassA::ClassA()
+: _member1(1)
+, _member2(2)
+, _member3(3)
+{}
+
+void SchedulerIssue17149::ClassA::update(float dt)
+{
+    CCLOG("i'm ClassA: %d%d%d", _member1, _member2, _member3);
+}
+
+SchedulerIssue17149::ClassB::ClassB()
+: _member1(4)
+, _member2(5)
+, _member3(6)
+{}
+
+void SchedulerIssue17149::ClassB::update(float dt)
+{
+    CCLOG("i'm ClassB: %d%d%d", _member1, _member2, _member3);
+    
+    Director::getInstance()->getScheduler()->unscheduleUpdate(this);
+}
+
+//------------------------------------------------------------------
+//
+// SchedulerRemoveEntryWhileUpdate
+//
+//------------------------------------------------------------------
+
+std::string SchedulerRemoveEntryWhileUpdate::title() const
+{
+    return "RemoveEntryWhileUpdate";
+}
+
+std::string SchedulerRemoveEntryWhileUpdate::subtitle() const
+{
+    return "see console, error message must not be shown.";
+}
+
+void SchedulerRemoveEntryWhileUpdate::onEnter()
+{
+    SchedulerTestLayer::onEnter();
+    for (auto i = 0; i < 500; ++i)
+    {
+        TestClass *nextObj = nullptr;
+        if (i != 0)
+        {
+            nextObj = _testvector[i - 1];
+        }
+        auto obj = new TestClass(i, nextObj, getScheduler());
+        _testvector.push_back(obj);
+        getScheduler()->scheduleUpdate(obj, 500 - i, false);
+    }
+}
+
+void SchedulerRemoveEntryWhileUpdate::onExit()
+{
+    for (auto obj: _testvector)
+    {
+        getScheduler()->unscheduleUpdate(obj);
+        delete obj;
+    }
+    _testvector.clear();
+    SchedulerTestLayer::onExit();
+}
+
+SchedulerRemoveEntryWhileUpdate::TestClass::TestClass(int index, TestClass *nextObj, cocos2d::Scheduler* scheduler)
+: _index(index)
+, _nextObj(nextObj)
+, _scheduler(scheduler)
+, _cleanedUp(false)
+{
+}
+
+void SchedulerRemoveEntryWhileUpdate::TestClass::update(float dt)
+{
+    if (_cleanedUp)
+    {
+        CCLOG("Error: cleaned object must not be called.");
+        return;
+    }
+    
+    if (_index % 50 == 1 && _nextObj != nullptr)
+    {
+        _scheduler->unscheduleUpdate(_nextObj);
+        _nextObj->_cleanedUp = true;
+    }
+}
+
+//------------------------------------------------------------------
+//
+// SchedulerRemoveSelectorDuringCall
+//
+//------------------------------------------------------------------
+
+std::string SchedulerRemoveSelectorDuringCall::title() const
+{
+    return "RemoveSelectorDuringCall";
+}
+
+std::string SchedulerRemoveSelectorDuringCall::subtitle() const
+{
+    return "see console, error message must not be shown.";
+}
+
+void SchedulerRemoveSelectorDuringCall::onEnter()
+{
+    SchedulerTestLayer::onEnter();
+
+    Scheduler* const scheduler( Director::getInstance()->getScheduler() );
+    
+    scheduler->setTimeScale( 10 );
+    scheduler->schedule
+      (SEL_SCHEDULE(&SchedulerRemoveSelectorDuringCall::callback), this,
+       0.01f, CC_REPEAT_FOREVER, 0.0f, !isRunning());
+
+    _scheduled = true;
+}
+
+void SchedulerRemoveSelectorDuringCall::onExit()
+{
+    Scheduler* const scheduler( Director::getInstance()->getScheduler() );
+
+    scheduler->setTimeScale( 1 );
+    scheduler->unschedule
+      (SEL_SCHEDULE(&SchedulerRemoveSelectorDuringCall::callback), this);
+
+    _scheduled = false;
+    SchedulerTestLayer::onExit();
+}
+
+void SchedulerRemoveSelectorDuringCall::callback( float )
+{
+    if ( !_scheduled )
+    {
+        cocos2d::log("Error: unscheduled callback must not be called.");
+        return;
+    }
+    
+    _scheduled = false;
+
+    Scheduler* const scheduler( Director::getInstance()->getScheduler() );
+    scheduler->unschedule
+      (SEL_SCHEDULE(&SchedulerRemoveSelectorDuringCall::callback), this);
 }

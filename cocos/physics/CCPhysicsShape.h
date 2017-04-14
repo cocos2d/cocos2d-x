@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -77,11 +77,17 @@ public:
         UNKNOWN,
         CIRCLE,
         BOX,
-        POLYGEN,
+        POLYGON,
         EDGESEGMENT,
         EDGEBOX,
-        EDGEPOLYGEN,
+        EDGEPOLYGON,
         EDGECHAIN,
+
+        /** @deprecated Use Type::POLYGON instead. */
+        POLYGEN = POLYGON,
+
+        /** @deprecated Use Type::EDGEPOLYGON instead. */
+        EDGEPOLYGEN = EDGEPOLYGON,
     };
     
 public:
@@ -90,28 +96,28 @@ public:
      *
      * @return A PhysicsBody object pointer.
      */
-    inline PhysicsBody* getBody() const { return _body; }
+    PhysicsBody* getBody() const { return _body; }
     
     /** 
      * Return this shape's type.
      *
      * @return A Type object.
      */
-    inline Type getType() const { return _type; }
+    Type getType() const { return _type; }
 
     /**
      * Return this shape's area.
      *
      * @return A float number.
      */
-    inline float getArea() const { return _area; }
+    float getArea() const { return _area; }
     
     /**
      * Get this shape's moment.
      *
      * @return A float number.
      */
-    inline float getMoment() const { return _moment; }
+    float getMoment() const { return _moment; }
     
     /**
      * Set this shape's moment.
@@ -127,21 +133,21 @@ public:
      *
      * @param tag An integer number that identifies a shape object.
      */
-    inline void setTag(int tag) { _tag = tag; }
+    void setTag(int tag) { _tag = tag; }
     
     /**
      * Get this shape's tag.
      *
      * @return An integer number.
      */
-    inline int getTag() const { return _tag; }
+    int getTag() const { return _tag; }
     
     /**
      * Get the mass of this shape.
      *
      * @return A float number.
      */
-    inline float getMass() const { return _mass; }
+    float getMass() const { return _mass; }
     
     /**
      * Set this shape's mass.
@@ -157,7 +163,7 @@ public:
      *
      * @return A float number.
      */
-    inline float getDensity() const { return _material.density; }
+    float getDensity() const { return _material.density; }
     
     /**
      * Set this shape's density.
@@ -173,7 +179,7 @@ public:
      *
      * @return A float number.
      */
-    inline float getRestitution() const { return _material.restitution; }
+    float getRestitution() const { return _material.restitution; }
     
     /**
      * Set this shape's restitution.
@@ -189,7 +195,7 @@ public:
      *
      * @return A float number.
      */
-    inline float getFriction() const { return _material.friction; }
+    float getFriction() const { return _material.friction; }
     
     /**
      * Set this shape's friction.
@@ -215,7 +221,7 @@ public:
      * @param material A PhysicsMaterial object.
      */
     void setMaterial(const PhysicsMaterial& material);
-    inline bool isSensor() const { return _sensor; }
+    bool isSensor() const { return _sensor; }
     void setSensor(bool sensor);
     
     /** 
@@ -260,13 +266,16 @@ public:
     static void recenterPoints(Vec2* points, int count, const Vec2& center = Vec2::ZERO);
 
     /**
-     * Get center of the polyon points.
+     * Get center of the polygon points.
      *
      * @param points A Vec2 object pointer.
      * @param count An integer number.
      * @return A Vec2 object.
      */
-    static Vec2 getPolyonCenter(const Vec2* points, int count);
+    static Vec2 getPolygonCenter(const Vec2* points, int count);
+
+    /** @deprecated use getPolygonCenter() instead */
+    CC_DEPRECATED_ATTRIBUTE static Vec2 getPolyonCenter(const Vec2* points, int count);
     
     /**
      * Set a mask that defines which categories this physics body belongs to.
@@ -274,14 +283,14 @@ public:
      * Every physics body in a scene can be assigned to up to 32 different categories, each corresponding to a bit in the bit mask. You define the mask values used in your game. In conjunction with the collisionBitMask and contactTestBitMask properties, you define which physics bodies interact with each other and when your game is notified of these interactions.
      * @param bitmask An integer number, the default value is 0xFFFFFFFF (all bits set).
      */
-    inline void setCategoryBitmask(int bitmask) { _categoryBitmask = bitmask; }
+    void setCategoryBitmask(int bitmask) { _categoryBitmask = bitmask; }
     
     /**
      * Get a mask that defines which categories this physics body belongs to.
      *
      * @return An integer number.
      */
-    inline int getCategoryBitmask() const { return _categoryBitmask; }
+    int getCategoryBitmask() const { return _categoryBitmask; }
     
     
     /**
@@ -290,14 +299,14 @@ public:
      * When two bodies share the same space, each body's category mask is tested against the other body's contact mask by performing a logical AND operation. If either comparison results in a non-zero value, an PhysicsContact object is created and passed to the physics world’s delegate. For best performance, only set bits in the contacts mask for interactions you are interested in.
      * @param bitmask An integer number, the default value is 0x00000000 (all bits cleared).
      */
-    inline void setContactTestBitmask(int bitmask) { _contactTestBitmask = bitmask; }
+    void setContactTestBitmask(int bitmask) { _contactTestBitmask = bitmask; }
     
     /**
      * Get a mask that defines which categories of bodies cause intersection notifications with this physics body.
      *
      * @return An integer number.
      */
-    inline int getContactTestBitmask() const { return _contactTestBitmask; }
+    int getContactTestBitmask() const { return _contactTestBitmask; }
 
     /**
      * A mask that defines which categories of physics bodies can collide with this physics body.
@@ -305,14 +314,14 @@ public:
      * When two physics bodies contact each other, a collision may occur. This body's collision mask is compared to the other body's category mask by performing a logical AND operation. If the result is a non-zero value, then this body is affected by the collision. Each body independently chooses whether it wants to be affected by the other body. For example, you might use this to avoid collision calculations that would make negligible changes to a body's velocity.
      * @param bitmask An integer number, the default value is 0xFFFFFFFF (all bits set).
      */
-    inline void setCollisionBitmask(int bitmask) { _collisionBitmask = bitmask; }
+    void setCollisionBitmask(int bitmask) { _collisionBitmask = bitmask; }
     
     /**
      * Get a mask that defines which categories of physics bodies can collide with this physics body.
      *
      * @return An integer number.
      */
-    inline int getCollisionBitmask() const { return _collisionBitmask; }
+    int getCollisionBitmask() const { return _collisionBitmask; }
     
     /**
      * Set the group of body.
@@ -327,7 +336,7 @@ public:
      *
      * @return An integer number.
      */
-    inline int getGroup() { return _group; }
+    int getGroup() { return _group; }
     
 protected:
     void setBody(PhysicsBody* body);

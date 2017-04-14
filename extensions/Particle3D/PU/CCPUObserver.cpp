@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2015-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -170,7 +170,7 @@ PUEventHandler* PUObserver::getEventHandler (size_t index) const
 PUEventHandler* PUObserver::getEventHandler (const std::string& eventHandlerName) const
 {
     if (eventHandlerName.empty())
-        return 0;
+        return nullptr;
 
     ParticleEventHandlerConstIterator it;
     ParticleEventHandlerConstIterator itEnd = _eventHandlers.end();
@@ -182,7 +182,7 @@ PUEventHandler* PUObserver::getEventHandler (const std::string& eventHandlerName
         }
     }
 
-    return 0;
+    return nullptr;
 }
 //-----------------------------------------------------------------------
 size_t PUObserver::getNumEventHandlers (void) const
@@ -303,12 +303,12 @@ void PUObserver::updateObserver( PUParticle3D *particle, float deltaTime, bool f
     handleObserve(particle, deltaTime);
 }
 
-void PUObserver::postUpdateObserver( float deltaTime )
+void PUObserver::postUpdateObserver( float /*deltaTime*/ )
 {
 
 }
 
-void PUObserver::firstParticleUpdate( PUParticle3D *particle, float deltaTime )
+void PUObserver::firstParticleUpdate( PUParticle3D* /*particle*/, float /*deltaTime*/ )
 {
 
 }

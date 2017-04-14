@@ -43,8 +43,8 @@ end
 function Physics3DTestDemo:shootBox(des)
     local rbDes = {}
     local cameraPosition = self._camera:getPosition3D()
-    local linearVec = cc.vec3normalize(cc.vec3(des.x - cameraPosition.x, des.y - cameraPosition.y, des.z - cameraPosition.z))
-    linearVec = cc.vec3(linearVec.x * 100, linearVec.y * 100, linearVec.z * 100)
+    local linearVec = cc.vec3normalize(cc.vec3sub(des, cameraPosition))
+    linearVec = cc.vec3mul(linearVec, 100)
 
     rbDes.originalTransform = cc.mat4.translate(cc.mat4.createIdentity(), self._camera:getPosition3D())
     rbDes.mass = 1.0
@@ -119,9 +119,9 @@ function Physics3DTestDemo:onEnter()
                     nearP = self._camera:unproject(nearP)
                     farP  = self._camera:unproject(farP)
     
-                    local dir = cc.vec3(farP.x - nearP.x, farP.y - nearP.y, farP.z - nearP.z)
+                    local dir = cc.vec3sub(farP, nearP)
                     local cameraPosition = self._camera:getPosition3D()
-                    self:shootBox(cc.vec3(cameraPosition.x + dir.x * 10, cameraPosition.y + dir.y * 10, cameraPosition.z + dir.z * 10))
+                    self:shootBox(cc.vec3add(cameraPosition, cc.vec3mul(dir, 10)))
                 end
             end, cc.Handler.EVENT_TOUCHES_ENDED)
 
@@ -245,8 +245,7 @@ function Physics3DConstraintDemo:extend()
             ret, hitResult = physicsWorld:rayCast(nearP, farP, hitResult)
             if true == ret and nil ~= hitResult.hitObj and hitResult.hitObj:getObjType() == cc.Physics3DObject.PhysicsObjType.RIGID_BODY then
                 local mat = cc.mat4.getInversed(hitResult.hitObj:getWorldTransform())
-                local position = {x = 0, y = 0, z = 0}
-                position = cc.mat4.transformVector(mat, cc.vec4(hitResult.hitPosition.x, hitResult.hitPosition.y, hitResult.hitPosition.z, 1.0),position)
+                local position = cc.mat4.transformVector(mat, cc.vec4(hitResult.hitPosition.x, hitResult.hitPosition.y, hitResult.hitPosition.z, 1.0))
 
                 self._constraint = cc.Physics3DPointToPointConstraint:create(hitResult.hitObj, position)
                 physicsWorld:addPhysics3DConstraint(self._constraint, true)
@@ -268,8 +267,8 @@ function Physics3DConstraintDemo:extend()
             local size = cc.Director:getInstance():getWinSize()
             nearP = self._camera:unproject(size, nearP, nearP)
             farP  = self._camera:unproject(size, farP, farP)
-            local dir = cc.vec3normalize(cc.vec3(farP.x - nearP.x, farP.y - nearP.y, farP.z - nearP.z))
-            self._constraint:setPivotPointInB(cc.vec3(nearP.x + dir.x * self._pickingDistance, nearP.y + dir.y * self._pickingDistance, nearP.z + dir.z * self._pickingDistance))
+            local dir = cc.vec3normalize(cc.vec3sub(farP, nearP))
+            self._constraint:setPivotPointInB(cc.vec3add(nearP, cc.vec3mul(dir, self._pickingDistance)))
             return
         end
 
@@ -306,9 +305,9 @@ function Physics3DConstraintDemo:extend()
             nearP = self._camera:unproject(nearP)
             farP  = self._camera:unproject(farP)
 
-            local dir = cc.vec3(farP.x - nearP.x, farP.y - nearP.y, farP.z - nearP.z)
+            local dir = cc.vec3sub(farP, nearP)
             local cameraPosition = self._camera:getPosition3D()
-            self:shootBox(cc.vec3(cameraPosition.x + dir.x * 10, cameraPosition.y + dir.y * 10, cameraPosition.z + dir.z * 10))
+            self:shootBox(cc.vec3add(cameraPosition, cc.vec3mul(dir, 10)))
         end
     end, cc.Handler.EVENT_TOUCHES_ENDED)
 
@@ -655,24 +654,23 @@ function Physics3DTerrainDemo:extend()
     self:addChild(sprite)
 
     local shapeList = {}
-    local localTrans = cc.mat4.createIdentity()
     local bodyshape  = cc.Physics3DShape:createBox(cc.vec3(2.0, 4.0, 2.0))
-    localTrans = cc.mat4.createTranslation(0.0, 2.0, 0.0, localTrans)
+    local localTrans = cc.mat4.createTranslation(0.0, 2.0, 0.0)
     table.insert(shapeList, {bodyshape, localTrans})
 
     local headshape = cc.Physics3DShape:createSphere(1.5)
-    localTrans = cc.mat4.createTranslation(0.6, 5.0, -1.5, localTrans)
+    localTrans = cc.mat4.createTranslation(0.6, 5.0, -1.5)
     table.insert(shapeList, {headshape, localTrans})
 
     local lhandshape = cc.Physics3DShape:createBox(cc.vec3(1.0, 3.0, 1.0))
-    localTrans = cc.mat4.createRotation(cc.vec3(1.0, 0.0, 0.0), 15.0 * math.pi / 180, localTrans)
+    localTrans = cc.mat4.createRotation(cc.vec3(1.0, 0.0, 0.0), 15.0 * math.pi / 180)
     localTrans[13] = -1.5
     localTrans[14] = 2.5
     localTrans[15] = -2.5
     table.insert(shapeList, {lhandshape, localTrans})
 
     local rhandshape = cc.Physics3DShape:createBox(cc.vec3(1.0, 3.0, 1.0))
-    localTrans = cc.mat4.createRotation(cc.vec3(1.0, 0.0, 0.0), -15.0 * math.pi / 180, localTrans)
+    localTrans = cc.mat4.createRotation(cc.vec3(1.0, 0.0, 0.0), -15.0 * math.pi / 180)
     localTrans[13] = 2.0
     localTrans[14] = 2.5
     localTrans[15] = 1.0
@@ -707,6 +705,7 @@ function Physics3DTest()
         Physics3DCollisionCallbackDemo.create,
         Physics3DTerrainDemo.create,
     }
+    Helper.index = 1
 
     scene:addChild(BasicPhysics3DDemo.create())
     scene:addChild(CreateBackMenuItem())

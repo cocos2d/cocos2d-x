@@ -353,18 +353,9 @@ static BOOL _mixerRateSet = NO;
     free(defs);
 }    
 
-- (id)init
-{    
-    if ((self = [super init])) {
-        
-        //Create mutexes
-        _mutexBufferLoad = [[NSObject alloc] init];
-        
-        asynchLoadProgress_ = 0.0f;
-        
-        bufferTotal = CD_BUFFERS_START;
-        _buffers = (bufferInfo *)malloc( sizeof(_buffers[0]) * bufferTotal);
-    
+- (void) _lazyInitOpenAL
+{
+    if (!functioning_) {
         // Initialize our OpenAL environment
         if ([self _initOpenAL]) {
             //Set up the default source group - a single group that contains all the sources
@@ -379,10 +370,28 @@ static BOOL _mixerRateSet = NO;
             enabled_ = YES;
             //Test whether get gain works for sources
             [self _testGetGain];
+            CDLOG(@"OpenAL was initialized successfully!");
         } else {
             //Something went wrong with OpenAL
             functioning_ = NO;
+            CDLOG(@"OpenAL failed to be initialized!");
         }
+    }
+}
+
+- (id)init
+{    
+    if ((self = [super init])) {
+        
+        //Create mutexes
+        _mutexBufferLoad = [[NSObject alloc] init];
+        
+        asynchLoadProgress_ = 0.0f;
+        
+        bufferTotal = CD_BUFFERS_START;
+        _buffers = (bufferInfo *)malloc( sizeof(_buffers[0]) * bufferTotal);
+    
+        [self _lazyInitOpenAL];
     }
     
     return self;
@@ -506,6 +515,8 @@ static BOOL _mixerRateSet = NO;
 
     @synchronized(_mutexBufferLoad) {
         
+        [self _lazyInitOpenAL];
+        
         if (!functioning_) {
             //OpenAL initialisation has previously failed
             CDLOG(@"Denshion::CDSoundEngine - Loading buffer failed because sound engine state != functioning");
@@ -550,7 +561,7 @@ static BOOL _mixerRateSet = NO;
             
 #ifdef CD_USE_STATIC_BUFFERS
             alBufferDataStaticProc(_buffers[soundId].bufferId, format, soundData, size, freq);
-            _buffers[soundId].bufferData = data;//Save the pointer to the new data
+            _buffers[soundId].bufferData = soundData;//Save the pointer to the new data
 #else        
             alBufferData(_buffers[soundId].bufferId, format, soundData, size, freq);
 #endif
@@ -615,7 +626,7 @@ static BOOL _mixerRateSet = NO;
         CDLOGINFO(@"Denshion::CDSoundEngine - validateBufferId buffer outside range %i",soundId);
         return NO;
     } else if (_buffers[soundId].bufferState != CD_BS_LOADED) {
-        CDLOGINFO(@"Denshion::CDSoundEngine - validateBufferId invalide buffer state %i",soundId);
+        CDLOGINFO(@"Denshion::CDSoundEngine - validateBufferId invalid buffer state %i", soundId);
         return NO;
     } else {
         return YES;

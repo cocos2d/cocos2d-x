@@ -13,20 +13,24 @@
 --------------------------------
 -- @overload self, char, char, string         
 -- @overload self, char, char         
+-- @overload self, char, char, string, string         
 -- @function [parent=#GLProgram] initWithByteArrays
 -- @param self
 -- @param #char vShaderByteArray
 -- @param #char fShaderByteArray
+-- @param #string compileTimeHeaders
 -- @param #string compileTimeDefines
 -- @return bool#bool ret (return value: bool)
 
 --------------------------------
 -- @overload self, string, string, string         
 -- @overload self, string, string         
+-- @overload self, string, string, string, string         
 -- @function [parent=#GLProgram] initWithFilenames
 -- @param self
 -- @param #string vShaderFilename
 -- @param #string fShaderFilename
+-- @param #string compileTimeHeaders
 -- @param #string compileTimeDefines
 -- @return bool#bool ret (return value: bool)
 
@@ -102,20 +106,24 @@
 --------------------------------
 -- @overload self, char, char, string         
 -- @overload self, char, char         
+-- @overload self, char, char, string, string         
 -- @function [parent=#GLProgram] createWithByteArrays
 -- @param self
 -- @param #char vShaderByteArray
 -- @param #char fShaderByteArray
+-- @param #string compileTimeHeaders
 -- @param #string compileTimeDefines
 -- @return GLProgram#GLProgram ret (return value: cc.GLProgram)
 
 --------------------------------
 -- @overload self, string, string, string         
 -- @overload self, string, string         
+-- @overload self, string, string, string, string         
 -- @function [parent=#GLProgram] createWithFilenames
 -- @param self
 -- @param #string vShaderFilename
 -- @param #string fShaderFilename
+-- @param #string compileTimeHeaders
 -- @param #string compileTimeDefines
 -- @return GLProgram#GLProgram ret (return value: cc.GLProgram)
 

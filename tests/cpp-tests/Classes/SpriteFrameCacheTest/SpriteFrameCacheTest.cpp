@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -54,13 +54,14 @@ SpriteFrameCachePixelFormatTest::SpriteFrameCachePixelFormatTest()
     loadSpriteFrames("Images/sprite_frames_test/test_RGB888.plist", Texture2D::PixelFormat::RGB888);
     loadSpriteFrames("Images/sprite_frames_test/test_RGBA4444.plist", Texture2D::PixelFormat::RGBA4444);
     loadSpriteFrames("Images/sprite_frames_test/test_RGBA5551.plist", Texture2D::PixelFormat::RGB5A1);
-#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC
-    loadSpriteFrames("Images/sprite_frames_test/test_PVRTC2.plist", Texture2D::PixelFormat::PVRTC2A);
-    loadSpriteFrames("Images/sprite_frames_test/test_PVRTC4.plist", Texture2D::PixelFormat::PVRTC4A);
-    loadSpriteFrames("Images/sprite_frames_test/test_PVRTC2_NOALPHA.plist", Texture2D::PixelFormat::PVRTC2);
-#endif
     
-    // test loading atlases wihtout PixelFormat specified
+    if (Configuration::getInstance()->supportsPVRTC()) {
+        loadSpriteFrames("Images/sprite_frames_test/test_PVRTC2.plist", Texture2D::PixelFormat::PVRTC2A);
+        loadSpriteFrames("Images/sprite_frames_test/test_PVRTC4.plist", Texture2D::PixelFormat::PVRTC4A);
+        loadSpriteFrames("Images/sprite_frames_test/test_PVRTC2_NOALPHA.plist", Texture2D::PixelFormat::PVRTC2);
+    }
+    
+    // test loading atlases without PixelFormat specified
     Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGB5A1);
     loadSpriteFrames("Images/sprite_frames_test/test_NoFormat.plist", Texture2D::PixelFormat::RGB5A1);
     
@@ -75,8 +76,7 @@ void SpriteFrameCachePixelFormatTest::loadSpriteFrames(const std::string &file, 
     Texture2D *texture = spriteFrame->getTexture();
     const ssize_t bitsPerKB = 8 * 1024;
     const double memorySize = 1.0 * texture->getBitsPerPixelForFormat() * texture->getContentSizeInPixels().width * texture->getContentSizeInPixels().height / bitsPerKB;
-    //FIXME: texture->getPixelFormat() != expectedFormat all the time, such as Texture2D::PixelFormat::PVRTC2A
-//    CC_ASSERT(texture->getPixelFormat() == expectedFormat);
+    CC_ASSERT(texture->getPixelFormat() == expectedFormat);
     
     const std::string textureInfo = StringUtils::format("%s: %.2f KB\r\n", texture->getStringForFormat(), memorySize);
     infoLabel->setString(infoLabel->getString() + textureInfo);

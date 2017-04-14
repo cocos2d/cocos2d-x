@@ -1,26 +1,26 @@
 
 raptor.png
-size: 1022,1022
+size: 1024,1024
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 back_arm
-  rotate: false
-  xy: 410, 545
+  rotate: true
+  xy: 140, 191
   size: 46, 29
   orig: 46, 29
   offset: 0, 0
   index: -1
 back_bracer
-  rotate: false
-  xy: 540, 548
+  rotate: true
+  xy: 167, 317
   size: 39, 28
   orig: 39, 28
   offset: 0, 0
   index: -1
 back_hand
-  rotate: true
-  xy: 504, 538
+  rotate: false
+  xy: 167, 358
   size: 36, 34
   orig: 36, 34
   offset: 0, 0
@@ -34,49 +34,63 @@ back_knee
   index: -1
 back_thigh
   rotate: true
-  xy: 140, 247
+  xy: 167, 437
   size: 39, 24
   orig: 39, 24
   offset: 0, 0
   index: -1
-eyes_open
+eyes_closed
   rotate: true
   xy: 2, 2
   size: 47, 45
   orig: 47, 45
   offset: 0, 0
   index: -1
+eyes_open
+  rotate: true
+  xy: 49, 2
+  size: 47, 45
+  orig: 47, 45
+  offset: 0, 0
+  index: -1
+eyes_surprised
+  rotate: true
+  xy: 96, 2
+  size: 47, 45
+  orig: 47, 45
+  offset: 0, 0
+  index: -1
 front_arm
   rotate: false
-  xy: 360, 544
+  xy: 419, 544
   size: 48, 30
   orig: 48, 30
   offset: 0, 0
   index: -1
 front_bracer
   rotate: false
-  xy: 538, 578
+  xy: 880, 695
   size: 41, 29
   orig: 41, 29
   offset: 0, 0
   index: -1
 front_hand
-  rotate: false
-  xy: 538, 609
+  rotate: true
+  xy: 167, 394
   size: 41, 38
   orig: 41, 38
   offset: 0, 0
   index: -1
 front_open_hand
   rotate: false
-  xy: 894, 782
+  xy: 880, 726
   size: 43, 44
   orig: 43, 44
   offset: 0, 0
   index: -1
 front_thigh
   rotate: false
-  xy: 942, 849
+  xy: 360, 545
   size: 57, 29
   orig: 57, 29
   offset: 0, 0
@@ -109,16 +123,30 @@ lower_leg
   orig: 73, 98
   offset: 0, 0
   index: -1
+mouth_grind
+  rotate: false
+  xy: 469, 544
+  size: 47, 30
+  orig: 47, 30
+  offset: 0, 0
+  index: -1
+mouth_oooo
+  rotate: true
+  xy: 894, 772
+  size: 105, 30
+  orig: 105, 30
+  offset: 0, 0
+  index: -1
 mouth_smile
   rotate: true
-  xy: 49, 2
+  xy: 140, 239
   size: 47, 30
   orig: 47, 30
   offset: 0, 0
   index: -1
 neck
   rotate: true
-  xy: 1001, 860
+  xy: 538, 577
   size: 18, 21
   orig: 18, 21
   offset: 0, 0
@@ -215,22 +243,22 @@ raptor_tongue
   offset: 0, 0
   index: -1
 stirrup_back
-  rotate: false
-  xy: 458, 539
+  rotate: true
+  xy: 140, 145
   size: 44, 35
   orig: 44, 35
   offset: 0, 0
   index: -1
 stirrup_front
-  rotate: true
-  xy: 81, 4
+  rotate: false
+  xy: 538, 597
   size: 45, 50
   orig: 45, 50
   offset: 0, 0
   index: -1
 stirrup_strap
-  rotate: true
-  xy: 894, 828
+  rotate: false
+  xy: 350, 497
   size: 49, 46
   orig: 49, 46
   offset: 0, 0

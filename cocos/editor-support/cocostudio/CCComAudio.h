@@ -1,5 +1,5 @@
 ﻿/****************************************************************************
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -75,6 +75,9 @@ public:
 
     virtual bool serialize(void* r) override;
 public:
+    /**
+    * @lua endToLua
+    */
     void end();
     void preloadBackgroundMusic(const char* pszFilePath);
     void playBackgroundMusic(const char* pszFilePath, bool bLoop);
@@ -113,7 +116,7 @@ public:
     virtual void start() override;
     // stop the effect sound which started with latest start()
     virtual void stop() override;
-    /// @} end of PlaybleProtocol
+    /// @} end of PlayableProtocol
 
 private:
     std::string _filePath;

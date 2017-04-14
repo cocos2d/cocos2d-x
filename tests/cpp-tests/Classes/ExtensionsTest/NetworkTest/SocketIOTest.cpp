@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2015 Chris Hannon http://www.channon.us
- Copyright (c) 2013-2015 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -195,7 +195,7 @@ void SocketIOTest::closedSocketAction(network::SIOClient* client)
 void SocketIOTest::onMenuSIOClientClicked(cocos2d::Ref *sender)
 {
 	//create a client by using this static method, url does not need to contain the protocol
-	_sioClient = SocketIO::connect("ws://localhost:3010", *this);
+	_sioClient = SocketIO::connect("ws://tools.itharbors.com:4000", *this);
 	//you may set a tag for the client for reference in callbacks
 	_sioClient->setTag("Test Client");
 
@@ -212,7 +212,7 @@ void SocketIOTest::onMenuSIOClientClicked(cocos2d::Ref *sender)
 void SocketIOTest::onMenuSIOEndpointClicked(cocos2d::Ref *sender)
 {
 	//repeat the same connection steps for the namespace "testpoint"
-	_sioEndpoint = SocketIO::connect("ws://localhost:3010/testpoint", *this);
+	_sioEndpoint = SocketIO::connect("ws://tools.itharbors.com:4000/testpoint", *this); 
 	//a tag to differentiate in shared callbacks
 	_sioEndpoint->setTag("Test Endpoint");
 

@@ -247,6 +247,13 @@
 -- @return PhysicsBody#PhysicsBody self (return value: cc.PhysicsBody)
         
 --------------------------------
+-- Get the first shape of the body shapes.<br>
+-- return The first shape in this body.
+-- @function [parent=#PhysicsBody] getFirstShape 
+-- @param self
+-- @return PhysicsShape#PhysicsShape ret (return value: cc.PhysicsShape)
+        
+--------------------------------
 -- Get the body shapes.<br>
 -- return A Vector<PhysicsShape*> object contains PhysicsShape pointer.
 -- @function [parent=#PhysicsBody] getShapes 

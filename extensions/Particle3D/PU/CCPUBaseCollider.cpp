@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2015-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -106,7 +106,7 @@ void PUBaseCollider::calculateRotationSpeedAfterCollision( PUParticle3D* particl
     if (particle->particleType != PUParticle3D::PT_VISUAL)
         return;
 
-    float signedFriction = CCRANDOM_0_1() > 0.5 ? -(_friction - 1) : (_friction - 1);
+    float signedFriction = CCRANDOM_0_1() > 0.5f ? -(_friction - 1) : (_friction - 1);
 
     particle->rotationSpeed *= signedFriction;
     particle->zRotationSpeed *= signedFriction;

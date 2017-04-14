@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -199,6 +199,7 @@ protected:
     Scale9Sprite* _barRenderer;
     TextureResType _renderBarTexType;
     Size _barRendererTextureSize;
+    Rect _originalRect;
     bool _scale9Enabled;
     bool _prevIgnoreSize;
     Rect _capInsets;

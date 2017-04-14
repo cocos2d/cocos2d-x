@@ -5,14 +5,13 @@
 -- @parent_module cc
 
 --------------------------------
--- @overload self, cc.ActionInterval         
--- @overload self, cc.ActionInterval, float         
--- @function [parent=#EaseElasticOut] create
+-- 
+-- @function [parent=#EaseElasticOut] create 
 -- @param self
 -- @param #cc.ActionInterval action
--- @param #float period
+-- @param #float rate
 -- @return EaseElasticOut#EaseElasticOut ret (return value: cc.EaseElasticOut)
-
+        
 --------------------------------
 -- 
 -- @function [parent=#EaseElasticOut] clone 

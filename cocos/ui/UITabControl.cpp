@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2015-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -150,18 +150,18 @@ namespace ui
         return _tabItems.size();
     }
 
-    void TabControl::setHeaderWidth(float headerWith)
+    void TabControl::setHeaderWidth(float headerWidth)
     {
-        _headerWidth = headerWith;
+        _headerWidth = headerWidth;
         if (_headerDockPlace == Dock::TOP || _headerDockPlace == Dock::BOTTOM)
             initTabHeadersPos(0);
         if (_headerDockPlace == Dock::LEFT || _headerDockPlace == Dock::RIGHT)
             initContainers();
     }
 
-    void TabControl::setHeaderHeight(float headerHeigt)
+    void TabControl::setHeaderHeight(float headerHeight)
     {
-        _headerHeight = headerHeigt;
+        _headerHeight = headerHeight;
         if (_headerDockPlace == Dock::LEFT || _headerDockPlace == Dock::RIGHT)
             initTabHeadersPos(0);
         if (_headerDockPlace == Dock::TOP || _headerDockPlace == Dock::BOTTOM)
@@ -339,9 +339,9 @@ namespace ui
         }
     }
 
-    void TabControl::setTabChangedEventListener(const ccTabControlCallback& callBack)
+    void TabControl::setTabChangedEventListener(const ccTabControlCallback& callback)
     {
-        _tabChangedCallback = callBack;
+        _tabChangedCallback = callback;
     }
 
     int TabControl::indexOfTabHeader(const TabHeader* tabCell) const
@@ -565,7 +565,7 @@ namespace ui
         _tabLabelRender->setPosition(_contentSize * 0.5f);
     }
 
-    const std::string TabHeader::getTitleText() const
+    std::string TabHeader::getTitleText() const
     {
         if (nullptr == _tabLabelRender)
         {
@@ -658,7 +658,7 @@ namespace ui
         return _tabLabelRender;
     }
 
-    const std::string TabHeader::getTitleFontName() const
+    std::string TabHeader::getTitleFontName() const
     {
         if (this->_fontType == FontType::SYSTEM)
         {

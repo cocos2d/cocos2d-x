@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010      cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -74,7 +74,7 @@ namespace utils
     );
 
     /** Capture a specific Node.
-    * @param startNode: specify the snapshot Node. It chould be cocos2d::Scene
+    * @param startNode specify the snapshot Node. It should be cocos2d::Scene
     * @param scale
     * @returns: return a Image, then can call saveToFile to save the image as "xxx.png or xxx.jpg".
     * @since v3.11
@@ -120,25 +120,33 @@ namespace utils
     CC_DLL Rect getCascadeBoundingBox(Node *node);
 
     /**
-     * Create a sprite instance from base64 encoded image.
+     * Create a sprite instance from base64 encoded image and adds the texture to the Texture Cache.
 
      * @return Returns an instance of sprite
      */
+    CC_DLL Sprite* createSpriteFromBase64Cached(const char* base64String, const char* key);
+
+    /**
+    * Create a sprite instance from base64 encoded image.
+
+    * @return Returns an instance of sprite
+    */
     CC_DLL Sprite* createSpriteFromBase64(const char* base64String);
-    
+
+
     /**
      * Find a child by name recursively
 
      * @return  Returns found node or nullptr
      */
-    CC_DLL Node*  findChild(Node* levelRoot, const char* name);
+    CC_DLL Node*  findChild(Node* levelRoot, const std::string& name);
 
     /**
      * Find a child by tag recursively
 
      * @return Returns found node or nullptr
      */
-   CC_DLL Node*  findChild(Node* levelRoot, int tag);
+    CC_DLL Node*  findChild(Node* levelRoot, int tag);
 
     /**
      * Find a child by name recursively
@@ -146,7 +154,7 @@ namespace utils
      * @return  Returns found node or nullptr with specified type 'T'
      */
     template<typename T> inline
-    T findChild(Node* levelRoot, const char* name)
+    T findChild(Node* levelRoot, const std::string& name)
     {
         return dynamic_cast<T>(findChild(levelRoot, name));
     }
@@ -161,6 +169,13 @@ namespace utils
     {
         return dynamic_cast<T>(findChild(levelRoot, tag));
     }
+
+    /**
+     *  Gets the md5 hash for the given file.
+     *  @param filename The file to calculate md5 hash.
+     *  @return The md5 hash for the file
+     */
+    CC_DLL std::string getFileMD5Hash(const std::string &filename);
 }
 
 NS_CC_END

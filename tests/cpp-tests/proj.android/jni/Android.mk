@@ -6,6 +6,8 @@ LOCAL_MODULE := cpp_tests_shared
 
 LOCAL_MODULE_FILENAME := libcpp_tests
 
+LOCAL_ARM_MODE := arm
+
 LOCAL_SRC_FILES := main.cpp \
 ../../Classes/ActionManagerTest/ActionManagerTest.cpp \
 ../../Classes/ActionsEaseTest/ActionsEaseTest.cpp \
@@ -21,7 +23,6 @@ LOCAL_SRC_FILES := main.cpp \
 ../../Classes/Box2DTestBed/Test.cpp \
 ../../Classes/Box2DTestBed/TestEntries.cpp \
 ../../Classes/BugsTest/Bug-CCDrawNode.cpp \
-../../Classes/BugsTest/Bug-PageViewLayout.cpp \
 ../../Classes/BugsTest/Bug-1159.cpp \
 ../../Classes/BugsTest/Bug-1174.cpp \
 ../../Classes/BugsTest/Bug-350.cpp \
@@ -33,6 +34,8 @@ LOCAL_SRC_FILES := main.cpp \
 ../../Classes/BugsTest/Bug-899.cpp \
 ../../Classes/BugsTest/Bug-914.cpp \
 ../../Classes/BugsTest/Bug-12847.cpp \
+../../Classes/BugsTest/Bug-15594.cpp \
+../../Classes/BugsTest/Bug-15776.cpp \
 ../../Classes/BugsTest/Bug-Child.cpp \
 ../../Classes/BugsTest/BugsTest.cpp \
 ../../Classes/Camera3DTest/Camera3DTest.cpp \
@@ -50,26 +53,10 @@ LOCAL_SRC_FILES := main.cpp \
 ../../Classes/EffectsAdvancedTest/EffectsAdvancedTest.cpp \
 ../../Classes/EffectsTest/EffectsTest.cpp \
 ../../Classes/ExtensionsTest/AssetsManagerExTest/AssetsManagerExTest.cpp \
-../../Classes/ExtensionsTest/CocosBuilderTest/AnimationsTest/AnimationsTestLayer.cpp \
-../../Classes/ExtensionsTest/CocosBuilderTest/ButtonTest/ButtonTestLayer.cpp \
-../../Classes/ExtensionsTest/CocosBuilderTest/CocosBuilderTest.cpp \
-../../Classes/ExtensionsTest/CocosBuilderTest/HelloCocosBuilder/HelloCocosBuilderLayer.cpp \
-../../Classes/ExtensionsTest/CocosBuilderTest/MenuTest/MenuTestLayer.cpp \
-../../Classes/ExtensionsTest/CocosBuilderTest/TestHeader/TestHeaderLayer.cpp \
-../../Classes/ExtensionsTest/CocosBuilderTest/TimelineCallbackTest/TimelineCallbackTestLayer.cpp \
-../../Classes/ExtensionsTest/ControlExtensionTest/CCControlButtonTest/CCControlButtonTest.cpp \
-../../Classes/ExtensionsTest/ControlExtensionTest/CCControlColourPicker/CCControlColourPickerTest.cpp \
-../../Classes/ExtensionsTest/ControlExtensionTest/CCControlPotentiometerTest/CCControlPotentiometerTest.cpp \
-../../Classes/ExtensionsTest/ControlExtensionTest/CCControlScene.cpp \
-../../Classes/ExtensionsTest/ControlExtensionTest/CCControlSceneManager.cpp \
-../../Classes/ExtensionsTest/ControlExtensionTest/CCControlSliderTest/CCControlSliderTest.cpp \
-../../Classes/ExtensionsTest/ControlExtensionTest/CCControlStepperTest/CCControlStepperTest.cpp \
-../../Classes/ExtensionsTest/ControlExtensionTest/CCControlSwitchTest/CCControlSwitchTest.cpp \
 ../../Classes/ExtensionsTest/ExtensionsTest.cpp \
 ../../Classes/ExtensionsTest/NetworkTest/HttpClientTest.cpp \
 ../../Classes/ExtensionsTest/NetworkTest/SocketIOTest.cpp \
 ../../Classes/ExtensionsTest/NetworkTest/WebSocketTest.cpp \
-../../Classes/ExtensionsTest/NotificationCenterTest/NotificationCenterTest.cpp \
 ../../Classes/ExtensionsTest/TableViewTest/CustomTableViewCell.cpp \
 ../../Classes/ExtensionsTest/TableViewTest/TableViewTestScene.cpp \
 ../../Classes/FileUtilsTest/FileUtilsTest.cpp \
@@ -84,7 +71,7 @@ LOCAL_SRC_FILES := main.cpp \
 ../../Classes/MaterialSystemTest/MaterialSystemTest.cpp \
 ../../Classes/MenuTest/MenuTest.cpp \
 ../../Classes/MotionStreakTest/MotionStreakTest.cpp \
-../../Classes/MutiTouchTest/MutiTouchTest.cpp \
+../../Classes/MultiTouchTest/MultiTouchTest.cpp \
 ../../Classes/NewAudioEngineTest/NewAudioEngineTest.cpp \
 ../../Classes/NewEventDispatcherTest/NewEventDispatcherTest.cpp \
 ../../Classes/NewRendererTest/NewRendererTest.cpp \
@@ -151,10 +138,10 @@ LOCAL_SRC_FILES := main.cpp \
 ../../Classes/UserDefaultTest/UserDefaultTest.cpp \
 ../../Classes/VisibleRect.cpp \
 ../../Classes/VibrateTest/VibrateTest.cpp \
+../../Classes/VRTest/VRTest.cpp \
 ../../Classes/ZwoptexTest/ZwoptexTest.cpp \
 ../../Classes/SpriteFrameCacheTest/SpriteFrameCacheTest.cpp \
-../../Classes/controller.cpp \
-../../Classes/testBasic.cpp
+../../Classes/controller.cpp
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes \
                     $(LOCAL_PATH)/../../../..

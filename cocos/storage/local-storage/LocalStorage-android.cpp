@@ -1,7 +1,7 @@
 /***************************************************************************
  Copyright (c) 2012 Zynga Inc.
  Copyright (c) 2013 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologic Inc.
+ Copyright (c) 2013-2017 Chukong Technologic Inc.
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -72,7 +72,7 @@ void localStorageInit( const std::string& fullpath)
 void localStorageFree()
 {
     if (_initialized) {
-        JniHelper::callStaticVoidMethod(className, "destory");
+        JniHelper::callStaticVoidMethod(className, "destroy");
         _initialized = 0;
     }
 }
@@ -94,11 +94,21 @@ bool localStorageGetItem( const std::string& key, std::string *outItem )
     {
         jstring jkey = t.env->NewStringUTF(key.c_str());
         jstring jret = (jstring)t.env->CallStaticObjectMethod(t.classID, t.methodID, jkey);
-        outItem->assign(JniHelper::jstring2string(jret));
-        t.env->DeleteLocalRef(jret);
-        t.env->DeleteLocalRef(jkey);
-        t.env->DeleteLocalRef(t.classID);
-        return true;
+        if (jret == nullptr)
+        {
+            t.env->DeleteLocalRef(jret);
+            t.env->DeleteLocalRef(jkey);
+            t.env->DeleteLocalRef(t.classID);
+            return false;
+        }
+        else 
+        {
+            outItem->assign(JniHelper::jstring2string(jret));
+            t.env->DeleteLocalRef(jret);
+            t.env->DeleteLocalRef(jkey);
+            t.env->DeleteLocalRef(t.classID);
+            return true;
+        }
     }
     else
     {

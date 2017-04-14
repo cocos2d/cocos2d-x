@@ -18,7 +18,7 @@ static bool jsb_cocos2dx_experimental_webView_setOnShouldStartLoading(JSContext 
     JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
 
     if(argc == 1){
-        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, obj, args.get(0)));
+        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, obj, args.get(0), args.thisv()));
         cobj->setOnShouldStartLoading([=](experimental::ui::WebView *sender, const std::string &url)->bool{
             JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
             jsval arg[2];
@@ -35,6 +35,9 @@ static bool jsb_cocos2dx_experimental_webView_setOnShouldStartLoading(JSContext 
         });
         return true;
     }
+
+    JS_ReportError(cx, "jsb_cocos2dx_experimental_webView_setOnShouldStartLoading : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
 }
 
 static bool jsb_cocos2dx_experimental_webView_setOnDidFinishLoading(JSContext *cx, uint32_t argc, jsval *vp)
@@ -46,7 +49,7 @@ static bool jsb_cocos2dx_experimental_webView_setOnDidFinishLoading(JSContext *c
     JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
 
     if(argc == 1){
-        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, obj, args.get(0)));
+        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, obj, args.get(0), args.thisv()));
         cobj->setOnDidFinishLoading([=](experimental::ui::WebView *sender, const std::string &url)->void{
             JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
             jsval arg[2];
@@ -62,6 +65,9 @@ static bool jsb_cocos2dx_experimental_webView_setOnDidFinishLoading(JSContext *c
         });
         return true;
     }
+
+    JS_ReportError(cx, "jsb_cocos2dx_experimental_webView_setOnDidFinishLoading : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
 }
 
 static bool jsb_cocos2dx_experimental_webView_setOnDidFailLoading(JSContext *cx, uint32_t argc, jsval *vp)
@@ -73,7 +79,7 @@ static bool jsb_cocos2dx_experimental_webView_setOnDidFailLoading(JSContext *cx,
     JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
 
     if(argc == 1){
-        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, obj, args.get(0)));
+        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, obj, args.get(0), args.thisv()));
         cobj->setOnDidFailLoading([=](experimental::ui::WebView *sender, const std::string &url)->void{
             JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
             jsval arg[2];
@@ -89,6 +95,9 @@ static bool jsb_cocos2dx_experimental_webView_setOnDidFailLoading(JSContext *cx,
         });
         return true;
     }
+
+    JS_ReportError(cx, "jsb_cocos2dx_experimental_webView_setOnDidFailLoading : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
 }
 
 static bool jsb_cocos2dx_experimental_webView_setOnJSCallback(JSContext *cx, uint32_t argc, jsval *vp)
@@ -100,7 +109,7 @@ static bool jsb_cocos2dx_experimental_webView_setOnJSCallback(JSContext *cx, uin
     JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
 
     if(argc == 1){
-        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, obj, args.get(0)));
+        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, obj, args.get(0), args.thisv()));
         cobj->setOnJSCallback([=](experimental::ui::WebView *sender, const std::string &url)->void{
             JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
             jsval arg[2];
@@ -116,6 +125,9 @@ static bool jsb_cocos2dx_experimental_webView_setOnJSCallback(JSContext *cx, uin
         });
         return true;
     }
+
+    JS_ReportError(cx, "jsb_cocos2dx_experimental_webView_setOnJSCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
 }
 extern JSObject* jsb_cocos2d_experimental_ui_WebView_prototype;
 

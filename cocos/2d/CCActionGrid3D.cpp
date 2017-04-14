@@ -1,7 +1,7 @@
 /****************************************************************************
 Copyright (c) 2009      On-Core
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
  
 http://www.cocos2d-x.org
 
@@ -336,9 +336,8 @@ void Lens3D::setPosition(const Vec2& pos)
     }
 }
 
-void Lens3D::update(float time)
+void Lens3D::update(float /*time*/)
 {
-    CC_UNUSED_PARAM(time);
     if (_dirty)
     {
         int i, j;
@@ -498,9 +497,8 @@ Shaky3D* Shaky3D::clone() const
     return a;
 }
 
-void Shaky3D::update(float time)
+void Shaky3D::update(float /*time*/)
 {
-    CC_UNUSED_PARAM(time);
     int i, j;
 
     for (i = 0; i < (_gridSize.width+1); ++i)
@@ -653,7 +651,7 @@ void Waves::update(float time)
 
 // implementation of Twirl
 
-Twirl* Twirl::create(float duration, const Size& gridSize, Vec2 position, unsigned int twirls, float amplitude)
+Twirl* Twirl::create(float duration, const Size& gridSize, const Vec2& position, unsigned int twirls, float amplitude)
 {
     Twirl *action = new (std::nothrow) Twirl();
 
@@ -672,7 +670,7 @@ Twirl* Twirl::create(float duration, const Size& gridSize, Vec2 position, unsign
     return action;
 }
 
-bool Twirl::initWithDuration(float duration, const Size& gridSize, Vec2 position, unsigned int twirls, float amplitude)
+bool Twirl::initWithDuration(float duration, const Size& gridSize, const Vec2& position, unsigned int twirls, float amplitude)
 {
     if (Grid3DAction::initWithDuration(duration, gridSize))
     {

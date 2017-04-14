@@ -701,6 +701,7 @@ function CocosNodeTest()
         NodeNonOpaqueTest,
         NodeGlobalZValueTest,
     }
+    Helper.index = 1
 
 	scene:addChild(CameraCenterTest())
 	scene:addChild(CreateBackMenuItem())

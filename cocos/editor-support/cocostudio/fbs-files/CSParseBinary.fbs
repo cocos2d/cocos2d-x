@@ -1,0 +1,557 @@
+// ParseBinary IDL file
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// !! When adding new pairs to the maps below,         !!
+// !! please add to the last position of the map.      !!
+// !! It will ensure the reader's version compatible.  !!
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+namespace flatbuffers;
+
+table CSParseBinary
+{
+    //Make sure the version is the 1st pair in this map! 
+	//It will make sure Cocos2d-x can parse the version string correctly from csbs in various versions. 
+	version:string;
+	
+    textures:[string];
+    texturePngs:[string];
+
+    nodeTree:NodeTree;
+    action:NodeAction;
+	animationList:[AnimationInfo];
+}
+
+root_type CSParseBinary;
+
+table NodeTree
+{
+    classname:string;
+    
+    children:[NodeTree];
+
+    options:Options;
+	customClassName:string;
+}
+
+table Options
+{
+    data:WidgetOptions;
+}
+
+table WidgetOptions
+{
+    name:string;
+    actionTag:int= 0;
+    rotationSkew:RotationSkew;
+    zOrder:int;
+    visible:bool = true;
+    alpha:ubyte = 255;
+    tag:int = 0;
+    position:Position;
+    scale:Scale;   
+    anchorPoint:AnchorPoint;
+    color:Color;
+    size:FlatSize;
+    flipX:bool = false;
+    flipY:bool = false;
+    ignoreSize:bool = false;
+    touchEnabled:bool;
+    frameEvent:string;
+    customProperty:string; 
+    callBackType:string;
+    callBackName:string;
+	layoutComponent:LayoutComponentTable;
+}
+
+table LayoutComponentTable
+{
+	positionXPercentEnabled:bool;
+	positionYPercentEnabled:bool;
+	positionXPercent:float;
+	positionYPercent:float;
+	sizeXPercentEnable:bool;
+	sizeYPercentEnable:bool;
+	sizeXPercent:float;
+	sizeYPercent:float;
+	stretchHorizontalEnabled:bool;
+	stretchVerticalEnabled:bool;
+	horizontalEdge:string;
+	verticalEdge:string;
+	leftMargin:float;
+	rightMargin:float;
+	topMargin:float;
+	bottomMargin:float;
+}
+
+table SingleNodeOptions
+{
+    nodeOptions:WidgetOptions;
+}
+
+table SpriteOptions
+{
+    nodeOptions:WidgetOptions;
+
+    fileNameData:ResourceData;
+    blendFunc:BlendFunc;
+}
+
+table ParticleSystemOptions
+{
+    nodeOptions:WidgetOptions;
+    fileNameData:ResourceData;
+    blendFunc:BlendFunc;
+}
+
+table GameMapOptions
+{
+    nodeOptions:WidgetOptions;
+
+    fileNameData:ResourceData;    
+}
+
+table ButtonOptions
+{
+    widgetOptions:WidgetOptions;
+
+    normalData:ResourceData;
+    pressedData:ResourceData;
+    disabledData:ResourceData;
+    fontResource:ResourceData;
+    text:string;
+    isLocalized:bool = false;
+    fontName:string;
+    fontSize:int;
+    textColor:Color;
+    capInsets:CapInsets;
+    scale9Size:FlatSize;
+    scale9Enabled:bool;
+    displaystate:bool = true;
+
+    outlineEnabled:bool = false;
+    outlineColor:Color;
+    outlineSize:int = 1;
+    shadowEnabled:bool = false;
+    shadowColor:Color;
+    shadowOffsetX:float = 2;
+    shadowOffsetY:float = -2;
+    shadowBlurRadius:int;
+}
+
+table CheckBoxOptions
+{
+    widgetOptions:WidgetOptions;
+
+    backGroundBoxData:ResourceData;
+    backGroundBoxSelectedData:ResourceData;
+    frontCrossData:ResourceData;
+    backGroundBoxDisabledData:ResourceData;
+    frontCrossDisabledData:ResourceData;
+    selectedState:bool = true;
+    displaystate:bool = true;
+}
+
+table ImageViewOptions
+{
+    widgetOptions:WidgetOptions;
+
+    fileNameData:ResourceData;
+    capInsets:CapInsets;
+    scale9Size:FlatSize;
+    scale9Enabled:bool;   
+}
+
+table TextAtlasOptions
+{
+    widgetOptions:WidgetOptions;
+
+    charMapFileData:ResourceData;
+    stringValue:string;
+    startCharMap:string;
+    itemWidth:int;
+    itemHeight:int;
+}
+
+table TextBMFontOptions
+{
+    widgetOptions:WidgetOptions;
+
+    fileNameData:ResourceData;
+    text:string;
+    isLocalized:bool = false;
+}
+
+table TextOptions
+{
+    widgetOptions:WidgetOptions;
+
+    fontResource:ResourceData;
+    fontName:string;
+    fontSize:int;
+    text:string;
+    isLocalized:bool = false;
+    areaWidth:int;
+    areaHeight:int;
+    hAlignment:int;
+    vAlignment:int;
+    touchScaleEnable:bool = false;
+    isCustomSize:bool = false;
+    outlineEnabled:bool = false;
+    outlineColor:Color;
+    outlineSize:int = 1;
+    shadowEnabled:bool = false;
+    shadowColor:Color;
+    shadowOffsetX:float = 2;
+    shadowOffsetY:float = -2;
+    shadowBlurRadius:int;
+}
+
+table TextFieldOptions
+{
+    widgetOptions:WidgetOptions;
+
+    fontResource:ResourceData;
+    fontName:string;
+    fontSize:int;
+    text:string;
+    isLocalized:bool = false;
+    placeHolder:string;
+    passwordEnabled:bool = false;
+    passwordStyleText:string;
+    maxLengthEnabled:bool = false;
+    maxLength:int;
+    areaWidth:int;
+    areaHeight:int;
+    isCustomSize:bool = false;
+}
+
+table LoadingBarOptions
+{
+    widgetOptions:WidgetOptions;
+
+    textureData:ResourceData;
+    percent:int = 80;
+    direction:int = 0;
+}
+
+table SliderOptions
+{
+    widgetOptions:WidgetOptions;
+
+    barFileNameData:ResourceData;
+    ballNormalData:ResourceData;
+    ballPressedData:ResourceData;
+    ballDisabledData:ResourceData;
+    progressBarData:ResourceData;
+    percent:int = 50;
+    displaystate:bool = true;
+}
+
+table PanelOptions
+{
+    widgetOptions:WidgetOptions;
+
+    backGroundImageData:ResourceData;
+    clipEnabled:bool = false;
+    bgColor:Color;
+    bgStartColor:Color;
+    bgEndColor:Color;
+    colorType:int = 0;
+    bgColorOpacity:ubyte = 255;
+    colorVector:ColorVector;
+    capInsets:CapInsets;
+    scale9Size:FlatSize;
+    backGroundScale9Enabled:bool = false;    
+}
+
+table ScrollViewOptions
+{
+    widgetOptions:WidgetOptions;
+
+    backGroundImageData:ResourceData;
+    clipEnabled:bool = false;
+    bgColor:Color;
+    bgStartColor:Color;
+    bgEndColor:Color;
+    colorType:int = 0;
+    bgColorOpacity:ubyte = 255;
+    colorVector:ColorVector;
+    capInsets:CapInsets;
+    scale9Size:FlatSize;
+    backGroundScale9Enabled:bool = false;
+    innerSize:FlatSize;
+    direction:int;
+    bounceEnabled:bool = false;
+    scrollbarEnabeld:bool = true;
+    scrollbarAutoHide:bool = true;
+    scrollbarAutoHideTime:float = 0.2;
+}
+
+table PageViewOptions
+{
+    widgetOptions:WidgetOptions;
+
+    backGroundImageData:ResourceData;
+    clipEnabled:bool = false;
+    bgColor:Color;
+    bgStartColor:Color;
+    bgEndColor:Color;
+    colorType:int = 0;
+    bgColorOpacity:ubyte = 255;
+    colorVector:ColorVector;
+    capInsets:CapInsets;
+    scale9Size:FlatSize;
+    backGroundScale9Enabled:bool = false;
+}
+
+table ListViewOptions
+{
+    widgetOptions:WidgetOptions;
+
+    backGroundImageData:ResourceData;
+    clipEnabled:bool = false;
+    bgColor:Color;
+    bgStartColor:Color;
+    bgEndColor:Color;
+    colorType:int = 0;
+    bgColorOpacity:ubyte = 255;
+    colorVector:ColorVector;
+    capInsets:CapInsets;
+    scale9Size:FlatSize;
+    backGroundScale9Enabled:bool = false;
+    innerSize:FlatSize;
+    direction:int;
+    bounceEnabled:bool = false;
+    itemMargin:int = 0;
+    directionType:string;
+    horizontalType:string;
+    verticalType:string;
+}
+
+table ProjectNodeOptions
+{
+    nodeOptions:WidgetOptions;
+
+    fileName:string;
+    innerActionSpeed:float;
+}
+
+table ComponentOptions
+{
+    nodeOptions:WidgetOptions;
+
+    type:string;
+    comAudioOptions:ComAudioOptions;
+}
+
+table ComAudioOptions
+{
+    nodeOptions:WidgetOptions;
+
+    name:string;
+    enabled:bool;
+    loop:bool;
+    volume:int;
+    fileNameData:ResourceData;
+}
+
+table AnimationInfo
+{
+    name:string;
+    startIndex:int;
+    endIndex:int;
+}
+
+table NodeAction
+{
+    duration:int;
+    speed:float;
+
+    timeLines:[TimeLine];
+    currentAnimationName:string;
+}
+
+table TimeLine
+{
+    property:string;
+    actionTag:int;
+
+    frames:[Frame];
+}
+
+table Frame
+{
+    pointFrame:PointFrame;
+    scaleFrame:ScaleFrame;
+    colorFrame:ColorFrame;
+    textureFrame:TextureFrame;
+    eventFrame:EventFrame;
+    intFrame:IntFrame; 
+    boolFrame:BoolFrame;   
+    innerActionFrame:InnerActionFrame;
+    blendFrame:BlendFrame;
+}
+
+// PointFrame
+table PointFrame
+{
+    frameIndex:int;
+    tween:bool = true;
+    position:Position;
+
+    easingData:EasingData;
+}
+
+// ScaleFrame
+table ScaleFrame
+{
+    frameIndex:int;
+    tween:bool = true;
+    scale:Scale;
+
+    easingData:EasingData;
+}
+
+// ColorFrame
+table ColorFrame
+{
+    frameIndex:int;
+    tween:bool = true;
+    color:Color;
+
+    easingData:EasingData;
+}
+
+// TextureFrame
+table TextureFrame
+{
+    frameIndex:int;
+    tween:bool = true;
+    textureFile:ResourceData;
+
+    easingData:EasingData;
+}
+
+// EventFrame
+table EventFrame
+{
+    frameIndex:int;
+    tween:bool = true;
+    value:string;
+
+    easingData:EasingData;
+}
+
+// IntFrame
+table IntFrame
+{
+    frameIndex:int;
+    tween:bool = true;
+    value:int;
+
+    easingData:EasingData;
+}
+
+// BoolFrame
+table BoolFrame
+{
+    frameIndex:int;
+    tween:bool = true;
+    value:bool = true;
+
+    easingData:EasingData;
+}
+
+// InnerActionFrame
+table InnerActionFrame
+{
+    frameIndex:int;
+    tween:bool = true;
+    innerActionType:int;
+    currentAniamtionName:string;
+    singleFrameIndex:int;
+
+    easingData:EasingData;
+}
+
+// EasingData
+table EasingData
+{
+    type:int = -1;
+    points:[Position];
+}
+
+struct RotationSkew
+{
+    rotationSkewX:float;
+    rotationSkewY:float;
+}
+
+struct Position
+{
+    x:float;
+    y:float;
+}
+
+struct Scale
+{
+    scaleX:float;
+    scaleY:float;
+}
+
+struct AnchorPoint
+{
+    scaleX:float;
+    scaleY:float;
+}
+
+struct Color
+{
+    a:ubyte;
+    r:ubyte;
+    g:ubyte;
+    b:ubyte;
+}
+
+struct ColorVector
+{    
+    vectorX:float;
+    vectorY:float;
+}
+
+struct FlatSize
+{
+    width:float;
+    height:float;
+}
+
+struct CapInsets
+{
+    x:float;
+    y:float;
+    width:float;
+    height:float;
+}
+
+struct BlendFunc
+{
+    src:int;
+    dst:int;
+}
+
+table ResourceData
+{
+    path:string;
+    plistFile:string;
+    resourceType:int;
+}
+
+// BlendFrame
+table BlendFrame
+{
+    frameIndex:int;
+    tween:bool = true;
+    blendFunc:BlendFunc;
+
+    easingData:EasingData;
+}

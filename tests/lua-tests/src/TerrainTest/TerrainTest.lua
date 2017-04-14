@@ -125,18 +125,18 @@ function Player:init()
         if self._playerState == PLAER_STATE.IDLE then
 
         elseif self._playerState == PLAER_STATE.FORWARD then
-            local newFaceDir = cc.vec3( self._targetPos.x - curPos.x, self._targetPos.y - curPos.y, self._targetPos.z - curPos.z)
+            local newFaceDir = cc.vec3sub(self._targetPos, curPos)
             newFaceDir.y = 0.0
             newFaceDir = cc.vec3normalize(newFaceDir)
-            local offset = cc.vec3(newFaceDir.x * 25.0 * dt, newFaceDir.y * 25.0 * dt, newFaceDir.z * 25.0 * dt)
-            curPos = cc.vec3(curPos.x + offset.x, curPos.y + offset.y, curPos.z + offset.z)
+            local offset = cc.vec3mul(newFaceDir, 25.0 * dt)
+            curPos = cc.vec3add(curPos, offset)
             self:setPosition3D(curPos)
         elseif self._playerState ==  PLAER_STATE.BACKWARD then
             
             local transform   = self:getNodeToWorldTransform()
             local forward_vec = cc.vec3(-transform[9], -transform[10], -transform[11])
             forward_vec = cc.vec3normalize(forward_vec)
-            self:setPosition3D(cc.vec3(curPos.x - forward_vec.x * 15 * dt, curPos.y - forward_vec.y * 15 * dt, curPos.z - forward_vec.z * 15 *dt))
+            self:setPosition3D(cc.vec3sub(curPos, cc.vec3mul(forward_vec, 15 * dt)))
         elseif self._playerState == PLAER_STATE.LEFT then
             player:setRotation3D(cc.vec3(curPos.x, curPos.y + 25 * dt, curPos.z))
         elseif self._playerState == PLAER_STATE.RIGHT then
@@ -159,10 +159,9 @@ function Player:init()
 
         local vec_offset = cc.vec4(camera_offset.x, camera_offset.y, camera_offset.z, 1)
         local transform  = self:getNodeToWorldTransform()
-        local dst = cc.vec4(0.0, 0.0, 0.0, 0.0)
-        vec_offset = mat4_transformVector(transform, vec_offset, dst)
+        vec_offset = mat4_transformVector(transform, vec_offset)
         local playerPos = self:getPosition3D()
-        self._cam:setPosition3D(cc.vec3(playerPos.x + camera_offset.x, playerPos.y + camera_offset.y, playerPos.z + camera_offset.z))
+        self._cam:setPosition3D(cc.vec3add(playerPos, camera_offset))
         self:updateState()
     end, 0)
 
@@ -218,20 +217,20 @@ function TerrainWalkThru:init()
                 local size = cc.Director:getInstance():getWinSize()
                 nearP = self._camera:unproject(size, nearP, nearP)
                 farP  = self._camera:unproject(size, farP, farP)
-                local dir = cc.vec3(farP.x - nearP.x, farP.y - nearP.y, farP.z - nearP.z)
+                local dir = cc.vec3sub(farP, nearP)
                 dir = cc.vec3normalize(dir)
 
-                local rayStep = cc.vec3(15 * dir.x, 15 * dir.y, 15 * dir.z)
+                local rayStep = cc.vec3mul(dir, 15)
                 local rayPos =  nearP
                 local rayStartPosition = nearP
                 local lastRayPosition  = rayPos
-                rayPos = cc.vec3(rayPos.x + rayStep.x, rayPos.y + rayStep.y, rayPos.z + rayStep.z)
+                rayPos = cc.vec3add(rayPos, rayStep)
                 -- Linear search - Loop until find a point inside and outside the terrain Vector3 
                 local height = self._terrain:getHeight(rayPos.x, rayPos.z)
 
                 while rayPos.y > height do
                     lastRayPosition = rayPos 
-                    rayPos = cc.vec3(rayPos.x + rayStep.x, rayPos.y + rayStep.y, rayPos.z + rayStep.z)
+                    rayPos = cc.vec3add(rayPos, rayStep)
                     height = self._terrain:getHeight(rayPos.x,rayPos.z) 
                 end
 
@@ -240,7 +239,7 @@ function TerrainWalkThru:init()
 
                 for i = 1, 32 do
                     -- Binary search pass 
-                    local middlePoint = cc.vec3(0.5 * (startPosition.x + endPosition.x), 0.5 * (startPosition.y + endPosition.y), 0.5 * (startPosition.z + endPosition.z))
+                    local middlePoint = cc.vec3mul(cc.vec3add(startPosition, endPosition), 0.5)
                     if (middlePoint.y < height) then
                         endPosition = middlePoint 
                     else 
@@ -248,9 +247,9 @@ function TerrainWalkThru:init()
                     end
                 end
 
-                local collisionPoint = cc.vec3(0.5 * (startPosition.x + endPosition.x), 0.5 * (startPosition.y + endPosition.y), 0.5 * (startPosition.z + endPosition.z))
+                local collisionPoint = cc.vec3mul(cc.vec3add(startPosition, endPosition), 0.5)
                 local playerPos = self._player:getPosition3D()
-                dir = cc.vec3(collisionPoint.x - playerPos.x, collisionPoint.y - playerPos.y, collisionPoint.z - playerPos.z)
+                dir = cc.vec3sub(collisionPoint, playerPos)
                 dir.y = 0
                 dir = cc.vec3normalize(dir)
                 self._player._headingAngle =  -1 * math.acos(-dir.z)
@@ -310,7 +309,7 @@ function TerrainWalkThru:init()
     end
 
     local playerPos = self._player:getPosition3D()
-    self._camera:setPosition3D(cc.vec3(playerPos.x + camera_offset.x, playerPos.y + camera_offset.y, playerPos.z + camera_offset.z))
+    self._camera:setPosition3D(cc.vec3add(playerPos, camera_offset))
     self._camera:setRotation3D(cc.vec3(-45,0,0))
 
     self:addChild(self._player)
@@ -333,6 +332,7 @@ function TerrainTest()
         TerrainSimple.create,
         TerrainWalkThru.create,
     }
+    Helper.index = 1
 
     scene:addChild(TerrainSimple.create())
     scene:addChild(CreateBackMenuItem())

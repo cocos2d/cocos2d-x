@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2013 Zynga Inc.
- * Copyright (c) 2013-2014 Chukong Technologies Inc.
+ * Copyright (c) 2013-2017 Chukong Technologies Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -380,7 +380,7 @@ bool JSB_glGetSupportedExtensions(JSContext *cx, uint32_t argc, jsval *vp)
     GLubyte* copy = new (std::nothrow) GLubyte[len+1];
     strncpy((char*)copy, (const char*)extensions, len );
 
-    int start_extension=0;
+    size_t start_extension = 0;
     int element=0;
     for( size_t i=0; i<len+1; i++) {
         if( copy[i]==' ' || copy[i]==',' || i==len ) {

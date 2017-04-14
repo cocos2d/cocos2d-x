@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2015-2017 Chukong Technologies Inc.
  Copyright (c) 2014 GamePlay3D team
 
  http://www.cocos2d-x.org
@@ -39,10 +39,10 @@ RenderState::StateBlock* RenderState::StateBlock::_defaultState = nullptr;
 
 
 RenderState::RenderState()
-: _texture(nullptr)
-, _hash(0)
+: _hash(0)
 , _hashDirty(true)
 , _parent(nullptr)
+, _texture(nullptr)
 {
     _state = StateBlock::create();
     CC_SAFE_RETAIN(_state);
@@ -50,12 +50,13 @@ RenderState::RenderState()
 
 RenderState::~RenderState()
 {
+    CC_SAFE_RELEASE(_texture);
     CC_SAFE_RELEASE(_state);
 }
 
 void RenderState::initialize()
 {
-    if (StateBlock::_defaultState == NULL)
+    if (StateBlock::_defaultState == nullptr)
     {
         StateBlock::_defaultState = StateBlock::create();
         CC_SAFE_RETAIN(StateBlock::_defaultState);
@@ -121,7 +122,7 @@ void RenderState::bind(Pass* pass)
     StateBlock::restore(stateOverrideBits);
 
     // Apply renderer state for the entire hierarchy, top-down.
-    rs = NULL;
+    rs = nullptr;
     while ((rs = getTopmost(rs)))
     {
         if (rs->_state)
@@ -137,12 +138,12 @@ RenderState* RenderState::getTopmost(RenderState* below)
     if (rs == below)
     {
         // Nothing below ourself.
-        return NULL;
+        return nullptr;
     }
 
     while (rs)
     {
-        if (rs->_parent == below || rs->_parent == NULL)
+        if (rs->_parent == below || rs->_parent == nullptr)
         {
             // Stop traversing up here.
             return rs;
@@ -150,7 +151,7 @@ RenderState* RenderState::getTopmost(RenderState* below)
         rs = rs->_parent;
     }
 
-    return NULL;
+    return nullptr;
 }
 
 RenderState::StateBlock* RenderState::getStateBlock() const

@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2015-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -32,11 +32,12 @@
 
 NS_CC_BEGIN
 
+#pragma pack(push,1)
 struct TileCacheSetHeader
 {
-    int magic;
-    int version;
-    int numTiles;
+    int32_t magic;
+    int32_t version;
+    int32_t numTiles;
     dtNavMeshParams meshParams;
     dtTileCacheParams cacheParams;
 };
@@ -44,8 +45,9 @@ struct TileCacheSetHeader
 struct TileCacheTileHeader
 {
     dtCompressedTileRef tileRef;
-    int dataSize;
+    int32_t dataSize;
 };
+#pragma pack(pop)
 
 static unsigned char* parseRow(unsigned char* buf, unsigned char* bufEnd, char* row, int len)
 {
@@ -229,7 +231,7 @@ bool NavMesh::loadNavMeshFile()
 
 bool NavMesh::loadGeomFile()
 {
-    unsigned char* buf = 0;
+    unsigned char* buf = nullptr;
     auto data = FileUtils::getInstance()->getDataFromFile(_geomFilePath);
     if (data.isNull()) return false;
     buf = data.getBytes();

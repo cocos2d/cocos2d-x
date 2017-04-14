@@ -1,7 +1,7 @@
 /****************************************************************************
  Copyright (c) 2008-2010 Ricardo Quesada
  Copyright (c) 2011-2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -42,8 +42,6 @@ var SpritePolygonTestDemo = BaseTestLayer.extend({
             swallowTouch: true,
             onTouchBegan: function (touch, event) {
                 var target = event.getCurrentTarget();
-                target._sp.debugDraw(true);
-                target._spp.debugDraw(true);
                 return true;
             },
             onTouchMoved: function (touch, event) {
@@ -55,8 +53,6 @@ var SpritePolygonTestDemo = BaseTestLayer.extend({
             },
             onTouchEnded: function (touch, event) {
                 var target = event.getCurrentTarget();
-                target._sp.debugDraw(false);
-                target._spp.debugDraw(false);
             }
         });
         cc.eventManager.addListener(touchListener, this);
@@ -229,7 +225,6 @@ var SpritePolygonTestSlider = SpritePolygonTestDemo.extend({
         {
             var sp = this.makeSprite(list[i], 50+offset*i, y);
             this.addChild(sp);
-            sp.debugDraw(true);
         }
     },
     makeSprite: function (filename, x, y) {
@@ -266,7 +261,6 @@ var SpritePolygonTestSlider = SpritePolygonTestDemo.extend({
                 if(file.length) {
                     var polygons = jsb.AutoPolygon.generatePolygon(file, cc.rect(), epsilon);
                     child.setPolygonInfo(polygons);
-                    child.debugDraw(true);
                     this.updateLabel(child, polygons);
                 }
             }

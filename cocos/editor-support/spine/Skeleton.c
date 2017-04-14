@@ -161,7 +161,7 @@ static void _addToUpdateCache(_spSkeleton* const internal, _spUpdateType type, v
 	_spUpdate* update;
 	if (internal->updateCacheCount == internal->updateCacheCapacity) {
 		internal->updateCacheCapacity *= 2;
-		internal->updateCache = (_spUpdate*)realloc(internal->updateCache, sizeof(_spUpdate) * internal->updateCacheCapacity);
+		internal->updateCache = realloc(internal->updateCache, sizeof(_spUpdate) * internal->updateCacheCapacity);
 	}
 	update = internal->updateCache + internal->updateCacheCount;
 	update->type = type;
@@ -172,7 +172,7 @@ static void _addToUpdateCache(_spSkeleton* const internal, _spUpdateType type, v
 static void _addToUpdateCacheReset(_spSkeleton* const internal, spBone* bone) {
 	if (internal->updateCacheResetCount == internal->updateCacheResetCapacity) {
 		internal->updateCacheResetCapacity *= 2;
-		internal->updateCacheReset = (spBone**)realloc(internal->updateCacheReset, sizeof(spBone*) * internal->updateCacheResetCapacity);
+		internal->updateCacheReset = realloc(internal->updateCacheReset, sizeof(spBone*) * internal->updateCacheResetCapacity);
 	}
 	internal->updateCacheReset[internal->updateCacheResetCount] = bone;
 	++internal->updateCacheResetCount;

@@ -55,7 +55,7 @@ PerformceLabelTests::PerformceLabelTests()
 ////////////////////////////////////////////////////////
 bool LabelMainScene::init()
 {
-    //srandom(0);
+    //std::srandom(0);
     if (!TestCase::init())
     {
         return false;

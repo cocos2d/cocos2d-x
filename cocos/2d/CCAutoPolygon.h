@@ -2,7 +2,7 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -54,17 +54,8 @@ public:
      * @memberof PolygonInfo
      * @return PolygonInfo object
      */
-    PolygonInfo():
-    rect(cocos2d::Rect::ZERO),
-    filename(""),
-    isVertsOwner(true)
-    {
-        triangles.verts = nullptr;
-        triangles.indices = nullptr;
-        triangles.vertCount = 0;
-        triangles.indexCount = 0;
-    };
-    
+    PolygonInfo();
+
     /**
      * Create an polygoninfo from the data of another Polygoninfo
      * @param other     another PolygonInfo to be copied
@@ -90,12 +81,21 @@ public:
     void setQuad(V3F_C4B_T2F_Quad *quad);
 
     /**
+     * set the data to be a pointer to a number of Quads
+     * the member verts will not be released when this PolygonInfo destructs
+     * as the verts memory are managed by other objects
+     * @param quad  a pointer to the V3F_C4B_T2F_Quad quads
+     */
+    void setQuads(V3F_C4B_T2F_Quad *quads, int numberOfQuads);
+
+
+    /**
      * set the data to be a pointer to a triangles
      * the member verts will not be released when this PolygonInfo destructs
      * as the verts memory are managed by other objects
      * @param triangles  a pointer to the TrianglesCommand::Triangles object
      */
-    void setTriangles(TrianglesCommand::Triangles triangles);
+    void setTriangles(const TrianglesCommand::Triangles& triangles);
 
     /**
      * get vertex count
@@ -117,13 +117,20 @@ public:
      * @return sum of all triangle area size
      */
     float getArea() const;
-    
-    Rect rect;
-    std::string filename;
+
+    const Rect& getRect() const { return _rect; }
+    void setRect(const Rect& rect) { _rect = rect; }
+    const std::string& getFilename() const { return _filename; }
+    void setFilename(const std::string& filename ) { _filename = filename; }
+
+    // FIXME: this should be a property, not a public ivar
     TrianglesCommand::Triangles triangles;
+
 protected:
-    bool isVertsOwner;
-    
+    bool _isVertsOwner;
+    Rect _rect;
+    std::string _filename;
+
 private:
     void releaseVertsAndIndices();
 };
@@ -163,11 +170,11 @@ public:
      * std::vector<Vec2> points = ap.trace(rect);//default threshold is 0.0
      * @endcode
      */
-     std::vector<Vec2> trace(const cocos2d::Rect& rect, const float& threshold = 0.0);
+     std::vector<Vec2> trace(const cocos2d::Rect& rect, float threshold = 0.0f);
     
     /**
      * reduce the amount of points so its faster for GPU to process and draw
-     * based on Ramer-Douglas-Puecker algorithm
+     * based on Ramer-Douglas-Peucker algorithm
      * @param   points  a vector of Vec2 points as input
      * @param   rect    a texture rect for specify an area of the image to avoid over reduction
      * @param   epsilon the perpendicular distance where points smaller than this value will be discarded
@@ -177,7 +184,7 @@ public:
      * std::vector<Vec2> reduced = ap.reduce(inputPoints, rect);//default epsilon is 2
      * @endcode
      */
-    std::vector<Vec2> reduce(const std::vector<Vec2>& points, const Rect& rect, const float& epsilon = 2.0);
+    std::vector<Vec2> reduce(const std::vector<Vec2>& points, const Rect& rect, float epsilon = 2.0f);
     
     /**
      * expand the points along their edge, useful after you reduce the points that cuts into the sprite
@@ -191,7 +198,7 @@ public:
      * std::vector<Vec2> expanded = ap.expand(inputPoints, rect, 2.0);
      * @endcode
      */
-    std::vector<Vec2> expand(const std::vector<Vec2>& points, const Rect& rect, const float& epsilon);
+    std::vector<Vec2> expand(const std::vector<Vec2>& points, const Rect& rect, float epsilon);
     
     /**
      * Triangulate the input points into triangles for rendering
@@ -218,7 +225,7 @@ public:
      * ap.calculateUV(rect, myPolygons.verts, 20);
      * @endcode
      */
-    void calculateUV(const Rect& rect, V3F_C4B_T2F* verts, const ssize_t& count);
+    void calculateUV(const Rect& rect, V3F_C4B_T2F* verts, ssize_t count);
     
     /**
      * a helper function, packing trace, reduce, expand, triangulate and calculate uv in one function
@@ -234,7 +241,7 @@ public:
      * auto sp2 = Sprite::create(myInfo2);
      * @endcode
      */
-    PolygonInfo generateTriangles(const Rect& rect = Rect::ZERO, const float& epsilon = 2.0, const float& threshold = 0.05);
+    PolygonInfo generateTriangles(const Rect& rect = Rect::ZERO, float epsilon = 2.0f, float threshold = 0.05f);
     
     /**
      * a helper function, packing autoPolygon creation, trace, reduce, expand, triangulate and calculate uv in one function
@@ -248,19 +255,19 @@ public:
      * auto sp = Sprite::create(AutoPolygon::generatePolygon("grossini.png"));
      * @endcode
      */
-    static PolygonInfo generatePolygon(const std::string& filename, const Rect& rect = Rect::ZERO, const float epsilon = 2.0, const float threshold = 0.05);
+    static PolygonInfo generatePolygon(const std::string& filename, const Rect& rect = Rect::ZERO, float epsilon = 2.0f, float threshold = 0.05f);
 protected:
-    Vec2 findFirstNoneTransparentPixel(const Rect& rect, const float& threshold);
-    std::vector<cocos2d::Vec2> marchSquare(const Rect& rect, const Vec2& first, const float& threshold);
-    unsigned int getSquareValue(const unsigned int& x, const unsigned int& y, const Rect& rect, const float& threshold);
+    Vec2 findFirstNoneTransparentPixel(const Rect& rect, float threshold);
+    std::vector<cocos2d::Vec2> marchSquare(const Rect& rect, const Vec2& first, float threshold);
+    unsigned int getSquareValue(unsigned int x, unsigned int y, const Rect& rect, float threshold);
 
-    unsigned char getAlphaByIndex(const unsigned int& i);
+    unsigned char getAlphaByIndex(unsigned int i);
     unsigned char getAlphaByPos(const Vec2& pos);
 
-    int getIndexFromPos(const unsigned int& x, const unsigned int& y){return y*_width+x;};
-    cocos2d::Vec2 getPosFromIndex(const unsigned int& i){return cocos2d::Vec2(i%_width, i/_width);};
+    int getIndexFromPos(unsigned int x, unsigned int y) { return y*_width+x; }
+    cocos2d::Vec2 getPosFromIndex(unsigned int i) { return cocos2d::Vec2(static_cast<float>(i%_width), static_cast<float>(i/_width)); }
 
-    std::vector<cocos2d::Vec2> rdp(std::vector<cocos2d::Vec2> v, const float& optimization);
+    std::vector<cocos2d::Vec2> rdp(const std::vector<cocos2d::Vec2>& v, float optimization);
     float perpendicularDistance(const cocos2d::Vec2& i, const cocos2d::Vec2& start, const cocos2d::Vec2& end);
 
     //real rect is the size that is in scale with the texture file

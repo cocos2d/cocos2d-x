@@ -15,7 +15,7 @@
 -- @return RichText#RichText self (return value: ccui.RichText)
         
 --------------------------------
---  @breif enable the outline of a-tag 
+--  @brief enable the outline of a-tag 
 -- @function [parent=#RichText] setAnchorTextOutline 
 -- @param self
 -- @param #bool enable
@@ -57,7 +57,7 @@
 -- @return int#int ret (return value: int)
         
 --------------------------------
---  @breif enable the shadow of a-tag 
+--  @brief enable the shadow of a-tag 
 -- @function [parent=#RichText] setAnchorTextShadow 
 -- @param self
 -- @param #bool enable

@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2015-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -125,7 +125,7 @@ bool getSteerTarget(dtNavMeshQuery* navQuery, const float* startPos, const float
     const float minTargetDist,
     const dtPolyRef* path, const int pathSize,
     float* steerPos, unsigned char& steerPosFlag, dtPolyRef& steerPosRef,
-    float* outPoints = 0, int* outPointCount = 0);
+    float* outPoints = nullptr, int* outPointCount = nullptr);
 /** @} */
 
 NS_CC_END

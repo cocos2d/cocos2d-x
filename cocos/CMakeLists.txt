@@ -1,7 +1,7 @@
 #/****************************************************************************
 # Copyright (c) 2013 cocos2d-x.org
 # Copyright (c) 2014 martell malone
-# Copyright (c) 2015 Chukong Technologies Inc.
+# Copyright (c) 2015-2017 Chukong Technologies Inc.
 #
 # http://www.cocos2d-x.org
 #
@@ -40,6 +40,7 @@ include(physics3d/CMakeLists.txt)
 include(math/CMakeLists.txt)
 include(navmesh/CMakeLists.txt)
 include(renderer/CMakeLists.txt)
+include(vr/CMakeLists.txt)
 include(base/CMakeLists.txt)
 include(deprecated/CMakeLists.txt)
 include(ui/CMakeLists.txt)
@@ -73,6 +74,7 @@ set(COCOS_SRC cocos2d.cpp
     ${COCOS_MATH_SRC}
     ${COCOS_NAVMESH_SRC}
     ${COCOS_RENDERER_SRC}
+    ${COCOS_VR_SRC}
     ${COCOS_BASE_SRC}
     ${COCOS_AUDIO_SRC}
     ${COCOS_UI_SRC}
@@ -88,12 +90,22 @@ set(COCOS_SRC cocos2d.cpp
 
 add_library(cocos2dInternal ${COCOS_SRC})
 
+set_target_properties(cocos2dInternal
+    PROPERTIES
+    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+    VERSION "${COCOS2D_X_VERSION}"
+)
+
 set(PLATFORM_SPECIFIC_LIBS)
 if(WINDOWS)
   foreach(_pkg OPENGL GLEW GLFW3 VORBIS MPG123 OPENAL)
     cocos_use_pkg(cocos2dInternal ${_pkg})
   endforeach()
-  list(APPEND PLATFORM_SPECIFIC_LIBS ws2_32 winmm)
+  list(APPEND PLATFORM_SPECIFIC_LIBS ws2_32 winmm version)
+  if(MINGW)
+    list(APPEND PLATFORM_SPECIFIC_LIBS shlwapi version)
+  endif()
 elseif(LINUX)
   foreach(_pkg OPENGL GLEW GLFW3 FMOD FONTCONFIG THREADS GTK3)
     cocos_use_pkg(cocos2dInternal ${_pkg})
@@ -134,7 +146,7 @@ else()
   message( FATAL_ERROR "Unsupported platform, CMake will exit" )
 endif()
 
-foreach(pkg ZLIB MINIZIP JPEG PNG TIFF TinyXML2 FREETYPE WEBSOCKETS CURL FLATBUFFERS XXHASH)
+foreach(pkg ZLIB MINIZIP JPEG PNG TIFF TinyXML2 FREETYPE WEBSOCKETS CURL OPENSSL FLATBUFFERS XXHASH)
   cocos_use_pkg(cocos2dInternal ${pkg})
 endforeach()
 
@@ -172,6 +184,8 @@ ADD_LIBRARY(cocos2d cc_dummy.c)
 if(ANDROID)
   target_link_libraries(cocos2d -Wl,-whole-archive cocos2dxandroid_static -Wl,-no-whole-archive)
   target_link_libraries(cocos2d cocos2dInternal cpufeatures)
+elseif(LINUX)
+  target_link_libraries(cocos2d cocos2dInternal dl)
 else()
   target_link_libraries(cocos2d cocos2dInternal)
 endif()

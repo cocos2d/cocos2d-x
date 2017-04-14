@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -578,6 +578,15 @@ private:
     cocos2d::Vector<Node*> _pausedTargets;
 };
 
+class ActionResize : public ActionsDemo 
+{
+public:
+    CREATE_FUNC(ActionResize);
+
+    virtual void onEnter() override;
+    virtual std::string subtitle() const override;
+};
+
 class ActionFloatTest : public ActionsDemo
 {
 public:
@@ -585,6 +594,45 @@ public:
 
     virtual void onEnter() override;
     virtual std::string subtitle() const override;
+};
+
+class Issue14936_1 : public ActionsDemo
+{
+public:
+    CREATE_FUNC(Issue14936_1);
+
+    virtual void onEnter() override;
+    virtual std::string subtitle() const override;
+    virtual std::string title() const override;
+private:
+    int _count;
+};
+
+class Issue14936_2 : public ActionsDemo
+{
+public:
+    CREATE_FUNC(Issue14936_2);
+
+    virtual void onEnter() override;
+    virtual std::string subtitle() const override;
+    virtual std::string title() const override;
+private:
+    int _count;
+};
+
+class SequenceWithFinalInstant : public ActionsDemo
+{
+public:
+    CREATE_FUNC(SequenceWithFinalInstant);
+    
+    virtual std::string subtitle() const override;
+    virtual void onEnter() override;
+    virtual void onExit() override;
+    
+private:
+    cocos2d::ActionManager* _manager;
+    cocos2d::Node* _target;
+    
 };
 
 #endif

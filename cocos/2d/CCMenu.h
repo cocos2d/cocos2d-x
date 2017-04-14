@@ -1,7 +1,7 @@
 /****************************************************************************
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -171,8 +171,8 @@ public:
     
     virtual void onEnter() override;
     virtual void onExit() override;
-    virtual void setOpacityModifyRGB(bool bValue) override {CC_UNUSED_PARAM(bValue);}
-    virtual bool isOpacityModifyRGB(void) const override { return false;}
+    virtual void setOpacityModifyRGB(bool value) override;
+    virtual bool isOpacityModifyRGB(void) const override;
 
     virtual std::string getDescription() const override;
 

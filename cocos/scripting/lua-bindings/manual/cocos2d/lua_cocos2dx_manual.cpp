@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -3201,9 +3201,8 @@ int tolua_cocos2dx_DrawNode_drawCardinalSpline(lua_State* tolua_S)
     cocos2d::DrawNode* self = nullptr;
     bool ok  = true;
 
-    tolua_Error tolua_err;
-
 #if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
     if (!tolua_isusertype(tolua_S,1,"cc.DrawNode",0,&tolua_err)) goto tolua_lerror;
 #endif
 
@@ -3267,9 +3266,8 @@ int tolua_cocos2dx_DrawNode_drawCatmullRom(lua_State* tolua_S)
     cocos2d::DrawNode* self = nullptr;
     bool ok  = true;
 
-    tolua_Error tolua_err;
-
 #if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
     if (!tolua_isusertype(tolua_S,1,"cc.DrawNode",0,&tolua_err)) goto tolua_lerror;
 #endif
 
@@ -3679,6 +3677,56 @@ static int tolua_cocos2dx_FileUtils_getStringFromFile(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'tolua_cocos2dx_FileUtils_getStringFromFile'.",&tolua_err);
+    return 0;
+#endif
+}
+
+static int tolua_cocos2dx_FileUtils_getDataFromFile(lua_State* tolua_S)
+{
+    if (nullptr == tolua_S)
+        return 0;
+
+    int argc = 0;
+    FileUtils* self = nullptr;
+    bool ok = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (!tolua_isusertype(tolua_S,1,"cc.FileUtils",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    self = static_cast<FileUtils *>(tolua_tousertype(tolua_S,1,0));
+
+#if COCOS2D_DEBUG >= 1
+    if (nullptr == self)
+    {
+        tolua_error(tolua_S,"invalid 'self' in function 'tolua_cocos2dx_FileUtils_getDataFromFile'\n", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (1 == argc)
+    {
+        const char* arg0;
+        std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp, "cc.FileUtils:getDataFromFile"); arg0 = arg0_tmp.c_str();
+        if (ok)
+        {
+            auto data = FileUtils::getInstance()->getDataFromFile(arg0);
+            if (!data.isNull())
+                lua_pushlstring(tolua_S, reinterpret_cast<const char*>(data.getBytes()), static_cast<size_t>(data.getSize()));
+
+            return 1;
+        }
+    }
+
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n", "cc.FileUtils:getDataFromFile", argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'tolua_cocos2dx_FileUtils_getDataFromFile'.",&tolua_err);
     return 0;
 #endif
 }
@@ -5309,6 +5357,10 @@ static void extendFileUtils(lua_State* tolua_S)
     {
         lua_pushstring(tolua_S,"getStringFromFile");
         lua_pushcfunction(tolua_S,tolua_cocos2dx_FileUtils_getStringFromFile );
+        lua_rawset(tolua_S,-3);
+
+        lua_pushstring(tolua_S,"getDataFromFile");
+        lua_pushcfunction(tolua_S,tolua_cocos2dx_FileUtils_getDataFromFile );
         lua_rawset(tolua_S,-3);
     }
     lua_pop(tolua_S, 1);
@@ -7308,9 +7360,9 @@ int lua_cocos2dx_Application_is64BitIOSDevice(lua_State* tolua_S)
     {
         bool is64BitIOSDevice = false;
         Application::Platform platform = cocos2d::Application::getInstance()->getTargetPlatform();
-        if (Application::Platform::OS_IPHONE == platform || Application::Platform::OS_IPAD == platform)
+        if (Application::Platform::OS_IPHONE == platform || Application::Platform::OS_IPAD == platform || Application::Platform::OS_ANDROID == platform)
         {
-#if defined(__arm64__)
+#if defined(__arm64__) || defined(__aarch64__)
             is64BitIOSDevice = true;
 #endif
         }
@@ -7642,7 +7694,7 @@ int lua_cocos2dx_get_PolygonInfo_rect(lua_State* tolua_S)
         return 0;
     }
 #endif
-    rect_to_luaval(tolua_S, cobj->rect);
+    rect_to_luaval(tolua_S, cobj->getRect());
     return 1;
 
 #if COCOS2D_DEBUG >= 1
@@ -7679,7 +7731,9 @@ int lua_cocos2dx_set_PolygonInfo_rect(lua_State* tolua_S)
         if (!tolua_istable(tolua_S, 2, 0, &tolua_err))
             goto tolua_lerror;
 #endif
-        luaval_to_rect(tolua_S, 2, &self->rect);
+        Rect outRect;
+        luaval_to_rect(tolua_S, 2, &outRect);
+        self->setRect(outRect);
         return 0;
     }
 
@@ -7709,7 +7763,7 @@ int lua_cocos2dx_get_PolygonInfo_filename(lua_State* tolua_S)
         return 0;
     }
 #endif
-    tolua_pushcppstring(tolua_S, cobj->filename);
+    tolua_pushcppstring(tolua_S, cobj->getFilename());
     return 1;
 
 #if COCOS2D_DEBUG >= 1
@@ -7742,7 +7796,9 @@ int lua_cocos2dx_set_PolygonInfo_filename(lua_State* tolua_S)
 
     if (1 == argc)
     {
-        luaval_to_std_string(tolua_S, 2, &self->filename);
+        std::string outFilename;
+        luaval_to_std_string(tolua_S, 2, &outFilename);
+        self->setFilename(outFilename);
         return 0;
     }
 
@@ -7957,7 +8013,6 @@ int register_all_cocos2dx_manual(lua_State* tolua_S)
     extendProperties(tolua_S);
     extendAutoPolygon(tolua_S);
     extendPolygonInfo(tolua_S);
-    extendPolygonInfo(tolua_S);
     return 0;
 }
 
@@ -8081,13 +8136,12 @@ static int tolua_cocos2d_Mat4_transformVector(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
 #endif
-    if (argc == 3)
+    if (argc == 2 || argc == 3) /* Allow 3 arguments for compatibility with old version */
     {
 #if COCOS2D_DEBUG >= 1
 
         if (!tolua_istable(tolua_S, 1, 0, &tolua_err) ||
-            !tolua_istable(tolua_S, 2, 0, &tolua_err) ||
-            !tolua_istable(tolua_S, 3, 0, &tolua_err))
+            !tolua_istable(tolua_S, 2, 0, &tolua_err))
             goto tolua_lerror;
         else
 #endif
@@ -8103,16 +8157,12 @@ static int tolua_cocos2d_Mat4_transformVector(lua_State* tolua_S)
             if (!ok)
                 return 0;
 
-            ok &= luaval_to_vec4(tolua_S, 3, &dst);
-            if (!ok)
-                return 0;
-
             mat.transformVector(vector, &dst);
             vec4_to_luaval(tolua_S, dst);
             return 1;
         }
     }
-    else if(argc == 6)
+    else if(argc == 5 || argc == 6) /* Allow 6 arguments for compatibility with old version */
     {
         /*
          float x, float y, float z, float w, Vec3* dst
@@ -8122,8 +8172,7 @@ static int tolua_cocos2d_Mat4_transformVector(lua_State* tolua_S)
             !tolua_isnumber(tolua_S, 2, 0, &tolua_err) ||
             !tolua_isnumber(tolua_S, 3, 0, &tolua_err) ||
             !tolua_isnumber(tolua_S, 4, 0, &tolua_err) ||
-            !tolua_isnumber(tolua_S, 5, 0, &tolua_err) ||
-            !tolua_istable(tolua_S, 6, 0, &tolua_err) )
+            !tolua_isnumber(tolua_S, 5, 0, &tolua_err) )
             goto tolua_lerror;
         else
 #endif
@@ -8139,10 +8188,6 @@ static int tolua_cocos2d_Mat4_transformVector(lua_State* tolua_S)
             y = tolua_tonumber(tolua_S, 3, 0);
             z = tolua_tonumber(tolua_S, 4, 0);
             w = tolua_tonumber(tolua_S, 5, 0);
-
-            ok &= luaval_to_vec3(tolua_S, 6, &dst);
-            if (!ok)
-                return 0;
 
             mat.transformVector(x,y,z,w, &dst);
             vec3_to_luaval(tolua_S, dst);
@@ -8622,23 +8667,18 @@ int tolua_cocos2d_Mat4_createTranslation(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
 #endif
-    if (argc == 4)
+    if (argc == 3)
     {
 #if COCOS2D_DEBUG >= 1
 
         if ( !tolua_isnumber(tolua_S, 1, 0, &tolua_err) ||
              !tolua_isnumber(tolua_S, 2, 0, &tolua_err)  ||
-             !tolua_isnumber(tolua_S, 3, 0, &tolua_err)  ||
-             !tolua_istable(tolua_S, 4, 0, &tolua_err))
+             !tolua_isnumber(tolua_S, 3, 0, &tolua_err))
             goto tolua_lerror;
         else
 #endif
         {
             cocos2d::Mat4 dst;
-            ok &= luaval_to_mat4(tolua_S, 4, &dst, "cc.Mat4.createTranslation");
-            if (!ok)
-                return 0;
-
             float xTranslation = (float)lua_tonumber(tolua_S, 1);
             float yTranslation = (float)lua_tonumber(tolua_S, 2);
             float zTranslation = (float)lua_tonumber(tolua_S, 3);
@@ -8648,12 +8688,10 @@ int tolua_cocos2d_Mat4_createTranslation(lua_State* tolua_S)
             return 1;
         }
     }
-    else if (argc == 2)
+    else if (argc == 1)
     {
 #if COCOS2D_DEBUG >= 1
-
-        if ( !tolua_istable(tolua_S, 1, 0, &tolua_err) ||
-             !tolua_istable(tolua_S, 2, 0, &tolua_err))
+        if ( !tolua_istable(tolua_S, 1, 0, &tolua_err))
             goto tolua_lerror;
         else
 #endif
@@ -8662,7 +8700,6 @@ int tolua_cocos2d_Mat4_createTranslation(lua_State* tolua_S)
             cocos2d::Mat4 dst;
 
             ok &= luaval_to_vec3(tolua_S, 1, &translation, "cc.Mat4.createTranslation");
-            ok &= luaval_to_mat4(tolua_S, 2, &dst, "cc.Mat4.createTranslation");
             if (!ok)
                 return 0;
 
@@ -8688,12 +8725,11 @@ int tolua_cocos2d_Mat4_createRotation(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
 #endif
-    if (argc == 2)
+    if (argc == 1)
     {
 #if COCOS2D_DEBUG >= 1
 
-        if ( !tolua_istable(tolua_S, 1, 0, &tolua_err) ||
-             !tolua_istable(tolua_S, 2, 0, &tolua_err))
+        if ( !tolua_istable(tolua_S, 1, 0, &tolua_err))
             goto tolua_lerror;
         else
 #endif
@@ -8702,7 +8738,6 @@ int tolua_cocos2d_Mat4_createRotation(lua_State* tolua_S)
             cocos2d::Mat4 dst;
 
             ok &= luaval_to_quaternion(tolua_S, 1, &quat, "cc.Mat4.createRotation");
-            ok &= luaval_to_mat4(tolua_S, 2, &dst, "cc.Mat4.createRotation");
             if (!ok)
                 return 0;
 
@@ -8711,13 +8746,12 @@ int tolua_cocos2d_Mat4_createRotation(lua_State* tolua_S)
             return 1;
         }
     }
-    else if (argc == 3)
+    else if (argc == 2)
     {
 #if COCOS2D_DEBUG >= 1
 
         if ( !tolua_istable(tolua_S, 1, 0, &tolua_err) ||
-             !tolua_isnumber(tolua_S, 2, 0, &tolua_err) ||
-             !tolua_istable(tolua_S, 3, 0, &tolua_err))
+             !tolua_isnumber(tolua_S, 2, 0, &tolua_err))
             goto tolua_lerror;
         else
 #endif
@@ -8726,7 +8760,6 @@ int tolua_cocos2d_Mat4_createRotation(lua_State* tolua_S)
             cocos2d::Mat4 dst;
 
             ok &= luaval_to_vec3(tolua_S, 1, &axis, "cc.Mat4.createRotation");
-            ok &= luaval_to_mat4(tolua_S, 3, &dst, "cc.Mat4.createRotation");
             if (!ok)
                 return 0;
 

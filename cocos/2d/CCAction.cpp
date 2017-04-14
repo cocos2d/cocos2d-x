@@ -2,7 +2,7 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include "2d/CCActionInterval.h"
 #include "2d/CCNode.h"
 #include "base/CCDirector.h"
-#include "deprecated/CCString.h"
+#include "base/ccUTF8.h"
 
 NS_CC_BEGIN
 //
@@ -73,15 +73,13 @@ bool Action::isDone() const
     return true;
 }
 
-void Action::step(float dt)
+void Action::step(float /*dt*/)
 {
-    CC_UNUSED_PARAM(dt);
     CCLOG("[Action step]. override me");
 }
 
-void Action::update(float time)
+void Action::update(float /*time*/)
 {
-    CC_UNUSED_PARAM(time);
     CCLOG("[Action update]. override me");
 }
 
@@ -283,10 +281,8 @@ bool Follow::initWithTarget(Node *followedNode, const Rect& rect /*= Rect::ZERO*
     return initWithTargetAndOffset(followedNode, 0.0, 0.0,rect);
     
 }
-void Follow::step(float dt)
+void Follow::step(float /*dt*/)
 {
-    CC_UNUSED_PARAM(dt);
-
     if(_boundarySet)
     {
         // whole map fits inside a single screen, no need to modify the position - unless map boundaries are increased

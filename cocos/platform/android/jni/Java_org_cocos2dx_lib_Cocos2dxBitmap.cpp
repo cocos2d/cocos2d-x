@@ -1,6 +1,10 @@
 /****************************************************************************
 Copyright (c) 2012 cocos2d-x.org
+<<<<<<< HEAD
 Copyright (c) 2013-2016 Chukong Technologies Inc.
+=======
+Copyright (c) 2013-2017 Chukong Technologies Inc.
+>>>>>>> cocos2d/v3
 
 http://www.cocos2d-x.org
 

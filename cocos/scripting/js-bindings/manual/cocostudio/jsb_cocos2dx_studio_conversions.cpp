@@ -1,6 +1,6 @@
 /*
  * Created by Huabin LING on 21/1/15.
- * Copyright (c) 2015 Chukong Technologies Inc.
+ * Copyright (c) 2015-2017 Chukong Technologies Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -56,7 +56,7 @@ bool jsval_to_animationInfo(JSContext* cx, JS::HandleValue vp, cocostudio::timel
     JS::ToNumber(cx, jsStartId, &startIndex) &&
     JS::ToNumber(cx, jsEndId, &endIndex) &&
     jsval_to_std_string(cx, jsName, &name) &&
-    !isnan(startIndex) && !isnan(endIndex);
+    !std::isnan(startIndex) && !std::isnan(endIndex);
     
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
     

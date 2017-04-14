@@ -41,162 +41,248 @@ using namespace spine;
 
 SpineTests::SpineTests()
 {
-    ADD_TEST_CASE(SpineTestLayerNormal);
-    ADD_TEST_CASE(SpineTestLayerFFD);
-    ADD_TEST_CASE(SpineTestPerformanceLayer);
-    ADD_TEST_CASE(SpineTestLayerRapor);
+    ADD_TEST_CASE(BatchingExample);
+    ADD_TEST_CASE(GoblinsExample);
+    ADD_TEST_CASE(GoblinsExampleBinary);
+    ADD_TEST_CASE(RaptorExample);
+    ADD_TEST_CASE(RaptorExampleBinary);
+    ADD_TEST_CASE(SpineboyExample);
+    ADD_TEST_CASE(SpineboyExampleBinary);
+    ADD_TEST_CASE(TankExample);
+    ADD_TEST_CASE(TankExampleBinary);
 }
 
-bool SpineTestLayerNormal::init () {
+SpineTestLayer::SpineTestLayer()
+: _title("")
+, _useBinary(false)
+{}
+
+std::string SpineTestLayer::title() const
+ {
+     return _title;
+ }
+
+// BatchingExample
+bool BatchingExample::init () {
     if (!SpineTestLayer::init()) return false;
     
-	skeletonNode = SkeletonAnimation::createWithFile("spine/spineboy.json", "spine/spineboy.atlas", 0.6f);
-    skeletonNode->setScale(0.5);
+    _title = "BatchingExample";
     
-	skeletonNode->setStartListener( [this] (int trackIndex) {
-		spTrackEntry* entry = spAnimationState_getCurrent(skeletonNode->getState(), trackIndex);
-		const char* animationName = (entry && entry->animation) ? entry->animation->name : 0;
-		log("%d start: %s", trackIndex, animationName);
-	});
-	skeletonNode->setEndListener( [] (int trackIndex) {
-		log("%d end", trackIndex);
-	});
-	skeletonNode->setCompleteListener( [] (int trackIndex, int loopCount) {
-		log("%d complete: %d", trackIndex, loopCount);
-	});
-	skeletonNode->setEventListener( [] (int trackIndex, spEvent* event) {
-		log("%d event: %s, %d, %f, %s", trackIndex, event->data->name, event->intValue, event->floatValue, event->stringValue);
-	});
+    // Load the texture atlas.
+    _atlas = spAtlas_createFromFile("spine/spineboy.atlas", 0);
+    CCASSERT(_atlas, "Error reading atlas file.");
     
-	skeletonNode->setMix("walk", "jump", 0.2f);
-	skeletonNode->setMix("jump", "run", 0.2f);
-	skeletonNode->setAnimation(0, "walk", true);
-	spTrackEntry* jumpEntry = skeletonNode->addAnimation(0, "jump", false, 3);
-	skeletonNode->addAnimation(0, "run", true);
+    // This attachment loader configures attachments with data needed for cocos2d-x rendering.
+    // Do not dispose the attachment loader until the skeleton data is disposed!
+    _attachmentLoader = (spAttachmentLoader*)Cocos2dAttachmentLoader_create(_atlas);
     
-	skeletonNode->setTrackStartListener(jumpEntry, [] (int trackIndex) {
-		log("jumped!");
-	});
+    // Load the skeleton data.
+    spSkeletonJson* json = spSkeletonJson_createWithLoader(_attachmentLoader);
+    json->scale = 0.6f; // Resizes skeleton data to 60% of the size it was in Spine.
+    _skeletonData = spSkeletonJson_readSkeletonDataFile(json, "spine/spineboy.json");
+    CCASSERT(_skeletonData, json->error ? json->error : "Error reading skeleton data file.");
+    spSkeletonJson_dispose(json);
     
-    Size windowSize = Director::getInstance()->getWinSize();
-	skeletonNode->setPosition(Vec2(windowSize.width / 2, 20));
-	addChild(skeletonNode);
+    // Setup mix times.
+    _stateData = spAnimationStateData_create(_skeletonData);
+    spAnimationStateData_setMixByName(_stateData, "walk", "jump", 0.2f);
+    spAnimationStateData_setMixByName(_stateData, "jump", "run", 0.2f);
     
-	scheduleUpdate();
-    
-    EventListenerTouchOneByOne* listener = EventListenerTouchOneByOne::create();
-	listener->onTouchBegan = [this] (Touch* touch, Event* event) -> bool {
-		if (!skeletonNode->getDebugBonesEnabled())
-			skeletonNode->setDebugBonesEnabled(true);
-		else if (skeletonNode->getTimeScale() == 1)
-			skeletonNode->setTimeScale(0.3f);
-        else
-        {
-            skeletonNode->setTimeScale(1);
-            skeletonNode->setDebugBonesEnabled(false);
-        }
-		
-        return true;
-	};
-	_eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
-    
-	return true;
-}
-
-void SpineTestLayerNormal::update (float deltaTime) {
-    
-}
-
-bool SpineTestLayerFFD::init () {
-    if (!SpineTestLayer::init()) return false;
-    
-	skeletonNode = SkeletonAnimation::createWithFile("spine/goblins-ffd.json", "spine/goblins-ffd.atlas", 1.5f);
-	skeletonNode->setAnimation(0, "walk", true);
-	skeletonNode->setSkin("goblin");
-    
-    skeletonNode->setScale(0.5);
-	Size windowSize = Director::getInstance()->getWinSize();
-	skeletonNode->setPosition(Vec2(windowSize.width / 2, 20));
-	addChild(skeletonNode);
-    
-	scheduleUpdate();
-	
-	EventListenerTouchOneByOne* listener = EventListenerTouchOneByOne::create();
-	listener->onTouchBegan = [this] (Touch* touch, Event* event) -> bool {
-		if (!skeletonNode->getDebugBonesEnabled())
-			skeletonNode->setDebugBonesEnabled(true);
-		else if (skeletonNode->getTimeScale() == 1)
-			skeletonNode->setTimeScale(0.3f);
-        else
-        {
-            skeletonNode->setTimeScale(1);
-            skeletonNode->setDebugBonesEnabled(false);
-        }
-		return true;
-	};
-	_eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
-    
-	return true;
-}
-
-void SpineTestLayerFFD::update (float deltaTime) {
-    
-}
-
-bool SpineTestPerformanceLayer::init () {
-    if (!SpineTestLayer::init()) return false;
-    
-	scheduleUpdate();
-	
-	EventListenerTouchOneByOne* listener = EventListenerTouchOneByOne::create();
-	listener->onTouchBegan = [this] (Touch* touch, Event* event) -> bool
-    {
+    int xMin = _contentSize.width * 0.10f, xMax = _contentSize.width * 0.90f;
+    int yMin = 0, yMax = _contentSize.height * 0.7f;
+    for (int i = 0; i < 50; i++) {
+        // Each skeleton node shares the same atlas, skeleton data, and mix times.
+        SkeletonAnimation* skeletonNode = SkeletonAnimation::createWithData(_skeletonData, false);
+        skeletonNode->setAnimationStateData(_stateData);
         
-        Vec2 pos = convertToNodeSpace(touch->getLocation());
-        auto skeletonNode = SkeletonAnimation::createWithFile("spine/goblins-ffd.json", "spine/goblins-ffd.atlas", 1.5f);
         skeletonNode->setAnimation(0, "walk", true);
-        skeletonNode->setSkin("goblin");
+        skeletonNode->addAnimation(0, "jump", false, 3);
+        skeletonNode->addAnimation(0, "run", true);
         
-        skeletonNode->setScale(0.2f);
-        skeletonNode->setPosition(pos);
+        skeletonNode->setPosition(Vec2(
+                                       RandomHelper::random_int(xMin, xMax),
+                                       RandomHelper::random_int(yMin, yMax)
+                                       ));
+        skeletonNode->setScale(0.8);
         addChild(skeletonNode);
-        return true;
-	};
-	_eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+    }
     
-	return true;
+    return true;
 }
 
-void SpineTestPerformanceLayer::update (float deltaTime) {
-    
+BatchingExample::~BatchingExample () {
+    // SkeletonAnimation instances are cocos2d-x nodes and are disposed of automatically as normal, but the data created
+    // manually to be shared across multiple SkeletonAnimations needs to be disposed of manually.
+    spSkeletonData_dispose(_skeletonData);
+    spAnimationStateData_dispose(_stateData);
+    spAttachmentLoader_dispose(_attachmentLoader);
+    spAtlas_dispose(_atlas);
 }
 
-bool SpineTestLayerRapor::init () {
+// GoblinsExample
+
+bool GoblinsExample::init () {
     if (!SpineTestLayer::init()) return false;
     
-    skeletonNode = SkeletonAnimation::createWithFile("spine/raptor.json", "spine/raptor.atlas", 0.5f);
+    if (_useBinary)
+    {
+        _title = "GoblinsExampleBinary";
+        skeletonNode = SkeletonAnimation::createWithBinaryFile("spine/goblins.skel", "spine/goblins.atlas", 1.5f);
+    }
+    else
+    {
+        _title = "GoblinsExample";
+        skeletonNode = SkeletonAnimation::createWithJsonFile("spine/goblins_mesh.json", "spine/goblins.atlas", 1.5f);
+    }
+    skeletonNode->setAnimation(0, "walk", true);
+    skeletonNode->setSkin("goblin");
+    
+    skeletonNode->setPosition(Vec2(_contentSize.width / 2, 20));
+    skeletonNode->setScale(0.6);
+    addChild(skeletonNode);
+    return true;
+}
+
+// GoblinsExampleBinary
+
+bool GoblinsExampleBinary::init()
+{
+    _useBinary = true;
+    return GoblinsExample::init();
+}
+
+// RaptorExample
+
+bool RaptorExample::init () {
+    if (!SpineTestLayer::init()) return false;
+    
+    if (_useBinary)
+    {
+        _title = _title = "RaptorExampleBinary";
+        skeletonNode = SkeletonAnimation::createWithBinaryFile("spine/raptor.skel", "spine/raptor.atlas", 0.5f);
+    }
+    else
+    {
+        _title = "RaptorExample";
+        skeletonNode = SkeletonAnimation::createWithJsonFile("spine/raptor.json", "spine/raptor.atlas", 0.5f);
+    }
+    
     skeletonNode->setAnimation(0, "walk", true);
     skeletonNode->setAnimation(1, "empty", false);
     skeletonNode->addAnimation(1, "gungrab", false, 2);
-    skeletonNode->setScale(0.5);
     
-    Size windowSize = Director::getInstance()->getWinSize();
-    skeletonNode->setPosition(Vec2(windowSize.width / 2, 20));
+    skeletonNode->setPosition(Vec2(_contentSize.width / 2, 20));
+    skeletonNode->setScale(0.6);
+    addChild(skeletonNode);
+    return true;
+}
+
+// RaptorExampleBinary
+
+bool RaptorExampleBinary::init()
+{
+    _useBinary = true;
+    
+    return RaptorExample::init();
+}
+
+// SpineboyExample
+
+bool SpineboyExample::init () {
+    if (!SpineTestLayer::init()) return false;
+    
+    if (_useBinary)
+    {
+        _title = "SpineboyExampleBinary";
+        skeletonNode = SkeletonAnimation::createWithBinaryFile("spine/spineboy.skel", "spine/spineboy.atlas", 0.6f);
+    }
+    else
+    {
+        _title = "SpineboyExample";
+        skeletonNode = SkeletonAnimation::createWithJsonFile("spine/spineboy.json", "spine/spineboy.atlas", 0.6f);
+    }
+    
+    skeletonNode->setStartListener( [] (spTrackEntry* entry) {
+        log("%d start: %s", entry->trackIndex, entry->animation->name);
+    });
+    skeletonNode->setInterruptListener( [] (spTrackEntry* entry) {
+        log("%d interrupt", entry->trackIndex);
+    });
+    skeletonNode->setEndListener( [] (spTrackEntry* entry) {
+        log("%d end", entry->trackIndex);
+    });
+    skeletonNode->setCompleteListener( [] (spTrackEntry* entry) {
+        log("%d complete", entry->trackIndex);
+    });
+    skeletonNode->setDisposeListener( [] (spTrackEntry* entry) {
+        log("%d dispose", entry->trackIndex);
+    });
+    skeletonNode->setEventListener( [] (spTrackEntry* entry, spEvent* event) {
+        log("%d event: %s, %d, %f, %s", entry->trackIndex, event->data->name, event->intValue, event->floatValue, event->stringValue);
+    });
+    
+    skeletonNode->setMix("walk", "jump", 0.4);
+    skeletonNode->setMix("jump", "run", 0.4);
+    skeletonNode->setAnimation(0, "walk", true);
+    spTrackEntry* jumpEntry = skeletonNode->addAnimation(0, "jump", false, 1);
+    skeletonNode->addAnimation(0, "run", true);
+    
+    skeletonNode->setTrackStartListener(jumpEntry, [] (spTrackEntry* entry) {
+        log("jumped!");
+    });
+    
+    // skeletonNode->addAnimation(1, "test", true);
+    // skeletonNode->runAction(RepeatForever::create(Sequence::create(FadeOut::create(1), FadeIn::create(1), DelayTime::create(5), NULL)));
+    
+    skeletonNode->setPosition(Vec2(_contentSize.width / 2, 20));
+    skeletonNode->setScale(0.8);
     addChild(skeletonNode);
     
     scheduleUpdate();
     
-    EventListenerTouchOneByOne* listener = EventListenerTouchOneByOne::create();
-    listener->onTouchBegan = [this] (Touch* touch, Event* event) -> bool {
-        if (!skeletonNode->getDebugBonesEnabled())
-            skeletonNode->setDebugBonesEnabled(true);
-        else if (skeletonNode->getTimeScale() == 1)
-            skeletonNode->setTimeScale(0.3f);
-        else
-            skeletonNode->setDebugBonesEnabled(false);
-        return true;
-    };
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+    return true;
+}
+
+void SpineboyExample::update (float deltaTime) {
+    // Test releasing memory.
+    // Director::getInstance()->replaceScene(SpineboyExample::scene());
+}
+
+// SpineboyExampleBinary
+
+bool SpineboyExampleBinary::init()
+{
+    _useBinary = true;
+    return SpineboyExample::init();
+}
+
+// TankExample
+
+bool TankExample::init () {
+    if (!SpineTestLayer::init()) return false;
+    
+    if (_useBinary)
+    {
+        _title = "TankExampleBinary";
+        skeletonNode = SkeletonAnimation::createWithBinaryFile("spine/tank.skel", "spine/tank.atlas", 0.5f);
+    }
+    else
+    {
+        _title = "TankExample";
+        skeletonNode = SkeletonAnimation::createWithJsonFile("spine/tank.json", "spine/tank.atlas", 0.5f);
+    }
+    skeletonNode->setAnimation(0, "drive", true);
+    
+    skeletonNode->setPosition(Vec2(_contentSize.width / 2 + 400, 20));
+    skeletonNode->setScale(0.8);
+    addChild(skeletonNode);
     
     return true;
+}
+
+// TankExampleBinary
+bool TankExampleBinary::init()
+{
+    _useBinary = true;
+    return TankExample::init();
 }

@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2015-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -64,7 +64,7 @@ CC_CONSTRUCTOR_ACCESS:
     PUOnClearObserver(void) : PUObserver(),
         _continue(false)
     {
-    };
+    }
     virtual ~PUOnClearObserver(void) {};
 
 protected:

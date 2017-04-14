@@ -6,6 +6,8 @@ LOCAL_MODULE := js_tests_shared
 
 LOCAL_MODULE_FILENAME := libjs_tests
 
+LOCAL_ARM_MODE := arm
+
 LOCAL_SRC_FILES := main.cpp \
                    ../../../Classes/AppDelegate.cpp \
                    ../../../Classes/js_DrawNode3D_bindings.cpp \

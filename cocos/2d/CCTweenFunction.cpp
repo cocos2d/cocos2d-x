@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -302,17 +302,13 @@ float expoEaseOut(float time)
 }
 float expoEaseInOut(float time)
 {
-    time /= 0.5f;
-    if (time < 1)
-    {
-        time = 0.5f * powf(2, 10 * (time - 1));
-    }
-    else
-    {
-        time = 0.5f * (-powf(2, -10 * (time - 1)) + 2);
-    }
+    if(time == 0 || time == 1) 
+        return time;
+    
+    if (time < 0.5f)
+        return 0.5f * powf(2, 10 * (time * 2 - 1));
 
-    return time;
+    return 0.5f * (-powf(2, -10 * (time * 2 - 1)) + 2);
 }
 
 
@@ -436,16 +432,16 @@ float backEaseInOut(float time)
 // Bounce Ease
 float bounceTime(float time)
 {
-    if (time < 1 / 2.75)
+    if (time < 1 / 2.75f)
     {
         return 7.5625f * time * time;
     }
-    else if (time < 2 / 2.75)
+    else if (time < 2 / 2.75f)
     {
         time -= 1.5f / 2.75f;
         return 7.5625f * time * time + 0.75f;
     }
-    else if(time < 2.5 / 2.75)
+    else if(time < 2.5f / 2.75f)
     {
         time -= 2.25f / 2.75f;
         return 7.5625f * time * time + 0.9375f;

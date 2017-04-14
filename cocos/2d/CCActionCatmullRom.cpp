@@ -2,7 +2,7 @@
  * Copyright (c) 2008 Radu Gruian
  * Copyright (c) 2011 Vit Valentin
  * Copyright (c) 2012 cocos2d-x.org
- * Copyright (c) 2013-2016 Chukong Technologies Inc.
+ * Copyright (c) 2013-2017 Chukong Technologies Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -57,6 +57,9 @@ PointArray* PointArray::create(ssize_t capacity)
 bool PointArray::initWithCapacity(ssize_t capacity)
 {
     _controlPoints = new (std::nothrow) vector<Vec2*>();
+    if (capacity > 0) {
+        _controlPoints->reserve(capacity);
+    }
     
     return true;
 }
@@ -64,10 +67,9 @@ bool PointArray::initWithCapacity(ssize_t capacity)
 PointArray* PointArray::clone() const
 {
     vector<Vec2*> *newArray = new (std::nothrow) vector<Vec2*>();
-    vector<Vec2*>::iterator iter;
-    for (iter = _controlPoints->begin(); iter != _controlPoints->end(); ++iter)
+    for (auto& controlPoint : *_controlPoints)
     {
-        newArray->push_back(new Vec2((*iter)->x, (*iter)->y));
+        newArray->push_back(new Vec2(controlPoint->x, controlPoint->y));
     }
     
     PointArray *points = new (std::nothrow) PointArray();
@@ -82,10 +84,9 @@ PointArray::~PointArray()
 {
     CCLOGINFO("deallocing PointArray: %p", this);
 
-    vector<Vec2*>::iterator iter;
-    for (iter = _controlPoints->begin(); iter != _controlPoints->end(); ++iter)
+    for (auto& controlPoint : *_controlPoints)
     {
-        delete *iter;
+        delete controlPoint;
     }
     delete _controlPoints;
 }
@@ -103,16 +104,16 @@ void PointArray::setControlPoints(vector<Vec2*> *controlPoints)
     
     // delete old points
     vector<Vec2*>::iterator iter;
-    for (iter = _controlPoints->begin(); iter != _controlPoints->end(); ++iter)
+    for (auto& controlPoint : *_controlPoints)
     {
-        delete *iter;
+        delete controlPoint;
     }
     delete _controlPoints;
     
     _controlPoints = controlPoints;
 }
 
-void PointArray::addControlPoint(Vec2 controlPoint)
+void PointArray::addControlPoint(const Vec2& controlPoint)
 {    
     _controlPoints->push_back(new Vec2(controlPoint.x, controlPoint.y));
 }
@@ -152,9 +153,8 @@ ssize_t PointArray::count() const
 PointArray* PointArray::reverse() const
 {
     vector<Vec2*> *newArray = new (std::nothrow) vector<Vec2*>();
-    vector<Vec2*>::reverse_iterator iter;
     Vec2 *point = nullptr;
-    for (iter = _controlPoints->rbegin(); iter != _controlPoints->rend(); ++iter)
+    for (auto iter = _controlPoints->rbegin(), iterRend = _controlPoints->rend(); iter != iterRend; ++iter)
     {
         point = *iter;
         newArray->push_back(new Vec2(point->x, point->y));

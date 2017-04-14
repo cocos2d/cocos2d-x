@@ -166,4 +166,30 @@ protected:
     RendererBatchQuadTri();
 };
 
+class RendererUniformBatch : public MultiSceneTest
+{
+public:
+    CREATE_FUNC(RendererUniformBatch);
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+protected:
+    RendererUniformBatch();
+
+    cocos2d::GLProgramState* createBlurGLProgramState();
+    cocos2d::GLProgramState* createSepiaGLProgramState();
+};
+
+class RendererUniformBatch2 : public MultiSceneTest
+{
+public:
+    CREATE_FUNC(RendererUniformBatch2);
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+protected:
+    RendererUniformBatch2();
+
+    cocos2d::GLProgramState* createBlurGLProgramState();
+    cocos2d::GLProgramState* createSepiaGLProgramState();
+};
+
 #endif //__NewRendererTest_H_

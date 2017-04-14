@@ -78,10 +78,22 @@ str
 
 /**
  * @method loadURL
- * @param {String} arg0
+* @param {String|String} str
+* @param {bool} bool
+*/
+loadURL : function(
+str,
+bool 
+)
+{
+},
+
+/**
+ * @method setBounces
+ * @param {bool} arg0
  */
-loadURL : function (
-str 
+setBounces : function (
+bool 
 )
 {
 },

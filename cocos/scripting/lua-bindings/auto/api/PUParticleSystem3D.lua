@@ -95,7 +95,7 @@
         
 --------------------------------
 --  Forces emission of particles.<br>
--- remarks The number of requested particles are the exact number that are emitted. No down-scalling is applied.
+-- remarks The number of requested particles are the exact number that are emitted. No down-scaling is applied.
 -- @function [parent=#PUParticleSystem3D] forceEmission 
 -- @param self
 -- @param #cc.PUEmitter emitter

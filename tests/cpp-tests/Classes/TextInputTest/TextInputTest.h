@@ -75,4 +75,17 @@ public:
     virtual bool onDraw(cocos2d::TextFieldTTF*  sender);
 };
 
+//////////////////////////////////////////////////////////////////////////
+// TextFieldTTFSecureTextEntryTest for test TextFieldTTF SecureTextEntry.
+//////////////////////////////////////////////////////////////////////////
+
+class TextFieldTTFSecureTextEntryTest : public TextFieldTTFDefaultTest
+{
+public:
+    CREATE_FUNC(TextFieldTTFSecureTextEntryTest);
+    
+    virtual std::string subtitle() const override;
+    // Layer
+    virtual void onEnter() override;
+};
 #endif    // __TEXT_INPUT_TEST_H__

@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2014-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -337,7 +337,7 @@ void Animate3D::update(float t)
                 float* trans = nullptr, *rot = nullptr, *scale = nullptr;
                 if (_playReverse){
                     t = 1 - t;
-                    lastTime = 1.0 - lastTime;
+                    lastTime = 1.0f - lastTime;
                 }
                 
                 t = _start + t * _last;

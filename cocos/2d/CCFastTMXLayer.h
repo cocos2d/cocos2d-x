@@ -2,7 +2,7 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -151,37 +151,37 @@ public:
      *
      * @return The tile layer name.
      */
-    inline const std::string& getLayerName(){ return _layerName; }
+    const std::string& getLayerName() { return _layerName; }
     
     /** Set the tile layer name.
      *
      * @param layerName The new layer name.
      */
-    inline void setLayerName(const std::string& layerName){ _layerName = layerName; }
+    void setLayerName(const std::string& layerName) { _layerName = layerName; }
 
     /** Size of the layer in tiles.
      *
      * @return Size of the layer in tiles.
      */
-    inline const Size& getLayerSize() const { return _layerSize; };
+    const Size& getLayerSize() const { return _layerSize; }
     
     /** Set the size of the layer in tiles. 
      *
      * @param size The new size of the layer in tiles.
      */
-    inline void setLayerSize(const Size& size) { _layerSize = size; };
+    void setLayerSize(const Size& size) { _layerSize = size; }
     
     /** Size of the map's tile (could be different from the tile's size).
      *
      * @return Size of the map's tile (could be different from the tile's size).
      */
-    inline const Size& getMapTileSize() const { return _mapTileSize; };
+    const Size& getMapTileSize() const { return _mapTileSize; }
     
     /** Set the size of the map's tile. 
      *
      * @param size The new size of the map's tile.
      */
-    inline void setMapTileSize(const Size& size) { _mapTileSize = size; };
+    void setMapTileSize(const Size& size) { _mapTileSize = size; }
     
     /** Pointer to the map of tiles.
      * @js NA
@@ -200,50 +200,50 @@ public:
      *
      * @return Tileset information for the layer.
      */
-    inline TMXTilesetInfo* getTileSet() const { return _tileSet; };
+    TMXTilesetInfo* getTileSet() const { return _tileSet; }
     
     /** Set the tileset information for the layer. 
      *
      * @param info The new tileset information for the layer.
      */
-    inline void setTileSet(TMXTilesetInfo* info) {
+    void setTileSet(TMXTilesetInfo* info) {
         CC_SAFE_RETAIN(info);
         CC_SAFE_RELEASE(_tileSet);
         _tileSet = info;
-    };
+    }
     
     /** Layer orientation, which is the same as the map orientation.
      *
      * @return Layer orientation, which is the same as the map orientation.
      */
-    inline int getLayerOrientation() const { return _layerOrientation; };
+    int getLayerOrientation() const { return _layerOrientation; }
     
     /** Set Layer orientation, which is the same as the map orientation. 
      *
      * @param orientation Layer orientation, which is the same as the map orientation.
      */
-    inline void setLayerOrientation(int orientation) { _layerOrientation = orientation; };
+    void setLayerOrientation(int orientation) { _layerOrientation = orientation; }
     
     /** Properties from the layer. They can be added using Tiled. 
      *
      * @return Properties from the layer. They can be added using Tiled.
      */
-    inline const ValueMap& getProperties() const { return _properties; };
+    const ValueMap& getProperties() const { return _properties; }
     
     /** Properties from the layer. They can be added using Tiled.
      *
      * @return Properties from the layer. They can be added using Tiled.
      */
-    inline ValueMap& getProperties() { return _properties; };
+    ValueMap& getProperties() { return _properties; }
     
     /** Set the properties to the layer.
      *
      * @param properties The properties to the layer.
      */
-    inline void setProperties(const ValueMap& properties)
+    void setProperties(const ValueMap& properties)
     {
         _properties = properties;
-    };
+    }
 
     /** Returns the tile (Sprite) at a given a tile coordinate.
      * The returned Sprite will be already added to the TMXLayer. Don't add it again.
@@ -261,7 +261,7 @@ public:
      * @param pos The tile coordinate.
      * @param gid The tile gid.
      */
-    void setupTileSprite(Sprite* sprite, Vec2 pos, int gid);
+    void setupTileSprite(Sprite* sprite, const Vec2& pos, uint32_t gid);
 
     //
     // Override
@@ -285,13 +285,13 @@ protected:
     int getVertexZForPos(const Vec2& pos);
     
     //Flip flags is packed into gid
-    void setFlaggedTileGIDByIndex(int index, int gid);
+    void setFlaggedTileGIDByIndex(int index, uint32_t gid);
     
     //
     void updateTotalQuads();
     
     void onDraw(Primitive* primitive);
-    inline int getTileIndexByPos(int x, int y) const { return x + y * (int) _layerSize.width; }
+    int getTileIndexByPos(int x, int y) const { return x + y * (int) _layerSize.width; }
     
     void updateVertexBuffer();
     void updateIndexBuffer();
@@ -334,7 +334,11 @@ protected:
     bool _quadsDirty;
     std::vector<int> _tileToQuadIndex;
     std::vector<V3F_C4B_T2F_Quad> _totalQuads;
+#ifdef CC_FAST_TILEMAP_32_BIT_INDICES
+    std::vector<GLuint> _indices;
+#else
     std::vector<GLushort> _indices;
+#endif
     std::map<int/*vertexZ*/, int/*offset to _indices by quads*/> _indicesVertexZOffsets;
     std::unordered_map<int/*vertexZ*/, int/*number to quads*/> _indicesVertexZNumber;
     std::vector<PrimitiveCommand> _renderCommands;

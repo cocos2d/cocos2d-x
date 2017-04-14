@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -99,7 +99,7 @@ bool Skin::initWithSpriteFrameName(const std::string& spriteFrameName)
     }
     else
     {
-        CCLOG("Cann't find CCSpriteFrame with %s. Please check your .plist file", spriteFrameName.c_str());
+        CCLOG("Can't find CCSpriteFrame with %s. Please check your .plist file", spriteFrameName.c_str());
         ret = false;
     }
 
@@ -229,12 +229,20 @@ Mat4 Skin::getNodeToWorldTransformAR() const
     return TransformConcat( _bone->getArmature()->getNodeToWorldTransform(),displayTransform);
 }
 
-void Skin::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
+void Skin::draw(Renderer *renderer, const Mat4 &/*transform*/, uint32_t flags)
 {
     auto mv = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 
-    //TODO: implement z order
-    _quadCommand.init(_globalZOrder, _texture->getName(), getGLProgramState(), _blendFunc, &_quad, 1, mv, flags);
+    // TODO: implement z order
+    _quadCommand.init(_globalZOrder, 
+        _texture, 
+        getGLProgramState(), 
+        _blendFunc, 
+        &_quad, 
+        1,
+        mv, 
+        flags);
+
     renderer->addCommand(&_quadCommand);
 }
 

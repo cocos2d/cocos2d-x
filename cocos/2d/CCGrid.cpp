@@ -1,7 +1,7 @@
 /****************************************************************************
 Copyright (c) 2009      On-Core
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (C) 2013-2014 Chukong Technologies Inc. 
+Copyright (c) 2013-2017 Chukong Technologies Inc. 
  
 http://www.cocos2d-x.org
 
@@ -231,7 +231,7 @@ void GridBase::beforeDraw(void)
     _grabber->beforeRender(_texture);
 }
 
-void GridBase::afterDraw(cocos2d::Node *target)
+void GridBase::afterDraw(cocos2d::Node * /*target*/)
 {
     _grabber->afterRender(_texture);
 
@@ -419,7 +419,7 @@ void Grid3D::blit(void)
 
     GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_TEX_COORD );
     _shaderProgram->use();
-    _shaderProgram->setUniformsForBuiltins();;
+    _shaderProgram->setUniformsForBuiltins();
 
     //
     // Attributes

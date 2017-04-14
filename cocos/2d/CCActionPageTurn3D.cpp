@@ -1,7 +1,7 @@
 /****************************************************************************
 Copyright (c) 2009      Sindesso Pty Ltd http://www.sindesso.com/
 Copyright (c) 2010-2012 cocos2d-x.org
-CopyRight (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
  
 http://www.cocos2d-x.org
 
@@ -71,7 +71,7 @@ void PageTurn3D::update(float time)
     float ay = -100 - deltaAy;
     
     float deltaTheta = sqrtf(time);
-    float theta = deltaTheta>0.5?(float)M_PI_2*deltaTheta:(float)M_PI_2*(1-deltaTheta);
+    float theta = deltaTheta > 0.5f ? (float)M_PI_2*deltaTheta : (float)M_PI_2*(1-deltaTheta);
     
     float rotateByYAxis = (2-time)* M_PI;
     

@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2011-2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -60,89 +60,46 @@ extern "C" {
 #include "platform/CCFileUtils.h"
 
 namespace {
-int lua_print(lua_State * luastate)
-{
-    int nargs = lua_gettop(luastate);
-
-    std::string t;
-    for (int i=1; i <= nargs; i++)
+    int get_string_for_print(lua_State * L, std::string* out)
     {
-        if (lua_istable(luastate, i))
-            t += "table";
-        else if (lua_isnone(luastate, i))
-            t += "none";
-        else if (lua_isnil(luastate, i))
-            t += "nil";
-        else if (lua_isboolean(luastate, i))
-        {
-            if (lua_toboolean(luastate, i) != 0)
-                t += "true";
-            else
-                t += "false";
+        int n = lua_gettop(L);  /* number of arguments */
+        int i;
+
+        lua_getglobal(L, "tostring");
+        for (i=1; i<=n; i++) {
+            const char *s;
+            lua_pushvalue(L, -1);  /* function to be called */
+            lua_pushvalue(L, i);   /* value to print */
+            lua_call(L, 1, 1);
+            size_t sz;
+            s = lua_tolstring(L, -1, &sz);  /* get result */
+            if (s == NULL)
+                return luaL_error(L, LUA_QL("tostring") " must return a string to "
+                                  LUA_QL("print"));
+            if (i>1) out->append("\t");
+            out->append(s, sz);
+            lua_pop(L, 1);  /* pop result */
         }
-        else if (lua_isfunction(luastate, i))
-            t += "function";
-        else if (lua_islightuserdata(luastate, i))
-            t += "lightuserdata";
-        else if (lua_isthread(luastate, i))
-            t += "thread";
-        else
-        {
-            const char * str = lua_tostring(luastate, i);
-            if (str)
-                t += lua_tostring(luastate, i);
-            else
-                t += lua_typename(luastate, lua_type(luastate, i));
-        }
-        if (i!=nargs)
-            t += "\t";
+        return 0;
     }
-    CCLOG("[LUA-print] %s", t.c_str());
 
-    return 0;
-}
-
-int lua_release_print(lua_State * L)
-{
-    int nargs = lua_gettop(L);
-
-    std::string t;
-    for (int i=1; i <= nargs; i++)
+    int lua_print(lua_State * L)
     {
-        if (lua_istable(L, i))
-            t += "table";
-        else if (lua_isnone(L, i))
-            t += "none";
-        else if (lua_isnil(L, i))
-            t += "nil";
-        else if (lua_isboolean(L, i))
-        {
-            if (lua_toboolean(L, i) != 0)
-                t += "true";
-            else
-                t += "false";
-        }
-        else if (lua_isfunction(L, i))
-            t += "function";
-        else if (lua_islightuserdata(L, i))
-            t += "lightuserdata";
-        else if (lua_isthread(L, i))
-            t += "thread";
-        else
-        {
-            const char * str = lua_tostring(L, i);
-            if (str)
-                t += lua_tostring(L, i);
-            else
-                t += lua_typename(L, lua_type(L, i));
-        }
-        if (i!=nargs)
-            t += "\t";
-    }
-    log("[LUA-print] %s", t.c_str());
+        std::string t;
+        get_string_for_print(L, &t);
+        CCLOG("[LUA-print] %s", t.c_str());
 
-    return 0;
-}
+        return 0;
+    }
+
+    int lua_release_print(lua_State * L)
+    {
+        std::string t;
+        get_string_for_print(L, &t);
+        log("[LUA-print] %s", t.c_str());
+
+        return 0;
+    }
 }
 
 NS_CC_BEGIN
@@ -302,18 +259,19 @@ int LuaStack::executeScriptFile(const char* filename)
     }
 
     FileUtils *utils = FileUtils::getInstance();
+
     //
-    // 1. check .lua suffix
-    // 2. check .luac suffix
+    // 1. check .luac suffix
+    // 2. check .lua suffix
     //
-    std::string tmpfilename = buf + NOT_BYTECODE_FILE_EXT;
+    std::string tmpfilename = buf + BYTECODE_FILE_EXT;
     if (utils->isFileExist(tmpfilename))
     {
         buf = tmpfilename;
     }
     else
     {
-        tmpfilename = buf + BYTECODE_FILE_EXT;
+        tmpfilename = buf + NOT_BYTECODE_FILE_EXT;
         if (utils->isFileExist(tmpfilename))
         {
             buf = tmpfilename;
@@ -818,7 +776,7 @@ int LuaStack::luaLoadChunksFromZIP(lua_State *L)
         bool isXXTEA = stack && stack->_xxteaEnabled && size >= stack->_xxteaSignLen
             && memcmp(stack->_xxteaSign, bytes, stack->_xxteaSignLen) == 0;
 
-        
+
         if (isXXTEA) { // decrypt XXTEA
             xxtea_long len = 0;
             buffer = xxtea_decrypt(bytes + stack->_xxteaSignLen,
@@ -854,9 +812,9 @@ int LuaStack::luaLoadChunksFromZIP(lua_State *L)
                         }
                     }
                     // replace path separator '/' '\' to '.'
-                    for (int i=0; i<filename.size(); i++) {
-                        if (filename[i] == '/' || filename[i] == '\\') {
-                            filename[i] = '.';
+                    for (auto & character : filename) {
+                        if (character == '/' || character == '\\') {
+                            character = '.';
                         }
                     }
                     CCLOG("[luaLoadChunksFromZIP] add %s to preload", filename.c_str());
@@ -887,6 +845,22 @@ int LuaStack::luaLoadChunksFromZIP(lua_State *L)
     return 1;
 }
 
+namespace {
+
+void skipBOM(const char*& chunk, int& chunkSize)
+{
+    // UTF-8 BOM? skip
+    if (static_cast<unsigned char>(chunk[0]) == 0xEF &&
+        static_cast<unsigned char>(chunk[1]) == 0xBB &&
+        static_cast<unsigned char>(chunk[2]) == 0xBF)
+    {
+        chunk += 3;
+        chunkSize -= 3;
+    }
+}
+
+} // end anonymous namespace
+
 int LuaStack::luaLoadBuffer(lua_State *L, const char *chunk, int chunkSize, const char *chunkName)
 {
     int r = 0;
@@ -900,11 +874,13 @@ int LuaStack::luaLoadBuffer(lua_State *L, const char *chunk, int chunkSize, cons
                                               (unsigned char*)_xxteaKey,
                                               (xxtea_long)_xxteaKeyLen,
                                               &len);
+        skipBOM((const char*&)result, (int&)len);
         r = luaL_loadbuffer(L, (char*)result, len, chunkName);
         free(result);
     }
     else
     {
+        skipBOM(chunk, chunkSize);
         r = luaL_loadbuffer(L, chunk, chunkSize, chunkName);
     }
 

@@ -1,7 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010      ForzeField Studios S.L. http://forzefield.com
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -26,6 +26,7 @@ THE SOFTWARE.
 
 #include "deprecated/CCArray.h"
 #include "deprecated/CCString.h"
+#include "base/ccUTF8.h"
 #include "platform/CCFileUtils.h"
 
 NS_CC_BEGIN
@@ -349,7 +350,8 @@ __Array* __Array::clone() const
     Ref* obj = nullptr;
     Ref* tmpObj = nullptr;
     Clonable* clonable = nullptr;
-    CCARRAY_FOREACH(this, obj)
+    const __Array* self( this );
+    CCARRAY_FOREACH(self, obj)
     {
         clonable = dynamic_cast<Clonable*>(obj);
         if (clonable)
@@ -695,7 +697,7 @@ void __Array::exchangeObjectAtIndex(ssize_t index1, ssize_t index2)
 void __Array::replaceObjectAtIndex(ssize_t index, Ref* object, bool releaseObject/* = true*/)
 {
     ccArrayInsertObjectAtIndex(data, object, index);
-    ccArrayRemoveObjectAtIndex(data, index + 1);
+    ccArrayRemoveObjectAtIndex(data, index + 1, releaseObject);
 }
 
 void __Array::reverseObjects()
@@ -732,10 +734,16 @@ __Array* __Array::clone() const
     ret->autorelease();
     ret->initWithCapacity(this->data->num > 0 ? this->data->num : 1);
 
+    if (data->num <= 0) {
+        return ret;
+    }
+
     Ref* obj = nullptr;
     Ref* tmpObj = nullptr;
     Clonable* clonable = nullptr;
-    CCARRAY_FOREACH(this, obj)
+    CC_ASSERT(data->num > 0);
+    for (Ref** arr = data->arr, **end = data->arr + data->num - 1;
+        arr <= end && ((obj = *arr) != nullptr); arr++)
     {
         clonable = dynamic_cast<Clonable*>(obj);
         if (clonable)

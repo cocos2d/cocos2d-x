@@ -1,6 +1,6 @@
 /**
  Copyright 2013 BlackBerry Inc.
- Copyright (c) 2015 Chukong Technologies
+ Copyright (c) 2015-2017 Chukong Technologies
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -46,7 +46,7 @@ static GLuint __maxVertexAttribs = 0;
 static std::vector<VertexAttribBinding*> __vertexAttribBindingCache;
 
 VertexAttribBinding::VertexAttribBinding() :
-    _handle(0), _attributes(), _meshIndexData(nullptr), _glProgramState(nullptr)
+    _handle(0), _meshIndexData(nullptr), _glProgramState(nullptr), _attributes()
 {
 }
 
@@ -143,9 +143,6 @@ bool VertexAttribBinding::init(MeshIndexData* meshIndexData, GLProgramState* glP
     // VAO hardware
     if (Configuration::getInstance()->supportsShareableVAO())
     {
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
         glGenVertexArrays(1, &_handle);
         GL::bindVAO(_handle);
         glBindBuffer(GL_ARRAY_BUFFER, meshVertexData->getVertexBuffer()->getVBO());
@@ -166,6 +163,8 @@ bool VertexAttribBinding::init(MeshIndexData* meshIndexData, GLProgramState* glP
         }
 
         GL::bindVAO(0);
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     }
 
     return true;

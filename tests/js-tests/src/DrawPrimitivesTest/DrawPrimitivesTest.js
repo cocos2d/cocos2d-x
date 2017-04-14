@@ -1,7 +1,7 @@
 /****************************************************************************
  Copyright (c) 2008-2010 Ricardo Quesada
  Copyright (c) 2011-2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -73,7 +73,7 @@ var DrawTestDemo = BaseTestLayer.extend({
 var DrawNewAPITest2 = DrawTestDemo.extend({
     _title: "cc.DrawNode",
     _subtitle: "Testing cc.DrawNode API 2",
-    ctor: function () {
+    onEnter: function () {
         //----start0----ctor
         this._super();
         var draw = new cc.DrawNode();
@@ -142,7 +142,7 @@ var DrawNewAPITest = DrawTestDemo.extend({
     _title : "cc.DrawNode",
     _subtitle : "Testing cc.DrawNode API",
 
-    ctor:function() {
+    onEnter:function() {
         //----start1----ctor
         this._super();
 

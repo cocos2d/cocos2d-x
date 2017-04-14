@@ -1,7 +1,7 @@
 /****************************************************************************
 Copyright (c) 2009      On-Core
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -108,7 +108,7 @@ public:
      * @js NA
      * @lua NA
      */
-    CC_DEPRECATED_ATTRIBUTE inline Vec3 vertex(const Vec2& position) { return getVertex(position); }
+    CC_DEPRECATED_ATTRIBUTE Vec3 vertex(const Vec2& position) { return getVertex(position); }
 
     /** 
      * @brief Get the non-transformed vertex that belongs to certain position in the grid.
@@ -123,7 +123,7 @@ public:
      * @js NA
      * @lua NA
      */
-    CC_DEPRECATED_ATTRIBUTE inline Vec3 originalVertex(const Vec2& position) { return getOriginalVertex(position); }
+    CC_DEPRECATED_ATTRIBUTE Vec3 originalVertex(const Vec2& position) { return getOriginalVertex(position); }
 
     /** 
      * @brief Set a new vertex to a certain position of the grid.
@@ -231,12 +231,12 @@ public:
     @brief Get the value of amplitude rate.
     @return the value of amplitude rate.
     */
-    inline float getRate(void) const { return _rate; }
+    float getRate() const { return _rate; }
     /**
     @brief Set the value of amplitude rate.
     @param rate Specify the value of amplitude rate.
     */
-    inline void setRate(float rate) { _rate = rate; }
+    void setRate(float rate) { _rate = rate; }
 
     // Overrides
     virtual void startWithTarget(Node *target) override;
@@ -283,12 +283,12 @@ public:
     @brief Get the value of amplitude rate.
     @return The value of amplitude rate.
     */
-    inline float getRate() const { return _rate; }
+    float getRate() const { return _rate; }
     /**
     @brief Set the value of amplitude rate.
     @param rate Specify the value of amplitude rate.
     */
-    inline void setRate(float rate) { _rate = rate; }
+    void setRate(float rate) { _rate = rate; }
 
     // Overrides
     virtual void startWithTarget(Node *target) override;
@@ -329,12 +329,12 @@ public:
     @brief Get the value of amplitude rate.
     @return The value of amplitude rate.
     */
-    inline float getRate() const { return _rate; }
+    float getRate() const { return _rate; }
     /**
     @brief Set the value of amplitude rate.
     @param rate Specify the value.
     */
-    inline void setRate(float rate) { _rate = rate; }
+    void setRate(float rate) { _rate = rate; }
 
     // overrides
     virtual void startWithTarget(Node *target) override;

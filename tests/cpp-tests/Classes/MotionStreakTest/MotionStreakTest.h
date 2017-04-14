@@ -18,7 +18,7 @@ public:
 
     void modeCallback(cocos2d::Ref* sender);
 protected:
-    cocos2d::MotionStreak* streak;
+    cocos2d::MotionStreak* _streak;
 };
 
 class MotionStreakTest1 : public MotionStreakTest
@@ -61,5 +61,16 @@ private:
     float _radius;
     float _angle;
 };
+
+class Issue12226 : public MotionStreakTest
+{
+public:
+    CREATE_FUNC(Issue12226);
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    virtual void onEnter() override;
+};
+
 
 #endif

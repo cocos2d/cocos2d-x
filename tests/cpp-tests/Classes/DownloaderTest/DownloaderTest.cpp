@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -36,8 +36,8 @@ static const char* sURLList[] =
 {
     "http://www.cocos2d-x.org/attachments/802/cocos2dx_landscape.png",
     "http://www.cocos2d-x.org/docs/manual/framework/native/wiki/logo-resources-of-cocos2d-x/res/2dx_icon_512_rounded.png",
-    "http://www.cocos2d-x.org/attachments/1503/inexist.png",
-    "http://download.sdkbox.com/installer/v1/sdkbox-iap_v1.2.3.3.tar.gz",
+    "http://www.cocos2d-x.org/attachments/1503/no_exist.txt",  // try to download no exist file
+    "http://download.sdkbox.com/installer/v1/sdkbox-iap_v2.3.6.1.tar.gz",
 };
 const static int sListSize = (sizeof(sURLList)/sizeof(sURLList[0]));
 static const char* sNameList[sListSize] =
@@ -78,7 +78,7 @@ struct DownloaderTest : public TestCase
         auto bg = ui::Scale9Sprite::createWithSpriteFrameName("button_actived.png");
         bg->setContentSize(viewSize);
         
-        // add a titile on the top
+        // add a title on the top
         auto title = Label::createWithTTF(name,"fonts/arial.ttf",16);
         title->setTag(TAG_TITLE);
         title->setAnchorPoint(Vec2(0.5, 1));

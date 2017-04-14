@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2014 cocos2d-x.org
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2014-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -29,6 +29,7 @@
 #include "platform/CCPlatformMacros.h"
 #include <vector>
 #include <string>
+#include <sstream>
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) 
 #include "platform/android/jni/JniHelper.h"
@@ -37,6 +38,16 @@
 NS_CC_BEGIN
 
 namespace StringUtils {
+
+template<typename T>
+std::string toString(T arg)
+{
+    std::stringstream ss;
+    ss << arg;
+    return ss.str();
+}
+
+std::string CC_DLL format(const char* format, ...) CC_FORMAT_PRINTF(1, 2);
 
 /**
  *  @brief Converts from UTF8 string to UTF16 string.
@@ -118,13 +129,18 @@ CC_DLL std::string getStringUTFCharsJNI(JNIEnv* env, jstring srcjStr, bool* ret 
 *  @param ret     True if the conversion succeeds and the ret pointer isn't null
 *  @returns the result of jstring,the jstring need to DeleteLocalRef(jstring);
 */
-CC_DLL jstring newStringUTFJNI(JNIEnv* env, std::string utf8Str, bool* ret = nullptr);
+CC_DLL jstring newStringUTFJNI(JNIEnv* env, const std::string& utf8Str, bool* ret = nullptr);
 #endif
 
 /**
  *  @brief Trims the unicode spaces at the end of char16_t vector.
  */
 CC_DLL void trimUTF16Vector(std::vector<char16_t>& str);
+    
+/**
+ *  @brief Trims the unicode spaces at the end of char32_t vector.
+ */
+CC_DLL void trimUTF32Vector(std::vector<char32_t>& str);
 
 /**
  *  @brief Whether the character is a whitespace character.
@@ -134,7 +150,7 @@ CC_DLL void trimUTF16Vector(std::vector<char16_t>& str);
  *  @see http://en.wikipedia.org/wiki/Whitespace_character#Unicode
  *
  */
-CC_DLL bool isUnicodeSpace(char16_t ch);
+CC_DLL bool isUnicodeSpace(char32_t ch);
 
 /**
  *  @brief Whether the character is a Chinese/Japanese/Korean character.
@@ -145,7 +161,7 @@ CC_DLL bool isUnicodeSpace(char16_t ch);
  *  @see http://tieba.baidu.com/p/748765987
  *
  */
-CC_DLL bool isCJKUnicode(char16_t ch);
+CC_DLL bool isCJKUnicode(char32_t ch);
 
 /**
  *  @brief Returns the length of the string in characters.

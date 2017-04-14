@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2013      Zynga Inc.
- Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -30,6 +30,7 @@
 #include "2d/CCFontAtlas.h"
 #include "2d/CCFontCharMap.h"
 #include "2d/CCLabel.h"
+#include "platform/CCFileUtils.h"
 
 NS_CC_BEGIN
 
@@ -47,7 +48,8 @@ void FontAtlasCache::purgeCachedData()
 }
 
 FontAtlas* FontAtlasCache::getFontAtlasTTF(const _ttfConfig* config)
-{  
+{
+    auto realFontFilename = FileUtils::getInstance()->getNewFilename(config->fontFilePath);  // resolves real file path, to prevent storing multiple atlases for the same file.
     bool useDistanceField = config->distanceFieldEnabled;
     if(config->outlineSize > 0)
     {
@@ -57,10 +59,10 @@ FontAtlas* FontAtlasCache::getFontAtlasTTF(const _ttfConfig* config)
     char tmp[ATLAS_MAP_KEY_BUFFER];
     if (useDistanceField) {
         snprintf(tmp, ATLAS_MAP_KEY_BUFFER, "df %.2f %d %s", config->fontSize, config->outlineSize,
-                 config->fontFilePath.c_str());
+                 realFontFilename.c_str());
     } else {
         snprintf(tmp, ATLAS_MAP_KEY_BUFFER, "%.2f %d %s", config->fontSize, config->outlineSize,
-                 config->fontFilePath.c_str());
+                 realFontFilename.c_str());
     }
     std::string atlasName = tmp;
 
@@ -68,7 +70,7 @@ FontAtlas* FontAtlasCache::getFontAtlasTTF(const _ttfConfig* config)
 
     if ( it == _atlasMap.end() )
     {
-        auto font = FontFreeType::create(config->fontFilePath, config->fontSize, config->glyphs,
+        auto font = FontFreeType::create(realFontFilename, config->fontSize, config->glyphs,
             config->customGlyphs, useDistanceField, config->outlineSize);
         if (font)
         {
@@ -91,14 +93,15 @@ FontAtlas* FontAtlasCache::getFontAtlasTTF(const _ttfConfig* config)
 
 FontAtlas* FontAtlasCache::getFontAtlasFNT(const std::string& fontFileName, const Vec2& imageOffset /* = Vec2::ZERO */)
 {
+    auto realFontFilename = FileUtils::getInstance()->getNewFilename(fontFileName);  // resolves real file path, to prevent storing multiple atlases for the same file.
     char tmp[ATLAS_MAP_KEY_BUFFER];
-    snprintf(tmp, ATLAS_MAP_KEY_BUFFER, "%.2f %.2f %s", imageOffset.x, imageOffset.y, fontFileName.c_str());
+    snprintf(tmp, ATLAS_MAP_KEY_BUFFER, "%.2f %.2f %s", imageOffset.x, imageOffset.y, realFontFilename.c_str());
     std::string atlasName = tmp;
     
     auto it = _atlasMap.find(atlasName);
     if ( it == _atlasMap.end() )
     {
-        auto font = FontFNT::create(fontFileName,imageOffset);
+        auto font = FontFNT::create(realFontFilename, imageOffset);
 
         if(font)
         {

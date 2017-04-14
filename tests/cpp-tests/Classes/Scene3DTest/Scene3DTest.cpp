@@ -13,20 +13,22 @@ using namespace spine;
 class SkeletonAnimationCullingFix : public SkeletonAnimation
 {
 public:
-    SkeletonAnimationCullingFix(const std::string& skeletonDataFile, const std::string& atlasFile, float scale)
-    : SkeletonAnimation(skeletonDataFile, atlasFile, scale)
+    SkeletonAnimationCullingFix()
+    : SkeletonAnimation()
     {}
     
-    virtual void drawSkeleton (const cocos2d::Mat4& transform, uint32_t transformFlags) override
+    virtual void draw(cocos2d::Renderer* renderer, const cocos2d::Mat4& transform, uint32_t transformFlags) override
     {
         glDisable(GL_CULL_FACE);
-        SkeletonAnimation::drawSkeleton(transform, transformFlags);
+        SkeletonAnimation::draw(renderer, transform, transformFlags);
         RenderState::StateBlock::invalidate(cocos2d::RenderState::StateBlock::RS_ALL_ONES);
     }
     
     static SkeletonAnimationCullingFix* createWithFile (const std::string& skeletonDataFile, const std::string& atlasFile, float scale = 1)
     {
-        SkeletonAnimationCullingFix* node = new SkeletonAnimationCullingFix(skeletonDataFile, atlasFile, scale);
+        SkeletonAnimationCullingFix* node = new SkeletonAnimationCullingFix();
+        spAtlas* atlas = spAtlas_createFromFile(atlasFile.c_str(), 0);
+        node->initWithJsonFile(skeletonDataFile, atlas, scale);
         node->autorelease();
         return node;
     }
@@ -120,7 +122,7 @@ enum GAME_SCENE {
     SCENE_COUNT,
 };
 
-/** Define the layers in scene, layer seperated by camera mask. */
+/** Define the layers in scene, layer separated by camera mask. */
 enum SCENE_LAYER {
     LAYER_BACKGROUND = 0,
     LAYER_DEFAULT,
@@ -144,10 +146,10 @@ enum GAME_CAMERAS_ORDER {
 };
 
 /*
- Defined s_CF and s_CM to avoid force convertion when call Camera::setCameraFlag
+ Defined s_CF and s_CM to avoid force conversion when call Camera::setCameraFlag
  and Node::setCameraMask.
  
- Useage:
+ Usage:
  -   Camera::setCameraFlag(s_CF[<SCENE_LAYER_INDEX>]);
  -   Node::setCameraMask(s_CM[<SCENE_LAYER_INDEX>]);
  
@@ -338,7 +340,7 @@ bool Scene3DTestScene::init()
         _descDlg->setVisible(false);
 
         ////////////////////////////////////////////////////////////////////////
-        // add touch envent callback
+        // add touch event callback
         auto listener = EventListenerTouchOneByOne::create();
         listener->onTouchBegan = CC_CALLBACK_2(Scene3DTestScene::onTouchBegan, this);
         listener->onTouchEnded = CC_CALLBACK_2(Scene3DTestScene::onTouchEnd, this);
@@ -380,7 +382,6 @@ void Scene3DTestScene::createWorld3D()
     _skyBox = Skybox::create();
     _skyBox->setCameraMask(s_CM[LAYER_BACKGROUND]);
     _skyBox->setTexture(_textureCube);
-    _skyBox->setScale(700.f);
 
     // create terrain
     Terrain::DetailMap r("TerrainTest/dirt.jpg");
@@ -393,7 +394,7 @@ void Scene3DTestScene::createWorld3D()
     _terrain = Terrain::create(data,Terrain::CrackFixedType::SKIRT);
     _terrain->setMaxDetailMapAmount(4);
     _terrain->setDrawWire(false);
-    
+
     _terrain->setSkirtHeightRatio(3);
     _terrain->setLODDistance(64,128,192);
     
@@ -455,7 +456,7 @@ void Scene3DTestScene::createUI()
     showPlayerDlgItem->setName("showPlayerDlgItem");
     showPlayerDlgItem->setPosition(VisibleRect::left().x + 30, VisibleRect::top().y - 30);
     
-    // create discription button
+    // create description button
     TTFConfig ttfConfig("fonts/arial.ttf", 20);
     auto descItem = MenuItemLabel::create(Label::createWithTTF(ttfConfig, "Description"),
                                           [this](Ref* sender)
@@ -703,9 +704,7 @@ void Scene3DTestScene::createDetailDlg()
     
     // add a spine ffd animation on it
     auto skeletonNode =
-        SkeletonAnimationCullingFix::createWithFile("spine/goblins-ffd.json",
-                                          "spine/goblins-ffd.atlas",
-                                          1.5f);
+        SkeletonAnimationCullingFix::createWithFile("spine/goblins_mesh.json", "spine/goblins.atlas", 1.5f);
     skeletonNode->setAnimation(0, "walk", true);
     skeletonNode->setSkin("goblin");
     

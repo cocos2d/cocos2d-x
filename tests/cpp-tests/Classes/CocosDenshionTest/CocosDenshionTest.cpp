@@ -10,7 +10,7 @@
     #define EFFECT_FILE        "effect1.raw"
 #else
     #define EFFECT_FILE        "effect1.wav"
-#endif // CC_PLATFOR_ANDROID
+#endif // CC_PLATFORM_ANDROID
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
     #define MUSIC_FILE        "music.mid"
@@ -22,7 +22,7 @@
     #define MUSIC_FILE        "background.caf"
 #else
     #define MUSIC_FILE        "background.mp3"
-#endif // CC_PLATFOR_WIN32
+#endif // CC_PLATFORM_WIN32
 
 USING_NS_CC;
 using namespace CocosDenshion;
@@ -102,27 +102,24 @@ private:
         return area.containsPoint(_child->convertToNodeSpace(touch->getLocation()));
     }
 
-    bool onTouchBegan(Touch  *touch, Event  *event)
+    bool onTouchBegan(Touch *touch, Event* /*event*/)
     {
-        CC_UNUSED_PARAM(event);
         const bool hits = touchHits(touch);
         if (hits)
             scaleButtonTo(0.9f);
         return hits;
     }
 
-    void onTouchEnded(Touch  *touch, Event  *event)
+    void onTouchEnded(Touch *touch, Event* /*event*/)
     {
-        CC_UNUSED_PARAM(event);
         const bool hits = touchHits(touch);
         if (hits && _onTriggered)
             _onTriggered();
         scaleButtonTo(1);
     }
 
-    void onTouchCancelled(Touch  *touch, Event  *event)
+    void onTouchCancelled(Touch* /*touch*/, Event* /*event*/)
     {
-        CC_UNUSED_PARAM(event);
         scaleButtonTo(1);
     }
 

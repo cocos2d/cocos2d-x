@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -78,12 +78,12 @@ int ActionFrame::getEasingType()
 	return (int)_easingType;
 }
 
-ActionInterval* ActionFrame::getAction(float fDuration)
+ActionInterval* ActionFrame::getAction(float /*fDuration*/)
 {
 	log("Need a definition of <getAction> for ActionFrame");
 	return nullptr;
 }
-ActionInterval* ActionFrame::getAction(float fDuration,ActionFrame* srcFrame)
+ActionInterval* ActionFrame::getAction(float fDuration, ActionFrame* /*srcFrame*/)
 {
 	return this->getAction(fDuration);
 }

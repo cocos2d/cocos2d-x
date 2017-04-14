@@ -359,13 +359,13 @@ namespace cocostudio
             child = child->NextSiblingElement();
         }
         
-        Vector3 postion3D(position.x, position.y, position.z);
+        Vector3 position3D(position.x, position.y, position.z);
         Vector3 rotation3D(rotation.x, rotation.y, rotation.z);
         Vector3 scale3D(scale.x, scale.y, scale.z);
 
         auto options = CreateNode3DOption(*builder,
                                            nodeOptions,
-                                           &postion3D,
+                                           &position3D,
                                            &rotation3D,
                                            &scale3D,
                                            cameraMask

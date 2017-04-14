@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies
+Copyright (c) 2013-2017 Chukong Technologies
 
  http://www.cocos2d-x.org
 
@@ -82,13 +82,12 @@ bool __String::initWithFormatAndValist(const char* format, va_list ap)
 
 bool __String::initWithFormat(const char* format, ...)
 {
-    bool bRet = false;
     _string.clear();
 
     va_list ap;
     va_start(ap, format);
 
-    bRet = initWithFormatAndValist(format, ap);
+    bool bRet = initWithFormatAndValist(format, ap);
 
     va_end(ap);
 
@@ -272,30 +271,5 @@ __String* __String::clone() const
 {
     return __String::create(_string);
 }
-
-namespace StringUtils {
-
-std::string format(const char* format, ...)
-{
-#define CC_MAX_STRING_LENGTH (1024*100)
-    
-    std::string ret;
-    
-    va_list ap;
-    va_start(ap, format);
-    
-    char* buf = (char*)malloc(CC_MAX_STRING_LENGTH);
-    if (buf != nullptr)
-    {
-        vsnprintf(buf, CC_MAX_STRING_LENGTH, format, ap);
-        ret = buf;
-        free(buf);
-    }
-    va_end(ap);
-    
-    return ret;
-}
-
-} // namespace StringUtils {
     
 NS_CC_END

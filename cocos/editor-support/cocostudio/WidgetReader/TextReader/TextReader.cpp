@@ -11,7 +11,6 @@
 
 #include "tinyxml2.h"
 #include "flatbuffers/flatbuffers.h"
-#include "platform/CCFileUtils.h"
 
 USING_NS_CC;
 using namespace ui;
@@ -383,6 +382,7 @@ namespace cocostudio
                                          builder->CreateString(fontName),
                                          fontSize,
                                          builder->CreateString(text),
+                                         isLocalized,
                                          areaWidth,
                                          areaHeight,
                                          h_alignment,
@@ -396,8 +396,7 @@ namespace cocostudio
                                          &f_shadowColor,
                                          shadowOffset.width,
                                          shadowOffset.height,
-                                         shadowBlurRadius,
-                                         isLocalized);
+                                         shadowBlurRadius);
         
         return *(Offset<Table>*)(&options);
     }

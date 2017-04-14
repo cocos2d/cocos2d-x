@@ -30,7 +30,7 @@ struct SoundEffectData
 	IXAudio2SourceVoice*		m_soundEffectSourceVoice;
 	XAUDIO2_BUFFER				m_audioBuffer;
 	byte*						m_soundEffectBufferData;
-	uint32						m_soundEffectBufferLength;
+	size_t						m_soundEffectBufferLength;
 	uint32						m_soundEffectSampleRate;
     bool						m_soundEffectStarted;
     bool						m_soundEffectPaused;

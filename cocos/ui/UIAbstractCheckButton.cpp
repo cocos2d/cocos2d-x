@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -73,7 +73,7 @@ AbstractCheckButton::~AbstractCheckButton()
 }
 
 bool AbstractCheckButton::init(const std::string& backGround,
-                    const std::string& backGroundSeleted,
+                    const std::string& backGroundSelected,
                     const std::string& cross,
                     const std::string& backGroundDisabled,
                     const std::string& frontCrossDisabled,
@@ -89,7 +89,7 @@ bool AbstractCheckButton::init(const std::string& backGround,
         }
         
         setSelected(false);
-        loadTextures(backGround, backGroundSeleted, cross, backGroundDisabled, frontCrossDisabled,texType);
+        loadTextures(backGround, backGroundSelected, cross, backGroundDisabled, frontCrossDisabled, texType);
     } while (0);
     return ret;
 }
@@ -304,8 +304,8 @@ void AbstractCheckButton::onPressStateChangedToNormal()
     _backGroundBoxDisabledRenderer->setVisible(false);
     _frontCrossDisabledRenderer->setVisible(false);
     
-    _backGroundBoxRenderer->setGLProgramState(this->getNormalGLProgramState());
-    _frontCrossRenderer->setGLProgramState(this->getNormalGLProgramState());
+    _backGroundBoxRenderer->setGLProgramState(this->getNormalGLProgramState(_backGroundBoxRenderer->getTexture()));
+    _frontCrossRenderer->setGLProgramState(this->getNormalGLProgramState(_frontCrossRenderer->getTexture()));
     
     
     _backGroundBoxRenderer->setScale(_backgroundTextureScaleX, _backgroundTextureScaleY);
@@ -321,8 +321,8 @@ void AbstractCheckButton::onPressStateChangedToNormal()
 
 void AbstractCheckButton::onPressStateChangedToPressed()
 {
-    _backGroundBoxRenderer->setGLProgramState(this->getNormalGLProgramState());
-    _frontCrossRenderer->setGLProgramState(this->getNormalGLProgramState());
+    _backGroundBoxRenderer->setGLProgramState(this->getNormalGLProgramState(_backGroundBoxRenderer->getTexture()));
+    _frontCrossRenderer->setGLProgramState(this->getNormalGLProgramState(_frontCrossRenderer->getTexture()));
     
     if (!_isBackgroundSelectedTextureLoaded)
     {
@@ -345,8 +345,8 @@ void AbstractCheckButton::onPressStateChangedToDisabled()
     if (!_isBackgroundDisabledTextureLoaded
         || !_isFrontCrossDisabledTextureLoaded)
     {
-        _backGroundBoxRenderer->setGLProgramState(this->getGrayGLProgramState());
-        _frontCrossRenderer->setGLProgramState(this->getGrayGLProgramState());
+        _backGroundBoxRenderer->setGLProgramState(this->getGrayGLProgramState(_backGroundBoxRenderer->getTexture()));
+        _frontCrossRenderer->setGLProgramState(this->getGrayGLProgramState(_backGroundBoxRenderer->getTexture()));
     }
     else
     {

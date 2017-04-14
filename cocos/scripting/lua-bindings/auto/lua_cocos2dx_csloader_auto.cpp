@@ -440,7 +440,7 @@ int lua_cocos2dx_csloader_CSLoader_getJsonPath(lua_State* tolua_S)
             return 0;
         }
         std::string ret = cobj->getJsonPath();
-        tolua_pushcppstring(tolua_S,ret);
+        lua_pushlstring(tolua_S,ret.c_str(),ret.length());
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.CSLoader:getJsonPath",argc, 0);

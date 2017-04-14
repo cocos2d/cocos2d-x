@@ -1,5 +1,9 @@
 /****************************************************************************
+<<<<<<< HEAD
 Copyright (c) 2016 Chukong Technologies Inc.
+=======
+Copyright (c) 2016-2017 Chukong Technologies Inc.
+>>>>>>> cocos2d/v3
 
 http://www.cocos2d-x.org
 
@@ -65,11 +69,19 @@ public:
     virtual void rewind() override;
 
     virtual void setVolume(float volume) override;
+<<<<<<< HEAD
     virtual void setPitch(float pitch) override;
     virtual void setSpeed(float speed) override;
 
     virtual float getVolume() const override;
 
+=======
+
+    virtual float getVolume() const override;
+
+    virtual void setAudioFocus(bool isFocus) override;
+
+>>>>>>> cocos2d/v3
     virtual void setLoop(bool isLoop) override;
 
     virtual bool isLoop() const override;
@@ -99,6 +111,11 @@ private:
 
     void playEventCallback(SLPlayItf caller, SLuint32 playEvent);
 
+<<<<<<< HEAD
+=======
+    void setVolumeToSLPlayer(float volume);
+
+>>>>>>> cocos2d/v3
 private:
     SLEngineItf _engineItf;
     SLObjectItf _outputMixObj;
@@ -113,6 +130,7 @@ private:
     SLPlayItf _playItf;
     SLSeekItf _seekItf;
     SLVolumeItf _volumeItf;
+<<<<<<< HEAD
     SLPitchItf _pitchItf;
     SLPlaybackRateItf _speedItf;
     SLDynamicInterfaceManagementItf dynamicInterfaceManagementItf;
@@ -122,6 +140,13 @@ private:
     float _speed;
     float _duration;
     bool _isLoop;
+=======
+
+    float _volume;
+    float _duration;
+    bool _isLoop;
+    bool _isAudioFocus;
+>>>>>>> cocos2d/v3
     State _state;
 
     PlayEventCallback _playEventCallback;

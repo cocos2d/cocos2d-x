@@ -1,6 +1,6 @@
 /**
  Copyright 2013 BlackBerry Inc.
- Copyright (c) 2015 Chukong Technologies
+ Copyright (c) 2015-2017 Chukong Technologies
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -30,10 +30,9 @@
 #include "math/Vec3.h"
 #include "math/Vec4.h"
 #include "math/Mat4.h"
+#include "math/Quaternion.h"
 #include "base/ccUTF8.h"
 #include "base/CCData.h"
-#include "deprecated/CCString.h"
-
 
 USING_NS_CC;
 
@@ -44,15 +43,16 @@ void calculateNamespacePath(const std::string& urlString, std::string& fileStrin
 Properties* getPropertiesFromNamespacePath(Properties* properties, const std::vector<std::string>& namespacePath);
 
 Properties::Properties()
-: _variables(nullptr), _dirPath(nullptr), _parent(nullptr), _dataIdx(nullptr), _data(nullptr)
+    :  _dataIdx(nullptr), _data(nullptr), _variables(nullptr), _dirPath(nullptr), _parent(nullptr)
 {
     _properties.reserve(32);
 }
 
 Properties::Properties(const Properties& copy)
-    : _namespace(copy._namespace), _id(copy._id), _parentID(copy._parentID), _properties(copy._properties),
-      _variables(nullptr), _dirPath(nullptr), _parent(copy._parent),
-      _dataIdx(copy._dataIdx), _data(copy._data)
+    : _dataIdx(copy._dataIdx), _data(copy._data), _namespace(copy._namespace),
+      _id(copy._id), _parentID(copy._parentID), _properties(copy._properties),
+      _variables(nullptr), _dirPath(nullptr), _parent(copy._parent)
+      
 {
     setDirectoryPath(copy._dirPath);
 
@@ -64,14 +64,14 @@ Properties::Properties(const Properties& copy)
 }
 
 Properties::Properties(Data* data, ssize_t* dataIdx)
-    : _variables(NULL), _dirPath(NULL), _parent(NULL), _dataIdx(dataIdx), _data(data)
+    : _dataIdx(dataIdx), _data(data), _variables(NULL), _dirPath(NULL), _parent(NULL)
 {
     readProperties();
     rewind();
 }
 
 Properties::Properties(Data* data, ssize_t* dataIdx, const std::string& name, const char* id, const char* parentID, Properties* parent)
-    : _namespace(name), _variables(NULL), _dirPath(NULL), _parent(parent), _dataIdx(dataIdx), _data(data)
+    : _dataIdx(dataIdx), _data(data), _namespace(name), _variables(NULL), _dirPath(NULL), _parent(parent)
 {
     if (id)
     {
@@ -90,7 +90,7 @@ Properties* Properties::createNonRefCounted(const std::string& url)
     if (url.size() == 0)
     {
         CCLOGERROR("Attempting to create a Properties object from an empty URL!");
-        return NULL;
+        return nullptr;
     }
 
     // Calculate the file and full namespace path from the specified url.
@@ -113,7 +113,7 @@ Properties* Properties::createNonRefCounted(const std::string& url)
     {
         CCLOGWARN("Failed to load properties from url '%s'.", url.c_str());
         CC_SAFE_DELETE(properties);
-        return NULL;
+        return nullptr;
     }
 
     // If the loaded properties object is not the root namespace,
@@ -480,10 +480,8 @@ char* Properties::trimWhiteSpace(char *str)
         return str;
     }
 
-    char *end;
-
     // Trim leading space.
-    while (isspace(*str))
+    while (*str != '\0' && isspace(*str))
         str++;
 
     // All spaces?
@@ -493,7 +491,7 @@ char* Properties::trimWhiteSpace(char *str)
     }
 
     // Trim trailing space.
-    end = str + strlen(str) - 1;
+    char *end = str + strlen(str) - 1;
     while (end > str && isspace(*end))
         end--;
 
@@ -652,7 +650,7 @@ Properties* Properties::getNextNamespace()
         return ns;
     }
 
-    return NULL;
+    return nullptr;
 }
 
 void Properties::rewind()
@@ -665,9 +663,9 @@ Properties* Properties::getNamespace(const char* id, bool searchNames, bool recu
 {
     CCASSERT(id, "invalid id");
 
-    for (std::vector<Properties*>::const_iterator it = _namespaces.begin(); it < _namespaces.end(); ++it)
+    for (const auto& it : _namespaces)
     {
-        Properties* p = *it;
+        Properties* p = it;
         if (strcmp(searchNames ? p->_namespace.c_str() : p->_id.c_str(), id) == 0)
             return p;
         
@@ -680,7 +678,7 @@ Properties* Properties::getNamespace(const char* id, bool searchNames, bool recu
         }
     }
 
-    return NULL;
+    return nullptr;
 }
 
 const char* Properties::getNamespace() const
@@ -698,9 +696,9 @@ bool Properties::exists(const char* name) const
     if (name == NULL)
         return false;
 
-    for (std::vector<Property>::const_iterator itr = _properties.begin(); itr != _properties.end(); ++itr)
+    for (const auto& itr : _properties)
     {
-        if (itr->name == name)
+        if (itr.name == name)
             return true;
     }
 
@@ -788,11 +786,11 @@ const char* Properties::getString(const char* name, const char* defaultValue) co
             return getVariable(variable, defaultValue);
         }
 
-        for (std::vector<Property>::const_iterator itr = _properties.begin(); itr != _properties.end(); ++itr)
+        for (const auto& itr : _properties)
         {
-            if (itr->name == name)
+            if (itr.name == name)
             {
-                value = itr->value.c_str();
+                value = itr.value.c_str();
                 break;
             }
         }
@@ -822,12 +820,12 @@ bool Properties::setString(const char* name, const char* value)
 {
     if (name)
     {
-        for (std::vector<Property>::iterator itr = _properties.begin(); itr != _properties.end(); ++itr)
+        for (auto& itr : _properties)
         {
-            if (itr->name == name)
+            if (itr.name == name)
             {
                 // Update the first property that matches this name
-                itr->value = value ? value : "";
+                itr.value = value ? value : "";
                 return true;
             }
         }
@@ -1152,7 +1150,7 @@ Properties* getPropertiesFromNamespacePath(Properties* properties, const std::ve
                 if (iter == NULL)
                 {
                     CCLOGWARN("Failed to load properties object from url.");
-                    return NULL;
+                    return nullptr;
                 }
 
                 if (strcmp(iter->getId(), namespacePath[i].c_str()) == 0)

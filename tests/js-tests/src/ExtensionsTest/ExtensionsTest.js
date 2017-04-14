@@ -1,7 +1,7 @@
 /****************************************************************************
  Copyright (c) 2008-2010 Ricardo Quesada
  Copyright (c) 2011-2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -90,7 +90,7 @@ var extensionsTestItemNames = [
     }
 ];
 
-if(!cc.sys.isNative || cc.sys.OS_LINUX !== cc.sys.os){
+if (!cc.sys.isNative || cc.sys.OS_LINUX !== cc.sys.os){
     extensionsTestItemNames.push({
         itemTitle:"EditBoxTest",
         testScene:function () {
@@ -106,10 +106,10 @@ if (cc.sys.isNative && cc.sys.OS_IOS == cc.sys.os) {
             var testScene = pluginXSceneManager.currentPluginXScene();
             cc.director.runScene(testScene);
         }
-    })
+    });
 }
 
-if (cc.sys.isNative && cc.sys.OS_WINDOWS != cc.sys.os) {
+if (cc.sys.isNative) {
     extensionsTestItemNames.push({
         itemTitle:"AssetsManagerTest",
         testScene:function () {

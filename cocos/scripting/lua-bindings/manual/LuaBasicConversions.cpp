@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -72,7 +72,7 @@ extern int lua_isusertype (lua_State* L, int lo, const char* type);
 
 bool luaval_is_usertype(lua_State* L,int lo,const char* type, int def)
 {
-    if (def && lua_gettop(L)<abs(lo))
+    if (def && lua_gettop(L)<std::abs(lo))
         return true;
 
     if (lua_isnil(L,lo) || lua_isusertype(L,lo,type))
@@ -283,7 +283,9 @@ bool luaval_to_std_string(lua_State* L, int lo, std::string* outValue, const cha
 
     if (ok)
     {
-        *outValue = tolua_tocppstring(L,lo,NULL);
+        size_t size;
+        auto rawString = lua_tolstring(L,lo,&size);
+        *outValue = std::string(rawString, size);
     }
 
     return ok;
@@ -2727,7 +2729,7 @@ void array_to_luaval(lua_State* L,__Array* inValue)
         }
         else
         {
-            CCASSERT(false, "the type isn't suppored.");
+            CCASSERT(false, "the type isn't supported.");
         }
     }
 }
@@ -2811,7 +2813,7 @@ void dictionary_to_luaval(lua_State* L, __Dictionary* dict)
         }
         else
         {
-            CCASSERT(false, "the type isn't suppored.");
+            CCASSERT(false, "the type isn't supported.");
         }
     }
 }

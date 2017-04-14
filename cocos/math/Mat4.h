@@ -1,6 +1,6 @@
 /**
  Copyright 2013 BlackBerry Inc.
- Copyright (c) 2014-2015 Chukong Technologies
+ Copyright (c) 2014-2017 Chukong Technologies
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -876,7 +876,7 @@ public:
      * @param mat The matrix to add.
      * @return The matrix sum.
      */
-    inline const Mat4 operator+(const Mat4& mat) const;
+    inline Mat4 operator+(const Mat4& mat) const;
     
     /**
      * Adds the given matrix to this matrix.
@@ -894,7 +894,7 @@ public:
      * @param mat The matrix to subtract.
      * @return The matrix difference.
      */
-    inline const Mat4 operator-(const Mat4& mat) const;
+    inline Mat4 operator-(const Mat4& mat) const;
 
     /**
      * Subtracts the given matrix from this matrix.
@@ -911,7 +911,7 @@ public:
      * 
      * @return The negation of this matrix.
      */
-    inline const Mat4 operator-() const;
+    inline Mat4 operator-() const;
 
     /**
      * Calculates the matrix product of this matrix with the given matrix.
@@ -921,7 +921,7 @@ public:
      * @param mat The matrix to multiply by.
      * @return The matrix product.
      */
-    inline const Mat4 operator*(const Mat4& mat) const;
+    inline Mat4 operator*(const Mat4& mat) const;
 
     /**
      * Right-multiplies this matrix by the given matrix.
@@ -963,7 +963,7 @@ inline Vec3& operator*=(Vec3& v, const Mat4& m);
  * @param v The vector to transform.
  * @return The resulting transformed vector.
  */
-inline const Vec3 operator*(const Mat4& m, const Vec3& v);
+inline Vec3 operator*(const Mat4& m, const Vec3& v);
 
 /**
  * Transforms the given vector by the given matrix.
@@ -985,7 +985,7 @@ inline Vec4& operator*=(Vec4& v, const Mat4& m);
  * @param v The vector to transform.
  * @return The resulting transformed vector.
  */
-inline const Vec4 operator*(const Mat4& m, const Vec4& v);
+inline Vec4 operator*(const Mat4& m, const Vec4& v);
 
 NS_CC_MATH_END
 /**

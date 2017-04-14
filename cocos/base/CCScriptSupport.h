@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2010-2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -557,11 +557,18 @@ struct CommonScriptData
     : handler(inHandler),
       eventSource(inSource)
     {
-        strncpy(eventName, inName, 64);
+        if (nullptr == inName)
+        {
+            memset(eventName, 0, sizeof(eventName));
+        }
+        else
+        {
+            strncpy(eventName, inName, sizeof(eventName));
+        }
         
         if (nullptr == inClassName)
         {
-            memset(eventSourceClassName, 0, 64*sizeof(char));
+            memset(eventSourceClassName, 0, sizeof(eventSourceClassName));
         }
         else
         {
@@ -622,7 +629,7 @@ public:
      * @js NA
      */
     ScriptEngineProtocol()
-    {};
+    {}
     
     /**
      * Destructor of ScriptEngineProtocol.
@@ -630,7 +637,7 @@ public:
      * @lua NA
      * @js NA
      */
-    virtual ~ScriptEngineProtocol() {};
+    virtual ~ScriptEngineProtocol() {}
     
     /** 
      * Get the specific script type.
@@ -640,37 +647,37 @@ public:
      * @lua NA
      * @js NA
      */
-    virtual ccScriptType getScriptType() { return kScriptTypeNone; };
+    virtual ccScriptType getScriptType() { return kScriptTypeNone; }
     
     /**
      * Reflect the retain relationship to script scope
      */
-    virtual void retainScriptObject(Ref* owner, Ref* target) {};
+    virtual void retainScriptObject(Ref* /*owner*/, Ref* /*target*/) {}
     
     /**
      * Add the script object to root object
      */
-    virtual void rootScriptObject(Ref* target) {};
+    virtual void rootScriptObject(Ref* /*target*/) {}
     
     /**
      * Reflect the release relationship to script scope
      */
-    virtual void releaseScriptObject(Ref* owner, Ref* target) {};
+    virtual void releaseScriptObject(Ref* /*owner*/, Ref* /*target*/) {}
     
     /**
      * Remove the script object from root object
      */
-    virtual void unrootScriptObject(Ref* target) {};
+    virtual void unrootScriptObject(Ref* /*target*/) {}
     
     /**
      * Release all children native refs for the given node in script scope
      */
-    virtual void releaseAllChildrenRecursive(Node* node) {};
+    virtual void releaseAllChildrenRecursive(Node* /*node*/) {}
     
     /**
      * Release all native refs for the given owner in script scope
      */
-    virtual void releaseAllNativeRefs(cocos2d::Ref* owner) {};
+    virtual void releaseAllNativeRefs(cocos2d::Ref* /*owner*/) {}
 
     /** 
      * Remove script object,The specific meaning should refer to the ScriptType.
@@ -679,7 +686,7 @@ public:
      * @lua NA
      * @js NA
      */
-    virtual void removeScriptObjectByObject(Ref* obj) {};
+    virtual void removeScriptObjectByObject(Ref* /*obj*/) {}
     
     /** 
      * Remove script function handler, only LuaEngine class need to implement this function.
@@ -687,7 +694,7 @@ public:
      * @lua NA
      * @js NA
      */
-    virtual void removeScriptHandler(int handler) {};
+    virtual void removeScriptHandler(int /*handler*/) {}
     
     /** 
      * Reallocate script function handler, only LuaEngine class need to implement this function.
@@ -695,7 +702,7 @@ public:
      * @lua NA
      * @js NA
      */
-    virtual int reallocateScriptHandler(int handler) { return 0;}
+    virtual int reallocateScriptHandler(int /*handler*/) { return 0; }
     
     /**
      * Execute script code contained in the given string.
@@ -754,7 +761,7 @@ public:
      * @lua NA
      * @js NA
      */
-    virtual void setCalledFromScript(bool callFromScript) { CC_UNUSED_PARAM(callFromScript); };
+    virtual void setCalledFromScript(bool /*callFromScript*/) {}
     
     /** 
      * Useless for Lua.
@@ -785,12 +792,16 @@ public:
     /** Root a Reference.
      It tells the Garbage Collector that the associated Scripting object should not be collected
      */
-    virtual void rootObject(Ref* obj) {}
+    virtual void rootObject(Ref* /*obj*/) {}
 
     /** Unroot a Reference.
      It tells the Garbage Collector that the associated Scripting object can be collected
      */
-    virtual void unrootObject(Ref* obj) {}
+    virtual void unrootObject(Ref* /*obj*/) {}
+
+    /** Remove proxy for a native object
+     */
+    virtual void removeObjectProxy(Ref* obj) {}
 
     /** Triggers the garbage collector */
     virtual void garbageCollect() {}
@@ -798,7 +809,7 @@ public:
 
 class Node;
 /**
- * ScriptEngineManager is a singleton which manager an object instance of ScriptEngineProtocl, such as LuaEngine.
+ * ScriptEngineManager is a singleton which manager an object instance of ScriptEngineProtocol, such as LuaEngine.
  *
  * @since v0.99.5-x-0.8.5
  * @js NA

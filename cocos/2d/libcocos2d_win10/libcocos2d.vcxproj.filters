@@ -71,9 +71,6 @@
     <Filter Include="cocostudio\components">
       <UniqueIdentifier>{b7fa88eb-4dd8-4476-89b3-665a128ecd49}</UniqueIdentifier>
     </Filter>
-    <Filter Include="cocostudio\json">
-      <UniqueIdentifier>{84e54bc0-68a3-4466-b64b-147525501276}</UniqueIdentifier>
-    </Filter>
     <Filter Include="cocostudio\reader">
       <UniqueIdentifier>{1c30324c-b033-419a-b0bc-fcd04bf5e887}</UniqueIdentifier>
     </Filter>
@@ -97,9 +94,6 @@
     </Filter>
     <Filter Include="cocostudio\armature\utils">
       <UniqueIdentifier>{0a31f1b5-366b-4b0e-b998-6eee00a5e232}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="cocostudio\json\flatbuffers">
-      <UniqueIdentifier>{c2ef43b9-5a8e-4810-9430-31427c61cd57}</UniqueIdentifier>
     </Filter>
     <Filter Include="cocostudio\reader\WidgetReader">
       <UniqueIdentifier>{377b23e6-4800-4305-b6de-7ffd6ab75445}</UniqueIdentifier>
@@ -268,6 +262,27 @@
     </Filter>
     <Filter Include="cocostudio\reader\WidgetReader\Particle3DReader\ParticleReader">
       <UniqueIdentifier>{2e9af99e-c268-459a-9615-9f3c5b58efdc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vr">
+      <UniqueIdentifier>{757d4df8-a9d6-430f-9a7a-80170d9ca6fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\md5">
+      <UniqueIdentifier>{9ed292ed-61f9-4197-b99d-d6d6dbf63235}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\json">
+      <UniqueIdentifier>{18477c41-d2ad-4050-b23e-06613d1265b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\flatbuffers">
+      <UniqueIdentifier>{d5ca0311-8832-4f39-a84c-986edf7b7db0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\json\error">
+      <UniqueIdentifier>{96ca83bc-ffd4-4d74-890d-f7e89df4a44e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\json\internal">
+      <UniqueIdentifier>{68ac465b-56b4-4803-806f-00d23cb49142}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\json\msinttypes">
+      <UniqueIdentifier>{079e35c5-f476-44f8-a3f0-04cf205f7260}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -794,39 +809,6 @@
     </ClCompile>
     <ClCompile Include="..\..\editor-support\cocostudio\CCInputDelegate.cpp">
       <Filter>cocostudio\components</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\editor-support\cocostudio\CocoLoader.cpp">
-      <Filter>cocostudio\json</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\editor-support\cocostudio\CocoStudio.cpp">
-      <Filter>cocostudio\json</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\editor-support\cocostudio\DictionaryHelper.cpp">
-      <Filter>cocostudio\json</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\editor-support\cocostudio\FlatBuffersSerialize.cpp">
-      <Filter>cocostudio\json</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\editor-support\cocostudio\WidgetCallBackHandlerProtocol.cpp">
-      <Filter>cocostudio\json</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\external\flatbuffers\idl_gen_cpp.cpp">
-      <Filter>cocostudio\json\flatbuffers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\external\flatbuffers\idl_gen_fbs.cpp">
-      <Filter>cocostudio\json\flatbuffers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\external\flatbuffers\idl_gen_general.cpp">
-      <Filter>cocostudio\json\flatbuffers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\external\flatbuffers\idl_gen_go.cpp">
-      <Filter>cocostudio\json\flatbuffers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\external\flatbuffers\idl_gen_text.cpp">
-      <Filter>cocostudio\json\flatbuffers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\external\flatbuffers\idl_parser.cpp">
-      <Filter>cocostudio\json\flatbuffers</Filter>
     </ClCompile>
     <ClCompile Include="..\..\editor-support\cocostudio\TriggerBase.cpp">
       <Filter>cocostudio\trigger</Filter>
@@ -1521,6 +1503,9 @@
     <ClCompile Include="..\..\network\SocketIO.cpp">
       <Filter>network</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\network\Uri.cpp">
+      <Filter>network</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\network\WebSocket.cpp">
       <Filter>network</Filter>
     </ClCompile>
@@ -1992,6 +1977,69 @@
     </ClCompile>
     <ClCompile Include="..\..\ui\UIEditBox\UIEditBoxImpl-common.cpp">
       <Filter>ui\UIWidgets\EditBox</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\vr\CCVRDistortion.cpp">
+      <Filter>vr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\vr\CCVRDistortionMesh.cpp">
+      <Filter>vr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\vr\CCVRGenericHeadTracker.cpp">
+      <Filter>vr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\vr\CCVRGenericRenderer.cpp">
+      <Filter>vr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\md5\md5.c">
+      <Filter>external\md5</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\editor-support\cocostudio\CocoLoader.cpp">
+      <Filter>cocostudio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\editor-support\cocostudio\CocoStudio.cpp">
+      <Filter>cocostudio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\editor-support\cocostudio\DictionaryHelper.cpp">
+      <Filter>cocostudio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\editor-support\cocostudio\FlatBuffersSerialize.cpp">
+      <Filter>cocostudio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\editor-support\cocostudio\WidgetCallBackHandlerProtocol.cpp">
+      <Filter>cocostudio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\flatbuffers\idl_gen_cpp.cpp">
+      <Filter>external\flatbuffers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\flatbuffers\idl_gen_fbs.cpp">
+      <Filter>external\flatbuffers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\flatbuffers\idl_gen_general.cpp">
+      <Filter>external\flatbuffers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\flatbuffers\idl_gen_go.cpp">
+      <Filter>external\flatbuffers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\flatbuffers\idl_gen_js.cpp">
+      <Filter>external\flatbuffers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\flatbuffers\idl_gen_php.cpp">
+      <Filter>external\flatbuffers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\flatbuffers\idl_gen_python.cpp">
+      <Filter>external\flatbuffers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\flatbuffers\idl_gen_text.cpp">
+      <Filter>external\flatbuffers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\flatbuffers\idl_parser.cpp">
+      <Filter>external\flatbuffers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\flatbuffers\reflection.cpp">
+      <Filter>external\flatbuffers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\flatbuffers\util.cpp">
+      <Filter>external\flatbuffers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2596,36 +2644,6 @@
     </ClInclude>
     <ClInclude Include="..\..\editor-support\cocostudio\CCInputDelegate.h">
       <Filter>cocostudio\components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\editor-support\cocostudio\CocoLoader.h">
-      <Filter>cocostudio\json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\editor-support\cocostudio\CocoStudio.h">
-      <Filter>cocostudio\json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\editor-support\cocostudio\CSParse3DBinary_generated.h">
-      <Filter>cocostudio\json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\editor-support\cocostudio\CSParseBinary_generated.h">
-      <Filter>cocostudio\json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\editor-support\cocostudio\DictionaryHelper.h">
-      <Filter>cocostudio\json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\editor-support\cocostudio\FlatBuffersSerialize.h">
-      <Filter>cocostudio\json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\editor-support\cocostudio\WidgetCallBackHandlerProtocol.h">
-      <Filter>cocostudio\json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\external\flatbuffers\flatbuffers.h">
-      <Filter>cocostudio\json\flatbuffers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\external\flatbuffers\idl.h">
-      <Filter>cocostudio\json\flatbuffers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\external\flatbuffers\util.h">
-      <Filter>cocostudio\json\flatbuffers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\editor-support\cocostudio\TriggerBase.h">
       <Filter>cocostudio\trigger</Filter>
@@ -3368,6 +3386,9 @@
     <ClInclude Include="..\..\network\SocketIO.h">
       <Filter>network</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\network\Uri.h">
+      <Filter>network</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\network\WebSocket.h">
       <Filter>network</Filter>
     </ClInclude>
@@ -3423,9 +3444,6 @@
       <Filter>platform\winrt</Filter>
     </ClInclude>
     <ClInclude Include="..\..\platform\winrt\CCGL.h">
-      <Filter>platform\winrt</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\platform\winrt\CCGL_Angle.h">
       <Filter>platform\winrt</Filter>
     </ClInclude>
     <ClInclude Include="..\..\platform\winrt\CCGLViewImpl-winrt.h">
@@ -3892,6 +3910,174 @@
     </ClInclude>
     <ClInclude Include="..\..\ui\UIEditBox\UIEditBoxImpl-common.h">
       <Filter>ui\UIWidgets\EditBox</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\vr\CCVRDistortion.h">
+      <Filter>vr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\vr\CCVRDistortionMesh.h">
+      <Filter>vr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\vr\CCVRGenericHeadTracker.h">
+      <Filter>vr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\vr\CCVRGenericRenderer.h">
+      <Filter>vr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\md5\md5.h">
+      <Filter>external\md5</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\editor-support\cocostudio\CocoLoader.h">
+      <Filter>cocostudio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\editor-support\cocostudio\CocoStudio.h">
+      <Filter>cocostudio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\editor-support\cocostudio\CSParse3DBinary_generated.h">
+      <Filter>cocostudio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\editor-support\cocostudio\CSParseBinary_generated.h">
+      <Filter>cocostudio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\editor-support\cocostudio\DictionaryHelper.h">
+      <Filter>cocostudio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\editor-support\cocostudio\FlatBuffersSerialize.h">
+      <Filter>cocostudio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\editor-support\cocostudio\WidgetCallBackHandlerProtocol.h">
+      <Filter>cocostudio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\flatbuffers\code_generators.h">
+      <Filter>external\flatbuffers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\flatbuffers\flatbuffers.h">
+      <Filter>external\flatbuffers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\flatbuffers\grpc.h">
+      <Filter>external\flatbuffers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\flatbuffers\hash.h">
+      <Filter>external\flatbuffers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\flatbuffers\idl.h">
+      <Filter>external\flatbuffers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\flatbuffers\reflection.h">
+      <Filter>external\flatbuffers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\flatbuffers\reflection_generated.h">
+      <Filter>external\flatbuffers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\flatbuffers\util.h">
+      <Filter>external\flatbuffers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\json\document.h">
+      <Filter>external\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\json\document-wrapper.h">
+      <Filter>external\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\json\encodedstream.h">
+      <Filter>external\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\json\encodings.h">
+      <Filter>external\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\json\filereadstream.h">
+      <Filter>external\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\json\filewritestream.h">
+      <Filter>external\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\json\fwd.h">
+      <Filter>external\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\json\istreamwrapper.h">
+      <Filter>external\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\json\memorybuffer.h">
+      <Filter>external\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\json\memorystream.h">
+      <Filter>external\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\json\ostreamwrapper.h">
+      <Filter>external\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\json\pointer.h">
+      <Filter>external\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\json\prettywriter.h">
+      <Filter>external\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\json\rapidjson.h">
+      <Filter>external\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\json\reader.h">
+      <Filter>external\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\json\schema.h">
+      <Filter>external\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\json\stream.h">
+      <Filter>external\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\json\stringbuffer.h">
+      <Filter>external\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\json\writer.h">
+      <Filter>external\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\json\allocators.h">
+      <Filter>external\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\json\error\en.h">
+      <Filter>external\json\error</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\json\error\error.h">
+      <Filter>external\json\error</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\json\internal\biginteger.h">
+      <Filter>external\json\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\json\internal\diyfp.h">
+      <Filter>external\json\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\json\internal\dtoa.h">
+      <Filter>external\json\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\json\internal\ieee754.h">
+      <Filter>external\json\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\json\internal\itoa.h">
+      <Filter>external\json\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\json\internal\meta.h">
+      <Filter>external\json\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\json\internal\pow10.h">
+      <Filter>external\json\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\json\internal\regex.h">
+      <Filter>external\json\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\json\internal\stack.h">
+      <Filter>external\json\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\json\internal\strfunc.h">
+      <Filter>external\json\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\json\internal\strtod.h">
+      <Filter>external\json\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\json\internal\swap.h">
+      <Filter>external\json\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\json\msinttypes\inttypes.h">
+      <Filter>external\json\msinttypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\json\msinttypes\stdint.h">
+      <Filter>external\json\msinttypes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

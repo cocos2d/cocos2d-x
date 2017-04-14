@@ -2,7 +2,7 @@
 Copyright (c) 2009      Lam Pham
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2012      Ricardo Quesada
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -91,7 +91,7 @@ void TransitionProgress::onEnter()
     ProgressTimer *node = progressTimerNodeWithRenderTexture(texture);
 
     // create the blend action
-    ActionInterval* layerAction = (ActionInterval*)Sequence::create(
+    auto layerAction = Sequence::create(
         ProgressFromTo::create(_duration, _from, _to),
         CallFunc::create(CC_CALLBACK_0(TransitionScene::finish,this)),
         nullptr);
@@ -122,7 +122,7 @@ void TransitionProgress::setupTransition()
     _to = 0;
 }
 
-ProgressTimer* TransitionProgress::progressTimerNodeWithRenderTexture(RenderTexture* texture)
+ProgressTimer* TransitionProgress::progressTimerNodeWithRenderTexture(RenderTexture* /*texture*/)
 {
     CCASSERT(false, "override me - abstract class");
     return nullptr;

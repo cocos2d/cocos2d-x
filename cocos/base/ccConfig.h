@@ -2,7 +2,7 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -158,17 +158,10 @@ THE SOFTWARE.
  * Apple recommends its usage but they might consume a lot of memory, specially if you use many of them.
  * So for certain cases, where you might need hundreds of VAO objects, it might be a good idea to disable it.
  * To disable it set it to 0. Enabled by default.
+ * If a device doesn't support VAO though it claims to support should add exceptions list here.
  */
 #ifndef CC_TEXTURE_ATLAS_USE_VAO
-    #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-        #define CC_TEXTURE_ATLAS_USE_VAO 1
-    #else
-        /* Some Windows display adapter driver cannot support VAO.
-         * Some android devices cannot support VAO very well, so we disable it by default for android platform.
-         * Blackberry also doesn't support this feature.
-         */
-		#define CC_TEXTURE_ATLAS_USE_VAO 1
-    #endif
+#define CC_TEXTURE_ATLAS_USE_VAO 1
 #endif
 
 
@@ -330,7 +323,7 @@ THE SOFTWARE.
 #endif
 
 /** When CC_ENABLE_SCRIPT_BINDING and CC_ENABLE_GC_FOR_NATIVE_OBJECTS are both 1
- then the Garbage collector will release the native objects, only when the JS/Lua objets
+ then the Garbage collector will release the native objects, only when the JS/Lua objects
  are collected.
  The benefit is that users don't need to retain/release the JS/Lua objects manually.
 
@@ -398,6 +391,14 @@ THE SOFTWARE.
  */
 #ifndef CC_FILEUTILS_APPLE_ENABLE_OBJC
 #define CC_FILEUTILS_APPLE_ENABLE_OBJC  1
+#endif
+
+/** @def CC_ENABLE_PREMULTIPLIED_ALPHA
+ * If enabled, all textures will be preprocessed to multiply its rgb components
+ * by its alpha component.
+ */
+#ifndef CC_ENABLE_PREMULTIPLIED_ALPHA
+# define CC_ENABLE_PREMULTIPLIED_ALPHA 1
 #endif
 
 /** @def CC_2D_CULLING_FUNCTION

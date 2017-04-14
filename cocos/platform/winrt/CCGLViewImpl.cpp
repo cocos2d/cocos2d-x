@@ -54,7 +54,7 @@ using namespace Windows::UI::ViewManagement;
 
 NS_CC_BEGIN
 
-static GLViewImpl* s_pEglView = NULL;
+static GLViewImpl* s_pEglView = nullptr;
 
 //////////////////////////////////////////////////////////////////////////
 // implement GLView
@@ -408,7 +408,7 @@ GLViewImpl::GLViewImpl()
 GLViewImpl::~GLViewImpl()
 {
 	CC_ASSERT(this == s_pEglView);
-    s_pEglView = NULL;
+    s_pEglView = nullptr;
 
 	// TODO: cleanup 
 }

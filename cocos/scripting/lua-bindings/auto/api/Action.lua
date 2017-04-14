@@ -88,7 +88,7 @@
         
 --------------------------------
 --  Changes the flag field that is used to group the actions easily.<br>
--- param tag Used to identify the action easily.
+-- param flags Used to group the actions easily.
 -- @function [parent=#Action] setFlags 
 -- @param self
 -- @param #unsigned int flags

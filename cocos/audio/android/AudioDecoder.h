@@ -1,5 +1,9 @@
 /****************************************************************************
+<<<<<<< HEAD
 Copyright (c) 2016 Chukong Technologies Inc.
+=======
+Copyright (c) 2016-2017 Chukong Technologies Inc.
+>>>>>>> cocos2d/v3
 
 http://www.cocos2d-x.org
 
@@ -26,24 +30,37 @@ THE SOFTWARE.
 
 #include "audio/android/OpenSLHelper.h"
 #include "audio/android/PcmData.h"
+<<<<<<< HEAD
 
 #include <mutex>
 #include <condition_variable>
+=======
+#include "base/CCData.h"
+>>>>>>> cocos2d/v3
 
 namespace cocos2d { namespace experimental {
 
 class AudioDecoder
 {
 public:
+<<<<<<< HEAD
     AudioDecoder(SLEngineItf engineItf, const std::string &url, int bufferSizeInFrames, int sampleRate, const FdGetterCallback &fdGetterCallback);
 
     virtual ~AudioDecoder();
 
+=======
+    AudioDecoder();
+    virtual ~AudioDecoder();
+
+    virtual bool init(const std::string &url, int sampleRate);
+
+>>>>>>> cocos2d/v3
     bool start();
 
     inline PcmData getResult()
     { return _result; };
 
+<<<<<<< HEAD
 private:
     bool decodeToPcm();
     bool resample();
@@ -103,6 +120,23 @@ private:
     bool _isDecodingCallbackInvoked;
 
     friend class SLAudioDecoderCallbackProxy;
+=======
+protected:
+    virtual bool decodeToPcm() = 0;
+    bool resample();
+    bool interleave();
+
+    static size_t fileRead(void* ptr, size_t size, size_t nmemb, void* datasource);
+    static int fileSeek(void* datasource, int64_t offset, int whence);
+    static int fileClose(void* datasource);
+    static long fileTell(void* datasource);
+
+    std::string _url;
+    PcmData _result;
+    int _sampleRate;
+    Data _fileData;
+    size_t _fileCurrPos;
+>>>>>>> cocos2d/v3
 };
 
 }} // namespace cocos2d { namespace experimental {

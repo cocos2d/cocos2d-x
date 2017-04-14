@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2014-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -35,6 +35,7 @@
 #include "base/CCDirector.h"
 #include "base/CCScheduler.h"
 #include "platform/CCFileUtils.h"
+#include "platform/tizen/CCApplication-tizen.h"
 
 #include <queue>
 
@@ -93,6 +94,27 @@ static AudioEngineThreadPool* _threadPool = nullptr;
 
 using namespace cocos2d;
 using namespace cocos2d::experimental;
+
+static void sessionInterruptedCallback(sound_session_interrupted_code_e code, void *user_data)
+{
+	Application* app = Application::getInstance();
+	if(app && app->isPaused())
+	{
+		return;
+	}
+	if(code == SOUND_SESSION_INTERRUPTED_COMPLETED)
+	{
+		AudioEngine::resumeAll();
+	}
+	else
+	{
+		AudioEngine::pauseAll();
+		if (code == SOUND_SESSION_INTERRUPTED_BY_EARJACK_UNPLUG)
+		{
+			AudioEngine::resumeAll();
+		}
+	}
+}
 
 AudioPlayer::AudioPlayer()
     : _playerHandle(nullptr)
@@ -232,10 +254,12 @@ bool AudioEngineImpl::init()
             SOUND_SESSION_OPTION_INTERRUPTIBLE_DURING_PLAY);
     sound_manager_set_media_session_resumption_option(SOUND_SESSION_OPTION_RESUMPTION_BY_SYSTEM_OR_MEDIA_PAUSED);
 
-    if (!_threadPool)
-    {
-        _threadPool = new (std::nothrow) AudioEngineThreadPool();
-    }
+	sound_manager_set_session_interrupted_cb(sessionInterruptedCallback, this);
+
+	if (!_threadPool)
+	{
+		_threadPool = new (std::nothrow) AudioEngineThreadPool();
+	}
 
     return true;
 }

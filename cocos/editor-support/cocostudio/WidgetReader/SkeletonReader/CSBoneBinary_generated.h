@@ -5,72 +5,27 @@
 
 #include "flatbuffers/flatbuffers.h"
 
-namespace flatbuffers {
-struct CSParseBinary;
-struct NodeTree;
-struct Options;
-struct WidgetOptions;
-struct LayoutComponentTable;
-struct SingleNodeOptions;
-struct SpriteOptions;
-struct ParticleSystemOptions;
-struct GameMapOptions;
-struct ButtonOptions;
-struct CheckBoxOptions;
-struct ImageViewOptions;
-struct TextAtlasOptions;
-struct TextBMFontOptions;
-struct TextOptions;
-struct TextFieldOptions;
-struct LoadingBarOptions;
-struct SliderOptions;
-struct PanelOptions;
-struct ScrollViewOptions;
-struct PageViewOptions;
-struct ListViewOptions;
-struct ProjectNodeOptions;
-struct ComponentOptions;
-struct ComAudioOptions;
-struct AnimationInfo;
-struct NodeAction;
-struct TimeLine;
-struct Frame;
-struct PointFrame;
-struct ScaleFrame;
-struct ColorFrame;
-struct TextureFrame;
-struct EventFrame;
-struct IntFrame;
-struct BoolFrame;
-struct InnerActionFrame;
-struct EasingData;
-struct RotationSkew;
-struct Position;
-struct Scale;
-struct AnchorPoint;
-struct Color;
-struct ColorVector;
-struct FlatSize;
-struct CapInsets;
-struct BlendFunc;
-struct ResourceData;
-}  // namespace flatbuffers
+#include "editor-support/cocostudio/CSParseBinary_generated.h"
 
 namespace flatbuffers {
 
 struct BoneOptions;
-struct SkeletonOptions;
 
-struct BoneOptions : private flatbuffers::Table {
-  const flatbuffers::WidgetOptions *nodeOptions() const { return GetPointer<const flatbuffers::WidgetOptions *>(4); }
-  float length() const { return GetField<float>(6, 0); }
-  const flatbuffers::BlendFunc *blendFunc() const { return GetStruct<const flatbuffers::BlendFunc *>(8); }
+struct BoneOptions FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+  enum {
+    VT_NODEOPTIONS = 4,
+    VT_LENGTH = 6,
+    VT_BLENDFUNC = 8
+  };
+  const flatbuffers::WidgetOptions *nodeOptions() const { return GetPointer<const flatbuffers::WidgetOptions *>(VT_NODEOPTIONS); }
+  float length() const { return GetField<float>(VT_LENGTH, 0.0f); }
+  const flatbuffers::BlendFunc *blendFunc() const { return GetStruct<const flatbuffers::BlendFunc *>(VT_BLENDFUNC); }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
-           VerifyField<flatbuffers::uoffset_t>(verifier, 4 /* nodeOptions */) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, VT_NODEOPTIONS) &&
            verifier.VerifyTable(nodeOptions()) &&
-           VerifyField<float>(verifier, 6 /* length */) &&
-           VerifyField<flatbuffers::BlendFunc>(verifier, 8 /* blendFunc */) &&
+           VerifyField<float>(verifier, VT_LENGTH) &&
+           VerifyField<flatbuffers::BlendFunc>(verifier, VT_BLENDFUNC) &&
            verifier.EndTable();
   }
 };
@@ -78,9 +33,9 @@ struct BoneOptions : private flatbuffers::Table {
 struct BoneOptionsBuilder {
   flatbuffers::FlatBufferBuilder &fbb_;
   flatbuffers::uoffset_t start_;
-  void add_nodeOptions(flatbuffers::Offset<flatbuffers::WidgetOptions> nodeOptions) { fbb_.AddOffset(4, nodeOptions); }
-  void add_length(float length) { fbb_.AddElement<float>(6, length, 0); }
-  void add_blendFunc(const flatbuffers::BlendFunc *blendFunc) { fbb_.AddStruct(8, blendFunc); }
+  void add_nodeOptions(flatbuffers::Offset<flatbuffers::WidgetOptions> nodeOptions) { fbb_.AddOffset(BoneOptions::VT_NODEOPTIONS, nodeOptions); }
+  void add_length(float length) { fbb_.AddElement<float>(BoneOptions::VT_LENGTH, length, 0.0f); }
+  void add_blendFunc(const flatbuffers::BlendFunc *blendFunc) { fbb_.AddStruct(BoneOptions::VT_BLENDFUNC, blendFunc); }
   BoneOptionsBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
   BoneOptionsBuilder &operator=(const BoneOptionsBuilder &);
   flatbuffers::Offset<BoneOptions> Finish() {
@@ -90,9 +45,9 @@ struct BoneOptionsBuilder {
 };
 
 inline flatbuffers::Offset<BoneOptions> CreateBoneOptions(flatbuffers::FlatBufferBuilder &_fbb,
-   flatbuffers::Offset<flatbuffers::WidgetOptions> nodeOptions = 0,
-   float length = 0,
-   const flatbuffers::BlendFunc *blendFunc = 0) {
+    flatbuffers::Offset<flatbuffers::WidgetOptions> nodeOptions = 0,
+    float length = 0.0f,
+    const flatbuffers::BlendFunc *blendFunc = 0) {
   BoneOptionsBuilder builder_(_fbb);
   builder_.add_blendFunc(blendFunc);
   builder_.add_length(length);
@@ -100,40 +55,17 @@ inline flatbuffers::Offset<BoneOptions> CreateBoneOptions(flatbuffers::FlatBuffe
   return builder_.Finish();
 }
 
-struct SkeletonOptions : private flatbuffers::Table {
-  const BoneOptions *boneOptions() const { return GetPointer<const BoneOptions *>(4); }
-  bool Verify(flatbuffers::Verifier &verifier) const {
-    return VerifyTableStart(verifier) &&
-           VerifyField<flatbuffers::uoffset_t>(verifier, 4 /* boneOptions */) &&
-           verifier.VerifyTable(boneOptions()) &&
-           verifier.EndTable();
-  }
-};
-
-struct SkeletonOptionsBuilder {
-  flatbuffers::FlatBufferBuilder &fbb_;
-  flatbuffers::uoffset_t start_;
-  void add_boneOptions(flatbuffers::Offset<BoneOptions> boneOptions) { fbb_.AddOffset(4, boneOptions); }
-  SkeletonOptionsBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
-  SkeletonOptionsBuilder &operator=(const SkeletonOptionsBuilder &);
-  flatbuffers::Offset<SkeletonOptions> Finish() {
-    auto o = flatbuffers::Offset<SkeletonOptions>(fbb_.EndTable(start_, 1));
-    return o;
-  }
-};
-
-inline flatbuffers::Offset<SkeletonOptions> CreateSkeletonOptions(flatbuffers::FlatBufferBuilder &_fbb,
-   flatbuffers::Offset<BoneOptions> boneOptions = 0) {
-  SkeletonOptionsBuilder builder_(_fbb);
-  builder_.add_boneOptions(boneOptions);
-  return builder_.Finish();
+inline const flatbuffers::BoneOptions *GetBoneOptions(const void *buf) {
+  return flatbuffers::GetRoot<flatbuffers::BoneOptions>(buf);
 }
 
-inline const BoneOptions *GetBoneOptions(const void *buf) { return flatbuffers::GetRoot<BoneOptions>(buf); }
+inline bool VerifyBoneOptionsBuffer(flatbuffers::Verifier &verifier) {
+  return verifier.VerifyBuffer<flatbuffers::BoneOptions>(nullptr);
+}
 
-inline bool VerifyBoneOptionsBuffer(flatbuffers::Verifier &verifier) { return verifier.VerifyBuffer<BoneOptions>(); }
-
-inline void FinishBoneOptionsBuffer(flatbuffers::FlatBufferBuilder &fbb, flatbuffers::Offset<BoneOptions> root) { fbb.Finish(root); }
+inline void FinishBoneOptionsBuffer(flatbuffers::FlatBufferBuilder &fbb, flatbuffers::Offset<flatbuffers::BoneOptions> root) {
+  fbb.Finish(root);
+}
 
 }  // namespace flatbuffers
 

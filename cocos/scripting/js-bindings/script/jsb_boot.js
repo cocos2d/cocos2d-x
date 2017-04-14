@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Chukong Technologies Inc.
+ * Copyright (c) 2015-2017 Chukong Technologies Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -737,35 +737,32 @@ cc.defineGetterSetter(cc.loader, "audioPath", function(){
 cc.formatStr = function(){
     var args = arguments;
     var l = args.length;
-    if(l < 1)
-        return "";
+    if (l < 1) return '';
+    var REGEXP_NUM_OR_STR = /(%d)|(%s)/;
 
+    var i = 1;
     var str = args[0];
-    var needToFormat = true;
-    if(typeof str === "object"){
-        needToFormat = false;
+    var hasSubstitution = typeof str === 'string' && REGEXP_NUM_OR_STR.test(str);
+    if (hasSubstitution) {
+        var REGEXP_STR = /%s/;
+        for (; i < l; ++i) {
+            var arg = args[i];
+            var regExpToTest = typeof arg === 'number' ? REGEXP_NUM_OR_STR : REGEXP_STR;
+            if (regExpToTest.test(str))
+                str = str.replace(regExpToTest, arg);
+            else
+                str += ' ' + arg;
+        }
     }
-    for(var i = 1; i < l; ++i){
-        var arg = args[i];
-        if(needToFormat){
-            while(true){
-                var result = null;
-                if(typeof arg === "number"){
-                    result = str.match(/(%d)|(%s)/);
-                    if(result){
-                        str = str.replace(/(%d)|(%s)/, arg);
-                        break;
-                    }
-                }
-                result = str.match(/%s/);
-                if(result)
-                    str = str.replace(/%s/, arg);
-                else
-                    str += "    " + arg;
-                break;
+    else {
+        if (l > 1) {
+            for (; i < l; ++i) {
+                str += ' ' + args[i];
             }
-        }else
-            str += "    " + arg;
+        }
+        else {
+            str = '' + str;
+        }
     }
     return str;
 };
@@ -775,6 +772,8 @@ cc.formatStr = function(){
 
 // Define singleton objects
 cc.director = cc.Director.getInstance();
+cc.director._actionManager = cc.director.getActionManager();
+cc.director._scheduler = cc.director.getScheduler();
 cc.winSize = cc.director.getWinSize();
 
 cc.view = cc.director.getOpenGLView();
@@ -810,6 +809,7 @@ cc.view.getVisibleOriginInPixel = cc.view.getVisibleOrigin;
 cc.view.setContentTranslateLeftTop = function(){return;};
 cc.view.getContentTranslateLeftTop = function(){return null;};
 cc.view.setFrameZoomFactor = function(){return;};
+cc.view.setOrientation = function () {};
 cc.DENSITYDPI_DEVICE = "device-dpi";
 cc.DENSITYDPI_HIGH = "high-dpi";
 cc.DENSITYDPI_MEDIUM = "medium-dpi";
@@ -1056,13 +1056,45 @@ var _initSys = function () {
     sys.LANGUAGE_POLISH = "pl";
 
     /**
+     * Turkish language code
+     * @constant
+     * @default
+     * @type {Number}
+     */
+    sys.LANGUAGE_TURKISH = "tr";
+
+    /**
+     * Ukrainian language code
+     * @constant
+     * @default
+     * @type {Number}
+     */
+    sys.LANGUAGE_UKRAINIAN = "uk";
+
+    /**
+     * Romanian language code
+     * @constant
+     * @default
+     * @type {Number}
+     */
+    sys.LANGUAGE_ROMANIAN = "ro";
+
+    /**
+     * Bulgarian language code
+     * @constant
+     * @default
+     * @type {Number}
+     */
+    sys.LANGUAGE_BULGARIAN = "bg";
+
+    /**
      * Unknown language code
      * @memberof cc.sys
      * @name LANGUAGE_UNKNOWN
      * @constant
      * @type {Number}
      */
-    sys.LANGUAGE_UNKNOWN = "unkonwn";
+    sys.LANGUAGE_UNKNOWN = "unknown";
 
     /**
      * @memberof cc.sys
@@ -1339,6 +1371,10 @@ var _initSys = function () {
             case 12: return sys.LANGUAGE_ARABIC;
             case 13: return sys.LANGUAGE_NORWEGIAN;
             case 14: return sys.LANGUAGE_POLISH;
+            case 15: return sys.LANGUAGE_TURKISH;
+            case 16: return sys.LANGUAGE_UKRAINIAN;
+            case 17: return sys.LANGUAGE_ROMANIAN;
+            case 18: return sys.LANGUAGE_BULGARIAN;
             default : return sys.LANGUAGE_ENGLISH;
         }
     })();
@@ -1486,6 +1522,10 @@ var _initSys = function () {
         sys._application.openURL(url);
     };
 
+    sys.now = function () {
+        return Date.now();
+    };
+
     // JS to Native bridges
     if(window.JavascriptJavaBridge && cc.sys.os == cc.sys.OS_ANDROID){
         jsb.reflection = new JavascriptJavaBridge();
@@ -1503,30 +1543,33 @@ _initSys();
  */
 cc._initDebugSetting = function (mode) {
     var ccGame = cc.game;
-    var bakLog = cc._cocosplayerLog || cc.log || log;
-    cc.log = cc.warn = cc.error = cc.assert = function(){};
-    if(mode == ccGame.DEBUG_MODE_NONE){
-    }else{
-        cc.error = function(){
-            bakLog.call(this, "ERROR :  " + cc.formatStr.apply(cc, arguments));
+    var bakLog = cc._cocosplayerLog || console.log || log;
+    cc.log = cc.warn = cc.error = cc.assert = function () {};
+    if (mode > ccGame.DEBUG_MODE_NONE) {
+        console.log = function () {
+            bakLog(cc.formatStr.apply(null, arguments));
         };
-        cc.assert = function(cond, msg) {
+        console.error = function () {
+            bakLog("ERROR :  " + cc.formatStr.apply(cc, arguments));
+        };
+        console.warn = function () {
+            bakLog("WARN :  " + cc.formatStr.apply(cc, arguments));
+        };
+
+        cc.error = console.error;
+        cc.assert = function (cond, msg) {
             if (!cond && msg) {
                 var args = [];
                 for (var i = 1; i < arguments.length; i++)
                     args.push(arguments[i]);
-                bakLog("Assert: " + cc.formatStr.apply(cc, args));
+                console.log("Assert: " + cc.formatStr.apply(cc, args));
             }
         };
-        if(mode != ccGame.DEBUG_MODE_ERROR && mode != ccGame.DEBUG_MODE_ERROR_FOR_WEB_PAGE){
-            cc.warn = function(){
-                bakLog.call(this, "WARN :  " + cc.formatStr.apply(cc, arguments));
-            };
+        if (mode != ccGame.DEBUG_MODE_ERROR && mode != ccGame.DEBUG_MODE_ERROR_FOR_WEB_PAGE) {
+            cc.warn = console.warn;
         }
-        if(mode == ccGame.DEBUG_MODE_INFO || mode == ccGame.DEBUG_MODE_INFO_FOR_WEB_PAGE){
-            cc.log = function(){
-                bakLog.call(this, cc.formatStr.apply(cc, arguments));
-            };
+        if (mode == ccGame.DEBUG_MODE_INFO || mode == ccGame.DEBUG_MODE_INFO_FOR_WEB_PAGE) {
+            cc.log = console.log;
         }
     }
 };
@@ -1779,6 +1822,29 @@ cc.game = /** @lends cc.game# */{
 
 //+++++++++++++++++++++++++something about CCGame end+++++++++++++++++++++++++++++
 
+// Original bind in Spidermonkey v33 will trigger object life cycle track issue in our memory model and cause crash
+Function.prototype.bind = function (oThis) {
+    if (!cc.isFunction(this)) {
+        // closest thing possible to the ECMAScript 5
+        // internal IsCallable function
+        throw new TypeError("Function.prototype.bind - what is trying to be bound is not callable");
+    }
+
+    var aArgs = Array.prototype.slice.call(arguments, 1),
+        fToBind = this,
+        fNOP = function () {},
+        fBound = function () {
+            return fToBind.apply(this instanceof fNOP && oThis
+                ? this
+                : oThis,
+                aArgs.concat(Array.prototype.slice.call(arguments)));
+        };
+
+    fNOP.prototype = this.prototype;
+    fBound.prototype = new fNOP();
+
+    return fBound;
+};
 
 jsb.urlRegExp = new RegExp(
     "^" +

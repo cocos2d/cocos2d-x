@@ -43,12 +43,6 @@
 -- @return ComAudio#ComAudio self (return value: ccs.ComAudio)
         
 --------------------------------
--- 
--- @function [parent=#ComAudio] end 
--- @param self
--- @return ComAudio#ComAudio self (return value: ccs.ComAudio)
-        
---------------------------------
 -- / @{/ @name implement Playable Protocol
 -- @function [parent=#ComAudio] start 
 -- @param self
@@ -112,6 +106,12 @@
 --------------------------------
 -- 
 -- @function [parent=#ComAudio] stop 
+-- @param self
+-- @return ComAudio#ComAudio self (return value: ccs.ComAudio)
+        
+--------------------------------
+-- lua endToLua
+-- @function [parent=#ComAudio] end 
 -- @param self
 -- @return ComAudio#ComAudio self (return value: ccs.ComAudio)
         

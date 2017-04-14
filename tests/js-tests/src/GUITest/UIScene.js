@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2011-2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -51,14 +51,8 @@ var UIMainLayer = cc.Layer.extend({
         this.addChild(mainNode);
 
         var widget;
-        if(cocoStudioOldApiFlag == 0){
-            var json = ccs.load("ccs-res/cocosui/UITest/UITest.json");
-            widget = json.node;
-        }
-        else{
-            //old api
-            widget = ccs.uiReader.widgetFromJsonFile("ccs-res/cocosui/UITest/UITest.json");
-        }
+        var json = ccs.load("ccs-res/cocosui/UITest/UITest.json");
+        widget = json.node;
         mainNode.addChild(widget,-1);
 
         this._sceneTitle = widget.getChildByName("UItest");

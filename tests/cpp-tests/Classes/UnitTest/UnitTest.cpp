@@ -1,7 +1,10 @@
 #include "UnitTest.h"
 #include "RefPtrTest.h"
+#include "ui/UIHelper.h"
+#include "network/Uri.h"
 
 USING_NS_CC;
+using namespace cocos2d::network;
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 #if defined (__arm64__)
@@ -33,6 +36,10 @@ USING_NS_CC;
 #define UNIT_TEST_FOR_OPTIMIZED_MATH_UTIL
 #endif
 
+#define EXPECT_EQ(a, b) assert((a) == (b))
+#define EXPECT_NE(a, b) assert((a) != (b))
+#define EXPECT_TRUE(a) assert(a)
+#define EXPECT_FALSE(a) assert(!(a))
 
 // For ' < o > ' multiply test scene.
 
@@ -43,6 +50,8 @@ UnitTests::UnitTests()
     ADD_TEST_CASE(ValueTest);
     ADD_TEST_CASE(RefPtrTest);
     ADD_TEST_CASE(UTFConversionTest);
+    ADD_TEST_CASE(UIHelperSubStringTest);
+    ADD_TEST_CASE(ParseUriTest);
 #ifdef UNIT_TEST_FOR_OPTIMIZED_MATH_UTIL
     ADD_TEST_CASE(MathUtilTest);
 #endif
@@ -90,8 +99,8 @@ void TemplateVectorTest::onEnter()
     for (ssize_t i = 0; i < size; ++i)
     {
         CCASSERT(vec2.at(i) == vec.at(i), "The element at the same index in vec2 and vec2 should be equal.");
-        CCASSERT(vec.at(i)->getReferenceCount() == 3, "The reference cound of element in vec is 3. ");
-        CCASSERT(vec2.at(i)->getReferenceCount() == 3, "The reference cound of element in vec2 is 3. ");
+        CCASSERT(vec.at(i)->getReferenceCount() == 3, "The reference count of element in vec is 3. ");
+        CCASSERT(vec2.at(i)->getReferenceCount() == 3, "The reference count of element in vec2 is 3. ");
     }
 
     // Test copy assignment operator
@@ -102,9 +111,9 @@ void TemplateVectorTest::onEnter()
     for (ssize_t i = 0; i < size; ++i)
     {
         CCASSERT(vec3.at(i) == vec2.at(i), "The element at the same index in vec3 and vec2 should be equal.");
-        CCASSERT(vec3.at(i)->getReferenceCount() == 4, "The reference cound of element in vec3 is 4. ");
-        CCASSERT(vec2.at(i)->getReferenceCount() == 4, "The reference cound of element in vec2 is 4. ");
-        CCASSERT(vec.at(i)->getReferenceCount() == 4, "The reference cound of element in vec is 4. ");
+        CCASSERT(vec3.at(i)->getReferenceCount() == 4, "The reference count of element in vec3 is 4. ");
+        CCASSERT(vec2.at(i)->getReferenceCount() == 4, "The reference count of element in vec2 is 4. ");
+        CCASSERT(vec.at(i)->getReferenceCount() == 4, "The reference count of element in vec is 4. ");
     }
 
     // Test move constructor
@@ -129,7 +138,6 @@ void TemplateVectorTest::onEnter()
     Vector<Node*> vec4(createVector());
     for (const auto& child : vec4)
     {
-        CC_UNUSED_PARAM(child);
         CCASSERT(child->getReferenceCount() == 2, "child's reference count should be 2.");
     }
 
@@ -153,7 +161,6 @@ void TemplateVectorTest::onEnter()
 
     for (const auto& child : vec5)
     {
-        CC_UNUSED_PARAM(child);
         CCASSERT(child->getReferenceCount() == 2, "child's reference count is 2.");
     }
 
@@ -196,7 +203,7 @@ void TemplateVectorTest::onEnter()
     CCASSERT(vec6.at(2)->getTag() == 1011, "vec6's third element's tag is 1011.");
     CCASSERT(vec6.at(3)->getTag() == 1012, "vec6's fouth element's tag is 1012.");
     vec6.erase(3);
-    CCASSERT(vec6.at(3)->getTag() == 1013, "vec6's 4th elemetn's tag is 1013.");
+    CCASSERT(vec6.at(3)->getTag() == 1013, "vec6's 4th element's tag is 1013.");
     vec6.eraseObject(vec6.at(2));
     CCASSERT(vec6.at(2)->getTag() == 1013, "vec6's 3rd element's tag is 1013.");
     vec6.clear();
@@ -246,7 +253,6 @@ void TemplateVectorTest::onEnter()
     CCASSERT(vec7.size() == 20, "vec7's size is 20.");
     for (const auto& child : vec7)
     {
-        CC_UNUSED_PARAM(child);
         CCASSERT(child->getReferenceCount() == 2, "child's reference count is 2.");
     }
 
@@ -287,7 +293,7 @@ void TemplateVectorTest::onEnter()
 
     // get random object
     // Set the seed by time
-    srand((unsigned)time(nullptr));
+    std::srand((unsigned)time(nullptr));
     Vector<Node*> vecForRandom = createVector();
     log("<--- begin ---->");
     for (int i = 0; i < vecForRandom.size(); ++i)
@@ -303,7 +309,6 @@ void TemplateVectorTest::onEnter()
 
     for (const auto& child : vecSelfAssign)
     {
-        CC_UNUSED_PARAM(child);
         CCASSERT(child->getReferenceCount() == 2, "child's reference count is 2.");
     }
 
@@ -312,7 +317,6 @@ void TemplateVectorTest::onEnter()
 
     for (const auto& child : vecSelfAssign)
     {
-        CC_UNUSED_PARAM(child);
         CCASSERT(child->getReferenceCount() == 2, "child's reference count is 2.");
     }
 
@@ -361,7 +365,6 @@ void TemplateMapTest::onEnter()
     Map<std::string, Node*> map2 = createMap();
     for (const auto& e : map2)
     {
-        CC_UNUSED_PARAM(e);
         CCASSERT(e.second->getReferenceCount() == 2, "e.second element's reference count is 2.");
     }
 
@@ -369,7 +372,6 @@ void TemplateMapTest::onEnter()
     Map<std::string, Node*> map3(map2);
     for (const auto& e : map3)
     {
-        CC_UNUSED_PARAM(e);
         CCASSERT(e.second->getReferenceCount() == 3, "e.second's reference count is 3.");
     }
 
@@ -381,7 +383,6 @@ void TemplateMapTest::onEnter()
     CCASSERT(unusedNode->getReferenceCount() == 1, "unusedNode's reference count is 1.");
     for (const auto& e : map4)
     {
-        CC_UNUSED_PARAM(e);
         CCASSERT(e.second->getReferenceCount() == 2, "e.second's reference count is 2.");
     }
 
@@ -390,7 +391,6 @@ void TemplateMapTest::onEnter()
     map5 = map4;
     for (const auto& e : map5)
     {
-        CC_UNUSED_PARAM(e);
         CCASSERT(e.second->getReferenceCount() == 3, "e.second's reference count is 3.");
     }
 
@@ -399,7 +399,6 @@ void TemplateMapTest::onEnter()
 
     for (const auto& e : map4)
     {
-        CC_UNUSED_PARAM(e);
         CCASSERT(e.second == map5.find(e.first)->second, "e.second can't be found in map5.");
     }
 
@@ -443,7 +442,6 @@ void TemplateMapTest::onEnter()
 
     // find
     auto nodeToFind = map4.find("10");
-    CC_UNUSED_PARAM(nodeToFind);
     CCASSERT(nodeToFind->second->getTag() == 1010, "nodeToFind's tag value is 1010.");
 
     // insert
@@ -489,13 +487,12 @@ void TemplateMapTest::onEnter()
 
     for (const auto& e : mapForClearCopy)
     {
-        CC_UNUSED_PARAM(e);
         CCASSERT(e.second->getReferenceCount() == 2, "e.second's reference count is 2.");
     }
 
     // get random object
     // Set the seed by time
-    srand((unsigned)time(nullptr));
+    std::srand((unsigned)time(nullptr));
     Map<std::string, Node*> mapForRandom = createMap();
     log("<--- begin ---->");
     for (int i = 0; i < mapForRandom.size(); ++i)
@@ -511,7 +508,6 @@ void TemplateMapTest::onEnter()
 
     for (const auto& e : mapForSelfAssign)
     {
-        CC_UNUSED_PARAM(e);
         CCASSERT(e.second->getReferenceCount() == 2, "e.second's reference count is 2.");
     }
 
@@ -520,7 +516,6 @@ void TemplateMapTest::onEnter()
 
     for (const auto& e : mapForSelfAssign)
     {
-        CC_UNUSED_PARAM(e);
         CCASSERT(e.second->getReferenceCount() == 2, "e.second's reference's count is 2.");
     }
 }
@@ -618,9 +613,8 @@ std::string ValueTest::subtitle() const
     return "Value Test, should not crash";
 }
 
-void ValueTest::constFunc(const Value& value) const
+void ValueTest::constFunc(const Value& /*value*/) const
 {
-    
 }
 
 // UTFConversionTest
@@ -777,6 +771,615 @@ void UTFConversionTest::onEnter()
 std::string UTFConversionTest::subtitle() const
 {
     return "UTF8 <-> UTF16 Conversion Test, no crash";
+}
+
+// UIHelperSubStringTest
+
+void UIHelperSubStringTest::onEnter()
+{
+    UnitTestDemo::onEnter();
+
+    using cocos2d::ui::Helper;
+    {
+        // Trivial case
+        std::string source = "abcdefghij";
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 2) == "ab");
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 2, 2) == "cd");
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 4, 2) == "ef");
+    }
+    {
+        // Empty string
+        std::string source = "";
+
+        // OK
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 0) == "");
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 1) == "");
+
+        // Error: These cases cause "out of range" error
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 1, 0) == "");
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 1, 1) == "");
+    }
+    {
+        // Ascii
+        std::string source = "abc";
+
+        // OK
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 0) == "");
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 1, 0) == "");
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 2, 0) == "");
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 3, 0) == "");
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 3) == "abc");
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 4) == "abc");
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 1, 2) == "bc");
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 1, 3) == "bc");
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 2, 1) == "c");
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 2, 2) == "c");
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 3, 1) == "");
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 3, 2) == "");
+
+        // Error: These cases cause "out of range" error
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 4, 0) == "");
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 4, 1) == "");
+    }
+    {
+        // CJK characters
+        std::string source = "这里是中文测试例";
+
+        // OK
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 0) == "");
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 1, 0) == "");
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 7, 0) == "");
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 8, 0) == "");
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 8, 1) == "");
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 1) == "\xe8\xbf\x99");
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 4) == "\xe8\xbf\x99\xe9\x87\x8c\xe6\x98\xaf\xe4\xb8\xad");
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 8) == "\xe8\xbf\x99\xe9\x87\x8c\xe6\x98\xaf\xe4\xb8\xad\xe6\x96\x87\xe6\xb5\x8b\xe8\xaf\x95\xe4\xbe\x8b");
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 100) == "\xe8\xbf\x99\xe9\x87\x8c\xe6\x98\xaf\xe4\xb8\xad\xe6\x96\x87\xe6\xb5\x8b\xe8\xaf\x95\xe4\xbe\x8b");
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 2, 5) == "\xe6\x98\xaf\xe4\xb8\xad\xe6\x96\x87\xe6\xb5\x8b\xe8\xaf\x95");
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 6, 2) == "\xe8\xaf\x95\xe4\xbe\x8b");
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 6, 100) == "\xe8\xaf\x95\xe4\xbe\x8b");
+
+        // Error: These cases cause "out of range" error
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 9, 0) == "");
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 9, 1) == "");
+    }
+    {
+        // Redundant UTF-8 sequence for Directory traversal attack (1)
+        std::string source = "\xC0\xAF";
+
+        // Error: Can't convert string to correct encoding such as UTF-32
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 0) == "");
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 1) == "");
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 1, 0) == "");
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 1, 1) == "");
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 2) == "");
+    }
+    {
+        // Redundant UTF-8 sequence for Directory traversal attack (2)
+        std::string source = "\xE0\x80\xAF";
+
+        // Error: Can't convert string to correct encoding such as UTF-32
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 0) == "");
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 1) == "");
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 1, 0) == "");
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 1, 1) == "");
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 3) == "");
+    }
+    {
+        // Redundant UTF-8 sequence for Directory traversal attack (3)
+        std::string source = "\xF0\x80\x80\xAF";
+
+        // Error: Can't convert string to correct encoding such as UTF-32
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 0) == "");
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 1) == "");
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 1, 0) == "");
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 1, 1) == "");
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 4) == "");
+    }
+}
+
+std::string UIHelperSubStringTest::subtitle() const
+{
+    return "ui::Helper::getSubStringOfUTF8String Test";
+}
+
+// ParseUriTest
+void ParseUriTest::onEnter()
+{
+    UnitTestDemo::onEnter();
+
+    {
+        std::string s("http://www.facebook.com/hello/world?query#fragment");
+        Uri u = Uri::parse(s);
+        EXPECT_EQ("http", u.getScheme());
+        EXPECT_EQ("", u.getUserName());
+        EXPECT_EQ("", u.getPassword());
+        EXPECT_EQ("www.facebook.com", u.getHost());
+        EXPECT_EQ(0, u.getPort());
+        EXPECT_EQ("www.facebook.com", u.getAuthority());
+        EXPECT_EQ("/hello/world", u.getPath());
+        EXPECT_EQ("query", u.getQuery());
+        EXPECT_EQ("fragment", u.getFragment());
+        EXPECT_EQ(s, u.toString());  // canonical
+    }
+
+    {
+        std::string s("http://www.facebook.com:8080/hello/world?query#fragment");
+        Uri u = Uri::parse(s);
+        EXPECT_EQ("http", u.getScheme());
+        EXPECT_EQ("", u.getUserName());
+        EXPECT_EQ("", u.getPassword());
+        EXPECT_EQ("www.facebook.com", u.getHost());
+        EXPECT_EQ(8080, u.getPort());
+        EXPECT_EQ("www.facebook.com:8080", u.getAuthority());
+        EXPECT_EQ("/hello/world", u.getPath());
+        EXPECT_EQ("query", u.getQuery());
+        EXPECT_EQ("fragment", u.getFragment());
+        EXPECT_EQ(s, u.toString());  // canonical
+    }
+
+    {
+        std::string s("http://127.0.0.1:8080/hello/world?query#fragment");
+        Uri u = Uri::parse(s);
+        EXPECT_EQ("http", u.getScheme());
+        EXPECT_EQ("", u.getUserName());
+        EXPECT_EQ("", u.getPassword());
+        EXPECT_EQ("127.0.0.1", u.getHost());
+        EXPECT_EQ(8080, u.getPort());
+        EXPECT_EQ("127.0.0.1:8080", u.getAuthority());
+        EXPECT_EQ("/hello/world", u.getPath());
+        EXPECT_EQ("query", u.getQuery());
+        EXPECT_EQ("fragment", u.getFragment());
+        EXPECT_EQ(s, u.toString());  // canonical
+    }
+
+    {
+        std::string s("http://[::1]:8080/hello/world?query#fragment");
+        Uri u = Uri::parse(s);
+        EXPECT_EQ("http", u.getScheme());
+        EXPECT_EQ("", u.getUserName());
+        EXPECT_EQ("", u.getPassword());
+        EXPECT_EQ("[::1]", u.getHost());
+        EXPECT_EQ("::1", u.getHostName());
+        EXPECT_EQ(8080, u.getPort());
+        EXPECT_EQ("[::1]:8080", u.getAuthority());
+        EXPECT_EQ("/hello/world", u.getPath());
+        EXPECT_EQ("query", u.getQuery());
+        EXPECT_EQ("fragment", u.getFragment());
+        EXPECT_EQ(s, u.toString());  // canonical
+    }
+
+    {
+        std::string s("http://[2401:db00:20:7004:face:0:29:0]:8080/hello/world?query");
+        Uri u = Uri::parse(s);
+        EXPECT_EQ("http", u.getScheme());
+        EXPECT_EQ("", u.getUserName());
+        EXPECT_EQ("", u.getPassword());
+        EXPECT_EQ("[2401:db00:20:7004:face:0:29:0]", u.getHost());
+        EXPECT_EQ("2401:db00:20:7004:face:0:29:0", u.getHostName());
+        EXPECT_EQ(8080, u.getPort());
+        EXPECT_EQ("[2401:db00:20:7004:face:0:29:0]:8080", u.getAuthority());
+        EXPECT_EQ("/hello/world", u.getPath());
+        EXPECT_EQ("query", u.getQuery());
+        EXPECT_EQ("", u.getFragment());
+        EXPECT_EQ(s, u.toString());  // canonical
+    }
+
+    {
+        std::string s("http://[2401:db00:20:7004:face:0:29:0]/hello/world?query");
+        Uri u = Uri::parse(s);
+        EXPECT_EQ("http", u.getScheme());
+        EXPECT_EQ("", u.getUserName());
+        EXPECT_EQ("", u.getPassword());
+        EXPECT_EQ("[2401:db00:20:7004:face:0:29:0]", u.getHost());
+        EXPECT_EQ("2401:db00:20:7004:face:0:29:0", u.getHostName());
+        EXPECT_EQ(0, u.getPort());
+        EXPECT_EQ("[2401:db00:20:7004:face:0:29:0]", u.getAuthority());
+        EXPECT_EQ("/hello/world", u.getPath());
+        EXPECT_EQ("query", u.getQuery());
+        EXPECT_EQ("", u.getFragment());
+        EXPECT_EQ(s, u.toString());  // canonical
+    }
+
+    {
+        std::string s("http://user:pass@host.com/");
+        Uri u = Uri::parse(s);
+        EXPECT_EQ("http", u.getScheme());
+        EXPECT_EQ("user", u.getUserName());
+        EXPECT_EQ("pass", u.getPassword());
+        EXPECT_EQ("host.com", u.getHost());
+        EXPECT_EQ(0, u.getPort());
+        EXPECT_EQ("user:pass@host.com", u.getAuthority());
+        EXPECT_EQ("/", u.getPath());
+        EXPECT_EQ("", u.getQuery());
+        EXPECT_EQ("", u.getFragment());
+        EXPECT_EQ(s, u.toString());
+    }
+
+    {
+        std::string s("http://user@host.com/");
+        Uri u = Uri::parse(s);
+        EXPECT_EQ("http", u.getScheme());
+        EXPECT_EQ("user", u.getUserName());
+        EXPECT_EQ("", u.getPassword());
+        EXPECT_EQ("host.com", u.getHost());
+        EXPECT_EQ(0, u.getPort());
+        EXPECT_EQ("user@host.com", u.getAuthority());
+        EXPECT_EQ("/", u.getPath());
+        EXPECT_EQ("", u.getQuery());
+        EXPECT_EQ("", u.getFragment());
+        EXPECT_EQ(s, u.toString());
+    }
+
+    {
+        std::string s("http://user:@host.com/");
+        Uri u = Uri::parse(s);
+        EXPECT_EQ("http", u.getScheme());
+        EXPECT_EQ("user", u.getUserName());
+        EXPECT_EQ("", u.getPassword());
+        EXPECT_EQ("host.com", u.getHost());
+        EXPECT_EQ(0, u.getPort());
+        EXPECT_EQ("user@host.com", u.getAuthority());
+        EXPECT_EQ("/", u.getPath());
+        EXPECT_EQ("", u.getQuery());
+        EXPECT_EQ("", u.getFragment());
+        EXPECT_EQ("http://user@host.com/", u.toString());
+    }
+
+    {
+        std::string s("http://:pass@host.com/");
+        Uri u = Uri::parse(s);
+        EXPECT_EQ("http", u.getScheme());
+        EXPECT_EQ("", u.getUserName());
+        EXPECT_EQ("pass", u.getPassword());
+        EXPECT_EQ("host.com", u.getHost());
+        EXPECT_EQ(0, u.getPort());
+        EXPECT_EQ(":pass@host.com", u.getAuthority());
+        EXPECT_EQ("/", u.getPath());
+        EXPECT_EQ("", u.getQuery());
+        EXPECT_EQ("", u.getFragment());
+        EXPECT_EQ(s, u.toString());
+    }
+
+    {
+        std::string s("http://@host.com/");
+        Uri u = Uri::parse(s);
+        EXPECT_EQ("http", u.getScheme());
+        EXPECT_EQ("", u.getUserName());
+        EXPECT_EQ("", u.getPassword());
+        EXPECT_EQ("host.com", u.getHost());
+        EXPECT_EQ(0, u.getPort());
+        EXPECT_EQ("host.com", u.getAuthority());
+        EXPECT_EQ("/", u.getPath());
+        EXPECT_EQ("", u.getQuery());
+        EXPECT_EQ("", u.getFragment());
+        EXPECT_EQ("http://host.com/", u.toString());
+    }
+
+    {
+        std::string s("http://:@host.com/");
+        Uri u = Uri::parse(s);
+        EXPECT_EQ("http", u.getScheme());
+        EXPECT_EQ("", u.getUserName());
+        EXPECT_EQ("", u.getPassword());
+        EXPECT_EQ("host.com", u.getHost());
+        EXPECT_EQ(0, u.getPort());
+        EXPECT_EQ("host.com", u.getAuthority());
+        EXPECT_EQ("/", u.getPath());
+        EXPECT_EQ("", u.getQuery());
+        EXPECT_EQ("", u.getFragment());
+        EXPECT_EQ("http://host.com/", u.toString());
+    }
+
+    {
+        std::string s("file:///etc/motd");
+        Uri u = Uri::parse(s);
+        EXPECT_EQ("file", u.getScheme());
+        EXPECT_EQ("", u.getUserName());
+        EXPECT_EQ("", u.getPassword());
+        EXPECT_EQ("", u.getHost());
+        EXPECT_EQ(0, u.getPort());
+        EXPECT_EQ("", u.getAuthority());
+        EXPECT_EQ("/etc/motd", u.getPath());
+        EXPECT_EQ("", u.getQuery());
+        EXPECT_EQ("", u.getFragment());
+        EXPECT_EQ(s, u.toString());
+    }
+
+    {
+        std::string s("file://etc/motd");
+        Uri u = Uri::parse(s);
+        EXPECT_EQ("file", u.getScheme());
+        EXPECT_EQ("", u.getUserName());
+        EXPECT_EQ("", u.getPassword());
+        EXPECT_EQ("etc", u.getHost());
+        EXPECT_EQ(0, u.getPort());
+        EXPECT_EQ("etc", u.getAuthority());
+        EXPECT_EQ("/motd", u.getPath());
+        EXPECT_EQ("", u.getQuery());
+        EXPECT_EQ("", u.getFragment());
+        EXPECT_EQ(s, u.toString());
+    }
+
+    {
+        // test query parameters
+        std::string s("http://localhost?&key1=foo&key2=&key3&=bar&=bar=&");
+        Uri u = Uri::parse(s);
+        auto paramsList = u.getQueryParams();
+        std::map<std::string, std::string> params;
+        for (auto& param : paramsList) {
+            params[param.first] = param.second;
+        }
+        EXPECT_EQ(3, params.size());
+        EXPECT_EQ("foo", params["key1"]);
+        EXPECT_NE(params.end(), params.find("key2"));
+        EXPECT_EQ("", params["key2"]);
+        EXPECT_NE(params.end(), params.find("key3"));
+        EXPECT_EQ("", params["key3"]);
+    }
+
+    {
+        // test query parameters
+        std::string s("http://localhost?&&&&&&&&&&&&&&&");
+        Uri u = Uri::parse(s);
+        auto params = u.getQueryParams();
+        EXPECT_TRUE(params.empty());
+    }
+
+    {
+        // test query parameters
+        std::string s("http://localhost?&=invalid_key&key2&key3=foo");
+        Uri u = Uri::parse(s);
+        auto paramsList = u.getQueryParams();
+        std::map<std::string, std::string> params;
+        for (auto& param : paramsList) {
+            params[param.first] = param.second;
+        }
+        EXPECT_EQ(2, params.size());
+        EXPECT_NE(params.end(), params.find("key2"));
+        EXPECT_EQ("", params["key2"]);
+        EXPECT_EQ("foo", params["key3"]);
+    }
+
+    {
+        // test query parameters
+        std::string s("http://localhost?&key1=====&&=key2&key3=");
+        Uri u = Uri::parse(s);
+        auto paramsList = u.getQueryParams();
+        std::map<std::string, std::string> params;
+        for (auto& param : paramsList) {
+            params[param.first] = param.second;
+        }
+        EXPECT_EQ(1, params.size());
+        EXPECT_NE(params.end(), params.find("key3"));
+        EXPECT_EQ("", params["key3"]);
+    }
+
+    {
+        // test query parameters
+        std::string s("ws://localhost:90?key1=foo=bar&key2=foobar&");
+        Uri u = Uri::parse(s);
+        auto paramsList = u.getQueryParams();
+        std::map<std::string, std::string> params;
+        for (auto& param : paramsList) {
+            params[param.first] = param.second;
+        }
+        EXPECT_EQ(1, params.size());
+        EXPECT_EQ("foobar", params["key2"]);
+
+        // copy constructor
+        {
+            Uri v(u);
+            u = v = u;
+            EXPECT_TRUE(v.isValid());
+            EXPECT_EQ("ws", v.getScheme());
+            EXPECT_EQ("localhost", v.getHost());
+            EXPECT_EQ("localhost", v.getHostName());
+            EXPECT_EQ("", v.getPath());
+            EXPECT_EQ(90, v.getPort());
+            EXPECT_EQ("", v.getFragment());
+            EXPECT_EQ("key1=foo=bar&key2=foobar&", v.getQuery());
+            EXPECT_EQ(u, v);
+        }
+
+        // copy assign operator
+        {
+            Uri v;
+            v = u;
+            EXPECT_TRUE(v.isValid());
+            EXPECT_EQ("ws", v.getScheme());
+            EXPECT_EQ("localhost", v.getHost());
+            EXPECT_EQ("localhost", v.getHostName());
+            EXPECT_EQ("", v.getPath());
+            EXPECT_EQ(90, v.getPort());
+            EXPECT_EQ("", v.getFragment());
+            EXPECT_EQ("key1=foo=bar&key2=foobar&", v.getQuery());
+            EXPECT_EQ(u, v);
+        }
+
+        // Self move assignment
+        {
+            u = u;
+            EXPECT_TRUE(u.isValid());
+        }
+
+        // Self move assignment
+        {
+            u = std::move(u);
+            EXPECT_TRUE(u.isValid());
+        }
+
+        // move constructor
+        {
+            Uri v = std::move(u);
+            EXPECT_FALSE(u.isValid());
+            EXPECT_TRUE(v.isValid());
+            EXPECT_EQ("ws", v.getScheme());
+            EXPECT_EQ("localhost", v.getHost());
+            EXPECT_EQ("localhost", v.getHostName());
+            EXPECT_EQ("", v.getPath());
+            EXPECT_EQ(90, v.getPort());
+            EXPECT_EQ("", v.getFragment());
+            EXPECT_EQ("key1=foo=bar&key2=foobar&", v.getQuery());
+            u = std::move(v);
+        }
+
+        // copy assign operator
+        {
+            Uri v;
+            v = std::move(u);
+            EXPECT_FALSE(u.isValid());
+            EXPECT_TRUE(v.isValid());
+            EXPECT_EQ("ws", v.getScheme());
+            EXPECT_EQ("localhost", v.getHost());
+            EXPECT_EQ("localhost", v.getHostName());
+            EXPECT_EQ("", v.getPath());
+            EXPECT_EQ(90, v.getPort());
+            EXPECT_EQ("", v.getFragment());
+            EXPECT_EQ("key1=foo=bar&key2=foobar&", v.getQuery());
+            u = v;
+        }
+    }
+
+    {
+        std::string s("2http://www.facebook.com");
+
+        Uri u = Uri::parse(s);
+        EXPECT_FALSE(u.isValid());
+    }
+
+    {
+        std::string s("www[facebook]com");
+
+        Uri u = Uri::parse("http://" + s);
+        EXPECT_FALSE(u.isValid());
+    }
+
+    {
+        std::string s("http://[::1:8080/hello/world?query#fragment");
+        Uri u = Uri::parse(s);
+        EXPECT_FALSE(u.isValid());
+    }
+
+    {
+        std::string s("http://::1]:8080/hello/world?query#fragment");
+
+        Uri u = Uri::parse(s);
+        EXPECT_FALSE(u.isValid());
+    }
+
+    {
+        std::string s("http://::1:8080/hello/world?query#fragment");
+        Uri u = Uri::parse(s);
+        EXPECT_FALSE(u.isValid());
+    }
+
+    {
+        std::string s("http://2401:db00:20:7004:face:0:29:0/hello/world?query");
+        Uri u = Uri::parse(s);
+        EXPECT_FALSE(u.isValid());
+    }
+
+    {
+        Uri http = Uri::parse("http://google.com");
+        Uri https = Uri::parse("https://www.google.com:90");
+        Uri query = Uri::parse("http://google.com:8080/foo/bar?foo=bar");
+        Uri localhost = Uri::parse("http://localhost:8080");
+        Uri ipv6 = Uri::parse("https://[2001:0db8:85a3:0042:1000:8a2e:0370:7334]");
+        Uri ipv6short = Uri::parse("http://[2001:db8:85a3:42:1000:8a2e:370:7334]");
+        Uri ipv6port = Uri::parse("http://[2001:db8:85a3:42:1000:8a2e:370:7334]:90");
+        Uri ipv6abbrev = Uri::parse("http://[2001::7334:a:90]");
+        Uri ipv6http = Uri::parse("http://[2001::7334:a]:90");
+        Uri ipv6query = Uri::parse("http://[2001::7334:a]:90/foo/bar?foo=bar");
+
+        EXPECT_EQ(http.getScheme(), "http");
+        EXPECT_EQ(http.getPort(), 0);
+        EXPECT_EQ(http.getHost(), "google.com");
+        EXPECT_EQ(https.getScheme(), "https");
+        EXPECT_EQ(https.getPort(), 90);
+        EXPECT_EQ(https.getHost(), "www.google.com");
+        EXPECT_EQ(query.getPort(), 8080);
+        EXPECT_EQ(query.getPathEtc(), "/foo/bar?foo=bar");
+        EXPECT_EQ(localhost.getScheme(), "http");
+        EXPECT_EQ(localhost.getHost(), "localhost");
+        EXPECT_EQ(localhost.getPort(), 8080);
+        EXPECT_EQ(ipv6.getScheme(), "https");
+        EXPECT_EQ(ipv6.getHostName(), "2001:0db8:85a3:0042:1000:8a2e:0370:7334");
+        EXPECT_EQ(ipv6.getPort(), 0);
+        EXPECT_EQ(ipv6short.getScheme(), "http");
+        EXPECT_EQ(ipv6short.getHostName(), "2001:db8:85a3:42:1000:8a2e:370:7334");
+        EXPECT_EQ(ipv6short.getPort(), 0);
+        EXPECT_EQ(ipv6port.getScheme(), "http");
+        EXPECT_EQ(ipv6port.getHostName(), "2001:db8:85a3:42:1000:8a2e:370:7334");
+        EXPECT_EQ(ipv6port.getPort(), 90);
+        EXPECT_EQ(ipv6abbrev.getScheme(), "http");
+        EXPECT_EQ(ipv6abbrev.getHostName(), "2001::7334:a:90");
+        EXPECT_EQ(ipv6abbrev.getPort(), 0);
+        EXPECT_EQ(ipv6http.getScheme(), "http");
+        EXPECT_EQ(ipv6http.getPort(), 90);
+        EXPECT_EQ(ipv6http.getHostName(), "2001::7334:a");
+        EXPECT_EQ(ipv6query.getScheme(), "http");
+        EXPECT_EQ(ipv6query.getPort(), 90);
+        EXPECT_EQ(ipv6query.getHostName(), "2001::7334:a");
+        EXPECT_EQ(ipv6query.getPathEtc(), "/foo/bar?foo=bar");
+    }
+
+    {
+        Uri u0 = Uri::parse("http://localhost:84/foo.html?&q=123");
+        Uri u1 = Uri::parse("https://localhost:82/foo.html?&q=1");
+        Uri u2 = Uri::parse("ws://localhost/foo");
+        Uri u3 = Uri::parse("localhost/foo");
+        Uri u4 = Uri::parse("localhost:8080");
+        Uri u5 = Uri::parse("bb://localhost?&foo=12:4&ccc=13");
+        Uri u6 = Uri::parse("cc://localhost:91?&foo=321&bbb=1");
+
+        EXPECT_EQ(u0.getScheme(), "http");
+        EXPECT_EQ(u0.getHost(), "localhost");
+        EXPECT_EQ(u0.getPort(), 84);
+        EXPECT_EQ(u0.getPath(), "/foo.html");
+        EXPECT_EQ(u0.getPathEtc(), "/foo.html?&q=123");
+
+        EXPECT_EQ(u1.getScheme(), "https");
+        EXPECT_EQ(u1.getHost(), "localhost");
+        EXPECT_EQ(u1.getPort(), 82);
+        EXPECT_EQ(u1.getPathEtc(), "/foo.html?&q=1");
+
+        EXPECT_EQ(u2.getScheme(), "ws");
+        EXPECT_EQ(u2.getHost(), "localhost");
+        EXPECT_EQ(u2.getPort(), 0);
+        EXPECT_EQ(u2.getPath(), "/foo");
+
+        EXPECT_EQ(u3.getScheme(), "");
+        EXPECT_EQ(u3.getHost(), "localhost");
+        EXPECT_EQ(u3.getPort(), 0);
+        EXPECT_EQ(u3.getPath(), "/foo");
+
+        EXPECT_EQ(u4.getScheme(), "");
+        EXPECT_EQ(u4.getHost(), "localhost");
+        EXPECT_EQ(u4.getPort(), 8080);
+        EXPECT_EQ(u4.getPath(), "");
+        EXPECT_EQ(u4.getPathEtc(), "");
+
+        EXPECT_EQ(u5.getScheme(), "bb");
+        EXPECT_EQ(u5.getHost(), "localhost");
+        EXPECT_EQ(u5.getPort(), 0);
+        EXPECT_EQ(u5.getPath(), "");
+        EXPECT_EQ(u5.getPathEtc(), "?&foo=12:4&ccc=13");
+        EXPECT_EQ(u5.getQuery(), "&foo=12:4&ccc=13");
+
+        EXPECT_EQ(u6.getScheme(), "cc");
+        EXPECT_EQ(u6.getHost(), "localhost");
+        EXPECT_EQ(u6.getPort(), 91);
+        EXPECT_EQ(u6.getPath(), "");
+        EXPECT_EQ(u6.getPathEtc(), "?&foo=321&bbb=1");
+        EXPECT_EQ(u6.getQuery(), "&foo=321&bbb=1");
+    }
+
+}
+
+std::string ParseUriTest::subtitle() const
+{
+    return "Uri::parse Test";
 }
 
 // MathUtilTest
@@ -1061,4 +1664,3 @@ std::string MathUtilTest::subtitle() const
 {
     return "MathUtilTest";
 }
-

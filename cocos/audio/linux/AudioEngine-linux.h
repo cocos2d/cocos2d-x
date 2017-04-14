@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2015-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -83,7 +83,7 @@ private:
     FMOD::Channel * getChannel(FMOD::Sound *);
   
     struct ChannelInfo{
-        size_t id; 
+        int id;
         std::string path; 
         FMOD::Sound * sound;
         FMOD::Channel * channel; 
@@ -93,6 +93,8 @@ private:
     };
     
     std::map<int, ChannelInfo> mapChannelInfo;
+
+    std::map<std::string, int> mapId;
     
     std::map<std::string, FMOD::Sound *> mapSound;  
     

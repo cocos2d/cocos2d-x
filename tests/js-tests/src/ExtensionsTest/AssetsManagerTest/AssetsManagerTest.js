@@ -1,7 +1,7 @@
 /****************************************************************************
  Copyright (c) 2008-2010 Ricardo Quesada
  Copyright (c) 2011-2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -199,7 +199,7 @@ var AssetsManagerLoaderScene = TestScene.extend({
         layer.addChild(this._fileLoadingBar);
 
         this._am = new jsb.AssetsManager(manifestPath, storagePath);
-        // this._am.retain();
+        this._am.retain();
 
         if (!this._am.getLocalManifest().isLoaded())
         {

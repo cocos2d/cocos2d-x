@@ -1,7 +1,7 @@
 /*
  * Created by Rohan Kuruvilla
  * Copyright (c) 2012 Zynga Inc.
- * Copyright (c) 2013-2014 Chukong Technologies Inc.
+ * Copyright (c) 2013-2017 Chukong Technologies Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -32,13 +32,26 @@
 #include "deprecated/CCInteger.h"
 #include "deprecated/CCString.h"
 #include "editor-support/cocostudio/CocosStudioExtension.h"
+#include "extensions/assets-manager/Manifest.h"
 #include "math/TransformUtils.h"
 #include "scripting/js-bindings/manual/ScriptingCore.h"
 #include "scripting/js-bindings/manual/cocos2d_specifics.hpp"
 #include "scripting/js-bindings/manual/js_bindings_config.h"
 
-
 USING_NS_CC;
+
+namespace
+{
+    class StringRef : public cocos2d::Ref
+    {
+    public:
+        CREATE_FUNC(StringRef);
+
+        virtual bool init() { return true; }
+
+        std::string data;
+    };
+};
 
 // JSStringWrapper
 JSStringWrapper::JSStringWrapper()
@@ -94,76 +107,94 @@ const char* JSStringWrapper::get()
 
 // JSFunctionWrapper
 JSFunctionWrapper::JSFunctionWrapper(JSContext* cx, JS::HandleObject jsthis, JS::HandleValue fval)
-: _cx(cx)
+: _cppOwner(nullptr)
+, _cx(cx)
 {
     _jsthis = jsthis;
     _fval = fval;
-
-    JS::RootedObject root(cx);
-    get_or_create_js_obj("jsb._root", &root);
-    JS::RootedValue valRoot(cx, OBJECT_TO_JSVAL(root));
-    _owner = valRoot;
-
-    if (!valRoot.isNullOrUndefined())
-    {
-        JS::RootedValue thisVal(cx, OBJECT_TO_JSVAL(_jsthis));
-        if (!thisVal.isNullOrUndefined())
-        {
-            js_add_object_reference(valRoot, thisVal);
-        }
-        JS::RootedValue funcVal(cx, _fval);
-        if (!funcVal.isNullOrUndefined())
-        {
-            js_add_object_reference(valRoot, funcVal);
-        }
-    }
 }
 JSFunctionWrapper::JSFunctionWrapper(JSContext* cx, JS::HandleObject jsthis, JS::HandleValue fval, JS::HandleValue owner)
-: _cx(cx)
+: _cppOwner(nullptr)
+, _cx(cx)
 {
     _jsthis = jsthis;
     _fval = fval;
-    _owner = owner;
-    JS::RootedValue ownerVal(cx, owner);
-
-    JS::RootedValue thisVal(cx, OBJECT_TO_JSVAL(jsthis));
-    if (!thisVal.isNullOrUndefined())
-    {
-        js_add_object_reference(ownerVal, thisVal);
-    }
-    JS::RootedValue funcVal(cx, _fval);
-    if (!funcVal.isNullOrUndefined())
-    {
-        js_add_object_reference(ownerVal, funcVal);
-    }
+    setOwner(cx, JS::RootedValue(cx, owner));
 }
 
 JSFunctionWrapper::~JSFunctionWrapper()
 {
+    ScriptingCore* sc = ScriptingCore::getInstance();
+    JSContext* cx = sc->getGlobalContext();
+    JSAutoCompartment(cx, sc->getGlobalObject());
     JS::RootedValue ownerVal(_cx, _owner);
-
-    if (!ownerVal.isNullOrUndefined())
+    
+    if (sc->getFinalizing() || ownerVal.isNullOrUndefined())
     {
-        JS::RootedValue thisVal(_cx, OBJECT_TO_JSVAL(_jsthis));
+        return;
+    }
+    if (_cppOwner != nullptr)
+    {
+        JS::RootedObject ownerObj(cx, ownerVal.toObjectOrNull());
+        js_proxy *t = jsb_get_js_proxy(ownerObj);
+        // JS object already released, no need to do the following release anymore, gc will take care of everything
+        if (t == nullptr || _cppOwner != t->ptr)
+        {
+            return;
+        }
+    }
+
+    JS::RootedValue thisVal(_cx, OBJECT_TO_JSVAL(_jsthis));
+    if (!thisVal.isNullOrUndefined())
+    {
+        js_remove_object_reference(ownerVal, thisVal);
+    }
+    JS::RootedValue funcVal(_cx, _fval);
+    if (!funcVal.isNullOrUndefined())
+    {
+        js_remove_object_reference(ownerVal, funcVal);
+    }
+}
+
+void JSFunctionWrapper::setOwner(JSContext* cx, JS::HandleValue owner)
+{
+    JSAutoCompartment(cx, ScriptingCore::getInstance()->getGlobalObject());
+    JS::RootedValue ownerVal(cx, owner);
+    if (!owner.isNullOrUndefined())
+    {
+        _owner = owner;
+        
+        JS::RootedObject ownerObj(cx, owner.toObjectOrNull());
+        js_proxy *t = jsb_get_js_proxy(ownerObj);
+        if (t) {
+            _cppOwner = t->ptr;
+        }
+        
+        JS::RootedValue thisVal(cx, OBJECT_TO_JSVAL(_jsthis));
         if (!thisVal.isNullOrUndefined())
         {
-            js_remove_object_reference(ownerVal, thisVal);
+            js_add_object_reference(ownerVal, thisVal);
         }
-        JS::RootedValue funcVal(_cx, _fval);
+        JS::RootedValue funcVal(cx, _fval);
         if (!funcVal.isNullOrUndefined())
         {
-            js_remove_object_reference(ownerVal, funcVal);
+            js_add_object_reference(ownerVal, funcVal);
         }
     }
 }
 
 bool JSFunctionWrapper::invoke(unsigned int argc, jsval *argv, JS::MutableHandleValue rval)
 {
-    JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+    return invoke(JS::HandleValueArray::fromMarkedLocation(argc, argv), rval);
+}
 
+bool JSFunctionWrapper::invoke(JS::HandleValueArray args, JS::MutableHandleValue rval)
+{
+    JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+    
     JS::RootedObject thisObj(_cx, _jsthis);
     JS::RootedValue fval(_cx, _fval);
-    return JS_CallFunctionValue(_cx, thisObj, fval, JS::HandleValueArray::fromMarkedLocation(argc, argv), rval);
+    return JS_CallFunctionValue(_cx, thisObj, fval, args, rval);
 }
 
 static Color3B getColorFromJSObject(JSContext *cx, JS::HandleObject colorObject)
@@ -364,18 +395,12 @@ bool jsval_to_charptr( JSContext *cx, JS::HandleValue vp, const char **ret )
     JSString *jsstr = JS::ToString( cx, vp );
     JSB_PRECONDITION2( jsstr, cx, false, "invalid string" );
 
-    //XXX: what's this?
-    // root it
-//    vp = STRING_TO_JSVAL(jsstr);
-
     JSStringWrapper strWrapper(jsstr);
 
-    // XXX: It is converted to String and then back to char* to autorelease the created object.
-    __String *tmp = __String::create(strWrapper.get());
+    auto tmp = StringRef::create();
+    tmp->data = strWrapper.get();
 
-    JSB_PRECONDITION2( tmp, cx, false, "Error creating string from UTF8");
-
-    *ret = tmp->getCString();
+    *ret = tmp->data.c_str();
 
     return true;
 }
@@ -482,7 +507,7 @@ bool jsval_to_ushort( JSContext *cx, JS::HandleValue vp, unsigned short *outval 
     double dp;
     ok &= JS::ToNumber(cx, vp, &dp);
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
-    ok &= !isnan(dp);
+    ok &= !std::isnan(dp);
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
 
     *outval = (unsigned short)dp;
@@ -496,7 +521,7 @@ bool jsval_to_int32( JSContext *cx, JS::HandleValue vp, int32_t *outval )
     double dp;
     ok &= JS::ToNumber(cx, vp, &dp);
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
-    ok &= !isnan(dp);
+    ok &= !std::isnan(dp);
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
 
     *outval = (int32_t)dp;
@@ -510,7 +535,7 @@ bool jsval_to_uint32( JSContext *cx, JS::HandleValue vp, uint32_t *outval )
     double dp;
     ok &= JS::ToNumber(cx, vp, &dp);
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
-    ok &= !isnan(dp);
+    ok &= !std::isnan(dp);
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
 
     *outval = (uint32_t)dp;
@@ -524,7 +549,7 @@ bool jsval_to_uint16( JSContext *cx, JS::HandleValue vp, uint16_t *outval )
     double dp;
     ok &= JS::ToNumber(cx, vp, &dp);
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
-    ok &= !isnan(dp);
+    ok &= !std::isnan(dp);
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
 
     *outval = (uint16_t)dp;
@@ -596,13 +621,17 @@ bool jsval_to_long_long(JSContext *cx, JS::HandleValue vp, long long* r)
 }
 
 bool jsval_to_std_string(JSContext *cx, JS::HandleValue v, std::string* ret) {
-    if(v.isString() || v.isNumber())
+    if (v.isString() || v.isBoolean() || v.isNumber())
     {
         JSString *tmp = JS::ToString(cx, v);
         JSB_PRECONDITION3(tmp, cx, false, "Error processing arguments");
 
         JSStringWrapper str(tmp);
         *ret = str.get();
+        return true;
+    }
+    if (v.isNullOrUndefined()) {
+        *ret = "";
         return true;
     }
 
@@ -675,7 +704,8 @@ bool jsval_to_quaternion( JSContext *cx, JS::HandleValue v, cocos2d::Quaternion*
         JS::ToNumber(cx, y, &yy) &&
         JS::ToNumber(cx, z, &zz) &&
         JS::ToNumber(cx, w, &ww) &&
-        !isnan(xx) && !isnan(yy) && !isnan(zz) && !isnan(ww);
+        !std::isnan(xx) && !std::isnan(yy) && !std::isnan(zz) && !std::
+isnan(ww);
 
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
 
@@ -1006,6 +1036,8 @@ bool jsval_to_ccarray_of_CCPoint(JSContext* cx, JS::HandleValue v, Point **point
         JS_GetElement(cx, jsobj, i, &valarg);
 
         ok = jsval_to_ccpoint(cx, valarg, &array[i]);
+        if(!ok)
+            delete [] array;
         JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
     }
 
@@ -1538,7 +1570,7 @@ bool jsval_to_vector2(JSContext *cx, JS::HandleValue vp, cocos2d::Vec2* ret)
     JS_GetProperty(cx, tmp, "y", &jsy) &&
     JS::ToNumber(cx, jsx, &x) &&
     JS::ToNumber(cx, jsy, &y) &&
-    !isnan(x) && !isnan(y);
+    !std::isnan(x) && !std::isnan(y);
 
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
 
@@ -1562,7 +1594,7 @@ bool jsval_to_vector3(JSContext *cx, JS::HandleValue vp, cocos2d::Vec3* ret)
     JS::ToNumber(cx, jsx, &x) &&
     JS::ToNumber(cx, jsy, &y) &&
     JS::ToNumber(cx, jsz, &z) &&
-    !isnan(x) && !isnan(y) && !isnan(z);
+    !std::isnan(x) && !std::isnan(y) && !std::isnan(z);
 
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
 
@@ -1590,7 +1622,7 @@ bool jsval_to_vector4(JSContext *cx, JS::HandleValue vp, cocos2d::Vec4* ret)
     JS::ToNumber(cx, jsy, &y) &&
     JS::ToNumber(cx, jsz, &z) &&
     JS::ToNumber(cx, jsw, &w) &&
-    !isnan(x) && !isnan(y) && !isnan(z) && !isnan(w);
+    !std::isnan(x) && !std::isnan(y) && !std::isnan(z) && !std::isnan(w);
 
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
 
@@ -1657,7 +1689,7 @@ bool jsval_to_cctex2f(JSContext* cx, JS::HandleValue vp, cocos2d::Tex2F* ret)
     JS_GetProperty(cx, tmp, "y", &jsy) &&
     JS::ToNumber(cx, jsx, &x) &&
     JS::ToNumber(cx, jsy, &y) &&
-    !isnan(x) && !isnan(y);
+    !std::isnan(x) && !std::isnan(y);
 
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
 
@@ -1846,7 +1878,7 @@ jsval ccarray_to_jsval(JSContext* cx, __Array *arr)
             }  else if ((boolVal = dynamic_cast<__Bool*>(obj))) {
                 arrElement = BOOLEAN_TO_JSVAL(boolVal->getValue() ? true : false);
             } else {
-                CCASSERT(false, "the type isn't suppored.");
+                CCASSERT(false, "the type isn't supported.");
             }
         }
         if (!JS_SetElement(cx, jsretArr, i, arrElement)) {
@@ -1898,7 +1930,7 @@ jsval ccdictionary_to_jsval(JSContext* cx, __Dictionary* dict)
             } else if ((boolVal = dynamic_cast<__Bool*>(obj))) {
                 dictElement = BOOLEAN_TO_JSVAL(boolVal->getValue() ? true : false);
             } else {
-                CCASSERT(false, "the type isn't suppored.");
+                CCASSERT(false, "the type isn't supported.");
             }
         }
         const char* key = pElement->getStrKey();
@@ -2107,9 +2139,7 @@ jsval c_string_to_jsval(JSContext* cx, const char* v, size_t length /* = -1 */)
 
 jsval ccpoint_to_jsval(JSContext* cx, const Point& v)
 {
-    JS::RootedObject proto(cx);
-    JS::RootedObject parent(cx);
-    JS::RootedObject tmp(cx, JS_NewObject(cx, NULL, proto, parent));
+    JS::RootedObject tmp(cx, JS_NewObject(cx, NULL, JS::NullPtr(), JS::NullPtr()));
     if (!tmp) return JSVAL_NULL;
     bool ok = JS_DefineProperty(cx, tmp, "x", v.x, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
     JS_DefineProperty(cx, tmp, "y", v.y, JSPROP_ENUMERATE | JSPROP_PERMANENT);
@@ -2123,9 +2153,7 @@ jsval ccacceleration_to_jsval(JSContext* cx, const Acceleration& v)
 {
     JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
 
-    JS::RootedObject proto(cx);
-    JS::RootedObject parent(cx);
-    JS::RootedObject tmp(cx, JS_NewObject(cx, NULL, proto, parent));
+    JS::RootedObject tmp(cx, JS_NewObject(cx, NULL, JS::NullPtr(), JS::NullPtr()));
     if (!tmp) return JSVAL_NULL;
     bool ok = JS_DefineProperty(cx, tmp, "x", v.x, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
     JS_DefineProperty(cx, tmp, "y", v.y, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
@@ -2139,9 +2167,7 @@ jsval ccacceleration_to_jsval(JSContext* cx, const Acceleration& v)
 
 jsval ccrect_to_jsval(JSContext* cx, const Rect& v)
 {
-    JS::RootedObject proto(cx);
-    JS::RootedObject parent(cx);
-    JS::RootedObject tmp(cx, JS_NewObject(cx, NULL, proto, parent));
+    JS::RootedObject tmp(cx, JS_NewObject(cx, NULL, JS::NullPtr(), JS::NullPtr()));
     if (!tmp) return JSVAL_NULL;
     bool ok = JS_DefineProperty(cx, tmp, "x", v.origin.x, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
     JS_DefineProperty(cx, tmp, "y", v.origin.y, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
@@ -2155,9 +2181,7 @@ jsval ccrect_to_jsval(JSContext* cx, const Rect& v)
 
 jsval ccsize_to_jsval(JSContext* cx, const Size& v)
 {
-    JS::RootedObject proto(cx);
-    JS::RootedObject parent(cx);
-    JS::RootedObject tmp(cx, JS_NewObject(cx, NULL, proto, parent));
+    JS::RootedObject tmp(cx, JS_NewObject(cx, NULL, JS::NullPtr(), JS::NullPtr()));
     if (!tmp) return JSVAL_NULL;
     bool ok = JS_DefineProperty(cx, tmp, "width", v.width, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
     JS_DefineProperty(cx, tmp, "height", v.height, JSPROP_ENUMERATE | JSPROP_PERMANENT);
@@ -2169,9 +2193,7 @@ jsval ccsize_to_jsval(JSContext* cx, const Size& v)
 
 jsval cccolor4b_to_jsval(JSContext* cx, const Color4B& v)
 {
-    JS::RootedObject proto(cx);
-    JS::RootedObject parent(cx);
-    JS::RootedObject tmp(cx, JS_NewObject(cx, NULL, proto, parent));
+    JS::RootedObject tmp(cx, JS_NewObject(cx, NULL, JS::NullPtr(), JS::NullPtr()));
     if (!tmp) return JSVAL_NULL;
     bool ok = JS_DefineProperty(cx, tmp, "r", (int32_t)v.r, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
     JS_DefineProperty(cx, tmp, "g", (int32_t)v.g, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
@@ -2185,9 +2207,7 @@ jsval cccolor4b_to_jsval(JSContext* cx, const Color4B& v)
 
 jsval cccolor4f_to_jsval(JSContext* cx, const Color4F& v)
 {
-    JS::RootedObject proto(cx);
-    JS::RootedObject parent(cx);
-    JS::RootedObject tmp(cx, JS_NewObject(cx, NULL, proto, parent));
+    JS::RootedObject tmp(cx, JS_NewObject(cx, NULL, JS::NullPtr(), JS::NullPtr()));
     if (!tmp) return JSVAL_NULL;
     bool ok = JS_DefineProperty(cx, tmp, "r", (int32_t)(v.r * 255), JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
     JS_DefineProperty(cx, tmp, "g", (int32_t)(v.g * 255), JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
@@ -2201,9 +2221,7 @@ jsval cccolor4f_to_jsval(JSContext* cx, const Color4F& v)
 
 jsval cccolor3b_to_jsval(JSContext* cx, const Color3B& v)
 {
-    JS::RootedObject proto(cx);
-    JS::RootedObject parent(cx);
-    JS::RootedObject tmp(cx, JS_NewObject(cx, NULL, proto, parent));
+    JS::RootedObject tmp(cx, JS_NewObject(cx, NULL, JS::NullPtr(), JS::NullPtr()));
     if (!tmp) return JSVAL_NULL;
     bool ok = JS_DefineProperty(cx, tmp, "r", (int32_t)v.r, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
     JS_DefineProperty(cx, tmp, "g", (int32_t)v.g, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
@@ -2216,9 +2234,7 @@ jsval cccolor3b_to_jsval(JSContext* cx, const Color3B& v)
 
 jsval ccaffinetransform_to_jsval(JSContext* cx, const AffineTransform& t)
 {
-    JS::RootedObject proto(cx);
-    JS::RootedObject parent(cx);
-    JS::RootedObject tmp(cx, JS_NewObject(cx, NULL, proto, parent));
+    JS::RootedObject tmp(cx, JS_NewObject(cx, NULL, JS::NullPtr(), JS::NullPtr()));
     if (!tmp) return JSVAL_NULL;
     bool ok = JS_DefineProperty(cx, tmp, "a", t.a, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
     JS_DefineProperty(cx, tmp, "b", t.b, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
@@ -2278,9 +2294,7 @@ jsval meshVertexAttrib_to_jsval(JSContext* cx, const cocos2d::MeshVertexAttrib& 
 
 jsval FontDefinition_to_jsval(JSContext* cx, const FontDefinition& t)
 {
-    JS::RootedObject proto(cx);
-    JS::RootedObject parent(cx);
-    JS::RootedObject tmp(cx, JS_NewObject(cx, NULL, proto, parent));
+    JS::RootedObject tmp(cx, JS_NewObject(cx, NULL, JS::NullPtr(), JS::NullPtr()));
     JS::RootedValue prop(cx);
 
     bool ok = true;
@@ -2828,9 +2842,7 @@ jsval matrix_to_jsval(JSContext *cx, const cocos2d::Mat4& v)
 
 jsval vector2_to_jsval(JSContext *cx, const cocos2d::Vec2& v)
 {
-    JS::RootedObject proto(cx);
-    JS::RootedObject parent(cx);
-    JS::RootedObject tmp(cx, JS_NewObject(cx, NULL, proto, parent));
+    JS::RootedObject tmp(cx, JS_NewObject(cx, NULL, JS::NullPtr(), JS::NullPtr()));
     if (!tmp) return JSVAL_NULL;
     bool ok = JS_DefineProperty(cx, tmp, "x", v.x, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
     JS_DefineProperty(cx, tmp, "y", v.y, JSPROP_ENUMERATE | JSPROP_PERMANENT);
@@ -2842,9 +2854,7 @@ jsval vector2_to_jsval(JSContext *cx, const cocos2d::Vec2& v)
 
 jsval vector3_to_jsval(JSContext *cx, const cocos2d::Vec3& v)
 {
-    JS::RootedObject proto(cx);
-    JS::RootedObject parent(cx);
-    JS::RootedObject tmp(cx, JS_NewObject(cx, NULL, proto, parent));
+    JS::RootedObject tmp(cx, JS_NewObject(cx, NULL, JS::NullPtr(), JS::NullPtr()));
     if (!tmp) return JSVAL_NULL;
     bool ok = JS_DefineProperty(cx, tmp, "x", v.x, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
     JS_DefineProperty(cx, tmp, "y", v.y, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
@@ -2857,9 +2867,7 @@ jsval vector3_to_jsval(JSContext *cx, const cocos2d::Vec3& v)
 
 jsval vector4_to_jsval(JSContext *cx, const cocos2d::Vec4& v)
 {
-    JS::RootedObject proto(cx);
-    JS::RootedObject parent(cx);
-    JS::RootedObject tmp(cx, JS_NewObject(cx, NULL, proto, parent));
+    JS::RootedObject tmp(cx, JS_NewObject(cx, NULL, JS::NullPtr(), JS::NullPtr()));
     if (!tmp) return JSVAL_NULL;
     bool ok = JS_DefineProperty(cx, tmp, "x", v.x, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
     JS_DefineProperty(cx, tmp, "y", v.y, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
@@ -2873,9 +2881,7 @@ jsval vector4_to_jsval(JSContext *cx, const cocos2d::Vec4& v)
 
 jsval blendfunc_to_jsval(JSContext *cx, const cocos2d::BlendFunc& v)
 {
-    JS::RootedObject proto(cx);
-    JS::RootedObject parent(cx);
-    JS::RootedObject tmp(cx, JS_NewObject(cx, NULL, proto, parent));
+    JS::RootedObject tmp(cx, JS_NewObject(cx, NULL, JS::NullPtr(), JS::NullPtr()));
     if (!tmp) return JSVAL_NULL;
     bool ok = JS_DefineProperty(cx, tmp, "src", (uint32_t)v.src, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
     JS_DefineProperty(cx, tmp, "dst", (uint32_t)v.dst, JSPROP_ENUMERATE | JSPROP_PERMANENT);
@@ -2890,7 +2896,7 @@ jsval vector_vec2_to_jsval(JSContext *cx, const std::vector<cocos2d::Vec2>& v)
     JS::RootedObject jsretArr(cx, JS_NewArrayObject(cx, v.size()));
 
     int i = 0;
-    for (const cocos2d::Vec2 obj : v)
+    for (const cocos2d::Vec2& obj : v)
     {
         JS::RootedValue arrElement(cx);
         arrElement = vector2_to_jsval(cx, obj);
@@ -2905,9 +2911,7 @@ jsval vector_vec2_to_jsval(JSContext *cx, const std::vector<cocos2d::Vec2>& v)
 
 jsval std_map_string_string_to_jsval(JSContext* cx, const std::map<std::string, std::string>& v)
 {
-    JS::RootedObject proto(cx);
-    JS::RootedObject parent(cx);
-    JS::RootedObject jsRet(cx, JS_NewObject(cx, NULL, proto, parent));
+    JS::RootedObject jsRet(cx, JS_NewObject(cx, NULL, JS::NullPtr(), JS::NullPtr()));
 
     for (auto iter = v.begin(); iter != v.end(); ++iter)
     {
@@ -2953,13 +2957,26 @@ bool jsval_to_resourcedata(JSContext *cx, JS::HandleValue v, ResourceData* ret) 
 
 jsval resourcedata_to_jsval(JSContext* cx, const ResourceData& v)
 {
-    JS::RootedObject proto(cx);
-    JS::RootedObject parent(cx);
-    JS::RootedObject tmp(cx, JS_NewObject(cx, NULL, proto, parent));
+    JS::RootedObject tmp(cx, JS_NewObject(cx, NULL, JS::NullPtr(), JS::NullPtr()));
     if (!tmp) return JSVAL_NULL;
     bool ok = JS_DefineProperty(cx, tmp, "type", v.type, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
         JS_DefineProperty(cx, tmp, "file", JS::RootedValue(cx, std_string_to_jsval(cx, v.file)), JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
         JS_DefineProperty(cx, tmp, "plist", JS::RootedValue(cx, std_string_to_jsval(cx, v.plist)), JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    if (ok) {
+        return OBJECT_TO_JSVAL(tmp);
+    }
+    return JSVAL_NULL;
+}
+
+jsval asset_to_jsval(JSContext* cx, const cocos2d::extension::ManifestAsset& v)
+{
+    JS::RootedObject tmp(cx, JS_NewObject(cx, NULL, JS::NullPtr(), JS::NullPtr()));
+    if (!tmp) return JSVAL_NULL;
+    bool ok = JS_DefineProperty(cx, tmp, "md5", JS::RootedValue(cx, std_string_to_jsval(cx, v.md5)), JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+    JS_DefineProperty(cx, tmp, "path", JS::RootedValue(cx, std_string_to_jsval(cx, v.path)), JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+    JS_DefineProperty(cx, tmp, "compressed", v.compressed, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+    JS_DefineProperty(cx, tmp, "size", v.size, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+    JS_DefineProperty(cx, tmp, "downloadState", (int)v.downloadState, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     if (ok) {
         return OBJECT_TO_JSVAL(tmp);
     }

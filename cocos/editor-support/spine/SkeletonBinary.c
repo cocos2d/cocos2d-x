@@ -36,7 +36,7 @@
 #include "kvec.h"
 
 typedef struct {
-	const unsigned char* cursor; 
+	const unsigned char* cursor;
 	const unsigned char* end;
 } _dataInput;
 
@@ -373,7 +373,7 @@ static spAnimation* _spSkeletonBinary_readAnimation (spSkeletonBinary* self, con
 		for (frameIndex = 0; frameIndex < frameCount; ++frameIndex) {
 			float time = readFloat(input);
 			float mix = readFloat(input);
-			signed char bendDirection = readSByte(input);
+			char bendDirection = readSByte(input);
 			spIkConstraintTimeline_setFrame(timeline, frameIndex, time, mix, bendDirection);
 			if (frameIndex < frameCount - 1) readCurve(input, SUPER(timeline), frameIndex);
 		}
@@ -582,7 +582,6 @@ static spAnimation* _spSkeletonBinary_readAnimation (spSkeletonBinary* self, con
 	kv_trim(spTimeline*, timelines);
 
 	animation = spAnimation_create(name, 0);
-	FREE(animation->timelines);
 	animation->duration = duration;
 	animation->timelinesCount = kv_size(timelines);
 	animation->timelines = kv_array(timelines);

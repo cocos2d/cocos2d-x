@@ -2,7 +2,7 @@
  Copyright (c) 2008-2010 Ricardo Quesada
  Copyright (c) 2010-2012 cocos2d-x.org
  Copyright (c) 2011      Zynga Inc.
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -321,9 +321,9 @@ bool js_cocos2dx_physics3d_Physics3dShape_initHeightfield(JSContext *cx, uint32_
         ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
         ok &= jsval_to_int32(cx, args.get(1), (int32_t *)&arg1);
         ok &= jsval_to_std_vector_float(cx, args.get(2), &arg2);
-        ok &= JS::ToNumber(cx, args.get(3), &arg3) && !isnan(arg3);
-        ok &= JS::ToNumber(cx, args.get(4), &arg4) && !isnan(arg4);
-        ok &= JS::ToNumber(cx, args.get(5), &arg5) && !isnan(arg5);
+        ok &= JS::ToNumber(cx, args.get(3), &arg3) && !std::isnan(arg3);
+        ok &= JS::ToNumber(cx, args.get(4), &arg4) && !std::isnan(arg4);
+        ok &= JS::ToNumber(cx, args.get(5), &arg5) && !std::isnan(arg5);
         arg6 = JS::ToBoolean(args.get(6));
         arg7 = JS::ToBoolean(args.get(7));
         if (argc == 9)
@@ -363,9 +363,9 @@ bool js_cocos2dx_physics3d_Physics3dShape_createHeightfield(JSContext *cx, uint3
         ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
         ok &= jsval_to_int32(cx, args.get(1), (int32_t *)&arg1);
         ok &= jsval_to_std_vector_float(cx, args.get(2), &arg2);
-        ok &= JS::ToNumber( cx, args.get(3), &arg3) && !isnan(arg3);
-        ok &= JS::ToNumber( cx, args.get(4), &arg4) && !isnan(arg4);
-        ok &= JS::ToNumber( cx, args.get(5), &arg5) && !isnan(arg5);
+        ok &= JS::ToNumber( cx, args.get(3), &arg3) && !std::isnan(arg3);
+        ok &= JS::ToNumber( cx, args.get(4), &arg4) && !std::isnan(arg4);
+        ok &= JS::ToNumber( cx, args.get(5), &arg5) && !std::isnan(arg5);
         arg6 = JS::ToBoolean(args.get(6));
         arg7 = JS::ToBoolean(args.get(7));
         if(argc == 9)

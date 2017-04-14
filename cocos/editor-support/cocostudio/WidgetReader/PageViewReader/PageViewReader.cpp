@@ -12,8 +12,6 @@
 
 #include "tinyxml2.h"
 #include "flatbuffers/flatbuffers.h"
-#include "platform/CCFileUtils.h"
-#include "2d/CCSpriteFrameCache.h"
 
 USING_NS_CC;
 using namespace ui;

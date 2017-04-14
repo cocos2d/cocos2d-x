@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2015-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -111,7 +111,7 @@ namespace ui {
          * get the TabHeader text
          *@return he TabHeader text
          */
-        const std::string getTitleText() const;
+        std::string getTitleText() const;
         
         /**
          * Change the color of he TabHeader text
@@ -147,7 +147,7 @@ namespace ui {
          * get the font name of TabHeader text
          *@return font name in std::string
          */
-        const std::string getTitleFontName() const;
+        std::string getTitleFontName() const;
         
         /**
          * get the index this header in the TabControl
@@ -215,39 +215,39 @@ namespace ui {
         
         /**
          * remove the tab from this TabControl
-         * @param index: the index of tab
+         * @param index The index of tab
          */
         void      removeTab(int index);
         
         /**
          * set tab selected, switch the current selected tab and visible container
-         * @param index: the index of tab
+         * @param index The index of tab
          */
         void      setSelectTab(int index);
         
         /**
          * set tab selected, switch the current selected tab and visible container
-         * @param tabHeader, the tab instance
+         * @param tabHeader The tab instance
          */
         void      setSelectTab(TabHeader* tabHeader);
         
         /**
          * get TabHeader
-         * @param index, the index of tab
+         * @param index The index of tab
          */
         TabHeader* getTabHeader(int index) const;
         
         /**
          * get Container
-         * @param index, the index of tab
+         * @param index The index of tab
          */
         Layout*   getTabContainer(int index) const;
         
         /**
          * insert tab, and init the position of header and container
-         * @param index, the index tab should be
-         * @param header, the header Button, will be a protected child in TabControl
-         * @param the container, will be a protected child in TabControl
+         * @param index The index tab should be
+         * @param header The header Button, will be a protected child in TabControl
+         * @param container The container, will be a protected child in TabControl
          */
         void      insertTab(int index, TabHeader* header, Layout* container);
         
@@ -265,7 +265,7 @@ namespace ui {
 
         /**
         * get the index of tabCell in TabView, return -1 if not exists in.
-        / @return the index of tabCell in TabView,  `-1` means not exists in.
+        * @return the index of tabCell in TabView, `-1` means not exists in.
         */
         int indexOfTabHeader(const TabHeader* tabCell) const;
 
@@ -273,7 +273,7 @@ namespace ui {
         * Add a callback function which would be called when selected tab changed
         *@param callback A std::function with type @see `ccTabControlCallback`
         */
-        void setTabChangedEventListener(const ccTabControlCallback& callBack);
+        void setTabChangedEventListener(const ccTabControlCallback& callback);
         /// @}
 
         /// @{
@@ -281,9 +281,9 @@ namespace ui {
 
         /**
         * set header width, affect all tab
-        * @param headerWith: each tab header's width
+        * @param headerWidth each tab header's width
         */
-        void  setHeaderWidth(float headerWith);
+        void  setHeaderWidth(float headerWidth);
 
         /**
         * get tab header's width
@@ -293,9 +293,9 @@ namespace ui {
 
         /**
         * set header height, affect all tab
-        * @param headerHeigt: each tab header's height
+        * @param headerHeight each tab header's height
         */
-        void  setHeaderHeight(float headerHeigt);
+        void  setHeaderHeight(float headerHeight);
 
         /**
         * get tab header's height
@@ -318,7 +318,7 @@ namespace ui {
 
         /**
         * set the delta zoom of selected tab
-        * @param zoom, the delta zoom
+        * @param zoom The delta zoom
         */
         void  setHeaderSelectedZoom(float zoom);
 
@@ -330,7 +330,7 @@ namespace ui {
 
         /**
         * the header dock place of header in TabControl
-        * @param: dockPlace, the strip place
+        * @param dockPlace The strip place
         */
         void         setHeaderDockPlace(TabControl::Dock dockPlace);
         TabControl::Dock getHeaderDockPlace() const { return _headerDockPlace; }

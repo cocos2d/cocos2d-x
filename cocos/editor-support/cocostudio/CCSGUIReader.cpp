@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -48,10 +48,6 @@ THE SOFTWARE.
 #include "editor-support/cocostudio/CocoLoader.h"
 #include "tinyxml2.h"
 
-#include "platform/CCFileUtils.h"
-#include "2d/CCSpriteFrameCache.h"
-#include "base/CCDirector.h"
-#include "base/ccUtils.h"
 
 using namespace cocos2d;
 using namespace cocos2d::ui;
@@ -934,9 +930,8 @@ void WidgetPropertiesReader0250::setPropsForLabelAtlasFromJsonDictionary(Widget*
     if (sv && cmf && iw && ih && scm && (strcmp(DICTOOL->getStringValue_json(options, "charMapFile"), "") != 0))
     {
         std::string tp_c = m_strFilePath;
-        const char* cmf_tp = nullptr;
         const char* cmft = DICTOOL->getStringValue_json(options, "charMapFile");
-        cmf_tp = tp_c.append(cmft).c_str();
+        const char* cmf_tp = tp_c.append(cmft).c_str();
         
         labelAtlas->setProperty(DICTOOL->getStringValue_json(options, "stringValue"),cmf_tp,DICTOOL->getIntValue_json(options, "itemWidth"),DICTOOL->getIntValue_json(options,"itemHeight"),DICTOOL->getStringValue_json(options, "startCharMap"));
         labelAtlas->setProperty(DICTOOL->getStringValue_json(options, "stringValue"),cmf_tp,DICTOOL->getIntValue_json(options, "itemWidth") / CC_CONTENT_SCALE_FACTOR() ,DICTOOL->getIntValue_json(options,"itemHeight") / CC_CONTENT_SCALE_FACTOR(), DICTOOL->getStringValue_json(options, "startCharMap"));
@@ -1188,9 +1183,8 @@ void WidgetPropertiesReader0250::setPropsForLabelBMFontFromJsonDictionary(Widget
     cocos2d::ui::TextBMFont* labelBMFont = static_cast<cocos2d::ui::TextBMFont*>(widget);
     
     std::string tp_c = m_strFilePath;
-    const char* cmf_tp = nullptr;
     const char* cmft = DICTOOL->getStringValue_json(options, "fileName");
-    cmf_tp = tp_c.append(cmft).c_str();
+    const char* cmf_tp = tp_c.append(cmft).c_str();
     
     labelBMFont->setFntFile(cmf_tp);
     
@@ -1200,18 +1194,36 @@ void WidgetPropertiesReader0250::setPropsForLabelBMFontFromJsonDictionary(Widget
     setColorPropsForWidgetFromJsonDictionary(widget,options);
 }
     
-void WidgetPropertiesReader0250::setPropsForAllWidgetFromJsonDictionary(WidgetReaderProtocol *reader, Widget *widget, const rapidjson::Value &options)
+void WidgetPropertiesReader0250::setPropsForAllWidgetFromJsonDictionary(WidgetReaderProtocol* /*reader*/, Widget* /*widget*/, const rapidjson::Value& /*options*/)
 {
     
 }
 
-void WidgetPropertiesReader0250::setPropsForAllCustomWidgetFromJsonDictionary(const std::string &classType,
-                                                                              cocos2d::ui::Widget *widget,
-                                                                              const rapidjson::Value &customOptions)
+void WidgetPropertiesReader0250::setPropsForAllCustomWidgetFromJsonDictionary(const std::string& /*classType*/,
+                                                                              cocos2d::ui::Widget* /*widget*/,
+                                                                              const rapidjson::Value& /*customOptions*/)
 {
     
 }
 
+Widget* WidgetPropertiesReader0250::createWidgetFromBinary(CocoLoader* /*cocoLoader*/,
+                                                    stExpCocoNode* /*pCocoNode*/,
+                                                    const char* /*fileName*/)
+{
+    return nullptr;
+}
+
+Widget* WidgetPropertiesReader0250::widgetFromBinary(CocoLoader* /*cocoLoader*/,
+                                              stExpCocoNode* /*pCocoNode*/)
+{
+    return nullptr;
+}
+
+void WidgetPropertiesReader0250::setPropsForAllWidgetFromBinary(WidgetReaderProtocol* /*reader*/,
+                                            cocos2d::ui::Widget* /*widget*/,
+                                            CocoLoader* /*cocoLoader*/,
+                                            stExpCocoNode* /*pCocoNode*/)
+{}
 
 /*0.3.0.0~1.0.0.0*/
 Widget* WidgetPropertiesReader0300::createWidget(const rapidjson::Value& data, const char* fullPath, const char* fileName)
@@ -1264,8 +1276,8 @@ Widget* WidgetPropertiesReader0300::createWidget(const rapidjson::Value& data, c
 {
     
     stExpCocoNode *tpChildArray = cocoNode->GetChildArray(cocoLoader);
-    float fileDesignWidth;
-    float fileDesignHeight;
+    float fileDesignWidth = 0.0f;
+    float fileDesignHeight = 0.0f;
     
     Widget* widget =  nullptr;
 
@@ -1464,7 +1476,13 @@ void WidgetPropertiesReader0300::setPropsForAllWidgetFromBinary(WidgetReaderProt
 {
     reader->setPropsFromBinary(widget, cocoLoader, cocoNode);
 }
-
+    
+void WidgetPropertiesReader0300::setPropsForAllCustomWidgetFromBinary(const std::string& /*classType*/,
+                                                  cocos2d::ui::Widget* /*widget*/,
+                                                  CocoLoader* /*cocoLoader*/,
+                                                  stExpCocoNode* /*pCocoNode*/) {
+    //TODO: custom property
+}
     
 Widget* WidgetPropertiesReader0300::widgetFromJsonDictionary(const rapidjson::Value& data)
 {

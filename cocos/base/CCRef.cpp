@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies
+Copyright (c) 2013-2017 Chukong Technologies
 
 http://www.cocos2d-x.org
 
@@ -30,6 +30,9 @@ THE SOFTWARE.
 
 #if CC_REF_LEAK_DETECTION
 #include <algorithm>    // std::find
+#include <thread>
+#include <mutex>
+#include <vector>
 #endif
 
 NS_CC_BEGIN
@@ -45,8 +48,6 @@ Ref::Ref()
 , _luaID (0)
 , _scriptObject(nullptr)
 , _rooted(false)
-, _scriptOwned(false)
-,_referenceCountAtRootTime(0)
 #endif
 {
 #if CC_ENABLE_SCRIPT_BINDING
@@ -134,6 +135,14 @@ void Ref::release()
         }
 #endif
 
+#if CC_ENABLE_SCRIPT_BINDING
+        ScriptEngineProtocol* pEngine = ScriptEngineManager::getInstance()->getScriptEngine();
+        if (pEngine != nullptr && pEngine->getScriptType() == kScriptTypeJavascript)
+        {
+            pEngine->removeObjectProxy(this);
+        }
+#endif // CC_ENABLE_SCRIPT_BINDING
+
 #if CC_REF_LEAK_DETECTION
         untrackRef(this);
 #endif
@@ -154,10 +163,12 @@ unsigned int Ref::getReferenceCount() const
 
 #if CC_REF_LEAK_DETECTION
 
-static std::list<Ref*> __refAllocationList;
+static std::vector<Ref*> __refAllocationList;
+static std::mutex __refMutex;
 
 void Ref::printLeaks()
 {
+    std::lock_guard<std::mutex> refLockGuard(__refMutex);
     // Dump Ref object memory leaks
     if (__refAllocationList.empty())
     {
@@ -178,6 +189,7 @@ void Ref::printLeaks()
 
 static void trackRef(Ref* ref)
 {
+    std::lock_guard<std::mutex> refLockGuard(__refMutex);
     CCASSERT(ref, "Invalid parameter, ref should not be null!");
 
     // Create memory allocation record.
@@ -186,6 +198,7 @@ static void trackRef(Ref* ref)
 
 static void untrackRef(Ref* ref)
 {
+    std::lock_guard<std::mutex> refLockGuard(__refMutex);
     auto iter = std::find(__refAllocationList.begin(), __refAllocationList.end(), ref);
     if (iter == __refAllocationList.end())
     {

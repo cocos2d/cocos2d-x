@@ -1,5 +1,9 @@
 /****************************************************************************
+<<<<<<< HEAD
 Copyright (c) 2016 Chukong Technologies Inc.
+=======
+Copyright (c) 2016-2017 Chukong Technologies Inc.
+>>>>>>> cocos2d/v3
 
 http://www.cocos2d-x.org
 
@@ -41,6 +45,10 @@ Track::Track(const PcmData &pcmData)
         , _isVolumeDirty(true)
         , _isLoop(false)
         , _isInitialized(false)
+<<<<<<< HEAD
+=======
+        , _isAudioFocus(true)
+>>>>>>> cocos2d/v3
 {
     init(_pcmData.pcmBuffer->data(), _pcmData.numFrames, _pcmData.bitsPerSample / 8 * _pcmData.numChannels);
 }
@@ -52,7 +60,12 @@ Track::~Track()
 
 gain_minifloat_packed_t Track::getVolumeLR()
 {
+<<<<<<< HEAD
     gain_minifloat_t v = gain_from_float(_volume);
+=======
+    float volume = _isAudioFocus ? _volume : 0.0f;
+    gain_minifloat_t v = gain_from_float(volume);
+>>>>>>> cocos2d/v3
     return gain_minifloat_pack(v, v);
 }
 
@@ -83,6 +96,15 @@ float Track::getVolume() const
     return _volume;
 }
 
+<<<<<<< HEAD
+=======
+void Track::setAudioFocus(bool isFocus)
+{
+    _isAudioFocus = isFocus;
+    setVolumeDirty(true);
+}
+
+>>>>>>> cocos2d/v3
 void Track::setState(State state)
 {
     std::lock_guard<std::mutex> lk(_stateMutex);

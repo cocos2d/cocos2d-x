@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2015-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -167,12 +167,12 @@ PUEmitter::~PUEmitter()
         delete _dynAngle;
 }
 
-void PUEmitter::updateEmitter(Particle3D *particle, float deltaTime)
+void PUEmitter::updateEmitter(Particle3D* /*particle*/, float /*deltaTime*/)
 {
     
 }
 
-void PUEmitter::emit(int count)
+void PUEmitter::emit(int /*count*/)
 {
     
 }
@@ -396,12 +396,12 @@ void PUEmitter::unPrepare()
     setForceEmission(_forceEmission);
 }
 
-void PUEmitter::preUpdateEmitter( float deltaTime )
+void PUEmitter::preUpdateEmitter( float /*deltaTime*/ )
 {
 
 }
 
-void PUEmitter::postUpdateEmitter( float deltaTime )
+void PUEmitter::postUpdateEmitter( float /*deltaTime*/ )
 {
     Vec3 currentPos = getDerivedPosition();
     _latestPositionDiff = currentPos - _latestPosition;

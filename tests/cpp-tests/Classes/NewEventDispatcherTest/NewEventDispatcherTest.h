@@ -217,6 +217,16 @@ public:
     virtual std::string subtitle() const override;
 };
 
+class WindowEventsTest : public EventDispatcherTestDemo
+{
+public:
+    CREATE_FUNC(WindowEventsTest);
+    WindowEventsTest();
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
 class Issue8194 : public EventDispatcherTestDemo
 {
 public:

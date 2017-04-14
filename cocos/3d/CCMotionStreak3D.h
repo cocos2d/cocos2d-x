@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2015-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
 
@@ -78,7 +78,7 @@ public:
      *
      * @return float stroke.
      */
-    inline float getStroke() const { return _stroke; }
+    float getStroke() const { return _stroke; }
     /** Set stroke.
      *
      * @param stroke The width of stroke.
@@ -97,12 +97,12 @@ public:
      *
      * @return True if the starting position is initialized.
      */
-    inline bool isStartingPositionInitialized() const { return _startingPositionInitialized; }
+    bool isStartingPositionInitialized() const { return _startingPositionInitialized; }
     /** Sets the starting position initialized or not.
      *
      * @param bStartingPositionInitialized True if initialized the starting position.
      */
-    inline void setStartingPositionInitialized(bool bStartingPositionInitialized)
+    void setStartingPositionInitialized(bool bStartingPositionInitialized)
     {
         _startingPositionInitialized = bStartingPositionInitialized; 
     }
@@ -111,8 +111,8 @@ public:
     virtual void setPosition(const Vec2& position) override;
     virtual void setPosition(float x, float y) override;
     virtual void setPosition3D(const Vec3& position) override;
-    virtual void setRotation3D(const Vec3& rotation) override {}
-    virtual void setRotationQuat(const Quaternion& quat) override {}
+    virtual void setRotation3D(const Vec3& rotation) override;
+    virtual void setRotationQuat(const Quaternion& quat) override;
     
     virtual const Vec2& getPosition() const override;
     virtual void getPosition(float* x, float* y) const override;

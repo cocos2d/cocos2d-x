@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -26,12 +26,14 @@
 #include "ActionsTest.h"
 #include "../testResource.h"
 #include "cocos2d.h"
+#include "ui/CocosGUI.h"
 
 #include "renderer/CCRenderer.h"
 #include "renderer/CCCustomCommand.h"
 #include "renderer/CCGroupCommand.h"
 
 USING_NS_CC;
+using namespace cocos2d::ui;
 
 ActionsTests::ActionsTests()
 {
@@ -79,6 +81,7 @@ ActionsTests::ActionsTests()
     ADD_TEST_CASE(ActionCardinalSplineStacked);
     ADD_TEST_CASE(ActionCatmullRomStacked);
     ADD_TEST_CASE(PauseResumeActions);
+    ADD_TEST_CASE(ActionResize);
     ADD_TEST_CASE(Issue1305);
     ADD_TEST_CASE(Issue1305_2);
     ADD_TEST_CASE(Issue1288);
@@ -87,6 +90,8 @@ ActionsTests::ActionsTests()
     ADD_TEST_CASE(Issue1398);
     ADD_TEST_CASE(Issue2599)
     ADD_TEST_CASE(ActionFloatTest);
+    ADD_TEST_CASE(Issue14936_1);
+    ADD_TEST_CASE(Issue14936_2);
 }
 
 std::string ActionsDemo::title() const
@@ -2203,6 +2208,69 @@ std::string PauseResumeActions::subtitle() const
 
 //------------------------------------------------------------------
 //
+//    ActionResize
+//    Works on all nodes where setContentSize is effective. 
+//    But it's mostly useful for nodes where 9-slice is enabled
+//
+//------------------------------------------------------------------
+void ActionResize::onEnter() 
+{
+    ActionsDemo::onEnter();
+
+    _grossini->setVisible(false);
+    _tamara->setVisible(false);
+    _kathia->setVisible(false);
+
+    Size widgetSize = getContentSize();
+
+    Text* alert = Text::create("ImageView Content ResizeTo ResizeBy action. \nTop: ResizeTo/ResizeBy on a 9-slice ImageView  \nBottom: ScaleTo/ScaleBy on a 9-slice ImageView (for comparison)", "fonts/Marker Felt.ttf", 14);
+    alert->setColor(Color3B(159, 168, 176));
+    alert->setPosition(Vec2(widgetSize.width / 2.0f,
+                            widgetSize.height / 2.0f - alert->getContentSize().height * 1.125f));
+
+    addChild(alert);
+
+    // Create the imageview
+    Vec2 offset(0.0f, 50.0f);
+    ImageView* imageViewResize = ImageView::create("cocosui/buttonHighlighted.png");
+    imageViewResize->setScale9Enabled(true);
+    imageViewResize->setContentSize(Size(50, 40));
+    imageViewResize->setPosition(Vec2((widgetSize.width / 2.0f) + offset.x,
+                                (widgetSize.height / 2.0f) + offset.y));
+
+    auto resizeDown = cocos2d::ResizeTo::create(2.8f, Size(50, 40));
+    auto resizeUp = cocos2d::ResizeTo::create(2.8f, Size(300, 40));
+
+    auto resizeByDown = cocos2d::ResizeBy::create(1.8f, Size(0, -30));
+    auto resizeByUp = cocos2d::ResizeBy::create(1.8f, Size(0, 30));
+    addChild(imageViewResize);
+    auto rep = RepeatForever::create(Sequence::create(resizeUp, resizeDown, resizeByDown, resizeByUp, nullptr));
+    imageViewResize->runAction(rep);
+
+    // Create another imageview that scale to see the difference
+    ImageView* imageViewScale = ImageView::create("cocosui/buttonHighlighted.png");
+    imageViewScale->setScale9Enabled(true);
+    imageViewScale->setContentSize(Size(50, 40));
+    imageViewScale->setPosition(Vec2(widgetSize.width / 2.0f,
+                                 widgetSize.height / 2.0f));
+
+    auto scaleDownScale = cocos2d::ScaleTo::create(2.8f, 1.0f);
+    auto scaleUpScale = cocos2d::ScaleTo::create(2.8f, 6.0f, 1.0f);
+
+    auto scaleByDownScale = cocos2d::ScaleBy::create(1.8f, 1.0f, 0.25f);
+    auto scaleByUpScale = cocos2d::ScaleBy::create(1.8f, 1.0f, 4.0f);
+    addChild(imageViewScale);
+    auto rep2 = RepeatForever::create(Sequence::create(scaleUpScale, scaleDownScale, scaleByDownScale, scaleByUpScale, nullptr));
+    imageViewScale->runAction(rep2);
+}
+
+std::string ActionResize::subtitle() const 
+{
+    return "ResizeTo / ResizeBy";
+}
+
+//------------------------------------------------------------------
+//
 //    ActionRemoveSelf
 //
 //------------------------------------------------------------------
@@ -2240,7 +2308,7 @@ void ActionFloatTest::onEnter()
 
     auto s = Director::getInstance()->getWinSize();
 
-    // create float action with duration and from to value, using lambda function we can easly animate any property of the Node.
+    // create float action with duration and from to value, using lambda function we can easily animate any property of the Node.
     auto actionFloat = ActionFloat::create(2.f, 0, 3, [this](float value) {
         _tamara->setScale(value);
     });
@@ -2260,9 +2328,136 @@ void ActionFloatTest::onEnter()
     _kathia->runAction(actionFloat2);
 }
 
+void Issue14936_1::onEnter() {
+    ActionsDemo::onEnter();
+    centerSprites(0);
+
+    auto origin = cocos2d::Director::getInstance()->getVisibleOrigin();
+    auto visibleSize = cocos2d::Director::getInstance()->getVisibleSize();
+
+    _count = 0;
+
+    auto counterLabel = Label::createWithTTF("0", "fonts/Marker Felt.ttf", 16.0f);
+    counterLabel->setPosition(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2);
+    addChild(counterLabel);
+
+    auto func = CallFunc::create([this, counterLabel]{
+        _count++;
+        std::ostringstream os;
+        os << _count;
+        counterLabel->setString(os.str());
+    });
+
+    runAction(Spawn::create(func, func, nullptr));
+}
+
+std::string Issue14936_1::subtitle() const {
+    return "Counter should be equal 2";
+}
+
+void Issue14936_2::onEnter() {
+    ActionsDemo::onEnter();
+    centerSprites(0);
+
+    auto origin = cocos2d::Director::getInstance()->getVisibleOrigin();
+    auto visibleSize = cocos2d::Director::getInstance()->getVisibleSize();
+
+    _count = 0;
+    auto counterLabel = Label::createWithTTF("0", "fonts/Marker Felt.ttf", 16.0f);
+    counterLabel->setPosition(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2);
+    addChild(counterLabel);
+
+    auto func = CallFunc::create([this, counterLabel] {
+        _count++;
+        std::ostringstream os;
+        os << _count;
+        counterLabel->setString(os.str());
+    });
+
+    runAction(Sequence::create(TargetedAction::create(this, func), DelayTime::create(0.2f), nullptr));
+}
+
+std::string Issue14936_2::subtitle() const {
+    return "Counter should be equal 1";
+}
+
+std::string Issue14936_2::title() const {
+    return "Issue 14936 - Sequence";
+}
+
+std::string Issue14936_1::title() const {
+    return "Issue 14936 - Action Interval";
+}
+
 std::string ActionFloatTest::subtitle() const
 {
     return "ActionFloat";
 }
 
 
+
+//------------------------------------------------------------------
+//
+// SequenceWithFinalInstant
+//
+//------------------------------------------------------------------
+void SequenceWithFinalInstant::onEnter()
+{
+    ActionsDemo::onEnter();
+
+    _manager = new cocos2d::ActionManager();
+    _manager->autorelease();
+    _manager->retain();
+    
+    _target = cocos2d::Node::create();
+    _target->setActionManager( _manager );
+    _target->retain();
+    _target->onEnter();
+
+    bool called( false );
+    const auto f
+      ( [ &called ]() -> void
+        {
+          cocos2d::log("Callback called.");
+          called = true;
+        } );
+    
+    const auto action =
+      cocos2d::Sequence::create
+      (cocos2d::DelayTime::create(0.05),
+       cocos2d::CallFunc::create(f),
+       nullptr);
+
+    _target->runAction(action);
+    _manager->update(0);
+    _manager->update(0.05 - FLT_EPSILON);
+
+    if ( action->isDone() && !called )
+      cocos2d::log
+        ("Action says it is done but is not."
+         " called=%d, elapsed=%f, duration=%f",
+         (int)called, action->getElapsed(), action->getDuration());
+    else
+      cocos2d::log("First step: everything went fine.");
+    
+    _manager->update(FLT_EPSILON);
+
+    if ( action->isDone() && called )
+      cocos2d::log("Second step: everything went fine.");
+    else
+      cocos2d::log
+        ("Action says it is done but is not."
+         " called=%d, elapsed=%f, duration=%f",
+         (int)called, action->getElapsed(), action->getDuration());
+}
+
+void SequenceWithFinalInstant::onExit()
+{
+  _target->release();
+  _manager->release();
+}
+
+std::string SequenceWithFinalInstant::subtitle() const
+{
+    return "Instant action should be run. See console.";
+}

@@ -161,7 +161,7 @@ namespace cocostudio
         float intensity = options->intensity();
         float range = options->range();
         float outerAngle = options->outerAngle()*0.5f;
-        bool enabled = options->enabled();
+        bool enabled = (options->enabled() != 0);
         switch (type)
         {
         case cocos2d::LightType::DIRECTIONAL:

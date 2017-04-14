@@ -28,7 +28,7 @@ local function initWithLayer(layer, callback)
 
    layer.toggleDebug = function(self) toggleDebugCallback(nil) end
    cc.MenuItemFont:setFontSize(18)
-   local item = cc.MenuItemFont:create("Toogle debug")
+   local item = cc.MenuItemFont:create("Toggle debug")
    item:registerScriptTapHandler(toggleDebugCallback)
    local menu = cc.Menu:create(item)
    layer:addChild(menu)
@@ -626,7 +626,7 @@ local function PhysicsDemoRayCast()
 
        local mode = 0
        cc.MenuItemFont:setFontSize(18)
-       local item = cc.MenuItemFont:create("Toogle debugChange Mode(any)")
+       local item = cc.MenuItemFont:create("Toggle debugChange Mode(any)")
        local function changeModeCallback(sender)
 	         mode = (mode + 1) % 3
 	  
@@ -957,7 +957,7 @@ local function PhysicsDemoPump()
     
     -- pump
     local pump = cc.Node:create()
-    local center = cc.PhysicsShape:getPolyonCenter(vec)
+    local center = cc.PhysicsShape:getPolygonCenter(vec)
     pump:setPosition(center)
     local pumpB = cc.PhysicsBody:createPolygon(vec, 
                                                cc.PHYSICSBODY_MATERIAL_DEFAULT, 
@@ -1034,16 +1034,16 @@ local function PhysicsDemoSlice()
           j = i
         end
     
-        local center = cc.PhysicsShape:getPolyonCenter(points)
+        local center = cc.PhysicsShape:getPolygonCenter(points)
         local node = cc.Node:create()
-        local polyon = cc.PhysicsBody:createPolygon(points, 
-                                                    cc.PHYSICSBODY_MATERIAL_DEFAULT, 
-                                                    cc.p(-center.x, -center.y))
+        local polygon = cc.PhysicsBody:createPolygon(points, 
+                                                     cc.PHYSICSBODY_MATERIAL_DEFAULT, 
+                                                     cc.p(-center.x, -center.y))
         node:setPosition(center)
-        node:setPhysicsBody(polyon)
-        polyon:setVelocity(body:getVelocityAtWorldPoint(center))
-        polyon:setAngularVelocity(body:getAngularVelocity())
-        polyon.tag = sliceTag
+        node:setPhysicsBody(polygon)
+        polygon:setVelocity(body:getVelocityAtWorldPoint(center))
+        polygon:setAngularVelocity(body:getAngularVelocity())
+        polygon.tag = sliceTag
         layer:addChild(node)
       end
 
@@ -1513,7 +1513,7 @@ local function PhysicsDemoBug5482()
 
     -- wall
     local wall = cc.Node:create()
-    wall:setPhysicsBody(cc.PhysicsBody:createEdgeBox(cc.size(VisibleRect:getVisibleRect().width, 
+    wall:addComponent(cc.PhysicsBody:createEdgeBox(cc.size(VisibleRect:getVisibleRect().width, 
                                                              VisibleRect:getVisibleRect().height),
                                                      cc.PhysicsMaterial(0.1, 1.0, 0.0)))
     wall:setPosition(VisibleRect:center());
@@ -1521,33 +1521,39 @@ local function PhysicsDemoBug5482()
 
     local _nodeA = cc.Sprite:create("Images/YellowSquare.png")
     _nodeA:setPosition(cc.p(VisibleRect:center().x-150,100))
-    _nodeA:setPhysicsBody(nil)
     layer:addChild(_nodeA)
 
     local _nodeB = cc.Sprite:create("Images/YellowSquare.png")
     _nodeB:setPosition(cc.p(VisibleRect:center().x+150,100))
-    _nodeB:setPhysicsBody(nil)
     layer:addChild(_nodeB)
 
     local _body = cc.PhysicsBody:createBox(_nodeA:getContentSize())
     _body:setTag(DRAG_BODYS_TAG)
     _body:retain()
 
+    local _button = nil
     local function changeBodyCallback(sender)
     	local node = nil
     	if _bodyInA then
     		node = _nodeB
+        _button:setString("Set Body To A")
     		cclog("_nodeB")
     	else
     		node = _nodeA
+        _button:setString("Set Body To B")
     		cclog("_nodeA")
     	end
-    	node:setPhysicsBody(_body)
+      local owner = _body:getOwner()
+      if owner ~= nil then
+        owner:removeComponent(_body)
+      end
+
+    	node:addComponent(_body)
     	_bodyInA = not _bodyInA
    	end
     
     cc.MenuItemFont:setFontSize(18)
-    local _button = cc.MenuItemFont:create("Set Body To A");
+    _button = cc.MenuItemFont:create("Set Body To A");
     _button:registerScriptTapHandler(changeBodyCallback)
 
     local menu = cc.Menu:create(_button)
@@ -1603,7 +1609,7 @@ local function PhysicsFixedUpdate()
 
   initWithLayer(layer, onEnter)
   Helper.titleLabel:setString("Fixed Update Test")
-  Helper.subtitleLabel:setString("The secend ball should not run across the wall")
+  Helper.subtitleLabel:setString("The second ball should not run across the wall")
   return layer
 end
 
@@ -1732,6 +1738,7 @@ function PhysicsTest()
       PhysicsTransformTest,
       PhysicsIssue9959
    }
+   Helper.index = 1
 
    scene:addChild(Helper.createFunctionTable[1]())
    scene:addChild(CreateBackMenuItem())

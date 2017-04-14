@@ -241,6 +241,7 @@ void PhysicsSprite::setB2Body(b2Body *pBody)
 #if CC_ENABLE_BOX2D_INTEGRATION
     _pB2Body = pBody;
 #else
+    CC_UNUSED_PARAM(pBody);
     CCASSERT(false, "Can't call box2d methods when Box2d is disabled");
 #endif
 }
@@ -260,6 +261,7 @@ void PhysicsSprite::setPTMRatio(float fRatio)
 #if CC_ENABLE_BOX2D_INTEGRATION
      _PTMRatio = fRatio;
 #else
+    CC_UNUSED_PARAM(fRatio);
     CCASSERT(false, "Can't call box2d methods when Box2d is disabled");
 #endif
 }
@@ -363,25 +365,25 @@ void PhysicsSprite::setRotation(float fRotation)
 void PhysicsSprite::syncPhysicsTransform() const
 {
     // Although scale is not used by physics engines, it is calculated just in case
-	// the sprite is animated (scaled up/down) using actions.
-	// For more info see: http://www.cocos2d-iphone.org/forum/topic/68990
+    // the sprite is animated (scaled up/down) using actions.
+    // For more info see: http://www.cocos2d-iphone.org/forum/topic/68990
     
 #if CC_ENABLE_CHIPMUNK_INTEGRATION
     
-	cpVect rot = (_ignoreBodyRotation ? cpvforangle(-CC_DEGREES_TO_RADIANS(_rotationX)) : cpBodyGetRotation(_CPBody));
-	float x = cpBodyGetPosition(_CPBody).x + rot.x * -_anchorPointInPoints.x * _scaleX - rot.y * -_anchorPointInPoints.y * _scaleY;
-	float y = cpBodyGetPosition(_CPBody).y + rot.y * -_anchorPointInPoints.x * _scaleX + rot.x * -_anchorPointInPoints.y * _scaleY;
+    cpVect rot = (_ignoreBodyRotation ? cpvforangle(-CC_DEGREES_TO_RADIANS(_rotationX)) : cpBodyGetRotation(_CPBody));
+    float x = cpBodyGetPosition(_CPBody).x + rot.x * -_anchorPointInPoints.x * _scaleX - rot.y * -_anchorPointInPoints.y * _scaleY;
+    float y = cpBodyGetPosition(_CPBody).y + rot.y * -_anchorPointInPoints.x * _scaleX + rot.x * -_anchorPointInPoints.y * _scaleY;
     
-	if (_ignoreAnchorPointForPosition)
+    if (_ignoreAnchorPointForPosition)
     {
-		x += _anchorPointInPoints.x;
-		y += _anchorPointInPoints.y;
-	}
+        x += _anchorPointInPoints.x;
+        y += _anchorPointInPoints.y;
+    }
     
     float mat[] = {  (float)rot.x * _scaleX, (float)rot.y * _scaleX, 0,  0,
         (float)-rot.y * _scaleY, (float)rot.x * _scaleY,  0,  0,
         0,  0,  1,  0,
-        x,	y,  0,  1};
+        x,    y,  0,  1};
     
     
     _transform.set(mat);
@@ -390,32 +392,32 @@ void PhysicsSprite::syncPhysicsTransform() const
     
     b2Vec2 pos  = _pB2Body->GetPosition();
     
-	float x = pos.x * _PTMRatio;
-	float y = pos.y * _PTMRatio;
+    float x = pos.x * _PTMRatio;
+    float y = pos.y * _PTMRatio;
     
-	if (_ignoreAnchorPointForPosition)
+    if (_ignoreAnchorPointForPosition)
     {
-		x += _anchorPointInPoints.x;
-		y += _anchorPointInPoints.y;
-	}
+        x += _anchorPointInPoints.x;
+        y += _anchorPointInPoints.y;
+    }
     
-	// Make matrix
-	float radians = _pB2Body->GetAngle();
-	float c = cosf(radians);
-	float s = sinf(radians);
+    // Make matrix
+    float radians = _pB2Body->GetAngle();
+    float c = cosf(radians);
+    float s = sinf(radians);
     
-	if (!_anchorPointInPoints.isZero())
+    if (!_anchorPointInPoints.isZero())
     {
-		x += ((c * -_anchorPointInPoints.x * _scaleX) + (-s * -_anchorPointInPoints.y * _scaleY));
-		y += ((s * -_anchorPointInPoints.x * _scaleX) + (c * -_anchorPointInPoints.y * _scaleY));
-	}
+        x += ((c * -_anchorPointInPoints.x * _scaleX) + (-s * -_anchorPointInPoints.y * _scaleY));
+        y += ((s * -_anchorPointInPoints.x * _scaleX) + (c * -_anchorPointInPoints.y * _scaleY));
+    }
     
-	// Rot, Translate Matrix
+    // Rot, Translate Matrix
     
     float mat[] = {  (float)c * _scaleX, (float)s * _scaleX, 0,  0,
         (float)-s * _scaleY, (float)c * _scaleY,  0,  0,
         0,  0,  1,  0,
-        x,	y,  0,  1};
+        x,    y,  0,  1};
     
     _transform.set(mat);
 #endif
@@ -438,7 +440,7 @@ void PhysicsSprite::onExit()
     Node::onExit();
 }
 
-void PhysicsSprite::afterUpdate(EventCustom *event)
+void PhysicsSprite::afterUpdate(EventCustom* /*event*/)
 {
     syncPhysicsTransform();
     

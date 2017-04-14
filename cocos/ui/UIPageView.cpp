@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -28,7 +28,7 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 namespace ui {
-    
+
 IMPLEMENT_CLASS_GUI_INFO(PageView)
 
 PageView::PageView():
@@ -39,7 +39,9 @@ _childFocusCancelOffset(5.0f),
 _pageViewEventListener(nullptr),
 _pageViewEventSelector(nullptr),
 _eventCallback(nullptr),
-_autoScrollStopEpsilon(0.001f)
+_autoScrollStopEpsilon(0.001f),
+_previousPageIndex(-1),
+_isTouchBegin(false)
 {
   this->_sens = 1.0;
 }
@@ -61,7 +63,7 @@ PageView* PageView::create()
     CC_SAFE_DELETE(widget);
     return nullptr;
 }
-    
+
 bool PageView::init()
 {
     if (ListView::init())
@@ -84,8 +86,8 @@ void PageView::doLayout()
     ListView::doLayout();
     if(_indicator != nullptr)
     {
-        ssize_t index = getIndex(getCenterItemInCurrentView());
-        _indicator->indicate(index);
+        _currentPageIndex = getIndex(getCenterItemInCurrentView());
+        _indicator->indicate(_currentPageIndex);
     }
     _innerContainerDoLayoutDirty = false;
 }
@@ -109,7 +111,7 @@ void PageView::setDirection(PageView::Direction direction)
     }
 }
 
-void PageView::addWidgetToPage(Widget *widget, ssize_t pageIdx, bool forceCreate)
+void PageView::addWidgetToPage(Widget *widget, ssize_t pageIdx, bool /*forceCreate*/)
 {
     insertCustomItem(widget, pageIdx);
 }
@@ -133,7 +135,7 @@ void PageView::removePageAtIndex(ssize_t index)
 {
     removeItem(index);
 }
-    
+
 void PageView::removeAllPages()
 {
     removeAllItems();
@@ -142,6 +144,15 @@ void PageView::removeAllPages()
 void PageView::setCurPageIndex( ssize_t index )
 {
     setCurrentPageIndex(index);
+}
+
+ssize_t PageView::getCurrentPageIndex()
+{
+    //The _currentPageIndex is lazy calculated
+    if (_innerContainerDoLayoutDirty) {
+        _currentPageIndex = getIndex(getCenterItemInCurrentView());
+    }
+    return _currentPageIndex;
 }
 
 void PageView::setCurrentPageIndex(ssize_t index)
@@ -153,13 +164,29 @@ void PageView::scrollToPage(ssize_t idx)
 {
     scrollToItem(idx);
 }
+    
+void PageView::scrollToPage(ssize_t idx, float time)
+{
+    scrollToItem(idx, time);
+}
 
 void PageView::scrollToItem(ssize_t itemIndex)
 {
+    if (_innerContainerDoLayoutDirty) {
+        this->forceDoLayout();
+    }
     ListView::scrollToItem(itemIndex, Vec2::ANCHOR_MIDDLE, Vec2::ANCHOR_MIDDLE);
 }
 
-void PageView::setCustomScrollThreshold(float threshold)
+void PageView::scrollToItem(ssize_t itemIndex, float time)
+{
+    if (_innerContainerDoLayoutDirty) {
+        this->forceDoLayout();
+    }
+    ListView::scrollToItem(itemIndex, Vec2::ANCHOR_MIDDLE, Vec2::ANCHOR_MIDDLE, time >= 0 ? time : _scrollTime);
+}
+
+void PageView::setCustomScrollThreshold(float /*threshold*/)
 {
     CCLOG("PageView::setCustomScrollThreshold() has no effect!");
 }
@@ -168,12 +195,12 @@ float PageView::getCustomScrollThreshold()const
 {
     return 0;
 }
-    
-void PageView::setUsingCustomScrollThreshold(bool flag)
+
+void PageView::setUsingCustomScrollThreshold(bool /*flag*/)
 {
     CCLOG("PageView::setUsingCustomScrollThreshold() has no effect!");
 }
-    
+
 bool PageView::isUsingCustomScrollThreshold()const
 {
     return false;
@@ -220,6 +247,16 @@ void PageView::refreshIndicatorPosition()
     }
 }
 
+void PageView::handlePressLogic(Touch *touch)
+{
+    ListView::handlePressLogic(touch);
+    if (!_isTouchBegin) {
+        _currentPageIndex = getIndex(getCenterItemInCurrentView());
+        _previousPageIndex = _currentPageIndex;
+        _isTouchBegin = true;
+    }
+}
+
 void PageView::handleReleaseLogic(Touch *touch)
 {
     // Use `ScrollView` method in order to avoid `startMagneticScroll()` by `ListView`.
@@ -229,7 +266,6 @@ void PageView::handleReleaseLogic(Touch *touch)
     {
         return;
     }
-
     Vec2 touchMoveVelocity = flattenVectorByDirection(calculateTouchMoveVelocity());
 
     static const float INERTIA_THRESHOLD = 500;
@@ -267,10 +303,23 @@ void PageView::handleReleaseLogic(Touch *touch)
         }
     }
 }
-    
+
 float PageView::getAutoScrollStopEpsilon() const
 {
     return _autoScrollStopEpsilon;
+}
+
+void PageView::addEventListenerPageView(Ref *target, SEL_PageViewEvent selector)
+{
+    _pageViewEventListener = target;
+    _pageViewEventSelector = selector;
+
+    ccScrollViewCallback scrollViewCallback = [=](Ref* /*ref*/, ScrollView::EventType type) -> void{
+        if (type == ScrollView::EventType::AUTOSCROLL_ENDED && _previousPageIndex != _currentPageIndex) {
+            pageTurningEvent();
+        }
+    };
+    this->addEventListener(scrollViewCallback);
 }
 
 void PageView::pageTurningEvent()
@@ -288,21 +337,16 @@ void PageView::pageTurningEvent()
     {
         _ccEventCallback(this, static_cast<int>(EventType::TURNING));
     }
+    _isTouchBegin = false;
     this->release();
 }
 
-void PageView::addEventListenerPageView(Ref *target, SEL_PageViewEvent selector)
-{
-    _pageViewEventListener = target;
-    _pageViewEventSelector = selector;
-}
-    
 void PageView::addEventListener(const ccPageViewCallback& callback)
 {
     _eventCallback = callback;
-    ccScrollViewCallback scrollViewCallback = [=](Ref* ref, ScrollView::EventType type) -> void{
-        if (type == ScrollView::EventType::AUTOSCROLL_ENDED) {
-            callback(ref, PageView::EventType::TURNING);
+    ccScrollViewCallback scrollViewCallback = [=](Ref* /*ref*/, ScrollView::EventType type) -> void{
+        if (type == ScrollView::EventType::AUTOSCROLL_ENDED && _previousPageIndex != _currentPageIndex) {
+            pageTurningEvent();
         }
     };
     this->addEventListener(scrollViewCallback);
@@ -365,6 +409,12 @@ void PageView::copySpecialProperties(Widget *widget)
         _ccEventCallback = pageView->_ccEventCallback;
         _pageViewEventListener = pageView->_pageViewEventListener;
         _pageViewEventSelector = pageView->_pageViewEventSelector;
+        _currentPageIndex = pageView->_currentPageIndex;
+        _previousPageIndex = pageView->_previousPageIndex;
+        _childFocusCancelOffset = pageView->_childFocusCancelOffset;
+        _autoScrollStopEpsilon = pageView->_autoScrollStopEpsilon;
+        _indicatorPositionAsAnchorPoint = pageView->_indicatorPositionAsAnchorPoint;
+        _isTouchBegin = pageView->_isTouchBegin;
     }
 }
 
@@ -443,6 +493,44 @@ const Color3B& PageView::getIndicatorSelectedIndexColor() const
 {
     CCASSERT(_indicator != nullptr, "");
     return _indicator->getSelectedIndexColor();
+}
+
+void PageView::setIndicatorIndexNodesColor(const Color3B& color)
+{
+    if(_indicator != nullptr)
+    {
+        _indicator->setIndexNodesColor(color);
+    }
+}
+
+const Color3B& PageView::getIndicatorIndexNodesColor() const
+{
+    CCASSERT(_indicator != nullptr, "");
+    return _indicator->getIndexNodesColor();
+}
+
+void PageView::setIndicatorIndexNodesScale(float indexNodesScale)
+{
+    if(_indicator != nullptr)
+    {
+        _indicator->setIndexNodesScale(indexNodesScale);
+        _indicator->indicate(_currentPageIndex);
+    }
+}
+
+float PageView::getIndicatorIndexNodesScale() const
+{
+    CCASSERT(_indicator != nullptr, "");
+    return _indicator->getIndexNodesScale();
+}
+
+void PageView::setIndicatorIndexNodesTexture(const std::string& texName,Widget::TextureResType texType)
+{
+    if(_indicator != nullptr)
+    {
+        _indicator->setIndexNodesTexture(texName, texType);
+        _indicator->indicate(_currentPageIndex);
+    }
 }
 
 void PageView::remedyLayoutParameter(Widget *item)

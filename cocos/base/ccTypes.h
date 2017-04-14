@@ -2,7 +2,7 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2015 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -311,9 +311,9 @@ struct CC_DLL V3F_T2F
  */
 struct CC_DLL V2F_C4B_T2F_Triangle
 {
-	V2F_C4B_T2F a;
-	V2F_C4B_T2F b;
-	V2F_C4B_T2F c;
+    V2F_C4B_T2F a;
+    V2F_C4B_T2F b;
+    V2F_C4B_T2F c;
 };
 
 /** @struct V2F_C4B_T2F_Quad
@@ -411,7 +411,7 @@ struct CC_DLL BlendFunc
     }
 };
 
-/** @struct TextVAlignment
+/** @enum TextVAlignment
  * Vertical text alignment type.
  *
  * @note If any of these enums are edited and/or reordered, update Texture2D.m.
@@ -423,7 +423,7 @@ enum class CC_DLL TextVAlignment
     BOTTOM
 };
 
-/** @struct TextHAlignment
+/** @enum TextHAlignment
  * Horizontal text alignment type.
  *
  * @note If any of these enums are edited and/or reordered, update Texture2D.m.
@@ -496,11 +496,11 @@ public:
     /// true if shadow enabled
     bool   _shadowEnabled;
     /// shadow x and y offset
-	Size   _shadowOffset;
-    /// shadow blurrines
-	float  _shadowBlur;
+    Size   _shadowOffset;
+    /// shadow blurriness
+    float  _shadowBlur;
     /// shadow opacity
-	float  _shadowOpacity;
+    float  _shadowOpacity;
 };
 
 /** @struct FontStroke
@@ -512,7 +512,7 @@ public:
 
     // stroke is disabled by default
     FontStroke()
-	    : _strokeEnabled(false)
+        : _strokeEnabled(false)
         , _strokeColor(Color3B::BLACK)
         , _strokeAlpha(255)
         , _strokeSize(0)
@@ -521,7 +521,7 @@ public:
     /// true if stroke enabled
     bool      _strokeEnabled;
     /// stroke color
-	Color3B   _strokeColor;
+    Color3B   _strokeColor;
     /// stroke alpha
     GLubyte   _strokeAlpha;
     /// stroke size
@@ -543,9 +543,11 @@ public:
         : _fontSize(0)
         , _alignment(TextHAlignment::CENTER)
         , _vertAlignment(TextVAlignment::TOP)
-    	, _dimensions(Size::ZERO)
+        , _dimensions(Size::ZERO)
         , _fontFillColor(Color3B::WHITE)
         , _fontAlpha(255)
+        , _enableWrap(true)
+        , _overflow(0)
     {}
 
     /// font name
@@ -566,7 +568,13 @@ public:
     FontShadow            _shadow;
     /// font stroke
     FontStroke            _stroke;
-
+    /// enable text wrap
+    bool                  _enableWrap;
+    /** There are 4 overflows: none, clamp, shrink and resize_height.
+     *  The corresponding integer values are 0, 1, 2, 3 respectively
+     * For more information, please refer to Label::Overflow enum class.
+     */
+    int                  _overflow;
 };
 
 /**

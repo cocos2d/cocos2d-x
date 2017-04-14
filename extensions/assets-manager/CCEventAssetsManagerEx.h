@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2014-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -56,21 +56,21 @@ public:
         ERROR_DECOMPRESS
     };
     
-    inline EventCode getEventCode() const { return _code; };
+    EventCode getEventCode() const { return _code; }
     
-    inline int getCURLECode() const { return _curle_code; };
+    int getCURLECode() const { return _curle_code; }
     
-    inline int getCURLMCode() const { return _curlm_code; };
+    int getCURLMCode() const { return _curlm_code; }
     
-    inline std::string getMessage() const { return _message; };
+    std::string getMessage() const { return _message; }
     
-    inline std::string getAssetId() const { return _assetId; };
+    std::string getAssetId() const { return _assetId; }
     
-    inline cocos2d::extension::AssetsManagerEx *getAssetsManagerEx() const { return _manager; };
+    cocos2d::extension::AssetsManagerEx *getAssetsManagerEx() const { return _manager; }
     
-    inline float getPercent() const { return _percent; };
+    float getPercent() const { return _percent; }
     
-    inline float getPercentByFile() const { return _percentByFile; };
+    float getPercentByFile() const { return _percentByFile; }
     
 CC_CONSTRUCTOR_ACCESS:
     /** Constructor */

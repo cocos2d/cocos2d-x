@@ -142,7 +142,7 @@ void _spEventQueue_drain (_spEventQueue* self) {
 	if (self->drainDisabled) return;
 	self->drainDisabled = 1;
 	for (i = 0; i < self->objectsCount; i += 2) {
-		spEventType type = (spEventType)self->objects[i].type;
+		spEventType type = self->objects[i].type;
 		spTrackEntry* entry = self->objects[i+1].entry;
 		spEvent* event;
 		switch (type) {
@@ -534,13 +534,12 @@ void _spAnimationState_queueEvents (spAnimationState* self, spTrackEntry* entry,
 
 void spAnimationState_clearTracks (spAnimationState* self) {
 	_spAnimationState* internal = SUB_CAST(_spAnimationState, self);
-	int i, n, oldDrainDisabled;
-	oldDrainDisabled = internal->queue->drainDisabled;
+	int i, n;
 	internal->queue->drainDisabled = 1;
 	for (i = 0, n = self->tracksCount; i < n; i++)
 		spAnimationState_clearTrack(self, i);
 	self->tracksCount = 0;
-	internal->queue->drainDisabled = oldDrainDisabled;
+	internal->queue->drainDisabled = 0;
 	_spEventQueue_drain(internal->queue);
 }
 
@@ -675,16 +674,15 @@ spTrackEntry* spAnimationState_addEmptyAnimation(spAnimationState* self, int tra
 }
 
 void spAnimationState_setEmptyAnimations(spAnimationState* self, float mixDuration) {
-	int i, n, oldDrainDisabled;
+	int i, n;
 	spTrackEntry* current;
 	_spAnimationState* internal = SUB_CAST(_spAnimationState, self);
-	oldDrainDisabled = internal->queue->drainDisabled;
 	internal->queue->drainDisabled = 1;
 	for (i = 0, n = self->tracksCount; i < n; i++) {
 		current = self->tracks[i];
 		if (current) spAnimationState_setEmptyAnimation(self, current->trackIndex, mixDuration);
 	}
-	internal->queue->drainDisabled = oldDrainDisabled;
+	internal->queue->drainDisabled = 0;
 	_spEventQueue_drain(internal->queue);
 }
 

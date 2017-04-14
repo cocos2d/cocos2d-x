@@ -184,9 +184,9 @@ function Sprite3DWithSkinTest.addNewSpriteWithCoords(parent,x,y)
         end
         animate:setTag(110)
         animate:setQuality(Sprite3DWithSkinTest._animateQuality)
-        local repeate = cc.RepeatForever:create(animate)
-        repeate:setTag(110)
-        sprite:runAction(repeate)
+        local repeatAction = cc.RepeatForever:create(animate)
+        repeatAction:setTag(110)
+        sprite:runAction(repeatAction)
     end
 end
 
@@ -830,7 +830,7 @@ function Sprite3DWithOBBPerfromanceTest:unproject( viewProjection, viewport, src
     screen.y = screen.y * 2.0 - 1.0
     screen.z = screen.z * 2.0 - 1.0
     local inversed = cc.mat4.new(viewProjection:getInversed())
-    screen = inversed:transformVector(screen, screen)
+    screen = inversed:transformVector(screen)
     if screen.w ~= 0.0 then
         screen.x = screen.x / screen.w
         screen.y = screen.y / screen.w
@@ -905,7 +905,7 @@ end
 function Sprite3DWithOBBPerfromanceTest.create()
     local layer = Sprite3DWithOBBPerfromanceTest.new()
     Helper.initWithLayer(layer)
-    Helper.titleLabel:setString("OBB Collison Perfromance Test")
+    Helper.titleLabel:setString("OBB Collision Perfromance Test")
     return layer
 end
 
@@ -1179,7 +1179,6 @@ function Sprite3DCubeMapTest:addNewSpriteWithCoords(pos)
 
     self._skyBox:setTexture(self._textureCube)
     self:addChild(self._skyBox)
-    self._skyBox:setScale(700)
 
     self:addChild(camera)
     self:setCameraMask(2)
@@ -1295,6 +1294,63 @@ end
 function Sprite3DNormalMappingTest:onExit()
 end
 
+----------------------------------------
+----Sprite3DMaterialTest
+----------------------------------------
+local Sprite3DMaterialTest = class("Sprite3DMaterialTest", function ()
+    local layer = cc.Layer:create()
+    Helper.initWithLayer(layer)
+    return layer
+end)
+
+function Sprite3DMaterialTest:ctor()
+    -- body
+    self:init()
+end
+
+function Sprite3DMaterialTest:init()
+    Helper.titleLabel:setString(self:title())
+    Helper.subtitleLabel:setString(self:subtitle())
+
+    self:registerScriptHandler(function (event)
+        if event == "enter" then
+            self:onEnter()
+        elseif event == "exit" then
+            self:onExit()
+        end
+    end)
+end
+
+function Sprite3DMaterialTest:title()
+    return "Testing Sprite3DMaterial"
+end
+
+function Sprite3DMaterialTest:subtitle()
+    return ""
+end
+
+function Sprite3DMaterialTest:onEnter()
+
+    local material = cc.Sprite3DMaterial:createWithFilename("Sprite3DTest/outline.material")
+    local sprite = cc.Sprite3D:create("Sprite3DTest/sphere_bumped.c3b")
+        :setScale(20.0)
+        :setPosition(cc.p(0,0))
+        :setRotation3D(cc.vec3(90.0, 0.0, 0.0))
+        :setCameraMask(2)
+        :setMaterial(material)
+    self:addChild(sprite)
+
+
+    local camera = cc.Camera:create()
+        :setPosition3D(cc.vec3(0.0, 0.0, 100.0))
+        :lookAt(cc.vec3(0.0, 0.0, 0.0))
+        :setCameraFlag(cc.CameraFlag.USER1)
+    self:addChild(camera)
+end
+
+function Sprite3DMaterialTest:onExit()
+end
+
 function Sprite3DTest()
     local scene = cc.Scene:create()
 
@@ -1311,7 +1367,9 @@ function Sprite3DTest()
         AsyncLoadSprite3DTest.create,
         Sprite3DCubeMapTest.create,
         Sprite3DNormalMappingTest.create,
+        Sprite3DMaterialTest.create,
     }
+    Helper.index = 1
 
     scene:addChild(Sprite3DBasicTest.create())
     scene:addChild(CreateBackMenuItem())

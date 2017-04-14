@@ -29,6 +29,7 @@ EventDispatcherTests::EventDispatcherTests()
     ADD_TEST_CASE(Issue4160);
     ADD_TEST_CASE(DanglingNodePointersTest);
     ADD_TEST_CASE(RegisterAndUnregisterWhileEventHanldingTest);
+    ADD_TEST_CASE(WindowEventsTest);
     ADD_TEST_CASE(Issue8194);
     ADD_TEST_CASE(Issue9898)
 }
@@ -191,12 +192,13 @@ public:
             return false;
         };
         
-        listener->onTouchEnded = [=](Touch* touch, Event* event){
+        listener->onTouchEnded = [this](Touch* touch, Event* event){
             this->setColor(Color3B::WHITE);
             
             if (_removeListenerOnTouchEnded)
             {
-                _eventDispatcher->removeEventListener(listener);
+                _eventDispatcher->removeEventListener(_listener);
+                _listener = nullptr;
             }
         };
         
@@ -214,7 +216,10 @@ public:
     
     void onExit() override
     {
-        _eventDispatcher->removeEventListener(_listener);
+        if (_listener != nullptr)
+        {
+            _eventDispatcher->removeEventListener(_listener);
+        }
         
         Sprite::onExit();
     }
@@ -952,9 +957,8 @@ StopPropagationTest::StopPropagationTest()
     };
     
     auto keyboardEventListener = EventListenerKeyboard::create();
-    keyboardEventListener->onKeyPressed = [](EventKeyboard::KeyCode key, Event* event){
+    keyboardEventListener->onKeyPressed = [](EventKeyboard::KeyCode /*key*/, Event* event){
         auto target = static_cast<Sprite*>(event->getCurrentTarget());
-        CC_UNUSED_PARAM(target);
         CCASSERT(target->getTag() == TAG_BLUE_SPRITE || target->getTag() == TAG_BLUE_SPRITE2, "Yellow blocks shouldn't response event.");
         // Stop propagation, so yellow blocks will not be able to receive event.
         event->stopPropagation();
@@ -1108,7 +1112,7 @@ Issue4129::Issue4129()
         
         auto label = Label::createWithSystemFont("Yeah, this issue was fixed.", "", 20);
         label->setAnchorPoint(Vec2(0, 0.5f));
-        label->setPosition(Vec2(VisibleRect::left()));
+        label->setPosition(Vec2(VisibleRect::left() + Vec2(0, 30)));
         this->addChild(label);
         
         // After test, remove it.
@@ -1370,6 +1374,39 @@ std::string RegisterAndUnregisterWhileEventHanldingTest::subtitle() const
 {
     return  "Tap the square multiple times - should not crash!";
 }
+
+//
+WindowEventsTest::WindowEventsTest()
+{
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+    auto dispatcher = Director::getInstance()->getEventDispatcher();
+    dispatcher->addCustomEventListener(GLViewImpl::EVENT_WINDOW_RESIZED, [](EventCustom* event) {
+        // TODO: need to create resizeable window
+        log("<<< WINDOW RESIZED! >>> ");
+    });
+    dispatcher->addCustomEventListener(GLViewImpl::EVENT_WINDOW_FOCUSED, [](EventCustom* event) {
+        log("<<< WINDOW FOCUSED! >>> ");
+    });
+    dispatcher->addCustomEventListener(GLViewImpl::EVENT_WINDOW_UNFOCUSED, [](EventCustom* event) {
+        log("<<< WINDOW BLURRED! >>> ");
+    });
+#endif
+}
+
+std::string WindowEventsTest::title() const
+{
+    return "WindowEventsTest";
+}
+
+std::string WindowEventsTest::subtitle() const
+{
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+    return  "Resize and Switch to another window and back. Read Logs.";
+#else
+    return  "Unsupported platform.";
+#endif
+}
+
 
 // https://github.com/cocos2d/cocos2d-x/issues/8194
 Issue8194::Issue8194()

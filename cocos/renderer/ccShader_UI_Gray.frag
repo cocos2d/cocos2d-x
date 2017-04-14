@@ -1,17 +1,17 @@
-const char* ccPositionTexture_GrayScale_frag = STRINGIFY(
+const char* ccPositionTexture_GrayScale_frag = R"(
 
-\n#ifdef GL_ES\n
-\nprecision mediump float;\n
-\n#endif\n
-\n\n
-\nvarying vec4 v_fragmentColor;\n
-\nvarying vec2 v_texCoord;\n
-\n\n
-\nvoid main(void)\n
-\n{\n
-	\nvec4 c = texture2D(CC_Texture0, v_texCoord);\n
-    \n c = v_fragmentColor * c; \n
-	\ngl_FragColor.xyz = vec3(0.2126*c.r + 0.7152*c.g + 0.0722*c.b);\n
-	\ngl_FragColor.w = c.w;\n
-\n}\n
-);
+#ifdef GL_ES
+precision mediump float;
+#endif
+
+varying vec4 v_fragmentColor;
+varying vec2 v_texCoord;
+
+void main(void)
+{
+    vec4 c = texture2D(CC_Texture0, v_texCoord);
+     c = v_fragmentColor * c;
+    gl_FragColor.xyz = vec3(0.2126*c.r + 0.7152*c.g + 0.0722*c.b);
+    gl_FragColor.w = c.w;
+}
+)";

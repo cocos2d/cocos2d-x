@@ -5,6 +5,12 @@
 -- @parent_module cc
 
 --------------------------------
+-- Restore the FBO, RenderTargets and viewport.
+-- @function [parent=#Camera] restore 
+-- @param self
+-- @return Camera#Camera self (return value: cc.Camera)
+        
+--------------------------------
 -- get depth, camera with larger depth is drawn on top of camera with smaller depth, the depth of camera with CameraFlag::DEFAULT is 0, user defined camera is -1 by default
 -- @function [parent=#Camera] getDepth 
 -- @param self
@@ -71,6 +77,12 @@
 -- @param self
 -- @param #mat4_table transform
 -- @return float#float ret (return value: float)
+        
+--------------------------------
+-- 
+-- @function [parent=#Camera] restoreViewport 
+-- @param self
+-- @return Camera#Camera self (return value: cc.Camera)
         
 --------------------------------
 -- Before rendering scene with this camera, the background need to be cleared. It clears the depth buffer with max depth by default. Use setBackgroundBrush to modify the default behavior
@@ -154,6 +166,12 @@
 -- @param self
 -- @param #vec3_table src
 -- @return vec2_table#vec2_table ret (return value: vec2_table)
+        
+--------------------------------
+-- 
+-- @function [parent=#Camera] restoreFrameBufferObject 
+-- @param self
+-- @return Camera#Camera self (return value: cc.Camera)
         
 --------------------------------
 -- Gets the camera's view matrix.<br>

@@ -94,7 +94,7 @@ local function OpenGLTestMainLayer()
         elseif 11 == curCase then
             return "gl.clear(gl.COLOR_BUFFER_BIT)"
         elseif 12 == curCase then
-            return "GLNode + WebGL API"
+            return "GLNode + OpenGL ES API"
         elseif 13 == curCase then
             return "GLNode + cocos2d API"
         elseif 14 == curCase then
@@ -727,21 +727,22 @@ local function OpenGLTestMainLayer()
         InitTitle(nodeCCAPILayer)
         local glNode = gl.glNodeCreate()
         nodeCCAPILayer:addChild(glNode,10)
-        local shader = cc.ShaderCache:getInstance():getProgram("ShaderPositionColor")
+        local shader = cc.GLProgramCache:getInstance():getGLProgram("ShaderPositionColor")
         local triangleVertexPositionBuffer = {}
         local triangleVertexColorBuffer = {}
         local squareVertexPositionBuffer = {}
         local squareVertexColorBuffer    = {}
 
+
         local function initBuffers()
             triangleVertexPositionBuffer.buffer_id = gl.createBuffer()
-            gl.bindBuffer(gl.ARRAY_BUFFER, triangleVertexPositionBuffer.buffer_id)  
+            gl.bindBuffer(gl.ARRAY_BUFFER, triangleVertexPositionBuffer.buffer_id)
             local vertices = {
              size.width / 2,   size.height,
              0,                 0,
              size.width,     0
             }
-            gl.bufferData(gl.ARRAY_BUFFER, table.getn(vertices), vertices, gl.STATIC_DRAW)
+            gl.bufferData(gl.ARRAY_BUFFER, 6, vertices, gl.STATIC_DRAW)
 
             triangleVertexColorBuffer.buffer_id = gl.createBuffer()
             gl.bindBuffer(gl.ARRAY_BUFFER, triangleVertexColorBuffer.buffer_id) 
@@ -750,7 +751,7 @@ local function OpenGLTestMainLayer()
             1.0, 0.0, 0.0, 1.0,
             1.0, 0.0, 0.0, 1.0
             }
-            gl.bufferData(gl.ARRAY_BUFFER, table.getn(colors),colors, gl.STATIC_DRAW)
+            gl.bufferData(gl.ARRAY_BUFFER, 12,colors, gl.STATIC_DRAW)
 
             --Square
             squareVertexPositionBuffer.buffer_id = gl.createBuffer()
@@ -761,7 +762,7 @@ local function OpenGLTestMainLayer()
                 size.width,  0,
                 0,           0
             }
-            gl.bufferData(gl.ARRAY_BUFFER, table.getn(vertices), vertices, gl.STATIC_DRAW)
+            gl.bufferData(gl.ARRAY_BUFFER, 8, vertices, gl.STATIC_DRAW)
             
             squareVertexColorBuffer.buffer_id = gl.createBuffer()
             gl.bindBuffer(gl.ARRAY_BUFFER, squareVertexColorBuffer.buffer_id)
@@ -771,14 +772,24 @@ local function OpenGLTestMainLayer()
             0.0, 0.0, 1.0, 1.0,
             0.0, 0.0, 1.0, 1.0
             };
-            gl.bufferData(gl.ARRAY_BUFFER, table.getn(colors), colors, gl.STATIC_DRAW)
+            gl.bufferData(gl.ARRAY_BUFFER, 16, colors, gl.STATIC_DRAW)
             gl.bindBuffer(gl.ARRAY_BUFFER, 0)
+        end
+
+        local function BitOR(a,b)--Bitwise or
+            local p,c=1,0
+            while a+b>0 do
+                local ra,rb=a%2,b%2
+                if ra+rb>0 then c=c+p end
+                a,b,p=(a-ra)/2,(b-rb)/2,p*2
+            end
+            return c
         end
 
         local function GLNodeCCAPIDraw(transform, transformUpdated)
             shader:use()
             shader:setUniformsForBuiltins(transform)
-            gl.glEnableVertexAttribs(cc.VERTEX_ATTRIB_FLAG_COLOR or cc.VERTEX_ATTRIB_FLAG_POSITION)
+            gl.glEnableVertexAttribs(BitOR(cc.VERTEX_ATTRIB_FLAG_COLOR , cc.VERTEX_ATTRIB_FLAG_POSITION))
 
             --
             gl.bindBuffer(gl.ARRAY_BUFFER, squareVertexPositionBuffer.buffer_id)
@@ -845,6 +856,10 @@ local function OpenGLTestMainLayer()
 
             local loc = gl.getUniformLocation( program, "CC_MVPMatrix")
 
+            -- Save the old MVP matrix
+            local oldUniformTable = gl.getUniform( program, loc )
+
+            -- Set the new MVP matrix
             gl.uniformMatrix4fv(loc, false, table.getn(pMatrix), pMatrix)
 
             local uniformTable = gl.getUniform( program, loc )
@@ -855,6 +870,9 @@ local function OpenGLTestMainLayer()
                 strFmt = strFmt..strTmp
             end
             print(strFmt)
+
+            -- Revert to the old MVP matrix
+            gl.uniformMatrix4fv(loc, false, table.getn(oldUniformTable), oldUniformTable)
         end
 
         runTest()

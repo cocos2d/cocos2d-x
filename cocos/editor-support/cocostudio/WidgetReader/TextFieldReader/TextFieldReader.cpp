@@ -10,7 +10,6 @@
 
 #include "tinyxml2.h"
 #include "flatbuffers/flatbuffers.h"
-#include "platform/CCFileUtils.h"
 
 USING_NS_CC;
 using namespace ui;
@@ -274,6 +273,7 @@ namespace cocostudio
                                               builder->CreateString(fontName),
                                               fontSize,
                                               builder->CreateString(text),
+                                              isLocalized,
                                               builder->CreateString(placeHolder),
                                               passwordEnabled,
                                               builder->CreateString(passwordStyleText),
@@ -281,8 +281,7 @@ namespace cocostudio
                                               maxLength,
                                               areaWidth,
                                               areaHeight,
-                                              isCustomSize,
-                                              isLocalized);
+                                              isCustomSize);
         
         return *(Offset<Table>*)(&options);
     }

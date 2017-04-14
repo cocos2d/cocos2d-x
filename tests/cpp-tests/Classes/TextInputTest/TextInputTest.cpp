@@ -9,6 +9,7 @@ TextInputTests::TextInputTests()
 {
     ADD_TEST_CASE(TextFieldTTFDefaultTest);
     ADD_TEST_CASE(TextFieldTTFActionTest);
+    ADD_TEST_CASE(TextFieldTTFSecureTextEntryTest);
 }
 
 static Rect getRect(Node * node)
@@ -153,12 +154,12 @@ void TextFieldTTFDefaultTest::onEnter()
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)    
     // on android, TextFieldTTF cannot auto adjust its position when soft-keyboard pop up
-    // so we had to set a higher position to make it visable
+    // so we had to set a higher position to make it visible
     pTextField->setPosition(Vec2(s.width / 2, s.height/2 + 50));
 #else
     pTextField->setPosition(Vec2(s.width / 2, s.height / 2));
 #endif
-
+    
     _trackNode = pTextField;
 }
 
@@ -339,4 +340,38 @@ bool TextFieldTTFActionTest::onDraw(TextFieldTTF * sender)
 void TextFieldTTFActionTest::callbackRemoveNodeWhenDidAction(Node * node)
 {
     this->removeChild(node, true);
+}
+
+
+//////////////////////////////////////////////////////////////////////////
+// implement TextFieldTTFSecureTextEntryTest
+//////////////////////////////////////////////////////////////////////////
+
+std::string TextFieldTTFSecureTextEntryTest::subtitle() const
+{
+    return "TextFieldTTF with SecureTextEntry test";
+}
+
+void TextFieldTTFSecureTextEntryTest::onEnter()
+{
+    KeyboardNotificationLayer::onEnter();
+    
+    // add TextFieldTTF
+    auto s = Director::getInstance()->getWinSize();
+    
+    auto pTextField = TextFieldTTF::textFieldWithPlaceHolder("<click here for input>",
+                                                             FONT_NAME,
+                                                             FONT_SIZE);
+    addChild(pTextField);
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    // on android, TextFieldTTF cannot auto adjust its position when soft-keyboard pop up
+    // so we had to set a higher position to make it visible
+    pTextField->setPosition(Vec2(s.width / 2, s.height/2 + 50));
+#else
+    pTextField->setPosition(Vec2(s.width / 2, s.height / 2));
+#endif
+    pTextField->setSecureTextEntry(true);
+    
+    _trackNode = pTextField;
 }

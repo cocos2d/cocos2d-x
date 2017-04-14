@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -71,13 +71,13 @@ void UICCTextField::onEnter()
 }
 
 
-bool UICCTextField::onTextFieldAttachWithIME(TextFieldTTF *pSender)
+bool UICCTextField::onTextFieldAttachWithIME(TextFieldTTF* /*pSender*/)
 {
     setAttachWithIME(true);
     return false;
 }
 
-bool UICCTextField::onTextFieldInsertText(TextFieldTTF *pSender, const char *text, size_t nLen)
+bool UICCTextField::onTextFieldInsertText(TextFieldTTF* /*pSender*/, const char *text, size_t nLen)
 {
     if (nLen == 1 && strcmp(text, "\n") == 0)
     {
@@ -95,13 +95,13 @@ bool UICCTextField::onTextFieldInsertText(TextFieldTTF *pSender, const char *tex
     return false;
 }
 
-bool UICCTextField::onTextFieldDeleteBackward(TextFieldTTF *pSender, const char *delText, size_t nLen)
+bool UICCTextField::onTextFieldDeleteBackward(TextFieldTTF* /*pSender*/, const char* /*delText*/, size_t /*nLen*/)
 {
     setDeleteBackward(true);
     return false;
 }
 
-bool UICCTextField::onTextFieldDetachWithIME(TextFieldTTF *pSender)
+bool UICCTextField::onTextFieldDetachWithIME(TextFieldTTF* /*pSender*/)
 {
     setDetachWithIME(true);
     return false;
@@ -370,7 +370,7 @@ void TextField::setTouchAreaEnabled(bool enable)
     _useTouchArea = enable;
 }
     
-bool TextField::hitTest(const Vec2 &pt, const Camera* camera, Vec3 *p) const
+bool TextField::hitTest(const Vec2 &pt, const Camera* camera, Vec3* /*p*/) const
 {
     if (false == _useTouchArea)
     {
@@ -582,7 +582,7 @@ const char* TextField::getPasswordStyleText()const
     return _textFieldRenderer->getPasswordTextStyle().c_str();
 }
 
-void TextField::update(float dt)
+void TextField::update(float /*dt*/)
 {
     if (getDetachWithIME())
     {
@@ -727,10 +727,10 @@ void TextField::deleteBackwardEvent()
     this->release();
 }
 
-void TextField::addEventListenerTextField(Ref *target, SEL_TextFieldEvent selecor)
+void TextField::addEventListenerTextField(Ref *target, SEL_TextFieldEvent selector)
 {
     _textFieldEventListener = target;
-    _textFieldEventSelector = selecor;
+    _textFieldEventSelector = selector;
 }
     
 void TextField::addEventListener(const ccTextFieldCallback& callback)

@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2015-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -157,6 +157,7 @@ public:
     //call glclear to clear frame buffer object
     void clearFBO();
     void applyFBO();
+    void restoreFBO();
     void setClearColor(const Color4F& color) { _clearColor = color;}
     void setClearDepth(float depth) { _clearDepth = depth; }
     void setClearStencil(int8_t stencil) { _clearStencil = stencil; }
@@ -180,6 +181,7 @@ CC_CONSTRUCTOR_ACCESS:
 private:
     //openGL content for FrameBuffer
     GLuint _fbo;
+    GLuint _previousFBO;
     //dirty flag for fbo binding
     bool _fboBindingDirty;
     //

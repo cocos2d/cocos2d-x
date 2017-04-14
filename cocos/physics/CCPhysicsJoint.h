@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -57,36 +57,36 @@ protected:
 
 public:
     /**Get physics body a connected to this joint.*/
-    inline PhysicsBody* getBodyA() const { return _bodyA; }
+    PhysicsBody* getBodyA() const { return _bodyA; }
     
     /**Get physics body b connected to this joint.*/
-    inline PhysicsBody* getBodyB() const { return _bodyB; }
+    PhysicsBody* getBodyB() const { return _bodyB; }
 
     /**Get the physics world.*/
-    inline PhysicsWorld* getWorld() const { return _world; }
+    PhysicsWorld* getWorld() const { return _world; }
     
     /**
      * Get this joint's tag.
      *
      * @return An integer number.
      */
-    inline int getTag() const { return _tag; }
+    int getTag() const { return _tag; }
     
     /**
      * Set this joint's tag.
      *
      * @param tag An integer number that identifies a PhysicsJoint.
      */
-    inline void setTag(int tag) { _tag = tag; }
+    void setTag(int tag) { _tag = tag; }
     
     /** Determines if the joint is enable. */
-    inline bool isEnabled() const { return _enable; }
+    bool isEnabled() const { return _enable; }
 
     /** Enable/Disable the joint. */
     void setEnable(bool enable);
     
     /** Determines if the collision is enable. */
-    inline bool isCollisionEnabled() const { return _collisionEnable; }
+    bool isCollisionEnabled() const { return _collisionEnable; }
     
     /** Enable/disable the collision between two bodies. */
     void setCollisionEnable(bool enable);
@@ -115,7 +115,7 @@ protected:
 
     bool _enable;
     bool _collisionEnable;
-    bool _destoryMark;
+    bool _destroyMark;
     int _tag;
     float _maxForce;
 

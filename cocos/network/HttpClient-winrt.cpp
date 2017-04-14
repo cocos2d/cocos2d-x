@@ -1,7 +1,7 @@
 /****************************************************************************
 Copyright (c) 2012      greathqy
 Copyright (c) 2012      cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -265,7 +265,7 @@ namespace network {
     }
 
     //Lazy create semaphore & mutex & thread
-    bool HttpClient::lazyInitThreadSemphore()
+    bool HttpClient::lazyInitThreadSemaphore()
     {
         if (s_requestQueue != nullptr) {
             return true;
@@ -285,7 +285,7 @@ namespace network {
     //Add a get task to queue
     void HttpClient::send(HttpRequest* request)
     {
-        if (false == lazyInitThreadSemphore())
+        if (false == lazyInitThreadSemaphore())
         {
             return;
         }

@@ -5,7 +5,10 @@ LOCAL_MODULE := spine_static
 
 LOCAL_MODULE_FILENAME := libspine
 
-LOCAL_SRC_FILES := Animation.c \
+LOCAL_ARM_MODE := arm
+
+LOCAL_SRC_FILES := \
+Animation.c \
 AnimationState.c \
 AnimationStateData.c \
 Atlas.c \
@@ -19,7 +22,6 @@ BoundingBoxAttachment.c \
 Cocos2dAttachmentLoader.cpp \
 Event.c \
 EventData.c \
-extension.c \
 IkConstraint.c \
 IkConstraintData.c \
 Json.c \
@@ -39,10 +41,11 @@ SkeletonRenderer.cpp \
 Skin.c \
 Slot.c \
 SlotData.c \
-spine-cocos2dx.cpp \
 TransformConstraint.c \
 TransformConstraintData.c \
 VertexAttachment.c \
+extension.c \
+spine-cocos2dx.cpp
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/..
 

@@ -44,7 +44,7 @@ elseif(UNIX)
     # because we have -std=c99
     add_definitions(-D_POSIX_C_SOURCE=200809L)
     if(LINUX)
-        add_definitions(-D_BSD_SOURCE)
+        add_definitions(-D_BSD_SOURCE -D_DEFAULT_SOURCE)
     endif()
     if(APPLE)
         add_definitions(-D_DARWIN_C_SOURCE)

@@ -1,7 +1,7 @@
 /****************************************************************************
 Copyright (c) 2011      Zynga Inc.
 Copyright (c) 2012 		cocos2d-x.org
-Copyright (c) 2013-2015 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -92,6 +92,9 @@ extern CC_DLL const GLchar * cc3D_Terrain_vert;
 extern CC_DLL const GLchar * cc3D_Terrain_frag;
 extern CC_DLL const GLchar * ccCameraClearVert;
 extern CC_DLL const GLchar * ccCameraClearFrag;
+// ETC1 ALPHA supports.
+extern CC_DLL const GLchar* ccETC1ASPositionTextureColor_frag;
+extern CC_DLL const char* ccETC1ASPositionTextureGray_frag;
 NS_CC_END
 /**
  end of support group

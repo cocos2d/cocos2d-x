@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014-2015 Chukong Technologies Inc.
+ Copyright (c) 2014-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -60,6 +60,7 @@ namespace cocos2d {
                 void loadHTMLString(const std::string &string, const std::string &baseURL);
 
                 void loadURL(const std::string &url);
+                void loadURL(const std::string &url, bool cleanCachedData);
 
                 void loadFile(const std::string &fileName);
 
@@ -82,6 +83,8 @@ namespace cocos2d {
                 virtual void draw(cocos2d::Renderer *renderer, cocos2d::Mat4 const &transform, uint32_t flags);
 
                 virtual void setVisible(bool visible);
+
+                void setBounces(bool bounces);
 
                 static bool shouldStartLoading(const int viewTag, const std::string &url);
                 static void didFinishLoading(const int viewTag, const std::string &url);

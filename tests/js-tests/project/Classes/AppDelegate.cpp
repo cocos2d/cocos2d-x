@@ -7,6 +7,7 @@
 #include "scripting/js-bindings/auto/jsb_cocos2dx_auto.hpp"
 #include "scripting/js-bindings/auto/jsb_cocos2dx_builder_auto.hpp"
 #include "scripting/js-bindings/auto/jsb_cocos2dx_extension_auto.hpp"
+#include "scripting/js-bindings/auto/jsb_cocos2dx_network_auto.hpp"
 #include "scripting/js-bindings/auto/jsb_cocos2dx_navmesh_auto.hpp"
 #include "scripting/js-bindings/auto/jsb_cocos2dx_physics3d_auto.hpp"
 #include "scripting/js-bindings/auto/jsb_cocos2dx_spine_auto.hpp"
@@ -104,6 +105,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->addRegisterCallback(MinXmlHttpRequest::_js_register);
     sc->addRegisterCallback(register_jsb_websocket);
 	sc->addRegisterCallback(register_jsb_socketio);
+    sc->addRegisterCallback(register_all_cocos2dx_network);
 
     sc->addRegisterCallback(register_all_cocos2dx_builder);
     sc->addRegisterCallback(register_CCBuilderReader);
@@ -157,15 +159,14 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->enableDebugger();
 #endif
 
-    auto pEngine = ScriptingCore::getInstance();
-    ScriptEngineManager::getInstance()->setScriptEngine(pEngine);
+    ScriptEngineManager::getInstance()->setScriptEngine(sc);
 
-    ScriptingCore::getInstance()->runScript("main.js");
+    sc->runScript("main.js");
 
     return true;
 }
 
-// This function will be called when the app is inactive. When comes a phone call,it's be invoked too
+// This function will be called when the app is inactive. Note, when receiving a phone call it is invoked.
 void AppDelegate::applicationDidEnterBackground()
 {
     auto director = Director::getInstance();

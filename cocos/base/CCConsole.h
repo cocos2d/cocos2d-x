@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013-2015 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -88,7 +88,7 @@ public:
         static std::vector<std::string> split(const std::string& s, char delim);
         
         /** Checks myString is a floating-point type. */
-        static bool isFloat(std::string myString);
+        static bool isFloat(const std::string& myString);
         
         /** send a message to console */
         static ssize_t sendToConsole(int fd, const void* buffer, size_t length, int flags = 0);
@@ -181,6 +181,9 @@ public:
      */
     void setBindAddress(const std::string &address);
 
+    /** Checks whether the server for console is bound with ipv6 address */
+    bool isIpv6Server() const;
+
 protected:
     // Main Loop
     void loop();
@@ -247,6 +250,7 @@ protected:
 
     bool _running;
     bool _endThread;
+    bool _isIpv6Server;
 
     std::map<std::string, Command> _commands;
 

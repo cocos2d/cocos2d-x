@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2014-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -39,6 +39,8 @@
 NS_CC_BEGIN
 
 experimental::Viewport Camera::_defaultViewport;
+
+// start static methods
 
 Camera* Camera::create(Node* parent)
 {
@@ -81,11 +83,23 @@ Camera* Camera::createOrthographic(float zoomX, float zoomY, float nearPlane, fl
     return nullptr;
 }
 
+const experimental::Viewport& Camera::getDefaultViewport()
+{
+    return _defaultViewport;
+}
+void Camera::setDefaultViewport(const experimental::Viewport& vp)
+{
+    _defaultViewport = vp;
+}
+
+// end static methods
+
 Camera::Camera()
 : _scene(nullptr)
 , _viewProjectionDirty(true)
 , _cameraFlag(1)
 , _frustumDirty(true)
+, _viewProjectionUpdated(false)
 , _depth(-1)
 , _fbo(nullptr)
 {
@@ -414,11 +428,20 @@ void Camera::setFrameBufferObject(experimental::FrameBuffer *fbo)
     }
 }
 
+void Camera::apply()
+{
+    _viewProjectionUpdated = _transformUpdated;
+    applyFrameBufferObject();
+    applyViewport();
+}
+
 void Camera::applyFrameBufferObject()
 {
     if(nullptr == _fbo)
     {
-        experimental::FrameBuffer::applyDefaultFBO();
+        // inherit from context if it doesn't have a FBO
+        // don't call apply the default one
+//        experimental::FrameBuffer::applyDefaultFBO();
     }
     else
     {
@@ -426,14 +449,10 @@ void Camera::applyFrameBufferObject()
     }
 }
 
-void Camera::apply()
-{
-    applyFrameBufferObject();
-    applyViewport();
-}
-
 void Camera::applyViewport()
 {
+    glGetIntegerv(GL_VIEWPORT, _oldViewport);
+
     if(nullptr == _fbo)
     {
         glViewport(getDefaultViewport()._left, getDefaultViewport()._bottom, getDefaultViewport()._width, getDefaultViewport()._height);
@@ -443,7 +462,36 @@ void Camera::applyViewport()
         glViewport(_viewport._left * _fbo->getWidth(), _viewport._bottom * _fbo->getHeight(),
                    _viewport._width * _fbo->getWidth(), _viewport._height * _fbo->getHeight());
     }
-    
+}
+
+void Camera::setViewport(const experimental::Viewport& vp)
+{
+    _viewport = vp;
+}
+
+void Camera::restore()
+{
+    restoreFrameBufferObject();
+    restoreViewport();
+}
+
+void Camera::restoreFrameBufferObject()
+{
+    if(nullptr == _fbo)
+    {
+        // it was inherited from context if it doesn't have a FBO
+        // don't call restore the default one... just keep using the previous one
+//        experimental::FrameBuffer::applyDefaultFBO();
+    }
+    else
+    {
+        _fbo->restoreFBO();
+    }
+}
+
+void Camera::restoreViewport()
+{
+    glViewport(_oldViewport[0], _oldViewport[1], _oldViewport[2], _oldViewport[3]);
 }
 
 int Camera::getRenderOrder() const
@@ -472,16 +520,6 @@ void Camera::setBackgroundBrush(CameraBackgroundBrush* clearBrush)
     CC_SAFE_RETAIN(clearBrush);
     CC_SAFE_RELEASE(_clearBrush);
     _clearBrush = clearBrush;
-}
-
-/**
- *
- * TODO: Add check of camera type before clone it.
- *
- */
-Camera* Camera::deepCopy()
-{
-  return Camera::createOrthographic(_zoom[0], _zoom[1], _nearPlane, _farPlane);
 }
 
 bool Camera::isBrushValid()

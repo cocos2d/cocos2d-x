@@ -326,4 +326,100 @@ public:
     void update(float dt) override;
 };
 
+class SchedulerRemoveAllFunctionsToBePerformedInCocosThread : public SchedulerTestLayer
+{
+public:
+    CREATE_FUNC(SchedulerRemoveAllFunctionsToBePerformedInCocosThread);
+    
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    void onEnter() override;
+    void onExit() override;
+    void update(float dt) override;
+    
+private:
+    cocos2d::Sprite *_sprite;
+};
+
+class SchedulerIssue17149: public SchedulerTestLayer
+{
+public:
+    CREATE_FUNC(SchedulerIssue17149);
+    SchedulerIssue17149();
+    ~SchedulerIssue17149();
+    
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    virtual void onEnter() override;
+    virtual void update(float dt) override;
+    
+private:
+    class ClassA
+    {
+    public:
+        ClassA();
+        
+        void update(float dt);
+        
+        int _member1;
+        int _member2;
+        int _member3;
+    };
+    
+    class ClassB
+    {
+    public:
+        ClassB();
+        void update(float dt);
+        
+        int _member1;
+        int _member2;
+        int _member3;
+    };
+    
+    void *_memoryPool;
+};
+
+class SchedulerRemoveEntryWhileUpdate: public SchedulerTestLayer
+{
+public:
+    CREATE_FUNC(SchedulerRemoveEntryWhileUpdate);
+    
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    virtual void onEnter() override;
+    virtual void onExit() override;
+    
+private:
+    class TestClass
+    {
+    public:
+        TestClass(int index, TestClass *nextObj, cocos2d::Scheduler* scheduler);
+        void update(float dt);
+    private:
+        TestClass *_nextObj;
+        int _index;
+        cocos2d::Scheduler *_scheduler;
+        bool _cleanedUp;
+    };
+    std::vector<TestClass *> _testvector;
+};
+
+class SchedulerRemoveSelectorDuringCall: public SchedulerTestLayer
+{
+public:
+    CREATE_FUNC(SchedulerRemoveSelectorDuringCall);
+    
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    virtual void onEnter() override;
+    virtual void onExit() override;
+    
+private:
+    void callback( float );
+
+private:
+    bool _scheduled;
+};
+
 #endif

@@ -1,7 +1,7 @@
 /****************************************************************************
  Copyright (c) 2008-2010 Ricardo Quesada
  Copyright (c) 2011-2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -532,266 +532,6 @@ var NodeToWorld = TestNodeDemo.extend({
     }
 });
 
-var CameraOrbitTest = TestNodeDemo.extend({
-    _preProjection : null,
-    ctor:function () {
-        this._super();
-        this.init();
-    },
-    onEnter:function () {
-        this._super();
-
-        var p = new cc.Sprite(s_back3);
-        this.addChild(p, 0);
-        p.x = winSize.width / 2;
-        p.y = winSize.height / 2;
-        p.opacity = 128;
-
-        // LEFT
-        var sw = p.getContentSize().width, sh = p.getContentSize().height;
-        var sprite = new cc.Sprite(s_pathGrossini);
-        sprite.scale = 0.5;
-        p.addChild(sprite, 0);
-        sprite.x = sw / 4;
-        sprite.y = sh / 2;
-        var orbit = cc.orbitCamera(2, 1, 0, 0, 360, 0, 0);
-        sprite.runAction(orbit.repeatForever());
-
-        // CENTER
-        sprite = new cc.Sprite(s_pathGrossini);
-        sprite.scale = 1.0;
-        p.addChild(sprite, 0);
-        sprite.x = sw / 4 * 2;
-        sprite.y = sh / 2;
-        orbit = cc.orbitCamera(2, 1, 0, 0, 360, 45, 0);
-        sprite.runAction(orbit.repeatForever());
-
-        // RIGHT
-        sprite = new cc.Sprite(s_pathGrossini);
-        sprite.scale = 2.0;
-        p.addChild(sprite, 0);
-        sprite.x = sw / 4 * 3;
-        sprite.y = sh / 2;
-        orbit = cc.orbitCamera(2, 1, 0, 0, 360, 90, -45);
-        sprite.runAction(orbit.repeatForever());
-
-        // PARENT
-        orbit = cc.orbitCamera(10, 1, 0, 0, 360, 0, 90);
-        p.runAction(orbit.repeatForever());
-
-        this.scale = 1;
-        //----end11----
-        this._preProjection = director.getProjection();
-        director.setDepthTest(true);
-        director.setProjection(cc.Director.PROJECTION_3D);
-        //----end11----
-    },
-    onExit:function () {
-        //----start11----onExit
-        director.setDepthTest(false);
-        director.setProjection(this._preProjection);
-        this._super();
-        //----end11----
-    },
-    title:function () {
-        return "Camera Orbit test";
-    }
-});
-
-var CameraZoomTest = TestNodeDemo.extend({
-    _z:0,
-    ctor:function () {
-        //----start12----ctor
-        this._super();
-
-        // LEFT
-        var sprite = new cc.Sprite(s_pathGrossini);
-        this.addChild(sprite, 0);
-        sprite.x = winSize.width / 4;
-        sprite.y = winSize.height / 2;
-        if ("opengl" in cc.sys.capabilities) {
-            var cam = sprite.getCamera();
-            cam.setEye(0, 0, 415 / 2);
-            cam.setCenter(0, 0, 0);
-        }
-
-        // CENTER
-        sprite = new cc.Sprite(s_pathGrossini);
-        this.addChild(sprite, 0, 40);
-        sprite.x = winSize.width / 4 * 2;
-        sprite.y = winSize.height / 2;
-        //cam = [sprite camera);
-        //[cam setEyeX:0 eyeY:0 eyeZ:415/2);
-
-        // RIGHT
-        sprite = new cc.Sprite(s_pathGrossini);
-        this.addChild(sprite, 0, 20);
-        sprite.x = winSize.width / 4 * 3;
-        sprite.y = winSize.height / 2;
-        //cam = [sprite camera);
-        //[cam setEyeX:0 eyeY:0 eyeZ:-485);
-        //[cam setCenterX:0 centerY:0 centerZ:0);
-
-        this._z = 0;
-        this.scheduleUpdate();
-
-        //Automation parameters
-        this.autoParam = sprite;
-        //----end12----
-    },
-    update:function (dt) {
-        //----start12----update
-        if (!("opengl" in cc.sys.capabilities))
-            return;
-
-        this._z += dt * 100;
-        var sprite = this.getChildByTag(20);
-        var cam = sprite.getCamera();
-        cam.setEye(0, 0, this._z);
-        if(!cc.sys.isNative)
-            sprite.setNodeDirty();
-
-        sprite = this.getChildByTag(40);
-        cam = sprite.getCamera();
-        cam.setEye(0, 0, -this._z);
-        if(!cc.sys.isNative)
-            sprite.setNodeDirty();
-        //----end12----
-    },
-    onEnter:function () {
-        //TODO
-        //----start12----onEnter
-        this._super();
-        director.setProjection(cc.Director.PROJECTION_3D);
-        //----end12----
-    },
-    onExit:function () {
-        //TODO
-        //----start12----onExit
-        director.setProjection(cc.Director.PROJECTION_2D);
-        this._super();
-        //----end12----
-    },
-    title:function () {
-        return "Camera Zoom test";
-    },
-    //
-    // Automation
-    //
-    testDuration:1.1,
-    pixel:{"0":115, "1":0, "2":115, "3":255},
-    getExpectedResult:function () {
-        var ret1 = {"z":this._z.toFixed(2)};
-        var ret2 = {"pixel":"yes"};
-        return JSON.stringify([ret1, ret2]);
-    },
-    getCurrentResult:function () {
-        var ret1 = {"z":this.autoParam.getCamera().getEye().z.toFixed(2)};
-        var readPixel = this.readPixels(winSize.width / 4 * 3, winSize.height / 2, 5, 5);
-        var ret2 = {"pixel":!this.containsPixel(readPixel, this.pixel, false) ? "yes" : "no"};
-        return JSON.stringify([ret1, ret2]);
-    }
-});
-
-var CameraCenterTest = TestNodeDemo.extend({
-    ctor:function () {
-        //----start10----ctor
-        this._super();
-
-        // LEFT-TOP
-        var sprite = new cc.Sprite(s_texture512);
-        this.addChild(sprite, 0);
-        sprite.x = winSize.width / 5;
-        sprite.y = winSize.height / 5;
-        sprite.color = cc.color.RED;
-        sprite.setTextureRect(cc.rect(0, 0, 120, 50));
-        var orbit = cc.orbitCamera(10, 1, 0, 0, 360, 0, 0);
-        sprite.runAction(orbit.repeatForever());
-
-        // LEFT-BOTTOM
-        sprite = new cc.Sprite(s_texture512);
-        this.addChild(sprite, 0, 40);
-        sprite.x = winSize.width / 5;
-        sprite.y = winSize.height / 5 * 4;
-        sprite.color = cc.color.BLUE;
-        sprite.setTextureRect(cc.rect(0, 0, 120, 50));
-        orbit = cc.orbitCamera(10, 1, 0, 0, 360, 0, 0);
-        sprite.runAction(orbit.repeatForever());
-
-        // RIGHT-TOP
-        sprite = new cc.Sprite(s_texture512);
-        this.addChild(sprite, 0);
-        sprite.x = winSize.width / 5 * 4;
-        sprite.y = winSize.height / 5;
-        sprite.color = cc.color.YELLOW;
-        sprite.setTextureRect(cc.rect(0, 0, 120, 50));
-        orbit = cc.orbitCamera(10, 1, 0, 0, 360, 0, 0);
-        sprite.runAction(orbit.repeatForever());
-
-        // RIGHT-BOTTOM
-        sprite = new cc.Sprite(s_texture512);
-        this.addChild(sprite, 0, 40);
-        sprite.x = winSize.width / 5 * 4;
-        sprite.y = winSize.height / 5 * 4;
-        sprite.color = cc.color.GREEN;
-        sprite.setTextureRect(cc.rect(0, 0, 120, 50));
-        orbit = cc.orbitCamera(10, 1, 0, 0, 360, 0, 0);
-        sprite.runAction(orbit.repeatForever());
-
-        // CENTER
-        sprite = new cc.Sprite(s_texture512);
-        this.addChild(sprite, 0, 40);
-        sprite.x = winSize.width / 2;
-        sprite.y = winSize.height / 2;
-        sprite.color = cc.color.WHITE;
-        sprite.setTextureRect(cc.rect(0, 0, 120, 50));
-        orbit = cc.orbitCamera(10, 1, 0, 0, 360, 0, 0);
-        sprite.runAction(orbit.repeatForever());
-        //----end10----
-    },
-
-    onEnter:function(){
-        //----start10----onEnter
-        this._super();
-        cc.director.setProjection(cc.Director.PROJECTION_3D);
-        //----end10----
-    },
-
-    onExit:function(){
-        //----start10----onExit
-        cc.director.setProjection(cc.Director.PROJECTION_2D);
-        this._super();
-        //----end10----
-    },
-
-    title:function () {
-        return "Camera Center test";
-    },
-    subtitle:function () {
-        return "Sprites should rotate at the same speed";
-    },
-    //
-    // Automation
-    //
-    testDuration:2.6,
-    pixel1:{"0":255, "1":255, "2":255, "3":255},
-    pixel2:{"0":255, "1":255, "2":255, "3":255},
-    pixel3:{"0":255, "1":255, "2":255, "3":255},
-    getExpectedResult:function () {
-        var ret = {"pixel1":"yes", "pixel2":"yes", "pixel3":"yes"};
-        return JSON.stringify(ret);
-    },
-    getCurrentResult:function () {
-        var ret1 = this.readPixels(winSize.width / 2, winSize.height / 2, 5, 5);
-        var ret2 = this.readPixels(winSize.width / 2 - 25, winSize.height / 2, 5, 5);
-        var ret3 = this.readPixels(winSize.width / 2 + 20, winSize.height / 2, 5, 5);
-        var ret = {"pixel1":this.containsPixel(ret1, this.pixel1, false) ? "yes" : "no",
-            "pixel2":!this.containsPixel(ret2, this.pixel2, false) ? "yes" : "no",
-            "pixel3":!this.containsPixel(ret3, this.pixel3, false) ? "yes" : "no"};
-        return JSON.stringify(ret);
-    }
-});
-
 //
 // ConvertToNode
 //
@@ -962,7 +702,7 @@ var SchedulerTest1 = TestNodeDemo.extend({
 
         layer.schedule(this.doSomething);
         //UXLOG("retain count after schedule is %d", layer->retainCount());
-        // 3 : (object-c viersion), but win32 version is still 2, because CCTimer class don't save target.
+        // 3 : (objective-c version), but win32 version is still 2, because CCTimer class don't save target.
 
         layer.unschedule(this.doSomething);
         //UXLOG("retain count after unschedule is %d", layer->retainCount());
@@ -1072,9 +812,6 @@ var arrayOfNodeTest = [
 ];
 
 if ('opengl' in cc.sys.capabilities) {
-    cc.sys.isNative || arrayOfNodeTest.push(CameraCenterTest);
-    cc.sys.isNative || arrayOfNodeTest.push(CameraOrbitTest);
-	cc.sys.isNative || arrayOfNodeTest.push(CameraZoomTest);
     arrayOfNodeTest.push(NodeOpaqueTest);
     arrayOfNodeTest.push(NodeNonOpaqueTest);
 }

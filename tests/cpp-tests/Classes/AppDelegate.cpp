@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2013      cocos2d-x.org
- Copyright (c) 2013-2015 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -43,12 +43,11 @@ AppDelegate::~AppDelegate()
     cocostudio::ArmatureDataManager::destroyInstance();
 }
 
-//if you want a different context,just modify the value of glContextAttrs
-//it will takes effect on all platforms
+// if you want a different context, modify the value of glContextAttrs
+// it will affect all platforms
 void AppDelegate::initGLContextAttrs()
 {
-    //set OpenGL context attributions,now can only set six attributions:
-    //red,green,blue,alpha,depth,stencil
+    // set OpenGL context attributes: red,green,blue,alpha,depth,stencil
     GLContextAttrs glContextAttrs = {8, 8, 8, 8, 24, 8};
 
     GLView::setGLContextAttrs(glContextAttrs);
@@ -98,18 +97,27 @@ bool AppDelegate::applicationDidFinishLaunching()
     
     fileUtils->setSearchPaths(searchPaths);
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+    // a bug in DirectX 11 level9-x on the device prevents ResolutionPolicy::NO_BORDER from working correctly
     glview->setDesignResolutionSize(designSize.width, designSize.height, ResolutionPolicy::SHOW_ALL);
-    
+#else
+    glview->setDesignResolutionSize(designSize.width, designSize.height, ResolutionPolicy::NO_BORDER);
+#endif
+
     // Enable Remote Console
     auto console = director->getConsole();
     console->listenOnTCP(5678);
 
     _testController = TestController::getInstance();
-    
+
+    // To enable built-in VR, use this line.
+//    auto vrImpl = new VRGenericRenderer;
+//    glview->setVR(vrImpl);
+
     return true;
 }
 
-// This function will be called when the app is inactive. When comes a phone call,it's be invoked too
+// This function will be called when the app is inactive. Note, when receiving a phone call it is invoked.
 void AppDelegate::applicationDidEnterBackground()
 {
     if (_testController)

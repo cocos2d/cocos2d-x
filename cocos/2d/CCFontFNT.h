@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2013      Zynga Inc.
- Copyright (c) 2013-2015 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -44,7 +44,7 @@ public:
     Removes from memory the cached configurations and the atlas name dictionary.
     */
     static void purgeCachedData();
-    virtual int* getHorizontalKerningForTextUTF16(const std::u16string& text, int &outNumLetters) const override;
+    virtual int* getHorizontalKerningForTextUTF32(const std::u32string& text, int &outNumLetters) const override;
     virtual FontAtlas *createFontAtlas() override;
     void setFontSize(float fontSize);
     int getOriginalFontSize()const;
@@ -62,7 +62,7 @@ protected:
     
 private:
     
-    int  getHorizontalKerningForChars(unsigned short firstChar, unsigned short secondChar) const;
+    int  getHorizontalKerningForChars(char32_t firstChar, char32_t secondChar) const;
     
     BMFontConfiguration * _configuration;
     Vec2                   _imageOffset;

@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -555,9 +555,9 @@ public:
      * Add a event listener to TextField, when some predefined event happens, the callback will be called.
      *@deprecated Use @see `addEventListener` instead.
      *@param target A pointer of `Ref*` type.
-     *@param selecor A member function pointer with type of `SEL_TextFieldEvent`.
+     *@param selector A member function pointer with type of `SEL_TextFieldEvent`.
      */
-    CC_DEPRECATED_ATTRIBUTE void addEventListenerTextField(Ref* target, SEL_TextFieldEvent selecor);
+    CC_DEPRECATED_ATTRIBUTE void addEventListenerTextField(Ref* target, SEL_TextFieldEvent selector);
     /**
      * Add a event listener to TextField, when some predefined event happens, the callback will be called.
      *@param callback A callback function with type of `ccTextFieldCallback`.

@@ -1,7 +1,7 @@
 /****************************************************************************
  Copyright (c) 2008-2010 Ricardo Quesada
  Copyright (c) 2011-2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -318,7 +318,7 @@ var BMFontOpacityColorAlignmentTest = AtlasDemo.extend({
         // testing anchors
         label2.anchorX = 0.5;
         label2.anchorY = 0.5;
-        label2.color = cc.color.RED ;
+        label2.color = cc.color.RED;
         this.addChild(label2, 0, TAG_BITMAP_ATLAS2);
         label2.runAction(repeat.clone());
 
@@ -1011,7 +1011,7 @@ var BMFontGlyphDesignerTest = AtlasDemo.extend({
         return "Testing Glyph Designer";
     },
     subtitle:function () {
-        return "You should see a font with shawdows and outline";
+        return "You should see a font with shadows and outline";
     },
 
     //

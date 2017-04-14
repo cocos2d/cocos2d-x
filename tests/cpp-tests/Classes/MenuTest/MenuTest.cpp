@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -331,7 +331,7 @@ MenuLayer3::MenuLayer3()
 
     auto label = Label::createWithBMFont("fonts/bitmapFontTest3.fnt", "Enable AtlasItem");
     auto item1 = MenuItemLabel::create(label, [&](Ref *sender) {
-		//CCLOG("Label clicked. Toogling AtlasSprite");
+		//CCLOG("Label clicked. Toggling AtlasSprite");
 		_disabledItem->setEnabled( ! _disabledItem->isEnabled() );
 		_disabledItem->stopAllActions();
 	});

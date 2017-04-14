@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -56,7 +56,7 @@ CameraRotationTest::CameraRotationTest()
     auto s = Director::getInstance()->getWinSize();
     
     _camControlNode = Node::create();
-    _camControlNode->setNormalizedPosition(Vec2(.5,.5));
+    _camControlNode->setPositionNormalized(Vec2(.5,.5));
     addChild(_camControlNode);
 
     _camNode = Node::create();
@@ -732,7 +732,7 @@ void CameraCullingDemo::onEnter()
     addChild(layer3D,0);
     _layer3D=layer3D;
     
-    // swich camera
+    // switch camera
     MenuItemFont::setFontName("fonts/arial.ttf");
     MenuItemFont::setFontSize(20);
     
@@ -1011,7 +1011,7 @@ void CameraArcBallDemo::onEnter()
     listener->onTouchesMoved = CC_CALLBACK_2(CameraArcBallDemo::onTouchsMoved, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 
-    // swich camera
+    // switch camera
     MenuItemFont::setFontName("fonts/arial.ttf");
     MenuItemFont::setFontSize(20);
     
@@ -1162,7 +1162,6 @@ void CameraArcBallDemo::updateCameraTransform()
     Mat4::createTranslation(_center, &center);
     Mat4 result = center * rot * trans;
     _camera->setNodeToParentTransform(result);
-
 }
 
 void CameraArcBallDemo::switchOperateCallback(Ref* sender)
@@ -1229,7 +1228,7 @@ void FogTestDemo::onEnter()
     listener->onTouchesMoved = CC_CALLBACK_2(FogTestDemo::onTouchesMoved, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 
-    // swich fog type
+    // switch fog type
     TTFConfig ttfConfig("fonts/arial.ttf", 20);
     
     auto label1 = Label::createWithTTF(ttfConfig,"Linear ");

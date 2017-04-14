@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2014-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -78,13 +78,13 @@ static void accelerometer_sensor_cb(sensor_h _sensor, sensor_event_s *sensor_dat
     _acceleration->x = sensor_data->values[0] / GRAVITY_EARTH;
     _acceleration->y = sensor_data->values[1] / GRAVITY_EARTH;
     _acceleration->z = sensor_data->values[2] / GRAVITY_EARTH;
-    _acceleration->timestamp = sensor_data->timestamp;
+    _acceleration->timestamp = (double)sensor_data->timestamp / 1e6;
 
     double tmp = _acceleration->x;
     Application *app = Application::getInstance();
-    int oritentation = elm_win_rotation_get(app->_win);
+    int orientation = elm_win_rotation_get(app->_win);
 
-   switch (oritentation)
+    switch (orientation)
     {
     case 0:
         _acceleration->x = _acceleration->y;
@@ -106,7 +106,7 @@ static void accelerometer_sensor_cb(sensor_h _sensor, sensor_event_s *sensor_dat
         _acceleration->y = -tmp;
         break;
     default:
-        CCLOG("unknow orientation");
+        CCLOG("unknown orientation");
     }
 
     cocos2d::EventAcceleration event(*_acceleration);
@@ -348,9 +348,8 @@ void Device::setKeepScreenOn(bool value)
 {
 }
 
-void Device::vibrate(float duration)
+void Device::vibrate(float /*duration*/)
 {
-    CC_UNUSED_PARAM(duration);
 }
 
 NS_CC_END

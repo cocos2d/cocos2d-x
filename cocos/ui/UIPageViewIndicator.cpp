@@ -27,6 +27,7 @@ THE SOFTWARE.
 #include "base/ccUtils.h"
 
 static const char* CIRCLE_IMAGE = "iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAQAAADZc7J/AAAA8ElEQVRIx62VyRGCQBBF+6gWRCEmYDIQkhiBCgHhSclC8YqWzOV5oVzKAYZp3r1/9fpbxAIBMTsKrjx5cqVgR0wgLhCRUWOjJiPqD56xoaGPhpRZV/iSEy6crHmw5oIrF9b/lVeMofrJgjlnxlIy/wik+JB+mme8BExbBhm+5CJC2LE2LtSEQoyGWDioBA5CoRIohJtK4CYDxzNEM4GAugR1E9VjVC+SZpXvhCJCrjomESLvc17pDGX7bWmlh6UtpjPVCWy9zaJ0TD7qfm3pwERMz2trRVZk3K3BD/L34AY+dEDCniMVBkPFkT2J/b2/AIV+dRpFLOYoAAAAAElFTkSuQmCC";
+static const char* CIRCLE_IMAGE_KEY = "/__circleImage";
 
 NS_CC_BEGIN
 
@@ -50,6 +51,11 @@ PageViewIndicator::PageViewIndicator()
 : _direction(PageView::Direction::HORIZONTAL)
 , _currentIndexNode(nullptr)
 , _spaceBetweenIndexNodes(SPACE_BETWEEN_INDEX_NODES_DEFAULT)
+, _indexNodesScale(1.0f)
+, _indexNodesColor(Color3B::WHITE)
+, _useDefaultTexture(true)
+, _indexNodesTextureFile("")
+, _indexNodesTexType(Widget::TextureResType::LOCAL)
 {
 }
 
@@ -59,7 +65,7 @@ PageViewIndicator::~PageViewIndicator()
 
 bool PageViewIndicator::init()
 {
-    _currentIndexNode = (Node*) utils::createSpriteFromBase64(CIRCLE_IMAGE);
+    _currentIndexNode = utils::createSpriteFromBase64Cached(CIRCLE_IMAGE, CIRCLE_IMAGE_KEY);
     _currentIndexNode->setVisible(false);
     addProtectedChild(_currentIndexNode, 1);
     return true;
@@ -111,7 +117,7 @@ void PageViewIndicator::rearrange()
     float totalSizeValue = sizeValue * numberOfItems + _spaceBetweenIndexNodes * (numberOfItems - 1);
 
     float posValue = -(totalSizeValue / 2) + (sizeValue / 2);
-    for(auto indexNode : _indexNodes) {
+    for(auto& indexNode : _indexNodes) {
         Vec2 position;
         if(horizontal)
         {
@@ -137,10 +143,84 @@ void PageViewIndicator::setSpaceBetweenIndexNodes(float spaceBetweenIndexNodes)
     rearrange();
 }
 
+void PageViewIndicator::setIndexNodesColor(const Color3B& indexNodesColor)
+{
+    _indexNodesColor = indexNodesColor;
+    
+    for(auto& indexNode : _indexNodes) {
+        indexNode->setColor(indexNodesColor);
+    }
+}
+
+void PageViewIndicator::setIndexNodesScale(float indexNodesScale)
+{
+    if(_indexNodesScale == indexNodesScale)
+    {
+        return;
+    }
+    _indexNodesScale = indexNodesScale;
+    
+    _currentIndexNode->setScale(indexNodesScale);
+    for(auto& indexNode : _indexNodes) {
+        indexNode->setScale(_indexNodesScale);
+    }
+    
+    rearrange();
+}
+
+void PageViewIndicator::setIndexNodesTexture(const std::string& texName, Widget::TextureResType texType)
+{
+    _useDefaultTexture = false;
+    _indexNodesTextureFile = texName;
+    _indexNodesTexType = texType;
+    
+    switch (texType)
+    {
+        case Widget::TextureResType::LOCAL:
+            _currentIndexNode->setTexture(texName);
+            for(auto& indexNode : _indexNodes) {
+                indexNode->setTexture(texName);
+            }
+            break;
+        case Widget::TextureResType::PLIST:
+            _currentIndexNode->setSpriteFrame(texName);
+            for(auto& indexNode : _indexNodes) {
+                indexNode->setSpriteFrame(texName);
+            }
+            break;
+        default:
+            break;
+    }
+    
+    rearrange();
+}
+    
 void PageViewIndicator::increaseNumberOfPages()
 {
-    Sprite* indexNode = utils::createSpriteFromBase64(CIRCLE_IMAGE);
-//    indexNode->setOpacity(255 * 0.3f);
+    Sprite* indexNode;
+    
+    if(_useDefaultTexture)
+    {
+        indexNode = utils::createSpriteFromBase64(CIRCLE_IMAGE);
+    }
+    else
+    {
+        switch (_indexNodesTexType)
+        {
+            case Widget::TextureResType::LOCAL:
+                indexNode = Sprite::create(_indexNodesTextureFile);
+                break;
+            case Widget::TextureResType::PLIST:
+                indexNode = Sprite::createWithSpriteFrameName(_indexNodesTextureFile);
+                break;
+            default:
+                break;
+        }
+    }
+    
+    indexNode->setColor(_indexNodesColor);
+    indexNode->setScale(_indexNodesScale);
+    indexNode->setOpacity(255 * 0.3f);
     addProtectedChild(indexNode);
     _indexNodes.pushBack(indexNode);
 }
@@ -157,7 +237,7 @@ void PageViewIndicator::decreaseNumberOfPages()
 
 void PageViewIndicator::clear()
 {
-    for(auto indexNode : _indexNodes)
+    for(auto& indexNode : _indexNodes)
     {
         removeProtectedChild(indexNode);
     }

@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2012      cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -36,11 +36,7 @@
 #include "base/CCDirector.h"
 #include "base/CCEventCustom.h"
 
-#if _MSC_VER > 1800
-#pragma comment(lib,"lua51-2015.lib")
-#else
 #pragma comment(lib,"lua51.lib")
-#endif
 
 NS_CC_BEGIN
 
@@ -395,7 +391,7 @@ int LuaEngine::handleKeypadEvent(void* data)
 
     switch(action)
     {
-        case EventKeyboard::KeyCode::KEY_BACKSPACE:
+        case EventKeyboard::KeyCode::KEY_ESCAPE:
 			_stack->pushString("backClicked");
 			break;
 		case EventKeyboard::KeyCode::KEY_MENU:
@@ -438,14 +434,14 @@ int LuaEngine::handleCommonEvent(void* data)
     if (NULL == data)
         return 0;
    
-    CommonScriptData* commonInfo = static_cast<CommonScriptData*>(data);
-    if ('\0' == commonInfo->eventName[0] || 0 == commonInfo->handler)
+    CommonScriptData* commonInfo = static_cast<CommonScriptData*>(data); 
+    if (0 == commonInfo->handler)
         return 0;
     
     _stack->pushString(commonInfo->eventName);
     if (NULL != commonInfo->eventSource)
     {
-        if ('\0' != commonInfo->eventSourceClassName[0])
+        if (strlen(commonInfo->eventSourceClassName) > 0)
         {
             _stack->pushObject(commonInfo->eventSource, commonInfo->eventSourceClassName);
         }

@@ -1,5 +1,9 @@
 /****************************************************************************
+<<<<<<< HEAD
 Copyright (c) 2016 Chukong Technologies Inc.
+=======
+Copyright (c) 2016-2017 Chukong Technologies Inc.
+>>>>>>> cocos2d/v3
 
 http://www.cocos2d-x.org
 
@@ -27,12 +31,17 @@ THE SOFTWARE.
 #include "audio/android/AudioDecoder.h"
 #include "audio/android/AudioResampler.h"
 #include "audio/android/PcmBufferProvider.h"
+<<<<<<< HEAD
+=======
+#include "audio/android/AudioResampler.h"
+>>>>>>> cocos2d/v3
 
 #include <thread>
 #include <chrono>
 
 namespace cocos2d { namespace experimental {
 
+<<<<<<< HEAD
 /* Explicitly requesting SL_IID_ANDROIDSIMPLEBUFFERQUEUE and SL_IID_PREFETCHSTATUS
 * on the AudioPlayer object for decoding, SL_IID_METADATAEXTRACTION for retrieving the
 * format of the decoded audio */
@@ -110,6 +119,47 @@ AudioDecoder::AudioDecoder(SLEngineItf engineItf, const std::string &url, int bu
     BUFFER_SIZE_IN_BYTES = toBufferSizeInBytes(bufferSizeInFrames, 2, 2);
     _pcmData = (char*) malloc(NB_BUFFERS_IN_QUEUE * BUFFER_SIZE_IN_BYTES);
     memset(_pcmData, 0x00, NB_BUFFERS_IN_QUEUE * BUFFER_SIZE_IN_BYTES);
+=======
+size_t AudioDecoder::fileRead(void* ptr, size_t size, size_t nmemb, void* datasource)
+{
+    AudioDecoder* thiz = (AudioDecoder*)datasource;
+    ssize_t toReadBytes = std::min((ssize_t)(thiz->_fileData.getSize() - thiz->_fileCurrPos), (ssize_t)(nmemb * size));
+    if (toReadBytes > 0)
+    {
+        memcpy(ptr, (unsigned char*) thiz->_fileData.getBytes() + thiz->_fileCurrPos, toReadBytes);
+        thiz->_fileCurrPos += toReadBytes;
+    }
+    // ALOGD("File size: %d, After fileRead _fileCurrPos %d", (int)thiz->_fileData.getSize(), thiz->_fileCurrPos);
+    return toReadBytes;
+}
+
+int AudioDecoder::fileSeek(void* datasource, int64_t offset, int whence)
+{
+    AudioDecoder* thiz = (AudioDecoder*)datasource;
+    if (whence == SEEK_SET)
+        thiz->_fileCurrPos = offset;
+    else if (whence == SEEK_CUR)
+        thiz->_fileCurrPos = thiz->_fileCurrPos + offset;
+    else if (whence == SEEK_END)
+        thiz->_fileCurrPos = thiz->_fileData.getSize();
+    return 0;
+}
+
+int AudioDecoder::fileClose(void* datasource)
+{
+    return 0;
+}
+
+long AudioDecoder::fileTell(void* datasource)
+{
+    AudioDecoder* thiz = (AudioDecoder*)datasource;
+    return (long) thiz->_fileCurrPos;
+}
+
+AudioDecoder::AudioDecoder()
+        : _fileCurrPos(0), _sampleRate(-1)
+{
+>>>>>>> cocos2d/v3
     auto pcmBuffer = std::make_shared<std::vector<char>>();
     pcmBuffer->reserve(4096);
     _result.pcmBuffer = pcmBuffer;
@@ -118,6 +168,7 @@ AudioDecoder::AudioDecoder(SLEngineItf engineItf, const std::string &url, int bu
 AudioDecoder::~AudioDecoder()
 {
     ALOGV("~AudioDecoder() %p", this);
+<<<<<<< HEAD
     {
         std::lock_guard<std::mutex> lk(__SLPlayerMutex);
         SL_DESTROY_OBJ(_playObj);
@@ -130,12 +181,25 @@ AudioDecoder::~AudioDecoder()
         _assetFd = 0;
     }
     free(_pcmData);
+=======
+}
+
+bool AudioDecoder::init(const std::string &url, int sampleRate)
+{
+    _url = url;
+    _sampleRate = sampleRate;
+    return true;
+>>>>>>> cocos2d/v3
 }
 
 bool AudioDecoder::start()
 {
     auto oldTime = clockNow();
+<<<<<<< HEAD
 
+=======
+    auto nowTime = oldTime;
+>>>>>>> cocos2d/v3
     bool ret;
     do
     {
@@ -145,23 +209,45 @@ bool AudioDecoder::start()
             ALOGE("decodeToPcm (%s) failed!", _url.c_str());
             break;
         }
+<<<<<<< HEAD
+=======
+
+        nowTime = clockNow();
+        ALOGD("Decoding (%s) to pcm data wasted %fms", _url.c_str(), intervalInMS(oldTime, nowTime));
+        oldTime = nowTime;
+
+>>>>>>> cocos2d/v3
         ret = resample();
         if (!ret) 
         {
             ALOGE("resample (%s) failed!", _url.c_str());
             break;
         }
+<<<<<<< HEAD
+=======
+
+        nowTime = clockNow();
+        ALOGD("Resampling (%s) wasted %fms", _url.c_str(), intervalInMS(oldTime, nowTime));
+        oldTime = nowTime;
+
+>>>>>>> cocos2d/v3
         ret = interleave();
         if (!ret) 
         {
             ALOGE("interleave (%s) failed!", _url.c_str());
             break;
         }
+<<<<<<< HEAD
 
         auto nowTime = clockNow();
 
         ALOGV("Decoding (%s) to pcm data wasted %fms", _url.c_str(),
               intervalInMS(oldTime, nowTime));
+=======
+        
+        nowTime = clockNow();
+        ALOGD("Interleave (%s) wasted %fms", _url.c_str(), intervalInMS(oldTime, nowTime));
+>>>>>>> cocos2d/v3
 
     } while(false);
 
@@ -169,6 +255,7 @@ bool AudioDecoder::start()
     return ret;
 }
 
+<<<<<<< HEAD
 bool AudioDecoder::decodeToPcm()
 {
     SLresult result;
@@ -493,6 +580,8 @@ bool AudioDecoder::decodeToPcm()
     return true;
 }
 
+=======
+>>>>>>> cocos2d/v3
 bool AudioDecoder::resample()
 {
     if (_result.sampleRate == _sampleRate)
@@ -609,6 +698,7 @@ bool AudioDecoder::resample()
 }
 
 //-----------------------------------------------------------------
+<<<<<<< HEAD
 void AudioDecoder::signalEos()
 {
     std::unique_lock<std::mutex> autoLock(_eosLock);
@@ -788,6 +878,8 @@ void AudioDecoder::decodeToPcmCallback(SLAndroidSimpleBufferQueueItf queueItf)
     queryAudioInfo();
 }
 
+=======
+>>>>>>> cocos2d/v3
 bool AudioDecoder::interleave()
 {
     if (_result.numChannels == 2)

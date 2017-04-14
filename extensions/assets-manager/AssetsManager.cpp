@@ -63,11 +63,12 @@ AssetsManager::AssetsManager(const char* packageUrl/* =nullptr */, const char* v
 , _isDownloading(false)
 , _shouldDeleteDelegateWhenExit(false)
 {
+    checkStoragePath();
     // convert downloader error code to AssetsManager::ErrorCode
-    _downloader->onTaskError = [this](const DownloadTask& task,
+    _downloader->onTaskError = [this](const DownloadTask& /*task*/,
                                       int errorCode,
-                                      int errorCodeInternal,
-                                      const std::string& errorStr)
+                                      int /*errorCodeInternal*/,
+                                      const std::string& /*errorStr*/)
     {
         _isDownloading = false;
         
@@ -81,7 +82,7 @@ AssetsManager::AssetsManager(const char* packageUrl/* =nullptr */, const char* v
     
     // progress callback
     _downloader->onTaskProgress = [this](const DownloadTask& task,
-                                         int64_t bytesReceived,
+                                         int64_t /*bytesReceived*/,
                                          int64_t totalBytesReceived,
                                          int64_t totalBytesExpected)
     {
@@ -102,7 +103,7 @@ AssetsManager::AssetsManager(const char* packageUrl/* =nullptr */, const char* v
     };
     
     // get version from version file when get data success
-    _downloader->onDataTaskSuccess = [this](const DownloadTask& task,
+    _downloader->onDataTaskSuccess = [this](const DownloadTask& /*task*/,
                                             std::vector<unsigned char>& data)
     {
         // store version info to member _version
@@ -145,11 +146,11 @@ AssetsManager::AssetsManager(const char* packageUrl/* =nullptr */, const char* v
         
         // start download;
         const string outFileName = _storagePath + TEMP_PACKAGE_FILE_NAME;
-        _downloader->createDownloadFileTask(_packageUrl, _storagePath);
+        _downloader->createDownloadFileTask(_packageUrl, outFileName);
     };
     
     // after download package, do uncompress operation
-    _downloader->onFileTaskSuccess = [this](const DownloadTask& task)
+    _downloader->onFileTaskSuccess = [this](const DownloadTask& /*task*/)
     {
         downloadAndUncompress();
     };
@@ -489,7 +490,7 @@ AssetsManager* AssetsManager::create(const char* packageUrl, const char* version
     class DelegateProtocolImpl : public AssetsManagerDelegateProtocol 
     {
     public :
-        DelegateProtocolImpl(ErrorCallback aErrorCallback, ProgressCallback aProgressCallback, SuccessCallback aSuccessCallback)
+        DelegateProtocolImpl(ErrorCallback& aErrorCallback, ProgressCallback& aProgressCallback, SuccessCallback& aSuccessCallback)
         : errorCallback(aErrorCallback), progressCallback(aProgressCallback), successCallback(aSuccessCallback)
         {}
 

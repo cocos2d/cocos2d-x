@@ -1,18 +1,18 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
- 
+ Copyright (c) 2014-2017 Chukong Technologies Inc.
+
  http://www.cocos2d-x.org
- 
+
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
- 
+
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
- 
+
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -21,298 +21,359 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+
+#define LOG_TAG "AudioCache"
+
 #include "platform/CCPlatformConfig.h"
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 
 #include "audio/win32/AudioCache.h"
 #include <thread>
-#include <algorithm>
-#include "vorbis/codec.h"
-#include "vorbis/vorbisfile.h"
-#include "platform/CCFileUtils.h"
-#include "mpg123.h"
 #include "base/CCDirector.h"
 #include "base/CCScheduler.h"
 
-#define PCMDATA_CACHEMAXSIZE 2621440
+#include "audio/win32/AudioDecoderManager.h"
+#include "audio/win32/AudioDecoder.h"
 
+#define VERY_VERY_VERBOSE_LOGGING
+#ifdef VERY_VERY_VERBOSE_LOGGING
+#define ALOGVV ALOGV
+#else
+#define ALOGVV(...) do{} while(false)
+#endif
+
+namespace {
+unsigned int __idIndex = 0;
+}
+
+#define INVALID_AL_BUFFER_ID 0xFFFFFFFF
+#define PCMDATA_CACHEMAXSIZE 1048576
+
+using namespace cocos2d;
 using namespace cocos2d::experimental;
 
 AudioCache::AudioCache()
-: _pcmData(nullptr)
-, _pcmDataSize(0)
-, _bytesOfRead(0)
-, _alBufferReady(false)
-, _loadFail(false)
-, _fileFormat(FileFormat::UNKNOWN)
+: _totalFrames(0)
+, _framesRead(0)
+, _format(-1)
+, _duration(0.0f)
+, _alBufferId(INVALID_AL_BUFFER_ID)
+, _pcmData(nullptr)
 , _queBufferFrames(0)
-, _queBufferBytes(0)
-, _mp3Encoding(0)
+, _state(State::INITIAL)
+, _isDestroyed(std::make_shared<bool>(false))
+, _id(++__idIndex)
+, _isLoadingFinished(false)
+, _isSkipReadDataTask(false)
 {
-    
-}
-
-AudioCache::AudioCache(const AudioCache& cache)
-{
-    _pcmData = cache._pcmData;
-    _pcmDataSize = cache._pcmDataSize;
-    _bytesOfRead = cache._bytesOfRead;
-    _alBufferReady = cache._alBufferReady;
-    _fileFormat = cache._fileFormat;
-    _queBufferFrames = cache._queBufferFrames;
-    _queBufferBytes = cache._queBufferBytes;
-    _mp3Encoding = cache._mp3Encoding;
+    ALOGVV("AudioCache() %p, id=%u", this, _id);
+    for (int i = 0; i < QUEUEBUFFER_NUM; ++i)
+    {
+        _queBuffers[i] = nullptr;
+        _queBufferSize[i] = 0;
+    }
 }
 
 AudioCache::~AudioCache()
 {
-    if(_pcmData){
-        if (_alBufferReady){
-            alDeleteBuffers(1, &_alBufferId);
+    ALOGVV("~AudioCache() %p, id=%u, begin", this, _id);
+    *_isDestroyed = true;
+    while (!_isLoadingFinished)
+    {
+        if (_isSkipReadDataTask)
+        {
+            ALOGV("id=%u, Skip read data task, don't continue to wait!", _id);
+            break;
         }
-        //wait for the 'readDataTask' task to exit
-        _readDataTaskMutex.lock();
-        _readDataTaskMutex.unlock();
-        
+        ALOGVV("id=%u, waiting readData thread to finish ...", _id);
+        std::this_thread::sleep_for(std::chrono::milliseconds(5));
+    }
+    //wait for the 'readDataTask' task to exit
+    _readDataTaskMutex.lock();
+    _readDataTaskMutex.unlock();
+
+    if (_pcmData)
+    {
+        if (_state == State::READY)
+        {
+            if (_alBufferId != INVALID_AL_BUFFER_ID && alIsBuffer(_alBufferId))
+            {
+                ALOGV("~AudioCache(id=%u), delete buffer: %u", _id, _alBufferId);
+                alDeleteBuffers(1, &_alBufferId);
+                _alBufferId = INVALID_AL_BUFFER_ID;
+            }
+        }
+        else
+        {
+            ALOGW("AudioCache (%p), id=%u, buffer isn't ready, state=%d", this, _id, _state);
+        }
+
         free(_pcmData);
     }
 
-    if (_queBufferFrames > 0) {
-        for (int index = 0; index < QUEUEBUFFER_NUM; ++index) {
+    if (_queBufferFrames > 0)
+    {
+        for (int index = 0; index < QUEUEBUFFER_NUM; ++index)
+        {
             free(_queBuffers[index]);
         }
     }
+    ALOGVV("~AudioCache() %p, id=%u, end", this, _id);
 }
 
-void AudioCache::readDataTask()
+void AudioCache::readDataTask(unsigned int selfId)
 {
+    //Note: It's in sub thread
+    ALOGVV("readDataTask begin, cache id=%u", selfId);
+
     _readDataTaskMutex.lock();
+    _state = State::LOADING;
 
-     OggVorbis_File* vf = nullptr;
-     mpg123_handle* mpg123handle = nullptr;
-     long totalFrames = 0;
-
-     switch (_fileFormat)
-     {
-     case FileFormat::OGG:
-         {
-             vf = new OggVorbis_File;
-             int openCode;
-             if (openCode = ov_fopen(FileUtils::getInstance()->getSuitableFOpen(_fileFullPath).c_str(), vf)){
-                 log("Input does not appear to be an Ogg bitstream: %s. Code: 0x%x\n", _fileFullPath.c_str(), openCode);
-                 goto ExitThread;
-             }
-
-             auto vi = ov_info(vf,-1);
-             totalFrames = (long)ov_pcm_total(vf,-1);
-             _bytesPerFrame =  vi->channels * 2;
-             _alBufferFormat = (vi->channels > 1) ? AL_FORMAT_STEREO16 : AL_FORMAT_MONO16;
-             _sampleRate = vi->rate;
-             _pcmDataSize = totalFrames * _bytesPerFrame;
-             _duration = 1.0f * totalFrames / _sampleRate;
-         }
-         break;
-     case FileFormat::MP3:
-         {
-             long rate = 0;
-             int error = MPG123_OK;
-             mpg123handle = mpg123_new(nullptr, &error);
-             if (!mpg123handle){
-                 log("Basic setup goes wrong: %s", mpg123_plain_strerror(error));
-                 goto ExitThread;
-             }
-
-             if (mpg123_open(mpg123handle,_fileFullPath.c_str()) != MPG123_OK || 
-                 mpg123_getformat(mpg123handle, &rate, &_channels, &_mp3Encoding) != MPG123_OK) {
-                 log("Trouble with mpg123: %s\n", mpg123_strerror(mpg123handle) );
-                 goto ExitThread;
-             }
-
-             if (_mp3Encoding == MPG123_ENC_SIGNED_16){
-                 _bytesPerFrame = 2 * _channels;
-             }
-             else if (_mp3Encoding == MPG123_ENC_FLOAT_32){
-                 _bytesPerFrame = 4 * _channels;
-             }
-             else{
-                 log("Bad encoding: 0x%x!\n", _mp3Encoding);
-                 goto ExitThread;
-             }
-             
-             _alBufferFormat = (_channels > 1) ? AL_FORMAT_STEREO16 : AL_FORMAT_MONO16;
-             _sampleRate = rate;
-             
-             /* Ensure that this output format will not change (it could, when we allow it). */
-             mpg123_format_none(mpg123handle);
-             mpg123_format(mpg123handle, rate, _channels, _mp3Encoding);
-             /* Ensure that we can get accurate length by call mpg123_length */
-             mpg123_scan(mpg123handle);
-
-             auto framesLength = mpg123_length(mpg123handle);
-             totalFrames = framesLength;
-             _pcmDataSize = totalFrames * _bytesPerFrame;
-             _duration = 1.0f * totalFrames / _sampleRate;
-         }
-         break;
-     case FileFormat::UNKNOWN:
-     default:
-         break;
-     }
-    
-    if (_pcmDataSize <= PCMDATA_CACHEMAXSIZE)
+    AudioDecoder* decoder = AudioDecoderManager::createDecoder(_fileFullPath.c_str());
+    do
     {
-        _pcmData = malloc(_pcmDataSize);
-        auto alError = alGetError();
-        alGenBuffers(1, &_alBufferId);
-        alError = alGetError();
-        if (alError != AL_NO_ERROR) {
-            log("%s: attaching audio to buffer fail: %x\n", __FUNCTION__, alError);
-            goto ExitThread;
-        }
-
-        switch (_fileFormat)
-        {
-        case FileFormat::OGG:
-            {
-                int current_section;
-                unsigned int currPos = 0;
-                long readRet = 0;
-                do 
-                {
-                    readRet = ov_read(vf,(char*)_pcmData + _bytesOfRead,4096,0,2,1,&current_section);
-                    if (readRet > 0){
-                        _bytesOfRead += readRet;
-                    }
-                } while (_bytesOfRead < _pcmDataSize);
-
-                _alBufferReady = true;
-                _bytesOfRead = _pcmDataSize;
-                break;
-            }
-        case FileFormat::MP3:
-            {
-                size_t done = 0;
-                auto err = mpg123_read(mpg123handle,(unsigned char*)_pcmData, _pcmDataSize,&done);
-                if (err == MPG123_ERR){
-                    log("Trouble with mpg123: %s\n", mpg123_strerror(mpg123handle) );
-                    goto ExitThread;
-                }
-                if (err == MPG123_DONE || err == MPG123_OK){
-                    _alBufferReady = true;
-                    _pcmDataSize = done;
-                    _bytesOfRead = done;
-                }
-            }
-            break;     
-        case FileFormat::UNKNOWN:
-        default:
+        if (decoder == nullptr || !decoder->open(_fileFullPath.c_str()))
             break;
-        }
-        alBufferData(_alBufferId,_alBufferFormat,_pcmData,_pcmDataSize,_sampleRate);
-    } 
-    else{
-        _queBufferFrames = _sampleRate * QUEUEBUFFER_TIME_STEP;
-        _queBufferBytes = _queBufferFrames * _bytesPerFrame;
 
-        for (int index = 0; index < QUEUEBUFFER_NUM; ++index) {
-            _queBuffers[index] = (char*)malloc(_queBufferBytes);
-            
-            switch (_fileFormat){
-            case FileFormat::MP3:
+        const uint32_t originalTotalFrames = decoder->getTotalFrames();
+        const uint32_t bytesPerFrame = decoder->getBytesPerFrame();
+        const uint32_t sampleRate = decoder->getSampleRate();
+        const uint32_t channelCount = decoder->getChannelCount();
+
+        uint32_t totalFrames = originalTotalFrames;
+        uint32_t dataSize = totalFrames * bytesPerFrame;
+        uint32_t remainingFrames = totalFrames;
+        uint32_t adjustFrames = 0;
+
+        _format = channelCount > 1 ? AL_FORMAT_STEREO16 : AL_FORMAT_MONO16;
+        _sampleRate = (ALsizei)sampleRate;
+        _duration = 1.0f * totalFrames / sampleRate;
+        _totalFrames = totalFrames;
+
+        if (dataSize <= PCMDATA_CACHEMAXSIZE)
+        {
+            uint32_t framesRead = 0;
+            const uint32_t framesToReadOnce = std::min(totalFrames, static_cast<uint32_t>(sampleRate * QUEUEBUFFER_TIME_STEP * QUEUEBUFFER_NUM));
+
+            std::vector<char> adjustFrameBuf;
+
+            if (decoder->seek(totalFrames))
+            {
+                char* tmpBuf = (char*)malloc(framesToReadOnce * bytesPerFrame);
+                adjustFrameBuf.reserve(framesToReadOnce * bytesPerFrame);
+
+                // Adjust total frames by setting position to the end of frames and try to read more data.
+                // This is a workaround for https://github.com/cocos2d/cocos2d-x/issues/16938
+                do
                 {
-                    size_t done = 0;
-                    mpg123_read(mpg123handle,(unsigned char*)_queBuffers[index], _queBufferBytes,&done);
-                    _queBufferSize[index] = done;
-                    _bytesOfRead += done;
-                }
-                break;
-            case FileFormat::OGG:
+                    framesRead = decoder->read(framesToReadOnce, tmpBuf);
+                    if (framesRead > 0)
+                    {
+                        adjustFrames += framesRead;
+                        adjustFrameBuf.insert(adjustFrameBuf.end(), tmpBuf, tmpBuf + framesRead * bytesPerFrame);
+                    }
+
+                } while (framesRead > 0);
+
+                if (adjustFrames > 0)
                 {
-                    int current_section;
-                    auto readRet = ov_read(vf,_queBuffers[index],_queBufferBytes,0,2,1,&current_section);
-                    _queBufferSize[index] = readRet;
+                    ALOGV("Orignal total frames: %u, adjust frames: %u, current total frames: %u", totalFrames, adjustFrames, totalFrames + adjustFrames);
+                    totalFrames += adjustFrames;
+                    _totalFrames = remainingFrames = totalFrames;
                 }
+
+                // Reset dataSize
+                dataSize = totalFrames * bytesPerFrame;
+
+                free(tmpBuf);
+            }
+            // Reset to frame 0
+            BREAK_IF_ERR_LOG(!decoder->seek(0), "AudioDecoder::seek(0) failed!");
+
+            _pcmData = (char*)malloc(dataSize);
+            memset(_pcmData, 0x00, dataSize);
+
+            if (adjustFrames > 0)
+            {
+                memcpy(_pcmData + (dataSize - adjustFrameBuf.size()), adjustFrameBuf.data(), adjustFrameBuf.size());
+            }
+
+            alGenBuffers(1, &_alBufferId);
+            auto alError = alGetError();
+            if (alError != AL_NO_ERROR) {
+                ALOGE("%s: attaching audio to buffer fail: %x", __FUNCTION__, alError);
                 break;
             }
+
+            if (*_isDestroyed)
+                break;
+
+            framesRead = decoder->readFixedFrames(std::min(framesToReadOnce, remainingFrames), _pcmData + _framesRead * bytesPerFrame);
+            _framesRead += framesRead;
+            remainingFrames -= framesRead;
+
+            if (*_isDestroyed)
+                break;
+
+            uint32_t frames = 0;
+            while (!*_isDestroyed && _framesRead < originalTotalFrames)
+            {
+                frames = std::min(framesToReadOnce, remainingFrames);
+                if (_framesRead + frames > originalTotalFrames)
+                {
+                    frames = originalTotalFrames - _framesRead;
+                }
+                framesRead = decoder->read(frames, _pcmData + _framesRead * bytesPerFrame);
+                if (framesRead == 0)
+                    break;
+                _framesRead += framesRead;
+                remainingFrames -= framesRead;
+            }
+
+            if (*_isDestroyed)
+                break;
+
+            if (_framesRead < originalTotalFrames)
+            {
+                memset(_pcmData + _framesRead * bytesPerFrame, 0x00, (totalFrames - _framesRead) * bytesPerFrame);
+            }
+            ALOGV("pcm buffer was loaded successfully, total frames: %u, total read frames: %u, adjust frames: %u, remainingFrames: %u", totalFrames, _framesRead, adjustFrames, remainingFrames);
+
+            _framesRead += adjustFrames;
+
+            alBufferData(_alBufferId, _format, _pcmData, (ALsizei)dataSize, (ALsizei)sampleRate);
+
+            _state = State::READY;
+        }
+        else
+        {
+            _queBufferFrames = sampleRate * QUEUEBUFFER_TIME_STEP;
+            BREAK_IF_ERR_LOG(_queBufferFrames == 0, "_queBufferFrames == 0");
+
+            const uint32_t queBufferBytes = _queBufferFrames * bytesPerFrame;
+
+            for (int index = 0; index < QUEUEBUFFER_NUM; ++index)
+            {
+                _queBuffers[index] = (char*)malloc(queBufferBytes);
+                _queBufferSize[index] = queBufferBytes;
+
+                decoder->readFixedFrames(_queBufferFrames, _queBuffers[index]);
+            }
+
+            _state = State::READY;
+        }
+
+    } while (false);
+
+    if (decoder != nullptr)
+    {
+        decoder->close();
+    }
+
+    AudioDecoderManager::destroyDecoder(decoder);
+
+    if (_state != State::READY)
+    {
+        _state = State::FAILED;
+        if (_alBufferId != INVALID_AL_BUFFER_ID && alIsBuffer(_alBufferId))
+        {
+            ALOGV("readDataTask failed, delete buffer: %u", _alBufferId);
+            alDeleteBuffers(1, &_alBufferId);
+            _alBufferId = INVALID_AL_BUFFER_ID;
         }
     }
-    
-ExitThread:
-    switch (_fileFormat)
-    {
-    case FileFormat::OGG:
-        ov_clear(vf);
-        delete vf;
-        break;
-    case FileFormat::MP3:
-        mpg123_close(mpg123handle);
-        mpg123_delete(mpg123handle);
-        break;
-    case FileFormat::UNKNOWN:
-    default:
-        break;
-    }
-    
-    _readDataTaskMutex.unlock();
-    if (_queBufferFrames > 0)
-    {
-        _alBufferReady = true;
-    } 
-    else
-    {
-        _loadFail = true;
-    }
-    
-    invokingLoadCallbacks();
-    invokingPlayCallbacks();
-}
 
-void AudioCache::invokingPlayCallbacks()
-{
-    _callbackMutex.lock();
-    auto count = _callbacks.size();
-    for (size_t index = 0; index < count; ++index) {
-        _callbacks[index]();
-    }
-    _callbacks.clear();
-    _callbackMutex.unlock();
+    //FIXME: Why to invoke play callback first? Should it be after 'load' callback?
+    invokingPlayCallbacks();
+    invokingLoadCallbacks();
+
+    _isLoadingFinished = true;
+    _readDataTaskMutex.unlock();
+    ALOGVV("readDataTask end, cache id=%u", selfId);
 }
 
 void AudioCache::addPlayCallback(const std::function<void()>& callback)
 {
-    _callbackMutex.lock();
-    if (_alBufferReady) {
-        callback();
-    } else {
-        _callbacks.push_back(callback);
+    std::lock_guard<std::mutex> lk(_playCallbackMutex);
+    switch (_state)
+    {
+        case State::INITIAL:
+        case State::LOADING:
+            _playCallbacks.push_back(callback);
+            break;
+
+        case State::READY:
+        // If state is failure, we still need to invoke the callback
+        // since the callback will set the 'AudioPlayer::_removeByAudioEngine' flag to true.
+        case State::FAILED:
+            callback();
+            break;
+
+        default:
+            ALOGE("Invalid state: %d", _state);
+            break;
     }
-    _callbackMutex.unlock();
 }
 
-void AudioCache::invokingLoadCallbacks()
+void AudioCache::invokingPlayCallbacks()
 {
-    auto scheduler = Director::getInstance()->getScheduler();
-    scheduler->performFunctionInCocosThread([&](){
-        auto count = _loadCallbacks.size();
-        for (size_t index = 0; index < count; ++index) {
-            _loadCallbacks[index](_alBufferReady);
-        }
-        _loadCallbacks.clear();
-    });
+    std::lock_guard<std::mutex> lk(_playCallbackMutex);
+
+    for (auto&& cb : _playCallbacks)
+    {
+        cb();
+    }
+
+    _playCallbacks.clear();
 }
 
 void AudioCache::addLoadCallback(const std::function<void(bool)>& callback)
 {
-    if (_alBufferReady) {
-        callback(true);
+    switch (_state)
+    {
+        case State::INITIAL:
+        case State::LOADING:
+            _loadCallbacks.push_back(callback);
+            break;
+
+        case State::READY:
+            callback(true);
+            break;
+        case State::FAILED:
+            callback(false);
+            break;
+
+        default:
+            ALOGE("Invalid state: %d", _state);
+            break;
     }
-    else if (_loadFail){
-        callback(false);
+}
+
+void AudioCache::invokingLoadCallbacks()
+{
+    if (*_isDestroyed)
+    {
+        ALOGV("AudioCache (%p) was destroyed, don't invoke preload callback ...", this);
+        return;
     }
-    else {
-        _loadCallbacks.push_back(callback);
-    }
+
+    auto isDestroyed = _isDestroyed;
+    auto scheduler = Director::getInstance()->getScheduler();
+    scheduler->performFunctionInCocosThread([&, isDestroyed](){
+        if (*isDestroyed)
+        {
+            ALOGV("invokingLoadCallbacks perform in cocos thread, AudioCache (%p) was destroyed!", this);
+            return;
+        }
+
+        for (auto&& cb : _loadCallbacks)
+        {
+            cb(_state == State::READY);
+        }
+
+        _loadCallbacks.clear();
+    });
 }
 
 #endif

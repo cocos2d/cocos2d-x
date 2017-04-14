@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2015-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -27,6 +27,8 @@
 #include "network/CCDownloader.h"
 #include "platform/android/jni/JniHelper.h"
 
+#include <mutex>
+
 #define JCLS_DOWNLOADER "org/cocos2dx/lib/Cocos2dxDownloader"
 #define JCLS_TASK       "com/loopj/android/http/RequestHandle"
 #define JARG_STR        "Ljava/lang/String;"
@@ -38,6 +40,33 @@ using namespace std;
 static bool _registerNativeMethods(JNIEnv* env);
 
 unordered_map<int, cocos2d::network::DownloaderAndroid*> sDownloaderMap;
+std::mutex sDownloaderMutex;
+
+static void _insertDownloaderAndroid(int id, cocos2d::network::DownloaderAndroid* downloaderPtr)
+{
+    std::lock_guard<std::mutex> guard(sDownloaderMutex);
+    sDownloaderMap.insert(make_pair(id, downloaderPtr));
+}
+
+static void _eraseDownloaderAndroid(int id)
+{
+    std::lock_guard<std::mutex> guard(sDownloaderMutex);
+    sDownloaderMap.erase(id);
+}
+
+/**
+ * If not found, return nullptr, otherwise return the Downloader
+ */
+static cocos2d::network::DownloaderAndroid* _findDownloaderAndroid(int id)
+{
+    std::lock_guard<std::mutex> guard(sDownloaderMutex);
+    auto iter = sDownloaderMap.find(id);
+    if (sDownloaderMap.end() == iter) {
+        return nullptr;
+    } else {
+        return iter->second;
+    }
+}
 
 namespace cocos2d { namespace network {
 
@@ -83,7 +112,9 @@ namespace cocos2d { namespace network {
                 );
                 _impl = methodInfo.env->NewGlobalRef(jObj);
                 DLLOG("android downloader: jObj: %p, _impl: %p", jObj, _impl);
-                sDownloaderMap.insert(make_pair(_id, this));
+                //It's not thread-safe here, use thread-safe method instead
+                //sDownloaderMap.insert(make_pair(_id, this));
+                _insertDownloaderAndroid(_id, this);
                 methodInfo.env->DeleteLocalRef(jStr);
                 methodInfo.env->DeleteLocalRef(jObj);
                 methodInfo.env->DeleteLocalRef(methodInfo.classID);
@@ -107,7 +138,9 @@ namespace cocos2d { namespace network {
                     );
                     methodInfo.env->DeleteLocalRef(methodInfo.classID);
                 }
-                sDownloaderMap.erase(_id);
+                //It's not thread-safe here, use thread-safe method instead
+                //sDownloaderMap.erase(_id);
+                _eraseDownloaderAndroid(_id);
                 JniHelper::getEnv()->DeleteGlobalRef(_impl);
             }
             DLLOG("Destruct DownloaderAndroid: %p", this);
@@ -186,26 +219,26 @@ namespace cocos2d { namespace network {
 static void _nativeOnProgress(JNIEnv *env, jclass clazz, jint id, jint taskId, jlong dl, jlong dlnow, jlong dltotal)
 {
     DLLOG("_nativeOnProgress(id: %d, taskId: %d, dl: %lld, dlnow: %lld, dltotal: %lld)", id, taskId, dl, dlnow, dltotal);
-    auto iter = sDownloaderMap.find(id);
-    if (sDownloaderMap.end() == iter)
+    //It's not thread-safe here, use thread-safe method instead
+    cocos2d::network::DownloaderAndroid *downloader = _findDownloaderAndroid(id);
+    if (nullptr == downloader)
     {
         DLLOG("_nativeOnProgress can't find downloader by key: %p for task: %d", clazz, id);
         return;
     }
-    cocos2d::network::DownloaderAndroid *downloader = iter->second;
     downloader->_onProcess((int)taskId, (int64_t)dl, (int64_t)dlnow, (int64_t)dltotal);
 }
 
 static void _nativeOnFinish(JNIEnv *env, jclass clazz, jint id, jint taskId, jint errCode, jstring errStr, jbyteArray data)
 {
     DLLOG("_nativeOnFinish(id: %d, taskId: %d)", id, taskId);
-    auto iter = sDownloaderMap.find(id);
-    if (sDownloaderMap.end() == iter)
+    //It's not thread-safe here, use thread-safe method instead
+    cocos2d::network::DownloaderAndroid *downloader = _findDownloaderAndroid(id);
+    if (nullptr == downloader)
     {
         DLLOG("_nativeOnFinish can't find downloader id: %d for task: %d", id, taskId);
         return;
     }
-    cocos2d::network::DownloaderAndroid *downloader = iter->second;
     vector<unsigned char> buf;
     if (errStr)
     {

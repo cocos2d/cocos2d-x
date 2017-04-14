@@ -1,7 +1,7 @@
 /****************************************************************************
 Copyright (c) 2009      Jason Booth
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -113,12 +113,9 @@ public:
      */
     virtual void beginWithClear(float r, float g, float b, float a, float depthValue, int stencilValue);
 
-    /** End is key word of lua, use other name to export to lua.
-     * @js NA
+    /** Ends grabbing.
+     * @lua endToLua
      */
-    inline void endToLua(){ end();};
-
-    /** Ends grabbing. */
     virtual void end();
 
     /** Clears the texture with a color. 
@@ -195,68 +192,68 @@ public:
      *
      * @return Clear flags.
      */
-    inline unsigned int getClearFlags() const { return _clearFlags; };
+    unsigned int getClearFlags() const { return _clearFlags; }
     
     /** Set flags.
      *
      * @param clearFlags Valid flags: GL_COLOR_BUFFER_BIT, GL_DEPTH_BUFFER_BIT, GL_STENCIL_BUFFER_BIT.
      */
-    inline void setClearFlags(unsigned int clearFlags) { _clearFlags = clearFlags; };
+    void setClearFlags(unsigned int clearFlags) { _clearFlags = clearFlags; }
     
     /** Clear color value. Valid only when "autoDraw" is true. 
      *
      * @return Color value.
      */
-    inline const Color4F& getClearColor() const { return _clearColor; };
+    const Color4F& getClearColor() const { return _clearColor; }
     
     /** Set color value. 
      *
      * @param clearColor Color value.
      */
-    inline void setClearColor(const Color4F &clearColor) { _clearColor = clearColor; };
+    void setClearColor(const Color4F &clearColor) { _clearColor = clearColor; }
     
     /** Value for clearDepth. Valid only when "autoDraw" is true. 
      *
      * @return Value for clearDepth.
      */
-    inline float getClearDepth() const { return _clearDepth; };
+    float getClearDepth() const { return _clearDepth; }
     
     /** Set Value for clearDepth.
      *
      * @param clearDepth Value for clearDepth.
      */
-    inline void setClearDepth(float clearDepth) { _clearDepth = clearDepth; };
+    void setClearDepth(float clearDepth) { _clearDepth = clearDepth; }
     
     /** Value for clear Stencil. Valid only when "autoDraw" is true.
      *
      * @return Value for clear Stencil.
      */
-    inline int getClearStencil() const { return _clearStencil; };
+    int getClearStencil() const { return _clearStencil; }
     
     /** Set Value for clear Stencil.
      *
      * @param clearStencil Value for clear Stencil.
      */
-    inline void setClearStencil(int clearStencil) { _clearStencil = clearStencil; };
+    void setClearStencil(int clearStencil) { _clearStencil = clearStencil; }
     
     /** When enabled, it will render its children into the texture automatically. Disabled by default for compatibility reasons.
      * Will be enabled in the future.
      *
      * @return Return the autoDraw value.
      */
-    inline bool isAutoDraw() const { return _autoDraw; };
+    bool isAutoDraw() const { return _autoDraw; }
     
     /** Set a valve to control whether or not render its children into the texture automatically. 
      *
      * @param isAutoDraw Whether or not render its children into the texture automatically.
      */
-    inline void setAutoDraw(bool isAutoDraw) { _autoDraw = isAutoDraw; };
+    void setAutoDraw(bool isAutoDraw) { _autoDraw = isAutoDraw; }
 
     /** Gets the Sprite being used. 
      *
      * @return A Sprite.
      */
-    inline Sprite* getSprite() const { return _sprite; };
+    Sprite* getSprite() const { return _sprite; }
     
     /** Sets the Sprite being used. 
      *
@@ -322,8 +319,8 @@ protected:
     Rect         _fullviewPort;
     
     GLuint       _FBO;
-    GLuint       _depthRenderBufffer;
-    GLuint       _stencilRenderBufffer;
+    GLuint       _depthRenderBuffer;
+    GLuint       _stencilRenderBuffer;
     GLint        _oldFBO;
     Texture2D* _texture;
     Texture2D* _textureCopy;    // a copy of _texture

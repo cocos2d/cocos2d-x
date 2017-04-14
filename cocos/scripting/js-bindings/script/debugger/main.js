@@ -1305,7 +1305,7 @@ function DebuggerServerConnection(aPrefix, aTransport)
   this._actorPool = new ActorPool(this);
   this._extraPools = [this._actorPool];
 
-  // Responses to a given actor must be returned the the client
+  // Responses to a given actor must be returned the client
   // in the same order as the requests that they're replying to, but
   // Implementations might finish serving requests in a different
   // order.  To keep things in order we generate a promise for each

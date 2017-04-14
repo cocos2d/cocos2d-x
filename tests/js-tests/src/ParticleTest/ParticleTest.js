@@ -1,7 +1,7 @@
 /****************************************************************************
  Copyright (c) 2008-2010 Ricardo Quesada
  Copyright (c) 2011-2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -135,6 +135,9 @@ var particleSceneArr = [
     },
     function() {
         return new ParticleResizeTest();
+    },
+    function() {
+        return new DemoPause();
     }
 ];
 
@@ -432,6 +435,23 @@ var DemoSun = ParticleDemo.extend({
     }
 });
 
+var DemoPause = ParticleDemo.extend({
+    onEnter:function () {
+    this._super();
+
+    this._emitter = new cc.ParticleSmoke();
+    this._background.addChild(this._emitter, 10);
+    this._emitter.texture = cc.textureCache.addImage(s_fire);
+    if (this._emitter.setShapeType)
+    this._emitter.setShapeType(cc.ParticleSystem.BALL_SHAPE);
+
+    this.setEmitterPosition();
+    },
+    title:function () {
+    return "Pause Particle";
+    }
+    });
+
 var DemoGalaxy = ParticleDemo.extend({
     onEnter:function () {
         this._super();
@@ -496,7 +516,7 @@ var DemoBigFlower = ParticleDemo.extend({
         this._emitter.radialAccel = -120;
         this._emitter.radialAccelVar = 0;
 
-        // tagential
+        // tangential
         this._emitter.tangentialAccel = 30;
         this._emitter.tangentialAccelVar = 0;
 

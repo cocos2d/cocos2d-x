@@ -31,7 +31,7 @@
 
 DEFINE_TEST_SUITE(NavMeshTests);
 
-#if CC_USE_NAVMESH == 0
+#if ( CC_USE_NAVMESH == 0 ) || ( CC_USE_PHYSICS == 0 )
 class NavMeshDisabled : public TestCase
 {
 public:

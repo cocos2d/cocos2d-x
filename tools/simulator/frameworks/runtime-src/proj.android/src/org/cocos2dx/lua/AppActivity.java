@@ -2,7 +2,7 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
  
 http://www.cocos2d-x.org
 
@@ -75,7 +75,7 @@ public class AppActivity extends Cocos2dxActivity{
 			{
 				AlertDialog.Builder builder=new AlertDialog.Builder(this);
 				builder.setTitle("Warning");
-				builder.setMessage("Please open WIFI for debuging...");
+				builder.setMessage("Please open WIFI for debugging...");
 				builder.setPositiveButton("OK",new DialogInterface.OnClickListener() {
 					
 					@Override

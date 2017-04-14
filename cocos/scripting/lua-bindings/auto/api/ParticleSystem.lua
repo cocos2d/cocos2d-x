@@ -137,6 +137,12 @@
 -- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
+-- 
+-- @function [parent=#ParticleSystem] resumeEmissions 
+-- @param self
+-- @return ParticleSystem#ParticleSystem self (return value: cc.ParticleSystem)
+        
+--------------------------------
 --  Gets the tangential acceleration.<br>
 -- return The tangential acceleration.
 -- @function [parent=#ParticleSystem] getTangentialAccel 
@@ -157,6 +163,12 @@
 -- @function [parent=#ParticleSystem] getSpeed 
 -- @param self
 -- @return float#float ret (return value: float)
+        
+--------------------------------
+-- 
+-- @function [parent=#ParticleSystem] pauseEmissions 
+-- @param self
+-- @return ParticleSystem#ParticleSystem self (return value: cc.ParticleSystem)
         
 --------------------------------
 --  Gets the angle of each particle. <br>
@@ -567,6 +579,13 @@
 -- @function [parent=#ParticleSystem] getLife 
 -- @param self
 -- @return float#float ret (return value: float)
+        
+--------------------------------
+--  Are the emissions paused<br>
+-- return True if the emissions are paused, else false
+-- @function [parent=#ParticleSystem] isPaused 
+-- @param self
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 --  Sets the speed variance.<br>

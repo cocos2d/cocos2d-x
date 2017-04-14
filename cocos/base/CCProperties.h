@@ -1,6 +1,6 @@
 /**
  Copyright 2013 BlackBerry Inc.
- Copyright (c) 2015 Chukong Technologies
+ Copyright (c) 2015-2017 Chukong Technologies
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -41,7 +41,7 @@ class Vec2;
 class Vec3;
 class Vec4;
 class Mat4;
-class Data;
+class Quaternion;
 class Data;
 
 

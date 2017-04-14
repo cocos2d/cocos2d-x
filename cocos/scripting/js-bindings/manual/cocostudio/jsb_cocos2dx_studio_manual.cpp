@@ -1,6 +1,6 @@
 /*
  * Created by LinWenhai on 20/10/13.
- * Copyright (c) 2013-2014 Chukong Technologies Inc.
+ * Copyright (c) 2013-2017 Chukong Technologies Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,7 +25,6 @@
 #include "scripting/js-bindings/manual/ScriptingCore.h"
 #include "scripting/js-bindings/manual/cocos2d_specifics.hpp"
 #include "editor-support/cocostudio/CocoStudio.h"
-#include "deprecated/CCDictionary.h"
 
 class JSArmatureWrapper: public JSCallbackWrapper {
 public:
@@ -121,13 +120,14 @@ static bool js_cocos2dx_ArmatureAnimation_setMovementEventCallFunc(JSContext *cx
             JSArmatureWrapper *tmpObj = new (std::nothrow) JSArmatureWrapper(args.thisv());
             tmpObj->autorelease();
 
-            cocos2d::__Dictionary* dict = static_cast<cocos2d::__Dictionary*>(cobj->getUserObject());
-            if (nullptr == dict)
+            auto userDict = static_cast<JSBinding::DictionaryRef*>(cobj->getUserObject());
+            if (nullptr == userDict)
             {
-                dict = cocos2d::__Dictionary::create();
-                cobj->setUserObject(dict);
+                userDict = new (std::nothrow) JSBinding::DictionaryRef();
+                cobj->setUserObject(userDict);
+                userDict->release();
             }
-            dict->setObject(tmpObj, "moveEvent");
+            userDict->data.insert("moveEvent", tmpObj);
 
             tmpObj->setJSCallbackFunc(args.get(0));
             if (argc == 1)
@@ -167,13 +167,14 @@ static bool js_cocos2dx_ArmatureAnimation_setFrameEventCallFunc(JSContext *cx, u
             JSArmatureWrapper *tmpObj = new (std::nothrow) JSArmatureWrapper(args.thisv());
             tmpObj->autorelease();
 
-            cocos2d::__Dictionary* dict = static_cast<cocos2d::__Dictionary*>(cobj->getUserObject());
+            auto dict = static_cast<JSBinding::DictionaryRef*>(cobj->getUserObject());
             if (nullptr == dict)
             {
-                dict = cocos2d::__Dictionary::create();
+                dict = new (std::nothrow) JSBinding::DictionaryRef();
                 cobj->setUserObject(dict);
+                dict->release();
             }
-            dict->setObject(tmpObj, "frameEvent");
+            dict->data.insert("frameEvent", tmpObj);
 
             tmpObj->setJSCallbackFunc(args.get(0));
             if (argc == 1)
@@ -251,7 +252,12 @@ static bool js_cocos2dx_studio_ActionManagerEx_initWithDictionaryEx(JSContext *c
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     cocostudio::ActionManagerEx* cobj = (cocostudio::ActionManagerEx *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_ActionManagerEx_initWithDictionaryEx : Invalid Native Object");
-    if (argc == 3) {
+
+    int version = 0;
+    if (argc == 4) {
+        ok &= jsval_to_int(cx, args.get(3), &version);
+    }
+    if (argc >= 3) {
         const char* arg0;
         const char* arg1;
         cocos2d::Ref* arg2;
@@ -271,7 +277,7 @@ static bool js_cocos2dx_studio_ActionManagerEx_initWithDictionaryEx(JSContext *c
             JSB_PRECONDITION2( arg2, cx, false, "Invalid Native Object");
         } while (0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_ActionManagerEx_initWithDictionaryEx : Error processing arguments");
-        cobj->initWithDictionary(arg0, arg1Jsondoc, arg2);
+        cobj->initWithDictionary(arg0, arg1Jsondoc, arg2, version);
         args.rval().setUndefined();
         return true;
     }
@@ -1460,5 +1466,4 @@ void register_all_cocos2dx_studio_manual(JSContext* cx, JS::HandleObject global)
     JS_DefineProperty(cx, textureData, "height", JS::UndefinedHandleValue, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_SHARED, js_get_TextureData_height, js_set_TextureData_height);
     JS_DefineProperty(cx, textureData, "pivotX", JS::UndefinedHandleValue, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_SHARED, js_get_TextureData_pivotX, js_set_TextureData_pivotX);
     JS_DefineProperty(cx, textureData, "pivotY", JS::UndefinedHandleValue, JSPROP_ENUMERATE | JSPROP_PERMANENT | JSPROP_SHARED, js_get_TextureData_pivotY, js_set_TextureData_pivotY);
-
 }

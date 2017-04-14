@@ -1,7 +1,7 @@
 /****************************************************************************
 Copyright (c) 2011      Zynga Inc.
 Copyright (c) 2012 		cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -92,4 +92,7 @@ NS_CC_BEGIN
 #include "renderer/ccShader_CameraClear.vert"
 #include "renderer/ccShader_CameraClear.frag"
 
+// ETC1 ALPHA support
+#include "renderer/ccShader_ETC1AS_PositionTextureColor.frag"
+#include "renderer/ccShader_ETC1AS_PositionTextureGray.frag"
 NS_CC_END

@@ -94,6 +94,14 @@
 -- @return Image#Image self (return value: cc.Image)
         
 --------------------------------
+-- Enables or disables premultiplied alpha for PNG files.<br>
+-- param enabled (default: true)
+-- @function [parent=#Image] setPNGPremultipliedAlphaEnabled 
+-- @param self
+-- @param #bool enabled
+-- @return Image#Image self (return value: cc.Image)
+        
+--------------------------------
 -- js ctor
 -- @function [parent=#Image] Image 
 -- @param self

@@ -1,5 +1,9 @@
 /****************************************************************************
+<<<<<<< HEAD
 Copyright (c) 2016 Chukong Technologies Inc.
+=======
+Copyright (c) 2016-2017 Chukong Technologies Inc.
+>>>>>>> cocos2d/v3
 
 http://www.cocos2d-x.org
 
@@ -28,6 +32,10 @@ THE SOFTWARE.
 #include "audio/android/UrlAudioPlayer.h"
 #include "audio/android/PcmAudioPlayer.h"
 #include "audio/android/AudioDecoder.h"
+<<<<<<< HEAD
+=======
+#include "audio/android/AudioDecoderProvider.h"
+>>>>>>> cocos2d/v3
 #include "audio/android/AudioMixerController.h"
 #include "audio/android/PcmAudioService.h"
 #include "audio/android/CCThreadPool.h"
@@ -146,19 +154,37 @@ IAudioPlayer *AudioPlayerProvider::getAudioPlayer(const std::string &audioFilePa
                 auto pcmData = std::make_shared<PcmData>();
                 auto isSucceed = std::make_shared<bool>(false);
                 auto isReturnFromCache = std::make_shared<bool>(false);
+<<<<<<< HEAD
 
                 std::thread::id threadId = std::this_thread::get_id();
 
                 preloadEffect(info, [&info, threadId, pcmData, isSucceed, isReturnFromCache](bool succeed, PcmData data){
+=======
+                auto isPreloadFinished = std::make_shared<bool>(false);
+
+                std::thread::id threadId = std::this_thread::get_id();
+
+                void* infoPtr = &info;
+                std::string url = info.url;
+                preloadEffect(info, [infoPtr, url, threadId, pcmData, isSucceed, isReturnFromCache, isPreloadFinished](bool succeed, PcmData data){
+>>>>>>> cocos2d/v3
                     // If the callback is in the same thread as caller's, it means that we found it
                     // in the cache
                     *isReturnFromCache = std::this_thread::get_id() == threadId;
                     *pcmData = data;
                     *isSucceed = succeed;
+<<<<<<< HEAD
                     ALOGV("FileInfo (%p), Set isSucceed flag: %d, path: %s", &info, succeed, info.url.c_str());
                 }, true);
 
                 if (!*isReturnFromCache)
+=======
+                    *isPreloadFinished = true;
+                    ALOGV("FileInfo (%p), Set isSucceed flag: %d, path: %s", infoPtr, succeed, url.c_str());
+                }, true);
+
+                if (!*isReturnFromCache && !*isPreloadFinished)
+>>>>>>> cocos2d/v3
                 {
                     std::unique_lock<std::mutex> lk(_preloadWaitMutex);
                     // Wait for 2 seconds for the decoding in sub thread finishes.
@@ -269,11 +295,19 @@ void AudioPlayerProvider::preloadEffect(const AudioFileInfo &info, const Preload
                 ALOGV("audio (%s) is being preloaded, add to callback vector!", audioFilePath.c_str());
                 PreloadCallbackParam param;
                 param.callback = cb;
+<<<<<<< HEAD
+=======
+                param.isPreloadInPlay2d = isPreloadInPlay2d;
+>>>>>>> cocos2d/v3
                 preloadIter->second.push_back(std::move(param));
                 return;
             }
 
+<<<<<<< HEAD
            // 3. Check it in cache again. If it has been removed from map just now, the file is in
+=======
+            // 3. Check it in cache again. If it has been removed from map just now, the file is in
+>>>>>>> cocos2d/v3
             // the cache absolutely.
             _pcmCacheMutex.lock();
             auto&& iter = _pcmCache.find(audioFilePath);
@@ -286,14 +320,21 @@ void AudioPlayerProvider::preloadEffect(const AudioFileInfo &info, const Preload
             }
             _pcmCacheMutex.unlock();
 
+<<<<<<< HEAD
 
             PreloadCallbackParam param;
             param.callback = cb;
+=======
+            PreloadCallbackParam param;
+            param.callback = cb;
+            param.isPreloadInPlay2d = isPreloadInPlay2d;
+>>>>>>> cocos2d/v3
             std::vector<PreloadCallbackParam> callbacks;
             callbacks.push_back(std::move(param));
             _preloadCallbackMap.insert(std::make_pair(audioFilePath, std::move(callbacks)));
         }
 
+<<<<<<< HEAD
         _threadPool->pushTask([this, audioFilePath, isPreloadInPlay2d](int tid) {
             ALOGV("AudioPlayerProvider::preloadEffect: (%s)", audioFilePath.c_str());
             PcmData d;
@@ -302,6 +343,16 @@ void AudioPlayerProvider::preloadEffect(const AudioFileInfo &info, const Preload
             if (ret)
             {
                 d = decoder.getResult();
+=======
+        _threadPool->pushTask([this, audioFilePath](int tid) {
+            ALOGV("AudioPlayerProvider::preloadEffect: (%s)", audioFilePath.c_str());
+            PcmData d;
+            AudioDecoder* decoder = AudioDecoderProvider::createAudioDecoder(_engineItf, audioFilePath, _bufferSizeInFrames, _deviceSampleRate, _fdGetterCallback);
+            bool ret = decoder != nullptr && decoder->start();
+            if (ret)
+            {
+                d = decoder->getResult();
+>>>>>>> cocos2d/v3
                 std::lock_guard<std::mutex> lk(_pcmCacheMutex);
                 _pcmCache.insert(std::make_pair(audioFilePath, d));
             }
@@ -310,12 +361,18 @@ void AudioPlayerProvider::preloadEffect(const AudioFileInfo &info, const Preload
                 ALOGE("decode (%s) failed!", audioFilePath.c_str());
             }
 
+<<<<<<< HEAD
             ALOGV("decode succeed.");
+=======
+            ALOGV("decode %s", (ret ? "succeed" : "failed"));
+
+>>>>>>> cocos2d/v3
             std::lock_guard<std::mutex> lk(_preloadCallbackMutex);
             auto&& preloadIter = _preloadCallbackMap.find(audioFilePath);
             if (preloadIter != _preloadCallbackMap.end())
             {
                 auto&& params = preloadIter->second;
+<<<<<<< HEAD
                 ALOGV("preload (%s) callback count: %d", audioFilePath.c_str(), params.size());
                 PcmData result = decoder.getResult();
                 for (auto&& param : params)
@@ -329,6 +386,22 @@ void AudioPlayerProvider::preloadEffect(const AudioFileInfo &info, const Preload
                     _preloadWaitCond.notify_one();
                 }
             }
+=======
+                ALOGV("preload (%s) callback count: %d", audioFilePath.c_str(), (int)params.size());
+                PcmData result = decoder->getResult();
+                for (auto&& param : params)
+                {
+                    param.callback(ret, result);
+                    if (param.isPreloadInPlay2d)
+                    {
+                        _preloadWaitCond.notify_one();
+                    }
+                }
+                _preloadCallbackMap.erase(preloadIter);
+            }
+
+            AudioDecoderProvider::destroyAudioDecoder(&decoder);
+>>>>>>> cocos2d/v3
         });
     }
     else

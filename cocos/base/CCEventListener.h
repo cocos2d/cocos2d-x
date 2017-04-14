@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -102,13 +102,13 @@ public:
      *
      * @param enabled True if enables the listener.
      */
-    inline void setEnabled(bool enabled) { _isEnabled = enabled; };
+    void setEnabled(bool enabled) { _isEnabled = enabled; }
 
     /** Checks whether the listener is enabled.
      *
      * @return True if the listener is enabled.
      */
-    inline bool isEnabled() const { return _isEnabled; };
+    bool isEnabled() const { return _isEnabled; }
 
 protected:
 
@@ -120,45 +120,45 @@ protected:
      *           call `setEnabled(false)` instead.
      *        2) In `Node`'s onEnter and onExit, the `paused state` of the listeners which associated with that node will be automatically updated.
      */
-    inline void setPaused(bool paused) { _paused = paused; };
+    void setPaused(bool paused) { _paused = paused; }
 
     /** Checks whether the listener is paused */
-    inline bool isPaused() const { return _paused; };
+    bool isPaused() const { return _paused; }
 
     /** Marks the listener was registered by EventDispatcher */
-    inline void setRegistered(bool registered) { _isRegistered = registered; };
+    void setRegistered(bool registered) { _isRegistered = registered; }
 
     /** Checks whether the listener was registered by EventDispatcher */
-    inline bool isRegistered() const { return _isRegistered; };
+    bool isRegistered() const { return _isRegistered; }
 
     /** Gets the type of this listener
      *  @note It's different from `EventType`, e.g. TouchEvent has two kinds of event listeners - EventListenerOneByOne, EventListenerAllAtOnce
      */
-    inline Type getType() const { return _type; };
+    Type getType() const { return _type; }
 
     /** Gets the listener ID of this listener
      *  When event is being dispatched, listener ID is used as key for searching listeners according to event type.
      */
-    inline const ListenerID& getListenerID() const { return _listenerID; };
+    const ListenerID& getListenerID() const { return _listenerID; }
 
     /** Sets the fixed priority for this listener
      *  @note This method is only used for `fixed priority listeners`, it needs to access a non-zero value.
      *  0 is reserved for scene graph priority listeners
      */
-    inline void setFixedPriority(int fixedPriority) { _fixedPriority = fixedPriority; };
+    void setFixedPriority(int fixedPriority) { _fixedPriority = fixedPriority; }
 
     /** Gets the fixed priority of this listener
      *  @return 0 if it's a scene graph priority listener, non-zero for fixed priority listener
      */
-    inline int getFixedPriority() const { return _fixedPriority; };
+    int getFixedPriority() const { return _fixedPriority; }
 
     /** Sets the node associated with this listener */
-    inline void setAssociatedNode(Node* node) { _node = node; };
+    void setAssociatedNode(Node* node) { _node = node; }
 
     /** Gets the node associated with this listener
      *  @return nullptr if it's a fixed priority listener, otherwise return non-nullptr
      */
-    inline Node* getAssociatedNode() const { return _node; };
+    Node* getAssociatedNode() const { return _node; }
 
     ///////////////
     // Properties

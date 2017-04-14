@@ -2,7 +2,7 @@
 Copyright (c) 2011      Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (C) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -119,7 +119,7 @@ static void SetBlending(GLenum sfactor, GLenum dfactor)
 
         RenderState::StateBlock::_defaultState->setBlend(true);
         RenderState::StateBlock::_defaultState->setBlendSrc((RenderState::Blend)sfactor);
-        RenderState::StateBlock::_defaultState->setBlendSrc((RenderState::Blend)dfactor);
+        RenderState::StateBlock::_defaultState->setBlendDst((RenderState::Blend)dfactor);
     }
 }
 
@@ -150,6 +150,15 @@ void blendResetToCache(void)
 void bindTexture2D(GLuint textureId)
 {
     GL::bindTexture2DN(0, textureId);
+}
+
+void bindTexture2D(Texture2D* texture)
+{
+    GL::bindTexture2DN(0, texture->getName());
+    auto alphaTexID = texture->getAlphaTextureName();
+    if (alphaTexID > 0) {
+        GL::bindTexture2DN(1, alphaTexID);
+    }
 }
 
 void bindTexture2DN(GLuint textureUnit, GLuint textureId)
@@ -200,7 +209,7 @@ void deleteTexture(GLuint textureId)
 	glDeleteTextures(1, &textureId);
 }
 
-void deleteTextureN(GLuint textureUnit, GLuint textureId)
+void deleteTextureN(GLuint /*textureUnit*/, GLuint textureId)
 {
     deleteTexture(textureId);
 }

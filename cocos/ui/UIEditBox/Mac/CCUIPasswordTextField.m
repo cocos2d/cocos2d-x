@@ -26,40 +26,110 @@
 #import "ui/UIEditBox/Mac/CCUIPasswordTextField.h"
 #include "ui/UIEditBox/Mac/CCUITextFieldFormatter.h"
 
+@interface RSVerticallyCenteredSecureTextFieldCell : NSSecureTextFieldCell
+{
+    BOOL mIsEditingOrSelecting;
+}
+
+@end
+
+@implementation RSVerticallyCenteredSecureTextFieldCell
+
+- (NSRect)drawingRectForBounds:(NSRect)theRect
+{
+    // Get the parent's idea of where we should draw
+    NSRect newRect = [super drawingRectForBounds:theRect];
+
+    // When the text field is being
+    // edited or selected, we have to turn off the magic because it screws up
+    // the configuration of the field editor.  We sneak around this by
+    // intercepting selectWithFrame and editWithFrame and sneaking a
+    // reduced, centered rect in at the last minute.
+    if (mIsEditingOrSelecting == NO)
+    {
+        // Get our ideal size for current text
+        NSSize textSize = [self cellSizeForBounds:theRect];
+
+        // Center that in the proposed rect
+        float heightDelta = newRect.size.height - textSize.height;
+        if (heightDelta > 0)
+        {
+            newRect.size.height -= heightDelta;
+            newRect.origin.y += (heightDelta / 2);
+        }
+    }
+
+    return newRect;
+}
+
+- (void)selectWithFrame:(NSRect)aRect
+                 inView:(NSView *)controlView
+                 editor:(NSText *)textObj
+               delegate:(id)anObject
+                  start:(long)selStart
+                 length:(long)selLength
+{
+    aRect = [self drawingRectForBounds:aRect];
+    mIsEditingOrSelecting = YES;
+    [super selectWithFrame:aRect
+                    inView:controlView
+                    editor:textObj
+                  delegate:anObject
+                     start:selStart
+                    length:selLength];
+    mIsEditingOrSelecting = NO;
+}
+
+- (void)editWithFrame:(NSRect)aRect
+               inView:(NSView *)controlView
+               editor:(NSText *)textObj
+             delegate:(id)anObject
+                event:(NSEvent *)theEvent
+{
+    aRect = [self drawingRectForBounds:aRect];
+    mIsEditingOrSelecting = YES;
+    [super editWithFrame:aRect
+                  inView:controlView
+                  editor:textObj
+                delegate:anObject
+                   event:theEvent];
+    mIsEditingOrSelecting = NO;
+}
+
+@end
+
 @interface CCUIPasswordTextField()
-@property (nonatomic, retain) NSMutableDictionary *placeholderAttributes;
+{
+
+}
 
 @end
 
 @implementation CCUIPasswordTextField
-{
-}
-
-@synthesize placeholderAttributes = _placeholderAttributes;
 
 -(id) initWithFrame:(NSRect)frameRect
 {
-    if ([super initWithFrame:frameRect]) {
-        NSFont* font = [NSFont systemFontOfSize:frameRect.size.height * 3 /2];
-        self.placeholderAttributes = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                      font, NSFontAttributeName,
-                                      [NSColor grayColor], NSForegroundColorAttributeName,
-                                      nil];
+    if (self = [super initWithFrame:frameRect]) {
+        [self setLineBreakMode:NSLineBreakByTruncatingTail];
     }
     
     return self;
 }
 
-- (void)dealloc
+-(void)dealloc
 {
-    self.placeholderAttributes = nil;
-    
     [super dealloc];
 }
 
++(void)load
+{
+    [self setCellClass:[RSVerticallyCenteredSecureTextFieldCell class]];
+}
+
+
 -(void)ccui_setPlaceholderFont:(NSFont *)font
 {
-    [self.placeholderAttributes setObject:font forKey:NSFontAttributeName];
+    //TODO:
 }
 
 -(NSString*)ccui_placeholder
@@ -69,27 +139,22 @@
 
 -(NSFont*)ccui_placeholderFont
 {
-    return [self.placeholderAttributes objectForKey:NSFontAttributeName];
+    return [NSFont systemFontOfSize:self.bounds.size.height * 3.0 / 2.0];
 }
 
 -(NSColor*)ccui_placeholderColor
 {
-    return [self.placeholderAttributes objectForKey:NSForegroundColorAttributeName];
+    return [NSColor whiteColor];
 }
 
 -(void)ccui_setPlaceholder:(NSString *)text
 {
-    NSAttributedString *as = [[NSAttributedString alloc] initWithString:text
-                                                             attributes:self.placeholderAttributes];
-    
-    [[self cell] setPlaceholderAttributedString:as];
-    
-    [as release];
+    //TODO:
 }
 
 -(void)ccui_setPlaceholderColor:(NSColor *)color
 {
-    [self.placeholderAttributes setObject:color forKey:NSForegroundColorAttributeName];
+    //TODO;
 }
 
 #pragma mark - CCUITextInput
@@ -121,6 +186,16 @@
 - (void)ccui_setFont:(NSFont *)ccui_font
 {
     self.font = ccui_font;
+}
+
+- (NSTextAlignment)ccui_alignment
+{
+  return self.alignment;
+}
+
+- (void)ccui_setTextHorizontalAlignment:(NSTextAlignment)ccui_alignment
+{
+  self.alignment = ccui_alignment;
 }
 
 

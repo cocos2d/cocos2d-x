@@ -60,7 +60,7 @@ SkeletonRenderer* SkeletonRenderer::createWithFile (const std::string& skeletonD
 }
 
 void SkeletonRenderer::initialize () {
-	_worldVertices = new float[2048]; // Max number of vertices per mesh.
+	_worldVertices = new float[1000]; // Max number of vertices per mesh.
 
 	_blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
 	setOpacityModifyRGB(true);

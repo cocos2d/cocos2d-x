@@ -58,9 +58,9 @@ public:
 
 	int getWidth();
 	int getHeight();
-	int getImageDataSize();
+    size_t getImageDataSize();
 	WICPixelFormatGUID getPixelFormat();
-	int getImageData(ImageBlob rawData, size_t dataLen);
+	size_t getImageData(ImageBlob rawData, size_t dataLen);
 	bool decodeImageData(ImageBlob data, size_t dataLen);
     bool encodeImageData(std::string path, const unsigned char* data, size_t dataLen, WICPixelFormatGUID pixelFormat, int width, int height, GUID containerFormat);
 
@@ -75,7 +75,7 @@ private:
 	int _height;
 	int _width;
 	size_t _dataLen;
-	UINT _bpp;
+    size_t _bpp;
 	WICPixelFormatGUID _format;
 	BYTE* _data;
 

@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2012      cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
  
@@ -25,8 +25,7 @@
 
 #include "deprecated/CCDictionary.h"
 #include <type_traits>
-#include "deprecated/CCString.h"
-#include "deprecated/CCInteger.h"
+#include "base/ccUTF8.h"
 #include "platform/CCFileUtils.h"
 #include "deprecated/CCString.h"
 #include "deprecated/CCBool.h"
@@ -503,7 +502,7 @@ static ValueVector ccarray_to_valuevector(__Array* arr)
         }  else if ((boolVal = dynamic_cast<__Bool*>(obj))) {
             arrElement = boolVal->getValue() ? Value(true) : Value(false);
         } else {
-            CCASSERT(false, "the type isn't suppored.");
+            CCASSERT(false, "the type isn't supported.");
         }
 
         ret.push_back(arrElement);
@@ -544,7 +543,7 @@ static ValueMap ccdictionary_to_valuemap(__Dictionary* dict)
         } else if ((boolVal = dynamic_cast<__Bool*>(obj))) {
             dictElement = boolVal->getValue() ? Value(true) : Value(false);
         } else {
-            CCASSERT(false, "the type isn't suppored.");
+            CCASSERT(false, "the type isn't supported.");
         }
 
         const char* key = pElement->getStrKey();
@@ -572,7 +571,8 @@ __Dictionary* __Dictionary::clone() const
     Clonable* obj = nullptr;
     if (_dictType == kDictInt)
     {
-        CCDICT_FOREACH(this, element)
+        DictElement* tmp = nullptr;
+        HASH_ITER(hh, _elements, element, tmp)
         {
             obj = dynamic_cast<Clonable*>(element->getObject());
             if (obj)
@@ -591,7 +591,8 @@ __Dictionary* __Dictionary::clone() const
     }
     else if (_dictType == kDictStr)
     {
-        CCDICT_FOREACH(this, element)
+        DictElement* tmp = nullptr;
+        HASH_ITER(hh, _elements, element, tmp)
         {
             obj = dynamic_cast<Clonable*>(element->getObject());
             if (obj)

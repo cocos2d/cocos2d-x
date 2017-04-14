@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -4344,7 +4344,7 @@ static int tolua_Cocos2d_glVertexAttribPointer00(lua_State* tolua_S)
         bool arg3 = tolua_toboolean(tolua_S, 4, 0);
         int arg4 = (int)tolua_tonumber(tolua_S, 5, 0);
         //int arg5 = (int)tolua_tonumber(tolua_S, 7, 0);
-        glVertexAttribPointer((GLuint)arg0 , (GLint)arg1 , (GLenum)arg2 , (GLboolean)arg3 , (GLsizei)arg4 , (GLvoid*)NULL);
+        glVertexAttribPointer((GLuint)arg0, (GLint)arg1, (GLenum)arg2, (GLboolean)arg3, (GLsizei)arg4, nullptr);
     }
     return 0;
 #ifndef TOLUA_RELEASE

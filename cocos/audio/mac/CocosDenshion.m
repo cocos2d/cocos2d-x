@@ -551,7 +551,7 @@ static BOOL _mixerRateSet = NO;
             
 #ifdef CD_USE_STATIC_BUFFERS
             alBufferDataStaticProc(_buffers[soundId].bufferId, format, soundData, size, freq);
-            _buffers[soundId].bufferData = data;//Save the pointer to the new data
+            _buffers[soundId].bufferData = soundData;//Save the pointer to the new data
 #else        
             alBufferData(_buffers[soundId].bufferId, format, soundData, size, freq);
 #endif
@@ -616,7 +616,7 @@ static BOOL _mixerRateSet = NO;
         CDLOGINFO(@"Denshion::CDSoundEngine - validateBufferId buffer outside range %i",soundId);
         return NO;
     } else if (_buffers[soundId].bufferState != CD_BS_LOADED) {
-        CDLOGINFO(@"Denshion::CDSoundEngine - validateBufferId invalide buffer state %i",soundId);
+        CDLOGINFO(@"Denshion::CDSoundEngine - validateBufferId invalid buffer state %i", soundId);
         return NO;
     } else {
         return YES;
@@ -809,7 +809,7 @@ static BOOL _mixerRateSet = NO;
 /**
  * Play a sound.
  * @param soundId the id of the sound to play (buffer id).
- * @param SourceGroupId the source group that will be used to play the sound.
+ * @param sourceGroupId the source group that will be used to play the sound.
  * @param pitch pitch multiplier. e.g 1.0 is unaltered, 0.5 is 1 octave lower. 
  * @param pan stereo position. -1 is fully left, 0 is centre and 1 is fully right.
  * @param gain gain multiplier. e.g. 1.0 is unaltered, 0.5 is half the gain
@@ -1411,7 +1411,7 @@ static BOOL _mixerRateSet = NO;
                 
             case kIT_SCurve:
                 //Cubic s curve t^2 * (3 - 2t)
-                return ((float)(t * t * (3.0 - (2.0 * t))) * (end - start)) + start;
+                return ((t * t * (3.0f - (2.0f * t))) * (end - start)) + start;
                 
             case kIT_Exponential:    
                 //Formulas taken from EaseAction
@@ -1486,7 +1486,7 @@ static BOOL _mixerRateSet = NO;
 }    
 
 -(void) modify:(float) t {
-    if (t < 1.0) {
+    if (t < 1.0f) {
         [self _setTargetProperty:[interpolator interpolate:t]];
     } else {
         //At the end

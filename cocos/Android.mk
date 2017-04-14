@@ -184,6 +184,10 @@ renderer/CCVertexIndexData.cpp \
 renderer/ccGLStateCache.cpp \
 renderer/CCFrameBuffer.cpp \
 renderer/ccShaders.cpp \
+vr/CCVRDistortion.cpp \
+vr/CCVRDistortionMesh.cpp \
+vr/CCVRGenericRenderer.cpp \
+vr/CCVRGenericHeadTracker.cpp \
 deprecated/CCArray.cpp \
 deprecated/CCDeprecated.cpp \
 deprecated/CCDictionary.cpp \
@@ -210,6 +214,7 @@ navmesh/CCNavMeshObstacle.cpp \
 navmesh/CCNavMeshUtils.cpp \
 ../external/ConvertUTF/ConvertUTFWrapper.cpp \
 ../external/ConvertUTF/ConvertUTF.c \
+../external/md5/md5.c \
 ../external/tinyxml2/tinyxml2.cpp \
 ../external/unzip/ioapi_mem.cpp \
 ../external/unzip/ioapi.cpp \
@@ -318,14 +323,27 @@ LOCAL_STATIC_LIBRARIES += cocos_png_static
 LOCAL_STATIC_LIBRARIES += cocos_webp_static
 #LOCAL_STATIC_LIBRARIES += cocos_chipmunk_static
 LOCAL_STATIC_LIBRARIES += cocos_zlib_static
+<<<<<<< HEAD
 #LOCAL_STATIC_LIBRARIES += recast_static
 #LOCAL_STATIC_LIBRARIES += bullet_static
+=======
+LOCAL_STATIC_LIBRARIES += cocos_ssl_static
+LOCAL_STATIC_LIBRARIES += recast_static
+LOCAL_STATIC_LIBRARIES += bullet_static
+>>>>>>> cocos2d/v3
 
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos2dxandroid_static
+LOCAL_WHOLE_STATIC_LIBRARIES += cpufeatures
 
 # define the macro to compile through support/zip_support/ioapi.c
 LOCAL_CFLAGS   :=  -DUSE_FILE32API
 LOCAL_CFLAGS   +=  -fexceptions
+
+# Issues #9968
+#ifeq ($(TARGET_ARCH_ABI),armeabi-v7a)
+#    LOCAL_CFLAGS += -DHAVE_NEON=1
+#endif
+
 LOCAL_CPPFLAGS := -Wno-deprecated-declarations
 LOCAL_EXPORT_CFLAGS   := -DUSE_FILE32API
 LOCAL_EXPORT_CPPFLAGS := -Wno-deprecated-declarations
@@ -350,6 +368,7 @@ LOCAL_STATIC_LIBRARIES += cocosdenshion_static
 
 include $(BUILD_STATIC_LIBRARY)
 #==============================================================
+$(call import-module,android/cpufeatures)
 $(call import-module,freetype2/prebuilt/android)
 $(call import-module,platform/android)
 $(call import-module,png/prebuilt/android)
@@ -371,4 +390,5 @@ $(call import-module,extensions)
 #$(call import-module,recast)
 # $(call import-module,curl/prebuilt/android)
 $(call import-module,websockets/prebuilt/android)
+$(call import-module,openssl/prebuilt/android)
 $(call import-module,flatbuffers)

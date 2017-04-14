@@ -39,12 +39,6 @@
 -- @return int#int ret (return value: int)
         
 --------------------------------
---  Ends grabbing. 
--- @function [parent=#RenderTexture] end 
--- @param self
--- @return RenderTexture#RenderTexture self (return value: cc.RenderTexture)
-        
---------------------------------
 --  Set Value for clear Stencil.<br>
 -- param clearStencil Value for clear Stencil.
 -- @function [parent=#RenderTexture] setClearStencil 
@@ -126,9 +120,9 @@
 -- @return RenderTexture#RenderTexture self (return value: cc.RenderTexture)
         
 --------------------------------
---  End is key word of lua, use other name to export to lua.<br>
--- js NA
--- @function [parent=#RenderTexture] endToLua 
+--  Ends grabbing.<br>
+-- lua endToLua
+-- @function [parent=#RenderTexture] end 
 -- @param self
 -- @return RenderTexture#RenderTexture self (return value: cc.RenderTexture)
         

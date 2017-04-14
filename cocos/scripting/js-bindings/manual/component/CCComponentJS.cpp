@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2015-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -82,7 +82,8 @@ ComponentJS::ComponentJS(const std::string& scriptFileName)
 #if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
             JS::RemoveObjectRoot(cx, &nproxy->obj);
 #endif // CC_ENABLE_GC_FOR_NATIVE_OBJECTS
-            jsb_remove_proxy(nproxy, jsb_get_js_proxy(nproxy->obj));
+            JS::RootedObject nobj(cx, nproxy->obj);
+            jsb_remove_proxy(nproxy, jsb_get_js_proxy(nobj));
         }
         // link the native object with the javascript object
         jsb_new_proxy(this, jsObj->ref());

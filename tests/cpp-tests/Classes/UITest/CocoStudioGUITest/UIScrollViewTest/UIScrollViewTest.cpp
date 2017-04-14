@@ -60,6 +60,7 @@ bool UIScrollViewTest_Vertical::init()
 		scrollView->setScrollBarWidth(4);
 		scrollView->setScrollBarPositionFromCorner(Vec2(2, 2));
 		scrollView->setScrollBarColor(Color3B::WHITE);
+        scrollView->setGlobalZOrder(200);
         _uiLayer->addChild(scrollView);
         
         ImageView* imageView = ImageView::create("cocosui/ccicon.png");
@@ -190,7 +191,7 @@ bool UIScrollViewTest_Both::init()
 {
     if (UIScene::init())
     {
-        Size widgetSize = _widget->getContentSize();;
+        Size widgetSize = _widget->getContentSize();
         
         // Add a label in which the dragpanel events will be displayed
         _displayValueLabel = Text::create("Move by any direction","fonts/Marker Felt.ttf",32);

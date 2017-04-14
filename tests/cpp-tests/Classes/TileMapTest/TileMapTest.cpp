@@ -49,6 +49,13 @@ TileMapTests::TileMapTests()
     ADD_TEST_CASE(TMXBug987);
     ADD_TEST_CASE(TMXBug787);
     ADD_TEST_CASE(TMXGIDObjectsTest);
+    ADD_TEST_CASE(TMXHexOddXTest);
+    ADD_TEST_CASE(TMXHexEvenXTest);
+    ADD_TEST_CASE(TMXHexOddYTest);
+    ADD_TEST_CASE(TMXHexEvenYTest);
+    ADD_TEST_CASE(TMXHexAxisXTest);
+    ADD_TEST_CASE(Issue16105Test);
+    ADD_TEST_CASE(Issue16512Test);
 }
 
 TileDemo::TileDemo()
@@ -1459,7 +1466,7 @@ TMXGIDObjectsTest::TMXGIDObjectsTest()
     Size CC_UNUSED s = map->getContentSize();
     CCLOG("Contentsize: %f, %f", s.width, s.height);
 
-    CCLOG("----> Iterating over all the group objets");
+    CCLOG("----> Iterating over all the group objects");
     
     auto drawNode = DrawNode::create();
     Color4F color(1.0, 1.0, 1.0, 1.0);
@@ -1490,4 +1497,202 @@ std::string TMXGIDObjectsTest::title() const
 std::string TMXGIDObjectsTest::subtitle() const
 {
     return "Tiles are created from an object group";
+}
+
+//------------------------------------------------------------------
+//
+// TMXHexOddXTest
+//
+//------------------------------------------------------------------
+TMXHexOddXTest::TMXHexOddXTest()
+{
+    auto color = LayerColor::create( Color4B(64,64,64,255) );
+    addChild(color, -1);
+
+    auto map = TMXTiledMap::create("TileMaps/hexagonal-mini-odd-x.tmx");
+    addChild(map, 0, kTagTileMap);
+
+    Size CC_UNUSED s = map->getContentSize();
+    CCLOG("ContentSize: %f, %f", s.width,s.height);
+
+    // Testing issue 16512 as well. Should not crash
+    auto floor = map->getLayer("Ground");
+    for (auto x = 0; x < map->getMapSize().width; x++) {
+        for (auto y = 0; y < map->getMapSize().height; y++) {
+            Vec2 p(x, y);
+            floor->getTileAt(p);
+        }
+    }
+}
+
+std::string TMXHexOddXTest::title() const
+{
+    return "TMX Hex Odd X";
+}
+
+//------------------------------------------------------------------
+//
+// TMXHexOddYTest
+//
+//------------------------------------------------------------------
+TMXHexOddYTest::TMXHexOddYTest()
+{
+    auto color = LayerColor::create( Color4B(64,64,64,255) );
+    addChild(color, -1);
+
+    auto map = TMXTiledMap::create("TileMaps/hexagonal-mini-odd-y.tmx");
+    addChild(map, 0, kTagTileMap);
+
+    Size CC_UNUSED s = map->getContentSize();
+    CCLOG("ContentSize: %f, %f", s.width,s.height);
+
+    // Testing issue 16512 as well. Should not crash
+    auto floor = map->getLayer("Ground");
+    for (auto x = 0; x < map->getMapSize().width; x++) {
+        for (auto y = 0; y < map->getMapSize().height; y++) {
+            Vec2 p(x, y);
+            floor->getTileAt(p);
+        }
+    }
+}
+
+std::string TMXHexOddYTest::title() const
+{
+    return "TMX Hex Odd Y";
+}
+
+//------------------------------------------------------------------
+//
+// TMXHexEvenXTest
+//
+//------------------------------------------------------------------
+TMXHexEvenXTest::TMXHexEvenXTest()
+{
+    auto color = LayerColor::create( Color4B(64,64,64,255) );
+    addChild(color, -1);
+
+    auto map = TMXTiledMap::create("TileMaps/hexagonal-mini-even-x.tmx");
+    addChild(map, 0, kTagTileMap);
+
+    Size CC_UNUSED s = map->getContentSize();
+    CCLOG("ContentSize: %f, %f", s.width,s.height);
+
+    // Testing issue 16512 as well. Should not crash
+    auto floor = map->getLayer("Ground");
+    for (auto x = 0; x < map->getMapSize().width; x++) {
+        for (auto y = 0; y < map->getMapSize().height; y++) {
+            Vec2 p(x, y);
+            floor->getTileAt(p);
+        }
+    }
+}
+
+std::string TMXHexEvenXTest::title() const
+{
+    return "TMX Hex Even X";
+}
+
+//------------------------------------------------------------------
+//
+// TMXHexEvenYTest
+//
+//------------------------------------------------------------------
+TMXHexEvenYTest::TMXHexEvenYTest()
+{
+    auto color = LayerColor::create( Color4B(64,64,64,255) );
+    addChild(color, -1);
+
+    auto map = TMXTiledMap::create("TileMaps/hexagonal-mini-even-y.tmx");
+    addChild(map, 0, kTagTileMap);
+
+    Size CC_UNUSED s = map->getContentSize();
+    CCLOG("ContentSize: %f, %f", s.width,s.height);
+
+    // Testing issue 16512 as well. Should not crash
+    auto floor = map->getLayer("Ground");
+    for (auto x = 0; x < map->getMapSize().width; x++) {
+        for (auto y = 0; y < map->getMapSize().height; y++) {
+            Vec2 p(x, y);
+            floor->getTileAt(p);
+        }
+    }
+}
+
+std::string TMXHexEvenYTest::title() const
+{
+    return "TMX Hex Even Y";
+}
+
+//------------------------------------------------------------------
+//
+// TMXHexAxisXTest
+//
+//------------------------------------------------------------------
+TMXHexAxisXTest::TMXHexAxisXTest()
+{
+    auto color = LayerColor::create( Color4B(64,64,64,255) );
+    addChild(color, -1);
+    
+    auto map = TMXTiledMap::create("TileMaps/hexa-axis-x.tmx");
+    addChild(map, 0, kTagTileMap);
+    
+    Size CC_UNUSED s = map->getContentSize();
+    CCLOG("ContentSize: %f, %f", s.width,s.height);
+}
+
+std::string TMXHexAxisXTest::title() const
+{
+    return "The map should be same with in Tiled Editor";
+}
+
+//------------------------------------------------------------------
+//
+// Issue16105Test
+//
+//------------------------------------------------------------------
+Issue16105Test::Issue16105Test()
+{
+    auto color = LayerColor::create( Color4B(64,64,64,255) );
+    addChild(color, -1);
+
+    auto map = TMXTiledMap::create("TileMaps/issue16105.tmx");
+    addChild(map, 0, kTagTileMap);
+
+    Size CC_UNUSED s = map->getContentSize();
+    CCLOG("ContentSize: %f, %f", s.width,s.height);
+}
+
+std::string Issue16105Test::title() const
+{
+    return "Github Issue #16105";
+}
+
+//------------------------------------------------------------------
+//
+// Issue16512Test
+//
+//------------------------------------------------------------------
+Issue16512Test::Issue16512Test()
+{
+    auto color = LayerColor::create( Color4B(64,64,64,255) );
+    addChild(color, -1);
+
+    auto map = TMXTiledMap::create("TileMaps/issue_16512.tmx");
+    addChild(map, 0, kTagTileMap);
+
+    Size CC_UNUSED s = map->getContentSize();
+    CCLOG("ContentSize: %f, %f", s.width,s.height);
+
+    auto floor = map->getLayer("Floor");
+    for (auto x = 0; x < map->getMapSize().width; x++) {
+        for (auto y = 0; y < map->getMapSize().height; y++) {
+            Vec2 p(x, y);
+            floor->getTileAt(p);
+        }
+    }
+}
+
+std::string Issue16512Test::title() const
+{
+    return "Github Issue #16512. Should not crash";
 }

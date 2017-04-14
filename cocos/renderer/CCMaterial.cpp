@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2015-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -419,8 +419,8 @@ std::string Material::getName() const
 
 Material::Material()
 : _name("")
-, _target(nullptr)
 , _currentTechnique(nullptr)
+, _target(nullptr)
 {
 }
 

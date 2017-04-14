@@ -1,5 +1,9 @@
 /****************************************************************************
+<<<<<<< HEAD
 Copyright (c) 2016 Chukong Technologies Inc.
+=======
+Copyright (c) 2016-2017 Chukong Technologies Inc.
+>>>>>>> cocos2d/v3
 
 http://www.cocos2d-x.org
 
@@ -131,7 +135,10 @@ bool PcmAudioService::init(AudioMixerController* controller, int numChannels, in
     const SLInterfaceID ids[] = {
             SL_IID_PLAY,
             SL_IID_VOLUME,
+<<<<<<< HEAD
             SL_IID_PITCH,
+=======
+>>>>>>> cocos2d/v3
             SL_IID_ANDROIDSIMPLEBUFFERQUEUE,
     };
 

@@ -18,6 +18,11 @@ FileUtilsTests::FileUtilsTests()
     ADD_TEST_CASE(TestWriteValueMap);
     ADD_TEST_CASE(TestWriteValueVector);
     ADD_TEST_CASE(TestUnicodePath);
+    ADD_TEST_CASE(TestIsFileExistAsync);
+    ADD_TEST_CASE(TestIsDirectoryExistAsync);
+    ADD_TEST_CASE(TestFileFuncsAsync);
+    ADD_TEST_CASE(TestWriteStringAsync);
+    ADD_TEST_CASE(TestWriteDataAsync);
 }
 
 // TestResolutionDirectories
@@ -30,7 +35,7 @@ void TestResolutionDirectories::onEnter()
     std::string ret;
 
     sharedFileUtils->purgeCachedEntries();
-    _defaultSearchPathArray = sharedFileUtils->getSearchPaths();
+    _defaultSearchPathArray = sharedFileUtils->getOriginalSearchPaths();
     std::vector<std::string> searchPaths = _defaultSearchPathArray;
     searchPaths.insert(searchPaths.begin(),   "Misc");
     sharedFileUtils->setSearchPaths(searchPaths);
@@ -84,7 +89,7 @@ void TestSearchPath::onEnter()
     std::string ret;
 
     sharedFileUtils->purgeCachedEntries();
-    _defaultSearchPathArray = sharedFileUtils->getSearchPaths();
+    _defaultSearchPathArray = sharedFileUtils->getOriginalSearchPaths();
     std::vector<std::string> searchPaths = _defaultSearchPathArray;
     std::string writablePath = sharedFileUtils->getWritablePath();
     std::string fileName = writablePath+"external.txt";
@@ -131,6 +136,25 @@ void TestSearchPath::onEnter()
             fclose(fp);
         }
     }
+
+    // Save old resource root path
+    std::string oldDefaultRootPath = sharedFileUtils->getDefaultResourceRootPath();
+    sharedFileUtils->setDefaultResourceRootPath(oldDefaultRootPath + "extensions");
+    auto sp1 = Sprite::create("orange_edit.png");
+    sp1->setPosition(VisibleRect::center());
+    addChild(sp1);
+
+    // Recover resource root path
+    sharedFileUtils->setDefaultResourceRootPath(oldDefaultRootPath);
+
+    auto oldSearchPaths = sharedFileUtils->getOriginalSearchPaths();
+    sharedFileUtils->addSearchPath("Images");
+    auto sp2 = Sprite::create("btn-about-normal.png");
+    sp2->setPosition(VisibleRect::center() + Vec2(0, -50));
+    addChild(sp2);
+
+    // Recover old search paths
+    sharedFileUtils->setSearchPaths(oldSearchPaths);
 }
 
 void TestSearchPath::onExit()
@@ -150,7 +174,7 @@ std::string TestSearchPath::title() const
 
 std::string TestSearchPath::subtitle() const
 {
-    return "See the console";
+    return "See the console, can see a orange box and a 'about' picture";
 }
 
 // TestFilenameLookup
@@ -385,8 +409,9 @@ void TestDirectoryFuncs::onEnter()
     y = s.height/4;
     Label* label = nullptr;
 
-    std::string dir = sharedFileUtils->getWritablePath() + "__test/";
+    std::string dir = sharedFileUtils->getWritablePath() + "__test";
     std::string subDir = "dir1/dir2";
+    std::string fullSubDir = dir + "/" + subDir;
     std::string msg;
     bool ok;
 
@@ -400,8 +425,8 @@ void TestDirectoryFuncs::onEnter()
         this->addChild(label);
 
         // Create sub directories recursively
-        ok = sharedFileUtils->createDirectory(dir + subDir);
-        if (ok && sharedFileUtils->isDirectoryExist(dir + subDir))
+        ok = sharedFileUtils->createDirectory(fullSubDir);
+        if (ok && sharedFileUtils->isDirectoryExist(fullSubDir))
         {
             msg = StringUtils::format("createDirectory: Sub directories '%s' created", subDir.c_str());
             label = Label::createWithSystemFont(msg, "", 20);
@@ -484,7 +509,7 @@ void TextWritePlist::onEnter()
     auto booleanObject = __Bool::create(true);
     dictInDict->setObject(booleanObject, "bool");
 
-    //add interger to the plist
+    //add integer to the plist
     auto intObject = __Integer::create(1024);
     dictInDict->setObject(intObject, "integer");
 
@@ -622,7 +647,7 @@ static const std::string FileErrors[] = {
     "OK",
     "NotExists",
     "OpenFailed",
-    "ReadFaild",
+    "ReadFailed",
     "NotInitialized",
     "TooLarge",
     "ObtainSizeFailed",
@@ -795,6 +820,8 @@ void TestWriteValueMap::onEnter()
     ValueMap mapInValueMap;
     mapInValueMap["string1"] = "string in dictInMap key 0";
     mapInValueMap["string2"] = "string in dictInMap key 1";
+    mapInValueMap["none"].getType();
+    
     valueMap["data0"] = Value(mapInValueMap);
 
     valueMap["data1"] = Value("string in array");
@@ -808,7 +835,7 @@ void TestWriteValueMap::onEnter()
     auto booleanObject = Value(true);
     valueMap["data3"] = booleanObject;
 
-    //add interger to the plist
+    //add integer to the plist
     auto intObject = Value(1024);
     valueMap["data4"] = intObject;
 
@@ -911,7 +938,7 @@ void TestWriteValueVector::onEnter()
     auto booleanObject = Value(true);
     array.push_back(booleanObject);
 
-    //add interger to the plist
+    //add integer to the plist
     auto intObject = Value(1024);
     array.push_back(intObject);
 
@@ -1077,6 +1104,262 @@ std::string TestUnicodePath::title() const
 }
 
 std::string TestUnicodePath::subtitle() const
+{
+    return "";
+}
+
+// TestIsFileExist
+
+void TestIsFileExistAsync::onEnter()
+{
+    FileUtilsDemo::onEnter();
+    auto s = Director::getInstance()->getWinSize();
+    auto sharedFileUtils = FileUtils::getInstance();
+    
+    sharedFileUtils->isFileExist("Images/grossini.png", [=](bool isExist) {
+        CCASSERT(std::this_thread::get_id() == Director::getInstance()->getCocos2dThreadId(), "Callback should be on cocos thread");
+        auto label = Label::createWithSystemFont(isExist ? "Images/grossini.png exists" : "Images/grossini.png doesn't exist", "", 20);
+        label->setPosition(s.width/2, s.height/3);
+        this->addChild(label);
+        
+        isExist = sharedFileUtils->isFileExist("Images/grossini.xcf");
+        label = Label::createWithSystemFont(isExist ? "Images/grossini.xcf exists" : "Images/grossini.xcf doesn't exist", "", 20);
+        label->setPosition(s.width/2, s.height/3*2);
+        this->addChild(label);
+    });
+}
+
+void TestIsFileExistAsync::onExit()
+{
+    
+    FileUtils *sharedFileUtils = FileUtils::getInstance();
+    
+    // reset filename lookup
+    sharedFileUtils->setFilenameLookupDictionary(ValueMap());
+    
+    FileUtilsDemo::onExit();
+}
+
+std::string TestIsFileExistAsync::title() const
+{
+    return "FileUtilsAsync: check whether the file exists";
+}
+
+std::string TestIsFileExistAsync::subtitle() const
+{
+    return "";
+}
+
+void TestIsDirectoryExistAsync::onEnter()
+{
+    FileUtilsDemo::onEnter();
+    auto s = Director::getInstance()->getWinSize();
+    auto util = FileUtils::getInstance();
+    int x = s.width/2, y = s.height/3;
+    
+    std::string dir;
+    auto getMsg = [](bool b, const std::string& dir)-> std::string
+    {
+        char msg[512];
+        snprintf((char *)msg, 512, "%s for dir: \"%s\"", b ? "success" : "failed", dir.c_str());
+        return std::string(msg);
+    };
+    
+    dir = util->getWritablePath();
+    util->isDirectoryExist(dir, [=](bool exists) {
+        CCAssert(exists, "Writable path should exist");
+        auto label = Label::createWithSystemFont(getMsg(exists, dir), "", 20);
+        label->setPosition(x, y * 2);
+        this->addChild(label);
+    });
+}
+
+void TestIsDirectoryExistAsync::onExit()
+{
+    
+    FileUtils *sharedFileUtils = FileUtils::getInstance();
+    
+    // reset filename lookup
+    sharedFileUtils->purgeCachedEntries();
+    
+    FileUtilsDemo::onExit();
+}
+
+std::string TestIsDirectoryExistAsync::title() const
+{
+    return "FileUtilsAsync: check whether the directory exists";
+}
+
+std::string TestIsDirectoryExistAsync::subtitle() const
+{
+    return "";
+}
+
+void TestFileFuncsAsync::onEnter()
+{
+    FileUtilsDemo::onEnter();
+    auto s = Director::getInstance()->getWinSize();
+    auto sharedFileUtils = FileUtils::getInstance();
+    
+    int x = s.width/2,
+    y = s.height/5;
+    
+    std::string filename = "__test.test";
+    std::string filename2 = "__newtest.test";
+    std::string filepath = sharedFileUtils->getWritablePath() + filename;
+    std::string content = "Test string content to put into created file";
+    std::string msg;
+    
+    FILE *out = fopen(filepath.c_str(), "w");
+    fputs(content.c_str(), out);
+    fclose(out);
+    
+    
+    sharedFileUtils->isFileExist(filepath, [=](bool exists) {
+        CCASSERT(exists, "File could not be found");
+        auto label = Label::createWithSystemFont("Test file '__test.test' created", "", 20);
+        label->setPosition(x, y * 4);
+        this->addChild(label);
+        
+        sharedFileUtils->getFileSize(filepath, [=](long size) {
+            auto msg = StringUtils::format("getFileSize: Test file size equals %ld", size);
+            auto label = Label::createWithSystemFont(msg, "", 20);
+            label->setPosition(x, y * 3);
+            this->addChild(label);
+            
+            sharedFileUtils->renameFile(sharedFileUtils->getWritablePath(), filename, filename2, [=] (bool success) {
+                CCASSERT(success, "Was not able to properly rename file");
+                auto label = Label::createWithSystemFont("renameFile: Test file renamed to  '__newtest.test'", "", 20);
+                label->setPosition(x, y * 2);
+                this->addChild(label);
+                
+                sharedFileUtils->removeFile(sharedFileUtils->getWritablePath() + filename2, [=](bool success) {
+                    CCASSERT(success, "Was not able to remove file");
+                    auto label = Label::createWithSystemFont("removeFile: Test file removed", "", 20);
+                    label->setPosition(x, y * 1);
+                    this->addChild(label);
+                });
+            });
+        });
+
+    });
+}
+
+std::string TestFileFuncsAsync::title() const
+{
+    return "FileUtilsAsync: file control functions";
+}
+
+std::string TestFileFuncsAsync::subtitle() const
+{
+    return "";
+}
+
+void TestWriteStringAsync::onEnter()
+{
+    FileUtilsDemo::onEnter();
+    
+    auto winSize = Director::getInstance()->getWinSize();
+    
+    auto writeResult = Label::createWithTTF("show writeResult", "fonts/Thonburi.ttf", 18);
+    this->addChild(writeResult);
+    writeResult->setPosition(winSize.width / 2, winSize.height * 3 / 4);
+    
+    auto readResult = Label::createWithTTF("show readResult", "fonts/Thonburi.ttf", 18);
+    this->addChild(readResult);
+    readResult->setPosition(winSize.width / 2, winSize.height / 3);
+    
+    std::string writablePath = FileUtils::getInstance()->getWritablePath();
+    std::string fileName = "writeStringTest.txt";
+    
+    // writeTest
+    std::string writeDataStr = "the string data will be write into a file";
+    std::string fullPath = writablePath + fileName;
+    
+    FileUtils::getInstance()->writeStringToFile(writeDataStr, fullPath, [=](bool success)
+    {
+        CCASSERT(success, "Write String to data failed");
+        writeResult->setString("write success:" + writeDataStr);
+
+        FileUtils::getInstance()->getStringFromFile(fullPath, [=](const std::string& value) {
+            CCASSERT(!value.empty(), "String should be readable");
+            readResult->setString("read success: " + value);
+        });
+    });
+}
+
+void TestWriteStringAsync::onExit()
+{
+    FileUtilsDemo::onExit();
+}
+
+std::string TestWriteStringAsync::title() const
+{
+    return "FileUtilsAsync: TestWriteString to files";
+}
+
+std::string TestWriteStringAsync::subtitle() const
+{
+    return "";
+}
+
+void TestWriteDataAsync::onEnter()
+{
+    FileUtilsDemo::onEnter();
+
+    auto winSize = Director::getInstance()->getWinSize();
+
+    auto writeResult = Label::createWithTTF("show writeResult", "fonts/Thonburi.ttf", 18);
+    this->addChild(writeResult);
+    writeResult->setPosition(winSize.width / 2, winSize.height * 3 / 4);
+
+    auto readResult = Label::createWithTTF("show readResult", "fonts/Thonburi.ttf", 18);
+    this->addChild(readResult);
+    readResult->setPosition(winSize.width / 2, winSize.height / 3);
+
+    std::string writablePath = FileUtils::getInstance()->getWritablePath();
+    std::string fileName = "writeDataTest.txt";
+
+    // writeTest
+    std::string writeDataStr = "the binary data will be write into a file";
+    Data writeData;
+    writeData.copy((unsigned char *)writeDataStr.c_str(), writeDataStr.size());
+    std::string fullPath = writablePath + fileName;
+
+
+    FileUtils::getInstance()->writeDataToFile(writeData, fullPath, [=](bool success) {
+        if (success)
+        {
+            writeResult->setString("Write result success");
+        } 
+        else
+        {
+            writeResult->setString("Write result failure");
+        }
+        
+        FileUtils::getInstance()->getDataFromFile(fullPath, [=](const Data& readData) {
+            auto buffer = (unsigned char*)malloc(sizeof(unsigned char) * (readData.getSize() + 1));
+            memcpy(buffer, readData.getBytes(), readData.getSize());
+            buffer[readData.getSize()] = '\0';
+            std::string readDataStr((const char*)buffer);
+            free(buffer);
+
+            readResult->setString("read success:" + readDataStr);
+        });
+    });
+}
+
+void TestWriteDataAsync::onExit()
+{
+    FileUtilsDemo::onExit();
+}
+
+std::string TestWriteDataAsync::title() const
+{
+    return "FileUtilsAsync: TestWriteData to files";
+}
+
+std::string TestWriteDataAsync::subtitle() const
 {
     return "";
 }
