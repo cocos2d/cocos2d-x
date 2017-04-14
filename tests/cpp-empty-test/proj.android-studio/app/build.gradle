@@ -21,10 +21,12 @@ android {
                     arguments 'NDK_TOOLCHAIN_VERSION=4.9'
                     arguments 'APP_PLATFORM=android-'+PROP_TARGET_SDK_VERSION
 
-                    def module_paths = [project.file("../../../.."),
-                                        project.file("../../../../cocos"),
-                                        project.file("../../../../external")]
+                    def module_paths = [project.file("../../../..").absolutePath,
+                                        project.file("../../../../cocos").absolutePath,
+                                        project.file("../../../../external").absolutePath]
                     if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+                        // should use '/'
+                        module_paths = module_paths.collect {it.replaceAll('\\\\', '/')}
                         arguments 'NDK_MODULE_PATH=' + module_paths.join(";")
                     }
                     else {
