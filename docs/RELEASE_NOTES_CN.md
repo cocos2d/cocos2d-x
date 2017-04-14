@@ -48,7 +48,7 @@
 
 ### 去除Windows 8.1的支持
 
-Windows 8.1的支持一直是微软的开发者在维护。因为市场占有率原因，他们觉得没必要继续支持Windows 8.1了。
+Windows 8.1的支持一直是微软的开发者在维护。因为市场占有率原因，微软觉得没必要继续支持Windows 8.1了。
 
 ### 去除32位linux支持
 
@@ -56,7 +56,7 @@ Windows 8.1的支持一直是微软的开发者在维护。因为市场占有率
 
 ### 其他
 
-[Android SDK Tools 25.3.0+](http://tools.android.com/recent/androidsdktoolsrevision2530feb2017)去除了 __ant脚本__ 和 __android命令__ ，使得cocos命令无法打包Android的Eclipse工程（proj.android）。为了不至于在最后胜出APK时才报错，现在cocos命令检查到这个版本后直接返回错误。有两个方法可以解决这个问题：
+[Android SDK Tools 25.3.0+](http://tools.android.com/recent/androidsdktoolsrevision2530feb2017)去除了 __ant脚本__ 和 __android命令__ ，使得cocos命令无法打包Android的Eclipse工程（proj.android）。为了不至于在最后生成APK时才报错，现在cocos命令检查到这个版本后直接返回错误。有两个方法可以解决这个问题：
 
 * 从旧版本的Android SDK拷贝tools文件夹过来替换对应的目录
 * 使用Android Studio工程编译打包
