@@ -818,7 +818,7 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual void listFiles(const std::string& dirPath, std::function<void(std::vector<std::string>)> callback) const;
+    virtual void listFilesAsync(const std::string& dirPath, std::function<void(std::vector<std::string>)> callback) const;
     
     /**
      *  List all files recursively in a directory.
@@ -837,7 +837,7 @@ public:
     * @js NA
     * @lua NA
     */
-    virtual void listFilesRecursively(const std::string& dirPath, std::function<void(std::vector<std::string>)> callback) const;
+    virtual void listFilesRecursivelyAsync(const std::string& dirPath, std::function<void(std::vector<std::string>)> callback) const;
 
     /** Returns the full path cache. */
     const std::unordered_map<std::string, std::string>& getFullPathCache() const { return _fullPathCache; }

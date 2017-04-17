@@ -1226,7 +1226,7 @@ std::vector<std::string> FileUtils::listFiles(const std::string& dirPath) const
     return files;
 }
 
-void FileUtils::listFiles(const std::string& dirPath, std::function<void(std::vector<std::string>)> callback) const
+void FileUtils::listFilesAsync(const std::string& dirPath, std::function<void(std::vector<std::string>)> callback) const
 {
     auto fullPath = fullPathForFilename(dirPath);
     performOperationOffthread([fullPath]() {
@@ -1299,7 +1299,7 @@ void FileUtils::listFilesRecursively(const std::string& dirPath, std::vector<std
     }
 }
 
-void FileUtils::listFilesRecursively(const std::string& dirPath, std::function<void(std::vector<std::string>)> callback) const
+void FileUtils::listFilesRecursivelyAsync(const std::string& dirPath, std::function<void(std::vector<std::string>)> callback) const
 {
     auto fullPath = fullPathForFilename(dirPath);
     performOperationOffthread([fullPath]() {
