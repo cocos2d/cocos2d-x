@@ -137,6 +137,9 @@ void TestSearchPath::onEnter()
         }
     }
 
+    // FIXME: should fix the issue on Android
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID)
+
     // Save old resource root path
     std::string oldDefaultRootPath = sharedFileUtils->getDefaultResourceRootPath();
     sharedFileUtils->setDefaultResourceRootPath(oldDefaultRootPath + "extensions");
@@ -155,6 +158,7 @@ void TestSearchPath::onEnter()
 
     // Recover old search paths
     sharedFileUtils->setSearchPaths(oldSearchPaths);
+#endif
 }
 
 void TestSearchPath::onExit()
