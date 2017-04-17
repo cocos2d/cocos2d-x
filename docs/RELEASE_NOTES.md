@@ -24,14 +24,14 @@
 
 ## Highlights
 
-* full Android Studio supports: include editing, compiling and debugging c++ codes
-* use [tremolo](http://wss.co.uk/pinknoise/tremolo/) to decode audio files on Android: high performance and more adaptable to different Android devices
-* WebSockets and SocketIO supports SSL
+* full __Android Studio__ supports: include editing, compiling and debugging c++ codes: [doc](https://github.com/chukong/cocos-docs/blob/v3-unified-documentation/installation/Android-Studio.md)
+* audio engine uses [tremolo](http://wss.co.uk/pinknoise/tremolo/) and __MP3 Decoder Library__ to decode audio files on Android: high performance and more adaptable to different Android devices
+* __WebSockets__ and __SocketIO__ supports SSL
 * AssetsManagerEx is more stable
-* update Spine runtime to v3.5.35
-* update flatbuffer to v1.5
+* update __Spine runtime__ to v3.5.35
+* update __flatbuffer__ to v1.5
 * remove support for Windows 8.1 store and phone
-* update OpenSSL to v1.1.0
+* update __OpenSSL__ to v1.1.0
 * remove linux 32-bit support
 
 ## Feature in detail
@@ -40,13 +40,13 @@
 
 Since v3.15, can use Android Studio 2.3+ to edit, compile and debug c++ codes. What you need to do is just use Android Studio to open `proj.android-studio`(such as `tests/cpp-empty-test/proj.android-studio`), then click run menu button to run on Android devices or simulators.
 
-![android-studio-support.png](todo)
+Please refer to [this doc](https://github.com/chukong/cocos-docs/blob/v3-unified-documentation/installation/Android-Studio.md) for detail usage.
 
-### Audio engine improve on Android
+### Audio engine improved on Android
 
 Before v3.15, new Audio engine uses OpenSL ES to decode and play audio files. But many Android device manufacturers modify OpenSL ES decoding codes which cause issues. [This thread](http://discuss.cocos2d-x.org/t/android-audio-decoding-issues-discussion/34610) lists many issues caused by it.
 
-In order to fix these issues, we decide to use a 3rd party audio decoding library. [tremolo](http://wss.co.uk/pinknoise/tremolo/) which is used by Android have good performance and stability. We finally choose to use it. What's exciting is what, after using `tremolo`, the audio engine's performance is highly improved too.
+In order to fix these issues, we decide to use 3rd party audio decoding libraries [tremolo](http://wss.co.uk/pinknoise/tremolo/) and __MP3 Decoder Library__, which are used by Android have good performance and stability. What's exciting is what, after using `tremolo`, the audio engine's performance is highly improved too.
 
 ![audio performance](https://raw.githubusercontent.com/minggo/Pictures/master/AudioDecodingPerfTest.png)  
 
@@ -62,4 +62,9 @@ If you need linux 32-bit support, you can build the 3rd party libraries through 
 
 ## misc
 
-[Android SDK Tools 25.3.0+](http://tools.android.com/recent/androidsdktoolsrevision2530feb2017) remove ant scripts and `android` tool, this leads to that cant not use cocos command to generate apk files. Currently, cocos command will do nothing if using SDK Tools 25.3.0+. We may remove eclipse project support in future as Google focus on Android Studio.
+[Android SDK Tools 25.3.0+](http://tools.android.com/recent/androidsdktoolsrevision2530feb2017) removes __ant script__ and __android tool__, which leads to that cocos command can not generate apk files with Eclipse projects(proj.android). Currently, cocos command will do nothing if using SDK Tools 25.3.0+, you can use these two methods to fix it:
+
+* copy `tools` folder from old Android SDK version
+* use Android Studio to build the app
+
+It seems google doesn't want developers continue to use Eclipse to develope Android applications, so i suggest to switch to use Android Studio.

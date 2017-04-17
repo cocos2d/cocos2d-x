@@ -1715,7 +1715,7 @@ void PhysicsFixedUpdate::onEnter()
 {
     PhysicsDemo::onEnter();
     
-    _physicsWorld->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+    toggleDebug();
     _physicsWorld->setGravity(Point::ZERO);
     
     // wall
