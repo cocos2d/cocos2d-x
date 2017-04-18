@@ -77,9 +77,13 @@ You can also create a JS project or Lua project with `-l js` or `-l lua`.
 
 ### Build and run a new project for Tizen ###
 
-The cocos command line tools doesn't support Tizen on Windows yet, you have to use Tizen IDE to do the build.
+There are two ways to build and run Tizen project:
 
-Please refer to this [guide](http://cocos2d-x.org/docs/installation/Tizen/index.html ).
+* use coocs console(can not work on 32-bit Windows currently)
+  ```
+  cocos run -p tizen
+  ```
+* use Tizen IDE, can refer to [this doc](http://cocos2d-x.org/docs/installation/Tizen/index.html ) for detail usage
 
 
 ### Build and run a new project for Linux ###
