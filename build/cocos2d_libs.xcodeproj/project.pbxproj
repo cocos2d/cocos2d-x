@@ -4180,8 +4180,8 @@
 		A5B57D451A3B919900CCBDB4 /* CCBXTextLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = A5B57CDD1A3B919900CCBDB4 /* CCBXTextLoader.h */; };
 		A5B57D461A3B919900CCBDB4 /* CCBXWidgetLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5B57CDE1A3B919900CCBDB4 /* CCBXWidgetLoader.cpp */; };
 		A5B57D471A3B919900CCBDB4 /* CCBXWidgetLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5B57CDE1A3B919900CCBDB4 /* CCBXWidgetLoader.cpp */; };
-		A5B57D481A3B919900CCBDB4 /* CCBXWidgetloader.h in Headers */ = {isa = PBXBuildFile; fileRef = A5B57CDF1A3B919900CCBDB4 /* CCBXWidgetloader.h */; };
-		A5B57D491A3B919900CCBDB4 /* CCBXWidgetloader.h in Headers */ = {isa = PBXBuildFile; fileRef = A5B57CDF1A3B919900CCBDB4 /* CCBXWidgetloader.h */; };
+		A5B57D481A3B919900CCBDB4 /* CCBXWidgetLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = A5B57CDF1A3B919900CCBDB4 /* CCBXWidgetLoader.h */; };
+		A5B57D491A3B919900CCBDB4 /* CCBXWidgetLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = A5B57CDF1A3B919900CCBDB4 /* CCBXWidgetLoader.h */; };
 		A5B57D4A1A3B919900CCBDB4 /* SpriteBuilder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5B57CE01A3B919900CCBDB4 /* SpriteBuilder.cpp */; };
 		A5B57D4B1A3B919900CCBDB4 /* SpriteBuilder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5B57CE01A3B919900CCBDB4 /* SpriteBuilder.cpp */; };
 		A5B57D4C1A3B919900CCBDB4 /* SpriteBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = A5B57CE11A3B919900CCBDB4 /* SpriteBuilder.h */; };
@@ -7106,7 +7106,7 @@
 		A5B57CDC1A3B919900CCBDB4 /* CCBXTextLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCBXTextLoader.cpp; path = spritebuilder/CCBXTextLoader.cpp; sourceTree = "<group>"; };
 		A5B57CDD1A3B919900CCBDB4 /* CCBXTextLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCBXTextLoader.h; path = spritebuilder/CCBXTextLoader.h; sourceTree = "<group>"; };
 		A5B57CDE1A3B919900CCBDB4 /* CCBXWidgetLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCBXWidgetLoader.cpp; path = spritebuilder/CCBXWidgetLoader.cpp; sourceTree = "<group>"; };
-		A5B57CDF1A3B919900CCBDB4 /* CCBXWidgetloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCBXWidgetloader.h; path = spritebuilder/CCBXWidgetloader.h; sourceTree = "<group>"; };
+		A5B57CDF1A3B919900CCBDB4 /* CCBXWidgetLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCBXWidgetLoader.h; path = spritebuilder/CCBXWidgetLoader.h; sourceTree = "<group>"; };
 		A5B57CE01A3B919900CCBDB4 /* SpriteBuilder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SpriteBuilder.cpp; path = spritebuilder/SpriteBuilder.cpp; sourceTree = "<group>"; };
 		A5B57CE11A3B919900CCBDB4 /* SpriteBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SpriteBuilder.h; path = spritebuilder/SpriteBuilder.h; sourceTree = "<group>"; };
 		A5C27CB81DD1E4490069F627 /* UIEditBoxImpl-emcc.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = "UIEditBoxImpl-emcc.cpp"; sourceTree = "<group>"; };
@@ -10525,7 +10525,7 @@
 				A5B57CDC1A3B919900CCBDB4 /* CCBXTextLoader.cpp */,
 				A5B57CDD1A3B919900CCBDB4 /* CCBXTextLoader.h */,
 				A5B57CDE1A3B919900CCBDB4 /* CCBXWidgetLoader.cpp */,
-				A5B57CDF1A3B919900CCBDB4 /* CCBXWidgetloader.h */,
+				A5B57CDF1A3B919900CCBDB4 /* CCBXWidgetLoader.h */,
 				A5B57CE01A3B919900CCBDB4 /* SpriteBuilder.cpp */,
 				A5B57CE11A3B919900CCBDB4 /* SpriteBuilder.h */,
 			);
@@ -12044,7 +12044,7 @@
 				A045F6DE1BA816A1005076C7 /* CCCameraBackgroundBrush.h in Headers */,
 				50ABBED91925AB6F00A911A9 /* ZipUtils.h in Headers */,
 				50643BDB19BFAF4400EF68ED /* CCStdC.h in Headers */,
-				A5B57D481A3B919900CCBDB4 /* CCBXWidgetloader.h in Headers */,
+				A5B57D481A3B919900CCBDB4 /* CCBXWidgetLoader.h in Headers */,
 				1A5701C3180BCB5A0088DEC7 /* CCLabelBMFont.h in Headers */,
 				B6CAB33F1AF9AA1A00B9B856 /* gim_basic_geometry_operations.h in Headers */,
 				B6CAAFFC1AF9A9E100B9B856 /* CCPhysics3DWorld.h in Headers */,
@@ -14727,7 +14727,7 @@
 				B6CAB3441AF9AA1A00B9B856 /* gim_box_collision.h in Headers */,
 				B665E3F11AA80A6600DDB1C5 /* CCPUSlaveBehaviourTranslator.h in Headers */,
 				15AE1BF419AAE01E00C27E9E /* CCControlSaturationBrightnessPicker.h in Headers */,
-				A5B57D491A3B919900CCBDB4 /* CCBXWidgetloader.h in Headers */,
+				A5B57D491A3B919900CCBDB4 /* CCBXWidgetLoader.h in Headers */,
 				15AE1AD119AAD40300C27E9E /* b2RevoluteJoint.h in Headers */,
 				B665E26D1AA80A6500DDB1C5 /* CCPUDoFreezeEventHandler.h in Headers */,
 				50643BD519BFAECF00EF68ED /* CCGL.h in Headers */,
