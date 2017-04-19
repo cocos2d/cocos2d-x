@@ -809,6 +809,16 @@ public:
      *  @return File paths in a string vector
      */
     virtual std::vector<std::string> listFiles(const std::string& dirPath) const;
+
+    /**
+     * List all files in a directory async, off of the main cocos thread.
+     *
+     * @param dirPath The path of the directory, it could be a relative or an absolute path.
+     * @param callback The callback to be called once the list operation is complete. Will be called on the main cocos thread.
+     * @js NA
+     * @lua NA
+     */
+    virtual void listFilesAsync(const std::string& dirPath, std::function<void(std::vector<std::string>)> callback) const;
     
     /**
      *  List all files recursively in a directory.
@@ -817,6 +827,17 @@ public:
      *  @return File paths in a string vector
      */
     virtual void listFilesRecursively(const std::string& dirPath, std::vector<std::string> *files) const;
+
+    /**
+    *  List all files recursively in a directory, async off the main cocos thread.
+    *
+    *  @param dirPath The path of the directory, it could be a relative or an absolute path.
+    *  @param callback The callback to be called once the list operation is complete. 
+    *          Will be called on the main cocos thread.
+    * @js NA
+    * @lua NA
+    */
+    virtual void listFilesRecursivelyAsync(const std::string& dirPath, std::function<void(std::vector<std::string>)> callback) const;
 
     /** Returns the full path cache. */
     const std::unordered_map<std::string, std::string>& getFullPathCache() const { return _fullPathCache; }

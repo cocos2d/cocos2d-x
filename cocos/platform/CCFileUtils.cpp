@@ -1226,6 +1226,14 @@ std::vector<std::string> FileUtils::listFiles(const std::string& dirPath) const
     return files;
 }
 
+void FileUtils::listFilesAsync(const std::string& dirPath, std::function<void(std::vector<std::string>)> callback) const
+{
+    auto fullPath = fullPathForFilename(dirPath);
+    performOperationOffthread([fullPath]() {
+        return FileUtils::getInstance()->listFiles(fullPath);
+    }, std::move(callback));
+}
+
 void FileUtils::listFilesRecursively(const std::string& dirPath, std::vector<std::string> *files) const
 {
     std::string fullpath = fullPathForFilename(dirPath);
@@ -1289,6 +1297,16 @@ void FileUtils::listFilesRecursively(const std::string& dirPath, std::vector<std
         }
         tinydir_close(&dir);
     }
+}
+
+void FileUtils::listFilesRecursivelyAsync(const std::string& dirPath, std::function<void(std::vector<std::string>)> callback) const
+{
+    auto fullPath = fullPathForFilename(dirPath);
+    performOperationOffthread([fullPath]() {
+        std::vector<std::string> retval;
+        FileUtils::getInstance()->listFilesRecursively(fullPath, &retval);
+        return retval;
+    }, std::move(callback));
 }
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
