@@ -803,13 +803,10 @@ void Scheduler::resumeTargets(const std::set<void*>& targetsToResume)
     }
 }
 
-void Scheduler::performFunctionInCocosThread(const std::function<void ()> &function)
+void Scheduler::performFunctionInCocosThread(std::function<void ()> function)
 {
-    _performMutex.lock();
-
-    _functionsToPerform.push_back(function);
-
-    _performMutex.unlock();
+    std::lock_guard<std::mutex> lock(_performMutex);
+    _functionsToPerform.push_back(std::move(function));
 }
 
 void Scheduler::removeAllFunctionsToBePerformedInCocosThread()
@@ -943,8 +940,7 @@ void Scheduler::update(float dt)
     if( !_functionsToPerform.empty() ) {
         _performMutex.lock();
         // fixed #4123: Save the callback functions, they must be invoked after '_performMutex.unlock()', otherwise if new functions are added in callback, it will cause thread deadlock.
-        auto temp = _functionsToPerform;
-        _functionsToPerform.clear();
+        auto temp = std::move(_functionsToPerform);
         _performMutex.unlock();
         for( const auto &function : temp ) {
             function();
