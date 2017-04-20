@@ -271,6 +271,10 @@ void AndroidJavaEngine::preloadEffect(const char* filePath)
         std::string fullPath = CocosDenshion::android::getFullPathWithoutAssetsPrefix(filePath);
         JniHelper::callStaticVoidMethod(helperClassName, "preloadEffect", fullPath);
     }
+    else
+    {
+        AudioEngine::preload(filePath);
+    }
 }
 
 void AndroidJavaEngine::unloadEffect(const char* filePath)
@@ -279,5 +283,9 @@ void AndroidJavaEngine::unloadEffect(const char* filePath)
     {
         std::string fullPath = CocosDenshion::android::getFullPathWithoutAssetsPrefix(filePath);
         JniHelper::callStaticVoidMethod(helperClassName, "unloadEffect", fullPath);
+    }
+    else
+    {
+        AudioEngine::uncache(filePath);
     }
 }

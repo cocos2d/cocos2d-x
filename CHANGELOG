@@ -1,3 +1,73 @@
+cocos2d-x-3.15 Apr.21 2017
+
+[NEW]           Full support of Android Studio, can use Android Studio to edit, compile and debug C++ codes
+[NEW]           Audio Engine: use `tremolo` to decode audio files to be more adaptable to Android devices and improve performance on Android
+[NEW]           WebSockets and SocketIO supports SSL
+[NEW]           WebSockets: add methods to get url and server selected protocol
+[NEW]           Add `utils::getFileMD5Hash()`
+
+[REFINE]        EventDispatcher: use `std::stable_sort()` to sort nodes and listeners
+[REFINE]        FileUtils: add async version of common methods
+[REFINE]        Label: full unicode support
+[REFINE]        Renderer: enable VAO by default on Android
+[REFINE]        Renderer: use std::stable_sort() to sort commands
+[REFINE]        Scheduler: `unscheduleAll()` will unschedule selectors that scheduled with `performFunctionInCocosThread()`
+[REFINE]        SpriteFrameCache: avoid load frames if they are already loaded
+[REFENE]        Texfield: not use auto correction on iOS now
+[REFINE]        TextureCache: allow to unbind asynchronous texture loading callback with a custom key
+[REFINE]        WebSockets: each connection will create a virtual host
+[REFINE]        WebView: can clean cached data
+[REFINE]        WebSockets: allow self-assign certification
+[REFINE]        3rd: update OpenSSL to v1.1.0
+[REFINE]        3rd: update flatbuffer to v1.5
+[REFINE]        3rd: Update Spine runtime to v3.5.35
+[REFINE]        Remove support for Windows 8.1 store and phone
+[REFINE]        Remove 32-bit linux support
+
+
+[FIX]           Action: spawn action may be invoked more times than specified 
+[FIX]           Audio engine: can not play audios in the callback set in `AudioEngine::setFinishedCallback()` on iOS, Mac and win32
+[FIX]           Audio engine: crash if uncache audios in finish callback on Android
+[FIX]           Audio engine: crash if playing very small mp3 audios on Android
+[FIX]           Audio engine: may crash if repeat doing `play -> stop` on iOS and Mac
+[FIX]           Audio engine: play2d may still wait 2 seconds if preload is too fast
+[FIX]           Audio engine: preload many audios may cause crash on devices that use Samsung Exynos CPU
+[FIX]           Application: `openURL()` return wrong valueo on Linux
+[FIX]           Core: out scene's `onEnterTransitionDidFinish` is not triggered if using transition scene with `Director::runWithScene()`
+[FIX]           CheckBox: can receive touch up event that is released far from it
+[FIX]           Downloader: is not thread safe and may cause rondom crash on Android
+[FIX]           DrawNode: can't change opacity
+[FIX]           GLProgram: memory leak
+[FIX]           HttpClient: may crash on Android 4.2
+[FIX]           Label: ttf font line wrap
+[FIX]           Label: wrong effect if ttf font line gap is not 0
+[FIX]           Label: memory leak with ttf font
+[FIX]           Label: call `disableEffect()` many times will compress the label to one character
+[FIX]           Mesh: enable depth write by default
+[FIX]           Node: calling `reorderChild()` does not update touch lister with scene graph priority
+[FIX]           PageView: `getCurrentPageIndex()` returns -1 when created and haven't scrolled
+[FIX]           Physics2d: can not apply velocity to kinematic bodies
+[FIX]           Scheduler: an unscheduled selector may be invoked many times
+[FIX]           Scheduler: selector is not moved in time
+[FIX]           Simple Audio Engine: `unloadEffect()` doesn't work on Android 5.0.1 devices
+[FIX]           Simple Audio Engine: `ConcurrentModificationException`
+[FIX]           SokcetIO: use wrong default port for connection
+[FIX]           Sprite: texture and shader lost after restore from background on Android if using ETC1
+[FIX]           WebSockets: memory leak
+[FIX]           WebSockets: doesn't parse url correctly
+[FIX]           WebSockets: may crash in random
+[FIX]           Vec4: error logic of operator '<'
+[FIX]           Android: accelerometer uses wrong time accuracy
+[FIX]           iOS: may crashed if multiple OpenGL ES contexts coexist
+[FIX]           Windows: bad performance
+[FIX]           Windows: link error when compiling in release mode
+[FIX]           Lua: content after '\0' of a string is cut off when passing a string to C++ or vice versa
+[FIX]           Lua: lua_cocos2dx_Widget_addTouchEventListener crashed
+[FIX]           Lua: can not get binary data from file
+[FIX]           JSB: XMLHttpRequest supports notifying progression
+[FIX]           JSB: invoke `jsb.reflection.callStaticMethod` many times will cause `JNI max table=512` exception on Android
+[FIX]           Others: `download_deps.py` depends on git command
+
 cocos2d-x-3.14.1 Jan.19 2017
 
 [FIX]           May crash if using `Scene::createWithPhysics()` to create a scene and physics3d camera is not set

@@ -427,8 +427,8 @@ cc.Speed.prototype._ctor = function(action, speed) {
 
 cc.Follow.prototype._ctor = function (followedNode, rect) {
     if(followedNode)
-        rect ? ret.initWithTarget(followedNode, rect)
-             : ret.initWithTarget(followedNode);
+        rect ? this.initWithTarget(followedNode, rect)
+             : this.initWithTarget(followedNode);
 };
 
 cc.OrbitCamera.prototype._ctor = function (t, radius, deltaRadius, angleZ, deltaAngleZ, angleX, deltaAngleX) {
