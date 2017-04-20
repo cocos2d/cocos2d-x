@@ -158,7 +158,7 @@ USER_UNDEFS =
 USER_CPP_UNDEFS = 
 
 # User Libraries
-USER_LIBS = cocos2dx websockets chipmunk png jpeg tiff webp
+USER_LIBS = cocos2dx websockets chipmunk png jpeg tiff webp ssl crypto
 
 # User Objects
 USER_OBJS = 
@@ -190,6 +190,7 @@ USER_CPP_INC_DIRS = ../Classes \
                     ../../../external/unzip \
                     ../../../external/webp/include/tizen \
                     ../../../external/websockets/include/tizen \
+                    ../../../external/openssl/include/tizen \
                     ../../../external/xxhash \
                     ../../../external/xxtea
 
@@ -204,7 +205,8 @@ USER_LIB_DIRS = ${PROJ_PATH}/../../../build/tizen/${BUILD_CONFIG}/${BUILD_ARCH} 
                 ${PROJ_PATH}/../../../external/png/prebuilt/tizen/${BUILD_ARCH} \
                 ${PROJ_PATH}/../../../external/tiff/prebuilt/tizen/${BUILD_ARCH} \
                 ${PROJ_PATH}/../../../external/webp/prebuilt/tizen/${BUILD_ARCH} \
-                ${PROJ_PATH}/../../../external/websockets/prebuilt/tizen/${BUILD_ARCH}
+                ${PROJ_PATH}/../../../external/websockets/prebuilt/tizen/${BUILD_ARCH} \
+                ${PROJ_PATH}/../../../external/openssl/prebuilt/tizen/${BUILD_ARCH}
 
 # EDC Resource Path
 USER_EDCS_IMAGE_DIRS = ${OUTPUT_DIR} 
