@@ -413,6 +413,13 @@
 -- @return FileUtils#FileUtils self (return value: cc.FileUtils)
 
 --------------------------------
+-- Gets the writable path.<br>
+-- return  The path that can be write/read a file in
+-- @function [parent=#FileUtils] getWritablePath 
+-- @param self
+-- @return string#string ret (return value: string)
+        
+--------------------------------
 -- List all files recursively in a directory.<br>
 -- param dirPath The path of the directory, it could be a relative or an absolute path.<br>
 -- return File paths in a string vector
@@ -421,13 +428,6 @@
 -- @param #string dirPath
 -- @param #array_table files
 -- @return FileUtils#FileUtils self (return value: cc.FileUtils)
-        
---------------------------------
--- Gets the writable path.<br>
--- return  The path that can be write/read a file in
--- @function [parent=#FileUtils] getWritablePath 
--- @param self
--- @return string#string ret (return value: string)
         
 --------------------------------
 -- Destroys the instance of FileUtils.

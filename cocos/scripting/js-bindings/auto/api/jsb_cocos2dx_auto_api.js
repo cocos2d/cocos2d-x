@@ -7491,6 +7491,16 @@ func
 },
 
 /**
+ * @method getWritablePath
+ * @return {String}
+ */
+getWritablePath : function (
+)
+{
+    return ;
+},
+
+/**
  * @method listFilesRecursively
  * @param {String} arg0
  * @param {Array} arg1
@@ -7500,16 +7510,6 @@ str,
 array 
 )
 {
-},
-
-/**
- * @method getWritablePath
- * @return {String}
- */
-getWritablePath : function (
-)
-{
-    return ;
 },
 
 /**
