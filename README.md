@@ -4,9 +4,9 @@
 cocos2d-x
 =========
 
-|  |iOS|Mac|Linux|Win32|Android|Win8.1-Universal|
+|  |iOS|Mac|Linux|Win32|Android|Tizen|
 | ----|----|----- | ---|----|------|---|
-|v3|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v3/node=ios)](http://45.56.80.45:8080/job/daily-build-v3/node=ios)|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v3/node=mac)](http://45.56.80.45:8080/job/daily-build-v3/node=mac)|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v3/node=linux)](http://45.56.80.45:8080/job/daily-build-v3/node=linux)|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v3/node=win32_bak)](http://45.56.80.45:8080/job/daily-build-v3/node=win32_bak)|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v3/node=android)](http://45.56.80.45:8080/job/daily-build-v3/node=android)|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v3/node=windows-universal_bak)](http://45.56.80.45:8080/job/daily-build-v3/node=windows-universal_bak)|
+|v3|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v3/node=ios)](http://45.56.80.45:8080/job/daily-build-v3/node=ios)|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v3/node=mac)](http://45.56.80.45:8080/job/daily-build-v3/node=mac)|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v3/node=linux)](http://45.56.80.45:8080/job/daily-build-v3/node=linux)|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v3/node=win32_bak)](http://45.56.80.45:8080/job/daily-build-v3/node=win32_bak)|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v3/node=android)](http://45.56.80.45:8080/job/daily-build-v3/node=android)|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=tizen-daily-build/node=tizen_mac)](http://45.56.80.45:8080/job/tizen-daily-build/node=tizen_mac/)|
 
 
 [cocos2d-x][1] is a multi-platform framework for building 2d games, interactive books, demos and other graphical applications.
