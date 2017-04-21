@@ -122,12 +122,12 @@ public:
 	{
 		switch (key)
 		{
-		case 'f':
+		case (unsigned char)cocos2d::EventKeyboard::KeyCode::KEY_F:
 			m_joint2->EnableMotor(!m_joint2->IsMotorEnabled());
 			m_joint2->GetBodyB()->SetAwake(true);
 			break;
 
-		case 'm':
+		case (unsigned char)cocos2d::EventKeyboard::KeyCode::KEY_M:
 			m_joint1->EnableMotor(!m_joint1->IsMotorEnabled());
 			m_joint1->GetBodyB()->SetAwake(true);
 			break;

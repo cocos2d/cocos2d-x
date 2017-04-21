@@ -103,7 +103,7 @@ public:
 	{
 		switch (key)
 		{
-		case 'j':
+		case (unsigned char)cocos2d::EventKeyboard::KeyCode::KEY_J:
 			if (m_rope)
 			{
 				m_world->DestroyJoint(m_rope);

@@ -137,8 +137,7 @@ public:
 	{
 		switch (key)
 		{
-		case 'a':
-		case 'A':
+		case (unsigned char)cocos2d::EventKeyboard::KeyCode::KEY_A:
 			m_button = true;
 			break;
 		}
@@ -148,8 +147,7 @@ public:
 	{
 		switch (key)
 		{
-		case 'a':
-		case 'A':
+		case (unsigned char)cocos2d::EventKeyboard::KeyCode::KEY_A:
 			m_button = false;
 			break;
 		}

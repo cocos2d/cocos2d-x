@@ -139,19 +139,19 @@ public:
 	{
 		switch (key)
 		{
-		case 'a':
+		case (unsigned char)cocos2d::EventKeyboard::KeyCode::KEY_A:
 			m_automated = !m_automated;
 			break;
 
-		case 'c':
+		case (unsigned char)cocos2d::EventKeyboard::KeyCode::KEY_C:
 			CreateProxy();
 			break;
 
-		case 'd':
+		case (unsigned char)cocos2d::EventKeyboard::KeyCode::KEY_D:
 			DestroyProxy();
 			break;
 
-		case 'm':
+		case (unsigned char)cocos2d::EventKeyboard::KeyCode::KEY_M:
 			MoveProxy();
 			break;
 		}

@@ -128,11 +128,11 @@ public:
 	{
 		switch (key)
 		{
-		case 'l':
+		case (unsigned char)cocos2d::EventKeyboard::KeyCode::KEY_L:
 			m_joint->EnableLimit(!m_joint->IsLimitEnabled());
 			break;
 
-		case 'm':
+		case (unsigned char)cocos2d::EventKeyboard::KeyCode::KEY_M:
 			m_joint->EnableMotor(!m_joint->IsMotorEnabled());
 			break;
 		}

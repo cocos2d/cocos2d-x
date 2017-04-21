@@ -306,20 +306,19 @@ public:
 	{
 		switch (key)
 		{
-		case '1':
-		case '2':
-		case '3':
-		case '4':
-		case '5':
-		case '6':
-			Create(key - '1');
+		case (unsigned char)cocos2d::EventKeyboard::KeyCode::KEY_1:
+		case (unsigned char)cocos2d::EventKeyboard::KeyCode::KEY_2:
+		case (unsigned char)cocos2d::EventKeyboard::KeyCode::KEY_3:
+		case (unsigned char)cocos2d::EventKeyboard::KeyCode::KEY_4:
+		case (unsigned char)cocos2d::EventKeyboard::KeyCode::KEY_5:
+		case (unsigned char)cocos2d::EventKeyboard::KeyCode::KEY_6:
+			Create((int32)key - (int32)cocos2d::EventKeyboard::KeyCode::KEY_1);
 			break;
 
-		case 'd':
+		case (unsigned char)cocos2d::EventKeyboard::KeyCode::KEY_D:
 			DestroyBody();
 			break;
-
-		case 'm':
+		case (unsigned char)cocos2d::EventKeyboard::KeyCode::KEY_M:
 			if (m_mode == e_closest)
 			{
 				m_mode = e_any;

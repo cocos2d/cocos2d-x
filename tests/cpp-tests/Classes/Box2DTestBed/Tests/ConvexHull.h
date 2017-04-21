@@ -69,11 +69,11 @@ public:
 	{
 		switch (key)
 		{
-		case 'a':
+		case (unsigned char)cocos2d::EventKeyboard::KeyCode::KEY_A:
 			m_auto = !m_auto;
 			break;
 
-		case 'g':
+		case (unsigned char)cocos2d::EventKeyboard::KeyCode::KEY_G:
 			Generate();
 			break;
 		}

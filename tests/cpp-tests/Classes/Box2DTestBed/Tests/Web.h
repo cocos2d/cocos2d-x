@@ -150,7 +150,7 @@ public:
 	{
 		switch (key)
 		{
-		case 'b':
+		case (unsigned char)cocos2d::EventKeyboard::KeyCode::KEY_B:
 			for (int32 i = 0; i < 4; ++i)
 			{
 				if (m_bodies[i])
@@ -162,7 +162,7 @@ public:
 			}
 			break;
 
-		case 'j':
+		case (unsigned char)cocos2d::EventKeyboard::KeyCode::KEY_J:
 			for (int32 i = 0; i < 8; ++i)
 			{
 				if (m_joints[i])

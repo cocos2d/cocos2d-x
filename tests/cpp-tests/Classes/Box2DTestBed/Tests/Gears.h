@@ -149,7 +149,8 @@ public:
 	{
 		switch (key)
 		{
-		case 0:
+		case (unsigned char)cocos2d::EventKeyboard::KeyCode::KEY_0:
+		// case 0:
 			break;
 		}
 	}
