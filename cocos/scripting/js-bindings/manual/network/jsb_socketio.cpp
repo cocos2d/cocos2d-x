@@ -146,17 +146,27 @@ bool js_cocos2dx_SocketIO_connect(JSContext* cx, uint32_t argc, jsval* vp)
     if (argc == 1 || argc == 2)
     {
         std::string url;
+        std::string caFilePath;
         
         do
         {
             bool ok = jsval_to_std_string(cx, args.get(0), &url);
             JSB_PRECONDITION2( ok, cx, false, "Error processing arguments");
         } while (0);
+
+        if (argc == 2)
+        {
+            do
+            {
+                bool ok = jsval_to_std_string(cx, args.get(1), &caFilePath);
+                JSB_PRECONDITION2( ok, cx, false, "Error processing arguments");
+            } while (0);
+        }
         
         JSB_SocketIODelegate* siodelegate = new (std::nothrow) JSB_SocketIODelegate();
         
         CCLOG("Calling native SocketIO.connect method");
-        SIOClient* ret = SocketIO::connect(url, *siodelegate);
+        SIOClient* ret = SocketIO::connect(url, *siodelegate, caFilePath);
         
         jsval jsret;
         do
