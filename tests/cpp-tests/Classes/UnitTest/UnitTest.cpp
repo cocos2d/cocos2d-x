@@ -312,7 +312,12 @@ void TemplateVectorTest::onEnter()
         CCASSERT(child->getReferenceCount() == 2, "child's reference count is 2.");
     }
 
+#if ((CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS))
+    vecSelfAssign = vecSelfAssign;
+#else
     vecSelfAssign = std::move(vecSelfAssign);
+#endif
+    
     CCASSERT(vecSelfAssign.size() == 20, "vecSelfAssign's size is 20.");
 
     for (const auto& child : vecSelfAssign)
@@ -511,7 +516,12 @@ void TemplateMapTest::onEnter()
         CCASSERT(e.second->getReferenceCount() == 2, "e.second's reference count is 2.");
     }
 
+#if ((CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS))
+    mapForSelfAssign = mapForSelfAssign;
+#else
     mapForSelfAssign = std::move(mapForSelfAssign);
+#endif
+    
     CCASSERT(mapForSelfAssign.size() == 20, "mapForSelfAssign's size is 20.");
 
     for (const auto& e : mapForSelfAssign)
@@ -1205,7 +1215,11 @@ void ParseUriTest::onEnter()
 
         // Self move assignment
         {
+#if ((CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS))
+            u = u;
+#else
             u = std::move(u);
+#endif
             EXPECT_TRUE(u.isValid());
         }
 
