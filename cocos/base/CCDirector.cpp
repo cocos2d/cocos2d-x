@@ -62,7 +62,7 @@ THE SOFTWARE.
 #include "base/CCAsyncTaskPool.h"
 #include "platform/CCApplication.h"
 
-#include "cocostudio/CCTransformHelp.h"
+#include "editor-support/cocostudio/CCTransformHelp.h"
 #include "base/ObjectFactory.h"
 #include "3d/CCSprite3DMaterial.h"
 #include "3d/CCSprite3D.h"
