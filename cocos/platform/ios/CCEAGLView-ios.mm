@@ -889,7 +889,13 @@ UIInterfaceOrientation getFixedOrientation(UIInterfaceOrientation statusBarOrien
     switch (getFixedOrientation([[UIApplication sharedApplication] statusBarOrientation]))
     {
         case UIInterfaceOrientationPortrait:
-            self.frame = CGRectMake(originalRect_.origin.x, originalRect_.origin.y - dis, originalRect_.size.width, originalRect_.size.height);
+            //fix bug (https://github.com/cocos2d/cocos2d-x/issues/17746)
+            if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
+            {
+                self.frame = CGRectMake(originalRect_.origin.x, originalRect_.origin.y - dis, self.frame.size.width, self.frame.size.height);
+            }else{
+                self.frame = CGRectMake(originalRect_.origin.x, originalRect_.origin.y - dis, originalRect_.size.width, originalRect_.size.height);
+            }
             break;
             
         case UIInterfaceOrientationPortraitUpsideDown:
