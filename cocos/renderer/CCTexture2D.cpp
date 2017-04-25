@@ -1270,10 +1270,10 @@ void Texture2D::setTexParameters(const TexParams &texParams)
 
 void Texture2D::setAliasTexParameters()
 {
-    if (! _antialiasEnabled)
+    /*if (! _antialiasEnabled)
     {
         return;
-    }
+    }*/
 
     _antialiasEnabled = false;
 

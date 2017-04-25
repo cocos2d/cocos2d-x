@@ -104,9 +104,9 @@ class CC_DLL RenderTargetRenderBuffer : public RenderTargetBase
 {
 public:
     
-    static RenderTargetRenderBuffer* create(unsigned int width, unsigned int height);
+    static RenderTargetRenderBuffer* create(unsigned int width, unsigned int height, int samples = 0);
     
-    bool init(unsigned int width, unsigned int height);
+    bool init(unsigned int width, unsigned int height, int samples = 0);
     
     virtual GLuint getBuffer() const { return _colorBuffer; }
     
@@ -126,9 +126,9 @@ class CC_DLL RenderTargetDepthStencil : public RenderTargetBase
 {
 public:
     
-    static RenderTargetDepthStencil* create(unsigned int width, unsigned int height);
+    static RenderTargetDepthStencil* create(unsigned int width, unsigned int height, int samples = 0);
     
-    bool init(unsigned int width, unsigned int height);
+    bool init(unsigned int width, unsigned int height, int samples = 0);
     
     virtual GLuint getBuffer() const { return _depthStencilBuffer; }
     

@@ -52,6 +52,7 @@ public:
     }
 
 public:
+    Size();
     /**
     @{
     Constructor.
@@ -60,7 +61,6 @@ public:
     @param other Copy constructor.
     @param point Conversion from a point.
      */
-    Size();
     Size(float width, float height);
     Size(const Size& other);
     explicit Size(const Vec2& point);

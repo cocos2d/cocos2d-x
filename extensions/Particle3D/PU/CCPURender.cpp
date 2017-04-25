@@ -105,7 +105,7 @@ void PUParticle3DQuadRender::render(Renderer* renderer, const Mat4 &transform, P
         _indices.resize(activeParticleList.size() * 6);
     }
 
-    auto camera = Camera::getVisitingCamera();
+    auto camera = Director::getInstance()->getRunningScene()->getCamera();
     auto cameraMat = camera->getNodeToWorldTransform();
     
 
@@ -640,7 +640,7 @@ void PUParticle3DBoxRender::render( Renderer* renderer, const Mat4 &transform, P
     if (!_isVisible || particlePool.empty())
         return;
 
-    auto camera = Camera::getVisitingCamera();
+    auto camera = Director::getInstance()->getRunningScene()->getCamera();
     auto cameraMat = camera->getNodeToWorldTransform();
     Vec3 backward(cameraMat.m[8], cameraMat.m[9], cameraMat.m[10]);
 
@@ -820,7 +820,7 @@ void PUSphereRender::render( Renderer* renderer, const Mat4 &transform, Particle
     if (!_isVisible || particlePool.empty())
         return;
 
-    auto camera = Camera::getVisitingCamera();
+    auto camera = Director::getInstance()->getRunningScene()->getCamera();
     auto cameraMat = camera->getNodeToWorldTransform();
     Vec3 backward(cameraMat.m[8], cameraMat.m[9], cameraMat.m[10]);
 

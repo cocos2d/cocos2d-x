@@ -12,11 +12,14 @@ LOCAL_SRC_FILES := AudioEngine-inl.cpp \
                    CCThreadPool.cpp \
                    AssetFd.cpp \
                    AudioDecoder.cpp \
+<<<<<<< HEAD
+=======
                    AudioDecoderProvider.cpp \
                    AudioDecoderSLES.cpp \
                    AudioDecoderOgg.cpp \
                    AudioDecoderMp3.cpp \
                    AudioDecoderWav.cpp \
+>>>>>>> cocos2d/v3
                    AudioPlayerProvider.cpp \
                    AudioResampler.cpp \
                    AudioResamplerCubic.cpp \
@@ -31,9 +34,13 @@ LOCAL_SRC_FILES := AudioEngine-inl.cpp \
                    audio_utils/format.c \
                    audio_utils/minifloat.cpp \
                    audio_utils/primitives.c \
+<<<<<<< HEAD
+                   utils/Utils.cpp
+=======
                    utils/Utils.cpp \
                    mp3reader.cpp \
                    tinysndfile.cpp
+>>>>>>> cocos2d/v3
 
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../include
@@ -43,7 +50,11 @@ LOCAL_EXPORT_LDLIBS := -lOpenSLES
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../include \
                     $(LOCAL_PATH)/../.. \
                     $(LOCAL_PATH)/../../platform/android \
+<<<<<<< HEAD
+                    $(LOCAL_PATH)/../../../../cocos2d-tooflya-sdk/support \
+=======
                     $(LOCAL_PATH)/../../../external/android-specific
+>>>>>>> cocos2d/v3
 
 LOCAL_STATIC_LIBRARIES += libvorbisidec libpvmp3dec
 include $(BUILD_STATIC_LIBRARY)
@@ -64,7 +75,8 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../include
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../include \
                     $(LOCAL_PATH)/../.. \
-                    $(LOCAL_PATH)/../../platform/android
+                    $(LOCAL_PATH)/../../platform/android \
+                    $(LOCAL_PATH)/../../../../cocos2d-tooflya-sdk/support \
 
 include $(BUILD_STATIC_LIBRARY)
 

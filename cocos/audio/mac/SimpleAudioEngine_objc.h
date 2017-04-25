@@ -45,6 +45,8 @@
 
 /** Background music volume. Range is 0.0f to 1.0f. This will only have an effect if willPlayBackgroundMusic returns YES */
 @property (readwrite) float backgroundMusicVolume;
+/** Background music speed. */
+@property (readwrite) float backgroundMusicSpeed;
 /** Effects volume. Range is 0.0f to 1.0f */
 @property (readwrite) float effectsVolume;
 /** If NO it indicates background music will not be played either because no background music is loaded or the audio session does not permit it.*/
@@ -93,6 +95,8 @@
 -(void) unloadEffect:(NSString*) filePath;
 /** Gets a CDSoundSource object set up to play the specified file. */
 -(CDSoundSource *) soundSourceForFile:(NSString*) filePath;
+/** */
+-(void) setEffectVolume:(int) soundId volume:(float) volume;
 
 /** Shuts down the shared audio engine instance so that it can be reinitialised */
 +(void) end;

@@ -132,6 +132,9 @@ protected:
     
     Physics3DObject*          _physics3DObj;
     PhysicsSyncFlag           _syncFlag;
+public:
+    short _group;
+    short _mask;
 };
 
 // end of 3d group

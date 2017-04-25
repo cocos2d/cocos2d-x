@@ -147,6 +147,10 @@ UserDefault::UserDefault()
 {
 }
 
+void UserDefault::clear()
+{
+}
+
 // FIXME:: deprecated
 void UserDefault::purgeSharedUserDefault()
 {

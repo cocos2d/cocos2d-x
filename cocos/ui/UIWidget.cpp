@@ -781,7 +781,7 @@ bool Widget::onTouchBegan(Touch *touch, Event* /*unusedEvent*/)
     if (isVisible() && isEnabled() && isAncestorsEnabled() && isAncestorsVisible(this) )
     {
         _touchBeganPosition = touch->getLocation();
-        auto camera = Camera::getVisitingCamera();
+        auto camera = Director::getInstance()->getRunningScene()->getCamera();
         if(hitTest(_touchBeganPosition, camera, nullptr))
         {
             if (isClippingParentContainsPoint(_touchBeganPosition)) {
@@ -1002,7 +1002,7 @@ bool Widget::isClippingParentContainsPoint(const Vec2 &pt)
     if (clippingParent)
     {
         bool bRet = false;
-        auto camera = Camera::getVisitingCamera();
+        auto camera = Director::getInstance()->getRunningScene()->getCamera();
         // Camera isn't null means in touch begin process, otherwise use _hittedByCamera instead.
         if (clippingParent->hitTest(pt, (camera ? camera : _hittedByCamera), nullptr))
         {

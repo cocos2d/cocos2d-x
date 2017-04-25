@@ -329,16 +329,6 @@ void Layer::setKeypadEnabled(bool enabled)
 
 bool Layer::onTouchBegan(Touch *touch, Event *event)
 {
-#if CC_ENABLE_SCRIPT_BINDING
-    if (kScriptTypeLua == _scriptType)
-    {
-        return executeScriptTouchHandler(EventTouch::EventCode::BEGAN, touch, event) == 0 ? false : true;
-    }
-#else
-    CC_UNUSED_PARAM(touch);
-    CC_UNUSED_PARAM(event);
-#endif
-    CCASSERT(false, "Layer#ccTouchBegan override me");
     return true;
 }
 

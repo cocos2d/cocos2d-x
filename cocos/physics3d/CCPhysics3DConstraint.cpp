@@ -833,6 +833,123 @@ void Physics3D6DofConstraint::setUseFrameOffset(bool frameOffsetOnOff) const
     static_cast<btGeneric6DofConstraint*>(_constraint)->setUseFrameOffset(frameOffsetOnOff);
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+Physics3D6DofSpringConstraint* Physics3D6DofSpringConstraint::create(Physics3DRigidBody* rbB, const cocos2d::Mat4& frameInB, bool useLinearReferenceFrameB)
+{
+    auto ret = new Physics3D6DofSpringConstraint();
+    ret->_bodyB = rbB;
+    rbB->retain();
+    
+    auto frameB = convertMat4TobtTransform(frameInB);
+    ret->_constraint = new btGeneric6DofSpringConstraint(*rbB->getRigidBody(), frameB, useLinearReferenceFrameB);
+    
+    ret->autorelease();
+    return ret;
+}
+
+Physics3D6DofSpringConstraint* Physics3D6DofSpringConstraint::create(Physics3DRigidBody* rbA, Physics3DRigidBody* rbB, const cocos2d::Mat4& frameInA, const cocos2d::Mat4& frameInB, bool useLinearReferenceFrameA)
+{
+    auto ret = new Physics3D6DofSpringConstraint();
+    ret->_bodyA = rbA;
+    ret->_bodyB = rbB;
+    rbA->retain();
+    rbB->retain();
+    
+    auto frameA = convertMat4TobtTransform(frameInA);
+    auto frameB = convertMat4TobtTransform(frameInB);
+    ret->_constraint = new btGeneric6DofSpringConstraint(*rbA->getRigidBody(), *rbB->getRigidBody(), frameA, frameB, useLinearReferenceFrameA);
+    
+    ret->autorelease();
+    return ret;
+}
+
+void	Physics3D6DofSpringConstraint::setLinearLowerLimit(const cocos2d::Vec3& linearLower)
+{
+    auto lower = convertVec3TobtVector3(linearLower);
+    static_cast<btGeneric6DofSpringConstraint*>(_constraint)->setLinearLowerLimit(lower);
+}
+
+cocos2d::Vec3	Physics3D6DofSpringConstraint::getLinearLowerLimit() const
+{
+    btVector3 lower;
+    static_cast<btGeneric6DofSpringConstraint*>(_constraint)->getLinearLowerLimit(lower);
+    return convertbtVector3ToVec3(lower);
+}
+
+void	Physics3D6DofSpringConstraint::setLinearUpperLimit(const cocos2d::Vec3& linearUpper)
+{
+    auto upper = convertVec3TobtVector3(linearUpper);
+    static_cast<btGeneric6DofSpringConstraint*>(_constraint)->setLinearUpperLimit(upper);
+}
+
+cocos2d::Vec3	Physics3D6DofSpringConstraint::getLinearUpperLimit() const
+{
+    btVector3 upper;
+    static_cast<btGeneric6DofSpringConstraint*>(_constraint)->getLinearUpperLimit(upper);
+    return convertbtVector3ToVec3(upper);
+}
+
+void	Physics3D6DofSpringConstraint::setAngularLowerLimit(const cocos2d::Vec3& angularLower)
+{
+    auto lower = convertVec3TobtVector3(angularLower);
+    static_cast<btGeneric6DofSpringConstraint*>(_constraint)->setAngularLowerLimit(lower);
+}
+
+cocos2d::Vec3	Physics3D6DofSpringConstraint::getAngularLowerLimit() const
+{
+    btVector3 lower;
+    static_cast<btGeneric6DofSpringConstraint*>(_constraint)->getAngularLowerLimit(lower);
+    return convertbtVector3ToVec3(lower);
+}
+
+void	Physics3D6DofSpringConstraint::setAngularUpperLimit(const cocos2d::Vec3& angularUpper)
+{
+    auto upper = convertVec3TobtVector3(angularUpper);
+    static_cast<btGeneric6DofSpringConstraint*>(_constraint)->setAngularUpperLimit(upper);
+}
+
+cocos2d::Vec3	Physics3D6DofSpringConstraint::getAngularUpperLimit() const
+{
+    btVector3 upper;
+    static_cast<btGeneric6DofSpringConstraint*>(_constraint)->getAngularUpperLimit(upper);
+    return convertbtVector3ToVec3(upper);
+}
+
+bool	Physics3D6DofSpringConstraint::isLimited(int limitIndex) const
+{
+    return static_cast<btGeneric6DofSpringConstraint*>(_constraint)->isLimited(limitIndex);
+}
+
+bool Physics3D6DofSpringConstraint::getUseFrameOffset() const
+{
+    return static_cast<btGeneric6DofSpringConstraint*>(_constraint)->getUseFrameOffset();
+}
+
+void Physics3D6DofSpringConstraint::setUseFrameOffset(bool frameOffsetOnOff) const
+{
+    static_cast<btGeneric6DofSpringConstraint*>(_constraint)->setUseFrameOffset(frameOffsetOnOff);
+}
+
+void Physics3D6DofSpringConstraint::enableSpring(int index, bool onOff)
+{
+  static_cast<btGeneric6DofSpringConstraint*>(_constraint)->enableSpring(index, onOff);
+}
+
+void Physics3D6DofSpringConstraint::setStiffness(int index, float stiffness)
+{
+  static_cast<btGeneric6DofSpringConstraint*>(_constraint)->setStiffness(index, stiffness);
+}
+
+void Physics3D6DofSpringConstraint::setDamping(int index, float damping)
+{
+  static_cast<btGeneric6DofSpringConstraint*>(_constraint)->setDamping(index, damping);
+}
+
+void Physics3D6DofSpringConstraint::setEquilibriumPoint()
+{
+  static_cast<btGeneric6DofSpringConstraint*>(_constraint)->setEquilibriumPoint();
+}
+
 NS_CC_END
 
 #endif // CC_ENABLE_BULLET_INTEGRATION

@@ -658,6 +658,7 @@ protected:
     bool _inertiaScrollEnabled;
 
     bool _bounceEnabled;
+    float _sens;
     
     Vec2 _outOfBoundaryAmount;
     bool _outOfBoundaryAmountDirty;
@@ -679,6 +680,8 @@ protected:
 #elif _MSC_VER >= 1400 //vs 2005 or higher
 #pragma warning (pop)
 #endif
+
+    public:
     ccScrollViewCallback _eventCallback;
 };
 

@@ -1,5 +1,9 @@
 /****************************************************************************
+<<<<<<< HEAD
+ Copyright (c) 2014-2016 Chukong Technologies Inc.
+=======
  Copyright (c) 2014-2017 Chukong Technologies Inc.
+>>>>>>> cocos2d/v3
 
  http://www.cocos2d-x.org
 
@@ -23,6 +27,11 @@
  ****************************************************************************/
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 
+<<<<<<< HEAD
+#define LOG_TAG "cocos2d-x debug info"
+
+=======
+>>>>>>> cocos2d/v3
 #include "audio/android/AudioEngine-inl.h"
 
 #include <unistd.h>
@@ -41,7 +50,10 @@
 #include "base/CCEventDispatcher.h"
 #include "base/CCEventType.h"
 #include "base/CCEventListenerCustom.h"
+<<<<<<< HEAD
+=======
 #include "base/ccUTF8.h"
+>>>>>>> cocos2d/v3
 #include "platform/android/CCFileUtils-android.h"
 #include "platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
 
@@ -63,6 +75,10 @@ static const int AUDIOFOCUS_LOST_TRANSIENT_CAN_DUCK = 3;
 static int __currentAudioFocus = AUDIOFOCUS_GAIN;
 static AudioEngineImpl* __impl = nullptr;
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> cocos2d/v3
 class CallerThreadUtils : public ICallerThreadUtils
 {
 public:
@@ -80,6 +96,7 @@ public:
     {
         _tid = tid;
     };
+<<<<<<< HEAD
 
 private:
     std::thread::id _tid;
@@ -87,6 +104,15 @@ private:
 
 static CallerThreadUtils __callerThreadUtils;
 
+=======
+
+private:
+    std::thread::id _tid;
+};
+
+static CallerThreadUtils __callerThreadUtils;
+
+>>>>>>> cocos2d/v3
 static int fdGetter(const std::string& url, off_t* start, off_t* length)
 {
     int fd = -1;
@@ -112,7 +138,12 @@ static int fdGetter(const std::string& url, off_t* start, off_t* length)
 
 //====================================================
 AudioEngineImpl::AudioEngineImpl()
+<<<<<<< HEAD
+    : _audioIDIndex(0)
+    , _engineObject(nullptr)
+=======
     : _engineObject(nullptr)
+>>>>>>> cocos2d/v3
     , _engineEngine(nullptr)
     , _outputMixObject(nullptr)
     , _audioPlayerProvider(nullptr)
@@ -120,9 +151,15 @@ AudioEngineImpl::AudioEngineImpl()
     , _onResumeListener(nullptr)
     , _audioIDIndex(0)
     , _lazyInitLoop(true)
+    , _audioPlayerProvider(nullptr)
+    , _onPauseListener(nullptr)
+    , _onResumeListener(nullptr)
 {
     __callerThreadUtils.setCallerThreadId(std::this_thread::get_id());
+<<<<<<< HEAD
+=======
     __impl = this;
+>>>>>>> cocos2d/v3
 }
 
 AudioEngineImpl::~AudioEngineImpl()
@@ -151,8 +188,11 @@ AudioEngineImpl::~AudioEngineImpl()
     {
         Director::getInstance()->getEventDispatcher()->removeEventListener(_onResumeListener);
     }
+<<<<<<< HEAD
+=======
 
     __impl = nullptr;
+>>>>>>> cocos2d/v3
 }
 
 bool AudioEngineImpl::init()
@@ -195,6 +235,7 @@ bool AudioEngineImpl::init()
 }
 
 void AudioEngineImpl::onEnterBackground(EventCustom* event)
+<<<<<<< HEAD
 {
     // _audioPlayerProvider->pause() pauses AudioMixer and PcmAudioService,
     // but UrlAudioPlayers could not be paused.
@@ -233,6 +274,104 @@ void AudioEngineImpl::onEnterForeground(EventCustom* event)
     _urlAudioPlayersNeedResume.clear();
 }
 
+int AudioEngineImpl::play2d(const std::string &filePath ,bool loop ,float volume)
+{
+    ALOGV("play2d, _audioPlayers.size=%d", (int)_audioPlayers.size());
+    auto audioId = AudioEngine::INVALID_AUDIO_ID;
+
+    do 
+    {
+        if (_engineEngine == nullptr || _audioPlayerProvider == nullptr)
+            break;
+
+        auto fullPath = FileUtils::getInstance()->fullPathForFilename(filePath);
+
+        audioId = _audioIDIndex++;
+
+        auto player = _audioPlayerProvider->getAudioPlayer(fullPath);
+        if (player != nullptr)
+        {
+            player->setId(audioId);
+            _audioPlayers.insert(std::make_pair(audioId, player));
+
+            player->setPlayEventCallback([this, player](IAudioPlayer::State state){
+
+                if (state != IAudioPlayer::State::OVER && state != IAudioPlayer::State::STOPPED)
+                {
+                    ALOGV("Ignore state: %d", static_cast<int>(state));
+                    return;
+                }
+
+                int id = player->getId();
+
+                ALOGV("Removing player id=%d, state:%d", id, (int)state);
+
+                auto iter = _callbackMap.find(id);
+                if (iter != _callbackMap.end())
+                {
+                    if (state == IAudioPlayer::State::OVER)
+                    {
+                        iter->second(id, *AudioEngine::_audioIDInfoMap[id].filePath);
+                    }
+                    _callbackMap.erase(iter);
+                }
+                AudioEngine::remove(id);
+                _audioPlayers.erase(id);
+            });
+
+            player->setLoop(loop);
+            player->setVolume(volume);
+            player->play();
+        } 
+        else
+        {
+            ALOGE("Oops, player is null ...");
+            return AudioEngine::INVALID_AUDIO_ID;
+        }
+
+        AudioEngine::_audioIDInfoMap[audioId].state = AudioEngine::AudioState::PLAYING;
+        
+    } while (0);
+=======
+{
+    // _audioPlayerProvider->pause() pauses AudioMixer and PcmAudioService,
+    // but UrlAudioPlayers could not be paused.
+    if (_audioPlayerProvider != nullptr)
+    {
+        _audioPlayerProvider->pause();
+    }
+
+    // pause UrlAudioPlayers which are playing.
+    for (auto&& e : _audioPlayers)
+    {
+        auto player = e.second;
+        if (dynamic_cast<UrlAudioPlayer*>(player) != nullptr
+            && player->getState() == IAudioPlayer::State::PLAYING)
+        {
+            _urlAudioPlayersNeedResume.push_back(player);
+            player->pause();
+        }
+    }
+}
+
+void AudioEngineImpl::onEnterForeground(EventCustom* event)
+{
+    // _audioPlayerProvider->resume() resumes AudioMixer and PcmAudioService,
+    // but UrlAudioPlayers could not be resumed.
+    if (_audioPlayerProvider != nullptr)
+    {
+        _audioPlayerProvider->resume();
+    }
+
+    // resume UrlAudioPlayers
+    for (auto&& player : _urlAudioPlayersNeedResume)
+    {
+        player->resume();
+    }
+    _urlAudioPlayersNeedResume.clear();
+}
+>>>>>>> cocos2d/v3
+
 void AudioEngineImpl::setAudioFocusForAllPlayers(bool isFocus)
 {
     for (const auto& e : _audioPlayers)
@@ -241,6 +380,16 @@ void AudioEngineImpl::setAudioFocusForAllPlayers(bool isFocus)
     }
 }
 
+<<<<<<< HEAD
+void AudioEngineImpl::setVolume(int audioID,float volume)
+{
+    auto iter = _audioPlayers.find(audioID);
+    if (iter != _audioPlayers.end())
+    {
+        auto player = iter->second;
+        player->setVolume(volume);
+    }
+=======
 int AudioEngineImpl::play2d(const std::string &filePath ,bool loop ,float volume)
 {
     ALOGV("play2d, _audioPlayers.size=%d", (int)_audioPlayers.size());
@@ -304,15 +453,30 @@ int AudioEngineImpl::play2d(const std::string &filePath ,bool loop ,float volume
     } while (0);
 
     return audioId;
+>>>>>>> cocos2d/v3
 }
 
-void AudioEngineImpl::setVolume(int audioID,float volume)
+void AudioEngineImpl::setPitch(int audioID,float pitch)
 {
     auto iter = _audioPlayers.find(audioID);
     if (iter != _audioPlayers.end())
     {
         auto player = iter->second;
+<<<<<<< HEAD
+        player->setPitch(pitch);
+    }
+}
+
+void AudioEngineImpl::setSpeed(int audioID,float speed)
+{
+    auto iter = _audioPlayers.find(audioID);
+    if (iter != _audioPlayers.end())
+    {
+        auto player = iter->second;
+        player->setSpeed(speed);
+=======
         player->setVolume(volume);
+>>>>>>> cocos2d/v3
     }
 }
 
@@ -416,6 +580,45 @@ bool AudioEngineImpl::setCurrentTime(int audioID, float time)
 void AudioEngineImpl::setFinishCallback(int audioID, const std::function<void (int, const std::string &)> &callback)
 {
     _callbackMap[audioID] = callback;
+<<<<<<< HEAD
+}
+
+void AudioEngineImpl::preload(const std::string& filePath, const std::function<void(bool)>& callback)
+{
+    if (_audioPlayerProvider != nullptr)
+    {
+        std::string fullPath = FileUtils::getInstance()->fullPathForFilename(filePath);
+        _audioPlayerProvider->preloadEffect(fullPath, [callback](bool succeed, PcmData data){
+            if (callback != nullptr)
+            {
+                callback(succeed);
+            }
+        });
+    }
+    else
+    {
+        if (callback != nullptr)
+        {
+            callback(false);
+        }
+    }
+}
+
+void AudioEngineImpl::uncache(const std::string& filePath)
+{
+    if (_audioPlayerProvider != nullptr)
+    {
+        std::string fullPath = FileUtils::getInstance()->fullPathForFilename(filePath);
+        _audioPlayerProvider->clearPcmCache(fullPath);
+    }
+}
+
+void AudioEngineImpl::uncacheAll()
+{
+    if (_audioPlayerProvider != nullptr)
+    {
+        _audioPlayerProvider->clearAllPcmCaches();
+=======
 }
 
 void AudioEngineImpl::preload(const std::string& filePath, const std::function<void(bool)>& callback)
@@ -480,6 +683,7 @@ void cocos_audioengine_focus_change(int focusChange)
     else
     {
         __impl->setAudioFocusForAllPlayers(false);
+>>>>>>> cocos2d/v3
     }
 }
 

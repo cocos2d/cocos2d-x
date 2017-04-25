@@ -84,16 +84,31 @@ static void static_setBackgroundMusicVolume(float volume)
     volume = MAX( MIN(volume, 1.0), 0 );
     [SimpleAudioEngine sharedEngine].backgroundMusicVolume = volume;
 }
+
+static float static_getBackgroundMusicSpeed()
+{
+    return [[SimpleAudioEngine sharedEngine] backgroundMusicSpeed];
+}
+
+static void static_setBackgroundMusicSpeed(float speed)
+{
+    [SimpleAudioEngine sharedEngine].backgroundMusicSpeed = speed;
+}
      
 static float static_getEffectsVolume()
 {
     return [[SimpleAudioEngine sharedEngine] effectsVolume];
 }
-     
+
 static void static_setEffectsVolume(float volume)
 {
     volume = MAX( MIN(volume, 1.0), 0 );
     [SimpleAudioEngine sharedEngine].effectsVolume = volume;
+}
+
+static void static_setEffectVolume(int id, float volume)
+{
+    [[SimpleAudioEngine sharedEngine] setEffectVolume: id volume: volume];
 }
 
 static unsigned int static_playEffect(const char* pszFilePath, bool bLoop, Float32 pszPitch, Float32 pszPan, Float32 pszGain)
@@ -230,6 +245,16 @@ void SimpleAudioEngine::setBackgroundMusicVolume(float volume)
     static_setBackgroundMusicVolume(volume);
 }
 
+float SimpleAudioEngine::getBackgroundMusicSpeed()
+{
+    return static_getBackgroundMusicSpeed();
+}
+
+void SimpleAudioEngine::setBackgroundMusicSpeed(float speed)
+{
+    static_setBackgroundMusicSpeed(speed);
+}
+
 float SimpleAudioEngine::getEffectsVolume()
 {
     return static_getEffectsVolume();
@@ -238,6 +263,11 @@ float SimpleAudioEngine::getEffectsVolume()
 void SimpleAudioEngine::setEffectsVolume(float volume)
 {
     static_setEffectsVolume(volume);
+}
+
+void SimpleAudioEngine::setEffectVolume(int id, float volume)
+{
+    static_setEffectVolume(id, volume);
 }
 
 unsigned int SimpleAudioEngine::playEffect(const char *pszFilePath, bool bLoop,

@@ -27,6 +27,8 @@
 #include "2d/CCCamera.h"
 #include "2d/CCNode.h"
 
+#include "base/CCDirector.h"
+
 NS_CC_BEGIN
 
 RenderCommand::RenderCommand()
@@ -48,8 +50,8 @@ void RenderCommand::init(float globalZOrder, const cocos2d::Mat4 &transform, uin
     _globalOrder = globalZOrder;
     if (flags & Node::FLAGS_RENDER_AS_3D)
     {
-        if (Camera::getVisitingCamera())
-            _depth = Camera::getVisitingCamera()->getDepthInView(transform);
+        if (Director::getInstance()->getRunningScene()->getCamera())
+            _depth = Director::getInstance()->getRunningScene()->getCamera()->getDepthInView(transform);
         
         set3D(true);
     }

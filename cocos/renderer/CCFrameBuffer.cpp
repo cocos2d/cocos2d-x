@@ -161,7 +161,7 @@ RenderTargetRenderBuffer::~RenderTargetRenderBuffer()
 #endif
 }
 
-bool RenderTargetRenderBuffer::init(unsigned int width, unsigned int height)
+bool RenderTargetRenderBuffer::init(unsigned int width, unsigned int height, int samples)
 {
     if(!RenderTargetBase::init(width, height)) return false;
     GLint oldRenderBuffer(0);
@@ -171,35 +171,34 @@ bool RenderTargetRenderBuffer::init(unsigned int width, unsigned int height)
     glGenRenderbuffers(1, &_colorBuffer);
     glBindRenderbuffer(GL_RENDERBUFFER, _colorBuffer);
     //todo: this could have a param
-    glRenderbufferStorage(GL_RENDERBUFFER, _format, width, height);
+    #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+    if(samples > 0)
+      glRenderbufferStorageMultisampleAPPLE(GL_RENDERBUFFER, samples, GL_RGBA8_OES, width, height);
+    else
+    #elif CC_TARGET_PLATFORM == CC_PLATFORM_MAC
+    if(samples > 0)
+      glRenderbufferStorageMultisampleEXT(GL_RENDERBUFFER_EXT, samples, GL_RGBA, width, height);
+    else
+    #endif
+      glRenderbufferStorage(GL_RENDERBUFFER, _format, width, height);
     glBindRenderbuffer(GL_RENDERBUFFER, oldRenderBuffer);
-    
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-    _reBuildRenderBufferListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, [this](EventCustom* event){
-        /** listen the event that renderer was recreated on Android/WP8 */
-        GLint oldRenderBuffer(0);
-        glGetIntegerv(GL_RENDERBUFFER_BINDING, &oldRenderBuffer);
-        
-        glGenRenderbuffers(1, &_colorBuffer);
-        //generate depthStencil
-        glBindRenderbuffer(GL_RENDERBUFFER, _colorBuffer);
-        glRenderbufferStorage(GL_RENDERBUFFER, _format, _width, _height);
-        glBindRenderbuffer(GL_RENDERBUFFER, oldRenderBuffer);
-        CCLOG("RenderTargetRenderBuffer recreated, _colorBuffer is %d", _colorBuffer);
-    });
-    
-    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_reBuildRenderBufferListener, -1);
-#endif
-    
+
+
+    GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER) ;
+  if(status != GL_FRAMEBUFFER_COMPLETE) {
+    CCLOG("failed to make complete framebuffer object %x", status);
+  }
+
+
     return true;
 }
 
 
-RenderTargetRenderBuffer* RenderTargetRenderBuffer::create(unsigned int width, unsigned int height)
+RenderTargetRenderBuffer* RenderTargetRenderBuffer::create(unsigned int width, unsigned int height, int samples)
 {
     auto result = new (std::nothrow) RenderTargetRenderBuffer();
     
-    if(result && result->init(width, height))
+    if(result && result->init(width, height, samples))
     {
         result->autorelease();
         return result;
@@ -232,7 +231,7 @@ RenderTargetDepthStencil::~RenderTargetDepthStencil()
 #endif
 }
 
-bool RenderTargetDepthStencil::init(unsigned int width, unsigned int height)
+bool RenderTargetDepthStencil::init(unsigned int width, unsigned int height, int samples)
 {
     if(!RenderTargetBase::init(width, height)) return false;
     GLint oldRenderBuffer(0);
@@ -241,7 +240,16 @@ bool RenderTargetDepthStencil::init(unsigned int width, unsigned int height)
     //generate depthStencil
     glGenRenderbuffers(1, &_depthStencilBuffer);
     glBindRenderbuffer(GL_RENDERBUFFER, _depthStencilBuffer);
-    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, width, height);
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+    if(samples > 0)
+      glRenderbufferStorageMultisampleAPPLE(GL_RENDERBUFFER, samples, GL_DEPTH24_STENCIL8, width, height);
+    else
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_MAC
+    if(samples > 0)
+      glRenderbufferStorageMultisampleEXT(GL_RENDERBUFFER_EXT, samples, GL_DEPTH24_STENCIL8, width, height);
+    else
+#endif
+      glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, width, height);
     glBindRenderbuffer(GL_RENDERBUFFER, oldRenderBuffer);
     
 #if CC_ENABLE_CACHE_TEXTURE_DATA
@@ -260,16 +268,22 @@ bool RenderTargetDepthStencil::init(unsigned int width, unsigned int height)
     
     Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_reBuildDepthStencilListener, -1);
 #endif
-    
+
+    GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER) ;
+  if(status != GL_FRAMEBUFFER_COMPLETE) {
+    CCLOG("failed to make complete framebuffer object %x", status);
+  }
+
+
     return true;
 }
 
 
-RenderTargetDepthStencil* RenderTargetDepthStencil::create(unsigned int width, unsigned int height)
+RenderTargetDepthStencil* RenderTargetDepthStencil::create(unsigned int width, unsigned int height, int samples)
 {
     auto result = new (std::nothrow) RenderTargetDepthStencil();
     
-    if(result && result->init(width, height))
+    if(result && result->init(width, height, samples))
     {
         result->autorelease();
         return result;

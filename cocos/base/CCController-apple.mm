@@ -75,9 +75,12 @@ static GCControllerConnectionEventHandler* __instance = nil;
 -(void) observerConnection: (GCControllerConnectionBlock) connectBlock disconnection: (GCControllerDisconnectionBlock) disconnectBlock {
     self._connectionBlock = connectBlock;
     self._disconnectionBlock = disconnectBlock;
+<<<<<<< HEAD:cocos/base/CCController-iOS.mm
+=======
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onControllerConnected:) name:GCControllerDidConnectNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onControllerDisconnected:) name:GCControllerDidDisconnectNotification object:nil];
+>>>>>>> cocos2d/v3:cocos/base/CCController-apple.mm
 }
 
 -(void)dealloc {

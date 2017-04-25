@@ -104,6 +104,8 @@ LanguageType Application::getCurrentLanguage()
     NSDictionary* temp = [NSLocale componentsFromLocaleIdentifier:currentLanguage];
     NSString * languageCode = [temp objectForKey:NSLocaleLanguageCode];
 
+    if ([currentLanguage isEqualToString:@"pt-BR"]) return LanguageType::BRAZIL;
+
     if ([languageCode isEqualToString:@"zh"]) return LanguageType::CHINESE;
     if ([languageCode isEqualToString:@"en"]) return LanguageType::ENGLISH;
     if ([languageCode isEqualToString:@"fr"]) return LanguageType::FRENCH;
@@ -154,8 +156,7 @@ bool Application::openURL(const std::string &url)
     return [[UIApplication sharedApplication] openURL:nsUrl];
 }
 
-void Application::applicationScreenSizeChanged(int newWidth, int newHeight) {
-
+void Application::applicationScreenSizeChanged() {
 }
 
 NS_CC_END

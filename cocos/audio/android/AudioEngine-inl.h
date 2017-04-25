@@ -1,5 +1,9 @@
 /****************************************************************************
+<<<<<<< HEAD
+ Copyright (c) 2014-2016 Chukong Technologies Inc.
+=======
  Copyright (c) 2014-2017 Chukong Technologies Inc.
+>>>>>>> cocos2d/v3
 
  http://www.cocos2d-x.org
 
@@ -58,6 +62,8 @@ public:
     bool init();
     int play2d(const std::string &fileFullPath ,bool loop ,float volume);
     void setVolume(int audioID,float volume);
+    void setPitch(int audioID,float pitch);
+    void setSpeed(int audioID,float speed);
     void setLoop(int audioID, bool loop);
     void pause(int audioID);
     void resume(int audioID);
@@ -72,7 +78,10 @@ public:
     void uncacheAll();
     void preload(const std::string& filePath, const std::function<void(bool)>& callback);
 
+<<<<<<< HEAD
+=======
     void setAudioFocusForAllPlayers(bool isFocus);
+>>>>>>> cocos2d/v3
 private:
 
     void onEnterBackground(EventCustom* event);

@@ -374,6 +374,7 @@ void MotionStreak::update(float delta)
 
 void MotionStreak::reset()
 {
+    _startingPositionInitialized = false;
     _nuPoints = 0;
 }
 

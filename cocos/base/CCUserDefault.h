@@ -50,6 +50,12 @@ NS_CC_BEGIN
 class CC_DLL UserDefault
 {
 public:
+
+    /**
+    *
+    *
+     */
+    void clear();
     // get value methods
 
     /**

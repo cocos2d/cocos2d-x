@@ -45,6 +45,7 @@ NSString * const kCDN_AudioManagerInitialised = @"kCDN_AudioManagerInitialised";
     if ((self = [super init])) {
         state = kLAS_Init;
         volume = 1.0f;
+        speed = 1.0f;
         mute = NO;
         enabled_ = YES;
         paused = NO;
@@ -98,6 +99,8 @@ NSString * const kCDN_AudioManagerInitialised = @"kCDN_AudioManagerInitialised";
         systemPaused = NO;
         paused = NO;
         stopped = NO;
+        audioSourcePlayer.enableRate = YES;
+        audioSourcePlayer.rate = speed;
         [audioSourcePlayer play];
     } else {
         CDLOGINFO(@"Denshion::CDLongAudioSource long audio source didn't play because it is disabled");
@@ -148,6 +151,21 @@ NSString * const kCDN_AudioManagerInitialised = @"kCDN_AudioManagerInitialised";
 -(float) volume 
 {
     return volume;
+}
+
+-(void) setSpeed:(float) newSpeed
+{
+    speed = newSpeed;
+    if (state != kLAS_Init && !mute) {
+        //audioSourcePlayer.speed = newSpeed;
+        audioSourcePlayer.enableRate = YES;
+        audioSourcePlayer.rate = speed;
+    }    
+}
+
+-(float) speed
+{
+    return speed;
 }
 
 #pragma mark Audio Interrupt Protocol

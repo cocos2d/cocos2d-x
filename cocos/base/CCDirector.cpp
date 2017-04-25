@@ -42,6 +42,7 @@ THE SOFTWARE.
 #include "2d/CCTransition.h"
 #include "2d/CCFontFreeType.h"
 #include "2d/CCLabelAtlas.h"
+#include "2d/CCRenderTexture.h"
 #include "renderer/CCGLProgramCache.h"
 #include "renderer/CCGLProgramStateCache.h"
 #include "renderer/CCTextureCache.h"
@@ -65,6 +66,14 @@ THE SOFTWARE.
 #if CC_ENABLE_SCRIPT_BINDING
 #include "base/CCScriptSupport.h"
 #endif
+
+#include "3d/CCSprite3D.h"
+#include "3d/CCSprite3DMaterial.h"
+
+#include "Entity.h"
+
+using namespace cocos2d;
+using namespace experimental;
 
 /**
  Position of the FPS
@@ -279,7 +288,7 @@ void Director::drawScene()
     }
 
     _renderer->clear();
-    experimental::FrameBuffer::clearAllFBOs();
+    //experimental::FrameBuffer::clearAllFBOs();
     /* to avoid flickr, nextScene MUST be here: after tick and before draw.
      * FIXME: Which bug is this one. It seems that it can't be reproduced with v0.9
      */
@@ -922,9 +931,64 @@ void Director::popScene(void)
     }
 }
 
+void Director::popScene(Scene* transition)
+{
+  _scenesStack.popBack();
+  unsigned int c = _scenesStack.size();
+
+  transition->setGlobalZOrder(10000);
+
+  if(c == 0)
+  {
+    end();
+  }
+  else
+  {
+    _sendCleanupToScene = true;
+    _nextScene = transition;
+  }
+}
+
 void Director::popToRootScene(void)
 {
-    popToSceneStackLevel(1);
+  popToSceneStackLevel(1);
+}
+
+void Director::popToRootScene(Scene* transition)
+{
+  CCASSERT(_runningScene != nullptr, "A running Scene is needed");
+  ssize_t c = _scenesStack.size();
+
+  // current level or lower -> nothing
+  if (1 >= c)
+    return;
+  
+  auto fisrtOnStackScene = _scenesStack.back();
+  if (fisrtOnStackScene == _runningScene)
+  {
+    _scenesStack.popBack();
+    --c;
+  }
+  
+  // pop stack until reaching desired level
+  while (c > 1)
+  {
+    auto current = _scenesStack.back();
+    
+    if (current->isRunning())
+    {
+      current->onExit();
+    }
+    
+    current->cleanup();
+    _scenesStack.popBack();
+    --c;
+  }
+  
+  _nextScene = transition;
+  
+  // cleanup running scene
+  _sendCleanupToScene = true;
 }
 
 void Director::popToSceneStackLevel(int level)
@@ -1351,9 +1415,9 @@ void Director::createStatsLabel()
     Texture2D::setDefaultAlphaPixelFormat(currentFormat);
 
     const int height_spacing = 22 / CC_CONTENT_SCALE_FACTOR();
-    _drawnVerticesLabel->setPosition(Vec2(0, height_spacing*2) + CC_DIRECTOR_STATS_POSITION);
-    _drawnBatchesLabel->setPosition(Vec2(0, height_spacing*1) + CC_DIRECTOR_STATS_POSITION);
-    _FPSLabel->setPosition(Vec2(0, height_spacing*0)+CC_DIRECTOR_STATS_POSITION);
+    _drawnVerticesLabel->setPosition(Vec2(0, 1200 + height_spacing*2) + CC_DIRECTOR_STATS_POSITION);
+    _drawnBatchesLabel->setPosition(Vec2(0, 1200 + height_spacing*1) + CC_DIRECTOR_STATS_POSITION);
+    _FPSLabel->setPosition(Vec2(0, 1200 + height_spacing*0)+CC_DIRECTOR_STATS_POSITION);
 }
 
 void Director::setContentScaleFactor(float scaleFactor)
@@ -1462,5 +1526,146 @@ void Director::setAnimationInterval(float interval)
     }    
 }
 
-NS_CC_END
+/**
+ * Tooflya Inc. Development
+ *
+ * @author Igor Mats from Tooflya Inc.
+ * @copyright (c) by Igor Mats
+ * http://www.tooflya.com/development/
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
 
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ *
+ */
+
+/**
+ *
+ * @Director
+ * | @Render;
+ *
+ */
+void Director::onRenderStart()
+{
+  if(this->_runningScene)
+  {
+    this->_runningScene->onRenderStart();
+  }
+}
+
+void Director::onRenderFinish()
+{
+  if(this->_runningScene)
+  {
+    this->_runningScene->onRenderFinish();
+  }
+}
+
+void Director::onRenderStart(int index)
+{
+  if(this->getRunningScene())
+  {
+    this->getRunningScene()->onRenderStart(index, 1);
+  }
+
+  if(this->getRunningScene()->getShadowState())
+  {
+    if(index == this->getRunningScene()->getShadowCamera()->getIndex())
+    {
+      this->getRunningScene()->updateShadowElementState1(this->getRunningScene()->getShadowElement());
+    }
+    else if(index == 1)
+    {
+      this->getRunningScene()->updateShadowElementState2(this->getRunningScene()->getShadowElement());
+    }
+  }
+
+  if(this->getRunningScene())
+  {
+    this->getRunningScene()->onRenderStart(index, 2);
+  }
+}
+
+void Director::onRenderFinish(int index)
+{
+  if(this->getRunningScene())
+  {
+    this->getRunningScene()->onRenderFinish(index);
+  }
+
+  /**
+   *
+   * @Scene
+   * | @Capture;
+   *
+   */
+  if(this->getRunningScene()->getCaptureState())
+  {
+    if(this->getRunningScene()->getCaptureResolveFrameBuffer())
+    {
+      if(this->getRunningScene()->getCaptureCamera()->getIndex() == index)
+      {
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+        glBindFramebuffer(GL_READ_FRAMEBUFFER_APPLE, this->getRunningScene()->getCaptureFrameBuffer()->getFBO());
+        glBindFramebuffer(GL_DRAW_FRAMEBUFFER_APPLE, this->getRunningScene()->getCaptureResolveFrameBuffer()->getFBO());
+        glResolveMultisampleFramebufferAPPLE();
+
+        GLenum attachments[] = {GL_COLOR_ATTACHMENT0, GL_DEPTH_ATTACHMENT};
+        glDiscardFramebufferEXT(GL_READ_FRAMEBUFFER_APPLE, 2,  attachments);
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_MAC
+        auto width = Director::getInstance()->getWinSizeInPixels().width;
+        auto height = Director::getInstance()->getWinSizeInPixels().height;
+
+        glBindFramebufferEXT(GL_READ_FRAMEBUFFER_EXT, this->getRunningScene()->getCaptureFrameBuffer()->getFBO());
+        glBindFramebufferEXT(GL_DRAW_FRAMEBUFFER_EXT, this->getRunningScene()->getCaptureResolveFrameBuffer()->getFBO());
+        glBlitFramebufferEXT(0, 0, width, height, 0, 0, width, height, GL_COLOR_BUFFER_BIT, GL_LINEAR);
+#endif
+      }
+    }
+  }
+
+  /**
+   *
+   * @Scene
+   * | @Shadow;
+   *
+   */
+  /*if(this->getRunningScene()->getShadowState())
+  {
+    if(this->getRunningScene()->getShadowResolveFrameBuffer())
+    {
+      if(this->getRunningScene()->getShadowCamera()->getIndex() == index)
+      {
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+        glBindFramebuffer(GL_READ_FRAMEBUFFER_APPLE, this->getRunningScene()->getShadowFrameBuffer()->getFBO());
+        glBindFramebuffer(GL_DRAW_FRAMEBUFFER_APPLE, this->getRunningScene()->getShadowResolveFrameBuffer()->getFBO());
+        glResolveMultisampleFramebufferAPPLE();
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_MAC
+        // @TODO: Add shadow factor;
+        auto width = Director::getInstance()->getWinSizeInPixels().width;
+        auto height = Director::getInstance()->getWinSizeInPixels().height;
+
+        glBindFramebufferEXT(GL_READ_FRAMEBUFFER_EXT, this->getRunningScene()->getShadowFrameBuffer()->getFBO());
+        glBindFramebufferEXT(GL_DRAW_FRAMEBUFFER_EXT, this->getRunningScene()->getShadowResolveFrameBuffer()->getFBO());
+        glBlitFramebufferEXT(0, 0, width, height, 0, 0, width, height, GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT, GL_NEAREST);
+#endif
+      }
+    }
+  }*/
+}
+
+NS_CC_END

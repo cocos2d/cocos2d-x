@@ -1,5 +1,9 @@
 /****************************************************************************
+<<<<<<< HEAD
+ Copyright (c) 2016 Chukong Technologies Inc.
+=======
  Copyright (c) 2016-2017 Chukong Technologies Inc.
+>>>>>>> cocos2d/v3
  
  http://www.cocos2d-x.org
  
@@ -102,7 +106,11 @@ ThreadPool *ThreadPool::newSingleThreadPool()
 }
 
 ThreadPool::ThreadPool(int minNum, int maxNum)
+<<<<<<< HEAD
+        : _isStop(false), _isDone(false), _idleThreadNum(0), _minThreadNum(minNum),
+=======
         : _isDone(false), _isStop(false), _idleThreadNum(0), _minThreadNum(minNum),
+>>>>>>> cocos2d/v3
           _maxThreadNum(maxNum), _initedThreadNum(0), _shrinkInterval(DEFAULT_SHRINK_INTERVAL),
           _shrinkStep(DEFAULT_SHRINK_STEP), _stretchStep(DEFAULT_STRETCH_STEP),
           _isFixedSize(false)

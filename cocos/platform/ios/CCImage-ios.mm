@@ -124,4 +124,3 @@ bool cocos2d::Image::saveToFile(const std::string& filename, bool isToRGB)
 NS_CC_END
 
 #endif // CC_PLATFORM_IOS
-

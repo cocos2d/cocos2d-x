@@ -38,17 +38,21 @@
 
 NS_CC_BEGIN
 
-Camera* Camera::_visitingCamera = nullptr;
 experimental::Viewport Camera::_defaultViewport;
 
 // start static methods
 
-Camera* Camera::create()
+Camera* Camera::create(Node* parent)
 {
     Camera* camera = new (std::nothrow) Camera();
     camera->initDefault();
     camera->autorelease();
     camera->setDepth(0.f);
+
+    if(parent)
+    {
+      parent->addChild(camera);
+    }
     
     return camera;
 }
@@ -79,17 +83,6 @@ Camera* Camera::createOrthographic(float zoomX, float zoomY, float nearPlane, fl
     return nullptr;
 }
 
-Camera* Camera::getDefaultCamera()
-{
-    auto scene = Director::getInstance()->getRunningScene();
-    if(scene)
-    {
-        return scene->getDefaultCamera();
-    }
-
-    return nullptr;
-}
-
 const experimental::Viewport& Camera::getDefaultViewport()
 {
     return _defaultViewport;
@@ -97,11 +90,6 @@ const experimental::Viewport& Camera::getDefaultViewport()
 void Camera::setDefaultViewport(const experimental::Viewport& vp)
 {
     _defaultViewport = vp;
-}
-
-const Camera* Camera::getVisitingCamera()
-{
-    return _visitingCamera;
 }
 
 // end static methods

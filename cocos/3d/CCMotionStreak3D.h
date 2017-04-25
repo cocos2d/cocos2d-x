@@ -83,7 +83,15 @@ public:
      *
      * @param stroke The width of stroke.
      */
-    void setStroke(float stroke) { _stroke = stroke; }
+    inline void setStroke(float stroke) { _stroke = stroke; }
+    /** Set fade.
+     *
+     * @param fade The fade of stroke.
+     */
+    inline void setFade(float fade) override {
+      _fadeDelta = 1.0f/fade;
+      _maxPoints = (int)(fade*60.0f)+2;
+    };
 
     /** Is the starting position initialized or not.
      *

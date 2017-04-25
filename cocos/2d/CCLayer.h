@@ -89,28 +89,28 @@ public:
      * @return if return false, onTouchMoved, onTouchEnded, onTouchCancelled will never called.
      * @js NA
      */
-    virtual bool onTouchBegan(Touch *touch, Event *unused_event);
+    virtual bool onTouchBegan(Touch *touch, Event *unused_event) override;
     /** Callback function for touch moved.
     *
     * @param touch Touch information.
     * @param unused_event Event information.
     * @js NA
     */
-    virtual void onTouchMoved(Touch *touch, Event *unused_event);
+    virtual void onTouchMoved(Touch *touch, Event *unused_event) override;
     /** Callback function for touch ended.
     *
     * @param touch Touch information.
     * @param unused_event Event information.
     * @js NA
     */
-    virtual void onTouchEnded(Touch *touch, Event *unused_event);
+    virtual void onTouchEnded(Touch *touch, Event *unused_event) override;
     /** Callback function for touch cancelled.
     *
     * @param touch Touch information.
     * @param unused_event Event information.
     * @js NA
     */
-    virtual void onTouchCancelled(Touch *touch, Event *unused_event);
+    virtual void onTouchCancelled(Touch *touch, Event *unused_event) override;
 
     /** Callback function for multiple touches began.
     *
@@ -226,13 +226,13 @@ public:
      * @param event Event information.
      * @js NA
      */
-    virtual void onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event);
+    virtual void onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event) override;
     /** Callback function for key released.
     * @param keyCode KeyCode information.
     * @param event Event information.
     * @js NA
     */
-    virtual void onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event);
+    virtual void onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event) override;
 
     CC_DEPRECATED_ATTRIBUTE virtual bool isKeypadEnabled() const final { return _keyboardEnabled; }
     CC_DEPRECATED_ATTRIBUTE virtual void setKeypadEnabled(bool value);

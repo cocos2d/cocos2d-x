@@ -1,5 +1,9 @@
 /****************************************************************************
+<<<<<<< HEAD
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+=======
  Copyright (c) 2013-2017 Chukong Technologies Inc.
+>>>>>>> cocos2d/v3
 
  http://www.cocos2d-x.org
 
@@ -309,14 +313,6 @@ void Renderer::setupVBOAndVAO()
 void Renderer::setupVBO()
 {
     glGenBuffers(2, &_buffersVBO[0]);
-    // Issue #15652
-    // Should not initialize VBO with a large size (VBO_SIZE=65536),
-    // it may cause low FPS on some Android devices like LG G4 & Nexus 5X.
-    // It's probably because some implementations of OpenGLES driver will
-    // copy the whole memory of VBO which initialized at the first time
-    // once glBufferData/glBufferSubData is invoked.
-    // For more discussion, please refer to https://github.com/cocos2d/cocos2d-x/issues/15652
-//    mapBuffers();
 }
 
 void Renderer::mapBuffers()
@@ -400,7 +396,7 @@ void Renderer::processRenderCommand(RenderCommand* command)
         flush2D();
         auto cmd = static_cast<MeshCommand*>(command);
         
-        if (cmd->isSkipBatching() || _lastBatchedMeshCommand == nullptr || _lastBatchedMeshCommand->getMaterialID() != cmd->getMaterialID())
+        if (cmd->isSkipBatching() || _lastBatchedMeshCommand == nullptr /*|| _lastBatchedMeshCommand->getMaterialID() != cmd->getMaterialID()*/)
         {
             flush3D();
 
@@ -666,10 +662,10 @@ void Renderer::clean()
 void Renderer::clear()
 {
     //Enable Depth mask to make sure glClear clear the depth buffer correctly
-    glDepthMask(true);
-    glClearColor(_clearColor.r, _clearColor.g, _clearColor.b, _clearColor.a);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glDepthMask(false);
+    //lglDepthMask(true);
+    //lglClearColor(_clearColor.r, _clearColor.g, _clearColor.b, _clearColor.a);
+    //lglClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    //lglDepthMask(false);
 
     RenderState::StateBlock::_defaultState->setDepthWrite(false);
 }
@@ -894,7 +890,7 @@ bool Renderer::checkVisibility(const Mat4 &transform, const Size &size)
     
     //If draw to Rendertexture, return true directly.
     // only cull the default camera. The culling algorithm is valid for default camera.
-    if (!scene || (scene && scene->_defaultCamera != Camera::getVisitingCamera()))
+    if (!scene)
         return true;
 
     auto director = Director::getInstance();
@@ -905,7 +901,7 @@ bool Renderer::checkVisibility(const Mat4 &transform, const Size &size)
     float hSizeY = size.height/2;
     Vec3 v3p(hSizeX, hSizeY, 0);
     transform.transformPoint(&v3p);
-    Vec2 v2p = Camera::getVisitingCamera()->projectGL(v3p);
+    Vec2 v2p = director->getRunningScene()->getCamera()->projectGL(v3p);
 
     // convert content size to world coordinates
     float wshw = std::max(fabsf(hSizeX * transform.m[0] + hSizeY * transform.m[4]), fabsf(hSizeX * transform.m[0] - hSizeY * transform.m[4]));

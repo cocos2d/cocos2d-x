@@ -952,6 +952,8 @@ typedef struct _ccBezierConfig {
     Vec2 controlPoint_1;
     //! Bezier control point 2
     Vec2 controlPoint_2;
+    //! Bezier control point 3
+    Vec2 controlPoint_3;
 } ccBezierConfig;
 
 /** @class BezierBy
@@ -1231,10 +1233,10 @@ public:
     /** 
      * Creates an action with duration and opacity.
      * @param duration Duration time, in seconds.
-     * @param opacity A certain opacity, the range is from 0 to 255.
+     * @param opacity A certain opacity, the range is from 0 to 1.
      * @return An autoreleased FadeTo object.
      */
-    static FadeTo* create(float duration, GLubyte opacity);
+    static FadeTo* create(float duration, float opacity);
 
     //
     // Overrides
@@ -1255,7 +1257,7 @@ CC_CONSTRUCTOR_ACCESS:
      * initializes the action with duration and opacity 
      * @param duration in seconds
      */
-    bool initWithDuration(float duration, GLubyte opacity);
+    bool initWithDuration(float duration, float opacity);
 
 protected:
     GLubyte _toOpacity;

@@ -19,12 +19,10 @@ UIPageView.cpp \
 UIPageViewIndicator.cpp \
 UIScrollView.cpp \
 UIScrollViewBar.cpp \
-UIButton.cpp \
 UIAbstractCheckButton.cpp \
 UICheckBox.cpp \
 UIRadioButton.cpp \
 UIImageView.cpp \
-UIText.cpp \
 UITextAtlas.cpp \
 UITextBMFont.cpp \
 UILoadingBar.cpp \
@@ -39,9 +37,6 @@ UIDeprecated.cpp \
 UIScale9Sprite.cpp \
 UIWebView.cpp \
 UIWebViewImpl-android.cpp \
-UIEditBox/UIEditBox.cpp \
-UIEditBox/UIEditBoxImpl-android.cpp \
-UIEditBox/UIEditBoxImpl-common.cpp \
 UILayoutComponent.cpp \
 UITabControl.cpp \
 

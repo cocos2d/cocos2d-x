@@ -213,7 +213,19 @@ static CDBufferManager *bufferManager = nil;
 -(void) setBackgroundMusicVolume:(float) volume
 {
     am.backgroundMusic.volume = volume;
+}
+
+
+#pragma mark SimpleAudioEngine - BackgroundMusicSpeed
+-(float) backgroundMusicSpeed
+{
+    return am.backgroundMusic.speed;
 }    
+
+-(void) setBackgroundMusicSpeed:(float) speed
+{
+    am.backgroundMusic.speed = speed;
+}
 
 #pragma mark SimpleAudioEngine - EffectsVolume
 -(float) effectsVolume
@@ -224,7 +236,12 @@ static CDBufferManager *bufferManager = nil;
 -(void) setEffectsVolume:(float) volume
 {
     am.soundEngine.masterGain = volume;
-}    
+}   
+
+-(void) setEffectVolume:(int) soundId volume:(float) volume
+{
+  alSourcef(soundId, AL_GAIN, volume);
+}
 
 -(CDSoundSource *) soundSourceForFile:(NSString*) filePath {
     int soundId = [bufferManager bufferForFile:filePath create:YES];

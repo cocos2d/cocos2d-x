@@ -75,7 +75,8 @@ _verticalScrollBar(nullptr),
 _horizontalScrollBar(nullptr),
 _scrollViewEventListener(nullptr),
 _scrollViewEventSelector(nullptr),
-_eventCallback(nullptr)
+_eventCallback(nullptr),
+_sens(1.0)
 {
     setTouchEnabled(true);
     _propagateTouchEvents = false;
@@ -197,7 +198,7 @@ void ScrollView::setInnerContainerSize(const Size &size)
     {
         pos.y = _contentSize.height - (1.0f - _innerContainer->getAnchorPoint().y) * _innerContainer->getContentSize().height;
     }
-    setInnerContainerPosition(pos);
+    //setInnerContainerPosition(pos);
     
     updateScrollBar(Vec2::ZERO);
 }
@@ -865,6 +866,9 @@ void ScrollView::gatherTouchMove(const Vec2& delta)
 
 void ScrollView::handlePressLogic(Touch* /*touch*/)
 {
+    this->stopAllActions();
+    this->getInnerContainer()->stopAllActions();
+
     _bePressed = true;
     _autoScrolling = false;
     
@@ -893,6 +897,9 @@ void ScrollView::handleMoveLogic(Touch *touch)
         return;
     }
     Vec3 delta3 = currPt - prevPt;
+    delta3.x /= _sens;
+    delta3.y /= _sens;
+
     Vec2 delta(delta3.x, delta3.y);
     scrollChildren(delta);
     
@@ -1023,6 +1030,7 @@ void ScrollView::interceptTouchEvent(Widget::TouchEventType event, Widget *sende
                 default:
                     break;
             }
+            offsetInInch/=2;
             if (offsetInInch > _childFocusCancelOffsetInInch)
             {
                 sender->setHighlighted(false);

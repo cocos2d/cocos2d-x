@@ -92,12 +92,16 @@ public:
     {
         if (_view)
             _view->onGLFWframebuffersize(window, w, h);
+
+      //Director::getInstance()->drawScene();
     }
 
     static void onGLFWWindowSizeFunCallback(GLFWwindow *window, int width, int height)
     {
         if (_view)
             _view->onGLFWWindowSizeFunCallback(window, width, height);
+
+      Director::getInstance()->getOpenGLView()->setFrameSize(width, height);
     }
 
     static void setGLViewImpl(GLViewImpl* view)
@@ -365,13 +369,14 @@ bool GLViewImpl::initWithRect(const std::string& viewName, Rect rect, float fram
 
     _frameZoomFactor = frameZoomFactor;
 
-    glfwWindowHint(GLFW_RESIZABLE,resizable?GL_TRUE:GL_FALSE);
+    glfwWindowHint(GLFW_RESIZABLE, resizable? GL_TRUE : GL_FALSE);
     glfwWindowHint(GLFW_RED_BITS,_glContextAttrs.redBits);
     glfwWindowHint(GLFW_GREEN_BITS,_glContextAttrs.greenBits);
     glfwWindowHint(GLFW_BLUE_BITS,_glContextAttrs.blueBits);
     glfwWindowHint(GLFW_ALPHA_BITS,_glContextAttrs.alphaBits);
     glfwWindowHint(GLFW_DEPTH_BITS,_glContextAttrs.depthBits);
     glfwWindowHint(GLFW_STENCIL_BITS,_glContextAttrs.stencilBits);
+    glfwWindowHint(GLFW_SAMPLES, 8);
 
     int neededWidth = rect.size.width * _frameZoomFactor;
     int neededHeight = rect.size.height * _frameZoomFactor;

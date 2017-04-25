@@ -102,6 +102,18 @@ void BillBoard::visit(Renderer *renderer, const Mat4& parentTransform, uint32_t 
     {
         return;
     }
+
+    /*if(Director::getInstance()->getRunningScene()->getShadowState())
+    {
+      if(Director::getInstance()->getRunningScene()->getCamera() && Director::getInstance()->getRunningScene()->getCamera()->getIndex() == Director::getInstance()->getRunningScene()->getShadowCamera()->getIndex())
+      {
+        if(!this->enableShadow())
+        {
+          return;
+        }
+      }
+    }*/
+
     bool visibleByCamera = isVisitableByVisitingCamera();
     
     uint32_t flags = processParentFlags(parentTransform, parentFlags);
@@ -153,7 +165,7 @@ void BillBoard::visit(Renderer *renderer, const Mat4& parentTransform, uint32_t 
 bool BillBoard::calculateBillboardTransform()
 {
     //Get camera world position
-    auto camera = Camera::getVisitingCamera();
+    auto camera = Director::getInstance()->getRunningScene()->getCamera();
     const Mat4& camWorldMat = camera->getNodeToWorldTransform();
     
     //TODO: use math lib to calculate math lib Make it easier to read and maintain
@@ -231,7 +243,7 @@ void BillBoard::draw(Renderer *renderer, const Mat4 &/*transform*/, uint32_t fla
 {
     //FIXME: frustum culling here
     flags |= Node::FLAGS_RENDER_AS_3D;
-    _trianglesCommand.init(0, _texture->getName(), getGLProgramState(), _blendFunc, _polyInfo.triangles, _modelViewTransform, flags);
+    _trianglesCommand.init(this->getGlobalZOrder(), _texture->getName(), getGLProgramState(), _blendFunc, _polyInfo.triangles, _modelViewTransform, flags);
     _trianglesCommand.setTransparent(true);
     _trianglesCommand.set3D(true);
     renderer->addCommand(&_trianglesCommand);

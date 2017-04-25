@@ -97,20 +97,10 @@ public:
     static Camera* createOrthographic(float zoomX, float zoomY, float nearPlane, float farPlane);
 
     /** create default camera, the camera type depends on Director::getProjection, the depth of the default camera is 0 */
-    static Camera* create();
-
-    /**
-     * Get the visiting camera , the visiting camera shall be set on Scene::render
-     */
-    static const Camera* getVisitingCamera();
+    static Camera* create(Node* parent = nullptr);
 
     static const experimental::Viewport& getDefaultViewport();
     static void setDefaultViewport(const experimental::Viewport& vp);
-
-    /**
-     * Get the default camera of the current running scene.
-     */
-    static Camera* getDefaultCamera();
 
     /**
     * Gets the type of camera.
@@ -120,8 +110,13 @@ public:
     Camera::Type getType() const { return _type; }
 
     /**get & set Camera flag*/
-    CameraFlag getCameraFlag() const { return (CameraFlag)_cameraFlag; }
-    void setCameraFlag(CameraFlag flag) { _cameraFlag = (unsigned short)flag; }
+    int getCameraFlag() const { return _cameraFlag; }
+    void setCameraFlag(int flag) { _cameraFlag = flag; }
+
+    /**get & set Camera index*/
+    int index;
+    int getIndex() const { return this->index; }
+    void setIndex(int index) { this->index = index; }
 
     /**
     * Make Camera looks at target
@@ -305,7 +300,6 @@ CC_CONSTRUCTOR_ACCESS:
     void restoreViewport();
 
 protected:
-    static Camera* _visitingCamera;
     static experimental::Viewport _defaultViewport;
 
     Scene* _scene; //Scene camera belongs to
@@ -323,7 +317,7 @@ protected:
     float _farPlane;
     mutable bool  _viewProjectionDirty;
     bool _viewProjectionUpdated; //Whether or not the viewprojection matrix was updated since the last frame.
-    unsigned short _cameraFlag; // camera flag
+    int _cameraFlag; // camera flag
     mutable Frustum _frustum;   // camera frustum
     mutable bool _frustumDirty;
     int8_t  _depth;                 //camera depth, the depth of camera with CameraFlag::DEFAULT flag is 0 by default, a camera with larger depth is drawn on top of camera with smaller depth

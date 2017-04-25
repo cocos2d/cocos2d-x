@@ -175,6 +175,37 @@ public:
     static void pauseAll();
 
     /** 
+     * Repeat an audio instance.
+     *
+     * @param audioID An audioID returned by the play2d function.
+     */
+    static void repeat(int audioID);
+
+    /** 
+     * Sets volume for an audio instance.
+     *
+     * @param audioID An audioID returned by the play2d function.
+     * @param volume Volume value (range from 0.0 to 1.0).
+     */
+    static void volume(int audioID, float volume);
+
+    /** 
+     * Sets pitch for an audio instance.
+     *
+     * @param audioID An audioID returned by the play2d function.
+     * @param pitch Pitch value (range from 0.0 to max).
+     */
+    static void pitch(int audioID, float pitch);
+
+    /** 
+     * Sets speed for an audio instance.
+     *
+     * @param audioID An audioID returned by the play2d function.
+     * @param speed Speed value (range from 0.0 to max).
+     */
+    static void speed(int audioID, float speed);
+
+    /** 
      * Resume an audio instance.
      *
      * @param audioID An audioID returned by the play2d function.
@@ -193,6 +224,9 @@ public:
 
     /** Stop all audio instances. */
     static void stopAll();
+
+    /**  */
+    static bool isOtherAudioPlaying();
 
     /**
      * Sets the current playback position of an audio instance.

@@ -153,6 +153,12 @@ UserDefault::UserDefault()
 {
 }
 
+void UserDefault::clear()
+{
+    string strFilePath = CCFileUtils::sharedFileUtils()->getWritablePath() + XML_FILE_NAME;
+    remove(strFilePath.c_str());
+}
+
 bool UserDefault::getBoolForKey(const char* pKey)
 {
  return getBoolForKey(pKey, false);

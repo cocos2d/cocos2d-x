@@ -98,7 +98,7 @@ public:
     Vec3 getGravity() const;
     
     /** Add a Physics3DObject. */
-    void addPhysics3DObject(Physics3DObject* physicsObj);
+    void addPhysics3DObject(Physics3DObject* physicsObj, short group = 0, short mask = 0);
     
     /** Remove a Physics3DObject. */
     void removePhysics3DObject(Physics3DObject* physicsObj);

@@ -187,7 +187,7 @@ float MotionStreak3D::getPositionX() const
 
 Vec3 MotionStreak3D::getPosition3D() const
 {
-    return Vec3(_positionR.x, _positionR.y, getPositionZ());
+    return Vec3(_positionR.x, _positionR.y, _positionR.z);
 }
 
 void MotionStreak3D::setPositionX(float x)
@@ -327,7 +327,7 @@ void MotionStreak3D::update(float delta)
     bool appendNewPoint = true;
     if(_nuPoints >= _maxPoints)
     {
-        appendNewPoint = false;
+        //appendNewPoint = false;
     }
 
     else if(_nuPoints>0)
@@ -336,7 +336,7 @@ void MotionStreak3D::update(float delta)
         bool a2 = (_nuPoints == 1) ? false : ((_pointVertexes[_nuPoints-2] - _positionR).lengthSquared() < (_minSeg * 2.0f));
         if(a1 || a2)
         {
-            appendNewPoint = false;
+            //appendNewPoint = false;
         }
     }
 

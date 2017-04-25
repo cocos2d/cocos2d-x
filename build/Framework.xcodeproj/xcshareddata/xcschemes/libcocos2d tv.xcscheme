@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0720"
+   LastUpgradeVersion = "0820"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A07A4C241783777C0073F6A7"
-               BuildableName = "libcocos2d iOS.a"
-               BlueprintName = "libcocos2d iOS"
-               ReferencedContainer = "container:cocos2d_libs.xcodeproj">
+               BlueprintIdentifier = "78C3536A1CEE7F6500F10068"
+               BuildableName = "libcocos2d tv.a"
+               BlueprintName = "libcocos2d tv"
+               ReferencedContainer = "container:Framework.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -45,10 +45,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "A07A4C241783777C0073F6A7"
-            BuildableName = "libcocos2d iOS.a"
-            BlueprintName = "libcocos2d iOS"
-            ReferencedContainer = "container:cocos2d_libs.xcodeproj">
+            BlueprintIdentifier = "78C3536A1CEE7F6500F10068"
+            BuildableName = "libcocos2d tv.a"
+            BlueprintName = "libcocos2d tv"
+            ReferencedContainer = "container:Framework.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -63,10 +63,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "A07A4C241783777C0073F6A7"
-            BuildableName = "libcocos2d iOS.a"
-            BlueprintName = "libcocos2d iOS"
-            ReferencedContainer = "container:cocos2d_libs.xcodeproj">
+            BlueprintIdentifier = "78C3536A1CEE7F6500F10068"
+            BuildableName = "libcocos2d tv.a"
+            BlueprintName = "libcocos2d tv"
+            ReferencedContainer = "container:Framework.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

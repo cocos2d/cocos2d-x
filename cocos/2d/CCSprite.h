@@ -531,6 +531,7 @@ public:
     virtual void setScale(float scale) override;
     virtual void setPositionZ(float positionZ) override;
     virtual void setAnchorPoint(const Vec2& anchor) override;
+    virtual void setAnchorPoint(const float x, const float y) override;
     virtual void setContentSize(const Size& size) override;
     
     virtual void setIgnoreAnchorPointForPosition(bool value) override;
@@ -543,6 +544,16 @@ public:
 
     int getResourceType() const { return _fileType; }
     const std::string& getResourceName() const { return _fileName; }
+
+    /**
+     * Visits this node's children and draw them recursively.
+     *
+     * @param renderer A given renderer.
+     * @param parentTransform A transform matrix.
+     * @param parentFlags Renderer flag.
+     */
+    virtual void visit(Renderer *renderer, const Mat4& parentTransform, uint32_t parentFlags) override;
+    virtual void visit() override;
 
 CC_CONSTRUCTOR_ACCESS :
 	/**

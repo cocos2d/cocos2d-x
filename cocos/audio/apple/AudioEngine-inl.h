@@ -49,6 +49,8 @@ public:
     bool init();
     int play2d(const std::string &fileFullPath ,bool loop ,float volume);
     void setVolume(int audioID,float volume);
+    void setPitch(int audioID, float pitch);
+    void setSpeed(int audioID, float speed);
     void setLoop(int audioID, bool loop);
     bool pause(int audioID);
     bool resume(int audioID);
@@ -58,7 +60,7 @@ public:
     float getCurrentTime(int audioID);
     bool setCurrentTime(int audioID, float time);
     void setFinishCallback(int audioID, const std::function<void (int, const std::string &)> &callback);
-
+    bool isOtherAudioPlaying();
     void uncache(const std::string& filePath);
     void uncacheAll();
     AudioCache* preload(const std::string& filePath, std::function<void(bool)> callback);

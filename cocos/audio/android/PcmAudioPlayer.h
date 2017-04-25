@@ -1,5 +1,9 @@
 /****************************************************************************
+<<<<<<< HEAD
+Copyright (c) 2016 Chukong Technologies Inc.
+=======
 Copyright (c) 2016-2017 Chukong Technologies Inc.
+>>>>>>> cocos2d/v3
 
 http://www.cocos2d-x.org
 
@@ -62,8 +66,11 @@ public:
 
     virtual float getVolume() const override;
 
+<<<<<<< HEAD
+=======
     virtual void setAudioFocus(bool isFocus) override;
 
+>>>>>>> cocos2d/v3
     virtual void setLoop(bool isLoop) override;
 
     virtual bool isLoop() const override;

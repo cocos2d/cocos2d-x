@@ -106,7 +106,6 @@ extern "C"
 #include "platform/CCFileUtils.h"
 #include "base/CCConfiguration.h"
 #include "base/ccUtils.h"
-#include "base/ZipUtils.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #include "platform/android/CCFileUtils-android.h"
 #endif
@@ -545,16 +544,6 @@ bool Image::initWithImageData(const unsigned char * data, ssize_t dataLen)
         unsigned char* unpackedData = nullptr;
         ssize_t unpackedLen = 0;
         
-        //detect and unzip the compress file
-        if (ZipUtils::isCCZBuffer(data, dataLen))
-        {
-            unpackedLen = ZipUtils::inflateCCZBuffer(data, dataLen, &unpackedData);
-        }
-        else if (ZipUtils::isGZipBuffer(data, dataLen))
-        {
-            unpackedLen = ZipUtils::inflateMemory(const_cast<unsigned char*>(data), dataLen, &unpackedData);
-        }
-        else
         {
             unpackedData = const_cast<unsigned char*>(data);
             unpackedLen = dataLen;

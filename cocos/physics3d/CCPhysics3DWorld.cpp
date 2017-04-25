@@ -22,6 +22,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+#include "base/CCDirector.h"
+#include "base/CCScheduler.h"
+
 #include "physics3d/CCPhysics3D.h"
 #include "renderer/CCRenderer.h"
 
@@ -123,7 +126,7 @@ bool Physics3DWorld::isDebugDrawEnabled() const
     return _btPhyiscsWorld->getDebugDrawer() != nullptr;
 }
 
-void Physics3DWorld::addPhysics3DObject(Physics3DObject* physicsObj)
+void Physics3DWorld::addPhysics3DObject(Physics3DObject* physicsObj, short group, short mask)
 {
     auto it = std::find(_objects.begin(), _objects.end(), physicsObj);
     if (it == _objects.end())
@@ -235,7 +238,7 @@ void Physics3DWorld::stepSimulate(float dt)
         {
             it->preSimulate();
         }
-        _btPhyiscsWorld->stepSimulation(dt, 3);
+        _btPhyiscsWorld->stepSimulation(dt, 3, 1.0 / (60.0 * (1.0 / Director::getInstance()->getScheduler()->getTimeScale())));
         //sync dynamic node after simulation
         for (auto it : _physicsComponents)
         {

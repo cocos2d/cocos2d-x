@@ -20,11 +20,8 @@ CCLabelTTFLoader.cpp \
 CCLayerColorLoader.cpp \
 CCLayerGradientLoader.cpp \
 CCLayerLoader.cpp \
-CCMenuItemImageLoader.cpp \
-CCMenuItemLoader.cpp \
 CCNode+CCBRelativePositioning.cpp \
 CCNodeLoader.cpp \
-CCNodeLoaderLibrary.cpp \
 CCParticleSystemQuadLoader.cpp \
 CCScale9SpriteLoader.cpp \
 CCScrollViewLoader.cpp \

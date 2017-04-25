@@ -290,7 +290,7 @@ protected:
      *      for scene graph node listeners, touch event process flow should
      *      order by viewport/camera first, because the touch location convert
      *      to 3D world space is different by different camera.
-     *  When listener process touch event, can get current camera by Camera::getVisitingCamera().
+     *  When listener process touch event, can get current camera by Director::getInstance()->getRunningScene()->getCamera().
      */
     void dispatchTouchEventToListeners(EventListenerVector* listeners, const std::function<bool(EventListener*)>& onEvent);
     

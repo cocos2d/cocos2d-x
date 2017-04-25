@@ -100,6 +100,13 @@ public:
     virtual bool openURL(const std::string &url) override;
 
     /**
+     @brief  This function will be called when the application screen size is changed.
+     @param new width
+     @param new height
+     */
+    virtual void applicationScreenSizeChanged();
+
+    /**
      *  Sets the Resource root path.
      *  @deprecated Please use FileUtils::getInstance()->setSearchPaths() instead.
      */

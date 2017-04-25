@@ -39,6 +39,15 @@
 #include "2d/CCComponentContainer.h"
 #include "2d/CCComponent.h"
 
+#include "Touch.h"
+#include "State.h"
+#include "Times.h"
+#include "Cull.h"
+
+namespace framework {
+  class Pool;
+}
+
 #if CC_USE_PHYSICS
 #include "physics/CCPhysicsBody.h"
 #endif
@@ -422,6 +431,7 @@ public:
      * @js NA
      */
     virtual void setPosition3D(const Vec3& position);
+    virtual void setPosition(float x, float y, float z);
     /**
      * Returns the position (X,Y,Z) in its parent's coordinate system.
      *
@@ -520,6 +530,21 @@ public:
      * @param anchorPoint   The anchor point of node.
      */
     virtual void setAnchorPoint(const Vec2& anchorPoint);
+
+    /**
+     * Sets the anchor point in percent.
+     *
+     * anchorPoint is the point around which all transformations and positioning manipulations take place.
+     * It's like a pin in the node where it is "attached" to its parent.
+     * The anchorPoint is normalized, like a percentage. (0,0) means the bottom-left corner and (1,1) means the top-right corner.
+     * But you can use values higher than (1,1) and lower than (0,0) too.
+     * The default anchorPoint is (0.5,0.5), so it starts in the center of the node.
+     * @note If node has a physics body, the anchor must be in the middle, you can't change this to other value.
+     *
+     * @param anchorPointX   The x anchor point of node.
+     * @param anchorPointY   The y anchor point of node.
+     */
+    virtual void setAnchorPoint(const float anchorPointX, const float anchorPointY);
     /**
      * Returns the anchor point in percent.
      *
@@ -604,6 +629,7 @@ public:
      * @js NA
      */
     virtual void setRotation3D(const Vec3& rotation);
+    virtual void setRotation(float x, float y, float z);
     /**
      * Returns the rotation (X,Y,Z) in degrees.
      * 
@@ -1171,7 +1197,7 @@ public:
      * @param parentFlags Renderer flag.
      */
     virtual void visit(Renderer *renderer, const Mat4& parentTransform, uint32_t parentFlags);
-    virtual void visit() final;
+    virtual void visit();
 
 
     /** Returns the Scene that contains the Node.
@@ -1188,6 +1214,13 @@ public:
      * @return An AABB (axis-aligned bounding-box) in its parent's coordinate system
      */
     virtual Rect getBoundingBox() const;
+
+    /**
+     * Returns an AABB (axis-aligned bounding-box) in its parent's coordinate system.
+     *
+     * @return An AABB (axis-aligned bounding-box) in its parent's coordinate system
+     */
+    virtual Rect getBoundingBoxToWorld() const;
 
     /** @deprecated Use getBoundingBox instead */
     CC_DEPRECATED_ATTRIBUTE virtual Rect boundingBox() const { return getBoundingBox(); }
@@ -1231,6 +1264,7 @@ public:
      * @param action An Action pointer.
      */
     virtual Action* runAction(Action* action);
+    virtual Action* runAction(Action* action, int tag);
 
     /**
      * Stops and removes all actions from the running action list .
@@ -1739,6 +1773,11 @@ public:
      */
     virtual void setOpacity(GLubyte opacity);
     /**
+     * Change node opacity.
+     * @param opacity A float opacity value.
+     */
+    virtual void setFade(float opacity);
+    /**
      * Update the displayed opacity of node with it's parent opacity;
      * @param parentOpacity The opacity of parent node.
      */
@@ -1850,9 +1889,10 @@ public:
      */
     virtual void setCameraMask(unsigned short mask, bool applyChildren = true);
 
-CC_CONSTRUCTOR_ACCESS:
+public:
     // Nodes should be created using create();
     Node();
+    Node(Node* parent, bool autocreate = false);
     virtual ~Node();
 
     virtual bool init();
@@ -1987,7 +2027,7 @@ protected:
     bool        _cascadeOpacityEnabled;
 
     // camera mask, it is visible only when _cameraMask & current camera' camera flag is true
-    unsigned short _cameraMask;
+    int _cameraMask;
     
     std::function<void()> _onEnterCallback;
     std::function<void()> _onExitCallback;
@@ -2014,6 +2054,120 @@ public:
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Node);
+
+/**
+ * Tooflya Inc. Development
+ *
+ * @author Igor Mats from Tooflya Inc.
+ * @copyright (c) 2015 by Igor Mats
+ * http://www.tooflya.com/development/
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ *
+ * @cocos2d
+ *
+ */
+
+  protected:
+  bool _scheduleUpdate = false;
+
+  float _actionsTimeFactor = 1.0;
+
+  void setScheduleUpdate(bool scheduleUpdate)
+  {
+      _scheduleUpdate = scheduleUpdate;
+
+      if(this->state->create)
+      {
+          this->scheduleUpdate();
+      }
+  }
+
+  public:
+  int id;
+  int data = 0;
+
+  bool shadow = false;
+  bool light = false;
+
+  framework::Touch* touch;
+  framework::State* state;
+  framework::Cull* cull;
+
+  framework::Pool* pool = nullptr;
+
+  virtual Node* _create();
+  virtual Node* _destroy(bool action = false);
+
+  virtual Node* _clone();
+
+  virtual void onCreate();
+  virtual void onDestroy(bool action = false);
+
+  virtual bool onTouchBegan(Touch* touch, Event* e);
+  virtual void onTouchEnded(Touch* touch, Event* e);
+  virtual void onTouchMoved(Touch* touch, Event* e);
+  virtual void onTouchCancelled(Touch* touch, Event* e);
+
+  virtual void onTouchStart(Touch* touch, Event* e);
+  virtual void onTouchFinish(Touch* touch, Event* e);
+  virtual void onTouch(Touch* touch, Event* e);
+
+  virtual void onHover(bool state);
+
+  virtual int onSwipe(Touch* touch, Event* e);
+  virtual int onSwipe();
+
+  virtual void onSwipeUp();
+  virtual void onSwipeDown();
+  virtual void onSwipeLeft();
+  virtual void onSwipeRight();
+
+  virtual void onKeyPressed(cocos2d::EventKeyboard::KeyCode key, Event *event);
+  virtual void onKeyReleased(cocos2d::EventKeyboard::KeyCode key, Event *event);
+
+  virtual void onEnterShow();
+  virtual void onExitHide();
+
+  virtual int setData(int data);
+  virtual int getData();
+
+  virtual void enableShadow(bool state, float shadowIndex = 0.0);
+  virtual void enableLight(bool state);
+
+  virtual bool enableShadow();
+  virtual bool enableLight();
+
+  virtual float getRecursiveWidth(bool recursive = false);
+  virtual float getRecursiveHeight(bool recursive = false);
+
+  virtual void setPool(framework::Pool* pool);
+  virtual void setPool(int id);
+
+  virtual bool bind(bool bind, bool swallowed = true);
+  virtual bool containsTouchLocation(Touch* touch);
+
+  framework::Pool* getPool();
+
+  virtual Mat4 getModelViewMatrix();
+
+  virtual Node* deepCopy();
 };
 
 /**

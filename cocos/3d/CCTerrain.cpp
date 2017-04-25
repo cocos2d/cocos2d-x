@@ -183,7 +183,7 @@ void Terrain::onDraw(const Mat4 &transform, uint32_t /*flags*/)
     {
         glUniform1i(_lightMapCheckLocation, 0);
     }
-    auto camera = Camera::getVisitingCamera();
+    auto camera = Director::getInstance()->getRunningScene()->getCamera();
 
     if(memcmp(&_CameraMatrix,&camera->getViewMatrix(),sizeof(Mat4))!=0)
     {

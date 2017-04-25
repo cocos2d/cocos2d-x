@@ -1,5 +1,9 @@
 /****************************************************************************
+<<<<<<< HEAD
+Copyright (c) 2016 Chukong Technologies Inc.
+=======
 Copyright (c) 2016-2017 Chukong Technologies Inc.
+>>>>>>> cocos2d/v3
 
 http://www.cocos2d-x.org
 
@@ -65,11 +69,19 @@ public:
     virtual void rewind() = 0;
 
     virtual void setVolume(float volume) = 0;
+<<<<<<< HEAD
+    virtual inline void setPitch(float pitch) {};
+    virtual inline void setSpeed(float speed) {};
+
+    virtual float getVolume() const = 0;
+
+=======
 
     virtual float getVolume() const = 0;
 
     virtual void setAudioFocus(bool isFocus) = 0;
 
+>>>>>>> cocos2d/v3
     virtual void setLoop(bool isLoop) = 0;
 
     virtual bool isLoop() const = 0;

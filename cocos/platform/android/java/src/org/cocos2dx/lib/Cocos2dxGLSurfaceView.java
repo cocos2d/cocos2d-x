@@ -223,7 +223,7 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
         }
 
         switch (pMotionEvent.getAction() & MotionEvent.ACTION_MASK) {
-            case MotionEvent.ACTION_POINTER_DOWN:
+            /*case MotionEvent.ACTION_POINTER_DOWN:
                 final int indexPointerDown = pMotionEvent.getAction() >> MotionEvent.ACTION_POINTER_INDEX_SHIFT;
                 if (!mMultipleTouchEnabled && indexPointerDown != 0) {
                     break;
@@ -238,7 +238,7 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
                         Cocos2dxGLSurfaceView.this.mCocos2dxRenderer.handleActionDown(idPointerDown, xPointerDown, yPointerDown);
                     }
                 });
-                break;
+                break;*/
 
             case MotionEvent.ACTION_DOWN:
                 // there are only one finger on the screen

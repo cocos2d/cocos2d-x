@@ -1075,28 +1075,6 @@ void Sprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
                                flags);
 
         renderer->addCommand(&_trianglesCommand);
-
-#if CC_SPRITE_DEBUG_DRAW
-        _debugDrawNode->clear();
-        auto count = _polyInfo.triangles.indexCount/3;
-        auto indices = _polyInfo.triangles.indices;
-        auto verts = _polyInfo.triangles.verts;
-        for(ssize_t i = 0; i < count; i++)
-        {
-            //draw 3 lines
-            Vec3 from =verts[indices[i*3]].vertices;
-            Vec3 to = verts[indices[i*3+1]].vertices;
-            _debugDrawNode->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::WHITE);
-
-            from =verts[indices[i*3+1]].vertices;
-            to = verts[indices[i*3+2]].vertices;
-            _debugDrawNode->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::WHITE);
-
-            from =verts[indices[i*3+2]].vertices;
-            to = verts[indices[i*3]].vertices;
-            _debugDrawNode->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::WHITE);
-        }
-#endif //CC_SPRITE_DEBUG_DRAW
     }
 }
 
@@ -1332,6 +1310,12 @@ void Sprite::setAnchorPoint(const Vec2& anchor)
     SET_DIRTY_RECURSIVELY();
 }
 
+void Sprite::setAnchorPoint(const float x, const float y)
+{
+    Node::setAnchorPoint(x, y);
+    SET_DIRTY_RECURSIVELY();
+}
+
 void Sprite::setIgnoreAnchorPointForPosition(bool value)
 {
     CCASSERT(_renderMode != RenderMode::QUAD_BATCHNODE, "setIgnoreAnchorPointForPosition is invalid in Sprite");
@@ -1539,6 +1523,16 @@ void Sprite::setOpacityModifyRGB(bool modify)
 bool Sprite::isOpacityModifyRGB(void) const
 {
     return _opacityModifyRGB;
+}
+
+void Sprite::visit()
+{
+  Node::visit();
+}
+
+void Sprite::visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t parentFlags)
+{
+  Node::visit(renderer, parentTransform, parentFlags);
 }
 
 // MARK: Frames

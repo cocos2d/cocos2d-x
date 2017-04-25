@@ -43,6 +43,7 @@ _autoScrollStopEpsilon(0.001f),
 _previousPageIndex(-1),
 _isTouchBegin(false)
 {
+  this->_sens = 1.0;
 }
 
 PageView::~PageView()

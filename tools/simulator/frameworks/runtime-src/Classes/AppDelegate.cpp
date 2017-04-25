@@ -1,7 +1,13 @@
 #include "AppDelegate.h"
-#include "CCLuaEngine.h"
+
 #include "SimpleAudioEngine.h"
 #include "cocos2d.h"
+<<<<<<< HEAD
+
+#include "runtime/Runtime.h"
+
+=======
+>>>>>>> cocos2d/v3
 
 using namespace CocosDenshion;
 
@@ -31,9 +37,11 @@ bool AppDelegate::applicationDidFinishLaunching()
 {
     // set default FPS
     Director::getInstance()->setAnimationInterval(1.0 / 60.0f);
+<<<<<<< HEAD
+    
+=======
+>>>>>>> cocos2d/v3
 
-    // Runtime end
-    cocos2d::log("iShow!");
     return true;
 }
 

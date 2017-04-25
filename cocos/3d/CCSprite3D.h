@@ -278,6 +278,17 @@ protected:
         NodeDatas*   nodeDatas;
     };
     AsyncLoadParam             _asyncLoadParam;
+
+    public:
+    float shadowIndex = 0.0;
+
+    virtual void enableShadow(bool state, float shadowIndex = 0.0) override;
+    virtual void enableLight(bool state) override;
+
+    virtual bool enableShadow() override;
+    virtual bool enableLight() override;
+    
+    virtual void onEnter() override;
 };
 
 ///////////////////////////////////////////////////////

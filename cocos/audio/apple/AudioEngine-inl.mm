@@ -86,9 +86,12 @@ void AudioEngineInterruptionListenerCallback(void* user_data, UInt32 interruptio
     // only enable it on iOS. Disable it on tvOS
     // AudioSessionInitialize removed from tvOS
 #if !defined(CC_TARGET_OS_TVOS)
-      else {
+      //else {
+        UInt32 category = kAudioSessionCategory_AmbientSound;
+
         AudioSessionInitialize(NULL, NULL, AudioEngineInterruptionListenerCallback, self);
-      }
+        AudioSessionSetProperty(kAudioSessionProperty_AudioCategory, sizeof(category), &category);
+      //}
 #endif
     }
     return self;
@@ -444,6 +447,36 @@ void AudioEngineImpl::setVolume(int audioID,float volume)
     }
 }
 
+void AudioEngineImpl::setPitch(int audioID,float pitch)
+{
+    auto player = _audioPlayers[audioID];
+    player->_pitch = pitch;
+    
+    if (player->_ready) {
+        alSourcef(_audioPlayers[audioID]->_alSource, AL_PITCH, pitch);
+        
+        auto error = alGetError();
+        if (error != AL_NO_ERROR) {
+            printf("%s: audio id = %d, error = %x\n", __PRETTY_FUNCTION__,audioID,error);
+        }
+    }
+}
+
+void AudioEngineImpl::setSpeed(int audioID,float speed)
+{
+    auto player = _audioPlayers[audioID];
+    player->_speed = speed;
+    
+    if (player->_ready) {
+        alSourcef(_audioPlayers[audioID]->_alSource, AL_SPEED_OF_SOUND, speed);
+        
+        auto error = alGetError();
+        if (error != AL_NO_ERROR) {
+            printf("%s: audio id = %d, error = %x\n", __PRETTY_FUNCTION__,audioID,error);
+        }
+    }
+}
+
 void AudioEngineImpl::setLoop(int audioID, bool loop)
 {
     auto player = _audioPlayers[audioID];
@@ -587,6 +620,15 @@ bool AudioEngineImpl::setCurrentTime(int audioID, float time)
 void AudioEngineImpl::setFinishCallback(int audioID, const std::function<void (int, const std::string &)> &callback)
 {
     _audioPlayers[audioID]->_finishCallbak = callback;
+}
+
+bool AudioEngineImpl::isOtherAudioPlaying()
+{
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+  return [[AVAudioSession sharedInstance] isOtherAudioPlaying];
+#endif
+
+  return false;
 }
 
 void AudioEngineImpl::update(float dt)

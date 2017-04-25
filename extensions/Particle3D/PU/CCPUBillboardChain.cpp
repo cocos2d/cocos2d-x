@@ -687,7 +687,7 @@ void PUBillboardChain::init( const std::string &texFile )
 
 void PUBillboardChain::render( Renderer* renderer, const Mat4 &transform, ParticleSystem3D* particleSystem )
 {
-    auto camera = Camera::getVisitingCamera();
+    auto camera = Director::getInstance()->getRunningScene()->getCamera();
     auto cameraMat = camera->getNodeToWorldTransform();
 
     if (!_chainSegmentList.empty())

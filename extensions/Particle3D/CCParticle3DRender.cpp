@@ -106,7 +106,7 @@ void Particle3DQuadRender::render(Renderer* renderer, const Mat4 &transform, Par
         _indexData.resize(activeParticleList.size() * 6);
     }
 
-    auto camera = Camera::getVisitingCamera();
+    auto camera = Director::getInstance()->getRunningScene()->getCamera();
     auto cameraMat = camera->getNodeToWorldTransform();
     const Mat4 &viewMat = cameraMat.getInversed();
     

@@ -36,6 +36,8 @@ THE SOFTWARE.
 #include "base/CCRef.h"
 #include "base/CCVector.h"
 #include "2d/CCScene.h"
+#include "2d/CCLight.h"
+#include "2d/CCSprite.h"
 #include "math/CCMath.h"
 #include "platform/CCGL.h"
 #include "platform/CCGLView.h"
@@ -46,7 +48,6 @@ NS_CC_BEGIN
  * @addtogroup base
  * @{
  */
-
 /* Forward declarations. */
 class LabelAtlas;
 //class GLView;
@@ -62,6 +63,8 @@ class Renderer;
 class Camera;
 
 class Console;
+class RenderTexture;
+
 namespace experimental
 {
     class FrameBuffer;
@@ -94,9 +97,13 @@ enum class MATRIX_STACK_TYPE
  Since the Director is a singleton, the standard way to use it is by calling:
  _ Director::getInstance()->methodName();
  */
+ 
 class CC_DLL Director : public Ref
 {
 public:
+    /* Renderer for the Director */
+    Renderer *_renderer;
+
     /** Director will trigger an event when projection type is changed. */
     static const char* EVENT_PROJECTION_CHANGED;
     /** Director will trigger an event before Schedule::update() is invoked. */
@@ -156,6 +163,13 @@ public:
 
     /** Gets current running Scene. Director can only run one Scene at a time. */
     Scene* getRunningScene() { return _runningScene; }
+
+    /** Gets previous running Scene. Director can only run one Scene at a time. */
+    inline Scene* getPreviousScene() { long c = _scenesStack.size(); return (Scene*) _scenesStack.at(c - 2); }
+    inline Scene* getRootScene() { return (Scene*) _scenesStack.at(0); }
+
+    /** */
+    inline long getScenesStackCount() { return _scenesStack.size(); }
 
     /** Gets the FPS value. */
     float getAnimationInterval() { return _animationInterval; }
@@ -294,6 +308,7 @@ public:
      * ONLY call it if there is a running scene.
      */
     void popScene();
+    void popScene(Scene *transition);
 
     /** 
      * Pops out all scenes from the stack until the root scene in the queue.
@@ -301,19 +316,26 @@ public:
      * Internally it will call `popToSceneStackLevel(1)`.
      */
     void popToRootScene();
+    void popToRootScene(Scene* transition);
 
     /** Pops out all scenes from the stack until it reaches `level`.
      If level is 0, it will end the director.
      If level is 1, it will pop all scenes until it reaches to root scene.
      If level is <= than the current stack level, it won't do anything.
      */
- 	void popToSceneStackLevel(int level);
+    void popToSceneStackLevel(int level);
 
     /** Replaces the running scene with a new one. The running scene is terminated.
      * ONLY call it if there is a running scene.
      * @js NA
      */
     void replaceScene(Scene *scene);
+
+    /**
+     *
+     *
+     */
+    inline void clearScenesStack() { _scenesStack.clear(); };
 
     /** Ends the execution, releases the running scene.
      * @lua endToLua
@@ -362,7 +384,7 @@ public:
      */
     void purgeCachedData();
 
-	/** Sets the default values based on the Configuration info. */
+    /** Sets the default values based on the Configuration info. */
     void setDefaultValues();
 
     // OpenGL Helper
@@ -674,9 +696,6 @@ protected:
 
     /* This object will be visited after the scene. Useful to hook a notification node */
     Node *_notificationNode;
-
-    /* Renderer for the Director */
-    Renderer *_renderer;
     
     /* Default FrameBufferObject*/
     experimental::FrameBuffer* _defaultFBO;
@@ -694,6 +713,45 @@ protected:
 
     // GLView will recreate stats labels to fit visible rect
     friend class GLView;
+
+  /**
+   * Tooflya Inc. Development
+   *
+   * @author Igor Mats from Tooflya Inc.
+   * @copyright (c) by Igor Mats
+   * http://www.tooflya.com/development/
+   *
+   * Permission is hereby granted, free of charge, to any person obtaining a copy
+   * of this software and associated documentation files (the "Software"), to deal
+   * in the Software without restriction, including without limitation the rights
+   * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+   * copies of the Software, and to permit persons to whom the Software is
+   * furnished to do so, subject to the following conditions:
+
+   * The above copyright notice and this permission notice shall be included in
+   * all copies or substantial portions of the Software.
+
+   * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+   * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+   * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+   * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+   * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+   * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+   * THE SOFTWARE.
+   *
+   */
+  public:
+
+    /**
+     *
+     * @Director
+     * | @Render;
+     *
+     */
+    virtual void onRenderStart();
+    virtual void onRenderFinish();
+    virtual void onRenderStart(int index);
+    virtual void onRenderFinish(int index);
 };
 
 // FIXME: Added for backward compatibility in case
