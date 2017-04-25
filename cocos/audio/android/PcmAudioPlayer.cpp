@@ -56,11 +56,21 @@ bool PcmAudioPlayer::prepare(const std::string &url, const PcmData &decResult)
 
     std::thread::id callerThreadId = _callerThreadUtils->getCallerThreadId();
 
+    // @note The logic may cause this issue https://github.com/cocos2d/cocos2d-x/issues/17707
+    // Assume that AudioEngine::stop(id) is invoked and the audio is played over meanwhile.
+    // Since State::OVER and State::DESTROYED are triggered in the audio mixing thread, it will
+    // call 'performFunctionInCallerThread' to post events to cocos's message queue.
+    // Therefore, the sequence in cocos's thread will be |STOP|OVER|DESTROYED|.
+    // Although, we remove the audio id in |STOPPED| callback, because it's asynchronous operation,
+    // |OVER| and |DESTROYED| callbacks will still be invoked in cocos's thread.
+    // HOW TO FIX: If the previous state is |STOPPED| and the current state
+    // is |OVER|, just skip to invoke |OVER| callback.
+
     _track->onStateChanged = [this, callerThreadId](Track::State state) {
         // It maybe in sub thread
         auto func = [this, state](){
             // It's in caller's thread
-            if (state == Track::State::OVER)
+            if (state == Track::State::OVER && _track->getPrevState() != Track::State::STOPPED)
             {
                 if (_playEventCallback != nullptr)
                 {
@@ -81,11 +91,11 @@ bool PcmAudioPlayer::prepare(const std::string &url, const PcmData &decResult)
         };
 
         if (callerThreadId == std::this_thread::get_id())
-        {
+        { // onStateChanged(Track::State::STOPPED) is in caller's (Cocos's) thread.
             func();
         }
         else
-        {
+        { // onStateChanged(Track::State::OVER) or onStateChanged(Track::State::DESTROYED) are in audio mixing thread.
             _callerThreadUtils->performFunctionInCallerThread(func);
         }
     };
