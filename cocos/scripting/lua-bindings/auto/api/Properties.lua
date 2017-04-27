@@ -23,6 +23,8 @@
 -- return The value of the given property as a string, or the empty string if no property with that name exists.
 -- @function [parent=#Properties] getString 
 -- @param self
+-- @param #char name
+-- @param #char defaultValue
 -- @return char#char ret (return value: char)
         
 --------------------------------
@@ -34,6 +36,7 @@
 -- Zero if the property does not exist or could not be scanned.
 -- @function [parent=#Properties] getLong 
 -- @param self
+-- @param #char name
 -- @return long#long ret (return value: long)
         
 --------------------------------
@@ -132,6 +135,8 @@
 -- return true if the property exists and its value is "true", otherwise false.
 -- @function [parent=#Properties] getBool 
 -- @param self
+-- @param #char name
+-- @param #bool defaultValue
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
@@ -149,6 +154,7 @@
 -- return The type of the property.
 -- @function [parent=#Properties] getType 
 -- @param self
+-- @param #char name
 -- @return int#int ret (return value: int)
         
 --------------------------------
@@ -166,6 +172,7 @@
 -- Zero if the property does not exist or could not be scanned.
 -- @function [parent=#Properties] getInt 
 -- @param self
+-- @param #char name
 -- @return int#int ret (return value: int)
         
 --------------------------------
@@ -228,6 +235,7 @@
 -- Zero if the property does not exist or could not be scanned.
 -- @function [parent=#Properties] getFloat 
 -- @param self
+-- @param #char name
 -- @return float#float ret (return value: float)
         
 --------------------------------

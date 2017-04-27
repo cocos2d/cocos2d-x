@@ -1179,7 +1179,6 @@
 		50FC18F41C3372DB00DD15A3 /* Icon-57.png in Resources */ = {isa = PBXBuildFile; fileRef = 50FC18141C3371C000DD15A3 /* Icon-57.png */; };
 		50FC18F51C3372DB00DD15A3 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 50FC18151C3371C000DD15A3 /* Icon-72.png */; };
 		50FC18F61C3372DB00DD15A3 /* Icon-76.png in Resources */ = {isa = PBXBuildFile; fileRef = 50FC18161C3371C000DD15A3 /* Icon-76.png */; };
-		50FC18F71C3372DB00DD15A3 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 50FC18171C3371C000DD15A3 /* Info.plist */; };
 		50FC18F81C3372DB00DD15A3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 50FC18181C3371C000DD15A3 /* main.m */; };
 		50FC18F91C3372DB00DD15A3 /* NativeOcClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 50FC181A1C3371C000DD15A3 /* NativeOcClass.m */; };
 		50FC18FA1C3372DB00DD15A3 /* RootViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50FC181D1C3371C000DD15A3 /* RootViewController.mm */; };
@@ -1341,11 +1340,9 @@
 		FA94B1FD1B8EF8250074B261 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = FA94B1E51B8EF8250074B261 /* Icon-72.png */; };
 		FA94B1FE1B8EF8250074B261 /* Icon-76.png in Resources */ = {isa = PBXBuildFile; fileRef = FA94B1E61B8EF8250074B261 /* Icon-76.png */; };
 		FA94B1FF1B8EF8250074B261 /* Icon-80.png in Resources */ = {isa = PBXBuildFile; fileRef = FA94B1E71B8EF8250074B261 /* Icon-80.png */; };
-		FA94B2001B8EF8250074B261 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FA94B1E81B8EF8250074B261 /* Info.plist */; };
 		FA94B2011B8EF8250074B261 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FA94B1E91B8EF8250074B261 /* main.m */; };
 		FA94B2021B8EF8250074B261 /* RootViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = FA94B1EC1B8EF8250074B261 /* RootViewController.mm */; };
 		FA94B2081B8EF8430074B261 /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = FA94B2041B8EF8430074B261 /* Icon.icns */; };
-		FA94B2091B8EF8430074B261 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FA94B2051B8EF8430074B261 /* Info.plist */; };
 		FA94B20A1B8EF8430074B261 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA94B2061B8EF8430074B261 /* main.cpp */; };
 		FA94B2261B8EF9C50074B261 /* CloseNormal.png in Resources */ = {isa = PBXBuildFile; fileRef = FA94B2211B8EF9C50074B261 /* CloseNormal.png */; };
 		FA94B2271B8EF9C50074B261 /* CloseNormal.png in Resources */ = {isa = PBXBuildFile; fileRef = FA94B2211B8EF9C50074B261 /* CloseNormal.png */; };
@@ -5524,13 +5521,16 @@
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0830;
 				TargetAttributes = {
 					1D6058900D05DD3D006BFB54 = {
 						DevelopmentTeam = U7E7529TA5;
 					};
 					507B43541C31FB340067B53E = {
 						CreatedOnToolsVersion = 7.2;
+					};
+					A07A517F1783A1D20073F6A7 = {
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -6172,7 +6172,6 @@
 				50FC18EA1C3372B900DD15A3 /* src in Resources */,
 				50FC18F31C3372DB00DD15A3 /* Icon-152.png in Resources */,
 				50FC18ED1C3372DB00DD15A3 /* Default-568h@2x.png in Resources */,
-				50FC18F71C3372DB00DD15A3 /* Info.plist in Resources */,
 				50FC18F51C3372DB00DD15A3 /* Icon-72.png in Resources */,
 				50FC18E81C3372B300DD15A3 /* script in Resources */,
 				50FC18F01C3372DB00DD15A3 /* Icon-114.png in Resources */,
@@ -6277,7 +6276,6 @@
 				FA94B1F21B8EF8250074B261 /* Default@2x.png in Resources */,
 				FA94B1F01B8EF8250074B261 /* Default-736h@3x.png in Resources */,
 				FADE786C1B942DE30061590D /* fonts in Resources */,
-				FA94B2001B8EF8250074B261 /* Info.plist in Resources */,
 				FADE78AE1B9E88420061590D /* Particles in Resources */,
 				FA94B1F41B8EF8250074B261 /* Icon-114.png in Resources */,
 				FA94B1F81B8EF8250074B261 /* Icon-29.png in Resources */,
@@ -6301,7 +6299,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				FA94B24E1B93EF7B0074B261 /* Images in Resources */,
-				FA94B2091B8EF8430074B261 /* Info.plist in Resources */,
 				FA94B2261B8EF9C50074B261 /* CloseNormal.png in Resources */,
 				FADE78AD1B9E88420061590D /* Particles in Resources */,
 				FADE786B1B942DE30061590D /* fonts in Resources */,
@@ -8186,7 +8183,7 @@
 					CC_TARGET_OS_TVOS,
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/../tests/lua-tests/project/proj.ios_mac/ios/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(SRCROOT)/../external/curl/prebuilt/ios",
 					"/Users/cocos2d/MyWork/cocos2d-x-develop/external/curl/prebuilt/ios",
@@ -8208,7 +8205,7 @@
 					CC_TARGET_OS_TVOS,
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/../tests/lua-tests/project/proj.ios_mac/ios/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(SRCROOT)/../external/curl/prebuilt/ios",
 					"/Users/cocos2d/MyWork/cocos2d-x-develop/external/curl/prebuilt/ios",
@@ -8457,6 +8454,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -8472,6 +8470,8 @@
 					"$(inherited)",
 					"$(SRCROOT)/../external/curl/prebuilt/ios",
 				);
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 				STRIP_PNG_TEXT = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -8484,6 +8484,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -8499,6 +8500,8 @@
 					"$(inherited)",
 					"$(SRCROOT)/../external/curl/prebuilt/ios",
 				);
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 				STRIP_PNG_TEXT = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -8512,23 +8515,40 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				COMPRESS_PNG_FILES = NO;
 				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"COCOS2D_DEBUG=1",
 					USE_FILE32API,
-					"CC_ENABLE_CHIPMUNK_INTEGRATION=1",
+					"CC_ENABLE_CHIPMUNK_INTEGRATION=0",
+					"CC_ENABLE_BOX2D_INTEGRATION=1",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
@@ -8543,20 +8563,37 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				COMPRESS_PNG_FILES = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_FILE32API,
-					"CC_ENABLE_CHIPMUNK_INTEGRATION=1",
+					"CC_ENABLE_CHIPMUNK_INTEGRATION=0",
+					"CC_ENABLE_BOX2D_INTEGRATION=1",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocos2d-x.${PRODUCT_NAME:rfc1034identifier}";
