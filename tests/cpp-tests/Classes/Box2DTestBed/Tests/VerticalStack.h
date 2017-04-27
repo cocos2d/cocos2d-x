@@ -86,7 +86,9 @@ public:
 	{
 		switch (key)
 		{
-		case ',':
+		case (unsigned char)cocos2d::EventKeyboard::KeyCode::KEY_A:
+		case (unsigned char)cocos2d::EventKeyboard::KeyCode::KEY_COMMA:
+		// case ',':
 			if (m_bullet != NULL)
 			{
 				m_world->DestroyBody(m_bullet);

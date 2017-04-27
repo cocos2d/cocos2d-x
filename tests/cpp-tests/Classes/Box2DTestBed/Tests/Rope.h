@@ -56,12 +56,12 @@ public:
 	{
 		switch (key)
 		{
-		case 'q':
+		case (unsigned char)cocos2d::EventKeyboard::KeyCode::KEY_Q:
 			m_angle = b2Max(-b2_pi, m_angle - 0.05f * b2_pi);
 			m_rope.SetAngle(m_angle);
 			break;
 
-		case 'e':
+		case (unsigned char)cocos2d::EventKeyboard::KeyCode::KEY_E:
 			m_angle = b2Min(b2_pi, m_angle + 0.05f * b2_pi);
 			m_rope.SetAngle(m_angle);
 			break;

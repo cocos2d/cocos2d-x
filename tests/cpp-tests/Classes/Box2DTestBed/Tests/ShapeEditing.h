@@ -52,7 +52,7 @@ public:
 	{
 		switch (key)
 		{
-		case 'c':
+		case (unsigned char)cocos2d::EventKeyboard::KeyCode::KEY_C:
 			if (m_fixture2 == NULL)
 			{
 				b2CircleShape shape;
@@ -63,7 +63,7 @@ public:
 			}
 			break;
 
-		case 'd':
+		case (unsigned char)cocos2d::EventKeyboard::KeyCode::KEY_D:
 			if (m_fixture2 != NULL)
 			{
 				m_body->DestroyFixture(m_fixture2);
@@ -72,7 +72,7 @@ public:
 			}
 			break;
 
-		case 's':
+		case (unsigned char)cocos2d::EventKeyboard::KeyCode::KEY_S:
 			if (m_fixture2 != NULL)
 			{
 				m_sensor = !m_sensor;

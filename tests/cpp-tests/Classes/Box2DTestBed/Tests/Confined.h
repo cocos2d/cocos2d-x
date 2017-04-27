@@ -106,7 +106,7 @@ public:
 	{
 		switch (key)
 		{
-		case 'c':
+		case (unsigned char)cocos2d::EventKeyboard::KeyCode::KEY_C:
 			CreateCircle();
 			break;
 		}

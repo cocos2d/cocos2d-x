@@ -81,27 +81,27 @@ public:
 	{
 		switch (key)
 		{
-		case 'a':
+		case (unsigned char)cocos2d::EventKeyboard::KeyCode::KEY_A:
 			m_positionB.x -= 0.1f;
 			break;
 
-		case 'd':
+		case (unsigned char)cocos2d::EventKeyboard::KeyCode::KEY_D:
 			m_positionB.x += 0.1f;
 			break;
 
-		case 's':
+		case (unsigned char)cocos2d::EventKeyboard::KeyCode::KEY_S:
 			m_positionB.y -= 0.1f;
 			break;
 
-		case 'w':
+		case (unsigned char)cocos2d::EventKeyboard::KeyCode::KEY_W:
 			m_positionB.y += 0.1f;
 			break;
 
-		case 'q':
+		case (unsigned char)cocos2d::EventKeyboard::KeyCode::KEY_Q:
 			m_angleB += 0.1f * b2_pi;
 			break;
 
-		case 'e':
+		case (unsigned char)cocos2d::EventKeyboard::KeyCode::KEY_E:
 			m_angleB -= 0.1f * b2_pi;
 			break;
 		}

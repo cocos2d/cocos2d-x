@@ -230,25 +230,25 @@ public:
 	{
 		switch (key)
 		{
-		case 'a':
+		case (unsigned char)cocos2d::EventKeyboard::KeyCode::KEY_A:
 			m_spring1->SetMotorSpeed(m_speed);
 			break;
 
-		case 's':
+		case (unsigned char)cocos2d::EventKeyboard::KeyCode::KEY_S:
 			m_spring1->SetMotorSpeed(0.0f);
 			break;
 
-		case 'd':
+		case (unsigned char)cocos2d::EventKeyboard::KeyCode::KEY_D:
 			m_spring1->SetMotorSpeed(-m_speed);
 			break;
 
-		case 'q':
+		case (unsigned char)cocos2d::EventKeyboard::KeyCode::KEY_Q:
 			m_hz = b2Max(0.0f, m_hz - 1.0f);
 			m_spring1->SetSpringFrequencyHz(m_hz);
 			m_spring2->SetSpringFrequencyHz(m_hz);
 			break;
 
-		case 'e':
+		case (unsigned char)cocos2d::EventKeyboard::KeyCode::KEY_E:
 			m_hz += 1.0f;
 			m_spring1->SetSpringFrequencyHz(m_hz);
 			m_spring2->SetSpringFrequencyHz(m_hz);

@@ -72,7 +72,7 @@ public:
 	{
 		switch (key)
 		{
-		case 's':
+		case (unsigned char)cocos2d::EventKeyboard::KeyCode::KEY_S:
 			m_go = !m_go;
 			break;
 		}

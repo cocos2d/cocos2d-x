@@ -222,19 +222,19 @@ public:
 	{
 		switch (key)
 		{
-		case 'a':
+		case (unsigned char)cocos2d::EventKeyboard::KeyCode::KEY_A:
 			m_motorJoint->SetMotorSpeed(-m_motorSpeed);
 			break;
 
-		case 's':
+		case (unsigned char)cocos2d::EventKeyboard::KeyCode::KEY_S:
 			m_motorJoint->SetMotorSpeed(0.0f);
 			break;
 
-		case 'd':
+		case (unsigned char)cocos2d::EventKeyboard::KeyCode::KEY_D:
 			m_motorJoint->SetMotorSpeed(m_motorSpeed);
 			break;
 
-		case 'm':
+		case (unsigned char)cocos2d::EventKeyboard::KeyCode::KEY_M:
 			m_motorJoint->EnableMotor(!m_motorJoint->IsMotorEnabled());
 			break;
 		}
