@@ -522,7 +522,7 @@ end
 -- int diff = offsetof( V3F_C4B_T2F, vertices)
 -- glVertexAttribPointer(kcc.VertexAttrib_Position, 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff))
 
--- -- texCoods
+-- -- texCoords
 -- diff = offsetof( V3F_C4B_T2F, texCoords)
 -- glVertexAttribPointer(kcc.VertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff))
 

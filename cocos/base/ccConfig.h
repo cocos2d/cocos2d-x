@@ -323,7 +323,7 @@ THE SOFTWARE.
 #endif
 
 /** When CC_ENABLE_SCRIPT_BINDING and CC_ENABLE_GC_FOR_NATIVE_OBJECTS are both 1
- then the Garbage collector will release the native objects, only when the JS/Lua objets
+ then the Garbage collector will release the native objects, only when the JS/Lua objects
  are collected.
  The benefit is that users don't need to retain/release the JS/Lua objects manually.
 

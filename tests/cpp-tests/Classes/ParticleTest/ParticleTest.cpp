@@ -1815,7 +1815,7 @@ std::string PremultipliedAlphaTest::subtitle() const
     return "no black halo, particles should fade out\n animation should be normal";
 }
 
-void PremultipliedAlphaTest::readdPaticle(float delta)
+void PremultipliedAlphaTest::readdParticle(float delta)
 {
     if (_hasEmitter)
     {
@@ -1858,7 +1858,7 @@ void PremultipliedAlphaTest::onEnter()
     this->addChild(_emitter, 10);
     _hasEmitter = true;
     
-    schedule(CC_SCHEDULE_SELECTOR(PremultipliedAlphaTest::readdPaticle), 1.0f);
+    schedule(CC_SCHEDULE_SELECTOR(PremultipliedAlphaTest::readdParticle), 1.0f);
 }
 
 // PremultipliedAlphaTest2

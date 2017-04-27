@@ -251,7 +251,7 @@ bool AudioControlTest::init()
                         _playOverLabel->setVisible(false);
                     }, 2.0f, "hide_play_over_label");
                     
-                    assert(!_isStopped); // Stop audio should not trigger finshed callback
+                    assert(!_isStopped); // Stop audio should not trigger finished callback
                     _audioID = AudioEngine::INVALID_AUDIO_ID;
                     ((TextButton*)_playItem)->setEnabled(true);
                     

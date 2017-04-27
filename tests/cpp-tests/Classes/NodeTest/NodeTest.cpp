@@ -1004,7 +1004,7 @@ void MySprite::onDraw(const Mat4 &transform, uint32_t flags)
     int diff = offsetof( V3F_C4B_T2F, vertices);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
 
-    // texCoods
+    // texCoords
     diff = offsetof( V3F_C4B_T2F, texCoords);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
 

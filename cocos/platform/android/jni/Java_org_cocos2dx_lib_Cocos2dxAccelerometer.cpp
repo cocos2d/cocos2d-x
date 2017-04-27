@@ -14,7 +14,7 @@ extern "C" {
         a.x = -((double)x / TG3_GRAVITY_EARTH);
         a.y = -((double)y / TG3_GRAVITY_EARTH);
         a.z = -((double)z / TG3_GRAVITY_EARTH);
-        a.timestamp = (double)timeStamp;
+        a.timestamp = (double)timeStamp / 1e9;
 
         EventAcceleration event(a);
         Director::getInstance()->getEventDispatcher()->dispatchEvent(&event);
