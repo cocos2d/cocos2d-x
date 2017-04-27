@@ -2804,63 +2804,6 @@ int lua_cocos2dx_cocosbuilder_CCBReader_constructor(lua_State* tolua_S)
     }while(0);
     ok  = true;
     do{
-        if (argc == 1) {
-            cocosbuilder::NodeLoaderLibrary* arg0;
-            ok &= luaval_to_object<cocosbuilder::NodeLoaderLibrary>(tolua_S, 2, "cc.NodeLoaderLibrary",&arg0, "cc.CCBReader:CCBReader");
-
-            if (!ok) { break; }
-            cobj = new cocosbuilder::CCBReader(arg0);
-            cobj->autorelease();
-            int ID =  (int)cobj->_ID ;
-            int* luaID =  &cobj->_luaID ;
-            toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)cobj,"cc.CCBReader");
-            return 1;
-        }
-    }while(0);
-    ok  = true;
-    do{
-        if (argc == 2) {
-            cocosbuilder::NodeLoaderLibrary* arg0;
-            ok &= luaval_to_object<cocosbuilder::NodeLoaderLibrary>(tolua_S, 2, "cc.NodeLoaderLibrary",&arg0, "cc.CCBReader:CCBReader");
-
-            if (!ok) { break; }
-            cocosbuilder::CCBMemberVariableAssigner* arg1;
-            ok &= luaval_to_object<cocosbuilder::CCBMemberVariableAssigner>(tolua_S, 3, "cc.CCBMemberVariableAssigner",&arg1, "cc.CCBReader:CCBReader");
-
-            if (!ok) { break; }
-            cobj = new cocosbuilder::CCBReader(arg0, arg1);
-            cobj->autorelease();
-            int ID =  (int)cobj->_ID ;
-            int* luaID =  &cobj->_luaID ;
-            toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)cobj,"cc.CCBReader");
-            return 1;
-        }
-    }while(0);
-    ok  = true;
-    do{
-        if (argc == 3) {
-            cocosbuilder::NodeLoaderLibrary* arg0;
-            ok &= luaval_to_object<cocosbuilder::NodeLoaderLibrary>(tolua_S, 2, "cc.NodeLoaderLibrary",&arg0, "cc.CCBReader:CCBReader");
-
-            if (!ok) { break; }
-            cocosbuilder::CCBMemberVariableAssigner* arg1;
-            ok &= luaval_to_object<cocosbuilder::CCBMemberVariableAssigner>(tolua_S, 3, "cc.CCBMemberVariableAssigner",&arg1, "cc.CCBReader:CCBReader");
-
-            if (!ok) { break; }
-            cocosbuilder::CCBSelectorResolver* arg2;
-            ok &= luaval_to_object<cocosbuilder::CCBSelectorResolver>(tolua_S, 4, "cc.CCBSelectorResolver",&arg2, "cc.CCBReader:CCBReader");
-
-            if (!ok) { break; }
-            cobj = new cocosbuilder::CCBReader(arg0, arg1, arg2);
-            cobj->autorelease();
-            int ID =  (int)cobj->_ID ;
-            int* luaID =  &cobj->_luaID ;
-            toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)cobj,"cc.CCBReader");
-            return 1;
-        }
-    }while(0);
-    ok  = true;
-    do{
         if (argc == 4) {
             cocosbuilder::NodeLoaderLibrary* arg0;
             ok &= luaval_to_object<cocosbuilder::NodeLoaderLibrary>(tolua_S, 2, "cc.NodeLoaderLibrary",&arg0, "cc.CCBReader:CCBReader");
