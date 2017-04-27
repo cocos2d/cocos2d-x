@@ -4,7 +4,8 @@ APP_CPPFLAGS := -frtti -DCC_ENABLE_CHIPMUNK_INTEGRATION=1 -std=c++11 -fsigned-ch
 APP_LDFLAGS := -latomic
 
 APP_ABI := armeabi
-APP_SHORT_COMMANDS := true
+# developers report it will cause error on Windows
+# APP_SHORT_COMMANDS := true
 
 
 ifeq ($(NDK_DEBUG),1)
