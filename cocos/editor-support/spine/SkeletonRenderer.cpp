@@ -252,7 +252,7 @@ void SkeletonRenderer::draw (Renderer* renderer, const Mat4& transform, uint32_t
 			blendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
 		}
 
-		batch->addCommand(renderer, _globalZOrder, attachmentVertices->_texture->getName(), _glProgramState, blendFunc,
+		batch->addCommand(renderer, _globalZOrder, attachmentVertices->_texture, _glProgramState, blendFunc,
 			*attachmentVertices->_triangles, transform, transformFlags);
 	}
 

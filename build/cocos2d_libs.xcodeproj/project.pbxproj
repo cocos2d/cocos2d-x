@@ -1026,6 +1026,7 @@
 		1A41ABC61DF00D1500B5584C /* AudioDecoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A41ABC51DF00D1500B5584C /* AudioDecoder.h */; };
 		1A41ABC71DF00D1500B5584C /* AudioDecoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A41ABC51DF00D1500B5584C /* AudioDecoder.h */; };
 		1A41ABC81DF00D1500B5584C /* AudioDecoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A41ABC51DF00D1500B5584C /* AudioDecoder.h */; };
+		1A4C3ABA1E9B7A45001972CC /* CCStencilStateManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A4C3AB91E9B7A45001972CC /* CCStencilStateManager.h */; };
 		1A570061180BC5A10088DEC7 /* CCAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A570047180BC5A10088DEC7 /* CCAction.cpp */; };
 		1A570062180BC5A10088DEC7 /* CCAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A570047180BC5A10088DEC7 /* CCAction.cpp */; };
 		1A570063180BC5A10088DEC7 /* CCAction.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A570048180BC5A10088DEC7 /* CCAction.h */; };
@@ -1369,8 +1370,6 @@
 		2986667F18B1B246000E39CA /* CCTweenFunction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2986667818B1B079000E39CA /* CCTweenFunction.cpp */; };
 		298C75D51C0465D0006BAE63 /* CCStencilStateManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 298C75D31C0465D0006BAE63 /* CCStencilStateManager.cpp */; };
 		298C75D61C0465D1006BAE63 /* CCStencilStateManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 298C75D31C0465D0006BAE63 /* CCStencilStateManager.cpp */; };
-		298C75D71C0465D1006BAE63 /* CCStencilStateManager.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 298C75D41C0465D0006BAE63 /* CCStencilStateManager.hpp */; };
-		298C75D81C0465D1006BAE63 /* CCStencilStateManager.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 298C75D41C0465D0006BAE63 /* CCStencilStateManager.hpp */; };
 		299754F4193EC95400A54AC3 /* ObjectFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 299754F2193EC95400A54AC3 /* ObjectFactory.cpp */; };
 		299754F5193EC95400A54AC3 /* ObjectFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 299754F2193EC95400A54AC3 /* ObjectFactory.cpp */; };
 		299754F6193EC95400A54AC3 /* ObjectFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 299754F3193EC95400A54AC3 /* ObjectFactory.h */; };
@@ -3307,7 +3306,6 @@
 		507B3F721C31BDD30067B53E /* CCBoneNode.h in Headers */ = {isa = PBXBuildFile; fileRef = C50306641B60B583001E6D43 /* CCBoneNode.h */; };
 		507B3F731C31BDD30067B53E /* CCPUCollisionAvoidanceAffectorTranslator.h in Headers */ = {isa = PBXBuildFile; fileRef = B665E0F71AA80A6500DDB1C5 /* CCPUCollisionAvoidanceAffectorTranslator.h */; };
 		507B3F741C31BDD30067B53E /* btParallelConstraintSolver.h in Headers */ = {isa = PBXBuildFile; fileRef = B6CAB1431AF9AA1900B9B856 /* btParallelConstraintSolver.h */; };
-		507B3F751C31BDD30067B53E /* CCStencilStateManager.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 298C75D41C0465D0006BAE63 /* CCStencilStateManager.hpp */; };
 		507B3F761C31BDD30067B53E /* CCNodeLoaderLibrary.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AD71D22180E26E600808F54 /* CCNodeLoaderLibrary.h */; };
 		507B3F771C31BDD30067B53E /* b2DistanceJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A168FE1807AF9C005B8026 /* b2DistanceJoint.h */; };
 		507B3F781C31BDD30067B53E /* btQuickprof.h in Headers */ = {isa = PBXBuildFile; fileRef = B6CAB1CC1AF9AA1A00B9B856 /* btQuickprof.h */; };
@@ -6034,6 +6032,7 @@
 		1A40D1081E8E56C6002E363A /* writer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = writer.h; sourceTree = "<group>"; };
 		1A41ABC11DF00CEC00B5584C /* AudioDecoder.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AudioDecoder.mm; sourceTree = "<group>"; };
 		1A41ABC51DF00D1500B5584C /* AudioDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioDecoder.h; sourceTree = "<group>"; };
+		1A4C3AB91E9B7A45001972CC /* CCStencilStateManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCStencilStateManager.h; path = ../base/CCStencilStateManager.h; sourceTree = "<group>"; };
 		1A570047180BC5A10088DEC7 /* CCAction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCAction.cpp; sourceTree = "<group>"; };
 		1A570048180BC5A10088DEC7 /* CCAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAction.h; sourceTree = "<group>"; };
 		1A570049180BC5A10088DEC7 /* CCActionCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionCamera.cpp; sourceTree = "<group>"; };
@@ -6403,7 +6402,6 @@
 		2986667818B1B079000E39CA /* CCTweenFunction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTweenFunction.cpp; sourceTree = "<group>"; };
 		2986667918B1B079000E39CA /* CCTweenFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTweenFunction.h; sourceTree = "<group>"; };
 		298C75D31C0465D0006BAE63 /* CCStencilStateManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCStencilStateManager.cpp; path = ../base/CCStencilStateManager.cpp; sourceTree = "<group>"; };
-		298C75D41C0465D0006BAE63 /* CCStencilStateManager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = CCStencilStateManager.hpp; path = ../base/CCStencilStateManager.hpp; sourceTree = "<group>"; };
 		299754F2193EC95400A54AC3 /* ObjectFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ObjectFactory.cpp; path = ../base/ObjectFactory.cpp; sourceTree = "<group>"; };
 		299754F3193EC95400A54AC3 /* ObjectFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjectFactory.h; path = ../base/ObjectFactory.h; sourceTree = "<group>"; };
 		299CF1F919A434BC00C378C1 /* ccRandom.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ccRandom.cpp; path = ../base/ccRandom.cpp; sourceTree = "<group>"; };
@@ -8437,7 +8435,7 @@
 				50ABBE1D1925AB6F00A911A9 /* ZipUtils.cpp */,
 				50ABBE1E1925AB6F00A911A9 /* ZipUtils.h */,
 				298C75D31C0465D0006BAE63 /* CCStencilStateManager.cpp */,
-				298C75D41C0465D0006BAE63 /* CCStencilStateManager.hpp */,
+				1A4C3AB91E9B7A45001972CC /* CCStencilStateManager.h */,
 			);
 			name = base;
 			path = ../cocos/2d;
@@ -11683,6 +11681,7 @@
 				B6CAB4011AF9AA1A00B9B856 /* btMultiBodyConstraintSolver.h in Headers */,
 				B6CAB2FB1AF9AA1A00B9B856 /* btTriangleCallback.h in Headers */,
 				15AE1A5A19AAD40300C27E9E /* b2StackAllocator.h in Headers */,
+				1A4C3ABA1E9B7A45001972CC /* CCStencilStateManager.h in Headers */,
 				B665E4101AA80A6600DDB1C5 /* CCPUTechniqueTranslator.h in Headers */,
 				B6CAB3691AF9AA1A00B9B856 /* btConvexCast.h in Headers */,
 				38F526401A48363B000DB7F7 /* ArmatureNodeReader.h in Headers */,
@@ -11803,7 +11802,6 @@
 				463AE7391E4DA31C00926B3A /* grpc.h in Headers */,
 				50864CA31C7BC1B000B3BAB1 /* cpBody.h in Headers */,
 				1A57007F180BC5A10088DEC7 /* CCActionInterval.h in Headers */,
-				298C75D71C0465D1006BAE63 /* CCStencilStateManager.hpp in Headers */,
 				B6DD2FDB1B04825B00E47F5F /* DetourLocalBoundary.h in Headers */,
 				B6CAB3491AF9AA1A00B9B856 /* gim_clip_polygon.h in Headers */,
 				503D4F661CE29D4E0054A2D1 /* CCVRDistortionMesh.h in Headers */,
@@ -13389,7 +13387,6 @@
 				507B3F721C31BDD30067B53E /* CCBoneNode.h in Headers */,
 				507B3F731C31BDD30067B53E /* CCPUCollisionAvoidanceAffectorTranslator.h in Headers */,
 				507B3F741C31BDD30067B53E /* btParallelConstraintSolver.h in Headers */,
-				507B3F751C31BDD30067B53E /* CCStencilStateManager.hpp in Headers */,
 				507B3F761C31BDD30067B53E /* CCNodeLoaderLibrary.h in Headers */,
 				507B3F771C31BDD30067B53E /* b2DistanceJoint.h in Headers */,
 				50864C961C7BC1B000B3BAB1 /* chipmunk_types.h in Headers */,
@@ -14483,7 +14480,6 @@
 				85505F051B60E3B2003F2CD4 /* CCBoneNode.h in Headers */,
 				B665E2491AA80A6500DDB1C5 /* CCPUCollisionAvoidanceAffectorTranslator.h in Headers */,
 				B6CAB4461AF9AA1A00B9B856 /* btParallelConstraintSolver.h in Headers */,
-				298C75D81C0465D1006BAE63 /* CCStencilStateManager.hpp in Headers */,
 				15AE18D119AAD33D00C27E9E /* CCNodeLoaderLibrary.h in Headers */,
 				15AE1AC319AAD40300C27E9E /* b2DistanceJoint.h in Headers */,
 				50864C951C7BC1B000B3BAB1 /* chipmunk_types.h in Headers */,
