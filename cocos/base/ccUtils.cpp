@@ -421,7 +421,7 @@ std::string getDataMD5Hash(const Data &data)
 {
     static const unsigned int MD5_DIGEST_LENGTH = 16;
 
-    if (data.isNull() || data.getSize() == 0)
+    if (data.isNull())
     {
         return std::string();
     }
