@@ -521,7 +521,7 @@ bool Scheduler::isScheduled(const std::string& key, void *target)
     {
         TimerTargetCallback *timer = dynamic_cast<TimerTargetCallback*>(element->timers->arr[i]);
         
-        if (timer && key == timer->getKey())
+        if (timer && !timer->isExhausted() && key == timer->getKey())
         {
             return true;
         }
@@ -1028,7 +1028,7 @@ bool Scheduler::isScheduled(SEL_SCHEDULE selector, Ref *target)
     {
         TimerTargetSelector *timer = dynamic_cast<TimerTargetSelector*>(element->timers->arr[i]);
         
-        if (timer && selector == timer->getSelector())
+        if (timer && !timer->isExhausted() && selector == timer->getSelector())
         {
             return true;
         }
