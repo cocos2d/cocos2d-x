@@ -943,13 +943,12 @@ void Scheduler::update(float dt)
     if( !_functionsToPerform.empty() ) {
         _performMutex.lock();
         // fixed #4123: Save the callback functions, they must be invoked after '_performMutex.unlock()', otherwise if new functions are added in callback, it will cause thread deadlock.
-        auto temp = _functionsToPerform;
-        _functionsToPerform.clear();
+        auto temp = std::move(_functionsToPerform);
         _performMutex.unlock();
-        for( const auto &function : temp ) {
+        
+        for (const auto &function : temp) {
             function();
         }
-        
     }
 }
 
