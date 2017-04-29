@@ -80,17 +80,16 @@ Timer::Timer()
 , _interval(0.0f)
 , _aborted(false)
 {
-
 }
 
 void Timer::setupTimerWithInterval(float seconds, unsigned int repeat, float delay)
 {
-	_elapsed = -1;
-	_interval = seconds;
-	_delay = delay;
-	_useDelay = (_delay > 0.0f) ? true : false;
-	_repeat = repeat;
-	_runForever = (_repeat == CC_REPEAT_FOREVER) ? true : false;
+    _elapsed = -1;
+    _interval = seconds;
+    _delay = delay;
+    _useDelay = (_delay > 0.0f) ? true : false;
+    _repeat = repeat;
+    _runForever = (_repeat == CC_REPEAT_FOREVER) ? true : false;
 }
 
 void Timer::update(float dt)
@@ -517,22 +516,18 @@ bool Scheduler::isScheduled(const std::string& key, void *target)
     {
         return false;
     }
-    else
+    
+    for (int i = 0; i < element->timers->num; ++i)
     {
-        for (int i = 0; i < element->timers->num; ++i)
-        {
-            TimerTargetCallback *timer = dynamic_cast<TimerTargetCallback*>(element->timers->arr[i]);
-            
-            if (timer && key == timer->getKey())
-            {
-                return true;
-            }
-        }
+        TimerTargetCallback *timer = dynamic_cast<TimerTargetCallback*>(element->timers->arr[i]);
         
-        return false;
+        if (timer && key == timer->getKey())
+        {
+            return true;
+        }
     }
     
-    return false;  // should never get here
+    return false;
 }
 
 void Scheduler::removeUpdateFromHash(struct _listEntry *entry)
@@ -739,11 +734,11 @@ bool Scheduler::isTargetPaused(void *target)
     }
     
     // We should check update selectors if target does not have custom selectors
-	tHashUpdateEntry *elementUpdate = nullptr;
-	HASH_FIND_PTR(_hashForUpdates, &target, elementUpdate);
-	if ( elementUpdate )
+    tHashUpdateEntry *elementUpdate = nullptr;
+    HASH_FIND_PTR(_hashForUpdates, &target, elementUpdate);
+    if ( elementUpdate )
     {
-		return elementUpdate->entry->paused;
+        return elementUpdate->entry->paused;
     }
     
     return false;  // should never get here
@@ -1028,22 +1023,18 @@ bool Scheduler::isScheduled(SEL_SCHEDULE selector, Ref *target)
     {
         return false;
     }
-    else
+
+    for (int i = 0; i < element->timers->num; ++i)
     {
-        for (int i = 0; i < element->timers->num; ++i)
-        {
-            TimerTargetSelector *timer = dynamic_cast<TimerTargetSelector*>(element->timers->arr[i]);
-            
-            if (timer && selector == timer->getSelector())
-            {
-                return true;
-            }
-        }
+        TimerTargetSelector *timer = dynamic_cast<TimerTargetSelector*>(element->timers->arr[i]);
         
-        return false;
+        if (timer && selector == timer->getSelector())
+        {
+            return true;
+        }
     }
     
-    return false;  // should never get here
+    return false;
 }
 
 void Scheduler::unschedule(SEL_SCHEDULE selector, Ref *target)
@@ -1065,7 +1056,7 @@ void Scheduler::unschedule(SEL_SCHEDULE selector, Ref *target)
             
             if (timer && selector == timer->getSelector())
             {
-                if (timer == element->currentTimer && (! timer->isAborted()))
+                if (timer == element->currentTimer && !timer->isAborted())
                 {
                     timer->retain();
                     timer->setAborted();
