@@ -198,8 +198,14 @@ bool Label::multilineTextWrap(const std::function<int(const std::u32string&, int
             }
 
             auto letterX = (nextLetterX + letterDef.offsetX * _bmfontScale) / contentScaleFactor;
-            if (_enableWrap && _maxLineWidth > 0.f && nextTokenX > 0.f && letterX + letterDef.width * _bmfontScale > _maxLineWidth
-                && !StringUtils::isUnicodeSpace(character) && nextChangeSize)
+            float trailingX = letterX;
+            if (StringUtils::isUnicodeSpace(character)) {
+                trailingX += letterDef.xAdvance * _bmfontScale / contentScaleFactor;
+            }
+            else {
+                trailingX += letterDef.width * _bmfontScale;
+            }
+            if (_enableWrap && _maxLineWidth > 0.f && nextTokenX > 0.f && letterX + letterDef.width * _bmfontScale > _maxLineWidth && nextChangeSize)
             {
                 _linesWidth.push_back(letterRight);
                 letterRight = 0.f;
