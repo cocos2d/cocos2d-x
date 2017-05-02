@@ -479,7 +479,7 @@ cc.loader = {
         if (cachedTex) {
             cb && cb(null, cachedTex);
         }
-        else if (url.match(jsb.urlRegExp)) {
+        else if (url.match(cc._urlRegExp)) {
             jsb.loadRemoteImg(url, function(succeed, tex) {
                 if (succeed) {
                     cb && cb(null, tex);
@@ -1846,7 +1846,7 @@ Function.prototype.bind = function (oThis) {
     return fBound;
 };
 
-jsb.urlRegExp = new RegExp(
+cc._urlRegExp = new RegExp(
     "^" +
         // protocol identifier
         "(?:(?:https?|ftp)://)" +
