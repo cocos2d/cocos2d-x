@@ -1095,6 +1095,8 @@ void Director::reset()
 
     RenderState::finalize();
     
+    resetMatrixStack();
+    
     destroyTextureCache();
 }
 
