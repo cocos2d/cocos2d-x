@@ -1454,6 +1454,7 @@
         "cocos/vr/CCVRProtocol.h", 
         "cocos/vr/CMakeLists.txt", 
         "docs/CODING_STYLE.md", 
+        "docs/CONTRIBUTE.md", 
         "docs/Groups.h", 
         "docs/MainPage.h", 
         "docs/MainPageWhiteBook.h", 
