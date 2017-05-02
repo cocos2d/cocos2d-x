@@ -777,7 +777,14 @@ Size TextField::getAutoRenderSize()
 
 Size TextField::getVirtualRendererSize() const
 {
-    return _textFieldRenderer->getContentSize();
+    Size virtualSize = _textFieldRenderer->getContentSize();
+    if (!_ignoreSize)
+    {
+        _textFieldRenderer->setDimensions(0, 0);
+        virtualSize = _textFieldRenderer->getContentSize();
+        _textFieldRenderer->setDimensions(_contentSize.width, _contentSize.height);
+    }
+    return virtualSize;
 }
 
 Node* TextField::getVirtualRenderer()
