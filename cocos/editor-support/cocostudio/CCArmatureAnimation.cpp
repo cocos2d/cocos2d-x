@@ -347,11 +347,14 @@ void ArmatureAnimation::update(float dt)
 {
     ProcessBase::update(dt);
     
-    for (const auto &tween : _tweenList)
+    if (!_isComplete && !_isPause)
     {
-        tween->update(dt);
+        for (const auto &tween : _tweenList)
+        {
+            tween->update(dt);
+        }
     }
-
+    
     if(_frameEventQueue.size() > 0 || _movementEventQueue.size() > 0)
     {
         _armature->retain();
