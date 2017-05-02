@@ -53,6 +53,7 @@ RenderTexture::RenderTexture()
 , _textureCopy(0)
 , _UITextureImage(nullptr)
 , _pixelFormat(Texture2D::PixelFormat::RGBA8888)
+, _depthStencilFormat(0)
 , _clearFlags(0)
 , _clearColor(Color4F(0,0,0,0))
 , _clearDepth(0.0f)
@@ -67,7 +68,7 @@ RenderTexture::RenderTexture()
     auto toBackgroundListener = EventListenerCustom::create(EVENT_COME_TO_BACKGROUND, CC_CALLBACK_1(RenderTexture::listenToBackground, this));
     _eventDispatcher->addEventListenerWithSceneGraphPriority(toBackgroundListener, this);
 
-    auto toForegroundListener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND, CC_CALLBACK_1(RenderTexture::listenToForeground, this));
+    auto toForegroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, CC_CALLBACK_1(RenderTexture::listenToForeground, this));
     _eventDispatcher->addEventListenerWithSceneGraphPriority(toForegroundListener, this);
 #endif
 }
@@ -96,10 +97,12 @@ void RenderTexture::listenToBackground(EventCustom* /*event*/)
     // We have not found a way to dispatch the enter background message before the texture data are destroyed.
     // So we disable this pair of message handler at present.
 #if CC_ENABLE_CACHE_TEXTURE_DATA
-    CC_SAFE_DELETE(_UITextureImage);
+    // We don't read the texture data here because the event is dispatched after the data had been destroyed.
+    // Uncomment these codes when a better solution is figured out.
+    //CC_SAFE_DELETE(_UITextureImage);
     
     // to get the rendered texture data
-    _UITextureImage = newImage(false);
+    //_UITextureImage = newImage(false);
 
     if (_UITextureImage)
     {
@@ -138,6 +141,27 @@ void RenderTexture::listenToForeground(EventCustom* /*event*/)
     }
     
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, _texture->getName(), 0);
+
+    if (_depthStencilFormat != 0)
+    {
+        Size size = _texture->getContentSizeInPixels();
+
+        //create and attach depth buffer
+        glGenRenderbuffers(1, &_depthRenderBufffer);
+        glBindRenderbuffer(GL_RENDERBUFFER, _depthRenderBufffer);
+        glRenderbufferStorage(GL_RENDERBUFFER, _depthStencilFormat, (GLsizei)size.width, (GLsizei)size.height);
+        glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, _depthRenderBufffer);
+
+        // if depth format is the one with stencil part, bind same render buffer as stencil attachment
+        if (_depthStencilFormat == GL_DEPTH24_STENCIL8)
+        {
+            glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, _depthRenderBufffer);
+        }
+    }
+
+    // check if it worked (probably worth doing :) )
+    CCAssert(glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE, "Could not attach texture to framebuffer");
+
     glBindFramebuffer(GL_FRAMEBUFFER, _oldFBO);
 #endif
 }
@@ -189,6 +213,9 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat 
 bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat format, GLuint depthStencilFormat)
 {
     CCASSERT(format != Texture2D::PixelFormat::A8, "only RGB and RGBA formats are valid for a render texture");
+
+    // Force use RGBA8888 now, because we need to save the texture when switching to background.
+    format = Texture2D::PixelFormat::RGBA8888;
 
     bool ret = false;
     void *data = nullptr;
@@ -257,6 +284,7 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat 
         // associate texture with FBO
         glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, _texture->getName(), 0);
 
+        _depthStencilFormat = depthStencilFormat;
         if (depthStencilFormat != 0)
         {
             
@@ -823,6 +851,14 @@ void RenderTexture::end()
     director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
     director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 
+
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    // Force update the bound texture here because we don't find a proper way to save the
+    // framebuffer when switching to background on WP8/Android.
+    // Remove these codes when a better solution is found.
+    CC_SAFE_DELETE(_UITextureImage);
+    _UITextureImage = newImage(false);
+#endif
 }
 
 NS_CC_END

@@ -326,6 +326,7 @@ protected:
     Texture2D* _textureCopy;    // a copy of _texture
     Image*     _UITextureImage;
     Texture2D::PixelFormat _pixelFormat;
+    GLuint     _depthStencilFormat;
     
     // code for "auto" update
     GLbitfield   _clearFlags;
