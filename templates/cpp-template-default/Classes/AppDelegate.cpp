@@ -125,3 +125,8 @@ void AppDelegate::applicationWillEnterForeground() {
     SimpleAudioEngine::getInstance()->resumeAllEffects();
 #endif
 }
+
+// this function will be called when the app will terminate
+void AppDelegate::applicationWillTerminate() {
+
+}
