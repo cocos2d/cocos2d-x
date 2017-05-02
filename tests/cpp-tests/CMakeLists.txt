@@ -127,6 +127,7 @@ set(TESTS_SRC
   Classes/UITest/CocoStudioGUITest/UIRadioButtonTest/UIRadioButtonTest.cpp
   Classes/UITest/CocoStudioGUITest/UIFocusTest/UIFocusTest.cpp
   Classes/UITest/CocoStudioGUITest/UIImageViewTest/UIImageViewTest.cpp
+  Classes/UITest/CocoStudioGUITest/UITileImageViewTest/UITileImageViewTest.cpp
   Classes/UITest/CocoStudioGUITest/UILayoutTest/UILayoutTest.cpp
   Classes/UITest/CocoStudioGUITest/UIListViewTest/UIListViewTest.cpp
   Classes/UITest/CocoStudioGUITest/UILoadingBarTest/UILoadingBarTest.cpp

@@ -668,6 +668,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\openssl\prebuilt\win32\*.*" "$(OutDir)"
     <ClCompile Include="..\ui\UIHBox.cpp" />
     <ClCompile Include="..\ui\UIHelper.cpp" />
     <ClCompile Include="..\ui\UIImageView.cpp" />
+    <ClCompile Include="..\ui\UITileImageView.cpp" />
     <ClCompile Include="..\ui\UILayout.cpp" />
     <ClCompile Include="..\ui\UILayoutComponent.cpp" />
     <ClCompile Include="..\ui\UILayoutManager.cpp" />
@@ -1310,6 +1311,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\openssl\prebuilt\win32\*.*" "$(OutDir)"
     <ClInclude Include="..\ui\UIHBox.h" />
     <ClInclude Include="..\ui\UIHelper.h" />
     <ClInclude Include="..\ui\UIImageView.h" />
+    <ClInclude Include="..\ui\UITileImageView.h" />
     <ClInclude Include="..\ui\UILayout.h" />
     <ClInclude Include="..\ui\UILayoutComponent.h" />
     <ClInclude Include="..\ui\UILayoutManager.h" />

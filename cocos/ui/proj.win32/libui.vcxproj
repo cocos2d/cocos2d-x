@@ -22,6 +22,7 @@
     <ClInclude Include="..\UIHBox.h" />
     <ClInclude Include="..\UIHelper.h" />
     <ClInclude Include="..\UIImageView.h" />
+    <ClInclude Include="..\UITileImageView.h" />
     <ClInclude Include="..\UILayout.h" />
     <ClInclude Include="..\UILayoutManager.h" />
     <ClInclude Include="..\UILayoutParameter.h" />
@@ -54,6 +55,7 @@
     <ClCompile Include="..\UIHBox.cpp" />
     <ClCompile Include="..\UIHelper.cpp" />
     <ClCompile Include="..\UIImageView.cpp" />
+    <ClCompile Include="..\UITileImageView.cpp" />
     <ClCompile Include="..\UILayout.cpp" />
     <ClCompile Include="..\UILayoutManager.cpp" />
     <ClCompile Include="..\UILayoutParameter.cpp" />

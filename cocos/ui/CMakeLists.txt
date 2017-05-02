@@ -42,6 +42,7 @@ set(COCOS_UI_SRC
   ui/UIHBox.cpp
   ui/UIHelper.cpp
   ui/UIImageView.cpp
+  ui/UITileImageView.cpp
   ui/UILayout.cpp
   ui/UILayoutManager.cpp
   ui/UILayoutParameter.cpp

@@ -224,6 +224,9 @@
     <Filter Include="Classes\UITest\CocoStudioGUITest\UIImageViewTest">
       <UniqueIdentifier>{e5a446a6-fee6-4802-952b-eb18a397f446}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\UITest\CocoStudioGUITest\UITileImageViewTest">
+      <UniqueIdentifier>{535ef690-f44f-4ffa-a6d9-6c13b60247df}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Classes\UITest\CocoStudioGUITest\UILayoutTest">
       <UniqueIdentifier>{16c5df56-4880-4bf2-a626-fc8974cd9df3}</UniqueIdentifier>
     </Filter>
@@ -582,6 +585,9 @@
       <Filter>Classes\UITest\CocoStudioGUITest\UIFocusTest</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIImageViewTest\UIImageViewTest.cpp">
+      <Filter>Classes\UITest\CocoStudioGUITest\UIImageViewTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UITileImageViewTest\UITileImageViewTest.cpp">
       <Filter>Classes\UITest\CocoStudioGUITest\UIImageViewTest</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UILayoutTest\UILayoutTest.cpp">
@@ -1136,6 +1142,9 @@
       <Filter>Classes\UITest\CocoStudioGUITest\UIFocusTest</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UIImageViewTest\UIImageViewTest.h">
+      <Filter>Classes\UITest\CocoStudioGUITest\UIImageViewTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UITileImageViewTest\UITileImageViewTest.h">
       <Filter>Classes\UITest\CocoStudioGUITest\UIImageViewTest</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UILayoutTest\UILayoutTest.h">
