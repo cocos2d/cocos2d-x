@@ -30,7 +30,8 @@ NS_CC_BEGIN
 
 Animation3D* Animation3D::create(const std::string& fileName, const std::string& animationName)
 {
-    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(fileName);
+    std::string fullPath = fileName;
+    //std::string fullPath = FileUtils::getInstance()->fullPathForFilename(fileName);
     std::string key = fullPath + "#" + animationName;
     auto animation = Animation3DCache::getInstance()->getAnimation(key);
     if (animation != nullptr)
