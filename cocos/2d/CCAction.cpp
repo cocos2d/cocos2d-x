@@ -34,7 +34,7 @@ THE SOFTWARE.
 NS_CC_BEGIN
 //
 // Action Base Class
-//
+// 
 
 Action::Action()
 :_originalTarget(nullptr)
