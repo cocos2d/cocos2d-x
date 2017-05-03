@@ -47,10 +47,33 @@ class CC_DLL AttachNode : public Node
 public:
     /** 
      * creates an AttachNode
-     * @param attachBone The bone to which the AttachNode is going to attach, the attacheBone must be a bone of the AttachNode's parent
+     * @param attachBone The bone to which the AttachNode is going to attach, the attacheBone must be a bone of the AttachNode's parent.
      */
     static AttachNode* create(Bone3D* attachBone);
-    
+  
+    /**
+     * creates an AttachNode
+     * @param attachBone The bone to which the AttachNode is going to attach, the attacheBone must be a bone of the AttachNode's parent.
+     * @param offset an additional transform between this node and the children
+     *
+     */
+    static AttachNode* create(Bone3D* attachBone, const Mat4& offset);
+  
+    /**
+     * creates an AttachNode that doesn't require a bone. Useful for attaching nodes to each other for relative positioning.
+     * @param offset an additional transform between this node and the children
+     *
+     */
+    static AttachNode* create(const Mat4& offset);
+  
+    /**
+    * sets the transform offset between this node and the children
+    * @param offset the transform value that gets applied
+    */
+    void setOffsetTransform(const Mat4& offset);
+  
+
+  
     //override
     virtual Mat4 getWorldToNodeTransform() const override;
     virtual Mat4 getNodeToWorldTransform() const override;
@@ -64,7 +87,10 @@ CC_CONSTRUCTOR_ACCESS:
     
 
 protected:
+    Mat4 getFullAttachTransform() const;
+  
     Bone3D* _attachBone;
+    mutable Mat4    _attachOffset;
     mutable Mat4    _transformToParent;
 };
 
