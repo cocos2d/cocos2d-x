@@ -264,11 +264,8 @@ void EditBoxImplCommon::setPlaceHolder(const char* pText)
     if (pText != NULL)
     {
         _placeHolder = pText;
-        if (_editingMode) {
-            this->setNativePlaceHolder(pText);
-        } else {
-            _labelPlaceHolder->setString(_placeHolder);
-        }
+        this->setNativePlaceHolder(pText);
+        _labelPlaceHolder->setString(_placeHolder);
     }
 }
 
