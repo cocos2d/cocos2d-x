@@ -29,6 +29,7 @@ THE SOFTWARE.
 #include <string>
 #include "2d/CCNode.h"
 #include "base/ccMacros.h"
+#include "base/CCData.h"
 
 /** @file ccUtils.h
 Misc free functions
