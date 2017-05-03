@@ -90,6 +90,7 @@ void Timer::setupTimerWithInterval(float seconds, unsigned int repeat, float del
     _useDelay = (_delay > 0.0f) ? true : false;
     _repeat = repeat;
     _runForever = (_repeat == CC_REPEAT_FOREVER) ? true : false;
+    _timesExecuted = 0;
 }
 
 void Timer::update(float dt)
@@ -318,8 +319,8 @@ void Scheduler::schedule(const ccSchedulerFunc& callback, void *target, float in
 
             if (timer && !timer->isExhausted() && key == timer->getKey())
             {
-                CCLOG("CCScheduler#scheduleSelector. Selector already scheduled. Updating interval from: %.4f to %.4f", timer->getInterval(), interval);
-                timer->setInterval(interval);
+                CCLOG("CCScheduler#schedule. Reiniting timer with interval %.4f, repeat %u, delay %.4f", interval, repeat, delay);
+                timer->setupTimerWithInterval(interval, repeat, delay);
                 return;
             }
         }
@@ -986,8 +987,8 @@ void Scheduler::schedule(SEL_SCHEDULE selector, Ref *target, float interval, uns
             
             if (timer && !timer->isExhausted() && selector == timer->getSelector())
             {
-                CCLOG("CCScheduler#scheduleSelector. Selector already scheduled. Updating interval from: %.4f to %.4f", timer->getInterval(), interval);
-                timer->setInterval(interval);
+                CCLOG("CCScheduler#schedule. Reiniting timer with interval %.4f, repeat %u, delay %.4f", interval, repeat, delay);
+                timer->setupTimerWithInterval(interval, repeat, delay);
                 return;
             }
         }
