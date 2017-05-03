@@ -501,18 +501,24 @@ void TMXMapInfo::startElement(void* /*ctx*/, const char *name, const char **atts
         }
 
         // But X and Y since they need special treatment
-        // X
-        int x = attributeDict["x"].asInt();
-        // Y
-        int y = attributeDict["y"].asInt();
+        float x = attributeDict["x"].asFloat();
+        float y = attributeDict["y"].asFloat();
+        float width = attributeDict["width"].asFloat();
+        float height = attributeDict["height"].asFloat();
+        float rotation = attributeDict["rotation"].asFloat();
+        float theta = rotation * M_PI / 180;
         
-        Vec2 p(x + objectGroup->getPositionOffset().x, _mapSize.height * _tileSize.height - y  - objectGroup->getPositionOffset().y - attributeDict["height"].asInt());
+        Vec2 p(x, y);
+        Vec2 originOffset((width * cos(theta) - height * sin(theta)) / 2, (height * cos(theta) + width * sin(theta)) / 2);
+        p.add(originOffset);
+        
+        p.add(objectGroup->getPositionOffset());
+        p.y = _mapSize.height * _tileSize.height - p.y;
+        
         p = CC_POINT_PIXELS_TO_POINTS(p);
         dict["x"] = Value(p.x);
         dict["y"] = Value(p.y);
         
-        int width = attributeDict["width"].asInt();
-        int height = attributeDict["height"].asInt();
         Size s(width, height);
         s = CC_SIZE_PIXELS_TO_POINTS(s);
         dict["width"] = Value(s.width);
