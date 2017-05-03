@@ -584,6 +584,10 @@ void Label::setFontAtlas(FontAtlas* atlas,bool distanceFieldEnabled /* = false *
 
     if (atlas == _fontAtlas)
     {
+        if (_fontAtlas)
+        {
+            FontAtlasCache::releaseFontAtlas(_fontAtlas);
+        }
         return;
     }
 
