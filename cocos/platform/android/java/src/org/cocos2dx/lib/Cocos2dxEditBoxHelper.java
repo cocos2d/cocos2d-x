@@ -141,15 +141,19 @@ public class Cocos2dxEditBoxHelper {
 
                     @Override
                     public void afterTextChanged(final Editable s) {
-                        if (!s.toString().equals("") && (Boolean) editBox.getTag()) {
-                            mCocos2dxActivity.runOnGLThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Cocos2dxEditBoxHelper.__editBoxEditingChanged(index, s.toString());
-                                }
+                        if (!editBox.getChangedTextProgrammatically()) {
+                            if (!s.toString().equals("") && (Boolean) editBox.getTag()) {
+                                mCocos2dxActivity.runOnGLThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Cocos2dxEditBoxHelper.__editBoxEditingChanged(index, s.toString());
+                                    }
 
-                            });
+                                });
+                            }
                         }
+                        editBox.setChangedTextProgrammatically(false);
+
                     }
                 });
 
@@ -159,6 +163,7 @@ public class Cocos2dxEditBoxHelper {
                     @Override
                     public void onFocusChange(View v, boolean hasFocus) {
                         editBox.setTag(true);
+                        editBox.setChangedTextProgrammatically(false);
                         if (hasFocus) {
                             mCocos2dxActivity.runOnGLThread(new Runnable() {
                                 @Override
@@ -344,7 +349,10 @@ public class Cocos2dxEditBoxHelper {
             public void run() {
                 Cocos2dxEditBox editBox = mEditBoxArray.get(index);
                 if (editBox != null) {
+                    editBox.setChangedTextProgrammatically(true);
                     editBox.setText(text);
+                    int position = text.length();
+                    editBox.setSelection(position);
                 }
             }
         });
