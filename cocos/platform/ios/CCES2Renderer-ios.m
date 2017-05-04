@@ -55,13 +55,17 @@
     {
         if (! sharegroup)
         {
-            context_ = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES3];
+            // multisampling conflict with GLES3, refer to https://github.com/cocos2d/cocos2d-x/issues/17767
+            if (!multiSampling)
+                context_ = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES3];
             if (! context_)
                 context_ = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
         }
         else
         {
-            context_ = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES3 sharegroup:sharegroup];
+            // multisampling conflict with GLES3, refer to https://github.com/cocos2d/cocos2d-x/issues/17767
+            if (!multiSampling)
+                context_ = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES3 sharegroup:sharegroup];
             if (!context_)
                 context_ = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2 sharegroup:sharegroup];
         }
