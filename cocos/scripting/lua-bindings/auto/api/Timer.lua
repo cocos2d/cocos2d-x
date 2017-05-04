@@ -5,25 +5,12 @@
 -- @parent_module cc
 
 --------------------------------
---  get interval in seconds 
--- @function [parent=#Timer] getInterval 
--- @param self
--- @return float#float ret (return value: float)
-        
---------------------------------
 -- 
 -- @function [parent=#Timer] setupTimerWithInterval 
 -- @param self
 -- @param #float seconds
 -- @param #unsigned int repeat
 -- @param #float delay
--- @return Timer#Timer self (return value: cc.Timer)
-        
---------------------------------
---  set interval in seconds 
--- @function [parent=#Timer] setInterval 
--- @param self
--- @param #float interval
 -- @return Timer#Timer self (return value: cc.Timer)
         
 --------------------------------
@@ -36,6 +23,12 @@
 --------------------------------
 -- 
 -- @function [parent=#Timer] isAborted 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
+-- @function [parent=#Timer] isExhausted 
 -- @param self
 -- @return bool#bool ret (return value: bool)
         
