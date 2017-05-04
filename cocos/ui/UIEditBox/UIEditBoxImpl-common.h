@@ -157,6 +157,7 @@ private:
     
     int   _maxLength;
     Size _contentSize;
+    bool _editingMode;
 };
 
 
