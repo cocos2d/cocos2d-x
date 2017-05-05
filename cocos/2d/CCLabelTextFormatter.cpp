@@ -37,38 +37,38 @@ void Label::computeAlignmentOffset()
     _linesOffsetX.clear();
     switch (_hAlignment)
     {
-    case cocos2d::TextHAlignment::LEFT:
-        _linesOffsetX.assign(_numberOfLines, 0);
-        break;
-    case cocos2d::TextHAlignment::CENTER:
-        for (auto lineWidth : _linesWidth)
-        {
-            _linesOffsetX.push_back((_contentSize.width - lineWidth) / 2.f);
-        }
-        break;
-    case cocos2d::TextHAlignment::RIGHT:
-        for (auto lineWidth : _linesWidth)
-        {
-            _linesOffsetX.push_back(_contentSize.width - lineWidth);
-        }
-        break;
-    default:
-        break;
+        case cocos2d::TextHAlignment::LEFT:
+            _linesOffsetX.assign(_numberOfLines, 0);
+            break;
+        case cocos2d::TextHAlignment::CENTER:
+            for (auto lineWidth : _linesWidth)
+            {
+                _linesOffsetX.push_back((_contentSize.width - lineWidth) / 2.f);
+            }
+            break;
+        case cocos2d::TextHAlignment::RIGHT:
+            for (auto lineWidth : _linesWidth)
+            {
+                _linesOffsetX.push_back(_contentSize.width - lineWidth);
+            }
+            break;
+        default:
+            break;
     }
 
     switch (_vAlignment)
     {
-    case cocos2d::TextVAlignment::TOP:
-        _letterOffsetY = _contentSize.height;
-        break;
-    case cocos2d::TextVAlignment::CENTER:
-        _letterOffsetY = (_contentSize.height + _textDesiredHeight) / 2.f;
-        break;
-    case cocos2d::TextVAlignment::BOTTOM:
-        _letterOffsetY = _textDesiredHeight;
-        break;
-    default:
-        break;
+        case cocos2d::TextVAlignment::TOP:
+            _letterOffsetY = _contentSize.height;
+            break;
+        case cocos2d::TextVAlignment::CENTER:
+            _letterOffsetY = (_contentSize.height + _textDesiredHeight) / 2.f;
+            break;
+        case cocos2d::TextVAlignment::BOTTOM:
+            _letterOffsetY = _textDesiredHeight;
+            break;
+        default:
+            break;
     }
 }
 
@@ -142,7 +142,7 @@ bool Label::multilineTextWrap(const std::function<int(const std::u32string&, int
     float nextTokenY = 0.f;
     float longestLine = 0.f;
     float letterRight = 0.f;
-
+    float lastNonSpaceLetterRight = 0.0f;
     auto contentScaleFactor = CC_CONTENT_SCALE_FACTOR();
     float lineSpacing = _lineSpacing * contentScaleFactor;
     float highestY = 0.f;
@@ -160,6 +160,7 @@ bool Label::multilineTextWrap(const std::function<int(const std::u32string&, int
         {
             _linesWidth.push_back(letterRight);
             letterRight = 0.f;
+            lastNonSpaceLetterRight = 0.0f;
             lineIndex++;
             nextTokenX = 0.f;
             nextTokenY -= _lineHeight*_bmfontScale + lineSpacing;
@@ -205,10 +206,17 @@ bool Label::multilineTextWrap(const std::function<int(const std::u32string&, int
             else {
                 trailingX += letterDef.width * _bmfontScale;
             }
-            if (_enableWrap && _maxLineWidth > 0.f && nextTokenX > 0.f && letterX + letterDef.width * _bmfontScale > _maxLineWidth && nextChangeSize)
+            if (_enableWrap && _maxLineWidth > 0.f && nextTokenX > 0.f && trailingX > _maxLineWidth && nextChangeSize)
             {
-                _linesWidth.push_back(letterRight);
+                // Trim trailing spaces
+                if (_trimLineSpaces && _hAlignment == TextHAlignment::RIGHT) {
+                    _linesWidth.push_back(lastNonSpaceLetterRight);
+                }
+                else {
+                    _linesWidth.push_back(letterRight);
+                }
                 letterRight = 0.f;
+                lastNonSpaceLetterRight = 0.0f;
                 lineIndex++;
                 nextTokenX = 0.f;
                 nextTokenY -= (_lineHeight*_bmfontScale + lineSpacing);
@@ -221,6 +229,11 @@ bool Label::multilineTextWrap(const std::function<int(const std::u32string&, int
             }
             letterPosition.y = (nextTokenY - letterDef.offsetY * _bmfontScale) / contentScaleFactor;
             recordLetterInfo(letterPosition, character, letterIndex, lineIndex);
+
+            // Trim leading spaces
+            if (_trimLineSpaces && _hAlignment == TextHAlignment::LEFT && lastNonSpaceLetterRight == 0.0f && StringUtils::isUnicodeSpace(character)) {
+                nextChangeSize = false;
+            }
 
             if (nextChangeSize)
             {
@@ -245,6 +258,10 @@ bool Label::multilineTextWrap(const std::function<int(const std::u32string&, int
 
         nextTokenX = nextLetterX;
         letterRight = tokenRight;
+        if (tokenLen > 1 || !StringUtils::isUnicodeSpace(character)) {
+            lastNonSpaceLetterRight = tokenRight;
+        }
+
         if (highestY < tokenHighestY)
             highestY = tokenHighestY;
         if (lowestY > tokenLowestY)

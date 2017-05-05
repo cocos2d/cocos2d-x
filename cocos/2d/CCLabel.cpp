@@ -384,6 +384,7 @@ Label::Label(TextHAlignment hAlignment /* = TextHAlignment::LEFT */,
 , _boldEnabled(false)
 , _underlineNode(nullptr)
 , _strikethroughEnabled(false)
+, _trimLineSpaces(true)
 {
     setAnchorPoint(Vec2::ANCHOR_MIDDLE);
     reset();
@@ -525,6 +526,8 @@ void Label::reset()
     }
     _strikethroughEnabled = false;
     setRotationSkewX(0);        // reverse italics
+
+    _trimLineSpaces = true;
 }
 
 //  ETC1 ALPHA supports, for LabelType::BMFONT & LabelType::CHARMAP
@@ -1845,6 +1848,20 @@ float Label::getAdditionalKerning() const
     CCASSERT(_currentLabelType != LabelType::STRING_TEXTURE, "Not supported system font!");
 
     return _additionalKerning;
+}
+
+void Label::setTrimLineSpacesEnabled(bool enabled)
+{
+    if (_trimLineSpaces != enabled) {
+        _trimLineSpaces = enabled;
+
+        _contentDirty = true;
+    }
+}
+
+bool Label::isTrimLineSpacesEnabled() const
+{
+    return _trimLineSpaces;
 }
 
 void Label::computeStringNumLines()
