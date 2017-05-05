@@ -142,7 +142,7 @@ public class Cocos2dxEditBoxHelper {
                     @Override
                     public void afterTextChanged(final Editable s) {
                         if (!editBox.getChangedTextProgrammatically()) {
-                            if (!s.toString().equals("") && (Boolean) editBox.getTag()) {
+                            if ((Boolean) editBox.getTag()) {
                                 mCocos2dxActivity.runOnGLThread(new Runnable() {
                                     @Override
                                     public void run() {
