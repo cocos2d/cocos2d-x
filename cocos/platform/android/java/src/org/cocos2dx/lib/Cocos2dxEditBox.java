@@ -127,6 +127,16 @@ public class Cocos2dxEditBox extends EditText {
     private int mInputModeConstraints;
     private  int mMaxLength;
 
+    public Boolean getChangedTextProgrammatically() {
+        return changedTextProgrammatically;
+    }
+
+    public void setChangedTextProgrammatically(Boolean changedTextProgrammatically) {
+        this.changedTextProgrammatically = changedTextProgrammatically;
+    }
+
+    private Boolean changedTextProgrammatically = false;
+
     //OpenGL view scaleX
     private  float mScaleX;
 

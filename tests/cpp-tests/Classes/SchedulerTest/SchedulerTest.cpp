@@ -1,8 +1,10 @@
 #include "SchedulerTest.h"
 #include "../testResource.h"
+#include "ui/UIText.h"
 
 USING_NS_CC;
 USING_NS_CC_EXT;
+using namespace cocos2d::ui;
 
 enum {
     kTagAnimationDance = 1,
@@ -26,6 +28,7 @@ SchedulerTests::SchedulerTests()
     ADD_TEST_CASE(RescheduleSelector);
     ADD_TEST_CASE(SchedulerDelayAndRepeat);
     ADD_TEST_CASE(SchedulerIssue2268);
+    ADD_TEST_CASE(SchedulerIssueWithReschedule);
     ADD_TEST_CASE(ScheduleCallbackTest);
     ADD_TEST_CASE(ScheduleUpdatePriority);
     ADD_TEST_CASE(SchedulerIssue10232);
@@ -983,6 +986,8 @@ std::string TwoSchedulers::subtitle() const
     return "Three schedulers. 2 custom + 1 default. Two different time scales";
 }
 
+// SchedulerIssue2268
+
 class TestNode2 : public Node
 {
 public:
@@ -1038,6 +1043,61 @@ std::string SchedulerIssue2268::title() const
 std::string SchedulerIssue2268::subtitle() const
 {
     return "Should not crash";
+}
+
+// SchedulerIssueWithReschedule
+// https://github.com/cocos2d/cocos2d-x/pull/17706
+
+void SchedulerIssueWithReschedule::onEnter()
+{
+	SchedulerTestLayer::onEnter();
+    
+    Size widgetSize = getContentSize();
+    
+    auto status_text = Text::create("Checking..", "fonts/Marker Felt.ttf", 18);
+    status_text->setColor(Color3B(255, 255, 255));
+    status_text->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
+    addChild(status_text);
+    
+    // schedule(callback, target, interval, repeat, delay, paused, key);
+    auto verified = std::make_shared<bool>();
+    *verified = false;
+
+	_scheduler->schedule([this, verified](float dt){
+        log("SchedulerIssueWithReschedule - first timer");
+        
+        _scheduler->schedule([this, verified](float dt){
+            log("SchedulerIssueWithReschedule - second timer. OK");
+            *verified = true;
+        }, this, 0.1f, 0, 0, false, "test_timer");
+        
+    }, this, 0.1f, 0, 0, false, "test_timer");
+    
+    _scheduler->schedule([verified, status_text](float dt){
+        if (*verified)
+        {
+            log("SchedulerIssueWithReschedule - test OK");
+            status_text->setString("OK");
+            status_text->setColor(Color3B(0, 255, 0));
+        }
+        else
+        {
+            log("SchedulerIssueWithReschedule - test failed!");
+            status_text->setString("Failed");
+            status_text->setColor(Color3B(255, 0, 0));
+        }
+
+    }, this, 0.5f, 0, 0, false, "test_verify_timer");
+}
+
+std::string SchedulerIssueWithReschedule::title() const
+{
+    return "Issue with reschedule";
+}
+
+std::string SchedulerIssueWithReschedule::subtitle() const
+{
+    return "reschedule issue with same key";
 }
 
 // ScheduleCallbackTest

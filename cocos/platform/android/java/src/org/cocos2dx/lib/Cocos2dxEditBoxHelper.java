@@ -126,7 +126,7 @@ public class Cocos2dxEditBoxHelper {
                 lParams.gravity = Gravity.TOP | Gravity.LEFT;
 
                 mFrameLayout.addView(editBox, lParams);
-
+                editBox.setTag(false);
                 editBox.addTextChangedListener(new TextWatcher() {
                     @Override
                     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -134,22 +134,25 @@ public class Cocos2dxEditBoxHelper {
 
                     @Override
                     public void onTextChanged(CharSequence s, int start, int before, int count) {
-                        //The optimization can't be turn on due to unknown keyboard hide in some custom keyboard
-//                        mFrameLayout.setEnableForceDoLayout(false);
 
-                        // Note that we must to copy a string to prevent string content is modified
-                        // on UI thread while 's.toString' is invoked at the same time.
-                        final String text = new String(s.toString());
-                        mCocos2dxActivity.runOnGLThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Cocos2dxEditBoxHelper.__editBoxEditingChanged(index, text);
-                            }
-                        });
                     }
 
+                    //http://stackoverflow.com/questions/21713246/addtextchangedlistener-and-ontextchanged-are-always-called-when-android-fragment
+
                     @Override
-                    public void afterTextChanged(Editable s) {
+                    public void afterTextChanged(final Editable s) {
+                        if (!editBox.getChangedTextProgrammatically()) {
+                            if ((Boolean) editBox.getTag()) {
+                                mCocos2dxActivity.runOnGLThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Cocos2dxEditBoxHelper.__editBoxEditingChanged(index, s.toString());
+                                    }
+
+                                });
+                            }
+                        }
+                        editBox.setChangedTextProgrammatically(false);
 
                     }
                 });
@@ -159,6 +162,8 @@ public class Cocos2dxEditBoxHelper {
 
                     @Override
                     public void onFocusChange(View v, boolean hasFocus) {
+                        editBox.setTag(true);
+                        editBox.setChangedTextProgrammatically(false);
                         if (hasFocus) {
                             mCocos2dxActivity.runOnGLThread(new Runnable() {
                                 @Override
@@ -344,7 +349,10 @@ public class Cocos2dxEditBoxHelper {
             public void run() {
                 Cocos2dxEditBox editBox = mEditBoxArray.get(index);
                 if (editBox != null) {
+                    editBox.setChangedTextProgrammatically(true);
                     editBox.setText(text);
+                    int position = text.length();
+                    editBox.setSelection(position);
                 }
             }
         });
