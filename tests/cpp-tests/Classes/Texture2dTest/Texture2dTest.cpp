@@ -2024,14 +2024,70 @@ public:
 };
  */
 
-TextureETC1::TextureETC1()
+TextureETC1::TextureETC1():_alphaMask(nullptr)
 {
-    auto sprite = Sprite::create("Images/ETC1.pkm");
+    Sprite* sprite;
+    int option = 1;
+    
+    // ETC1 does not support the compression of images with Alpha channels, but there are several
+    // work-arounds for this issue.
+    // You can check the following link for more details.
+    // http://malideveloper.arm.com/develop-for-mali/sample-code/etcv1-texture-compression-and-alpha-channels/
+    // This demo shows how to handle the work-arounds with cocos2d-x.
+    // Three options are provided respectively for the methods, switch the option to see different effects.
+    
+    if (option == 1)
+    {
+        // Option 1
+        // The alpha channel is converted to a visible grayscale image, which is then concatenated onto the
+        // compressed RGB texture. Note that the generated texture is thus twice height of the origin one.
+        sprite = Sprite::create("Images/Icon-cocos_altas.pkm");
+        auto glprogram = GLProgram::createWithFilenames("Shaders/example_Etc1Alpha.vsh", "Shaders/example_Etc1Alpha.fsh");
+        auto glprogramState = GLProgramState::getOrCreateWithGLProgram(glprogram);
+        glprogramState->setUniformTexture("u_alphaMask", sprite->getTexture());
+        glprogramState->setUniformInt("u_option", 1);
+        sprite->setGLProgramState(glprogramState);
+    }
+    else if (option == 2)
+    {
+        // Option 2
+        // The alpha channel is delivered as a second packed texture, which is compressed as an ETC1 file too.
+        sprite = Sprite::create("Images/Icon-cocos.pkm");
+        _alphaMask = Director::getInstance()->getTextureCache()->addImage("Images/Icon-cocos_alpha.pkm");
+        _alphaMask->retain();
+        auto glprogram = GLProgram::createWithFilenames("Shaders/example_Etc1Alpha.vsh", "Shaders/example_Etc1Alpha.fsh");
+        auto glprogramState = GLProgramState::getOrCreateWithGLProgram(glprogram);
+        glprogramState->setUniformTexture("u_alphaMask", _alphaMask);
+        glprogramState->setUniformInt("u_option", 2);
+        sprite->setGLProgramState(glprogramState);
+    }
+    else if (option == 3)
+    {
+        // Options 3
+        // The alpha channel is delivered as an uncompressed teture file.
+        // You can use any other uncompressed image to store the alpha components in practice.
+        sprite = Sprite::create("Images/Icon-cocos.pkm");
+        _alphaMask = Director::getInstance()->getTextureCache()->addImage("Images/Yes-alpha.png");
+        _alphaMask->retain();
+        auto glprogram = GLProgram::createWithFilenames("Shaders/example_Etc1Alpha.vsh", "Shaders/example_Etc1Alpha.fsh");
+        auto glprogramState = GLProgramState::getOrCreateWithGLProgram(glprogram);
+        glprogramState->setUniformTexture("u_alphaMask", _alphaMask);
+        glprogramState->setUniformInt("u_option", 3);
+        sprite->setGLProgramState(glprogramState);
+    }
     
     auto size = Director::getInstance()->getWinSize();
     sprite->setPosition(Vec2(size.width/2, size.height/2));
-    
     addChild(sprite);
+}
+
+TextureETC1::~TextureETC1()
+{
+    if (_alphaMask)
+    {
+        Director::getInstance()->getTextureCache()->removeTexture(_alphaMask);
+        _alphaMask->release();
+    }
 }
 
 std::string TextureETC1::title() const

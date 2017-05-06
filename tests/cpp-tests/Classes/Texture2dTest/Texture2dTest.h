@@ -522,9 +522,11 @@ public:
 // ETC1 texture format test
 class TextureETC1 : public TextureDemo
 {
+    Texture2D* _alphaMask;
 public:
     CREATE_FUNC(TextureETC1);
     TextureETC1();
+    virtual ~TextureETC1();
     
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
