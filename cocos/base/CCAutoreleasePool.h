@@ -35,7 +35,6 @@ THE SOFTWARE.
  */
 NS_CC_BEGIN
 
-
 /**
  * A pool for managing autorelease objects.
  * @js NA
@@ -134,7 +133,7 @@ private:
      */
     std::vector<Ref*> _managedObjectArray;
     std::string _name;
-    
+
 #if defined(COCOS2D_DEBUG) && (COCOS2D_DEBUG > 0)
     /**
      *  The flag for checking whether the pool is doing `clear` operation.
