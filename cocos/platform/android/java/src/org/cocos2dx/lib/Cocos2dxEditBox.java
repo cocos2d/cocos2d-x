@@ -121,7 +121,7 @@ public class Cocos2dxEditBox extends EditText {
 
     private static final int kTextVerticalAlignmentTop = 0;
     private static final int kTextVerticalAlignmentCenter = 1;
-    private static final int getkTextVerticalAlignmentBottom = 2;
+    private static final int kTextVerticalAlignmentBottom = 2;
 
     private int mInputFlagConstraints; 
     private int mInputModeConstraints;
@@ -201,7 +201,7 @@ public class Cocos2dxEditBox extends EditText {
                 gravity = gravity | Gravity.LEFT;
                 break;
             case kTextHorizontalAlignmentCenter:
-                gravity = gravity | Gravity.CENTER;
+                gravity = gravity | Gravity.CENTER_HORIZONTAL;
                 break;
             case kTextHorizontalAlignmentRight:
                 gravity = gravity | Gravity.RIGHT;
@@ -215,18 +215,22 @@ public class Cocos2dxEditBox extends EditText {
 
     public void setTextVerticalAlignment(int alignment) {
         int gravity = this.getGravity();
+        int padding = Cocos2dxEditBoxHelper.getPadding(mScaleX);
         switch (alignment) {
             case kTextVerticalAlignmentTop:
-                gravity = gravity | Gravity.TOP;
+                setPadding(padding, 3*padding/4, 0, 0);
+                gravity = Gravity.TOP;
                 break;
             case kTextVerticalAlignmentCenter:
-                gravity = gravity | Gravity.CENTER_VERTICAL;
+                setPadding(padding, 0, 0, padding/2);
+                gravity = Gravity.CENTER_VERTICAL;
                 break;
-            case getkTextVerticalAlignmentBottom:
-                gravity = gravity | Gravity.BOTTOM;
+            case kTextVerticalAlignmentBottom:
+                //TODO: Add appropriate padding when this alignment is used
+                gravity =Gravity.BOTTOM;
                 break;
             default:
-                gravity = gravity | Gravity.CENTER_VERTICAL;
+                gravity = Gravity.CENTER_VERTICAL;
                 break;
         }
 
@@ -265,7 +269,6 @@ public class Cocos2dxEditBox extends EditText {
         }
 
         this.setInputType(this.mInputModeConstraints | this.mInputFlagConstraints);
-
     }
 
     @Override
