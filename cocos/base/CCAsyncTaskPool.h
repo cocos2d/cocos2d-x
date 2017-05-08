@@ -184,7 +184,7 @@ protected:
                     return;
                 }
                 
-                _tasks.push(task);
+                _tasks.push(std::move(task));
                 _taskCallBacks.push(std::move(taskCallBack));
             }
             _condition.notify_one();
