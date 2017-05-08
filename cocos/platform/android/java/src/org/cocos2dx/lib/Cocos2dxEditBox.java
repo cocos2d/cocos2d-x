@@ -198,38 +198,40 @@ public class Cocos2dxEditBox extends EditText {
         int gravity = this.getGravity();
         switch (alignment) {
             case kTextHorizontalAlignmentLeft:
-                gravity = gravity | Gravity.LEFT;
+                gravity = (gravity & ~Gravity.RIGHT) | Gravity.LEFT ;
                 break;
             case kTextHorizontalAlignmentCenter:
-                gravity = gravity | Gravity.CENTER_HORIZONTAL;
+                gravity =(gravity & ~Gravity.RIGHT & ~Gravity.LEFT) | Gravity.CENTER_HORIZONTAL;
                 break;
             case kTextHorizontalAlignmentRight:
-                gravity = gravity | Gravity.RIGHT;
+                gravity = (gravity & ~Gravity.LEFT) | Gravity.RIGHT ;
                 break;
             default:
+                gravity = (gravity & ~Gravity.RIGHT) | Gravity.LEFT ;
                 gravity = gravity | Gravity.LEFT;
                 break;
         }
         this.setGravity(gravity);
     }
-
+    
     public void setTextVerticalAlignment(int alignment) {
         int gravity = this.getGravity();
         int padding = Cocos2dxEditBoxHelper.getPadding(mScaleX);
         switch (alignment) {
             case kTextVerticalAlignmentTop:
-                setPadding(padding, 3*padding/4, 0, 0);
-                gravity = Gravity.TOP;
+                setPadding(padding, padding*3/4, 0, 0);
+                gravity = (gravity & ~Gravity.BOTTOM) | Gravity.TOP ;
                 break;
             case kTextVerticalAlignmentCenter:
                 setPadding(padding, 0, 0, padding/2);
-                gravity = Gravity.CENTER_VERTICAL;
+                gravity =(gravity & ~Gravity.TOP & ~Gravity.BOTTOM) | Gravity.CENTER_VERTICAL;
                 break;
             case kTextVerticalAlignmentBottom:
                 //TODO: Add appropriate padding when this alignment is used
-                gravity =Gravity.BOTTOM;
+                gravity = (gravity & ~Gravity.TOP) | Gravity.BOTTOM ;
                 break;
             default:
+                gravity =(gravity & ~Gravity.TOP & ~Gravity.BOTTOM) | Gravity.CENTER_VERTICAL;
                 gravity = Gravity.CENTER_VERTICAL;
                 break;
         }
