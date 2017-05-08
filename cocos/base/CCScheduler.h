@@ -426,7 +426,7 @@ public:
      @since v3.0
      @js NA
      */
-    void performFunctionInCocosThread( const std::function<void()> &function);
+    void performFunctionInCocosThread(std::function<void()> function);
     
     /**
      * Remove all pending functions queued to be performed with Scheduler::performFunctionInCocosThread

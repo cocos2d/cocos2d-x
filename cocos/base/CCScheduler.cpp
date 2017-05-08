@@ -804,13 +804,10 @@ void Scheduler::resumeTargets(const std::set<void*>& targetsToResume)
     }
 }
 
-void Scheduler::performFunctionInCocosThread(const std::function<void ()> &function)
+void Scheduler::performFunctionInCocosThread(std::function<void ()> function)
 {
-    _performMutex.lock();
-
-    _functionsToPerform.push_back(function);
-
-    _performMutex.unlock();
+    std::lock_guard<std::mutex> lock(_performMutex);
+    _functionsToPerform.push_back(std::move(function));
 }
 
 void Scheduler::removeAllFunctionsToBePerformedInCocosThread()
