@@ -193,7 +193,6 @@ void Scene::render(Renderer* renderer, const Mat4* eyeTransforms, const Mat4* ey
 {
     auto director = Director::getInstance();
     Camera* defaultCamera = nullptr;
-    const auto& transform = getNodeToParentTransform();
 
     for (const auto& camera : getCameras())
     {
@@ -226,7 +225,7 @@ void Scene::render(Renderer* renderer, const Mat4* eyeTransforms, const Mat4* ey
         //clear background with max depth
         camera->clearBackground();
         //visit the scene
-        visit(renderer, transform, 0);
+        visit(renderer, Mat4::IDENTITY, 0);
 #if CC_USE_NAVMESH
         if (_navMesh && _navMeshDebugCamera == camera)
         {
