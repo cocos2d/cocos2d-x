@@ -248,8 +248,11 @@ end
 
 local iskindof_
 iskindof_ = function(cls, name)
+    local clsMetatable = getmetatable(cls)
+    if clsMetatable and iskindof_(clsMetatable, name) then return true end
+    
     local __index = rawget(cls, "__index")
-    if type(__index) == "table" and rawget(__index, "__cname") == name then return true end
+    if type(__index) == "table" and __index ~= cls and iskindof_(__index, name) then return true end
 
     if rawget(cls, "__cname") == name then return true end
     local __supers = rawget(__index, "__supers")
@@ -267,7 +270,7 @@ function iskindof(obj, classname)
     local mt
     if t == "userdata" then
         if tolua.iskindof(obj, classname) then return true end
-        mt = getmetatable(tolua.getpeer(obj))
+        mt = tolua.getpeer(obj)
     else
         mt = getmetatable(obj)
     end
