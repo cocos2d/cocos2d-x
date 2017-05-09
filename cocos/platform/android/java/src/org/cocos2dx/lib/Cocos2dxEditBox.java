@@ -230,6 +230,7 @@ public class Cocos2dxEditBox extends EditText {
                 gravity = (gravity & ~Gravity.TOP) | Gravity.BOTTOM ;
                 break;
             default:
+                setPadding(padding, 0, 0, padding/2);
                 gravity =(gravity & ~Gravity.TOP & ~Gravity.BOTTOM) | Gravity.CENTER_VERTICAL;
                 break;
         }
