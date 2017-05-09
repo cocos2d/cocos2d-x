@@ -1508,6 +1508,8 @@ void Sprite::updateColor(void)
     // so it is important to update _quad colors as well.
     _quad.bl.colors = _quad.tl.colors = _quad.br.colors = _quad.tr.colors = color4;
 
+    _polyInfo.setQuad(&_quad);
+
     // renders using batch node
     if (_renderMode == RenderMode::QUAD_BATCHNODE)
     {
