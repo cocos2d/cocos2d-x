@@ -1181,6 +1181,14 @@ public:
      * @return The Scene that contains the node.
      */
     virtual Scene* getScene() const;
+    
+    /** Returns the Layer that contains the Node.
+     It returns `nullptr` if the node doesn't belong to any Layer.
+     This function recursively calls parent->getLayer() until parent is a Layer object. The results are not cached. It is that the user caches the results in case this functions is being used inside a loop.
+     *
+     * @return The Layer that contains the node.
+     */
+    virtual Layer* getLayer();
 
     /**
      * Returns an AABB (axis-aligned bounding-box) in its parent's coordinate system.
