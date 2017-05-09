@@ -208,7 +208,6 @@ public class Cocos2dxEditBox extends EditText {
                 break;
             default:
                 gravity = (gravity & ~Gravity.RIGHT) | Gravity.LEFT ;
-                gravity = gravity | Gravity.LEFT;
                 break;
         }
         this.setGravity(gravity);
@@ -232,7 +231,6 @@ public class Cocos2dxEditBox extends EditText {
                 break;
             default:
                 gravity =(gravity & ~Gravity.TOP & ~Gravity.BOTTOM) | Gravity.CENTER_VERTICAL;
-                gravity = Gravity.CENTER_VERTICAL;
                 break;
         }
 
