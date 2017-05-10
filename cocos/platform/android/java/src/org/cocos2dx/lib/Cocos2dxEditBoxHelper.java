@@ -425,6 +425,7 @@ public class Cocos2dxEditBoxHelper {
         Cocos2dxEditBox editBox = mEditBoxArray.get(index);
         if (null != editBox) {
             editBox.requestFocus();
+            mCocos2dxActivity.getGLSurfaceView().requestLayout();
             imm.showSoftInput(editBox, 0);
             mCocos2dxActivity.getGLSurfaceView().setSoftKeyboardShown(true);
         }
