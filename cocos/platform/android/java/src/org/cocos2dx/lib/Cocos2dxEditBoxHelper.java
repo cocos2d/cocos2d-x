@@ -257,8 +257,6 @@ public class Cocos2dxEditBoxHelper {
                     }
                     // TODO: The font size is not the same across all the android devices...
                     if (fontSize >= 0){
-                        float density =  mCocos2dxActivity.getResources().getDisplayMetrics().density;
-//                        Log.e("XXX", "density is " + density);
                         editBox.setTextSize(TypedValue.COMPLEX_UNIT_PX,
                                 fontSize);
                     }
