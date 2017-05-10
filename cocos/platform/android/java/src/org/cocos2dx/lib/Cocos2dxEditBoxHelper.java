@@ -92,7 +92,8 @@ public class Cocos2dxEditBoxHelper {
                 editBox.setInputMode(6); //kEditBoxInputModeSingleLine
                 editBox.setReturnType(0);  //kKeyboardReturnTypeDefault
                 editBox.setHintTextColor(Color.GRAY);
-                editBox.setVisibility(View.INVISIBLE);
+                //http://stackoverflow.com/questions/11236336/setvisibilityview-visible-doesnt-always-work-ideas
+                editBox.setVisibility(View.GONE);
                 editBox.setBackgroundColor(Color.TRANSPARENT);
                 editBox.setTextColor(Color.WHITE);
                 editBox.setSingleLine();
