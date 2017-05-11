@@ -564,7 +564,7 @@ if (ccui.WebView)
 
     ccui.WebView.prototype._loadURL = ccui.WebView.prototype.loadURL;
     ccui.WebView.prototype.loadURL = function (url) {
-        if (url.indexOf("http://") >= 0)
+        if (url.indexOf("http://") >= 0 || url.indexOf("https://") >= 0)
         {
             this._loadURL(url);
         }
