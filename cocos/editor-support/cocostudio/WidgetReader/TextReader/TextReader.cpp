@@ -457,6 +457,11 @@ namespace cocostudio
                 label->enableShadow(shadowColor, Size(options->shadowOffsetX(), options->shadowOffsetY()), options->shadowBlurRadius());
             }
         }
+        
+        //Set the text content last to minimise overhead of recalculating/rerendering text.
+        //Also helps to avoid max texture size issue caused by large text rendered with system font before fontResource is set.
+        std::string text = options->text()->c_str();
+        label->setString(text);
 
         std::string text = options->text()->c_str();
         bool isLocalized = options->isLocalized() != 0;
