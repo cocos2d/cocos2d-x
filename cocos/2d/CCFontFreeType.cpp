@@ -351,7 +351,7 @@ unsigned char* FontFreeType::getGlyphBitmap(uint64_t theChar, long &outWidth, lo
             auto blendWidth = MAX(outlineMaxX, glyphMaxX) - blendImageMinX;
             auto blendHeight = blendImageMaxY - MIN(outlineMinY, glyphMinY);
 
-            outRect.origin.x = blendImageMinX;
+            outRect.origin.x = blendImageMinX + _outlineSize;
             outRect.origin.y = -blendImageMaxY + _outlineSize;
 
             unsigned char *blendImage = nullptr;
