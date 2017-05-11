@@ -372,7 +372,10 @@ Node* findChild(Node* levelRoot, const std::string& name)
 {
     if (levelRoot == nullptr || name.empty())
         return nullptr;
-
+        
+    if ( !name || !strcmp(name,"") )
+        return nullptr;
+        
     // Find this node
     auto target = levelRoot->getChildByName(name);
     if (target != nullptr)
@@ -393,6 +396,9 @@ Node* findChild(Node* levelRoot, int tag)
     if (levelRoot == nullptr || tag == Node::INVALID_TAG)
         return nullptr;
 
+    if (tag == Node::INVALID_TAG)
+    return nullptr;
+	
     // Find this node
     auto target = levelRoot->getChildByTag(tag);
     if (target != nullptr)
