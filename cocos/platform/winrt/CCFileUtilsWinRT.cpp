@@ -286,7 +286,7 @@ bool CCFileUtilsWinRT::removeDirectory(const std::string& path)
                 if (wfd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
                 {
                     temp += '/';
-                    ret = ret && this->removeDirectory(std::string(temp.begin(), temp.end()));
+                    ret = ret && this->removeDirectory(StringWideCharToUtf8(temp));
                 }
                 else
                 {
