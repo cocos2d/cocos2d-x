@@ -1169,22 +1169,17 @@ void FileUtils::getFileSize(const std::string &filepath, std::function<void(long
 
 std::vector<std::string> FileUtils::listFiles(const std::string& dirPath) const
 {
-    std::string fullpath = fullPathForFilename(dirPath);
     std::vector<std::string> files;
+#ifdef UNICODE
+    CCASSERT(false, "FileUtils not support listFiles");
+    return files;
+#else
+    std::string fullpath = fullPathForFilename(dirPath);
     if (isDirectoryExist(fullpath))
     {
         tinydir_dir dir;
-#ifdef UNICODE
-        unsigned int length = MultiByteToWideChar(CP_UTF8, 0, &fullpath[0], (int)fullpath.size(), NULL, 0);
-        if (length != fullpath.size())
-        {
-            return files;
-        }
-        std::wstring fullpathstr(length, 0);
-        MultiByteToWideChar(CP_UTF8, 0, &fullpath[0], (int)fullpath.size(), &fullpathstr[0], length);
-#else
         std::string fullpathstr = fullpath;
-#endif
+
         if (tinydir_open(&dir, &fullpathstr[0]) != -1)
         {
             while (dir.has_next)
@@ -1195,19 +1190,8 @@ std::vector<std::string> FileUtils::listFiles(const std::string& dirPath) const
                     // Error getting file
                     break;
                 }
-                
-#ifdef UNICODE
-                std::wstring path = file.path;
-                length = WideCharToMultiByte(CP_UTF8, 0, &path[0], (int)path.size(), NULL, 0, NULL, NULL);
-                std::string filepath;
-                if (length > 0)
-                {
-                    filepath.resize(length);
-                    WideCharToMultiByte(CP_UTF8, 0, &path[0], (int)path.size(), &filepath[0], length, NULL, NULL);
-                }
-#else
                 std::string filepath = file.path;
-#endif
+
                 if (file.is_dir)
                 {
                     filepath.append("/");
@@ -1224,6 +1208,7 @@ std::vector<std::string> FileUtils::listFiles(const std::string& dirPath) const
         tinydir_close(&dir);
     }
     return files;
+#endif
 }
 
 void FileUtils::listFilesAsync(const std::string& dirPath, std::function<void(std::vector<std::string>)> callback) const
@@ -1236,21 +1221,16 @@ void FileUtils::listFilesAsync(const std::string& dirPath, std::function<void(st
 
 void FileUtils::listFilesRecursively(const std::string& dirPath, std::vector<std::string> *files) const
 {
+#ifdef UNICODE
+    CCASSERT(false, "FileUtils not support listFilesRecursively");
+    return;
+#else
     std::string fullpath = fullPathForFilename(dirPath);
     if (isDirectoryExist(fullpath))
     {
         tinydir_dir dir;
-#ifdef UNICODE
-        unsigned int length = MultiByteToWideChar(CP_UTF8, 0, &fullpath[0], (int)fullpath.size(), NULL, 0);
-        if (length != fullpath.size())
-        {
-            return;
-        }
-        std::wstring fullpathstr(length, 0);
-        MultiByteToWideChar(CP_UTF8, 0, &fullpath[0], (int)fullpath.size(), &fullpathstr[0], length);
-#else
         std::string fullpathstr = fullpath;
-#endif
+
         if (tinydir_open(&dir, &fullpathstr[0]) != -1)
         {
             while (dir.has_next)
@@ -1261,21 +1241,12 @@ void FileUtils::listFilesRecursively(const std::string& dirPath, std::vector<std
                     // Error getting file
                     break;
                 }
+                std::string fileName = file.name;
 
-#ifdef UNICODE
-                std::wstring path = file.path;
-                length = WideCharToMultiByte(CP_UTF8, 0, &path[0], (int)path.size(), NULL, 0, NULL, NULL);
-                std::string filepath;
-                if (length > 0)
+                // Need check full name file on "." and "..", otherwise exclude file and folder begin '.'
+                if (fileName != "." && fileName != "..")
                 {
-                    filepath.resize(length);
-                    WideCharToMultiByte(CP_UTF8, 0, &path[0], (int)path.size(), &filepath[0], length, NULL, NULL);
-                }
-#else
-                std::string filepath = file.path;
-#endif
-                if (file.name[0] != '.')
-                {
+                    std::string filepath = file.path;
                     if (file.is_dir)
                     {
                         filepath.append("/");
@@ -1297,6 +1268,7 @@ void FileUtils::listFilesRecursively(const std::string& dirPath, std::vector<std
         }
         tinydir_close(&dir);
     }
+#endif
 }
 
 void FileUtils::listFilesRecursivelyAsync(const std::string& dirPath, std::function<void(std::vector<std::string>)> callback) const
