@@ -122,13 +122,6 @@ void Tween::play(MovementBoneData *movementBoneData, int durationTo, int duratio
     FrameData *nextKeyFrame = _movementBoneData->getFrameData(0);
     _tweenData->displayIndex = nextKeyFrame->displayIndex;
 
-    if (_bone->getArmature()->getArmatureData()->dataVersion >= VERSION_COMBINED)
-    {
-        TransformHelp::nodeSub(*_tweenData, *_bone->getBoneData());
-        _tweenData->scaleX += 1;
-        _tweenData->scaleY += 1;
-    }
-
     if (_rawDuration == 0 )
     {
         _loopType = SINGLE_FRAME;
@@ -161,6 +154,13 @@ void Tween::play(MovementBoneData *movementBoneData, int durationTo, int duratio
                 setBetween(_tweenData, nextKeyFrame);
             }
         }
+    }
+
+    if (_bone->getArmature()->getArmatureData()->dataVersion >= VERSION_COMBINED)
+    {
+        TransformHelp::nodeSub(*_tweenData, *_bone->getBoneData());
+        _tweenData->scaleX += 1;
+        _tweenData->scaleY += 1;
     }
 
     tweenNodeTo(0);
