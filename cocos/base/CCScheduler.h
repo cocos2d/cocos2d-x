@@ -50,14 +50,10 @@ class CC_DLL Timer : public Ref
 protected:
     Timer();
 public:
-    /** get interval in seconds */
-    float getInterval() const { return _interval; }
-    /** set interval in seconds */
-    void setInterval(float interval) { _interval = interval; }
-    
     void setupTimerWithInterval(float seconds, unsigned int repeat, float delay);
     void setAborted() { _aborted = true; }
     bool isAborted() const { return _aborted; }
+    bool isExhausted() const;
     
     virtual void trigger(float dt) = 0;
     virtual void cancel() = 0;
@@ -66,7 +62,6 @@ public:
     void update(float dt);
     
 protected:
-    
     Scheduler* _scheduler; // weak ref
     float _elapsed;
     bool _runForever;
@@ -431,7 +426,7 @@ public:
      @since v3.0
      @js NA
      */
-    void performFunctionInCocosThread( const std::function<void()> &function);
+    void performFunctionInCocosThread(std::function<void()> function);
     
     /**
      * Remove all pending functions queued to be performed with Scheduler::performFunctionInCocosThread

@@ -152,6 +152,7 @@ void UIEditBoxTest::editBoxEditingDidEndWithAction(cocos2d::ui::EditBox* editBox
 void UIEditBoxTest::editBoxTextChanged(cocos2d::ui::EditBox* editBox, const std::string& text)
 {
     log("editBox %p TextChanged, text: %s ", editBox, text.c_str());
+    editBox->setText(text.c_str());
 }
 
 void UIEditBoxTest::editBoxReturn(ui::EditBox* editBox)

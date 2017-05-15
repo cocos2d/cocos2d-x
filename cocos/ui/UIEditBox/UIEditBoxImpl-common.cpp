@@ -57,6 +57,7 @@ EditBoxImplCommon::EditBoxImplCommon(EditBox* pEditText)
 , _colPlaceHolder(Color3B::GRAY)
 , _maxLength(-1)
 , _alignment(TextHAlignment::LEFT)
+, _editingMode(false)
 {
 }
 
@@ -232,16 +233,14 @@ void EditBoxImplCommon::refreshInactiveText()
     setInactiveText(_text.c_str());
 
     refreshLabelAlignment();
-
-    if(_text.size() == 0)
-    {
-        _label->setVisible(false);
-        _labelPlaceHolder->setVisible(true);
-    }
-    else
-    {
-        _label->setVisible(true);
-        _labelPlaceHolder->setVisible(false);
+    if (!_editingMode) {
+        if (_text.size() == 0) {
+            _label->setVisible(false);
+            _labelPlaceHolder->setVisible(true);
+        } else {
+            _label->setVisible(true);
+            _labelPlaceHolder->setVisible(false);
+        }
     }
 }
 
@@ -253,9 +252,11 @@ void EditBoxImplCommon::refreshLabelAlignment()
 
 void EditBoxImplCommon::setText(const char* text)
 {
-    this->setNativeText(text);
-    _text = text;
-    refreshInactiveText();
+    if (nullptr != text) {
+        this->setNativeText(text);
+        _text = text;
+        refreshInactiveText();
+    }
 }
 
 void EditBoxImplCommon::setPlaceHolder(const char* pText)
@@ -263,9 +264,8 @@ void EditBoxImplCommon::setPlaceHolder(const char* pText)
     if (pText != NULL)
     {
         _placeHolder = pText;
-        _labelPlaceHolder->setString(_placeHolder);
-
         this->setNativePlaceHolder(pText);
+        _labelPlaceHolder->setString(_placeHolder);
     }
 }
 
@@ -308,7 +308,7 @@ void EditBoxImplCommon::openKeyboard()
 {
     _label->setVisible(false);
     _labelPlaceHolder->setVisible(false);
-
+    _editingMode = true;
     this->setNativeVisible(true);
     this->nativeOpenKeyboard();
 }
@@ -316,12 +316,13 @@ void EditBoxImplCommon::openKeyboard()
 void EditBoxImplCommon::closeKeyboard()
 {
     this->nativeCloseKeyboard();
+    _editingMode = false;
 }
 
 void EditBoxImplCommon::onEndEditing(const std::string& /*text*/)
 {
+    _editingMode = false;
     this->setNativeVisible(false);
-    
     refreshInactiveText();
 }
     

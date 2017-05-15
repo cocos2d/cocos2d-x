@@ -284,6 +284,16 @@ private:
     cocos2d::Node* testNode;
 };
 
+class SchedulerIssueWithReschedule : public SchedulerTestLayer
+{
+public:
+    CREATE_FUNC(SchedulerIssueWithReschedule);
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    void onEnter() override;
+};
+
 class ScheduleCallbackTest : public SchedulerTestLayer
 {
 public:

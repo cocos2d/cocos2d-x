@@ -17188,53 +17188,6 @@ int lua_register_cocos2dx_Director(lua_State* tolua_S)
     return 1;
 }
 
-int lua_cocos2dx_Timer_getInterval(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::Timer* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.Timer",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::Timer*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Timer_getInterval'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Timer_getInterval'", nullptr);
-            return 0;
-        }
-        double ret = cobj->getInterval();
-        tolua_pushnumber(tolua_S,(lua_Number)ret);
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Timer:getInterval",argc, 0);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Timer_getInterval'.",&tolua_err);
-#endif
-
-    return 0;
-}
 int lua_cocos2dx_Timer_setupTimerWithInterval(lua_State* tolua_S)
 {
     int argc = 0;
@@ -17287,56 +17240,6 @@ int lua_cocos2dx_Timer_setupTimerWithInterval(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Timer_setupTimerWithInterval'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_Timer_setInterval(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::Timer* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.Timer",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::Timer*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Timer_setInterval'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 1) 
-    {
-        double arg0;
-
-        ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.Timer:setInterval");
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Timer_setInterval'", nullptr);
-            return 0;
-        }
-        cobj->setInterval(arg0);
-        lua_settop(tolua_S, 1);
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Timer:setInterval",argc, 1);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Timer_setInterval'.",&tolua_err);
 #endif
 
     return 0;
@@ -17434,6 +17337,53 @@ int lua_cocos2dx_Timer_isAborted(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Timer_isAborted'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_Timer_isExhausted(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Timer* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Timer",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Timer*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Timer_isExhausted'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Timer_isExhausted'", nullptr);
+            return 0;
+        }
+        bool ret = cobj->isExhausted();
+        tolua_pushboolean(tolua_S,(bool)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Timer:isExhausted",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Timer_isExhausted'.",&tolua_err);
 #endif
 
     return 0;
@@ -17594,11 +17544,10 @@ int lua_register_cocos2dx_Timer(lua_State* tolua_S)
     tolua_cclass(tolua_S,"Timer","cc.Timer","cc.Ref",nullptr);
 
     tolua_beginmodule(tolua_S,"Timer");
-        tolua_function(tolua_S,"getInterval",lua_cocos2dx_Timer_getInterval);
         tolua_function(tolua_S,"setupTimerWithInterval",lua_cocos2dx_Timer_setupTimerWithInterval);
-        tolua_function(tolua_S,"setInterval",lua_cocos2dx_Timer_setInterval);
         tolua_function(tolua_S,"update",lua_cocos2dx_Timer_update);
         tolua_function(tolua_S,"isAborted",lua_cocos2dx_Timer_isAborted);
+        tolua_function(tolua_S,"isExhausted",lua_cocos2dx_Timer_isExhausted);
         tolua_function(tolua_S,"trigger",lua_cocos2dx_Timer_trigger);
         tolua_function(tolua_S,"cancel",lua_cocos2dx_Timer_cancel);
         tolua_function(tolua_S,"setAborted",lua_cocos2dx_Timer_setAborted);

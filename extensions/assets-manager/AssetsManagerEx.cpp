@@ -493,7 +493,7 @@ void AssetsManagerEx::decompressDownloadedZip(const std::string &customId, const
         }
         delete dataInner;
     };
-    AsyncTaskPool::getInstance()->enqueue(AsyncTaskPool::TaskType::TASK_OTHER, decompressFinished, (void*)asyncData, [this, asyncData]() {
+    AsyncTaskPool::getInstance()->enqueue(AsyncTaskPool::TaskType::TASK_OTHER, std::move(decompressFinished), (void*)asyncData, [this, asyncData]() {
         // Decompress all compressed files
         if (decompress(asyncData->zipFile))
         {
