@@ -1754,7 +1754,7 @@ Sprite* Label::getLetter(int letterIndex)
         if (_textSprite == nullptr && letterIndex < _lengthOfString)
         {
             const auto &letterInfo = _lettersInfo[letterIndex];
-            if (!letterInfo.valid)
+            if (!letterInfo.valid || letterInfo.atlasIndex<0)
             {
                 break;
             }

@@ -382,6 +382,7 @@ void Label::recordLetterInfo(const cocos2d::Vec2& point, char32_t utf32Char, int
     _lettersInfo[letterIndex].valid = _fontAtlas->_letterDefinitions[utf32Char].validDefinition;
     _lettersInfo[letterIndex].positionX = point.x;
     _lettersInfo[letterIndex].positionY = point.y;
+    _lettersInfo[letterIndex].atlasIndex = -1;
 }
 
 void Label::recordPlaceholderInfo(int letterIndex, char32_t utf32Char)
