@@ -347,6 +347,10 @@ void ArmatureAnimation::update(float dt)
 {
     ProcessBase::update(dt);
     
+    //支持在用户回调中移除当前armature。
+	_armature->retain();
+	_armature->autorelease();
+	
     for (const auto &tween : _tweenList)
     {
         tween->update(dt);
