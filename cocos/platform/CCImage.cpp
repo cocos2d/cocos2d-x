@@ -2158,6 +2158,11 @@ bool Image::initWithWebpData(const unsigned char * data, ssize_t dataLen)
 
 bool Image::initWithRawData(const unsigned char * data, ssize_t /*dataLen*/, int width, int height, int /*bitsPerComponent*/, bool preMulti)
 {
+  return initWithRawData(data, dataLen, width, height, bitsPerComponent, preMulti, Texture2D::PixelFormat::RGBA8888);
+}
+
+bool Image::initWithRawData(const unsigned char * data, ssize_t dataLen, int width, int height, int bitsPerComponent, bool preMulti, Texture2D::PixelFormat renderFormat)
+{
     bool ret = false;
     do 
     {
@@ -2166,10 +2171,10 @@ bool Image::initWithRawData(const unsigned char * data, ssize_t /*dataLen*/, int
         _height   = height;
         _width    = width;
         _hasPremultipliedAlpha = preMulti;
-        _renderFormat = Texture2D::PixelFormat::RGBA8888;
+        _renderFormat = renderFormat;
 
-        // only RGBA8888 supported
-        int bytesPerComponent = 4;
+        // only RGBA8888, BGRA8888 and RGB888 supported
+        int bytesPerComponent = (_renderFormat == Texture2D::PixelFormat::RGB888) ? 3 : 4;
         _dataLen = height * width * bytesPerComponent;
         _data = static_cast<unsigned char*>(malloc(_dataLen * sizeof(unsigned char)));
         CC_BREAK_IF(! _data);
