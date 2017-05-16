@@ -1170,7 +1170,7 @@ void FileUtils::getFileSize(const std::string &filepath, std::function<void(long
 std::vector<std::string> FileUtils::listFiles(const std::string& dirPath) const
 {
     std::vector<std::string> files;
-#ifdef UNICODE
+#ifdef _MSC_VER
     CCASSERT(false, "FileUtils not support listFiles");
     return files;
 #else
@@ -1221,7 +1221,7 @@ void FileUtils::listFilesAsync(const std::string& dirPath, std::function<void(st
 
 void FileUtils::listFilesRecursively(const std::string& dirPath, std::vector<std::string> *files) const
 {
-#ifdef UNICODE
+#ifdef _MSC_VER
     CCASSERT(false, "FileUtils not support listFilesRecursively");
     return;
 #else
@@ -1243,7 +1243,6 @@ void FileUtils::listFilesRecursively(const std::string& dirPath, std::vector<std
                 }
                 std::string fileName = file.name;
 
-                // Need check full name file on "." and "..", otherwise exclude file and folder begin '.'
                 if (fileName != "." && fileName != "..")
                 {
                     std::string filepath = file.path;

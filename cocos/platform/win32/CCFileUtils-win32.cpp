@@ -240,7 +240,6 @@ void FileUtilsWin32::listFilesRecursively(const std::string& dirPath, std::vecto
                 }
                 std::string fileName = StringWideCharToUtf8(file.name);
 
-                // Need check full name file on "." and "..", otherwise exclude file and folder begin '.'
                 if (fileName != "." && fileName != "..")
                 {
                     std::string filepath = StringWideCharToUtf8(file.path);
