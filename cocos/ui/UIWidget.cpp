@@ -1125,22 +1125,22 @@ bool Widget::isEnabled() const
 
 float Widget::getLeftBoundary() const
 {
-    return getPosition().x - getAnchorPoint().x * _contentSize.width;
+    return getBoundingBox().origin.x;
 }
 
 float Widget::getBottomBoundary() const
 {
-    return getPosition().y - getAnchorPoint().y * _contentSize.height;
+    return getBoundingBox().origin.y;
 }
 
 float Widget::getRightBoundary() const
 {
-    return getLeftBoundary() + _contentSize.width;
+    return getLeftBoundary() + getBoundingBox().size.width;
 }
 
 float Widget::getTopBoundary() const
 {
-    return getBottomBoundary() + _contentSize.height;
+    return getBottomBoundary() + getBoundingBox().size.height;
 }
 
 const Vec2& Widget::getTouchBeganPosition()const
