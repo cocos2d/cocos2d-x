@@ -2008,6 +2008,9 @@
     <ClCompile Include="..\..\external\md5\md5.c">
       <Filter>external\md5</Filter>
     </ClCompile>
+    <ClCompile Include="..\ui\UIEditBox\UIEditBoxImpl-common.cpp">
+      <Filter>ui\UIWidgets\EditBox</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\physics\CCPhysicsBody.h">
@@ -3919,6 +3922,9 @@
     </ClInclude>
     <ClInclude Include="..\..\external\md5\md5.h">
       <Filter>external\md5</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ui\UIEditBox\UIEditBoxImpl-common.h">
+      <Filter>ui\UIWidgets\EditBox</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
