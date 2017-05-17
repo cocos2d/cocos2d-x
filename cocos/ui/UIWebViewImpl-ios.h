@@ -83,6 +83,12 @@ public:
     virtual void setVisible(bool visible);
 
     void setBounces(bool bounces);
+    
+    virtual void setOpacityWebView(float opacity);
+    
+    virtual float getOpacityWebView();
+    
+    virtual void setBackgroundTransparent();
 
 private:
     UIWebViewWrapper *_uiWebViewWrapper;

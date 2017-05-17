@@ -216,6 +216,20 @@ public:
      * Toggle visibility of WebView.
      */
     virtual void setVisible(bool visible) override;
+    /**
+     * SetOpacity of webview.
+     */
+    virtual void setOpacityWebView(float opacity);
+    
+    /**
+     * getOpacity of webview.
+     */
+    virtual float getOpacityWebView();
+    
+    /**
+     * set the background transparent
+     */
+    virtual void setBackgroundTransparent();
     virtual void onEnter() override;
     virtual void onExit() override;
     
