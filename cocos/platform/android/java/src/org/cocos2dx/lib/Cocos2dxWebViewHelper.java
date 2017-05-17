@@ -1,5 +1,6 @@
 package org.cocos2dx.lib;
 
+import android.annotation.TargetApi;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.SparseArray;
@@ -93,6 +94,46 @@ public class Cocos2dxWebViewHelper {
                 }
             }
         });
+    }
+
+    @TargetApi(11)
+    public static void setOpacityWebView(final int index, final float opacity) {
+        
+        
+        sCocos2dxActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Cocos2dxWebView webView = webViews.get(index);
+                if (webView != null) {
+                    webView.setAlpha(opacity);
+                }
+            }
+        });
+    }
+
+    @TargetApi(11)
+    public static float getOpacityWebView(final int index) {
+        
+        FutureTask<Float> futureResult = new FutureTask<Float>(new Callable<Float>() {
+            @Override
+            public Float call() throws Exception {
+                float opacity=0.f;
+                Cocos2dxWebView webView = webViews.get(index);
+                if (webView != null) {
+                    opacity = webView.getAlpha();
+                }
+                return opacity;
+            }
+        });
+        sCocos2dxActivity.runOnUiThread(futureResult);
+        try {
+            return futureResult.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 
     public static void setWebViewRect(final int index, final int left, final int top, final int maxWidth, final int maxHeight) {
