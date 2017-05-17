@@ -657,6 +657,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\openssl\prebuilt\win32\*.*" "$(OutDir)"
     <ClCompile Include="..\ui\UIButton.cpp" />
     <ClCompile Include="..\ui\UIAbstractCheckButton.cpp" />
     <ClCompile Include="..\ui\UICheckBox.cpp" />
+    <ClCompile Include="..\ui\UIEditBox\UIEditBoxImpl-common.cpp" />
     <ClCompile Include="..\ui\UIRadioButton.cpp" />
     <ClCompile Include="..\ui\UIDeprecated.cpp" />
     <ClCompile Include="..\ui\UIEditBox\UIEditBox.cpp" />
@@ -1302,6 +1303,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\openssl\prebuilt\win32\*.*" "$(OutDir)"
     <ClInclude Include="..\ui\UICheckBox.h" />
     <ClInclude Include="..\ui\UIDeprecated.h" />
     <ClInclude Include="..\ui\UIEditBox\UIEditBox.h" />
+    <ClInclude Include="..\ui\UIEditBox\UIEditBoxImpl-common.h" />
     <ClInclude Include="..\ui\UIEditBox\UIEditBoxImpl-win32.h" />
     <ClInclude Include="..\ui\UIEditBox\UIEditBoxImpl.h" />
     <ClInclude Include="..\ui\UIHBox.h" />
