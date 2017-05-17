@@ -563,6 +563,40 @@ protected:
     bool    _compressedInterpolation;
 };
 
+class CC_DLL LayerRadialGradient : public Layer
+{
+public:
+    static LayerRadialGradient* create(const Color4B& startColor, const Color4B& endColor, float radius, const Vec2& center, float expand);
+    
+CC_CONSTRUCTOR_ACCESS:
+    LayerRadialGradient();
+    virtual ~LayerRadialGradient();
+    
+    bool initWithColor(const Color4B& startColor, const Color4B& endColor, float radius, const Vec2& center, float expand);
+    
+    //
+    // overrides
+    //
+    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
+    
+protected:
+    void onDraw(const Mat4& transform, uint32_t flags);
+    
+    
+private:
+    void convertColor4B24F(Color4F& outColor, const Color4B& inColor);
+    
+    Color4F _startColor;
+    Color4F _endColor;
+    GLubyte _startOpacity;
+    GLubyte _endOpacity;
+    Vec2 _center;
+    float _radius;
+    float _expand;
+    Vec2 _vertices[4];
+    CustomCommand _customCommand;
+};
+
 
 /** @class LayerMultiplex
  * @brief MultipleLayer is a Layer with the ability to multiplex it's children.

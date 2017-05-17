@@ -94,7 +94,11 @@ extern CC_DLL const GLchar * ccCameraClearVert;
 extern CC_DLL const GLchar * ccCameraClearFrag;
 // ETC1 ALPHA supports.
 extern CC_DLL const GLchar* ccETC1ASPositionTextureColor_frag;
-extern CC_DLL const char* ccETC1ASPositionTextureGray_frag;
+extern CC_DLL const GLchar* ccETC1ASPositionTextureGray_frag;
+
+extern CC_DLL const GLchar* ccPosition_vert;
+extern CC_DLL const GLchar* ccShader_LayerRadialGradient_frag;
+
 NS_CC_END
 /**
  end of support group

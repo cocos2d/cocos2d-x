@@ -535,6 +535,15 @@ void GLViewImpl::setIMEKeyboardState(bool /*bOpen*/)
 
 }
 
+Size GLViewImpl::getFrameSize() const
+{
+    int width = 0;
+    int height = 0;
+    glfwGetFramebufferSize(_mainWindow, &width, &height);
+    
+    return Size(width, height);
+}
+
 void GLViewImpl::setCursorVisible( bool isVisible )
 {
     if( _mainWindow == NULL )

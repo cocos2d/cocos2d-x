@@ -165,7 +165,7 @@ public:
      *
      * @return The frame size of EGL view.
      */
-    virtual const Size& getFrameSize() const;
+    virtual Size getFrameSize() const;
 
     /**
      * Set the frame size of EGL view.

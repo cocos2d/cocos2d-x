@@ -843,6 +843,107 @@ std::string LayerGradient::getDescription() const
     return StringUtils::format("<LayerGradient | Tag = %d>", _tag);
 }
 
+/**
+ * LayerRadialGradient
+ */
+LayerRadialGradient* LayerRadialGradient::create(const Color4B& startColor, const Color4B& endColor, float radius, const Vec2& center, float expand)
+{
+    auto layerGradient = new LayerRadialGradient();
+    if (layerGradient && layerGradient->initWithColor(startColor, endColor, radius, center, expand))
+    {
+        layerGradient->autorelease();
+        return layerGradient;
+    }
+    
+    delete layerGradient;
+    return nullptr;
+}
+
+LayerRadialGradient::LayerRadialGradient()
+: _startColor(Color4B::BLACK)
+, _endColor(Color4B::BLACK)
+, _startOpacity(255)
+, _endOpacity(255)
+, _radius(0.f)
+, _expand(0.f)
+{}
+
+LayerRadialGradient::~LayerRadialGradient()
+{}
+
+bool LayerRadialGradient::initWithColor(const cocos2d::Color4B &startColor, const cocos2d::Color4B &endColor, float radius, const Vec2& center, float expand)
+{
+    convertColor4B24F(_startColor, startColor);
+    convertColor4B24F(_endColor, endColor);
+    _radius = radius;
+    _expand = expand;
+    
+    auto director = Director::getInstance();
+    auto visiableSize = director->getVisibleSize();
+    auto winSizeInPixel = director->getOpenGLView()->getFrameSize();
+    _center = (center - director->getVisibleOrigin());
+    _center = {_center.x / visiableSize.width * winSizeInPixel.width,
+    winSizeInPixel.height - _center.y / visiableSize.height * winSizeInPixel.height};
+    
+    // calculate the squal coordinate
+    float minx = center.x - radius;
+    float maxx = center.x + radius;
+    float miny = center.y - radius;
+    float maxy = center.y + radius;
+    _vertices[0] = {minx, miny};
+    _vertices[1] = {minx, maxy};
+    _vertices[2] = {maxx, miny};
+    _vertices[3] = {maxx, maxy};
+    
+    setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_LAYER_RADIAL_GRADIENT));
+    return true;
+}
+
+void LayerRadialGradient::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
+{
+    _customCommand.init(_globalZOrder, transform, flags);
+    _customCommand.func = CC_CALLBACK_0(LayerRadialGradient::onDraw, this, transform, flags);
+    renderer->addCommand(&_customCommand);
+}
+
+void LayerRadialGradient::onDraw(const Mat4& transform, uint32_t /*flags*/)
+{
+    auto program = getGLProgram();
+    program->use();
+    program->setUniformsForBuiltins(transform);
+    program->setUniformLocationWith4f(program->getUniformLocation("u_startColor"), _startColor.r,
+                                      _startColor.g, _startColor.b, _startColor.a);
+    program->setUniformLocationWith4f(program->getUniformLocation("u_endColor"), _endColor.r,
+                                      _endColor.g, _endColor.b, _endColor.a);
+    program->setUniformLocationWith2f(program->getUniformLocation("u_center"), _center.x, _center.y);
+    program->setUniformLocationWith1f(program->getUniformLocation("u_radius"), _radius);
+    program->setUniformLocationWith1f(program->getUniformLocation("u_expand"), _expand);
+    
+    
+    GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION);
+    
+    //
+    // Attributes
+    //
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, _vertices);
+    
+//    GL::blendFunc( _blendFunc.src, _blendFunc.dst );
+    
+    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+    
+    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,4);
+}
+
+void LayerRadialGradient::convertColor4B24F(Color4F& outColor, const Color4B& inColor)
+{
+    outColor.r = inColor.r / 255.0f;
+    outColor.g = inColor.g / 255.0f;
+    outColor.b = inColor.b / 255.0f;
+    outColor.a = inColor.a / 255.0f;
+}
+
+
 /// MultiplexLayer
 
 LayerMultiplex::LayerMultiplex()
