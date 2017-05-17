@@ -943,7 +943,7 @@ void Widget::onMouseMove(EventMouse *eventMouse)
         auto camera = Camera::getVisitingCamera();
         if(hitTest(mousePosition, camera, nullptr))
         {
-            if (isClippingParentContainsPoint(mousePosition)) {
+            if (isClippingParentContainsPoint(mousePosition) && isTouchEnabled()) {
                 _mouseOverWidget = this;
             }
         }
