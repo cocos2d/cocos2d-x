@@ -875,15 +875,19 @@ bool LayerRadialGradient::initWithColor(const cocos2d::Color4B &startColor, cons
 {
     convertColor4B24F(_startColor, startColor);
     convertColor4B24F(_endColor, endColor);
-    _radius = radius;
+    
     _expand = expand;
     
+    // convert _center to screen pixel coordinate
     auto director = Director::getInstance();
-    auto visiableSize = director->getVisibleSize();
-    auto winSizeInPixel = director->getOpenGLView()->getFrameSize();
+    auto visibleSize = director->getVisibleSize();
     _center = (center - director->getVisibleOrigin());
-    _center = {_center.x / visiableSize.width * winSizeInPixel.width,
-    winSizeInPixel.height - _center.y / visiableSize.height * winSizeInPixel.height};
+    auto winSizeInPixel = director->getOpenGLView()->getFrameSize();
+    _center = {_center.x / visibleSize.width * winSizeInPixel.width,
+               _center.y / visibleSize.height * winSizeInPixel.height};
+    
+    // convert radius to screen pixel coordinate
+    _radius = radius * (winSizeInPixel.width / (visibleSize.width + visibleSize.width));
     
     // calculate the squal coordinate
     float minx = center.x - radius;
