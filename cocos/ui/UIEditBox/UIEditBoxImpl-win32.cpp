@@ -337,7 +337,6 @@ namespace ui {
         case WM_SETFOCUS:
             if (hwnd != s_previousFocusWnd)
             {
-                ::ShowWindow(hwnd, SW_SHOW);
                 ::PostMessage(hwnd, WM_ACTIVATE, (WPARAM)s_previousFocusWnd, 0);
                 ::PostMessage(hwnd, WM_SETCURSOR, (WPARAM)s_previousFocusWnd, 0);
                 s_previousFocusWnd = hwndEdit;
