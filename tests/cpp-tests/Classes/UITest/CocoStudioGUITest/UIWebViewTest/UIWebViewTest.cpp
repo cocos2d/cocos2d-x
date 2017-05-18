@@ -170,6 +170,18 @@ bool WebViewTest::init()
         opacityBtn->setName("Opacity");
         this->addChild(opacityBtn);
         
+        
+        Button *transparentBgBtn = Button::create("cocosui/animationbuttonnormal.png",
+                                            "cocosui/animationbuttonpressed.png");
+        transparentBgBtn->setTitleText("Transparent BG");
+        transparentBgBtn->setPosition(Vec2(winSize/2) + Vec2( _webView->getContentSize().width/2 +
+                                                             transparentBgBtn->getContentSize().width/2 + 10,-100 ));
+        transparentBgBtn->addClickEventListener([=](Ref*){
+            _webView->setBackgroundTransparent();
+        });
+        transparentBgBtn->setName("Transparent");
+        this->addChild(transparentBgBtn);
+        
         return true;
     }
     return false;

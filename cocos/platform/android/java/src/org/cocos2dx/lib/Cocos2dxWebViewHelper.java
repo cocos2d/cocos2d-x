@@ -1,10 +1,13 @@
 package org.cocos2dx.lib;
 
 import android.annotation.TargetApi;
+import android.graphics.Color;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.FrameLayout;
 import android.webkit.WebSettings;
 
@@ -97,9 +100,23 @@ public class Cocos2dxWebViewHelper {
     }
 
     @TargetApi(11)
+    public static void setBackgroundTransparent(final int index) {
+
+        sCocos2dxActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Cocos2dxWebView webView = webViews.get(index);
+                if (webView != null) {
+                    webView.setBackgroundColor(Color.TRANSPARENT);
+                    webView.setLayerType(WebView.LAYER_TYPE_SOFTWARE, null);
+                }
+            }
+        });
+    }
+
+    @TargetApi(11)
     public static void setOpacityWebView(final int index, final float opacity) {
-        
-        
+
         sCocos2dxActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
