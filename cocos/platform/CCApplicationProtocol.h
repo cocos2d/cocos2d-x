@@ -102,6 +102,7 @@ public:
     * @js NA
     * @lua NA
     */
+    virtual void setAnimationInterval(float interval) = 0;
     virtual void setAnimationInterval(float interval, SetIntervalReason reason) = 0;
 
     /** Subclass override the function to set OpenGL context attribution instead of use default value.

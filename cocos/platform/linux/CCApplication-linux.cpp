@@ -113,6 +113,11 @@ void Application::setAnimationInterval(float interval)
     _animationInterval = interval*1000.0f;
 }
 
+void Application::setAnimationInterval(float interval, SetIntervalReason reason)
+{
+    setAnimationInterval(interval);
+}
+
 void Application::setResourceRootPath(const std::string& rootResDir)
 {
     _resourceRootPath = rootResDir;

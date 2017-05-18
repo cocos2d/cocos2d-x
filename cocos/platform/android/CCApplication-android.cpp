@@ -75,6 +75,11 @@ int Application::run()
     return -1;
 }
 
+void Application::setAnimationInterval(float interval)
+{
+    setAnimationInterval(interval, SetIntervalReason::BY_ENGINE);
+}
+
 void Application::setAnimationInterval(float interval, SetIntervalReason reason)
 {
     EngineDataManager::setAnimationInterval(interval, reason);
