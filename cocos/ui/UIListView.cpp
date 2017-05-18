@@ -803,7 +803,14 @@ void ListView::scrollToItem(ssize_t itemIndex, const Vec2& positionRatioInView, 
 
 ssize_t ListView::getCurSelectedIndex() const
 {
-    return _curSelectedIndex;
+    if (_curSelectedIndex < _items.size())
+    {
+        return _curSelectedIndex;
+    }
+    else
+    {
+        return -1;
+    }
 }
 
 void ListView::setCurSelectedIndex(int itemIndex)
