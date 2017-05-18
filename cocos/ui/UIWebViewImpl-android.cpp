@@ -296,7 +296,7 @@ namespace cocos2d {
             };
             
             void WebViewImpl::setBackgroundTransparent(){
-                // empty function as this was mainly a fix for iOS
+                JniHelper::callStaticVoidMethod(className, "setBackgroundTransparent", _viewTag);
             };
 
             void WebViewImpl::setBounces(bool bounces) {
