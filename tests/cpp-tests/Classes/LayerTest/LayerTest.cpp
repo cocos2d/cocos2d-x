@@ -28,6 +28,7 @@ LayerTests::LayerTests()
     ADD_TEST_CASE(LayerBug3162A);
     ADD_TEST_CASE(LayerBug3162B);
     ADD_TEST_CASE(LayerColorOccludeBug);
+    ADD_TEST_CASE(LayerRadialGradientTest);
 }
 
 // Cascading support extensions
@@ -869,4 +870,23 @@ void LayerColorOccludeBug::onExit()
 {
     LayerTest::onExit();
     Director::getInstance()->setDepthTest(false);
+}
+
+// LayerRadialGradient
+
+std::string LayerRadialGradientTest::title() const
+{
+    return "LayerRadialGradient test";
+}
+
+void LayerRadialGradientTest::onEnter()
+{
+    LayerTest::onEnter();
+    
+    auto director = Director::getInstance();
+    auto origin = director->getVisibleOrigin();
+    auto size = director->getVisibleSize();
+    Vec2 center(origin.x + size.width/2, origin.y + size.height/2);
+    _layer = LayerRadialGradient::create(Color4B::RED, Color4B::BLUE, 50.0f, center, 0.5f);
+    addChild(_layer);
 }

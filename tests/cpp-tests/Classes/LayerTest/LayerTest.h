@@ -196,5 +196,15 @@ private:
     cocos2d::LayerColor* _layer;
 };
 
+class LayerRadialGradientTest : public LayerTest
+{
+public:
+    CREATE_FUNC(LayerRadialGradientTest);
+    virtual void onEnter() override;
+    virtual std::string title() const override;
+private:
+    cocos2d::LayerRadialGradient* _layer;
+};
+
 
 #endif
