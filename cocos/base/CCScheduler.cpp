@@ -500,7 +500,7 @@ void Scheduler::schedulePerFrame(const ccSchedulerFunc& callback, void *target, 
     }
 }
 
-bool Scheduler::isScheduled(const std::string& key, void *target) const
+bool Scheduler::isScheduled(const std::string& key, const void *target) const
 {
     CCASSERT(!key.empty(), "Argument key must not be empty");
     CCASSERT(target, "Argument target must be non-nullptr");
@@ -1003,7 +1003,7 @@ void Scheduler::schedule(SEL_SCHEDULE selector, Ref *target, float interval, boo
     this->schedule(selector, target, interval, CC_REPEAT_FOREVER, 0.0f, paused);
 }
 
-bool Scheduler::isScheduled(SEL_SCHEDULE selector, Ref *target) const
+bool Scheduler::isScheduled(SEL_SCHEDULE selector, const Ref *target) const
 {
     CCASSERT(selector, "Argument selector must be non-nullptr");
     CCASSERT(target, "Argument target must be non-nullptr");

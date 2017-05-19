@@ -363,7 +363,7 @@ public:
      @return True if the specified callback is invoked, false if not.
      @since v3.0.0
      */
-    bool isScheduled(const std::string& key, void *target) const;
+    bool isScheduled(const std::string& key, const void *target) const;
     
     /** Checks whether a selector for a given target is scheduled.
      @param selector The selector to be checked.
@@ -371,7 +371,7 @@ public:
      @return True if the specified selector is invoked, false if not.
      @since v3.0
      */
-    bool isScheduled(SEL_SCHEDULE selector, Ref *target) const;
+    bool isScheduled(SEL_SCHEDULE selector, const Ref *target) const;
     
     /////////////////////////////////////
     
