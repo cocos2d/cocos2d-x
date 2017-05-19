@@ -111,9 +111,9 @@ bool _isFpsChanged = false;
 float _oldRealFps = 60.0f;
 
 uint32_t _lowFpsCheckMode = 0; // 0: Continuous mode, 1: Average mode
-float _lowRealFpsThreshold = 0.25f; // Unit: percentage (0 ~ 1)
+float _lowRealFpsThreshold = 0.5f; // Unit: percentage (0 ~ 1)
 std::chrono::steady_clock::time_point _lastTimeNotifyLevelByLowFps; // Only used in continuous mode 
-float _notifyLevelByLowFpsThreshold = 0.2f; // Unit: seconds, only used in continuous mode 
+float _notifyLevelByLowFpsThreshold = 0.5f; // Unit: seconds, only used in continuous mode 
 uint32_t _continuousLowRealFpsCount = 0; // Only used in continuous mode 
 uint32_t _continuousLowRealFpsThreshold = 1; // Only used in continuous mode
 uint32_t _calculateAvgFpsCount = 0; // Only used in average mode
