@@ -1054,7 +1054,7 @@ void Sprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
     // Don't calculate the culling if the transform was not updated
     auto visitingCamera = Camera::getVisitingCamera();
     auto defaultCamera = Camera::getDefaultCamera();
-    if (visitingCamera == NULL) {
+    if (visitingCamera == nullptr) {
         _insideBounds = true;
     }
     else if (visitingCamera == defaultCamera) {
