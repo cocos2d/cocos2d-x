@@ -42,6 +42,10 @@ THE SOFTWARE.
 #include "base/CCEventListenerAcceleration.h"
 #include "base/ccUTF8.h"
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+#include "platform/desktop/CCGLViewImpl-desktop.h"
+#endif
+
 NS_CC_BEGIN
 
 // Layer
@@ -878,10 +882,8 @@ LayerRadialGradient::LayerRadialGradient()
 , _endColor(Color4B::BLACK)
 , _endColorRend(Color4F::BLACK)
 , _radius(0.f)
-, _radiusRend(0.f)
 , _expand(0.f)
 , _center(Vec2(0,0))
-, _centerRend(Vec2(0,0))
 , _uniformLocationCenter(0)
 , _uniformLocationRadius(0)
 , _uniformLocationExpand(0)
@@ -895,25 +897,35 @@ LayerRadialGradient::~LayerRadialGradient()
 
 bool LayerRadialGradient::initWithColor(const cocos2d::Color4B &startColor, const cocos2d::Color4B &endColor, float radius, const Vec2& center, float expand)
 {
-    convertColor4B24F(_startColorRend, startColor);
-    _startColor = startColor;
-    convertColor4B24F(_endColorRend, endColor);
-    _endColor = endColor;
+    // should do it before Layer::init()
+    for (int i = 0; i < 4; ++i)
+        _vertices[i] = {0.0f, 0.0f};
     
-    _expand = expand;
-
-    setRadius(radius);
-    setCenter(center);
+    if (Layer::init())
+    {
+        convertColor4B24F(_startColorRend, startColor);
+        _startColor = startColor;
+        
+        convertColor4B24F(_endColorRend, endColor);
+        _endColor = endColor;
+        
+        _expand = expand;
+        
+        setRadius(radius);
+        setCenter(center);
+        
+        setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_LAYER_RADIAL_GRADIENT));
+        auto program = getGLProgram();
+        _uniformLocationStartColor = program->getUniformLocation("u_startColor");
+        _uniformLocationEndColor = program->getUniformLocation("u_endColor");
+        _uniformLocationExpand = program->getUniformLocation("u_expand");
+        _uniformLocationRadius = program->getUniformLocation("u_radius");
+        _uniformLocationCenter = program->getUniformLocation("u_center");
+        
+        return true;
+    }
     
-    setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_LAYER_RADIAL_GRADIENT));
-    auto program = getGLProgram();
-    _uniformLocationStartColor = program->getUniformLocation("u_startColor");
-    _uniformLocationEndColor = program->getUniformLocation("u_endColor");
-    _uniformLocationExpand = program->getUniformLocation("u_expand");
-    _uniformLocationRadius = program->getUniformLocation("u_radius");
-    _uniformLocationCenter = program->getUniformLocation("u_center");
-    
-    return true;
+    return false;
 }
 
 void LayerRadialGradient::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
@@ -932,8 +944,8 @@ void LayerRadialGradient::onDraw(const Mat4& transform, uint32_t /*flags*/)
                                       _startColorRend.g, _startColorRend.b, _startColorRend.a);
     program->setUniformLocationWith4f(_uniformLocationEndColor, _endColorRend.r,
                                       _endColorRend.g, _endColorRend.b, _endColorRend.a);
-    program->setUniformLocationWith2f(_uniformLocationCenter, _centerRend.x, _centerRend.y);
-    program->setUniformLocationWith1f(_uniformLocationRadius, _radiusRend);
+    program->setUniformLocationWith2f(_uniformLocationCenter, _center.x, _center.y);
+    program->setUniformLocationWith1f(_uniformLocationRadius, _radius);
     program->setUniformLocationWith1f(_uniformLocationExpand, _expand);
     
     
@@ -950,6 +962,15 @@ void LayerRadialGradient::onDraw(const Mat4& transform, uint32_t /*flags*/)
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
     
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,4);
+}
+
+void LayerRadialGradient::setContentSize(const Size& size)
+{
+    _vertices[1].x = size.width;
+    _vertices[2].y = size.height;
+    _vertices[3].x = size.width;
+    _vertices[3].y = size.height;
+    Layer::setContentSize(size);
 }
 
 void LayerRadialGradient::setStartOpacity(GLubyte opacity)
@@ -976,29 +997,17 @@ GLubyte LayerRadialGradient::getEndOpacity() const
 
 void LayerRadialGradient::setRadius(float radius)
 {
-    // convert radius to screen pixel coordinate
-    auto director = Director::getInstance();
-    auto visibleSize = director->getVisibleSize();
-    auto winSizeInPixel = director->getOpenGLView()->getFrameSize();
-    _radiusRend = radius * (winSizeInPixel.width / (visibleSize.width + visibleSize.width));
-    
     _radius = radius;
-    
-    updateVerts();
+}
+
+float LayerRadialGradient::getRadius() const
+{
+    return _radius;
 }
 
 void LayerRadialGradient::setCenter(const Vec2& center)
 {
-    auto director = Director::getInstance();
-    auto visibleSize = director->getVisibleSize();
-    _centerRend = (center - director->getVisibleOrigin());
-    auto winSizeInPixel = director->getOpenGLView()->getFrameSize();
-    _centerRend = {_centerRend.x / visibleSize.width * winSizeInPixel.width,
-        _centerRend.y / visibleSize.height * winSizeInPixel.height};
-    
     _center = center;
-    
-    updateVerts();
 }
 
 void LayerRadialGradient::setExpand(float expand)
@@ -1069,19 +1078,6 @@ void LayerRadialGradient::convertColor4B24F(Color4F& outColor, const Color4B& in
     outColor.g = inColor.g / 255.0f;
     outColor.b = inColor.b / 255.0f;
     outColor.a = inColor.a / 255.0f;
-}
-
-void LayerRadialGradient::updateVerts()
-{
-    // calculate the squal coordinate
-    float minx = _center.x - _radius;
-    float maxx = _center.x + _radius;
-    float miny = _center.y - _radius;
-    float maxy = _center.y + _radius;
-    _vertices[0] = {minx, miny};
-    _vertices[1] = {minx, maxy};
-    _vertices[2] = {maxx, miny};
-    _vertices[3] = {maxx, maxy};
 }
 
 

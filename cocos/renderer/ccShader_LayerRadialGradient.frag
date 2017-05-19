@@ -30,9 +30,15 @@ uniform vec2 u_center;
 uniform float u_radius;
 uniform float u_expand;
 
+#ifdef GL_ES
+varying lowp vec4 v_position;
+#else
+varying vec4 v_position;
+#endif
+
 void main()
 {
-    float d = distance(gl_FragCoord.xy, u_center) / u_radius;
+    float d = distance(v_position.xy, u_center) / u_radius;
     if (d <= 1.0)
     {
         if (d <= u_expand)
@@ -46,8 +52,7 @@ void main()
     }
     else
     {
-        gl_FragColor = vec4(0,0,0,0);
+        gl_FragColor = vec4(0.0, 0.0, 0.0, 0.0);
     }
-
 }
 )";

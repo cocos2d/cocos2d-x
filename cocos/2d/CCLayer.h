@@ -579,6 +579,7 @@ CC_CONSTRUCTOR_ACCESS:
     // overrides
     //
     virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
+    virtual void setContentSize(const Size& size) override;
     
     void setStartOpacity(GLubyte opacity);
     GLubyte getStartOpacity() const;
@@ -614,7 +615,6 @@ protected:
     
 private:
     void convertColor4B24F(Color4F& outColor, const Color4B& inColor);
-    void updateVerts();
     
     Color4B _startColor;
     Color4F _startColorRend; // start color used in shader
@@ -623,13 +623,8 @@ private:
     Color4F _endColorRend; // end color used in shader
     
     Vec2 _center;
-    Vec2 _centerRend; // the center used in shader
-    
     float _radius;
-    float _radiusRend; // radius used in shader
-    
     float _expand;
-    
     Vec2 _vertices[4];
     CustomCommand _customCommand;
     
