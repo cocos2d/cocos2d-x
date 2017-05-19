@@ -190,10 +190,7 @@ bool BillBoard::calculateBillboardTransform()
             camDir.set(camWorldMat.m[8], camWorldMat.m[9], camWorldMat.m[10]);
         }
         camDir.normalize();
-        
-        //Quaternion rotationQuaternion;
-        //this->getNodeToWorldTransform().getRotation(&rotationQuaternion);
-        
+
         Mat4 rotationMatrix;
         rotationMatrix.setIdentity();
 
