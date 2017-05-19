@@ -78,13 +78,13 @@ FontAtlas* FontAtlasCache::getFontAtlasTTF(const _ttfConfig* config)
             if (tempAtlas)
             {
                 _atlasMap[atlasName] = tempAtlas;
+                _atlasMap[atlasName]->retain();
                 return _atlasMap[atlasName];
             }
         }
     }
     else
     {
-        _atlasMap[atlasName]->retain();
         return _atlasMap[atlasName];
     }
 
@@ -109,13 +109,13 @@ FontAtlas* FontAtlasCache::getFontAtlasFNT(const std::string& fontFileName, cons
             if (tempAtlas)
             {
                 _atlasMap[atlasName] = tempAtlas;
+                _atlasMap[atlasName]->retain();
                 return _atlasMap[atlasName];
             }
         }
     }
     else
     {
-        _atlasMap[atlasName]->retain();
         return _atlasMap[atlasName];
     }
     
@@ -137,13 +137,13 @@ FontAtlas* FontAtlasCache::getFontAtlasCharMap(const std::string& plistFile)
             if (tempAtlas)
             {
                 _atlasMap[atlasName] = tempAtlas;
+                _atlasMap[atlasName]->retain();
                 return _atlasMap[atlasName];
             }
         }
     }
     else
     {
-        _atlasMap[atlasName]->retain();
         return _atlasMap[atlasName];
     }
 
@@ -167,13 +167,13 @@ FontAtlas* FontAtlasCache::getFontAtlasCharMap(Texture2D* texture, int itemWidth
             if (tempAtlas)
             {
                 _atlasMap[atlasName] = tempAtlas;
+                _atlasMap[atlasName]->retain();
                 return _atlasMap[atlasName];
             }
         }
     }
     else
     {
-        _atlasMap[atlasName]->retain();
         return _atlasMap[atlasName];
     }
 
@@ -197,13 +197,13 @@ FontAtlas* FontAtlasCache::getFontAtlasCharMap(const std::string& charMapFile, i
             if (tempAtlas)
             {
                 _atlasMap[atlasName] = tempAtlas;
+                _atlasMap[atlasName]->retain();
                 return _atlasMap[atlasName];
             }
         }
     }
     else
     {
-        _atlasMap[atlasName]->retain();
         return _atlasMap[atlasName];
     }
 
