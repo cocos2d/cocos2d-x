@@ -40,6 +40,7 @@ THE SOFTWARE.
 #include "unzip.h"
 #endif
 #include <sys/stat.h>
+#include <openssl/md5.h>
 
 NS_CC_BEGIN
 
@@ -1529,6 +1530,21 @@ void FileUtils::valueMapCompact(ValueMap& /*valueMap*/)
 
 void FileUtils::valueVectorCompact(ValueVector& /*valueVector*/)
 {
+}
+
+std::string FileUtils::getMD5Hash(const std::string &filename)
+{
+   unsigned char digest[MD5_DIGEST_LENGTH];
+   Data d;
+   getContents(filename, &d);
+   
+   MD5(d.getBytes(), d.getSize(), (unsigned char*)&digest);
+   
+   std::string mdString;
+   mdString.reserve(32);
+   for(int i = 0; i < 16; i++)
+       sprintf(&mdString[i*2], "%02x", (unsigned int)digest[i]);
+   return mdString;
 }
 
 NS_CC_END
