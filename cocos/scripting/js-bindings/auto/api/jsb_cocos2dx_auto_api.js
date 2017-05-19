@@ -2211,6 +2211,16 @@ create : function (
 },
 
 /**
+ * @method getAttachedNodeCount
+ * @return {int}
+ */
+getAttachedNodeCount : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method Node
  * @constructor
  */
@@ -10743,13 +10753,13 @@ node
 },
 
 /**
- * @method update
- * @param {float} arg0
+ * @method getNumberOfRunningActions
+ * @return {int}
  */
-update : function (
-float 
+getNumberOfRunningActions : function (
 )
 {
+    return 0;
 },
 
 /**
@@ -10812,6 +10822,16 @@ pauseAllRunningActions : function (
 )
 {
     return new Array();
+},
+
+/**
+ * @method update
+ * @param {float} arg0
+ */
+update : function (
+float 
+)
+{
 },
 
 /**
@@ -16262,6 +16282,16 @@ int
 )
 {
     return cc.ParticleSystem;
+},
+
+/**
+ * @method getAllParticleSystems
+ * @return {Array}
+ */
+getAllParticleSystems : function (
+)
+{
+    return new Array();
 },
 
 /**
