@@ -48,7 +48,7 @@ THE SOFTWARE.
 using namespace cocos2d;
 
 #if EDM_DEBUG
-#include "ProcessCpuTracker.h"
+#include "platform/android/jni/ProcessCpuTracker.h"
 #include "json/document.h"
 typedef rapidjson::GenericDocument<rapidjson::UTF8<>, rapidjson::CrtAllocator> RapidJsonDocument;
 typedef rapidjson::GenericValue<rapidjson::UTF8<>, rapidjson::CrtAllocator> RapidJsonValue;

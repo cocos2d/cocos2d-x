@@ -1,4 +1,4 @@
-#include "ProcessCpuTracker.h"
+#include "platform/android/jni/ProcessCpuTracker.h"
 
 #ifdef ANDROID
 #include <jni.h>
