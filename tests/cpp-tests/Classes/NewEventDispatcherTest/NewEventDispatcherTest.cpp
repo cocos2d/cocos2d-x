@@ -171,16 +171,16 @@ protected:
     , _removeListenerOnTouchEnded(false)
     {
     }
-    
-public:
-    void onEnter() override
+
+    virtual bool init() override
     {
-        Sprite::onEnter();
-        
+        if (!Sprite::init())
+            return false;
+
         auto listener = EventListenerTouchOneByOne::create();
         listener->setSwallowTouches(true);
         
-        listener->onTouchBegan = [=](Touch* touch, Event* event){
+        listener->onTouchBegan = [this](Touch* touch, Event* event){
             Vec2 locationInNode = this->convertToNodeSpace(touch->getLocation());
             Size s = this->getContentSize();
             Rect rect = Rect(0, 0, s.width, s.height);
@@ -215,18 +215,19 @@ public:
         }
 
         _listener = listener;
+        return true;
     }
     
-    void onExit() override
+    virtual void onExit() override
     {
-        if (_listener != nullptr)
+        if (_listener != nullptr && _fixedPriority != 0)
         {
             _eventDispatcher->removeEventListener(_listener);
         }
         
         Sprite::onExit();
     }
-
+public:
     void removeListenerOnTouchEnded(bool toRemove) { _removeListenerOnTouchEnded = toRemove; };
     
     inline EventListener* getListener() { return _listener; };
@@ -578,7 +579,7 @@ void RemoveAndRetainNodeTest::onEnter()
                                      CallFunc::create([this](){
                                         _spriteSaved = true;
                                         _sprite->retain();
-                                        _sprite->removeFromParent();
+                                        _sprite->removeFromParentAndCleanup(false);
                                      }),
                                      DelayTime::create(5.0f),
                                      CallFunc::create([this](){
@@ -1153,7 +1154,7 @@ PauseResumeTargetTest2::PauseResumeTargetTest2()
     _itemRemoveFromScene = MenuItemFont::create("removeFromScene", [=](Ref* sender){
         _itemAddToScene->setEnabled(true);
         _itemRemoveFromScene->setEnabled(false);
-        _touchableSprite->removeFromParent();
+        _touchableSprite->removeFromParentAndCleanup(false);
     });
 
     _itemRemoveFromScene->setAnchorPoint(Vec2::ANCHOR_MIDDLE_RIGHT);
