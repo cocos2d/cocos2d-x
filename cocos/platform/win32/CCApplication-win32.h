@@ -65,7 +65,9 @@ public:
     CC_DEPRECATED_ATTRIBUTE static Application* sharedApplication();
     
     /* override functions */
-    virtual void setAnimationInterval(float interval);
+    virtual void setAnimationInterval(float interval) override;
+    virtual void setAnimationInterval(float interval, SetIntervalReason reason) override;
+
     virtual LanguageType getCurrentLanguage();
 
     virtual const char * getCurrentLanguageCode();

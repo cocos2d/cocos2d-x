@@ -44,5 +44,8 @@
 // This message is posted in cocos/platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxRenderer.cpp and cocos\platform\wp8-xaml\cpp\Cocos2dRenderer.cpp.
 #define EVENT_COME_TO_BACKGROUND    "event_come_to_background"
 
+// The name of an event which indicates there will be a file being read.
+#define EVENT_BEFORE_READ_FILE "event_before_read_file"
+
 /// @endcond
 #endif // __CCEVENT_TYPE_H__

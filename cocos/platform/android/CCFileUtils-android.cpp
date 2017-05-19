@@ -33,6 +33,10 @@ THE SOFTWARE.
 #include "android/asset_manager.h"
 #include "android/asset_manager_jni.h"
 #include "base/ZipUtils.h"
+#include "base/CCDirector.h"
+#include "base/CCEventDispatcher.h"
+#include "base/CCEventType.h"
+
 #include <stdlib.h>
 #include <sys/stat.h>
 
@@ -253,6 +257,8 @@ bool FileUtilsAndroid::isAbsolutePath(const std::string& strPath) const
 
 FileUtils::Status FileUtilsAndroid::getContents(const std::string& filename, ResizableBuffer* buffer)
 {
+    Director::getInstance()->getEventDispatcher()->dispatchCustomEvent(EVENT_BEFORE_READ_FILE);
+
     static const std::string apkprefix("assets/");
     if (filename.empty())
         return FileUtils::Status::NotExists;
