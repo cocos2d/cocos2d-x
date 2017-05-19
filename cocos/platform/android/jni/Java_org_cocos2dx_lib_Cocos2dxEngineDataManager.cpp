@@ -111,9 +111,9 @@ bool _isFpsChanged = false;
 float _oldRealFps = 60.0f;
 
 uint32_t _lowFpsCheckMode = 0; // 0: Continuous mode, 1: Average mode
-float _lowRealFpsThreshold = 0.25f; // Unit: percentage (0 ~ 1)
+float _lowRealFpsThreshold = 0.5f; // Unit: percentage (0 ~ 1)
 std::chrono::steady_clock::time_point _lastTimeNotifyLevelByLowFps; // Only used in continuous mode 
-float _notifyLevelByLowFpsThreshold = 0.2f; // Unit: seconds, only used in continuous mode 
+float _notifyLevelByLowFpsThreshold = 0.5f; // Unit: seconds, only used in continuous mode 
 uint32_t _continuousLowRealFpsCount = 0; // Only used in continuous mode 
 uint32_t _continuousLowRealFpsThreshold = 1; // Only used in continuous mode
 uint32_t _calculateAvgFpsCount = 0; // Only used in average mode
@@ -1223,38 +1223,38 @@ void EngineDataManager::nativeOnChangeLowFpsConfig(JNIEnv* env, jobject thiz, ji
 
 void EngineDataManager::nativeOnChangeExpectedFps(JNIEnv* env, jobject thiz, jint fps)
 {
-    // if (!_isSupported)
-    //     return;
+    if (!_isSupported)
+        return;
 
-    // if (fps < -1 || fps > 60)
-    // {
-    //     LOGE("Setting fps (%d) isn't supported!", fps);
-    //     return;
-    // }
+    if (fps < -1 || fps > 60)
+    {
+        LOGE("Setting fps (%d) isn't supported!", fps);
+        return;
+    }
 
-    // auto director = cocos2d::Director::getInstance();
-    // float defaultAnimationInterval = director->getAnimationInterval();
+    auto director = cocos2d::Director::getInstance();
+    float defaultAnimationInterval = director->getAnimationInterval();
 
-    // int defaultFps = static_cast<int>(std::ceil(1.0f/defaultAnimationInterval));
+    int defaultFps = static_cast<int>(std::ceil(1.0f/defaultAnimationInterval));
 
-    // if (fps > defaultFps)
-    // {
-    //     LOGD("nativeOnChangeExpectedFps, fps (%d) is greater than default fps (%d), reset it to default!", fps, defaultFps);
-    //     fps = -1;
-    // }
+    if (fps > defaultFps)
+    {
+        LOGD("nativeOnChangeExpectedFps, fps (%d) is greater than default fps (%d), reset it to default!", fps, defaultFps);
+        fps = -1;
+    }
 
-    // LOGD("nativeOnChangeExpectedFps, set fps: %d, default fps: %d", fps, defaultFps);
+    LOGD("nativeOnChangeExpectedFps, set fps: %d, default fps: %d", fps, defaultFps);
 
-    // if (fps > 0)
-    // {
-    //     setAnimationIntervalBySystem(1.0f/fps);
-    //     LOGD("nativeOnChangeExpectedFps, fps (%d) was set successfuly!", fps);
-    // }
-    // else if (fps == -1) // -1 means to reset to default FPS
-    // {
-    //     setAnimationIntervalBySystem(-1.0f);
-    //     LOGD("nativeOnChangeExpectedFps, fps (%d) was reset successfuly!", defaultFps);
-    // }
+    if (fps > 0)
+    {
+        setAnimationIntervalBySystem(1.0f/fps);
+        LOGD("nativeOnChangeExpectedFps, fps (%d) was set successfuly!", fps);
+    }
+    else if (fps == -1) // -1 means to reset to default FPS
+    {
+        setAnimationIntervalBySystem(-1.0f);
+        LOGD("nativeOnChangeExpectedFps, fps (%d) was reset successfuly!", defaultFps);
+    }
 }
 
 void EngineDataManager::nativeOnChangeSpecialEffectLevel(JNIEnv* env, jobject thiz, jint level)
