@@ -667,7 +667,7 @@ void js_add_object_root(JS::HandleValue target)
     }
 
     JS::RootedObject root(cx);
-    get_or_create_js_obj(cx, jsbObj, "jsb._root", &root);
+    get_or_create_js_obj(cx, jsbObj, "_root", &root);
     JS::RootedValue valRoot(cx, OBJECT_TO_JSVAL(root));
 
     JS::RootedValue retval(cx);
@@ -688,12 +688,6 @@ void js_remove_object_root(JS::HandleValue target)
     JSContext *cx = engine->getGlobalContext();
     JS::RootedObject global(cx, engine->getGlobalObject());
     JSAutoCompartment(cx, global);
-    JS::RootedObject targetObj(cx, target.toObjectOrNull());
-    js_proxy_t *pTarget = jsb_get_js_proxy(targetObj);
-    if (!pTarget)
-    {
-        return;
-    }
 
     JS::RootedObject jsbObj(cx);
     get_or_create_js_obj(cx, global, "jsb", &jsbObj);
