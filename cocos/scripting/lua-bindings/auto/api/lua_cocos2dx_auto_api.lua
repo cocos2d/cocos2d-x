@@ -812,6 +812,11 @@
 
 
 --------------------------------------------------------
+-- the cc LayerRadialGradient
+-- @field [parent=#cc] LayerRadialGradient#LayerRadialGradient LayerRadialGradient preloaded module
+
+
+--------------------------------------------------------
 -- the cc LayerMultiplex
 -- @field [parent=#cc] LayerMultiplex#LayerMultiplex LayerMultiplex preloaded module
 
