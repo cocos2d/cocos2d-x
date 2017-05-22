@@ -688,8 +688,6 @@ void js_remove_object_root(JS::HandleValue target)
     JSContext *cx = engine->getGlobalContext();
     JS::RootedObject global(cx, engine->getGlobalObject());
     JSAutoCompartment(cx, global);
-    JS::RootedObject targetObj(cx, target.toObjectOrNull());
-    js_proxy_t *pTarget = jsb_get_js_proxy(targetObj);
 
     JS::RootedObject jsbObj(cx);
     get_or_create_js_obj(cx, global, "jsb", &jsbObj);

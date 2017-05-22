@@ -328,7 +328,7 @@ void MinXmlHttpRequest::_clearCallbacks()
 
 MinXmlHttpRequest::MinXmlHttpRequest()
 : _url()
-{ 
+{
     MinXmlHttpRequest(ScriptingCore::getInstance()->getGlobalContext());
 }
 
