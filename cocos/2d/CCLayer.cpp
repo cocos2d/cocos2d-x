@@ -42,6 +42,10 @@ THE SOFTWARE.
 #include "base/CCEventListenerAcceleration.h"
 #include "base/ccUTF8.h"
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+#include "platform/desktop/CCGLViewImpl-desktop.h"
+#endif
+
 NS_CC_BEGIN
 
 // Layer
@@ -842,6 +846,245 @@ std::string LayerGradient::getDescription() const
 {
     return StringUtils::format("<LayerGradient | Tag = %d>", _tag);
 }
+
+/**
+ * LayerRadialGradient
+ */
+LayerRadialGradient* LayerRadialGradient::create(const Color4B& startColor, const Color4B& endColor, float radius, const Vec2& center, float expand)
+{
+    auto layerGradient = new LayerRadialGradient();
+    if (layerGradient && layerGradient->initWithColor(startColor, endColor, radius, center, expand))
+    {
+        layerGradient->autorelease();
+        return layerGradient;
+    }
+    
+    delete layerGradient;
+    return nullptr;
+}
+
+LayerRadialGradient* LayerRadialGradient::create()
+{
+    auto layerGradient = new LayerRadialGradient();
+    if (layerGradient && layerGradient->initWithColor(Color4B::BLACK, Color4B::BLACK, 0, Vec2(0,0), 0))
+    {
+        layerGradient->autorelease();
+        return layerGradient;
+    }
+    
+    delete layerGradient;
+    return nullptr;
+}
+
+LayerRadialGradient::LayerRadialGradient()
+: _startColor(Color4B::BLACK)
+, _startColorRend(Color4F::BLACK)
+, _endColor(Color4B::BLACK)
+, _endColorRend(Color4F::BLACK)
+, _radius(0.f)
+, _expand(0.f)
+, _center(Vec2(0,0))
+, _uniformLocationCenter(0)
+, _uniformLocationRadius(0)
+, _uniformLocationExpand(0)
+, _uniformLocationEndColor(0)
+, _uniformLocationStartColor(0)
+, _blendFunc(BlendFunc::ALPHA_NON_PREMULTIPLIED)
+{ }
+
+LayerRadialGradient::~LayerRadialGradient()
+{}
+
+bool LayerRadialGradient::initWithColor(const cocos2d::Color4B &startColor, const cocos2d::Color4B &endColor, float radius, const Vec2& center, float expand)
+{
+    // should do it before Layer::init()
+    for (int i = 0; i < 4; ++i)
+        _vertices[i] = {0.0f, 0.0f};
+    
+    if (Layer::init())
+    {
+        convertColor4B24F(_startColorRend, startColor);
+        _startColor = startColor;
+        
+        convertColor4B24F(_endColorRend, endColor);
+        _endColor = endColor;
+        
+        _expand = expand;
+        
+        setRadius(radius);
+        setCenter(center);
+        
+        setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_LAYER_RADIAL_GRADIENT));
+        auto program = getGLProgram();
+        _uniformLocationStartColor = program->getUniformLocation("u_startColor");
+        _uniformLocationEndColor = program->getUniformLocation("u_endColor");
+        _uniformLocationExpand = program->getUniformLocation("u_expand");
+        _uniformLocationRadius = program->getUniformLocation("u_radius");
+        _uniformLocationCenter = program->getUniformLocation("u_center");
+        
+        return true;
+    }
+    
+    return false;
+}
+
+void LayerRadialGradient::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
+{
+    _customCommand.init(_globalZOrder, transform, flags);
+    _customCommand.func = CC_CALLBACK_0(LayerRadialGradient::onDraw, this, transform, flags);
+    renderer->addCommand(&_customCommand);
+}
+
+void LayerRadialGradient::onDraw(const Mat4& transform, uint32_t /*flags*/)
+{
+    auto program = getGLProgram();
+    program->use();
+    program->setUniformsForBuiltins(transform);
+    program->setUniformLocationWith4f(_uniformLocationStartColor, _startColorRend.r,
+                                      _startColorRend.g, _startColorRend.b, _startColorRend.a);
+    program->setUniformLocationWith4f(_uniformLocationEndColor, _endColorRend.r,
+                                      _endColorRend.g, _endColorRend.b, _endColorRend.a);
+    program->setUniformLocationWith2f(_uniformLocationCenter, _center.x, _center.y);
+    program->setUniformLocationWith1f(_uniformLocationRadius, _radius);
+    program->setUniformLocationWith1f(_uniformLocationExpand, _expand);
+    
+    
+    GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION);
+    
+    //
+    // Attributes
+    //
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, _vertices);
+    
+    GL::blendFunc(_blendFunc.src, _blendFunc.dst);
+    
+    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+    
+    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,4);
+}
+
+void LayerRadialGradient::setContentSize(const Size& size)
+{
+    _vertices[1].x = size.width;
+    _vertices[2].y = size.height;
+    _vertices[3].x = size.width;
+    _vertices[3].y = size.height;
+    Layer::setContentSize(size);
+}
+
+void LayerRadialGradient::setStartOpacity(GLubyte opacity)
+{
+    _startColorRend.a = opacity / 255.0f;
+    _startColor.a = opacity;
+}
+
+GLubyte LayerRadialGradient::getStartOpacity() const
+{
+    return _startColor.a;
+}
+
+void LayerRadialGradient::setEndOpacity(GLubyte opacity)
+{
+    _endColorRend.a = opacity / 255.0f;
+    _endColor.a = opacity;
+}
+
+GLubyte LayerRadialGradient::getEndOpacity() const
+{
+    return _endColor.a;
+}
+
+void LayerRadialGradient::setRadius(float radius)
+{
+    _radius = radius;
+}
+
+float LayerRadialGradient::getRadius() const
+{
+    return _radius;
+}
+
+void LayerRadialGradient::setCenter(const Vec2& center)
+{
+    _center = center;
+}
+
+Vec2 LayerRadialGradient::getCenter() const
+{
+    return _center;
+}
+
+void LayerRadialGradient::setExpand(float expand)
+{
+    _expand = expand;
+}
+
+float LayerRadialGradient::getExpand() const
+{
+    return _expand;
+}
+
+void LayerRadialGradient::setStartColor(const Color3B& color)
+{
+    setStartColor(Color4B(color));
+}
+
+void LayerRadialGradient::setStartColor(const cocos2d::Color4B &color)
+{
+    _startColor = color;
+    convertColor4B24F(_startColorRend, _startColor);
+}
+
+Color4B LayerRadialGradient::getStartColor() const
+{
+    return _startColor;
+}
+
+Color3B LayerRadialGradient::getStartColor3B() const
+{
+    return Color3B(_startColor);
+}
+
+void LayerRadialGradient::setEndColor(const Color3B& color)
+{
+    setEndColor(Color4B(color));
+}
+
+void LayerRadialGradient::setEndColor(const cocos2d::Color4B &color)
+{
+    _endColor = color;
+    convertColor4B24F(_endColorRend, _endColor);
+}
+
+Color4B LayerRadialGradient::getEndColor() const
+{
+    return _endColor;
+}
+
+Color3B LayerRadialGradient::getEndColor3B() const
+{
+    return Color3B(_endColor);
+}
+
+void LayerRadialGradient::setBlendFunc(const BlendFunc& blendFunc)
+{
+    _blendFunc = blendFunc;
+}
+
+BlendFunc LayerRadialGradient::getBlendFunc() const
+{
+    return _blendFunc;
+}
+
+void LayerRadialGradient::convertColor4B24F(Color4F& outColor, const Color4B& inColor)
+{
+    outColor.r = inColor.r / 255.0f;
+    outColor.g = inColor.g / 255.0f;
+    outColor.b = inColor.b / 255.0f;
+    outColor.a = inColor.a / 255.0f;
+}
+
 
 /// MultiplexLayer
 

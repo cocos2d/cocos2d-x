@@ -564,6 +564,93 @@ protected:
 };
 
 
+/** @class LayerRadialGradient
+ * @brief LayerRadialGradient is a subclass of Layer that draws radial gradients across the background.
+ @since v3.16
+ */
+class CC_DLL LayerRadialGradient : public Layer
+{
+public:
+    /** Create a LayerRadialGradient
+     * @param startColor the inner color of the gradient
+     * @param endColor the out color of the gradient
+     * @param radius the radius of the gradient(length from center of gradient to outer color)
+     * @param center the position of the center of the gradient
+     * @param expand an alpha value(0.f-1.f) that specifies how much of that radius in only inner color(the gradient
+                     starts outside of that amount)
+     */
+    static LayerRadialGradient* create(const Color4B& startColor, const Color4B& endColor, float radius, const Vec2& center, float expand);
+    static LayerRadialGradient* create();
+    
+    //
+    // overrides
+    //
+    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
+    virtual void setContentSize(const Size& size) override;
+    
+    void setStartOpacity(GLubyte opacity);
+    GLubyte getStartOpacity() const;
+    
+    void setEndOpacity(GLubyte opacity);
+    GLubyte getEndOpacity() const;
+    
+    void setRadius(float radius);
+    float getRadius() const;
+    
+    void setCenter(const Vec2& center);
+    Vec2 getCenter() const;
+    
+    void setExpand(float expand);
+    float getExpand() const;
+    
+    void setStartColor(const Color3B& color);
+    void setStartColor(const Color4B& color);
+    Color4B getStartColor() const;
+    Color3B getStartColor3B() const;
+    
+    void setEndColor(const Color3B& color);
+    void setEndColor(const Color4B& color);
+    Color4B getEndColor() const;
+    Color3B getEndColor3B() const;
+    
+    void setBlendFunc(const BlendFunc& blendFunc);
+    BlendFunc getBlendFunc() const;
+    
+CC_CONSTRUCTOR_ACCESS:
+    LayerRadialGradient();
+    virtual ~LayerRadialGradient();
+    
+    bool initWithColor(const Color4B& startColor, const Color4B& endColor, float radius, const Vec2& center, float expand);
+    
+protected:
+    void onDraw(const Mat4& transform, uint32_t flags);
+    
+    
+private:
+    void convertColor4B24F(Color4F& outColor, const Color4B& inColor);
+    
+    Color4B _startColor;
+    Color4F _startColorRend; // start color used in shader
+    
+    Color4B _endColor;
+    Color4F _endColorRend; // end color used in shader
+    
+    Vec2 _center;
+    float _radius;
+    float _expand;
+    Vec2 _vertices[4];
+    CustomCommand _customCommand;
+    
+    GLint _uniformLocationStartColor;
+    GLint _uniformLocationEndColor;
+    GLint _uniformLocationCenter;
+    GLint _uniformLocationRadius;
+    GLint _uniformLocationExpand;
+    
+    BlendFunc _blendFunc;
+};
+
+
 /** @class LayerMultiplex
  * @brief MultipleLayer is a Layer with the ability to multiplex it's children.
 Features:
