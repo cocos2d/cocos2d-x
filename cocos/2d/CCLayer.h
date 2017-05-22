@@ -563,9 +563,22 @@ protected:
     bool    _compressedInterpolation;
 };
 
+
+/** @class LayerRadialGradient
+ * @brief LayerRadialGradient is a subclass of Layer that draws radial gradients across the background.
+ @since v3.16
+ */
 class CC_DLL LayerRadialGradient : public Layer
 {
 public:
+    /** Create a LayerRadialGradient
+     * @param startColor the inner color of the gradient
+     * @param endColor the out color of the gradient
+     * @param radius the radius of the gradient(length from center of gradient to outer color)
+     * @param center the position of the center of the gradient
+     * @param expand an alpha value(0.f-1.f) that specifies how much of that radius in only inner color(the gradient
+                     starts outside of that amount)
+     */
     static LayerRadialGradient* create(const Color4B& startColor, const Color4B& endColor, float radius, const Vec2& center, float expand);
     static LayerRadialGradient* create();
     
