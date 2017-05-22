@@ -32,6 +32,7 @@
         id displayLink;
         int interval;
         BOOL isAppActive;
+    CFTimeInterval lastDisplayTime;
 }
 @property (readwrite) int interval;
 -(void) startMainLoop;

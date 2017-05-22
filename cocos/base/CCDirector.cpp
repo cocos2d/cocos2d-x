@@ -108,6 +108,7 @@ Director* Director::getInstance()
 Director::Director()
 : _isStatusLabelUpdated(true)
 , _invalid(true)
+, _deltaTimePassedByCaller(false)
 {
 }
 
@@ -346,7 +347,12 @@ void Director::calculateDeltaTime()
     }
     else
     {
-        _deltaTime = std::chrono::duration_cast<std::chrono::microseconds>(now - _lastUpdate).count() / 1000000.0f;
+        // delta time may passed by invoke mainLoop(dt)
+        if (!_deltaTimePassedByCaller)
+        {
+            _deltaTime = std::chrono::duration_cast<std::chrono::microseconds>(now - _lastUpdate).count() / 1000000.0f;
+            _lastUpdate = now;
+        }
         _deltaTime = MAX(0, _deltaTime);
     }
 
@@ -357,8 +363,6 @@ void Director::calculateDeltaTime()
         _deltaTime = 1 / 60.0f;
     }
 #endif
-
-    _lastUpdate = now;
 }
 float Director::getDeltaTime() const
 {
@@ -1445,6 +1449,13 @@ void Director::mainLoop()
         // release the objects
         PoolManager::getInstance()->getCurrentPool()->clear();
     }
+}
+
+void Director::mainLoop(float dt)
+{
+    _deltaTime = dt;
+    _deltaTimePassedByCaller = true;
+    mainLoop();
 }
 
 void Director::stopAnimation()
