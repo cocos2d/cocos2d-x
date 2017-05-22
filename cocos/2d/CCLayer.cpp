@@ -1010,6 +1010,11 @@ void LayerRadialGradient::setCenter(const Vec2& center)
     _center = center;
 }
 
+Vec2 LayerRadialGradient::getCenter() const
+{
+    return _center;
+}
+
 void LayerRadialGradient::setExpand(float expand)
 {
     _expand = expand;
