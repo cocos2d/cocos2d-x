@@ -569,12 +569,6 @@ public:
     static LayerRadialGradient* create(const Color4B& startColor, const Color4B& endColor, float radius, const Vec2& center, float expand);
     static LayerRadialGradient* create();
     
-CC_CONSTRUCTOR_ACCESS:
-    LayerRadialGradient();
-    virtual ~LayerRadialGradient();
-    
-    bool initWithColor(const Color4B& startColor, const Color4B& endColor, float radius, const Vec2& center, float expand);
-    
     //
     // overrides
     //
@@ -608,6 +602,12 @@ CC_CONSTRUCTOR_ACCESS:
     
     void setBlendFunc(const BlendFunc& blendFunc);
     BlendFunc getBlendFunc() const;
+    
+CC_CONSTRUCTOR_ACCESS:
+    LayerRadialGradient();
+    virtual ~LayerRadialGradient();
+    
+    bool initWithColor(const Color4B& startColor, const Color4B& endColor, float radius, const Vec2& center, float expand);
     
 protected:
     void onDraw(const Mat4& transform, uint32_t flags);
