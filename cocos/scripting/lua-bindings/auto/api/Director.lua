@@ -155,11 +155,13 @@
 -- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
--- 
--- @function [parent=#Director] mainLoop 
+-- @overload self, float         
+-- @overload self         
+-- @function [parent=#Director] mainLoop
 -- @param self
+-- @param #float dt
 -- @return Director#Director self (return value: cc.Director)
-        
+
 --------------------------------
 --  Enables/disables OpenGL depth test. 
 -- @function [parent=#Director] setDepthTest 

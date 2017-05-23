@@ -2899,8 +2899,10 @@ getVisibleOrigin : function (
 
 /**
  * @method mainLoop
- */
-mainLoop : function (
+* @param {float} float
+*/
+mainLoop : function(
+float 
 )
 {
 },
