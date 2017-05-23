@@ -136,7 +136,10 @@ static id s_sharedDirectorCaller;
             glFlush();
         
         [EAGLContext setCurrentContext: cocos2dxContext];
-        director->mainLoop();
+
+        CFTimeInterval dt = ((CADisplayLink*)displayLink).timestamp - lastDisplayTime;
+        lastDisplayTime = ((CADisplayLink*)displayLink).timestamp;
+        director->mainLoop(dt);
     }
 }
 

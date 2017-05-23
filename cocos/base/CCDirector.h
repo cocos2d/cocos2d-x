@@ -386,6 +386,11 @@ public:
     void setDepthTest(bool on);
 
     void mainLoop();
+    /** Invoke main loop with delta time. Then `calculateDeltaTime` can just use the delta time directly.
+     * The delta time paseed may include vsync time. See issue #17806
+     * @since 3.16
+     */
+    void mainLoop(float dt);
 
     /** The size in pixels of the surface. It could be different than the screen size.
      * High-res devices might have a higher surface size than the screen size.
@@ -615,6 +620,7 @@ protected:
         
     /* delta time since last tick to main loop */
 	float _deltaTime;
+    bool _deltaTimePassedByCaller;
     
     /* The _openGLView, where everything is rendered, GLView is a abstract class,cocos2d-x provide GLViewImpl
      which inherit from it as default renderer context,you can have your own by inherit from it*/
