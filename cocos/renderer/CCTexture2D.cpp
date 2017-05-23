@@ -120,6 +120,10 @@ const Texture2D::PixelFormatInfoMap Texture2D::_pixelFormatInfoTables(TexturePix
 // Default is: RGBA8888 (32-bit textures)
 static Texture2D::PixelFormat g_defaultAlphaPixelFormat = Texture2D::PixelFormat::DEFAULT;
 
+// The default value whether to apply antialias
+// Default is: true
+static bool g_defaultAntialiasEnabled = true;
+
 //////////////////////////////////////////////////////////////////////////
 //convertor function
 
@@ -442,7 +446,7 @@ Texture2D::Texture2D()
 , _hasPremultipliedAlpha(false)
 , _hasMipmaps(false)
 , _shaderProgram(nullptr)
-, _antialiasEnabled(true)
+, _antialiasEnabled(g_defaultAntialiasEnabled)
 , _ninePatchInfo(nullptr)
 , _valid(true)
 , _alphaTexture(nullptr)
@@ -1415,6 +1419,16 @@ void Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat format)
 Texture2D::PixelFormat Texture2D::getDefaultAlphaPixelFormat()
 {
     return g_defaultAlphaPixelFormat;
+}
+
+void Texture2D::setDefaultAntialiasEnabled(bool enabled)
+{
+    g_defaultAntialiasEnabled = enabled;
+}
+
+bool Texture2D::getDefaultAntialiasEnabled()
+{
+    return g_defaultAntialiasEnabled;
 }
 
 unsigned int Texture2D::getBitsPerPixelForFormat(Texture2D::PixelFormat format) const

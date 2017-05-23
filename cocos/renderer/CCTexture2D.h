@@ -179,6 +179,15 @@ public:
      */
     static Texture2D::PixelFormat getDefaultAlphaPixelFormat();
     CC_DEPRECATED_ATTRIBUTE static Texture2D::PixelFormat defaultAlphaPixelFormat() { return Texture2D::getDefaultAlphaPixelFormat(); };
+    
+    /** sets the default value whether to enable antialias.
+     @param enabled
+     */
+    static void setDefaultAntialiasEnabled(bool enabled);
+    
+    /** Returns whether antialias is enabled or not.
+     */
+    static bool getDefaultAntialiasEnabled();
 
     /** Treats (or not) PVR files as if they have alpha premultiplied.
      
