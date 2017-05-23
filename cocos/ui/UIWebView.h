@@ -224,7 +224,7 @@ public:
     /**
      * getOpacity of webview.
      */
-    virtual float getOpacityWebView();
+    virtual float getOpacityWebView() const;
     
     /**
      * set the background transparent

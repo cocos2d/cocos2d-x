@@ -88,7 +88,7 @@ namespace cocos2d {
                 
                 void setOpacityWebView(float opacity);
                 
-                float getOpacityWebView();
+                float getOpacityWebView()const;
                 
                 void setBackgroundTransparent();
 

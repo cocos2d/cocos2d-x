@@ -291,7 +291,7 @@ namespace cocos2d {
             };
             
             
-            float WebViewImpl::getOpacityWebView(){
+            float WebViewImpl::getOpacityWebView()const{
                 return JniHelper::callStaticFloatMethod(className, "getOpacityWebView", _viewTag);
             };
             

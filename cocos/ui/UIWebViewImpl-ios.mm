@@ -423,7 +423,7 @@ void WebViewImpl::setOpacityWebView(float opacity){
     [_uiWebViewWrapper setOpacityWebView: opacity];
 }
         
-float WebViewImpl::getOpacityWebView(){
+float WebViewImpl::getOpacityWebView() const{
     return [_uiWebViewWrapper getOpacityWebView];
 }
 

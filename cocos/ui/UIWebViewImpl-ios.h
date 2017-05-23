@@ -86,7 +86,7 @@ public:
     
     virtual void setOpacityWebView(float opacity);
     
-    virtual float getOpacityWebView();
+    virtual float getOpacityWebView() const;
     
     virtual void setBackgroundTransparent();
 

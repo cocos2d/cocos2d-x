@@ -152,7 +152,7 @@ namespace experimental{
             _impl->setOpacityWebView(opacity);
         }
         
-        float WebView::getOpacityWebView(){
+        float WebView::getOpacityWebView() const{
             return _impl->getOpacityWebView();
         }
         

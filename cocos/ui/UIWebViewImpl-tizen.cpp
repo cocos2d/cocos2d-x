@@ -168,7 +168,7 @@ namespace cocos2d {
                 //TODO
             }
         
-            float WebViewImpl::getOpacityWebView(){
+            float WebViewImpl::getOpacityWebView() const{
                 //TODO
             }
         
