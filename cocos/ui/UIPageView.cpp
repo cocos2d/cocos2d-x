@@ -156,12 +156,24 @@ ssize_t PageView::getCurrentPageIndex()
 
 void PageView::setCurrentPageIndex(ssize_t index)
 {
+	auto preindex = MAX(0, getCurrentPageIndex());
+		
     jumpToItem(index, Vec2::ANCHOR_MIDDLE, Vec2::ANCHOR_MIDDLE);
+
+	if (preindex != index)
+	{
+		pageTurningEvent();
+	}
 }
 
 void PageView::scrollToPage(ssize_t idx)
 {
-    scrollToItem(idx);
+	auto preindex = MAX(0, getCurrentPageIndex());
+	scrollToItem(idx);
+	if (preindex != idx)
+	{
+		pageTurningEvent();
+	}
 }
     
 void PageView::scrollToPage(ssize_t idx, float time)
