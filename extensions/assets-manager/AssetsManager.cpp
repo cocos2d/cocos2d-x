@@ -21,6 +21,17 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+
+// keyWithHash() is using PRIdPTR definition
+#define __STDC_FORMAT_MACROS
+#ifdef _MSC_VER
+#include "json/msinttypes/stdint.h"
+#include "json/msinttypes/inttypes.h"
+#else
+#include <stdint.h>
+#include <inttypes.h>
+#endif
+
 #include "AssetsManager.h"
 
 #include <thread>
@@ -177,7 +188,7 @@ void AssetsManager::checkStoragePath()
 static std::string keyWithHash( const char* prefix, const std::string& url )
 {
     char buf[256];
-    sprintf(buf,"%s%zd",prefix,std::hash<std::string>()(url));
+    sprintf(buf,"%s%" PRIdPTR,prefix,std::hash<std::string>()(url));
     return buf;
 }
 
