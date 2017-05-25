@@ -88,7 +88,7 @@ extern "C" {
     
     
     static std::unordered_map<int, cocos2d::EventKeyboard::KeyCode> g_keyCodeMap = {
-        { KEYCODE_BACK , cocos2d::EventKeyboard::KeyCode::KEY_ESCAPE},
+        { KEYCODE_BACK , cocos2d::EventKeyboard::KeyCode::KEY_BACKSPACE},
         { KEYCODE_MENU , cocos2d::EventKeyboard::KeyCode::KEY_MENU},
         { KEYCODE_DPAD_UP  , cocos2d::EventKeyboard::KeyCode::KEY_DPAD_UP },
         { KEYCODE_DPAD_DOWN , cocos2d::EventKeyboard::KeyCode::KEY_DPAD_DOWN },
