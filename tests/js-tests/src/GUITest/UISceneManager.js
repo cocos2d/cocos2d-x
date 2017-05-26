@@ -411,6 +411,12 @@
                 }
             },
             {
+                title: "UILayoutTest_Layout_Scaled_Widget",
+                func: function () {
+                    return new UILayoutTest_Layout_Scaled_Widget();
+                }
+            },
+            {
                 title: "UILayoutComponent_Berth_Test",
                 func: function () {
                     return new UILayoutComponent_Berth_Test();
