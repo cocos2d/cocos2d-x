@@ -63,6 +63,11 @@ include(editor-support/spine/CMakeLists.txt)
 set(COCOS_EDITOR_SUPPORT_SRC ${COCOS_EDITOR_SUPPORT_SRC} ${COCOS_SPINE_SRC})
 endif(BUILD_EDITOR_SPINE)
 
+if(BUILD_EDITOR_CREATOR)
+include(editor-support/creator/CMakeLists.txt)
+set(COCOS_EDITOR_SUPPORT_SRC ${COCOS_EDITOR_SUPPORT_SRC} ${COCOS_CREATOR_SRC})
+endif(BUILD_EDITOR_CREATOR)
+
 include(../extensions/CMakeLists.txt)
 
 set(COCOS_SRC cocos2d.cpp
