@@ -43,7 +43,10 @@ TransformHelp::TransformHelp()
 
 void TransformHelp::release()
 {
-    CC_SAFE_DELETE(helpParentNode);
+    if ( helpParentNode )
+    {
+        CC_SAFE_DELETE(helpParentNode);
+    }
 }
 
 void TransformHelp::transformFromParent(BaseData &node, const BaseData &parentNode)
