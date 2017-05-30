@@ -166,6 +166,7 @@ bool Menu::initWithArray(const Vector<MenuItem*>& arrayOfItems)
         touchListener->onTouchMoved = CC_CALLBACK_2(Menu::onTouchMoved, this);
         touchListener->onTouchEnded = CC_CALLBACK_2(Menu::onTouchEnded, this);
         touchListener->onTouchCancelled = CC_CALLBACK_2(Menu::onTouchCancelled, this);
+        _touchListener = touchListener;
         
         _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
         
