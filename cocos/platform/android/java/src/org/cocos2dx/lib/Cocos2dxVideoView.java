@@ -26,6 +26,7 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnErrorListener;
 import android.net.Uri;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -78,6 +79,8 @@ public class Cocos2dxVideoView extends SurfaceView implements MediaPlayerControl
 
     protected Cocos2dxActivity mCocos2dxActivity = null;
     
+    private DisplayMetrics mDisplayMetrics = null; 
+
     protected int mViewLeft = 0;
     protected int mViewTop = 0;
     protected int mViewWidth = 0;
@@ -97,6 +100,9 @@ public class Cocos2dxVideoView extends SurfaceView implements MediaPlayerControl
     public Cocos2dxVideoView(Cocos2dxActivity activity,int tag) {
         super(activity);
         
+        mDisplayMetrics = new DisplayMetrics();
+        activity.getWindowManager().getDefaultDisplay().getMetrics(mDisplayMetrics);
+
         mViewTag = tag;
         mCocos2dxActivity = activity;
         initVideoView();
@@ -104,15 +110,16 @@ public class Cocos2dxVideoView extends SurfaceView implements MediaPlayerControl
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        if (mVideoWidth == 0 || mVideoHeight == 0) {
-            setMeasuredDimension(mViewWidth, mViewHeight);
-            Log.i(TAG, ""+mViewWidth+ ":" +mViewHeight);
-        }
-        else {
+        // do we know view size? video is loaded already or video rect was set
+        if (mVisibleWidth != 0 && mVisibleHeight != 0) {
             setMeasuredDimension(mVisibleWidth, mVisibleHeight);
-            Log.i(TAG, ""+mVisibleWidth+ ":" +mVisibleHeight);
-        }
-        
+            Log.d(TAG, "Measured: " + mVisibleWidth + ":" + mVisibleHeight);
+        } else {
+            // sometimes we're not fast enough. fallback
+            setMeasuredDimension(mDisplayMetrics.widthPixels, mDisplayMetrics.heightPixels);
+            Log.i(TAG, "Measured: " + 
+                    mDisplayMetrics.widthPixels + ":" + mDisplayMetrics.heightPixels);
+        }        
     }
     
     public void setVideoRect(int left, int top, int maxWidth, int maxHeight) {
@@ -346,12 +353,14 @@ public class Cocos2dxVideoView extends SurfaceView implements MediaPlayerControl
         }
         else if (width != 0 && height != 0) {
             if (mKeepRatio) {
-                if ( mVideoWidth * height  > width * mVideoHeight ) {
-                    mVisibleWidth = width;
-                    mVisibleHeight = width * mVideoHeight / mVideoWidth;
-                } else if ( mVideoWidth * height  < width * mVideoHeight ) {
-                    mVisibleWidth = height * mVideoWidth / mVideoHeight;
-                    mVisibleHeight = height;
+                if ( (mVideoWidth != 0) && (mVideoHeight != 0) ) {      // have we got video size already?
+                    if ( mVideoWidth * height  >= width * mVideoHeight ) {
+                        mVisibleWidth = width;
+                        mVisibleHeight = width * mVideoHeight / mVideoWidth;
+                    } else if ( mVideoWidth * height  < width * mVideoHeight ) {
+                        mVisibleWidth = height * mVideoWidth / mVideoHeight;
+                        mVisibleHeight = height;
+                    }
                 }
                 mVisibleLeft = left + (width - mVisibleWidth) / 2;
                 mVisibleTop = top + (height - mVisibleHeight) / 2;
