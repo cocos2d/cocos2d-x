@@ -10,14 +10,11 @@
       <Setter Property="Background" Value="Transparent" />
       <Setter Property="BorderThickness" Value="0" />
       <Setter Property="BorderBrush" Value="Transparent" />
+      <Setter Property="VerticalAlignment" Value="Center" />
       <Setter Property="Template">
         <Setter.Value>
           <ControlTemplate TargetType="PasswordBox">
             <Grid>
-              <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-              </Grid.RowDefinitions>
               <VisualStateManager.VisualStateGroups>
                 <VisualStateGroup x:Name="CommonStates">
                   <VisualState x:Name="Disabled">
@@ -55,11 +52,10 @@
                   </VisualState>
                 </VisualStateGroup>
               </VisualStateManager.VisualStateGroups>
-              <Border x:Name="BackgroundElement" Background="{TemplateBinding Background}" Margin="{TemplateBinding BorderThickness}" Grid.Row="1"/>
-              <Border x:Name="BorderElement" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Grid.Row="1"/>
-              <ContentPresenter x:Name="HeaderContentPresenter" ContentTemplate="{TemplateBinding HeaderTemplate}" Content="{TemplateBinding Header}" Margin="0" Grid.Row="0" VerticalAlignment="Center"/>
-              <ScrollViewer x:Name="ContentElement" VerticalAlignment="Center" AutomationProperties.AccessibilityView="Raw" HorizontalScrollMode="{TemplateBinding ScrollViewer.HorizontalScrollMode}" HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}" IsTabStop="False" IsHorizontalRailEnabled="{TemplateBinding ScrollViewer.IsHorizontalRailEnabled}" IsVerticalRailEnabled="{TemplateBinding ScrollViewer.IsVerticalRailEnabled}" IsDeferredScrollingEnabled="{TemplateBinding ScrollViewer.IsDeferredScrollingEnabled}" Margin="{TemplateBinding BorderThickness}" MinHeight="25" Padding="{TemplateBinding Padding}" Grid.Row="1" VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}" VerticalScrollMode="{TemplateBinding ScrollViewer.VerticalScrollMode}" ZoomMode="Disabled"/>
-              <ContentControl x:Name="PlaceholderTextContentPresenter" Content="{TemplateBinding PlaceholderText}" Foreground="Black" FontSize="12" IsTabStop="False" Margin="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}" Grid.Row="1"/>
+              <Border x:Name="BackgroundElement" Background="{TemplateBinding Background}" Margin="{TemplateBinding BorderThickness}"/>
+              <Border x:Name="BorderElement" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"/>
+              <ScrollViewer x:Name="ContentElement" VerticalAlignment="{TemplateBinding VerticalAlignment}" AutomationProperties.AccessibilityView="Raw" HorizontalScrollMode="{TemplateBinding ScrollViewer.HorizontalScrollMode}" HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}" IsTabStop="False" IsHorizontalRailEnabled="{TemplateBinding ScrollViewer.IsHorizontalRailEnabled}" IsVerticalRailEnabled="{TemplateBinding ScrollViewer.IsVerticalRailEnabled}" IsDeferredScrollingEnabled="{TemplateBinding ScrollViewer.IsDeferredScrollingEnabled}" Margin="{TemplateBinding BorderThickness}" MinHeight="25" Padding="{TemplateBinding Padding}" VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}" VerticalScrollMode="{TemplateBinding ScrollViewer.VerticalScrollMode}" ZoomMode="Disabled"/>
+              <ContentControl x:Name="PlaceholderTextContentPresenter" Content="{TemplateBinding PlaceholderText}" Foreground="Black" FontSize="12" IsTabStop="False" Margin="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}"/>
             </Grid>
           </ControlTemplate>
         </Setter.Value>
@@ -69,14 +65,11 @@
       <Setter Property="Background" Value="Transparent" />
       <Setter Property="BorderThickness" Value="0" />
       <Setter Property="BorderBrush" Value="Transparent" />
+      <Setter Property="VerticalAlignment" Value="Center" />
       <Setter Property="Template">
         <Setter.Value>
           <ControlTemplate TargetType="TextBox">
             <Grid>
-              <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-              </Grid.RowDefinitions>
               <VisualStateManager.VisualStateGroups>
                 <VisualStateGroup x:Name="CommonStates">
                   <VisualState x:Name="Disabled">
@@ -114,11 +107,10 @@
                   </VisualState>
                 </VisualStateGroup>
               </VisualStateManager.VisualStateGroups>
-              <Border x:Name="BackgroundElement" Background="{TemplateBinding Background}" Margin="{TemplateBinding BorderThickness}" Grid.Row="1"/>
-              <Border x:Name="BorderElement" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Grid.Row="1"/>
-              <ContentPresenter x:Name="HeaderContentPresenter" ContentTemplate="{TemplateBinding HeaderTemplate}" Content="{TemplateBinding Header}" Margin="0" Grid.Row="0"/>
-              <ScrollViewer x:Name="ContentElement" VerticalAlignment="Center" AutomationProperties.AccessibilityView="Raw" HorizontalScrollMode="{TemplateBinding ScrollViewer.HorizontalScrollMode}" HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}" IsTabStop="False" IsHorizontalRailEnabled="{TemplateBinding ScrollViewer.IsHorizontalRailEnabled}" IsVerticalRailEnabled="{TemplateBinding ScrollViewer.IsVerticalRailEnabled}" IsDeferredScrollingEnabled="{TemplateBinding ScrollViewer.IsDeferredScrollingEnabled}" Margin="{TemplateBinding BorderThickness}" MinHeight="25" Padding="{TemplateBinding Padding}" Grid.Row="1" VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}" VerticalScrollMode="{TemplateBinding ScrollViewer.VerticalScrollMode}" ZoomMode="Disabled"/>
-              <ContentControl x:Name="PlaceholderTextContentPresenter" Content="{TemplateBinding PlaceholderText}" Foreground="Black" FontSize="12" IsTabStop="False" Margin="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}" Grid.Row="1"/>
+              <Border x:Name="BackgroundElement" Background="{TemplateBinding Background}" Margin="{TemplateBinding BorderThickness}"/>
+              <Border x:Name="BorderElement" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"/>
+              <ScrollViewer x:Name="ContentElement" VerticalAlignment="{TemplateBinding VerticalAlignment}" AutomationProperties.AccessibilityView="Raw" HorizontalScrollMode="{TemplateBinding ScrollViewer.HorizontalScrollMode}" HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}" IsTabStop="False" IsHorizontalRailEnabled="{TemplateBinding ScrollViewer.IsHorizontalRailEnabled}" IsVerticalRailEnabled="{TemplateBinding ScrollViewer.IsVerticalRailEnabled}" IsDeferredScrollingEnabled="{TemplateBinding ScrollViewer.IsDeferredScrollingEnabled}" Margin="{TemplateBinding BorderThickness}" MinHeight="25" Padding="{TemplateBinding Padding}" VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}" VerticalScrollMode="{TemplateBinding ScrollViewer.VerticalScrollMode}" ZoomMode="Disabled"/>
+              <ContentControl x:Name="PlaceholderTextContentPresenter" Content="{TemplateBinding PlaceholderText}" Foreground="Black" FontSize="12" IsTabStop="False" Margin="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}" />
             </Grid>
           </ControlTemplate>
         </Setter.Value>
