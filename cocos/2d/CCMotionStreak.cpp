@@ -51,6 +51,7 @@ MotionStreak::MotionStreak()
 , _vertices(nullptr)
 , _colorPointer(nullptr)
 , _texCoords(nullptr)
+, _followNode(nullptr)
 {
 }
 
@@ -112,10 +113,10 @@ bool MotionStreak::initWithFade(float fade, float minSeg, float stroke, const Co
 
     _stroke = stroke;
     _fadeDelta = 1.0f/fade;
-    
+
     double fps = 1/Director::getInstance()->getAnimationInterval();
     _maxPoints = (int)(fade*fps)+2;
-    
+
     _nuPoints = 0;
     _pointState = (float *)malloc(sizeof(float) * _maxPoints);
     _pointVertexes = (Vec2*)malloc(sizeof(Vec2) * _maxPoints);
@@ -201,7 +202,7 @@ void MotionStreak::tintWithColor(const Color3B& colors)
     setColor(colors);
 
     // Fast assignation
-    for(unsigned int i = 0; i<_nuPoints*2; i++) 
+    for(unsigned int i = 0; i<_nuPoints*2; i++)
     {
         *((Color3B*) (_colorPointer+i*4)) = colors;
     }
@@ -258,7 +259,7 @@ void MotionStreak::update(float delta)
     {
         return;
     }
-    
+
     delta *= _fadeDelta;
 
     unsigned int newIdx, newIdx2, i, i2;
@@ -307,6 +308,11 @@ void MotionStreak::update(float delta)
         }
     }
     _nuPoints-=mov;
+
+    if (_followNode)
+    {
+        _positionR = _parent->convertToNodeSpace(_followNode->convertToWorldSpace(_followPoint));
+    }
 
     // Append new point
     bool appendNewPoint = true;
@@ -378,7 +384,7 @@ void MotionStreak::reset()
 }
 
 void MotionStreak::onDraw(const Mat4 &transform, uint32_t /*flags*/)
-{  
+{
     getGLProgram()->use();
     getGLProgram()->setUniformsForBuiltins(transform);
 
@@ -402,6 +408,27 @@ void MotionStreak::draw(Renderer *renderer, const Mat4 &transform, uint32_t flag
     _customCommand.init(_globalZOrder, transform, flags);
     _customCommand.func = CC_CALLBACK_0(MotionStreak::onDraw, this, transform, flags);
     renderer->addCommand(&_customCommand);
+}
+
+void MotionStreak::followNode(Node *node, const Vec2& point)
+{
+    if (node)
+    {
+        _startingPositionInitialized = true;
+        _followNode = node;
+        _followPoint = point;
+    }
+    #ifdef COCOS2D_DEBUG
+    else
+    {
+        CCLOG("Warning: MotionStreak cannot follow a node set to nullptr");
+    }
+    #endif
+}
+
+void MotionStreak::stopFollowNode()
+{
+    _followNode = nullptr;
 }
 
 NS_CC_END
