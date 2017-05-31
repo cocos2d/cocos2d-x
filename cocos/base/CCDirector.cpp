@@ -62,11 +62,9 @@ THE SOFTWARE.
 #include "base/CCAsyncTaskPool.h"
 #include "platform/CCApplication.h"
 
-#include "editor-support/cocostudio/CCTransformHelp.h"
 #include "base/ObjectFactory.h"
 #include "3d/CCSprite3DMaterial.h"
 #include "3d/CCSprite3D.h"
-#include "extensions/Particle3D/PU/CCPUMaterialManager.h"
 
 #if CC_ENABLE_SCRIPT_BINDING
 #include "base/CCScriptSupport.h"
@@ -222,8 +220,6 @@ Director::~Director(void)
     Configuration::destroyInstance();
 
     Sprite3DMaterial::releaseBuiltInMaterial();
-
-    cocostudio::TransformHelp::release();
 
     ObjectFactory::destroyInstance();
 
@@ -1110,7 +1106,6 @@ void Director::reset()
     Animation3DCache::destroyInstance();
     SpriteFrameCache::destroyInstance();
     Sprite3DCache::destroyInstance();
-    PUMaterialCache::destroyInstance();
     GLProgramCache::destroyInstance();
     GLProgramStateCache::destroyInstance();
     FileUtils::destroyInstance();
