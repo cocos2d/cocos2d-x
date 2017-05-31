@@ -406,6 +406,7 @@ Texture2D * TextureCache::addImage(const std::string &path)
     std::string fullpath = FileUtils::getInstance()->fullPathForFilename(path);
     if (fullpath.size() == 0)
     {
+        CCLOG("TextureCache warning: image \"%s\" could not be found", path.c_str());
         return nullptr;
     }
     auto it = _textures.find(fullpath);
