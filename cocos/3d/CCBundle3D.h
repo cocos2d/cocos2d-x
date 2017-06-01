@@ -28,6 +28,7 @@
 #include "base/CCData.h"
 #include "3d/CCBundle3DData.h"
 #include "3d/CCBundleReader.h"
+//#include "3d/CCBundleWriter.h"
 #include "json/document-wrapper.h"
 
 NS_CC_BEGIN
@@ -38,6 +39,8 @@ NS_CC_BEGIN
  */
 
 class Animation3D;
+
+typedef std::map<std::string, Animation3DData*> AnimaDatas;
 
 /**
  * @brief Defines a bundle file that contains a collection of assets. Mesh, Material, MeshSkin, Animation
@@ -65,6 +68,7 @@ public:
      * @return result of load
      */
     virtual bool load(const std::string& path);
+	virtual bool save(const std::string& path);
     
     /**
      * load skin data from bundle
@@ -77,6 +81,7 @@ public:
      * @param id The ID of the animation, load the first animation in the bundle if it is empty
      */
     virtual bool loadAnimationData(const std::string& id, Animation3DData* animationdata);
+	virtual bool loadAnimationDatas(AnimaDatas& animations);
     
     //since 3.3, to support reskin
     virtual bool loadMeshDatas(MeshDatas& meshdatas);
@@ -101,40 +106,46 @@ protected:
 
     bool loadJson(const std::string& path);
     bool loadBinary(const std::string& path);
-    bool loadMeshDatasJson(MeshDatas& meshdatas);
+
+	bool toJson(const std::string& path);
+	bool toBinary(const std::string& path);
+
+	std::string parseGLType(GLenum type);
+	std::string parseGLTextureType(NTextureData::Usage gltype);
+	std::string parseGLProgramAttribute(int progattri);
+	bool saveSkeletonChildren(std::vector<NodeData*>& skeletons, rapidjson::Value& parentnode, rapidjson::Document::AllocatorType& allocator);
+	
+	//mesh
+	bool loadMeshDatasJson(MeshDatas& meshdatas);
     bool loadMeshDataJson_0_1(MeshDatas& meshdatas);
     bool loadMeshDataJson_0_2(MeshDatas& meshdatas);
+
     bool loadMeshDatasBinary(MeshDatas& meshdatas);
     bool loadMeshDatasBinary_0_1(MeshDatas& meshdatas);
     bool loadMeshDatasBinary_0_2(MeshDatas& meshdatas);
+
+	//material
     bool loadMaterialsJson(MaterialDatas& materialdatas);
     bool loadMaterialDataJson_0_1(MaterialDatas& materialdatas);
     bool loadMaterialDataJson_0_2(MaterialDatas& materialdatas);
     bool loadMaterialsBinary(MaterialDatas& materialdatas);
     bool loadMaterialsBinary_0_1(MaterialDatas& materialdatas);
     bool loadMaterialsBinary_0_2(MaterialDatas& materialdatas);
-    bool loadMeshDataJson(MeshData* meshdata);
-    bool loadMeshDataJson_0_1(MeshData* meshdata);
-    bool loadMeshDataJson_0_2(MeshData* meshdata);
-    bool loadSkinDataJson(SkinData* skindata);
-    bool loadSkinDataBinary(SkinData* skindata);
-    bool loadMaterialDataJson(MaterialData* materialdata);
-    bool loadMaterialDataJson_0_1(MaterialData* materialdata);
-    bool loadMaterialDataJson_0_2(MaterialData* materialdata);
+
+	//animation
     bool loadAnimationDataJson(const std::string& id,Animation3DData* animationdata);
     bool loadAnimationDataBinary(const std::string& id,Animation3DData* animationdata);
-
-    /**
-     * load nodes of json
-     */
+	
+	//nodes 
     bool loadNodesJson(NodeDatas& nodedatas);
     NodeData* parseNodesRecursivelyJson(const rapidjson::Value& jvalue, bool singleSprite);
 
-    /**
-     * load nodes of binary
-     */
     bool loadNodesBinary(NodeDatas& nodedatas);
     NodeData* parseNodesRecursivelyBinary(bool& skeleton, bool singleSprite);
+
+	//skin of nodes
+	bool loadSkinDataJson(SkinData* skindata);
+	bool loadSkinDataBinary(SkinData* skindata);
 
     /**
      * get define data type
@@ -153,6 +164,8 @@ protected:
      * @param str The type in string
      */
     unsigned int parseGLProgramAttribute(const std::string& str);
+
+	
 
     /*
      * get model path
@@ -175,6 +188,7 @@ protected:
     std::string _modelPath;
     std::string _path;
     std::string _version;// the c3b or c3t version
+	std::string _sig;
     
     // for json reading
     std::string _jsonBuffer;
@@ -186,6 +200,7 @@ protected:
     unsigned int _referenceCount;
     Reference* _references;
     bool  _isBinary;
+	//BundleWriter _binaryWriter;
 };
 
 // end of 3d group

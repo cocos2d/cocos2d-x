@@ -328,8 +328,14 @@ struct NTextureData
 } ;
 struct NMaterialData
 {
-    std::vector<NTextureData> textures;
     std::string id;
+	float ambient[3];
+	float diffuse[3];
+	float emissive[3];
+	float opacity;
+	float specular[3];
+	float shininess;
+	std::vector<NTextureData> textures;
     const NTextureData* getTextureData(const NTextureData::Usage& type) const
     {
         for(const auto& it : textures)
