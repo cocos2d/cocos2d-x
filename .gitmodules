@@ -14,5 +14,5 @@
         path = web
         url = https://github.com/joywish/cocos2d-html5.git
 [submodule "external"]
-	path = external
-	url = https://github.com/joywish/cocos2d-x-3rd-party-libs-bin
+        path = external
+        url = https://github.com/joywish/cocos2d-x-3rd-party-libs-bin
