@@ -185,6 +185,7 @@ protected:
 
     QuadCommand _quadCommand;           // quad command
     
+    float _yAspect; // fixes aspect from non-square uv's
 
 
 private:

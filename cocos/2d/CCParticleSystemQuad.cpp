@@ -49,6 +49,7 @@ ParticleSystemQuad::ParticleSystemQuad()
 :_quads(nullptr)
 ,_indices(nullptr)
 ,_VAOname(0)
+, _yAspect(1.0)
 {
     memset(_buffersVBO, 0, sizeof(_buffersVBO));
 }
@@ -151,6 +152,9 @@ void ParticleSystemQuad::initTexCoordsWithRect(const Rect& pointRect)
         pointRect.origin.y * CC_CONTENT_SCALE_FACTOR(),
         pointRect.size.width * CC_CONTENT_SCALE_FACTOR(),
         pointRect.size.height * CC_CONTENT_SCALE_FACTOR());
+
+    CCASSERT(pointRect.size.height != 0, "invalid height");
+    _yAspect = pointRect.size.width / pointRect.size.height;
 
     GLfloat wide = (GLfloat) pointRect.size.width;
     GLfloat high = (GLfloat) pointRect.size.height;
@@ -258,15 +262,15 @@ void ParticleSystemQuad::initIndices()
     }
 }
 
-inline void updatePosWithParticle(V3F_C4B_T2F_Quad *quad, const Vec2& newPosition,float size,float rotation)
+inline void updatePosWithParticle(V3F_C4B_T2F_Quad *quad, const Vec2& newPosition,float size,float rotation,float yAspect)
 {
     // vertices
     GLfloat size_2 = size/2;
     GLfloat x1 = -size_2;
-    GLfloat y1 = -size_2;
+    GLfloat y1 = -size_2*yAspect;
     
     GLfloat x2 = size_2;
-    GLfloat y2 = size_2;
+    GLfloat y2 = size_2*yAspect;
     GLfloat x = newPosition.x;
     GLfloat y = newPosition.y;
     
@@ -350,7 +354,7 @@ void ParticleSystemQuad::updateParticleQuads()
             p2 = p1 - p2;
             newPos.x -= p2.x - pos.x;
             newPos.y -= p2.y - pos.y;
-            updatePosWithParticle(quadStart, newPos, *s, *r);
+            updatePosWithParticle(quadStart, newPos, *s, *r,_yAspect);
         }
     }
     else if( _positionType == PositionType::RELATIVE )
@@ -369,7 +373,7 @@ void ParticleSystemQuad::updateParticleQuads()
             newPos.x = *x - (currentPosition.x - *startX);
             newPos.y = *y - (currentPosition.y - *startY);
             newPos += pos;
-            updatePosWithParticle(quadStart, newPos, *s, *r);
+            updatePosWithParticle(quadStart, newPos, *s, *r, _yAspect);
         }
     }
     else
@@ -385,7 +389,7 @@ void ParticleSystemQuad::updateParticleQuads()
         for (int i = 0 ; i < _particleCount; ++i, ++startX, ++startY, ++x, ++y, ++quadStart, ++s, ++r)
         {
             newPos.set(*x + pos.x, *y + pos.y);
-            updatePosWithParticle(quadStart, newPos, *s, *r);
+            updatePosWithParticle(quadStart, newPos, *s, *r, _yAspect);
         }
     }
     
