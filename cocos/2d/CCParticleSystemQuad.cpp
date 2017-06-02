@@ -154,8 +154,14 @@ void ParticleSystemQuad::initTexCoordsWithRect(const Rect& pointRect)
         pointRect.size.height * CC_CONTENT_SCALE_FACTOR());
 
     CCASSERT(pointRect.size.height != 0, "invalid height");
-    _yAspect = pointRect.size.width / pointRect.size.height;
-
+    if (pointRect.size.height > pointRect.size.width)
+    {
+        _yAspect = pointRect.size.width / pointRect.size.height;
+    }
+    else
+    {
+        _yAspect = pointRect.size.height / pointRect.size.width;
+    }
     GLfloat wide = (GLfloat) pointRect.size.width;
     GLfloat high = (GLfloat) pointRect.size.height;
 
