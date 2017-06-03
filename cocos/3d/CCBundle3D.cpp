@@ -428,16 +428,16 @@ bool Bundle3D::toJson(const std::string& path)
 	rapidjson::Document doc;
 	rapidjson::Document::AllocatorType& allocator = doc.GetAllocator();
 	doc.SetObject();
-	doc.AddMember(rapidjson::Value(VERSION,allocator), 0.3, allocator);
-	doc.AddMember(rapidjson::Value(ID, allocator), "", allocator);
+	doc.AddMember("version", 0.3, allocator);
+	doc.AddMember("id", "", allocator);
 	rapidjson::Value _meshes(rapidjson::kArrayType);
 	rapidjson::Value _materials(rapidjson::kArrayType);
 	rapidjson::Value _nodes(rapidjson::kArrayType);
 	rapidjson::Value _animations(rapidjson::kArrayType);
-	doc.AddMember(rapidjson::Value(MESHES, allocator), _meshes, allocator);
-	doc.AddMember(rapidjson::Value(MATERIALS, allocator), _materials, allocator);
-	doc.AddMember(rapidjson::Value(NODES, allocator), _nodes, allocator);
-	doc.AddMember(rapidjson::Value(MATERIAL, allocator), _animations, allocator);
+	doc.AddMember("meshes", _meshes, allocator);
+	doc.AddMember("materials", _materials, allocator);
+	doc.AddMember("nodes", _nodes, allocator);
+	doc.AddMember("animations", _animations, allocator);
 	
 	//meshes
 	for (unsigned int i = 0; i < meshdatas.meshDatas.size(); i++)
@@ -448,20 +448,20 @@ bool Bundle3D::toJson(const std::string& path)
 		rapidjson::Value  vertices(rapidjson::kArrayType);
 		rapidjson::Value  parts(rapidjson::kArrayType);
 
-		mesh.AddMember(rapidjson::Value(ATTRIBUTES,allocator),attributes,allocator);
-		mesh.AddMember(rapidjson::Value(VERTICES, allocator),vertices,allocator);
-		mesh.AddMember(rapidjson::Value(PARTS, allocator),parts,allocator);
+		mesh.AddMember("attributes",attributes,allocator);
+		mesh.AddMember("vertices",vertices,allocator);
+		mesh.AddMember("parts",parts,allocator);
 
 		MeshData* md = meshdatas.meshDatas[i];
 		for (unsigned int j = 0; j < md->attribs.size(); j++)
 		{
 			rapidjson::Value  attri(rapidjson::kObjectType);
 			attributes.PushBack(attri, allocator);
-			attri.AddMember(rapidjson::Value(ATTRIBUTESIZE, allocator), md->attribs[j].size, allocator);
+			attri.AddMember("size", md->attribs[j].size, allocator);
 			rapidjson::Value gltype(this->parseGLType(md->attribs[j].type).c_str(), allocator);
-			attri.AddMember(rapidjson::Value(TYPE, allocator), gltype, allocator);
+			attri.AddMember("type", gltype, allocator);
 			rapidjson::Value attritype(this->parseGLProgramAttribute(md->attribs[j].vertexAttrib).c_str(), allocator);
-			attri.AddMember(rapidjson::Value(ATTRIBUTE, allocator), attritype, allocator);
+			attri.AddMember("attribute", attritype, allocator);
 		}
 		for (unsigned int j = 0; j < md->vertex.size(); j++)
 		{
@@ -471,10 +471,10 @@ bool Bundle3D::toJson(const std::string& path)
 		{
 			rapidjson::Value  part(rapidjson::kObjectType);
 			parts.PushBack(part, allocator);
-			part.AddMember(rapidjson::Value(ID, allocator), rapidjson::Value(md->subMeshIds[j].c_str(), allocator), allocator);
-			part.AddMember(rapidjson::Value(TYPE, allocator), rapidjson::Value(TRIANGLES, allocator), allocator);
+			part.AddMember("id", rapidjson::Value(md->subMeshIds[j].c_str(), allocator), allocator);
+			part.AddMember("type", rapidjson::Value(TRIANGLES, allocator), allocator);
 			rapidjson::Value indices(rapidjson::kArrayType);
-			part.AddMember(rapidjson::Value(INDICES, allocator), indices, allocator);
+			part.AddMember("indices", indices, allocator);
 			for (unsigned int k = 0; k < md->subMeshIndices[j].size(); k++)
 			{
 				indices.PushBack(md->subMeshIndices[j][k], allocator);
@@ -488,7 +488,7 @@ bool Bundle3D::toJson(const std::string& path)
 		rapidjson::Value material(rapidjson::kObjectType);
 		_materials.PushBack(material, allocator);
 		std::string ids = materialdatas.materials[i].id;
-		material.AddMember(rapidjson::Value(ID, allocator), rapidjson::Value(ids.c_str(), allocator), allocator);
+		material.AddMember("id", rapidjson::Value(ids.c_str(), allocator), allocator);
 		rapidjson::Value ambient(rapidjson::kArrayType);
 		ambient.PushBack(materialdatas.materials[i].ambient[0], allocator);
 		ambient.PushBack(materialdatas.materials[i].ambient[1], allocator);
@@ -517,10 +517,10 @@ bool Bundle3D::toJson(const std::string& path)
 		{
 			rapidjson::Value texture(rapidjson::kObjectType);
 			NTextureData ntd = materialdatas.materials[i].textures[j];
-			texture.AddMember(rapidjson::Value(ID, allocator), rapidjson::Value(ntd.id.c_str(), allocator), allocator);
-			texture.AddMember(rapidjson::Value(FILENAME, allocator), rapidjson::Value(ntd.filename.c_str(), allocator), allocator);
+			texture.AddMember("id", rapidjson::Value(ntd.id.c_str(), allocator), allocator);
+			texture.AddMember("filename", rapidjson::Value(ntd.filename.c_str(), allocator), allocator);
 			rapidjson::Value rtype = rapidjson::Value(this->parseGLTextureType(ntd.type).c_str(), allocator);
-			texture.AddMember(rapidjson::Value(TYPE, allocator), rtype, allocator);
+			texture.AddMember("type", rtype, allocator);
 			texture.AddMember("wrapModeU", rapidjson::Value(this->parseGLType(ntd.wrapS).c_str(), allocator), allocator);
 			texture.AddMember("wrapModeV", rapidjson::Value(this->parseGLType(ntd.wrapT).c_str(), allocator), allocator);
 		}
@@ -531,33 +531,33 @@ bool Bundle3D::toJson(const std::string& path)
 	{
 		rapidjson::Value node(rapidjson::kObjectType);
 		_nodes.PushBack(node, allocator);
-		node.AddMember(rapidjson::Value(ID, allocator), rapidjson::Value(nodedatas.nodes[i]->id.c_str(), allocator), allocator);
-		node.AddMember(rapidjson::Value(SKELETON,allocator), false, allocator);
+		node.AddMember("id", rapidjson::Value(nodedatas.nodes[i]->id.c_str(), allocator), allocator);
+		node.AddMember<bool>("skeleton", false, allocator);
 		rapidjson::Value transform(rapidjson::kArrayType);
-		node.AddMember(rapidjson::Value(TRANSFORM, allocator), transform, allocator);
+		node.AddMember("transform", transform, allocator);
 		Mat4 mat = nodedatas.nodes[i]->transform;
 		for (unsigned int j = 0; j < 16; j++)
 		{
 			transform.PushBack(mat.m[j], allocator);
 		}
 		rapidjson::Value parts(rapidjson::kArrayType);
-		node.AddMember(rapidjson::Value(PARTS, allocator), parts, allocator);
+		node.AddMember("parts", parts, allocator);
 		for (unsigned int j = 0; j < nodedatas.nodes[i]->modelNodeDatas.size(); j++)
 		{
 			ModelData* mod = nodedatas.nodes[i]->modelNodeDatas[j];
 			rapidjson::Value part(rapidjson::kObjectType);
 			parts.PushBack(part, allocator);
-			part.AddMember(rapidjson::Value(MESHPARTID, allocator), rapidjson::Value(mod->subMeshId.c_str(),allocator),allocator);
-			part.AddMember(rapidjson::Value(MATERIALID, allocator), rapidjson::Value(mod->materialId.c_str(), allocator), allocator);
+			part.AddMember("meshpartid", rapidjson::Value(mod->subMeshId.c_str(),allocator),allocator);
+			part.AddMember("materialid", rapidjson::Value(mod->materialId.c_str(), allocator), allocator);
 			rapidjson::Value bones(rapidjson::kArrayType);
 			part.AddMember(rapidjson::Value(BONES, allocator), bones, allocator);
 			for (unsigned int k = 0; k < mod->bones.size(); k++)
 			{
 				rapidjson::Value bone(rapidjson::kObjectType);
 				bones.PushBack(bone, allocator);
-				bone.AddMember(rapidjson::Value(NODE, allocator), rapidjson::Value(mod->bones[k].c_str(),allocator), allocator);
+				bone.AddMember("node", rapidjson::Value(mod->bones[k].c_str(),allocator), allocator);
 				rapidjson::Value transform(rapidjson::kArrayType);
-				bone.AddMember(rapidjson::Value(TRANSFORM, allocator), transform, allocator);
+				bone.AddMember("transform", transform, allocator);
 				Mat4 mat = mod->invBindPose[k];
 				for (unsigned int n = 0; n < 16; n++)
 				{
@@ -577,10 +577,10 @@ bool Bundle3D::toJson(const std::string& path)
 	{
 		rapidjson::Value node(rapidjson::kObjectType);
 		_nodes.PushBack(node, allocator);
-		node.AddMember(rapidjson::Value(ID, allocator), rapidjson::Value(nodedatas.skeleton[i]->id.c_str(), allocator), allocator);
-		node.AddMember(rapidjson::Value(SKELETON, allocator), false, allocator);
+		node.AddMember("id", rapidjson::Value(nodedatas.skeleton[i]->id.c_str(), allocator), allocator);
+		node.AddMember<bool>("skeleton", true, allocator);
 		rapidjson::Value transform(rapidjson::kArrayType);
-		node.AddMember(rapidjson::Value(TRANSFORM, allocator), transform, allocator);
+		node.AddMember("transform", transform, allocator);
 		Mat4 mat = nodedatas.skeleton[i]->transform;
 		for (unsigned int j = 0; j < 16; j++)
 		{
@@ -593,10 +593,10 @@ bool Bundle3D::toJson(const std::string& path)
 	{
 		rapidjson::Value animation(rapidjson::kObjectType);
 		_animations.PushBack(animation, allocator);
-		animation.AddMember(rapidjson::Value(ID, allocator), rapidjson::Value(it->first.c_str(),allocator), allocator);
-		animation.AddMember(rapidjson::Value(LENGTH, allocator), it->second->_totalTime, allocator);
+		animation.AddMember("id", rapidjson::Value(it->first.c_str(),allocator), allocator);
+		animation.AddMember<float>("length", it->second->_totalTime, allocator);
 		rapidjson::Value bones(rapidjson::kArrayType);
-		animation.AddMember(rapidjson::Value(BONES, allocator), bones, allocator);
+		animation.AddMember("bones", bones, allocator);
 		std::map<std::string, std::vector<Animation3DData::Vec3Key>>::iterator ittrans;
 		std::map<std::string, std::vector<Animation3DData::Vec3Key>>::iterator itscale;
 		std::map<std::string, std::vector<Animation3DData::QuatKey>>::iterator itrot;
@@ -604,9 +604,9 @@ bool Bundle3D::toJson(const std::string& path)
 		{
 			rapidjson::Value bone(rapidjson::kObjectType);
 			bones.PushBack(bone, allocator);
-			bone.AddMember(rapidjson::Value(BONEID, allocator), rapidjson::Value(ittrans->first.c_str(), allocator), allocator);
+			bone.AddMember("boneId", rapidjson::Value(ittrans->first.c_str(), allocator), allocator);
 			rapidjson::Value keyframes(rapidjson::kArrayType);
-			bone.AddMember(rapidjson::Value(KEYFRAMES, allocator), keyframes, allocator);
+			bone.AddMember("keyframes", keyframes, allocator);
 			itscale = it->second->_scaleKeys.find(ittrans->first);
 			itrot = it->second->_rotationKeys.find(ittrans->first);
 			for (unsigned int i = 0; i < ittrans->second.size(); i++)
@@ -614,23 +614,23 @@ bool Bundle3D::toJson(const std::string& path)
 				rapidjson::Value keyframe(rapidjson::kObjectType);
 				keyframes.PushBack(keyframe, allocator);
 				Animation3DData::Vec3Key trans = ittrans->second[i];
-				keyframe.AddMember(rapidjson::Value(KEYTIME, allocator), trans._time, allocator);
+				keyframe.AddMember<float>("keytime", trans._time, allocator);
 				rapidjson::Value rotation(rapidjson::kArrayType);
 				rotation.PushBack(itrot->second[i]._key.x, allocator);
 				rotation.PushBack(itrot->second[i]._key.y, allocator);
 				rotation.PushBack(itrot->second[i]._key.z, allocator);
 				rotation.PushBack(itrot->second[i]._key.w, allocator);
-				keyframe.AddMember(rapidjson::Value(ROTATION, allocator), rotation, allocator);
+				keyframe.AddMember("rotation", rotation, allocator);
 				rapidjson::Value scale(rapidjson::kArrayType);
 				scale.PushBack(itscale->second[i]._key.x, allocator);
 				scale.PushBack(itscale->second[i]._key.y, allocator);
 				scale.PushBack(itscale->second[i]._key.z, allocator);
-				keyframe.AddMember(rapidjson::Value(SCALE, allocator), scale, allocator);
+				keyframe.AddMember("scale", scale, allocator);
 				rapidjson::Value rtrans(rapidjson::kArrayType);
 				rtrans.PushBack(ittrans->second[i]._key.x, allocator);
 				rtrans.PushBack(ittrans->second[i]._key.y, allocator);
 				rtrans.PushBack(ittrans->second[i]._key.z, allocator);
-				keyframe.AddMember(rapidjson::Value(TRANSLATION, allocator), rtrans, allocator);
+				keyframe.AddMember("translation", rtrans, allocator);
 			}
 		}
 	}
@@ -653,10 +653,12 @@ bool cocos2d::Bundle3D::saveSkeletonChildren(std::vector<NodeData*>& skeletons, 
 		{
 			rapidjson::Value node(rapidjson::kObjectType);
 			nodes.PushBack(node, allocator);
-			node.AddMember(rapidjson::Value(ID, allocator), rapidjson::Value(skeletons[i]->id.c_str(), allocator), allocator);
-			node.AddMember(rapidjson::Value(SKELETON, allocator), false, allocator);
+			node.AddMember("id", rapidjson::Value(skeletons[i]->id.c_str(), allocator), allocator);
+			rapidjson::Value bolval;
+			bolval.SetBool(true);
+			node.AddMember("skeleton", bolval, allocator);
 			rapidjson::Value transform(rapidjson::kArrayType);
-			node.AddMember(rapidjson::Value(TRANSFORM, allocator), transform, allocator);
+			node.AddMember("transform", transform, allocator);
 			Mat4 mat = skeletons[i]->transform;
 			for (unsigned int j = 0; j < 16; j++)
 			{
