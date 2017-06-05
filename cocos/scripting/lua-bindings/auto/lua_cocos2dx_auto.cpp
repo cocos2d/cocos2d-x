@@ -11085,6 +11085,40 @@ int lua_cocos2dx_Node_create(lua_State* tolua_S)
 #endif
     return 0;
 }
+int lua_cocos2dx_Node_getAttachedNodeCount(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"cc.Node",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (argc == 0)
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Node_getAttachedNodeCount'", nullptr);
+            return 0;
+        }
+        int ret = cocos2d::Node::getAttachedNodeCount();
+        tolua_pushnumber(tolua_S,(lua_Number)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "cc.Node:getAttachedNodeCount",argc, 0);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Node_getAttachedNodeCount'.",&tolua_err);
+#endif
+    return 0;
+}
 int lua_cocos2dx_Node_constructor(lua_State* tolua_S)
 {
     int argc = 0;
@@ -11274,6 +11308,7 @@ int lua_register_cocos2dx_Node(lua_State* tolua_S)
         tolua_function(tolua_S,"stopAction",lua_cocos2dx_Node_stopAction);
         tolua_function(tolua_S,"getActionManager",lua_cocos2dx_Node_getActionManager);
         tolua_function(tolua_S,"create", lua_cocos2dx_Node_create);
+        tolua_function(tolua_S,"getAttachedNodeCount", lua_cocos2dx_Node_getAttachedNodeCount);
     tolua_endmodule(tolua_S);
     std::string typeName = typeid(cocos2d::Node).name();
     g_luaType[typeName] = "cc.Node";
@@ -47683,7 +47718,7 @@ int lua_cocos2dx_ActionManager_resumeTarget(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_ActionManager_update(lua_State* tolua_S)
+int lua_cocos2dx_ActionManager_getNumberOfRunningActions(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ActionManager* cobj = nullptr;
@@ -47703,32 +47738,29 @@ int lua_cocos2dx_ActionManager_update(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ActionManager_update'", nullptr);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ActionManager_getNumberOfRunningActions'", nullptr);
         return 0;
     }
 #endif
 
     argc = lua_gettop(tolua_S)-1;
-    if (argc == 1) 
+    if (argc == 0) 
     {
-        double arg0;
-
-        ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.ActionManager:update");
         if(!ok)
         {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ActionManager_update'", nullptr);
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ActionManager_getNumberOfRunningActions'", nullptr);
             return 0;
         }
-        cobj->update(arg0);
-        lua_settop(tolua_S, 1);
+        ssize_t ret = cobj->getNumberOfRunningActions();
+        tolua_pushnumber(tolua_S,(lua_Number)ret);
         return 1;
     }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ActionManager:update",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ActionManager:getNumberOfRunningActions",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ActionManager_update'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ActionManager_getNumberOfRunningActions'.",&tolua_err);
 #endif
 
     return 0;
@@ -48030,6 +48062,56 @@ int lua_cocos2dx_ActionManager_pauseAllRunningActions(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_ActionManager_update(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ActionManager* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.ActionManager",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::ActionManager*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ActionManager_update'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        double arg0;
+
+        ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.ActionManager:update");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ActionManager_update'", nullptr);
+            return 0;
+        }
+        cobj->update(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ActionManager:update",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ActionManager_update'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_ActionManager_removeAllActionsByTag(lua_State* tolua_S)
 {
     int argc = 0;
@@ -48192,13 +48274,14 @@ int lua_register_cocos2dx_ActionManager(lua_State* tolua_S)
         tolua_function(tolua_S,"removeAllActions",lua_cocos2dx_ActionManager_removeAllActions);
         tolua_function(tolua_S,"addAction",lua_cocos2dx_ActionManager_addAction);
         tolua_function(tolua_S,"resumeTarget",lua_cocos2dx_ActionManager_resumeTarget);
-        tolua_function(tolua_S,"update",lua_cocos2dx_ActionManager_update);
+        tolua_function(tolua_S,"getNumberOfRunningActions",lua_cocos2dx_ActionManager_getNumberOfRunningActions);
         tolua_function(tolua_S,"pauseTarget",lua_cocos2dx_ActionManager_pauseTarget);
         tolua_function(tolua_S,"getNumberOfRunningActionsInTarget",lua_cocos2dx_ActionManager_getNumberOfRunningActionsInTarget);
         tolua_function(tolua_S,"removeAllActionsFromTarget",lua_cocos2dx_ActionManager_removeAllActionsFromTarget);
         tolua_function(tolua_S,"resumeTargets",lua_cocos2dx_ActionManager_resumeTargets);
         tolua_function(tolua_S,"removeAction",lua_cocos2dx_ActionManager_removeAction);
         tolua_function(tolua_S,"pauseAllRunningActions",lua_cocos2dx_ActionManager_pauseAllRunningActions);
+        tolua_function(tolua_S,"update",lua_cocos2dx_ActionManager_update);
         tolua_function(tolua_S,"removeAllActionsByTag",lua_cocos2dx_ActionManager_removeAllActionsByTag);
         tolua_function(tolua_S,"getNumberOfRunningActionsInTargetByTag",lua_cocos2dx_ActionManager_getNumberOfRunningActionsInTargetByTag);
     tolua_endmodule(tolua_S);
@@ -71057,6 +71140,40 @@ int lua_cocos2dx_ParticleSystem_createWithTotalParticles(lua_State* tolua_S)
 #endif
     return 0;
 }
+int lua_cocos2dx_ParticleSystem_getAllParticleSystems(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"cc.ParticleSystem",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (argc == 0)
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ParticleSystem_getAllParticleSystems'", nullptr);
+            return 0;
+        }
+        cocos2d::Vector<cocos2d::ParticleSystem *>& ret = cocos2d::ParticleSystem::getAllParticleSystems();
+        ccvector_to_luaval(tolua_S, ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "cc.ParticleSystem:getAllParticleSystems",argc, 0);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ParticleSystem_getAllParticleSystems'.",&tolua_err);
+#endif
+    return 0;
+}
 int lua_cocos2dx_ParticleSystem_constructor(lua_State* tolua_S)
 {
     int argc = 0;
@@ -71213,6 +71330,7 @@ int lua_register_cocos2dx_ParticleSystem(lua_State* tolua_S)
         tolua_function(tolua_S,"getStartColorVar",lua_cocos2dx_ParticleSystem_getStartColorVar);
         tolua_function(tolua_S,"create", lua_cocos2dx_ParticleSystem_create);
         tolua_function(tolua_S,"createWithTotalParticles", lua_cocos2dx_ParticleSystem_createWithTotalParticles);
+        tolua_function(tolua_S,"getAllParticleSystems", lua_cocos2dx_ParticleSystem_getAllParticleSystems);
     tolua_endmodule(tolua_S);
     std::string typeName = typeid(cocos2d::ParticleSystem).name();
     g_luaType[typeName] = "cc.ParticleSystem";
@@ -94211,42 +94329,51 @@ int lua_cocos2dx_Application_setAnimationInterval(lua_State* tolua_S)
     int argc = 0;
     cocos2d::Application* cobj = nullptr;
     bool ok  = true;
-
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
 #endif
 
-
 #if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"cc.Application",0,&tolua_err)) goto tolua_lerror;
 #endif
-
     cobj = (cocos2d::Application*)tolua_tousertype(tolua_S,1,0);
-
 #if COCOS2D_DEBUG >= 1
-    if (!cobj) 
+    if (!cobj)
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Application_setAnimationInterval'", nullptr);
         return 0;
     }
 #endif
-
     argc = lua_gettop(tolua_S)-1;
-    if (argc == 1) 
-    {
-        double arg0;
+    do{
+        if (argc == 2) {
+            double arg0;
+            ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.Application:setAnimationInterval");
 
-        ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.Application:setAnimationInterval");
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Application_setAnimationInterval'", nullptr);
-            return 0;
+            if (!ok) { break; }
+            cocos2d::SetIntervalReason arg1;
+            ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1, "cc.Application:setAnimationInterval");
+
+            if (!ok) { break; }
+            cobj->setAnimationInterval(arg0, arg1);
+            lua_settop(tolua_S, 1);
+            return 1;
         }
-        cobj->setAnimationInterval(arg0);
-        lua_settop(tolua_S, 1);
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Application:setAnimationInterval",argc, 1);
+    }while(0);
+    ok  = true;
+    do{
+        if (argc == 1) {
+            double arg0;
+            ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.Application:setAnimationInterval");
+
+            if (!ok) { break; }
+            cobj->setAnimationInterval(arg0);
+            lua_settop(tolua_S, 1);
+            return 1;
+        }
+    }while(0);
+    ok  = true;
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n",  "cc.Application:setAnimationInterval",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1

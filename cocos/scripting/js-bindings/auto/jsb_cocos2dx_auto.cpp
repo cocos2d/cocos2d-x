@@ -5341,6 +5341,21 @@ bool js_cocos2dx_Node_create(JSContext *cx, uint32_t argc, jsval *vp)
     return false;
 }
 
+bool js_cocos2dx_Node_getAttachedNodeCount(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    if (argc == 0) {
+
+        int ret = cocos2d::Node::getAttachedNodeCount();
+        jsval jsret = JSVAL_NULL;
+        jsret = int32_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_cocos2dx_Node_getAttachedNodeCount : wrong number of arguments");
+    return false;
+}
+
 bool js_cocos2dx_Node_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -5534,6 +5549,7 @@ void js_register_cocos2dx_Node(JSContext *cx, JS::HandleObject global) {
 
     static JSFunctionSpec st_funcs[] = {
         JS_FN("create", js_cocos2dx_Node_create, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getAttachedNodeCount", js_cocos2dx_Node_getAttachedNodeCount, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
 
@@ -30350,24 +30366,22 @@ bool js_cocos2dx_ActionManager_resumeTarget(JSContext *cx, uint32_t argc, jsval 
     JS_ReportError(cx, "js_cocos2dx_ActionManager_resumeTarget : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_cocos2dx_ActionManager_update(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_cocos2dx_ActionManager_getNumberOfRunningActions(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     cocos2d::ActionManager* cobj = (cocos2d::ActionManager *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ActionManager_update : Invalid Native Object");
-    if (argc == 1) {
-        double arg0 = 0;
-        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !std::isnan(arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ActionManager_update : Error processing arguments");
-        cobj->update(arg0);
-        args.rval().setUndefined();
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ActionManager_getNumberOfRunningActions : Invalid Native Object");
+    if (argc == 0) {
+        ssize_t ret = cobj->getNumberOfRunningActions();
+        JS::RootedValue jsret(cx);
+        jsret = ssize_to_jsval(cx, ret);
+        args.rval().set(jsret);
         return true;
     }
 
-    JS_ReportError(cx, "js_cocos2dx_ActionManager_update : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_cocos2dx_ActionManager_getNumberOfRunningActions : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_cocos2dx_ActionManager_pauseTarget(JSContext *cx, uint32_t argc, jsval *vp)
@@ -30522,6 +30536,26 @@ bool js_cocos2dx_ActionManager_pauseAllRunningActions(JSContext *cx, uint32_t ar
     JS_ReportError(cx, "js_cocos2dx_ActionManager_pauseAllRunningActions : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
+bool js_cocos2dx_ActionManager_update(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ActionManager* cobj = (cocos2d::ActionManager *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ActionManager_update : Invalid Native Object");
+    if (argc == 1) {
+        double arg0 = 0;
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !std::isnan(arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ActionManager_update : Error processing arguments");
+        cobj->update(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ActionManager_update : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
 bool js_cocos2dx_ActionManager_removeAllActionsByTag(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -30638,13 +30672,14 @@ void js_register_cocos2dx_ActionManager(JSContext *cx, JS::HandleObject global) 
         JS_FN("removeAllActions", js_cocos2dx_ActionManager_removeAllActions, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("addAction", js_cocos2dx_ActionManager_addAction, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("resumeTarget", js_cocos2dx_ActionManager_resumeTarget, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("update", js_cocos2dx_ActionManager_update, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getNumberOfRunningActions", js_cocos2dx_ActionManager_getNumberOfRunningActions, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("pauseTarget", js_cocos2dx_ActionManager_pauseTarget, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getNumberOfRunningActionsInTarget", js_cocos2dx_ActionManager_getNumberOfRunningActionsInTarget, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("removeAllActionsFromTarget", js_cocos2dx_ActionManager_removeAllActionsFromTarget, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("resumeTargets", js_cocos2dx_ActionManager_resumeTargets, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("removeAction", js_cocos2dx_ActionManager_removeAction, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("pauseAllRunningActions", js_cocos2dx_ActionManager_pauseAllRunningActions, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("update", js_cocos2dx_ActionManager_update, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("removeAllActionsByTag", js_cocos2dx_ActionManager_removeAllActionsByTag, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getNumberOfRunningActionsInTargetByTag", js_cocos2dx_ActionManager_getNumberOfRunningActionsInTargetByTag, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("ctor", js_cocos2dx_ActionManager_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -44978,6 +45013,21 @@ bool js_cocos2dx_ParticleSystem_createWithTotalParticles(JSContext *cx, uint32_t
     return false;
 }
 
+bool js_cocos2dx_ParticleSystem_getAllParticleSystems(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    if (argc == 0) {
+
+        cocos2d::Vector<cocos2d::ParticleSystem *>& ret = cocos2d::ParticleSystem::getAllParticleSystems();
+        jsval jsret = JSVAL_NULL;
+        jsret = ccvector_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_cocos2dx_ParticleSystem_getAllParticleSystems : wrong number of arguments");
+    return false;
+}
+
 bool js_cocos2dx_ParticleSystem_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -45139,6 +45189,7 @@ void js_register_cocos2dx_ParticleSystem(JSContext *cx, JS::HandleObject global)
     static JSFunctionSpec st_funcs[] = {
         JS_FN("create", js_cocos2dx_ParticleSystem_create, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("createWithTotalParticles", js_cocos2dx_ParticleSystem_createWithTotalParticles, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getAllParticleSystems", js_cocos2dx_ParticleSystem_getAllParticleSystems, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
 

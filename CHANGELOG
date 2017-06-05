@@ -1,3 +1,7 @@
+cocos2d-x-3.15.1 May.27 2017
+
+[REFINE]        Add optimization codes for huawei devices
+
 cocos2d-x-3.15 Apr.21 2017
 
 [NEW]           Full support of Android Studio, can use Android Studio to edit, compile and debug C++ codes

@@ -55,9 +55,11 @@ public:
     static Application* getInstance();
 
     /* override functions */
-    virtual void setAnimationInterval(float interval);
-    virtual LanguageType getCurrentLanguage();
-    virtual const char * getCurrentLanguageCode();
+    virtual void setAnimationInterval(float interval) override;
+    virtual void setAnimationInterval(float interval, SetIntervalReason reason) override;
+
+    virtual LanguageType getCurrentLanguage() override;
+    virtual const char * getCurrentLanguageCode() override;
 
     /**
      @brief Get target platform
