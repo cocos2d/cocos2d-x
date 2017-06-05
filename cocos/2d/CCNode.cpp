@@ -157,7 +157,7 @@ Node::~Node()
 #endif
 
     // User object has to be released before others, since userObject may have a weak reference of this node
-    // It may invoke `node->stopAllAction();` while `_actionManager` is null if the next line is after `CC_SAFE_RELEASE_NULL(_actionManager)`.
+    // It may invoke `node->stopAllActions();` while `_actionManager` is null if the next line is after `CC_SAFE_RELEASE_NULL(_actionManager)`.
     CC_SAFE_RELEASE_NULL(_userObject);
     
     // attributes
