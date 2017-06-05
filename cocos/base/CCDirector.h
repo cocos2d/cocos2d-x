@@ -628,7 +628,7 @@ protected:
      @since v3.0
      */
     EventDispatcher* _eventDispatcher;
-    EventCustom *_eventProjectionChanged, *_eventAfterDraw, *_eventAfterVisit, *_eventBeforeUpdate, *_eventAfterUpdate, *_eventResetDirector, *_beforeSetNextScene, *_afterSetNextScene;
+    EventCustom *_eventProjectionChanged, *_eventBeforeDraw, *_eventAfterDraw, *_eventAfterVisit, *_eventBeforeUpdate, *_eventAfterUpdate, *_eventResetDirector, *_beforeSetNextScene, *_afterSetNextScene;
         
     /* delta time since last tick to main loop */
 	float _deltaTime;
