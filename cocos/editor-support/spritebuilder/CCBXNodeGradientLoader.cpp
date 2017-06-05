@@ -77,7 +77,7 @@ void NodeGradientLoader::onHandlePropTypeFloat(const std::string &propertyName, 
 
 void NodeGradientLoader::onHandlePropTypePoint(const std::string &propertyName, bool isExtraProp, const Point &value) {
     if(propertyName == PROPERTY_VECTOR) {
-        _vector = value;
+        _vector = Point(-value.x, -value.y);
     } else {
         NodeColorLoader::onHandlePropTypePoint(propertyName, isExtraProp, value);
     }
