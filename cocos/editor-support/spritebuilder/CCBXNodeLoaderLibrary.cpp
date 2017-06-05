@@ -9,6 +9,7 @@
 #include "CCBXNodeLoaderLibrary.h"
 #include "CCBXNodeLoader.h"
 #include "CCBXNodeColorLoader.h"
+#include "CCBXNodeGradientLoader.h"
 #include "CCBXScale9SpriteLoader.h"
 #include "CCBXLabelTTFLoader.h"
 #include "CCBXSpriteLoader.h"
@@ -104,6 +105,7 @@ NodeLoaderLibrary::NodeLoaderLibrary()
 void NodeLoaderLibrary::registerDefaultLoaders()
 {
     _loaders.emplace("CCNodeColor", NodeLoaderCreateFuntion(&NodeColorLoader::create));
+    _loaders.emplace("CCNodeGradient", NodeLoaderCreateFuntion(&NodeGradientLoader::create));
     _loaders.emplace("CCNode", NodeLoaderCreateFuntion(&NodeLoader::create));
     _loaders.emplace("CCSprite", NodeLoaderCreateFuntion(&SpriteLoader::create));
     _loaders.emplace("CCSprite9Slice", NodeLoaderCreateFuntion(&Scale9SpriteLoader::create));
