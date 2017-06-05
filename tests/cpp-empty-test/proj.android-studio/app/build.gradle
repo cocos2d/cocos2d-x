@@ -3,12 +3,12 @@ import org.apache.tools.ant.taskdefs.condition.Os
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 22
+    compileSdkVersion PROP_COMPILE_SDK_VERSION.toInteger()
     buildToolsVersion '25.0.0'
 
     defaultConfig {
         applicationId "org.cocos2dx.cpp_empty_test"
-        minSdkVersion 10
+        minSdkVersion PROP_MIN_SDK_VERSION
         targetSdkVersion PROP_TARGET_SDK_VERSION
         versionCode 1
         versionName "1.0"
@@ -19,7 +19,7 @@ android {
                     // skip the NDK Build step if PROP_NDK_MODE is none
                     targets 'cpp_empty_test'
                     arguments 'NDK_TOOLCHAIN_VERSION=4.9'
-                    arguments 'APP_PLATFORM=android-'+PROP_TARGET_SDK_VERSION
+                    arguments 'APP_PLATFORM=android-'+PROP_APP_PLATFORM
 
                     def module_paths = [project.file("../../../..").absolutePath,
                                         project.file("../../../../cocos").absolutePath,
