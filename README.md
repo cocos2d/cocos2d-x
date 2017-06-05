@@ -79,7 +79,7 @@ You can also create a JS project or Lua project with `-l js` or `-l lua`.
 
 There are two ways to build and run Tizen project:
 
-* use coocs console(can not work on 32-bit Windows currently)
+* use cocos console(can not work on 32-bit Windows currently)
   ```
   cocos run -p tizen
   ```
