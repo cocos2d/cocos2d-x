@@ -64,7 +64,6 @@ void invalidateStateCache( void )
 {
     Director::getInstance()->resetMatrixStack();
     s_currentProjectionMatrix = -1;
-    s_attributeFlags = 0;
 
 #if CC_ENABLE_GL_STATE_CACHE
     s_currentShaderProgram = -1;
