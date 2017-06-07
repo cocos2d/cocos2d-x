@@ -877,6 +877,7 @@ void AssetsManagerEx::update()
         }
             break;
         case State::PREDOWNLOAD_MANIFEST:
+        case State::DOWNLOADING_MANIFEST:
         {
             downloadManifest();
         }
