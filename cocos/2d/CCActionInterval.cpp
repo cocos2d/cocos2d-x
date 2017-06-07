@@ -287,6 +287,7 @@ bool Sequence::initWithTwoActions(FiniteTimeAction *actionOne, FiniteTimeAction 
 
 bool Sequence::isDone() const
 {
+    // fix issue #17884
     return (ActionInterval::isDone() && _actions[1]->isDone());
 }
 
