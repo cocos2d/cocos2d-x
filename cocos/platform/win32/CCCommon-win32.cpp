@@ -48,7 +48,6 @@ void LuaLog(const char *pszMsg)
 
     puts(UTF8StringToMultiByte(pszMsg).c_str());
 }
-
 NS_CC_END
 
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
