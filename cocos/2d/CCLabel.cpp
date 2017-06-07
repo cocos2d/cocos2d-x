@@ -1272,8 +1272,11 @@ void Label::createSpriteForSystemFont(const FontDefinition& fontDef)
     _textSprite->setCameraMask(getCameraMask());
     _textSprite->setGlobalZOrder(getGlobalZOrder());
     _textSprite->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
+    _textSprite->setSubpixelRendering(false);
+
     this->setContentSize(_textSprite->getContentSize());
     texture->release();
+
     if (_blendFuncDirty)
     {
         _textSprite->setBlendFunc(_blendFunc);
@@ -1305,6 +1308,7 @@ void Label::createShadowSpriteForSystemFont(const FontDefinition& fontDef)
         auto texture = new (std::nothrow) Texture2D;
         texture->initWithString(_utf8Text.c_str(), shadowFontDefinition);
         _shadowNode = Sprite::createWithTexture(texture);
+        _shadowNode->setSubpixelRendering(false);
         texture->release();
     }
 
