@@ -71,11 +71,6 @@ ColliderBody::ColliderBody(ContourData *contourData)
 {
     CC_SAFE_RETAIN(_contourData);
     _filter = new (std::nothrow) ColliderFilter();
-
-#if ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
-    _calculatedVertexList = Array::create();
-    CC_SAFE_RETAIN(_calculatedVertexList);
-#endif
 }
 #elif ENABLE_PHYSICS_CHIPMUNK_DETECT
 
@@ -85,11 +80,6 @@ ColliderBody::ColliderBody(ContourData *contourData)
 {
     CC_SAFE_RETAIN(_contourData);
     _filter = new (std::nothrow) ColliderFilter();
-
-#if ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
-    _calculatedVertexList = Array::create();
-    CC_SAFE_RETAIN(_calculatedVertexList);
-#endif
 }
 #elif ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
 ColliderBody::ColliderBody(ContourData *contourData)
