@@ -644,6 +644,11 @@ bool Label::setBMFontFilePath(const std::string& bmfontFilePath, const Vec2& ima
         return false;
     }
 
+    if (newAtlas == _fontAtlas)
+    {
+        FontAtlasCache::releaseFontAtlas(_fontAtlas);
+    }
+
     //assign the default fontSize
     if (std::abs(fontSize) < FLT_EPSILON) {
         FontFNT *bmFont = (FontFNT*)newAtlas->getFont();
@@ -983,6 +988,11 @@ bool Label::setTTFConfigInternal(const TTFConfig& ttfConfig)
     {
         reset();
         return false;
+    }
+
+    if (newAtlas == _fontAtlas)
+    {
+        FontAtlasCache::releaseFontAtlas(_fontAtlas);
     }
 
     _currentLabelType = LabelType::TTF;
