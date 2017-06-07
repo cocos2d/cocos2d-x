@@ -228,6 +228,19 @@ public:
 private:
 };
 
+class Issue17476 : public EventDispatcherTestDemo
+{
+public:
+    CREATE_FUNC(Issue17476);
+	Issue17476();
+    virtual ~Issue17476();
+    
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+private:
+};
+
 class DanglingNodePointersTest : public EventDispatcherTestDemo
 {
 public:

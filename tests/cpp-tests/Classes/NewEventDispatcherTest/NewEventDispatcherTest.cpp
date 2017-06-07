@@ -29,6 +29,7 @@ EventDispatcherTests::EventDispatcherTests()
     ADD_TEST_CASE(PauseResumeTargetTest3);
     ADD_TEST_CASE(Issue4129);
     ADD_TEST_CASE(Issue4160);
+    ADD_TEST_CASE(Issue17476);
     ADD_TEST_CASE(DanglingNodePointersTest);
     ADD_TEST_CASE(RegisterAndUnregisterWhileEventHanldingTest);
     ADD_TEST_CASE(WindowEventsTest);
@@ -1360,6 +1361,92 @@ std::string Issue4160::title() const
 std::string Issue4160::subtitle() const
 {
     return "Touch the red block twice \n should not crash and the red one couldn't be touched";
+}
+
+// Issue17476
+Issue17476::Issue17476()
+{
+    Vec2 origin = Director::getInstance()->getVisibleOrigin();
+    Size size = Director::getInstance()->getVisibleSize();
+    
+    auto labelFirst = Label::createWithSystemFont("First\nClick\nHere\nThe\nIntersect", "Arial", 15);
+    labelFirst->setPosition(origin + Vec2(size.width / 2, size.height / 2));
+    addChild(labelFirst);
+
+    auto sprite1 = Sprite::create();
+    sprite1->setTexture("Images/CyanSquare.png");
+    sprite1->setPosition(origin+Vec2(size.width/2, size.height/2) + Vec2(-25, 0));
+    addChild(sprite1, -10);
+
+    auto listener1 = EventListenerTouchOneByOne::create();
+    listener1->setSwallowTouches(false);
+    listener1->onTouchBegan = [=](Touch* touch, Event* event) {
+        auto ptInSprite = sprite1->convertToNodeSpace(touch->getLocation());
+        if (sprite1->getTextureRect().containsPoint(ptInSprite))
+        {
+            CCLOG("Left Square On TouchBegan !");
+            sprite1->setColor(Color3B::RED);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    };
+
+    listener1->onTouchEnded = [=](Touch* touch, Event* event) {
+        CCLOG("Left Square On TouchEnded !");
+        sprite1->setColor(Color3B::WHITE);
+        event->stopPropagation();
+    };
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener1, sprite1);
+    
+    auto sprite2 = Sprite::create();
+    sprite2->setTexture("Images/MagentaSquare.png");
+    sprite2->setPosition(origin+Vec2(size.width/2, size.height/2) + Vec2(25, 0));
+    addChild(sprite2, -20);
+
+    auto listener2 = EventListenerTouchOneByOne::create();
+    listener2->setSwallowTouches(false);
+    listener2->onTouchBegan = [=](Touch* touch, Event* event) {
+        auto ptInSprite = sprite2->convertToNodeSpace(touch->getLocation());
+        if (sprite2->getTextureRect().containsPoint(ptInSprite))
+        {
+            CCLOG("Right Square On TouchBegan !");
+            sprite2->setColor(Color3B::RED);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    };
+
+    listener2->onTouchEnded = [=](Touch* touch, Event* event) {
+        CCLOG("Right Square On TouchEnded !");
+        sprite2->setColor(Color3B::WHITE);
+        event->stopPropagation();
+    };
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener2, sprite2);
+    
+    auto labelSecond = Label::createWithSystemFont("Second Step click Here, outside the squares", \
+        "Arial", 15);
+    labelSecond->setPosition(origin + Vec2(size.width / 2, size.height / 2) + Vec2(0, -90));
+    addChild(labelSecond);
+}
+
+Issue17476::~Issue17476()
+{
+}
+
+std::string Issue17476::title() const
+{
+    return "Issue 17476: _claimedTouches not cleared!";
+}
+
+std::string Issue17476::subtitle() const
+{
+    return "First Click the intersection of the two squares, Then click outside, you will find that the bottom square responsed to the second click !";
 }
 
 // DanglingNodePointersTest
