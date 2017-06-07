@@ -34,6 +34,7 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import java.util.ArrayList;
 
 public class Cocos2dxGLSurfaceView extends GLSurfaceView {
     // ===========================================================
@@ -60,6 +61,9 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 
     private boolean mSoftKeyboardShown = false;
     private boolean mMultipleTouchEnabled = true;
+    private boolean paused;
+    private ArrayList<Integer> trackedTouches = new ArrayList<Integer>();
+    
 
     public boolean isSoftKeyboardShown() {
         return mSoftKeyboardShown;
@@ -183,9 +187,22 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
         this.queueEvent(new Runnable() {
             @Override
             public void run() {
+                // Cancel any touches we were tracking before backgrounding the app
+                int[] ids = new int[trackedTouches.size()];
+                float[] xs = new float[trackedTouches.size()];
+                float[] ys = new float[trackedTouches.size()];
+                
+                for (int i = 0; i < trackedTouches.size(); i++) {
+                    ids[i] = trackedTouches.get(i);
+                    xs[i] = 0;
+                    ys[i] = 0;
+                    Cocos2dxGLSurfaceView.this.mCocos2dxRenderer.handleActionCancel(ids, xs, ys);
+                }
+                trackedTouches.clear();
                 Cocos2dxGLSurfaceView.this.mCocos2dxRenderer.handleOnResume();
             }
         });
+        paused = false;
     }
 
     @Override
@@ -197,11 +214,13 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
             }
         });
         this.setRenderMode(RENDERMODE_WHEN_DIRTY);
+        paused = true;
         //super.onPause();
     }
 
     @Override
     public boolean onTouchEvent(final MotionEvent pMotionEvent) {
+        if(paused) return false;
         // these data are used in ACTION_MOVE and ACTION_CANCEL
         final int pointerNumber = pMotionEvent.getPointerCount();
         final int[] ids = new int[pointerNumber];
@@ -231,6 +250,7 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
                 final int idPointerDown = pMotionEvent.getPointerId(indexPointerDown);
                 final float xPointerDown = pMotionEvent.getX(indexPointerDown);
                 final float yPointerDown = pMotionEvent.getY(indexPointerDown);
+                trackedTouches.add(idPointerDown);
 
                 this.queueEvent(new Runnable() {
                     @Override
@@ -245,6 +265,7 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
                 final int idDown = pMotionEvent.getPointerId(0);
                 final float xDown = xs[0];
                 final float yDown = ys[0];
+                trackedTouches.add(idDown);
 
                 this.queueEvent(new Runnable() {
                     @Override
@@ -289,6 +310,7 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
                 final int idPointerUp = pMotionEvent.getPointerId(indexPointUp);
                 final float xPointerUp = pMotionEvent.getX(indexPointUp);
                 final float yPointerUp = pMotionEvent.getY(indexPointUp);
+                trackedTouches.remove(Integer.valueOf(idPointerUp));
 
                 this.queueEvent(new Runnable() {
                     @Override
@@ -303,6 +325,7 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
                 final int idUp = pMotionEvent.getPointerId(0);
                 final float xUp = xs[0];
                 final float yUp = ys[0];
+                trackedTouches.remove(Integer.valueOf(idUp));
 
                 this.queueEvent(new Runnable() {
                     @Override
@@ -313,6 +336,10 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
                 break;
 
             case MotionEvent.ACTION_CANCEL:
+                for (int i = 0; i < pointerNumber; i++)
+                {
+                    trackedTouches.remove(Integer.valueOf(pMotionEvent.getPointerId(i)));
+                }
                 if (!mMultipleTouchEnabled) {
                     // handle only touch with id == 0
                     for (int i = 0; i < pointerNumber; i++) {
