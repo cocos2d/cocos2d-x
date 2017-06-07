@@ -193,6 +193,8 @@ public:
 CC_CONSTRUCTOR_ACCESS:
     Sequence();
     virtual ~Sequence();
+    
+    virtual bool isDone() const override;
 
     /** initializes the action */
     bool initWithTwoActions(FiniteTimeAction *pActionOne, FiniteTimeAction *pActionTwo);

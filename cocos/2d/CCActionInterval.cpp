@@ -285,6 +285,11 @@ bool Sequence::initWithTwoActions(FiniteTimeAction *actionOne, FiniteTimeAction 
     return true;
 }
 
+bool Sequence::isDone() const
+{
+    return (ActionInterval::isDone() && _actions[1]->isDone());
+}
+
 Sequence* Sequence::clone() const
 {
     // no copy constructor
