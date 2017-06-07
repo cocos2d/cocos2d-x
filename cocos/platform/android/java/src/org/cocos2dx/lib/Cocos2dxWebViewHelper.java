@@ -2,6 +2,7 @@ package org.cocos2dx.lib;
 
 import android.annotation.TargetApi;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
@@ -11,6 +12,8 @@ import android.webkit.WebView;
 import android.widget.FrameLayout;
 import android.webkit.WebSettings;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
@@ -99,22 +102,30 @@ public class Cocos2dxWebViewHelper {
         });
     }
 
-    @TargetApi(11)
     public static void setBackgroundTransparent(final int index) {
-
-        sCocos2dxActivity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Cocos2dxWebView webView = webViews.get(index);
-                if (webView != null) {
-                    webView.setBackgroundColor(Color.TRANSPARENT);
-                    webView.setLayerType(WebView.LAYER_TYPE_SOFTWARE, null);
+        if(android.os.Build.VERSION.SDK_INT >10) {
+            sCocos2dxActivity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Cocos2dxWebView webView = webViews.get(index);
+                    if (webView != null) {
+                        webView.setBackgroundColor(Color.TRANSPARENT);
+                        try {
+                            Method method = webView.getClass().getMethod("setLayerType",int.class,Paint.class);
+                            method.invoke(webView,WebView.LAYER_TYPE_SOFTWARE,null);
+                        } catch (NoSuchMethodException e) {
+                            e.printStackTrace();
+                        } catch (IllegalAccessException e) {
+                            e.printStackTrace();
+                        } catch (InvocationTargetException e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
-    @TargetApi(11)
     public static void setOpacityWebView(final int index, final float opacity) {
         if(android.os.Build.VERSION.SDK_INT >10){
             sCocos2dxActivity.runOnUiThread(new Runnable() {
@@ -122,14 +133,23 @@ public class Cocos2dxWebViewHelper {
                 public void run() {
                     Cocos2dxWebView webView = webViews.get(index);
                     if (webView != null) {
-                        webView.setAlpha(opacity);
+                        try {
+                            Method method = webView.getClass().getMethod("setAlpha",float.class);
+                            method.invoke(webView,opacity);
+                        } catch (NoSuchMethodException e) {
+                            e.printStackTrace();
+                        } catch (IllegalAccessException e) {
+                            e.printStackTrace();
+                        } catch (InvocationTargetException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             });
         }
     }
 
-    @TargetApi(11)
+
     public static float getOpacityWebView(final int index) {
         if(android.os.Build.VERSION.SDK_INT >10){
             FutureTask<Float> futureResult = new FutureTask<Float>(new Callable<Float>() {
@@ -137,10 +157,20 @@ public class Cocos2dxWebViewHelper {
             public Float call() throws Exception {
                 float opacity=0.f;
                 Cocos2dxWebView webView = webViews.get(index);
+                Object valueToReturn=null;
                 if (webView != null) {
-                    opacity = webView.getAlpha();
+                    try {
+                        Method method = webView.getClass().getMethod("getAlpha");
+                        valueToReturn = method.invoke(webView);
+                    } catch (NoSuchMethodException e) {
+                        e.printStackTrace();
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
+                    } catch (InvocationTargetException e) {
+                        e.printStackTrace();
+                    }
                 }
-                return opacity;
+                return (Float) valueToReturn;
             }
             });
             sCocos2dxActivity.runOnUiThread(futureResult);
@@ -152,7 +182,7 @@ public class Cocos2dxWebViewHelper {
                 e.printStackTrace();
             }
         }
-        return 0;
+        return 1;
     }
 
     public static void setWebViewRect(final int index, final int left, final int top, final int maxWidth, final int maxHeight) {
