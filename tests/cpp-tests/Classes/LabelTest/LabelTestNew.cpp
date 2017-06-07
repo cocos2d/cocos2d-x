@@ -113,6 +113,7 @@ NewLabelTests::NewLabelTests()
     ADD_TEST_CASE(LabelIssue16471);
     ADD_TEST_CASE(LabelIssue16717);
     ADD_TEST_CASE(LabelIssueLineGap);
+    ADD_TEST_CASE(LabelIssue17902);
 };
 
 LabelFNTColorAndOpacity::LabelFNTColorAndOpacity()
@@ -3395,6 +3396,36 @@ std::string LabelIssueLineGap::title() const
 std::string LabelIssueLineGap::subtitle() const
 {
     return "two label must have exactly the same position and distance between lines";
+}
+
+//
+// LabelIssue17902
+//
+LabelIssue17902::LabelIssue17902()
+{
+    auto center = VisibleRect::center();
+    
+    auto label = Label::createWithTTF("abcdefg\nhijklmn", "fonts/arial.ttf", 26);
+    label->setLineHeight(40);
+    label->setPosition(center);
+    addChild(label);
+
+	scheduleOnce(CC_CALLBACK_0(LabelIssue17902::purgeCachedData, this), 1.0f, "purge_cached_data");
+}
+
+void LabelIssue17902::purgeCachedData()
+{
+    FontAtlasCache::purgeCachedData();
+}
+
+std::string LabelIssue17902::title() const
+{
+    return "Github Issue 17902";
+}
+
+std::string LabelIssue17902::subtitle() const
+{
+    return "";
 }
 
 

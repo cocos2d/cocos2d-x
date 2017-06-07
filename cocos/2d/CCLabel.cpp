@@ -416,7 +416,12 @@ Label::Label(TextHAlignment hAlignment /* = TextHAlignment::LEFT */,
         if (_fontAtlas && _currentLabelType == LabelType::TTF && event->getUserData() == _fontAtlas)
         {
             _fontAtlas = nullptr;
+            auto lineHeight = _lineHeight;
             this->setTTFConfig(_fontConfig);
+            if (_currentLabelType != LabelType::STRING_TEXTURE)
+            {
+                setLineHeight(lineHeight);
+            }
             for (auto&& it : _letters)
             {
                 getLetter(it.first);

@@ -916,4 +916,17 @@ public:
     virtual std::string subtitle() const override;
 };
 
+class LabelIssue17902 : public AtlasDemoNew
+{
+public:
+    CREATE_FUNC(LabelIssue17902);
+    
+    LabelIssue17902();
+
+    virtual void purgeCachedData();
+    
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
 #endif
