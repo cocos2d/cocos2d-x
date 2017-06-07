@@ -113,11 +113,7 @@ public class Cocos2dxWebViewHelper {
                         try {
                             Method method = webView.getClass().getMethod("setLayerType",int.class,Paint.class);
                             method.invoke(webView,WebView.LAYER_TYPE_SOFTWARE,null);
-                        } catch (NoSuchMethodException e) {
-                            e.printStackTrace();
-                        } catch (IllegalAccessException e) {
-                            e.printStackTrace();
-                        } catch (InvocationTargetException e) {
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
@@ -136,11 +132,7 @@ public class Cocos2dxWebViewHelper {
                         try {
                             Method method = webView.getClass().getMethod("setAlpha",float.class);
                             method.invoke(webView,opacity);
-                        } catch (NoSuchMethodException e) {
-                            e.printStackTrace();
-                        } catch (IllegalAccessException e) {
-                            e.printStackTrace();
-                        } catch (InvocationTargetException e) {
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
@@ -162,11 +154,7 @@ public class Cocos2dxWebViewHelper {
                     try {
                         Method method = webView.getClass().getMethod("getAlpha");
                         valueToReturn = method.invoke(webView);
-                    } catch (NoSuchMethodException e) {
-                        e.printStackTrace();
-                    } catch (IllegalAccessException e) {
-                        e.printStackTrace();
-                    } catch (InvocationTargetException e) {
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
@@ -176,9 +164,7 @@ public class Cocos2dxWebViewHelper {
             sCocos2dxActivity.runOnUiThread(futureResult);
             try {
                 return futureResult.get();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
