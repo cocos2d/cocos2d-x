@@ -210,7 +210,7 @@ private: varType varName; public: virtual inline varType get##funName(void) cons
 
 /// @name Cocos2d debug
 /// @{
-#if !defined(COCOS2D_DEBUG) || COCOS2D_DEBUG == 0
+#if !defined(COCOS2D_DEBUG) || COCOS2D_DEBUG == 0 || COCOS2D_LOG_LEVEL == 0
 #define CCLOG(...)       do {} while (0)
 #define CCLOGINFO(...)   do {} while (0)
 #define CCLOGERROR(...)  do {} while (0)
