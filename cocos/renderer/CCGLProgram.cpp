@@ -66,6 +66,10 @@ static void replaceDefines(const std::string& compileTimeDefines, std::string& o
                 currentDefine.append(1, itChar);
             }
         }
+		if (!currentDefine.empty())
+        {
+            out.append("\n#define " + currentDefine);
+        }
         out += "\n";
     }
 }
