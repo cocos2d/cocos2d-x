@@ -72,8 +72,6 @@ static AppDelegate s_sharedApplication;
         // use this method on ios6
         [window setRootViewController:viewController];
     }
-    
-    [window makeKeyAndVisible];
 
     [[UIApplication sharedApplication] setStatusBarHidden: YES];
     
@@ -82,6 +80,9 @@ static AppDelegate s_sharedApplication;
     cocos2d::Director::getInstance()->setOpenGLView(glview);
     
     app->run();
+    
+    [window makeKeyAndVisible];
+    
     return YES;
 }
 
