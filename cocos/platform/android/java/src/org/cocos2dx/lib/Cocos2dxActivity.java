@@ -343,22 +343,6 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
         {
             int[][] EGLAttributes = {
                 {
-                    // GL ES 3 with user set
-                    EGL10.EGL_RED_SIZE, mConfigAttributes[0],
-                    EGL10.EGL_GREEN_SIZE, mConfigAttributes[1],
-                    EGL10.EGL_BLUE_SIZE, mConfigAttributes[2],
-                    EGL10.EGL_ALPHA_SIZE, mConfigAttributes[3],
-                    EGL10.EGL_DEPTH_SIZE, mConfigAttributes[4],
-                    EGL10.EGL_STENCIL_SIZE,mConfigAttributes[5],
-                    EGL10.EGL_RENDERABLE_TYPE, EGL_OPENGL_ES3_BIT,
-                    EGL10.EGL_NONE
-                },
-                {
-                    // GL ES 3 by default
-                    EGL10.EGL_RENDERABLE_TYPE, EGL_OPENGL_ES3_BIT,
-                    EGL10.EGL_NONE
-                },
-                {
                     // GL ES 2 with user set
                     EGL10.EGL_RED_SIZE, mConfigAttributes[0],
                     EGL10.EGL_GREEN_SIZE, mConfigAttributes[1],
@@ -404,20 +388,10 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 
         public EGLContext createContext(
             EGL10 egl, EGLDisplay display, EGLConfig eglConfig) {
-
-            // create GL ES 3 context first,
-            // if failed, then try to create GL ES 2 context
-
-            int[] attributes = {EGL_CONTEXT_CLIENT_VERSION, 3, EGL10.EGL_NONE };
-            // attempt to create a OpenGL ES 3.0 context
+            
+            int[] attributes = {EGL_CONTEXT_CLIENT_VERSION, 2, EGL10.EGL_NONE };
             EGLContext context = egl.eglCreateContext(
                 display, eglConfig, EGL10.EGL_NO_CONTEXT, attributes);
-
-            if (context == null || EGL10.EGL_NO_CONTEXT == context) {
-                attributes = new int[] {EGL_CONTEXT_CLIENT_VERSION, 2, EGL10.EGL_NONE };
-                context = egl.eglCreateContext(
-                    display, eglConfig, EGL10.EGL_NO_CONTEXT, attributes);
-            }
 
             return context;
         }
