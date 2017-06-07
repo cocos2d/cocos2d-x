@@ -99,7 +99,8 @@ public:
         QUAD,
         POLYGON,
         SLICE9,
-        QUAD_BATCHNODE
+        QUAD_BATCHNODE,
+        TILE
     };
      /** Sprite invalid index on the SpriteBatchNode. */
     static const int INDEX_NOT_INITIALIZED = -1;
@@ -395,7 +396,17 @@ public:
      * Gets the offset position of the sprite. Calculated automatically by editors like Zwoptex.
      */
     const Vec2& getOffsetPosition() const { return _offsetPosition; }
-
+    
+    /**
+     * Returns the flag which indicates whether the sprite is in tile render mode
+     */
+    bool isTiled() const { return _renderMode == RenderMode::TILE; }
+    /**
+     * Sets whether the sprite should be in tile render mode.
+     *
+     * @param value true if the sprite should be in tile render mode, false otherwise.
+     */
+    void setTiled(bool value);
 
     /**
      * Returns the flag which indicates whether the sprite is flipped horizontally or not.
@@ -660,6 +671,8 @@ protected:
 
     void updatePoly();
     void updateStretchFactor();
+    
+    void processRect();
 
     //
     // Data used when the sprite is rendered using a SpriteSheet

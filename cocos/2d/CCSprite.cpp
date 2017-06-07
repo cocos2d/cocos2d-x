@@ -665,6 +665,203 @@ void Sprite::updatePoly()
         // to avoid memcpy'ing stuff
         _polyInfo.setTriangles(triangles);
     }
+    else if (_renderMode == RenderMode::TILE) {
+        float u0, u1;
+        float v0, v1;
+        float uo, vo;
+        
+        Texture2D *tex = (_renderMode == RenderMode::QUAD_BATCHNODE) ? _textureAtlas->getTexture() : _texture;
+        if (tex == nullptr)
+            return;
+        
+        const auto rectInPixels = CC_RECT_POINTS_TO_PIXELS(_rect);
+        
+        const float atlasWidth = (float)tex->getPixelsWide();
+        const float atlasHeight = (float)tex->getPixelsHigh();
+        
+        float relativeOffsetX = _unflippedOffsetPositionFromCenter.x;
+        float relativeOffsetY = _unflippedOffsetPositionFromCenter.y;
+        
+        auto originalSizeInPixels = CC_SIZE_POINTS_TO_PIXELS(_originalContentSize);
+        auto offsetInPixels = CC_POINT_POINTS_TO_PIXELS(Vec2(relativeOffsetX, relativeOffsetY));
+        
+        Vec4 offsets;
+        offsets.x = offsetInPixels.x + (originalSizeInPixels.width - rectInPixels.size.width) / 2;
+        offsets.w = offsetInPixels.y + (originalSizeInPixels.height - rectInPixels.size.height) / 2;
+        offsets.z = originalSizeInPixels.width - rectInPixels.size.width - offsets.x;
+        offsets.y = originalSizeInPixels.height - rectInPixels.size.height - offsets.w;
+        
+        if (_rectRotated) {
+            u0 = (rectInPixels.origin.x - offsets.w) / atlasWidth;
+            u1 = (rectInPixels.origin.x + rectInPixels.size.height + offsets.y) / atlasWidth;
+            
+            v1 = (rectInPixels.origin.y - offsets.x) / atlasHeight;
+            v0 = (rectInPixels.origin.y + rectInPixels.size.width + offsets.z) / atlasHeight;
+            
+            uo = offsets.x / atlasHeight;
+            vo = offsets.w / atlasWidth;
+        }
+        else {
+            u0 = (rectInPixels.origin.x - offsets.x) / atlasWidth;
+            u1 = (rectInPixels.origin.x + rectInPixels.size.width + offsets.z) / atlasWidth;
+            
+            v1 = (rectInPixels.origin.y - offsets.y) / atlasHeight;
+            v0 = (rectInPixels.origin.y + rectInPixels.size.height + offsets.w) / atlasHeight;
+            
+            uo = offsets.x / atlasWidth;
+            vo = offsets.w / atlasHeight;
+        }
+        
+        auto rectWidth = _originalContentSize.width;
+        auto rectHeight = _originalContentSize.height;
+        
+        //build quads
+        auto hRepeat = getContentSize().width / rectWidth;
+        auto vRepeat = getContentSize().height / rectHeight;
+        
+        float offsetLeft = offsets.x / CC_CONTENT_SCALE_FACTOR();
+        float offsetTop = offsets.y / CC_CONTENT_SCALE_FACTOR();
+        float offsetRight = offsets.z / CC_CONTENT_SCALE_FACTOR();
+        float offsetBottom = offsets.w / CC_CONTENT_SCALE_FACTOR();
+        
+        float roTop = offsetTop / rectHeight;
+        float roBottom = offsetBottom / rectHeight;
+        //float roLeft = offsetLeft / rectWidth;
+        float roRight = offsetRight / rectWidth;
+        
+        
+        const int vertsStep = 4;
+        const int indicesStep = 6;
+        int quadsCount = ceilf(hRepeat) * ceilf(vRepeat);
+        
+        unsigned short slicedTotalVertexCount = quadsCount * vertsStep;
+        unsigned short slicedTotalIndices = quadsCount * indicesStep;
+        
+        V3F_C4B_T2F* sliceVertices = new (std::nothrow) V3F_C4B_T2F[quadsCount * vertsStep];
+        
+        auto displayedColor = getDisplayedColor();
+        auto displayedOpacity = getDisplayedOpacity();
+        Color4B color4( displayedColor.r, displayedColor.g, displayedColor.b, displayedOpacity );
+        
+        int quadIndex = 0;
+        for (int hindex = 0; hindex < ceilf(hRepeat); ++hindex) {
+            for (int vindex = 0; vindex < ceilf(vRepeat); ++vindex) {
+                
+                V3F_C4B_T2F &quad_bl = sliceVertices[quadIndex];
+                V3F_C4B_T2F &quad_br = sliceVertices[quadIndex + 1];
+                V3F_C4B_T2F &quad_tl = sliceVertices[quadIndex + 2];
+                V3F_C4B_T2F &quad_tr = sliceVertices[quadIndex + 3];
+                
+                quadIndex += vertsStep;;
+                
+                quad_bl.colors = color4;
+                quad_br.colors = color4;
+                quad_tl.colors = color4;
+                quad_tr.colors = color4;
+                
+                float x1 = rectWidth * hindex + offsetLeft;
+                float y1 = rectHeight * vindex + offsetBottom;
+                float x2 = rectWidth * fminf(hindex + (1 - roRight), hRepeat);
+                float y2 = rectHeight * fminf(vindex + (1 - roTop), vRepeat);
+                
+                
+                if(x2 < x1)
+                    x2 = x1;
+                
+                if(y2 < y1)
+                    y2 = y1;
+                
+                if(_flippedY)
+                {
+                    y1 = getContentSize().height - y1;
+                    y2 = getContentSize().height - y2;
+                }
+                
+                if(_flippedX)
+                {
+                    x1 = getContentSize().width - x1;
+                    x2 = getContentSize().width - x2;
+                }
+                
+                quad_bl.vertices = cocos2d::Vec3(x1, y1, 0);
+                quad_br.vertices = cocos2d::Vec3(x2, y1, 0);
+                quad_tl.vertices = cocos2d::Vec3(x1, y2, 0);
+                quad_tr.vertices = cocos2d::Vec3(x2, y2, 0);
+                
+                if (!_rectRotated) {
+                    quad_bl.texCoords = cocos2d::Tex2F(u0 + uo, v0 - vo);
+                    quad_br.texCoords = cocos2d::Tex2F(u0 + (u1 - u0) * fminf((1 - roRight), hRepeat - hindex), v0 - vo);
+                    quad_tl.texCoords = cocos2d::Tex2F(u0 + uo, v0 + (v1 - v0) * fminf((1 - roTop), vRepeat - vindex));
+                    quad_tr.texCoords = cocos2d::Tex2F(u0 + (u1 - u0) * fminf((1 - roRight), hRepeat - hindex), v0 + (v1 - v0) * fminf((1 - roTop), vRepeat - vindex));
+                } else {
+                    quad_bl.texCoords = cocos2d::Tex2F(u0 + vo, v1 + uo);
+                    quad_br.texCoords = cocos2d::Tex2F(u0 + vo, v1 + (v0 - v1) * fminf((1 - roBottom), hRepeat - hindex));
+                    quad_tl.texCoords = cocos2d::Tex2F(u0 + (u1 - u0) * fminf((1 - roTop), vRepeat - vindex), v1 + uo);
+                    quad_tr.texCoords = cocos2d::Tex2F(u0 + (u1 - u0) * fminf((1 - roTop), vRepeat - vindex), v1 + (v0 - v1) * fminf((1 - roBottom), hRepeat - hindex));
+                    
+                }
+            }
+        }
+        
+        unsigned short* sliceIndices = new (std::nothrow) unsigned short[slicedTotalIndices];
+        
+        unsigned short indices[indicesStep];
+        for(int index = 0; index < quadsCount; ++index) {
+            {
+                indices[0] = vertsStep * index;
+                indices[1] = vertsStep * index + 1;
+                indices[2] = vertsStep * index + 2;
+                indices[3] = vertsStep * index + 3;
+                indices[4] = vertsStep * index + 2;
+                indices[5] = vertsStep * index + 1;
+            }
+            
+            memcpy(&sliceIndices[indicesStep * index], indices, sizeof(unsigned short) * indicesStep);
+            
+        }
+
+        TrianglesCommand::Triangles triangles;
+        triangles.vertCount = slicedTotalVertexCount;
+        triangles.indexCount = slicedTotalIndices;
+        triangles.verts = sliceVertices;
+        triangles.indices = sliceIndices;
+
+        _polyInfo.setTriangles(triangles);
+
+    }
+}
+
+void Sprite::processRect()
+{
+    // convert it to 1-slice when the centerRect is not present.
+    if (_centerRectNormalized.equals(Rect(0,0,1,1))) {
+        _renderMode = RenderMode::QUAD;
+        free(_trianglesVertex);
+        free(_trianglesIndex);
+        _trianglesVertex = nullptr;
+        _trianglesIndex = nullptr;
+    }
+    else
+    {
+        // convert it to 9-slice if it isn't already
+        if (_renderMode != RenderMode::SLICE9) {
+            _renderMode = RenderMode::SLICE9;
+            // 9 quads + 7 exterior points = 16
+            _trianglesVertex = (V3F_C4B_T2F*) malloc(sizeof(*_trianglesVertex) * (9 + 3 + 4));
+            // 9 quads, each needs 6 vertices = 54
+            _trianglesIndex = (unsigned short*) malloc(sizeof(*_trianglesIndex) * 6 * 9);
+
+            // populate indices in CCW direction
+            for (int i=0; i<9; ++i) {
+                _trianglesIndex[i * 6 + 0] = (i * 4 / 3) + 4;
+                _trianglesIndex[i * 6 + 1] = (i * 4 / 3) + 0;
+                _trianglesIndex[i * 6 + 2] = (i * 4 / 3) + 5;
+                _trianglesIndex[i * 6 + 3] = (i * 4 / 3) + 1;
+                _trianglesIndex[i * 6 + 4] = (i * 4 / 3) + 5;
+                _trianglesIndex[i * 6 + 5] = (i * 4 / 3) + 0;
+            }
+        }
+    }
 }
 
 void Sprite::setCenterRectNormalized(const cocos2d::Rect &rectTopLeft)
@@ -680,37 +877,25 @@ void Sprite::setCenterRectNormalized(const cocos2d::Rect &rectTopLeft)
     Rect rect(rectTopLeft.origin.x, 1 - rectTopLeft.origin.y - rectTopLeft.size.height, rectTopLeft.size.width, rectTopLeft.size.height);
     if (!_centerRectNormalized.equals(rect)) {
         _centerRectNormalized = rect;
+        processRect();
+        updateStretchFactor();
+        updatePoly();
+        updateColor();
+    }
+}
 
-        // convert it to 1-slice when the centerRect is not present.
-        if (rect.equals(Rect(0,0,1,1))) {
-            _renderMode = RenderMode::QUAD;
-            free(_trianglesVertex);
-            free(_trianglesIndex);
-            _trianglesVertex = nullptr;
-            _trianglesIndex = nullptr;
-        }
+void Sprite::setTiled(bool value)
+{
+    if (_renderMode != RenderMode::QUAD && _renderMode != RenderMode::SLICE9 && _renderMode != RenderMode::TILE) {
+        CCLOGWARN("Warning: Sprite::setTiled() only works with QUAD, SLICE9 and TILE render modes");
+        return;
+    }
+    if(value != (_renderMode == RenderMode::TILE))
+    {
+        if(value)
+            _renderMode = RenderMode::TILE;
         else
-        {
-            // convert it to 9-slice if it isn't already
-            if (_renderMode != RenderMode::SLICE9) {
-                _renderMode = RenderMode::SLICE9;
-                // 9 quads + 7 exterior points = 16
-                _trianglesVertex = (V3F_C4B_T2F*) malloc(sizeof(*_trianglesVertex) * (9 + 3 + 4));
-                // 9 quads, each needs 6 vertices = 54
-                _trianglesIndex = (unsigned short*) malloc(sizeof(*_trianglesIndex) * 6 * 9);
-
-                // populate indices in CCW direction
-                for (int i=0; i<9; ++i) {
-                    _trianglesIndex[i * 6 + 0] = (i * 4 / 3) + 4;
-                    _trianglesIndex[i * 6 + 1] = (i * 4 / 3) + 0;
-                    _trianglesIndex[i * 6 + 2] = (i * 4 / 3) + 5;
-                    _trianglesIndex[i * 6 + 3] = (i * 4 / 3) + 1;
-                    _trianglesIndex[i * 6 + 4] = (i * 4 / 3) + 5;
-                    _trianglesIndex[i * 6 + 5] = (i * 4 / 3) + 0;
-                }
-            }
-        }
-
+            processRect();
         updateStretchFactor();
         updatePoly();
         updateColor();

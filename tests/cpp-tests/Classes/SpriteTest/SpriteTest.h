@@ -901,7 +901,7 @@ class SpriteSlice9Test10 : public SpriteTestDemo
 public:
     CREATE_FUNC(SpriteSlice9Test10);
     SpriteSlice9Test10();
-    virtual std::string title() const override { return "Slice 10 Test #9"; };
+    virtual std::string title() const override { return "Slice 9 Test #10"; };
     virtual std::string subtitle() const override { return "Rotated Sprites"; }
 };
 
@@ -931,5 +931,33 @@ protected:
     cocos2d::Sprite* _s3;
     cocos2d::Sprite* _s4;
 };
+
+class SpriteTileTest1 : public SpriteTestDemo
+{
+public:
+    CREATE_FUNC(SpriteTileTest1);
+    SpriteTileTest1();
+    virtual std::string title() const override { return "Tile Test #1"; };
+    virtual std::string subtitle() const override { return "image must be tiled"; }
+};
+
+class SpriteTileTest2 : public SpriteTestDemo
+{
+public:
+    CREATE_FUNC(SpriteTileTest2);
+    SpriteTileTest2();
+    virtual std::string title() const override { return "Tile Test #2"; };
+    virtual std::string subtitle() const override { return "image must be tiled"; }
+};
+
+class SpriteTileTest3 : public SpriteTestDemo
+{
+public:
+    CREATE_FUNC(SpriteTileTest3);
+    SpriteTileTest3();
+    virtual std::string title() const override { return "Tile Test #3"; };
+    virtual std::string subtitle() const override { return "image must be tiled"; }
+};
+
 
 #endif
