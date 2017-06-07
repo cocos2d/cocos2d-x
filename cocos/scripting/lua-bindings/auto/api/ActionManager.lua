@@ -67,10 +67,7 @@
         
 --------------------------------
 --  Returns the numbers of actions that are running in all targets.<br>
--- Composable actions are counted as 1 action. Example:<br>
--- - If you are running 1 Sequence of 7 actions, it will return 1.<br>
--- - If you are running 7 Sequences of 2 actions, it will return 7.<br>
--- return  The numbers of actions that are running in a certain target.<br>
+-- return  The numbers of actions that are running in all target.<br>
 -- js NA
 -- @function [parent=#ActionManager] getNumberOfRunningActions 
 -- @param self
