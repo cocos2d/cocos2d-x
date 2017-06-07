@@ -163,6 +163,18 @@ namespace cocos2d {
             void WebViewImpl::setBounces(bool bounces) {
                 // empty function as this was mainly a fix for iOS
             }
+
+            void WebViewImpl::setOpacityWebView(float opacity){
+                //TODO
+            }
+        
+            float WebViewImpl::getOpacityWebView() const{
+                //TODO
+            }
+        
+            void WebViewImpl::setBackgroundTransparent(){
+                //TODO
+            }
         } // namespace ui
     } // namespace experimental
 } //namespace cocos2d
