@@ -197,7 +197,7 @@ private: varType varName; public: virtual inline varType get##funName(void) cons
     } \
 } 
 
-#define CC_SAFE_DELETE(p)           do { delete (p); (p) = nullptr; } while(0)
+#define CC_SAFE_DELETE(p)           do { if(p) { delete (p); (p) = nullptr; } } while(0)
 #define CC_SAFE_DELETE_ARRAY(p)     do { if(p) { delete[] (p); (p) = nullptr; } } while(0)
 #define CC_SAFE_FREE(p)             do { if(p) { free(p); (p) = nullptr; } } while(0)
 #define CC_SAFE_RELEASE(p)          do { if(p) { (p)->release(); } } while(0)
