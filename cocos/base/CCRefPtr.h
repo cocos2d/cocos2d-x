@@ -44,7 +44,7 @@ NS_CC_BEGIN
     {\
         if (ptr)\
         {\
-            const_cast<Ref*>(static_cast<const Ref*>(ptr))->retain();\
+            ptr->retain();\
         }\
     \
     }   while (0);
@@ -55,7 +55,7 @@ NS_CC_BEGIN
     {\
         if (ptr)\
         {\
-            const_cast<Ref*>(static_cast<const Ref*>(ptr))->release();\
+            ptr->release();\
         }\
     \
     }   while (0);
@@ -66,7 +66,7 @@ NS_CC_BEGIN
     {\
         if (ptr)\
         {\
-            const_cast<Ref*>(static_cast<const Ref*>(ptr))->release();\
+            ptr->release();\
             ptr = nullptr;\
         }\
     \
