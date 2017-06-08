@@ -27,8 +27,7 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/.. \
-                    $(LOCAL_PATH)/../.. \
-                    $(LOCAL_PATH)/../../../external
+                    $(LOCAL_PATH)/../..
 
 LOCAL_EXPORT_LDLIBS := -lGLESv2 \
                        -lEGL \
