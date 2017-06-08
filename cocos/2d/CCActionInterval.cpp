@@ -833,6 +833,16 @@ void Spawn::update(float time)
     }
 }
 
+bool Spawn::isDone() const
+{
+    bool done = ActionInterval::isDone();
+    if (_two)
+        done &= _two->isDone();
+    
+    return done;
+        
+}
+
 Spawn* Spawn::reverse() const
 {
     if (_one && _two)
