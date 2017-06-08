@@ -31,6 +31,10 @@ THE SOFTWARE.
 #include "3d/CCBundleReader.h"
 #include "base/CCData.h"
 
+#include "json/stringbuffer.h"
+#include "json/writer.h"
+#include "json/reader.h"
+
 #define BUNDLE_TYPE_SCENE               1
 #define BUNDLE_TYPE_NODE                2
 #define BUNDLE_TYPE_ANIMATIONS          3
@@ -87,6 +91,7 @@ static const char* ROTATION =  "rotation";
 static const char* SCALE =  "scale";
 static const char* KEYTIME =  "keytime";
 static const char* AABBS = "aabb";
+static const char* TRIANGLES = "TRIANGLES";
 
 NS_CC_BEGIN
 
@@ -201,6 +206,511 @@ bool Bundle3D::load(const std::string& path)
 
     return ret;
 }
+
+bool cocos2d::Bundle3D::save(const std::string& path)
+{
+	bool ret = false;
+	std::string ext = FileUtils::getInstance()->getFileExtension(path);
+	if (ext == ".c3t")
+	{
+		_isBinary = false;
+		ret = loadJson(path);
+	}
+	else if (ext == ".c3b")
+	{
+		_isBinary = true;
+		ret = loadBinary(path);
+	}
+	else
+	{
+		CCLOG("warning: %s is invalid file formate", path.c_str());
+	}
+	return ret;
+}
+
+bool cocos2d::Bundle3D::loadAnimationDatas(AnimaDatas& animations)
+{
+	bool ret = false;
+
+	std::string aname = "";
+	if (_isBinary)
+	{
+		if (_version == "0.1" || _version == "0.2" || _version == "0.3" || _version == "0.4")
+		{
+			if (!seekToFirstType(BUNDLE_TYPE_ANIMATIONS))
+				return false;
+		}
+		else
+		{
+			// if id is not a null string, we need to add a suffix of "animation" for seeding.
+			std::string id_ = aname;
+			if (aname != "") id_ = aname + "animation";
+
+			if (!seekToFirstType(BUNDLE_TYPE_ANIMATIONS, id_))
+				return false;
+		}
+		unsigned int animNum = 1;
+		if (_version == "0.3" || _version == "0.4")
+		{
+			if (!_binaryReader.read(&animNum))
+			{
+				CCLOG("warning: Failed to read AnimationData: animNum '%s'.", _path.c_str());
+				return false;
+			}
+		}
+
+		bool has_found = false;
+		for (unsigned int k = 0; k < animNum; ++k)
+		{
+			Animation3DData* animationdata = new (std::nothrow) Animation3DData();
+			animationdata->resetData();
+			std::string animId = _binaryReader.readString();
+
+			if (!_binaryReader.read(&animationdata->_totalTime))
+			{
+				CCLOG("warning: Failed to read AnimationData: totalTime '%s'.", _path.c_str());
+				return false;
+			}
+
+			unsigned int nodeAnimationNum;
+			if (!_binaryReader.read(&nodeAnimationNum))
+			{
+				CCLOG("warning: Failed to read AnimationData: animNum '%s'.", _path.c_str());
+				return false;
+			}
+			for (unsigned int i = 0; i < nodeAnimationNum; ++i)
+			{
+				std::string boneName = _binaryReader.readString();
+				unsigned int keyframeNum;
+				if (!_binaryReader.read(&keyframeNum))
+				{
+					CCLOG("warning: Failed to read AnimationData: keyframeNum '%s'.", _path.c_str());
+					return false;
+				}
+
+				animationdata->_rotationKeys[boneName].reserve(keyframeNum);
+				animationdata->_scaleKeys[boneName].reserve(keyframeNum);
+				animationdata->_translationKeys[boneName].reserve(keyframeNum);
+
+				for (unsigned int j = 0; j < keyframeNum; ++j)
+				{
+					float keytime;
+					if (!_binaryReader.read(&keytime))
+					{
+						CCLOG("warning: Failed to read AnimationData: keytime '%s'.", _path.c_str());
+						return false;
+					}
+
+					// transform flag
+					unsigned char transformFlag(0);
+					if (_version != "0.1" && _version != "0.2" && _version != "0.3")
+					{
+						if (!_binaryReader.read(&transformFlag))
+						{
+							CCLOG("warning: Failed to read AnimationData: transformFlag '%s'.", _path.c_str());
+							return false;
+						}
+					}
+
+					// rotation
+					bool hasRotate = true;
+					if (_version != "0.1" && _version != "0.2" && _version != "0.3")
+						hasRotate = transformFlag & 0x01;
+
+					if (hasRotate)
+					{
+						Quaternion  rotate;
+						if (_binaryReader.read(&rotate, 4, 4) != 4)
+						{
+							CCLOG("warning: Failed to read AnimationData: rotate '%s'.", _path.c_str());
+							return false;
+						}
+						animationdata->_rotationKeys[boneName].push_back(Animation3DData::QuatKey(keytime, rotate));
+					}
+
+					// scale
+					bool hasScale = true;
+					if (_version != "0.1" && _version != "0.2" && _version != "0.3")
+						hasScale = (transformFlag >> 1) & 0x01;
+
+					if (hasScale)
+					{
+						Vec3 scale;
+						if (_binaryReader.read(&scale, 4, 3) != 3)
+						{
+							CCLOG("warning: Failed to read AnimationData: scale '%s'.", _path.c_str());
+							return false;
+						}
+						animationdata->_scaleKeys[boneName].push_back(Animation3DData::Vec3Key(keytime, scale));
+					}
+
+					// translation
+					bool hasTranslation = true;
+					if (_version != "0.1" && _version != "0.2" && _version != "0.3")
+						hasTranslation = (transformFlag >> 2) & 0x01;
+
+					if (hasTranslation)
+					{
+						Vec3 position;
+						if (_binaryReader.read(&position, 4, 3) != 3)
+						{
+							CCLOG("warning: Failed to read AnimationData: position '%s'.", _path.c_str());
+							return false;
+						}
+						animationdata->_translationKeys[boneName].push_back(Animation3DData::Vec3Key(keytime, position));
+					}
+				}
+			}
+			ret = loadAnimationDataBinary(aname, animationdata);
+			animations[aname] = animationdata;
+		}
+	}
+	else
+	{
+		std::string anim = "";
+		if (_version == "1.2" || _version == "0.2")
+			anim = ANIMATION;
+		else
+			anim = ANIMATIONS;
+		if (!_jsonReader.HasMember(anim.c_str())) return false;
+		int the_index = -1;
+		const rapidjson::Value& animarray = _jsonReader[anim.c_str()];
+
+		if (animarray.Size() == 0) return false;
+		for (unsigned int i = 0; i < animarray.Size(); i++)
+		{
+			Animation3DData* animationdata = new (std::nothrow) Animation3DData();
+			const rapidjson::Value& anim_val = animarray[(rapidjson::SizeType)i];
+
+			ret = loadAnimationDataJson(anim_val[ID].GetString(), animationdata);
+			animations[aname] = animationdata;
+		}
+	}
+	return ret;
+}
+
+bool Bundle3D::toJson(const std::string& path)
+{
+	//3d data
+	MeshDatas meshdatas;
+	MaterialDatas materialdatas;
+	AnimaDatas animationdatas;
+	NodeDatas nodedatas;
+
+	//swap data
+	std::map<std::string, SkinData*> skindatas;
+
+	std::string fullPath = FileUtils::getInstance()->fullPathForFilename(path);
+	std::string ext = FileUtils::getInstance()->getFileExtension(path);
+	if (ext == ".obj")
+	{
+		//obj files didn't contain animation
+		return Bundle3D::loadObj(meshdatas, materialdatas, nodedatas, fullPath);
+	}
+	else if (ext == ".c3b" || ext == ".c3t")
+	{
+		//load from .c3b or .c3t
+		auto bundle = Bundle3D::createBundle();
+		if (!bundle->load(fullPath))
+		{
+			Bundle3D::destroyBundle(bundle);
+			return false;
+		}
+		auto ret = bundle->loadMeshDatas(meshdatas)
+			&& bundle->loadMaterials(materialdatas) && bundle->loadNodes(nodedatas)
+			&& bundle->loadAnimationDatas(animationdatas);
+		Bundle3D::destroyBundle(bundle);
+		return ret;
+	}
+
+	
+	//convert c3b to c3t
+	rapidjson::Document doc;
+	rapidjson::Document::AllocatorType& allocator = doc.GetAllocator();
+	doc.SetObject();
+	doc.AddMember("version", 0.3, allocator);
+	doc.AddMember("id", "", allocator);
+	rapidjson::Value _meshes(rapidjson::kArrayType);
+	rapidjson::Value _materials(rapidjson::kArrayType);
+	rapidjson::Value _nodes(rapidjson::kArrayType);
+	rapidjson::Value _animations(rapidjson::kArrayType);
+	doc.AddMember("meshes", _meshes, allocator);
+	doc.AddMember("materials", _materials, allocator);
+	doc.AddMember("nodes", _nodes, allocator);
+	doc.AddMember("animations", _animations, allocator);
+	
+	//meshes
+	for (unsigned int i = 0; i < meshdatas.meshDatas.size(); i++)
+	{
+		rapidjson::Value mesh(rapidjson::kObjectType);
+		_meshes.PushBack(mesh,allocator);
+		rapidjson::Value  attributes(rapidjson::kArrayType);
+		rapidjson::Value  vertices(rapidjson::kArrayType);
+		rapidjson::Value  parts(rapidjson::kArrayType);
+
+		mesh.AddMember("attributes",attributes,allocator);
+		mesh.AddMember("vertices",vertices,allocator);
+		mesh.AddMember("parts",parts,allocator);
+
+		MeshData* md = meshdatas.meshDatas[i];
+		for (unsigned int j = 0; j < md->attribs.size(); j++)
+		{
+			rapidjson::Value  attri(rapidjson::kObjectType);
+			attributes.PushBack(attri, allocator);
+			attri.AddMember("size", md->attribs[j].size, allocator);
+			rapidjson::Value gltype(this->parseGLType(md->attribs[j].type).c_str(), allocator);
+			attri.AddMember("type", gltype, allocator);
+			rapidjson::Value attritype(this->parseGLProgramAttribute(md->attribs[j].vertexAttrib).c_str(), allocator);
+			attri.AddMember("attribute", attritype, allocator);
+		}
+		for (unsigned int j = 0; j < md->vertex.size(); j++)
+		{
+			vertices.PushBack(md->vertex[j], allocator);
+		}
+		for (unsigned int j = 0; j < md->subMeshIds.size(); j++)
+		{
+			rapidjson::Value  part(rapidjson::kObjectType);
+			parts.PushBack(part, allocator);
+			part.AddMember("id", rapidjson::Value(md->subMeshIds[j].c_str(), allocator), allocator);
+			part.AddMember("type", rapidjson::Value(TRIANGLES, allocator), allocator);
+			rapidjson::Value indices(rapidjson::kArrayType);
+			part.AddMember("indices", indices, allocator);
+			for (unsigned int k = 0; k < md->subMeshIndices[j].size(); k++)
+			{
+				indices.PushBack(md->subMeshIndices[j][k], allocator);
+			}
+		}
+	}
+
+	//material
+	for (unsigned int i = 0; i < materialdatas.materials.size(); i++)
+	{
+		rapidjson::Value material(rapidjson::kObjectType);
+		_materials.PushBack(material, allocator);
+		std::string ids = materialdatas.materials[i].id;
+		material.AddMember("id", rapidjson::Value(ids.c_str(), allocator), allocator);
+		rapidjson::Value ambient(rapidjson::kArrayType);
+		ambient.PushBack(materialdatas.materials[i].ambient[0], allocator);
+		ambient.PushBack(materialdatas.materials[i].ambient[1], allocator);
+		ambient.PushBack(materialdatas.materials[i].ambient[2], allocator);
+		material.AddMember("ambient", ambient,allocator);
+		rapidjson::Value diffuse(rapidjson::kArrayType);
+		diffuse.PushBack(materialdatas.materials[i].diffuse[0], allocator);
+		diffuse.PushBack(materialdatas.materials[i].diffuse[1], allocator);
+		diffuse.PushBack(materialdatas.materials[i].diffuse[2], allocator);
+		material.AddMember("diffuse", diffuse, allocator);
+		rapidjson::Value emissive(rapidjson::kArrayType);
+		emissive.PushBack(materialdatas.materials[i].emissive[0], allocator);
+		emissive.PushBack(materialdatas.materials[i].emissive[1], allocator);
+		emissive.PushBack(materialdatas.materials[i].emissive[2], allocator);
+		material.AddMember("emissive", emissive, allocator);
+		material.AddMember("opacity", materialdatas.materials[i].opacity, allocator);
+		rapidjson::Value specular(rapidjson::kArrayType);
+		specular.PushBack(materialdatas.materials[i].specular[0], allocator);
+		specular.PushBack(materialdatas.materials[i].specular[1], allocator);
+		specular.PushBack(materialdatas.materials[i].specular[2], allocator);
+		material.AddMember("specular", specular, allocator);
+		material.AddMember("shininess", materialdatas.materials[i].shininess, allocator);
+		rapidjson::Value textures(rapidjson::kArrayType);
+		material.AddMember("textures", textures, allocator);
+		for (unsigned int j = 0; j < materialdatas.materials[i].textures.size(); j++)
+		{
+			rapidjson::Value texture(rapidjson::kObjectType);
+			NTextureData ntd = materialdatas.materials[i].textures[j];
+			texture.AddMember("id", rapidjson::Value(ntd.id.c_str(), allocator), allocator);
+			texture.AddMember("filename", rapidjson::Value(ntd.filename.c_str(), allocator), allocator);
+			rapidjson::Value rtype = rapidjson::Value(this->parseGLTextureType(ntd.type).c_str(), allocator);
+			texture.AddMember("type", rtype, allocator);
+			texture.AddMember("wrapModeU", rapidjson::Value(this->parseGLType(ntd.wrapS).c_str(), allocator), allocator);
+			texture.AddMember("wrapModeV", rapidjson::Value(this->parseGLType(ntd.wrapT).c_str(), allocator), allocator);
+		}
+	}
+
+	// nodes, CCNode, Sprite3D or part of Sprite3D
+	for (unsigned int i = 0; i < nodedatas.nodes.size(); i++)
+	{
+		rapidjson::Value node(rapidjson::kObjectType);
+		_nodes.PushBack(node, allocator);
+		node.AddMember("id", rapidjson::Value(nodedatas.nodes[i]->id.c_str(), allocator), allocator);
+		node.AddMember<bool>("skeleton", false, allocator);
+		rapidjson::Value transform(rapidjson::kArrayType);
+		node.AddMember("transform", transform, allocator);
+		Mat4 mat = nodedatas.nodes[i]->transform;
+		for (unsigned int j = 0; j < 16; j++)
+		{
+			transform.PushBack(mat.m[j], allocator);
+		}
+		rapidjson::Value parts(rapidjson::kArrayType);
+		node.AddMember("parts", parts, allocator);
+		for (unsigned int j = 0; j < nodedatas.nodes[i]->modelNodeDatas.size(); j++)
+		{
+			ModelData* mod = nodedatas.nodes[i]->modelNodeDatas[j];
+			rapidjson::Value part(rapidjson::kObjectType);
+			parts.PushBack(part, allocator);
+			part.AddMember("meshpartid", rapidjson::Value(mod->subMeshId.c_str(),allocator),allocator);
+			part.AddMember("materialid", rapidjson::Value(mod->materialId.c_str(), allocator), allocator);
+			rapidjson::Value bones(rapidjson::kArrayType);
+			part.AddMember(rapidjson::Value(BONES, allocator), bones, allocator);
+			for (unsigned int k = 0; k < mod->bones.size(); k++)
+			{
+				rapidjson::Value bone(rapidjson::kObjectType);
+				bones.PushBack(bone, allocator);
+				bone.AddMember("node", rapidjson::Value(mod->bones[k].c_str(),allocator), allocator);
+				rapidjson::Value transform(rapidjson::kArrayType);
+				bone.AddMember("transform", transform, allocator);
+				Mat4 mat = mod->invBindPose[k];
+				for (unsigned int n = 0; n < 16; n++)
+				{
+					transform.PushBack(mat.m[n], allocator);
+				}
+			}
+			rapidjson::Value uvmaps(rapidjson::kArrayType);
+			rapidjson::Value uvmaping(rapidjson::kArrayType);
+			uvmaps.PushBack(uvmaping, allocator);
+			uvmaping.PushBack(0, allocator);
+			part.AddMember("uvMapping", uvmaps, allocator);
+		}
+	}
+	
+	//skeleton tree
+	for (unsigned int i = 0; i < nodedatas.skeleton.size(); i++)
+	{
+		rapidjson::Value node(rapidjson::kObjectType);
+		_nodes.PushBack(node, allocator);
+		node.AddMember("id", rapidjson::Value(nodedatas.skeleton[i]->id.c_str(), allocator), allocator);
+		node.AddMember<bool>("skeleton", true, allocator);
+		rapidjson::Value transform(rapidjson::kArrayType);
+		node.AddMember("transform", transform, allocator);
+		Mat4 mat = nodedatas.skeleton[i]->transform;
+		for (unsigned int j = 0; j < 16; j++)
+		{
+			transform.PushBack(mat.m[j], allocator);
+		}
+		this->saveSkeletonChildren(nodedatas.skeleton, node, allocator);
+	}
+	
+	for (AnimaDatas::iterator it = animationdatas.begin(); it != animationdatas.end();it++)
+	{
+		rapidjson::Value animation(rapidjson::kObjectType);
+		_animations.PushBack(animation, allocator);
+		animation.AddMember("id", rapidjson::Value(it->first.c_str(),allocator), allocator);
+		animation.AddMember<float>("length", it->second->_totalTime, allocator);
+		rapidjson::Value bones(rapidjson::kArrayType);
+		animation.AddMember("bones", bones, allocator);
+		std::map<std::string, std::vector<Animation3DData::Vec3Key>>::iterator ittrans;
+		std::map<std::string, std::vector<Animation3DData::Vec3Key>>::iterator itscale;
+		std::map<std::string, std::vector<Animation3DData::QuatKey>>::iterator itrot;
+		for (ittrans = it->second->_translationKeys.begin(); ittrans != it->second->_translationKeys.end(); ittrans++)
+		{
+			rapidjson::Value bone(rapidjson::kObjectType);
+			bones.PushBack(bone, allocator);
+			bone.AddMember("boneId", rapidjson::Value(ittrans->first.c_str(), allocator), allocator);
+			rapidjson::Value keyframes(rapidjson::kArrayType);
+			bone.AddMember("keyframes", keyframes, allocator);
+			itscale = it->second->_scaleKeys.find(ittrans->first);
+			itrot = it->second->_rotationKeys.find(ittrans->first);
+			for (unsigned int i = 0; i < ittrans->second.size(); i++)
+			{
+				rapidjson::Value keyframe(rapidjson::kObjectType);
+				keyframes.PushBack(keyframe, allocator);
+				Animation3DData::Vec3Key trans = ittrans->second[i];
+				keyframe.AddMember<float>("keytime", trans._time, allocator);
+				rapidjson::Value rotation(rapidjson::kArrayType);
+				rotation.PushBack(itrot->second[i]._key.x, allocator);
+				rotation.PushBack(itrot->second[i]._key.y, allocator);
+				rotation.PushBack(itrot->second[i]._key.z, allocator);
+				rotation.PushBack(itrot->second[i]._key.w, allocator);
+				keyframe.AddMember("rotation", rotation, allocator);
+				rapidjson::Value scale(rapidjson::kArrayType);
+				scale.PushBack(itscale->second[i]._key.x, allocator);
+				scale.PushBack(itscale->second[i]._key.y, allocator);
+				scale.PushBack(itscale->second[i]._key.z, allocator);
+				keyframe.AddMember("scale", scale, allocator);
+				rapidjson::Value rtrans(rapidjson::kArrayType);
+				rtrans.PushBack(ittrans->second[i]._key.x, allocator);
+				rtrans.PushBack(ittrans->second[i]._key.y, allocator);
+				rtrans.PushBack(ittrans->second[i]._key.z, allocator);
+				keyframe.AddMember("translation", rtrans, allocator);
+			}
+		}
+	}
+	
+	rapidjson::StringBuffer buffer;
+	rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
+	doc.Accept(writer);
+	std::string json_str = buffer.GetString();
+	FileUtils::getInstance()->writeStringToFile(json_str, path);
+	return true;
+}
+
+bool cocos2d::Bundle3D::saveSkeletonChildren(std::vector<NodeData*>& skeletons, rapidjson::Value& parentnode, rapidjson::Document::AllocatorType& allocator)
+{
+	if (skeletons.size() > 0)
+	{
+		rapidjson::Value nodes(rapidjson::kArrayType);
+		parentnode.AddMember(rapidjson::Value(CHILDREN, allocator), nodes, allocator);
+		for (unsigned int i = 0; i < skeletons.size(); i++)
+		{
+			rapidjson::Value node(rapidjson::kObjectType);
+			nodes.PushBack(node, allocator);
+			node.AddMember("id", rapidjson::Value(skeletons[i]->id.c_str(), allocator), allocator);
+			rapidjson::Value bolval;
+			bolval.SetBool(true);
+			node.AddMember("skeleton", bolval, allocator);
+			rapidjson::Value transform(rapidjson::kArrayType);
+			node.AddMember("transform", transform, allocator);
+			Mat4 mat = skeletons[i]->transform;
+			for (unsigned int j = 0; j < 16; j++)
+			{
+				transform.PushBack(mat.m[j], allocator);
+			}
+			this->saveSkeletonChildren(skeletons[i]->children, node, allocator);
+		}
+		return true;
+	}
+	return false;
+}
+
+bool Bundle3D::toBinary(const std::string& path)
+{
+	//TODO:convert c3t to c3b
+	//3d data
+	MeshDatas meshdatas;
+	MaterialDatas materialdatas;
+	AnimaDatas animationdatas;
+	NodeDatas nodedatas;
+
+	//swap data
+	std::map<std::string, SkinData*> skindatas;
+
+	std::string fullPath = FileUtils::getInstance()->fullPathForFilename(path);
+	std::string ext = FileUtils::getInstance()->getFileExtension(path);
+	if (ext == ".obj")
+	{
+		//obj files didn't contain animation
+		return Bundle3D::loadObj(meshdatas, materialdatas, nodedatas, fullPath);
+	}
+	else if (ext == ".c3b" || ext == ".c3t")
+	{
+		//load from .c3b or .c3t
+		auto bundle = Bundle3D::createBundle();
+		if (!bundle->load(fullPath))
+		{
+			Bundle3D::destroyBundle(bundle);
+			return false;
+		}
+		auto ret = bundle->loadMeshDatas(meshdatas)
+			&& bundle->loadMaterials(materialdatas) && bundle->loadNodes(nodedatas)
+			&& bundle->loadAnimationDatas(animationdatas);
+		Bundle3D::destroyBundle(bundle);
+		return ret;
+	}
+	//TODO:convert c3t to c3b
+
+
+	return false;
+}
+
 
 bool Bundle3D::loadObj(MeshDatas& meshdatas, MaterialDatas& materialdatas, NodeDatas& nodedatas, const std::string& fullPath, const char* mtl_basepath)
 {
@@ -357,6 +867,8 @@ bool Bundle3D::loadAnimationData(const std::string& id, Animation3DData* animati
         return loadAnimationDataJson(id,animationdata);
     }
 }
+
+
 
 //since 3.3, to support reskin
 bool Bundle3D::loadMeshDatas(MeshDatas& meshdatas)
@@ -731,6 +1243,9 @@ bool Bundle3D::loadMeshDatasBinary_0_2(MeshDatas& meshdatas)
     
     return true;
 }
+
+
+
 bool  Bundle3D::loadMeshDatasJson(MeshDatas& meshdatas)
 {
     const rapidjson::Value& mesh_data_array = _jsonReader[MESHES];
@@ -1100,7 +1615,8 @@ bool Bundle3D::loadBinary(const std::string& path)
         CCLOG("warning: Invalid identifier: %s", path.c_str());
         return false;
     }
-    
+	_sig = sig;
+
     // Read version
     unsigned char ver[2];
     if (_binaryReader.read(ver, 1, 2)!= 2){
@@ -1138,6 +1654,7 @@ bool Bundle3D::loadBinary(const std::string& path)
     
     return true;
 }
+
 
 bool Bundle3D::loadMeshDataJson_0_1(MeshDatas& meshdatas)
 {
@@ -1438,18 +1955,6 @@ bool Bundle3D::loadMaterialDataJson_0_2(MaterialDatas& materialdatas)
     return true;
 }
 
-bool loadMaterialDataJson(MaterialData* /*materialdata*/)
-{
-    return true;
-}
-
-bool loadMaterialDataJson_0_1(MaterialData* /*materialdata*/){
-    return true;
-}
-
-bool loadMaterialDataJson_0_2(MaterialData* /*materialdata*/){
-    return true;
-}
 
 bool Bundle3D::loadAnimationDataJson(const std::string& id, Animation3DData* animationdata)
 {
@@ -1659,7 +2164,6 @@ bool Bundle3D::loadAnimationDataBinary(const std::string& id, Animation3DData* a
                     animationdata->_translationKeys[boneName].push_back(Animation3DData::Vec3Key(keytime, position));
                 }
             }
-
         }
         if( id == animId || id.empty())
         {
@@ -2023,6 +2527,52 @@ GLenum Bundle3D::parseGLType(const std::string& str)
         return 0;
     }
 }
+
+std::string cocos2d::Bundle3D::parseGLType(GLenum str)
+{
+	if (str == GL_BYTE)
+	{
+		return "GL_BYTE";
+	}
+	else if (str == GL_UNSIGNED_BYTE)
+	{
+		return "GL_UNSIGNED_BYTE";
+	}
+	else if (str == GL_SHORT)
+	{
+		return "GL_SHORT";
+	}
+	else if (str == GL_UNSIGNED_SHORT)
+	{
+		return "GL_UNSIGNED_SHORT";
+	}
+	else if (str == GL_INT)
+	{
+		return "GL_INT";
+	}
+	else if (str == GL_UNSIGNED_INT)
+	{
+		return "GL_UNSIGNED_INT";
+	}
+	else if (str == GL_FLOAT)
+	{
+		return "GL_FLOAT";
+	}
+	else if (str == GL_REPEAT)
+	{
+		return "REPEAT";
+	}
+	else if (str == GL_CLAMP_TO_EDGE)
+	{
+		return "CLAMP";
+	}
+	else
+	{
+		CCASSERT(false, "Invalid GL type");
+		return "INVALID";
+	}
+}
+
 NTextureData::Usage Bundle3D::parseGLTextureType(const std::string& str)
 {
     if (str == "AMBIENT")
@@ -2071,6 +2621,57 @@ NTextureData::Usage Bundle3D::parseGLTextureType(const std::string& str)
         return NTextureData::Usage::Unknown;
     }
 }
+
+std::string cocos2d::Bundle3D::parseGLTextureType(NTextureData::Usage str)
+{
+	if (str == NTextureData::Usage::Ambient)
+	{
+		return "AMBIENT";
+	}
+	else if (str == NTextureData::Usage::Bump)
+	{
+		return "BUMP";
+	}
+	else if (str == NTextureData::Usage::Diffuse)
+	{
+		return "DIFFUSE";
+	}
+	else if (str == NTextureData::Usage::Emissive)
+	{
+		return "EMISSIVE";
+	}
+	else if (str == NTextureData::Usage::None)
+	{
+		return "NONE";
+	}
+	else if (str == NTextureData::Usage::Normal)
+	{
+		return "NORMAL";
+	}
+	else if (str == NTextureData::Usage::Reflection)
+	{
+		return "REFLECTION";
+	}
+	else if (str == NTextureData::Usage::Shininess)
+	{
+		return "SHININESS";
+	}
+	else if (str == NTextureData::Usage::Specular)
+	{
+		return "SPECULAR";
+	}
+	else if (str == NTextureData::Usage::Transparency)
+	{
+		return "TRANSPARENCY";
+	}
+	else if (str == NTextureData::Usage::Unknown)
+	{
+		CCASSERT(false, "Wrong Texture type");
+		return "UNKNOWN";
+	}
+	return "UNKNOWN";
+}
+
 unsigned int Bundle3D::parseGLProgramAttribute(const std::string& str)
 {
     if (str == "VERTEX_ATTRIB_POSITION")
@@ -2139,6 +2740,78 @@ unsigned int Bundle3D::parseGLProgramAttribute(const std::string& str)
         CCASSERT(false, "Wrong Attribute type");
         return -1;
     }
+}
+
+
+
+std::string cocos2d::Bundle3D::parseGLProgramAttribute(int str)
+{
+	if (str == GLProgram::VERTEX_ATTRIB_POSITION)
+	{
+		return "VERTEX_ATTRIB_POSITION";
+	}
+	else if (str == GLProgram::VERTEX_ATTRIB_COLOR)
+	{
+		return "VERTEX_ATTRIB_COLOR";
+	}
+	else if (str == GLProgram::VERTEX_ATTRIB_TEX_COORD)
+	{
+		return "VERTEX_ATTRIB_TEX_COORD";
+	}
+	else if (str == GLProgram::VERTEX_ATTRIB_TEX_COORD1)
+	{
+		return "VERTEX_ATTRIB_TEX_COORD1";
+	}
+	else if (str == GLProgram::VERTEX_ATTRIB_TEX_COORD2)
+	{
+		return "VERTEX_ATTRIB_TEX_COORD2";
+	}
+	else if (str == GLProgram::VERTEX_ATTRIB_TEX_COORD3)
+	{
+		return "VERTEX_ATTRIB_TEX_COORD3";
+	}
+	//comment out them
+	//    else if (str == GLProgram::VERTEX_ATTRIB_TEX_COORD4)
+	//    {
+	//        return "VERTEX_ATTRIB_TEX_COORD4";
+	//    }
+	//    else if (str == GLProgram::VERTEX_ATTRIB_TEX_COORD5)
+	//    {
+	//        return "VERTEX_ATTRIB_TEX_COORD5";
+	//    }
+	//    else if (str == GLProgram::VERTEX_ATTRIB_TEX_COORD6)
+	//    {
+	//        return "VERTEX_ATTRIB_TEX_COORD6";
+	//    }
+	//    else if (str == GLProgram::VERTEX_ATTRIB_TEX_COORD7)
+	//    {
+	//        return "VERTEX_ATTRIB_TEX_COORD7";
+	//    }
+	else if (str == GLProgram::VERTEX_ATTRIB_NORMAL)
+	{
+		return "VERTEX_ATTRIB_NORMAL";
+	}
+	else if (str == GLProgram::VERTEX_ATTRIB_BLEND_WEIGHT)
+	{
+		return "VERTEX_ATTRIB_BLEND_WEIGHT";
+	}
+	else if (str == GLProgram::VERTEX_ATTRIB_BLEND_INDEX)
+	{
+		return "VERTEX_ATTRIB_BLEND_INDEX";
+	}
+	else if (str == GLProgram::VERTEX_ATTRIB_TANGENT)
+	{
+		return "VERTEX_ATTRIB_TANGENT";
+	}
+	else if (str == GLProgram::VERTEX_ATTRIB_BINORMAL)
+	{
+		return "VERTEX_ATTRIB_BINORMAL";
+	}
+	else
+	{
+		CCASSERT(false, "Wrong Attribute type");
+		return "";
+	}
 }
 
 void Bundle3D::getModelRelativePath(const std::string& path)
