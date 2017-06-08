@@ -185,6 +185,7 @@ public:
     virtual Sequence* reverse() const override;
     virtual void startWithTarget(Node *target) override;
     virtual void stop(void) override;
+    virtual bool isDone() const override;
     /**
      * @param t In seconds.
      */
