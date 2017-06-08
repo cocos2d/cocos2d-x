@@ -47,7 +47,7 @@ class ExtraAction : public FiniteTimeAction
 public:
     static ExtraAction* create();
     virtual ExtraAction* clone() const;
-    virtual ExtraAction* reverse(void) const;
+    virtual ExtraAction* reverse() const;
     virtual void update(float time);
     virtual void step(float dt);
 };
@@ -335,7 +335,7 @@ void Sequence::startWithTarget(Node *target)
     _last = -1;
 }
 
-void Sequence::stop(void)
+void Sequence::stop()
 {
     // Issue #1305
     if( _last != - 1 && _actions[_last])
@@ -465,13 +465,13 @@ bool Repeat::initWithAction(FiniteTimeAction *action, unsigned int times)
     return false;
 }
 
-Repeat* Repeat::clone(void) const
+Repeat* Repeat::clone() const
 {
     // no copy constructor
     return Repeat::create(_innerAction->clone(), _times);
 }
 
-Repeat::~Repeat(void)
+Repeat::~Repeat()
 {
     CC_SAFE_RELEASE(_innerAction);
 }
@@ -484,7 +484,7 @@ void Repeat::startWithTarget(Node *target)
     _innerAction->startWithTarget(target);
 }
 
-void Repeat::stop(void)
+void Repeat::stop()
 {
     _innerAction->stop();
     ActionInterval::stop();
@@ -541,7 +541,7 @@ void Repeat::update(float dt)
     }
 }
 
-bool Repeat::isDone(void) const
+bool Repeat::isDone() const
 {
     return _total == _times;
 }
@@ -768,7 +768,7 @@ bool Spawn::initWithTwoActions(FiniteTimeAction *action1, FiniteTimeAction *acti
     return ret;
 }
 
-Spawn* Spawn::clone(void) const
+Spawn* Spawn::clone() const
 {
     // no copy constructor
     if (_one && _two)
@@ -784,7 +784,7 @@ Spawn::Spawn()
     
 }
 
-Spawn::~Spawn(void)
+Spawn::~Spawn()
 {
     CC_SAFE_RELEASE(_one);
     CC_SAFE_RELEASE(_two);
@@ -808,7 +808,7 @@ void Spawn::startWithTarget(Node *target)
     _two->startWithTarget(target);
 }
 
-void Spawn::stop(void)
+void Spawn::stop()
 {
     if (_one)
         _one->stop();
@@ -925,7 +925,7 @@ bool RotateTo::initWithDuration(float duration, const Vec3& dstAngle3D)
     return false;
 }
 
-RotateTo* RotateTo::clone(void) const
+RotateTo* RotateTo::clone() const
 {
     // no copy constructor
     auto a = new (std::nothrow) RotateTo();
@@ -1491,7 +1491,7 @@ ResizeTo* ResizeTo::create(float duration, const cocos2d::Size& final_size)
     return ret;
 }
 
-ResizeTo* ResizeTo::clone(void) const
+ResizeTo* ResizeTo::clone() const
 {
     // no copy constructor
     ResizeTo* a = new (std::nothrow) ResizeTo();
@@ -2103,7 +2103,7 @@ void Blink::startWithTarget(Node *target)
     _originalState = target->isVisible();
 }
 
-Blink* Blink::clone(void) const
+Blink* Blink::clone() const
 {
     // no copy constructor
     return Blink::create(_duration, _times);
@@ -2505,7 +2505,7 @@ void ReverseTime::startWithTarget(Node *target)
     _other->startWithTarget(target);
 }
 
-void ReverseTime::stop(void)
+void ReverseTime::stop()
 {
     _other->stop();
     ActionInterval::stop();
