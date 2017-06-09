@@ -24,10 +24,14 @@
 
 const char* ccShader_LayerRadialGradient_frag = R"(
 
+#ifdef GL_ES
+precision highp float;
+#endif
+
 uniform vec4 u_startColor;
 uniform vec4 u_endColor;
-uniform highp vec2 u_center;
-uniform highp float u_radius;
+uniform vec2 u_center;
+uniform float u_radius;
 uniform float u_expand;
 
 #ifdef GL_ES
@@ -38,7 +42,7 @@ varying vec4 v_position;
 
 void main()
 {
-    highp float d = distance(v_position.xy, u_center) / u_radius;
+    float d = distance(v_position.xy, u_center) / u_radius;
     if (d <= 1.0)
     {
         if (d <= u_expand)
