@@ -984,6 +984,13 @@ private:
                 case PropertyType::FLOAT_XY:
                 {
                     Point xy = parsePropTypeFloatXY();
+                    if (animatedProperties.find(propertyName) != animatedProperties.end())
+                    {
+                        ValueVector baseValue;
+                        baseValue.push_back(Value(xy.x));
+                        baseValue.push_back(Value(xy.y));
+                        baseValues.emplace(propertyName, Value(baseValue));
+                    }
                     loader->onHandlePropTypeFloatXY(propertyName, isExtraProp, xy);
                     break;
                 }
