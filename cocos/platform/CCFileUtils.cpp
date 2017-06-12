@@ -1252,6 +1252,7 @@ void FileUtils::listFilesRecursively(const std::string& dirPath, std::vector<std
 #include <sys/types.h>
 #include <errno.h>
 #include <dirent.h>
+#include <ftw.h>
 
 bool FileUtils::isDirectoryExistInternal(const std::string& dirPath) const
 {
@@ -1326,16 +1327,27 @@ bool FileUtils::createDirectory(const std::string& path)
     return true;
 }
 
+namespace
+{
+    int unlink_cb(const char *fpath, const struct stat *sb, int typeflag, struct FTW *ftwbuf)
+    {
+        int rv = remove(fpath);
+        
+        if (rv)
+            perror(fpath);
+        
+        return rv;
+    }
+
+}
+
 bool FileUtils::removeDirectory(const std::string& path)
 {
 #if !defined(CC_TARGET_OS_TVOS)
-    std::string command = "rm -r ";
-    // Path may include space.
-    command += "\"" + path + "\"";
-    if (system(command.c_str()) >= 0)
-        return true;
-    else
+    if (nftw(path.c_str(), unlink_cb, 64, FTW_DEPTH | FTW_PHYS) == -1)
         return false;
+    else
+        return true;
 #else
     return false;
 #endif
