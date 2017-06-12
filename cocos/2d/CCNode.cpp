@@ -115,6 +115,10 @@ Node::Node()
 , _physicsBody(nullptr)
 #endif
 , _anchorPoint(0, 0)
+, _onEnterCallback(nullptr)
+, _onExitCallback(nullptr)
+, _onEnterTransitionDidFinishCallback(nullptr)
+, _onExitTransitionDidStartCallback(nullptr)
 {
     // set default scheduler and actionManager
     _director = Director::getInstance();
