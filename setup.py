@@ -188,7 +188,7 @@ class SetEnvVar(object):
 
         file = open(self.file_used_for_setup, 'a')
         file.write('\n# Add environment variable %s for cocos2d-x\n' % key)
-        file.write('export %s=%s\n' % (key, value))
+        file.write('export %s="%s"\n' % (key, value))
         file.write('export PATH=$%s:$PATH\n' % key)
         if key == ANDROID_SDK_ROOT:
             file.write(
