@@ -24,6 +24,10 @@
 
 const char* ccShader_LayerRadialGradient_frag = R"(
 
+#ifdef GL_ES
+precision highp float;
+#endif
+
 uniform vec4 u_startColor;
 uniform vec4 u_endColor;
 uniform vec2 u_center;
