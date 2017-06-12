@@ -23,6 +23,8 @@
  ****************************************************************************/
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 
+#define LOG_TAG "AudioEngineImpl"
+
 #include "audio/android/AudioEngine-inl.h"
 
 #include <unistd.h>
