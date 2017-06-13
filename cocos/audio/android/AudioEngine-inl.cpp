@@ -23,6 +23,8 @@
  ****************************************************************************/
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 
+#define LOG_TAG "AudioEngineImpl"
+
 #include "audio/android/AudioEngine-inl.h"
 
 #include <unistd.h>
@@ -261,7 +263,7 @@ int AudioEngineImpl::play2d(const std::string &filePath ,bool loop ,float volume
             player->setId(audioId);
             _audioPlayers.insert(std::make_pair(audioId, player));
 
-            player->setPlayEventCallback([this, player](IAudioPlayer::State state){
+            player->setPlayEventCallback([this, player, filePath](IAudioPlayer::State state){
 
                 if (state != IAudioPlayer::State::OVER && state != IAudioPlayer::State::STOPPED)
                 {
@@ -270,12 +272,14 @@ int AudioEngineImpl::play2d(const std::string &filePath ,bool loop ,float volume
                 }
 
                 int id = player->getId();
-                std::string filePath = *AudioEngine::_audioIDInfoMap[id].filePath;
 
                 ALOGV("Removing player id=%d, state:%d", id, (int)state);
 
                 AudioEngine::remove(id);
-                _audioPlayers.erase(id);
+                if (_audioPlayers.find(id) != _audioPlayers.end())
+                {
+                    _audioPlayers.erase(id);
+                }
 
                 auto iter = _callbackMap.find(id);
                 if (iter != _callbackMap.end())
