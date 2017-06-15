@@ -337,7 +337,9 @@ void Director::drawScene()
     
     if (_displayStats)
     {
+#if !CC_STRIP_FPS
         showStats();
+#endif
     }
     
     _renderer->render();
@@ -356,7 +358,9 @@ void Director::drawScene()
 
     if (_displayStats)
     {
+#if !CC_STRIP_FPS
         calculateMPF();
+#endif
     }
 }
 
@@ -1257,6 +1261,8 @@ void Director::updateFrameRate()
     _frameRate = 1.0f / _deltaTime;
 }
 
+#if !CC_STRIP_FPS
+
 // display the FPS using a LabelAtlas
 // updates the FPS every frame
 void Director::showStats()
@@ -1401,6 +1407,8 @@ void Director::createStatsLabel()
     _drawnBatchesLabel->setPosition(Vec2(0, height_spacing*1) + CC_DIRECTOR_STATS_POSITION);
     _FPSLabel->setPosition(Vec2(0, height_spacing*0)+CC_DIRECTOR_STATS_POSITION);
 }
+
+#endif // #if !CC_STRIP_FPS
 
 void Director::setContentScaleFactor(float scaleFactor)
 {
