@@ -233,13 +233,8 @@
     <ClCompile Include="..\..\..\external\flatbuffers\idl_gen_fbs.cpp" />
     <ClCompile Include="..\..\..\external\flatbuffers\idl_gen_general.cpp" />
     <ClCompile Include="..\..\..\external\flatbuffers\idl_gen_go.cpp" />
-    <ClCompile Include="..\..\..\external\flatbuffers\idl_gen_js.cpp" />
-    <ClCompile Include="..\..\..\external\flatbuffers\idl_gen_php.cpp" />
-    <ClCompile Include="..\..\..\external\flatbuffers\idl_gen_python.cpp" />
     <ClCompile Include="..\..\..\external\flatbuffers\idl_gen_text.cpp" />
     <ClCompile Include="..\..\..\external\flatbuffers\idl_parser.cpp" />
-    <ClCompile Include="..\..\..\external\flatbuffers\reflection.cpp" />
-    <ClCompile Include="..\..\..\external\flatbuffers\util.cpp" />
     <ClCompile Include="..\..\..\external\md5\md5.c">
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsWinRT>
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsWinRT>
@@ -960,13 +955,8 @@
     <ClInclude Include="..\..\..\external\clipper\clipper.hpp" />
     <ClInclude Include="..\..\..\external\ConvertUTF\ConvertUTF.h" />
     <ClInclude Include="..\..\..\external\edtaa3func\edtaa3func.h" />
-    <ClInclude Include="..\..\..\external\flatbuffers\code_generators.h" />
     <ClInclude Include="..\..\..\external\flatbuffers\flatbuffers.h" />
-    <ClInclude Include="..\..\..\external\flatbuffers\grpc.h" />
-    <ClInclude Include="..\..\..\external\flatbuffers\hash.h" />
     <ClInclude Include="..\..\..\external\flatbuffers\idl.h" />
-    <ClInclude Include="..\..\..\external\flatbuffers\reflection.h" />
-    <ClInclude Include="..\..\..\external\flatbuffers\reflection_generated.h" />
     <ClInclude Include="..\..\..\external\flatbuffers\util.h" />
     <ClInclude Include="..\..\..\external\json\allocators.h" />
     <ClInclude Include="..\..\..\external\json\document-wrapper.h" />
