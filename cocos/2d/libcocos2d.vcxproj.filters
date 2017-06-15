@@ -1312,21 +1312,6 @@
     <ClCompile Include="..\..\external\flatbuffers\idl_parser.cpp">
       <Filter>cocostudio\json\flatbuffers</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\external\flatbuffers\idl_gen_js.cpp">
-      <Filter>cocostudio\json\flatbuffers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\external\flatbuffers\idl_gen_php.cpp">
-      <Filter>cocostudio\json\flatbuffers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\external\flatbuffers\idl_gen_python.cpp">
-      <Filter>cocostudio\json\flatbuffers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\external\flatbuffers\reflection.cpp">
-      <Filter>cocostudio\json\flatbuffers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\external\flatbuffers\util.cpp">
-      <Filter>cocostudio\json\flatbuffers</Filter>
-    </ClCompile>
     <ClCompile Include="..\editor-support\cocostudio\FlatBuffersSerialize.cpp">
       <Filter>cocostudio\json</Filter>
     </ClCompile>
@@ -3178,9 +3163,6 @@
     <ClInclude Include="..\..\external\flatbuffers\util.h">
       <Filter>cocostudio\json\flatbuffers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\external\flatbuffers\hash.h">
-      <Filter>cocostudio\json\flatbuffers</Filter>
-    </ClInclude>
     <ClInclude Include="..\editor-support\cocostudio\CSParseBinary_generated.h">
       <Filter>cocostudio\json</Filter>
     </ClInclude>
@@ -3907,10 +3889,6 @@
     <ClInclude Include="..\audio\win32\AudioDecoderManager.h">
       <Filter>audioengine</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\external\flatbuffers\gprc.h" />
-    <ClInclude Include="..\..\external\flatbuffers\code_generators.h" />
-    <ClInclude Include="..\..\external\flatbuffers\reflection.h" />
-    <ClInclude Include="..\..\external\flatbuffers\reflection_generated.h" />
     <ClInclude Include="..\network\Uri.h">
       <Filter>network\Header Files</Filter>
     </ClInclude>
