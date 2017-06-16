@@ -15,3 +15,7 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+
+# cocos2d-x 3.4 exceptions:
+-keep public class org.cocos2dx.lib.**
+-keepclassmembers public class org.cocos2dx.lib.** { *; }
