@@ -96,7 +96,7 @@ public:
      * @param controlPoint A control point.
      * @param index Insert the point to array in index.
      */
-    void insertControlPoint(Vec2 &controlPoint, ssize_t index);
+    void insertControlPoint(const Vec2 &controlPoint, ssize_t index);
 
     /** Replaces an existing controlPoint at index.
      *
@@ -104,7 +104,7 @@ public:
      * @param controlPoint A control point.
      * @param index Replace the point to array in index.
      */
-    void replaceControlPoint(Vec2 &controlPoint, ssize_t index);
+    void replaceControlPoint(const Vec2 &controlPoint, ssize_t index);
 
     /** Get the value of a controlPoint at a given index.
      *
@@ -200,7 +200,7 @@ public:
      *
      * @param newPos The new position.
      */
-    virtual void updatePosition(Vec2 &newPos);
+    virtual void updatePosition(const Vec2 &newPos);
     /** Return a PointArray.
      *
      * @return A PointArray.
@@ -261,7 +261,7 @@ public:
 
     // Overrides
     virtual void startWithTarget(Node *target) override;
-    virtual void updatePosition(Vec2 &newPos) override;
+    virtual void updatePosition(const Vec2 &newPos) override;
     virtual CardinalSplineBy *clone() const override;
     virtual CardinalSplineBy* reverse() const override;
 
@@ -337,7 +337,7 @@ public:
 };
 
 /** Returns the Cardinal Spline position for a given set of control points, tension and time */
-extern CC_DLL Vec2 ccCardinalSplineAt(Vec2 &p0, Vec2 &p1, Vec2 &p2, Vec2 &p3, float tension, float t);
+extern CC_DLL Vec2 ccCardinalSplineAt(const Vec2 &p0, const Vec2 &p1, const Vec2 &p2, const Vec2 &p3, float tension, float t);
 
 // end of actions group
 /// @}
