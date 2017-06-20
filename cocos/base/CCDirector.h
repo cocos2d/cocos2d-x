@@ -593,10 +593,12 @@ protected:
     void setNextScene();
     
     void updateFrameRate();
+#if !CC_STRIP_FPS
     void showStats();
     void createStatsLabel();
     void calculateMPF();
     void getFPSImageData(unsigned char** datapointer, ssize_t* length);
+#endif
     
     /** calculates delta time since last time it was called */    
     void calculateDeltaTime();
