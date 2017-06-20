@@ -3,6 +3,7 @@
 #ifdef ANDROID
 #include <jni.h>
 #include <android/log.h>
+#include <unistd.h>
 #endif
 #include <stdlib.h>
 #include <vector>
