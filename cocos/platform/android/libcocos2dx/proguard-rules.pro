@@ -16,6 +16,7 @@
 #   public *;
 #}
 
-# cocos2d-x 3.4 exceptions:
+-dontobfuscate
+
 -keep public class org.cocos2dx.lib.**
 -keepclassmembers public class org.cocos2dx.lib.** { *; }
