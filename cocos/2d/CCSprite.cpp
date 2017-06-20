@@ -372,8 +372,10 @@ void Sprite::setTexture(const std::string &filename)
 
 void Sprite::setTexture(Texture2D *texture)
 {
-    setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP, texture));
-
+    if(_glProgramState == nullptr)
+    {
+        setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP, texture));
+    }
     // If batchnode, then texture id should be the same
     CCASSERT(! _batchNode || (texture &&  texture->getName() == _batchNode->getTexture()->getName()), "CCSprite: Batched sprites should use the same texture as the batchnode");
     // accept texture==nil as argument
