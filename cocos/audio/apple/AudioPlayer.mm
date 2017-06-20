@@ -59,6 +59,7 @@ AudioPlayer::AudioPlayer()
 , _rotateBufferThread(nullptr)
 , _timeDirty(false)
 , _isRotateThreadExited(false)
+, _needWakeupRotateThread(false)
 , _id(++__idIndex)
 {
     memset(_bufferIds, 0, sizeof(_bufferIds));
@@ -71,7 +72,7 @@ AudioPlayer::~AudioPlayer()
 
     if (_streamingSource)
     {
-        alDeleteBuffers(3, _bufferIds);
+        alDeleteBuffers(QUEUEBUFFER_NUM, _bufferIds);
     }
 }
 
@@ -172,7 +173,7 @@ bool AudioPlayer::play2d()
         }
         else
         {
-            alGenBuffers(3, _bufferIds);
+            alGenBuffers(QUEUEBUFFER_NUM, _bufferIds);
 
             auto alError = alGetError();
             if (alError == AL_NO_ERROR)
@@ -302,7 +303,12 @@ void AudioPlayer::rotateBufferThread(int offsetFrame)
                 break;
             }
 
-            _sleepCondition.wait_for(lk,std::chrono::milliseconds(75));
+            if (!_needWakeupRotateThread)
+            {
+                _sleepCondition.wait_for(lk,std::chrono::milliseconds(75));
+            }
+
+            _needWakeupRotateThread = false;
         }
 
     } while(false);
@@ -311,6 +317,12 @@ void AudioPlayer::rotateBufferThread(int offsetFrame)
     decoder.close();
     free(tmpBuffer);
     _isRotateThreadExited = true;
+}
+
+void AudioPlayer::wakeupRotateThread()
+{
+    _needWakeupRotateThread = true;
+    _sleepCondition.notify_all();
 }
 
 bool AudioPlayer::setLoop(bool loop)

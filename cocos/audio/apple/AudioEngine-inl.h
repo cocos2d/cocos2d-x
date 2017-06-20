@@ -66,6 +66,7 @@ public:
 
 private:
     void _play2d(AudioCache *cache, int audioID);
+    static ALvoid myAlSourceNotificationCallback(ALuint sid, ALuint notificationID, ALvoid* userData);
 
     ALuint _alSources[MAX_AUDIOINSTANCES];
 

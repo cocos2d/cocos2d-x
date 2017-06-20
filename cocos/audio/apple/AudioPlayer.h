@@ -27,12 +27,14 @@
 #include "platform/CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC
 
+#include "platform/CCPlatformMacros.h"
+#include "audio/apple/AudioMacros.h"
+
 #include <condition_variable>
 #include <mutex>
 #include <string>
 #include <thread>
-#import <OpenAL/al.h>
-#include "platform/CCPlatformMacros.h"
+#include <OpenAL/al.h>
 
 NS_CC_BEGIN
 namespace experimental{
@@ -57,6 +59,7 @@ protected:
     void setCache(AudioCache* cache);
     void rotateBufferThread(int offsetFrame);
     bool play2d();
+    void wakeupRotateThread();
 
     AudioCache* _audioCache;
 
@@ -72,12 +75,13 @@ protected:
     //play by circular buffer
     float _currTime;
     bool _streamingSource;
-    ALuint _bufferIds[3];
+    ALuint _bufferIds[QUEUEBUFFER_NUM];
     std::thread* _rotateBufferThread;
     std::condition_variable _sleepCondition;
     std::mutex _sleepMutex;
     bool _timeDirty;
     bool _isRotateThreadExited;
+    std::atomic_bool _needWakeupRotateThread;
 
     std::mutex _play2dMutex;
 
