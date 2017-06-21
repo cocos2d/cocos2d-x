@@ -50,7 +50,6 @@ win32-msvc-vs201*-x86
 *.sbr
 *.sdf
 obj/
-[Rr]elease/
 [Rr]elease.win32/
 _ReSharper*/
 [Tt]est[Rr]esult*
