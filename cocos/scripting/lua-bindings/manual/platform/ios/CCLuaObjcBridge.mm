@@ -128,7 +128,7 @@ int LuaObjcBridge::callObjcStaticMethod(lua_State *L)
                 [invocation getReturnValue:&ret];
                 pushValue(L, ret);
             }
-            else if (strcmp(returnType, "c") == 0) // BOOL
+            else if (strcmp(returnType, "B") == 0) // BOOL
             {
                 char ret;
                 [invocation getReturnValue:&ret];
