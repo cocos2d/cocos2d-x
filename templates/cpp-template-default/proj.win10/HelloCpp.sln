@@ -13,8 +13,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libcocos2d", "..\cocos2d\co
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HelloCpp", "App\HelloCpp.vcxproj", "{187D3E60-961A-41EE-BC18-C510A431D22E}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libbullet", "..\cocos2d\external\bullet\proj.win10\libbullet.vcxproj", "{ECEE1119-CE2E-4F7E-83A8-1932EA48E893}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "librecast", "..\cocos2d\external\recast\proj.win10\librecast.vcxproj", "{F551524D-8A70-4B2F-A7C2-28AE61150022}"
 EndProject
 Global
