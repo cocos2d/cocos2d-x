@@ -611,7 +611,7 @@ if (ccui.VideoPlayer)
 
     ccui.VideoPlayer.prototype._setURL = ccui.VideoPlayer.prototype.setURL;
     ccui.VideoPlayer.prototype.setURL = function (url) {
-        if (url.indexOf("http://") >= 0)
+        if (url.indexOf("http://") >= 0 || url.indexOf("https://") >= 0)
         {
             this._setURL(url);
         }
