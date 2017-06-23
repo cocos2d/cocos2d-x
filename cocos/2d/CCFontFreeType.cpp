@@ -255,13 +255,13 @@ int * FontFreeType::getHorizontalKerningForTextUTF32(const std::u32string& text,
 int  FontFreeType::getHorizontalKerningForChars(uint64_t firstChar, uint64_t secondChar) const
 {
     // get the ID to the char we need
-    int glyphIndex1 = FT_Get_Char_Index(_fontRef, firstChar);
+    int glyphIndex1 = FT_Get_Char_Index(_fontRef, static_cast<FT_ULong>(firstChar));
     
     if (!glyphIndex1)
         return 0;
     
     // get the ID to the char we need
-    int glyphIndex2 = FT_Get_Char_Index(_fontRef, secondChar);
+    int glyphIndex2 = FT_Get_Char_Index(_fontRef, static_cast<FT_ULong>(secondChar));
     
     if (!glyphIndex2)
         return 0;
@@ -299,12 +299,12 @@ unsigned char* FontFreeType::getGlyphBitmap(uint64_t theChar, long &outWidth, lo
 
         if (_distanceFieldEnabled)
         {
-            if (FT_Load_Char(_fontRef, theChar, FT_LOAD_RENDER | FT_LOAD_NO_HINTING | FT_LOAD_NO_AUTOHINT))
+            if (FT_Load_Char(_fontRef, static_cast<FT_ULong>(theChar), FT_LOAD_RENDER | FT_LOAD_NO_HINTING | FT_LOAD_NO_AUTOHINT))
                 break;
         }
         else
         {
-            if (FT_Load_Char(_fontRef, theChar, FT_LOAD_RENDER | FT_LOAD_NO_AUTOHINT))
+            if (FT_Load_Char(_fontRef, static_cast<FT_ULong>(theChar), FT_LOAD_RENDER | FT_LOAD_NO_AUTOHINT))
                 break;
         }
 
@@ -416,7 +416,7 @@ unsigned char* FontFreeType::getGlyphBitmap(uint64_t theChar, long &outWidth, lo
 unsigned char * FontFreeType::getGlyphBitmapWithOutline(uint64_t theChar, FT_BBox &bbox)
 {   
     unsigned char* ret = nullptr;
-    if (FT_Load_Char(_fontRef, theChar, FT_LOAD_NO_BITMAP) == 0)
+    if (FT_Load_Char(_fontRef, static_cast<FT_ULong>(theChar), FT_LOAD_NO_BITMAP) == 0)
     {
         if (_fontRef->glyph->format == FT_GLYPH_FORMAT_OUTLINE)
         {
