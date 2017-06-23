@@ -53,6 +53,8 @@
 - (void)setTextHorizontalAlignment:(cocos2d::TextHAlignment)alignment;
 
 - (void)setPlaceHolder:(NSString *)text;
+- (void)setPlaceholderFont:(UIFont *)font;
+- (void)setPlaceholderTextColor:(UIColor *)color;
 - (void)setVisible:(BOOL)visible;
 - (void)setTextColor:(UIColor*)color;
 - (void)setFont:(UIFont *)font;
