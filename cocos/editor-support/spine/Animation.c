@@ -610,7 +610,7 @@ void _spAttachmentTimeline_apply (const spTimeline* timeline, spSkeleton* skelet
 	spSlot* slot = skeleton->slots[self->slotIndex];
 
 	if (mixingOut && setupPose) {
-		const char* attachmentName = slot->data->attachmentName;
+        attachmentName = slot->data->attachmentName;
         spSlot_setAttachment(slot, attachmentName ? spSkeleton_getAttachmentForSlotIndex(skeleton, self->slotIndex, attachmentName) : 0);
 		return;
 	}
