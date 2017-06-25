@@ -15,7 +15,7 @@ USING_NS_CC;
 // Arguments: char*
 // Ret value: const char*
 bool JSB_localStorageGetItem(JSContext *cx, uint32_t argc, jsval *vp) {
-    JSB_PRECONDITION2( argc == 1, cx, false, "Invalid number of arguments" );
+    JSB_PRECONDITION2(argc == 1 || argc == 2, cx, false, "Invalid number of arguments" );
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     std::string arg0; 
@@ -30,7 +30,7 @@ bool JSB_localStorageGetItem(JSContext *cx, uint32_t argc, jsval *vp) {
         args.rval().set(ret_jsval);
     }
     else {
-        args.rval().set(JSVAL_NULL);
+        args.rval().set(argc == 1 ? JSVAL_NULL : args.get(1));
     }
     
     return true;
