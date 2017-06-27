@@ -50,11 +50,13 @@ class SkeletonAnimation: public SkeletonRenderer {
 public:
 	CREATE_FUNC(SkeletonAnimation);
 	static SkeletonAnimation* createWithData (spSkeletonData* skeletonData, bool ownsSkeletonData = false);
+    static SkeletonAnimation* createWithJsonFileCached (const std::string& skeletonDataFile, const std::string& atlasFile, float scale);
 	static SkeletonAnimation* createWithJsonFile (const std::string& skeletonJsonFile, spAtlas* atlas, float scale = 1);
 	static SkeletonAnimation* createWithJsonFile (const std::string& skeletonJsonFile, const std::string& atlasFile, float scale = 1);
 	static SkeletonAnimation* createWithBinaryFile (const std::string& skeletonBinaryFile, spAtlas* atlas, float scale = 1);
 	static SkeletonAnimation* createWithBinaryFile (const std::string& skeletonBinaryFile, const std::string& atlasFile, float scale = 1);
-
+    static void cleanupCache();
+    
 	// Use createWithJsonFile instead
 	CC_DEPRECATED_ATTRIBUTE static SkeletonAnimation* createWithFile (const std::string& skeletonJsonFile, spAtlas* atlas, float scale = 1)
 	{
