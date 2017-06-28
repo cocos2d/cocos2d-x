@@ -23,26 +23,18 @@ function build_mac()
 {
     NUM_OF_CORES=`getconf _NPROCESSORS_ONLN`
 
-    if [ $BUILD_CPP == 'true' ]; then
-        xctool -project $COCOS2DX_ROOT/build/cocos2d_tests.xcodeproj -scheme "cpp-empty-test Mac" -jobs $NUM_OF_CORES -arch x86_64 -sdk macosx10.11  build
-        xctool -project $COCOS2DX_ROOT/build/cocos2d_tests.xcodeproj -scheme "cpp-tests Mac" -jobs $NUM_OF_CORES -arch x86_64 -sdk macosx10.11  build
-    else
-        xctool -project $COCOS2DX_ROOT/build/cocos2d_tests.xcodeproj -scheme "lua-tests Mac" -jobs $NUM_OF_CORES -arch x86_64 -sdk macosx10.11  build
-        xctool -project $COCOS2DX_ROOT/build/cocos2d_tests.xcodeproj -scheme "js-tests Mac" -jobs $NUM_OF_CORES -arch x86_64 -sdk macosx10.11  build
-    fi
+    xcodebuild -project $COCOS2DX_ROOT/build/cocos2d_tests.xcodeproj -scheme "build all tests Mac" -jobs $NUM_OF_CORES -arch x86_64 build | xcpretty
+    ##xcpretty has a bug, some xcodebuid fails return value would be treated as 0.
+    xcodebuild -project $COCOS2DX_ROOT/build/cocos2d_tests.xcodeproj -scheme "build all tests Mac" -jobs $NUM_OF_CORES -arch x86_64 build
 }
 
 function build_ios()
 {
     NUM_OF_CORES=`getconf _NPROCESSORS_ONLN`
 
-    if [ $BUILD_CPP == 'true' ]; then
-        xctool -project $COCOS2DX_ROOT/build/cocos2d_tests.xcodeproj -scheme "cpp-empty-test iOS" -jobs $NUM_OF_CORES -arch i386 -sdk iphonesimulator9.3  build
-        xctool -project $COCOS2DX_ROOT/build/cocos2d_tests.xcodeproj -scheme "cpp-tests iOS" -jobs $NUM_OF_CORES -arch i386 -sdk iphonesimulator9.3  build
-    else
-        xctool -project $COCOS2DX_ROOT/build/cocos2d_tests.xcodeproj -scheme "lua-tests iOS" -jobs $NUM_OF_CORES -arch i386 -sdk iphonesimulator9.3  build
-        xctool -project $COCOS2DX_ROOT/build/cocos2d_tests.xcodeproj -scheme "js-tests iOS" -jobs $NUM_OF_CORES -arch i386 -sdk iphonesimulator9.3  build
-    fi
+    xcodebuild -project $COCOS2DX_ROOT/build/cocos2d_tests.xcodeproj -scheme "build all tests iOS" -jobs $NUM_OF_CORES  -destination "platform=iOS Simulator,name=iPhone Retina (4-inch)" build | xcpretty
+    #the following commands must not be removed
+    xcodebuild -project $COCOS2DX_ROOT/build/cocos2d_tests.xcodeproj -scheme "build all tests iOS" -jobs $NUM_OF_CORES  -destination "platform=iOS Simulator,name=iPhone Retina (4-inch)" build
 }
 
 function build_android()
@@ -96,9 +88,15 @@ function genernate_binding_codes()
 {
     # set environment variables needed by binding codes
 
+    which python
 
     export NDK_ROOT=$HOME/bin/android-ndk
-    export PYTHON_BIN=/usr/bin/python
+
+    if [ "$TRAVIS_OS_NAME" == "osx" ]; then
+        export PYTHON_BIN=/usr/local/bin/python
+    else
+        export PYTHON_BIN=/usr/bin/python
+    fi
 
     # Generate binding glue codes
 
