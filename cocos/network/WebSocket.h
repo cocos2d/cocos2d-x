@@ -51,6 +51,10 @@ NS_CC_BEGIN
 
 class EventListenerCustom;
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+class Reachability;
+#endif
+
 namespace network {
 
 class WsThreadHelper;
@@ -267,6 +271,10 @@ private:
     std::string _caFilePath;
 
     EventListenerCustom* _resetDirectorListener;
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+    Reachability* _reachability;
+#endif
 
     friend class WsThreadHelper;
     friend class WebSocketCallbackWrapper;

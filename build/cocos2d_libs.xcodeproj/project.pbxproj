@@ -1297,6 +1297,12 @@
 		1AAF5850180E40B9000584C8 /* LocalStorage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AAF584C180E40B9000584C8 /* LocalStorage.cpp */; };
 		1AAF5851180E40B9000584C8 /* LocalStorage.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AAF584D180E40B9000584C8 /* LocalStorage.h */; };
 		1AAF5852180E40B9000584C8 /* LocalStorage.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AAF584D180E40B9000584C8 /* LocalStorage.h */; };
+		1AB64A6D1F05F59C000C28A7 /* Reachability-apple.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AB64A6B1F05F59C000C28A7 /* Reachability-apple.h */; };
+		1AB64A711F0642F8000C28A7 /* Reachability-apple.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AB64A6C1F05F59C000C28A7 /* Reachability-apple.cpp */; };
+		1AB64A721F0642F9000C28A7 /* Reachability-apple.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AB64A6C1F05F59C000C28A7 /* Reachability-apple.cpp */; };
+		1AB64A731F0642FB000C28A7 /* Reachability-apple.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AB64A6B1F05F59C000C28A7 /* Reachability-apple.h */; };
+		1AB64A741F0642FB000C28A7 /* Reachability-apple.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AB64A6B1F05F59C000C28A7 /* Reachability-apple.h */; };
+		1AB64A771F064F95000C28A7 /* Reachability-apple.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AB64A6C1F05F59C000C28A7 /* Reachability-apple.cpp */; };
 		1ABA68AE1888D700007D1BB4 /* CCFontCharMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1ABA68AC1888D700007D1BB4 /* CCFontCharMap.cpp */; };
 		1ABA68AF1888D700007D1BB4 /* CCFontCharMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1ABA68AC1888D700007D1BB4 /* CCFontCharMap.cpp */; };
 		1ABA68B01888D700007D1BB4 /* CCFontCharMap.h in Headers */ = {isa = PBXBuildFile; fileRef = 1ABA68AD1888D700007D1BB4 /* CCFontCharMap.h */; };
@@ -6239,6 +6245,8 @@
 		1AAF584B180E40B9000584C8 /* Android.mk */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Android.mk; sourceTree = "<group>"; };
 		1AAF584C180E40B9000584C8 /* LocalStorage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LocalStorage.cpp; sourceTree = "<group>"; };
 		1AAF584D180E40B9000584C8 /* LocalStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalStorage.h; sourceTree = "<group>"; };
+		1AB64A6B1F05F59C000C28A7 /* Reachability-apple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Reachability-apple.h"; sourceTree = "<group>"; };
+		1AB64A6C1F05F59C000C28A7 /* Reachability-apple.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "Reachability-apple.cpp"; sourceTree = "<group>"; };
 		1ABA68AC1888D700007D1BB4 /* CCFontCharMap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCFontCharMap.cpp; sourceTree = "<group>"; };
 		1ABA68AD1888D700007D1BB4 /* CCFontCharMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFontCharMap.h; sourceTree = "<group>"; };
 		1AC026991914068200FA920D /* ConvertUTF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConvertUTF.h; sourceTree = "<group>"; };
@@ -8956,6 +8964,8 @@
 		1AAF5360180E3374000584C8 /* network */ = {
 			isa = PBXGroup;
 			children = (
+				1AB64A6B1F05F59C000C28A7 /* Reachability-apple.h */,
+				1AB64A6C1F05F59C000C28A7 /* Reachability-apple.cpp */,
 				1A2B22B11E6E54EC001D5EC9 /* Uri.cpp */,
 				1A2B22AF1E6E54D6001D5EC9 /* Uri.h */,
 				50693C621B6BF2BC005C5820 /* Downloader */,
@@ -11715,6 +11725,7 @@
 				B276EF631988D1D500CD400F /* CCVertexIndexBuffer.h in Headers */,
 				5020A20D1D49912500E80C72 /* Slot.h in Headers */,
 				50ABBE871925AB6F00A911A9 /* ccMacros.h in Headers */,
+				1AB64A731F0642FB000C28A7 /* Reachability-apple.h in Headers */,
 				B665E32C1AA80A6500DDB1C5 /* CCPUOnCountObserver.h in Headers */,
 				3E2A09C41BAA91B70086B878 /* CCMotionStreak3D.h in Headers */,
 				15B3708A19EE414C00ABE682 /* Manifest.h in Headers */,
@@ -12809,6 +12820,7 @@
 				507B3D801C31BDD30067B53E /* CCUIMultilineTextField.h in Headers */,
 				507B3D811C31BDD30067B53E /* btConvexHull.h in Headers */,
 				507B3D821C31BDD30067B53E /* firePngData.h in Headers */,
+				1AB64A741F0642FB000C28A7 /* Reachability-apple.h in Headers */,
 				507B3D831C31BDD30067B53E /* CCPrimitive.h in Headers */,
 				1A40D1321E8E56C7002E363A /* ieee754.h in Headers */,
 				507B3D841C31BDD30067B53E /* CCPlatformConfig.h in Headers */,
@@ -13803,6 +13815,7 @@
 				50643BDA19BFAF4400EF68ED /* CCApplication.h in Headers */,
 				B6CAB53A1AF9AA1A00B9B856 /* cl.h in Headers */,
 				15AE181519AAD2F700C27E9E /* CCAnimationCurve.h in Headers */,
+				1AB64A6D1F05F59C000C28A7 /* Reachability-apple.h in Headers */,
 				B6CAB28C1AF9AA1A00B9B856 /* btCapsuleShape.h in Headers */,
 				B665E4191AA80A6600DDB1C5 /* CCPUTextureAnimatorTranslator.h in Headers */,
 				5020A1F61D49912500E80C72 /* SkeletonData.h in Headers */,
@@ -15541,6 +15554,7 @@
 				B6CAB26D1AF9AA1A00B9B856 /* btSphereSphereCollisionAlgorithm.cpp in Sources */,
 				B6CAB3251AF9AA1A00B9B856 /* btGImpactBvh.cpp in Sources */,
 				50FC3F9E1D74C0A3001C936A /* CCController.cpp in Sources */,
+				1AB64A711F0642F8000C28A7 /* Reachability-apple.cpp in Sources */,
 				B665E2721AA80A6500DDB1C5 /* CCPUDoPlacementParticleEventHandler.cpp in Sources */,
 				50ABBD3C1925AB0000A911A9 /* CCGeometry.cpp in Sources */,
 				B6CAB3C31AF9AA1A00B9B856 /* btHingeConstraint.cpp in Sources */,
@@ -16677,6 +16691,7 @@
 				507B3D031C31BDD30067B53E /* btInternalEdgeUtility.cpp in Sources */,
 				507B3D041C31BDD30067B53E /* CCPUOnTimeObserver.cpp in Sources */,
 				507B3D051C31BDD30067B53E /* WebSocket.cpp in Sources */,
+				1AB64A721F0642F9000C28A7 /* Reachability-apple.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -17539,6 +17554,7 @@
 				B6CAB25E1AF9AA1A00B9B856 /* btInternalEdgeUtility.cpp in Sources */,
 				B665E3631AA80A6500DDB1C5 /* CCPUOnTimeObserver.cpp in Sources */,
 				15AE1BBF19AADFF000C27E9E /* WebSocket.cpp in Sources */,
+				1AB64A771F064F95000C28A7 /* Reachability-apple.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
