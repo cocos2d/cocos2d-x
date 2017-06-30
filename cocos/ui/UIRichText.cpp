@@ -1719,7 +1719,7 @@ void RichText::handleCustomRenderer(cocos2d::Node *renderer)
 void RichText::addNewLine()
 {
     _leftSpaceWidth = _customSize.width;
-    _elementRenders.push_back(new Vector<Node*>());
+    _elementRenders.emplace_back();
 }
     
 void RichText::formarRenderers()
@@ -1730,10 +1730,9 @@ void RichText::formarRenderers()
         float nextPosY = 0.0f;
         for (auto& element: _elementRenders)
         {
-            Vector<Node*>* row = element;
             float nextPosX = 0.0f;
             float maxY = 0.0f;
-            for (auto& iter : *row)
+            for (auto& iter : element)
             {
                 iter->setAnchorPoint(Vec2::ZERO);
                 iter->setPosition(nextPosX, nextPosY);
@@ -1754,9 +1753,9 @@ void RichText::formarRenderers()
         
         for (size_t i=0, size = _elementRenders.size(); i<size; i++)
         {
-            Vector<Node*>* row = (_elementRenders[i]);
+            Vector<Node*>& row = _elementRenders[i];
             float maxHeight = 0.0f;
-            for (auto& iter : *row)
+            for (auto& iter : row)
             {
                 maxHeight = MAX(iter->getContentSize().height, maxHeight);
             }
@@ -1767,11 +1766,11 @@ void RichText::formarRenderers()
         float nextPosY = _customSize.height;
         for (size_t i=0, size = _elementRenders.size(); i<size; i++)
         {
-            Vector<Node*>* row = (_elementRenders[i]);
+            Vector<Node*>& row = _elementRenders[i];
             float nextPosX = 0.0f;
             nextPosY -= (maxHeights[i] + _defaults.at(KEY_VERTICAL_SPACE).asFloat());
             
-            for (auto& iter : *row)
+            for (auto& iter : row)
             {
                 iter->setAnchorPoint(Vec2::ZERO);
                 iter->setPosition(nextPosX, nextPosY);
@@ -1782,11 +1781,6 @@ void RichText::formarRenderers()
         delete [] maxHeights;
     }
     
-    for (auto& iter : _elementRenders)
-    {
-        iter->clear();
-        delete iter;
-    }
     _elementRenders.clear();
     
     if (_ignoreSize)
@@ -1812,7 +1806,7 @@ void RichText::pushToContainer(cocos2d::Node *renderer)
     {
         return;
     }
-    _elementRenders[_elementRenders.size()-1]->pushBack(renderer);
+    _elementRenders[_elementRenders.size()-1].pushBack(renderer);
 }
     
 void RichText::setVerticalSpace(float space)
