@@ -288,7 +288,10 @@ bool Sequence::initWithTwoActions(FiniteTimeAction *actionOne, FiniteTimeAction 
 bool Sequence::isDone() const
 {
     // fix issue #17884
-    return (ActionInterval::isDone() && _actions[1]->isDone());
+    if (dynamic_cast<ActionInstant*>(_actions[1]))
+        return (_done && _actions[1]->isDone());
+    else
+        return _done;
 }
 
 Sequence* Sequence::clone() const
@@ -831,16 +834,6 @@ void Spawn::update(float time)
         if (!(sendUpdateEventToScript(time, _two)))
             _two->update(time);
     }
-}
-
-bool Spawn::isDone() const
-{
-    bool done = ActionInterval::isDone();
-    if (_two)
-        done &= _two->isDone();
-    
-    return done;
-        
 }
 
 Spawn* Spawn::reverse() const

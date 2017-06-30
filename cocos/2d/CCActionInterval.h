@@ -412,7 +412,6 @@ public:
     virtual Spawn* reverse() const override;
     virtual void startWithTarget(Node *target) override;
     virtual void stop() override;
-    virtual bool isDone() const override;
     /**
      * @param time In seconds.
      */

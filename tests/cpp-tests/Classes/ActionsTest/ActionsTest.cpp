@@ -93,6 +93,7 @@ ActionsTests::ActionsTests()
     ADD_TEST_CASE(Issue14936_1);
     ADD_TEST_CASE(Issue14936_2);
     ADD_TEST_CASE(SequenceWithFinalInstant);
+    ADD_TEST_CASE(Issue18003);
 }
 
 std::string ActionsDemo::title() const
@@ -2404,7 +2405,7 @@ std::string ActionFloatTest::subtitle() const
 //------------------------------------------------------------------
 void SequenceWithFinalInstant::onEnter()
 {
-    ActionsDemo::onEnter();
+    TestCase::onEnter();
 
     _manager = new cocos2d::ActionManager();
     
@@ -2432,27 +2433,17 @@ void SequenceWithFinalInstant::onEnter()
     _manager->update(0.05 - FLT_EPSILON);
 
     if ( action->isDone() && !called )
-      cocos2d::log
-        ("Action says it is done but is not."
-         " called=%d, elapsed=%f, duration=%f",
-         (int)called, action->getElapsed(), action->getDuration());
-    else
-      cocos2d::log("First step: everything went fine.");
+        assert(false);
     
     _manager->update(FLT_EPSILON);
 
-    if ( action->isDone() && called )
-      cocos2d::log("Second step: everything went fine.");
-    else
-      cocos2d::log
-        ("Action says it is done but is not."
-         " called=%d, elapsed=%f, duration=%f",
-         (int)called, action->getElapsed(), action->getDuration());
+    if ( action->isDone() && !called )
+        assert(false);
 }
 
 void SequenceWithFinalInstant::onExit()
 {
-    ActionsDemo::onExit();
+    TestCase::onExit();
     _target->onExit();
     _target->release();
     _manager->release();
@@ -2460,5 +2451,84 @@ void SequenceWithFinalInstant::onExit()
 
 std::string SequenceWithFinalInstant::subtitle() const
 {
-    return "Instant action should be run. See console.";
+    return "Instant action should not crash";
+}
+
+//------------------------------------------------------------------
+//
+// Issue18003
+//
+//------------------------------------------------------------------
+
+void Issue18003::onEnter()
+{
+    TestCase::onEnter();
+    
+    _manager = new ActionManager();
+    
+    _target = Node::create();
+    _target->setActionManager(_manager);
+    _target->retain();
+    _target->onEnter();
+    
+    // instant action + interval action
+    
+    const auto f
+    ( []() -> void
+     {
+         // do nothing
+     });
+    
+    auto action = Sequence::create(CallFunc::create(f),
+                                   DelayTime::create(1),
+                                   nullptr);
+    
+    _target->runAction(action);
+    _manager->update(0);
+    _manager->update(2);
+    
+    assert(action->isDone());
+    
+    _target->stopAction(action);
+    
+    // instant action + instant action
+    action = Sequence::create(CallFunc::create(f),
+                              CallFunc::create(f),
+                              nullptr);
+    _target->runAction(action);
+    _manager->update(0);
+    _manager->update(1);
+    assert(action->isDone());
+    _target->stopAction(action);
+    
+    // interval action + instant action
+    action = Sequence::create(DelayTime::create(1),
+                              CallFunc::create(f),
+                              nullptr);
+    _target->runAction(action);
+    _manager->update(0);
+    _manager->update(2);
+    assert(action->isDone());
+    _target->stopAction(action);
+    
+    // interval action + interval action
+    action = Sequence::create(DelayTime::create(1), DelayTime::create(1), nullptr);
+    _target->runAction(action);
+    _manager->update(0);
+    _manager->update(3);
+    assert(action->isDone());
+    _target->stopAction(action);
+}
+
+void Issue18003::onExit()
+{
+    TestCase::onExit();
+    _target->onExit();
+    _target->release();
+    _manager->release();
+}
+
+std::string Issue18003::subtitle() const
+{
+    return "issue18003: should not crash";
 }
