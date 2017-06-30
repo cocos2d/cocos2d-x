@@ -92,6 +92,7 @@ ActionsTests::ActionsTests()
     ADD_TEST_CASE(ActionFloatTest);
     ADD_TEST_CASE(Issue14936_1);
     ADD_TEST_CASE(Issue14936_2);
+    ADD_TEST_CASE(SequenceWithFinalInstant);
 }
 
 std::string ActionsDemo::title() const
@@ -2406,8 +2407,6 @@ void SequenceWithFinalInstant::onEnter()
     ActionsDemo::onEnter();
 
     _manager = new cocos2d::ActionManager();
-    _manager->autorelease();
-    _manager->retain();
     
     _target = cocos2d::Node::create();
     _target->setActionManager( _manager );
@@ -2453,8 +2452,10 @@ void SequenceWithFinalInstant::onEnter()
 
 void SequenceWithFinalInstant::onExit()
 {
-  _target->release();
-  _manager->release();
+    ActionsDemo::onExit();
+    _target->onExit();
+    _target->release();
+    _manager->release();
 }
 
 std::string SequenceWithFinalInstant::subtitle() const
