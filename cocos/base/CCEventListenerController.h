@@ -43,7 +43,7 @@ class Controller;
  * @param Controller event listener.
  * @js NA
  */
-class EventListenerController : public EventListener
+class CC_DLL EventListenerController : public EventListener
 {
 public:
     static const std::string LISTENER_ID;
