@@ -36,7 +36,7 @@
 #include "platform/CCFileUtils.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-#include "Reachability-apple.h"
+#include "network/Reachability-apple.h"
 #endif
 
 #include <thread>
