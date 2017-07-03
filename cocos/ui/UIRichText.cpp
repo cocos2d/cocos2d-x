@@ -832,6 +832,7 @@ ValueMap MyXMLVisitor::tagAttrMapWithXMLElement(const char ** attrs)
 
 const std::string RichText::KEY_VERTICAL_SPACE("KEY_VERTICAL_SPACE");
 const std::string RichText::KEY_WRAP_MODE("KEY_WRAP_MODE");
+const std::string RichText::KEY_HORIZONTAL_ALIGNMENT("KEY_HORIZONTAL_ALIGNMENT");
 const std::string RichText::KEY_FONT_COLOR_STRING("KEY_FONT_COLOR_STRING");
 const std::string RichText::KEY_FONT_SIZE("KEY_FONT_SIZE");
 const std::string RichText::KEY_FONT_SMALL("KEY_FONT_SMALL");
@@ -875,6 +876,7 @@ RichText::RichText()
 {
     _defaults[KEY_VERTICAL_SPACE] = 0.0f;
     _defaults[KEY_WRAP_MODE] = static_cast<int>(WrapMode::WRAP_PER_WORD);
+	_defaults[KEY_HORIZONTAL_ALIGNMENT] = static_cast<int>(HorizontalAlignment::LEFT);
     _defaults[KEY_FONT_COLOR_STRING] = "#ffffff";
     _defaults[KEY_FONT_SIZE] = 12.0f;
     _defaults[KEY_FONT_FACE] = "Verdana";
@@ -993,6 +995,20 @@ void RichText::setWrapMode(RichText::WrapMode wrapMode)
         _defaults[KEY_WRAP_MODE] = static_cast<int>(wrapMode);
         _formatTextDirty = true;
     }
+}
+
+RichText::HorizontalAlignment RichText::getHorizontalAlignment() const
+{
+	return static_cast<RichText::HorizontalAlignment>(_defaults.at(KEY_HORIZONTAL_ALIGNMENT).asInt());
+}
+
+void RichText::setHorizontalAlignment(cocos2d::ui::RichText::HorizontalAlignment a)
+{
+	if (static_cast<RichText::HorizontalAlignment>(_defaults.at(KEY_HORIZONTAL_ALIGNMENT).asInt()) != a)
+	{
+		_defaults[KEY_HORIZONTAL_ALIGNMENT] = static_cast<int>(a);
+		_formatTextDirty = true;
+	}
 }
 
 void RichText::setFontColor(const std::string& color)
@@ -1198,6 +1214,9 @@ void RichText::setDefaults(const ValueMap& defaults)
     if (defaults.find(KEY_WRAP_MODE) != defaults.end()) {
         _defaults[KEY_WRAP_MODE] = defaults.at(KEY_WRAP_MODE).asInt();
     }
+	if (defaults.find(KEY_HORIZONTAL_ALIGNMENT) != defaults.end()) {
+		_defaults[KEY_HORIZONTAL_ALIGNMENT] = defaults.at(KEY_HORIZONTAL_ALIGNMENT).asInt();
+	}
     if (defaults.find(KEY_FONT_COLOR_STRING) != defaults.end()) {
         _defaults[KEY_FONT_COLOR_STRING] = defaults.at(KEY_FONT_COLOR_STRING).asString();
     }
@@ -1728,6 +1747,8 @@ void RichText::formarRenderers()
     {
         float newContentSizeWidth = 0.0f;
         float nextPosY = 0.0f;
+        std::vector<std::pair<Vector<Node*>*, float> > rowWidthPairs;
+        rowWidthPairs.reserve(_elementRenders.size());
         for (auto& element: _elementRenders)
         {
             Vector<Node*>* row = element;
@@ -1744,13 +1765,16 @@ void RichText::formarRenderers()
                 maxY = MAX(maxY, iSize.height);
             }
             nextPosY -= maxY;
+            rowWidthPairs.emplace_back(row, nextPosX);
         }
         this->setContentSize(Size(newContentSizeWidth, -nextPosY));
+        for ( auto& row : rowWidthPairs )
+            doHorizontalAlignment(*row.first, row.second);
     }
     else
     {
         float newContentSizeHeight = 0.0f;
-        float *maxHeights = new (std::nothrow) float[_elementRenders.size()];
+        std::vector<float> maxHeights(_elementRenders.size());
         
         for (size_t i=0, size = _elementRenders.size(); i<size; i++)
         {
@@ -1778,8 +1802,9 @@ void RichText::formarRenderers()
                 this->addProtectedChild(iter, 1);
                 nextPosX += iter->getContentSize().width;
             }
+            
+            doHorizontalAlignment(*row, nextPosX);
         }
-        delete [] maxHeights;
     }
     
     for (auto& iter : _elementRenders)
@@ -1800,12 +1825,34 @@ void RichText::formarRenderers()
     }
     updateContentSizeWithTextureSize(_contentSize);
 }
-    
+
+void RichText::doHorizontalAlignment(const Vector<cocos2d::Node*> &row, float rowWidth) {
+    const auto alignment = static_cast<HorizontalAlignment>(_defaults.at(KEY_HORIZONTAL_ALIGNMENT).asInt());
+    if ( alignment != HorizontalAlignment::LEFT ) {
+        const auto leftOver = getContentSize().width - rowWidth;
+        const float leftPadding = [alignment, leftOver] {
+            switch ( alignment ) {
+                case HorizontalAlignment::CENTER:
+                    return leftOver / 2.f;
+                case HorizontalAlignment::RIGHT:
+                    return leftOver;
+                default:
+                    CCASSERT(false, "invalid horizontal alignment!");
+                    return 0.f;
+            }
+        }();
+        const Vec2 offset(leftPadding, 0.f);
+        for ( auto& node : row ) {
+            node->setPosition(node->getPosition() + offset);
+        }
+    }
+}
+
 void RichText::adaptRenderers()
 {
     this->formatText();
 }
-    
+
 void RichText::pushToContainer(cocos2d::Node *renderer)
 {
     if (_elementRenders.size() <= 0)
