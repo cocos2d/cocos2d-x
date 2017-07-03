@@ -650,12 +650,6 @@ bool WebSocket::init(const Delegate& delegate,
     }
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-    static const char* netStatusStr[] = {
-        "NOT_REACHABLE",
-        "REACHABLE_VIA_ETHERNET_OR_WIFI",
-        "REACHABLE_VIA_WWAN"
-    };
-
     _reachability = Reachability::createForInternetConnection();
     auto oldNetStatus = std::make_shared<Reachability::NetworkStatus>(_reachability->getCurrentReachabilityStatus());
     auto isDestroyed = _isDestroyed;
@@ -665,7 +659,6 @@ bool WebSocket::init(const Delegate& delegate,
             LOGD("WebSocket (%p) was destroyed, not need to close it again!\n", this);
             return;
         }
-        LOGD("Close websocket (%p) by reachability changed! %s -> %s\n", this, netStatusStr[(int)(*oldNetStatus)], netStatusStr[(int)netStatus]);
         this->closeAsync();
         *oldNetStatus = netStatus;
     });
