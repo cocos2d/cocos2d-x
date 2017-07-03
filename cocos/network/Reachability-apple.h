@@ -85,6 +85,7 @@ private:
 
     SCNetworkReachabilityRef _reachabilityRef;
     std::function<void(Reachability*, NetworkStatus)> _reachabilityChangedCallback;
+    bool _toObserveNetworkChanged;
     bool _isOwnerDestroyed;
 };
 

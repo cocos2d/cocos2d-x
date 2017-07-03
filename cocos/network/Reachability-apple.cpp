@@ -29,6 +29,8 @@
 #include <ifaddrs.h>
 #include <netdb.h>
 #include <netinet/in.h>
+#include <SystemConfiguration/CaptiveNetwork.h>
+#include <notify_keys.h>
 
 NS_CC_BEGIN
 
@@ -113,14 +115,15 @@ static Reachability::NetworkStatus getNetworkStatusForFlags(SCNetworkReachabilit
 // static
 void Reachability::onReachabilityChanged(SCNetworkReachabilityRef target, SCNetworkReachabilityFlags flags, void* info)
 {
-    Reachability* reachability = (Reachability*) info;
+    Reachability* thiz = (Reachability*) info;
     // Notify the client that the network reachability changed.
-    if (!reachability->_isOwnerDestroyed)
+    if (!thiz->_isOwnerDestroyed)
     {
-        if (reachability->_reachabilityChangedCallback != nullptr)
+        if (thiz->_reachabilityChangedCallback != nullptr)
         {
+            printf("Reachability (%p) was changed by SCNetworkReachabilityRef\n", thiz);
             NetworkStatus netStatus = getNetworkStatusForFlags(flags);
-            reachability->_reachabilityChangedCallback(reachability, netStatus);
+            thiz->_reachabilityChangedCallback(thiz, netStatus);
         }
     }
     else
@@ -191,6 +194,22 @@ Reachability* Reachability::createForInternetConnection()
 
 #pragma mark - Start and stop notifier
 
+static std::string convertCFStringRefToStdString(CFTypeRef str)
+{
+    std::string ret;
+
+    if (str != nullptr && CFGetTypeID(str) == CFStringGetTypeID())
+    {
+        char buffer[256] = {0};
+        if (CFStringGetCString((CFStringRef)str, buffer, sizeof(buffer), kCFStringEncodingUTF8))
+        {
+            ret = buffer;
+        }
+    }
+
+    return ret;
+}
+
 bool Reachability::startNotifier(const std::function<void(Reachability*, NetworkStatus)>& reachabilityChangedCallback)
 {
 	bool returnValue = false;
@@ -216,6 +235,30 @@ bool Reachability::startNotifier(const std::function<void(Reachability*, Network
 			returnValue = true;
 		}
 	}
+
+    CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), //center
+                                    this, // observer
+                                    [](CFNotificationCenterRef center, void *observer, CFStringRef name, const void *object, CFDictionaryRef userInfo){
+                                        std::string notifyName = convertCFStringRefToStdString(name);
+                                        if (notifyName == kNotifySCNetworkChange)
+                                        {
+                                            Reachability* thiz = (Reachability*)observer;
+//                                            printf("Reachability (%p) was changed by %s!\n", thiz, kNotifySCNetworkChange);
+
+                                            if (thiz->_reachabilityChangedCallback != nullptr)
+                                            {
+                                                thiz->_reachabilityChangedCallback(thiz, NetworkStatus::REACHABLE_VIA_ETHERNET_OR_WIFI);
+                                            }
+                                        }
+                                        else
+                                        {
+                                            printf("Unknown notifcation: %s\n", notifyName.c_str());
+                                        }
+                                    },
+                                    CFSTR(kNotifySCNetworkChange), // event name
+                                    nullptr, // object
+                                    CFNotificationSuspensionBehaviorDeliverImmediately);
+    _toObserveNetworkChanged = true;
     
 	return returnValue;
 }
@@ -223,6 +266,12 @@ bool Reachability::startNotifier(const std::function<void(Reachability*, Network
 
 void Reachability::stopNotifier()
 {
+    if (_toObserveNetworkChanged)
+    {
+        CFNotificationCenterRemoveObserver(CFNotificationCenterGetDarwinNotifyCenter(), this, CFSTR(kNotifySCNetworkChange), nullptr);
+        _toObserveNetworkChanged = false;
+    }
+
 	if (_reachabilityRef != nullptr)
 	{
         SCNetworkReachabilitySetCallback(_reachabilityRef, nullptr, nullptr);
@@ -236,6 +285,7 @@ Reachability::Reachability()
 : _reachabilityRef(nullptr)
 , _reachabilityChangedCallback(nullptr)
 , _isOwnerDestroyed(false)
+, _toObserveNetworkChanged(false)
 {
 }
 
