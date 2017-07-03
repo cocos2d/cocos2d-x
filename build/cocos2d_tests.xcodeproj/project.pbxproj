@@ -235,6 +235,7 @@
 		1AAF534D180E2F4E000584C8 /* libcocos2d Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FB01807A4F9005B8026 /* libcocos2d Mac.a */; };
 		1AAF5400180E39D4000584C8 /* libcocos2d iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FBE1807A4F9005B8026 /* libcocos2d iOS.a */; };
 		1AB64A701F062C96000C28A7 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AB64A6F1F062C96000C28A7 /* SystemConfiguration.framework */; };
+		1AB64A761F064513000C28A7 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AB64A751F064513000C28A7 /* SystemConfiguration.framework */; };
 		1ABCA28718CD91510087CE3A /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64822165F391E007D4F18 /* Cocoa.framework */; };
 		1ABCA2C318CD92420087CE3A /* libcocos2d Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FB01807A4F9005B8026 /* libcocos2d Mac.a */; };
 		1ABCA2CE18CD93580087CE3A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64832165F3AFD007D4F18 /* Foundation.framework */; };
@@ -1894,6 +1895,7 @@
 		1A0EE47E18CDF799004CD58F /* lua-empty-test iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "lua-empty-test iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A9F808C177E98A600D9A1CB /* libcurl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.dylib; path = usr/lib/libcurl.dylib; sourceTree = SDKROOT; };
 		1AB64A6F1F062C96000C28A7 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/SystemConfiguration.framework; sourceTree = DEVELOPER_DIR; };
+		1AB64A751F064513000C28A7 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		1ABCA27618CD90A40087CE3A /* cocos2d_lua_bindings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2d_lua_bindings.xcodeproj; path = "../cocos/scripting/lua-bindings/proj.ios_mac/cocos2d_lua_bindings.xcodeproj"; sourceTree = "<group>"; };
 		1ABCA28618CD91510087CE3A /* lua-tests Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "lua-tests Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1ABCA28918CD91510087CE3A /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -2784,6 +2786,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1AB64A761F064513000C28A7 /* SystemConfiguration.framework in Frameworks */,
 				ED545A6D1B68A18300C3958E /* libiconv.dylib in Frameworks */,
 				1AAF534D180E2F4E000584C8 /* libcocos2d Mac.a in Frameworks */,
 				826294431AAF071500CB7CF7 /* Security.framework in Frameworks */,
@@ -4552,6 +4555,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1AB64A751F064513000C28A7 /* SystemConfiguration.framework */,
 				1AB64A6F1F062C96000C28A7 /* SystemConfiguration.framework */,
 				50FC3FA01D74C15B001C936A /* GameController.framework */,
 				29DC5A1E1CFFE5E700CF2930 /* CoreText.framework */,
