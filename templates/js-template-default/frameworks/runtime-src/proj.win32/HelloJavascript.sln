@@ -19,8 +19,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libcocos2d", "..\..\cocos2d
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libjscocos2d", "..\..\cocos2d-x\cocos\scripting\js-bindings\proj.win32\libjscocos2d.vcxproj", "{39379840-825A-45A0-B363-C09FFEF864BD}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libbullet", "..\..\cocos2d-x\external\bullet\proj.win32\libbullet.vcxproj", "{012DFF48-A13F-4F52-B07B-F8B9D21CE95B}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "librecast", "..\..\cocos2d-x\external\recast\proj.win32\librecast.vcxproj", "{41E34993-647E-4282-8384-4AB1AE31A452}"
 EndProject
 Global

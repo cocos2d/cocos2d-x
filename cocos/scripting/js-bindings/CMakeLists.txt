@@ -112,3 +112,7 @@ set_target_properties(jscocos2d
     ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
     LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
 )
+
+if(USE_BULLET)
+  include_directories(${BULLET_INCLUDE_DIRS})
+endif()

@@ -219,6 +219,7 @@ Director::~Director(void)
     CC_SAFE_RELEASE(_eventBeforeUpdate);
     CC_SAFE_RELEASE(_eventAfterUpdate);
     CC_SAFE_RELEASE(_eventAfterDraw);
+    CC_SAFE_RELEASE(_eventBeforeDraw);
     CC_SAFE_RELEASE(_eventAfterVisit);
     CC_SAFE_RELEASE(_eventProjectionChanged);
     CC_SAFE_RELEASE(_eventResetDirector);

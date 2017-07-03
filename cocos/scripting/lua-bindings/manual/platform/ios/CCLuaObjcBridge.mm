@@ -122,25 +122,25 @@ int LuaObjcBridge::callObjcStaticMethod(lua_State *L)
         lua_pushboolean(L, 1);
         if (returnLength > 0)
         {
-            if (strcmp(returnType, "@") == 0)
+            if (strcmp(returnType, @encode(id)) == 0)
             {
                 id ret;
                 [invocation getReturnValue:&ret];
                 pushValue(L, ret);
             }
-            else if (strcmp(returnType, "c") == 0) // BOOL
+            else if (strcmp(returnType, @encode(BOOL)) == 0) // BOOL
             {
                 char ret;
                 [invocation getReturnValue:&ret];
                 lua_pushboolean(L, ret);
             }
-            else if (strcmp(returnType, "i") == 0) // int
+            else if (strcmp(returnType, @encode(int)) == 0) // int
             {
                 int ret;
                 [invocation getReturnValue:&ret];
                 lua_pushinteger(L, ret);
             }
-            else if (strcmp(returnType, "f") == 0) // float
+            else if (strcmp(returnType, @encode(float)) == 0) // float
             {
                 float ret;
                 [invocation getReturnValue:&ret];

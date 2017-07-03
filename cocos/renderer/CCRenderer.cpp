@@ -844,7 +844,7 @@ void Renderer::drawBatchedTriangles()
     }
 
     /************** 4: Cleanup *************/
-    if (Configuration::getInstance()->supportsShareableVAO() && conf->supportsMapBuffer())
+    if (conf->supportsShareableVAO() && conf->supportsMapBuffer())
     {
         //Unbind VAO
         GL::bindVAO(0);
@@ -890,14 +890,14 @@ void Renderer::flushTriangles()
 // helpers
 bool Renderer::checkVisibility(const Mat4 &transform, const Size &size)
 {
-    auto scene = Director::getInstance()->getRunningScene();
+    auto director = Director::getInstance();
+    auto scene = director->getRunningScene();
     
     //If draw to Rendertexture, return true directly.
     // only cull the default camera. The culling algorithm is valid for default camera.
     if (!scene || (scene && scene->_defaultCamera != Camera::getVisitingCamera()))
         return true;
 
-    auto director = Director::getInstance();
     Rect visibleRect(director->getVisibleOrigin(), director->getVisibleSize());
     
     // transform center point to screen space

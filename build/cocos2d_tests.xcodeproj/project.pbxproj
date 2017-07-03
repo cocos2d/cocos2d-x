@@ -27,7 +27,6 @@
 			buildPhases = (
 			);
 			dependencies = (
-				50FC3FAB1D74C3D0001C936A /* PBXTargetDependency */,
 				293CE83A1B43F3ED00F66EF1 /* PBXTargetDependency */,
 				1ADA8BA418CF277400AE24B9 /* PBXTargetDependency */,
 				1ADA8BA618CF277400AE24B9 /* PBXTargetDependency */,
@@ -1775,13 +1774,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 1551A33E158F2AB200E66CFE;
 			remoteInfo = "cocos2dx Mac";
-		};
-		50FC3FAA1D74C3D0001C936A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 50FC3F701D74BCC9001C936A;
-			remoteInfo = "game-controller-test Mac";
 		};
 		A035ACBF178246BD00987F6C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -7427,11 +7419,6 @@
 			name = "cocos2dx Mac";
 			targetProxy = 50FC3F721D74BCC9001C936A /* PBXContainerItemProxy */;
 		};
-		50FC3FAB1D74C3D0001C936A /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 50FC3F701D74BCC9001C936A /* game-controller-test Mac */;
-			targetProxy = 50FC3FAA1D74C3D0001C936A /* PBXContainerItemProxy */;
-		};
 		A035ACC0178246BD00987F6C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 1D6058900D05DD3D006BFB54 /* cpp-tests Mac */;
@@ -8583,7 +8570,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocos2d-x.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../cocos/editor-support $(SRCROOT)/../extensions $(SRCROOT)/../external $(SRCROOT)/../external/chipmunk/include";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../cocos/editor-support $(SRCROOT)/../extensions $(SRCROOT)/../external $(SRCROOT)/../external/chipmunk/include $(SRCROOT)/../external/bullet/include $(SRCROOT)/../external/bullet/include/bullet";
 			};
 			name = Debug;
 		};
@@ -8610,7 +8597,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocos2d-x.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../cocos/editor-support $(SRCROOT)/../extensions $(SRCROOT)/../external $(SRCROOT)/../external/chipmunk/include";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../cocos/editor-support $(SRCROOT)/../extensions $(SRCROOT)/../external $(SRCROOT)/../external/chipmunk/include $(SRCROOT)/../external/bullet/include $(SRCROOT)/../external/bullet/include/bullet";
 			};
 			name = Release;
 		};

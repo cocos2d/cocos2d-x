@@ -78,7 +78,7 @@
 
 - (UIColor *)ccui_placeholderTextColor
 {
-    SEL selector = @selector(placeholderTextColor);
+    SEL selector = NSSelectorFromString(@"placeholderTextColor");
     if ([self respondsToSelector:selector]) {
         return [self performSelector:selector];
     }
@@ -87,7 +87,7 @@
 
 - (void)ccui_setPlaceholderTextColor:(UIColor *)ccui_placeholderTextColor
 {
-    SEL selector = @selector(setPlaceholderTextColor:);
+    SEL selector = NSSelectorFromString(@"placeholderTextColor");
     if ([self respondsToSelector:selector]) {
         [self performSelector:selector withObject:ccui_placeholderTextColor];
     }
@@ -95,7 +95,7 @@
 
 - (UIFont *)ccui_placeholderFont
 {
-    SEL selector = @selector(placeholderFont);
+    SEL selector = NSSelectorFromString(@"placeholderTextColor");
     if ([self respondsToSelector:selector]) {
         return [self performSelector:selector];
     }
@@ -104,7 +104,7 @@
 
 - (void)ccui_setPlaceholderFont:(UIFont *)ccui_placeholderFont
 {
-    SEL selector = @selector(setPlaceholderFont:);
+    SEL selector = NSSelectorFromString(@"placeholderTextColor");
     if ([self respondsToSelector:selector]) {
         [self performSelector:selector withObject:ccui_placeholderFont];
     }

@@ -66,12 +66,14 @@ THE SOFTWARE.
 #pragma comment(lib,"libtiff-2015.lib")
 #pragma comment(lib,"glfw3-2015.lib")
 #pragma comment(lib,"libchipmunk-2015.lib")
+#pragma comment(lib, "libbullet-2015.lib")
 #else
 #pragma comment(lib,"libpng.lib")
 #pragma comment(lib,"libjpeg.lib")
 #pragma comment(lib,"libtiff.lib")
 #pragma comment(lib,"glfw3.lib")
 #pragma comment(lib,"libchipmunk.lib")
+#pragma comment(lib, "libbullet.lib")
 #endif
 
 #endif //s CC_TARGET_PLATFORM == CC_PLATFORM_WIN32

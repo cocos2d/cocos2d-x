@@ -181,6 +181,7 @@ if(USE_BULLET)
   list(APPEND TESTS_SRC
     Classes/Physics3DTest/Physics3DTest.cpp
     )
+  include_directories(${BULLET_INCLUDE_DIRS})
 endif()
 
 set (EXTENDED_TESTS_SRC

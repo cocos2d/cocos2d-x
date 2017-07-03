@@ -18,42 +18,18 @@ matrix:
       android:
         components:
           - android-13
-    # mac lua-tests + js-tests
-    # - os: osx
-    #   env: BUILD_TARGET=mac
-    #   language: cpp
-    #   osx_image: xcode7.3
-    #   sudo: required
-    #   python:
-    #     - "2.7"
-    #   cache: pip
-    # # mac cpp-tests
-    # - os: osx
-    #   env: BUILD_TARGET=mac BUILD_CPP=true
-    #   language: cpp
-    #   osx_image: xcode7.3
-    #   sudo: required
-    #   python:
-    #     - "2.7"
-    #   cache: pip
-    # # iOS lua-tests + js-tests
-    # - os: osx
-    #   env: BUILD_TARGET=ios
-    #   language: cpp
-    #   osx_image: xcode7.3
-    #   sudo: required
-    #   python:
-    #     - "2.7"
-    #   cache: pip
-    # # iOS cpp-tests
-    # - os: osx
-    #   env: BUILD_TARGET=ios BUILD_CPP=true
-    #   language: cpp
-    #   osx_image: xcode7.3
-    #   sudo: required
-    #   python:
-    #     - "2.7"
-    #   cache: pip
+    # mac
+    - os: osx
+      env: BUILD_TARGET=mac
+      language: cpp
+      osx_image: xcode8.3
+      sudo: required
+    # iOS
+    - os: osx
+      env: BUILD_TARGET=ios
+      language: cpp
+      osx_image: xcode8.3
+      sudo: required
 
 script:
 - tools/travis-scripts/run-script.sh
