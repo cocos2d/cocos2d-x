@@ -233,6 +233,27 @@
 		1A78A5551D1A3D1500B61B27 /* ccs-res in Resources */ = {isa = PBXBuildFile; fileRef = 460629771CDB4DBA00B44058 /* ccs-res */; };
 		1AAF534D180E2F4E000584C8 /* libcocos2d Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FB01807A4F9005B8026 /* libcocos2d Mac.a */; };
 		1AAF5400180E39D4000584C8 /* libcocos2d iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FBE1807A4F9005B8026 /* libcocos2d iOS.a */; };
+		1AB64A701F062C96000C28A7 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AB64A6F1F062C96000C28A7 /* SystemConfiguration.framework */; };
+		1AB64A761F064513000C28A7 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AB64A751F064513000C28A7 /* SystemConfiguration.framework */; };
+		1AB64A7D1F0A126F000C28A7 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AB64A751F064513000C28A7 /* SystemConfiguration.framework */; };
+		1AB64A7E1F0A1275000C28A7 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AB64A751F064513000C28A7 /* SystemConfiguration.framework */; };
+		1AB64A7F1F0A127A000C28A7 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AB64A751F064513000C28A7 /* SystemConfiguration.framework */; };
+		1AB64A801F0A127E000C28A7 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AB64A751F064513000C28A7 /* SystemConfiguration.framework */; };
+		1AB64A811F0A1283000C28A7 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AB64A751F064513000C28A7 /* SystemConfiguration.framework */; };
+		1AB64A821F0A1288000C28A7 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AB64A751F064513000C28A7 /* SystemConfiguration.framework */; };
+		1AB64A831F0A128C000C28A7 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AB64A751F064513000C28A7 /* SystemConfiguration.framework */; };
+		1AB64A841F0A1293000C28A7 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AB64A6F1F062C96000C28A7 /* SystemConfiguration.framework */; };
+		1AB64A851F0A1297000C28A7 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AB64A6F1F062C96000C28A7 /* SystemConfiguration.framework */; };
+		1AB64A861F0A129D000C28A7 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AB64A6F1F062C96000C28A7 /* SystemConfiguration.framework */; };
+		1AB64A871F0A12A2000C28A7 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AB64A6F1F062C96000C28A7 /* SystemConfiguration.framework */; };
+		1AB64A881F0A12A6000C28A7 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AB64A6F1F062C96000C28A7 /* SystemConfiguration.framework */; };
+		1AB64A891F0A12AA000C28A7 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AB64A6F1F062C96000C28A7 /* SystemConfiguration.framework */; };
+		1AB64A8A1F0A12AE000C28A7 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AB64A6F1F062C96000C28A7 /* SystemConfiguration.framework */; };
+		1AB64A8B1F0A12B2000C28A7 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AB64A6F1F062C96000C28A7 /* SystemConfiguration.framework */; };
+		1AB64A8D1F0A12B8000C28A7 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AB64A8C1F0A12B8000C28A7 /* SystemConfiguration.framework */; };
+		1AB64A8E1F0A12BC000C28A7 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AB64A8C1F0A12B8000C28A7 /* SystemConfiguration.framework */; };
+		1AB64A8F1F0A12C0000C28A7 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AB64A8C1F0A12B8000C28A7 /* SystemConfiguration.framework */; };
+		1AB64A901F0A12C4000C28A7 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AB64A8C1F0A12B8000C28A7 /* SystemConfiguration.framework */; };
 		1ABCA28718CD91510087CE3A /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64822165F391E007D4F18 /* Cocoa.framework */; };
 		1ABCA2C318CD92420087CE3A /* libcocos2d Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FB01807A4F9005B8026 /* libcocos2d Mac.a */; };
 		1ABCA2CE18CD93580087CE3A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64832165F3AFD007D4F18 /* Foundation.framework */; };
@@ -1884,6 +1905,9 @@
 		1A0EE41318CDF775004CD58F /* cpp-empty-test iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "cpp-empty-test iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A0EE47E18CDF799004CD58F /* lua-empty-test iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "lua-empty-test iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A9F808C177E98A600D9A1CB /* libcurl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.dylib; path = usr/lib/libcurl.dylib; sourceTree = SDKROOT; };
+		1AB64A6F1F062C96000C28A7 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/SystemConfiguration.framework; sourceTree = DEVELOPER_DIR; };
+		1AB64A751F064513000C28A7 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		1AB64A8C1F0A12B8000C28A7 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS10.2.sdk/System/Library/Frameworks/SystemConfiguration.framework; sourceTree = DEVELOPER_DIR; };
 		1ABCA27618CD90A40087CE3A /* cocos2d_lua_bindings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2d_lua_bindings.xcodeproj; path = "../cocos/scripting/lua-bindings/proj.ios_mac/cocos2d_lua_bindings.xcodeproj"; sourceTree = "<group>"; };
 		1ABCA28618CD91510087CE3A /* lua-tests Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "lua-tests Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1ABCA28918CD91510087CE3A /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -2575,6 +2599,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1AB64A881F0A12A6000C28A7 /* SystemConfiguration.framework in Frameworks */,
 				294D7D8E1D0E50AC002CE7B7 /* CoreText.framework in Frameworks */,
 				4B5C5BB01CA114C100D55A14 /* Security.framework in Frameworks */,
 				15427B7A198B87AA00DC375D /* libcocos2d iOS.a in Frameworks */,
@@ -2599,6 +2624,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1AB64A811F0A1283000C28A7 /* SystemConfiguration.framework in Frameworks */,
 				185663581B4155D3009EF2AE /* Security.framework in Frameworks */,
 				185664951B4246C9009EF2AE /* libsqlite3.dylib in Frameworks */,
 				185664941B4246BA009EF2AE /* AppKit.framework in Frameworks */,
@@ -2622,6 +2648,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1AB64A891F0A12AA000C28A7 /* SystemConfiguration.framework in Frameworks */,
 				294D7D8F1D0E50B2002CE7B7 /* CoreText.framework in Frameworks */,
 				4B5C5BB11CA114C700D55A14 /* Security.framework in Frameworks */,
 				18FC4D5F1B4257CD00B76F95 /* libsqlite3.dylib in Frameworks */,
@@ -2647,6 +2674,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1AB64A7D1F0A126F000C28A7 /* SystemConfiguration.framework in Frameworks */,
 				4B5C5BA81CA1147300D55A14 /* Security.framework in Frameworks */,
 				1A0EE2A218CDF6DA004CD58F /* libcocos2d Mac.a in Frameworks */,
 				1A0EE2A518CDF6DA004CD58F /* IOKit.framework in Frameworks */,
@@ -2666,6 +2694,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1AB64A801F0A127E000C28A7 /* SystemConfiguration.framework in Frameworks */,
 				4B5C5BA91CA1147F00D55A14 /* Security.framework in Frameworks */,
 				15EFA270198B25B9000C57D3 /* libcocos2d Mac.a in Frameworks */,
 				15EFA25B198A4A47000C57D3 /* libluacocos2d Mac.a in Frameworks */,
@@ -2686,6 +2715,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1AB64A841F0A1293000C28A7 /* SystemConfiguration.framework in Frameworks */,
 				294D7D8A1D0E5093002CE7B7 /* CoreText.framework in Frameworks */,
 				4B5C5BAC1CA114A300D55A14 /* Security.framework in Frameworks */,
 				1A0EE40318CDF775004CD58F /* libcocos2d iOS.a in Frameworks */,
@@ -2707,6 +2737,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1AB64A861F0A129D000C28A7 /* SystemConfiguration.framework in Frameworks */,
 				294D7D8C1D0E50A0002CE7B7 /* CoreText.framework in Frameworks */,
 				4B5C5BAE1CA114B500D55A14 /* Security.framework in Frameworks */,
 				ED545A761B68A1B600C3958E /* libiconv.dylib in Frameworks */,
@@ -2730,6 +2761,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1AB64A7F1F0A127A000C28A7 /* SystemConfiguration.framework in Frameworks */,
 				59E170151AB42EB10007F2BF /* Security.framework in Frameworks */,
 				15EFA273198B265A000C57D3 /* libluacocos2d Mac.a in Frameworks */,
 				1ABCA2C318CD92420087CE3A /* libcocos2d Mac.a in Frameworks */,
@@ -2750,6 +2782,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1AB64A851F0A1297000C28A7 /* SystemConfiguration.framework in Frameworks */,
 				294D7D8B1D0E509A002CE7B7 /* CoreText.framework in Frameworks */,
 				4B5C5BAD1CA114AC00D55A14 /* Security.framework in Frameworks */,
 				52B47A351A53A43A004E4C60 /* Security.framework in Frameworks */,
@@ -2774,6 +2807,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1AB64A761F064513000C28A7 /* SystemConfiguration.framework in Frameworks */,
 				ED545A6D1B68A18300C3958E /* libiconv.dylib in Frameworks */,
 				1AAF534D180E2F4E000584C8 /* libcocos2d Mac.a in Frameworks */,
 				826294431AAF071500CB7CF7 /* Security.framework in Frameworks */,
@@ -2793,6 +2827,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1AB64A871F0A12A2000C28A7 /* SystemConfiguration.framework in Frameworks */,
 				294D7D8D1D0E50A6002CE7B7 /* CoreText.framework in Frameworks */,
 				4B5C5BAF1CA114BB00D55A14 /* Security.framework in Frameworks */,
 				3E61773D1960FBD200DE83F5 /* GameController.framework in Frameworks */,
@@ -2815,6 +2850,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1AB64A8D1F0A12B8000C28A7 /* SystemConfiguration.framework in Frameworks */,
 				4B5C5BB51CA114DB00D55A14 /* Security.framework in Frameworks */,
 				507B42121C31C1710067B53E /* libcocos2d tvOS.a in Frameworks */,
 				507B41FC1C31BEA60067B53E /* libiconv.dylib in Frameworks */,
@@ -2837,6 +2873,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1AB64A8E1F0A12BC000C28A7 /* SystemConfiguration.framework in Frameworks */,
 				4B5C5BB61CA114E100D55A14 /* Security.framework in Frameworks */,
 				507B42B91C31EC6A0067B53E /* libcocos2d tvOS.a in Frameworks */,
 				507B42BA1C31EC6A0067B53E /* libjscocos2d tvOS.a in Frameworks */,
@@ -2861,6 +2898,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1AB64A8F1F0A12C0000C28A7 /* SystemConfiguration.framework in Frameworks */,
 				4B5C5BB71CA114E700D55A14 /* Security.framework in Frameworks */,
 				507B43BF1C31FB920067B53E /* libcocos2d tvOS.a in Frameworks */,
 				507B43C01C31FB920067B53E /* libluacocos2d tvOS.a in Frameworks */,
@@ -2884,6 +2922,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1AB64A901F0A12C4000C28A7 /* SystemConfiguration.framework in Frameworks */,
 				4B5C5BB81CA114EE00D55A14 /* Security.framework in Frameworks */,
 				507B43F61C3201780067B53E /* libcocos2d tvOS.a in Frameworks */,
 				507B43E21C3201360067B53E /* GameController.framework in Frameworks */,
@@ -2905,6 +2944,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1AB64A821F0A1288000C28A7 /* SystemConfiguration.framework in Frameworks */,
 				507B44271C336EFA0067B53E /* libsqlite3.dylib in Frameworks */,
 				507B44281C336EFA0067B53E /* AppKit.framework in Frameworks */,
 				507B44291C336EFA0067B53E /* Cocoa.framework in Frameworks */,
@@ -2928,6 +2968,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1AB64A8A1F0A12AE000C28A7 /* SystemConfiguration.framework in Frameworks */,
 				294D7D901D0E50B8002CE7B7 /* CoreText.framework in Frameworks */,
 				4B5C5BB21CA114CC00D55A14 /* Security.framework in Frameworks */,
 				50FC18C31C33725200DD15A3 /* libsqlite3.dylib in Frameworks */,
@@ -2953,6 +2994,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1AB64A7E1F0A1275000C28A7 /* SystemConfiguration.framework in Frameworks */,
 				50FC3FA11D74C15B001C936A /* GameController.framework in Frameworks */,
 				50FC3F811D74BCC9001C936A /* Security.framework in Frameworks */,
 				50FC3F821D74BCC9001C936A /* libcocos2d Mac.a in Frameworks */,
@@ -2973,6 +3015,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1AB64A701F062C96000C28A7 /* SystemConfiguration.framework in Frameworks */,
 				29DC5A201CFFE6E100CF2930 /* CoreText.framework in Frameworks */,
 				4B5C5BAB1CA1149900D55A14 /* Security.framework in Frameworks */,
 				ED545A731B68A1AC00C3958E /* libiconv.dylib in Frameworks */,
@@ -2996,6 +3039,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1AB64A8B1F0A12B2000C28A7 /* SystemConfiguration.framework in Frameworks */,
 				294D7D911D0E50BF002CE7B7 /* CoreText.framework in Frameworks */,
 				4B5C5BB31CA114D400D55A14 /* Security.framework in Frameworks */,
 				FA94B0A31B8EF69A0074B261 /* libiconv.dylib in Frameworks */,
@@ -3019,6 +3063,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1AB64A831F0A128C000C28A7 /* SystemConfiguration.framework in Frameworks */,
 				FA94B1B81B8EF76D0074B261 /* libiconv.dylib in Frameworks */,
 				FA94B1B91B8EF76D0074B261 /* libcocos2d Mac.a in Frameworks */,
 				FA94B1BA1B8EF76D0074B261 /* Security.framework in Frameworks */,
@@ -4541,6 +4586,9 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1AB64A8C1F0A12B8000C28A7 /* SystemConfiguration.framework */,
+				1AB64A751F064513000C28A7 /* SystemConfiguration.framework */,
+				1AB64A6F1F062C96000C28A7 /* SystemConfiguration.framework */,
 				50FC3FA01D74C15B001C936A /* GameController.framework */,
 				29DC5A1E1CFFE5E700CF2930 /* CoreText.framework */,
 				4B5C5BB41CA114DB00D55A14 /* Security.framework */,
