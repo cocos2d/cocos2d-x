@@ -1459,7 +1459,7 @@ bool UIRichTextXMLShadow::init()
         // RichText
         _richText = RichText::createWithXML("<font size=\"24\"><shadow color=\"#4169E1\" offsetWidth=\"8\" offsetHeight=\"-8\" blurRadius=\"2\">SHADOW</shadow></font>");
         _richText->ignoreContentAdaptWithSize(false);
-        _richText->setContentSize(Size(100, 100));
+        _richText->setContentSize(Size(150, 100));
         
         _richText->setPosition(Vec2(widgetSize.width / 2, widgetSize.height / 2));
         _richText->setLocalZOrder(10);
