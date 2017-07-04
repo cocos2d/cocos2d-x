@@ -1712,7 +1712,7 @@ void RichText::handleImageRenderer(const std::string& filePath, const Color3B &/
             imageRenderer->setScaleY(height / currentSize.height);
         imageRenderer->setContentSize(Size(currentSize.width * imageRenderer->getScaleX(),
                                              currentSize.height * imageRenderer->getScaleY()));
-
+        imageRenderer->setScale(1.f, 1.f);
         handleCustomRenderer(imageRenderer);
         imageRenderer->addComponent(ListenerComponent::create(imageRenderer,
                                                               url,
@@ -1800,6 +1800,8 @@ void RichText::formarRenderers()
                 iter->setAnchorPoint(Vec2::ZERO);
                 iter->setPosition(nextPosX, nextPosY);
                 this->addProtectedChild(iter, 1);
+                if ( dynamic_cast<Sprite*>(iter) )
+                    do{}while(0);
                 nextPosX += iter->getContentSize().width;
             }
             
