@@ -157,6 +157,12 @@ void ImageView::setupTexture()
 
     updateContentSizeWithTextureSize(_imageTextureSize);
     _imageRendererAdaptDirty = true;
+    
+    //FIX issue https://github.com/cocos2d/cocos2d-x/issues/17654
+    if (_scale9Enabled) {
+        _imageRenderer->setRenderingType(Scale9Sprite::RenderingType::SLICE);
+        setCapInsets(_capInsets);
+    }
 }
 
 void ImageView::setTextureRect(const Rect &rect)

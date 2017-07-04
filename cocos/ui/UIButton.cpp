@@ -300,6 +300,12 @@ void Button::setupNormalTexture(bool textureLoaded)
     }
     _normalTextureLoaded = textureLoaded;
     _normalTextureAdaptDirty = true;
+    
+    //FIX issue https://github.com/cocos2d/cocos2d-x/issues/17654
+    if (_scale9Enabled) {
+        _buttonNormalRenderer->setRenderingType(Scale9Sprite::RenderingType::SLICE);
+        setCapInsetsNormalRenderer(_capInsetsNormal);
+    }
 }
 
 void Button::loadTextureNormal(SpriteFrame* normalSpriteFrame)
@@ -343,6 +349,12 @@ void Button::setupPressedTexture(bool textureLoaded)
 
     _pressedTextureLoaded = textureLoaded;
     _pressedTextureAdaptDirty = true;
+    
+    //FIX issue https://github.com/cocos2d/cocos2d-x/issues/17654
+    if (_scale9Enabled) {
+        _buttonClickedRenderer->setRenderingType(Scale9Sprite::RenderingType::SLICE);
+        setCapInsetsPressedRenderer(_capInsetsPressed);
+    }
 }
 
 void Button::loadTexturePressed(SpriteFrame* pressedSpriteFrame)
@@ -386,6 +398,12 @@ void Button::setupDisabledTexture(bool textureLoaded)
 
     _disabledTextureLoaded = textureLoaded;
     _disabledTextureAdaptDirty = true;
+    
+    //FIX issue https://github.com/cocos2d/cocos2d-x/issues/17654
+    if (_scale9Enabled) {
+        _buttonDisabledRenderer->setRenderingType(Scale9Sprite::RenderingType::SLICE);
+        setCapInsetsDisabledRenderer(_capInsetsDisabled);
+    }
 }
 
 void Button::loadTextureDisabled(SpriteFrame* disabledSpriteFrame)
