@@ -562,7 +562,7 @@ protected:
 
     bool _formatTextDirty;
     Vector<RichElement*> _richElements;
-    std::vector<Vector<Node*>*> _elementRenders;
+    std::vector<Vector<Node*>> _elementRenders;
     float _leftSpaceWidth;
 
     ValueMap _defaults;             /*!< default values */
