@@ -1800,8 +1800,6 @@ void RichText::formarRenderers()
                 iter->setAnchorPoint(Vec2::ZERO);
                 iter->setPosition(nextPosX, nextPosY);
                 this->addProtectedChild(iter, 1);
-                if ( dynamic_cast<Sprite*>(iter) )
-                    do{}while(0);
                 nextPosX += iter->getContentSize().width;
             }
             
