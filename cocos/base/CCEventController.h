@@ -43,7 +43,7 @@ class EventListenerController;
 /** @class EventController
  * @brief Controller event.
  */
-class EventController : public Event
+class CC_DLL EventController : public Event
 {
 public:
     /** ControllerEventType Controller event type.*/
