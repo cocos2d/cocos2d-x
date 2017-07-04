@@ -1826,21 +1826,25 @@ void RichText::formarRenderers()
     updateContentSizeWithTextureSize(_contentSize);
 }
 
+namespace {
+    float getPaddingAmount(const RichText::HorizontalAlignment alignment, const float leftOver) {
+        switch ( alignment ) {
+            case RichText::HorizontalAlignment::CENTER:
+                return leftOver / 2.f;
+            case RichText::HorizontalAlignment::RIGHT:
+                return leftOver;
+            default:
+                CCASSERT(false, "invalid horizontal alignment!");
+                return 0.f;
+        }
+    }
+}
+
 void RichText::doHorizontalAlignment(const Vector<cocos2d::Node*> &row, float rowWidth) {
     const auto alignment = static_cast<HorizontalAlignment>(_defaults.at(KEY_HORIZONTAL_ALIGNMENT).asInt());
     if ( alignment != HorizontalAlignment::LEFT ) {
         const auto leftOver = getContentSize().width - rowWidth;
-        const float leftPadding = [alignment, leftOver] {
-            switch ( alignment ) {
-                case HorizontalAlignment::CENTER:
-                    return leftOver / 2.f;
-                case HorizontalAlignment::RIGHT:
-                    return leftOver;
-                default:
-                    CCASSERT(false, "invalid horizontal alignment!");
-                    return 0.f;
-            }
-        }();
+        const float leftPadding = getPaddingAmount(alignment, leftOver);
         const Vec2 offset(leftPadding, 0.f);
         for ( auto& node : row ) {
             node->setPosition(node->getPosition() + offset);
