@@ -47,7 +47,7 @@ class EventDispatcher;
  * @brief A Controller object represents a connected physical game controller.
  * @js NA
  */
-class Controller
+class CC_DLL Controller
 {
 public:
     /** 
@@ -123,6 +123,13 @@ public:
      * @return A Controller object.
      */
     static Controller* getControllerByTag(int tag);
+    /** 
+     * Gets a Controller object with tag.
+     *
+     * @param tag   An identifier to find the controller.
+     * @return A Controller object.
+     */
+    static Controller* getControllerByDeviceId(int deviceId);
 
     /**
      * Start discovering new controllers.
@@ -210,6 +217,19 @@ private:
     EventController *_connectEvent;
     EventController *_keyEvent;
     EventController *_axisEvent;
+
+	#if ( CC_TARGET_PLATFORM == CC_PLATFORM_LINUX || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 )
+	// Attach the controller profiles from CCController-linux-win32.cpp to each
+	// of the controllers in order to minimize profile lookup time.
+
+	// Note: this increases memory usage unecessarily since the same maps are
+	// already stored on ControllerImpl within the member variable
+	// "s_controllerProfiles", but on these platforms the increase in memory usage
+	// is negligible.  Peformance over memory optimization was consciously chosen.
+
+	std::unordered_map<int,int> _buttonInputMap;
+	std::unordered_map<int,int> _axisInputMap;
+	#endif
 
     friend class ControllerImpl;
     friend class EventListenerController;
