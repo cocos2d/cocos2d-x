@@ -8085,6 +8085,32 @@ tolua_lerror:
 #endif
 }
 
+static int tolua_cocos2d_utils_findChild(lua_State* tolua_S)
+{
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (!tolua_isusertype(tolua_S, 1, "cc.Node", 0, &tolua_err) ||
+        !tolua_isstring(tolua_S, 2, 0, &tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        cocos2d::Node* node = static_cast<Node*>(tolua_tousertype(tolua_S, 1, nullptr));
+        std::string  name = tolua_tocppstring(tolua_S, 2, "");
+        auto obj = cocos2d::utils::findChild(node, name);
+        int ID = (obj) ? (int)obj->_ID : -1;
+        int* luaID = (obj) ? &obj->_luaID : NULL;
+        toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)obj, "cc.Node");
+        return 1;
+    }
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+                tolua_error(tolua_S, "#ferror in function 'tolua_cocos2d_utils_findChild'.", &tolua_err);
+                return 0;
+#endif
+}
+
 int register_all_cocos2dx_module_manual(lua_State* tolua_S)
 {
     if (nullptr == tolua_S)
@@ -8097,6 +8123,7 @@ int register_all_cocos2dx_module_manual(lua_State* tolua_S)
         tolua_beginmodule(tolua_S,"utils");
             tolua_function(tolua_S, "captureScreen", tolua_cocos2d_utils_captureScreen);
             tolua_function(tolua_S, "findChildren", tolua_cocos2d_utils_findChildren);
+	    tolua_function(tolua_S, "findChild", tolua_cocos2d_utils_findChild);
         tolua_endmodule(tolua_S);
     tolua_endmodule(tolua_S);
 
