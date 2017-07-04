@@ -167,21 +167,20 @@ struct CC_DLL Color4F
 
 Color4F& operator+=(Color4F& lhs, const Color4F& rhs);
 Color4F operator+(Color4F lhs, const Color4F& rhs);
+
 Color4F& operator-=(Color4F& lhs, const Color4F& rhs);
 Color4F operator-(Color4F lhs, const Color4F& rhs);
 
 Color4F& operator*=(Color4F& lhs, const Color4F& rhs);
+Color4F operator*(Color4F lhs, const Color4F& rhs);
 Color4F& operator*=(Color4F& lhs, float rhs);
-template<typename T>
-Color4F operator*(Color4F lhs, const T& rhs) {
-    return lhs *= rhs;
-}
+Color4F operator*(Color4F lhs, float rhs);
+
 Color4F& operator/=(Color4F& lhs, const Color4F& rhs);
+Color4F operator/(Color4F lhs, const Color4F& rhs);
 Color4F& operator/=(Color4F& lhs, float rhs);
-template<typename T>
-Color4F operator/(Color4F lhs, const T& rhs) {
-    return lhs /= rhs;
-}
+Color4F operator/(Color4F lhs, float rhs);
+
 
 /** A vertex composed of 2 floats: x, y
  @since v3.0

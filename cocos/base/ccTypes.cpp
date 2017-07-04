@@ -249,6 +249,14 @@ Color4F& operator*=(Color4F& lhs, float rhs) {
 	lhs.a *= rhs;
 	return lhs;
 }
+Color4F operator*(Color4F lhs, const Color4F& rhs) {
+    return lhs *= rhs;
+}
+
+Color4F operator*(Color4F lhs, float rhs) {
+    return lhs *= rhs;
+}
+
 Color4F& operator/=(Color4F& lhs, const Color4F& rhs) {
 	lhs.r /= rhs.r;
 	lhs.g /= rhs.g;
@@ -262,6 +270,13 @@ Color4F& operator/=(Color4F& lhs, float rhs) {
 	lhs.b /= rhs;
 	lhs.a /= rhs;
 	return lhs;
+}
+Color4F operator/(Color4F lhs, const Color4F& rhs) {
+    return lhs /= rhs;
+}
+
+Color4F operator/(Color4F lhs, float rhs) {
+    return lhs /= rhs;
 }
 
 /**
