@@ -1765,7 +1765,7 @@ void RichText::formarRenderers()
                 maxY = MAX(maxY, iSize.height);
             }
             nextPosY -= maxY;
-            rowWidthPairs.emplace_back(row, nextPosX);
+            rowWidthPairs.emplace_back(&element, nextPosX);
         }
         this->setContentSize(Size(newContentSizeWidth, -nextPosY));
         for ( auto& row : rowWidthPairs )
@@ -1803,7 +1803,7 @@ void RichText::formarRenderers()
                 nextPosX += iter->getContentSize().width;
             }
             
-            doHorizontalAlignment(*row, nextPosX);
+            doHorizontalAlignment(row, nextPosX);
         }
     }
     
