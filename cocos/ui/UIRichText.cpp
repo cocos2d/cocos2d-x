@@ -27,6 +27,7 @@
 #include <sstream>
 #include <vector>
 #include <locale>
+#include <algorithm>
 
 #include "platform/CCFileUtils.h"
 #include "platform/CCApplication.h"
@@ -1843,13 +1844,41 @@ namespace {
 void RichText::doHorizontalAlignment(const Vector<cocos2d::Node*> &row, float rowWidth) {
     const auto alignment = static_cast<HorizontalAlignment>(_defaults.at(KEY_HORIZONTAL_ALIGNMENT).asInt());
     if ( alignment != HorizontalAlignment::LEFT ) {
-        const auto leftOver = getContentSize().width - rowWidth;
+        const auto diff = stripTrailingWhitespace(row);
+        const auto leftOver = getContentSize().width - (rowWidth + diff);
         const float leftPadding = getPaddingAmount(alignment, leftOver);
         const Vec2 offset(leftPadding, 0.f);
         for ( auto& node : row ) {
             node->setPosition(node->getPosition() + offset);
         }
     }
+}
+
+namespace {
+    bool isWhitespace(char c) {
+        return std::isspace(c, std::locale());
+    }
+    std::string rtrim(std::string s) {
+        s.erase(std::find_if_not(s.rbegin(),
+                                 s.rend(),
+                                 isWhitespace).base(),
+                s.end());
+        return s;
+    }
+}
+
+float RichText::stripTrailingWhitespace(const Vector<cocos2d::Node*>& row) {
+    if ( !row.empty() ) {
+        if ( auto label = dynamic_cast<Label*>(row.back()) ) {
+            const auto width = label->getContentSize().width;
+            const auto trimmedString = rtrim(label->getString());
+            if ( label->getString() != trimmedString ) {
+                label->setString(trimmedString);
+                return label->getContentSize().width - width;
+            }
+        }
+    }
+    return 0.0f;
 }
 
 void RichText::adaptRenderers()

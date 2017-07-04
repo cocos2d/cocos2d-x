@@ -569,6 +569,7 @@ protected:
     int findSplitPositionForWord(cocos2d::Label* label, const std::string& text);
     int findSplitPositionForChar(cocos2d::Label* label, const std::string& text);
 	void doHorizontalAlignment(const Vector<Node*>& row, float rowWidth);
+	float stripTrailingWhitespace(const Vector<Node*>& row);
 
     bool _formatTextDirty;
     Vector<RichElement*> _richElements;
