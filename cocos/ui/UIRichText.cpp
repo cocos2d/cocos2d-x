@@ -27,6 +27,7 @@
 #include <sstream>
 #include <vector>
 #include <locale>
+#include <algorithm>
 
 #include "platform/CCFileUtils.h"
 #include "platform/CCApplication.h"
@@ -832,6 +833,7 @@ ValueMap MyXMLVisitor::tagAttrMapWithXMLElement(const char ** attrs)
 
 const std::string RichText::KEY_VERTICAL_SPACE("KEY_VERTICAL_SPACE");
 const std::string RichText::KEY_WRAP_MODE("KEY_WRAP_MODE");
+const std::string RichText::KEY_HORIZONTAL_ALIGNMENT("KEY_HORIZONTAL_ALIGNMENT");
 const std::string RichText::KEY_FONT_COLOR_STRING("KEY_FONT_COLOR_STRING");
 const std::string RichText::KEY_FONT_SIZE("KEY_FONT_SIZE");
 const std::string RichText::KEY_FONT_SMALL("KEY_FONT_SMALL");
@@ -875,6 +877,7 @@ RichText::RichText()
 {
     _defaults[KEY_VERTICAL_SPACE] = 0.0f;
     _defaults[KEY_WRAP_MODE] = static_cast<int>(WrapMode::WRAP_PER_WORD);
+	_defaults[KEY_HORIZONTAL_ALIGNMENT] = static_cast<int>(HorizontalAlignment::LEFT);
     _defaults[KEY_FONT_COLOR_STRING] = "#ffffff";
     _defaults[KEY_FONT_SIZE] = 12.0f;
     _defaults[KEY_FONT_FACE] = "Verdana";
@@ -993,6 +996,20 @@ void RichText::setWrapMode(RichText::WrapMode wrapMode)
         _defaults[KEY_WRAP_MODE] = static_cast<int>(wrapMode);
         _formatTextDirty = true;
     }
+}
+
+RichText::HorizontalAlignment RichText::getHorizontalAlignment() const
+{
+	return static_cast<RichText::HorizontalAlignment>(_defaults.at(KEY_HORIZONTAL_ALIGNMENT).asInt());
+}
+
+void RichText::setHorizontalAlignment(cocos2d::ui::RichText::HorizontalAlignment a)
+{
+	if (static_cast<RichText::HorizontalAlignment>(_defaults.at(KEY_HORIZONTAL_ALIGNMENT).asInt()) != a)
+	{
+		_defaults[KEY_HORIZONTAL_ALIGNMENT] = static_cast<int>(a);
+		_formatTextDirty = true;
+	}
 }
 
 void RichText::setFontColor(const std::string& color)
@@ -1198,6 +1215,9 @@ void RichText::setDefaults(const ValueMap& defaults)
     if (defaults.find(KEY_WRAP_MODE) != defaults.end()) {
         _defaults[KEY_WRAP_MODE] = defaults.at(KEY_WRAP_MODE).asInt();
     }
+	if (defaults.find(KEY_HORIZONTAL_ALIGNMENT) != defaults.end()) {
+		_defaults[KEY_HORIZONTAL_ALIGNMENT] = defaults.at(KEY_HORIZONTAL_ALIGNMENT).asInt();
+	}
     if (defaults.find(KEY_FONT_COLOR_STRING) != defaults.end()) {
         _defaults[KEY_FONT_COLOR_STRING] = defaults.at(KEY_FONT_COLOR_STRING).asString();
     }
@@ -1692,7 +1712,7 @@ void RichText::handleImageRenderer(const std::string& filePath, const Color3B &/
             imageRenderer->setScaleY(height / currentSize.height);
         imageRenderer->setContentSize(Size(currentSize.width * imageRenderer->getScaleX(),
                                              currentSize.height * imageRenderer->getScaleY()));
-
+        imageRenderer->setScale(1.f, 1.f);
         handleCustomRenderer(imageRenderer);
         imageRenderer->addComponent(ListenerComponent::create(imageRenderer,
                                                               url,
@@ -1728,6 +1748,8 @@ void RichText::formarRenderers()
     {
         float newContentSizeWidth = 0.0f;
         float nextPosY = 0.0f;
+        std::vector<std::pair<Vector<Node*>*, float> > rowWidthPairs;
+        rowWidthPairs.reserve(_elementRenders.size());
         for (auto& element: _elementRenders)
         {
             float nextPosX = 0.0f;
@@ -1743,13 +1765,16 @@ void RichText::formarRenderers()
                 maxY = MAX(maxY, iSize.height);
             }
             nextPosY -= maxY;
+            rowWidthPairs.emplace_back(&element, nextPosX);
         }
         this->setContentSize(Size(newContentSizeWidth, -nextPosY));
+        for ( auto& row : rowWidthPairs )
+            doHorizontalAlignment(*row.first, row.second);
     }
     else
     {
         float newContentSizeHeight = 0.0f;
-        float *maxHeights = new (std::nothrow) float[_elementRenders.size()];
+        std::vector<float> maxHeights(_elementRenders.size());
         
         for (size_t i=0, size = _elementRenders.size(); i<size; i++)
         {
@@ -1777,8 +1802,9 @@ void RichText::formarRenderers()
                 this->addProtectedChild(iter, 1);
                 nextPosX += iter->getContentSize().width;
             }
+            
+            doHorizontalAlignment(row, nextPosX);
         }
-        delete [] maxHeights;
     }
     
     _elementRenders.clear();
@@ -1794,12 +1820,66 @@ void RichText::formarRenderers()
     }
     updateContentSizeWithTextureSize(_contentSize);
 }
-    
+
+namespace {
+    float getPaddingAmount(const RichText::HorizontalAlignment alignment, const float leftOver) {
+        switch ( alignment ) {
+            case RichText::HorizontalAlignment::CENTER:
+                return leftOver / 2.f;
+            case RichText::HorizontalAlignment::RIGHT:
+                return leftOver;
+            default:
+                CCASSERT(false, "invalid horizontal alignment!");
+                return 0.f;
+        }
+    }
+}
+
+void RichText::doHorizontalAlignment(const Vector<cocos2d::Node*> &row, float rowWidth) {
+    const auto alignment = static_cast<HorizontalAlignment>(_defaults.at(KEY_HORIZONTAL_ALIGNMENT).asInt());
+    if ( alignment != HorizontalAlignment::LEFT ) {
+        const auto diff = stripTrailingWhitespace(row);
+        const auto leftOver = getContentSize().width - (rowWidth + diff);
+        const float leftPadding = getPaddingAmount(alignment, leftOver);
+        const Vec2 offset(leftPadding, 0.f);
+        for ( auto& node : row ) {
+            node->setPosition(node->getPosition() + offset);
+        }
+    }
+}
+
+namespace {
+    bool isWhitespace(char c) {
+        return std::isspace(c, std::locale());
+    }
+    std::string rtrim(std::string s) {
+        s.erase(std::find_if_not(s.rbegin(),
+                                 s.rend(),
+                                 isWhitespace).base(),
+                s.end());
+        return s;
+    }
+}
+
+float RichText::stripTrailingWhitespace(const Vector<cocos2d::Node*>& row) {
+    if ( !row.empty() ) {
+        if ( auto label = dynamic_cast<Label*>(row.back()) ) {
+            const auto width = label->getContentSize().width;
+            const auto trimmedString = rtrim(label->getString());
+            if ( label->getString() != trimmedString ) {
+                label->setString(trimmedString);
+                return label->getContentSize().width - width;
+            }
+        }
+    }
+    return 0.0f;
+}
+
 void RichText::adaptRenderers()
 {
     this->formatText();
 }
-    
+
 void RichText::pushToContainer(cocos2d::Node *renderer)
 {
     if (_elementRenders.size() <= 0)
