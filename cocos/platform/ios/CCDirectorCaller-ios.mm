@@ -52,6 +52,7 @@ static id s_sharedDirectorCaller;
     if (s_sharedDirectorCaller == nil)
     {
         s_sharedDirectorCaller = [CCDirectorCaller new];
+        ((CCDirectorCaller*) s_sharedDirectorCaller)->lastDisplayTime = 0;
     }
     
     return s_sharedDirectorCaller;
@@ -137,7 +138,10 @@ static id s_sharedDirectorCaller;
         
         [EAGLContext setCurrentContext: cocos2dxContext];
 
-        CFTimeInterval dt = ((CADisplayLink*)displayLink).timestamp - lastDisplayTime;
+        CFTimeInterval dt = 0;
+        if (lastDisplayTime != 0) {
+            dt = ((CADisplayLink*)displayLink).timestamp - lastDisplayTime;
+        }
         lastDisplayTime = ((CADisplayLink*)displayLink).timestamp;
         director->mainLoop(dt);
     }
